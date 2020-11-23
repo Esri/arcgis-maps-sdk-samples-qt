@@ -38,6 +38,7 @@ def check_files(file_list):
             file_name = directory_list[-1]
             
             # Check skip file conditions
+            # Does the file exist, is it in a category, is it a .json or .md?
             if skip_file(directory_list):
                 continue        
 
@@ -57,6 +58,7 @@ def check_files(file_list):
                 except Exception as e:
                     errors.append(f"Error checking {file_name}. Exception: {e}")
             
+            # Count and print the errors
             if len(errors) > 0:
                 print(f"Found {len(errors)} errors in file:\n{file}")
                 for i in range(len(errors)):
@@ -101,21 +103,28 @@ class MetadataFile:
         self.api_list = []
         self.keyword_list = []
         self.metadata = read_json_file(file_path)
-        self.metadata_errors = []
+        self.metadata_keys = [key for key in self.metadata.keys()]
 
     def check_metadata_file_for_errors(self):
+        self.metadata_errors = []
+
+        # General check for capitalization, ordering, and presence
         if self.file_name != "README.metadata.json":
             self.metadata_errors.append(f"{self.file_name} does not have correct capitalization")
 
-        for key in self.metadata.keys():
+        if not is_subsequence(self.metadata_keys,possible_metadata_keys):
+            self.metadata_errors.append(f"JSON keys are not in the correct order\nExpected order is: {possible_metadata_keys}")
+
+        for expected_key in required_metadata_keys:
+            if expected_key not in self.metadata_keys:
+                self.metadata_errors.append(f"{expected_key} not found in file metadata keys")
+
+        # Check the individual sections by passing each key to check_sections(0)
+        for key in self.metadata_keys:
             try:
                 self.metadata_errors += (self.check_sections(key))
             except Exception as e:
                 self.metadata_errors.append(f"Errors testing: {key}. Exception: {e}")
-
-        for expected_key in required_metadata_keys:
-            if expected_key not in self.metadata.keys():
-                self.metadata_errors.append(f"{expected_key} not found in file metadata keys")
 
         return self.metadata_errors
 
@@ -123,10 +132,12 @@ class MetadataFile:
         # We do this in case the .json key is not one of the accepted sections
         if key == "category":
             return self.check_category(self.metadata["category"])
+        elif key == "dataItems":
+            return self.check_data_items(self.metadata["dataItems"])
         elif key == "description":
             return self.check_description(self.metadata["description"])
         elif key == "ignore":
-            return [] # (check_ignore(self.metadata["ignore"]))
+            return self.check_ignore(self.metadata["ignore"])
         elif key == "images":
             return self.check_images(self.metadata["images"])
         elif key == "keywords":
@@ -139,12 +150,10 @@ class MetadataFile:
             return self.check_snippets(self.metadata["snippets"])
         elif key == "title":
             return self.check_title(self.metadata["title"])
-        elif key == "dataItems":
-            return [] # (check_dataItems(self.metadata["dataItems"]))
         else:
             return [f"Category: '{key}' is not a recognized readme metadata key."]
 
-    def check_category(self, category: str):
+    def check_category(self, category: str) -> list:
         if not category:
             return ["No category"]
         errors = []
@@ -154,7 +163,18 @@ class MetadataFile:
             errors.append(f"Category does not match parent category folder: ('{category}' != '{self.category_name}')")
         return errors
 
-    def check_description(self, description: str):
+    def check_data_items(self, data_items) -> list:
+        if not data_items or data_items == []:
+            return ["No data items"]
+        errors = []
+        for i in range(len(data_items)):
+            if not data_items[i].get('itemId', None):
+                errors.append(f"dataItem {i} needs an itemId")
+            if not data_items[i].get('path', None):
+                errors.append(f"dataItem {i} needs a path")
+        return errors
+    
+    def check_description(self, description: str) -> list:
         if not description:
             return ["No description written"]
         errors = []
@@ -162,7 +182,13 @@ class MetadataFile:
             errors.append("Description does not end in proper punctuation")
         return errors
 
-    def check_images(self, images: list):
+    def check_ignore(self, ignore) -> list:
+        if ignore not in [True, False]:
+            return ["Ignore value must be true or false"]
+        errors = []
+        return errors
+    
+    def check_images(self, images: list) -> list:
         if not images:
             return ["No images listed"]
         errors = []
@@ -177,7 +203,7 @@ class MetadataFile:
             errors.append("'screenshot.png' not found")
         return errors
 
-    def check_keywords(self, keywords: list):
+    def check_keywords(self, keywords: list) -> list:
         if not keywords:
             return ["No keywords found"]
         errors = []
@@ -188,7 +214,7 @@ class MetadataFile:
                 self.keyword_list.append(keyword)
         return errors
 
-    def check_redirect_from(self, redirects: list):
+    def check_redirect_from(self, redirects: list) -> list:
         if redirects == ['']:
             return ["No redirects listed"]
         errors = []
@@ -201,7 +227,7 @@ class MetadataFile:
             errors.append(f"Expected redirect ({expected_redirect}) not found among {redirects}")
         return errors
 
-    def check_relevant_apis(self, apis: list):
+    def check_relevant_apis(self, apis: list) -> list:
         if not apis:
             return ["No APIs listed"]
         errors = []
@@ -212,7 +238,7 @@ class MetadataFile:
                 self.api_list.append(api)
         return errors
 
-    def check_snippets(self, snippets: list):
+    def check_snippets(self, snippets: list) -> list:
         if not snippets:
             return ["No snippets listed"]
         errors = []
@@ -234,7 +260,7 @@ class MetadataFile:
                 errors.append(f"Expected {expected_snippet} in snippets")
         return errors
 
-    def check_title(self, title: str):
+    def check_title(self, title: str) -> list:
         if not title:
             return ["No title"]
         errors = []
@@ -264,9 +290,6 @@ class READMEFile:
         self.screenshot_text = ""
         self.sections = {}
         self.section_header_list = []
-        self.readme_errors = []
-        self.header_errors = []
-        self.section_errors = []
 
         self.parse_readme()
     
@@ -295,13 +318,13 @@ class READMEFile:
             else:
                 self.sections[section_title] = section_body
 
-    def check_readme_for_errors(self):
+    def check_readme_for_errors(self) -> list:
         self.readme_errors = []
         self.readme_errors += (self.check_readme_section_headers())
         self.readme_errors += (self.check_readme_sections())
         return self.readme_errors
 
-    def check_readme_section_headers(self):
+    def check_readme_section_headers(self) -> list:
         # Check if missing essential headers
         missing_headers = []
         self.header_errors = []
@@ -315,18 +338,18 @@ class READMEFile:
         
         # Check if README headers are in order
         if not is_subsequence(self.section_header_list, possible_readme_headers):
-            self.header_errors.append("Section headers are not in the correct order.")
+            self.header_errors.append(f"Section headers are not in the correct order.\nExpected order to be: {possible_readme_headers}.")
 
         # Check if duplicate headers
         temp_header_list = []
         for header in self.section_header_list:
             if header in temp_header_list:
-                self.header_errors.append(f"Header '{header}' is a aduplicate.")
+                self.header_errors.append(f"Header '{header}' is a a duplicate.")
             else:
                 temp_header_list.append(header)
         return self.header_errors
 
-    def check_readme_sections(self):
+    def check_readme_sections(self) -> list:
         self.section_errors = []
         for header in self.sections.keys():
             if header.lower() == "relevant api":
@@ -344,7 +367,7 @@ class READMEFile:
                 self.section_errors += ([f"{header} not found in possible README headers."])
         return self.section_errors
 
-    def check_relevant_api(self, h):
+    def check_relevant_api(self, h) -> list:
         if not self.sections[h]:
             return ["No text found in 'Relevant API'"]
         errors = []
@@ -363,7 +386,7 @@ class READMEFile:
             errors.append("Expected API list to be sorted alphabetically")
         return errors
 
-    def check_tags(self, h):
+    def check_tags(self, h) -> list:
         if not self.sections[h]:
             return ["No tags found in 'Tag' section"]
         errors = []
@@ -379,7 +402,7 @@ class READMEFile:
             errors.append("Expected tag list to be sorted alphabetically")
         return errors
 
-    def check_if_section_contents(self, h):
+    def check_if_section_contents(self, h) -> list:
         if not self.sections[h]:
             return [f"No text found in {h} section body."]
         errors = []
@@ -467,7 +490,7 @@ possible_readme_headers = [
     'Tags'
 ]
 
-# ***** Helper functions from utilities.helper_functions
+# ***** HELPER FUNCTIONS
 
 def read_json_file(file_path):
     data = None
@@ -535,14 +558,12 @@ def filter_string_for_alpha_numeric(string):
 test_file_list = [
     "/Users/tan11389/Projects/ty-samples/ArcGISRuntimeSDKQt_CppSamples/Scenes/AddIntegratedMeshLayer/README.md",
     "/Users/tan11389/Projects/ty-samples/ArcGISRuntimeSDKQt_CppSamples/Scenes/SceneLayerSelection/README.md",
-    "/Users/tan11389/Projects/ty-samples/ArcGISRuntimeSDKQt_CppSamples/Scenes/Symbols/README.md",
-    "/Users/tan11389/Projects/ty-samples/ArcGISRuntimeSDKQt_CppSamples/Scenes/RealisticLightingAndShadows/README.md",
-    "/Users/tan11389/Projects/ty-samples/ArcGISRuntimeSDKQt_CppSamples/Search/OfflineGeocode/README.md",
     "/Users/tan11389/Projects/ty-samples/ArcGISRuntimeSDKQt_CppSamples/LocalServer/LocalServerMapImageLayer/README.md",
     "/Users/tan11389/Projects/ty-samples/ArcGISRuntimeSDKQt_CppSamples/Geometry/FormatCoordinates/README.metadata.json",
+    "/Users/tan11389/Projects/ty-samples/ArcGISRuntimeSDKQt_CppSamples/LocalServer/LocalServerMapImageLayer/README.metadata.json"
 ]
 
-# check_files(test_file_list)
+check_files(test_file_list)
 
 if __name__ == '__main__':
     main()
