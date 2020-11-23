@@ -1,5 +1,6 @@
 import os
 import argparse
+import subprocess as sp
 from os import listdir
 from os.path import isfile, join
 import json
@@ -348,6 +349,10 @@ class READMEFile:
             else:
                 temp_header_list.append(header)
         return self.header_errors
+
+    def run_mdl(readme_path: str):
+        code = sp.call(f'mdl --style /style.rb "{readme_path}"', shell=True)
+        return code
 
     def check_readme_sections(self) -> list:
         self.section_errors = []
