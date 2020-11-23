@@ -7,8 +7,6 @@ on:
   pull_request:
     branches: [ master, v.next ]
     paths: ['**.json', '**.md']
-  push:
-    branches: [master, v.next]
 
 # A workflow run is made up of one or more jobs that can run sequentially or in parallel
 jobs:
