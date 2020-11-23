@@ -4,7 +4,7 @@ Use a geoprocessing service and a set of features to identify statistically sign
 
 ![](screenshot.png)
 
-## Usecase
+## Use case
 
 This tool identifies statistically significant spatial clusters of high values (hot spots) and low values (cold spots). For example, a hotspot analysis based on the frequency of 911 calls within a set region.
 
