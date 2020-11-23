@@ -560,15 +560,5 @@ def filter_string_for_alpha_numeric(string):
              clean_string += letter
     return clean_string
 
-test_file_list = [
-    "/Users/tan11389/Projects/ty-samples/ArcGISRuntimeSDKQt_CppSamples/Scenes/AddIntegratedMeshLayer/README.md",
-    "/Users/tan11389/Projects/ty-samples/ArcGISRuntimeSDKQt_CppSamples/Scenes/SceneLayerSelection/README.md",
-    "/Users/tan11389/Projects/ty-samples/ArcGISRuntimeSDKQt_CppSamples/LocalServer/LocalServerMapImageLayer/README.md",
-    "/Users/tan11389/Projects/ty-samples/ArcGISRuntimeSDKQt_CppSamples/Geometry/FormatCoordinates/README.metadata.json",
-    "/Users/tan11389/Projects/ty-samples/ArcGISRuntimeSDKQt_CppSamples/LocalServer/LocalServerMapImageLayer/README.metadata.json"
-]
-
-check_files(test_file_list)
-
 if __name__ == '__main__':
     main()
