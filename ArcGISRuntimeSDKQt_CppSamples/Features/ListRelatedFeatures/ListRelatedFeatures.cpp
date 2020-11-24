@@ -110,29 +110,36 @@ void ListRelatedFeatures::connectSignals()
         // connect to queryRelatedFeaturesCompleted signal
         connect(m_alaskaFeatureTable, &ArcGISFeatureTable::queryRelatedFeaturesCompleted,
                 this, [this](QUuid, QList<RelatedFeatureQueryResult*> rawRelatedResults)
-                {
-                  FeatureQueryListResultLock lock(rawRelatedResults);
-                  for (const RelatedFeatureQueryResult* relatedResult : lock.results)
-                  {
-                    while (relatedResult->iterator().hasNext())
-                    {
-                      // get the related feature
-                      const ArcGISFeature* feature = static_cast<ArcGISFeature*>(relatedResult->iterator().next());
-                      const ArcGISFeatureTable* relatedTable = static_cast<ArcGISFeatureTable*>(feature->featureTable());
-                      const QString displayFieldName = relatedTable->layerInfo().displayFieldName();
-                      const QString serviceLayerName = relatedTable->layerInfo().serviceLayerName();
-                      const QString displayFieldValue = feature->attributes()->attributeValue(displayFieldName).toString();
+        {
+          FeatureQueryListResultLock lock(rawRelatedResults);
+          for (const RelatedFeatureQueryResult* relatedResult : lock.results)
+          {
+            while (relatedResult->iterator().hasNext())
+            {
+              // get the related feature
+              const ArcGISFeature* feature = static_cast<ArcGISFeature*>(relatedResult->iterator().next());
+              const ArcGISFeatureTable* relatedTable = static_cast<ArcGISFeatureTable*>(feature->featureTable());
+              const QString displayFieldName = relatedTable->layerInfo().displayFieldName();
+              const QString serviceLayerName = relatedTable->layerInfo().serviceLayerName();
+              const QString displayFieldValue = feature->attributes()->attributeValue(displayFieldName).toString();
 
-                      // add the related feature to the list model
-                      RelatedFeature relatedFeature = RelatedFeature(displayFieldName,
-                                                                     displayFieldValue,
-                                                                     serviceLayerName);
-                      m_relatedFeaturesModel->addRelatedFeature(relatedFeature);
-                      emit relatedFeaturesModelChanged();
-                    }
-                  }
-                  emit showAttributeTable();
-                });
+              // add the related feature to the list model
+              RelatedFeature relatedFeature = RelatedFeature(displayFieldName,
+                                                             displayFieldValue,
+                                                             serviceLayerName);
+              m_relatedFeaturesModel->addRelatedFeature(relatedFeature);
+              emit relatedFeaturesModelChanged();
+            }
+          }
+
+          if (m_selectedFeature)
+          {
+            delete m_selectedFeature;
+            m_selectedFeature = nullptr;
+          }
+
+          emit showAttributeTable();
+        });
 
         // connect to selectFeaturesCompleted signal
         connect(m_alaskaNationalParks, &FeatureLayer::selectFeaturesCompleted, this, [this](QUuid, FeatureQueryResult* rawResult)
@@ -143,13 +150,13 @@ void ListRelatedFeatures::connectSignals()
           // are only interested in the first (and only) feature.
           if (result->iterator().hasNext())
           {
-            ArcGISFeature* arcGISFeature = static_cast<ArcGISFeature*>(result->iterator().next(this));
+            m_selectedFeature = static_cast<ArcGISFeature*>(result->iterator().next(this));
 
             // zoom to the selected feature
-            m_mapView->setViewpointGeometry(arcGISFeature->geometry().extent(), 100);
+            m_mapView->setViewpointGeometry(m_selectedFeature->geometry().extent(), 100);
 
             // query related features
-            m_alaskaFeatureTable->queryRelatedFeatures(arcGISFeature);
+            m_alaskaFeatureTable->queryRelatedFeatures(m_selectedFeature);
           }
         });
       }
