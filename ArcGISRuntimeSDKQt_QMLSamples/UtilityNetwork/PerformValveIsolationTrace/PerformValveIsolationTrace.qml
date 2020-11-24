@@ -26,14 +26,15 @@ Rectangle {
     width: 800
     height: 600
 
-//    readonly property url featureServiceUrl: "https://sampleserver7.arcgisonline.com/arcgis/rest/services/UtilityNetwork/NapervilleGas/FeatureServer"
-    readonly property url featureServiceUrl: "https://nice.esri.com/server/rest/services/NapervilleGas/FeatureServer"
+    readonly property url featureServiceUrl: "https://sampleserver7.arcgisonline.com/server/rest/services/UtilityNetwork/NapervilleGas/FeatureServer"
     readonly property string domainNetworkName: "Pipeline"
     readonly property string tierName: "Pipe Distribution System"
     readonly property string networkSourceName: "Gas Device"
     readonly property string assetGroupName: "Meter"
     readonly property string assetTypeName: "Customer"
     readonly property string globalId: "98A06E95-70BE-43E7-91B7-E34C9D3CB9FF"
+    readonly property string sampleServer7Username: "viewer01"
+    readonly property string sampleServer7Password: "I68VGU^nMurF"
     property var clickPoint: null
     property var filterBarriers: []
     property var traceConfiguration: null
@@ -132,6 +133,12 @@ Rectangle {
 //            }
         }
 
+        Credential {
+            id: cred
+            username: sampleServer7Username
+            password: sampleServer7Password
+        }
+
         Map {
             id: map
             BasemapStreetsNightVector {}
@@ -142,24 +149,18 @@ Rectangle {
 
             FeatureLayer {
                 id: distributionLineLayer
-                Credential {
-                    username: "apptest"
-                    password: "app.test1234"
-                }
 
                 ServiceFeatureTable {
                     url: featureServiceUrl + "/3"
+                    credential: cred
                 }
             }
 
             FeatureLayer {
                 id: deviceLayer
-                Credential {
-                    username: "apptest"
-                    password: "app.test1234"
-                }
                 ServiceFeatureTable {
                     url: featureServiceUrl + "/0"
+                    credential: cred
                 }
             }
 
@@ -186,10 +187,7 @@ Rectangle {
                 id: utilityNetwork
                 url: featureServiceUrl
 
-                Credential {
-                    username: "apptest"
-                    password: "app.test1234"
-                }
+                credential: cred
 
                 onTraceStatusChanged: {
                     print("trace status: " + traceStatus);
