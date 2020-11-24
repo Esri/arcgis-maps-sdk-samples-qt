@@ -143,7 +143,7 @@ void ListRelatedFeatures::connectSignals()
           // are only interested in the first (and only) feature.
           if (result->iterator().hasNext())
           {
-            ArcGISFeature* arcGISFeature = static_cast<ArcGISFeature*>(result->iterator().next());
+            ArcGISFeature* arcGISFeature = static_cast<ArcGISFeature*>(result->iterator().next(this));
 
             // zoom to the selected feature
             m_mapView->setViewpointGeometry(arcGISFeature->geometry().extent(), 100);
