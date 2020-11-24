@@ -5,33 +5,40 @@ from os import listdir
 from os.path import isfile, join
 import json
 
+# Example usage:
+# python3 entry.py -s root/path/to/sample/README.md
+# python3 entry.py -s root/path/to/sample/README.md,root/path/to/sample/readme.metadata.json
+# python3 entry.py -s "[root/path/to/sample/README.md, root/path/to/sample/readme.metadata.json]"
+
 def main():
-    # Tell the program that we're using global variables
     msg = 'Entry point of the docker to run json style check scripts.'
     parser = argparse.ArgumentParser(description=msg)
-    parser.add_argument('-s', '--string', help='A JSON array of file paths.')
-    args = parser.parse_args()
-    cleanstring = ""
+    parser.add_argument('-s', '--string', help='A list of comma separated values')
     try:
+        args = parser.parse_args()
+        cleanstring = ""
         for letter in args.string:
             if letter not in '[" \']':
                 cleanstring+=letter
         file_list = cleanstring.split(",")
     except Exception as e:
-        print(f"Unable to split args {args.string}.\nException: {e}")
+        print(f"Unable to parse arguments. Either there are no arguments or the directory structure may have errors.\nException: {e}")
         exit(1)
     check_files(file_list)
     
 def check_files(file_list):
-    print("Files to check: ")
-    for file in file_list:
-        print(file)
-    print("\n")
     total_errors = 0
+    tests = 0
     if not file_list:
+        # This will trigger if the GitHub action is somehow triggered, but no files were changed,
+        # so no files will be present to check. This scenario is unlikely.
         print("No files in file set")
         exit(0)
+
     for file in file_list:
+        if not file:
+            # This will trigger if extra commas are included in the input string
+            continue
         try:
             errors = []
             # Set variables for file
@@ -40,9 +47,10 @@ def check_files(file_list):
             
             # Check skip file conditions
             # Does the file exist, is it in a category, is it a .json or .md?
-            if skip_file(directory_list):
-                continue        
-
+            if not is_file_valid(directory_list):
+                continue
+            
+            tests += 1
             # If metadata file
             if file_name.lower() == 'readme.metadata.json':
                 try:
@@ -67,29 +75,33 @@ def check_files(file_list):
                 print("\n")
             total_errors += len(errors)
         except Exception as e:
-            print(f"Critical failure on file: {file}. Exception: {e}")
+            print(f"Critical failure on file: {file}. You may need to use a full file path rather than a relative path. Exception: {e}")
             total_errors += 1
     
+    if tests == 0:
+        print("No files were tested.")
+        exit(0)
     if total_errors == 0:
         print("All tests passed!")
     else:
         print(f"Total errors: {total_errors}")
-    # When we exit an pass a non-zero value, GitHub registers the test as failed.
+    # When we exit an pass a non-zero value, GitHub registers the test as failed
     exit(total_errors)
 
-def skip_file(directory_list: list)-> bool:
+def is_file_valid(directory_list: list)-> bool:
     category_name = directory_list[-3]
     if not os.path.exists("/".join(directory_list)):
-        print('File was deleted')
-        # The changed file is deleted, no need to style check.
-        return True
+        # The file is not present on the disk, either because it never existed or because it was deleted
+        # If the file was modified by deleting it, then we do not need to check it
+        return False
     if category_name not in folder_names:
-        print('File is not in a category folder')
-        return True
+        # If the file is not in a sample category folder, it does not need to be tested
+        return False
     
     if directory_list[-1].lower() not in  ['readme.metadata.json', 'readme.md']:
-        print('File is not readme or metadata')
-        return True
+        # We are not testing files other than the ones above
+        return False
+    return True
 
 class MetadataFile:
     def __init__(self, file_path):
@@ -220,7 +232,7 @@ class MetadataFile:
             return ["No redirects listed"]
         errors = []
         has_expected_redirect = False
-        expected_redirect = "/qt/latest/cpp/sample-code/sample-qt-"+self.sample_name+".htm"
+        expected_redirect = f"/qt/latest/cpp/sample-code/sample-qt-{self.sample_name}.htm"
         for redirect in redirects:
             if redirect.lower() == expected_redirect.lower():
                 has_expected_redirect = True

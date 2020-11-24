@@ -1,7 +1,6 @@
 # Using Debian slim which uses minimum packages necessary; Alpine is not preferred 
 FROM alpine:3.12
 
-# MAINTAINER is depreciated
 LABEL maintainer="Tanner Yould <tyould@esri.com>"
 
 # Setting PYTHONUNBUFFERED=TRUE or PYTHONUNBUFFERED=1 (they are equivalent) allows for log messages 

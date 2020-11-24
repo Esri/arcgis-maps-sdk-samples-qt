@@ -39,15 +39,8 @@ jobs:
         run: |
           echo 'Below shows a list of changed file paths'
           echo '${{ steps.file_changes.outputs.files}}'
-      #    echo '${{ steps.file_changes.outputs.files_modified}}'
-      #    echo '${{ steps.file_changes.outputs.files_added}}'
-      #    echo '${{ steps.file_changes.outputs.files_removed}}'
 
       - name: Run style checks
         uses: ./Scripts/CI/README_Metadata_StyleCheck
         with:
           FILE_PATHS: ${{ steps.file_changes.outputs.files }}
-      
-      # Runs a single command using the runners shell
-      # - name: Run a script with Python
-      #   run: python ./Scripts/README-formatter.py
