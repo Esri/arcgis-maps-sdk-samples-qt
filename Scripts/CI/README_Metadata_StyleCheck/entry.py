@@ -57,7 +57,7 @@ def check_files(file_list):
                     json_file = MetadataFile(file)
                     errors += json_file.check_metadata_file_for_errors()
                 except Exception as e:
-                    errors.append(f"Error checking {file_name}. Exception: {e}")
+                    errors.append(f"Error checking {file}. Exception: {e}")
 
             # If README.md
             elif file_name.lower() == 'readme.md':
@@ -65,7 +65,7 @@ def check_files(file_list):
                     readme_file = READMEFile(file)
                     errors += readme_file.check_readme_for_errors()
                 except Exception as e:
-                    errors.append(f"Error checking {file_name}. Exception: {e}")
+                    errors.append(f"Error checking {file}. Exception: {e}")
             
             # Count and print the errors
             if len(errors) > 0:

@@ -14,4 +14,3 @@ runs:
   args:
     - "-s"
     - ${{ inputs.FILE_PATHS }}
-    
