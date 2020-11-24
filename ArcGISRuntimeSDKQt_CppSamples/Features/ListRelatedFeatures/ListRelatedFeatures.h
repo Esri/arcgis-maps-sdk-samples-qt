@@ -57,6 +57,7 @@ private:
   Esri::ArcGISRuntime::MapQuickView* m_mapView = nullptr;
   Esri::ArcGISRuntime::FeatureLayer* m_alaskaNationalParks = nullptr;  
   Esri::ArcGISRuntime::ArcGISFeatureTable* m_alaskaFeatureTable = nullptr;
+  Esri::ArcGISRuntime::ArcGISFeature* m_selectedFeature = nullptr;
   RelatedFeatureListModel* m_relatedFeaturesModel = nullptr;
 };
 
