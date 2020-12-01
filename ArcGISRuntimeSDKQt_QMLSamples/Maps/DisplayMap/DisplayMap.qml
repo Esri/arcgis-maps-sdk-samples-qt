@@ -25,7 +25,9 @@ Rectangle {
     MapView {
         anchors.fill: parent
         Map {
-            BasemapImageryWithLabels {}            
+            Basemap {
+                initStyle: Enums.BasemapStyleArcGISImagery
+            }
         }
     }
     //! [Create MapView that contains a Map with the Imagery with Labels Basemap]
