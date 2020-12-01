@@ -56,7 +56,7 @@ void LocalServerFeatureLayer::componentComplete()
   m_mapView->setWrapAroundMode(WrapAroundMode::Disabled);
 
   // Create a map using the topographic BaseMap
-  m_map = new Map(Basemap::topographic(this), this);
+  m_map = new Map(BasemapStyle::ArcGISTopographic, this);
 
   // Set map to map view
   m_mapView->setMap(m_map);

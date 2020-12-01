@@ -75,7 +75,7 @@ void LocalServerGeoprocessing::componentComplete()
   m_mapView->setWrapAroundMode(WrapAroundMode::Disabled);
 
   // Create a map using the topographic BaseMap
-  m_map = new Map(Basemap::lightGrayCanvas(this), this);
+  m_map = new Map(BasemapStyle::ArcGISLightGray, this);
 
   // Set map to map view
   m_mapView->setMap(m_map);
@@ -85,7 +85,7 @@ void LocalServerGeoprocessing::componentComplete()
   m_map->operationalLayers()->append(m_tiledLayer);
 
   // create a gp service
-  m_localGPService = new LocalGeoprocessingService(dataPath + "/gpk/Contour.gpk", this);
+  m_localGPService = new LocalGeoprocessingService(dataPath + "/gpkx/Contour.gpkx", this);
   m_localGPService->setServiceType(GeoprocessingServiceType::AsynchronousSubmitWithMapServerResult);
 
   if (LocalServer::instance()->isInstallValid())

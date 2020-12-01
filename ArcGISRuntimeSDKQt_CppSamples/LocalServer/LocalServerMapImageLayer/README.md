@@ -20,7 +20,7 @@ The Local Server and local map service will automatically be started and, once r
 2. Wait for server to be in the  `LocalServerStatus::Started` state.
     * `LocalServer::statusChanged()` fires whenever the running status of the Local Server changes.
 3. Create and run a local service, example of running a `LocalMapService`.
-    * `new LocalMapService(Url)`, creates a local map service with the given URL path to the map package (`mpk` file).
+    * `new LocalMapService(Url)`, creates a local map service with the given URL path to the map package (`mpkx` file).
     * `LocalMapService::start()` starts the service asynchronously.
     * The service is added to the Local Server automatically.
 4. Wait for map service to be in the `LocalServerStatus::Started` state.
@@ -44,7 +44,7 @@ Read more about how to set up the sample's offline data [here](http://links.esri
 
 Link | Local Location
 ---------|-------|
-|[RelationshipID map package](https://www.arcgis.com/home/item.html?id=dee5d8060a6048a4b063484199a9546b)| `<userhome>`/ArcGIS/Runtime/Data/mpk/RelationshipID.mpk
+|[RelationshipID map package](https://www.arcgis.com/home/item.html?id=33e8c33a421640749bfe1602b8644db8)| `<userhome>`/ArcGIS/Runtime/Data/mpkx/RelationshipID.mpkx
 
 ## Additional information
 

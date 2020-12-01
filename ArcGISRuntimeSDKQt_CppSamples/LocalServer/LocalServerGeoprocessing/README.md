@@ -1,6 +1,6 @@
 # Local server geoprocessing
 
-Create contour lines from local raster data using a local geoprocessing package `.gpk` and the contour geoprocessing tool.
+Create contour lines from local raster data using a local geoprocessing package `.gpkx` and the contour geoprocessing tool.
 
 ![](screenshot.png)
 
@@ -59,7 +59,7 @@ Read more about how to set up the sample's offline data [here](http://links.esri
 
 Link | Local Location
 ---------|-------|
-|[Contour geoprocessing package](https://www.arcgis.com/home/item.html?id=da9e565a52ca41c1937cff1a01017068)| `<userhome>`/ArcGIS/Runtime/Data/gpk/Contour.gpk |
+|[Contour geoprocessing package](https://www.arcgis.com/home/item.html?id=7c4994a31470460798afb07a282b438a)| `<userhome>`/ArcGIS/Runtime/Data/gpkx/Contour.gpkx |
 |[Raster Hillshade TPK](https://www.arcgis.com/home/item.html?id=f7c7b4a30fb9415896ba0d1921fe014b)| `<userhome>`/ArcGIS/Runtime/Data/tpk/RasterHillshade.tpk |
 
 ## Additional information
