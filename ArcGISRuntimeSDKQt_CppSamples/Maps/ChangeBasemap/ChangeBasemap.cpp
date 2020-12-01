@@ -68,7 +68,7 @@ void ChangeBasemap::changeBasemap(const QString& basemap)
     else if (basemap == "Streets")
       m_map->setBasemap(new Basemap(BasemapStyle::ArcGISStreets, this));
     else if (basemap == "Streets - Relief")
-      m_map->setBasemap(new Basemap(BasemapStyle::ArcGISStreetsRelief));
+      m_map->setBasemap(new Basemap(BasemapStyle::ArcGISStreetsRelief, this));
     else if (basemap == "Streets - Night")
       m_map->setBasemap(new Basemap(BasemapStyle::ArcGISStreetsNight, this));
     else if (basemap == "Imagery")
