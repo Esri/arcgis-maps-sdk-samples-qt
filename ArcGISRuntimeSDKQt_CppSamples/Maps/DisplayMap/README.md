@@ -21,7 +21,7 @@ Run the sample to view the map. Pan and zoom to navigate the map.
 ## Relevant API
 
 * Map
-* Basemap
+* BasemapStyle
 * MapView
 
 ## Tags
