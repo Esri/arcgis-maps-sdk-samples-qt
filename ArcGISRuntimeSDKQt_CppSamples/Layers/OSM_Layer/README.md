@@ -14,7 +14,7 @@ When the sample opens, it will automatically display the map with the OpenStreet
 
 ## How it works
 
-1. Create a basemap with the static method `Basemap::openStreetMap()`
+1. Create a basemap using `Basemap(BasemapStyle::OsmStandard`.
 2. Create a map with that basemap.
 3. Show the map in a map view.
 
