@@ -62,11 +62,11 @@ void LocalServerServices::componentComplete()
 
   QString dataPath = QDir::homePath() + "/ArcGIS/Runtime/Data";
   // create a map service
-  m_localMapService = new LocalMapService(dataPath + "/mpk/PointsofInterest.mpk", this);
+  m_localMapService = new LocalMapService(dataPath + "/mpkx/PointsofInterest.mpkx", this);
   // create a feature service
-  m_localFeatureService = new LocalFeatureService(dataPath + "/mpk/PointsofInterest.mpk", this);
+  m_localFeatureService = new LocalFeatureService(dataPath + "/mpkx/PointsofInterest.mpkx", this);
   // create a gp service
-  m_localGPService = new LocalGeoprocessingService(dataPath + "/gpk/MessageInABottle.gpk", this);
+  m_localGPService = new LocalGeoprocessingService(dataPath + "/gpkx/Contour.gpkx", this);
 
   if (LocalServer::instance()->isInstallValid())
   {
