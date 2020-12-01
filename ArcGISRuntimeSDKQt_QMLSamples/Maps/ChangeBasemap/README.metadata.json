@@ -16,7 +16,7 @@
         "/qt/latest/qml/sample-code/sample-qt-changebasemap.htm"
     ],
     "relevant_apis": [
-        "Basemap",
+        "BasemapStyle",
         "Map",
         "MapView"
     ],
