@@ -47,6 +47,7 @@ ChangeBasemapSample {
             "Streets - Night",
             "Imagery",
             "Imagery with Labels",
+            "Labels without Imagery",
             "Dark Gray Canvas",
             "Light Gray Canvas",
             "Navigation",
