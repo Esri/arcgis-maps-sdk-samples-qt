@@ -391,8 +391,8 @@ void PerformValveIsolationTrace::onIdentifyLayersCompleted(QUuid, const QList<Id
   if (elementSourceType == UtilityNetworkSourceType::Junction)
   {
     QList<UtilityTerminal*> terminals = m_element->assetType()->terminalConfiguration()->terminals();
-    // normally check for multiple terminals but sample doesn't seem to have that occurance.
-    if ( terminals.size() > 1)
+
+    if (terminals.size() > 1)
     {
       m_terminals.clear();
       for (UtilityTerminal* terminal : terminals)

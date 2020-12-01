@@ -398,7 +398,6 @@ Rectangle {
                         }
                         enabled: uiEnabled
                     }
-
                 }
 
                 RowLayout {
