@@ -43,16 +43,15 @@ ChangeBasemapSample {
         width: bestWidth + indicator.width + leftPadding + rightPadding
 
         model: ["Topographic","Streets",
-            "Streets (Vector)",
-            "Streets - Night (Vector)",
-            "Imagery (Raster)",
-            "Imagery with Labels (Raster)",
-            "Imagery with Labels (Vector)",
-            "Dark Gray Canvas (Vector)",
-            "Light Gray Canvas (Raster)",
-            "Light Gray Canvas (Vector)",
-            "Navigation (Vector)",
-            "OpenStreetMap (Raster)",
+            "Streets - Relief",
+            "Streets - Night",
+            "Imagery",
+            "Imagery with Labels",
+            "Labels without Imagery",
+            "Dark Gray Canvas",
+            "Light Gray Canvas",
+            "Navigation",
+            "OpenStreetMap",
             "Oceans"]
 
         onCurrentTextChanged: {

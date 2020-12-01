@@ -8,7 +8,7 @@
     "keywords": [
         "basemap",
         "map",
-        "Basemap",
+        "BasemapStyle",
         "Map",
         "MapView"
     ],
@@ -16,7 +16,7 @@
         "/qt/latest/cpp/sample-code/sample-qt-changebasemap.htm"
     ],
     "relevant_apis": [
-        "Basemap",
+        "BasemapStyle",
         "Map",
         "MapView"
     ],

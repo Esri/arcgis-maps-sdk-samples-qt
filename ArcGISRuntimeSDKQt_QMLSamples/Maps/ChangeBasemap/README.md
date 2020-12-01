@@ -16,11 +16,13 @@ Use the drop down menu to select the active basemap from the list of available b
 
 1. Create a `Map`.
 2. Set the map to the `MapView`.
-3. Choose a new basemap type and set it on the map.
+3. Choose a new `Enums.BasemapStyle` to create a `Basemap` with.
+4. Set the basemap on the map.
 
 ## Relevant API
+
 * Map
-* Basemap
+* Enums.BasemapStyle
 * MapView
 
 ## Tags
