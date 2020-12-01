@@ -2,12 +2,12 @@
     "category": "Local Server",
     "dataItems": [
         {
-            "itemId": "4e94fec734434d1288e6ebe36c3c461f",
-            "path": "~/ArcGIS/Runtime/Data/mpk/PointsofInterest.mpk"
+            "itemId": "ab8647d60dfd413babffa815bbb12095",
+            "path": "~/ArcGIS/Runtime/Data/mpk/PointsofInterest.mpkx"
         },
         {
-            "itemId": "a0ef1f20344f43ad8837f0e0d8406d03",
-            "path": "~/ArcGIS/Runtime/Data/gpk/MessageInABottle.gpk"
+            "itemId": "7c4994a31470460798afb07a282b438a",
+            "path": "~/ArcGIS/Runtime/Data/gpkx/Contour.gpkx"
         }
     ],
     "description": "Demonstrates how to start and stop the Local Server and start and stop a local map, feature, and geoprocessing service running on the Local Server.",

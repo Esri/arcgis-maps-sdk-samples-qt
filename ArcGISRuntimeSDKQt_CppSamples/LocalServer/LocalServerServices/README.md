@@ -23,7 +23,7 @@ When the running service's url appears, select it and click `Open Url`. To stop 
 1. Create it with `LocalServer::instance` and use `LocalServer::start()` to start the server asynchronously.
 2. `LocalServer::statusChanged()` fires whenever the running status of the Local Server changes. Wait for the server to be in the `LocalServerStatus::Started` state.
 3. Create and run a local service. Here is an example of running a `LocalMapService`:
-    * `new LocalMapService(Url)` creates a local map service with the given URL path to map package (`mpk` or `mpkx` file).
+    * `new LocalMapService(Url)` creates a local map service with the given URL path to map package (`mpkx` file).
     * `LocalMapService::start()` starts the service asynchronously.
     * The service is added to the `LocalServer` automatically.
 
@@ -51,8 +51,8 @@ Read more about how to set up the sample's offline data [here](http://links.esri
 
 Link | Local Location
 ---------|-------|
-|[PointsOfInterest map package](https://www.arcgis.com/home/item.html?id=4e94fec734434d1288e6ebe36c3c461f)| `<userhome>`/ArcGIS/Runtime/Data/mpk/PointsofInterest.mpk |
-|[MessageInABottle geoprocessing package](https://www.arcgis.com/home/item.html?id=a0ef1f20344f43ad8837f0e0d8406d03)| `<userhome>`/ArcGIS/Runtime/Data/mpk/MessageInABottle.gpk |
+|[PointsOfInterest map package](https://www.arcgis.com/home/item.html?id=ab8647d60dfd413babffa815bbb12095)| `<userhome>`/ArcGIS/Runtime/Data/mpkx/PointsofInterest.mpkx |
+|[Contour geoprocessing package](https://www.arcgis.com/home/item.html?id=7c4994a31470460798afb07a282b438a)| `<userhome>`/ArcGIS/Runtime/Data/gpkx/Contour.gpkx |
 
 ## Additional information
 

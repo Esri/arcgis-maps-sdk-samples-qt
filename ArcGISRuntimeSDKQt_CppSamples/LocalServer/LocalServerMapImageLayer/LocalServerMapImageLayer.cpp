@@ -54,7 +54,7 @@ void LocalServerMapImageLayer::componentComplete()
   m_mapView->setWrapAroundMode(WrapAroundMode::Disabled);
 
   // Create a map using the topographic BaseMap
-  m_map = new Map(Basemap::topographic(this), this);
+  m_map = new Map(BasemapStyle::ArcGISTopographic, this);
 
   // Set map to map view
   m_mapView->setMap(m_map);
@@ -62,7 +62,7 @@ void LocalServerMapImageLayer::componentComplete()
   QString dataPath = QDir::homePath() + "/ArcGIS/Runtime/Data";
 
   // create a map service
-  m_localMapService = new LocalMapService(dataPath + "/mpk/RelationshipID.mpk", this);
+  m_localMapService = new LocalMapService(dataPath + "/mpkx/RelationshipID.mpkx", this);
 
   if (LocalServer::instance()->isInstallValid())
   {

@@ -2,8 +2,8 @@
     "category": "Local Server",
     "dataItems": [
         {
-            "itemId": "dee5d8060a6048a4b063484199a9546b",
-            "path": "~/ArcGIS/Runtime/Data/mpk/RelationshipID.mpk"
+            "itemId": "33e8c33a421640749bfe1602b8644db8",
+            "path": "~/ArcGIS/Runtime/Data/mpkx/RelationshipID.mpkx"
         }
     ],
     "description": "Start the Local Server and Local Map Service, create an ArcGIS Map Image Layer from the Local Map Service, and add it to a map.",
