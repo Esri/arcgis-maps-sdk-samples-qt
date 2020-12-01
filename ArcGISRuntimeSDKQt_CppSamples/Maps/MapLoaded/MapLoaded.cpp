@@ -47,7 +47,7 @@ void MapLoaded::componentComplete()
   m_mapView = findChild<MapQuickView*>("mapView");
 
   // create a new basemap instance
-  Basemap* basemap = Basemap::streets(this);
+  Basemap* basemap = new Basemap(BasemapStyle::ArcGISStreets, this);
   // create a new map instance
   m_map = new Map(basemap, this);
   // set map on the map view

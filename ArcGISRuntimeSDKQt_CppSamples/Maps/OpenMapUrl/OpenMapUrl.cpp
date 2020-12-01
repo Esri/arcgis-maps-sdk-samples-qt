@@ -47,7 +47,7 @@ void OpenMapUrl::componentComplete()
   m_mapView = findChild<MapQuickView*>("mapView");
 
   // create a new basemap instance
-  Basemap* basemap = Basemap::imagery(this);
+  Basemap* basemap = new Basemap(BasemapStyle::ArcGISImagery, this);
   // create a new map instance
   Map* map = new Map(basemap, this);
   // set map on the map view

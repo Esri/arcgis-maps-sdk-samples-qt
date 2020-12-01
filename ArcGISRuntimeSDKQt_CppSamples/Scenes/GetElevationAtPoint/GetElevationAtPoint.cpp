@@ -31,7 +31,7 @@ using namespace Esri::ArcGISRuntime;
 
 GetElevationAtPoint::GetElevationAtPoint(QObject* parent /* = nullptr */):
   QObject(parent),
-  m_scene(new Scene(Basemap::imagery(this), this)),
+  m_scene(new Scene(BasemapStyle::ArcGISImagery, this)),
   m_graphicsOverlay(new GraphicsOverlay(this)),
   m_elevationMarker(new Graphic(Geometry(), new SimpleMarkerSymbol(SimpleMarkerSymbolStyle::Circle, QColor("red"), 12, this), this))
 {

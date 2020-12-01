@@ -51,7 +51,7 @@ void DisplayDrawingStatus::componentComplete()
   m_mapView->setWrapAroundMode(WrapAroundMode::Disabled);
 
   // Create a map using the topographic basemap
-  m_map = new Map(Basemap::topographic(this), this);
+  m_map = new Map(BasemapStyle::ArcGISTopographic, this);
   m_map->setInitialViewpoint(Viewpoint(Envelope(-13639984, 4537387, -13606734, 4558866, SpatialReference::webMercator())));
 
   // create feature layer

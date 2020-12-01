@@ -49,7 +49,7 @@ void Symbols::componentComplete()
   m_sceneView = findChild<SceneQuickView*>("sceneView");
 
   // create a new basemap instance
-  Basemap* basemap = Basemap::imagery(this);
+  Basemap* basemap = new Basemap(BasemapStyle::ArcGISImagery, this);
   // create a new scene instance
   m_scene = new Scene(basemap, this);
   // set scene on the scene view

@@ -58,7 +58,7 @@ void CreateGeometries::componentComplete()
   m_mapView = findChild<MapQuickView*>("mapView");
 
   // Create a map using the topographic basemap
-  m_map = new Map(Basemap::topographic(this), this);
+  m_map = new Map(BasemapStyle::ArcGISTopographic, this);
 
   // Add a Graphics Overlay to the map view
   m_graphicsOverlay = new GraphicsOverlay(this);

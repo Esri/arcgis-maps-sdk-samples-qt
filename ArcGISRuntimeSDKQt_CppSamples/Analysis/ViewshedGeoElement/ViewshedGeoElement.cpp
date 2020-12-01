@@ -84,7 +84,7 @@ void ViewshedGeoElement::componentComplete()
 
   // Create a scene and give it to the SceneView
   m_sceneView = findChild<SceneQuickView*>("sceneView");
-  Scene* scene = new Scene(Basemap::imagery(this), this);
+  Scene* scene = new Scene(BasemapStyle::ArcGISImagery, this);
 
   // Create a surface
   Surface* surface = new Surface(this);

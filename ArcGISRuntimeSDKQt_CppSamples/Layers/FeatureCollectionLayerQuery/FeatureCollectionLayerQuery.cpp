@@ -65,7 +65,7 @@ void FeatureCollectionLayerQuery::componentComplete()
   m_mapView = findChild<MapQuickView*>("mapView");
 
   // Create a map using the oceans basemap
-  m_map = new Map(Basemap::oceans(this), this);
+  m_map = new Map(BasemapStyle::ArcGISOceans, this);
 
   // Set map to map view
   m_mapView->setMap(m_map);

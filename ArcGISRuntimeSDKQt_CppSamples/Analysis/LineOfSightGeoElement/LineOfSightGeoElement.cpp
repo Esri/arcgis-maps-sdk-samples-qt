@@ -79,7 +79,7 @@ const std::array<Point, 4> waypoints = {{
 
 LineOfSightGeoElement::LineOfSightGeoElement(QObject* parent /* = nullptr */):
   QObject(parent),
-  m_scene(new Scene(Basemap::imagery(this), this))
+  m_scene(new Scene(BasemapStyle::ArcGISImagery, this))
 {
   // create a new elevation source from Terrain3D rest service
   ArcGISTiledElevationSource* elevationSource = new ArcGISTiledElevationSource(

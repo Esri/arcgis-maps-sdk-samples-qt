@@ -64,7 +64,7 @@ QString defaultDataPath()
 
 ReadSymbolsFromMobileStyle::ReadSymbolsFromMobileStyle(QObject* parent /* = nullptr */) :
   QObject(parent),
-  m_map(new Map(Basemap::topographic(this), this)),
+  m_map(new Map(BasemapStyle::ArcGISTopographic, this)),
   m_graphicParent(new QObject())
 {
   m_symbolStyle = new SymbolStyle(defaultDataPath() + "/ArcGIS/Runtime/Data/styles/emoji-mobile.stylx", this);

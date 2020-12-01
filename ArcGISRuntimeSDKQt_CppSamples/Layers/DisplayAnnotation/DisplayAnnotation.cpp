@@ -36,7 +36,7 @@ const QUrl annotationUrl("https://sampleserver6.arcgisonline.com/arcgis/rest/ser
 
 DisplayAnnotation::DisplayAnnotation(QObject* parent /* = nullptr */):
   QObject(parent),
-  m_map(new Map(Basemap::lightGrayCanvas(this), this))
+  m_map(new Map(BasemapStyle::ArcGISLightGray, this))
 {
   const Point center(-2.725610, 55.882436, SpatialReference::wgs84());
   const Viewpoint viewpoint(center, 50000);

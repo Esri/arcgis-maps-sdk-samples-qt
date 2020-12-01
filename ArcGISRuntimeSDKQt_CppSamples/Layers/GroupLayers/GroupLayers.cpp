@@ -34,7 +34,7 @@ using namespace Esri::ArcGISRuntime;
 
 GroupLayers::GroupLayers(QObject* parent /* = nullptr */):
   QObject(parent),
-  m_scene(new Scene(Basemap::imagery(this), this))
+  m_scene(new Scene(BasemapStyle::ArcGISImagery, this))
 {
   // create a new elevation source from Terrain3D REST service
   ArcGISTiledElevationSource* elevationSource = new ArcGISTiledElevationSource(

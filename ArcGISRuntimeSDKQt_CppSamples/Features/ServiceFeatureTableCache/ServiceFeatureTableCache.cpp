@@ -54,7 +54,7 @@ void ServiceFeatureTableCache::componentComplete()
   m_mapView->setWrapAroundMode(WrapAroundMode::Disabled);
 
   // Create a map using the light gray canvas basemap
-  m_map = new Map(Basemap::lightGrayCanvas(this), this);
+  m_map = new Map(BasemapStyle::ArcGISLightGray, this);
   m_map->setInitialViewpoint(Viewpoint(Envelope(-13075816.4047166, 4014771.46954516, -13073005.6797177, 4016869.78617381, SpatialReference(102100))));
 
   // Set map to map view

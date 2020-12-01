@@ -56,7 +56,7 @@ QString defaultDataPath()
 
 ListKmlContents::ListKmlContents(QObject* parent /* = nullptr */):
   QObject(parent),
-  m_scene(new Scene(Basemap::imageryWithLabels(this), this))
+  m_scene(new Scene(BasemapStyle::ArcGISImageryStandard, this))
 {
   // create a new elevation source from Terrain3D REST service
   ArcGISTiledElevationSource* elevationSource = new ArcGISTiledElevationSource(

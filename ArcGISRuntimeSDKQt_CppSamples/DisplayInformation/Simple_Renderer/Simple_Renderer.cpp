@@ -54,7 +54,7 @@ void Simple_Renderer::componentComplete()
   m_mapView->setWrapAroundMode(WrapAroundMode::Disabled);
 
   // Create a map using the imagery basemap
-  m_map = new Map(Basemap::imagery(this), this);
+  m_map = new Map(BasemapStyle::ArcGISImagery, this);
 
   // create graphics overlay
   m_graphicsOverlay = new GraphicsOverlay(this);

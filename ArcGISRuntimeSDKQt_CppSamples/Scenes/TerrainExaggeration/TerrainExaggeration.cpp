@@ -46,7 +46,7 @@ void TerrainExaggeration::componentComplete()
 
   // Create a scene and give it to the SceneView
   m_sceneView = findChild<SceneQuickView*>("sceneView");
-  Scene* scene = new Scene(Basemap::nationalGeographic(this), this);
+  Scene* scene = new Scene(BasemapStyle::ArcGISTopographic, this);
   m_surface = new Surface(this);
   m_surface->elevationSources()->append(
         new ArcGISTiledElevationSource(

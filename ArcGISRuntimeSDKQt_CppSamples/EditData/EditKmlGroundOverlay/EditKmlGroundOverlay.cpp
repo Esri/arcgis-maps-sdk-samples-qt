@@ -59,7 +59,7 @@ namespace
 
 EditKmlGroundOverlay::EditKmlGroundOverlay(QObject* parent /* = nullptr */):
   QObject(parent),
-  m_scene(new Scene(Basemap::imagery(this), this))
+  m_scene(new Scene(BasemapStyle::ArcGISImagery, this))
 {
   // Create Geometry
   const Envelope env(-123.066227926904, 44.04736963555683,

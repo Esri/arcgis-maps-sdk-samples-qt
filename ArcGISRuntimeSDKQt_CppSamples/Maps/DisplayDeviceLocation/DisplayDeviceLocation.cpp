@@ -54,7 +54,7 @@ void DisplayDeviceLocation::componentComplete()
   m_mapView = findChild<MapQuickView*>("mapView");
 
   // create a new basemap instance
-  Basemap* basemap = Basemap::imagery(this);
+  Basemap* basemap = new Basemap(BasemapStyle::ArcGISImagery, this);
 
   // create a new map instance
   m_map = new Map(basemap, this);

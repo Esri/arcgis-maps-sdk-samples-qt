@@ -77,7 +77,7 @@ void SymbolizeShapefile::componentComplete()
   m_mapView = findChild<MapQuickView*>("mapView");
 
   // Create a map using the streets vector basemap
-  m_map = new Map(Basemap::streetsVector(this), this);
+  m_map = new Map(BasemapStyle::ArcGISStreets, this);
 
   // Set an initial viewpoint
   const Point pt(-11662054, 4818336, SpatialReference(3857));

@@ -55,7 +55,7 @@ void Surface_Placement::componentComplete()
   //! [Create Scene API snippet]
   // Create a scene with the imagery basemap and world elevation surface
   m_sceneView = findChild<SceneQuickView*>("sceneView");
-  Scene* scene = new Scene(Basemap::imagery(this), this);
+  Scene* scene = new Scene(BasemapStyle::ArcGISImagery, this);
   Surface* surface = new Surface(this);
   surface->elevationSources()->append(new ArcGISTiledElevationSource(QUrl("https://elevation3d.arcgis.com/arcgis/rest/services/WorldElevation3D/Terrain3D/ImageServer"), this));
   scene->setBaseSurface(surface);

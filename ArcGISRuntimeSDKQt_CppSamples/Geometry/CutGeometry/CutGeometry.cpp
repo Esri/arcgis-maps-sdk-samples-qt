@@ -53,7 +53,7 @@ void CutGeometry::componentComplete()
   m_mapView = findChild<MapQuickView*>("mapView");
 
   // Create a map using the topographic basemap
-  m_map = new Map(Basemap::topographic(this), this);
+  m_map = new Map(BasemapStyle::ArcGISTopographic, this);
 
   // Set map to map view
   m_mapView->setMap(m_map);
