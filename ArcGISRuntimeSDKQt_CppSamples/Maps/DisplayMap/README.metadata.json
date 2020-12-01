@@ -16,7 +16,7 @@
         "/qt/latest/cpp/sample-code/sample-qt-displaymap.htm"
     ],
     "relevant_apis": [
-        "Basemap",
+        "BasemapStyle",
         "Map",
         "MapView"
     ],
