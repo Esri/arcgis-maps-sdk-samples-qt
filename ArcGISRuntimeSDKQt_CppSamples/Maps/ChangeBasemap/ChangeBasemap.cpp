@@ -78,11 +78,11 @@ void ChangeBasemap::changeBasemap(const QString& basemap)
     else if (basemap == "Labels without Imagery")
       m_map->setBasemap(new Basemap(BasemapStyle::ArcGISImageryLabels, this));
     else if (basemap == "Dark Gray Canvas")
-      m_map->setBasemap(new Basemap(BasemapStyle::ArcGISDarkGray));
+      m_map->setBasemap(new Basemap(BasemapStyle::ArcGISDarkGray, this));
     else if (basemap == "Light Gray Canvas")
-      m_map->setBasemap(new Basemap(BasemapStyle::ArcGISLightGray));
+      m_map->setBasemap(new Basemap(BasemapStyle::ArcGISLightGray, this));
     else if (basemap == "Navigation")
-      m_map->setBasemap(new Basemap(BasemapStyle::ArcGISNavigation));
+      m_map->setBasemap(new Basemap(BasemapStyle::ArcGISNavigation, this));
     else if (basemap == "OpenStreetMap")
       m_map->setBasemap(new Basemap(BasemapStyle::OsmStandard, this));
     else if (basemap == "Oceans")
