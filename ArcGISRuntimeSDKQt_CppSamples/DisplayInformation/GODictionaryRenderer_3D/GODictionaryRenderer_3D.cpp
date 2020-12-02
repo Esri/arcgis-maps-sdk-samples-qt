@@ -104,7 +104,7 @@ void GODictionaryRenderer_3D::componentComplete()
   m_sceneView = findChild<SceneQuickView*>("sceneView");
   connect(m_sceneView, &SceneQuickView::errorOccurred, this, &GODictionaryRenderer_3D::logError);
 
-  Scene* scene = new Scene(BasemapStyle::ArcGISImageryStandard, this);
+  Scene* scene = new Scene(Basemap::imagery(this), this);
   connect(scene, &Scene::errorOccurred, this, &GODictionaryRenderer_3D::logError);
 
   Surface* surface = new Surface(this);

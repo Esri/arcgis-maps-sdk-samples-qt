@@ -109,7 +109,7 @@ void Animate3DSymbols::componentComplete()
   // find QML SceneView component
   m_sceneView = findChild<SceneQuickView*>("sceneView");
   // create a new scene instance
-  Scene* scene = new Scene(BasemapStyle::ArcGISImageryStandard, this);
+  Scene* scene = new Scene(Basemap::imagery(this), this);
 
   // set scene on the scene view
   m_sceneView->setArcGISScene(scene);

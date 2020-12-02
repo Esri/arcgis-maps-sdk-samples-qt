@@ -36,7 +36,7 @@ using namespace Esri::ArcGISRuntime;
 
 ViewPointCloudDataOffline::ViewPointCloudDataOffline(QObject* parent /* = nullptr */):
   QObject(parent),
-  m_scene(new Scene(BasemapStyle::ArcGISImageryStandard, this))
+  m_scene(new Scene(Basemap::imagery(this), this))
 {
   // create a new elevation source from Terrain3D service
   ArcGISTiledElevationSource* elevationSource = new ArcGISTiledElevationSource(
