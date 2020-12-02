@@ -162,11 +162,18 @@ Rectangle {
 //                                                                                 table: serviceGeodatabase.tableWithLayerIdAsInt(0)
 //                                                                                 });
 
+//                        let lineLayer = ArcGISRuntimeEnvironment.createObject("FeatureLayer", {
+//                                                                                 featureTable: serviceGeodatabase.tableWithLayerIdAsInt(3)
+//                                                                              });
+//                        let deviceLayer = ArcGISRuntimeEnvironment.createObject("FeatureLayer", {
+//                                                                                 featureTable: serviceGeodatabase.tableWithLayerIdAsInt(0)
+//                                                                              });
+
                         let lineLayer = ArcGISRuntimeEnvironment.createObject("FeatureLayer", {
-                                                                                 featureTable: serviceGeodatabase.tableWithLayerIdAsInt(3)
+                                                                                 featureTable: serviceGeodatabase.table(3)
                                                                               });
                         let deviceLayer = ArcGISRuntimeEnvironment.createObject("FeatureLayer", {
-                                                                                 featureTable: serviceGeodatabase.tableWithLayerIdAsInt(0)
+                                                                                 featureTable: serviceGeodatabase.table(0)
                                                                               });
                         map.operationalLayers.append(lineLayer);
                         map.operationalLayers.append(deviceLayer);
@@ -241,7 +248,7 @@ Rectangle {
                     let allElements = traceResult.get(0).elements;
 
                     // if no elements found, then display message
-                    print(allElements.length);
+                    print("result elements count: " + allElements.length);
                     if (allElements.length === 0) {
                         messageDialog.visible = true;
                         return;
@@ -251,20 +258,29 @@ Rectangle {
                     for (let i = 0; i < map.operationalLayers.count; i++) {
                         let currentFeatureLayer = map.operationalLayers.get(i);
 
+                        if (!currentFeatureLayer) {
+                            print("map.operationalLayers.get(i); returned nothing - sooner");
+
+                        }
+
                         // create query parameters to find features whose network names match the layer's feature table name
                         let objectIds = [];
                         for (let j = 0; j < allElements.length; j++) {
                             let networkSourceName = allElements[j].networkSource.name;
-//                            print(networkSourceName);
-                            if (!currentFeatureLayer || !currentFeatureLayer.featureTable) {
-                                print("No feature table for element at index: " + j);
-                                break;
-                            }
-//                            print(currentFeatureLayer.featureTable.featureTableType);
-                            let featureTableName = currentFeatureLayer.featureTable.tableName;
-//                            print(featureTableName);
-                            if (networkSourceName === featureTableName) {
-                                objectIds.push(allElements[j].objectId);
+
+                            if (!currentFeatureLayer) {
+                                print("map.operationalLayers.get(i); returned nothing");
+
+                            } else {
+                                if (!currentFeatureLayer.featureTable) {
+                                    print("currentFeatureLayer.featureTable is null");
+                                } else {
+                                    let featureTableName = currentFeatureLayer.featureTable.tableName;
+
+                                    if (networkSourceName === featureTableName) {
+                                        objectIds.push(allElements[j].objectId);
+                                    }
+                                }
                             }
                         }
 
