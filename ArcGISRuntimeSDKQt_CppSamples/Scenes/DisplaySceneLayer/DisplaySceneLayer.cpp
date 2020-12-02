@@ -52,7 +52,7 @@ void DisplaySceneLayer::componentComplete()
   m_sceneView = findChild<SceneQuickView*>("sceneView");
 
   // create a new scene instance
-  Basemap* basemap = new Basemap(Basemap::topographic(this), this);
+  Basemap* basemap = Basemap::topographic(this);
   m_scene = new Scene(basemap, this);
 
   //! [add a scene service with ArcGISSceneLayer]

@@ -48,7 +48,7 @@ void BasicSceneView::componentComplete()
   m_sceneView = findChild<SceneQuickView*>("sceneView");
 
   // Create a new basemap instance
-  Basemap* basemap = new Basemap(Basemap::imagery(this), this);
+  Basemap* basemap = Basemap::imagery(this);
 
   // Create a new scene instance
   m_scene = new Scene(basemap, this);
