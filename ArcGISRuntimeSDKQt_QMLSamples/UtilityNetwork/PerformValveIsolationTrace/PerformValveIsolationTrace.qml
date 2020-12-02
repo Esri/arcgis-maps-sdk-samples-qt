@@ -43,6 +43,8 @@ Rectangle {
     property var startingLocation: null
     property var categories: null
     property bool uiEnabled: false
+    property var distributionLineLayerFeatureTable: null
+    property var deviceLayerFeatureTable: null
 
     MapView {
         id: mapView
@@ -155,41 +157,23 @@ Rectangle {
 
                 onLoadStatusChanged: {
                     if (loadStatus === Enums.LoadStatusLoaded) {
-//                        let lineLayerSFT = ArcGISRuntimeEnvironment.createObject("ServiceFeatureTable", {
-//                                                                                 table: serviceGeodatabase.tableWithLayerIdAsInt(3)
-//                                                                                 });
-//                        let deviceLayerSFT = ArcGISRuntimeEnvironment.createObject("ServiceFeatureTable", {
-//                                                                                 table: serviceGeodatabase.tableWithLayerIdAsInt(0)
-//                                                                                 });
 
-//                        let lineLayer = ArcGISRuntimeEnvironment.createObject("FeatureLayer", {
-//                                                                                 featureTable: serviceGeodatabase.tableWithLayerIdAsInt(3)
-//                                                                              });
-//                        let deviceLayer = ArcGISRuntimeEnvironment.createObject("FeatureLayer", {
-//                                                                                 featureTable: serviceGeodatabase.tableWithLayerIdAsInt(0)
-//                                                                              });
+                        distributionLineLayerFeatureTable = serviceGeodatabase.tableWithLayerIdAsInt(3);
+                        deviceLayerFeatureTable = serviceGeodatabase.tableWithLayerIdAsInt(0);
 
-                        let lineLayer = ArcGISRuntimeEnvironment.createObject("FeatureLayer", {
-                                                                                 featureTable: serviceGeodatabase.table(3)
-                                                                              });
-                        let deviceLayer = ArcGISRuntimeEnvironment.createObject("FeatureLayer", {
-                                                                                 featureTable: serviceGeodatabase.table(0)
-                                                                              });
-                        map.operationalLayers.append(lineLayer);
-                        map.operationalLayers.append(deviceLayer);
-//                        distributionLineLayer.featureTable = serviceGeodatabase.tableWithLayerIdAsInt(3);
-//                        deviceLayer.featureTable = serviceGeodatabase.tableWithLayerIdAsInt(0);
+                        distributionLineLayer.featureTable = distributionLineLayerFeatureTable;
+                        deviceLayer.featureTable = deviceLayerFeatureTable;
                     }
                 }
             }
 
-//            FeatureLayer {
-//                id: distributionLineLayer
-//            }
+            FeatureLayer {
+                id: distributionLineLayer
+            }
 
-//            FeatureLayer {
-//                id: deviceLayer
-//            }
+            FeatureLayer {
+                id: deviceLayer
+            }
 
 //            FeatureLayer {
 //                id: distributionLineLayer
