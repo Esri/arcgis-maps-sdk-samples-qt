@@ -30,8 +30,8 @@ using namespace Esri::ArcGISRuntime;
 
 SyncMapViewSceneView::SyncMapViewSceneView(QObject* parent /* = nullptr */):
   QObject(parent),
-  m_scene(new Scene(BasemapStyle::ArcGISImagery, this)),
-  m_map(new Map(BasemapStyle::ArcGISImagery, this))
+  m_scene(new Scene(BasemapStyle::ArcGISImageryStandard, this)),
+  m_map(new Map(BasemapStyle::ArcGISImageryStandard, this))
 {
 }
 

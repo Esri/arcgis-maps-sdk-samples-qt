@@ -69,7 +69,7 @@ void DisplayGrid::componentComplete()
   m_mapView->setWrapAroundMode(WrapAroundMode::Disabled);
 
   // Create a map using the imagery basemap
-  m_map = new Map(BasemapStyle::ArcGISImagery, this);
+  m_map = new Map(BasemapStyle::ArcGISImageryStandard, this);
   double targetScale = 6450785;
   m_map->setInitialViewpoint(Viewpoint(Point(-10336141.70018318, 5418213.05332071, SpatialReference::webMercator()), targetScale));
 

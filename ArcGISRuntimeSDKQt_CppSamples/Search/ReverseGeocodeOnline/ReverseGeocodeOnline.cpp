@@ -42,7 +42,7 @@ const QUrl pinUrl("qrc:/Samples/Search/ReverseGeocodeOnline/pin_circle_red.png")
 
 ReverseGeocodeOnline::ReverseGeocodeOnline(QObject* parent /* = nullptr */):
   QObject(parent),
-  m_map(new Map(BasemapStyle::ArcGISImageryStandard, this))
+  m_map(new Map(BasemapStyle::ArcGISImagery, this))
 {
   m_graphicsOverlay = new GraphicsOverlay(this);
   m_locatorTask = new LocatorTask(url, this);

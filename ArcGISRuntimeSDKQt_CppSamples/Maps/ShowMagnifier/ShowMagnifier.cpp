@@ -48,7 +48,7 @@ void ShowMagnifier::componentComplete()
   m_mapView = findChild<MapQuickView*>("mapView");
 
   // create a new basemap instance
-  Basemap* basemap = new Basemap(BasemapStyle::ArcGISImagery, this);
+  Basemap* basemap = new Basemap(BasemapStyle::ArcGISImageryStandard, this);
 
   // create a new map instance
   m_map = new Map(basemap, this);

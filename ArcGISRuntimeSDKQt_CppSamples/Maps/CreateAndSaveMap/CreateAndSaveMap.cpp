@@ -66,7 +66,7 @@ void CreateAndSaveMap::createMap(const QString& basemap, const QStringList& oper
   if (basemap == "Streets")
     selectedBasemap = new Basemap(BasemapStyle::ArcGISStreets, this);
   else if (basemap == "Imagery")
-    selectedBasemap = new Basemap(BasemapStyle::ArcGISImagery, this);
+    selectedBasemap = new Basemap(BasemapStyle::ArcGISImageryStandard, this);
   else if (basemap == "Topographic")
     selectedBasemap = new Basemap(BasemapStyle::ArcGISTopographic, this);
   else if (basemap == "Oceans")

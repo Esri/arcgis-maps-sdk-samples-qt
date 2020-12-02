@@ -28,7 +28,7 @@ using namespace Esri::ArcGISRuntime;
 
 ChangeAtmosphereEffect::ChangeAtmosphereEffect(QObject* parent /* = nullptr */):
   QObject(parent),
-  m_scene(new Scene(BasemapStyle::ArcGISImagery, this))
+  m_scene(new Scene(BasemapStyle::ArcGISImageryStandard, this))
 {
   // create a new elevation source from %{ElevationOption} rest service
   ArcGISTiledElevationSource* elevationSource = new ArcGISTiledElevationSource(

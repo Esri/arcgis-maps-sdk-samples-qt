@@ -109,7 +109,7 @@ void Animate3DSymbols::componentComplete()
   // find QML SceneView component
   m_sceneView = findChild<SceneQuickView*>("sceneView");
   // create a new scene instance
-  Scene* scene = new Scene(BasemapStyle::ArcGISImagery, this);
+  Scene* scene = new Scene(BasemapStyle::ArcGISImageryStandard, this);
 
   // set scene on the scene view
   m_sceneView->setArcGISScene(scene);
@@ -142,7 +142,7 @@ void Animate3DSymbols::componentComplete()
   m_mapView->setAttributionTextVisible(false);
 
   // set up mini map
-  Map* map = new Map(BasemapStyle::ArcGISImagery, this);
+  Map* map = new Map(BasemapStyle::ArcGISImageryStandard, this);
   m_mapView->setMap(map);
 
   // create a graphics overlay for the mini map
