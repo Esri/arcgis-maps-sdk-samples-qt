@@ -22,7 +22,6 @@ import QtQuick.Dialogs 1.1
 import Esri.ArcGISRuntime.Toolkit 100.10
 
 Item {
-
     // add a mapView component
     MapView {
         id: view

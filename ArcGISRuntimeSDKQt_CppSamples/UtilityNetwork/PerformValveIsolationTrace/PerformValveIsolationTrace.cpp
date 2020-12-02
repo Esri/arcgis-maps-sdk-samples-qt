@@ -71,14 +71,13 @@ const QString sampleServer7Password = QStringLiteral("I68VGU^nMurF");
 
 namespace
 {
-  // Convenience RAII structs that deletes all pointers in given container.
+  // Convenient RAII structs that deletes all pointers in a given container.
   struct IdentifyLayerResultsScopedCleanup
   {
     IdentifyLayerResultsScopedCleanup(const QList<IdentifyLayerResult*>& list) : results(list) { }
     ~IdentifyLayerResultsScopedCleanup() { qDeleteAll(results); }
     const QList<IdentifyLayerResult*>& results;
   };
-
   struct TraceResultResultsScopedCleanup
   {
     TraceResultResultsScopedCleanup(const QList<UtilityElement*>& list) : results(list) { }
@@ -89,12 +88,13 @@ namespace
 
 PerformValveIsolationTrace::PerformValveIsolationTrace(QObject* parent /* = nullptr */):
   QObject(parent),
-  m_map(new Map(Basemap::streetsNightVector(this), this)),
+  m_map(new Map(BasemapStyle::ArcGISStreetsNight, this)),
   m_startingLocationOverlay(new GraphicsOverlay(this)),
   m_filterBarriersOverlay(new GraphicsOverlay(this)),
   m_cred(new Credential{sampleServer7Username, sampleServer7Password, this}),
   m_graphicParent(new QObject())
 {
+  // create service geodatabase with the feature service url
   m_serviceGeodatabase = new ServiceGeodatabase(featureServiceUrl, m_cred, this);
 
   connect(m_serviceGeodatabase, &ServiceGeodatabase::doneLoading, this, [this](Error error)
@@ -102,16 +102,18 @@ PerformValveIsolationTrace::PerformValveIsolationTrace(QObject* parent /* = null
     if (!error.isEmpty())
       return;
 
+    // obtain service feature tables from the service geodatabase
     ServiceFeatureTable* lineLayerTable = m_serviceGeodatabase->table(3);
     ServiceFeatureTable* devieLayerTable = m_serviceGeodatabase->table(0);
 
+    // create feature layers from the service feature tables
     FeatureLayer* lineLayer = new FeatureLayer(lineLayerTable, this);
     FeatureLayer* deviceLayer = new FeatureLayer(devieLayerTable, this);
+
     // add the feature layers to the map
     m_map->operationalLayers()->append(lineLayer);
     m_map->operationalLayers()->append(deviceLayer);
   });
-
   m_serviceGeodatabase->load();
 
   m_utilityNetwork = new UtilityNetwork(featureServiceUrl, m_map, m_cred, this);
@@ -151,7 +153,6 @@ void PerformValveIsolationTrace::setMapView(MapQuickView* mapView)
     constexpr bool returnPopups = false;
     m_clickPoint = m_mapView->screenToLocation(mouseEvent.x(), mouseEvent.y());
     m_mapView->identifyLayers(mouseEvent.x(), mouseEvent.y(), tolerance, returnPopups);
-
   });
 
   // handle the identify resultss
@@ -367,7 +368,8 @@ void PerformValveIsolationTrace::connectSignals()
     Graphic* graphic = new Graphic(startingLocationGeometry, m_graphicParent.get());
     m_startingLocationOverlay->graphics()->append(graphic);
 
-    m_mapView->setViewpointCenter(startingLocationGeometry, 3000);
+    constexpr double scale = 3000.0;
+    m_mapView->setViewpointCenter(startingLocationGeometry, scale);
     m_tasksRunning = false;
     emit tasksRunningChanged();
   });
@@ -388,12 +390,13 @@ void PerformValveIsolationTrace::onIdentifyLayersCompleted(QUuid, const QList<Id
   // A convenience wrapper that deletes the contents of results when we leave scope.
   IdentifyLayerResultsScopedCleanup identifyResultsScopedCleanup(results);
 
+  // could not identify location
   if (results.isEmpty())
     return;
 
   const IdentifyLayerResult* result = results[0];
-  /*ArcGISFeature* */ m_feature = static_cast<ArcGISFeature*>(result->geoElements()[0]);
-  m_element = m_utilityNetwork->createElementWithArcGISFeature(m_feature);
+  ArcGISFeature* feature = static_cast<ArcGISFeature*>(result->geoElements()[0]);
+  m_element = m_utilityNetwork->createElementWithArcGISFeature(feature);
 
   const UtilityNetworkSourceType elementSourceType = m_element->networkSource()->sourceType();
 
@@ -414,9 +417,9 @@ void PerformValveIsolationTrace::onIdentifyLayersCompleted(QUuid, const QList<Id
   }
   else if (elementSourceType == UtilityNetworkSourceType::Edge)
   {
-    if (m_feature->geometry().geometryType() == GeometryType::Polyline)
+    if (feature->geometry().geometryType() == GeometryType::Polyline)
     {
-      const Polyline line = GeometryEngine::removeZ(m_feature->geometry());
+      const Polyline line = GeometryEngine::removeZ(feature->geometry());
       // Set how far the element is along the edge.
       const double fraction = GeometryEngine::fractionAlong(line, m_clickPoint, -1);
       m_element->setFractionAlongEdge(fraction);

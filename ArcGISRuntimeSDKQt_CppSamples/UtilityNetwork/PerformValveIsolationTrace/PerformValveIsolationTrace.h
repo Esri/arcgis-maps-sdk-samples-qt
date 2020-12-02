@@ -89,7 +89,6 @@ private:
   Esri::ArcGISRuntime::UtilityElement* m_element = nullptr;
   Esri::ArcGISRuntime::UtilityNetwork* m_utilityNetwork = nullptr;
   Esri::ArcGISRuntime::UtilityTraceConfiguration* m_traceConfiguration = nullptr;
-  Esri::ArcGISRuntime::ArcGISFeature* m_feature = nullptr;
   Esri::ArcGISRuntime::ServiceGeodatabase* m_serviceGeodatabase = nullptr;
   Esri::ArcGISRuntime::Credential* m_cred = nullptr;
   Esri::ArcGISRuntime::Point m_clickPoint;

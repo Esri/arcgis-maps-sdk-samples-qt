@@ -45,7 +45,6 @@ Rectangle {
     property bool uiEnabled: false
     property var distributionLineLayerFeatureTable: null
     property var deviceLayerFeatureTable: null
-    property var identifiedLayerResult: null
 
     MapView {
         id: mapView
@@ -65,12 +64,12 @@ Rectangle {
                 return;
 
             const results = mapView.identifyLayersResults;
-            identifiedLayerResult = results[0];
+            const identifiedLayerResult = results[0];
 
-            if (!identifiedLayerResult) {
-                messageDialog.visible = true;
+            // could not identify location
+            if (!identifiedLayerResult)
                 return;
-            }
+
             const feature = identifiedLayerResult.geoElements[0];
 
             let element = utilityNetwork.createElementWithArcGISFeature(feature);
@@ -81,8 +80,7 @@ Rectangle {
 
             if (elementSourceType === Enums.UtilityNetworkSourceTypeJunction) {
                 const terminals = element.assetType.terminalConfiguration.terminals;
-                if ( terminals.length > 1)
-                {
+                if (terminals.length > 1) {
                     terminalNames = [];
                     const temporaryTerminalNames = [];
                     for (let i = 0; i < terminals.length; i++) {
@@ -95,8 +93,7 @@ Rectangle {
                 }
             } else if (elementSourceType === Enums.UtilityNetworkSourceTypeEdge) {
 
-                if (feature.geometry.geometryType === Enums.GeometryTypePolyline)
-                {
+                if (feature.geometry.geometryType === Enums.GeometryTypePolyline) {
                     const line = GeometryEngine.removeZ(feature.geometry);
                     // Set how far the element is along the edge.
                     const fraction = GeometryEngine.fractionAlong(line, clickPoint, -1);
@@ -106,7 +103,6 @@ Rectangle {
             let graphic = ArcGISRuntimeEnvironment.createObject("Graphic", {geometry: clickPoint});
 
             filterBarriersOverlay.graphics.append(graphic);
-
             filterBarriers.push(element);
         }
 
@@ -141,7 +137,10 @@ Rectangle {
 
         Map {
             id: map
-            BasemapStreetsNightVector {}
+
+            Basemap {
+                initStyle: Enums.BasemapStyleArcGISStreetsNight
+            }
 
             Component.onCompleted: {
                 serviceGeodatabase.load();
@@ -197,7 +196,6 @@ Rectangle {
                 url: featureServiceUrl
 
                 credential: cred
-
                 onTraceStatusChanged: {
 
                     if (traceStatus !== Enums.TaskStatusCompleted)
@@ -439,7 +437,7 @@ Rectangle {
     MessageDialog {
         id: messageDialog
         title: "Perform valve isolation trace"
-        text: !identifiedLayerResult ? "Could not identify location." : "Isolation trace returned no elements."
+        text: "Isolation trace returned no elements."
         visible: false
         onRejected: {
             visible = false;
