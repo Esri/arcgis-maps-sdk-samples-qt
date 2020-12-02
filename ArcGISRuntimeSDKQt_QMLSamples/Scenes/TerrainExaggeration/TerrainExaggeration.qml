@@ -30,7 +30,7 @@ Rectangle {
 
         // add a Scene to the SceneView
         Scene {
-            // add the BasemapNationalGeographic basemap to the scene
+            // add the topographic basemap to the scene
             Basemap {
                 initStyle: Enums.BasemapStyleArcGISTopographic
             }
