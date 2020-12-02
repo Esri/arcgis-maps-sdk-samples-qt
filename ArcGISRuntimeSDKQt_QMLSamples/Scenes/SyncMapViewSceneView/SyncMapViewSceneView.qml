@@ -53,7 +53,9 @@ Rectangle {
 
             Scene {
                 id: scene
-                BasemapImagery {}
+                Basemap {
+                    initStyle: Enums.BasemapStyleArcGISImageryStandard
+                }
             }
 
             onViewpointChanged: {

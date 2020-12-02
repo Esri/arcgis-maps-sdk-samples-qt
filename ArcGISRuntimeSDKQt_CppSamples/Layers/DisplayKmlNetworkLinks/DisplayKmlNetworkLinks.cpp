@@ -59,7 +59,7 @@ void DisplayKmlNetworkLinks::componentComplete()
 
   // Create a scene and give it to the SceneView
   m_sceneView = findChild<SceneQuickView*>("sceneView");
-  Scene* scene = new Scene(Basemap::imagery(this), this);
+  Scene* scene = new Scene(BasemapStyle::ArcGISImageryStandard, this);
 
   // Create a KML dataset from the given resource.
   // This is a KML resource that references other KML resources over a network.
