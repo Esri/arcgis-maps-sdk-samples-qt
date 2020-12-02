@@ -37,6 +37,8 @@ Rectangle {
     readonly property string sampleServer7Password: "I68VGU^nMurF"
     property var clickPoint: null
     property var filterBarriers: []
+    property var terminalNames: []
+    property var createdElement: null
     property var traceConfiguration: null
     property var startingLocation: null
     property var categories: null
@@ -61,48 +63,51 @@ Rectangle {
 
             const results = mapView.identifyLayersResults;
             const result = results[0];
-            const feature = result.geoElements[0];
+
             if (!result) {
-//                dialogText.text = qsTr("Could not identify location.")
-//                traceCompletedDialog.open();
+                dialogText.text = qsTr("Could not identify location.")
+                traceCompletedDialog.open();
                 return;
             }
+            const feature = result.geoElements[0];
 
-            const element = utilityNetwork.createElementWithArcGISFeature(feature);
+            let element = utilityNetwork.createElementWithArcGISFeature(feature);
 
-
+            createdElement = element;
 
             const elementSourceType = element.networkSource.sourceType;
 
             if (elementSourceType === Enums.UtilityNetworkSourceTypeJunction) {
-//              qDebug() << "Junction";
               const terminals = element.assetType.terminalConfiguration.terminals;
-              // normally check for multiple terminals but sample doesn't seem to have that occurance.
               if ( terminals.length > 1)
               {
-//                qDebug() << "Choose Terminal";
-                return;
+                  terminalNames = [];
+                  const temporaryTerminalNames = [];
+                  for (let i = 0; i < terminals.length; i++) {
+                      temporaryTerminalNames.push(terminals[i].name);
+                      print(temporaryTerminalNames[i]);
+                  }
+                  terminalNames = temporaryTerminalNames;
+
+                  terminalPickerView.visible = true;
+                  return;
               }
             } else if (elementSourceType === Enums.UtilityNetworkSourceTypeEdge) {
-//              qDebug() << "Edge";
 
               if (feature.geometry.geometryType === Enums.GeometryTypePolyline)
               {
                 const line = GeometryEngine.removeZ(feature.geometry);
                 // Set how far the element is along the edge.
                 const fraction = GeometryEngine.fractionAlong(line, clickPoint, -1);
-//                qDebug() << fraction;
                 element.fractionAlongEdge = fraction;
               }
             }
-//            m_filterBarriersOverlay->graphics()->append(new Graphic(clickPoint, this));
             let graphic = ArcGISRuntimeEnvironment.createObject("Graphic", {geometry: clickPoint});
 
             filterBarriersOverlay.graphics.append(graphic);
 
             filterBarriers.push(element);
         }
-
 
         GraphicsOverlay {
             id: startingLocationOverlay
@@ -125,12 +130,6 @@ Rectangle {
                     size: 25
                 }
             }
-
-//            SimpleMarkerSymbol {
-//                style: Enums.SimpleMarkerSymbolStyleX
-//                color: "red"
-//                size: 25
-//            }
         }
 
         Credential {
@@ -144,25 +143,64 @@ Rectangle {
             BasemapStreetsNightVector {}
 
             Component.onCompleted: {
+                serviceGeodatabase.load();
                 utilityNetwork.load();
             }
 
-            FeatureLayer {
-                id: distributionLineLayer
+            ServiceGeodatabase {
+                id: serviceGeodatabase
+                url: featureServiceUrl
+                credential: cred
 
-                ServiceFeatureTable {
-                    url: featureServiceUrl + "/3"
-                    credential: cred
+
+                onLoadStatusChanged: {
+                    if (loadStatus === Enums.LoadStatusLoaded) {
+//                        let lineLayerSFT = ArcGISRuntimeEnvironment.createObject("ServiceFeatureTable", {
+//                                                                                 table: serviceGeodatabase.tableWithLayerIdAsInt(3)
+//                                                                                 });
+//                        let deviceLayerSFT = ArcGISRuntimeEnvironment.createObject("ServiceFeatureTable", {
+//                                                                                 table: serviceGeodatabase.tableWithLayerIdAsInt(0)
+//                                                                                 });
+
+                        let lineLayer = ArcGISRuntimeEnvironment.createObject("FeatureLayer", {
+                                                                                 featureTable: serviceGeodatabase.tableWithLayerIdAsInt(3)
+                                                                              });
+                        let deviceLayer = ArcGISRuntimeEnvironment.createObject("FeatureLayer", {
+                                                                                 featureTable: serviceGeodatabase.tableWithLayerIdAsInt(0)
+                                                                              });
+                        map.operationalLayers.append(lineLayer);
+                        map.operationalLayers.append(deviceLayer);
+//                        distributionLineLayer.featureTable = serviceGeodatabase.tableWithLayerIdAsInt(3);
+//                        deviceLayer.featureTable = serviceGeodatabase.tableWithLayerIdAsInt(0);
+                    }
                 }
             }
 
-            FeatureLayer {
-                id: deviceLayer
-                ServiceFeatureTable {
-                    url: featureServiceUrl + "/0"
-                    credential: cred
-                }
-            }
+//            FeatureLayer {
+//                id: distributionLineLayer
+//            }
+
+//            FeatureLayer {
+//                id: deviceLayer
+//            }
+
+//            FeatureLayer {
+//                id: distributionLineLayer
+
+//                ServiceFeatureTable {
+//                    url: featureServiceUrl + "/3"
+//                    credential: cred
+//                }
+//            }
+
+//            FeatureLayer {
+//                id: deviceLayer
+
+//                ServiceFeatureTable {
+//                    url: featureServiceUrl + "/0"
+//                    credential: cred
+//                }
+//            }
 
             UtilityCategoryComparison {
                 id: categoryComparison
@@ -174,9 +212,6 @@ Rectangle {
 
             UtilityTraceParameters {
                 id: traceParameters
-                onFilterBarriersChanged: {
-                    print("onFilterBarriersChanged: " + filterBarriers.length);
-                }
             }
 
             QueryParameters {
@@ -190,11 +225,6 @@ Rectangle {
                 credential: cred
 
                 onTraceStatusChanged: {
-                    print("trace status: " + traceStatus);
-
-                    if (traceStatus === Enums.TaskStatusErrored) {
-                        print(error.message);
-                    }
 
                     if (traceStatus !== Enums.TaskStatusCompleted)
                         return;
@@ -211,6 +241,7 @@ Rectangle {
                     let allElements = traceResult.get(0).elements;
 
                     // if no elements found, then display message
+                    print(allElements.length);
                     if (allElements.length === 0) {
                         messageDialog.visible = true;
                         return;
@@ -224,7 +255,14 @@ Rectangle {
                         let objectIds = [];
                         for (let j = 0; j < allElements.length; j++) {
                             let networkSourceName = allElements[j].networkSource.name;
+//                            print(networkSourceName);
+                            if (!currentFeatureLayer || !currentFeatureLayer.featureTable) {
+                                print("No feature table for element at index: " + j);
+                                break;
+                            }
+//                            print(currentFeatureLayer.featureTable.featureTableType);
                             let featureTableName = currentFeatureLayer.featureTable.tableName;
+//                            print(featureTableName);
                             if (networkSourceName === featureTableName) {
                                 objectIds.push(allElements[j].objectId);
                             }
@@ -250,7 +288,6 @@ Rectangle {
                 }
 
                 onLoadStatusChanged: {
-                    print(loadStatus);
                     if (loadStatus !== Enums.LoadStatusLoaded)
                         return;
 
@@ -293,11 +330,9 @@ Rectangle {
                     for (let i = 0; i < allCategories.length; i++) {
                         categories.push(allCategories[i].name);
                     }
-
                     comboBox.model = categories;
                 }
             }
-
         }
 
         ColumnLayout {
@@ -370,9 +405,6 @@ Rectangle {
                                 traceConfiguration.filter.barriers = categoryComparison;
                             }
 
-                            print(traceParameters.filterBarriers.length);
-
-
                             // set whether to include isolated features
                             traceConfiguration.includeIsolatedFeatures = checkBox.checked;
 
@@ -421,6 +453,20 @@ Rectangle {
             anchors.centerIn: parent
             running: utilityNetwork.traceStatus === Enums.TaskStatusInProgress
         }
+    }
+
+    TerminalPickerView {
+        id: terminalPickerView
+    }
+
+    function selectTerminal(terminalIndex) {
+        const terminal = createdElement.assetType.terminalConfiguration.terminals[terminalIndex];
+        createdElement.terminal = terminal;
+
+        let graphic = ArcGISRuntimeEnvironment.createObject("Graphic", {geometry: clickPoint});
+        filterBarriersOverlay.graphics.append(graphic);
+
+        filterBarriers.push(createdElement);
     }
 
     MessageDialog {

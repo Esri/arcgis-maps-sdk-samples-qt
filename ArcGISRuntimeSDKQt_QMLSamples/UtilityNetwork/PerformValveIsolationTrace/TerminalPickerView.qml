@@ -33,7 +33,7 @@ Dialog {
 
         ComboBox {
             id: terminalSelection
-            model: terminals
+            model: terminalNames
             Layout.alignment: Qt.AlignHCenter
         }
     }
