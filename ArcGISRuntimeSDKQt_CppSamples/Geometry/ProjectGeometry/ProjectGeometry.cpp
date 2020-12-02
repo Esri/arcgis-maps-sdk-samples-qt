@@ -57,7 +57,7 @@ void ProjectGeometry::componentComplete()
   // connect to mouse clicked signal
   connect(m_mapView, &MapQuickView::mouseClicked, this, &ProjectGeometry::onMouseClicked);
 
-  // Create a map using the National Geographic basemap
+  // Create a map using a topographic basemap
   m_map = new Map(BasemapStyle::ArcGISTopographic, this);
 
   // Set initial viewpoint to Minneapolis
