@@ -13,6 +13,7 @@
         "map",
         "open",
         "street",
+        "Basemap",
         "Map",
         "MapView",
         "OpenStreetMapLayer"
@@ -21,6 +22,7 @@
         "/qt/latest/qml/sample-code/sample-qt-osm-layer.htm"
     ],
     "relevant_apis": [
+        "Basemap",
         "Map",
         "MapView",
         "OpenStreetMapLayer"
