@@ -101,7 +101,6 @@ private:
   bool m_tasksRunning = false;
   bool m_traceRunning = false;
   bool m_noResults = false;
-  bool m_junctionHasMultipleTerminals = false;
 };
 
 #endif // PERFORMVALVEISOLATIONTRACE_H
