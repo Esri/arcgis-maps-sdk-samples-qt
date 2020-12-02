@@ -22,6 +22,7 @@ namespace Esri
 namespace ArcGISRuntime
 {
 class ArcGISFeature;
+class Credential;
 class FeatureLayer;
 class GraphicsOverlay;
 class Map;
@@ -32,6 +33,7 @@ class UtilityNetwork;
 class UtilityTraceConfiguration;
 class UtilityTraceParameters;
 class IdentifyLayerResult;
+class ServiceGeodatabase;
 }
 }
 
@@ -48,7 +50,6 @@ class PerformValveIsolationTrace : public QObject
   Q_PROPERTY(bool isolateFeatures MEMBER m_isolateFeatures NOTIFY isolateFeaturesChanged)
   Q_PROPERTY(bool tasksRunning READ tasksRunning NOTIFY tasksRunningChanged)
   Q_PROPERTY(bool noResults READ noResults NOTIFY noResultsChanged)
-//  Q_PROPERTY(bool junctionHasMultipleTerminals MEMBER m_junctionHasMultipleTerminals NOTIFY junctionHasMultipleTerminalsChanged)
   Q_PROPERTY(QStringList terminals MEMBER m_terminals NOTIFY terminalsChanged)
 
 public:
@@ -70,7 +71,6 @@ signals:
   void isolateFeaturesChanged();
   void tasksRunningChanged();
   void noResultsChanged();
-  void junctionHasMultipleTerminalsChanged();
   void terminalsChanged();
 
 private:
@@ -90,6 +90,8 @@ private:
   Esri::ArcGISRuntime::UtilityNetwork* m_utilityNetwork = nullptr;
   Esri::ArcGISRuntime::UtilityTraceConfiguration* m_traceConfiguration = nullptr;
   Esri::ArcGISRuntime::ArcGISFeature* m_feature = nullptr;
+  Esri::ArcGISRuntime::ServiceGeodatabase* m_serviceGeodatabase = nullptr;
+  Esri::ArcGISRuntime::Credential* m_cred = nullptr;
   Esri::ArcGISRuntime::Point m_clickPoint;
   QList<Esri::ArcGISRuntime::UtilityElement*> m_filterBarriers;
   QStringList m_terminals;

@@ -30,6 +30,7 @@
 #include "Point.h"
 #include "QueryParameters.h"
 #include "ServiceFeatureTable.h"
+#include "ServiceGeodatabase.h"
 #include "SimpleMarkerSymbol.h"
 #include "SimpleRenderer.h"
 #include "UtilityTraceResultListModel.h"
@@ -57,17 +58,16 @@
 using namespace Esri::ArcGISRuntime;
 
 namespace  {
-const QString featureServiceUrl = "https://sampleserver7.arcgisonline.com/server/rest/services/UtilityNetwork/NapervilleGas/FeatureServer";
-const QString domainNetworkName = "Pipeline";
-const QString tierName = "Pipe Distribution System";
-const QString networkSourceName = "Gas Device";
-const QString assetGroupName = "Meter";
-const QString assetTypeName = "Customer";
-const QString globalId = "{98A06E95-70BE-43E7-91B7-E34C9D3CB9FF}";
-const QString sampleServer7Username = "viewer01";
-const QString sampleServer7Password = "I68VGU^nMurF";
+const QString featureServiceUrl = QStringLiteral("https://sampleserver7.arcgisonline.com/server/rest/services/UtilityNetwork/NapervilleGas/FeatureServer");
+const QString domainNetworkName = QStringLiteral("Pipeline");
+const QString tierName = QStringLiteral("Pipe Distribution System");
+const QString networkSourceName = QStringLiteral("Gas Device");
+const QString assetGroupName = QStringLiteral("Meter");
+const QString assetTypeName = QStringLiteral("Customer");
+const QString globalId = QStringLiteral("{98A06E95-70BE-43E7-91B7-E34C9D3CB9FF}");
+const QString sampleServer7Username = QStringLiteral("viewer01");
+const QString sampleServer7Password = QStringLiteral("I68VGU^nMurF");
 }
-
 
 namespace
 {
@@ -92,20 +92,29 @@ PerformValveIsolationTrace::PerformValveIsolationTrace(QObject* parent /* = null
   m_map(new Map(Basemap::streetsNightVector(this), this)),
   m_startingLocationOverlay(new GraphicsOverlay(this)),
   m_filterBarriersOverlay(new GraphicsOverlay(this)),
+  m_cred(new Credential{sampleServer7Username, sampleServer7Password, this}),
   m_graphicParent(new QObject())
 {
-  Credential* cred = new Credential{sampleServer7Username, sampleServer7Password, this};
-  ServiceFeatureTable* distributionLineFeatureTable = new ServiceFeatureTable(featureServiceUrl + "/3", cred, this);
-  FeatureLayer* distributionLineLayer = new FeatureLayer(distributionLineFeatureTable, this);
+  m_serviceGeodatabase = new ServiceGeodatabase(featureServiceUrl, m_cred, this);
 
-  ServiceFeatureTable* deviceFeatureTable = new ServiceFeatureTable(featureServiceUrl + "/0", cred, this);
-  FeatureLayer* deviceLayer = new FeatureLayer(deviceFeatureTable, this);
+  connect(m_serviceGeodatabase, &ServiceGeodatabase::doneLoading, this, [this](Error error)
+  {
+    if (!error.isEmpty())
+      return;
 
-  // add the feature layers to the map
-  m_map->operationalLayers()->append(distributionLineLayer);
-  m_map->operationalLayers()->append(deviceLayer);
+    ServiceFeatureTable* lineLayerTable = m_serviceGeodatabase->table(3);
+    ServiceFeatureTable* devieLayerTable = m_serviceGeodatabase->table(0);
 
-  m_utilityNetwork = new UtilityNetwork(featureServiceUrl, m_map, cred, this);
+    FeatureLayer* lineLayer = new FeatureLayer(lineLayerTable, this);
+    FeatureLayer* deviceLayer = new FeatureLayer(devieLayerTable, this);
+    // add the feature layers to the map
+    m_map->operationalLayers()->append(lineLayer);
+    m_map->operationalLayers()->append(deviceLayer);
+  });
+
+  m_serviceGeodatabase->load();
+
+  m_utilityNetwork = new UtilityNetwork(featureServiceUrl, m_map, m_cred, this);
   connectSignals();
   m_utilityNetwork->load();
 }
@@ -199,9 +208,6 @@ void PerformValveIsolationTrace::performTrace()
   // get the selected utility category
   if (categories[m_selectedIndex] != nullptr)
   {
-    UtilityCategory* selectedCategory = categories[m_selectedIndex];
-    UtilityCategoryComparison* categoryComparison = new UtilityCategoryComparison(selectedCategory, UtilityCategoryComparisonOperator::Exists, this);
-
     // set whether to include isolated features
     m_traceConfiguration->setIncludeIsolatedFeatures(m_isolateFeatures);
 
@@ -219,6 +225,8 @@ void PerformValveIsolationTrace::performTrace()
     }
     else
     {
+      UtilityCategory* selectedCategory = categories[m_selectedIndex];
+      UtilityCategoryComparison* categoryComparison = new UtilityCategoryComparison(selectedCategory, UtilityCategoryComparisonOperator::Exists, this);
       traceParameters->traceConfiguration()->filter()->setBarriers(categoryComparison);
     }
     m_utilityNetwork->trace(traceParameters);
@@ -294,6 +302,7 @@ void PerformValveIsolationTrace::connectSignals()
 
   connect(m_utilityNetwork, &UtilityNetwork::traceCompleted, this, [this](QUuid)
   {
+    // local paret to clean up UtilityElementTraceResult when we leave scope.
     QObject localParent;
 
     m_tasksRunning = false;
