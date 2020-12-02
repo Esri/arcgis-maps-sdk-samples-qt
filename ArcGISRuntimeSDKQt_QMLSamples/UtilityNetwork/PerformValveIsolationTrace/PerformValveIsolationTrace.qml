@@ -45,6 +45,7 @@ Rectangle {
     property bool uiEnabled: false
     property var distributionLineLayerFeatureTable: null
     property var deviceLayerFeatureTable: null
+    property var identifiedLayerResult: null
 
     MapView {
         id: mapView
@@ -64,14 +65,13 @@ Rectangle {
                 return;
 
             const results = mapView.identifyLayersResults;
-            const result = results[0];
+            identifiedLayerResult = results[0];
 
-            if (!result) {
-                dialogText.text = qsTr("Could not identify location.")
-                traceCompletedDialog.open();
+            if (!identifiedLayerResult) {
+                messageDialog.visible = true;
                 return;
             }
-            const feature = result.geoElements[0];
+            const feature = identifiedLayerResult.geoElements[0];
 
             let element = utilityNetwork.createElementWithArcGISFeature(feature);
 
@@ -80,29 +80,28 @@ Rectangle {
             const elementSourceType = element.networkSource.sourceType;
 
             if (elementSourceType === Enums.UtilityNetworkSourceTypeJunction) {
-              const terminals = element.assetType.terminalConfiguration.terminals;
-              if ( terminals.length > 1)
-              {
-                  terminalNames = [];
-                  const temporaryTerminalNames = [];
-                  for (let i = 0; i < terminals.length; i++) {
-                      temporaryTerminalNames.push(terminals[i].name);
-                      print(temporaryTerminalNames[i]);
-                  }
-                  terminalNames = temporaryTerminalNames;
+                const terminals = element.assetType.terminalConfiguration.terminals;
+                if ( terminals.length > 1)
+                {
+                    terminalNames = [];
+                    const temporaryTerminalNames = [];
+                    for (let i = 0; i < terminals.length; i++) {
+                        temporaryTerminalNames.push(terminals[i].name);
+                    }
+                    terminalNames = temporaryTerminalNames;
 
-                  terminalPickerView.visible = true;
-                  return;
-              }
+                    terminalPickerView.visible = true;
+                    return;
+                }
             } else if (elementSourceType === Enums.UtilityNetworkSourceTypeEdge) {
 
-              if (feature.geometry.geometryType === Enums.GeometryTypePolyline)
-              {
-                const line = GeometryEngine.removeZ(feature.geometry);
-                // Set how far the element is along the edge.
-                const fraction = GeometryEngine.fractionAlong(line, clickPoint, -1);
-                element.fractionAlongEdge = fraction;
-              }
+                if (feature.geometry.geometryType === Enums.GeometryTypePolyline)
+                {
+                    const line = GeometryEngine.removeZ(feature.geometry);
+                    // Set how far the element is along the edge.
+                    const fraction = GeometryEngine.fractionAlong(line, clickPoint, -1);
+                    element.fractionAlongEdge = fraction;
+                }
             }
             let graphic = ArcGISRuntimeEnvironment.createObject("Graphic", {geometry: clickPoint});
 
@@ -158,9 +157,11 @@ Rectangle {
                 onLoadStatusChanged: {
                     if (loadStatus === Enums.LoadStatusLoaded) {
 
+                        // obtain service feature tables from service geodatabase and store them in global properties
                         distributionLineLayerFeatureTable = serviceGeodatabase.tableWithLayerIdAsInt(3);
                         deviceLayerFeatureTable = serviceGeodatabase.tableWithLayerIdAsInt(0);
 
+                        // set each service feature table to their respective feature layer
                         distributionLineLayer.featureTable = distributionLineLayerFeatureTable;
                         deviceLayer.featureTable = deviceLayerFeatureTable;
                     }
@@ -174,24 +175,6 @@ Rectangle {
             FeatureLayer {
                 id: deviceLayer
             }
-
-//            FeatureLayer {
-//                id: distributionLineLayer
-
-//                ServiceFeatureTable {
-//                    url: featureServiceUrl + "/3"
-//                    credential: cred
-//                }
-//            }
-
-//            FeatureLayer {
-//                id: deviceLayer
-
-//                ServiceFeatureTable {
-//                    url: featureServiceUrl + "/0"
-//                    credential: cred
-//                }
-//            }
 
             UtilityCategoryComparison {
                 id: categoryComparison
@@ -232,7 +215,6 @@ Rectangle {
                     let allElements = traceResult.get(0).elements;
 
                     // if no elements found, then display message
-                    print("result elements count: " + allElements.length);
                     if (allElements.length === 0) {
                         messageDialog.visible = true;
                         return;
@@ -242,29 +224,14 @@ Rectangle {
                     for (let i = 0; i < map.operationalLayers.count; i++) {
                         let currentFeatureLayer = map.operationalLayers.get(i);
 
-                        if (!currentFeatureLayer) {
-                            print("map.operationalLayers.get(i); returned nothing - sooner");
-
-                        }
-
                         // create query parameters to find features whose network names match the layer's feature table name
                         let objectIds = [];
                         for (let j = 0; j < allElements.length; j++) {
                             let networkSourceName = allElements[j].networkSource.name;
+                            let featureTableName = currentFeatureLayer.featureTable.tableName;
 
-                            if (!currentFeatureLayer) {
-                                print("map.operationalLayers.get(i); returned nothing");
-
-                            } else {
-                                if (!currentFeatureLayer.featureTable) {
-                                    print("currentFeatureLayer.featureTable is null");
-                                } else {
-                                    let featureTableName = currentFeatureLayer.featureTable.tableName;
-
-                                    if (networkSourceName === featureTableName) {
-                                        objectIds.push(allElements[j].objectId);
-                                    }
-                                }
+                            if (networkSourceName === featureTableName) {
+                                objectIds.push(allElements[j].objectId);
                             }
                         }
 
@@ -472,7 +439,7 @@ Rectangle {
     MessageDialog {
         id: messageDialog
         title: "Perform valve isolation trace"
-        text: "Isolation trace returned no elements."
+        text: !identifiedLayerResult ? "Could not identify location." : "Isolation trace returned no elements."
         visible: false
         onRejected: {
             visible = false;
