@@ -58,7 +58,7 @@ void ExtrudeGraphics::componentComplete()
   m_sceneView = findChild<SceneQuickView*>("sceneView");
 
   // create a new basemap instance
-  Basemap* basemap = new Basemap(BasemapStyle::ArcGISImageryStandard, this);
+  Basemap* basemap = new Basemap(Basemap::imagery(this), this);
   // create a new scene instance
   m_scene = new Scene(basemap, this);
   // set scene on the scene view
