@@ -49,7 +49,7 @@ Rectangle {
         // create a scene, which is a default property of scene view
         Scene {
             // add a basemap
-            BasemapImagery {}
+            BasemapTopographic {}
 
             // add a surface, which is a default property of scene
             Surface {

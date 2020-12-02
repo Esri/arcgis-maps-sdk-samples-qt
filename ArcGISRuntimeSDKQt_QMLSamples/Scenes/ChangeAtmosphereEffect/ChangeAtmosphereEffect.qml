@@ -70,7 +70,7 @@ Rectangle {
         }
 
         Scene {
-            id: scene           
+            id: scene
             BasemapImagery {}
 
             Surface {
