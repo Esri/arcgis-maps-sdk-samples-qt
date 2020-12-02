@@ -50,7 +50,7 @@ ChangeBasemap::ChangeBasemap(QWidget* parent) :
             m_map->setBasemap(new Basemap(BasemapStyle::ArcGISStreets, this));
             break;
         case 2:
-            m_map->setBasemap(new Basemap(BasemapStyle::ArcGISImagery, this));
+            m_map->setBasemap(new Basemap(BasemapStyle::ArcGISImageryStandard, this));
             break;
         case 3:
             m_map->setBasemap(new Basemap(BasemapStyle::ArcGISOceans, this));

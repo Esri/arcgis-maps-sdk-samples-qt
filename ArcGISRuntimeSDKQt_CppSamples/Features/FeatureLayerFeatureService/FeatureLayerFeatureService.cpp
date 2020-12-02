@@ -53,7 +53,7 @@ void FeatureLayerFeatureService::componentComplete()
   m_mapView->setWrapAroundMode(WrapAroundMode::Disabled);
 
   // Create a map using the terrain with labels basemap
-  m_map = new Map(BasemapStyle::ArcGISTerrainBase, this);
+  m_map = new Map(BasemapStyle::ArcGISTerrain, this);
   m_map->setInitialViewpoint(Viewpoint(Point(-13176752, 4090404, SpatialReference(102100)), 300000));
 
   // Set map to map view

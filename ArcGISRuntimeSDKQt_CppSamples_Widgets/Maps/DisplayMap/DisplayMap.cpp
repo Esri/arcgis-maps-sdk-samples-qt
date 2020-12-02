@@ -25,7 +25,7 @@ DisplayMap::DisplayMap(QWidget* parent) :
   QWidget(parent)
 {    
     // Create a map using the Imagery with labels basemap
-    m_map = new Map(BasemapStyle::ArcGISImageryStandard, this);
+    m_map = new Map(BasemapStyle::ArcGISImagery, this);
 
     // Create a map view, and pass in the map
     m_mapView = new MapGraphicsView(m_map, this);

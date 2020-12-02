@@ -16,7 +16,7 @@ basemap_replace = {
     "Basemap::streetsNightVector(this)":        "BasemapStyle::ArcGISStreetsNight",
     "Basemap::streetsVector(this)":             "BasemapStyle::ArcGISStreets",
     "Basemap::streetsWithReliefVector(this)":   "BasemapStyle::ArcGISStreetsRelief",
-    "Basemap::terrainWithLabels(this)":         "BasemapStyle::ArcGISTerrainBase",
+    "Basemap::terrainWithLabels(this)":         "BasemapStyle::ArcGISTerrain",
     "Basemap::terrainWithLabelsVector(this)":   "BasemapStyle::ArcGISTerrain",
     "Basemap::topographic(this)":               "BasemapStyle::ArcGISTopographic",
     "Basemap::topographicVector(this)":         "BasemapStyle::ArcGISTopographic",
