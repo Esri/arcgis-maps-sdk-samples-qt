@@ -31,9 +31,7 @@ Rectangle {
         // and thus will get added to the sceneview
         Scene {
             // add a basemap
-            Basemap {
-                initStyle: Enums.BasemapStyleArcGISImageryStandard
-            }
+            BasemapImagery {}
 
             // add a surface...surface is a default property of scene
             Surface {

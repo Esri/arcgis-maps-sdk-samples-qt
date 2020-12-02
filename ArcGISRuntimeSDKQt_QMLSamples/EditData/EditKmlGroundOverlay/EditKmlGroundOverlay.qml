@@ -32,9 +32,7 @@ Rectangle {
         anchors.fill: parent
 
         Scene {
-            Basemap {
-                initStyle: Enums.BasemapStyleArcGISImageryStandard
-            }
+            BasemapImagery {}
 
             // Create a KML Layer
             KmlLayer {

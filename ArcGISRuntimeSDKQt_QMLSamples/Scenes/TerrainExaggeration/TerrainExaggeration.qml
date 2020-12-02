@@ -31,9 +31,7 @@ Rectangle {
         // add a Scene to the SceneView
         Scene {
             // add the topographic basemap to the scene
-            Basemap {
-                initStyle: Enums.BasemapStyleArcGISTopographic
-            }
+            BasemapTopographic {}
 
             // add a surface...surface is a default property of scene
             Surface {

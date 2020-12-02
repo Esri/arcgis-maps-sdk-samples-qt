@@ -29,9 +29,7 @@ Rectangle {
         // create a scene, which is a default property of scene view
         Scene {
             // add a basemap
-            Basemap {
-                initStyle: Enums.BasemapStyleArcGISTopographic
-            }
+            BasemapTopographic {}
 
             //! [add a scene service with ArcGISSceneLayer]
             ArcGISSceneLayer {
