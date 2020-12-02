@@ -30,7 +30,9 @@ Rectangle {
         Map {
 
             // add the topographic basemap to the map
-            BasemapTopographic {}
+            Basemap {
+                initStyle: Enums.BasemapStyleArcGISTopographic
+            }
 
             // create feature layer using service feature table
             FeatureLayer {

@@ -37,7 +37,9 @@ Rectangle {
         id: mapView
         anchors.fill: parent
         Map {
-            BasemapImagery {}
+            Basemap {
+                initStyle: Enums.BasemapStyleArcGISImagery
+            }
 
             // start the location display
             onLoadStatusChanged: {

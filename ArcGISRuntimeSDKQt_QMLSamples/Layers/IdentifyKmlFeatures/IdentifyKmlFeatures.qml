@@ -43,7 +43,9 @@ Rectangle {
         }
 
         Map {
-            BasemapDarkGrayCanvasVector {}
+            Basemap {
+                initStyle: Enums.BasemapStyleArcGIS
+            }
 
             // start zoomed in over the US
             ViewpointExtent {

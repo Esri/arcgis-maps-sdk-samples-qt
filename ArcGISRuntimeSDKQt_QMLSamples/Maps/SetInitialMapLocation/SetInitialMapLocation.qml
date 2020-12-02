@@ -25,7 +25,9 @@ Rectangle {
     MapView {
         anchors.fill: parent
         Map {
-            BasemapImageryWithLabels {}
+            Basemap {
+                initStyle: Enums.BasemapStyleArcGISImageryStandard
+            }
             // Set the initialViewpoint property to a ViewpointCenter object
             initialViewpoint: viewpoint
         }

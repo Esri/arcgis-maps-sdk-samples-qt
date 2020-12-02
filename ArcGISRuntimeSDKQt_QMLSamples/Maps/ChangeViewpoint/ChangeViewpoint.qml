@@ -51,7 +51,9 @@ Rectangle {
         anchors.fill: parent
 
         Map {
-            BasemapImageryWithLabels {}
+            Basemap {
+                initStyle: Enums.BasemapStyleArcGISImageryStandard
+            }
         }
     }
 

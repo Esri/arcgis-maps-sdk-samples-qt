@@ -35,7 +35,9 @@ Rectangle {
         anchors.fill: parent
         Scene {
             id: scene
-            BasemapImagery {}
+            Basemap {
+                initStyle: Enums.BasemapStyleArcGISImagery
+            }
             Surface {
                 ArcGISTiledElevationSource {
                     url: "https://elevation3d.arcgis.com/arcgis/rest/services/WorldElevation3D/Terrain3D/ImageServer"

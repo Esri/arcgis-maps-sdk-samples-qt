@@ -35,7 +35,9 @@ Rectangle {
         Map {
             id: map
 
-            BasemapImagery {}
+            Basemap {
+                initStyle: Enums.BasemapStyleArcGISImagery
+            }
 
             //! [RasterLayerFile qml new raster layer]
             RasterLayer {

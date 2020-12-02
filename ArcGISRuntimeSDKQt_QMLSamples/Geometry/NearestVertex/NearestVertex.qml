@@ -94,7 +94,9 @@ Rectangle {
         }
 
         Map {
-            BasemapTopographic {}
+            Basemap {
+                initStyle: Enums.BasemapStyleArcGISTopographic
+            }
 
             ViewpointCenter {
                 Point {

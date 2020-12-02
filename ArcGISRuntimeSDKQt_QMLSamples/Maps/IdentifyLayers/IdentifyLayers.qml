@@ -31,7 +31,9 @@ Rectangle {
         anchors.fill: parent
 
         Map {
-            BasemapTopographic {}
+            Basemap {
+                initStyle: Enums.BasemapStyleArcGISTopographic
+            }
 
             // add a map image layer and hide 2 of the sublayers
             ArcGISMapImageLayer {

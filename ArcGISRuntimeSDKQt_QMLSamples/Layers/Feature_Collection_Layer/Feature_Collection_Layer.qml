@@ -28,7 +28,9 @@ Rectangle {
         anchors.fill: parent
 
         Map {
-            BasemapOceans {}
+            Basemap {
+                initStyle: Enums.BasemapStyleArcGISOceans
+            }
 
             // Declare a FeatureCollectionLayer
             FeatureCollectionLayer {

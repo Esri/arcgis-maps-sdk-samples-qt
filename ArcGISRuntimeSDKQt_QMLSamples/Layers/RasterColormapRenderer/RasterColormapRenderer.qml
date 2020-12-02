@@ -33,7 +33,9 @@ Rectangle {
         anchors.fill: parent
 
         Map {
-            BasemapImagery {}
+            Basemap {
+                initStyle: Enums.BasemapStyleArcGISImagery
+            }
 
             onLoadStatusChanged: {
                 if (loadStatus !== Enums.LoadStatusLoaded)

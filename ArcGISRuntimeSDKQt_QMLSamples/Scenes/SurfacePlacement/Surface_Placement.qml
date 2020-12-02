@@ -30,7 +30,9 @@ Rectangle {
 
         // Add a scene with the imagery basemap and world elevation surface
         Scene {
-            BasemapImagery {}
+            Basemap {
+                initStyle: Enums.BasemapStyleArcGISImagery
+            }
 
             Surface {
                 ArcGISTiledElevationSource {

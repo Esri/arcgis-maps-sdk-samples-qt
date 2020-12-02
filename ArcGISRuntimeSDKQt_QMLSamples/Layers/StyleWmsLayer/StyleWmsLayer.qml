@@ -32,7 +32,9 @@ Rectangle {
         anchors.fill: parent
 
         Map {
-            BasemapImagery {}
+            Basemap {
+                initStyle: Enums.BasemapStyleArcGISImagery
+            }
 
             WmsLayer {
                 id: wmsLayer

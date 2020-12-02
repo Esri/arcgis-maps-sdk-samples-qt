@@ -29,7 +29,9 @@ Rectangle {
         anchors.fill: parent
 
         Map {
-            BasemapNationalGeographic {}
+            Basemap {
+                initStyle: Enums.BasemapStyleArcGISTopographic
+            }
 
             // Set initial viewpoint to Minneapolis
             ViewpointExtent {
