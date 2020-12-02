@@ -55,7 +55,7 @@ Rectangle {
         Scene {
             // add a basemap
             Basemap {
-                initStyle: Enums.BasemapStyleArcGISImagery
+                initStyle: Enums.BasemapStyleArcGISImageryStandard
             }
 
             // add a surface...surface is a default property of scene
@@ -228,7 +228,7 @@ Rectangle {
 
                     Map {
                         Basemap {
-                            initStyle: Enums.BasemapStyleArcGISImagery
+                            initStyle: Enums.BasemapStyleArcGISImageryStandard
                         }
                     }
 

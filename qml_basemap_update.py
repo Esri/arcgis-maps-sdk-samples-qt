@@ -3,9 +3,9 @@ import os
 
 basemap_replace = {
     'BasemapDarkGrayCanvasVector':      'BasemapStyleArcGISDarkGray',
-    'BasemapImagery':                   'BasemapStyleArcGISImageryStandard',
-    'BasemapImageryWithLabels':         'BasemapStyleArcGISImagery',
-    'BasemapImageryWithLabelsVector':   'BasemapStyleArcGISImagery',
+    'BasemapImagery':                   'BasemapStyleArcGISImagery',
+    'BasemapImageryWithLabels':         'BasemapStyleArcGISImageryStandard',
+    'BasemapImageryWithLabelsVector':   'BasemapStyleArcGISImageryStandard',
     'BasemapLightGrayCanvas':           'BasemapStyleArcGISLightGray',
     'BasemapLightGrayCanvasVector':     'BasemapStyleArcGISLightGray',
     'BasemapNationalGeographic':        'BasemapStyleArcGISTopographic',

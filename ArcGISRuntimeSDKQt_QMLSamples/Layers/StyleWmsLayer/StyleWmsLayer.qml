@@ -33,7 +33,7 @@ Rectangle {
 
         Map {
             Basemap {
-                initStyle: Enums.BasemapStyleArcGISImagery
+                initStyle: Enums.BasemapStyleArcGISImageryStandard
             }
 
             WmsLayer {

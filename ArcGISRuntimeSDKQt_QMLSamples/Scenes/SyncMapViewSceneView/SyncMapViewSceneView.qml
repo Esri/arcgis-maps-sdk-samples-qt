@@ -54,7 +54,7 @@ Rectangle {
             Scene {
                 id: scene
                 Basemap {
-                    initStyle: Enums.BasemapStyleArcGISImagery
+                    initStyle: Enums.BasemapStyleArcGISImageryStandard
                 }
             }
 
@@ -73,7 +73,7 @@ Rectangle {
             Map {
                 id: map
                 Basemap {
-                    initStyle: Enums.BasemapStyleArcGISImagery
+                    initStyle: Enums.BasemapStyleArcGISImageryStandard
                 }
             }
 

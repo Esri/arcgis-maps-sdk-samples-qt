@@ -48,7 +48,7 @@ Rectangle {
             id: map
             // set the basemap
             Basemap {
-                initStyle: Enums.BasemapStyleArcGISImagery
+                initStyle: Enums.BasemapStyleArcGISImageryStandard
             }
         }
 

@@ -115,7 +115,7 @@ Rectangle {
 
         Scene {
             Basemap {
-                initStyle: Enums.BasemapStyleArcGISImagery
+                initStyle: Enums.BasemapStyleArcGISImageryStandard
             }
 
             Surface {

@@ -34,7 +34,7 @@ Rectangle {
         Map {
             // Add the Imagery basemap
             Basemap {
-                initStyle: Enums.BasemapStyleArcGISImagery
+                initStyle: Enums.BasemapStyleArcGISImageryStandard
             }
         }
 

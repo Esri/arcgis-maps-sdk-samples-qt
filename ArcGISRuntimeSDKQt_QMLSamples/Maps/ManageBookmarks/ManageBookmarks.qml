@@ -33,7 +33,7 @@ Rectangle {
             id: map
             // Set the initial basemap to Imagery with Labels
             Basemap {
-                initStyle: Enums.BasemapStyleArcGISImageryStandard
+                initStyle: Enums.BasemapStyleArcGISImagery
             }
 
             onLoadStatusChanged: {

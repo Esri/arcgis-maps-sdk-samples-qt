@@ -29,7 +29,7 @@ Rectangle {
         // Create an initial Map with the Imagery basemap
         Map {
             Basemap {
-                initStyle: Enums.BasemapStyleArcGISImagery
+                initStyle: Enums.BasemapStyleArcGISImageryStandard
             }
         }
     }

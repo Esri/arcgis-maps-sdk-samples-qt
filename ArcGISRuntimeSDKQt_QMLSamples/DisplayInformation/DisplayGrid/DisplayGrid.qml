@@ -53,7 +53,7 @@ Rectangle {
 
         Map {
             Basemap {
-                initStyle: Enums.BasemapStyleArcGISImagery
+                initStyle: Enums.BasemapStyleArcGISImageryStandard
             }
 
             // Set an initial viewpoint

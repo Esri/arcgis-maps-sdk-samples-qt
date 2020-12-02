@@ -26,7 +26,7 @@ Rectangle {
         anchors.fill: parent
         Map {
             Basemap {
-                initStyle: Enums.BasemapStyleArcGISImagery
+                initStyle: Enums.BasemapStyleArcGISImageryStandard
             }
         }
     }

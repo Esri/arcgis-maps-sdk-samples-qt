@@ -52,7 +52,7 @@ Rectangle {
 
         Map {
             Basemap {
-                initStyle: Enums.BasemapStyleArcGISImageryStandard
+                initStyle: Enums.BasemapStyleArcGISImagery
             }
         }
     }
