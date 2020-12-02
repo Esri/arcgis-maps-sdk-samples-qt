@@ -44,7 +44,7 @@ Rectangle {
 
         Map {
             Basemap {
-                initStyle: Enums.BasemapStyleArcGIS
+                initStyle: Enums.BasemapStyleArcGISDarkGray
             }
 
             // start zoomed in over the US

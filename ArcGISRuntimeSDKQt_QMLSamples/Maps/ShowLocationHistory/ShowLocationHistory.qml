@@ -34,7 +34,7 @@ Rectangle {
 
         Map {
             Basemap {
-                initStyle: Enums.BasemapStyleArcGIS
+                initStyle: Enums.BasemapStyleArcGISDarkGray
             }
         }
 
