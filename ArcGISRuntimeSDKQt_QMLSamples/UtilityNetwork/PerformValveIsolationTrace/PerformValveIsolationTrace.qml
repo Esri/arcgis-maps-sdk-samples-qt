@@ -37,7 +37,6 @@ Rectangle {
     readonly property string sampleServer7Password: "I68VGU^nMurF"
     property var clickPoint: null
     property var filterBarriers: []
-    property var terminalNames: []
     property var createdElement: null
     property var traceConfiguration: null
     property var startingLocation: null
@@ -45,6 +44,10 @@ Rectangle {
     property bool uiEnabled: false
     property var distributionLineLayerFeatureTable: null
     property var deviceLayerFeatureTable: null
+
+    ListModel {
+        id: terminalNamesModel
+    }
 
     MapView {
         id: mapView
@@ -81,12 +84,11 @@ Rectangle {
             if (elementSourceType === Enums.UtilityNetworkSourceTypeJunction) {
                 const terminals = element.assetType.terminalConfiguration.terminals;
                 if (terminals.length > 1) {
-                    terminalNames = [];
-                    const temporaryTerminalNames = [];
+                    terminalNamesModel.clear();
+
                     for (let i = 0; i < terminals.length; i++) {
-                        temporaryTerminalNames.push(terminals[i].name);
+                        terminalNamesModel.append({text: terminals[i].name});
                     }
-                    terminalNames = temporaryTerminalNames;
 
                     terminalPickerView.visible = true;
                     return;

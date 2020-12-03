@@ -33,10 +33,15 @@ Dialog {
 
         ComboBox {
             id: terminalSelection
-            model: terminalNames
+            model: terminalNamesModel
+            textRole: "text"
             Layout.alignment: Qt.AlignHCenter
+            currentIndex: visible ? 0 : -1
         }
     }
 
-    onAccepted: selectTerminal(terminalSelection.currentIndex);
+    onAccepted: {
+        if (terminalSelection.currentIndex != -1)
+            selectTerminal(terminalSelection.currentIndex);
+    }
 }
