@@ -206,7 +206,8 @@ void PerformValveIsolationTrace::performTrace()
   for (Layer* layer : *m_map->operationalLayers())
   {
     // clear previous selection from the feature layers
-   if (FeatureLayer* featureLayer = dynamic_cast<FeatureLayer*>(layer))
+    FeatureLayer* featureLayer = dynamic_cast<FeatureLayer*>(layer);
+   if (featureLayer)
      featureLayer->clearSelection();
   }
 
@@ -250,7 +251,8 @@ void PerformValveIsolationTrace::performReset()
   for (Layer* layer : *m_map->operationalLayers())
   {
     // clear previous selection from the feature layers
-   if (FeatureLayer* featureLayer = dynamic_cast<FeatureLayer*>(layer))
+    FeatureLayer* featureLayer = dynamic_cast<FeatureLayer*>(layer);
+   if (featureLayer)
      featureLayer->clearSelection();
   }
 }
@@ -277,9 +279,11 @@ void PerformValveIsolationTrace::connectSignals()
 
     // get a trace configuration from a tier
     UtilityNetworkDefinition* networkDefinition = m_utilityNetwork->definition();
-    if (UtilityDomainNetwork* domainNetwork = networkDefinition->domainNetwork(domainNetworkName))
+    UtilityDomainNetwork* domainNetwork = networkDefinition->domainNetwork(domainNetworkName);
+    if (domainNetwork)
     {
-      if (UtilityTier* tier = domainNetwork->tier(tierName))
+      UtilityTier* tier = domainNetwork->tier(tierName);
+      if (tier)
       {
         m_traceConfiguration = tier->traceConfiguration();
       }
@@ -292,11 +296,14 @@ void PerformValveIsolationTrace::connectSignals()
     m_traceConfiguration->setFilter(new UtilityTraceFilter(this));
 
     // get a default starting location
-    if (UtilityNetworkSource* networkSource = networkDefinition->networkSource(networkSourceName))
+    UtilityNetworkSource* networkSource = networkDefinition->networkSource(networkSourceName);
+    if (networkSource)
     {
-      if (UtilityAssetGroup* assetGroup = networkSource->assetGroup(assetGroupName))
+      UtilityAssetGroup* assetGroup = networkSource->assetGroup(assetGroupName);
+      if (assetGroup)
       {
-        if (UtilityAssetType* assetType = assetGroup->assetType(assetTypeName))
+        UtilityAssetType* assetType = assetGroup->assetType(assetTypeName);
+        if (assetType)
         {
           m_startingLocation = m_utilityNetwork->createElementWithAssetType(assetType, QUuid(globalId), nullptr, this);
         }
@@ -331,7 +338,8 @@ void PerformValveIsolationTrace::connectSignals()
       return;
     }
 
-    if (UtilityElementTraceResult* utilityElementTraceResult = dynamic_cast<UtilityElementTraceResult*>(utilityTraceResultList->at(0)))
+    UtilityElementTraceResult* utilityElementTraceResult = dynamic_cast<UtilityElementTraceResult*>(utilityTraceResultList->at(0));
+    if (utilityElementTraceResult)
     {
       // given local parent to clean up once we leave scope
       utilityElementTraceResult->setParent(&localParent);
@@ -339,7 +347,6 @@ void PerformValveIsolationTrace::connectSignals()
       QList<UtilityElement*> utilityElementList = utilityElementTraceResult->elements(this);
 
       // A convenience wrapper that deletes the contents of utilityElementList when we leave scope.
-//      TraceResultResultsScopedCleanup cleanUpUtilityElementList(utilityElementList);
       ScopedCleanup<UtilityElement> utilityElementListCleanUp(utilityElementList);
 
       if (utilityElementList.empty())
@@ -352,7 +359,8 @@ void PerformValveIsolationTrace::connectSignals()
       // iterate through the map's features
       for (Layer* layer : *m_map->operationalLayers())
       {
-        if (FeatureLayer* featureLayer = dynamic_cast<FeatureLayer*>(layer))
+        FeatureLayer* featureLayer = dynamic_cast<FeatureLayer*>(layer);
+        if (featureLayer)
         {
           // create query parameters to find features whose network source names match layer's feature table name
           QueryParameters queryParameters;
@@ -402,7 +410,6 @@ bool PerformValveIsolationTrace::tasksRunning() const
 void PerformValveIsolationTrace::onIdentifyLayersCompleted(QUuid, const QList<IdentifyLayerResult*>& results)
 {
   // A convenience wrapper that deletes the contents of results when we leave scope.
-//  IdentifyLayerResultsScopedCleanup identifyResultsScopedCleanup(results);
   ScopedCleanup<IdentifyLayerResult> resultsScopedCleanup(results);
 
   // could not identify location
