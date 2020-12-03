@@ -151,8 +151,6 @@ Rectangle {
                 id: serviceGeodatabase
                 url: featureServiceUrl
                 credential: cred
-
-
                 onLoadStatusChanged: {
                     if (loadStatus === Enums.LoadStatusLoaded) {
 

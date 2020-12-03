@@ -104,11 +104,11 @@ PerformValveIsolationTrace::PerformValveIsolationTrace(QObject* parent /* = null
 
     // obtain service feature tables from the service geodatabase
     ServiceFeatureTable* lineLayerTable = m_serviceGeodatabase->table(3);
-    ServiceFeatureTable* devieLayerTable = m_serviceGeodatabase->table(0);
+    ServiceFeatureTable* deviceLayerTable = m_serviceGeodatabase->table(0);
 
     // create feature layers from the service feature tables
     FeatureLayer* lineLayer = new FeatureLayer(lineLayerTable, this);
-    FeatureLayer* deviceLayer = new FeatureLayer(devieLayerTable, this);
+    FeatureLayer* deviceLayer = new FeatureLayer(deviceLayerTable, this);
 
     // add the feature layers to the map
     m_map->operationalLayers()->append(lineLayer);
