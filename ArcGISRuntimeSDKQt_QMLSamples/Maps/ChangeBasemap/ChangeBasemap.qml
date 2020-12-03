@@ -49,8 +49,8 @@ Rectangle {
             ListElement { text: "Streets"; map: "BasemapStyleArcGISStreets" }
             ListElement { text: "Streets - Relief"; map: "BasemapStyleArcGISStreetsRelief" }
             ListElement { text: "Streets - Night"; map: "BasemapStyleArcGISStreetsNight" }
-            ListElement { text: "Imagery"; map: "BasemapStyleArcGISImagery" }
-            ListElement { text: "Imagery with Labels"; map: "BasemapStyleArcGISImageryStandard" }
+            ListElement { text: "Imagery"; map: "BasemapStyleArcGISImageryStandard" }
+            ListElement { text: "Imagery with Labels"; map: "BasemapStyleArcGISImagery" }
             ListElement { text: "Labels without Imagery"; map: "BasemapStyleArcGISImageryLabels" }
             ListElement { text: "Dark Gray Canvas"; map: "BasemapStyleArcGISDarkGray" }
             ListElement { text: "Light Gray Canvas"; map: "BasemapStyleArcGISLightGray" }
