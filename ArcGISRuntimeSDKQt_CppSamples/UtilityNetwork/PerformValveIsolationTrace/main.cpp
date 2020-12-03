@@ -21,7 +21,6 @@
 #include <QGuiApplication>
 #include <QQmlApplicationEngine>
 
-#include "Esri/ArcGISRuntime/Toolkit/register.h"
 
 int main(int argc, char *argv[])
 {
@@ -41,7 +40,6 @@ int main(int argc, char *argv[])
   engine.addImportPath(ARCGIS_RUNTIME_IMPORT_PATH_2);
 #endif
 
-  Esri::ArcGISRuntime::Toolkit::registerComponents(engine);
 
   // Set the source
   engine.load(QUrl("qrc:/Samples/UtilityNetwork/PerformValveIsolationTrace/main.qml"));

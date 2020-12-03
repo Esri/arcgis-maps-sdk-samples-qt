@@ -71,18 +71,13 @@ const QString sampleServer7Password = QStringLiteral("I68VGU^nMurF");
 
 namespace
 {
-  // Convenient RAII structs that deletes all pointers in a given container.
-  struct IdentifyLayerResultsScopedCleanup
+  // Convenient RAII template struct that deletes all pointers in a given container.
+  template <typename T>
+  struct ScopedCleanup
   {
-    IdentifyLayerResultsScopedCleanup(const QList<IdentifyLayerResult*>& list) : results(list) { }
-    ~IdentifyLayerResultsScopedCleanup() { qDeleteAll(results); }
-    const QList<IdentifyLayerResult*>& results;
-  };
-  struct TraceResultResultsScopedCleanup
-  {
-    TraceResultResultsScopedCleanup(const QList<UtilityElement*>& list) : results(list) { }
-    ~TraceResultResultsScopedCleanup() { qDeleteAll(results); }
-    const QList<UtilityElement*>& results;
+    ScopedCleanup(const QList<T*>& list) : results(list) { }
+    ~ScopedCleanup() { qDeleteAll(results); }
+    const QList<T*>& results;
   };
 }
 
@@ -97,8 +92,19 @@ PerformValveIsolationTrace::PerformValveIsolationTrace(QObject* parent /* = null
   // create service geodatabase with the feature service url
   m_serviceGeodatabase = new ServiceGeodatabase(featureServiceUrl, m_cred, this);
 
+  // disable UI while loading service geodatabase and utility network
+  m_tasksRunning = true;
+  emit tasksRunningChanged();
+
   connect(m_serviceGeodatabase, &ServiceGeodatabase::doneLoading, this, [this](Error error)
   {
+    if (m_utilityNetwork->loadStatus() == LoadStatus::Loaded)
+    {
+      // re-enable UI if both service geodatabase and utility network are loaded
+      m_tasksRunning = false;
+      emit tasksRunningChanged();
+    }
+
     if (!error.isEmpty())
       return;
 
@@ -253,6 +259,13 @@ void PerformValveIsolationTrace::connectSignals()
 {
   connect(m_utilityNetwork, &UtilityNetwork::doneLoading, this, [this](const Error& error)
   {
+    if (m_serviceGeodatabase->loadStatus() == LoadStatus::Loaded)
+    {
+      // re-enable UI if both service geodatabase and utility network are loaded
+      m_tasksRunning = false;
+      emit tasksRunningChanged();
+    }
+
     if (!error.isEmpty())
     {
       qDebug() << error.message() << error.additionalMessage();
@@ -326,7 +339,8 @@ void PerformValveIsolationTrace::connectSignals()
       QList<UtilityElement*> utilityElementList = utilityElementTraceResult->elements(this);
 
       // A convenience wrapper that deletes the contents of utilityElementList when we leave scope.
-      TraceResultResultsScopedCleanup cleanUpUtilityElementList(utilityElementList);
+//      TraceResultResultsScopedCleanup cleanUpUtilityElementList(utilityElementList);
+      ScopedCleanup<UtilityElement> utilityElementListCleanUp(utilityElementList);
 
       if (utilityElementList.empty())
       {
@@ -388,7 +402,8 @@ bool PerformValveIsolationTrace::tasksRunning() const
 void PerformValveIsolationTrace::onIdentifyLayersCompleted(QUuid, const QList<IdentifyLayerResult*>& results)
 {
   // A convenience wrapper that deletes the contents of results when we leave scope.
-  IdentifyLayerResultsScopedCleanup identifyResultsScopedCleanup(results);
+//  IdentifyLayerResultsScopedCleanup identifyResultsScopedCleanup(results);
+  ScopedCleanup<IdentifyLayerResult> resultsScopedCleanup(results);
 
   // could not identify location
   if (results.isEmpty())

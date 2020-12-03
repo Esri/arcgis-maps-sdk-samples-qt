@@ -19,7 +19,6 @@ import QtQuick.Controls 2.2
 import Esri.Samples 1.0
 import QtQuick.Layouts 1.11
 import QtQuick.Dialogs 1.1
-import Esri.ArcGISRuntime.Toolkit 100.10
 
 Item {
     // add a mapView component
@@ -110,10 +109,6 @@ Item {
     TerminalPickerView {
         id: terminalPickerView
         visible: sampleModel.terminals.length > 0
-    }
-
-    AuthenticationView {
-        anchors.fill: parent
     }
 
     BusyIndicator {
