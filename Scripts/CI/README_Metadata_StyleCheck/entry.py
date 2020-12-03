@@ -169,9 +169,9 @@ class MetadataFile:
         elif key == "keywords":
             return self.check_keywords(self.metadata['keywords'])
         elif key == "redirect_from":
-            return self.check_redirect_from(self.metadata["redirect_from"])
-        elif key == "relevant_apis":
             return []
+        elif key == "relevant_apis":
+            return self.check_relevant_apis(self.metadata['relevant_apis'])
         elif key == "snippets":
             return self.check_snippets(self.metadata["snippets"])
         elif key == "title":
