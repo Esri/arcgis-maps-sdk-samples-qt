@@ -45,7 +45,11 @@ int main(int argc, char *argv[])
       qWarning() << "Use of Esri location services, including basemaps, requires"
                     "you to authenticate with an ArcGIS identity or set the API Key property.";
   }
-    
+  else
+  {
+      Esri::ArcGISRuntime::ArcGISRuntimeEnvironment::setApiKey(apiKey);
+  }
+
   // Initialize the sample
   ReadGeoPackage::init();
 
