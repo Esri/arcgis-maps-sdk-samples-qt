@@ -26,6 +26,17 @@ int main(int argc, char *argv[])
   QGuiApplication::setAttribute(Qt::AA_EnableHighDpiScaling);
   QGuiApplication app(argc, argv);
 
+  const QString apiKey = "";
+  if (apiKey.isEmpty())
+  {
+      qWarning() << "Use of Esri location services, including basemaps, requires"
+                    "you to authenticate with an ArcGIS identity or set the API Key property.";
+  }
+  else
+  {
+      QCoreApplication::instance()->setProperty("Esri.ArcGISRuntime.apiKey", apiKey);
+  }
+
   // Intialize application view
   QQuickView view;
   view.setResizeMode(QQuickView::SizeRootObjectToView);
