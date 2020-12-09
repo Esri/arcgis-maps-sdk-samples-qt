@@ -18,7 +18,6 @@
 #include <QQmlEngine>
 
 #include "Esri/ArcGISRuntime/Toolkit/register.h"
-#include "ArcGISRuntimeEnvironment.h"
 
 #ifdef Q_OS_WIN
 #include <Windows.h>
