@@ -104,7 +104,7 @@ private:
   const QString m_deviceTableName = "Electric Distribution Device";
   const QString m_domainNetworkName = "ElectricDistribution";
   const QString m_tierName = "Medium Voltage Radial";
-  const QUrl m_featureLayerUrl = QUrl("https://sampleserver7.arcgisonline.com/arcgis/rest/services/UtilityNetwork/NapervilleElectric/FeatureServer");
+  const QUrl m_featureLayerUrl = QUrl("https://sampleserver7.arcgisonline.com/server/rest/services/UtilityNetwork/NapervilleElectric/FeatureServer");
   const QUuid m_gloabId = QUuid("{1CAF7740-0BF4-4113-8DB2-654E18800028}");
   QString m_dialogText;
   QString m_expressionBuilder;

@@ -108,7 +108,7 @@ private:
   Esri::ArcGISRuntime::UtilityTier * m_mediumVoltageTier = nullptr;
   Esri::ArcGISRuntime::UniqueValueRenderer* m_uniqueValueRenderer = nullptr;
 
-  const QUrl m_serviceUrl = QUrl("https://sampleserver7.arcgisonline.com/arcgis/rest/services/UtilityNetwork/NapervilleElectric/FeatureServer");
+  const QUrl m_serviceUrl = QUrl("https://sampleserver7.arcgisonline.com/server/rest/services/UtilityNetwork/NapervilleElectric/FeatureServer");
   bool m_terminalDialogVisisble = false;
   bool m_dialogVisible = false;
   bool m_startingLocationsEnabled = true;

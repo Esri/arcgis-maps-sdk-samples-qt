@@ -169,7 +169,7 @@ void EditWithBranchVersioning::onMapDoneLoading(const Error& error)
 
 void EditWithBranchVersioning::connectSgdbSignals()
 {
-  m_serviceGeodatabase = new ServiceGeodatabase(QUrl("https://sampleserver7.arcgisonline.com/arcgis/rest/services/DamageAssessment/FeatureServer"), m_cred, this);
+  m_serviceGeodatabase = new ServiceGeodatabase(QUrl("https://sampleserver7.arcgisonline.com/server/rest/services/DamageAssessment/FeatureServer"), m_cred, this);
   m_busy = true;
   emit busyChanged();
 

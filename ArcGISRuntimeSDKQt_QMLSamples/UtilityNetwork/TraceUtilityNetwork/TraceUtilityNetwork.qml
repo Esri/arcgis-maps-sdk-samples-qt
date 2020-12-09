@@ -38,7 +38,7 @@ Rectangle {
     property var terminal
     property var terminals: []
     property var utilityNetworkSource
-    readonly property url featureLayerUrl: "https://sampleserver7.arcgisonline.com/arcgis/rest/services/UtilityNetwork/NapervilleElectric/FeatureServer"
+    readonly property url featureLayerUrl: "https://sampleserver7.arcgisonline.com/server/rest/services/UtilityNetwork/NapervilleElectric/FeatureServer"
 
     MapView {
         id: mapView

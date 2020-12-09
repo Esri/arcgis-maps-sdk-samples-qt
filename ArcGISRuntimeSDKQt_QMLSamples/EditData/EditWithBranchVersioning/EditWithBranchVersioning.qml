@@ -114,7 +114,7 @@ Rectangle {
 
     ServiceGeodatabase {
         id: sgdb
-        url: "https://sampleserver7.arcgisonline.com/arcgis/rest/services/DamageAssessment/FeatureServer"
+        url: "https://sampleserver7.arcgisonline.com/server/rest/services/DamageAssessment/FeatureServer"
 
         credential: Credential {
             username: "editor01"

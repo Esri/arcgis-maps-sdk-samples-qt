@@ -44,17 +44,17 @@ using namespace Esri::ArcGISRuntime;
 
 namespace
 {
-const QString featureServerUrl("https://sampleserver7.arcgisonline.com/arcgis/rest/services/UtilityNetwork/NapervilleElectric/FeatureServer");
+const QString featureServerUrl("https://sampleserver7.arcgisonline.com/server/rest/services/UtilityNetwork/NapervilleElectric/FeatureServer/");
 const int maxScale = 2000;
 constexpr int targetScale = 50;
 }
-
+Credential* cred = new Credential("user", "pass");
 DisplayUtilityAssociations::DisplayUtilityAssociations(QObject* parent /* = nullptr */):
   QObject(parent),
   m_map(new Map(Basemap::topographicVector(this), this)),
   m_associationsOverlay(new GraphicsOverlay(this))
 {
-  m_utilityNetwork = new UtilityNetwork(featureServerUrl, this);
+  m_utilityNetwork = new UtilityNetwork(featureServerUrl, cred, this);
 
   // create symbols for the associations
   m_attachmentSymbol = new SimpleLineSymbol(SimpleLineSymbolStyle::Dot, Qt::green, 5, this);

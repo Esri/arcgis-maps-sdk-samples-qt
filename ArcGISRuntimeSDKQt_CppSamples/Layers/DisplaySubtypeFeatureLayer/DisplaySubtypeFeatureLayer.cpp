@@ -41,7 +41,7 @@ DisplaySubtypeFeatureLayer::DisplaySubtypeFeatureLayer(QObject* parent /* = null
   m_busy = true;
   emit busyChanged();
   // create the feature table
-  ServiceFeatureTable* featureTable = new ServiceFeatureTable(QUrl("https://sampleserver7.arcgisonline.com/arcgis/rest/services/UtilityNetwork/NapervilleElectric/FeatureServer/100"), this);
+  ServiceFeatureTable* featureTable = new ServiceFeatureTable(QUrl("https://sampleserver7.arcgisonline.com/server/rest/services/UtilityNetwork/NapervilleElectric/FeatureServer/100"), this);
   // create the feature layer using the feature table
   m_subtypeFeatureLayer = new SubtypeFeatureLayer(featureTable, this);
 
