@@ -54,7 +54,7 @@ int main(int argc, char *argv[])
   QtWebEngine::initialize();
 #endif // QT_WEBVIEW_WEBENGINE_BACKEND
 
-  // Intialize application view
+  // Initialize application view
   QQuickView view;
   view.setResizeMode(QQuickView::SizeRootObjectToView);
 

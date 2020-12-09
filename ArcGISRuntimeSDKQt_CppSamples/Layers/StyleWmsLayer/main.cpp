@@ -54,7 +54,7 @@ int main(int argc, char *argv[])
   // Initialize the sample
   StyleWmsLayer::init();
 
-  // Intialize application view
+  // Initialize application view
   QQuickView view;
   view.setResizeMode(QQuickView::SizeRootObjectToView);
 

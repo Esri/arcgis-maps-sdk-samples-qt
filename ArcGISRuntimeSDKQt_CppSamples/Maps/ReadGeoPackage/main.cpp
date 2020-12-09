@@ -53,7 +53,7 @@ int main(int argc, char *argv[])
   // Initialize the sample
   ReadGeoPackage::init();
 
-  // Intialize application view
+  // Initialize application view
   QQuickView view;
   view.setResizeMode(QQuickView::SizeRootObjectToView);
 

@@ -50,7 +50,7 @@ int main(int argc, char *argv[])
   QCoreApplication::setAttribute(Qt::AA_UseOpenGLES);
 #endif
 
-  // Intialize application view
+  // Initialize application view
   QQuickView view;
   view.setResizeMode(QQuickView::SizeRootObjectToView);
 

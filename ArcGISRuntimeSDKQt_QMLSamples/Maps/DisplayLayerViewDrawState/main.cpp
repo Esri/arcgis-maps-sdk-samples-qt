@@ -44,7 +44,7 @@ int main(int argc, char *argv[])
       QCoreApplication::instance()->setProperty("Esri.ArcGISRuntime.apiKey", apiKey);
   }
 
-  // Intialize application view
+  // Initialize application view
   QQuickView view;
   view.setResizeMode(QQuickView::SizeRootObjectToView);
 

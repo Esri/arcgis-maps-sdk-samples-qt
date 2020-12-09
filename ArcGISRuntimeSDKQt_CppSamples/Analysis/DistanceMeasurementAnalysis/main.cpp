@@ -64,7 +64,7 @@ int main(int argc, char *argv[])
   // Initialize the sample
   DistanceMeasurementAnalysis::init();
 
-  // Intialize application view
+  // Initialize application view
   QQuickView view;
   view.setResizeMode(QQuickView::SizeRootObjectToView);
 
