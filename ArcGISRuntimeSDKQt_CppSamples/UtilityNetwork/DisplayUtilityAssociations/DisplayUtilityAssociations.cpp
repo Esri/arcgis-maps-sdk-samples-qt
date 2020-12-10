@@ -44,7 +44,7 @@ using namespace Esri::ArcGISRuntime;
 
 namespace
 {
-const QString featureServerUrl("https://sampleserver7.arcgisonline.com/server/rest/services/UtilityNetwork/NapervilleElectric/FeatureServer/");
+const QString featureServerUrl("https://sampleserver7.arcgisonline.com/server/rest/services/UtilityNetwork/NapervilleElectric/FeatureServer");
 const int maxScale = 2000;
 constexpr int targetScale = 50;
 }
