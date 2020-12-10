@@ -96,6 +96,11 @@ Rectangle {
                 id: utilityNetwork
                 url: featureServerUrl
 
+                credential {
+                    username: "username"
+                    password: "password"
+                }
+
                 onLoadStatusChanged: {
                     if (loadStatus !== Enums.LoadStatusLoaded)
                         return;

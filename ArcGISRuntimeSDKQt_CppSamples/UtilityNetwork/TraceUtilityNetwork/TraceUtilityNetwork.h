@@ -22,6 +22,7 @@ namespace Esri
 namespace ArcGISRuntime
 {
 class ArcGISFeature;
+class Credential;
 class FeatureLayer;
 class GraphicsOverlay;
 class IdentifyLayerResult;
@@ -92,6 +93,7 @@ private:
   Esri::ArcGISRuntime::UniqueValue* createUniqueValue(const QString& label, Esri::ArcGISRuntime::Symbol* fillSymbol, int value);
 
   Esri::ArcGISRuntime::Map* m_map = nullptr;
+  Esri::ArcGISRuntime::Credential* m_cred = nullptr;
   Esri::ArcGISRuntime::MapQuickView* m_mapView = nullptr;
   Esri::ArcGISRuntime::FeatureLayer* m_deviceLayer = nullptr;
   Esri::ArcGISRuntime::FeatureLayer* m_lineLayer = nullptr;

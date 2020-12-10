@@ -50,7 +50,7 @@ namespace
 EditWithBranchVersioning::EditWithBranchVersioning(QObject* parent /* = nullptr */):
   QObject(parent),
   m_map(new Map(Basemap::streetsVector(this), this)),
-  m_cred(new Credential("editor01", "editor01.password", this))
+  m_cred(new Credential("username", "password", this))
 {
 }
 

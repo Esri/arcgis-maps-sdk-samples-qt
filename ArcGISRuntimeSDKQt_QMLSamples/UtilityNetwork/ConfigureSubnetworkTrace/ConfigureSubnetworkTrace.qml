@@ -48,6 +48,11 @@ Rectangle {
         id: utilityNetwork
         url: featureLayerUrl
 
+        Credential {
+            username: "username"
+            password: "password"
+        }
+
         onTraceStatusChanged: {
             if (traceStatus !== Enums.TaskStatusCompleted)
                 return;

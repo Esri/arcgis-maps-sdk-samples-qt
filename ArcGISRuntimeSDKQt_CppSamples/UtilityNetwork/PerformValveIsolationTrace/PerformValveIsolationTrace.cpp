@@ -66,12 +66,13 @@ const QString globalId = "{98A06E95-70BE-43E7-91B7-E34C9D3CB9FF}";
 PerformValveIsolationTrace::PerformValveIsolationTrace(QObject* parent /* = nullptr */):
   QObject(parent),
   m_map(new Map(Basemap::streetsNightVector(this), this)),
+  m_cred(new Credential("username", "password", this)),
   m_startingLocationOverlay(new GraphicsOverlay(this))
 {
-  ServiceFeatureTable* distributionLineFeatureTable = new ServiceFeatureTable(featureServiceUrl + "/3", this);
+  ServiceFeatureTable* distributionLineFeatureTable = new ServiceFeatureTable(featureServiceUrl + "/3", m_cred, this);
   FeatureLayer* distributionLineLayer = new FeatureLayer(distributionLineFeatureTable, this);
 
-  ServiceFeatureTable* deviceFeatureTable = new ServiceFeatureTable(featureServiceUrl + "/0", this);
+  ServiceFeatureTable* deviceFeatureTable = new ServiceFeatureTable(featureServiceUrl + "/0", m_cred, this);
   FeatureLayer* deviceLayer = new FeatureLayer(deviceFeatureTable, this);
 
   // add the feature layers to the map

@@ -21,16 +21,17 @@ namespace Esri
 {
 namespace ArcGISRuntime
 {
+class Credential;
 class Error;
-class UtilityTraceCondition;
 class UtilityElement;
 class UtilityNetwork;
 class UtilityNetworkDefinition;
 class UtilityTerminal;
 class UtilityTier;
-class UtilityTraceParameters;
+class UtilityTraceCondition;
 class UtilityTraceConditionalExpression;
 class UtilityTraceConfiguration;
+class UtilityTraceParameters;
 }
 }
 
@@ -92,6 +93,7 @@ private:
   Esri::ArcGISRuntime::UtilityTraceCondition* m_initialExpression = nullptr;
   Esri::ArcGISRuntime::UtilityTraceConfiguration* m_traceConfiguration = nullptr;
   Esri::ArcGISRuntime::UtilityTraceParameters* m_traceParams = nullptr;
+  Esri::ArcGISRuntime::Credential* m_cred = nullptr;
 
   QStringList m_attributeListModel;
   QStringList m_conditionBarrierExpressionListModel;

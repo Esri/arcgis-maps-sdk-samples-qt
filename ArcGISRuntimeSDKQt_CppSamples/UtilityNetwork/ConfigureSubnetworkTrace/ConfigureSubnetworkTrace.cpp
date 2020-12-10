@@ -49,9 +49,10 @@
 using namespace Esri::ArcGISRuntime;
 
 ConfigureSubnetworkTrace::ConfigureSubnetworkTrace(QObject* parent /* = nullptr */):
-  QObject(parent)
+  QObject(parent),
+  m_cred(new Credential("username", "password", this))
 {
-  m_utilityNetwork = new UtilityNetwork(m_featureLayerUrl, this);
+  m_utilityNetwork = new UtilityNetwork(m_featureLayerUrl, m_cred, this);
 
   connect(m_utilityNetwork, &UtilityNetwork::doneLoading, this, &ConfigureSubnetworkTrace::onUtilityNetworkLoaded);
 
