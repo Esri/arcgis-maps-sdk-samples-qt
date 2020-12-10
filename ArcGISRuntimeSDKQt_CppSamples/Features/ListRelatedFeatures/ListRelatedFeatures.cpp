@@ -62,7 +62,7 @@ void ListRelatedFeatures::init()
   // Register the map view for QML
   qmlRegisterType<MapQuickView>("Esri.Samples", 1, 0, "MapView");
   qmlRegisterType<ListRelatedFeatures>("Esri.Samples", 1, 0, "ListRelatedFeaturesSample");
-  qmlRegisterType<ViewInsets>();
+  qmlRegisterAnonymousType<ViewInsets>("Esri.Samples", 1);
   qmlRegisterUncreatableType<RelatedFeatureListModel>("Esri.ArcGISRuntimeSamples", 1, 0,
                                                       "RelatedFeatureListModel", "RelatedFeatureListModel is an uncreatable type");
 }

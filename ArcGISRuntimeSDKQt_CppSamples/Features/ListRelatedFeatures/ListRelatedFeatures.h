@@ -21,6 +21,7 @@ namespace Esri
 {
   namespace ArcGISRuntime
   {
+    class ArcGISFeature;
     class ArcGISFeatureTable;
     class FeatureLayer;
     class Map;
