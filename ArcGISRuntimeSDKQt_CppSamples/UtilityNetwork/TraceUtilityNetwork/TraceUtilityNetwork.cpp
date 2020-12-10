@@ -57,7 +57,7 @@ TraceUtilityNetwork::TraceUtilityNetwork(QObject* parent /* = nullptr */):
 {
   m_map->setInitialViewpoint(Viewpoint(Envelope(-9813547.35557238, 5129980.36635111, -9813185.0602376, 5130215.41254146, SpatialReference::webMercator())));
 
-  m_deviceFeatureTable = new ServiceFeatureTable(QUrl("https://sampleserver7.arcgisonline.com/server/rest/services/UtilityNetwork/NapervilleElectric/FeatureServer/0"), this);
+  m_deviceFeatureTable = new ServiceFeatureTable(QUrl("https://sampleserver7.arcgisonline.com/server/rest/services/UtilityNetwork/NapervilleElectric/FeatureServer/0"), m_cred, this);
   m_deviceLayer = new FeatureLayer(m_deviceFeatureTable, this);
   connect(m_deviceLayer, &FeatureLayer::selectFeaturesCompleted, this, [this](QUuid)
   {
