@@ -179,7 +179,7 @@ Rectangle {
                     SimpleLineSymbol {
                         id: attachmentSymbol
                         style: Enums.SimpleLineSymbolStyleDot
-                        color: "lime"
+                        color: "red"
                         width: 5
 
                         // create swatch image for the legend
@@ -198,7 +198,7 @@ Rectangle {
                     SimpleLineSymbol {
                         id: connectivitySymbol
                         style: Enums.SimpleLineSymbolStyleDot
-                        color: "red"
+                        color: "lime"
                         width: 5
 
                         // create swatch image for the legend
