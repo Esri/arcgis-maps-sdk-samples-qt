@@ -48,6 +48,11 @@ Rectangle {
                 ServiceFeatureTable {
                     id: featureTable
                     url: "https://sampleserver7.arcgisonline.com/server/rest/services/UtilityNetwork/NapervilleElectric/FeatureServer/100"
+
+                    credential {
+                        username: "username"
+                        password: "password"
+                    }
                 }
 
                 onLoadStatusChanged: {

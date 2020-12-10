@@ -63,6 +63,11 @@ Rectangle {
 
                 ServiceFeatureTable {
                     url: featureLayerUrl + "/115"
+
+                    credential {
+                        username: "username"
+                        password: "password"
+                    }
                 }
 
                 UniqueValueRenderer {
@@ -99,6 +104,11 @@ Rectangle {
 
                 ServiceFeatureTable {
                     url: featureLayerUrl + "/100"
+
+                    credential {
+                        username: "username"
+                        password: "password"
+                    }
                 }
 
                 onSelectFeaturesStatusChanged: checkSelectionStatus();
@@ -205,6 +215,11 @@ Rectangle {
     UtilityNetwork {
         id: utilityNetwork
         url: featureLayerUrl
+
+        credential {
+            username: "username"
+            password: "password"
+        }
 
         onTraceStatusChanged: {
             if (traceStatus !== Enums.TaskStatusCompleted)
