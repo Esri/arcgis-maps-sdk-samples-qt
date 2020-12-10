@@ -46,7 +46,7 @@ Read more about how to set up the sample's offline data [here](http://links.esri
 
 Link | Local Location
 ---------|-------|
-|[PointsOfInterest map package](https://www.arcgis.com/home/item.html?id=ab8647d60dfd413babffa815bbb12095)| `<userhome>`/ArcGIS/Runtime/Data/mpkx/PointsofInterest.mpkx |
+|[PointsOfInterest map package](https://www.arcgis.com/home/item.html?id=92ca5cdb3ff1461384bf80dc008e297b)| `<userhome>`/ArcGIS/Runtime/Data/mpkx/PointsofInterest.mpkx |
 
 ## Additional information
 
