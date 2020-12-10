@@ -40,4 +40,4 @@ For more information, see [Understanding the mosaicking rules](https://desktop.a
 
 ## Tags
 
-image service, mosaic rule, mosaic method, raster
+image service, mosaic method, mosaic rule, raster
