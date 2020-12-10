@@ -96,7 +96,7 @@ Rectangle {
                 id: utilityNetwork
                 url: featureServerUrl
 
-                Credential
+                Credential {
                     username: "viewer01"
                     password: "I68VGU^nMurF"
                 }
