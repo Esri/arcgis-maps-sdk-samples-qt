@@ -118,7 +118,7 @@ Rectangle {
 
         credential: Credential {
             username: "editor01"
-            password: "editor01.password"
+            password: "S7#i2LWmYH75"
         }
 
         onLoadStatusChanged: {

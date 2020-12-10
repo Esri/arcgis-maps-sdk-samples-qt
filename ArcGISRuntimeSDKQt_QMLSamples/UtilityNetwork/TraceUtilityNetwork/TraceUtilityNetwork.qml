@@ -64,9 +64,9 @@ Rectangle {
                 ServiceFeatureTable {
                     url: featureLayerUrl + "/115"
 
-                    credential {
-                        username: "username"
-                        password: "password"
+                    Credential
+                        username: "viewer01"
+                        password: "I68VGU^nMurF"
                     }
                 }
 
@@ -105,9 +105,9 @@ Rectangle {
                 ServiceFeatureTable {
                     url: featureLayerUrl + "/100"
 
-                    credential {
-                        username: "username"
-                        password: "password"
+                    Credential
+                        username: "viewer01"
+                        password: "I68VGU^nMurF"
                     }
                 }
 
@@ -216,9 +216,9 @@ Rectangle {
         id: utilityNetwork
         url: featureLayerUrl
 
-        credential {
-            username: "username"
-            password: "password"
+        Credential
+            username: "viewer01"
+            password: "I68VGU^nMurF"
         }
 
         onTraceStatusChanged: {

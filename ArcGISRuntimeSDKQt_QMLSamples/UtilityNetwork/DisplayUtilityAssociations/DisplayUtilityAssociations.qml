@@ -96,9 +96,9 @@ Rectangle {
                 id: utilityNetwork
                 url: featureServerUrl
 
-                credential {
-                    username: "username"
-                    password: "password"
+                Credential
+                    username: "viewer01"
+                    password: "I68VGU^nMurF"
                 }
 
                 onLoadStatusChanged: {

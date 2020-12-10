@@ -48,7 +48,7 @@ using namespace Esri::ArcGISRuntime;
 TraceUtilityNetwork::TraceUtilityNetwork(QObject* parent /* = nullptr */):
   QObject(parent),
   m_map(new Map(Basemap::streetsNightVector(this), this)),
-  m_cred(new Credential("username", "password", this)),
+  m_cred(new Credential("viewer01", "I68VGU^nMurF", this)),
   m_startingSymbol(new SimpleMarkerSymbol(SimpleMarkerSymbolStyle::Cross, QColor(Qt::green), 20, this)),
   m_barrierSymbol(new SimpleMarkerSymbol(SimpleMarkerSymbolStyle::X, QColor(Qt::red), 20, this)),
   m_mediumVoltageSymbol(new SimpleLineSymbol(SimpleLineSymbolStyle::Solid, QColor(Qt::darkCyan), 3, this)),
@@ -57,7 +57,7 @@ TraceUtilityNetwork::TraceUtilityNetwork(QObject* parent /* = nullptr */):
 {
   m_map->setInitialViewpoint(Viewpoint(Envelope(-9813547.35557238, 5129980.36635111, -9813185.0602376, 5130215.41254146, SpatialReference::webMercator())));
 
-  m_deviceFeatureTable = new ServiceFeatureTable(QUrl("https://sampleserver7.arcgisonline.com/server/rest/services/UtilityNetwork/NapervilleElectric/FeatureServer/100"), this);
+  m_deviceFeatureTable = new ServiceFeatureTable(QUrl("https://sampleserver7.arcgisonline.com/server/rest/services/UtilityNetwork/NapervilleElectric/FeatureServer/0"), this);
   m_deviceLayer = new FeatureLayer(m_deviceFeatureTable, this);
   connect(m_deviceLayer, &FeatureLayer::selectFeaturesCompleted, this, [this](QUuid)
   {

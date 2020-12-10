@@ -49,8 +49,8 @@ Rectangle {
         url: featureLayerUrl
 
         Credential {
-            username: "username"
-            password: "password"
+            username: "viewer01"
+            password: "I68VGU^nMurF"
         }
 
         onTraceStatusChanged: {
