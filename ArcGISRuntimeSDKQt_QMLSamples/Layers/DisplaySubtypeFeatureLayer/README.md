@@ -32,6 +32,12 @@ The sample loads with the sublayer visible on the map. Toggle its visibility wit
 
 The [feature service layer](https://sampleserver7.arcgisonline.com/server/rest/services/UtilityNetwork/NapervilleElectric/FeatureServer/0) in this sample represents an electric network in Naperville, Illinois, which contains a utility network with asset classification for different devices.
 
+## Additional information
+
+Credentials:
+* Username: viewer01
+* Password: I68VGU^nMurF
+
 ## Tags
 
 asset group, feature layer, labeling, sublayer, subtype, symbology, utility network, visible scale range

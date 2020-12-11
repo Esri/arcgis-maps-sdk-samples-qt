@@ -60,6 +60,12 @@ Example barrier conditions for the default dataset:
 
 The [Naperville electrical](https://sampleserver7.arcgisonline.com/server/rest/services/UtilityNetwork/NapervilleElectric/FeatureServer)  network feature service, hosted on ArcGIS Online, contains a utility network used to run the subnetwork-based trace shown in this sample.
 
+## Additional information
+
+Credentials:
+* Username: viewer01
+* Password: I68VGU^nMurF
+
 ## Tags
 
 category comparison, condition barriers, network analysis, network attribute comparison, subnetwork trace, trace configuration, traversability, utility network, validate consistency

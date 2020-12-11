@@ -45,6 +45,12 @@ To add a starting point, select 'Add starting location(s)' and tap on one or mor
 
 The sample uses a dark vector basemap. It includes a subset of feature layers from a feature service that contains the same utility network used to run the connected trace.
 
+## Additional information
+
+Credentials:
+* Username: viewer01
+* Password: I68VGU^nMurF
+
 ## Tags
 
 connected trace, network analysis, utility network
