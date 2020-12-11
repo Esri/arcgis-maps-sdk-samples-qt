@@ -65,7 +65,7 @@ TraceUtilityNetwork::TraceUtilityNetwork(QObject* parent /* = nullptr */):
     emit busyChanged();
   });
 
-  m_lineFeatureTable = new ServiceFeatureTable(QUrl("https://sampleserver7.arcgisonline.com/server/rest/services/UtilityNetwork/NapervilleElectric/FeatureServer/115"), m_cred, this);
+  m_lineFeatureTable = new ServiceFeatureTable(QUrl("https://sampleserver7.arcgisonline.com/server/rest/services/UtilityNetwork/NapervilleElectric/FeatureServer/3"), m_cred, this);
   m_lineLayer = new FeatureLayer(m_lineFeatureTable, this);
 
   // create unique renderer
