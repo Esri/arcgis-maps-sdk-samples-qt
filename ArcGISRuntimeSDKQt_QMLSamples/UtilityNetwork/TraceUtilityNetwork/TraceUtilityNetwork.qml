@@ -62,7 +62,7 @@ Rectangle {
                 id: lineLayer
 
                 ServiceFeatureTable {
-                    url: featureLayerUrl + "/115"
+                    url: featureLayerUrl + "/3"
 
                     Credential {
                         username: "viewer01"
