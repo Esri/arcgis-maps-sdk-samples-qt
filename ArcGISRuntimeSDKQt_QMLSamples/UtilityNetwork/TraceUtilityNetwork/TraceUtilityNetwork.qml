@@ -103,7 +103,7 @@ Rectangle {
                 id: deviceLayer
 
                 ServiceFeatureTable {
-                    url: featureLayerUrl + "/100"
+                    url: featureLayerUrl + "/0"
 
                     Credential {
                         username: "viewer01"
