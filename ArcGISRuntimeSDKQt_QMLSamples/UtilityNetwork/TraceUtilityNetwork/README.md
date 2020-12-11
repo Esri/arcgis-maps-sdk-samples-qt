@@ -32,14 +32,14 @@ To add a starting point, select 'Add starting location(s)' and tap on one or mor
 ## Relevant API
 
 * GeometryEngine.fractionAlong
-* UtilityNetwork
-* UtilityTraceParameters
-* UtilityTraceResult
+* UtilityAssetType
 * UtilityElementTraceResult
+* UtilityNetwork
 * UtilityNetworkDefinition
 * UtilityNetworkSource
-* UtilityAssetType
 * UtilityTerminal
+* UtilityTraceParameters
+* UtilityTraceResult
 
 ## About the data
 

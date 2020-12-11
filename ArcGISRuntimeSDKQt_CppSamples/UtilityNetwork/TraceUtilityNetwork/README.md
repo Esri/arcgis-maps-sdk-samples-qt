@@ -31,15 +31,15 @@ To add a starting point, select 'Add starting location(s)' and tap on one or mor
 
 ## Relevant API
 
-* UtilityNetwork
-* UtilityTraceParameters
-* UtilityTraceResult
+* GeometryEngine::fractionAlong
+* UtilityAssetType
 * UtilityElementTraceResult
+* UtilityNetwork
 * UtilityNetworkDefinition
 * UtilityNetworkSource
-* UtilityAssetType
 * UtilityTerminal
-* GeometryEngine::fractionAlong
+* UtilityTraceParameters
+* UtilityTraceResult
 
 ## About the data
 
