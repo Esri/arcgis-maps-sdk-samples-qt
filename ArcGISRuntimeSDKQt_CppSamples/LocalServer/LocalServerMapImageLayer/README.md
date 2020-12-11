@@ -44,7 +44,7 @@ Read more about how to set up the sample's offline data [here](http://links.esri
 
 Link | Local Location
 ---------|-------|
-|[RelationshipID map package](https://www.arcgis.com/home/item.html?id=33e8c33a421640749bfe1602b8644db8)| `<userhome>`/ArcGIS/Runtime/Data/mpkx/RelationshipID.mpkx
+|[RelationshipID map package](https://www.arcgis.com/home/item.html?id=85c34847bbe1402fa115a1b9b87561ce)| `<userhome>`/ArcGIS/Runtime/Data/mpkx/RelationshipID.mpkx
 
 ## Additional information
 

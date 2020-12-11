@@ -51,8 +51,8 @@ Read more about how to set up the sample's offline data [here](http://links.esri
 
 Link | Local Location
 ---------|-------|
-|[PointsOfInterest map package](https://www.arcgis.com/home/item.html?id=ab8647d60dfd413babffa815bbb12095)| `<userhome>`/ArcGIS/Runtime/Data/mpkx/PointsofInterest.mpkx |
-|[Contour geoprocessing package](https://www.arcgis.com/home/item.html?id=7c4994a31470460798afb07a282b438a)| `<userhome>`/ArcGIS/Runtime/Data/gpkx/Contour.gpkx |
+|[PointsOfInterest map package](https://www.arcgis.com/home/item.html?id=92ca5cdb3ff1461384bf80dc008e297b)| `<userhome>`/ArcGIS/Runtime/Data/mpkx/PointsofInterest.mpkx |
+|[Contour geoprocessing package](https://www.arcgis.com/home/item.html?id=a680362d6a7447e8afe2b1eb85fcde30)| `<userhome>`/ArcGIS/Runtime/Data/gpkx/Contour.gpkx |
 
 ## Additional information
 
