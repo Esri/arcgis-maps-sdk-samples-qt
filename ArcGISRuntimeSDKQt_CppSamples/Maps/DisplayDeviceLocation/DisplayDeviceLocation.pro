@@ -24,7 +24,7 @@ CONFIG += c++14
 # additional modules are pulled in via arcgisruntime.pri
 QT += opengl qml quick
 
-ARCGIS_RUNTIME_VERSION = 100.10
+ARCGIS_RUNTIME_VERSION = 100.11
 include($$PWD/arcgisruntime.pri)
 
 TEMPLATE = app
