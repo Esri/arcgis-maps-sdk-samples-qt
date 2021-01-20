@@ -83,7 +83,7 @@ void Picture_Marker_Symbol::componentComplete()
   m_mapView->setWrapAroundMode(WrapAroundMode::Disabled);
 
   // Create a map using the topographic basemap
-  m_map = new Map(Basemap::topographic(this), this);
+  m_map = new Map(BasemapStyle::ArcGISTopographic, this);
 
   // Set map to map view
   m_mapView->setMap(m_map);

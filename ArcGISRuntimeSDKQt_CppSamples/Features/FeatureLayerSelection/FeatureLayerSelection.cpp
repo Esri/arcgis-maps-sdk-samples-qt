@@ -60,7 +60,7 @@ void FeatureLayerSelection::componentComplete()
   m_mapView->setWrapAroundMode(WrapAroundMode::Disabled);
 
   // Create a map using the streets basemap
-  m_map = new Map(Basemap::lightGrayCanvas(this), this);
+  m_map = new Map(BasemapStyle::ArcGISLightGray, this);
   m_map->setInitialViewpoint(Viewpoint(Envelope(-6603299.491810, 1679677.742046, 9002253.947487, 8691318.054732, SpatialReference::webMercator())));
 
   // Set map to map view

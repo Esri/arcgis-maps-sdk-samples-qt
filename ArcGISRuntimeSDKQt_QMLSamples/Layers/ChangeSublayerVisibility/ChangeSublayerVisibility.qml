@@ -28,7 +28,9 @@ Rectangle {
         // Nest the Map as a child of the MapView
         Map {
             // Nest the Basemap to add it as the Map's Basemap
-            BasemapTopographic {}
+            Basemap {
+                initStyle: Enums.BasemapStyleArcGISTopographic
+            }
 
             // Nest an ArcGISMapImage Layer in the Map to add it as an operational layer
             ArcGISMapImageLayer {

@@ -27,7 +27,7 @@ BasicSceneView::BasicSceneView(QWidget* parent) :
   QWidget(parent)
 {    
     // Create a scene using the Imagery basemap
-    m_scene = new Scene(Basemap::imagery(this), this);
+    m_scene = new Scene(BasemapStyle::ArcGISImageryStandard, this);
 
     // Create a scene view, and pass in the scene
     m_sceneView = new SceneGraphicsView(m_scene, this);

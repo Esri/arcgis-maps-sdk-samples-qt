@@ -50,7 +50,7 @@ void ViewshedCamera::componentComplete()
 
   // Create a scene
   m_sceneView = findChild<SceneQuickView*>("sceneView");
-  m_scene = new Scene(Basemap::imagery(this), this);
+  m_scene = new Scene(BasemapStyle::ArcGISImageryStandard, this);
 
   // Set a base surface
   Surface* surface = new Surface(this);

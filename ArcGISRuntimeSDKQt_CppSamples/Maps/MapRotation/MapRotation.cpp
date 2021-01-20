@@ -50,7 +50,7 @@ void MapRotation::componentComplete()
     m_mapView = findChild<MapQuickView*>("mapView");
 
     // create a new basemap instance
-    Basemap* basemap = Basemap::streets(this);
+    Basemap* basemap = new Basemap(BasemapStyle::ArcGISStreets, this);
     // create a new map instance and set the initial viewpoint
     m_map = new Map(basemap, this);
     Viewpoint initialViewpoint(Point(-11070722, 4658720, SpatialReference(102100)), 55151630);

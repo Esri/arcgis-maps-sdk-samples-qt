@@ -58,7 +58,9 @@ Rectangle {
 
         // create a map with the imagery basemap
         Map {
-            BasemapImagery {}
+            Basemap {
+                initStyle: Enums.BasemapStyleArcGISImageryStandard
+            }
         }
 
         // handle the mouse click

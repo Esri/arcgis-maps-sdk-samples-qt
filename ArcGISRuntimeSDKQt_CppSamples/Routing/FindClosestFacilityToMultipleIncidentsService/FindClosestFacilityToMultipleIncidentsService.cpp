@@ -40,7 +40,7 @@ using namespace Esri::ArcGISRuntime;
 
 FindClosestFacilityToMultipleIncidentsService::FindClosestFacilityToMultipleIncidentsService(QObject* parent /* = nullptr */):
   QObject(parent),
-  m_map(new Map(Basemap::streetsWithReliefVector(this), this)),
+  m_map(new Map(BasemapStyle::ArcGISStreetsRelief, this)),
   m_task(new ClosestFacilityTask(QUrl("https://sampleserver6.arcgisonline.com/arcgis/rest/services/NetworkAnalysis/SanDiego/NAServer/ClosestFacility"), this)),
   m_resultsOverlay(new GraphicsOverlay(this))
 {

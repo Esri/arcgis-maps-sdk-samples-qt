@@ -59,7 +59,7 @@ void SpatialRelationships::componentComplete()
   m_mapView->setSelectionProperties(SelectionProperties(QColor(Qt::yellow)));
 
   // Create a map using the topographic basemap
-  m_map = new Map(Basemap::topographic(this), this);
+  m_map = new Map(BasemapStyle::ArcGISTopographic, this);
 
   // Set map to map view
   m_mapView->setMap(m_map);

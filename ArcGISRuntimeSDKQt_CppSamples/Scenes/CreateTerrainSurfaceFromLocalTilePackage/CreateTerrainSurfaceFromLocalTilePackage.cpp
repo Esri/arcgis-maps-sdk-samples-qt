@@ -56,7 +56,7 @@ using namespace Esri::ArcGISRuntime;
 
 CreateTerrainSurfaceFromLocalTilePackage::CreateTerrainSurfaceFromLocalTilePackage(QObject* parent /* = nullptr */):
   QObject(parent),
-  m_scene(new Scene(Basemap::imagery(this), this))
+  m_scene(new Scene(BasemapStyle::ArcGISImageryStandard, this))
 {
   // create the MontereyElevation data path
   // data is downloaded automatically by the sample viewer app. Instructions to download

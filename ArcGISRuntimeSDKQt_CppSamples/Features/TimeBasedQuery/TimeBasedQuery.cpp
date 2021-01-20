@@ -51,7 +51,7 @@ void TimeBasedQuery::componentComplete()
   m_mapView = findChild<MapQuickView*>("mapView");
 
   // Create a map using the oceans basemap
-  m_map = new Map(Basemap::oceans(this), this);
+  m_map = new Map(BasemapStyle::ArcGISOceans, this);
 
   // Create feature table
   ServiceFeatureTable* hurricaneTable = new ServiceFeatureTable(QUrl("https://sampleserver6.arcgisonline.com/arcgis/rest/services/Hurricanes/MapServer/0"), this);

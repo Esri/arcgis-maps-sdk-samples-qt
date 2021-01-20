@@ -27,7 +27,7 @@ ChangeViewpoint::ChangeViewpoint(QWidget* parent) :
     QWidget(parent)
 {    
     // Create a map using an imagery basemap
-    m_map = new Map(Basemap::imageryWithLabels(this), this);
+    m_map = new Map(BasemapStyle::ArcGISImagery, this);
 
     // Create a map view, and pass in the map
     m_mapView = new MapGraphicsView(m_map, this);

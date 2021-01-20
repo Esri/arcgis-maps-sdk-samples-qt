@@ -49,7 +49,9 @@ Rectangle {
         }
 
         Map {
-            BasemapLightGrayCanvas {}
+            Basemap {
+                initStyle: Enums.BasemapStyleArcGISLightGray
+            }
 
             // create query parameters used to select all facilities from the feature table
             QueryParameters {
