@@ -93,7 +93,9 @@ Rectangle {
 
         // Create a map with a basemap and initial viewpoint
         Map {
-            BasemapNavigationVector {}
+            Basemap {
+                initStyle: Enums.BasemapStyleArcGISNavigation
+            }
 
             initialViewpoint: ViewpointCenter {
                 Point {

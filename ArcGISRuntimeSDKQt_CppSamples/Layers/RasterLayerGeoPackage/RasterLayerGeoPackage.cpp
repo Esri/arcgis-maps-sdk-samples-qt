@@ -77,7 +77,7 @@ void RasterLayerGeoPackage::componentComplete()
   m_mapView = findChild<MapQuickView*>("mapView");
 
   // Create a map using the light gray basemap
-  m_map = new Map(Basemap::lightGrayCanvas(this), this);
+  m_map = new Map(BasemapStyle::ArcGISLightGray, this);
 
   // Set an initial viewpoint
   const Point pt(-104.8319, 39.7294, SpatialReference(4326));

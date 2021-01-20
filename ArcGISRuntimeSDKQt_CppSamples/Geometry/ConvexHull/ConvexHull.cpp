@@ -34,7 +34,7 @@ using namespace Esri::ArcGISRuntime;
 
 ConvexHull::ConvexHull(QObject* parent /* = nullptr */):
   QObject(parent),
-  m_map(new Map(Basemap::topographic(this), this))
+  m_map(new Map(BasemapStyle::ArcGISTopographic, this))
 {
   setupGraphics();
 }

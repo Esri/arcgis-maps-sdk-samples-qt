@@ -30,7 +30,9 @@ Rectangle {
         wrapAroundMode: Enums.WrapAroundModeDisabled
 
         Map {
-            BasemapLightGrayCanvas {}
+            Basemap {
+                initStyle: Enums.BasemapStyleArcGISLightGray
+            }
 
             FeatureLayer {
                 ServiceFeatureTable {

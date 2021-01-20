@@ -35,7 +35,9 @@ Rectangle {
         anchors.fill: parent
         Scene {
             id: scene
-            BasemapImagery {}
+            Basemap {
+                initStyle: Enums.BasemapStyleArcGISImageryStandard
+            }
             // Center the viewpoint over continental Europe.
             ViewpointCenter {
                 Point {

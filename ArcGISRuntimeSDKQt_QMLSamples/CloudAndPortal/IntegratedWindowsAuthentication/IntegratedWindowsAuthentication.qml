@@ -35,7 +35,9 @@ Rectangle {
         anchors.fill: parent
 
         Map {
-            BasemapTopographic {}
+            Basemap {
+                initStyle: Enums.BasemapStyleArcGISTopographic
+            }
         }
     }
 

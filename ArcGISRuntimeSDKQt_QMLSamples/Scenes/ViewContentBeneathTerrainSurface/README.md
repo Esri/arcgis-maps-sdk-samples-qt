@@ -14,7 +14,7 @@ The sample loads a scene with underground features. Pan and zoom to explore the 
 
 ## How it works
 
-1. Display an `Scene` in a `SceneView` which contains layers with underground features.
+1. Display a `Scene` in a `SceneView` which contains layers with underground features.
 2. To see underground, get the scene's base surface and set its opacity to a value between 0 and 1.
 2. To allow the camera to go underground, set the surface's navigation constraint to `NONE`.
 

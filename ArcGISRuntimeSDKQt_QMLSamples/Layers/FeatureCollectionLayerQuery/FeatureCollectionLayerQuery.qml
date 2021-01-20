@@ -32,7 +32,9 @@ Rectangle {
 
         Map {
             id: map
-            BasemapOceans {}
+            Basemap {
+                initStyle: Enums.BasemapStyleArcGISOceans
+            }
         }
     }
 

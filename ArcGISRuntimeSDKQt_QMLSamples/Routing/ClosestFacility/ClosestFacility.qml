@@ -36,7 +36,9 @@ Rectangle {
         anchors.fill: parent
 
         Map {
-            BasemapStreets {}
+            Basemap {
+                initStyle: Enums.BasemapStyleArcGISStreets
+            }
 
             initialViewpoint: ViewpointCenter {
                 Point {

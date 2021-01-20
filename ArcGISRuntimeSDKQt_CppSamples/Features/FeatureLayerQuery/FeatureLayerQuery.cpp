@@ -63,7 +63,7 @@ void FeatureLayerQuery::componentComplete()
     m_mapView->setWrapAroundMode(WrapAroundMode::Disabled);
 
     // Create a map using the topographic basemap
-    m_map = new Map(Basemap::topographic(this), this);
+    m_map = new Map(BasemapStyle::ArcGISTopographic, this);
     m_map->setInitialViewpoint(Viewpoint(Point(-11e6, 5e6, SpatialReference(102100)), 9e7));
 
     // Set map to map view

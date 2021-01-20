@@ -53,7 +53,9 @@ Rectangle {
         }
 
         Map {
-            BasemapImageryWithLabels {}
+            Basemap {
+                initStyle: Enums.BasemapStyleArcGISImagery
+            }
 
             ViewpointCenter {
                 Point {

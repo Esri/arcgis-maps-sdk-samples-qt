@@ -39,7 +39,9 @@ Rectangle {
 
         Scene {
             id: scene
-            BasemapImagery {}
+            Basemap {
+                initStyle: Enums.BasemapStyleArcGISImageryStandard
+            }
 
             Surface {
                 opacity: 0.0

@@ -31,7 +31,7 @@ SetInitialMapArea::SetInitialMapArea(QWidget* parent) :
     Envelope envelope(-12211308.778729, 4645116.003309, -12208257.879667, 4650542.535773, SpatialReference(102100));
 
     // Create a new map with the imagery with labels basemap
-    m_map = new Map(Basemap::imageryWithLabels(this), this);
+    m_map = new Map(BasemapStyle::ArcGISImagery, this);
 
     // Set the initial viewpoint to the envelope
     m_map->setInitialViewpoint(Viewpoint(envelope));

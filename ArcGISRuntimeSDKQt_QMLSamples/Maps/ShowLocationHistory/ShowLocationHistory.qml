@@ -33,7 +33,9 @@ Rectangle {
         anchors.fill: parent
 
         Map {
-            BasemapDarkGrayCanvasVector {}
+            Basemap {
+                initStyle: Enums.BasemapStyleArcGISDarkGray
+            }
         }
 
         // set initial viewpoint near UCLA, Los Angeles

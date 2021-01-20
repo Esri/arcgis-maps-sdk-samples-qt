@@ -31,7 +31,9 @@ Rectangle {
         anchors.fill: parent
 
         Map {
-            BasemapDarkGrayCanvasVector {}
+            Basemap {
+                initStyle: Enums.BasemapStyleArcGISDarkGray
+            }
 
             // add a KML Layer
             KmlLayer {

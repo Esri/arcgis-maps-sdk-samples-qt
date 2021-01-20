@@ -38,7 +38,9 @@ Rectangle {
         anchors.fill: parent
 
         Map {
-            BasemapStreetsNightVector {}
+            Basemap {
+                initStyle: Enums.BasemapStyleArcGISStreetsNight
+            }
 
             // create the feature layer
             SubtypeFeatureLayer  {

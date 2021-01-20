@@ -98,7 +98,7 @@ void RasterColormapRenderer::componentComplete()
   m_rasterLayer->setRenderer(colormapRenderer);
 
   // Add the raster to the map as an operational layer
-  Map* map = new Map(Basemap::imagery(this), this);
+  Map* map = new Map(BasemapStyle::ArcGISImageryStandard, this);
 
   map->operationalLayers()->append(m_rasterLayer);
 

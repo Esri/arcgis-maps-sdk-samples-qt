@@ -35,7 +35,9 @@ Rectangle {
 
         // Create a new Map with the world streets vector basemap
         Map {
-            BasemapStreetsVector {}
+            Basemap {
+                initStyle: Enums.BasemapStyleArcGISStreets
+            }
 
             // Create a new feature layer to display features in the world cities table
             FeatureLayer {

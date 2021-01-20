@@ -28,7 +28,9 @@ Rectangle {
         anchors.fill: parent
 
         Map {
-            BasemapTopographic {}
+            Basemap {
+                initStyle: Enums.BasemapStyleArcGISTopographic
+            }
 
             FeatureLayer {
                 // Create WFS Feature Table from Get Capabilities URL and table name

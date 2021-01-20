@@ -29,7 +29,9 @@ Rectangle {
 
     Map {
         id: map
-        BasemapTopographic {}
+        Basemap {
+            initStyle: Enums.BasemapStyleArcGISTopographic
+        }
     }
 
     // Create MapView that a GraphicsOverlay

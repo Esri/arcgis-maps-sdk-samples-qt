@@ -30,7 +30,9 @@ Rectangle {
 
         //! [Display Feature Service]
         Map {
-            BasemapTerrainWithLabels {}
+            Basemap {
+                initStyle: Enums.BasemapStyleArcGISTerrain
+            }
             initialViewpoint: vc
 
             FeatureLayer {

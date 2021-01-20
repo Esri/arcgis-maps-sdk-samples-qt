@@ -32,7 +32,9 @@ Rectangle {
         wrapAroundMode: Enums.WrapAroundModeDisabled
 
         Map {
-            BasemapTopographic {}
+            Basemap {
+                initStyle: Enums.BasemapStyleArcGISTopographic
+            }
             initialViewpoint: viewPoint
 
             FeatureLayer {

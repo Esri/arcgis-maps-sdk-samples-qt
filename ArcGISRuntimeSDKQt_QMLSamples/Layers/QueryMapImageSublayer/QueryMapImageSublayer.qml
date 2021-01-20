@@ -36,7 +36,9 @@ Rectangle {
         // Desclare a Map inside the MapView
         Map {
             // Declare a Basemap
-            BasemapStreetsVector {}
+            Basemap {
+                initStyle: Enums.BasemapStyleArcGISStreets
+            }
 
             // Add a Map Image Layer
             ArcGISMapImageLayer {

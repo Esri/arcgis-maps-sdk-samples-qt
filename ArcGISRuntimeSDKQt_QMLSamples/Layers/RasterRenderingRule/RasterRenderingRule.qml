@@ -36,7 +36,9 @@ Rectangle {
         Map {
             id: map
             // create a basemap from a tiled layer and add to the map
-            BasemapStreets {}
+            Basemap {
+                initStyle: Enums.BasemapStyleArcGISStreets
+            }
 
             //! [RasterRenderingRule qml ImageServiceRaster]
             // create and add a raster layer to the map

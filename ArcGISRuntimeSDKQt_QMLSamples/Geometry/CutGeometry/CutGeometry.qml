@@ -28,7 +28,9 @@ Rectangle {
         anchors.fill: parent
 
         Map {
-            BasemapTopographic {}
+            Basemap {
+                initStyle: Enums.BasemapStyleArcGISTopographic
+            }
 
             onLoadStatusChanged: {
                 if (loadStatus === Enums.LoadStatusLoaded) {

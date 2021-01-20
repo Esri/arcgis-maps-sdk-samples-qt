@@ -48,7 +48,9 @@ Rectangle {
 
         Map {
             id: map
-            BasemapLightGrayCanvas {}
+            Basemap {
+                initStyle: Enums.BasemapStyleArcGISLightGray
+            }
 
             ViewpointCenter {
                 center: originalGeometry

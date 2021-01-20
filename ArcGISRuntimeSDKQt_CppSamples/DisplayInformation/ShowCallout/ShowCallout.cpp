@@ -49,7 +49,7 @@ void ShowCallout::componentComplete()
   m_mapView->setWrapAroundMode(WrapAroundMode::Disabled);
 
   // Create a map using the topographic basemap
-  m_map = new Map(Basemap::topographic(this), this);
+  m_map = new Map(BasemapStyle::ArcGISTopographic, this);
   m_map->setInitialViewpoint(Viewpoint(Point(-1.2e7, 5e6, SpatialReference::webMercator()), 1e7));
 
   // Set map to map view

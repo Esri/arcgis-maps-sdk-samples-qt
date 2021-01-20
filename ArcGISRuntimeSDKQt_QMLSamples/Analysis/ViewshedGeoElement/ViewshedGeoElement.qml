@@ -37,7 +37,9 @@ Rectangle {
 
         Scene {
             id: scene
-            BasemapImagery {}
+            Basemap {
+                initStyle: Enums.BasemapStyleArcGISImageryStandard
+            }
 
             // Set the Scene's Surface
             Surface {

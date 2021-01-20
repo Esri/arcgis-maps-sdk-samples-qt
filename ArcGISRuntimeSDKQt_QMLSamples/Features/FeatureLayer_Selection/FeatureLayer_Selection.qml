@@ -39,7 +39,9 @@ Rectangle {
 
         Map {
             id: map
-            BasemapLightGrayCanvas {}
+            Basemap {
+                initStyle: Enums.BasemapStyleArcGISLightGray
+            }
 
             FeatureLayer {
                 id: featureLayer

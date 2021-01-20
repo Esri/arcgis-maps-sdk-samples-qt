@@ -108,7 +108,9 @@ Rectangle {
         }
 
         Map {
-            BasemapStreetsVector {}
+            Basemap {
+                initStyle: Enums.BasemapStyleArcGISStreets
+            }
         }
     }
 

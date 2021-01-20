@@ -54,7 +54,7 @@ void RasterRenderingRule::componentComplete()
   m_mapView = findChild<MapQuickView*>("mapView");
   m_mapView->setWrapAroundMode(WrapAroundMode::Disabled);
 
-  m_map = new Map(Basemap::streets(this), this);
+  m_map = new Map(BasemapStyle::ArcGISStreets, this);
   m_mapView->setMap(m_map);
 
   //! [RasterRenderingRule cpp ImageServiceRaster]

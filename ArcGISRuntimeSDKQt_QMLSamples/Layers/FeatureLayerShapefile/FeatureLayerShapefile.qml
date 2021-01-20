@@ -33,7 +33,9 @@ Rectangle {
 
         Map {
             id: map
-            BasemapStreetsVector {}
+            Basemap {
+                initStyle: Enums.BasemapStyleArcGISStreets
+            }
 
             FeatureLayer {
 

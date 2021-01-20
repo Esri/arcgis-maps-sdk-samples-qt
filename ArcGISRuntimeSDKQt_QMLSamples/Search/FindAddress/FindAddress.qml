@@ -48,7 +48,9 @@ Rectangle {
         }
 
         Map {
-            BasemapImageryWithLabels {}
+            Basemap {
+                initStyle: Enums.BasemapStyleArcGISImagery
+            }
         }
 
         // show the callout once the identify is complete

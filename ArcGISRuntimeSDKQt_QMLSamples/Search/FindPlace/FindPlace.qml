@@ -34,7 +34,9 @@ Rectangle {
         anchors.fill: parent
 
         Map {
-            BasemapTopographic {}
+            Basemap {
+                initStyle: Enums.BasemapStyleArcGISTopographic
+            }
 
             // start the location display once the map loads
             onLoadStatusChanged: {

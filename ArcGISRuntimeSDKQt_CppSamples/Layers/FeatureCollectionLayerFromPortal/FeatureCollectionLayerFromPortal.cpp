@@ -35,7 +35,7 @@ const QString featureCollectionItemId("32798dfad17942858d5eef82ee802f0b");
 
 FeatureCollectionLayerFromPortal::FeatureCollectionLayerFromPortal(QObject* parent /* = nullptr */):
   QObject(parent),
-  m_map(new Map(Basemap::oceans(this), this))
+  m_map(new Map(BasemapStyle::ArcGISOceans, this))
 {
   Portal* portal = new Portal(this);
   m_portalItem = new PortalItem(portal, featureCollectionItemId, this);

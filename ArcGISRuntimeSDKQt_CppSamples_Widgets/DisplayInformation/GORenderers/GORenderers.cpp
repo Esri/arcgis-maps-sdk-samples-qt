@@ -37,7 +37,7 @@ GORenderers::GORenderers(QWidget* parent) :
   QWidget(parent)
 {        
   // Create a map using the imagery with labels basemap
-  m_map = new Map(Basemap::topographic(this), this);
+  m_map = new Map(BasemapStyle::ArcGISTopographic, this);
 
   // Create a map view, and pass in the map
   m_mapView = new MapGraphicsView(m_map, this);

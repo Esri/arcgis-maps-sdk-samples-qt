@@ -32,7 +32,9 @@ Rectangle {
         Map {
             id: map
 
-            BasemapTopographic {}
+            Basemap {
+                initStyle: Enums.BasemapStyleArcGISTopographic
+            }
             initialViewpoint: viewPoint
 
             FeatureLayer {

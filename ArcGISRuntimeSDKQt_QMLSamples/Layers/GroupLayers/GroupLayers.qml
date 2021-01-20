@@ -30,7 +30,9 @@ Rectangle {
 
         Scene {
             id: scene
-            BasemapImagery {}
+            Basemap {
+                initStyle: Enums.BasemapStyleArcGISImageryStandard
+            }
 
             Surface {
                 // add an arcgis tiled elevation source

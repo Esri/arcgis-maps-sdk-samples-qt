@@ -56,7 +56,9 @@ Rectangle {
 
         Map {
             id: map
-            BasemapStreetsNightVector {}
+            Basemap {
+                initStyle: Enums.BasemapStyleArcGISStreetsNight
+            }
 
             Component.onCompleted: {
                 utilityNetwork.load();

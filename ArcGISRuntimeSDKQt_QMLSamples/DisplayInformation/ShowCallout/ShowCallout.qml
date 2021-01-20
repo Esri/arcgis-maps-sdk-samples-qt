@@ -35,7 +35,9 @@ Rectangle {
         clip: true
 
         Map {
-            BasemapTopographic {}
+            Basemap {
+                initStyle: Enums.BasemapStyleArcGISTopographic
+            }
 
             // initial Viewpoint
             ViewpointCenter {

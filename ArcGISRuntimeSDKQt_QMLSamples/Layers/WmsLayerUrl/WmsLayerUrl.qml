@@ -28,7 +28,9 @@ Rectangle {
         anchors.fill: parent
 
         Map {
-            BasemapLightGrayCanvas {}
+            Basemap {
+                initStyle: Enums.BasemapStyleArcGISLightGray
+            }
 
             // Add a WMS Layer by specifying the URL and layer name
             WmsLayer {

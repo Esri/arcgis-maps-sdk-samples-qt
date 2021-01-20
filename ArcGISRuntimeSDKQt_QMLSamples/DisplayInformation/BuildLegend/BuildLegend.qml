@@ -34,7 +34,9 @@ Rectangle {
             autoFetchLegendInfos: true
 
             // Nest the Basemap to add it as the Map's Basemap
-            BasemapTopographic {}
+            Basemap {
+                initStyle: Enums.BasemapStyleArcGISTopographic
+            }
 
             // Add a tiled layer as an operational layer
             ArcGISTiledLayer {

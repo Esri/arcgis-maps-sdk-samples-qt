@@ -27,7 +27,7 @@ ChangeBasemap::ChangeBasemap(QWidget* parent) :
     QWidget(parent)
 {        
     // Create a map initially using the topographic basemap
-    m_map = new Map(Basemap::topographic(this), this);
+    m_map = new Map(BasemapStyle::ArcGISTopographic, this);
 
     // Create a map view, and pass in the map
     m_mapView = new MapGraphicsView(m_map, this);
@@ -44,16 +44,16 @@ ChangeBasemap::ChangeBasemap(QWidget* parent) :
         {
         // Call setBasemap and pass in the appropriate basemap
         case 0:
-            m_map->setBasemap(Basemap::topographic(this));
+            m_map->setBasemap(new Basemap(BasemapStyle::ArcGISTopographic, this));
             break;
         case 1:
-            m_map->setBasemap(Basemap::streets(this));
+            m_map->setBasemap(new Basemap(BasemapStyle::ArcGISStreets, this));
             break;
         case 2:
-            m_map->setBasemap(Basemap::imagery(this));
+            m_map->setBasemap(new Basemap(BasemapStyle::ArcGISImageryStandard, this));
             break;
         case 3:
-            m_map->setBasemap(Basemap::oceans(this));
+            m_map->setBasemap(new Basemap(BasemapStyle::ArcGISOceans, this));
             break;
         }
     });

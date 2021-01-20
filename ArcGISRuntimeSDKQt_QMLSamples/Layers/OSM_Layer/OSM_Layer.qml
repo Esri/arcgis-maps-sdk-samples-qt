@@ -29,7 +29,9 @@ Rectangle {
 
         Map {
             // Declare the OpenStreetMap layer Basemap
-            BasemapOpenStreetMap {}
+            Basemap {
+                initStyle: Enums.BasemapStyleArcGISOsmStandard
+            }
         }
     }
 }

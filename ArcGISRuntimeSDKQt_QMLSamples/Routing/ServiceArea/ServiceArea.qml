@@ -35,7 +35,9 @@ Rectangle {
         anchors.fill: parent
 
         Map {
-            BasemapStreets {}
+            Basemap {
+                initStyle: Enums.BasemapStyleArcGISStreets
+            }
 
             // set the initial viewpoint to San Diego
             initialViewpoint: ViewpointCenter {

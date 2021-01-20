@@ -52,7 +52,9 @@ Rectangle {
         anchors.fill: parent
 
         Map {
-            BasemapImagery {}
+            Basemap {
+                initStyle: Enums.BasemapStyleArcGISImageryStandard
+            }
 
             // Set an initial viewpoint
             ViewpointCenter {

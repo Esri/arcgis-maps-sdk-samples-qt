@@ -61,7 +61,9 @@ Rectangle {
           }
 
         Map {
-            BasemapOceans {}
+            Basemap {
+                initStyle: Enums.BasemapStyleArcGISOceans
+            }
             RasterLayer {
                 id: rasterLayer
                 Raster {

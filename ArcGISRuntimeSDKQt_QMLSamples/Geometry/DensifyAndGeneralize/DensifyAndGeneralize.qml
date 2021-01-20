@@ -30,7 +30,9 @@ Rectangle {
 
         // Declare a map with the streets night vector basemap
         Map {
-            BasemapStreetsNightVector {}
+            Basemap {
+                initStyle: Enums.BasemapStyleArcGISStreetsNight
+            }
         }
 
         // Add a graphics overlay

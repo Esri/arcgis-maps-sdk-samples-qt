@@ -86,7 +86,9 @@ Rectangle {
 
         Map {
             id: map
-            BasemapTopographicVector {}
+            Basemap {
+                initStyle: Enums.BasemapStyleArcGISTopographic
+            }
 
             Component.onCompleted: {
                 utilityNetwork.load();

@@ -33,7 +33,9 @@ Rectangle {
 
         // create map using topographic basemap
         Map {
-            BasemapTopographic {}
+            Basemap {
+                initStyle: Enums.BasemapStyleArcGISTopographic
+            }
 
             // create FeatureLayer using a service URL
             FeatureLayer {

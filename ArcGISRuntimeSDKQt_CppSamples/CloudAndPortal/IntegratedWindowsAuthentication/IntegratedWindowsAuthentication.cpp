@@ -31,7 +31,7 @@ using namespace Esri::ArcGISRuntime;
 
 IntegratedWindowsAuthentication::IntegratedWindowsAuthentication(QObject* parent /* = nullptr */):
   QObject(parent),
-  m_map(new Map(Basemap::topographic(this), this)),
+  m_map(new Map(BasemapStyle::ArcGISTopographic, this)),
   query(new PortalQueryParametersForItems())
 {
   query->setTypes(QList<PortalItemType>() << PortalItemType::WebMap);

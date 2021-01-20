@@ -70,7 +70,7 @@ void UpdateGeometryFeatureService::componentComplete()
   m_mapView->setWrapAroundMode(WrapAroundMode::Disabled);
 
   // create a Map by passing in the Basemap
-  m_map = new Map(Basemap::streets(this), this);
+  m_map = new Map(BasemapStyle::ArcGISStreets, this);
   m_map->setInitialViewpoint(Viewpoint(Point(-10800000, 4500000, SpatialReference(102100)), 3e7));
 
   // set map on the map view

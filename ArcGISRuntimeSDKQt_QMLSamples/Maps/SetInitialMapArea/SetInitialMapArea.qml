@@ -26,7 +26,9 @@ Rectangle {
         id: mapView
         anchors.fill: parent
         Map {
-            BasemapImagery {}
+            Basemap {
+                initStyle: Enums.BasemapStyleArcGISImageryStandard
+            }
             initialViewpoint: viewpoint
         }
     }

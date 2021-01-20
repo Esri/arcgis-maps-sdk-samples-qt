@@ -36,7 +36,9 @@ Rectangle {
         anchors.fill: parent
 
         Map {
-            BasemapStreetsWithReliefVector {}
+            Basemap {
+                initStyle: Enums.BasemapStyleArcGISStreetsRelief
+            }
 
             FeatureLayer {
                 id: facilitiesLayer
