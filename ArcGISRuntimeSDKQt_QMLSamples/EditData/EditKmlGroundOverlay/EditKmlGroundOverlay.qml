@@ -16,7 +16,7 @@
 
 import QtQuick 2.6
 import QtQuick.Controls 2.3
-import Esri.ArcGISRuntime 100.10
+import Esri.ArcGISRuntime 100.11
 import Esri.ArcGISExtras 1.1
 
 Rectangle {
@@ -32,7 +32,9 @@ Rectangle {
         anchors.fill: parent
 
         Scene {
-            BasemapImagery {}
+            Basemap {
+                initStyle: Enums.BasemapStyleArcGISImageryStandard
+            }
 
             // Create a KML Layer
             KmlLayer {

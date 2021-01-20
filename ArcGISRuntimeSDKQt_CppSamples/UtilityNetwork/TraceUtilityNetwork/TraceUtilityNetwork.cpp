@@ -47,7 +47,7 @@ using namespace Esri::ArcGISRuntime;
 
 TraceUtilityNetwork::TraceUtilityNetwork(QObject* parent /* = nullptr */):
   QObject(parent),
-  m_map(new Map(Basemap::streetsNightVector(this), this)),
+  m_map(new Map(BasemapStyle::ArcGISStreetsNight, this)),
   m_cred(new Credential("viewer01", "I68VGU^nMurF", this)),
   m_startingSymbol(new SimpleMarkerSymbol(SimpleMarkerSymbolStyle::Cross, QColor(Qt::green), 20, this)),
   m_barrierSymbol(new SimpleMarkerSymbol(SimpleMarkerSymbolStyle::X, QColor(Qt::red), 20, this)),

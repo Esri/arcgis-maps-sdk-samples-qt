@@ -16,7 +16,7 @@
 
 import QtQuick 2.6
 import QtQuick.Controls 2.12
-import Esri.ArcGISRuntime 100.10
+import Esri.ArcGISRuntime 100.11
 import Esri.ArcGISExtras 1.1
 import Esri.ArcGISArToolkit 1.0
 
@@ -39,7 +39,9 @@ Rectangle {
 
         Scene {
             id: scene
-            BasemapImagery {}
+            Basemap {
+                initStyle: Enums.BasemapStyleArcGISImageryStandard
+            }
 
             Surface {
                 opacity: 0.0

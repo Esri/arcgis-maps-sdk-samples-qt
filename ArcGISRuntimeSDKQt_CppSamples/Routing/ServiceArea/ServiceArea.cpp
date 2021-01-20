@@ -55,7 +55,7 @@ void ServiceArea::componentComplete()
   m_mapView->setWrapAroundMode(WrapAroundMode::Disabled);
 
   // set view to be over San Diego
-  m_map = new Map(Basemap::streets(this), this);
+  m_map = new Map(BasemapStyle::ArcGISStreets, this);
   m_map->setInitialViewpoint(Viewpoint(Point(-13041154, 3858170, SpatialReference(3857)), 1e5));
 
   // Set map to map view

@@ -16,7 +16,7 @@
 
 import QtQuick 2.6
 import QtQuick.Controls 2.2
-import Esri.ArcGISRuntime 100.10
+import Esri.ArcGISRuntime 100.11
 
 Rectangle {
     id: rootRectangle
@@ -35,7 +35,9 @@ Rectangle {
         anchors.fill: parent
 
         Map {
-            BasemapStreets {}
+            Basemap {
+                initStyle: Enums.BasemapStyleArcGISStreets
+            }
 
             // set the initial viewpoint to San Diego
             initialViewpoint: ViewpointCenter {

@@ -30,7 +30,7 @@ using namespace Esri::ArcGISRuntime;
 
 ApplyMosaicRuleToRasters::ApplyMosaicRuleToRasters(QObject* parent /* = nullptr */):
   QObject(parent),
-  m_map(new Map(Basemap::topographicVector(this), this)),
+  m_map(new Map(BasemapStyle::ArcGISTopographic, this)),
   m_mosaicRule(new MosaicRule(this))
 {
 }

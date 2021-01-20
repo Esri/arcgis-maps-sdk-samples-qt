@@ -17,7 +17,7 @@
 import QtQuick 2.6
 import QtQuick.Controls 2.2
 import QtQuick.Layouts 1.1
-import Esri.ArcGISRuntime 100.10
+import Esri.ArcGISRuntime 100.11
 import Esri.ArcGISExtras 1.1
 
 Rectangle {
@@ -52,7 +52,9 @@ Rectangle {
         anchors.fill: parent
 
         Map {
-            BasemapImagery {}
+            Basemap {
+                initStyle: Enums.BasemapStyleArcGISImageryStandard
+            }
 
             // Set an initial viewpoint
             ViewpointCenter {

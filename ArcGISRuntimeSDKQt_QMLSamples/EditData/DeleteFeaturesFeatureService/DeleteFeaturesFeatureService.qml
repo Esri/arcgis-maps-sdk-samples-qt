@@ -17,8 +17,8 @@
 import QtQuick 2.6
 import QtQuick.Controls 2.2
 import QtGraphicalEffects 1.0
-import Esri.ArcGISRuntime 100.10
-import Esri.ArcGISRuntime.Toolkit 100.10
+import Esri.ArcGISRuntime 100.11
+import Esri.ArcGISRuntime.Toolkit 100.11
 
 Rectangle {
     width: 800
@@ -36,7 +36,9 @@ Rectangle {
 
         Map {
             // Set the initial basemap to Streets
-            BasemapStreets { }
+            Basemap {
+                initStyle: Enums.BasemapStyleArcGISStreets
+            }
 
             // Set the initial viewpoint over The United States
             ViewpointCenter {

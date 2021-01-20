@@ -15,8 +15,8 @@
 // [Legal]
 
 import QtQuick 2.6
-import Esri.ArcGISRuntime 100.10
-import Esri.ArcGISRuntime.Toolkit 100.10
+import Esri.ArcGISRuntime 100.11
+import Esri.ArcGISRuntime.Toolkit 100.11
 
 Rectangle {
     id: rootRectangle
@@ -43,7 +43,9 @@ Rectangle {
         }
 
         Map {
-            BasemapDarkGrayCanvasVector {}
+            Basemap {
+                initStyle: Enums.BasemapStyleArcGISDarkGray
+            }
 
             // start zoomed in over the US
             ViewpointExtent {

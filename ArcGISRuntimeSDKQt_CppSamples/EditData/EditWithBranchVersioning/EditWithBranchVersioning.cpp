@@ -49,7 +49,7 @@ namespace
 
 EditWithBranchVersioning::EditWithBranchVersioning(QObject* parent /* = nullptr */):
   QObject(parent),
-  m_map(new Map(Basemap::streetsVector(this), this)),
+  m_map(new Map(BasemapStyle::ArcGISStreets, this)),
   m_cred(new Credential("editor01", "S7#i2LWmYH75", this))
 {
 }

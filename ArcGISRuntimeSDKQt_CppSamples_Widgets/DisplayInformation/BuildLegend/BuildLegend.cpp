@@ -68,7 +68,7 @@ BuildLegend::BuildLegend(QWidget* parent /* = nullptr */):
   m_ui->setupUi(this);
 
   // Create a map using the topo basemap
-  m_map = new Map(Basemap::topographic(this), this);
+  m_map = new Map(BasemapStyle::ArcGISTopographic, this);
   m_map->setAutoFetchLegendInfos(true);
   // set initial viewpoint
   m_map->setInitialViewpoint(

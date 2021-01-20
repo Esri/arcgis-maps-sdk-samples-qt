@@ -15,7 +15,7 @@
 // [Legal]
 
 import QtQuick 2.6
-import Esri.ArcGISRuntime 100.10
+import Esri.ArcGISRuntime 100.11
 
 Rectangle {
     width: 800
@@ -29,7 +29,9 @@ Rectangle {
         magnifierEnabled: true
 
         Map {
-            BasemapImagery {}
+            Basemap {
+                initStyle: Enums.BasemapStyleArcGISImageryStandard
+            }
 
             onLoadStatusChanged: {
                 if (loadStatus === Enums.LoadStatusLoaded) {

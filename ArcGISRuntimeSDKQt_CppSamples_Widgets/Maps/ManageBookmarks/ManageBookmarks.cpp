@@ -32,7 +32,7 @@ ManageBookmarks::ManageBookmarks(QWidget* parent) :
     QWidget(parent)
 {        
     // Create a map using the imagery with labels basemap
-    m_map = new Map(Basemap::imageryWithLabels(this), this);
+    m_map = new Map(BasemapStyle::ArcGISImagery, this);
     Envelope env1(3742993.127298778, 3170396.4675719286, 3744795.1333054285, 3171745.88077, SpatialReference(102100));
     m_map->setInitialViewpoint(Viewpoint(env1));
 

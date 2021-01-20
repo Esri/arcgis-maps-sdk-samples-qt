@@ -17,7 +17,7 @@
 import QtQuick 2.6
 import QtQuick.Controls 2.2
 import QtQuick.Layouts 1.3
-import Esri.ArcGISRuntime 100.10
+import Esri.ArcGISRuntime 100.11
 
 Rectangle {
     id: rootRectangle
@@ -32,7 +32,9 @@ Rectangle {
         Map {
             id: map
             // Set the initial basemap to Imagery with Labels
-            BasemapImageryWithLabels {}
+            Basemap {
+                initStyle: Enums.BasemapStyleArcGISImagery
+            }
 
             onLoadStatusChanged: {
                 // Once the map is loaded, add in the initial bookmarks

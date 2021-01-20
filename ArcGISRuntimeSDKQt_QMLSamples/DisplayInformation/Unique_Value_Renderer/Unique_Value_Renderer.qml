@@ -16,7 +16,7 @@
 
 import QtQuick 2.6
 import QtQuick.Controls 2.2
-import Esri.ArcGISRuntime 100.10
+import Esri.ArcGISRuntime 100.11
 
 Rectangle {
     width: 800
@@ -30,7 +30,9 @@ Rectangle {
         Map {
 
             // add the topographic basemap to the map
-            BasemapTopographic {}
+            Basemap {
+                initStyle: Enums.BasemapStyleArcGISTopographic
+            }
 
             // create feature layer using service feature table
             FeatureLayer {

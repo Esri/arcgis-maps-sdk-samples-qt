@@ -16,7 +16,7 @@
 
 import QtQuick 2.6
 import QtQuick.Controls 2.2
-import Esri.ArcGISRuntime 100.10
+import Esri.ArcGISRuntime 100.11
 import QtQuick.Layouts 1.11
 import QtPositioning 5.2
 import Esri.samples 1.0
@@ -38,7 +38,9 @@ Rectangle {
         anchors.fill: parent
 
         Map {
-            BasemapNavigationVector {}
+            Basemap {
+                initStyle: Enums.BasemapStyleArcGISNavigation
+            }
         }
 
         GraphicsOverlay {

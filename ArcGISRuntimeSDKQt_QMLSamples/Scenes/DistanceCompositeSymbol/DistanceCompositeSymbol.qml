@@ -16,7 +16,7 @@
 
 import QtQuick 2.6
 import QtQuick.Controls 2.2
-import Esri.ArcGISRuntime 100.10
+import Esri.ArcGISRuntime 100.11
 import Esri.ArcGISExtras 1.1
 
 Rectangle {
@@ -34,7 +34,9 @@ Rectangle {
         // and thus will get added to the sceneview
         Scene {
             // add a basemap
-            BasemapImagery {}
+            Basemap {
+                initStyle: Enums.BasemapStyleArcGISImageryStandard
+            }
 
             // add a surface...surface is a default property of scene
             Surface {

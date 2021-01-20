@@ -16,7 +16,7 @@
 
 import QtQuick 2.6
 import QtQuick.Controls 2.2
-import Esri.ArcGISRuntime 100.10
+import Esri.ArcGISRuntime 100.11
 
 Rectangle {
     id: rootRectangle
@@ -36,7 +36,9 @@ Rectangle {
         // Desclare a Map inside the MapView
         Map {
             // Declare a Basemap
-            BasemapStreetsVector {}
+            Basemap {
+                initStyle: Enums.BasemapStyleArcGISStreets
+            }
 
             // Add a Map Image Layer
             ArcGISMapImageLayer {

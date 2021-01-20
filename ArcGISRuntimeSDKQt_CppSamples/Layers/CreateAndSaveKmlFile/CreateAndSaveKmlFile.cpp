@@ -42,7 +42,7 @@ using namespace Esri::ArcGISRuntime;
 
 CreateAndSaveKmlFile::CreateAndSaveKmlFile(QObject* parent /* = nullptr */):
   QObject(parent),
-  m_map(new Map(Basemap::darkGrayCanvasVector(this), this)),
+  m_map(new Map(BasemapStyle::ArcGISDarkGray, this)),
   m_kmlDocument(new KmlDocument(this)),
   m_point(createPoint()),
   m_polyline(createPolyline()),

@@ -15,8 +15,8 @@
 // [Legal]
 
 import QtQuick 2.6
-import Esri.ArcGISRuntime 100.10
-import Esri.ArcGISRuntime.Toolkit 100.10
+import Esri.ArcGISRuntime 100.11
+import Esri.ArcGISRuntime.Toolkit 100.11
 
 Rectangle {
     id: rootRectangle
@@ -29,7 +29,9 @@ Rectangle {
         anchors.fill: parent
 
         Map {
-            BasemapNationalGeographic {}
+            Basemap {
+                initStyle: Enums.BasemapStyleArcGISTopographic
+            }
 
             // Set initial viewpoint to Minneapolis
             ViewpointExtent {
