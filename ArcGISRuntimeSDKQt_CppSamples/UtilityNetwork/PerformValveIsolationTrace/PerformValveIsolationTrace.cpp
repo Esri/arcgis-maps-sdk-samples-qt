@@ -65,7 +65,6 @@ const QString globalId = "{98A06E95-70BE-43E7-91B7-E34C9D3CB9FF}";
 
 PerformValveIsolationTrace::PerformValveIsolationTrace(QObject* parent /* = nullptr */):
   QObject(parent),
-
   m_map(new Map(BasemapStyle::ArcGISStreetsNight, this)),
   m_cred(new Credential("viewer01", "I68VGU^nMurF", this)),
   m_startingLocationOverlay(new GraphicsOverlay(this))
