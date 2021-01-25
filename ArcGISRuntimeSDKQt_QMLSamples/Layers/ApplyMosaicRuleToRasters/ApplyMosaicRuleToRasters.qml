@@ -40,7 +40,7 @@ Rectangle {
                 id: rasterLayer
                 ImageServiceRaster {
                     id: imageServiceRaster
-                    url: "https://sampleserver7.arcgisonline.com/arcgis/rest/services/amberg_germany/ImageServer"
+                    url: "https://sampleserver7.arcgisonline.com/server/rest/services/amberg_germany/ImageServer"
                     mosaicRule: MosaicRule {
                     }
                 }
