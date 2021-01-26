@@ -25,7 +25,6 @@ namespace Esri
 {
 namespace ArcGISRuntime
 {
-class Credential;
 class GraphicsOverlay;
 class Map;
 class MapQuickView;
@@ -65,7 +64,6 @@ private:
 
   Esri::ArcGISRuntime::Map* m_map = nullptr;
   Esri::ArcGISRuntime::MapQuickView* m_mapView = nullptr;
-  Esri::ArcGISRuntime::Credential* m_cred = nullptr;
   Esri::ArcGISRuntime::GraphicsOverlay* m_associationsOverlay = nullptr;
   Esri::ArcGISRuntime::UtilityNetwork* m_utilityNetwork = nullptr;
   Esri::ArcGISRuntime::Symbol* m_attachmentSymbol = nullptr;

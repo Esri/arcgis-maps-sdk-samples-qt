@@ -25,7 +25,7 @@ Rectangle {
     width: 800
     height: 600
 
-    readonly property url featureServerUrl: "https://sampleserver7.arcgisonline.com/server/rest/services/UtilityNetwork/NapervilleElectric/FeatureServer"
+    readonly property url featureServerUrl: "https://sampleserver7.arcgisonline.com/arcgis/rest/services/UtilityNetwork/NapervilleElectric/FeatureServer"
     readonly property int maxScale: 2000
     readonly property int viewpointScale: 40
 
@@ -97,11 +97,6 @@ Rectangle {
             UtilityNetwork {
                 id: utilityNetwork
                 url: featureServerUrl
-
-                Credential {
-                    username: "viewer01"
-                    password: "I68VGU^nMurF"
-                }
 
                 onLoadStatusChanged: {
                     if (loadStatus !== Enums.LoadStatusLoaded)
@@ -181,7 +176,7 @@ Rectangle {
                     SimpleLineSymbol {
                         id: attachmentSymbol
                         style: Enums.SimpleLineSymbolStyleDot
-                        color: "red"
+                        color: "lime"
                         width: 5
 
                         // create swatch image for the legend
@@ -200,7 +195,7 @@ Rectangle {
                     SimpleLineSymbol {
                         id: connectivitySymbol
                         style: Enums.SimpleLineSymbolStyleDot
-                        color: "lime"
+                        color: "red"
                         width: 5
 
                         // create swatch image for the legend
