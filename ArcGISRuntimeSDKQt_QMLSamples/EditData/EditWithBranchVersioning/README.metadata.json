@@ -1,5 +1,5 @@
 {
-    "category": "Edit Data",
+    "category": "Edit data",
     "description": "Create, query and edit a specific server version using service geodatabase.",
     "ignore": false,
     "images": [
