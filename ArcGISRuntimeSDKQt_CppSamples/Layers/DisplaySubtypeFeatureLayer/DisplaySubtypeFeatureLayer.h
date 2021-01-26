@@ -22,7 +22,6 @@ namespace Esri
 namespace ArcGISRuntime
 {
 class FeatureLayer;
-class Credential;
 class LabelDefinition;
 class Map;
 class MapQuickView;
@@ -70,7 +69,6 @@ private:
   void setMapView(Esri::ArcGISRuntime::MapQuickView* mapView);
 
   Esri::ArcGISRuntime::Map* m_map = nullptr;
-  Esri::ArcGISRuntime::Credential* m_cred = nullptr;
   Esri::ArcGISRuntime::MapQuickView* m_mapView = nullptr;
   Esri::ArcGISRuntime::SubtypeFeatureLayer* m_subtypeFeatureLayer = nullptr;
   Esri::ArcGISRuntime::SubtypeSublayer* m_subtypeSublayer = nullptr;

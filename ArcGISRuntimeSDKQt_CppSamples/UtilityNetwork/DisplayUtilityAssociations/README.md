@@ -34,13 +34,7 @@ Pan and zoom around the map. Observe graphics that show utility associations bet
 
 ## About the data
 
-The [feature service](https://sampleserver7.arcgisonline.com/server/rest/services/UtilityNetwork/NapervilleElectric/FeatureServer) in this sample represents an electric network in Naperville, Illinois, which contains a utility network used to run the subnetwork-based trace.
-
-## Additional information
-
-Credentials:
-* Username: viewer01
-* Password: I68VGU^nMurF
+The [feature service](https://sampleserver7.arcgisonline.com/arcgis/rest/services/UtilityNetwork/NapervilleElectric/FeatureServer) in this sample represents an electric network in Naperville, Illinois, which contains a utility network used to run the subnetwork-based trace.
 
 ## Tags
 
