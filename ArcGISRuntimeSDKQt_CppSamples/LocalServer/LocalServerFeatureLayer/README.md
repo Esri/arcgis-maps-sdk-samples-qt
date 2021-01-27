@@ -20,7 +20,7 @@ A Local Server and Local Feature Service will automatically be started. Once sta
 2. Wait for server to be in the `LocalServerStatus::Started` state.
     * `LocalServer::statusChanged()` fires whenever the running status of the Local Server changes.
 3. Create and run a local service. For example, to run a `LocalMapService`:
-    * `new LocalFeatureService(Url)` creates a local feature service with the given URL path to the map package (`mpk` file).
+    * `new LocalFeatureService(Url)` creates a local feature service with the given URL path to the map package (`mpkx` file).
     * `LocalFeatureService::start()` starts the service asynchronously.
     * The service is added to the Local Server automatically.
 4. Wait for feature service to be in the `LocalServerStatus::Started` state.
@@ -46,7 +46,7 @@ Read more about how to set up the sample's offline data [here](http://links.esri
 
 Link | Local Location
 ---------|-------|
-|[PointsOfInterest map package](https://www.arcgis.com/home/item.html?id=4e94fec734434d1288e6ebe36c3c461f)| `<userhome>`/ArcGIS/Runtime/Data/mpk/PointsofInterest.mpk |
+|[PointsOfInterest map package](https://www.arcgis.com/home/item.html?id=92ca5cdb3ff1461384bf80dc008e297b)| `<userhome>`/ArcGIS/Runtime/Data/mpkx/PointsofInterest.mpkx |
 
 ## Additional information
 

@@ -22,7 +22,7 @@ CONFIG += c++14
 # additional modules are pulled in via arcgisruntime.pri
 QT += opengl widgets
 
-ARCGIS_RUNTIME_VERSION = 100.9
+ARCGIS_RUNTIME_VERSION = 100.10
 include($$PWD/arcgisruntime.pri)
 
 win32:CONFIG += \

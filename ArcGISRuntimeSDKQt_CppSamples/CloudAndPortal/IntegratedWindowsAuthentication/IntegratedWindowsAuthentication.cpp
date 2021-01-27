@@ -22,7 +22,6 @@
 
 #include "Map.h"
 #include "MapQuickView.h"
-#include "AuthenticationManager.h"
 #include "Portal.h"
 #include "PortalItem.h"
 #include "PortalQueryResultSetForItems.h"
@@ -43,7 +42,6 @@ IntegratedWindowsAuthentication::~IntegratedWindowsAuthentication() = default;
 void IntegratedWindowsAuthentication::init()
 {
   // Register C++ classes as QML types
-  qmlRegisterUncreatableType<AuthenticationManager>("Esri.Samples", 1, 0, "AuthenticationManager", "AuthenticationManager is uncreateable");
   qmlRegisterType<MapQuickView>("Esri.Samples", 1, 0, "MapView");
   qmlRegisterType<IntegratedWindowsAuthentication>("Esri.Samples", 1, 0, "IntegratedWindowsAuthenticationSample");
 }
@@ -146,11 +144,6 @@ void IntegratedWindowsAuthentication::errorAccepted()
 QAbstractListModel* IntegratedWindowsAuthentication::webmapListModel() const
 {
   return m_webmaps;
-}
-
-AuthenticationManager* IntegratedWindowsAuthentication::authManager() const
-{
-  return AuthenticationManager::instance();
 }
 
 void IntegratedWindowsAuthentication::securePortalDoneLoading(const Error& loadError)

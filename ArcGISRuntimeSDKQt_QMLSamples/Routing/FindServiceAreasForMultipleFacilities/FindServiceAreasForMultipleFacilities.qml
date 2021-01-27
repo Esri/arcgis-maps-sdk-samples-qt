@@ -15,7 +15,7 @@
 // [Legal]
 
 import QtQuick 2.6
-import Esri.ArcGISRuntime 100.9
+import Esri.ArcGISRuntime 100.10
 import QtQuick.Layouts 1.11
 import QtQuick.Controls 2.2
 

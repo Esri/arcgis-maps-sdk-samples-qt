@@ -25,7 +25,6 @@
 #include "Basemap.h"
 #include "ArcGISMapImageLayer.h"
 #include "Portal.h"
-#include "AuthenticationManager.h"
 
 using namespace Esri::ArcGISRuntime;
 
@@ -39,8 +38,6 @@ void CreateAndSaveMap::init()
   // Register the map view for QML
   qmlRegisterType<MapQuickView>("Esri.Samples", 1, 0, "MapView");
   qmlRegisterType<CreateAndSaveMap>("Esri.Samples", 1, 0, "CreateAndSaveMapSample");
-  qmlRegisterUncreatableType<AuthenticationManager>("Esri.Samples", 1, 0, "AuthenticationManager", "AuthenticationManager is uncreateable");
-
 }
 
 void CreateAndSaveMap::componentComplete()
@@ -126,12 +123,6 @@ void CreateAndSaveMap::loadPortal()
     emit portalLoaded();
   else
     m_portal->load();
-}
-
-// Getter for authentication manager Q_PROPERTY
-AuthenticationManager* CreateAndSaveMap::authenticationManager() const
-{
-  return AuthenticationManager::instance();
 }
 
 void CreateAndSaveMap::saveMap(const QString& title, const QString& tags, const QString& description)

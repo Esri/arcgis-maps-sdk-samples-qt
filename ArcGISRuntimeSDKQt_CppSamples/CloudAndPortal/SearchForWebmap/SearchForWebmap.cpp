@@ -41,7 +41,6 @@ SearchForWebmap::~SearchForWebmap() = default;
 
 void SearchForWebmap::init()
 {
-  qmlRegisterUncreatableType<AuthenticationManager>("Esri.Samples", 1, 0, "AuthenticationManager", "AuthenticationManager is uncreateable");
   qmlRegisterType<MapQuickView>("Esri.Samples", 1, 0, "MapView");
   qmlRegisterType<SearchForWebmap>("Esri.Samples", 1, 0, "SearchForWebmapSample");
 }
@@ -49,7 +48,6 @@ void SearchForWebmap::init()
 void SearchForWebmap::componentComplete()
 {
   QQuickItem::componentComplete();
-  emit authManagerChanged();
 
   if (m_portal)
   {
@@ -160,9 +158,4 @@ void SearchForWebmap::errorAccepted()
 {
   m_mapLoadeError.clear();
   emit mapLoadErrorChanged();
-}
-
-AuthenticationManager *SearchForWebmap::authManager() const
-{
-  return AuthenticationManager::instance();
 }

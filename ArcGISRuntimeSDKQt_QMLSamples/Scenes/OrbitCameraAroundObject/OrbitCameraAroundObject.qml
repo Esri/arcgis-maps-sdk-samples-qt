@@ -15,7 +15,7 @@
 // [Legal]
 
 import Esri.ArcGISExtras 1.1
-import Esri.ArcGISRuntime 100.9
+import Esri.ArcGISRuntime 100.10
 import QtQuick 2.6
 import QtQuick.Controls 2.2
 import QtQuick.Layouts 1.12
@@ -39,7 +39,7 @@ Rectangle {
 
             Surface {
                 ArcGISTiledElevationSource {
-                    url: "http://elevation3d.arcgis.com/arcgis/rest/services/WorldElevation3D/Terrain3D/ImageServer"
+                    url: "https://elevation3d.arcgis.com/arcgis/rest/services/WorldElevation3D/Terrain3D/ImageServer"
                 }
             }
         }

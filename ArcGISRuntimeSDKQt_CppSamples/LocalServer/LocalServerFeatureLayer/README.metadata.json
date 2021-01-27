@@ -2,8 +2,8 @@
     "category": "Local Server",
     "dataItems": [
         {
-            "itemId": "4e94fec734434d1288e6ebe36c3c461f",
-            "path": "~/ArcGIS/Runtime/Data/mpk/PointsofInterest.mpk"
+            "itemId": "92ca5cdb3ff1461384bf80dc008e297b",
+            "path": "~/ArcGIS/Runtime/Data/mpkx/PointsofInterest.mpkx"
         }
     ],
     "description": "Start a local feature service and display its features in a map.",

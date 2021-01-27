@@ -50,6 +50,7 @@ private:
   Esri::ArcGISRuntime::Map* m_map = nullptr;
   Esri::ArcGISRuntime::MapQuickView* m_mapView = nullptr;
   Esri::ArcGISRuntime::LocalFeatureService* m_localFeatureService = nullptr;
+  void startFeatureService() const;
 };
 
 #endif // LOCAL_SERVER_FEATURELAYER_H

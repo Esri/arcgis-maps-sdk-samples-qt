@@ -23,6 +23,7 @@
 #endif
 
 #include "LocalServerMapImageLayer.h"
+#include "ArcGISRuntimeEnvironment.h"
 
 #define STRINGIZE(x) #x
 #define QUOTE(x) STRINGIZE(x)
@@ -32,6 +33,24 @@ int main(int argc, char *argv[])
   QGuiApplication::setAttribute(Qt::AA_EnableHighDpiScaling);
   QGuiApplication app(argc, argv);
   app.setApplicationName("LocalServerMapImageLayer - C++");
+
+  // Use of Esri location services, including basemaps and geocoding,
+  // requires authentication using either an ArcGIS identity or an API Key.
+  // 1. ArcGIS identity: An ArcGIS named user account that is a member of an
+  //    organization in ArcGIS Online or ArcGIS Enterprise.
+  // 2. API key: A permanent key that gives your application access to Esri
+  //    location services. Visit your ArcGIS Developers Dashboard create a new
+  //    API keys or access an existing API key.
+  const QString apiKey = "";
+  if (apiKey.isEmpty())
+  {
+      qWarning() << "Use of Esri location services, including basemaps, requires"
+                    "you to authenticate with an ArcGIS identity or set the API Key property.";
+  }
+  else
+  {
+      Esri::ArcGISRuntime::ArcGISRuntimeEnvironment::setApiKey(apiKey);
+  }
 
   // Initialize the sample
   LocalServerMapImageLayer::init();
@@ -44,20 +63,16 @@ int main(int argc, char *argv[])
   view.engine()->addImportPath(QDir(QCoreApplication::applicationDirPath()).filePath("qml"));
   
   QString arcGISRuntimeImportPath = QUOTE(ARCGIS_RUNTIME_IMPORT_PATH);
-  QString arcGISToolkitImportPath = QUOTE(ARCGIS_TOOLKIT_IMPORT_PATH);
 
  #if defined(LINUX_PLATFORM_REPLACEMENT)
   // on some linux platforms the string 'linux' is replaced with 1
   // fix the replacement paths which were created
   QString replaceString = QUOTE(LINUX_PLATFORM_REPLACEMENT);
   arcGISRuntimeImportPath = arcGISRuntimeImportPath.replace(replaceString, "linux", Qt::CaseSensitive);
-  arcGISToolkitImportPath = arcGISToolkitImportPath.replace(replaceString, "linux", Qt::CaseSensitive);
  #endif
 
   // Add the Runtime and Extras path
   view.engine()->addImportPath(arcGISRuntimeImportPath);
-  // Add the Toolkit path
-  view.engine()->addImportPath(arcGISToolkitImportPath);
 
   // Set the source
   view.setSource(QUrl("qrc:/Samples/LocalServer/LocalServerMapImageLayer/LocalServerMapImageLayer.qml"));

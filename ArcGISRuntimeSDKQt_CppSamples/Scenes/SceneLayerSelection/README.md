@@ -20,15 +20,15 @@ Click on a building in the scene layer to select it. Deselect buildings by click
 4. From the resulting `IdentifyLayerResult`, a list of identified `GeoElements` are obtained.
 5. Get the first element in the list, checking that it is a feature, and call `ArcGISSceneLayer::selectFeature(feature)` to select it.
 
-## About the data
-
-This sample shows a [Berlin, Germany Scene](https://www.arcgis.com/home/item.html?id=31874da8a16d45bfbc1273422f772270) hosted on ArcGIS Online.
-
 ## Relevant API
 
 * ArcGISSceneLayer
 * Scene
 * SceneView
+
+## About the data
+
+This sample shows a [Berlin, Germany Scene](https://www.arcgis.com/home/item.html?id=31874da8a16d45bfbc1273422f772270) hosted on ArcGIS Online.
 
 ## Tags
 

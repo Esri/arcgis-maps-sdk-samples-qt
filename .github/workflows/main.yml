@@ -1,0 +1,59 @@
+# Copyright 2020 Esri.
+
+# Licensed under the Apache License, Version 2.0 (the "License");
+# you may not use this file except in compliance with the License.
+# You may obtain a copy of the License at
+# http://www.apache.org/licenses/LICENSE-2.0
+
+# Unless required by applicable law or agreed to in writing, software
+# distributed under the License is distributed on an "AS IS" BASIS,
+# WITHOUT WARRANTIES OR CONDITIONS OF ANY KIND, either express or implied.
+# See the License for the specific language governing permissions and
+# limitations under the License.
+
+# Name of the job, which will be displayed for the status check in the PR
+name: README and metadata formatting check
+
+# Controls when the action will run. Triggers the workflow on pull request
+# events for master and v.next branches.
+on:
+  pull_request:
+    branches: [ master, v.next ]
+    paths: ['**.json', '**.md']
+
+# A workflow run is made up of one or more jobs that can run sequentially or in parallel
+jobs:
+
+  # This workflow contains a single job called "changes"
+  changes:
+    name: Check README and metadata format for changed files
+
+    # The type of runner that the job will run on
+    runs-on: ubuntu-latest
+
+    # Steps represent a sequence of tasks that will be executed as part of the job
+    steps:
+
+      # This step gets the paths to all changed files and returns an array
+      # such as ['xxx/README.md', 'xxx/README.metadata.json', 'xxx/1.png']
+      # https://github.com/trilom/file-changes-action
+      - id: file_changes
+        name: Detect changed file paths
+        uses: trilom/file-changes-action@master
+
+      # Checks-out your repository under $GITHUB_WORKSPACE, so the workflow can 
+      # access the files.
+      # https://github.com/actions/checkout
+      - name: Checkout the repository
+        uses: actions/checkout@v2
+      
+      # Print out changed file paths for debugging purposes.
+      - name: Print changed file paths
+        run: |
+          echo 'Below shows a list of changed file paths'
+          echo '${{ steps.file_changes.outputs.files}}'
+
+      - name: Run style checks
+        uses: ./Scripts/CI/README_Metadata_StyleCheck
+        with:
+          FILE_PATHS: ${{ steps.file_changes.outputs.files }}

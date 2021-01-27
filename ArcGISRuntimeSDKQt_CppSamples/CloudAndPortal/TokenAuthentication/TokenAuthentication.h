@@ -23,7 +23,6 @@ namespace Esri
   {
     class Map;
     class MapQuickView;
-    class AuthenticationManager;
   }
 }
 
@@ -33,8 +32,6 @@ class TokenAuthentication : public QQuickItem
 {
   Q_OBJECT
 
-  Q_PROPERTY(Esri::ArcGISRuntime::AuthenticationManager* authenticationManager READ authenticationManager CONSTANT)
-
 public:
   explicit TokenAuthentication(QQuickItem* parent = nullptr);
   ~TokenAuthentication() override;
@@ -42,9 +39,6 @@ public:
   void componentComplete() override;
   static void init();
   Q_INVOKABLE void loadSecuredLayer();
-
-private:
-  Esri::ArcGISRuntime::AuthenticationManager* authenticationManager() const;
 
 private:
   Esri::ArcGISRuntime::Map* m_map = nullptr;
