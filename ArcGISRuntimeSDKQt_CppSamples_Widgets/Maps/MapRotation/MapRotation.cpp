@@ -28,7 +28,7 @@ MapRotation::MapRotation(QWidget* parent) :
   QWidget(parent)
 {
     // Create a map using the streets basemap
-    m_map = new Map(Basemap::streets(this), this);
+    m_map = new Map(BasemapStyle::ArcGISStreets, this);
 
     // Create a map view, and pass in the map
     m_mapView = new MapGraphicsView(m_map, this);

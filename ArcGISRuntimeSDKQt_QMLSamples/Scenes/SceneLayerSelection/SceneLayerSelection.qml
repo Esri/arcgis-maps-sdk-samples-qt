@@ -29,7 +29,9 @@ Rectangle {
 
         Scene {
             id: scene
-            BasemapImagery {}
+            Basemap {
+                initStyle: Enums.BasemapStyleArcGISImageryStandard
+            }
 
             // add a scene layer
             ArcGISSceneLayer {

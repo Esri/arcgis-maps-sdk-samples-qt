@@ -58,7 +58,7 @@ namespace
 
 CustomDictionaryStyle::CustomDictionaryStyle(QObject* parent /* = nullptr */):
   QObject(parent),
-  m_map(new Map(Basemap::streetsVector(this), this))
+  m_map(new Map(BasemapStyle::ArcGISStreets, this))
 {
   // Set an initial viewpoint
   Viewpoint vp(Point(-1.304630524635E7, 4036698.1412000023, SpatialReference(3857)), 5000);

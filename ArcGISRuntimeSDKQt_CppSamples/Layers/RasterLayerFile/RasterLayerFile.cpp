@@ -78,7 +78,7 @@ void RasterLayerFile::componentComplete()
   m_mapView = findChild<MapQuickView*>("mapView");
   m_mapView->setWrapAroundMode(WrapAroundMode::Disabled);
 
-  Basemap* basemap = Basemap::imagery(this);
+  Basemap* basemap = new Basemap(BasemapStyle::ArcGISImageryStandard, this);
   m_map = new Map(basemap, this);
   m_mapView->setMap(m_map);
 

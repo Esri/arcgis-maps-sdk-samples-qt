@@ -60,7 +60,7 @@ void Unique_Value_Renderer::componentComplete()
   m_mapView = findChild<MapQuickView*>("mapView");
 
   // create a new basemap instance
-  Basemap* basemap = Basemap::topographic(this);
+  Basemap* basemap = new Basemap(BasemapStyle::ArcGISTopographic, this);
   // create a new map instance
   m_map = new Map(basemap, this);
 

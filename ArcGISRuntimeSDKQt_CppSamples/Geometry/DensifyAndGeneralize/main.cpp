@@ -22,6 +22,7 @@
 #endif
 
 #include "DensifyAndGeneralize.h"
+#include "ArcGISRuntimeEnvironment.h"
 
 #define STRINGIZE(x) #x
 #define QUOTE(x) STRINGIZE(x)
@@ -31,10 +32,28 @@ int main(int argc, char *argv[])
   QGuiApplication::setAttribute(Qt::AA_EnableHighDpiScaling);
   QGuiApplication app(argc, argv);
 
+  // Use of Esri location services, including basemaps and geocoding,
+  // requires authentication using either an ArcGIS identity or an API Key.
+  // 1. ArcGIS identity: An ArcGIS named user account that is a member of an
+  //    organization in ArcGIS Online or ArcGIS Enterprise.
+  // 2. API key: A permanent key that gives your application access to Esri
+  //    location services. Visit your ArcGIS Developers Dashboard create a new
+  //    API keys or access an existing API key.
+  const QString apiKey = QStringLiteral("");
+  if (apiKey.isEmpty())
+  {
+      qWarning() << "Use of Esri location services, including basemaps, requires"
+                    "you to authenticate with an ArcGIS identity or set the API Key property.";
+  }
+  else
+  {
+      Esri::ArcGISRuntime::ArcGISRuntimeEnvironment::setApiKey(apiKey);
+  }
+    
   // Initialize the sample
   DensifyAndGeneralize::init();
 
-  // Intialize application view
+  // Initialize application view
   QQuickView view;
   view.setResizeMode(QQuickView::SizeRootObjectToView);
 

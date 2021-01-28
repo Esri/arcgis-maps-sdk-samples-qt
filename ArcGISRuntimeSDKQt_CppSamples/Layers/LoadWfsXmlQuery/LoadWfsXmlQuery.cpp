@@ -48,7 +48,7 @@ namespace
 
 LoadWfsXmlQuery::LoadWfsXmlQuery(QObject* parent /* = nullptr */):
   QObject(parent),
-  m_map(new Map(Basemap::navigationVector(this), this))
+  m_map(new Map(BasemapStyle::ArcGISNavigation, this))
 {
   // create WFS Feature Table
   const QUrl featureTableUrl("https://dservices2.arcgis.com/ZQgQTuoyBrtmoGdP/arcgis/services/Seattle_Downtown_Features/WFSServer?service=wfs&request=getcapabilities");

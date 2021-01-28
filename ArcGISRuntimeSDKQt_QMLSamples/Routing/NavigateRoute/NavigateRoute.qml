@@ -38,7 +38,9 @@ Rectangle {
         anchors.fill: parent
 
         Map {
-            BasemapNavigationVector {}
+            Basemap {
+                initStyle: Enums.BasemapStyleArcGISNavigation
+            }
         }
 
         GraphicsOverlay {

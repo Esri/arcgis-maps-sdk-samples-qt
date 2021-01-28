@@ -56,7 +56,7 @@ void SpatialOperations::componentComplete()
 {
   QQuickItem::componentComplete();
 
-  m_map = new Map(Basemap::topographic(this), this);
+  m_map = new Map(BasemapStyle::ArcGISTopographic, this);
   m_mapView->setMap(m_map);
 
   addPolygons();

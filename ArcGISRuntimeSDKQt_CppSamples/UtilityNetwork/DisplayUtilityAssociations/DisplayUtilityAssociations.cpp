@@ -51,7 +51,7 @@ constexpr int targetScale = 50;
 
 DisplayUtilityAssociations::DisplayUtilityAssociations(QObject* parent /* = nullptr */):
   QObject(parent),
-  m_map(new Map(Basemap::topographicVector(this), this)),
+  m_map(new Map(BasemapStyle::ArcGISTopographic, this)),
   m_associationsOverlay(new GraphicsOverlay(this))
 {
   m_utilityNetwork = new UtilityNetwork(featureServerUrl, this);

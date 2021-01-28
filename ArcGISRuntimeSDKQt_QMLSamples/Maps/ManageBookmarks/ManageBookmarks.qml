@@ -32,7 +32,9 @@ Rectangle {
         Map {
             id: map
             // Set the initial basemap to Imagery with Labels
-            BasemapImageryWithLabels {}
+            Basemap {
+                initStyle: Enums.BasemapStyleArcGISImagery
+            }
 
             onLoadStatusChanged: {
                 // Once the map is loaded, add in the initial bookmarks

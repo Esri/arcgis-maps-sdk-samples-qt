@@ -14,7 +14,7 @@ When the app starts, you will be prompted to sign in using an ArcGIS Online acco
 
 ## How it works
 
-1. Create an `Map` with a `Portal` item pointing to the web map.
+1. Create a `Map` with a `Portal` item pointing to the web map.
 2. Create `GenerateOfflineMapParameters` specifying the download area geometry, minimum scale, and maximum scale.
 3. Create an `OfflineMapTask` with the map.
 4. Create the `OfflineMapJob` with `OfflineMapTask::generateOfflineMap(params, downloadDirectoryPath)` and start it with `OfflineMapJob::start()`.

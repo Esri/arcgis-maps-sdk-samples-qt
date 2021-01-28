@@ -32,7 +32,9 @@ Rectangle {
         anchors.fill: parent
 
         Map {
-            BasemapStreetsVector {}
+            Basemap {
+                initStyle: Enums.BasemapStyleArcGISStreets
+            }
 
             // Declare a FeatureLayer for displaying the shapefile
             FeatureLayer {

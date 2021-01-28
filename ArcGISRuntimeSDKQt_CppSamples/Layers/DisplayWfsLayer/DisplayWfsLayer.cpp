@@ -32,7 +32,7 @@ using namespace Esri::ArcGISRuntime;
 
 DisplayWfsLayer::DisplayWfsLayer(QObject* parent /* = nullptr */):
   QObject(parent),
-  m_map(new Map(Basemap::topographic(this), this))
+  m_map(new Map(BasemapStyle::ArcGISTopographic, this))
 {
   // create WFS Feature Table
   m_wfsFeatureTable = new WfsFeatureTable(QUrl("https://dservices2.arcgis.com/ZQgQTuoyBrtmoGdP/arcgis/services/Seattle_Downtown_Features/WFSServer?service=wfs&request=getcapabilities"),

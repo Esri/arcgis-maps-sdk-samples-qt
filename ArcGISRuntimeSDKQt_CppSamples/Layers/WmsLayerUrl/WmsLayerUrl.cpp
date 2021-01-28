@@ -50,7 +50,7 @@ void WmsLayerUrl::componentComplete()
   m_mapView = findChild<MapQuickView*>("mapView");
 
   // Create a map using the light gray canvas basemap
-  m_map = new Map(Basemap::lightGrayCanvas(this), this);
+  m_map = new Map(BasemapStyle::ArcGISLightGray, this);
 
   // Add a WMS Layer by specifying the URL and layer name
   const QUrl wmsServiceUrl("https://nowcoast.noaa.gov/arcgis/services/nowcoast/radar_meteo_imagery_nexrad_time/MapServer/WMSServer?request=GetCapabilities&service=WMS");

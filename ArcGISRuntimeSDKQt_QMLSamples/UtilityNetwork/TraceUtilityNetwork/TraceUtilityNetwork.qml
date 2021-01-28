@@ -45,7 +45,9 @@ Rectangle {
         anchors.fill: parent
         
         Map {
-            BasemapStreetsNightVector {}
+            Basemap {
+                initStyle: Enums.BasemapStyleArcGISStreetsNight
+            }
             
             ViewpointExtent {
                 Envelope {

@@ -29,7 +29,7 @@ using namespace Esri::ArcGISRuntime;
 
 ManageOperationalLayers::ManageOperationalLayers(QObject* parent /* = nullptr */):
   QObject(parent),
-  m_map(new Map(Basemap::topographic(this), this)),
+  m_map(new Map(BasemapStyle::ArcGISTopographic, this)),
   m_elevationLayer(new ArcGISMapImageLayer(QUrl("https://sampleserver5.arcgisonline.com/arcgis/rest/services/Elevation/WorldElevations/MapServer"), this)),
   m_censusLayer(new ArcGISMapImageLayer(QUrl("https://sampleserver5.arcgisonline.com/arcgis/rest/services/Census/MapServer"), this)),
   m_damageLayer(new ArcGISMapImageLayer(QUrl("https://sampleserver5.arcgisonline.com/arcgis/rest/services/DamageAssessment/MapServer"), this)),

@@ -52,7 +52,7 @@ void SceneLayerSelection::componentComplete()
   m_sceneView = findChild<SceneQuickView*>("sceneView");
 
   // Create a scene with the imagery basemap
-  Scene* scene = new Scene(Basemap::imagery(this), this);
+  Scene* scene = new Scene(BasemapStyle::ArcGISImageryStandard, this);
 
   // add a surface
   Surface* surface = new Surface(this);

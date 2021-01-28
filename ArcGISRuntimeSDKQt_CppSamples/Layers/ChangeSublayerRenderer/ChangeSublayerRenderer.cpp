@@ -51,7 +51,7 @@ void ChangeSublayerRenderer::componentComplete()
   m_mapView = findChild<MapQuickView*>("mapView");
 
   // Create a map using the streets basemap
-  m_map = new Map(Basemap::streets(this), this);
+  m_map = new Map(BasemapStyle::ArcGISStreets, this);
 
   // Add the map image layer
   ArcGISMapImageLayer* mapImageLayer = new ArcGISMapImageLayer(QUrl("https://sampleserver6.arcgisonline.com/arcgis/rest/services/Census/MapServer"), this);

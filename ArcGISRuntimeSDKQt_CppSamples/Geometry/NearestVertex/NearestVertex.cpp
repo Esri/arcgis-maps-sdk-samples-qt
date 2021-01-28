@@ -34,7 +34,7 @@ using namespace Esri::ArcGISRuntime;
 
 NearestVertex::NearestVertex(QObject* parent /* = nullptr */):
   QObject(parent),
-  m_map(new Map(Basemap::topographic(this), this))
+  m_map(new Map(BasemapStyle::ArcGISTopographic, this))
 {
   const Point center(-4487263.495911, 3699176.480377, SpatialReference::webMercator());
   const Viewpoint viewpoint(center, 80000000);

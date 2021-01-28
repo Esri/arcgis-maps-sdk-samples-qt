@@ -33,7 +33,9 @@ Rectangle {
 
         // Add a map with a basemap
         Map {
-            BasemapTopographic {}
+            Basemap {
+                initStyle: Enums.BasemapStyleArcGISTopographic
+            }
         }
 
         // handle the mouse click - perform a buffer on click
