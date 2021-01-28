@@ -78,7 +78,7 @@ void RasterFunctionService::componentComplete()
   m_mapView->setWrapAroundMode(WrapAroundMode::Disabled);
 
   // create a new tiled layer to add a basemap
-  m_map = new Map(Basemap::streets(this), this);
+  m_map = new Map(BasemapStyle::ArcGISStreets, this);
   m_mapView->setMap(m_map);
 
   // create an image service raster

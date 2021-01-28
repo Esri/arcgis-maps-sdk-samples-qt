@@ -35,7 +35,7 @@ const QUrl datasetUrl("https://www.wpc.ncep.noaa.gov/kml/noaa_chart/WPC_Day1_Sig
 
 IdentifyKmlFeatures::IdentifyKmlFeatures(QObject* parent /* = nullptr */):
   QObject(parent),
-  m_map(new Map(Basemap::darkGrayCanvasVector(this), this))
+  m_map(new Map(BasemapStyle::ArcGISDarkGray, this))
 {
   // create new KML layer
   KmlDataset* forecastDataset = new KmlDataset(datasetUrl, this);

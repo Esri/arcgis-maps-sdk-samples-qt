@@ -34,7 +34,9 @@ Rectangle {
 
         Map {
             // Set the initial basemap to Streets
-            BasemapStreets {}
+            Basemap {
+                initStyle: Enums.BasemapStyleArcGISStreets
+            }
 
             // Set up signal handler to determine load status
             // Load status should be loaded once the basemap successfully loads

@@ -35,7 +35,9 @@ Rectangle {
 
         Map {
             id: map
-            BasemapTopographic {}
+            Basemap {
+                initStyle: Enums.BasemapStyleArcGISTopographic
+            }
 
             onLoadStatusChanged: {
                 if (loadStatus !== Enums.LoadStatusLoaded)

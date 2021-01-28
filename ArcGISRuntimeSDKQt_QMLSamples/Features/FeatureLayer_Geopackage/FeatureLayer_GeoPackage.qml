@@ -32,7 +32,9 @@ Rectangle {
 
         Map {
             id: map
-            BasemapLightGrayCanvas {}
+            Basemap {
+                initStyle: Enums.BasemapStyleArcGISLightGray
+            }
 
             // Load the GeoPackage once the Map loads
             onLoadStatusChanged: {

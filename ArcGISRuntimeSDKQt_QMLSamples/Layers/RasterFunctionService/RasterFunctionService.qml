@@ -33,7 +33,9 @@ Rectangle {
 
         Map {
             // create a basemap from a tiled layer and add to the map
-            BasemapStreets {}
+            Basemap {
+                initStyle: Enums.BasemapStyleArcGISStreets
+            }
 
             // create and add a raster layer to the map
             RasterLayer {

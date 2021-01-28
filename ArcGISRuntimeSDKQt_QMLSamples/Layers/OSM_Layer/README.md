@@ -14,12 +14,13 @@ When the sample opens, it will automatically display the map with the OpenStreet
 
 ## How it works
 
-1. Create a `BasemapOpenStreetMap` object nested as a child of the `Map`.
-2. Show the map in a map view.
+1. Create a `Basemap` object nested as a child of the `Map`.
+2. Add the `initStyle` attribute to `Basemap` and set it to `Enums.BasemapStyleOsmStandard`.
+3. Show the map in a map view.
 
 ## Relevant API
 
-* BasemapOpenStreetMap
+* Basemap
 * Map
 * MapView
 * OpenStreetMapLayer

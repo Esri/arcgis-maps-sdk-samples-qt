@@ -28,7 +28,9 @@ Rectangle {
         anchors.fill: parent
         // Create an initial Map with the Imagery basemap
         Map {
-            BasemapImagery {}
+            Basemap {
+                initStyle: Enums.BasemapStyleArcGISImageryStandard
+            }
         }
     }
 

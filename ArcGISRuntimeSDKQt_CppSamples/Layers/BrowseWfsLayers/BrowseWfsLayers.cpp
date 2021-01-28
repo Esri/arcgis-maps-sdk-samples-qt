@@ -35,7 +35,7 @@ using namespace Esri::ArcGISRuntime;
 
 BrowseWfsLayers::BrowseWfsLayers(QObject* parent /* = nullptr */):
   QObject(parent),
-  m_map(new Map(Basemap::topographic(this), this))
+  m_map(new Map(BasemapStyle::ArcGISTopographic, this))
 {
   // create WFS Service
   m_wfsService = new WfsService(QUrl("https://dservices2.arcgis.com/ZQgQTuoyBrtmoGdP/arcgis/services/Seattle_Downtown_Features/WFSServer?service=wfs&request=getcapabilities"),this);

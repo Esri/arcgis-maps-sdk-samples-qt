@@ -61,7 +61,7 @@ void ClosestFacility::componentComplete()
   m_mapView->setWrapAroundMode(WrapAroundMode::Disabled);
 
   // Create a map using the streets basemap
-  m_map = new Map(Basemap::streets(this), this);
+  m_map = new Map(BasemapStyle::ArcGISStreets, this);
 
   // set view to be over San Diego
   m_map->setInitialViewpoint(Viewpoint(Point(-13041154, 3858170, SpatialReference(3857)), 1e5));

@@ -14,7 +14,7 @@ Tap the *Load layer* button to create a new layer and add it to the map. As you 
 
 ## How it works
 
-1. Create an `Map` with some operational layers.
+1. Create a `Map` with some operational layers.
 2. Set the map on a `MapView`.
 3. Connect to the `layerViewStateChanged` signal from the map view.
 4. Display the `LayerViewStatus` flag for the `FeatureLayer`.

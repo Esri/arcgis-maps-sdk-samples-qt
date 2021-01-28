@@ -57,7 +57,7 @@ void StatisticalQuery::componentComplete()
   m_mapView = findChild<MapQuickView*>("mapView");
 
   // Create a new Map with the world streets vector basemap
-  m_map = new Map(Basemap::streetsVector(this), this);
+  m_map = new Map(BasemapStyle::ArcGISStreets, this);
 
   // Create feature table using the world cities URL
   m_featureTable = new ServiceFeatureTable(QUrl("https://sampleserver6.arcgisonline.com/arcgis/rest/services/SampleWorldCities/MapServer/0"), this);

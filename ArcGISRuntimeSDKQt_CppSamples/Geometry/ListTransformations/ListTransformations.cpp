@@ -100,7 +100,7 @@ void ListTransformations::componentComplete()
   m_mapView = findChild<MapQuickView*>("mapView");
 
   // Create a map using the light gray canvas basemap
-  m_map = new Map(Basemap::lightGrayCanvas(this), this);
+  m_map = new Map(BasemapStyle::ArcGISLightGray, this);
 
   // Set initial viewpoint of the map
   m_map->setInitialViewpoint(Viewpoint(m_originalPoint, 5000));

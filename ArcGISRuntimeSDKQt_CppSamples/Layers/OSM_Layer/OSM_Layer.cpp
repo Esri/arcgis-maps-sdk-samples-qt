@@ -47,7 +47,7 @@ void OSM_Layer::componentComplete()
   m_mapView = findChild<MapQuickView*>("mapView");
 
   // Create a map using the OpenStreetMap basemap
-  m_map = new Map(Basemap::openStreetMap(this), this);
+  m_map = new Map(BasemapStyle::OsmStandard, this);
 
   // Set map to map view
   m_mapView->setMap(m_map);
