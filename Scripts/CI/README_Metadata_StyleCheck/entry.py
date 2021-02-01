@@ -412,7 +412,7 @@ class READMEFile:
                     self.api_list.append(api)
                     if api in self.tag_list:
                         errors.append(f"{api} should not be in tags")
-        if self.api_list != sorted(self.api_list):
+        if self.api_list != sorted(self.api_list, key=str.casefold):
             errors.append("Expected API list to be sorted alphabetically")
         return errors
 
@@ -428,7 +428,7 @@ class READMEFile:
                 self.tag_list.append(tag)
                 if tag in self.api_list:
                     errors.append(f"Tag '{tag}' should not be an API.")
-        if self.tag_list != sorted(self.tag_list):
+        if self.tag_list != sorted(self.tag_list, key=str.casefold):
             errors.append("Expected tag list to be sorted alphabetically")
         return errors
 
