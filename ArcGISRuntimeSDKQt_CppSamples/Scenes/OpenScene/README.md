@@ -22,8 +22,8 @@ To open a web scene from a portal item:
 
 ## Relevant API
 
-* Scene
 * PortalItem
+* Scene
 * SceneView
 
 ## About the data
