@@ -334,7 +334,7 @@ class READMEFile:
         except Exception as e:
             return f"Title, description, or screenshot.png formatted incorrectly. README check cannot proceed.\nFatal error: {e}"
 
-        # If all goes well, this the only items remaining in the text are the h2's
+        # If all goes well, the only sections remaining in the text begin with h2's (## )
         for section in text:
             section_body = section.split("\n")
             section_title = section_body.pop(0)
