@@ -292,8 +292,8 @@ class MetadataFile:
         errors = []
         if not check_sentence_case:
             errors.append("Title does not follow sentence case")
-        if "".join(title.split(" ")).lower() != self.sample_name.lower():
-            errors.append("Title does not match sample name")
+        # if "".join(title.split(" ")).lower() != self.sample_name.lower():
+        #    errors.append("Title does not match sample name")
         if not title[-1].isalnum():
             errors.append("Title does not end in alphanumeric character")
         return errors
@@ -334,7 +334,7 @@ class READMEFile:
         except Exception as e:
             return f"Title, description, or screenshot.png formatted incorrectly. README check cannot proceed.\nFatal error: {e}"
 
-        # If all goes well, this the only items remaining in the text are the h2's
+        # If all goes well, the only sections remaining in the text begin with h2's (## )
         for section in text:
             section_body = section.split("\n")
             section_title = section_body.pop(0)
@@ -412,7 +412,7 @@ class READMEFile:
                     self.api_list.append(api)
                     if api in self.tag_list:
                         errors.append(f"{api} should not be in tags")
-        if self.api_list != sorted(self.api_list):
+        if self.api_list != sorted(self.api_list, key=str.casefold):
             errors.append("Expected API list to be sorted alphabetically")
         return errors
 
@@ -428,7 +428,7 @@ class READMEFile:
                 self.tag_list.append(tag)
                 if tag in self.api_list:
                     errors.append(f"Tag '{tag}' should not be an API.")
-        if self.tag_list != sorted(self.tag_list):
+        if self.tag_list != sorted(self.tag_list, key=str.casefold):
             errors.append("Expected tag list to be sorted alphabetically")
         return errors
 
