@@ -59,7 +59,7 @@ const Point aerospaceMuseumPoint(-117.147230, 32.730467, SpatialReference::wgs84
 
 NavigateRoute::NavigateRoute(QObject* parent /* = nullptr */):
   QObject(parent),
-  m_map(new Map(Basemap::navigationVector(this), this))
+  m_map(new Map(BasemapStyle::ArcGISNavigation, this))
 {
   m_routeOverlay = new GraphicsOverlay(this);
   m_routeTask = new RouteTask(routeTaskUrl, this);

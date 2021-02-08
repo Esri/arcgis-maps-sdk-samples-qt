@@ -91,7 +91,7 @@ const QString polylineJson("{\"paths\":[[[-13185646.046666779,4037971.5966668758
 
 ShowLocationHistory::ShowLocationHistory(QObject* parent /* = nullptr */):
   QObject(parent),
-  m_map(new Map(Basemap::darkGrayCanvasVector(this), this)),
+  m_map(new Map(BasemapStyle::ArcGISDarkGray, this)),
   m_locationHistoryOverlay(new GraphicsOverlay(this)),
   m_locationHistoryLineOverlay(new GraphicsOverlay(this))
 {

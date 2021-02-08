@@ -23,7 +23,7 @@ IWA, which is built into Microsoft Internet Information Server (IIS), works well
 1. Declare an `AuthenticationView` and connect the `AuthenticationManager` to it.
 2. The authentication manager object is configured with a challenge handler that will prompt for a Windows login (username and password) if a secure resource is encountered.
 3. When a search for portal items is performed against an IWA-secured portal, the challenge handler creates an `UserCredential` object from the information entered by the user or what was automatically obtained by the current Windows login.
-4. If the user authenticates, the search returns a list of web maps from `PortalItem` objects and the user can select one to display as an `Map`.
+4. If the user authenticates, the search returns a list of web maps from `PortalItem` objects and the user can select one to display as a `Map`.
 
 ## Relevant API
 

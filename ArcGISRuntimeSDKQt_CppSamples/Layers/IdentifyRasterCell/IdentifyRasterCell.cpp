@@ -54,7 +54,7 @@ QString defaultDataPath()
 
 IdentifyRasterCell::IdentifyRasterCell(QObject* parent /* = nullptr */):
   QObject(parent),
-  m_map(new Map(Basemap::oceans(this), this))
+  m_map(new Map(BasemapStyle::ArcGISOceans, this))
 {
   // initialize the raster layer
   const QString filepath = defaultDataPath() + "/ArcGIS/Runtime/Data/raster/SA_EVI_8Day_03May20/SA_EVI_8Day_03May20.tif";

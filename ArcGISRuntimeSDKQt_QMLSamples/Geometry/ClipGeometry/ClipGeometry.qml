@@ -29,7 +29,9 @@ Rectangle {
         anchors.fill: parent
 
         Map {
-            BasemapTopographic {}
+            Basemap {
+                initStyle: Enums.BasemapStyleArcGISTopographic
+            }
             initialViewpoint: vc
 
             // Create the envelope for Colorado

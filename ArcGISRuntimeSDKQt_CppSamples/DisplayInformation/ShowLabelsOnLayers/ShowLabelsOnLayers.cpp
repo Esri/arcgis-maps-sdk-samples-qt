@@ -48,7 +48,7 @@ void ShowLabelsOnLayers::componentComplete()
   m_mapView = findChild<MapQuickView*>("mapView");
 
   // Create a map using the light gray basemap
-  m_map = new Map(Basemap::lightGrayCanvas(this), this);
+  m_map = new Map(BasemapStyle::ArcGISLightGray, this);
 
   // Create a feature layer
   ServiceFeatureTable* featureTable = new ServiceFeatureTable(QUrl("https://services.arcgis.com/P3ePLMYs2RVChkJx/arcgis/rest/services/USA_115th_Congressional_Districts/FeatureServer/0"), this);

@@ -54,7 +54,7 @@ void DensifyAndGeneralize::componentComplete()
   m_mapView = findChild<MapQuickView*>("mapView");
 
   // Create a map using the streets night vector basemap
-  m_map = new Map(Basemap::streetsNightVector(this), this);
+  m_map = new Map(BasemapStyle::ArcGISStreetsNight, this);
 
   // Add a GraphicsOverlay
   m_graphicsOverlay = new GraphicsOverlay(this);

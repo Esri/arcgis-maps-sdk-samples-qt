@@ -35,7 +35,9 @@ Rectangle {
 
         Map {
             // Set the initial basemap to Streets
-            BasemapStreets { }
+            Basemap {
+                initStyle: Enums.BasemapStyleArcGISStreets
+            }
 
             ViewpointCenter {
                 Point {

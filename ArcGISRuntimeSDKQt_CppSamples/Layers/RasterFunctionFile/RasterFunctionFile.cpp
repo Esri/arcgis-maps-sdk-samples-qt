@@ -81,7 +81,7 @@ void RasterFunctionFile::componentComplete()
   m_mapView = findChild<MapQuickView*>("mapView");
 
   // Create a map using the imagery basemap
-  m_map = new Map(Basemap::imagery(this), this);
+  m_map = new Map(BasemapStyle::ArcGISImageryStandard, this);
 
   // Add the Raster Layer
   m_raster = new Raster(m_rasterPath, this);

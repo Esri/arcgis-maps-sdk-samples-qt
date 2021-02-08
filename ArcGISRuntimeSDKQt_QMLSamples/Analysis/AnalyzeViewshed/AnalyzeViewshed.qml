@@ -36,7 +36,9 @@ Rectangle {
 
         // Create map with topographic basemap and initial viewpoint
         Map {
-            BasemapTopographic {}
+            Basemap {
+                initStyle: Enums.BasemapStyleArcGISTopographic
+            }
 
             ViewpointCenter {
                 Point {

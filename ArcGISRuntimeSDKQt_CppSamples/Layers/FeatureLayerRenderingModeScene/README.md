@@ -16,7 +16,7 @@ Click 'Start Animation' to begin the same zoom animation on both static and dyna
 
 ## How it works
 
-1. Create an `Scene` and call `loadSettings()` and then `setPreferred[Point/Polyline/Polygon]FeatureRenderingMode(...)`.
+1. Create a `Scene` and call `loadSettings()` and then `setPreferred[Point/Polyline/Polygon]FeatureRenderingMode(...)`.
 2. The `RenderingMode` can be set to `STATIC`, `DYNAMIC` or `AUTOMATIC`.
     * In Static rendering mode, the number of features and graphics has little impact on frame render time, meaning it scales well, however points don't stay screen-aligned and point/polyline/polygon objects are only redrawn once map view navigation is complete.
     * In Dynamic rendering mode, large numbers of features or graphics can affect the responsiveness of maps or scenes to user interaction, however points remain screen-aligned and point/polyline/polygon objects are continually redrawn while the map view is navigating.
@@ -24,10 +24,10 @@ Click 'Start Animation' to begin the same zoom animation on both static and dyna
 
 ## Relevant API
 
-* Scene
 * FeatureLayer
 * FeatureLayer::renderingMode
 * LoadSettings
+* Scene
 * SceneView
 
 ## Tags

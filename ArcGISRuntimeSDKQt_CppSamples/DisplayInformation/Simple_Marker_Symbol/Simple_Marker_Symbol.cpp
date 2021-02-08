@@ -54,7 +54,7 @@ void Simple_Marker_Symbol::componentComplete()
   m_mapView->setWrapAroundMode(WrapAroundMode::Disabled);
 
   // create a map using the imagery basemap
-  m_map = new Map(Basemap::imagery(this), this);
+  m_map = new Map(BasemapStyle::ArcGISImageryStandard, this);
 
   // set initial viewpoint
   m_map->setInitialViewpoint(Viewpoint(Point(-226773, 6550477, SpatialReference::webMercator()), 7500));

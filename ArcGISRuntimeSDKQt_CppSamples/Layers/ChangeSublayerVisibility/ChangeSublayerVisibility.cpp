@@ -54,7 +54,7 @@ void ChangeSublayerVisibility::componentComplete()
   m_mapView = findChild<MapQuickView*>("mapView");
 
   // create a new map instance
-  m_map = new Map(Basemap::topographic(this), this);
+  m_map = new Map(BasemapStyle::ArcGISTopographic, this);
   m_map->setInitialViewpoint(Viewpoint(Point(-11e6, 6e6, SpatialReference(102100)), 9e7));
 
   // add the map image layer

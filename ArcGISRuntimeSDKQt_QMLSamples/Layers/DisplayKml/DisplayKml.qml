@@ -34,7 +34,7 @@ Rectangle {
 
         Scene {
             id: scene
-            BasemapImageryWithLabels{}
+            BasemapImageryWithLabels {}
 
             Surface {
                 ArcGISTiledElevationSource {

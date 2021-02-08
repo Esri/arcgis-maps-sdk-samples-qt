@@ -32,7 +32,9 @@ Rectangle {
         anchors.fill: parent
 
         Map {
-            BasemapTopographicVector {}
+            Basemap {
+                initStyle: Enums.BasemapStyleArcGISTopographic
+            }
 
             RasterLayer {
                 id: rasterLayer

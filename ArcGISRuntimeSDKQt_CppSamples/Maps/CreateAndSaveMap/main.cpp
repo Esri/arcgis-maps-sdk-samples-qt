@@ -37,7 +37,7 @@ int main(int argc, char *argv[])
   // Initialize the sample
   CreateAndSaveMap::init();
 
-  // Intialize application view
+  // Initialize application view
   QQuickView view;
   view.setResizeMode(QQuickView::SizeRootObjectToView);
 

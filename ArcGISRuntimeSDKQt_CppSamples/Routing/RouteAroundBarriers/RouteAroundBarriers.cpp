@@ -50,7 +50,7 @@ const QUrl routeTaskUrl("https://sampleserver6.arcgisonline.com/arcgis/rest/serv
 
 RouteAroundBarriers::RouteAroundBarriers(QObject* parent /* = nullptr */):
   QObject(parent),
-  m_map(new Map(Basemap::streets(this), this)),
+  m_map(new Map(BasemapStyle::ArcGISStreets, this)),
   m_routeOverlay(new GraphicsOverlay(this)),
   m_stopsOverlay(new GraphicsOverlay(this)),
   m_barriersOverlay(new GraphicsOverlay(this))

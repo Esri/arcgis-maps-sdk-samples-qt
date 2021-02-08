@@ -48,7 +48,7 @@ const QUrl serviceAreaTaskUrl("https://sampleserver6.arcgisonline.com/arcgis/res
 
 FindServiceAreasForMultipleFacilities::FindServiceAreasForMultipleFacilities(QObject* parent /* = nullptr */):
   QObject(parent),
-  m_map(new Map(Basemap::lightGrayCanvas(this), this)),
+  m_map(new Map(BasemapStyle::ArcGISLightGray, this)),
   m_serviceAreasOverlay(new GraphicsOverlay(this))
 {
   // create fill symbols for rendering the results

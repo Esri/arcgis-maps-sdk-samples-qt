@@ -33,7 +33,9 @@ Rectangle {
         // Declare a Map
         Map {
             // Add the Imagery basemap
-            BasemapImagery {}
+            Basemap {
+                initStyle: Enums.BasemapStyleArcGISImageryStandard
+            }
         }
 
         // connect to the exportImageUrlChanged signal

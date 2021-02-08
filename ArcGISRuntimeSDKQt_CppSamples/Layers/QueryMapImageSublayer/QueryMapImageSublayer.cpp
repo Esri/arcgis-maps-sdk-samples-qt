@@ -55,7 +55,7 @@ void QueryMapImageSublayer::componentComplete()
   m_mapView = findChild<MapQuickView*>("mapView");
 
   // Create a map using the streets vector basemap
-  m_map = new Map(Basemap::streetsVector(this), this);
+  m_map = new Map(BasemapStyle::ArcGISStreets, this);
 
   // add map image layer
   m_usaImageLayer = new ArcGISMapImageLayer(QUrl("https://sampleserver6.arcgisonline.com/arcgis/rest/services/USA/MapServer"), this);
