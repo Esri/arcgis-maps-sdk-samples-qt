@@ -115,7 +115,7 @@ def is_file_valid(directory_list: list)-> bool:
             return False
     except:
         return False
-        
+
     if not os.path.exists("/".join(directory_list)):
         # The file is not present on the disk, either because it never existed or because it was deleted
         # If the file was modified by deleting it, then we do not need to check it
