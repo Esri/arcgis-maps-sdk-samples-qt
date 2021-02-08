@@ -21,8 +21,8 @@ Use the drop down menu to select the active basemap from the list of available b
 
 ## Relevant API
 
-* Map
 * BasemapStyle
+* Map
 * MapView
 
 ## Tags

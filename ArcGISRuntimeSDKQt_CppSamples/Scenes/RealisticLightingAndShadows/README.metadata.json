@@ -17,12 +17,10 @@
     ],
     "redirect_from": "",
     "relevant_apis": [
-        "Scene",
         "ArcGISSceneLayer",
-        "SceneView",
         "LightingMode",
-        "setSunLighting",
-        "setSunTime"
+        "Scene",
+        "SceneView"
     ],
     "snippets": [
         "RealisticLightingAndShadows.qml",
