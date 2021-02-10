@@ -193,14 +193,14 @@ Rectangle {
     SimpleMarkerSymbol {
         id: startingPointSymbol
         style: Enums.SimpleMarkerSymbolStyleCross
-        color: "Green"
+        color: "lime"
         size: 20
     }
 
     SimpleMarkerSymbol {
         id: barrierPointSymbol
         style: Enums.SimpleMarkerSymbolStyleX
-        color: "Red"
+        color: "red"
         size: 20
     }
 
