@@ -33,18 +33,20 @@ Rectangle {
         id: mapView
         anchors.fill: parent
 
+        onDrawStatusChanged: {
+            if (drawStatus !== Enums.DrawStatusCompleted || mapView.locationDisplay.started)
+                return;
+
+            mapView.locationDisplay.autoPanMode = Enums.LocationDisplayAutoPanModeRecenter;
+            mapView.locationDisplay.start();
+        }
+
         Map {
             Basemap {
                 initStyle: Enums.BasemapStyleArcGISTopographic
             }
 
             // start the location display once the map loads
-            onLoadStatusChanged: {
-                if (loadStatus !== Enums.LoadStatusLoaded)
-                    return;
-
-                mapView.locationDisplay.start();
-            }
         }
 
         // add a graphics overlay to the mapview
