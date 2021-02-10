@@ -184,7 +184,7 @@ Rectangle {
                             createSwatch();
                         }
                         onSwatchImageChanged: {
-                            connectivityImage.source = swatchImage;
+                            attachmentImage.source = swatchImage;
                         }
                     }
                 }
@@ -203,7 +203,7 @@ Rectangle {
                             createSwatch();
                         }
                         onSwatchImageChanged: {
-                            attachmentImage.source = swatchImage;
+                            connectivityImage.source = swatchImage;
                         }
                     }
                 }
