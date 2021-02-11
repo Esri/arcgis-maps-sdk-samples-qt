@@ -32,9 +32,7 @@ Rectangle {
         anchors.fill: parent
 
         Map {
-            Basemap {
-                initStyle: Enums.BasemapStyleArcGISImageryStandard
-            }
+            spatialReference: SpatialReference {wkid: 26915}
 
             WmsLayer {
                 id: wmsLayer
@@ -54,6 +52,8 @@ Rectangle {
                     // get the styles
                     styles = sublayer.sublayerInfo.styles;
                 }
+
+                minScale: 7000000
             }
         }
     }
