@@ -22,6 +22,7 @@
 
 #include "Map.h"
 #include "MapQuickView.h"
+#include "SpatialReference.h"
 #include "WmsLayer.h"
 #include "WmsSublayer.h"
 #include "WmsLayerInfo.h"
@@ -48,7 +49,8 @@ void StyleWmsLayer::componentComplete()
   m_mapView = findChild<MapQuickView*>("mapView");
 
   // Create a map using the imagery basemap
-  m_map = new Map(BasemapStyle::ArcGISImageryStandard, this);
+  m_map = new Map(SpatialReference(26915), this);
+  // m_map->setMinScale(7'000'000);
 
   // Add a WMS Layer
   WmsLayer* wmsLayer = new WmsLayer(QUrl("https://imageserver.gisdata.mn.gov/cgi-bin/mncomp?SERVICE=WMS&VERSION=1.3.0&REQUEST=GetCapabilities"), QStringList{"mncomp"}, this);
