@@ -34,6 +34,7 @@ Rectangle {
         Map {
             // create a map with spatial reference appropriate for the WMS service (North American Datum 83)
             spatialReference: SpatialReference {wkid: 26915}
+            minScale: 7000000
 
             WmsLayer {
                 id: wmsLayer
@@ -53,8 +54,6 @@ Rectangle {
                     // get the styles
                     styles = sublayer.sublayerInfo.styles;
                 }
-
-                minScale: 7000000
             }
         }
     }
