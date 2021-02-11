@@ -33,6 +33,7 @@ Rectangle {
 
         Map {
             spatialReference: SpatialReference {wkid: 26915}
+            minScale: 7000000
 
             WmsLayer {
                 id: wmsLayer
@@ -52,8 +53,6 @@ Rectangle {
                     // get the styles
                     styles = sublayer.sublayerInfo.styles;
                 }
-
-                minScale: 7000000
             }
         }
     }
