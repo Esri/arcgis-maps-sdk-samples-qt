@@ -49,4 +49,4 @@ For more information about offline workflows, see [Offline maps, scenes, and dat
 
 ## Tags
 
-map area, offline, preplanned, pre-planned
+map area, pre-planned, offline, preplanned

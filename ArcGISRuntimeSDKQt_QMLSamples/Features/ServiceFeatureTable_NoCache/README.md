@@ -17,20 +17,13 @@ Run the sample and pan and zoom around the map. With each interaction, new featu
 1. Set the `ServiceFeatureTable.featureRequestMode` property of the service feature table to `Enums.FeatureRequestModeOnInteractionNoCache` before the table is loaded.
 2. Add the table to the map using a `FeatureLayer`; features will be requested for the visible extent as the user pans and zooms.
 
-## Features
-- MapView
-- Map
-- Basemap
-- ServiceFeatureTable
-- FeatureLayer
-
 ## Relevant API
 
 * Enums.FeatureRequestModeOnInteractionNoCache
 * FeatureLayer
 * ServiceFeatureTable
-* ServiceFeatureTable.populateFromService
 * ServiceFeatureTable.featureRequestMode
+* ServiceFeatureTable.populateFromService
 
 ## About the data
 
