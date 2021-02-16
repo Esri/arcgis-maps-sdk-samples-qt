@@ -31,7 +31,7 @@ Tap on the `Export tiles` button, and this will obtain the default parameters an
 
 ## Additional information
 
-ArcGIS tiled layers do not support reprojection, query, select, identify, or editing. Visit the [ArcGiS Online Developer's portal](https://developers.arcgis.com/java/latest/guide/layer-types-described.htm#ESRI_SECTION1_BAA7882E7A7E4DE3AF4E9F137FA78279) to Learn more about the characteristics of ArcGIS tiled layers.
+ArcGIS tiled layers do not support reprojection, query, select, identify, or editing. See the [Layer types](https://developers.arcgis.com/qt/layers/#layer-types) discussion in the developers guide to learn more about the characteristics of ArcGIS tiled layers.
 
 ## Tags
 

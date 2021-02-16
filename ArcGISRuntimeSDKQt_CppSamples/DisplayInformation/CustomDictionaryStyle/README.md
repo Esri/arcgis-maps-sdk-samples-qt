@@ -29,7 +29,7 @@ The data used in this sample is from a feature layer showing a subset of [restau
 
 ## Additional information
 
-To learn more about how styles in dictionary renderers work, visit [Display symbols from a style with a dictionary renderer](https://developers.arcgis.com/qt/latest/qml/guide/display-military-symbols-with-a-dictionary-renderer.htm). For information about creating your own custom dictionary style, see the open source [dictionary-renderer-toolkit](https://esriurl.com/DictionaryToolkit).
+For information about creating your own custom dictionary style, see the open source [dictionary-renderer-toolkit](https://esriurl.com/DictionaryToolkit).
 
 ## Tags
 
