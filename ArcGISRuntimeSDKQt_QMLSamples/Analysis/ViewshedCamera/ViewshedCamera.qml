@@ -39,31 +39,31 @@ Rectangle {
             // Set the Scene's Surface
             Surface {
                 ArcGISTiledElevationSource {
-                    url: "https://scene.arcgis.com/arcgis/rest/services/BREST_DTM_1M/ImageServer"
+                    url: "https://elevation3d.arcgis.com/arcgis/rest/services/WorldElevation3D/Terrain3D/ImageServer"
                 }
             }
 
-            // Add a Scene Layer
-            ArcGISSceneLayer {
-                url: "https://tiles.arcgis.com/tiles/P3ePLMYs2RVChkJx/arcgis/rest/services/Buildings_Brest/SceneServer/layers/0"
+            // Add the Girona, Spain integrated mesh layer
+            IntegratedMeshLayer {
+                url: "https://tiles.arcgis.com/tiles/z2tnIkrLQ2BRzr6P/arcgis/rest/services/Girona_Spain/SceneServer"
             }
 
             // Set an initial viewpoint
             ViewpointCenter {
                 Point {
                     id: centerPt
-                    x: -4.49492
-                    y: 48.3808
-                    z: 48.2511
+                    x: 2.82691
+                    y: 41.98500
+                    z:  124.987
                     spatialReference: Factory.SpatialReference.createWgs84()
                 }
-                targetScale: 62.01
+                targetScale: 1
 
                 Camera {
                     id: camera
                     location: centerPt
-                    heading: 344.488
-                    pitch: 74.1212
+                    heading: 332.131
+                    pitch: 82.4732
                     roll: 0
                 }
             }
