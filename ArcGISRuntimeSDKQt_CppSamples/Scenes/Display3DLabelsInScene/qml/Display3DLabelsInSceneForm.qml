@@ -13,7 +13,7 @@
 
 import QtQuick 2.6
 import QtQuick.Controls 2.2
-import Esri.Display3dLabels 1.0
+import Esri.Display3DLabelsInScene 1.0
 
 Item {
 
@@ -24,7 +24,7 @@ Item {
     }
 
     // Declare the C++ instance which creates the scene etc. and supply the view
-    Display3dLabels {
+    Display3DLabelsInScene {
         id: model
         sceneView: view
     }

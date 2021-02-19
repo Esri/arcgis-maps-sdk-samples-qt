@@ -1,7 +1,0 @@
-<RCC>
-    <qresource prefix="/qml">
-        <file>Display3dLabels.cpp</file>
-        <file>Display3dLabels.h</file>
-        <file>Display3dLabels.qml</file>
-    </qresource>
-</RCC>

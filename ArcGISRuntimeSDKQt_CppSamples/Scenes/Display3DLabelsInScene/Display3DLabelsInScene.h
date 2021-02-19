@@ -1,5 +1,5 @@
 
-// Copyright 2021 ESRI
+// Copyright 2019 ESRI
 //
 // All rights reserved under the copyright laws of the United States
 // and applicable international laws, treaties, and conventions.
@@ -11,30 +11,30 @@
 // See the Sample code usage restrictions document for further information.
 //
 
-#ifndef DISPLAY3DLABELS_H
-#define DISPLAY3DLABELS_H
+#ifndef DISPLAY3DLABELSINSCENE_H
+#define DISPLAY3DLABELSINSCENE_H
 
 namespace Esri
 {
 namespace ArcGISRuntime
 {
+class FeatureLayer;
 class Scene;
 class SceneQuickView;
-class FeatureLayer;
 }
 }
 
 #include <QObject>
 
-class Display3dLabels : public QObject
+class Display3DLabelsInScene : public QObject
 {
   Q_OBJECT
 
   Q_PROPERTY(Esri::ArcGISRuntime::SceneQuickView* sceneView READ sceneView WRITE setSceneView NOTIFY sceneViewChanged)
 
 public:
-  explicit Display3dLabels(QObject* parent = nullptr);
-  ~Display3dLabels() override;
+  explicit Display3DLabelsInScene(QObject* parent = nullptr);
+  ~Display3DLabelsInScene() override;
 
 signals:
   void sceneViewChanged();
@@ -42,10 +42,10 @@ signals:
 private:
   Esri::ArcGISRuntime::SceneQuickView* sceneView() const;
   void setSceneView(Esri::ArcGISRuntime::SceneQuickView* sceneView);
-  void display3dLabelsOnFeatureLayer(Esri::ArcGISRuntime::FeatureLayer* featureLayer);
+  void display3DLabelsOnFeatureLayer(Esri::ArcGISRuntime::FeatureLayer* featureLayer);
 
   Esri::ArcGISRuntime::Scene* m_scene = nullptr;
   Esri::ArcGISRuntime::SceneQuickView* m_sceneView = nullptr;
 };
 
-#endif // DISPLAY3DLABELS_H
+#endif // DISPLAY3DLABELSINSCENE_H

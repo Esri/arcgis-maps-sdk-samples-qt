@@ -11,7 +11,7 @@
 // See the Sample code usage restrictions document for further information.
 //
 
-#include "Display3dLabels.h"
+#include "Display3DLabelsInScene.h"
 
 #include "ArcGISTiledElevationSource.h"
 #include "Basemap.h"
@@ -27,7 +27,7 @@
 
 using namespace Esri::ArcGISRuntime;
 
-Display3dLabels::Display3dLabels(QObject* parent /* = nullptr */):
+Display3DLabelsInScene::Display3DLabelsInScene(QObject* parent /* = nullptr */):
   QObject(parent),
   m_scene(new Scene(QUrl("https://www.arcgis.com/home/item.html?id=850dfee7d30f4d9da0ebca34a533c169"), this))
 {
@@ -45,11 +45,11 @@ Display3dLabels::Display3dLabels(QObject* parent /* = nullptr */):
       if(layer->name() == "Gas")
       {
         // The gas layer is a GroupLayer type consisting of Layer types.
-        // Labels can only be displayed on specfic Layer types, so we must first convert it to a FeatureLayer class.
+        // Labels can only be displayed on FeatureLayer types, so we must first convert it to a FeatureLayer class.
         GroupLayer* gasGroupLayer = dynamic_cast<GroupLayer*>(layer);
         FeatureLayer* gasFeatureLayer = dynamic_cast<FeatureLayer*>(gasGroupLayer->layers()->first());
         if (gasFeatureLayer)
-          display3dLabelsOnFeatureLayer(gasFeatureLayer);
+          display3DLabelsOnFeatureLayer(gasFeatureLayer);
 
         break;
       }
@@ -57,10 +57,9 @@ Display3dLabels::Display3dLabels(QObject* parent /* = nullptr */):
   });
 }
 
-void Display3dLabels::display3dLabelsOnFeatureLayer(FeatureLayer* featureLayer)
+void Display3DLabelsInScene::display3DLabelsOnFeatureLayer(FeatureLayer* featureLayer)
 {
   TextSymbol* textSymbol = new TextSymbol(this);
-
   textSymbol->setAngle(0);
   textSymbol->setBackgroundColor(QColor(Qt::transparent));
   textSymbol->setOutlineColor(QColor(Qt::white));
@@ -83,24 +82,23 @@ void Display3dLabels::display3dLabelsOnFeatureLayer(FeatureLayer* featureLayer)
                       "\"useCodedValues\": true,"
                       "\"symbol\":"+ textSymbol->toJson() + "}";
 
-  // This feature layer's service definition has a predefined label definition that we want to remove.
-  featureLayer->labelDefinitions()->clear();
+  // featureLayer->labelDefinitions()->clear();
   featureLayer->labelDefinitions()->append(LabelDefinition::fromJson(labelJson));
+  qDebug() << featureLayer->labelDefinitions()->last()->toJson();
   featureLayer->setLabelsEnabled(true);
-  return;
 }
 
-Display3dLabels::~Display3dLabels()
+Display3DLabelsInScene::~Display3DLabelsInScene()
 {
 }
 
-SceneQuickView* Display3dLabels::sceneView() const
+SceneQuickView* Display3DLabelsInScene::sceneView() const
 {
   return m_sceneView;
 }
 
 // Set the view (created in QML)
-void Display3dLabels::setSceneView(SceneQuickView* sceneView)
+void Display3DLabelsInScene::setSceneView(SceneQuickView* sceneView)
 {
   if (!sceneView || sceneView == m_sceneView)
   {

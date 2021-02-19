@@ -12,14 +12,14 @@
 //
 
 import QtQuick.Controls 2.2
-import Esri.Display3dLabels 1.0
+import Esri.Display3DLabelsInScene 1.0
 
 ApplicationWindow {
     visible: true
     width: 800
     height: 600
 
-    Display3dLabelsForm {
+    Display3DLabelsInSceneForm {
         anchors.fill: parent
     }
 }

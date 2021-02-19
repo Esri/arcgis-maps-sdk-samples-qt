@@ -11,7 +11,7 @@
 // See the Sample code usage restrictions document for further information.
 //
 
-#include "Display3dLabels.h"
+#include "Display3DLabelsInScene.h"
 
 #include "ArcGISRuntimeEnvironment.h"
 #include "SceneQuickView.h"
@@ -67,10 +67,10 @@ int main(int argc, char *argv[])
   // ArcGISRuntimeEnvironment::setLicense("Place license string in here");
 
   // Register the scene view for QML
-  qmlRegisterType<SceneQuickView>("Esri.Display3dLabels", 1, 0, "SceneView");
+  qmlRegisterType<SceneQuickView>("Esri.Display3DLabelsInScene", 1, 0, "SceneView");
 
-  // Register the Display3dLabels (QQuickItem) for QML
-  qmlRegisterType<Display3dLabels>("Esri.Display3dLabels", 1, 0, "Display3dLabels");
+  // Register the Display3DLabelsInScene (QQuickItem) for QML
+  qmlRegisterType<Display3DLabelsInScene>("Esri.Display3DLabelsInScene", 1, 0, "Display3DLabelsInScene");
 
   // Initialize application view
   QQmlApplicationEngine engine;
