@@ -225,7 +225,7 @@ void PerformValveIsolationTrace::performTrace()
     // reset trace configuration filter barriers
     m_traceConfiguration->setFilter(new UtilityTraceFilter(this));
 
-    // set the user selected filter barries otherwise
+    // set the user selected filter barriers otherwise
     // set the category comparison to the barriers of the configuration's trace filter
     if (!m_filterBarriers.empty())
     {
