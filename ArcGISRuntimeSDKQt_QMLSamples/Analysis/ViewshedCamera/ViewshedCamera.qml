@@ -54,7 +54,7 @@ Rectangle {
                     id: centerPt
                     x: 2.82691
                     y: 41.98500
-                    z:  124.987
+                    z: 124.987
                     spatialReference: Factory.SpatialReference.createWgs84()
                 }
                 targetScale: 1

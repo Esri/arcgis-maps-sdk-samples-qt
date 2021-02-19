@@ -61,7 +61,7 @@ void ViewshedCamera::componentComplete()
           this));
   m_scene->setBaseSurface(surface);
 
-  // create and add the Girona, Spain integrated mesh layer
+  // Create and add the Girona, Spain integrated mesh layer
   IntegratedMeshLayer* gironaMeshLayer = new IntegratedMeshLayer(QUrl("https://tiles.arcgis.com/tiles/z2tnIkrLQ2BRzr6P/arcgis/rest/services/Girona_Spain/SceneServer"), this);
   m_scene->operationalLayers()->append(gironaMeshLayer);
 

@@ -51,7 +51,7 @@ void DistanceMeasurementAnalysis::componentComplete()
   // Get the Scene View
   m_sceneView = findChild<SceneQuickView*>("sceneView");
 
-  // Create a Scene with the imagery basemap
+  // Create a Scene with the topographic basemap
   Scene* scene = new Scene(Basemap::topographic(this), this);
 
   // Add a Scene Layer

@@ -51,7 +51,7 @@ void SceneLayerSelection::componentComplete()
 
   m_sceneView = findChild<SceneQuickView*>("sceneView");
 
-  // Create a scene with the imagery basemap
+  // Create a scene with the topographic basemap
   Scene* scene = new Scene(Basemap::topographic(this), this);
 
   // add a surface
@@ -113,5 +113,4 @@ void SceneLayerSelection::connectSignals()
     m_sceneView->identifyLayer(m_sceneLayer, mouseEvent.x(), mouseEvent.y(), 10, false);
   });
 }
-
 
