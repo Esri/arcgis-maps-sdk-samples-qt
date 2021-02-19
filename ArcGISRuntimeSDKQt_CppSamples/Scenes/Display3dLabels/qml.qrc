@@ -1,6 +1,0 @@
-<RCC>
-    <qresource prefix="/qml">
-        <file>main.qml</file>
-		<file>Display3dLabelsForm.qml</file>
-    </qresource>
-</RCC>
