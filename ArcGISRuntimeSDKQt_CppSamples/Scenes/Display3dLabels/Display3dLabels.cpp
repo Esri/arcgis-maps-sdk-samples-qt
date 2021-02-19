@@ -45,7 +45,7 @@ Display3dLabels::Display3dLabels(QObject* parent /* = nullptr */):
       if(layer->name() == "Gas")
       {
         // The gas layer is a GroupLayer type consisting of Layer types.
-        // Labels can only be displayed on FeatureLayer types, so we must first convert it to a FeatureLayer class.
+        // Labels can only be displayed on specfic Layer types, so we must first convert it to a FeatureLayer class.
         GroupLayer* gasGroupLayer = dynamic_cast<GroupLayer*>(layer);
         FeatureLayer* gasFeatureLayer = dynamic_cast<FeatureLayer*>(gasGroupLayer->layers()->first());
         if (gasFeatureLayer)
@@ -60,6 +60,7 @@ Display3dLabels::Display3dLabels(QObject* parent /* = nullptr */):
 void Display3dLabels::display3dLabelsOnFeatureLayer(FeatureLayer* featureLayer)
 {
   TextSymbol* textSymbol = new TextSymbol(this);
+
   textSymbol->setAngle(0);
   textSymbol->setBackgroundColor(QColor(Qt::transparent));
   textSymbol->setOutlineColor(QColor(Qt::white));
@@ -82,10 +83,11 @@ void Display3dLabels::display3dLabelsOnFeatureLayer(FeatureLayer* featureLayer)
                       "\"useCodedValues\": true,"
                       "\"symbol\":"+ textSymbol->toJson() + "}";
 
-  // featureLayer->labelDefinitions()->clear();
+  // This feature layer's service definition has a predefined label definition that we want to remove.
+  featureLayer->labelDefinitions()->clear();
   featureLayer->labelDefinitions()->append(LabelDefinition::fromJson(labelJson));
-  qDebug() << featureLayer->labelDefinitions()->last()->toJson();
   featureLayer->setLabelsEnabled(true);
+  return;
 }
 
 Display3dLabels::~Display3dLabels()
