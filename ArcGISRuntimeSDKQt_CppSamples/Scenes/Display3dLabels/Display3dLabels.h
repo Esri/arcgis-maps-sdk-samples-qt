@@ -20,6 +20,7 @@ namespace ArcGISRuntime
 {
 class Scene;
 class SceneQuickView;
+class FeatureLayer;
 }
 }
 
@@ -41,6 +42,7 @@ signals:
 private:
   Esri::ArcGISRuntime::SceneQuickView* sceneView() const;
   void setSceneView(Esri::ArcGISRuntime::SceneQuickView* sceneView);
+  void display3dLabelsOnFeatureLayer(Esri::ArcGISRuntime::FeatureLayer* featureLayer);
 
   Esri::ArcGISRuntime::Scene* m_scene = nullptr;
   Esri::ArcGISRuntime::SceneQuickView* m_sceneView = nullptr;
