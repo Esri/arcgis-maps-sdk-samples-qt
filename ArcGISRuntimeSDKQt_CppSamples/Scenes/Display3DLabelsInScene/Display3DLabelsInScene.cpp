@@ -84,7 +84,6 @@ void Display3DLabelsInScene::display3DLabelsOnFeatureLayer(FeatureLayer* feature
 
   // featureLayer->labelDefinitions()->clear();
   featureLayer->labelDefinitions()->append(LabelDefinition::fromJson(labelJson));
-  qDebug() << featureLayer->labelDefinitions()->last()->toJson();
   featureLayer->setLabelsEnabled(true);
 }
 
