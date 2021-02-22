@@ -289,14 +289,9 @@ class MetadataFile:
     def check_title(self, title: str) -> list:
         if not title:
             return ["No title"]
-        errors = []
-        if not check_sentence_case:
-            errors.append("Title does not follow sentence case")
-        # if "".join(title.split(" ")).lower() != self.sample_name.lower():
-        #    errors.append("Title does not match sample name")
-        if not title[-1].isalnum():
-            errors.append("Title does not end in alphanumeric character")
-        return errors
+        elif not check_sentence_case:
+            return ["Title does not follow sentence case"]
+        return []
 
 class READMEFile:
     def __init__(self, file_path):
