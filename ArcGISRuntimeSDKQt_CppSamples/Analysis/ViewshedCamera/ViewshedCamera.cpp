@@ -99,8 +99,16 @@ void ViewshedCamera::calculateViewshed()
 
 void ViewshedCamera::setInitialViewpoint()
 {
-  const Point initialPt(2.82691, 41.98500, 124.987, SpatialReference::wgs84());
-  const Camera initialCamera(initialPt, 332.131, 82.4732, 0.0);
-  const Viewpoint initialViewpoint(initialPt, initialCamera);
-  m_scene->setInitialViewpoint(initialViewpoint);
+  const double x_longitude = 2.82691;
+  const double y_latitude = 41.985;
+  const double z_altitude = 124.987;
+  Point pt(x_longitude, y_latitude, z_altitude, SpatialReference(4326));
+
+  const double heading = 332.131;
+  const double pitch = 82.4732;
+  const double roll = 0;
+  Camera camera(pt, heading, pitch, roll);
+
+  Viewpoint initViewpoint(pt, camera);
+  m_scene->setInitialViewpoint(initViewpoint);
 }
