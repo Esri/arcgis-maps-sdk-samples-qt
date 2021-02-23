@@ -82,7 +82,7 @@ void Display3DLabelsInScene::display3DLabelsOnFeatureLayer(FeatureLayer* feature
                       "\"useCodedValues\": true,"
                       "\"symbol\":"+ textSymbol->toJson() + "}";
 
-  // featureLayer->labelDefinitions()->clear();
+  featureLayer->labelDefinitions()->clear();
   featureLayer->labelDefinitions()->append(LabelDefinition::fromJson(labelJson));
   featureLayer->setLabelsEnabled(true);
 }
