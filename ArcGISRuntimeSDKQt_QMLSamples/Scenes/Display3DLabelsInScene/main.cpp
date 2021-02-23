@@ -33,6 +33,8 @@ int main(int argc, char *argv[])
   QGuiApplication app(argc, argv);
   app.setApplicationName(QStringLiteral("Display3DLabelsInScene - QML"));
 
+  QCoreApplication::instance()->setProperty("Esri.ArcGISRuntime.apiKey", "");
+
   // Initialize application view
   QQuickView view;
   view.setResizeMode(QQuickView::SizeRootObjectToView);
