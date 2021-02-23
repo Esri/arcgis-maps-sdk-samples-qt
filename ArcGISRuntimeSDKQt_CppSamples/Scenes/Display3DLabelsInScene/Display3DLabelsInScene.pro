@@ -1,36 +1,36 @@
 #-------------------------------------------------
-#  Copyright 2019 ESRI
-#
-#  All rights reserved under the copyright laws of the United States
-#  and applicable international laws, treaties, and conventions.
-#
-#  You may freely redistribute and use this sample code, with or
-#  without modification, provided you include the original copyright
-#  notice and use restrictions.
-#
-#  See the Sample code usage restrictions document for further information.
+# Copyright 2020 Esri.
+
+# Licensed under the Apache License, Version 2.0 (the "License");
+# you may not use this file except in compliance with the License.
+# You may obtain a copy of the License at
+# http://www.apache.org/licenses/LICENSE-2.0
+
+# Unless required by applicable law or agreed to in writing, software
+# distributed under the License is distributed on an "AS IS" BASIS,
+# WITHOUT WARRANTIES OR CONDITIONS OF ANY KIND, either express or implied.
+# See the License for the specific language governing permissions and
+# limitations under the License.
 #-------------------------------------------------
 
-TEMPLATE = app
+mac {
+    cache()
+}
+
+#-------------------------------------------------------------------------------
 
 CONFIG += c++14
 
 # additional modules are pulled in via arcgisruntime.pri
 QT += opengl qml quick
 
+TEMPLATE = app
 TARGET = Display3DLabelsInScene
-
-equals(QT_MAJOR_VERSION, 5) {
-    lessThan(QT_MINOR_VERSION, 15) { 
-        error("$$TARGET requires Qt 5.15.1")
-    }
-	equals(QT_MINOR_VERSION, 15) : lessThan(QT_PATCH_VERSION, 1) {
-		error("$$TARGET requires Qt 5.15.1")
-	}
-}
 
 ARCGIS_RUNTIME_VERSION = 100.11
 include($$PWD/arcgisruntime.pri)
+
+#-------------------------------------------------------------------------------
 
 HEADERS += \
     Display3DLabelsInScene.h
@@ -39,24 +39,26 @@ SOURCES += \
     main.cpp \
     Display3DLabelsInScene.cpp
 
-RESOURCES += \
-    qml/qml.qrc \
-    Resources/Resources.qrc
+RESOURCES += Display3DLabelsInScene.qrc
 
 #-------------------------------------------------------------------------------
 
 win32 {
-    include (Win/Win.pri)
-}
-
-macx {
-    include (Mac/Mac.pri)
+    LIBS += \
+        Ole32.lib
 }
 
 ios {
-    include (iOS/iOS.pri)
+    INCLUDEPATH += $$PWD
+    DEPENDPATH += $$PWD
+
+    OTHER_FILES += \
+        $$PWD/Info.plist
+
+    QMAKE_INFO_PLIST = $$PWD/Info.plist
 }
 
 android {
-    include (Android/Android.pri)
+    INCLUDEPATH += $$PWD
+    DEPENDPATH += $$PWD
 }

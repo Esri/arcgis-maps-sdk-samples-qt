@@ -1,29 +1,26 @@
+// Copyright 2020 Esri.
 
-// Copyright 2021 ESRI
-//
-// All rights reserved under the copyright laws of the United States
-// and applicable international laws, treaties, and conventions.
-//
-// You may freely redistribute and use this sample code, with or
-// without modification, provided you include the original copyright
-// notice and use restrictions.
-//
-// See the Sample code usage restrictions document for further information.
-//
+// Licensed under the Apache License, Version 2.0 (the "License");
+// you may not use this file except in compliance with the License.
+// You may obtain a copy of the License at
+// http://www.apache.org/licenses/LICENSE-2.0
+
+// Unless required by applicable law or agreed to in writing, software
+// distributed under the License is distributed on an "AS IS" BASIS,
+// WITHOUT WARRANTIES OR CONDITIONS OF ANY KIND, either express or implied.
+// See the License for the specific language governing permissions and
+// limitations under the License.
+
+#ifdef Q_OS_WIN
+#include <Windows.h>
+#endif
 
 #include "Display3DLabelsInScene.h"
 
-#include "ArcGISRuntimeEnvironment.h"
-#include "SceneQuickView.h"
-
 #include <QDir>
 #include <QGuiApplication>
-#include <QSurfaceFormat>
 #include <QQmlApplicationEngine>
-
-//------------------------------------------------------------------------------
-
-using namespace Esri::ArcGISRuntime;
+#include <QSurfaceFormat>
 
 int main(int argc, char *argv[])
 {
@@ -37,51 +34,22 @@ int main(int argc, char *argv[])
 
   QGuiApplication::setAttribute(Qt::AA_EnableHighDpiScaling);
   QGuiApplication app(argc, argv);
+  app.setApplicationName(QStringLiteral("Display3DLabelsInScene - C++"));
 
-  // Use of Esri location services, including basemaps and geocoding, requires
-  // either an ArcGIS identity or an API key. For more information see
-  // https://links.esri.com/arcgis-runtime-security-auth.
-
-  // 1. ArcGIS identity: An ArcGIS named user account that is a member of an
-  // organization in ArcGIS Online or ArcGIS Enterprise.
-
-  // 2. API key: A permanent key that gives your application access to Esri
-  // location services. Create a new API key or access existing API keys from
-  // your ArcGIS for Developers dashboard (https://links.esri.com/arcgis-api-keys).
-
-  const QString apiKey = QStringLiteral("");
-  if (apiKey.isEmpty())
-  {
-    qWarning() << "Use of Esri location services, including basemaps, requires "
-                  "you to authenticate with an ArcGIS identity or set the API Key property.";
-  }
-  else
-  {
-    ArcGISRuntimeEnvironment::setApiKey(apiKey);
-  }
-
-  // Production deployment of applications built with ArcGIS Runtime requires you to
-  // license ArcGIS Runtime functionality. For more information see
-  // https://links.esri.com/arcgis-runtime-license-and-deploy.
-
-  // ArcGISRuntimeEnvironment::setLicense("Place license string in here");
-
-  // Register the scene view for QML
-  qmlRegisterType<SceneQuickView>("Esri.Display3DLabelsInScene", 1, 0, "SceneView");
-
-  // Register the Display3DLabelsInScene (QQuickItem) for QML
-  qmlRegisterType<Display3DLabelsInScene>("Esri.Display3DLabelsInScene", 1, 0, "Display3DLabelsInScene");
+  // Initialize the sample
+  Display3DLabelsInScene::init();
 
   // Initialize application view
   QQmlApplicationEngine engine;
-
   // Add the import Path
   engine.addImportPath(QDir(QCoreApplication::applicationDirPath()).filePath("qml"));
 
+#ifdef ARCGIS_RUNTIME_IMPORT_PATH_2
+  engine.addImportPath(ARCGIS_RUNTIME_IMPORT_PATH_2);
+#endif
+
   // Set the source
-  engine.load(QUrl("qrc:/qml/main.qml"));
+  engine.load(QUrl("qrc:/Samples/Scenes/Display3DLabelsInScene/main.qml"));
 
   return app.exec();
 }
-
-//------------------------------------------------------------------------------
