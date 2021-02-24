@@ -1,31 +1,37 @@
 # Display 3D labels in scene
 
 This sample demonstrates how to display custom labels in a 3D scene.
-This sample demonstrates ...       
-This is **why** you would do it this way ...
+Labeling features is useful to visually display information or attributes on a scene. For example, city officials or maintenance crews may want to show installation dates of features of a gas network.
 
 ![](screenshot.png)
 
 ## How to use the sample
-e.g. Use the input controls to define a ... Click the "Go" button to ...
+Pan and zoom to explore the scene. Notice the labels showing installation dates of features in the 3D gas network.
 
 ## How it works
-e.g. In the `GeoView.Tapped` event, features in the `Map` are selected using an `Envelope` defined by the user's tap location ...
+1. Create a `Scene` using the `initUrl` property.
+2. Create a `TextSymbol` to use for displaying the label text.
+3. Create a `LabelDefinition` with a `json` property
+    * Set the "labelExpressionInfo.expression" key to create an Arcade expression that defines what text the label should display. You can use fields of the feature by using $feature.FIELD_NAME in the expression.
+    * To use a text symbol, set the "symbol" key in the JSON representation using `TextSymbol.json`.
+4. Create a label definition from the JSON using `LabelDefinition::fromJson()`.
+5. After the `Scene` has loaded, obtain the `FeatureLayer` from the scene's `operationalLayers`.
+6. Set the `labelsEnabled` property to `true`.
+7. Add the label definition to the feature layer's `labelDefinitions` list model.
 
 ## Relevant API
- - ClassName1
- - MethodName
 
-## Offline data
-Read more about how to set up the sample's offline data [here](http://links.esri.com/ArcGISRuntimeQtSamples).
+* FeatureLayer
+* LabelDefinition
+* Scene
+* SceneView
+* TextSymbol
 
-Link | Local Location
----------|-------|
-|[San Francisco Streets TPK](https://www.arcgis.com/home/item.html?id=3f1bbf0ec70b409a975f5c91f363fe7d)| `<userhome>`/ArcGIS/Runtime/Data/tpk/SanFrancisco.tpk |
+## About the data
 
-## Additional information
-A standard level license is required to ...
+This sample shows a [New York City infrastructure](https://www.arcgis.com/home/item.html?id=850dfee7d30f4d9da0ebca34a533c169) scene hosted on ArcGIS Online.
 
 ## Tags
-Routing, Network analysis, Geocode
+
+3D, attribute, buildings, label, model, scene, symbol, text, URL, visualization
 
