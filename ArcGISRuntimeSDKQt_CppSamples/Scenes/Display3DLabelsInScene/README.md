@@ -1,13 +1,21 @@
 # Display 3D labels in scene
 
 This sample demonstrates how to display custom labels in a 3D scene.
-This sample demonstrates ...       
-This is **why** you would do it this way ...
+Labeling features is useful to visually display information or attributes on a scene. For example, city officials or maintenance crews may want to show installation dates of features of a gas network.
 
 ![](screenshot.png)
 
 ## How to use the sample
-e.g. Use the input controls to define a ... Click the "Go" button to ...
+1. Create an `Scene` using a URL.
+2. ~~Apply the scene to a `SceneView` and load it.~~
+3. After the scene has loaded, obtain the `FeatureLayer` from the scene's `operationalLayers`.
+4. Use `setLabelsEnabled()` to set the `labelsEnabled` property to `true`.
+5. Create a TextSymbol to use for displaying the label text.
+6. Create a JSON string for the label definition.
+7. Set the "labelExpressionInfo.expression" key to define what text the label should display. You can use fields of the feature by using $feature.NAME in the expression.
+8. To use a text symbol, set the "symbol" key in the JSON representation using AGSTextSymbol.toJSON().
+9. Create a label definition from the JSON using AGSJSONSerializable.fromJSON(_:).
+10. Add the definition to the feature layer's labelDefinitions array.
 
 ## How it works
 e.g. In the `GeoView.Tapped` event, features in the `Map` are selected using an `Envelope` defined by the user's tap location ...
