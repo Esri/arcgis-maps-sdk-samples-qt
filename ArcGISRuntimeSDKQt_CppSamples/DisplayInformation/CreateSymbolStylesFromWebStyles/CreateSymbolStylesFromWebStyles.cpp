@@ -1,42 +1,53 @@
+// [WriteFile Name=CreateSymbolStylesFromWebStyles, Category=DisplayInformation]
+// [Legal]
+// Copyright 2020 Esri.
 
-// Copyright 2019 ESRI
-//
-// All rights reserved under the copyright laws of the United States
-// and applicable international laws, treaties, and conventions.
-//
-// You may freely redistribute and use this sample code, with or
-// without modification, provided you include the original copyright
-// notice and use restrictions.
-//
-// See the Sample code usage restrictions document for further information.
-//
+// Licensed under the Apache License, Version 2.0 (the "License");
+// you may not use this file except in compliance with the License.
+// You may obtain a copy of the License at
+// http://www.apache.org/licenses/LICENSE-2.0
+
+// Unless required by applicable law or agreed to in writing, software
+// distributed under the License is distributed on an "AS IS" BASIS,
+// WITHOUT WARRANTIES OR CONDITIONS OF ANY KIND, either express or implied.
+// See the License for the specific language governing permissions and
+// limitations under the License.
+// [Legal]
+
+#ifdef PCH_BUILD
+#include "pch.hpp"
+#endif // PCH_BUILD
 
 #include "CreateSymbolStylesFromWebStyles.h"
 
-#include "Basemap.h"
-#include "Map.h"
-#include "MapQuickView.h"
-
 #include "FeatureLayer.h"
 #include "ServiceFeatureTable.h"
-
-#include <QUrl>
+#include "Map.h"
+#include "MapQuickView.h"
 
 using namespace Esri::ArcGISRuntime;
 
 CreateSymbolStylesFromWebStyles::CreateSymbolStylesFromWebStyles(QObject* parent /* = nullptr */):
   QObject(parent),
-  m_map(new Map(BasemapStyle::ArcGISNavigation, this))
+  m_map(new Map(Basemap::imagery(this), this))
 {
-  m_map->setReferenceScale(100'000);
 
-  QUrl webStyleLayerUrl = QUrl("http://services.arcgis.com/V6ZHFr6zdgNZuVG0/arcgis/rest/services/LA_County_Points_of_Interest/FeatureServer/0");
-  FeatureLayer* webStyleLayer = new FeatureLayer(new ServiceFeatureTable(webStyleLayerUrl, this), this);
-  m_map->operationalLayers()->append(webStyleLayer);
+  // create the feature table
+  ServiceFeatureTable* featureTable = new ServiceFeatureTable(QUrl("http://services.arcgis.com/V6ZHFr6zdgNZuVG0/arcgis/rest/services/LA_County_Points_of_Interest/FeatureServer/0"), this);
+  // create the feature layer using the feature table
+  m_featureLayer = new FeatureLayer(featureTable, this);
+
+  // add the feature layer to the map
+  m_map->operationalLayers()->append(m_featureLayer);
 }
 
-CreateSymbolStylesFromWebStyles::~CreateSymbolStylesFromWebStyles()
+CreateSymbolStylesFromWebStyles::~CreateSymbolStylesFromWebStyles() = default;
+
+void CreateSymbolStylesFromWebStyles::init()
 {
+  // Register the map view for QML
+  qmlRegisterType<MapQuickView>("Esri.Samples", 1, 0, "MapView");
+  qmlRegisterType<CreateSymbolStylesFromWebStyles>("Esri.Samples", 1, 0, "CreateSymbolStylesFromWebStylesSample");
 }
 
 MapQuickView* CreateSymbolStylesFromWebStyles::mapView() const
@@ -48,19 +59,10 @@ MapQuickView* CreateSymbolStylesFromWebStyles::mapView() const
 void CreateSymbolStylesFromWebStyles::setMapView(MapQuickView* mapView)
 {
   if (!mapView || mapView == m_mapView)
-  {
     return;
-  }
 
   m_mapView = mapView;
   m_mapView->setMap(m_map);
-
-  const double x_longitude = -118.44186;
-  const double y_latitude = 34.38301;
-  const Point centerPt(x_longitude, y_latitude, SpatialReference::wgs84());
-  const double scale = 7000;
-
-  m_mapView->setViewpointCenter(centerPt, scale);
 
   emit mapViewChanged();
 }

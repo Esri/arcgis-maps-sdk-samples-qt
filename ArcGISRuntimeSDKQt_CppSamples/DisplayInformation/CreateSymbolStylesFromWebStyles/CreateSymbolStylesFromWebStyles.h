@@ -1,15 +1,18 @@
+// [WriteFile Name=CreateSymbolStylesFromWebStyles, Category=DisplayInformation]
+// [Legal]
+// Copyright 2020 Esri.
 
-// Copyright 2019 ESRI
-//
-// All rights reserved under the copyright laws of the United States
-// and applicable international laws, treaties, and conventions.
-//
-// You may freely redistribute and use this sample code, with or
-// without modification, provided you include the original copyright
-// notice and use restrictions.
-//
-// See the Sample code usage restrictions document for further information.
-//
+// Licensed under the Apache License, Version 2.0 (the "License");
+// you may not use this file except in compliance with the License.
+// You may obtain a copy of the License at
+// http://www.apache.org/licenses/LICENSE-2.0
+
+// Unless required by applicable law or agreed to in writing, software
+// distributed under the License is distributed on an "AS IS" BASIS,
+// WITHOUT WARRANTIES OR CONDITIONS OF ANY KIND, either express or implied.
+// See the License for the specific language governing permissions and
+// limitations under the License.
+// [Legal]
 
 #ifndef CREATESYMBOLSTYLESFROMWEBSTYLES_H
 #define CREATESYMBOLSTYLESFROMWEBSTYLES_H
@@ -18,6 +21,7 @@ namespace Esri
 {
 namespace ArcGISRuntime
 {
+class FeatureLayer;
 class Map;
 class MapQuickView;
 }
@@ -33,7 +37,9 @@ class CreateSymbolStylesFromWebStyles : public QObject
 
 public:
   explicit CreateSymbolStylesFromWebStyles(QObject* parent = nullptr);
-  ~CreateSymbolStylesFromWebStyles() override;
+  ~CreateSymbolStylesFromWebStyles();
+
+  static void init();
 
 signals:
   void mapViewChanged();
@@ -44,6 +50,7 @@ private:
 
   Esri::ArcGISRuntime::Map* m_map = nullptr;
   Esri::ArcGISRuntime::MapQuickView* m_mapView = nullptr;
+  Esri::ArcGISRuntime::FeatureLayer* m_featureLayer = nullptr;
 };
 
 #endif // CREATESYMBOLSTYLESFROMWEBSTYLES_H
