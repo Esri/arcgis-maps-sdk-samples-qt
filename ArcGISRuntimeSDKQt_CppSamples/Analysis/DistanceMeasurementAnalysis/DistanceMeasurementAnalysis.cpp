@@ -51,8 +51,8 @@ void DistanceMeasurementAnalysis::componentComplete()
   // Get the Scene View
   m_sceneView = findChild<SceneQuickView*>("sceneView");
 
-  // Create a Scene with the imagery basemap
-  Scene* scene = new Scene(BasemapStyle::ArcGISImageryStandard, this);
+  // Create a Scene with the topographic basemap
+  Scene* scene = new Scene(Basemap::topographic(this), this);
 
   // Add a Scene Layer
   ArcGISSceneLayer* sceneLayer = new ArcGISSceneLayer(QUrl("https://tiles.arcgis.com/tiles/P3ePLMYs2RVChkJx/arcgis/rest/services/Buildings_Brest/SceneServer/layers/0"), this);

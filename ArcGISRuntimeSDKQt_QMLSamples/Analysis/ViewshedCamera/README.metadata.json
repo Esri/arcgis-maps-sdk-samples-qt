@@ -12,9 +12,9 @@
         "visibility analysis",
         "AnalysisOverlay",
         "ArcGISScene",
-        "ArcGISSceneLayer",
         "ArcGISTiledElevationSource",
         "Camera",
+        "integrated mesh",
         "LocationViewshed",
         "SceneView"
     ],
@@ -24,9 +24,9 @@
     "relevant_apis": [
         "AnalysisOverlay",
         "ArcGISScene",
-        "ArcGISSceneLayer",
         "ArcGISTiledElevationSource",
         "Camera",
+        "IntegratedMeshLayer",
         "LocationViewshed",
         "SceneView"
     ],
