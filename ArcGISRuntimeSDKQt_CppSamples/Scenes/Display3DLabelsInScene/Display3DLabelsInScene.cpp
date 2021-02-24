@@ -81,7 +81,7 @@ void Display3DLabelsInScene::display3DLabelsOnFeatureLayer(FeatureLayer* feature
   textSymbol->setFontWeight(FontWeight::Normal);
 
   QString labelJson = "{"
-                      "\"labelExpressionInfo\":{\"expression\": \"$feature.INSTALLATIONDATE\"},"
+                      "\"labelExpressionInfo\":{\"expression\": \"Text($feature.INSTALLATIONDATE, 'D MMMM Y')\"},"
                       "\"labelPlacement\": \"esriServerLinePlacementAboveAlong\","
                       "\"useCodedValues\": true,"
                       "\"symbol\":"+ textSymbol->toJson() + "}";

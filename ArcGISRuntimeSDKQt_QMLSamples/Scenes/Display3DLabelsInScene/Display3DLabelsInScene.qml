@@ -71,7 +71,7 @@ Rectangle {
             id: gasLineLabelDefinition
             json: {
                 "labelExpressionInfo": {
-                    "expression": "$feature.INSTALLATIONDATE"
+                    "expression": "'Installed: ' + Text($feature.INSTALLATIONDATE, 'Y') + ' (' + (Year(Now()) - Year($feature.INSTALLATIONDATE)) + ' years old)'"
                 },
                 "labelPlacement": "esriServerLinePlacementAboveAlong",
                 "symbol": gasLineLabelSymbol.json
