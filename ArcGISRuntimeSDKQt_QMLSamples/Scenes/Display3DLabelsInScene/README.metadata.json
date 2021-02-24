@@ -1,16 +1,36 @@
 {
     "category": "TODO",
-    "description": "TODO",
+    "description": "This sample demonstrates how to display custom labels in a 3D scene.",
     "ignore": false,
     "images": [
         "screenshot.png"
     ],
     "keywords": [
-        "TODO"
+        "3D",
+        "URL",
+        "attribute",
+        "buildings",
+        "label",
+        "model",
+        "scene",
+        "symbol",
+        "text",
+        "visualization",
+        "FeatureLayer",
+        "LabelDefinition",
+        "Scene",
+        "SceneView",
+        "TextSymbol"
     ],
-    "redirect_from": "",
+    "redirect_from": [
+        ""
+    ],
     "relevant_apis": [
-        "TODO"
+        "FeatureLayer",
+        "LabelDefinition",
+        "Scene",
+        "SceneView",
+        "TextSymbol"
     ],
     "snippets": [
         "Display3DLabelsInScene.qml"
