@@ -16,6 +16,7 @@
 #endif
 
 #include "Display3DLabelsInScene.h"
+#include "ArcGISRuntimeEnvironment.h"
 
 #include <QDir>
 #include <QGuiApplication>
@@ -35,6 +36,8 @@ int main(int argc, char *argv[])
   QGuiApplication::setAttribute(Qt::AA_EnableHighDpiScaling);
   QGuiApplication app(argc, argv);
   app.setApplicationName(QStringLiteral("Display3DLabelsInScene - C++"));
+
+  Esri::ArcGISRuntime::ArcGISRuntimeEnvironment::setApiKey("");
 
   // Initialize the sample
   Display3DLabelsInScene::init();
