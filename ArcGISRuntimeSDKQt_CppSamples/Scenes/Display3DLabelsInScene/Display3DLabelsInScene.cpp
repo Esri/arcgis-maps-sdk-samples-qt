@@ -28,6 +28,8 @@
 #include "GroupLayer.h"
 #include "Layer.h"
 #include "TextSymbol.h"
+#include "LabelDefinition.h"
+#include "ArcadeLabelExpression.h"
 
 using namespace Esri::ArcGISRuntime;
 
@@ -80,14 +82,14 @@ void Display3DLabelsInScene::display3DLabelsOnFeatureLayer(FeatureLayer* feature
   textSymbol->setFontStyle(FontStyle::Normal);
   textSymbol->setFontWeight(FontWeight::Normal);
 
-  QString labelJson = "{"
-                      "\"labelExpressionInfo\":{\"expression\": \"Text($feature.INSTALLATIONDATE, 'D MMMM Y')\"},"
-                      "\"labelPlacement\": \"esriServerLinePlacementAboveAlong\","
-                      "\"useCodedValues\": true,"
-                      "\"symbol\":"+ textSymbol->toJson() + "}";
+  LabelDefinition* labelDefinition = new LabelDefinition(this);
+  labelDefinition->setExpression(new ArcadeLabelExpression("Text($feature.INSTALLATIONDATE, 'D MMMM Y')", this));
+  labelDefinition->setPlacement(LabelingPlacement::LineAboveAlong);
+  labelDefinition->setUseCodedValues(true);
+  labelDefinition->setTextSymbol(textSymbol);
 
   featureLayer->labelDefinitions()->clear();
-  featureLayer->labelDefinitions()->append(LabelDefinition::fromJson(labelJson));
+  featureLayer->labelDefinitions()->append(labelDefinition);
   featureLayer->setLabelsEnabled(true);
 }
 
