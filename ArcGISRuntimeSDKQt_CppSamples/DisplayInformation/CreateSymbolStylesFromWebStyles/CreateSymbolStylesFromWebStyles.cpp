@@ -25,6 +25,9 @@
 #include "Map.h"
 #include "MapQuickView.h"
 
+#include "UniqueValueRenderer.h"
+#include "SymbolStyle.h"
+
 using namespace Esri::ArcGISRuntime;
 
 CreateSymbolStylesFromWebStyles::CreateSymbolStylesFromWebStyles(QObject* parent /* = nullptr */):
@@ -36,6 +39,24 @@ CreateSymbolStylesFromWebStyles::CreateSymbolStylesFromWebStyles(QObject* parent
   QUrl webStyleLayerUrl = QUrl("http://services.arcgis.com/V6ZHFr6zdgNZuVG0/arcgis/rest/services/LA_County_Points_of_Interest/FeatureServer/0");
   FeatureLayer* webStyleLayer = new FeatureLayer(new ServiceFeatureTable(webStyleLayerUrl, this), this);
   m_map->operationalLayers()->append(webStyleLayer);
+
+  UniqueValueRenderer* uniqueValueRenderer = new UniqueValueRenderer(this);
+  uniqueValueRenderer->fieldNames().append("cat2");
+  webStyleLayer->setRenderer(uniqueValueRenderer);
+
+  SymbolStyle* symbolStyle = new SymbolStyle("Esri2DPointSymbolsStyle", this);
+
+  QList<QString> symbolNames = {"atm", "beach", "campground", "city-hall", "hospital", "library", "park", "place-of-worship", "police-station", "post-office", "school", "trail"};
+
+  for (const QString &symbolName : symbolNames)
+  {
+    connect(symbolStyle, &SymbolStyle::fetchSymbolCompleted, this, [this](QUuid taskId, Symbol* symbol)
+    {
+      // QList<QString> categories =
+    });
+
+    // symbolStyle->fetchSymbol({symbolName});
+  }
 }
 
 CreateSymbolStylesFromWebStyles::~CreateSymbolStylesFromWebStyles() = default;
@@ -69,4 +90,9 @@ void CreateSymbolStylesFromWebStyles::setMapView(MapQuickView* mapView)
   m_mapView->setViewpointCenter(centerPt, scale);
 
   emit mapViewChanged();
+}
+
+QList<QString> CreateSymbolStylesFromWebStyles::mapSymbolNameToField(QString symbolName)
+{
+  QMap<QString,QList<QString>> categories = {};
 }
