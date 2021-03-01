@@ -56,16 +56,14 @@ void DistanceMeasurementAnalysis::componentComplete()
 
   // Add a Scene Layer
   ArcGISSceneLayer* sceneLayer = new ArcGISSceneLayer(QUrl("https://tiles.arcgis.com/tiles/P3ePLMYs2RVChkJx/arcgis/rest/services/Buildings_Brest/SceneServer/layers/0"), this);
-  sceneLayer->setAltitudeOffset(1);
+  sceneLayer->setAltitudeOffset(1); // The elevation source is a very fine resolution so we raise the scene layer slightly so it does not clip the surface
 
   scene->operationalLayers()->append(sceneLayer);
 
   // Create and set the surface on the scene
   Surface* surface = new Surface(this);
   surface->elevationSources()->append(
-        new ArcGISTiledElevationSource(
-          QUrl("https://scene.arcgis.com/arcgis/rest/services/BREST_DTM_1M/ImageServer"),
-          this));
+        new ArcGISTiledElevationSource(QUrl("https://scene.arcgis.com/arcgis/rest/services/BREST_DTM_1M/ImageServer"),this));
   scene->setBaseSurface(surface);
 
   // Add Analysis Overlay
