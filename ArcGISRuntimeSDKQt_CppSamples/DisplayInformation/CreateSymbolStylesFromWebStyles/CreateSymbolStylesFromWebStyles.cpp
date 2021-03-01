@@ -41,6 +41,8 @@ CreateSymbolStylesFromWebStyles::CreateSymbolStylesFromWebStyles(QObject* parent
   m_webStyleLayer = new FeatureLayer(new ServiceFeatureTable(webStyleLayerUrl, this), this);
   m_map->operationalLayers()->append(m_webStyleLayer);
 
+  m_map->setAutoFetchLegendInfos(true);
+
   m_uniqueValueRenderer = new UniqueValueRenderer(this);
   m_uniqueValueRenderer->setFieldNames({"cat2"});
   m_webStyleLayer->setRenderer(m_uniqueValueRenderer);
@@ -58,10 +60,17 @@ CreateSymbolStylesFromWebStyles::CreateSymbolStylesFromWebStyles(QObject* parent
       {
         m_uniqueValueRenderer->uniqueValues()->append(new UniqueValue("", symbolKey, {category}, symbol, this));
       }
-    });
 
+    });
     symbolStyle->fetchSymbol({symbolKey});
   }
+
+  connect(m_map->legendInfos(), &LegendInfoListModel::fetchLegendInfosCompleted, this, [this]()
+  {
+    // set the legend info list model
+    m_legendInfoListModel = m_map->legendInfos();
+    emit legendInfoListModelChanged();
+  });
 }
 
 CreateSymbolStylesFromWebStyles::~CreateSymbolStylesFromWebStyles() = default;
@@ -71,6 +80,7 @@ void CreateSymbolStylesFromWebStyles::init()
   // Register the map view for QML
   qmlRegisterType<MapQuickView>("Esri.Samples", 1, 0, "MapView");
   qmlRegisterType<CreateSymbolStylesFromWebStyles>("Esri.Samples", 1, 0, "CreateSymbolStylesFromWebStylesSample");
+  qmlRegisterUncreatableType<QAbstractListModel>("Esri.Samples", 1, 0, "AbstractListModel", "AbstractListModel is uncreateable");
 }
 
 MapQuickView* CreateSymbolStylesFromWebStyles::mapView() const
@@ -118,4 +128,9 @@ QMap<QString,QList<QString>> CreateSymbolStylesFromWebStyles::createCategoriesMa
   categories["school"] = {"Public High Schools", "Public Elementary Schools", "Private and Charter Schools"};
   categories["trail"] = {"Trails"};
   return categories;
+}
+
+void CreateSymbolStylesFromWebStyles::buildLegend()
+{
+
 }
