@@ -27,6 +27,7 @@
 
 #include "UniqueValueRenderer.h"
 #include "SymbolStyle.h"
+#include "SimpleMarkerSymbol.h"
 
 using namespace Esri::ArcGISRuntime;
 
@@ -37,25 +38,29 @@ CreateSymbolStylesFromWebStyles::CreateSymbolStylesFromWebStyles(QObject* parent
   m_map->setReferenceScale(100'000);
 
   QUrl webStyleLayerUrl = QUrl("http://services.arcgis.com/V6ZHFr6zdgNZuVG0/arcgis/rest/services/LA_County_Points_of_Interest/FeatureServer/0");
-  FeatureLayer* webStyleLayer = new FeatureLayer(new ServiceFeatureTable(webStyleLayerUrl, this), this);
-  m_map->operationalLayers()->append(webStyleLayer);
+  m_webStyleLayer = new FeatureLayer(new ServiceFeatureTable(webStyleLayerUrl, this), this);
+  m_map->operationalLayers()->append(m_webStyleLayer);
 
-  UniqueValueRenderer* uniqueValueRenderer = new UniqueValueRenderer(this);
-  uniqueValueRenderer->fieldNames().append("cat2");
-  webStyleLayer->setRenderer(uniqueValueRenderer);
+  m_uniqueValueRenderer = new UniqueValueRenderer(this);
+  m_uniqueValueRenderer->setFieldNames({"cat2"});
+  m_webStyleLayer->setRenderer(m_uniqueValueRenderer);
 
-  SymbolStyle* symbolStyle = new SymbolStyle("Esri2DPointSymbolsStyle", this);
+  m_categoriesMap = createCategoriesMap();
 
-  QList<QString> symbolNames = {"atm", "beach", "campground", "city-hall", "hospital", "library", "park", "place-of-worship", "police-station", "post-office", "school", "trail"};
-
-  for (const QString &symbolName : symbolNames)
+  for (const QString &symbolKey : m_categoriesMap.keys())
   {
-    connect(symbolStyle, &SymbolStyle::fetchSymbolCompleted, this, [this](QUuid taskId, Symbol* symbol)
+    SymbolStyle* symbolStyle = new SymbolStyle("Esri2DPointSymbolsStyle", {}, this);
+    connect(symbolStyle, &SymbolStyle::fetchSymbolCompleted, this, [this, symbolKey](QUuid /* taskId */, Symbol* symbol)
     {
-      // QList<QString> categories =
+      QList<QString> categories = m_categoriesMap[symbolKey];
+
+      for (const QString &category : categories)
+      {
+        m_uniqueValueRenderer->uniqueValues()->append(new UniqueValue("", symbolKey, {category}, symbol, this));
+      }
     });
 
-    // symbolStyle->fetchSymbol({symbolName});
+    symbolStyle->fetchSymbol({symbolKey});
   }
 }
 
@@ -83,16 +88,34 @@ void CreateSymbolStylesFromWebStyles::setMapView(MapQuickView* mapView)
   m_mapView->setMap(m_map);
 
   const double x_longitude = -118.44186;
-  const double y_latitude = 34.38301;
+  const double y_latitude = 34.28301;
   const Point centerPt(x_longitude, y_latitude, SpatialReference::wgs84());
   const double scale = 7000;
 
   m_mapView->setViewpointCenter(centerPt, scale);
 
+  connect(m_mapView, &MapQuickView::mapScaleChanged, this, [this]()
+  {
+    m_webStyleLayer->setScaleSymbols(m_mapView->mapScale() >= 80'000);
+  });
+
   emit mapViewChanged();
 }
 
-QList<QString> CreateSymbolStylesFromWebStyles::mapSymbolNameToField(QString symbolName)
-{
-  QMap<QString,QList<QString>> categories = {};
+QMap<QString,QList<QString>> CreateSymbolStylesFromWebStyles::createCategoriesMap()
+{// "atm", "beach", "campground", "city-hall", "hospital", "library", "park", "place-of-worship", "police-station", "post-office", "school", "trail"
+  QMap<QString,QList<QString>> categories;
+  categories["atm"] = {"Banking and Finance"};
+  categories["beach"] = {"Beaches and Marinas"};
+  categories["campground"] = {"Campgrounds"};
+  categories["city-hall"] = {"City Halls", "Government Offices"};
+  categories["hospital"] = {"Hospitals and Medical Centers", "Health Screening and Testing", "Health Centers", "Mental Health Centers"};
+  categories["library"] = {"Libraries"};
+  categories["park"] = {"Parks and Gardens"};
+  categories["place-of-worship"] = {"Churches"};
+  categories["police-station"] = {"Sheriff and Police Stations"};
+  categories["post-office"] = {"DHL Locations", "Federal Express Locations"};
+  categories["school"] = {"Public High Schools", "Public Elementary Schools", "Private and Charter Schools"};
+  categories["trail"] = {"Trails"};
+  return categories;
 }

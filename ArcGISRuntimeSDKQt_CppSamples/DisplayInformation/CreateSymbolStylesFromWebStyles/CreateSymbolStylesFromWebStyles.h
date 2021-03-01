@@ -24,10 +24,12 @@ namespace ArcGISRuntime
 class FeatureLayer;
 class Map;
 class MapQuickView;
+class UniqueValueRenderer;
 }
 }
 
 #include <QObject>
+#include <QMap>
 
 class CreateSymbolStylesFromWebStyles : public QObject
 {
@@ -47,11 +49,13 @@ signals:
 private:
   Esri::ArcGISRuntime::MapQuickView* mapView() const;
   void setMapView(Esri::ArcGISRuntime::MapQuickView* mapView);
-  QList<QString> mapSymbolNameToField(QString symbolName);
+  QMap<QString,QList<QString>> createCategoriesMap();
 
   Esri::ArcGISRuntime::Map* m_map = nullptr;
   Esri::ArcGISRuntime::MapQuickView* m_mapView = nullptr;
-  Esri::ArcGISRuntime::FeatureLayer* m_featureLayer = nullptr;
+  Esri::ArcGISRuntime::FeatureLayer* m_webStyleLayer = nullptr;
+  QMap<QString,QList<QString>> m_categoriesMap;
+  Esri::ArcGISRuntime::UniqueValueRenderer* m_uniqueValueRenderer = nullptr;
 };
 
 #endif // CREATESYMBOLSTYLESFROMWEBSTYLES_H
