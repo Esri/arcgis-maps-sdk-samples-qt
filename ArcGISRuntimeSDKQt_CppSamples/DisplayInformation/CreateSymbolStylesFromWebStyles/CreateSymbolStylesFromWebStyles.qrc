@@ -1,11 +1,13 @@
 <RCC>
     <qresource prefix="/Samples/DisplayInformation/CreateSymbolStylesFromWebStyles">
-        <file alias="sample.json">README.metadata.json</file>        
+        <file alias="sample.json">README.metadata.json</file>
         <file>CreateSymbolStylesFromWebStyles.qml</file>
         <file>CreateSymbolStylesFromWebStyles.h</file>
         <file>CreateSymbolStylesFromWebStyles.cpp</file>
         <file>main.qml</file>
         <file>screenshot.png</file>
         <file>README.md</file>
+        <file>ic_menu_legendpopover_light_d.png</file>
+        <file>ic_menu_legendpopover_light.png</file>
     </qresource>
 </RCC>

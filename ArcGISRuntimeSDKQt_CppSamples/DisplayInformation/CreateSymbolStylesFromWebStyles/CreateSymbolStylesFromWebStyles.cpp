@@ -41,13 +41,14 @@ CreateSymbolStylesFromWebStyles::CreateSymbolStylesFromWebStyles(QObject* parent
   m_webStyleLayer = new FeatureLayer(new ServiceFeatureTable(webStyleLayerUrl, this), this);
   m_map->operationalLayers()->append(m_webStyleLayer);
 
-  m_map->setAutoFetchLegendInfos(true);
+  //m_map->setAutoFetchLegendInfos(true);
 
   m_uniqueValueRenderer = new UniqueValueRenderer(this);
   m_uniqueValueRenderer->setFieldNames({"cat2"});
   m_webStyleLayer->setRenderer(m_uniqueValueRenderer);
 
   m_categoriesMap = createCategoriesMap();
+  m_connectionIterations = 0;
 
   for (const QString &symbolKey : m_categoriesMap.keys())
   {
@@ -58,8 +59,15 @@ CreateSymbolStylesFromWebStyles::CreateSymbolStylesFromWebStyles(QObject* parent
 
       for (const QString &category : categories)
       {
-        m_uniqueValueRenderer->uniqueValues()->append(new UniqueValue("", symbolKey, {category}, symbol, this));
+        m_uniqueValueRenderer->uniqueValues()->append(new UniqueValue(symbolKey, "", {category}, symbol, this));
       }
+
+      qDebug() << symbolKey;
+      qDebug() << categories << Qt::endl;
+      m_connectionIterations++;
+      if (m_categoriesMap.keys().size() == m_connectionIterations)
+        m_map->setAutoFetchLegendInfos(true);
+
 
     });
     symbolStyle->fetchSymbol({symbolKey});
@@ -68,6 +76,8 @@ CreateSymbolStylesFromWebStyles::CreateSymbolStylesFromWebStyles(QObject* parent
   connect(m_map->legendInfos(), &LegendInfoListModel::fetchLegendInfosCompleted, this, [this]()
   {
     // set the legend info list model
+    qDebug() << "fetch legend infos completed";
+    qDebug() << m_map->legendInfos()->size();
     m_legendInfoListModel = m_map->legendInfos();
     emit legendInfoListModelChanged();
   });

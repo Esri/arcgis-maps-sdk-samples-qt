@@ -62,6 +62,7 @@ private:
   QMap<QString,QList<QString>> m_categoriesMap;
   Esri::ArcGISRuntime::UniqueValueRenderer* m_uniqueValueRenderer = nullptr;
   QAbstractListModel* m_legendInfoListModel = nullptr;
+  int m_connectionIterations;
 };
 
 #endif // CREATESYMBOLSTYLESFROMWEBSTYLES_H
