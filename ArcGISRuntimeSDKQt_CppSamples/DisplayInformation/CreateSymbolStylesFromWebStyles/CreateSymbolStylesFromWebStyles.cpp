@@ -41,8 +41,6 @@ CreateSymbolStylesFromWebStyles::CreateSymbolStylesFromWebStyles(QObject* parent
   m_webStyleLayer = new FeatureLayer(new ServiceFeatureTable(webStyleLayerUrl, this), this);
   m_map->operationalLayers()->append(m_webStyleLayer);
 
-  //m_map->setAutoFetchLegendInfos(true);
-
   m_uniqueValueRenderer = new UniqueValueRenderer(this);
   m_uniqueValueRenderer->setFieldNames({"cat2"});
   m_webStyleLayer->setRenderer(m_uniqueValueRenderer);
@@ -55,20 +53,13 @@ CreateSymbolStylesFromWebStyles::CreateSymbolStylesFromWebStyles(QObject* parent
     SymbolStyle* symbolStyle = new SymbolStyle("Esri2DPointSymbolsStyle", {}, this);
     connect(symbolStyle, &SymbolStyle::fetchSymbolCompleted, this, [this, symbolKey](QUuid /* taskId */, Symbol* symbol)
     {
-      QList<QString> categories = m_categoriesMap[symbolKey];
-
-      for (const QString &category : categories)
+      for (const QString &category : m_categoriesMap[symbolKey])
       {
-        m_uniqueValueRenderer->uniqueValues()->append(new UniqueValue(symbolKey, "", {category}, symbol, this));
+        m_uniqueValueRenderer->uniqueValues()->append(new UniqueValue(category, "", {category}, symbol, this));
       }
-
-      qDebug() << symbolKey;
-      qDebug() << categories << Qt::endl;
       m_connectionIterations++;
       if (m_categoriesMap.keys().size() == m_connectionIterations)
         m_map->setAutoFetchLegendInfos(true);
-
-
     });
     symbolStyle->fetchSymbol({symbolKey});
   }
@@ -123,7 +114,7 @@ void CreateSymbolStylesFromWebStyles::setMapView(MapQuickView* mapView)
 }
 
 QMap<QString,QList<QString>> CreateSymbolStylesFromWebStyles::createCategoriesMap()
-{// "atm", "beach", "campground", "city-hall", "hospital", "library", "park", "place-of-worship", "police-station", "post-office", "school", "trail"
+{
   QMap<QString,QList<QString>> categories;
   categories["atm"] = {"Banking and Finance"};
   categories["beach"] = {"Beaches and Marinas"};
@@ -142,5 +133,5 @@ QMap<QString,QList<QString>> CreateSymbolStylesFromWebStyles::createCategoriesMa
 
 void CreateSymbolStylesFromWebStyles::buildLegend()
 {
-
+  return;
 }
