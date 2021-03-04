@@ -38,9 +38,7 @@ class CreateSymbolStylesFromWebStyles : public QObject
   Q_OBJECT
 
   Q_PROPERTY(Esri::ArcGISRuntime::MapQuickView* mapView READ mapView WRITE setMapView NOTIFY mapViewChanged)
-
   Q_PROPERTY(QAbstractListModel* legendInfoListModel MEMBER m_legendInfoListModel NOTIFY legendInfoListModelChanged)
-
   Q_PROPERTY(QList<Esri::ArcGISRuntime::LegendInfo*> legendInfoList MEMBER m_legendInfoList NOTIFY legendInfoListChanged)
 
 public:
@@ -59,6 +57,7 @@ private:
   void setMapView(Esri::ArcGISRuntime::MapQuickView* mapView);
   QMap<QString,QList<QString>> createCategoriesMap();
   void buildLegend();
+  QList<Esri::ArcGISRuntime::LegendInfo*> sortLegendInfoList(QList<Esri::ArcGISRuntime::LegendInfo*> list);
 
   Esri::ArcGISRuntime::Map* m_map = nullptr;
   Esri::ArcGISRuntime::MapQuickView* m_mapView = nullptr;

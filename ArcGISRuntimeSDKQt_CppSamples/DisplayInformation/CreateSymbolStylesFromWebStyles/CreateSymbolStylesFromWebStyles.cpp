@@ -140,10 +140,45 @@ void CreateSymbolStylesFromWebStyles::buildLegend()
     if (m_map->legendInfos()->at(i)->name() != m_map->legendInfos()->at(i-1)->name())
     {
       m_legendInfoList.append(m_map->legendInfos()->at(i));
-      qDebug() << m_legendInfoList.last()->name();
+      //qDebug() << m_legendInfoList.last()->name();
     }
   }
-
+  QList<LegendInfo*> sorted = sortLegendInfoList(m_legendInfoList);
+  for (int i = 0; i < sorted.size(); ++i)
+  {
+    qDebug() << sorted.at(i)->name();
+  }
   qDebug() << m_legendInfoList.size();
   emit legendInfoListChanged();
+}
+
+QList<LegendInfo*> CreateSymbolStylesFromWebStyles::sortLegendInfoList(QList<LegendInfo*> list)
+{
+  if (list.size() <= 1)
+    return list;
+
+  int midIdx = list.size()/2;
+  QList<LegendInfo*> left;
+  QList<LegendInfo*> right;
+
+  for (int i = 0; i < list.size(); ++i)
+  {
+    if (i == midIdx)
+      continue;
+
+    if (list.at(i)->name() < list.at(midIdx)->name())
+      left.append(list.at(i));
+    else
+      right.append(list.at(i));
+  }
+
+  QList<LegendInfo*> sortedLeft = sortLegendInfoList(left);
+  QList<LegendInfo*> sortedRight = sortLegendInfoList(right);
+
+  sortedLeft.append(list.at(midIdx));
+  for (int i = 0; i < sortedRight.size(); ++i)
+  {
+    sortedLeft.append(sortedRight.at(i));
+  }
+  return sortedLeft;
 }

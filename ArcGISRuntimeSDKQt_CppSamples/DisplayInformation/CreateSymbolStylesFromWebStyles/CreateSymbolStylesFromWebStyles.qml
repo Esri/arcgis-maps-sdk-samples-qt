@@ -29,7 +29,7 @@ Item {
 
     // Declare the C++ instance which creates the scene etc. and supply the view
     CreateSymbolStylesFromWebStylesSample {
-        id: model
+        id: sample
         mapView: view
     }
 
@@ -90,7 +90,7 @@ Item {
             ListView {
                 id: legendListView
                 anchors.margins: 10
-                model: model.legendInfoListModel
+                model: sample.legendInfoList
                 width: parent.width * .9
                 height: parent.height * .9
                 clip: true
@@ -109,14 +109,14 @@ Item {
                             anchors.verticalCenter: parent.verticalCenter
                             width: 25
                             height: width
-                            source: symbolUrl
+                            source: modelData.symbolUrl
                         }
 
                         Text {
                             id: symbolText
                             anchors.verticalCenter: parent.verticalCenter
                             width: 110
-                            text: name
+                            text: modelData.name
                             wrapMode: Text.Wrap
                             font.pixelSize: 12
                         }
