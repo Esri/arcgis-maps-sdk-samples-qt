@@ -57,6 +57,7 @@ CreateSymbolStylesFromWebStyles::CreateSymbolStylesFromWebStyles(QObject* parent
       {
         m_uniqueValueRenderer->uniqueValues()->append(new UniqueValue(category, "", {category}, symbol, this));
       }
+      qDebug() << symbolKey;
       m_connectionIterations++;
       if (m_categoriesMap.keys().size() == m_connectionIterations)
         m_map->setAutoFetchLegendInfos(true);
@@ -66,10 +67,10 @@ CreateSymbolStylesFromWebStyles::CreateSymbolStylesFromWebStyles(QObject* parent
 
   connect(m_map->legendInfos(), &LegendInfoListModel::fetchLegendInfosCompleted, this, [this]()
   {
-    // set the legend info list model
     qDebug() << "fetch legend infos completed";
-    qDebug() << m_map->legendInfos()->size();
     m_legendInfoListModel = m_map->legendInfos();
+    qDebug() <<  m_map->legendInfos()->rowCount();
+    // buildLegend();
     emit legendInfoListModelChanged();
   });
 }
