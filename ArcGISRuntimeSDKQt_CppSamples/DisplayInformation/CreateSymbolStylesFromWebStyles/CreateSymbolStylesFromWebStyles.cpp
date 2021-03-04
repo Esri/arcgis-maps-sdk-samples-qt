@@ -28,7 +28,6 @@
 #include "UniqueValueRenderer.h"
 #include "SymbolStyle.h"
 #include "SimpleMarkerSymbol.h"
-#include "LegendInfo.h"
 
 using namespace Esri::ArcGISRuntime;
 
@@ -40,11 +39,14 @@ CreateSymbolStylesFromWebStyles::CreateSymbolStylesFromWebStyles(QObject* parent
 
   QUrl webStyleLayerUrl = QUrl("http://services.arcgis.com/V6ZHFr6zdgNZuVG0/arcgis/rest/services/LA_County_Points_of_Interest/FeatureServer/0");
   m_webStyleLayer = new FeatureLayer(new ServiceFeatureTable(webStyleLayerUrl, this), this);
-  m_map->operationalLayers()->append(m_webStyleLayer);
 
   m_uniqueValueRenderer = new UniqueValueRenderer(this);
   m_uniqueValueRenderer->setFieldNames({"cat2"});
+
   m_webStyleLayer->setRenderer(m_uniqueValueRenderer);
+
+  m_legendInfoListModel = m_map->legendInfos();
+  m_map->operationalLayers()->append(m_webStyleLayer);
 
   m_categoriesMap = createCategoriesMap();
   m_connectionIterations = 0;
@@ -56,9 +58,8 @@ CreateSymbolStylesFromWebStyles::CreateSymbolStylesFromWebStyles(QObject* parent
     {
       for (const QString &category : m_categoriesMap[symbolKey])
       {
-        m_uniqueValueRenderer->uniqueValues()->append(new UniqueValue(symbolKey, "", {category}, symbol, this));
+        addAUniqueValuesToRendererAndSort(new UniqueValue(symbolKey, "", {category}, symbol, this));
       }
-      qDebug() << symbolKey;
       m_connectionIterations++;
       if (m_categoriesMap.keys().size() == m_connectionIterations)
         m_map->setAutoFetchLegendInfos(true);
@@ -68,12 +69,49 @@ CreateSymbolStylesFromWebStyles::CreateSymbolStylesFromWebStyles(QObject* parent
 
   connect(m_map->legendInfos(), &LegendInfoListModel::fetchLegendInfosCompleted, this, [this]()
   {
-    qDebug() << "fetch legend infos completed";
-    m_legendInfoListModel = m_map->legendInfos();
-    qDebug() <<  m_map->legendInfos()->rowCount();
-    buildLegend();
     emit legendInfoListModelChanged();
   });
+}
+
+void CreateSymbolStylesFromWebStyles::addAUniqueValuesToRendererAndSort(UniqueValue* newUniqueValue)
+{
+  m_uniqueValueRenderer->uniqueValues()->append(newUniqueValue);
+  int idx = m_uniqueValueRenderer->uniqueValues()->size()-1;
+
+  while (true)
+  {
+    if (idx < 1 || m_uniqueValueRenderer->uniqueValues()->at(idx)->label() >= m_uniqueValueRenderer->uniqueValues()->at(idx-1)->label())
+      break;
+
+    m_uniqueValueRenderer->uniqueValues()->move(idx, idx-1);
+    --idx;
+  }
+}
+
+void CreateSymbolStylesFromWebStyles::getSymbols()
+{
+  SymbolStyle* symbolStyle = new SymbolStyle("Esri2DPointSymbolsStyle", {}, this);
+  connect(symbolStyle, &SymbolStyle::fetchSymbolCompleted, this, [this](QUuid /* taskId */, Symbol* symbol)
+  {
+    for (const QString &category : m_categoriesMap[m_symbolKeys[m_connectionIterations]])
+    {
+      m_uniqueValueRenderer->uniqueValues()->append(new UniqueValue(m_symbolKeys[m_connectionIterations], "", {category}, symbol, this));
+    }
+
+    qDebug() << m_connectionIterations;
+    qDebug() << m_symbolKeys[m_connectionIterations];
+
+    m_connectionIterations++;
+    if (m_connectionIterations < m_symbolKeys.length())
+    {
+      getSymbols();
+    }
+    else
+    {
+      m_map->setAutoFetchLegendInfos(true);
+    }
+  });
+  symbolStyle->fetchSymbol({m_symbolKeys[m_connectionIterations]});
 }
 
 CreateSymbolStylesFromWebStyles::~CreateSymbolStylesFromWebStyles() = default;

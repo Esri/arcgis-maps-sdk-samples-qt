@@ -124,8 +124,6 @@ Item {
                         }
                     }
                     Component.onCompleted: {
-                        console.log(symbolText.text);
-                        console.log(symbolNames);
                         if (symbolNames.includes(symbolText.text)) {
                             legendItem.height = 0;
                             legendItem.visible = false;

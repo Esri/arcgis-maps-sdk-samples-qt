@@ -24,8 +24,10 @@ namespace ArcGISRuntime
 class FeatureLayer;
 class Map;
 class MapQuickView;
+class UniqueValue;
 class UniqueValueRenderer;
 class LegendInfo;
+class SymbolStyle;
 }
 }
 
@@ -58,6 +60,8 @@ private:
   QMap<QString,QList<QString>> createCategoriesMap();
   void buildLegend();
   QList<Esri::ArcGISRuntime::LegendInfo*> sortLegendInfoList(QList<Esri::ArcGISRuntime::LegendInfo*> list);
+  void addAUniqueValuesToRendererAndSort(Esri::ArcGISRuntime::UniqueValue*);
+  void getSymbols();
 
   Esri::ArcGISRuntime::Map* m_map = nullptr;
   Esri::ArcGISRuntime::MapQuickView* m_mapView = nullptr;
@@ -66,7 +70,9 @@ private:
   Esri::ArcGISRuntime::UniqueValueRenderer* m_uniqueValueRenderer = nullptr;
   QAbstractListModel* m_legendInfoListModel = nullptr;
   QList<Esri::ArcGISRuntime::LegendInfo*> m_legendInfoList;
+  Esri::ArcGISRuntime::SymbolStyle* m_symbolStyle = nullptr;
   int m_connectionIterations;
+  QList<QString> m_symbolKeys;
 };
 
 #endif // CREATESYMBOLSTYLESFROMWEBSTYLES_H
