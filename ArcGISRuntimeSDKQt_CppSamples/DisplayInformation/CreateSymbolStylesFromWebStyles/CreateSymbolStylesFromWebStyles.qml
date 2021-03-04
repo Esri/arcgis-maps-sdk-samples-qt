@@ -20,6 +20,7 @@ import Esri.Samples 1.0
 
 Item {
     id: window
+    property var symbolNames: []
 
     // add a mapView component
     MapView {
@@ -90,13 +91,14 @@ Item {
             ListView {
                 id: legendListView
                 anchors.margins: 10
-                model: sample.legendInfoList
+                model: sample.legendInfoListModel
                 width: parent.width * .9
                 height: parent.height * .9
                 clip: true
 
                 // Create delegate to display the name with an image
                 delegate: Item {
+                    id: legendItem
                     width: 175
                     height: 40
                     clip: true
@@ -109,19 +111,28 @@ Item {
                             anchors.verticalCenter: parent.verticalCenter
                             width: 25
                             height: width
-                            source: modelData.symbolUrl
+                            source: symbolUrl
                         }
 
                         Text {
                             id: symbolText
                             anchors.verticalCenter: parent.verticalCenter
                             width: 110
-                            text: modelData.name
+                            text: name
                             wrapMode: Text.Wrap
                             font.pixelSize: 12
                         }
                     }
-                    visible: true
+                    Component.onCompleted: {
+                        console.log(symbolText.text);
+                        console.log(symbolNames);
+                        if (symbolNames.includes(symbolText.text)) {
+                            legendItem.height = 0;
+                            legendItem.visible = false;
+                        } else {
+                            symbolNames.push(symbolText.text)
+                        }
+                    }
                 }
             }
         }
