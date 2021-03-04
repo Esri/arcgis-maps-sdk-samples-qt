@@ -25,6 +25,7 @@ class FeatureLayer;
 class Map;
 class MapQuickView;
 class UniqueValueRenderer;
+class LegendInfo;
 }
 }
 
@@ -40,6 +41,8 @@ class CreateSymbolStylesFromWebStyles : public QObject
 
   Q_PROPERTY(QAbstractListModel* legendInfoListModel MEMBER m_legendInfoListModel NOTIFY legendInfoListModelChanged)
 
+  Q_PROPERTY(QList<Esri::ArcGISRuntime::LegendInfo*> legendInfoList MEMBER m_legendInfoList NOTIFY legendInfoListChanged)
+
 public:
   explicit CreateSymbolStylesFromWebStyles(QObject* parent = nullptr);
   ~CreateSymbolStylesFromWebStyles();
@@ -49,6 +52,7 @@ public:
 signals:
   void mapViewChanged();
   void legendInfoListModelChanged();
+  void legendInfoListChanged();
 
 private:
   Esri::ArcGISRuntime::MapQuickView* mapView() const;
@@ -62,6 +66,7 @@ private:
   QMap<QString,QList<QString>> m_categoriesMap;
   Esri::ArcGISRuntime::UniqueValueRenderer* m_uniqueValueRenderer = nullptr;
   QAbstractListModel* m_legendInfoListModel = nullptr;
+  QList<Esri::ArcGISRuntime::LegendInfo*> m_legendInfoList;
   int m_connectionIterations;
 };
 

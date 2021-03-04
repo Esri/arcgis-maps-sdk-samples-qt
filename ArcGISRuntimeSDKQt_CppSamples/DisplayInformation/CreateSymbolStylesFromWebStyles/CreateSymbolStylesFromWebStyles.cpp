@@ -55,7 +55,7 @@ CreateSymbolStylesFromWebStyles::CreateSymbolStylesFromWebStyles(QObject* parent
     {
       for (const QString &category : m_categoriesMap[symbolKey])
       {
-        m_uniqueValueRenderer->uniqueValues()->append(new UniqueValue(category, "", {category}, symbol, this));
+        m_uniqueValueRenderer->uniqueValues()->append(new UniqueValue(symbolKey, "", {category}, symbol, this));
       }
       qDebug() << symbolKey;
       m_connectionIterations++;
@@ -70,7 +70,7 @@ CreateSymbolStylesFromWebStyles::CreateSymbolStylesFromWebStyles(QObject* parent
     qDebug() << "fetch legend infos completed";
     m_legendInfoListModel = m_map->legendInfos();
     qDebug() <<  m_map->legendInfos()->rowCount();
-    // buildLegend();
+    buildLegend();
     emit legendInfoListModelChanged();
   });
 }
@@ -134,5 +134,16 @@ QMap<QString,QList<QString>> CreateSymbolStylesFromWebStyles::createCategoriesMa
 
 void CreateSymbolStylesFromWebStyles::buildLegend()
 {
-  return;
+  m_legendInfoList.append(m_map->legendInfos()->at(0));
+  for (int i = 1; i < m_map->legendInfos()->rowCount(); ++i)
+  {
+    if (m_map->legendInfos()->at(i)->name() != m_map->legendInfos()->at(i-1)->name())
+    {
+      m_legendInfoList.append(m_map->legendInfos()->at(i));
+      qDebug() << m_legendInfoList.last()->name();
+    }
+  }
+
+  qDebug() << m_legendInfoList.size();
+  emit legendInfoListChanged();
 }
