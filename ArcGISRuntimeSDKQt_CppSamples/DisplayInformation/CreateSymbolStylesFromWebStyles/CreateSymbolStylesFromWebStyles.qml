@@ -19,6 +19,7 @@ import QtQuick.Controls 2.2
 import Esri.Samples 1.0
 
 Item {
+    id: window
 
     // add a mapView component
     MapView {
@@ -39,7 +40,6 @@ Item {
             left: parent.left
             top: parent.top
         }
-        property bool expanded: true
         height: parent.height * .75
         width: 175
         color: "lightgrey"
@@ -84,26 +84,6 @@ Item {
                         bold: true
                     }
                 }
-
-                // Legend icon to allow expanding and collapsing
-                Image {
-                    source: legendRect.expanded ? "qrc:/Samples/DisplayInformation/CreateSymbolStylesFromWebStyles/ic_menu_legendpopover_light_d.png" : "qrc:/Samples/DisplayInformation/CreateSymbolStylesFromWebStyles/ic_menu_legendpopover_light.png"
-                    width: 28
-                    height: width
-
-                    MouseArea {
-                        anchors.fill: parent
-                        onClicked: {
-                            if (legendRect.expanded) {
-                                legendRect.height = 40;
-                                legendRect.expanded = false;
-                            } else {
-                                legendRect.height = 200;
-                                legendRect.expanded = true;
-                            }
-                        }
-                    }
-                }
             }
 
             // Create a list view to display the legend
@@ -117,8 +97,8 @@ Item {
 
                 // Create delegate to display the name with an image
                 delegate: Item {
-                    width: 165
-                    height: 35
+                    width: 175
+                    height: 40
                     clip: true
 
                     Row {
@@ -127,37 +107,22 @@ Item {
 
                         Image {
                             anchors.verticalCenter: parent.verticalCenter
-                            width: 24
+                            width: 25
                             height: width
                             source: symbolUrl
                         }
 
                         Text {
+                            id: symbolText
                             anchors.verticalCenter: parent.verticalCenter
-                            width: 125
+                            width: 110
                             text: name
-                            wrapMode: Text.WordWrap
+                            wrapMode: Text.Wrap
                             font.pixelSize: 12
                         }
                     }
+                    visible: true
                 }
-
-//                section {
-//                    property: "layerName"
-//                    criteria: ViewSection.FullString
-//                    labelPositioning: ViewSection.CurrentLabelAtStart | ViewSection.InlineLabels
-//                    delegate: Rectangle {
-//                        width: 180
-//                        height: childrenRect.height
-//                        color: "lightsteelblue"
-
-//                        Text {
-//                            text: section
-//                            font.bold: true
-//                            font.pixelSize: 13
-//                        }
-//                    }
-//                }
             }
         }
     }
