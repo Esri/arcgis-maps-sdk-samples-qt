@@ -28,6 +28,7 @@
 #include "UniqueValueRenderer.h"
 #include "SymbolStyle.h"
 #include "SimpleMarkerSymbol.h"
+#include "LegendInfo.h"
 
 using namespace Esri::ArcGISRuntime;
 
