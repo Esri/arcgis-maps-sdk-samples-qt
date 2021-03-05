@@ -41,23 +41,14 @@ Item {
             left: parent.left
             top: parent.top
         }
-        height: parent.height * .75
+        height: 570
         width: 175
         color: "lightgrey"
-        opacity: 0.95
-        radius: 10
+        opacity: 0.9
         clip: true
         border {
             color: "darkgrey"
             width: 1
-        }
-
-        // Animate the expand and collapse of the legend
-        Behavior on height {
-            SpringAnimation {
-                spring: 3
-                damping: .4
-            }
         }
 
         // Catch mouse signals so they don't propagate to the map
@@ -123,6 +114,9 @@ Item {
                             font.pixelSize: 12
                         }
                     }
+
+                    // The LegendInfoListModel populates from all values in a layer's UniqueValueRenderer
+                    // Therefore we hide duplicate values with this following codeblock
                     Component.onCompleted: {
                         if (symbolNames.includes(symbolText.text)) {
                             legendItem.height = 0;

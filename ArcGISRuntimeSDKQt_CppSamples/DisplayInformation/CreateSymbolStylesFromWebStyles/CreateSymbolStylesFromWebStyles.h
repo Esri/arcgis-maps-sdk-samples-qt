@@ -41,7 +41,6 @@ class CreateSymbolStylesFromWebStyles : public QObject
 
   Q_PROPERTY(Esri::ArcGISRuntime::MapQuickView* mapView READ mapView WRITE setMapView NOTIFY mapViewChanged)
   Q_PROPERTY(QAbstractListModel* legendInfoListModel MEMBER m_legendInfoListModel NOTIFY legendInfoListModelChanged)
-  Q_PROPERTY(QList<Esri::ArcGISRuntime::LegendInfo*> legendInfoList MEMBER m_legendInfoList NOTIFY legendInfoListChanged)
 
 public:
   explicit CreateSymbolStylesFromWebStyles(QObject* parent = nullptr);
@@ -52,27 +51,21 @@ public:
 signals:
   void mapViewChanged();
   void legendInfoListModelChanged();
-  void legendInfoListChanged();
 
 private:
   Esri::ArcGISRuntime::MapQuickView* mapView() const;
   void setMapView(Esri::ArcGISRuntime::MapQuickView* mapView);
-  QMap<QString,QList<QString>> createCategoriesMap();
-  void buildLegend();
-  QList<Esri::ArcGISRuntime::LegendInfo*> sortLegendInfoList(QList<Esri::ArcGISRuntime::LegendInfo*> list);
+  QMap<QString,QStringList> createCategoriesMap();
   void addAUniqueValuesToRendererAndSort(Esri::ArcGISRuntime::UniqueValue*);
-  void getSymbols();
+  void createSymbolStyles();
 
   Esri::ArcGISRuntime::Map* m_map = nullptr;
   Esri::ArcGISRuntime::MapQuickView* m_mapView = nullptr;
   Esri::ArcGISRuntime::FeatureLayer* m_webStyleLayer = nullptr;
-  QMap<QString,QList<QString>> m_categoriesMap;
   Esri::ArcGISRuntime::UniqueValueRenderer* m_uniqueValueRenderer = nullptr;
   QAbstractListModel* m_legendInfoListModel = nullptr;
-  QList<Esri::ArcGISRuntime::LegendInfo*> m_legendInfoList;
-  Esri::ArcGISRuntime::SymbolStyle* m_symbolStyle = nullptr;
-  int m_connectionIterations;
-  QList<QString> m_symbolKeys;
+  QMap<QString,QStringList> m_categoriesMap;
+  int m_symbolsFetchedCount;
 };
 
 #endif // CREATESYMBOLSTYLESFROMWEBSTYLES_H

@@ -35,42 +35,59 @@ CreateSymbolStylesFromWebStyles::CreateSymbolStylesFromWebStyles(QObject* parent
   QObject(parent),
   m_map(new Map(BasemapStyle::ArcGISNavigation, this))
 {
-  m_map->setReferenceScale(100'000);
-
   QUrl webStyleLayerUrl = QUrl("http://services.arcgis.com/V6ZHFr6zdgNZuVG0/arcgis/rest/services/LA_County_Points_of_Interest/FeatureServer/0");
   m_webStyleLayer = new FeatureLayer(new ServiceFeatureTable(webStyleLayerUrl, this), this);
 
   m_uniqueValueRenderer = new UniqueValueRenderer(this);
+  // The UniqueValueRenderer will affect specific features based on the values of the specified FieldName(s)
   m_uniqueValueRenderer->setFieldNames({"cat2"});
-
+  // The UniqueValueRenderer defines how features of a FeatureLayer are stylized
+  // Without an overriding UniqueValueRenderer, features from m_webStyleLayer will use the web layer's default gray circle style
   m_webStyleLayer->setRenderer(m_uniqueValueRenderer);
 
-  m_legendInfoListModel = m_map->legendInfos();
   m_map->operationalLayers()->append(m_webStyleLayer);
 
+  // Populate the legend from the UniqueValuesRenderer's UniqueValuesList once all UniqueValues have been added
+  connect(m_map->legendInfos(), &LegendInfoListModel::fetchLegendInfosCompleted, this, [this]()
+  {
+    m_legendInfoListModel = m_map->legendInfos();
+    emit legendInfoListModelChanged();
+  });
+
+  // Set the scale at which feature symbols and text will appear at their default size
+  m_map->setReferenceScale(100'000);
+
+  createSymbolStyles();
+}
+
+void CreateSymbolStylesFromWebStyles::createSymbolStyles()
+{
   m_categoriesMap = createCategoriesMap();
-  m_connectionIterations = 0;
+  m_symbolsFetchedCount = 0;
 
   for (const QString &symbolKey : m_categoriesMap.keys())
   {
     SymbolStyle* symbolStyle = new SymbolStyle("Esri2DPointSymbolsStyle", {}, this);
+
     connect(symbolStyle, &SymbolStyle::fetchSymbolCompleted, this, [this, symbolKey](QUuid /* taskId */, Symbol* symbol)
     {
+      // If multiple field names are set, we can pass multiple values from each field,
+      // here even though we are using the same symbol, we must create a UniqueValue for each value from the same field
+      // when the FeatureLayer is rendered, all features with a matching value in the specified FieldNames will appear with the defined UniqueValue
       for (const QString &category : m_categoriesMap[symbolKey])
       {
+        // The resulting legend will use the order of UniqueValues in the UniqueValueRenderer, so we ensure that it is kept in alphabetical order
         addAUniqueValuesToRendererAndSort(new UniqueValue(symbolKey, "", {category}, symbol, this));
       }
-      m_connectionIterations++;
-      if (m_categoriesMap.keys().size() == m_connectionIterations)
+
+      // fetchLegendInfosCompleted will only trigger once, so we need to ensure it triggers after all UniqueValues have been added
+      m_symbolsFetchedCount++;
+      if (m_categoriesMap.keys().size() == m_symbolsFetchedCount)
         m_map->setAutoFetchLegendInfos(true);
     });
+
     symbolStyle->fetchSymbol({symbolKey});
   }
-
-  connect(m_map->legendInfos(), &LegendInfoListModel::fetchLegendInfosCompleted, this, [this]()
-  {
-    emit legendInfoListModelChanged();
-  });
 }
 
 void CreateSymbolStylesFromWebStyles::addAUniqueValuesToRendererAndSort(UniqueValue* newUniqueValue)
@@ -78,6 +95,7 @@ void CreateSymbolStylesFromWebStyles::addAUniqueValuesToRendererAndSort(UniqueVa
   m_uniqueValueRenderer->uniqueValues()->append(newUniqueValue);
   int idx = m_uniqueValueRenderer->uniqueValues()->size()-1;
 
+  // A simple bubble sort to reorganize the UniqueValuesList
   while (true)
   {
     if (idx < 1 || m_uniqueValueRenderer->uniqueValues()->at(idx)->label() >= m_uniqueValueRenderer->uniqueValues()->at(idx-1)->label())
@@ -86,32 +104,6 @@ void CreateSymbolStylesFromWebStyles::addAUniqueValuesToRendererAndSort(UniqueVa
     m_uniqueValueRenderer->uniqueValues()->move(idx, idx-1);
     --idx;
   }
-}
-
-void CreateSymbolStylesFromWebStyles::getSymbols()
-{
-  SymbolStyle* symbolStyle = new SymbolStyle("Esri2DPointSymbolsStyle", {}, this);
-  connect(symbolStyle, &SymbolStyle::fetchSymbolCompleted, this, [this](QUuid /* taskId */, Symbol* symbol)
-  {
-    for (const QString &category : m_categoriesMap[m_symbolKeys[m_connectionIterations]])
-    {
-      m_uniqueValueRenderer->uniqueValues()->append(new UniqueValue(m_symbolKeys[m_connectionIterations], "", {category}, symbol, this));
-    }
-
-    qDebug() << m_connectionIterations;
-    qDebug() << m_symbolKeys[m_connectionIterations];
-
-    m_connectionIterations++;
-    if (m_connectionIterations < m_symbolKeys.length())
-    {
-      getSymbols();
-    }
-    else
-    {
-      m_map->setAutoFetchLegendInfos(true);
-    }
-  });
-  symbolStyle->fetchSymbol({m_symbolKeys[m_connectionIterations]});
 }
 
 CreateSymbolStylesFromWebStyles::~CreateSymbolStylesFromWebStyles() = default;
@@ -147,77 +139,27 @@ void CreateSymbolStylesFromWebStyles::setMapView(MapQuickView* mapView)
 
   connect(m_mapView, &MapQuickView::mapScaleChanged, this, [this]()
   {
+    // Set scale symbols to true so the symbols don't take up the entire view when we zoom in
     m_webStyleLayer->setScaleSymbols(m_mapView->mapScale() >= 80'000);
   });
 
   emit mapViewChanged();
 }
 
-QMap<QString,QList<QString>> CreateSymbolStylesFromWebStyles::createCategoriesMap()
+QMap<QString,QStringList> CreateSymbolStylesFromWebStyles::createCategoriesMap()
 {
-  QMap<QString,QList<QString>> categories;
-  categories["atm"] = {"Banking and Finance"};
-  categories["beach"] = {"Beaches and Marinas"};
-  categories["campground"] = {"Campgrounds"};
-  categories["city-hall"] = {"City Halls", "Government Offices"};
-  categories["hospital"] = {"Hospitals and Medical Centers", "Health Screening and Testing", "Health Centers", "Mental Health Centers"};
-  categories["library"] = {"Libraries"};
-  categories["park"] = {"Parks and Gardens"};
-  categories["place-of-worship"] = {"Churches"};
-  categories["police-station"] = {"Sheriff and Police Stations"};
-  categories["post-office"] = {"DHL Locations", "Federal Express Locations"};
-  categories["school"] = {"Public High Schools", "Public Elementary Schools", "Private and Charter Schools"};
-  categories["trail"] = {"Trails"};
+  QMap<QString,QStringList> categories;
+  categories["atm"] << "Banking and Finance";
+  categories["beach"] << "Beaches and Marinas";
+  categories["campground"] << "Campgrounds";
+  categories["city-hall"] << "City Halls" << "Government Offices";
+  categories["hospital"] << "Hospitals and Medical Centers" << "Health Screening and Testing" << "Health Centers" << "Mental Health Centers";
+  categories["library"] << "Libraries";
+  categories["park"] << "Parks and Gardens";
+  categories["place-of-worship"] << "Churches";
+  categories["police-station"] << "Sheriff and Police Stations";
+  categories["post-office"] << "DHL Locations" << "Federal Express Locations";
+  categories["school"] << "Public High Schools" << "Public Elementary Schools" << "Private and Charter Schools";
+  categories["trail"] << "Trails";
   return categories;
-}
-
-void CreateSymbolStylesFromWebStyles::buildLegend()
-{
-  m_legendInfoList.append(m_map->legendInfos()->at(0));
-  for (int i = 1; i < m_map->legendInfos()->rowCount(); ++i)
-  {
-    if (m_map->legendInfos()->at(i)->name() != m_map->legendInfos()->at(i-1)->name())
-    {
-      m_legendInfoList.append(m_map->legendInfos()->at(i));
-      //qDebug() << m_legendInfoList.last()->name();
-    }
-  }
-  QList<LegendInfo*> sorted = sortLegendInfoList(m_legendInfoList);
-  for (int i = 0; i < sorted.size(); ++i)
-  {
-    qDebug() << sorted.at(i)->name();
-  }
-  qDebug() << m_legendInfoList.size();
-  emit legendInfoListChanged();
-}
-
-QList<LegendInfo*> CreateSymbolStylesFromWebStyles::sortLegendInfoList(QList<LegendInfo*> list)
-{
-  if (list.size() <= 1)
-    return list;
-
-  int midIdx = list.size()/2;
-  QList<LegendInfo*> left;
-  QList<LegendInfo*> right;
-
-  for (int i = 0; i < list.size(); ++i)
-  {
-    if (i == midIdx)
-      continue;
-
-    if (list.at(i)->name() < list.at(midIdx)->name())
-      left.append(list.at(i));
-    else
-      right.append(list.at(i));
-  }
-
-  QList<LegendInfo*> sortedLeft = sortLegendInfoList(left);
-  QList<LegendInfo*> sortedRight = sortLegendInfoList(right);
-
-  sortedLeft.append(list.at(midIdx));
-  for (int i = 0; i < sortedRight.size(); ++i)
-  {
-    sortedLeft.append(sortedRight.at(i));
-  }
-  return sortedLeft;
 }
