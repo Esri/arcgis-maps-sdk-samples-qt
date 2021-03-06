@@ -39,8 +39,10 @@ CreateSymbolStylesFromWebStyles::CreateSymbolStylesFromWebStyles(QObject* parent
   m_webStyleLayer = new FeatureLayer(new ServiceFeatureTable(webStyleLayerUrl, this), this);
 
   m_uniqueValueRenderer = new UniqueValueRenderer(this);
+
   // The UniqueValueRenderer will affect specific features based on the values of the specified FieldName(s)
   m_uniqueValueRenderer->setFieldNames({"cat2"});
+
   // The UniqueValueRenderer defines how features of a FeatureLayer are stylized
   // Without an overriding UniqueValueRenderer, features from m_webStyleLayer will use the web layer's default gray circle style
   m_webStyleLayer->setRenderer(m_uniqueValueRenderer);
@@ -72,8 +74,8 @@ void CreateSymbolStylesFromWebStyles::createSymbolStyles()
     connect(symbolStyle, &SymbolStyle::fetchSymbolCompleted, this, [this, symbolKey](QUuid /* taskId */, Symbol* symbol)
     {
       // If multiple field names are set, we can pass multiple values from each field,
-      // here even though we are using the same symbol, we must create a UniqueValue for each value from the same field
-      // when the FeatureLayer is rendered, all features with a matching value in the specified FieldNames will appear with the defined UniqueValue
+      // However, even though we are using the same symbol, we must create a UniqueValue for each value from the same field
+      // When the FeatureLayer is rendered, all features with a matching value in the specified FieldNames will appear with the defined UniqueValue
       for (const QString &category : m_categoriesMap[symbolKey])
       {
         // The resulting legend will use the order of UniqueValues in the UniqueValueRenderer, so we ensure that it is kept in alphabetical order
@@ -92,10 +94,10 @@ void CreateSymbolStylesFromWebStyles::createSymbolStyles()
 
 void CreateSymbolStylesFromWebStyles::addAUniqueValuesToRendererAndSort(UniqueValue* newUniqueValue)
 {
+  int idx = m_uniqueValueRenderer->uniqueValues()->size();
   m_uniqueValueRenderer->uniqueValues()->append(newUniqueValue);
-  int idx = m_uniqueValueRenderer->uniqueValues()->size()-1;
 
-  // A simple bubble sort to reorganize the UniqueValuesList
+  // A simple bubble sort to alphabetize the UniqueValuesList by label
   while (true)
   {
     if (idx < 1 || m_uniqueValueRenderer->uniqueValues()->at(idx)->label() >= m_uniqueValueRenderer->uniqueValues()->at(idx-1)->label())
@@ -121,7 +123,6 @@ MapQuickView* CreateSymbolStylesFromWebStyles::mapView() const
   return m_mapView;
 }
 
-// Set the view (created in QML)
 void CreateSymbolStylesFromWebStyles::setMapView(MapQuickView* mapView)
 {
   if (!mapView || mapView == m_mapView)

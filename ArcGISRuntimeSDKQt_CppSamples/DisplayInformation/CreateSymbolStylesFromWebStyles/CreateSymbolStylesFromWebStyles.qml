@@ -41,7 +41,7 @@ Item {
             left: parent.left
             top: parent.top
         }
-        height: 570
+        height: 545
         width: 175
         color: "lightgrey"
         opacity: 0.9
@@ -58,7 +58,6 @@ Item {
             onWheel: wheel.accepted = true
         }
 
-        // Create UI for the user to select the layer to display
         Column {
             anchors {
                 fill: parent
