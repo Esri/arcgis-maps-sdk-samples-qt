@@ -66,8 +66,8 @@ Rectangle {
                                                                                             // However, even though we are using the same symbol, we must create a UniqueValue for each value from the same field
                                                                                             // When the FeatureLayer is rendered, all features with a matching value in the specified FieldNames will appear with the defined UniqueValue
                                                                                             getValuesFromSymbolLabel(symbolKey).forEach((value) => {
-                                                                                                                                            var uniqueValue = ArcGISRuntimeEnvironment.createObject("UniqueValue", {label: symbolKey, values: [value], symbol: symbolStyle.fetchSymbolResult});
-                                                                                                                                            addToRendererAndSort(uniqueValue);
+                                                                                                                                            // The resulting legend will use the order of UniqueValues in the UniqueValueRenderer, so we ensure that it is kept in alphabetical order
+                                                                                                                                            addToRendererAndSort(ArcGISRuntimeEnvironment.createObject("UniqueValue", {label: symbolKey, values: [value], symbol: symbolStyle.fetchSymbolResult}));
                                                                                                                                         });
 
                                                                                             symbolsFetchedCount++;
@@ -92,6 +92,10 @@ Rectangle {
                 }
                 targetScale: 7000
             }
+        }
+        onMapScaleChanged: {
+            // Set scale symbols to true when we zoom in so the symbols don't take up the entire view
+            webLayer.scaleSymbols = (mapView.mapScale >= 80000);
         }
     }
 
@@ -220,5 +224,4 @@ Rectangle {
         default: return [];
         }
     }
-
 }

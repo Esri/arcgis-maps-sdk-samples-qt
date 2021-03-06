@@ -140,7 +140,7 @@ void CreateSymbolStylesFromWebStyles::setMapView(MapQuickView* mapView)
 
   connect(m_mapView, &MapQuickView::mapScaleChanged, this, [this]()
   {
-    // Set scale symbols to true so the symbols don't take up the entire view when we zoom in
+    // Set scale symbols to true when we zoom in so the symbols don't take up the entire view
     m_webStyleLayer->setScaleSymbols(m_mapView->mapScale() >= 80'000);
   });
 
