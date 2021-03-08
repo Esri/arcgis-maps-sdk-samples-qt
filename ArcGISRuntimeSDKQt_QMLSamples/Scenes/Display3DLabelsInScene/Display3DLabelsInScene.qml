@@ -32,6 +32,24 @@ Rectangle {
             id: nycScene
             initUrl: "https://www.arcgis.com/home/item.html?id=850dfee7d30f4d9da0ebca34a533c169"
 
+            LabelDefinition {
+                id: gasLineLabelDefinition
+
+                expression: ArcadeLabelExpression {
+                    expression: "Text($feature.INSTALLATIONDATE, 'D MMM Y')"
+                }
+
+                textSymbol: TextSymbol {
+                    color: "#ffa500"
+                    haloColor: "white"
+                    haloWidth: 2.0
+                    size: 16.0
+                }
+
+                placement: Enums.LabelingPlacementLineAboveAlong
+                useCodedValues: true
+            }
+
             onLoadStatusChanged: {
                 if (loadStatus !== Enums.LoadStatusLoaded)
                     return;
@@ -48,24 +66,6 @@ Rectangle {
                                                        }
                                                    });
             }
-        }
-
-        LabelDefinition {
-            id: gasLineLabelDefinition
-
-            expression: ArcadeLabelExpression {
-                expression: "Text($feature.INSTALLATIONDATE, 'D MMM Y')"
-            }
-
-            textSymbol: TextSymbol {
-                color: "#ffa500"
-                haloColor: "white"
-                haloWidth: 2.0
-                size: 16.0
-            }
-
-            placement: Enums.LabelingPlacementLineAboveAlong
-            useCodedValues: true
         }
     }
 }

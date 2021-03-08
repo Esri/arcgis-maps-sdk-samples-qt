@@ -9,18 +9,17 @@ Labeling features is useful to visually display information or attributes on a s
 Pan and zoom to explore the scene. Notice the labels showing installation dates of features in the 3D gas network.
 
 ## How it works
-1. Create a `Scene` using the `initUrl` property.
-2. Create a `TextSymbol` to use for displaying the label text.
-3. Create a `LabelDefinition` with a `json` property
-    * Set the "labelExpressionInfo.expression" key to create an Arcade expression that defines what text the label should display. You can use fields of the feature by using $feature.FIELD_NAME in the expression.
-    * To use a text symbol, set the "symbol" key in the JSON representation using `TextSymbol.json`.
-4. Create a label definition from the JSON using `LabelDefinition::fromJson()`.
+1. Create a `Scene` from a URL.
+2. Create a `LabelDefinition` to define how the labels will be displayed.
+3. Create an `ArcadeLabelExpression` to define the labels' format.
+4. Create a `TextSymbol` to define how labels are stylized.
 5. After the `Scene` has loaded, obtain the `FeatureLayer` from the scene's `operationalLayers`.
 6. Set the `labelsEnabled` property to `true`.
 7. Add the label definition to the feature layer's `labelDefinitions` list model.
 
 ## Relevant API
 
+* ArcadeLabelExpression
 * FeatureLayer
 * LabelDefinition
 * Scene

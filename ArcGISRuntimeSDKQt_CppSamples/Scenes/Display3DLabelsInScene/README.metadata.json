@@ -1,5 +1,5 @@
 {
-    "category": "TODO",
+    "category": "Scenes",
     "description": "This sample demonstrates how to display custom labels in a 3D scene.",
     "ignore": false,
     "images": [
@@ -7,7 +7,6 @@
     ],
     "keywords": [
         "3D",
-        "URL",
         "attribute",
         "buildings",
         "label",
@@ -15,17 +14,14 @@
         "scene",
         "symbol",
         "text",
-        "visualization",
-        "FeatureLayer",
-        "LabelDefinition",
-        "Scene",
-        "SceneView",
-        "TextSymbol"
+        "URL",
+        "visualization"
     ],
     "redirect_from": [
         ""
     ],
     "relevant_apis": [
+        "ArcadeLabelExpression",
         "FeatureLayer",
         "LabelDefinition",
         "Scene",
