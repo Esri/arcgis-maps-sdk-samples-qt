@@ -1,9 +1,12 @@
 # Display 3D labels in scene
 
 This sample demonstrates how to display custom labels in a 3D scene.
-Labeling features is useful to visually display information or attributes on a scene. For example, city officials or maintenance crews may want to show installation dates of features of a gas network.
 
 ![](screenshot.png)
+
+## Use case
+
+Labeling features is useful to visually display information or attributes on a scene. For example, city officials or maintenance crews may want to show installation dates of features of a gas network.
 
 ## How to use the sample
 Pan and zoom to explore the scene. Notice the labels showing installation dates of features in the 3D gas network.
