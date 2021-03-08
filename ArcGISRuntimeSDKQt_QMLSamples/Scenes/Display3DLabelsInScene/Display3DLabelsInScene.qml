@@ -1,6 +1,6 @@
 // [WriteFile Name=Display3DLabelsInScene, Category=Scenes]
 // [Legal]
-// Copyright 2020 Esri.
+// Copyright 2021 Esri.
 
 // Licensed under the Apache License, Version 2.0 (the "License");
 // you may not use this file except in compliance with the License.
@@ -48,34 +48,24 @@ Rectangle {
             }
         }
 
-        TextSymbol {
-            id: gasLineLabelSymbol
-            angle: 0
-            backgroundColor: "transparent"
-            outlineColor: "white"
-            color: "#ffa500"
-            haloColor: "white"
-            haloWidth: 2.0
-            horizontalAlignment: Enums.HorizontalAlignmentCenter
-            verticalAlignment: Enums.VerticalAlignmentMiddle
-            kerningEnabled: false
-            offsetX: 0
-            offsetY: 0
-            fontDecoration: Enums.FontDecorationNone
-            size: 14.0
-            fontStyle: Enums.FontStyleNormal
-            fontWeight: Enums.FontStyleNormal
-        }
 
         LabelDefinition {
             id: gasLineLabelDefinition
-            json: {
-                "labelExpressionInfo": {
-                    "expression": "'Installed: ' + Text($feature.INSTALLATIONDATE, 'Y') + ' (' + (Year(Now()) - Year($feature.INSTALLATIONDATE)) + ' years old)'"
-                },
-                "labelPlacement": "esriServerLinePlacementAboveAlong",
-                "symbol": gasLineLabelSymbol.json
+
+            TextSymbol {
+                id: gasLineLabelSymbol
+                color: "#ffa500"
+                haloColor: "white"
+                haloWidth: 2.0
+                size: 16.0
             }
+
+            ArcadeLabelExpression {
+                expression: "Text($feature.INSTALLATIONDATE, 'D MMMM Y')"
+            }
+
+            placement: Enums.LabelingPlacementLineAboveAlong
+            useCodedValues: true
         }
     }
 }

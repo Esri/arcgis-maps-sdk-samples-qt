@@ -1,6 +1,6 @@
 // [WriteFile Name=Display3DLabelsInScene, Category=Scenes]
 // [Legal]
-// Copyright 2020 Esri.
+// Copyright 2021 Esri.
 
 // Licensed under the Apache License, Version 2.0 (the "License");
 // you may not use this file except in compliance with the License.
@@ -66,21 +66,10 @@ Display3DLabelsInScene::Display3DLabelsInScene(QObject* parent /* = nullptr */):
 void Display3DLabelsInScene::display3DLabelsOnFeatureLayer(FeatureLayer* featureLayer)
 {
   TextSymbol* textSymbol = new TextSymbol(this);
-  textSymbol->setAngle(0);
-  textSymbol->setBackgroundColor(QColor(Qt::transparent));
-  textSymbol->setOutlineColor(QColor(Qt::white));
   textSymbol->setColor(QColor("#ffa500"));
   textSymbol->setHaloColor(QColor(Qt::white));
   textSymbol->setHaloWidth(2.0);
-  textSymbol->setHorizontalAlignment(HorizontalAlignment::Center);
-  textSymbol->setVerticalAlignment(VerticalAlignment::Middle);
-  textSymbol->setKerningEnabled(false);
-  textSymbol->setOffsetX(0);
-  textSymbol->setOffsetY(0);
-  textSymbol->setFontDecoration(FontDecoration::None);
   textSymbol->setSize(14.0);
-  textSymbol->setFontStyle(FontStyle::Normal);
-  textSymbol->setFontWeight(FontWeight::Normal);
 
   LabelDefinition* labelDefinition = new LabelDefinition(this);
   labelDefinition->setExpression(new ArcadeLabelExpression("Text($feature.INSTALLATIONDATE, 'D MMMM Y')", this));
