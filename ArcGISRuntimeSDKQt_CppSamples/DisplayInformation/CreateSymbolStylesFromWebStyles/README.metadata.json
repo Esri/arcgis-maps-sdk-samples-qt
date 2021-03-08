@@ -1,16 +1,23 @@
 {
-    "category": "TODO",
-    "description": "TODO",
+    "category": "DisplayInformation",
+    "description": "Create symbol styles from a style file hosted on a portal.",
     "ignore": false,
     "images": [
         "screenshot.png"
     ],
     "keywords": [
-        "TODO"
+        "renderer",
+        "symbol",
+        "symbology",
+        "web style"
     ],
     "redirect_from": "",
     "relevant_apis": [
-        "TODO"
+        "FeatureLayer",
+        "Symbol",
+        "SymbolStyle",
+        "UniqueValue",
+        "UniqueValueRenderer"
     ],
     "snippets": [
         "CreateSymbolStylesFromWebStyles.qml",
