@@ -7,8 +7,6 @@ Create symbol styles from a style file hosted on a portal.
 ## How to use the sample
 The sample displays a map with a set of symbols that represent the categories of the features within the dataset. Pan and zoom on the map and view the legend to explore the appearance and names of the different symbols from the selected symbol style.
 
-
-
 ## How it works
 1. Create a `FeatureLayer` and add it to the map.
 2. Create a `UniqueValueRenderer` and set it to the feature layer.
