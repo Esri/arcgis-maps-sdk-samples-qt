@@ -1,6 +1,6 @@
 // [WriteFile Name=Display3DLabelsInScene, Category=Scenes]
 // [Legal]
-// Copyright 2021 Esri.
+// Copyright 2020 Esri.
 
 // Licensed under the Apache License, Version 2.0 (the "License");
 // you may not use this file except in compliance with the License.
@@ -36,10 +36,12 @@ Rectangle {
                 if (loadStatus !== Enums.LoadStatusLoaded)
                     return;
 
+                // Search for a specific layer from the web scene's operational layers to apply labels to
                 nycScene.operationalLayers.forEach(layer => {
                                                        if (layer.name === "Gas") {
-                                                           // The Gas layer is a GroupLayer type and we must extract our target layer from it
+                                                           // The Gas layer is a GroupLayer type and we must extract our target FeatureLayer from it
                                                            let gasLayer = layer.layers.get(0);
+                                                           // This layer has a preexisting label definition from the web that we don't want to display
                                                            gasLayer.labelDefinitions.clear();
                                                            gasLayer.labelDefinitions.append(gasLineLabelDefinition);
                                                            gasLayer.labelsEnabled = true;
@@ -48,20 +50,18 @@ Rectangle {
             }
         }
 
-
         LabelDefinition {
             id: gasLineLabelDefinition
 
-            TextSymbol {
-                id: gasLineLabelSymbol
+            expression: ArcadeLabelExpression {
+                expression: "Text($feature.INSTALLATIONDATE, 'D MMM Y')"
+            }
+
+            textSymbol: TextSymbol {
                 color: "#ffa500"
                 haloColor: "white"
                 haloWidth: 2.0
                 size: 16.0
-            }
-
-            ArcadeLabelExpression {
-                expression: "Text($feature.INSTALLATIONDATE, 'D MMMM Y')"
             }
 
             placement: Enums.LabelingPlacementLineAboveAlong
