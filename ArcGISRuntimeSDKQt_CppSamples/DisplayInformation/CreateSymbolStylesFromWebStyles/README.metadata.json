@@ -11,7 +11,9 @@
         "symbology",
         "web style"
     ],
-    "redirect_from": "",
+    "redirect_from": [
+        ""
+    ],
     "relevant_apis": [
         "FeatureLayer",
         "Symbol",

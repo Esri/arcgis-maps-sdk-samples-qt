@@ -1,31 +1,42 @@
 # Create symbol styles from web styles
 
-This sample demonstrates how to create symbol styles from a style file hosted on a portal.
-This sample demonstrates ...       
-This is **why** you would do it this way ...
+Create symbol styles from a style file hosted on a portal.
 
 ![](screenshot.png)
 
 ## How to use the sample
-e.g. Use the input controls to define a ... Click the "Go" button to ...
+The sample displays a map with a set of symbols that represent the categories of the features within the dataset. Pan and zoom on the map and view the legend to explore the appearance and names of the different symbols from the selected symbol style.
+
+
 
 ## How it works
-e.g. In the `GeoView.Tapped` event, features in the `Map` are selected using an `Envelope` defined by the user's tap location ...
+1. Create a `FeatureLayer` and add it to the map.
+2. Create a `UniqueValueRenderer` and set it to the feature layer.
+3. Create a `SymbolStyle` from a portal by passing in the web style name and portal URL.
+       * Note: passing `null` as the portal will default to ArcGIS.com.
+4. Search for symbols in the symbol style by name using `symbolStyle->fetchSymbol({symbolKey})`.
+5. Create a `Symbol` from the search result.
+6. Create `UniqueValue` objects for each symbol with defined values to map the symbol to features on the feature layer.
+7. Add each `UniqueValue` to the `UniqueValueRenderer`.
 
 ## Relevant API
- - ClassName1
- - MethodName
+* FeatureLayer
+* Symbol
+* SymbolStyle
+* UniqueValue
+* UniqueValueRenderer
 
-## Offline data
-Read more about how to set up the sample's offline data [here](http://links.esri.com/ArcGISRuntimeQtSamples).
+## About the data
 
-Link | Local Location
----------|-------|
-|[San Francisco Streets TPK](https://www.arcgis.com/home/item.html?id=3f1bbf0ec70b409a975f5c91f363fe7d)| `<userhome>`/ArcGIS/Runtime/Data/tpk/SanFrancisco.tpk |
+The sample uses the ['Esri2DPointSymbolsStyle'](https://developers.arcgis.com/javascript/latest/guide/esri-web-style-symbols-2d) Web Style.
+
+The map shows features from the [LA County Points of Interest service](https://services.arcgis.com/V6ZHFr6zdgNZuVG0/arcgis/rest/services/LA_County_Points_of_Interest/FeatureServer/0) hosted on ArcGIS Online.
 
 ## Additional information
-A standard level license is required to ...
+
+2D web styles, dictionary web styles, and 3D web styles can all be hosted on an ArcGIS Online or Enterprise portal.
 
 ## Tags
-Routing, Network analysis, Geocode
+
+renderer, symbol, symbology, web style
 
