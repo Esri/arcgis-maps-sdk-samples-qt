@@ -49,13 +49,6 @@ CreateSymbolStylesFromWebStyles::CreateSymbolStylesFromWebStyles(QObject* parent
 
   m_map->operationalLayers()->append(m_webStyleLayer);
 
-  // Populate the legend from the UniqueValuesRenderer's UniqueValuesList once all UniqueValues have been added
-  connect(m_map->legendInfos(), &LegendInfoListModel::fetchLegendInfosCompleted, this, [this]()
-  {
-    m_legendInfoListModel = m_map->legendInfos();
-    emit legendInfoListModelChanged();
-  });
-
   // Set the scale at which feature symbols and text will appear at their default size
   m_map->setReferenceScale(100'000);
 
@@ -65,58 +58,35 @@ CreateSymbolStylesFromWebStyles::CreateSymbolStylesFromWebStyles(QObject* parent
 void CreateSymbolStylesFromWebStyles::createSymbolStyles()
 {
   QMap<QString,QStringList> categoriesMap = createCategoriesMap();
-  int symbolsFetchedCount = 0;
   SymbolStyle* symbolStyle = new SymbolStyle("Esri2DPointSymbolsStyle", {}, this);
   SymbolStyleSearchParameters searchParams = SymbolStyleSearchParameters();
   searchParams.setKeysStrictlyMatch(true);
 
-  connect(symbolStyle, &SymbolStyle::searchSymbolsCompleted, this, [this, symbolStyle, categoriesMap, symbolsFetchedCount](QUuid /* taskId */, SymbolStyleSearchResultListModel* searchResults) mutable
+  connect(symbolStyle, &SymbolStyle::searchSymbolsCompleted, this, [this, symbolStyle, categoriesMap](QUuid /* taskId */, SymbolStyleSearchResultListModel* searchResults)
   {
-    const QString symbolLabel = searchResults->searchResults().at(0).key();
-    SymbolStyleSearchResultSymbolFetcher* symbolFetcher = searchResults->searchResults().at(0).fetchSymbol(symbolStyle);
+    m_legendInfoListModel = searchResults;
+    emit legendInfoListModelChanged();
 
-    connect(symbolFetcher, &SymbolStyleSearchResultSymbolFetcher::fetchSymbolCompleted, this, [this, symbolLabel, categoriesMap, &symbolsFetchedCount](QUuid /* taskId */, Symbol* symbol) mutable
+    for (SymbolStyleSearchResult symbolStyleSearchResult : searchResults->searchResults())
     {
-      // If multiple field names are set, we can pass multiple values from each field,
-      // However, even though we are using the same symbol, we must create a UniqueValue for each value from the same field
-      // When the FeatureLayer is rendered, all features with a matching value in the specified FieldNames will appear with the defined UniqueValue
-      for (const QString &category : categoriesMap[symbolLabel])
+      SymbolStyleSearchResultSymbolFetcher* symbolFetcher = symbolStyleSearchResult.fetchSymbol(symbolStyle);
+      const QString symbolLabel = symbolStyleSearchResult.key();
+
+      connect(symbolFetcher, &SymbolStyleSearchResultSymbolFetcher::fetchSymbolCompleted, this, [this, symbolLabel, categoriesMap](QUuid /* taskId */, Symbol* symbol)
       {
-        // The resulting legend will use the order of UniqueValues in the UniqueValueRenderer, so we ensure that it is kept in alphabetical order
-        addAUniqueValuesToRendererAndSort(new UniqueValue(symbolLabel, "", {category}, symbol, this));
-      }
-
-      // fetchLegendInfosCompleted will only trigger once, so we need to ensure it triggers after all UniqueValues have been added
-      symbolsFetchedCount++;
-      if (categoriesMap.keys().size() == symbolsFetchedCount)
-        m_map->setAutoFetchLegendInfos(true);
-    });
-
-    symbolFetcher->fetchSymbol();
+        // If multiple field names are set, we can pass multiple values from each field,
+        // However, even though we are using the same symbol, we must create a UniqueValue for each value from the same field
+        // When the FeatureLayer is rendered, all features with a matching value in the specified FieldNames will appear with the defined UniqueValue
+        for (const QString &category : categoriesMap[symbolLabel])
+        {
+          m_uniqueValueRenderer->uniqueValues()->append(new UniqueValue(symbolLabel, "", {category}, symbol, this));
+        }
+      });
+    }
   });
 
-
-  for (const QString &symbolKey : categoriesMap.keys())
-  {
-    searchParams.setKeys({symbolKey});
-    symbolStyle->searchSymbols(searchParams);
-  }
-}
-
-void CreateSymbolStylesFromWebStyles::addAUniqueValuesToRendererAndSort(UniqueValue* newUniqueValue)
-{
-  int idx = m_uniqueValueRenderer->uniqueValues()->size();
-  m_uniqueValueRenderer->uniqueValues()->append(newUniqueValue);
-
-  // A simple bubble sort to alphabetize the UniqueValuesList by label
-  while (true)
-  {
-    if (idx < 1 || m_uniqueValueRenderer->uniqueValues()->at(idx)->label() >= m_uniqueValueRenderer->uniqueValues()->at(idx-1)->label())
-      break;
-
-    m_uniqueValueRenderer->uniqueValues()->move(idx, idx-1);
-    --idx;
-  }
+  searchParams.setKeys(categoriesMap.keys());
+  symbolStyle->searchSymbols(searchParams);
 }
 
 CreateSymbolStylesFromWebStyles::~CreateSymbolStylesFromWebStyles() = default;

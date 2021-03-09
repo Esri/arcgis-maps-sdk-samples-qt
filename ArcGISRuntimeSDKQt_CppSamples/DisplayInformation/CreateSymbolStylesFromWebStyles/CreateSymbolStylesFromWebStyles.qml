@@ -20,7 +20,6 @@ import Esri.Samples 1.0
 
 Item {
     id: window
-    property var symbolNames: []
 
     // add a mapView component
     MapView {
@@ -111,17 +110,6 @@ Item {
                             text: name
                             wrapMode: Text.Wrap
                             font.pixelSize: 12
-                        }
-                    }
-
-                    // The LegendInfoListModel populates from all values in a layer's UniqueValueRenderer
-                    // Therefore we hide duplicate values with this following codeblock
-                    Component.onCompleted: {
-                        if (symbolNames.includes(symbolText.text)) {
-                            legendItem.height = 0;
-                            legendItem.visible = false;
-                        } else {
-                            symbolNames.push(symbolText.text)
                         }
                     }
                 }
