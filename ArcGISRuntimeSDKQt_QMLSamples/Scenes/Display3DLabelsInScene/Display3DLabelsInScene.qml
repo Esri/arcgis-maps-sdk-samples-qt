@@ -58,7 +58,7 @@ Rectangle {
                 nycScene.operationalLayers.forEach(layer => {
                                                        if (layer.name === "Gas") {
                                                            // The Gas layer is a GroupLayer type and we must extract our target FeatureLayer from it
-                                                           let gasLayer = layer.layers.get(0);
+                                                           const gasLayer = layer.layers.get(0);
                                                            // This layer has a preexisting label definition from the web that we don't want to display
                                                            gasLayer.labelDefinitions.clear();
                                                            gasLayer.labelDefinitions.append(gasLineLabelDefinition);

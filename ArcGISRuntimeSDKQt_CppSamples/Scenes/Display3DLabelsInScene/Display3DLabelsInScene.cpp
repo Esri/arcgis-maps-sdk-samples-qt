@@ -20,16 +20,15 @@
 
 #include "Display3DLabelsInScene.h"
 
+#include "ArcadeLabelExpression.h"
 #include "ArcGISTiledElevationSource.h"
-#include "Scene.h"
-#include "SceneQuickView.h"
-
 #include "FeatureLayer.h"
 #include "GroupLayer.h"
-#include "Layer.h"
-#include "TextSymbol.h"
 #include "LabelDefinition.h"
-#include "ArcadeLabelExpression.h"
+#include "Layer.h"
+#include "Scene.h"
+#include "SceneQuickView.h"
+#include "TextSymbol.h"
 
 using namespace Esri::ArcGISRuntime;
 
@@ -48,7 +47,7 @@ Display3DLabelsInScene::Display3DLabelsInScene(QObject* parent /* = nullptr */):
   {
     for (Layer* layer : *m_scene->operationalLayers())
     {
-      if(layer->name() == "Gas")
+      if (layer->name() == "Gas")
       {
         // The gas layer is a GroupLayer type consisting of Layer types.
         // Labels can only be displayed on FeatureLayer types, so we must first convert it to a FeatureLayer class.
