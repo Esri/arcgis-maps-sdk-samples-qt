@@ -21,13 +21,12 @@
 #include "CreateSymbolStylesFromWebStyles.h"
 
 #include "FeatureLayer.h"
-#include "ServiceFeatureTable.h"
 #include "Map.h"
 #include "MapQuickView.h"
-
-#include "UniqueValueRenderer.h"
-#include "SymbolStyle.h"
+#include "ServiceFeatureTable.h"
 #include "SimpleMarkerSymbol.h"
+#include "SymbolStyle.h"
+#include "UniqueValueRenderer.h"
 
 using namespace Esri::ArcGISRuntime;
 
@@ -35,7 +34,7 @@ CreateSymbolStylesFromWebStyles::CreateSymbolStylesFromWebStyles(QObject* parent
   QObject(parent),
   m_map(new Map(BasemapStyle::ArcGISNavigation, this))
 {
-  QUrl webStyleLayerUrl = QUrl("http://services.arcgis.com/V6ZHFr6zdgNZuVG0/arcgis/rest/services/LA_County_Points_of_Interest/FeatureServer/0");
+  QUrl webStyleLayerUrl = QUrl("https://services.arcgis.com/V6ZHFr6zdgNZuVG0/arcgis/rest/services/LA_County_Points_of_Interest/FeatureServer/0");
   m_webStyleLayer = new FeatureLayer(new ServiceFeatureTable(webStyleLayerUrl, this), this);
 
   m_uniqueValueRenderer = new UniqueValueRenderer(this);
@@ -70,7 +69,6 @@ void CreateSymbolStylesFromWebStyles::createSymbolStyles()
   for (const QString &symbolKey : m_categoriesMap.keys())
   {
     SymbolStyle* symbolStyle = new SymbolStyle("Esri2DPointSymbolsStyle", {}, this);
-
     connect(symbolStyle, &SymbolStyle::fetchSymbolCompleted, this, [this, symbolKey](QUuid /* taskId */, Symbol* symbol)
     {
       // If multiple field names are set, we can pass multiple values from each field,
