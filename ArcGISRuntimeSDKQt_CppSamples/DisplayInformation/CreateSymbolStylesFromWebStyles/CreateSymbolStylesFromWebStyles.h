@@ -59,13 +59,11 @@ private:
   void addAUniqueValuesToRendererAndSort(Esri::ArcGISRuntime::UniqueValue*);
   void createSymbolStyles();
 
+  Esri::ArcGISRuntime::FeatureLayer* m_webStyleLayer = nullptr;
   Esri::ArcGISRuntime::Map* m_map = nullptr;
   Esri::ArcGISRuntime::MapQuickView* m_mapView = nullptr;
-  Esri::ArcGISRuntime::FeatureLayer* m_webStyleLayer = nullptr;
   Esri::ArcGISRuntime::UniqueValueRenderer* m_uniqueValueRenderer = nullptr;
   QAbstractListModel* m_legendInfoListModel = nullptr;
-  QMap<QString,QStringList> m_categoriesMap;
-  int m_symbolsFetchedCount;
 };
 
 #endif // CREATESYMBOLSTYLESFROMWEBSTYLES_H

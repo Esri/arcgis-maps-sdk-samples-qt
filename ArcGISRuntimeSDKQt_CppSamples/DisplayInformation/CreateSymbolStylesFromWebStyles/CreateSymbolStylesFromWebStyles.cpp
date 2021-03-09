@@ -26,6 +26,7 @@
 #include "ServiceFeatureTable.h"
 #include "SimpleMarkerSymbol.h"
 #include "SymbolStyle.h"
+#include "SymbolStyleSearchResultSymbolFetcher.h"
 #include "UniqueValueRenderer.h"
 
 using namespace Esri::ArcGISRuntime;
@@ -63,30 +64,42 @@ CreateSymbolStylesFromWebStyles::CreateSymbolStylesFromWebStyles(QObject* parent
 
 void CreateSymbolStylesFromWebStyles::createSymbolStyles()
 {
-  m_categoriesMap = createCategoriesMap();
-  m_symbolsFetchedCount = 0;
+  QMap<QString,QStringList> categoriesMap = createCategoriesMap();
+  int symbolsFetchedCount = 0;
+  SymbolStyle* symbolStyle = new SymbolStyle("Esri2DPointSymbolsStyle", {}, this);
+  SymbolStyleSearchParameters searchParams = SymbolStyleSearchParameters();
+  searchParams.setKeysStrictlyMatch(true);
 
-  for (const QString &symbolKey : m_categoriesMap.keys())
+  connect(symbolStyle, &SymbolStyle::searchSymbolsCompleted, this, [this, symbolStyle, categoriesMap, symbolsFetchedCount](QUuid /* taskId */, SymbolStyleSearchResultListModel* searchResults) mutable
   {
-    SymbolStyle* symbolStyle = new SymbolStyle("Esri2DPointSymbolsStyle", {}, this);
-    connect(symbolStyle, &SymbolStyle::fetchSymbolCompleted, this, [this, symbolKey](QUuid /* taskId */, Symbol* symbol)
+    const QString symbolLabel = searchResults->searchResults().at(0).key();
+    SymbolStyleSearchResultSymbolFetcher* symbolFetcher = searchResults->searchResults().at(0).fetchSymbol(symbolStyle);
+
+    connect(symbolFetcher, &SymbolStyleSearchResultSymbolFetcher::fetchSymbolCompleted, this, [this, symbolLabel, categoriesMap, &symbolsFetchedCount](QUuid /* taskId */, Symbol* symbol) mutable
     {
       // If multiple field names are set, we can pass multiple values from each field,
       // However, even though we are using the same symbol, we must create a UniqueValue for each value from the same field
       // When the FeatureLayer is rendered, all features with a matching value in the specified FieldNames will appear with the defined UniqueValue
-      for (const QString &category : m_categoriesMap[symbolKey])
+      for (const QString &category : categoriesMap[symbolLabel])
       {
         // The resulting legend will use the order of UniqueValues in the UniqueValueRenderer, so we ensure that it is kept in alphabetical order
-        addAUniqueValuesToRendererAndSort(new UniqueValue(symbolKey, "", {category}, symbol, this));
+        addAUniqueValuesToRendererAndSort(new UniqueValue(symbolLabel, "", {category}, symbol, this));
       }
 
       // fetchLegendInfosCompleted will only trigger once, so we need to ensure it triggers after all UniqueValues have been added
-      m_symbolsFetchedCount++;
-      if (m_categoriesMap.keys().size() == m_symbolsFetchedCount)
+      symbolsFetchedCount++;
+      if (categoriesMap.keys().size() == symbolsFetchedCount)
         m_map->setAutoFetchLegendInfos(true);
     });
 
-    symbolStyle->fetchSymbol({symbolKey});
+    symbolFetcher->fetchSymbol();
+  });
+
+
+  for (const QString &symbolKey : categoriesMap.keys())
+  {
+    searchParams.setKeys({symbolKey});
+    symbolStyle->searchSymbols(searchParams);
   }
 }
 
