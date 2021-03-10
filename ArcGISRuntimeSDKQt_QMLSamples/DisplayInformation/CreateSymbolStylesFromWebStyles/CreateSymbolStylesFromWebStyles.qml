@@ -53,7 +53,7 @@ Rectangle {
                 Component.onCompleted: {
                     const symbolKeys = ["atm", "beach", "campground", "city-hall", "hospital", "library", "park", "place-of-worship", "police-station", "post-office", "school", "trail"];
                     const symbolStyle = ArcGISRuntimeEnvironment.createObject("SymbolStyle", {styleName: "Esri2DPointSymbolsStyle"}, webLayer);
-                    const symbolStyleSearchParameters = ArcGISRuntimeEnvironment.createObject("SymbolStyleSearchParameters", symbolStyle);
+                    const symbolStyleSearchParameters = ArcGISRuntimeEnvironment.createObject("SymbolStyleSearchParameters");
                     symbolStyleSearchParameters.keysStrictlyMatch = true;
                     symbolStyle.searchSymbolsStatusChanged.connect(() => {
                                                                        if (symbolStyle.searchSymbolsStatus !== Enums.TaskStatusCompleted)

@@ -13,13 +13,14 @@ The sample displays a map with a set of symbols that represent the categories of
 
 ## How it works
 1. Create a `FeatureLayer` and add it to the map.
-2. Create a `UniqueValueRenderer` and set it to the feature layer.
+2. Create a `UniqueValueRenderer` and add it to the feature layer.
 3. Create a `SymbolStyle` from a portal by passing in the web style name and portal URL.
        * Note: passing `null` as the portal will default to ArcGIS.com.
-4. Search for symbols in the symbol style by name using `symbolStyle->fetchSymbol({symbolKey})`.
-5. Create a `Symbol` from the search result.
-6. Create `UniqueValue` objects for each symbol with defined values to map the symbol to features on the feature layer.
-7. Add each `UniqueValue` to the `UniqueValueRenderer`.
+4. Create `SearchSymbolParameters` and set the `keys` parameter to the names of the symbols you want to display.
+5. Search for symbols in the `SymbolStyle` by name using `symbolStyle->searchSymbols(symbolStyleSearchParameters)`.
+6. Call `fetchSymbol` on each `SymbolStyleSearchResult` in the returned `SymbolStyleSearchResultListModel` to generate a symbol for each search key.
+7. Create `UniqueValue` objects for each symbol with defined values to map the symbol to features on the feature layer.
+8. Add each `UniqueValue` to the `UniqueValueRenderer`.
 
 ## Relevant API
 * FeatureLayer
