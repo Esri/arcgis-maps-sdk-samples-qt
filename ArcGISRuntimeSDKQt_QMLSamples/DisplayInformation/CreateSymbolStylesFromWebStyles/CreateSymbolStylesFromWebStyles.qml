@@ -22,7 +22,7 @@ Rectangle {
     clip: true
     width: 800
     height: 600
-    property var symbolNames: []
+    property var legendItems: []
 
     MapView {
         id: mapView
@@ -52,35 +52,27 @@ Rectangle {
 
                 Component.onCompleted: {
                     const symbolKeys = ["atm", "beach", "campground", "city-hall", "hospital", "library", "park", "place-of-worship", "police-station", "post-office", "school", "trail"];
-                    let symbolsFetchedCount = 0;
+                    const symbolStyle = ArcGISRuntimeEnvironment.createObject("SymbolStyle", {styleName: "Esri2DPointSymbolsStyle"}, webLayer);
+                    const symbolStyleSearchParameters = ArcGISRuntimeEnvironment.createObject("SymbolStyleSearchParameters", symbolStyle);
+                    symbolStyleSearchParameters.keysStrictlyMatch = true;
+                    symbolStyle.searchSymbolsStatusChanged.connect(() => {
+                                                                       if (symbolStyle.searchSymbolsStatus !== Enums.TaskStatusCompleted)
+                                                                       return;
 
-                    symbolKeys.forEach((symbolKey) => {
-                                           var symbolStyle = ArcGISRuntimeEnvironment.createObject("SymbolStyle", {styleName: "Esri2DPointSymbolsStyle", portal: {}});
+                                                                       legendItems = symbolStyle.searchSymbolsResult;
+                                                                       symbolStyle.searchSymbolsResult.forEach((symbolResult) => {
+                                                                                                                   symbolResult.fetchSymbol();
+                                                                                                                   const label = symbolResult.key;
+                                                                                                                   const values = getValuesFromSymbolLabel(label);
+                                                                                                                   const symbol = symbolResult.symbol;                                                                                                                   console.log(label);
+                                                                                                                   console.log(values);
+                                                                                                                   console.log(symbol);
+                                                                                                                   uniqueValueRenderer.uniqueValues.append(ArcGISRuntimeEnvironment.createObject("UniqueValue", {label: label, values: values, symbol: symbol}));
+                                                                                                               });
+                                                                   });
 
-                                           symbolStyle.fetchSymbolStatusChanged.connect(() =>
-                                                                                        {
-                                                                                            if (symbolStyle.fetchSymbolStatus !== Enums.TaskStatusCompleted)
-                                                                                            return;
-
-                                                                                            // If multiple field names are set, we can pass multiple values from each field,
-                                                                                            // However, even though we are using the same symbol, we must create a UniqueValue for each value from the same field
-                                                                                            // When the FeatureLayer is rendered, all features with a matching value in the specified FieldNames will appear with the defined UniqueValue
-                                                                                            getValuesFromSymbolLabel(symbolKey).forEach((value) => {
-                                                                                                                                            // The resulting legend will use the order of UniqueValues in the UniqueValueRenderer, so we ensure that it is kept in alphabetical order
-                                                                                                                                            addToRendererAndSort(ArcGISRuntimeEnvironment.createObject("UniqueValue", {label: symbolKey, values: [value], symbol: symbolStyle.fetchSymbolResult}));
-                                                                                                                                        });
-
-                                                                                            symbolsFetchedCount++;
-
-                                                                                            // Populate the legend from the UniqueValuesRenderer's UniqueValuesList once all UniqueValues have been added
-                                                                                            // The underlying signal will only trigger once, so we need to ensure it triggers after all UniqueValues have been added
-                                                                                            if (symbolsFetchedCount >= symbolKeys.length) {
-                                                                                                map.autoFetchLegendInfos = true;
-                                                                                            }
-                                                                                        });
-
-                                           symbolStyle.fetchSymbolWithKeyList([symbolKey]);
-                                       });
+                    symbolStyleSearchParameters.keys = symbolKeys;
+                    symbolStyle.searchSymbols(symbolStyleSearchParameters);
                 }
             }
 
@@ -149,7 +141,7 @@ Rectangle {
                 width: parent.width * .9
                 height: parent.height * .9
                 clip: true
-                model: map.legendInfos
+                model: legendItems
 
                 // Create delegate to display the name with an image
                 delegate: Item {
@@ -178,32 +170,8 @@ Rectangle {
                             font.pixelSize: 12
                         }
                     }
-
-                    // The LegendInfoListModel populates from all values in a layer's UniqueValueRenderer
-                    // Therefore we hide duplicate values with this following codeblock
-                    Component.onCompleted: {
-                        if (symbolNames.includes(symbolText.text)) {
-                            legendItem.height = 0;
-                            legendItem.visible = false;
-                        } else {
-                            symbolNames.push(symbolText.text)
-                        }
-                    }
                 }
             }
-        }
-    }
-
-    function addToRendererAndSort(uniqueValue) {
-        uniqueValueRenderer.uniqueValues.append(uniqueValue);
-        let idx = uniqueValueRenderer.uniqueValues.count - 1;
-
-        while (true) {
-            if (idx < 1 || uniqueValueRenderer.uniqueValues.get(idx).label >= uniqueValueRenderer.uniqueValues.get(idx-1).label) {
-                break;
-            }
-            uniqueValueRenderer.uniqueValues.move(idx, idx-1);
-            idx--;
         }
     }
 
