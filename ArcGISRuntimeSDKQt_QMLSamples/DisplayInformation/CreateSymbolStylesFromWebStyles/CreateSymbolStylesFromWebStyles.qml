@@ -61,13 +61,19 @@ Rectangle {
 
                                                                        legendItems = symbolStyle.searchSymbolsResult;
                                                                        symbolStyle.searchSymbolsResult.forEach((symbolResult) => {
+                                                                                                                   symbolResult.fetchSymbolStatusChanged.connect(() => {
+                                                                                                                                                                     if (symbolResult.fetchSymbolStatus !== Enums.TaskStatusCompleted)
+                                                                                                                                                                     return;
+
+                                                                                                                                                                     const label = symbolResult.key;
+                                                                                                                                                                     const values = getValuesFromSymbolLabel(label);
+                                                                                                                                                                     const symbol = symbolResult.fetchSymbolResult;
+                                                                                                                                                                     values.forEach((value) => {
+                                                                                                                                                                                        const uniqueValue = ArcGISRuntimeEnvironment.createObject("UniqueValue", {label: label, values: [value], symbol: symbol}, webLayer);
+                                                                                                                                                                                        uniqueValueRenderer.uniqueValues.append(uniqueValue);
+                                                                                                                                                                                    });
+                                                                                                                                                                 });
                                                                                                                    symbolResult.fetchSymbol();
-                                                                                                                   const label = symbolResult.key;
-                                                                                                                   const values = getValuesFromSymbolLabel(label);
-                                                                                                                   const symbol = symbolResult.symbol;                                                                                                                   console.log(label);
-                                                                                                                   console.log(values);
-                                                                                                                   console.log(symbol);
-                                                                                                                   uniqueValueRenderer.uniqueValues.append(ArcGISRuntimeEnvironment.createObject("UniqueValue", {label: label, values: values, symbol: symbol}));
                                                                                                                });
                                                                    });
 
