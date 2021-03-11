@@ -52,6 +52,9 @@ Display3DLabelsInScene::Display3DLabelsInScene(QObject* parent /* = nullptr */):
         // The gas layer is a GroupLayer type consisting of Layer types.
         // Labels can only be displayed on FeatureLayer types, so we must first convert it to a FeatureLayer class.
         GroupLayer* gasGroupLayer = dynamic_cast<GroupLayer*>(layer);
+        if (!gasGroupLayer)
+          continue;
+
         FeatureLayer* gasFeatureLayer = dynamic_cast<FeatureLayer*>(gasGroupLayer->layers()->first());
         if (gasFeatureLayer)
           display3DLabelsOnFeatureLayer(gasFeatureLayer);
