@@ -1,0 +1,37 @@
+{
+    "category": "Scenes",
+    "description": "This sample demonstrates how to display custom labels in a 3D scene.",
+    "ignore": false,
+    "images": [
+        "screenshot.png"
+    ],
+    "keywords": [
+        "3D",
+        "attribute",
+        "buildings",
+        "label",
+        "model",
+        "scene",
+        "symbol",
+        "text",
+        "URL",
+        "visualization"
+    ],
+    "redirect_from": [
+        ""
+    ],
+    "relevant_apis": [
+        "ArcadeLabelExpression",
+        "FeatureLayer",
+        "LabelDefinition",
+        "Scene",
+        "SceneView",
+        "TextSymbol"
+    ],
+    "snippets": [
+        "Display3DLabelsInScene.qml",
+        "Display3DLabelsInScene.cpp",
+        "Display3DLabelsInScene.h"
+    ],
+    "title": "Display 3D labels in scene"
+}
