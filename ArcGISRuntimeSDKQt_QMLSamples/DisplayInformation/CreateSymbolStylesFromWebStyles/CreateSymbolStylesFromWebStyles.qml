@@ -24,6 +24,66 @@ Rectangle {
     height: 600
     property var legendItems: []
 
+    SymbolStyle {
+        id: symbolStyle
+        styleName: "Esri2DPointSymbolsStyle"
+
+        SymbolStyleSearchParameters {
+            id: symbolStyleSearchParameters
+            keys: ["atm", "beach", "campground", "city-hall", "hospital", "library", "park", "place-of-worship", "police-station", "post-office", "school", "trail"]
+            keysStrictlyMatch: true
+        }
+
+        Component.onCompleted: {
+            symbolStyle.searchSymbolsStatusChanged.connect(searchSymbolsHandler);
+            symbolStyle.searchSymbols(symbolStyleSearchParameters);
+        }
+
+        function searchSymbolsHandler() {
+            if (symbolStyle.searchSymbolsStatus !== Enums.TaskStatusCompleted)
+                return;
+
+            legendItems = symbolStyle.searchSymbolsResult;
+            symbolStyle.searchSymbolsResult.forEach((symbolResult) => {
+                                                        symbolResult.fetchSymbolStatusChanged.connect(() => fetchSymbolsHandler(symbolResult));
+                                                        symbolResult.fetchSymbol();
+                                                    });
+        }
+
+        function fetchSymbolsHandler(symbolResult) {
+            if (symbolResult.fetchSymbolStatus !== Enums.TaskStatusCompleted)
+                return;
+
+            const values = getValuesFromSymbolLabel(symbolResult.key);
+            values.forEach((value) => {
+                               const uniqueValue = ArcGISRuntimeEnvironment.createObject("UniqueValue", {
+                                                                                             label: symbolResult.key,
+                                                                                             values: [value],
+                                                                                             symbol: symbolResult.fetchSymbolResult
+                                                                                         }, webLayer);
+                               webLayerUniqueValueRenderer.uniqueValues.append(uniqueValue);
+                           });
+        }
+
+        function getValuesFromSymbolLabel(symbolLabel) {
+            switch (symbolLabel) {
+            case "atm": return ["Banking and Finance"];
+            case "beach": return ["Beaches and Marinas"];
+            case "campground": return ["Campgrounds"];
+            case "city-hall": return ["City Halls", "Government Offices"];
+            case "hospital": return ["Hospitals and Medical Centers", "Health Screening and Testing", "Health Centers", "Mental Health Centers"];
+            case "library": return ["Libraries"];
+            case "park": return ["Parks and Gardens"];
+            case "place-of-worship": return ["Churches"];
+            case "police-station": return ["Sheriff and Police Stations"];
+            case "post-office": return ["DHL Locations", "Federal Express Locations"];
+            case "school": return ["Public High Schools", "Public Elementary Schools", "Private and Charter Schools"];
+            case "trail": return ["Trails"];
+            default: return [];
+            }
+        }
+    }
+
     MapView {
         id: mapView
         anchors.fill: parent
@@ -41,70 +101,16 @@ Rectangle {
                 id: webLayer
                 // Set scale symbols to true when we zoom in so the symbols don't take up the entire view
                 scaleSymbols: mapView.mapScale >= 80000
+
                 ServiceFeatureTable {
                     url: "https://services.arcgis.com/V6ZHFr6zdgNZuVG0/arcgis/rest/services/LA_County_Points_of_Interest/FeatureServer/0"
                 }
 
                 UniqueValueRenderer {
-                    id: uniqueValueRenderer
+                    id: webLayerUniqueValueRenderer
 
                     // The UniqueValueRenderer will affect specific features based on the values of the specified FieldName(s)
                     fieldNames: ["cat2"]
-                }
-
-                Component.onCompleted: {
-                    const symbolStyle = ArcGISRuntimeEnvironment.createObject("SymbolStyle", {styleName: "Esri2DPointSymbolsStyle"}, webLayer);
-
-                    const symbolStyleSearchParameters = ArcGISRuntimeEnvironment.createObject("SymbolStyleSearchParameters");
-                    symbolStyleSearchParameters.keys = ["atm", "beach", "campground", "city-hall", "hospital", "library", "park", "place-of-worship", "police-station", "post-office", "school", "trail"];
-                    symbolStyleSearchParameters.keysStrictlyMatch = true;
-
-                    symbolStyle.searchSymbolsStatusChanged.connect(() => searchSymbolsHandler(symbolStyle));
-                    symbolStyle.searchSymbols(symbolStyleSearchParameters);
-                }
-
-                function searchSymbolsHandler(symbolStyle) {
-                    if (symbolStyle.searchSymbolsStatus !== Enums.TaskStatusCompleted)
-                        return;
-
-                    legendItems = symbolStyle.searchSymbolsResult;
-                    symbolStyle.searchSymbolsResult.forEach((symbolResult) => {
-                                                                symbolResult.fetchSymbolStatusChanged.connect(() => fetchSymbolsHandler(symbolResult));
-                                                                symbolResult.fetchSymbol();
-                                                            });
-                }
-
-                function fetchSymbolsHandler(symbolResult) {
-                    if (symbolResult.fetchSymbolStatus !== Enums.TaskStatusCompleted)
-                        return;
-
-                    const values = getValuesFromSymbolLabel(symbolResult.key);
-                    values.forEach((value) => {
-                                       const uniqueValue = ArcGISRuntimeEnvironment.createObject("UniqueValue", {
-                                                                                                     label: symbolResult.key,
-                                                                                                     values: [value],
-                                                                                                     symbol: symbolResult.fetchSymbolResult
-                                                                                                 }, webLayer);
-                                       uniqueValueRenderer.uniqueValues.append(uniqueValue);
-                                   });
-                }
-
-                function getValuesFromSymbolLabel(symbolLabel) {
-                    switch (symbolLabel) {
-                    case "atm": return ["Banking and Finance"];
-                    case "beach": return ["Beaches and Marinas"];
-                    case "campground": return ["Campgrounds"];
-                    case "city-hall": return ["City Halls", "Government Offices"];
-                    case "hospital": return ["Hospitals and Medical Centers", "Health Screening and Testing", "Health Centers", "Mental Health Centers"];
-                    case "library": return ["Libraries"];
-                    case "park": return ["Parks and Gardens"];
-                    case "place-of-worship": return ["Churches"];
-                    case "police-station": return ["Sheriff and Police Stations"];
-                    case "post-office": return ["DHL Locations", "Federal Express Locations"];
-                    case "school": return ["Public High Schools", "Public Elementary Schools", "Private and Charter Schools"];
-                    case "trail": return ["Trails"];
-                    default: return [];
-                    }
                 }
             }
 
@@ -200,8 +206,7 @@ Rectangle {
                     }
                 }
             }
+
         }
     }
-
-
 }
