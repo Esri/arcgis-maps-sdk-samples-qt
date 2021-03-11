@@ -59,7 +59,7 @@ void CreateSymbolStylesFromWebStyles::createSymbolStyles()
 {
   QMap<QString,QStringList> categoriesMap = createCategoriesMap();
   SymbolStyle* symbolStyle = new SymbolStyle("Esri2DPointSymbolsStyle", {}, this);
-  SymbolStyleSearchParameters searchParams = SymbolStyleSearchParameters();
+  SymbolStyleSearchParameters searchParams;
   searchParams.setKeysStrictlyMatch(true);
 
   connect(symbolStyle, &SymbolStyle::searchSymbolsCompleted, this, [this, symbolStyle, categoriesMap](QUuid /* taskId */, SymbolStyleSearchResultListModel* searchResults)
@@ -114,10 +114,10 @@ void CreateSymbolStylesFromWebStyles::setMapView(MapQuickView* mapView)
   m_mapView = mapView;
   m_mapView->setMap(m_map);
 
-  const double x_longitude = -118.44186;
-  const double y_latitude = 34.28301;
+  constexpr double x_longitude = -118.44186;
+  constexpr double y_latitude = 34.28301;
+  constexpr double scale = 7000;
   const Point centerPt(x_longitude, y_latitude, SpatialReference::wgs84());
-  const double scale = 7000;
 
   m_mapView->setViewpointCenter(centerPt, scale);
 
