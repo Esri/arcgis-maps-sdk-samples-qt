@@ -1,4 +1,4 @@
-// [WriteFile Name=NmeaLocationDataSource, Category=DisplayInformation]
+// [WriteFile Name=DisplayDeviceLocationWithNmeaDataSources, Category=DisplayInformation]
 // [Legal]
 // Copyright 2020 Esri.
 
@@ -18,36 +18,42 @@
 #include "pch.hpp"
 #endif // PCH_BUILD
 
+#include "DisplayDeviceLocationWithNmeaDataSources.h"
+
+#include "Location.h"
+#include "LocationDisplay.h"
+#include "NmeaLocation.h"
 #include "NmeaLocationDataSource.h"
+#include "SimulatedLocationDataSource.h"
 
 #include "Map.h"
 #include "MapQuickView.h"
 
 using namespace Esri::ArcGISRuntime;
 
-NmeaLocationDataSource::NmeaLocationDataSource(QObject* parent /* = nullptr */):
+DisplayDeviceLocationWithNmeaDataSources::DisplayDeviceLocationWithNmeaDataSources(QObject* parent /* = nullptr */):
   QObject(parent),
   m_map(new Map(Basemap::imagery(this), this))
 {
-
+  NmeaLocationDataSource* simulatedNmeaLocation = new NmeaLocationDataSource(SpatialReference::wgs84(), this);
 }
 
-NmeaLocationDataSource::~NmeaLocationDataSource() = default;
+DisplayDeviceLocationWithNmeaDataSources::~DisplayDeviceLocationWithNmeaDataSources() = default;
 
-void NmeaLocationDataSource::init()
+void DisplayDeviceLocationWithNmeaDataSources::init()
 {
   // Register the map view for QML
   qmlRegisterType<MapQuickView>("Esri.Samples", 1, 0, "MapView");
-  qmlRegisterType<NmeaLocationDataSource>("Esri.Samples", 1, 0, "NmeaLocationDataSourceSample");
+  qmlRegisterType<DisplayDeviceLocationWithNmeaDataSources>("Esri.Samples", 1, 0, "DisplayDeviceLocationWithNmeaDataSourcesSample");
 }
 
-MapQuickView* NmeaLocationDataSource::mapView() const
+MapQuickView* DisplayDeviceLocationWithNmeaDataSources::mapView() const
 {
   return m_mapView;
 }
 
 // Set the view (created in QML)
-void NmeaLocationDataSource::setMapView(MapQuickView* mapView)
+void DisplayDeviceLocationWithNmeaDataSources::setMapView(MapQuickView* mapView)
 {
   if (!mapView || mapView == m_mapView)
     return;

@@ -1,4 +1,4 @@
-// [WriteFile Name=NmeaLocationDataSource, Category=DisplayInformation]
+// [WriteFile Name=DisplayDeviceLocationWithNmeaDataSources, Category=DisplayInformation]
 // [Legal]
 // Copyright 2020 Esri.
 
@@ -14,8 +14,8 @@
 // limitations under the License.
 // [Legal]
 
-#ifndef NMEALOCATIONDATASOURCE_H
-#define NMEALOCATIONDATASOURCE_H
+#ifndef DISPLAYDEVICELOCATIONWITHNMEADATASOURCES_H
+#define DISPLAYDEVICELOCATIONWITHNMEADATASOURCES_H
 
 namespace Esri
 {
@@ -28,15 +28,15 @@ class MapQuickView;
 
 #include <QObject>
 
-class NmeaLocationDataSource : public QObject
+class DisplayDeviceLocationWithNmeaDataSources : public QObject
 {
   Q_OBJECT
 
   Q_PROPERTY(Esri::ArcGISRuntime::MapQuickView* mapView READ mapView WRITE setMapView NOTIFY mapViewChanged)
 
 public:
-  explicit NmeaLocationDataSource(QObject* parent = nullptr);
-  ~NmeaLocationDataSource();
+  explicit DisplayDeviceLocationWithNmeaDataSources(QObject* parent = nullptr);
+  ~DisplayDeviceLocationWithNmeaDataSources();
 
   static void init();
 
@@ -51,4 +51,4 @@ private:
   Esri::ArcGISRuntime::MapQuickView* m_mapView = nullptr;
 };
 
-#endif // NMEALOCATIONDATASOURCE_H
+#endif // DISPLAYDEVICELOCATIONWITHNMEADATASOURCES_H

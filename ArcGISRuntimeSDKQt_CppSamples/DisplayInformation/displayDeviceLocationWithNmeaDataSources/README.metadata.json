@@ -13,9 +13,9 @@
         "TODO"
     ],
     "snippets": [
-        "NmeaLocationDataSource.qml",
-        "NmeaLocationDataSource.cpp",
-        "NmeaLocationDataSource.h"
+        "DisplayDeviceLocationWithNmeaDataSources.qml",
+        "DisplayDeviceLocationWithNmeaDataSources.cpp",
+        "DisplayDeviceLocationWithNmeaDataSources.h"
     ],
     "title": "Display device location with NMEA data sources"
 }
