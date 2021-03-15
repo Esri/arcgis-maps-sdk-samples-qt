@@ -23,6 +23,8 @@ namespace ArcGISRuntime
 {
 class Map;
 class MapQuickView;
+class NmeaLocation;
+class NmeaLocationDataSource;
 }
 }
 
@@ -46,9 +48,14 @@ signals:
 private:
   Esri::ArcGISRuntime::MapQuickView* mapView() const;
   void setMapView(Esri::ArcGISRuntime::MapQuickView* mapView);
+  void start();
+  void recenter();
+  void reset();
 
   Esri::ArcGISRuntime::Map* m_map = nullptr;
   Esri::ArcGISRuntime::MapQuickView* m_mapView = nullptr;
+  Esri::ArcGISRuntime::NmeaLocationDataSource* m_nmeaLocationDataSource = nullptr;
+  Esri::ArcGISRuntime::NmeaLocation* m_nmeaData = nullptr;
 };
 
 #endif // DISPLAYDEVICELOCATIONWITHNMEADATASOURCES_H
