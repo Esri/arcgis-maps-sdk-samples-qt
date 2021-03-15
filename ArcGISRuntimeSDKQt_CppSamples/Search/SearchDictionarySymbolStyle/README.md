@@ -41,7 +41,7 @@ Link | Local Location
 
 This sample features the mil2525D specification. ArcGIS Runtime supports other military symbology standards, including mil2525C and mil2525B(change 2). See the [Military Symbology Styles](https://solutions.arcgis.com/defense/help/military-symbology-styles/) overview on *ArcGIS Solutions for Defense* for more information about support for military symbology.
 
-While developing, you can omit the path to the **.stylx** style file; Runtime will refer to a copy installed with the SDK. For production, you should take care to deploy the proper style files and explicitly specify the path to that file when creating the symbol dictionary. See the [Military Symbology Styles](https://solutions.arcgis.com/defense/help/military-symbology-styles/) overview on *ArcGIS Solutions for Defense* for more information about support for military symbology.
+While developing, you can omit the path to the **.stylx** style file; Runtime will refer to a copy installed with the API. For production, you should take care to deploy the proper style files and explicitly specify the path to that file when creating the symbol dictionary. See the [Military Symbology Styles](https://solutions.arcgis.com/defense/help/military-symbology-styles/) overview on *ArcGIS Solutions for Defense* for more information about support for military symbology.
 
 ## Tags
 
