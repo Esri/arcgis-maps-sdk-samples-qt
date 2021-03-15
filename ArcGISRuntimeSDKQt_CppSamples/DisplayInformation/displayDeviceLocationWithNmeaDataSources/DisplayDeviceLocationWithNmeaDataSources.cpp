@@ -25,11 +25,13 @@
 #include "NmeaLocation.h"
 #include "NmeaLocationDataSource.h"
 #include "SimulatedLocationDataSource.h"
+#include "SimulationParameters.h"
 
 #include "Map.h"
 #include "MapQuickView.h"
 
 #include <QFile>
+#include <QThread>
 
 using namespace Esri::ArcGISRuntime;
 
@@ -38,8 +40,10 @@ DisplayDeviceLocationWithNmeaDataSources::DisplayDeviceLocationWithNmeaDataSourc
   m_map(new Map(BasemapStyle::ArcGISNavigationNight, this))
 {
   m_nmeaLocationDataSource = new NmeaLocationDataSource(SpatialReference::wgs84(), this);
-//  m_mockLocations = {};
-//  m_mockDataSource = makeDataSource(m_mockLocations);
+  m_simulatedLocationDataSource = new SimulatedLocationDataSource(this);
+
+  //  m_mockLocations = {};
+  //  m_mockDataSource = makeDataSource(m_mockLocations);
 }
 
 DisplayDeviceLocationWithNmeaDataSources::~DisplayDeviceLocationWithNmeaDataSources() = default;
@@ -59,53 +63,40 @@ MapQuickView* DisplayDeviceLocationWithNmeaDataSources::mapView() const
 // Set the view (created in QML)
 void DisplayDeviceLocationWithNmeaDataSources::setMapView(MapQuickView* mapView)
 {
+
   if (!mapView || mapView == m_mapView)
     return;
 
   m_mapView = mapView;
   m_mapView->setMap(m_map);
 
-  start();
-
   emit mapViewChanged();
+  start();
 }
 
-//SimulatedLocationDataSource* DisplayDeviceLocationWithNmeaDataSources::makeDataSource(QList<Location> locations)
-//{
-//  QFile simulatedNmeaDataFile(":/Samples/DisplayInformation/DisplayDeviceLocationWithNmeaDataSources/redlands.nmea");
-//  qDebug() << simulatedNmeaDataFile.exists();
-
-//  simulatedNmeaDataFile.open(QIODevice::ReadOnly);
-
-//  QByteArray data = simulatedNmeaDataFile.readAll();
-//  qDebug() << data;
-
-//  m_nmeaLocationDataSource->pushData(data);
-
-
-//  SimulatedLocationDataSource* mockDataSource = new SimulatedLocationDataSource(this);
-//  mockDataSource->setLocations(locations);
-//  return mockDataSource;
-//}
-
 void DisplayDeviceLocationWithNmeaDataSources::start() {
+  m_mockDataFile.setFileName(":/Samples/DisplayInformation/DisplayDeviceLocationWithNmeaDataSources/redlands.nmea");
+  qDebug() << "File found" << m_mockDataFile.exists();
 
-  QFile simulatedNmeaDataFile(":/Samples/DisplayInformation/DisplayDeviceLocationWithNmeaDataSources/redlands.nmea");
-  qDebug() << "File found" << simulatedNmeaDataFile.exists();
+  m_mockDataFile.open(QIODevice::ReadOnly);
 
-  simulatedNmeaDataFile.open(QIODevice::ReadOnly);
+  m_mockData = m_mockDataFile.readAll();
 
-  QByteArray data = simulatedNmeaDataFile.readAll();
-
-  m_nmeaLocationDataSource->pushData(data);
+  SimulationParameters* simulationParameters = new SimulationParameters(QDateTime::currentDateTime(), 30.0, 0.0, 0.0, this);
   m_mapView->locationDisplay()->setDataSource(m_nmeaLocationDataSource);
 
   m_nmeaLocationDataSource->start();
   m_mapView->locationDisplay()->start();
+
+  m_nmeaLocationDataSource->pushData(m_mockData);
+  recenter();
+
   return;
 }
 
 void DisplayDeviceLocationWithNmeaDataSources::recenter() {
+  m_mapView->locationDisplay()->setAutoPanMode(LocationDisplayAutoPanMode::Recenter);
+
   return;
 }
 

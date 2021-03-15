@@ -25,10 +25,13 @@ class Map;
 class MapQuickView;
 class NmeaLocation;
 class NmeaLocationDataSource;
+class SimulatedLocationDataSource;
 }
 }
 
 #include <QObject>
+#include <QByteArray>
+#include <QFile>
 
 class DisplayDeviceLocationWithNmeaDataSources : public QObject
 {
@@ -51,11 +54,15 @@ private:
   void start();
   void recenter();
   void reset();
+  int updateLocation(int i);
 
   Esri::ArcGISRuntime::Map* m_map = nullptr;
   Esri::ArcGISRuntime::MapQuickView* m_mapView = nullptr;
   Esri::ArcGISRuntime::NmeaLocationDataSource* m_nmeaLocationDataSource = nullptr;
   Esri::ArcGISRuntime::NmeaLocation* m_nmeaData = nullptr;
+  Esri::ArcGISRuntime::SimulatedLocationDataSource* m_simulatedLocationDataSource = nullptr;
+  QByteArray m_mockData;
+  QFile m_mockDataFile;
 };
 
 #endif // DISPLAYDEVICELOCATIONWITHNMEADATASOURCES_H
