@@ -40,7 +40,6 @@ DisplayDeviceLocationWithNmeaDataSources::DisplayDeviceLocationWithNmeaDataSourc
   m_map(new Map(BasemapStyle::ArcGISNavigationNight, this))
 {
   m_nmeaLocationDataSource = new NmeaLocationDataSource(SpatialReference::wgs84(), this);
-  m_simulatedLocationDataSource = new SimulatedLocationDataSource(this);
 
   //  m_mockLocations = {};
   //  m_mockDataSource = makeDataSource(m_mockLocations);
@@ -71,26 +70,49 @@ void DisplayDeviceLocationWithNmeaDataSources::setMapView(MapQuickView* mapView)
   m_mapView->setMap(m_map);
 
   emit mapViewChanged();
-  start();
+
+  connect(m_mapView, &MapQuickView::mouseClicked, this, [this]()
+  {
+    start();
+  });
 }
 
 void DisplayDeviceLocationWithNmeaDataSources::start() {
   m_mockDataFile.setFileName(":/Samples/DisplayInformation/DisplayDeviceLocationWithNmeaDataSources/redlands.nmea");
   qDebug() << "File found" << m_mockDataFile.exists();
 
+  connect(m_mapView->locationDisplay(), &LocationDisplay::locationChanged, this, [this]()
+  {
+    qDebug() << m_mapView->locationDisplay()->location().position().x();
+    qDebug() << m_mapView->locationDisplay()->location().position().y();
+
+    while(!m_mockDataFile.atEnd())
+    {
+      QByteArray line = m_mockDataFile.readLine();
+      qDebug() << line;
+      m_nmeaLocationDataSource->pushData(line);
+      if (line.startsWith("$GPGGA"))
+        break;
+    }
+  });
+
   m_mockDataFile.open(QIODevice::ReadOnly);
 
-  m_mockData = m_mockDataFile.readAll();
+  // m_mockData = m_mockDataFile.readAll();
 
-  SimulationParameters* simulationParameters = new SimulationParameters(QDateTime::currentDateTime(), 30.0, 0.0, 0.0, this);
   m_mapView->locationDisplay()->setDataSource(m_nmeaLocationDataSource);
 
   m_nmeaLocationDataSource->start();
   m_mapView->locationDisplay()->start();
 
-  m_nmeaLocationDataSource->pushData(m_mockData);
+  while(!m_mockDataFile.atEnd())
+  {
+    QByteArray line = m_mockDataFile.readLine();
+    qDebug() << line;
+    m_nmeaLocationDataSource->pushData(line);
+    break;
+  }
   recenter();
-
   return;
 }
 
@@ -101,6 +123,7 @@ void DisplayDeviceLocationWithNmeaDataSources::recenter() {
 }
 
 void DisplayDeviceLocationWithNmeaDataSources::reset() {
+  start();
   return;
 }
 

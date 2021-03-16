@@ -31,4 +31,31 @@ Item {
         id: model
         mapView: view
     }
+
+    Rectangle {
+        x: parent.width - 150
+        y: 5
+        width: 145
+        height: 200
+        color: "blue"
+        border.color: "black"
+        border.width: 1
+
+        Column {
+            padding: 5
+            spacing: 5
+            Button {
+                text: "Start"
+                onClicked: model.start();
+            }
+            Button {
+                text: "Recenter"
+                onClicked: model.recenter();
+            }
+            Button {
+                text: "Reset"
+                onClicked: model.reset();
+            }
+        }
+    }
 }

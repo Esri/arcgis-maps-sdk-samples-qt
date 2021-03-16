@@ -45,15 +45,19 @@ public:
 
   static void init();
 
+  Q_INVOKABLE void start();
+  Q_INVOKABLE void recenter();
+  Q_INVOKABLE void reset();
+
 signals:
   void mapViewChanged();
 
 private:
   Esri::ArcGISRuntime::MapQuickView* mapView() const;
   void setMapView(Esri::ArcGISRuntime::MapQuickView* mapView);
-  void start();
-  void recenter();
-  void reset();
+//  void start();
+//  void recenter();
+//  void reset();
   int updateLocation(int i);
 
   Esri::ArcGISRuntime::Map* m_map = nullptr;
