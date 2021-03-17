@@ -31,7 +31,7 @@
 #include "MapQuickView.h"
 
 #include <QFile>
-#include <QThread>
+#include <QTimer>
 
 using namespace Esri::ArcGISRuntime;
 
@@ -39,10 +39,7 @@ DisplayDeviceLocationWithNmeaDataSources::DisplayDeviceLocationWithNmeaDataSourc
   QObject(parent),
   m_map(new Map(BasemapStyle::ArcGISNavigationNight, this))
 {
-  m_nmeaLocationDataSource = new NmeaLocationDataSource(SpatialReference::wgs84(), this);
-
-  //  m_mockLocations = {};
-  //  m_mockDataSource = makeDataSource(m_mockLocations);
+  m_useSimulatedData = true;
 }
 
 DisplayDeviceLocationWithNmeaDataSources::~DisplayDeviceLocationWithNmeaDataSources() = default;
@@ -69,61 +66,94 @@ void DisplayDeviceLocationWithNmeaDataSources::setMapView(MapQuickView* mapView)
   m_mapView = mapView;
   m_mapView->setMap(m_map);
 
-  emit mapViewChanged();
+  m_nmeaLocationDataSource = new NmeaLocationDataSource(SpatialReference::wgs84(), this);
+  m_mapView->locationDisplay()->setDataSource(m_nmeaLocationDataSource);
 
-  connect(m_mapView, &MapQuickView::mouseClicked, this, [this]()
-  {
-    start();
-  });
+  emit mapViewChanged();
 }
 
-void DisplayDeviceLocationWithNmeaDataSources::start() {
-  m_mockDataFile.setFileName(":/Samples/DisplayInformation/DisplayDeviceLocationWithNmeaDataSources/redlands.nmea");
-  qDebug() << "File found" << m_mockDataFile.exists();
+void DisplayDeviceLocationWithNmeaDataSources::start()
+{
+  if (m_sampleStarted)
+    return;
 
-  connect(m_mapView->locationDisplay(), &LocationDisplay::locationChanged, this, [this]()
+  m_sampleStarted = true;
+
+  m_nmeaLocationDataSource->start();
+  m_mapView->locationDisplay()->start();
+
+  if (m_useSimulatedData)
+    startNmeaSimulation();
+}
+
+void DisplayDeviceLocationWithNmeaDataSources::startNmeaSimulation()
+{
+  if (m_mockNmeaSentences.isEmpty())
   {
-    qDebug() << m_mapView->locationDisplay()->location().position().x();
-    qDebug() << m_mapView->locationDisplay()->location().position().y();
-
-    while(!m_mockDataFile.atEnd())
+    QString filePath = ":/Samples/DisplayInformation/DisplayDeviceLocationWithNmeaDataSources/redlands.nmea";
+    if(!loadMockDataFile(filePath))
     {
-      QByteArray line = m_mockDataFile.readLine();
-      qDebug() << line;
+      qDebug() << "Unable to load file at" << filePath;
+      return;
+    }
+  }
+
+  m_mockDataIterator = 0;
+
+  connect(m_timer, &QTimer::timeout, this, [this]()
+  {
+    while(!m_mockNmeaSentences.isEmpty())
+    {
+      QByteArray line = m_mockNmeaSentences.at(m_mockDataIterator);
       m_nmeaLocationDataSource->pushData(line);
+      Location l = m_mapView->locationDisplay()->location();
+
+      ++m_mockDataIterator;
+
+      if (m_mockDataIterator >= m_mockNmeaSentences.size()-1)
+        m_mockDataIterator = 0;
+
       if (line.startsWith("$GPGGA"))
         break;
     }
   });
 
-  m_mockDataFile.open(QIODevice::ReadOnly);
+  m_timer->start(1000);
 
-  // m_mockData = m_mockDataFile.readAll();
-
-  m_mapView->locationDisplay()->setDataSource(m_nmeaLocationDataSource);
-
-  m_nmeaLocationDataSource->start();
-  m_mapView->locationDisplay()->start();
-
-  while(!m_mockDataFile.atEnd())
-  {
-    QByteArray line = m_mockDataFile.readLine();
-    qDebug() << line;
-    m_nmeaLocationDataSource->pushData(line);
-    break;
-  }
   recenter();
   return;
 }
 
 void DisplayDeviceLocationWithNmeaDataSources::recenter() {
   m_mapView->locationDisplay()->setAutoPanMode(LocationDisplayAutoPanMode::Recenter);
-
   return;
 }
 
 void DisplayDeviceLocationWithNmeaDataSources::reset() {
-  start();
-  return;
+  if (!m_sampleStarted)
+    return;
+
+  m_sampleStarted = false;
+  m_timer->stop();
+  m_mapView->locationDisplay()->stop();
+  m_nmeaLocationDataSource->stop();
+}
+
+bool DisplayDeviceLocationWithNmeaDataSources::loadMockDataFile(QString filePath)
+{
+  QFile mockDataFile;
+  mockDataFile.setFileName(filePath);
+
+  if(!mockDataFile.exists())
+    return false;
+
+  mockDataFile.open(QIODevice::ReadOnly);
+
+  while (!mockDataFile.atEnd())
+    m_mockNmeaSentences.append(mockDataFile.readLine());
+
+  mockDataFile.close();
+
+  return true;
 }
 

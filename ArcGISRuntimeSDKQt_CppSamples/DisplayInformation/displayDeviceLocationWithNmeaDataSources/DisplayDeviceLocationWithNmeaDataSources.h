@@ -32,6 +32,7 @@ class SimulatedLocationDataSource;
 #include <QObject>
 #include <QByteArray>
 #include <QFile>
+#include <QTimer>
 
 class DisplayDeviceLocationWithNmeaDataSources : public QObject
 {
@@ -46,6 +47,7 @@ public:
   static void init();
 
   Q_INVOKABLE void start();
+  // Q_INVOKABLE void stop();
   Q_INVOKABLE void recenter();
   Q_INVOKABLE void reset();
 
@@ -55,18 +57,19 @@ signals:
 private:
   Esri::ArcGISRuntime::MapQuickView* mapView() const;
   void setMapView(Esri::ArcGISRuntime::MapQuickView* mapView);
-//  void start();
-//  void recenter();
-//  void reset();
-  int updateLocation(int i);
+  bool loadMockDataFile(QString filePath);
+  void startNmeaSimulation();
 
   Esri::ArcGISRuntime::Map* m_map = nullptr;
   Esri::ArcGISRuntime::MapQuickView* m_mapView = nullptr;
   Esri::ArcGISRuntime::NmeaLocationDataSource* m_nmeaLocationDataSource = nullptr;
   Esri::ArcGISRuntime::NmeaLocation* m_nmeaData = nullptr;
   Esri::ArcGISRuntime::SimulatedLocationDataSource* m_simulatedLocationDataSource = nullptr;
-  QByteArray m_mockData;
-  QFile m_mockDataFile;
+  bool m_useSimulatedData = true;
+  QList<QByteArray> m_mockNmeaSentences;
+  int m_mockDataIterator;
+  QTimer* m_timer = new QTimer(this);
+  bool m_sampleStarted = false;
 };
 
 #endif // DISPLAYDEVICELOCATIONWITHNMEADATASOURCES_H

@@ -33,7 +33,7 @@ Item {
     }
 
     Rectangle {
-        x: parent.width - 150
+        x: parent.width - 200
         y: 5
         width: 145
         height: 200
