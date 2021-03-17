@@ -66,34 +66,57 @@ void DisplayDeviceLocationWithNmeaDataSources::setMapView(MapQuickView* mapView)
   m_mapView = mapView;
   m_mapView->setMap(m_map);
 
+  m_mapView->setViewpointCenter(Point());
+
   m_nmeaLocationDataSource = new NmeaLocationDataSource(SpatialReference::wgs84(), this);
   m_mapView->locationDisplay()->setDataSource(m_nmeaLocationDataSource);
 
   emit mapViewChanged();
 }
 
+void DisplayDeviceLocationWithNmeaDataSources::changeDataSource()
+{
+  m_useSimulatedData =! m_useSimulatedData;
+
+  reset();
+  emit sampleStartedChanged();
+}
+
+void DisplayDeviceLocationWithNmeaDataSources::changeSampleState()
+{
+  if (!m_sampleStarted)
+    start();
+  else
+    reset();
+
+  emit sampleStartedChanged();
+}
+
 void DisplayDeviceLocationWithNmeaDataSources::start()
 {
-  if (m_sampleStarted)
-    return;
-
-  m_sampleStarted = true;
-
-  m_nmeaLocationDataSource->start();
-  m_mapView->locationDisplay()->start();
-
   if (m_useSimulatedData)
     startNmeaSimulation();
+  else
+  {
+    qDebug() << "Device not found, lol";
+    return;
+  }
+
+  recenter();
 }
 
 void DisplayDeviceLocationWithNmeaDataSources::startNmeaSimulation()
 {
+  m_nmeaLocationDataSource->start();
+  m_mapView->locationDisplay()->start();
+  m_sampleStarted = true;
+
   if (m_mockNmeaSentences.isEmpty())
   {
     QString filePath = ":/Samples/DisplayInformation/DisplayDeviceLocationWithNmeaDataSources/redlands.nmea";
     if(!loadMockDataFile(filePath))
     {
-      qDebug() << "Unable to load file at" << filePath;
+      qDebug() << "Unable to load file at path:" << filePath;
       return;
     }
   }
@@ -120,7 +143,6 @@ void DisplayDeviceLocationWithNmeaDataSources::startNmeaSimulation()
 
   m_timer->start(1000);
 
-  recenter();
   return;
 }
 
@@ -130,13 +152,12 @@ void DisplayDeviceLocationWithNmeaDataSources::recenter() {
 }
 
 void DisplayDeviceLocationWithNmeaDataSources::reset() {
-  if (!m_sampleStarted)
-    return;
-
   m_sampleStarted = false;
   m_timer->stop();
+  disconnect(m_timer, &QTimer::timeout, nullptr, nullptr);
   m_mapView->locationDisplay()->stop();
   m_nmeaLocationDataSource->stop();
+  m_mapView->locationDisplay()->setAutoPanMode(LocationDisplayAutoPanMode::Off);
 }
 
 bool DisplayDeviceLocationWithNmeaDataSources::loadMockDataFile(QString filePath)

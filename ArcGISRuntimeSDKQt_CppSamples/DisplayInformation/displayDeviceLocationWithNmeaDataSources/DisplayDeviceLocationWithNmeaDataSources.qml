@@ -32,29 +32,50 @@ Item {
         mapView: view
     }
 
-    Rectangle {
-        x: parent.width - 200
+    Button {
+        id: button
+        anchors.horizontalCenter: parent.horizontalCenter
         y: 5
-        width: 145
-        height: 200
-        color: "blue"
+        width: 200
+        text: model.sampleStarted ? "Stop tracking" : "Start tracking"
+        onClicked: {
+            model.changeSampleState();
+        }
+    }
+
+    Rectangle {
+        height: dataSourceCol.height
+        width: dataSourceCol.width
+        x: parent.width - (width + 15)
+        y: 5
+        color: "white"
+        opacity: .9
         border.color: "black"
         border.width: 1
-
         Column {
-            padding: 5
-            spacing: 5
-            Button {
-                text: "Start"
-                onClicked: model.start();
+            id: dataSourceCol
+            padding: 10
+            Text {
+                text: "Data source"
+                font.bold: true
+
             }
-            Button {
-                text: "Recenter"
-                onClicked: model.recenter();
+            RadioButton {
+                id: simData
+                text: "Simulated data"
+                checked: true
+                onCheckedChanged: {
+                    if (simData.checked)
+                        model.changeDataSource();
+                }
             }
-            Button {
-                text: "Reset"
-                onClicked: model.reset();
+            RadioButton {
+                id: receiverData
+                text: "Receiver"
+                onCheckedChanged: {
+                    if (receiverData.checked)
+                        model.changeDataSource();
+                }
             }
         }
     }
