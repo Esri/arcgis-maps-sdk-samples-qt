@@ -123,7 +123,9 @@ void DisplayDeviceLocationWithNmeaDataSources::startNmeaSimulation()
       m_nmeaLocationDataSource->pushData(line);
       ++m_mockDataIterator;
 
-      if (m_mockDataIterator >= m_mockNmeaSentences.size()-1)
+      qDebug() << (m_mockDataIterator == m_mockNmeaSentences.size());
+
+      if (m_mockDataIterator >= m_mockNmeaSentences.size())
         m_mockDataIterator = 0;
 
       if (line.startsWith("$GPGGA")) {

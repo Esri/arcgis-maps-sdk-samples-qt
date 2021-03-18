@@ -32,19 +32,18 @@ Rectangle {
         id: mapView
         anchors.fill: parent
 
-        Component.onCompleted: {
-
-        }
-
         Map {
+            id: map
             Basemap {
                 initStyle: Enums.BasemapStyleArcGISNavigationNight
             }
-
-            NmeaLocationDataSource {
-                receiverSpatialReference: SpatialReference { wkid: 4326 }
-            }
         }
+
+        locationDisplay.dataSource: NmeaLocationDataSource {
+            id: nmeaLocationDataSource
+            receiverSpatialReference: SpatialReference { wkid: 4326 }
+        }
+        locationDisplay.autoPanMode: Enums.LocationDisplayAutoPanModeRecenter;
     }
 
     Button {
@@ -55,11 +54,18 @@ Rectangle {
         text: sampleStarted ? "Stop tracking" : "Start tracking"
         onClicked: {
             sampleStarted = !sampleStarted;
-            console.log(sampleStarted);
-            if (sampleStarted)
-                start();
-            else
-                reset();
+            if (sampleStarted) {
+                timer.start();
+                nmeaLocationDataSource.start();
+                mapView.locationDisplay.start();
+            }
+            else {
+                timer.stop();
+                timer.iterator = 0;
+                nmeaLocationDataSource.stop();
+                mapView.locationDisplay.stop();
+            }
+
         }
     }
 
@@ -97,37 +103,46 @@ Rectangle {
         }
     }
 
+    property var mockNmeaData: []
+
     FileFolder {
         id: mockNmeaDataFile
         path: ":/Samples/DisplayInformation/DisplayDeviceLocationWithNmeaDataSources/redlands.nmea"
-        property var mockNmeaData: []
         Component.onCompleted: {
-            console.log(fileExists(path));
-            readFile(path).forEach((line) => { mockNmeaData.push(line + "\n") });
-
+            readFile(path).toString().split("\n").forEach((line) => {
+                                                              mockNmeaData.push(line + "\n");
+                                                          });
         }
     }
 
-    function loadNmeaData(fileUrl) {
-        var xhr = new XMLHttpRequest;
-        xhr.open("GET", fileUrl);
-        xhr.onreadystatechange = function () {
-            if (xhr.readyState === XMLHttpRequest.DONE) {
-                var response = xhr.responseText;
-                response.split("\n").forEach((line) => { mockNmeaData.push(line + "\n") });
-                start();
-            }
-        }
-        xhr.send();
-    }
 
     function start() {
-        if (mockNmeaData.length === 0) {
-            loadNmeaData("qrc:/Samples/DisplayInformation/DisplayDeviceLocationWithNmeaDataSources/redlands.nmea");
-            return;
-        }
-        console.log(mockNmeaData);
+        timer.start();
         return;
+    }
+
+    Timer {
+        id: timer
+        interval: 1000
+        repeat: true
+        property var iterator: 0
+        onTriggered: {
+
+            if (!mockNmeaData) {
+                console.log("File not found sorry :(");
+                stop();
+                return;
+            }
+
+            while (true) {
+                nmeaLocationDataSource.pushData(mockNmeaData[iterator]);
+                iterator++;
+                if (iterator >= mockNmeaData.length)
+                    iterator = 0;
+                if (mockNmeaData[iterator].startsWith("$GPGGA"))
+                    break;
+            }
+        }
     }
 
     function reset() {
