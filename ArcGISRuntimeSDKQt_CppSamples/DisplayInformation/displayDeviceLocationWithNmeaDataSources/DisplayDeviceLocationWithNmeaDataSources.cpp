@@ -77,19 +77,6 @@ void DisplayDeviceLocationWithNmeaDataSources::setMapView(MapQuickView* mapView)
 void DisplayDeviceLocationWithNmeaDataSources::changeDataSource()
 {
   m_useSimulatedData =! m_useSimulatedData;
-
-  reset();
-  emit sampleStartedChanged();
-}
-
-void DisplayDeviceLocationWithNmeaDataSources::changeSampleState()
-{
-  if (!m_sampleStarted)
-    start();
-  else
-    reset();
-
-  emit sampleStartedChanged();
 }
 
 void DisplayDeviceLocationWithNmeaDataSources::start()
@@ -98,18 +85,22 @@ void DisplayDeviceLocationWithNmeaDataSources::start()
     startNmeaSimulation();
   else
   {
-    qDebug() << "Device not found, lol";
-    return;
+    qDebug() << "Device not found";
+    m_sampleStarted = false;
   }
 
-  recenter();
+  if (!m_sampleStarted)
+    emit sampleStartedChanged();
+
+  else
+    recenter();
 }
 
 void DisplayDeviceLocationWithNmeaDataSources::startNmeaSimulation()
 {
   m_nmeaLocationDataSource->start();
   m_mapView->locationDisplay()->start();
-  m_sampleStarted = true;
+
 
   if (m_mockNmeaSentences.isEmpty())
   {
@@ -117,6 +108,7 @@ void DisplayDeviceLocationWithNmeaDataSources::startNmeaSimulation()
     if(!loadMockDataFile(filePath))
     {
       qDebug() << "Unable to load file at path:" << filePath;
+      m_sampleStarted = false;
       return;
     }
   }
@@ -125,25 +117,30 @@ void DisplayDeviceLocationWithNmeaDataSources::startNmeaSimulation()
 
   connect(m_timer, &QTimer::timeout, this, [this]()
   {
-    while(!m_mockNmeaSentences.isEmpty())
+    while(true)
     {
       QByteArray line = m_mockNmeaSentences.at(m_mockDataIterator);
       m_nmeaLocationDataSource->pushData(line);
-      Location l = m_mapView->locationDisplay()->location();
-
       ++m_mockDataIterator;
 
       if (m_mockDataIterator >= m_mockNmeaSentences.size()-1)
         m_mockDataIterator = 0;
 
-      if (line.startsWith("$GPGGA"))
+      if (line.startsWith("$GPGGA")) {
         break;
+      }
     }
   });
 
   m_timer->start(1000);
+}
 
-  return;
+void DisplayDeviceLocationWithNmeaDataSources::reset() {
+  m_timer->stop();
+  disconnect(m_timer, &QTimer::timeout, nullptr, nullptr);
+  m_mapView->locationDisplay()->stop();
+  m_nmeaLocationDataSource->stop();
+  m_mapView->locationDisplay()->setAutoPanMode(LocationDisplayAutoPanMode::Off);
 }
 
 void DisplayDeviceLocationWithNmeaDataSources::recenter() {
@@ -151,14 +148,6 @@ void DisplayDeviceLocationWithNmeaDataSources::recenter() {
   return;
 }
 
-void DisplayDeviceLocationWithNmeaDataSources::reset() {
-  m_sampleStarted = false;
-  m_timer->stop();
-  disconnect(m_timer, &QTimer::timeout, nullptr, nullptr);
-  m_mapView->locationDisplay()->stop();
-  m_nmeaLocationDataSource->stop();
-  m_mapView->locationDisplay()->setAutoPanMode(LocationDisplayAutoPanMode::Off);
-}
 
 bool DisplayDeviceLocationWithNmeaDataSources::loadMockDataFile(QString filePath)
 {

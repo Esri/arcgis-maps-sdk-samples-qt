@@ -39,7 +39,11 @@ Item {
         width: 200
         text: model.sampleStarted ? "Stop tracking" : "Start tracking"
         onClicked: {
-            model.changeSampleState();
+            model.sampleStarted = !model.sampleStarted;
+            if (model.sampleStarted)
+                model.start();
+            else
+                model.reset();
         }
     }
 
@@ -58,24 +62,20 @@ Item {
             Text {
                 text: "Data source"
                 font.bold: true
-
             }
             RadioButton {
                 id: simData
                 text: "Simulated data"
                 checked: true
                 onCheckedChanged: {
-                    if (simData.checked)
-                        model.changeDataSource();
+                    model.useSimulatedData = !model.useSimulatedData
+                    model.reset();
+                    model.sampleStarted = false;
                 }
             }
             RadioButton {
                 id: receiverData
                 text: "Receiver"
-                onCheckedChanged: {
-                    if (receiverData.checked)
-                        model.changeDataSource();
-                }
             }
         }
     }
