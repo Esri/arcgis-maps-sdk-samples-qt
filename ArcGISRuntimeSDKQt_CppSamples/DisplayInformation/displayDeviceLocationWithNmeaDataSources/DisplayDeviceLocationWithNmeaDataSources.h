@@ -61,7 +61,6 @@ private:
   Esri::ArcGISRuntime::MapQuickView* mapView() const;
   void setMapView(Esri::ArcGISRuntime::MapQuickView* mapView);
   bool loadMockDataFile(QString filePath);
-  void recenter();
   void startNmeaSimulation();
 
   Esri::ArcGISRuntime::Map* m_map = nullptr;

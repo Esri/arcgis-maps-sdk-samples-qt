@@ -93,7 +93,7 @@ void DisplayDeviceLocationWithNmeaDataSources::start()
     emit sampleStartedChanged();
 
   else
-    recenter();
+    m_mapView->locationDisplay()->setAutoPanMode(LocationDisplayAutoPanMode::Recenter);
 }
 
 void DisplayDeviceLocationWithNmeaDataSources::startNmeaSimulation()
@@ -137,17 +137,15 @@ void DisplayDeviceLocationWithNmeaDataSources::startNmeaSimulation()
 
 void DisplayDeviceLocationWithNmeaDataSources::reset() {
   m_timer->stop();
+
+
   disconnect(m_timer, &QTimer::timeout, nullptr, nullptr);
+
+
   m_mapView->locationDisplay()->stop();
   m_nmeaLocationDataSource->stop();
   m_mapView->locationDisplay()->setAutoPanMode(LocationDisplayAutoPanMode::Off);
 }
-
-void DisplayDeviceLocationWithNmeaDataSources::recenter() {
-  m_mapView->locationDisplay()->setAutoPanMode(LocationDisplayAutoPanMode::Recenter);
-  return;
-}
-
 
 bool DisplayDeviceLocationWithNmeaDataSources::loadMockDataFile(QString filePath)
 {

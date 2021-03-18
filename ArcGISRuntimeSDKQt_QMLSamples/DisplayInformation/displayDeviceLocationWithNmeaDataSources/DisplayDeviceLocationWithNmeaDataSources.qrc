@@ -4,5 +4,6 @@
         <file>DisplayDeviceLocationWithNmeaDataSources.qml</file>
         <file>screenshot.png</file>
         <file>README.md</file>
+        <file>redlands.nmea</file>
     </qresource>
 </RCC>
