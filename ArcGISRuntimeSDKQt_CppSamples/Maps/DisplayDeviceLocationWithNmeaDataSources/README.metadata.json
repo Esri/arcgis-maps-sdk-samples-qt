@@ -1,16 +1,25 @@
 {
-    "category": "TODO",
-    "description": "TODO",
+    "category": "Maps",
+    "description": "Parse NMEA sentences and use the results to show device location on the map.",
     "ignore": false,
     "images": [
         "screenshot.png"
     ],
     "keywords": [
-        "TODO"
+        "GPS",
+        "history",
+        "Location",
+        "LocationDisplay",
+        "navigation",
+        "NMEA",
+        "NMEALocationDataSource",
+        "real-time",
+        "trace"
     ],
     "redirect_from": "",
     "relevant_apis": [
-        "TODO"
+        "LocationDisplay",
+        "NMEALocationDataSource",
     ],
     "snippets": [
         "DisplayDeviceLocationWithNmeaDataSources.qml",
