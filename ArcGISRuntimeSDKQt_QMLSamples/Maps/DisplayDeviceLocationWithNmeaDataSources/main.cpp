@@ -11,22 +11,19 @@
 // See the License for the specific language governing permissions and
 // limitations under the License.
 
-#ifdef Q_OS_WIN
-#include <Windows.h>
-#endif
-
-#include "DisplayDeviceLocationWithNmeaDataSources.h"
-#include "ArcGISRuntimeEnvironment.h"
-
-#include <QDir>
+#include <QSettings>
 #include <QGuiApplication>
-#include <QQmlApplicationEngine>
+#include <QQuickView>
+#include <QCommandLineParser>
+#include <QDir>
+#include <QQmlEngine>
 
 int main(int argc, char *argv[])
 {
   QGuiApplication::setAttribute(Qt::AA_EnableHighDpiScaling);
   QGuiApplication app(argc, argv);
-  app.setApplicationName(QStringLiteral("DisplayDeviceLocationWithNmeaDataSources - C++"));
+  app.setApplicationName(QStringLiteral("DisplayDeviceLocationWithNmeaDataSources - QML"));
+
 
   // Use of Esri location services, including basemaps and geocoding,
   // requires authentication using either an ArcGIS identity or an API Key.
@@ -38,28 +35,29 @@ int main(int argc, char *argv[])
   const QString apiKey = QStringLiteral("");
   if (apiKey.isEmpty())
   {
-      qWarning() << "Use of Esri location services, including basemaps, requires"
-                    "you to authenticate with an ArcGIS identity or set the API Key property.";
+    qWarning() << "Use of Esri location services, including basemaps, requires "
+                  "you to authenticate with an ArcGIS identity or set the API Key property.";
   }
   else
   {
-      Esri::ArcGISRuntime::ArcGISRuntimeEnvironment::setApiKey(apiKey);
+    QCoreApplication::instance()->setProperty("Esri.ArcGISRuntime.apiKey", apiKey);
   }
 
-  // Initialize the sample
-  DisplayDeviceLocationWithNmeaDataSources::init();
-
   // Initialize application view
-  QQmlApplicationEngine engine;
+  QQuickView view;
+  view.setResizeMode(QQuickView::SizeRootObjectToView);
+
   // Add the import Path
-  engine.addImportPath(QDir(QCoreApplication::applicationDirPath()).filePath("qml"));
+  view.engine()->addImportPath(QDir(QCoreApplication::applicationDirPath()).filePath("qml"));
 
 #ifdef ARCGIS_RUNTIME_IMPORT_PATH_2
-  engine.addImportPath(ARCGIS_RUNTIME_IMPORT_PATH_2);
+  view.engine()->addImportPath(ARCGIS_RUNTIME_IMPORT_PATH_2);
 #endif
 
   // Set the source
-  engine.load(QUrl("qrc:/Samples/DisplayInformation/DisplayDeviceLocationWithNmeaDataSources/main.qml"));
+  view.setSource(QUrl("qrc:/Samples/Maps/DisplayDeviceLocationWithNmeaDataSources/DisplayDeviceLocationWithNmeaDataSources.qml"));
+
+  view.show();
 
   return app.exec();
 }

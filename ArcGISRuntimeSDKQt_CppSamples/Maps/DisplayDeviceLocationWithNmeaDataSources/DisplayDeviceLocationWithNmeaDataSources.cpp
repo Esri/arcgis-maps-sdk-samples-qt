@@ -1,4 +1,4 @@
-// [WriteFile Name=DisplayDeviceLocationWithNmeaDataSources, Category=DisplayInformation]
+// [WriteFile Name=DisplayDeviceLocationWithNmeaDataSources, Category=Maps]
 // [Legal]
 // Copyright 2020 Esri.
 
@@ -79,7 +79,7 @@ void DisplayDeviceLocationWithNmeaDataSources::start()
   // Load simulated NMEA sentences for sample
   if (m_mockNmeaSentences.isEmpty())
   {
-    QString filePath = ":/Samples/DisplayInformation/DisplayDeviceLocationWithNmeaDataSources/redlands.nmea";
+    QString filePath = ":/Samples/Maps/DisplayDeviceLocationWithNmeaDataSources/redlands.nmea";
     if(!loadMockDataFile(filePath))
     {
       qDebug() << "Unable to load file at path:" << filePath;

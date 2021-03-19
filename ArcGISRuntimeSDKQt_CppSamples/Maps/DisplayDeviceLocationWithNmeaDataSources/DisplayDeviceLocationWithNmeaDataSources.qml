@@ -1,4 +1,4 @@
-// [WriteFile Name=DisplayDeviceLocationWithNmeaDataSources, Category=DisplayInformation]
+// [WriteFile Name=DisplayDeviceLocationWithNmeaDataSources, Category=Maps]
 // [Legal]
 // Copyright 2020 Esri.
 

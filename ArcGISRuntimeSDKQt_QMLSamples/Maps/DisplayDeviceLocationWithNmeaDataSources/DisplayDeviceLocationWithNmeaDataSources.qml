@@ -1,4 +1,4 @@
-// [WriteFile Name=DisplayDeviceLocationWithNmeaDataSources, Category=DisplayInformation]
+// [WriteFile Name=DisplayDeviceLocationWithNmeaDataSources, Category=Maps]
 // [Legal]
 // Copyright 2020 Esri.
 
@@ -78,7 +78,7 @@ Rectangle {
 
     FileFolder {
         id: mockNmeaDataFile
-        path: ":/Samples/DisplayInformation/DisplayDeviceLocationWithNmeaDataSources/redlands.nmea"
+        path: ":/Samples/Maps/DisplayDeviceLocationWithNmeaDataSources/redlands.nmea"
         Component.onCompleted: {
             readFile(path).toString().split("\n").forEach((line) => {
                                                               mockNmeaData.push(line + "\n");

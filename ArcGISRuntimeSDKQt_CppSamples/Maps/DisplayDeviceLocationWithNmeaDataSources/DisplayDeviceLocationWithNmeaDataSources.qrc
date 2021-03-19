@@ -1,6 +1,6 @@
 <RCC>
-    <qresource prefix="/Samples/DisplayInformation/DisplayDeviceLocationWithNmeaDataSources">
-        <file alias="sample.json">README.metadata.json</file>        
+    <qresource prefix="/Samples/Maps/DisplayDeviceLocationWithNmeaDataSources">
+        <file alias="sample.json">README.metadata.json</file>
         <file>DisplayDeviceLocationWithNmeaDataSources.qml</file>
         <file>DisplayDeviceLocationWithNmeaDataSources.h</file>
         <file>DisplayDeviceLocationWithNmeaDataSources.cpp</file>
