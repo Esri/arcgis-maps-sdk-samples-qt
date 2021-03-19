@@ -19,7 +19,7 @@
     "redirect_from": "",
     "relevant_apis": [
         "LocationDisplay",
-        "NMEALocationDataSource",
+        "NMEALocationDataSource"
     ],
     "snippets": [
         "DisplayDeviceLocationWithNmeaDataSources.qml"
