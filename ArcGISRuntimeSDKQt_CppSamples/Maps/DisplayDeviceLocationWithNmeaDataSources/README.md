@@ -1,31 +1,34 @@
 # Display device location with NMEA data sources
 
 This sample demonstrates how to parse NMEA sentences and use the results to show device location on the map.
-This sample demonstrates ...       
-This is **why** you would do it this way ...
 
 ![](screenshot.png)
 
+## Use case
+
+NMEA sentences can be retrieved from GPS receivers and parsed into a series of coordinates with additional information. Devices without a built-in GPS receiver can retrieve NMEA sentences by using a separate GPS dongle, commonly connected bluetooth or through a serial port.
+
+The NMEA location data source allows for detailed interrogation of the information coming from the GPS receiver. For example, allowing you to report the number of satellites in view.
+
 ## How to use the sample
-e.g. Use the input controls to define a ... Click the "Go" button to ...
+Tap "Start" to parse the NMEA sentences into a simulated location data source, and initiate the location display. Tap "Reset" to reset the location display.
 
 ## How it works
-e.g. In the `GeoView.Tapped` event, features in the `Map` are selected using an `Envelope` defined by the user's tap location ...
+
+1. Load NMEA sentences from a local file.
+2. Parse the NMEA sentence strings, and push data into `NMEALocationDataSource`.
+3. Set the `NMEALocationDataSource` to the location display's data source.
+4. Start the location display to begin receiving location and satellite updates.
 
 ## Relevant API
- - ClassName1
- - MethodName
+* LocationDisplay
+* NMEALocationDataSource
 
-## Offline data
-Read more about how to set up the sample's offline data [here](http://links.esri.com/ArcGISRuntimeQtSamples).
+## About the data
 
-Link | Local Location
----------|-------|
-|[San Francisco Streets TPK](https://www.arcgis.com/home/item.html?id=3f1bbf0ec70b409a975f5c91f363fe7d)| `<userhome>`/ArcGIS/Runtime/Data/tpk/SanFrancisco.tpk |
+This sample reads lines from a local file to simulate the feed of data into the `NMEALocationDataSource` . This simulated data source provides NMEA data periodically, and allows the sample to be used on devices without a GPS dongle that produces NMEA data.
 
-## Additional information
-A standard level license is required to ...
+The route taken in this sample features a [one minute driving trip around Redlands, CA](https://arcgis.com/home/item.html?id=d5bad9f4fee9483791e405880fb466da).
 
 ## Tags
-Routing, Network analysis, Geocode
-
+GPS, history, navigation, NMEA, real-time, trace
