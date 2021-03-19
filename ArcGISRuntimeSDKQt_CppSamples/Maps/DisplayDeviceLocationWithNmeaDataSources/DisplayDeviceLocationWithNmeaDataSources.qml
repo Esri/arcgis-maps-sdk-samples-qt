@@ -31,4 +31,19 @@ Item {
         id: model
         mapView: view
     }
+
+    Button {
+        id: button
+        anchors.horizontalCenter: parent.horizontalCenter
+        y: 5
+        width: 200
+        text: model.sampleStarted ? "Stop tracking" : "Start tracking"
+        onClicked: {
+            model.sampleStarted = !model.sampleStarted;
+            if (model.sampleStarted)
+                model.start();
+            else
+                model.reset();
+        }
+    }
 }
