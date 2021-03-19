@@ -1,4 +1,4 @@
-// [WriteFile Name=DisplayDeviceLocationWithNmeaDataSources, Category=DisplayInformation]
+// [WriteFile Name=DisplayDeviceLocationFromNmeaDataSources, Category=Maps]
 // [Legal]
 // Copyright 2020 Esri.
 
@@ -14,8 +14,8 @@
 // limitations under the License.
 // [Legal]
 
-#ifndef DISPLAYDEVICELOCATIONWITHNMEADATASOURCES_H
-#define DISPLAYDEVICELOCATIONWITHNMEADATASOURCES_H
+#ifndef DISPLAYDEVICELOCATIONFROMNMEADATASOURCES_H
+#define DISPLAYDEVICELOCATIONFROMNMEADATASOURCES_H
 
 namespace Esri
 {
@@ -23,49 +23,32 @@ namespace ArcGISRuntime
 {
 class Map;
 class MapQuickView;
-class NmeaLocation;
-class NmeaLocationDataSource;
-class SimulatedLocationDataSource;
 }
 }
 
 #include <QObject>
-#include <QByteArray>
-#include <QFile>
-#include <QTimer>
 
-class DisplayDeviceLocationWithNmeaDataSources : public QObject
+class DisplayDeviceLocationFromNmeaDataSources : public QObject
 {
   Q_OBJECT
 
   Q_PROPERTY(Esri::ArcGISRuntime::MapQuickView* mapView READ mapView WRITE setMapView NOTIFY mapViewChanged)
-  Q_PROPERTY(bool sampleStarted MEMBER m_sampleStarted NOTIFY sampleStartedChanged)
 
 public:
-  explicit DisplayDeviceLocationWithNmeaDataSources(QObject* parent = nullptr);
-  ~DisplayDeviceLocationWithNmeaDataSources();
+  explicit DisplayDeviceLocationFromNmeaDataSources(QObject* parent = nullptr);
+  ~DisplayDeviceLocationFromNmeaDataSources();
 
   static void init();
 
-  Q_INVOKABLE void start();
-  Q_INVOKABLE void reset();
-
 signals:
   void mapViewChanged();
-  void sampleStartedChanged();
 
 private:
   Esri::ArcGISRuntime::MapQuickView* mapView() const;
   void setMapView(Esri::ArcGISRuntime::MapQuickView* mapView);
-  bool loadMockDataFile(QString filePath);
 
   Esri::ArcGISRuntime::Map* m_map = nullptr;
   Esri::ArcGISRuntime::MapQuickView* m_mapView = nullptr;
-  Esri::ArcGISRuntime::NmeaLocationDataSource* m_nmeaLocationDataSource = nullptr;
-  QList<QByteArray> m_mockNmeaSentences;
-  int m_mockDataIterator;
-  QTimer* m_timer = new QTimer(this);
-  bool m_sampleStarted = false;
 };
 
-#endif // DISPLAYDEVICELOCATIONWITHNMEADATASOURCES_H
+#endif // DISPLAYDEVICELOCATIONFROMNMEADATASOURCES_H

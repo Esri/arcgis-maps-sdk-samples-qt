@@ -19,7 +19,7 @@ ApplicationWindow {
     width: 800
     height: 600
 
-    DisplayDeviceLocationWithNmeaDataSources {
+    DisplayDeviceLocationFromNmeaDataSources {
         anchors.fill: parent
     }
 }

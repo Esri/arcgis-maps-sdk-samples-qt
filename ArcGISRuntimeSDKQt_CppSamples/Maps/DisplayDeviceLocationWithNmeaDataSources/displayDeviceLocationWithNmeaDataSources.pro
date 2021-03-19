@@ -25,7 +25,7 @@ CONFIG += c++14
 QT += opengl qml quick
 
 TEMPLATE = app
-TARGET = DisplayDeviceLocationWithNmeaDataSources
+TARGET = DisplayDeviceLocationFromNmeaDataSources
 
 ARCGIS_RUNTIME_VERSION = 100.11
 include($$PWD/arcgisruntime.pri)
@@ -33,13 +33,13 @@ include($$PWD/arcgisruntime.pri)
 #-------------------------------------------------------------------------------
 
 HEADERS += \
-    DisplayDeviceLocationWithNmeaDataSources.h
+    DisplayDeviceLocationFromNmeaDataSources.h
 
 SOURCES += \
     main.cpp \
-    DisplayDeviceLocationWithNmeaDataSources.cpp
+    DisplayDeviceLocationFromNmeaDataSources.cpp
 
-RESOURCES += DisplayDeviceLocationWithNmeaDataSources.qrc
+RESOURCES += DisplayDeviceLocationFromNmeaDataSources.qrc
 
 #-------------------------------------------------------------------------------
 
