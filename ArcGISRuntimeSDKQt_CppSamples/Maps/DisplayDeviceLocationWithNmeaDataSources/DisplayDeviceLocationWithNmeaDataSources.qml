@@ -1,4 +1,4 @@
-// [WriteFile Name=DisplayDeviceLocationFromNmeaDataSources, Category=Maps]
+// [WriteFile Name=DisplayDeviceLocationWithNmeaDataSources, Category=Maps]
 // [Legal]
 // Copyright 2020 Esri.
 
@@ -27,7 +27,7 @@ Item {
     }
 
     // Declare the C++ instance which creates the scene etc. and supply the view
-    DisplayDeviceLocationFromNmeaDataSourcesSample {
+    DisplayDeviceLocationWithNmeaDataSourcesSample {
         id: model
         mapView: view
     }

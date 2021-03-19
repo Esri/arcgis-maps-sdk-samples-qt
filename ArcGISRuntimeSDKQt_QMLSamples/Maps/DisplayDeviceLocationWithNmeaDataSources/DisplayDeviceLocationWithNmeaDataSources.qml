@@ -15,7 +15,9 @@
 // [Legal]
 
 import QtQuick 2.6
+import QtQuick.Controls 2.2
 import Esri.ArcGISRuntime 100.11
+import Esri.ArcGISExtras 1.1
 
 Rectangle {
     id: rootRectangle
@@ -28,7 +30,83 @@ Rectangle {
         anchors.fill: parent
 
         Map {
-            BasemapTopographic {}
+            id: map
+            Basemap {
+                initStyle: Enums.BasemapStyleArcGISNavigationNight
+            }
+            ViewpointCenter {
+                Point {
+                    x: -117.191
+                    y: 34.0306
+                    spatialReference: SpatialReference { wkid: 4326 }
+                }
+                targetScale: 100000
+            }
+        }
+
+        locationDisplay.dataSource: NmeaLocationDataSource {
+            id: nmeaLocationDataSource
+            receiverSpatialReference: SpatialReference { wkid: 4326 }
+        }
+        locationDisplay.autoPanMode: Enums.LocationDisplayAutoPanModeRecenter;
+    }
+
+    Button {
+        id: button
+        anchors.horizontalCenter: parent.horizontalCenter
+        y: 5
+        width: 200
+        property bool sampleStarted: false
+        text: sampleStarted ? "Stop tracking" : "Start tracking"
+        onClicked: {
+            sampleStarted = !sampleStarted;
+            if (sampleStarted) {
+                timer.start();
+                nmeaLocationDataSource.start();
+                mapView.locationDisplay.start();
+            }
+            else {
+                timer.stop();
+                timer.iterator = 0;
+                nmeaLocationDataSource.stop();
+                mapView.locationDisplay.stop();
+            }
+        }
+    }
+
+    property var mockNmeaData: []
+
+    FileFolder {
+        id: mockNmeaDataFile
+        path: ":/Samples/Maps/DisplayDeviceLocationWithNmeaDataSources/redlands.nmea"
+        Component.onCompleted: {
+            readFile(path).toString().split("\n").forEach((line) => {
+                                                              mockNmeaData.push(line + "\n");
+                                                          });
+        }
+    }
+
+    Timer {
+        id: timer
+        interval: 1000
+        repeat: true
+        property var iterator: 0
+        onTriggered: {
+
+            if (!mockNmeaData) {
+                console.log("File not found sorry :(");
+                stop();
+                return;
+            }
+
+            while (true) {
+                nmeaLocationDataSource.pushData(mockNmeaData[iterator]);
+                iterator++;
+                if (iterator >= mockNmeaData.length)
+                    iterator = 0;
+                if (mockNmeaData[iterator].startsWith("$GPGGA"))
+                    break;
+            }
         }
     }
 }

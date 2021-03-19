@@ -15,7 +15,7 @@
 #include <Windows.h>
 #endif
 
-#include "DisplayDeviceLocationFromNmeaDataSources.h"
+#include "DisplayDeviceLocationWithNmeaDataSources.h"
 
 #include <QDir>
 #include <QGuiApplication>
@@ -25,10 +25,10 @@ int main(int argc, char *argv[])
 {
   QGuiApplication::setAttribute(Qt::AA_EnableHighDpiScaling);
   QGuiApplication app(argc, argv);
-  app.setApplicationName(QStringLiteral("DisplayDeviceLocationFromNmeaDataSources - C++"));
+  app.setApplicationName(QStringLiteral("DisplayDeviceLocationWithNmeaDataSources - C++"));
 
   // Initialize the sample
-  DisplayDeviceLocationFromNmeaDataSources::init();
+  DisplayDeviceLocationWithNmeaDataSources::init();
 
   // Initialize application view
   QQmlApplicationEngine engine;
@@ -40,7 +40,7 @@ int main(int argc, char *argv[])
 #endif
 
   // Set the source
-  engine.load(QUrl("qrc:/Samples/Maps/DisplayDeviceLocationFromNmeaDataSources/main.qml"));
+  engine.load(QUrl("qrc:/Samples/Maps/DisplayDeviceLocationWithNmeaDataSources/main.qml"));
 
   return app.exec();
 }

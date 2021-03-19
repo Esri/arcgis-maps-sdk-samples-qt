@@ -1,4 +1,4 @@
-# Display device location from NMEA data sources
+# Display device location with NMEA data sources
 
 This sample demonstrates how to parse NMEA sentences and use the results to show device location on the map.
 This sample demonstrates ...       
