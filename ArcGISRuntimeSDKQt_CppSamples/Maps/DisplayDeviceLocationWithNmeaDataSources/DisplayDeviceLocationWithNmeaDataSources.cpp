@@ -20,11 +20,9 @@
 
 #include "DisplayDeviceLocationWithNmeaDataSources.h"
 
-#include "LocationDisplay.h"
-#include "NmeaLocationDataSource.h"
-
 #include "Map.h"
 #include "MapQuickView.h"
+#include "NmeaLocationDataSource.h"
 
 #include <QFile>
 #include <QTimer>
@@ -84,6 +82,8 @@ void DisplayDeviceLocationWithNmeaDataSources::start()
     {
       qDebug() << "Unable to load file at path:" << filePath;
       m_sampleStarted = false;
+      emit sampleStartedChanged();
+
       return;
     }
   }

@@ -37,7 +37,7 @@ Item {
         anchors.horizontalCenter: parent.horizontalCenter
         y: 5
         width: 200
-        text: model.sampleStarted ? "Stop tracking" : "Start tracking"
+        text: model.sampleStarted ? "RESET" : "START"
         onClicked: {
             model.sampleStarted = !model.sampleStarted;
             if (model.sampleStarted)

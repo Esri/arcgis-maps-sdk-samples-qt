@@ -23,9 +23,7 @@ namespace ArcGISRuntime
 {
 class Map;
 class MapQuickView;
-class NmeaLocation;
 class NmeaLocationDataSource;
-class SimulatedLocationDataSource;
 }
 }
 

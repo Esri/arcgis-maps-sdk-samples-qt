@@ -57,7 +57,7 @@ Rectangle {
         y: 5
         width: 200
         property bool sampleStarted: false
-        text: sampleStarted ? "Stop tracking" : "Start tracking"
+        text: sampleStarted ? "STOP" : "START"
         onClicked: {
             sampleStarted = !sampleStarted;
             if (sampleStarted) {
