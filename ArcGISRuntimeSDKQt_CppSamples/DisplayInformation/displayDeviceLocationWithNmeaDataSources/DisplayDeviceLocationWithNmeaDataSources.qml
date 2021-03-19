@@ -46,37 +46,4 @@ Item {
                 model.reset();
         }
     }
-
-    Rectangle {
-        height: dataSourceCol.height
-        width: dataSourceCol.width
-        x: parent.width - (width + 15)
-        y: 5
-        color: "white"
-        opacity: .9
-        border.color: "black"
-        border.width: 1
-        Column {
-            id: dataSourceCol
-            padding: 10
-            Text {
-                text: "Data source"
-                font.bold: true
-            }
-            RadioButton {
-                id: simData
-                text: "Simulated data"
-                checked: true
-                onCheckedChanged: {
-                    model.useSimulatedData = !model.useSimulatedData
-                    model.reset();
-                    model.sampleStarted = false;
-                }
-            }
-            RadioButton {
-                id: receiverData
-                text: "Receiver"
-            }
-        }
-    }
 }

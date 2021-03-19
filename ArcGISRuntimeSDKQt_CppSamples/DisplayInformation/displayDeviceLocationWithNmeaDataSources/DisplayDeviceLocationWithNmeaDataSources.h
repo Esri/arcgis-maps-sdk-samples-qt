@@ -40,7 +40,6 @@ class DisplayDeviceLocationWithNmeaDataSources : public QObject
 
   Q_PROPERTY(Esri::ArcGISRuntime::MapQuickView* mapView READ mapView WRITE setMapView NOTIFY mapViewChanged)
   Q_PROPERTY(bool sampleStarted MEMBER m_sampleStarted NOTIFY sampleStartedChanged)
-  Q_PROPERTY(bool useSimulatedData MEMBER m_useSimulatedData NOTIFY dataSourceChanged)
 
 public:
   explicit DisplayDeviceLocationWithNmeaDataSources(QObject* parent = nullptr);
@@ -50,29 +49,23 @@ public:
 
   Q_INVOKABLE void start();
   Q_INVOKABLE void reset();
-  Q_INVOKABLE void changeDataSource();
 
 signals:
   void mapViewChanged();
   void sampleStartedChanged();
-  void dataSourceChanged();
 
 private:
   Esri::ArcGISRuntime::MapQuickView* mapView() const;
   void setMapView(Esri::ArcGISRuntime::MapQuickView* mapView);
   bool loadMockDataFile(QString filePath);
-  void startNmeaSimulation();
 
   Esri::ArcGISRuntime::Map* m_map = nullptr;
   Esri::ArcGISRuntime::MapQuickView* m_mapView = nullptr;
   Esri::ArcGISRuntime::NmeaLocationDataSource* m_nmeaLocationDataSource = nullptr;
-  Esri::ArcGISRuntime::NmeaLocation* m_nmeaData = nullptr;
-  Esri::ArcGISRuntime::SimulatedLocationDataSource* m_simulatedLocationDataSource = nullptr;
   QList<QByteArray> m_mockNmeaSentences;
   int m_mockDataIterator;
   QTimer* m_timer = new QTimer(this);
   bool m_sampleStarted = false;
-  bool m_useSimulatedData = true;
 };
 
 #endif // DISPLAYDEVICELOCATIONWITHNMEADATASOURCES_H

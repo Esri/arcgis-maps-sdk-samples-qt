@@ -20,12 +20,8 @@
 
 #include "DisplayDeviceLocationWithNmeaDataSources.h"
 
-#include "Location.h"
 #include "LocationDisplay.h"
-#include "NmeaLocation.h"
 #include "NmeaLocationDataSource.h"
-#include "SimulatedLocationDataSource.h"
-#include "SimulationParameters.h"
 
 #include "Map.h"
 #include "MapQuickView.h"
@@ -39,7 +35,6 @@ DisplayDeviceLocationWithNmeaDataSources::DisplayDeviceLocationWithNmeaDataSourc
   QObject(parent),
   m_map(new Map(BasemapStyle::ArcGISNavigationNight, this))
 {
-  m_useSimulatedData = true;
 }
 
 DisplayDeviceLocationWithNmeaDataSources::~DisplayDeviceLocationWithNmeaDataSources() = default;
@@ -59,49 +54,29 @@ MapQuickView* DisplayDeviceLocationWithNmeaDataSources::mapView() const
 // Set the view (created in QML)
 void DisplayDeviceLocationWithNmeaDataSources::setMapView(MapQuickView* mapView)
 {
-
   if (!mapView || mapView == m_mapView)
     return;
 
   m_mapView = mapView;
   m_mapView->setMap(m_map);
 
-  m_mapView->setViewpointCenter(Point());
+  m_mapView->setViewpointCenter(Point(-117.191, 34.0306, SpatialReference::wgs84()), 100'000);
 
+  // Create a new NMEA location data source.
   m_nmeaLocationDataSource = new NmeaLocationDataSource(SpatialReference::wgs84(), this);
   m_mapView->locationDisplay()->setDataSource(m_nmeaLocationDataSource);
 
   emit mapViewChanged();
 }
 
-void DisplayDeviceLocationWithNmeaDataSources::changeDataSource()
-{
-  m_useSimulatedData =! m_useSimulatedData;
-}
-
 void DisplayDeviceLocationWithNmeaDataSources::start()
 {
-  if (m_useSimulatedData)
-    startNmeaSimulation();
-  else
-  {
-    qDebug() << "Device not found";
-    m_sampleStarted = false;
-  }
-
-  if (!m_sampleStarted)
-    emit sampleStartedChanged();
-
-  else
-    m_mapView->locationDisplay()->setAutoPanMode(LocationDisplayAutoPanMode::Recenter);
-}
-
-void DisplayDeviceLocationWithNmeaDataSources::startNmeaSimulation()
-{
+  // Enable receiving NMEA location data from external device
   m_nmeaLocationDataSource->start();
+  // Display the user's location
   m_mapView->locationDisplay()->start();
 
-
+  // Load simulated NMEA sentences for sample
   if (m_mockNmeaSentences.isEmpty())
   {
     QString filePath = ":/Samples/DisplayInformation/DisplayDeviceLocationWithNmeaDataSources/redlands.nmea";
@@ -113,44 +88,37 @@ void DisplayDeviceLocationWithNmeaDataSources::startNmeaSimulation()
     }
   }
 
-  m_mockDataIterator = 0;
-
+  // Simulate pushing data to the NMEA location data source
   connect(m_timer, &QTimer::timeout, this, [this]()
   {
-    while(true)
-    {
-      QByteArray line = m_mockNmeaSentences.at(m_mockDataIterator);
-      m_nmeaLocationDataSource->pushData(line);
-      ++m_mockDataIterator;
+    QByteArray line = m_mockNmeaSentences.at(m_mockDataIterator);
+    m_nmeaLocationDataSource->pushData(line);
 
-      qDebug() << (m_mockDataIterator == m_mockNmeaSentences.size());
-
-      if (m_mockDataIterator >= m_mockNmeaSentences.size())
-        m_mockDataIterator = 0;
-
-      if (line.startsWith("$GPGGA")) {
-        break;
-      }
-    }
+    ++m_mockDataIterator;
+    if (m_mockDataIterator >= m_mockNmeaSentences.size())
+      m_mockDataIterator = 0;
   });
 
+  m_mockDataIterator = 0;
   m_timer->start(1000);
+  m_mapView->locationDisplay()->setAutoPanMode(LocationDisplayAutoPanMode::Recenter);
 }
 
 void DisplayDeviceLocationWithNmeaDataSources::reset() {
+  // Disable simulated data
   m_timer->stop();
-
-
   disconnect(m_timer, &QTimer::timeout, nullptr, nullptr);
 
-
+  // Stop displaying user's location
   m_mapView->locationDisplay()->stop();
+  // Stop receiving location data
   m_nmeaLocationDataSource->stop();
   m_mapView->locationDisplay()->setAutoPanMode(LocationDisplayAutoPanMode::Off);
 }
 
 bool DisplayDeviceLocationWithNmeaDataSources::loadMockDataFile(QString filePath)
 {
+  // Load simulated NMEA sentences to display for sample
   QFile mockDataFile;
   mockDataFile.setFileName(filePath);
 
@@ -159,11 +127,16 @@ bool DisplayDeviceLocationWithNmeaDataSources::loadMockDataFile(QString filePath
 
   mockDataFile.open(QIODevice::ReadOnly);
 
-  while (!mockDataFile.atEnd())
-    m_mockNmeaSentences.append(mockDataFile.readLine());
+  m_mockNmeaSentences.append(mockDataFile.readLine());
+  while (!mockDataFile.atEnd()) {
+    QByteArray line = mockDataFile.readLine();
+    if (line.startsWith("$GPGGA"))
+      m_mockNmeaSentences.append(line);
+    else
+      m_mockNmeaSentences.last() += line;
+  }
 
   mockDataFile.close();
-
   return true;
 }
 

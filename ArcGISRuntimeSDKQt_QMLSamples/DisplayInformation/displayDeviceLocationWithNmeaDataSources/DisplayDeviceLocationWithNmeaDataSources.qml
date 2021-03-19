@@ -25,9 +25,6 @@ Rectangle {
     width: 800
     height: 600
 
-    property bool sampleStarted: false
-    property bool useSimulatedData: true
-
     MapView {
         id: mapView
         anchors.fill: parent
@@ -36,6 +33,14 @@ Rectangle {
             id: map
             Basemap {
                 initStyle: Enums.BasemapStyleArcGISNavigationNight
+            }
+            ViewpointCenter {
+                Point {
+                    x: -117.191
+                    y: 34.0306
+                    spatialReference: SpatialReference { wkid: 4326 }
+                }
+                targetScale: 100000
             }
         }
 
@@ -51,6 +56,7 @@ Rectangle {
         anchors.horizontalCenter: parent.horizontalCenter
         y: 5
         width: 200
+        property bool sampleStarted: false
         text: sampleStarted ? "Stop tracking" : "Start tracking"
         onClicked: {
             sampleStarted = !sampleStarted;
@@ -65,41 +71,6 @@ Rectangle {
                 nmeaLocationDataSource.stop();
                 mapView.locationDisplay.stop();
             }
-
-        }
-    }
-
-    Rectangle {
-        height: dataSourceCol.height
-        width: dataSourceCol.width
-        x: parent.width - (width + 15)
-        y: 5
-        color: "white"
-        opacity: .9
-        border.color: "black"
-        border.width: 1
-
-        Column {
-            id: dataSourceCol
-            padding: 10
-            Text {
-                text: "Data source"
-                font.bold: true
-            }
-            RadioButton {
-                id: simData
-                text: "Simulated data"
-                checked: true
-                onCheckedChanged: {
-                    useSimulatedData = !useSimulatedData
-                    reset();
-                    sampleStarted = false;
-                }
-            }
-            RadioButton {
-                id: receiverData
-                text: "Receiver"
-            }
         }
     }
 
@@ -113,12 +84,6 @@ Rectangle {
                                                               mockNmeaData.push(line + "\n");
                                                           });
         }
-    }
-
-
-    function start() {
-        timer.start();
-        return;
     }
 
     Timer {
@@ -143,9 +108,5 @@ Rectangle {
                     break;
             }
         }
-    }
-
-    function reset() {
-        return;
     }
 }
