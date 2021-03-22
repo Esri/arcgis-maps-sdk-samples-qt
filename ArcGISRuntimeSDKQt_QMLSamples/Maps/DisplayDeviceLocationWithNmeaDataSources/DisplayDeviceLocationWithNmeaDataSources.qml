@@ -1,6 +1,6 @@
 // [WriteFile Name=DisplayDeviceLocationWithNmeaDataSources, Category=Maps]
 // [Legal]
-// Copyright 2020 Esri.
+// Copyright 2021 Esri.
 
 // Licensed under the Apache License, Version 2.0 (the "License");
 // you may not use this file except in compliance with the License.
@@ -25,6 +25,9 @@ Rectangle {
     width: 800
     height: 600
 
+    property bool nmeaSimulationActive: false
+    property var mockNmeaData: []
+
     MapView {
         id: mapView
         anchors.fill: parent
@@ -32,7 +35,7 @@ Rectangle {
         Map {
             id: map
             Basemap {
-                initStyle: Enums.BasemapStyleArcGISNavigationNight
+                initStyle: Enums.BasemapStyleArcGISNavigation
             }
             ViewpointCenter {
                 Point {
@@ -48,65 +51,73 @@ Rectangle {
             id: nmeaLocationDataSource
             receiverSpatialReference: SpatialReference { wkid: 4326 }
         }
-        locationDisplay.autoPanMode: Enums.LocationDisplayAutoPanModeRecenter;
+        locationDisplay.autoPanMode: Enums.LocationDisplayAutoPanModeRecenter
     }
 
     Button {
         id: button
         anchors.horizontalCenter: parent.horizontalCenter
-        y: 5
+        anchors.bottom: parent.bottom
+        anchors.margins: 25
         width: 200
-        property bool sampleStarted: false
-        text: sampleStarted ? "STOP" : "START"
+        text: nmeaSimulationActive ? "RESET" : "START"
         onClicked: {
-            sampleStarted = !sampleStarted;
-            if (sampleStarted) {
-                timer.start();
-                nmeaLocationDataSource.start();
-                mapView.locationDisplay.start();
-            }
-            else {
-                timer.stop();
-                timer.iterator = 0;
-                nmeaLocationDataSource.stop();
-                mapView.locationDisplay.stop();
-            }
+            nmeaSimulationActive = !nmeaSimulationActive;
+            if (nmeaSimulationActive)
+                startSimulation();
+            else
+                endSimulation();
         }
     }
 
-    property var mockNmeaData: []
-
     FileFolder {
         id: mockNmeaDataFile
-        path: ":/Samples/Maps/DisplayDeviceLocationWithNmeaDataSources/redlands.nmea"
+        path: "://Samples/Maps/DisplayDeviceLocationWithNmeaDataSources/redlands.nmea"
         Component.onCompleted: {
             readFile(path).toString().split("\n").forEach((line) => {
-                                                              mockNmeaData.push(line + "\n");
+                                                              if (line.startsWith("$GPGGA"))
+                                                                  mockNmeaData.push(line + "\n");
+                                                              else
+                                                                  mockNmeaData[mockNmeaData.length-1] += line + "\n";
                                                           });
         }
     }
 
+    // This timer is used to simulate NMEA sentences being received at regular intervals
     Timer {
         id: timer
         interval: 1000
         repeat: true
-        property var iterator: 0
+        property var count: 0
         onTriggered: {
-
-            if (!mockNmeaData) {
-                console.log("File not found sorry :(");
-                stop();
-                return;
+            try {
+                // In a non-simulated scenario, incoming NMEA sentences from a serial port or bluetooth device would be pushed to the location data source in real time
+                // NMEA sentences can be pushed individually or in multiple lines separated by line breaks
+                // Sentences pass information such as direction, velocity, and location and are grouped together to provide detailed information about a user's position
+                nmeaLocationDataSource.pushData(mockNmeaData[count]);
+            } catch(err) {
+                console.log("Unable to push: " + mockNmeaData[count]);
+                console.log(err);
             }
-
-            while (true) {
-                nmeaLocationDataSource.pushData(mockNmeaData[iterator]);
-                iterator++;
-                if (iterator >= mockNmeaData.length)
-                    iterator = 0;
-                if (mockNmeaData[iterator].startsWith("$GPGGA"))
-                    break;
-            }
+            count++;
+            if (count >= mockNmeaData.length)
+                count = 0;
         }
+    }
+
+    function startSimulation() {
+        // Enable receiving NMEA location data from external device
+        nmeaLocationDataSource.start();
+        // Display the user's location
+        mapView.locationDisplay.start();
+        timer.count = 0;
+        // Begin simulated data stream
+        timer.start();
+    }
+
+    function endSimulation() {
+        timer.stop();
+        mapView.locationDisplay.stop();
+        nmeaLocationDataSource.stop();
     }
 }

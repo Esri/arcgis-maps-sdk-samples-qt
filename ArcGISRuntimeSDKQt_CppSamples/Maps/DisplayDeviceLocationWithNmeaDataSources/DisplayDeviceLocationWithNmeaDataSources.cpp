@@ -31,7 +31,8 @@ using namespace Esri::ArcGISRuntime;
 
 DisplayDeviceLocationWithNmeaDataSources::DisplayDeviceLocationWithNmeaDataSources(QObject* parent /* = nullptr */):
   QObject(parent),
-  m_map(new Map(BasemapStyle::ArcGISNavigationNight, this))
+  m_map(new Map(BasemapStyle::ArcGISNavigation, this)),
+  m_timer(new QTimer(this))
 {
 }
 
@@ -77,12 +78,12 @@ void DisplayDeviceLocationWithNmeaDataSources::start()
   // Load simulated NMEA sentences for sample
   if (m_mockNmeaSentences.isEmpty())
   {
-    QString filePath = ":/Samples/Maps/DisplayDeviceLocationWithNmeaDataSources/redlands.nmea";
+    const QString filePath = ":/Samples/Maps/DisplayDeviceLocationWithNmeaDataSources/redlands.nmea";
     if(!loadMockDataFile(filePath))
     {
       qDebug() << "Unable to load file at path:" << filePath;
-      m_sampleStarted = false;
-      emit sampleStartedChanged();
+      m_nmeaSimulationActive = false;
+      emit nmeaSimulationActiveChanged();
 
       return;
     }
@@ -91,7 +92,11 @@ void DisplayDeviceLocationWithNmeaDataSources::start()
   // Simulate pushing data to the NMEA location data source
   connect(m_timer, &QTimer::timeout, this, [this]()
   {
-    QByteArray line = m_mockNmeaSentences.at(m_mockDataIterator);
+    const QByteArray line = m_mockNmeaSentences.at(m_mockDataIterator);
+
+    // In a non-simulated scenario, incoming NMEA sentences from a serial port or bluetooth device would be pushed to the location data source in real time
+    // NMEA sentences can be pushed individually or in multiple lines separated by line breaks
+    // Sentences pass information such as direction, velocity, and location and are grouped together to provide detailed information about a user's position
     m_nmeaLocationDataSource->pushData(line);
 
     ++m_mockDataIterator;
@@ -104,7 +109,8 @@ void DisplayDeviceLocationWithNmeaDataSources::start()
   m_mapView->locationDisplay()->setAutoPanMode(LocationDisplayAutoPanMode::Recenter);
 }
 
-void DisplayDeviceLocationWithNmeaDataSources::reset() {
+void DisplayDeviceLocationWithNmeaDataSources::reset()
+{
   // Disable simulated data
   m_timer->stop();
   disconnect(m_timer, &QTimer::timeout, nullptr, nullptr);
@@ -116,22 +122,25 @@ void DisplayDeviceLocationWithNmeaDataSources::reset() {
   m_mapView->locationDisplay()->setAutoPanMode(LocationDisplayAutoPanMode::Off);
 }
 
-bool DisplayDeviceLocationWithNmeaDataSources::loadMockDataFile(QString filePath)
+bool DisplayDeviceLocationWithNmeaDataSources::loadMockDataFile(const QString &filePath)
 {
+
   // Load simulated NMEA sentences to display for sample
-  QFile mockDataFile;
-  mockDataFile.setFileName(filePath);
+  QFile mockDataFile(filePath);
 
   if(!mockDataFile.exists())
     return false;
 
   mockDataFile.open(QIODevice::ReadOnly);
 
-  m_mockNmeaSentences.append(mockDataFile.readLine());
   while (!mockDataFile.atEnd()) {
     QByteArray line = mockDataFile.readLine();
+
+    // In this simulated data stream, blocks of NMEA sentences start with $GPGGA (which provides the device's position)
     if (line.startsWith("$GPGGA"))
       m_mockNmeaSentences.append(line);
+
+    // Additional sentences that provide information such as direction and velocity follow and are separated by line breaks
     else
       m_mockNmeaSentences.last() += line;
   }

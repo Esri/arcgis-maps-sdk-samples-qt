@@ -35,12 +35,13 @@ Item {
     Button {
         id: button
         anchors.horizontalCenter: parent.horizontalCenter
-        y: 5
+        anchors.bottom: parent.bottom
+        anchors.margins: 25
         width: 200
-        text: model.sampleStarted ? "RESET" : "START"
+        text: model.nmeaSimulationActive ? "RESET" : "START"
         onClicked: {
-            model.sampleStarted = !model.sampleStarted;
-            if (model.sampleStarted)
+            model.nmeaSimulationActive = !model.nmeaSimulationActive;
+            if (model.nmeaSimulationActive)
                 model.start();
             else
                 model.reset();
