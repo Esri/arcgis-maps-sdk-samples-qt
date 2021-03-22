@@ -61,9 +61,10 @@ void DisplayDeviceLocationWithNmeaDataSources::setMapView(MapQuickView* mapView)
 
   m_mapView->setViewpointCenter(Point(-117.191, 34.0306, SpatialReference::wgs84()), 100'000);
 
-  // Create a new NMEA location data source.
+  // Create a new NMEA location data source
   m_nmeaLocationDataSource = new NmeaLocationDataSource(SpatialReference::wgs84(), this);
   m_mapView->locationDisplay()->setDataSource(m_nmeaLocationDataSource);
+  m_mapView->locationDisplay()->setAutoPanMode(LocationDisplayAutoPanMode::Recenter);
 
   emit mapViewChanged();
 }
@@ -72,6 +73,7 @@ void DisplayDeviceLocationWithNmeaDataSources::start()
 {
   // Enable receiving NMEA location data from external device
   m_nmeaLocationDataSource->start();
+
   // Display the user's location
   m_mapView->locationDisplay()->start();
 
@@ -106,7 +108,6 @@ void DisplayDeviceLocationWithNmeaDataSources::start()
 
   m_mockDataIterator = 0;
   m_timer->start(1000);
-  m_mapView->locationDisplay()->setAutoPanMode(LocationDisplayAutoPanMode::Recenter);
 }
 
 void DisplayDeviceLocationWithNmeaDataSources::reset()
@@ -117,9 +118,9 @@ void DisplayDeviceLocationWithNmeaDataSources::reset()
 
   // Stop displaying user's location
   m_mapView->locationDisplay()->stop();
+
   // Stop receiving location data
   m_nmeaLocationDataSource->stop();
-  m_mapView->locationDisplay()->setAutoPanMode(LocationDisplayAutoPanMode::Off);
 }
 
 bool DisplayDeviceLocationWithNmeaDataSources::loadMockDataFile(const QString &filePath)

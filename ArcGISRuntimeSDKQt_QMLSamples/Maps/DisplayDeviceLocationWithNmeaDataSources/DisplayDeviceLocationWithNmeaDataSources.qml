@@ -47,6 +47,7 @@ Rectangle {
             }
         }
 
+        // Create the NemaLocationDataSource to push NMEA sentences to
         locationDisplay.dataSource: NmeaLocationDataSource {
             id: nmeaLocationDataSource
             receiverSpatialReference: SpatialReference { wkid: 4326 }
@@ -74,12 +75,20 @@ Rectangle {
         id: mockNmeaDataFile
         path: "://Samples/Maps/DisplayDeviceLocationWithNmeaDataSources/redlands.nmea"
         Component.onCompleted: {
-            readFile(path).toString().split("\n").forEach((line) => {
-                                                              if (line.startsWith("$GPGGA"))
-                                                                  mockNmeaData.push(line + "\n");
-                                                              else
-                                                                  mockNmeaData[mockNmeaData.length-1] += line + "\n";
-                                                          });
+            // Load simulated NMEA sentences to display for sample
+            readFile(path)
+            .toString()
+            .split("\n")
+            .forEach(
+                 (line) => {
+                     // In this simulated data stream, blocks of NMEA sentences start with $GPGGA (which provides the device's position)
+                     if (line.startsWith("$GPGGA"))
+                         mockNmeaData.push(line + "\n");
+
+                     // Additional sentences that provide information such as direction and velocity follow and are separated by line breaks
+                     else
+                         mockNmeaData[mockNmeaData.length-1] += (line + "\n");
+                 });
         }
     }
 
@@ -99,6 +108,7 @@ Rectangle {
                 console.log("Unable to push: " + mockNmeaData[count]);
                 console.log(err);
             }
+
             count++;
             if (count >= mockNmeaData.length)
                 count = 0;
@@ -108,16 +118,23 @@ Rectangle {
     function startSimulation() {
         // Enable receiving NMEA location data from external device
         nmeaLocationDataSource.start();
+
         // Display the user's location
         mapView.locationDisplay.start();
-        timer.count = 0;
+
         // Begin simulated data stream
+        timer.count = 0;
         timer.start();
     }
 
     function endSimulation() {
+        // End simulated data stream
         timer.stop();
+
+        // Stop displaying the user's location
         mapView.locationDisplay.stop();
+
+        // Stop receiving location data
         nmeaLocationDataSource.stop();
     }
 }
