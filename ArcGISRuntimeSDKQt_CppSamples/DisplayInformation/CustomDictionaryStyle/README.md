@@ -1,6 +1,6 @@
 # Custom dictionary style
 
-Use a custom dictionary style (.stylx) to symbolize features using a variety of attribute values.
+Use a custom dictionary created from a web style or style file (.stylx) to symbolize features using a variety of attribute values.
 
 ![](screenshot.png)
 
@@ -10,12 +10,14 @@ When symbolizing geoelements in your map, you may need to convey several pieces 
 
 ## How to use the sample
 
-Pan and zoom the map to see the symbology from the custom dictionary style.
+Toggle between the dictionary symbols from the web style and style file. Pan and zoom around the map to see the symbology from the chosen dictionary symbol style.
 
 ## How it works
 
-1. Create a new `DictionarySymbolStyle` by passing in the path to the custom style file (.stylx).
-2. Create a new `DictionaryRenderer`, providing the dictionary symbol style.
+1. Create a new `DictionarySymbolStyle` for both the local and web dictionary symbol styles.
+    * Web style: use `DictionarySymbolStyle::DictionarySymbolStyle()` or `DictionarySymbolStyle::DictionarySymbolStyleFromUrl()` by passing a `PortalItem` or the url to the hosted style.
+    * Local style file: use `DictionarySymbolStyle::createFromFile()` and pass the path to the file on the device.
+2. Create a new `DictionaryRenderer` for each, providing the dictionary symbol style.
 3. Apply the dictionary renderer to a feature layer using `layer::setRenderer(dictionaryRenderer)`.
 
 ## Relevant API
@@ -25,7 +27,7 @@ Pan and zoom the map to see the symbology from the custom dictionary style.
 
 ## About the data
 
-The data used in this sample is from a feature layer showing a subset of [restaurants in Redlands, CA](https://services2.arcgis.com/ZQgQTuoyBrtmoGdP/arcgis/rest/services/Redlands_Restaurants/FeatureServer) hosted as a feature service with attributes for rating, style, health score, and open hours. The feature layer is symbolized using a dictionary renderer that displays a single symbol for all of these variables. The renderer uses symbols from a custom [restaurant dictionary style](https://arcgisruntime.maps.arcgis.com/home/item.html?id=751138a2e0844e06853522d54103222a), available as an item from ArcGIS Online, to show unique symbols based on several feature attributes. The symbols it contains were created using ArcGIS Pro. The logic used to apply the symbols comes from an Arcade script embedded in the stylx file (which is a SQLite database), along with a JSON string that defines expected attribute names and configuration properties.
+The data used in this sample is from a feature layer showing a subset of [restaurants in Redlands, CA](https://services2.arcgis.com/ZQgQTuoyBrtmoGdP/arcgis/rest/services/Redlands_Restaurants/FeatureServer) hosted as a feature service with attributes for rating, style, health score, and open hours.
 
 ## Additional information
 

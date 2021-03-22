@@ -40,20 +40,20 @@ using namespace Esri::ArcGISRuntime;
 // helper method to get cross platform data path
 namespace
 {
-  QString defaultDataPath()
-  {
-    QString dataPath;
+QString defaultDataPath()
+{
+  QString dataPath;
 
-  #ifdef Q_OS_ANDROID
-    dataPath = "/sdcard";
-  #elif defined Q_OS_IOS
-    dataPath = QStandardPaths::writableLocation(QStandardPaths::DocumentsLocation);
-  #else
-    dataPath = QDir::homePath();
-  #endif
+#ifdef Q_OS_ANDROID
+  dataPath = "/sdcard";
+#elif defined Q_OS_IOS
+  dataPath = QStandardPaths::writableLocation(QStandardPaths::DocumentsLocation);
+#else
+  dataPath = QDir::homePath();
+#endif
 
-    return dataPath;
-  }
+  return dataPath;
+}
 } // namespace
 
 CustomDictionaryStyle::CustomDictionaryStyle(QObject* parent /* = nullptr */):
@@ -61,18 +61,27 @@ CustomDictionaryStyle::CustomDictionaryStyle(QObject* parent /* = nullptr */):
   m_map(new Map(BasemapStyle::ArcGISStreets, this))
 {
   // Set an initial viewpoint
-  Viewpoint vp(Point(-1.304630524635E7, 4036698.1412000023, SpatialReference(3857)), 5000);
-  m_map->setInitialViewpoint(vp);
+  Viewpoint viewpoint(Point(-13046305, 4036698, SpatialReference(3857)), 5000);
+  m_map->setInitialViewpoint(viewpoint);
 
   // Create a feature layer from a feature service and it to the map
   ServiceFeatureTable* featureTable = new ServiceFeatureTable(QUrl("https://services2.arcgis.com/ZQgQTuoyBrtmoGdP/arcgis/rest/services/Redlands_Restaurants/FeatureServer/0"), this);
-  FeatureLayer* featureLayer = new FeatureLayer(featureTable, this);
-  m_map->operationalLayers()->append(featureLayer);
+  m_featureLayer = new FeatureLayer(featureTable, this);
+  m_map->operationalLayers()->append(m_featureLayer);
 
   // Set a Dictionary Renderer on the Feature Layer
-  DictionarySymbolStyle* dictionaryStyle = DictionarySymbolStyle::createFromFile(defaultDataPath() + "/ArcGIS/Runtime/Data/styles/arcade_style/Restaurant.stylx", this);
-  DictionaryRenderer* dictionaryRenderer = new DictionaryRenderer(dictionaryStyle, this);
-  featureLayer->setRenderer(dictionaryRenderer);
+  DictionarySymbolStyle* localDictionaryStyle = DictionarySymbolStyle::createFromFile(defaultDataPath() + "/ArcGIS/Runtime/Data/styles/arcade_style/Restaurant.stylx", this);
+  m_localDictionaryRenderer = new DictionaryRenderer(localDictionaryStyle, this);
+
+  DictionarySymbolStyle* webDictionaryStyle = DictionarySymbolStyle::createDictionarySymbolStyleFromUrl(QUrl("https://arcgis.com/home/item.html?id=adee951477014ec68d7cf0ea0579c800"), this);
+  m_webDictionaryRenderer = new DictionaryRenderer(webDictionaryStyle, this);
+
+  m_featureLayer->setRenderer(m_webDictionaryRenderer);
+}
+
+void CustomDictionaryStyle::changeDictionarySymbolStyleSource()
+{
+  m_featureLayer->setRenderer(m_featureLayer->renderer() == m_webDictionaryRenderer ? m_localDictionaryRenderer : m_webDictionaryRenderer);
 }
 
 CustomDictionaryStyle::~CustomDictionaryStyle() = default;
