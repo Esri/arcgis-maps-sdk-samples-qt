@@ -123,7 +123,7 @@ void DisplayDeviceLocationWithNmeaDataSources::reset()
   m_nmeaLocationDataSource->stop();
 }
 
-bool DisplayDeviceLocationWithNmeaDataSources::loadMockDataFile(const QString &filePath)
+bool DisplayDeviceLocationWithNmeaDataSources::loadMockDataFile(const QString& filePath)
 {
 
   // Load simulated NMEA sentences to display for sample

@@ -57,9 +57,11 @@ Rectangle {
 
     Button {
         id: button
-        anchors.horizontalCenter: parent.horizontalCenter
-        anchors.bottom: parent.bottom
-        anchors.margins: 25
+        anchors {
+            horizontalCenter: parent.horizontalCenter
+            bottom: parent.bottom
+            margins: 25
+        }
         width: 200
         text: nmeaSimulationActive ? "RESET" : "START"
         onClicked: {
@@ -73,7 +75,7 @@ Rectangle {
 
     FileFolder {
         id: mockNmeaDataFile
-        path: "://Samples/Maps/DisplayDeviceLocationWithNmeaDataSources/redlands.nmea"
+        path: ":/Samples/Maps/DisplayDeviceLocationWithNmeaDataSources/redlands.nmea"
         Component.onCompleted: {
             // Load simulated NMEA sentences to display for sample
             readFile(path)

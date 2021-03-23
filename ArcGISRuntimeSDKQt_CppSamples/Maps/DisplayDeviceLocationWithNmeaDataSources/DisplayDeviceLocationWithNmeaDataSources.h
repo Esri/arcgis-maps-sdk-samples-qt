@@ -55,7 +55,7 @@ signals:
 private:
   Esri::ArcGISRuntime::MapQuickView* mapView() const;
   void setMapView(Esri::ArcGISRuntime::MapQuickView* mapView);
-  bool loadMockDataFile(const QString &filePath);
+  bool loadMockDataFile(const QString& filePath);
 
   Esri::ArcGISRuntime::Map* m_map = nullptr;
   Esri::ArcGISRuntime::MapQuickView* m_mapView = nullptr;

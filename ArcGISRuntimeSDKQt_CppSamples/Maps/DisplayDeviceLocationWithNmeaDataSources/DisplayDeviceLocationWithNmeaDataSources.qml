@@ -34,9 +34,11 @@ Item {
 
     Button {
         id: button
-        anchors.horizontalCenter: parent.horizontalCenter
-        anchors.bottom: parent.bottom
-        anchors.margins: 25
+        anchors {
+            horizontalCenter: parent.horizontalCenter
+            bottom: parent.bottom
+            margins: 25
+        }
         width: 200
         text: model.nmeaSimulationActive ? "RESET" : "START"
         onClicked: {
