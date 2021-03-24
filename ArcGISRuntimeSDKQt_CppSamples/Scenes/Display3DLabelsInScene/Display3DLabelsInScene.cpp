@@ -36,13 +36,6 @@ Display3DLabelsInScene::Display3DLabelsInScene(QObject* parent /* = nullptr */):
   QObject(parent),
   m_scene(new Scene(QUrl("https://www.arcgis.com/home/item.html?id=850dfee7d30f4d9da0ebca34a533c169"), this))
 {
-  // create a new elevation source from Terrain3D REST service
-  ArcGISTiledElevationSource* elevationSource = new ArcGISTiledElevationSource(
-        QUrl("https://elevation3d.arcgis.com/arcgis/rest/services/WorldElevation3D/Terrain3D/ImageServer"), this);
-
-  // add the elevation source to the scene to display elevation
-  m_scene->baseSurface()->elevationSources()->append(elevationSource);
-
   connect(m_scene, &Scene::doneLoading, this, [this]()
   {
     for (Layer* layer : *m_scene->operationalLayers())
