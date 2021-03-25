@@ -39,8 +39,8 @@ Rectangle {
             // Set an initial viewpoint
             ViewpointCenter {
                 Point {
-                    x: -1.304630524635E7
-                    y: 4036698.1412000023
+                    x: -13046305
+                    y: 4036698
                     SpatialReference { wkid: 3857 }
                 }
                 targetScale: 5000
@@ -48,16 +48,43 @@ Rectangle {
 
             // Add a Feature Layer to the Map
             FeatureLayer {
+                id: restaurantsLayer
                 ServiceFeatureTable {
                     url: "https://services2.arcgis.com/ZQgQTuoyBrtmoGdP/arcgis/rest/services/Redlands_Restaurants/FeatureServer/0"
                 }
 
-                // Set a Dictionary Renderer on the Feature Layer
-                DictionaryRenderer {
-                    id: dictionaryRenderer
-                    dictionarySymbolStyle: Factory.DictionarySymbolStyle.createFromFile(dataPath + "/styles/arcade_style/Restaurant.stylx")
+            }
+
+            DictionaryRenderer {
+                id: webDictionaryRenderer
+                symbologyFieldOverrides: {"healthgrade": "inspection"}
+                textFieldOverrides: {"healthgrade": "inspection"}
+
+                Component.onCompleted: {
+                    restaurantsLayer.renderer = webDictionaryRenderer;
+                }
+
+                DictionarySymbolStyle {
+                    id: webDictionaryStyle
+                    PortalItem {
+                        itemId: "adee951477014ec68d7cf0ea0579c800"
+                    }
+                    autoLoad: true
+                    onErrorChanged: {
+                        console.log(error.message);
+                    }
+                    onLoadStatusChanged: {
+                        console.log(loadStatus);
+                    }
                 }
             }
+
+            // Set a Dictionary Renderer on the Feature Layer
+            DictionaryRenderer {
+                id: localDictionaryRenderer
+                dictionarySymbolStyle: Factory.DictionarySymbolStyle.createFromFile(dataPath + "/styles/arcade_style/Restaurant.stylx")
+            }
+
         }
     }
 }

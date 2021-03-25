@@ -62,7 +62,7 @@ CustomDictionaryStyle::CustomDictionaryStyle(QObject* parent /* = nullptr */):
   m_map(new Map(BasemapStyle::ArcGISStreets, this))
 {
   // Set an initial viewpoint
-  Viewpoint viewpoint(Point(-13046305, 4036698, SpatialReference(3857)), 5000);
+  Viewpoint viewpoint(Point(-13'046'305, 4'036'698, SpatialReference(3857)), 5000);
   m_map->setInitialViewpoint(viewpoint);
 
   // Create a feature layer from a feature service and it to the map
