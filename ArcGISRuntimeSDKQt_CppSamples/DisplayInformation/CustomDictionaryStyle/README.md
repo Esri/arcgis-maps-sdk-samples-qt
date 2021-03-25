@@ -10,20 +10,23 @@ When symbolizing geoelements in your map, you may need to convey several pieces 
 
 ## How to use the sample
 
-Toggle between the dictionary symbols from the web style and style file. Pan and zoom around the map to see the symbology from the chosen dictionary symbol style.
+Toggle between the dictionary symbols from the local .stylx file and the web style. Pan and zoom around the map to see the symbology from the chosen dictionary symbol style.
 
 ## How it works
 
-1. Create a new `DictionarySymbolStyle` for both the local and web dictionary symbol styles.
-    * Web style: use `DictionarySymbolStyle::DictionarySymbolStyle()` or `DictionarySymbolStyle::DictionarySymbolStyleFromUrl()` by passing a `PortalItem` or the url to the hosted style.
-    * Local style file: use `DictionarySymbolStyle::createFromFile()` and pass the path to the file on the device.
-2. Create a new `DictionaryRenderer` for each, providing the dictionary symbol style.
-3. Apply the dictionary renderer to a feature layer using `layer::setRenderer(dictionaryRenderer)`.
+1. Create a new `FeatureLayer` and append it to the Map's operational layers.
+2. Use `DictionarySymbolStyle::createFromFile()` to create a `DictionarySymbolStyle` from a .stylx file.
+3. Create a `DictionarySymbolStyle` from a `PortalItem`
+    * Load the web `DictionarySymbolStyle`
+    * Remap any inconsistent fields between the `FeatureLayer` and the `DictionarySymbolStyle`
+4. Create a `DictionaryRenderer` for each `DictionarySymbolStyle`s.
+5. Apply the desired `DictionaryRenderer` to render the `FeatureLayer`'s `Feature`s with the respective `DictionarySymbolStyle`s.
 
 ## Relevant API
 
 * DictionaryRenderer
 * DictionarySymbolStyle
+* PortalItem
 
 ## About the data
 
@@ -35,4 +38,4 @@ For information about creating your own custom dictionary style, see the open so
 
 ## Tags
 
-dictionary, military, renderer, style, stylx, unique value, visualization
+dictionary, renderer, style, stylx, unique value, visualization

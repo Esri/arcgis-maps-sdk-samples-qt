@@ -27,7 +27,6 @@
 #include "MapQuickView.h"
 #include "ServiceFeatureTable.h"
 #include "Viewpoint.h"
-#include "Portal.h"
 #include "PortalItem.h"
 
 #include <QDir>
@@ -71,30 +70,29 @@ CustomDictionaryStyle::CustomDictionaryStyle(QObject* parent /* = nullptr */):
   m_featureLayer = new FeatureLayer(featureTable, this);
   m_map->operationalLayers()->append(m_featureLayer);
 
-  // Set a Dictionary Renderer on the Feature Layer
+  // Create a DictionaryRenderer using the local .stylx file
   DictionarySymbolStyle* localDictionaryStyle = DictionarySymbolStyle::createFromFile(defaultDataPath() + "/ArcGIS/Runtime/Data/styles/arcade_style/Restaurant.stylx", this);
   m_localDictionaryRenderer = new DictionaryRenderer(localDictionaryStyle, this);
 
+  // Set initial FeatureLayer renderer to the local DictionaryRenderer
+  m_featureLayer->setRenderer(m_localDictionaryRenderer);
+
+  // Create a DictionarySymbolStyle from a portal item, using the default arcgis.com path
   PortalItem* portalItem = new PortalItem("adee951477014ec68d7cf0ea0579c800", this);
-
   DictionarySymbolStyle* dictSymbStyleFromPortal = new DictionarySymbolStyle(portalItem, this);
-
 
   connect(dictSymbStyleFromPortal, &DictionarySymbolStyle::loadStatusChanged, this, [this, dictSymbStyleFromPortal]()
   {
     if (dictSymbStyleFromPortal->loadStatus() != LoadStatus::Loaded)
       return;
 
+    // The source feature layer fields do not match thsoe of the the DictionarySymbolStyle so we create a fieldMap to correct this
     QMap<QString, QString> fieldMap;
+    // With the following override, the feature layer's "inspection" field will be mapped to the dictionary symbol style's "healthgrade" field
     fieldMap["healthgrade"] = "inspection";
     m_webDictionaryRenderer = new DictionaryRenderer(dictSymbStyleFromPortal, fieldMap, fieldMap, this);
   });
-
   dictSymbStyleFromPortal->load();
-
-  m_featureLayer->setRenderer(m_localDictionaryRenderer);
-
-  // m_webDictionaryRenderer = new DictionaryRenderer(webDictionaryStyle, this);
 }
 
 void CustomDictionaryStyle::changeDictionarySymbolStyleSource()

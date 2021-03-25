@@ -51,7 +51,7 @@ Item {
                 text: "Custom Dictionary Symbol Style Source"
             }
             RadioButton {
-                text: "Local .stylex file"
+                text: "Local .stylx file"
                 checked: true
             }
             RadioButton {
