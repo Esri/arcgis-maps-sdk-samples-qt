@@ -51,14 +51,14 @@ Item {
                 text: "Custom Dictionary Symbol Style Source"
             }
             RadioButton {
-                text: "Web style"
+                text: "Local .stylex file"
                 checked: true
+            }
+            RadioButton {
+                text: "Web style"
                 onCheckedChanged: {
                     model.changeDictionarySymbolStyleSource();
                 }
-            }
-            RadioButton {
-                text: "Local .stylex file"
             }
         }
     }

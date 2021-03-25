@@ -28,6 +28,7 @@
 #include "ServiceFeatureTable.h"
 #include "Viewpoint.h"
 #include "Portal.h"
+#include "PortalItem.h"
 
 #include <QDir>
 #include <QtCore/qglobal.h>
@@ -74,26 +75,26 @@ CustomDictionaryStyle::CustomDictionaryStyle(QObject* parent /* = nullptr */):
   DictionarySymbolStyle* localDictionaryStyle = DictionarySymbolStyle::createFromFile(defaultDataPath() + "/ArcGIS/Runtime/Data/styles/arcade_style/Restaurant.stylx", this);
   m_localDictionaryRenderer = new DictionaryRenderer(localDictionaryStyle, this);
 
-  Portal* portal = new Portal("https://arcgisruntime.maps.arcgis.com");
-  PortalItem* portalItem = new PortalItem(portal, "adee951477014ec68d7cf0ea0579c800", this);
+  PortalItem* portalItem = new PortalItem("adee951477014ec68d7cf0ea0579c800", this);
 
   DictionarySymbolStyle* dictSymbStyleFromPortal = new DictionarySymbolStyle(portalItem, this);
 
-  QMap<QString, QString> fieldMap;
-  fieldMap["healthgrade"] = "inspection";
 
-
-  connect(dictSymbStyleFromPortal, &DictionarySymbolStyle::doneLoading, this, [this, dictSymbStyleFromPortal, fieldMap]()
+  connect(dictSymbStyleFromPortal, &DictionarySymbolStyle::loadStatusChanged, this, [this, dictSymbStyleFromPortal]()
   {
+    if (dictSymbStyleFromPortal->loadStatus() != LoadStatus::Loaded)
+      return;
+
+    QMap<QString, QString> fieldMap;
+    fieldMap["healthgrade"] = "inspection";
     m_webDictionaryRenderer = new DictionaryRenderer(dictSymbStyleFromPortal, fieldMap, fieldMap, this);
   });
 
   dictSymbStyleFromPortal->load();
 
+  m_featureLayer->setRenderer(m_localDictionaryRenderer);
 
   // m_webDictionaryRenderer = new DictionaryRenderer(webDictionaryStyle, this);
-
-  m_featureLayer->setRenderer(m_webDictionaryRenderer);
 }
 
 void CustomDictionaryStyle::changeDictionarySymbolStyleSource()
