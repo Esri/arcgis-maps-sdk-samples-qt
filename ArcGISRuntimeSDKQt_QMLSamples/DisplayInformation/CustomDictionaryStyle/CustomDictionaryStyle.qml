@@ -17,6 +17,7 @@
 import QtQuick 2.6
 import Esri.ArcGISRuntime 100.11
 import Esri.ArcGISExtras 1.1
+import QtQuick.Controls 2.2
 
 Rectangle {
     id: rootRectangle
@@ -33,7 +34,7 @@ Rectangle {
         Map {
             // Set basemap
             Basemap {
-                initStyle: Enums.BasemapStyleArcGISStreets
+                initStyle: Enums.BasemapStyleArcGISTopographic
             }
 
             // Set an initial viewpoint
@@ -52,39 +53,69 @@ Rectangle {
                 ServiceFeatureTable {
                     url: "https://services2.arcgis.com/ZQgQTuoyBrtmoGdP/arcgis/rest/services/Redlands_Restaurants/FeatureServer/0"
                 }
+                // Set initial FeatureLayer renderer to the local DictionaryRenderer
+                renderer: localDictionaryRenderer
+                property bool usingLocalRenderer: true
 
             }
 
-            DictionaryRenderer {
-                id: webDictionaryRenderer
-                symbologyFieldOverrides: {"healthgrade": "inspection"}
-                textFieldOverrides: {"healthgrade": "inspection"}
-
-                Component.onCompleted: {
-                    restaurantsLayer.renderer = webDictionaryRenderer;
-                }
-
-                DictionarySymbolStyle {
-                    id: webDictionaryStyle
-                    PortalItem {
-                        itemId: "adee951477014ec68d7cf0ea0579c800"
-                    }
-                    autoLoad: true
-                    onErrorChanged: {
-                        console.log(error.message);
-                    }
-                    onLoadStatusChanged: {
-                        console.log(loadStatus);
-                    }
-                }
-            }
-
-            // Set a Dictionary Renderer on the Feature Layer
+            // Create a DictionaryRenderer using the local .stylx file
             DictionaryRenderer {
                 id: localDictionaryRenderer
                 dictionarySymbolStyle: Factory.DictionarySymbolStyle.createFromFile(dataPath + "/styles/arcade_style/Restaurant.stylx")
             }
 
+            DictionaryRenderer {
+                id: webDictionaryRenderer
+
+                // The source feature layer fields do not match those of the the DictionarySymbolStyle
+                // With the following overrides, the feature layer's "inspection" field will be mapped to the dictionary symbol style's "healthgrade" field
+                symbologyFieldOverrides: {"healthgrade": "inspection"}
+                textFieldOverrides: {"healthgrade": "inspection"}
+
+                // Create a DictionarySymbolStyle from a portal item, using the default arcgis.com path
+                DictionarySymbolStyle {
+                    portalItem: PortalItem {
+                        itemId: "adee951477014ec68d7cf0ea0579c800"
+                    }
+                }
+            }
+        }
+    }
+
+    Rectangle {
+        id: rectangle
+        x: 5; y: 5
+        width: radioColumn.width
+        height: radioColumn.height
+        color: "white"
+        border.color: "black"
+        border.width: 1
+        opacity: 0.9
+
+        Column {
+            id: radioColumn
+            padding: 5
+            spacing: 5
+
+            Text {
+                text: "Custom Dictionary Symbol Style Source"
+            }
+
+            RadioButton {
+                text: "Local .stylx file"
+                checked: true
+            }
+
+            RadioButton {
+                text: "Web style"
+                onCheckedChanged: {
+                    if (checked)
+                        restaurantsLayer.renderer = webDictionaryRenderer
+                    else
+                        restaurantsLayer.renderer = localDictionaryRenderer
+                }
+            }
         }
     }
 }

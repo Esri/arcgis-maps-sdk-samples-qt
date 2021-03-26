@@ -59,7 +59,7 @@ QString defaultDataPath()
 
 CustomDictionaryStyle::CustomDictionaryStyle(QObject* parent /* = nullptr */):
   QObject(parent),
-  m_map(new Map(BasemapStyle::ArcGISStreets, this))
+  m_map(new Map(BasemapStyle::ArcGISTopographic, this))
 {
   // Set an initial viewpoint
   Viewpoint viewpoint(Point(-13'046'305, 4'036'698, SpatialReference(3857)), 5000);
@@ -81,18 +81,11 @@ CustomDictionaryStyle::CustomDictionaryStyle(QObject* parent /* = nullptr */):
   PortalItem* portalItem = new PortalItem("adee951477014ec68d7cf0ea0579c800", this);
   DictionarySymbolStyle* dictSymbStyleFromPortal = new DictionarySymbolStyle(portalItem, this);
 
-  connect(dictSymbStyleFromPortal, &DictionarySymbolStyle::loadStatusChanged, this, [this, dictSymbStyleFromPortal]()
-  {
-    if (dictSymbStyleFromPortal->loadStatus() != LoadStatus::Loaded)
-      return;
-
-    // The source feature layer fields do not match thsoe of the the DictionarySymbolStyle so we create a fieldMap to correct this
-    QMap<QString, QString> fieldMap;
-    // With the following override, the feature layer's "inspection" field will be mapped to the dictionary symbol style's "healthgrade" field
-    fieldMap["healthgrade"] = "inspection";
-    m_webDictionaryRenderer = new DictionaryRenderer(dictSymbStyleFromPortal, fieldMap, fieldMap, this);
-  });
-  dictSymbStyleFromPortal->load();
+  // The source feature layer fields do not match those of the the DictionarySymbolStyle so we create a fieldMap to correct this
+  QMap<QString, QString> fieldMap;
+  // With the following override, the feature layer's "inspection" field will be mapped to the dictionary symbol style's "healthgrade" field
+  fieldMap["healthgrade"] = "inspection";
+  m_webDictionaryRenderer = new DictionaryRenderer(dictSymbStyleFromPortal, fieldMap, fieldMap, this);
 }
 
 void CustomDictionaryStyle::changeDictionarySymbolStyleSource()
