@@ -65,7 +65,7 @@ Item {
 
             // select the component based on the layer type
             // GroupLayer is LayerType int value of 22. See API doc for more details:
-            // https://developers.arcgis.com/qt/latest/cpp/api-reference/esri-arcgisruntime-layertype.html
+            // https://developers.arcgis.com/qt/layers/
             Loader {
                 sourceComponent: layerType === 22 ?
                                      groupLayerDelegate : layerDelegate
