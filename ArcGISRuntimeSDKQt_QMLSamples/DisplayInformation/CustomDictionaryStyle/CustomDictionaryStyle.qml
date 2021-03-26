@@ -85,12 +85,18 @@ Rectangle {
 
     Rectangle {
         id: rectangle
-        x: 5; y: 5
+        anchors {
+            left: parent.left
+            top: parent.top
+            margins: 5
+        }
         width: radioColumn.width
         height: radioColumn.height
         color: "white"
-        border.color: "black"
-        border.width: 1
+        border {
+            color: "black"
+            width: 1
+        }
         opacity: 0.9
 
         Column {
@@ -110,10 +116,7 @@ Rectangle {
             RadioButton {
                 text: "Web style"
                 onCheckedChanged: {
-                    if (checked)
-                        restaurantsLayer.renderer = webDictionaryRenderer
-                    else
-                        restaurantsLayer.renderer = localDictionaryRenderer
+                    restaurantsLayer.renderer = checked ? webDictionaryRenderer : localDictionaryRenderer;
                 }
             }
         }
