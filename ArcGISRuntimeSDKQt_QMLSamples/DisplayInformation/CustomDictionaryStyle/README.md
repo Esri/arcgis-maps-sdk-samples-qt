@@ -16,7 +16,7 @@ Use the radio buttons to toggle between the dictionary symbols from the web styl
 
 1. Create a new `FeatureLayer` and append it to the Map's operational layers.
 2. Create a unique `DictionaryRenderer` for the local .stylx file and the web style.
-    * Remap any inconsistent fields between the `FeatureLayer` and the `DictionarySymbolStyle` as needed.
+    * Remap any inconsistent fields between the `FeatureLayer` and the following `DictionarySymbolStyle` as needed.
 3. Use `Factory.DictionarySymbolStyle.createFromFile()` to create a `DictionarySymbolStyle` from a .stylx file.
 4. Create a `DictionarySymbolStyle` with a `PortalItem`.
 5. Apply the desired `DictionaryRenderer` to the `FeatureLayer`.

@@ -18,7 +18,7 @@ Use the radio buttons to toggle between the dictionary symbols from the web styl
 2. Use `DictionarySymbolStyle::createFromFile()` to create a `DictionarySymbolStyle` from a .stylx file.
 3. Create a `DictionarySymbolStyle` with a `PortalItem`.
 4. Create a `DictionaryRenderer` for each `DictionarySymbolStyle`.
-    * Remap any inconsistent fields between the `FeatureLayer` and the `DictionarySymbolStyle` as needed.
+    * Remap any inconsistent fields between the `FeatureLayer` and the `DictionaryRenderer` as needed.
 5. Apply the desired `DictionaryRenderer` to the `FeatureLayer`.
 
 ## Relevant API
