@@ -590,4 +590,3 @@ def filter_string_for_alpha_numeric(string):
 
 if __name__ == '__main__':
     main()
-
