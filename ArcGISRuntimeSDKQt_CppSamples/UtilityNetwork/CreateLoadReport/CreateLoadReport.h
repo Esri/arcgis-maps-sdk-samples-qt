@@ -23,11 +23,14 @@ namespace ArcGISRuntime
 {
 class Map;
 class MapQuickView;
+class UtilityAssetType;
 class UtilityNetwork;
+class UtilityTerminal;
 }
 }
 
 #include <QObject>
+#include <QUuid>
 
 class CreateLoadReport : public QObject
 {
@@ -50,7 +53,11 @@ private:
 
   Esri::ArcGISRuntime::Map* m_map = nullptr;
   Esri::ArcGISRuntime::MapQuickView* m_mapView = nullptr;
+  Esri::ArcGISRuntime::UtilityAssetType* m_utilityAssetType = nullptr;
   Esri::ArcGISRuntime::UtilityNetwork* m_utilityNetwork = nullptr;
+  Esri::ArcGISRuntime::UtilityTerminal* m_utilityTerminal = nullptr;
+
+  QUuid globalId;
 };
 
 #endif // CREATELOADREPORT_H
