@@ -26,7 +26,7 @@ Rectangle {
     width: 800
     height: 600
 
-    readonly property url featureServiceUrl: "https://sampleserver7.arcgisonline.com/arcgis/rest/services/UtilityNetwork/NapervilleGas/FeatureServer"
+    readonly property url featureServiceUrl: "https://sampleserver7.arcgisonline.com/server/rest/services/UtilityNetwork/NapervilleGas/FeatureServer"
     readonly property string domainNetworkName: "Pipeline"
     readonly property string tierName: "Pipe Distribution System"
     readonly property string networkSourceName: "Gas Device"
@@ -97,6 +97,11 @@ Rectangle {
             UtilityNetwork {
                 id: utilityNetwork
                 url: featureServiceUrl
+
+                Credential {
+                    username: "viewer01"
+                    password: "I68VGU^nMurF"
+                }
 
                 onTraceStatusChanged: {
                     if (traceStatus !== Enums.TaskStatusCompleted)
