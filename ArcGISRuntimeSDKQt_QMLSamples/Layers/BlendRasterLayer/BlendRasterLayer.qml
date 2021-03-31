@@ -122,7 +122,7 @@ Rectangle {
             }
 
             SpinBox {
-                id: altSlider
+                id: altSpinBox
                 from: 0
                 to: 90
                 editable: true
@@ -139,9 +139,9 @@ Rectangle {
             }
 
             SpinBox {
-                id: azimuthSlider
+                id: azimuthSpinBox
                 from: 0
-                to: 90
+                to: 360
                 editable: true
                 textFromValue: function(value) {
                     return value.toFixed(0) + "\u00B0";
@@ -216,8 +216,8 @@ Rectangle {
     function applyRendererSettings() {
         const blendRenderer = ArcGISRuntimeEnvironment.createObject("BlendRenderer");
         blendRenderer.elevationRaster = elevationRaster;
-        blendRenderer.altitude = altSlider.value;
-        blendRenderer.azimuth = azimuthSlider.value;
+        blendRenderer.altitude = altSpinBox.value;
+        blendRenderer.azimuth = azimuthSpinBox.value;
         blendRenderer.slopeType = slopeTypeModel.get(slopeCombo.currentIndex).value;
         blendRenderer.colorRamp = getColorRamp();
         blendRenderer.outputBitDepth = 8;

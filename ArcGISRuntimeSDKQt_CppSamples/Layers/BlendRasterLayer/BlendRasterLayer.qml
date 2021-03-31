@@ -108,9 +108,9 @@ BlendRasterLayerSample {
             }
 
             SpinBox {
-                id: azimuthSlider
+                id: azimuthSpinBox
                 from: 0
-                to: 90
+                to: 360
                 editable: true
                 textFromValue: function(value) {
                     return value.toFixed(0) + "\u00B0";
@@ -172,8 +172,8 @@ BlendRasterLayerSample {
                 Layout.alignment: Qt.AlignHCenter
                 onClicked: {
                     editingRenderer = false;
-                    applyRenderSettings(altSlider.value,
-                                        azimuthSlider.value,
+                    applyRenderSettings(altSpinBox.value,
+                                        azimuthSpinBox.value,
                                         slopeTypeModel.get(slopeCombo.currentIndex).value,
                                         colorRampModel.get(colorCombo.currentIndex).value);
                 }
