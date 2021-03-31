@@ -102,18 +102,24 @@ def check_files(file_list):
     exit(total_errors)
 
 def is_file_valid(directory_list: list)-> bool:
-    category_name = directory_list[-3]
+    try:
+        # directory structure is "folder/category/sample_name/file"
+        # If the file is not in a sample category folder, it does not need to be tested
+        category_name = directory_list[-3]
+        if category_name not in folder_names:
+            return False
+    except:
+        return False
+    
     if not os.path.exists("/".join(directory_list)):
         # The file is not present on the disk, either because it never existed or because it was deleted
         # If the file was modified by deleting it, then we do not need to check it
         return False
-    if category_name not in folder_names:
-        # If the file is not in a sample category folder, it does not need to be tested
-        return False
-    
+
     if directory_list[-1].lower() not in  ['readme.metadata.json', 'readme.md']:
         # We are not testing files other than the ones above
         return False
+
     return True
 
 class MetadataFile:
@@ -433,8 +439,6 @@ class READMEFile:
         errors = []
         return errors
 
-
-
 # ***** Large variable sets (from utilities.common_dicts) *****
 
 folder_names = [
@@ -523,7 +527,6 @@ def read_json_file(file_path):
         data = json.load(file)
     return data
 
-
 def read_readme_file(file_path):
     readme_text = ""
     with open(file_path, 'r') as f:
@@ -536,6 +539,7 @@ def read_readme_file(file_path):
 
 def check_sentence_case(string: str) -> bool:
     ignore_list = {
+        "3D",
         "ArcGIS"
     }
     alnum_string = filter_string_for_alpha_numeric(string)
