@@ -130,8 +130,11 @@ Rectangle {
                 from: 0
                 to: 90
                 editable: true
-                textFromValue: function(v) {
-                    return v.toFixed(0) + "\u00B0";
+                textFromValue: function(value) {
+                    return value.toFixed(0) + "\u00B0";
+                }
+                valueFromText: function(text) {
+                    return parseInt(text);
                 }
             }
 
@@ -144,8 +147,11 @@ Rectangle {
                 from: 0
                 to: 90
                 editable: true
-                textFromValue: function(v) {
-                    return v.toFixed(0) + "\u00B0";
+                textFromValue: function(value) {
+                    return value.toFixed(0) + "\u00B0";
+                }
+                valueFromText: function(text) {
+                    return parseInt(text);
                 }
             }
 
