@@ -28,7 +28,6 @@ Rectangle {
 
     readonly property string dataPath: System.userHomePath + "/ArcGIS/Runtime/Data/raster"
     property bool editingRenderer: false
-    property bool useColorRamp: colorCombo.currentText !== "none"
 
     SlopeTypeModel {
         id: slopeTypeModel
@@ -42,10 +41,7 @@ Rectangle {
         anchors.fill: parent
         Map {
             id: map
-            basemap: useColorRamp ?
-                         basemapColorRamp :
-                         basemap
-
+            basemap: basemap
         }
     }
 
@@ -235,6 +231,8 @@ Rectangle {
         blendRenderer.sourceMinValues = [];
 
         applyRenderer(blendRenderer);
+
+        map.basemap = (colorCombo.currentText !== "none") ? basemapColorRamp : basemap;
     }
 
     function applyRenderer(blendRenderer) {
