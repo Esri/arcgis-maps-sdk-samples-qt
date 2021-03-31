@@ -151,7 +151,6 @@ Rectangle {
                 }
             }
 
-
             Text {
                 text: "slope type"
             }
@@ -175,7 +174,6 @@ Rectangle {
                     font: slopeCombo.font
                 }
             }
-
 
             Text {
                 text: "color ramp"

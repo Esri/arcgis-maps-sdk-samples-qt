@@ -131,7 +131,7 @@ BlendRasterLayerSample {
                 Layout.fillWidth: true
                 textRole: "name"
                 model: slopeTypeModel
-               Component.onCompleted : {
+                Component.onCompleted : {
                     for (let i = 0; i < model.count; ++i) {
                         metrics.text = model.get(i).name;
                         modelWidth = Math.max(modelWidth, metrics.width);
