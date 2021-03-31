@@ -57,7 +57,7 @@ Cloning the toolkit in this location will allow for the samples to automatically
 
 Note: Filesystem permissions is required for this sample.
 
-For more information on the Augmented Reality (AR) toolkit, including the steps required to deploy to Android and iOS, see [the AR README on GitHub](https://github.com/Esri/arcgis-runtime-toolkit-qt/blob/master/Common/AR/README.md#augmented-reality-toolkit-components).
+For more information on the Augmented Reality (AR) toolkit, including the steps required to deploy to Android and iOS, see [the AR README on GitHub](https://github.com/Esri/arcgis-runtime-toolkit-qt/blob/master/augmentedreality/README.md).
 
 ## Tags
 
