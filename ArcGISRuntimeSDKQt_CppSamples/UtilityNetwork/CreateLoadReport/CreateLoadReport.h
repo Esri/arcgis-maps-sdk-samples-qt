@@ -21,8 +21,10 @@ namespace Esri
 {
 namespace ArcGISRuntime
 {
+class Credential;
 class Map;
 class MapQuickView;
+class CodedValue;
 class UtilityAssetType;
 class UtilityNetwork;
 class UtilityTerminal;
@@ -53,9 +55,11 @@ private:
 
   Esri::ArcGISRuntime::Map* m_map = nullptr;
   Esri::ArcGISRuntime::MapQuickView* m_mapView = nullptr;
+  Esri::ArcGISRuntime::Credential* m_cred = nullptr;
   Esri::ArcGISRuntime::UtilityAssetType* m_utilityAssetType = nullptr;
   Esri::ArcGISRuntime::UtilityNetwork* m_utilityNetwork = nullptr;
   Esri::ArcGISRuntime::UtilityTerminal* m_utilityTerminal = nullptr;
+  QList<Esri::ArcGISRuntime::CodedValue> m_phaseList;
 
   QUuid globalId;
 };

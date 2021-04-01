@@ -50,10 +50,11 @@ using namespace Esri::ArcGISRuntime;
 
 CreateLoadReport::CreateLoadReport(QObject* parent /* = nullptr */):
   QObject(parent),
-  m_map(new Map(Basemap::imagery(this), this))
+  m_map(new Map(Basemap::imagery(this), this)),
+  m_cred(new Credential("editor01", "S7#i2LWmYH75", this))
 {
   globalId = QUuid("{1CAF7740-0BF4-4113-8DB2-654E18800028}");
-  m_utilityNetwork = new UtilityNetwork(QUrl("https://sampleserver7.arcgisonline.com/arcgis/rest/services/UtilityNetwork/NapervilleElectric/FeatureServer"), this);
+  m_utilityNetwork = new UtilityNetwork(QUrl("https://sampleserver7.arcgisonline.com/server/rest/services/UtilityNetwork/NapervilleElectric/FeatureServer"), m_cred, this);
   connect(m_utilityNetwork, &UtilityNetwork::doneLoading, this, [this]()
   {
     qDebug() << "done loading";
@@ -84,6 +85,7 @@ CreateLoadReport::CreateLoadReport(QObject* parent /* = nullptr */):
 
       QList<UtilityCategory*> utilityCategories = m_utilityNetwork->definition()->categories();
       UtilityCategory* serviceCategory = nullptr;
+
       for (UtilityCategory* uc : utilityCategories)
       {
         if(uc->name() == "ServicePoint")
@@ -109,9 +111,9 @@ CreateLoadReport::CreateLoadReport(QObject* parent /* = nullptr */):
         if (phasesAttribute->domain().domainType() == DomainType::CodedValueDomain)
         {
           CodedValueDomain cvd = CodedValueDomain(phasesAttribute->domain());
-          for (auto n : cvd.codedValues())
+          for (CodedValue codedValue : cvd.codedValues())
           {
-            qDebug() << n.name();
+            m_phaseList.append(codedValue);
           }
         }
       }
