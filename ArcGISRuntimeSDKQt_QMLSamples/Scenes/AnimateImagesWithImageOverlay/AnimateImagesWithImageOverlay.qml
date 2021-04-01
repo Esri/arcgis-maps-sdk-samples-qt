@@ -45,9 +45,9 @@ Rectangle {
             if (fileNamesLength === 0)
                 return;
 
-            // create an image frame with the url to the image file and a extent
+            // Create new ImageFrames from images in the folder
+            // Add them to a list so infinite ImageFrame objects are not created each loop
             if (imageFrameList.length !== fileNamesLength) {
-                console.log("Creating new ImageFrame at " + index + " of " + fileNamesLength);
                 imageFrameList.push(ArcGISRuntimeEnvironment.createObject("ImageFrame", {
                                                                               url: dataPath + "/" + imageFrameFolder.fileNames()[index],
                                                                               extent: imageFrameExtent
