@@ -215,8 +215,6 @@ Rectangle {
         id: imageFrameFolder
         url: dataPath
 
-        Component.onCompleted: {
-            fileNamesLength = imageFrameFolder.fileNames().length;
-        }
+        Component.onCompleted: fileNamesLength = imageFrameFolder.fileNames().length;
     }
 }
