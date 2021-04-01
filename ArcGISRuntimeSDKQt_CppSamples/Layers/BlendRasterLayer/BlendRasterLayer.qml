@@ -95,8 +95,11 @@ BlendRasterLayerSample {
                 from: 0
                 to: 90
                 editable: true
-                textFromValue: function(v) {
-                    return v.toFixed(0) + "\u00B0";
+                textFromValue: function(value) {
+                    return value.toFixed(0) + "\u00B0";
+                }
+                valueFromText: function(text) {
+                    return parseInt(text);
                 }
             }
 
@@ -105,12 +108,15 @@ BlendRasterLayerSample {
             }
 
             SpinBox {
-                id: azimuthSlider
+                id: azimuthSpinBox
                 from: 0
-                to: 90
+                to: 360
                 editable: true
-                textFromValue: function(v) {
-                    return v.toFixed(0) + "\u00B0";
+                textFromValue: function(value) {
+                    return value.toFixed(0) + "\u00B0";
+                }
+                valueFromText: function(text) {
+                    return parseInt(text);
                 }
             }
 
@@ -125,7 +131,7 @@ BlendRasterLayerSample {
                 Layout.fillWidth: true
                 textRole: "name"
                 model: slopeTypeModel
-               Component.onCompleted : {
+                Component.onCompleted : {
                     for (let i = 0; i < model.count; ++i) {
                         metrics.text = model.get(i).name;
                         modelWidth = Math.max(modelWidth, metrics.width);
@@ -166,8 +172,8 @@ BlendRasterLayerSample {
                 Layout.alignment: Qt.AlignHCenter
                 onClicked: {
                     editingRenderer = false;
-                    applyRenderSettings(altSlider.value,
-                                        azimuthSlider.value,
+                    applyRenderSettings(altSpinBox.value,
+                                        azimuthSpinBox.value,
                                         slopeTypeModel.get(slopeCombo.currentIndex).value,
                                         colorRampModel.get(colorCombo.currentIndex).value);
                 }
