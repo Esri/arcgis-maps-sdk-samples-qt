@@ -55,7 +55,7 @@ Rectangle {
             }
 
             // set image frame to image overlay
-            imageOverlay.imageFrame = imageFrameList[index]
+            imageOverlay.imageFrame = imageFrameList[index];
 
             // increment the index to keep track of which image to load next
             index++;
