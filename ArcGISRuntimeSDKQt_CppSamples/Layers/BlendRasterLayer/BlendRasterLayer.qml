@@ -91,7 +91,7 @@ BlendRasterLayerSample {
             }
 
             SpinBox {
-                id: altSlider
+                id: altSpinBox
                 from: 0
                 to: 90
                 editable: true
