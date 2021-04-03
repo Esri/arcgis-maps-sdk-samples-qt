@@ -97,7 +97,7 @@ TraceUtilityNetwork::TraceUtilityNetwork(QObject* parent /* = nullptr */):
     m_graphicsOverlay = new GraphicsOverlay(this);
     m_mapView->graphicsOverlays()->append(m_graphicsOverlay);
 
-    m_utilityNetwork = new UtilityNetwork(m_serviceUrl, m_map, this);
+    m_utilityNetwork = new UtilityNetwork(m_serviceUrl, m_map, m_cred, this);
 
     connect(m_utilityNetwork, &UtilityNetwork::errorOccurred, [this](Error e)
     {
