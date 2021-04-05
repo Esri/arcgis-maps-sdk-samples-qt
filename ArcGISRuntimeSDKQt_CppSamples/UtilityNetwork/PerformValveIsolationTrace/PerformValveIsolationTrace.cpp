@@ -79,7 +79,7 @@ PerformValveIsolationTrace::PerformValveIsolationTrace(QObject* parent /* = null
   m_map->operationalLayers()->append(distributionLineLayer);
   m_map->operationalLayers()->append(deviceLayer);
 
-  m_utilityNetwork = new UtilityNetwork(featureServiceUrl, m_map, this);
+  m_utilityNetwork = new UtilityNetwork(featureServiceUrl, m_map, m_cred, this);
   connectSignals();
   m_utilityNetwork->load();
 }
