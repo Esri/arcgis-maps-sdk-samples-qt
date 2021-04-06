@@ -16,6 +16,7 @@
 
 import QtQuick 2.6
 import QtQuick.Controls 2.2
+import QtQuick.Layouts 1.3
 import Esri.Samples 1.0
 
 Item {
@@ -28,7 +29,21 @@ Item {
 
     // Declare the C++ instance which creates the scene etc. and supply the view
     CreateLoadReportSample {
-        id: model
+        id: sampleModel
         mapView: view
     }
-}
+
+        GridLayout {
+            id: grid
+            columns: 3
+
+            Text { text: sampleModel.phases[0][0]; font.bold: true; }
+            Text { text: sampleModel.phases[0][1]; color: "red"; visible: false}
+            Text { text: "in"; font.underline: true; visible: false }
+            Text { text: "a"; font.pixelSize: 20 }
+            Text { text: "row"; font.strikeout: true }
+            Component.onCompleted: {
+
+            }
+        }
+    }

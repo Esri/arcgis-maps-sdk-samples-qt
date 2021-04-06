@@ -26,8 +26,13 @@ class Map;
 class MapQuickView;
 class CodedValue;
 class UtilityAssetType;
+class UtilityElement;
 class UtilityNetwork;
+class UtilityNetworkAttribute;
 class UtilityTerminal;
+class UtilityTraceCondition;
+class UtilityTraceConditionalExpression;
+class UtilityTraceParameters;
 }
 }
 
@@ -39,29 +44,42 @@ class CreateLoadReport : public QObject
   Q_OBJECT
 
   Q_PROPERTY(Esri::ArcGISRuntime::MapQuickView* mapView READ mapView WRITE setMapView NOTIFY mapViewChanged)
+  Q_PROPERTY(QList<QStringList> phases READ getPhases WRITE setPhases NOTIFY phaseListChanged)
 
 public:
   explicit CreateLoadReport(QObject* parent = nullptr);
   ~CreateLoadReport();
 
   static void init();
+  Q_INVOKABLE void addPhase();
+  Q_INVOKABLE void runReport();
+  Q_INVOKABLE void reset();
+  Q_INVOKABLE void setPhases(QList<QStringList>);
 
 signals:
   void mapViewChanged();
+  void phaseListChanged();
 
 private:
   Esri::ArcGISRuntime::MapQuickView* mapView() const;
   void setMapView(Esri::ArcGISRuntime::MapQuickView* mapView);
+  QList<QStringList> getPhases();
+  Esri::ArcGISRuntime::UtilityElement* createStartingLocation();
+  void initializeLoadReport();
 
   Esri::ArcGISRuntime::Map* m_map = nullptr;
   Esri::ArcGISRuntime::MapQuickView* m_mapView = nullptr;
   Esri::ArcGISRuntime::Credential* m_cred = nullptr;
   Esri::ArcGISRuntime::UtilityAssetType* m_utilityAssetType = nullptr;
+  Esri::ArcGISRuntime::UtilityElement* m_startingLocation = nullptr;
   Esri::ArcGISRuntime::UtilityNetwork* m_utilityNetwork = nullptr;
   Esri::ArcGISRuntime::UtilityTerminal* m_utilityTerminal = nullptr;
   QList<Esri::ArcGISRuntime::CodedValue> m_phaseList;
+  Esri::ArcGISRuntime::UtilityTraceConditionalExpression* m_baseCondition = nullptr;
+  Esri::ArcGISRuntime::UtilityNetworkAttribute* m_phasesCurrentAttribute = nullptr;
+  Esri::ArcGISRuntime::UtilityTraceParameters* m_traceParameters = nullptr;
 
-  QUuid globalId;
+  QUuid m_globalId;
 };
 
 #endif // CREATELOADREPORT_H
