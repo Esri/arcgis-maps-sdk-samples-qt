@@ -21,6 +21,20 @@ import Esri.Samples 1.0
 
 Item {
 
+    property var phaseVisible: {
+        "A": true,
+        "AB": false,
+        "ABC": false,
+        "AC": false,
+        "BC": true,
+        "B": true,
+        "C": true,
+        "DeEnergized": false,
+        "Unknown": false
+    }
+
+    property var selectedPhases: []
+
     // add a mapView component
     MapView {
         id: view
@@ -33,77 +47,101 @@ Item {
         mapView: view
     }
 
-    Column {
-        Row {
-            id: a
-            visible: sampleModel.activePhases["A"]
-            Text {
-                text: sampleModel.totalCustomers["A"] + " total customers"
-            }
-            Text {
-                text: sampleModel.totalLoad["A"] + " total load"
-            }
+    Rectangle {
+        color: "white"
+        width: contents.width
+        height: contents.height
+        anchors {
+            top: parent.top
+            left: parent.left
+            margins: 10
         }
-        Row {
-            id: ab
-            visible: sampleModel.activePhases["A"]
-            Text {
-                text: sampleModel.totalCustomers["A"] + " total customers"
-            }
-            Text {
-                text: sampleModel.totalLoad["A"] + " total load"
-            }
-        }
-        Row {
-            id: abc
-            visible: sampleModel.activePhases["A"]
-            Text {
-                text: sampleModel.totalCustomers["A"] + " total customers"
-            }
-            Text {
-                text: sampleModel.totalLoad["A"] + " total load"
-            }
-        }
-        Row {
-            id: ac
-            visible: sampleModel.activePhases["A"]
-            Text {
-                text: sampleModel.totalCustomers["A"] + " total customers"
-            }
-            Text {
-                text: sampleModel.totalLoad["A"] + " total load"
-            }
-        }
-        Row {
-            id: bc
-            visible: sampleModel.activePhases["A"]
-            Text {
-                text: sampleModel.totalCustomers["A"] + " total customers"
-            }
-            Text {
-                text: sampleModel.totalLoad["A"] + " total load"
-            }
-        }
-        Row {
-            id: c
-            visible: sampleModel.activePhases["A"]
-            Text {
-                text: sampleModel.totalCustomers["A"] + " total customers"
-            }
-            Text {
-                text: sampleModel.totalLoad["A"] + " total load"
-            }
-        }
-    }
+        Column {
+            id: contents
+            spacing: 25
 
-    GridLayout {
-        id: grid
-        columns: 1
+            Row {
+                ComboBox {
+                    id: phaseSelect
+                    model: [
+                        "A",
+                        "AB",
+                        "ABC",
+                        "AC",
+                        "B",
+                        "BC",
+                        "C",
+                        "DeEnergized",
+                        "Unknown"
+                    ]
+                }
 
-        Text { text: sampleModel.phases[0][0] + "\tasdZXcZXCf\tasdfadsfasd"; font.bold: true; }
-        Text { text: sampleModel.phases[0][1] + "\tasdf\ts"; color: "red"}
-        Text { text: "in\tarow"; font.underline: true; visible: true }
-        Text { text: "a"; font.pixelSize: 20 }
-        Text { text: "row"; font.strikeout: true }
+                Button {
+                    text: "Add Phase"
+                    onClicked: {
+                        selectedPhases.push(phaseSelect.currentValue);
+                        console.log(phaseSelect.currentValue);
+                        sampleModel.addPhase(phaseSelect.currentValue);
+                        phaseVisible[phaseSelect.currentValue] = true;
+                        console.log(phaseVisible[phaseSelect.currentValue]);
+                        grid.update();
+                    }
+                }
+
+                Button {
+                    text: "Run Report"
+                    onClicked: {
+                        sampleModel.runReport(selectedPhases);
+                    }
+                }
+            }
+
+            Row {
+                GridLayout {
+                    id: grid
+                    columns: 3
+
+                    Text { text: "Phase"; }
+                    Text { text: "Total customers"; }
+                    Text { text: "Total load"; }
+
+                    Text { text: "A"; visible: phaseVisible[text] }
+                    Text { text: sampleModel.phaseCust["A"]; visible: phaseVisible["A"] }
+                    Text { text: sampleModel.phaseLoad["A"]; visible: phaseVisible["A"] }
+
+                    Text { text: "AB"; visible: phaseVisible["AB"] }
+                    Text { text: sampleModel.phaseCust["AB"]; visible: phaseVisible["AB"] }
+                    Text { text: sampleModel.phaseLoad["AB"]; visible: phaseVisible["AB"] }
+
+                    Text { text: "ABC"; visible: phaseVisible["ABC"] }
+                    Text { text: sampleModel.phaseCust["ABC"]; visible: phaseVisible["ABC"] }
+                    Text { text: sampleModel.phaseLoad["ABC"]; visible: phaseVisible["ABC"] }
+
+                    Text { text: "AC"; visible: phaseVisible["AC"] }
+                    Text { text: sampleModel.phaseCust["AC"]; visible: phaseVisible["AC"] }
+                    Text { text: sampleModel.phaseLoad["AC"]; visible: phaseVisible["AC"] }
+
+                    Text { text: "BC"; visible: phaseVisible["BC"] }
+                    Text { text: sampleModel.phaseCust["BC"]; visible: phaseVisible["BC"] }
+                    Text { text: sampleModel.phaseLoad["BC"]; visible: phaseVisible["BC"] }
+
+                    Text { text: "B"; visible: phaseVisible["B"] }
+                    Text { text: sampleModel.phaseCust["B"]; visible: phaseVisible["B"] }
+                    Text { text: sampleModel.phaseLoad["B"]; visible: phaseVisible["B"] }
+
+                    Text { text: "C"; visible: phaseVisible["C"] }
+                    Text { text: sampleModel.phaseCust["C"]; visible: phaseVisible["C"] }
+                    Text { text: sampleModel.phaseLoad["C"]; visible: phaseVisible["C"] }
+
+                    Text { text: "DeEngergized"; visible: phaseVisible["DeEnergized"] }
+                    Text { text: sampleModel.phaseCust["DeEnergized"]; visible: phaseVisible["DeEnergized"] }
+                    Text { text: sampleModel.phaseLoad["DeEnergized"]; visible: phaseVisible["DeEnergized"] }
+
+                    Text { text: "Unknown"; visible: phaseVisible["Unknown"] }
+                    Text { text: sampleModel.phaseCust["Unknown"]; visible: phaseVisible["Unknown"] }
+                    Text { text: sampleModel.phaseLoad["Unknown"]; visible: phaseVisible["Unknown"] }
+                }
+            }
+        }
     }
 }

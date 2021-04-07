@@ -121,7 +121,7 @@ void CreateLoadReport::initializeLoadReport()
       return (cv1.name() < cv2.name());
     });
 
-    runReport();
+    // runReport();
   }
 }
 
@@ -158,14 +158,23 @@ UtilityElement* CreateLoadReport::createStartingLocation()
   return m_utilityNetwork->createElementWithAssetType(m_utilityAssetType, m_globalId, m_utilityTerminal, this);
 }
 
-void CreateLoadReport::addPhase()
+void CreateLoadReport::addPhase(QString phaseToAdd)
 {
+  m_activePhases.append(phaseToAdd);
+  qDebug() << m_activePhases;
   return;
 }
 
-void CreateLoadReport::runReport()
+void CreateLoadReport::runReport(QStringList selectedPhaseNames)
 {
+  qDebug() << selectedPhaseNames.size();
+  QList<CodedValue> activeValues;
   for (CodedValue codedValue : m_phaseList)
+  {
+    if (selectedPhaseNames.contains(codedValue.name()))
+      activeValues.append(codedValue);
+  }
+  for (CodedValue codedValue : activeValues)
   {
     UtilityTraceConditionalExpression* condUnac = dynamic_cast<UtilityTraceConditionalExpression*>(new UtilityNetworkAttributeComparison(m_phasesCurrentAttribute, UtilityAttributeComparisonOperator::DoesNotIncludeAny, codedValue.code()));
     UtilityTraceConditionalExpression* condBase = dynamic_cast<UtilityTraceConditionalExpression*>(m_baseCondition);
@@ -178,41 +187,45 @@ void CreateLoadReport::runReport()
     if (utoc)
       m_traceParameters->traceConfiguration()->traversability()->setBarriers(utoc);
 
-    connect(m_utilityNetwork, &UtilityNetwork::traceCompleted, this, [this, codedValue](QUuid)
+    connect(m_utilityNetwork, &UtilityNetwork::traceCompleted, this, [this, codedValue](QUuid taskId)
     {
+      qDebug() << taskId;
+      qDebug() << codedValue.name();
+      int totalCustomers = 0;
       UtilityTraceResultListModel* results = m_utilityNetwork->traceResult();
+
+      qDebug() << results->size();
 
       for (UtilityTraceResult* result : *results) {
         if (UtilityElementTraceResult* elementResult = dynamic_cast<UtilityElementTraceResult*>(result))
         {
           qDebug() << codedValue.name() << elementResult->elements().size();
+
+          QList<int> objectIds;
+          for (UtilityElement* element : elementResult->elements())
+          {
+            if (!objectIds.contains(element->objectId()))
+              ++totalCustomers;
+          }
+
         }
         if (UtilityFunctionTraceResult* functionResult = dynamic_cast<UtilityFunctionTraceResult*>(result))
         {
-          qDebug() << functionResult->functionOutputs().first()->result();
+          m_phaseLoad[codedValue.name()] = functionResult->functionOutputs().first()->result();
         }
       }
+      m_phaseCust[codedValue.name()] = totalCustomers;
+      emit loadReportUpdated();
+      qDebug() << Qt::endl;
     });
 
     m_utilityNetwork->trace(m_traceParameters);
   }
-  emit phaseListChanged();
-  return;
 }
 
 void CreateLoadReport::reset()
 {
   return;
-}
-
-void CreateLoadReport::setPhases(QList<QStringList>)
-{
-  return;
-}
-
-QList<QStringList> CreateLoadReport::getPhases()
-{
-  return {{"first", "b", "c"}};
 }
 
 CreateLoadReport::~CreateLoadReport() = default;
@@ -239,4 +252,15 @@ void CreateLoadReport::setMapView(MapQuickView* mapView)
   m_mapView->setMap(m_map);
 
   emit mapViewChanged();
+}
+
+QVariantMap CreateLoadReport::phaseCust()
+{
+
+  return m_phaseCust;
+}
+
+QVariantMap CreateLoadReport::phaseLoad()
+{
+  return m_phaseLoad;
 }
