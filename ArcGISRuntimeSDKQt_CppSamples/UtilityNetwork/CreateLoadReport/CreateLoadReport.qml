@@ -33,17 +33,77 @@ Item {
         mapView: view
     }
 
-        GridLayout {
-            id: grid
-            columns: 3
-
-            Text { text: sampleModel.phases[0][0]; font.bold: true; }
-            Text { text: sampleModel.phases[0][1]; color: "red"; visible: false}
-            Text { text: "in"; font.underline: true; visible: false }
-            Text { text: "a"; font.pixelSize: 20 }
-            Text { text: "row"; font.strikeout: true }
-            Component.onCompleted: {
-
+    Column {
+        Row {
+            id: a
+            visible: sampleModel.activePhases["A"]
+            Text {
+                text: sampleModel.totalCustomers["A"] + " total customers"
+            }
+            Text {
+                text: sampleModel.totalLoad["A"] + " total load"
+            }
+        }
+        Row {
+            id: ab
+            visible: sampleModel.activePhases["A"]
+            Text {
+                text: sampleModel.totalCustomers["A"] + " total customers"
+            }
+            Text {
+                text: sampleModel.totalLoad["A"] + " total load"
+            }
+        }
+        Row {
+            id: abc
+            visible: sampleModel.activePhases["A"]
+            Text {
+                text: sampleModel.totalCustomers["A"] + " total customers"
+            }
+            Text {
+                text: sampleModel.totalLoad["A"] + " total load"
+            }
+        }
+        Row {
+            id: ac
+            visible: sampleModel.activePhases["A"]
+            Text {
+                text: sampleModel.totalCustomers["A"] + " total customers"
+            }
+            Text {
+                text: sampleModel.totalLoad["A"] + " total load"
+            }
+        }
+        Row {
+            id: bc
+            visible: sampleModel.activePhases["A"]
+            Text {
+                text: sampleModel.totalCustomers["A"] + " total customers"
+            }
+            Text {
+                text: sampleModel.totalLoad["A"] + " total load"
+            }
+        }
+        Row {
+            id: c
+            visible: sampleModel.activePhases["A"]
+            Text {
+                text: sampleModel.totalCustomers["A"] + " total customers"
+            }
+            Text {
+                text: sampleModel.totalLoad["A"] + " total load"
             }
         }
     }
+
+    GridLayout {
+        id: grid
+        columns: 1
+
+        Text { text: sampleModel.phases[0][0] + "\tasdZXcZXCf\tasdfadsfasd"; font.bold: true; }
+        Text { text: sampleModel.phases[0][1] + "\tasdf\ts"; color: "red"}
+        Text { text: "in\tarow"; font.underline: true; visible: true }
+        Text { text: "a"; font.pixelSize: 20 }
+        Text { text: "row"; font.strikeout: true }
+    }
+}
