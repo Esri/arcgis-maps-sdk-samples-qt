@@ -80,11 +80,8 @@ Item {
                     text: "Add Phase"
                     onClicked: {
                         selectedPhases.push(phaseSelect.currentValue);
-                        console.log(phaseSelect.currentValue);
                         sampleModel.addPhase(phaseSelect.currentValue);
                         phaseVisible[phaseSelect.currentValue] = true;
-                        console.log(phaseVisible[phaseSelect.currentValue]);
-                        grid.update();
                     }
                 }
 
@@ -105,41 +102,41 @@ Item {
                     Text { text: "Total customers"; }
                     Text { text: "Total load"; }
 
-                    Text { text: "A"; visible: phaseVisible[text] }
-                    Text { text: sampleModel.phaseCust["A"]; visible: phaseVisible["A"] }
-                    Text { text: sampleModel.phaseLoad["A"]; visible: phaseVisible["A"] }
+//                    Text { text: "A"; visible: phaseVisible[text] }
+//                    Text { text: sampleModel.phaseCust["A"]; visible: phaseVisible["A"] }
+//                    Text { text: sampleModel.phaseLoad["A"]; visible: phaseVisible["A"] }
 
-                    Text { text: "AB"; visible: phaseVisible["AB"] }
-                    Text { text: sampleModel.phaseCust["AB"]; visible: phaseVisible["AB"] }
-                    Text { text: sampleModel.phaseLoad["AB"]; visible: phaseVisible["AB"] }
+//                    Text { text: "AB"; visible: phaseVisible["AB"] }
+//                    Text { text: sampleModel.phaseCust["AB"]; visible: phaseVisible["AB"] }
+//                    Text { text: sampleModel.phaseLoad["AB"]; visible: phaseVisible["AB"] }
 
-                    Text { text: "ABC"; visible: phaseVisible["ABC"] }
-                    Text { text: sampleModel.phaseCust["ABC"]; visible: phaseVisible["ABC"] }
-                    Text { text: sampleModel.phaseLoad["ABC"]; visible: phaseVisible["ABC"] }
+//                    Text { text: "ABC"; visible: phaseVisible["ABC"] }
+//                    Text { text: sampleModel.phaseCust["ABC"]; visible: phaseVisible["ABC"] }
+//                    Text { text: sampleModel.phaseLoad["ABC"]; visible: phaseVisible["ABC"] }
 
-                    Text { text: "AC"; visible: phaseVisible["AC"] }
-                    Text { text: sampleModel.phaseCust["AC"]; visible: phaseVisible["AC"] }
-                    Text { text: sampleModel.phaseLoad["AC"]; visible: phaseVisible["AC"] }
+//                    Text { text: "AC"; visible: phaseVisible["AC"] }
+//                    Text { text: sampleModel.phaseCust["AC"]; visible: phaseVisible["AC"] }
+//                    Text { text: sampleModel.phaseLoad["AC"]; visible: phaseVisible["AC"] }
 
-                    Text { text: "BC"; visible: phaseVisible["BC"] }
-                    Text { text: sampleModel.phaseCust["BC"]; visible: phaseVisible["BC"] }
-                    Text { text: sampleModel.phaseLoad["BC"]; visible: phaseVisible["BC"] }
+//                    Text { text: "BC"; visible: phaseVisible["BC"] }
+//                    Text { text: sampleModel.phaseCust["BC"]; visible: phaseVisible["BC"] }
+//                    Text { text: sampleModel.phaseLoad["BC"]; visible: phaseVisible["BC"] }
 
-                    Text { text: "B"; visible: phaseVisible["B"] }
-                    Text { text: sampleModel.phaseCust["B"]; visible: phaseVisible["B"] }
-                    Text { text: sampleModel.phaseLoad["B"]; visible: phaseVisible["B"] }
+//                    Text { text: "B"; visible: phaseVisible["B"] }
+//                    Text { text: sampleModel.phaseCust["B"]; visible: phaseVisible["B"] }
+//                    Text { text: sampleModel.phaseLoad["B"]; visible: phaseVisible["B"] }
 
-                    Text { text: "C"; visible: phaseVisible["C"] }
-                    Text { text: sampleModel.phaseCust["C"]; visible: phaseVisible["C"] }
-                    Text { text: sampleModel.phaseLoad["C"]; visible: phaseVisible["C"] }
+//                    Text { text: "C"; visible: phaseVisible["C"] }
+//                    Text { text: sampleModel.phaseCust["C"]; visible: phaseVisible["C"] }
+//                    Text { text: sampleModel.phaseLoad["C"]; visible: phaseVisible["C"] }
 
-                    Text { text: "DeEngergized"; visible: phaseVisible["DeEnergized"] }
-                    Text { text: sampleModel.phaseCust["DeEnergized"]; visible: phaseVisible["DeEnergized"] }
-                    Text { text: sampleModel.phaseLoad["DeEnergized"]; visible: phaseVisible["DeEnergized"] }
+//                    Text { text: "DeEngergized"; visible: phaseVisible["DeEnergized"] }
+//                    Text { text: sampleModel.phaseCust["DeEnergized"]; visible: phaseVisible["DeEnergized"] }
+//                    Text { text: sampleModel.phaseLoad["DeEnergized"]; visible: phaseVisible["DeEnergized"] }
 
-                    Text { text: "Unknown"; visible: phaseVisible["Unknown"] }
-                    Text { text: sampleModel.phaseCust["Unknown"]; visible: phaseVisible["Unknown"] }
-                    Text { text: sampleModel.phaseLoad["Unknown"]; visible: phaseVisible["Unknown"] }
+//                    Text { text: "Unknown"; visible: phaseVisible["Unknown"] }
+//                    Text { text: sampleModel.phaseCust["Unknown"]; visible: phaseVisible["Unknown"] }
+//                    Text { text: sampleModel.phaseLoad["Unknown"]; visible: phaseVisible["Unknown"] }
                 }
             }
         }
