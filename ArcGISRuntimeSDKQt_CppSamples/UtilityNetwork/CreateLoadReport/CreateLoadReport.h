@@ -86,7 +86,7 @@ private:
   Esri::ArcGISRuntime::UtilityTerminal* m_utilityTerminal = nullptr;
   QStringList m_activePhases;
   QList<Esri::ArcGISRuntime::CodedValue> m_phaseList;
-  Esri::ArcGISRuntime::UtilityTraceCondition* m_baseCondition = nullptr;
+  Esri::ArcGISRuntime::UtilityTraceConditionalExpression* m_baseCondition = nullptr;
   Esri::ArcGISRuntime::UtilityNetworkAttribute* m_phasesCurrentAttribute = nullptr;
   Esri::ArcGISRuntime::UtilityTraceParameters* m_traceParameters = nullptr;
   QVariantMap m_phaseCust;
