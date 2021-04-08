@@ -26,12 +26,15 @@ class Map;
 class MapQuickView;
 class CodedValue;
 class UtilityAssetType;
+class UtilityCategory;
 class UtilityElement;
 class UtilityNetwork;
 class UtilityNetworkAttribute;
+class UtilityTier;
 class UtilityTerminal;
 class UtilityTraceCondition;
 class UtilityTraceConditionalExpression;
+class UtilityTraceConfiguration;
 class UtilityTraceParameters;
 }
 }
@@ -69,6 +72,10 @@ private:
   QVariantMap phaseLoad();
   Esri::ArcGISRuntime::UtilityElement* createStartingLocation();
   void initializeLoadReport();
+  Esri::ArcGISRuntime::UtilityTraceConfiguration* createDefaultTraceConfiguration();
+  Esri::ArcGISRuntime::UtilityTraceParameters* createDefaultTraceParameters();
+  QList<Esri::ArcGISRuntime::CodedValue> createPhaseList();
+  Esri::ArcGISRuntime::UtilityCategory* getUtilityCategory(const QString categoryName, const Esri::ArcGISRuntime::UtilityNetwork* utilityNetwork);
 
   Esri::ArcGISRuntime::Map* m_map = nullptr;
   Esri::ArcGISRuntime::MapQuickView* m_mapView = nullptr;
@@ -79,11 +86,13 @@ private:
   Esri::ArcGISRuntime::UtilityTerminal* m_utilityTerminal = nullptr;
   QStringList m_activePhases;
   QList<Esri::ArcGISRuntime::CodedValue> m_phaseList;
-  Esri::ArcGISRuntime::UtilityTraceConditionalExpression* m_baseCondition = nullptr;
+  Esri::ArcGISRuntime::UtilityTraceCondition* m_baseCondition = nullptr;
   Esri::ArcGISRuntime::UtilityNetworkAttribute* m_phasesCurrentAttribute = nullptr;
   Esri::ArcGISRuntime::UtilityTraceParameters* m_traceParameters = nullptr;
   QVariantMap m_phaseCust;
   QVariantMap m_phaseLoad;
+  Esri::ArcGISRuntime::UtilityTraceConfiguration* m_traceConfiguration = nullptr;
+  Esri::ArcGISRuntime::UtilityTier* m_utilityTier = nullptr;
 
   QUuid m_globalId;
 };
