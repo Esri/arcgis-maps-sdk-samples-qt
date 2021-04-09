@@ -76,6 +76,7 @@ private:
   Esri::ArcGISRuntime::UtilityTraceParameters* createDefaultTraceParameters();
   QList<Esri::ArcGISRuntime::CodedValue> createPhaseList();
   Esri::ArcGISRuntime::UtilityCategory* getUtilityCategory(const QString categoryName, const Esri::ArcGISRuntime::UtilityNetwork* utilityNetwork);
+  Esri::ArcGISRuntime::UtilityTraceParameters* createTraceParametersWithCodedValue(Esri::ArcGISRuntime::CodedValue);
 
   Esri::ArcGISRuntime::Map* m_map = nullptr;
   Esri::ArcGISRuntime::MapQuickView* m_mapView = nullptr;
@@ -94,7 +95,16 @@ private:
   Esri::ArcGISRuntime::UtilityTraceConfiguration* m_traceConfiguration = nullptr;
   Esri::ArcGISRuntime::UtilityTier* m_utilityTier = nullptr;
 
-  QUuid m_globalId;
+  QString m_networkSourceName;
+  QString m_assetGroupName;
+  QString m_assetTypeName;
+  QString m_terminalName;
+  QString m_globalId;
+  QString m_domainNetworkName;
+  QString m_tierName;
+  QString m_serviceCategoryName;
+  QString m_loadNetworkAttributeName;
+  QString m_phasesNetworkAttributeName;
 };
 
 #endif // CREATELOADREPORT_H

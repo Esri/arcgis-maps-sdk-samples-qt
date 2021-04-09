@@ -58,9 +58,19 @@ using namespace Esri::ArcGISRuntime;
 CreateLoadReport::CreateLoadReport(QObject* parent /* = nullptr */):
   QObject(parent),
   m_map(new Map(BasemapStyle::ArcGISColoredPencil, this)),
-  m_cred(new Credential("editor01", "S7#i2LWmYH75", this)),
-  m_globalId(QUuid("1CAF7740-0BF4-4113-8DB2-654E18800028"))
+  m_cred(new Credential("editor01", "S7#i2LWmYH75", this))
 {
+  m_networkSourceName = "Electric Distribution Device";
+  m_assetGroupName = "Circuit Breaker";
+  m_assetTypeName = "Three Phase";
+  m_terminalName = "Load";
+  m_globalId = "{1CAF7740-0BF4-4113-8DB2-654E18800028}";
+  m_domainNetworkName = "ElectricDistribution";
+  m_tierName = "Medium Voltage Radial";
+  m_serviceCategoryName = "ServicePoint";
+  m_loadNetworkAttributeName = "Service Load";
+  m_phasesNetworkAttributeName = "Phases Current";
+
   m_utilityNetwork = new UtilityNetwork(QUrl("https://sampleserver7.arcgisonline.com/server/rest/services/UtilityNetwork/NapervilleElectric/FeatureServer"), m_cred, this);
 
   connect(m_utilityNetwork, &UtilityNetwork::doneLoading, this, [this]()
@@ -68,14 +78,14 @@ CreateLoadReport::CreateLoadReport(QObject* parent /* = nullptr */):
 
     m_utilityAssetType = m_utilityNetwork
         ->definition()
-        ->networkSource("Electric Distribution Device")
-        ->assetGroup("Circuit Breaker")
-        ->assetType("Three Phase");
+        ->networkSource(m_networkSourceName)
+        ->assetGroup(m_assetGroupName)
+        ->assetType(m_assetTypeName);
 
     m_utilityTier = m_utilityNetwork
         ->definition()
-        ->domainNetwork("ElectricDistribution")
-        ->tier("Medium Voltage Radial");
+        ->domainNetwork(m_domainNetworkName)
+        ->tier(m_tierName);
 
 
 
@@ -88,10 +98,11 @@ CreateLoadReport::CreateLoadReport(QObject* parent /* = nullptr */):
 void CreateLoadReport::initializeLoadReport()
 {
   qDebug() << "initilializing load report";
-  /* UtilityElement* */             m_startingLocation = createStartingLocation();
-  /* UtilityTraceConfiguration* */  m_traceConfiguration = createDefaultTraceConfiguration();
-  /* UtilityTraceCondition* */      m_baseCondition = dynamic_cast<UtilityTraceConditionalExpression*>(m_utilityTier->traceConfiguration()->traversability()->barriers());
-  /* UtilityTraceParameters* */     m_traceParameters = createDefaultTraceParameters();
+  /* UtilityElement* */                         m_startingLocation = createStartingLocation();
+  /* UtilityTraceConfiguration* */              m_traceConfiguration = createDefaultTraceConfiguration();
+  /* UtilityTraceConditionalExpression* */      m_baseCondition = dynamic_cast<UtilityTraceConditionalExpression*>(m_utilityTier->traceConfiguration()->traversability()->barriers());
+  /* UtilityTraceParameters* */                 m_traceParameters = createDefaultTraceParameters();
+
   m_traceParameters->setTraceConfiguration(m_traceConfiguration);
   m_phaseList = createPhaseList();
   qDebug() << "ready to go";
@@ -112,7 +123,7 @@ UtilityElement* CreateLoadReport::createStartingLocation()
 
   for (UtilityTerminal* utilityTerminal : utilityTerminals)
   {
-    if(utilityTerminal->name() == "Load")
+    if(utilityTerminal->name() == m_terminalName)
     {
       m_utilityTerminal = utilityTerminal;
       break;
@@ -122,18 +133,18 @@ UtilityElement* CreateLoadReport::createStartingLocation()
   if (!m_utilityTerminal)
     return nullptr;
 
-  return m_utilityNetwork->createElementWithAssetType(m_utilityAssetType, m_globalId, m_utilityTerminal, this);
+  return m_utilityNetwork->createElementWithAssetType(m_utilityAssetType, QUuid(m_globalId), m_utilityTerminal, this);
 }
 
-Esri::ArcGISRuntime::UtilityTraceConfiguration* CreateLoadReport::createDefaultTraceConfiguration()
+Esri::ArcGISRuntime::UtilityTraceConfiguration* CreateLoadReport:createDefaultTraceConfiguration()
 {
   UtilityTraceConfiguration* traceConfig = m_utilityTier->traceConfiguration();
 
   // Service Category for counting total customers
-  UtilityCategory* servicePointCategory = getUtilityCategory("Service Point", m_utilityNetwork);
+  UtilityCategory* servicePointCategory = getUtilityCategory(m_serviceCategoryName, m_utilityNetwork);
   UtilityTraceCondition* serviceCategoryComparison = dynamic_cast<UtilityTraceCondition*>(new UtilityCategoryComparison(servicePointCategory, UtilityCategoryComparisonOperator::Exists, this));
 
-  UtilityNetworkAttribute* serviceLoadAttribute = m_utilityNetwork->definition()->networkAttribute("Service Load");
+  UtilityNetworkAttribute* serviceLoadAttribute = m_utilityNetwork->definition()->networkAttribute(m_loadNetworkAttributeName);
 
   // For counting total load
   UtilityTraceFunction* addLoadAttributeFunction = new UtilityTraceFunction(UtilityTraceFunctionType::Add, serviceLoadAttribute, serviceCategoryComparison, this);
@@ -141,7 +152,7 @@ Esri::ArcGISRuntime::UtilityTraceConfiguration* CreateLoadReport::createDefaultT
   traceConfig->functions()->clear();
   traceConfig->functions()->append(addLoadAttributeFunction);
   traceConfig->setOutputCondition(serviceCategoryComparison);
-  // traceConfig->setIncludeBarriers(false);
+  traceConfig->setIncludeBarriers(false);
 
   return traceConfig;
 }
@@ -149,8 +160,8 @@ Esri::ArcGISRuntime::UtilityTraceConfiguration* CreateLoadReport::createDefaultT
 Esri::ArcGISRuntime::UtilityTraceParameters* CreateLoadReport::createDefaultTraceParameters()
 {
   UtilityTraceParameters* traceParameters = new UtilityTraceParameters(UtilityTraceType::Downstream, {m_startingLocation}, this);
-  traceParameters->resultTypes().append(UtilityTraceResultType::FunctionOutputs);
-  traceParameters->setTraceConfiguration(m_utilityTier->traceConfiguration());
+  traceParameters->setResultTypes({UtilityTraceResultType::Elements, UtilityTraceResultType::FunctionOutputs});
+  traceParameters->setTraceConfiguration(m_traceConfiguration);
 
   return traceParameters;
 }
@@ -170,12 +181,33 @@ UtilityCategory* CreateLoadReport::getUtilityCategory(const QString categoryName
   return nullptr;
 }
 
+UtilityTraceParameters* CreateLoadReport::createTraceParametersWithCodedValue(CodedValue codedValue)
+{
+  UtilityTraceParameters* traceParameters = new UtilityTraceParameters(UtilityTraceType::Downstream, {m_startingLocation}, this);
+  traceParameters->setResultTypes({UtilityTraceResultType::Elements, UtilityTraceResultType::FunctionOutputs});
+  traceParameters->setTraceConfiguration(m_utilityTier->traceConfiguration());
+  traceParameters->setTraceConfiguration(m_traceConfiguration);
 
+  UtilityTraceConditionalExpression* utilityNetworkAttributeComparison = dynamic_cast<UtilityTraceConditionalExpression*>(
+        new UtilityNetworkAttributeComparison(
+          m_phasesCurrentAttribute,
+          UtilityAttributeComparisonOperator::DoesNotIncludeAny,
+          codedValue.code()));
+
+  UtilityTraceOrCondition* utilityTraceOrCondition = nullptr;
+  if (utilityNetworkAttributeComparison && m_baseCondition)
+    utilityTraceOrCondition = new UtilityTraceOrCondition(m_baseCondition, utilityNetworkAttributeComparison, this);
+
+  if (utilityTraceOrCondition)
+    traceParameters->traceConfiguration()->traversability()->setBarriers(utilityTraceOrCondition);
+
+  return traceParameters;
+}
 
 
 QList<Esri::ArcGISRuntime::CodedValue> CreateLoadReport::createPhaseList()
 {
-  m_phasesCurrentAttribute = m_utilityNetwork->definition()->networkAttribute("Phases Current");
+  m_phasesCurrentAttribute = m_utilityNetwork->definition()->networkAttribute(m_phasesNetworkAttributeName);
 
   if (m_phasesCurrentAttribute->domain().domainType() == DomainType::CodedValueDomain)
   {
@@ -199,10 +231,18 @@ void CreateLoadReport::runReport(QStringList selectedPhaseNames)
   {
     if (selectedPhaseNames.contains(codedValue.name()))
       activeValues.append(codedValue);
+    else
+    {
+      m_phaseCust[codedValue.name()] = 0;
+      m_phaseLoad[codedValue.name()] = 0;
+      emit loadReportUpdated();
+    }
   }
   qDebug() << activeValues.size();
+
   for (CodedValue codedValue : activeValues)
   {
+
     UtilityTraceConditionalExpression* utilityNetworkAttributeComparison = dynamic_cast<UtilityTraceConditionalExpression*>(
           new UtilityNetworkAttributeComparison(
             m_phasesCurrentAttribute,
@@ -216,19 +256,16 @@ void CreateLoadReport::runReport(QStringList selectedPhaseNames)
     if (utilityTraceOrCondition)
       m_traceParameters->traceConfiguration()->traversability()->setBarriers(utilityTraceOrCondition);
 
-    connect(m_utilityNetwork, &UtilityNetwork::traceCompleted, this, [this, codedValue](QUuid taskId)
+    connect(m_utilityNetwork, &UtilityNetwork::traceCompleted, this, [this, codedValue](QUuid taskId) mutable
     {
-      qDebug() << taskId;
-      qDebug() << codedValue.name();
       int totalCustomers = 0;
       int totalPhaseLoad = 0;
       UtilityTraceResultListModel* results = m_utilityNetwork->traceResult();
-      qDebug() << "Results" << results->size();
+      //qDebug() << "Results" << results->size();
 
       for (UtilityTraceResult* result : *results) {
         if (UtilityElementTraceResult* elementResult = dynamic_cast<UtilityElementTraceResult*>(result))
         {
-          qDebug() << "element result";
           QList<int> objectIds;
           for (UtilityElement* element : elementResult->elements())
           {
@@ -241,7 +278,6 @@ void CreateLoadReport::runReport(QStringList selectedPhaseNames)
         }
         if (UtilityFunctionTraceResult* functionResult = dynamic_cast<UtilityFunctionTraceResult*>(result))
         {
-          qDebug() << "function result";
           totalPhaseLoad = functionResult->functionOutputs().first()->result().toInt();
         }
       }
@@ -251,7 +287,6 @@ void CreateLoadReport::runReport(QStringList selectedPhaseNames)
       qDebug() << totalCustomers;
       qDebug() << totalPhaseLoad;
       emit loadReportUpdated();
-
     });
     qDebug() << "triggering trace";
     m_utilityNetwork->trace(m_traceParameters);
