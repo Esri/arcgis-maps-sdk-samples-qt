@@ -21,19 +21,19 @@ import Esri.Samples 1.0
 
 Item {
 
-    property var phaseVisible: {
-        "A": true,
+    property var phases: ["A", "AB", "ABC", "AC", "B", "BC", "C", "DeEnergized", "Unknown"]
+
+    property var selectedPhases: {
+        "A": false,
         "AB": false,
         "ABC": false,
         "AC": false,
-        "BC": true,
-        "B": true,
-        "C": true,
+        "BC": false,
+        "B": false,
+        "C": false,
         "DeEnergized": false,
         "Unknown": false
     }
-
-    property var selectedPhases: []
 
     // add a mapView component
     MapView {
@@ -61,82 +61,75 @@ Item {
             spacing: 25
 
             Row {
-                ComboBox {
-                    id: phaseSelect
-                    model: [
-                        "A",
-                        "AB",
-                        "ABC",
-                        "AC",
-                        "B",
-                        "BC",
-                        "C",
-                        "DeEnergized",
-                        "Unknown"
-                    ]
-                }
-
-                Button {
-                    text: "Add Phase"
-                    onClicked: {
-                        selectedPhases.push(phaseSelect.currentValue);
-                        sampleModel.addPhase(phaseSelect.currentValue);
-                        phaseVisible[phaseSelect.currentValue] = true;
-                    }
-                }
-
-                Button {
-                    text: "Run Report"
-                    onClicked: {
-                        sampleModel.runReport(selectedPhases);
-                    }
-                }
-            }
-
-            Row {
                 GridLayout {
                     id: grid
-                    columns: 3
+                    columns: 4
 
+                    Text {}
                     Text { text: "Phase"; }
                     Text { text: "Total customers"; }
                     Text { text: "Total load"; }
 
-//                    Text { text: "A"; visible: phaseVisible[text] }
-//                    Text { text: sampleModel.phaseCust["A"]; visible: phaseVisible["A"] }
-//                    Text { text: sampleModel.phaseLoad["A"]; visible: phaseVisible["A"] }
+                    CheckBox { onCheckedChanged: selectedPhases["A"] = !selectedPhases["A"]}
+                    Text { text: "A" }
+                    Text { text: sampleModel.phaseCust["A"] ? sampleModel.phaseCust["A"] : 0 }
+                    Text { text: sampleModel.phaseLoad["A"] ? sampleModel.phaseLoad["A"] : 0 }
 
-//                    Text { text: "AB"; visible: phaseVisible["AB"] }
-//                    Text { text: sampleModel.phaseCust["AB"]; visible: phaseVisible["AB"] }
-//                    Text { text: sampleModel.phaseLoad["AB"]; visible: phaseVisible["AB"] }
+                    CheckBox { onCheckedChanged: selectedPhases["AB"] = !selectedPhases["AB"]}
+                    Text { text: "AB" }
+                    Text { text: sampleModel.phaseCust["AB"] ? sampleModel.phaseCust["AB"] : 0 }
+                    Text { text: sampleModel.phaseLoad["AB"] ? sampleModel.phaseLoad["AB"] : 0 }
 
-//                    Text { text: "ABC"; visible: phaseVisible["ABC"] }
-//                    Text { text: sampleModel.phaseCust["ABC"]; visible: phaseVisible["ABC"] }
-//                    Text { text: sampleModel.phaseLoad["ABC"]; visible: phaseVisible["ABC"] }
+                    CheckBox { onCheckedChanged: selectedPhases["ABC"] = !selectedPhases["ABC"]}
+                    Text { text: "ABC" }
+                    Text { text: sampleModel.phaseCust["ABC"] ? sampleModel.phaseCust["ABC"] : 0 }
+                    Text { text: sampleModel.phaseLoad["ABC"] ? sampleModel.phaseLoad["ABC"] : 0 }
 
-//                    Text { text: "AC"; visible: phaseVisible["AC"] }
-//                    Text { text: sampleModel.phaseCust["AC"]; visible: phaseVisible["AC"] }
-//                    Text { text: sampleModel.phaseLoad["AC"]; visible: phaseVisible["AC"] }
+                    CheckBox { onCheckedChanged: selectedPhases["AC"] = !selectedPhases["AC"]}
+                    Text { text: "AC" }
+                    Text { text: sampleModel.phaseCust["AC"] ? sampleModel.phaseCust["AC"] : 0 }
+                    Text { text: sampleModel.phaseLoad["AC"] ? sampleModel.phaseLoad["AC"] : 0 }
 
-//                    Text { text: "BC"; visible: phaseVisible["BC"] }
-//                    Text { text: sampleModel.phaseCust["BC"]; visible: phaseVisible["BC"] }
-//                    Text { text: sampleModel.phaseLoad["BC"]; visible: phaseVisible["BC"] }
+                    CheckBox { onCheckedChanged: selectedPhases["B"] = !selectedPhases["B"]}
+                    Text { text: "B" }
+                    Text { text: sampleModel.phaseCust["B"] ? sampleModel.phaseCust["B"] : 0 }
+                    Text { text: sampleModel.phaseLoad["B"] ? sampleModel.phaseLoad["B"] : 0 }
 
-//                    Text { text: "B"; visible: phaseVisible["B"] }
-//                    Text { text: sampleModel.phaseCust["B"]; visible: phaseVisible["B"] }
-//                    Text { text: sampleModel.phaseLoad["B"]; visible: phaseVisible["B"] }
+                    CheckBox { onCheckedChanged: selectedPhases["BC"] = !selectedPhases["BC"]}
+                    Text { text: "BC" }
+                    Text { text: sampleModel.phaseCust["BC"] ? sampleModel.phaseCust["BC"] : 0 }
+                    Text { text: sampleModel.phaseLoad["BC"] ? sampleModel.phaseLoad["BC"] : 0 }
 
-//                    Text { text: "C"; visible: phaseVisible["C"] }
-//                    Text { text: sampleModel.phaseCust["C"]; visible: phaseVisible["C"] }
-//                    Text { text: sampleModel.phaseLoad["C"]; visible: phaseVisible["C"] }
+                    CheckBox { onCheckedChanged: selectedPhases["C"] = !selectedPhases["C"]}
+                    Text { text: "C" }
+                    Text { text: sampleModel.phaseCust["C"] ? sampleModel.phaseCust["C"] : 0 }
+                    Text { text: sampleModel.phaseLoad["C"] ? sampleModel.phaseLoad["C"] : 0 }
 
-//                    Text { text: "DeEngergized"; visible: phaseVisible["DeEnergized"] }
-//                    Text { text: sampleModel.phaseCust["DeEnergized"]; visible: phaseVisible["DeEnergized"] }
-//                    Text { text: sampleModel.phaseLoad["DeEnergized"]; visible: phaseVisible["DeEnergized"] }
+                    CheckBox { onCheckedChanged: selectedPhases["DeEnergized"] = !selectedPhases["DeEnergized"]}
+                    Text { text: "DeEnergized" }
+                    Text { text: sampleModel.phaseCust["DeEnergized"] ? sampleModel.phaseCust["DeEnergized"] : 0 }
+                    Text { text: sampleModel.phaseLoad["DeEnergized"] ? sampleModel.phaseLoad["DeEnergized"] : 0 }
 
-//                    Text { text: "Unknown"; visible: phaseVisible["Unknown"] }
-//                    Text { text: sampleModel.phaseCust["Unknown"]; visible: phaseVisible["Unknown"] }
-//                    Text { text: sampleModel.phaseLoad["Unknown"]; visible: phaseVisible["Unknown"] }
+                    CheckBox { onCheckedChanged: selectedPhases["Unknown"] = !selectedPhases["Unknown"]}
+                    Text { text: "Unknown" }
+                    Text { text: sampleModel.phaseCust["Unknown"] ? sampleModel.phaseCust["Unknown"] : 0 }
+                    Text { text: sampleModel.phaseLoad["Unknown"] ? sampleModel.phaseLoad["Unknown"] : 0 }
+                }
+            }
+
+            Row {
+                Button {
+                    text: "Run Report"
+                    onClicked: {
+                        let runPhases = [];
+                        phases.forEach((phase) => {
+                                           console.log(selectedPhases[phase])
+                                           if (selectedPhases[phase])
+                                           runPhases.push(phase)
+                                       });
+                        console.log(runPhases);
+                        sampleModel.runReport(runPhases);
+                    }
                 }
             }
         }

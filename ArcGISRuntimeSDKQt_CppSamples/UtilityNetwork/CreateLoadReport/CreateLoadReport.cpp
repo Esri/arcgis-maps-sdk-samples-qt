@@ -90,7 +90,7 @@ void CreateLoadReport::initializeLoadReport()
   qDebug() << "initilializing load report";
   /* UtilityElement* */             m_startingLocation = createStartingLocation();
   /* UtilityTraceConfiguration* */  m_traceConfiguration = createDefaultTraceConfiguration();
-  /* UtilityTraceCondition* */      m_baseCondition = dynamic_cast<UtilityTraceConditionalExpression*>(m_traceConfiguration->traversability()->barriers());
+  /* UtilityTraceCondition* */      m_baseCondition = dynamic_cast<UtilityTraceConditionalExpression*>(m_utilityTier->traceConfiguration()->traversability()->barriers());
   /* UtilityTraceParameters* */     m_traceParameters = createDefaultTraceParameters();
   m_traceParameters->setTraceConfiguration(m_traceConfiguration);
   m_phaseList = createPhaseList();
@@ -141,7 +141,7 @@ Esri::ArcGISRuntime::UtilityTraceConfiguration* CreateLoadReport::createDefaultT
   traceConfig->functions()->clear();
   traceConfig->functions()->append(addLoadAttributeFunction);
   traceConfig->setOutputCondition(serviceCategoryComparison);
-  traceConfig->setIncludeBarriers(false);
+  // traceConfig->setIncludeBarriers(false);
 
   return traceConfig;
 }
@@ -211,10 +211,10 @@ void CreateLoadReport::runReport(QStringList selectedPhaseNames)
 
     UtilityTraceOrCondition* utilityTraceOrCondition = nullptr;
     if (utilityNetworkAttributeComparison && m_baseCondition)
-      utilityTraceOrCondition = new UtilityTraceOrCondition(utilityNetworkAttributeComparison, m_baseCondition, this);
+      utilityTraceOrCondition = new UtilityTraceOrCondition(m_baseCondition, utilityNetworkAttributeComparison, this);
 
-        if (utilityTraceOrCondition)
-          m_traceParameters->traceConfiguration()->traversability()->setBarriers(utilityTraceOrCondition);
+    if (utilityTraceOrCondition)
+      m_traceParameters->traceConfiguration()->traversability()->setBarriers(utilityTraceOrCondition);
 
     connect(m_utilityNetwork, &UtilityNetwork::traceCompleted, this, [this, codedValue](QUuid taskId)
     {
@@ -224,27 +224,34 @@ void CreateLoadReport::runReport(QStringList selectedPhaseNames)
       int totalPhaseLoad = 0;
       UtilityTraceResultListModel* results = m_utilityNetwork->traceResult();
       qDebug() << "Results" << results->size();
+
       for (UtilityTraceResult* result : *results) {
         if (UtilityElementTraceResult* elementResult = dynamic_cast<UtilityElementTraceResult*>(result))
         {
+          qDebug() << "element result";
           QList<int> objectIds;
           for (UtilityElement* element : elementResult->elements())
           {
             if (!objectIds.contains(element->objectId()))
+            {
               ++totalCustomers;
+              objectIds.append(element->objectId());
+            }
           }
-
         }
         if (UtilityFunctionTraceResult* functionResult = dynamic_cast<UtilityFunctionTraceResult*>(result))
         {
+          qDebug() << "function result";
           totalPhaseLoad = functionResult->functionOutputs().first()->result().toInt();
         }
       }
+
       m_phaseCust[codedValue.name()] = totalCustomers;
       m_phaseLoad[codedValue.name()] = totalPhaseLoad;
       qDebug() << totalCustomers;
       qDebug() << totalPhaseLoad;
       emit loadReportUpdated();
+
     });
     qDebug() << "triggering trace";
     m_utilityNetwork->trace(m_traceParameters);
@@ -299,4 +306,3 @@ QVariantMap CreateLoadReport::phaseLoad()
 {
   return m_phaseLoad;
 }
-
