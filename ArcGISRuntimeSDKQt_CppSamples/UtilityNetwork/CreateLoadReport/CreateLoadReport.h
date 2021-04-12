@@ -25,6 +25,7 @@ class Credential;
 class Map;
 class MapQuickView;
 class CodedValue;
+class TaskWatcher;
 class UtilityAssetType;
 class UtilityCategory;
 class UtilityElement;
@@ -77,6 +78,7 @@ private:
   QList<Esri::ArcGISRuntime::CodedValue> createPhaseList();
   Esri::ArcGISRuntime::UtilityCategory* getUtilityCategory(const QString categoryName, const Esri::ArcGISRuntime::UtilityNetwork* utilityNetwork);
   Esri::ArcGISRuntime::UtilityTraceParameters* createTraceParametersWithCodedValue(Esri::ArcGISRuntime::CodedValue);
+  void createTraceCompletedConnection();
 
   Esri::ArcGISRuntime::Map* m_map = nullptr;
   Esri::ArcGISRuntime::MapQuickView* m_mapView = nullptr;
@@ -94,6 +96,7 @@ private:
   QVariantMap m_phaseLoad;
   Esri::ArcGISRuntime::UtilityTraceConfiguration* m_traceConfiguration = nullptr;
   Esri::ArcGISRuntime::UtilityTier* m_utilityTier = nullptr;
+  QMap<QUuid, QString> m_tasks;
 
   QString m_networkSourceName;
   QString m_assetGroupName;

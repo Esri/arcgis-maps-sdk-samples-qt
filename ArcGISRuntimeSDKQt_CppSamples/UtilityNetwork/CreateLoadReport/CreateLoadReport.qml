@@ -35,29 +35,23 @@ Item {
         "Unknown": false
     }
 
-    // add a mapView component
-    MapView {
-        id: view
-        anchors.fill: parent
-    }
-
     // Declare the C++ instance which creates the scene etc. and supply the view
     CreateLoadReportSample {
         id: sampleModel
-        mapView: view
     }
 
     Rectangle {
+        id: rectangle
         color: "white"
         width: contents.width
         height: contents.height
-        anchors {
-            top: parent.top
-            left: parent.left
-            margins: 10
-        }
+        anchors.fill: parent
+
         Column {
+
             id: contents
+            anchors.fill: parent
+            padding: 10
             spacing: 25
 
             Row {
@@ -66,9 +60,9 @@ Item {
                     columns: 4
 
                     Text {}
-                    Text { text: "Phase"; }
-                    Text { text: "Total customers"; }
-                    Text { text: "Total load"; }
+                    Text { text: "Phase"; font.pointSize: 18; font.bold: true }
+                    Text { text: "Total customers"; font.pointSize: 18; font.bold: true; }
+                    Text { text: "Total load"; font.bold: true; font.pointSize: 18 }
 
                     CheckBox { onCheckedChanged: selectedPhases["A"] = !selectedPhases["A"]}
                     Text { text: "A" }
@@ -123,11 +117,9 @@ Item {
                     onClicked: {
                         let runPhases = [];
                         phases.forEach((phase) => {
-                                           console.log(selectedPhases[phase])
                                            if (selectedPhases[phase])
                                            runPhases.push(phase)
                                        });
-                        console.log(runPhases);
                         sampleModel.runReport(runPhases);
                     }
                 }
@@ -135,3 +127,9 @@ Item {
         }
     }
 }
+
+/*##^##
+Designer {
+    D{i:0;autoSize:true;height:480;width:640}
+}
+##^##*/
