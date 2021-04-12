@@ -20,7 +20,6 @@ import QtQuick.Layouts 1.3
 import Esri.Samples 1.0
 
 Item {
-
     property var phases: ["A", "AB", "ABC", "AC", "B", "BC", "C", "DeEnergized", "Unknown"]
 
     property var selectedPhases: {
@@ -43,9 +42,12 @@ Item {
     Rectangle {
         id: rectangle
         color: "white"
-        width: contents.width
+        width: grid.width
         height: contents.height
-        anchors.fill: parent
+        anchors {
+            horizontalCenter: parent.horizontalCenter
+
+        }
 
         Column {
 
@@ -127,9 +129,3 @@ Item {
         }
     }
 }
-
-/*##^##
-Designer {
-    D{i:0;autoSize:true;height:480;width:640}
-}
-##^##*/

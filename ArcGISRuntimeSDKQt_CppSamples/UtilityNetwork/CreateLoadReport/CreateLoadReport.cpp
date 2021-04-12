@@ -153,7 +153,7 @@ UtilityElement* CreateLoadReport::createStartingLocation()
   {
     if(utilityTerminal->name() == m_terminalName)
     {
-      m_utilityTerminal = utilityTerminal;
+      m_utilityTerminal = utilityTerminal; // does not need to be global
       break;
     }
   }
@@ -169,7 +169,7 @@ Esri::ArcGISRuntime::UtilityTraceConfiguration* CreateLoadReport::createDefaultT
   UtilityTraceConfiguration* traceConfig = m_utilityTier->traceConfiguration();
 
   // Service Category for counting total customers
-  UtilityCategory* servicePointCategory = getUtilityCategory(m_serviceCategoryName, m_utilityNetwork);
+  UtilityCategory* servicePointCategory = getUtilityCategory(m_serviceCategoryName);
   UtilityTraceCondition* serviceCategoryComparison = dynamic_cast<UtilityTraceCondition*>(new UtilityCategoryComparison(servicePointCategory, UtilityCategoryComparisonOperator::Exists, this));
 
   UtilityNetworkAttribute* serviceLoadAttribute = m_utilityNetwork->definition()->networkAttribute(m_loadNetworkAttributeName);
@@ -185,13 +185,13 @@ Esri::ArcGISRuntime::UtilityTraceConfiguration* CreateLoadReport::createDefaultT
   return traceConfig;
 }
 
-UtilityCategory* CreateLoadReport::getUtilityCategory(const QString categoryName, const Esri::ArcGISRuntime::UtilityNetwork* utilityNetwork)
+UtilityCategory* CreateLoadReport::getUtilityCategory(const QString categoryName)
 {
-  QList<UtilityCategory*> utilityCategories = utilityNetwork->definition()->categories();
+  QList<UtilityCategory*> utilityCategories = m_utilityNetwork->definition()->categories();
 
   for (UtilityCategory* utilityCategory : utilityCategories)
   {
-    if(utilityCategory->name() == categoryName)
+    if (utilityCategory->name() == categoryName)
     {
       return utilityCategory;
       break;
@@ -205,8 +205,6 @@ UtilityTraceParameters* CreateLoadReport::createTraceParametersWithCodedValue(Co
   UtilityTraceParameters* traceParameters = new UtilityTraceParameters(UtilityTraceType::Downstream, {m_startingLocation}, this);
   traceParameters->resultTypes().append(UtilityTraceResultType::FunctionOutputs);
   traceParameters->setResultTypes({UtilityTraceResultType::Elements, UtilityTraceResultType::FunctionOutputs});
-  traceParameters->setTraceConfiguration(m_traceConfiguration);
-
   traceParameters->setTraceConfiguration(m_traceConfiguration);
 
   UtilityTraceConditionalExpression* utilityNetworkAttributeComparison = dynamic_cast<UtilityTraceConditionalExpression*>(
@@ -271,23 +269,6 @@ CreateLoadReport::~CreateLoadReport() = default;
 void CreateLoadReport::init()
 {
   qmlRegisterType<CreateLoadReport>("Esri.Samples", 1, 0, "CreateLoadReportSample");
-}
-
-MapQuickView* CreateLoadReport::mapView() const
-{
-  return m_mapView;
-}
-
-// Set the view (created in QML)
-void CreateLoadReport::setMapView(MapQuickView* mapView)
-{
-  if (!mapView || mapView == m_mapView)
-    return;
-
-  m_mapView = mapView;
-  m_mapView->setMap(m_map);
-
-  emit mapViewChanged();
 }
 
 void CreateLoadReport::reset()

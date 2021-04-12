@@ -48,8 +48,6 @@ class CreateLoadReport : public QObject
 {
   Q_OBJECT
 
-
-  Q_PROPERTY(Esri::ArcGISRuntime::MapQuickView* mapView READ mapView WRITE setMapView NOTIFY mapViewChanged)
   Q_PROPERTY(QVariantMap phaseCust READ phaseCust NOTIFY loadReportUpdated)
   Q_PROPERTY(QVariantMap phaseLoad READ phaseLoad NOTIFY loadReportUpdated)
 
@@ -63,12 +61,9 @@ public:
   Q_INVOKABLE void reset();
 
 signals:
-  void mapViewChanged();
   void loadReportUpdated();
 
 private:
-  Esri::ArcGISRuntime::MapQuickView* mapView() const;
-  void setMapView(Esri::ArcGISRuntime::MapQuickView* mapView);
   QVariantMap phaseCust();
   QVariantMap phaseLoad();
   Esri::ArcGISRuntime::UtilityElement* createStartingLocation();
@@ -76,7 +71,7 @@ private:
   Esri::ArcGISRuntime::UtilityTraceConfiguration* createDefaultTraceConfiguration();
   Esri::ArcGISRuntime::UtilityTraceParameters* createDefaultTraceParameters();
   QList<Esri::ArcGISRuntime::CodedValue> createPhaseList();
-  Esri::ArcGISRuntime::UtilityCategory* getUtilityCategory(const QString categoryName, const Esri::ArcGISRuntime::UtilityNetwork* utilityNetwork);
+  Esri::ArcGISRuntime::UtilityCategory* getUtilityCategory(const QString categoryName);
   Esri::ArcGISRuntime::UtilityTraceParameters* createTraceParametersWithCodedValue(Esri::ArcGISRuntime::CodedValue);
   void createTraceCompletedConnection();
 
