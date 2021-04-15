@@ -2,7 +2,7 @@
 ArcGIS Runtime SDK 100.11 for Qt sample applications.  The repo contains [Qt](http://qt.io) projects for each sample that can be run from within the Qt Creator IDE.
 
 # Prerequisites
-* Qt SDK 5.15.1 or higher (Open source or commercial)
+* Qt SDK 5.15.2 or higher (Open source or commercial)
 * Qt Creator
 * [ArcGIS Runtime Toolkit - Qt](https://github.com/Esri/arcgis-runtime-toolkit-qt) is required as some samples utilize toolkit components. 
 * For more information, please visit the [System Requirements](https://developers.arcgis.com/qt/reference/system-requirements/) page.
