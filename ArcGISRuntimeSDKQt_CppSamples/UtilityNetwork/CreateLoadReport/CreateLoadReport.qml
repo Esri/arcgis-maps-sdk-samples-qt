@@ -34,6 +34,8 @@ Item {
         "Unknown": false
     }
 
+    property bool reportHasRun: false
+
     // Declare the C++ instance which creates the scene etc. and supply the view
     CreateLoadReportSample {
         id: sampleModel
@@ -49,6 +51,12 @@ Item {
 
         }
 
+        ButtonGroup {
+            id: checkBoxes
+            exclusive: false
+            checkState: parentBox.checkState
+        }
+
         Column {
 
             id: contents
@@ -57,65 +65,77 @@ Item {
             spacing: 25
 
             Row {
+
                 GridLayout {
                     id: grid
                     columns: 4
+                    columnSpacing: 50
+                    rowSpacing: 5
 
-                    Text {}
+                    CheckBox { id: parentBox; checkState: checkBoxes.checkState }
                     Text { text: "Phase"; font.pointSize: 18; font.bold: true }
                     Text { text: "Total customers"; font.pointSize: 18; font.bold: true; }
                     Text { text: "Total load"; font.bold: true; font.pointSize: 18 }
 
-                    CheckBox { onCheckedChanged: selectedPhases["A"] = !selectedPhases["A"]}
+                    CheckBox { id: checkA; onCheckedChanged: selectedPhases["A"] = !selectedPhases["A"]; ButtonGroup.group: checkBoxes }
                     Text { text: "A" }
-                    Text { text: sampleModel.phaseCust["A"] ? sampleModel.phaseCust["A"] : 0 }
-                    Text { text: sampleModel.phaseLoad["A"] ? sampleModel.phaseLoad["A"] : 0 }
+                    Text { text: "A" in sampleModel.phaseCust ? sampleModel.phaseCust["A"].toLocaleString(Qt.locale(), "f", 0) : "NA" }
+                    Text { text: "A" in sampleModel.phaseLoad ? sampleModel.phaseLoad["A"].toLocaleString(Qt.locale(), "f", 0) : "NA" }
 
-                    CheckBox { onCheckedChanged: selectedPhases["AB"] = !selectedPhases["AB"]}
+                    CheckBox { id: checkAB; onCheckedChanged: selectedPhases["AB"] = !selectedPhases["AB"]; ButtonGroup.group: checkBoxes }
                     Text { text: "AB" }
-                    Text { text: sampleModel.phaseCust["AB"] ? sampleModel.phaseCust["AB"] : 0 }
-                    Text { text: sampleModel.phaseLoad["AB"] ? sampleModel.phaseLoad["AB"] : 0 }
+                    Text { text: "AB" in sampleModel.phaseCust ? sampleModel.phaseCust["AB"].toLocaleString(Qt.locale(), "f", 0) : "NA" }
+                    Text { text: "AB" in sampleModel.phaseLoad ? sampleModel.phaseLoad["AB"].toLocaleString(Qt.locale(), "f", 0) : "NA" }
 
-                    CheckBox { onCheckedChanged: selectedPhases["ABC"] = !selectedPhases["ABC"]}
+                    CheckBox { id: checkABC; onCheckedChanged: selectedPhases["ABC"] = !selectedPhases["ABC"]; ButtonGroup.group: checkBoxes }
                     Text { text: "ABC" }
-                    Text { text: sampleModel.phaseCust["ABC"] ? sampleModel.phaseCust["ABC"] : 0 }
-                    Text { text: sampleModel.phaseLoad["ABC"] ? sampleModel.phaseLoad["ABC"] : 0 }
+                    Text { text: "ABC" in sampleModel.phaseCust ? sampleModel.phaseCust["ABC"].toLocaleString(Qt.locale(), "f", 0) : "NA" }
+                    Text { text: "ABC" in sampleModel.phaseLoad ? sampleModel.phaseLoad["ABC"].toLocaleString(Qt.locale(), "f", 0) : "NA" }
 
-                    CheckBox { onCheckedChanged: selectedPhases["AC"] = !selectedPhases["AC"]}
+                    CheckBox { id: checkAC; onCheckedChanged: selectedPhases["AC"] = !selectedPhases["AC"]; ButtonGroup.group: checkBoxes }
                     Text { text: "AC" }
-                    Text { text: sampleModel.phaseCust["AC"] ? sampleModel.phaseCust["AC"] : 0 }
-                    Text { text: sampleModel.phaseLoad["AC"] ? sampleModel.phaseLoad["AC"] : 0 }
+                    Text { text: "AC" in sampleModel.phaseCust ? sampleModel.phaseCust["AC"].toLocaleString(Qt.locale(), "f", 0) : "NA" }
+                    Text { text: "AC" in sampleModel.phaseLoad ? sampleModel.phaseLoad["AC"].toLocaleString(Qt.locale(), "f", 0) : "NA" }
 
-                    CheckBox { onCheckedChanged: selectedPhases["B"] = !selectedPhases["B"]}
+                    CheckBox { id: checkB; onCheckedChanged: selectedPhases["B"] = !selectedPhases["B"]; ButtonGroup.group: checkBoxes }
                     Text { text: "B" }
-                    Text { text: sampleModel.phaseCust["B"] ? sampleModel.phaseCust["B"] : 0 }
-                    Text { text: sampleModel.phaseLoad["B"] ? sampleModel.phaseLoad["B"] : 0 }
+                    Text { text: "B" in sampleModel.phaseCust ? sampleModel.phaseCust["B"].toLocaleString(Qt.locale(), "f", 0) : "NA" }
+                    Text { text: "B" in sampleModel.phaseLoad ? sampleModel.phaseLoad["B"].toLocaleString(Qt.locale(), "f", 0) : "NA" }
 
-                    CheckBox { onCheckedChanged: selectedPhases["BC"] = !selectedPhases["BC"]}
+                    CheckBox { id: checkBC; onCheckedChanged: selectedPhases["BC"] = !selectedPhases["BC"]; ButtonGroup.group: checkBoxes }
                     Text { text: "BC" }
-                    Text { text: sampleModel.phaseCust["BC"] ? sampleModel.phaseCust["BC"] : 0 }
-                    Text { text: sampleModel.phaseLoad["BC"] ? sampleModel.phaseLoad["BC"] : 0 }
+                    Text { text: "BC" in sampleModel.phaseCust ? sampleModel.phaseCust["BC"].toLocaleString(Qt.locale(), "f", 0) : "NA" }
+                    Text { text: "BC" in sampleModel.phaseLoad ? sampleModel.phaseLoad["BC"].toLocaleString(Qt.locale(), "f", 0) : "NA" }
 
-                    CheckBox { onCheckedChanged: selectedPhases["C"] = !selectedPhases["C"]}
+                    CheckBox { id: checkC; onCheckedChanged: selectedPhases["C"] = !selectedPhases["C"]; ButtonGroup.group: checkBoxes }
                     Text { text: "C" }
-                    Text { text: sampleModel.phaseCust["C"] ? sampleModel.phaseCust["C"] : 0 }
-                    Text { text: sampleModel.phaseLoad["C"] ? sampleModel.phaseLoad["C"] : 0 }
+                    Text { text: "C" in sampleModel.phaseCust ? sampleModel.phaseCust["C"].toLocaleString(Qt.locale(), "f", 0) : "NA" }
+                    Text { text: "C" in sampleModel.phaseLoad ? sampleModel.phaseLoad["C"].toLocaleString(Qt.locale(), "f", 0) : "NA" }
 
-                    CheckBox { onCheckedChanged: selectedPhases["DeEnergized"] = !selectedPhases["DeEnergized"]}
+                    CheckBox { id: checkDeEnergized; onCheckedChanged: selectedPhases["DeEnergized"] = !selectedPhases["DeEnergized"]; ButtonGroup.group: checkBoxes }
                     Text { text: "DeEnergized" }
-                    Text { text: sampleModel.phaseCust["DeEnergized"] ? sampleModel.phaseCust["DeEnergized"] : 0 }
-                    Text { text: sampleModel.phaseLoad["DeEnergized"] ? sampleModel.phaseLoad["DeEnergized"] : 0 }
+                    Text { text: "DeEnergized" in sampleModel.phaseCust ? sampleModel.phaseCust["DeEnergized"].toLocaleString(Qt.locale(), "f", 0) : "NA" }
+                    Text { text: "DeEnergized" in sampleModel.phaseLoad ? sampleModel.phaseLoad["DeEnergized"].toLocaleString(Qt.locale(), "f", 0) : "NA" }
 
-                    CheckBox { onCheckedChanged: selectedPhases["Unknown"] = !selectedPhases["Unknown"]}
+                    CheckBox { id: checkUnknown; onCheckedChanged: selectedPhases["Unknown"] = !selectedPhases["Unknown"]; ButtonGroup.group: checkBoxes }
                     Text { text: "Unknown" }
-                    Text { text: sampleModel.phaseCust["Unknown"] ? sampleModel.phaseCust["Unknown"] : 0 }
-                    Text { text: sampleModel.phaseLoad["Unknown"] ? sampleModel.phaseLoad["Unknown"] : 0 }
+                    Text { text: "Unknown" in sampleModel.phaseCust ? sampleModel.phaseCust["Unknown"].toLocaleString(Qt.locale(), "f", 0) : "NA" }
+                    Text { text: "Unknown" in sampleModel.phaseLoad ? sampleModel.phaseLoad["Unknown"].toLocaleString(Qt.locale(), "f", 0) : "NA" }
                 }
             }
 
             Row {
                 Button {
-                    text: "Run Report"
+                    text: {
+                        if (checkBoxes.checkState !== 0 || !reportHasRun) {
+                            "Run Report";
+                        } else {
+                            "Reset";
+                        }
+                    }
+
+                    enabled: ((reportHasRun || checkBoxes.checkState !== 0) && sampleModel.sampleStatus === 2) ? true : false
+
                     onClicked: {
                         let runPhases = [];
                         phases.forEach((phase) => {
@@ -123,6 +143,41 @@ Item {
                                            runPhases.push(phase)
                                        });
                         sampleModel.runReport(runPhases);
+
+                        if (runPhases.length === 0) {
+                            reportHasRun = false;
+                        } else {
+                            reportHasRun = true;
+                        }
+                    }
+                }
+            }
+
+            Row {
+                Text {
+                    id: noticeText
+                    text: {
+                        switch (sampleModel.sampleStatus) {
+                        case -1:
+                            "Error initializing sample";
+                            break;
+                        case 0:
+                            "Sample initializing...";
+                            break;
+                        case 1:
+                            "Sample running...";
+                            break;
+                        case 2:
+                            if (checkBoxes.checkState === 0 && !reportHasRun) {
+                                "Select phases to run the load report with";
+                            } else {
+                                "Tap the \"Run Report\" button to create the load report";
+                            }
+                            break;
+                        default:
+                            "";
+                            break;
+                        }
                     }
                 }
             }

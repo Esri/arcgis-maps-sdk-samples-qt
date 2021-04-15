@@ -50,6 +50,7 @@ class CreateLoadReport : public QObject
 
   Q_PROPERTY(QVariantMap phaseCust READ phaseCust NOTIFY loadReportUpdated)
   Q_PROPERTY(QVariantMap phaseLoad READ phaseLoad NOTIFY loadReportUpdated)
+  Q_PROPERTY(int sampleStatus READ sampleStatus NOTIFY sampleStatusChanged)
 
 public:
   explicit CreateLoadReport(QObject* parent = nullptr);
@@ -58,51 +59,50 @@ public:
   static void init();
   Q_INVOKABLE void addPhase(QString phaseToAdd);
   Q_INVOKABLE void runReport(QStringList selectedPhaseNames);
-  Q_INVOKABLE void reset();
 
 signals:
   void loadReportUpdated();
+  void sampleStatusChanged();
 
 private:
   QVariantMap phaseCust();
   QVariantMap phaseLoad();
-  Esri::ArcGISRuntime::UtilityElement* createStartingLocation();
-  void initializeLoadReport();
-  Esri::ArcGISRuntime::UtilityTraceConfiguration* createDefaultTraceConfiguration();
-  Esri::ArcGISRuntime::UtilityTraceParameters* createDefaultTraceParameters();
-  QList<Esri::ArcGISRuntime::CodedValue> createPhaseList();
+  int sampleStatus();
+
   Esri::ArcGISRuntime::UtilityCategory* getUtilityCategory(const QString categoryName);
+  Esri::ArcGISRuntime::UtilityElement* createStartingLocation();
+  Esri::ArcGISRuntime::UtilityTraceConfiguration* createDefaultTraceConfiguration();
   Esri::ArcGISRuntime::UtilityTraceParameters* createTraceParametersWithCodedValue(Esri::ArcGISRuntime::CodedValue);
+  QList<Esri::ArcGISRuntime::CodedValue> createPhaseList();
   void createTraceCompletedConnection();
 
-  Esri::ArcGISRuntime::Map* m_map = nullptr;
-  Esri::ArcGISRuntime::MapQuickView* m_mapView = nullptr;
   Esri::ArcGISRuntime::Credential* m_cred = nullptr;
   Esri::ArcGISRuntime::UtilityAssetType* m_utilityAssetType = nullptr;
   Esri::ArcGISRuntime::UtilityElement* m_startingLocation = nullptr;
   Esri::ArcGISRuntime::UtilityNetwork* m_utilityNetwork = nullptr;
-  Esri::ArcGISRuntime::UtilityTerminal* m_utilityTerminal = nullptr;
-  QStringList m_activePhases;
-  QList<Esri::ArcGISRuntime::CodedValue> m_phaseList;
-  Esri::ArcGISRuntime::UtilityTraceConditionalExpression* m_baseCondition = nullptr;
   Esri::ArcGISRuntime::UtilityNetworkAttribute* m_phasesCurrentAttribute = nullptr;
+  Esri::ArcGISRuntime::UtilityTerminal* m_utilityTerminal = nullptr;
+  Esri::ArcGISRuntime::UtilityTier* m_utilityTier = nullptr;
+  Esri::ArcGISRuntime::UtilityTraceConditionalExpression* m_baseCondition = nullptr;
+  Esri::ArcGISRuntime::UtilityTraceConfiguration* m_traceConfiguration = nullptr;
   Esri::ArcGISRuntime::UtilityTraceParameters* m_traceParameters = nullptr;
+  QList<Esri::ArcGISRuntime::CodedValue> m_phaseList;
+  QMap<QUuid, QString> m_tasks;
+  QStringList m_activePhases;
   QVariantMap m_phaseCust;
   QVariantMap m_phaseLoad;
-  Esri::ArcGISRuntime::UtilityTraceConfiguration* m_traceConfiguration = nullptr;
-  Esri::ArcGISRuntime::UtilityTier* m_utilityTier = nullptr;
-  QMap<QUuid, QString> m_tasks;
 
-  QString m_networkSourceName;
+  int m_sampleStatus;
   QString m_assetGroupName;
   QString m_assetTypeName;
-  QString m_terminalName;
-  QString m_globalId;
   QString m_domainNetworkName;
-  QString m_tierName;
-  QString m_serviceCategoryName;
+  QString m_globalId;
   QString m_loadNetworkAttributeName;
+  QString m_networkSourceName;
   QString m_phasesNetworkAttributeName;
+  QString m_serviceCategoryName;
+  QString m_terminalName;
+  QString m_tierName;
 };
 
 #endif // CREATELOADREPORT_H
