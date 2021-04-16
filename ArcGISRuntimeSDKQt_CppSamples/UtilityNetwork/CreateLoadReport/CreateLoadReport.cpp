@@ -211,12 +211,11 @@ void CreateLoadReport::runReport(QStringList selectedPhaseNames)
   {
     if (selectedPhaseNames.contains(codedValue.name()))
       activeValues.append(codedValue);
-    else
-    {
-      m_phaseCust.remove(codedValue.name());
-      m_phaseLoad.remove(codedValue.name());
-      emit loadReportUpdated();
-    }
+
+    m_phaseCust.remove(codedValue.name());
+    m_phaseLoad.remove(codedValue.name());
+
+    emit loadReportUpdated();
   }
 
   for (CodedValue codedValue : activeValues)

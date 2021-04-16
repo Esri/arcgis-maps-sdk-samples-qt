@@ -30,9 +30,9 @@ Rectangle {
     property var startingLocation: null
     property var phasesCurrentAttr: null
     property var phaseList: []
-    property var traceConfiguration: null
     property var baseCondition: null
     property var taskMap: null
+    // property var traceOrCondition: null
 
     property var phases: ["A", "AB", "ABC", "AC", "B", "BC", "C", "DeEnergized", "Unknown"]
 
@@ -96,6 +96,11 @@ Rectangle {
                 baseCondition = utilityTier.traceConfiguration.traversability.barriers;
                 phaseList = createPhaseList();
                 addLoadAttributeFunction.setNetworkAttribute();
+//                traceOrCondition = ArcGISRuntimeEnvironment.createObject("UtilityTraceOrCondition", {
+//                                                                                     leftExpression: baseCondition,
+//                                                                                     rightExpression: networkAttributeComparison
+//                                                                                 });
+
             }
         }
         onTraceStatusChanged: {
@@ -103,6 +108,7 @@ Rectangle {
         }
         onErrorChanged: {
             console.log(error.message);
+            console.log(error.additionalMessage);
         }
     }
 
@@ -113,8 +119,6 @@ Rectangle {
             const codedValueDomain = phasesCurrentAttr.domain;
             return codedValueDomain.codedValues;
         }
-
-
     }
 
     function createUtilityAssetType() {
@@ -160,6 +164,10 @@ Rectangle {
                 }
             }
         }
+
+        onErrorChanged: {
+            console.log(error.message);
+        }
     }
 
     UtilityTraceFunction {
@@ -170,16 +178,25 @@ Rectangle {
         function setNetworkAttribute() {
             addLoadAttributeFunction.networkAttribute = utilityNetwork.definition.networkAttribute("Service Load");
         }
+
+        onErrorChanged: {
+            console.log(error.message);
+        }
     }
 
     UtilityTraceConfiguration {
-        id: traceConfiguration
+        id: traceConfig
+        domainNetwork: utilityNetwork.definition.domainNetwork("ElectricDistribution")
         outputCondition: serviceCategoryComparison
         includeBarriers: false
-
+        // traversability: utilityTraversability
         Component.onCompleted: {
-            traceConfiguration.functions.clear();
-            traceConfiguration.functions.append(addLoadAttributeFunction);
+            functions.clear();
+            functions.append(addLoadAttributeFunction);
+        }
+
+        onErrorChanged: {
+            console.log(error.message);
         }
     }
 
@@ -187,8 +204,12 @@ Rectangle {
         id: traceParams
         traceType: Enums.UtilityTraceTypeDownstream
         startingLocations: [startingLocation]
-        traceConfiguration: traceConfiguration
+        traceConfiguration: traceConfig
         barriers: [traceOrCondition]
+
+        onErrorChanged: {
+            console.log(error.message);
+        }
 
         Component.onCompleted: {
             traceParams.resultTypes = [Enums.UtilityTraceResultTypeElements, Enums.UtilityTraceResultTypeFunctionOutputs]
@@ -203,12 +224,21 @@ Rectangle {
         id: networkAttributeComparison
         comparisonOperator: Enums.UtilityAttributeComparisonOperatorDoesNotIncludeAny
         otherNetworkAttribute: phasesCurrentAttr
+        onErrorChanged: {
+            console.log(error.message);
+        }
     }
 
     UtilityTraceOrCondition {
         id: traceOrCondition
         leftExpression: baseCondition
         rightExpression: networkAttributeComparison
+        Component.onCompleted: {
+            traceConfig.traversability.barriers = traceOrCondition;
+        }
+        onErrorChanged: {
+            console.log(error.message);
+        }
     }
 
     function runReport(selectedPhases) {

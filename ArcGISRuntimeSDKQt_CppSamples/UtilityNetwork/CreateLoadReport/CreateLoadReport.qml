@@ -165,7 +165,7 @@ Item {
                             "Sample initializing...";
                             break;
                         case 1:
-                            "Sample running...";
+                            "Generating load report...";
                             break;
                         case 2:
                             if (checkBoxes.checkState === 0 && !reportHasRun) {
