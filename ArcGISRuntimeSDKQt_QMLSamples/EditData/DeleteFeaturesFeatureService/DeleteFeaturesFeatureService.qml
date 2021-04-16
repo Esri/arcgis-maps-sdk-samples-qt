@@ -17,8 +17,8 @@
 import QtQuick 2.6
 import QtQuick.Controls 2.2
 import QtGraphicalEffects 1.0
-import Esri.ArcGISRuntime 100.11
-import Esri.ArcGISRuntime.Toolkit 100.11
+import Esri.ArcGISRuntime 100.12
+import Esri.ArcGISRuntime.Toolkit 100.12
 
 Rectangle {
     width: 800
