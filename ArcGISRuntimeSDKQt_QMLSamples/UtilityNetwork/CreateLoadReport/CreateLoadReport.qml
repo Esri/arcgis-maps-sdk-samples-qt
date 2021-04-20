@@ -16,8 +16,8 @@
 
 import QtQuick 2.6
 import Esri.ArcGISRuntime 100.11
-import QtQuick.Controls 2.0
-import QtQuick.Layouts 1.0
+import QtQuick.Controls 2.2
+import QtQuick.Layouts 1.3
 
 Rectangle {
     id: rootRectangle
@@ -43,7 +43,7 @@ Rectangle {
 
     property var phases: ["A", "AB", "ABC", "AC", "B", "BC", "C", "DeEnergized", "Unknown"]
 
-    property var selectedPhases: {
+    property var checkedPhases: {
         "A": false,
         "AB": false,
         "ABC": false,
@@ -55,10 +55,8 @@ Rectangle {
         "Unknown": false
     }
 
-    property var phaseLoad: ({})
-
     property var phaseCust: ({})
-
+    property var phaseLoad: ({})
 
 
     UtilityNetwork {
@@ -75,8 +73,6 @@ Rectangle {
         }
 
         onLoadStatusChanged: {
-            console.log(utilityNetwork.loadStatus);
-
             if (utilityNetwork.loadStatus === Enums.LoadStatusLoaded) {
                 utilityAssetType = createUtilityAssetType();
                 utilityTier = createUtilityTier();
@@ -92,36 +88,38 @@ Rectangle {
         }
 
         onTraceStatusChanged: {
-            console.log(traceStatus);
             if (traceStatus === Enums.TaskStatusCompleted) {
-                console.log("trace result count: "+ traceResult.count);
                 console.log(currentPhase.name);
+
                 traceResult.forEach(result => {
                                         if (result.objectType === "UtilityElementTraceResult") {
-                                            const objectIds = [];
-                                            const elements = result.elements;
-                                            for (let i = 0; i < elements.length; i++) {
-                                                if (!objectIds.includes(elements[i].objectId)) {
-                                                    objectIds.push(elements[i].objectId);
-                                                }
-                                            }
-                                            phaseCust[currentPhase.name] = objectIds.length;
-                                            console.log("oids: " + objectIds.length);
+//                                            let objectIds = [];
+//                                            let elements = result.elements;
+//                                            for (let i = 0; i < elements.length; i++) {
+//                                                if (!objectIds.includes(elements[i].objectIdAsInt)) {
+//                                                    objectIds.push(elements[i].objectIdAsInt);
+//                                                } else {
+//                                                    console.log(elements[i].objectIdAsInt + " already in oids");
+//                                                }
+//                                            }
+                                            phaseCust[currentPhase.name] = result.elements.length;
+                                            console.log("oids: " + phaseCust[currentPhase.name]);
                                         } else if (result.objectType === "UtilityFunctionTraceResult") {
                                             phaseLoad[currentPhase.name] = result.functionOutputs[0].result;
-                                            console.log("load: " + result.functionOutputs[0].result);
+                                            console.log("load: " + phaseLoad[currentPhase.name]);
                                         }
                                     });
+                console.log(phaseList.length);
+                if (phaseQueue.length > 0) {
+                    console.log(phaseQueue);
+                    currentPhase = phaseQueue.pop();
+                    createReportForPhase(currentPhase);
+                } else {
+                    sampleStatus = 2;
+                    reportHasRun = true;
+                }
 
-            if (phaseQueue.length > 0) {
-                currentPhase = phaseQueue.shift();
-                createReportForPhase(currentPhase);
-            } else {
-                sampleStatus = 2;
-                reportHasRun = true;
-            }
-            }
-            if (traceStatus === Enums.TaskStatusErrored) {
+            } else if (traceStatus === Enums.TaskStatusErrored) {
                 sampleStatus = -1;
             }
         }
@@ -145,10 +143,6 @@ Rectangle {
                 }
             }
         }
-
-        onErrorChanged: {
-            console.log(error.message);
-        }
     }
 
     UtilityTraceFunction {
@@ -159,20 +153,12 @@ Rectangle {
         function setNetworkAttribute() {
             addLoadAttributeFunction.networkAttribute = utilityNetwork.definition.networkAttribute("Service Load");
         }
-
-        onErrorChanged: {
-            console.log(error.message);
-        }
     }
 
     UtilityTraceParameters {
         id: traceParams
         traceType: Enums.UtilityTraceTypeDownstream
         startingLocations: [startingLocation]
-
-        onErrorChanged: {
-            console.log(error.message);
-        }
 
         Component.onCompleted: {
             traceParams.resultTypes = [Enums.UtilityTraceResultTypeElements, Enums.UtilityTraceResultTypeFunctionOutputs]
@@ -183,12 +169,6 @@ Rectangle {
         id: networkAttributeComparison
         comparisonOperator: Enums.UtilityAttributeComparisonOperatorDoesNotIncludeAny
         otherNetworkAttribute: phasesCurrentAttr
-        onErrorChanged: {
-            console.log(error.message);
-        }
-        Component.onCompleted: {
-            console.log(networkAttributeComparison);
-        }
     }
 
     function createUtilityAssetType() {
@@ -220,11 +200,10 @@ Rectangle {
     }
 
     function createPhaseList() {
-        phasesCurrentAttr = utilityNetwork.definition.networkAttribute("Phases current");
+        phasesCurrentAttr = utilityNetwork.definition.networkAttribute("Phases Current");
 
         if (phasesCurrentAttr.domain.domainType === Enums.DomainTypeCodedValueDomain) {
-            const codedValueDomain = phasesCurrentAttr.domain;
-            return codedValueDomain.codedValues;
+            return phasesCurrentAttr.domain.codedValues;
         }
     }
 
@@ -246,7 +225,10 @@ Rectangle {
     }
 
     function runReport(selectedPhases) {
+        console.log(selectedPhases);
         for (let i = 0; i < phaseList.length; i++) {
+            delete(phaseCust[phaseList[i].name]);
+            delete(phaseLoad[phaseList[i].name]);
             if (selectedPhases.includes(phaseList[i].name)) {
                 phaseQueue.push(phaseList[i]);
             }
@@ -254,24 +236,23 @@ Rectangle {
 
         if (phaseQueue.length > 0) {
             sampleStatus = 1;
-            currentPhase = phaseQueue.shift();
+            currentPhase = phaseQueue.pop();
             createReportForPhase(currentPhase);
         }
-        return;
     }
 
     function createReportForPhase(phase) {
-        const condExpr = ArcGISRuntimeEnvironment.createObject("UtilityNetworkAttributeComparison", {
+        let condExpr = ArcGISRuntimeEnvironment.createObject("UtilityNetworkAttributeComparison", {
                                                                    networkAttribute: phasesCurrentAttr,
                                                                    comparisonOperator: Enums.UtilityAttributeComparisonOperatorDoesNotIncludeAny,
-                                                                   value: phase.code});
+                                                                   value: phase.code
+                                                             });
 
         traceOrCondition = ArcGISRuntimeEnvironment.createObject("UtilityTraceOrCondition", {
                                                                      leftExpression: baseCondition,
                                                                      rightExpression: condExpr
                                                                  });
         traceParams.traceConfiguration.traversability.barriers = traceOrCondition;
-        console.log("bars:" + traceParams.traceConfiguration.traversability.barriers);
         utilityNetwork.trace(traceParams);
     }
 
@@ -299,7 +280,6 @@ Rectangle {
             spacing: 25
 
             Row {
-
                 GridLayout {
                     id: grid
                     columns: 4
@@ -311,47 +291,47 @@ Rectangle {
                     Text { text: "Total customers"; font.pointSize: 18; font.bold: true; }
                     Text { text: "Total load"; font.bold: true; font.pointSize: 18 }
 
-                    CheckBox { id: checkA; onCheckedChanged: selectedPhases["A"] = !selectedPhases["A"]; ButtonGroup.group: checkBoxes }
+                    CheckBox { id: checkA; onCheckedChanged: checkedPhases["A"] = !checkedPhases["A"]; ButtonGroup.group: checkBoxes }
                     Text { text: "A" }
                     Text { text: "A" in phaseCust ? phaseCust["A"].toLocaleString(Qt.locale(), "f", 0) : "NA" }
                     Text { text: "A" in phaseLoad ? phaseLoad["A"].toLocaleString(Qt.locale(), "f", 0) : "NA" }
 
-                    CheckBox { id: checkAB; onCheckedChanged: selectedPhases["AB"] = !selectedPhases["AB"]; ButtonGroup.group: checkBoxes }
+                    CheckBox { id: checkAB; onCheckedChanged: checkedPhases["AB"] = !checkedPhases["AB"]; ButtonGroup.group: checkBoxes }
                     Text { text: "AB" }
                     Text { text: "AB" in phaseCust ? phaseCust["AB"].toLocaleString(Qt.locale(), "f", 0) : "NA" }
                     Text { text: "AB" in phaseLoad ? phaseLoad["AB"].toLocaleString(Qt.locale(), "f", 0) : "NA" }
 
-                    CheckBox { id: checkABC; onCheckedChanged: selectedPhases["ABC"] = !selectedPhases["ABC"]; ButtonGroup.group: checkBoxes }
+                    CheckBox { id: checkABC; onCheckedChanged: checkedPhases["ABC"] = !checkedPhases["ABC"]; ButtonGroup.group: checkBoxes }
                     Text { text: "ABC" }
                     Text { text: "ABC" in phaseCust ? phaseCust["ABC"].toLocaleString(Qt.locale(), "f", 0) : "NA" }
                     Text { text: "ABC" in phaseLoad ? phaseLoad["ABC"].toLocaleString(Qt.locale(), "f", 0) : "NA" }
 
-                    CheckBox { id: checkAC; onCheckedChanged: selectedPhases["AC"] = !selectedPhases["AC"]; ButtonGroup.group: checkBoxes }
+                    CheckBox { id: checkAC; onCheckedChanged: checkedPhases["AC"] = !checkedPhases["AC"]; ButtonGroup.group: checkBoxes }
                     Text { text: "AC" }
                     Text { text: "AC" in phaseCust ? phaseCust["AC"].toLocaleString(Qt.locale(), "f", 0) : "NA" }
                     Text { text: "AC" in phaseLoad ? phaseLoad["AC"].toLocaleString(Qt.locale(), "f", 0) : "NA" }
 
-                    CheckBox { id: checkB; onCheckedChanged: selectedPhases["B"] = !selectedPhases["B"]; ButtonGroup.group: checkBoxes }
+                    CheckBox { id: checkB; onCheckedChanged: checkedPhases["B"] = !checkedPhases["B"]; ButtonGroup.group: checkBoxes }
                     Text { text: "B" }
                     Text { text: "B" in phaseCust ? phaseCust["B"].toLocaleString(Qt.locale(), "f", 0) : "NA" }
                     Text { text: "B" in phaseLoad ? phaseLoad["B"].toLocaleString(Qt.locale(), "f", 0) : "NA" }
 
-                    CheckBox { id: checkBC; onCheckedChanged: selectedPhases["BC"] = !selectedPhases["BC"]; ButtonGroup.group: checkBoxes }
+                    CheckBox { id: checkBC; onCheckedChanged: checkedPhases["BC"] = !checkedPhases["BC"]; ButtonGroup.group: checkBoxes }
                     Text { text: "BC" }
                     Text { text: "BC" in phaseCust ? phaseCust["BC"].toLocaleString(Qt.locale(), "f", 0) : "NA" }
                     Text { text: "BC" in phaseLoad ? phaseLoad["BC"].toLocaleString(Qt.locale(), "f", 0) : "NA" }
 
-                    CheckBox { id: checkC; onCheckedChanged: selectedPhases["C"] = !selectedPhases["C"]; ButtonGroup.group: checkBoxes }
+                    CheckBox { id: checkC; onCheckedChanged: checkedPhases["C"] = !checkedPhases["C"]; ButtonGroup.group: checkBoxes }
                     Text { text: "C" }
                     Text { text: "C" in phaseCust ? phaseCust["C"].toLocaleString(Qt.locale(), "f", 0) : "NA" }
                     Text { text: "C" in phaseLoad ? phaseLoad["C"].toLocaleString(Qt.locale(), "f", 0) : "NA" }
 
-                    CheckBox { id: checkDeEnergized; onCheckedChanged: selectedPhases["DeEnergized"] = !selectedPhases["DeEnergized"]; ButtonGroup.group: checkBoxes }
+                    CheckBox { id: checkDeEnergized; onCheckedChanged: checkedPhases["DeEnergized"] = !checkedPhases["DeEnergized"]; ButtonGroup.group: checkBoxes }
                     Text { text: "DeEnergized" }
                     Text { text: "DeEnergized" in phaseCust ? phaseCust["DeEnergized"].toLocaleString(Qt.locale(), "f", 0) : "NA" }
                     Text { text: "DeEnergized" in phaseLoad ? phaseLoad["DeEnergized"].toLocaleString(Qt.locale(), "f", 0) : "NA" }
 
-                    CheckBox { id: checkUnknown; onCheckedChanged: selectedPhases["Unknown"] = !selectedPhases["Unknown"]; ButtonGroup.group: checkBoxes }
+                    CheckBox { id: checkUnknown; onCheckedChanged: checkedPhases["Unknown"] = !checkedPhases["Unknown"]; ButtonGroup.group: checkBoxes }
                     Text { text: "Unknown" }
                     Text { text: "Unknown" in phaseCust ? phaseCust["Unknown"].toLocaleString(Qt.locale(), "f", 0) : "NA" }
                     Text { text: "Unknown" in phaseLoad ? phaseLoad["Unknown"].toLocaleString(Qt.locale(), "f", 0) : "NA" }
@@ -373,7 +353,7 @@ Rectangle {
                     onClicked: {
                         let runPhases = [];
                         phases.forEach((phase) => {
-                                           if (selectedPhases[phase])
+                                           if (checkedPhases[phase])
                                            runPhases.push(phase)
                                        });
                         runReport(runPhases);
@@ -409,7 +389,7 @@ Rectangle {
                             }
                             break;
                         default:
-                            "";
+                            "Sample status is not defined";
                             break;
                         }
                     }
