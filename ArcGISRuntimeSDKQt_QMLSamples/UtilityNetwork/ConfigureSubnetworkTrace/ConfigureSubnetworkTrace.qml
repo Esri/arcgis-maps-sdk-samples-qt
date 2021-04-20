@@ -37,7 +37,7 @@ Rectangle {
     readonly property string domainNetworkName: "ElectricDistribution"
     readonly property string globalId: "{1CAF7740-0BF4-4113-8DB2-654E18800028}"
     readonly property string tierName: "Medium Voltage Radial"
-    readonly property url featureLayerUrl: "https://sampleserver7.arcgisonline.com/arcgis/rest/services/UtilityNetwork/NapervilleElectric/FeatureServer"
+    readonly property url featureLayerUrl: "https://sampleserver7.arcgisonline.com/server/rest/services/UtilityNetwork/NapervilleElectric/FeatureServer"
     readonly property var attributeComparisonOperatorModel: ["Equal","NotEqual","GreaterThan","GreaterThanEqual","LessThan","LessThanEqual","IncludesTheValues","DoesNotIncludeTheValues","IncludesAny","DoesNotIncludeAny"]
 
     ListModel {
@@ -47,6 +47,12 @@ Rectangle {
     UtilityNetwork {
         id: utilityNetwork
         url: featureLayerUrl
+
+        credential: Credential {
+            username: "editor01"
+            password: "S7#i2LWmYH75"
+        }
+
 
         onTraceStatusChanged: {
             if (traceStatus !== Enums.TaskStatusCompleted)
@@ -69,6 +75,7 @@ Rectangle {
 
         onErrorChanged: {
             dialogText.text = qsTr("%1 - %2".arg(error.message).arg(error.additionalMessage));
+            console.log(dialogText.text);
             dialog.open();
             busyIndicator.visible = false;
         }
