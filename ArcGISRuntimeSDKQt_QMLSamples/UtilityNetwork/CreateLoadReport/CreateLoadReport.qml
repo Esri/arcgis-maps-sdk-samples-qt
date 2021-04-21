@@ -18,6 +18,7 @@ import QtQuick 2.6
 import Esri.ArcGISRuntime 100.11
 import QtQuick.Controls 2.2
 import QtQuick.Layouts 1.3
+import Esri.ArcGISExtras 1.1
 
 Rectangle {
     id: rootRectangle
@@ -90,6 +91,8 @@ Rectangle {
         onTraceStatusChanged: {
             if (traceStatus === Enums.TaskStatusCompleted) {
                 console.log(currentPhase.name);
+                let customers = 0;
+                let load = 0;
 
                 traceResult.forEach(result => {
                                         if (result.objectType === "UtilityElementTraceResult") {
@@ -102,14 +105,13 @@ Rectangle {
 //                                                    console.log(elements[i].objectIdAsInt + " already in oids");
 //                                                }
 //                                            }
-                                            phaseCust[currentPhase.name] = result.elements.length;
-                                            console.log("oids: " + phaseCust[currentPhase.name]);
+                                            customers = result.elements.length;
                                         } else if (result.objectType === "UtilityFunctionTraceResult") {
-                                            phaseLoad[currentPhase.name] = result.functionOutputs[0].result;
-                                            console.log("load: " + phaseLoad[currentPhase.name]);
+                                            load = result.functionOutputs[0].result;
                                         }
                                     });
-                console.log(phaseList.length);
+                setGridText(currentPhase.name, customers, load);
+
                 if (phaseQueue.length > 0) {
                     console.log(phaseQueue);
                     currentPhase = phaseQueue.pop();
@@ -118,7 +120,6 @@ Rectangle {
                     sampleStatus = 2;
                     reportHasRun = true;
                 }
-
             } else if (traceStatus === Enums.TaskStatusErrored) {
                 sampleStatus = -1;
             }
@@ -225,7 +226,6 @@ Rectangle {
     }
 
     function runReport(selectedPhases) {
-        console.log(selectedPhases);
         for (let i = 0; i < phaseList.length; i++) {
             delete(phaseCust[phaseList[i].name]);
             delete(phaseLoad[phaseList[i].name]);
@@ -240,6 +240,8 @@ Rectangle {
             createReportForPhase(currentPhase);
         }
     }
+
+
 
     function createReportForPhase(phase) {
         let condExpr = ArcGISRuntimeEnvironment.createObject("UtilityNetworkAttributeComparison", {
@@ -280,6 +282,7 @@ Rectangle {
             spacing: 25
 
             Row {
+
                 GridLayout {
                     id: grid
                     columns: 4
@@ -293,48 +296,51 @@ Rectangle {
 
                     CheckBox { id: checkA; onCheckedChanged: checkedPhases["A"] = !checkedPhases["A"]; ButtonGroup.group: checkBoxes }
                     Text { text: "A" }
-                    Text { text: "A" in phaseCust ? phaseCust["A"].toLocaleString(Qt.locale(), "f", 0) : "NA" }
-                    Text { text: "A" in phaseLoad ? phaseLoad["A"].toLocaleString(Qt.locale(), "f", 0) : "NA" }
+                    Text { id: custTextA }
+                    Text { id: loadTextA }
 
                     CheckBox { id: checkAB; onCheckedChanged: checkedPhases["AB"] = !checkedPhases["AB"]; ButtonGroup.group: checkBoxes }
                     Text { text: "AB" }
-                    Text { text: "AB" in phaseCust ? phaseCust["AB"].toLocaleString(Qt.locale(), "f", 0) : "NA" }
-                    Text { text: "AB" in phaseLoad ? phaseLoad["AB"].toLocaleString(Qt.locale(), "f", 0) : "NA" }
+                    Text { id: custTextAB }
+                    Text { id: loadTextAB }
 
                     CheckBox { id: checkABC; onCheckedChanged: checkedPhases["ABC"] = !checkedPhases["ABC"]; ButtonGroup.group: checkBoxes }
                     Text { text: "ABC" }
-                    Text { text: "ABC" in phaseCust ? phaseCust["ABC"].toLocaleString(Qt.locale(), "f", 0) : "NA" }
-                    Text { text: "ABC" in phaseLoad ? phaseLoad["ABC"].toLocaleString(Qt.locale(), "f", 0) : "NA" }
+                    Text { id: custTextABC }
+                    Text { id: loadTextABC }
 
                     CheckBox { id: checkAC; onCheckedChanged: checkedPhases["AC"] = !checkedPhases["AC"]; ButtonGroup.group: checkBoxes }
                     Text { text: "AC" }
-                    Text { text: "AC" in phaseCust ? phaseCust["AC"].toLocaleString(Qt.locale(), "f", 0) : "NA" }
-                    Text { text: "AC" in phaseLoad ? phaseLoad["AC"].toLocaleString(Qt.locale(), "f", 0) : "NA" }
+                    Text { id: custTextAC }
+                    Text { id: loadTextAC }
 
                     CheckBox { id: checkB; onCheckedChanged: checkedPhases["B"] = !checkedPhases["B"]; ButtonGroup.group: checkBoxes }
                     Text { text: "B" }
-                    Text { text: "B" in phaseCust ? phaseCust["B"].toLocaleString(Qt.locale(), "f", 0) : "NA" }
-                    Text { text: "B" in phaseLoad ? phaseLoad["B"].toLocaleString(Qt.locale(), "f", 0) : "NA" }
+                    Text { id: custTextB }
+                    Text { id: loadTextB }
 
                     CheckBox { id: checkBC; onCheckedChanged: checkedPhases["BC"] = !checkedPhases["BC"]; ButtonGroup.group: checkBoxes }
                     Text { text: "BC" }
-                    Text { text: "BC" in phaseCust ? phaseCust["BC"].toLocaleString(Qt.locale(), "f", 0) : "NA" }
-                    Text { text: "BC" in phaseLoad ? phaseLoad["BC"].toLocaleString(Qt.locale(), "f", 0) : "NA" }
+                    Text { id: custTextBC }
+                    Text { id: loadTextBC }
 
                     CheckBox { id: checkC; onCheckedChanged: checkedPhases["C"] = !checkedPhases["C"]; ButtonGroup.group: checkBoxes }
                     Text { text: "C" }
-                    Text { text: "C" in phaseCust ? phaseCust["C"].toLocaleString(Qt.locale(), "f", 0) : "NA" }
-                    Text { text: "C" in phaseLoad ? phaseLoad["C"].toLocaleString(Qt.locale(), "f", 0) : "NA" }
+                    Text { id: custTextC }
+                    Text { id: loadTextC }
 
                     CheckBox { id: checkDeEnergized; onCheckedChanged: checkedPhases["DeEnergized"] = !checkedPhases["DeEnergized"]; ButtonGroup.group: checkBoxes }
                     Text { text: "DeEnergized" }
-                    Text { text: "DeEnergized" in phaseCust ? phaseCust["DeEnergized"].toLocaleString(Qt.locale(), "f", 0) : "NA" }
-                    Text { text: "DeEnergized" in phaseLoad ? phaseLoad["DeEnergized"].toLocaleString(Qt.locale(), "f", 0) : "NA" }
+                    Text { id: custTextDE }
+                    Text { id: loadTextDE }
 
                     CheckBox { id: checkUnknown; onCheckedChanged: checkedPhases["Unknown"] = !checkedPhases["Unknown"]; ButtonGroup.group: checkBoxes }
                     Text { text: "Unknown" }
-                    Text { text: "Unknown" in phaseCust ? phaseCust["Unknown"].toLocaleString(Qt.locale(), "f", 0) : "NA" }
-                    Text { text: "Unknown" in phaseLoad ? phaseLoad["Unknown"].toLocaleString(Qt.locale(), "f", 0) : "NA" }
+                    Text { id: custTextU }
+                    Text { id: loadTextU }
+                }
+                Component.onCompleted: {
+                    resetGrid();
                 }
             }
 
@@ -351,6 +357,7 @@ Rectangle {
                     enabled: ((reportHasRun || checkBoxes.checkState !== 0) && sampleStatus === 2) ? true : false
 
                     onClicked: {
+                        resetGrid();
                         let runPhases = [];
                         phases.forEach((phase) => {
                                            if (checkedPhases[phase])
@@ -398,4 +405,84 @@ Rectangle {
         }
     }
 
+    function resetGrid() {
+        custTextA.text = "NA"
+        loadTextA.text = "NA"
+
+        custTextAB.text = "NA"
+        loadTextAB.text = "NA"
+
+        custTextABC.text = "NA"
+        loadTextABC.text = "NA"
+
+        custTextAC.text = "NA"
+        loadTextAC.text = "NA"
+
+        custTextB.text = "NA"
+        loadTextB.text = "NA"
+
+        custTextBC.text = "NA"
+        loadTextBC.text = "NA"
+
+        custTextC.text = "NA"
+        loadTextC.text = "NA"
+
+        custTextDE.text = "NA"
+        loadTextDE.text = "NA"
+
+        custTextU.text = "NA"
+        loadTextU.text = "NA"
+    }
+
+    function setGridText(phaseName, customers, load) {
+        switch (phaseName) {
+        case "A":
+            custTextA.text = customers.toLocaleString(Qt.locale(), "f", 0);
+            loadTextA.text = load.toLocaleString(Qt.locale(), "f", 0);
+            break;
+
+        case "AB":
+            custTextAB.text = customers.toLocaleString(Qt.locale(), "f", 0);
+            loadTextAB.text = load.toLocaleString(Qt.locale(), "f", 0);
+            break;
+
+        case "ABC":
+            custTextABC.text = customers.toLocaleString(Qt.locale(), "f", 0);
+            loadTextABC.text = load.toLocaleString(Qt.locale(), "f", 0);
+            break;
+
+        case "AC":
+            custTextAC.text = customers.toLocaleString(Qt.locale(), "f", 0);
+            loadTextAC.text = load.toLocaleString(Qt.locale(), "f", 0);
+            break;
+
+        case "B":
+            custTextB.text = customers.toLocaleString(Qt.locale(), "f", 0);
+            loadTextB.text = load.toLocaleString(Qt.locale(), "f", 0);
+            break;
+
+        case "BC":
+            custTextBC.text = customers.toLocaleString(Qt.locale(), "f", 0);
+            loadTextBC.text = load.toLocaleString(Qt.locale(), "f", 0);
+            break;
+
+        case "C":
+            custTextC.text = customers.toLocaleString(Qt.locale(), "f", 0);
+            loadTextC.text = load.toLocaleString(Qt.locale(), "f", 0);
+            break;
+
+        case "DeEnergized":
+            custTextDE.text = customers.toLocaleString(Qt.locale(), "f", 0);
+            loadTextDE.text = load.toLocaleString(Qt.locale(), "f", 0);
+            break;
+
+        case "Unknown":
+            custTextU.text = customers.toLocaleString(Qt.locale(), "f", 0);
+            loadTextU.text = load.toLocaleString(Qt.locale(), "f", 0);
+            break;
+
+        default:
+            break;
+        }
+    }
 }
