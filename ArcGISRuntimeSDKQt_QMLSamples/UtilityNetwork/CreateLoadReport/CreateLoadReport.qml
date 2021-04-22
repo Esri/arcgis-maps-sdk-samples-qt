@@ -1,6 +1,6 @@
 // [WriteFile Name=CreateLoadReport, Category=UtilityNetwork]
 // [Legal]
-// Copyright 2020 Esri.
+// Copyright 2021 Esri.
 
 // Licensed under the Apache License, Version 2.0 (the "License");
 // you may not use this file except in compliance with the License.
@@ -15,10 +15,9 @@
 // [Legal]
 
 import QtQuick 2.6
-import Esri.ArcGISRuntime 100.11
+import Esri.ArcGISRuntime 100.12
 import QtQuick.Controls 2.2
 import QtQuick.Layouts 1.3
-import Esri.ArcGISExtras 1.1
 
 Rectangle {
     id: rootRectangle
@@ -30,19 +29,26 @@ Rectangle {
     property var utilityTier: null
     property var startingLocation: null
     property var phasesCurrentAttr: null
-    property var phaseList: []
+    property var phaseCodedValuesList: []
     property var baseCondition: null
 
-    property var traceOrCondition: null
-    property var traceConfiguration: null
-
-    property bool reportHasRun: false
+    property var networkSourceName: "Electric Distribution Device"
+    property var assetGroupName: "Circuit Breaker"
+    property var assetTypeName: "Three Phase"
+    property var terminalName: "Load"
+    property var globalId: "{1CAF7740-0BF4-4113-8DB2-654E18800028}"
+    property var domainNetworkName: "ElectricDistribution"
+    property var tierName: "Medium Voltage Radial"
+    property var serviceCategoryName: "ServicePoint"
+    property var loadNetworkAttributeName: "Service Load"
+    property var phasesNetworkAttributeName: "Phases Current"
     property var sampleStatus: 0
 
-    property var phaseQueue: []
-    property var currentPhase: null
+    property bool reportHasRun: false
 
     property var phases: ["A", "AB", "ABC", "AC", "B", "BC", "C", "DeEnergized", "Unknown"]
+    property var phaseQueue: []
+    property var currentPhase: null
 
     property var checkedPhases: {
         "A": false,
@@ -55,10 +61,6 @@ Rectangle {
         "DeEnergized": false,
         "Unknown": false
     }
-
-    property var phaseCust: ({})
-    property var phaseLoad: ({})
-
 
     UtilityNetwork {
         id: utilityNetwork
@@ -77,68 +79,62 @@ Rectangle {
             if (utilityNetwork.loadStatus === Enums.LoadStatusLoaded) {
                 utilityAssetType = createUtilityAssetType();
                 utilityTier = createUtilityTier();
+
+                // Create a UtilityElement from the UtilityAssetType to use as the starting location
                 startingLocation = createStartingLocation();
 
-                traceConfiguration = createTraceConfiguration();
-                traceParams.traceConfiguration = traceConfiguration;
-                baseCondition = traceConfiguration.traversability.barriers;
+                // Get a default trace configuration from a tier in the network.
+                traceParams.traceConfiguration = createTraceConfiguration();
 
-                phaseList = createPhaseList();
+                // Create a base condition to compare against
+                baseCondition = traceParams.traceConfiguration.traversability.barriers;
+
+                // Create a list of possible phases from a given network attribute
+                phaseCodedValuesList = createCodedValuesPhaseList();
                 sampleStatus = 2;
             }
         }
 
         onTraceStatusChanged: {
             if (traceStatus === Enums.TaskStatusCompleted) {
-                console.log(currentPhase.name);
                 let customers = 0;
                 let load = 0;
 
                 traceResult.forEach(result => {
-                                        if (result.objectType === "UtilityElementTraceResult") {
-//                                            let objectIds = [];
-//                                            let elements = result.elements;
-//                                            for (let i = 0; i < elements.length; i++) {
-//                                                if (!objectIds.includes(elements[i].objectIdAsInt)) {
-//                                                    objectIds.push(elements[i].objectIdAsInt);
-//                                                } else {
-//                                                    console.log(elements[i].objectIdAsInt + " already in oids");
-//                                                }
-//                                            }
+                                        if (result.objectType === "UtilityElementTraceResult")
                                             customers = result.elements.length;
-                                        } else if (result.objectType === "UtilityFunctionTraceResult") {
+
+                                        else if (result.objectType === "UtilityFunctionTraceResult")
                                             load = result.functionOutputs[0].result;
-                                        }
                                     });
+
                 setGridText(currentPhase.name, customers, load);
 
                 if (phaseQueue.length > 0) {
-                    console.log(phaseQueue);
                     currentPhase = phaseQueue.pop();
                     createReportForPhase(currentPhase);
                 } else {
                     sampleStatus = 2;
                     reportHasRun = true;
                 }
-            } else if (traceStatus === Enums.TaskStatusErrored) {
-                sampleStatus = -1;
             }
         }
+
         onErrorChanged: {
-            console.log(error.message);
-            console.log(error.additionalMessage);
             sampleStatus = -1;
         }
     }
 
     UtilityCategoryComparison {
+        // Create a comparison to check the existence of service points.
         id: serviceCategoryComparison
         comparisonOperator: Enums.UtilityCategoryComparisonOperatorExists
 
+        // Service Category for counting total customers
         function setServiceCategoryComparison() {
             let utilityCategories = utilityNetwork.definition.categories;
             for (let i = 0; i < utilityCategories.length; i++) {
-                if (utilityCategories[i].name === "ServicePoint") {
+                if (utilityCategories[i].name === serviceCategoryName) {
                     serviceCategoryComparison.category = utilityCategories[i];
                     break;
                 }
@@ -152,7 +148,8 @@ Rectangle {
         condition: serviceCategoryComparison
 
         function setNetworkAttribute() {
-            addLoadAttributeFunction.networkAttribute = utilityNetwork.definition.networkAttribute("Service Load");
+            // The load attribute for counting total load.
+            addLoadAttributeFunction.networkAttribute = utilityNetwork.definition.networkAttribute(loadNetworkAttributeName);
         }
     }
 
@@ -166,54 +163,27 @@ Rectangle {
         }
     }
 
-    UtilityNetworkAttributeComparison {
-        id: networkAttributeComparison
-        comparisonOperator: Enums.UtilityAttributeComparisonOperatorDoesNotIncludeAny
-        otherNetworkAttribute: phasesCurrentAttr
-    }
-
     function createUtilityAssetType() {
         const networkDefinition = utilityNetwork.definition;
-        const networkSource = networkDefinition.networkSource("Electric Distribution Device");
-        const assetGroup = networkSource.assetGroup("Circuit Breaker");
-        return assetGroup.assetType("Three Phase");
+        const networkSource = networkDefinition.networkSource(networkSourceName);
+        const assetGroup = networkSource.assetGroup(assetGroupName);
+        return assetGroup.assetType(assetTypeName);
     }
 
     function createUtilityTier() {
         const networkDefinition = utilityNetwork.definition;
-        const domainNetwork = networkDefinition.domainNetwork("ElectricDistribution");
-        return domainNetwork.tier("Medium Voltage Radial");
-    }
-
-    function createTraceConfiguration() {
-        let traceConfig = utilityTier.traceConfiguration;
-        traceConfig.domainNetwork = utilityNetwork.definition.domainNetwork("ElectricDistribution");
-
-        serviceCategoryComparison.setServiceCategoryComparison();
-        traceConfig.outputCondition = serviceCategoryComparison;
-
-        addLoadAttributeFunction.setNetworkAttribute();
-        traceConfig.functions.clear();
-        traceConfig.functions.append(addLoadAttributeFunction);
-
-        traceConfig.includeBarriers = false;
-        return traceConfig;
-    }
-
-    function createPhaseList() {
-        phasesCurrentAttr = utilityNetwork.definition.networkAttribute("Phases Current");
-
-        if (phasesCurrentAttr.domain.domainType === Enums.DomainTypeCodedValueDomain) {
-            return phasesCurrentAttr.domain.codedValues;
-        }
+        const domainNetwork = networkDefinition.domainNetwork(domainNetworkName);
+        return domainNetwork.tier(tierName);
     }
 
     function createStartingLocation() {
         let loadTerminal;
+
+        // Get the terminal for the location. (For our case, use the "Load" terminal.)
         const utilityTerminals = utilityAssetType.terminalConfiguration.terminals;
 
         for (let i = 0; i < utilityTerminals.length; i++) {
-            if (utilityTerminals[i].name === "Load") {
+            if (utilityTerminals[i].name === terminalName) {
                 loadTerminal = utilityTerminals[i];
                 break;
             }
@@ -222,15 +192,38 @@ Rectangle {
         if (!loadTerminal)
             return;
 
-        return utilityNetwork.createElementWithAssetType(utilityAssetType, "{1CAF7740-0BF4-4113-8DB2-654E18800028}", loadTerminal);
+        return utilityNetwork.createElementWithAssetType(utilityAssetType, globalId, loadTerminal);
+    }
+
+    function createTraceConfiguration() {
+        let traceConfig = utilityTier.traceConfiguration;
+        traceConfig.domainNetwork = utilityNetwork.definition.domainNetwork(domainNetworkName);
+
+        serviceCategoryComparison.setServiceCategoryComparison();
+        traceConfig.outputCondition = serviceCategoryComparison;
+
+        addLoadAttributeFunction.setNetworkAttribute();
+        traceConfig.functions.clear();
+        traceConfig.functions.append(addLoadAttributeFunction);
+
+        // Set to false to ensure that service points with incorrect phasing
+        // (which therefore act as barriers) are not counted with results.
+        traceConfig.includeBarriers = false;
+        return traceConfig;
+    }
+
+    function createCodedValuesPhaseList() {
+        phasesCurrentAttr = utilityNetwork.definition.networkAttribute(phasesNetworkAttributeName);
+
+        if (phasesCurrentAttr.domain.domainType === Enums.DomainTypeCodedValueDomain) {
+            return phasesCurrentAttr.domain.codedValues;
+        }
     }
 
     function runReport(selectedPhases) {
-        for (let i = 0; i < phaseList.length; i++) {
-            delete(phaseCust[phaseList[i].name]);
-            delete(phaseLoad[phaseList[i].name]);
-            if (selectedPhases.includes(phaseList[i].name)) {
-                phaseQueue.push(phaseList[i]);
+        for (let i = 0; i < phaseCodedValuesList.length; i++) {
+            if (selectedPhases.includes(phaseCodedValuesList[i].name)) {
+                phaseQueue.push(phaseCodedValuesList[i]);
             }
         }
 
@@ -241,22 +234,23 @@ Rectangle {
         }
     }
 
-
-
     function createReportForPhase(phase) {
         let condExpr = ArcGISRuntimeEnvironment.createObject("UtilityNetworkAttributeComparison", {
-                                                                   networkAttribute: phasesCurrentAttr,
-                                                                   comparisonOperator: Enums.UtilityAttributeComparisonOperatorDoesNotIncludeAny,
-                                                                   value: phase.code
+                                                                 networkAttribute: phasesCurrentAttr,
+                                                                 comparisonOperator: Enums.UtilityAttributeComparisonOperatorDoesNotIncludeAny,
+                                                                 value: phase.code
                                                              });
 
-        traceOrCondition = ArcGISRuntimeEnvironment.createObject("UtilityTraceOrCondition", {
+        const traceOrCondition = ArcGISRuntimeEnvironment.createObject("UtilityTraceOrCondition", {
                                                                      leftExpression: baseCondition,
                                                                      rightExpression: condExpr
                                                                  });
+
         traceParams.traceConfiguration.traversability.barriers = traceOrCondition;
         utilityNetwork.trace(traceParams);
     }
+
+    // Load Report UI
 
     Rectangle {
         id: rectangle
@@ -286,7 +280,6 @@ Rectangle {
                 GridLayout {
                     id: grid
                     columns: 4
-                    columnSpacing: 50
                     rowSpacing: 5
 
                     CheckBox { id: parentBox; checkState: checkBoxes.checkState }
@@ -363,6 +356,7 @@ Rectangle {
                                            if (checkedPhases[phase])
                                            runPhases.push(phase)
                                        });
+
                         runReport(runPhases);
 
                         if (runPhases.length === 0) {
@@ -380,7 +374,7 @@ Rectangle {
                     text: {
                         switch (sampleStatus) {
                         case -1:
-                            "Error initializing sample";
+                            "The sample encountered an error:\n"+utilityNetwork.error.message+"\n"+utilityNetwork.error.additionalMessage;
                             break;
                         case 0:
                             "Sample initializing...";
@@ -404,6 +398,8 @@ Rectangle {
             }
         }
     }
+
+    // UI Functions
 
     function resetGrid() {
         custTextA.text = "NA"

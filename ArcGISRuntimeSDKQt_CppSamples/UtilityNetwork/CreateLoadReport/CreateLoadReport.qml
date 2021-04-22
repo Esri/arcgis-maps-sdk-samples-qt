@@ -1,6 +1,6 @@
 // [WriteFile Name=CreateLoadReport, Category=UtilityNetwork]
 // [Legal]
-// Copyright 2020 Esri.
+// Copyright 2021 Esri.
 
 // Licensed under the Apache License, Version 2.0 (the "License");
 // you may not use this file except in compliance with the License.
@@ -48,7 +48,6 @@ Item {
         height: contents.height
         anchors {
             horizontalCenter: parent.horizontalCenter
-
         }
 
         ButtonGroup {
@@ -58,18 +57,15 @@ Item {
         }
 
         Column {
-
             id: contents
             anchors.fill: parent
             padding: 10
             spacing: 25
 
             Row {
-
                 GridLayout {
                     id: grid
                     columns: 4
-                    columnSpacing: 50
                     rowSpacing: 5
 
                     CheckBox { id: parentBox; checkState: checkBoxes.checkState }
@@ -158,16 +154,16 @@ Item {
                     id: noticeText
                     text: {
                         switch (sampleModel.sampleStatus) {
-                        case -1:
+                        case -1: // SampleError
                             "Error initializing sample";
                             break;
-                        case 0:
+                        case 0: // SampleNotLoaded
                             "Sample initializing...";
                             break;
-                        case 1:
+                        case 1: // SampleBusy
                             "Generating load report...";
                             break;
-                        case 2:
+                        case 2: // SampleReady
                             if (checkBoxes.checkState === 0 && !reportHasRun) {
                                 "Select phases to run the load report with";
                             } else {

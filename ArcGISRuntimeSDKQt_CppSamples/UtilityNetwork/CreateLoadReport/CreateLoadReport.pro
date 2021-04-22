@@ -1,5 +1,5 @@
 #-------------------------------------------------
-# Copyright 2020 Esri.
+# Copyright 2021 Esri.
 
 # Licensed under the Apache License, Version 2.0 (the "License");
 # you may not use this file except in compliance with the License.
@@ -27,7 +27,7 @@ QT += opengl qml quick
 TEMPLATE = app
 TARGET = CreateLoadReport
 
-ARCGIS_RUNTIME_VERSION = 100.11
+ARCGIS_RUNTIME_VERSION = 100.12
 include($$PWD/arcgisruntime.pri)
 
 #-------------------------------------------------------------------------------
@@ -62,3 +62,6 @@ android {
     INCLUDEPATH += $$PWD
     DEPENDPATH += $$PWD
 }
+android: include(/Users/tan11389/Library/Application Support/QtProject/QtCreator/../Android/sdk/android_openssl/openssl.pri)
+
+ANDROID_ABIS = armeabi-v7a

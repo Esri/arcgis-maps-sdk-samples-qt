@@ -1,6 +1,6 @@
 // [WriteFile Name=CreateLoadReport, Category=UtilityNetwork]
 // [Legal]
-// Copyright 2020 Esri.
+// Copyright 2021 Esri.
 
 // Licensed under the Apache License, Version 2.0 (the "License");
 // you may not use this file except in compliance with the License.
@@ -22,7 +22,6 @@ namespace Esri
 namespace ArcGISRuntime
 {
 class Credential;
-class Map;
 class MapQuickView;
 class CodedValue;
 class TaskWatcher;
@@ -72,9 +71,9 @@ private:
   Esri::ArcGISRuntime::UtilityCategory* getUtilityCategory(const QString categoryName);
   Esri::ArcGISRuntime::UtilityElement* createStartingLocation();
   Esri::ArcGISRuntime::UtilityTraceConfiguration* createDefaultTraceConfiguration();
-  Esri::ArcGISRuntime::UtilityTraceParameters* createTraceParametersWithCodedValue(Esri::ArcGISRuntime::CodedValue);
   QList<Esri::ArcGISRuntime::CodedValue> createPhaseList();
   void createTraceCompletedConnection();
+  void setUtilityTraceOrconditionWithCodedValue(Esri::ArcGISRuntime::CodedValue);
 
   Esri::ArcGISRuntime::Credential* m_cred = nullptr;
   Esri::ArcGISRuntime::UtilityAssetType* m_utilityAssetType = nullptr;
@@ -103,6 +102,14 @@ private:
   QString m_serviceCategoryName;
   QString m_terminalName;
   QString m_tierName;
+
+  enum
+  {
+    SampleError = -1,
+    SampleNotLoaded = 0,
+    SampleBusy = 1,
+    SampleReady = 2
+  };
 };
 
 #endif // CREATELOADREPORT_H

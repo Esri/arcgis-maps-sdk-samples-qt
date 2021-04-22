@@ -1,5 +1,5 @@
 #-------------------------------------------------
-# Copyright 2020 Esri.
+# Copyright 2021 Esri.
 
 # Licensed under the Apache License, Version 2.0 (the "License");
 # you may not use this file except in compliance with the License.
@@ -20,7 +20,7 @@ QT += opengl qml quick
 
 CONFIG += c++14
 
-ARCGIS_RUNTIME_VERSION = 100.11
+ARCGIS_RUNTIME_VERSION = 100.12
 include($$PWD/arcgisruntime.pri)
 
 SOURCES += \
