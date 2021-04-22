@@ -80,7 +80,6 @@ private:
   Esri::ArcGISRuntime::UtilityElement* m_startingLocation = nullptr;
   Esri::ArcGISRuntime::UtilityNetwork* m_utilityNetwork = nullptr;
   Esri::ArcGISRuntime::UtilityNetworkAttribute* m_phasesCurrentAttribute = nullptr;
-  Esri::ArcGISRuntime::UtilityTerminal* m_utilityTerminal = nullptr;
   Esri::ArcGISRuntime::UtilityTier* m_utilityTier = nullptr;
   Esri::ArcGISRuntime::UtilityTraceConditionalExpression* m_baseCondition = nullptr;
   Esri::ArcGISRuntime::UtilityTraceConfiguration* m_traceConfiguration = nullptr;
