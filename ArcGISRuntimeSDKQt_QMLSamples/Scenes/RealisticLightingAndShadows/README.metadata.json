@@ -13,16 +13,20 @@
         "rendering",
         "shadows",
         "sun",
-        "time"
-    ],
-    "redirect_from": "",
-    "relevant_apis": [
-        "Scene",
+        "time",
         "ArcGISSceneLayer",
-        "SceneView",
         "LightingMode",
-        "sunLighting",
-        "sunTime"
+        "Scene",
+        "SceneView"
+    ],
+    "redirect_from": [
+        ""
+    ],
+    "relevant_apis": [
+        "ArcGISSceneLayer",
+        "LightingMode",
+        "Scene",
+        "SceneView"
     ],
     "snippets": [
         "RealisticLightingAndShadows.qml"

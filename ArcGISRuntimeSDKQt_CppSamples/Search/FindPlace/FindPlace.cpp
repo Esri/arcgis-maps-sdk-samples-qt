@@ -66,10 +66,6 @@ void FindPlace::componentComplete()
   // Set map to map view
   m_mapView->setMap(m_map);
 
-  // turn on the location display
-  m_mapView->locationDisplay()->setAutoPanMode(LocationDisplayAutoPanMode::Recenter);
-  m_mapView->locationDisplay()->start();
-
   // create the locator
   createLocator();
 
@@ -78,7 +74,7 @@ void FindPlace::componentComplete()
 
   // initialize callout
   m_mapView->calloutData()->setVisible(false);
-  m_calloutData = m_mapView->calloutData();  
+  m_calloutData = m_mapView->calloutData();
 
   // connect mapview signals
   connectSignals();
@@ -86,6 +82,16 @@ void FindPlace::componentComplete()
 
 void FindPlace::connectSignals()
 {
+  connect(m_mapView, &MapQuickView::drawStatusChanged, this, [this](DrawStatus drawStatus)
+  {
+    if (drawStatus != DrawStatus::Completed || m_mapView->locationDisplay()->isStarted())
+      return;
+
+    // turn on the location display
+    m_mapView->locationDisplay()->setAutoPanMode(LocationDisplayAutoPanMode::Recenter);
+    m_mapView->locationDisplay()->start();
+  });
+
   connect(m_mapView, &MapQuickView::mousePressed, this, [this](QMouseEvent& /*event*/)
   {
     emit hideSuggestionView();

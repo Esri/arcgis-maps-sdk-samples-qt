@@ -21,6 +21,7 @@ namespace Esri
 {
 namespace ArcGISRuntime
 {
+class Credential;
 class FeatureLayer;
 class GraphicsOverlay;
 class Map;
@@ -69,6 +70,7 @@ private:
   void connectSignals();
 
   Esri::ArcGISRuntime::Map* m_map = nullptr;
+  Esri::ArcGISRuntime::Credential* m_cred = nullptr;
   Esri::ArcGISRuntime::MapQuickView* m_mapView = nullptr;
   Esri::ArcGISRuntime::GraphicsOverlay* m_startingLocationOverlay = nullptr;
   Esri::ArcGISRuntime::UtilityElement* m_startingLocation = nullptr;

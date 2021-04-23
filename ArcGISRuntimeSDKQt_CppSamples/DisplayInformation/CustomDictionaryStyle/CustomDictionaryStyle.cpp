@@ -27,6 +27,7 @@
 #include "MapQuickView.h"
 #include "ServiceFeatureTable.h"
 #include "Viewpoint.h"
+#include "PortalItem.h"
 
 #include <QDir>
 #include <QtCore/qglobal.h>
@@ -40,39 +41,56 @@ using namespace Esri::ArcGISRuntime;
 // helper method to get cross platform data path
 namespace
 {
-  QString defaultDataPath()
-  {
-    QString dataPath;
+QString defaultDataPath()
+{
+  QString dataPath;
 
-  #ifdef Q_OS_ANDROID
-    dataPath = "/sdcard";
-  #elif defined Q_OS_IOS
-    dataPath = QStandardPaths::writableLocation(QStandardPaths::DocumentsLocation);
-  #else
-    dataPath = QDir::homePath();
-  #endif
+#ifdef Q_OS_ANDROID
+  dataPath = "/sdcard";
+#elif defined Q_OS_IOS
+  dataPath = QStandardPaths::writableLocation(QStandardPaths::DocumentsLocation);
+#else
+  dataPath = QDir::homePath();
+#endif
 
-    return dataPath;
-  }
+  return dataPath;
+}
 } // namespace
 
 CustomDictionaryStyle::CustomDictionaryStyle(QObject* parent /* = nullptr */):
   QObject(parent),
-  m_map(new Map(BasemapStyle::ArcGISStreets, this))
+  m_map(new Map(BasemapStyle::ArcGISTopographic, this))
 {
   // Set an initial viewpoint
-  Viewpoint vp(Point(-1.304630524635E7, 4036698.1412000023, SpatialReference(3857)), 5000);
-  m_map->setInitialViewpoint(vp);
+  Viewpoint viewpoint(Point(-13'046'305, 4'036'698, SpatialReference(3857)), 5000);
+  m_map->setInitialViewpoint(viewpoint);
 
   // Create a feature layer from a feature service and it to the map
   ServiceFeatureTable* featureTable = new ServiceFeatureTable(QUrl("https://services2.arcgis.com/ZQgQTuoyBrtmoGdP/arcgis/rest/services/Redlands_Restaurants/FeatureServer/0"), this);
-  FeatureLayer* featureLayer = new FeatureLayer(featureTable, this);
-  m_map->operationalLayers()->append(featureLayer);
+  m_featureLayer = new FeatureLayer(featureTable, this);
+  m_map->operationalLayers()->append(m_featureLayer);
 
-  // Set a Dictionary Renderer on the Feature Layer
-  DictionarySymbolStyle* dictionaryStyle = DictionarySymbolStyle::createFromFile(defaultDataPath() + "/ArcGIS/Runtime/Data/styles/arcade_style/Restaurant.stylx", this);
-  DictionaryRenderer* dictionaryRenderer = new DictionaryRenderer(dictionaryStyle, this);
-  featureLayer->setRenderer(dictionaryRenderer);
+  // Create a DictionaryRenderer using the local .stylx file
+  DictionarySymbolStyle* localDictionaryStyle = DictionarySymbolStyle::createFromFile(defaultDataPath() + "/ArcGIS/Runtime/Data/styles/arcade_style/Restaurant.stylx", this);
+  m_localDictionaryRenderer = new DictionaryRenderer(localDictionaryStyle, this);
+
+  // Set initial FeatureLayer renderer to the local DictionaryRenderer
+  m_featureLayer->setRenderer(m_localDictionaryRenderer);
+
+  // Create a DictionarySymbolStyle from a portal item, using the default arcgis.com path
+  PortalItem* portalItem = new PortalItem("adee951477014ec68d7cf0ea0579c800", this);
+  DictionarySymbolStyle* dictSymbStyleFromPortal = new DictionarySymbolStyle(portalItem, this);
+
+  // The source feature layer fields do not match those of the the DictionarySymbolStyle so we create a fieldMap to correct this
+  QMap<QString, QString> fieldMap;
+  // With the following override, the feature layer's "inspection" field will be mapped to the dictionary symbol style's "healthgrade" field
+  fieldMap["healthgrade"] = "inspection";
+  m_webDictionaryRenderer = new DictionaryRenderer(dictSymbStyleFromPortal, fieldMap, fieldMap, this);
+}
+
+void CustomDictionaryStyle::changeDictionarySymbolStyleSource()
+{
+  m_featureLayer->setRenderer(m_featureLayer->renderer() == m_webDictionaryRenderer ? m_localDictionaryRenderer : m_webDictionaryRenderer);
 }
 
 CustomDictionaryStyle::~CustomDictionaryStyle() = default;

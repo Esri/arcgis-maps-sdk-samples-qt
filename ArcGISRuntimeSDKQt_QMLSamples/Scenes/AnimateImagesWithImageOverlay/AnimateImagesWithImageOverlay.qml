@@ -17,7 +17,7 @@
 import QtQuick 2.6
 import QtQuick.Layouts 1.12
 import QtQuick.Controls 2.12
-import Esri.ArcGISRuntime 100.10
+import Esri.ArcGISRuntime 100.11
 import Esri.ArcGISExtras 1.1
 
 Rectangle {
@@ -30,6 +30,7 @@ Rectangle {
     readonly property var imageFrameRefreshRate: ["Fast","Medium","Slow"]
     readonly property url dataPath: System.userHomePath +  "/ArcGIS/Runtime/Data/3D/ImageOverlay/PacificSouthWest"
     property int fileNamesLength: 0
+    property var imageFrameList: []
 
     // Create new Timer and set the timeout interval to 68ms
     Timer {
@@ -44,14 +45,17 @@ Rectangle {
             if (fileNamesLength === 0)
                 return;
 
-            // create an image frame with the url to the image file and a extent
-            let imageFrame = ArcGISRuntimeEnvironment.createObject("ImageFrame", {
-                                                                       url: dataPath + "/" + imageFrameFolder.fileNames()[index],
-                                                                       extent: imageFrameExtent
-                                                                   });
+            // Create new ImageFrames from images in the folder
+            // Add them to a list so infinite ImageFrame objects are not created each loop
+            if (imageFrameList.length !== fileNamesLength) {
+                imageFrameList.push(ArcGISRuntimeEnvironment.createObject("ImageFrame", {
+                                                                              url: dataPath + "/" + imageFrameFolder.fileNames()[index],
+                                                                              extent: imageFrameExtent
+                                                                          }));
+            }
 
             // set image frame to image overlay
-            imageOverlay.imageFrame = imageFrame;
+            imageOverlay.imageFrame = imageFrameList[index];
 
             // increment the index to keep track of which image to load next
             index++;

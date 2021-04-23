@@ -18,7 +18,7 @@ import QtQuick 2.6
 import QtQuick.Controls 2.12
 import QtQuick.Layouts 1.12
 import QtQuick.Shapes 1.12
-import Esri.ArcGISRuntime 100.10
+import Esri.ArcGISRuntime 100.11
 
 Rectangle {
     id: rootRectangle
@@ -37,7 +37,7 @@ Rectangle {
     readonly property string domainNetworkName: "ElectricDistribution"
     readonly property string globalId: "{1CAF7740-0BF4-4113-8DB2-654E18800028}"
     readonly property string tierName: "Medium Voltage Radial"
-    readonly property url featureLayerUrl: "https://sampleserver7.arcgisonline.com/arcgis/rest/services/UtilityNetwork/NapervilleElectric/FeatureServer"
+    readonly property url featureLayerUrl: "https://sampleserver7.arcgisonline.com/server/rest/services/UtilityNetwork/NapervilleElectric/FeatureServer"
     readonly property var attributeComparisonOperatorModel: ["Equal","NotEqual","GreaterThan","GreaterThanEqual","LessThan","LessThanEqual","IncludesTheValues","DoesNotIncludeTheValues","IncludesAny","DoesNotIncludeAny"]
 
     ListModel {
@@ -47,6 +47,11 @@ Rectangle {
     UtilityNetwork {
         id: utilityNetwork
         url: featureLayerUrl
+
+        Credential {
+            username: "viewer01"
+            password: "I68VGU^nMurF"
+        }
 
         onTraceStatusChanged: {
             if (traceStatus !== Enums.TaskStatusCompleted)

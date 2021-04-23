@@ -1,0 +1,30 @@
+{
+    "category": "Display information",
+    "description": "Create symbol styles from a style file hosted on a portal.",
+    "ignore": false,
+    "images": [
+        "screenshot.png"
+    ],
+    "keywords": [
+        "renderer",
+        "symbol",
+        "symbology",
+        "web style"
+    ],
+    "redirect_from": [
+        ""
+    ],
+    "relevant_apis": [
+        "FeatureLayer",
+        "Symbol",
+        "SymbolStyle",
+        "UniqueValue",
+        "UniqueValueRenderer"
+    ],
+    "snippets": [
+        "CreateSymbolStylesFromWebStyles.qml",
+        "CreateSymbolStylesFromWebStyles.cpp",
+        "CreateSymbolStylesFromWebStyles.h"
+    ],
+    "title": "Create symbol styles from web styles"
+}

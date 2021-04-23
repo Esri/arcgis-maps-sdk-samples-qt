@@ -16,12 +16,10 @@ Select one of the three available lighting options to display that lighting effe
 4. Set the `lightingMode` of the scene view to `NoLight`, `Light`, or `LightAndShadows` with `m_sceneView->setSunLighting(LightingMode)`.
 
 ## Relevant API
-* Scene
 * ArcGISSceneLayer
-* SceneView
 * LightingMode
-* setSunLighting()
-* setSunTime()
+* Scene
+* SceneView
 
 ## Tags
 3D, lighting, realism, realistic, rendering, shadows, sun, time

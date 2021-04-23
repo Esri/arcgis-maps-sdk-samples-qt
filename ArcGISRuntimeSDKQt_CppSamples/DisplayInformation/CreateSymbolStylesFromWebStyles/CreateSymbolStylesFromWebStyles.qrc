@@ -1,0 +1,11 @@
+<RCC>
+    <qresource prefix="/Samples/DisplayInformation/CreateSymbolStylesFromWebStyles">
+        <file alias="sample.json">README.metadata.json</file>
+        <file>CreateSymbolStylesFromWebStyles.qml</file>
+        <file>CreateSymbolStylesFromWebStyles.h</file>
+        <file>CreateSymbolStylesFromWebStyles.cpp</file>
+        <file>main.qml</file>
+        <file>screenshot.png</file>
+        <file>README.md</file>
+    </qresource>
+</RCC>

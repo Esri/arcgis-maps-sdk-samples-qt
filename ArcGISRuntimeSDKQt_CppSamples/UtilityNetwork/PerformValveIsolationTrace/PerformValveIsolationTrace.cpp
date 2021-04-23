@@ -54,7 +54,7 @@
 using namespace Esri::ArcGISRuntime;
 
 namespace  {
-const QString featureServiceUrl = "https://sampleserver7.arcgisonline.com/arcgis/rest/services/UtilityNetwork/NapervilleGas/FeatureServer";
+const QString featureServiceUrl = "https://sampleserver7.arcgisonline.com/server/rest/services/UtilityNetwork/NapervilleGas/FeatureServer";
 const QString domainNetworkName = "Pipeline";
 const QString tierName = "Pipe Distribution System";
 const QString networkSourceName = "Gas Device";
@@ -66,19 +66,20 @@ const QString globalId = "{98A06E95-70BE-43E7-91B7-E34C9D3CB9FF}";
 PerformValveIsolationTrace::PerformValveIsolationTrace(QObject* parent /* = nullptr */):
   QObject(parent),
   m_map(new Map(BasemapStyle::ArcGISStreetsNight, this)),
+  m_cred(new Credential("viewer01", "I68VGU^nMurF", this)),
   m_startingLocationOverlay(new GraphicsOverlay(this))
 {
-  ServiceFeatureTable* distributionLineFeatureTable = new ServiceFeatureTable(featureServiceUrl + "/3", this);
+  ServiceFeatureTable* distributionLineFeatureTable = new ServiceFeatureTable(featureServiceUrl + "/3", m_cred, this);
   FeatureLayer* distributionLineLayer = new FeatureLayer(distributionLineFeatureTable, this);
 
-  ServiceFeatureTable* deviceFeatureTable = new ServiceFeatureTable(featureServiceUrl + "/0", this);
+  ServiceFeatureTable* deviceFeatureTable = new ServiceFeatureTable(featureServiceUrl + "/0", m_cred, this);
   FeatureLayer* deviceLayer = new FeatureLayer(deviceFeatureTable, this);
 
   // add the feature layers to the map
   m_map->operationalLayers()->append(distributionLineLayer);
   m_map->operationalLayers()->append(deviceLayer);
 
-  m_utilityNetwork = new UtilityNetwork(featureServiceUrl, m_map, this);
+  m_utilityNetwork = new UtilityNetwork(featureServiceUrl, m_map, m_cred, this);
   connectSignals();
   m_utilityNetwork->load();
 }

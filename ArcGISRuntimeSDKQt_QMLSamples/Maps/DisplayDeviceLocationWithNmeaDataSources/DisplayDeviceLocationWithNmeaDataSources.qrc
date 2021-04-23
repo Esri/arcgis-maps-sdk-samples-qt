@@ -1,0 +1,9 @@
+<RCC>
+    <qresource prefix="/Samples/Maps/DisplayDeviceLocationWithNmeaDataSources">
+        <file alias="sample.json">README.metadata.json</file>
+        <file>DisplayDeviceLocationWithNmeaDataSources.qml</file>
+        <file>screenshot.png</file>
+        <file>README.md</file>
+        <file>redlands.nmea</file>
+    </qresource>
+</RCC>

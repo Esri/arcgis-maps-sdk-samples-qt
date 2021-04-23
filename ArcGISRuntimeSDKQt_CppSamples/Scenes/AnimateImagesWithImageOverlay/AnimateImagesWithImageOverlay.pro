@@ -27,7 +27,7 @@ QT += opengl qml quick
 TEMPLATE = app
 TARGET = AnimateImagesWithImageOverlay
 
-ARCGIS_RUNTIME_VERSION = 100.10
+ARCGIS_RUNTIME_VERSION = 100.11
 include($$PWD/arcgisruntime.pri)
 
 #-------------------------------------------------------------------------------

@@ -31,19 +31,25 @@ To add a starting point, select 'Add starting location(s)' and tap on one or mor
 
 ## Relevant API
 
-* UtilityNetwork
-* UtilityTraceParameters
-* UtilityTraceResult
+* GeometryEngine::fractionAlong
+* UtilityAssetType
 * UtilityElementTraceResult
+* UtilityNetwork
 * UtilityNetworkDefinition
 * UtilityNetworkSource
-* UtilityAssetType
 * UtilityTerminal
-* GeometryEngine::fractionAlong
+* UtilityTraceParameters
+* UtilityTraceResult
 
 ## About the data
 
 The sample uses a dark vector basemap. It includes a subset of feature layers from a feature service that contains the same utility network used to run the connected trace.
+
+## Additional information
+
+Credentials:
+* Username: viewer01
+* Password: I68VGU^nMurF
 
 ## Tags
 

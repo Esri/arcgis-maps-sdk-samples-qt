@@ -16,7 +16,7 @@
 
 import QtQuick 2.6
 import QtQuick.Controls 2.2
-import Esri.ArcGISRuntime 100.10
+import Esri.ArcGISRuntime 100.11
 
 Rectangle {
     id: rootRectangle
@@ -32,9 +32,9 @@ Rectangle {
         anchors.fill: parent
 
         Map {
-            Basemap {
-                initStyle: Enums.BasemapStyleArcGISImageryStandard
-            }
+            // create a map with spatial reference appropriate for the WMS service (North American Datum 83)
+            spatialReference: SpatialReference {wkid: 26915}
+            minScale: 7000000
 
             WmsLayer {
                 id: wmsLayer
