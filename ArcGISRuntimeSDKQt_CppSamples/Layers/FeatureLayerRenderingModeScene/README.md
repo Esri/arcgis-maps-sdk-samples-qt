@@ -24,10 +24,10 @@ Click 'Start Animation' to begin the same zoom animation on both static and dyna
 
 ## Relevant API
 
-* Scene
 * FeatureLayer
 * FeatureLayer::renderingMode
 * LoadSettings
+* Scene
 * SceneView
 
 ## Tags

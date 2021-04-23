@@ -24,10 +24,10 @@ Click 'Start Animation' to begin the same zoom animation on both static and dyna
 
 ## Relevant API
 
-* Map
 * FeatureLayer
 * FeatureLayer::renderingMode
 * LoadSettings
+* Map
 * MapView
 
 ## Tags
