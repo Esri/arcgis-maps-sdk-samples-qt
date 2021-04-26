@@ -60,7 +60,7 @@ namespace
 
 AddEncExchangeSet::AddEncExchangeSet(QObject* parent /* = nullptr */):
   QObject(parent),
-  m_map(new Map(Basemap::oceans(this), this))
+  m_map(new Map(BasemapStyle::ArcGISOceans, this))
 {
   // set resource path
   EncEnvironmentSettings::setResourcePath(defaultDataPath() + "/ArcGIS/Runtime/Data/ENC/hydrography");

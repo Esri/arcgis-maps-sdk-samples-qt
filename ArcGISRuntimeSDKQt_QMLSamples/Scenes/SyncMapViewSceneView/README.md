@@ -1,6 +1,6 @@
 # Sync map and scene views
 
-Keep the view points of two views (e.g. MapView and SceneView) synchronized with each other.
+Keep the viewpoints of two views (e.g. MapView and SceneView) synchronized with each other.
 
 ![](screenshot.png)
 

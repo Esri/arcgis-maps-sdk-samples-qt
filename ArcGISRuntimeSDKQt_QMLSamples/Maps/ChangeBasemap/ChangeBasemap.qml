@@ -16,7 +16,7 @@
 
 import QtQuick 2.6
 import QtQuick.Controls 2.2
-import Esri.ArcGISRuntime 100.10
+import Esri.ArcGISRuntime 100.12
 
 Rectangle {
     width: 800
@@ -28,7 +28,9 @@ Rectangle {
         Map {
             id: map
             // Set the initial basemap to Topographic
-            BasemapTopographic {}
+            Basemap {
+                initStyle: Enums.BasemapStyleArcGISTopographic
+            }
         }
     }
 
@@ -43,19 +45,18 @@ Rectangle {
         width: modelWidth + leftPadding + rightPadding + indicator.width
         textRole: "text"
         model: ListModel {
-            ListElement { text: "Topographic"; map: "BasemapTopographic" }
-            ListElement { text: "Streets"; map: "BasemapStreets" }
-            ListElement { text: "Streets (Vector)"; map: "BasemapStreetsVector" }
-            ListElement { text: "Streets - Night (Vector)"; map: "BasemapStreetsNightVector" }
-            ListElement { text: "Imagery (Raster)"; map: "BasemapImagery" }
-            ListElement { text: "Imagery with Labels (Raster)"; map: "BasemapImageryWithLabels" }
-            ListElement { text: "Imagery with Labels (Vector)"; map: "BasemapImageryWithLabelsVector" }
-            ListElement { text: "Dark Gray Canvas (Vector)"; map: "BasemapDarkGrayCanvasVector" }
-            ListElement { text: "Light Gray Canvas (Raster)"; map: "BasemapLightGrayCanvas" }
-            ListElement { text: "Light Gray Canvas (Vector)"; map: "BasemapLightGrayCanvasVector" }
-            ListElement { text: "Navigation (Vector)"; map: "BasemapNavigationVector" }
-            ListElement { text: "OpenStreetMap (Raster)"; map: "BasemapOpenStreetMap" }
-            ListElement { text: "Oceans"; map: "BasemapOceans" }
+            ListElement { text: "Topographic"; map: "BasemapStyleArcGISTopographic" }
+            ListElement { text: "Streets"; map: "BasemapStyleArcGISStreets" }
+            ListElement { text: "Streets - Relief"; map: "BasemapStyleArcGISStreetsRelief" }
+            ListElement { text: "Streets - Night"; map: "BasemapStyleArcGISStreetsNight" }
+            ListElement { text: "Imagery"; map: "BasemapStyleArcGISImageryStandard" }
+            ListElement { text: "Imagery with Labels"; map: "BasemapStyleArcGISImagery" }
+            ListElement { text: "Labels without Imagery"; map: "BasemapStyleArcGISImageryLabels" }
+            ListElement { text: "Dark Gray Canvas"; map: "BasemapStyleArcGISDarkGray" }
+            ListElement { text: "Light Gray Canvas"; map: "BasemapStyleArcGISLightGray" }
+            ListElement { text: "Navigation"; map: "BasemapStyleArcGISNavigation" }
+            ListElement { text: "OpenStreetMap"; map: "BasemapStyleOsmStandard" }
+            ListElement { text: "Oceans"; map: "BasemapStyleArcGISOceans" }
         }
 
         Component.onCompleted : {
@@ -76,8 +77,10 @@ Rectangle {
                 changeBasemap(model.get(currentIndex).map);
         }
 
-        function changeBasemap(type) {
-            map.basemap = ArcGISRuntimeEnvironment.createObject(type);
+        function changeBasemap(style) {
+            map.basemap = ArcGISRuntimeEnvironment.createObject("Basemap", {
+                                                                initStyle: style
+                                                                });
         }
     }
 }

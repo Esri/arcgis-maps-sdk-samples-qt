@@ -16,7 +16,7 @@
 
 import QtQuick 2.6
 import QtQuick.Layouts 1.2
-import Esri.ArcGISRuntime 100.10
+import Esri.ArcGISRuntime 100.12
 
 Rectangle {
     id: rootRectangle
@@ -53,7 +53,9 @@ Rectangle {
 
             Scene {
                 id: scene
-                BasemapImagery {}
+                Basemap {
+                    initStyle: Enums.BasemapStyleArcGISImageryStandard
+                }
             }
 
             onViewpointChanged: {
@@ -70,7 +72,9 @@ Rectangle {
 
             Map {
                 id: map
-                BasemapImagery {}
+                Basemap {
+                    initStyle: Enums.BasemapStyleArcGISImageryStandard
+                }
             }
 
             onViewpointChanged: {

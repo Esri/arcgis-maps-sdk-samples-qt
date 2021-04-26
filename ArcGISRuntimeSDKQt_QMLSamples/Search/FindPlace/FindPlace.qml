@@ -17,8 +17,8 @@
 import QtQuick 2.6
 import QtQuick.Controls 2.2
 import QtPositioning 5.6
-import Esri.ArcGISRuntime 100.10
-import Esri.ArcGISRuntime.Toolkit 100.10
+import Esri.ArcGISRuntime 100.12
+import Esri.ArcGISRuntime.Toolkit 100.12
 
 Rectangle {
     id: rootRectangle
@@ -33,16 +33,20 @@ Rectangle {
         id: mapView
         anchors.fill: parent
 
+        onDrawStatusChanged: {
+            if (drawStatus !== Enums.DrawStatusCompleted || mapView.locationDisplay.started)
+                return;
+
+            mapView.locationDisplay.autoPanMode = Enums.LocationDisplayAutoPanModeRecenter;
+            mapView.locationDisplay.start();
+        }
+
         Map {
-            BasemapTopographic {}
+            Basemap {
+                initStyle: Enums.BasemapStyleArcGISTopographic
+            }
 
             // start the location display once the map loads
-            onLoadStatusChanged: {
-                if (loadStatus !== Enums.LoadStatusLoaded)
-                    return;
-
-                mapView.locationDisplay.start();
-            }
         }
 
         // add a graphics overlay to the mapview

@@ -15,7 +15,7 @@
 // [Legal]
 
 import QtQuick 2.6
-import Esri.ArcGISRuntime 100.10
+import Esri.ArcGISRuntime 100.12
 
 Rectangle {
     id: rootRectangle
@@ -58,7 +58,9 @@ Rectangle {
 
         // create a map with the imagery basemap
         Map {
-            BasemapImagery {}
+            Basemap {
+                initStyle: Enums.BasemapStyleArcGISImageryStandard
+            }
         }
 
         // handle the mouse click

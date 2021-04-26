@@ -18,7 +18,7 @@ import QtQuick 2.6
 import QtQuick.Controls 2.2
 import Qt.labs.calendar 1.0
 import QtGraphicalEffects 1.0
-import Esri.ArcGISRuntime 100.10
+import Esri.ArcGISRuntime 100.12
 import QtQuick.Layouts 1.3
 
 Rectangle {
@@ -40,7 +40,9 @@ Rectangle {
         anchors.fill: parent
 
         Map {
-            BasemapTopographic {}
+            Basemap {
+                initStyle: Enums.BasemapStyleArcGISTopographic
+            }
         }
     }
 

@@ -16,7 +16,7 @@
 
 import QtQuick 2.6
 import QtQuick.Controls 2.2
-import Esri.ArcGISRuntime 100.10
+import Esri.ArcGISRuntime 100.12
 import Esri.ArcGISExtras 1.1
 
 Rectangle {
@@ -37,20 +37,18 @@ Rectangle {
         Scene {
             id: scene
             // Set the basemap
-            BasemapImagery {}
+            BasemapTopographic {}
 
             // Add a Scene Layer
             ArcGISSceneLayer {
                 url: "https://tiles.arcgis.com/tiles/P3ePLMYs2RVChkJx/arcgis/rest/services/Buildings_Brest/SceneServer/layers/0"
+                altitudeOffset: 1
             }
 
             // Set the Surface
             Surface {
                 ArcGISTiledElevationSource {
-                    url: "https://elevation3d.arcgis.com/arcgis/rest/services/WorldElevation3D/Terrain3D/ImageServer"
-                }
-                ArcGISTiledElevationSource {
-                    url: "https://tiles.arcgis.com/tiles/d3voDfTFbHOCRwVR/arcgis/rest/services/MNT_IDF/ImageServer"
+                    url: "https://scene.arcgis.com/arcgis/rest/services/BREST_DTM_1M/ImageServer"
                 }
             }
 

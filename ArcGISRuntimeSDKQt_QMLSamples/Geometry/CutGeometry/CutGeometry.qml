@@ -16,7 +16,7 @@
 
 import QtQuick 2.6
 import QtQuick.Controls 2.2
-import Esri.ArcGISRuntime 100.10
+import Esri.ArcGISRuntime 100.12
 
 Rectangle {
     clip: true
@@ -28,7 +28,9 @@ Rectangle {
         anchors.fill: parent
 
         Map {
-            BasemapTopographic {}
+            Basemap {
+                initStyle: Enums.BasemapStyleArcGISTopographic
+            }
 
             onLoadStatusChanged: {
                 if (loadStatus === Enums.LoadStatusLoaded) {

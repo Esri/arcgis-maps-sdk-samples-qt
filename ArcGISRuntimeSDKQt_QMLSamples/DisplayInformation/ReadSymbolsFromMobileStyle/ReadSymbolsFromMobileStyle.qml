@@ -17,7 +17,7 @@
 import QtQuick 2.11
 import QtQuick.Controls 2.5
 import QtQuick.Layouts 1.3
-import Esri.ArcGISRuntime 100.10
+import Esri.ArcGISRuntime 100.12
 import Esri.ArcGISExtras 1.1
 
 Rectangle {
@@ -38,7 +38,9 @@ Rectangle {
         anchors.fill: parent
 
         Map {
-            BasemapTopographic {}
+            Basemap {
+                initStyle: Enums.BasemapStyleArcGISTopographic
+            }
         }
 
         GraphicsOverlay {

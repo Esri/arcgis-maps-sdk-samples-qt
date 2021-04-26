@@ -16,7 +16,7 @@
 
 import QtQuick 2.6
 import QtQuick.Controls 2.2
-import Esri.ArcGISRuntime 100.10
+import Esri.ArcGISRuntime 100.12
 
 Rectangle {
     id: mainRect
@@ -93,7 +93,9 @@ Rectangle {
 
         // Create a map with a basemap and initial viewpoint
         Map {
-            BasemapNavigationVector {}
+            Basemap {
+                initStyle: Enums.BasemapStyleArcGISNavigation
+            }
 
             initialViewpoint: ViewpointCenter {
                 Point {

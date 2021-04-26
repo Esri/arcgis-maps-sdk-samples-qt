@@ -15,7 +15,7 @@
 // [Legal]
 
 import QtQuick 2.6
-import Esri.ArcGISRuntime 100.10
+import Esri.ArcGISRuntime 100.12
 import Esri.ArcGISExtras 1.1
 
 Rectangle {
@@ -32,7 +32,9 @@ Rectangle {
 
         Scene {
             id: scene
-            BasemapImagery {}
+            Basemap {
+                initStyle: Enums.BasemapStyleArcGISImageryStandard
+            }
 
             Surface {
                 RasterElevationSource{

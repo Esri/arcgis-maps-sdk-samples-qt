@@ -64,7 +64,7 @@ void AnalyzeViewshed::componentComplete()
   m_mapView->setWrapAroundMode(WrapAroundMode::Disabled);
 
   // Create a map using the topographic basemap
-  m_map = new Map(Basemap::topographic(this), this);
+  m_map = new Map(BasemapStyle::ArcGISTopographic, this);
   m_map->setInitialViewpoint(Viewpoint(Point(6.84905317262762, 45.3790902612337, SpatialReference(4326)), 100000));
 
   // Set map to map view

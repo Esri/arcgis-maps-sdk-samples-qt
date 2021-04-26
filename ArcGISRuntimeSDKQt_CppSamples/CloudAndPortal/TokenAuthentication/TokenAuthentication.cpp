@@ -55,7 +55,7 @@ void TokenAuthentication::componentComplete()
   m_mapView->setWrapAroundMode(WrapAroundMode::Disabled);
 
   // Create a map using the topographic basemap
-  m_map = new Map(Basemap::topographic(this), this);
+  m_map = new Map(BasemapStyle::ArcGISTopographic, this);
   m_map->setInitialViewpoint(Viewpoint(Envelope(-19221397.32591107, -208306.59714691807, -3024411.4154897667, 11939432.83566906, SpatialReference(3857))));
 
   // Set map to map view

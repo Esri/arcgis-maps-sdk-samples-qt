@@ -1,5 +1,5 @@
 {
-    "category": "EditData",
+    "category": "Edit data",
     "description": "Create, query and edit a specific server version using service geodatabase.",
     "ignore": false,
     "images": [
@@ -13,7 +13,7 @@
         "FeatureLayer",
         "ServiceFeatureTable",
         "ServiceGeodatabase",
-        "ServiceGeodatabase.applyEdits()",
+        "ServiceGeodatabase.applyEdits",
         "ServiceGeodatabase.createVersion",
         "ServiceGeodatabase.createVersionResult",
         "ServiceGeodatabase.switchVersion",
@@ -28,7 +28,7 @@
         "FeatureLayer",
         "ServiceFeatureTable",
         "ServiceGeodatabase",
-        "ServiceGeodatabase.applyEdits()",
+        "ServiceGeodatabase.applyEdits",
         "ServiceGeodatabase.createVersion",
         "ServiceGeodatabase.createVersionResult",
         "ServiceGeodatabase.switchVersion",

@@ -16,7 +16,7 @@
 
 import QtQuick 2.6
 import QtGraphicalEffects 1.0
-import Esri.ArcGISRuntime 100.10
+import Esri.ArcGISRuntime 100.12
 
 Rectangle {
     width: 800
@@ -28,7 +28,9 @@ Rectangle {
         anchors.fill: parent
         // Create an initial Map with the Imagery basemap
         Map {
-            BasemapImagery {}
+            Basemap {
+                initStyle: Enums.BasemapStyleArcGISImageryStandard
+            }
         }
     }
 

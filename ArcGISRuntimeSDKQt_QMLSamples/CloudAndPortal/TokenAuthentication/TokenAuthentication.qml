@@ -16,8 +16,8 @@
 
 import QtQuick 2.6
 import QtQuick.Controls 2.2
-import Esri.ArcGISRuntime 100.10
-import Esri.ArcGISRuntime.Toolkit 100.10
+import Esri.ArcGISRuntime 100.12
+import Esri.ArcGISRuntime.Toolkit 100.12
 
 Rectangle {
     id: rootRectangle
@@ -34,7 +34,9 @@ Rectangle {
 
         Map {
             id: map
-            BasemapTopographic {}
+            Basemap {
+                initStyle: Enums.BasemapStyleArcGISTopographic
+            }
 
             ViewpointExtent {
                 Envelope {

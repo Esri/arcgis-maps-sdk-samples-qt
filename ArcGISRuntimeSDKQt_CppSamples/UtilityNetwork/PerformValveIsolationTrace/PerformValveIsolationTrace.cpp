@@ -57,7 +57,8 @@
 
 using namespace Esri::ArcGISRuntime;
 
-namespace  {
+namespace 
+{
 const QString featureServiceUrl = QStringLiteral("https://sampleserver7.arcgisonline.com/server/rest/services/UtilityNetwork/NapervilleGas/FeatureServer");
 const QString domainNetworkName = QStringLiteral("Pipeline");
 const QString tierName = QStringLiteral("Pipe Distribution System");
@@ -71,14 +72,14 @@ const QString sampleServer7Password = QStringLiteral("I68VGU^nMurF");
 
 namespace
 {
-  // Convenient RAII template struct that deletes all pointers in a given container.
-  template <typename T>
-  struct ScopedCleanup
-  {
-    ScopedCleanup(const QList<T*>& list) : results(list) { }
-    ~ScopedCleanup() { qDeleteAll(results); }
-    const QList<T*>& results;
-  };
+// Convenient RAII template struct that deletes all pointers in a given container.
+template <typename T>
+struct ScopedCleanup
+{
+  ScopedCleanup(const QList<T*>& list) : results(list) { }
+  ~ScopedCleanup() { qDeleteAll(results); }
+  const QList<T*>& results;
+};
 }
 
 PerformValveIsolationTrace::PerformValveIsolationTrace(QObject* parent /* = nullptr */):

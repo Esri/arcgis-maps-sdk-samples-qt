@@ -31,4 +31,43 @@ Item {
         id: model
         mapView: view
     }
+
+    Rectangle {
+        id: rectangle
+        anchors {
+            left: parent.left
+            top: parent.top
+            margins: 5
+        }
+        width: radioColumn.width
+        height: radioColumn.height
+        color: "white"
+        border {
+            color: "black"
+            width: 1
+        }
+        opacity: 0.9
+
+        Column {
+            id: radioColumn
+            padding: 5
+            spacing: 5
+
+            Text {
+                text: "Custom Dictionary Symbol Style Source"
+            }
+
+            RadioButton {
+                text: "Local .stylx file"
+                checked: true
+            }
+
+            RadioButton {
+                text: "Web style"
+                onCheckedChanged: {
+                    model.changeDictionarySymbolStyleSource();
+                }
+            }
+        }
+    }
 }

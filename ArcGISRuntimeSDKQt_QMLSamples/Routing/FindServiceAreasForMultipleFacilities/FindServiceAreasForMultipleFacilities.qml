@@ -15,7 +15,7 @@
 // [Legal]
 
 import QtQuick 2.6
-import Esri.ArcGISRuntime 100.10
+import Esri.ArcGISRuntime 100.12
 import QtQuick.Layouts 1.11
 import QtQuick.Controls 2.2
 
@@ -49,7 +49,9 @@ Rectangle {
         }
 
         Map {
-            BasemapLightGrayCanvas {}
+            Basemap {
+                initStyle: Enums.BasemapStyleArcGISLightGray
+            }
 
             // create query parameters used to select all facilities from the feature table
             QueryParameters {

@@ -21,6 +21,8 @@ namespace Esri
 {
 namespace ArcGISRuntime
 {
+class DictionaryRenderer;
+class FeatureLayer;
 class Map;
 class MapQuickView;
 }
@@ -40,6 +42,8 @@ public:
 
   static void init();
 
+  Q_INVOKABLE void changeDictionarySymbolStyleSource();
+
 signals:
   void mapViewChanged();
 
@@ -49,6 +53,9 @@ private:
 
   Esri::ArcGISRuntime::Map* m_map = nullptr;
   Esri::ArcGISRuntime::MapQuickView* m_mapView = nullptr;
+  Esri::ArcGISRuntime::DictionaryRenderer* m_localDictionaryRenderer = nullptr;
+  Esri::ArcGISRuntime::DictionaryRenderer* m_webDictionaryRenderer = nullptr;
+  Esri::ArcGISRuntime::FeatureLayer* m_featureLayer = nullptr;
 };
 
 #endif // CUSTOMDICTIONARYSTYLE_H

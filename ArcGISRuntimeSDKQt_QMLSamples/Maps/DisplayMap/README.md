@@ -14,14 +14,14 @@ Run the sample to view the map. Pan and zoom to navigate the map.
 
 ## How it works
 
-1. Create an `Map` with a `BasemapImageryWithLabels` basemap.
+1. Create a `Map` with a basemap using the `Enums.BasemapStyleArcGISImagery` BasemapStyle.
 2. Create a `MapView` object to display the map.
 3. Set the map to the map view.
 
 ## Relevant API
 
 * Map
-* Basemap
+* Enums.BasemapStyle
 * MapView
 
 ## Tags

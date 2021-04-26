@@ -17,7 +17,7 @@
 import QtQuick 2.6
 import QtQuick.Layouts 1.12
 import QtQuick.Controls 2.12
-import Esri.ArcGISRuntime 100.10
+import Esri.ArcGISRuntime 100.12
 
 Rectangle {
     id: rootRectangle
@@ -38,14 +38,16 @@ Rectangle {
     property var terminal
     property var terminals: []
     property var utilityNetworkSource
-    readonly property url featureLayerUrl: "https://sampleserver7.arcgisonline.com/arcgis/rest/services/UtilityNetwork/NapervilleElectric/FeatureServer"
+    readonly property url featureLayerUrl: "https://sampleserver7.arcgisonline.com/server/rest/services/UtilityNetwork/NapervilleElectric/FeatureServer"
 
     MapView {
         id: mapView
         anchors.fill: parent
         
         Map {
-            BasemapStreetsNightVector {}
+            Basemap {
+                initStyle: Enums.BasemapStyleArcGISStreetsNight
+            }
             
             ViewpointExtent {
                 Envelope {
@@ -62,7 +64,12 @@ Rectangle {
                 id: lineLayer
 
                 ServiceFeatureTable {
-                    url: featureLayerUrl + "/115"
+                    url: featureLayerUrl + "/3"
+
+                    Credential {
+                        username: "viewer01"
+                        password: "I68VGU^nMurF"
+                    }
                 }
 
                 UniqueValueRenderer {
@@ -98,7 +105,12 @@ Rectangle {
                 id: deviceLayer
 
                 ServiceFeatureTable {
-                    url: featureLayerUrl + "/100"
+                    url: featureLayerUrl + "/0"
+
+                    Credential {
+                        username: "viewer01"
+                        password: "I68VGU^nMurF"
+                    }
                 }
 
                 onSelectFeaturesStatusChanged: checkSelectionStatus();
@@ -191,20 +203,25 @@ Rectangle {
     SimpleMarkerSymbol {
         id: startingPointSymbol
         style: Enums.SimpleMarkerSymbolStyleCross
-        color: "Green"
+        color: "lime"
         size: 20
     }
 
     SimpleMarkerSymbol {
         id: barrierPointSymbol
         style: Enums.SimpleMarkerSymbolStyleX
-        color: "Red"
+        color: "red"
         size: 20
     }
 
     UtilityNetwork {
         id: utilityNetwork
         url: featureLayerUrl
+
+        Credential {
+            username: "viewer01"
+            password: "I68VGU^nMurF"
+        }
 
         onTraceStatusChanged: {
             if (traceStatus !== Enums.TaskStatusCompleted)

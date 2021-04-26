@@ -30,7 +30,7 @@ using namespace Esri::ArcGISRuntime;
 
 ApplyMosaicRuleToRasters::ApplyMosaicRuleToRasters(QObject* parent /* = nullptr */):
   QObject(parent),
-  m_map(new Map(Basemap::topographicVector(this), this)),
+  m_map(new Map(BasemapStyle::ArcGISTopographic, this)),
   m_mosaicRule(new MosaicRule(this))
 {
 }
@@ -59,7 +59,7 @@ void ApplyMosaicRuleToRasters::setMapView(MapQuickView* mapView)
   m_mapView->setMap(m_map);
 
   // Create image service raster from image server
-  m_imageServiceRaster = new ImageServiceRaster(QUrl("https://sampleserver7.arcgisonline.com/arcgis/rest/services/amberg_germany/ImageServer"), this);
+  m_imageServiceRaster = new ImageServiceRaster(QUrl("https://sampleserver7.arcgisonline.com/server/rest/services/amberg_germany/ImageServer"), this);
 
   // Set Mosaic Rule if none exists on the image service raster
   if (!m_imageServiceRaster->mosaicRule())

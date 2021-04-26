@@ -30,7 +30,7 @@ namespace toolkit = Esri::ArcGISRuntime::Toolkit;
 
 ExploreScenesInFlyoverAR::ExploreScenesInFlyoverAR(QObject* parent /* = nullptr */):
   QObject(parent),
-  m_scene(new Scene(Basemap::imagery(this), this))
+  m_scene(new Scene(BasemapStyle::ArcGISImageryStandard, this))
 {
   // create a new elevation source from Terrain3D REST service
   ArcGISTiledElevationSource* elevationSource = new ArcGISTiledElevationSource(
@@ -41,7 +41,7 @@ ExploreScenesInFlyoverAR::ExploreScenesInFlyoverAR(QObject* parent /* = nullptr 
   m_scene->baseSurface()->setOpacity(0.0f);
 
   // create the integrated mesh layer
-  const QUrl meshLyrUrl("https://www.arcgis.com/home/item.html?id=dbc72b3ebb024c848d89a42fe6387a1b");
+  const QUrl meshLyrUrl("https://www.arcgis.com/home/item.html?id=5c55d0d1f21e489193cdeff11460a28c");
   m_integratedMeshLayer = new IntegratedMeshLayer(meshLyrUrl, this);
 
   // add the layer to the scene

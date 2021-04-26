@@ -38,7 +38,7 @@ namespace
 
 FormatCoordinates::FormatCoordinates(QObject* parent) :
   QObject(parent),
-  m_map(new Map(Basemap::imagery(this), this)),
+  m_map(new Map(BasemapStyle::ArcGISImageryStandard, this)),
   m_graphicsOverlay(new GraphicsOverlay(this))
 {
   // create a graphic

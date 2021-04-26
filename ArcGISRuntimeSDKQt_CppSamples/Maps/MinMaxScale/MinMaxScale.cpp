@@ -45,7 +45,7 @@ void MinMaxScale::componentComplete()
   m_mapView = findChild<MapQuickView*>("mapView");
 
   // Create a map using the streets basemap
-  m_map = new Map(Basemap::streets(this), this);
+  m_map = new Map(BasemapStyle::ArcGISStreets, this);
 
   // Establish the minimum and maximum scales for the map
   m_map->setMaxScale(2000);

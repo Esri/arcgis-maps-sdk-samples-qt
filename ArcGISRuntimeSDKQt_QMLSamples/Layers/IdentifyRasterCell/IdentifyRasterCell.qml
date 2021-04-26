@@ -15,9 +15,9 @@
 // [Legal]
 
 import QtQuick 2.6
-import Esri.ArcGISRuntime 100.10
+import Esri.ArcGISRuntime 100.12
 import Esri.ArcGISExtras 1.1
-import Esri.ArcGISRuntime.Toolkit 100.10
+import Esri.ArcGISRuntime.Toolkit 100.12
 
 Rectangle {
     id: rootRectangle
@@ -61,7 +61,9 @@ Rectangle {
           }
 
         Map {
-            BasemapOceans {}
+            Basemap {
+                initStyle: Enums.BasemapStyleArcGISOceans
+            }
             RasterLayer {
                 id: rasterLayer
                 Raster {

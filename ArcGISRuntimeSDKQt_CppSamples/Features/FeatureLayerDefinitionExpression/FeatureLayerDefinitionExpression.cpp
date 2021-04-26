@@ -55,7 +55,7 @@ void FeatureLayerDefinitionExpression::componentComplete()
   m_mapView->setWrapAroundMode(WrapAroundMode::Disabled);
 
   // Create a map using the topographic basemap
-  m_map = new Map(Basemap::topographic(this), this);
+  m_map = new Map(BasemapStyle::ArcGISTopographic, this);
   const Point center = Point(-13630484, 4545415, SpatialReference(102100));
   constexpr double scale = 300000.0;
   m_map->setInitialViewpoint(Viewpoint(center, scale));

@@ -15,12 +15,12 @@
 // [Legal]
 
 import QtQuick 2.6
-import Esri.ArcGISRuntime 100.10
+import Esri.ArcGISRuntime 100.12
 
 import QtQuick.Controls 2.12
 import QtQuick.Layouts 1.12
 import QtGraphicalEffects 1.0
-import Esri.ArcGISRuntime.Toolkit 100.10
+import Esri.ArcGISRuntime.Toolkit 100.12
 
 Rectangle {
     id: rootRectangle
@@ -108,17 +108,19 @@ Rectangle {
         }
 
         Map {
-            BasemapStreetsVector {}
+            Basemap {
+                initStyle: Enums.BasemapStyleArcGISStreets
+            }
         }
     }
 
     ServiceGeodatabase {
         id: sgdb
-        url: "https://sampleserver7.arcgisonline.com/arcgis/rest/services/DamageAssessment/FeatureServer"
+        url: "https://sampleserver7.arcgisonline.com/server/rest/services/DamageAssessment/FeatureServer"
 
         credential: Credential {
             username: "editor01"
-            password: "editor01.password"
+            password: "S7#i2LWmYH75"
         }
 
         onLoadStatusChanged: {

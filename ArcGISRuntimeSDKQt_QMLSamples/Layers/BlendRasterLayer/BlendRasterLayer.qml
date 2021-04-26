@@ -17,7 +17,7 @@
 import QtQuick 2.6
 import QtQuick.Controls 2.2
 import QtQuick.Layouts 1.3
-import Esri.ArcGISRuntime 100.10
+import Esri.ArcGISRuntime 100.12
 import Esri.ArcGISExtras 1.1
 
 Rectangle {
@@ -28,7 +28,6 @@ Rectangle {
 
     readonly property string dataPath: System.userHomePath + "/ArcGIS/Runtime/Data/raster"
     property bool editingRenderer: false
-    property bool useColorRamp: colorCombo.currentText !== "none"
 
     SlopeTypeModel {
         id: slopeTypeModel
@@ -42,10 +41,7 @@ Rectangle {
         anchors.fill: parent
         Map {
             id: map
-            basemap: useColorRamp ?
-                         basemapColorRamp :
-                         basemap
-
+            basemap: basemap
         }
     }
 
@@ -126,12 +122,15 @@ Rectangle {
             }
 
             SpinBox {
-                id: altSlider
+                id: altSpinBox
                 from: 0
                 to: 90
                 editable: true
-                textFromValue: function(v) {
-                    return v.toFixed(0) + "\u00B0";
+                textFromValue: function(value) {
+                    return value.toFixed(0) + "\u00B0";
+                }
+                valueFromText: function(text) {
+                    return parseInt(text);
                 }
             }
 
@@ -140,15 +139,17 @@ Rectangle {
             }
 
             SpinBox {
-                id: azimuthSlider
+                id: azimuthSpinBox
                 from: 0
-                to: 90
+                to: 360
                 editable: true
-                textFromValue: function(v) {
-                    return v.toFixed(0) + "\u00B0";
+                textFromValue: function(value) {
+                    return value.toFixed(0) + "\u00B0";
+                }
+                valueFromText: function(text) {
+                    return parseInt(text);
                 }
             }
-
 
             Text {
                 text: "slope type"
@@ -173,7 +174,6 @@ Rectangle {
                     font: slopeCombo.font
                 }
             }
-
 
             Text {
                 text: "color ramp"
@@ -216,8 +216,8 @@ Rectangle {
     function applyRendererSettings() {
         const blendRenderer = ArcGISRuntimeEnvironment.createObject("BlendRenderer");
         blendRenderer.elevationRaster = elevationRaster;
-        blendRenderer.altitude = altSlider.value;
-        blendRenderer.azimuth = azimuthSlider.value;
+        blendRenderer.altitude = altSpinBox.value;
+        blendRenderer.azimuth = azimuthSpinBox.value;
         blendRenderer.slopeType = slopeTypeModel.get(slopeCombo.currentIndex).value;
         blendRenderer.colorRamp = getColorRamp();
         blendRenderer.outputBitDepth = 8;
@@ -229,6 +229,8 @@ Rectangle {
         blendRenderer.sourceMinValues = [];
 
         applyRenderer(blendRenderer);
+
+        map.basemap = (colorCombo.currentText !== "none") ? basemapColorRamp : basemap;
     }
 
     function applyRenderer(blendRenderer) {

@@ -16,7 +16,7 @@
 
 import QtQuick 2.6
 import QtQuick.Controls 2.2
-import Esri.ArcGISRuntime 100.10
+import Esri.ArcGISRuntime 100.12
 
 Rectangle {
     id: rootRectangle
@@ -33,7 +33,9 @@ Rectangle {
         anchors.fill: parent
 
         Map {
-            BasemapDarkGrayCanvasVector {}
+            Basemap {
+                initStyle: Enums.BasemapStyleArcGISDarkGray
+            }
         }
 
         // set initial viewpoint near UCLA, Los Angeles

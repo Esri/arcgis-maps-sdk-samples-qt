@@ -44,17 +44,17 @@ using namespace Esri::ArcGISRuntime;
 
 namespace
 {
-const QString featureServerUrl("https://sampleserver7.arcgisonline.com/arcgis/rest/services/UtilityNetwork/NapervilleElectric/FeatureServer");
+const QString featureServerUrl("https://sampleserver7.arcgisonline.com/server/rest/services/UtilityNetwork/NapervilleElectric/FeatureServer");
 const int maxScale = 2000;
 constexpr int targetScale = 50;
 }
-
 DisplayUtilityAssociations::DisplayUtilityAssociations(QObject* parent /* = nullptr */):
   QObject(parent),
-  m_map(new Map(Basemap::topographicVector(this), this)),
+  m_map(new Map(BasemapStyle::ArcGISTopographic, this)),
+  m_cred(new Credential("viewer01", "I68VGU^nMurF", this)),
   m_associationsOverlay(new GraphicsOverlay(this))
 {
-  m_utilityNetwork = new UtilityNetwork(featureServerUrl, this);
+  m_utilityNetwork = new UtilityNetwork(featureServerUrl, m_cred, this);
 
   // create symbols for the associations
   m_attachmentSymbol = new SimpleLineSymbol(SimpleLineSymbolStyle::Dot, Qt::green, 5, this);
@@ -203,7 +203,7 @@ void DisplayUtilityAssociations::connectSignals()
     {
 
       // check if the graphics overlay already contains the association
-      const bool uniqueGraphic = std::none_of(graphics->begin(), graphics->end(), [=](const Graphic* graphic)
+      const bool uniqueGraphic = std::none_of(graphics->begin(), graphics->end(), [association](const Graphic* graphic)
       {
         const AttributeListModel* attributes = graphic->attributes();
         return attributes->containsAttribute("GlobalId") && qvariant_cast<QUuid>((*graphic->attributes())["GlobalId"]) == association->globalId();

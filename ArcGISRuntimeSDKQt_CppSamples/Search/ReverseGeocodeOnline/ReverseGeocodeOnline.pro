@@ -27,7 +27,7 @@ QT += opengl qml quick
 TEMPLATE = app
 TARGET = ReverseGeocodeOnline
 
-ARCGIS_RUNTIME_VERSION = 100.10
+ARCGIS_RUNTIME_VERSION = 100.12
 include($$PWD/arcgisruntime.pri)
 
 # path of the toolkit relative to the sample

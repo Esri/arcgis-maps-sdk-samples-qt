@@ -18,7 +18,7 @@ import QtQuick 2.6
 import QtQuick.Window 2.3
 import QtQuick.Controls 2.2
 import Esri.Samples 1.0
-import Esri.ArcGISRuntime.Toolkit 100.10
+import Esri.ArcGISRuntime.Toolkit 100.12
 
 ProjectGeometrySample {
     id: rootRectangle

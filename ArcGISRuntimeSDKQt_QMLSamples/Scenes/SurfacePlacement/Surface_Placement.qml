@@ -17,7 +17,7 @@
 import QtQuick 2.6
 import QtQuick.Controls 2.12
 import QtQuick.Layouts 1.12
-import Esri.ArcGISRuntime 100.10
+import Esri.ArcGISRuntime 100.12
 
 Rectangle {
     width: 800
@@ -30,7 +30,9 @@ Rectangle {
 
         // Add a scene with the imagery basemap and world elevation surface
         Scene {
-            BasemapImagery {}
+            Basemap {
+                initStyle: Enums.BasemapStyleArcGISImageryStandard
+            }
 
             Surface {
                 ArcGISTiledElevationSource {

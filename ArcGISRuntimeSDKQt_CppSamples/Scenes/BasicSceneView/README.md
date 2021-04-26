@@ -14,15 +14,15 @@ When loaded, the sample will display a scene. Pan and zoom to explore the scene.
 
 ## How it works
 
-1. Create an `Scene` object with the `Basemap::imagery()` basemap.
+1. Create a `Scene` object with a basemap using the `BasemapStyle::ArcGISImagery` BasemapStyle.
 2. Create an `ArcGISTiledElevationSource` object and add it to the scene's base surface.
 3. Create a `SceneView` object to display the map.
 4. Set the scene to the scene view.
 
 ## Relevant API
 
-* Scene
 * ArcGISTiledElevationSource
+* Scene
 * SceneView
 
 ## Tags

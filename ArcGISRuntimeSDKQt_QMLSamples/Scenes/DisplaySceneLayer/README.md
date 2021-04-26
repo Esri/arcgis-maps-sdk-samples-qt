@@ -14,7 +14,7 @@ When launched, this sample displays a scene service with an `ArcGISSceneLayer`. 
 
 ## How it works
 
-1. Create an `Scene` and set its `Basemap`.
+1. Create a `Scene` and set its `Basemap`.
 2. Create a `Surface` and add an elevation source to it.
 3. Add the created surface to the scene.
 4. Create a `SceneView` and set the scene to the view.

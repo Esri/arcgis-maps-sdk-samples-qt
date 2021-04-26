@@ -15,7 +15,7 @@
 // [Legal]
 
 import QtQuick 2.6
-import Esri.ArcGISRuntime 100.10
+import Esri.ArcGISRuntime 100.12
 
 Rectangle {
     width: 800
@@ -25,7 +25,9 @@ Rectangle {
     MapView {
         anchors.fill: parent
         Map {
-            BasemapImageryWithLabels {}            
+            Basemap {
+                initStyle: Enums.BasemapStyleArcGISImagery
+            }
         }
     }
     //! [Create MapView that contains a Map with the Imagery with Labels Basemap]

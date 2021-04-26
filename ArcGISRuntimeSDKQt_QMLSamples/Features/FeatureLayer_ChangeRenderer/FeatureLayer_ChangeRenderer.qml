@@ -16,7 +16,7 @@
 
 import QtQuick 2.6
 import QtQuick.Controls 2.2
-import Esri.ArcGISRuntime 100.10
+import Esri.ArcGISRuntime 100.12
 
 Rectangle {
     width: 800
@@ -32,7 +32,9 @@ Rectangle {
         wrapAroundMode: Enums.WrapAroundModeDisabled
 
         Map {
-            BasemapTopographic {}
+            Basemap {
+                initStyle: Enums.BasemapStyleArcGISTopographic
+            }
 
             // create the feature layer
             FeatureLayer {

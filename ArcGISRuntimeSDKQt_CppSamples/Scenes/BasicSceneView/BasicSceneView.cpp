@@ -47,10 +47,12 @@ void BasicSceneView::componentComplete()
   // find QML SceneView component
   m_sceneView = findChild<SceneQuickView*>("sceneView");
 
-  // create a new basemap instance
-  Basemap* basemap = Basemap::imagery(this);
-  // create a new scene instance
+  // Create a new basemap instance
+  Basemap* basemap = Basemap::imageryWithLabels(this);
+
+  // Create a new scene instance
   m_scene = new Scene(basemap, this);
+
   // set scene on the scene view
   m_sceneView->setArcGISScene(m_scene);
 

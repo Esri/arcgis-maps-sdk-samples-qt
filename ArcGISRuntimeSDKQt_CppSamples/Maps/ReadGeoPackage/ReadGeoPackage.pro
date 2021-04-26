@@ -27,7 +27,7 @@ QT += opengl qml quick
 TEMPLATE = app
 TARGET = ReadGeoPackage
 
-ARCGIS_RUNTIME_VERSION = 100.10
+ARCGIS_RUNTIME_VERSION = 100.12
 include($$PWD/arcgisruntime.pri)
 
 #-------------------------------------------------------------------------------

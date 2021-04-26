@@ -16,8 +16,8 @@
 
 import QtQuick 2.6
 import Esri.ArcGISExtras 1.1
-import Esri.ArcGISRuntime 100.10
-import Esri.ArcGISRuntime.Toolkit 100.10
+import Esri.ArcGISRuntime 100.12
+import Esri.ArcGISRuntime.Toolkit 100.12
 
 Rectangle {
     clip: true
@@ -35,7 +35,9 @@ Rectangle {
         clip: true
 
         Map {
-            BasemapTopographic {}
+            Basemap {
+                initStyle: Enums.BasemapStyleArcGISTopographic
+            }
 
             // initial Viewpoint
             ViewpointCenter {

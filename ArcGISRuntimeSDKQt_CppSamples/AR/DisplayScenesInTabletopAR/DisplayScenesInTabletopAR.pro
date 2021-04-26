@@ -27,7 +27,7 @@ QT += opengl qml quick
 TEMPLATE = app
 TARGET = DisplayScenesInTabletopAR
 
-ARCGIS_RUNTIME_VERSION = 100.10
+ARCGIS_RUNTIME_VERSION = 100.12
 include($$PWD/arcgisruntime.pri)
 
 #-------------------------------------------------------------------------------
@@ -64,13 +64,14 @@ ios {
 # The path to the ArcGIS runtime toolkit for Qt sources, corresponding to the files downloaded
 # from the GitHub repo: https://github.com/Esri/arcgis-runtime-toolkit-qt
 
-AR_TOOLKIT_SOURCE_PATH = # must be set to the path to toolkit sources
+# path of the toolkit relative to the sample
+ARCGIS_TOOLKIT_PATH = $$PWD/../../../arcgis-runtime-toolkit-qt
 
-isEmpty(AR_TOOLKIT_SOURCE_PATH) {
-    error(AR_TOOLKIT_SOURCE_PATH is not set)
+exists($$ARCGIS_TOOLKIT_PATH/augmentedreality/CppApi/ArCppApi.pri) {
+    include($$ARCGIS_TOOLKIT_PATH/augmentedreality/CppApi/ArCppApi.pri)
+} else {
+    error(ARCGIS_TOOLKIT_PATH is missing which is required to build this application.)
 }
-
-include($$AR_TOOLKIT_SOURCE_PATH/Plugin/CppApi/ArCppApi.pri)
 
 #-------------------------------------------------------------------------------
 
@@ -80,15 +81,6 @@ android {
     DEPENDPATH += $$PWD
 
     ANDROID_ABIS = arm64-v8a
-
-    DISTFILES += \
-        android/AndroidManifest.xml \
-        android/build.gradle \
-        android/gradle/wrapper/gradle-wrapper.jar \
-        android/gradle/wrapper/gradle-wrapper.properties \
-        android/gradlew \
-        android/gradlew.bat \
-        android/res/values/libs.xml
 }
 
 contains(ANDROID_TARGET_ARCH,arm64-v8a) {

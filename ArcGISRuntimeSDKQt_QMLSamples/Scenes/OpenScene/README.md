@@ -17,13 +17,13 @@ When the sample opens, it will automatically display the scene from ArcGIS Onlin
 To open a web scene from a portal item:
 
 1. Create a `PortalItem` with an item ID pointing to a web scene.
-2. Create an `Scene` passing in the portal item.
+2. Create a `Scene` passing in the portal item.
 3. Set the scene to a `SceneView` to display it.
 
 ## Relevant API
 
-* Scene
 * PortalItem
+* Scene
 * SceneView
 
 ## About the data

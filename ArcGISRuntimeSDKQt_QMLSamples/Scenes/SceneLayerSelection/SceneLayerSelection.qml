@@ -15,7 +15,7 @@
 // [Legal]
 
 import QtQuick 2.6
-import Esri.ArcGISRuntime 100.10
+import Esri.ArcGISRuntime 100.12
 
 Rectangle {
     id: rootRectangle
@@ -29,7 +29,7 @@ Rectangle {
 
         Scene {
             id: scene
-            BasemapImagery {}
+            BasemapTopographic {}
 
             // add a scene layer
             ArcGISSceneLayer {

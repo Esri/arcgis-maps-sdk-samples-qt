@@ -33,11 +33,20 @@ The [world elevation service](https://elevation3d.arcgis.com/arcgis/rest/service
 
 ## Additional information
 
-1. Clone the [ArcGIS Runtime Toolkit](https://github.com/Esri/arcgis-runtime-toolkit-qt) repository.
-2. In the project's `.pro` file, make sure to set the path, `AR_TOOLKIT_SOURCE_PATH`, to the ArcGIS Toolkit source folder you just cloned.
-3. The sample contains the necessary changes to deploy to iOS or Android as is.
+#### Clone the toolkit repo - Required for AR samples
 
-For more information on the Augmented Reality (AR) toolkit see [the AR README on GitHub](https://github.com/Esri/arcgis-runtime-toolkit-qt/blob/master/Common/AR/README.md#augmented-reality-toolkit-components).
+Change directory into your locally cloned samples repo and then use `git clone` to get a copy of the [ArcGIS Runtime Toolkit - Qt](https://github.com/Esri/arcgis-runtime-toolkit-qt.git).
+
+```
+# Change directory to the clone of the samples repository
+# Clone the toolkit repository into the current directory in terminal
+$ cd /arcgis-runtime-samples-qt
+$ git clone https://github.com/Esri/arcgis-runtime-toolkit-qt.git
+```
+
+Cloning the toolkit in this location will allow for the samples to automatically pick it up. If you wish to place the toolkit in another location, you will need to update the samples project file accordingly to locate the necessary .pri file.
+
+For more information on the Augmented Reality (AR) toolkit, including the steps required to deploy to Android and iOS, see [the AR README on GitHub](https://github.com/Esri/arcgis-runtime-toolkit-qt/blob/master/augmentedreality/README.md).
 
 ## Tags
 

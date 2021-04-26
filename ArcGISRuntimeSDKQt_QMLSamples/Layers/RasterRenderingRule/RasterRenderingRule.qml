@@ -17,7 +17,7 @@
 import QtQuick 2.6
 import QtQuick.Controls 2.2
 import QtQuick.Layouts 1.3
-import Esri.ArcGISRuntime 100.10
+import Esri.ArcGISRuntime 100.12
 import Esri.ArcGISExtras 1.1
 
 Rectangle {
@@ -36,7 +36,9 @@ Rectangle {
         Map {
             id: map
             // create a basemap from a tiled layer and add to the map
-            BasemapStreets {}
+            Basemap {
+                initStyle: Enums.BasemapStyleArcGISStreets
+            }
 
             //! [RasterRenderingRule qml ImageServiceRaster]
             // create and add a raster layer to the map

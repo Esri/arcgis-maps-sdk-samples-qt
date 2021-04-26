@@ -29,6 +29,7 @@
 #include "Camera.h"
 #include "Viewpoint.h"
 #include "LocationViewshed.h"
+#include "IntegratedMeshLayer.h"
 
 using namespace Esri::ArcGISRuntime;
 
@@ -50,21 +51,21 @@ void ViewshedCamera::componentComplete()
 
   // Create a scene
   m_sceneView = findChild<SceneQuickView*>("sceneView");
-  m_scene = new Scene(Basemap::imagery(this), this);
+  m_scene = new Scene(BasemapStyle::ArcGISImageryStandard, this);
 
   // Set a base surface
   Surface* surface = new Surface(this);
   surface->elevationSources()->append(
         new ArcGISTiledElevationSource(
-          QUrl("https://scene.arcgis.com/arcgis/rest/services/BREST_DTM_1M/ImageServer"),
+          QUrl("https://elevation3d.arcgis.com/arcgis/rest/services/WorldElevation3D/Terrain3D/ImageServer"),
           this));
   m_scene->setBaseSurface(surface);
 
-  // Add a Scene Layer
-  ArcGISSceneLayer* sceneLayer = new ArcGISSceneLayer(QUrl("https://tiles.arcgis.com/tiles/P3ePLMYs2RVChkJx/arcgis/rest/services/Buildings_Brest/SceneServer/layers/0"), this);
-  m_scene->operationalLayers()->append(sceneLayer);
+  // Create and add the Girona, Spain integrated mesh layer
+  IntegratedMeshLayer* gironaMeshLayer = new IntegratedMeshLayer(QUrl("https://tiles.arcgis.com/tiles/z2tnIkrLQ2BRzr6P/arcgis/rest/services/Girona_Spain/SceneServer"), this);
+  m_scene->operationalLayers()->append(gironaMeshLayer);
 
-  // Add an AnalysisOverlay
+  // Add an AnalysisOverlay to display the viewshed analysis result
   m_analysisOverlay = new AnalysisOverlay(this);
   m_sceneView->analysisOverlays()->append(m_analysisOverlay);
 
@@ -98,15 +99,16 @@ void ViewshedCamera::calculateViewshed()
 
 void ViewshedCamera::setInitialViewpoint()
 {
-  // create a camera and set the initial viewpoint
-  const double x = -4.49492;
-  const double y = 48.3808;
-  const double z = 48.2511;
-  Point pt(x, y, z, SpatialReference(4326));
-  const double heading = 344.488;
-  const double pitch = 74.1212;
+  const double x_longitude = 2.82691;
+  const double y_latitude = 41.985;
+  const double z_altitude = 124.987;
+  Point pt(x_longitude, y_latitude, z_altitude, SpatialReference(4326));
+
+  const double heading = 332.131;
+  const double pitch = 82.4732;
   const double roll = 0;
   Camera camera(pt, heading, pitch, roll);
+
   Viewpoint initViewpoint(pt, camera);
   m_scene->setInitialViewpoint(initViewpoint);
 }

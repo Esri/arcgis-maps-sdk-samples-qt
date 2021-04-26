@@ -48,7 +48,7 @@ void DisplayMap::componentComplete()
   m_mapView = findChild<MapQuickView*>("mapView");
 
   // create a new basemap instance
-  Basemap* basemap = Basemap::imageryWithLabels(this);
+  Basemap* basemap = new Basemap(BasemapStyle::ArcGISImageryStandard, this);
   // create a new map instance
   m_map = new Map(basemap, this);
   // set map on the map view

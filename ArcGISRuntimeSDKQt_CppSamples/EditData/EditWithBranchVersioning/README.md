@@ -2,7 +2,7 @@
 
 Create, query and edit a specific server version using service geodatabase.
 
-![Image of edit with branch versioning](editWithBranchVersioning.png)
+![](screenshot.png)
 
 ## Use case
 
@@ -10,7 +10,7 @@ Workflows often progress in discrete stages, with each stage requiring the alloc
 
 ## How to use the sample
 
-Upon opening the sample, you will be prompted to enter credentials for the service(un: editor01/pwd: editor01.password). Once loaded, the map will zoom to the extent of the feature layer. The current version is indicated at the top of the map. Click "Create Version" to open a dialog to specify the version information (name, access, and description). See the *Additional information* section for restrictions on the version name.
+Once loaded, the map will zoom to the extent of the feature layer. The current version is indicated at the top of the map. Click "Create Version" to open a dialog to specify the version information (name, access, and description). See the *Additional information* section for restrictions on the version name.
 
 Click "Create" to create the version with the information that you specified. Select a feature to edit an attribute and/or click a second time to relocate the point.
 
@@ -45,13 +45,13 @@ Click the button in the top left corner to switch back and forth between the ver
 
 ## About the data
 
-The feature layer used in this sample is [Damage to commercial buildings](https://sampleserver7.arcgisonline.com/arcgis/rest/services/DamageAssessment/FeatureServer/0) located in Naperville, Illinois. 
+The feature layer used in this sample is [Damage to commercial buildings](https://sampleserver7.arcgisonline.com/server/rest/services/DamageAssessment/FeatureServer/0) located in Naperville, Illinois. 
 
 ## Additional information
 
 Credentials:
 * Username: editor01
-* Password: editor01.password
+* Password: S7#i2LWmYH75
 
 The name of the version must meet the following criteria:
 1. Must not exceed 62 characters

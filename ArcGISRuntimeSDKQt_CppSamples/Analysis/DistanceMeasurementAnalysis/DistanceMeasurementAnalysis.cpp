@@ -51,26 +51,19 @@ void DistanceMeasurementAnalysis::componentComplete()
   // Get the Scene View
   m_sceneView = findChild<SceneQuickView*>("sceneView");
 
-  // Create a Scene with the imagery basemap
-  Scene* scene = new Scene(Basemap::imagery(this), this);
+  // Create a Scene with the topographic basemap
+  Scene* scene = new Scene(Basemap::topographic(this), this);
 
   // Add a Scene Layer
   ArcGISSceneLayer* sceneLayer = new ArcGISSceneLayer(QUrl("https://tiles.arcgis.com/tiles/P3ePLMYs2RVChkJx/arcgis/rest/services/Buildings_Brest/SceneServer/layers/0"), this);
+  sceneLayer->setAltitudeOffset(1); // The elevation source is a very fine resolution so we raise the scene layer slightly so it does not clip the surface
+
   scene->operationalLayers()->append(sceneLayer);
 
-  // Create a list of elevation sources
-  const QList<ElevationSource*> sources
-  {
-    new ArcGISTiledElevationSource(
-          QUrl("https://elevation3d.arcgis.com/arcgis/rest/services/WorldElevation3D/Terrain3D/ImageServer"),
-          this),
-        new ArcGISTiledElevationSource(
-          QUrl("https://tiles.arcgis.com/tiles/d3voDfTFbHOCRwVR/arcgis/rest/services/MNT_IDF/ImageServer"),
-          this)
-  };
-
   // Create and set the surface on the scene
-  Surface* surface = new Surface(sources, this);
+  Surface* surface = new Surface(this);
+  surface->elevationSources()->append(
+        new ArcGISTiledElevationSource(QUrl("https://scene.arcgis.com/arcgis/rest/services/BREST_DTM_1M/ImageServer"),this));
   scene->setBaseSurface(surface);
 
   // Add Analysis Overlay

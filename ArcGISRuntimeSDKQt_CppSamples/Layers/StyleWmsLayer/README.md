@@ -1,4 +1,4 @@
-# Style WMS layers
+# Style WMS layer
 
 Change the style of a Web Map Service (WMS) layer.
 

@@ -20,7 +20,6 @@
     ],
     "relevant_apis": [
         "GeometryEngine",
-        "MapView",
         "ProximityResult"
     ],
     "snippets": [

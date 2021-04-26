@@ -21,16 +21,17 @@ namespace Esri
 {
 namespace ArcGISRuntime
 {
+class Credential;
 class Error;
-class UtilityTraceCondition;
 class UtilityElement;
 class UtilityNetwork;
 class UtilityNetworkDefinition;
 class UtilityTerminal;
 class UtilityTier;
-class UtilityTraceParameters;
+class UtilityTraceCondition;
 class UtilityTraceConditionalExpression;
 class UtilityTraceConfiguration;
+class UtilityTraceParameters;
 }
 }
 
@@ -92,6 +93,7 @@ private:
   Esri::ArcGISRuntime::UtilityTraceCondition* m_initialExpression = nullptr;
   Esri::ArcGISRuntime::UtilityTraceConfiguration* m_traceConfiguration = nullptr;
   Esri::ArcGISRuntime::UtilityTraceParameters* m_traceParams = nullptr;
+  Esri::ArcGISRuntime::Credential* m_cred = nullptr;
 
   QStringList m_attributeListModel;
   QStringList m_conditionBarrierExpressionListModel;
@@ -104,7 +106,7 @@ private:
   const QString m_deviceTableName = "Electric Distribution Device";
   const QString m_domainNetworkName = "ElectricDistribution";
   const QString m_tierName = "Medium Voltage Radial";
-  const QUrl m_featureLayerUrl = QUrl("https://sampleserver7.arcgisonline.com/arcgis/rest/services/UtilityNetwork/NapervilleElectric/FeatureServer");
+  const QUrl m_featureLayerUrl = QUrl("https://sampleserver7.arcgisonline.com/server/rest/services/UtilityNetwork/NapervilleElectric/FeatureServer");
   const QUuid m_gloabId = QUuid("{1CAF7740-0BF4-4113-8DB2-654E18800028}");
   QString m_dialogText;
   QString m_expressionBuilder;

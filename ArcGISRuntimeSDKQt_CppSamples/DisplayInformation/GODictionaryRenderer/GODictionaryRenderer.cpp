@@ -96,7 +96,7 @@ void GODictionaryRenderer::componentComplete()
 
   // Create a map and give it to the MapView
   m_mapView = findChild<MapQuickView*>("mapView");
-  m_map = new Map(Basemap::topographic(this), this);
+  m_map = new Map(BasemapStyle::ArcGISTopographic, this);
 
   parseXmlFile();
   m_mapView->graphicsOverlays()->append(m_graphicsOverlay);

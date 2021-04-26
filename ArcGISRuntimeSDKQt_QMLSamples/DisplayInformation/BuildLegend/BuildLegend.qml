@@ -16,7 +16,7 @@
 
 import QtQuick 2.6
 import QtQuick.Controls 2.2
-import Esri.ArcGISRuntime 100.10
+import Esri.ArcGISRuntime 100.12
 
 Rectangle {
     width: 800
@@ -34,7 +34,9 @@ Rectangle {
             autoFetchLegendInfos: true
 
             // Nest the Basemap to add it as the Map's Basemap
-            BasemapTopographic {}
+            Basemap {
+                initStyle: Enums.BasemapStyleArcGISTopographic
+            }
 
             // Add a tiled layer as an operational layer
             ArcGISTiledLayer {

@@ -15,7 +15,7 @@
 // [Legal]
 
 import QtQuick 2.6
-import Esri.ArcGISRuntime 100.10
+import Esri.ArcGISRuntime 100.12
 
 Rectangle {
     id: rootRectangle
@@ -28,7 +28,9 @@ Rectangle {
         anchors.fill: parent
 
         Map {
-            BasemapStreets {}
+            Basemap {
+                initStyle: Enums.BasemapStyleArcGISStreets
+            }
             minScale: 8000
             maxScale: 2000
             initialViewpoint: ViewpointCenter {

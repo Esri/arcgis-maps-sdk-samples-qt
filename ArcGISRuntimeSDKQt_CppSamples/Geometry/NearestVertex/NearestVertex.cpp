@@ -34,7 +34,7 @@ using namespace Esri::ArcGISRuntime;
 
 NearestVertex::NearestVertex(QObject* parent /* = nullptr */):
   QObject(parent),
-  m_map(new Map(Basemap::topographic(this), this))
+  m_map(new Map(BasemapStyle::ArcGISTopographic, this))
 {
   const Point center(-4487263.495911, 3699176.480377, SpatialReference::webMercator());
   const Viewpoint viewpoint(center, 80000000);
@@ -119,7 +119,9 @@ void NearestVertex::setupGraphics()
   graphicsOverlay->graphics()->append(nearestVertexGraphic);
 
   // add graphic to clicked location
-  connect(m_mapView, &MapQuickView::mouseClicked, this, [=](QMouseEvent& e)
+  connect(m_mapView, &MapQuickView::mouseClicked, this,
+          [nearestVertexGraphic, nearestCoordinateGraphic, polygonBuilder, clickedLocationGraphic, this]
+          (QMouseEvent& e)
   {
     const Point clickedLocation = m_mapView->screenToLocation(e.x(), e.y());
     // normalizing the geometry before performing geometric operations

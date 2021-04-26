@@ -16,7 +16,7 @@
 
 import QtQuick 2.6
 import QtQuick.Controls 2.2
-import Esri.ArcGISRuntime 100.10
+import Esri.ArcGISRuntime 100.12
 
 Rectangle {
     id: rootRectangle
@@ -32,7 +32,9 @@ Rectangle {
         anchors.fill: parent
 
         Map {
-            BasemapStreets {}
+            Basemap {
+                initStyle: Enums.BasemapStyleArcGISStreets
+            }
 
             ArcGISMapImageLayer {
                 url: "https://sampleserver6.arcgisonline.com/arcgis/rest/services/Census/MapServer"

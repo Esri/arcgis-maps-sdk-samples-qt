@@ -16,7 +16,7 @@
 
 import QtQuick 2.6
 import QtQuick.Controls 2.2
-import Esri.ArcGISRuntime 100.10
+import Esri.ArcGISRuntime 100.12
 import QtQuick.Layouts 1.11
 import QtQuick.Dialogs 1.1
 
@@ -194,8 +194,8 @@ Rectangle {
             UtilityNetwork {
                 id: utilityNetwork
                 url: featureServiceUrl
-
                 credential: cred
+
                 onTraceStatusChanged: {
 
                     if (traceStatus !== Enums.TaskStatusCompleted)

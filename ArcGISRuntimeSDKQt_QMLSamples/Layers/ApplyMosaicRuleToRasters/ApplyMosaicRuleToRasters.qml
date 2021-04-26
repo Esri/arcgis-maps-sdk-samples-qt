@@ -16,7 +16,7 @@
 
 import QtQuick 2.6
 import QtQuick.Controls 2.2
-import Esri.ArcGISRuntime 100.10
+import Esri.ArcGISRuntime 100.12
 
 Rectangle {
     id: rootRectangle
@@ -32,13 +32,15 @@ Rectangle {
         anchors.fill: parent
 
         Map {
-            BasemapTopographicVector {}
+            Basemap {
+                initStyle: Enums.BasemapStyleArcGISTopographic
+            }
 
             RasterLayer {
                 id: rasterLayer
                 ImageServiceRaster {
                     id: imageServiceRaster
-                    url: "https://sampleserver7.arcgisonline.com/arcgis/rest/services/amberg_germany/ImageServer"
+                    url: "https://sampleserver7.arcgisonline.com/server/rest/services/amberg_germany/ImageServer"
                     mosaicRule: MosaicRule {
                     }
                 }

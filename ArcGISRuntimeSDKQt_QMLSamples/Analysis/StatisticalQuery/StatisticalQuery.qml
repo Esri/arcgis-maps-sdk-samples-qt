@@ -17,7 +17,7 @@
 import QtQuick 2.6
 import QtQuick.Controls 2.2
 import QtQuick.Layouts 1.3
-import Esri.ArcGISRuntime 100.10
+import Esri.ArcGISRuntime 100.12
 
 Rectangle {
     clip: true
@@ -35,7 +35,9 @@ Rectangle {
 
         // Create a new Map with the world streets vector basemap
         Map {
-            BasemapStreetsVector {}
+            Basemap {
+                initStyle: Enums.BasemapStyleArcGISStreets
+            }
 
             // Create a new feature layer to display features in the world cities table
             FeatureLayer {
