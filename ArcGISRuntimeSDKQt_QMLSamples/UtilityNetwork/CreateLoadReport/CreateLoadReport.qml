@@ -42,24 +42,21 @@ Rectangle {
     property var serviceCategoryName: "ServicePoint"
     property var loadNetworkAttributeName: "Service Load"
     property var phasesNetworkAttributeName: "Phases Current"
-    property var sampleStatus: 0
+    property var sampleStatus: CreateLoadReport.SampleStatus.NotLoaded
 
     property bool reportHasRun: false
 
-    property var phases: ["A", "AB", "ABC", "AC", "B", "BC", "C", "DeEnergized", "Unknown"]
+    property var phaseNames: ["A", "AB", "ABC", "AC", "B", "BC", "C", "DeEnergized", "Unknown"]
     property var phaseQueue: []
     property var currentPhase: null
 
-    property var checkedPhases: {
-        "A": false,
-        "AB": false,
-        "ABC": false,
-        "AC": false,
-        "BC": false,
-        "B": false,
-        "C": false,
-        "DeEnergized": false,
-        "Unknown": false
+    property var selectedPhases: ({})
+
+    enum SampleStatus {
+        Error,
+        NotLoaded,
+        Busy,
+        Ready
     }
 
     UtilityNetwork {
@@ -91,7 +88,7 @@ Rectangle {
 
                 // Create a list of possible phases from a given network attribute
                 phaseCodedValuesList = createCodedValuesPhaseList();
-                sampleStatus = 2;
+                sampleStatus = CreateLoadReport.SampleStatus.Ready;
             }
         }
 
@@ -114,14 +111,14 @@ Rectangle {
                     currentPhase = phaseQueue.pop();
                     createReportForPhase(currentPhase);
                 } else {
-                    sampleStatus = 2;
+                    sampleStatus = CreateLoadReport.SampleStatus.Ready;
                     reportHasRun = true;
                 }
             }
         }
 
         onErrorChanged: {
-            sampleStatus = -1;
+            sampleStatus = CreateLoadReport.SampleStatus.Error;
         }
     }
 
@@ -224,7 +221,7 @@ Rectangle {
         }
 
         if (phaseQueue.length > 0) {
-            sampleStatus = 1;
+            sampleStatus = CreateLoadReport.SampleStatus.Busy;
             currentPhase = phaseQueue.pop();
             createReportForPhase(currentPhase);
         }
@@ -251,15 +248,8 @@ Rectangle {
     Rectangle {
         id: rectangle
         anchors.horizontalCenter: parent.horizontalCenter
-        color: "white"
         width: grid.width
         height: contents.height
-
-        ButtonGroup {
-            id: checkBoxes
-            exclusive: false
-            checkState: parentBox.checkState
-        }
 
         Column {
             id: contents
@@ -268,6 +258,12 @@ Rectangle {
             spacing: 25
 
             Row {
+                ButtonGroup {
+                    id: checkBoxes
+                    exclusive: false
+                    checkState: parentBox.checkState
+                }
+
                 GridLayout {
                     id: grid
                     columns: 4
@@ -330,31 +326,21 @@ Rectangle {
 
             Row {
                 Button {
-                    text: {
-                        if (checkBoxes.checkState !== 0 || !reportHasRun) {
-                            "Run Report";
-                        } else {
-                            "Reset";
-                        }
-                    }
+                    text: checkBoxes.checkState !== 0 || !reportHasRun ? "Run Report" : "Reset"
 
-                    enabled: ((reportHasRun || checkBoxes.checkState !== 0) && sampleStatus === 2) ? true : false
+                    enabled: ((reportHasRun || checkBoxes.checkState !== 0) && sampleStatus === CreateLoadReport.SampleStatus.Ready) ? true : false
 
                     onClicked: {
-                        resetGrid();
+                        initOrResetGrid();
                         let runPhases = [];
-                        phases.forEach((phase) => {
-                                           if (checkedPhases[phase])
+                        phaseNames.forEach((phase) => {
+                                           if (selectedPhases[phase])
                                            runPhases.push(phase)
                                        });
 
                         runReport(runPhases);
 
-                        if (runPhases.length === 0) {
-                            reportHasRun = false;
-                        } else {
-                            reportHasRun = true;
-                        }
+                        reportHasRun = runPhases.length !== 0;
                     }
                 }
             }
@@ -364,22 +350,28 @@ Rectangle {
                     id: noticeText
                     text: {
                         switch (sampleStatus) {
-                        case -1:
+                        case CreateLoadReport.SampleStatus.Error:
                             "The sample encountered an error:\n"+utilityNetwork.error.message+"\n"+utilityNetwork.error.additionalMessage;
                             break;
-                        case 0:
+
+                        case CreateLoadReport.SampleStatus.NotLoaded:
                             "Sample initializing...";
                             break;
-                        case 1:
+
+                        case CreateLoadReport.SampleStatus.Busy:
                             "Generating load report...";
                             break;
-                        case 2:
+
+                        case CreateLoadReport.SampleStatus.Ready:
                             if (checkBoxes.checkState === 0 && !reportHasRun) {
                                 "Select phases to run the load report with";
+                            } else if (checkBoxes.checkState === 0 && reportHasRun) {
+                                "Tap the \"Reset\" button to reset the load report";
                             } else {
                                 "Tap the \"Run Report\" button to create the load report";
                             }
                             break;
+
                         default:
                             "Sample status is not defined";
                             break;
