@@ -174,7 +174,7 @@ UtilityTraceConfiguration* CreateLoadReport::createDefaultTraceConfiguration()
   return traceConfig;
 }
 
-UtilityCategory* CreateLoadReport::getUtilityCategory(const QString categoryName)
+UtilityCategory* CreateLoadReport::getUtilityCategory(const QString& categoryName)
 {
   QList<UtilityCategory*> utilityCategories = m_utilityNetwork->definition()->categories();
 
@@ -203,7 +203,7 @@ QList<CodedValue> CreateLoadReport::createPhaseList()
   return {};
 }
 
-void CreateLoadReport::runReport(QStringList selectedPhaseNames)
+void CreateLoadReport::runReport(const QStringList& selectedPhaseNames)
 {
   m_sampleStatus = CreateLoadReport::SampleBusy;
   emit sampleStatusChanged();
@@ -289,7 +289,7 @@ void CreateLoadReport::init()
   qmlRegisterType<CreateLoadReport>("Esri.Samples", 1, 0, "CreateLoadReportSample");
 }
 
-void CreateLoadReport::addPhase(QString phaseToAdd)
+void CreateLoadReport::addPhase(const QString& phaseToAdd)
 {
   m_activePhases.append(phaseToAdd);
 }

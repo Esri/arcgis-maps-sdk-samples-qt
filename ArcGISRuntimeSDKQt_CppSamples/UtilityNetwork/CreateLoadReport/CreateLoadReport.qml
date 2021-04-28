@@ -43,12 +43,12 @@ Item {
 
     Rectangle {
         id: rectangle
-        color: "white"
-        width: grid.width
-        height: contents.height
         anchors {
             horizontalCenter: parent.horizontalCenter
         }
+        color: "white"
+        width: grid.width
+        height: contents.height
 
         ButtonGroup {
             id: checkBoxes
@@ -136,15 +136,11 @@ Item {
                         let runPhases = [];
                         phases.forEach((phase) => {
                                            if (selectedPhases[phase])
-                                           runPhases.push(phase)
+                                                runPhases.push(phase)
                                        });
                         sampleModel.runReport(runPhases);
 
-                        if (runPhases.length === 0) {
-                            reportHasRun = false;
-                        } else {
-                            reportHasRun = true;
-                        }
+                        reportHasRun = runPhases.length === 0;
                     }
                 }
             }

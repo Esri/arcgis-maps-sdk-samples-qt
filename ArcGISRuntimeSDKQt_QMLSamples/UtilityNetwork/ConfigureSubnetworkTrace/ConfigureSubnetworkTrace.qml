@@ -53,7 +53,6 @@ Rectangle {
             password: "S7#i2LWmYH75"
         }
 
-
         onTraceStatusChanged: {
             if (traceStatus !== Enums.TaskStatusCompleted)
                 return;
@@ -75,7 +74,6 @@ Rectangle {
 
         onErrorChanged: {
             dialogText.text = qsTr("%1 - %2".arg(error.message).arg(error.additionalMessage));
-            console.log(dialogText.text);
             dialog.open();
             busyIndicator.visible = false;
         }

@@ -62,6 +62,3 @@ android {
     INCLUDEPATH += $$PWD
     DEPENDPATH += $$PWD
 }
-android: include(/Users/tan11389/Library/Application Support/QtProject/QtCreator/../Android/sdk/android_openssl/openssl.pri)
-
-ANDROID_ABIS = armeabi-v7a

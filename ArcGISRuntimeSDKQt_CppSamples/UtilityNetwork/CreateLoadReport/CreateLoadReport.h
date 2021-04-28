@@ -56,8 +56,8 @@ public:
   ~CreateLoadReport();
 
   static void init();
-  Q_INVOKABLE void addPhase(QString phaseToAdd);
-  Q_INVOKABLE void runReport(QStringList selectedPhaseNames);
+  Q_INVOKABLE void addPhase(const QString& phaseToAdd);
+  Q_INVOKABLE void runReport(const QStringList& selectedPhaseNames);
 
 signals:
   void loadReportUpdated();
@@ -68,7 +68,7 @@ private:
   QVariantMap phaseLoad();
   int sampleStatus();
 
-  Esri::ArcGISRuntime::UtilityCategory* getUtilityCategory(const QString categoryName);
+  Esri::ArcGISRuntime::UtilityCategory* getUtilityCategory(const QString& categoryName);
   Esri::ArcGISRuntime::UtilityElement* createStartingLocation();
   Esri::ArcGISRuntime::UtilityTraceConfiguration* createDefaultTraceConfiguration();
   QList<Esri::ArcGISRuntime::CodedValue> createPhaseList();

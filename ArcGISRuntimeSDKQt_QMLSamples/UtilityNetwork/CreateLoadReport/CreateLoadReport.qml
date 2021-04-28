@@ -132,7 +132,7 @@ Rectangle {
 
         // Service Category for counting total customers
         function setServiceCategoryComparison() {
-            let utilityCategories = utilityNetwork.definition.categories;
+            const utilityCategories = utilityNetwork.definition.categories;
             for (let i = 0; i < utilityCategories.length; i++) {
                 if (utilityCategories[i].name === serviceCategoryName) {
                     serviceCategoryComparison.category = utilityCategories[i];
@@ -146,11 +146,6 @@ Rectangle {
         id: addLoadAttributeFunction
         functionType: Enums.UtilityTraceFunctionTypeAdd
         condition: serviceCategoryComparison
-
-        function setNetworkAttribute() {
-            // The load attribute for counting total load.
-            addLoadAttributeFunction.networkAttribute = utilityNetwork.definition.networkAttribute(loadNetworkAttributeName);
-        }
     }
 
     UtilityTraceParameters {
@@ -196,13 +191,14 @@ Rectangle {
     }
 
     function createTraceConfiguration() {
-        let traceConfig = utilityTier.traceConfiguration;
+        const traceConfig = utilityTier.traceConfiguration;
         traceConfig.domainNetwork = utilityNetwork.definition.domainNetwork(domainNetworkName);
 
         serviceCategoryComparison.setServiceCategoryComparison();
         traceConfig.outputCondition = serviceCategoryComparison;
 
-        addLoadAttributeFunction.setNetworkAttribute();
+        // The load attribute for counting total load.
+        addLoadAttributeFunction.networkAttribute = utilityNetwork.definition.networkAttribute(loadNetworkAttributeName);
         traceConfig.functions.clear();
         traceConfig.functions.append(addLoadAttributeFunction);
 
@@ -235,7 +231,7 @@ Rectangle {
     }
 
     function createReportForPhase(phase) {
-        let condExpr = ArcGISRuntimeEnvironment.createObject("UtilityNetworkAttributeComparison", {
+        const condExpr = ArcGISRuntimeEnvironment.createObject("UtilityNetworkAttributeComparison", {
                                                                  networkAttribute: phasesCurrentAttr,
                                                                  comparisonOperator: Enums.UtilityAttributeComparisonOperatorDoesNotIncludeAny,
                                                                  value: phase.code
@@ -254,13 +250,10 @@ Rectangle {
 
     Rectangle {
         id: rectangle
+        anchors.horizontalCenter: parent.horizontalCenter
         color: "white"
         width: grid.width
         height: contents.height
-        anchors {
-            horizontalCenter: parent.horizontalCenter
-
-        }
 
         ButtonGroup {
             id: checkBoxes
@@ -269,14 +262,12 @@ Rectangle {
         }
 
         Column {
-
             id: contents
             anchors.fill: parent
             padding: 10
             spacing: 25
 
             Row {
-
                 GridLayout {
                     id: grid
                     columns: 4
