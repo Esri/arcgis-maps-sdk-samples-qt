@@ -51,7 +51,7 @@ using namespace Esri::ArcGISRuntime;
 
 CreateLoadReport::CreateLoadReport(QObject* parent /* = nullptr */):
   QObject(parent),
-  m_cred(new Credential("editor01", "S7#i2LWmYH75", this))
+  m_cred(new Credential("viewer01", "I68VGU^nMurF", this))
 {
   m_networkSourceName = "Electric Distribution Device";
   m_assetGroupName = "Circuit Breaker";

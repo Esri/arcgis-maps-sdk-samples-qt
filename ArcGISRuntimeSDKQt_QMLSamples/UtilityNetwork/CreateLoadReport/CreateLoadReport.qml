@@ -64,8 +64,8 @@ Rectangle {
         url: "https://sampleserver7.arcgisonline.com/server/rest/services/UtilityNetwork/NapervilleElectric/FeatureServer"
 
         credential: Credential {
-            username: "editor01"
-            password: "S7#i2LWmYH75"
+            username: "viewer01"
+            password: "I68VGU^nMurF"
         }
 
         Component.onCompleted: {

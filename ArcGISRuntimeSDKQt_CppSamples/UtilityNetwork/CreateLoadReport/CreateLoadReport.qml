@@ -31,9 +31,7 @@ Item {
 
     Rectangle {
         id: rectangle
-        anchors {
-            horizontalCenter: parent.horizontalCenter
-        }
+        anchors.horizontalCenter: parent.horizontalCenter
         width: grid.width
         height: contents.height
 
