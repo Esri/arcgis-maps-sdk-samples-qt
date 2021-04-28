@@ -336,7 +336,7 @@ Rectangle {
                         let runPhases = [];
                         phaseNames.forEach((phase) => {
                                            if (selectedPhases[phase])
-                                           runPhases.push(phase)
+                                               runPhases.push(phase)
                                        });
 
                         runReport(runPhases);
