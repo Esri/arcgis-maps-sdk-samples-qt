@@ -22,17 +22,13 @@ namespace Esri
 namespace ArcGISRuntime
 {
 class Credential;
-class MapQuickView;
 class CodedValue;
-class TaskWatcher;
 class UtilityAssetType;
 class UtilityCategory;
 class UtilityElement;
 class UtilityNetwork;
 class UtilityNetworkAttribute;
 class UtilityTier;
-class UtilityTerminal;
-class UtilityTraceCondition;
 class UtilityTraceConditionalExpression;
 class UtilityTraceConfiguration;
 class UtilityTraceParameters;
@@ -73,9 +69,9 @@ signals:
   void sampleStatusChanged();
 
 private:
+  int sampleStatus();
   QVariantMap phaseCust();
   QVariantMap phaseLoad();
-  int sampleStatus();
 
   Esri::ArcGISRuntime::UtilityCategory* getUtilityCategory(const QString& categoryName);
   Esri::ArcGISRuntime::UtilityElement* createStartingLocation();

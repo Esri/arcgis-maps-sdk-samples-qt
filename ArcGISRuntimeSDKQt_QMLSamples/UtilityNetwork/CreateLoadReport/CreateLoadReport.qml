@@ -42,16 +42,16 @@ Rectangle {
     property var serviceCategoryName: "ServicePoint"
     property var loadNetworkAttributeName: "Service Load"
     property var phasesNetworkAttributeName: "Phases Current"
-    property var sampleStatus: CreateLoadReport.SampleStatus.NotLoaded
 
     property bool reportHasRun: false
 
     property var phaseNames: ["A", "AB", "ABC", "AC", "B", "BC", "C", "DeEnergized", "Unknown"]
     property var phaseQueue: []
     property var currentPhase: null
-
     property var selectedPhases: ({})
 
+
+    property var sampleStatus: CreateLoadReport.SampleStatus.NotLoaded
     enum SampleStatus {
         Error,
         NotLoaded,
@@ -274,53 +274,54 @@ Rectangle {
                     Text { text: "Total customers"; font.pointSize: 18; font.bold: true; }
                     Text { text: "Total load"; font.bold: true; font.pointSize: 18 }
 
-                    CheckBox { id: checkA; onCheckedChanged: checkedPhases["A"] = !checkedPhases["A"]; ButtonGroup.group: checkBoxes }
+                    CheckBox { id: checkA; onCheckedChanged: selectedPhases["A"] = !selectedPhases["A"]; ButtonGroup.group: checkBoxes }
                     Text { text: "A" }
                     Text { id: custTextA }
                     Text { id: loadTextA }
 
-                    CheckBox { id: checkAB; onCheckedChanged: checkedPhases["AB"] = !checkedPhases["AB"]; ButtonGroup.group: checkBoxes }
+                    CheckBox { id: checkAB; onCheckedChanged: selectedPhases["AB"] = !selectedPhases["AB"]; ButtonGroup.group: checkBoxes }
                     Text { text: "AB" }
                     Text { id: custTextAB }
                     Text { id: loadTextAB }
 
-                    CheckBox { id: checkABC; onCheckedChanged: checkedPhases["ABC"] = !checkedPhases["ABC"]; ButtonGroup.group: checkBoxes }
+                    CheckBox { id: checkABC; onCheckedChanged: selectedPhases["ABC"] = !selectedPhases["ABC"]; ButtonGroup.group: checkBoxes }
                     Text { text: "ABC" }
                     Text { id: custTextABC }
                     Text { id: loadTextABC }
 
-                    CheckBox { id: checkAC; onCheckedChanged: checkedPhases["AC"] = !checkedPhases["AC"]; ButtonGroup.group: checkBoxes }
+                    CheckBox { id: checkAC; onCheckedChanged: selectedPhases["AC"] = !selectedPhases["AC"]; ButtonGroup.group: checkBoxes }
                     Text { text: "AC" }
                     Text { id: custTextAC }
                     Text { id: loadTextAC }
 
-                    CheckBox { id: checkB; onCheckedChanged: checkedPhases["B"] = !checkedPhases["B"]; ButtonGroup.group: checkBoxes }
+                    CheckBox { id: checkB; onCheckedChanged: selectedPhases["B"] = !selectedPhases["B"]; ButtonGroup.group: checkBoxes }
                     Text { text: "B" }
                     Text { id: custTextB }
                     Text { id: loadTextB }
 
-                    CheckBox { id: checkBC; onCheckedChanged: checkedPhases["BC"] = !checkedPhases["BC"]; ButtonGroup.group: checkBoxes }
+                    CheckBox { id: checkBC; onCheckedChanged: selectedPhases["BC"] = !selectedPhases["BC"]; ButtonGroup.group: checkBoxes }
                     Text { text: "BC" }
                     Text { id: custTextBC }
                     Text { id: loadTextBC }
 
-                    CheckBox { id: checkC; onCheckedChanged: checkedPhases["C"] = !checkedPhases["C"]; ButtonGroup.group: checkBoxes }
+                    CheckBox { id: checkC; onCheckedChanged: selectedPhases["C"] = !selectedPhases["C"]; ButtonGroup.group: checkBoxes }
                     Text { text: "C" }
                     Text { id: custTextC }
                     Text { id: loadTextC }
 
-                    CheckBox { id: checkDeEnergized; onCheckedChanged: checkedPhases["DeEnergized"] = !checkedPhases["DeEnergized"]; ButtonGroup.group: checkBoxes }
+                    CheckBox { id: checkDeEnergized; onCheckedChanged: selectedPhases["DeEnergized"] = !selectedPhases["DeEnergized"]; ButtonGroup.group: checkBoxes }
                     Text { text: "DeEnergized" }
                     Text { id: custTextDE }
                     Text { id: loadTextDE }
 
-                    CheckBox { id: checkUnknown; onCheckedChanged: checkedPhases["Unknown"] = !checkedPhases["Unknown"]; ButtonGroup.group: checkBoxes }
+                    CheckBox { id: checkUnknown; onCheckedChanged: selectedPhases["Unknown"] = !selectedPhases["Unknown"]; ButtonGroup.group: checkBoxes }
                     Text { text: "Unknown" }
                     Text { id: custTextU }
                     Text { id: loadTextU }
                 }
+
                 Component.onCompleted: {
-                    resetGrid();
+                    initOrResetGrid();
                 }
             }
 
@@ -384,7 +385,7 @@ Rectangle {
 
     // UI Functions
 
-    function resetGrid() {
+    function initOrResetGrid() {
         custTextA.text = "NA"
         loadTextA.text = "NA"
 

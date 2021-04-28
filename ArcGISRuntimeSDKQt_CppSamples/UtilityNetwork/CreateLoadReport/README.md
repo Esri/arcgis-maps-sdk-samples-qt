@@ -28,33 +28,23 @@ Select phases to be included in the report. Press the "Run Report" button to ini
 
 ## Relevant API
 
-- CodedValueDomain
-- UtilityAssetGroup
 - UtilityAssetType
-- UtilityCategory
 - UtilityCategoryComparison
 - UtilityDomainNetwork
 - UtilityElement
 - UtilityElementTraceResult
-- UtilityFunctionTraceResult
 - UtilityNetwork
 - UtilityNetworkAttribute
 - UtilityNetworkAttributeComparison
 - UtilityNetworkDefinition
 - UtilityNetworkSource
-- UtilityNetworkTypes
 - UtilityTerminal
-- UtilityTerminalConfiguration
 - UtilityTier
-- UtilityTraceConditionalExpression
 - UtilityTraceConfiguration
 - UtilityTraceFunction
-- UtilityTraceFunctionListModel
-- UtilityTraceFunctionOutput
-- UtilityTraceOrCondition
 - UtilityTraceParameters
 - UtilityTraceResult
-- UtilityTraceResultListModel
+- UtilityTraceType
 - UtilityTraversability
 
 ## About the data
