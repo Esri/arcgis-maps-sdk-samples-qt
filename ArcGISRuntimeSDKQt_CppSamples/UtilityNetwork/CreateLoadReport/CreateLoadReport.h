@@ -58,6 +58,15 @@ public:
   static void init();
   Q_INVOKABLE void addPhase(const QString& phaseToAdd);
   Q_INVOKABLE void runReport(const QStringList& selectedPhaseNames);
+  Q_ENUMS(SampleStatus)
+
+  enum SampleStatus
+  {
+    SampleError = -1,
+    SampleNotLoaded = 0,
+    SampleBusy = 1,
+    SampleReady = 2
+  };
 
 signals:
   void loadReportUpdated();
@@ -101,14 +110,6 @@ private:
   QString m_serviceCategoryName;
   QString m_terminalName;
   QString m_tierName;
-
-  enum
-  {
-    SampleError = -1,
-    SampleNotLoaded = 0,
-    SampleBusy = 1,
-    SampleReady = 2
-  };
 };
 
 #endif // CREATELOADREPORT_H
