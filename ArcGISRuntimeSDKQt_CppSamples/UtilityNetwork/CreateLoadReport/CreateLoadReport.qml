@@ -75,14 +75,14 @@ Item {
                     Repeater {
                         id: phaseCustomerValues
                         model: phases
-                        Text { text: phases[index] in sampleModel.phaseCust ? sampleModel.phaseCust[phases[index]].toLocaleString(Qt.locale(), "f", 0) : "NA" }
+                        Text { text: modelData in sampleModel.phaseCust ? sampleModel.phaseCust[modelData].toLocaleString(Qt.locale(), "f", 0) : "NA" }
                     }
 
                     Text { text: "Total load"; font.bold: true; font.pointSize: 18 }
                     Repeater {
                         id: phaseLoadValues
                         model: phases
-                        Text { text: phases[index] in sampleModel.phaseLoad ? sampleModel.phaseLoad[phases[index]].toLocaleString(Qt.locale(), "f", 0) : "NA" }
+                        Text { text: modelData in sampleModel.phaseLoad ? sampleModel.phaseLoad[modelData].toLocaleString(Qt.locale(), "f", 0) : "NA" }
                     }
                 }
             }
@@ -128,7 +128,7 @@ Item {
                             }
                             break;
                         default:
-                            "";
+                            "Sample status is not defined";
                             break;
                         }
                     }
