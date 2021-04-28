@@ -73,7 +73,8 @@ CreateLoadReport::CreateLoadReport(QObject* parent /* = nullptr */):
 
   connect(m_utilityNetwork, &UtilityNetwork::loadStatusChanged, this, [this]()
   {
-    if (m_utilityNetwork->loadStatus() == LoadStatus::Loaded) {
+    if (m_utilityNetwork->loadStatus() == LoadStatus::Loaded)
+    {
       m_utilityAssetType = m_utilityNetwork
           ->definition()
           ->networkSource(m_networkSourceName)
@@ -133,7 +134,7 @@ UtilityElement* CreateLoadReport::createStartingLocation()
   for (UtilityTerminal* utilityTerminal : utilityTerminals)
   {
     // Set the terminal for the location. (For our case, use the "Load" terminal.)
-    if(utilityTerminal->name() == m_terminalName)
+    if (utilityTerminal->name() == m_terminalName)
     {
       loadTerminal = utilityTerminal;
       break;
@@ -146,7 +147,7 @@ UtilityElement* CreateLoadReport::createStartingLocation()
   return m_utilityNetwork->createElementWithAssetType(m_utilityAssetType, QUuid(m_globalId), loadTerminal, this);
 }
 
-Esri::ArcGISRuntime::UtilityTraceConfiguration* CreateLoadReport::createDefaultTraceConfiguration()
+UtilityTraceConfiguration* CreateLoadReport::createDefaultTraceConfiguration()
 {
   UtilityTraceConfiguration* traceConfig = m_utilityTier->traceConfiguration();
 
@@ -157,7 +158,7 @@ Esri::ArcGISRuntime::UtilityTraceConfiguration* CreateLoadReport::createDefaultT
   UtilityNetworkAttribute* serviceLoadAttribute = m_utilityNetwork->definition()->networkAttribute(m_loadNetworkAttributeName);
 
   // Create a comparison to check the existence of service points.
-  UtilityTraceCondition* serviceCategoryComparison = dynamic_cast<UtilityTraceCondition*>(new UtilityCategoryComparison(servicePointCategory, UtilityCategoryComparisonOperator::Exists, this));
+  UtilityCategoryComparison* serviceCategoryComparison = new UtilityCategoryComparison(servicePointCategory, UtilityCategoryComparisonOperator::Exists, this);
   UtilityTraceFunction* addLoadAttributeFunction = new UtilityTraceFunction(UtilityTraceFunctionType::Add, serviceLoadAttribute, serviceCategoryComparison, this);
 
   traceConfig->functions()->clear();
@@ -185,7 +186,7 @@ UtilityCategory* CreateLoadReport::getUtilityCategory(const QString categoryName
   return nullptr;
 }
 
-QList<Esri::ArcGISRuntime::CodedValue> CreateLoadReport::createPhaseList()
+QList<CodedValue> CreateLoadReport::createPhaseList()
 {
   // The phase attribute for getting total phase current load.
   m_phasesCurrentAttribute = m_utilityNetwork->definition()->networkAttribute(m_phasesNetworkAttributeName);
@@ -193,8 +194,8 @@ QList<Esri::ArcGISRuntime::CodedValue> CreateLoadReport::createPhaseList()
   // Get possible coded phase values from the attributes.
   if (m_phasesCurrentAttribute->domain().domainType() == DomainType::CodedValueDomain)
   {
-    const CodedValueDomain* cvd = new CodedValueDomain(m_phasesCurrentAttribute->domain());
-    QList<CodedValue> codedValues = cvd->codedValues();
+    const CodedValueDomain cvd = CodedValueDomain(m_phasesCurrentAttribute->domain());
+    QList<CodedValue> codedValues = cvd.codedValues();
 
     return codedValues;
   }
@@ -237,11 +238,11 @@ void CreateLoadReport::runReport(QStringList selectedPhaseNames)
 void CreateLoadReport::setUtilityTraceOrconditionWithCodedValue(CodedValue codedValue)
 {
   // Create a conditional expression with the CodedValue
-  UtilityTraceConditionalExpression* utilityNetworkAttributeComparison = dynamic_cast<UtilityTraceConditionalExpression*>(
+  UtilityNetworkAttributeComparison* utilityNetworkAttributeComparison =
         new UtilityNetworkAttributeComparison(
           m_phasesCurrentAttribute,
           UtilityAttributeComparisonOperator::DoesNotIncludeAny,
-          codedValue.code()));
+          codedValue.code(), this);
 
   UtilityTraceOrCondition* utilityTraceOrCondition = nullptr;
 
@@ -251,14 +252,13 @@ void CreateLoadReport::setUtilityTraceOrconditionWithCodedValue(CodedValue coded
 
   if (utilityTraceOrCondition)
     m_traceParameters->traceConfiguration()->traversability()->setBarriers(utilityTraceOrCondition);
-
 }
 
 void CreateLoadReport::createTraceCompletedConnection()
 {
   connect(m_utilityNetwork, &UtilityNetwork::traceCompleted, this, [this](QUuid taskId)
   {
-    QString codedValueName = m_tasks.take(taskId);
+    const QString codedValueName = m_tasks.take(taskId);
 
     UtilityTraceResultListModel* results = m_utilityNetwork->traceResult();
 
@@ -292,7 +292,6 @@ void CreateLoadReport::init()
 void CreateLoadReport::addPhase(QString phaseToAdd)
 {
   m_activePhases.append(phaseToAdd);
-  return;
 }
 
 QVariantMap CreateLoadReport::phaseCust()
