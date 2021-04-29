@@ -53,4 +53,4 @@ Link | Local Location
 
 ## Tags
 
-DictionaryRenderer, DictionarySymbolStyle, military, symbol
+military, symbol
