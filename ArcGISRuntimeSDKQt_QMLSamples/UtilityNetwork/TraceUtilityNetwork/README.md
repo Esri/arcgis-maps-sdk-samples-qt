@@ -1,16 +1,16 @@
 # Trace utility network
 
-Find all features connected to a set of starting points in a utility network.
+Discover connected features in a utility network using connected, subnetwork, upstream, and downstream traces.
 
 ![](screenshot.png)
 
 ## Use case
 
-This is useful to visualize and validate the network topology of a utility network for quality assurance.
+You can use a trace to visualize and validate the network topology of a utility network for quality assurance. Subnetwork traces are used for validating whether subnetworks, such as circuits or zones, are defined or edited appropriately.
 
 ## How to use the sample
 
-To add a starting point, select 'Add starting location(s)' and tap on one or more features. To add a barrier, select 'Add barrier(s)' and tap on one or more features. Depending on the type of feature, you may be prompted to select a terminal or the distance from the tapped location will be computed. Click 'Trace' to highlight all features connected to the specified starting locations and not positioned beyond the barriers. Click 'Reset' to clear parameters and start over.
+Tap on one or more features while 'Add starting locations' or 'Add barriers' is selected. When a junction feature is identified, you may be prompted to select a terminal. When an edge feature is identified, the distance from the tapped location to the beginning of the edge feature will be computed. Select the type of trace using the drop down menu. Click 'Trace' to initiate a trace on the network. Click 'Reset' to clear the trace parameters and start over.
 
 ## How it works
 
@@ -21,18 +21,18 @@ To add a starting point, select 'Add starting location(s)' and tap on one or mor
 5. Add a `GraphicsOverlay` with symbology that distinguishes starting locations from barriers.
 6. Identify features on the map and add a `Graphic` that represents its purpose (starting point or barrier) at the location of each identified feature.
 7.  Create a `UtilityElement` for the identified feature.
-8.  Determine the type of this element using its `NetworkSource.SourceType` property.
+8.  Determine the type of this element using its `NetworkSource::SourceType` property.
 9.  If the element is a junction with more than one terminal, display a terminal picker. Then set the junction's `terminal` property with the selected terminal.
-10.  If an edge, set its `fractionAlongEdge` property using `GeometryEngine.fractionAlong`.
+10.  If an edge, set its `fractionAlongEdge` property using `GeometryEngine::fractionAlong`.
 11. Add this `UtilityElement` to a collection of starting locations or barriers.
 12. Create `UtilityTraceParameters` with the selected trace type along with the collected starting locations and barriers (if applicable). 
-13. Set the `UtilityTraceParameters.traceConfiguration` with the utility tier's `traceConfiguration` property.
-14. Run a `UtilityNetwork.trace` with the specified parameters.
-15. For every `FeatureLayer` in the map, select the features using the `UtilityElement.objectId` from the filtered list of `UtilityElementTraceResult.elements`.
+13. Set the `UtilityTraceParameters::traceConfiguration` with the utility tier's `traceConfiguration` property.
+14. Run a `UtilityNetwork::trace` with the specified parameters.
+15. For every `FeatureLayer` in the map, select the features using the `UtilityElement::objectId` from the filtered list of `UtilityElementTraceResult::elements`.
 
 ## Relevant API
 
-* GeometryEngine.fractionAlong
+* GeometryEngine::fractionAlong
 * ServiceGeodatabase
 * UtilityAssetType
 * UtilityDomainNetwork
