@@ -30,7 +30,7 @@ Start the app. It will display an offline map, check for available updates, and 
 * MobileMapPackage
 * OfflineMapSyncJob
 * OfflineMapSyncParameters
-* OfflineMapSyncResult
+* OfflineMapSyncR
 * OfflineMapSyncTask
 * OfflineMapUpdatesInfo
 
@@ -48,7 +48,7 @@ The data in this sample shows the roads and trails in the Canyonlands National P
 
 ## Additional information
 
-**Note:** preplanned areas using the Scheduled Updates workflow are read-only. For preplanned areas that can be edited on the end-user device, see the [Download preplanned map area](https://developers.arcgis.com/net/android/sample-code/download-preplanned-map-area/) sample. For more information about offline workflows, see [Offline maps, scenes, and data](https://developers.arcgis.com/documentation/mapping-apis-and-location-services/offline/) in the *ArcGIS Developers* guide.
+**Note:** preplanned areas using the Scheduled Updates workflow are read-only. For preplanned areas that can be edited on the end-user device, see the [Download preplanned map area](https://developers.arcgis.com/qt/qml/sample-code/download-a-preplanned-map-area/) sample. For more information about offline workflows, see [Offline maps, scenes, and data](https://developers.arcgis.com/documentation/mapping-apis-and-location-services/offline/) in the *ArcGIS Developers* guide.
 
 ## Tags
 

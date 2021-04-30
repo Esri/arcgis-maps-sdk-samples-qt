@@ -15,7 +15,7 @@ Pan and zoom into the desired area, making sure the area is within the red bound
 ## How it works
 
 1. Create a map and set its `minScale` to 10,000,000. Limiting the scale in this sample limits the potential size of the selection area, thereby keeping the exported tile package to a reasonable size.
-2. Create an `ExportTileCacheTask`, passing in the URI of the tiled layer.
+2. Create an `ExportTileCacheTask`, passing in the URL of the tiled layer.
 3. Create default `ExportTileCacheParameters` for the task, specifying extent, minimum scale and maximum scale.
 4. Use the parameters and a path to create an `ExportTileCacheJob` from the task.
 5. Start the job, and when it completes successfully, get the resulting `TileCache`.
@@ -31,7 +31,7 @@ Pan and zoom into the desired area, making sure the area is within the red bound
 
 ## Additional information
 
-ArcGIS tiled layers do not support reprojection, query, select, identify, or editing. See the [Layer types](https://developers.arcgis.com/net/layers/#layer-types) discussion in the developers guide to learn more about the characteristics of ArcGIS tiled layers.
+ArcGIS tiled layers do not support reprojection, query, select, identify, or editing. See the [Layer types](https://developers.arcgis.com/qt/layers/#layer-types) discussion in the developers guide to learn more about the characteristics of ArcGIS tiled layers.
 
 ## Tags
 

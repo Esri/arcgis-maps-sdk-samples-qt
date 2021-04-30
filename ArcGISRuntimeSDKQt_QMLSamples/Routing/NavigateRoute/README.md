@@ -20,7 +20,7 @@ Click 'Navigate' to simulate travelling and to receive directions from a preset 
 4. Add `Stop`s to the parameters for each destination using `setStops(stops)`.
 5. Solve the route using `RouteTask.solveRoute(routeParameters)` to get a `RouteResult`.
 6. Create a `RouteTracker` using the route result, and the index of the desired route to take.
-7. Create a `RouteTrackerLocationDataSource` with the route tracker and simulated location data source to snap the location display to the route.
+7. Use `trackRuntimeLocation(Location)` to track the location of the device and update the route tracking status.
 8. Use the `trackingStatusResultChanged` signal to get the `TrackingStatus` and use it to display updated route information. Tracking status includes a variety of information on the route progress, such as the remaining distance, remaining geometry or traversed geometry (represented by a `Polyline`), or the remaining time, amongst others.
 9. Use the `newVoiceGuidanceResultChanged` signal to get the `VoiceGuidance` whenever new instructions are available. From the voice guidance, get the `string` representing the directions and use a text-to-speech engine to output the maneuver directions.
 10. You can also query the tracking status for the current `DirectionManeuver` index, retrieve that maneuver from the `Route` and get its direction text to display in the GUI.

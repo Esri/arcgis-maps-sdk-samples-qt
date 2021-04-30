@@ -6,7 +6,7 @@ Determine if a layer is currently being viewed.
 
 ## Use case
 
-The view status includes information on the loading state of layers and whether layers are visible at a given scale. You might change how a layer is displayed in a layer list to communicate whether it is being viewed in the map. For example, you could show a loading spinner next to its name when the view status is LOADING, grey out the name when NOT_VISIBLE or OUT_OF_SCALE, show the name normally when ACTIVE, or with a warning or error icon when the status is WARNING or ERROR.
+The view status includes information on the loading state of layers and whether layers are visible at a given scale. You might change how a layer is displayed in a layer list to communicate whether it is being viewed in the map. For example, you could show a loading spinner next to its name when the view status is Loading, grey out the name when NotVisible or OutOfScale, show the name normally when Active, or with a warning or error icon when the status is Warning or Error.
 
 ## How to use the sample
 
