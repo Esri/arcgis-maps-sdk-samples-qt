@@ -26,10 +26,6 @@ Tap the map to see the nearest address displayed in a callout.
 * LocatorTask
 * ReverseGeocodeParameters
 
-## About the data
-
-This sample uses the [World Geocoding Service](https://www.arcgis.com/home/item.html?id=305f2e55e67f4389bef269669fc2e284).
-
 ## Offline data
 
 Read more about how to set up the sample's offline data [here](http://links.esri.com/ArcGISRuntimeQtSamples#use-offline-data-in-the-samples).
@@ -37,6 +33,10 @@ Read more about how to set up the sample's offline data [here](http://links.esri
 Link | Local Location
 ---------|-------|
 [pin PNG file](https://github.com/Esri/arcgis-runtime-samples-java/blob/master/search/reverse-geocode-online/src/main/resources/pin.png)| `<userhome>`/ArcGIS/Runtime/Data/symbol/pin.png |
+
+## About the data
+
+This sample uses the [World Geocoding Service](https://www.arcgis.com/home/item.html?id=305f2e55e67f4389bef269669fc2e284).
 
 ## Tags
 

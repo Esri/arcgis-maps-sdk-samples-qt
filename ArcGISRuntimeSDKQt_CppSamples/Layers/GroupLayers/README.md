@@ -38,4 +38,4 @@ The full extent of a group layer may change when child layers are added/removed.
 
 ## Tags
 
-Layers, group layer, LayerListModel, GroupLayer
+group layer, layers

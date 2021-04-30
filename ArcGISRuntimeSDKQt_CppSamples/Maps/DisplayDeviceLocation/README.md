@@ -26,9 +26,9 @@ Tap the button in the lower right (which starts in Stop mode). A menu will appea
 
 ## Relevant API
 
-* Map
 * LocationDisplay
 * LocationDisplay::setAutoPanMode
+* Map
 * MapView
 
 ## Additional information
