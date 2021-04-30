@@ -30,7 +30,7 @@ Start the app. It will display an offline map, check for available updates, and 
 * MobileMapPackage
 * OfflineMapSyncJob
 * OfflineMapSyncParameters
-* OfflineMapSyncR
+* OfflineMapSyncResult
 * OfflineMapSyncTask
 * OfflineMapUpdatesInfo
 
