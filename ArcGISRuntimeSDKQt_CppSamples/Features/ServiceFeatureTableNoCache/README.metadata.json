@@ -8,12 +8,7 @@
     "keywords": [
         "cache",
         "feature request mode",
-        "performance",
-        "FeatureLayer",
-        "FeatureRequestMode::OnInteractionNoCache",
-        "ServiceFeatureTable",
-        "ServiceFeatureTable::populateFromService",
-        "ServiceFeatureTable::setFeatureRequestMode"
+        "performance"
     ],
     "redirect_from": [
         "/qt/latest/cpp/sample-code/sample-qt-servicefeaturetable-nocache.htm"
@@ -22,7 +17,6 @@
         "FeatureLayer",
         "FeatureRequestMode::OnInteractionNoCache",
         "ServiceFeatureTable",
-        "ServiceFeatureTable::populateFromService",
         "ServiceFeatureTable::setFeatureRequestMode"
     ],
     "snippets": [

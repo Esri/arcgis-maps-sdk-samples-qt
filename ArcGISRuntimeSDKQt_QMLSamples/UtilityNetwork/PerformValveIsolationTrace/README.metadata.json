@@ -13,21 +13,7 @@
         "subnetwork trace",
         "trace configuration",
         "trace filter",
-        "utility network",
-        "ServiceGeodatabase",
-        "UtilityCategory",
-        "UtilityCategoryComparison",
-        "UtilityCategoryComparisonOperator",
-        "UtilityDomainNetwork",
-        "UtilityElement",
-        "UtilityElementTraceResult",
-        "UtilityNetwork",
-        "UtilityNetworkDefinition",
-        "UtilityTier",
-        "UtilityTraceFilter",
-        "UtilityTraceParameters",
-        "UtilityTraceResult",
-        "UtilityTraceType"
+        "utility network"
     ],
     "redirect_from": [
         ""
@@ -49,7 +35,8 @@
         "UtilityTraceType"
     ],
     "snippets": [
-        "PerformValveIsolationTrace.qml"
+        "PerformValveIsolationTrace.qml",
+        "TerminalPickerView.qml"
     ],
     "title": "Perform valve isolation trace"
 }
