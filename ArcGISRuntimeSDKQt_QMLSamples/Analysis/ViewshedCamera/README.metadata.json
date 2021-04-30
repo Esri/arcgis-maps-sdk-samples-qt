@@ -7,9 +7,16 @@
     ],
     "keywords": [
         "3D",
-        "integrated mesh",
+        "Scene",
         "viewshed",
         "visibility analysis",
+        "AnalysisOverlay",
+        "ArcGISScene",
+        "ArcGISTiledElevationSource",
+        "Camera",
+        "integrated mesh",
+        "LocationViewshed",
+        "SceneView"
     ],
     "redirect_from": [
         "/qt/latest/qml/sample-code/sample-qt-viewshedcamera.htm"

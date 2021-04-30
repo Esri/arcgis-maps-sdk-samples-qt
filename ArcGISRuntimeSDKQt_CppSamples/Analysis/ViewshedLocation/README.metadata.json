@@ -7,9 +7,15 @@
     ],
     "keywords": [
         "3D",
+        "Scene",
         "frustum",
         "viewshed",
-        "visibility analysis"
+        "visibility analysis",
+        "AnalysisOverlay",
+        "ArcGISSceneLayer",
+        "ArcGISTiledElevationSource",
+        "LocationViewshed",
+        "Viewshed"
     ],
     "redirect_from": [
         "/qt/latest/cpp/sample-code/sample-qt-viewshedlocation.htm"

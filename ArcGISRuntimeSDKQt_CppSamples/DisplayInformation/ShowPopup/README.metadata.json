@@ -29,5 +29,5 @@
         "ShowPopup.cpp",
         "ShowPopup.h"
     ],
-    "title": "Show popup"
+    "title": "Show a popup"
 }
