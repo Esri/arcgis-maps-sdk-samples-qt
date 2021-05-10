@@ -21,7 +21,7 @@ When taking a web map offline, you may adjust the data (such as layers or tiles)
 7. Wait for the progress bar to indicate that the task has completed.
 8. You should see that the basemap does not display when you zoom out past a certain range and is padded around the original area of interest. The network dataset should extend beyond the target area. The System Valves and Service Connections should be omitted from the offline map and the Hydrants layer should contain a subset of the original features.
 
-# How it works
+## How it works
 
 The sample creates a `PortalItem` object using a web map’s ID. This portal item is also used to initialize an `OfflineMapTask` object. When the button is clicked, the sample requests the default parameters for the task, with the selected extent, by calling `OfflineMapTask.createDefaultGenerateOfflineMapParameters`. Once the parameters are retrieved, they are used to create a set of `GenerateOfflineMapParameterOverrides` by calling `OfflineMapTask.createGenerateOfflineMapParameterOverrides`. The overrides are then adjusted so that specific layers will be taken offline using custom settings.
 
