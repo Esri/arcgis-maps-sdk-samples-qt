@@ -1,37 +1,57 @@
 {
     "category": "UtilityNetwork",
-    "description": "Find all features connected to a set of starting points in a utility network.",
+    "description": "Discover connected features in a utility network using connected, subnetwork, upstream, and downstream traces.",
     "ignore": false,
     "images": [
         "screenshot.png"
     ],
     "keywords": [
-        "connected trace",
+        "condition barriers",
+        "downstream trace",
         "network analysis",
+        "subnetwork trace",
+        "trace configuration",
+        "traversability",
+        "upstream trace",
         "utility network",
-        "GeometryEngine.fractionAlong",
+        "validate consistency",
+        "GeometryEngine::fractionAlong",
+        "ServiceGeodatabase",
         "UtilityAssetType",
+        "UtilityDomainNetwork",
+        "UtilityElement",
         "UtilityElementTraceResult",
         "UtilityNetwork",
         "UtilityNetworkDefinition",
         "UtilityNetworkSource",
         "UtilityTerminal",
+        "UtilityTier",
+        "UtilityTraceConfiguration",
         "UtilityTraceParameters",
-        "UtilityTraceResult"
+        "UtilityTraceResult",
+        "UtilityTraceType",
+        "UtilityTraversability"
     ],
     "redirect_from": [
         ""
     ],
     "relevant_apis": [
-        "GeometryEngine.fractionAlong",
+        "GeometryEngine::fractionAlong",
+        "ServiceGeodatabase",
         "UtilityAssetType",
+        "UtilityDomainNetwork",
+        "UtilityElement",
         "UtilityElementTraceResult",
         "UtilityNetwork",
         "UtilityNetworkDefinition",
         "UtilityNetworkSource",
         "UtilityTerminal",
+        "UtilityTier",
+        "UtilityTraceConfiguration",
         "UtilityTraceParameters",
-        "UtilityTraceResult"
+        "UtilityTraceResult",
+        "UtilityTraceType",
+        "UtilityTraversability"
     ],
     "snippets": [
         "TraceUtilityNetwork.qml"

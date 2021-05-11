@@ -17,7 +17,7 @@
 import QtQuick 2.6
 import QtQuick.Controls 2.2
 import QtQuick.Layouts 1.3
-import Esri.ArcGISRuntime 100.11
+import Esri.ArcGISRuntime 100.12
 
 Rectangle {
     id: rootRectangle
@@ -25,7 +25,7 @@ Rectangle {
     width: 800
     height: 600
 
-    readonly property url featureServerUrl: "https://sampleserver7.arcgisonline.com/arcgis/rest/services/UtilityNetwork/NapervilleElectric/FeatureServer"
+    readonly property url featureServerUrl: "https://sampleserver7.arcgisonline.com/server/rest/services/UtilityNetwork/NapervilleElectric/FeatureServer"
     readonly property int maxScale: 2000
     readonly property int viewpointScale: 40
 
@@ -97,6 +97,11 @@ Rectangle {
             UtilityNetwork {
                 id: utilityNetwork
                 url: featureServerUrl
+
+                Credential {
+                    username: "viewer01"
+                    password: "I68VGU^nMurF"
+                }
 
                 onLoadStatusChanged: {
                     if (loadStatus !== Enums.LoadStatusLoaded)

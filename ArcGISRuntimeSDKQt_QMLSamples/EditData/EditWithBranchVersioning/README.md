@@ -44,13 +44,13 @@ Click the button in the top left corner to switch back and forth between the ver
 
 ## About the data
 
-The feature layer used in this sample is [Damage to commercial buildings](https://sampleserver7.arcgisonline.com/arcgis/rest/services/DamageAssessment/FeatureServer/0) located in Naperville, Illinois. 
+The feature layer used in this sample is [Damage to commercial buildings](https://sampleserver7.arcgisonline.com/server/rest/services/DamageAssessment/FeatureServer/0) located in Naperville, Illinois. 
 
 ## Additional information
 
 Credentials:
 * Username: editor01
-* Password: editor01.password
+* Password: S7#i2LWmYH75
 
 The name of the version must meet the following criteria:
 1. Must not exceed 62 characters
@@ -60,9 +60,9 @@ The name of the version must meet the following criteria:
 * Note - the version name will have the username and a period (.) prepended to it. E.g "editor01.MyNewUniqueVersionName"
 
 Branch versioning access permission:
-1. VersionAccess::Public - Any portal user can view and edit the version.
-2. VersionAccess::Protected - Any portal user can view, but only the version owner, feature layer owner, and portal administrator can edit the version.
-3. VersionAccess::Private - Only the version owner, feature layer owner, and portal administrator can view and edit the version.
+1. VersionAccess.Public - Any portal user can view and edit the version.
+2. VersionAccess.Protected - Any portal user can view, but only the version owner, feature layer owner, and portal administrator can edit the version.
+3. VersionAccess.Private - Only the version owner, feature layer owner, and portal administrator can view and edit the version.
 
 ## Tags
 

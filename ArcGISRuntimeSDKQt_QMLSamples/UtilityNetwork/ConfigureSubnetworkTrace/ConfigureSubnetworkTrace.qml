@@ -18,7 +18,7 @@ import QtQuick 2.6
 import QtQuick.Controls 2.12
 import QtQuick.Layouts 1.12
 import QtQuick.Shapes 1.12
-import Esri.ArcGISRuntime 100.11
+import Esri.ArcGISRuntime 100.12
 
 Rectangle {
     id: rootRectangle
@@ -48,9 +48,9 @@ Rectangle {
         id: utilityNetwork
         url: featureLayerUrl
 
-        credential: Credential {
-            username: "editor01"
-            password: "S7#i2LWmYH75"
+        Credential {
+            username: "viewer01"
+            password: "I68VGU^nMurF"
         }
 
         onTraceStatusChanged: {

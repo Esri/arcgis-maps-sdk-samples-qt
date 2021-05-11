@@ -17,7 +17,7 @@
 import QtQuick 2.6
 import QtQuick.Controls 2.2
 import Esri.Samples 1.0
-import Esri.ArcGISRuntime.Toolkit 100.11
+import Esri.ArcGISRuntime.Toolkit 100.12
 
 Item {
 
@@ -30,7 +30,7 @@ Item {
             id: callout
             calloutData: view.calloutData
             autoAdjustWidth: false
-            calloutWidth: 400
+            calloutWidth: 300
             accessoryButtonHidden: true
             leaderPosition: leaderPositionEnum.Top
             calloutContent: customComponent

@@ -6,28 +6,33 @@
             "path": "~/ArcGIS/Runtime/Data/styles/arcade_style/Restaurant.stylx"
         }
     ],
-    "description": "Use a custom dictionary style (.stylx) to symbolize features using a variety of attribute values.",
+    "description": "Use a custom dictionary created from a web style or style file (.stylx) to symbolize features using a variety of attribute values.",
     "ignore": false,
     "images": [
         "screenshot.png"
     ],
     "keywords": [
+        "ArcGIS Online",
         "dictionary",
-        "military",
         "renderer",
         "style",
         "stylx",
         "unique value",
         "visualization",
+        "web style",
         "DictionaryRenderer",
-        "DictionarySymbolStyle"
+        "DictionarySymbolStyle",
+        "Portal",
+        "PortalItem"
     ],
     "redirect_from": [
         ""
     ],
     "relevant_apis": [
         "DictionaryRenderer",
-        "DictionarySymbolStyle"
+        "DictionarySymbolStyle",
+        "Portal",
+        "PortalItem"
     ],
     "snippets": [
         "CustomDictionaryStyle.qml"
