@@ -107,7 +107,10 @@ Rectangle {
                                             load = result.functionOutputs[0].result;
                                     });
 
-                setGridText(currentPhase.name, customers, load);
+                phaseCust[currentPhase.name] = customers;
+                phaseLoad[currentPhase.name] = load;
+                phaseCustChanged();
+                phaseLoadChanged();
 
                 if (phaseQueue.length > 0) {
                     currentPhase = phaseQueue.pop();
@@ -286,52 +289,6 @@ Rectangle {
                         Text { text: modelData in phaseLoad ? phaseLoad[modelData].toLocaleString(Qt.locale(), "f", 0) : "NA" }
                     }
                 }
-
-                GridLayout {
-                    id: grid2
-                    columns: 3
-                    rowSpacing: 5
-
-                    Text { text: "A" }
-                    Text { id: custTextA }
-                    Text { id: loadTextA }
-
-                    Text { text: "AB" }
-                    Text { id: custTextAB }
-                    Text { id: loadTextAB }
-
-                    Text { text: "ABC" }
-                    Text { id: custTextABC }
-                    Text { id: loadTextABC }
-
-                    Text { text: "AC" }
-                    Text { id: custTextAC }
-                    Text { id: loadTextAC }
-
-                    Text { text: "B" }
-                    Text { id: custTextB }
-                    Text { id: loadTextB }
-
-                    Text { text: "BC" }
-                    Text { id: custTextBC }
-                    Text { id: loadTextBC }
-
-                    Text { text: "C" }
-                    Text { id: custTextC }
-                    Text { id: loadTextC }
-
-                    Text { text: "DeEnergized" }
-                    Text { id: custTextDE }
-                    Text { id: loadTextDE }
-
-                    Text { text: "Unknown" }
-                    Text { id: custTextU }
-                    Text { id: loadTextU }
-                }
-
-                Component.onCompleted: {
-                    initOrResetGrid();
-                }
             }
 
             Row {
@@ -341,11 +298,12 @@ Rectangle {
                     enabled: ((reportHasRun || checkBoxes.checkState !== 0) && sampleStatus === CreateLoadReport.SampleStatus.Ready) ? true : false
 
                     onClicked: {
-                        initOrResetGrid();
+                        phaseCust = {};
+                        phaseLoad = {};
                         let runPhases = [];
                         phaseNames.forEach((phase) => {
                                                if (selectedPhases[phase])
-                                               runPhases.push(phase)
+                                                    runPhases.push(phase)
                                            });
 
                         for (let i = 0; i < phaseCodedValuesList.length; i++) {
@@ -399,93 +357,6 @@ Rectangle {
                     }
                 }
             }
-        }
-    }
-
-    // UI Functions
-
-    function initOrResetGrid() {
-
-        custTextA.text = "NA"
-        loadTextA.text = "NA"
-
-        custTextAB.text = "NA"
-        loadTextAB.text = "NA"
-
-        custTextABC.text = "NA"
-        loadTextABC.text = "NA"
-
-        custTextAC.text = "NA"
-        loadTextAC.text = "NA"
-
-        custTextB.text = "NA"
-        loadTextB.text = "NA"
-
-        custTextBC.text = "NA"
-        loadTextBC.text = "NA"
-
-        custTextC.text = "NA"
-        loadTextC.text = "NA"
-
-        custTextDE.text = "NA"
-        loadTextDE.text = "NA"
-
-        custTextU.text = "NA"
-        loadTextU.text = "NA"
-    }
-
-    function setGridText(phaseName, customers, load) {
-        phaseCust[phaseName] = customers;
-        phaseLoad[phaseName] = load;
-
-        switch (phaseName) {
-        case "A":
-            custTextA.text = customers.toLocaleString(Qt.locale(), "f", 0);
-            loadTextA.text = load.toLocaleString(Qt.locale(), "f", 0);
-            break;
-
-        case "AB":
-            custTextAB.text = customers.toLocaleString(Qt.locale(), "f", 0);
-            loadTextAB.text = load.toLocaleString(Qt.locale(), "f", 0);
-            break;
-
-        case "ABC":
-            custTextABC.text = customers.toLocaleString(Qt.locale(), "f", 0);
-            loadTextABC.text = load.toLocaleString(Qt.locale(), "f", 0);
-            break;
-
-        case "AC":
-            custTextAC.text = customers.toLocaleString(Qt.locale(), "f", 0);
-            loadTextAC.text = load.toLocaleString(Qt.locale(), "f", 0);
-            break;
-
-        case "B":
-            custTextB.text = customers.toLocaleString(Qt.locale(), "f", 0);
-            loadTextB.text = load.toLocaleString(Qt.locale(), "f", 0);
-            break;
-
-        case "BC":
-            custTextBC.text = customers.toLocaleString(Qt.locale(), "f", 0);
-            loadTextBC.text = load.toLocaleString(Qt.locale(), "f", 0);
-            break;
-
-        case "C":
-            custTextC.text = customers.toLocaleString(Qt.locale(), "f", 0);
-            loadTextC.text = load.toLocaleString(Qt.locale(), "f", 0);
-            break;
-
-        case "DeEnergized":
-            custTextDE.text = customers.toLocaleString(Qt.locale(), "f", 0);
-            loadTextDE.text = load.toLocaleString(Qt.locale(), "f", 0);
-            break;
-
-        case "Unknown":
-            custTextU.text = customers.toLocaleString(Qt.locale(), "f", 0);
-            loadTextU.text = load.toLocaleString(Qt.locale(), "f", 0);
-            break;
-
-        default:
-            break;
         }
     }
 }
