@@ -49,6 +49,8 @@ Rectangle {
     property var phaseQueue: []
     property var currentPhase: null
     property var selectedPhases: ({})
+    property var phaseCust: ({})
+    property var phaseLoad: ({})
 
 
     property var sampleStatus: CreateLoadReport.SampleStatus.NotLoaded
@@ -213,31 +215,17 @@ Rectangle {
         }
     }
 
-    function runReport(selectedPhases) {
-        for (let i = 0; i < phaseCodedValuesList.length; i++) {
-            if (selectedPhases.includes(phaseCodedValuesList[i].name)) {
-                phaseQueue.push(phaseCodedValuesList[i]);
-            }
-        }
-
-        if (phaseQueue.length > 0) {
-            sampleStatus = CreateLoadReport.SampleStatus.Busy;
-            currentPhase = phaseQueue.pop();
-            createReportForPhase(currentPhase);
-        }
-    }
-
     function createReportForPhase(phase) {
         const condExpr = ArcGISRuntimeEnvironment.createObject("UtilityNetworkAttributeComparison", {
-                                                                 networkAttribute: phasesCurrentAttr,
-                                                                 comparisonOperator: Enums.UtilityAttributeComparisonOperatorDoesNotIncludeAny,
-                                                                 value: phase.code
-                                                             });
+                                                                   networkAttribute: phasesCurrentAttr,
+                                                                   comparisonOperator: Enums.UtilityAttributeComparisonOperatorDoesNotIncludeAny,
+                                                                   value: phase.code
+                                                               });
 
         const traceOrCondition = ArcGISRuntimeEnvironment.createObject("UtilityTraceOrCondition", {
-                                                                     leftExpression: baseCondition,
-                                                                     rightExpression: condExpr
-                                                                 });
+                                                                           leftExpression: baseCondition,
+                                                                           rightExpression: condExpr
+                                                                       });
 
         traceParams.traceConfiguration.traversability.barriers = traceOrCondition;
         utilityNetwork.trace(traceParams);
@@ -266,55 +254,76 @@ Rectangle {
 
                 GridLayout {
                     id: grid
-                    columns: 4
+                    rows: phaseNames.length + 1
                     rowSpacing: 5
+                    flow: GridLayout.TopToBottom
 
                     CheckBox { id: parentBox; checkState: checkBoxes.checkState }
-                    Text { text: "Phase"; font.pointSize: 18; font.bold: true }
-                    Text { text: "Total customers"; font.pointSize: 18; font.bold: true; }
-                    Text { text: "Total load"; font.bold: true; font.pointSize: 18 }
+                    Repeater {
+                        id: phaseCheckBoxes
+                        model: phaseNames
+                        CheckBox { onCheckedChanged: selectedPhases[modelData] = !selectedPhases[modelData]; ButtonGroup.group: checkBoxes }
+                    }
 
-                    CheckBox { id: checkA; onCheckedChanged: selectedPhases["A"] = !selectedPhases["A"]; ButtonGroup.group: checkBoxes }
+                    Text { text: "Phase"; font.pointSize: 18; font.bold: true }
+                    Repeater {
+                        id: phaseLabels
+                        model: phaseNames
+                        Text { text: modelData }
+                    }
+
+                    Text { text: "Total customers"; font.pointSize: 18; font.bold: true; }
+                    Repeater {
+                        id: phaseCustomerValues
+                        model: phaseNames
+                        Text { text: modelData in phaseCust ? phaseCust[modelData].toLocaleString(Qt.locale(), "f", 0) : "NA" }
+                    }
+
+                    Text { text: "Total load"; font.bold: true; font.pointSize: 18 }
+                    Repeater {
+                        id: phaseLoadValues
+                        model: phaseNames
+                        Text { text: modelData in phaseLoad ? phaseLoad[modelData].toLocaleString(Qt.locale(), "f", 0) : "NA" }
+                    }
+                }
+
+                GridLayout {
+                    id: grid2
+                    columns: 3
+                    rowSpacing: 5
+
                     Text { text: "A" }
                     Text { id: custTextA }
                     Text { id: loadTextA }
 
-                    CheckBox { id: checkAB; onCheckedChanged: selectedPhases["AB"] = !selectedPhases["AB"]; ButtonGroup.group: checkBoxes }
                     Text { text: "AB" }
                     Text { id: custTextAB }
                     Text { id: loadTextAB }
 
-                    CheckBox { id: checkABC; onCheckedChanged: selectedPhases["ABC"] = !selectedPhases["ABC"]; ButtonGroup.group: checkBoxes }
                     Text { text: "ABC" }
                     Text { id: custTextABC }
                     Text { id: loadTextABC }
 
-                    CheckBox { id: checkAC; onCheckedChanged: selectedPhases["AC"] = !selectedPhases["AC"]; ButtonGroup.group: checkBoxes }
                     Text { text: "AC" }
                     Text { id: custTextAC }
                     Text { id: loadTextAC }
 
-                    CheckBox { id: checkB; onCheckedChanged: selectedPhases["B"] = !selectedPhases["B"]; ButtonGroup.group: checkBoxes }
                     Text { text: "B" }
                     Text { id: custTextB }
                     Text { id: loadTextB }
 
-                    CheckBox { id: checkBC; onCheckedChanged: selectedPhases["BC"] = !selectedPhases["BC"]; ButtonGroup.group: checkBoxes }
                     Text { text: "BC" }
                     Text { id: custTextBC }
                     Text { id: loadTextBC }
 
-                    CheckBox { id: checkC; onCheckedChanged: selectedPhases["C"] = !selectedPhases["C"]; ButtonGroup.group: checkBoxes }
                     Text { text: "C" }
                     Text { id: custTextC }
                     Text { id: loadTextC }
 
-                    CheckBox { id: checkDeEnergized; onCheckedChanged: selectedPhases["DeEnergized"] = !selectedPhases["DeEnergized"]; ButtonGroup.group: checkBoxes }
                     Text { text: "DeEnergized" }
                     Text { id: custTextDE }
                     Text { id: loadTextDE }
 
-                    CheckBox { id: checkUnknown; onCheckedChanged: selectedPhases["Unknown"] = !selectedPhases["Unknown"]; ButtonGroup.group: checkBoxes }
                     Text { text: "Unknown" }
                     Text { id: custTextU }
                     Text { id: loadTextU }
@@ -335,11 +344,21 @@ Rectangle {
                         initOrResetGrid();
                         let runPhases = [];
                         phaseNames.forEach((phase) => {
-                                           if (selectedPhases[phase])
+                                               if (selectedPhases[phase])
                                                runPhases.push(phase)
-                                       });
+                                           });
 
-                        runReport(runPhases);
+                        for (let i = 0; i < phaseCodedValuesList.length; i++) {
+                            if (runPhases.includes(phaseCodedValuesList[i].name)) {
+                                phaseQueue.push(phaseCodedValuesList[i]);
+                            }
+                        }
+
+                        if (phaseQueue.length > 0) {
+                            sampleStatus = CreateLoadReport.SampleStatus.Busy;
+                            currentPhase = phaseQueue.pop();
+                            createReportForPhase(currentPhase);
+                        }
 
                         reportHasRun = runPhases.length !== 0;
                     }
@@ -386,6 +405,7 @@ Rectangle {
     // UI Functions
 
     function initOrResetGrid() {
+
         custTextA.text = "NA"
         loadTextA.text = "NA"
 
@@ -415,6 +435,9 @@ Rectangle {
     }
 
     function setGridText(phaseName, customers, load) {
+        phaseCust[phaseName] = customers;
+        phaseLoad[phaseName] = load;
+
         switch (phaseName) {
         case "A":
             custTextA.text = customers.toLocaleString(Qt.locale(), "f", 0);
