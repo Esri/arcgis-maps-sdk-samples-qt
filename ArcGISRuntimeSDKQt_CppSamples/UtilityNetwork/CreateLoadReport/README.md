@@ -28,24 +28,24 @@ Select phases to be included in the report. Press the "Run Report" button to ini
 
 ## Relevant API
 
-- UtilityAssetType
-- UtilityCategoryComparison
-- UtilityDomainNetwork
-- UtilityElement
-- UtilityElementTraceResult
-- UtilityNetwork
-- UtilityNetworkAttribute
-- UtilityNetworkAttributeComparison
-- UtilityNetworkDefinition
-- UtilityNetworkSource
-- UtilityTerminal
-- UtilityTier
-- UtilityTraceConfiguration
-- UtilityTraceFunction
-- UtilityTraceParameters
-- UtilityTraceResult
-- UtilityTraceType
-- UtilityTraversability
+* UtilityAssetType
+* UtilityCategoryComparison
+* UtilityDomainNetwork
+* UtilityElement
+* UtilityElementTraceResult
+* UtilityNetwork
+* UtilityNetworkAttribute
+* UtilityNetworkAttributeComparison
+* UtilityNetworkDefinition
+* UtilityNetworkSource
+* UtilityTerminal
+* UtilityTier
+* UtilityTraceConfiguration
+* UtilityTraceFunction
+* UtilityTraceParameters
+* UtilityTraceResult
+* UtilityTraceType
+* UtilityTraversability
 
 ## About the data
 
