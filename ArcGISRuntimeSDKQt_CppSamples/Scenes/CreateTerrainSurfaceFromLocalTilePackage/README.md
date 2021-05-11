@@ -25,13 +25,11 @@ When loaded, the sample will show a scene with a terrain surface applied. Pan an
 
 ## Offline data
 
+This sample uses the [Monterey Elevation](https://arcgisruntime.maps.arcgis.com/home/item.html?id=52ca74b4ba8042b78b3c653696f34a9c) tile package, using CompactV2 storage format (.tpkx).
+
 Read more about how to set up the sample's offline data [here](http://links.esri.com/ArcGISRuntimeQtSamples#use-offline-data-in-the-samples).
 
-The tile package must be a LERC (limited error raster compression) encoded TPK. Details on creating these are in the [ArcGIS Pro documentation](https://pro.arcgis.com/en/pro-app/help/sharing/overview/tile-package.htm)
-
-Link | Local Location
----------|-------|
-|[MontereyElevation Tile Package](https://www.arcgis.com/home/item.html?id=cce37043eb0440c7a5c109cf8aad5500)| `<userhome>`/ArcGIS/Runtime/Data/tpk/MontereyElevation.tpk |
+The tile package must be a LERC (limited error raster compression) encoded TPK/TPKX. Details on can be found in the topic [Share a tile package](https://pro.arcgis.com/en/pro-app/help/sharing/overview/tile-package.htm) in the *ArcGIS Pro* documentation.
 
 ## Additional information
 
