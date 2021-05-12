@@ -32,7 +32,7 @@ The author of a web map can support the use of basemaps which are already on a d
 1. The sample creates a `PortalItem` object using a web map's ID. This portal item is used to initialize an `OfflineMapTask` object. When the button is clicked, the sample requests the default parameters for the task, with the selected extent, by calling `OfflineMapTask.createDefaultGenerateOfflineMapParameters`.
 2. If the user chooses to use the basemap on the device, the `GenerateOfflineMapParameters.referenceBasemapDirectory` is set to the absolute path of the directory which contains the .tpkx file.
 3. A `GenerateOfflineMapJob` is created by calling `OfflineMapTask.generateOfflineMap` passing the parameters and the download location for the offline map.
-4. When the `GenerateOfflineMapJob` is started it will check whether `GenerateOfflineMapParameters.referenceBasemapDirectory` has been set. If this property is set, no online basemap will be downloaded and instead, the mobile map will be created with a reference to the .tpk on the device.
+4. When the `GenerateOfflineMapJob` is started it will check whether `GenerateOfflineMapParameters.referenceBasemapDirectory` has been set. If this property is set, no online basemap will be downloaded and instead, the mobile map will be created with a reference to the .tpkx on the device.
 
 ## Relevant API
 
