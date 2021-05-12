@@ -119,7 +119,7 @@ void GenerateOfflineMapLocalBasemap::generateMapByExtent(double xCorner1, double
   const Envelope extent = Envelope(corner1, corner2);
   const Envelope mapExtent = GeometryEngine::project(extent, SpatialReference::webMercator());
   const QString tempPath = m_tempDir.path() + "/OfflineMap.mmpk";
-  const QString dataPath = defaultDataPath() + "/ArcGIS/Runtime/Data/tpk";
+  const QString dataPath = defaultDataPath() + "/ArcGIS/Runtime/Data/tpkx";
 
   // connect to the signal for when the default parameters are generated
   connect(m_offlineMapTask, &OfflineMapTask::createDefaultGenerateOfflineMapParametersCompleted,
