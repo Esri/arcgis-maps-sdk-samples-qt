@@ -21,9 +21,9 @@ Launch the app to view the "San Francisco offline tile package" as the basemap.
 
 ## Relevant API
 
-* Map
 * ArcGISTiledLayer
 * Basemap
+* Map
 * TileCache
 
 ## Offline Data
