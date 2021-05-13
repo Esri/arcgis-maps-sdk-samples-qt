@@ -80,7 +80,7 @@ void LocalServerGeoprocessing::componentComplete()
   // Set map to map view
   m_mapView->setMap(m_map);
 
-  TileCache* tileCache = new TileCache(dataPath + "/tpk/RasterHillshade.tpk", this);
+  TileCache* tileCache = new TileCache(dataPath + "/tpkx/RasterHillshade.tpkx", this);
   m_tiledLayer = new ArcGISTiledLayer(tileCache, this);
   m_map->operationalLayers()->append(m_tiledLayer);
 

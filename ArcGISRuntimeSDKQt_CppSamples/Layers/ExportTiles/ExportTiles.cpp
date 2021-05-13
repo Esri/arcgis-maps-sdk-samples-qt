@@ -98,7 +98,7 @@ void ExportTiles::exportTileCacheFromCorners(double xCorner1, double yCorner1, d
 
     //! [ExportTiles start job]
     // execute the task and obtain the job
-    ExportTileCacheJob* exportJob = m_exportTileCacheTask->exportTileCache(m_parameters, m_tempPath.path() + "/offlinemap.tpk");
+    ExportTileCacheJob* exportJob = m_exportTileCacheTask->exportTileCache(m_parameters, m_tempPath.path() + "/offlinemap.tpkx");
 
     // check if there is a valid job
     if (exportJob)
@@ -122,7 +122,7 @@ void ExportTiles::exportTileCacheFromCorners(double xCorner1, double yCorner1, d
           emit updateStatus("In progress...");
           break;
         case JobStatus::Succeeded:
-          emit updateStatus("Adding TPK...");
+          emit updateStatus("Adding TPKX...");
           emit hideWindow(1500, true);
           displayOutputTileCache(exportJob->result());
           break;
