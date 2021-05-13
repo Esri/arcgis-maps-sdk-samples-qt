@@ -36,8 +36,8 @@ The author of a web map can support the use of basemaps which are already on a d
 
 ## Relevant API
 
-* GenerateOfflineMapParameters
 * GenerateOfflineMapJob
+* GenerateOfflineMapParameters
 * GenerateOfflineMapResult
 * OfflineMapTask
 
