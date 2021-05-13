@@ -49,7 +49,7 @@ Rectangle {
             Basemap {
                 ArcGISTiledLayer {
                     TileCache {
-                        path: dataPath + "/tpk/streetmap_SD.tpk"
+                        path: dataPath + "/tpkx/streetmap_SD.tpkx"
                     }
                 }
             }

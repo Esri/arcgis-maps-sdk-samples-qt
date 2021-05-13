@@ -15,7 +15,7 @@ When loaded, the sample will show a scene with a terrain surface applied. Pan an
 ## How it works
 
 1. Create a `Scene` and add it to a `SceneView`.
-2. Create an `ArcGISTiledElevationSource` from a local tile package (.tpk) by setting the url to the local file.
+2. Create an `ArcGISTiledElevationSource` from a local tile package (.tpkx) by setting the url to the local file.
 3. Add the tiled elevation source to the scene's base surface.
 
 ## Relevant API
