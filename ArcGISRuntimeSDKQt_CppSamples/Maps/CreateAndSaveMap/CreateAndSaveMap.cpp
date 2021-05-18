@@ -25,8 +25,11 @@
 #include "Basemap.h"
 #include "ArcGISMapImageLayer.h"
 #include "Portal.h"
+#include "ArcGISRuntimeEnvironment.h"
 
 using namespace Esri::ArcGISRuntime;
+
+QString g_apiKey;
 
 CreateAndSaveMap::CreateAndSaveMap(QQuickItem* parent /* = nullptr */):
   QQuickItem(parent)
@@ -98,6 +101,8 @@ void CreateAndSaveMap::createMap(const QString& basemap, const QStringList& oper
 
     const QString itemId = m_map->item()->itemId();
     emit saveMapCompleted(success, itemId);
+
+    ArcGISRuntimeEnvironment::setApiKey(g_apiKey);
   });
 
   // Handle Map error signal
@@ -135,6 +140,9 @@ void CreateAndSaveMap::saveMap(const QString& title, const QString& tags, const 
   constexpr bool forceSave = false;
   const PortalFolder folder;
   const QByteArray thumbnail;
+
+  g_apiKey = ArcGISRuntimeEnvironment::apiKey();
+  ArcGISRuntimeEnvironment::setApiKey("");
 
   // save the map
   m_map->saveAs(m_portal, title, tagsList, forceSave, folder, description, thumbnail);
