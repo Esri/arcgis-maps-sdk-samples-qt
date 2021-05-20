@@ -120,7 +120,7 @@ Item {
                             break;
                         case CreateLoadReportSample.SampleReady: // SampleReady
                             if (checkBoxes.checkState === 0 && !reportHasRun) {
-                                "Select phases to run the load report with";
+                                "Select phases to include in the load report";
                             } else {
                                 "Tap the \"Run Report\" button to create the load report";
                             }
