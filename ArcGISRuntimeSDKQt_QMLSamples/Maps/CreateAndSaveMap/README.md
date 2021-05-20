@@ -23,9 +23,9 @@ Maps can be created programmatically in code and then serialized and saved as an
 3. Once the user is authenticated, `Map.saveAs` is called and a new `Map` is saved with the specified title, tags, and folder.
 
 ## Relevant API
-- Map
-- Map.saveAs
-- Portal
+* Map
+* Map.saveAs
+* Portal
 
 ## Additional information
 
