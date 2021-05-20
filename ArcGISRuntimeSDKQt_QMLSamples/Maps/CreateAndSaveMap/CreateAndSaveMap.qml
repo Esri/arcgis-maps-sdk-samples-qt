@@ -195,7 +195,7 @@ Rectangle {
     Component.onCompleted: {
         // We store and unset the API key from the ArcGISRuntimeEnvironment here to ensure this sample works within the Qt Sample Viewer.
         // In a standalone app, the API key can be set directly on the basemaps and never onto the Runtime environment.
-        apiKey = "AAPKc25504c4ceaa494b9d161113dab3fc38KIAA-QZy8lNVpp3K2rqUAgZGnaKWXKzXFzONkenePYcPyEnPzWmqk6vLxkBpx5sI"; //ArcGISRuntimeEnvironment.apiKey;
+        apiKey = ArcGISRuntimeEnvironment.apiKey;
         ArcGISRuntimeEnvironment.apiKey = "";
     }
 }
