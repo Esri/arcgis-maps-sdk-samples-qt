@@ -51,6 +51,7 @@ private:
   Esri::ArcGISRuntime::Map* m_map = nullptr;
   Esri::ArcGISRuntime::MapQuickView* m_mapView = nullptr;
   Esri::ArcGISRuntime::Portal* m_portal = nullptr;
+  QString m_apiKey;
 };
 
 #endif // CREATEANDSAVEMAP_H

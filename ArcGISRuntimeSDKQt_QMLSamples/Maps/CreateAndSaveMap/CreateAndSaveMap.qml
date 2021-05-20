@@ -25,6 +25,9 @@ Rectangle {
     width: 800
     height: 600
 
+    // We manually track the Runtime Environment API key here to control which assets use the API key and which use the given named user credentials.
+    property var apiKey: ""
+
     StackView {
         id: stackView
         anchors.fill: parent
@@ -119,7 +122,6 @@ Rectangle {
         }
     }
 
-
     // Create Portal object that requires sign in
     Portal {
         id: portal
@@ -151,6 +153,8 @@ Rectangle {
             selectedBasemap = ArcGISRuntimeEnvironment.createObject("BasemapTopographic");
         else if (basemap === "Oceans")
             selectedBasemap = ArcGISRuntimeEnvironment.createObject("BasemapOceans");
+
+        selectedBasemap.apiKey = apiKey;
 
         // Create the Map with the basemap
         const map = ArcGISRuntimeEnvironment.createObject("Map", { basemap: selectedBasemap }, mapView);
@@ -186,5 +190,12 @@ Rectangle {
 
         // Return the Map
         return map;
+    }
+
+    Component.onCompleted: {
+        // We store and unset the API key from the ArcGISRuntimeEnvironment here to ensure this sample works within the Qt Sample Viewer.
+        // In a standalone app, the API key can be set directly on the basemaps and never onto the Runtime environment.
+        apiKey = "AAPKc25504c4ceaa494b9d161113dab3fc38KIAA-QZy8lNVpp3K2rqUAgZGnaKWXKzXFzONkenePYcPyEnPzWmqk6vLxkBpx5sI"; //ArcGISRuntimeEnvironment.apiKey;
+        ArcGISRuntimeEnvironment.apiKey = "";
     }
 }

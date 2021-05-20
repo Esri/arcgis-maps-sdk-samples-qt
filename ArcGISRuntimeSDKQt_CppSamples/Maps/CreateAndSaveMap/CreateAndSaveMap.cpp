@@ -29,11 +29,13 @@
 
 using namespace Esri::ArcGISRuntime;
 
-QString g_apiKey;
-
 CreateAndSaveMap::CreateAndSaveMap(QQuickItem* parent /* = nullptr */):
   QQuickItem(parent)
 {
+  // We store and unset the API key from the ArcGISRuntimeEnvironment here to ensure this sample works within the Qt Sample Viewer.
+  // In a standalone app, the API key can be set directly on the basemaps and never onto the Runtime environment.
+  m_apiKey = ArcGISRuntimeEnvironment::apiKey();
+  ArcGISRuntimeEnvironment::setApiKey("");
 }
 
 void CreateAndSaveMap::init()
@@ -75,6 +77,8 @@ void CreateAndSaveMap::createMap(const QString& basemap, const QStringList& oper
   else if (basemap == "Oceans")
     selectedBasemap = new Basemap(BasemapStyle::ArcGISOceans, this);
 
+  selectedBasemap->setApiKey(m_apiKey);
+
   // Create the Map with the basemap
   m_map = new Map(selectedBasemap, this);
 
@@ -101,8 +105,6 @@ void CreateAndSaveMap::createMap(const QString& basemap, const QStringList& oper
 
     const QString itemId = m_map->item()->itemId();
     emit saveMapCompleted(success, itemId);
-
-    ArcGISRuntimeEnvironment::setApiKey(g_apiKey);
   });
 
   // Handle Map error signal
@@ -140,9 +142,6 @@ void CreateAndSaveMap::saveMap(const QString& title, const QString& tags, const 
   constexpr bool forceSave = false;
   const PortalFolder folder;
   const QByteArray thumbnail;
-
-  g_apiKey = ArcGISRuntimeEnvironment::apiKey();
-  ArcGISRuntimeEnvironment::setApiKey("");
 
   // save the map
   m_map->saveAs(m_portal, title, tagsList, forceSave, folder, description, thumbnail);
