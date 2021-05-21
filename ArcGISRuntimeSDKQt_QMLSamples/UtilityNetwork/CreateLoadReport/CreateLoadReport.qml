@@ -341,7 +341,7 @@ Rectangle {
 
                         case CreateLoadReport.SampleStatus.Ready:
                             if (checkBoxes.checkState === 0 && !reportHasRun) {
-                                "Select phases to run the load report with";
+                                "Select phases to include in the load report";
                             } else if (checkBoxes.checkState === 0 && reportHasRun) {
                                 "Tap the \"Reset\" button to reset the load report";
                             } else {
