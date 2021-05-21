@@ -244,8 +244,8 @@ Rectangle {
 
         Column {
             id: contents
-            spacing: 10
             padding: 20
+            spacing: 10
 
             Row {
                 ButtonGroup {
@@ -257,7 +257,6 @@ Rectangle {
                 GridLayout {
                     id: grid
                     rows: phaseNames.length + 1
-                    rowSpacing: 5
                     flow: GridLayout.TopToBottom
 
                     CheckBox { id: parentBox; checkState: checkBoxes.checkState }

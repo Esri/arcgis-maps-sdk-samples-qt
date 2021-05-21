@@ -37,8 +37,8 @@ Item {
 
         Column {
             id: contents
-            spacing: 10
             padding: 20
+            spacing: 10
 
             Row {
                 ButtonGroup {
