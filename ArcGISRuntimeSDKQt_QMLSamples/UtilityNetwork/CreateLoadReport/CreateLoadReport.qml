@@ -236,17 +236,16 @@ Rectangle {
 
     // Load Report UI
 
-    Rectangle {
+    ScrollView {
         id: rectangle
-        anchors.horizontalCenter: parent.horizontalCenter
-        width: grid.width
-        height: contents.height
+        anchors.centerIn: parent
+        width: children.width
+        height: parent.height
 
         Column {
             id: contents
-            anchors.fill: parent
-            padding: 10
-            spacing: 25
+            padding: 20
+            spacing: 10
 
             Row {
                 ButtonGroup {
@@ -258,7 +257,6 @@ Rectangle {
                 GridLayout {
                     id: grid
                     rows: phaseNames.length + 1
-                    rowSpacing: 5
                     flow: GridLayout.TopToBottom
 
                     CheckBox { id: parentBox; checkState: checkBoxes.checkState }
@@ -342,7 +340,7 @@ Rectangle {
 
                         case CreateLoadReport.SampleStatus.Ready:
                             if (checkBoxes.checkState === 0 && !reportHasRun) {
-                                "Select phases to run the load report with";
+                                "Select phases to include in the load report";
                             } else if (checkBoxes.checkState === 0 && reportHasRun) {
                                 "Tap the \"Reset\" button to reset the load report";
                             } else {
