@@ -69,29 +69,29 @@ Once you have set up a remote upstream you can keep your fork up to date with ou
 
 - Open a terminal (Mac users) or command prompt (Windows & Linux users)
 - Change to the current working directory of your local repository
-- Fetch the branches and commits from the upstream repository.  Commits to ```master``` will be stored in a local branch, ```upstream/master```.
+- Fetch the branches and commits from the upstream repository.  Commits to ```main``` will be stored in a local branch, ```upstream/main```.
 
 ```
 $ git fetch upstream
 ```
 
-- Check out your forks local ```master``` branch
+- Check out your forks local ```main``` branch
 
 ```
-$ git checkout master
+$ git checkout main
 ```
 
-- Merge changes from ```upstream/master``` into  your local ```master``` branch which syncs your forks ```master``` branch with our samples repository.
+- Merge changes from ```upstream/main``` into  your local ```main``` branch which syncs your forks ```main``` branch with our samples repository.
 
 ```
-$ git merge upstream/master
+$ git merge upstream/main
 ```
 ## Open a sample project file in Qt Creator
 Start Qt Creator. When the IDE opens to the Welcome screen, click on the **Open Project** button and browse to a project file (.pro) within your forked repo location.
 Configure the project and run the sample.
 
 ## Use a previous version
-The `master` branch contains samples for the current, most up-to-date version of ArcGIS Runtime. To access previous versions, you can checkout by a tag or commit, or alternativley you can download the source zip:
+The `main` branch contains samples for the current, most up-to-date version of ArcGIS Runtime. To access previous versions, you can checkout by a tag or commit, or alternativley you can download the source zip:
 
 - [100.0](https://github.com/Esri/arcgis-runtime-samples-qt/releases/tag/1529)
 - [100.1](https://github.com/Esri/arcgis-runtime-samples-qt/releases/tag/1744)
@@ -148,4 +148,4 @@ See the License for the specific language governing permissions and
 limitations under the License.
 
 
-A copy of the license is available in the repository's [license.txt]( https://github.com/Esri/arcgis-runtime-samples-qt/blob/master/license.txt) file
+A copy of the license is available in the repository's [license.txt]( https://github.com/Esri/arcgis-runtime-samples-qt/blob/main/license.txt) file
