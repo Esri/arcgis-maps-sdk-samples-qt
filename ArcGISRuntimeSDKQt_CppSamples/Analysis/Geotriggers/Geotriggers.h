@@ -17,12 +17,19 @@
 #ifndef GEOTRIGGERS_H
 #define GEOTRIGGERS_H
 
+#include "Point.h"
+
 namespace Esri
 {
 namespace ArcGISRuntime
 {
+class GeotriggerMonitor;
+class Graphic;
+class GraphicsOverlay;
 class Map;
 class MapQuickView;
+class Point;
+class SimulatedLocationDataSource;
 }
 }
 
@@ -46,9 +53,14 @@ signals:
 private:
   Esri::ArcGISRuntime::MapQuickView* mapView() const;
   void setMapView(Esri::ArcGISRuntime::MapQuickView* mapView);
+  void setup();
+  void handleLocationChanges();
 
+  Esri::ArcGISRuntime::GeotriggerMonitor* m_geotriggerMonitor = nullptr;
   Esri::ArcGISRuntime::Map* m_map = nullptr;
   Esri::ArcGISRuntime::MapQuickView* m_mapView = nullptr;
+  Esri::ArcGISRuntime::Graphic* m_locationHistoryLineGraphic = nullptr;
+  Esri::ArcGISRuntime::SimulatedLocationDataSource* m_simulatedLocationDataSource = nullptr;
 };
 
 #endif // GEOTRIGGERS_H
