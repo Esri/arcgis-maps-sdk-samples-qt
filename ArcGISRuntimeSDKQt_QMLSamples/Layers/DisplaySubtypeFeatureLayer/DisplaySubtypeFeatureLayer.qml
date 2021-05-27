@@ -45,7 +45,6 @@ Rectangle {
             SubtypeFeatureLayer  {
                 id: subtypeFeatureLayer
 
-
                 // feature table
                 ServiceFeatureTable {
                     id: featureTable
