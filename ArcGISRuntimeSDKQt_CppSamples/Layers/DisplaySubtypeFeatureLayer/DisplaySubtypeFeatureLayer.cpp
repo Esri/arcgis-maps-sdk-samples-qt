@@ -154,10 +154,10 @@ LabelDefinition* DisplaySubtypeFeatureLayer::createLabelDefinition()
   ArcadeLabelExpression* labelExpression = new ArcadeLabelExpression("$feature.nominalvoltage + ' V'", this);
 
   TextSymbol* textSymbol = new TextSymbol(this);
+  textSymbol->setSize(14);
   textSymbol->setColor(Qt::blue);
-  textSymbol->setSize(10.5);
   textSymbol->setHaloColor(Qt::white);
-  textSymbol->setHaloWidth(2);
+  textSymbol->setHaloWidth(3);
   textSymbol->setHorizontalAlignment(HorizontalAlignment::Center);
   textSymbol->setVerticalAlignment(VerticalAlignment::Middle);
 

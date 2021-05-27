@@ -58,10 +58,10 @@ Rectangle {
                     }
 
                     textSymbol: TextSymbol {
+                        size: 11
                         color: "red"
                         haloColor: "white"
-                        haloWidth: 1.5
-                        size: 8
+                        haloWidth: 2
                         horizontalAlignment: Enums.HorizontalAlignmentCenter
                         verticalAlignment: Enums.VerticalAlignmentMiddle
                     }
@@ -77,47 +77,15 @@ Rectangle {
                     }
 
                     textSymbol: TextSymbol {
+                        size: 11
                         color: "blue"
                         haloColor: "white"
-                        haloWidth: 1.5
-                        size: 8
+                        haloWidth: 2
                         horizontalAlignment: Enums.HorizontalAlignmentCenter
                         verticalAlignment: Enums.VerticalAlignmentMiddle
                     }
 
                     whereClause: "PARTY = 'Democrat'"
-                }
-
-                LabelDefinition {
-                    id: democratJson2
-                    json: {
-                        "labelExpressionInfo":{
-                            "expression":"$feature.NAME + ' (' + left($feature.PARTY,1) + ') \\nDistrict ' + $feature.CDFIPS"
-                        },
-                        "labelPlacement":"esriServerPolygonPlacementAlwaysHorizontal",
-                        "where":"PARTY = 'Democrat'",
-                        "symbol": {
-                            "angle":0,
-                            "backgroundColor":[0,0,0,0],
-                            "borderLineColor":[0,0,0,0],
-                            "borderLineSize":0,
-                            "color":[0,0,255,255],
-                            "font": {
-                                "decoration":"none",
-                                "size":8,
-                                "style":"normal",
-                                "weight":"normal"
-                            },
-                            "haloColor":[255,255,255,255],
-                            "haloSize":1.5,
-                            "horizontalAlignment":"center",
-                            "kerning":false,
-                            "type":"esriTS",
-                            "verticalAlignment":"middle",
-                            "xoffset":0,
-                            "yoffset":0
-                        }
-                    }
                 }
 
                 // zoom to the layer once it loads

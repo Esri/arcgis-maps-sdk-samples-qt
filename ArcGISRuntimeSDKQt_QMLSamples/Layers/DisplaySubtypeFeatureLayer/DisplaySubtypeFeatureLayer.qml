@@ -52,10 +52,10 @@ Rectangle {
                 }
 
                 textSymbol: TextSymbol {
+                    size: 14
                     color: "blue"
-                    size: 10.5
                     haloColor: "white"
-                    haloWidth: 2
+                    haloWidth: 3
                     horizontalAlignment: Enums.HorizontalAlignmentCenter
                     verticalAlignment: Enums.VerticalAlignmentMiddle
                 }

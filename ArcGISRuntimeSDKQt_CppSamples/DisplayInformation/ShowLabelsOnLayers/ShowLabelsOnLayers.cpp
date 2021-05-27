@@ -92,10 +92,10 @@ LabelDefinition* ShowLabelsOnLayers::createRepublicanLabelDefinition()
   ArcadeLabelExpression* republicanArcadeLabelExpression = new ArcadeLabelExpression("$feature.NAME + ' (' + left($feature.PARTY,1) + ')\\nDistrict ' + $feature.CDFIPS", this);
 
   TextSymbol* republicanTextSymbol = new TextSymbol(this);
+  republicanTextSymbol->setSize(11);
   republicanTextSymbol->setColor(Qt::red);
   republicanTextSymbol->setHaloColor(Qt::white);
-  republicanTextSymbol->setHaloWidth(1.5);
-  republicanTextSymbol->setSize(8);
+  republicanTextSymbol->setHaloWidth(2);
   republicanTextSymbol->setHorizontalAlignment(HorizontalAlignment::Center);
   republicanTextSymbol->setVerticalAlignment(VerticalAlignment::Middle);
 
@@ -118,10 +118,10 @@ LabelDefinition* ShowLabelsOnLayers::createDemocratLabelDefinition()
   ArcadeLabelExpression* democratArcadeLabelExpression = new ArcadeLabelExpression("$feature.NAME + ' (' + left($feature.PARTY,1) + ')\\nDistrict ' + $feature.CDFIPS", this);
 
   TextSymbol* democratTextSymbol = new TextSymbol(this);
+  democratTextSymbol->setSize(11);
   democratTextSymbol->setColor(Qt::blue);
   democratTextSymbol->setHaloColor(Qt::white);
-  democratTextSymbol->setHaloWidth(1.5);
-  democratTextSymbol->setSize(8);
+  democratTextSymbol->setHaloWidth(2);
   democratTextSymbol->setHorizontalAlignment(HorizontalAlignment::Center);
   democratTextSymbol->setVerticalAlignment(VerticalAlignment::Middle);
 
