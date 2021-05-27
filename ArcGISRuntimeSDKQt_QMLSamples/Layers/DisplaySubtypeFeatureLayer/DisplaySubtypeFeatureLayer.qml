@@ -41,26 +41,6 @@ Rectangle {
                 initStyle: Enums.BasemapStyleArcGISStreetsNight
             }
 
-            LabelDefinition {
-                id: labelDefinition
-
-                placement: Enums.LabelingPlacementPointAboveRight
-                useCodedValues: true
-
-                expression: ArcadeLabelExpression {
-                    expression: "$feature.nominalvoltage + ' V'"
-                }
-
-                textSymbol: TextSymbol {
-                    size: 14
-                    color: "blue"
-                    haloColor: "white"
-                    haloWidth: 3
-                    horizontalAlignment: Enums.HorizontalAlignmentCenter
-                    verticalAlignment: Enums.VerticalAlignmentMiddle
-                }
-            }
-
             // create the feature layer
             SubtypeFeatureLayer  {
                 id: subtypeFeatureLayer
@@ -77,6 +57,26 @@ Rectangle {
                     }
                 }
 
+                LabelDefinition {
+                    id: subtypeSublayerLabelDefinition
+
+                    placement: Enums.LabelingPlacementPointAboveRight
+                    useCodedValues: true
+
+                    expression: SimpleLabelExpression {
+                        expression: "[nominalvoltage]"
+                    }
+
+                    textSymbol: TextSymbol {
+                        size: 14
+                        color: "blue"
+                        haloColor: "white"
+                        haloWidth: 3
+                        horizontalAlignment: Enums.HorizontalAlignmentCenter
+                        verticalAlignment: Enums.VerticalAlignmentMiddle
+                    }
+                }
+
                 onLoadStatusChanged: {
                     if (loadStatus != Enums.LoadStatusLoaded)
                         return;
@@ -87,7 +87,7 @@ Rectangle {
                     if (!subtypeSublayer)
                         return;
 
-                    subtypeSublayer.labelDefinitions.append(labelDefinition);
+                    subtypeSublayer.labelDefinitions.append(subtypeSublayerLabelDefinition);
                     subtypeSublayer.labelsEnabled = true;
 
                     // get the original renderer of the sublayer

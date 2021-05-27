@@ -20,12 +20,12 @@
 
 #include "DisplaySubtypeFeatureLayer.h"
 
-#include "ArcadeLabelExpression.h"
 #include "FeatureLayer.h"
 #include "LabelDefinition.h"
 #include "Map.h"
 #include "MapQuickView.h"
 #include "ServiceFeatureTable.h"
+#include "SimpleLabelExpression.h"
 #include "SimpleMarkerSymbol.h"
 #include "SimpleRenderer.h"
 #include "SubtypeFeatureLayer.h"
@@ -151,7 +151,7 @@ void DisplaySubtypeFeatureLayer::setSublayerMinScale()
 
 LabelDefinition* DisplaySubtypeFeatureLayer::createLabelDefinition()
 {
-  ArcadeLabelExpression* labelExpression = new ArcadeLabelExpression("$feature.nominalvoltage + ' V'", this);
+  SimpleLabelExpression* labelExpression = new SimpleLabelExpression("[nominalvoltage]", this);
 
   TextSymbol* textSymbol = new TextSymbol(this);
   textSymbol->setSize(14);
