@@ -43,50 +43,53 @@ Rectangle {
 
                 // Add a label definition to define labels for the layer
                 //
-                // Help regarding the JSON syntax for defining the LabelDefinition.FromJson syntax can be found here:
-                // https://developers.arcgis.com/web-map-specification/objects/labelingInfo/
-                // This particular JSON string will have the following characteristics:
-                // (1) The 'labelExpressionInfo' defines that the label text displayed comes from the fields 'NAME',
+                // (1) The 'ArcadeLabelExpression' defines that the label text displayed comes from the fields 'NAME',
                 //     'PARTY' (R or D), and 'CDFIPS' in the feature service in the format
                 //     "Firstname Lastname (R or D)
                 //     District #".
-                // (2) The 'labelPlacement' will be placed horizontally in the polygon.
-                // (3) The 'where' clause restricts the labels to data from Republican or Democrat districts.
-                // (4) The 'symbol' for the labeled text will be red (for Republican) or blue (for Democrat) with a white halo.
+                // (2) The 'textSymbol' for the labeled text will be red (for Republican) or blue (for Democrat) with a white halo, in the center of the polygon.
+                // (3) The 'whereClause' restricts the labels to data from Republican or Democrat districts.
+
                 LabelDefinition {
                     id: republicanJson
-                    json: {
-                        "labelExpressionInfo":{
-                            "expression":"$feature.NAME + ' (' + left($feature.PARTY,1) + ') \\nDistrict ' + $feature.CDFIPS"
-                        },
-                        "labelPlacement":"esriServerPolygonPlacementAlwaysHorizontal",
-                        "where":"PARTY = 'Republican'",
-                        "symbol": {
-                            "angle":0,
-                            "backgroundColor":[0,0,0,0],
-                            "borderLineColor":[0,0,0,0],
-                            "borderLineSize":0,
-                            "color":[255,0,0,255],
-                            "font": {
-                                "decoration":"none",
-                                "size":8,
-                                "style":"normal",
-                                "weight":"normal"
-                            },
-                            "haloColor":[255,255,255,255],
-                            "haloSize":1.5,
-                            "horizontalAlignment":"center",
-                            "kerning":false,
-                            "type":"esriTS",
-                            "verticalAlignment":"middle",
-                            "xoffset":0,
-                            "yoffset":0
-                        }
+
+                    expression: ArcadeLabelExpression {
+                        expression: "$feature.NAME + ' (' + left($feature.PARTY,1) + ') \\nDistrict ' + $feature.CDFIPS"
                     }
+
+                    textSymbol: TextSymbol {
+                        color: "red"
+                        haloColor: "white"
+                        haloWidth: 1.5
+                        size: 8
+                        horizontalAlignment: Enums.HorizontalAlignmentCenter
+                        verticalAlignment: Enums.VerticalAlignmentMiddle
+                    }
+
+                    whereClause: "PARTY = 'Republican'"
                 }
 
                 LabelDefinition {
                     id: democratJson
+
+                    expression: ArcadeLabelExpression {
+                        expression: "$feature.NAME + ' (' + left($feature.PARTY,1) + ') \\nDistrict ' + $feature.CDFIPS"
+                    }
+
+                    textSymbol: TextSymbol {
+                        color: "blue"
+                        haloColor: "white"
+                        haloWidth: 1.5
+                        size: 8
+                        horizontalAlignment: Enums.HorizontalAlignmentCenter
+                        verticalAlignment: Enums.VerticalAlignmentMiddle
+                    }
+
+                    whereClause: "PARTY = 'Democrat'"
+                }
+
+                LabelDefinition {
+                    id: democratJson2
                     json: {
                         "labelExpressionInfo":{
                             "expression":"$feature.NAME + ' (' + left($feature.PARTY,1) + ') \\nDistrict ' + $feature.CDFIPS"
