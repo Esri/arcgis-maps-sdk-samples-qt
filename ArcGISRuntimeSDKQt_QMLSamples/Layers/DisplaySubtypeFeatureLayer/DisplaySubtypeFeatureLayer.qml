@@ -41,30 +41,30 @@ Rectangle {
                 initStyle: Enums.BasemapStyleArcGISStreetsNight
             }
 
+            LabelDefinition {
+                id: labelDefinition
+
+                placement: Enums.LabelingPlacementPointAboveRight
+                useCodedValues: true
+
+                expression: ArcadeLabelExpression {
+                    expression: "$feature.nominalvoltage + ' V'"
+                }
+
+                textSymbol: TextSymbol {
+                    color: "blue"
+                    size: 10.5
+                    haloColor: "white"
+                    haloWidth: 2
+                    horizontalAlignment: Enums.HorizontalAlignmentCenter
+                    verticalAlignment: Enums.VerticalAlignmentMiddle
+                }
+            }
 
             // create the feature layer
             SubtypeFeatureLayer  {
                 id: subtypeFeatureLayer
 
-                LabelDefinition {
-                    id: labelDefinition
-
-                    placement: Enums.LabelingPlacementPointAboveRight
-                    useCodedValues: true
-
-                    expression: ArcadeLabelExpression {
-                        expression: "$feature.nominalvoltage + ' V'"
-                    }
-
-                    textSymbol: TextSymbol {
-                        color: "blue"
-                        size: 10.5
-                        haloColor: "white"
-                        haloWidth: 2
-                        horizontalAlignment: Enums.HorizontalAlignmentCenter
-                        verticalAlignment: Enums.VerticalAlignmentMiddle
-                    }
-                }
 
                 // feature table
                 ServiceFeatureTable {
@@ -85,7 +85,7 @@ Rectangle {
                     subtypeSublayer = subtypeFeatureLayer.sublayerWithSubtypeName("Street Light");
 
                     if (!subtypeSublayer)
-                      return;
+                        return;
 
                     subtypeSublayer.labelDefinitions.append(labelDefinition);
                     subtypeSublayer.labelsEnabled = true;
