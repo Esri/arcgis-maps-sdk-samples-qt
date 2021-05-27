@@ -106,7 +106,7 @@ LabelDefinition* ShowLabelsOnLayers::createDemocratLabelDefinition()
 {
   // This particular LabelDefinition will have the following characteristics:
   // (1) The 'ArcadeLabelExpression' defines that the label text displayed comes from the fields 'NAME',
-  //     the first letter of PARTY' (R or D), and 'CDFIPS' in the feature service in the format
+  //     the first letter of PARTY' (R or D), and 'CDFIPS' in the feature service in the format:
   //         Firstname Lastname (D)
   //         District #
   // (2) The 'TextSymbol' for the labeled text will be blue with a white halo centered in the target polygon.
