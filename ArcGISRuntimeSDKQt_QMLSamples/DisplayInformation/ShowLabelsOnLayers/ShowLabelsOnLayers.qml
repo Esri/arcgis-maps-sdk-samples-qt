@@ -44,9 +44,9 @@ Rectangle {
                 // Add a label definition to define labels for the layer
                 //
                 // (1) The 'ArcadeLabelExpression' defines that the label text displayed comes from the fields 'NAME',
-                //     'PARTY' (R or D), and 'CDFIPS' in the feature service in the format
-                //     "Firstname Lastname (R or D)
-                //     District #".
+                //     the first letter of 'PARTY' (R or D), and 'CDFIPS' in the feature service in the format:
+                //         Firstname Lastname (R or D)
+                //         District #
                 // (2) The 'textSymbol' for the labeled text will be red (for Republican) or blue (for Democrat) with a white halo, in the center of the polygon.
                 // (3) The 'whereClause' restricts the labels to data from Republican or Democrat districts.
 
