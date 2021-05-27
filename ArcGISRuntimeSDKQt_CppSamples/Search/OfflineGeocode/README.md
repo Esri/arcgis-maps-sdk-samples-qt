@@ -31,7 +31,7 @@ Read more about how to set up the sample's offline data [here](http://links.esri
 Link | Local Location
 ---------|-------|
 |[SanDiego tpkx File](https://www.arcgis.com/home/item.html?id=22c3083d4fa74e3e9b25adfc9f8c0496)| `<userhome>`/ArcGIS/Runtime/Data/tpkx/streetmap_SD.tpkx |
-|[SanDiego loc Files](https://www.arcgis.com/home/item.html?id=c88c170e18f74740a0e4c660a5ff51c4)| `<userhome>`/ArcGIS/Runtime/Data/Locators/SanDiegoStreetAddress/SanDiego_StreetAddress.loc |
+|[SanDiego loc Files](https://www.arcgis.com/home/item.html?id=3424d442ebe54f3cbf34462382d3aebe)| `<userhome>`/ArcGIS/Runtime/Data/Locators/SanDiegoStreetAddress/SanDiego_StreetAddress.loc |
 
 ## Tags
 
