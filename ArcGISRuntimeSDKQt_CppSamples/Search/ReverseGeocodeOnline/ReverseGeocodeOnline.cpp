@@ -36,7 +36,7 @@ using namespace Esri::ArcGISRuntime;
 
 namespace
 {
-const QUrl url("https://geocode.arcgis.com/arcgis/rest/services/World/GeocodeServer");
+const QUrl url("https://geocode-api.arcgis.com/arcgis/rest/services/World/GeocodeServer");
 const QUrl pinUrl("qrc:/Samples/Search/ReverseGeocodeOnline/pin_circle_red.png");
 } // namespace
 

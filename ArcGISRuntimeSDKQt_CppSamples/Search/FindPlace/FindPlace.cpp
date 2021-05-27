@@ -144,7 +144,7 @@ void FindPlace::addGraphicsOverlay()
 void FindPlace::createLocator()
 {
   // create a locator task that uses the world geocoding service
-  m_locatorTask = new LocatorTask(QUrl("https://geocode.arcgis.com/arcgis/rest/services/World/GeocodeServer"), this);
+  m_locatorTask = new LocatorTask(QUrl("https://geocode-api.arcgis.com/arcgis/rest/services/World/GeocodeServer"), this);
 
   // set the suggestions Q_PROPERTY
   m_suggestListModel = m_locatorTask->suggestions();
