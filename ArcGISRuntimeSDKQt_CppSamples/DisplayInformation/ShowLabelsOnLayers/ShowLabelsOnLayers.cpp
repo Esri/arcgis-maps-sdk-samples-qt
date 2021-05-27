@@ -64,9 +64,6 @@ void ShowLabelsOnLayers::componentComplete()
   });
   m_map->operationalLayers()->append(featureLayer);
 
-  // Optionally clear any label definitions that may be defined from the web layer
-  featureLayer->labelDefinitions()->clear();
-
   // Apply labels to the feature layer
   LabelDefinition* republicanLabelDef = createRepublicanLabelDefinition();
   LabelDefinition* democratLabelDef = createDemocratLabelDefinition();
