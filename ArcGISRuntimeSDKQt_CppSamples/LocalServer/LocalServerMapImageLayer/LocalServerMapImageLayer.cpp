@@ -29,12 +29,22 @@
 #include "Viewpoint.h"
 
 #include <QDir>
+#include <QTemporaryDir>
 
 using namespace Esri::ArcGISRuntime;
 
 LocalServerMapImageLayer::LocalServerMapImageLayer(QQuickItem* parent) :
   QQuickItem(parent)
 {
+  // create temp/data path
+  const QString tempPath = LocalServerMapImageLayer::shortestTempPath() + "/EsriQtTemp";
+
+  // create the directory
+  m_tempDir = std::unique_ptr<QTemporaryDir>(new QTemporaryDir(tempPath));
+
+  // set the temp & app data path for the local server
+  LocalServer::instance()->setTempDataPath(m_tempDir->path());
+  LocalServer::instance()->setAppDataPath(m_tempDir->path());
 }
 
 LocalServerMapImageLayer::~LocalServerMapImageLayer() = default;
@@ -103,4 +113,17 @@ void LocalServerMapImageLayer::connectSignals()
       m_map->operationalLayers()->append(mapImageLayer);
     }
   });
+}
+
+QString LocalServerMapImageLayer::shortestTempPath()
+{
+  // get tmp and home paths
+  const QString tmpPath = QDir::tempPath();
+  const QString homePath = QDir::homePath();
+
+  // return whichever is shorter, temp or home path
+  if (homePath.length() > tmpPath.length())
+    return tmpPath;
+  else
+    return homePath;
 }
