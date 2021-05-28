@@ -109,7 +109,7 @@ void OfflineGeocode::componentComplete()
 
   // create locator task
   //! [OfflineGeocode create LocatorTask]
-  m_locatorTask = new LocatorTask(m_dataPath + "Locators/SanDiegoStreetAddress/SanDiego_StreetAddress.loc", this);
+  m_locatorTask = new LocatorTask(m_dataPath + "Locators/SanDiegoStreetAddressLocator/SanDiego_StreetAddress.loc", this);
   //! [OfflineGeocode create LocatorTask]
 
   // set the suggestions Q_PROPERTY

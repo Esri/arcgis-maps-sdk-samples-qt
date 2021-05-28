@@ -78,6 +78,7 @@ void FindAddress::componentComplete()
 
   // create locator task and parameters
   //! [FindAddress create LocatorTask]
+  // An ArcGIS Developer API key is required to utilize this world geocoding service
   m_locatorTask = new LocatorTask(QUrl("https://geocode-api.arcgis.com/arcgis/rest/services/World/GeocodeServer"), this);
   //! [FindAddress create LocatorTask]
   m_geocodeParameters.setMinScore(75);

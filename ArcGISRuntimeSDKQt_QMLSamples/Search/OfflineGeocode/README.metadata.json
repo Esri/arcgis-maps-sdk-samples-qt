@@ -7,7 +7,7 @@
         },
         {
             "itemId": "3424d442ebe54f3cbf34462382d3aebe",
-            "path": "~/ArcGIS/Runtime/Data/Locators/SanDiegoStreetAddress/SanDiego_StreetAddress.loc"
+            "path": "~/ArcGIS/Runtime/Data/Locators/SanDiegoStreetAddressLocator/SanDiego_StreetAddress.loc"
         }
     ],
     "description": "Geocode addresses to locations and reverse geocode locations to addresses offline.",
