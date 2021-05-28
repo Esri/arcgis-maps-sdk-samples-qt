@@ -157,7 +157,7 @@ Rectangle {
 
     LocatorTask {
         id: locatorTask
-        url: dataPath + "/Locators/SanDiegoStreetAddress/SanDiego_StreetAddress.loc"
+        url: dataPath + "/Locators/SanDiegoStreetAddressLocator/SanDiego_StreetAddress.loc"
         //! [OfflineGeocode LocatorTask]
 
         suggestions {
