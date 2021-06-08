@@ -32,6 +32,12 @@ Rectangle {
     property int fileNamesLength: 0
     property var imageFrameList: []
 
+    // free up memory claimed by imageFrameList property
+    Component.onDestruction: {
+        while (imageFrameList.length !== 0)
+            imageFrameList.pop();
+    }
+
     // Create new Timer and set the timeout interval to 68ms
     Timer {
         id: timer
