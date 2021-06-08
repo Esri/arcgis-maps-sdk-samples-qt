@@ -34,7 +34,7 @@ Rectangle {
 
     // free up memory claimed by imageFrameList property
     Component.onDestruction: {
-        imageFrameList = []
+        imageFrameList = [];
     }
 
     // Create new Timer and set the timeout interval to 68ms
