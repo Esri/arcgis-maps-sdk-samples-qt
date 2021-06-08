@@ -15,10 +15,10 @@
 name: README and metadata formatting check
 
 # Controls when the action will run. Triggers the workflow on pull request
-# events for master and v.next branches.
+# events for main and v.next branches.
 on:
   pull_request:
-    branches: [ master, v.next ]
+    branches: [ main, v.next ]
     paths: ['**.json', '**.md']
 
 # A workflow run is made up of one or more jobs that can run sequentially or in parallel

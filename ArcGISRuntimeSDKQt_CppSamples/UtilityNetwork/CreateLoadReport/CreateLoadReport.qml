@@ -29,18 +29,16 @@ Item {
         id: sampleModel
     }
 
-    Rectangle {
+    ScrollView {
         id: rectangle
-        anchors.horizontalCenter: parent.horizontalCenter
-        width: grid.width
-        height: contents.height
-
+        anchors.centerIn: parent
+        width: children.width
+        height: parent.height
 
         Column {
             id: contents
-            anchors.fill: parent
-            padding: 10
-            spacing: 25
+            padding: 20
+            spacing: 10
 
             Row {
                 ButtonGroup {
@@ -52,7 +50,6 @@ Item {
                 GridLayout {
                     id: grid
                     rows: phases.length + 1
-                    rowSpacing: 5
                     flow: GridLayout.TopToBottom
 
                     CheckBox { id: parentBox; checkState: checkBoxes.checkState }
@@ -120,7 +117,7 @@ Item {
                             break;
                         case CreateLoadReportSample.SampleReady: // SampleReady
                             if (checkBoxes.checkState === 0 && !reportHasRun) {
-                                "Select phases to run the load report with";
+                                "Select phases to include in the load report";
                             } else {
                                 "Tap the \"Run Report\" button to create the load report";
                             }

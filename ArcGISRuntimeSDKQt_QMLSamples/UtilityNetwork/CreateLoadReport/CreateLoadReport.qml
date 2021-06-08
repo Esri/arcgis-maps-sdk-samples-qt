@@ -29,7 +29,7 @@ Rectangle {
     property var utilityTier: null
     property var startingLocation: null
     property var phasesCurrentAttr: null
-    property var phaseCodedValuesList: []
+    property var phaseCodedValuesList: null
     property var baseCondition: null
 
     property var networkSourceName: "Electric Distribution Device"
@@ -214,7 +214,12 @@ Rectangle {
         phasesCurrentAttr = utilityNetwork.definition.networkAttribute(phasesNetworkAttributeName);
 
         if (phasesCurrentAttr.domain.domainType === Enums.DomainTypeCodedValueDomain) {
-            return phasesCurrentAttr.domain.codedValues;
+            let codedValues = [];
+            for (let i = 0; i < phasesCurrentAttr.domain.codedValues.length; i++) {
+                codedValues.push(phasesCurrentAttr.domain.codedValues[i]);
+            }
+
+            return codedValues;
         }
     }
 
@@ -236,17 +241,16 @@ Rectangle {
 
     // Load Report UI
 
-    Rectangle {
+    ScrollView {
         id: rectangle
-        anchors.horizontalCenter: parent.horizontalCenter
-        width: grid.width
-        height: contents.height
+        anchors.centerIn: parent
+        width: children.width
+        height: parent.height
 
         Column {
             id: contents
-            anchors.fill: parent
-            padding: 10
-            spacing: 25
+            padding: 20
+            spacing: 10
 
             Row {
                 ButtonGroup {
@@ -258,7 +262,6 @@ Rectangle {
                 GridLayout {
                     id: grid
                     rows: phaseNames.length + 1
-                    rowSpacing: 5
                     flow: GridLayout.TopToBottom
 
                     CheckBox { id: parentBox; checkState: checkBoxes.checkState }
@@ -303,19 +306,20 @@ Rectangle {
                         let runPhases = [];
                         phaseNames.forEach((phase) => {
                                                if (selectedPhases[phase])
-                                                    runPhases.push(phase)
+                                                   runPhases.push(phase)
                                            });
 
-                        for (let i = 0; i < phaseCodedValuesList.length; i++) {
-                            if (runPhases.includes(phaseCodedValuesList[i].name)) {
-                                phaseQueue.push(phaseCodedValuesList[i]);
-                            }
-                        }
+                        if (runPhases.length > 0) {
+                            phaseCodedValuesList.forEach(codedValue => {
+                                                             if (runPhases.includes(codedValue.name))
+                                                                 phaseQueue.push(codedValue);
+                                                         });
 
-                        if (phaseQueue.length > 0) {
-                            sampleStatus = CreateLoadReport.SampleStatus.Busy;
-                            currentPhase = phaseQueue.pop();
-                            createReportForPhase(currentPhase);
+                            if (phaseQueue.length > 0) {
+                                sampleStatus = CreateLoadReport.SampleStatus.Busy;
+                                currentPhase = phaseQueue.pop();
+                                createReportForPhase(currentPhase);
+                            }
                         }
 
                         reportHasRun = runPhases.length !== 0;
@@ -342,7 +346,7 @@ Rectangle {
 
                         case CreateLoadReport.SampleStatus.Ready:
                             if (checkBoxes.checkState === 0 && !reportHasRun) {
-                                "Select phases to run the load report with";
+                                "Select phases to include in the load report";
                             } else if (checkBoxes.checkState === 0 && reportHasRun) {
                                 "Tap the \"Reset\" button to reset the load report";
                             } else {
