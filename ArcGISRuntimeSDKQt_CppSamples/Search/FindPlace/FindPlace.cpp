@@ -46,7 +46,7 @@ FindPlace::FindPlace(QQuickItem* parent /* = nullptr */):
 
 FindPlace::~FindPlace()
 {
-    m_mapView->locationDisplay()->stop();
+  m_mapView->locationDisplay()->stop();
 }
 
 void FindPlace::init()
