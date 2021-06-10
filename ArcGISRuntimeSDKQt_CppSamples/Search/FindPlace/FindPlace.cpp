@@ -44,6 +44,11 @@ FindPlace::FindPlace(QQuickItem* parent /* = nullptr */):
 {
 }
 
+FindPlace::~FindPlace()
+{
+  m_mapView->locationDisplay()->stop();
+}
+
 void FindPlace::init()
 {
   // Register the map view for QML
