@@ -40,7 +40,7 @@ DisplayDeviceLocation::DisplayDeviceLocation(QQuickItem* parent) :
 
 DisplayDeviceLocation::~DisplayDeviceLocation()
 {
-    m_mapView->locationDisplay()->stop();
+  m_mapView->locationDisplay()->stop();
 }
 
 void DisplayDeviceLocation::init()
