@@ -45,7 +45,7 @@ LocalServerGeoprocessing::LocalServerGeoprocessing(QQuickItem* parent) :
   QQuickItem(parent)
 {
   // Create a temporary directory for the local server if one has not already been created
-  if (LocalServer::appDataPath() != "")
+  if (LocalServer::appDataPath() != "" && LocalServer::tempDataPath() != "")
     return;
 
   // create temp/data path
