@@ -17,12 +17,17 @@
 #ifndef DISPLAYOGCAPICOLLECTION_H
 #define DISPLAYOGCAPICOLLECTION_H
 
+#include "QueryParameters.h"
+
 namespace Esri
 {
 namespace ArcGISRuntime
 {
+class FeatureLayer;
 class Map;
 class MapQuickView;
+class OgcFeatureCollectionTable;
+class QueryParameters;
 }
 }
 
@@ -47,8 +52,11 @@ private:
   Esri::ArcGISRuntime::MapQuickView* mapView() const;
   void setMapView(Esri::ArcGISRuntime::MapQuickView* mapView);
 
+  Esri::ArcGISRuntime::FeatureLayer* m_featureLayer = nullptr;
   Esri::ArcGISRuntime::Map* m_map = nullptr;
   Esri::ArcGISRuntime::MapQuickView* m_mapView = nullptr;
+  Esri::ArcGISRuntime::OgcFeatureCollectionTable* m_ogcFeatureCollectionTable = nullptr;
+  Esri::ArcGISRuntime::QueryParameters m_queryParameters;
 };
 
 #endif // DISPLAYOGCAPICOLLECTION_H
