@@ -39,7 +39,7 @@ LocalServerFeatureLayer::LocalServerFeatureLayer(QQuickItem* parent) :
   QQuickItem(parent)
 {
   // Create a temporary directory for the local server if one has not already been created
-  if (LocalServer::appDataPath() != "" && LocalServer::tempDataPath() != "")
+  if (!LocalServer::appDataPath().isEmpty() && !LocalServer::tempDataPath().isEmpty())
     return;
 
   // create temp/data path
