@@ -36,6 +36,10 @@ LocalServerServices::LocalServerServices(QQuickItem* parent) :
   QQuickItem(parent),
   m_dataPath(QDir::homePath() + "/ArcGIS/Runtime/Data")
 {
+  // Create a temporary directory for the local server if one has not already been created
+  if (!LocalServer::appDataPath().isEmpty() && !LocalServer::tempDataPath().isEmpty())
+    return;
+
   // create temp/data path
   const QString tempPath = LocalServerServices::shortestTempPath() + "/EsriQtSample";
 
@@ -203,10 +207,10 @@ void LocalServerServices::startService(const QString& serviceName, const QUrl& f
   {
     if (path.isEmpty())
     {
-    if (m_localGPService->status() == LocalServerStatus::Started)
-      return;
+      if (m_localGPService->status() == LocalServerStatus::Started)
+        return;
 
-    m_localGPService->start();
+      m_localGPService->start();
     }
     else
     {
