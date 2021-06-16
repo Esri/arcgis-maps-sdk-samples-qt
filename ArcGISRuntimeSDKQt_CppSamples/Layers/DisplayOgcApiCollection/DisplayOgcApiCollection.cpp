@@ -25,33 +25,31 @@
 #include "MapQuickView.h"
 #include "OgcFeatureCollectionTable.h"
 #include "QueryParameters.h"
+#include "SimpleLineSymbol.h"
+#include "SimpleRenderer.h"
 
 using namespace Esri::ArcGISRuntime;
 
 DisplayOgcApiCollection::DisplayOgcApiCollection(QObject* parent /* = nullptr */):
   QObject(parent),
-  m_map(new Map(Basemap::topographic(this), this))
+  m_map(new Map(BasemapStyle::ArcGISTopographic, this))
 {
-  m_ogcFeatureCollectionTable = new OgcFeatureCollectionTable(QUrl("https://demo.ldproxy.net/daraa"), "TransportationGroundCrv", this);
+  const QString serviceUrl = "https://demo.ldproxy.net/daraa";
+  const QString collectionId = "TransportationGroundCrv";
+  m_ogcFeatureCollectionTable = new OgcFeatureCollectionTable(QUrl(serviceUrl), collectionId, this);
   m_ogcFeatureCollectionTable->setFeatureRequestMode(FeatureRequestMode::ManualCache);
-
-  m_queryParameters = QueryParameters();
-  m_queryParameters.setSpatialRelationship(SpatialRelationship::Intersects);
-  m_queryParameters.setMaxFeatures(5000);
 
   connect(m_ogcFeatureCollectionTable, &OgcFeatureCollectionTable::loadStatusChanged, this, [this]()
   {
-    qDebug() << (int)m_ogcFeatureCollectionTable->loadStatus();
     if (m_ogcFeatureCollectionTable->loadStatus() == LoadStatus::Loaded)
     {
       m_featureLayer = new FeatureLayer(m_ogcFeatureCollectionTable, this);
-
+      m_featureLayer->setRenderer(new SimpleRenderer(new SimpleLineSymbol(SimpleLineSymbolStyle::Solid, Qt::blue, 3, this), this));
       m_map->operationalLayers()->append(m_featureLayer);
     }
   });
 
   m_ogcFeatureCollectionTable->load();
-
 }
 
 DisplayOgcApiCollection::~DisplayOgcApiCollection() = default;
@@ -76,30 +74,27 @@ void DisplayOgcApiCollection::setMapView(MapQuickView* mapView)
 
   m_mapView = mapView;
   m_mapView->setMap(m_map);
-
   m_mapView->setViewpoint(Viewpoint(32.62, 36.10, 20'000));
 
-  connect(m_ogcFeatureCollectionTable, &OgcFeatureCollectionTable::populateFromServiceCompleted, this, [this](QUuid taskId, FeatureQueryResult* featureQueryResult)
-  {
-    qDebug() << "populate from service result: " << featureQueryResult->iterator().features(this).length();
-
-    qDebug() << "ogc feature collection table num of features: " << m_ogcFeatureCollectionTable->numberOfFeatures();
-
-    qDebug() << "map features: " << m_featureLayer->attribution();
-    qDebug() << Qt::endl;
-
-    //m_featureLayer = new FeatureLayer(m_ogcFeatureCollectionTable, this);
-    //m_map->operationalLayers()->append(m_featureLayer);
-  });
-
-  connect(m_mapView, &MapQuickView::drawStatusChanged, this, [this]()
-  {
-    if (m_mapView->drawStatus() == DrawStatus::Completed)
-    {
-      m_queryParameters.setGeometry(m_mapView->currentViewpoint(ViewpointType::BoundingGeometry).targetGeometry());
-      m_ogcFeatureCollectionTable->populateFromService(m_queryParameters, false, {});
-    }
-  });
+  createQueryConnection();
 
   emit mapViewChanged();
+}
+
+void DisplayOgcApiCollection::createQueryConnection()
+{
+  connect(m_mapView, &MapQuickView::navigatingChanged, this, [this]()
+  {
+    if (!m_mapView->isNavigating())
+    {
+      QueryParameters queryParameters = QueryParameters();
+      queryParameters.setSpatialRelationship(SpatialRelationship::Intersects);
+      queryParameters.setMaxFeatures(5000);
+
+      Geometry queryArea = m_mapView->currentViewpoint(ViewpointType::BoundingGeometry).targetGeometry();
+      queryParameters.setGeometry(queryArea);
+
+      m_ogcFeatureCollectionTable->populateFromService(queryParameters, false, {});
+    }
+  });
 }
