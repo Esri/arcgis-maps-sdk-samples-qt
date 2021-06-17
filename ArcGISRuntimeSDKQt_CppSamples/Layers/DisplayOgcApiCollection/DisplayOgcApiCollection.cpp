@@ -39,17 +39,9 @@ DisplayOgcApiCollection::DisplayOgcApiCollection(QObject* parent /* = nullptr */
   m_ogcFeatureCollectionTable = new OgcFeatureCollectionTable(QUrl(serviceUrl), collectionId, this);
   m_ogcFeatureCollectionTable->setFeatureRequestMode(FeatureRequestMode::ManualCache);
 
-  connect(m_ogcFeatureCollectionTable, &OgcFeatureCollectionTable::loadStatusChanged, this, [this]()
-  {
-    if (m_ogcFeatureCollectionTable->loadStatus() == LoadStatus::Loaded)
-    {
-      m_featureLayer = new FeatureLayer(m_ogcFeatureCollectionTable, this);
-      m_featureLayer->setRenderer(new SimpleRenderer(new SimpleLineSymbol(SimpleLineSymbolStyle::Solid, Qt::blue, 3, this), this));
-      m_map->operationalLayers()->append(m_featureLayer);
-    }
-  });
-
-  m_ogcFeatureCollectionTable->load();
+  m_featureLayer = new FeatureLayer(m_ogcFeatureCollectionTable, this);
+  m_featureLayer->setRenderer(new SimpleRenderer(new SimpleLineSymbol(SimpleLineSymbolStyle::Solid, Qt::blue, 3, this), this));
+  m_map->operationalLayers()->append(m_featureLayer);
 }
 
 DisplayOgcApiCollection::~DisplayOgcApiCollection() = default;
@@ -85,16 +77,15 @@ void DisplayOgcApiCollection::createQueryConnection()
 {
   connect(m_mapView, &MapQuickView::navigatingChanged, this, [this]()
   {
-    if (!m_mapView->isNavigating())
-    {
-      QueryParameters queryParameters = QueryParameters();
-      queryParameters.setSpatialRelationship(SpatialRelationship::Intersects);
-      queryParameters.setMaxFeatures(5000);
+    if (m_mapView->isNavigating())
+      return;
 
-      Geometry queryArea = m_mapView->currentViewpoint(ViewpointType::BoundingGeometry).targetGeometry();
-      queryParameters.setGeometry(queryArea);
+    QueryParameters queryParameters = QueryParameters();
+    queryParameters.setSpatialRelationship(SpatialRelationship::Intersects);
+    queryParameters.setMaxFeatures(5000);
 
-      m_ogcFeatureCollectionTable->populateFromService(queryParameters, false, {});
-    }
+    queryParameters.setGeometry(m_mapView->currentViewpoint(ViewpointType::BoundingGeometry).targetGeometry());
+
+    m_ogcFeatureCollectionTable->populateFromService(queryParameters, false, {});
   });
 }
