@@ -28,7 +28,53 @@ Rectangle {
         anchors.fill: parent
 
         Map {
-            BasemapTopographic {}
+            initBasemapStyle: Enums.BasemapStyleArcGISTopographic
+
+            FeatureLayer {
+                OgcFeatureCollectionTable {
+                    id: ogcFeatureCollectionTable
+                    url: "https://demo.ldproxy.net/daraa"
+                    collectionId: "TransportationGroundCrv"
+                    featureRequestMode: Enums.FeatureRequestModeManualCache
+
+                    onLoadStatusChanged: {
+                        if (ogcFeatureCollectionTable.loadStatus === Enums.LoadStatusLoaded) {
+                            ogcFeatureCollectionTable.populateFromService(queryParameters, false, []);
+                        }
+                    }
+                }
+
+                renderer: SimpleRenderer {
+                    SimpleLineSymbol {
+                        style: Enums.SimpleLineSymbolStyleSolid
+                        color: "blue"
+                        width: 3
+                    }
+                }
+            }
+
+            ViewpointCenter {
+                targetScale: 20000
+                center: Point {
+                    x: 36.10
+                    y: 32.62
+                    spatialReference: SpatialReference{ wkid: 4326 }
+                }
+            }
+        }
+
+        QueryParameters {
+            id: queryParameters
+            geometry: mapView.currentViewpointExtent.extent
+            spatialRelationship: Enums.SpatialRelationshipIntersects
+            maxFeatures: 5000
+        }
+
+        onNavigatingChanged: {
+            if (mapView.navigating)
+                return;
+
+            ogcFeatureCollectionTable.populateFromService(queryParameters, false, []);
         }
     }
 }
