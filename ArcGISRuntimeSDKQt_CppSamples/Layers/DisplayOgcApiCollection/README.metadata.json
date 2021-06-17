@@ -1,21 +1,33 @@
 {
     "category": "TODO",
-    "description": "TODO",
+    "description": "This sample demonstrates how to display an OGC API feature collection and query features while navigating the map view.",
     "ignore": false,
     "images": [
         "screenshot.png"
     ],
     "keywords": [
-        "TODO"
+        "OGC",
+        "OGC API",
+        "feature",
+        "feature layer",
+        "feature table",
+        "service",
+        "table",
+        "web",
+        "OgcFeatureCollectionTable",
+        "QueryParameters"
     ],
-    "redirect_from": "",
+    "redirect_from": [
+        ""
+    ],
     "relevant_apis": [
-        "TODO"
+        "OgcFeatureCollectionTable",
+        "QueryParameters"
     ],
     "snippets": [
         "DisplayOgcApiCollection.qml",
         "DisplayOgcApiCollection.cpp",
         "DisplayOgcApiCollection.h"
     ],
-    "title": "Display OGC API Collection"
+    "title": "Display OGC API Feature Collection"
 }
