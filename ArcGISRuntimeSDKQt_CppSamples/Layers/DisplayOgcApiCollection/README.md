@@ -1,31 +1,37 @@
-# Display OGC API Collection
+# Display OGC API Feature Collection
 
 This sample demonstrates how to display an OGC API feature collection and query features while navigating the map view.
-This sample demonstrates ...       
-This is **why** you would do it this way ...
 
 ![](screenshot.png)
 
+## Use case
+
+When panning the map view, it may be necessary to query the OGC API feature table for additional features within the new visible extent.
+
 ## How to use the sample
-e.g. Use the input controls to define a ... Click the "Go" button to ...
+
+Pan the map and observe how new features are loaded from the OGC API feature service.
 
 ## How it works
-e.g. In the `GeoView.Tapped` event, features in the `Map` are selected using an `Envelope` defined by the user's tap location ...
+
+1. Create an `OgcFeatureCollectionTable` object using a URL to an OGC API feature service and a collection ID.
+2. Set the feature table's `FeatureRequestMode` to `ManualCache` so features requested from the server are cached locally.
+3. Create a `FeatureLayer` using the feature table and add it to the Map's `operationalLayers`.
+4. Every time the map view navigation completes:
+    i. Create `QueryParameters`
+    ii. Set the parameter's `Geometry` to the current extent of the map view. 
+    iii. Set the parameter's `SpatialRelationship` to `Intersects`.
+    iv. Set the `MaxFeatures` property to 5000 (some services have a low default value for maximum features).
+    v. Call `OgcFeatureCollectionTable->PopulateFromService()` using the query parameters from the previous steps.
 
 ## Relevant API
- - ClassName1
- - MethodName
-
-## Offline data
-Read more about how to set up the sample's offline data [here](http://links.esri.com/ArcGISRuntimeQtSamples).
-
-Link | Local Location
----------|-------|
-|[San Francisco Streets TPK](https://www.arcgis.com/home/item.html?id=3f1bbf0ec70b409a975f5c91f363fe7d)| `<userhome>`/ArcGIS/Runtime/Data/tpk/SanFrancisco.tpk |
+ - OgcFeatureCollectionTable
+ - QueryParameters
 
 ## Additional information
-A standard level license is required to ...
+
+See the [OGC API website](https://ogcapi.ogc.org/) for more information on the OGC API family of standards.
 
 ## Tags
-Routing, Network analysis, Geocode
 
+feature, feature layer, feature table, OGC, OGC API, service, table, web
