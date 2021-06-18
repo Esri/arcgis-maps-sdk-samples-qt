@@ -25,8 +25,8 @@ Pan the map and observe how new features are loaded from the OGC API feature ser
     v. Call `OgcFeatureCollectionTable->PopulateFromService()` using the query parameters from the previous steps.
 
 ## Relevant API
- * OgcFeatureCollectionTable
- * QueryParameters
+* OgcFeatureCollectionTable
+* QueryParameters
 
 ## Additional information
 

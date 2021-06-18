@@ -24,8 +24,8 @@ Pan the map and observe how new features are loaded from the OGC API feature ser
 4. When the feature table loads and thereafter every time time the map view navigation completes, call `OgcFeatureCollectionTable.populateFromService()` using the query parameters from the previous steps.
 
 ## Relevant API
- * OgcFeatureCollectionTable
- * QueryParameters
+* OgcFeatureCollectionTable
+* QueryParameters
 
 ## Additional information
 
