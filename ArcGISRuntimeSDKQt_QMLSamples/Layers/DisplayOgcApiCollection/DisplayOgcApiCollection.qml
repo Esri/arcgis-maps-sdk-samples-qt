@@ -1,6 +1,6 @@
 // [WriteFile Name=DisplayOgcApiCollection, Category=Layers]
 // [Legal]
-// Copyright 2020 Esri.
+// Copyright 2021 Esri.
 
 // Licensed under the Apache License, Version 2.0 (the "License");
 // you may not use this file except in compliance with the License.
@@ -15,7 +15,7 @@
 // [Legal]
 
 import QtQuick 2.6
-import Esri.ArcGISRuntime 100.11
+import Esri.ArcGISRuntime 100.12
 
 Rectangle {
     id: rootRectangle
@@ -35,9 +35,14 @@ Rectangle {
                     id: ogcFeatureCollectionTable
                     url: "https://demo.ldproxy.net/daraa"
                     collectionId: "TransportationGroundCrv"
+
+                    // FeatureRequestMode::ManualCache specifies that features from the server will be stored locally for display and querying
+                    // In this mode, ServiceFeatureTable::populateFromService() must be called to populate the local cache
                     featureRequestMode: Enums.FeatureRequestModeManualCache
 
                     onLoadStatusChanged: {
+                        // ogcFeatureCollectionTable.load() will be automatically called when added to a FeatureLayer
+                        // populateFromService() will be called with the initial viewpoint extent
                         if (ogcFeatureCollectionTable.loadStatus === Enums.LoadStatusLoaded) {
                             ogcFeatureCollectionTable.populateFromService(queryParameters, false, []);
                         }
@@ -65,8 +70,11 @@ Rectangle {
 
         QueryParameters {
             id: queryParameters
+            // Set the query area to what is currently visible in the map view
             geometry: mapView.currentViewpointExtent.extent
+            // Enums.SpatialRelationshipIntersects will return all features that are within and crossing the perimiter of the input geometry
             spatialRelationship: Enums.SpatialRelationshipIntersects
+            // Some services have low default values for max features returned
             maxFeatures: 5000
         }
 
@@ -74,6 +82,7 @@ Rectangle {
             if (mapView.navigating)
                 return;
 
+            // Populate the feature collection table with features that match the parameters, cache them locally, and store all table fields
             ogcFeatureCollectionTable.populateFromService(queryParameters, false, []);
         }
     }

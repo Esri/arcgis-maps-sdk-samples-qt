@@ -37,8 +37,12 @@ DisplayOgcApiCollection::DisplayOgcApiCollection(QObject* parent /* = nullptr */
   const QString serviceUrl = "https://demo.ldproxy.net/daraa";
   const QString collectionId = "TransportationGroundCrv";
   m_ogcFeatureCollectionTable = new OgcFeatureCollectionTable(QUrl(serviceUrl), collectionId, this);
+
+  // FeatureRequestMode::ManualCache specifies that features from the server will be stored locally for display and querying
+  // In this mode, ServiceFeatureTable::populateFromService() must be called to populate the local cache
   m_ogcFeatureCollectionTable->setFeatureRequestMode(FeatureRequestMode::ManualCache);
 
+  // m_ogcFeatureCollectionTable->load() will be automatically called when added to a FeatureLayer
   m_featureLayer = new FeatureLayer(m_ogcFeatureCollectionTable, this);
   m_featureLayer->setRenderer(new SimpleRenderer(new SimpleLineSymbol(SimpleLineSymbolStyle::Solid, Qt::blue, 3, this), this));
   m_map->operationalLayers()->append(m_featureLayer);
@@ -81,11 +85,14 @@ void DisplayOgcApiCollection::createQueryConnection()
       return;
 
     QueryParameters queryParameters = QueryParameters();
+    // Set the query area to what is currently visible in the map view
+    queryParameters.setGeometry(m_mapView->currentViewpoint(ViewpointType::BoundingGeometry).targetGeometry());
+    // SpatialRelationship::Intersects will return all features that are within and crossing the perimiter of the input geometry
     queryParameters.setSpatialRelationship(SpatialRelationship::Intersects);
+    // Some services have low default values for max features returned
     queryParameters.setMaxFeatures(5000);
 
-    queryParameters.setGeometry(m_mapView->currentViewpoint(ViewpointType::BoundingGeometry).targetGeometry());
-
+    // Populate the feature collection table with features that match the parameters, cache them locally, and store all table fields
     m_ogcFeatureCollectionTable->populateFromService(queryParameters, false, {});
   });
 }
