@@ -475,7 +475,7 @@ metadata_categories = [
     'Routing',
     'Scenes',
     'Search',
-    'UtilityNetwork'
+    'Utility network'
 ]
 
 required_metadata_keys = [
