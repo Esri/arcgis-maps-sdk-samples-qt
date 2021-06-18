@@ -1,4 +1,4 @@
-// [WriteFile Name=DisplayOgcApiCollection, Category=Layers]
+// [WriteFile Name=DisplayOgcApiFeatureCollection, Category=Layers]
 // [Legal]
 // Copyright 2021 Esri.
 
@@ -18,7 +18,7 @@
 #include "pch.hpp"
 #endif // PCH_BUILD
 
-#include "DisplayOgcApiCollection.h"
+#include "DisplayOgcApiFeatureCollection.h"
 
 #include "FeatureLayer.h"
 #include "Map.h"
@@ -30,7 +30,7 @@
 
 using namespace Esri::ArcGISRuntime;
 
-DisplayOgcApiCollection::DisplayOgcApiCollection(QObject* parent /* = nullptr */):
+DisplayOgcApiFeatureCollection::DisplayOgcApiFeatureCollection(QObject* parent /* = nullptr */):
   QObject(parent),
   m_map(new Map(BasemapStyle::ArcGISTopographic, this))
 {
@@ -48,22 +48,22 @@ DisplayOgcApiCollection::DisplayOgcApiCollection(QObject* parent /* = nullptr */
   m_map->operationalLayers()->append(m_featureLayer);
 }
 
-DisplayOgcApiCollection::~DisplayOgcApiCollection() = default;
+DisplayOgcApiFeatureCollection::~DisplayOgcApiFeatureCollection() = default;
 
-void DisplayOgcApiCollection::init()
+void DisplayOgcApiFeatureCollection::init()
 {
   // Register the map view for QML
   qmlRegisterType<MapQuickView>("Esri.Samples", 1, 0, "MapView");
-  qmlRegisterType<DisplayOgcApiCollection>("Esri.Samples", 1, 0, "DisplayOgcApiCollectionSample");
+  qmlRegisterType<DisplayOgcApiFeatureCollection>("Esri.Samples", 1, 0, "DisplayOgcApiFeatureCollectionSample");
 }
 
-MapQuickView* DisplayOgcApiCollection::mapView() const
+MapQuickView* DisplayOgcApiFeatureCollection::mapView() const
 {
   return m_mapView;
 }
 
 // Set the view (created in QML)
-void DisplayOgcApiCollection::setMapView(MapQuickView* mapView)
+void DisplayOgcApiFeatureCollection::setMapView(MapQuickView* mapView)
 {
   if (!mapView || mapView == m_mapView)
     return;
@@ -77,7 +77,7 @@ void DisplayOgcApiCollection::setMapView(MapQuickView* mapView)
   emit mapViewChanged();
 }
 
-void DisplayOgcApiCollection::createQueryConnection()
+void DisplayOgcApiFeatureCollection::createQueryConnection()
 {
   connect(m_mapView, &MapQuickView::navigatingChanged, this, [this]()
   {

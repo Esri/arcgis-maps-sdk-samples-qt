@@ -15,7 +15,7 @@
 #include <Windows.h>
 #endif
 
-#include "DisplayOgcApiCollection.h"
+#include "DisplayOgcApiFeatureCollection.h"
 
 #include "ArcGISRuntimeEnvironment.h"
 
@@ -27,7 +27,7 @@ int main(int argc, char *argv[])
 {
   QGuiApplication::setAttribute(Qt::AA_EnableHighDpiScaling);
   QGuiApplication app(argc, argv);
-  app.setApplicationName(QStringLiteral("DisplayOgcApiCollection - C++"));
+  app.setApplicationName(QStringLiteral("DisplayOgcApiFeatureCollection - C++"));
 
   // Use of Esri location services, including basemaps and geocoding,
   // requires authentication using either an ArcGIS identity or an API Key.
@@ -49,7 +49,7 @@ int main(int argc, char *argv[])
 
 
   // Initialize the sample
-  DisplayOgcApiCollection::init();
+  DisplayOgcApiFeatureCollection::init();
 
   // Initialize application view
   QQmlApplicationEngine engine;
@@ -61,7 +61,7 @@ int main(int argc, char *argv[])
 #endif
 
   // Set the source
-  engine.load(QUrl("qrc:/Samples/Layers/DisplayOgcApiCollection/main.qml"));
+  engine.load(QUrl("qrc:/Samples/Layers/DisplayOgcApiFeatureCollection/main.qml"));
 
   return app.exec();
 }

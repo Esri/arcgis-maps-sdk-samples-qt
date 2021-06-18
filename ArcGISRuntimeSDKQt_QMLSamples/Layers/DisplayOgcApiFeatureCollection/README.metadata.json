@@ -25,7 +25,7 @@
         "QueryParameters"
     ],
     "snippets": [
-        "DisplayOgcApiCollection.qml"
+        "DisplayOgcApiFeatureCollection.qml"
     ],
     "title": "Display OGC API Feature Collection"
 }

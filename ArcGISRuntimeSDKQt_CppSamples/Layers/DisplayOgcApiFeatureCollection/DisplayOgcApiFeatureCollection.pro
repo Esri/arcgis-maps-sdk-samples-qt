@@ -13,25 +13,52 @@
 # limitations under the License.
 #-------------------------------------------------
 
-TEMPLATE = app
+mac {
+    cache()
+}
+
+#-------------------------------------------------------------------------------
+
+CONFIG += c++14
 
 # additional modules are pulled in via arcgisruntime.pri
 QT += opengl qml quick
 
-CONFIG += c++14
+TEMPLATE = app
+TARGET = DisplayOgcApiFeatureCollection
 
 ARCGIS_RUNTIME_VERSION = 100.12
 include($$PWD/arcgisruntime.pri)
 
-SOURCES += \
-    main.cpp
+#-------------------------------------------------------------------------------
 
-RESOURCES += \
-    DisplayOgcApiCollection.qrc
+HEADERS += \
+    DisplayOgcApiFeatureCollection.h
+
+SOURCES += \
+    main.cpp \
+    DisplayOgcApiFeatureCollection.cpp
+
+RESOURCES += DisplayOgcApiFeatureCollection.qrc
+
+#-------------------------------------------------------------------------------
+
+win32 {
+    LIBS += \
+        Ole32.lib
+}
 
 ios {
+    INCLUDEPATH += $$PWD
+    DEPENDPATH += $$PWD
+
+    OTHER_FILES += \
+        $$PWD/Info.plist
+
     QMAKE_INFO_PLIST = $$PWD/Info.plist
 }
 
-# Default rules for deployment.
-include(deployment.pri)
+android {
+    INCLUDEPATH += $$PWD
+    DEPENDPATH += $$PWD
+}

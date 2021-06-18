@@ -1,4 +1,4 @@
-// [WriteFile Name=DisplayOgcApiCollection, Category=Layers]
+// [WriteFile Name=DisplayOgcApiFeatureCollection, Category=Layers]
 // [Legal]
 // Copyright 2021 Esri.
 

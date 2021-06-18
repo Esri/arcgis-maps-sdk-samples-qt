@@ -1,4 +1,4 @@
-// [WriteFile Name=DisplayOgcApiCollection, Category=Layers]
+// [WriteFile Name=DisplayOgcApiFeatureCollection, Category=Layers]
 // [Legal]
 // Copyright 2021 Esri.
 
@@ -14,8 +14,8 @@
 // limitations under the License.
 // [Legal]
 
-#ifndef DISPLAYOGCAPICOLLECTION_H
-#define DISPLAYOGCAPICOLLECTION_H
+#ifndef DisplayOgcApiFeatureCollection_H
+#define DisplayOgcApiFeatureCollection_H
 
 #include "QueryParameters.h"
 
@@ -33,15 +33,15 @@ class QueryParameters;
 
 #include <QObject>
 
-class DisplayOgcApiCollection : public QObject
+class DisplayOgcApiFeatureCollection : public QObject
 {
   Q_OBJECT
 
   Q_PROPERTY(Esri::ArcGISRuntime::MapQuickView* mapView READ mapView WRITE setMapView NOTIFY mapViewChanged)
 
 public:
-  explicit DisplayOgcApiCollection(QObject* parent = nullptr);
-  ~DisplayOgcApiCollection();
+  explicit DisplayOgcApiFeatureCollection(QObject* parent = nullptr);
+  ~DisplayOgcApiFeatureCollection();
 
   static void init();
 
@@ -59,4 +59,4 @@ private:
   Esri::ArcGISRuntime::OgcFeatureCollectionTable* m_ogcFeatureCollectionTable = nullptr;
 };
 
-#endif // DISPLAYOGCAPICOLLECTION_H
+#endif // DisplayOgcApiFeatureCollection_H

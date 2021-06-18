@@ -1,4 +1,4 @@
-// [WriteFile Name=DisplayOgcApiCollection, Category=Layers]
+// [WriteFile Name=DisplayOgcApiFeatureCollection, Category=Layers]
 // [Legal]
 // Copyright 2021 Esri.
 
@@ -27,7 +27,7 @@ Item {
     }
 
     // Declare the C++ instance which creates the scene etc. and supply the view
-    DisplayOgcApiCollectionSample {
+    DisplayOgcApiFeatureCollectionSample {
         id: model
         mapView: view
     }
