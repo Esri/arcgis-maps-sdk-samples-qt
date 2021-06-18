@@ -1,6 +1,6 @@
 {
-    "category": "UtilityNetwork",
-    "description": "Find all features connected to a set of starting points in a utility network.",
+    "category": "Utility network",
+    "description": "Discover connected features in a utility network using connected, subnetwork, upstream, and downstream traces.",
     "ignore": false,
     "images": [
         "screenshot.png"
