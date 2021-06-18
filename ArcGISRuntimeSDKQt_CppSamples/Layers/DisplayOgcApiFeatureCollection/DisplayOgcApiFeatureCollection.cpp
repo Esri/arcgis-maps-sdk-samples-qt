@@ -34,9 +34,9 @@ DisplayOgcApiFeatureCollection::DisplayOgcApiFeatureCollection(QObject* parent /
   QObject(parent),
   m_map(new Map(BasemapStyle::ArcGISTopographic, this))
 {
-  const QString serviceUrl = "https://demo.ldproxy.net/daraa";
+  const QUrl serviceUrl = QUrl("https://demo.ldproxy.net/daraa");
   const QString collectionId = "TransportationGroundCrv";
-  m_ogcFeatureCollectionTable = new OgcFeatureCollectionTable(QUrl(serviceUrl), collectionId, this);
+  m_ogcFeatureCollectionTable = new OgcFeatureCollectionTable(serviceUrl, collectionId, this);
 
   // FeatureRequestMode::ManualCache specifies that features from the server will be stored locally for display and querying
   // In this mode, ServiceFeatureTable::populateFromService() must be called to populate the local cache

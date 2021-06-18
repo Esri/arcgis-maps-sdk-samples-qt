@@ -36,7 +36,7 @@ Rectangle {
                     url: "https://demo.ldproxy.net/daraa"
                     collectionId: "TransportationGroundCrv"
 
-                    // FeatureRequestMode::ManualCache specifies that features from the server will be stored locally for display and querying
+                    // Enums.FeatureRequestModeManualCache specifies that features from the server will be stored locally for display and querying
                     // In this mode, ServiceFeatureTable::populateFromService() must be called to populate the local cache
                     featureRequestMode: Enums.FeatureRequestModeManualCache
 
