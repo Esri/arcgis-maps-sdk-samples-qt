@@ -24,7 +24,7 @@ Rectangle {
     width: 800
     height: 600
     
-    readonly property url outputTileCache: System.temporaryFolder.url + "/TileCacheQml_%1.tpkx".arg(new Date().getTime().toString())
+    readonly property url outputTileCache: System.temporaryFolder.url + "/TileCacheQml_%1.tpk".arg(new Date().getTime().toString())
     readonly property string tiledServiceUrl: "https://sampleserver6.arcgisonline.com/arcgis/rest/services/World_Street_Map/MapServer"
     property Envelope tileCacheExtent: null
     property string statusText: ""
@@ -116,7 +116,7 @@ Rectangle {
                 statusText = "In progress...";
                 break;
             case Enums.JobStatusSucceeded:
-                statusText = "Adding TPKX...";
+                statusText = "Adding TPK...";
                 exportWindow.hideWindow(1500);
                 displayOutputTileCache(exportJob.result);
                 break;
