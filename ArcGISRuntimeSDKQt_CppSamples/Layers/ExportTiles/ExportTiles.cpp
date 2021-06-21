@@ -55,10 +55,8 @@ void ExportTiles::componentComplete()
   // find QML MapView component
   m_mapView = findChild<MapQuickView*>("mapView");
 
-  QUrl serviceUrl("https://sampleserver6.arcgisonline.com/arcgis/rest/services/World_Street_Map/MapServer");
-
   // create a tiled basemap
-  ArcGISTiledLayer* tiledLayer = new ArcGISTiledLayer(serviceUrl, this);
+  ArcGISTiledLayer* tiledLayer = new ArcGISTiledLayer(m_serviceUrl, this);
   Basemap* basemap = new Basemap(tiledLayer, this);
 
   // create a new map instance
@@ -73,7 +71,7 @@ void ExportTiles::componentComplete()
   m_mapView->setMap(m_map);
 
   // create the task with the url and load it
-  m_exportTileCacheTask = new ExportTileCacheTask(serviceUrl, this);
+  m_exportTileCacheTask = new ExportTileCacheTask(m_serviceUrl, this);
   connect(m_exportTileCacheTask, &ExportTileCacheTask::doneLoading, this, [this](Error error)
   {
     if (!error.isEmpty())
