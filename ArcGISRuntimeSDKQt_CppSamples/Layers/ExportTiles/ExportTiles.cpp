@@ -55,8 +55,10 @@ void ExportTiles::componentComplete()
   // find QML MapView component
   m_mapView = findChild<MapQuickView*>("mapView");
 
+  QUrl serviceUrl("https://sampleserver6.arcgisonline.com/arcgis/rest/services/World_Street_Map/MapServer");
+
   // create a tiled basemap
-  ArcGISTiledLayer* tiledLayer = new ArcGISTiledLayer(m_serviceUrl, this);
+  ArcGISTiledLayer* tiledLayer = new ArcGISTiledLayer(serviceUrl, this);
   Basemap* basemap = new Basemap(tiledLayer, this);
 
   // create a new map instance
@@ -71,7 +73,7 @@ void ExportTiles::componentComplete()
   m_mapView->setMap(m_map);
 
   // create the task with the url and load it
-  m_exportTileCacheTask = new ExportTileCacheTask(m_serviceUrl, this);
+  m_exportTileCacheTask = new ExportTileCacheTask(serviceUrl, this);
   connect(m_exportTileCacheTask, &ExportTileCacheTask::doneLoading, this, [this](Error error)
   {
     if (!error.isEmpty())
@@ -98,7 +100,7 @@ void ExportTiles::exportTileCacheFromCorners(double xCorner1, double yCorner1, d
 
     //! [ExportTiles start job]
     // execute the task and obtain the job
-    ExportTileCacheJob* exportJob = m_exportTileCacheTask->exportTileCache(m_parameters, m_tempPath.path() + "/offlinemap.tpkx");
+    ExportTileCacheJob* exportJob = m_exportTileCacheTask->exportTileCache(m_parameters, m_tempPath.path() + "/offlinemap.tpk");
 
     // check if there is a valid job
     if (exportJob)
@@ -122,7 +124,7 @@ void ExportTiles::exportTileCacheFromCorners(double xCorner1, double yCorner1, d
           emit updateStatus("In progress...");
           break;
         case JobStatus::Succeeded:
-          emit updateStatus("Adding TPKX...");
+          emit updateStatus("Adding TPK...");
           emit hideWindow(1500, true);
           displayOutputTileCache(exportJob->result());
           break;
