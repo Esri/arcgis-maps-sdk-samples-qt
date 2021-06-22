@@ -18,10 +18,13 @@ Pan the map and observe how new features are loaded from the OGC API feature ser
 2. Set the feature table's `featureRequestMode` to `Enums.FeatureRequestModeManualCache` so features requested from the server are cached locally.
 3. Create a `FeatureLayer` using the feature table and add it to the Map.
 4. Create a `QueryParameters` object with the following parameters:
+    
     i. Set the `geometry` to the current extent of the map view.
+    
     ii. Set the `SpatialRelationship` to `Enums.SpatialRelationshipIntersects`.
+    
     iii. Set the `MaxFeatures` property to 5000 (some services have a low default value for maximum features).
-4. When the feature table loads and thereafter every time time the map view navigation completes, call `OgcFeatureCollectionTable.populateFromService()` using the query parameters from the previous steps.
+5. When the feature table loads and thereafter every time time the map view navigation completes, call `OgcFeatureCollectionTable.populateFromService()` using the query parameters from the previous steps.
 
 ## Relevant API
 * OgcFeatureCollectionTable

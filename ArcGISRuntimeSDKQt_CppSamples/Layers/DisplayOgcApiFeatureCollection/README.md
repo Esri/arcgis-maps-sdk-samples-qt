@@ -18,10 +18,15 @@ Pan the map and observe how new features are loaded from the OGC API feature ser
 2. Set the feature table's `FeatureRequestMode` to `ManualCache` so features requested from the server are cached locally.
 3. Create a `FeatureLayer` using the feature table and add it to the Map's `operationalLayers`.
 4. Every time the map view navigation completes:
+    
     i. Create `QueryParameters`
+    
     ii. Set the parameter's `Geometry` to the current extent of the map view. 
+    
     iii. Set the parameter's `SpatialRelationship` to `Intersects`.
+    
     iv. Set the `MaxFeatures` property to 5000 (some services have a low default value for maximum features).
+    
     v. Call `OgcFeatureCollectionTable::PopulateFromService()` using the query parameters from the previous steps.
 
 ## Relevant API
