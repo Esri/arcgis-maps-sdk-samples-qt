@@ -1,0 +1,11 @@
+<RCC>
+    <qresource prefix="/Samples/DisplayInformation/SketchOnMap">
+        <file alias="sample.json">README.metadata.json</file>        
+        <file>SketchOnMap.qml</file>
+        <file>SketchOnMap.h</file>
+        <file>SketchOnMap.cpp</file>
+        <file>main.qml</file>
+        <file>screenshot.png</file>
+        <file>README.md</file>
+    </qresource>
+</RCC>
