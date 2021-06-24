@@ -23,6 +23,8 @@ namespace ArcGISRuntime
 {
 class Map;
 class MapQuickView;
+class GraphicsOverlay;
+class SketchEditor;
 }
 }
 
@@ -49,6 +51,8 @@ private:
 
   Esri::ArcGISRuntime::Map* m_map = nullptr;
   Esri::ArcGISRuntime::MapQuickView* m_mapView = nullptr;
+  Esri::ArcGISRuntime::GraphicsOverlay* m_sketchOverlay = nullptr;
+  Esri::ArcGISRuntime::SketchEditor* m_sketchEditor = nullptr;
 };
 
 #endif // SKETCHONMAP_H
