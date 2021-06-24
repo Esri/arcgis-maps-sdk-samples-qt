@@ -61,6 +61,7 @@ private:
   Esri::ArcGISRuntime::ExportTileCacheTask* m_exportTileCacheTask = nullptr;
   Esri::ArcGISRuntime::Map* m_map = nullptr;
   Esri::ArcGISRuntime::MapQuickView* m_mapView = nullptr;
+  QList<int> createLevelsOfDetail(double minScale, double maxScale);
   QTemporaryDir m_tempPath;
 };
 
