@@ -61,7 +61,7 @@ void ExportTiles::componentComplete()
   // create an export tile cache task when basemap has finished loading
   connect(basemap, &Basemap::doneLoading, this, [this]()
   {
-    if (m_map->basemap()->baseLayers()->size() > 0)
+    if (!m_map->basemap()->baseLayers()->isEmpty())
       createExportTileCacheTask();
   });
 
@@ -173,7 +173,7 @@ void ExportTiles::displayOutputTileCache(TileCache* tileCache)
   {
     if (tiledLayer->loadStatus() == LoadStatus::Loaded)
     {
-      double prevMapScale = m_mapView->mapScale();
+      const double prevMapScale = m_mapView->mapScale();
       m_map->setMinScale(prevMapScale);
       m_map->setMaxScale(prevMapScale * 0.1);
       m_mapView->setViewpointScale(prevMapScale * 0.5);
