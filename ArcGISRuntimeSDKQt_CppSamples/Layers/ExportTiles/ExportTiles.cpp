@@ -72,7 +72,6 @@ void ExportTiles::componentComplete()
 
   // set an initial viewpoint
   m_map->setInitialViewpoint(Viewpoint(35, -117, 1e7));
-  m_map->setMinScale(1e7);
 
   // set map on the map view
   m_mapView->setMap(m_map);
@@ -111,13 +110,6 @@ void ExportTiles::exportTileCacheFromCorners(double xCorner1, double yCorner1, d
   {
     //! [ExportTiles start job]
     // execute the task and obtain the job
-
-    m_map->setMinScale(m_mapView->mapScale());
-    m_map->setMaxScale(m_mapView->mapScale()/10);
-
-    QList<int> levelsOfDetail = createLevelsOfDetail(m_map->minScale(), m_map->maxScale());
-
-    parameters.setLevelIds(levelsOfDetail);
     ExportTileCacheJob* exportJob = m_exportTileCacheTask->exportTileCache(parameters, m_tempPath.path() + "/offlinemap.tpkx");
 
     // check if there is a valid job
@@ -163,7 +155,7 @@ void ExportTiles::exportTileCacheFromCorners(double xCorner1, double yCorner1, d
   });
 
   // generate parameters
-  m_exportTileCacheTask->createDefaultExportTileCacheParameters(tileCacheExtent, m_mapView->mapScale(), m_tiledLayer->maxScale());
+  m_exportTileCacheTask->createDefaultExportTileCacheParameters(tileCacheExtent, m_mapView->mapScale(), m_mapView->mapScale() * 0.1);
 }
 
 // display the tile cache once the task is complete
@@ -183,67 +175,10 @@ void ExportTiles::displayOutputTileCache(TileCache* tileCache)
   {
     if (tiledLayer->loadStatus() == LoadStatus::Loaded)
     {
-      m_mapView->setViewpointScale(m_mapView->mapScale() * 0.5);
+      double prevMapScale = m_mapView->mapScale();
+      m_map->setMinScale(prevMapScale);
+      m_map->setMaxScale(prevMapScale * 0.1);
+      m_mapView->setViewpointScale(prevMapScale * 0.5);
     }
   });
 }
-
-int convertScaleToLevelOfDetail(double scale)
-{
-  /*
-   * This is a helper function to convert map scale to zoom levels used by most mapping APIs
-   * For more information about zoom levels and scale visit:
-   * https://developers.arcgis.com/documentation/mapping-apis-and-services/reference/zoom-levels-and-scale
-   */
-
-  QList<double> scaleList =
-  {
-    591657527.591555, // Global
-    295828763.795777,
-    147914381.897889, // Subcontinent
-    73957190.948944,
-    36978595.474472,
-    18489297.737236,  // Large country
-    9244648.868618,
-    4622324.434309,   // Small country/US state
-    2311162.217155,
-    1155581.108577,   // Large metropolitan area
-    577790.554289,
-    288895.277144,    // City
-    144447.638572,    // Town
-    72223.819286,     // Village
-    36111.909643,
-    18055.954822,     // Small road
-    9027.977411,      // Street
-    4513.988705,      // Street block
-    2256.994353,      // Address
-    1128.497176,      // Street intersection
-    564.248588,
-    282.124294,
-    141.062147,
-    70.5310735
-  };
-
-  int levelOfDetail = 0;
-  while (levelOfDetail < scaleList.size() && scale < scaleList[levelOfDetail])
-  {
-    ++levelOfDetail;
-  }
-  return levelOfDetail;
-}
-
-QList<int> ExportTiles::createLevelsOfDetail(double minScale, double maxScale)
-{
-  QList<int> levelsOfDetail;
-  int minLevel = ::convertScaleToLevelOfDetail(minScale);
-  int maxLevel = ::convertScaleToLevelOfDetail(maxScale);
-
-  for (int i = minLevel; i < maxLevel; ++i)
-  {
-    levelsOfDetail.push_back(i);
-  }
-
-  return levelsOfDetail;
-}
-
-
