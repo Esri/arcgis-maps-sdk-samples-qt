@@ -14,9 +14,9 @@ Pan and zoom into the desired area, making sure the area is within the red bound
 
 ## How it works
 
-1. Create a map and set its `minScale` to 10,000,000. Limiting the scale in this sample limits the potential size of the selection area, thereby keeping the exported tile package to a reasonable size.
+1. Create an `ArcGISTiledLayer` from a raster baselayer of a basemap style.
 2. Create an `ExportTileCacheTask`, passing in the URL of the tiled layer.
-3. Create default `ExportTileCacheParameters` for the task, specifying extent, minimum scale and maximum scale.
+3. Create default `ExportTileCacheParameters` for the task, specifying extent, minimum scale and maximum scale. Limiting the difference between the minimum and maximum scales will decrease the size of the resulting tile package and the time it takes to create.
 4. Use the parameters and a path to create an `ExportTileCacheJob` from the task.
 5. Start the job, and when it completes successfully, get the resulting `TileCache`.
 6. Use the tile cache to create an `ArcGISTiledLayer`, and display it in the map.
