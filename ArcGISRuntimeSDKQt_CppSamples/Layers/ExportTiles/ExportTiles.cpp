@@ -56,17 +56,17 @@ void ExportTiles::componentComplete()
   m_mapView = findChild<MapQuickView*>("mapView");
 
   // create a tiled basemap
-  m_basemap = new Basemap(BasemapStyle::ArcGISImagery, this);
+  Basemap* basemap = new Basemap(BasemapStyle::ArcGISImagery, this);
 
   // create an export tile cache task when basemap has finished loading
-  connect(m_basemap, &Basemap::doneLoading, this, [this]()
+  connect(basemap, &Basemap::doneLoading, this, [this]()
   {
-    if (m_basemap->baseLayers()->size() > 0)
+    if (m_map->basemap()->baseLayers()->size() > 0)
       createExportTileCacheTask();
   });
 
   // create a new map instance
-  m_map = new Map(m_basemap, this);
+  m_map = new Map(basemap, this);
 
   // set an initial viewpoint
   m_map->setInitialViewpoint(Viewpoint(35, -117, 1e7));
@@ -78,7 +78,7 @@ void ExportTiles::componentComplete()
 void ExportTiles::createExportTileCacheTask()
 {
   // Get a tile layer from the basemap
-  ArcGISTiledLayer* tiledLayer = dynamic_cast<ArcGISTiledLayer*>(m_basemap->baseLayers()->at(0));
+  ArcGISTiledLayer* tiledLayer = dynamic_cast<ArcGISTiledLayer*>(m_map->basemap()->baseLayers()->at(0));
 
   // create the task with the url and load it
   m_exportTileCacheTask = new ExportTileCacheTask(tiledLayer->url(), this);

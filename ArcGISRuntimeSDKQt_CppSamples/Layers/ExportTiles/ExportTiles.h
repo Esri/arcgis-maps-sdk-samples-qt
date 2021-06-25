@@ -24,7 +24,6 @@ namespace Esri
 {
   namespace ArcGISRuntime
   {
-    class Basemap;
     class ExportTileCacheTask;
     class Map;
     class MapQuickView;
@@ -55,7 +54,6 @@ private:
   void createExportTileCacheTask();
   void displayOutputTileCache(Esri::ArcGISRuntime::TileCache* tileCache);
 
-  Esri::ArcGISRuntime::Basemap* m_basemap = nullptr;
   Esri::ArcGISRuntime::ExportTileCacheTask* m_exportTileCacheTask = nullptr;
   Esri::ArcGISRuntime::Map* m_map = nullptr;
   Esri::ArcGISRuntime::MapQuickView* m_mapView = nullptr;
