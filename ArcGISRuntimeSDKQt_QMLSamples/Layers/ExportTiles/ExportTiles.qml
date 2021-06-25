@@ -25,7 +25,6 @@ Rectangle {
     height: 600
     
     readonly property url outputTileCache: System.temporaryFolder.url + "/TileCacheQml_%1.tpkx".arg(new Date().getTime().toString())
-    readonly property string tiledServiceUrl: "https://sampleserver6.arcgisonline.com/arcgis/rest/services/World_Street_Map/MapServer"
     property Envelope tileCacheExtent: null
     property string statusText: ""
     property ExportTileCacheParameters params
@@ -36,20 +35,18 @@ Rectangle {
         anchors.fill: parent
         Map {
             id: map
-            // Nest an ArcGISTiledLayer in the Basemap
+            // Add an imagery basemap to the map and get the url of the raster baselayer once it has loaded
             Basemap {
-                id: imageryBasemap
                 initStyle: Enums.BasemapStyleArcGISImagery
 
                 onLoadStatusChanged: {
                     if (loadStatus !== Enums.LoadStatusLoaded)
                         return;
 
-                    exportTask.url = imageryBasemap.baseLayers.get(0).url;
+                    exportTask.url = baseLayers.get(0).url;
                 }
             }
 
-            // set an initial viewpoint
             initialViewpoint: ViewpointCenter {
                 center: Point {
                     x: -117
@@ -115,7 +112,6 @@ Rectangle {
                 statusText = "Job paused";
                 break;
             case Enums.JobStatusStarted:
-                console.log("In progress...");
                 statusText = "In progress...";
                 break;
             case Enums.JobStatusSucceeded:
@@ -124,7 +120,6 @@ Rectangle {
                 displayOutputTileCache(exportJob.result);
                 break;
             default:
-                console.log("default");
                 break;
             }
         }

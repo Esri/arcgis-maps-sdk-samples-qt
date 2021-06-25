@@ -65,8 +65,6 @@ void ExportTiles::componentComplete()
       createExportTileCacheTask();
   });
 
-  m_basemap->load();
-
   // create a new map instance
   m_map = new Map(m_basemap, this);
 
@@ -80,10 +78,10 @@ void ExportTiles::componentComplete()
 void ExportTiles::createExportTileCacheTask()
 {
   // Get a tile layer from the basemap
-  m_tiledLayer = dynamic_cast<ArcGISTiledLayer*>(m_basemap->baseLayers()->at(0));
+  ArcGISTiledLayer* tiledLayer = dynamic_cast<ArcGISTiledLayer*>(m_basemap->baseLayers()->at(0));
 
   // create the task with the url and load it
-  m_exportTileCacheTask = new ExportTileCacheTask(m_tiledLayer->url(), this);
+  m_exportTileCacheTask = new ExportTileCacheTask(tiledLayer->url(), this);
 
   connect(m_exportTileCacheTask, &ExportTileCacheTask::doneLoading, this, [this](Error error)
   {

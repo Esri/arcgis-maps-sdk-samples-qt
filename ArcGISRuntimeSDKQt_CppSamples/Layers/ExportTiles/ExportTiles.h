@@ -25,7 +25,6 @@ namespace Esri
   namespace ArcGISRuntime
   {
     class Basemap;
-    class ArcGISTiledLayer;
     class ExportTileCacheTask;
     class Map;
     class MapQuickView;
@@ -56,12 +55,10 @@ private:
   void createExportTileCacheTask();
   void displayOutputTileCache(Esri::ArcGISRuntime::TileCache* tileCache);
 
-  Esri::ArcGISRuntime::ArcGISTiledLayer* m_tiledLayer = nullptr;
   Esri::ArcGISRuntime::Basemap* m_basemap = nullptr;
   Esri::ArcGISRuntime::ExportTileCacheTask* m_exportTileCacheTask = nullptr;
   Esri::ArcGISRuntime::Map* m_map = nullptr;
   Esri::ArcGISRuntime::MapQuickView* m_mapView = nullptr;
-  QList<int> createLevelsOfDetail(double minScale, double maxScale);
   QTemporaryDir m_tempPath;
 };
 
