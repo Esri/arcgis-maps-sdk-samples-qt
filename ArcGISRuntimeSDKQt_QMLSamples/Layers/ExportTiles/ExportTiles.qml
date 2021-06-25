@@ -24,7 +24,7 @@ Rectangle {
     width: 800
     height: 600
     
-    readonly property url outputTileCache: System.temporaryFolder.url + "/TileCacheQml_%1.tpk".arg(new Date().getTime().toString())
+    readonly property url outputTileCache: System.temporaryFolder.url + "/TileCacheQml_%1.tpkx".arg(new Date().getTime().toString())
     readonly property string tiledServiceUrl: "https://sampleserver6.arcgisonline.com/arcgis/rest/services/World_Street_Map/MapServer"
     property Envelope tileCacheExtent: null
     property string statusText: ""
@@ -38,21 +38,25 @@ Rectangle {
             id: map
             // Nest an ArcGISTiledLayer in the Basemap
             Basemap {
-                ArcGISTiledLayer {
-                    id: tiledLayer
-                    url: tiledServiceUrl
+                id: imageryBasemap
+                initStyle: Enums.BasemapStyleArcGISImagery
+
+                onLoadStatusChanged: {
+                    if (loadStatus !== Enums.LoadStatusLoaded)
+                        return;
+
+                    exportTask.url = imageryBasemap.baseLayers.get(0).url;
                 }
             }
 
             // set an initial viewpoint
-            ViewpointExtent {
-                Envelope {
-                    xMax: 12362601.050868368
-                    xMin: 10187678.26582548
-                    yMax: 2567213.6854449743
-                    yMin: 936021.5966628084
-                    spatialReference: SpatialReference { wkid: 3857 }
+            initialViewpoint: ViewpointCenter {
+                center: Point {
+                    x: -117
+                    y: 35
+                    spatialReference: SpatialReference { wkid: 4326 }
                 }
+                targetScale: 1e7
             }
         }
     }
@@ -62,7 +66,6 @@ Rectangle {
 
     ExportTileCacheTask {
         id: exportTask
-        url: tiledServiceUrl
         property var exportJob
 
         onCreateDefaultExportTileCacheParametersStatusChanged: {
@@ -76,7 +79,7 @@ Rectangle {
 
         function generateDefaultParameters() {
             // generate the default parameters with the extent and map scales specified
-            exportTask.createDefaultExportTileCacheParameters(tileCacheExtent, mapView.mapScale, tiledLayer.maxScale);
+            exportTask.createDefaultExportTileCacheParameters(tileCacheExtent, mapView.mapScale, mapView.mapScale/10);
         }
 
         function executeExportTileCacheTask(params) {
@@ -116,7 +119,7 @@ Rectangle {
                 statusText = "In progress...";
                 break;
             case Enums.JobStatusSucceeded:
-                statusText = "Adding TPK...";
+                statusText = "Adding TPKX...";
                 exportWindow.hideWindow(1500);
                 displayOutputTileCache(exportJob.result);
                 break;
@@ -139,12 +142,16 @@ Rectangle {
 
             // zoom to the new layer and hide window once loaded
             tiledLayer.loadStatusChanged.connect(()=> {
-                if (tiledLayer.loadStatus === Enums.LoadStatusLoaded) {
-                    extentRectangle.visible = false;
-                    downloadButton.visible = false;
-                    mapView.setViewpointScale(mapView.mapScale * .5);
-                }
-            });
+                 if (tiledLayer.loadStatus === Enums.LoadStatusLoaded) {
+                     extentRectangle.visible = false;
+                     downloadButton.visible = false;
+
+                     const prevMapScale = mapView.mapScale;
+                     mapView.setViewpointScale(prevMapScale * .5);
+                     map.minScale = prevMapScale;
+                     map.maxScale = prevMapScale / 10;
+                 }
+             });
         }
 
         Component.onDestruction: {
