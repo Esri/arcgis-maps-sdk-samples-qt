@@ -32,7 +32,7 @@ using namespace Esri::ArcGISRuntime;
 
 SketchOnMap::SketchOnMap(QObject* parent /* = nullptr */):
   QObject(parent),
-  m_map(new Map(BasemapStyle::ArcGISLightGray, this))
+  m_map(new Map(BasemapStyle::ArcGISImagery, this))
 {
   m_sketchOverlay = new GraphicsOverlay(this);
 }
@@ -64,10 +64,6 @@ void SketchOnMap::setMapView(MapQuickView* mapView)
 
   m_mapView->graphicsOverlays()->append(m_sketchOverlay);
 
-  m_sketchEditor = new SketchEditor();
-
-  m_mapView->setSketchEditor(m_sketchEditor);
-
   PolygonBuilder* polygonBuilder = new PolygonBuilder(SpatialReference::wgs84());
   polygonBuilder->addPoint(-118.8190, 34.0138);
   polygonBuilder->addPoint(-118.8068, 34.0216);
@@ -78,22 +74,67 @@ void SketchOnMap::setMapView(MapQuickView* mapView)
   const Polygon polygon = polygonBuilder->toPolygon();
 
   SimpleFillSymbol* polygonSymbol = new SimpleFillSymbol(
-    SimpleFillSymbolStyle::Solid, // Fill style
-    QColor(255, 131, 0), // Fill color, RGB orange
-    new SimpleLineSymbol( // Outline
-      SimpleLineSymbolStyle::Solid, // Outline style
-      QColor(Qt::blue), // Outline color
-      2.0, // Outline width (float)
-      this
-      ),
-    this
-    );
+        SimpleFillSymbolStyle::Solid, // Fill style
+        QColor(255, 131, 0), // Fill color, RGB orange
+        new SimpleLineSymbol( // Outline
+                              SimpleLineSymbolStyle::Solid, // Outline style
+                              QColor(Qt::blue), // Outline color
+                              2.0, // Outline width (float)
+                              this),
+        this);
 
   Graphic* polygonGraphic = new Graphic(polygon, polygonSymbol, this);
 
   m_sketchOverlay->graphics()->append(polygonGraphic);
 
-  m_sketchEditor->start(polygon);
-
   emit mapViewChanged();
+
+  connect(m_map, &Map::doneLoading, [this, polygon]()
+  {
+    m_sketchEditor = new SketchEditor();
+    m_mapView->setSketchEditor(m_sketchEditor);
+  });
+
+  connect(m_mapView, &MapQuickView::mouseClicked, this, [this]()
+  {
+    qDebug() << "pressed and held";
+    SketchCreationMode test = m_sketchEditor->creationMode();
+    m_sketchEditor->stop();
+    connect(m_mapView, &MapQuickView::mouseReleased, this, [this, test]()
+    {
+      qDebug() << "released";
+      m_sketchEditor->start(test);
+      m_mapView->disconnect();
+    });
+  });
+}
+
+void SketchOnMap::setSketchCreationMode(SampleSketchMode sketchCreationMode)
+{
+  qDebug() << (int)sketchCreationMode;
+  if (m_sketchEditor->isStarted())
+    m_sketchEditor->stop();
+
+  switch(sketchCreationMode)
+  {
+    case SampleSketchMode::PointSketchMode:
+      m_sketchEditor->start(SketchCreationMode::Point);
+      break;
+
+    case SampleSketchMode::MultipointSketchMode:
+      m_sketchEditor->start(SketchCreationMode::Multipoint);
+      break;
+
+    case SampleSketchMode::PolylineSketchMode:
+      m_sketchEditor->start(SketchCreationMode::Polyline);
+      break;
+
+    case SampleSketchMode::PolygonSketchMode:
+      m_sketchEditor->start(SketchCreationMode::Polygon);
+      break;
+
+    default:
+      break;
+
+  }
 }

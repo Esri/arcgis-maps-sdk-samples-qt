@@ -40,7 +40,16 @@ public:
   explicit SketchOnMap(QObject* parent = nullptr);
   ~SketchOnMap();
 
+  Q_ENUMS(SampleSketchMode)
+  enum class SampleSketchMode {
+    PointSketchMode,
+    MultipointSketchMode,
+    PolylineSketchMode,
+    PolygonSketchMode
+  };
+
   static void init();
+  Q_INVOKABLE void setSketchCreationMode(SampleSketchMode sketchCreationMode);
 
 signals:
   void mapViewChanged();
@@ -53,6 +62,7 @@ private:
   Esri::ArcGISRuntime::MapQuickView* m_mapView = nullptr;
   Esri::ArcGISRuntime::GraphicsOverlay* m_sketchOverlay = nullptr;
   Esri::ArcGISRuntime::SketchEditor* m_sketchEditor = nullptr;
+  bool sketchEditorIsRunning;
 };
 
 #endif // SKETCHONMAP_H

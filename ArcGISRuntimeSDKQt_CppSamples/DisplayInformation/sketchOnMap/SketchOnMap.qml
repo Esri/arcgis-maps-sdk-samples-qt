@@ -31,4 +31,40 @@ Item {
         id: model
         mapView: view
     }
+
+    Column {
+        id: buttonColumn
+        anchors {
+            top: parent.top
+            right: parent.right
+        }
+        // width: 200
+        Row {
+            Button {
+                text: "Point"
+                onClicked: {
+                    console.log(SketchOnMap.PointSketchMode)
+                    model.setSketchCreationMode(0);
+                }
+            }
+        }
+        Row {
+            Button {
+                text: "MultiPoint"
+                onClicked: model.setSketchCreationMode(1);
+            }
+        }
+        Row {
+            Button {
+                text: "Polyline"
+                onClicked: model.setSketchCreationMode(2);
+            }
+        }
+        Row {
+            Button {
+                text: "Polygon"
+                onClicked: model.setSketchCreationMode(3);
+            }
+        }
+    }
 }
