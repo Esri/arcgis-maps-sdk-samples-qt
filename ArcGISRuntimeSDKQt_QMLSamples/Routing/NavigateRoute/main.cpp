@@ -49,8 +49,7 @@ int main(int argc, char *argv[])
   view.setResizeMode(QQuickView::SizeRootObjectToView);
 
   // Register the C++ NavigateRouteSpeaker class
-  qmlRegisterSingletonType<NavigateRouteSpeaker>("Esri.samples", 1, 0, "NavigateRouteSpeaker", [](QQmlEngine* parent, QJSEngine*)-> QObject* { return new NavigateRouteSpeaker
-        (parent);  } );
+  qmlRegisterType<NavigateRouteSpeaker>("Esri.samples", 1, 0, "NavigateRouteSpeaker");
 
   // Add the import Path
   view.engine()->addImportPath(QDir(QCoreApplication::applicationDirPath()).filePath("qml"));

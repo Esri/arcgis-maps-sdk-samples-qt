@@ -259,10 +259,20 @@ Rectangle {
 
             // output new voice guidance
             onNewVoiceGuidanceResultChanged: {
-                NavigateRouteSpeaker.textToSpeech(newVoiceGuidanceResult.text);
+                speaker.textToSpeech(newVoiceGuidanceResult.text);
+            }
+
+            // set a callback to indicate if the speech engine is ready to speak
+            speechEngineReadyCallback: function() {
+                return speaker.textToSpeechEngineReady();
             }
         }
     }
+
+    NavigateRouteSpeaker {
+        id: speaker
+    }
+
     function startNavigation() {
         // get the directions for the route
         directionListModel = m_route.directionManeuvers;
