@@ -23,6 +23,7 @@ namespace ArcGISRuntime
 {
 class Map;
 class MapQuickView;
+class Graphic;
 class GraphicsOverlay;
 class SketchEditor;
 }
@@ -50,6 +51,10 @@ public:
 
   static void init();
   Q_INVOKABLE void setSketchCreationMode(SampleSketchMode sketchCreationMode);
+  Q_INVOKABLE void stopSketching();
+  Q_INVOKABLE void clearGraphics();
+  Q_INVOKABLE void undo();
+  Q_INVOKABLE void redo();
 
 signals:
   void mapViewChanged();
@@ -57,12 +62,13 @@ signals:
 private:
   Esri::ArcGISRuntime::MapQuickView* mapView() const;
   void setMapView(Esri::ArcGISRuntime::MapQuickView* mapView);
+  void createConnections();
 
   Esri::ArcGISRuntime::Map* m_map = nullptr;
   Esri::ArcGISRuntime::MapQuickView* m_mapView = nullptr;
   Esri::ArcGISRuntime::GraphicsOverlay* m_sketchOverlay = nullptr;
   Esri::ArcGISRuntime::SketchEditor* m_sketchEditor = nullptr;
-  bool sketchEditorIsRunning;
+  Esri::ArcGISRuntime::Graphic* editingGraphic = nullptr;
 };
 
 #endif // SKETCHONMAP_H

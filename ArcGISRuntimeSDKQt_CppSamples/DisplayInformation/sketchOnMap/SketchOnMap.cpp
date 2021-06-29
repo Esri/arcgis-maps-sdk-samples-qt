@@ -87,34 +87,40 @@ void SketchOnMap::setMapView(MapQuickView* mapView)
 
   m_sketchOverlay->graphics()->append(polygonGraphic);
 
-  emit mapViewChanged();
+  m_sketchEditor = new SketchEditor();
 
-  connect(m_map, &Map::doneLoading, [this, polygon]()
+  connect(m_map, &Map::doneLoading, [this]()
   {
-    m_sketchEditor = new SketchEditor();
     m_mapView->setSketchEditor(m_sketchEditor);
   });
 
-  connect(m_mapView, &MapQuickView::mouseClicked, this, [this]()
+  emit mapViewChanged();
+
+  createConnections();
+}
+
+void SketchOnMap::createConnections()
+{
+  connect(m_mapView, &MapQuickView::mouseClicked, this, [this](QMouseEvent& mouseEvent)
   {
-    qDebug() << "pressed and held";
-    SketchCreationMode test = m_sketchEditor->creationMode();
-    m_sketchEditor->stop();
-    connect(m_mapView, &MapQuickView::mouseReleased, this, [this, test]()
-    {
-      qDebug() << "released";
-      m_sketchEditor->start(test);
-      m_mapView->disconnect();
-    });
+    if (m_sketchEditor->isStarted())
+      return;
+
+    m_mapView->identifyGraphicsOverlay(m_sketchOverlay, mouseEvent.x(), mouseEvent.y(), 5.0, false, 1);
+  });
+
+  connect(m_mapView, &MapQuickView::identifyGraphicsOverlayCompleted, this, [this](QUuid, IdentifyGraphicsOverlayResult* graphicsOverlayResult)
+  {
+    if (m_sketchEditor->isStarted() || graphicsOverlayResult->graphics().isEmpty())
+      return;
+
+    editingGraphic = graphicsOverlayResult->graphics().at(0);
+    m_sketchEditor->start(editingGraphic->geometry());
   });
 }
 
 void SketchOnMap::setSketchCreationMode(SampleSketchMode sketchCreationMode)
 {
-  qDebug() << (int)sketchCreationMode;
-  if (m_sketchEditor->isStarted())
-    m_sketchEditor->stop();
-
   switch(sketchCreationMode)
   {
     case SampleSketchMode::PointSketchMode:
@@ -137,4 +143,58 @@ void SketchOnMap::setSketchCreationMode(SampleSketchMode sketchCreationMode)
       break;
 
   }
+}
+
+void SketchOnMap::stopSketching()
+{
+  Geometry sketchGeometry = m_sketchEditor->geometry();
+
+  if (editingGraphic)
+  {
+    editingGraphic->setGeometry(sketchGeometry);
+    m_sketchEditor->stop();
+    editingGraphic = nullptr;
+    return;
+  }
+
+  Symbol* geometrySymbol = nullptr;
+
+  Graphic* sketchGraphic = nullptr;
+
+  if (sketchGeometry.geometryType() == GeometryType::Point || sketchGeometry.geometryType() == GeometryType::Multipoint)
+  {
+    SimpleMarkerSymbol* pointSymbol = new SimpleMarkerSymbol(SimpleMarkerSymbolStyle::Circle, QColor(255, 131, 0), 10, this);
+    pointSymbol->setOutline(new SimpleLineSymbol(SimpleLineSymbolStyle::Solid, QColor(Qt::blue), 2.0, this));
+    geometrySymbol = pointSymbol;
+  }
+  else if (sketchGeometry.geometryType() == GeometryType::Polyline)
+  {
+    geometrySymbol = new SimpleLineSymbol(SimpleLineSymbolStyle::Solid, QColor(255, 131, 0), 2, this);
+  }
+  else if (sketchGeometry.geometryType() == GeometryType::Polygon)
+  {
+    geometrySymbol = new SimpleFillSymbol(SimpleFillSymbolStyle::Solid, QColor(255, 131, 0),
+                                          new SimpleLineSymbol(SimpleLineSymbolStyle::Solid, QColor(Qt::blue), 2.0, this), this);
+  }
+
+  sketchGraphic = new Graphic(sketchGeometry, geometrySymbol, this);
+
+  m_sketchOverlay->graphics()->append(sketchGraphic);
+
+  m_sketchEditor->stop();
+}
+
+void SketchOnMap::clearGraphics()
+{
+  m_sketchOverlay->graphics()->clear();
+}
+
+void SketchOnMap::undo()
+{
+  m_sketchEditor->undo();
+}
+
+void SketchOnMap::redo()
+{
+  m_sketchEditor->redo();
 }

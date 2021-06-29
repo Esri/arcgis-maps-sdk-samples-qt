@@ -41,9 +41,9 @@ Item {
         // width: 200
         Row {
             Button {
+                id: pButton
                 text: "Point"
                 onClicked: {
-                    console.log(SketchOnMap.PointSketchMode)
                     model.setSketchCreationMode(0);
                 }
             }
@@ -64,6 +64,37 @@ Item {
             Button {
                 text: "Polygon"
                 onClicked: model.setSketchCreationMode(3);
+            }
+        }
+        Row {
+            Button {
+                text: "edit graphic"
+            }
+        }
+
+        Row {
+            Button {
+                width: pButton.width / 2
+                text: "Undo"
+                onClicked: model.undo();
+            }
+            Button {
+                width: pButton.width / 2
+                text: "Redo"
+                onClicked: model.redo();
+            }
+        }
+
+        Row {
+            Button {
+                text: "Stop"
+                onClicked: model.stopSketching();
+            }
+        }
+        Row {
+            Button {
+                text: "Clear graphics"
+                onClicked: model.clearGraphics();
             }
         }
     }
