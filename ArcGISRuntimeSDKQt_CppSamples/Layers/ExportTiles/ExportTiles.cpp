@@ -113,6 +113,12 @@ void ExportTiles::exportTileCacheFromCorners(double xCorner1, double yCorner1, d
     // check if there is a valid job
     if (exportJob)
     {
+      connect(exportJob, &ExportTileCacheJob::progressChanged, this, [this, exportJob]()
+      {
+        m_exportTilesProgress = exportJob->progress();
+        emit exportTilesProgressChanged();
+      });
+
       // connect to the job's status changed signal
       connect(exportJob, &ExportTileCacheJob::jobStatusChanged, this, [this, exportJob]()
       {
