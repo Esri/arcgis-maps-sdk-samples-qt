@@ -28,6 +28,7 @@ Rectangle {
     property Envelope tileCacheExtent: null
     property string statusText: ""
     property ExportTileCacheParameters params
+    property var exportTileCacheProgress: 0
 
     // Create MapView that contains a Map
     MapView {
@@ -90,6 +91,7 @@ Rectangle {
 
                 // connect to the job's status changed signal to know once it is done
                 exportJob.jobStatusChanged.connect(updateJobStatus);
+                exportJob.progressChanged.connect(updateExportProgress);
 
                 exportJob.start();
             } else {
@@ -124,6 +126,10 @@ Rectangle {
             }
         }
 
+        function updateExportProgress() {
+            exportTileCacheProgress = exportJob.progress;
+        }
+
         function displayOutputTileCache(tileCache) {
             // create a new tiled layer from the output tile cache
             const tiledLayer = ArcGISRuntimeEnvironment.createObject("ArcGISTiledLayer", { tileCache: tileCache } );
@@ -152,6 +158,7 @@ Rectangle {
         Component.onDestruction: {
             if (exportJob) {
                 exportJob.jobStatusChanged.disconnect(updateJobStatus);
+                exportJob.progressChanged.disconnect(updateExportProgress);
             }
         }
     }
@@ -248,8 +255,8 @@ Rectangle {
 
         Rectangle {
             anchors.centerIn: parent
-            width: 125
-            height: 100
+            width: 140
+            height: 145
             color: "lightgrey"
             opacity: 0.8
             radius: 5
@@ -274,12 +281,17 @@ Rectangle {
                     text: statusText
                     font.pixelSize: 16
                 }
+
+                Text {
+                    anchors.horizontalCenter: parent.horizontalCenter
+                    text: exportTileCacheProgress + "% Completed"
+                    font.pixelSize: 16
+                }
             }
         }
 
         Timer {
             id: hideWindowTimer
-
             onTriggered: exportWindow.visible = false;
         }
 

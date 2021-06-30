@@ -45,19 +45,23 @@ public:
   void componentComplete() override;
   static void init();
   Q_INVOKABLE void exportTileCacheFromCorners(double xCorner1, double yCorner1, double xCorner2, double yCorner2);
+  Q_PROPERTY(int exportTilesProgress READ exportTilesProgress NOTIFY exportTilesProgressChanged)
 
 signals:
   void updateStatus(QString status);
   void hideWindow(int time, bool success);
+  void exportTilesProgressChanged();
 
 private:
   void createExportTileCacheTask();
   void displayOutputTileCache(Esri::ArcGISRuntime::TileCache* tileCache);
+  inline int exportTilesProgress() { return m_exportTilesProgress; }
 
   Esri::ArcGISRuntime::ExportTileCacheTask* m_exportTileCacheTask = nullptr;
   Esri::ArcGISRuntime::Map* m_map = nullptr;
   Esri::ArcGISRuntime::MapQuickView* m_mapView = nullptr;
   QTemporaryDir m_tempPath;
+  int m_exportTilesProgress = 0;
 };
 
 #endif // EXPORT_TILES
