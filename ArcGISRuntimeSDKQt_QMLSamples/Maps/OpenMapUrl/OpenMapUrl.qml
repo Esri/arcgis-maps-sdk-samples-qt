@@ -16,7 +16,7 @@
 
 import QtQuick 2.6
 import QtGraphicalEffects 1.0
-import Esri.ArcGISRuntime 100.12
+import Esri.ArcGISRuntime 100.11
 
 Rectangle {
     width: 800

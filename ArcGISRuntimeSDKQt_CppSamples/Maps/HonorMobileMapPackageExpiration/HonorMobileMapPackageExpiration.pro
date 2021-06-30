@@ -26,7 +26,7 @@ QT += opengl qml quick positioning sensors
 TEMPLATE = app
 TARGET = HonorMobileMapPackageExpiration
 
-ARCGIS_RUNTIME_VERSION = 100.12
+ARCGIS_RUNTIME_VERSION = 100.11
 include($$PWD/arcgisruntime.pri)
 
 #-------------------------------------------------------------------------------

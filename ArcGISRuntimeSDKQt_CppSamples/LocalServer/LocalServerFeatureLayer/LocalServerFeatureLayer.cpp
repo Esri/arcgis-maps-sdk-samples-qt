@@ -46,7 +46,7 @@ LocalServerFeatureLayer::LocalServerFeatureLayer(QQuickItem* parent) :
   const QString tempPath = LocalServerFeatureLayer::shortestTempPath() + "/EsriQtTemp";
 
   // create the directory
-  m_tempDir = std::make_unique<QTemporaryDir>(tempPath);
+  m_tempDir = std::unique_ptr<QTemporaryDir>(new QTemporaryDir(tempPath));
 
   // set the temp & app data path for the local server
   LocalServer::instance()->setTempDataPath(m_tempDir->path());
