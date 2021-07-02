@@ -1,8 +1,6 @@
 # Sketch on map
 
-This sample demonstrates how to use the Sketch Editor to edit or sketch a new point, line, or polygon geometry on to a map..
-This sample demonstrates ...       
-This is **why** you would do it this way ...
+This sample demonstrates how to use the Sketch Editor to edit or sketch a new point, line, or polygon geometry on to a map.
 
 ![](screenshot.png)
 

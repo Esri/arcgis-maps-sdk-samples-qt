@@ -66,11 +66,6 @@ Item {
                 onClicked: model.setSketchCreationMode(3);
             }
         }
-        Row {
-            Button {
-                text: "edit graphic"
-            }
-        }
 
         Row {
             Button {
@@ -87,12 +82,14 @@ Item {
 
         Row {
             Button {
+                width: pButton.width
                 text: "Stop"
                 onClicked: model.stopSketching();
             }
         }
         Row {
             Button {
+                width: pButton.width
                 text: "Clear graphics"
                 onClicked: model.clearGraphics();
             }

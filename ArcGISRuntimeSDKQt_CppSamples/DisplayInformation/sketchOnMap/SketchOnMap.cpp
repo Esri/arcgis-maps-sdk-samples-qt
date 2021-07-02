@@ -89,10 +89,7 @@ void SketchOnMap::setMapView(MapQuickView* mapView)
 
   m_sketchEditor = new SketchEditor();
 
-  connect(m_map, &Map::doneLoading, [this]()
-  {
-    m_mapView->setSketchEditor(m_sketchEditor);
-  });
+  m_mapView->setSketchEditor(m_sketchEditor);
 
   emit mapViewChanged();
 
@@ -121,6 +118,9 @@ void SketchOnMap::createConnections()
 
 void SketchOnMap::setSketchCreationMode(SampleSketchMode sketchCreationMode)
 {
+  if (m_map->loadStatus() != LoadStatus::Loaded)
+    return;
+
   switch(sketchCreationMode)
   {
     case SampleSketchMode::PointSketchMode:
