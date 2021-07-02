@@ -38,44 +38,75 @@ Item {
             top: parent.top
             right: parent.right
         }
-        // width: 200
-        Row {
-            Button {
-                id: pButton
-                text: "Point"
-                onClicked: {
-                    model.setSketchCreationMode(0);
+
+        Column {
+            id: geometryColumn
+            width: 32
+
+            Row {
+                Button {
+                    id: pButton
+                    Rectangle {
+                        Image {
+                            source: "./iconAssets/point-32.svg"
+                            width: geometryColumn.width
+                        }
+                        anchors.centerIn: parent
+                    }
+                    onClicked: {
+                        model.setSketchCreationMode(0);
+                    }
                 }
             }
-        }
-        Row {
-            Button {
-                text: "MultiPoint"
-                onClicked: model.setSketchCreationMode(1);
+            Row {
+                Button {
+                    Image {
+                        source: "./iconAssets/point-32.svg"
+                        anchors.centerIn: geometryColumn.Center
+                        width: geometryColumn.width
+                    }
+                    onClicked: model.setSketchCreationMode(1);
+                }
             }
-        }
-        Row {
-            Button {
-                text: "Polyline"
-                onClicked: model.setSketchCreationMode(2);
+            Row {
+                Button {
+                    Image {
+                        source: "./iconAssets/line-32.svg"
+                        anchors.centerIn: geometryColumn.Center
+                        width: geometryColumn.width
+                    }
+                    onClicked: model.setSketchCreationMode(2);
+                }
             }
-        }
-        Row {
-            Button {
-                text: "Polygon"
-                onClicked: model.setSketchCreationMode(3);
+            Row {
+                Button {
+                    Image {
+                        source: "./iconAssets/polygon-32.svg"
+                        anchors.centerIn: geometryColumn.Center
+                        width: geometryColumn.width
+                    }
+                    onClicked: model.setSketchCreationMode(3);
+                }
             }
         }
 
         Row {
             Button {
                 width: pButton.width / 2
-                text: "Undo"
+                Image {
+                    source: "./iconAssets/undo-32.svg"
+                    anchors.centerIn: buttonColumn.Center
+                    width: buttonColumn.width / 2
+                }
                 onClicked: model.undo();
             }
             Button {
                 width: pButton.width / 2
-                text: "Redo"
+                Image {
+                    source: "./iconAssets/redo-32.svg"
+                    anchors.centerIn: buttonColumn.Center
+                    width: buttonColumn.width / 2
+                }
                 onClicked: model.redo();
             }
         }
@@ -83,14 +114,33 @@ Item {
         Row {
             Button {
                 width: pButton.width
-                text: "Stop"
-                onClicked: model.stopSketching();
+                Image {
+                    source: "./iconAssets/check-circle-32.svg"
+                    width: buttonColumn.width
+                    anchors.centerIn: buttonColumn.Center
+                }
+                onClicked: model.stopSketching(true);
             }
         }
         Row {
             Button {
                 width: pButton.width
-                text: "Clear graphics"
+                Image {
+                    source: "./iconAssets/circle-disallowed-32.svg"
+                    width: buttonColumn.width
+                    anchors.centerIn: buttonColumn.Center
+                }
+                onClicked: model.stopSketching(false);
+            }
+        }
+        Row {
+            Button {
+                width: pButton.width
+                Image {
+                    source: "./iconAssets/trash-32.svg"
+                    width: buttonColumn.width
+                    anchors.centerIn: buttonColumn.Center
+                }
                 onClicked: model.clearGraphics();
             }
         }

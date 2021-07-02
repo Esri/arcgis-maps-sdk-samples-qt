@@ -1,11 +1,20 @@
 <RCC>
     <qresource prefix="/Samples/DisplayInformation/SketchOnMap">
-        <file alias="sample.json">README.metadata.json</file>        
+        <file alias="sample.json">README.metadata.json</file>
         <file>SketchOnMap.qml</file>
         <file>SketchOnMap.h</file>
         <file>SketchOnMap.cpp</file>
         <file>main.qml</file>
         <file>screenshot.png</file>
         <file>README.md</file>
+        <file>iconAssets/check-circle-32.svg</file>
+        <file>iconAssets/circle-disallowed-32.svg</file>
+        <file>iconAssets/line-32.svg</file>
+        <file>iconAssets/point-32.svg</file>
+        <file>iconAssets/polygon-32.svg</file>
+        <file>iconAssets/redo-32.svg</file>
+        <file>iconAssets/save-32.svg</file>
+        <file>iconAssets/trash-32.svg</file>
+        <file>iconAssets/undo-32.svg</file>
     </qresource>
 </RCC>

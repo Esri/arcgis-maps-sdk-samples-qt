@@ -51,7 +51,7 @@ public:
 
   static void init();
   Q_INVOKABLE void setSketchCreationMode(SampleSketchMode sketchCreationMode);
-  Q_INVOKABLE void stopSketching();
+  Q_INVOKABLE void stopSketching(bool saveGeometry);
   Q_INVOKABLE void clearGraphics();
   Q_INVOKABLE void undo();
   Q_INVOKABLE void redo();

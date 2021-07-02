@@ -64,56 +64,11 @@ void SketchOnMap::setMapView(MapQuickView* mapView)
 
   m_mapView->graphicsOverlays()->append(m_sketchOverlay);
 
-  PolygonBuilder* polygonBuilder = new PolygonBuilder(SpatialReference::wgs84());
-  polygonBuilder->addPoint(-118.8190, 34.0138);
-  polygonBuilder->addPoint(-118.8068, 34.0216);
-  polygonBuilder->addPoint(-118.7914, 34.0164);
-  polygonBuilder->addPoint(-118.7960, 34.0087);
-  polygonBuilder->addPoint(-118.8086, 34.0035);
-
-  const Polygon polygon = polygonBuilder->toPolygon();
-
-  SimpleFillSymbol* polygonSymbol = new SimpleFillSymbol(
-        SimpleFillSymbolStyle::Solid, // Fill style
-        QColor(255, 131, 0), // Fill color, RGB orange
-        new SimpleLineSymbol( // Outline
-                              SimpleLineSymbolStyle::Solid, // Outline style
-                              QColor(Qt::blue), // Outline color
-                              2.0, // Outline width (float)
-                              this),
-        this);
-
-  Graphic* polygonGraphic = new Graphic(polygon, polygonSymbol, this);
-
-  m_sketchOverlay->graphics()->append(polygonGraphic);
-
   m_sketchEditor = new SketchEditor();
 
   m_mapView->setSketchEditor(m_sketchEditor);
 
   emit mapViewChanged();
-
-  createConnections();
-}
-
-void SketchOnMap::createConnections()
-{
-  connect(m_mapView, &MapQuickView::mouseClicked, this, [this](QMouseEvent& mouseEvent)
-  {
-    if (m_sketchEditor->isStarted())
-      return;
-
-    m_mapView->identifyGraphicsOverlay(m_sketchOverlay, mouseEvent.x(), mouseEvent.y(), 5.0, false, 1);
-  });
-
-  connect(m_mapView, &MapQuickView::identifyGraphicsOverlayCompleted, this, [this](QUuid, IdentifyGraphicsOverlayResult* graphicsOverlayResult)
-  {
-    if (m_sketchEditor->isStarted() || graphicsOverlayResult->graphics().isEmpty())
-      return;
-
-    editingGraphic = graphicsOverlayResult->graphics().at(0);
-    m_sketchEditor->start(editingGraphic->geometry());
-  });
 }
 
 void SketchOnMap::setSketchCreationMode(SampleSketchMode sketchCreationMode)
@@ -145,21 +100,16 @@ void SketchOnMap::setSketchCreationMode(SampleSketchMode sketchCreationMode)
   }
 }
 
-void SketchOnMap::stopSketching()
+void SketchOnMap::stopSketching(bool saveGeometry)
 {
-  Geometry sketchGeometry = m_sketchEditor->geometry();
-
-  if (editingGraphic)
+  if (!saveGeometry)
   {
-    editingGraphic->setGeometry(sketchGeometry);
     m_sketchEditor->stop();
-    editingGraphic = nullptr;
     return;
   }
 
+  Geometry sketchGeometry = m_sketchEditor->geometry();
   Symbol* geometrySymbol = nullptr;
-
-  Graphic* sketchGraphic = nullptr;
 
   if (sketchGeometry.geometryType() == GeometryType::Point || sketchGeometry.geometryType() == GeometryType::Multipoint)
   {
@@ -177,7 +127,7 @@ void SketchOnMap::stopSketching()
                                           new SimpleLineSymbol(SimpleLineSymbolStyle::Solid, QColor(Qt::blue), 2.0, this), this);
   }
 
-  sketchGraphic = new Graphic(sketchGeometry, geometrySymbol, this);
+  Graphic* sketchGraphic = new Graphic(sketchGeometry, geometrySymbol, this);
 
   m_sketchOverlay->graphics()->append(sketchGraphic);
 
