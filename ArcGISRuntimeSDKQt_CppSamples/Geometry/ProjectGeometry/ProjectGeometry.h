@@ -24,6 +24,7 @@ namespace ArcGISRuntime
 class Map;
 class MapQuickView;
 class Graphic;
+class CalloutData;
 }
 }
 
