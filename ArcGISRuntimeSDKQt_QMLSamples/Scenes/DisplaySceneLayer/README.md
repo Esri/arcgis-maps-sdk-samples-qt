@@ -21,17 +21,17 @@ When launched, this sample displays a scene service with an `ArcGISSceneLayer`. 
 5. Create an `ArcGISSceneLayer` using a data source URL.
 6. Add the new scene layer to the scene as an operational layer.
 
+## Relevant API
+
+* ArcGISSceneLayer
+* ArcGISTiledElevationSource
+* Scene
+* SceneView
+* Surface
+
 ## About the data
 
 The scene launches with a northward view of the city of Brest, France. A 3D scene layer representing buildings (some textured) is used as an example.
-
-## Relevant API
-
-* Scene
-* ArcGISSceneLayer
-* ArcGISTiledElevationSource
-* SceneView
-* Surface
 
 ## Tags
 

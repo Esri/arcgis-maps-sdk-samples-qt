@@ -196,6 +196,11 @@ Rectangle {
                 url: featureServiceUrl
                 credential: cred
 
+                Credential {
+                    username: "viewer01"
+                    password: "I68VGU^nMurF"
+                }
+
                 onTraceStatusChanged: {
 
                     if (traceStatus !== Enums.TaskStatusCompleted)
