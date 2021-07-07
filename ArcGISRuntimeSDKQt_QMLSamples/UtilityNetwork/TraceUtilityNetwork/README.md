@@ -61,12 +61,6 @@ Credentials:
 * Username: viewer01
 * Password: I68VGU^nMurF
 
-## Additional information
-
-Credentials:
-* Username: viewer01
-* Password: I68VGU^nMurF
-
 ## Tags
 
 condition barriers, downstream trace, network analysis, subnetwork trace, trace configuration, traversability, upstream trace, utility network, validate consistency

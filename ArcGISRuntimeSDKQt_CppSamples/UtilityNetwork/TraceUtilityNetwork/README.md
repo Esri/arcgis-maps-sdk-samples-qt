@@ -20,10 +20,10 @@ Tap on one or more features while 'Add starting locations' or 'Add barriers' is 
 4. Create and load a `UtilityNetwork` with the same feature service URL as the `Map`.
 5. Add a `GraphicsOverlay` with symbology that distinguishes starting locations from barriers.
 6. Identify features on the map and add a `Graphic` that represents its purpose (starting point or barrier) at the location of each identified feature.
-7.  Create a `UtilityElement` for the identified feature.
-8.  Determine the type of this element using its `NetworkSource::SourceType` property.
-9.  If the element is a junction with more than one terminal, display a terminal picker. Then set the junction's `terminal` property with the selected terminal.
-10.  If an edge, set its `fractionAlongEdge` property using `GeometryEngine::fractionAlong`.
+7. Create a `UtilityElement` for the identified feature.
+8. Determine the type of this element using its `NetworkSource::SourceType` property.
+9. If the element is a junction with more than one terminal, display a terminal picker. Then set the junction's `terminal` property with the selected terminal.
+10. If an edge, set its `fractionAlongEdge` property using `GeometryEngine::fractionAlong`.
 11. Add this `UtilityElement` to a collection of starting locations or barriers.
 12. Create `UtilityTraceParameters` with the selected trace type along with the collected starting locations and barriers (if applicable). 
 13. Set the `UtilityTraceParameters::traceConfiguration` with the utility tier's `traceConfiguration` property.
@@ -56,12 +56,6 @@ The [Naperville electrical](https://sampleserver7.arcgisonline.com/server/rest/s
 ## Additional information
 
 Using utility network on ArcGIS Enterprise 10.8 requires an ArcGIS Enterprise member account licensed with the [Utility Network user type extension](https://enterprise.arcgis.com/en/portal/latest/administer/windows/license-user-type-extensions.htm#ESRI_SECTION1_41D78AD9691B42E0A8C227C113C0C0BF). Please refer to the [utility network services documentation](https://enterprise.arcgis.com/en/server/latest/publish-services/windows/utility-network-services.htm).
-
-Credentials:
-* Username: viewer01
-* Password: I68VGU^nMurF
-
-## Additional information
 
 Credentials:
 * Username: viewer01
