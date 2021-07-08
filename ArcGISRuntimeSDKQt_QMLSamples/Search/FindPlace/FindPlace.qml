@@ -41,6 +41,10 @@ Rectangle {
             mapView.locationDisplay.start();
         }
 
+        Component.onDestruction: {
+            mapView.locationDisplay.stop();
+        }
+
         Map {
             Basemap {
                 initStyle: Enums.BasemapStyleArcGISTopographic
