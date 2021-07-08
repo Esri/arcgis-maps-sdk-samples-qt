@@ -102,7 +102,7 @@ Item {
                 }
 
                 Text {
-                    text: qsTr("Sublayer min scale: %1".arg(model.sublayerMinScale > 0.0 ? Math.round(model.sublayerMinScale) : "not set"))
+                    text: qsTr("Sublayer min scale: 1:%1".arg(model.sublayerMinScale > 0.0 ? Math.round(model.sublayerMinScale) : "not set"))
                     Layout.margins: 2
                     Layout.alignment: Qt.AlignLeft
                 }
