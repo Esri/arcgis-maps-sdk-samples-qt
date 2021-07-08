@@ -22,6 +22,7 @@
 #include <QGuiApplication>
 #include <QQmlApplicationEngine>
 
+
 int main(int argc, char *argv[])
 {
   QGuiApplication::setAttribute(Qt::AA_EnableHighDpiScaling);
@@ -57,6 +58,7 @@ int main(int argc, char *argv[])
 #ifdef ARCGIS_RUNTIME_IMPORT_PATH_2
   engine.addImportPath(ARCGIS_RUNTIME_IMPORT_PATH_2);
 #endif
+
 
   // Set the source
   engine.load(QUrl("qrc:/Samples/UtilityNetwork/PerformValveIsolationTrace/main.qml"));

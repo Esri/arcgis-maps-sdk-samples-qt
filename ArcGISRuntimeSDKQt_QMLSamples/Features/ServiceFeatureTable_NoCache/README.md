@@ -23,7 +23,6 @@ Run the sample and pan and zoom around the map. With each interaction, new featu
 * FeatureLayer
 * ServiceFeatureTable
 * ServiceFeatureTable.featureRequestMode
-* ServiceFeatureTable.populateFromService
 
 ## About the data
 
