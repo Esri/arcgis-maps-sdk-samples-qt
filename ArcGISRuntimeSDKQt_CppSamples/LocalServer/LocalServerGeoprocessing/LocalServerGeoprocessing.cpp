@@ -44,11 +44,15 @@ using namespace Esri::ArcGISRuntime;
 LocalServerGeoprocessing::LocalServerGeoprocessing(QQuickItem* parent) :
   QQuickItem(parent)
 {
+  // Create a temporary directory for the local server if one has not already been created
+  if (!LocalServer::appDataPath().isEmpty() && !LocalServer::tempDataPath().isEmpty())
+    return;
+
   // create temp/data path
   const QString tempPath = LocalServerGeoprocessing::shortestTempPath() + "/EsriQtTemp";
 
   // create the directory
-  m_tempDir = std::unique_ptr<QTemporaryDir>(new QTemporaryDir(tempPath));
+  m_tempDir = std::make_unique<QTemporaryDir>(tempPath);
 
   // set the temp & app data path for the local server
   LocalServer::instance()->setTempDataPath(m_tempDir->path());
