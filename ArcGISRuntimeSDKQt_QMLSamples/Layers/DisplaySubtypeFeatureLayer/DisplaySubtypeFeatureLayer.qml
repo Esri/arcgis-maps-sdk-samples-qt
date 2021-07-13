@@ -28,7 +28,7 @@ Rectangle {
 
     property var subtypeSublayer
     property var originalRenderer
-    property double mapScale: mapView ? Math.round(mapView.mapScale) : 0
+    property double mapScale: mapView ? mapView.mapScale : 0
     property double sublayerMinScale
 
 
@@ -187,13 +187,13 @@ Rectangle {
                 }
 
                 Text {
-                    text: qsTr("Current map scale: 1:%1".arg(mapScale))
+                    text: qsTr("Current map scale: 1:%1".arg(Math.round(mapScale)))
                     Layout.margins: 2
                     Layout.alignment: Qt.AlignLeft
                 }
 
                 Text {
-                    text: subtypeSublayer ? qsTr("Sublayer min scale: 1:%1".arg(subtypeSublayer.minScale)) : qsTr("Sublayer min scale:")
+                    text: subtypeSublayer ? qsTr("Sublayer min scale: 1:%1".arg(Math.round(subtypeSublayer.minScale))) : qsTr("Sublayer min scale:")
                     Layout.margins: 2
                     Layout.alignment: Qt.AlignLeft
                 }
