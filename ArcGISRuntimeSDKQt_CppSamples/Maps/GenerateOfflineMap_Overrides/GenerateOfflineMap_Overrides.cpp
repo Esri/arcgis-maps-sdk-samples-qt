@@ -59,7 +59,7 @@ void GenerateOfflineMap_Overrides::componentComplete()
   m_mapView = findChild<MapQuickView*>("mapView");
 
   // Create a Portal Item for use by the Map and OfflineMapTask
-  const bool loginRequired = true;
+  const bool loginRequired = false;
   Portal* portal = new Portal(loginRequired, this);
   m_portalItem = new PortalItem(portal, webMapId(), this);
 

@@ -17,7 +17,6 @@
 #include <QDir>
 #include <QQmlEngine>
 
-#include "Esri/ArcGISRuntime/Toolkit/register.h"
 #include "ArcGISRuntimeEnvironment.h"
 
 #ifdef Q_OS_WIN
@@ -42,7 +41,7 @@ int main(int argc, char *argv[])
   // 2. API key: A permanent key that gives your application access to Esri
   //    location services. Visit your ArcGIS Developers Dashboard create a new
   //    API keys or access an existing API key.
-  const QString apiKey = QStringLiteral("");
+  const QString apiKey = QStringLiteral("AAPK6bba0a01a9d843b3b6b2cad0d063fd84E0RQmdykTwozMbL0bJbvTGQniM1w_Jj4mZojHXiIYM4F8nG_Ok4A2rjfEisOCc8n");
   if (apiKey.isEmpty())
   {
       qWarning() << "Use of Esri location services, including basemaps, requires"
@@ -73,8 +72,6 @@ int main(int argc, char *argv[])
   view.engine()->addImportPath(QDir(QCoreApplication::applicationDirPath()).filePath("qml"));
   // Add the Runtime and Extras path
   view.engine()->addImportPath(arcGISRuntimeImportPath);
-
-  Esri::ArcGISRuntime::Toolkit::registerComponents(*(view.engine()));
 
   // Set the source
   view.setSource(QUrl("qrc:/Samples/Maps/GenerateOfflineMap_Overrides/GenerateOfflineMap_Overrides.qml"));
