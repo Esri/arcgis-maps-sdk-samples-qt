@@ -18,8 +18,6 @@
 #include <QDir>
 #include <QQmlEngine>
 
-#include <Esri/ArcGISRuntime/Toolkit/register.h>
-
 #define STRINGIZE(x) #x
 #define QUOTE(x) STRINGIZE(x)
 
@@ -64,8 +62,6 @@ int main(int argc, char *argv[])
   view.engine()->addImportPath(QDir(QCoreApplication::applicationDirPath()).filePath("qml"));
   // Add the Runtime and Extras path
   view.engine()->addImportPath(arcGISRuntimeImportPath);
-
-  Esri::ArcGISRuntime::Toolkit::registerComponents(*(view.engine()));
 
   // Set the source
   view.setSource(QUrl("qrc:/Samples/Maps/GenerateOfflineMap/GenerateOfflineMap.qml"));
