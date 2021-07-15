@@ -14,8 +14,6 @@
 // limitations under the License.
 // [Legal]
 
-// AAPK
-
 #ifdef PCH_BUILD
 #include "pch.hpp"
 #endif // PCH_BUILD
