@@ -16,132 +16,358 @@
 
 import QtQuick 2.6
 import QtQuick.Controls 2.2
+import QtQuick.Layouts 1.15
 import Esri.Samples 1.0
 
 Item {
-
-    // add a mapView component
-    MapView {
-        id: view
-        anchors.fill: parent
-    }
-
-    // Declare the C++ instance which creates the scene etc. and supply the view
     SketchOnMapSample {
         id: model
         mapView: view
     }
 
-    Column {
-        id: buttonColumn
-        anchors {
-            top: parent.top
-            right: parent.right
+    MapView {
+        id: view
+        anchors.fill: parent
+    }
+
+    Control {
+        id: control
+        width: 110
+        anchors.right: parent.right
+        padding: 5
+
+        background: Rectangle {
+            color: "black"
+            opacity: .5
         }
 
-        Column {
-            id: geometryColumn
-            width: 32
+        contentItem: ColumnLayout {
+            id: columns
+            anchors.verticalCenter: parent.verticalCenter
+            anchors.horizontalCenter: parent.horizontalCenter
+            spacing: 20
 
-            Row {
-                Button {
-                    id: pButton
-                    Rectangle {
-                        Image {
-                            source: "./iconAssets/point-32.svg"
-                            width: geometryColumn.width
-                        }
-                        anchors.centerIn: parent
-                    }
-                    onClicked: {
-                        model.setSketchCreationMode(0);
-                    }
+            GridLayout {
+                id: geometryColumn
+                Layout.alignment: Qt.AlignHCenter | Qt.AlignVCenter
+                columns: 2
+
+                Text {
+                    id: geometryText
+                    color: "#ffffff"
+                    text: qsTr("Geometry")
+                    font.pixelSize: 10
+                    Layout.alignment: Qt.AlignHCenter | Qt.AlignVCenter
+                    font.bold: true
+                    Layout.columnSpan: 2
                 }
-            }
-            Row {
-                Button {
+
+                RoundButton {
+                    id: ptButton
+                    radius: 5
+                    Layout.fillWidth: true
+                    Layout.alignment: Qt.AlignHCenter
+
                     Image {
-                        source: "./iconAssets/point-32.svg"
-                        anchors.centerIn: geometryColumn.Center
-                        width: geometryColumn.width
+                        id: ptImage
+                        source: "iconAssets/point-32.png"
+                        anchors {
+                            horizontalCenter: parent.horizontalCenter
+                            verticalCenter: parent.verticalCenter
+                            verticalCenterOffset: -ptText.height/2
+                        }
+                        width: 20
+                        fillMode: Image.PreserveAspectFit
+                    }
+
+                    Text {
+                        id: ptText
+                        text: qsTr("Point")
+                        font.pixelSize: 8
+                        anchors {
+                            top: ptImage.bottom
+                            horizontalCenter: parent.horizontalCenter
+                        }
+                    }
+
+                    onClicked: model.setSketchCreationMode(0);
+                }
+
+                RoundButton {
+                    id: mPtButton
+                    radius: 5
+                    Layout.fillWidth: true
+                    Layout.alignment: Qt.AlignHCenter
+
+                    Image {
+                        id: mptImage1
+                        source: "iconAssets/point-32.png"
+                        anchors {
+                            right: parent.horizontalCenter
+                            rightMargin: -mptImage2.width/5
+                            verticalCenter: parent.verticalCenter
+                            verticalCenterOffset: -mptText.height/2 - 2
+                        }
+                        width: 20
+                        fillMode: Image.PreserveAspectFit
+                    }
+
+                    Image {
+                        id: mptImage2
+                        source: "iconAssets/point-32.png"
+                        anchors {
+                            left: parent.horizontalCenter
+                            leftMargin: -mptImage1.width/5
+                            verticalCenter: parent.verticalCenter
+                            verticalCenterOffset: -mptText.height/2
+                        }
+                        width: 20
+                        fillMode: Image.PreserveAspectFit
+                    }
+
+                    Text {
+                        id: mptText
+                        text: qsTr("Multipoint")
+                        font.pixelSize: 8
+                        anchors {
+                            top: mptImage2.bottom
+                            horizontalCenter: parent.horizontalCenter
+                        }
                     }
                     onClicked: model.setSketchCreationMode(1);
                 }
-            }
-            Row {
-                Button {
+
+                RoundButton {
+                    id: lineButton
+                    radius: 5
+                    Layout.fillWidth: true
+                    Layout.alignment: Qt.AlignHCenter
+
                     Image {
-                        source: "./iconAssets/line-32.svg"
-                        anchors.centerIn: geometryColumn.Center
-                        width: geometryColumn.width
+                        id: lineImage
+                        source: "iconAssets/line-32.png"
+                        anchors {
+                            horizontalCenter: parent.horizontalCenter
+                            verticalCenter: parent.verticalCenter
+                            verticalCenterOffset: -lineText.height/2
+                        }
+                        width: 20
+                        fillMode: Image.PreserveAspectFit
                     }
+
+                    Text {
+                        id: lineText
+                        text: qsTr("Line")
+                        font.pixelSize: 8
+                        anchors {
+                            top: lineImage.bottom
+                            horizontalCenter: parent.horizontalCenter
+                        }
+                    }
+
                     onClicked: model.setSketchCreationMode(2);
                 }
-            }
-            Row {
-                Button {
+
+                RoundButton {
+                    id: polygonButton
+                    radius: 5
+                    Layout.fillWidth: true
+                    Layout.alignment: Qt.AlignHCenter
+
                     Image {
-                        source: "./iconAssets/polygon-32.svg"
-                        anchors.centerIn: geometryColumn.Center
-                        width: geometryColumn.width
+                        id: polygonImage
+                        source: "iconAssets/polygon-32.png"
+                        anchors {
+                            horizontalCenter: parent.horizontalCenter
+                            verticalCenter: parent.verticalCenter
+                            verticalCenterOffset: -polygonText.height/2
+                        }
+                        width: 20
+                        fillMode: Image.PreserveAspectFit
                     }
+
+                    Text {
+                        id: polygonText
+                        text: qsTr("Polygon")
+                        font.pixelSize: 8
+                        anchors {
+                            top: polygonImage.bottom
+                            horizontalCenter: parent.horizontalCenter
+                        }
+                    }
+
                     onClicked: model.setSketchCreationMode(3);
                 }
             }
-        }
 
-        Row {
-            Button {
-                width: pButton.width / 2
-                Image {
-                    source: "./iconAssets/undo-32.svg"
-                    anchors.centerIn: buttonColumn.Center
-                    width: buttonColumn.width / 2
-                }
-                onClicked: model.undo();
-            }
-            Button {
-                width: pButton.width / 2
-                Image {
-                    source: "./iconAssets/redo-32.svg"
-                    anchors.centerIn: buttonColumn.Center
-                    width: buttonColumn.width / 2
-                }
-                onClicked: model.redo();
-            }
-        }
+            GridLayout {
+                id: editingColumn
+                Layout.fillWidth: true
+                Layout.alignment: Qt.AlignHCenter | Qt.AlignVCenter
+                columns: 2
 
-        Row {
-            Button {
-                width: pButton.width
-                Image {
-                    source: "./iconAssets/check-circle-32.svg"
-                    width: buttonColumn.width
-                    anchors.centerIn: buttonColumn.Center
+                Text {
+                    id: editingText
+                    color: "#ffffff"
+                    text: qsTr("Editing")
+                    font.pixelSize: 10
+                    Layout.alignment: Qt.AlignHCenter | Qt.AlignVCenter
+                    font.bold: true
+                    Layout.columnSpan: 2
                 }
-                onClicked: model.stopSketching(true);
-            }
-        }
-        Row {
-            Button {
-                width: pButton.width
-                Image {
-                    source: "./iconAssets/circle-disallowed-32.svg"
-                    width: buttonColumn.width
-                    anchors.centerIn: buttonColumn.Center
+
+                RoundButton {
+                    id: undoButton
+                    radius: 5
+                    Layout.fillWidth: true
+
+                    Image {
+                        id: undoImage
+                        source: "iconAssets/undo-32.png"
+                        anchors {
+                            horizontalCenter: parent.horizontalCenter
+                            verticalCenter: parent.verticalCenter
+                            verticalCenterOffset: -undoText.height/2
+                        }
+                        width: 20
+                        fillMode: Image.PreserveAspectFit
+                    }
+
+                    Text {
+                        id: undoText
+                        text: qsTr("Undo")
+                        font.pixelSize: 8
+                        anchors {
+                            top: undoImage.bottom
+                            horizontalCenter: parent.horizontalCenter
+                        }
+                    }
+
+                    onClicked: model.undo();
                 }
-                onClicked: model.stopSketching(false);
-            }
-        }
-        Row {
-            Button {
-                width: pButton.width
-                Image {
-                    source: "./iconAssets/trash-32.svg"
-                    width: buttonColumn.width
-                    anchors.centerIn: buttonColumn.Center
+
+                RoundButton {
+                    id: redoButton
+                    radius: 5
+                    Layout.fillWidth: true
+                    Image {
+                        id: redoImage
+                        source: "iconAssets/redo-32.png"
+                        anchors {
+                            horizontalCenter: parent.horizontalCenter
+                            verticalCenter: parent.verticalCenter
+                            verticalCenterOffset: -redoText.height/2
+                        }
+                        width: 20
+                        fillMode: Image.PreserveAspectFit
+                    }
+
+                    Text {
+                        id: redoText
+                        text: qsTr("Redo")
+                        font.pixelSize: 8
+                        anchors {
+                            top: redoImage.bottom
+                            horizontalCenter: parent.horizontalCenter
+                        }
+                    }
+
+                    onClicked: model.redo();
                 }
-                onClicked: model.clearGraphics();
+
+
+                RoundButton {
+                    id: saveEditsButton
+                    radius: 5
+                    Layout.fillWidth: true
+                    Layout.columnSpan: 2
+
+                    Image {
+                        id: saveEditsImage
+                        source: "iconAssets/check-circle-32.png"
+                        anchors {
+                            horizontalCenter: parent.horizontalCenter
+                            verticalCenter: parent.verticalCenter
+                            verticalCenterOffset: -saveEditsText.height/2
+                        }
+                        width: 20
+                        fillMode: Image.PreserveAspectFit
+                    }
+
+                    Text {
+                        id: saveEditsText
+                        text: qsTr("Save edits")
+                        font.pixelSize: 8
+                        anchors {
+                            top: saveEditsImage.bottom
+                            horizontalCenter: parent.horizontalCenter
+                        }
+                    }
+
+                    onClicked: model.stopSketching(true);
+                }
+
+                RoundButton {
+                    id: discardEditsButton
+                    radius: 5
+                    Layout.fillWidth: true
+                    Layout.columnSpan: 2
+
+                    Image {
+                        id: discardEditsImage
+                        source: "iconAssets/circle-disallowed-32.png"
+                        anchors {
+                            horizontalCenter: parent.horizontalCenter
+                            verticalCenter: parent.verticalCenter
+                            verticalCenterOffset: -discardEditsText.height/2
+                        }
+                        width: 20
+                        fillMode: Image.PreserveAspectFit
+                    }
+
+                    Text {
+                        id: discardEditsText
+                        text: qsTr("Discard edits")
+                        font.pixelSize: 8
+                        anchors {
+                            top: discardEditsImage.bottom
+                            horizontalCenter: parent.horizontalCenter
+                        }
+                    }
+
+                    onClicked: model.stopSketching(false);
+                }
+
+                RoundButton {
+                    id: clearGraphicsButton
+                    radius: 5
+                    Layout.fillWidth: true
+                    Layout.columnSpan: 2
+
+                    Image {
+                        id: clearGraphicsImage
+                        source: "iconAssets/trash-32.png"
+                        anchors {
+                            horizontalCenter: parent.horizontalCenter
+                            verticalCenter: parent.verticalCenter
+                            verticalCenterOffset: -clearGraphicsText.height/2
+                        }
+                        width: 20
+                        fillMode: Image.PreserveAspectFit
+                    }
+
+                    Text {
+                        id: clearGraphicsText
+                        text: qsTr("Clear graphics")
+                        font.pixelSize: 8
+                        anchors {
+                            top: clearGraphicsImage.bottom
+                            horizontalCenter: parent.horizontalCenter
+                        }
+                    }
+
+                    onClicked: model.clearGraphics();
+                }
             }
         }
     }
