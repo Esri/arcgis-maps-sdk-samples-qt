@@ -27,7 +27,7 @@ SOURCES += \
     main.cpp
 
 RESOURCES += \
-    SketchOnmap.qrc
+    SketchOnMap.qrc
 
 ios {
     QMAKE_INFO_PLIST = $$PWD/Info.plist

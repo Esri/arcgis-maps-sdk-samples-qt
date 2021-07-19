@@ -1,4 +1,4 @@
-// [WriteFile Name=SketchOnmap, Category=DisplayInformation]
+// [WriteFile Name=SketchOnMap, Category=DisplayInformation]
 // [Legal]
 // Copyright 2020 Esri.
 

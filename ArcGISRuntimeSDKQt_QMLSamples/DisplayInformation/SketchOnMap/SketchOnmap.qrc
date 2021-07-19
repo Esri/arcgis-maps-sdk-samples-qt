@@ -1,7 +1,7 @@
 <RCC>
-    <qresource prefix="/Samples/DisplayInformation/SketchOnmap">
+    <qresource prefix="/Samples/DisplayInformation/SketchOnMap">
         <file alias="sample.json">README.metadata.json</file>
-        <file>SketchOnmap.qml</file>
+        <file>SketchOnMap.qml</file>
         <file>screenshot.png</file>
         <file>README.md</file>
         <file>iconAssets/check-circle-32.png</file>

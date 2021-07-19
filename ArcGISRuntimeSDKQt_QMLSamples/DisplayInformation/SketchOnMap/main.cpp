@@ -22,7 +22,7 @@ int main(int argc, char *argv[])
 {
   QGuiApplication::setAttribute(Qt::AA_EnableHighDpiScaling);
   QGuiApplication app(argc, argv);
-  app.setApplicationName(QStringLiteral("SketchOnmap - QML"));
+  app.setApplicationName(QStringLiteral("SketchOnMap - QML"));
 
   // Use of Esri location services, including basemaps and geocoding,
   // requires authentication using either an ArcGIS identity or an API Key.
@@ -54,7 +54,7 @@ int main(int argc, char *argv[])
 #endif
 
   // Set the source
-  view.setSource(QUrl("qrc:/Samples/DisplayInformation/SketchOnmap/SketchOnmap.qml"));
+  view.setSource(QUrl("qrc:/Samples/DisplayInformation/SketchOnMap/SketchOnMap.qml"));
 
   view.show();
 
