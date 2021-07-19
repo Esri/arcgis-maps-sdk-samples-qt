@@ -56,7 +56,7 @@ Item {
                     id: geometryText
                     color: "#ffffff"
                     text: qsTr("Geometry")
-                    font.pixelSize: 10
+                    font.pixelSize: 16
                     Layout.alignment: Qt.AlignHCenter | Qt.AlignVCenter
                     font.bold: true
                     Layout.columnSpan: 2
@@ -210,7 +210,7 @@ Item {
                     id: editingText
                     color: "#ffffff"
                     text: qsTr("Editing")
-                    font.pixelSize: 10
+                    font.pixelSize: 16
                     Layout.alignment: Qt.AlignHCenter | Qt.AlignVCenter
                     font.bold: true
                     Layout.columnSpan: 2

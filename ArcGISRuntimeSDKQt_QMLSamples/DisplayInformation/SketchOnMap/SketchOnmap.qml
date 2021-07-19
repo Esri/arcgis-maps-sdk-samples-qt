@@ -35,13 +35,22 @@ Rectangle {
                 initStyle: Enums.BasemapStyleArcGISImagery
             }
 
-            GraphicsOverlay {
-                id: sketchOverlay
+            initialViewpoint: ViewpointCenter {
+                Point {
+                    y: 64.3286
+                    x: -15.5314
+                    spatialReference: SpatialReference { wkid: 4326 }
+                }
+                targetScale: 100000
             }
         }
 
         SketchEditor {
             id: sketchEditor
+        }
+
+        GraphicsOverlay {
+            id: sketchOverlay
         }
 
         Component.onCompleted: {
@@ -52,21 +61,34 @@ Rectangle {
 
     SimpleMarkerSymbol {
         id: pointSymbol
-        style: Enums.SimpleMarkerSymbolStyleCircle
+        style: Enums.SimpleMarkerSymbolStyleSquare
+        color: "red"
+        size: 10
+    }
+
+    SimpleMarkerSymbol {
+        id: multiPointSymbol
+        style: Enums.SimpleMarkerSymbolStyleSquare
         color: "blue"
+        size: 10
     }
 
     SimpleLineSymbol {
         id: polylineSymbol
         style: Enums.SimpleLineSymbolStyleSolid
-        color: "blue"
+        color: "#90EE90"
         width: 3
     }
 
     SimpleFillSymbol {
         id: polygonSymbol
         style: Enums.SimpleFillSymbolStyleSolid
-        color: "blue"
+        color: "#7743A6C6"
+        outline: SimpleLineSymbol {
+            style: "SimpleLineSymbolStyleSolid"
+            width: 3
+            color: "#43A6C6"
+        }
     }
 
     Control {
@@ -74,7 +96,6 @@ Rectangle {
         width: 110
         anchors.right: parent.right
         padding: 5
-        visible: map.loadStatus === Enums.LoadStatusLoaded
 
         background: Rectangle {
             color: "black"
@@ -96,7 +117,7 @@ Rectangle {
                     id: geometryText
                     color: "#ffffff"
                     text: qsTr("Geometry")
-                    font.pixelSize: 10
+                    font.pixelSize: 16
                     Layout.alignment: Qt.AlignHCenter | Qt.AlignVCenter
                     font.bold: true
                     Layout.columnSpan: 2
@@ -250,7 +271,7 @@ Rectangle {
                     id: editingText
                     color: "#ffffff"
                     text: qsTr("Editing")
-                    font.pixelSize: 10
+                    font.pixelSize: 16
                     Layout.alignment: Qt.AlignHCenter | Qt.AlignVCenter
                     font.bold: true
                     Layout.columnSpan: 2
@@ -290,6 +311,7 @@ Rectangle {
                     id: redoButton
                     radius: 5
                     Layout.fillWidth: true
+
                     Image {
                         id: redoImage
                         source: "iconAssets/redo-32.png"
@@ -345,6 +367,11 @@ Rectangle {
                     }
 
                     onClicked: {
+                        if (!sketchEditor.isSketchValid()) {
+                            console.log("Unable to save sketch. Sketch is not valid.");
+                            return;
+                        }
+
                         var graphic = ArcGISRuntimeEnvironment.createObject("Graphic");
                         graphic.geometry = sketchEditor.geometry;
 
@@ -353,7 +380,7 @@ Rectangle {
                             graphic.symbol = pointSymbol
                             break;
                         case Enums.SketchCreationModeMultipoint:
-                            graphic.symbol = pointSymbol
+                            graphic.symbol = multiPointSymbol
                             break;
                         case Enums.SketchCreationModePolyline:
                             graphic.symbol = polylineSymbol

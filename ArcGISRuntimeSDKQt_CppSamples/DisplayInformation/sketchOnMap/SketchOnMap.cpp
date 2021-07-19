@@ -60,7 +60,7 @@ void SketchOnMap::setMapView(MapQuickView* mapView)
   m_mapView = mapView;
   m_mapView->setMap(m_map);
 
-  m_mapView->setViewpointCenter(Point(-118.819, 34.0138, SpatialReference::wgs84()), 50'000);
+  m_mapView->setViewpointCenter(Point(-15.5314, 64.3286, SpatialReference::wgs84()), 100'000);
 
   m_mapView->graphicsOverlays()->append(m_sketchOverlay);
 
@@ -73,9 +73,6 @@ void SketchOnMap::setMapView(MapQuickView* mapView)
 
 void SketchOnMap::setSketchCreationMode(SampleSketchMode sketchCreationMode)
 {
-  if (m_map->loadStatus() != LoadStatus::Loaded)
-    return;
-
   switch(sketchCreationMode)
   {
     case SampleSketchMode::PointSketchMode:
@@ -108,23 +105,33 @@ void SketchOnMap::stopSketching(bool saveGeometry)
     return;
   }
 
+  if (!m_sketchEditor->isSketchValid())
+  {
+    qWarning() << "Unable to save sketch. Sketch is not valid.";
+    return;
+  }
+
   Geometry sketchGeometry = m_sketchEditor->geometry();
   Symbol* geometrySymbol = nullptr;
 
-  if (sketchGeometry.geometryType() == GeometryType::Point || sketchGeometry.geometryType() == GeometryType::Multipoint)
+  if (sketchGeometry.geometryType() == GeometryType::Point)
   {
-    SimpleMarkerSymbol* pointSymbol = new SimpleMarkerSymbol(SimpleMarkerSymbolStyle::Circle, QColor(255, 131, 0), 10, this);
-    pointSymbol->setOutline(new SimpleLineSymbol(SimpleLineSymbolStyle::Solid, QColor(Qt::blue), 2.0, this));
+    SimpleMarkerSymbol* pointSymbol = new SimpleMarkerSymbol(SimpleMarkerSymbolStyle::Square, QColor(255, 0, 0), 10, this);
+    geometrySymbol = pointSymbol;
+  }
+  if (sketchGeometry.geometryType() == GeometryType::Multipoint)
+  {
+    SimpleMarkerSymbol* pointSymbol = new SimpleMarkerSymbol(SimpleMarkerSymbolStyle::Square, QColor(0, 0, 255), 10, this);
     geometrySymbol = pointSymbol;
   }
   else if (sketchGeometry.geometryType() == GeometryType::Polyline)
   {
-    geometrySymbol = new SimpleLineSymbol(SimpleLineSymbolStyle::Solid, QColor(255, 131, 0), 2, this);
+    geometrySymbol = new SimpleLineSymbol(SimpleLineSymbolStyle::Solid, QColor("#90EE90"), 3, this);
   }
   else if (sketchGeometry.geometryType() == GeometryType::Polygon)
   {
-    geometrySymbol = new SimpleFillSymbol(SimpleFillSymbolStyle::Solid, QColor(255, 131, 0),
-                                          new SimpleLineSymbol(SimpleLineSymbolStyle::Solid, QColor(Qt::blue), 2.0, this), this);
+    geometrySymbol = new SimpleFillSymbol(SimpleFillSymbolStyle::Solid, QColor("#7743A6C6"),
+                                          new SimpleLineSymbol(SimpleLineSymbolStyle::Solid, QColor("#43A6C6"), 2.0, this), this);
   }
 
   Graphic* sketchGraphic = new Graphic(sketchGeometry, geometrySymbol, this);
