@@ -1,16 +1,30 @@
 {
-    "category": "TODO",
-    "description": "TODO",
+    "category": "Display information",
+    "description": "This sample demonstrates how to use the Sketch Editor to edit or sketch a new point, line, or polygon geometry on to a map.",
     "ignore": false,
     "images": [
         "screenshot.png"
     ],
     "keywords": [
-        "TODO"
+        "draw",
+        "edit",
+        "Geometry",
+        "Graphic",
+        "GraphicsOverlay",
+        "MapView",
+        "SketchCreationMode",
+        "SketchEditor"
     ],
-    "redirect_from": "",
+    "redirect_from": [
+        ""
+    ],
     "relevant_apis": [
-        "TODO"
+        "Geometry",
+        "Graphic",
+        "GraphicsOverlay",
+        "MapView",
+        "SketchCreationMode",
+        "SketchEditor"
     ],
     "snippets": [
         "SketchOnmap.qml"
