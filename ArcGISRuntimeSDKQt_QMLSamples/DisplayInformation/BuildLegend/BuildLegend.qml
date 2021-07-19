@@ -22,8 +22,6 @@ Rectangle {
     width: 800
     height: 600
 
-    
-
     // Create the MapView
     MapView {
         anchors.fill: parent
@@ -156,7 +154,7 @@ Rectangle {
 
                 // Create delegate to display the name with an image
                 delegate: Item {
-                    width: parent.width
+                    width: parent ? parent.width : 0
                     height: 35
                     clip: true
 
@@ -177,7 +175,6 @@ Rectangle {
                             wrapMode: Text.WordWrap
                             font.pixelSize: 12
                         }
-
                     }
                 }
 
