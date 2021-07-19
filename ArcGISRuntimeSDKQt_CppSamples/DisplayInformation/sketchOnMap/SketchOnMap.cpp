@@ -59,13 +59,11 @@ void SketchOnMap::setMapView(MapQuickView* mapView)
 
   m_mapView = mapView;
   m_mapView->setMap(m_map);
-
   m_mapView->setViewpointCenter(Point(-15.5314, 64.3286, SpatialReference::wgs84()), 100'000);
 
   m_mapView->graphicsOverlays()->append(m_sketchOverlay);
 
   m_sketchEditor = new SketchEditor();
-
   m_mapView->setSketchEditor(m_sketchEditor);
 
   emit mapViewChanged();
@@ -99,6 +97,9 @@ void SketchOnMap::setSketchCreationMode(SampleSketchMode sketchCreationMode)
 
 void SketchOnMap::stopSketching(bool saveGeometry)
 {
+  if (!m_sketchEditor->isStarted())
+    return;
+
   if (!saveGeometry)
   {
     m_sketchEditor->stop();
@@ -114,24 +115,28 @@ void SketchOnMap::stopSketching(bool saveGeometry)
   Geometry sketchGeometry = m_sketchEditor->geometry();
   Symbol* geometrySymbol = nullptr;
 
-  if (sketchGeometry.geometryType() == GeometryType::Point)
+  if (m_sketchEditor->creationMode() == SketchCreationMode::Point)
   {
     SimpleMarkerSymbol* pointSymbol = new SimpleMarkerSymbol(SimpleMarkerSymbolStyle::Square, QColor(255, 0, 0), 10, this);
     geometrySymbol = pointSymbol;
   }
-  if (sketchGeometry.geometryType() == GeometryType::Multipoint)
+  else if (m_sketchEditor->creationMode() == SketchCreationMode::Multipoint)
   {
     SimpleMarkerSymbol* pointSymbol = new SimpleMarkerSymbol(SimpleMarkerSymbolStyle::Square, QColor(0, 0, 255), 10, this);
     geometrySymbol = pointSymbol;
   }
-  else if (sketchGeometry.geometryType() == GeometryType::Polyline)
+  else if (m_sketchEditor->creationMode() == SketchCreationMode::Polyline)
   {
     geometrySymbol = new SimpleLineSymbol(SimpleLineSymbolStyle::Solid, QColor("#90EE90"), 3, this);
   }
-  else if (sketchGeometry.geometryType() == GeometryType::Polygon)
+  else if (m_sketchEditor->creationMode() == SketchCreationMode::Polygon)
   {
     geometrySymbol = new SimpleFillSymbol(SimpleFillSymbolStyle::Solid, QColor("#7743A6C6"),
                                           new SimpleLineSymbol(SimpleLineSymbolStyle::Solid, QColor("#43A6C6"), 2.0, this), this);
+  }
+  else
+  {
+    return;
   }
 
   Graphic* sketchGraphic = new Graphic(sketchGeometry, geometrySymbol, this);
