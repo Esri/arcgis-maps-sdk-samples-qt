@@ -29,6 +29,7 @@ class GraphicsOverlay;
 class Map;
 class MapQuickView;
 class Point;
+class ServiceFeatureTable;
 class SimulatedLocationDataSource;
 }
 }
@@ -40,6 +41,8 @@ class Geotriggers : public QObject
   Q_OBJECT
 
   Q_PROPERTY(Esri::ArcGISRuntime::MapQuickView* mapView READ mapView WRITE setMapView NOTIFY mapViewChanged)
+  Q_PROPERTY(QString sectionName READ sectionName NOTIFY sectionNameChanged)
+  Q_PROPERTY(QString sectionDesc READ sectionDesc NOTIFY sectionDescChanged)
 
 public:
   explicit Geotriggers(QObject* parent = nullptr);
@@ -49,9 +52,13 @@ public:
 
 signals:
   void mapViewChanged();
+  void sectionNameChanged();
+  void sectionDescChanged();
 
 private:
   Esri::ArcGISRuntime::MapQuickView* mapView() const;
+  QString sectionName() const;
+  QString sectionDesc() const;
   void setMapView(Esri::ArcGISRuntime::MapQuickView* mapView);
   void setup();
   void handleLocationChanges();
@@ -60,7 +67,10 @@ private:
   Esri::ArcGISRuntime::Map* m_map = nullptr;
   Esri::ArcGISRuntime::MapQuickView* m_mapView = nullptr;
   Esri::ArcGISRuntime::Graphic* m_locationHistoryLineGraphic = nullptr;
+  Esri::ArcGISRuntime::ServiceFeatureTable* m_gardenSections = nullptr;
   Esri::ArcGISRuntime::SimulatedLocationDataSource* m_simulatedLocationDataSource = nullptr;
+  QString m_sectionName;
+  QString m_sectionDesc;
 };
 
 #endif // GEOTRIGGERS_H

@@ -20,6 +20,8 @@ import Esri.Samples 1.0
 
 Item {
 
+    property var sectionInfo: model.sectionInfo
+
     // add a mapView component
     MapView {
         id: view
@@ -30,5 +32,19 @@ Item {
     GeotriggersSample {
         id: model
         mapView: view
+    }
+    Rectangle {
+        color: "red"
+        width: 200
+        height: 200
+        Column {
+            Text {
+                text: model.sectionName
+            }
+            Text {
+                text: model.sectionDesc
+            }
+        }
+
     }
 }
