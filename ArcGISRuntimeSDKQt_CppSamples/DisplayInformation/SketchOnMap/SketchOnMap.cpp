@@ -91,16 +91,12 @@ void SketchOnMap::setSketchCreationMode(SampleSketchMode sketchCreationMode)
 
     default:
       break;
-
   }
 }
 
 void SketchOnMap::stopSketching(bool saveGeometry)
 {
-  if (!m_sketchEditor->isStarted())
-    return;
-
-  if (!saveGeometry)
+  if (!m_sketchEditor->isStarted() || !saveGeometry)
   {
     m_sketchEditor->stop();
     return;
@@ -115,28 +111,27 @@ void SketchOnMap::stopSketching(bool saveGeometry)
   Geometry sketchGeometry = m_sketchEditor->geometry();
   Symbol* geometrySymbol = nullptr;
 
-  if (m_sketchEditor->creationMode() == SketchCreationMode::Point)
+  switch (m_sketchEditor->creationMode())
   {
-    SimpleMarkerSymbol* pointSymbol = new SimpleMarkerSymbol(SimpleMarkerSymbolStyle::Square, QColor(255, 0, 0), 10, this);
-    geometrySymbol = pointSymbol;
-  }
-  else if (m_sketchEditor->creationMode() == SketchCreationMode::Multipoint)
-  {
-    SimpleMarkerSymbol* pointSymbol = new SimpleMarkerSymbol(SimpleMarkerSymbolStyle::Square, QColor(0, 0, 255), 10, this);
-    geometrySymbol = pointSymbol;
-  }
-  else if (m_sketchEditor->creationMode() == SketchCreationMode::Polyline)
-  {
-    geometrySymbol = new SimpleLineSymbol(SimpleLineSymbolStyle::Solid, QColor("#90EE90"), 3, this);
-  }
-  else if (m_sketchEditor->creationMode() == SketchCreationMode::Polygon)
-  {
-    geometrySymbol = new SimpleFillSymbol(SimpleFillSymbolStyle::Solid, QColor("#7743A6C6"),
-                                          new SimpleLineSymbol(SimpleLineSymbolStyle::Solid, QColor("#43A6C6"), 2.0, this), this);
-  }
-  else
-  {
-    return;
+    case SketchCreationMode::Point:
+      geometrySymbol = new SimpleMarkerSymbol(SimpleMarkerSymbolStyle::Square, QColor(255, 0, 0), 10, this);
+      break;
+
+    case SketchCreationMode::Multipoint:
+      geometrySymbol = new SimpleMarkerSymbol(SimpleMarkerSymbolStyle::Square, QColor(0, 0, 255), 10, this);
+      break;
+
+    case SketchCreationMode::Polyline:
+      geometrySymbol = new SimpleLineSymbol(SimpleLineSymbolStyle::Solid, QColor("#90EE90"), 3, this);
+      break;
+
+    case SketchCreationMode::Polygon:
+      geometrySymbol = new SimpleFillSymbol(SimpleFillSymbolStyle::Solid, QColor("#7743A6C6"),
+                                            new SimpleLineSymbol(SimpleLineSymbolStyle::Solid, QColor("#43A6C6"), 2.0, this), this);
+      break;
+
+    default:
+      return;
   }
 
   Graphic* sketchGraphic = new Graphic(sketchGeometry, geometrySymbol, this);
