@@ -20,7 +20,6 @@ import QtQuick.Layouts 1.3
 import QtQuick.Window 2.2
 import Esri.ArcGISRuntime 100.12
 import Esri.ArcGISExtras 1.1
-import Esri.ArcGISRuntime.Toolkit 100.12
 
 Rectangle {
     id: rootRectangle
@@ -47,7 +46,7 @@ Rectangle {
 
                 itemId: webMapId
                 Portal {
-                    loginRequired: true
+                    loginRequired: false
                 }
             }
         }
@@ -445,10 +444,4 @@ Rectangle {
         running: offlineMapTask.createGenerateOfflineMapParameterOverridesStatus === Enums.TaskStatusInProgress ||
                  offlineMapTask.createDefaultGenerateOfflineMapParameterStatus === Enums.TaskStatusInProgress
     }
-
-    /* Uncomment this section when running as standalone application
-    AuthenticationView {
-        anchors.fill: parent
-    }
-    */
 }
