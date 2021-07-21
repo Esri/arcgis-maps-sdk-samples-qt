@@ -21,7 +21,7 @@ import Esri.Samples 1.0
 BuildLegendSample {
     id: showLegendSample
     width: 800
-    height: 600    
+    height: 600
 
     // add a mapView component
     MapView {
@@ -115,7 +115,7 @@ BuildLegendSample {
 
                 // Create delegate to display the name with an image
                 delegate: Item {
-                    width: parent.width
+                    width: parent ? parent.width : 0
                     height: 35
                     clip: true
 
