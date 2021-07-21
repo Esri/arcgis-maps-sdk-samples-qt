@@ -17,7 +17,7 @@ When taking a web map offline, you may adjust the data (such as layers or tiles)
 5. Use the combo-box to select the maximum flow rate for the features from the Hydrant layer.
 6. Use the check-box to skip the geometry filter for the water pipes features.
 7. Click "Start Job"
-8. Wait for the progress bar to indicate that the task has completed.
+8. Wait for the progress view to indicate that the task has completed.
 9. You should see that the basemap does not display when you zoom out past a certain range and is padded around the original area of interest. The network dataset should extend beyond the target area. The System Valves and Service Connections should be omitted from the offline map and the Hydrants layer should contain a subset of the original features.
 
 ## How it works
