@@ -24,6 +24,7 @@
 #include "ArcGISTiledLayer.h"
 #include "FeatureLayer.h"
 #include "FenceGeotrigger.h"
+#include "FenceGeotriggerNotificationInfo.h"
 #include "GeotriggerNotificationInfo.h"
 #include "GeotriggerMonitor.h"
 #include "GeotriggersTypes.h"
@@ -83,6 +84,10 @@ QString Geotriggers::sectionDesc() const
 {
   return m_sectionDesc;
 }
+QUrl Geotriggers::sectionImg() const
+{
+  return m_sectionImg;
+}
 
 // Set the view (created in QML)
 void Geotriggers::setMapView(MapQuickView* mapView)
@@ -127,17 +132,36 @@ void Geotriggers::setup()
 
   connect(m_geotriggerMonitor, &GeotriggerMonitor::geotriggerNotification, this, [this](GeotriggerNotificationInfo* notification)
   {
-    QString message = notification->message();
+    FenceGeotriggerNotificationInfo* fenceGeotriggerNotifInfo = static_cast<FenceGeotriggerNotificationInfo*>(notification);
+    GeoElement* fenceFeature = fenceGeotriggerNotifInfo->fenceGeoElement();
+    ArcGISFeature* feature = dynamic_cast<ArcGISFeature*>(fenceFeature);
 
-    m_sectionName = message.split("|").first();
-    m_sectionDesc = message.split("|").last();
+    QueryParameters queryParams;
+    queryParams.setWhereClause("objectid=" + feature->attributes()->attributeValue(QString("objectid")).toString());
+    m_gardenSections->queryFeatures(queryParams);
 
-    qDebug() << m_sectionName;
-    qDebug() << m_sectionDesc;
+    QVariantMap attributeMap = fenceFeature->attributes()->attributesMap();
 
-    emit sectionNameChanged();
-    emit sectionDescChanged();
+    m_sectionName = attributeMap.value("name").toString();
+    m_sectionDesc = attributeMap.value("description").toString();
+
+    emit sectionInfoChanged();
   });
 
   m_geotriggerMonitor->start();
+
+  connect(m_gardenSections, &ServiceFeatureTable::queryFeaturesCompleted, this, [this](QUuid, FeatureQueryResult* featureQueryResult)
+  {
+    ArcGISFeature* feature = static_cast<ArcGISFeature*>(featureQueryResult->iterator().features(this).at(0));
+    connect(feature->attachments(), &AttachmentListModel::fetchAttachmentsCompleted, this, [this](QUuid, const QList<Attachment*>& attachments)
+    {
+      Attachment* img = attachments.at(0);
+      connect(img, &Attachment::fetchDataCompleted, this, [this, img]()
+      {
+        m_sectionImg = img->attachmentUrl();
+        sectionInfoChanged();
+      });
+      img->fetchData();
+    });
+  });
 }

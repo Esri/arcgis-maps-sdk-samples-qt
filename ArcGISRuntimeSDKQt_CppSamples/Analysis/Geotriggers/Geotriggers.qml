@@ -33,18 +33,32 @@ Item {
         id: model
         mapView: view
     }
-    Rectangle {
-        color: "red"
-        width: 200
-        height: 200
-        Column {
+
+    Control {
+        anchors.right: parent.right
+        padding: 10
+        background: Rectangle {
+            color: "white"
+        }
+        contentItem: Column {
+            width: 20
+            Image {
+                source: model.sectionImg
+                width: 200
+                fillMode: Image.PreserveAspectFit
+            }
+
             Text {
                 text: model.sectionName
+                font.pointSize: 16
+                font.bold: true
             }
             Text {
                 text: model.sectionDesc
+                width: 200
+                wrapMode: Text.WordWrap
             }
         }
-
     }
+
 }

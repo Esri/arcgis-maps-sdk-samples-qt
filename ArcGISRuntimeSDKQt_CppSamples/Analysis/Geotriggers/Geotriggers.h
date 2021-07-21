@@ -23,6 +23,8 @@ namespace Esri
 {
 namespace ArcGISRuntime
 {
+class ArcGISFeature;
+class AttachmentListModel;
 class GeotriggerMonitor;
 class Graphic;
 class GraphicsOverlay;
@@ -41,8 +43,9 @@ class Geotriggers : public QObject
   Q_OBJECT
 
   Q_PROPERTY(Esri::ArcGISRuntime::MapQuickView* mapView READ mapView WRITE setMapView NOTIFY mapViewChanged)
-  Q_PROPERTY(QString sectionName READ sectionName NOTIFY sectionNameChanged)
-  Q_PROPERTY(QString sectionDesc READ sectionDesc NOTIFY sectionDescChanged)
+  Q_PROPERTY(QString sectionName READ sectionName NOTIFY sectionInfoChanged)
+  Q_PROPERTY(QString sectionDesc READ sectionDesc NOTIFY sectionInfoChanged)
+  Q_PROPERTY(QUrl sectionImg READ sectionImg NOTIFY sectionInfoChanged)
 
 public:
   explicit Geotriggers(QObject* parent = nullptr);
@@ -52,17 +55,19 @@ public:
 
 signals:
   void mapViewChanged();
-  void sectionNameChanged();
-  void sectionDescChanged();
+  void sectionInfoChanged();
 
 private:
   Esri::ArcGISRuntime::MapQuickView* mapView() const;
   QString sectionName() const;
   QString sectionDesc() const;
+  QUrl sectionImg() const;
   void setMapView(Esri::ArcGISRuntime::MapQuickView* mapView);
   void setup();
   void handleLocationChanges();
 
+  Esri::ArcGISRuntime::ArcGISFeature* m_agsFeature = nullptr;
+  Esri::ArcGISRuntime::AttachmentListModel* m_featureAttachments = nullptr;
   Esri::ArcGISRuntime::GeotriggerMonitor* m_geotriggerMonitor = nullptr;
   Esri::ArcGISRuntime::Map* m_map = nullptr;
   Esri::ArcGISRuntime::MapQuickView* m_mapView = nullptr;
@@ -71,6 +76,7 @@ private:
   Esri::ArcGISRuntime::SimulatedLocationDataSource* m_simulatedLocationDataSource = nullptr;
   QString m_sectionName;
   QString m_sectionDesc;
+  QUrl m_sectionImg;
 };
 
 #endif // GEOTRIGGERS_H
