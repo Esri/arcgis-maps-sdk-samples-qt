@@ -1,6 +1,6 @@
 // [WriteFile Name=SketchOnMap, Category=DisplayInformation]
 // [Legal]
-// Copyright 2020 Esri.
+// Copyright 2021 Esri.
 
 // Licensed under the Apache License, Version 2.0 (the "License");
 // you may not use this file except in compliance with the License.
@@ -24,6 +24,8 @@ Rectangle {
     clip: true
     width: 800
     height: 600
+
+    property var drawStatus: ""
 
     MapView {
         id: mapView
@@ -51,11 +53,6 @@ Rectangle {
 
         GraphicsOverlay {
             id: sketchOverlay
-        }
-
-        Component.onCompleted: {
-            mapView.graphicsOverlays.append(sketchOverlay);
-            mapView.sketchEditor = sketchEditor;
         }
     }
 
@@ -93,9 +90,9 @@ Rectangle {
 
     Control {
         id: control
-        width: 110
         anchors.right: parent.right
         padding: 5
+        width: 110
 
         background: Rectangle {
             color: "black"
@@ -104,8 +101,10 @@ Rectangle {
 
         contentItem: ColumnLayout {
             id: columns
-            anchors.verticalCenter: parent.verticalCenter
-            anchors.horizontalCenter: parent.horizontalCenter
+            anchors {
+                verticalCenter: parent.verticalCenter
+                horizontalCenter: parent.horizontalCenter
+            }
             spacing: 20
 
             GridLayout {
@@ -115,28 +114,29 @@ Rectangle {
 
                 Text {
                     id: geometryText
-                    color: "#ffffff"
-                    text: qsTr("Geometry")
-                    font.pixelSize: 16
                     Layout.alignment: Qt.AlignHCenter | Qt.AlignVCenter
-                    font.bold: true
                     Layout.columnSpan: 2
+                    text: qsTr("Geometry")
+                    color: "white"
+                    font.pixelSize: 16
+                    font.bold: true
                 }
 
                 RoundButton {
                     id: ptButton
-                    radius: 5
                     Layout.fillWidth: true
                     Layout.alignment: Qt.AlignHCenter
+                    radius: 5
+                    highlighted: drawStatus === "point"
 
                     Image {
                         id: ptImage
-                        source: "iconAssets/point-32.png"
                         anchors {
                             horizontalCenter: parent.horizontalCenter
                             verticalCenter: parent.verticalCenter
                             verticalCenterOffset: -ptText.height/2
                         }
+                        source: "iconAssets/point-32.png"
                         width: 20
                         fillMode: Image.PreserveAspectFit
                     }
@@ -151,113 +151,128 @@ Rectangle {
                         }
                     }
 
-                    onClicked: sketchEditor.startWithCreationMode(Enums.SketchCreationModePoint);
+                    onClicked: {
+                        sketchEditor.startWithCreationMode(Enums.SketchCreationModePoint);
+                        drawStatus = "point";
+                    }
                 }
 
                 RoundButton {
                     id: mPtButton
-                    radius: 5
                     Layout.fillWidth: true
                     Layout.alignment: Qt.AlignHCenter
+                    radius: 5
+                    highlighted: drawStatus === "multiPoint"
 
                     Image {
                         id: mptImage1
-                        source: "iconAssets/point-32.png"
                         anchors {
                             right: parent.horizontalCenter
                             rightMargin: -mptImage2.width/5
                             verticalCenter: parent.verticalCenter
                             verticalCenterOffset: -mptText.height/2 - 2
                         }
+                        source: "iconAssets/point-32.png"
                         width: 20
                         fillMode: Image.PreserveAspectFit
                     }
 
                     Image {
                         id: mptImage2
-                        source: "iconAssets/point-32.png"
                         anchors {
                             left: parent.horizontalCenter
                             leftMargin: -mptImage1.width/5
                             verticalCenter: parent.verticalCenter
                             verticalCenterOffset: -mptText.height/2
                         }
+                        source: "iconAssets/point-32.png"
                         width: 20
                         fillMode: Image.PreserveAspectFit
                     }
 
                     Text {
                         id: mptText
-                        text: qsTr("Multipoint")
-                        font.pixelSize: 8
                         anchors {
                             top: mptImage2.bottom
                             horizontalCenter: parent.horizontalCenter
                         }
+                        text: qsTr("Multipoint")
+                        font.pixelSize: 8
                     }
-                    onClicked: sketchEditor.startWithCreationMode(Enums.SketchCreationModeMultipoint);
+                    onClicked: {
+                        sketchEditor.startWithCreationMode(Enums.SketchCreationModeMultipoint);
+                        drawStatus = "multiPoint";
+                    }
                 }
 
                 RoundButton {
                     id: lineButton
-                    radius: 5
                     Layout.fillWidth: true
                     Layout.alignment: Qt.AlignHCenter
+                    radius: 5
+                    highlighted: drawStatus === "line"
 
                     Image {
                         id: lineImage
-                        source: "iconAssets/line-32.png"
                         anchors {
                             horizontalCenter: parent.horizontalCenter
                             verticalCenter: parent.verticalCenter
                             verticalCenterOffset: -lineText.height/2
                         }
+                        source: "iconAssets/line-32.png"
                         width: 20
                         fillMode: Image.PreserveAspectFit
                     }
 
                     Text {
                         id: lineText
-                        text: qsTr("Line")
-                        font.pixelSize: 8
                         anchors {
                             top: lineImage.bottom
                             horizontalCenter: parent.horizontalCenter
                         }
+                        text: qsTr("Line")
+                        font.pixelSize: 8
                     }
 
-                    onClicked: sketchEditor.startWithCreationMode(Enums.SketchCreationModePolyline);
+                    onClicked: {
+                        sketchEditor.startWithCreationMode(Enums.SketchCreationModePolyline);
+                        drawStatus = "line";
+                    }
                 }
 
                 RoundButton {
                     id: polygonButton
-                    radius: 5
                     Layout.fillWidth: true
                     Layout.alignment: Qt.AlignHCenter
+                    radius: 5
+                    highlighted: drawStatus === "polygon"
 
                     Image {
                         id: polygonImage
-                        source: "iconAssets/polygon-32.png"
                         anchors {
                             horizontalCenter: parent.horizontalCenter
                             verticalCenter: parent.verticalCenter
                             verticalCenterOffset: -polygonText.height/2
                         }
+                        source: "iconAssets/polygon-32.png"
                         width: 20
                         fillMode: Image.PreserveAspectFit
                     }
 
                     Text {
                         id: polygonText
-                        text: qsTr("Polygon")
-                        font.pixelSize: 8
                         anchors {
                             top: polygonImage.bottom
                             horizontalCenter: parent.horizontalCenter
                         }
+                        text: qsTr("Polygon")
+                        font.pixelSize: 8
                     }
 
-                    onClicked: sketchEditor.startWithCreationMode(Enums.SketchCreationModePolygon);
+                    onClicked: {
+                        sketchEditor.startWithCreationMode(Enums.SketchCreationModePolygon);
+                        drawStatus = "polygon";
+                    }
                 }
             }
 
@@ -269,39 +284,39 @@ Rectangle {
 
                 Text {
                     id: editingText
-                    color: "#ffffff"
-                    text: qsTr("Editing")
-                    font.pixelSize: 16
                     Layout.alignment: Qt.AlignHCenter | Qt.AlignVCenter
-                    font.bold: true
                     Layout.columnSpan: 2
+                    text: qsTr("Editing")
+                    color: "white"
+                    font.pixelSize: 16
+                    font.bold: true
                 }
 
                 RoundButton {
                     id: undoButton
-                    radius: 5
                     Layout.fillWidth: true
+                    radius: 5
 
                     Image {
                         id: undoImage
-                        source: "iconAssets/undo-32.png"
                         anchors {
                             horizontalCenter: parent.horizontalCenter
                             verticalCenter: parent.verticalCenter
                             verticalCenterOffset: -undoText.height/2
                         }
+                        source: "iconAssets/undo-32.png"
                         width: 20
                         fillMode: Image.PreserveAspectFit
                     }
 
                     Text {
                         id: undoText
-                        text: qsTr("Undo")
-                        font.pixelSize: 8
                         anchors {
                             top: undoImage.bottom
                             horizontalCenter: parent.horizontalCenter
                         }
+                        text: qsTr("Undo")
+                        font.pixelSize: 8
                     }
 
                     onClicked: sketchEditor.undo();
@@ -309,64 +324,63 @@ Rectangle {
 
                 RoundButton {
                     id: redoButton
-                    radius: 5
                     Layout.fillWidth: true
-
+                    radius: 5
                     Image {
                         id: redoImage
-                        source: "iconAssets/redo-32.png"
                         anchors {
                             horizontalCenter: parent.horizontalCenter
                             verticalCenter: parent.verticalCenter
                             verticalCenterOffset: -redoText.height/2
                         }
+                        source: "iconAssets/redo-32.png"
                         width: 20
                         fillMode: Image.PreserveAspectFit
                     }
 
                     Text {
                         id: redoText
-                        text: qsTr("Redo")
-                        font.pixelSize: 8
                         anchors {
                             top: redoImage.bottom
                             horizontalCenter: parent.horizontalCenter
                         }
+                        text: qsTr("Redo")
+                        font.pixelSize: 8
                     }
 
                     onClicked: sketchEditor.redo();
                 }
 
-
                 RoundButton {
                     id: saveEditsButton
-                    radius: 5
                     Layout.fillWidth: true
                     Layout.columnSpan: 2
+                    radius: 5
 
                     Image {
                         id: saveEditsImage
-                        source: "iconAssets/check-circle-32.png"
                         anchors {
                             horizontalCenter: parent.horizontalCenter
                             verticalCenter: parent.verticalCenter
                             verticalCenterOffset: -saveEditsText.height/2
                         }
+                        source: "iconAssets/check-circle-32.png"
                         width: 20
                         fillMode: Image.PreserveAspectFit
                     }
 
                     Text {
                         id: saveEditsText
-                        text: qsTr("Save edits")
-                        font.pixelSize: 8
                         anchors {
                             top: saveEditsImage.bottom
                             horizontalCenter: parent.horizontalCenter
                         }
+                        text: qsTr("Save edits")
+                        font.pixelSize: 8
                     }
 
                     onClicked: {
+                        drawStatus = "";
                         if (!sketchEditor.isSketchValid()) {
                             console.log("Unable to save sketch. Sketch is not valid.");
                             return;
@@ -400,61 +414,64 @@ Rectangle {
 
                 RoundButton {
                     id: discardEditsButton
-                    radius: 5
                     Layout.fillWidth: true
                     Layout.columnSpan: 2
+                    radius: 5
 
                     Image {
                         id: discardEditsImage
-                        source: "iconAssets/circle-disallowed-32.png"
                         anchors {
                             horizontalCenter: parent.horizontalCenter
                             verticalCenter: parent.verticalCenter
                             verticalCenterOffset: -discardEditsText.height/2
                         }
+                        source: "iconAssets/circle-disallowed-32.png"
                         width: 20
                         fillMode: Image.PreserveAspectFit
                     }
 
                     Text {
                         id: discardEditsText
-                        text: qsTr("Discard edits")
-                        font.pixelSize: 8
                         anchors {
                             top: discardEditsImage.bottom
                             horizontalCenter: parent.horizontalCenter
                         }
+                        text: qsTr("Discard edits")
+                        font.pixelSize: 8
                     }
 
-                    onClicked: sketchEditor.stop();
+                    onClicked: {
+                        sketchEditor.stop();
+                        drawStatus = "";
+                    }
                 }
 
                 RoundButton {
                     id: clearGraphicsButton
-                    radius: 5
                     Layout.fillWidth: true
                     Layout.columnSpan: 2
+                    radius: 5
 
                     Image {
                         id: clearGraphicsImage
-                        source: "iconAssets/trash-32.png"
                         anchors {
                             horizontalCenter: parent.horizontalCenter
                             verticalCenter: parent.verticalCenter
                             verticalCenterOffset: -clearGraphicsText.height/2
                         }
+                        source: "iconAssets/trash-32.png"
                         width: 20
                         fillMode: Image.PreserveAspectFit
                     }
 
                     Text {
                         id: clearGraphicsText
-                        text: qsTr("Clear graphics")
-                        font.pixelSize: 8
                         anchors {
                             top: clearGraphicsImage.bottom
                             horizontalCenter: parent.horizontalCenter
                         }
+                        text: qsTr("Clear graphics")
+                        font.pixelSize: 8
                     }
 
                     onClicked: sketchOverlay.graphics.clear();
@@ -462,5 +479,4 @@ Rectangle {
             }
         }
     }
-
 }

@@ -26,6 +26,10 @@ class MapQuickView;
 class Graphic;
 class GraphicsOverlay;
 class SketchEditor;
+class SimpleMarkerSymbol;
+class SimpleLineSymbol;
+class SimpleFillSymbol;
+
 }
 }
 
@@ -41,7 +45,6 @@ public:
   explicit SketchOnMap(QObject* parent = nullptr);
   ~SketchOnMap();
 
-  Q_ENUMS(SampleSketchMode)
   enum class SampleSketchMode {
     PointSketchMode,
     MultipointSketchMode,
@@ -49,8 +52,10 @@ public:
     PolygonSketchMode
   };
 
+  Q_ENUM(SampleSketchMode)
+
   static void init();
-  Q_INVOKABLE void setSketchCreationMode(SampleSketchMode sketchCreationMode);
+  Q_INVOKABLE void setSketchCreationMode(SketchOnMap::SampleSketchMode sketchCreationMode);
   Q_INVOKABLE void stopSketching(bool saveGeometry);
   Q_INVOKABLE void clearGraphics();
   Q_INVOKABLE void undo();
@@ -63,12 +68,19 @@ private:
   Esri::ArcGISRuntime::MapQuickView* mapView() const;
   void setMapView(Esri::ArcGISRuntime::MapQuickView* mapView);
   void createConnections();
+  void createSymbols();
 
   Esri::ArcGISRuntime::Map* m_map = nullptr;
   Esri::ArcGISRuntime::MapQuickView* m_mapView = nullptr;
   Esri::ArcGISRuntime::GraphicsOverlay* m_sketchOverlay = nullptr;
   Esri::ArcGISRuntime::SketchEditor* m_sketchEditor = nullptr;
   Esri::ArcGISRuntime::Graphic* editingGraphic = nullptr;
+
+  Esri::ArcGISRuntime::SimpleMarkerSymbol* m_pointSymbol = nullptr;
+  Esri::ArcGISRuntime::SimpleMarkerSymbol* m_multiPointSymbol = nullptr;
+  Esri::ArcGISRuntime::SimpleLineSymbol* m_lineSymbol = nullptr;
+  Esri::ArcGISRuntime::SimpleFillSymbol* m_polygonSymbol = nullptr;
+
 };
 
 #endif // SKETCHONMAP_H

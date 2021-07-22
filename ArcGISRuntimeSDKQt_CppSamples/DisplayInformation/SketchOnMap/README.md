@@ -12,7 +12,7 @@ A field worker could annotate features of interest on a map (via the GUI) such a
 
 Choose which geometry type to sketch from one of the available buttons. Choose from points, multipoints, polylines, and polygons.
 
-Add points or verticies by tapping on the map. You can edit individual points by tapping to select the point, then dragging it to a new location or double tapping to delete it.
+Add points or vertices by tapping on the map. You can edit individual points by tapping to select the point, then dragging it to a new location or double tapping to delete it.
 
 Use the control panel to undo or redo changes made to the sketch, save the sketch to the graphics overlay, discard the current sketch, or clear the graphics overlay.
 

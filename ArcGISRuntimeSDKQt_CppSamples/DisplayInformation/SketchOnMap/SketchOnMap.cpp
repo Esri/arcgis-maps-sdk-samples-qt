@@ -35,6 +35,7 @@ SketchOnMap::SketchOnMap(QObject* parent /* = nullptr */):
   m_map(new Map(BasemapStyle::ArcGISImagery, this))
 {
   m_sketchOverlay = new GraphicsOverlay(this);
+  createSymbols();
 }
 
 SketchOnMap::~SketchOnMap() = default;
@@ -63,7 +64,7 @@ void SketchOnMap::setMapView(MapQuickView* mapView)
 
   m_mapView->graphicsOverlays()->append(m_sketchOverlay);
 
-  m_sketchEditor = new SketchEditor();
+  m_sketchEditor = new SketchEditor(this);
   m_mapView->setSketchEditor(m_sketchEditor);
 
   emit mapViewChanged();
@@ -114,20 +115,19 @@ void SketchOnMap::stopSketching(bool saveGeometry)
   switch (m_sketchEditor->creationMode())
   {
     case SketchCreationMode::Point:
-      geometrySymbol = new SimpleMarkerSymbol(SimpleMarkerSymbolStyle::Square, QColor(255, 0, 0), 10, this);
+      geometrySymbol = m_pointSymbol;
       break;
 
     case SketchCreationMode::Multipoint:
-      geometrySymbol = new SimpleMarkerSymbol(SimpleMarkerSymbolStyle::Square, QColor(0, 0, 255), 10, this);
+      geometrySymbol = m_multiPointSymbol;
       break;
 
     case SketchCreationMode::Polyline:
-      geometrySymbol = new SimpleLineSymbol(SimpleLineSymbolStyle::Solid, QColor("#90EE90"), 3, this);
+      geometrySymbol = m_lineSymbol;
       break;
 
     case SketchCreationMode::Polygon:
-      geometrySymbol = new SimpleFillSymbol(SimpleFillSymbolStyle::Solid, QColor("#7743A6C6"),
-                                            new SimpleLineSymbol(SimpleLineSymbolStyle::Solid, QColor("#43A6C6"), 2.0, this), this);
+      geometrySymbol = m_polygonSymbol;
       break;
 
     default:
@@ -135,10 +135,18 @@ void SketchOnMap::stopSketching(bool saveGeometry)
   }
 
   Graphic* sketchGraphic = new Graphic(sketchGeometry, geometrySymbol, this);
-
   m_sketchOverlay->graphics()->append(sketchGraphic);
 
   m_sketchEditor->stop();
+}
+
+void SketchOnMap::createSymbols()
+{
+  m_pointSymbol = new SimpleMarkerSymbol(SimpleMarkerSymbolStyle::Square, QColor(255, 0, 0), 10, this);
+  m_multiPointSymbol = new SimpleMarkerSymbol(SimpleMarkerSymbolStyle::Square, QColor(0, 0, 255), 10, this);
+  m_lineSymbol = new SimpleLineSymbol(SimpleLineSymbolStyle::Solid, QColor(144, 238, 144), 3, this);
+  m_polygonSymbol = new SimpleFillSymbol(SimpleFillSymbolStyle::Solid, QColor(67, 166, 198, 119),
+                                        new SimpleLineSymbol(SimpleLineSymbolStyle::Solid, QColor("#43A6C6"), 2.0, this), this);
 }
 
 void SketchOnMap::clearGraphics()
