@@ -3,30 +3,64 @@ import QtQuick.Controls 2.2
 import QtQuick.Layouts 1.15
 
 RoundButton {
-    id: undoButton
-    Layout.fillWidth: true
-    radius: 5
+    id: sketchEditorButton
 
-    property string buttonName: []
-    property string iconPath: []
-    property alias name: value
+    property var columnSpan: 1
+    property string buttonName: ""
+    property string iconPath: ""
+    property var images: 1
+
+    Layout.fillWidth: true
+    Layout.columnSpan: columnSpan
+    radius: 5
 
     Image {
         id: imgComponent
         anchors {
             horizontalCenter: parent.horizontalCenter
             verticalCenter: parent.verticalCenter
-            verticalCenterOffset: -undoText.height/2
+            verticalCenterOffset: -textComponent.height/2
         }
         source: iconPath
         width: 20
         fillMode: Image.PreserveAspectFit
+        visible: images === 1
+    }
+
+    Image {
+        id: imgComponentLeft
+        anchors {
+            right: parent.horizontalCenter
+            rightMargin: -imgComponentRight.width/5
+            verticalCenter: parent.verticalCenter
+            verticalCenterOffset: -textComponent.height/2 - 2
+        }
+        source: iconPath
+        width: 20
+        fillMode: Image.PreserveAspectFit
+
+        visible: images === 2
+    }
+
+    Image {
+        id: imgComponentRight
+        anchors {
+            left: parent.horizontalCenter
+            leftMargin: -imgComponentLeft.width/5
+            verticalCenter: parent.verticalCenter
+            verticalCenterOffset: -textComponent.height/2
+        }
+        source: iconPath
+        width: 20
+        fillMode: Image.PreserveAspectFit
+
+        visible: images === 2
     }
 
     Text {
-        id: undoText
+        id: textComponent
         anchors {
-            top: imgComponent.bottom
+            top: images === 1 ? imgComponent.bottom : imgComponentRight.bottom
             horizontalCenter: parent.horizontalCenter
         }
         text: buttonName
