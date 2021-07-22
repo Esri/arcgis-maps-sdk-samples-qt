@@ -2,6 +2,8 @@ import QtQuick 2.6
 import QtQuick.Controls 2.2
 import QtQuick.Layouts 1.15
 
+// This component defines each of the buttons in the sketch editor control UI
+
 RoundButton {
     id: sketchEditorButton
 

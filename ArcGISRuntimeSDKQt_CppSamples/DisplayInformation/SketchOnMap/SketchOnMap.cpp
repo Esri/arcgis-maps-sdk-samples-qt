@@ -1,6 +1,6 @@
 // [WriteFile Name=SketchOnMap, Category=DisplayInformation]
 // [Legal]
-// Copyright 2020 Esri.
+// Copyright 2021 Esri.
 
 // Licensed under the Apache License, Version 2.0 (the "License");
 // you may not use this file except in compliance with the License.
@@ -34,6 +34,7 @@ SketchOnMap::SketchOnMap(QObject* parent /* = nullptr */):
   QObject(parent),
   m_map(new Map(BasemapStyle::ArcGISImagery, this))
 {
+  // Create a GraphicsOverlay to save the sketches to
   m_sketchOverlay = new GraphicsOverlay(this);
   createSymbols();
 }
@@ -109,6 +110,7 @@ void SketchOnMap::stopSketching(bool saveGeometry)
     return;
   }
 
+  // To save the sketch, create a graphic with the sketch's geometry before stopping the sketchEditor
   Geometry sketchGeometry = m_sketchEditor->geometry();
   Symbol* geometrySymbol = nullptr;
 

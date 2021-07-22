@@ -56,6 +56,7 @@ Rectangle {
         }
     }
 
+    // Display an option to delete the selected vertex if the user right-clicks or taps and holds when the sketch editor is started
     MouseArea {
         anchors.fill: parent
         acceptedButtons: {
@@ -238,6 +239,7 @@ Rectangle {
                             return;
                         }
 
+                        // To save the sketch, create a graphic with the sketch's geometry before stopping the sketchEditor
                         var graphic = ArcGISRuntimeEnvironment.createObject("Graphic");
                         graphic.geometry = sketchEditor.geometry;
 
@@ -271,8 +273,8 @@ Rectangle {
                     columnSpan: 2
 
                     onClicked: {
-                        sketchEditor.stop();
                         drawStatus = "";
+                        sketchEditor.stop();
                     }
                 }
 
