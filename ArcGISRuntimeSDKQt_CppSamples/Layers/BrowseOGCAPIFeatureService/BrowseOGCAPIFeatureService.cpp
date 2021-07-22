@@ -27,7 +27,7 @@ using namespace Esri::ArcGISRuntime;
 
 BrowseOGCAPIFeatureService::BrowseOGCAPIFeatureService(QObject* parent /* = nullptr */):
     QObject(parent),
-    m_map(new Map(Basemap::imagery(this), this))
+    m_map(new Map(BasemapStyle::ArcGISImagery, this))
 {
 
 }
