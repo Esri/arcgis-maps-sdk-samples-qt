@@ -237,34 +237,38 @@ Item {
                     font.bold: true
                 }
 
-                RoundButton {
+
+                SketchEditorButton {
                     id: undoButton
-                    Layout.fillWidth: true
-                    radius: 5
-
-                    Image {
-                        id: undoImage
-                        anchors {
-                            horizontalCenter: parent.horizontalCenter
-                            verticalCenter: parent.verticalCenter
-                            verticalCenterOffset: -undoText.height/2
-                        }
-                        source: "iconAssets/undo-32.png"
-                        width: 20
-                        fillMode: Image.PreserveAspectFit
-                    }
-
-                    Text {
-                        id: undoText
-                        anchors {
-                            top: undoImage.bottom
-                            horizontalCenter: parent.horizontalCenter
-                        }
-                        text: qsTr("Undo")
-                        font.pixelSize: 8
-                    }
-
+                    buttonName: "undo"
+                    iconPath: "iconAssets/undo-32.png"
                     onClicked: model.undo();
+//                    Layout.fillWidth: true
+//                    radius: 5
+
+//                    Image {
+//                        id: undoImage
+//                        anchors {
+//                            horizontalCenter: parent.horizontalCenter
+//                            verticalCenter: parent.verticalCenter
+//                            verticalCenterOffset: -undoText.height/2
+//                        }
+//                        source: "iconAssets/undo-32.png"
+//                        width: 20
+//                        fillMode: Image.PreserveAspectFit
+//                    }
+
+//                    Text {
+//                        id: undoText
+//                        anchors {
+//                            top: undoImage.bottom
+//                            horizontalCenter: parent.horizontalCenter
+//                        }
+//                        text: qsTr("Undo")
+//                        font.pixelSize: 8
+//                    }
+
+//                    onClicked: model.undo();
                 }
 
                 RoundButton {

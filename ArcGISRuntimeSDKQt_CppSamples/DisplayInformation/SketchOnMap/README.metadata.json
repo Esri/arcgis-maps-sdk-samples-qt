@@ -28,6 +28,7 @@
     ],
     "snippets": [
         "SketchOnMap.qml",
+        "SketchEditorButton.qml",
         "SketchOnMap.cpp",
         "SketchOnMap.h"
     ],
