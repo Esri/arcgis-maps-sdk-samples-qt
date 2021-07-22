@@ -84,9 +84,9 @@ QString Geotriggers::sectionDesc() const
 {
   return m_sectionDesc;
 }
-QUrl Geotriggers::sectionImg() const
+QUrl Geotriggers::sectionImgUrl() const
 {
-  return m_sectionImg;
+  return m_sectionImgUrl;
 }
 
 // Set the view (created in QML)
@@ -98,16 +98,16 @@ void Geotriggers::setMapView(MapQuickView* mapView)
   m_mapView = mapView;
   m_mapView->setMap(m_map);
 
-  handleLocationChanges();
-  setup();
+  initializeSimulatedLocationDisplay();
+  setupGeotriggerMonitor();
 
   emit mapViewChanged();
 }
 
-void Geotriggers::handleLocationChanges()
+void Geotriggers::initializeSimulatedLocationDisplay()
 {
   m_simulatedLocationDataSource = new SimulatedLocationDataSource(this);
-  SimulationParameters* simulationParameters = new SimulationParameters(QDateTime::currentDateTime(), 10.0, 0.0, 0.0, this); // set speed
+  SimulationParameters* simulationParameters = new SimulationParameters(QDateTime::currentDateTime(), 10.0, 0.0, 0.0, this);
 
   m_simulatedLocationDataSource->setLocationsWithPolyline(Polyline::fromJson(polylineJson), simulationParameters);
 
@@ -119,49 +119,62 @@ void Geotriggers::handleLocationChanges()
   m_simulatedLocationDataSource->start();
 }
 
-void Geotriggers::setup()
+void Geotriggers::setupGeotriggerMonitor()
 {
   GeotriggerFeed* feed = new LocationGeotriggerFeed(m_simulatedLocationDataSource, this);
   FeatureFenceParameters* gardenSectionParams = new FeatureFenceParameters(m_gardenSections, 0.0, this);
 
-  ArcadeExpression* expression = new ArcadeExpression("$fencefeature.name + '|' + $fencefeature.description", this);
-
-  FenceGeotrigger* fenceGeotrigger = new FenceGeotrigger(feed, FenceRuleType::Enter, gardenSectionParams, expression, "blue", this);
+  FenceGeotrigger* fenceGeotrigger = new FenceGeotrigger(feed, FenceRuleType::EnterOrExit, gardenSectionParams, this);
 
   m_geotriggerMonitor = new GeotriggerMonitor(fenceGeotrigger, this);
 
   connect(m_geotriggerMonitor, &GeotriggerMonitor::geotriggerNotification, this, [this](GeotriggerNotificationInfo* notification)
-  {
+  {   
     FenceGeotriggerNotificationInfo* fenceGeotriggerNotifInfo = static_cast<FenceGeotriggerNotificationInfo*>(notification);
     GeoElement* fenceFeature = fenceGeotriggerNotifInfo->fenceGeoElement();
-    ArcGISFeature* feature = dynamic_cast<ArcGISFeature*>(fenceFeature);
-
-    QueryParameters queryParams;
-    queryParams.setWhereClause("objectid=" + feature->attributes()->attributeValue(QString("objectid")).toString());
-    m_gardenSections->queryFeatures(queryParams);
 
     QVariantMap attributeMap = fenceFeature->attributes()->attributesMap();
+
+    if (m_sectionName == attributeMap.value("name").toString())
+    {
+      m_sectionName = "No section";
+      m_sectionDesc = "";
+      m_sectionImgUrl = "";
+      sectionInfoChanged();
+      return;
+    }
 
     m_sectionName = attributeMap.value("name").toString();
     m_sectionDesc = attributeMap.value("description").toString();
 
-    emit sectionInfoChanged();
+    ArcGISFeature* feature = static_cast<ArcGISFeature*>(fenceFeature);
+
+    getSectionImage(feature);
   });
 
   m_geotriggerMonitor->start();
+}
+
+void Geotriggers::getSectionImage(ArcGISFeature* gardenSection)
+{
+  QueryParameters queryParams;
+  queryParams.setWhereClause("objectid=" + gardenSection->attributes()->attributeValue(QString("objectid")).toString());
 
   connect(m_gardenSections, &ServiceFeatureTable::queryFeaturesCompleted, this, [this](QUuid, FeatureQueryResult* featureQueryResult)
   {
     ArcGISFeature* feature = static_cast<ArcGISFeature*>(featureQueryResult->iterator().features(this).at(0));
     connect(feature->attachments(), &AttachmentListModel::fetchAttachmentsCompleted, this, [this](QUuid, const QList<Attachment*>& attachments)
     {
-      Attachment* img = attachments.at(0);
-      connect(img, &Attachment::fetchDataCompleted, this, [this, img]()
+      Attachment* sectionImageAttachment = attachments.at(0);
+      connect(sectionImageAttachment, &Attachment::fetchDataCompleted, this, [this, sectionImageAttachment]()
       {
-        m_sectionImg = img->attachmentUrl();
+        m_sectionImgUrl = sectionImageAttachment->attachmentUrl();
         sectionInfoChanged();
       });
-      img->fetchData();
+      sectionImageAttachment->fetchData();
     });
+    m_gardenSections->disconnect();
   });
+
+  m_gardenSections->queryFeatures(queryParams);
 }

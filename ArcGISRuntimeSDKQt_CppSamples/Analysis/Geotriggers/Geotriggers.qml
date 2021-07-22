@@ -43,7 +43,7 @@ Item {
         contentItem: Column {
             width: 20
             Image {
-                source: model.sectionImg
+                source: model.sectionImgUrl
                 width: 200
                 fillMode: Image.PreserveAspectFit
             }

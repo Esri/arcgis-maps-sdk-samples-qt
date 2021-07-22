@@ -45,7 +45,7 @@ class Geotriggers : public QObject
   Q_PROPERTY(Esri::ArcGISRuntime::MapQuickView* mapView READ mapView WRITE setMapView NOTIFY mapViewChanged)
   Q_PROPERTY(QString sectionName READ sectionName NOTIFY sectionInfoChanged)
   Q_PROPERTY(QString sectionDesc READ sectionDesc NOTIFY sectionInfoChanged)
-  Q_PROPERTY(QUrl sectionImg READ sectionImg NOTIFY sectionInfoChanged)
+  Q_PROPERTY(QUrl sectionImgUrl READ sectionImgUrl NOTIFY sectionInfoChanged)
 
 public:
   explicit Geotriggers(QObject* parent = nullptr);
@@ -61,10 +61,11 @@ private:
   Esri::ArcGISRuntime::MapQuickView* mapView() const;
   QString sectionName() const;
   QString sectionDesc() const;
-  QUrl sectionImg() const;
+  QUrl sectionImgUrl() const;
   void setMapView(Esri::ArcGISRuntime::MapQuickView* mapView);
-  void setup();
-  void handleLocationChanges();
+  void setupGeotriggerMonitor();
+  void initializeSimulatedLocationDisplay();
+  void getSectionImage(Esri::ArcGISRuntime::ArcGISFeature* gardenSection);
 
   Esri::ArcGISRuntime::ArcGISFeature* m_agsFeature = nullptr;
   Esri::ArcGISRuntime::AttachmentListModel* m_featureAttachments = nullptr;
@@ -76,7 +77,7 @@ private:
   Esri::ArcGISRuntime::SimulatedLocationDataSource* m_simulatedLocationDataSource = nullptr;
   QString m_sectionName;
   QString m_sectionDesc;
-  QUrl m_sectionImg;
+  QUrl m_sectionImgUrl;
 };
 
 #endif // GEOTRIGGERS_H
