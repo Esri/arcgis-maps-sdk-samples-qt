@@ -15,7 +15,7 @@
 // [Legal]
 
 import QtQuick 2.6
-import QtQuick.Controls 2.2
+import QtQuick.Controls 2.12
 import QtQuick.Layouts 1.15
 import Esri.ArcGISRuntime 100.12
 
@@ -53,6 +53,27 @@ Rectangle {
 
         GraphicsOverlay {
             id: sketchOverlay
+        }
+    }
+
+    MouseArea {
+        anchors.fill: parent
+        acceptedButtons: {
+            Qt.RightButton
+            Qt.TapAndHoldGesture
+        }
+        enabled: drawStatus !== ""
+        onClicked: {
+            contextMenu.popup()
+        }
+
+        Menu {
+            id: contextMenu
+            width: 75
+            Action {
+                text: "Delete"
+                onTriggered: sketchEditor.removeSelectedVertex();
+            }
         }
     }
 

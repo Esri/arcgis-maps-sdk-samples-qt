@@ -146,7 +146,12 @@ void SketchOnMap::createSymbols()
   m_multiPointSymbol = new SimpleMarkerSymbol(SimpleMarkerSymbolStyle::Square, QColor(0, 0, 255), 10, this);
   m_lineSymbol = new SimpleLineSymbol(SimpleLineSymbolStyle::Solid, QColor(144, 238, 144), 3, this);
   m_polygonSymbol = new SimpleFillSymbol(SimpleFillSymbolStyle::Solid, QColor(67, 166, 198, 119),
-                                        new SimpleLineSymbol(SimpleLineSymbolStyle::Solid, QColor("#43A6C6"), 2.0, this), this);
+                                        new SimpleLineSymbol(SimpleLineSymbolStyle::Solid, QColor(67, 166, 198), 2.0, this), this);
+}
+
+void SketchOnMap::deleteVertex()
+{
+  m_sketchEditor->removeSelectedVertex();
 }
 
 void SketchOnMap::clearGraphics()
