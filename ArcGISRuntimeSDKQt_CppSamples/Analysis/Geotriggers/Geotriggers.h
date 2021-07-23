@@ -43,9 +43,9 @@ class Geotriggers : public QObject
   Q_OBJECT
 
   Q_PROPERTY(Esri::ArcGISRuntime::MapQuickView* mapView READ mapView WRITE setMapView NOTIFY mapViewChanged)
-  Q_PROPERTY(QString sectionName READ sectionName NOTIFY sectionInfoChanged)
-  Q_PROPERTY(QString sectionDesc READ sectionDesc NOTIFY sectionInfoChanged)
-  Q_PROPERTY(QUrl sectionImgUrl READ sectionImgUrl NOTIFY sectionInfoChanged)
+  Q_PROPERTY(QStringList nearbySections READ nearbySections NOTIFY sectionInfoChanged)
+  Q_PROPERTY(QVariantMap sectionDesc READ sectionDesc NOTIFY sectionInfoChanged)
+  Q_PROPERTY(QVariantMap sectionImgUrl READ sectionImgUrl NOTIFY sectionInfoChanged)
 
 public:
   explicit Geotriggers(QObject* parent = nullptr);
@@ -59,13 +59,13 @@ signals:
 
 private:
   Esri::ArcGISRuntime::MapQuickView* mapView() const;
-  QString sectionName() const;
-  QString sectionDesc() const;
-  QUrl sectionImgUrl() const;
+  QStringList nearbySections() const;
+  QVariantMap sectionDesc() const;
+  QVariantMap sectionImgUrl() const;
   void setMapView(Esri::ArcGISRuntime::MapQuickView* mapView);
   void setupGeotriggerMonitor();
   void initializeSimulatedLocationDisplay();
-  void getSectionImage(Esri::ArcGISRuntime::ArcGISFeature* gardenSection);
+  void getSectionImage(Esri::ArcGISRuntime::ArcGISFeature* gardenSection, QString sectionName);
 
   Esri::ArcGISRuntime::ArcGISFeature* m_agsFeature = nullptr;
   Esri::ArcGISRuntime::AttachmentListModel* m_featureAttachments = nullptr;
@@ -75,9 +75,9 @@ private:
   Esri::ArcGISRuntime::Graphic* m_locationHistoryLineGraphic = nullptr;
   Esri::ArcGISRuntime::ServiceFeatureTable* m_gardenSections = nullptr;
   Esri::ArcGISRuntime::SimulatedLocationDataSource* m_simulatedLocationDataSource = nullptr;
-  QString m_sectionName;
-  QString m_sectionDesc;
-  QUrl m_sectionImgUrl;
+  QStringList m_nearbySections;
+  QVariantMap m_sectionDesc;
+  QVariantMap m_sectionImgUrl;
 };
 
 #endif // GEOTRIGGERS_H

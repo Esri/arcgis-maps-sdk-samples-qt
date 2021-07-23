@@ -20,7 +20,8 @@ import Esri.Samples 1.0
 
 Item {
 
-    property var sectionInfo: model.sectionInfo
+    property var sectionInfo: sampleModel.sectionInfo
+    property var focusSection: ""
 
     // add a mapView component
     MapView {
@@ -30,7 +31,7 @@ Item {
 
     // Declare the C++ instance which creates the scene etc. and supply the view
     GeotriggersSample {
-        id: model
+        id: sampleModel
         mapView: view
     }
 
@@ -41,22 +42,55 @@ Item {
             color: "white"
         }
         contentItem: Column {
-            width: 20
+            width: 200
+
+            Text {
+                text: "nearby features"
+            }
+
+            Repeater {
+                model: sampleModel.nearbySections
+                delegate: Column {
+                    width: 200
+                    Button {
+                        text: modelData
+                        onClicked: {
+                            console.log(focusSection);
+                            if (focusSection === modelData)
+                                focusSection = "";
+                            else {
+                                focusSection = modelData;
+                                sectionNameTextBox.text = focusSection;
+                                img.source = sampleModel.sectionImgUrl[focusSection];
+                                desc.text = sampleModel.sectionDesc[focusSection];
+                            }
+                            console.log(focusSection);
+                        }
+                    }
+                }
+            }
             Image {
-                source: model.sectionImgUrl
+                id: img
+                source: sampleModel.sectionImgUrl[focusSection] ? sampleModel.sectionImgUrl[focusSection] : ""
                 width: 200
                 fillMode: Image.PreserveAspectFit
+                visible: focusSection !== ""
             }
 
             Text {
-                text: model.sectionName
-                font.pointSize: 16
-                font.bold: true
-            }
-            Text {
-                text: model.sectionDesc
+                id: sectionNameTextBox
+                text: ""
                 width: 200
                 wrapMode: Text.WordWrap
+                visible: focusSection !== ""
+            }
+
+            Text {
+                id: desc
+                text: sampleModel.sectionDesc[focusSection] ? sampleModel.sectionDesc[focusSection] : ""
+                width: 200
+                wrapMode: Text.WordWrap
+                visible: focusSection !== ""
             }
         }
     }
