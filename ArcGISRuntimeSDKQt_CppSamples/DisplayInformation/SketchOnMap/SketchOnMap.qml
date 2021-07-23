@@ -162,7 +162,7 @@ Item {
 
                 SketchEditorButton {
                     id: undoButton
-                    buttonName: "undo"
+                    buttonName: "Undo"
                     iconPath: "iconAssets/undo-32.png"
 
                     onClicked: model.undo();
