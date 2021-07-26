@@ -120,7 +120,7 @@ void Geotriggers::initializeSimulatedLocationDisplay()
 void Geotriggers::setupGeotriggerMonitor()
 {
   GeotriggerFeed* feed = new LocationGeotriggerFeed(m_simulatedLocationDataSource, this);
-  FeatureFenceParameters* gardenSectionParams = new FeatureFenceParameters(m_gardenSections, 10000.0, this);
+  FeatureFenceParameters* gardenSectionParams = new FeatureFenceParameters(m_gardenSections, 10.0, this);
 
   FenceGeotrigger* fenceGeotrigger = new FenceGeotrigger(feed, FenceRuleType::EnterOrExit, gardenSectionParams, this);
 
@@ -177,7 +177,7 @@ void Geotriggers::getSectionImage(ArcGISFeature* gardenSection, QString sectionN
       });
       sectionImageAttachment->fetchData();
     });
-    //m_gardenSections->disconnect();
+    m_gardenSections->disconnect();
   });
   m_gardenSections->queryFeatures(queryParams);
 }

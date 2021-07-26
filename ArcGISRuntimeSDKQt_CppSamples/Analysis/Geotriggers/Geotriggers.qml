@@ -69,6 +69,7 @@ Item {
                     }
                 }
             }
+
             Image {
                 id: img
                 source: sampleModel.sectionImgUrl[focusSection] ? sampleModel.sectionImgUrl[focusSection] : ""
