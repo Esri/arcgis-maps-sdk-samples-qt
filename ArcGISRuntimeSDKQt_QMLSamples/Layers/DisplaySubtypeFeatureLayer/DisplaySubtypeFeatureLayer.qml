@@ -203,7 +203,7 @@ Rectangle {
                     Layout.margins: 2
                     Layout.alignment: Qt.AlignLeft
                     enabled: subtypeFeatureLayer.loadStatus === Enums.LoadStatusLoaded ? true : false
-                    onClicked: subtypeSublayer ? subtypeSublayer.minScale = mapScale : null
+                    onClicked: subtypeSublayer ? subtypeSublayer.minScale = Math.ceil(mapScale) : null
                 }
             }
         }
