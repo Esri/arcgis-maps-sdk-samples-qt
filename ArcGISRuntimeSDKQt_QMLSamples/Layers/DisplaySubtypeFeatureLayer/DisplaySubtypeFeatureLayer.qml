@@ -29,8 +29,6 @@ Rectangle {
     property var subtypeSublayer
     property var originalRenderer
     property double mapScale: mapView ? mapView.mapScale : 0
-    property double sublayerMinScale
-
 
     MapView {
         id: mapView
@@ -94,7 +92,6 @@ Rectangle {
 
                     // set a default minimum scale
                     subtypeSublayer.minScale = 3000.0;
-                    sublayerMinScale = subtypeSublayer.minScale;
                 }
 
                 onErrorChanged: print("%1 - %2 - %3 - %4".arg(error.code, error.domain, error.message, error.additionalMessage));
