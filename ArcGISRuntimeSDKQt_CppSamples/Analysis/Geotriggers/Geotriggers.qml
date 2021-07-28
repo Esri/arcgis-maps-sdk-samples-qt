@@ -33,6 +33,13 @@ Item {
     GeotriggersSample {
         id: sampleModel
         mapView: view
+        onSectionInfoChanged: {
+            console.log(focusSection);
+            console.log(nearbySections);
+            if (!(nearbySections.includes(focusSection))) {
+                focusSection = "";
+            }
+        }
     }
 
     Control {
@@ -81,6 +88,10 @@ Item {
             Text {
                 id: sectionNameTextBox
                 text: ""
+                font {
+                    bold: true
+                    pointSize: 16
+                }
                 width: 200
                 wrapMode: Text.WordWrap
                 visible: focusSection !== ""
@@ -92,6 +103,7 @@ Item {
                 width: 200
                 wrapMode: Text.WordWrap
                 visible: focusSection !== ""
+                textFormat: Text.RichText
             }
         }
     }
