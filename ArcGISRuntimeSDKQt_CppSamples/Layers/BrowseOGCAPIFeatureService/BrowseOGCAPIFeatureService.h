@@ -28,11 +28,17 @@ class MapQuickView;
 
 #include <QObject>
 
+#include "OgcFeatureService.h"
+#include "OgcFeatureCollectionInfo.h"
+#include "OgcFeatureCollectionTable.h"
+
 class BrowseOGCAPIFeatureService : public QObject
 {
     Q_OBJECT
 
     Q_PROPERTY(Esri::ArcGISRuntime::MapQuickView* mapView READ mapView WRITE setMapView NOTIFY mapViewChanged)
+    Q_PROPERTY(QUrl featureServiceUrl READ featureServiceUrl NOTIFY urlChanged)
+    Q_PROPERTY(QStringList featureList READ featureList NOTIFY featureListChanged)
 
 public:
     explicit BrowseOGCAPIFeatureService(QObject* parent = nullptr);
@@ -40,15 +46,34 @@ public:
 
     static void init();
 
+    Q_INVOKABLE void loadService(QUrl urlFromInterface);
+    Q_INVOKABLE void loadFeatureAtIndex(int index);
+
 signals:
     void mapViewChanged();
+    void urlChanged();
+    void featureListChanged();
 
 private:
     Esri::ArcGISRuntime::MapQuickView* mapView() const;
     void setMapView(Esri::ArcGISRuntime::MapQuickView* mapView);
+    QUrl featureServiceUrl() const;
+    QStringList featureList() const;
 
     Esri::ArcGISRuntime::Map* m_map = nullptr;
     Esri::ArcGISRuntime::MapQuickView* m_mapView = nullptr;
+
+    QUrl m_featureServiceUrl;
+    Esri::ArcGISRuntime::OgcFeatureService* m_featureService = nullptr;
+    Esri::ArcGISRuntime::OgcFeatureServiceInfo* m_serviceInfo = nullptr;
+    QList<Esri::ArcGISRuntime::OgcFeatureCollectionInfo*> m_collectionInfo;
+    QStringList m_featureList;
+    Esri::ArcGISRuntime::OgcFeatureCollectionTable* m_featureCollectionTable;
+
+    void initialiseOGCService(const QUrl Url);
+    void handleLoadingStatus(Esri::ArcGISRuntime::LoadStatus loadstatus);
+    void retrieveFeatures();
+    void updateListInInterface();
 };
 
 #endif // BROWSEOGCAPIFEATURESERVICE_H

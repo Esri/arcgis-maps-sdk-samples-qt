@@ -17,18 +17,75 @@
 import QtQuick 2.12
 import QtQuick.Controls 2.12
 import Esri.Samples 1.0
+import QtQuick.Layouts 1.12
 
-Item {
+Item {   
+    // Declare the C++ instance which creates the scene etc. and supply the view
+    BrowseOGCAPIFeatureServiceSample {
+        id: model
+        mapView: view
+    }
 
     // add a mapView component
     MapView {
         id: view
         anchors.fill: parent
-    }
 
-    // Declare the C++ instance which creates the scene etc. and supply the view
-    BrowseOGCAPIFeatureServiceSample {
-        id: model
-        mapView: view
+        // Add the OGC feature service UI element
+        Control {
+            id: uiControl
+            anchors {
+                right: view.right
+                top: view.top
+                margins: 10
+            }
+            padding: 10
+            background: Rectangle {
+                color: "white"
+                border.color: "black"
+            }
+            contentItem: GridLayout {
+                columns: 2
+                Label {
+                    id: instructionLabel
+                    text: "Load the service, then select a layer for display"
+                    font.bold: true
+                    verticalAlignment: "AlignVCenter"
+                    horizontalAlignment: "AlignHCenter"
+                    Layout.columnSpan: 2
+                    Layout.fillWidth: true
+                }
+                TextField {
+                    id: serviceURLBox
+                    text: model.featureServiceUrl
+                    Layout.fillWidth: true
+                    selectByMouse: true
+                }
+                Button {
+                    id: connectButton
+                    text: "Load service"
+                    onClicked: model.loadService(serviceURLBox.text)
+
+                }
+                ComboBox {
+                    id: featureList
+                    model: model.featureList
+                    Layout.columnSpan: 2
+                    Layout.fillWidth: true
+                    Layout.fillHeight: true
+                    ScrollBar.vertical: ScrollBar {
+                        id: listVerticalScrollBar
+                        active: true
+                    }
+                }
+                Button {
+                    id: loadLayerButton
+                    text: "Load selected layer"
+                    onClicked: model.loadFeatureAtIndex(featureList.currentIndex)
+                    Layout.columnSpan: 2
+                    Layout.fillWidth: true
+                }
+            }
+        }
     }
 }
