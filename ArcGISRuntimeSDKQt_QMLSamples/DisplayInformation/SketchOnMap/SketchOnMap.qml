@@ -63,7 +63,7 @@ Rectangle {
             Qt.RightButton
             Qt.TapAndHoldGesture
         }
-        enabled: drawStatus !== ""
+        enabled: sketchEditor.started
         onClicked: {
             contextMenu.popup()
         }
@@ -150,6 +150,8 @@ Rectangle {
                     iconPath: "iconAssets/point-32.png"
                     highlighted: drawStatus === "point"
 
+                    enabled: !sketchEditor.started
+
                     onClicked: {
                         sketchEditor.startWithCreationMode(Enums.SketchCreationModePoint);
                         drawStatus = "point";
@@ -163,6 +165,8 @@ Rectangle {
                     images: 2
                     highlighted: drawStatus === "multiPoint"
 
+                    enabled: !sketchEditor.started
+
                     onClicked: {
                         sketchEditor.startWithCreationMode(Enums.SketchCreationModeMultipoint);
                         drawStatus = "multiPoint";
@@ -175,6 +179,8 @@ Rectangle {
                     iconPath: "iconAssets/line-32.png"
                     highlighted: drawStatus === "line"
 
+                    enabled: !sketchEditor.started
+
                     onClicked: {
                         sketchEditor.startWithCreationMode(Enums.SketchCreationModePolyline);
                         drawStatus = "line";
@@ -186,6 +192,8 @@ Rectangle {
                     buttonName: "Polygon"
                     iconPath: "iconAssets/polygon-32.png"
                     highlighted: drawStatus === "polygon"
+
+                    enabled: !sketchEditor.started
 
                     onClicked: {
                         sketchEditor.startWithCreationMode(Enums.SketchCreationModePolygon);
@@ -215,6 +223,8 @@ Rectangle {
                     buttonName: "Undo"
                     iconPath: "iconAssets/undo-32.png"
 
+                    enabled: sketchEditor.started
+
                     onClicked: sketchEditor.undo();
                 }
 
@@ -222,6 +232,8 @@ Rectangle {
                     id: redoButton
                     buttonName: "Redo"
                     iconPath: "iconAssets/redo-32.png"
+
+                    enabled: sketchEditor.started
 
                     onClicked: sketchEditor.redo();
                 }
@@ -231,6 +243,8 @@ Rectangle {
                     buttonName: "Save edits"
                     iconPath: "iconAssets/check-circle-32.png"
                     columnSpan: 2
+
+                    enabled: sketchEditor.started
 
                     onClicked: {
                         drawStatus = "";
@@ -271,6 +285,8 @@ Rectangle {
                     buttonName: "Discard edits"
                     iconPath: "iconAssets/circle-disallowed-32.png"
                     columnSpan: 2
+
+                    enabled: sketchEditor.started
 
                     onClicked: {
                         drawStatus = "";
