@@ -55,6 +55,7 @@ Geotriggers::Geotriggers(QObject* parent /* = nullptr */):
 {
   m_map = new Map(new PortalItem("6ab0e91dc39e478cae4f408e1a36a308", this), this);
   m_gardenSections = new ServiceFeatureTable(new PortalItem("1ba816341ea04243832136379b8951d9", this), 0, this);
+  m_gardenPois = new ServiceFeatureTable(new PortalItem("7c6280c290c34ae8aeb6b5c4ec841167", this), 0, this);
 }
 
 Geotriggers::~Geotriggers() = default;
@@ -71,17 +72,21 @@ MapQuickView* Geotriggers::mapView() const
   return m_mapView;
 }
 
-QString Geotriggers::sectionDescription() const
+QString Geotriggers::currentSection() const
 {
-  return m_sectionDescription;
+  return m_sectionName;
 }
-QUrl Geotriggers::sectionImageUrl() const
+QString Geotriggers::currentDescription() const
 {
-  return m_sectionImageUrl;
+  return m_currentDescription;
 }
-QStringList Geotriggers::nearbySections() const
+QUrl Geotriggers::currentImageUrl() const
 {
-  return m_nearbySections;
+  return m_currentImageUrl;
+}
+QStringList Geotriggers::nearbyPois() const
+{
+  return m_nearbyPois;
 }
 
 // Set the view (created in QML)
@@ -94,21 +99,22 @@ void Geotriggers::setMapView(MapQuickView* mapView)
   m_mapView->setMap(m_map);
 
   initializeSimulatedLocationDisplay();
-  setupGeotriggerMonitor();
+  setupSectionGeotriggerMonitor();
+  setupPoiGeotriggerMonitor();
   createAttachmentConnection();
 
   emit mapViewChanged();
 }
 
-void Geotriggers::setSectionDescription(QString sectionDescription)
+void Geotriggers::setDescription(QString description)
 {
-  m_sectionDescription = sectionDescription;
-  sectionInfoChanged();
+  m_currentDescription = description;
+  displayInfoChanged();
 }
-void Geotriggers::setSectionImageUrl(QUrl imageUrl)
+void Geotriggers::setImageUrl(QUrl imageUrl)
 {
-  m_sectionImageUrl = imageUrl;
-  sectionInfoChanged();
+  m_currentImageUrl = imageUrl;
+  displayInfoChanged();
 }
 
 void Geotriggers::initializeSimulatedLocationDisplay()
@@ -129,17 +135,17 @@ void Geotriggers::initializeSimulatedLocationDisplay()
   m_simulatedLocationDataSource->start();
 }
 
-void Geotriggers::setupGeotriggerMonitor()
+void Geotriggers::setupSectionGeotriggerMonitor()
 {
   // Initialize FeatureFenceParameters with the service feature table and a buffer of 10 meters to display all nearby features of interest
-  FeatureFenceParameters* gardenSectionParams = new FeatureFenceParameters(m_gardenSections, 10.0, this);
+  FeatureFenceParameters* gardenSectionParams = new FeatureFenceParameters(m_gardenSections, 0, this);
   GeotriggerFeed* feed = new LocationGeotriggerFeed(m_simulatedLocationDataSource, this);
 
   FenceGeotrigger* fenceGeotrigger = new FenceGeotrigger(feed, FenceRuleType::EnterOrExit, gardenSectionParams, this);
 
-  m_geotriggerMonitor = new GeotriggerMonitor(fenceGeotrigger, this);
+  GeotriggerMonitor* geotriggerMonitor = new GeotriggerMonitor(fenceGeotrigger, this);
 
-  connect(m_geotriggerMonitor, &GeotriggerMonitor::geotriggerNotification, this, [this](GeotriggerNotificationInfo* notification)
+  connect(geotriggerMonitor, &GeotriggerMonitor::geotriggerNotification, this, [this](GeotriggerNotificationInfo* notification)
   {
     m_mapView->locationDisplay()->setAutoPanMode(LocationDisplayAutoPanMode::Recenter);
     // Cast the default notification to a FenceGeotriggerNotificationInfo to access the triggering GeoElement
@@ -148,34 +154,83 @@ void Geotriggers::setupGeotriggerMonitor()
 
     // Get the name and description from the relevant feature
     QVariantMap attributeMap = fenceFeature->attributes()->attributesMap();
-    m_sectionName = attributeMap.value("name").toString();
+    QString sectionName = attributeMap.value("name").toString();
+    qDebug() << sectionName;
 
     // If the simulated user is entering the feature buffer, the section name should be displayed as a nearby section
     if (fenceGeotriggerNotifInfo->fenceNotificationType() == FenceNotificationType::Entered)
     {
-      m_nearbySections.append(m_sectionName);
+      m_sectionName = sectionName;
+    }
+    else if (sectionName == m_sectionName)
+    {
+      // Otherwise if the simulated user is leaving the feature buffer, remove it from the UI
+      m_sectionName = "Santa Barbara Botanic Garden";
+    }
+    displayInfoChanged();
+  });
+
+  // Start must be explicitly called. It is called after the signal connection is defined to avoid a race condition in Qt.
+  geotriggerMonitor->start();
+}
+
+void Geotriggers::setupPoiGeotriggerMonitor()
+{
+  // Initialize FeatureFenceParameters with the service feature table and a buffer of 10 meters to display all nearby features of interest
+  FeatureFenceParameters* gardenSectionParams = new FeatureFenceParameters(m_gardenPois, 10, this);
+  GeotriggerFeed* feed = new LocationGeotriggerFeed(m_simulatedLocationDataSource, this);
+
+  FenceGeotrigger* fenceGeotrigger = new FenceGeotrigger(feed, FenceRuleType::EnterOrExit, gardenSectionParams, this);
+
+  GeotriggerMonitor* geotriggerMonitor = new GeotriggerMonitor(fenceGeotrigger, this);
+
+  connect(geotriggerMonitor, &GeotriggerMonitor::geotriggerNotification, this, [this](GeotriggerNotificationInfo* notification)
+  {
+    m_mapView->locationDisplay()->setAutoPanMode(LocationDisplayAutoPanMode::Recenter);
+    // Cast the default notification to a FenceGeotriggerNotificationInfo to access the triggering GeoElement
+    FenceGeotriggerNotificationInfo* fenceGeotriggerNotifInfo = static_cast<FenceGeotriggerNotificationInfo*>(notification);
+    GeoElement* fenceFeature = fenceGeotriggerNotifInfo->fenceGeoElement();
+
+    // Get the name and description from the relevant feature
+    QVariantMap attributeMap = fenceFeature->attributes()->attributesMap();
+    QString poiName = attributeMap.value("name").toString();
+    qDebug() << poiName;
+
+    // If the simulated user is entering the feature buffer, the section name should be displayed as a nearby section
+    if (fenceGeotriggerNotifInfo->fenceNotificationType() == FenceNotificationType::Entered)
+    {
+      m_nearbyPois.append(poiName);
     }
     else
     {
       // Otherwise if the simulated user is leaving the feature buffer, remove it from the UI
-      m_nearbySections.removeAll(m_sectionName);
+      m_nearbyPois.removeAll(poiName);
     }
-    sectionInfoChanged();
+    displayInfoChanged();
   });
 
   // Start must be explicitly called. It is called after the signal connection is defined to avoid a race condition in Qt.
-  m_geotriggerMonitor->start();
+  geotriggerMonitor->start();
 }
+
 
 void Geotriggers::getSectionInformation(QString sectionName)
 {
-  m_sectionName = sectionName;
   QueryParameters queryParams;
-  queryParams.setWhereClause(QString("name='%1'").arg(m_sectionName));
+  queryParams.setWhereClause(QString("name='%1'").arg(sectionName));
 
   m_gardenSections->queryFeatures(queryParams);
-  m_sectionDescription = "Fetching section description...";
-  sectionInfoChanged();
+  m_currentDescription = "Fetching section description...";
+  displayInfoChanged();
+}
+void Geotriggers::getPoiInformation(QString poiName)
+{
+  QueryParameters queryParams;
+  queryParams.setWhereClause(QString("name='%1'").arg(poiName));
+
+  m_gardenPois->queryFeatures(queryParams);
+  m_currentDescription = "Fetching section description...";
+  displayInfoChanged();
 }
 
 void Geotriggers::createAttachmentConnection()
@@ -186,12 +241,12 @@ void Geotriggers::createAttachmentConnection()
   {
     if (!featureQueryResult || featureQueryResult->iterator().isEmpty())
     {
-      m_sectionDescription = "Unable to fetch information about this garden section, something went wrong.";
-      sectionInfoChanged();
+      m_currentDescription = "Unable to fetch information about this garden section, something went wrong.";
+      displayInfoChanged();
       return;
     }
     ArcGISFeature* feature = static_cast<ArcGISFeature*>(featureQueryResult->iterator().features(this).at(0));
-    m_sectionDescription = feature->attributes()->attributeValue("description").toString();
+    m_currentDescription = feature->attributes()->attributeValue("description").toString();
 
     // Retrieve the attachments of the feature
     connect(feature->attachments(), &AttachmentListModel::fetchAttachmentsCompleted, this, [this](QUuid, const QList<Attachment*>& attachments)
@@ -200,8 +255,33 @@ void Geotriggers::createAttachmentConnection()
       Attachment* sectionImageAttachment = attachments.at(0);
       connect(sectionImageAttachment, &Attachment::fetchDataCompleted, this, [this, sectionImageAttachment]()
       {
-        m_sectionImageUrl = sectionImageAttachment->attachmentUrl();
-        sectionInfoChanged();
+        m_currentImageUrl = sectionImageAttachment->attachmentUrl();
+        displayInfoChanged();
+      });
+      sectionImageAttachment->fetchData();
+    });
+  });
+
+  connect(m_gardenPois, &ServiceFeatureTable::queryFeaturesCompleted, this, [this](QUuid, FeatureQueryResult* featureQueryResult)
+  {
+    if (!featureQueryResult || featureQueryResult->iterator().isEmpty())
+    {
+      m_currentDescription = "Unable to fetch information about this garden section, something went wrong.";
+      displayInfoChanged();
+      return;
+    }
+    ArcGISFeature* feature = static_cast<ArcGISFeature*>(featureQueryResult->iterator().features(this).at(0));
+    m_currentDescription = feature->attributes()->attributeValue("description").toString();
+
+    // Retrieve the attachments of the feature
+    connect(feature->attachments(), &AttachmentListModel::fetchAttachmentsCompleted, this, [this](QUuid, const QList<Attachment*>& attachments)
+    {
+      // Get the first (and only) attachment for the feature
+      Attachment* sectionImageAttachment = attachments.at(0);
+      connect(sectionImageAttachment, &Attachment::fetchDataCompleted, this, [this, sectionImageAttachment]()
+      {
+        m_currentImageUrl = sectionImageAttachment->attachmentUrl();
+        displayInfoChanged();
       });
       sectionImageAttachment->fetchData();
     });

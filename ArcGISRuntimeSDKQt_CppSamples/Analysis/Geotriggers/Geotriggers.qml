@@ -51,7 +51,7 @@ Item {
             spacing: 10
 
             Text {
-                text: "Nearby Features"
+                text: "Current Section"
                 padding: 5
                 horizontalAlignment: Text.AlignHCenter
                 anchors.horizontalCenter: parent.horizontalCenter
@@ -59,13 +59,43 @@ Item {
                 font.pointSize: 16
             }
 
+            RoundButton {
+                id: sbutton
+                width: parent.width - 10
+                Text {
+                    id: buttonText
+                    text: sampleModel.currentSection
+                    wrapMode: Text.WordWrap
+                    anchors.centerIn: parent
+                    width: parent.width - 5
+                    horizontalAlignment: Text.AlignHCenter
+                    anchors.horizontalCenter: parent.horizontalCenter
+                }
+
+                onClicked: {
+                    currentSectionName = buttonText.text;
+                    sampleModel.getSectionInformation(currentSectionName);
+                }
+
+            }
+            Text {
+                text: "Nearby Points of Interest"
+                padding: 5
+                horizontalAlignment: Text.AlignHCenter
+                anchors.horizontalCenter: parent.horizontalCenter
+                font.bold: true
+                font.pointSize: 16
+                visible: sampleModel.nearbyPois.length > 0
+            }
+
             Repeater {
-                model: sampleModel.nearbySections
+                visible: sampleModel.nearbyPois.count > 0
+                model: sampleModel.nearbyPois
                 delegate: RoundButton {
                     id: button
                     width: parent.width - 10
                     Text {
-                        id: buttonText
+                        id: pbuttonText
                         text: modelData
                         wrapMode: Text.WordWrap
                         anchors.centerIn: parent
@@ -75,8 +105,8 @@ Item {
                     }
 
                     onClicked: {
-                        currentSectionName = buttonText.text;
-                        sampleModel.getSectionInformation(currentSectionName);
+                        currentSectionName = pbuttonText.text;
+                        sampleModel.getPoiInformation(currentSectionName);
                     }
                 }
             }
@@ -106,7 +136,7 @@ Item {
 
                 Image {
                     id: img
-                    source: sampleModel.sectionImageUrl
+                    source: sampleModel.currentImageUrl
                     fillMode: Image.PreserveAspectFit
                     width: scrollViewComponent.width
                 }
@@ -127,7 +157,7 @@ Item {
                 Text {
                     id: desc
                     width: scrollViewComponent.width
-                    text: sampleModel.sectionDescription
+                    text: sampleModel.currentDescription
                     textFormat: Text.RichText
                     horizontalAlignment: Text.AlignLeft
                     verticalAlignment: Text.AlignTop
@@ -145,8 +175,8 @@ Item {
                     }
                     onClicked: {
                         currentSectionName = ""
-                        sampleModel.sectionDescription = "";
-                        sampleModel.sectionImageUrl = "";
+                        sampleModel.currentDescription = "";
+                        sampleModel.currentImageUrl = "";
                     }
                 }
             }

@@ -43,9 +43,10 @@ class Geotriggers : public QObject
   Q_OBJECT
 
   Q_PROPERTY(Esri::ArcGISRuntime::MapQuickView* mapView READ mapView WRITE setMapView NOTIFY mapViewChanged)
-  Q_PROPERTY(QStringList nearbySections READ nearbySections NOTIFY sectionInfoChanged)
-  Q_PROPERTY(QString sectionDescription READ sectionDescription WRITE setSectionDescription NOTIFY sectionInfoChanged)
-  Q_PROPERTY(QUrl sectionImageUrl READ sectionImageUrl WRITE setSectionImageUrl NOTIFY sectionInfoChanged)
+  Q_PROPERTY(QString currentSection READ currentSection NOTIFY displayInfoChanged)
+  Q_PROPERTY(QStringList nearbyPois READ nearbyPois NOTIFY displayInfoChanged)
+  Q_PROPERTY(QString currentDescription READ currentDescription WRITE setDescription NOTIFY displayInfoChanged)
+  Q_PROPERTY(QUrl currentImageUrl READ currentImageUrl WRITE setImageUrl NOTIFY displayInfoChanged)
 
 public:
   explicit Geotriggers(QObject* parent = nullptr);
@@ -54,20 +55,23 @@ public:
   static void init();
 
   Q_INVOKABLE void getSectionInformation(QString sectionName);
+  Q_INVOKABLE void getPoiInformation(QString poiName);
 
 signals:
   void mapViewChanged();
-  void sectionInfoChanged();
+  void displayInfoChanged();
 
 private:
   Esri::ArcGISRuntime::MapQuickView* mapView() const;
-  QStringList nearbySections() const;
-  QString sectionDescription() const;
-  QUrl sectionImageUrl() const;
+  QString currentSection() const;
+  QStringList nearbyPois() const;
+  QString currentDescription() const;
+  QUrl currentImageUrl() const;
   void setMapView(Esri::ArcGISRuntime::MapQuickView* mapView);
-  void setSectionDescription(QString sectionDescription);
-  void setSectionImageUrl(QUrl sectionImageUrl);
-  void setupGeotriggerMonitor();
+  void setDescription(QString description);
+  void setImageUrl(QUrl imageUrl);
+  void setupSectionGeotriggerMonitor();
+  void setupPoiGeotriggerMonitor();
   void initializeSimulatedLocationDisplay();
   void createAttachmentConnection();
 
@@ -78,11 +82,12 @@ private:
   Esri::ArcGISRuntime::MapQuickView* m_mapView = nullptr;
   Esri::ArcGISRuntime::Graphic* m_locationHistoryLineGraphic = nullptr;
   Esri::ArcGISRuntime::ServiceFeatureTable* m_gardenSections = nullptr;
+  Esri::ArcGISRuntime::ServiceFeatureTable* m_gardenPois = nullptr;
   Esri::ArcGISRuntime::SimulatedLocationDataSource* m_simulatedLocationDataSource = nullptr;
-  QStringList m_nearbySections;
   QString m_sectionName;
-  QString m_sectionDescription;
-  QUrl m_sectionImageUrl;
+  QStringList m_nearbyPois;
+  QString m_currentDescription;
+  QUrl m_currentImageUrl;
 };
 
 #endif // GEOTRIGGERS_H
