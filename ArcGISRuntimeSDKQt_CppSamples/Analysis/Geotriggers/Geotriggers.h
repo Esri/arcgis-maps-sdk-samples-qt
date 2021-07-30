@@ -44,14 +44,16 @@ class Geotriggers : public QObject
 
   Q_PROPERTY(Esri::ArcGISRuntime::MapQuickView* mapView READ mapView WRITE setMapView NOTIFY mapViewChanged)
   Q_PROPERTY(QStringList nearbySections READ nearbySections NOTIFY sectionInfoChanged)
-  Q_PROPERTY(QVariantMap sectionDesc READ sectionDesc NOTIFY sectionInfoChanged)
-  Q_PROPERTY(QVariantMap sectionImgUrl READ sectionImgUrl NOTIFY sectionInfoChanged)
+  Q_PROPERTY(QString sectionDescription READ sectionDescription WRITE setSectionDescription NOTIFY sectionInfoChanged)
+  Q_PROPERTY(QUrl sectionImageUrl READ sectionImageUrl WRITE setSectionImageUrl NOTIFY sectionInfoChanged)
 
 public:
   explicit Geotriggers(QObject* parent = nullptr);
   ~Geotriggers();
 
   static void init();
+
+  Q_INVOKABLE void getSectionInformation(QString sectionName);
 
 signals:
   void mapViewChanged();
@@ -60,12 +62,14 @@ signals:
 private:
   Esri::ArcGISRuntime::MapQuickView* mapView() const;
   QStringList nearbySections() const;
-  QVariantMap sectionDesc() const;
-  QVariantMap sectionImgUrl() const;
+  QString sectionDescription() const;
+  QUrl sectionImageUrl() const;
   void setMapView(Esri::ArcGISRuntime::MapQuickView* mapView);
+  void setSectionDescription(QString sectionDescription);
+  void setSectionImageUrl(QUrl sectionImageUrl);
   void setupGeotriggerMonitor();
   void initializeSimulatedLocationDisplay();
-  void getSectionImage(Esri::ArcGISRuntime::ArcGISFeature* gardenSection, QString sectionName);
+  void createAttachmentConnection();
 
   Esri::ArcGISRuntime::ArcGISFeature* m_agsFeature = nullptr;
   Esri::ArcGISRuntime::AttachmentListModel* m_featureAttachments = nullptr;
@@ -76,8 +80,9 @@ private:
   Esri::ArcGISRuntime::ServiceFeatureTable* m_gardenSections = nullptr;
   Esri::ArcGISRuntime::SimulatedLocationDataSource* m_simulatedLocationDataSource = nullptr;
   QStringList m_nearbySections;
-  QVariantMap m_sectionDesc;
-  QVariantMap m_sectionImgUrl;
+  QString m_sectionName;
+  QString m_sectionDescription;
+  QUrl m_sectionImageUrl;
 };
 
 #endif // GEOTRIGGERS_H

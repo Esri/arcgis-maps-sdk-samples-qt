@@ -53,9 +53,7 @@ const QString polylineJson("{\"paths\":[[[-119.709881177746,34.4570041646846],[-
 Geotriggers::Geotriggers(QObject* parent /* = nullptr */):
   QObject(parent)
 {
-  ArcGISTiledLayer* gardenMap = new ArcGISTiledLayer(new PortalItem("b6cb2e140f7248b89092e0eae88351e1", this), this);
-  m_map = new Map(new Basemap(gardenMap, this), this);
-
+  m_map = new Map(new PortalItem("6ab0e91dc39e478cae4f408e1a36a308", this), this);
   m_gardenSections = new ServiceFeatureTable(new PortalItem("1ba816341ea04243832136379b8951d9", this), 0, this);
 }
 
@@ -73,13 +71,13 @@ MapQuickView* Geotriggers::mapView() const
   return m_mapView;
 }
 
-QVariantMap Geotriggers::sectionDesc() const
+QString Geotriggers::sectionDescription() const
 {
-  return m_sectionDesc;
+  return m_sectionDescription;
 }
-QVariantMap Geotriggers::sectionImgUrl() const
+QUrl Geotriggers::sectionImageUrl() const
 {
-  return m_sectionImgUrl;
+  return m_sectionImageUrl;
 }
 QStringList Geotriggers::nearbySections() const
 {
@@ -97,8 +95,20 @@ void Geotriggers::setMapView(MapQuickView* mapView)
 
   initializeSimulatedLocationDisplay();
   setupGeotriggerMonitor();
+  createAttachmentConnection();
 
   emit mapViewChanged();
+}
+
+void Geotriggers::setSectionDescription(QString sectionDescription)
+{
+  m_sectionDescription = sectionDescription;
+  sectionInfoChanged();
+}
+void Geotriggers::setSectionImageUrl(QUrl imageUrl)
+{
+  m_sectionImageUrl = imageUrl;
+  sectionInfoChanged();
 }
 
 void Geotriggers::initializeSimulatedLocationDisplay()
@@ -106,7 +116,7 @@ void Geotriggers::initializeSimulatedLocationDisplay()
   m_simulatedLocationDataSource = new SimulatedLocationDataSource(this);
 
   // Create SimulationParameters starting at the current time, a velocity of 10 m/s, and a horizontal and vertical accuracy of 0.0
-  SimulationParameters* simulationParameters = new SimulationParameters(QDateTime::currentDateTime(), 3.0, 0.0, 0.0, this);
+  SimulationParameters* simulationParameters = new SimulationParameters(QDateTime::currentDateTime(), 5.0, 0.0, 0.0, this);
 
   // Use the polyline from this AGOL GeoJSON to define the path. retrieved from https://arcgisruntime.maps.arcgis.com/home/item.html?id=9a72ac39712345e3b1775deaa94d3513
   m_simulatedLocationDataSource->setLocationsWithPolyline(Polyline::fromJson(polylineJson), simulationParameters);
@@ -131,32 +141,25 @@ void Geotriggers::setupGeotriggerMonitor()
 
   connect(m_geotriggerMonitor, &GeotriggerMonitor::geotriggerNotification, this, [this](GeotriggerNotificationInfo* notification)
   {
+    m_mapView->locationDisplay()->setAutoPanMode(LocationDisplayAutoPanMode::Recenter);
     // Cast the default notification to a FenceGeotriggerNotificationInfo to access the triggering GeoElement
     FenceGeotriggerNotificationInfo* fenceGeotriggerNotifInfo = static_cast<FenceGeotriggerNotificationInfo*>(notification);
     GeoElement* fenceFeature = fenceGeotriggerNotifInfo->fenceGeoElement();
 
     // Get the name and description from the relevant feature
     QVariantMap attributeMap = fenceFeature->attributes()->attributesMap();
-    QString sectionName = attributeMap.value("name").toString();
-    qDebug() << QStringList{"enter","exit"}[(int)fenceGeotriggerNotifInfo->fenceNotificationType()] << attributeMap.value("name").toString();
+    m_sectionName = attributeMap.value("name").toString();
 
-    // If the simulated user is leaving the feature buffer, remove it from the UI
-    if (fenceGeotriggerNotifInfo->fenceNotificationType() == FenceNotificationType::Exited)
+    // If the simulated user is entering the feature buffer, the section name should be displayed as a nearby section
+    if (fenceGeotriggerNotifInfo->fenceNotificationType() == FenceNotificationType::Entered)
     {
-      m_nearbySections.removeAll(sectionName);
-      m_sectionDesc.remove(sectionName);
-      m_sectionImgUrl.remove(sectionName);
-      sectionInfoChanged();
-      return;
+      m_nearbySections.append(m_sectionName);
     }
-
-    // Otherwise the user is entering the feature buffer and information about the feature should be displayed on the UI
-    m_nearbySections.append(sectionName);
-    m_sectionDesc[sectionName] = attributeMap.value("description");
-
-    ArcGISFeature* feature = static_cast<ArcGISFeature*>(fenceFeature);
-
-    getSectionImage(feature, sectionName);
+    else
+    {
+      // Otherwise if the simulated user is leaving the feature buffer, remove it from the UI
+      m_nearbySections.removeAll(m_sectionName);
+    }
     sectionInfoChanged();
   });
 
@@ -164,32 +167,43 @@ void Geotriggers::setupGeotriggerMonitor()
   m_geotriggerMonitor->start();
 }
 
-void Geotriggers::getSectionImage(ArcGISFeature* gardenSection, QString sectionName)
-// This function asynchronously retrieves and displays an image of the feature that triggered the geotrigger notification.
+void Geotriggers::getSectionInformation(QString sectionName)
 {
+  m_sectionName = sectionName;
   QueryParameters queryParams;
-  queryParams.setWhereClause("objectid=" + gardenSection->attributes()->attributeValue(QString("objectid")).toString());
+  queryParams.setWhereClause(QString("name='%1'").arg(m_sectionName));
 
-  connect(m_gardenSections, &ServiceFeatureTable::queryFeaturesCompleted, this, [this, sectionName](QUuid, FeatureQueryResult* featureQueryResult)
+  m_gardenSections->queryFeatures(queryParams);
+  m_sectionDescription = "Fetching section description...";
+  sectionInfoChanged();
+}
+
+void Geotriggers::createAttachmentConnection()
+// This function responds to getSectionInformation() and asynchronously retrieves and displays an image of the feature that triggered the geotrigger notification.
+{
   // Query the ServiceFeatureTable for the triggering feature
+  connect(m_gardenSections, &ServiceFeatureTable::queryFeaturesCompleted, this, [this](QUuid, FeatureQueryResult* featureQueryResult)
   {
+    if (!featureQueryResult || featureQueryResult->iterator().isEmpty())
+    {
+      m_sectionDescription = "Unable to fetch information about this garden section, something went wrong.";
+      sectionInfoChanged();
+      return;
+    }
     ArcGISFeature* feature = static_cast<ArcGISFeature*>(featureQueryResult->iterator().features(this).at(0));
-    connect(feature->attachments(), &AttachmentListModel::fetchAttachmentsCompleted, this, [this, sectionName](QUuid, const QList<Attachment*>& attachments)
+    m_sectionDescription = feature->attributes()->attributeValue("description").toString();
+
     // Retrieve the attachments of the feature
+    connect(feature->attachments(), &AttachmentListModel::fetchAttachmentsCompleted, this, [this](QUuid, const QList<Attachment*>& attachments)
     {
       // Get the first (and only) attachment for the feature
       Attachment* sectionImageAttachment = attachments.at(0);
-      connect(sectionImageAttachment, &Attachment::fetchDataCompleted, this, [this, sectionImageAttachment, sectionName]()
+      connect(sectionImageAttachment, &Attachment::fetchDataCompleted, this, [this, sectionImageAttachment]()
       {
-        qDebug() << sectionName;
-        if (!m_sectionImgUrl.contains(sectionName))
-          m_sectionImgUrl[sectionName] = sectionImageAttachment->attachmentUrl();
+        m_sectionImageUrl = sectionImageAttachment->attachmentUrl();
         sectionInfoChanged();
-        sectionImageAttachment->disconnect();
       });
       sectionImageAttachment->fetchData();
     });
-    m_gardenSections->disconnect();
   });
-  m_gardenSections->queryFeatures(queryParams);
 }
