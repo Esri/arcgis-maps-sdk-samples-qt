@@ -35,7 +35,7 @@ int main(int argc, char *argv[])
       if (apiKey.isEmpty())
       {
           qWarning() << "Use of Esri location services, including basemaps, requires"
-                        "you to authenticate with an ArcGIS identity or set the API Key property.";
+                        " you to authenticate with an ArcGIS identity or set the API Key property.";
       }
       else
       {
