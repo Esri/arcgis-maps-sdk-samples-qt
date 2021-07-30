@@ -16,6 +16,8 @@ RoundButton {
     Layout.columnSpan: columnSpan
     radius: 5
 
+    focusPolicy: Qt.NoFocus
+
     Image {
         id: imgComponent
         anchors {

@@ -95,6 +95,7 @@ Item {
                     iconPath: "iconAssets/point-32.png"
 
                     highlighted: drawStatus === "point"
+                    enabled: !model.sketchEditorStarted
 
                     onClicked: {
                         model.setSketchCreationMode(SketchOnMapSample.PointSketchMode);
@@ -109,6 +110,7 @@ Item {
                     images: 2
 
                     highlighted: drawStatus === "multiPoint"
+                    enabled: !model.sketchEditorStarted
 
                     onClicked: {
                         model.setSketchCreationMode(SketchOnMapSample.MultipointSketchMode);
@@ -122,6 +124,7 @@ Item {
                     iconPath: "iconAssets/line-32.png"
 
                     highlighted: drawStatus === "line"
+                    enabled: !model.sketchEditorStarted
 
                     onClicked: {
                         model.setSketchCreationMode(SketchOnMapSample.PolylineSketchMode);
@@ -135,6 +138,7 @@ Item {
                     iconPath: "iconAssets/polygon-32.png"
 
                     highlighted: drawStatus === "polygon"
+                    enabled: !model.sketchEditorStarted
 
                     onClicked: {
                         model.setSketchCreationMode(SketchOnMapSample.PolygonSketchMode);
@@ -165,6 +169,8 @@ Item {
                     buttonName: "Undo"
                     iconPath: "iconAssets/undo-32.png"
 
+                    enabled: model.sketchEditorStarted
+
                     onClicked: model.undo();
                 }
 
@@ -172,6 +178,8 @@ Item {
                     id: redoButton
                     buttonName: "Redo"
                     iconPath: "iconAssets/redo-32.png"
+
+                    enabled: model.sketchEditorStarted
 
                     onClicked: model.redo();
                 }
@@ -182,9 +190,13 @@ Item {
                     buttonName: "Save edits"
                     iconPath: "iconAssets/check-circle-32.png"
 
+                    enabled: model.sketchEditorStarted
+
                     onClicked: {
                         model.stopSketching(true);
                         drawStatus = "";
+                        if (!model.sketchEditorStarted && !clearGraphicsButton.enabled)
+                            clearGraphicsButton.enabled = true;
                     }
                 }
 
@@ -193,6 +205,8 @@ Item {
                     columnSpan: 2
                     buttonName: "Discard edits"
                     iconPath: "iconAssets/circle-disallowed-32.png"
+
+                    enabled: model.sketchEditorStarted
 
                     onClicked: {
                         model.stopSketching(false);
@@ -206,7 +220,12 @@ Item {
                     buttonName: "Clear graphics"
                     iconPath: "iconAssets/trash-32.png"
 
-                    onClicked: model.clearGraphics();
+                    enabled: false
+
+                    onClicked: {
+                        model.clearGraphics();
+                        enabled = false;
+                    }
                 }
             }
         }

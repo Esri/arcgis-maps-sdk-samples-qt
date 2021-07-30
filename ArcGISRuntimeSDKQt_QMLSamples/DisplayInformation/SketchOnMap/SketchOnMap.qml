@@ -302,8 +302,11 @@ Rectangle {
                     buttonName: "Clear graphics"
                     iconPath: "iconAssets/trash-32.png"
                     columnSpan: 2
+                    enabled: sketchOverlay.graphics.count > 0;
 
-                    onClicked: sketchOverlay.graphics.clear();
+                    onClicked: {
+                        sketchOverlay.graphics.clear();
+                    }
                 }
             }
         }

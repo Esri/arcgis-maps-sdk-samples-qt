@@ -95,6 +95,7 @@ void SketchOnMap::setSketchCreationMode(SampleSketchMode sketchCreationMode)
     default:
       break;
   }
+  sketchEditorStartedChanged();
 }
 
 void SketchOnMap::stopSketching(bool saveGeometry)
@@ -102,6 +103,7 @@ void SketchOnMap::stopSketching(bool saveGeometry)
   if (!m_sketchEditor->isStarted() || !saveGeometry)
   {
     m_sketchEditor->stop();
+    sketchEditorStartedChanged();
     return;
   }
 
@@ -141,6 +143,15 @@ void SketchOnMap::stopSketching(bool saveGeometry)
   m_sketchOverlay->graphics()->append(sketchGraphic);
 
   m_sketchEditor->stop();
+  sketchEditorStartedChanged();
+}
+
+bool SketchOnMap::sketchEditorStarted() const
+{
+  if (m_sketchEditor)
+    return m_sketchEditor->isStarted();
+
+  return false;
 }
 
 void SketchOnMap::createSymbols()

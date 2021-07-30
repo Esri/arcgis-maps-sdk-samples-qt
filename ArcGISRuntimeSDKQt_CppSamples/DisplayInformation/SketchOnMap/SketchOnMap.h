@@ -40,6 +40,7 @@ class SketchOnMap : public QObject
   Q_OBJECT
 
   Q_PROPERTY(Esri::ArcGISRuntime::MapQuickView* mapView READ mapView WRITE setMapView NOTIFY mapViewChanged)
+  Q_PROPERTY(bool sketchEditorStarted READ sketchEditorStarted NOTIFY sketchEditorStartedChanged)
 
 public:
   explicit SketchOnMap(QObject* parent = nullptr);
@@ -64,12 +65,14 @@ public:
 
 signals:
   void mapViewChanged();
+  void sketchEditorStartedChanged();
 
 private:
   Esri::ArcGISRuntime::MapQuickView* mapView() const;
   void setMapView(Esri::ArcGISRuntime::MapQuickView* mapView);
   void createConnections();
   void createSymbols();
+  bool sketchEditorStarted() const;
 
   Esri::ArcGISRuntime::Map* m_map = nullptr;
   Esri::ArcGISRuntime::MapQuickView* m_mapView = nullptr;
@@ -81,7 +84,6 @@ private:
   Esri::ArcGISRuntime::SimpleMarkerSymbol* m_multiPointSymbol = nullptr;
   Esri::ArcGISRuntime::SimpleLineSymbol* m_lineSymbol = nullptr;
   Esri::ArcGISRuntime::SimpleFillSymbol* m_polygonSymbol = nullptr;
-
 };
 
 #endif // SKETCHONMAP_H
