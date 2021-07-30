@@ -27,6 +27,9 @@ Rectangle {
 
     property var drawStatus: ""
 
+    onFocusChanged: {
+        mapView.focus = true
+    }
     MapView {
         id: mapView
         anchors.fill: parent
