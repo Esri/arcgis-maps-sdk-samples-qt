@@ -50,7 +50,7 @@ void BrowseOGCAPIFeatureService::init()
     qmlRegisterType<BrowseOGCAPIFeatureService>("Esri.Samples", 1, 0, "BrowseOGCAPIFeatureServiceSample");
 }
 
-void BrowseOGCAPIFeatureService::initialiseOGCService(const QUrl Url)
+void BrowseOGCAPIFeatureService::initialiseOGCService(const QUrl& url)
 {
     // Delete existing feature service and associated information (if nullptr, nothing will happen).
     m_collectionInfo.clear();
@@ -60,7 +60,7 @@ void BrowseOGCAPIFeatureService::initialiseOGCService(const QUrl Url)
     emit featureListChanged();
 
     // Create an OGCFeatureService object
-    m_featureService = new OgcFeatureService(Url, this);
+    m_featureService = new OgcFeatureService(url, this);
 
     // Establish connection between loadStatusChanged and serviceLoading()
     connect(m_featureService, &OgcFeatureService::loadStatusChanged, this, &BrowseOGCAPIFeatureService::handleLoadingStatus);

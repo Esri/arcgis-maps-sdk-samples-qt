@@ -70,7 +70,7 @@ private:
     QStringList m_featureList;
     Esri::ArcGISRuntime::OgcFeatureCollectionTable* m_featureCollectionTable;
 
-    void initialiseOGCService(const QUrl Url);
+    void initialiseOGCService(const QUrl& url);
     void handleLoadingStatus(Esri::ArcGISRuntime::LoadStatus loadstatus);
     void retrieveFeatures();
     void updateListInInterface();
