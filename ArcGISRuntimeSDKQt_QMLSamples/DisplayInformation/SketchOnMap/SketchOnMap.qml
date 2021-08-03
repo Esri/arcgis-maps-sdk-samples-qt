@@ -260,7 +260,7 @@ Rectangle {
                         }
 
                         // To save the sketch, create a graphic with the sketch's geometry before stopping the sketchEditor
-                        var graphic = ArcGISRuntimeEnvironment.createObject("Graphic");
+                        const graphic = ArcGISRuntimeEnvironment.createObject("Graphic");
                         graphic.geometry = sketchEditor.geometry;
 
                         switch (sketchEditor.creationMode) {
