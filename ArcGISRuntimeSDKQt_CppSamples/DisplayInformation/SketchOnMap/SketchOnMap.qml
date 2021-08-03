@@ -21,7 +21,15 @@ import Esri.Samples 1.0
 
 Item {
 
-    property var drawStatus: ""
+    enum DrawingModes {
+        NotDrawing,
+        Point,
+        Multipoint,
+        Line,
+        Polygon
+    }
+
+    property int drawStatus: SketchOnMap.DrawingModes.NotDrawing
 
     SketchOnMapSample {
         id: model
@@ -96,57 +104,57 @@ Item {
                 SketchEditorButton {
                     id: ptButton
                     buttonName: "Point"
-                    iconPath: "iconAssets/point-32.png"
+                    iconPath: "qrc:/Samples/DisplayInformation/SketchOnMap/iconAssets/point-32.png"
 
-                    highlighted: drawStatus === "point"
+                    highlighted: drawStatus === SketchOnMap.DrawingModes.Point
                     enabled: !model.sketchEditorStarted
 
                     onClicked: {
                         model.setSketchCreationMode(SketchOnMapSample.PointSketchMode);
-                        drawStatus = "point";
+                        drawStatus = SketchOnMap.DrawingModes.Point;
                     }
                 }
 
                 SketchEditorButton {
                     id: mPtButton
                     buttonName: "Multipoint"
-                    iconPath: "iconAssets/point-32.png"
+                    iconPath: "qrc:/Samples/DisplayInformation/SketchOnMap/iconAssets/point-32.png"
                     images: 2
 
-                    highlighted: drawStatus === "multiPoint"
+                    highlighted: drawStatus === SketchOnMap.DrawingModes.Multipoint
                     enabled: !model.sketchEditorStarted
 
                     onClicked: {
                         model.setSketchCreationMode(SketchOnMapSample.MultipointSketchMode);
-                        drawStatus = "multiPoint";
+                        drawStatus = SketchOnMap.DrawingModes.Multipoint;
                     }
                 }
 
                 SketchEditorButton {
                     id: lineButton
                     buttonName: "Line"
-                    iconPath: "iconAssets/line-32.png"
+                    iconPath: "qrc:/Samples/DisplayInformation/SketchOnMap/iconAssets/line-32.png"
 
-                    highlighted: drawStatus === "line"
+                    highlighted: drawStatus === SketchOnMap.DrawingModes.Line
                     enabled: !model.sketchEditorStarted
 
                     onClicked: {
                         model.setSketchCreationMode(SketchOnMapSample.PolylineSketchMode);
-                        drawStatus = "line";
+                        drawStatus = SketchOnMap.DrawingModes.Line;
                     }
                 }
 
                 SketchEditorButton {
                     id: polygonButton
                     buttonName: "Polygon"
-                    iconPath: "iconAssets/polygon-32.png"
+                    iconPath: "qrc:/Samples/DisplayInformation/SketchOnMap/iconAssets/polygon-32.png"
 
-                    highlighted: drawStatus === "polygon"
+                    highlighted: drawStatus === SketchOnMap.DrawingModes.Polygon
                     enabled: !model.sketchEditorStarted
 
                     onClicked: {
                         model.setSketchCreationMode(SketchOnMapSample.PolygonSketchMode);
-                        drawStatus = "polygon";
+                        drawStatus = SketchOnMap.DrawingModes.Polygon;
                     }
                 }
             }
@@ -170,7 +178,7 @@ Item {
                 SketchEditorButton {
                     id: undoButton
                     buttonName: "Undo"
-                    iconPath: "iconAssets/undo-32.png"
+                    iconPath: "qrc:/Samples/DisplayInformation/SketchOnMap/iconAssets/undo-32.png"
 
                     enabled: model.sketchEditorStarted
 
@@ -180,7 +188,7 @@ Item {
                 SketchEditorButton {
                     id: redoButton
                     buttonName: "Redo"
-                    iconPath: "iconAssets/redo-32.png"
+                    iconPath: "qrc:/Samples/DisplayInformation/SketchOnMap/iconAssets/redo-32.png"
 
                     enabled: model.sketchEditorStarted
 
@@ -188,16 +196,27 @@ Item {
                 }
 
                 SketchEditorButton {
+                    id: deleteSelectedVertexButton
+                    columnSpan: 2
+                    buttonName: "Delete selected vertex"
+                    iconPath: "qrc:/Samples/DisplayInformation/SketchOnMap/iconAssets/erase-32.png"
+
+                    enabled: model.sketchEditorStarted
+
+                    onClicked: model.deleteVertex();
+                }
+
+                SketchEditorButton {
                     id: saveEditsButton
                     columnSpan: 2
                     buttonName: "Save edits"
-                    iconPath: "iconAssets/check-circle-32.png"
+                    iconPath: "qrc:/Samples/DisplayInformation/SketchOnMap/iconAssets/check-circle-32.png"
 
                     enabled: model.sketchEditorStarted
 
                     onClicked: {
                         model.stopSketching(true);
-                        drawStatus = "";
+                        drawStatus = SketchOnMap.DrawingModes.NotDrawing
                         if (!model.sketchEditorStarted && !clearGraphicsButton.enabled)
                             clearGraphicsButton.enabled = true;
                     }
@@ -207,13 +226,13 @@ Item {
                     id: discardEditsButton
                     columnSpan: 2
                     buttonName: "Discard edits"
-                    iconPath: "iconAssets/circle-disallowed-32.png"
+                    iconPath: "qrc:/Samples/DisplayInformation/SketchOnMap/iconAssets/circle-disallowed-32.png"
 
                     enabled: model.sketchEditorStarted
 
                     onClicked: {
                         model.stopSketching(false);
-                        drawStatus = "";
+                        drawStatus = SketchOnMap.DrawingModes.NotDrawing
                     }
                 }
 
@@ -221,7 +240,7 @@ Item {
                     id: clearGraphicsButton
                     columnSpan: 2
                     buttonName: "Clear graphics"
-                    iconPath: "iconAssets/trash-32.png"
+                    iconPath: "qrc:/Samples/DisplayInformation/SketchOnMap/iconAssets/trash-32.png"
 
                     enabled: false
 

@@ -17,5 +17,6 @@
         <file>iconAssets/trash-32.png</file>
         <file>iconAssets/undo-32.png</file>
         <file>SketchEditorButton.qml</file>
+        <file>iconAssets/erase-32.png</file>
     </qresource>
 </RCC>

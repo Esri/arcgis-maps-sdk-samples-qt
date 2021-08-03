@@ -27,7 +27,8 @@
         "SketchEditor"
     ],
     "snippets": [
-        "SketchOnMap.qml"
+        "SketchOnMap.qml",
+        "SketchEditorButton.qml"
     ],
     "title": "Sketch on map"
 }

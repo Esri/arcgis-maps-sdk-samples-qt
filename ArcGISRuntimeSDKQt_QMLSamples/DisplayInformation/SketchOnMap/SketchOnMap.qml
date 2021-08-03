@@ -121,7 +121,6 @@ Rectangle {
 
         focusPolicy: Qt.NoFocus
 
-
         background: Rectangle {
             color: "black"
             opacity: .5
@@ -153,7 +152,7 @@ Rectangle {
                 SketchEditorButton {
                     id: ptButton
                     buttonName: "Point"
-                    iconPath: "iconAssets/point-32.png"
+                    iconPath: "qrc:/Samples/DisplayInformation/SketchOnMap/iconAssets/point-32.png"
                     highlighted: drawStatus === "point"
 
                     enabled: !sketchEditor.started
@@ -167,7 +166,7 @@ Rectangle {
                 SketchEditorButton {
                     id: mPtButton
                     buttonName: "Multipoint"
-                    iconPath: "iconAssets/point-32.png"
+                    iconPath: "qrc:/Samples/DisplayInformation/SketchOnMap/iconAssets/point-32.png"
                     images: 2
                     highlighted: drawStatus === "multiPoint"
 
@@ -182,7 +181,7 @@ Rectangle {
                 SketchEditorButton {
                     id: lineButton
                     buttonName: "Line"
-                    iconPath: "iconAssets/line-32.png"
+                    iconPath: "qrc:/Samples/DisplayInformation/SketchOnMap/iconAssets/line-32.png"
                     highlighted: drawStatus === "line"
 
                     enabled: !sketchEditor.started
@@ -196,7 +195,7 @@ Rectangle {
                 SketchEditorButton {
                     id: polygonButton
                     buttonName: "Polygon"
-                    iconPath: "iconAssets/polygon-32.png"
+                    iconPath: "qrc:/Samples/DisplayInformation/SketchOnMap/iconAssets/polygon-32.png"
                     highlighted: drawStatus === "polygon"
 
                     enabled: !sketchEditor.started
@@ -227,7 +226,7 @@ Rectangle {
                 SketchEditorButton {
                     id: undoButton
                     buttonName: "Undo"
-                    iconPath: "iconAssets/undo-32.png"
+                    iconPath: "qrc:/Samples/DisplayInformation/SketchOnMap/iconAssets/undo-32.png"
 
                     enabled: sketchEditor.started
 
@@ -237,7 +236,7 @@ Rectangle {
                 SketchEditorButton {
                     id: redoButton
                     buttonName: "Redo"
-                    iconPath: "iconAssets/redo-32.png"
+                    iconPath: "qrc:/Samples/DisplayInformation/SketchOnMap/iconAssets/redo-32.png"
 
                     enabled: sketchEditor.started
 
@@ -245,9 +244,22 @@ Rectangle {
                 }
 
                 SketchEditorButton {
+                    id: deleteVertexButton
+                    buttonName: "Delete selected vertex"
+                    iconPath: "qrc:/Samples/DisplayInformation/SketchOnMap/iconAssets/erase-32.png"
+                    columnSpan: 2
+
+                    enabled: sketchEditor.started
+
+                    onClicked: {
+                        sketchEditor.removeSelectedVertex();
+                    }
+                }
+
+                SketchEditorButton {
                     id: saveEditsButton
                     buttonName: "Save edits"
-                    iconPath: "iconAssets/check-circle-32.png"
+                    iconPath: "qrc:/Samples/DisplayInformation/SketchOnMap/iconAssets/check-circle-32.png"
                     columnSpan: 2
 
                     enabled: sketchEditor.started
@@ -289,7 +301,7 @@ Rectangle {
                 SketchEditorButton {
                     id: discardEditsButton
                     buttonName: "Discard edits"
-                    iconPath: "iconAssets/circle-disallowed-32.png"
+                    iconPath: "qrc:/Samples/DisplayInformation/SketchOnMap/iconAssets/circle-disallowed-32.png"
                     columnSpan: 2
 
                     enabled: sketchEditor.started
@@ -303,7 +315,7 @@ Rectangle {
                 SketchEditorButton {
                     id: clearGraphicsButton
                     buttonName: "Clear graphics"
-                    iconPath: "iconAssets/trash-32.png"
+                    iconPath: "qrc:/Samples/DisplayInformation/SketchOnMap/iconAssets/trash-32.png"
                     columnSpan: 2
                     enabled: sketchOverlay.graphics.count > 0;
 
