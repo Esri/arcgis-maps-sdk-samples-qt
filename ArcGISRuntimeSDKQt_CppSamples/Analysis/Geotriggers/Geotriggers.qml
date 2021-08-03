@@ -22,7 +22,7 @@ import Esri.Samples 1.0
 Item {
     id: applicationWindowItem
 
-    property var currentSectionName: ""
+    property var currentFeatureName: ""
 
     // add a mapView component
     MapView {
@@ -37,76 +37,122 @@ Item {
     }
 
     Control {
-        id: nearbyFeatureButtons
+        id: featureSelectButtonsColumn
         anchors.right: parent.right
         padding: 10
-        visible: currentSectionName === ""
+
+        visible: currentFeatureName === ""
+
         background: Rectangle {
             color: "white"
             border.color: "black"
         }
+
         contentItem: Column {
             id: column
             width: 200
             spacing: 10
 
             Text {
-                text: "Current Section"
-                padding: 5
-                horizontalAlignment: Text.AlignHCenter
                 anchors.horizontalCenter: parent.horizontalCenter
-                font.bold: true
-                font.pointSize: 16
+                horizontalAlignment: Text.AlignHCenter
+                padding: 5
+                text: "Current Garden Section"
+                color: "#3b4e1e"
+                font {
+                    bold: true
+                    pointSize: 20
+                }
             }
 
             RoundButton {
-                id: sbutton
+                id: sButton
                 width: parent.width - 10
+                padding: 20
+
                 Text {
                     id: buttonText
+                    horizontalAlignment: Text.AlignHCenter
+                    verticalAlignment: Text.AlignVCenter
+
                     text: sampleModel.currentSection
                     wrapMode: Text.WordWrap
+                    font.bold: true
+                    font.pointSize: 18
                     anchors.centerIn: parent
                     width: parent.width - 5
-                    horizontalAlignment: Text.AlignHCenter
-                    anchors.horizontalCenter: parent.horizontalCenter
+                    color: "#f9f9f9"
                 }
 
+                background: Rectangle {
+                    radius: sButton.radius
+                    color: "#3B4E1E"
+                }
+
+                enabled: buttonText.text !== "N/A"
+
                 onClicked: {
-                    currentSectionName = buttonText.text;
-                    sampleModel.getSectionInformation(currentSectionName);
+                    currentFeatureName = buttonText.text;
+                    sampleModel.getFeatureInformation(currentFeatureName);
                 }
 
             }
-            Text {
-                text: "Nearby Points of Interest"
-                padding: 5
-                horizontalAlignment: Text.AlignHCenter
+
+            Rectangle {
+                id: llline
                 anchors.horizontalCenter: parent.horizontalCenter
-                font.bold: true
-                font.pointSize: 16
-                visible: sampleModel.nearbyPois.length > 0
+                width: parent.width - 20
+                height: 2
+
+                color: "#000000"
+
+                visible: poiHeader.visible
+            }
+
+            Text {
+                id: poiHeader
+                anchors.horizontalCenter: parent.horizontalCenter
+                horizontalAlignment: Text.AlignHCenter
+                padding: 5
+
+                text: "Points of Interest"
+                font {
+                    bold: true
+                    pointSize: 16
+                }
+                color: "#ac901e"
+
+                visible: sampleModel.poisInRange.length > 0
             }
 
             Repeater {
-                visible: sampleModel.nearbyPois.count > 0
-                model: sampleModel.nearbyPois
+                model: sampleModel.poisInRange
                 delegate: RoundButton {
                     id: button
                     width: parent.width - 10
+                    padding: 20
+
                     Text {
-                        id: pbuttonText
+                        id: poiButtonText
+                        anchors.centerIn: parent
+                        horizontalAlignment: Text.AlignHCenter
+                        width: parent.width - 5
+
                         text: modelData
                         wrapMode: Text.WordWrap
-                        anchors.centerIn: parent
-                        width: parent.width - 5
-                        horizontalAlignment: Text.AlignHCenter
-                        anchors.horizontalCenter: parent.horizontalCenter
+                        font.bold: true
+                        color: "#f9f9f9"
+                    }
+
+                    background: Rectangle {
+                        radius: sButton.radius
+                        anchors.fill: parent
+                        color: "#AC901E"
                     }
 
                     onClicked: {
-                        currentSectionName = pbuttonText.text;
-                        sampleModel.getPoiInformation(currentSectionName);
+                        currentFeatureName = poiButtonText.text;
+                        sampleModel.getFeatureInformation(currentFeatureName);
                     }
                 }
             }
@@ -115,16 +161,18 @@ Item {
 
     Pane {
         id: pane
-        width: parent.width < 300 ? parent.width : 300
-        height: parent.height
-        visible: currentSectionName != ""
         anchors.top: parent.top
         anchors.right: parent.right
+        width: parent.width < 300 ? parent.width : 300
+        height: parent.height
+        visible: currentFeatureName != ""
         clip: true
+
         background: Rectangle {
             color: "white"
             border.color: "black"
         }
+
         contentItem: ScrollView {
             id: scrollViewComponent
             anchors.verticalCenter: parent.verticalCenter
@@ -143,40 +191,44 @@ Item {
 
                 Text {
                     id: sectionNameTextBox
-                    width: scrollViewComponent.width
-                    text: currentSectionName
+                    anchors.horizontalCenter: parent.horizontalCenter
                     horizontalAlignment: Text.AlignHCenter
+                    width: scrollViewComponent.width
+
+                    text: currentFeatureName
                     font {
                         bold: true
-                        pointSize: 16
+                        pointSize: 20
                     }
+                    color: "#3b4e1e"
                     wrapMode: Text.WordWrap
-                    anchors.horizontalCenter: parent.horizontalCenter
                 }
 
                 Text {
                     id: desc
-                    width: scrollViewComponent.width
-                    text: sampleModel.currentDescription
-                    textFormat: Text.RichText
+                    anchors.horizontalCenter: parent.horizontalCenter
                     horizontalAlignment: Text.AlignLeft
                     verticalAlignment: Text.AlignTop
+                    width: scrollViewComponent.width
+
+                    text: sampleModel.currentDescription
+                    textFormat: Text.RichText
                     wrapMode: Text.WordWrap
-                    anchors.horizontalCenter: parent.horizontalCenter
                 }
+
                 Button {
                     id: closeButton
                     anchors.horizontalCenter: parent.horizontalCenter
                     Text {
-                        text: "Close"
                         anchors.centerIn: parent
                         verticalAlignment: Text.AlignVCenter
                         horizontalAlignment: Text.AlignHCenter
+
+                        text: "Close"
                     }
+
                     onClicked: {
-                        currentSectionName = ""
-                        sampleModel.currentDescription = "";
-                        sampleModel.currentImageUrl = "";
+                        currentFeatureName = ""
                     }
                 }
             }
