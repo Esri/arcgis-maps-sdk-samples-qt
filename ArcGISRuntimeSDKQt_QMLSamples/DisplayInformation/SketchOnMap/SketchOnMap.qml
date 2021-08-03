@@ -70,10 +70,7 @@ Rectangle {
     // Display an option to delete the selected vertex if the user right-clicks or taps and holds when the sketch editor is started
     MouseArea {
         anchors.fill: parent
-        acceptedButtons: {
-            Qt.RightButton
-            Qt.TapAndHoldGesture
-        }
+        acceptedButtons: Qt.RightButton
         enabled: sketchEditor.started
         onClicked: {
             contextMenu.popup()
