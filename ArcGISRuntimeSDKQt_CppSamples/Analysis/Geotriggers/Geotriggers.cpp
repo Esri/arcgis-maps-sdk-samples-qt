@@ -132,7 +132,7 @@ void Geotriggers::initializeSimulatedLocationDisplay()
 
 // This function is used to create two geotrigger monitors in this sample - one for the sections and one for the points ot interest
 // The parameters for this function are the only differences between the two geotrigger monitors
-void Geotriggers::createGeotriggerMonitor(ServiceFeatureTable* serviceFeatureTable, double bufferSize, QString geotriggerName)
+void Geotriggers::createGeotriggerMonitor(ServiceFeatureTable* serviceFeatureTable, double bufferSize, const QString &geotriggerName)
 {
   // Initialize FeatureFenceParameters with the service feature table and a buffer of 0 meters to display the exact garden section the user has entered
   FeatureFenceParameters* featureFenceParameters = new FeatureFenceParameters(serviceFeatureTable, bufferSize, this);
@@ -164,13 +164,12 @@ void Geotriggers::handleGeotriggerNotification(GeotriggerNotificationInfo* geotr
   {
     // If the user enters a given geofence, add the feature's information to the UI and save the feature for querying.
     m_currentFeaturesEntered[geotriggerName].append(featureName);
-    m_featureMap[featureName] = fenceFeature;
+    m_featureQMap[featureName] = fenceFeature;
   }
   else
   {
-    // If the user leaves the geofence, remove the information
+    // If the user leaves the geofence, remove the information from the UI
     m_currentFeaturesEntered[geotriggerName].removeAll(featureName);
-    m_featureMap.remove(featureName);
   }
 
   displayInfoChanged();
@@ -184,21 +183,29 @@ void Geotriggers::getFeatureInformation(QString sectionName)
 
   // Clear feature description and image of the previous query
   m_currentFeatureImageUrl = QUrl("");
-  if (!m_featureMap.contains(sectionName))
+  if (!m_featureQMap.contains(sectionName))
   {
     m_currentFeatureDescription = "Unable to find information for this Garden feature.";
     displayInfoChanged();
     return;
   }
 
-  ArcGISFeature* feature = m_featureMap[sectionName];
+  ArcGISFeature* feature = m_featureQMap[sectionName];
   m_currentFeatureDescription = feature->attributes()->attributeValue("description").toString();
+
+  if (m_featureAttachmentImageUrls.contains(sectionName))
+  {
+    m_currentFeatureImageUrl = m_featureAttachmentImageUrls[sectionName];
+    displayInfoChanged();
+    return;
+  }
+
   displayInfoChanged();
 
   AttachmentListModel* featureAttachments = feature->attachments();
 
   // Fetch attachments will automatically trigger upon instantiation of the AttachmentListModel
-  connect(featureAttachments, &AttachmentListModel::fetchAttachmentsCompleted, this, [this](QUuid, const QList<Attachment*> attachments)
+  connect(featureAttachments, &AttachmentListModel::fetchAttachmentsCompleted, this, [this, sectionName](QUuid, const QList<Attachment*> attachments)
   {
     if (attachments.isEmpty())
       return;
@@ -206,9 +213,10 @@ void Geotriggers::getFeatureInformation(QString sectionName)
     // Get the first (and only) attachment for the feature
     Attachment* sectionImageAttachment = attachments.first();
 
-    connect(sectionImageAttachment, &Attachment::fetchDataCompleted, this, [this, sectionImageAttachment]()
+    connect(sectionImageAttachment, &Attachment::fetchDataCompleted, this, [this, sectionImageAttachment, sectionName]()
     {
-      m_currentFeatureImageUrl = sectionImageAttachment->attachmentUrl();
+      m_featureAttachmentImageUrls[sectionName] = sectionImageAttachment->attachmentUrl();
+      m_currentFeatureImageUrl = m_featureAttachmentImageUrls[sectionName];
       displayInfoChanged();
     });
 

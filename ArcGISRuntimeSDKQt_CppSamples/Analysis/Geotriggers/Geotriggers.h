@@ -71,7 +71,7 @@ private:
   QUrl currentImageUrl() const;
   void setMapView(Esri::ArcGISRuntime::MapQuickView* mapView);
 
-  void createGeotriggerMonitor(Esri::ArcGISRuntime::ServiceFeatureTable* serviceFeatureTable, double bufferSize, QString geotriggerName);
+  void createGeotriggerMonitor(Esri::ArcGISRuntime::ServiceFeatureTable* serviceFeatureTable, double bufferSize, const QString &geotriggerName);
   void initializeSimulatedLocationDisplay();
   void handleGeotriggerNotification(Esri::ArcGISRuntime::GeotriggerNotificationInfo* geotriggerNotificationInfo);
 
@@ -85,7 +85,8 @@ private:
   QMap<QString, QStringList> m_currentFeaturesEntered;
   QString m_currentFeatureDescription;
   QUrl m_currentFeatureImageUrl;
-  QMap<QString, Esri::ArcGISRuntime::ArcGISFeature*> m_featureMap;
+  QMap<QString, Esri::ArcGISRuntime::ArcGISFeature*> m_featureQMap;
+  QMap<QString, QUrl> m_featureAttachmentImageUrls;
 
 };
 

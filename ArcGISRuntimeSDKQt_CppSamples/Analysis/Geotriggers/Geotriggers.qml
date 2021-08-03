@@ -141,7 +141,7 @@ Item {
                         text: modelData
                         wrapMode: Text.WordWrap
                         font.bold: true
-                        color: "#f9f9f9"
+                        color: "#ffffff"
                     }
 
                     background: Rectangle {
