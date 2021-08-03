@@ -25,7 +25,15 @@ Rectangle {
     width: 800
     height: 600
 
-    property var drawStatus: ""
+    enum DrawingModes {
+        NotDrawing,
+        Point,
+        Multipoint,
+        Line,
+        Polygon
+    }
+
+    property int drawStatus: SketchOnMap.DrawingModes.NotDrawing
 
     MapView {
         id: mapView
@@ -153,13 +161,13 @@ Rectangle {
                     id: ptButton
                     buttonName: "Point"
                     iconPath: "qrc:/Samples/DisplayInformation/SketchOnMap/iconAssets/point-32.png"
-                    highlighted: drawStatus === "point"
+                    highlighted: drawStatus === SketchOnMap.DrawingModes.Point
 
                     enabled: !sketchEditor.started
 
                     onClicked: {
                         sketchEditor.startWithCreationMode(Enums.SketchCreationModePoint);
-                        drawStatus = "point";
+                        drawStatus = SketchOnMap.DrawingModes.Point;
                     }
                 }
 
@@ -168,13 +176,13 @@ Rectangle {
                     buttonName: "Multipoint"
                     iconPath: "qrc:/Samples/DisplayInformation/SketchOnMap/iconAssets/point-32.png"
                     images: 2
-                    highlighted: drawStatus === "multiPoint"
+                    highlighted: drawStatus === SketchOnMap.DrawingModes.Multipoint
 
                     enabled: !sketchEditor.started
 
                     onClicked: {
                         sketchEditor.startWithCreationMode(Enums.SketchCreationModeMultipoint);
-                        drawStatus = "multiPoint";
+                        drawStatus = SketchOnMap.DrawingModes.Multipoint;
                     }
                 }
 
@@ -182,13 +190,13 @@ Rectangle {
                     id: lineButton
                     buttonName: "Line"
                     iconPath: "qrc:/Samples/DisplayInformation/SketchOnMap/iconAssets/line-32.png"
-                    highlighted: drawStatus === "line"
+                    highlighted: drawStatus === SketchOnMap.DrawingModes.Line
 
                     enabled: !sketchEditor.started
 
                     onClicked: {
                         sketchEditor.startWithCreationMode(Enums.SketchCreationModePolyline);
-                        drawStatus = "line";
+                        drawStatus = SketchOnMap.DrawingModes.Line;
                     }
                 }
 
@@ -196,13 +204,13 @@ Rectangle {
                     id: polygonButton
                     buttonName: "Polygon"
                     iconPath: "qrc:/Samples/DisplayInformation/SketchOnMap/iconAssets/polygon-32.png"
-                    highlighted: drawStatus === "polygon"
+                    highlighted: drawStatus === SketchOnMap.DrawingModes.Polygon
 
                     enabled: !sketchEditor.started
 
                     onClicked: {
                         sketchEditor.startWithCreationMode(Enums.SketchCreationModePolygon);
-                        drawStatus = "polygon";
+                        drawStatus = SketchOnMap.DrawingModes.Polygon;
                     }
                 }
             }
@@ -265,7 +273,7 @@ Rectangle {
                     enabled: sketchEditor.started
 
                     onClicked: {
-                        drawStatus = "";
+                        drawStatus = SketchOnMap.DrawingModes.NotDrawing;
                         if (!sketchEditor.isSketchValid()) {
                             console.log("Unable to save sketch. Sketch is not valid.");
                             return;
@@ -307,7 +315,7 @@ Rectangle {
                     enabled: sketchEditor.started
 
                     onClicked: {
-                        drawStatus = "";
+                        drawStatus = SketchOnMap.DrawingModes.NotDrawing;
                         sketchEditor.stop();
                     }
                 }
