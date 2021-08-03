@@ -28,7 +28,32 @@ Rectangle {
         anchors.fill: parent
 
         Map {
-            BasemapTopographic {}
+            PortalItem {
+                itemId: "6ab0e91dc39e478cae4f408e1a36a308"
+            }
+            ServiceFeatureTable {
+                id: gardenSections
+                PortalItem {
+                    itemId: "1ba816341ea04243832136379b8951d9"
+                }
+                initLayerId: "0"
+            }
+            ServiceFeatureTable {
+                id: gardenPois
+                PortalItem {
+                    itemId: "7c6280c290c34ae8aeb6b5c4ec841167"
+                }
+                initLayerId: "0"
+            }
+        }
+        locationDisplay {
+            id: userLocation
+            autoPanMode: Enums.LocationDisplayAutoPanModeRecenter
+            initialZoomScale: 1000
+            started: true
+            dataSource: SimulatedLocationDataSource {
+
+            }
         }
     }
 }
