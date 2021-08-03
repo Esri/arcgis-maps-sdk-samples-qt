@@ -31,6 +31,9 @@ Item {
     MapView {
         id: view
         anchors.fill: parent
+
+        // Set focus on the MapView so delete and backspace keys can be used to delete a selected vertex
+        focus: true
     }
 
     // Display an option to delete the selected vertex if the user right-clicks or taps and holds when the sketch editor is started
@@ -40,7 +43,8 @@ Item {
             Qt.RightButton
             Qt.TapAndHoldGesture
         }
-        enabled: drawStatus !== ""
+
+        enabled: model.sketchEditorStarted
         onClicked: {
             contextMenu.popup()
         }
@@ -83,7 +87,7 @@ Item {
                     id: geometryHeader
                     Layout.alignment: Qt.AlignHCenter | Qt.AlignVCenter
                     Layout.columnSpan: 2
-                    text: qsTr("Geometry")
+                    text: "Geometry"
                     color: "white"
                     font.pixelSize: 16
                     font.bold: true
@@ -157,12 +161,11 @@ Item {
                     id: editingHeader
                     Layout.alignment: Qt.AlignHCenter | Qt.AlignVCenter
                     Layout.columnSpan: 2
-                    text: qsTr("Editing")
+                    text: "Editing"
                     color: "white"
                     font.pixelSize: 16
                     font.bold: true
                 }
-
 
                 SketchEditorButton {
                     id: undoButton

@@ -27,16 +27,12 @@ Rectangle {
 
     property var drawStatus: ""
 
-
     MapView {
         id: mapView
         anchors.fill: parent       
 
-        onActiveFocusChanged: {
-            mapView.forceActiveFocus();
-            mapView.focus = true;
-            mapView.activeFocus = true;
-        }
+        // Set focus on the MapView so delete and backspace keys can be used to delete a selected vertex
+        focus: true
 
         Map {
             id: map
@@ -62,7 +58,6 @@ Rectangle {
             id: sketchOverlay
         }
     }
-
 
     // Display an option to delete the selected vertex if the user right-clicks or taps and holds when the sketch editor is started
     MouseArea {
@@ -149,7 +144,7 @@ Rectangle {
                     id: geometryHeader
                     Layout.alignment: Qt.AlignHCenter | Qt.AlignVCenter
                     Layout.columnSpan: 2
-                    text: qsTr("Geometry")
+                    text: "Geometry"
                     color: "white"
                     font.pixelSize: 16
                     font.bold: true
@@ -223,7 +218,7 @@ Rectangle {
                     id: editingHeader
                     Layout.alignment: Qt.AlignHCenter | Qt.AlignVCenter
                     Layout.columnSpan: 2
-                    text: qsTr("Editing")
+                    text: "Editing"
                     color: "white"
                     font.pixelSize: 16
                     font.bold: true

@@ -73,7 +73,6 @@ void SketchOnMap::setMapView(MapQuickView* mapView)
 
 void SketchOnMap::setSketchCreationMode(SampleSketchMode sketchCreationMode)
 {
-  m_mapView->forceActiveFocus();
   switch(sketchCreationMode)
   {
     case SampleSketchMode::PointSketchMode:

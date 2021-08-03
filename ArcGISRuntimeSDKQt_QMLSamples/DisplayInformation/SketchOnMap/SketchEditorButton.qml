@@ -16,6 +16,7 @@ RoundButton {
     Layout.columnSpan: columnSpan
     radius: 5
 
+    // Set the focus policy so that the buttons do not take focus from the MapView
     focusPolicy: Qt.NoFocus
 
     Image {
