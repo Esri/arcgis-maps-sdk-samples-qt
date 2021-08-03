@@ -1,0 +1,8 @@
+<RCC>
+    <qresource prefix="/Samples/Analysis/Geotriggers">
+        <file alias="sample.json">README.metadata.json</file>        
+        <file>Geotriggers.qml</file>
+        <file>screenshot.png</file>
+        <file>README.md</file>
+    </qresource>
+</RCC>
