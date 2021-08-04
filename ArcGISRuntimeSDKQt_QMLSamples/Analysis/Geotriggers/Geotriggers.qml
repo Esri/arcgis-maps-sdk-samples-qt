@@ -67,6 +67,45 @@ Rectangle {
         }
     }
 
+    GeotriggerMonitor {
+        id: sectionGeotriggerMonitor
+
+        geotrigger: FenceGeotrigger {
+
+            feed: LocationGeotriggerFeed {
+                locationDataSource: simulatedLocationdataSource
+            }
+
+            ruleType: Enums.FenceRuleTypeEnterOrExit
+
+            fenceParameters: FeatureFenceParameters {
+                featureTable: gardenSections
+                bufferDistance: 0
+            }
+
+            messageExpression: ArcadeExpression {
+                expression: "$fencefeature.name";
+            }
+
+            name: "sectionGeotrigger"
+        }
+
+        onGeotriggerNotification: {
+            console.log("Notification: " + geotriggerNotificationInfo.message);
+        }
+        onStatusChanged: {
+            console.log(status);
+        }
+        onErrorChanged: {
+            console.log(warning.message);
+            console.log(warning.additionalMessage);
+        }
+
+        Component.onCompleted: {
+            start();
+        }
+    }
+
     Polyline {
         id: walkingTourPath
         json: {
