@@ -149,8 +149,6 @@ void Geotriggers::createGeotriggerMonitor(ServiceFeatureTable* serviceFeatureTab
 
 void Geotriggers::handleGeotriggerNotification(GeotriggerNotificationInfo* geotriggerNotificationInfo)
 {
-  QScopedPointer<GeotriggerNotificationInfo> scopedNotification(geotriggerNotificationInfo);
-
   // GeotriggerNotificationInfo provides access to information about the geotrigger that was triggered
   QString geotriggerName = geotriggerNotificationInfo->geotriggerMonitor()->geotrigger()->name();
   QString featureName = geotriggerNotificationInfo->message();
