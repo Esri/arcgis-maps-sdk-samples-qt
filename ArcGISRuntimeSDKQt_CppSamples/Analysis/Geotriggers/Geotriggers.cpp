@@ -149,6 +149,7 @@ void Geotriggers::createGeotriggerMonitor(ServiceFeatureTable* serviceFeatureTab
 
 void Geotriggers::handleGeotriggerNotification(GeotriggerNotificationInfo* geotriggerNotificationInfo)
 {
+  QScopedPointer<GeotriggerNotificationInfo> scopedNotification(geotriggerNotificationInfo);
   // GeotriggerNotificationInfo provides access to information about the geotrigger that was triggered
   QString geotriggerName = geotriggerNotificationInfo->geotriggerMonitor()->geotrigger()->name();
   QString featureName = geotriggerNotificationInfo->message();
@@ -159,11 +160,16 @@ void Geotriggers::handleGeotriggerNotification(GeotriggerNotificationInfo* geotr
 
   ArcGISFeature* fenceFeature = dynamic_cast<ArcGISFeature*>(fenceGeoElement);
 
+  // Set the parent to the Geotriggers QObject so the feature is still available outside the scope of this function
+  fenceFeature->setParent(this);
+
   if (fenceGeotriggerNotificationInfo->fenceNotificationType() == FenceNotificationType::Entered)
   {
     // If the user enters a given geofence, add the feature's information to the UI and save the feature for querying.
     m_currentFeaturesEntered[geotriggerName].append(featureName);
-    m_featureQMap[featureName] = fenceFeature;
+
+    if (!m_featureQMap.contains(featureName))
+      m_featureQMap[featureName] = fenceFeature;
   }
   else
   {
@@ -174,7 +180,6 @@ void Geotriggers::handleGeotriggerNotification(GeotriggerNotificationInfo* geotr
   displayInfoChanged();
 }
 
-
 void Geotriggers::getFeatureInformation(const QString& sectionName)
 {
   // Recenter the camera on the user if need be
@@ -183,14 +188,16 @@ void Geotriggers::getFeatureInformation(const QString& sectionName)
   // Clear feature description and image of the previous query
   m_currentFeatureImageUrl = QUrl("");
 
-  if (!m_featureQMap.contains(sectionName))
+  QMap<QString, ArcGISFeature*>::iterator findIt = m_featureQMap.find(sectionName);
+
+  if (findIt == m_featureQMap.end())
   {
     m_currentFeatureDescription = "Unable to find information for this Garden feature.";
     displayInfoChanged();
     return;
   }
 
-  ArcGISFeature* feature = m_featureQMap[sectionName];
+  ArcGISFeature* feature = *findIt;
   m_currentFeatureDescription = feature->attributes()->attributeValue("description").toString();
 
   if (m_featureAttachmentImageUrls.contains(sectionName))
