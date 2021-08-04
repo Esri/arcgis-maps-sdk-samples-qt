@@ -38,7 +38,7 @@ BrowseOGCAPIFeatureService::BrowseOGCAPIFeatureService(QObject* parent /* = null
 {
     // Initialise OGC feature service
     m_featureServiceUrl = "https://demo.ldproxy.net/daraa";
-    initialiseOGCService(m_featureServiceUrl);
+    loadFeatureService(m_featureServiceUrl);
 }
 
 BrowseOGCAPIFeatureService::~BrowseOGCAPIFeatureService() = default;
@@ -50,82 +50,55 @@ void BrowseOGCAPIFeatureService::init()
     qmlRegisterType<BrowseOGCAPIFeatureService>("Esri.Samples", 1, 0, "BrowseOGCAPIFeatureServiceSample");
 }
 
-void BrowseOGCAPIFeatureService::initialiseOGCService(const QUrl& url)
+void BrowseOGCAPIFeatureService::loadFeatureService(const QUrl& url)
 {
-    // Delete existing feature service and associated information (if nullptr, nothing will happen).
+    // Delete existing feature service and associated objects
     m_collectionInfo.clear();
     delete m_serviceInfo;
     delete m_featureService;
-    m_featureList.clear();
-    emit featureListChanged();
+    m_featureCollectionList.clear();
+    emit featureCollectionListChanged();
 
-    // Create an OGCFeatureService object
+    // Instantiate new OGCFeatureService object using url
     m_featureService = new OgcFeatureService(url, this);
 
-    // Establish connection between loadStatusChanged and serviceLoading()
-    connect(m_featureService, &OgcFeatureService::loadStatusChanged, this, &BrowseOGCAPIFeatureService::handleLoadingStatus);
+    // Connect loadStatusChanged and checkIfServiceLoaded()
+    connect(m_featureService, &OgcFeatureService::loadStatusChanged, this, &BrowseOGCAPIFeatureService::checkIfServiceLoaded);
 
-    // Handle any errors that occur during feature service initialisation
-    connect(m_featureService, &OgcFeatureService::errorOccurred, this, [](Error error){
-        // Print error message
-        qDebug() << error.message();
-    });
-
-    // Load feature service
     m_featureService->load();
 }
 
-void BrowseOGCAPIFeatureService::handleLoadingStatus(LoadStatus loadstatus)
+void BrowseOGCAPIFeatureService::checkIfServiceLoaded(LoadStatus loadstatus)
 {
-    switch(loadstatus)
+    if (loadstatus != LoadStatus::Loaded)
     {
-    case LoadStatus::Loaded:
-        // Update features in interface
-        retrieveFeatures();
-        break;
-    case LoadStatus::FailedToLoad:
-        // Do nothing - the error will have been handled
-        break;
-    case LoadStatus::Loading:
-        // Do nothing
-        break;
-    case LoadStatus::NotLoaded:
-        // Do nothing
-        break;
-    case LoadStatus::Unknown:
-        // Do nothing
-        break;
-    default:
-        // Do Nothing
-        break;
+        return;
     }
+    retrieveCollectionInfos();
 }
 
-void BrowseOGCAPIFeatureService::retrieveFeatures()
+void BrowseOGCAPIFeatureService::retrieveCollectionInfos()
 {
-    // Get OGC service metadata
+    // Assign OGC service metadata to m_serviceInfo property
     m_serviceInfo = m_featureService->serviceInfo();
 
-    // Create a list of feature collections
+    // Assign information from each feature collection to the m_collectionInfo property
     m_collectionInfo = m_serviceInfo->featureCollectionInfos();
 
-    // Display feature list in interface
-    updateListInInterface();
+    createFeatureCollectionList();
 }
 
-void BrowseOGCAPIFeatureService::updateListInInterface()
+void BrowseOGCAPIFeatureService::createFeatureCollectionList()
 {
-    // Clear current feature list
-    m_featureList.clear();
+    m_featureCollectionList.clear();
 
-    // Convert elements of m_collectionInfo into QStringList
+    // Populate list with names of each feature collection
     for (OgcFeatureCollectionInfo* info : m_collectionInfo)
     {
-        // Add the name (title) of the feature to m_featureList
-        m_featureList.push_back(info->title());
+        m_featureCollectionList.push_back(info->title());
     }
 
-    emit featureListChanged();
+    emit featureCollectionListChanged();
 }
 
 MapQuickView* BrowseOGCAPIFeatureService::mapView() const
@@ -150,24 +123,25 @@ QUrl BrowseOGCAPIFeatureService::featureServiceUrl() const
     return m_featureServiceUrl;
 }
 
-QStringList BrowseOGCAPIFeatureService::featureList() const
+QStringList BrowseOGCAPIFeatureService::featureCollectionList() const
 {
-    return m_featureList;
+    return m_featureCollectionList;
 }
 
+// When "Load Service" button is pressed in interface (from QML)
 void BrowseOGCAPIFeatureService::loadService(QUrl urlFromInterface)
 {
     m_featureServiceUrl = urlFromInterface;
     emit urlChanged();
-    initialiseOGCService(m_featureServiceUrl);
+    loadFeatureService(m_featureServiceUrl);
 }
 
-void BrowseOGCAPIFeatureService::loadFeatureAtIndex(int index)
+void BrowseOGCAPIFeatureService::loadFeatureCollection(int selectedFeature)
 {
-    // Get the selected collection
-    OgcFeatureCollectionInfo *info = m_collectionInfo[index];
+    // Create a CollectionInfo object from the selected collection
+    OgcFeatureCollectionInfo *info = m_collectionInfo[selectedFeature];
 
-    // Create the OGC feature collection table
+    // Assign the CollectedInfo to the m_featureCollectionTable property
     m_featureCollectionTable = new OgcFeatureCollectionTable(info);
 
     // Set the feature request mode to manual (only manual is currently supported)
@@ -179,18 +153,30 @@ void BrowseOGCAPIFeatureService::loadFeatureAtIndex(int index)
     queryParameters.setMaxFeatures(1000);
     m_featureCollectionTable->populateFromService(queryParameters, false, QStringList{ /* empty */ });
 
-    // Create a feature layer
-    FeatureLayer* m_featureLayer = new FeatureLayer(m_featureCollectionTable);
+    // Delete existing feature layer and create new layer from selected collection
+    delete m_featureLayer;
+    m_featureLayer = new FeatureLayer(m_featureCollectionTable);
 
-    // When feature has loaded, adjust the position of the mapView
-    connect(m_featureLayer, &FeatureLayer::doneLoading, this, [this, m_featureLayer](){
-        // Define view insets
-        //m_mapView->setViewInsets(m_mapView->viewInsets());
+    // Connect LoadStatusChanged with CheckIfLayerLoaded
+    connect(m_featureLayer, &FeatureLayer::loadStatusChanged, this, &BrowseOGCAPIFeatureService::checkIfLayerLoaded);
 
-        // Position the map to focus on the extent of the layer
-        m_mapView->setViewpointGeometry(m_featureLayer->fullExtent());
+    // Load feature layer
+    m_featureLayer->load();
+}
 
-    });
+void BrowseOGCAPIFeatureService::checkIfLayerLoaded(LoadStatus loadStatus)
+{
+    if (loadStatus != LoadStatus::Loaded)
+    {
+        return;
+    }
+    addFeatureToMap();
+}
+
+void BrowseOGCAPIFeatureService::addFeatureToMap()
+{
+    // Adjust the viewpoint to match the extent of the layer
+    m_mapView->setViewpointGeometry(m_featureLayer->fullExtent());
 
     // Clear any existing layers and add current layer to map
     m_map->operationalLayers()->clear();

@@ -69,19 +69,15 @@ Item {
                 }
                 ComboBox {
                     id: featureList
-                    model: model.featureList
+                    model: model.featureCollectionList
                     Layout.columnSpan: 2
                     Layout.fillWidth: true
                     Layout.fillHeight: true
-                    ScrollBar.vertical: ScrollBar {
-                        id: listVerticalScrollBar
-                        active: true
-                    }
                 }
                 Button {
                     id: loadLayerButton
                     text: "Load selected layer"
-                    onClicked: model.loadFeatureAtIndex(featureList.currentIndex)
+                    onClicked: model.loadFeatureCollection(featureList.currentIndex)
                     Layout.columnSpan: 2
                     Layout.fillWidth: true
                 }

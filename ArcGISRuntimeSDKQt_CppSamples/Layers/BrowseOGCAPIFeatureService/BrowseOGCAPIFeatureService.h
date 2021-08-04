@@ -38,7 +38,7 @@ class BrowseOGCAPIFeatureService : public QObject
 
     Q_PROPERTY(Esri::ArcGISRuntime::MapQuickView* mapView READ mapView WRITE setMapView NOTIFY mapViewChanged)
     Q_PROPERTY(QUrl featureServiceUrl READ featureServiceUrl NOTIFY urlChanged)
-    Q_PROPERTY(QStringList featureList READ featureList NOTIFY featureListChanged)
+    Q_PROPERTY(QStringList featureCollectionList READ featureCollectionList NOTIFY featureCollectionListChanged)
 
 public:
     explicit BrowseOGCAPIFeatureService(QObject* parent = nullptr);
@@ -47,18 +47,18 @@ public:
     static void init();
 
     Q_INVOKABLE void loadService(QUrl urlFromInterface);
-    Q_INVOKABLE void loadFeatureAtIndex(int index);
+    Q_INVOKABLE void loadFeatureCollection(int selectedFeature);
 
 signals:
     void mapViewChanged();
     void urlChanged();
-    void featureListChanged();
+    void featureCollectionListChanged();
 
 private:
     Esri::ArcGISRuntime::MapQuickView* mapView() const;
     void setMapView(Esri::ArcGISRuntime::MapQuickView* mapView);
     QUrl featureServiceUrl() const;
-    QStringList featureList() const;
+    QStringList featureCollectionList() const;
 
     Esri::ArcGISRuntime::Map* m_map = nullptr;
     Esri::ArcGISRuntime::MapQuickView* m_mapView = nullptr;
@@ -67,13 +67,16 @@ private:
     Esri::ArcGISRuntime::OgcFeatureService* m_featureService = nullptr;
     Esri::ArcGISRuntime::OgcFeatureServiceInfo* m_serviceInfo = nullptr;
     QList<Esri::ArcGISRuntime::OgcFeatureCollectionInfo*> m_collectionInfo;
-    QStringList m_featureList;
+    QStringList m_featureCollectionList;
     Esri::ArcGISRuntime::OgcFeatureCollectionTable* m_featureCollectionTable;
+    Esri::ArcGISRuntime::FeatureLayer* m_featureLayer = nullptr;
 
-    void initialiseOGCService(const QUrl& url);
-    void handleLoadingStatus(Esri::ArcGISRuntime::LoadStatus loadstatus);
-    void retrieveFeatures();
-    void updateListInInterface();
+    void loadFeatureService(const QUrl& url);
+    void checkIfServiceLoaded(Esri::ArcGISRuntime::LoadStatus loadstatus);
+    void retrieveCollectionInfos();
+    void createFeatureCollectionList();
+    void checkIfLayerLoaded(Esri::ArcGISRuntime::LoadStatus loadStatus);
+    void addFeatureToMap();
 };
 
 #endif // BROWSEOGCAPIFEATURESERVICE_H
