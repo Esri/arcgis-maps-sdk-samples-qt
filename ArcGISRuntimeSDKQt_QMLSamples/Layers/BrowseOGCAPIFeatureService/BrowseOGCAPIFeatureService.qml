@@ -28,7 +28,7 @@ Rectangle {
     property url serviceURL: "https://demo.ldproxy.net/daraa"
     property OgcFeatureService featureService: null
     property var featureCollectionInfos : []
-    property var featureList : []
+    property var featureCollectionList : []
     property FeatureLayer featureLayer : null
 
     MapView {
@@ -86,7 +86,7 @@ Rectangle {
                     }
                 }
                 ComboBox {
-                    id: featureListComboBox
+                    id: featureCollectionListComboBox
                     Layout.columnSpan: 2
                     Layout.fillWidth: true
                     Layout.fillHeight: true
@@ -94,7 +94,7 @@ Rectangle {
                 Button {
                     id: loadLayerButton
                     text: "Load selected layer"
-                    onClicked: loadFeature(featureListComboBox.currentIndex)
+                    onClicked: loadFeatureCollection(featureCollectionListComboBox.currentIndex)
                     Layout.columnSpan: 2
                     Layout.fillWidth: true
                 }
@@ -114,36 +114,36 @@ Rectangle {
     }
 
     function checkIfServiceLoaded() {
-        // If featureService is loaded, create a list of features
-        if (root.featureService.loadStatus === Enums.LoadStatusLoaded) {
-            createFeatureList();
+        if (root.featureService.loadStatus !== Enums.LoadStatusLoaded) {
+            return;
         }
+        createFeatureCollectionList();
     }
 
-    function createFeatureList() {
+    function createFeatureCollectionList() {
         // Clear current list of features
-        featureList = [];
+        featureCollectionList = [];
 
         // Assign featureCollectionInfos to featureCollectionInfos property
         featureCollectionInfos = root.featureService.serviceInfo.featureCollectionInfos;
 
-        // For each feature in the featureService, add the title to a list that can be displayed in the UI
+        // For each feature collection in the featureService, add the title to a list that can be displayed in the UI
         for (let counter = 0; counter < featureCollectionInfos.length; counter++) {
-            featureList.push(featureService.serviceInfo.featureCollectionInfos[counter].title);
+            featureCollectionList.push(featureService.serviceInfo.featureCollectionInfos[counter].title);
         }
 
         // Define ComboBox model using list
-        featureListComboBox.model = featureList;
+        featureCollectionListComboBox.model = featureCollectionList;
     }
 
-    function loadFeature(selectedFeature) {
+    function loadFeatureCollection(selectedFeature) {
         // Create featureCollectionTable object
         let featureCollectionTable = ArcGISRuntimeEnvironment.createObject("OgcFeatureCollectionTable");
 
         // Set request mode to manual cache
         featureCollectionTable.featureRequestMode = Enums.FeatureRequestModeManualCache;
 
-        // Copy info for selected feature into featureCollectionTable
+        // Copy info for selected feature collection into featureCollectionTable
         featureCollectionTable.featureCollectionInfo = featureService.serviceInfo.featureCollectionInfos[selectedFeature];
 
         // Create Query Parameters
@@ -163,17 +163,17 @@ Rectangle {
     }
 
     function checkIfLayerLoaded() {
-        // If featureLayer has loaded, add featureLayer to map
-        if (root.featureLayer.loadStatus === Enums.LoadStatusLoaded) {
-            addFeatureToMap();
+        if (root.featureLayer.loadStatus !== Enums.LoadStatusLoaded) {
+            return;
         }
+        addFeatureToMap();
     }
 
     function addFeatureToMap() {
-        // Remove all features from the map
+        // Remove all feature layers from the map
         map.operationalLayers.clear()
 
-        // Add selected feature to the map
+        // Add selected feature layers to the map
         map.operationalLayers.append(root.featureLayer)
 
         // Set the viewpoint of the map
