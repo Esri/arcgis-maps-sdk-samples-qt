@@ -57,7 +57,7 @@ public:
 
   static void init();
 
-  Q_INVOKABLE void getFeatureInformation(QString featureName);
+  Q_INVOKABLE void getFeatureInformation(const QString &featureName);
 
 signals:
   void mapViewChanged();

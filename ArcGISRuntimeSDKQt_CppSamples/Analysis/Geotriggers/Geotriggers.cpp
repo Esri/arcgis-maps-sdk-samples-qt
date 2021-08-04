@@ -130,9 +130,9 @@ void Geotriggers::initializeSimulatedLocationDisplay()
   m_geotriggerFeed = new LocationGeotriggerFeed(m_simulatedLocationDataSource, this);
 }
 
-// This function is used to create two geotrigger monitors in this sample - one for the sections and one for the points ot interest
+// This function is used to create two geotrigger monitors in this sample - one for the sections and one for the points of interest
 // The parameters for this function are the only differences between the two geotrigger monitors
-void Geotriggers::createGeotriggerMonitor(ServiceFeatureTable* serviceFeatureTable, double bufferSize, const QString &geotriggerName)
+void Geotriggers::createGeotriggerMonitor(ServiceFeatureTable* serviceFeatureTable, double bufferSize, const QString& geotriggerName)
 {
   // Initialize FeatureFenceParameters with the service feature table and a buffer of 0 meters to display the exact garden section the user has entered
   FeatureFenceParameters* featureFenceParameters = new FeatureFenceParameters(serviceFeatureTable, bufferSize, this);
@@ -176,7 +176,7 @@ void Geotriggers::handleGeotriggerNotification(GeotriggerNotificationInfo* geotr
 }
 
 
-void Geotriggers::getFeatureInformation(QString sectionName)
+void Geotriggers::getFeatureInformation(const QString& sectionName)
 {
   // Recenter the camera on the user if need be
   m_mapView->locationDisplay()->setAutoPanMode(LocationDisplayAutoPanMode::Recenter);
