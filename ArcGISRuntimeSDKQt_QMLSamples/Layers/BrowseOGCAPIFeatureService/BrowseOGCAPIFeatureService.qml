@@ -137,22 +137,22 @@ Rectangle {
     }
 
     function loadFeature(selectedFeature) {
-        // Create a featureCollectionTable object
+        // Create featureCollectionTable object
         let featureCollectionTable = ArcGISRuntimeEnvironment.createObject("OgcFeatureCollectionTable");
 
-        // Set feature request mode to manual
+        // Set request mode to manual cache
         featureCollectionTable.featureRequestMode = Enums.FeatureRequestModeManualCache;
 
-        // Copy the info for the selected feature into the featureCollectiontable
+        // Copy info for selected feature into featureCollectionTable
         featureCollectionTable.featureCollectionInfo = featureService.serviceInfo.featureCollectionInfos[selectedFeature];
 
-        // Create Query Parameters (required for populateFromService)
+        // Create Query Parameters
         var queryParameters = ArcGISRuntimeEnvironment.createObject("QueryParameters", { maxFeatures: 1000 })
 
-        // Populate the featureCollectionTable from the feature service
+        // Populate featureCollectionTable
         featureCollectionTable.populateFromService(queryParameters, true, []);
 
-        // Create a feature layer object and assign to featureLayer property
+        // Create feature layer object and assign to featureLayer property
         root.featureLayer = ArcGISRuntimeEnvironment.createObject("FeatureLayer", { featureTable: featureCollectionTable } )
 
         // Connect loadStatusChanged to checkIfLayerLoaded
