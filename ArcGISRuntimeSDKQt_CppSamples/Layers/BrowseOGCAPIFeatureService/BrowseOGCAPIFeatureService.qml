@@ -18,6 +18,7 @@ import QtQuick 2.12
 import QtQuick.Controls 2.12
 import Esri.Samples 1.0
 import QtQuick.Layouts 1.12
+import QtQuick.Dialogs 1.2
 
 Item {   
     // Declare the C++ instance which creates the scene etc. and supply the view
@@ -83,5 +84,18 @@ Item {
                 }
             }
         }
+
+        // Pop-up error message box
+        MessageDialog {
+            id: errorMessageBox
+            title: "Error message!"
+            text: model.errorMessage
+            icon: StandardIcon.Warning
+            visible: model.errorMessage === "" ? false : true
+            onAccepted: {
+                model.errorMessage = "";
+            }
+        }
+
     }
 }

@@ -37,6 +37,7 @@ class BrowseOGCAPIFeatureService : public QObject
     Q_OBJECT
 
     Q_PROPERTY(Esri::ArcGISRuntime::MapQuickView* mapView READ mapView WRITE setMapView NOTIFY mapViewChanged)
+    Q_PROPERTY(QString errorMessage READ errorMessage WRITE setErrorMessage NOTIFY errorMessageChanged)
     Q_PROPERTY(QUrl featureServiceUrl READ featureServiceUrl NOTIFY urlChanged)
     Q_PROPERTY(QStringList featureCollectionList READ featureCollectionList NOTIFY featureCollectionListChanged)
 
@@ -51,6 +52,7 @@ public:
 
 signals:
     void mapViewChanged();
+    void errorMessageChanged();
     void urlChanged();
     void featureCollectionListChanged();
 
@@ -59,10 +61,13 @@ private:
     void setMapView(Esri::ArcGISRuntime::MapQuickView* mapView);
     QUrl featureServiceUrl() const;
     QStringList featureCollectionList() const;
+    QString errorMessage() const;
+    void setErrorMessage(QString message);
 
     Esri::ArcGISRuntime::Map* m_map = nullptr;
     Esri::ArcGISRuntime::MapQuickView* m_mapView = nullptr;
 
+    QString m_errorMessage = "";
     QUrl m_featureServiceUrl;
     Esri::ArcGISRuntime::OgcFeatureService* m_featureService = nullptr;
     Esri::ArcGISRuntime::OgcFeatureServiceInfo* m_serviceInfo = nullptr;
@@ -71,6 +76,7 @@ private:
     Esri::ArcGISRuntime::OgcFeatureCollectionTable* m_featureCollectionTable;
     Esri::ArcGISRuntime::FeatureLayer* m_featureLayer = nullptr;
 
+    void handleError(Esri::ArcGISRuntime::Error error);
     void loadFeatureService(const QUrl& url);
     void checkIfServiceLoaded(Esri::ArcGISRuntime::LoadStatus loadstatus);
     void retrieveCollectionInfos();

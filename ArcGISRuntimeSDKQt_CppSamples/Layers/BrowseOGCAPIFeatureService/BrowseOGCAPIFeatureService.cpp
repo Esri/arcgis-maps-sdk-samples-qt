@@ -50,12 +50,33 @@ void BrowseOGCAPIFeatureService::init()
     qmlRegisterType<BrowseOGCAPIFeatureService>("Esri.Samples", 1, 0, "BrowseOGCAPIFeatureServiceSample");
 }
 
+void BrowseOGCAPIFeatureService::handleError(Esri::ArcGISRuntime::Error error)
+{
+    if (error.additionalMessage().isEmpty())
+    {
+        setErrorMessage(error.message());
+    }
+    else
+    {
+        setErrorMessage(error.message() + "\n" + error.additionalMessage());
+    }
+    emit errorMessageChanged();
+}
+
 void BrowseOGCAPIFeatureService::loadFeatureService(const QUrl& url)
 {
     // Delete existing feature service and associated objects
     m_collectionInfo.clear();
-    delete m_serviceInfo;
-    delete m_featureService;
+    if (m_serviceInfo != nullptr)
+    {
+        delete m_serviceInfo;
+        m_serviceInfo = nullptr;
+    }
+    if (m_featureService != nullptr)
+    {
+        delete m_featureService;
+        m_featureService = nullptr;
+    }
     m_featureCollectionList.clear();
     emit featureCollectionListChanged();
 
@@ -64,6 +85,9 @@ void BrowseOGCAPIFeatureService::loadFeatureService(const QUrl& url)
 
     // Connect loadStatusChanged and checkIfServiceLoaded()
     connect(m_featureService, &OgcFeatureService::loadStatusChanged, this, &BrowseOGCAPIFeatureService::checkIfServiceLoaded);
+
+    // Connect errorOccurred to handleError
+    connect(m_featureService, &OgcFeatureService::errorOccurred, this, &BrowseOGCAPIFeatureService::handleError);
 
     m_featureService->load();
 }
@@ -128,7 +152,11 @@ QStringList BrowseOGCAPIFeatureService::featureCollectionList() const
     return m_featureCollectionList;
 }
 
-// When "Load Service" button is pressed in interface (from QML)
+QString BrowseOGCAPIFeatureService::errorMessage() const
+{
+    return m_errorMessage;
+}
+
 void BrowseOGCAPIFeatureService::loadService(QUrl urlFromInterface)
 {
     m_featureServiceUrl = urlFromInterface;
@@ -157,8 +185,11 @@ void BrowseOGCAPIFeatureService::loadFeatureCollection(int selectedFeature)
     delete m_featureLayer;
     m_featureLayer = new FeatureLayer(m_featureCollectionTable);
 
-    // Connect LoadStatusChanged with CheckIfLayerLoaded
+    // Connect loadStatusChanged with checkIfLayerLoaded
     connect(m_featureLayer, &FeatureLayer::loadStatusChanged, this, &BrowseOGCAPIFeatureService::checkIfLayerLoaded);
+
+    // Connect errorOccurred to handleError
+    connect(m_featureLayer, &FeatureLayer::errorOccurred, this, &BrowseOGCAPIFeatureService::handleError);
 
     // Load feature layer
     m_featureLayer->load();
@@ -181,4 +212,10 @@ void BrowseOGCAPIFeatureService::addFeatureToMap()
     // Clear any existing layers and add current layer to map
     m_map->operationalLayers()->clear();
     m_map->operationalLayers()->append(m_featureLayer);
+}
+
+void BrowseOGCAPIFeatureService::setErrorMessage(QString message)
+{
+    m_errorMessage = message;
+    emit errorMessageChanged();
 }
