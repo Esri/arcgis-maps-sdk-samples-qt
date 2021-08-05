@@ -27,8 +27,6 @@ Rectangle {
 
     property url serviceURL: "https://demo.ldproxy.net/daraa"
     property OgcFeatureService featureService: null
-    property var featureCollectionInfos : []
-    property var featureCollectionList : []
     property FeatureLayer featureLayer : null
 
     MapView {
@@ -90,6 +88,7 @@ Rectangle {
                     Layout.columnSpan: 2
                     Layout.fillWidth: true
                     Layout.fillHeight: true
+                    textRole: "title"
                 }
                 Button {
                     id: loadLayerButton
@@ -117,23 +116,15 @@ Rectangle {
         if (root.featureService.loadStatus !== Enums.LoadStatusLoaded) {
             return;
         }
-        createFeatureCollectionList();
+        updateListInInterface();
     }
 
-    function createFeatureCollectionList() {
-        // Clear current list of features
-        featureCollectionList = [];
-
+    function updateListInInterface() {
         // Assign featureCollectionInfos to featureCollectionInfos property
-        featureCollectionInfos = root.featureService.serviceInfo.featureCollectionInfos;
-
-        // For each feature collection in the featureService, add the title to a list that can be displayed in the UI
-        for (let counter = 0; counter < featureCollectionInfos.length; counter++) {
-            featureCollectionList.push(featureService.serviceInfo.featureCollectionInfos[counter].title);
-        }
+        let featureCollectionInfos = root.featureService.serviceInfo.featureCollectionInfos;
 
         // Define ComboBox model using list
-        featureCollectionListComboBox.model = featureCollectionList;
+        featureCollectionListComboBox.model = featureCollectionInfos;
     }
 
     function loadFeatureCollection(selectedFeature) {
