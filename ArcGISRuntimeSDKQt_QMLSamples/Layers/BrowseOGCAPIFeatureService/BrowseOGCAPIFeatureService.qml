@@ -18,6 +18,7 @@ import QtQuick 2.12
 import QtQuick.Controls 2.2
 import QtQuick.Layouts 1.3
 import Esri.ArcGISRuntime 100.12
+import QtQuick.Dialogs 1.2
 
 Rectangle {
     id: root
@@ -28,6 +29,7 @@ Rectangle {
     property url serviceURL: "https://demo.ldproxy.net/daraa"
     property OgcFeatureService featureService: null
     property FeatureLayer featureLayer : null
+    property string errorMessage: ""
 
     MapView {
         id: mapView
@@ -99,11 +101,22 @@ Rectangle {
                 }
             }
         }
+        // Pop-up error message box
+        MessageDialog {
+            id: errorMessageBox
+            title: "Error message!"
+            text: errorMessage
+            icon: StandardIcon.Warning
+            visible: errorMessage === "" ? false : true
+            onAccepted: {
+                errorMessage = "";
+            }
+        }
     }
 
     function loadFeatureService(currentUrl) {
         // Create feature service object and assign to featureService property
-        root.featureService = ArcGISRuntimeEnvironment.createObject("OgcFeatureService", {url: currentUrl}, map)
+        root.featureService = ArcGISRuntimeEnvironment.createObject("OgcFeatureService", {url: currentUrl}, map);
 
         // Connect loaded signal to updateList() function
         root.featureService.loadStatusChanged.connect(checkIfServiceLoaded);
@@ -112,8 +125,21 @@ Rectangle {
         featureService.load();
     }
 
+    function handleError(error) {
+        if (!error.additionalMessage) {
+            errorMessage = error.message;
+        }
+        else {
+            errorMessage = error.message + "\n" + error.additionalMessage;
+        }
+    }
+
     function checkIfServiceLoaded() {
-        if (root.featureService.loadStatus !== Enums.LoadStatusLoaded) {
+        if (root.featureService.loadStatus === Enums.LoadStatusFailedToLoad) {
+            handleError(root.featureService.loadError);
+            return;
+        }
+        else if (root.featureService.loadStatus !== Enums.LoadStatusLoaded) {
             return;
         }
         updateListInInterface();
@@ -138,13 +164,13 @@ Rectangle {
         featureCollectionTable.featureCollectionInfo = featureService.serviceInfo.featureCollectionInfos[selectedFeature];
 
         // Create Query Parameters
-        var queryParameters = ArcGISRuntimeEnvironment.createObject("QueryParameters", { maxFeatures: 1000 })
+        var queryParameters = ArcGISRuntimeEnvironment.createObject("QueryParameters", { maxFeatures: 1000 });
 
         // Populate featureCollectionTable
         featureCollectionTable.populateFromService(queryParameters, true, []);
 
         // Create feature layer object and assign to featureLayer property
-        root.featureLayer = ArcGISRuntimeEnvironment.createObject("FeatureLayer", { featureTable: featureCollectionTable } )
+        root.featureLayer = ArcGISRuntimeEnvironment.createObject("FeatureLayer", { featureTable: featureCollectionTable } );
 
         // Connect loadStatusChanged to checkIfLayerLoaded
         root.featureLayer.loadStatusChanged.connect(checkIfLayerLoaded);
@@ -154,7 +180,11 @@ Rectangle {
     }
 
     function checkIfLayerLoaded() {
-        if (root.featureLayer.loadStatus !== Enums.LoadStatusLoaded) {
+        if (root.featureLayer.loadStatus === Enums.LoadStatusFailedToLoad) {
+            handleError(root.featureLayer.loadError);
+            return;
+        }
+        else if (root.featureLayer.loadStatus !== Enums.LoadStatusLoaded) {
             return;
         }
         addFeatureToMap();
@@ -162,12 +192,12 @@ Rectangle {
 
     function addFeatureToMap() {
         // Remove all feature layers from the map
-        map.operationalLayers.clear()
+        map.operationalLayers.clear();
 
         // Add selected feature layers to the map
-        map.operationalLayers.append(root.featureLayer)
+        map.operationalLayers.append(root.featureLayer);
 
         // Set the viewpoint of the map
-        mapView.setViewpointGeometry(root.featureLayer.fullExtent)
+        mapView.setViewpointGeometry(root.featureLayer.fullExtent);
     }
 }
