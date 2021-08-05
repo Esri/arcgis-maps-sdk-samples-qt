@@ -1,31 +1,38 @@
 # Browse OGC API Feature Service
 
-This sample demonstrates how to XXXXX.
-This sample demonstrates ...       
-This is **why** you would do it this way ...
+Browse an OGC API feature service for layers and add them to the map.
 
 ![](screenshot.png)
 
+## Use case
+
+OGC API standards are used for sharing geospatial data on the web. As an open standard, the OGC API aims to improve access to geospatial or location information and could be a good choice for sharing data internationally or between organizations. That data could be of any type, including, for example, transportation layers shared between government organizations and private businesses.
+
 ## How to use the sample
-e.g. Use the input controls to define a ... Click the "Go" button to ...
+Select a layer to display from the drop-down list of layers available from the OGC API service. The Daraa data is used as the default feature service, however, alternative feature services can be used.
 
 ## How it works
-e.g. In the `GeoView.Tapped` event, features in the `Map` are selected using an `Envelope` defined by the user's tap location ...
+1. Create an `OgcFeatureService` object with a URL to an OGC API feature service.
+2. Create a list of feature collections from the `OgcFeatureService.OgcFeatureServiceInfo.FeatureCollectionInfos`.
+3. When a feature collection is selected, create an `OgcFeatureCollectionTable` from the list of feature collections.
+4. Populate the `OgcFeatureCollectionTable` using `PopulateFromService` with `QueryParameters` that contain a `MaxFeatures` property.
+5. Create a feature layer from the feature table.
+6. Add the feature layer to the map.
 
 ## Relevant API
- - ClassName1
- - MethodName
+ * OgcFeatureCollectionInfo
+ * OgcFeatureCollectionTable
+ * OgcFeatureService
+ * OgcFeatureServiceInfo
 
-## Offline data
-Read more about how to set up the sample's offline data [here](http://links.esri.com/ArcGISRuntimeQtSamples).
+## About the data
 
-Link | Local Location
----------|-------|
-|[San Francisco Streets TPK](https://www.arcgis.com/home/item.html?id=3f1bbf0ec70b409a975f5c91f363fe7d)| `<userhome>`/ArcGIS/Runtime/Data/tpk/SanFrancisco.tpk |
+The [Daraa, Syria test data](https://demo.ldproxy.net/daraa) is OpenStreetMap data converted to the Topographic Data Store schema of NGA.
 
 ## Additional information
-A standard level license is required to ...
+
+See the [OGC API website](https://ogcapi.ogc.org/) for more information on the OGC API family of standards.
 
 ## Tags
-Routing, Network analysis, Geocode
 
+browse, catalog, feature, layers, OGC, OGC API, service, web
