@@ -1,16 +1,32 @@
 {
-    "category": "TODO",
-    "description": "TODO",
+    "category": "Layers",
+    "description": "Browse an OGC API feature service for layers and add them to the map.",
     "ignore": false,
     "images": [
         "screenshot.png"
     ],
     "keywords": [
-        "TODO"
+        "OGC",
+        "OGC API",
+        "browse",
+        "catalog",
+        "feature",
+        "layers",
+        "service",
+        "web",
+        "OgcFeatureCollectionInfo",
+        "OgcFeatureCollectionTable",
+        "OgcFeatureService",
+        "OgcFeatureServiceInfo"
     ],
-    "redirect_from": "",
+    "redirect_from": [
+        ""
+    ],
     "relevant_apis": [
-        "TODO"
+        "OgcFeatureCollectionInfo",
+        "OgcFeatureCollectionTable",
+        "OgcFeatureService",
+        "OgcFeatureServiceInfo"
     ],
     "snippets": [
         "BrowseOGCAPIFeatureService.qml",
