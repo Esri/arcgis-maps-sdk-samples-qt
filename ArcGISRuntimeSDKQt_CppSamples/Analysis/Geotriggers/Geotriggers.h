@@ -17,8 +17,6 @@
 #ifndef GEOTRIGGERS_H
 #define GEOTRIGGERS_H
 
-#include "Point.h"
-
 namespace Esri
 {
 namespace ArcGISRuntime
