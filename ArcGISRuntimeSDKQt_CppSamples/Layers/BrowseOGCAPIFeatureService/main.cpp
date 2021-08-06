@@ -24,42 +24,42 @@
 
 int main(int argc, char *argv[])
 {
-    QGuiApplication::setAttribute(Qt::AA_EnableHighDpiScaling);
-    QGuiApplication app(argc, argv);
-    app.setApplicationName(QStringLiteral("BrowseOGCAPIFeatureService - C++"));
+  QGuiApplication::setAttribute(Qt::AA_EnableHighDpiScaling);
+  QGuiApplication app(argc, argv);
+  app.setApplicationName(QStringLiteral("BrowseOGCAPIFeatureService - C++"));
 
-    // Use of Esri location services, including basemaps and geocoding,
-    // requires authentication using either an ArcGIS identity or an API Key.
-    // 1. ArcGIS identity: An ArcGIS named user account that is a member of an
-    //    organization in ArcGIS Online or ArcGIS Enterprise.
-    // 2. API key: A permanent key that gives your application access to Esri
-    //    location services. Visit your ArcGIS Developers Dashboard create a new
-    //    API keys or access an existing API key.
-    const QString apiKey = QString("");
-    if (apiKey.isEmpty())
-    {
-        qWarning() << "Use of Esri location services, including basemaps, requires"
+  // Use of Esri location services, including basemaps and geocoding,
+  // requires authentication using either an ArcGIS identity or an API Key.
+  // 1. ArcGIS identity: An ArcGIS named user account that is a member of an
+  //    organization in ArcGIS Online or ArcGIS Enterprise.
+  // 2. API key: A permanent key that gives your application access to Esri
+  //    location services. Visit your ArcGIS Developers Dashboard create a new
+  //    API keys or access an existing API key.
+  const QString apiKey = QString("");
+  if (apiKey.isEmpty())
+  {
+    qWarning() << "Use of Esri location services, including basemaps, requires"
                       " you to authenticate with an ArcGIS identity or set the API Key property.";
-    }
-    else
-    {
-        Esri::ArcGISRuntime::ArcGISRuntimeEnvironment::setApiKey(apiKey);
-    }
+  }
+  else
+  {
+    Esri::ArcGISRuntime::ArcGISRuntimeEnvironment::setApiKey(apiKey);
+  }
 
-    // Initialize the sample
-    BrowseOGCAPIFeatureService::init();
+  // Initialize the sample
+  BrowseOGCAPIFeatureService::init();
 
-    // Initialize application view
-    QQmlApplicationEngine engine;
-    // Add the import Path
-    engine.addImportPath(QDir(QCoreApplication::applicationDirPath()).filePath("qml"));
+  // Initialize application view
+  QQmlApplicationEngine engine;
+  // Add the import Path
+  engine.addImportPath(QDir(QCoreApplication::applicationDirPath()).filePath("qml"));
 
 #ifdef ARCGIS_RUNTIME_IMPORT_PATH_2
-    engine.addImportPath(ARCGIS_RUNTIME_IMPORT_PATH_2);
+  engine.addImportPath(ARCGIS_RUNTIME_IMPORT_PATH_2);
 #endif
 
-    // Set the source
-    engine.load(QUrl("qrc:/Samples/Layers/BrowseOGCAPIFeatureService/main.qml"));
+  // Set the source
+  engine.load(QUrl("qrc:/Samples/Layers/BrowseOGCAPIFeatureService/main.qml"));
 
-    return app.exec();
+  return app.exec();
 }
