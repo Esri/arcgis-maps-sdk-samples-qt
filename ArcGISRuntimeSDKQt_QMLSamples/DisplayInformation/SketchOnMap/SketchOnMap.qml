@@ -81,7 +81,10 @@ Rectangle {
             width: 75
             Action {
                 text: "Delete"
-                onTriggered: sketchEditor.removeSelectedVertex();
+                onTriggered: {
+                    if (sketchEditor.geometry.extent.center.x)
+                        sketchEditor.removeSelectedVertex();
+                }
             }
         }
     }
@@ -257,7 +260,11 @@ Rectangle {
                     enabled: sketchEditor.started
 
                     onClicked: {
-                        sketchEditor.removeSelectedVertex();
+                        console.log(sketchEditor.geometry.extent.center.x);
+                        if (!isNaN(sketchEditor.geometry.extent.center.x)) {
+                            console.log("deleting");
+                            sketchEditor.removeSelectedVertex();
+                        }
                     }
                 }
 
