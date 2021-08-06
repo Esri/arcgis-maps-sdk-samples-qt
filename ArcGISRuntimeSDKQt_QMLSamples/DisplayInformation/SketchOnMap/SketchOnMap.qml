@@ -78,8 +78,9 @@ Rectangle {
 
         Menu {
             id: contextMenu
-            width: 75
+            width: actionComponent.width
             Action {
+                id: actionComponent
                 text: "Delete"
                 onTriggered: {
                     if (sketchEditor.geometry.extent.center.x)
