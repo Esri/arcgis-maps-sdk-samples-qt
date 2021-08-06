@@ -21,16 +21,19 @@ namespace Esri
 {
 namespace ArcGISRuntime
 {
+class Error;
+class FeatureLayer;
 class Map;
 class MapQuickView;
+class OgcFeatureCollectionTable;
+class OgcFeatureCollectionInfo;
+class OgcFeatureService;
+class OgcFeatureServiceInfo;
 }
 }
 
 #include <QObject>
-
-#include "OgcFeatureService.h"
-#include "OgcFeatureCollectionInfo.h"
-#include "OgcFeatureCollectionTable.h"
+#include <QUrl>
 
 class BrowseOGCAPIFeatureService : public QObject
 {
@@ -47,7 +50,7 @@ public:
 
   static void init();
 
-  Q_INVOKABLE void loadService(QUrl urlFromInterface);
+  Q_INVOKABLE void loadService(const QUrl& urlFromInterface);
   Q_INVOKABLE void loadFeatureCollection(int selectedFeature);
 
 signals:
@@ -62,27 +65,27 @@ private:
   QUrl featureServiceUrl() const;
   QStringList featureCollectionList() const;
   QString errorMessage() const;
-  void setErrorMessage(QString message);
+  void setErrorMessage(const QString& message);
+  void handleError(const Esri::ArcGISRuntime::Error& error);
+  void loadFeatureService(const QUrl& url);
+  void clearExistingFeatureService();
+  void checkIfServiceLoaded();
+  void retrieveCollectionInfos();
+  void createFeatureCollectionList();
+  void clearExistingFeatureLayer();
+  void checkIfLayerLoaded();
+  void addFeatureLayerToMap();
 
   Esri::ArcGISRuntime::Map* m_map = nullptr;
   Esri::ArcGISRuntime::MapQuickView* m_mapView = nullptr;
-
   QString m_errorMessage = "";
   QUrl m_featureServiceUrl;
   Esri::ArcGISRuntime::OgcFeatureService* m_featureService = nullptr;
   Esri::ArcGISRuntime::OgcFeatureServiceInfo* m_serviceInfo = nullptr;
   QList<Esri::ArcGISRuntime::OgcFeatureCollectionInfo*> m_collectionInfo;
   QStringList m_featureCollectionList;
-  Esri::ArcGISRuntime::OgcFeatureCollectionTable* m_featureCollectionTable;
+  Esri::ArcGISRuntime::OgcFeatureCollectionTable* m_featureCollectionTable = nullptr;
   Esri::ArcGISRuntime::FeatureLayer* m_featureLayer = nullptr;
-
-  void handleError(Esri::ArcGISRuntime::Error error);
-  void loadFeatureService(const QUrl& url);
-  void checkIfServiceLoaded(Esri::ArcGISRuntime::LoadStatus loadstatus);
-  void retrieveCollectionInfos();
-  void createFeatureCollectionList();
-  void checkIfLayerLoaded(Esri::ArcGISRuntime::LoadStatus loadStatus);
-  void addFeatureToMap();
 };
 
 #endif // BROWSEOGCAPIFEATURESERVICE_H

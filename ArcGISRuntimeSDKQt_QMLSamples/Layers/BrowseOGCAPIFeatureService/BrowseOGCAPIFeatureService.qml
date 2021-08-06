@@ -91,6 +91,7 @@ Rectangle {
                     Layout.fillWidth: true
                     Layout.fillHeight: true
                     textRole: "title"
+                    model: featureService.loadStatus === Enums.LoadStatusLoaded ? root.featureService.serviceInfo.featureCollectionInfos : [];
                 }
                 Button {
                     id: loadLayerButton
@@ -112,6 +113,11 @@ Rectangle {
                 errorMessage = "";
             }
         }
+
+        QueryParameters {
+            id: queryParameters
+            maxFeatures: 1000
+        }
     }
 
     function loadFeatureService(currentUrl) {
@@ -119,7 +125,7 @@ Rectangle {
         root.featureService = ArcGISRuntimeEnvironment.createObject("OgcFeatureService", {url: currentUrl}, map);
 
         // Connect loaded signal to updateList() function
-        root.featureService.loadStatusChanged.connect(checkIfServiceLoaded);
+        root.featureService.loadStatusChanged.connect(checkForLoadingErrors);
 
         // Load feature service
         featureService.load();
@@ -134,23 +140,10 @@ Rectangle {
         }
     }
 
-    function checkIfServiceLoaded() {
+    function checkForLoadingErrors() {
         if (root.featureService.loadStatus === Enums.LoadStatusFailedToLoad) {
             handleError(root.featureService.loadError);
-            return;
         }
-        else if (root.featureService.loadStatus !== Enums.LoadStatusLoaded) {
-            return;
-        }
-        updateListInInterface();
-    }
-
-    function updateListInInterface() {
-        // Assign featureCollectionInfos to featureCollectionInfos property
-        let featureCollectionInfos = root.featureService.serviceInfo.featureCollectionInfos;
-
-        // Define ComboBox model using list
-        featureCollectionListComboBox.model = featureCollectionInfos;
     }
 
     function loadFeatureCollection(selectedFeature) {
@@ -162,9 +155,6 @@ Rectangle {
 
         // Copy info for selected feature collection into featureCollectionTable
         featureCollectionTable.featureCollectionInfo = featureService.serviceInfo.featureCollectionInfos[selectedFeature];
-
-        // Create Query Parameters
-        var queryParameters = ArcGISRuntimeEnvironment.createObject("QueryParameters", { maxFeatures: 1000 });
 
         // Populate featureCollectionTable
         featureCollectionTable.populateFromService(queryParameters, true, []);
@@ -187,10 +177,10 @@ Rectangle {
         else if (root.featureLayer.loadStatus !== Enums.LoadStatusLoaded) {
             return;
         }
-        addFeatureToMap();
+        addFeatureLayerToMap();
     }
 
-    function addFeatureToMap() {
+    function addFeatureLayerToMap() {
         // Remove all feature layers from the map
         map.operationalLayers.clear();
 
