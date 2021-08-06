@@ -328,7 +328,9 @@ Rectangle {
 
         Scene {
             id: scene
-            BasemapImageryWithLabels {}
+            Basemap {
+                initStyle: Enums.BasemapStyleArcGISImagery
+            }
 
             Surface {
                 ArcGISTiledElevationSource {
@@ -373,7 +375,8 @@ Rectangle {
                                                                                        xMax: lookAtExtent.xMax,
                                                                                        yMax: lookAtExtent.yMax,
                                                                                        zMin: locationToElevationResult,
-                                                                                       zMax: lookAtExtent.depth + locationToElevationResult,
+                                                                                       // set the camera slightly above the placemark by adding one meter
+                                                                                       zMax: lookAtExtent.depth + locationToElevationResult + 1,
                                                                                        spatialReference: lookAtExtent.spatialReference
                                                                                    });
                             }
