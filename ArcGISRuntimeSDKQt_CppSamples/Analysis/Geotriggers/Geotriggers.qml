@@ -36,6 +36,8 @@ Item {
         mapView: view
     }
 
+    // The featureSelectButtonsColumn displays the current section as well as points of interest within 10 meters
+    // Buttons are added and removed when a feature fence has been entered or exited.
     Control {
         id: featureSelectButtonsColumn
         anchors.right: parent.right
@@ -66,26 +68,28 @@ Item {
             }
 
             RoundButton {
-                id: sButton
+                id: sectionButton
                 width: parent.width - 10
                 padding: 20
 
                 Text {
                     id: buttonText
+                    anchors.centerIn: parent
                     horizontalAlignment: Text.AlignHCenter
                     verticalAlignment: Text.AlignVCenter
+                    width: parent.width - 5
 
                     text: sampleModel.currentSection
+                    font {
+                        bold: true
+                        pointSize: 18
+                    }
                     wrapMode: Text.WordWrap
-                    font.bold: true
-                    font.pointSize: 18
-                    anchors.centerIn: parent
-                    width: parent.width - 5
                     color: "white"
                 }
 
                 background: Rectangle {
-                    radius: sButton.radius
+                    radius: sectionButton.radius
                     color: "#3B4E1E"
                 }
 
@@ -96,11 +100,10 @@ Item {
                     sampleModel.getFeatureInformation(currentFeatureName);
                     featureInfoPane.visible = true
                 }
-
             }
 
             Rectangle {
-                id: uiLine
+                id: dividingLine
                 anchors.horizontalCenter: parent.horizontalCenter
                 width: parent.width - 20
                 height: 2
@@ -129,7 +132,7 @@ Item {
             Repeater {
                 model: sampleModel.poisInRange
                 delegate: RoundButton {
-                    id: button
+                    id: poiButton
                     width: parent.width - 10
                     padding: 20
 
@@ -142,12 +145,12 @@ Item {
                         text: modelData
                         wrapMode: Text.WordWrap
                         font.bold: true
-                        color: "#ffffff"
+                        color: "white"
                     }
 
                     background: Rectangle {
-                        radius: sButton.radius
                         anchors.fill: parent
+                        radius: sectionButton.radius
                         color: "#AC901E"
                     }
 
@@ -161,6 +164,7 @@ Item {
         }
     }
 
+    // The FeatureInfoPane displays the name, description, and image retrieved from a fence feature.
     FeatureInfoPane {
         id: featureInfoPane
 

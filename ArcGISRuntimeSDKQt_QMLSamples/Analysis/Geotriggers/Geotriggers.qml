@@ -85,7 +85,6 @@ Rectangle {
         id: sectionGeotriggerMonitor
 
         geotrigger: FenceGeotrigger {
-
             feed: LocationGeotriggerFeed {
                 locationDataSource: simulatedLocationdataSource
             }
@@ -105,20 +104,24 @@ Rectangle {
         }
 
         onGeotriggerNotification: {
+
+            // the message property contains the evaluated messageExpression of the FenceGeotrigger
             const sectionName = geotriggerNotificationInfo.message;
 
+            // Pass the triggering fence feature to a map for later querying and display
             featuresMap[sectionName] = geotriggerNotificationInfo.fenceGeoElement
 
+            // If the user enters a new section, store its information in memory if not already there, and set the current section to the new section
             if (geotriggerNotificationInfo.fenceNotificationType === Enums.FenceNotificationTypeEntered) {
-
                 if (!(sectionName in descriptionMap))
                     descriptionMap[sectionName] = geotriggerNotificationInfo.fenceGeoElement.attributes.attributeValue("description").toString();
 
                 currentSectionName = sectionName;
+
             } else if (geotriggerNotificationInfo.fenceNotificationType === Enums.FenceNotificationTypeExited && currentSectionName === sectionName) {
+                // If the user exits the section they were currently in, remove section information from the UI
                 currentSectionName = "N/A";
             }
-
         }
 
         Component.onCompleted: {
@@ -130,13 +133,11 @@ Rectangle {
         id: poiGeotriggerMonitor
 
         geotrigger: FenceGeotrigger {
-
             feed: LocationGeotriggerFeed {
                 locationDataSource: simulatedLocationdataSource
             }
 
             ruleType: Enums.FenceRuleTypeEnterOrExit
-
             fenceParameters: FeatureFenceParameters {
                 featureTable: gardenPoisServiceFeatureTable
                 bufferDistance: 10
@@ -151,19 +152,23 @@ Rectangle {
 
         onGeotriggerNotification: {
             const poiName = geotriggerNotificationInfo.message;
-            featuresMap[poiName]  = geotriggerNotificationInfo.fenceGeoElement
-
             const index = poisInRange.indexOf(poiName);
 
-            if (!(poiName in descriptionMap)) {
-                descriptionMap[poiName] = geotriggerNotificationInfo.fenceGeoElement.attributes.attributeValue("description").toString();
-            }
+            // Commit feature attributes to memory for later querying and display
+            if (!(poiName in featuresMap))
+                featuresMap[poiName] = geotriggerNotificationInfo.fenceGeoElement;
 
-            if (geotriggerNotificationInfo.fenceNotificationType === Enums.FenceNotificationTypeEntered && index === -1) {
+            if (!(poiName in descriptionMap))
+                descriptionMap[poiName] = geotriggerNotificationInfo.fenceGeoElement.attributes.attributeValue("description").toString();
+
+            // If entering a fence feature, add it to the UI
+            if (geotriggerNotificationInfo.fenceNotificationType === Enums.FenceNotificationTypeEntered && index === -1)
                 poisInRange[poisInRange.length] = poiName;
-            } else if (geotriggerNotificationInfo.fenceNotificationType === Enums.FenceNotificationTypeExited) {
+
+            // If exiting the fence feature, remove it from the UI
+            else if (geotriggerNotificationInfo.fenceNotificationType === Enums.FenceNotificationTypeExited)
                 poisInRange.splice(index, 1);
-            }
+
             poisInRangeChanged();
         }
 
@@ -184,7 +189,6 @@ Rectangle {
     }
 
     // Functions
-
     function getFeatureInformation(featureName) {
         featureInfoPane.featureName = featureName;
         featureInfoPane.description = descriptionMap[featureName];
@@ -208,10 +212,9 @@ Rectangle {
         if (attachmentListModel.fetchAttachmentsStatus === Enums.TaskStatusCompleted) {
             imageAttachment = attachmentListModel.get(0);
             imageAttachment.onFetchDataStatusChanged.connect(() => {
-                if (imageAttachment.fetchDataStatus === Enums.TaskStatusCompleted) {
-                    featureInfoPane.imageSourceUrl = imageUrlMap[currentFeatureName] = imageAttachment.attachmentUrl;
-                }
-            });
+                                                                 if (imageAttachment.fetchDataStatus === Enums.TaskStatusCompleted)
+                                                                    featureInfoPane.imageSourceUrl = imageUrlMap[currentFeatureName] = imageAttachment.attachmentUrl;
+                                                             });
 
             imageAttachment.fetchData();
         }
@@ -219,6 +222,8 @@ Rectangle {
 
     // User interface
 
+    // The featureSelectButtonsColumn displays the current section as well as points of interest within 10 meters
+    // Buttons are added and removed when a feature fence has been entered or exited.
     Control {
         id: featureSelectButtonsColumn
         anchors.right: parent.right
@@ -260,9 +265,11 @@ Rectangle {
                     verticalAlignment: Text.AlignVCenter
 
                     text: currentSectionName
+                    font {
+                        bold: true
+                        pointSize: 18
+                    }
                     wrapMode: Text.WordWrap
-                    font.bold: true
-                    font.pointSize: 18
                     width: parent.width - 5
                     color: "white"
                 }
@@ -282,7 +289,7 @@ Rectangle {
             }
 
             Rectangle {
-                id: separatorLine
+                id: dividingLine
                 anchors.horizontalCenter: parent.horizontalCenter
                 width: parent.width - 20
                 height: 2
@@ -329,8 +336,8 @@ Rectangle {
                     }
 
                     background: Rectangle {
-                        radius: poiButton.radius
                         anchors.fill: parent
+                        radius: poiButton.radius
                         color: "#AC901E"
                     }
 
@@ -344,6 +351,7 @@ Rectangle {
         }
     }
 
+    // The FeatureInfoPane displays the name, description, and image retrieved from a fence feature.
     FeatureInfoPane {
         id: featureInfoPane
     }

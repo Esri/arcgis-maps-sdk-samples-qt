@@ -25,8 +25,10 @@ Pane {
 
     contentItem: ScrollView {
         id: scrollViewComponent
-        anchors.verticalCenter: parent.verticalCenter
-        anchors.horizontalCenter: parent.horizontalCenter
+        anchors {
+            verticalCenter: parent.verticalCenter
+            horizontalCenter: parent.horizontalCenter
+        }
 
         Column {
             id: sectionInfoColumn

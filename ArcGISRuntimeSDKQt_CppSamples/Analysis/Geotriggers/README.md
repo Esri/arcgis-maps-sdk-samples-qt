@@ -14,9 +14,9 @@ Observe a virtual walking tour of the Santa Barbara Botanic Garden. Information 
 
 ## How it works
 
-1. Create a `GeotriggerFeed` with an `AbstractLocationDataSource` class (in this case, a `SimulatedLocationDataSource`).
-2. Create a `FeatureFenceParameters` class from a `ServiceFeatureTable`, a buffer distance at which to monitor each feature, an Arcade Expression, and a name for the specific geotrigger.
-3. Create a `FenceGeotrigger` with the geotrigger feed, a `FenceRuleType`, and the fence parameters.
+1. Create a `GeotriggerFeed` with a `LocationDataSource` class (in this case, a `SimulatedLocationDataSource`).
+2. Create a `FeatureFenceParameters` with a `ServiceFeatureTable` and a buffer distance at which to monitor each feature.
+3. Create a `FenceGeotrigger` with the geotrigger feed, a `FenceRuleType`, the fence parameters, an Arcade Expression, and a name for the specific geotrigger.
 4. Create a `GeotriggerMonitor` with the fence geotrigger and call `GeotriggerMonitor::start()` to begin listening for events that meet the `FenceRuleType`.
 5. When a `GeotriggerMonitor::geotriggerNotification` emits, capture the `GeotriggerNotificationInfo`.
 6. For more information about the feature that triggered the notification, cast the `GeotriggerNotificationInfo` to a `FenceGeotriggerNotificationInfo` and call `FenceGeotriggerNotificationInfo::fenceGeoElement()`.

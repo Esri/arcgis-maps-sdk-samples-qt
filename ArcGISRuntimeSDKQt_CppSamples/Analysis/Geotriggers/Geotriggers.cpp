@@ -74,6 +74,7 @@ QString Geotriggers::currentSection() const
 {
   if (!m_currentFeaturesEntered[sectionGeotriggerName].isEmpty())
     return m_currentFeaturesEntered[sectionGeotriggerName].last();
+
   return "N/A";
 }
 
@@ -149,7 +150,9 @@ void Geotriggers::createGeotriggerMonitor(ServiceFeatureTable* serviceFeatureTab
 
 void Geotriggers::handleGeotriggerNotification(GeotriggerNotificationInfo* geotriggerNotificationInfo)
 {
+  // Create a QScopedPointer so GeotriggerNotificationInfo does not persist outside this scope
   QScopedPointer<GeotriggerNotificationInfo> scopedNotification(geotriggerNotificationInfo);
+
   // GeotriggerNotificationInfo provides access to information about the geotrigger that was triggered
   QString geotriggerName = geotriggerNotificationInfo->geotriggerMonitor()->geotrigger()->name();
 
