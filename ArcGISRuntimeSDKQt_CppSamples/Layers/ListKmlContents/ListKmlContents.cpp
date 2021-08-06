@@ -56,7 +56,7 @@ QString defaultDataPath()
 
 ListKmlContents::ListKmlContents(QObject* parent /* = nullptr */):
   QObject(parent),
-  m_scene(new Scene(Basemap::imageryWithLabels(this), this))
+  m_scene(new Scene(BasemapStyle::ArcGISImagery, this))
 {
   // create a new elevation source from Terrain3D REST service
   ArcGISTiledElevationSource* elevationSource = new ArcGISTiledElevationSource(
@@ -383,9 +383,9 @@ void ListKmlContents::setSceneView(SceneQuickView* sceneView)
         }
         else
         {
-          // add buffer of 1m to zMax
           target = Envelope(lookAtExtent.xMin(), lookAtExtent.yMin(),
                             lookAtExtent.xMax(), lookAtExtent.yMax(),
+                            // set the camera slightly above the placemark by adding one meter
                             elevation, lookAtExtent.depth() + elevation + 1,
                             lookAtExtent.spatialReference());
         }
