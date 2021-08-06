@@ -115,7 +115,7 @@ void Geotriggers::initializeSimulatedLocationDisplay()
 {
   m_simulatedLocationDataSource = new SimulatedLocationDataSource(this);
 
-  // Create SimulationParameters starting at the current time, a velocity of 10 m/s, and a horizontal and vertical accuracy of 0.0
+  // Create SimulationParameters starting at the current time, a velocity of 5 m/s, and a horizontal and vertical accuracy of 0.0
   SimulationParameters* simulationParameters = new SimulationParameters(QDateTime::currentDateTime(), 5.0, 0.0, 0.0, this);
 
   // Use the polyline as defined above or from this AGOL GeoJSON to define the path. retrieved from https://https://arcgisruntime.maps.arcgis.com/home/item.html?id=2a346cf1668d4564b8413382ae98a956
@@ -152,6 +152,8 @@ void Geotriggers::handleGeotriggerNotification(GeotriggerNotificationInfo* geotr
   QScopedPointer<GeotriggerNotificationInfo> scopedNotification(geotriggerNotificationInfo);
   // GeotriggerNotificationInfo provides access to information about the geotrigger that was triggered
   QString geotriggerName = geotriggerNotificationInfo->geotriggerMonitor()->geotrigger()->name();
+
+  // message() returns the evaluated arcade expression defined in the FenceGeotrigger, "$fencefeatue.name" in this case
   QString featureName = geotriggerNotificationInfo->message();
 
   // FenceGeotriggerNotificationInfo provides access to the feature that triggered the notification
@@ -160,16 +162,17 @@ void Geotriggers::handleGeotriggerNotification(GeotriggerNotificationInfo* geotr
 
   ArcGISFeature* fenceFeature = dynamic_cast<ArcGISFeature*>(fenceGeoElement);
 
-  // Set the parent to the Geotriggers QObject so the feature is still available outside the scope of this function
-  fenceFeature->setParent(this);
-
   if (fenceGeotriggerNotificationInfo->fenceNotificationType() == FenceNotificationType::Entered)
   {
     // If the user enters a given geofence, add the feature's information to the UI and save the feature for querying.
     m_currentFeaturesEntered[geotriggerName].append(featureName);
 
     if (!m_featureQMap.contains(featureName))
+    {
+      // Set the parent to the Geotriggers QObject so the feature is still available outside the scope of this function
+      fenceFeature->setParent(this);
       m_featureQMap[featureName] = fenceFeature;
+    }
   }
   else
   {

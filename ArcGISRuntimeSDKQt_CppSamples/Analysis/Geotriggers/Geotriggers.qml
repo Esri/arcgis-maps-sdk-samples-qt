@@ -41,7 +41,7 @@ Item {
         anchors.right: parent.right
         padding: 10
 
-        visible: currentFeatureName === ""
+        visible: !featureInfoPane.visible
 
         background: Rectangle {
             color: "white"
@@ -58,7 +58,7 @@ Item {
                 horizontalAlignment: Text.AlignHCenter
                 padding: 5
                 text: "Current Garden Section"
-                color: "#3b4e1e"
+                color: "#3B4E1E"
                 font {
                     bold: true
                     pointSize: 20
@@ -81,7 +81,7 @@ Item {
                     font.pointSize: 18
                     anchors.centerIn: parent
                     width: parent.width - 5
-                    color: "#f9f9f9"
+                    color: "white"
                 }
 
                 background: Rectangle {
@@ -94,17 +94,18 @@ Item {
                 onClicked: {
                     currentFeatureName = buttonText.text;
                     sampleModel.getFeatureInformation(currentFeatureName);
+                    featureInfoPane.visible = true
                 }
 
             }
 
             Rectangle {
-                id: llline
+                id: uiLine
                 anchors.horizontalCenter: parent.horizontalCenter
                 width: parent.width - 20
                 height: 2
 
-                color: "#000000"
+                color: "black"
 
                 visible: poiHeader.visible
             }
@@ -120,7 +121,7 @@ Item {
                     bold: true
                     pointSize: 16
                 }
-                color: "#ac901e"
+                color: "#AC901E"
 
                 visible: sampleModel.poisInRange.length > 0
             }
@@ -153,85 +154,18 @@ Item {
                     onClicked: {
                         currentFeatureName = poiButtonText.text;
                         sampleModel.getFeatureInformation(currentFeatureName);
+                        featureInfoPane.visible = true
                     }
                 }
             }
         }
     }
 
-    Pane {
-        id: pane
-        anchors.top: parent.top
-        anchors.right: parent.right
-        width: parent.width < 300 ? parent.width : 300
-        height: parent.height
-        visible: currentFeatureName != ""
-        clip: true
+    FeatureInfoPane {
+        id: featureInfoPane
 
-        background: Rectangle {
-            color: "white"
-            border.color: "black"
-        }
-
-        contentItem: ScrollView {
-            id: scrollViewComponent
-            anchors.verticalCenter: parent.verticalCenter
-            anchors.horizontalCenter: parent.horizontalCenter
-
-            Column {
-                id: sectionInfoColumn
-                spacing: 20
-
-                Image {
-                    id: img
-                    source: sampleModel.currentImageUrl
-                    fillMode: Image.PreserveAspectFit
-                    width: scrollViewComponent.width
-                }
-
-                Text {
-                    id: sectionNameTextBox
-                    anchors.horizontalCenter: parent.horizontalCenter
-                    horizontalAlignment: Text.AlignHCenter
-                    width: scrollViewComponent.width
-
-                    text: currentFeatureName
-                    font {
-                        bold: true
-                        pointSize: 20
-                    }
-                    color: "#3b4e1e"
-                    wrapMode: Text.WordWrap
-                }
-
-                Text {
-                    id: desc
-                    anchors.horizontalCenter: parent.horizontalCenter
-                    horizontalAlignment: Text.AlignLeft
-                    verticalAlignment: Text.AlignTop
-                    width: scrollViewComponent.width
-
-                    text: sampleModel.currentDescription
-                    textFormat: Text.RichText
-                    wrapMode: Text.WordWrap
-                }
-
-                Button {
-                    id: closeButton
-                    anchors.horizontalCenter: parent.horizontalCenter
-                    Text {
-                        anchors.centerIn: parent
-                        verticalAlignment: Text.AlignVCenter
-                        horizontalAlignment: Text.AlignHCenter
-
-                        text: "Close"
-                    }
-
-                    onClicked: {
-                        currentFeatureName = ""
-                    }
-                }
-            }
-        }
+        featureName: currentFeatureName
+        description: sampleModel.currentDescription
+        imageSourceUrl: sampleModel.currentImageUrl
     }
 }

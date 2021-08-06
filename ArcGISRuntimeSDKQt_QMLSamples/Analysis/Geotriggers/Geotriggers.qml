@@ -14,7 +14,9 @@
 // limitations under the License.
 // [Legal]
 
-import QtQuick 2.12
+import QtQuick 2.6
+import QtQuick.Controls 2.2
+import QtQuick.Layouts 1.3
 import Esri.ArcGISRuntime 100.12
 
 Rectangle {
@@ -22,6 +24,16 @@ Rectangle {
     clip: true
     width: 800
     height: 600
+
+    property var currentFeatureName: ""
+    property var currentSectionName: ""
+    property var poisInRange: []
+    property var descriptionMap: ({})
+    property var imageUrlMap: ({})
+    property var featuresMap: ({})
+    property ArcGISFeature feature: null
+    property Attachment imageAttachment: null
+    property AttachmentListModel attachmentListModel: null
 
     MapView {
         id: mapView
@@ -31,15 +43,17 @@ Rectangle {
             PortalItem {
                 itemId: "6ab0e91dc39e478cae4f408e1a36a308"
             }
+
             ServiceFeatureTable {
-                id: gardenSections
+                id: gardenSectionsServiceFeatureTable
                 PortalItem {
                     itemId: "1ba816341ea04243832136379b8951d9"
                 }
                 initLayerId: "0"
             }
+
             ServiceFeatureTable {
-                id: gardenPois
+                id: gardenPoisServiceFeatureTable
                 PortalItem {
                     itemId: "7c6280c290c34ae8aeb6b5c4ec841167"
                 }
@@ -49,7 +63,7 @@ Rectangle {
 
         SimulationParameters {
             id: simulationParameters
-            velocity: 10
+            velocity: 5
         }
 
         locationDisplay {
@@ -79,7 +93,7 @@ Rectangle {
             ruleType: Enums.FenceRuleTypeEnterOrExit
 
             fenceParameters: FeatureFenceParameters {
-                featureTable: gardenSections
+                featureTable: gardenSectionsServiceFeatureTable
                 bufferDistance: 0
             }
 
@@ -91,14 +105,66 @@ Rectangle {
         }
 
         onGeotriggerNotification: {
-            console.log("Notification: " + geotriggerNotificationInfo.message);
+            const sectionName = geotriggerNotificationInfo.message;
+
+            featuresMap[sectionName] = geotriggerNotificationInfo.fenceGeoElement
+
+            if (geotriggerNotificationInfo.fenceNotificationType === Enums.FenceNotificationTypeEntered) {
+
+                if (!(sectionName in descriptionMap))
+                    descriptionMap[sectionName] = geotriggerNotificationInfo.fenceGeoElement.attributes.attributeValue("description").toString();
+
+                currentSectionName = sectionName;
+            } else if (geotriggerNotificationInfo.fenceNotificationType === Enums.FenceNotificationTypeExited && currentSectionName === sectionName) {
+                currentSectionName = "N/A";
+            }
+
         }
-        onStatusChanged: {
-            console.log(status);
+
+        Component.onCompleted: {
+            start();
         }
-        onErrorChanged: {
-            console.log(warning.message);
-            console.log(warning.additionalMessage);
+    }
+
+    GeotriggerMonitor {
+        id: poiGeotriggerMonitor
+
+        geotrigger: FenceGeotrigger {
+
+            feed: LocationGeotriggerFeed {
+                locationDataSource: simulatedLocationdataSource
+            }
+
+            ruleType: Enums.FenceRuleTypeEnterOrExit
+
+            fenceParameters: FeatureFenceParameters {
+                featureTable: gardenPoisServiceFeatureTable
+                bufferDistance: 10
+            }
+
+            messageExpression: ArcadeExpression {
+                expression: "$fencefeature.name";
+            }
+
+            name: "poiGeotrigger"
+        }
+
+        onGeotriggerNotification: {
+            const poiName = geotriggerNotificationInfo.message;
+            featuresMap[poiName]  = geotriggerNotificationInfo.fenceGeoElement
+
+            const index = poisInRange.indexOf(poiName);
+
+            if (!(poiName in descriptionMap)) {
+                descriptionMap[poiName] = geotriggerNotificationInfo.fenceGeoElement.attributes.attributeValue("description").toString();
+            }
+
+            if (geotriggerNotificationInfo.fenceNotificationType === Enums.FenceNotificationTypeEntered && index === -1) {
+                poisInRange[poisInRange.length] = poiName;
+            } else if (geotriggerNotificationInfo.fenceNotificationType === Enums.FenceNotificationTypeExited) {
+                poisInRange.splice(index, 1);
+            }
+            poisInRangeChanged();
         }
 
         Component.onCompleted: {
@@ -115,5 +181,170 @@ Rectangle {
                 "latestWkid":4326
             }
         }
+    }
+
+    // Functions
+
+    function getFeatureInformation(featureName) {
+        featureInfoPane.featureName = featureName;
+        featureInfoPane.description = descriptionMap[featureName];
+
+        // If image has already been fetched, retrieve it from memory
+        if (featureName in imageUrlMap) {
+            featureInfoPane.imageSourceUrl = imageUrlMap[featureName];
+            return
+        }
+
+        featureInfoPane.imageSourceUrl = "";
+
+        // Otherwise fetch the attachment from the feature's AttachmentListModel
+        feature = featuresMap[featureName];
+        attachmentListModel = feature.attachments;
+
+        attachmentListModel.onFetchAttachmentsStatusChanged.connect(getImageAttachmentUrl);
+    }
+
+    function getImageAttachmentUrl() {
+        if (attachmentListModel.fetchAttachmentsStatus === Enums.TaskStatusCompleted) {
+            imageAttachment = attachmentListModel.get(0);
+            imageAttachment.onFetchDataStatusChanged.connect(() => {
+                if (imageAttachment.fetchDataStatus === Enums.TaskStatusCompleted) {
+                    featureInfoPane.imageSourceUrl = imageUrlMap[currentFeatureName] = imageAttachment.attachmentUrl;
+                }
+            });
+
+            imageAttachment.fetchData();
+        }
+    }
+
+    // User interface
+
+    Control {
+        id: featureSelectButtonsColumn
+        anchors.right: parent.right
+        padding: 10
+
+        visible: !featureInfoPane.visible
+
+        background: Rectangle {
+            color: "white"
+            border.color: "black"
+        }
+
+        contentItem: Column {
+            id: column
+            width: 200
+            spacing: 10
+
+            Text {
+                anchors.horizontalCenter: parent.horizontalCenter
+                horizontalAlignment: Text.AlignHCenter
+                padding: 5
+                text: "Current Garden Section"
+                color: "#3B4E1E"
+                font {
+                    bold: true
+                    pointSize: 20
+                }
+            }
+
+            RoundButton {
+                id: sectionButton
+                width: parent.width - 10
+                padding: 20
+
+                Text {
+                    id: buttonText
+                    anchors.centerIn: parent
+                    horizontalAlignment: Text.AlignHCenter
+                    verticalAlignment: Text.AlignVCenter
+
+                    text: currentSectionName
+                    wrapMode: Text.WordWrap
+                    font.bold: true
+                    font.pointSize: 18
+                    width: parent.width - 5
+                    color: "white"
+                }
+
+                background: Rectangle {
+                    radius: sectionButton.radius
+                    color: "#3B4E1E"
+                }
+
+                enabled: buttonText.text !== "N/A"
+
+                onClicked: {
+                    currentFeatureName = buttonText.text;
+                    getFeatureInformation(currentFeatureName);
+                    featureInfoPane.visible = true;
+                }
+            }
+
+            Rectangle {
+                id: separatorLine
+                anchors.horizontalCenter: parent.horizontalCenter
+                width: parent.width - 20
+                height: 2
+
+                color: "black"
+
+                visible: poiHeader.visible
+            }
+
+            Text {
+                id: poiHeader
+                anchors.horizontalCenter: parent.horizontalCenter
+                horizontalAlignment: Text.AlignHCenter
+                padding: 5
+
+                text: "Points of Interest"
+                font {
+                    bold: true
+                    pointSize: 16
+                }
+                color: "#AC901E"
+
+                visible: poisInRange.length > 0
+            }
+
+            Repeater {
+                id: poiRepeater
+                model: poisInRange
+                delegate: RoundButton {
+                    id: poiButton
+                    width: parent.width - 10
+                    padding: 20
+
+                    Text {
+                        id: poiButtonText
+                        anchors.centerIn: parent
+                        horizontalAlignment: Text.AlignHCenter
+                        width: parent.width - 5
+
+                        text: modelData
+                        wrapMode: Text.WordWrap
+                        font.bold: true
+                        color: "white"
+                    }
+
+                    background: Rectangle {
+                        radius: poiButton.radius
+                        anchors.fill: parent
+                        color: "#AC901E"
+                    }
+
+                    onClicked: {
+                        currentFeatureName = poiButtonText.text;
+                        getFeatureInformation(currentFeatureName);
+                        featureInfoPane.visible = true;
+                    }
+                }
+            }
+        }
+    }
+
+    FeatureInfoPane {
+        id: featureInfoPane
     }
 }
