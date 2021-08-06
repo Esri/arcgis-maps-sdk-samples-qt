@@ -43,12 +43,12 @@ int main(int argc, char *argv[])
   const QString apiKey = QStringLiteral("");
   if (apiKey.isEmpty())
   {
-      qWarning() << "Use of Esri location services, including basemaps, requires"
-                    "you to authenticate with an ArcGIS identity or set the API Key property.";
+    qWarning() << "Use of Esri location services, including basemaps, requires" <<
+                  "you to authenticate with an ArcGIS identity or set the API Key property.";
   }
   else
   {
-      QCoreApplication::instance()->setProperty("Esri.ArcGISRuntime.apiKey", apiKey);
+    QCoreApplication::instance()->setProperty("Esri.ArcGISRuntime.apiKey", apiKey);
   }
 
   // Initialize application view
