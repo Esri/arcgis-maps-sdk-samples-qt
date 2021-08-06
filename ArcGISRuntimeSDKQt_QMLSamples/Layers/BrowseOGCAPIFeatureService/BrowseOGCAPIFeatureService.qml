@@ -41,9 +41,7 @@ Rectangle {
                 initStyle: Enums.BasemapStyleArcGISTopographic
 
                 // When the map has loaded, connect to the OGC Feature Service
-                onComponentCompleted: {
-                    loadFeatureService(serviceURL);
-                }
+                onComponentCompleted: loadFeatureService(serviceURL);
             }
         }
 
@@ -81,8 +79,8 @@ Rectangle {
                     id: connectButton
                     text: "Load service"
                     onClicked: {
-                        serviceURL = serviceURLBox.text
-                        loadFeatureService(serviceURL)
+                        serviceURL = serviceURLBox.text;
+                        loadFeatureService(serviceURL);
                     }
                 }
                 ComboBox {
@@ -96,22 +94,21 @@ Rectangle {
                 Button {
                     id: loadLayerButton
                     text: "Load selected layer"
-                    onClicked: loadFeatureCollection(featureCollectionListComboBox.currentIndex)
+                    onClicked: loadFeatureCollection(featureCollectionListComboBox.currentIndex);
                     Layout.columnSpan: 2
                     Layout.fillWidth: true
                 }
             }
         }
+
         // Pop-up error message box
         MessageDialog {
             id: errorMessageBox
             title: "Error message!"
             text: errorMessage
             icon: StandardIcon.Warning
-            visible: errorMessage === "" ? false : true
-            onAccepted: {
-                errorMessage = "";
-            }
+            visible: errorMessage === "" ? false : true;
+            onAccepted: errorMessage = "";
         }
 
         QueryParameters {
@@ -124,20 +121,17 @@ Rectangle {
         // Create feature service object and assign to featureService property
         root.featureService = ArcGISRuntimeEnvironment.createObject("OgcFeatureService", {url: currentUrl}, map);
 
-        // Connect loaded signal to updateList() function
+        // Connect loaded signal to checkForLoadingErrors() function
         root.featureService.loadStatusChanged.connect(checkForLoadingErrors);
 
-        // Load feature service
         featureService.load();
     }
 
     function handleError(error) {
-        if (!error.additionalMessage) {
+        if (!error.additionalMessage)
             errorMessage = error.message;
-        }
-        else {
+        else
             errorMessage = error.message + "\n" + error.additionalMessage;
-        }
     }
 
     function checkForLoadingErrors() {
@@ -162,10 +156,9 @@ Rectangle {
         // Create feature layer object and assign to featureLayer property
         root.featureLayer = ArcGISRuntimeEnvironment.createObject("FeatureLayer", { featureTable: featureCollectionTable } );
 
-        // Connect loadStatusChanged to checkIfLayerLoaded
+        // Connect loadStatusChanged to checkIfLayerLoaded function
         root.featureLayer.loadStatusChanged.connect(checkIfLayerLoaded);
 
-        // Load feature layer
         root.featureLayer.load();
     }
 
@@ -181,10 +174,9 @@ Rectangle {
     }
 
     function addFeatureLayerToMap() {
-        // Remove all feature layers from the map
         map.operationalLayers.clear();
 
-        // Add selected feature layers to the map
+        // Add selected feature layer to the map
         map.operationalLayers.append(root.featureLayer);
 
         // Set the viewpoint of the map

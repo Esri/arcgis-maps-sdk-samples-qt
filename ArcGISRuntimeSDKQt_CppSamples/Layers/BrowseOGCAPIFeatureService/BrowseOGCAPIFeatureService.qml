@@ -65,7 +65,7 @@ Item {
                 Button {
                     id: connectButton
                     text: "Load service"
-                    onClicked: model.loadService(serviceURLBox.text)
+                    onClicked: model.loadService(serviceURLBox.text);
 
                 }
                 ComboBox {
@@ -78,7 +78,7 @@ Item {
                 Button {
                     id: loadLayerButton
                     text: "Load selected layer"
-                    onClicked: model.loadFeatureCollection(featureList.currentIndex)
+                    onClicked: model.loadFeatureCollection(featureList.currentIndex);
                     Layout.columnSpan: 2
                     Layout.fillWidth: true
                 }
@@ -92,10 +92,7 @@ Item {
             text: model.errorMessage
             icon: StandardIcon.Warning
             visible: model.errorMessage === "" ? false : true
-            onAccepted: {
-                model.errorMessage = "";
-            }
+            onAccepted: model.errorMessage = "";
         }
-
     }
 }
