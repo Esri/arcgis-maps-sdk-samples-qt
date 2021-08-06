@@ -20,10 +20,10 @@ Select a layer to display from the drop-down list of layers available from the O
 6. Add the feature layer to the map.
 
 ## Relevant API
- * OgcFeatureCollectionInfo
- * OgcFeatureCollectionTable
- * OgcFeatureService
- * OgcFeatureServiceInfo
+* OgcFeatureCollectionInfo
+* OgcFeatureCollectionTable
+* OgcFeatureService
+* OgcFeatureServiceInfo
 
 ## About the data
 
