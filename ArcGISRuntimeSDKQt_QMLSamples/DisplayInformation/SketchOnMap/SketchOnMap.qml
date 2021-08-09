@@ -83,7 +83,7 @@ Rectangle {
                 id: actionComponent
                 text: "Delete"
                 onTriggered: {
-                    if (sketchEditor.geometry.extent.center.x)
+                    if (!sketchEditor.geometry.extent.empty)
                         sketchEditor.removeSelectedVertex();
                 }
             }
@@ -261,9 +261,7 @@ Rectangle {
                     enabled: sketchEditor.started
 
                     onClicked: {
-                        console.log(sketchEditor.geometry.extent.center.x);
-                        if (!isNaN(sketchEditor.geometry.extent.center.x)) {
-                            console.log("deleting");
+                        if (!sketchEditor.geometry.extent.empty) {
                             sketchEditor.removeSelectedVertex();
                         }
                     }
