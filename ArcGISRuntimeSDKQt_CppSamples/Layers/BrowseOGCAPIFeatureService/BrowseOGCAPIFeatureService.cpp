@@ -103,8 +103,8 @@ void BrowseOGCAPIFeatureService::loadFeatureService(const QUrl& url)
   // Instantiate new OGCFeatureService object using url
   m_featureService = new OgcFeatureService(url, this);
 
-  // Connect loadStatusChanged to checkIfServiceLoaded()
-  connect(m_featureService, &OgcFeatureService::loadStatusChanged, this, &BrowseOGCAPIFeatureService::checkIfServiceLoaded);
+  // Retrieve collection info when feature service has loaded
+  connect(m_featureService, &OgcFeatureService::doneLoading, this, &BrowseOGCAPIFeatureService::retrieveCollectionInfos);
 
   // Connect errorOccurred to handleError()
   connect(m_featureService, &OgcFeatureService::errorOccurred, this, &BrowseOGCAPIFeatureService::handleError);
@@ -127,13 +127,6 @@ void BrowseOGCAPIFeatureService::clearExistingFeatureService()
   }
   m_featureCollectionList.clear();
   emit featureCollectionListChanged();
-}
-
-void BrowseOGCAPIFeatureService::checkIfServiceLoaded()
-{
-  if (m_featureService->loadStatus() != LoadStatus::Loaded)
-    return;
-  retrieveCollectionInfos();
 }
 
 void BrowseOGCAPIFeatureService::retrieveCollectionInfos()
@@ -189,13 +182,11 @@ void BrowseOGCAPIFeatureService::loadFeatureCollection(int selectedFeature)
   // Create new Feature Layer from selected collection
   m_featureLayer = new FeatureLayer(m_featureCollectionTable, this);
 
-  // Connect loadStatusChanged to checkIfLayerLoaded()
-  connect(m_featureLayer, &FeatureLayer::loadStatusChanged, this, &BrowseOGCAPIFeatureService::checkIfLayerLoaded);
+  // Add feature layer to operational layers when it has finished loading
+  connect(m_featureLayer, &FeatureLayer::doneLoading, this, &BrowseOGCAPIFeatureService::addFeatureLayerToMap);
 
   // Connect errorOccurred to handleError()
   connect(m_featureLayer, &FeatureLayer::errorOccurred, this, &BrowseOGCAPIFeatureService::handleError);
-
-  m_featureLayer->load();
 }
 
 void BrowseOGCAPIFeatureService::clearExistingFeatureLayer()
@@ -211,13 +202,6 @@ void BrowseOGCAPIFeatureService::clearExistingFeatureLayer()
     delete m_featureLayer;
     m_featureLayer = nullptr;
   }
-}
-
-void BrowseOGCAPIFeatureService::checkIfLayerLoaded()
-{
-  if (m_featureLayer->loadStatus() != LoadStatus::Loaded)
-    return;
-  addFeatureLayerToMap();
 }
 
 void BrowseOGCAPIFeatureService::addFeatureLayerToMap()

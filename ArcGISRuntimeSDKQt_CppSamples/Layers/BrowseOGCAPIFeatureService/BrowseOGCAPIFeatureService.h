@@ -69,11 +69,9 @@ private:
   void handleError(const Esri::ArcGISRuntime::Error& error);
   void loadFeatureService(const QUrl& url);
   void clearExistingFeatureService();
-  void checkIfServiceLoaded();
   void retrieveCollectionInfos();
   void createFeatureCollectionList();
   void clearExistingFeatureLayer();
-  void checkIfLayerLoaded();
   void addFeatureLayerToMap();
 
   Esri::ArcGISRuntime::Map* m_map = nullptr;
