@@ -21,8 +21,10 @@ namespace Esri
 {
   namespace ArcGISRuntime
   {
+    class Geometry;
     class Map;
     class MapQuickView;
+    class Point;
   }
 }
 
@@ -41,6 +43,7 @@ public:
 
 private:
   void addGraphicsOverlay();
+  Esri::ArcGISRuntime::Geometry createHeart(Esri::ArcGISRuntime::Point origin, int sideLength);
 
 private:
   Esri::ArcGISRuntime::Map* m_map = nullptr;

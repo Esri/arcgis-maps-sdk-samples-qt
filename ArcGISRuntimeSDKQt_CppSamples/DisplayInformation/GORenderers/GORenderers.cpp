@@ -20,6 +20,9 @@
 
 #include "GORenderers.h"
 
+#include "CubicBezierSegment.h"
+#include "EllipticArcSegment.h"
+#include "ImmutablePart.h"
 #include "Map.h"
 #include "MapQuickView.h"
 #include "SpatialReference.h"
@@ -115,5 +118,76 @@ void GORenderers::addGraphicsOverlay()
     polygonGraphicsOverlay->setRenderer(new SimpleRenderer(sfs, this));
     polygonGraphicsOverlay->graphics()->append(polygonGraphic);
     m_mapView->graphicsOverlays()->append(polygonGraphicsOverlay);
+
+    // create the curve geometry
+    Point origin(40e5, 5e5, 0, SpatialReference::webMercator());
+    int sideLength = 10e5;
+    Geometry heartShape = createHeart(origin, sideLength);
+    Graphic* curveGraphic = new Graphic(heartShape);
+    SimpleLineSymbol* curveSls = new SimpleLineSymbol(SimpleLineSymbolStyle::Solid, QColor("black"), 1, this);
+    SimpleFillSymbol* curveSfs = new SimpleFillSymbol(SimpleFillSymbolStyle::Solid, QColor("red"), curveSls, this);
+
+
+    // create a graphic overlay to display the curve graphic
+    GraphicsOverlay* curveGraphicsOverlay = new GraphicsOverlay(this);
+    curveGraphicsOverlay->setRenderer(new SimpleRenderer(curveSfs, this));
+    curveGraphicsOverlay->graphics()->append(curveGraphic);
+    m_mapView->graphicsOverlays()->append(curveGraphicsOverlay);
 }
+
+Geometry GORenderers::createHeart(Point origin, int sideLength)
+{
+  SpatialReference spatialReference = origin.spatialReference();
+  const double pi = 3.14159265359;
+
+  // Create variables to store the min and max X and Y coordinates
+  int minX = origin.x() - 0.5 * sideLength;
+  int minY = origin.y() - 0.5 * sideLength;
+
+  // Create variable to store radius of the arcs used to create the heart
+  int arcRadius = sideLength * 0.25;
+
+  // Create bottom left curve
+  Point leftCurveStart(origin.x(), minY, spatialReference);
+  Point leftCurveEnd(minX, minY + 0.75 * sideLength, spatialReference);
+  Point leftControlPoint1(origin.x(), minY + 0.25 * sideLength, spatialReference);
+  Point leftControlPoint2(minX, origin.y(), spatialReference);
+  CubicBezierSegment leftCurve(leftCurveStart, leftControlPoint1, leftControlPoint2, leftCurveEnd, spatialReference);
+
+  // Create bottom right curve
+  Point rightCurveStart(minX + sideLength, minY + 0.75 * sideLength, spatialReference);
+  Point rightCurveEnd = leftCurveStart;
+  Point rightControlPoint1(minX + sideLength, origin.y(), spatialReference);
+  Point rightControlPoint2 = leftControlPoint1;
+  CubicBezierSegment rightCurve(rightCurveStart, rightControlPoint1, rightControlPoint2, rightCurveEnd, spatialReference);
+
+  // Create top left arc
+  Point arcIntersection(origin.x(), minY + 0.75 * sideLength);
+  Point leftArcCentre(minX + 0.25 * sideLength, minY + 0.75 * sideLength, spatialReference);
+  EllipticArcSegment leftArc(leftCurveEnd, arcIntersection, 0, false, false, arcRadius, 1, spatialReference);
+
+      //.createCircularEllipticArc(leftArcCentre, arcRadius, pi, (-1 * pi), spatialReference);
+  //EllipticArcSegment leftArc = arcMaker.createCircularEllipticArc(leftArcCentre, arcRadius, pi, (-1 * pi), spatialReference);
+
+  // Create top right arc
+  Point rightArcCentre(minX + sideLength, minY + 0.75 * sideLength, spatialReference);
+  EllipticArcSegment rightArc(arcIntersection, rightCurveStart, 0, false, false, arcRadius, 1, spatialReference);
+  //EllipticArcSegment rightArc;
+  //EllipticArcSegment rightArc = arcMaker.createCircularEllipticArc(rightArcCentre, arcRadius, pi, (-1 * pi), spatialReference);
+
+  Part* heart = new Part(spatialReference, this);
+  heart->addSegment(leftCurve);
+  heart->addSegment(leftArc);
+  heart->addSegment(rightArc);
+  heart->addSegment(rightCurve);
+
+  PartCollection* partCollection = new PartCollection(spatialReference, this);
+  partCollection->addPart(heart);
+
+  PolygonBuilder* heartBuilder = new PolygonBuilder(origin.spatialReference());
+  heartBuilder->setParts(partCollection);
+
+  return heartBuilder->toGeometry();
+}
+
 
