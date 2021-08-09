@@ -71,7 +71,7 @@ Rectangle {
     MouseArea {
         anchors.fill: parent
         acceptedButtons: Qt.RightButton
-        enabled: sketchEditor.started
+        enabled: sketchEditor.started && !sketchEditor.geometry.extent.empty
         onClicked: {
             contextMenu.popup()
         }
@@ -258,7 +258,7 @@ Rectangle {
                     iconPath: "qrc:/Samples/DisplayInformation/SketchOnMap/iconAssets/erase-32.png"
                     columnSpan: 2
 
-                    enabled: sketchEditor.started
+                    enabled: sketchEditor.started && !sketchEditor.geometry.extent.empty
 
                     onClicked: {
                         if (!sketchEditor.geometry.extent.empty) {
