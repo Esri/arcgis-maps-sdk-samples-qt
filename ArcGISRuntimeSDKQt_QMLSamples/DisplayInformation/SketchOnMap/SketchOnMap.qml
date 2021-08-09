@@ -78,10 +78,14 @@ Rectangle {
 
         Menu {
             id: contextMenu
-            width: 75
+            width: actionComponent.width
             Action {
+                id: actionComponent
                 text: "Delete"
-                onTriggered: sketchEditor.removeSelectedVertex();
+                onTriggered: {
+                    if (!sketchEditor.geometry.extent.empty)
+                        sketchEditor.removeSelectedVertex();
+                }
             }
         }
     }
@@ -257,7 +261,9 @@ Rectangle {
                     enabled: sketchEditor.started
 
                     onClicked: {
-                        sketchEditor.removeSelectedVertex();
+                        if (!sketchEditor.geometry.extent.empty) {
+                            sketchEditor.removeSelectedVertex();
+                        }
                     }
                 }
 
