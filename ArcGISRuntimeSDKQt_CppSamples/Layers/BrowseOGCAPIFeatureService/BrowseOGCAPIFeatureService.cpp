@@ -131,6 +131,7 @@ void BrowseOGCAPIFeatureService::clearExistingFeatureService()
     delete m_featureService;
     m_featureService = nullptr;
   }
+
   m_featureCollectionList.clear();
   emit featureCollectionListChanged();
 }
@@ -227,5 +228,11 @@ void BrowseOGCAPIFeatureService::addFeatureLayerToMap()
 
 bool BrowseOGCAPIFeatureService::loading() const
 {
-  return m_featureService->loadStatus() == LoadStatus::Loading;
+  if (m_featureService && m_featureService->loadStatus() == LoadStatus::Loading)
+    return true;
+
+  else if (m_featureLayer && m_featureLayer->loadStatus() == LoadStatus::Loading)
+    return true;
+
+  return false;
 }
