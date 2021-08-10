@@ -98,6 +98,11 @@ void BrowseOGCAPIFeatureService::handleError(const Esri::ArcGISRuntime::Error& e
 
 void BrowseOGCAPIFeatureService::loadFeatureService(const QUrl& url)
 {
+  if (m_featureService && m_featureService->loadStatus() == LoadStatus::Loading)
+  {
+    return;
+  }
+
   clearExistingFeatureService();
 
   // Instantiate new OGCFeatureService object using url
@@ -110,6 +115,7 @@ void BrowseOGCAPIFeatureService::loadFeatureService(const QUrl& url)
   connect(m_featureService, &OgcFeatureService::errorOccurred, this, &BrowseOGCAPIFeatureService::handleError);
 
   m_featureService->load();
+  setLoading(true);
 }
 
 void BrowseOGCAPIFeatureService::clearExistingFeatureService()
@@ -131,6 +137,8 @@ void BrowseOGCAPIFeatureService::clearExistingFeatureService()
 
 void BrowseOGCAPIFeatureService::retrieveCollectionInfos()
 {
+  setLoading(false);
+
   // Assign OGC service metadata to m_serviceInfo property
   m_serviceInfo = m_featureService->serviceInfo();
 
@@ -187,6 +195,8 @@ void BrowseOGCAPIFeatureService::loadFeatureCollection(int selectedFeature)
 
   // Connect errorOccurred to handleError()
   connect(m_featureLayer, &FeatureLayer::errorOccurred, this, &BrowseOGCAPIFeatureService::handleError);
+
+  setLoading(true);
 }
 
 void BrowseOGCAPIFeatureService::clearExistingFeatureLayer()
@@ -206,10 +216,23 @@ void BrowseOGCAPIFeatureService::clearExistingFeatureLayer()
 
 void BrowseOGCAPIFeatureService::addFeatureLayerToMap()
 {
+  setLoading(false);
+
   // Adjust the viewpoint to match the extent of the layer
   m_mapView->setViewpointGeometry(m_featureLayer->fullExtent());
 
   // Clear any existing layers and add current layer to map
   m_map->operationalLayers()->clear();
   m_map->operationalLayers()->append(m_featureLayer);
+}
+
+bool BrowseOGCAPIFeatureService::loading() const
+{
+  return isLoading;
+}
+
+void BrowseOGCAPIFeatureService::setLoading(bool loading)
+{
+  isLoading = loading;
+  emit loadingChanged();
 }
