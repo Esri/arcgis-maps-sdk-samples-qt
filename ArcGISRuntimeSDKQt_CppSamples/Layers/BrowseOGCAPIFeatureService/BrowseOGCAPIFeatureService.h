@@ -87,7 +87,6 @@ private:
   QStringList m_featureCollectionList;
   Esri::ArcGISRuntime::OgcFeatureCollectionTable* m_featureCollectionTable = nullptr;
   Esri::ArcGISRuntime::FeatureLayer* m_featureLayer = nullptr;
-  bool isLoading = false;
 };
 
 #endif // BROWSEOGCAPIFEATURESERVICE_H
