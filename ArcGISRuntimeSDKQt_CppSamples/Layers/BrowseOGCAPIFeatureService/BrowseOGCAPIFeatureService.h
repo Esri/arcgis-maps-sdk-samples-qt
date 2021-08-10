@@ -76,7 +76,6 @@ private:
   void clearExistingFeatureLayer();
   void addFeatureLayerToMap();
   bool loading() const;
-  void setLoading(bool loading);
 
   Esri::ArcGISRuntime::Map* m_map = nullptr;
   Esri::ArcGISRuntime::MapQuickView* m_mapView = nullptr;
