@@ -30,6 +30,7 @@ Rectangle {
     property OgcFeatureService featureService: null
     property FeatureLayer featureLayer : null
     property string errorMessage: ""
+    property bool loading: false
 
     MapView {
         id: mapView
@@ -78,6 +79,7 @@ Rectangle {
                 Button {
                     id: connectButton
                     text: "Load service"
+                    enabled: loading ? false : true;
                     onClicked: {
                         serviceURL = serviceURLBox.text;
                         loadFeatureService(serviceURL);
@@ -94,6 +96,7 @@ Rectangle {
                 Button {
                     id: loadLayerButton
                     text: "Load selected layer"
+                    enabled: loading ? false : true;
                     onClicked: loadFeatureCollection(featureCollectionListComboBox.currentIndex);
                     Layout.columnSpan: 2
                     Layout.fillWidth: true
@@ -124,7 +127,15 @@ Rectangle {
         // Connect loaded signal to checkForLoadingErrors() function
         root.featureService.loadStatusChanged.connect(checkForLoadingErrors);
 
+        // Once loaded, return the loading property to false
+        root.featureService.loadStatusChanged.connect(function() {
+            if (root.featureService.loadStatus === Enums.LoadStatusLoaded)
+                loading = false;
+        }
+        );
+
         featureService.load();
+        loading = true;
     }
 
     function handleError(error) {
@@ -137,6 +148,7 @@ Rectangle {
     function checkForLoadingErrors() {
         if (root.featureService.loadStatus === Enums.LoadStatusFailedToLoad) {
             handleError(root.featureService.loadError);
+            loading = false;
         }
     }
 
@@ -160,17 +172,20 @@ Rectangle {
         root.featureLayer.loadStatusChanged.connect(checkIfLayerLoaded);
 
         root.featureLayer.load();
+        loading = true;
     }
 
     function checkIfLayerLoaded() {
         if (root.featureLayer.loadStatus === Enums.LoadStatusFailedToLoad) {
             handleError(root.featureLayer.loadError);
+            loading = false;
             return;
         }
         else if (root.featureLayer.loadStatus !== Enums.LoadStatusLoaded) {
             return;
         }
         addFeatureLayerToMap();
+        loading = false;
     }
 
     function addFeatureLayerToMap() {
