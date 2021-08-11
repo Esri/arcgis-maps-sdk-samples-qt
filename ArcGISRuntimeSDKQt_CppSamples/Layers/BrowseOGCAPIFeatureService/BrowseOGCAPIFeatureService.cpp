@@ -113,7 +113,7 @@ void BrowseOGCAPIFeatureService::loadFeatureService(const QUrl& url)
   connect(m_featureService, &OgcFeatureService::errorOccurred, this, &BrowseOGCAPIFeatureService::handleError);
 
   // Connect to loadingChanged() to enable and disable UI buttons
-  connect(m_featureService, &OgcFeatureService::loadStatusChanged, this, &BrowseOGCAPIFeatureService::loadingChanged);
+  connect(m_featureService, &OgcFeatureService::loadStatusChanged, this, &BrowseOGCAPIFeatureService::serviceOrFeatureLoadingChanged);
 
   m_featureService->load();
 }
@@ -196,7 +196,7 @@ void BrowseOGCAPIFeatureService::loadFeatureCollection(int selectedFeature)
   connect(m_featureLayer, &FeatureLayer::errorOccurred, this, &BrowseOGCAPIFeatureService::handleError);
 
   // Connect to loadingChanged() to enable and disable UI buttons
-  connect(m_featureLayer, &FeatureLayer::loadStatusChanged, this, &BrowseOGCAPIFeatureService::loadingChanged);
+  connect(m_featureLayer, &FeatureLayer::loadStatusChanged, this, &BrowseOGCAPIFeatureService::serviceOrFeatureLoadingChanged);
 
   m_featureLayer->load();
 }
@@ -226,7 +226,7 @@ void BrowseOGCAPIFeatureService::addFeatureLayerToMap()
   m_map->operationalLayers()->append(m_featureLayer);
 }
 
-bool BrowseOGCAPIFeatureService::loading() const
+bool BrowseOGCAPIFeatureService::serviceOrFeatureLoading() const
 {
   if (m_featureService && m_featureService->loadStatus() == LoadStatus::Loading)
     return true;

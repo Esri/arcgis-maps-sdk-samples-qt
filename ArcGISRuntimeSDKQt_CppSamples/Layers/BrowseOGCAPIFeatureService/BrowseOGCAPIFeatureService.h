@@ -43,7 +43,7 @@ class BrowseOGCAPIFeatureService : public QObject
   Q_PROPERTY(QString errorMessage READ errorMessage WRITE setErrorMessage NOTIFY errorMessageChanged)
   Q_PROPERTY(QUrl featureServiceUrl READ featureServiceUrl NOTIFY urlChanged)
   Q_PROPERTY(QStringList featureCollectionList READ featureCollectionList NOTIFY featureCollectionListChanged)
-  Q_PROPERTY(bool loading READ loading NOTIFY loadingChanged)
+  Q_PROPERTY(bool serviceOrFeatureLoading READ serviceOrFeatureLoading NOTIFY serviceOrFeatureLoadingChanged)
 
 public:
   explicit BrowseOGCAPIFeatureService(QObject* parent = nullptr);
@@ -59,7 +59,7 @@ signals:
   void errorMessageChanged();
   void urlChanged();
   void featureCollectionListChanged();
-  void loadingChanged();
+  void serviceOrFeatureLoadingChanged();
 
 private:
   Esri::ArcGISRuntime::MapQuickView* mapView() const;
@@ -75,7 +75,7 @@ private:
   void createFeatureCollectionList();
   void clearExistingFeatureLayer();
   void addFeatureLayerToMap();
-  bool loading() const;
+  bool serviceOrFeatureLoading() const;
 
   Esri::ArcGISRuntime::Map* m_map = nullptr;
   Esri::ArcGISRuntime::MapQuickView* m_mapView = nullptr;

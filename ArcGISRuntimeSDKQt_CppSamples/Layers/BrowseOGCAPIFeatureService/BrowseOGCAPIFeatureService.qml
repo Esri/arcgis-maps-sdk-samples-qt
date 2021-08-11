@@ -65,7 +65,7 @@ Item {
                 Button {
                     id: connectButton
                     text: "Load service"
-                    enabled: !model.loading
+                    enabled: !model.serviceOrFeatureLoading
                     onClicked: model.loadService(serviceURLBox.text);
 
                 }
@@ -79,7 +79,7 @@ Item {
                 Button {
                     id: loadLayerButton
                     text: "Load selected layer"
-                    enabled: !model.loading
+                    enabled: !model.serviceOrFeatureLoading
                     onClicked: model.loadFeatureCollection(featureList.currentIndex);
                     Layout.columnSpan: 2
                     Layout.fillWidth: true
