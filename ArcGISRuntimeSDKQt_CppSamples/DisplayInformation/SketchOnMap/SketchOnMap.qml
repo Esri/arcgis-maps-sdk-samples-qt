@@ -56,8 +56,9 @@ Item {
 
         Menu {
             id: contextMenu
-            width: 75
+            width: actionComponent.width
             Action {
+                id: actionComponent
                 text: "Delete"
                 onTriggered: model.deleteVertex();
             }
