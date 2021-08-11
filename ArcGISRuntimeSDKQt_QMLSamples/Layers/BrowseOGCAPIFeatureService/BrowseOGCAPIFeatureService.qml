@@ -78,6 +78,7 @@ Rectangle {
                 Button {
                     id: connectButton
                     text: "Load service"
+                    enabled: featureService.loadStatus !== Enums.LoadStatusLoading
                     onClicked: {
                         serviceURL = serviceURLBox.text;
                         loadFeatureService(serviceURL);
@@ -94,6 +95,7 @@ Rectangle {
                 Button {
                     id: loadLayerButton
                     text: "Load selected layer"
+                    enabled: featureLayer.loadStatus !== Enums.LoadStatusLoading
                     onClicked: loadFeatureCollection(featureCollectionListComboBox.currentIndex);
                     Layout.columnSpan: 2
                     Layout.fillWidth: true

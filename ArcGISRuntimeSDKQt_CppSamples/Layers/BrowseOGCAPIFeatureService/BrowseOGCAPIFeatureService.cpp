@@ -98,6 +98,9 @@ void BrowseOGCAPIFeatureService::handleError(const Esri::ArcGISRuntime::Error& e
 
 void BrowseOGCAPIFeatureService::loadFeatureService(const QUrl& url)
 {
+  if (m_featureService && m_featureService->loadStatus() == LoadStatus::Loading)
+    return;
+
   clearExistingFeatureService();
 
   // Instantiate new OGCFeatureService object using url
@@ -108,6 +111,9 @@ void BrowseOGCAPIFeatureService::loadFeatureService(const QUrl& url)
 
   // Connect errorOccurred to handleError()
   connect(m_featureService, &OgcFeatureService::errorOccurred, this, &BrowseOGCAPIFeatureService::handleError);
+
+  // Connect to loadingChanged() to enable and disable UI buttons
+  connect(m_featureService, &OgcFeatureService::loadStatusChanged, this, &BrowseOGCAPIFeatureService::serviceOrFeatureLoadingChanged);
 
   m_featureService->load();
 }
@@ -125,6 +131,7 @@ void BrowseOGCAPIFeatureService::clearExistingFeatureService()
     delete m_featureService;
     m_featureService = nullptr;
   }
+
   m_featureCollectionList.clear();
   emit featureCollectionListChanged();
 }
@@ -187,6 +194,11 @@ void BrowseOGCAPIFeatureService::loadFeatureCollection(int selectedFeature)
 
   // Connect errorOccurred to handleError()
   connect(m_featureLayer, &FeatureLayer::errorOccurred, this, &BrowseOGCAPIFeatureService::handleError);
+
+  // Connect to loadingChanged() to enable and disable UI buttons
+  connect(m_featureLayer, &FeatureLayer::loadStatusChanged, this, &BrowseOGCAPIFeatureService::serviceOrFeatureLoadingChanged);
+
+  m_featureLayer->load();
 }
 
 void BrowseOGCAPIFeatureService::clearExistingFeatureLayer()
@@ -212,4 +224,15 @@ void BrowseOGCAPIFeatureService::addFeatureLayerToMap()
   // Clear any existing layers and add current layer to map
   m_map->operationalLayers()->clear();
   m_map->operationalLayers()->append(m_featureLayer);
+}
+
+bool BrowseOGCAPIFeatureService::serviceOrFeatureLoading() const
+{
+  if (m_featureService && m_featureService->loadStatus() == LoadStatus::Loading)
+    return true;
+
+  else if (m_featureLayer && m_featureLayer->loadStatus() == LoadStatus::Loading)
+    return true;
+
+  return false;
 }
