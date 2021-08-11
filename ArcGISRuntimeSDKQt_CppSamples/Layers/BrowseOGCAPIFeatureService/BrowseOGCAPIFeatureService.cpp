@@ -99,9 +99,7 @@ void BrowseOGCAPIFeatureService::handleError(const Esri::ArcGISRuntime::Error& e
 void BrowseOGCAPIFeatureService::loadFeatureService(const QUrl& url)
 {
   if (m_featureService && m_featureService->loadStatus() == LoadStatus::Loading)
-  {
     return;
-  }
 
   clearExistingFeatureService();
 
@@ -114,8 +112,10 @@ void BrowseOGCAPIFeatureService::loadFeatureService(const QUrl& url)
   // Connect errorOccurred to handleError()
   connect(m_featureService, &OgcFeatureService::errorOccurred, this, &BrowseOGCAPIFeatureService::handleError);
 
+  // Connect to loadingChanged() to enable and disable UI buttons
+  connect(m_featureService, &OgcFeatureService::loadStatusChanged, this, &BrowseOGCAPIFeatureService::loadingChanged);
+
   m_featureService->load();
-  setLoading(true);
 }
 
 void BrowseOGCAPIFeatureService::clearExistingFeatureService()
@@ -131,14 +131,13 @@ void BrowseOGCAPIFeatureService::clearExistingFeatureService()
     delete m_featureService;
     m_featureService = nullptr;
   }
+
   m_featureCollectionList.clear();
   emit featureCollectionListChanged();
 }
 
 void BrowseOGCAPIFeatureService::retrieveCollectionInfos()
 {
-  setLoading(false);
-
   // Assign OGC service metadata to m_serviceInfo property
   m_serviceInfo = m_featureService->serviceInfo();
 
@@ -196,7 +195,10 @@ void BrowseOGCAPIFeatureService::loadFeatureCollection(int selectedFeature)
   // Connect errorOccurred to handleError()
   connect(m_featureLayer, &FeatureLayer::errorOccurred, this, &BrowseOGCAPIFeatureService::handleError);
 
-  setLoading(true);
+  // Connect to loadingChanged() to enable and disable UI buttons
+  connect(m_featureLayer, &FeatureLayer::loadStatusChanged, this, &BrowseOGCAPIFeatureService::loadingChanged);
+
+  m_featureLayer->load();
 }
 
 void BrowseOGCAPIFeatureService::clearExistingFeatureLayer()
@@ -216,8 +218,6 @@ void BrowseOGCAPIFeatureService::clearExistingFeatureLayer()
 
 void BrowseOGCAPIFeatureService::addFeatureLayerToMap()
 {
-  setLoading(false);
-
   // Adjust the viewpoint to match the extent of the layer
   m_mapView->setViewpointGeometry(m_featureLayer->fullExtent());
 
@@ -228,11 +228,11 @@ void BrowseOGCAPIFeatureService::addFeatureLayerToMap()
 
 bool BrowseOGCAPIFeatureService::loading() const
 {
-  return isLoading;
-}
+  if (m_featureService && m_featureService->loadStatus() == LoadStatus::Loading)
+    return true;
 
-void BrowseOGCAPIFeatureService::setLoading(bool loading)
-{
-  isLoading = loading;
-  emit loadingChanged();
+  else if (m_featureLayer && m_featureLayer->loadStatus() == LoadStatus::Loading)
+    return true;
+
+  return false;
 }

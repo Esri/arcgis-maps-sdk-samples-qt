@@ -76,7 +76,6 @@ private:
   void clearExistingFeatureLayer();
   void addFeatureLayerToMap();
   bool loading() const;
-  void setLoading(bool loading);
 
   Esri::ArcGISRuntime::Map* m_map = nullptr;
   Esri::ArcGISRuntime::MapQuickView* m_mapView = nullptr;
@@ -88,7 +87,6 @@ private:
   QStringList m_featureCollectionList;
   Esri::ArcGISRuntime::OgcFeatureCollectionTable* m_featureCollectionTable = nullptr;
   Esri::ArcGISRuntime::FeatureLayer* m_featureLayer = nullptr;
-  bool isLoading = false;
 };
 
 #endif // BROWSEOGCAPIFEATURESERVICE_H
