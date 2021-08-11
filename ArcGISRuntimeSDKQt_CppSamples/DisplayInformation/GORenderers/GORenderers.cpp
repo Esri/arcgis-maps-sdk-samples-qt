@@ -138,7 +138,6 @@ void GORenderers::addGraphicsOverlay()
 Geometry GORenderers::createHeart(Point origin, int sideLength)
 {
   SpatialReference spatialReference = origin.spatialReference();
-  const double pi = 3.14159265359;
 
   // Create variables to store the min and max X and Y coordinates
   int minX = origin.x() - 0.5 * sideLength;
@@ -166,14 +165,9 @@ Geometry GORenderers::createHeart(Point origin, int sideLength)
   Point leftArcCentre(minX + 0.25 * sideLength, minY + 0.75 * sideLength, spatialReference);
   EllipticArcSegment leftArc(leftCurveEnd, arcIntersection, 0, false, false, arcRadius, 1, spatialReference);
 
-  //.createCircularEllipticArc(leftArcCentre, arcRadius, pi, (-1 * pi), spatialReference);
-  //EllipticArcSegment leftArc = arcMaker.createCircularEllipticArc(leftArcCentre, arcRadius, pi, (-1 * pi), spatialReference);
-
   // Create top right arc
   Point rightArcCentre(minX + sideLength, minY + 0.75 * sideLength, spatialReference);
   EllipticArcSegment rightArc(arcIntersection, rightCurveStart, 0, false, false, arcRadius, 1, spatialReference);
-  //EllipticArcSegment rightArc;
-  //EllipticArcSegment rightArc = arcMaker.createCircularEllipticArc(rightArcCentre, arcRadius, pi, (-1 * pi), spatialReference);
 
   Part* heart = new Part(spatialReference, this);
   heart->addSegment(leftCurve);
