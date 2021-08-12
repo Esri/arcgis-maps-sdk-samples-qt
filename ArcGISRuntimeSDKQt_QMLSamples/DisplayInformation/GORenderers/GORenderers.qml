@@ -122,6 +122,11 @@ Rectangle {
         }
     }
 
+    // Geometry for the heart graphic
+    HeartGraphic {
+        id: heartGraphicGeometryBuilder
+    }
+
     Component.onCompleted: {
         // create the line by assigning points
         polylineBuilder.addPointXY(-10e5, 40e5);
@@ -137,7 +142,7 @@ Rectangle {
         polygonBuilder.addPointXY(20e5, -20e5);
         polygonBuilder.addPointXY(-20e5, -20e5);
         // assign the geometry of the graphic to be the polygon
-        polygonGraphic.geometry = polygonBuilder.geometry;
+        polygonGraphic.geometry = heartGraphicGeometryBuilder.createHeartGeometry();
         // add the graphic to the polygon graphics overlay
         polygonGraphicsOverlay.graphics.append(polygonGraphic);
     }
