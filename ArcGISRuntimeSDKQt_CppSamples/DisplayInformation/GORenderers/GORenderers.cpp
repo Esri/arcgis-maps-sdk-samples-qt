@@ -65,78 +65,88 @@ void GORenderers::componentComplete()
   // set map on the map view
   m_mapView->setMap(m_map);
 
-  addGraphicsOverlay();
+  addGraphicsOverlays();
 }
 
-void GORenderers::addGraphicsOverlay()
+void GORenderers::addGraphicsOverlays()
 {
-  // create the point geometry
+  addPointGraphic();
+
+  addLineGraphic();
+
+  addPolygonGraphic();
+
+  addCurveGraphic();
+}
+
+void GORenderers::addPointGraphic()
+{
   Point pointGeometry(40e5, 40e5, SpatialReference::webMercator());
-  // create the point symbol
+
   SimpleMarkerSymbol* pointSymbol = new SimpleMarkerSymbol(SimpleMarkerSymbolStyle::Diamond, QColor("red"), 10, this);
-  // Point graphic
+
   Graphic* pointGraphic = new Graphic(pointGeometry, this);
 
-  // create a graphic overlay to display the point graphic
-  GraphicsOverlay* pointGraphicOverlay = new GraphicsOverlay(this);
-  // set the renderer of the overlay to be the marker symbol
-  pointGraphicOverlay->setRenderer(new SimpleRenderer(pointSymbol, this));
-  // add the graphic to the overlay
-  pointGraphicOverlay->graphics()->append(pointGraphic);
-  // add the overlay to the mapview
-  m_mapView->graphicsOverlays()->append(pointGraphicOverlay);
+  createGraphicOverlayWithGraphicAndSymbol(pointGraphic, pointSymbol);
+}
 
-  // create line geometry
+void GORenderers::addLineGraphic()
+{
   PolygonBuilder polylineBuilder(SpatialReference::webMercator());
-  // build the polyline
   polylineBuilder.addPoint(-10e5, 40e5);
   polylineBuilder.addPoint(20e5, 50e5);
-  // create a line symbol
-  SimpleLineSymbol* sls = new SimpleLineSymbol(SimpleLineSymbolStyle::Solid, QColor("blue"), 5, this);
-  // create a line graphic
+
+  SimpleLineSymbol* lineSymbol = new SimpleLineSymbol(SimpleLineSymbolStyle::Solid, QColor("blue"), 5, this);
+
   Graphic* lineGraphic = new Graphic(polylineBuilder.toGeometry(), this);
 
-  // create a graphic overlay to display the line graphic
-  GraphicsOverlay* lineGraphicOverlay = new GraphicsOverlay(this);
-  // set the renderer of the graphic overlay to be the line symbol
-  lineGraphicOverlay->setRenderer(new SimpleRenderer(sls, this));
-  // add the graphic to the overlay
-  lineGraphicOverlay->graphics()->append(lineGraphic);
-  // add the overlay to the mapview
-  m_mapView->graphicsOverlays()->append(lineGraphicOverlay);
+  createGraphicOverlayWithGraphicAndSymbol(lineGraphic, lineSymbol);
+}
 
-  // create the polygon geometry
+void GORenderers::addPolygonGraphic()
+{
   PolygonBuilder polygonBuilder(SpatialReference::webMercator());
   polygonBuilder.addPoint(-20e5, 20e5);
   polygonBuilder.addPoint(20e5, 20e5);
   polygonBuilder.addPoint(20e5, -20e5);
   polygonBuilder.addPoint(-20e5, -20e5);
-  SimpleFillSymbol* sfs = new SimpleFillSymbol(SimpleFillSymbolStyle::Solid, QColor(255, 255, 0, 180), this);
+
+  SimpleFillSymbol* polygonFillSymbol = new SimpleFillSymbol(SimpleFillSymbolStyle::Solid, QColor(255, 255, 0, 180), this);
+
   Graphic* polygonGraphic = new Graphic(polygonBuilder.toGeometry(), this);
 
-  GraphicsOverlay* polygonGraphicsOverlay = new GraphicsOverlay(this);
-  polygonGraphicsOverlay->setRenderer(new SimpleRenderer(sfs, this));
-  polygonGraphicsOverlay->graphics()->append(polygonGraphic);
-  m_mapView->graphicsOverlays()->append(polygonGraphicsOverlay);
-
-  // create the curve geometry
-  Point origin(40e5, 5e5, 0, SpatialReference::webMercator());
-  int sideLength = 10e5;
-  Geometry heartShape = createHeart(origin, sideLength);
-  Graphic* curveGraphic = new Graphic(heartShape);
-  SimpleLineSymbol* curveSls = new SimpleLineSymbol(SimpleLineSymbolStyle::Solid, QColor("black"), 1, this);
-  SimpleFillSymbol* curveSfs = new SimpleFillSymbol(SimpleFillSymbolStyle::Solid, QColor("red"), curveSls, this);
-
-
-  // create a graphic overlay to display the curve graphic
-  GraphicsOverlay* curveGraphicsOverlay = new GraphicsOverlay(this);
-  curveGraphicsOverlay->setRenderer(new SimpleRenderer(curveSfs, this));
-  curveGraphicsOverlay->graphics()->append(curveGraphic);
-  m_mapView->graphicsOverlays()->append(curveGraphicsOverlay);
+  createGraphicOverlayWithGraphicAndSymbol(polygonGraphic, polygonFillSymbol);
 }
 
-Geometry GORenderers::createHeart(Point origin, int sideLength)
+void GORenderers::addCurveGraphic()
 {
+  Geometry heartShapedCurve = createHeart();
+
+  Graphic* curveGraphic = new Graphic(heartShapedCurve);
+
+  SimpleLineSymbol* curveLineSymbol = new SimpleLineSymbol(SimpleLineSymbolStyle::Solid, QColor("black"), 1, this);
+  SimpleFillSymbol* curveFillSymbol = new SimpleFillSymbol(SimpleFillSymbolStyle::Solid, QColor("red"), curveLineSymbol, this);
+
+  createGraphicOverlayWithGraphicAndSymbol(curveGraphic, curveFillSymbol);
+}
+
+void GORenderers::createGraphicOverlayWithGraphicAndSymbol(Graphic* graphic, Symbol* symbol)
+{
+  GraphicsOverlay* graphicOverlay = new GraphicsOverlay(this);
+  // set the renderer of the overlay to be the marker symbol
+  graphicOverlay->setRenderer(new SimpleRenderer(symbol, this));
+  // add the graphic to the overlay
+  graphicOverlay->graphics()->append(graphic);
+  // add the overlay to the mapview
+  m_mapView->graphicsOverlays()->append(graphicOverlay);
+}
+
+
+Geometry GORenderers::createHeart()
+{
+  Point origin(40e5, 5e5, 0, SpatialReference::webMercator());
+  int sideLength = 10e5;
+
   SpatialReference spatialReference = origin.spatialReference();
 
   // Create variables to store the min and max X and Y coordinates
@@ -183,5 +193,3 @@ Geometry GORenderers::createHeart(Point origin, int sideLength)
 
   return heartBuilder->toGeometry();
 }
-
-

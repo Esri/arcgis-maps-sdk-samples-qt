@@ -22,9 +22,11 @@ namespace Esri
   namespace ArcGISRuntime
   {
     class Geometry;
+    class Graphic;
     class Map;
     class MapQuickView;
     class Point;
+    class Symbol;
   }
 }
 
@@ -42,8 +44,13 @@ public:
   static void init();
 
 private:
-  void addGraphicsOverlay();
-  Esri::ArcGISRuntime::Geometry createHeart(Esri::ArcGISRuntime::Point origin, int sideLength);
+  void addGraphicsOverlays();
+  void addPointGraphic();
+  void addLineGraphic();
+  void addPolygonGraphic();
+  void addCurveGraphic();
+  void createGraphicOverlayWithGraphicAndSymbol(Esri::ArcGISRuntime::Graphic* graphic, Esri::ArcGISRuntime::Symbol* symbol);
+  Esri::ArcGISRuntime::Geometry createHeart();
 
 private:
   Esri::ArcGISRuntime::Map* m_map = nullptr;
