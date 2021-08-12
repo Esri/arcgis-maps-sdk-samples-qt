@@ -22,7 +22,7 @@
 #include <Windows.h>
 #endif
 
-#include "GORenderers.h"
+#include "AddGraphicsWithRenderer.h"
 #include "ArcGISRuntimeEnvironment.h"
 
 #define STRINGIZE(x) #x
@@ -32,7 +32,7 @@ int main(int argc, char *argv[])
 {
   QGuiApplication::setAttribute(Qt::AA_EnableHighDpiScaling);
   QGuiApplication app(argc, argv);
-  app.setApplicationName("GORenderers - C++");
+  app.setApplicationName("AddGraphicsWithRenderer - C++");
 
   // Use of Esri location services, including basemaps and geocoding,
   // requires authentication using either an ArcGIS identity or an API Key.
@@ -52,7 +52,7 @@ int main(int argc, char *argv[])
       Esri::ArcGISRuntime::ArcGISRuntimeEnvironment::setApiKey(apiKey);
   }
   // Initialize the sample
-  GORenderers::init();
+  AddGraphicsWithRenderer::init();
 
   // Initialize application view
   QQuickView view;
@@ -74,7 +74,7 @@ int main(int argc, char *argv[])
   view.engine()->addImportPath(arcGISRuntimeImportPath);
 
   // Set the source
-  view.setSource(QUrl("qrc:/Samples/DisplayInformation/GORenderers/GORenderers.qml"));
+  view.setSource(QUrl("qrc:/Samples/DisplayInformation/AddGraphicsWithRenderer/AddGraphicsWithRenderer.qml"));
 
   view.show();
 

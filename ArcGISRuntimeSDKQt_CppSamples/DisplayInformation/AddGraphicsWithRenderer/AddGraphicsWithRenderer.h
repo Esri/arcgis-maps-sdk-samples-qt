@@ -32,13 +32,13 @@ namespace Esri
 
 #include <QQuickItem>
 
-class GORenderers : public QQuickItem
+class AddGraphicsWithRenderer : public QQuickItem
 {
   Q_OBJECT
 
 public:
-  explicit GORenderers(QQuickItem* parent = nullptr);
-  ~GORenderers() override;
+  explicit AddGraphicsWithRenderer(QQuickItem* parent = nullptr);
+  ~AddGraphicsWithRenderer() override;
 
   void componentComplete() override;
   static void init();

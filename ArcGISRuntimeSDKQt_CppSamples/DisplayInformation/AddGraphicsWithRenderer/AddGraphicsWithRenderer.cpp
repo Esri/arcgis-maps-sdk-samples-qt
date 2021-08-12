@@ -18,7 +18,7 @@
 #include "pch.hpp"
 #endif // PCH_BUILD
 
-#include "GORenderers.h"
+#include "AddGraphicsWithRenderer.h"
 
 #include "CubicBezierSegment.h"
 #include "EllipticArcSegment.h"
@@ -40,20 +40,20 @@
 
 using namespace Esri::ArcGISRuntime;
 
-GORenderers::GORenderers(QQuickItem* parent) :
+AddGraphicsWithRenderer::AddGraphicsWithRenderer(QQuickItem* parent) :
   QQuickItem(parent)
 {
 }
 
-GORenderers::~GORenderers() = default;
+AddGraphicsWithRenderer::~AddGraphicsWithRenderer() = default;
 
-void GORenderers::init()
+void AddGraphicsWithRenderer::init()
 {
   qmlRegisterType<MapQuickView>("Esri.Samples", 1, 0, "MapView");
-  qmlRegisterType<GORenderers>("Esri.Samples", 1, 0, "GORenderersSample");
+  qmlRegisterType<AddGraphicsWithRenderer>("Esri.Samples", 1, 0, "AddGraphicsWithRendererSample");
 }
 
-void GORenderers::componentComplete()
+void AddGraphicsWithRenderer::componentComplete()
 {
   QQuickItem::componentComplete();
 
@@ -68,7 +68,7 @@ void GORenderers::componentComplete()
   addGraphicsOverlays();
 }
 
-void GORenderers::addGraphicsOverlays()
+void AddGraphicsWithRenderer::addGraphicsOverlays()
 {
   addPointGraphic();
 
@@ -79,7 +79,7 @@ void GORenderers::addGraphicsOverlays()
   addCurveGraphic();
 }
 
-void GORenderers::addPointGraphic()
+void AddGraphicsWithRenderer::addPointGraphic()
 {
   Point pointGeometry(40e5, 40e5, SpatialReference::webMercator());
 
@@ -90,7 +90,7 @@ void GORenderers::addPointGraphic()
   createGraphicOverlayWithGraphicAndSymbol(pointGraphic, pointSymbol);
 }
 
-void GORenderers::addLineGraphic()
+void AddGraphicsWithRenderer::addLineGraphic()
 {
   PolygonBuilder polylineBuilder(SpatialReference::webMercator());
   polylineBuilder.addPoint(-10e5, 40e5);
@@ -103,7 +103,7 @@ void GORenderers::addLineGraphic()
   createGraphicOverlayWithGraphicAndSymbol(lineGraphic, lineSymbol);
 }
 
-void GORenderers::addPolygonGraphic()
+void AddGraphicsWithRenderer::addPolygonGraphic()
 {
   PolygonBuilder polygonBuilder(SpatialReference::webMercator());
   polygonBuilder.addPoint(-20e5, 20e5);
@@ -118,7 +118,7 @@ void GORenderers::addPolygonGraphic()
   createGraphicOverlayWithGraphicAndSymbol(polygonGraphic, polygonFillSymbol);
 }
 
-void GORenderers::addCurveGraphic()
+void AddGraphicsWithRenderer::addCurveGraphic()
 {
   Geometry heartShapedCurve = createHeart();
 
@@ -130,7 +130,7 @@ void GORenderers::addCurveGraphic()
   createGraphicOverlayWithGraphicAndSymbol(curveGraphic, curveFillSymbol);
 }
 
-void GORenderers::createGraphicOverlayWithGraphicAndSymbol(Graphic* graphic, Symbol* symbol)
+void AddGraphicsWithRenderer::createGraphicOverlayWithGraphicAndSymbol(Graphic* graphic, Symbol* symbol)
 {
   GraphicsOverlay* graphicOverlay = new GraphicsOverlay(this);
   // set the renderer of the overlay to be the marker symbol
@@ -142,7 +142,7 @@ void GORenderers::createGraphicOverlayWithGraphicAndSymbol(Graphic* graphic, Sym
 }
 
 
-Geometry GORenderers::createHeart()
+Geometry AddGraphicsWithRenderer::createHeart()
 {
   // Declare common variables
   Point origin(40e5, 5e5, 0, SpatialReference::webMercator());

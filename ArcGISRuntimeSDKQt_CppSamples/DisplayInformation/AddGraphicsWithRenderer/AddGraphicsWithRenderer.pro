@@ -28,18 +28,18 @@ ARCGIS_RUNTIME_VERSION = 100.12
 include($$PWD/arcgisruntime.pri)
 
 TEMPLATE = app
-TARGET = GORenderers
+TARGET = AddGraphicsWithRenderer
 
 #-------------------------------------------------------------------------------
 
 HEADERS += \
-    GORenderers.h
+    AddGraphicsWithRenderer.h
 
 SOURCES += \
     main.cpp \
-    GORenderers.cpp
+    AddGraphicsWithRenderer.cpp
 
-RESOURCES +=  GORenderers.qrc
+RESOURCES +=  AddGraphicsWithRenderer.qrc
 
 #-------------------------------------------------------------------------------
 
