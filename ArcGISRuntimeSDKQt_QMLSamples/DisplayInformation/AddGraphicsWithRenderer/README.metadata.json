@@ -33,7 +33,8 @@
         "SimpleRenderer"
     ],
     "snippets": [
-        "AddGraphicsWithRenderer.qml"
+        "AddGraphicsWithRenderer.qml",
+        "HeartGraphicGeometryBuilder.qml"
     ],
     "title": "Add graphics with renderer"
 }
