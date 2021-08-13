@@ -4,6 +4,6 @@
         <file>screenshot.png</file>
         <file>GORenderers.qml</file>
         <file>README.md</file>
-        <file>HeartGraphic.qml</file>
+        <file>HeartGraphicGeometryBuilder.qml</file>
     </qresource>
 </RCC>

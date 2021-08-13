@@ -70,6 +70,23 @@ Rectangle {
                 symbol: fillSymbol
             }
         }
+
+        // graphics overlay to display the heart graphic
+        GraphicsOverlay {
+            id: heartGraphicsOverlay
+
+            renderer: SimpleRenderer {
+                symbol: SimpleFillSymbol {
+                    style: Enums.SimpleFillSymbolStyleSolid
+                    color: "red"
+                    outline: SimpleLineSymbol {
+                        style: Enums.SimpleLineSymbolStyleSolid
+                        color: "black"
+                        width: 1
+                    }
+                }
+            }
+        }
     }
 
     // the symbology for the point graphic
@@ -123,8 +140,13 @@ Rectangle {
     }
 
     // Geometry for the heart graphic
-    HeartGraphic {
+    HeartGraphicGeometryBuilder {
         id: heartGraphicGeometryBuilder
+    }
+
+    // The heart graphic to append the heart geometry to
+    Graphic {
+        id: heartGraphic
     }
 
     Component.onCompleted: {
@@ -142,8 +164,13 @@ Rectangle {
         polygonBuilder.addPointXY(20e5, -20e5);
         polygonBuilder.addPointXY(-20e5, -20e5);
         // assign the geometry of the graphic to be the polygon
-        polygonGraphic.geometry = heartGraphicGeometryBuilder.createHeartGeometry();
+        polygonGraphic.geometry = polygonBuilder.geometry;
         // add the graphic to the polygon graphics overlay
         polygonGraphicsOverlay.graphics.append(polygonGraphic);
+
+        // Create the heart graphic with curved line segments
+        // The geometry for the heart graphic is defined in heartGraphicGeometryBuilder.qml
+        heartGraphic.geometry = heartGraphicGeometryBuilder.createHeartGeometry(40e5, 5e5, 10e5, Factory.SpatialReference.createWebMercator());
+        heartGraphicsOverlay.graphics.append(heartGraphic);
     }
 }
