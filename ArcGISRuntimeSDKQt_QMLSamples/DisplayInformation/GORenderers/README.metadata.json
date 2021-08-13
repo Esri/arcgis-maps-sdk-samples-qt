@@ -21,7 +21,7 @@
         "SimpleRenderer"
     ],
     "redirect_from": [
-        "/qt/latest/qml/sample-code/sample-qt-gorenderers.htm"
+        "/qt/latest/qml/sample-code/sample-qt-AddGraphicsWithRenderer.htm"
     ],
     "relevant_apis": [
         "Geometry",
@@ -33,7 +33,7 @@
         "SimpleRenderer"
     ],
     "snippets": [
-        "GORenderers.qml"
+        "AddGraphicsWithRenderer.qml"
     ],
     "title": "Add graphics with renderer"
 }

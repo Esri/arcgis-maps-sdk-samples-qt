@@ -1,4 +1,4 @@
-// [WriteFile Name=GORenderers, Category=DisplayInformation]
+// [WriteFile Name=AddGraphicsWithRenderer, Category=DisplayInformation]
 // [Legal]
 // Copyright 2016 Esri.
 

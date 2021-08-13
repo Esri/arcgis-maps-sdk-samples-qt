@@ -1,8 +1,8 @@
 <RCC>
-    <qresource prefix="/Samples/DisplayInformation/GORenderers">
+    <qresource prefix="/Samples/DisplayInformation/AddGraphicsWithRenderer">
         <file alias="sample.json">README.metadata.json</file>
         <file>screenshot.png</file>
-        <file>GORenderers.qml</file>
+        <file>AddGraphicsWithRenderer.qml</file>
         <file>README.md</file>
         <file>HeartGraphicGeometryBuilder.qml</file>
     </qresource>
