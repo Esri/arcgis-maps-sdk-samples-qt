@@ -4,6 +4,5 @@
         <file>screenshot.png</file>
         <file>AddGraphicsWithRenderer.qml</file>
         <file>README.md</file>
-        <file>HeartGraphicGeometryBuilder.qml</file>
     </qresource>
 </RCC>
