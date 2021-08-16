@@ -80,7 +80,7 @@ void AddGraphicsWithRenderer::addPointGraphic()
 
   Graphic* pointGraphic = new Graphic(pointGeometry, this);
 
-  createGraphicOverlayWithGraphicAndSymbol(pointGraphic, pointSymbol);
+  createGraphicsOverlayWithGraphicAndSymbol(pointGraphic, pointSymbol);
 }
 
 void AddGraphicsWithRenderer::addLineGraphic()
@@ -93,7 +93,7 @@ void AddGraphicsWithRenderer::addLineGraphic()
 
   Graphic* lineGraphic = new Graphic(polylineBuilder.toGeometry(), this);
 
-  createGraphicOverlayWithGraphicAndSymbol(lineGraphic, lineSymbol);
+  createGraphicsOverlayWithGraphicAndSymbol(lineGraphic, lineSymbol);
 }
 
 void AddGraphicsWithRenderer::addPolygonGraphic()
@@ -108,32 +108,31 @@ void AddGraphicsWithRenderer::addPolygonGraphic()
 
   Graphic* polygonGraphic = new Graphic(polygonBuilder.toGeometry(), this);
 
-  createGraphicOverlayWithGraphicAndSymbol(polygonGraphic, polygonFillSymbol);
+  createGraphicsOverlayWithGraphicAndSymbol(polygonGraphic, polygonFillSymbol);
 }
 
 void AddGraphicsWithRenderer::addCurveGraphic()
 {
   Geometry heartShapedCurve = createHeart();
 
-  Graphic* curveGraphic = new Graphic(heartShapedCurve);
+  Graphic* curveGraphic = new Graphic(heartShapedCurve, this);
 
   SimpleLineSymbol* curveLineSymbol = new SimpleLineSymbol(SimpleLineSymbolStyle::Solid, QColor("black"), 1, this);
   SimpleFillSymbol* curveFillSymbol = new SimpleFillSymbol(SimpleFillSymbolStyle::Solid, QColor("red"), curveLineSymbol, this);
 
-  createGraphicOverlayWithGraphicAndSymbol(curveGraphic, curveFillSymbol);
+  createGraphicsOverlayWithGraphicAndSymbol(curveGraphic, curveFillSymbol);
 }
 
-void AddGraphicsWithRenderer::createGraphicOverlayWithGraphicAndSymbol(Graphic* graphic, Symbol* symbol)
+void AddGraphicsWithRenderer::createGraphicsOverlayWithGraphicAndSymbol(Graphic* graphic, Symbol* symbol)
 {
   GraphicsOverlay* graphicOverlay = new GraphicsOverlay(this);
-  // set the renderer of the overlay to be the marker symbol
+  // set the renderer of the overlay to be the symbol
   graphicOverlay->setRenderer(new SimpleRenderer(symbol, this));
   // add the graphic to the overlay
   graphicOverlay->graphics()->append(graphic);
   // add the overlay to the mapview
   m_mapView->graphicsOverlays()->append(graphicOverlay);
 }
-
 
 Geometry AddGraphicsWithRenderer::createHeart()
 {
@@ -152,7 +151,7 @@ Geometry AddGraphicsWithRenderer::createHeart()
   Point leftControlPoint2(minX, origin.y(), spatialReference);
   Point leftCurveEnd(minX, minY + 0.75 * sideLength, spatialReference);
   Point leftArcCentre(minX + 0.25 * sideLength, minY + 0.75 * sideLength, spatialReference);
-  Point arcIntersection(origin.x(), minY + 0.75 * sideLength);
+  Point arcIntersection(origin.x(), minY + 0.75 * sideLength, spatialReference);
   Point rightArcCentre(minX + sideLength, minY + 0.75 * sideLength, spatialReference);
   Point rightCurveStart(minX + sideLength, minY + 0.75 * sideLength, spatialReference);
   Point rightControlPoint1(minX + sideLength, origin.y(), spatialReference);
@@ -176,7 +175,7 @@ Geometry AddGraphicsWithRenderer::createHeart()
   partCollection->addPart(heart);
 
   // Construct polygon from part collection
-  PolygonBuilder* heartBuilder = new PolygonBuilder(origin.spatialReference());
+  PolygonBuilder* heartBuilder = new PolygonBuilder(origin.spatialReference(), this);
   heartBuilder->setParts(partCollection);
 
   return heartBuilder->toGeometry();
