@@ -19,15 +19,14 @@
 
 namespace Esri
 {
-  namespace ArcGISRuntime
-  {
-    class Geometry;
-    class Graphic;
-    class Map;
-    class MapQuickView;
-    class Point;
-    class Symbol;
-  }
+namespace ArcGISRuntime
+{
+class Geometry;
+class Graphic;
+class Map;
+class MapQuickView;
+class Symbol;
+}
 }
 
 #include <QQuickItem>

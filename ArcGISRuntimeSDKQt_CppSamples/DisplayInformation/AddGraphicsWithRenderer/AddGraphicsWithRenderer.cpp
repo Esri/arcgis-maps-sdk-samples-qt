@@ -22,20 +22,13 @@
 
 #include "CubicBezierSegment.h"
 #include "EllipticArcSegment.h"
-#include "ImmutablePart.h"
 #include "Map.h"
 #include "MapQuickView.h"
-#include "SpatialReference.h"
-#include "Point.h"
-#include "PolylineBuilder.h"
-#include "Polyline.h"
 #include "PolygonBuilder.h"
-#include "Polygon.h"
-#include "Graphic.h"
-#include "GraphicsOverlay.h"
-#include "SimpleMarkerSymbol.h"
-#include "SimpleLineSymbol.h"
+#include "PolylineBuilder.h"
 #include "SimpleFillSymbol.h"
+#include "SimpleLineSymbol.h"
+#include "SimpleMarkerSymbol.h"
 #include "SimpleRenderer.h"
 
 using namespace Esri::ArcGISRuntime;
@@ -167,9 +160,9 @@ Geometry AddGraphicsWithRenderer::createHeart()
 
   // Create curve segments
   CubicBezierSegment leftCurve(bottomTip, leftControlPoint1, leftControlPoint2, leftCurveEnd, spatialReference);
-  CubicBezierSegment rightCurve(rightCurveStart, rightControlPoint1, rightControlPoint2, bottomTip, spatialReference);
   EllipticArcSegment leftArc(leftCurveEnd, arcIntersection, 0, false, false, arcRadius, 1, spatialReference);
   EllipticArcSegment rightArc(arcIntersection, rightCurveStart, 0, false, false, arcRadius, 1, spatialReference);
+  CubicBezierSegment rightCurve(rightCurveStart, rightControlPoint1, rightControlPoint2, bottomTip, spatialReference);
 
   // Create part from segments
   Part* heart = new Part(spatialReference, this);
