@@ -26,7 +26,7 @@ CONFIG += c++14
 
 SOURCES += main.cpp
 
-RESOURCES += GORenderers.qrc
+RESOURCES += AddGraphicsWithRenderer.qrc
 
 ios {
     QMAKE_INFO_PLIST = $$PWD/Info.plist

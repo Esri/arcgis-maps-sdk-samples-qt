@@ -6,34 +6,48 @@
         "screenshot.png"
     ],
     "keywords": [
+        "arc",
+        "bezier",
+        "curve",
         "display",
         "graphics",
         "marker",
         "overlay",
         "renderer",
+        "segment",
         "symbol",
+        "true curve",
+        "CubicBezierSegment",
+        "EllipticArcSegment",
         "Geometry",
         "Graphic",
         "GraphicsOverlay",
+        "PolygonBuilder",
+        "PolylineBulder",
         "SimpleFillSymbol",
         "SimpleLineSymbol",
         "SimpleMarkerSymbol",
         "SimpleRenderer"
     ],
     "redirect_from": [
-        "/qt/latest/qml/sample-code/sample-qt-gorenderers.htm"
+        "/qt/latest/qml/sample-code/sample-qt-AddGraphicsWithRenderer.htm"
     ],
     "relevant_apis": [
+        "CubicBezierSegment",
+        "EllipticArcSegment",
         "Geometry",
         "Graphic",
         "GraphicsOverlay",
+        "PolygonBuilder",
+        "PolylineBulder",
         "SimpleFillSymbol",
         "SimpleLineSymbol",
         "SimpleMarkerSymbol",
         "SimpleRenderer"
     ],
     "snippets": [
-        "GORenderers.qml"
+        "AddGraphicsWithRenderer.qml",
+        "HeartGraphicGeometryBuilder.qml"
     ],
     "title": "Add graphics with renderer"
 }
