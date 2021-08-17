@@ -19,15 +19,14 @@
 
 namespace Esri
 {
-  namespace ArcGISRuntime
-  {
-    class Geometry;
-    class Graphic;
-    class Map;
-    class MapQuickView;
-    class Point;
-    class Symbol;
-  }
+namespace ArcGISRuntime
+{
+class Geometry;
+class Graphic;
+class Map;
+class MapQuickView;
+class Symbol;
+}
 }
 
 #include <QQuickItem>
@@ -49,7 +48,7 @@ private:
   void addLineGraphic();
   void addPolygonGraphic();
   void addCurveGraphic();
-  void createGraphicOverlayWithGraphicAndSymbol(Esri::ArcGISRuntime::Graphic* graphic, Esri::ArcGISRuntime::Symbol* symbol);
+  void createGraphicsOverlayWithGraphicAndSymbol(Esri::ArcGISRuntime::Graphic* graphic, Esri::ArcGISRuntime::Symbol* symbol);
   Esri::ArcGISRuntime::Geometry createHeart();
 
 private:
