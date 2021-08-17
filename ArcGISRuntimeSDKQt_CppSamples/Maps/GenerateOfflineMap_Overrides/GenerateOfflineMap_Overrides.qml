@@ -124,10 +124,4 @@ GenerateOfflineMap_OverridesSample {
         anchors.centerIn: parent
         running: taskBusy
     }
-
-    /* Uncomment this section when running as standalone application
-    AuthenticationView {
-        anchors.fill: parent
-    }
-    */
 }

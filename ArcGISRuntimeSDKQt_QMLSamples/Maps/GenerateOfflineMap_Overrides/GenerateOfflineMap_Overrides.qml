@@ -47,7 +47,7 @@ Rectangle {
 
                 itemId: webMapId
                 Portal {
-                    loginRequired: true
+                    loginRequired: false
                 }
             }
         }
@@ -445,10 +445,4 @@ Rectangle {
         running: offlineMapTask.createGenerateOfflineMapParameterOverridesStatus === Enums.TaskStatusInProgress ||
                  offlineMapTask.createDefaultGenerateOfflineMapParameterStatus === Enums.TaskStatusInProgress
     }
-
-    /* Uncomment this section when running as standalone application
-    AuthenticationView {
-        anchors.fill: parent
-    }
-    */
 }

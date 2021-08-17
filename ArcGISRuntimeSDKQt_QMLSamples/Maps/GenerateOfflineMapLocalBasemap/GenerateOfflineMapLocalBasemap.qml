@@ -261,10 +261,4 @@ Rectangle {
             }
         }
     }
-
-    /* Uncomment this section when running as standalone application
-    AuthenticationView {
-        anchors.fill: parent
-    }
-    */
 }

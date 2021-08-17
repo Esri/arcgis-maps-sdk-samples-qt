@@ -43,7 +43,7 @@ Rectangle {
 
                 itemId: webMapId
                 Portal {
-                    loginRequired: true
+                    loginRequired: false
                 }
             }
         }
@@ -207,10 +207,4 @@ Rectangle {
             }
         }
     }
-
-    /* Uncomment this section when running as standalone application
-    AuthenticationView {
-        anchors.fill: parent
-    }
-    */
 }
