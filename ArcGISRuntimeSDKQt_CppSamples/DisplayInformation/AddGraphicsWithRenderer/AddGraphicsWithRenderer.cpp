@@ -1,4 +1,4 @@
-// [WriteFile Name=GORenderers, Category=DisplayInformation]
+// [WriteFile Name=AddGraphicsWithRenderer, Category=DisplayInformation]
 // [Legal]
 // Copyright 2016 Esri.
 
@@ -74,7 +74,7 @@ void AddGraphicsWithRenderer::addGraphicsOverlays()
 
 void AddGraphicsWithRenderer::addPointGraphic()
 {
-  Point pointGeometry(40e5, 40e5, SpatialReference::webMercator());
+  const Point pointGeometry(40e5, 40e5, SpatialReference::webMercator());
 
   SimpleMarkerSymbol* pointSymbol = new SimpleMarkerSymbol(SimpleMarkerSymbolStyle::Diamond, QColor("red"), 10, this);
 
@@ -137,7 +137,7 @@ void AddGraphicsWithRenderer::createGraphicsOverlayWithGraphicAndSymbol(Graphic*
 Geometry AddGraphicsWithRenderer::createHeart()
 {
   // Declare common variables
-  Point origin(40e5, 5e5, 0, SpatialReference::webMercator());
+  const Point origin(40e5, 5e5, 0, SpatialReference::webMercator());
   SpatialReference spatialReference = origin.spatialReference();
   int sideLength = 10e5;
   int minX = origin.x() - 0.5 * sideLength;
@@ -146,16 +146,16 @@ Geometry AddGraphicsWithRenderer::createHeart()
 
   // The heart-shape comprises 4-curve segments: 2 bezier curves make the base and 2 arc curves make the top
   // Declare all points used to create heart-shaped curve, starting at bottom tip and moving clockwise
-  Point bottomTip(origin.x(), minY, spatialReference);
-  Point leftControlPoint1(origin.x(), minY + 0.25 * sideLength, spatialReference);
-  Point leftControlPoint2(minX, origin.y(), spatialReference);
-  Point leftCurveEnd(minX, minY + 0.75 * sideLength, spatialReference);
-  Point leftArcCentre(minX + 0.25 * sideLength, minY + 0.75 * sideLength, spatialReference);
-  Point arcIntersection(origin.x(), minY + 0.75 * sideLength, spatialReference);
-  Point rightArcCentre(minX + sideLength, minY + 0.75 * sideLength, spatialReference);
-  Point rightCurveStart(minX + sideLength, minY + 0.75 * sideLength, spatialReference);
-  Point rightControlPoint1(minX + sideLength, origin.y(), spatialReference);
-  Point rightControlPoint2 = leftControlPoint1;
+  const Point bottomTip(origin.x(), minY, spatialReference);
+  const Point leftControlPoint1(origin.x(), minY + 0.25 * sideLength, spatialReference);
+  const Point leftControlPoint2(minX, origin.y(), spatialReference);
+  const Point leftCurveEnd(minX, minY + 0.75 * sideLength, spatialReference);
+  const Point leftArcCentre(minX + 0.25 * sideLength, minY + 0.75 * sideLength, spatialReference);
+  const Point arcIntersection(origin.x(), minY + 0.75 * sideLength, spatialReference);
+  const Point rightArcCentre(minX + sideLength, minY + 0.75 * sideLength, spatialReference);
+  const Point rightCurveStart(minX + sideLength, minY + 0.75 * sideLength, spatialReference);
+  const Point rightControlPoint1(minX + sideLength, origin.y(), spatialReference);
+  const Point rightControlPoint2 = leftControlPoint1;
 
   // Create curve segments
   CubicBezierSegment leftCurve(bottomTip, leftControlPoint1, leftControlPoint2, leftCurveEnd, spatialReference);

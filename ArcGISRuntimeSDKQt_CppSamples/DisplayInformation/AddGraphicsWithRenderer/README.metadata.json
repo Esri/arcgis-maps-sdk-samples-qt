@@ -30,7 +30,7 @@
         "SimpleRenderer"
     ],
     "redirect_from": [
-        "/qt/latest/cpp/sample-code/sample-qt-AddGraphicsWithRenderer.htm"
+        "/qt/latest/cpp/sample-code/sample-qt-gorenderers.htm"
     ],
     "relevant_apis": [
         "CubicBezierSegment",
