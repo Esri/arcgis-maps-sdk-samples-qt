@@ -3,7 +3,7 @@
 
 # Licensed under the Apache License, Version 2.0 (the "License");
 # you may not use this file except in compliance with the License.
-# You may obtain a copy of the License at:
+# You may obtain a copy of the License at
 # http://www.apache.org/licenses/LICENSE-2.0
 
 # Unless required by applicable law or agreed to in writing, software
@@ -13,8 +13,13 @@
 # limitations under the License.
 #-------------------------------------------------
 
+mac {
+    cache()
+}
 
-TEMPLATE = app
+#-------------------------------------------------------------------------------
+
+CONFIG += c++14
 
 # additional modules are pulled in via arcgisruntime.pri
 QT += opengl qml quick
@@ -22,15 +27,39 @@ QT += opengl qml quick
 ARCGIS_RUNTIME_VERSION = 100.12
 include($$PWD/arcgisruntime.pri)
 
-CONFIG += c++14
+TEMPLATE = app
+TARGET = AddGraphicsWithRenderer
 
-SOURCES += main.cpp
+#-------------------------------------------------------------------------------
 
-RESOURCES += GORenderers.qrc
+HEADERS += \
+    AddGraphicsWithRenderer.h
+
+SOURCES += \
+    main.cpp \
+    AddGraphicsWithRenderer.cpp
+
+RESOURCES +=  AddGraphicsWithRenderer.qrc
+
+#-------------------------------------------------------------------------------
+
+win32 {
+    LIBS += \
+        Ole32.lib
+}
 
 ios {
+    INCLUDEPATH += $$PWD
+    DEPENDPATH += $$PWD
+
+    OTHER_FILES += \
+        $$PWD/Info.plist
+
     QMAKE_INFO_PLIST = $$PWD/Info.plist
 }
 
-# Default rules for deployment.
-include(deployment.pri)
+android {
+    INCLUDEPATH += $$PWD
+    DEPENDPATH += $$PWD
+}
+

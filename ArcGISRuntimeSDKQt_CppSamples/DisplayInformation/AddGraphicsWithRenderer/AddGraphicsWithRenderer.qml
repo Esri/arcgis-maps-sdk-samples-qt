@@ -1,4 +1,4 @@
-// [WriteFile Name=GORenderers, Category=DisplayInformation]
+// [WriteFile Name=AddGraphicsWithRenderer, Category=DisplayInformation]
 // [Legal]
 // Copyright 2016 Esri.
 
@@ -17,7 +17,7 @@
 import QtQuick 2.6
 import Esri.Samples 1.0
 
-GORenderersSample {
+AddGraphicsWithRendererSample {
     width: 800
     height: 600
 

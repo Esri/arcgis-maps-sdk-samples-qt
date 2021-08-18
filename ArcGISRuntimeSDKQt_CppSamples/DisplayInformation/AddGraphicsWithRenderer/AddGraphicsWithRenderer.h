@@ -1,4 +1,4 @@
-// [WriteFile Name=GORenderers, Category=DisplayInformation]
+// [WriteFile Name=AddGraphicsWithRenderer, Category=DisplayInformation]
 // [Legal]
 // Copyright 2016 Esri.
 
@@ -19,28 +19,37 @@
 
 namespace Esri
 {
-  namespace ArcGISRuntime
-  {
-    class Map;
-    class MapQuickView;
-  }
+namespace ArcGISRuntime
+{
+class Geometry;
+class Graphic;
+class Map;
+class MapQuickView;
+class Symbol;
+}
 }
 
 #include <QQuickItem>
 
-class GORenderers : public QQuickItem
+class AddGraphicsWithRenderer : public QQuickItem
 {
   Q_OBJECT
 
 public:
-  explicit GORenderers(QQuickItem* parent = nullptr);
-  ~GORenderers() override;
+  explicit AddGraphicsWithRenderer(QQuickItem* parent = nullptr);
+  ~AddGraphicsWithRenderer() override;
 
   void componentComplete() override;
   static void init();
 
 private:
-  void addGraphicsOverlay();
+  void addGraphicsOverlays();
+  void addPointGraphic();
+  void addLineGraphic();
+  void addPolygonGraphic();
+  void addCurveGraphic();
+  void createGraphicsOverlayWithGraphicAndSymbol(Esri::ArcGISRuntime::Graphic* graphic, Esri::ArcGISRuntime::Symbol* symbol);
+  Esri::ArcGISRuntime::Geometry createHeart();
 
 private:
   Esri::ArcGISRuntime::Map* m_map = nullptr;

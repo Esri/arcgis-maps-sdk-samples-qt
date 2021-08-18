@@ -3,9 +3,9 @@
 <plist version="1.0">
 <dict>
 	<key>CFBundleDisplayName</key>
-	<string>GORenderers</string>
+        <string>AddGraphicsWithRenderer</string>
 	<key>CFBundleExecutable</key>
-	<string>GORenderers</string>
+        <string>AddGraphicsWithRenderer</string>
 	<key>CFBundleGetInfoString</key>
 	<string>ArcGIS</string>
 	<key>CFBundleIcons~ipad</key>
@@ -25,7 +25,7 @@
 	<key>NOTE</key>
 	<string>This app is cool</string>
 	<key>UIFileSharingEnabled</key>
-        <string>FALSE</string>
+	<string>FALSE</string>
 	<key>UIRequiresPersistentWiFi</key>
 	<string>NO</string>
 	<key>LSRequiresIPhoneOS</key>
@@ -52,4 +52,3 @@
     <string>LaunchScreen</string>
 </dict>
 </plist>
-
