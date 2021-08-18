@@ -3,10 +3,10 @@
         <file alias="sample.json">README.metadata.json</file>
         <file>OpenMapUrl.qml</file>
         <file>screenshot.png</file>
-        <file>Tapestry.png</file>
         <file>SwitchMap.png</file>
         <file>geology.jpg</file>
         <file>README.md</file>
-        <file>population.png</file>
+        <file>ecosystems.png</file>
+        <file>traces.png</file>
     </qresource>
 </RCC>
