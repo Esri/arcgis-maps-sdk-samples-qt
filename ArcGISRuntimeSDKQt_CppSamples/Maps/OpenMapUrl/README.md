@@ -20,7 +20,7 @@ A web map can be selected from the list. On selection the web map displays in th
 
 ## Relevant API
 
-* ArcGISMap
+* Map
 * MapView
 * Portal
 * PortalItem

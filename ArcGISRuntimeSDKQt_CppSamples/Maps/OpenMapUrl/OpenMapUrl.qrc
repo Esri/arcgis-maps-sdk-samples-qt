@@ -11,5 +11,4 @@
         <file>ecosystems.png</file>
         <file>traces.png</file>
     </qresource>
-    <qresource prefix="/"/>
 </RCC>
