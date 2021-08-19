@@ -19,7 +19,7 @@
     ],
     "redirect_from": [
         "/qt/latest/cpp/sample-code/sample-qt-displaydevicelocation.htm",
-        "/qt/cpp/sample-code/display-device-location-with-autopan-modes/"
+        "/qt/cpp/sample-code/display-device-location/"
     ],
     "relevant_apis": [
         "LocationDisplay",
