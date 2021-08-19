@@ -76,9 +76,6 @@ void BuildLegend::componentComplete()
 
 void BuildLegend::addLayers()
 {
-  ArcGISTiledLayer* tiledLayer = new ArcGISTiledLayer(QUrl("https://services.arcgisonline.com/ArcGIS/rest/services/Specialty/Soil_Survey_Map/MapServer"), this);
-  m_map->operationalLayers()->append(tiledLayer);
-
   ArcGISMapImageLayer* mapImageLayer = new ArcGISMapImageLayer(QUrl("https://sampleserver6.arcgisonline.com/arcgis/rest/services/Census/MapServer"), this);
   m_map->operationalLayers()->append(mapImageLayer);
 
