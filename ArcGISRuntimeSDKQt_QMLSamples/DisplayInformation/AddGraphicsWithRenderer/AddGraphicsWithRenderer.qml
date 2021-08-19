@@ -166,7 +166,6 @@ Rectangle {
         polygonGraphicsOverlay.graphics.append(polygonGraphic);
 
         // Create the heart graphic with curved line segments
-        // The geometry for the heart graphic is defined in heartGraphicGeometryBuilder.qml
         heartGraphic.geometry = createHeartGeometry(40e5, 5e5, 10e5, Factory.SpatialReference.createWebMercator());
         heartGraphicsOverlay.graphics.append(heartGraphic);
     }

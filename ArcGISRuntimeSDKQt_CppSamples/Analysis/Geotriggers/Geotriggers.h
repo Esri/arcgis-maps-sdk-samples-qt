@@ -38,6 +38,7 @@ class SimulatedLocationDataSource;
 
 #include <QObject>
 #include <QMap>
+#include <QUrl>
 
 class Geotriggers : public QObject
 {
