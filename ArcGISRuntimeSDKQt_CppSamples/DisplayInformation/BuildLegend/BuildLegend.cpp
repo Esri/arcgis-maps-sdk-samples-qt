@@ -23,7 +23,6 @@
 #include "Map.h"
 #include "MapQuickView.h"
 #include "Basemap.h"
-#include "ArcGISTiledLayer.h"
 #include "ArcGISMapImageLayer.h"
 #include "FeatureLayer.h"
 #include "ServiceFeatureTable.h"
