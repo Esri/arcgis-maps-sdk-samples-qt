@@ -17,6 +17,7 @@
 import QtQuick 2.6
 import QtQuick.Controls 2.2
 import Esri.Samples 1.0
+import QtQuick.Dialogs 1.2
 
 Item {
 
@@ -29,5 +30,12 @@ Item {
     AddIntegratedMeshLayerSample {
         id: model
         sceneView: view
+    }
+
+    MessageDialog {
+        id: errorMessageDialog
+        visible: model.errorWhileLoading ? true : false;
+        text: "The Integrated Mesh Layer Service is Currently Unavailable."
+        onButtonClicked: model.errorWhileLoading = false;
     }
 }

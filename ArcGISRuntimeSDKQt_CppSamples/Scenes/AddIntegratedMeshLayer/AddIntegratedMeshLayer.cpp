@@ -28,21 +28,57 @@
 using namespace Esri::ArcGISRuntime;
 
 AddIntegratedMeshLayer::AddIntegratedMeshLayer(QObject* parent /* = nullptr */):
-  QObject(parent),
-  m_scene(new Scene(this))
+  QObject(parent)
 {
   // create the integrated mesh layer
   const QUrl meshLyrUrl("https://tiles.arcgis.com/tiles/z2tnIkrLQ2BRzr6P/arcgis/rest/services/Girona_Spain/SceneServer");
-  IntegratedMeshLayer* integratedMeshLyr = new IntegratedMeshLayer(meshLyrUrl, this);
+  m_integratedMeshLyr = new IntegratedMeshLayer(meshLyrUrl, this);
 
-  // add the layer to the scene
-  m_scene->operationalLayers()->append(integratedMeshLyr);
+  // Connect the done loading signal to the handleLoadingCompleted() method.
+  connect(m_integratedMeshLyr, &IntegratedMeshLayer::doneLoading, this, &AddIntegratedMeshLayer::handleLoadingCompleted);
 
-  // set the intial viewpoint of the scene
+  // Load mesh layer
+  m_integratedMeshLyr->load();
+}
+
+void AddIntegratedMeshLayer::handleLoadingCompleted(Error error)
+{
+  if (error.isEmpty())
+  {
+    createSceneForIntegratedMesh();
+
+    m_scene->operationalLayers()->append(m_integratedMeshLyr);
+
+    setIntegratedMeshViewpoint();
+  }
+  else
+  {
+    createDefaultScene();
+
+    seterrorWhileLoading(true);
+  }
+}
+
+void AddIntegratedMeshLayer::createSceneForIntegratedMesh()
+{
+  m_scene = new Scene(this);
+  m_sceneView->setArcGISScene(m_scene);
+  emit sceneViewChanged();
+}
+
+void AddIntegratedMeshLayer::setIntegratedMeshViewpoint()
+{
   const Point initialPt(2.8259, 41.9906, 200.0, SpatialReference::wgs84());
   const Camera initialCamera(initialPt, 200.0, 190.0, 65.0, 0.0);
   const Viewpoint initialViewpoint(initialPt, initialPt.z(), initialCamera);
   m_scene->setInitialViewpoint(initialViewpoint);
+}
+
+void AddIntegratedMeshLayer::createDefaultScene()
+{
+  m_scene = new Scene(BasemapStyle::ArcGISImagery, this);
+  m_sceneView->setArcGISScene(m_scene);
+  emit sceneViewChanged();
 }
 
 AddIntegratedMeshLayer::~AddIntegratedMeshLayer() = default;
@@ -71,4 +107,15 @@ void AddIntegratedMeshLayer::setSceneView(SceneQuickView* sceneView)
   m_sceneView->setArcGISScene(m_scene);
 
   emit sceneViewChanged();
+}
+
+bool AddIntegratedMeshLayer::errorWhileLoading() const
+{
+  return m_errorWhileLoading;
+}
+
+void AddIntegratedMeshLayer::seterrorWhileLoading(bool errorWhileLoadingStatus)
+{
+  m_errorWhileLoading = errorWhileLoadingStatus;
+  emit errorWhileLoadingStatusChanged();
 }

@@ -23,16 +23,20 @@ namespace ArcGISRuntime
 {
 class Scene;
 class SceneQuickView;
+class IntegratedMeshLayer;
+class Error;
 }
 }
 
 #include <QObject>
+/*FOR TESTING*/#include <MapTypes.h>
 
 class AddIntegratedMeshLayer : public QObject
 {
   Q_OBJECT
 
   Q_PROPERTY(Esri::ArcGISRuntime::SceneQuickView* sceneView READ sceneView WRITE setSceneView NOTIFY sceneViewChanged)
+  Q_PROPERTY(bool errorWhileLoading READ errorWhileLoading WRITE seterrorWhileLoading NOTIFY errorWhileLoadingStatusChanged)
 
 public:
   explicit AddIntegratedMeshLayer(QObject* parent = nullptr);
@@ -42,13 +46,23 @@ public:
 
 signals:
   void sceneViewChanged();
+  void errorWhileLoadingStatusChanged();
 
 private:
   Esri::ArcGISRuntime::SceneQuickView* sceneView() const;
   void setSceneView(Esri::ArcGISRuntime::SceneQuickView* sceneView);
+  bool errorWhileLoading() const;
+  void seterrorWhileLoading(bool errorWhileLoadingStatus);
 
   Esri::ArcGISRuntime::Scene* m_scene = nullptr;
   Esri::ArcGISRuntime::SceneQuickView* m_sceneView = nullptr;
+  Esri::ArcGISRuntime::IntegratedMeshLayer* m_integratedMeshLyr = nullptr;
+  bool m_errorWhileLoading = false;
+
+  void handleLoadingCompleted(Esri::ArcGISRuntime::Error error);
+  void createSceneForIntegratedMesh();
+  void setIntegratedMeshViewpoint();
+  void createDefaultScene();
 };
 
 #endif // ADDINTEGRATEDMESHLAYER_H
