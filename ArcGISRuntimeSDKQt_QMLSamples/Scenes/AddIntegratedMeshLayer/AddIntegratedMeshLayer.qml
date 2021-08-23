@@ -16,12 +16,15 @@
 
 import QtQuick 2.6
 import Esri.ArcGISRuntime 100.12
+import QtQuick.Dialogs 1.2
 
 Rectangle {
     id: rootRectangle
     clip: true
     width: 800
     height: 600
+
+    property string errorMessage: ""
 
     SceneView {
         id: sceneView
@@ -33,9 +36,15 @@ Rectangle {
             // Add the integrated mesh layer to the scene
             IntegratedMeshLayer {
                 url: "https://tiles.arcgis.com/tiles/z2tnIkrLQ2BRzr6P/arcgis/rest/services/Girona_Spain/SceneServer"
+                onLoadErrorChanged: {
+                    if (!error.additionalMessage)
+                        rootRectangle.errorMessage = error.message;
+                    else
+                        rootRectangle.errorMessage = error.message + "\n" + error.additionalMessage;
+                }
             }
 
-            // Set the initial viewpoint to Yosemite Valley
+            // Set the initial viewpoint
             ViewpointCenter {
                 center: Point {
                     id: initPt
@@ -54,6 +63,13 @@ Rectangle {
                     distance: 200.0
                 }
             }
+        }
+
+        MessageDialog {
+            id: errorMessageDialogue
+            visible: !rootRectangle.errorMessage ? false : true;
+            text: rootRectangle.errorMessage;
+            onButtonClicked: rootRectangle.errorMessage = "";
         }
     }
 }
