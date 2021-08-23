@@ -29,14 +29,13 @@ class Error;
 }
 
 #include <QObject>
-/*FOR TESTING*/#include <MapTypes.h>
 
 class AddIntegratedMeshLayer : public QObject
 {
   Q_OBJECT
 
   Q_PROPERTY(Esri::ArcGISRuntime::SceneQuickView* sceneView READ sceneView WRITE setSceneView NOTIFY sceneViewChanged)
-  Q_PROPERTY(bool errorWhileLoading READ errorWhileLoading WRITE seterrorWhileLoading NOTIFY errorWhileLoadingStatusChanged)
+  Q_PROPERTY(QString errorMessage READ errorMessage WRITE setErrorMessage NOTIFY errorMessageChanged)
 
 public:
   explicit AddIntegratedMeshLayer(QObject* parent = nullptr);
@@ -46,23 +45,21 @@ public:
 
 signals:
   void sceneViewChanged();
-  void errorWhileLoadingStatusChanged();
+  void errorMessageChanged();
 
 private:
   Esri::ArcGISRuntime::SceneQuickView* sceneView() const;
   void setSceneView(Esri::ArcGISRuntime::SceneQuickView* sceneView);
-  bool errorWhileLoading() const;
-  void seterrorWhileLoading(bool errorWhileLoadingStatus);
+  QString errorMessage() const;
+  void setErrorMessage(QString message);
 
   Esri::ArcGISRuntime::Scene* m_scene = nullptr;
   Esri::ArcGISRuntime::SceneQuickView* m_sceneView = nullptr;
   Esri::ArcGISRuntime::IntegratedMeshLayer* m_integratedMeshLyr = nullptr;
-  bool m_errorWhileLoading = false;
+  QString m_errorMessage = "";
 
-  void handleLoadingCompleted(Esri::ArcGISRuntime::Error error);
-  void createSceneForIntegratedMesh();
+  void handleError(Esri::ArcGISRuntime::Error error);
   void setIntegratedMeshViewpoint();
-  void createDefaultScene();
 };
 
 #endif // ADDINTEGRATEDMESHLAYER_H

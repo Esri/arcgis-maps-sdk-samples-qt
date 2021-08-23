@@ -26,44 +26,34 @@
 #include "IntegratedMeshLayer.h"
 
 using namespace Esri::ArcGISRuntime;
+namespace
+{
+  const QUrl meshLyrUrl("https://tiles.arcgis.com/tiles/z2tnIkrLQ2BRzr6P/arcgis/rest/services/Girona_Spain/SceneServer");
+}
 
 AddIntegratedMeshLayer::AddIntegratedMeshLayer(QObject* parent /* = nullptr */):
-  QObject(parent)
+  QObject(parent),
+  m_scene(new Scene(this)),
+  m_integratedMeshLyr(new IntegratedMeshLayer(meshLyrUrl, this))
 {
-  // create the integrated mesh layer
-  const QUrl meshLyrUrl("https://tiles.arcgis.com/tiles/z2tnIkrLQ2BRzr6P/arcgis/rest/services/Girona_Spain/SceneServer");
-  m_integratedMeshLyr = new IntegratedMeshLayer(meshLyrUrl, this);
+  // Connect the doneLoading signal to the handleError() method.
+  connect(m_integratedMeshLyr, &IntegratedMeshLayer::doneLoading, this, &AddIntegratedMeshLayer::handleError);
 
-  // Connect the done loading signal to the handleLoadingCompleted() method.
-  connect(m_integratedMeshLyr, &IntegratedMeshLayer::doneLoading, this, &AddIntegratedMeshLayer::handleLoadingCompleted);
+  m_scene->operationalLayers()->append(m_integratedMeshLyr);
 
-  // Load mesh layer
-  m_integratedMeshLyr->load();
+  setIntegratedMeshViewpoint();
 }
 
-void AddIntegratedMeshLayer::handleLoadingCompleted(Error error)
+void AddIntegratedMeshLayer::handleError(Error error)
 {
-  if (error.isEmpty())
+  // If the doneLoading error message is not empty, an error has been thrown.
+  if (!error.isEmpty())
   {
-    createSceneForIntegratedMesh();
-
-    m_scene->operationalLayers()->append(m_integratedMeshLyr);
-
-    setIntegratedMeshViewpoint();
+    if (error.additionalMessage().isEmpty())
+      setErrorMessage(error.message());
+    else
+      setErrorMessage(error.message() + "\n" + error.additionalMessage());
   }
-  else
-  {
-    createDefaultScene();
-
-    seterrorWhileLoading(true);
-  }
-}
-
-void AddIntegratedMeshLayer::createSceneForIntegratedMesh()
-{
-  m_scene = new Scene(this);
-  m_sceneView->setArcGISScene(m_scene);
-  emit sceneViewChanged();
 }
 
 void AddIntegratedMeshLayer::setIntegratedMeshViewpoint()
@@ -72,13 +62,6 @@ void AddIntegratedMeshLayer::setIntegratedMeshViewpoint()
   const Camera initialCamera(initialPt, 200.0, 190.0, 65.0, 0.0);
   const Viewpoint initialViewpoint(initialPt, initialPt.z(), initialCamera);
   m_scene->setInitialViewpoint(initialViewpoint);
-}
-
-void AddIntegratedMeshLayer::createDefaultScene()
-{
-  m_scene = new Scene(BasemapStyle::ArcGISImagery, this);
-  m_sceneView->setArcGISScene(m_scene);
-  emit sceneViewChanged();
 }
 
 AddIntegratedMeshLayer::~AddIntegratedMeshLayer() = default;
@@ -109,13 +92,13 @@ void AddIntegratedMeshLayer::setSceneView(SceneQuickView* sceneView)
   emit sceneViewChanged();
 }
 
-bool AddIntegratedMeshLayer::errorWhileLoading() const
+QString AddIntegratedMeshLayer::errorMessage() const
 {
-  return m_errorWhileLoading;
+  return m_errorMessage;
 }
 
-void AddIntegratedMeshLayer::seterrorWhileLoading(bool errorWhileLoadingStatus)
+void AddIntegratedMeshLayer::setErrorMessage(QString message)
 {
-  m_errorWhileLoading = errorWhileLoadingStatus;
-  emit errorWhileLoadingStatusChanged();
+  m_errorMessage = message;
+  emit errorMessageChanged();
 }

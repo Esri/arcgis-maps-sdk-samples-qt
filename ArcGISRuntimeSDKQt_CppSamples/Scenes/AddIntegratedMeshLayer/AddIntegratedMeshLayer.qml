@@ -34,8 +34,8 @@ Item {
 
     MessageDialog {
         id: errorMessageDialog
-        visible: model.errorWhileLoading ? true : false;
-        text: "The Integrated Mesh Layer Service is Currently Unavailable."
-        onButtonClicked: model.errorWhileLoading = false;
+        visible: model.errorMessage === "" ? false : true;
+        text: model.errorMessage
+        onButtonClicked: model.errorMessage = "";
     }
 }
