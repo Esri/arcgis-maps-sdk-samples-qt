@@ -16,7 +16,7 @@
 
 import QtQuick 2.6
 import Esri.ArcGISRuntime 100.12
-import QtQuick.Dialogs 1.2
+import QtQuick.Controls 2.5
 
 Rectangle {
     id: rootRectangle
@@ -35,12 +35,13 @@ Rectangle {
 
             // Add the integrated mesh layer to the scene
             IntegratedMeshLayer {
+                id: integratedMeshLyr
                 url: "https://tiles.arcgis.com/tiles/z2tnIkrLQ2BRzr6P/arcgis/rest/services/Girona_Spain/SceneServer"
                 onLoadErrorChanged: {
                     if (!error.additionalMessage)
-                        rootRectangle.errorMessage = error.message;
+                        errorMessage = error.message;
                     else
-                        rootRectangle.errorMessage = error.message + "\n" + error.additionalMessage;
+                        errorMessage = error.message + "\n" + error.additionalMessage;
                 }
             }
 
@@ -65,11 +66,21 @@ Rectangle {
             }
         }
 
-        MessageDialog {
-            id: errorMessageDialogue
-            visible: !rootRectangle.errorMessage ? false : true;
-            text: rootRectangle.errorMessage;
-            onButtonClicked: rootRectangle.errorMessage = "";
+        Dialog {
+            id: errorMessageDialog
+            anchors.centerIn: parent
+            title: "Error:"
+            contentItem: Label {
+                id: errorLabel
+                text: errorMessage
+            }
+        }
+
+        Connections {
+            target: integratedMeshLyr
+            function onLoadErrorChanged() {
+                errorMessageDialog.visible = errorMessage !== "";
+            }
         }
     }
 }

@@ -26,15 +26,11 @@
 #include "IntegratedMeshLayer.h"
 
 using namespace Esri::ArcGISRuntime;
-namespace
-{
-  const QUrl meshLyrUrl("https://tiles.arcgis.com/tiles/z2tnIkrLQ2BRzr6P/arcgis/rest/services/Girona_Spain/SceneServer");
-}
 
 AddIntegratedMeshLayer::AddIntegratedMeshLayer(QObject* parent /* = nullptr */):
   QObject(parent),
   m_scene(new Scene(this)),
-  m_integratedMeshLyr(new IntegratedMeshLayer(meshLyrUrl, this))
+  m_integratedMeshLyr(new IntegratedMeshLayer(QUrl("https://tiles.arcgis.com/tiles/z2tnIkrLQ2BRzr6P/arcgis/rest/services/Girona_Spain/SceneServer"), this))
 {
   // Connect the doneLoading signal to the handleError() method.
   connect(m_integratedMeshLyr, &IntegratedMeshLayer::doneLoading, this, &AddIntegratedMeshLayer::handleError);
@@ -50,10 +46,12 @@ void AddIntegratedMeshLayer::handleError(const Error& error)
   if (!error.isEmpty())
   {
     if (error.additionalMessage().isEmpty())
-      setErrorMessage(error.message());
+      m_errorMessage = error.message();
     else
-      setErrorMessage(error.message() + "\n" + error.additionalMessage());
+      m_errorMessage = error.message() + "\n" + error.additionalMessage();
   }
+
+  emit errorMessageChanged();
 }
 
 void AddIntegratedMeshLayer::setIntegratedMeshViewpoint()
@@ -90,15 +88,4 @@ void AddIntegratedMeshLayer::setSceneView(SceneQuickView* sceneView)
   m_sceneView->setArcGISScene(m_scene);
 
   emit sceneViewChanged();
-}
-
-QString AddIntegratedMeshLayer::errorMessage() const
-{
-  return m_errorMessage;
-}
-
-void AddIntegratedMeshLayer::setErrorMessage(const QString& message)
-{
-  m_errorMessage = message;
-  emit errorMessageChanged();
 }

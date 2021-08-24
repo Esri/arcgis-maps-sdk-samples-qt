@@ -35,7 +35,7 @@ class AddIntegratedMeshLayer : public QObject
   Q_OBJECT
 
   Q_PROPERTY(Esri::ArcGISRuntime::SceneQuickView* sceneView READ sceneView WRITE setSceneView NOTIFY sceneViewChanged)
-  Q_PROPERTY(QString errorMessage READ errorMessage WRITE setErrorMessage NOTIFY errorMessageChanged)
+  Q_PROPERTY(QString errorMessage MEMBER m_errorMessage NOTIFY errorMessageChanged)
 
 public:
   explicit AddIntegratedMeshLayer(QObject* parent = nullptr);
@@ -50,8 +50,6 @@ signals:
 private:
   Esri::ArcGISRuntime::SceneQuickView* sceneView() const;
   void setSceneView(Esri::ArcGISRuntime::SceneQuickView* sceneView);
-  QString errorMessage() const;
-  void setErrorMessage(const QString& message);
 
   Esri::ArcGISRuntime::Scene* m_scene = nullptr;
   Esri::ArcGISRuntime::SceneQuickView* m_sceneView = nullptr;

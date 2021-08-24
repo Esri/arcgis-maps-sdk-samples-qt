@@ -17,7 +17,7 @@
 import QtQuick 2.6
 import QtQuick.Controls 2.2
 import Esri.Samples 1.0
-import QtQuick.Dialogs 1.2
+import QtQuick.Controls 2.5
 
 Item {
 
@@ -32,10 +32,20 @@ Item {
         sceneView: view
     }
 
-    MessageDialog {
+    Dialog {
         id: errorMessageDialog
-        visible: model.errorMessage === "" ? false : true;
-        text: model.errorMessage
-        onButtonClicked: model.errorMessage = "";
+        anchors.centerIn: parent
+        title: "Error:"
+        contentItem: Label {
+            text: model.errorMessage
+        }
+    }
+
+    Connections {
+        target: model
+        function onErrorMessageChanged() {
+            errorMessageDialog.visible = model.errorMessage !== ''
+        }
     }
 }
+
