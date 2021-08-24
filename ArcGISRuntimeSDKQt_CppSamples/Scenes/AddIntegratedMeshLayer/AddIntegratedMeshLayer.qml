@@ -35,16 +35,10 @@ Item {
     Dialog {
         id: errorMessageDialog
         anchors.centerIn: parent
+        visible: model.errorMessage !== ""
         title: "Error:"
         contentItem: Label {
             text: model.errorMessage
-        }
-    }
-
-    Connections {
-        target: model
-        function onErrorMessageChanged() {
-            errorMessageDialog.visible = model.errorMessage !== ''
         }
     }
 }

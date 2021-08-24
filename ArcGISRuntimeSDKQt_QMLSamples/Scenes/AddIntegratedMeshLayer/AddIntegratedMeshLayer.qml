@@ -42,6 +42,7 @@ Rectangle {
                         errorMessage = error.message;
                     else
                         errorMessage = error.message + "\n" + error.additionalMessage;
+                    errorMessageDialog.visible = errorMessage !== "";
                 }
             }
 
@@ -73,13 +74,6 @@ Rectangle {
             contentItem: Label {
                 id: errorLabel
                 text: errorMessage
-            }
-        }
-
-        Connections {
-            target: integratedMeshLyr
-            function onLoadErrorChanged() {
-                errorMessageDialog.visible = errorMessage !== "";
             }
         }
     }
