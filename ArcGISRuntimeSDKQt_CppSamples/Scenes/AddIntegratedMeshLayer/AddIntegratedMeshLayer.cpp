@@ -44,9 +44,9 @@ AddIntegratedMeshLayer::AddIntegratedMeshLayer(QObject* parent /* = nullptr */):
   setIntegratedMeshViewpoint();
 }
 
-void AddIntegratedMeshLayer::handleError(Error error)
+void AddIntegratedMeshLayer::handleError(const Error& error)
 {
-  // If the doneLoading error message is not empty, an error has been thrown.
+  // If the doneLoading error message is not empty, an error has been encountered.
   if (!error.isEmpty())
   {
     if (error.additionalMessage().isEmpty())
@@ -97,7 +97,7 @@ QString AddIntegratedMeshLayer::errorMessage() const
   return m_errorMessage;
 }
 
-void AddIntegratedMeshLayer::setErrorMessage(QString message)
+void AddIntegratedMeshLayer::setErrorMessage(const QString& message)
 {
   m_errorMessage = message;
   emit errorMessageChanged();

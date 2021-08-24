@@ -21,10 +21,10 @@ namespace Esri
 {
 namespace ArcGISRuntime
 {
+class Error;
+class IntegratedMeshLayer;
 class Scene;
 class SceneQuickView;
-class IntegratedMeshLayer;
-class Error;
 }
 }
 
@@ -51,14 +51,14 @@ private:
   Esri::ArcGISRuntime::SceneQuickView* sceneView() const;
   void setSceneView(Esri::ArcGISRuntime::SceneQuickView* sceneView);
   QString errorMessage() const;
-  void setErrorMessage(QString message);
+  void setErrorMessage(const QString& message);
 
   Esri::ArcGISRuntime::Scene* m_scene = nullptr;
   Esri::ArcGISRuntime::SceneQuickView* m_sceneView = nullptr;
   Esri::ArcGISRuntime::IntegratedMeshLayer* m_integratedMeshLyr = nullptr;
-  QString m_errorMessage = "";
+  QString m_errorMessage;
 
-  void handleError(Esri::ArcGISRuntime::Error error);
+  void handleError(const Esri::ArcGISRuntime::Error& error);
   void setIntegratedMeshViewpoint();
 };
 
