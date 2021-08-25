@@ -12,10 +12,11 @@ public:
   explicit NavigateRouteSpeaker(QObject* parent = nullptr);
   ~NavigateRouteSpeaker();
 
-  Q_INVOKABLE void textToSpeech(QString text);
+  Q_INVOKABLE void textToSpeech(const QString& text);
+  Q_INVOKABLE bool textToSpeechEngineReady() const;
 
-protected:
-  QTextToSpeech* speaker = nullptr;
+private:
+  QTextToSpeech* m_speaker = nullptr;
 };
 
 #endif // NAVIGATEROUTESPEAKER_H

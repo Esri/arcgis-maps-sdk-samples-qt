@@ -185,6 +185,12 @@ void NavigateRoute::startNavigation()
   m_routeTracker = new RouteTracker(m_routeResult, 0, this);
   connectRouteTrackerSignals();
 
+  // enable the RouteTracker to know when the QTextToSpeech engine is ready
+  m_routeTracker->setSpeechEngineReadyFunction([speaker = m_speaker]() -> bool
+  {
+    return speaker->state() == QTextToSpeech::State::Ready;
+  });
+
   // enable "recenter" button when location display is moved from nagivation mode
   connect(m_mapView->locationDisplay(), &LocationDisplay::autoPanModeChanged, this, [this](LocationDisplayAutoPanMode autoPanMode)
   {

@@ -18,7 +18,6 @@ import QtQuick 2.6
 import QtQuick.Controls 2.2
 import QtQuick.Layouts 1.3
 import Esri.Samples 1.0
-import Esri.ArcGISRuntime.Toolkit 100.11
 
 GenerateOfflineMapSample {
     id: offlineMapSample
@@ -103,10 +102,4 @@ GenerateOfflineMapSample {
             }
         }
     }
-
-    /* Uncomment this section when running as standalone application
-    AuthenticationView {
-        anchors.fill: parent
-    }
-    */
 }

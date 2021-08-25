@@ -21,6 +21,8 @@ namespace Esri
 {
 namespace ArcGISRuntime
 {
+class Error;
+class IntegratedMeshLayer;
 class Scene;
 class SceneQuickView;
 }
@@ -33,6 +35,7 @@ class AddIntegratedMeshLayer : public QObject
   Q_OBJECT
 
   Q_PROPERTY(Esri::ArcGISRuntime::SceneQuickView* sceneView READ sceneView WRITE setSceneView NOTIFY sceneViewChanged)
+  Q_PROPERTY(QString errorMessage MEMBER m_errorMessage NOTIFY errorMessageChanged)
 
 public:
   explicit AddIntegratedMeshLayer(QObject* parent = nullptr);
@@ -42,6 +45,7 @@ public:
 
 signals:
   void sceneViewChanged();
+  void errorMessageChanged();
 
 private:
   Esri::ArcGISRuntime::SceneQuickView* sceneView() const;
@@ -49,6 +53,11 @@ private:
 
   Esri::ArcGISRuntime::Scene* m_scene = nullptr;
   Esri::ArcGISRuntime::SceneQuickView* m_sceneView = nullptr;
+  Esri::ArcGISRuntime::IntegratedMeshLayer* m_integratedMeshLyr = nullptr;
+  QString m_errorMessage;
+
+  void handleError(const Esri::ArcGISRuntime::Error& error);
+  void setIntegratedMeshViewpoint();
 };
 
 #endif // ADDINTEGRATEDMESHLAYER_H

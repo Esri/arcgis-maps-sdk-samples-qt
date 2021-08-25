@@ -17,7 +17,7 @@
 import QtQuick 2.6
 import QtQuick.Controls 2.2
 import QtQuick.Layouts 1.11
-import Esri.ArcGISRuntime 100.11
+import Esri.ArcGISRuntime 100.12
 import Esri.ArcGISExtras 1.1
 
 Rectangle {
@@ -138,7 +138,7 @@ Rectangle {
                                                                           roll: kmlViewpoint.roll
                                                                       });
                 currentViewpoint = ArcGISRuntimeEnvironment.createObject("ViewpointCenter", {center: kmlViewpoint.location,
-                                                                         camera: currentCamera});
+                                                                             camera: currentCamera});
                 return;
             case Enums.KmlViewpointTypeCamera:
                 currentCamera = ArcGISRuntimeEnvironment.createObject("Camera", {
@@ -148,7 +148,7 @@ Rectangle {
                                                                           roll: kmlViewpoint.roll
                                                                       });
                 currentViewpoint = ArcGISRuntimeEnvironment.createObject("ViewpointCenter", {center: kmlViewpoint.location,
-                                                                         camera: currentCamera});
+                                                                             camera: currentCamera});
                 return;
             default:
                 console.warn("Unexpected KmlViewpointType");
@@ -328,7 +328,9 @@ Rectangle {
 
         Scene {
             id: scene
-            BasemapImageryWithLabels {}
+            Basemap {
+                initStyle: Enums.BasemapStyleArcGISImagery
+            }
 
             Surface {
                 ArcGISTiledElevationSource {
@@ -358,35 +360,36 @@ Rectangle {
                             // if depth of extent = 0, add 100m to the elevation to get zMax
                             if (lookAtExtent.depth === 0) {
                                 target = ArcGISRuntimeEnvironment.createObject("Envelope",{
-                                                                                       xMin: lookAtExtent.xMin,
-                                                                                       yMin: lookAtExtent.yMin,
-                                                                                       xMax: lookAtExtent.xMax,
-                                                                                       yMax: lookAtExtent.yMax,
-                                                                                       zMin: locationToElevationResult,
-                                                                                       zMax: locationToElevationResult + 100,
-                                                                                       spatialReference: lookAtExtent.spatialReference
-                                                                                   });
-                            } else {
-                                target = ArcGISRuntimeEnvironment.createObject("Envelope",{
-                                                                                       xMin: lookAtExtent.xMin,
-                                                                                       yMin: lookAtExtent.yMin,
-                                                                                       xMax: lookAtExtent.xMax,
-                                                                                       yMax: lookAtExtent.yMax,
-                                                                                       zMin: locationToElevationResult,
-                                                                                       zMax: lookAtExtent.depth + locationToElevationResult,
-                                                                                       spatialReference: lookAtExtent.spatialReference
-                                                                                   });
-                            }
-                        } else {
-                            target = ArcGISRuntimeEnvironment.createObject("Envelope",{
                                                                                    xMin: lookAtExtent.xMin,
                                                                                    yMin: lookAtExtent.yMin,
                                                                                    xMax: lookAtExtent.xMax,
                                                                                    yMax: lookAtExtent.yMax,
-                                                                                   zMin: lookAtExtent.zMin + locationToElevationResult,
-                                                                                   zMax: lookAtExtent.zMax + locationToElevationResult,
+                                                                                   zMin: locationToElevationResult,
+                                                                                   zMax: locationToElevationResult + 100,
                                                                                    spatialReference: lookAtExtent.spatialReference
                                                                                });
+                            } else {
+                                target = ArcGISRuntimeEnvironment.createObject("Envelope",{
+                                                                                   xMin: lookAtExtent.xMin,
+                                                                                   yMin: lookAtExtent.yMin,
+                                                                                   xMax: lookAtExtent.xMax,
+                                                                                   yMax: lookAtExtent.yMax,
+                                                                                   zMin: locationToElevationResult,
+                                                                                   // set the camera slightly above the placemark by adding one meter
+                                                                                   zMax: lookAtExtent.depth + locationToElevationResult + 1,
+                                                                                   spatialReference: lookAtExtent.spatialReference
+                                                                               });
+                            }
+                        } else {
+                            target = ArcGISRuntimeEnvironment.createObject("Envelope",{
+                                                                               xMin: lookAtExtent.xMin,
+                                                                               yMin: lookAtExtent.yMin,
+                                                                               xMax: lookAtExtent.xMax,
+                                                                               yMax: lookAtExtent.yMax,
+                                                                               zMin: lookAtExtent.zMin + locationToElevationResult,
+                                                                               zMax: lookAtExtent.zMax + locationToElevationResult,
+                                                                               spatialReference: lookAtExtent.spatialReference
+                                                                           });
                         }
 
                         // if node has viewpoint specified, return adjusted geometry with adjusted camera

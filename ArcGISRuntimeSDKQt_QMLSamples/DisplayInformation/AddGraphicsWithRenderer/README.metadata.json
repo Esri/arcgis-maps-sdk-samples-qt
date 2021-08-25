@@ -1,0 +1,52 @@
+{
+    "category": "Display information",
+    "description": "A renderer allows you to change the style of all graphics in a graphics overlay by referencing a single symbol style.",
+    "ignore": false,
+    "images": [
+        "screenshot.png"
+    ],
+    "keywords": [
+        "arc",
+        "bezier",
+        "curve",
+        "display",
+        "graphics",
+        "marker",
+        "overlay",
+        "renderer",
+        "segment",
+        "symbol",
+        "true curve",
+        "CubicBezierSegment",
+        "EllipticArcSegment",
+        "Geometry",
+        "Graphic",
+        "GraphicsOverlay",
+        "PolygonBuilder",
+        "PolylineBulder",
+        "SimpleFillSymbol",
+        "SimpleLineSymbol",
+        "SimpleMarkerSymbol",
+        "SimpleRenderer"
+    ],
+    "redirect_from": [
+        "/qt/latest/qml/sample-code/sample-qt-gorenderers.htm"
+    ],
+    "relevant_apis": [
+        "CubicBezierSegment",
+        "EllipticArcSegment",
+        "Geometry",
+        "Graphic",
+        "GraphicsOverlay",
+        "PolygonBuilder",
+        "PolylineBulder",
+        "SimpleFillSymbol",
+        "SimpleLineSymbol",
+        "SimpleMarkerSymbol",
+        "SimpleRenderer"
+    ],
+    "snippets": [
+        "AddGraphicsWithRenderer.qml"
+    ],
+    "title": "Add graphics with renderer"
+}

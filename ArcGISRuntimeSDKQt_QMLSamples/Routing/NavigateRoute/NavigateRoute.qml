@@ -16,7 +16,7 @@
 
 import QtQuick 2.6
 import QtQuick.Controls 2.2
-import Esri.ArcGISRuntime 100.11
+import Esri.ArcGISRuntime 100.12
 import QtQuick.Layouts 1.11
 import QtPositioning 5.2
 import Esri.samples 1.0
@@ -259,10 +259,20 @@ Rectangle {
 
             // output new voice guidance
             onNewVoiceGuidanceResultChanged: {
-                NavigateRouteSpeaker.textToSpeech(newVoiceGuidanceResult.text);
+                speaker.textToSpeech(newVoiceGuidanceResult.text);
+            }
+
+            // set a callback to indicate if the speech engine is ready to speak
+            speechEngineReadyCallback: function() {
+                return speaker.textToSpeechEngineReady();
             }
         }
     }
+
+    NavigateRouteSpeaker {
+        id: speaker
+    }
+
     function startNavigation() {
         // get the directions for the route
         directionListModel = m_route.directionManeuvers;

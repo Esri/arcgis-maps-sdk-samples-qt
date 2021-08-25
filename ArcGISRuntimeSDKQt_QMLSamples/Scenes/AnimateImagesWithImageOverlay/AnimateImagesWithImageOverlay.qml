@@ -17,7 +17,7 @@
 import QtQuick 2.6
 import QtQuick.Layouts 1.12
 import QtQuick.Controls 2.12
-import Esri.ArcGISRuntime 100.11
+import Esri.ArcGISRuntime 100.12
 import Esri.ArcGISExtras 1.1
 
 Rectangle {
@@ -31,6 +31,11 @@ Rectangle {
     readonly property url dataPath: System.userHomePath +  "/ArcGIS/Runtime/Data/3D/ImageOverlay/PacificSouthWest"
     property int fileNamesLength: 0
     property var imageFrameList: []
+
+    // free up memory claimed by imageFrameList property
+    Component.onDestruction: {
+        imageFrameList = [];
+    }
 
     // Create new Timer and set the timeout interval to 68ms
     Timer {

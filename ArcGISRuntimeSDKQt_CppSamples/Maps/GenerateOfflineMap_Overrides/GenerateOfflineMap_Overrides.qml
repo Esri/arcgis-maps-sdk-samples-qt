@@ -18,7 +18,6 @@ import QtQuick 2.6
 import QtQuick.Controls 2.2
 import QtQuick.Layouts 1.3
 import Esri.Samples 1.0
-import Esri.ArcGISRuntime.Toolkit 100.11
 
 GenerateOfflineMap_OverridesSample {
     id: offlineMapOverridesSample
@@ -124,10 +123,4 @@ GenerateOfflineMap_OverridesSample {
         anchors.centerIn: parent
         running: taskBusy
     }
-
-    /* Uncomment this section when running as standalone application
-    AuthenticationView {
-        anchors.fill: parent
-    }
-    */
 }

@@ -7,8 +7,8 @@
         <file>OpenMapUrl.cpp</file>
         <file>README.md</file>
         <file>geology.jpg</file>
-        <file>population.png</file>
         <file>SwitchMap.png</file>
-        <file>Tapestry.png</file>
+        <file>ecosystems.png</file>
+        <file>traces.png</file>
     </qresource>
 </RCC>
