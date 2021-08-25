@@ -19,8 +19,8 @@ import QtQuick.Controls 2.2
 import Qt.labs.platform 1.0
 import QtGraphicalEffects 1.0
 import Esri.ArcGISExtras 1.1
-import Esri.ArcGISRuntime 100.12
-import Esri.ArcGISRuntime.Toolkit 100.12
+import Esri.ArcGISRuntime 100.13
+import Esri.ArcGISRuntime.Toolkit 100.13
 
 Rectangle {
 
