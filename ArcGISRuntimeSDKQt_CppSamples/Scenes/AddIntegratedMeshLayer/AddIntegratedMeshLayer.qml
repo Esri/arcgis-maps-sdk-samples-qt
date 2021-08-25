@@ -15,7 +15,7 @@
 // [Legal]
 
 import QtQuick 2.6
-import QtQuick.Controls 2.2
+import QtQuick.Controls 2.5
 import Esri.Samples 1.0
 
 Item {
@@ -30,4 +30,15 @@ Item {
         id: model
         sceneView: view
     }
+
+    Dialog {
+        id: errorMessageDialog
+        anchors.centerIn: parent
+        visible: model.errorMessage !== ""
+        title: "Error:"
+        contentItem: Label {
+            text: model.errorMessage
+        }
+    }
 }
+
