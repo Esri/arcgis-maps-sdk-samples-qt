@@ -40,20 +40,6 @@ AddIntegratedMeshLayer::AddIntegratedMeshLayer(QObject* parent /* = nullptr */):
   setIntegratedMeshViewpoint();
 }
 
-void AddIntegratedMeshLayer::handleError(const Error& error)
-{
-  // If the doneLoading error message is not empty, an error has been encountered.
-  if (!error.isEmpty())
-  {
-    if (error.additionalMessage().isEmpty())
-      m_errorMessage = error.message();
-    else
-      m_errorMessage = error.message() + "\n" + error.additionalMessage();
-  }
-
-  emit errorMessageChanged();
-}
-
 void AddIntegratedMeshLayer::setIntegratedMeshViewpoint()
 {
   const Point initialPt(2.8259, 41.9906, 200.0, SpatialReference::wgs84());
@@ -88,4 +74,18 @@ void AddIntegratedMeshLayer::setSceneView(SceneQuickView* sceneView)
   m_sceneView->setArcGISScene(m_scene);
 
   emit sceneViewChanged();
+}
+
+void AddIntegratedMeshLayer::handleError(const Error& error)
+{
+  // If the doneLoading error message is not empty, an error has been encountered.
+  if (!error.isEmpty())
+  {
+    if (error.additionalMessage().isEmpty())
+      m_errorMessage = error.message();
+    else
+      m_errorMessage = error.message() + "\n" + error.additionalMessage();
+  }
+
+  emit errorMessageChanged();
 }
