@@ -25,7 +25,7 @@ int main(int argc, char *argv[])
 {
   QGuiApplication::setAttribute(Qt::AA_EnableHighDpiScaling);
   QGuiApplication app(argc, argv);
-  app.setApplicationName("GORenderers - QML");
+  app.setApplicationName("AddGraphicsWithRenderer - QML");
 
   // Use of Esri location services, including basemaps and geocoding,
   // requires authentication using either an ArcGIS identity or an API Key.
@@ -37,7 +37,7 @@ int main(int argc, char *argv[])
   const QString apiKey = QStringLiteral("");
   if (apiKey.isEmpty())
   {
-      qWarning() << "Use of Esri location services, including basemaps, requires"
+      qWarning() << "Use of Esri location services, including basemaps, requires" <<
                     "you to authenticate with an ArcGIS identity or set the API Key property.";
   }
   else
@@ -65,7 +65,7 @@ int main(int argc, char *argv[])
   view.engine()->addImportPath(arcGISRuntimeImportPath);
 
     // Set the source
-    view.setSource(QUrl("qrc:/Samples/DisplayInformation/GORenderers/GORenderers.qml"));
+    view.setSource(QUrl("qrc:/Samples/DisplayInformation/AddGraphicsWithRenderer/AddGraphicsWithRenderer.qml"));
 
     view.show();
 
