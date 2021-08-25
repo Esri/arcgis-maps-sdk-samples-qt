@@ -22,8 +22,6 @@ Rectangle {
     width: 800
     height: 600
 
-    
-
     // Create the MapView
     MapView {
         anchors.fill: parent
@@ -36,12 +34,6 @@ Rectangle {
             // Nest the Basemap to add it as the Map's Basemap
             Basemap {
                 initStyle: Enums.BasemapStyleArcGISTopographic
-            }
-
-            // Add a tiled layer as an operational layer
-            ArcGISTiledLayer {
-                id: tiledLayer
-                url: "https://services.arcgisonline.com/ArcGIS/rest/services/Specialty/Soil_Survey_Map/MapServer"
             }
 
             // Add a map image layer as an operational layer
@@ -156,7 +148,7 @@ Rectangle {
 
                 // Create delegate to display the name with an image
                 delegate: Item {
-                    width: parent.width
+                    width: parent ? parent.width : 0
                     height: 35
                     clip: true
 
@@ -177,7 +169,6 @@ Rectangle {
                             wrapMode: Text.WordWrap
                             font.pixelSize: 12
                         }
-
                     }
                 }
 

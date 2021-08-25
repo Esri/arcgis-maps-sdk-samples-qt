@@ -28,9 +28,7 @@ Rectangle {
 
     property var subtypeSublayer
     property var originalRenderer
-    property double mapScale: mapView ? Math.round(mapView.mapScale) : 0
-    property double sublayerMinScale
-
+    property double mapScale: mapView ? mapView.mapScale : 0
 
     MapView {
         id: mapView
@@ -94,7 +92,6 @@ Rectangle {
 
                     // set a default minimum scale
                     subtypeSublayer.minScale = 3000.0;
-                    sublayerMinScale = subtypeSublayer.minScale;
                 }
 
                 onErrorChanged: print("%1 - %2 - %3 - %4".arg(error.code, error.domain, error.message, error.additionalMessage));
@@ -187,13 +184,13 @@ Rectangle {
                 }
 
                 Text {
-                    text: qsTr("Current map scale: 1:%1".arg(mapScale))
+                    text: qsTr("Current map scale: 1:%1".arg(Math.round(mapScale)))
                     Layout.margins: 2
                     Layout.alignment: Qt.AlignLeft
                 }
 
                 Text {
-                    text: subtypeSublayer ? qsTr("Sublayer min scale: 1:%1".arg(subtypeSublayer.minScale)) : qsTr("Sublayer min scale:")
+                    text: subtypeSublayer ? qsTr("Sublayer min scale: 1:%1".arg(Math.round(subtypeSublayer.minScale))) : qsTr("Sublayer min scale:")
                     Layout.margins: 2
                     Layout.alignment: Qt.AlignLeft
                 }
@@ -203,7 +200,7 @@ Rectangle {
                     Layout.margins: 2
                     Layout.alignment: Qt.AlignLeft
                     enabled: subtypeFeatureLayer.loadStatus === Enums.LoadStatusLoaded ? true : false
-                    onClicked: subtypeSublayer ? subtypeSublayer.minScale = mapScale : null
+                    onClicked: subtypeSublayer ? subtypeSublayer.minScale = Math.ceil(mapScale) : null
                 }
             }
         }

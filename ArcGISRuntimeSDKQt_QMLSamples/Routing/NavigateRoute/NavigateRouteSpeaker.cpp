@@ -2,14 +2,19 @@
 #include <QTextToSpeech>
 
 NavigateRouteSpeaker::NavigateRouteSpeaker(QObject* parent):
-  QObject(parent)
+  QObject(parent),
+  m_speaker(new QTextToSpeech(this))
 {
-  speaker = new QTextToSpeech(this);
 }
 
 NavigateRouteSpeaker::~NavigateRouteSpeaker() = default;
 
-void NavigateRouteSpeaker::textToSpeech(QString text)
+void NavigateRouteSpeaker::textToSpeech(const QString& text)
 {
-  speaker->say(text);
+  m_speaker->say(text);
+}
+
+bool NavigateRouteSpeaker::textToSpeechEngineReady() const
+{
+  return m_speaker->state() == QTextToSpeech::State::Ready;
 }

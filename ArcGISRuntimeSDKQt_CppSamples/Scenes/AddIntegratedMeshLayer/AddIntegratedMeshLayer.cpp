@@ -29,16 +29,33 @@ using namespace Esri::ArcGISRuntime;
 
 AddIntegratedMeshLayer::AddIntegratedMeshLayer(QObject* parent /* = nullptr */):
   QObject(parent),
-  m_scene(new Scene(this))
+  m_scene(new Scene(this)),
+  m_integratedMeshLyr(new IntegratedMeshLayer(QUrl("https://tiles.arcgis.com/tiles/z2tnIkrLQ2BRzr6P/arcgis/rest/services/Girona_Spain/SceneServer"), this))
 {
-  // create the integrated mesh layer
-  const QUrl meshLyrUrl("https://tiles.arcgis.com/tiles/z2tnIkrLQ2BRzr6P/arcgis/rest/services/Girona_Spain/SceneServer");
-  IntegratedMeshLayer* integratedMeshLyr = new IntegratedMeshLayer(meshLyrUrl, this);
+  // Connect the doneLoading signal to the handleError() method.
+  connect(m_integratedMeshLyr, &IntegratedMeshLayer::doneLoading, this, &AddIntegratedMeshLayer::handleError);
 
-  // add the layer to the scene
-  m_scene->operationalLayers()->append(integratedMeshLyr);
+  m_scene->operationalLayers()->append(m_integratedMeshLyr);
 
-  // set the intial viewpoint of the scene
+  setIntegratedMeshViewpoint();
+}
+
+void AddIntegratedMeshLayer::handleError(const Error& error)
+{
+  // If the doneLoading error message is not empty, an error has been encountered.
+  if (!error.isEmpty())
+  {
+    if (error.additionalMessage().isEmpty())
+      m_errorMessage = error.message();
+    else
+      m_errorMessage = error.message() + "\n" + error.additionalMessage();
+  }
+
+  emit errorMessageChanged();
+}
+
+void AddIntegratedMeshLayer::setIntegratedMeshViewpoint()
+{
   const Point initialPt(2.8259, 41.9906, 200.0, SpatialReference::wgs84());
   const Camera initialCamera(initialPt, 200.0, 190.0, 65.0, 0.0);
   const Viewpoint initialViewpoint(initialPt, initialPt.z(), initialCamera);

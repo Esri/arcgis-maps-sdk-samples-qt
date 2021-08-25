@@ -20,8 +20,8 @@ Run the sample to view the map. Pan and zoom to navigate the map.
 
 ## Relevant API
 
-* Enums.BasemapStyle
 * Map
+* Enums.BasemapStyle
 * MapView
 
 ## Tags
