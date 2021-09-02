@@ -32,6 +32,7 @@
 #include "UtilityAssociation.h"
 #include "UtilityElement.h"
 #include "UtilityNetwork.h"
+#include "UtilityNetworkListModel.h"
 #include "UtilityNetworkDefinition.h"
 #include "UtilityNetworkSource.h"
 #include "UtilityNetworkTypes.h"
@@ -55,6 +56,8 @@ DisplayUtilityAssociations::DisplayUtilityAssociations(QObject* parent /* = null
   m_associationsOverlay(new GraphicsOverlay(this))
 {
   m_utilityNetwork = new UtilityNetwork(featureServerUrl, m_cred, this);
+
+  m_map->utilityNetworks()->append(m_utilityNetwork);
 
   // create symbols for the associations
   m_attachmentSymbol = new SimpleLineSymbol(SimpleLineSymbolStyle::Dot, Qt::green, 5, this);
