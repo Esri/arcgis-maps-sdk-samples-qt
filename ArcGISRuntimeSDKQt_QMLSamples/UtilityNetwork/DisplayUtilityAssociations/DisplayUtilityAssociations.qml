@@ -92,6 +92,7 @@ Rectangle {
 
             Component.onCompleted: {
                 utilityNetwork.load();
+                map.utilityNetworks.append(utilityNetwork);
             }
 
             UtilityNetwork {
