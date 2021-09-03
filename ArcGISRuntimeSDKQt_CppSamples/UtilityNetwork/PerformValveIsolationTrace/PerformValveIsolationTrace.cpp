@@ -43,6 +43,7 @@
 #include "UtilityElementTraceResult.h"
 #include "UtilityNetwork.h"
 #include "UtilityNetworkDefinition.h"
+#include "UtilityNetworkListModel.h"
 #include "UtilityNetworkSource.h"
 #include "UtilityNetworkTypes.h"
 #include "UtilityTerminal.h"
@@ -88,11 +89,9 @@ PerformValveIsolationTrace::PerformValveIsolationTrace(QObject* parent /* = null
   m_startingLocationOverlay(new GraphicsOverlay(this)),
   m_filterBarriersOverlay(new GraphicsOverlay(this)),
   m_cred(new Credential{sampleServer7Username, sampleServer7Password, this}),
-  m_graphicParent(new QObject())
+  m_graphicParent(new QObject()),
+  m_serviceGeodatabase(new ServiceGeodatabase(featureServiceUrl, m_cred, this))
 {
-  // create service geodatabase with the feature service url
-  m_serviceGeodatabase = new ServiceGeodatabase(featureServiceUrl, m_cred, this);
-
   // disable UI while loading service geodatabase and utility network
   m_tasksRunning = true;
   emit tasksRunningChanged();
@@ -123,8 +122,12 @@ PerformValveIsolationTrace::PerformValveIsolationTrace(QObject* parent /* = null
   });
   m_serviceGeodatabase->load();
 
+  // Create and add the utility network to the map before loading
   m_utilityNetwork = new UtilityNetwork(featureServiceUrl, m_map, m_cred, this);
+  m_map->utilityNetworks()->append(m_utilityNetwork);
+
   connectSignals();
+
   m_utilityNetwork->load();
 }
 
