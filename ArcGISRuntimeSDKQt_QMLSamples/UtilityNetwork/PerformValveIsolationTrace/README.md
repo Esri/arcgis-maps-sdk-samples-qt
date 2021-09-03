@@ -15,26 +15,24 @@ Select one or more features to use as filter barriers or create and set the conf
 ## How it works
 
 1. Create a `MapView`.
-2. Create and load a `ServiceGeodatabase` with a feature service URL and get tables by their layer IDs.
+2. Create and load an `ServiceGeodatabase` with a feature service URL and get tables by their layer IDs.
 3. Create a `Map` that contains `FeatureLayer`(s) created from the service geodatabases tables.
-4. Create and load a `UtilityNetwork` with the same feature service URL and the above map.
-5. Create a default starting location from a given asset type and global id.
-6. Get a default `UtilityTraceConfiguration` from a given tier in a domain network to set `UtilityTraceParameters.traceConfiguration` property.
-7. Add a `GraphicsOverlay` with a `Graphic` that represents this starting location, and another graphics overlay for the filter barriers.
-8. Populate the choice list for the 'Filter barrier: category exists' from `UtilityNetworkDefinition.categories`.
-9. When the map view is clicked, identify which features are at that location and add a graphic that represents a filter barrier.
-10. Create a `UtilityElement` for the identified feature and add this utility element to a list of filter barriers.
+4. Create and load a `UtilityNetwork` with the feature service URL and the `Map`.
+5. Add a `GraphicsOverlay` with a `Graphic` that represents the starting location, and another graphics overlay for the filter barriers.
+6. Populate the list of filter barrier categories from `UtilityNetworkDefinition.categories`.
+7. When the map view is clicked, identify which features are at that location and add a graphic that represents a filter barrier.
+8. Create a `UtilityElement` for the identified feature and add this utility element to a list of filter barriers.
    - If the element is a junction with more than one terminal, display a terminal picker. Then set the junction's Terminal property with the selected terminal.
    - If an edge, use the result from `GeometryEngine.fractionAlong` to set the elements `fractionAlongEdge` property.
-11. If 'Trace' is clicked without filter barriers:
-   - Create a new `UtilityCategoryComparison` with the selected category and `Enums.UtilityCategoryComparisonOperatorExists`.
-   - Assign this condition to `UtilityTraceFilter.barriers` from the default configuration from step 6. Update this configuration's `includeIsolatedFeatures` property.
-   - Run `UtilityNetwork.trace`.
-12. If `Trace` is clicked with filter barriers:
+9. If `Trace` is clicked with filter barriers:
    - Update the default configurations include isolated features property.
    - Update the `UtilityTraceParameters` filter barriers property.
    - Run `UtilityNetwork.trace`.
-13.  For every `FeatureLayer` in the map, select the features returned by `featuresForElements` from the elements matching their `NetworkSource.name` with the layer's `FeatureTable.name`.
+10. If 'Trace' is clicked without filter barriers:
+   - Create a new `UtilityCategoryComparison` with the selected category and `Enums.UtilityCategoryComparisonOperatorExists`.
+   - Assign this condition to `UtilityTraceFilter.barriers` from the default configuration from step 6. Update this configuration's `includeIsolatedFeatures` property.
+   - Run `UtilityNetwork.trace`.
+11.  For every `FeatureLayer` in the map, select the features returned by `featuresForElements` from the elements matching their `NetworkSource.name` with the layer's `FeatureTable.name`.
 
 ## Relevant API
 
