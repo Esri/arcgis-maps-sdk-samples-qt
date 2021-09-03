@@ -53,15 +53,12 @@ DisplayUtilityAssociations::DisplayUtilityAssociations(QObject* parent /* = null
   QObject(parent),
   m_map(new Map(BasemapStyle::ArcGISTopographic, this)),
   m_cred(new Credential("viewer01", "I68VGU^nMurF", this)),
-  m_associationsOverlay(new GraphicsOverlay(this))
+  m_associationsOverlay(new GraphicsOverlay(this)),
+  m_utilityNetwork(new UtilityNetwork(featureServerUrl, m_cred, this)),
+  m_attachmentSymbol(new SimpleLineSymbol(SimpleLineSymbolStyle::Dot, Qt::green, 5, this)),
+  m_connectivitySymbol(new SimpleLineSymbol(SimpleLineSymbolStyle::Dot, Qt::red, 5, this))
 {
-  m_utilityNetwork = new UtilityNetwork(featureServerUrl, m_cred, this);
-
   m_map->utilityNetworks()->append(m_utilityNetwork);
-
-  // create symbols for the associations
-  m_attachmentSymbol = new SimpleLineSymbol(SimpleLineSymbolStyle::Dot, Qt::green, 5, this);
-  m_connectivitySymbol = new SimpleLineSymbol(SimpleLineSymbolStyle::Dot, Qt::red, 5, this);
 
   connectSignals();
 }
