@@ -64,81 +64,7 @@ TraceUtilityNetwork::TraceUtilityNetwork(QObject* parent /* = nullptr */):
 
   m_serviceGeodatabase->load();
 
-//  m_deviceFeatureTable = new ServiceFeatureTable(QUrl("https://sampleserver7.arcgisonline.com/server/rest/services/UtilityNetwork/NapervilleElectric/FeatureServer/0"), m_cred, this);
-//  m_deviceLayer = new FeatureLayer(m_deviceFeatureTable, this);
-//  connect(m_deviceLayer, &FeatureLayer::selectFeaturesCompleted, this, [this](QUuid)
-//  {
-//    m_busy = false;
-//    emit busyChanged();
-//  });
-
-//  m_lineFeatureTable = new ServiceFeatureTable(QUrl("https://sampleserver7.arcgisonline.com/server/rest/services/UtilityNetwork/NapervilleElectric/FeatureServer/3"), m_cred, this);
-//  m_lineLayer = new FeatureLayer(m_lineFeatureTable, this);
-
-  // create unique renderer
-//  m_uniqueValueRenderer = new UniqueValueRenderer(this);
-//  m_uniqueValueRenderer->setFieldNames(QStringList("ASSETGROUP"));
-//  UniqueValue* mediumVoltageUniqueValue = createUniqueValue(QString("Medium Voltage"), m_mediumVoltageSymbol, 5);
-//  UniqueValue* lowVoltageUniqueValue = createUniqueValue(QString("Low Voltage"), m_lowVoltageSymbol, 3);
-
-//  // append to UniqueValueRenderer
-//  m_uniqueValueRenderer->uniqueValues()->append(mediumVoltageUniqueValue);
-//  m_uniqueValueRenderer->uniqueValues()->append(lowVoltageUniqueValue);
-
-//  // set unique value renderer to the line layer
-//  m_lineLayer->setRenderer(m_uniqueValueRenderer);
-
-//  // Add electric distribution lines and electric devices layers
-//  m_map->operationalLayers()->append(m_lineLayer);
-//  m_map->operationalLayers()->append(m_deviceLayer);
-
-  connect(m_map, &Map::doneLoading, this, [this](Error e)
-  {
-    if (!e.isEmpty())
-    {
-      m_dialogText = QString(e.message() + " - " + e.additionalMessage());
-      emit dialogVisibleChanged();
-      return;
-    }
-
-    m_graphicsOverlay = new GraphicsOverlay(this);
-    m_mapView->graphicsOverlays()->append(m_graphicsOverlay);
-
-    m_utilityNetwork = new UtilityNetwork(m_serviceUrl, m_map, m_cred, this);
-
-    connect(m_utilityNetwork, &UtilityNetwork::errorOccurred, [this](Error e)
-    {
-      if (e.isEmpty())
-        return;
-
-      m_dialogText = QString(e.message() + " - " + e.additionalMessage());
-      emit dialogTextChanged();
-    });
-
-    // select the features returned from the trace
-    connect(m_utilityNetwork, &UtilityNetwork::traceCompleted, this, &TraceUtilityNetwork::onTraceCompleted);
-
-    connect(m_utilityNetwork, &UtilityNetwork::doneLoading, [this](Error e)
-    {
-      m_busy = false;
-      emit busyChanged();
-
-      if (!e.isEmpty())
-      {
-        m_dialogText = QString(e.message() + " - " + e.additionalMessage());
-        emit dialogTextChanged();
-        return;
-      }
-
-      m_map->utilityNetworks()->append(m_utilityNetwork);
-
-      connectSignals();
-    });
-
-    m_utilityNetwork->load();
-    m_busy = true;
-    emit busyChanged();
-  });
+  connect(m_map, &Map::doneLoading, this, &TraceUtilityNetwork::loadUtilityNetwork);
 }
 
 void TraceUtilityNetwork::createFeatureLayers()
@@ -174,6 +100,51 @@ void TraceUtilityNetwork::createRenderers()
 
   // set unique value renderer to the line layer
   m_lineLayer->setRenderer(m_uniqueValueRenderer);
+}
+
+void TraceUtilityNetwork::loadUtilityNetwork(const Error& error)
+{
+  if (hasErrorOccurred(error))
+    return;
+
+  // Create graphics overlay and append to mapview
+  m_graphicsOverlay = new GraphicsOverlay(this);
+  m_mapView->graphicsOverlays()->append(m_graphicsOverlay);
+
+  m_utilityNetwork = new UtilityNetwork(m_serviceUrl, m_map, m_cred, this);
+
+  connect(m_utilityNetwork, &UtilityNetwork::errorOccurred, this, &TraceUtilityNetwork::hasErrorOccurred);
+
+  connect(m_utilityNetwork, &UtilityNetwork::traceCompleted, this, &TraceUtilityNetwork::onTraceCompleted);
+
+  connect(m_utilityNetwork, &UtilityNetwork::doneLoading, this, &TraceUtilityNetwork::addUtilityNetworkToMap);
+
+  m_utilityNetwork->load();
+  m_busy = true;
+  emit busyChanged();
+}
+
+bool TraceUtilityNetwork::hasErrorOccurred(const Error& error)
+{
+  if (error.isEmpty())
+    return false;
+
+  m_dialogText = QString(error.message() + " - " + error.additionalMessage());
+  emit dialogVisibleChanged();
+  return true;
+}
+
+void TraceUtilityNetwork::addUtilityNetworkToMap(const Error& error)
+{
+  m_busy = false;
+  emit busyChanged();
+
+  if (hasErrorOccurred(error))
+    return;
+
+  m_map->utilityNetworks()->append(m_utilityNetwork);
+
+  connectSignals();
 }
 
 void TraceUtilityNetwork::connectSignals()

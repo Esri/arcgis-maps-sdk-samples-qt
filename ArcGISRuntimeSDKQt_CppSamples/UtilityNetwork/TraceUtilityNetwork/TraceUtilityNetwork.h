@@ -23,6 +23,7 @@ namespace ArcGISRuntime
 {
 class ArcGISFeature;
 class Credential;
+class Error;
 class FeatureLayer;
 class GraphicsOverlay;
 class IdentifyLayerResult;
@@ -94,6 +95,9 @@ private:
   Esri::ArcGISRuntime::UniqueValue* createUniqueValue(const QString& label, Esri::ArcGISRuntime::Symbol* fillSymbol, int value);
   void createFeatureLayers();
   void createRenderers();
+  void loadUtilityNetwork(const Esri::ArcGISRuntime::Error& error);
+  bool hasErrorOccurred(const Esri::ArcGISRuntime::Error& error);
+  void addUtilityNetworkToMap(const Esri::ArcGISRuntime::Error& error);
 
   const QUrl m_serviceUrl = QUrl("https://sampleserver7.arcgisonline.com/server/rest/services/UtilityNetwork/NapervilleElectric/FeatureServer");
 
