@@ -26,6 +26,7 @@
 #include "Map.h"
 #include "MapQuickView.h"
 #include "ServiceFeatureTable.h"
+#include "ServiceGeodatabase.h"
 #include "SimpleMarkerSymbol.h"
 #include "SimpleRenderer.h"
 #include "UniqueValueRenderer.h"
@@ -36,6 +37,7 @@
 #include "UtilityElementTraceResult.h"
 #include "UtilityNetwork.h"
 #include "UtilityNetworkDefinition.h"
+#include "UtilityNetworkListModel.h"
 #include "UtilityNetworkSource.h"
 #include "UtilityNetworkTypes.h"
 #include "UtilityTerminalConfiguration.h"
@@ -53,37 +55,42 @@ TraceUtilityNetwork::TraceUtilityNetwork(QObject* parent /* = nullptr */):
   m_barrierSymbol(new SimpleMarkerSymbol(SimpleMarkerSymbolStyle::X, QColor(Qt::red), 20, this)),
   m_mediumVoltageSymbol(new SimpleLineSymbol(SimpleLineSymbolStyle::Solid, QColor(Qt::darkCyan), 3, this)),
   m_lowVoltageSymbol(new SimpleLineSymbol(SimpleLineSymbolStyle::Dash, QColor(Qt::darkCyan), 3, this)),
+  m_serviceGeodatabase(new ServiceGeodatabase(m_serviceUrl, m_cred, this)),
   m_graphicParent(new QObject())
 {
   m_map->setInitialViewpoint(Viewpoint(Envelope(-9813547.35557238, 5129980.36635111, -9813185.0602376, 5130215.41254146, SpatialReference::webMercator())));
 
-  m_deviceFeatureTable = new ServiceFeatureTable(QUrl("https://sampleserver7.arcgisonline.com/server/rest/services/UtilityNetwork/NapervilleElectric/FeatureServer/0"), m_cred, this);
-  m_deviceLayer = new FeatureLayer(m_deviceFeatureTable, this);
-  connect(m_deviceLayer, &FeatureLayer::selectFeaturesCompleted, this, [this](QUuid)
-  {
-    m_busy = false;
-    emit busyChanged();
-  });
+  connect(m_serviceGeodatabase, &ServiceGeodatabase::doneLoading, this, &TraceUtilityNetwork::createFeatureLayers);
 
-  m_lineFeatureTable = new ServiceFeatureTable(QUrl("https://sampleserver7.arcgisonline.com/server/rest/services/UtilityNetwork/NapervilleElectric/FeatureServer/3"), m_cred, this);
-  m_lineLayer = new FeatureLayer(m_lineFeatureTable, this);
+  m_serviceGeodatabase->load();
+
+//  m_deviceFeatureTable = new ServiceFeatureTable(QUrl("https://sampleserver7.arcgisonline.com/server/rest/services/UtilityNetwork/NapervilleElectric/FeatureServer/0"), m_cred, this);
+//  m_deviceLayer = new FeatureLayer(m_deviceFeatureTable, this);
+//  connect(m_deviceLayer, &FeatureLayer::selectFeaturesCompleted, this, [this](QUuid)
+//  {
+//    m_busy = false;
+//    emit busyChanged();
+//  });
+
+//  m_lineFeatureTable = new ServiceFeatureTable(QUrl("https://sampleserver7.arcgisonline.com/server/rest/services/UtilityNetwork/NapervilleElectric/FeatureServer/3"), m_cred, this);
+//  m_lineLayer = new FeatureLayer(m_lineFeatureTable, this);
 
   // create unique renderer
-  m_uniqueValueRenderer = new UniqueValueRenderer(this);
-  m_uniqueValueRenderer->setFieldNames(QStringList("ASSETGROUP"));
-  UniqueValue* mediumVoltageUniqueValue = createUniqueValue(QString("Medium Voltage"), m_mediumVoltageSymbol, 5);
-  UniqueValue* lowVoltageUniqueValue = createUniqueValue(QString("Low Voltage"), m_lowVoltageSymbol, 3);
+//  m_uniqueValueRenderer = new UniqueValueRenderer(this);
+//  m_uniqueValueRenderer->setFieldNames(QStringList("ASSETGROUP"));
+//  UniqueValue* mediumVoltageUniqueValue = createUniqueValue(QString("Medium Voltage"), m_mediumVoltageSymbol, 5);
+//  UniqueValue* lowVoltageUniqueValue = createUniqueValue(QString("Low Voltage"), m_lowVoltageSymbol, 3);
 
-  // append to UniqueValueRenderer
-  m_uniqueValueRenderer->uniqueValues()->append(mediumVoltageUniqueValue);
-  m_uniqueValueRenderer->uniqueValues()->append(lowVoltageUniqueValue);
+//  // append to UniqueValueRenderer
+//  m_uniqueValueRenderer->uniqueValues()->append(mediumVoltageUniqueValue);
+//  m_uniqueValueRenderer->uniqueValues()->append(lowVoltageUniqueValue);
 
-  // set unique value renderer to the line layer
-  m_lineLayer->setRenderer(m_uniqueValueRenderer);
+//  // set unique value renderer to the line layer
+//  m_lineLayer->setRenderer(m_uniqueValueRenderer);
 
-  // Add electric distribution lines and electric devices layers
-  m_map->operationalLayers()->append(m_lineLayer);
-  m_map->operationalLayers()->append(m_deviceLayer);
+//  // Add electric distribution lines and electric devices layers
+//  m_map->operationalLayers()->append(m_lineLayer);
+//  m_map->operationalLayers()->append(m_deviceLayer);
 
   connect(m_map, &Map::doneLoading, this, [this](Error e)
   {
@@ -123,6 +130,8 @@ TraceUtilityNetwork::TraceUtilityNetwork(QObject* parent /* = nullptr */):
         return;
       }
 
+      m_map->utilityNetworks()->append(m_utilityNetwork);
+
       connectSignals();
     });
 
@@ -130,6 +139,41 @@ TraceUtilityNetwork::TraceUtilityNetwork(QObject* parent /* = nullptr */):
     m_busy = true;
     emit busyChanged();
   });
+}
+
+void TraceUtilityNetwork::createFeatureLayers()
+{
+  m_deviceFeatureTable = m_serviceGeodatabase->table(0);
+  m_deviceLayer = new FeatureLayer(m_deviceFeatureTable, this);
+  connect(m_deviceLayer, &FeatureLayer::selectFeaturesCompleted, this, [this](QUuid)
+  {
+    m_busy = false;
+    emit busyChanged();
+  });
+
+  m_lineFeatureTable = m_serviceGeodatabase->table(3);
+  m_lineLayer = new FeatureLayer(m_lineFeatureTable, this);
+
+  m_map->operationalLayers()->append(m_lineLayer);
+  m_map->operationalLayers()->append(m_deviceLayer);
+
+  createRenderers();
+}
+
+void TraceUtilityNetwork::createRenderers()
+{
+  // create unique renderer
+  m_uniqueValueRenderer = new UniqueValueRenderer(this);
+  m_uniqueValueRenderer->setFieldNames(QStringList("ASSETGROUP"));
+  UniqueValue* mediumVoltageUniqueValue = createUniqueValue(QString("Medium Voltage"), m_mediumVoltageSymbol, 5);
+  UniqueValue* lowVoltageUniqueValue = createUniqueValue(QString("Low Voltage"), m_lowVoltageSymbol, 3);
+
+  // append to UniqueValueRenderer
+  m_uniqueValueRenderer->uniqueValues()->append(mediumVoltageUniqueValue);
+  m_uniqueValueRenderer->uniqueValues()->append(lowVoltageUniqueValue);
+
+  // set unique value renderer to the line layer
+  m_lineLayer->setRenderer(m_uniqueValueRenderer);
 }
 
 void TraceUtilityNetwork::connectSignals()

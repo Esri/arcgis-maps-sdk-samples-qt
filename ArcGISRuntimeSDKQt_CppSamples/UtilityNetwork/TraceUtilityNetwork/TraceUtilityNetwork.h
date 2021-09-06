@@ -29,6 +29,7 @@ class IdentifyLayerResult;
 class Map;
 class MapQuickView;
 class ServiceFeatureTable;
+class ServiceGeodatabase;
 class SimpleFillSymbol;
 class SimpleLineSymbol;
 class SimpleMarkerSymbol;
@@ -91,6 +92,10 @@ private:
   void connectSignals();
   void updateTraceParams(Esri::ArcGISRuntime::UtilityElement* element);
   Esri::ArcGISRuntime::UniqueValue* createUniqueValue(const QString& label, Esri::ArcGISRuntime::Symbol* fillSymbol, int value);
+  void createFeatureLayers();
+  void createRenderers();
+
+  const QUrl m_serviceUrl = QUrl("https://sampleserver7.arcgisonline.com/server/rest/services/UtilityNetwork/NapervilleElectric/FeatureServer");
 
   Esri::ArcGISRuntime::Map* m_map = nullptr;
   Esri::ArcGISRuntime::Credential* m_cred = nullptr;
@@ -104,13 +109,13 @@ private:
   Esri::ArcGISRuntime::SimpleLineSymbol* m_mediumVoltageSymbol = nullptr;
   Esri::ArcGISRuntime::SimpleLineSymbol* m_lowVoltageSymbol = nullptr;
   Esri::ArcGISRuntime::GraphicsOverlay* m_graphicsOverlay = nullptr;
+  Esri::ArcGISRuntime::ServiceGeodatabase* m_serviceGeodatabase = nullptr;
   Esri::ArcGISRuntime::UtilityNetwork* m_utilityNetwork = nullptr;
   Esri::ArcGISRuntime::UtilityTraceParameters* m_traceParams = nullptr;
   Esri::ArcGISRuntime::ArcGISFeature* m_feature = nullptr;
   Esri::ArcGISRuntime::UtilityTier * m_mediumVoltageTier = nullptr;
   Esri::ArcGISRuntime::UniqueValueRenderer* m_uniqueValueRenderer = nullptr;
 
-  const QUrl m_serviceUrl = QUrl("https://sampleserver7.arcgisonline.com/server/rest/services/UtilityNetwork/NapervilleElectric/FeatureServer");
   bool m_terminalDialogVisisble = false;
   bool m_dialogVisible = false;
   bool m_startingLocationsEnabled = true;
