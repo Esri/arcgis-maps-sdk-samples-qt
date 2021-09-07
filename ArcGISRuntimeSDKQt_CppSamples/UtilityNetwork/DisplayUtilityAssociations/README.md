@@ -14,7 +14,7 @@ Pan and zoom around the map. Observe graphics that show utility associations bet
 
 ## How it works
 
-1. Create an `UtilityNetwork` with a feature service URL, add it to the map's `utilityNetworks` array, then load it.
+1. Create an `UtilityNetwork` with a feature service URL, add it to the map's `utilityNetworks` list, then load it.
 2. Add a `FeatureLayer` to the map for every `UtilityNetworkSource` of type `Edge` or `Junction`.
 3. Create a `GraphicsOverlay` for the utility associations.
 4. Add connection for the `ViewpointChanged` signal of the `MapView`.

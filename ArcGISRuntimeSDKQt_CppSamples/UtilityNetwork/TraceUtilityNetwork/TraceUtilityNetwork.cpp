@@ -67,16 +67,21 @@ TraceUtilityNetwork::TraceUtilityNetwork(QObject* parent /* = nullptr */):
   connect(m_map, &Map::doneLoading, this, &TraceUtilityNetwork::loadUtilityNetwork);
 }
 
-void TraceUtilityNetwork::createFeatureLayers()
+void TraceUtilityNetwork::createFeatureLayers(const Error& error)
 {
+  if (hasErrorOccurred(error))
+    return;
+
+  // Create feature table from the 1st table (index = 0) in the serviceGeodatabase
   m_deviceFeatureTable = m_serviceGeodatabase->table(0);
   m_deviceLayer = new FeatureLayer(m_deviceFeatureTable, this);
-  connect(m_deviceLayer, &FeatureLayer::selectFeaturesCompleted, this, [this](QUuid)
+
+  connect(m_deviceLayer, &FeatureLayer::selectFeaturesCompleted, this, [this]()
   {
-    m_busy = false;
-    emit busyChanged();
+    setBusyIndicator(false);
   });
 
+  // Create feature table from the 4th table (index = 3) in the serviceGeodatabase
   m_lineFeatureTable = m_serviceGeodatabase->table(3);
   m_lineLayer = new FeatureLayer(m_lineFeatureTable, this);
 
@@ -120,8 +125,8 @@ void TraceUtilityNetwork::loadUtilityNetwork(const Error& error)
   connect(m_utilityNetwork, &UtilityNetwork::doneLoading, this, &TraceUtilityNetwork::addUtilityNetworkToMap);
 
   m_utilityNetwork->load();
-  m_busy = true;
-  emit busyChanged();
+
+  setBusyIndicator(true);
 }
 
 bool TraceUtilityNetwork::hasErrorOccurred(const Error& error)
@@ -136,8 +141,7 @@ bool TraceUtilityNetwork::hasErrorOccurred(const Error& error)
 
 void TraceUtilityNetwork::addUtilityNetworkToMap(const Error& error)
 {
-  m_busy = false;
-  emit busyChanged();
+  setBusyIndicator(false);
 
   if (hasErrorOccurred(error))
     return;
@@ -221,8 +225,7 @@ void TraceUtilityNetwork::updateTraceParams(UtilityElement* element)
 
 void TraceUtilityNetwork::trace(int index)
 {
-  m_busy = true;
-  emit busyChanged();
+  setBusyIndicator(true);
 
   delete m_traceParams;
 
@@ -379,8 +382,7 @@ void TraceUtilityNetwork::onTraceCompleted()
 
   if (m_utilityNetwork->traceResult()->isEmpty())
   {
-    m_busy = false;
-    emit busyChanged();
+    setBusyIndicator(false);
     return;
   }
 
@@ -426,4 +428,16 @@ UniqueValue* TraceUtilityNetwork::createUniqueValue(const QString& label, Esri::
 
   // return Unique value created
   return uniqueValue;
+}
+
+void TraceUtilityNetwork::setBusyIndicator(bool status)
+{
+  if (status)
+    m_busy = true;
+  else
+    m_busy = false;
+
+  emit busyChanged();
+
+  return;
 }

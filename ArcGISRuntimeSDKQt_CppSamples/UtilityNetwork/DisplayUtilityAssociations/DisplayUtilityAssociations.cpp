@@ -32,8 +32,8 @@
 #include "UtilityAssociation.h"
 #include "UtilityElement.h"
 #include "UtilityNetwork.h"
-#include "UtilityNetworkListModel.h"
 #include "UtilityNetworkDefinition.h"
+#include "UtilityNetworkListModel.h"
 #include "UtilityNetworkSource.h"
 #include "UtilityNetworkTypes.h"
 

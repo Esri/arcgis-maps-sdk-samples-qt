@@ -15,7 +15,7 @@ Select one or more features to use as filter barriers or create and set the conf
 ## How it works
 
 1. Create a `MapView` and connect to its `mouseClicked` signal.
-2. Create and load an `ServiceGeodatabase` with a feature service URL and get tables with their layer IDs.
+2. Create and load a `ServiceGeodatabase` with a feature service URL and get tables with their layer IDs.
 3. Create a `Map` that contains `FeatureLayer`(s) created from the `ServiceGeodatabase`'s tables.
 4. Create and load a `UtilityNetwork` with the feature service URL and the `Map`.
 5. Add a `GraphicsOverlay` with a `Graphic` that represents the starting location, and another graphics overlay for the filter barriers.

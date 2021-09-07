@@ -93,11 +93,12 @@ private:
   void connectSignals();
   void updateTraceParams(Esri::ArcGISRuntime::UtilityElement* element);
   Esri::ArcGISRuntime::UniqueValue* createUniqueValue(const QString& label, Esri::ArcGISRuntime::Symbol* fillSymbol, int value);
-  void createFeatureLayers();
+  void createFeatureLayers(const Esri::ArcGISRuntime::Error& error);
   void createRenderers();
   void loadUtilityNetwork(const Esri::ArcGISRuntime::Error& error);
   bool hasErrorOccurred(const Esri::ArcGISRuntime::Error& error);
   void addUtilityNetworkToMap(const Esri::ArcGISRuntime::Error& error);
+  void setBusyIndicator(bool status);
 
   const QUrl m_serviceUrl = QUrl("https://sampleserver7.arcgisonline.com/server/rest/services/UtilityNetwork/NapervilleElectric/FeatureServer");
 
