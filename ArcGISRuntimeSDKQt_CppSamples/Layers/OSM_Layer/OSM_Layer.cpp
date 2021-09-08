@@ -49,7 +49,6 @@ void OSM_Layer::componentComplete()
   // Create a map
   m_map = new Map();
 
-
   // Create a new OpenStreetMapLayer and add it to the list of operational layers
   OpenStreetMapLayer* osm = new OpenStreetMapLayer();
   m_map->operationalLayers()->append(osm);
