@@ -22,10 +22,9 @@
 
 #include "Map.h"
 #include "MapQuickView.h"
-#include "ArcGISMapImageLayer.h"
-#include "Viewpoint.h"
-#include "Envelope.h"
-#include "Basemap.h"
+#include "Portal.h"
+#include "PortalItem.h"
+
 #include <QUrl>
 
 using namespace Esri::ArcGISRuntime;
@@ -54,18 +53,11 @@ void TokenAuthentication::componentComplete()
 
   m_mapView->setWrapAroundMode(WrapAroundMode::Disabled);
 
-  // Create a map using the topographic basemap
-  m_map = new Map(BasemapStyle::ArcGISTopographic, this);
-  m_map->setInitialViewpoint(Viewpoint(Envelope(-19221397.32591107, -208306.59714691807, -3024411.4154897667, 11939432.83566906, SpatialReference(3857))));
+  m_portal = new Portal(m_portalURL, this);
+  m_portalItem =  new PortalItem(m_portal, m_itemID, this);
+
+  m_map = new Map(m_portalItem, this);
 
   // Set map to map view
   m_mapView->setMap(m_map);
-}
-
-void TokenAuthentication::loadSecuredLayer()
-{
-  // add a map service that is secured with token-based authentication
-  // username/password is user1/user1
-  ArcGISMapImageLayer* mapImgLyr = new ArcGISMapImageLayer(QUrl("https://sampleserver6.arcgisonline.com/arcgis/rest/services/USA_secure_user1/MapServer"), this);
-  m_map->operationalLayers()->append(mapImgLyr);
 }
