@@ -46,8 +46,14 @@ void OSM_Layer::componentComplete()
   // find QML MapView component
   m_mapView = findChild<MapQuickView*>("mapView");
 
-  // Create a map using the OpenStreetMap basemap
-  m_map = new Map(BasemapStyle::OsmStandard, this);
+  // Create a map
+  m_map = new Map();
+
+
+  // Create a new OpenStreetMapLayer and add it to the list of operational layers
+  OpenStreetMapLayer* osm = new OpenStreetMapLayer();
+  m_map->operationalLayers()->append(osm);
+
 
   // Set map to map view
   m_mapView->setMap(m_map);
