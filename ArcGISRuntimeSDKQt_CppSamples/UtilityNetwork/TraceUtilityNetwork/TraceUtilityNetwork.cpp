@@ -341,13 +341,9 @@ void TraceUtilityNetwork::onIdentifyLayersCompleted(QUuid, const QList<IdentifyL
       return;
     }
     else if (m_terminals.size() == 1)
-    {
       element = m_utilityNetwork->createElementWithArcGISFeature(m_feature, m_terminals[0]);
-    }
     else
-    {
       return;
-    }
 
   }
   else if (networkSource->sourceType() == UtilityNetworkSourceType::Edge)
@@ -368,9 +364,7 @@ void TraceUtilityNetwork::onIdentifyLayersCompleted(QUuid, const QList<IdentifyL
     }
   }
   else
-  {
     return;
-  }
 
   updateTraceParams(element);
 }
@@ -401,13 +395,9 @@ void TraceUtilityNetwork::onTraceCompleted()
   for (UtilityElement* item : elements)
   {
     if (item->networkSource()->name() == "Electric Distribution Device")
-    {
       deviceObjIds.append(item->objectId());
-    }
     else if (item->networkSource()->name() == "Electric Distribution Line")
-    {
       lineObjIds.append(item->objectId());
-    }
   }
 
   deviceParams.setObjectIds(deviceObjIds);

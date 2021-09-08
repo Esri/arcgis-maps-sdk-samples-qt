@@ -67,9 +67,7 @@ void DisplayUtilityAssociations::addAssociations()
 {
   // check if current viewpoint is outside the max scale
   if(m_mapView->currentViewpoint(ViewpointType::CenterAndScale).targetScale() >= maxScale)
-  {
     return;
-  }
 
   // check if current viewpoint has a valid extent
   const Envelope extent = m_mapView->currentViewpoint(ViewpointType::BoundingGeometry).targetGeometry().extent();
@@ -124,9 +122,7 @@ void DisplayUtilityAssociations::setMapView(MapQuickView* mapView)
   connect(m_mapView, &MapQuickView::navigatingChanged, this, [this]()
   {
     if (!m_mapView->isNavigating())
-    {
       addAssociations();
-    }
   });
 
   m_utilityNetwork->load();
@@ -154,31 +150,23 @@ void DisplayUtilityAssociations::connectSignals()
     for (UtilityNetworkSource* networkSource : allSources)
     {
       if (networkSource->sourceType() == UtilityNetworkSourceType::Edge)
-      {
         edges.append(networkSource);
-      }
       else if (networkSource->sourceType() == UtilityNetworkSourceType::Junction)
-      {
         junctions.append(networkSource);
-      }
     }
 
     // add all edges that are not subnet lines to the map
     for (UtilityNetworkSource* source : edges)
     {
       if (source->sourceUsageType() != UtilityNetworkSourceUsageType::SubnetLine && source->featureTable() != nullptr)
-      {
         m_map->operationalLayers()->append(new FeatureLayer(source->featureTable(), this));
-      }
     }
 
     // add all junctions to the map
     for (UtilityNetworkSource* source : junctions)
     {
       if (source->featureTable())
-      {
         m_map->operationalLayers()->append(new FeatureLayer(source->featureTable(), this));
-      }
     }
 
     // create a renderer for the associations
