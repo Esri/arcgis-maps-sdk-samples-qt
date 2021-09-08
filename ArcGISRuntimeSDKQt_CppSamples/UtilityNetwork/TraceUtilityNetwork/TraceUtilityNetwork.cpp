@@ -432,11 +432,7 @@ UniqueValue* TraceUtilityNetwork::createUniqueValue(const QString& label, Esri::
 
 void TraceUtilityNetwork::setBusyIndicator(bool status)
 {
-  if (status)
-    m_busy = true;
-  else
-    m_busy = false;
-
+  m_busy = status;
   emit busyChanged();
 
   return;

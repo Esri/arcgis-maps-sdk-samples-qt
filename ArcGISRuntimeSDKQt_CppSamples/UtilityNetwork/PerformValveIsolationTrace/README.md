@@ -31,10 +31,10 @@ Select one or more features to use as filter barriers or create and set the conf
    - Create a new `UtilityCategoryComparison` with the selected category and `UtilityCategoryComparisonOperator::Exists`.
    - Create a new `UtilityTraceFilter` with this condition as `Barriers` to set `Filter` and update `IncludeIsolatedFeatures` properties of the default configuration from step 5.
    - Run `UtilityNetwork::trace`.
-    If `Trace` is clicked with filter barriers:
+11. If `Trace` is clicked with filter barriers:
    - Update `IncludeIsolatedFeatures` property of the default configuration from step 5.
    - Run `UtilityNetwork::trace`.
-11.  For every `FeatureLayer` in the map, select the features returned by `featuresForElements` from the elements matching their `NetworkSource::name` with the layer's `FeatureTable::name`.
+12.  For every `FeatureLayer` in the map, select the features returned by `featuresForElements` from the elements matching their `NetworkSource::name` with the layer's `FeatureTable::name`.
 
 ## Relevant API
 

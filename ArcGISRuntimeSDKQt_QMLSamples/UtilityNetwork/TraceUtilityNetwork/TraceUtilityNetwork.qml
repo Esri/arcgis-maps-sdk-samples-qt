@@ -51,7 +51,6 @@ Rectangle {
         }
 
         Map {
-
             Basemap {
                 initStyle: Enums.BasemapStyleArcGISStreetsNight
             }
