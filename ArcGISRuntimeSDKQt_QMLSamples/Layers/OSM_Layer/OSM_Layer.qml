@@ -30,7 +30,7 @@ Rectangle {
         Map {
             // Declare the OpenStreetMap layer Basemap
             Basemap {
-                initStyle: Enums.BasemapStyleOsmStandard
+                OpenStreetMapLayer {}
             }
         }
     }
