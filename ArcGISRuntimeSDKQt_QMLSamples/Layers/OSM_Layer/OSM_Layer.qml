@@ -28,7 +28,7 @@ Rectangle {
         anchors.fill: parent
 
         Map {
-            // Declare the OpenStreetMap layer Basemap
+            // Declare a Basemap with an OpenStreetMapLayer baselayer
             Basemap {
                 OpenStreetMapLayer {}
             }
