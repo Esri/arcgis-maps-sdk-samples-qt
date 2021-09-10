@@ -25,6 +25,11 @@ Item {
     MapView {
         id: myMapView
         anchors.fill: parent
+
+        onFocusChanged: focus = true;
+        Component.onCompleted: {
+            forceActiveFocus();
+        }
     }
 
     Rectangle {

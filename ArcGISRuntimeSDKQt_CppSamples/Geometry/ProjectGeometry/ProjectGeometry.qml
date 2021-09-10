@@ -32,6 +32,11 @@ ProjectGeometrySample {
         anchors.fill: parent
         objectName: "mapView"
 
+        onFocusChanged: focus = true;
+        Component.onCompleted: {
+            forceActiveFocus();
+        }
+
         // Declare a callout
         Callout {
             id: callout

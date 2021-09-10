@@ -25,6 +25,12 @@ Item {
     MapView {
         id: view
         anchors.fill: parent
+
+        onFocusChanged: focus = true;
+        Component.onCompleted: {
+            forceActiveFocus();
+        }
+
         RowLayout {
             anchors {
                 left: parent.left

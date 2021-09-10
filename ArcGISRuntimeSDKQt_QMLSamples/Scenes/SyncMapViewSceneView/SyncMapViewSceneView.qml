@@ -70,6 +70,11 @@ Rectangle {
             Layout.fillHeight: true
             rotationByPinchingEnabled: true
 
+            onFocusChanged: focus = true;
+            Component.onCompleted: {
+                forceActiveFocus();
+            }
+
             Map {
                 id: map
                 Basemap {

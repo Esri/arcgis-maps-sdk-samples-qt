@@ -29,6 +29,11 @@ DisplayDrawingStatusSample {
     MapView {
         anchors.fill: parent
         objectName: "mapView"
+
+        onFocusChanged: focus = true;
+        Component.onCompleted: {
+            forceActiveFocus();
+        }
     }
 
     // dim window if map is drawing

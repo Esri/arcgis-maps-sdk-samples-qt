@@ -27,6 +27,11 @@ Item {
         id: view
         anchors.fill: parent
 
+        onFocusChanged: focus = true;
+        Component.onCompleted: {
+            forceActiveFocus();
+        }
+
         Dialog {
             id: warningDialog
             anchors.centerIn: parent

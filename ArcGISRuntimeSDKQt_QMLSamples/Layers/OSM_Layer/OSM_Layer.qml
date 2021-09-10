@@ -27,6 +27,11 @@ Rectangle {
         id: mapView
         anchors.fill: parent
 
+        onFocusChanged: focus = true;
+        Component.onCompleted: {
+            forceActiveFocus();
+        }
+
         Map {
             // Declare a Basemap with an OpenStreetMapLayer baselayer
             Basemap {

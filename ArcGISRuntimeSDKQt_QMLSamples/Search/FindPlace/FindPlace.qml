@@ -33,6 +33,11 @@ Rectangle {
         id: mapView
         anchors.fill: parent
 
+        onFocusChanged: focus = true;
+        Component.onCompleted: {
+            forceActiveFocus();
+        }
+
         onDrawStatusChanged: {
             if (drawStatus !== Enums.DrawStatusCompleted || mapView.locationDisplay.started)
                 return;

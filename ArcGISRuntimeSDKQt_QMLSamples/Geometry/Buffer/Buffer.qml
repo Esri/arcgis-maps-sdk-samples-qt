@@ -31,6 +31,11 @@ Rectangle {
         id: mapView
         anchors.fill: parent
 
+        onFocusChanged: focus = true;
+        Component.onCompleted: {
+            forceActiveFocus();
+        }
+
         // Add a map with a basemap
         Map {
             Basemap {

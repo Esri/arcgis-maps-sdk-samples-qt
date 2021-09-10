@@ -226,6 +226,11 @@ Rectangle {
                         margins: 2
                     }
 
+                    onFocusChanged: focus = true;
+                    Component.onCompleted: {
+                        forceActiveFocus();
+                    }
+
                     Map {
                         Basemap {
                             initStyle: Enums.BasemapStyleArcGISImageryStandard

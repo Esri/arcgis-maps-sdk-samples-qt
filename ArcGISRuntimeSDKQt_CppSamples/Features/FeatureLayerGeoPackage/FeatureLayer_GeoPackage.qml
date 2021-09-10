@@ -27,5 +27,10 @@ FeatureLayer_GeoPackageSample {
     MapView {
         anchors.fill: parent
         objectName: "mapView"
+
+        onFocusChanged: focus = true;
+        Component.onCompleted: {
+            forceActiveFocus();
+        }
     }
 }

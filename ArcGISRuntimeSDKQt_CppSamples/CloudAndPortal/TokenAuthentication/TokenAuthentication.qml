@@ -31,6 +31,11 @@ TokenAuthenticationSample {
         anchors.fill: parent
         objectName: "mapView"
 
+        onFocusChanged: focus = true;
+        Component.onCompleted: {
+            forceActiveFocus();
+        }
+
         Column {
             anchors {
                 horizontalCenter: parent.horizontalCenter

@@ -42,6 +42,11 @@ Item {
                 Layout.fillWidth: true
                 Layout.fillHeight: true
                 Layout.columnSpan: 2
+
+                onFocusChanged: focus = true;
+                Component.onCompleted: {
+                    forceActiveFocus();
+                }
             }
 
             Text {

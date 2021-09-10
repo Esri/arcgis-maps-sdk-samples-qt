@@ -65,6 +65,11 @@ FindRouteSample {
         anchors.fill: parent
         objectName: "mapView"
 
+        onFocusChanged: focus = true;
+        Component.onCompleted: {
+            forceActiveFocus();
+        }
+
         // set the transform to animate showing the direction window
         transform: Translate {
             id: translate

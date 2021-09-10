@@ -27,6 +27,11 @@ ChangeViewpointSample {
     MapView {
         id: mapQuickView
         anchors.fill: parent
+
+        onFocusChanged: focus = true;
+        Component.onCompleted: {
+            forceActiveFocus();
+        }
     }
     mapView: mapQuickView
 

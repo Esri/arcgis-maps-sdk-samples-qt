@@ -25,6 +25,12 @@ Rectangle {
     MapView {
         id: mapView
         anchors.fill: parent
+
+        onFocusChanged: focus = true;
+        Component.onCompleted: {
+            forceActiveFocus();
+        }
+        
         Map {
             Basemap {
                 initStyle: Enums.BasemapStyleArcGISImageryStandard

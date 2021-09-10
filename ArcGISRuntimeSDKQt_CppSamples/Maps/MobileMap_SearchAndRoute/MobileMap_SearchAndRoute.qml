@@ -37,6 +37,11 @@ MobileMap_SearchAndRouteSample {
             id: mapView
             objectName: "mapView"
 
+            onFocusChanged: focus = true;
+            Component.onCompleted: {
+                forceActiveFocus();
+            }
+
             // callout to display information
             Callout {
                 calloutData: mapView.calloutData

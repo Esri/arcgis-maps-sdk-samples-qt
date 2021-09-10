@@ -24,6 +24,12 @@ Rectangle {
     // Create the MapView
     MapView {
         anchors.fill: parent
+
+        onFocusChanged: focus = true;
+        Component.onCompleted: {
+            forceActiveFocus();
+        }
+        
         // Nest the Map as a child of the MapView
         Map {
             // Nest the Basemap to add it as the Map's Basemap

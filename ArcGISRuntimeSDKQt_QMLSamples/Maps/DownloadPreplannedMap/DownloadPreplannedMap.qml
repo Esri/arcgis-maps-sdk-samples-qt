@@ -39,6 +39,11 @@ Rectangle {
         id: mapView
         anchors.fill: parent
 
+        onFocusChanged: focus = true;
+        Component.onCompleted: {
+            forceActiveFocus();
+        }
+
         ProgressBar {
             id: progressBar_loading
             anchors.centerIn: parent

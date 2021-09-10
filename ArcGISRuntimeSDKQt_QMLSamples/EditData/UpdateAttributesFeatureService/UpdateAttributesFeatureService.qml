@@ -35,6 +35,11 @@ Rectangle {
         anchors.fill: parent
         wrapAroundMode: Enums.WrapAroundModeDisabled
 
+        onFocusChanged: focus = true;
+        Component.onCompleted: {
+            forceActiveFocus();
+        }
+
         Map {
             // Set the initial basemap to Streets
             Basemap {

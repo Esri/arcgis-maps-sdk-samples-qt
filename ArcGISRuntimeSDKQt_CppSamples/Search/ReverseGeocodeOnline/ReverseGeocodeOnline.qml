@@ -26,6 +26,11 @@ Item {
         id: view
         anchors.fill: parent
 
+        onFocusChanged: focus = true;
+        Component.onCompleted: {
+            forceActiveFocus();
+        }
+
         Callout {
             id: callout
             calloutData: view.calloutData

@@ -28,6 +28,11 @@ Rectangle {
         id: mapView
         anchors.fill: parent
 
+        onFocusChanged: focus = true;
+        Component.onCompleted: {
+            forceActiveFocus();
+        }
+
         // Declare a map with the streets night vector basemap
         Map {
             Basemap {

@@ -162,6 +162,11 @@ ShowOrgBasemapsSample {
             right: parent.right
         }
         visible: false
+
+        onFocusChanged: focus = true;
+        Component.onCompleted: {
+            forceActiveFocus();
+        }
     }
 
     Button {

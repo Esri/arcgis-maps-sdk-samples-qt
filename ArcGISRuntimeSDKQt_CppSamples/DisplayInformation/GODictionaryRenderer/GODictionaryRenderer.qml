@@ -27,6 +27,11 @@ GODictionaryRendererSample {
     MapView {
         objectName: "mapView"
         anchors.fill: parent
+
+        onFocusChanged: focus = true;
+        Component.onCompleted: {
+            forceActiveFocus();
+        }
     }
 
     ProgressBar {

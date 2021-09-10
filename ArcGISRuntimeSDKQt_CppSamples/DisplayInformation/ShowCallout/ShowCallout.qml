@@ -31,6 +31,11 @@ ShowCalloutSample {
         objectName: "mapView"
         clip: true
 
+        onFocusChanged: focus = true;
+        Component.onCompleted: {
+            forceActiveFocus();
+        }
+
         //! [set callout data]
         Callout {
             id: callout

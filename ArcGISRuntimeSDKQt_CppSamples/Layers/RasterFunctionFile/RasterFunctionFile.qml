@@ -28,6 +28,11 @@ RasterFunctionFileSample {
     MapView {
         anchors.fill: parent
         objectName: "mapView"
+
+        onFocusChanged: focus = true;
+        Component.onCompleted: {
+            forceActiveFocus();
+        }
     }
 
     // Create a button to apply the raster function

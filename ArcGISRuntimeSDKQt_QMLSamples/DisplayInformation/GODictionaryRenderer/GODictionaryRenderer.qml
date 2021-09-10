@@ -40,6 +40,11 @@ Rectangle {
         id: mapView
         anchors.fill: parent
 
+        onFocusChanged: focus = true;
+        Component.onCompleted: {
+            forceActiveFocus();
+        }
+
         // The GraphicsOverlay does not have a valid extent until it has been added
         // to a MapView with a valid SpatialReference
         onSpatialReferenceChanged: {

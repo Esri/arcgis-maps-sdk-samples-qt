@@ -30,6 +30,11 @@ ManageBookmarksSample {
         anchors.fill: parent
         objectName: "mapView"
 
+        onFocusChanged: focus = true;
+        Component.onCompleted: {
+            forceActiveFocus();
+        }
+
         // Create the add button so new bookmarks can be added
         Rectangle {
             id: addButton

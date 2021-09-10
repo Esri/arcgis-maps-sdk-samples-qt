@@ -34,6 +34,12 @@ Rectangle {
     MapView {
         id: mapView
         anchors.fill: parent
+
+        onFocusChanged: focus = true;
+        Component.onCompleted: {
+            forceActiveFocus();
+        }
+        
         Map {
             id: map
             // Add an imagery basemap to the map and get the url of the raster baselayer once it has loaded

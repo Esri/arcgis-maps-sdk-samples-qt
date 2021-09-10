@@ -38,6 +38,11 @@ SearchForWebmapSample {
             margins: 10
         }
         visible: false
+
+        onFocusChanged: focus = true;
+        Component.onCompleted: {
+            forceActiveFocus();
+        }
     }
 
     Component {

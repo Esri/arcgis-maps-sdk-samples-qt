@@ -42,6 +42,12 @@ Rectangle {
     // Map view UI presentation at top
     MapView {
         id: mapView
+        
+        onFocusChanged: focus = true;
+        Component.onCompleted: {
+            forceActiveFocus();
+        }
+        
         calloutData {
             title : "Address";
         }

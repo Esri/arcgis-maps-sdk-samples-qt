@@ -29,9 +29,14 @@ Rectangle {
     readonly property string webMapId: "3953413f3bd34e53a42bf70f2937a408"
     property LayerListModel featureLayerModel
 
-    MapView{
+    MapView {
         id: mapView
         anchors.fill: parent
+
+        onFocusChanged: focus = true;
+        Component.onCompleted: {
+            forceActiveFocus();
+        }
 
         // Create a Map from a Portal Item
         Map {

@@ -30,6 +30,11 @@ LocalServerGeoprocessingSample {
         // set focus to enable keyboard navigation
         focus: true
 
+        onFocusChanged: focus = true;
+        Component.onCompleted: {
+            forceActiveFocus();
+        }
+
         Rectangle {
             id: actionAreaRect
             anchors {

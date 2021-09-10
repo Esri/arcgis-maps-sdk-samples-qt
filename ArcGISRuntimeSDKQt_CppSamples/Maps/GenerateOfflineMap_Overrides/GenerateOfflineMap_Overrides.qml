@@ -48,6 +48,11 @@ GenerateOfflineMap_OverridesSample {
         anchors.fill: parent
         objectName: "mapView"
 
+        onFocusChanged: focus = true;
+        Component.onCompleted: {
+            forceActiveFocus();
+        }
+
         // Create a button and anchor it to the attribution top
         DownloadButton {
             id: downloadButton

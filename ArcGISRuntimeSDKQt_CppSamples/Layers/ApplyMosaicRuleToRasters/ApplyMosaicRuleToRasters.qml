@@ -27,6 +27,11 @@ Item {
         id: view
         anchors.fill: parent
 
+        onFocusChanged: focus = true;
+        Component.onCompleted: {
+            forceActiveFocus();
+        }
+
         Rectangle {
             width: childrenRect.width
             height: childrenRect.height

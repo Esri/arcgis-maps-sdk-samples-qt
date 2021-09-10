@@ -42,6 +42,11 @@ Rectangle {
         // Set focus on the MapView so delete and backspace keys can be used to delete a selected vertex
         focus: true
 
+        onFocusChanged: focus = true;
+        Component.onCompleted: {
+            forceActiveFocus();
+        }
+
         Map {
             id: map
             Basemap {

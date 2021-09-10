@@ -24,6 +24,11 @@ Item {
     MapView {
         id: view
         anchors.fill: parent
+
+        onFocusChanged: focus = true;
+        Component.onCompleted: {
+            forceActiveFocus();
+        }
     }
 
     // Declare the C++ instance which creates the map etc. and supply the view

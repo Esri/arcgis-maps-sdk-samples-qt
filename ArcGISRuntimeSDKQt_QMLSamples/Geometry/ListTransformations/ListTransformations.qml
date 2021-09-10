@@ -46,6 +46,11 @@ Rectangle {
         }
         height: parent.height / 2
 
+        onFocusChanged: focus = true;
+        Component.onCompleted: {
+            forceActiveFocus();
+        }
+
         Map {
             id: map
             Basemap {

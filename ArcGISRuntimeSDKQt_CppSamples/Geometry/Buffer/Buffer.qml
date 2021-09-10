@@ -28,6 +28,11 @@ BufferSample {
     MapView {
         anchors.fill: parent
         objectName: "mapView"
+
+        onFocusChanged: focus = true;
+        Component.onCompleted: {
+            forceActiveFocus();
+        }
     }
 
     // display a control pane to change size

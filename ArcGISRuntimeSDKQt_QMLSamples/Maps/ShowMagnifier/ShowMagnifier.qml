@@ -28,6 +28,11 @@ Rectangle {
         // set the magnifier to true
         magnifierEnabled: true
 
+        onFocusChanged: focus = true;
+        Component.onCompleted: {
+            forceActiveFocus();
+        }
+
         Map {
             Basemap {
                 initStyle: Enums.BasemapStyleArcGISImageryStandard

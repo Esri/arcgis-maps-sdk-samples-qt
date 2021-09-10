@@ -37,6 +37,11 @@ Rectangle {
         id: mapView
         visible: false
 
+        onFocusChanged: focus = true;
+        Component.onCompleted: {
+            forceActiveFocus();
+        }
+
         Button {
             anchors {
                 horizontalCenter: parent.horizontalCenter

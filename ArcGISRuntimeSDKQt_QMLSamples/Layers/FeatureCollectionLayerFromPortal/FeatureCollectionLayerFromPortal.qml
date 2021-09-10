@@ -28,6 +28,11 @@ Rectangle {
         id: mapView
         anchors.fill: parent
 
+        onFocusChanged: focus = true;
+        Component.onCompleted: {
+            forceActiveFocus();
+        }
+
         PortalItem {
             id: portalItem
             itemId: "32798dfad17942858d5eef82ee802f0b"

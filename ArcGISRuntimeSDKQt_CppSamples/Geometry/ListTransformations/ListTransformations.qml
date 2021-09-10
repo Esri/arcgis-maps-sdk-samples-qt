@@ -34,6 +34,11 @@ ListTransformationsSample {
         }
         height: parent.height / 2
         objectName: "mapView"
+
+        onFocusChanged: focus = true;
+        Component.onCompleted: {
+            forceActiveFocus();
+        }
     }
 
     Rectangle {

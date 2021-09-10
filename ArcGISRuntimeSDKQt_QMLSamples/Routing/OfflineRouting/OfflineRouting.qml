@@ -35,7 +35,11 @@ Rectangle {
     MapView {
         id: mapView
         anchors.fill: parent
-        focus: false
+        
+        onFocusChanged: focus = true;
+        Component.onCompleted: {
+            forceActiveFocus();
+        }
 
         RowLayout {
             anchors {

@@ -31,6 +31,11 @@ Rectangle {
     MapView {
         anchors.fill: parent
 
+        onFocusChanged: focus = true;
+        Component.onCompleted: {
+            forceActiveFocus();
+        }
+
         // create map using topographic basemap
         Map {
             Basemap {

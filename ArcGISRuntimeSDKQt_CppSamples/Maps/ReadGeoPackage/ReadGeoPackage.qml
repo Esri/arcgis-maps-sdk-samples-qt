@@ -26,7 +26,12 @@ ReadGeoPackageSample {
     // add a mapView component
     MapView {
         anchors.fill: parent
-        objectName: "mapView"        
+        objectName: "mapView"
+
+        onFocusChanged: focus = true;
+        Component.onCompleted: {
+            forceActiveFocus();
+        }        
     }
 }
 

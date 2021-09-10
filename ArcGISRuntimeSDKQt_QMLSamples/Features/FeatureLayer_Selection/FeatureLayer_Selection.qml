@@ -37,6 +37,11 @@ Rectangle {
         }
         wrapAroundMode: Enums.WrapAroundModeDisabled
 
+        onFocusChanged: focus = true;
+        Component.onCompleted: {
+            forceActiveFocus();
+        }
+
         Map {
             id: map
             Basemap {

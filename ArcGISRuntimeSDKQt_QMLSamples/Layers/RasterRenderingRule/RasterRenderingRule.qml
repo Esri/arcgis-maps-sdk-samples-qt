@@ -30,8 +30,13 @@ Rectangle {
     readonly property url imageServiceUrl: "https://sampleserver6.arcgisonline.com/arcgis/rest/services/CharlotteLAS/ImageServer"
 
     MapView {
-        anchors.fill: parent
         id: mapView
+        anchors.fill: parent
+
+        onFocusChanged: focus = true;
+        Component.onCompleted: {
+            forceActiveFocus();
+        }
 
         Map {
             id: map

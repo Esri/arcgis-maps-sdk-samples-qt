@@ -53,6 +53,11 @@ Rectangle {
         id: mapView
         anchors.fill: parent
 
+        onFocusChanged: focus = true;
+        Component.onCompleted: {
+            forceActiveFocus();
+        }
+
         onMouseClicked: {
             const screenX = mouse.x;
             const screenY = mouse.y;

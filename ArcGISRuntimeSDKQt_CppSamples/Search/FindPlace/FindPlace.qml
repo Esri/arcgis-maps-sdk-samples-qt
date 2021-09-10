@@ -40,6 +40,11 @@ FindPlaceSample {
         anchors.fill: parent
         objectName: "mapView"
 
+        onFocusChanged: focus = true;
+        Component.onCompleted: {
+            forceActiveFocus();
+        }
+
         // declare a Callout
         Callout {
             id: callout

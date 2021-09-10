@@ -29,6 +29,11 @@ MapRotationSample {
         anchors.fill: parent
         objectName: "mapView"
 
+        onFocusChanged: focus = true;
+        Component.onCompleted: {
+            forceActiveFocus();
+        }
+
         // Slider UI presentation at bottom
         Rectangle {
             anchors {

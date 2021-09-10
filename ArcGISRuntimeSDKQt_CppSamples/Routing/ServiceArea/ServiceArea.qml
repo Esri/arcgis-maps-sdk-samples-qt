@@ -30,6 +30,11 @@ ServiceAreaSample {
         anchors.fill: parent
         objectName: "mapView"
 
+        onFocusChanged: focus = true;
+        Component.onCompleted: {
+            forceActiveFocus();
+        }
+
         Rectangle {
             anchors.centerIn: solveRow
             radius: 8

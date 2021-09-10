@@ -25,8 +25,12 @@ Rectangle {
     // Declare a map view inside the rectangle
     MapView {
         id: mapView
-
         anchors.fill: parent
+
+        onFocusChanged: focus = true;
+        Component.onCompleted: {
+            forceActiveFocus();
+        }
 
         // Nest a map inside of the map view
         Map {

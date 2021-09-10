@@ -33,6 +33,11 @@ Rectangle {
         id: mapView
         anchors.fill: parent
 
+        onFocusChanged: focus = true;
+        Component.onCompleted: {
+            forceActiveFocus();
+        }
+
         // Create a GraphicsOverlay to display the geocode results
         GraphicsOverlay {
             id: graphicsOverlay

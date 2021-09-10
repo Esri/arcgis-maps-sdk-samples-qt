@@ -67,6 +67,11 @@ Rectangle {
         id: mapView
         anchors.fill: parent
 
+        onFocusChanged: focus = true;
+        Component.onCompleted: {
+            forceActiveFocus();
+        }
+
         // set the transform to animate showing the direction window
         transform: Translate {
             id: translate

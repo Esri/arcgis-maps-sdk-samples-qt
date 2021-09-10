@@ -26,6 +26,12 @@ Rectangle {
     MapView {
         id: mapView
         anchors.fill: parent
+
+        onFocusChanged: focus = true;
+        Component.onCompleted: {
+            forceActiveFocus();
+        }
+
         // Create an initial Map with the Imagery basemap
         Map {
             Basemap {

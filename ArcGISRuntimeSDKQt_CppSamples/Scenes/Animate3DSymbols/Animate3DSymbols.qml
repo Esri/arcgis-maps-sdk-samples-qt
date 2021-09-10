@@ -155,10 +155,15 @@ Animate3DSymbolsSample {
 
                 MapView {
                     id: mapView
-                    objectName: "mapView"
                     anchors {
                         fill: parent
                         margins: 2
+                    }
+                    objectName: "mapView"
+
+                    onFocusChanged: focus = true;
+                    Component.onCompleted: {
+                        forceActiveFocus();
                     }
 
                     MouseArea {

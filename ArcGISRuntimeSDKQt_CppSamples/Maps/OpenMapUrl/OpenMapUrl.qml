@@ -29,6 +29,11 @@ OpenMapUrlSample {
         id: mapView
         anchors.fill: parent
         objectName: "mapView"
+
+        onFocusChanged: focus = true;
+        Component.onCompleted: {
+            forceActiveFocus();
+        }
     }
 
     // Create a list model with information about different webmaps

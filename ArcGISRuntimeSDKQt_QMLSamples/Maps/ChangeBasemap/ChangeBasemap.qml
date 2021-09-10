@@ -25,6 +25,12 @@ Rectangle {
     // Create MapView that contains a Map
     MapView {
         anchors.fill: parent
+
+        onFocusChanged: focus = true;
+        Component.onCompleted: {
+            forceActiveFocus();
+        }
+
         Map {
             id: map
             // Set the initial basemap to Topographic

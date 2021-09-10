@@ -51,6 +51,12 @@ Item {
             id: mapView
             Layout.fillHeight: true
             Layout.fillWidth: true
+
+            onFocusChanged: focus = true;
+            Component.onCompleted: {
+                forceActiveFocus();
+            }
+            
         }
     }
 

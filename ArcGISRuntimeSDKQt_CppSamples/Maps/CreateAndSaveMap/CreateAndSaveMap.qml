@@ -50,6 +50,12 @@ CreateAndSaveMapSample {
     MapView {
         id: mapView
         objectName: "mapView"
+
+        onFocusChanged: focus = true;
+        Component.onCompleted: {
+            forceActiveFocus();
+        }
+
         Button {
             anchors {
                 horizontalCenter: parent.horizontalCenter

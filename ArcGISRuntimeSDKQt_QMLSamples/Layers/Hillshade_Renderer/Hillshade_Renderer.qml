@@ -31,6 +31,11 @@ Rectangle {
         id: mapView
         anchors.fill: parent
 
+        onFocusChanged: focus = true;
+        Component.onCompleted: {
+            forceActiveFocus();
+        }
+
         //! [HillshadeRenderer QML apply to layer snippet]
         Map {
             Basemap {

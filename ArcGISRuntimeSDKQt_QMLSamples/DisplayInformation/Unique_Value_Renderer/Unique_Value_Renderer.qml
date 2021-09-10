@@ -26,6 +26,11 @@ Rectangle {
     MapView {
         anchors.fill: parent
 
+        onFocusChanged: focus = true;
+        Component.onCompleted: {
+            forceActiveFocus();
+        }
+
         // add map to the mapview
         Map {
 

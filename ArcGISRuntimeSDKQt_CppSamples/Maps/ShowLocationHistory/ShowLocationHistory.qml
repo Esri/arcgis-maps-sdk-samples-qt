@@ -25,6 +25,11 @@ Item {
         id: view
         anchors.fill: parent
 
+        onFocusChanged: focus = true;
+        Component.onCompleted: {
+            forceActiveFocus();
+        }
+
         Button {
             id: button
             text: model.trackingEnabled ? "Stop tracking" : "Start tracking"

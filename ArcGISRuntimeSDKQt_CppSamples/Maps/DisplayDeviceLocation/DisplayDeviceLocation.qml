@@ -31,6 +31,11 @@ DisplayDeviceLocationSample {
         anchors.fill: parent
         objectName: "mapView"
 
+        onFocusChanged: focus = true;
+        Component.onCompleted: {
+            forceActiveFocus();
+        }
+
         Component.onCompleted: {
             // populate list model with modes
             autoPanListModel.append({name: deviceLocationSample.compassMode, image: "qrc:/Samples/Maps/DisplayDeviceLocation/Compass.png"});

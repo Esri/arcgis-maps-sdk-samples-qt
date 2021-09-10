@@ -27,6 +27,11 @@ Item {
         id: view
         anchors.fill: parent
 
+        onFocusChanged: focus = true;
+        Component.onCompleted: {
+            forceActiveFocus();
+        }
+
         onMouseClicked: {
             if (updateWindow.visible)
                 updateWindow.visible = false;

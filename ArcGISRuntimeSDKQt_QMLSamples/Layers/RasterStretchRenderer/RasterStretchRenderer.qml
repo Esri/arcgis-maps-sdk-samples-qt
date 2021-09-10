@@ -35,6 +35,11 @@ Rectangle {
     MapView {
         anchors.fill: parent
 
+        onFocusChanged: focus = true;
+        Component.onCompleted: {
+            forceActiveFocus();
+        }
+
         Map {
             Basemap {
                 RasterLayer {

@@ -33,6 +33,11 @@ FeatureLayerSelectionSample {
             bottom: messageBar.top
         }
         objectName: "mapView"
+
+        onFocusChanged: focus = true;
+        Component.onCompleted: {
+            forceActiveFocus();
+        }
     }
 
     Rectangle {

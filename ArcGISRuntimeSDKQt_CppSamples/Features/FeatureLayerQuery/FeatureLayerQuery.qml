@@ -28,6 +28,11 @@ FeatureLayerQuerySample {
         id: mapView
         anchors.fill: parent
         objectName: "mapView"
+
+        onFocusChanged: focus = true;
+        Component.onCompleted: {
+            forceActiveFocus();
+        }
     }
 
     Row {

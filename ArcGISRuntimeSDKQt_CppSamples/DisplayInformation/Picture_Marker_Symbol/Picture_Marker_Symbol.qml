@@ -26,5 +26,10 @@ Picture_Marker_SymbolSample {
     MapView {
         anchors.fill: parent
         objectName: "mapView"
+
+        onFocusChanged: focus = true;
+        Component.onCompleted: {
+            forceActiveFocus();
+        }
     }
 }

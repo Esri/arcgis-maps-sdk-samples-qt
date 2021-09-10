@@ -34,6 +34,11 @@ UpdateAttributesFeatureServiceSample {
         anchors.fill: parent
         objectName: "mapView"
 
+        onFocusChanged: focus = true;
+        Component.onCompleted: {
+            forceActiveFocus();
+        }
+
         Callout {
             id: callout
             borderWidth: 1;

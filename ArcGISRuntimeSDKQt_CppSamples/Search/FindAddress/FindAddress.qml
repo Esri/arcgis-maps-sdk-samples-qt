@@ -31,6 +31,11 @@ FindAddressSample {
         anchors.fill: parent
         objectName: "mapView"
 
+        onFocusChanged: focus = true;
+        Component.onCompleted: {
+            forceActiveFocus();
+        }
+
         Callout {
             id: callout
             borderColor: "lightgrey"

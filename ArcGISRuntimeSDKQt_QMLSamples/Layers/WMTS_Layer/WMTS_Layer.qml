@@ -30,7 +30,11 @@ Rectangle {
         id: mapView
         anchors.fill: parent
 
-        Component.onCompleted: createWmtsLayer();
+        onFocusChanged: focus = true;
+        Component.onCompleted: {
+            forceActiveFocus();
+            createWtmsLayer();
+        }
     }
 
     function createWmtsLayer() {

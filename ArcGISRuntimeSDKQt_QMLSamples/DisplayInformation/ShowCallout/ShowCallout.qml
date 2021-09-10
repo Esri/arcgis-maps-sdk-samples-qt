@@ -34,6 +34,11 @@ Rectangle {
         anchors.fill: parent
         clip: true
 
+        onFocusChanged: focus = true;
+        Component.onCompleted: {
+            forceActiveFocus();
+        }
+
         Map {
             Basemap {
                 initStyle: Enums.BasemapStyleArcGISTopographic

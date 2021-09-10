@@ -30,6 +30,11 @@ FeatureLayerDefinitionExpressionSample {
     MapView {
         anchors.fill: parent
         objectName: "mapView"
+
+        onFocusChanged: focus = true;
+        Component.onCompleted: {
+            forceActiveFocus();
+        }
     }
     //! [Declare map view in QML that will be accessed from Cpp]
 

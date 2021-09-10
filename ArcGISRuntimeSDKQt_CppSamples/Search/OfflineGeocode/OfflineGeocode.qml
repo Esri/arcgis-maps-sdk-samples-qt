@@ -32,6 +32,11 @@ OfflineGeocodeSample {
         anchors.fill: parent
         objectName: "mapView"
 
+        onFocusChanged: focus = true;
+        Component.onCompleted: {
+            forceActiveFocus();
+        }
+
         Callout {
             id: callout
             leaderPosition: leaderPositionEnum.Automatic

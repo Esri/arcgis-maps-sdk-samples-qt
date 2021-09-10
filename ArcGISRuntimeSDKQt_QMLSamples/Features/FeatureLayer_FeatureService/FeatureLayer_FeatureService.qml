@@ -25,8 +25,12 @@ Rectangle {
     // Map view UI presentation at top
     MapView {
         id: mv
-
         anchors.fill: parent
+
+        onFocusChanged: focus = true;
+        Component.onCompleted: {
+            forceActiveFocus();
+        }
 
         //! [Display Feature Service]
         Map {

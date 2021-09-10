@@ -26,8 +26,13 @@ Rectangle {
     height: 600
 
     MapView {
-        anchors.fill: parent
         id: mapView
+        anchors.fill: parent
+        
+        onFocusChanged: focus = true;
+        Component.onCompleted: {
+            forceActiveFocus();
+        }
 
         Map {
             // create a basemap from a tiled layer and add to the map

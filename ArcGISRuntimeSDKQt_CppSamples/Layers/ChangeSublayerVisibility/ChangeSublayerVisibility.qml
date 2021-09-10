@@ -27,6 +27,11 @@ ChangeSublayerVisibilitySample {
     MapView {
         anchors.fill: parent
         objectName: "mapView"
+
+        onFocusChanged: focus = true;
+        Component.onCompleted: {
+            forceActiveFocus();
+        }
     }
 
     // Create a window to display the sublayers

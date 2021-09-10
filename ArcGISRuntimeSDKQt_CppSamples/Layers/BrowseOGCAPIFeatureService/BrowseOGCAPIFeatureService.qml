@@ -32,6 +32,11 @@ Item {
         id: view
         anchors.fill: parent
 
+        onFocusChanged: focus = true;
+        Component.onCompleted: {
+            forceActiveFocus();
+        }
+
         // Add the OGC feature service UI element
         Control {
             id: uiControl

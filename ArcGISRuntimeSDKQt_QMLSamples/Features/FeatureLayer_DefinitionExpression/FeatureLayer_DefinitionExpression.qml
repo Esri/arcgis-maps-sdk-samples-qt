@@ -28,9 +28,13 @@ Rectangle {
     // Map view UI presentation at top
     MapView {
         id: mv
-
         anchors.fill: parent
         wrapAroundMode: Enums.WrapAroundModeDisabled
+
+        onFocusChanged: focus = true;
+        Component.onCompleted: {
+            forceActiveFocus();
+        }
 
         Map {
             Basemap {
