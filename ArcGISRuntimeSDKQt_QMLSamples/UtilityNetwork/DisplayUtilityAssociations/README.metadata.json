@@ -13,6 +13,7 @@
         "containment",
         "relationships",
         "GraphicsOverlay",
+        "ServiceGeodatabase",
         "UtilityAssociation",
         "UtilityAssociationType",
         "UtilityNetwork"
@@ -22,6 +23,7 @@
     ],
     "relevant_apis": [
         "GraphicsOverlay",
+        "ServiceGeodatabase",
         "UtilityAssociation",
         "UtilityAssociationType",
         "UtilityNetwork"
