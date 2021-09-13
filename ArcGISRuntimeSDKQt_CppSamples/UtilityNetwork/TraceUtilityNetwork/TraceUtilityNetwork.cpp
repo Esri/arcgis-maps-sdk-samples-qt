@@ -26,6 +26,7 @@
 #include "Map.h"
 #include "MapQuickView.h"
 #include "ServiceFeatureTable.h"
+#include "ServiceGeodatabase.h"
 #include "SimpleMarkerSymbol.h"
 #include "SimpleRenderer.h"
 #include "UniqueValueRenderer.h"
@@ -36,6 +37,7 @@
 #include "UtilityElementTraceResult.h"
 #include "UtilityNetwork.h"
 #include "UtilityNetworkDefinition.h"
+#include "UtilityNetworkListModel.h"
 #include "UtilityNetworkSource.h"
 #include "UtilityNetworkTypes.h"
 #include "UtilityTerminalConfiguration.h"
@@ -53,21 +55,44 @@ TraceUtilityNetwork::TraceUtilityNetwork(QObject* parent /* = nullptr */):
   m_barrierSymbol(new SimpleMarkerSymbol(SimpleMarkerSymbolStyle::X, QColor(Qt::red), 20, this)),
   m_mediumVoltageSymbol(new SimpleLineSymbol(SimpleLineSymbolStyle::Solid, QColor(Qt::darkCyan), 3, this)),
   m_lowVoltageSymbol(new SimpleLineSymbol(SimpleLineSymbolStyle::Dash, QColor(Qt::darkCyan), 3, this)),
+  m_serviceGeodatabase(new ServiceGeodatabase(m_serviceUrl, m_cred, this)),
   m_graphicParent(new QObject())
 {
   m_map->setInitialViewpoint(Viewpoint(Envelope(-9813547.35557238, 5129980.36635111, -9813185.0602376, 5130215.41254146, SpatialReference::webMercator())));
 
-  m_deviceFeatureTable = new ServiceFeatureTable(QUrl("https://sampleserver7.arcgisonline.com/server/rest/services/UtilityNetwork/NapervilleElectric/FeatureServer/0"), m_cred, this);
+  connect(m_serviceGeodatabase, &ServiceGeodatabase::doneLoading, this, &TraceUtilityNetwork::createFeatureLayers);
+
+  m_serviceGeodatabase->load();
+
+  connect(m_map, &Map::doneLoading, this, &TraceUtilityNetwork::loadUtilityNetwork);
+}
+
+void TraceUtilityNetwork::createFeatureLayers(const Error& error)
+{
+  if (hasErrorOccurred(error))
+    return;
+
+  // Create feature table from the 1st table (index = 0) in the serviceGeodatabase
+  m_deviceFeatureTable = m_serviceGeodatabase->table(0);
   m_deviceLayer = new FeatureLayer(m_deviceFeatureTable, this);
-  connect(m_deviceLayer, &FeatureLayer::selectFeaturesCompleted, this, [this](QUuid)
+
+  connect(m_deviceLayer, &FeatureLayer::selectFeaturesCompleted, this, [this]()
   {
-    m_busy = false;
-    emit busyChanged();
+    setBusyIndicator(false);
   });
 
-  m_lineFeatureTable = new ServiceFeatureTable(QUrl("https://sampleserver7.arcgisonline.com/server/rest/services/UtilityNetwork/NapervilleElectric/FeatureServer/3"), m_cred, this);
+  // Create feature table from the 4th table (index = 3) in the serviceGeodatabase
+  m_lineFeatureTable = m_serviceGeodatabase->table(3);
   m_lineLayer = new FeatureLayer(m_lineFeatureTable, this);
 
+  m_map->operationalLayers()->append(m_lineLayer);
+  m_map->operationalLayers()->append(m_deviceLayer);
+
+  createRenderers();
+}
+
+void TraceUtilityNetwork::createRenderers()
+{
   // create unique renderer
   m_uniqueValueRenderer = new UniqueValueRenderer(this);
   m_uniqueValueRenderer->setFieldNames(QStringList("ASSETGROUP"));
@@ -80,56 +105,50 @@ TraceUtilityNetwork::TraceUtilityNetwork(QObject* parent /* = nullptr */):
 
   // set unique value renderer to the line layer
   m_lineLayer->setRenderer(m_uniqueValueRenderer);
+}
 
-  // Add electric distribution lines and electric devices layers
-  m_map->operationalLayers()->append(m_lineLayer);
-  m_map->operationalLayers()->append(m_deviceLayer);
+void TraceUtilityNetwork::loadUtilityNetwork(const Error& error)
+{
+  if (hasErrorOccurred(error))
+    return;
 
-  connect(m_map, &Map::doneLoading, this, [this](Error e)
-  {
-    if (!e.isEmpty())
-    {
-      m_dialogText = QString(e.message() + " - " + e.additionalMessage());
-      emit dialogVisibleChanged();
-      return;
-    }
+  // Create graphics overlay and append to mapview
+  m_graphicsOverlay = new GraphicsOverlay(this);
+  m_mapView->graphicsOverlays()->append(m_graphicsOverlay);
 
-    m_graphicsOverlay = new GraphicsOverlay(this);
-    m_mapView->graphicsOverlays()->append(m_graphicsOverlay);
+  m_utilityNetwork = new UtilityNetwork(m_serviceUrl, m_map, m_cred, this);
 
-    m_utilityNetwork = new UtilityNetwork(m_serviceUrl, m_map, m_cred, this);
+  connect(m_utilityNetwork, &UtilityNetwork::errorOccurred, this, &TraceUtilityNetwork::hasErrorOccurred);
 
-    connect(m_utilityNetwork, &UtilityNetwork::errorOccurred, [this](Error e)
-    {
-      if (e.isEmpty())
-        return;
+  connect(m_utilityNetwork, &UtilityNetwork::traceCompleted, this, &TraceUtilityNetwork::onTraceCompleted);
 
-      m_dialogText = QString(e.message() + " - " + e.additionalMessage());
-      emit dialogTextChanged();
-    });
+  connect(m_utilityNetwork, &UtilityNetwork::doneLoading, this, &TraceUtilityNetwork::addUtilityNetworkToMap);
 
-    // select the features returned from the trace
-    connect(m_utilityNetwork, &UtilityNetwork::traceCompleted, this, &TraceUtilityNetwork::onTraceCompleted);
+  m_utilityNetwork->load();
 
-    connect(m_utilityNetwork, &UtilityNetwork::doneLoading, [this](Error e)
-    {
-      m_busy = false;
-      emit busyChanged();
+  setBusyIndicator(true);
+}
 
-      if (!e.isEmpty())
-      {
-        m_dialogText = QString(e.message() + " - " + e.additionalMessage());
-        emit dialogTextChanged();
-        return;
-      }
+bool TraceUtilityNetwork::hasErrorOccurred(const Error& error)
+{
+  if (error.isEmpty())
+    return false;
 
-      connectSignals();
-    });
+  m_dialogText = QString(error.message() + " - " + error.additionalMessage());
+  emit dialogVisibleChanged();
+  return true;
+}
 
-    m_utilityNetwork->load();
-    m_busy = true;
-    emit busyChanged();
-  });
+void TraceUtilityNetwork::addUtilityNetworkToMap(const Error& error)
+{
+  setBusyIndicator(false);
+
+  if (hasErrorOccurred(error))
+    return;
+
+  m_map->utilityNetworks()->append(m_utilityNetwork);
+
+  connectSignals();
 }
 
 void TraceUtilityNetwork::connectSignals()
@@ -206,8 +225,7 @@ void TraceUtilityNetwork::updateTraceParams(UtilityElement* element)
 
 void TraceUtilityNetwork::trace(int index)
 {
-  m_busy = true;
-  emit busyChanged();
+  setBusyIndicator(true);
 
   delete m_traceParams;
 
@@ -323,13 +341,9 @@ void TraceUtilityNetwork::onIdentifyLayersCompleted(QUuid, const QList<IdentifyL
       return;
     }
     else if (m_terminals.size() == 1)
-    {
       element = m_utilityNetwork->createElementWithArcGISFeature(m_feature, m_terminals[0]);
-    }
     else
-    {
       return;
-    }
 
   }
   else if (networkSource->sourceType() == UtilityNetworkSourceType::Edge)
@@ -350,9 +364,7 @@ void TraceUtilityNetwork::onIdentifyLayersCompleted(QUuid, const QList<IdentifyL
     }
   }
   else
-  {
     return;
-  }
 
   updateTraceParams(element);
 }
@@ -364,8 +376,7 @@ void TraceUtilityNetwork::onTraceCompleted()
 
   if (m_utilityNetwork->traceResult()->isEmpty())
   {
-    m_busy = false;
-    emit busyChanged();
+    setBusyIndicator(false);
     return;
   }
 
@@ -384,13 +395,9 @@ void TraceUtilityNetwork::onTraceCompleted()
   for (UtilityElement* item : elements)
   {
     if (item->networkSource()->name() == "Electric Distribution Device")
-    {
       deviceObjIds.append(item->objectId());
-    }
     else if (item->networkSource()->name() == "Electric Distribution Line")
-    {
       lineObjIds.append(item->objectId());
-    }
   }
 
   deviceParams.setObjectIds(deviceObjIds);
@@ -411,4 +418,12 @@ UniqueValue* TraceUtilityNetwork::createUniqueValue(const QString& label, Esri::
 
   // return Unique value created
   return uniqueValue;
+}
+
+void TraceUtilityNetwork::setBusyIndicator(bool status)
+{
+  m_busy = status;
+  emit busyChanged();
+
+  return;
 }
