@@ -17,12 +17,17 @@
 #ifndef QUERY_OGC_H
 #define QUERY_OGC_H
 
+#include "Envelope.h"
+#include "TaskWatcher.h"
+
 namespace Esri
 {
 namespace ArcGISRuntime
 {
+class FeatureLayer;
 class Map;
 class MapQuickView;
+class OgcFeatureCollectionTable;
 }
 }
 
@@ -39,16 +44,20 @@ public:
     ~Query_OGC();
 
     static void init();
-
 signals:
     void mapViewChanged();
 
 private:
     Esri::ArcGISRuntime::MapQuickView* mapView() const;
     void setMapView(Esri::ArcGISRuntime::MapQuickView* mapView);
+    void createQueryConnection();
 
+    Esri::ArcGISRuntime::Envelope m_dataSetExtent;
+    Esri::ArcGISRuntime::FeatureLayer* m_featureLayer = nullptr;
     Esri::ArcGISRuntime::Map* m_map = nullptr;
     Esri::ArcGISRuntime::MapQuickView* m_mapView = nullptr;
+    Esri::ArcGISRuntime::OgcFeatureCollectionTable* m_ogcFeatureCollectionTable = nullptr;
+    Esri::ArcGISRuntime::TaskWatcher m_taskWatcher;
 };
 
 #endif // QUERY_OGC_H
