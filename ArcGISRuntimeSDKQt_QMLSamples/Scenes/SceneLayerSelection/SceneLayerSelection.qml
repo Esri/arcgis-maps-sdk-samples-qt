@@ -27,6 +27,11 @@ Rectangle {
         id: sceneView
         anchors.fill: parent
 
+        onFocusChanged: focus = true;
+        Component.onCompleted: {
+            forceActiveFocus();
+        }
+
         Scene {
             id: scene
             BasemapTopographic {}

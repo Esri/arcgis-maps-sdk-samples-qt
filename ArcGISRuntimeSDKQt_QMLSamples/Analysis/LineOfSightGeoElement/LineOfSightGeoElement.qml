@@ -80,6 +80,11 @@ Rectangle {
         id: view
         anchors.fill: parent
 
+        onFocusChanged: focus = true;
+        Component.onCompleted: {
+            forceActiveFocus();
+        }
+
         // Slider that alters the z-height of the observation point.
 
         Rectangle {

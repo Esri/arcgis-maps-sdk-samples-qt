@@ -46,17 +46,16 @@ Item {
             id: sceneView
             Layout.fillHeight: true
             Layout.fillWidth: true
-        }
-        MapView {
-            id: mapView
-            Layout.fillHeight: true
-            Layout.fillWidth: true
 
             onFocusChanged: focus = true;
             Component.onCompleted: {
                 forceActiveFocus();
             }
-            
+        }
+        MapView {
+            id: mapView
+            Layout.fillHeight: true
+            Layout.fillWidth: true
         }
     }
 

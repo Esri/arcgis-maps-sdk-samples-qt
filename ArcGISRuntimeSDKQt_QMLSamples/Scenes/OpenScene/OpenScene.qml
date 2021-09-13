@@ -27,6 +27,11 @@ Rectangle {
     SceneView {
         anchors.fill: parent
 
+        onFocusChanged: focus = true;
+        Component.onCompleted: {
+            forceActiveFocus();
+        }
+
         // Declare a Scene
         Scene {
             // Declare a PortalItem by setting Item ID.

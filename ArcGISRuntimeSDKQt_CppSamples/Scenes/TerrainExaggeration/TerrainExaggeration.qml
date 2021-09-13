@@ -29,6 +29,11 @@ TerrainExaggerationSample {
         anchors.fill: parent
         objectName: "sceneView"
 
+        onFocusChanged: focus = true;
+        Component.onCompleted: {
+            forceActiveFocus();
+        }
+
         // Slider UI presentation at bottom
         Rectangle {
             anchors {

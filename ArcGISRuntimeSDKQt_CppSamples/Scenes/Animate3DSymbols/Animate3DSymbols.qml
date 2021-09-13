@@ -43,6 +43,11 @@ Animate3DSymbolsSample {
         objectName: "sceneView"
         anchors.fill: parent
 
+        onFocusChanged: focus = true;
+        Component.onCompleted: {
+            forceActiveFocus();
+        }
+
         GridLayout {
             anchors {
                 left: parent.left

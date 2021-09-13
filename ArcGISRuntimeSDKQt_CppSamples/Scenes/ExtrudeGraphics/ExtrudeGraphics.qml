@@ -26,5 +26,10 @@ ExtrudeGraphicsSample {
     SceneView {
         anchors.fill: parent
         objectName: "sceneView"
+
+        onFocusChanged: focus = true;
+        Component.onCompleted: {
+            forceActiveFocus();
+        }
     }
 }

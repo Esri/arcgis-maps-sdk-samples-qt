@@ -28,6 +28,11 @@ Item {
         id: sceneView
         anchors.fill: parent
         objectName: "sceneView"
+
+        onFocusChanged: focus = true;
+        Component.onCompleted: {
+            forceActiveFocus();
+        }
     }
 
     Rectangle {

@@ -30,6 +30,11 @@ Rectangle {
     SceneView {
         anchors.fill: parent
 
+        onFocusChanged: focus = true;
+        Component.onCompleted: {
+            forceActiveFocus();
+        }
+
         // create a scene...scene is a default property of sceneview
         // and thus will get added to the sceneview
         Scene {

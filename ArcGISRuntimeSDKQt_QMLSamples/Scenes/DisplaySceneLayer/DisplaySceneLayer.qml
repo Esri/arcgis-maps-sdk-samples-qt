@@ -26,6 +26,11 @@ Rectangle {
     SceneView {
         anchors.fill: parent
 
+        onFocusChanged: focus = true;
+        Component.onCompleted: {
+            forceActiveFocus();
+        }
+
         // create a scene, which is a default property of scene view
         Scene {
             // add a basemap

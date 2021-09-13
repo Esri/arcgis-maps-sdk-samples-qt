@@ -24,6 +24,11 @@ Item {
     SceneView {
         id: view
         anchors.fill: parent
+
+        onFocusChanged: focus = true;
+        Component.onCompleted: {
+            forceActiveFocus();
+        }
     }
 
     // Declare the C++ instance which creates the scene etc. and supply the view

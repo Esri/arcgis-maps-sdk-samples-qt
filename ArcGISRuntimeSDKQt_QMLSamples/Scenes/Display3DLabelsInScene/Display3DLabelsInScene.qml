@@ -27,6 +27,11 @@ Rectangle {
         id: sceneView
         anchors.fill: parent
 
+        onFocusChanged: focus = true;
+        Component.onCompleted: {
+            forceActiveFocus();
+        }
+
         // add a Scene to the SceneView
         Scene {
             id: nycScene

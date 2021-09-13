@@ -28,6 +28,11 @@ Rectangle {
         id: sceneView
         anchors.fill: parent
 
+        onFocusChanged: focus = true;
+        Component.onCompleted: {
+            forceActiveFocus();
+        }
+
         // add a Scene to the SceneView
         Scene {
             // add the BasemapNationalGeographic basemap to the scene

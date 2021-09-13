@@ -52,8 +52,10 @@ Rectangle {
     SceneView {
         id: sceneView
         anchors.fill: parent
+        onFocusChanged: focus = true;
 
         Component.onCompleted: {
+            forceActiveFocus();
             setViewpointCameraAndSeconds(camera, 0);
         }
 

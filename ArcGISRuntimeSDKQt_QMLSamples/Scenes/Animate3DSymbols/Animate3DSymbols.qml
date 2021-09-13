@@ -46,6 +46,12 @@ Rectangle {
     SceneView {
         id: sceneView
         anchors.fill: parent
+        
+        onFocusChanged: focus = true;
+        Component.onCompleted: {
+            forceActiveFocus();
+        }
+
         attributionTextVisible: (sceneView.width - mapView.width) > mapView.width // only show attribution text on the widest view
 
         cameraController: followButton.checked && missionReady ? followController : globeController

@@ -31,6 +31,11 @@ Rectangle {
         id: sceneView
         anchors.fill: parent
 
+        onFocusChanged: focus = true;
+        Component.onCompleted: {
+            forceActiveFocus();
+        }
+
         Scene {
             Basemap {
                 initStyle: Enums.BasemapStyleArcGISImageryStandard

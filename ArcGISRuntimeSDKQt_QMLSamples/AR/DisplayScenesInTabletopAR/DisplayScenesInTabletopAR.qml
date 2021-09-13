@@ -48,6 +48,11 @@ Rectangle {
         id: sceneView
         anchors.fill: parent
 
+        onFocusChanged: focus = true;
+        Component.onCompleted: {
+            forceActiveFocus();
+        }
+
         onMouseClicked: {
             if (mspk.loadStatus !== Enums.LoadStatusLoaded || !arcGISArView.tracking || !philadelphiaScene)
                 return;

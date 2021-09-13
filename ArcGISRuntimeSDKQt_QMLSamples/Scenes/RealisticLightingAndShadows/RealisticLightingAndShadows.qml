@@ -26,12 +26,15 @@ Rectangle {
     SceneView {
         id: sceneView
         anchors.fill: parent
+        onFocusChanged: focus = true;
+        
         atmosphereEffect: Enums.AtmosphereEffectRealistic
         sunLighting: Enums.LightingModeLightAndShadows
         sunTime: "2018-08-10T08:30"
 
         Component.onCompleted: {
-            setViewpointCameraAndSeconds(camera, 0)
+            forceActiveFocus();
+            setViewpointCameraAndSeconds(camera, 0);
         }
 
         Camera {

@@ -29,7 +29,11 @@ FeatureLayerExtrusionSample {
         objectName: "sceneView"
         anchors.fill: parent
 
-
+        onFocusChanged: focus = true;
+        Component.onCompleted: {
+            forceActiveFocus();
+        }
+        
         // combo box to update the extrusion
         ComboBox {
             id: popCombo

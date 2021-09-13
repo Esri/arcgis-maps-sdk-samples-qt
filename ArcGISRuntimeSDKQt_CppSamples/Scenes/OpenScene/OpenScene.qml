@@ -27,5 +27,10 @@ OpenSceneSample {
     SceneView {
         objectName: "sceneView"
         anchors.fill: parent
+
+        onFocusChanged: focus = true;
+        Component.onCompleted: {
+            forceActiveFocus();
+        }
     }
 }

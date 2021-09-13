@@ -33,6 +33,11 @@ Rectangle {
         id: view
         anchors.fill: parent
 
+        onFocusChanged: focus = true;
+        Component.onCompleted: {
+            forceActiveFocus();
+        }
+
         Scene {
             id: scene
             Basemap {

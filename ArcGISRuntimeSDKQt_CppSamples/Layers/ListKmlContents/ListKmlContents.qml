@@ -25,6 +25,11 @@ Item {
         id: view
         anchors.fill: parent
 
+        onFocusChanged: focus = true;
+        Component.onCompleted: {
+            forceActiveFocus();
+        }
+
         // Create window for displaying the KML contents
         Control {
             width: 300

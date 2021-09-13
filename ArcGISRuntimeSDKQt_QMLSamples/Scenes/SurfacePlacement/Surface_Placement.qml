@@ -28,6 +28,11 @@ Rectangle {
         id: sceneView
         anchors.fill: parent
 
+        onFocusChanged: focus = true;
+        Component.onCompleted: {
+            forceActiveFocus();
+        }
+
         // Add a scene with the imagery basemap and world elevation surface
         Scene {
             Basemap {

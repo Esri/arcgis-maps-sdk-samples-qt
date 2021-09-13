@@ -27,6 +27,11 @@ Rectangle {
         id: sceneView
         anchors.fill: parent
 
+        onFocusChanged: focus = true;
+        Component.onCompleted: {
+            forceActiveFocus();
+        }
+        
         Scene {
             id: scene
             initUrl: "https://www.arcgis.com/home/item.html?id=91a4fafd747a47c7bab7797066cb9272"

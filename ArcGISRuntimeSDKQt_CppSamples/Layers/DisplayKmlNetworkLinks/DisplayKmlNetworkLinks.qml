@@ -53,6 +53,11 @@ DisplayKmlNetworkLinksSample {
         objectName: "sceneView"
         anchors.fill: parent
 
+        onFocusChanged: focus = true;
+        Component.onCompleted: {
+            forceActiveFocus();
+        }
+
         MessageButton {
             visible: currentKmlNetworkMessage.length > 0
             anchors {

@@ -51,6 +51,11 @@ Rectangle {
             Layout.fillWidth: true
             Layout.fillHeight: true
 
+            onFocusChanged: focus = true;
+            Component.onCompleted: {
+                forceActiveFocus();
+            }
+
             Scene {
                 id: scene
                 Basemap {
