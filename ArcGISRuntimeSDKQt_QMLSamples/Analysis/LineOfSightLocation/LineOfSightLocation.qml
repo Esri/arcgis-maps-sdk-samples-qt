@@ -31,9 +31,8 @@ Rectangle {
         id: sceneView
         anchors.fill: parent
         focus: true
-        // Set and keep the focus on SceneView to enable keyboard navigation
-        onFocusChanged: focus = true;
         Component.onCompleted: {
+            // Set the focus on SceneView to initially enable keyboard navigation
             forceActiveFocus();
         }
 

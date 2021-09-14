@@ -39,12 +39,11 @@ Rectangle {
         id: mapView
         anchors.fill: parent       
 
-        // Set focus on the MapView so delete and backspace keys can be used to delete a selected vertex
-        focus: true
-
-        // Set and keep the focus on MapView to enable keyboard navigation
+        // Force focus to remain on MapView so SketchEditor will respond to keystrokes
         onFocusChanged: focus = true;
+
         Component.onCompleted: {
+            // Set the focus on MapView to initially enable keyboard navigation
             forceActiveFocus();
         }
 
@@ -133,8 +132,6 @@ Rectangle {
         anchors.right: parent.right
         padding: 5
         width: 110
-
-        focusPolicy: Qt.NoFocus
 
         background: Rectangle {
             color: "black"

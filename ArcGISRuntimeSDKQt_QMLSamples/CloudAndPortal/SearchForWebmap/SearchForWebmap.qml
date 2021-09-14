@@ -305,9 +305,8 @@ Rectangle {
         visible: false
         anchors {top: searchBox.bottom; bottom: parent.bottom; left: parent.left; right: parent.right; margins: 10}
 
-        // Set and keep the focus on MapView to enable keyboard navigation
-        onFocusChanged: focus = true;
         Component.onCompleted: {
+            // Set the focus on MapView to initially enable keyboard navigation
             forceActiveFocus();
         }
     }

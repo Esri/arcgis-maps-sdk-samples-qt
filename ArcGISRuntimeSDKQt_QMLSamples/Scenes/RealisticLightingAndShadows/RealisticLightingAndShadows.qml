@@ -26,14 +26,13 @@ Rectangle {
     SceneView {
         id: sceneView
         anchors.fill: parent
-        // Set and keep the focus on SceneView to enable keyboard navigation
-        onFocusChanged: focus = true;
         
         atmosphereEffect: Enums.AtmosphereEffectRealistic
         sunLighting: Enums.LightingModeLightAndShadows
         sunTime: "2018-08-10T08:30"
 
         Component.onCompleted: {
+            // Set the focus on MapView to initially enable keyboard navigation
             forceActiveFocus();
             setViewpointCameraAndSeconds(camera, 0);
         }
