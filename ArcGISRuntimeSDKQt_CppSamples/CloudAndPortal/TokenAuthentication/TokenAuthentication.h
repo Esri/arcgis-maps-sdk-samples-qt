@@ -44,10 +44,10 @@ public:
 private:
   QUrl m_portalURL = QUrl("https://www.arcgis.com/");
   QString m_itemID = "e5039444ef3c48b8a8fdc9227f9be7c1";
-  Esri::ArcGISRuntime::Map* m_map = nullptr;
-  Esri::ArcGISRuntime::MapQuickView* m_mapView = nullptr;
   Esri::ArcGISRuntime::Portal* m_portal = nullptr;
   Esri::ArcGISRuntime::PortalItem* m_portalItem = nullptr;
+  Esri::ArcGISRuntime::Map* m_map = nullptr;
+  Esri::ArcGISRuntime::MapQuickView* m_mapView = nullptr;
 };
 
 #endif // TOKENAUTHENTICATION_H

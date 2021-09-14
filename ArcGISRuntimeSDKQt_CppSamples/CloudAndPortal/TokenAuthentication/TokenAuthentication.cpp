@@ -30,7 +30,10 @@
 using namespace Esri::ArcGISRuntime;
 
 TokenAuthentication::TokenAuthentication(QQuickItem* parent /* = nullptr */):
-  QQuickItem(parent)
+  QQuickItem(parent),
+  m_portal(new Portal(m_portalURL, this)),
+  m_portalItem(new PortalItem(m_portal, m_itemID, this)),
+  m_map(new Map(m_portalItem, this))
 {
 }
 
@@ -52,11 +55,6 @@ void TokenAuthentication::componentComplete()
     return;
 
   m_mapView->setWrapAroundMode(WrapAroundMode::Disabled);
-
-  m_portal = new Portal(m_portalURL, this);
-  m_portalItem =  new PortalItem(m_portal, m_itemID, this);
-
-  m_map = new Map(m_portalItem, this);
 
   // Set map to map view
   m_mapView->setMap(m_map);
