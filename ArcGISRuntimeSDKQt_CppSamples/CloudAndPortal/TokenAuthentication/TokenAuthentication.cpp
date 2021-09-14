@@ -29,16 +29,16 @@
 
 namespace
 {
-  QUrl m_portalURL = QUrl("https://www.arcgis.com/");
-  QString m_itemID = "e5039444ef3c48b8a8fdc9227f9be7c1";
+  QUrl portalURL = QUrl("https://www.arcgis.com/");
+  QString itemID = "e5039444ef3c48b8a8fdc9227f9be7c1";
 }
 
 using namespace Esri::ArcGISRuntime;
 
 TokenAuthentication::TokenAuthentication(QQuickItem* parent /* = nullptr */):
   QQuickItem(parent),
-  m_portal(new Portal(m_portalURL, this)),
-  m_portalItem(new PortalItem(m_portal, m_itemID, this)),
+  m_portal(new Portal(portalURL, this)),
+  m_portalItem(new PortalItem(m_portal, itemID, this)),
   m_map(new Map(m_portalItem, this))
 {
 }
