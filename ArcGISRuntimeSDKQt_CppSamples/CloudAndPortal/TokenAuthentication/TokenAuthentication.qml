@@ -30,27 +30,6 @@ TokenAuthenticationSample {
         id: mapView
         anchors.fill: parent
         objectName: "mapView"
-
-        Column {
-            anchors {
-                horizontalCenter: parent.horizontalCenter
-                bottom: mapView.attributionTop
-                margins: 10
-            }
-            spacing: 10
-
-            Text {
-                anchors.horizontalCenter: parent.horizontalCenter
-                font.pixelSize: 14
-                text: "username/password: user1/user1"
-            }
-
-            Button {
-                anchors.horizontalCenter: parent.horizontalCenter
-                text: "Load Secured Layer"
-                onClicked: loadSecuredLayer();
-            }
-        }
     }
 
     // Uncomment this section when running as standalone application

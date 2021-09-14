@@ -25,60 +25,26 @@ Rectangle {
     width: 800
     height: 600
 
+    Portal {
+        id: agolPortal
+        url: "https://www.arcgis.com/"
+    }
 
+    PortalItem {
+        id: trafficWebMap
+        portal: agolPortal
+        itemId: "e5039444ef3c48b8a8fdc9227f9be7c1"
+    }
 
     MapView {
         id: mapView
         anchors.fill: parent
 
-
         Map {
             id: map
-            Basemap {
-                initStyle: Enums.BasemapStyleArcGISTopographic
-            }
-
-            ViewpointExtent {
-                Envelope {
-                    json: {"spatialReference":{"latestWkid":3857,"wkid":102100},
-                           "xmax":-3024411.4154897667,
-                           "xmin":-19221397.32591107,
-                           "ymax":11939432.83566906,
-                           "ymin":-208306.59714691807
-                    }
-                }
-            }
-        }
-
-        Column {
-            anchors {
-                horizontalCenter: parent.horizontalCenter
-                bottom: mapView.attributionTop
-                margins: 10
-            }
-            spacing: 10
-
-            Text {
-                anchors.horizontalCenter: parent.horizontalCenter
-                font.pixelSize: 14
-                text: "username/password: user1/user1"
-            }
-
-            Button {
-                anchors.horizontalCenter: parent.horizontalCenter
-                text: "Load Secured Layer"
-                onClicked: map.operationalLayers.append(mapImagelayer);
-            }
+            item: trafficWebMap
         }
     }
-
-    // add a map service that is secured with token-based authentication
-    // username/password is user1/user1
-    ArcGISMapImageLayer {
-        id: mapImagelayer
-        url: "https://sampleserver6.arcgisonline.com/arcgis/rest/services/USA_secure_user1/MapServer"
-    }
-
 
     // Uncomment this section when running as standalone application
 
