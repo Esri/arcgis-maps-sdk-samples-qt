@@ -28,6 +28,7 @@ SceneLayerSelectionSample {
         objectName: "sceneView"
         anchors.fill: parent
 
+        // Set and keep the focus on SceneView to enable keyboard navigation
         onFocusChanged: focus = true;
         Component.onCompleted: {
             forceActiveFocus();

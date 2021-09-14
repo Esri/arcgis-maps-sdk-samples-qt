@@ -42,6 +42,7 @@ Rectangle {
         // Set focus on the MapView so delete and backspace keys can be used to delete a selected vertex
         focus: true
 
+        // Set and keep the focus on MapView to enable keyboard navigation
         onFocusChanged: focus = true;
         Component.onCompleted: {
             forceActiveFocus();

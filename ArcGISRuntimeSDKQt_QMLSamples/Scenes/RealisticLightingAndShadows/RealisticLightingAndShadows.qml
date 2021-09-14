@@ -26,6 +26,7 @@ Rectangle {
     SceneView {
         id: sceneView
         anchors.fill: parent
+        // Set and keep the focus on SceneView to enable keyboard navigation
         onFocusChanged: focus = true;
         
         atmosphereEffect: Enums.AtmosphereEffectRealistic

@@ -34,6 +34,7 @@ UpdateAttributesFeatureServiceSample {
         anchors.fill: parent
         objectName: "mapView"
 
+        // Set and keep the focus on MapView to enable keyboard navigation
         onFocusChanged: focus = true;
         Component.onCompleted: {
             forceActiveFocus();

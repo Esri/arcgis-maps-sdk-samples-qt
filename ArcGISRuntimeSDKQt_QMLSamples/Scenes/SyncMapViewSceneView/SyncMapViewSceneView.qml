@@ -51,6 +51,7 @@ Rectangle {
             Layout.fillWidth: true
             Layout.fillHeight: true
 
+            // Set and keep the focus on SceneView to enable keyboard navigation
             onFocusChanged: focus = true;
             Component.onCompleted: {
                 forceActiveFocus();
@@ -74,11 +75,6 @@ Rectangle {
             Layout.fillWidth: true
             Layout.fillHeight: true
             rotationByPinchingEnabled: true
-
-            onFocusChanged: focus = true;
-            Component.onCompleted: {
-                forceActiveFocus();
-            }
 
             Map {
                 id: map

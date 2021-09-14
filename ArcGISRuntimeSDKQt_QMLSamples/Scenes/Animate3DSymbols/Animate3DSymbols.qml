@@ -47,6 +47,7 @@ Rectangle {
         id: sceneView
         anchors.fill: parent
         
+        // Set and keep the focus on SceneView to enable keyboard navigation
         onFocusChanged: focus = true;
         Component.onCompleted: {
             forceActiveFocus();
@@ -230,11 +231,6 @@ Rectangle {
                     anchors {
                         fill: parent
                         margins: 2
-                    }
-
-                    onFocusChanged: focus = true;
-                    Component.onCompleted: {
-                        forceActiveFocus();
                     }
 
                     Map {

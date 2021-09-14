@@ -43,6 +43,7 @@ Item {
                 Layout.fillHeight: true
                 Layout.columnSpan: 2
 
+                // Set and keep the focus on MapView to enable keyboard navigation
                 onFocusChanged: focus = true;
                 Component.onCompleted: {
                     forceActiveFocus();

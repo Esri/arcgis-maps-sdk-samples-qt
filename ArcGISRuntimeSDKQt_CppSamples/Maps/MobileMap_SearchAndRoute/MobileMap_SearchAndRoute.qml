@@ -37,6 +37,7 @@ MobileMap_SearchAndRouteSample {
             id: mapView
             objectName: "mapView"
 
+            // Set and keep the focus on MapView to enable keyboard navigation
             onFocusChanged: focus = true;
             Component.onCompleted: {
                 forceActiveFocus();
