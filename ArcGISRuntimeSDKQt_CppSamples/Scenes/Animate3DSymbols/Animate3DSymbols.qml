@@ -167,12 +167,6 @@ Animate3DSymbolsSample {
                     }
                     objectName: "mapView"
 
-                    // Set and keep the focus on MapView to enable keyboard navigation
-                    onFocusChanged: focus = true;
-                    Component.onCompleted: {
-                        forceActiveFocus();
-                    }
-
                     MouseArea {
                         anchors.fill: parent
                         onPressed: mouse.accepted
