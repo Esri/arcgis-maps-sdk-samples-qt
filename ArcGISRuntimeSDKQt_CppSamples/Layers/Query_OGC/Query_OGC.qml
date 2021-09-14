@@ -85,7 +85,6 @@ Item {
                 text: ""
                 selectByMouse: true
                 validator: IntValidator{}
-
             }
         }
 
@@ -104,26 +103,41 @@ Item {
         }
 
         Row {
-//            MouseArea {
-//                       enabled: config['calendar_popup']
-//                       anchors.fill: parent
-//                       onClicked: {
-//                           var usedDate = new Date();
-//                           if (value !== undefined && value != '') {
-//                               usedDate = value;
-//                           }
+            spacing: 8
+            Text {
+                id: from_field
+                anchors.verticalCenter: parent.verticalCenter
+                text: "From"
+                rightPadding: 40
+            }
 
-//                           calendar.selectedDate = usedDate
-//                           calendar.year = usedDate.getFullYear()
-//                           calendar.month = usedDate.getMonth()
+            TextField {
+                id: from_date
+                anchors.verticalCenter: parent.verticalCenter
+                width: 200
+                text: ""
+                selectByMouse: true
+                validator: RegExpValidator { regExp: /^\d\d\d\d-(0?[1-9]|1[0-2])-(0?[1-9]|[12][0-9]|3[01])/ }
+            }
+        }
 
-//                           hoursSpinBox.value = usedDate.getHours()
-//                           minutesSpinBox.value = usedDate.getMinutes()
-//                           secondsSpinBox.value = usedDate.getSeconds()
+        Row {
+            spacing: 8
+            Text {
+                id: to_field
+                anchors.verticalCenter: parent.verticalCenter
+                text: "To"
+                rightPadding: 53
+            }
 
-//                           popup.open()
-//                       }
-//                   }
+            TextField {
+                id: to_date
+                anchors.verticalCenter: parent.verticalCenter
+                width: 200
+                text: ""
+                selectByMouse: true
+                validator: RegExpValidator { regExp: /^\d\d\d\d-(0?[1-9]|1[0-2])-(0?[1-9]|[12][0-9]|3[01])/ }
+            }
         }
 
         Button {
