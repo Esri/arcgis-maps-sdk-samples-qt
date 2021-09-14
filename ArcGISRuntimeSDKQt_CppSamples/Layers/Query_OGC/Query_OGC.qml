@@ -85,6 +85,7 @@ Item {
                 text: ""
                 selectByMouse: true
                 validator: IntValidator{}
+
             }
         }
 
@@ -94,11 +95,12 @@ Item {
                 id: fieldText_5
                 anchors.verticalCenter: parent.verticalCenter
                 text: "Date Filter"
+                rightPadding: 16
             }
 
-//            Switch {
-//                text: ""
-//            }
+            Switch {
+                id: switch_button
+            }
         }
 
         Row {
