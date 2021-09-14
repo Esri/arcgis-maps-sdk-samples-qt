@@ -57,7 +57,6 @@ private:
     Esri::ArcGISRuntime::Map* m_map = nullptr;
     Esri::ArcGISRuntime::MapQuickView* m_mapView = nullptr;
     Esri::ArcGISRuntime::OgcFeatureCollectionTable* m_ogcFeatureCollectionTable = nullptr;
-    Esri::ArcGISRuntime::TaskWatcher m_taskWatcher;
 };
 
 #endif // QUERY_OGC_H

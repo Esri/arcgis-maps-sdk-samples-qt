@@ -17,6 +17,7 @@
 import QtQuick 2.12
 import QtQuick.Controls 2.12
 import Esri.Samples 1.0
+import QtQuick.Controls 1.4
 
 Item {
 
@@ -30,5 +31,103 @@ Item {
     Query_OGCSample {
         id: model
         mapView: view
+    }
+
+    Rectangle {
+        anchors {
+            fill: controlColumn
+            margins: -5
+        }
+        color: "#efefef"
+        radius: 5
+        border {
+            color: "darkgray"
+            width: 1
+        }
+    }
+
+    Column {
+        id: controlColumn
+        anchors {
+            left: parent.left
+            top: parent.top
+            margins: 10
+        }
+        spacing: 5
+
+        Row {
+            spacing: 5
+            Text {
+                id: fieldText_1
+                anchors.verticalCenter: parent.verticalCenter
+                text: "Where Clause"
+            }
+
+            ComboBox {
+                width: 200
+                model: [ "F_CODE = 'AP010'", "{ \"eq\" : [ { \"property\" : \"F_CODE\" }, \"AP010\" ] }", "F_CODE LIKE 'AQ%'", "{\"and\":[{\"eq\":[{ \"property\" : \"F_CODE\" }, \"AP010\"]},{ \"before\":" +
+                    "[{ \"property\" : \"ZI001_SDV\"},\"2013-01-01\"]}]}" ]
+            }
+        }
+
+        Row {
+            spacing: 8
+            Text {
+                id: fieldText_3
+                anchors.verticalCenter: parent.verticalCenter
+                text: "Max Features"
+            }
+
+            TextField {
+                id: fieldText_4
+                anchors.verticalCenter: parent.verticalCenter
+                width: 200
+                text: ""
+                selectByMouse: true
+                validator: IntValidator{}
+            }
+        }
+
+        Row {
+            spacing: 5
+            Text {
+                id: fieldText_5
+                anchors.verticalCenter: parent.verticalCenter
+                text: "Date Filter"
+            }
+
+//            Switch {
+//                text: ""
+//            }
+        }
+
+        Row {
+//            MouseArea {
+//                       enabled: config['calendar_popup']
+//                       anchors.fill: parent
+//                       onClicked: {
+//                           var usedDate = new Date();
+//                           if (value !== undefined && value != '') {
+//                               usedDate = value;
+//                           }
+
+//                           calendar.selectedDate = usedDate
+//                           calendar.year = usedDate.getFullYear()
+//                           calendar.month = usedDate.getMonth()
+
+//                           hoursSpinBox.value = usedDate.getHours()
+//                           minutesSpinBox.value = usedDate.getMinutes()
+//                           secondsSpinBox.value = usedDate.getSeconds()
+
+//                           popup.open()
+//                       }
+//                   }
+        }
+
+        Button {
+            anchors.horizontalCenter: parent.horizontalCenter
+            text: "Query"
+            onClicked: query(fieldText.text + populationText.text);
+        }
     }
 }
