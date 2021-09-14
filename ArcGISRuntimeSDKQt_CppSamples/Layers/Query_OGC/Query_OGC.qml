@@ -58,12 +58,13 @@ Item {
         Row {
             spacing: 5
             Text {
-                id: fieldText_1
+                id: clause_text
                 anchors.verticalCenter: parent.verticalCenter
                 text: "Where Clause"
             }
 
             ComboBox {
+                id: clause_menu
                 width: 200
                 model: [ "F_CODE = 'AP010'", "{ \"eq\" : [ { \"property\" : \"F_CODE\" }, \"AP010\" ] }", "F_CODE LIKE 'AQ%'", "{\"and\":[{\"eq\":[{ \"property\" : \"F_CODE\" }, \"AP010\"]},{ \"before\":" +
                     "[{ \"property\" : \"ZI001_SDV\"},\"2013-01-01\"]}]}" ]
@@ -73,13 +74,13 @@ Item {
         Row {
             spacing: 8
             Text {
-                id: fieldText_3
+                id: count_text
                 anchors.verticalCenter: parent.verticalCenter
                 text: "Max Features"
             }
 
             TextField {
-                id: fieldText_4
+                id: count_field
                 anchors.verticalCenter: parent.verticalCenter
                 width: 200
                 text: ""
@@ -88,19 +89,19 @@ Item {
             }
         }
 
-        Row {
-            spacing: 5
-            Text {
-                id: fieldText_5
-                anchors.verticalCenter: parent.verticalCenter
-                text: "Date Filter"
-                rightPadding: 16
-            }
+//        Row {
+//            spacing: 5
+//            Text {
+//                id: switch_text
+//                anchors.verticalCenter: parent.verticalCenter
+//                text: "Date Filter"
+//                rightPadding: 16
+//            }
 
-            Switch {
-                id: switch_button
-            }
-        }
+//            Switch {
+//                id: switch_button
+//            }
+//        }
 
         Row {
             spacing: 8
@@ -143,7 +144,7 @@ Item {
         Button {
             anchors.horizontalCenter: parent.horizontalCenter
             text: "Query"
-            onClicked: query(fieldText.text + populationText.text);
+            onClicked: model.query(clause_menu.text/* + count_field.text + from_date + to_date*/);
         }
     }
 }

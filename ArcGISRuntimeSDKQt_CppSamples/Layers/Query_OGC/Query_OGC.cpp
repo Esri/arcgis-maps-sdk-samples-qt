@@ -103,3 +103,18 @@ void Query_OGC::createQueryConnection()
     m_ogcFeatureCollectionTable->populateFromService(queryParameters, false, {});
   });
 }
+
+void Query_OGC::query(const QString& whereClause)
+{
+  if (!m_ogcFeatureCollectionTable || !m_featureLayer || !m_mapView)
+    return;
+
+  // create the parameters
+  QueryParameters queryParams;
+  queryParams.setGeometry(m_mapView->currentViewpoint(ViewpointType::BoundingGeometry).targetGeometry().extent());
+  queryParams.setWhereClause(whereClause);
+
+  // query the feature tables
+  m_ogcFeatureCollectionTable->queryFeatures(queryParams);
+}
+
