@@ -38,7 +38,7 @@ using namespace Esri::ArcGISRuntime;
 TokenAuthentication::TokenAuthentication(QQuickItem* parent /* = nullptr */):
   QQuickItem(parent)
 {
-  // Create local portal and portalItem objects using global portalURL and itemID variables
+  // Create local portal and portalItem objects using constants defined for portalURL and itemID.
   Portal* portal = new Portal(portalURL, this);
   PortalItem* portalItem = new PortalItem(portal, itemID, this);
 
