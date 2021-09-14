@@ -27,6 +27,12 @@
 
 #include <QUrl>
 
+namespace
+{
+  QUrl m_portalURL = QUrl("https://www.arcgis.com/");
+  QString m_itemID = "e5039444ef3c48b8a8fdc9227f9be7c1";
+}
+
 using namespace Esri::ArcGISRuntime;
 
 TokenAuthentication::TokenAuthentication(QQuickItem* parent /* = nullptr */):
