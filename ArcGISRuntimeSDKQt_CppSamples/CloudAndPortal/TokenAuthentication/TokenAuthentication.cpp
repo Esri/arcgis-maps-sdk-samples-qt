@@ -36,11 +36,14 @@ namespace
 using namespace Esri::ArcGISRuntime;
 
 TokenAuthentication::TokenAuthentication(QQuickItem* parent /* = nullptr */):
-  QQuickItem(parent),
-  m_portal(new Portal(portalURL, this)),
-  m_portalItem(new PortalItem(m_portal, itemID, this)),
-  m_map(new Map(m_portalItem, this))
+  QQuickItem(parent)
 {
+  // Create local portal and portalItem objects using constants defined for portalURL and itemID.
+  Portal* portal = new Portal(portalURL, this);
+  PortalItem* portalItem = new PortalItem(portal, itemID, this);
+
+  // Create a map object using the local portalItem variable
+  m_map = new Map(portalItem, this);
 }
 
 TokenAuthentication::~TokenAuthentication() = default;

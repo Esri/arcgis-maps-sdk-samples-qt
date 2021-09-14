@@ -23,8 +23,6 @@ namespace Esri
   {
     class Map;
     class MapQuickView;
-    class Portal;
-    class PortalItem;
   }
 }
 
@@ -42,8 +40,6 @@ public:
   static void init();
 
 private:
-  Esri::ArcGISRuntime::Portal* m_portal = nullptr;
-  Esri::ArcGISRuntime::PortalItem* m_portalItem = nullptr;
   Esri::ArcGISRuntime::Map* m_map = nullptr;
   Esri::ArcGISRuntime::MapQuickView* m_mapView = nullptr;
 };
