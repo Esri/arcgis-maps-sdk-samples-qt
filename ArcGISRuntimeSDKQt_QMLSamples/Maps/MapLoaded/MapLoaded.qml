@@ -32,6 +32,11 @@ Rectangle {
             bottom: statusBar.top
         }
 
+        Component.onCompleted: {
+            // Set the focus on MapView to initially enable keyboard navigation
+            forceActiveFocus();
+        }
+
         Map {
             // Set the initial basemap to Streets
             Basemap {

@@ -30,6 +30,12 @@ Item {
     MapView {
         id: view
         anchors.fill: parent
+
+        Component.onCompleted: {
+            // Set the focus on MapView to initially enable keyboard navigation
+            forceActiveFocus();
+        }
+
         ColumnLayout {
             spacing: 0
             Layout.alignment: Qt.AlignTop

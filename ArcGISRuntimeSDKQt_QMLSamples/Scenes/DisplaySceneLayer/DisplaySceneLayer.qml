@@ -26,6 +26,11 @@ Rectangle {
     SceneView {
         anchors.fill: parent
 
+        Component.onCompleted: {
+            // Set the focus on SceneView to initially enable keyboard navigation
+            forceActiveFocus();
+        }
+
         // create a scene, which is a default property of scene view
         Scene {
             // add a basemap

@@ -80,6 +80,11 @@ Rectangle {
         id: view
         anchors.fill: parent
 
+        Component.onCompleted: {
+            // Set the focus on SceneView to initially enable keyboard navigation
+            forceActiveFocus();
+        }
+
         // Slider that alters the z-height of the observation point.
 
         Rectangle {

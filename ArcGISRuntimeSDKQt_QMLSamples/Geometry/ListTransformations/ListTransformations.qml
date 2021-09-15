@@ -46,6 +46,11 @@ Rectangle {
         }
         height: parent.height / 2
 
+        Component.onCompleted: {
+            // Set the focus on MapView to initially enable keyboard navigation
+            forceActiveFocus();
+        }
+
         Map {
             id: map
             Basemap {

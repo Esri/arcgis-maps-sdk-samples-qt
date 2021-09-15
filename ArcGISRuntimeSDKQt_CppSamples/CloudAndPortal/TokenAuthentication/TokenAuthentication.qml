@@ -30,6 +30,11 @@ TokenAuthenticationSample {
         id: mapView
         anchors.fill: parent
         objectName: "mapView"
+
+        Component.onCompleted: {
+            // Set the focus on MapView to initially enable keyboard navigation
+            forceActiveFocus();
+        }
     }
 
     // Uncomment this section when running as standalone application

@@ -48,6 +48,11 @@ GenerateOfflineMapSample {
         anchors.fill: parent
         objectName: "mapView"
 
+        Component.onCompleted: {
+            // Set the focus on MapView to initially enable keyboard navigation
+            forceActiveFocus();
+        }
+
         // Create a button and anchor it to the attribution top
         DownloadButton {
             id: downloadButton

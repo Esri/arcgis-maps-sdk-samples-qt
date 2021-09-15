@@ -53,6 +53,11 @@ DisplayKmlNetworkLinksSample {
         objectName: "sceneView"
         anchors.fill: parent
 
+        Component.onCompleted: {
+            // Set the focus on SceneView to initially enable keyboard navigation
+            forceActiveFocus();
+        }
+
         MessageButton {
             visible: currentKmlNetworkMessage.length > 0
             anchors {

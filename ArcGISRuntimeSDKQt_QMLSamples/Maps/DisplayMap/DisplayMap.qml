@@ -24,6 +24,12 @@ Rectangle {
     //! [Create MapView that contains a Map with the Imagery with Labels Basemap]
     MapView {
         anchors.fill: parent
+
+        Component.onCompleted: {
+            // Set the focus on MapView to initially enable keyboard navigation
+            forceActiveFocus();
+        }
+        
         Map {
             Basemap {
                 initStyle: Enums.BasemapStyleArcGISImagery

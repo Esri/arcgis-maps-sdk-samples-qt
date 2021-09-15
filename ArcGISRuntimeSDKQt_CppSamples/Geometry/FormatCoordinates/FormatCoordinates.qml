@@ -42,6 +42,11 @@ Item {
                 Layout.fillWidth: true
                 Layout.fillHeight: true
                 Layout.columnSpan: 2
+
+                Component.onCompleted: {
+                    // Set the focus on MapView to initially enable keyboard navigation
+                    forceActiveFocus();
+                }
             }
 
             Text {

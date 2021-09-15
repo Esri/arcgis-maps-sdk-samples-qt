@@ -31,6 +31,11 @@ Rectangle {
         id: mapView
         anchors.fill: parent
 
+        Component.onCompleted: {
+            // Set the focus on MapView to initially enable keyboard navigation
+            forceActiveFocus();
+        }
+
         Map {
             // create a map with spatial reference appropriate for the WMS service (North American Datum 83)
             spatialReference: SpatialReference {wkid: 26915}

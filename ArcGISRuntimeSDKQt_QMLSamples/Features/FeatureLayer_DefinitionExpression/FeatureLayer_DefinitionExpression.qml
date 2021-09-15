@@ -28,9 +28,13 @@ Rectangle {
     // Map view UI presentation at top
     MapView {
         id: mv
-
         anchors.fill: parent
         wrapAroundMode: Enums.WrapAroundModeDisabled
+
+        Component.onCompleted: {
+            // Set the focus on MapView to initially enable keyboard navigation
+            forceActiveFocus();
+        }
 
         Map {
             Basemap {

@@ -26,6 +26,11 @@ Item {
         id: view
         anchors.fill: parent
 
+        Component.onCompleted: {
+            // Set the focus on MapView to initially enable keyboard navigation
+            forceActiveFocus();
+        }
+
         Callout {
             id: callout
             calloutData: view.calloutData
@@ -33,7 +38,6 @@ Item {
             calloutContent: customComponent
             leaderHeight: 30
         }
-
 
         Component {
             id: customComponent

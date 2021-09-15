@@ -25,6 +25,11 @@ Rectangle {
         anchors.fill: parent
         wrapAroundMode: Enums.WrapAroundModeDisabled
 
+        Component.onCompleted: {
+            // Set the focus on MapView to initially enable keyboard navigation
+            forceActiveFocus();
+        }
+
         Map {
             id: map
             // Specify the SpatialReference

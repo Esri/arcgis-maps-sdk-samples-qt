@@ -40,8 +40,13 @@ Item {
         id: view
         anchors.fill: parent
 
-        // Set focus on the MapView so delete and backspace keys can be used to delete a selected vertex
-        focus: true
+        // Force focus to remain on MapView so SketchEditor will respond to keystrokes
+        onFocusChanged: focus = true;
+
+        Component.onCompleted: {
+            // Set the focus on MapView to initially enable keyboard navigation
+            forceActiveFocus();
+        }
     }
 
     // Display an option to delete the selected vertex if the user right-clicks or taps and holds when the sketch editor is started

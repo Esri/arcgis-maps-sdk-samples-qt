@@ -34,6 +34,11 @@ ListTransformationsSample {
         }
         height: parent.height / 2
         objectName: "mapView"
+
+        Component.onCompleted: {
+            // Set the focus on MapView to initially enable keyboard navigation
+            forceActiveFocus();
+        }
     }
 
     Rectangle {
