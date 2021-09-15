@@ -25,7 +25,7 @@ CONFIG += c++14
 QT += opengl qml quick
 
 TEMPLATE = app
-TARGET = Query_OGC
+TARGET = QueryOGCAPICQLFilters
 
 ARCGIS_RUNTIME_VERSION = 100.13
 include($$PWD/arcgisruntime.pri)
@@ -33,13 +33,14 @@ include($$PWD/arcgisruntime.pri)
 #-------------------------------------------------------------------------------
 
 HEADERS += \
-    Query_OGC.h
+    QueryOGCAPICQLFilters.h
 
 SOURCES += \
-    main.cpp \
-    Query_OGC.cpp
+    QueryOGCAPICQLFilters.cpp \
+    main.cpp
 
-RESOURCES += Query_OGC.qrc
+RESOURCES += \
+    QueryOGCAPICQLFilters.qrc
 
 #-------------------------------------------------------------------------------
 

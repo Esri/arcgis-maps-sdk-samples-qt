@@ -1,4 +1,4 @@
-// [WriteFile Name=Query_OGC, Category=Layers]
+// [WriteFile Name=QueryOGCAPICQLFiltersQuery_OGC, Category=Layers]
 // [Legal]
 // Copyright 2021 Esri.
 
@@ -14,8 +14,8 @@
 // limitations under the License.
 // [Legal]
 
-#ifndef QUERY_OGC_H
-#define QUERY_OGC_H
+#ifndef QUERYOGCAPICQLFILTERS_H
+#define QUERYOGCAPICQLFILTERS_H
 
 #include "Envelope.h"
 #include "TaskWatcher.h"
@@ -33,15 +33,15 @@ class OgcFeatureCollectionTable;
 
 #include <QObject>
 
-class Query_OGC : public QObject
+class QueryOGCAPICQLFilters : public QObject
 {
     Q_OBJECT
 
     Q_PROPERTY(Esri::ArcGISRuntime::MapQuickView* mapView READ mapView WRITE setMapView NOTIFY mapViewChanged)
 
 public:
-    explicit Query_OGC(QObject* parent = nullptr);
-    ~Query_OGC();
+    explicit QueryOGCAPICQLFilters(QObject* parent = nullptr);
+    ~QueryOGCAPICQLFilters();
 
     static void init();
     Q_INVOKABLE void query(const QString& whereClause, const QString& maxFeature, const QString& fromDateString, const QString& toDateString);
@@ -60,4 +60,4 @@ private:
     Esri::ArcGISRuntime::OgcFeatureCollectionTable* m_ogcFeatureCollectionTable = nullptr;
 };
 
-#endif // QUERY_OGC_H
+#endif // QUERYOGCAPICQLFILTERS_H

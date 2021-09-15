@@ -1,4 +1,4 @@
-# Query_OGC
+# QueryOGCAPICQLFilters
 
 This sample demonstrates how to Query OGC API with CQL Filters
 This sample demonstrates ...       

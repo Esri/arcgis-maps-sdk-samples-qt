@@ -18,7 +18,7 @@
 #include "pch.hpp"
 #endif // PCH_BUILD
 
-#include "Query_OGC.h"
+#include "QueryOGCAPICQLFilters.h"
 
 #include "FeatureLayer.h"
 #include "Map.h"
@@ -29,7 +29,7 @@
 
 using namespace Esri::ArcGISRuntime;
 
-Query_OGC::Query_OGC(QObject* parent /* = nullptr */):
+QueryOGCAPICQLFilters::QueryOGCAPICQLFilters(QObject* parent /* = nullptr */):
     QObject(parent),
     m_map(new Map(BasemapStyle::ArcGISTopographic, this))
 {
@@ -43,28 +43,29 @@ Query_OGC::Query_OGC(QObject* parent /* = nullptr */):
 
       // m_ogcFeatureCollectionTable->load() will be automatically called when added to a FeatureLayer
       m_featureLayer = new FeatureLayer(m_ogcFeatureCollectionTable, this);
+
       m_map->operationalLayers()->append(m_featureLayer);
 
       // Set a renderer to it to visualize the OGC API features and zoom to features
       m_featureLayer->setRenderer(new SimpleRenderer(new SimpleLineSymbol(SimpleLineSymbolStyle::Solid, Qt::darkMagenta, 3, this), this));
 }
 
-Query_OGC::~Query_OGC() = default;
+QueryOGCAPICQLFilters::~QueryOGCAPICQLFilters() = default;
 
-void Query_OGC::init()
+void QueryOGCAPICQLFilters::init()
 {
     // Register the map view for QML
     qmlRegisterType<MapQuickView>("Esri.Samples", 1, 0, "MapView");
-    qmlRegisterType<Query_OGC>("Esri.Samples", 1, 0, "Query_OGCSample");
+    qmlRegisterType<QueryOGCAPICQLFilters>("Esri.Samples", 1, 0, "QueryOGCAPICQLFiltersSample");
 }
 
-MapQuickView* Query_OGC::mapView() const
+MapQuickView* QueryOGCAPICQLFilters::mapView() const
 {
     return m_mapView;
 }
 
 // Set the view (created in QML)
-void Query_OGC::setMapView(MapQuickView* mapView)
+void QueryOGCAPICQLFilters::setMapView(MapQuickView* mapView)
 {
     if (!mapView || mapView == m_mapView)
       return;
@@ -90,7 +91,7 @@ void Query_OGC::setMapView(MapQuickView* mapView)
     emit mapViewChanged();
 }
 
-void Query_OGC::query(const QString& whereClause, const QString& maxFeature, const QString& fromDateString, const QString& toDateString)
+void QueryOGCAPICQLFilters::query(const QString& whereClause, const QString& maxFeature, const QString& fromDateString, const QString& toDateString)
 {
   if (!m_ogcFeatureCollectionTable || !m_featureLayer || !m_mapView)
     return;
@@ -105,16 +106,12 @@ void Query_OGC::query(const QString& whereClause, const QString& maxFeature, con
       queryParams.setWhereClause(whereClause);
       queryParams.setMaxFeatures(maxFeature.toUInt());
 
-      QDateTime fromDate = QDateTime::fromString(fromDateString,"dd-MM-yyyy");
-      QDateTime toDate = QDateTime::fromString(toDateString,"dd-MM-yyyy");
+      QDateTime fromDate = QDateTime::fromString(fromDateString,"mm-dd-yyyy");
+      QDateTime toDate = QDateTime::fromString(toDateString,"mm-dd-yyyy");
       TimeExtent timeExtent(fromDate, toDate);
       queryParams.setTimeExtent(timeExtent);
-
-      // query the feature tables
-    //  m_ogcFeatureCollectionTable->queryFeatures(queryParams);
 
       // Populate the feature collection table with features that match the parameters, cache them locally, and store all table fields
       m_ogcFeatureCollectionTable->populateFromService(queryParams, false, {});
   });
 }
-

@@ -13,9 +13,9 @@
         "TODO"
     ],
     "snippets": [
-        "Query_OGC.qml",
-        "Query_OGC.cpp",
-        "Query_OGC.h"
+        "QueryOGCAPICQLFilters.qml",
+        "QueryOGCAPICQLFilters.cpp",
+        "QueryOGCAPICQLFilters.h"
     ],
-    "title": "Query_OGC"
+    "title": "QueryOGCAPICQLFilters"
 }

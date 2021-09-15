@@ -15,7 +15,7 @@
 #include <Windows.h>
 #endif
 
-#include "Query_OGC.h"
+#include "QueryOGCAPICQLFilters.h"
 
 #include "ArcGISRuntimeEnvironment.h"
 
@@ -30,14 +30,14 @@ int main(int argc, char *argv[])
 {
     QGuiApplication::setAttribute(Qt::AA_EnableHighDpiScaling);
     QGuiApplication app(argc, argv);
-    app.setApplicationName(QString("Query_OGC - C++"));
+    app.setApplicationName(QString("QueryOGCAPICQLFilters - C++"));
 
     // Access to Esri location services requires an API key. This can be copied below or used as a command line argument.
     const QString apiKey = QString("");
     setAPIKey(app, apiKey);
 
     // Initialize the sample
-    Query_OGC::init();
+    QueryOGCAPICQLFilters::init();
 
     // Initialize application view
     QQmlApplicationEngine engine;
@@ -49,7 +49,7 @@ int main(int argc, char *argv[])
 #endif
 
     // Set the source
-    engine.load(QUrl("qrc:/Samples/Layers/Query_OGC/main.qml"));
+    engine.load(QUrl("qrc:/Samples/Layers/QueryOGCAPICQLFilters/main.qml"));
 
     return app.exec();
 }
