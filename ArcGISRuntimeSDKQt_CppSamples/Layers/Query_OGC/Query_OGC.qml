@@ -66,8 +66,12 @@ Item {
             ComboBox {
                 id: clause_menu
                 width: 200
-                model: [ "F_CODE = 'AP010'", "{ \"eq\" : [ { \"property\" : \"F_CODE\" }, \"AP010\" ] }", "F_CODE LIKE 'AQ%'", "{\"and\":[{\"eq\":[{ \"property\" : \"F_CODE\" }, \"AP010\"]},{ \"before\":" +
-                    "[{ \"property\" : \"ZI001_SDV\"},\"2013-01-01\"]}]}" ]
+                model: [
+                    "F_CODE = 'AP010'",
+                    "{ \"eq\" : [ { \"property\" : \"F_CODE\" }, \"AP010\" ] }",
+                    "F_CODE LIKE 'AQ%'", "{\"and\":[{\"eq\":[{ \"property\" : \"F_CODE\" }, \"AP010\"]},{ \"before\":" +
+                    "[{ \"property\" : \"ZI001_SDV\"},\"2013-01-01\"]}]}"
+                ]
             }
         }
 
@@ -83,7 +87,7 @@ Item {
                 id: count_field
                 anchors.verticalCenter: parent.verticalCenter
                 width: 200
-                text: ""
+                text: "1000"
                 selectByMouse: true
                 validator: IntValidator{}
             }
@@ -118,7 +122,8 @@ Item {
                 width: 200
                 text: ""
                 selectByMouse: true
-                validator: RegExpValidator { regExp: /^\d\d\d\d-(0?[1-9]|1[0-2])-(0?[1-9]|[12][0-9]|3[01])/ }
+                validator: RegExpValidator { regExp: /(0[1-9]|1[012])[-](0[1-9]|[12][0-9]|3[01])[-](19|20)\d\d/ }
+                placeholderText: "MM-DD-YYYY"
             }
         }
 
@@ -137,14 +142,25 @@ Item {
                 width: 200
                 text: ""
                 selectByMouse: true
-                validator: RegExpValidator { regExp: /^\d\d\d\d-(0?[1-9]|1[0-2])-(0?[1-9]|[12][0-9]|3[01])/ }
+                validator: RegExpValidator { regExp: /(0[1-9]|1[012])[-](0[1-9]|[12][0-9]|3[01])[-](19|20)\d\d/ }
+                placeholderText: "MM-DD-YYYY"
             }
         }
 
         Button {
             anchors.horizontalCenter: parent.horizontalCenter
             text: "Query"
-            onClicked: model.query(clause_menu.text/* + count_field.text + from_date + to_date*/);
+//            onClicked: model.query(clause_menu/* + count_field.text + from_date + to_date*/);
+            onClicked:
+            {
+                var clause_text = clause_menu.currentText;
+                var from_date_text = from_date.text;
+                var to_date_text = to_date.text;
+
+                var final_query = clause_text + from_date_text + to_date_text;
+            }
+
+
         }
     }
 }
