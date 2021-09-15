@@ -47,12 +47,6 @@ Query_OGC::Query_OGC(QObject* parent /* = nullptr */):
 
       // Set a renderer to it to visualize the OGC API features and zoom to features
       m_featureLayer->setRenderer(new SimpleRenderer(new SimpleLineSymbol(SimpleLineSymbolStyle::Solid, Qt::darkMagenta, 3, this), this));
-
-      //Get the extent of the dataset
-      m_dataSetExtent = m_ogcFeatureCollectionTable->extent();
-
-      // display result of query on the map
-//      setInitialQueryOnOgcFeatureTable();
 }
 
 Query_OGC::~Query_OGC() = default;
@@ -79,29 +73,21 @@ void Query_OGC::setMapView(MapQuickView* mapView)
     m_mapView->setMap(m_map);
     m_mapView->setViewpoint(Viewpoint(32.62, 36.10, 20'000));
 
-    createQueryConnection();
+    connect(m_mapView, &MapQuickView::navigatingChanged, this, [this]()
+      {
+        QueryParameters queryParams;
+
+        //Get the extent of the dataset
+        m_dataSetExtent = m_ogcFeatureCollectionTable->extent();
+        queryParams.setGeometry(m_dataSetExtent);
+
+        queryParams.setMaxFeatures(1000);
+
+        // Populate the feature collection table with features that match the parameters, cache them locally, and store all table fields
+        m_ogcFeatureCollectionTable->populateFromService(queryParams, false, {});
+      });
 
     emit mapViewChanged();
-}
-
-void Query_OGC::createQueryConnection()
-{
-  connect(m_mapView, &MapQuickView::navigatingChanged, this, [this]()
-  {
-    if (m_mapView->isNavigating())
-      return;
-
-    QueryParameters queryParameters = QueryParameters();
-    // Set the query area to what is currently visible in the map view
-    queryParameters.setGeometry(m_mapView->currentViewpoint(ViewpointType::BoundingGeometry).targetGeometry());
-    // SpatialRelationship::Intersects will return all features that are within and crossing the perimiter of the input geometry
-    queryParameters.setSpatialRelationship(SpatialRelationship::Intersects);
-    // Some services have low default values for max features returned
-    queryParameters.setMaxFeatures(5000);
-
-    // Populate the feature collection table with features that match the parameters, cache them locally, and store all table fields
-    m_ogcFeatureCollectionTable->populateFromService(queryParameters, false, {});
-  });
 }
 
 void Query_OGC::query(const QString& whereClause, const QString& maxFeature, const QString& fromDateString, const QString& toDateString)
@@ -109,19 +95,26 @@ void Query_OGC::query(const QString& whereClause, const QString& maxFeature, con
   if (!m_ogcFeatureCollectionTable || !m_featureLayer || !m_mapView)
     return;
 
-  // create the parameters
-  QueryParameters queryParams;
-  queryParams.setGeometry(m_mapView->currentViewpoint(ViewpointType::BoundingGeometry).targetGeometry().extent());
-  queryParams.setWhereClause(whereClause);
 
-  queryParams.setMaxFeatures(maxFeature.toUInt());
+  connect(m_mapView, &MapQuickView::navigatingChanged, this, [this, whereClause, maxFeature, fromDateString, toDateString]()
+  {
+      // create the parameters
+      QueryParameters queryParams;
 
-  QDateTime fromDate = QDateTime::fromString(fromDateString,"dd-MM-yyyy");
-  QDateTime toDate = QDateTime::fromString(toDateString,"dd-MM-yyyy");
-  TimeExtent timeExtent(fromDate, toDate);
-  queryParams.setTimeExtent(timeExtent);
+      queryParams.setGeometry(m_mapView->currentViewpoint(ViewpointType::BoundingGeometry).targetGeometry().extent());
+      queryParams.setWhereClause(whereClause);
+      queryParams.setMaxFeatures(maxFeature.toUInt());
 
-  // query the feature tables
-  m_ogcFeatureCollectionTable->queryFeatures(queryParams);
+      QDateTime fromDate = QDateTime::fromString(fromDateString,"dd-MM-yyyy");
+      QDateTime toDate = QDateTime::fromString(toDateString,"dd-MM-yyyy");
+      TimeExtent timeExtent(fromDate, toDate);
+      queryParams.setTimeExtent(timeExtent);
+
+      // query the feature tables
+    //  m_ogcFeatureCollectionTable->queryFeatures(queryParams);
+
+      // Populate the feature collection table with features that match the parameters, cache them locally, and store all table fields
+      m_ogcFeatureCollectionTable->populateFromService(queryParams, false, {});
+  });
 }
 

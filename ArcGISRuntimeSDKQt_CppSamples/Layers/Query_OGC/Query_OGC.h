@@ -52,7 +52,6 @@ signals:
 private:
     Esri::ArcGISRuntime::MapQuickView* mapView() const;
     void setMapView(Esri::ArcGISRuntime::MapQuickView* mapView);
-    void createQueryConnection();
 
     Esri::ArcGISRuntime::Envelope m_dataSetExtent;
     Esri::ArcGISRuntime::FeatureLayer* m_featureLayer = nullptr;
