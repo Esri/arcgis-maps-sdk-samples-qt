@@ -25,8 +25,12 @@ Rectangle {
     // Declare a map view inside the rectangle
     MapView {
         id: mapView
-
         anchors.fill: parent
+
+        Component.onCompleted: {
+            // Set the focus on MapView to initially enable keyboard navigation
+            forceActiveFocus();
+        }
 
         // Nest a map inside of the map view
         Map {

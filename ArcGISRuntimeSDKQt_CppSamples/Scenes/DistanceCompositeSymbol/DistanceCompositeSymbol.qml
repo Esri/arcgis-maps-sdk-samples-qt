@@ -25,5 +25,10 @@ DistanceCompositeSymbolSample {
     SceneView {
         anchors.fill: parent
         objectName: "sceneView"
+
+        Component.onCompleted: {
+            // Set the focus on SceneView to initially enable keyboard navigation
+            forceActiveFocus();
+        }
     }
 }

@@ -46,6 +46,11 @@ Item {
             id: sceneView
             Layout.fillHeight: true
             Layout.fillWidth: true
+
+            Component.onCompleted: {
+                // Set the focus on SceneView to initially enable keyboard navigation
+                forceActiveFocus();
+            }
         }
         MapView {
             id: mapView

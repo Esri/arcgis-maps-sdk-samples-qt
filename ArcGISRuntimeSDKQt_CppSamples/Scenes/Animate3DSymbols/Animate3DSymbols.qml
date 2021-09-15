@@ -43,6 +43,11 @@ Animate3DSymbolsSample {
         objectName: "sceneView"
         anchors.fill: parent
 
+        Component.onCompleted: {
+            // Set the focus on SceneView to initially enable keyboard navigation
+            forceActiveFocus();
+        }
+
         GridLayout {
             anchors {
                 left: parent.left
@@ -155,11 +160,11 @@ Animate3DSymbolsSample {
 
                 MapView {
                     id: mapView
-                    objectName: "mapView"
                     anchors {
                         fill: parent
                         margins: 2
                     }
+                    objectName: "mapView"
 
                     MouseArea {
                         anchors.fill: parent

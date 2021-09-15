@@ -253,6 +253,11 @@ Rectangle {
         id: sceneView
         anchors.fill: parent
 
+        Component.onCompleted: {
+            // Set the focus on SceneView to initially enable keyboard navigation
+            forceActiveFocus();
+        }
+
         // create window for displaying the KML contents
         Control {
             width: 300

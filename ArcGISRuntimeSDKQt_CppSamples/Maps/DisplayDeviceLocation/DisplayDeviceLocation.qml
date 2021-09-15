@@ -32,6 +32,11 @@ DisplayDeviceLocationSample {
         objectName: "mapView"
 
         Component.onCompleted: {
+            // Set the focus on MapView to initially enable keyboard navigation
+            forceActiveFocus();
+        }
+
+        Component.onCompleted: {
             // populate list model with modes
             autoPanListModel.append({name: deviceLocationSample.compassMode, image: "qrc:/Samples/Maps/DisplayDeviceLocation/Compass.png"});
             autoPanListModel.append({name: deviceLocationSample.navigationMode, image: "qrc:/Samples/Maps/DisplayDeviceLocation/Navigation.png"});

@@ -27,6 +27,11 @@ Rectangle {
     SceneView {
         anchors.fill: parent
 
+        Component.onCompleted: {
+            // Set the focus on SceneView to initially enable keyboard navigation
+            forceActiveFocus();
+        }
+
         // Declare a Scene
         Scene {
             // Declare a PortalItem by setting Item ID.

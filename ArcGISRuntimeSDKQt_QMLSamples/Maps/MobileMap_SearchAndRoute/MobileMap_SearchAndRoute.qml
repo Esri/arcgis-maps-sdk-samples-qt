@@ -42,6 +42,12 @@ Rectangle {
     // Map view UI presentation at top
     MapView {
         id: mapView
+        
+        Component.onCompleted: {
+            // Set the focus on MapView to initially enable keyboard navigation
+            forceActiveFocus();
+        }
+        
         calloutData {
             title : "Address";
         }

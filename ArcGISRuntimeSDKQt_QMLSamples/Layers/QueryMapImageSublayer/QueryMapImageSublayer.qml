@@ -33,6 +33,11 @@ Rectangle {
         id: mapView
         anchors.fill: parent
 
+        Component.onCompleted: {
+            // Set the focus on MapView to initially enable keyboard navigation
+            forceActiveFocus();
+        }
+
         // Desclare a Map inside the MapView
         Map {
             // Declare a Basemap
