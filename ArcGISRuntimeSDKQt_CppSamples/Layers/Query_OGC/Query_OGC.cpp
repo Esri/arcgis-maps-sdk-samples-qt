@@ -104,7 +104,7 @@ void Query_OGC::createQueryConnection()
   });
 }
 
-void Query_OGC::query(const QString& whereClause)
+void Query_OGC::query(const QString& where_clause, const QString& max_feature, const QString& from_date_string, const QString& to_date_string)
 {
   if (!m_ogcFeatureCollectionTable || !m_featureLayer || !m_mapView)
     return;
@@ -112,7 +112,14 @@ void Query_OGC::query(const QString& whereClause)
   // create the parameters
   QueryParameters queryParams;
   queryParams.setGeometry(m_mapView->currentViewpoint(ViewpointType::BoundingGeometry).targetGeometry().extent());
-  queryParams.setWhereClause(whereClause);
+  queryParams.setWhereClause(where_clause);
+
+  queryParams.setMaxFeatures(max_feature.toUInt());
+
+  QDateTime from_date = QDateTime::fromString(from_date_string,"dd-MM-yyyy");
+  QDateTime to_date = QDateTime::fromString(to_date_string,"dd-MM-yyyy");
+  TimeExtent timeExtent(from_date, to_date);
+  queryParams.setTimeExtent(timeExtent);
 
   // query the feature tables
   m_ogcFeatureCollectionTable->queryFeatures(queryParams);

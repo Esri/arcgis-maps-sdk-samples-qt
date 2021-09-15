@@ -93,20 +93,6 @@ Item {
             }
         }
 
-//        Row {
-//            spacing: 5
-//            Text {
-//                id: switch_text
-//                anchors.verticalCenter: parent.verticalCenter
-//                text: "Date Filter"
-//                rightPadding: 16
-//            }
-
-//            Switch {
-//                id: switch_button
-//            }
-//        }
-
         Row {
             spacing: 8
             Text {
@@ -150,14 +136,14 @@ Item {
         Button {
             anchors.horizontalCenter: parent.horizontalCenter
             text: "Query"
-//            onClicked: model.query(clause_menu/* + count_field.text + from_date + to_date*/);
             onClicked:
             {
                 var clause_text = clause_menu.currentText;
+                var max_feature_count = count_field.text;
                 var from_date_text = from_date.text;
                 var to_date_text = to_date.text;
 
-                var final_query = clause_text + from_date_text + to_date_text;
+                model.query(clause_text, max_feature_count, from_date_text, to_date_text);
             }
 
 

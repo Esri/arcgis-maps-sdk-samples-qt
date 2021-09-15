@@ -44,7 +44,7 @@ public:
     ~Query_OGC();
 
     static void init();
-    Q_INVOKABLE void query(const QString& whereClause);
+    Q_INVOKABLE void query(const QString& where_clause, const QString& max_feature, const QString& from_date_string, const QString& to_date_string);
 
 signals:
     void mapViewChanged();
