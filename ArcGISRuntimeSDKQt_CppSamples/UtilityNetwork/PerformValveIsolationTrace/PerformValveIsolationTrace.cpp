@@ -43,6 +43,7 @@
 #include "UtilityElementTraceResult.h"
 #include "UtilityNetwork.h"
 #include "UtilityNetworkDefinition.h"
+#include "UtilityNetworkListModel.h"
 #include "UtilityNetworkSource.h"
 #include "UtilityNetworkTypes.h"
 #include "UtilityTerminal.h"
@@ -88,11 +89,9 @@ PerformValveIsolationTrace::PerformValveIsolationTrace(QObject* parent /* = null
   m_startingLocationOverlay(new GraphicsOverlay(this)),
   m_filterBarriersOverlay(new GraphicsOverlay(this)),
   m_cred(new Credential{sampleServer7Username, sampleServer7Password, this}),
-  m_graphicParent(new QObject())
+  m_graphicParent(new QObject()),
+  m_serviceGeodatabase(new ServiceGeodatabase(featureServiceUrl, m_cred, this))
 {
-  // create service geodatabase with the feature service url
-  m_serviceGeodatabase = new ServiceGeodatabase(featureServiceUrl, m_cred, this);
-
   // disable UI while loading service geodatabase and utility network
   m_tasksRunning = true;
   emit tasksRunningChanged();
@@ -123,8 +122,12 @@ PerformValveIsolationTrace::PerformValveIsolationTrace(QObject* parent /* = null
   });
   m_serviceGeodatabase->load();
 
+  // Create and add the utility network to the map before loading
   m_utilityNetwork = new UtilityNetwork(featureServiceUrl, m_map, m_cred, this);
+  m_map->utilityNetworks()->append(m_utilityNetwork);
+
   connectSignals();
+
   m_utilityNetwork->load();
 }
 
@@ -229,9 +232,7 @@ void PerformValveIsolationTrace::performTrace()
     // set the user selected filter barriers otherwise
     // set the category comparison to the barriers of the configuration's trace filter
     if (!m_filterBarriers.empty())
-    {
       traceParameters->setFilterBarriers(m_filterBarriers);
-    }
     else
     {
       UtilityCategory* selectedCategory = categories[m_selectedIndex];
@@ -285,9 +286,7 @@ void PerformValveIsolationTrace::connectSignals()
     {
       UtilityTier* tier = domainNetwork->tier(tierName);
       if (tier)
-      {
         m_traceConfiguration = tier->traceConfiguration();
-      }
     }
 
     if (!m_traceConfiguration)
@@ -305,9 +304,7 @@ void PerformValveIsolationTrace::connectSignals()
       {
         UtilityAssetType* assetType = assetGroup->assetType(assetTypeName);
         if (assetType)
-        {
           m_startingLocation = m_utilityNetwork->createElementWithAssetType(assetType, QUuid(globalId), nullptr, this);
-        }
       }
     }
 
@@ -372,9 +369,7 @@ void PerformValveIsolationTrace::connectSignals()
             const QString networkSourceName = utilityElement->networkSource()->name();
             const QString featureTableName = featureLayer->featureTable()->tableName();
             if (networkSourceName == featureTableName)
-            {
               objectIds.append(utilityElement->objectId());
-            }
           }
           queryParameters.setObjectIds(objectIds);
           featureLayer->selectFeatures(queryParameters, SelectionMode::New);

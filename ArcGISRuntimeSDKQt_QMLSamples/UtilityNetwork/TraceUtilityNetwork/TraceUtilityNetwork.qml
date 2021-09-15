@@ -49,11 +49,36 @@ Rectangle {
             forceActiveFocus();
         }
         
+        Credential {
+            id: credentials
+            username: "viewer01"
+            password: "I68VGU^nMurF"
+        }
+
         Map {
             Basemap {
                 initStyle: Enums.BasemapStyleArcGISStreetsNight
             }
-            
+               
+            onComponentCompleted: {
+                serviceGeodatabase.load();
+                utilityNetwork.load();
+                map.utilityNetworks.append(utilityNetwork);
+            }
+
+            ServiceGeodatabase {
+                id: serviceGeodatabase
+                url: featureLayerUrl
+                credential: credentials
+                onLoadStatusChanged: {
+                    if (loadStatus === Enums.LoadStatusLoaded) {
+                        // Set feature layer feature table properties using the appropriate serviceGeodatabase table
+                        lineLayer.featureTable = serviceGeodatabase.tableWithLayerIdAsInt(3);
+                        deviceLayer.featureTable = serviceGeodatabase.tableWithLayerIdAsInt(0);
+                    }
+                }
+            }
+
             ViewpointExtent {
                 Envelope {
                     xMin: -9813547.35557238
@@ -67,15 +92,6 @@ Rectangle {
             // Add the layer with electric distribution lines.
             FeatureLayer {
                 id: lineLayer
-
-                ServiceFeatureTable {
-                    url: featureLayerUrl + "/3"
-
-                    Credential {
-                        username: "viewer01"
-                        password: "I68VGU^nMurF"
-                    }
-                }
 
                 UniqueValueRenderer {
                     fieldNames: ["ASSETGROUP"]
@@ -108,15 +124,6 @@ Rectangle {
             // Add the layer with electric devices.
             FeatureLayer {
                 id: deviceLayer
-
-                ServiceFeatureTable {
-                    url: featureLayerUrl + "/0"
-
-                    Credential {
-                        username: "viewer01"
-                        password: "I68VGU^nMurF"
-                    }
-                }
 
                 onSelectFeaturesStatusChanged: checkSelectionStatus();
             }
@@ -222,11 +229,7 @@ Rectangle {
     UtilityNetwork {
         id: utilityNetwork
         url: featureLayerUrl
-
-        Credential {
-            username: "viewer01"
-            password: "I68VGU^nMurF"
-        }
+        credential: credentials
 
         onTraceStatusChanged: {
             if (traceStatus !== Enums.TaskStatusCompleted)

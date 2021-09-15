@@ -22,17 +22,28 @@
 
 #include "Map.h"
 #include "MapQuickView.h"
-#include "ArcGISMapImageLayer.h"
-#include "Viewpoint.h"
-#include "Envelope.h"
-#include "Basemap.h"
+#include "Portal.h"
+#include "PortalItem.h"
+
 #include <QUrl>
+
+namespace
+{
+  QUrl portalURL = QUrl("https://www.arcgis.com/");
+  QString itemID = "e5039444ef3c48b8a8fdc9227f9be7c1";
+}
 
 using namespace Esri::ArcGISRuntime;
 
 TokenAuthentication::TokenAuthentication(QQuickItem* parent /* = nullptr */):
   QQuickItem(parent)
 {
+  // Create local portal and portalItem objects using constants defined for portalURL and itemID.
+  Portal* portal = new Portal(portalURL, this);
+  PortalItem* portalItem = new PortalItem(portal, itemID, this);
+
+  // Create a map object using the local portalItem variable
+  m_map = new Map(portalItem, this);
 }
 
 TokenAuthentication::~TokenAuthentication() = default;
@@ -50,22 +61,10 @@ void TokenAuthentication::componentComplete()
   // find QML MapView component
   m_mapView = findChild<MapQuickView*>("mapView");
   if (!m_mapView)
-      return;
+    return;
 
   m_mapView->setWrapAroundMode(WrapAroundMode::Disabled);
 
-  // Create a map using the topographic basemap
-  m_map = new Map(BasemapStyle::ArcGISTopographic, this);
-  m_map->setInitialViewpoint(Viewpoint(Envelope(-19221397.32591107, -208306.59714691807, -3024411.4154897667, 11939432.83566906, SpatialReference(3857))));
-
   // Set map to map view
   m_mapView->setMap(m_map);
-}
-
-void TokenAuthentication::loadSecuredLayer()
-{
-  // add a map service that is secured with token-based authentication
-  // username/password is user1/user1
-  ArcGISMapImageLayer* mapImgLyr = new ArcGISMapImageLayer(QUrl("https://sampleserver6.arcgisonline.com/arcgis/rest/services/USA_secure_user1/MapServer"), this);
-  m_map->operationalLayers()->append(mapImgLyr);
 }

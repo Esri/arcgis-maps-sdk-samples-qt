@@ -152,6 +152,7 @@ Rectangle {
             Component.onCompleted: {
                 serviceGeodatabase.load();
                 utilityNetwork.load();
+                map.utilityNetworks.append(utilityNetwork);
             }
 
             ServiceGeodatabase {
