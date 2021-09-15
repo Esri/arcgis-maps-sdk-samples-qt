@@ -104,7 +104,7 @@ void Query_OGC::createQueryConnection()
   });
 }
 
-void Query_OGC::query(const QString& where_clause, const QString& max_feature, const QString& from_date_string, const QString& to_date_string)
+void Query_OGC::query(const QString& whereClause, const QString& maxFeature, const QString& fromDateString, const QString& toDateString)
 {
   if (!m_ogcFeatureCollectionTable || !m_featureLayer || !m_mapView)
     return;
@@ -112,13 +112,13 @@ void Query_OGC::query(const QString& where_clause, const QString& max_feature, c
   // create the parameters
   QueryParameters queryParams;
   queryParams.setGeometry(m_mapView->currentViewpoint(ViewpointType::BoundingGeometry).targetGeometry().extent());
-  queryParams.setWhereClause(where_clause);
+  queryParams.setWhereClause(whereClause);
 
-  queryParams.setMaxFeatures(max_feature.toUInt());
+  queryParams.setMaxFeatures(maxFeature.toUInt());
 
-  QDateTime from_date = QDateTime::fromString(from_date_string,"dd-MM-yyyy");
-  QDateTime to_date = QDateTime::fromString(to_date_string,"dd-MM-yyyy");
-  TimeExtent timeExtent(from_date, to_date);
+  QDateTime fromDate = QDateTime::fromString(fromDateString,"dd-MM-yyyy");
+  QDateTime toDate = QDateTime::fromString(toDateString,"dd-MM-yyyy");
+  TimeExtent timeExtent(fromDate, toDate);
   queryParams.setTimeExtent(timeExtent);
 
   // query the feature tables

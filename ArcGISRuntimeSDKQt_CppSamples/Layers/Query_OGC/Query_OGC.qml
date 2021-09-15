@@ -58,13 +58,13 @@ Item {
         Row {
             spacing: 5
             Text {
-                id: clause_text
+                id: whereClauseText
                 anchors.verticalCenter: parent.verticalCenter
                 text: "Where Clause"
             }
 
             ComboBox {
-                id: clause_menu
+                id: whereClauseMenu
                 width: 200
                 model: [
                     "F_CODE = 'AP010'",
@@ -78,13 +78,13 @@ Item {
         Row {
             spacing: 8
             Text {
-                id: count_text
+                id: maxFeatureText
                 anchors.verticalCenter: parent.verticalCenter
                 text: "Max Features"
             }
 
             TextField {
-                id: count_field
+                id: maxFeatureField
                 anchors.verticalCenter: parent.verticalCenter
                 width: 200
                 text: "1000"
@@ -96,14 +96,14 @@ Item {
         Row {
             spacing: 8
             Text {
-                id: from_field
+                id: fromField
                 anchors.verticalCenter: parent.verticalCenter
                 text: "From"
                 rightPadding: 40
             }
 
             TextField {
-                id: from_date
+                id: fromDate
                 anchors.verticalCenter: parent.verticalCenter
                 width: 200
                 text: ""
@@ -116,14 +116,14 @@ Item {
         Row {
             spacing: 8
             Text {
-                id: to_field
+                id: toField
                 anchors.verticalCenter: parent.verticalCenter
                 text: "To"
                 rightPadding: 53
             }
 
             TextField {
-                id: to_date
+                id: toDate
                 anchors.verticalCenter: parent.verticalCenter
                 width: 200
                 text: ""
@@ -138,10 +138,10 @@ Item {
             text: "Query"
             onClicked:
             {
-                var clause_text = clause_menu.currentText;
-                var max_feature_count = count_field.text;
-                var from_date_text = from_date.text;
-                var to_date_text = to_date.text;
+                var clause_text = whereClauseMenu.currentText;
+                var max_feature_count = maxFeatureField.text;
+                var from_date_text = fromDate.text;
+                var to_date_text = toDate.text;
 
                 model.query(clause_text, max_feature_count, from_date_text, to_date_text);
             }
