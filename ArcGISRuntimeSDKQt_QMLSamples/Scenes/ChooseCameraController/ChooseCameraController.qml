@@ -58,11 +58,6 @@ Rectangle {
         id: sceneView
         anchors.fill: parent
 
-        Component.onCompleted: {
-            // Set the focus on SceneView to initially enable keyboard navigation
-            forceActiveFocus();
-        }
-
         Scene {
             id: scene
             Basemap {
@@ -104,6 +99,9 @@ Rectangle {
         }
 
         Component.onCompleted: {
+            // Set the focus on SceneView to initially enable keyboard navigation
+            forceActiveFocus();
+
             // set viewpoint to the specified camera
             sceneView.setViewpointCamera(camera);
         }
