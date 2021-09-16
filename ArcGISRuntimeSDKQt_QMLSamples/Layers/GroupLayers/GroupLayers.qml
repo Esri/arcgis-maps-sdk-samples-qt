@@ -28,11 +28,6 @@ Rectangle {
         id: sceneView
         anchors.fill: parent
 
-        Component.onCompleted: {
-            // Set the focus on SceneView to initially enable keyboard navigation
-            forceActiveFocus();
-        }
-
         Scene {
             id: scene
             Basemap {
@@ -80,6 +75,9 @@ Rectangle {
         }
 
         Component.onCompleted: {
+            // Set the focus on SceneView to initially enable keyboard navigation
+            forceActiveFocus();
+
             // create initial viewpoint extent
             const env = ArcGISRuntimeEnvironment.createObject("Envelope", {
                                                                   json: {

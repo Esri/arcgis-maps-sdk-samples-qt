@@ -31,11 +31,6 @@ Rectangle {
         id: sceneView
         anchors.fill: parent
 
-        Component.onCompleted: {
-            // Set the focus on SceneView to initially enable keyboard navigation
-            forceActiveFocus();
-        }
-
         // create a scene...scene is a default property of sceneview
         // and thus will get added to the sceneview
         Scene {
@@ -69,6 +64,9 @@ Rectangle {
         }
 
         Component.onCompleted: {
+            // Set the focus on SceneView to initially enable keyboard navigation
+            forceActiveFocus();
+
             // set viewpoint to the specified camera
             setViewpointCameraAndWait(camera);
             createGraphics();
