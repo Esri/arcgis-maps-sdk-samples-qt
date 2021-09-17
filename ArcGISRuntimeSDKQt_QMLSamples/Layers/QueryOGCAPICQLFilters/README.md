@@ -2,7 +2,7 @@
 
 Query data from an OGC API feature service using CQL filters.
 
-![](QueryOGCAPICQLFilters.png)
+![](screenshot.png)
 
 ## Use case
 
