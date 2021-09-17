@@ -45,7 +45,7 @@ Rectangle {
 
     Portal {
         id: iwaSecurePortal
-        loginRequired: false
+        loginRequired: true
 
         onLoadStatusChanged: {
             if (loadStatus === Enums.LoadStatusLoading) {
