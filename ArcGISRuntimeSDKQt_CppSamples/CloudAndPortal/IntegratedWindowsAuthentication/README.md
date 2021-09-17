@@ -27,9 +27,9 @@ IWA, which is built into Microsoft Internet Information Server (IIS), works well
 
 ## Relevant API
 
+* AuthenticationManager
 * Credential
 * Portal
-* AuthenticationManager
 
 ## About the data
 
@@ -45,4 +45,4 @@ More information about IWA and its use with ArcGIS can be found at the following
 
 ## Tags
 
-authentication, Portal, security, Windows
+authentication, security, Windows
