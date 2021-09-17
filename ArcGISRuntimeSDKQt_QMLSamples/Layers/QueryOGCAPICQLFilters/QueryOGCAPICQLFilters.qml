@@ -53,39 +53,21 @@ Rectangle {
                 renderer: SimpleRenderer {
                     SimpleLineSymbol {
                         style: Enums.SimpleLineSymbolStyleSolid
-                        color: "blue"
+                        color: "darkMagenta"
                         width: 3
                     }
-                }
-            }
-
-            ViewpointCenter {
-                targetScale: 20000
-                center: Point {
-                    x: 36.10
-                    y: 32.62
-                    spatialReference: SpatialReference{ wkid: 4326 }
                 }
             }
         }
 
         QueryParameters {
             id: queryParameters
-            // Set the query area to what is currently visible in the map view
-            geometry: mapView.currentViewpointExtent.extent
-            // Some services have low default values for max features returned
+
+            // Set the default value for max features returned
             maxFeatures: 1000
 
             // Set the default where clause
             whereClause: "F_CODE = 'AP010'"
-        }
-
-        onNavigatingChanged: {
-            if (mapView.navigating)
-                return;
-
-            // Populate the feature collection table with features that match the parameters, cache them locally, and store all table fields
-            ogcFeatureCollectionTable.populateFromService(queryParameters, true, ["*"]);
         }
 
         Rectangle {
@@ -193,6 +175,13 @@ Rectangle {
                 text: "Query"
 
 
+                TimeExtent {
+                    id: time
+                    startTime: new Date(fromDate.text)
+                    endTime: new Date(toDate.text)
+                    }
+
+
                 onClicked: {
                     if (!ogcFeatureCollectionTable)
                         return;
@@ -200,15 +189,15 @@ Rectangle {
                     // create the parameters
                     const queryParams = ArcGISRuntimeEnvironment.createObject("QueryParameters",
                                                                               {
+                                                                                  geometry: mapView.currentViewpointExtent.extent,
                                                                                   whereClause: whereClauseMenu.currentText,
                                                                                   maxFeatures: maxFeatureField.text,
-//                                                                                  TimeExtent:
-                                                                                  geometry: mapView.currentViewpointExtent.extent
+                                                                                  timeExtent: time
                                                                               });
 
                     // Populate the feature collection table with features that match the parameters,
                     // clear the cache to prepare for the new query results, and store all table fields
-                    ogcFeatureCollectionTable.populateFromService(queryParams, true, ["*"]);
+                    ogcFeatureCollectionTable.populateFromService(queryParams, true, []);
                 }
             }
         }

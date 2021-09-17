@@ -138,15 +138,8 @@ Item {
             text: "Query"
             onClicked:
             {
-                var clause_text = whereClauseMenu.currentText;
-                var max_feature_count = maxFeatureField.text;
-                var from_date_text = fromDate.text;
-                var to_date_text = toDate.text;
-
-                model.query(clause_text, max_feature_count, from_date_text, to_date_text);
+                model.query(hereClauseMenu.currentText, maxFeatureField.text, fromDate.text, toDate.text);
             }
-
-
         }
     }
 }
