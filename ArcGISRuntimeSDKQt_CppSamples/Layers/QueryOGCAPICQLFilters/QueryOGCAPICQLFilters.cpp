@@ -74,19 +74,16 @@ void QueryOGCAPICQLFilters::setMapView(MapQuickView* mapView)
     m_mapView->setMap(m_map);
     m_mapView->setViewpoint(Viewpoint(32.62, 36.10, 20'000));
 
-    connect(m_mapView, &MapQuickView::navigatingChanged, this, [this]()
-      {
-        QueryParameters queryParams;
+    QueryParameters queryParams;
 
-        //Get the extent of the dataset
-        m_dataSetExtent = m_ogcFeatureCollectionTable->extent();
-        queryParams.setGeometry(m_dataSetExtent);
+    //Get the extent of the dataset
+    m_dataSetExtent = m_ogcFeatureCollectionTable->extent();
+    queryParams.setGeometry(m_dataSetExtent);
 
-        queryParams.setMaxFeatures(1000);
+    queryParams.setMaxFeatures(1000);
 
-        // Populate the feature collection table with features that match the parameters, cache them locally, and store all table fields
-        m_ogcFeatureCollectionTable->populateFromService(queryParams, false, {});
-      });
+    // Populate the feature collection table with features that match the parameters, cache them locally, and store all table fields
+    m_ogcFeatureCollectionTable->populateFromService(queryParams, false, {});
 
     emit mapViewChanged();
 }
@@ -96,22 +93,20 @@ void QueryOGCAPICQLFilters::query(const QString& whereClause, const QString& max
   if (!m_ogcFeatureCollectionTable || !m_featureLayer || !m_mapView)
     return;
 
+  // create the parameters
+  QueryParameters queryParams;
 
-  connect(m_mapView, &MapQuickView::navigatingChanged, this, [this, whereClause, maxFeature, fromDateString, toDateString]()
-  {
-      // create the parameters
-      QueryParameters queryParams;
+  queryParams.setGeometry(m_mapView->currentViewpoint(ViewpointType::BoundingGeometry).targetGeometry().extent());
+  queryParams.setWhereClause(whereClause);
+  queryParams.setMaxFeatures(maxFeature.toUInt());
 
-      queryParams.setGeometry(m_mapView->currentViewpoint(ViewpointType::BoundingGeometry).targetGeometry().extent());
-      queryParams.setWhereClause(whereClause);
-      queryParams.setMaxFeatures(maxFeature.toUInt());
+  QDateTime fromDate = QDateTime::fromString(fromDateString,"mm-dd-yyyy");
+  QDateTime toDate = QDateTime::fromString(toDateString,"mm-dd-yyyy");
+  TimeExtent timeExtent(fromDate, toDate);
+  queryParams.setTimeExtent(timeExtent);
 
-      QDateTime fromDate = QDateTime::fromString(fromDateString,"mm-dd-yyyy");
-      QDateTime toDate = QDateTime::fromString(toDateString,"mm-dd-yyyy");
-      TimeExtent timeExtent(fromDate, toDate);
-      queryParams.setTimeExtent(timeExtent);
+  // Populate the feature collection table with features that match the parameters, cache them locally, and store all table fields
+  m_ogcFeatureCollectionTable->populateFromService(queryParams, false, {});
 
-      // Populate the feature collection table with features that match the parameters, cache them locally, and store all table fields
-      m_ogcFeatureCollectionTable->populateFromService(queryParams, false, {});
-  });
+
 }
