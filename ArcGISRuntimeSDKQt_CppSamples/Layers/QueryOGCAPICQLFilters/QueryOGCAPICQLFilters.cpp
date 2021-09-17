@@ -82,8 +82,8 @@ void QueryOGCAPICQLFilters::setMapView(MapQuickView* mapView)
 
     queryParams.setMaxFeatures(1000);
 
-    // Populate the feature collection table with features that match the parameters, cache them locally, and store all table fields
-    m_ogcFeatureCollectionTable->populateFromService(queryParams, false, {});
+    // Populate the feature collection table with features that match the parameters, clear the cache, and store all table fields
+    m_ogcFeatureCollectionTable->populateFromService(queryParams, true, {});
 
     emit mapViewChanged();
 }
@@ -105,8 +105,7 @@ void QueryOGCAPICQLFilters::query(const QString& whereClause, const QString& max
   TimeExtent timeExtent(fromDate, toDate);
   queryParams.setTimeExtent(timeExtent);
 
-  // Populate the feature collection table with features that match the parameters, cache them locally, and store all table fields
-  m_ogcFeatureCollectionTable->populateFromService(queryParams, false, {});
-
-
+  // Populate the feature collection table with features that match the parameters,
+  // clear the cache to prepare for the new query results, and store all table fields
+  m_ogcFeatureCollectionTable->populateFromService(queryParams, true, {});
 }

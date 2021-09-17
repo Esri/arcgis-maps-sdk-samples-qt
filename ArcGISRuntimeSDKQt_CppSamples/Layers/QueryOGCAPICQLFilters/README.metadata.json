@@ -1,21 +1,36 @@
 {
-    "category": "TODO",
-    "description": "TODO",
+    "category": "OGC",
+    "description": "Query data from an OGC API feature service using CQL filters.",
     "ignore": false,
     "images": [
-        "screenshot.png"
+        "QueryOGCAPICQLFilters.png"
     ],
     "keywords": [
-        "TODO"
+        "browse",
+        "catalog",
+        "common query language",
+        "CQL",
+        "feature table",
+        "filter",
+        "OGC",
+        "OGC API",
+        "query",
+        "service",
+        "web",
+        "OgcFeatureCollectionTable",
+        "QueryParameters",
+        "TimeExtent"
     ],
     "redirect_from": "",
     "relevant_apis": [
-        "TODO"
+        "OgcFeatureCollectionTable",
+        "QueryParameters",
+        "TimeExtent"
     ],
     "snippets": [
         "QueryOGCAPICQLFilters.qml",
         "QueryOGCAPICQLFilters.cpp",
         "QueryOGCAPICQLFilters.h"
     ],
-    "title": "QueryOGCAPICQLFilters"
+    "title": "Query OGC API with CQL Filters"
 }

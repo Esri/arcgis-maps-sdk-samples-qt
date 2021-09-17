@@ -1,31 +1,35 @@
 # QueryOGCAPICQLFilters
 
-This sample demonstrates how to Query OGC API with CQL Filters
-This sample demonstrates ...       
-This is **why** you would do it this way ...
+Query data from an OGC API feature service using CQL filters.
 
-![](screenshot.png)
+![](QueryOGCAPICQLFilters.png)
+
+## Use case
+
+CQL (Common Query Language) is an OGC-created query language used to query for subsets of features. Use CQL filters to narrow geometry results from an OGC feature table.
 
 ## How to use the sample
-e.g. Use the input controls to define a ... Click the "Go" button to ...
+The sample loads displaying 1000 features within the OGC API feature service. Select a sample CQL query from the drop down menu. Optionally, adjust the max features value in the text box, and enter a date range to query the data with a time extent. Press the "Query" button to see the query applied to the OGC API features shown on the map.
 
 ## How it works
-e.g. In the `GeoView.Tapped` event, features in the `Map` are selected using an `Envelope` defined by the user's tap location ...
+1. Create an `OgcFeatureCollectionTable` object using a URL to an OGC API feature service and a collection ID.
+2. Create `QueryParameters` and set a CQL filter string to it using `queryParameters.setWhereClause()`.
+3. Set the maximum amount of features to be returned with `queryParamters.setMaxFeatures()`.
+4. Create a new `TimeExtent` from start and end date values, and set it to the `queryParameters.setTimeExtent()` method.
+5. Populate the OGC feature collection table using `populateFromService()` with the custom `QueryParameters` created in the previous steps.
+6. Use `mapView.setViewpointGeometryAsync()` with the OGC feature collection table extent to view the newly-queried features.
 
 ## Relevant API
- - ClassName1
- - MethodName
+* OgcFeatureCollectionTable
+* QueryParameters
+* TimeExtent
 
-## Offline data
-Read more about how to set up the sample's offline data [here](http://links.esri.com/ArcGISRuntimeQtSamples).
-
-Link | Local Location
----------|-------|
-|[San Francisco Streets TPK](https://www.arcgis.com/home/item.html?id=3f1bbf0ec70b409a975f5c91f363fe7d)| `<userhome>`/ArcGIS/Runtime/Data/tpk/SanFrancisco.tpk |
+## About the data
+The [Daraa, Syria test data](https://demo.ldproxy.net/daraa) is OpenStreetMap data converted to the Topographic Data Store schema of NGA.
 
 ## Additional information
-A standard level license is required to ...
+See the [OGC API website](https://ogcapi.ogc.org/) for more information on the OGC API family of standards. See the [CQL documentation](https://portal.ogc.org/files/96288#cql-core) to learn more about the common query language.
 
 ## Tags
-Routing, Network analysis, Geocode
+browse, catalog, common query language, CQL, feature table, filter, OGC, OGC API, query, service, web
 
