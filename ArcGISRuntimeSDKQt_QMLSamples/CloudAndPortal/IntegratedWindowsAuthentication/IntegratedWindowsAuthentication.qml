@@ -78,7 +78,6 @@ Rectangle {
     }
 
     Rectangle {
-        id: portalLayoutRect
         anchors {
             margins: 5
             left: parent.left
@@ -95,7 +94,7 @@ Rectangle {
                 horizontalCenter: parent.horizontalCenter
                 verticalCenter: parent.verticalCenter
             }
-
+            width: 250
             visible: webmapsList.model ? false : true
 
             TextField {
@@ -138,8 +137,8 @@ Rectangle {
                 horizontalCenter: parent.horizontalCenter
                 verticalCenter: parent.verticalCenter
             }
-            visible: webmapsList.model ? true : false
             width: 250
+            visible: webmapsList.model ? true : false
 
             Text {
                 id: header
@@ -175,21 +174,6 @@ Rectangle {
                 }
             }
         }
-    }
-
-    Rectangle {
-        id: portalResultRectangle
-        anchors {
-            margins: 5
-            left: parent.left
-            top: parent.top
-        }
-        width: childrenRect.width
-        height: childrenRect.height
-        color: "#000000"
-        opacity: .70
-        radius: 5
-
     }
 
     BusyIndicator {
