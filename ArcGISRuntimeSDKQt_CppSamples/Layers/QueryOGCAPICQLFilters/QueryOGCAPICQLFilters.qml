@@ -138,7 +138,7 @@ Item {
             text: "Query"
             onClicked:
             {
-                model.query(hereClauseMenu.currentText, maxFeatureField.text, fromDate.text, toDate.text);
+                model.query(whereClauseMenu.currentText, maxFeatureField.text, fromDate.text, toDate.text);
             }
         }
     }
