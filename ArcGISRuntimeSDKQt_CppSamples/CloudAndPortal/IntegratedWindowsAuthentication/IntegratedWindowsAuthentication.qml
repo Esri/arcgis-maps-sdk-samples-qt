@@ -50,12 +50,9 @@ Item {
         radius: 5
 
         ColumnLayout {
-            anchors {
-                horizontalCenter: parent.horizontalCenter
-                verticalCenter: parent.verticalCenter
-            }
+            anchors.centerIn: parent
             width: 250
-            visible: webmapsList.model ? false : true
+            visible: !webmapsList.model
 
             TextField {
                 id: securePortalUrl
@@ -92,20 +89,18 @@ Item {
         }
 
         ColumnLayout {
-            anchors {
-                horizontalCenter: parent.horizontalCenter
-                verticalCenter: parent.verticalCenter
-            }
-
+            anchors.centerIn: parent
             width: 250
-            visible: webmapsList.model ? true : false
+            visible: webmapsList.model
 
             Text {
                 id: header
                 text: "Connected to:"
                 color: "white"
-                font.bold: true
-                font.pointSize: 14
+                font {
+                    bold: true
+                    pointSize: 14
+                }
             }
 
             Text {
@@ -113,8 +108,10 @@ Item {
                 text: securePortalUrl.text
                 elide: Text.ElideMiddle
                 color: "white"
-                font.bold: true
-                font.pointSize: 14
+                font {
+                    bold: true
+                    pointSize: 14
+                }
             }
 
             ComboBox {
@@ -129,7 +126,7 @@ Item {
                 text: qsTr("Load Web Map")
                 Layout.fillWidth: true
                 Layout.margins: 2
-                visible: webmapsList.model ? true : false
+                visible: webmapsList.model
                 onClicked: integratedWindowsAuthenticationSampleModel.loadSelectedWebmap(webmapsList.currentIndex);
             }
         }

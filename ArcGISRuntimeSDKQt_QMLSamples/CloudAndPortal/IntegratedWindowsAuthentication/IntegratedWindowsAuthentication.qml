@@ -90,12 +90,9 @@ Rectangle {
         radius: 5
 
         ColumnLayout {
-            anchors {
-                horizontalCenter: parent.horizontalCenter
-                verticalCenter: parent.verticalCenter
-            }
+            anchors.centerIn: parent
             width: 250
-            visible: webmapsList.model ? false : true
+            visible: !webmapsList.model
 
             TextField {
                 id: securePortalUrl
@@ -133,19 +130,17 @@ Rectangle {
         }
 
         ColumnLayout {
-            anchors {
-                horizontalCenter: parent.horizontalCenter
-                verticalCenter: parent.verticalCenter
-            }
+            anchors.centerIn: parent
             width: 250
-            visible: webmapsList.model ? true : false
-
+            visible: webmapsList.model
             Text {
                 id: header
                 text: "Connected to:"
                 color: "white"
-                font.bold: true
-                font.pointSize: 14
+                font {
+                    bold: true
+                    pointSize: 14
+                }
             }
 
             Text {
@@ -153,8 +148,10 @@ Rectangle {
                 text: securePortalUrl.text
                 elide: Text.ElideMiddle
                 color: "white"
-                font.bold: true
-                font.pointSize: 14
+                font {
+                    bold: true
+                    pointSize: 14
+                }
             }
 
             ComboBox {
@@ -167,9 +164,9 @@ Rectangle {
                 text: qsTr("Load Web Map")
                 Layout.fillWidth: true
                 Layout.margins: 2
-                visible: webmapsList.model ? true : false
+                visible: webmapsList.model
                 onClicked: {
-                    var selectedWebmap = webmapsList.model.get(webmapsList.currentIndex);
+                    const selectedWebmap = webmapsList.model.get(webmapsList.currentIndex);
                     mapView.map = ArcGISRuntimeEnvironment.createObject("Map", {"item": selectedWebmap});
                 }
             }
