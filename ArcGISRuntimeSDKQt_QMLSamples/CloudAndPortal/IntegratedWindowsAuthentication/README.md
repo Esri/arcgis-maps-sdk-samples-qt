@@ -10,13 +10,7 @@ IWA, which is built into Microsoft Internet Information Server (IIS), works well
 
 ## How to use the sample
 
-* Search Public
-
-  Click the "Search Public" button. This will anonymously connect to www.arcgis.com and will search for web maps stored on the portal. It will then populate the combo box with the results found from the portal. Select a web map item and click the "load web map" button to display it in the map view.
-
-* Search Secure
-
-  Enter the URL to your IWA-secured portal in the text field at the top of the screen. Click the "Search Secure". You will be prompted for a username (including domain, such as username@DOMAIN or domain\username), and password. On Windows it will automatically use your current login credentials. If you authenticate successfully, portal item results will display in the combo box below. Select a web map item and click the "load web map" button to display it in the map view.
+Enter the URL to your IWA-secured portal in the text field at the top of the screen and click "Search Secure". You will be prompted for a username (including domain, such as username@DOMAIN or domain\username), and password. On Windows it will automatically use your current login credentials. If you authenticate successfully, portal item results will display in the combo box below. Select a web map item and click the "Load Web Map" button to display it in the map view.
 
 ## How it works
 
