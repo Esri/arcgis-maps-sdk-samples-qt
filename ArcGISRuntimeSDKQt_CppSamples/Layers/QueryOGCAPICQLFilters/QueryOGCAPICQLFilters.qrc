@@ -5,7 +5,7 @@
         <file>QueryOGCAPICQLFilters.h</file>
         <file>QueryOGCAPICQLFilters.cpp</file>
         <file>main.qml</file>
-        <file>QueryOGCAPICQLFilters.png</file>
+        <file>screenshot.png</file>
         <file>README.md</file>
     </qresource>
 </RCC>
