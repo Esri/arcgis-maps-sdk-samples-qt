@@ -100,9 +100,9 @@ void QueryOGCAPICQLFilters::query(const QString& whereClause, const QString& max
   queryParams.setWhereClause(whereClause);
   queryParams.setMaxFeatures(maxFeature.toUInt());
 
-  QDateTime fromDate = QDateTime::fromString(fromDateString,"mm-dd-yyyy");
-  QDateTime toDate = QDateTime::fromString(toDateString,"mm-dd-yyyy");
-  TimeExtent timeExtent(fromDate, toDate);
+  const QDateTime fromDate = QDateTime::fromString(fromDateString,"mm-dd-yyyy");
+  const QDateTime toDate = QDateTime::fromString(toDateString,"mm-dd-yyyy");
+  const TimeExtent timeExtent(fromDate, toDate);
   queryParams.setTimeExtent(timeExtent);
 
   // Populate the feature collection table with features that match the parameters,

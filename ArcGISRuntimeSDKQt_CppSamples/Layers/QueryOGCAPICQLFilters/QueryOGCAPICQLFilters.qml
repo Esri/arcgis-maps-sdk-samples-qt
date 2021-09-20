@@ -1,4 +1,3 @@
-
 // [WriteFile Name=Query_OGC, Category=Layers]
 // [Legal]
 // Copyright 2021 Esri.
@@ -105,7 +104,7 @@ Item {
                 selectByMouse: true
                 validator: RegExpValidator {
                     regExp: /(0[1-9]|1[012])[-](0[1-9]|[12][0-9]|3[01])[-](19|20)\d\d/
-                }
+                }a
                 placeholderText: "MM-DD-YYYY"
             }
         }
@@ -136,8 +135,7 @@ Item {
             anchors.horizontalCenter: parent.horizontalCenter
             text: "Query"
             onClicked: {
-                model.query(whereClauseMenu.currentText, maxFeatureField.text,
-                            fromDate.text, toDate.text)
+                model.query(whereClauseMenu.currentText, maxFeatureField.text, fromDate.text, toDate.text);
             }
         }
     }

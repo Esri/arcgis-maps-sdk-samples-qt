@@ -43,10 +43,8 @@ Rectangle {
                     onLoadStatusChanged: {
                         // ogcFeatureCollectionTable.load() will be automatically called when added to a FeatureLayer
                         // populateFromService() will be called with the initial viewpoint extent
-                        if (ogcFeatureCollectionTable.loadStatus === Enums.LoadStatusLoaded) {
-                            ogcFeatureCollectionTable.populateFromService(
-                                        queryParameters, false, [])
-                        }
+                        if (ogcFeatureCollectionTable.loadStatus === Enums.LoadStatusLoaded)
+                            ogcFeatureCollectionTable.populateFromService(queryParameters, false, []);
                     }
                 }
 
@@ -188,13 +186,13 @@ Rectangle {
 
                 TimeExtent {
                     id: time
-                    startTime: new Date(fromDate.text)
-                    endTime: new Date(toDate.text)
+                    startTime: new Date(fromDate.text);
+                    endTime: new Date(toDate.text);
                 }
 
                 onClicked: {
                     if (!ogcFeatureCollectionTable)
-                        return
+                        return;
 
                     // create the parameters
                     const queryParams = ArcGISRuntimeEnvironment.createObject(
@@ -203,12 +201,11 @@ Rectangle {
                                               "whereClause": whereClauseMenu.currentText,
                                               "maxFeatures": maxFeatureField.text,
                                               "timeExtent": time
-                                          })
+                                          });
 
                     // Populate the feature collection table with features that match the parameters,
                     // clear the cache to prepare for the new query results, and store all table fields
-                    ogcFeatureCollectionTable.populateFromService(queryParams,
-                                                                  true, [])
+                    ogcFeatureCollectionTable.populateFromService(queryParams, true, []);
                 }
             }
         }
