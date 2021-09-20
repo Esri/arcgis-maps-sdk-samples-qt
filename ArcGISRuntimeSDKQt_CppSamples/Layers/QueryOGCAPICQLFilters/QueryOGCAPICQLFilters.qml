@@ -1,3 +1,4 @@
+
 // [WriteFile Name=Query_OGC, Category=Layers]
 // [Legal]
 // Copyright 2021 Esri.
@@ -13,11 +14,9 @@
 // See the License for the specific language governing permissions and
 // limitations under the License.
 // [Legal]
-
 import QtQuick 2.12
 import QtQuick.Controls 2.12
 import Esri.Samples 1.0
-import QtQuick.Controls 1.4
 
 Item {
 
@@ -66,12 +65,8 @@ Item {
             ComboBox {
                 id: whereClauseMenu
                 width: 200
-                model: [
-                    "F_CODE = 'AP010'",
-                    "{ \"eq\" : [ { \"property\" : \"F_CODE\" }, \"AP010\" ] }",
-                    "F_CODE LIKE 'AQ%'", "{\"and\":[{\"eq\":[{ \"property\" : \"F_CODE\" }, \"AP010\"]},{ \"before\":" +
-                    "[{ \"property\" : \"ZI001_SDV\"},\"2013-01-01\"]}]}"
-                ]
+                model: ["F_CODE = 'AP010'", "{ \"eq\" : [ { \"property\" : \"F_CODE\" }, \"AP010\" ] }", "F_CODE LIKE 'AQ%'", "{\"and\":[{\"eq\":[{ \"property\" : \"F_CODE\" }, \"AP010\"]},{ \"before\":"
+                    + "[{ \"property\" : \"ZI001_SDV\"},\"2013-01-01\"]}]}"]
             }
         }
 
@@ -89,7 +84,7 @@ Item {
                 width: 200
                 text: "1000"
                 selectByMouse: true
-                validator: IntValidator{}
+                validator: IntValidator {}
             }
         }
 
@@ -108,7 +103,9 @@ Item {
                 width: 200
                 text: ""
                 selectByMouse: true
-                validator: RegExpValidator { regExp: /(0[1-9]|1[012])[-](0[1-9]|[12][0-9]|3[01])[-](19|20)\d\d/ }
+                validator: RegExpValidator {
+                    regExp: /(0[1-9]|1[012])[-](0[1-9]|[12][0-9]|3[01])[-](19|20)\d\d/
+                }
                 placeholderText: "MM-DD-YYYY"
             }
         }
@@ -128,7 +125,9 @@ Item {
                 width: 200
                 text: ""
                 selectByMouse: true
-                validator: RegExpValidator { regExp: /(0[1-9]|1[012])[-](0[1-9]|[12][0-9]|3[01])[-](19|20)\d\d/ }
+                validator: RegExpValidator {
+                    regExp: /(0[1-9]|1[012])[-](0[1-9]|[12][0-9]|3[01])[-](19|20)\d\d/
+                }
                 placeholderText: "MM-DD-YYYY"
             }
         }
@@ -136,9 +135,9 @@ Item {
         Button {
             anchors.horizontalCenter: parent.horizontalCenter
             text: "Query"
-            onClicked:
-            {
-                model.query(whereClauseMenu.currentText, maxFeatureField.text, fromDate.text, toDate.text);
+            onClicked: {
+                model.query(whereClauseMenu.currentText, maxFeatureField.text,
+                            fromDate.text, toDate.text)
             }
         }
     }

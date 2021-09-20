@@ -35,29 +35,29 @@ class OgcFeatureCollectionTable;
 
 class QueryOGCAPICQLFilters : public QObject
 {
-    Q_OBJECT
+  Q_OBJECT
 
-    Q_PROPERTY(Esri::ArcGISRuntime::MapQuickView* mapView READ mapView WRITE setMapView NOTIFY mapViewChanged)
+  Q_PROPERTY(Esri::ArcGISRuntime::MapQuickView* mapView READ mapView WRITE setMapView NOTIFY mapViewChanged)
 
 public:
-    explicit QueryOGCAPICQLFilters(QObject* parent = nullptr);
-    ~QueryOGCAPICQLFilters();
+  explicit QueryOGCAPICQLFilters(QObject* parent = nullptr);
+  ~QueryOGCAPICQLFilters();
 
-    static void init();
-    Q_INVOKABLE void query(const QString& whereClause, const QString& maxFeature, const QString& fromDateString, const QString& toDateString);
+  static void init();
+  Q_INVOKABLE void query(const QString& whereClause, const QString& maxFeature, const QString& fromDateString, const QString& toDateString);
 
 signals:
-    void mapViewChanged();
+  void mapViewChanged();
 
 private:
-    Esri::ArcGISRuntime::MapQuickView* mapView() const;
-    void setMapView(Esri::ArcGISRuntime::MapQuickView* mapView);
+  Esri::ArcGISRuntime::MapQuickView* mapView() const;
+  void setMapView(Esri::ArcGISRuntime::MapQuickView* mapView);
 
-    Esri::ArcGISRuntime::Envelope m_dataSetExtent;
-    Esri::ArcGISRuntime::FeatureLayer* m_featureLayer = nullptr;
-    Esri::ArcGISRuntime::Map* m_map = nullptr;
-    Esri::ArcGISRuntime::MapQuickView* m_mapView = nullptr;
-    Esri::ArcGISRuntime::OgcFeatureCollectionTable* m_ogcFeatureCollectionTable = nullptr;
+  Esri::ArcGISRuntime::Envelope m_dataSetExtent;
+  Esri::ArcGISRuntime::FeatureLayer* m_featureLayer = nullptr;
+  Esri::ArcGISRuntime::Map* m_map = nullptr;
+  Esri::ArcGISRuntime::MapQuickView* m_mapView = nullptr;
+  Esri::ArcGISRuntime::OgcFeatureCollectionTable* m_ogcFeatureCollectionTable = nullptr;
 };
 
 #endif // QUERYOGCAPICQLFILTERS_H
