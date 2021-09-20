@@ -1,4 +1,3 @@
-
 // [WriteFile Name=QueryOGCAPICQLFilters, Category=Layers]
 // [Legal]
 // Copyright 2021 Esri.
@@ -56,6 +55,18 @@ Rectangle {
                         style: Enums.SimpleLineSymbolStyleSolid
                         color: "darkMagenta"
                         width: 3
+                    }
+                }
+            }
+
+            // initial viewPoint
+            ViewpointCenter {
+                targetScale: 200000
+                center: Point {
+                    x: 36.10
+                    y: 32.62
+                    spatialReference: SpatialReference {
+                        wkid: 4326
                     }
                 }
             }
