@@ -16,7 +16,7 @@ Tap on the features to prompt a popup that displays information about the featur
 
 1. Create and load a `Map` using a URL.
 2. Set the map to a `MapView` and connect to the `MapView.mouseClicked` signal.
-3. Use `GeoView.identifyLayer(layer, x, y, tolerance, allowPopupsOnly)` to identify the top-most feature.
+3. Use `GeoView.identifyLayer(layer, x, y, tolerance, allowPopupsOnly, maximumResults)` to identify features.
 4. Create a `PopupManager` for each of the result's `Popup`s and append them to a list.
 5. Assign the list of popup managers to the `PopupStackView.popupManagers` property.
 6. Display the popup stack view.
