@@ -24,6 +24,7 @@
 
 #include "ChangeBasemap.h"
 #include "ArcGISRuntimeEnvironment.h"
+#include "Esri/ArcGISRuntime/Toolkit/register.h"
 
 #define STRINGIZE(x) #x
 #define QUOTE(x) STRINGIZE(x)
@@ -73,6 +74,9 @@ int main(int argc, char *argv[])
 
   // Add the Runtime and Extras path
   view.engine()->addImportPath(arcGISRuntimeImportPath);
+
+  // Register the application view with the toolkit
+  Esri::ArcGISRuntime::Toolkit::registerComponents(engine);
 
   // Set the source
   view.setSource(QUrl("qrc:/Samples/Maps/ChangeBasemap/ChangeBasemap.qml"));
