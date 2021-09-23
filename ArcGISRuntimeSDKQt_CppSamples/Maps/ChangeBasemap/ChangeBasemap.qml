@@ -25,6 +25,28 @@ Item {
     MapView {
         id: view
         anchors.fill: parent
+
+        Button {
+            id: changeBasemapButton
+            anchors {
+                horizontalCenter: view.horizontalCenter
+                bottom: view.attributionTop
+                bottomMargin: 10
+            }
+            text: "Change Basemap"
+            checkable: true
+        }
+
+        BasemapGallery {
+            id: basemapGallery
+            anchors.centerIn: view
+            visible: changeBasemapButton.checked ? true : false;
+            onCurrentBasemapChanged: {
+                changeBasemapButton.checked = false;
+            }
+        }
+
+        onMapChanged: basemapGallery.setGeoModelFromGeoView(view);
     }
 
     // Declare the C++ instance which creates the scene etc. and supply the view
