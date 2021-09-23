@@ -19,6 +19,8 @@
 #include <QDir>
 #include <QQmlEngine>
 
+#include "Esri/ArcGISRuntime/Toolkit/register.h"
+
 #define STRINGIZE(x) #x
 #define QUOTE(x) STRINGIZE(x)
 
@@ -40,6 +42,9 @@ int main(int argc, char *argv[])
 
   // Add the import Path
   view.engine()->addImportPath(QDir(QCoreApplication::applicationDirPath()).filePath("qml"));
+
+  // Register the application view with the toolkit
+  Esri::ArcGISRuntime::Toolkit::registerComponents(*view.engine());
 
 #ifdef ARCGIS_RUNTIME_IMPORT_PATH_2
   view.engine()->addImportPath(ARCGIS_RUNTIME_IMPORT_PATH_2);
