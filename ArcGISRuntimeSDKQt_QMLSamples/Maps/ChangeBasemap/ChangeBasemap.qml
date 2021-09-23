@@ -25,6 +25,7 @@ Rectangle {
 
     // Create MapView that contains a Map
     MapView {
+        id: view
         anchors.fill: parent
 
         Component.onCompleted: {
@@ -36,58 +37,32 @@ Rectangle {
             id: map
             // Set the initial basemap to Topographic
             Basemap {
+                id: basemap
                 initStyle: Enums.BasemapStyleArcGISTopographic
             }
-        }
-    }
 
-    ComboBox {
-        id: comboBoxBasemap
-        anchors {
-            left: parent.left
-            top: parent.top
-            margins: 5
-        }
-        property int modelWidth: 0
-        width: modelWidth + leftPadding + rightPadding + indicator.width
-        textRole: "text"
-        model: ListModel {
-            ListElement { text: "Topographic"; map: "BasemapStyleArcGISTopographic" }
-            ListElement { text: "Streets"; map: "BasemapStyleArcGISStreets" }
-            ListElement { text: "Streets - Relief"; map: "BasemapStyleArcGISStreetsRelief" }
-            ListElement { text: "Streets - Night"; map: "BasemapStyleArcGISStreetsNight" }
-            ListElement { text: "Imagery"; map: "BasemapStyleArcGISImageryStandard" }
-            ListElement { text: "Imagery with Labels"; map: "BasemapStyleArcGISImagery" }
-            ListElement { text: "Labels without Imagery"; map: "BasemapStyleArcGISImageryLabels" }
-            ListElement { text: "Dark Gray Canvas"; map: "BasemapStyleArcGISDarkGray" }
-            ListElement { text: "Light Gray Canvas"; map: "BasemapStyleArcGISLightGray" }
-            ListElement { text: "Navigation"; map: "BasemapStyleArcGISNavigation" }
-            ListElement { text: "OpenStreetMap"; map: "BasemapStyleOsmStandard" }
-            ListElement { text: "Oceans"; map: "BasemapStyleArcGISOceans" }
+            onBasemapChanged: basemapGallery.setGeoModelFromGeoView(view)
         }
 
-        Component.onCompleted : {
-            for (let i = 0; i < model.count; ++i) {
-                metrics.text = model.get(i).text;
-                modelWidth = Math.max(modelWidth, metrics.width);
+        Button {
+            id: changeBasemapButton
+            anchors {
+                horizontalCenter: view.horizontalCenter
+                bottom: view.attributionTop
+                bottomMargin: 10
             }
+            text: "Change Basemap"
+            checkable: true
         }
 
-        TextMetrics {
-            id: metrics
-            font: comboBoxBasemap.font
-        }
-
-        onCurrentIndexChanged: {
-            // Call this JavaScript function when the current selection changes
-            if (map.loadStatus === Enums.LoadStatusLoaded)
-                changeBasemap(model.get(currentIndex).map);
-        }
-
-        function changeBasemap(style) {
-            map.basemap = ArcGISRuntimeEnvironment.createObject("Basemap", {
-                                                                initStyle: style
-                                                                });
+        BasemapGallery {
+            id: basemapGallery
+            anchors.centerIn: view
+            geoModel: map
+            visible: changeBasemapButton.checked ? true : false;
+            onCurrentBasemapChanged: {
+                changeBasemapButton.checked = false;
+            }
         }
     }
 }
