@@ -18,6 +18,7 @@
 #include "ChangeBasemap.h"
 
 #include "ArcGISRuntimeEnvironment.h"
+#include "Esri/ArcGISRuntime/Toolkit/register.h"
 
 #include <QCommandLineParser>
 #include <QDir>
@@ -43,6 +44,9 @@ int main(int argc, char *argv[])
   QQmlApplicationEngine engine;
   // Add the import Path
   engine.addImportPath(QDir(QCoreApplication::applicationDirPath()).filePath("qml"));
+
+  // Register the application view with the toolkit
+  Esri::ArcGISRuntime::Toolkit::registerComponents(engine);
 
 #ifdef ARCGIS_RUNTIME_IMPORT_PATH_2
   engine.addImportPath(ARCGIS_RUNTIME_IMPORT_PATH_2);
