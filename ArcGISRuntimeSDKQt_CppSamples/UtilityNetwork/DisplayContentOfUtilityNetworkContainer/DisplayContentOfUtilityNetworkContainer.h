@@ -21,12 +21,20 @@ namespace Esri
 {
 namespace ArcGISRuntime
 {
+class Credential;
+class SubtypeFeatureLayer;
+class GraphicsOverlay;
+class IdentifyLayerResult;
 class Map;
 class MapQuickView;
+class UtilityAssociation;
+class UtilityElement;
+class UtilityNetwork;
 }
 }
 
 #include <QObject>
+#include <QMouseEvent>
 
 class DisplayContentOfUtilityNetworkContainer : public QObject
 {
@@ -45,10 +53,21 @@ signals:
 
 private:
   Esri::ArcGISRuntime::MapQuickView* mapView() const;
+  void onIdentifyLayerCompleted(QUuid, Esri::ArcGISRuntime::IdentifyLayerResult* rawIdentifyResult);
+  void onMouseClicked(QMouseEvent& mouseEvent);
+  void onFeaturesForElementsCompleted(QUuid);
+  void getContainmentAssociations(QList<Esri::ArcGISRuntime::UtilityAssociation*> containmentAssociations);
+  void showAttachmentAndConnectivitySymbols(QList<Esri::ArcGISRuntime::UtilityAssociation*> containmentAssociations);
   void setMapView(Esri::ArcGISRuntime::MapQuickView* mapView);
 
+  Esri::ArcGISRuntime::Credential* m_cred = nullptr;
+  Esri::ArcGISRuntime::SubtypeFeatureLayer* m_subtypeFeatureLayer = nullptr;
+  Esri::ArcGISRuntime::GraphicsOverlay* m_graphicsOverlay = nullptr;
   Esri::ArcGISRuntime::Map* m_map = nullptr;
   Esri::ArcGISRuntime::MapQuickView* m_mapView = nullptr;
+  Esri::ArcGISRuntime::UtilityElement* m_utilityElement = nullptr;
+  Esri::ArcGISRuntime::UtilityNetwork* m_utilityNetwork = nullptr;
+  bool m_containerView = false;
 };
 
 #endif // DISPLAYCONTENTOFUTILITYNETWORKCONTAINER_H
