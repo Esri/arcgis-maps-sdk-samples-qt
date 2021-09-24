@@ -40,8 +40,6 @@ Rectangle {
                 id: basemap
                 initStyle: Enums.BasemapStyleArcGISTopographic
             }
-
-            onBasemapChanged: basemapGallery.setGeoModelFromGeoView(view)
         }
 
         Button {
