@@ -35,6 +35,7 @@
 #include "UtilityElement.h"
 #include "UtilityNetwork.h"
 #include "UtilityNetworkListModel.h"
+#include "UtilityNetworkTypes.h"
 
 using namespace Esri::ArcGISRuntime;
 
@@ -151,7 +152,7 @@ void DisplayContentOfUtilityNetworkContainer::onIdentifyLayerCompleted(QUuid, Id
         m_utilityElement = m_utilityNetwork->createElementWithArcGISFeature(feature);
         if (m_utilityElement)
         {
-          m_utilityNetwork->associations(m_utilityElement, static_cast<UtilityAssociationType>(2)); //UtilityAssociationType::Containment);
+          m_utilityNetwork->associations(m_utilityElement, UtilityAssociationType::Containment);
           break;
         }
       }
@@ -208,7 +209,7 @@ void DisplayContentOfUtilityNetworkContainer::showAttachmentAndConnectivitySymbo
 
   for (UtilityAssociation* association : containmentAssociations)
   {
-    Symbol* symbol = association->associationType() == static_cast<UtilityAssociationType>(3) ? attachmentSymbol : connectivitySymbol;
+    Symbol* symbol = association->associationType() == UtilityAssociationType::Attachment ? attachmentSymbol : connectivitySymbol;
     m_graphicsOverlay->graphics()->append(new Graphic(association->geometry(), symbol, this));
   }
   if (m_graphicsOverlay->graphics()->size() == 1 && m_graphicsOverlay->graphics()->first()->geometry().geometryType() == GeometryType::Point)
