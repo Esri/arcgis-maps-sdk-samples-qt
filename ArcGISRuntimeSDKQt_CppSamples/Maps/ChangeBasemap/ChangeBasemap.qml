@@ -40,7 +40,7 @@ Item {
         BasemapGallery {
             id: basemapGallery
             anchors.centerIn: view
-            visible: changeBasemapButton.checked ? true : false;
+            visible: changeBasemapButton.checked;
             onCurrentBasemapChanged: {
                 changeBasemapButton.checked = false;
             }

@@ -57,7 +57,7 @@ Rectangle {
             id: basemapGallery
             anchors.centerIn: view
             geoModel: map
-            visible: changeBasemapButton.checked ? true : false;
+            visible: changeBasemapButton.checked;
             onCurrentBasemapChanged: {
                 changeBasemapButton.checked = false;
             }
