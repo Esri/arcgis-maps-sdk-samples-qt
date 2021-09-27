@@ -19,6 +19,14 @@ import QtQuick.Controls 2.12
 import Esri.Samples 1.0
 
 Item {
+    id: item1
+
+    // Declare the C++ instance which creates the scene etc. and supply the view
+    DisplayContentOfUtilityNetworkContainerSample {
+        id: model
+        mapView: view
+
+    }
 
     // add a mapView component
     MapView {
@@ -31,9 +39,22 @@ Item {
         }
     }
 
-    // Declare the C++ instance which creates the scene etc. and supply the view
-    DisplayContentOfUtilityNetworkContainerSample {
-        id: model
-        mapView: view
+    Button {
+        id: containerCloseButton
+        text: "Close container view"
+        anchors.bottom: parent.bottom
+        focusPolicy: Qt.NoFocus
+        anchors.bottomMargin: 20
+        anchors.horizontalCenter: parent.horizontalCenter
+        //visible: model.showContainerView
+        onClicked: {
+            model.showContainerView = false;
+        }
     }
 }
+
+/*##^##
+Designer {
+    D{i:0;autoSize:true;height:480;width:640}
+}
+##^##*/

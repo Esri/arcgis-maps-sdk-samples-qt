@@ -35,12 +35,16 @@ class UtilityNetwork;
 
 #include <QObject>
 #include <QMouseEvent>
+#include "Geometry.h"
+#include "TaskWatcher.h"
+#include "Viewpoint.h"
 
 class DisplayContentOfUtilityNetworkContainer : public QObject
 {
   Q_OBJECT
 
   Q_PROPERTY(Esri::ArcGISRuntime::MapQuickView* mapView READ mapView WRITE setMapView NOTIFY mapViewChanged)
+  Q_PROPERTY(bool showContainerView READ showContainerView WRITE setShowContainerView NOTIFY showContainerViewChanged)
 
 public:
   explicit DisplayContentOfUtilityNetworkContainer(QObject* parent = nullptr);
@@ -50,24 +54,32 @@ public:
 
 signals:
   void mapViewChanged();
+  void showContainerViewChanged();
 
 private:
   Esri::ArcGISRuntime::MapQuickView* mapView() const;
+  bool showContainerView() const;
+  void createConnections();
   void onIdentifyLayerCompleted(QUuid, Esri::ArcGISRuntime::IdentifyLayerResult* rawIdentifyResult);
   void onMouseClicked(QMouseEvent& mouseEvent);
   void onFeaturesForElementsCompleted(QUuid);
   void getContainmentAssociations(QList<Esri::ArcGISRuntime::UtilityAssociation*> containmentAssociations);
   void showAttachmentAndConnectivitySymbols(QList<Esri::ArcGISRuntime::UtilityAssociation*> containmentAssociations);
   void setMapView(Esri::ArcGISRuntime::MapQuickView* mapView);
+  void setShowContainerView(bool showContainerView);
 
   Esri::ArcGISRuntime::Credential* m_cred = nullptr;
   Esri::ArcGISRuntime::SubtypeFeatureLayer* m_subtypeFeatureLayer = nullptr;
-  Esri::ArcGISRuntime::GraphicsOverlay* m_graphicsOverlay = nullptr;
+  Esri::ArcGISRuntime::GraphicsOverlay* m_containerGraphicsOverlay = nullptr;
   Esri::ArcGISRuntime::Map* m_map = nullptr;
   Esri::ArcGISRuntime::MapQuickView* m_mapView = nullptr;
-  Esri::ArcGISRuntime::UtilityElement* m_utilityElement = nullptr;
+  Esri::ArcGISRuntime::UtilityElement* m_containerElement = nullptr;
   Esri::ArcGISRuntime::UtilityNetwork* m_utilityNetwork = nullptr;
-  bool m_containerView = false;
+  Esri::ArcGISRuntime::Geometry m_boundingBox;
+  Esri::ArcGISRuntime::TaskWatcher m_taskWatcher;
+  Esri::ArcGISRuntime::Viewpoint m_previousViewpoint;
+  bool m_showContainerView = false;
+  bool m_setBoundingBox = false;
 };
 
 #endif // DISPLAYCONTENTOFUTILITYNETWORKCONTAINER_H
