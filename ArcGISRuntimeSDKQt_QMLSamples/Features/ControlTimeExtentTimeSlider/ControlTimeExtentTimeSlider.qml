@@ -51,8 +51,6 @@ Rectangle {
 
                             // add layers to the map
                             operationalLayers.append(hurricanesLayer);
-
-                            drawOrderModel.setLayerListModel(operationalLayers);
                         }
         }
     }
