@@ -16,7 +16,7 @@
 
 import QtQuick 2.12
 import Esri.ArcGISRuntime 100.13
-//import Esri.ArcGISRuntime.Toolkit 100.13
+import Esri.ArcGISRuntime.Toolkit 100.13
 
 Rectangle {
     id: rootRectangle
@@ -31,15 +31,15 @@ Rectangle {
         anchors.fill: parent
 
 
-//        TimeSlider {
-//                    anchors {
-//                        left: parent.left
-//                        right: parent.right
-//                        bottom: parent.bottom
-//                    }
+        TimeSlider {
+                    anchors {
+                        left: parent.left
+                        right: parent.right
+                        bottom: parent.bottom
+                    }
 
-//                    geoView: view
-//                }
+                    geoView: view
+                }
 
         Map {
             id: map
