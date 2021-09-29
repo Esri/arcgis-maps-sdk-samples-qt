@@ -60,7 +60,7 @@ private:
   Esri::ArcGISRuntime::MapQuickView* mapView() const;
   bool showContainerView() const;
   void createConnections();
-  void onIdentifyLayerCompleted(QUuid, Esri::ArcGISRuntime::IdentifyLayerResult* rawIdentifyResult);
+  void onIdentifyLayersCompleted(QUuid, QList<Esri::ArcGISRuntime::IdentifyLayerResult*> identifyResult);
   void onMouseClicked(QMouseEvent& mouseEvent);
   void onFeaturesForElementsCompleted(QUuid);
   void getContainmentAssociations(QList<Esri::ArcGISRuntime::UtilityAssociation*> containmentAssociations);

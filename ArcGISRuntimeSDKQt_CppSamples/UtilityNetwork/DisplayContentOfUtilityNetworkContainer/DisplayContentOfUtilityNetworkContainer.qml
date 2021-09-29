@@ -46,7 +46,7 @@ Item {
         focusPolicy: Qt.NoFocus
         anchors.bottomMargin: 20
         anchors.horizontalCenter: parent.horizontalCenter
-        //visible: model.showContainerView
+        visible: model.showContainerView
         onClicked: {
             model.showContainerView = false;
         }

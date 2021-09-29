@@ -112,7 +112,6 @@ void DisplayContentOfUtilityNetworkContainer::setMapView(MapQuickView* mapView)
     return;
 
   m_mapView = mapView;
-  qDebug() << (int)m_map->loadStatus();
   m_mapView->setMap(m_map);
 
   m_containerGraphicsOverlay = new GraphicsOverlay;
@@ -126,19 +125,17 @@ void DisplayContentOfUtilityNetworkContainer::setMapView(MapQuickView* mapView)
 void DisplayContentOfUtilityNetworkContainer::createConnections()
 {
   connect(m_mapView, &MapQuickView::mouseClicked, this, &DisplayContentOfUtilityNetworkContainer::onMouseClicked);
-  connect(m_mapView, &MapQuickView::identifyLayerCompleted, this, &DisplayContentOfUtilityNetworkContainer::onIdentifyLayerCompleted);
+  connect(m_mapView, &MapQuickView::identifyLayersCompleted, this, &DisplayContentOfUtilityNetworkContainer::onIdentifyLayersCompleted);
   connect(m_utilityNetwork, &UtilityNetwork::featuresForElementsCompleted, this, &DisplayContentOfUtilityNetworkContainer::onFeaturesForElementsCompleted);
 
-  connect(m_mapView, &MapQuickView::setViewpointCompleted, this, [this]()
+  connect(m_map, &Map::errorOccurred, this, [](Error e)
   {
-    qDebug() << "set viewpoint completed";
-    if (!m_setBoundingBox)
-      return;
+    qDebug() << "map error:" << e.message() << e.additionalMessage();
+  });
 
-    m_setBoundingBox = false;
-    m_boundingBox = m_mapView->currentViewpoint(ViewpointType::BoundingGeometry).targetGeometry();
-    m_containerGraphicsOverlay->graphics()->append(new Graphic(m_boundingBox, boundingBoxSymbol, this));
-    m_mapView->setViewpoint(Viewpoint(GeometryEngine::buffer(m_containerGraphicsOverlay->extent(), 0.1)), .5);
+  connect(m_mapView, &MapQuickView::errorOccurred, this, [](Error e)
+  {
+    qDebug() << "map view error:" << e.message() << e.additionalMessage();
   });
 
   connect(m_utilityNetwork, &UtilityNetwork::errorOccurred, this, [](Error error)
@@ -158,75 +155,57 @@ void DisplayContentOfUtilityNetworkContainer::createConnections()
 
 void DisplayContentOfUtilityNetworkContainer::onMouseClicked(QMouseEvent& mouseEvent)
 {
-  if (m_map->loadStatus() != LoadStatus::Loaded || m_utilityNetwork->loadStatus() != LoadStatus::Loaded)
+  if (m_map->loadStatus() != LoadStatus::Loaded || m_utilityNetwork->loadStatus() != LoadStatus::Loaded || !m_taskWatcher.isDone())
     return;
 
-  qDebug() << "mouse clicked";
-  Layer* layer = m_map->operationalLayers()->at(0);
-  if (layer->layerType() == LayerType::SubtypeFeatureLayer)
-  {
-    m_subtypeFeatureLayer = static_cast<SubtypeFeatureLayer*>(layer);
-  }
-
-  constexpr double tolerance = 12;
+  constexpr double tolerance = 5;
   constexpr bool returnPopupsOnly = false;
 
-  m_mapView->identifyLayer(m_subtypeFeatureLayer, mouseEvent.x(), mouseEvent.y(), tolerance, returnPopupsOnly);
+  m_mapView->identifyLayers(mouseEvent.x(), mouseEvent.y(), tolerance, returnPopupsOnly);
 }
 
-void DisplayContentOfUtilityNetworkContainer::onIdentifyLayerCompleted(QUuid, IdentifyLayerResult* rawIdentifyResult)
+void DisplayContentOfUtilityNetworkContainer::onIdentifyLayersCompleted(QUuid, QList<Esri::ArcGISRuntime::IdentifyLayerResult*> identifyResults)
 {
-  qDebug() << "id layer completed";
-  auto identifyResult = std::unique_ptr<IdentifyLayerResult>(rawIdentifyResult);
-
-  if (!identifyResult)
-  {
-    qDebug() << "Identify error occured: " << identifyResult->error().message() << identifyResult->error().additionalMessage();
-    return;
-  }
-
-  QList<IdentifyLayerResult*> sublayerResults = identifyResult->sublayerResults();
-  qDebug() << sublayerResults.size();
-
   if (m_containerElement)
   {
     delete m_containerElement;
     m_containerElement = nullptr;
   }
 
-  auto l = identifyResult->layerContent();
-
-//  for (IdentifyLayerResult* sublayerResult : identifyResult->sublayerResults())
-//  {
-    for (GeoElement* geoElement : identifyResult->geoElements())
+  for (IdentifyLayerResult* layerResult : identifyResults)
+  {
+    if (!m_containerElement && dynamic_cast<SubtypeFeatureLayer*>(layerResult->layerContent()))
     {
-      if (ArcGISFeature* feature = dynamic_cast<ArcGISFeature*>(geoElement))
+      for (IdentifyLayerResult* sublayerResult : layerResult->sublayerResults())
       {
-        m_containerElement = m_utilityNetwork->createElementWithArcGISFeature(feature);
-        if (m_containerElement)
+        for (GeoElement* geoElement : sublayerResult->geoElements())
         {
-          m_utilityNetwork->associations(m_containerElement, UtilityAssociationType::Containment);
-          break;
+          if (ArcGISFeature* feature = dynamic_cast<ArcGISFeature*>(geoElement))
+          {
+            m_containerElement = m_utilityNetwork->createElementWithArcGISFeature(feature);
+            if (m_containerElement)
+            {
+              m_taskWatcher = m_utilityNetwork->associations(m_containerElement, UtilityAssociationType::Containment);
+              break;
+            }
+          }
         }
-//      }
+        if (m_containerElement)
+          break;
+      }
     }
-    if (m_containerElement)
-      break;
   }
 }
 
 void DisplayContentOfUtilityNetworkContainer::onFeaturesForElementsCompleted(QUuid)
 {
   QList<Feature*> contentFeatures = m_utilityNetwork->featuresForElementsResult()->features();
-  qDebug() << "features for elements completed with" << contentFeatures.size();
   for (Feature* content : contentFeatures)
   {
     Symbol* symbol = dynamic_cast<ArcGISFeatureTable*>(content->featureTable())->layerInfo().drawingInfo().renderer(this)->symbol(content);
     m_containerGraphicsOverlay->graphics()->append(new Graphic(content->geometry(), symbol, this));
   }
-
-  qDebug() << m_containerGraphicsOverlay->graphics()->size();
-  m_utilityNetwork->associations(m_containerGraphicsOverlay->extent());
+  m_taskWatcher = m_utilityNetwork->associations(m_containerGraphicsOverlay->extent());
 }
 
 void DisplayContentOfUtilityNetworkContainer::getContainmentAssociations(QList<Esri::ArcGISRuntime::UtilityAssociation*> containmentAssociations)
@@ -240,12 +219,11 @@ void DisplayContentOfUtilityNetworkContainer::getContainmentAssociations(QList<E
     UtilityElement* otherElement = association->fromElement()->objectId() == m_containerElement->objectId() ? association->toElement() : association->fromElement();
     contentElements.append(otherElement);
   }
-  qDebug() << contentElements.size();
 
   if (!contentElements.isEmpty())
   {
     setShowContainerView(true);
-    m_utilityNetwork->featuresForElements(contentElements);
+    m_taskWatcher = m_utilityNetwork->featuresForElements(contentElements);
   }
 }
 
@@ -258,13 +236,14 @@ void DisplayContentOfUtilityNetworkContainer::showAttachmentAndConnectivitySymbo
   }
   if (m_containerGraphicsOverlay->graphics()->size() == 1 && m_containerGraphicsOverlay->graphics()->first()->geometry().geometryType() == GeometryType::Point)
   {
-    m_setBoundingBox = true;
-    m_mapView->setViewpointCenter(m_containerGraphicsOverlay->graphics()->first()->geometry(), m_containerElement->assetType()->containerViewScale());
+    m_mapView->setViewpointAndWait(Viewpoint(Point(m_containerGraphicsOverlay->graphics()->first()->geometry()), m_containerElement->assetType()->containerViewScale()));
+    m_boundingBox = m_mapView->currentViewpoint(ViewpointType::BoundingGeometry).targetGeometry();
+    m_mapView->setViewpointAndWait(m_previousViewpoint);
   }
   else
   {
     m_boundingBox = GeometryEngine::buffer(m_containerGraphicsOverlay->extent(), 0.05);
-    m_containerGraphicsOverlay->graphics()->append(new Graphic(m_boundingBox, boundingBoxSymbol, this));
-    m_mapView->setViewpoint(Viewpoint(GeometryEngine::buffer(m_containerGraphicsOverlay->extent(), 0.2)), .5);
   }
+  m_containerGraphicsOverlay->graphics()->append(new Graphic(m_boundingBox, boundingBoxSymbol, this));
+  m_taskWatcher = m_mapView->setViewpoint(Viewpoint(GeometryEngine::buffer(m_containerGraphicsOverlay->extent(), 0.2)), .5);
 }
