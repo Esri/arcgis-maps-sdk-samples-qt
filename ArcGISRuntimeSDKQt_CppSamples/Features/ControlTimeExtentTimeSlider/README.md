@@ -1,7 +1,7 @@
 # ControlTimeExtentTimeSlider
 
-This sample demonstrates how to use the time slider to visualize temporal data by applying a specific time extent.
-When viewing feature layers that contain a large amount of data with timestamps, you may want to filter the data to only show data relevant to a specific time range. This can help visualize changes in the data over time and aids in making better interpretations and predictions of future trends.
+This sample demonstrates how to use the time slider from the toolkit to visualize temporal data by applying a specific time extent.
+When viewing feature layers that contain a large amount of data with timestamps, you may want to filter the data to only show data relevant to a specific time range. This can help visualize changes in the data over time and aid in making better interpretations and predictions of future trends.
 
 
 ![](screenshot.png)
