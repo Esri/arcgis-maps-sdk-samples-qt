@@ -25,6 +25,7 @@ Item {
     MapView {
         id: view
         anchors.fill: parent
+        focus: true
 
         TimeSlider {
                     anchors {

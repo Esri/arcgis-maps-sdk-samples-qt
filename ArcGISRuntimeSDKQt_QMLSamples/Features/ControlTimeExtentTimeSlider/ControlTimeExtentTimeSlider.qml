@@ -24,12 +24,23 @@ Rectangle {
     width: 800
     height: 600
 
-    property alias layerListModel: map.operationalLayers
-
     MapView {
         id: mapView
         anchors.fill: parent
 
+        Map {
+            id: map
+            initBasemapStyle: Enums.BasemapStyleArcGISTopographic
+
+
+            onLoadStatusChanged: {
+                            if (loadStatus !== Enums.LoadStatusLoaded)
+                                return;
+
+                            // add layer to the map
+                            operationalLayers.append(hurricanesLayer);
+                        }
+        }
 
         TimeSlider {
                     anchors {
@@ -38,21 +49,8 @@ Rectangle {
                         bottom: parent.bottom
                     }
 
-                    geoView: view
+                    geoView: mapView
                 }
-
-        Map {
-            id: map
-            initBasemapStyle: Enums.BasemapStyleArcGISTopographic
-
-            onLoadStatusChanged: {
-                            if (loadStatus !== Enums.LoadStatusLoaded)
-                                return;
-
-                            // add layers to the map
-                            operationalLayers.append(hurricanesLayer);
-                        }
-        }
     }
     ArcGISMapImageLayer {
         id: hurricanesLayer
