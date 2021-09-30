@@ -407,15 +407,15 @@ class READMEFile:
         errors = []
         for i in range(len(self.sections[h])):
             if self.sections[h][i][:2] != "* ":
-                errors.append(f"Expected unordered list item as '* ' on line {i}")
+                errors.append(f"Expected unordered list item of 'Relevant API' to be prefixed as '* ', not {self.sections[h][i][:2]}")
             else:
                 api = self.sections[h][i][2:]
                 if api in self.api_list:
-                    errors.append(f"{api} is duplicate on line {i}")
+                    errors.append(f"Relevant API section has duplicate: {api}")
                 else:
                     self.api_list.append(api)
                     if api in self.tag_list:
-                        errors.append(f"{api} should not be in tags")
+                        errors.append(f"Relevant API: {api} should not be in tags")
         if self.api_list != sorted(self.api_list, key=str.casefold):
             errors.append("Expected API list to be sorted alphabetically")
         return errors
