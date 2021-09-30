@@ -21,9 +21,9 @@ A map is created and then the ArcGIS image layer that contains time-enabled data
 
 ## Relevant API
 
-- ArcGISMapImageLayer
-- Map
-- MapView
+* ArcGISMapImageLayer
+* Map
+* MapView
 
 ## Additional information
 
