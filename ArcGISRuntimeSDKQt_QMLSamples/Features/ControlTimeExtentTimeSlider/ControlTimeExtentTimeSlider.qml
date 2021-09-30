@@ -42,6 +42,7 @@ Rectangle {
                         }
         }
 
+        // Add a TimeSlider from the toolkit to the MapView
         TimeSlider {
                     anchors {
                         left: parent.left

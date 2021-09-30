@@ -16,8 +16,8 @@
 
 import QtQuick 2.12
 import QtQuick.Controls 2.12
-import Esri.Samples 1.0
 import Esri.ArcGISRuntime.Toolkit 100.13
+import Esri.Samples 1.0
 
 Item {
 
@@ -27,6 +27,7 @@ Item {
         anchors.fill: parent
         focus: true
 
+        // Add a TimeSlider from the toolkit to the MapView
         TimeSlider {
                     anchors {
                         left: parent.left
