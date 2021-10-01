@@ -32,29 +32,21 @@ Rectangle {
             id: map
             initBasemapStyle: Enums.BasemapStyleArcGISTopographic
 
-
-            onLoadStatusChanged: {
-                            if (loadStatus !== Enums.LoadStatusLoaded)
-                                return;
-
-                            // add layer to the map
-                            operationalLayers.append(hurricanesLayer);
-                        }
+            ArcGISMapImageLayer {
+                id: hurricanesLayer
+                url: "https://sampleserver6.arcgisonline.com/arcgis/rest/services/Hurricanes/MapServer"
+            }
         }
 
         // Add a TimeSlider from the toolkit to the MapView
         TimeSlider {
-                    anchors {
-                        left: parent.left
-                        right: parent.right
-                        bottom: parent.bottom
-                    }
+            anchors {
+                left: parent.left
+                right: parent.right
+                bottom: parent.bottom
+            }
 
-                    geoView: mapView
-                }
-    }
-    ArcGISMapImageLayer {
-        id: hurricanesLayer
-        url: "https://sampleserver6.arcgisonline.com/arcgis/rest/services/Hurricanes/MapServer"
+            geoView: mapView
+        }
     }
 }

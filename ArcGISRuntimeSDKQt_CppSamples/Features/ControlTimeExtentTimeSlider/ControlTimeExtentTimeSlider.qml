@@ -29,14 +29,14 @@ Item {
 
         // Add a TimeSlider from the toolkit to the MapView
         TimeSlider {
-                    anchors {
-                        left: parent.left
-                        right: parent.right
-                        bottom: parent.bottom
-                    }
+            anchors {
+                left: parent.left
+                right: parent.right
+                bottom: parent.bottom
+            }
 
-                    geoView: view
-                }
+            geoView: view
+        }
     }
 
     // Declare the C++ instance which creates the scene etc. and supply the view

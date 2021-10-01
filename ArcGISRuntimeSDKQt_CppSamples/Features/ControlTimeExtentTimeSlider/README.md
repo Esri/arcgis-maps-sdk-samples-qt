@@ -1,4 +1,4 @@
-# Control time extent using toolkit time slider
+# Visualize temporal data using time slider
 
 This sample demonstrates how to use the time slider from the toolkit to visualize temporal data by applying a specific time extent.
 When viewing feature layers that contain a large amount of data with timestamps, you may want to filter the data to only show data relevant to a specific time range. This can help visualize changes in the data over time and aid in making better interpretations and predictions of future trends.
@@ -8,7 +8,7 @@ When viewing feature layers that contain a large amount of data with timestamps,
 
 ## Use case
 
-When viewing feature layers that contain a large amount of data with timestamps, you may want to filter the data to only show data relevant to a specific time range. This can help visualize changes in the data over time and aids in making better interpretations and predictions of future trends.
+When viewing layers that contain a large amount of data with timestamps, you may want to filter the data to only show data relevant to a specific time range.
 
 ## How to use the sample
 
@@ -17,7 +17,10 @@ Use the play button to step through the data 4 days at a time. Use the previous 
 
 ## How it works
 
-A map is created and then the ArcGIS image layer that contains time-enabled data is added to map's list of operational layers. Then a time slider is created from the ArcGIS Runtime Toolkit to allow users to show data only from the given date range. This sets up all the necessary calls to visualize and step through the data.
+1. Create a `MapView` with a `Map`.
+2. Create an `ArcGISMapImageLayer` from a URL (the map image layer from the url in this sample includes time-enabled data).
+3. Add the ArcGIS image layer that includes time-enabled data to the map's list of operational layers.
+4. Create a `TimeSlider` from the ArcGIS Runtime Toolkit to allow users to show data only from the given date range. This sets up all necessary calls to visualize and step through the temporal data.
 
 ## Relevant API
 
