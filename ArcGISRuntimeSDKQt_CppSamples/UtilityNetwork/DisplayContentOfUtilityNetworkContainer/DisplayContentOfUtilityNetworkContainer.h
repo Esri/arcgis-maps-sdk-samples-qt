@@ -27,12 +27,16 @@ class GraphicsOverlay;
 class IdentifyLayerResult;
 class Map;
 class MapQuickView;
+class Symbol;
 class UtilityAssociation;
 class UtilityElement;
 class UtilityNetwork;
 }
 }
 
+class SymbolImageProvider;
+
+#include <QAbstractListModel>
 #include <QObject>
 #include <QMouseEvent>
 #include "Geometry.h"
@@ -46,6 +50,11 @@ class DisplayContentOfUtilityNetworkContainer : public QObject
   Q_PROPERTY(Esri::ArcGISRuntime::MapQuickView* mapView READ mapView WRITE setMapView NOTIFY mapViewChanged)
   Q_PROPERTY(bool showContainerView READ showContainerView WRITE setShowContainerView NOTIFY showContainerViewChanged)
 
+  Q_PROPERTY(QString attachmentSymbolUrl READ attachmentSymbolUrl NOTIFY attachmentSymbolUrlChanged)
+  Q_PROPERTY(QString connectivitySymbolUrl READ connectivitySymbolUrl NOTIFY connectivitySymbolUrlChanged)
+  Q_PROPERTY(QString boundingBoxSymbolUrl READ boundingBoxSymbolUrl NOTIFY boundingBoxSymbolUrlChanged)
+  Q_PROPERTY(QString messageBoxText READ messageBoxText WRITE setMessageBoxText NOTIFY messageBoxTextChanged)
+
 public:
   explicit DisplayContentOfUtilityNetworkContainer(QObject* parent = nullptr);
   ~DisplayContentOfUtilityNetworkContainer();
@@ -55,6 +64,10 @@ public:
 signals:
   void mapViewChanged();
   void showContainerViewChanged();
+  void attachmentSymbolUrlChanged();
+  void connectivitySymbolUrlChanged();
+  void boundingBoxSymbolUrlChanged();
+  void messageBoxTextChanged();
 
 private:
   Esri::ArcGISRuntime::MapQuickView* mapView() const;
@@ -67,6 +80,12 @@ private:
   void showAttachmentAndConnectivitySymbols(QList<Esri::ArcGISRuntime::UtilityAssociation*> containmentAssociations);
   void setMapView(Esri::ArcGISRuntime::MapQuickView* mapView);
   void setShowContainerView(bool showContainerView);
+  void setMessageBoxText(QString message);
+  QString messageBoxText() const;
+  void createLegend();
+  QString attachmentSymbolUrl() const;
+  QString connectivitySymbolUrl() const;
+  QString boundingBoxSymbolUrl() const;
 
   Esri::ArcGISRuntime::Credential* m_cred = nullptr;
   Esri::ArcGISRuntime::SubtypeFeatureLayer* m_subtypeFeatureLayer = nullptr;
@@ -80,6 +99,16 @@ private:
   Esri::ArcGISRuntime::Viewpoint m_previousViewpoint;
   bool m_showContainerView = false;
   bool m_setBoundingBox = false;
+
+  QString m_messageBoxText = "";
+
+  QString m_attachmentSymbolUrl = "";
+  QString m_connectivitySymbolUrl = "";
+  QString m_boundingBoxSymbolUrl = "";
+  Esri::ArcGISRuntime::Symbol* m_attachmentSymbol = nullptr;
+  Esri::ArcGISRuntime::Symbol* m_connectivitySymbol = nullptr;
+  Esri::ArcGISRuntime::Symbol* m_boundingBoxSymbol = nullptr;
+  SymbolImageProvider* m_symbolImageProvider = nullptr;
 };
 
 #endif // DISPLAYCONTENTOFUTILITYNETWORKCONTAINER_H

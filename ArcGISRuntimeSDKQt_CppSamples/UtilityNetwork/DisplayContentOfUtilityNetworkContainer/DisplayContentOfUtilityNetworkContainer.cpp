@@ -19,6 +19,7 @@
 #endif // PCH_BUILD
 
 #include "DisplayContentOfUtilityNetworkContainer.h"
+#include "SymbolImageProvider.h"
 
 #include "ArcGISFeature.h"
 #include "ArcGISFeatureListModel.h"
@@ -37,13 +38,10 @@
 #include "UtilityNetworkListModel.h"
 #include "UtilityNetworkTypes.h"
 
-using namespace Esri::ArcGISRuntime;
+#include <QImage>
+#include <QQmlContext>
 
-namespace {
-Symbol* attachmentSymbol = new SimpleLineSymbol(SimpleLineSymbolStyle::Dot, Qt::blue, 3);
-Symbol* connectivitySymbol = new SimpleLineSymbol(SimpleLineSymbolStyle::Dot, Qt::red, 3);
-Symbol* boundingBoxSymbol = new SimpleLineSymbol(SimpleLineSymbolStyle::Dot, Qt::yellow, 3);
-}
+using namespace Esri::ArcGISRuntime;
 
 DisplayContentOfUtilityNetworkContainer::DisplayContentOfUtilityNetworkContainer(QObject* parent /* = nullptr */):
   QObject(parent),
@@ -118,6 +116,7 @@ void DisplayContentOfUtilityNetworkContainer::setMapView(MapQuickView* mapView)
   m_mapView->graphicsOverlays()->append(m_containerGraphicsOverlay);
 
   createConnections();
+  createLegend();
 
   emit mapViewChanged();
 }
@@ -128,21 +127,6 @@ void DisplayContentOfUtilityNetworkContainer::createConnections()
   connect(m_mapView, &MapQuickView::identifyLayersCompleted, this, &DisplayContentOfUtilityNetworkContainer::onIdentifyLayersCompleted);
   connect(m_utilityNetwork, &UtilityNetwork::featuresForElementsCompleted, this, &DisplayContentOfUtilityNetworkContainer::onFeaturesForElementsCompleted);
 
-  connect(m_map, &Map::errorOccurred, this, [](Error e)
-  {
-    qDebug() << "map error:" << e.message() << e.additionalMessage();
-  });
-
-  connect(m_mapView, &MapQuickView::errorOccurred, this, [](Error e)
-  {
-    qDebug() << "map view error:" << e.message() << e.additionalMessage();
-  });
-
-  connect(m_utilityNetwork, &UtilityNetwork::errorOccurred, this, [](Error error)
-  {
-    qWarning() << "Utility Network error occured: " << error.message() << error.additionalMessage();
-  });
-
   connect(m_utilityNetwork, &UtilityNetwork::associationsCompleted, this, [this](QUuid, QList<UtilityAssociation*> containmentAssociations)
   {
     if (!m_showContainerView)
@@ -150,6 +134,21 @@ void DisplayContentOfUtilityNetworkContainer::createConnections()
 
     else
       showAttachmentAndConnectivitySymbols(containmentAssociations);
+  });
+
+  connect(m_map, &Map::errorOccurred, this, [this](Error e)
+  {
+    setMessageBoxText("Map error: " + e.message() + " " + e.additionalMessage());
+  });
+
+  connect(m_mapView, &MapQuickView::errorOccurred, this, [this](Error e)
+  {
+    setMessageBoxText("MapView error: " + e.message() + " " + e.additionalMessage());
+  });
+
+  connect(m_utilityNetwork, &UtilityNetwork::errorOccurred, this, [this](Error e)
+  {
+    setMessageBoxText("Utility Network error occured: " + e.message() + " " + e.additionalMessage());
   });
 }
 
@@ -197,17 +196,6 @@ void DisplayContentOfUtilityNetworkContainer::onIdentifyLayersCompleted(QUuid, Q
   }
 }
 
-void DisplayContentOfUtilityNetworkContainer::onFeaturesForElementsCompleted(QUuid)
-{
-  QList<Feature*> contentFeatures = m_utilityNetwork->featuresForElementsResult()->features();
-  for (Feature* content : contentFeatures)
-  {
-    Symbol* symbol = dynamic_cast<ArcGISFeatureTable*>(content->featureTable())->layerInfo().drawingInfo().renderer(this)->symbol(content);
-    m_containerGraphicsOverlay->graphics()->append(new Graphic(content->geometry(), symbol, this));
-  }
-  m_taskWatcher = m_utilityNetwork->associations(m_containerGraphicsOverlay->extent());
-}
-
 void DisplayContentOfUtilityNetworkContainer::getContainmentAssociations(QList<Esri::ArcGISRuntime::UtilityAssociation*> containmentAssociations)
 {
   if (m_showContainerView)
@@ -227,23 +215,134 @@ void DisplayContentOfUtilityNetworkContainer::getContainmentAssociations(QList<E
   }
 }
 
+void DisplayContentOfUtilityNetworkContainer::onFeaturesForElementsCompleted(QUuid)
+{
+  QList<Feature*> contentFeatures = m_utilityNetwork->featuresForElementsResult()->features();
+  for (Feature* content : contentFeatures)
+  {
+    Symbol* symbol = dynamic_cast<ArcGISFeatureTable*>(content->featureTable())->layerInfo().drawingInfo().renderer(this)->symbol(content);
+    m_containerGraphicsOverlay->graphics()->append(new Graphic(content->geometry(), symbol, this));
+  }
+  m_taskWatcher = m_utilityNetwork->associations(m_containerGraphicsOverlay->extent());
+}
+
 void DisplayContentOfUtilityNetworkContainer::showAttachmentAndConnectivitySymbols(QList<Esri::ArcGISRuntime::UtilityAssociation*> containmentAssociations)
 {
   for (UtilityAssociation* association : containmentAssociations)
   {
-    Symbol* symbol = association->associationType() == UtilityAssociationType::Attachment ? attachmentSymbol : connectivitySymbol;
+    Symbol* symbol = association->associationType() == UtilityAssociationType::Attachment ? m_attachmentSymbol : m_connectivitySymbol;
     m_containerGraphicsOverlay->graphics()->append(new Graphic(association->geometry(), symbol, this));
   }
+
   if (m_containerGraphicsOverlay->graphics()->size() == 1 && m_containerGraphicsOverlay->graphics()->first()->geometry().geometryType() == GeometryType::Point)
   {
     m_mapView->setViewpointAndWait(Viewpoint(Point(m_containerGraphicsOverlay->graphics()->first()->geometry()), m_containerElement->assetType()->containerViewScale()));
     m_boundingBox = m_mapView->currentViewpoint(ViewpointType::BoundingGeometry).targetGeometry();
     m_mapView->setViewpointAndWait(m_previousViewpoint);
+
+    setMessageBoxText("This feature contains no associations");
   }
   else
   {
     m_boundingBox = GeometryEngine::buffer(m_containerGraphicsOverlay->extent(), 0.05);
   }
-  m_containerGraphicsOverlay->graphics()->append(new Graphic(m_boundingBox, boundingBoxSymbol, this));
+
+  m_containerGraphicsOverlay->graphics()->append(new Graphic(m_boundingBox, m_boundingBoxSymbol, this));
   m_taskWatcher = m_mapView->setViewpoint(Viewpoint(GeometryEngine::buffer(m_containerGraphicsOverlay->extent(), 0.2)), .5);
+}
+
+QString DisplayContentOfUtilityNetworkContainer::messageBoxText() const
+{
+  return m_messageBoxText;
+}
+
+void DisplayContentOfUtilityNetworkContainer::setMessageBoxText(QString message)
+{
+  m_messageBoxText = message;
+  emit messageBoxTextChanged();
+}
+
+// Create attachment and connectivity legend
+void DisplayContentOfUtilityNetworkContainer::createLegend()
+{
+  QQmlEngine* engine = QQmlEngine::contextForObject(this)->engine();
+  m_symbolImageProvider = new SymbolImageProvider();
+  engine->addImageProvider(SymbolImageProvider::imageProviderId(), m_symbolImageProvider);
+
+  m_attachmentSymbol = new SimpleLineSymbol(SimpleLineSymbolStyle::Dot, Qt::blue, 3);
+  m_connectivitySymbol = new SimpleLineSymbol(SimpleLineSymbolStyle::Dot, Qt::red, 3);
+  m_boundingBoxSymbol = new SimpleLineSymbol(SimpleLineSymbolStyle::Dot, Qt::yellow, 3);
+
+  connect(m_attachmentSymbol, &Symbol::createSwatchCompleted, this, [this](QUuid id, QImage image)
+  {
+    if (!m_symbolImageProvider)
+      return;
+
+    // convert the QUuid into a QString
+    const QString imageId = id.toString().remove("{").remove("}");
+
+    // add the image to the provider
+    m_symbolImageProvider->addImage(imageId, image);
+
+    // update the URL with the unique id
+    m_attachmentSymbolUrl = QString("image://%1/%2").arg(SymbolImageProvider::imageProviderId(), imageId);
+
+    // emit the signal to trigger the QML Image to update
+    emit attachmentSymbolUrlChanged();
+  });
+
+  connect(m_connectivitySymbol, &Symbol::createSwatchCompleted, this, [this](QUuid id, QImage image)
+  {
+    if (!m_symbolImageProvider)
+      return;
+
+    // convert the QUuid into a QString
+    const QString imageId = id.toString().remove("{").remove("}");
+
+    // add the image to the provider
+    m_symbolImageProvider->addImage(imageId, image);
+
+    // update the URL with the unique id
+    m_connectivitySymbolUrl = QString("image://%1/%2").arg(SymbolImageProvider::imageProviderId(), imageId);
+
+    // emit the signal to trigger the QML Image to update
+    emit connectivitySymbolUrlChanged();
+  });
+
+  connect(m_boundingBoxSymbol, &Symbol::createSwatchCompleted, this, [this](QUuid id, QImage image)
+  {
+    if (!m_symbolImageProvider)
+      return;
+
+    // convert the QUuid into a QString
+    const QString imageId = id.toString().remove("{").remove("}");
+
+    // add the image to the provider
+    m_symbolImageProvider->addImage(imageId, image);
+
+    // update the URL with the unique id
+    m_boundingBoxSymbolUrl = QString("image://%1/%2").arg(SymbolImageProvider::imageProviderId(), imageId);
+
+    // emit the signal to trigger the QML Image to update
+    emit boundingBoxSymbolUrlChanged();
+  });
+
+  m_attachmentSymbol->createSwatch();
+  m_connectivitySymbol->createSwatch();
+  m_boundingBoxSymbol->createSwatch();
+}
+
+QString DisplayContentOfUtilityNetworkContainer::attachmentSymbolUrl() const
+{
+  return m_attachmentSymbolUrl;
+}
+
+QString DisplayContentOfUtilityNetworkContainer::connectivitySymbolUrl() const
+{
+  return m_connectivitySymbolUrl;
+}
+
+QString DisplayContentOfUtilityNetworkContainer::boundingBoxSymbolUrl() const
+{
+  return m_boundingBoxSymbolUrl;
 }

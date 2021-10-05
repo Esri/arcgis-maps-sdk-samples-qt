@@ -16,6 +16,7 @@
 
 import QtQuick 2.12
 import QtQuick.Controls 2.12
+import QtQuick.Layouts 1.3
 import Esri.Samples 1.0
 
 Item {
@@ -25,7 +26,6 @@ Item {
     DisplayContentOfUtilityNetworkContainerSample {
         id: model
         mapView: view
-
     }
 
     // add a mapView component
@@ -39,22 +39,122 @@ Item {
         }
     }
 
-    Button {
-        id: containerCloseButton
-        text: "Close container view"
-        anchors.bottom: parent.bottom
-        focusPolicy: Qt.NoFocus
-        anchors.bottomMargin: 20
-        anchors.horizontalCenter: parent.horizontalCenter
+    // Create outter rectangle for the legend
+    Control {
+        id: legendBox
+        anchors {
+            top: parent.top
+            left: parent.left
+            margins: 20
+        }
+        background: Rectangle {
+            border.color: "black"
+            border.width: 1
+        }
+        padding: 5
         visible: model.showContainerView
-        onClicked: {
-            model.showContainerView = false;
+
+        contentItem: GridLayout {
+            id: grid
+            anchors.horizontalCenter: parent.horizontalCenter
+            columns: 2
+            Layout.fillWidth: true
+
+            Image {
+                id: attachmentImage
+                source: model.attachmentSymbolUrl
+                fillMode: Image.PreserveAspectFit
+            }
+            Label {
+                id: attachmentLabel
+                text: "Attachment"
+            }
+
+            Image {
+                id: connectivityImage
+                source: model.connectivitySymbolUrl
+            }
+            Label {
+                id: connectivityLabel
+                text: "Connectivity"
+            }
+
+            Image {
+                id: boundingBoxSymbol
+                source: model.boundingBoxSymbolUrl
+            }
+            Label {
+                id: boundingBoxLabel
+                text: "Bounding box"
+            }
+        }
+    }
+
+    Rectangle {
+        id: containerViewOverlay
+        anchors.fill: parent
+        MouseArea {
+            anchors.fill: parent
+        }
+        color: "transparent"
+        border.color: "transparent"
+
+        visible: model.showContainerView
+        onVisibleChanged: view.focus = !overlay.visible;
+
+        Button {
+            id: containerCloseButton
+            anchors {
+                bottom: parent.bottom
+                bottomMargin: 30
+                horizontalCenter: parent.horizontalCenter
+            }
+            background: Rectangle {
+                color: "white"
+                border.color: "black"
+            }
+            text: "Close container view"
+            font.pointSize: 16
+            onClicked: {
+                model.showContainerView = false;
+            }
+        }
+    }
+
+    Control {
+        id: messageBoxPopup
+        anchors {
+            centerIn: parent
+        }
+        padding: 10
+        width: Math.max(messageBoxText.width, closeMessage.width) + (padding * 2)
+        height: messageBoxText.height + closeMessage.height + (messageBoxPopup.padding * 3)
+        background: Rectangle {
+            color: "white"
+            border.color: "black"
+        }
+
+        visible: model.messageBoxText !== ""
+
+        Text {
+            id: messageBoxText
+            anchors {
+                top: parent.top
+                topMargin: messageBoxPopup.padding
+                horizontalCenter: parent.horizontalCenter
+            }
+            text: model.messageBoxText
+        }
+
+        Button {
+            id: closeMessage
+            anchors {
+                bottom: parent.bottom
+                bottomMargin: messageBoxPopup.padding
+                horizontalCenter: parent.horizontalCenter
+            }
+            text: "Close"
+            onClicked: model.messageBoxText = "";
         }
     }
 }
-
-/*##^##
-Designer {
-    D{i:0;autoSize:true;height:480;width:640}
-}
-##^##*/

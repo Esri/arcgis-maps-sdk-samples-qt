@@ -34,9 +34,11 @@ include($$PWD/arcgisruntime.pri)
 
 HEADERS += \
     DisplayContentOfUtilityNetworkContainer.h
+    SymbolImageProvider.h
 
 SOURCES += \
     main.cpp \
+    SymbolImageProvider.cpp \
     DisplayContentOfUtilityNetworkContainer.cpp
 
 RESOURCES += DisplayContentOfUtilityNetworkContainer.qrc
