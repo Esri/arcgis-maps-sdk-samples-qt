@@ -7,7 +7,7 @@
     ],
     "keywords": [
         "data",
-        "image layer",
+        "feature layer",
         "time",
         "time aware",
         "time enabled",
@@ -17,9 +17,10 @@
     ],
     "redirect_from": "",
     "relevant_apis": [
-        "ArcGISMapImageLayer",
+        "FeatureLayer",
         "Map",
-        "MapView"
+        "MapView",
+        "ServiceFeatureTable"
     ],
     "snippets": [
         "ControlTimeExtentTimeSlider.qml",
