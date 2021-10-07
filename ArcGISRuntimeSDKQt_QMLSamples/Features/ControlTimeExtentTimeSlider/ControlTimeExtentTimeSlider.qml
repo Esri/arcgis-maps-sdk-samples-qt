@@ -32,9 +32,11 @@ Rectangle {
             id: map
             initBasemapStyle: Enums.BasemapStyleArcGISTopographic
 
-            ArcGISMapImageLayer {
-                id: hurricanesLayer
-                url: "https://sampleserver6.arcgisonline.com/arcgis/rest/services/Hurricanes/MapServer"
+            FeatureLayer {
+                ServiceFeatureTable {
+                    id: featureLayer
+                    url: "https://services5.arcgis.com/N82JbI5EYtAkuUKU/ArcGIS/rest/services/Hurricane_time_enabled_layer_2005_1_day/FeatureServer/0"
+                }
             }
         }
 
