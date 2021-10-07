@@ -185,12 +185,10 @@ void DisplayContentOfUtilityNetworkContainer::onIdentifyLayersCompleted(QUuid, Q
             if (m_containerElement)
             {
               m_taskWatcher = m_utilityNetwork->associations(m_containerElement, UtilityAssociationType::Containment);
-              break;
+              return;
             }
           }
         }
-        if (m_containerElement)
-          break;
       }
     }
   }
