@@ -1,0 +1,29 @@
+{
+    "category": "Features",
+    "description": "Use the ArcGIS toolkit time slider to customize the date range for which you want to view time enabled data in a layer.",
+    "ignore": false,
+    "images": [
+        "screenshot.png"
+    ],
+    "keywords": [
+        "data",
+        "feature layer",
+        "time",
+        "time aware",
+        "time enabled",
+        "time extent",
+        "time slider",
+        "toolkit"
+    ],
+    "redirect_from": "",
+    "relevant_apis": [
+        "FeatureLayer",
+        "Map",
+        "MapView",
+        "ServiceFeatureTable"
+    ],
+    "snippets": [
+        "ControlTimeExtentTimeSlider.qml"
+    ],
+    "title": "ControlTimeExtentTimeSlider"
+}
