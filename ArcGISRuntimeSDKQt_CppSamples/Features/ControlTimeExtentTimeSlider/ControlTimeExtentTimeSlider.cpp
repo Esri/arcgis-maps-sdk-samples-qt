@@ -20,7 +20,6 @@
 
 #include "ControlTimeExtentTimeSlider.h"
 
-#include "ArcGISMapImageLayer.h"
 #include "Map.h"
 #include "MapQuickView.h"
 
