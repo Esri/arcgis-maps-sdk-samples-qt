@@ -38,50 +38,6 @@ Rectangle {
             forceActiveFocus();
         }
 
-        Control {
-            background: Rectangle {
-                border.color: "black"
-                border.width: 1
-            }
-
-            padding: 5
-            anchors {
-                top: parent.top
-                left: parent.left
-                margins: 20
-            }
-
-            contentItem: GridLayout {
-                id: grid
-                columns: 2
-                anchors.horizontalCenter: parent.horizontalCenter
-
-                Label {
-                    text: "Utility association types"
-                    Layout.alignment: Qt.AlignHCenter
-                    Layout.fillWidth: true
-                    Layout.columnSpan: 2
-                }
-
-                Image {
-                    id: attachmentImage
-                    fillMode: Image.PreserveAspectFit
-                }
-                Label {
-                    id: attachmentLabel
-                    text: "Attachment symbol"
-                }
-
-                Image {
-                    id: connectivityImage
-                }
-                Label {
-                    id: connectivityLabel
-                    text: "Connectivity symbol"
-                }
-            }
-        }
-
         Point {
             id: centerPoint
             x: -9812698.37297436
@@ -249,6 +205,52 @@ Rectangle {
                 return;
 
             addAssociations();
+        }
+    }
+
+    // Container view legend
+    Control {
+        id: containerViewLegend
+        background: Rectangle {
+            border.color: "black"
+            border.width: 1
+        }
+
+        padding: 5
+        anchors {
+            top: parent.top
+            left: parent.left
+            margins: 20
+        }
+
+        contentItem: GridLayout {
+            id: grid
+            columns: 2
+            anchors.horizontalCenter: parent.horizontalCenter
+
+            Label {
+                text: "Utility association types"
+                Layout.alignment: Qt.AlignHCenter
+                Layout.fillWidth: true
+                Layout.columnSpan: 2
+            }
+
+            Image {
+                id: attachmentImage
+                fillMode: Image.PreserveAspectFit
+            }
+            Label {
+                id: attachmentLabel
+                text: "Attachment symbol"
+            }
+
+            Image {
+                id: connectivityImage
+            }
+            Label {
+                id: connectivityLabel
+                text: "Connectivity symbol"
+            }
         }
     }
 }

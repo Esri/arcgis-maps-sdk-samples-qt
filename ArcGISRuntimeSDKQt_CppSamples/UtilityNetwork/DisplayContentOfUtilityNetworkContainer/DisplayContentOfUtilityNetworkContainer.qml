@@ -95,12 +95,18 @@ Item {
         anchors.fill: parent
         MouseArea {
             anchors.fill: parent
+            scrollGestureEnabled: true
         }
         color: "transparent"
         border.color: "transparent"
 
         visible: model.showContainerView
-        onVisibleChanged: view.focus = !overlay.visible;
+        onVisibleChanged: {
+            if (containerViewOverlay.visible)
+                containerViewOverlay.focus = true;
+            else
+                view.focus = true;
+        }
 
         Button {
             id: containerCloseButton

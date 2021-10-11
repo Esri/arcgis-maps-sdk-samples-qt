@@ -31,7 +31,6 @@ Rectangle {
     property var containerElement;
     property var previousViewpoint;
     property var boundingBoxExtent;
-    property var taskId: ""
 
     Credential {
         id: viewerCredential
@@ -39,6 +38,7 @@ Rectangle {
         password: "I68VGU^nMurF"
     }
 
+    // The AuthenticationManager handles credential challenges raised by the web map and the utility network
     Connections {
         id: authenticationManagerConnnections
         target: AuthenticationManager
@@ -51,49 +51,24 @@ Rectangle {
         id: mapView
         anchors.fill: parent
 
-        onSetViewpointCompleted: {
-            if (createBoundingBoxGeometry) {
-                createBoundingBoxGeometry = false;
-                boundingBoxExtent = mapView.currentViewpointExtent.extent;
-                returnToPreviousViewpoint = true;
-                mapView.setViewpoint(previousViewpoint);
-            }
-            if (returnToPreviousViewpoint) {
-                returnToPreviousViewpoint = false;
-
-                containerGraphicsOverlay.graphics.append(ArcGISRuntimeEnvironment.createObject("Graphic", {geometry: boundingBoxExtent, symbol: boundingBoxSymbol}));
-                mapView.setViewpointGeometryAndPadding(containerGraphicsOverlay.extent, 100);
-            }
-        }
-
         GraphicsOverlay {
+            // Add a GraphicsOverlay for displaying a container view.
             id: containerGraphicsOverlay
         }
 
         Map {
             id: map
+            // Load a web map that includes ArcGIS Pro Subtype Group Layers with only container features visible (i.e. fuse bank, switch bank, transformer bank, hand hole and junction box)
             initUrl: "https://sampleserver7.arcgisonline.com/portal/home/item.html?id=813eda749a9444e4a9d833a4db19e1c8"
 
             onErrorChanged: {
-                console.log("Map error:", error.message, error.additionalMessage);
+                messageBoxText.text = ("Map error: " + error.message + " " + error.additionalMessage);
             }
 
             UtilityNetwork {
                 id: utilityNetwork
+                // Create and load a UtilityNetwork with the same feature service URL as the layers in the Map
                 url: "https://sampleserver7.arcgisonline.com/server/rest/services/UtilityNetwork/NapervilleElectric/FeatureServer"
-                credential: Credential {
-                    id: uhh
-                    username: "viewer01"
-                    password: "I68VGU^nMurF"
-                }
-
-                Component.onCompleted: {
-                    load();
-                }
-
-                onCredentialChanged: {
-                    load();
-                }
 
                 onAssociationsStatusChanged: {
                     if (associationsStatus !== Enums.TaskStatusCompleted)
@@ -116,10 +91,16 @@ Rectangle {
                     messageBoxText.text = ("UtilityNetork error: " + error.message + " " + error.additionalMessage);
                 }
             }
+
+            onLoadStatusChanged: {
+                if (loadStatus === Enums.LoadStatusLoaded) {
+                    utilityNetwork.load();
+                }
+            }
         }
 
         onErrorChanged: {
-            console.log("MapView error:", error.message, error.additionalMessage);
+            messageBoxText.text = ("MapView error: " + error.message + " " + error.additionalMessage);
         }
 
         onMouseClicked: identifyLayers(mouse.x, mouse.y, 5, false);
@@ -131,34 +112,34 @@ Rectangle {
                     containerViewIsVisible)
                 return;
 
-            containerElement = null;
+            getContainerElementFromIdentifiedFeature(mapView.identifyLayersResults);
+        }
 
-            for (let i = 0; i < mapView.identifyLayersResults.length; i++) {
-                let layerResult = mapView.identifyLayersResults[i];
-                if (layerResult.layerContent.objectType !== "SubtypeFeatureLayer")
-                    continue;
-
-                for (let j = 0; j < layerResult.sublayerResults.length; j++) {
-                    let sublayerResult = layerResult.sublayerResults[j];
-                    for (let n = 0; n < sublayerResult.geoElements.length; n++) {
-                        let geoElement = sublayerResult.geoElements[n];
-                        containerElement = utilityNetwork.createElementWithArcGISFeature(geoElement);
-                        console.log(containerElement.objectId);
-                        if (containerElement) {
-                            utilityNetwork.associations(containerElement, Enums.UtilityAssociationTypeContainment);
-                            return;
-                        }
-                    }
-                }
+        onSetViewpointCompleted: {
+            if (createBoundingBoxGeometry) {
+                createBoundingBoxGeometry = false;
+                boundingBoxExtent = mapView.currentViewpointExtent.extent;
+                returnToPreviousViewpoint = true;
+                containerGraphicsOverlay.graphics.append(ArcGISRuntimeEnvironment.createObject("Graphic", {geometry: boundingBoxExtent, symbol: boundingBoxSymbol}));
+                mapView.setViewpointGeometryAndPadding(containerGraphicsOverlay.extent, 100);
             }
         }
 
         Component.onCompleted: {
             // Set and keep the focus on MapView to enable keyboard navigation
             forceActiveFocus();
-            utilityNetwork.load();
         }
 
+    }
+
+    Rectangle {
+        anchors.fill: parent
+        visible: containerViewIsVisible
+        color: "transparent"
+        MouseArea {
+            anchors.fill: parent
+            scrollGestureEnabled: true
+        }
     }
 
     Button {
@@ -180,6 +161,59 @@ Rectangle {
         onClicked: {
             setShowContainerView(false);
             containerGraphicsOverlay.graphics.clear();
+        }
+    }
+
+    Control {
+        id: legendBox
+        anchors {
+            top: parent.top
+            left: parent.left
+            margins: 20
+        }
+        background: Rectangle {
+            border.color: "black"
+            border.width: 1
+        }
+        padding: 5
+        visible: containerViewIsVisible
+
+        contentItem: GridLayout {
+            id: grid
+            columns: 2
+            anchors.horizontalCenter: parent.horizontalCenter
+
+            Label {
+                text: "Utility association types"
+                Layout.alignment: Qt.AlignHCenter
+                Layout.fillWidth: true
+                Layout.columnSpan: 2
+            }
+
+            Image {
+                id: attachmentImage
+                fillMode: Image.PreserveAspectFit
+            }
+            Label {
+                id: attachmentLabel
+                text: "Attachment symbol"
+            }
+
+            Image {
+                id: connectivityImage
+            }
+            Label {
+                id: connectivityLabel
+                text: "Connectivity symbol"
+            }
+
+            Image {
+                id: boundingBoxImage
+            }
+            Label {
+                id: boundingBoxLabel
+                text: "Connectivity symbol"
+            }
         }
     }
 
@@ -220,36 +254,111 @@ Rectangle {
         }
     }
 
-    SimpleLineSymbol {
-        id: attachmentSymbol
-        style: Enums.SimpleLineSymbolStyleDot
-        color: "blue"
-        width: 3
+    GraphicsOverlay {
+        id: containerBoxGraphicsOverlay
+
+        // create a renderer for the associations
+        UniqueValueRenderer {
+            id: uniqueValueRenderer
+            fieldNames: ["AssociationType"]
+
+            UniqueValue {
+                id: attachmentValue
+                label: "Attachment"
+                SimpleLineSymbol {
+                    id: attachmentSymbol
+                    style: Enums.SimpleLineSymbolStyleDot
+                    color: "blue"
+                    width: 3
+
+                    // create swatch image for the legend
+                    Component.onCompleted: {
+                        createSwatch();
+                    }
+                    onSwatchImageChanged: {
+                        attachmentImage.source = swatchImage;
+                    }
+                }
+            }
+
+            UniqueValue {
+                id: connectivityValue
+                label: "Connectivity"
+                SimpleLineSymbol {
+                    id: connectivitySymbol
+                    style: Enums.SimpleLineSymbolStyleDot
+                    color: "red"
+                    width: 3
+
+                    // create swatch image for the legend
+                    Component.onCompleted: {
+                        createSwatch();
+                    }
+                    onSwatchImageChanged: {
+                        connectivityImage.source = swatchImage;
+                    }
+                }
+            }
+
+            UniqueValue {
+                id: boundingBoxValue
+                label: "Connectivity"
+                SimpleLineSymbol {
+                    id: boundingBoxSymbol
+                    style: Enums.SimpleLineSymbolStyleDot
+                    color: "yellow"
+                    width: 3
+
+                    // create swatch image for the legend
+                    Component.onCompleted: {
+                        createSwatch();
+                    }
+                    onSwatchImageChanged: {
+                        boundingBoxImage.source = swatchImage;
+                    }
+                }
+            }
+        }
     }
 
-    SimpleLineSymbol {
-        id: connectivitySymbol
-        style: Enums.SimpleLineSymbolStyleDot
-        color: "red"
-        width: 3
-    }
+    function getContainerElementFromIdentifiedFeature(identifyLayersResults) {
+        // Identify a feature and create a UtilityElement from it.
+        containerElement = null;
 
-    SimpleLineSymbol {
-        id: boundingBoxSymbol
-        style: Enums.SimpleLineSymbolStyleDot
-        color: "yellow"
-        width: 3
+        for (let i = 0; i < mapView.identifyLayersResults.length; i++) {
+            let layerResult = mapView.identifyLayersResults[i];
+
+            if (layerResult.layerContent.objectType !== "SubtypeFeatureLayer")
+                continue;
+
+            for (let j = 0; j < layerResult.sublayerResults.length; j++) {
+                let sublayerResult = layerResult.sublayerResults[j];
+
+                for (let n = 0; n < sublayerResult.geoElements.length; n++) {
+                    let geoElement = sublayerResult.geoElements[n];
+                    containerElement = utilityNetwork.createElementWithArcGISFeature(geoElement);
+
+                    if (containerElement) {
+                        // Queries for a list of all UtilityAssociation objects of containment association types present in the geodatabase for the containerElement.
+                        utilityNetwork.associations(containerElement, Enums.UtilityAssociationTypeContainment);
+                        return;
+                    }
+                }
+            }
+        }
     }
 
     function setShowContainerView(showContainterView) {
         containerViewIsVisible = showContainterView;
         if (containerViewIsVisible) {
-            previousViewpoint = mapView.currentViewpointExtent; //ArcGISRuntimeEnvironment.createObject("ViewpointExtent", {extent: mapView.currentViewpointExtent});
+            containerCloseButton.focus = true;
+            previousViewpoint = mapView.currentViewpointExtent;
             mapView.map.operationalLayers.forEach((layer) => {
                                                       layer.visible = false;
                                                   });
 
         } else {
+            mapView.focus = true;
             mapView.setViewpointAndSeconds(previousViewpoint, 0.5);
             containerGraphicsOverlay.graphics.clear();
             mapView.map.operationalLayers.forEach((layer) => {
@@ -259,17 +368,20 @@ Rectangle {
     }
 
     function getContainmentAssociations(containmentAssociations) {
+        // Create a list of elements representing the participants in the containment associations
         const contentElements = [];
         for (let i = 0; i < containmentAssociations.length; i++) {
             let otherElement = containmentAssociations[i].fromElement.objectId === containerElement.objectId ? containmentAssociations[i].toElement : containmentAssociations[i].fromElement;
             contentElements.push(otherElement);
         }
         if (contentElements.length > 0) {
+            // Get the features for the UtilityElements
             utilityNetwork.featuresForElements(contentElements);
         }
     }
 
     function getFeaturesForElements(featuresForElementsResult) {
+        // Display the features on the graphics overlay
         featuresForElementsResult.forEach((feature) => {
                                               const featureSymbol = feature.featureTable.layerInfo.drawingInfo.renderer.symbolForFeature(feature);
                                               const featureGraphic = ArcGISRuntimeEnvironment.createObject("Graphic", {
@@ -280,11 +392,13 @@ Rectangle {
                                           });
         if (containerGraphicsOverlay.graphics.count > 0) {
             setShowContainerView(true);
+            // Get the associations for each feature within the graphics overlay extent
             utilityNetwork.associationsWithEnvelope(containerGraphicsOverlay.extent);
         }
     }
 
     function showAttachmentAndConnectivitySymbols(containmentAssociations) {
+        // Display the association lines on the graphics overlay
         for (let i = 0; i < containmentAssociations.length; i++) {
             let association = containmentAssociations[i]
             let symbol;
@@ -301,6 +415,7 @@ Rectangle {
             containerGraphicsOverlay.graphics.append(graphic);
         }
 
+        // If there are no associations, create a bounding box graphic using the viewpoint, otherwise use the extent of the graphics overlay
         if (containerGraphicsOverlay.graphics.count === 1 && containerGraphicsOverlay.graphics.get(0).geometry.geometryType === Enums.GeometryTypePoint) {
             let viewpoint = ArcGISRuntimeEnvironment.createObject("ViewpointCenter", {
                                                                       center: containerGraphicsOverlay.graphics.get(0).geometry,
@@ -308,15 +423,12 @@ Rectangle {
                                                                   });
             createBoundingBoxGeometry = true;
             mapView.setViewpoint(viewpoint);
-            return;
-            // Will trigger after viewpoint is set
-            // boundingBoxExtent = mapView.currentViewpointExtent.extent;
-            // mapView.setViewpointAndWait(previousViewpoint);
+            messageBoxText.text = "This feature contains no associations";
         } else {
             boundingBoxExtent = GeometryEngine.buffer(containerGraphicsOverlay.extent, 0.05);
+            containerGraphicsOverlay.graphics.append(ArcGISRuntimeEnvironment.createObject("Graphic", {geometry: boundingBoxExtent, symbol: boundingBoxSymbol}));
+            mapView.setViewpointGeometryAndPadding(containerGraphicsOverlay.extent, 80);
         }
 
-        containerGraphicsOverlay.graphics.append(ArcGISRuntimeEnvironment.createObject("Graphic", {geometry: boundingBoxExtent, symbol: boundingBoxSymbol}));
-        mapView.setViewpointGeometryAndPadding(containerGraphicsOverlay.extent, 100);
     }
 }

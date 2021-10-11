@@ -52,8 +52,11 @@ DisplayContentOfUtilityNetworkContainer::DisplayContentOfUtilityNetworkContainer
     challenge->continueWithCredential(m_cred);
   });
 
+  // Load a web map that includes ArcGIS Pro Subtype Group Layers with only container features visible (i.e. fuse bank, switch bank, transformer bank, hand hole and junction box)
   m_map = new Map(QUrl("https://sampleserver7.arcgisonline.com/portal/home/item.html?id=813eda749a9444e4a9d833a4db19e1c8"), this);
-  m_utilityNetwork = new UtilityNetwork(QUrl("https://sampleserver7.arcgisonline.com/server/rest/services/UtilityNetwork/NapervilleElectric/FeatureServer"), m_cred, this);
+
+  // Create and load a UtilityNetwork with the same feature service URL as the layers in the Map
+  m_utilityNetwork = new UtilityNetwork(QUrl("https://sampleserver7.arcgisonline.com/server/rest/services/UtilityNetwork/NapervilleElectric/FeatureServer"), this);
 
   m_map->utilityNetworks()->append(m_utilityNetwork);
   m_utilityNetwork->load();
@@ -76,7 +79,6 @@ bool DisplayContentOfUtilityNetworkContainer::showContainerView() const
 void DisplayContentOfUtilityNetworkContainer::setShowContainerView(bool showContainerView)
 {
   m_showContainerView = showContainerView;
-  emit showContainerViewChanged();
 
   if (m_showContainerView)
   {
@@ -96,6 +98,8 @@ void DisplayContentOfUtilityNetworkContainer::setShowContainerView(bool showCont
       layer->setVisible(true);
     }
   }
+
+  emit showContainerViewChanged();
 }
 
 MapQuickView* DisplayContentOfUtilityNetworkContainer::mapView() const
@@ -112,6 +116,7 @@ void DisplayContentOfUtilityNetworkContainer::setMapView(MapQuickView* mapView)
   m_mapView = mapView;
   m_mapView->setMap(m_map);
 
+  // Add a GraphicsOverlay for displaying a container view.
   m_containerGraphicsOverlay = new GraphicsOverlay;
   m_mapView->graphicsOverlays()->append(m_containerGraphicsOverlay);
 
@@ -136,6 +141,7 @@ void DisplayContentOfUtilityNetworkContainer::createConnections()
       showAttachmentAndConnectivitySymbols(containmentAssociations);
   });
 
+  // Connect error signals to message box
   connect(m_map, &Map::errorOccurred, this, [this](Error e)
   {
     setMessageBoxText("Map error: " + e.message() + " " + e.additionalMessage());
@@ -165,11 +171,16 @@ void DisplayContentOfUtilityNetworkContainer::onMouseClicked(QMouseEvent& mouseE
 
 void DisplayContentOfUtilityNetworkContainer::onIdentifyLayersCompleted(QUuid, QList<Esri::ArcGISRuntime::IdentifyLayerResult*> identifyResults)
 {
+  if (identifyResults.isEmpty())
+    return;
+
   if (m_containerElement)
   {
     delete m_containerElement;
     m_containerElement = nullptr;
   }
+
+  // Identify a feature and create a UtilityElement from it.
 
   for (IdentifyLayerResult* layerResult : identifyResults)
   {
@@ -184,6 +195,7 @@ void DisplayContentOfUtilityNetworkContainer::onIdentifyLayersCompleted(QUuid, Q
             m_containerElement = m_utilityNetwork->createElementWithArcGISFeature(feature);
             if (m_containerElement)
             {
+              // Queries for a list of all UtilityAssociation objects of containment association types present in the geodatabase for the m_containerElement.
               m_taskWatcher = m_utilityNetwork->associations(m_containerElement, UtilityAssociationType::Containment);
               return;
             }
@@ -196,9 +208,7 @@ void DisplayContentOfUtilityNetworkContainer::onIdentifyLayersCompleted(QUuid, Q
 
 void DisplayContentOfUtilityNetworkContainer::getContainmentAssociations(QList<Esri::ArcGISRuntime::UtilityAssociation*> containmentAssociations)
 {
-  if (m_showContainerView)
-    return;
-
+  // Create a list of elements representing the participants in the containment associations
   QList<UtilityElement*> contentElements;
   for (UtilityAssociation* association : containmentAssociations)
   {
@@ -209,29 +219,37 @@ void DisplayContentOfUtilityNetworkContainer::getContainmentAssociations(QList<E
   if (!contentElements.isEmpty())
   {
     setShowContainerView(true);
+
+    // Get the features for the UtilityElements
     m_taskWatcher = m_utilityNetwork->featuresForElements(contentElements);
   }
 }
 
 void DisplayContentOfUtilityNetworkContainer::onFeaturesForElementsCompleted(QUuid)
 {
+  // Display the features on the graphics overlay
   QList<Feature*> contentFeatures = m_utilityNetwork->featuresForElementsResult()->features();
+
   for (Feature* content : contentFeatures)
   {
     Symbol* symbol = dynamic_cast<ArcGISFeatureTable*>(content->featureTable())->layerInfo().drawingInfo().renderer(this)->symbol(content);
     m_containerGraphicsOverlay->graphics()->append(new Graphic(content->geometry(), symbol, this));
   }
+
+  // Get the associations for each feature within the graphics overlay extent
   m_taskWatcher = m_utilityNetwork->associations(m_containerGraphicsOverlay->extent());
 }
 
 void DisplayContentOfUtilityNetworkContainer::showAttachmentAndConnectivitySymbols(QList<Esri::ArcGISRuntime::UtilityAssociation*> containmentAssociations)
 {
+  // Display the association lines on the graphics overlay
   for (UtilityAssociation* association : containmentAssociations)
   {
     Symbol* symbol = association->associationType() == UtilityAssociationType::Attachment ? m_attachmentSymbol : m_connectivitySymbol;
     m_containerGraphicsOverlay->graphics()->append(new Graphic(association->geometry(), symbol, this));
   }
 
+  // If there are no associations, create a bounding box graphic using the viewpoint, otherwise use the extent of the graphics overlay
   if (m_containerGraphicsOverlay->graphics()->size() == 1 && m_containerGraphicsOverlay->graphics()->first()->geometry().geometryType() == GeometryType::Point)
   {
     m_mapView->setViewpointAndWait(Viewpoint(Point(m_containerGraphicsOverlay->graphics()->first()->geometry()), m_containerElement->assetType()->containerViewScale()));
@@ -246,7 +264,7 @@ void DisplayContentOfUtilityNetworkContainer::showAttachmentAndConnectivitySymbo
   }
 
   m_containerGraphicsOverlay->graphics()->append(new Graphic(m_boundingBox, m_boundingBoxSymbol, this));
-  m_taskWatcher = m_mapView->setViewpoint(Viewpoint(GeometryEngine::buffer(m_containerGraphicsOverlay->extent(), 0.2)), .5);
+  m_taskWatcher = m_mapView->setViewpoint(Viewpoint(GeometryEngine::buffer(m_containerGraphicsOverlay->extent(), 0.5)), .5);
 }
 
 QString DisplayContentOfUtilityNetworkContainer::messageBoxText() const
@@ -260,7 +278,7 @@ void DisplayContentOfUtilityNetworkContainer::setMessageBoxText(QString message)
   emit messageBoxTextChanged();
 }
 
-// Create attachment and connectivity legend
+// Create attachment, connectivity, and bounding box legend
 void DisplayContentOfUtilityNetworkContainer::createLegend()
 {
   QQmlEngine* engine = QQmlEngine::contextForObject(this)->engine();
