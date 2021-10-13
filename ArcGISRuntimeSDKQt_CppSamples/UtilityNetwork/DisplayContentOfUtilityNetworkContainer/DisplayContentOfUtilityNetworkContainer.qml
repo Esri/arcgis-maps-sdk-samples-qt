@@ -40,56 +40,6 @@ Item {
     }
 
     // Create outter rectangle for the legend
-    Control {
-        id: legendBox
-        anchors {
-            top: parent.top
-            left: parent.left
-            margins: 20
-        }
-        background: Rectangle {
-            border.color: "black"
-            border.width: 1
-        }
-        padding: 5
-        visible: model.showContainerView
-
-        contentItem: GridLayout {
-            id: grid
-            anchors.horizontalCenter: parent.horizontalCenter
-            columns: 2
-            Layout.fillWidth: true
-
-            Image {
-                id: attachmentImage
-                source: model.attachmentSymbolUrl
-                fillMode: Image.PreserveAspectFit
-            }
-            Label {
-                id: attachmentLabel
-                text: "Attachment"
-            }
-
-            Image {
-                id: connectivityImage
-                source: model.connectivitySymbolUrl
-            }
-            Label {
-                id: connectivityLabel
-                text: "Connectivity"
-            }
-
-            Image {
-                id: boundingBoxSymbol
-                source: model.boundingBoxSymbolUrl
-            }
-            Label {
-                id: boundingBoxLabel
-                text: "Bounding box"
-            }
-        }
-    }
-
     Rectangle {
         id: containerViewOverlay
         anchors.fill: parent
@@ -106,6 +56,55 @@ Item {
                 containerViewOverlay.focus = true;
             else
                 view.focus = true;
+        }
+
+        Control {
+            id: legendBox
+            anchors {
+                top: parent.top
+                left: parent.left
+                margins: 20
+            }
+            background: Rectangle {
+                border.color: "black"
+                border.width: 1
+            }
+            padding: 5
+
+            contentItem: GridLayout {
+                id: grid
+                anchors.horizontalCenter: parent.horizontalCenter
+                columns: 2
+                Layout.fillWidth: true
+
+                Image {
+                    id: attachmentImage
+                    source: model.attachmentSymbolUrl
+                    fillMode: Image.PreserveAspectFit
+                }
+                Label {
+                    id: attachmentLabel
+                    text: "Attachment"
+                }
+
+                Image {
+                    id: connectivityImage
+                    source: model.connectivitySymbolUrl
+                }
+                Label {
+                    id: connectivityLabel
+                    text: "Connectivity"
+                }
+
+                Image {
+                    id: boundingBoxSymbol
+                    source: model.boundingBoxSymbolUrl
+                }
+                Label {
+                    id: boundingBoxLabel
+                    text: "Bounding box"
+                }
+            }
         }
 
         Button {

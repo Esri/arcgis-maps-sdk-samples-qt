@@ -140,79 +140,76 @@ Rectangle {
             anchors.fill: parent
             scrollGestureEnabled: true
         }
-    }
 
-    Button {
-        id: containerCloseButton
-        anchors {
-            bottom: parent.bottom
-            bottomMargin: 30
-            horizontalCenter: parent.horizontalCenter
+        Control {
+            id: legendBox
+            anchors {
+                top: parent.top
+                left: parent.left
+                margins: 20
+            }
+            background: Rectangle {
+                border.color: "black"
+                border.width: 1
+            }
+            padding: 5
+
+            contentItem: GridLayout {
+                id: grid
+                columns: 2
+                anchors.horizontalCenter: parent.horizontalCenter
+
+                Label {
+                    text: "Utility association types"
+                    Layout.alignment: Qt.AlignHCenter
+                    Layout.fillWidth: true
+                    Layout.columnSpan: 2
+                }
+
+                Image {
+                    id: attachmentImage
+                    fillMode: Image.PreserveAspectFit
+                }
+                Label {
+                    id: attachmentLabel
+                    text: "Attachment symbol"
+                }
+
+                Image {
+                    id: connectivityImage
+                }
+                Label {
+                    id: connectivityLabel
+                    text: "Connectivity symbol"
+                }
+
+                Image {
+                    id: boundingBoxImage
+                }
+                Label {
+                    id: boundingBoxLabel
+                    text: "Connectivity symbol"
+                }
+            }
         }
-        background: Rectangle {
-            color: "white"
-            border.color: "black"
-        }
-        text: "Close container view"
-        font.pointSize: 16
 
-        visible: containerViewIsVisible
-
-        onClicked: {
-            setShowContainerView(false);
-            containerGraphicsOverlay.graphics.clear();
-        }
-    }
-
-    Control {
-        id: legendBox
-        anchors {
-            top: parent.top
-            left: parent.left
-            margins: 20
-        }
-        background: Rectangle {
-            border.color: "black"
-            border.width: 1
-        }
-        padding: 5
-        visible: containerViewIsVisible
-
-        contentItem: GridLayout {
-            id: grid
-            columns: 2
-            anchors.horizontalCenter: parent.horizontalCenter
-
-            Label {
-                text: "Utility association types"
-                Layout.alignment: Qt.AlignHCenter
-                Layout.fillWidth: true
-                Layout.columnSpan: 2
+        Button {
+            id: containerCloseButton
+            anchors {
+                bottom: parent.bottom
+                bottomMargin: 30
+                horizontalCenter: parent.horizontalCenter
             }
+            background: Rectangle {
+                color: "white"
+                border.color: "black"
+            }
+            text: "Close container view"
+            font.pointSize: 16
 
-            Image {
-                id: attachmentImage
-                fillMode: Image.PreserveAspectFit
-            }
-            Label {
-                id: attachmentLabel
-                text: "Attachment symbol"
-            }
-
-            Image {
-                id: connectivityImage
-            }
-            Label {
-                id: connectivityLabel
-                text: "Connectivity symbol"
-            }
-
-            Image {
-                id: boundingBoxImage
-            }
-            Label {
-                id: boundingBoxLabel
-                text: "Connectivity symbol"
+            onClicked: {
+                setShowContainerView(false);
+                containerGraphicsOverlay.graphics.clear();
             }
         }
     }
@@ -429,6 +426,5 @@ Rectangle {
             containerGraphicsOverlay.graphics.append(ArcGISRuntimeEnvironment.createObject("Graphic", {geometry: boundingBoxExtent, symbol: boundingBoxSymbol}));
             mapView.setViewpointGeometryAndPadding(containerGraphicsOverlay.extent, 80);
         }
-
     }
 }
