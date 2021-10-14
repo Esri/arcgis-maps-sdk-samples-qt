@@ -72,7 +72,7 @@ void QueryOGCAPICQLFilters::setMapView(MapQuickView* mapView)
 
   m_mapView = mapView;
   m_mapView->setMap(m_map);
-  m_mapView->setViewpoint(Viewpoint(32.62, 36.10, 20'000));
+  m_mapView->setViewpoint(Viewpoint(32.62, 36.10, 200'000));
 
   QueryParameters queryParams;
 
