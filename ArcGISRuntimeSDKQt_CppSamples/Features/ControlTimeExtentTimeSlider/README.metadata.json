@@ -27,5 +27,5 @@
         "ControlTimeExtentTimeSlider.cpp",
         "ControlTimeExtentTimeSlider.h"
     ],
-    "title": "ControlTimeExtentTimeSlider"
+    "title": "Control time extent using time slider"
 }
