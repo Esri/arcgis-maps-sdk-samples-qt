@@ -79,7 +79,7 @@ void QueryOGCAPICQLFilters::setMapView(MapQuickView* mapView)
   //Get the extent of the dataset
   m_dataSetExtent = m_ogcFeatureCollectionTable->extent();
   queryParams.setGeometry(m_dataSetExtent);
-
+  queryParams.setWhereClause("F_CODE = 'AP010'");
   queryParams.setMaxFeatures(1000);
 
   // Populate the feature collection table with features that match the parameters, clear the cache, and store all table fields
