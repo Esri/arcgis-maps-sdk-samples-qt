@@ -9,7 +9,7 @@ Query data from an OGC API feature service using CQL filters.
 CQL (Common Query Language) is an OGC-created query language used to query for subsets of features. Use CQL filters to narrow geometry results from an OGC feature table.
 
 ## How to use the sample
-The sample loads displaying 1000 features within the OGC API feature service. Select a sample CQL query from the drop down menu. Optionally, adjust the max features value in the text box, and enter a date range to query the data with a time extent. Press the "Query" button to see the query applied to the OGC API features shown on the map.
+The sample loads displaying a maximum of 1000 features within the OGC API feature service. Select a sample CQL query from the drop down menu. Optionally, adjust the max features value in the text box, and enter a date range such as June 13, 2011 (06-13-2011) to January 7, 2012 (01-07-2012) to narrow down the results based on time extent. Press the "Query" button to see the query applied to the OGC API features shown on the map.
 
 ## How it works
 1. Create an `OgcFeatureCollectionTable` object using a URL to an OGC API feature service and a collection ID.
