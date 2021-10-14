@@ -1,4 +1,4 @@
-# Visualize temporal data using time slider
+# Control time extent using time slider
 
 This sample demonstrates how to use the time slider from the toolkit to visualize temporal data by applying a specific time extent.
 When viewing feature layers that contain a large amount of data with timestamps, you may want to filter the data to only show data relevant to a specific time range. This can help visualize changes in the data over time and aid in making better interpretations and predictions of future trends.
@@ -19,7 +19,7 @@ Use the play button to step through the data one day at a time. Use the previous
 
 1. Create a `MapView` with a `Map`.
 2. Create a `ServiceFeatureTable` from a URL (the feature layer from the url in this sample includes time-enabled data).
-3. Create a feature layer from the service feature table
+3. Create a feature layer from the service feature table.
 4. Add the feature layer that includes time-enabled data to the map's list of operational layers.
 5. Create a `TimeSlider` from the ArcGIS Runtime Toolkit to allow users to show data only from the given date range. This sets up all necessary calls to visualize and step through the temporal data.
 
