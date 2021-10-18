@@ -21,14 +21,14 @@
 #include "DisplayContentOfUtilityNetworkContainer.h"
 #include "SymbolImageProvider.h"
 
-#include "ArcGISFeature.h"
+//#include "ArcGISFeature.h"
 #include "ArcGISFeatureListModel.h"
 #include "ArcGISFeatureTable.h"
 #include "AuthenticationManager.h"
 #include "GeometryEngine.h"
 #include "SimpleLineSymbol.h"
 #include "SubtypeFeatureLayer.h"
-#include "Symbol.h"
+//#include "Symbol.h"
 #include "Map.h"
 #include "MapQuickView.h"
 #include "UtilityAssetType.h"
@@ -69,37 +69,6 @@ void DisplayContentOfUtilityNetworkContainer::init()
   // Register the map view for QML
   qmlRegisterType<MapQuickView>("Esri.Samples", 1, 0, "MapView");
   qmlRegisterType<DisplayContentOfUtilityNetworkContainer>("Esri.Samples", 1, 0, "DisplayContentOfUtilityNetworkContainerSample");
-}
-
-bool DisplayContentOfUtilityNetworkContainer::showContainerView() const
-{
-  return m_showContainerView;
-}
-
-void DisplayContentOfUtilityNetworkContainer::setShowContainerView(bool showContainerView)
-{
-  m_showContainerView = showContainerView;
-
-  if (m_showContainerView)
-  {
-    m_previousViewpoint = m_mapView->currentViewpoint(ViewpointType::BoundingGeometry);
-    for (Layer* layer : *m_mapView->map()->operationalLayers())
-    {
-      layer->setVisible(false);
-    }
-  }
-  else
-  {
-    m_mapView->setViewpoint(m_previousViewpoint, 0.5);
-    m_containerGraphicsOverlay->graphics()->clear();
-
-    for (Layer* layer : *m_mapView->map()->operationalLayers())
-    {
-      layer->setVisible(true);
-    }
-  }
-
-  emit showContainerViewChanged();
 }
 
 MapQuickView* DisplayContentOfUtilityNetworkContainer::mapView() const
@@ -181,7 +150,6 @@ void DisplayContentOfUtilityNetworkContainer::onIdentifyLayersCompleted(QUuid, Q
   }
 
   // Identify a feature and create a UtilityElement from it.
-
   for (IdentifyLayerResult* layerResult : identifyResults)
   {
     if (!m_containerElement && dynamic_cast<SubtypeFeatureLayer*>(layerResult->layerContent()))
@@ -218,6 +186,7 @@ void DisplayContentOfUtilityNetworkContainer::getContainmentAssociations(QList<E
 
   if (!contentElements.isEmpty())
   {
+    // Set visibility of all `OperationalLayers` to `false`
     setShowContainerView(true);
 
     // Get the features for the UtilityElements
@@ -229,7 +198,6 @@ void DisplayContentOfUtilityNetworkContainer::onFeaturesForElementsCompleted(QUu
 {
   // Display the features on the graphics overlay
   QList<Feature*> contentFeatures = m_utilityNetwork->featuresForElementsResult()->features();
-
   for (Feature* content : contentFeatures)
   {
     Symbol* symbol = dynamic_cast<ArcGISFeatureTable*>(content->featureTable())->layerInfo().drawingInfo().renderer(this)->symbol(content);
@@ -265,6 +233,37 @@ void DisplayContentOfUtilityNetworkContainer::showAttachmentAndConnectivitySymbo
 
   m_containerGraphicsOverlay->graphics()->append(new Graphic(m_boundingBox, m_boundingBoxSymbol, this));
   m_taskWatcher = m_mapView->setViewpoint(Viewpoint(GeometryEngine::buffer(m_containerGraphicsOverlay->extent(), 0.5)), .5);
+}
+
+bool DisplayContentOfUtilityNetworkContainer::showContainerView() const
+{
+  return m_showContainerView;
+}
+
+void DisplayContentOfUtilityNetworkContainer::setShowContainerView(bool showContainerView)
+{
+  m_showContainerView = showContainerView;
+
+  if (m_showContainerView)
+  {
+    m_previousViewpoint = m_mapView->currentViewpoint(ViewpointType::BoundingGeometry);
+    for (Layer* layer : *m_mapView->map()->operationalLayers())
+    {
+      layer->setVisible(false);
+    }
+  }
+  else
+  {
+    m_mapView->setViewpoint(m_previousViewpoint, 0.5);
+    m_containerGraphicsOverlay->graphics()->clear();
+
+    for (Layer* layer : *m_mapView->map()->operationalLayers())
+    {
+      layer->setVisible(true);
+    }
+  }
+
+  emit showContainerViewChanged();
 }
 
 QString DisplayContentOfUtilityNetworkContainer::messageBoxText() const

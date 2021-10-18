@@ -136,9 +136,13 @@ Rectangle {
         anchors.fill: parent
         visible: containerViewIsVisible
         color: "transparent"
+
+        // Prevent MapView interaction
         MouseArea {
             anchors.fill: parent
-            scrollGestureEnabled: true
+        }
+        ScrollView {
+            anchors.fill: parent
         }
 
         Control {
@@ -212,44 +216,45 @@ Rectangle {
                 containerGraphicsOverlay.graphics.clear();
             }
         }
+
+        Control {
+            id: messageBoxPopup
+            anchors {
+                centerIn: parent
+            }
+            padding: 10
+            width: Math.max(messageBoxText.width, closeMessage.width) + (padding * 2)
+            height: messageBoxText.height + closeMessage.height + (messageBoxPopup.padding * 3)
+            background: Rectangle {
+                color: "white"
+                border.color: "black"
+            }
+
+            visible: messageBoxText.text !== ""
+
+            Text {
+                id: messageBoxText
+                anchors {
+                    top: parent.top
+                    topMargin: messageBoxPopup.padding
+                    horizontalCenter: parent.horizontalCenter
+                }
+                text: ""
+            }
+
+            Button {
+                id: closeMessage
+                anchors {
+                    bottom: parent.bottom
+                    bottomMargin: messageBoxPopup.padding
+                    horizontalCenter: parent.horizontalCenter
+                }
+                text: "Close"
+                onClicked: messageBoxText.text = "";
+            }
+        }
     }
 
-    Control {
-        id: messageBoxPopup
-        anchors {
-            centerIn: parent
-        }
-        padding: 10
-        width: Math.max(messageBoxText.width, closeMessage.width) + (padding * 2)
-        height: messageBoxText.height + closeMessage.height + (messageBoxPopup.padding * 3)
-        background: Rectangle {
-            color: "white"
-            border.color: "black"
-        }
-
-        visible: messageBoxText.text !== ""
-
-        Text {
-            id: messageBoxText
-            anchors {
-                top: parent.top
-                topMargin: messageBoxPopup.padding
-                horizontalCenter: parent.horizontalCenter
-            }
-            text: ""
-        }
-
-        Button {
-            id: closeMessage
-            anchors {
-                bottom: parent.bottom
-                bottomMargin: messageBoxPopup.padding
-                horizontalCenter: parent.horizontalCenter
-            }
-            text: "Close"
-            onClicked: messageBoxText.text = "";
-        }
-    }
 
     GraphicsOverlay {
         id: containerBoxGraphicsOverlay

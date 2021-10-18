@@ -36,10 +36,10 @@ class UtilityNetwork;
 
 class SymbolImageProvider;
 
-#include <QAbstractListModel>
+//#include <QAbstractListModel>
 #include <QObject>
 #include <QMouseEvent>
-#include "Geometry.h"
+//#include "Geometry.h"
 #include "TaskWatcher.h"
 #include "Viewpoint.h"
 
@@ -88,14 +88,13 @@ private:
   QString boundingBoxSymbolUrl() const;
 
   Esri::ArcGISRuntime::Credential* m_cred = nullptr;
-  Esri::ArcGISRuntime::SubtypeFeatureLayer* m_subtypeFeatureLayer = nullptr;
+  Esri::ArcGISRuntime::Geometry m_boundingBox;
   Esri::ArcGISRuntime::GraphicsOverlay* m_containerGraphicsOverlay = nullptr;
   Esri::ArcGISRuntime::Map* m_map = nullptr;
   Esri::ArcGISRuntime::MapQuickView* m_mapView = nullptr;
+  Esri::ArcGISRuntime::TaskWatcher m_taskWatcher;
   Esri::ArcGISRuntime::UtilityElement* m_containerElement = nullptr;
   Esri::ArcGISRuntime::UtilityNetwork* m_utilityNetwork = nullptr;
-  Esri::ArcGISRuntime::Geometry m_boundingBox;
-  Esri::ArcGISRuntime::TaskWatcher m_taskWatcher;
   Esri::ArcGISRuntime::Viewpoint m_previousViewpoint;
   bool m_showContainerView = false;
   bool m_setBoundingBox = false;

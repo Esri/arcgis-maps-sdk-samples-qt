@@ -32,6 +32,7 @@ Item {
     MapView {
         id: view
         anchors.fill: parent
+        focus: true
 
         Component.onCompleted: {
             // Set and keep the focus on SceneView to enable keyboard navigation
@@ -43,10 +44,15 @@ Item {
     Rectangle {
         id: containerViewOverlay
         anchors.fill: parent
+
+        // Prevent MapView interaction
         MouseArea {
             anchors.fill: parent
-            scrollGestureEnabled: true
         }
+        ScrollView {
+            anchors.fill: parent
+        }
+
         color: "transparent"
         border.color: "transparent"
 
