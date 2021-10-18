@@ -15,7 +15,7 @@
         "upstream trace",
         "utility network",
         "validate consistency",
-        "GeometryEngine::fractionAlong",
+        "GeometryEngine.fractionAlong",
         "ServiceGeodatabase",
         "UtilityAssetType",
         "UtilityDomainNetwork",
@@ -36,7 +36,7 @@
         ""
     ],
     "relevant_apis": [
-        "GeometryEngine::fractionAlong",
+        "GeometryEngine.fractionAlong",
         "ServiceGeodatabase",
         "UtilityAssetType",
         "UtilityDomainNetwork",
