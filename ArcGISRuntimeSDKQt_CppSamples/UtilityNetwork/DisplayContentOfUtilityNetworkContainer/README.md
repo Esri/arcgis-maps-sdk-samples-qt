@@ -1,31 +1,44 @@
 # Display Content of Utility Network Container
 
 A utility network container allows a dense collection of features to be represented by a single feature, which can be used to reduce map clutter.
-This sample demonstrates ...       
-This is **why** you would do it this way ...
 
 ![](screenshot.png)
 
+## Use case
+
+Offering a container view for features aids in the review for valid structural attachment and containment relationships and helps determine if a dataset has an association role set. Container views often model a cluster of electrical devices on a pole top or inside a cabinet or vault.
+
 ## How to use the sample
-e.g. Use the input controls to define a ... Click the "Go" button to ...
+
+Tap on a container feature to show all features inside the container. The container is shown as a polygon graphic with the content features contained within. The viewpoint and scale of the map are also changed to the container's extent. Connectivity and attachment associations inside the container are shown as red and blue dotted lines respectively.
 
 ## How it works
-e.g. In the `GeoView.Tapped` event, features in the `Map` are selected using an `Envelope` defined by the user's tap location ...
+
+1. Load a web map that includes ArcGIS Pro [Subtype Group Layers](https://pro.arcgis.com/en/pro-app/latest/help/mapping/layer-properties/subtype-layers.htm) with only container features visible (i.e. fuse bank, switch bank, transformer bank, hand hole and junction box).
+2. Create and load a UtilityNetwork with the same feature service URL as the layers in the Map.
+3. Add a `GraphicsOverlay` for displaying a container view.
+4. Create a connection to `MapQuickView::mouseClicked`.
+5. Identify a feature with `MapView::identifyLayers` and create a `UtilityElement` from it.
+6. Get the associations for this element using `UtilityNetwork::associations(UtilityElement *element, UtilityAssociationType::Containment)`.
+7. Turn-off the visibility of all `OperationalLayers`.
+8. Get the features for the `UtilityElement`(s) from the associations using `UtilityNetwork::featuresForElements(const QList<UtilityElement *> &elements)`
+9. Add a `Graphic` with the geometry and symbol of each feature to the `GraphicsOverlay`.
+10. Get associations for the extent of the `GraphicsOverlay` using `UtilityNetwork::associations(const Envelope &extent)`
+11. Add a `Graphic` to represent the association geometry between container features using a symbol that distinguishes between `Attachment` and `Connectivity` association type.
+12. Add another `Graphic` that represents this extent and zoom to this extent with some buffer.
 
 ## Relevant API
- - ClassName1
- - MethodName
 
-## Offline data
-Read more about how to set up the sample's offline data [here](http://links.esri.com/ArcGISRuntimeQtSamples).
+* SubtypeFeatureLayer
+* UtilityAssociation
+* UtilityAssociationType
+* UtilityElement
+* UtilityNetwork
 
-Link | Local Location
----------|-------|
-|[San Francisco Streets TPK](https://www.arcgis.com/home/item.html?id=3f1bbf0ec70b409a975f5c91f363fe7d)| `<userhome>`/ArcGIS/Runtime/Data/tpk/SanFrancisco.tpk |
+## About the data
 
-## Additional information
-A standard level license is required to ...
+The [Naperville electric network feature service](https://sampleserver7.arcgisonline.com/server/rest/services/UtilityNetwork/NapervilleElectric/FeatureServer), hosted on ArcGIS Online, contains a utility network used to find associations shown in this sample and a web map portal item, [Naperville electric containers](https://sampleserver7.arcgisonline.com/portal/home/item.html?id=813eda749a9444e4a9d833a4db19e1c8), that use the same feature service endpoint and displays only container features.
 
 ## Tags
-Routing, Network analysis, Geocode
 
+associations, connectivity association, containment association, structural attachment associations, utility network
