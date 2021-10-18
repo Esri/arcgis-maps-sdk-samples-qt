@@ -132,6 +132,73 @@ Rectangle {
 
     }
 
+    GraphicsOverlay {
+        id: containerBoxGraphicsOverlay
+
+        // create a renderer for the associations
+        UniqueValueRenderer {
+            id: uniqueValueRenderer
+            fieldNames: ["AssociationType"]
+
+            UniqueValue {
+                id: attachmentValue
+                label: "Attachment"
+                SimpleLineSymbol {
+                    id: attachmentSymbol
+                    style: Enums.SimpleLineSymbolStyleDot
+                    color: "blue"
+                    width: 3
+
+                    // create swatch image for the legend
+                    Component.onCompleted: {
+                        createSwatch();
+                    }
+                    onSwatchImageChanged: {
+                        attachmentImage.source = swatchImage;
+                    }
+                }
+            }
+
+            UniqueValue {
+                id: connectivityValue
+                label: "Connectivity"
+                SimpleLineSymbol {
+                    id: connectivitySymbol
+                    style: Enums.SimpleLineSymbolStyleDot
+                    color: "red"
+                    width: 3
+
+                    // create swatch image for the legend
+                    Component.onCompleted: {
+                        createSwatch();
+                    }
+                    onSwatchImageChanged: {
+                        connectivityImage.source = swatchImage;
+                    }
+                }
+            }
+
+            UniqueValue {
+                id: boundingBoxValue
+                label: "Connectivity"
+                SimpleLineSymbol {
+                    id: boundingBoxSymbol
+                    style: Enums.SimpleLineSymbolStyleDot
+                    color: "yellow"
+                    width: 3
+
+                    // create swatch image for the legend
+                    Component.onCompleted: {
+                        createSwatch();
+                    }
+                    onSwatchImageChanged: {
+                        boundingBoxImage.source = swatchImage;
+                    }
+                }
+            }
+        }
+    }
+
     Rectangle {
         anchors.fill: parent
         visible: containerViewIsVisible
@@ -251,74 +318,6 @@ Rectangle {
                 }
                 text: "Close"
                 onClicked: messageBoxText.text = "";
-            }
-        }
-    }
-
-
-    GraphicsOverlay {
-        id: containerBoxGraphicsOverlay
-
-        // create a renderer for the associations
-        UniqueValueRenderer {
-            id: uniqueValueRenderer
-            fieldNames: ["AssociationType"]
-
-            UniqueValue {
-                id: attachmentValue
-                label: "Attachment"
-                SimpleLineSymbol {
-                    id: attachmentSymbol
-                    style: Enums.SimpleLineSymbolStyleDot
-                    color: "blue"
-                    width: 3
-
-                    // create swatch image for the legend
-                    Component.onCompleted: {
-                        createSwatch();
-                    }
-                    onSwatchImageChanged: {
-                        attachmentImage.source = swatchImage;
-                    }
-                }
-            }
-
-            UniqueValue {
-                id: connectivityValue
-                label: "Connectivity"
-                SimpleLineSymbol {
-                    id: connectivitySymbol
-                    style: Enums.SimpleLineSymbolStyleDot
-                    color: "red"
-                    width: 3
-
-                    // create swatch image for the legend
-                    Component.onCompleted: {
-                        createSwatch();
-                    }
-                    onSwatchImageChanged: {
-                        connectivityImage.source = swatchImage;
-                    }
-                }
-            }
-
-            UniqueValue {
-                id: boundingBoxValue
-                label: "Connectivity"
-                SimpleLineSymbol {
-                    id: boundingBoxSymbol
-                    style: Enums.SimpleLineSymbolStyleDot
-                    color: "yellow"
-                    width: 3
-
-                    // create swatch image for the legend
-                    Component.onCompleted: {
-                        createSwatch();
-                    }
-                    onSwatchImageChanged: {
-                        boundingBoxImage.source = swatchImage;
-                    }
-                }
             }
         }
     }
