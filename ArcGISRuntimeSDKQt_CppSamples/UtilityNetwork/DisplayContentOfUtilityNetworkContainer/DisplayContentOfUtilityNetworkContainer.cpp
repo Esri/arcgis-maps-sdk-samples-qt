@@ -84,7 +84,7 @@ void DisplayContentOfUtilityNetworkContainer::setMapView(MapQuickView* mapView)
   m_mapView->setMap(m_map);
 
   // Add a GraphicsOverlay for displaying a container view.
-  m_containerGraphicsOverlay = new GraphicsOverlay;
+  m_containerGraphicsOverlay = new GraphicsOverlay(this);
   m_mapView->graphicsOverlays()->append(m_containerGraphicsOverlay);
 
   createConnections();
