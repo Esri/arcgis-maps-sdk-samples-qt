@@ -36,10 +36,8 @@ class UtilityNetwork;
 
 class SymbolImageProvider;
 
-//#include <QAbstractListModel>
 #include <QObject>
 #include <QMouseEvent>
-//#include "Geometry.h"
 #include "TaskWatcher.h"
 #include "Viewpoint.h"
 
