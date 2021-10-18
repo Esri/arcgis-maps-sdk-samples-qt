@@ -152,7 +152,7 @@ void DisplayContentOfUtilityNetworkContainer::onIdentifyLayersCompleted(QUuid, Q
   {
     if (!m_containerElement && dynamic_cast<SubtypeFeatureLayer*>(layerResult->layerContent()))
     {
-      for (IdentifyLayerResult* sublayerResult : layerResult->sublayerResults())
+      for (const IdentifyLayerResult* sublayerResult : layerResult->sublayerResults())
       {
         for (GeoElement* geoElement : sublayerResult->geoElements())
         {
