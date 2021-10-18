@@ -1,4 +1,4 @@
-# QueryOGCAPICQLFilters
+# Query OGC API with CQL Filters
 
 Query data from an OGC API feature service using CQL filters.
 

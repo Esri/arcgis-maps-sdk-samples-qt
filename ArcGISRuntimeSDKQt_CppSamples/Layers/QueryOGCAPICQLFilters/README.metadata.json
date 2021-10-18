@@ -34,5 +34,5 @@
         "QueryOGCAPICQLFilters.cpp",
         "QueryOGCAPICQLFilters.h"
     ],
-    "title": "QueryOGCAPICQLFilters"
+    "title": "Query OGC API with CQL Filters"
 }
