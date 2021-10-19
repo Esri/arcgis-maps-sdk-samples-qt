@@ -230,7 +230,7 @@ void DisplayContentOfUtilityNetworkContainer::showAttachmentAndConnectivitySymbo
   }
 
   m_containerGraphicsOverlay->graphics()->append(new Graphic(m_boundingBox, m_boundingBoxSymbol, this));
-  m_taskWatcher = m_mapView->setViewpoint(Viewpoint(GeometryEngine::buffer(m_containerGraphicsOverlay->extent(), 0.5)), .5);
+  m_taskWatcher = m_mapView->setViewpointGeometry(m_containerGraphicsOverlay->extent(), 100);
 }
 
 bool DisplayContentOfUtilityNetworkContainer::showContainerView() const
