@@ -61,9 +61,7 @@ Rectangle {
             // Load a web map that includes ArcGIS Pro Subtype Group Layers with only container features visible (i.e. fuse bank, switch bank, transformer bank, hand hole and junction box)
             initUrl: "https://sampleserver7.arcgisonline.com/portal/home/item.html?id=813eda749a9444e4a9d833a4db19e1c8"
 
-            onErrorChanged: {
-                messageBoxText.text = ("Map error: " + error.message + " " + error.additionalMessage);
-            }
+            onErrorChanged: messageBoxText.text = ("Map error: " + error.message + " " + error.additionalMessage);
 
             UtilityNetwork {
                 id: utilityNetwork
@@ -87,9 +85,7 @@ Rectangle {
                     getFeaturesForElements(utilityNetwork.featuresForElementsResult);
                 }
 
-                onErrorChanged: {
-                    messageBoxText.text = ("UtilityNetork error: " + error.message + " " + error.additionalMessage);
-                }
+                onErrorChanged: messageBoxText.text = ("UtilityNetork error: " + error.message + " " + error.additionalMessage);
             }
 
             onLoadStatusChanged: {
@@ -99,9 +95,7 @@ Rectangle {
             }
         }
 
-        onErrorChanged: {
-            messageBoxText.text = ("MapView error: " + error.message + " " + error.additionalMessage);
-        }
+        onErrorChanged: messageBoxText.text = ("MapView error: " + error.message + " " + error.additionalMessage);
 
         onMouseClicked: identifyLayers(mouse.x, mouse.y, 5, false);
 
@@ -150,12 +144,8 @@ Rectangle {
                     width: 3
 
                     // create swatch image for the legend
-                    Component.onCompleted: {
-                        createSwatch();
-                    }
-                    onSwatchImageChanged: {
-                        attachmentImage.source = swatchImage;
-                    }
+                    Component.onCompleted: createSwatch();
+                    onSwatchImageChanged: attachmentImage.source = swatchImage;
                 }
             }
 
@@ -169,12 +159,8 @@ Rectangle {
                     width: 3
 
                     // create swatch image for the legend
-                    Component.onCompleted: {
-                        createSwatch();
-                    }
-                    onSwatchImageChanged: {
-                        connectivityImage.source = swatchImage;
-                    }
+                    Component.onCompleted: createSwatch();
+                    onSwatchImageChanged: connectivityImage.source = swatchImage;
                 }
             }
 
@@ -188,12 +174,8 @@ Rectangle {
                     width: 3
 
                     // create swatch image for the legend
-                    Component.onCompleted: {
-                        createSwatch();
-                    }
-                    onSwatchImageChanged: {
-                        boundingBoxImage.source = swatchImage;
-                    }
+                    Component.onCompleted: createSwatch();
+                    onSwatchImageChanged: boundingBoxImage.source = swatchImage;
                 }
             }
         }
@@ -284,9 +266,7 @@ Rectangle {
 
     Control {
         id: messageBoxPopup
-        anchors {
-            centerIn: parent
-        }
+        anchors.centerIn: parent
         padding: 10
         width: Math.max(messageBoxText.width, closeMessage.width) + (padding * 2)
         height: messageBoxText.height + closeMessage.height + (messageBoxPopup.padding * 3)

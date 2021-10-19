@@ -123,17 +123,13 @@ Item {
             }
             text: "Close container view"
             font.pointSize: 16
-            onClicked: {
-                model.showContainerView = false;
-            }
+            onClicked: model.showContainerView = false;
         }
     }
 
     Control {
         id: messageBoxPopup
-        anchors {
-            centerIn: parent
-        }
+        anchors.centerIn: parent
         padding: 10
         width: Math.max(messageBoxText.width, closeMessage.width) + (padding * 2)
         height: messageBoxText.height + closeMessage.height + (messageBoxPopup.padding * 3)
