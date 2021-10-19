@@ -63,7 +63,6 @@ Rectangle {
             onComponentCompleted: {
                 serviceGeodatabase.load();
                 utilityNetwork.load();
-                map.utilityNetworks.append(utilityNetwork);
             }
 
             ServiceGeodatabase {
