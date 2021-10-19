@@ -15,8 +15,8 @@
         "utility network",
         "visible scale range",
         "LabelDefinition",
-        "SimpleLabelExpression",
         "ServiceFeatureTable",
+        "SimpleLabelExpression",
         "SubtypeFeatureLayer",
         "SubtypeSublayer",
         "TextSymbol"
@@ -26,8 +26,8 @@
     ],
     "relevant_apis": [
         "LabelDefinition",
-        "SimpleLabelExpression",
         "ServiceFeatureTable",
+        "SimpleLabelExpression",
         "SubtypeFeatureLayer",
         "SubtypeSublayer",
         "TextSymbol"
