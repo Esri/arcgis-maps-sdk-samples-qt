@@ -68,12 +68,12 @@ signals:
 
 private:
   Esri::ArcGISRuntime::MapQuickView* mapView() const;
-  bool showContainerView() const;
   void createConnections();
-  void onIdentifyLayersCompleted(QUuid, QList<Esri::ArcGISRuntime::IdentifyLayerResult*> identifyResult);
-  void onMouseClicked(QMouseEvent& mouseEvent);
-  void onFeaturesForElementsCompleted(QUuid);
-  void getContainmentAssociations(QList<Esri::ArcGISRuntime::UtilityAssociation*> containmentAssociations);
+  bool showContainerView() const;
+  void identifyFeaturesAtMouseClick(QMouseEvent& mouseEvent);
+  void getUtilityAssociationsOfFeature(QUuid, QList<Esri::ArcGISRuntime::IdentifyLayerResult*> identifyResult);
+  void displayFeaturesAndGetAssociations(QUuid);
+  void getFeaturesForElementsOfUtilityAssociations(QList<Esri::ArcGISRuntime::UtilityAssociation*> containmentAssociations);
   void showAttachmentAndConnectivitySymbols(QList<Esri::ArcGISRuntime::UtilityAssociation*> containmentAssociations);
   void setMapView(Esri::ArcGISRuntime::MapQuickView* mapView);
   void setShowContainerView(bool showContainerView);
