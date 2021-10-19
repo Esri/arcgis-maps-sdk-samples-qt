@@ -89,9 +89,8 @@ Rectangle {
             }
 
             onLoadStatusChanged: {
-                if (loadStatus === Enums.LoadStatusLoaded) {
+                if (loadStatus === Enums.LoadStatusLoaded)
                     utilityNetwork.load();
-                }
             }
         }
 
@@ -222,7 +221,7 @@ Rectangle {
                 }
                 Label {
                     id: attachmentLabel
-                    text: "Attachment symbol"
+                    text: "Attachment"
                 }
 
                 Image {
@@ -230,7 +229,7 @@ Rectangle {
                 }
                 Label {
                     id: connectivityLabel
-                    text: "Connectivity symbol"
+                    text: "Connectivity"
                 }
 
                 Image {
@@ -238,7 +237,7 @@ Rectangle {
                 }
                 Label {
                     id: boundingBoxLabel
-                    text: "Connectivity symbol"
+                    text: "Bounding box"
                 }
             }
         }

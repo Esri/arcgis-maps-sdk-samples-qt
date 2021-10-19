@@ -22,11 +22,11 @@ namespace Esri
 namespace ArcGISRuntime
 {
 class Credential;
-class SubtypeFeatureLayer;
 class GraphicsOverlay;
 class IdentifyLayerResult;
 class Map;
 class MapQuickView;
+class SubtypeFeatureLayer;
 class Symbol;
 class UtilityAssociation;
 class UtilityElement;
