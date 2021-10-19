@@ -6,7 +6,6 @@
         "screenshot.png"
     ],
     "keywords": [
-        "ArcadeLabelExression",
         "attribute",
         "deconfliction",
         "label",
@@ -15,6 +14,7 @@
         "symbol",
         "text",
         "visualization",
+        "ArcadeLabelExpression",
         "FeatureLayer",
         "LabelDefinition",
         "TextSymbol"
@@ -23,7 +23,7 @@
         "/qt/latest/qml/sample-code/sample-qt-showlabelsonlayers.htm"
     ],
     "relevant_apis": [
-        "ArcadeLabelExression",
+        "ArcadeLabelExpression",
         "FeatureLayer",
         "LabelDefinition",
         "TextSymbol"
