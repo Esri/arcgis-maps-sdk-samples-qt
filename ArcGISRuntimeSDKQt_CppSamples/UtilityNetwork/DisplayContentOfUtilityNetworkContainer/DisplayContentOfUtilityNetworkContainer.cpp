@@ -55,8 +55,6 @@ DisplayContentOfUtilityNetworkContainer::DisplayContentOfUtilityNetworkContainer
 
   // Create and load a UtilityNetwork with the same feature service URL as the layers in the Map
   m_utilityNetwork = new UtilityNetwork(QUrl("https://sampleserver7.arcgisonline.com/server/rest/services/UtilityNetwork/NapervilleElectric/FeatureServer"), this);
-
-  m_map->utilityNetworks()->append(m_utilityNetwork);
   m_utilityNetwork->load();
 }
 
