@@ -262,6 +262,7 @@ Rectangle {
         }
 
         onErrorChanged: {
+            busy.visible = false;
             dialogText.text = qsTr("%1 - %2".arg(error.message).arg(error.additionalMessage));
             traceCompletedDialog.open();
         }
