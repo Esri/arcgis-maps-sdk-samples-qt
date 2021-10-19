@@ -25,10 +25,10 @@
 #include "ArcGISFeatureTable.h"
 #include "AuthenticationManager.h"
 #include "GeometryEngine.h"
-#include "SimpleLineSymbol.h"
-#include "SubtypeFeatureLayer.h"
 #include "Map.h"
 #include "MapQuickView.h"
+#include "SimpleLineSymbol.h"
+#include "SubtypeFeatureLayer.h"
 #include "UtilityAssetType.h"
 #include "UtilityAssociation.h"
 #include "UtilityElement.h"
@@ -136,7 +136,7 @@ void DisplayContentOfUtilityNetworkContainer::onMouseClicked(QMouseEvent& mouseE
   m_mapView->identifyLayers(mouseEvent.x(), mouseEvent.y(), tolerance, returnPopupsOnly);
 }
 
-void DisplayContentOfUtilityNetworkContainer::onIdentifyLayersCompleted(QUuid, QList<Esri::ArcGISRuntime::IdentifyLayerResult*> identifyResults)
+void DisplayContentOfUtilityNetworkContainer::onIdentifyLayersCompleted(QUuid, QList<IdentifyLayerResult*> identifyResults)
 {
   if (identifyResults.isEmpty())
     return;
@@ -172,7 +172,7 @@ void DisplayContentOfUtilityNetworkContainer::onIdentifyLayersCompleted(QUuid, Q
   }
 }
 
-void DisplayContentOfUtilityNetworkContainer::getContainmentAssociations(QList<Esri::ArcGISRuntime::UtilityAssociation*> containmentAssociations)
+void DisplayContentOfUtilityNetworkContainer::getContainmentAssociations(QList<UtilityAssociation*> containmentAssociations)
 {
   // Create a list of elements representing the participants in the containment associations
   QList<UtilityElement*> contentElements;
@@ -206,7 +206,7 @@ void DisplayContentOfUtilityNetworkContainer::onFeaturesForElementsCompleted(QUu
   m_taskWatcher = m_utilityNetwork->associations(m_containerGraphicsOverlay->extent());
 }
 
-void DisplayContentOfUtilityNetworkContainer::showAttachmentAndConnectivitySymbols(QList<Esri::ArcGISRuntime::UtilityAssociation*> containmentAssociations)
+void DisplayContentOfUtilityNetworkContainer::showAttachmentAndConnectivitySymbols(QList<UtilityAssociation*> containmentAssociations)
 {
   // Display the association lines on the graphics overlay
   for (UtilityAssociation* association : containmentAssociations)
@@ -269,7 +269,7 @@ QString DisplayContentOfUtilityNetworkContainer::messageBoxText() const
   return m_messageBoxText;
 }
 
-void DisplayContentOfUtilityNetworkContainer::setMessageBoxText(QString message)
+void DisplayContentOfUtilityNetworkContainer::setMessageBoxText(const QString& message)
 {
   m_messageBoxText = message;
   emit messageBoxTextChanged();
@@ -282,9 +282,9 @@ void DisplayContentOfUtilityNetworkContainer::createLegend()
   m_symbolImageProvider = new SymbolImageProvider();
   engine->addImageProvider(SymbolImageProvider::imageProviderId(), m_symbolImageProvider);
 
-  m_attachmentSymbol = new SimpleLineSymbol(SimpleLineSymbolStyle::Dot, Qt::blue, 3);
-  m_connectivitySymbol = new SimpleLineSymbol(SimpleLineSymbolStyle::Dot, Qt::red, 3);
-  m_boundingBoxSymbol = new SimpleLineSymbol(SimpleLineSymbolStyle::Dot, Qt::yellow, 3);
+  m_attachmentSymbol = new SimpleLineSymbol(SimpleLineSymbolStyle::Dot, Qt::blue, 3, this);
+  m_connectivitySymbol = new SimpleLineSymbol(SimpleLineSymbolStyle::Dot, Qt::red, 3, this);
+  m_boundingBoxSymbol = new SimpleLineSymbol(SimpleLineSymbolStyle::Dot, Qt::yellow, 3, this);
 
   connect(m_attachmentSymbol, &Symbol::createSwatchCompleted, this, [this](QUuid id, QImage image)
   {

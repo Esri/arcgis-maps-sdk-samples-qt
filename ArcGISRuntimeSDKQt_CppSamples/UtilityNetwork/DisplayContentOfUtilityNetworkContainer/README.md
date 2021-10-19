@@ -1,4 +1,4 @@
-# Display Content of Utility Network Container
+# Display content of utility network container
 
 A utility network container allows a dense collection of features to be represented by a single feature, which can be used to reduce map clutter.
 

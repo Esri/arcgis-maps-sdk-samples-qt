@@ -205,9 +205,6 @@ Rectangle {
         color: "transparent"
 
         // Prevent MapView interaction
-        MouseArea {
-            anchors.fill: parent
-        }
         ScrollView {
             anchors.fill: parent
         }

@@ -40,15 +40,12 @@ Item {
         }
     }
 
-    // Create outter rectangle for the legend
+    // Create outer rectangle for the legend
     Rectangle {
         id: containerViewOverlay
         anchors.fill: parent
 
         // Prevent MapView interaction
-        MouseArea {
-            anchors.fill: parent
-        }
         ScrollView {
             anchors.fill: parent
         }

@@ -47,7 +47,6 @@ class DisplayContentOfUtilityNetworkContainer : public QObject
 
   Q_PROPERTY(Esri::ArcGISRuntime::MapQuickView* mapView READ mapView WRITE setMapView NOTIFY mapViewChanged)
   Q_PROPERTY(bool showContainerView READ showContainerView WRITE setShowContainerView NOTIFY showContainerViewChanged)
-
   Q_PROPERTY(QString attachmentSymbolUrl READ attachmentSymbolUrl NOTIFY attachmentSymbolUrlChanged)
   Q_PROPERTY(QString connectivitySymbolUrl READ connectivitySymbolUrl NOTIFY connectivitySymbolUrlChanged)
   Q_PROPERTY(QString boundingBoxSymbolUrl READ boundingBoxSymbolUrl NOTIFY boundingBoxSymbolUrlChanged)
@@ -78,7 +77,7 @@ private:
   void showAttachmentAndConnectivitySymbols(QList<Esri::ArcGISRuntime::UtilityAssociation*> containmentAssociations);
   void setMapView(Esri::ArcGISRuntime::MapQuickView* mapView);
   void setShowContainerView(bool showContainerView);
-  void setMessageBoxText(QString message);
+  void setMessageBoxText(const QString& message);
   QString messageBoxText() const;
   void createLegend();
   QString attachmentSymbolUrl() const;
@@ -96,9 +95,7 @@ private:
   Esri::ArcGISRuntime::Viewpoint m_previousViewpoint;
   bool m_showContainerView = false;
   bool m_setBoundingBox = false;
-
   QString m_messageBoxText = "";
-
   QString m_attachmentSymbolUrl = "";
   QString m_connectivitySymbolUrl = "";
   QString m_boundingBoxSymbolUrl = "";
