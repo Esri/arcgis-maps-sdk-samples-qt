@@ -205,15 +205,8 @@ Rectangle {
 
             contentItem: GridLayout {
                 id: grid
-                columns: 2
                 anchors.horizontalCenter: parent.horizontalCenter
-
-                Label {
-                    text: "Utility association types"
-                    Layout.alignment: Qt.AlignHCenter
-                    Layout.fillWidth: true
-                    Layout.columnSpan: 2
-                }
+                columns: 2
 
                 Image {
                     id: attachmentImage
