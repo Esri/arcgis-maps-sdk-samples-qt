@@ -6,14 +6,14 @@
         "screenshot.png"
     ],
     "keywords": [
+        "CQL",
+        "OGC",
+        "OGC API",
         "browse",
         "catalog",
         "common query language",
-        "CQL",
         "feature table",
         "filter",
-        "OGC",
-        "OGC API",
         "query",
         "service",
         "web",
@@ -21,7 +21,9 @@
         "QueryParameters",
         "TimeExtent"
     ],
-    "redirect_from": "",
+    "redirect_from": [
+        ""
+    ],
     "relevant_apis": [
         "OgcFeatureCollectionTable",
         "QueryParameters",
