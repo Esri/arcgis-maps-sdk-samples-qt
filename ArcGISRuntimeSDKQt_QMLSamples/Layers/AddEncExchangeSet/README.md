@@ -39,4 +39,4 @@ Link | Local Location
 
 ## Tags
 
-data, ENC, hydrographic, maritime, nautical chart, layers
+data, ENC, hydrographic, layers, maritime, nautical chart
