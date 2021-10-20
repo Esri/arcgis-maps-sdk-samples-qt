@@ -8,6 +8,10 @@ This sample demonstrates applying a dictionary renderer to a graphics overlay in
 
 Use a dictionary renderer on a graphics overlay to display more transient data, such as military messages coming through a local tactical network.
 
+## How to use the sample
+
+Pan and zoom to explore military symbols on the map.
+
 ## How it works
 
 1. Create a new `DictionarySymbolStyle(dictionaryPath)`.

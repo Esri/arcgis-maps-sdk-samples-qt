@@ -6,9 +6,13 @@ Display nautical charts per the ENC specification.
 
 ## Use case
 
-The ENC specification describes how hydrographic data should be displayed digitally.
+The [ENC specification](https://docs.iho.int/iho_pubs/standard/S-57Ed3.1/20ApB1.pdf) describes how hydrographic data should be displayed digitally.
 
 An ENC exchange set is a catalog of data files which can be loaded as cells. The cells contain information on how symbols should be displayed in relation to one another, so as to represent information such as depth and obstacles accurately.
+
+## How to use the sample
+
+Run the sample and view the ENC data. Pan and zoom around the map. Take note of the high level of detail in the data and the smooth rendering of the layer.
 
 ## How it works
 
@@ -25,6 +29,7 @@ An ENC exchange set is a catalog of data files which can be loaded as cells. The
 * EncLayer
 
 ## Offline data
+
 To set up the sample's offline data, see the [Use offline data in the samples](https://github.com/Esri/arcgis-runtime-samples-qt#use-offline-data-in-the-samples) section of the Qt Samples repository overview.
 
 Link | Local Location
@@ -34,4 +39,4 @@ Link | Local Location
 
 ## Tags
 
-Data, ENC, maritime, nautical chart, layers, hydrographic
+data, ENC, hydrographic, maritime, nautical chart, layers

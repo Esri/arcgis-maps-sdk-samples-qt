@@ -8,6 +8,10 @@ This sample demonstrates applying a dictionary renderer to a graphics overlay in
 
 Use a dictionary renderer on a graphics overlay to display more transient data, such as military messages coming through a local tactical network.
 
+## How to use the sample
+
+Pan and zoom to explore military symbols on the map.
+
 ## How it works
 
 The sample loads a number of point military elements from an XML file and adds them as graphics to a `GraphicsOverlay`. A `DictionaryRenderer` is applied to the `GraphicsOverlay` in order to display the graphics with MIL-STD-2525D military symbology. The `GraphicsOverlay`'s `renderingMode` parameter is set to `GraphicsRenderingModeDynamic`, so that point features are displayed with billboarded symbols facing the user (a developer can set `renderingMode` to `GraphicsRenderingModeStatic` if desired to instead drape the symbols on the surface). When all graphics are created, the 3D scene's viewpoint is set to zoom to the full extent of all graphics.
