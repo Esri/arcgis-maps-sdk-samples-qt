@@ -38,27 +38,44 @@ Item {
     }
 
     Rectangle {
+        id: connectionBox
         anchors {
             margins: 5
             left: parent.left
             top: parent.top
         }
         width: 275
-        height: 150
+        height: 175
         color: "#000000"
         opacity: .70
         radius: 5
 
+        ScrollView {
+            anchors.fill: parent
+        }
+
         ColumnLayout {
-            anchors.centerIn: parent
-            width: 250
+            id: enterPortalPrompt
+            anchors {
+                fill: parent
+                margins: 5
+            }
+
             visible: !webmapsList.model
+
+            Text {
+                text: qsTr("Enter portal url secured by IWA")
+                color: "white"
+                font {
+                    bold: true
+                    pixelSize: 14
+                }
+            }
 
             TextField {
                 id: securePortalUrl
                 Layout.fillWidth: true
                 Layout.margins: 2
-                placeholderText: qsTr("Enter portal url secured by IWA")
                 selectByMouse: true
 
                 background: Rectangle {
@@ -89,13 +106,17 @@ Item {
         }
 
         ColumnLayout {
-            anchors.centerIn: parent
-            width: 250
+            id: selectMapPrompt
+            anchors {
+                fill: parent
+                margins: 5
+            }
             visible: webmapsList.model
 
             Text {
                 id: header
                 text: "Connected to:"
+                Layout.fillWidth: true
                 color: "white"
                 font {
                     bold: true
@@ -105,7 +126,9 @@ Item {
 
             Text {
                 id: portalName
+                Layout.fillWidth: true
                 text: securePortalUrl.text
+                horizontalAlignment: Text.AlignLeft
                 elide: Text.ElideMiddle
                 color: "white"
                 font {
@@ -146,11 +169,11 @@ Item {
 
     Dialog {
         id: webMapMsg
+        anchors.centerIn: parent
         property alias text : textLabel.text
         property alias informativeText : detailsLabel.text
         modal: true
-        x: Math.round(parent.width - width) / 2
-        y: Math.round(parent.height - height) / 2
+
         standardButtons: Dialog.Ok
         title: "Could not load web map!"
         visible: integratedWindowsAuthenticationSampleModel.mapLoadError.length > 0
