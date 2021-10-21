@@ -180,28 +180,29 @@ Rectangle {
                 }
             }
 
+            QueryParameters {
+                id: queryParams
+
+                TimeExtent {
+                    id: timeExtent
+                    startTime: new Date(fromDate.text)
+                    endTime: new Date(toDate.text)
+                }
+            }
+
+
             Button {
                 anchors.horizontalCenter: parent.horizontalCenter
                 text: "Query"
 
-                TimeExtent {
-                    id: time
-                    startTime: new Date(fromDate.text);
-                    endTime: new Date(toDate.text);
-                }
 
                 onClicked: {
                     if (!ogcFeatureCollectionTable)
                         return;
 
-                    // create the parameters
-                    const queryParams = ArcGISRuntimeEnvironment.createObject(
-                                          "QueryParameters", {
-                                              "geometry": mapView.currentViewpointExtent.extent,
-                                              "whereClause": whereClauseMenu.currentText,
-                                              "maxFeatures": maxFeatureField.text,
-                                              "timeExtent": time
-                                          });
+                    whereClause: whereClauseMenu.currentText
+                    geometry: mapView.currentViewpointExtent.extent
+                    maxFeatures: maxFeatureField.text
 
                     // Populate the feature collection table with features that match the parameters,
                     // clear the cache to prepare for the new query results, and store all table fields
