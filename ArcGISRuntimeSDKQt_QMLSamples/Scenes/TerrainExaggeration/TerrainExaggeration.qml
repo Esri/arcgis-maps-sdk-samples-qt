@@ -28,11 +28,6 @@ Rectangle {
         id: sceneView
         anchors.fill: parent
 
-        Component.onCompleted: {
-            // Set the focus on SceneView to initially enable keyboard navigation
-            forceActiveFocus();
-        }
-
         // add a Scene to the SceneView
         Scene {
             // add the BasemapNationalGeographic basemap to the scene
@@ -50,6 +45,9 @@ Rectangle {
         }
 
         Component.onCompleted: {
+            // Set the focus on SceneView to initially enable keyboard navigation
+            forceActiveFocus();
+
             sceneView.setViewpointCamera(camera);
         }
 

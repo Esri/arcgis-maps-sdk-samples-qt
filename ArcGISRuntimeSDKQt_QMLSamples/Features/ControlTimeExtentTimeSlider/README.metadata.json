@@ -1,0 +1,34 @@
+{
+    "category": "Features",
+    "description": "This sample demonstrates how to use the time slider from the toolkit to visualize temporal data by applying a specific time extent.",
+    "ignore": false,
+    "images": [
+        "screenshot.png"
+    ],
+    "keywords": [
+        "animate",
+        "data",
+        "filter",
+        "time",
+        "time extent",
+        "time frame",
+        "toolkit",
+        "FeatureLayer",
+        "Map",
+        "MapView",
+        "ServiceFeatureTable"
+    ],
+    "redirect_from": [
+        ""
+    ],
+    "relevant_apis": [
+        "FeatureLayer",
+        "Map",
+        "MapView",
+        "ServiceFeatureTable"
+    ],
+    "snippets": [
+        "ControlTimeExtentTimeSlider.qml"
+    ],
+    "title": "Control time extent using time slider"
+}

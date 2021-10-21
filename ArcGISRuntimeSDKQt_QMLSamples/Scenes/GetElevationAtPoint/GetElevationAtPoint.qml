@@ -31,11 +31,6 @@ Rectangle {
         id: sceneView
         anchors.fill: parent
 
-        Component.onCompleted: {
-            // Set the focus on SceneView to initially enable keyboard navigation
-            forceActiveFocus();
-        }
-
         Scene {
             id: scene
             Basemap {
@@ -81,8 +76,11 @@ Rectangle {
             elevationSurface.locationToElevation(lastQueriedSurfacePos)
         }
 
-        // Once the scene view has loaded, apply the camera.
         Component.onCompleted: {
+            // Set the focus on SceneView to initially enable keyboard navigation
+            forceActiveFocus();
+
+            // Once the scene view has loaded, apply the camera.
             setViewpointCameraAndWait(camera);
         }
     }

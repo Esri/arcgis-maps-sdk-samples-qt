@@ -16,7 +16,7 @@ Tap on the features to prompt a popup that displays information about the featur
 
 1. Create and load a `Map` using a URL.
 2. Set the map to a `MapView` and connect to the `MapView.mouseClicked` signal.
-3. Use `GeoView.identifyLayer(layer, x, y, tolerance, allowPopupsOnly)` to identify the top-most feature.
+3. Use `GeoView.identifyLayer(layer, x, y, tolerance, allowPopupsOnly, maximumResults)` to identify features.
 4. Create a `PopupManager` for each of the result's `Popup`s and append them to a list.
 5. Assign the list of popup managers to the `PopupStackView.popupManagers` property.
 6. Display the popup stack view.
@@ -31,6 +31,10 @@ Tap on the features to prompt a popup that displays information about the featur
 ## About the data
 
 This sample uses a [feature layer](https://sampleserver6.arcgisonline.com/arcgis/rest/services/SF311/FeatureServer/0) that displays reported incidents in San Francisco.
+
+## Additional information
+
+In order to use the PopupManager with a QML UI, the PopupManager, PopupAttachmentManager, PopupAttachmentListModel, and PopupAttributeListModel classes must be registered as QML Types. For more information [visit our developer site](https://developers.arcgis.com/qt/qml/api-reference/qml-esri-arcgisruntime-popupmanager.html#details).
 
 ## Tags
 
