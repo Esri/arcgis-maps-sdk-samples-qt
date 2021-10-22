@@ -67,7 +67,7 @@ Item {
             visible: !webmapsList.model
 
             Text {
-                text: qsTr("Enter portal url secured by IWA")
+                text: qsTr("Enter portal URL secured by IWA")
                 color: "white"
                 font {
                     bold: true
