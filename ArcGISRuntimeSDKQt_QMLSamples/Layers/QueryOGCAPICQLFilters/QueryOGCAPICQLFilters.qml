@@ -152,9 +152,9 @@ Rectangle {
                     text: ""
                     selectByMouse: true
                     validator: RegExpValidator {
-                        regExp: /(0[1-9]|1[012])[-](0[1-9]|[12][0-9]|3[01])[-](19|20)\d\d/
+                        regExp: /(0[1-9]|1[012])[/](0[1-9]|[12][0-9]|3[01])[/](19|20)\d\d/
                     }
-                    placeholderText: "MM-DD-YYYY"
+                    placeholderText: "MM/DD/YYYY"
                 }
             }
 
@@ -174,9 +174,9 @@ Rectangle {
                     text: ""
                     selectByMouse: true
                     validator: RegExpValidator {
-                        regExp: /(0[1-9]|1[012])[-](0[1-9]|[12][0-9]|3[01])[-](19|20)\d\d/
+                        regExp: /(0[1-9]|1[012])[/](0[1-9]|[12][0-9]|3[01])[/](19|20)\d\d/
                     }
-                    placeholderText: "MM-DD-YYYY"
+                    placeholderText: "MM/DD/YYYY"
                 }
             }
 
@@ -184,28 +184,26 @@ Rectangle {
                 anchors.horizontalCenter: parent.horizontalCenter
                 text: "Query"
 
-                TimeExtent {
-                    id: time
-                    startTime: new Date(fromDate.text);
-                    endTime: new Date(toDate.text);
-                }
 
                 onClicked: {
                     if (!ogcFeatureCollectionTable)
                         return;
 
-                    // create the parameters
-                    const queryParams = ArcGISRuntimeEnvironment.createObject(
-                                          "QueryParameters", {
-                                              "geometry": mapView.currentViewpointExtent.extent,
-                                              "whereClause": whereClauseMenu.currentText,
-                                              "maxFeatures": maxFeatureField.text,
-                                              "timeExtent": time
-                                          });
+                    queryParameters.whereClause = whereClauseMenu.currentText
+                    queryParameters.geometry = mapView.currentViewpointExtent.extent
+                    queryParameters.maxFeatures = maxFeatureField.text
+
+                    const newTimeExtent = ArcGISRuntimeEnvironment.createObject("TimeExtent", {
+                                                                                    "startTime": new Date(Date.fromLocaleDateString(Qt.locale(), fromDate.text, "MM/dd/yyyy")),
+                                                                                    "endTime": new Date(Date.fromLocaleDateString(Qt.locale(), toDate.text, "MM/dd/yyyy"))
+                                                                                });
+
+
+                    queryParameters.timeExtent = newTimeExtent;
 
                     // Populate the feature collection table with features that match the parameters,
                     // clear the cache to prepare for the new query results, and store all table fields
-                    ogcFeatureCollectionTable.populateFromService(queryParams, true, []);
+                    ogcFeatureCollectionTable.populateFromService(queryParameters, true, []);
                 }
             }
         }
