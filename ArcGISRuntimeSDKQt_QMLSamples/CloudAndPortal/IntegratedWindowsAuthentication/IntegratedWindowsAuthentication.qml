@@ -90,8 +90,11 @@ Rectangle {
         opacity: .70
         radius: 5
 
-        ScrollView {
+        // Prevent mouse interaction from propagating to the MapView
+        MouseArea {
             anchors.fill: parent
+            onPressed: mouse.accepted = true;
+            onWheel: wheel.accepted = true;
         }
 
         ColumnLayout {
