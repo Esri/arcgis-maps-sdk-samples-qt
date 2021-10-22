@@ -16,7 +16,7 @@
 
 import QtQuick 2.6
 import QtQuick.Controls 2.2
-import Esri.ArcGISRuntime 100.13
+import Esri.ArcGISRuntime 100.12
 
 Rectangle {
     id: mainRect
