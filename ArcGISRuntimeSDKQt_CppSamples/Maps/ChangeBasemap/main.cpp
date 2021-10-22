@@ -81,7 +81,7 @@ void setAPIKey(const QGuiApplication& app, QString apiKey)
 
     if (apiKey.isEmpty())
     {
-      qWarning() << "Use of Esri location services, including basemaps, requires "
+      qWarning() << "Use of Esri location services, including basemaps, requires" <<
                     "you to authenticate with an ArcGIS identity or set the API Key property.";
 
       return;
