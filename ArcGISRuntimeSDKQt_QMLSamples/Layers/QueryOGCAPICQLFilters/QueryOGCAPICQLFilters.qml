@@ -149,12 +149,12 @@ Rectangle {
                     id: fromDate
                     anchors.verticalCenter: parent.verticalCenter
                     width: 200
-                    text: "1900/01/01"
+                    text: ""
                     selectByMouse: true
-                    //                    validator: RegExpValidator {
-                    //                        regExp: /(0[1-9]|1[012])[-](0[1-9]|[12][0-9]|3[01])[-](19|20)\d\d/
-                    //                    }
-                    placeholderText: "MM-DD-YYYY"
+                    validator: RegExpValidator {
+                        regExp: /(0[1-9]|1[012])[/](0[1-9]|[12][0-9]|3[01])[/](19|20)\d\d/
+                    }
+                    placeholderText: "MM/DD/YYYY"
                 }
             }
 
@@ -173,10 +173,10 @@ Rectangle {
                     width: 200
                     text: ""
                     selectByMouse: true
-//                    validator: RegExpValidator {
-//                        regExp: /(0[1-9]|1[012])[-](0[1-9]|[12][0-9]|3[01])[-](19|20)\d\d/
-//                    }
-                    placeholderText: "MM-DD-YYYY"
+                    validator: RegExpValidator {
+                        regExp: /(0[1-9]|1[012])[/](0[1-9]|[12][0-9]|3[01])[/](19|20)\d\d/
+                    }
+                    placeholderText: "MM/DD/YYYY"
                 }
             }
 
@@ -194,9 +194,9 @@ Rectangle {
                     queryParameters.maxFeatures = maxFeatureField.text
 
                     const newTimeExtent = ArcGISRuntimeEnvironment.createObject("TimeExtent", {
-                                                                                 "startTime": new Date(Date.fromLocaleDateString(Qt.locale(), fromDate.text, "MM/dd/yyyy")),
-                                                                                 "endTime": new Date(Date.fromLocaleDateString(Qt.locale(), toDate.text, "MM/dd/yyyy"))
-                                                                             });
+                                                                                    "startTime": new Date(Date.fromLocaleDateString(Qt.locale(), fromDate.text, "MM/dd/yyyy")),
+                                                                                    "endTime": new Date(Date.fromLocaleDateString(Qt.locale(), toDate.text, "MM/dd/yyyy"))
+                                                                                });
 
 
                     queryParameters.timeExtent = newTimeExtent;
