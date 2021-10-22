@@ -14,60 +14,78 @@
 #include <QGuiApplication>
 #include <QQuickView>
 #include <QUrl>
+#include <QCommandLineParser>
 #include <QCoreApplication>
 #include <QDir>
 #include <QQmlEngine>
 
+#include "Esri/ArcGISRuntime/Toolkit/register.h"
+
 #define STRINGIZE(x) #x
 #define QUOTE(x) STRINGIZE(x)
 
+void setAPIKey(const QGuiApplication& app, QString apiKey);
+
 int main(int argc, char *argv[])
 {
-    QGuiApplication::setAttribute(Qt::AA_EnableHighDpiScaling);
-    QGuiApplication app(argc, argv);
-    app.setApplicationName("ChangeBasemap - QML");
+  QGuiApplication::setAttribute(Qt::AA_EnableHighDpiScaling);
+  QGuiApplication app(argc, argv);
+  app.setApplicationName(QString("Test - QML"));
 
-  // Use of Esri location services, including basemaps and geocoding,
-  // requires authentication using either an ArcGIS identity or an API Key.
-  // 1. ArcGIS identity: An ArcGIS named user account that is a member of an
-  //    organization in ArcGIS Online or ArcGIS Enterprise.
-  // 2. API key: A permanent key that gives your application access to Esri
-  //    location services. Visit your ArcGIS Developers Dashboard create a new
-  //    API keys or access an existing API key.
-  const QString apiKey = QStringLiteral("");
-  if (apiKey.isEmpty())
-  {
-      qWarning() << "Use of Esri location services, including basemaps, requires"
-                    "you to authenticate with an ArcGIS identity or set the API Key property.";
-  }
-  else
-  {
-      QCoreApplication::instance()->setProperty("Esri.ArcGISRuntime.apiKey", apiKey);
-  }
+  // Access to Esri location services requires an API key. This can be copied below or used as a command line argument.
+  const QString apiKey = QString("");
+  setAPIKey(app, apiKey);
 
-    // Set the source
-    QQuickView view;
-    view.setResizeMode(QQuickView::SizeRootObjectToView);
+  // Initialize application view
+  QQuickView view;
+  view.setResizeMode(QQuickView::SizeRootObjectToView);
 
-    // Add the import Path
-    view.engine()->addImportPath(QDir(QCoreApplication::applicationDirPath()).filePath("qml"));
+  // Add the import Path
+  view.engine()->addImportPath(QDir(QCoreApplication::applicationDirPath()).filePath("qml"));
 
-    QString arcGISRuntimeImportPath = QUOTE(ARCGIS_RUNTIME_IMPORT_PATH);
+  // Register the application view with the toolkit
+  Esri::ArcGISRuntime::Toolkit::registerComponents(*view.engine());
 
-#if defined(LINUX_PLATFORM_REPLACEMENT)
-    // on some linux platforms the string 'linux' is replaced with 1
-    // fix the replacement paths which were created
-    QString replaceString = QUOTE(LINUX_PLATFORM_REPLACEMENT);
-    arcGISRuntimeImportPath = arcGISRuntimeImportPath.replace(replaceString, "linux", Qt::CaseSensitive);
+#ifdef ARCGIS_RUNTIME_IMPORT_PATH_2
+  view.engine()->addImportPath(ARCGIS_RUNTIME_IMPORT_PATH_2);
 #endif
 
-    // Add the Runtime and Extras path
-    view.engine()->addImportPath(arcGISRuntimeImportPath);
+  // Set the source
+  view.setSource(QUrl("qrc:/Samples/Maps/ChangeBasemap/ChangeBasemap.qml"));
 
-    // Set the source
-    view.setSource(QUrl("qrc:/Samples/Maps/ChangeBasemap/ChangeBasemap.qml"));
+  view.show();
 
-    view.show();
+  return app.exec();
+}
 
-    return app.exec();
+// Use of Esri location services, including basemaps and geocoding,
+// requires authentication using either an ArcGIS identity or an API Key.
+// 1. ArcGIS identity: An ArcGIS named user account that is a member of an
+//    organization in ArcGIS Online or ArcGIS Enterprise.
+// 2. API key: API key: a permanent key that grants access to
+//    location services and premium content in your applications.
+//    Visit your ArcGIS Developers Dashboard to create a new
+//    API key or access an existing API key.
+
+void setAPIKey(const QGuiApplication& app, QString apiKey)
+{
+  if (apiKey.isEmpty())
+  {
+    // Try parsing API key from command line argument, which uses the following syntax "-k <apiKey>".
+    QCommandLineParser cmdParser;
+    QCommandLineOption apiKeyArgument(QStringList{"k", "api"}, "The API Key property used to access Esri location services", "apiKeyInput");
+    cmdParser.addOption(apiKeyArgument);
+    cmdParser.process(app);
+
+    apiKey = cmdParser.value(apiKeyArgument);
+
+    if (apiKey.isEmpty())
+    {
+      qWarning() << "Use of Esri location services, including basemaps, requires" <<
+                    "you to authenticate with an ArcGIS identity or set the API Key property.";
+      return;
+    }
+  }
+
+  QCoreApplication::instance()->setProperty("Esri.ArcGISRuntime.apiKey", apiKey);
 }
