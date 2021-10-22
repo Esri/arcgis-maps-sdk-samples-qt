@@ -35,7 +35,7 @@ Pan and zoom to position the red rectangle around the area you want to take offl
 * SyncLayerOption
 
 ## Offline Data
-Read more about how to set up the sample's offline data [here](http://links.esri.com/ArcGISRuntimeQtSamples).
+To set up the sample's offline data, see the [Use offline data in the samples](https://github.com/Esri/arcgis-runtime-samples-qt#use-offline-data-in-the-samples) section of the Qt Samples repository overview.
 
 Link | Local Location
 ---------|-------|

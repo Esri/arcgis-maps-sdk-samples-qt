@@ -8,6 +8,10 @@ This sample demonstrates applying a dictionary renderer to a graphics overlay in
 
 Use a dictionary renderer on a graphics overlay to display more transient data, such as military messages coming through a local tactical network.
 
+## How to use the sample
+
+Pan and zoom to explore military symbols on the map.
+
 ## How it works
 
 1. Create a new `DictionarySymbolStyle(dictionaryPath)`.
@@ -29,7 +33,7 @@ Use a dictionary renderer on a graphics overlay to display more transient data, 
 
 ## Offline Data
 
-Read more about how to set up the sample's offline data [here](http://links.esri.com/ArcGISRuntimeQtSamples).
+To set up the sample's offline data, see the [Use offline data in the samples](https://github.com/Esri/arcgis-runtime-samples-qt#use-offline-data-in-the-samples) section of the Qt Samples repository overview.
 
 Link | Local Location
 ---------|-------|
