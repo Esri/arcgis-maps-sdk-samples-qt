@@ -107,6 +107,7 @@ void QueryOGCAPICQLFilters::query(const QString& whereClause, const QString& max
     const TimeExtent timeExtent(fromDate.toUTC(), toDate.toUTC());
     queryParams.setTimeExtent(timeExtent);
   }
+  
   // Populate the feature collection table with features that match the parameters,
   // clear the cache to prepare for the new query results, and store all table fields
   m_ogcFeatureCollectionTable->populateFromService(queryParams, true, {});
