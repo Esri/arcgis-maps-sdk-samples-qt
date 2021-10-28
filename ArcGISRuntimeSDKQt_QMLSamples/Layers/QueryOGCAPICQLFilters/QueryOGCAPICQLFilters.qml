@@ -193,13 +193,17 @@ Rectangle {
                     queryParameters.geometry = mapView.currentViewpointExtent.extent
                     queryParameters.maxFeatures = maxFeatureField.text
 
-                    const newTimeExtent = ArcGISRuntimeEnvironment.createObject("TimeExtent", {
-                                                                                    "startTime": new Date(Date.fromLocaleDateString(Qt.locale(), fromDate.text, "MM/dd/yyyy")),
-                                                                                    "endTime": new Date(Date.fromLocaleDateString(Qt.locale(), toDate.text, "MM/dd/yyyy"))
-                                                                                });
+                    if (fromDate.text && toDate.text) {
+                        const startDate = new Date(Date.fromLocaleDateString(Qt.locale(), fromDate.text, "MM/dd/yyyy"));
+                        const endDate = new Date(Date.fromLocaleDateString(Qt.locale(), toDate.text, "MM/dd/yyyy"));
 
+                        const newTimeExtent = ArcGISRuntimeEnvironment.createObject("TimeExtent", {
+                                                                                        "startTime": startDate,
+                                                                                        "endTime": endDate
+                                                                                    });
 
-                    queryParameters.timeExtent = newTimeExtent;
+                        queryParameters.timeExtent = newTimeExtent;
+                    }
 
                     // Populate the feature collection table with features that match the parameters,
                     // clear the cache to prepare for the new query results, and store all table fields
