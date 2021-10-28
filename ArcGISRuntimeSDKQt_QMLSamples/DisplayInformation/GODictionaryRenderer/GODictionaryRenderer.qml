@@ -40,6 +40,11 @@ Rectangle {
         id: mapView
         anchors.fill: parent
 
+        Component.onCompleted: {
+            // Set the focus on MapView to initially enable keyboard navigation
+            forceActiveFocus();
+        }
+
         // The GraphicsOverlay does not have a valid extent until it has been added
         // to a MapView with a valid SpatialReference
         onSpatialReferenceChanged: {

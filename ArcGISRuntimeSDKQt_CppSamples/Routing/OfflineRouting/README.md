@@ -33,11 +33,11 @@ To display a `Route` using a `RouteTask` with offline data:
 
 ## Offline data
 
-The data used by this sample is available on [ArcGIS Online](https://arcgisruntime.maps.arcgis.com/home/item.html?id=567e14f3420d40c5a206e5c0284cf8fc).
+The data used by this sample is available on [ArcGIS Online](https://arcgisruntime.maps.arcgis.com/home/item.html?id=df193653ed39449195af0c9725701dca).
 
 Link | Local Location
 ---------|-------|
-|[San Diego Streets TPKX](https://arcgisruntime.maps.arcgis.com/home/item.html?id=567e14f3420d40c5a206e5c0284cf8fc)| `<userhome>`/ArcGIS/Runtime/Data/tpkx/san_diego |
+|[San Diego Streets TPKX](https://arcgisruntime.maps.arcgis.com/home/item.html?id=df193653ed39449195af0c9725701dca)| `<userhome>`/ArcGIS/Runtime/Data/tpkx/san_diego |
 
 ## About the data
 

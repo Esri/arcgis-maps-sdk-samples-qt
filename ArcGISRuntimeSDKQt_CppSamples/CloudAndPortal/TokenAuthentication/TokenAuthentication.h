@@ -38,7 +38,6 @@ public:
 
   void componentComplete() override;
   static void init();
-  Q_INVOKABLE void loadSecuredLayer();
 
 private:
   Esri::ArcGISRuntime::Map* m_map = nullptr;

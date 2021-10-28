@@ -46,6 +46,12 @@ Rectangle {
     SceneView {
         id: sceneView
         anchors.fill: parent
+        
+        Component.onCompleted: {
+            // Set the focus on SceneView to initially enable keyboard navigation
+            forceActiveFocus();
+        }
+
         attributionTextVisible: (sceneView.width - mapView.width) > mapView.width // only show attribution text on the widest view
 
         cameraController: followButton.checked && missionReady ? followController : globeController

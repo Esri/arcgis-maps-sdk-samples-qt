@@ -36,15 +36,15 @@ int main(int argc, char *argv[])
   // 2. API key: A permanent key that gives your application access to Esri
   //    location services. Visit your ArcGIS Developers Dashboard create a new
   //    API keys or access an existing API key.
-  const QString apiKey = QStringLiteral("");
+  const QString apiKey = QString("");
   if (apiKey.isEmpty())
   {
-      qWarning() << "Use of Esri location services, including basemaps, requires"
-                    "you to authenticate with an ArcGIS identity or set the API Key property.";
+    qWarning() << "Use of Esri location services, including basemaps, requires" <<
+                  "you to authenticate with an ArcGIS identity or set the API Key property.";
   }
   else
   {
-      QCoreApplication::instance()->setProperty("Esri.ArcGISRuntime.apiKey", apiKey);
+    QCoreApplication::instance()->setProperty("Esri.ArcGISRuntime.apiKey", apiKey);
   }
 
   // Initialize application view
@@ -56,12 +56,12 @@ int main(int argc, char *argv[])
   
   QString arcGISRuntimeImportPath = QUOTE(ARCGIS_RUNTIME_IMPORT_PATH);
 
- #if defined(LINUX_PLATFORM_REPLACEMENT)
+#if defined(LINUX_PLATFORM_REPLACEMENT)
   // on some linux platforms the string 'linux' is replaced with 1
   // fix the replacement paths which were created
   QString replaceString = QUOTE(LINUX_PLATFORM_REPLACEMENT);
   arcGISRuntimeImportPath = arcGISRuntimeImportPath.replace(replaceString, "linux", Qt::CaseSensitive);
- #endif
+#endif
 
   // Add the Runtime and Extras path
   view.engine()->addImportPath(arcGISRuntimeImportPath);

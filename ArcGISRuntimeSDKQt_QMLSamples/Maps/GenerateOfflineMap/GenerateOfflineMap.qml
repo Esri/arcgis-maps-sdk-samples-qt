@@ -19,6 +19,7 @@ import QtQuick.Controls 2.2
 import QtQuick.Layouts 1.3
 import Esri.ArcGISRuntime 100.12
 import Esri.ArcGISExtras 1.1
+import Esri.ArcGISRuntime.Toolkit 100.12
 
 Rectangle {
     id: rootRectangle
@@ -32,6 +33,11 @@ Rectangle {
     MapView {
         id: mapView
         anchors.fill: parent
+
+        Component.onCompleted: {
+            // Set the focus on MapView to initially enable keyboard navigation
+            forceActiveFocus();
+        }
 
         // Create a Map from a Portal Item
         Map {

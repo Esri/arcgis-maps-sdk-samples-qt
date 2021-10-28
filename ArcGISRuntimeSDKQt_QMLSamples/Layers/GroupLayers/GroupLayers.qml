@@ -75,6 +75,9 @@ Rectangle {
         }
 
         Component.onCompleted: {
+            // Set the focus on SceneView to initially enable keyboard navigation
+            forceActiveFocus();
+
             // create initial viewpoint extent
             const env = ArcGISRuntimeEnvironment.createObject("Envelope", {
                                                                   json: {

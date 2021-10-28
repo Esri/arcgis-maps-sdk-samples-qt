@@ -1,0 +1,36 @@
+{
+    "category": "Layers",
+    "description": "Query data from an OGC API feature service using CQL filters.",
+    "ignore": false,
+    "images": [
+        "screenshot.png"
+    ],
+    "keywords": [
+        "CQL",
+        "OGC",
+        "OGC API",
+        "browse",
+        "catalog",
+        "common query language",
+        "feature table",
+        "filter",
+        "query",
+        "service",
+        "web",
+        "OgcFeatureCollectionTable",
+        "QueryParameters",
+        "TimeExtent"
+    ],
+    "redirect_from": [
+        ""
+    ],
+    "relevant_apis": [
+        "OgcFeatureCollectionTable",
+        "QueryParameters",
+        "TimeExtent"
+    ],
+    "snippets": [
+        "QueryOGCAPICQLFilters.qml"
+    ],
+    "title": "Query OGC API with CQL Filters"
+}

@@ -63,55 +63,13 @@ void IntegratedWindowsAuthentication::setMapView(MapQuickView* mapView)
   emit mapViewChanged();
 }
 
-void IntegratedWindowsAuthentication::searchPublicPortal()
-{
-  if (!m_publicPortal)
-  {
-    m_publicPortal = new Portal(arcgis_url, this);
-  }
-  else
-  {
-    m_loadingIndicator = true;
-    emit isLoadingChanged();
-    m_publicPortal->findItems(*query);
-    return;
-  }
-
-  connect(m_publicPortal, &Portal::doneLoading, this, &IntegratedWindowsAuthentication::publicPortalDoneLoading);
-  connect(m_publicPortal, &Portal::findItemsCompleted, this, &IntegratedWindowsAuthentication::searchItemsCompleted);
-
-  m_loadingIndicator = true;
-  emit isLoadingChanged();
-
-  m_publicPortal->load();
-}
-
 void IntegratedWindowsAuthentication::searchIwaSecurePortal(const QString& url)
-{
-  if (!m_iwaSecurePortal)
-  {
-    m_iwaSecurePortal = new Portal(url, this);
-  }
-  else if (m_iwaSecurePortal && (m_iwaSecurePortal->loadStatus() == LoadStatus::FailedToLoad))
+{  
+  if (m_iwaSecurePortal && m_iwaSecurePortal->loadStatus() == LoadStatus::FailedToLoad)
   {
     m_iwaSecurePortal = nullptr;
-    m_iwaSecurePortal = new Portal(url, this);
   }
-  else if (m_iwaSecurePortal && (m_iwaSecurePortal->loadStatus() == LoadStatus::Loaded))
-  {
-    if (m_iwaSecurePortal->url() != url)
-    {
-      m_iwaSecurePortal = nullptr;
-      m_iwaSecurePortal = new Portal(url, this);
-    }
-    else
-    {
-      m_loadingIndicator = true;
-      emit isLoadingChanged();
-      m_iwaSecurePortal->findItems(*query);
-      return;
-    }
-  }
+  m_iwaSecurePortal = new Portal(url, true, this);
 
   connect(m_iwaSecurePortal, &Portal::doneLoading, this, &IntegratedWindowsAuthentication::securePortalDoneLoading);
   connect(m_iwaSecurePortal, &Portal::findItemsCompleted, this, &IntegratedWindowsAuthentication::searchItemsCompleted);
@@ -165,25 +123,6 @@ void IntegratedWindowsAuthentication::securePortalDoneLoading(const Error& loadE
   m_iwaSecurePortal->findItems(*query);
 }
 
-void IntegratedWindowsAuthentication::publicPortalDoneLoading(const Error& loadError)
-{
-  if (!loadError.isEmpty())
-  {
-    m_mapLoadError = loadError.message();
-    m_loadingIndicator = false;
-
-    if(m_webmaps)
-      m_webmaps = nullptr;
-
-    emit webmapListModelChanged();
-    emit isLoadingChanged();
-    emit mapLoadErrorChanged();
-    return;
-  }
-
-  m_publicPortal->findItems(*query);
-}
-
 void IntegratedWindowsAuthentication::searchItemsCompleted(const PortalQueryResultSetForItems* result)
 {
   if(!result)
@@ -193,8 +132,8 @@ void IntegratedWindowsAuthentication::searchItemsCompleted(const PortalQueryResu
     m_webmaps = nullptr;
 
   m_webmaps = result->itemResults();
-
   emit webmapListModelChanged();
+
   m_loadingIndicator = false;
   emit isLoadingChanged();
 }

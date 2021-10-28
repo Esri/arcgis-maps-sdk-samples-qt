@@ -37,6 +37,11 @@ MobileMap_SearchAndRouteSample {
             id: mapView
             objectName: "mapView"
 
+            Component.onCompleted: {
+                // Set the focus on MapView to initially enable keyboard navigation
+                forceActiveFocus();
+            }
+
             // callout to display information
             Callout {
                 calloutData: mapView.calloutData

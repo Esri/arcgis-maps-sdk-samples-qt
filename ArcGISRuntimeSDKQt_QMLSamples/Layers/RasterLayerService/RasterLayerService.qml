@@ -26,8 +26,13 @@ Rectangle {
     height: 600
 
     MapView {
-        anchors.fill: parent
         id: mapView
+        anchors.fill: parent
+        
+        Component.onCompleted: {
+            // Set the focus on MapView to initially enable keyboard navigation
+            forceActiveFocus();
+        }
 
         Map {
             // create a basemap from a tiled layer and add to the map

@@ -10,7 +10,7 @@ Field workers with limited network connectivity can use exported tiles as a base
 
 ## How to use the sample
 
-Pan and zoom into the desired area, making sure the area is within the red boundary. Click 'Export tiles' to start the process. On successful completion you will see a preview of the downloaded tile package.
+Pan and zoom into the desired area, making sure the area is within the red boundary. Click 'Export tiles' to start the process. The application will export tiles from the raster imagery baselayer and not include the vector labels baselayer from the Imagery `BasemapStyle`. On successful completion you will see a preview of the downloaded tile package.
 
 ## How it works
 
@@ -32,6 +32,8 @@ Pan and zoom into the desired area, making sure the area is within the red bound
 ## Additional information
 
 ArcGIS tiled layers do not support reprojection, query, select, identify, or editing. See the [Layer types](https://developers.arcgis.com/qt/layers/#layer-types) discussion in the developers guide to learn more about the characteristics of ArcGIS tiled layers.
+
+At this time, `ExportTileCacheTask` only supports raster layers.
 
 ## Tags
 

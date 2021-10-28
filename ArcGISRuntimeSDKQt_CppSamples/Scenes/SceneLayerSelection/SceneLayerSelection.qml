@@ -27,5 +27,10 @@ SceneLayerSelectionSample {
     SceneView {
         objectName: "sceneView"
         anchors.fill: parent
+
+        Component.onCompleted: {
+            // Set the focus on SceneView to initially enable keyboard navigation
+            forceActiveFocus();
+        }
     }
 }

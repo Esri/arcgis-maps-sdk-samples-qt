@@ -29,6 +29,11 @@ SpatialOperationsSample {
     MapView {
         id: mapQuickView
         anchors.fill: parent
+
+        Component.onCompleted: {
+            // Set the focus on MapView to initially enable keyboard navigation
+            forceActiveFocus();
+        }
     }
     mapView: mapQuickView
 

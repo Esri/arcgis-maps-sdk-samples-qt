@@ -26,15 +26,17 @@ Rectangle {
     width: 800
     height: 600
 
-    readonly property url arcgis_url: "https://www.arcgis.com"
-    property var portalItem
-    property var iwaSecurePortal
-
     MapView {
         id: mapView
         anchors.fill: parent
 
+        Component.onCompleted: {
+            // Set the focus on MapView to initially enable keyboard navigation
+            forceActiveFocus();
+        }
+
         Map {
+            id: webMap
             Basemap {
                 initStyle: Enums.BasemapStyleArcGISTopographic
             }
@@ -42,18 +44,26 @@ Rectangle {
     }
 
     Portal {
-        id: publicPortal
-        url: arcgis_url
+        id: iwaSecurePortal
+        loginRequired: true
+
         onLoadStatusChanged: {
-            if (loadStatus === Enums.LoadStatusFailedToLoad) {
-                webMapMsg.text = loadError.message;
-                webMapMsg.visible = true;
-                indicator.running = false;
+            if (loadStatus === Enums.LoadStatusLoading) {
+                indicator.running = true;
                 return;
             }
 
-            if (loadStatus === Enums.LoadStatusLoaded){
+            else if (loadStatus === Enums.LoadStatusLoaded) {
+                indicator.running = false;
                 findItems(webmapQuery);
+                return;
+            }
+
+            else if (loadStatus === Enums.LoadStatusFailedToLoad) {
+                webMapMsg.text = loadError.message;
+                webmapsList.model = null;
+                webMapMsg.visible = true;
+                indicator.running = false;
                 return;
             }
         }
@@ -65,29 +75,53 @@ Rectangle {
                 webmapsList.model = findItemsResult.itemResults;
             }
         }
-
     }
 
     Rectangle {
-        id: portalLayoutRect
+        id: connectionBox
         anchors {
             margins: 5
             left: parent.left
             top: parent.top
         }
-        width: childrenRect.width
-        height: childrenRect.height
+        width: 275
+        height: 175
         color: "#000000"
         opacity: .70
         radius: 5
 
+        // Prevent mouse interaction from propagating to the MapView
+        MouseArea {
+            anchors.fill: parent
+            onPressed: mouse.accepted = true;
+            onWheel: wheel.accepted = true;
+        }
+
         ColumnLayout {
+            id: enterPortalPrompt
+            anchors {
+                fill: parent
+                margins: 5
+            }
+
+            visible: webmapsList.count === 0
+
+            Text {
+                text: qsTr("Enter portal url secured by IWA")
+                color: "white"
+                font {
+                    bold: true
+                    pixelSize: 14
+                }
+            }
+
+
             TextField {
                 id: securePortalUrl
                 Layout.fillWidth: true
                 Layout.margins: 2
-                placeholderText: qsTr("Enter portal url secured by IWA")
                 selectByMouse: true
+
                 background: Rectangle {
                     implicitWidth: parent.width
                     implicitHeight: parent.height
@@ -96,33 +130,53 @@ Rectangle {
             }
 
             Row {
-                id: myRow
                 Layout.alignment: Qt.AlignHCenter | Qt.AlignVCenter
                 Layout.margins: 2
                 spacing: 3
 
                 Button {
-                    text: qsTr("Search Public")
-                    onClicked: {
-                        if (publicPortal.loadStatus !== Enums.LoadStatusLoaded) {
-                            indicator.running = true;
-                            publicPortal.load();
-                        } else {
-                            publicPortal.findItems(webmapQuery);
-                        }
-                    }
-                }
-                Button {
                     text: qsTr("Search Secure")
                     onClicked: {
                         if (securePortalUrl.text) {
-                            searchPortal(securePortalUrl.text);
+                            iwaSecurePortal.url = securePortalUrl.text;
+                            iwaSecurePortal.load();
                         } else {
                             webMapMsg.text = "Portal URL is empty. Please enter a portal URL"
                             webMapMsg.visible = true;
                             return;
                         }
                     }
+                }
+            }
+        }
+
+        ColumnLayout {
+            id: selectMapPrompt
+            anchors {
+                fill: parent
+                margins: 5
+            }
+            visible: webmapsList.count > 0
+            Text {
+                id: header
+                text: "Connected to:"
+                color: "white"
+                font {
+                    bold: true
+                    pointSize: 14
+                }
+            }
+
+            Text {
+                id: portalName
+                Layout.fillWidth: true
+                text: securePortalUrl.text
+                horizontalAlignment: Text.AlignLeft
+                elide: Text.ElideMiddle
+                color: "white"
+                font {
+                    bold: true
+                    pointSize: 14
                 }
             }
 
@@ -136,8 +190,10 @@ Rectangle {
                 text: qsTr("Load Web Map")
                 Layout.fillWidth: true
                 Layout.margins: 2
-                enabled: webmapsList.model ? true : false
-                onClicked: loadSelectedWebmap(webmapsList.model.get(webmapsList.currentIndex));
+                onClicked: {
+                    const selectedWebmap = webmapsList.model.get(webmapsList.currentIndex);
+                    mapView.map = ArcGISRuntimeEnvironment.createObject("Map", {"item": selectedWebmap});
+                }
             }
         }
     }
@@ -153,66 +209,18 @@ Rectangle {
         types: [ Enums.PortalItemTypeWebMap ]
     }
 
-    function searchPortal (portalUrl) {
-
-        if (!iwaSecurePortal) {
-            iwaSecurePortal = ArcGISRuntimeEnvironment.createObject("Portal", {url: portalUrl});
-        } else if (iwaSecurePortal && (iwaSecurePortal.loadStatus === Enums.LoadStatusFailedToLoad)) {
-            iwaSecurePortal = ArcGISRuntimeEnvironment.createObject("Portal", {url: portalUrl});
-        } else if (iwaSecurePortal && (iwaSecurePortal.loadStatus === Enums.LoadStatusLoaded)) {
-            if (iwaSecurePortal.url != portalUrl) {
-                iwaSecurePortal = ArcGISRuntimeEnvironment.createObject("Portal", {url: portalUrl});
-            } else {
-                indicator.running = true;
-                iwaSecurePortal.findItems(webmapQuery);
-                return;
-            }
-        }
-
-        iwaSecurePortal.loadStatusChanged.connect(()=> {
-            if (iwaSecurePortal.loadStatus === Enums.LoadStatusFailedToLoad) {
-                webMapMsg.text = iwaSecurePortal.loadError.message;
-                webmapsList.model = null;
-                webMapMsg.visible = true;
-                indicator.running = false;
-                return;
-            }
-
-            if (iwaSecurePortal.loadStatus === Enums.LoadStatusLoaded){
-                iwaSecurePortal.findItems(webmapQuery);
-                return;
-            }
-
-        });
-
-        iwaSecurePortal.findItemsStatusChanged.connect(()=> {
-            if ( iwaSecurePortal.findItemsStatus === Enums.TaskStatusCompleted ) {
-                indicator.running = false;
-                webmapsList.textRole = "title";
-                webmapsList.model = iwaSecurePortal.findItemsResult.itemResults;
-            }
-        });
-
-        iwaSecurePortal.load();
-        indicator.running = true;
-    }
-
-    function loadSelectedWebmap(selectedWebmap) {
-        mapView.map = ArcGISRuntimeEnvironment.createObject("Map", {"item": selectedWebmap});
-    }
-
     // Uncomment this section when running as standalone application
-    /*
-    AuthenticationView {
-        anchors.fill: parent
-    }*/
+
+    //    AuthenticationView {
+    //        anchors.fill: parent
+    //    }
 
     Dialog {
         id: webMapMsg
+        anchors.centerIn: parent
         property alias text : textLabel.text
         modal: true
-        x: Math.round(parent.width - width) / 2
-        y: Math.round(parent.height - height) / 2
+
         standardButtons: Dialog.Ok
         title: qsTr("Could not load web map!")
         Text {

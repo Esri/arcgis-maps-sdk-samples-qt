@@ -9,14 +9,18 @@
         "portal item",
         "web map",
         "Map",
-        "MapView"
+        "MapView",
+        "Portal",
+        "PortalItem"
     ],
     "redirect_from": [
         "/qt/latest/qml/sample-code/sample-qt-openmapurl.htm"
     ],
     "relevant_apis": [
         "Map",
-        "MapView"
+        "MapView",
+        "Portal",
+        "PortalItem"
     ],
     "snippets": [
         "OpenMapUrl.qml"

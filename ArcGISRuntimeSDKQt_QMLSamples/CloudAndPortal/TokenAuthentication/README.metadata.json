@@ -11,17 +11,19 @@
         "portal",
         "remember",
         "security",
-        "ArcGISMapImageLayer",
         "Map",
-        "MapView"
+        "MapView",
+        "Portal",
+        "PortalItem"
     ],
     "redirect_from": [
         "/qt/latest/qml/sample-code/sample-qt-tokenauthentication.htm"
     ],
     "relevant_apis": [
-        "ArcGISMapImageLayer",
         "Map",
-        "MapView"
+        "MapView",
+        "Portal",
+        "PortalItem"
     ],
     "snippets": [
         "TokenAuthentication.qml"

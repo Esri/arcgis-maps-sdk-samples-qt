@@ -25,6 +25,12 @@ Rectangle {
     // Create the MapView
     MapView {
         anchors.fill: parent
+
+        Component.onCompleted: {
+            // Set the focus on MapView to initially enable keyboard navigation
+            forceActiveFocus();
+        }
+        
         // Nest the Map as a child of the MapView
         Map {
             // Nest the Basemap to add it as the Map's Basemap

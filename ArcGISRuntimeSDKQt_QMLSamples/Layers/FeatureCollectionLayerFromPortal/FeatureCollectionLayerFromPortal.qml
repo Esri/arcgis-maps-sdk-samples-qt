@@ -28,6 +28,11 @@ Rectangle {
         id: mapView
         anchors.fill: parent
 
+        Component.onCompleted: {
+            // Set the focus on MapView to initially enable keyboard navigation
+            forceActiveFocus();
+        }
+
         PortalItem {
             id: portalItem
             itemId: "32798dfad17942858d5eef82ee802f0b"

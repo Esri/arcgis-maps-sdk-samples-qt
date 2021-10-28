@@ -29,6 +29,11 @@ TerrainExaggerationSample {
         anchors.fill: parent
         objectName: "sceneView"
 
+        Component.onCompleted: {
+            // Set the focus on SceneView to initially enable keyboard navigation
+            forceActiveFocus();
+        }
+
         // Slider UI presentation at bottom
         Rectangle {
             anchors {

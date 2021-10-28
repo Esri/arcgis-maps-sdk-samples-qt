@@ -51,6 +51,11 @@ Rectangle {
             Layout.fillWidth: true
             Layout.fillHeight: true
 
+            Component.onCompleted: {
+                // Set the focus on SceneView to initially enable keyboard navigation
+                forceActiveFocus();
+            }
+
             Scene {
                 id: scene
                 Basemap {

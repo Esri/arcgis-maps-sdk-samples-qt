@@ -18,6 +18,7 @@ import QtQuick 2.6
 import QtQuick.Controls 2.2
 import QtQuick.Layouts 1.3
 import Esri.Samples 1.0
+import Esri.ArcGISRuntime.Toolkit 100.12
 
 GenerateOfflineMap_OverridesSample {
     id: offlineMapOverridesSample
@@ -46,6 +47,11 @@ GenerateOfflineMap_OverridesSample {
         id: mapView
         anchors.fill: parent
         objectName: "mapView"
+
+        Component.onCompleted: {
+            // Set the focus on MapView to initially enable keyboard navigation
+            forceActiveFocus();
+        }
 
         // Create a button and anchor it to the attribution top
         DownloadButton {

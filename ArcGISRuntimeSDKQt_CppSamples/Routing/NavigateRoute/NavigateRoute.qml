@@ -26,6 +26,11 @@ Item {
         id: view
         anchors.fill: parent
 
+        Component.onCompleted: {
+            // Set the focus on MapView to initially enable keyboard navigation
+            forceActiveFocus();
+        }
+
         Rectangle {
             id: backBox
             z: 1

@@ -27,6 +27,14 @@ Rectangle {
     SceneView {
         anchors.fill: parent
 
+        Component.onCompleted: {
+            // Set the focus on SceneView to initially enable keyboard navigation
+            forceActiveFocus();
+
+            // set viewpoint to the specified camera
+            setViewpointCameraAndWait(camera);
+        }
+
         // create a scene...scene is a default property of sceneview
         // and thus will get added to the sceneview
         Scene {
@@ -40,11 +48,6 @@ Rectangle {
                     url: "https://elevation3d.arcgis.com/arcgis/rest/services/WorldElevation3D/Terrain3D/ImageServer"
                 }
             }
-        }
-
-        Component.onCompleted: {
-            // set viewpoint to the specified camera
-            setViewpointCameraAndWait(camera);
         }
     }
     //! [create the scene with a basemap and surface]

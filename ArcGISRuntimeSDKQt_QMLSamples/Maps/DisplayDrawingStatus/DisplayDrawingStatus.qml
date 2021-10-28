@@ -31,6 +31,11 @@ Rectangle {
     MapView {
         anchors.fill: parent
 
+        Component.onCompleted: {
+            // Set the focus on MapView to initially enable keyboard navigation
+            forceActiveFocus();
+        }
+
         // create map using topographic basemap
         Map {
             Basemap {

@@ -25,6 +25,11 @@ Item {
         id: view
         anchors.fill: parent
 
+        Component.onCompleted: {
+            // Set the focus on MapView to initially enable keyboard navigation
+            forceActiveFocus();
+        }
+
         Button {
             id: button
             text: model.trackingEnabled ? "Stop tracking" : "Start tracking"

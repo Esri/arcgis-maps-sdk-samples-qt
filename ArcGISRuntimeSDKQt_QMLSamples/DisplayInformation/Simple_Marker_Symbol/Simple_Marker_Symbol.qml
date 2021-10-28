@@ -24,8 +24,12 @@ Rectangle {
 
     // Map view UI presentation at top
     MapView {
-
         anchors.fill: parent
+
+        Component.onCompleted: {
+            // Set the focus on MapView to initially enable keyboard navigation
+            forceActiveFocus();
+        }
 
         Map {
             Basemap {

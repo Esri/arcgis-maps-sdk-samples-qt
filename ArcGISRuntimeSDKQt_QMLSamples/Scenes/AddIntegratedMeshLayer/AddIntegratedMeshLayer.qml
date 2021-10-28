@@ -17,6 +17,7 @@
 import QtQuick 2.6
 import QtQuick.Controls 2.5
 import Esri.ArcGISRuntime 100.12
+import QtQuick.Controls 2.5
 
 Rectangle {
     id: rootRectangle
@@ -29,6 +30,11 @@ Rectangle {
     SceneView {
         id: sceneView
         anchors.fill: parent
+
+        Component.onCompleted: {
+            // Set the focus on SceneView to initially enable keyboard navigation
+            forceActiveFocus();
+        }
 
         Scene {
             id: scene

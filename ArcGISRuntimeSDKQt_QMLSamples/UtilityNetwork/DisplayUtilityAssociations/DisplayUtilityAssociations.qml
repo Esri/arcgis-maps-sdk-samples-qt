@@ -33,6 +33,11 @@ Rectangle {
         id: mapView
         anchors.fill: parent
 
+        Component.onCompleted: {
+            // Set the focus on MapView to initially enable keyboard navigation
+            forceActiveFocus();
+        }
+
         Control {
             background: Rectangle {
                 border.color: "black"
@@ -92,6 +97,7 @@ Rectangle {
 
             Component.onCompleted: {
                 utilityNetwork.load();
+                map.utilityNetworks.append(utilityNetwork);
             }
 
             UtilityNetwork {

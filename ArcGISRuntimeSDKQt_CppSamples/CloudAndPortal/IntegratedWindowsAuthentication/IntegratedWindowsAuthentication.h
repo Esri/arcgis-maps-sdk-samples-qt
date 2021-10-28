@@ -51,7 +51,6 @@ public:
 
   static void init();
 
-  Q_INVOKABLE void searchPublicPortal();
   Q_INVOKABLE void searchIwaSecurePortal(const QString& url);
   Q_INVOKABLE void loadSelectedWebmap(int index);
   Q_INVOKABLE void errorAccepted();
@@ -65,7 +64,6 @@ signals:
 
 private slots:
   void securePortalDoneLoading(const Esri::ArcGISRuntime::Error& loadError);
-  void publicPortalDoneLoading(const Esri::ArcGISRuntime::Error& loadError);
   void searchItemsCompleted(const Esri::ArcGISRuntime::PortalQueryResultSetForItems* result);
 
 private:
@@ -77,11 +75,9 @@ private:
   Esri::ArcGISRuntime::PortalQueryResultSetForItems* m_webmapResults = nullptr;
   Esri::ArcGISRuntime::PortalItemListModel* m_webmaps = nullptr;
   Esri::ArcGISRuntime::PortalItem* m_selectedItem = nullptr;
-  Esri::ArcGISRuntime::Portal* m_publicPortal = nullptr;
   Esri::ArcGISRuntime::Portal* m_iwaSecurePortal = nullptr;
   Esri::ArcGISRuntime::PortalQueryParametersForItems* query = nullptr;
   QString m_mapLoadError;
-  const QString arcgis_url = "https://www.arcgis.com";
   bool m_loadingIndicator = false;
 };
 

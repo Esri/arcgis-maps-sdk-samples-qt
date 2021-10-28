@@ -67,6 +67,11 @@ Rectangle {
         id: mapView
         anchors.fill: parent
 
+        Component.onCompleted: {
+            // Set the focus on MapView to initially enable keyboard navigation
+            forceActiveFocus();
+        }
+
         // set the transform to animate showing the direction window
         transform: Translate {
             id: translate

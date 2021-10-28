@@ -31,6 +31,11 @@ Rectangle {
         id: sceneView
         anchors.fill: parent
 
+        Component.onCompleted: {
+            // Set the focus on SceneView to initially enable keyboard navigation
+            forceActiveFocus();
+        }
+
         property bool isPressAndHeld: false
 
         // Declare a Scene

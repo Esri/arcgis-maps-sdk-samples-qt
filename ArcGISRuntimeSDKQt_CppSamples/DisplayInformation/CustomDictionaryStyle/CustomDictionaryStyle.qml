@@ -24,6 +24,11 @@ Item {
     MapView {
         id: view
         anchors.fill: parent
+
+        Component.onCompleted: {
+            // Set the focus on MapView to initially enable keyboard navigation
+            forceActiveFocus();
+        }
     }
 
     // Declare the C++ instance which creates the scene etc. and supply the view

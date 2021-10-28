@@ -29,6 +29,11 @@ DeleteFeaturesFeatureServiceSample {
         anchors.fill: parent
         objectName: "mapView"
 
+        Component.onCompleted: {
+            // Set the focus on MapView to initially enable keyboard navigation
+            forceActiveFocus();
+        }
+
         // map callout window
         Callout {
             id: callout

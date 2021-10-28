@@ -27,10 +27,15 @@ Rectangle {
         id: mapView
         anchors.fill: parent
 
+        Component.onCompleted: {
+            // Set the focus on MapView to initially enable keyboard navigation
+            forceActiveFocus();
+        }
+
         Map {
-            // Declare the OpenStreetMap layer Basemap
+            // Declare a Basemap with an OpenStreetMapLayer baselayer
             Basemap {
-                initStyle: Enums.BasemapStyleOsmStandard
+                OpenStreetMapLayer {}
             }
         }
     }

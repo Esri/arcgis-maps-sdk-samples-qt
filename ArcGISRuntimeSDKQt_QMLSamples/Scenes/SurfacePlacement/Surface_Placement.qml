@@ -28,6 +28,11 @@ Rectangle {
         id: sceneView
         anchors.fill: parent
 
+        Component.onCompleted: {
+            // Set the focus on SceneView to initially enable keyboard navigation
+            forceActiveFocus();
+        }
+
         // Add a scene with the imagery basemap and world elevation surface
         Scene {
             Basemap {

@@ -1,4 +1,4 @@
-// Copyright 2020 Esri.
+// Copyright 2021 Esri.
 
 // Licensed under the Apache License, Version 2.0 (the "License");
 // you may not use this file except in compliance with the License.
@@ -38,7 +38,7 @@ int main(int argc, char *argv[])
   const QString apiKey = QString("");
   if (apiKey.isEmpty())
   {
-      qWarning() << "Use of Esri location services, including basemaps, requires"
+      qWarning() << "Use of Esri location services, including basemaps, requires" <<
                     "you to authenticate with an ArcGIS identity or set the API Key property.";
   }
   else

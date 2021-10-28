@@ -50,6 +50,12 @@ CreateAndSaveMapSample {
     MapView {
         id: mapView
         objectName: "mapView"
+
+        Component.onCompleted: {
+            // Set the focus on MapView to initially enable keyboard navigation
+            forceActiveFocus();
+        }
+
         Button {
             anchors {
                 horizontalCenter: parent.horizontalCenter

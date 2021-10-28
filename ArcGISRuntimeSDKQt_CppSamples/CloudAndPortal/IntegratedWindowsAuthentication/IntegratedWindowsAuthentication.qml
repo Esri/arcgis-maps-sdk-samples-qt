@@ -21,31 +21,66 @@ import Esri.Samples 1.0
 import Esri.ArcGISRuntime.Toolkit 100.12
 
 Item {
+    // Declare the C++ instance which creates the scene etc. and supply the view
+    IntegratedWindowsAuthenticationSample {
+        id: integratedWindowsAuthenticationSampleModel
+        mapView: view
+    }
 
     MapView {
         id: view
         anchors.fill: parent
+
+        Component.onCompleted: {
+            // Set the focus on MapView to initially enable keyboard navigation
+            forceActiveFocus();
+        }
     }
 
     Rectangle {
+        id: connectionBox
         anchors {
             margins: 5
             left: parent.left
             top: parent.top
         }
-        width: childrenRect.width
-        height: childrenRect.height
+        width: 275
+        height: 175
         color: "#000000"
         opacity: .70
         radius: 5
 
+        // Prevent mouse interaction from propagating to the MapView
+        MouseArea {
+            anchors.fill: parent
+            onPressed: mouse.accepted = true;
+            onWheel: wheel.accepted = true;
+        }
+
         ColumnLayout {
+            id: enterPortalPrompt
+            anchors {
+                fill: parent
+                margins: 5
+            }
+
+            visible: !webmapsList.model
+
+            Text {
+                text: qsTr("Enter portal URL secured by IWA")
+                color: "white"
+                font {
+                    bold: true
+                    pixelSize: 14
+                }
+            }
+
             TextField {
                 id: securePortalUrl
                 Layout.fillWidth: true
                 Layout.margins: 2
-                placeholderText: qsTr("Enter portal url secured by IWA")
                 selectByMouse: true
+
                 background: Rectangle {
                     implicitWidth: parent.width
                     implicitHeight: parent.height
@@ -59,12 +94,6 @@ Item {
                 spacing: 3
 
                 Button {
-                    text: qsTr("Search Public")
-                    onClicked: {
-                        integratedWindowsAuthenticationSampleModel.searchPublicPortal();
-                    }
-                }
-                Button {
                     text: qsTr("Search Secure")
                     onClicked: {
                         if (securePortalUrl.text) {
@@ -77,6 +106,39 @@ Item {
                     }
                 }
             }
+        }
+
+        ColumnLayout {
+            id: selectMapPrompt
+            anchors {
+                fill: parent
+                margins: 5
+            }
+            visible: webmapsList.model
+
+            Text {
+                id: header
+                text: "Connected to:"
+                Layout.fillWidth: true
+                color: "white"
+                font {
+                    bold: true
+                    pointSize: 14
+                }
+            }
+
+            Text {
+                id: portalName
+                Layout.fillWidth: true
+                text: securePortalUrl.text
+                horizontalAlignment: Text.AlignLeft
+                elide: Text.ElideMiddle
+                color: "white"
+                font {
+                    bold: true
+                    pointSize: 14
+                }
+            }
 
             ComboBox {
                 id: webmapsList
@@ -84,14 +146,13 @@ Item {
                 Layout.fillWidth: true
                 textRole: qsTr("title")
                 model: integratedWindowsAuthenticationSampleModel.webmapListModel
-                visible: true
             }
 
             Button {
                 text: qsTr("Load Web Map")
                 Layout.fillWidth: true
                 Layout.margins: 2
-                enabled: webmapsList.model ? true : false
+                visible: webmapsList.model
                 onClicked: integratedWindowsAuthenticationSampleModel.loadSelectedWebmap(webmapsList.currentIndex);
             }
         }
@@ -104,18 +165,18 @@ Item {
     }
 
     // Uncomment this section when running as standalone application
-    /*
-    AuthenticationView {
-        anchors.fill: parent
-    }*/
+
+    //    AuthenticationView {
+    //        anchors.fill: parent
+    //    }
 
     Dialog {
         id: webMapMsg
+        anchors.centerIn: parent
         property alias text : textLabel.text
         property alias informativeText : detailsLabel.text
         modal: true
-        x: Math.round(parent.width - width) / 2
-        y: Math.round(parent.height - height) / 2
+
         standardButtons: Dialog.Ok
         title: "Could not load web map!"
         visible: integratedWindowsAuthenticationSampleModel.mapLoadError.length > 0
@@ -129,11 +190,5 @@ Item {
             }
         }
         onAccepted: integratedWindowsAuthenticationSampleModel.errorAccepted();
-    }
-
-    // Declare the C++ instance which creates the scene etc. and supply the view
-    IntegratedWindowsAuthenticationSample {
-        id: integratedWindowsAuthenticationSampleModel
-        mapView: view
     }
 }

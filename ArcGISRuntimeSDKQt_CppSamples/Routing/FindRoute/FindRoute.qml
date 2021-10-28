@@ -65,6 +65,11 @@ FindRouteSample {
         anchors.fill: parent
         objectName: "mapView"
 
+        Component.onCompleted: {
+            // Set the focus on MapView to initially enable keyboard navigation
+            forceActiveFocus();
+        }
+
         // set the transform to animate showing the direction window
         transform: Translate {
             id: translate
