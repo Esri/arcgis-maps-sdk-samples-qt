@@ -100,11 +100,13 @@ void QueryOGCAPICQLFilters::query(const QString& whereClause, const QString& max
   queryParams.setWhereClause(whereClause);
   queryParams.setMaxFeatures(maxFeature.toUInt());
 
-  const QDateTime fromDate = QDateTime::fromString(fromDateString,"mm/dd/yyyy");
-  const QDateTime toDate = QDateTime::fromString(toDateString,"mm/dd/yyyy");
-  const TimeExtent timeExtent(fromDate, toDate);
-  queryParams.setTimeExtent(timeExtent);
-
+  if (!fromDateString.isEmpty() && !toDateString.isEmpty())
+  {
+    const QDateTime fromDate = QDateTime::fromString(fromDateString,"MM/dd/yyyy");
+    const QDateTime toDate = QDateTime::fromString(toDateString,"MM/dd/yyyy");
+    const TimeExtent timeExtent(fromDate.toUTC(), toDate.toUTC());
+    queryParams.setTimeExtent(timeExtent);
+  }
   // Populate the feature collection table with features that match the parameters,
   // clear the cache to prepare for the new query results, and store all table fields
   m_ogcFeatureCollectionTable->populateFromService(queryParams, true, {});
