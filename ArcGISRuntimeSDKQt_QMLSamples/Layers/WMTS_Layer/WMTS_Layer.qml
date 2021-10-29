@@ -33,7 +33,7 @@ Rectangle {
         Component.onCompleted: {
             // Set the focus on MapView to initially enable keyboard navigation
             forceActiveFocus();
-            createWtmsLayer();
+            createWmtsLayer();
         }
     }
 
