@@ -32,7 +32,7 @@ The sample loads with the sublayer visible on the map. Toggle its visibility wit
 
 ## About the data
 
-The [Naperville electrical](https://sampleserver7.arcgisonline.com/arcgis/rest/services/UtilityNetwork/NapervilleElectric/FeatureServer/100) network feature service, hosted on ArcGIS Online (authentication required: this is handled within the sample code), contains a utility network with asset classification for different devices.
+The [Naperville electrical](https://sampleserver7.arcgisonline.com/arcgis/rest/services/UtilityNetwork/NapervilleElectric/FeatureServer) network feature service, hosted on ArcGIS Online (authentication required: this is handled within the sample code), contains a utility network with asset classification for different devices.
 
 ## Additional information
 
