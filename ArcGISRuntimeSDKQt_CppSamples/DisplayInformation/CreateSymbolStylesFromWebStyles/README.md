@@ -33,7 +33,7 @@ The sample displays a map with a set of symbols that represent the categories of
 
 The sample uses the ['Esri2DPointSymbolsStyle'](https://developers.arcgis.com/javascript/latest/guide/esri-web-style-symbols-2d) Web Style.
 
-The map shows features from the [LA County Points of Interest service](https://services.arcgis.com/V6ZHFr6zdgNZuVG0/arcgis/rest/services/LA_County_Points_of_Interest/FeatureServer/0) hosted on ArcGIS Online.
+The map shows features from the [LA County Points of Interest](https://www.arcgis.com/home/item.html?id=b9f7c339f9d747558329f44059064ccc) service hosted on ArcGIS Online.
 
 ## Additional information
 
