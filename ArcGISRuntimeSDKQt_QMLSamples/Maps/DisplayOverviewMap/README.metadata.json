@@ -1,19 +1,32 @@
 {
     "category": "TODO",
-    "description": "TODO",
+    "description": "Include an overview or inset map as an additional map view to show the wider context of the primary view.",
     "ignore": false,
     "images": [
         "screenshot.png"
     ],
     "keywords": [
-        "TODO"
+        "context",
+        "inset",
+        "map",
+        "minimap",
+        "overview",
+        "preview",
+        "small scale",
+        "toolkit",
+        "view",
+        "MapView",
+        "OverviewMap"
     ],
-    "redirect_from": "",
+    "redirect_from": [
+        ""
+    ],
     "relevant_apis": [
-        "TODO"
+        "MapView",
+        "OverviewMap"
     ],
     "snippets": [
         "DisplayOverviewMap.qml"
     ],
-    "title": "DisplayOverviewMap"
+    "title": "Display overview map"
 }
