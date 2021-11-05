@@ -54,7 +54,7 @@ Rectangle {
             border.width: 2
 
             OverviewMap {
-                id: insetMap
+                id: overviewMap
                 anchors {
                     fill: overviewMapBorder
                     margins: 2

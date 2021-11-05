@@ -26,11 +26,6 @@
 #include "ServiceFeatureTable.h"
 #include "Viewpoint.h"
 
-namespace
-{
-  QUrl featureTableURL = QUrl("https://services6.arcgis.com/Do88DoK2xjTUCXd1/arcgis/rest/services/OSM_Tourism_NA/FeatureServer/0");
-}
-
 using namespace Esri::ArcGISRuntime;
 
 DisplayOverviewMap::DisplayOverviewMap(QObject* parent /* = nullptr */):
@@ -40,7 +35,7 @@ DisplayOverviewMap::DisplayOverviewMap(QObject* parent /* = nullptr */):
   m_map->setInitialViewpoint(Viewpoint(49.28299, -123.12052, 70000));
 
   // Access the feature layer and add it to the maps operational layers.
-  ServiceFeatureTable* serviceFeatureTable = new ServiceFeatureTable(featureTableURL, this);
+  ServiceFeatureTable* serviceFeatureTable = new ServiceFeatureTable(QUrl("https://services6.arcgis.com/Do88DoK2xjTUCXd1/arcgis/rest/services/OSM_Tourism_NA/FeatureServer/0"), this);
   serviceFeatureTable->setFeatureRequestMode(FeatureRequestMode::OnInteractionCache);
   FeatureLayer* featureLayer = new FeatureLayer(serviceFeatureTable, this);
   m_map->operationalLayers()->append(featureLayer);
