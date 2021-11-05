@@ -21,11 +21,8 @@ namespace Esri
 {
 namespace ArcGISRuntime
 {
-class Basemap;
 class Map;
 class MapQuickView;
-class Portal;
-class PortalItem;
 }
 }
 
@@ -47,12 +44,9 @@ signals:
   void mapViewChanged();
 
 private:
-  void addFeatureLayerToMap();
-
   Esri::ArcGISRuntime::MapQuickView* mapView() const;
   void setMapView(Esri::ArcGISRuntime::MapQuickView* mapView);
 
-  Esri::ArcGISRuntime::Basemap* m_basemap = nullptr;
   Esri::ArcGISRuntime::Map* m_map = nullptr;
   Esri::ArcGISRuntime::MapQuickView* m_mapView = nullptr;
 };

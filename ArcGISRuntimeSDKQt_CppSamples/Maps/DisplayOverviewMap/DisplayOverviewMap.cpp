@@ -35,12 +35,15 @@ using namespace Esri::ArcGISRuntime;
 
 DisplayOverviewMap::DisplayOverviewMap(QObject* parent /* = nullptr */):
   QObject(parent),
-  m_basemap(new Basemap(BasemapStyle::ArcGISTopographic, this)),
-  m_map(new Map(m_basemap, this))
+  m_map(new Map(new Basemap(BasemapStyle::ArcGISTopographic, this), this))
 {
   m_map->setInitialViewpoint(Viewpoint(49.28299, -123.12052, 70000));
 
-  connect(m_map, &Map::doneLoading, this, &DisplayOverviewMap::addFeatureLayerToMap);
+  // Access the feature layer and add it to the maps operational layers.
+  ServiceFeatureTable* serviceFeatureTable = new ServiceFeatureTable(featureTableURL, this);
+  serviceFeatureTable->setFeatureRequestMode(FeatureRequestMode::OnInteractionCache);
+  FeatureLayer* featureLayer = new FeatureLayer(serviceFeatureTable, this);
+  m_map->operationalLayers()->append(featureLayer);
 }
 
 DisplayOverviewMap::~DisplayOverviewMap() = default;
@@ -50,17 +53,6 @@ void DisplayOverviewMap::init()
   // Register the map view for QML
   qmlRegisterType<MapQuickView>("Esri.Samples", 1, 0, "MapView");
   qmlRegisterType<DisplayOverviewMap>("Esri.Samples", 1, 0, "DisplayOverviewMapSample");
-}
-
-void DisplayOverviewMap::addFeatureLayerToMap()
-{
-  // Access the feature layer and add it to the mapView
-  ServiceFeatureTable* serviceFeatureTable = new ServiceFeatureTable(featureTableURL, this);
-  serviceFeatureTable->setFeatureRequestMode(FeatureRequestMode::OnInteractionCache);
-
-  FeatureLayer* featureLayer = new FeatureLayer(serviceFeatureTable, this);
-
-  m_map->operationalLayers()->append(featureLayer);
 }
 
 MapQuickView* DisplayOverviewMap::mapView() const
