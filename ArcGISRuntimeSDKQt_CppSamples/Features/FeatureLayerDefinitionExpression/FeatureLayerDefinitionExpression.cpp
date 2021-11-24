@@ -84,8 +84,61 @@ bool FeatureLayerDefinitionExpression::layerInitialized() const
   return m_initialized;
 }
 
-void FeatureLayerDefinitionExpression::setDefExpression(QString whereClause)
+void FeatureLayerDefinitionExpression::setDefExpression(const QString& whereClause)
 {
-  // In QML, "req_Type = \'Tree Maintenance or Damage\'"
+  // In QML, "req_type = \'Tree Maintenance or Damage\'"
   m_featureLayer->setDefinitionExpression(whereClause);
+}
+
+void FeatureLayerDefinitionExpression::setDisplayFilter(const QString& whereClause)
+{
+  QueryParameters queryParams;
+  queryParams.setWhereClause(QString(whereClause)); //QString("req_type = \'Tree Maintenance or Damage\'")
+  m_featureTable->populateFromService(queryParams, true, {});
+}
+
+int FeatureLayerDefinitionExpression::getFeatureCount()
+{
+
+  connect(m_featureTable, &ServiceFeatureTable::queryFeaturesCompleted, this, [this](QUuid, FeatureQueryResult* rawQueryResult)
+      {
+        auto queryResult = std::unique_ptr<FeatureQueryResult>(rawQueryResult);
+
+//          if (queryResult && !queryResult->iterator().hasNext())
+//          {
+//              m_queryResultsCount = 0;
+//              emit queryResultsCountChanged();
+//              return;
+//          }
+
+          // clear any existing selection
+//          m_featureLayer->clearSelection();
+          QList<Feature*> features;
+
+          // iterate over the result object
+          while(queryResult->iterator().hasNext())
+          {
+              Feature* feature = queryResult->iterator().next(this);
+              // add each feature to the list
+              features.append(feature);
+          }
+
+          // select the feature
+//          m_featureLayer->selectFeatures(features);
+          // zoom to the first feature
+//          m_mapView->setViewpointGeometry(features.at(0)->geometry(), 30);
+          // set the count for QML property
+          m_queryResultsCount = features.count();
+//          emit queryResultsCountChanged();
+      });
+  // get extent
+//  auto extent = m_mapView-> ;
+
+//  if (extent == null)
+//    return;
+
+//queryFeatureCountResult
+//  auto totalDamagedTrees = m_featureLayer->featureTable()->queryFeatureCount(); //paramter: geometry is the extent
+
+  return m_queryResultsCount;
 }

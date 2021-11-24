@@ -24,6 +24,7 @@ namespace Esri
     class Map;
     class MapQuickView;
     class FeatureLayer;
+    class ServiceFeatureTable;
   }
 }
 
@@ -41,7 +42,9 @@ public:
 
   void componentComplete() override;
   static void init();
-  Q_INVOKABLE void setDefExpression(QString whereClause);
+  Q_INVOKABLE void setDefExpression(const QString& whereClause);
+  Q_INVOKABLE void setDisplayFilter(const QString& whereClause);
+  Q_INVOKABLE int getFeatureCount();
 
 signals:
   void layerInitializedChanged();
@@ -54,6 +57,8 @@ private:
   Esri::ArcGISRuntime::MapQuickView* m_mapView = nullptr;
   Esri::ArcGISRuntime::FeatureLayer* m_featureLayer = nullptr;
   bool m_initialized = false;
+  Esri::ArcGISRuntime::ServiceFeatureTable* m_featureTable = nullptr;
+  int m_queryResultsCount = 0;
 };
 
 #endif // FEATURE_LAYER_DEFINITION_EXPRESSION_H
