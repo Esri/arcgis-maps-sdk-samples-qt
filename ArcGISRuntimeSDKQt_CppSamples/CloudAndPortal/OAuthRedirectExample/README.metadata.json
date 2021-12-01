@@ -21,13 +21,13 @@
         "Portal"
     ],
     "snippets": [
-        "OAuthRedirectExample.qml",
+        "OAuthRedirectExample.cpp",
         "OAuthRedirectExample.h",
         "MyApplication.h",
         "OAuthRedirectHandler.cpp",
         "OAuthRedirectHandler.h",
         "MyApplication.cpp",
-        "OAuthRedirectExample.cpp"
+        "OAuthRedirectExample.qml"
     ],
     "title": "OAuth redirect example"
 }

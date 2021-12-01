@@ -23,9 +23,9 @@
         "Viewpoint"
     ],
     "snippets": [
-        "ManageBookmarks.qml",
         "ManageBookmarks.cpp",
-        "ManageBookmarks.h"
+        "ManageBookmarks.h",
+        "ManageBookmarks.qml"
     ],
     "title": "Manage bookmarks"
 }

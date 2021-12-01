@@ -20,9 +20,9 @@
         "GeometryEngine"
     ],
     "snippets": [
-        "ConvexHull.qml",
         "ConvexHull.cpp",
-        "ConvexHull.h"
+        "ConvexHull.h",
+        "ConvexHull.qml"
     ],
     "title": "Convex hull"
 }

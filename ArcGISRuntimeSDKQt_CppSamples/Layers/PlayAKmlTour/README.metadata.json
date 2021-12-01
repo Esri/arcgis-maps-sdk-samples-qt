@@ -43,9 +43,9 @@
         "KmlTourController::tour"
     ],
     "snippets": [
-        "PlayAKmlTour.qml",
         "PlayAKmlTour.cpp",
-        "PlayAKmlTour.h"
+        "PlayAKmlTour.h",
+        "PlayAKmlTour.qml"
     ],
     "title": "Play a KML tour"
 }

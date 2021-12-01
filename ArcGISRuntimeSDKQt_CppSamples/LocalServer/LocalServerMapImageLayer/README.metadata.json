@@ -32,9 +32,9 @@
         "LocalServerStatus"
     ],
     "snippets": [
-        "LocalServerMapImageLayer.qml",
         "LocalServerMapImageLayer.cpp",
-        "LocalServerMapImageLayer.h"
+        "LocalServerMapImageLayer.h",
+        "LocalServerMapImageLayer.qml"
     ],
     "title": "Local Server map image layer"
 }

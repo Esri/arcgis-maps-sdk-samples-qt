@@ -44,9 +44,9 @@
         "KmlScreenOverlay"
     ],
     "snippets": [
-        "ListKmlContents.qml",
         "ListKmlContents.cpp",
-        "ListKmlContents.h"
+        "ListKmlContents.h",
+        "ListKmlContents.qml"
     ],
     "title": "List KML contents"
 }

@@ -29,9 +29,9 @@
         "MapView"
     ],
     "snippets": [
-        "DisplayLayerViewDrawState.qml",
         "DisplayLayerViewDrawState.cpp",
-        "DisplayLayerViewDrawState.h"
+        "DisplayLayerViewDrawState.h",
+        "DisplayLayerViewDrawState.qml"
     ],
     "title": "Display layer view draw state"
 }

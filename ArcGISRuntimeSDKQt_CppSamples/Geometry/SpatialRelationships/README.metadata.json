@@ -44,9 +44,9 @@
         "Polyline"
     ],
     "snippets": [
-        "SpatialRelationships.qml",
         "SpatialRelationships.cpp",
-        "SpatialRelationships.h"
+        "SpatialRelationships.h",
+        "SpatialRelationships.qml"
     ],
     "title": "Spatial relationships"
 }

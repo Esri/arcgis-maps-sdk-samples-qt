@@ -27,9 +27,9 @@
         "ShapefileFeatureTable"
     ],
     "snippets": [
-        "FeatureLayerShapefile.qml",
         "FeatureLayerShapefile.cpp",
-        "FeatureLayerShapefile.h"
+        "FeatureLayerShapefile.h",
+        "FeatureLayerShapefile.qml"
     ],
     "title": "Feature layer (shapefile)"
 }

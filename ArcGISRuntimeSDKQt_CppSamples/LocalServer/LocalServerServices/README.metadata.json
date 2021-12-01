@@ -41,9 +41,9 @@
         "LocalService"
     ],
     "snippets": [
-        "LocalServerServices.qml",
         "LocalServerServices.cpp",
-        "LocalServerServices.h"
+        "LocalServerServices.h",
+        "LocalServerServices.qml"
     ],
     "title": "Local server services"
 }

@@ -23,9 +23,9 @@
         "ProximityResult"
     ],
     "snippets": [
-        "NearestVertex.qml",
         "NearestVertex.cpp",
-        "NearestVertex.h"
+        "NearestVertex.h",
+        "NearestVertex.qml"
     ],
     "title": "Nearest vertex"
 }

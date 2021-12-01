@@ -32,12 +32,12 @@
         "SuggestResult"
     ],
     "snippets": [
-        "FindPlace.qml",
         "FindPlace.cpp",
         "FindPlace.h",
         "SearchBox.qml",
         "SearchButton.qml",
-        "SuggestionView.qml"
+        "SuggestionView.qml",
+        "FindPlace.qml"
     ],
     "title": "Find a place"
 }

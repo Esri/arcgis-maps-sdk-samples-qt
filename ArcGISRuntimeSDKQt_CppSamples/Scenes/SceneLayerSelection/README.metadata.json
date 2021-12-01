@@ -27,9 +27,9 @@
         "SceneView"
     ],
     "snippets": [
-        "SceneLayerSelection.qml",
         "SceneLayerSelection.cpp",
-        "SceneLayerSelection.h"
+        "SceneLayerSelection.h",
+        "SceneLayerSelection.qml"
     ],
     "title": "Scene layer selection"
 }

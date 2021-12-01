@@ -24,9 +24,9 @@
         "ServiceFeatureTable"
     ],
     "snippets": [
-        "DeleteFeaturesFeatureService.qml",
         "DeleteFeaturesFeatureService.cpp",
-        "DeleteFeaturesFeatureService.h"
+        "DeleteFeaturesFeatureService.h",
+        "DeleteFeaturesFeatureService.qml"
     ],
     "title": "Delete features (feature service)"
 }

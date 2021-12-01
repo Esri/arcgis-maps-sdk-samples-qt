@@ -26,9 +26,9 @@
         "Surface"
     ],
     "snippets": [
-        "DisplaySceneLayer.qml",
         "DisplaySceneLayer.cpp",
-        "DisplaySceneLayer.h"
+        "DisplaySceneLayer.h",
+        "DisplaySceneLayer.qml"
     ],
     "title": "Display a scene layer"
 }

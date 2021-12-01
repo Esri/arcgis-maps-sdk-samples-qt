@@ -30,9 +30,9 @@
         "OpenStreetMapLayer"
     ],
     "snippets": [
-        "OSM_Layer.qml",
         "OSM_Layer.cpp",
-        "OSM_Layer.h"
+        "OSM_Layer.h",
+        "OSM_Layer.qml"
     ],
     "title": "OpenStreetMap layer"
 }

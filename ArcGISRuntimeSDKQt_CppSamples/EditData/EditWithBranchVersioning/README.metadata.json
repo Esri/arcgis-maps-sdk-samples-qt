@@ -37,9 +37,9 @@
         "VersionAccess"
     ],
     "snippets": [
-        "EditWithBranchVersioning.qml",
         "EditWithBranchVersioning.cpp",
-        "EditWithBranchVersioning.h"
+        "EditWithBranchVersioning.h",
+        "EditWithBranchVersioning.qml"
     ],
     "title": "Edit with branch versioning"
 }

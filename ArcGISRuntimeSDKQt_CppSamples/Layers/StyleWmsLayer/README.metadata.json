@@ -25,9 +25,9 @@
         "WmsSublayerInfo"
     ],
     "snippets": [
-        "StyleWmsLayer.qml",
         "StyleWmsLayer.cpp",
-        "StyleWmsLayer.h"
+        "StyleWmsLayer.h",
+        "StyleWmsLayer.qml"
     ],
     "title": "Style WMS layer"
 }

@@ -33,9 +33,9 @@
         "Incident"
     ],
     "snippets": [
-        "FindClosestFacilityToMultipleIncidentsService.qml",
         "FindClosestFacilityToMultipleIncidentsService.cpp",
-        "FindClosestFacilityToMultipleIncidentsService.h"
+        "FindClosestFacilityToMultipleIncidentsService.h",
+        "FindClosestFacilityToMultipleIncidentsService.qml"
     ],
     "title": "Find closest facility to multiple incidents (service)"
 }

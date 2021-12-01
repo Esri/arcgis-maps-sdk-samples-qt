@@ -24,9 +24,9 @@
         "MapView::setMagnifierMapPanningEnabled()"
     ],
     "snippets": [
-        "ShowMagnifier.qml",
         "ShowMagnifier.cpp",
-        "ShowMagnifier.h"
+        "ShowMagnifier.h",
+        "ShowMagnifier.qml"
     ],
     "title": "Show magnifier"
 }

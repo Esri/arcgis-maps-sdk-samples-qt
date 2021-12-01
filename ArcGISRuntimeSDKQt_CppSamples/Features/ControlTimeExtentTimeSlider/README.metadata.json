@@ -28,9 +28,9 @@
         "ServiceFeatureTable"
     ],
     "snippets": [
-        "ControlTimeExtentTimeSlider.qml",
         "ControlTimeExtentTimeSlider.cpp",
-        "ControlTimeExtentTimeSlider.h"
+        "ControlTimeExtentTimeSlider.h",
+        "ControlTimeExtentTimeSlider.qml"
     ],
     "title": "Control time extent using time slider"
 }

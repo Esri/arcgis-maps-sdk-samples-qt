@@ -28,9 +28,9 @@
         "ClassBreaksRenderer::classBreak"
     ],
     "snippets": [
-        "ChangeSublayerRenderer.qml",
         "ChangeSublayerRenderer.cpp",
-        "ChangeSublayerRenderer.h"
+        "ChangeSublayerRenderer.h",
+        "ChangeSublayerRenderer.qml"
     ],
     "title": "Change sublayer renderer"
 }

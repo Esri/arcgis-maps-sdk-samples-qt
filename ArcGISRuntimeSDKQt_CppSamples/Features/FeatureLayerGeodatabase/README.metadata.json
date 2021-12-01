@@ -32,9 +32,9 @@
         "GeodatabaseFeatureTable"
     ],
     "snippets": [
-        "FeatureLayerGeodatabase.qml",
         "FeatureLayerGeodatabase.cpp",
-        "FeatureLayerGeodatabase.h"
+        "FeatureLayerGeodatabase.h",
+        "FeatureLayerGeodatabase.qml"
     ],
     "title": "Feature layer (geodatabase)"
 }

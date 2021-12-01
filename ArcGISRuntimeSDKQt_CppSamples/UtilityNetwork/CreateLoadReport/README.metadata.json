@@ -58,9 +58,9 @@
         "UtilityTraversability"
     ],
     "snippets": [
-        "CreateLoadReport.qml",
         "CreateLoadReport.cpp",
-        "CreateLoadReport.h"
+        "CreateLoadReport.h",
+        "CreateLoadReport.qml"
     ],
     "title": "Create load report"
 }

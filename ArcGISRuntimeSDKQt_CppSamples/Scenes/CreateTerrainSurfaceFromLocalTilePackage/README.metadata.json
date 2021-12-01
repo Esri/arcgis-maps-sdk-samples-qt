@@ -29,9 +29,9 @@
         "Surface"
     ],
     "snippets": [
-        "CreateTerrainSurfaceFromLocalTilePackage.qml",
         "CreateTerrainSurfaceFromLocalTilePackage.cpp",
-        "CreateTerrainSurfaceFromLocalTilePackage.h"
+        "CreateTerrainSurfaceFromLocalTilePackage.h",
+        "CreateTerrainSurfaceFromLocalTilePackage.qml"
     ],
     "title": "Create terrain surface from a local tile package"
 }

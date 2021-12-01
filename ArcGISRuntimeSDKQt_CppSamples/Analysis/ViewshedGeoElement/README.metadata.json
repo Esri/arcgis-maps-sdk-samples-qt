@@ -38,9 +38,9 @@
         "OrbitGeoElementCameraController"
     ],
     "snippets": [
-        "ViewshedGeoElement.qml",
         "ViewshedGeoElement.cpp",
-        "ViewshedGeoElement.h"
+        "ViewshedGeoElement.h",
+        "ViewshedGeoElement.qml"
     ],
     "title": "Viewshed (GeoElement)"
 }
