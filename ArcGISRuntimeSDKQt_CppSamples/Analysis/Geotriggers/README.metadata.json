@@ -48,10 +48,10 @@
         "SimulatedLocationDataSource"
     ],
     "snippets": [
-        "Geotriggers.qml",
-        "FeatureInfoPane.qml",
         "Geotriggers.cpp",
-        "Geotriggers.h"
+        "Geotriggers.h",
+        "FeatureInfoPane.qml",
+        "Geotriggers.qml"
     ],
     "title": "Set up location-driven Geotriggers"
 }

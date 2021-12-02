@@ -29,9 +29,9 @@
         "ServiceFeatureTable"
     ],
     "snippets": [
-        "QueryMapImageSublayer.qml",
         "QueryMapImageSublayer.cpp",
-        "QueryMapImageSublayer.h"
+        "QueryMapImageSublayer.h",
+        "QueryMapImageSublayer.qml"
     ],
     "title": "Query map image sublayer"
 }

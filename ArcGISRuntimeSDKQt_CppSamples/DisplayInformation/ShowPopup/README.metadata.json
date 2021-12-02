@@ -25,9 +25,9 @@
         "PopupStackView"
     ],
     "snippets": [
-        "ShowPopup.qml",
         "ShowPopup.cpp",
-        "ShowPopup.h"
+        "ShowPopup.h",
+        "ShowPopup.qml"
     ],
     "title": "Show popup"
 }

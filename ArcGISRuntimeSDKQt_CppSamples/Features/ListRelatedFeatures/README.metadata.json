@@ -29,13 +29,13 @@
         "RelatedFeatureQueryResult"
     ],
     "snippets": [
-        "ListRelatedFeatures.qml",
         "ListRelatedFeatures.cpp",
         "ListRelatedFeatures.h",
         "RelatedFeature.cpp",
         "RelatedFeature.h",
         "RelatedFeatureListModel.cpp",
-        "RelatedFeatureListModel.h"
+        "RelatedFeatureListModel.h",
+        "ListRelatedFeatures.qml"
     ],
     "title": "List related features"
 }

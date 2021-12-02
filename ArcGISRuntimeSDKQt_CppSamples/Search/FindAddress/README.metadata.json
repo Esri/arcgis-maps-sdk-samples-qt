@@ -23,9 +23,9 @@
         "LocatorTask"
     ],
     "snippets": [
-        "FindAddress.qml",
         "FindAddress.cpp",
-        "FindAddress.h"
+        "FindAddress.h",
+        "FindAddress.qml"
     ],
     "title": "Find address"
 }

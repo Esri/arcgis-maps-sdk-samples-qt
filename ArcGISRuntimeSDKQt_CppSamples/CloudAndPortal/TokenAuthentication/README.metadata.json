@@ -26,9 +26,9 @@
         "PortalItem"
     ],
     "snippets": [
-        "TokenAuthentication.qml",
         "TokenAuthentication.cpp",
-        "TokenAuthentication.h"
+        "TokenAuthentication.h",
+        "TokenAuthentication.qml"
     ],
     "title": "Token authentication"
 }

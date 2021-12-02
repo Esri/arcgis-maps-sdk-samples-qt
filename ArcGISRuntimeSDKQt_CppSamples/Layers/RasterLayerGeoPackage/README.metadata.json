@@ -34,9 +34,9 @@
         "RasterLayer"
     ],
     "snippets": [
-        "RasterLayerGeoPackage.qml",
         "RasterLayerGeoPackage.cpp",
-        "RasterLayerGeoPackage.h"
+        "RasterLayerGeoPackage.h",
+        "RasterLayerGeoPackage.qml"
     ],
     "title": "Raster layer (GeoPackage)"
 }

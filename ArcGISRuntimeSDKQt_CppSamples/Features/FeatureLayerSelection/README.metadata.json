@@ -24,9 +24,9 @@
         "ServiceFeatureTable"
     ],
     "snippets": [
-        "FeatureLayerSelection.qml",
         "FeatureLayerSelection.cpp",
-        "FeatureLayerSelection.h"
+        "FeatureLayerSelection.h",
+        "FeatureLayerSelection.qml"
     ],
     "title": "Feature layer selection"
 }

@@ -30,9 +30,9 @@
         "ServiceAreaTask"
     ],
     "snippets": [
-        "ServiceArea.qml",
         "ServiceArea.cpp",
-        "ServiceArea.h"
+        "ServiceArea.h",
+        "ServiceArea.qml"
     ],
     "title": "Service area"
 }

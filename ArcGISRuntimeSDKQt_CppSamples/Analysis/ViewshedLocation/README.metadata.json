@@ -28,11 +28,11 @@
         "Viewshed"
     ],
     "snippets": [
-        "ViewshedLocation.qml",
-        "ColorDialog.qml",
         "ViewshedLocation.cpp",
         "ViewshedLocation.h",
-        "ViewshedSlider.qml"
+        "ColorDialog.qml",
+        "ViewshedSlider.qml",
+        "ViewshedLocation.qml"
     ],
     "title": "Viewshed (location)"
 }

@@ -37,9 +37,9 @@
         "GraphicsOverlay"
     ],
     "snippets": [
-        "SpatialOperations.qml",
         "SpatialOperations.cpp",
-        "SpatialOperations.h"
+        "SpatialOperations.h",
+        "SpatialOperations.qml"
     ],
     "title": "Spatial operations"
 }

@@ -27,9 +27,9 @@
         "ViewPoint"
     ],
     "snippets": [
-        "MinMaxScale.qml",
         "MinMaxScale.cpp",
-        "MinMaxScale.h"
+        "MinMaxScale.h",
+        "MinMaxScale.qml"
     ],
     "title": "Min-Max scale"
 }

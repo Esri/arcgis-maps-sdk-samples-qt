@@ -28,9 +28,9 @@
         "MapView"
     ],
     "snippets": [
-        "FeatureLayerRenderingModeMap.qml",
         "FeatureLayerRenderingModeMap.cpp",
-        "FeatureLayerRenderingModeMap.h"
+        "FeatureLayerRenderingModeMap.h",
+        "FeatureLayerRenderingModeMap.qml"
     ],
     "title": "Feature layer rendering mode (map)"
 }

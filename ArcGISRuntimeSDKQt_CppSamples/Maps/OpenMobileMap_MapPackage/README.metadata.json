@@ -26,9 +26,9 @@
         "MobileMapPackage"
     ],
     "snippets": [
-        "OpenMobileMap_MapPackage.qml",
         "OpenMobileMap_MapPackage.cpp",
-        "OpenMobileMap_MapPackage.h"
+        "OpenMobileMap_MapPackage.h",
+        "OpenMobileMap_MapPackage.qml"
     ],
     "title": "Open mobile map (map package)"
 }

@@ -26,9 +26,9 @@
         "MapView"
     ],
     "snippets": [
-        "ArcGISTiledLayerUrl.qml",
         "ArcGISTiledLayerUrl.cpp",
-        "ArcGISTiledLayerUrl.h"
+        "ArcGISTiledLayerUrl.h",
+        "ArcGISTiledLayerUrl.qml"
     ],
     "title": "ArcGIS tiled layer (URL)"
 }

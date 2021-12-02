@@ -30,9 +30,9 @@
         "TransformationCatalog"
     ],
     "snippets": [
-        "ListTransformations.qml",
         "ListTransformations.cpp",
-        "ListTransformations.h"
+        "ListTransformations.h",
+        "ListTransformations.qml"
     ],
     "title": "List transformations by suitability"
 }

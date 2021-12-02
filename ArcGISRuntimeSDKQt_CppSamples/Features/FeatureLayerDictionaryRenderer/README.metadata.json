@@ -29,9 +29,9 @@
         "DictionarySymbolStyle"
     ],
     "snippets": [
-        "FeatureLayerDictionaryRenderer.qml",
         "FeatureLayerDictionaryRenderer.cpp",
-        "FeatureLayerDictionaryRenderer.h"
+        "FeatureLayerDictionaryRenderer.h",
+        "FeatureLayerDictionaryRenderer.qml"
     ],
     "title": "Feature layer (dictionary renderer)"
 }

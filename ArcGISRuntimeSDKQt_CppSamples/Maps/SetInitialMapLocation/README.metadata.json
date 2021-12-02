@@ -33,9 +33,9 @@
         "MapView"
     ],
     "snippets": [
-        "SetInitialMapLocation.qml",
         "SetInitialMapLocation.cpp",
-        "SetInitialMapLocation.h"
+        "SetInitialMapLocation.h",
+        "SetInitialMapLocation.qml"
     ],
     "title": "Set initial map location"
 }

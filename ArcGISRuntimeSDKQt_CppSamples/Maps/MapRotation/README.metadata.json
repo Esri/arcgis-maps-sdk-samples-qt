@@ -20,9 +20,9 @@
         "MapView"
     ],
     "snippets": [
-        "MapRotation.qml",
         "MapRotation.cpp",
-        "MapRotation.h"
+        "MapRotation.h",
+        "MapRotation.qml"
     ],
     "title": "Map rotation"
 }

@@ -21,9 +21,9 @@
         "WmsLayer"
     ],
     "snippets": [
-        "WmsLayerUrl.qml",
         "WmsLayerUrl.cpp",
-        "WmsLayerUrl.h"
+        "WmsLayerUrl.h",
+        "WmsLayerUrl.qml"
     ],
     "title": "WMS layer (URL)"
 }

@@ -23,9 +23,9 @@
         "PortalItem"
     ],
     "snippets": [
-        "OpenMapUrl.qml",
         "OpenMapUrl.cpp",
-        "OpenMapUrl.h"
+        "OpenMapUrl.h",
+        "OpenMapUrl.qml"
     ],
     "title": "Open map (URL)"
 }

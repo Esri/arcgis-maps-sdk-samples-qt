@@ -24,9 +24,9 @@
         "ServiceFeatureTable::setFeatureRequestMode"
     ],
     "snippets": [
-        "ServiceFeatureTableNoCache.qml",
         "ServiceFeatureTableNoCache.cpp",
-        "ServiceFeatureTableNoCache.h"
+        "ServiceFeatureTableNoCache.h",
+        "ServiceFeatureTableNoCache.qml"
     ],
     "title": "Service feature table (no cache)"
 }

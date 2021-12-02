@@ -39,9 +39,9 @@
         "VoiceGuidance"
     ],
     "snippets": [
-        "NavigateRoute.qml",
         "NavigateRoute.cpp",
-        "NavigateRoute.h"
+        "NavigateRoute.h",
+        "NavigateRoute.qml"
     ],
     "title": "Navigate route"
 }

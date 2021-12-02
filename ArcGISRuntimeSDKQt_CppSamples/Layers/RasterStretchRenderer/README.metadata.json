@@ -47,10 +47,10 @@
         "StretchRenderer"
     ],
     "snippets": [
-        "RasterStretchRenderer.qml",
-        "InputWithLabel.qml",
         "RasterStretchRenderer.cpp",
-        "RasterStretchRenderer.h"
+        "RasterStretchRenderer.h",
+        "InputWithLabel.qml",
+        "RasterStretchRenderer.qml"
     ],
     "title": "Stretch renderer"
 }

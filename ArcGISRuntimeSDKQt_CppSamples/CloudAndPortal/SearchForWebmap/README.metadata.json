@@ -25,9 +25,9 @@
         "PortalQueryResultSet"
     ],
     "snippets": [
-        "SearchForWebmap.qml",
         "SearchForWebmap.cpp",
-        "SearchForWebmap.h"
+        "SearchForWebmap.h",
+        "SearchForWebmap.qml"
     ],
     "title": "Search for web map by keyword"
 }

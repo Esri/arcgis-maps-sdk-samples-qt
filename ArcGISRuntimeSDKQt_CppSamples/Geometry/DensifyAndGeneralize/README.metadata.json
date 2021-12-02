@@ -31,9 +31,9 @@
         "SpatialReference"
     ],
     "snippets": [
-        "DensifyAndGeneralize.qml",
         "DensifyAndGeneralize.cpp",
-        "DensifyAndGeneralize.h"
+        "DensifyAndGeneralize.h",
+        "DensifyAndGeneralize.qml"
     ],
     "title": "Densify and generalize"
 }

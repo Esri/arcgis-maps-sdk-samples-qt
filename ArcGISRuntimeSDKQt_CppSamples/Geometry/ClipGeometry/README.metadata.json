@@ -26,9 +26,9 @@
         "GraphicsOverlay"
     ],
     "snippets": [
-        "ClipGeometry.qml",
         "ClipGeometry.cpp",
-        "ClipGeometry.h"
+        "ClipGeometry.h",
+        "ClipGeometry.qml"
     ],
     "title": "Clip geometry"
 }
