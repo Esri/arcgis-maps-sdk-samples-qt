@@ -57,8 +57,11 @@ DisplayDimensions::DisplayDimensions(QObject* parent /* = nullptr */):
   QString mapPackagePath = defaultDataPath() + edinburghPylonFilePath;
   m_mmpk = new MobileMapPackage(mapPackagePath, this);
 
+  // Make connections between the mmpk's doneLoading and errorOccurred signal and the addMapToMapView and handleError methods respectively.
   connect(m_mmpk, &MobileMapPackage::doneLoading, this, &DisplayDimensions::addMapToMapView);
   connect(m_mmpk, &MobileMapPackage::errorOccurred, this, &DisplayDimensions::handleError);
+
+  // Load the mmpk.
   m_mmpk->load();
 }
 
@@ -73,19 +76,27 @@ void DisplayDimensions::init()
 
 void DisplayDimensions::addMapToMapView(const Error& error)
 {
-  // Any errors will be managed by the handleError method.
+  // If no error's have occurred, the mmpk is loaded, and there is only one map in the mmpk, the map in the mmpk can be
+  // assigned to the MapView and the viewpoint set. Any errors will be managed by the handleError method.
   if (error.isEmpty() && m_mmpk->loadStatus() == LoadStatus::Loaded && m_mmpk->maps().count() > 0)
   {
+    // Enable the checkboxes.
     setCheckBoxesEnabled(true);
 
+    // Assign the map in the mmpk to m_map.
     m_map = m_mmpk->maps().at(0);
+    // Set the viewpoint.
     m_map->setInitialViewpoint(Viewpoint(Point(-3.3098678, 55.9074044, SpatialReference::wgs84()), 30000));
+    // Set the minimum scale to prevent zooming out too far.
     m_map->setMinScale(35000);
+    // Set m_map as the MapView's map.
     m_mapView->setMap(m_map);
 
+    // From the map's layers, find the Dimension Layer.
     findDimensionLayer();
   }
   else
+    // If the map hasn't loaded or an error has occurred, disable the checkboxes in the UI.
     setCheckBoxesEnabled(false);
 }
 
@@ -97,7 +108,9 @@ void DisplayDimensions::findDimensionLayer()
   {
     if (layer->layerType() == LayerType::DimensionLayer)
     {
+      // The current layer, which is the DimensionLayer, has type Layer*. Ths needs to be converted to a DimensionLayer*.
       m_dimensionLayer = dynamic_cast<DimensionLayer*>(layer);
+      // Use the name of the Dimension Layer to define the title of the UI element.
       setDimensionLayerName(m_dimensionLayer->name());
     }
   }
