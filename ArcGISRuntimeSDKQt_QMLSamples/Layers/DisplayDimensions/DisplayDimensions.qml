@@ -113,7 +113,7 @@ Rectangle {
             }
 
             // If there is more than one map, return.
-            if (mmpk.maps.length < 1) {
+            if (mmpk.maps.length > 1) {
                 return;
             }
 
