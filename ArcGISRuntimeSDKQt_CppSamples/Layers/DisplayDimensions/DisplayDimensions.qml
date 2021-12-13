@@ -54,7 +54,7 @@ Item {
                 }
                 CheckBox {
                     id: visibilityToggle
-                    text: "Dimension visibility"
+                    text: "Dimension Layer visibility"
                     checked: true
                     onCheckStateChanged: model.dimensionLayerVisibility = visibilityToggle.checkState;
                     enabled: model.checkBoxesEnabled;
@@ -65,12 +65,6 @@ Item {
                     checked: false
                     onCheckStateChanged: model.definitionExpressionApplied = definitionExpressionToggle.checkState;
                     enabled: model.checkBoxesEnabled && visibilityToggle.checked ? true : false;
-                }
-                Text {
-                    id: zoomThresholdText
-                    text: "NOTE: min. zoom is 1:35000"
-                    font.italic: true
-                    horizontalAlignment: Text.AlignHCenter
                 }
             }
         }
