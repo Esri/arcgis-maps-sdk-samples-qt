@@ -76,16 +76,17 @@ void DisplayDimensions::addMapToMapView(const Error& error)
   // Any errors will be managed by the handleError method.
   if (error.isEmpty() && m_mmpk->loadStatus() == LoadStatus::Loaded && m_mmpk->maps().count() > 0)
   {
-    setMMPKLoadStatus(true);
+    setCheckBoxesEnabled(true);
 
     m_map = m_mmpk->maps().at(0);
     m_map->setInitialViewpoint(Viewpoint(Point(-3.3098678, 55.9074044, SpatialReference::wgs84()), 30000));
+    m_map->setMinScale(35000);
     m_mapView->setMap(m_map);
 
     findDimensionLayer();
   }
   else
-    setMMPKLoadStatus(false);
+    setCheckBoxesEnabled(false);
 }
 
 void DisplayDimensions::findDimensionLayer()
@@ -162,13 +163,13 @@ void DisplayDimensions::applyDefinitionExpression(const bool applied)
     m_dimensionLayer->setDefinitionExpression("");
 }
 
-bool DisplayDimensions::mmpkLoaded()
+bool DisplayDimensions::checkBoxesEnabled()
 {
-  return m_mmpkLoaded;
+  return m_checkBoxesEnabled;
 }
 
-void DisplayDimensions::setMMPKLoadStatus(const bool& status)
+void DisplayDimensions::setCheckBoxesEnabled(const bool& status)
 {
-  m_mmpkLoaded = status;
-  emit mmpkLoadStatusChanged();
+  m_checkBoxesEnabled = status;
+  emit checkBoxesEnabledChanged();
 }

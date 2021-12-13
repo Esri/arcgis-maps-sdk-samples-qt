@@ -57,14 +57,20 @@ Item {
                     text: "Dimension visibility"
                     checked: true
                     onCheckStateChanged: model.dimensionLayerVisibility = visibilityToggle.checkState;
-                    enabled: model.mmpkLoaded;
+                    enabled: model.checkBoxesEnabled;
                 }
                 CheckBox {
                     id: definitionExpressionToggle
                     text: "Definition Expression: \nDimensions >= 450m"
                     checked: false
                     onCheckStateChanged: model.definitionExpressionApplied = definitionExpressionToggle.checkState;
-                    enabled: model.mmpkLoaded;
+                    enabled: model.checkBoxesEnabled && visibilityToggle.checked ? true : false;
+                }
+                Text {
+                    id: zoomThresholdText
+                    text: "NOTE: min. zoom is 1:35000"
+                    font.italic: true
+                    horizontalAlignment: Text.AlignHCenter
                 }
             }
         }
