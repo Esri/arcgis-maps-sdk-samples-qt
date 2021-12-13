@@ -117,6 +117,16 @@ Rectangle {
                 return;
             }
 
+            // Set viewpoint.
+            var viewpointPoint = ArcGISRuntimeEnvironment.createObject("Point", { x: -3.3098678, y: 55.9074044, spatialReference: Factory.SpatialReference.createWgs84()});
+            var viewpointCenter = ArcGISRuntimeEnvironment.createObject("ViewpointCenter", {center: viewpointPoint, targetScale: 30000});
+            mmpk.maps[0].initialViewpoint = viewpointCenter;
+
+            // Set the map view's map to the first map in the mobile map package
+            mapView.map = mmpk.maps[0];
+            // Set the minimum scale as 1:35000 to prevent zooming out too far.
+            mapView.map.minScale = 35000;
+
             // Loop through all layers in the mmpk and find the dimension layer.
             for (let counter = 0; counter < mmpk.maps[0].operationalLayers.count; counter++) {
                 // Check each layer to see if it is a DimensionLayer.
@@ -128,15 +138,6 @@ Rectangle {
                 }
             }
 
-            // Set viewpoint.
-            var viewpointPoint = ArcGISRuntimeEnvironment.createObject("Point", { x: -3.3098678, y: 55.9074044, spatialReference: Factory.SpatialReference.createWgs84()});
-            var viewpointCenter = ArcGISRuntimeEnvironment.createObject("ViewpointCenter", {center: viewpointPoint, targetScale: 30000});
-            mmpk.maps[0].initialViewpoint = viewpointCenter;
-
-            // Set the map view's map to the first map in the mobile map package
-            mapView.map = mmpk.maps[0];
-            // Set the minimum scale as 1:35000 to prevent zooming out too far.
-            mapView.map.minScale = 35000;
         }
     }
 
