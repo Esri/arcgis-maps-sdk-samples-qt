@@ -79,7 +79,13 @@ Rectangle {
                             mmpk.maps[0].operationalLayers.get(indexOfDimensionLayer).definitionExpression = "";
                         }
                     }
-                    enabled: mmpk.loadStatus === Enums.LoadStatusLoaded ? true : false
+                    enabled: mmpk.loadStatus === Enums.LoadStatusLoaded && visibilityToggle.checked ? true : false
+                }
+                Text {
+                    id: zoomThresholdText
+                    text: "NOTE: min. zoom is 1:35000"
+                    font.italic: true
+                    horizontalAlignment: Text.AlignHCenter
                 }
             }
         }
@@ -129,6 +135,7 @@ Rectangle {
 
             // Set the map view's map to the first map in the mobile map package
             mapView.map = mmpk.maps[0];
+            mapView.map.minScale = 35000;
         }
     }
 
