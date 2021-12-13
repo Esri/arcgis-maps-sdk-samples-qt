@@ -1,21 +1,33 @@
 {
     "category": "TODO",
-    "description": "TODO",
+    "description": "Display dimension features from a mobile map package.",
     "ignore": false,
     "images": [
         "screenshot.png"
     ],
     "keywords": [
-        "TODO"
+        "definition expression",
+        "dimension",
+        "distance",
+        "layer",
+        "length",
+        "mmpk",
+        "mobile map package",
+        "utility",
+        "DimensionLayer",
+        "MobileMapPackage"
     ],
-    "redirect_from": "",
+    "redirect_from": [
+        ""
+    ],
     "relevant_apis": [
-        "TODO"
+        "DimensionLayer",
+        "MobileMapPackage"
     ],
     "snippets": [
         "DisplayDimensions.qml",
         "DisplayDimensions.cpp",
         "DisplayDimensions.h"
     ],
-    "title": "DisplayDimensions"
+    "title": "Display dimensions"
 }
