@@ -1,5 +1,5 @@
 {
-    "category": "TODO",
+    "category": "Layers",
     "description": "Display dimension features from a mobile map package.",
     "ignore": false,
     "images": [
@@ -25,9 +25,9 @@
         "MobileMapPackage"
     ],
     "snippets": [
-        "DisplayDimensions.qml",
         "DisplayDimensions.cpp",
-        "DisplayDimensions.h"
+        "DisplayDimensions.h",
+        "DisplayDimensions.qml"
     ],
     "title": "Display dimensions"
 }
