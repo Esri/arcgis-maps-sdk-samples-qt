@@ -102,22 +102,28 @@ Rectangle {
         path: dataPath + "Edinburgh_Pylon_Dimensions.mmpk"
 
         onLoadStatusChanged: {
+            // If an error occurred during loading, pass the error onto the handleError function.
             if (loadStatus === Enums.LoadStatusFailedToLoad) {
                 handleError(mmpk.loadError);
             }
 
+            // If the mmpk has not loaded, return.
             if (loadStatus !== Enums.LoadStatusLoaded) {
                 return;
             }
 
+            // If there is more than one map, return.
             if (mmpk.maps.length < 1) {
                 return;
             }
 
-            // Find dimension layer and set toggleBoxTitle.
+            // Loop through all layers in the mmpk and find the dimension layer.
             for (let counter = 0; counter < mmpk.maps[0].operationalLayers.count; counter++) {
+                // Check each layer to see if it is a DimensionLayer.
                 if (mmpk.maps[0].operationalLayers.get(counter).layerType === Enums.LayerTypeDimensionLayer) {
+                    // Save the index of the DimensionLayer - it is used to control layer visibility and definition expressions.
                     indexOfDimensionLayer = counter;
+                    // Use the name of the DimensionLayer to define the title of the UI controls.
                     toggleBoxTitle.text = mmpk.maps[0].operationalLayers.get(counter).name;
                 }
             }
@@ -129,6 +135,7 @@ Rectangle {
 
             // Set the map view's map to the first map in the mobile map package
             mapView.map = mmpk.maps[0];
+            // Set the minimum scale as 1:35000 to prevent zooming out too far.
             mapView.map.minScale = 35000;
         }
     }
