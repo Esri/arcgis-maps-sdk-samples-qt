@@ -26,9 +26,9 @@
         "OverviewMap"
     ],
     "snippets": [
-        "DisplayOverviewMap.qml",
         "DisplayOverviewMap.cpp",
-        "DisplayOverviewMap.h"
+        "DisplayOverviewMap.h",
+        "DisplayOverviewMap.qml"
     ],
     "title": "Display overview map"
 }
