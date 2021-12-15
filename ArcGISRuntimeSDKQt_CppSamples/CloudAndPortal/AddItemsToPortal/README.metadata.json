@@ -24,9 +24,9 @@
         "PortalUser::deleteItem"
     ],
     "snippets": [
-        "AddItemsToPortal.qml",
         "AddItemsToPortal.cpp",
-        "AddItemsToPortal.h"
+        "AddItemsToPortal.h",
+        "AddItemsToPortal.qml"
     ],
     "title": "Add items to portal"
 }

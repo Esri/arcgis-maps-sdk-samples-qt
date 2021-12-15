@@ -30,9 +30,9 @@
         "RasterLayer"
     ],
     "snippets": [
-        "RasterColormapRenderer.qml",
         "RasterColormapRenderer.cpp",
-        "RasterColormapRenderer.h"
+        "RasterColormapRenderer.h",
+        "RasterColormapRenderer.qml"
     ],
     "title": "Colormap renderer"
 }

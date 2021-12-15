@@ -21,9 +21,9 @@
         "Portal::fetchBasemaps"
     ],
     "snippets": [
-        "ShowOrgBasemaps.qml",
         "ShowOrgBasemaps.cpp",
-        "ShowOrgBasemaps.h"
+        "ShowOrgBasemaps.h",
+        "ShowOrgBasemaps.qml"
     ],
     "title": "Show organization basemaps"
 }

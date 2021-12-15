@@ -28,9 +28,9 @@
         "RangeCollection"
     ],
     "snippets": [
-        "DistanceCompositeSymbol.qml",
         "DistanceCompositeSymbol.cpp",
-        "DistanceCompositeSymbol.h"
+        "DistanceCompositeSymbol.h",
+        "DistanceCompositeSymbol.qml"
     ],
     "title": "Distance composite symbol"
 }

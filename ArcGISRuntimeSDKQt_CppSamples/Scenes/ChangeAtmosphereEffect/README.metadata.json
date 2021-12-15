@@ -22,9 +22,9 @@
         "SceneView"
     ],
     "snippets": [
-        "ChangeAtmosphereEffect.qml",
         "ChangeAtmosphereEffect.cpp",
-        "ChangeAtmosphereEffect.h"
+        "ChangeAtmosphereEffect.h",
+        "ChangeAtmosphereEffect.qml"
     ],
     "title": "Change atmosphere effect"
 }

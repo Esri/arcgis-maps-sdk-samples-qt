@@ -29,9 +29,9 @@
         "SimpleRenderer"
     ],
     "snippets": [
-        "Simple_Renderer.qml",
         "Simple_Renderer.cpp",
-        "Simple_Renderer.h"
+        "Simple_Renderer.h",
+        "Simple_Renderer.qml"
     ],
     "title": "Simple renderer"
 }

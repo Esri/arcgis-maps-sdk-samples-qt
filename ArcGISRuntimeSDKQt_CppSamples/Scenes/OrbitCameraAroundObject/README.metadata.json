@@ -27,9 +27,9 @@
         "OrbitGeoElementCameraController"
     ],
     "snippets": [
-        "OrbitCameraAroundObject.qml",
         "OrbitCameraAroundObject.cpp",
-        "OrbitCameraAroundObject.h"
+        "OrbitCameraAroundObject.h",
+        "OrbitCameraAroundObject.qml"
     ],
     "title": "Orbit the camera around an object"
 }

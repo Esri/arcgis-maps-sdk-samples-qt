@@ -24,9 +24,9 @@
         "ServiceFeatureTable::setFeatureRequestMode"
     ],
     "snippets": [
-        "ServiceFeatureTableCache.qml",
         "ServiceFeatureTableCache.cpp",
-        "ServiceFeatureTableCache.h"
+        "ServiceFeatureTableCache.h",
+        "ServiceFeatureTableCache.qml"
     ],
     "title": "Service feature table (cache)"
 }

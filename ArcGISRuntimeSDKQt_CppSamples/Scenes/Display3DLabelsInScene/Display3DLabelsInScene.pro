@@ -27,7 +27,7 @@ QT += opengl qml quick
 TEMPLATE = app
 TARGET = Display3DLabelsInScene
 
-ARCGIS_RUNTIME_VERSION = 100.12
+ARCGIS_RUNTIME_VERSION = 100.14
 include($$PWD/arcgisruntime.pri)
 
 #-------------------------------------------------------------------------------

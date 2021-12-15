@@ -35,9 +35,9 @@
         "KmlStyle"
     ],
     "snippets": [
-        "CreateAndSaveKmlFile.qml",
         "CreateAndSaveKmlFile.cpp",
-        "CreateAndSaveKmlFile.h"
+        "CreateAndSaveKmlFile.h",
+        "CreateAndSaveKmlFile.qml"
     ],
     "title": "Create and save KML file"
 }

@@ -39,13 +39,13 @@
         "StatisticsQueryResult"
     ],
     "snippets": [
-        "StatisticalQueryGroupSort.qml",
+        "StatisticalQueryGroupSort.cpp",
+        "StatisticalQueryGroupSort.h",
         "OptionsPage.qml",
         "ResultsPage.qml",
         "StatisticResultListModel.cpp",
         "StatisticResultListModel.h",
-        "StatisticalQueryGroupSort.cpp",
-        "StatisticalQueryGroupSort.h"
+        "StatisticalQueryGroupSort.qml"
     ],
     "title": "Statistical query (group & sort)"
 }

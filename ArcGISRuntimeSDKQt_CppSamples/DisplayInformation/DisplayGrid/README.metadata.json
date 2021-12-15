@@ -44,9 +44,9 @@
         "UTMGrid"
     ],
     "snippets": [
-        "DisplayGrid.qml",
         "DisplayGrid.cpp",
-        "DisplayGrid.h"
+        "DisplayGrid.h",
+        "DisplayGrid.qml"
     ],
     "title": "Display a grid"
 }

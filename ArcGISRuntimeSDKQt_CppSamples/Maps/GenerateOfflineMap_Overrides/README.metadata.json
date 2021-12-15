@@ -42,12 +42,12 @@
         "OfflineMapTask"
     ],
     "snippets": [
-        "GenerateOfflineMap_Overrides.qml",
-        "DownloadButton.qml",
         "GenerateOfflineMap_Overrides.cpp",
         "GenerateOfflineMap_Overrides.h",
+        "DownloadButton.qml",
         "GenerateWindow.qml",
-        "OverridesWindow.qml"
+        "OverridesWindow.qml",
+        "GenerateOfflineMap_Overrides.qml"
     ],
     "title": "Generate Offline Map (Overrides)"
 }

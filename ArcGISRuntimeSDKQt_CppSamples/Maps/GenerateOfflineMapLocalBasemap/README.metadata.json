@@ -33,11 +33,11 @@
         "OfflineMapTask"
     ],
     "snippets": [
-        "GenerateOfflineMapLocalBasemap.qml",
-        "DownloadButton.qml",
         "GenerateOfflineMapLocalBasemap.cpp",
         "GenerateOfflineMapLocalBasemap.h",
-        "GenerateWindow.qml"
+        "DownloadButton.qml",
+        "GenerateWindow.qml",
+        "GenerateOfflineMapLocalBasemap.qml"
     ],
     "title": "Generate offline map with local basemap"
 }

@@ -25,11 +25,11 @@
         "Portal"
     ],
     "snippets": [
-        "CreateAndSaveMap.qml",
         "CreateAndSaveMap.cpp",
         "CreateAndSaveMap.h",
         "LayerWindow.qml",
-        "SaveOptionsWindow.qml"
+        "SaveOptionsWindow.qml",
+        "CreateAndSaveMap.qml"
     ],
     "title": "Create and save map"
 }

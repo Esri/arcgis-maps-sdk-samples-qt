@@ -27,10 +27,10 @@
         "kmlNetworkLinkMessageReceived"
     ],
     "snippets": [
-        "DisplayKmlNetworkLinks.qml",
         "DisplayKmlNetworkLinks.cpp",
         "DisplayKmlNetworkLinks.h",
-        "MessageButton.qml"
+        "MessageButton.qml",
+        "DisplayKmlNetworkLinks.qml"
     ],
     "title": "Display KML network links"
 }

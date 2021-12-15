@@ -48,9 +48,9 @@
         "TransportationNetworkDataset"
     ],
     "snippets": [
-        "MobileMap_SearchAndRoute.qml",
         "MobileMap_SearchAndRoute.cpp",
-        "MobileMap_SearchAndRoute.h"
+        "MobileMap_SearchAndRoute.h",
+        "MobileMap_SearchAndRoute.qml"
     ],
     "title": "Mobile map (search and route)"
 }

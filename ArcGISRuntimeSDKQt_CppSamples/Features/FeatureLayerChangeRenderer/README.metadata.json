@@ -22,9 +22,9 @@
         "SimpleRenderer"
     ],
     "snippets": [
-        "FeatureLayerChangeRenderer.qml",
         "FeatureLayerChangeRenderer.cpp",
-        "FeatureLayerChangeRenderer.h"
+        "FeatureLayerChangeRenderer.h",
+        "FeatureLayerChangeRenderer.qml"
     ],
     "title": "Feature layer change renderer"
 }

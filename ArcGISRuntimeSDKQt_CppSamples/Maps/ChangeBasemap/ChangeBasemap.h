@@ -1,6 +1,6 @@
 // [WriteFile Name=ChangeBasemap, Category=Maps]
 // [Legal]
-// Copyright 2016 Esri.
+// Copyright 2021 Esri.
 
 // Licensed under the Apache License, Version 2.0 (the "License");
 // you may not use this file except in compliance with the License.
@@ -14,36 +14,41 @@
 // limitations under the License.
 // [Legal]
 
-#ifndef CHANGE_BASEMAP_H
-#define CHANGE_BASEMAP_H
+#ifndef CHANGEBASEMAP_H
+#define CHANGEBASEMAP_H
 
 namespace Esri
 {
-  namespace ArcGISRuntime
-  {
-    class Map;
-    class MapQuickView;
-  }
+namespace ArcGISRuntime
+{
+class Map;
+class MapQuickView;
+}
 }
 
-#include <QQuickItem>
+#include <QObject>
 
-class ChangeBasemap : public QQuickItem
+class ChangeBasemap : public QObject
 {
   Q_OBJECT
 
-public:
-  explicit ChangeBasemap(QQuickItem* parent = nullptr);
-  ~ChangeBasemap() override;
+  Q_PROPERTY(Esri::ArcGISRuntime::MapQuickView* mapView READ mapView WRITE setMapView NOTIFY mapViewChanged)
 
-  void componentComplete() override;
+public:
+  explicit ChangeBasemap(QObject* parent = nullptr);
+  ~ChangeBasemap();
+
   static void init();
-  Q_INVOKABLE void changeBasemap(const QString& basemap);
+
+signals:
+  void mapViewChanged();
 
 private:
+  Esri::ArcGISRuntime::MapQuickView* mapView() const;
+  void setMapView(Esri::ArcGISRuntime::MapQuickView* mapView);
+
   Esri::ArcGISRuntime::Map* m_map = nullptr;
   Esri::ArcGISRuntime::MapQuickView* m_mapView = nullptr;
 };
 
-#endif // CHANGE_BASEMAP_H
-
+#endif // CHANGEBASEMAP_H

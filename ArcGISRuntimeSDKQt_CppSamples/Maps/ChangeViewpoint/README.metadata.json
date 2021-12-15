@@ -32,9 +32,9 @@
         "Viewpoint"
     ],
     "snippets": [
-        "ChangeViewpoint.qml",
         "ChangeViewpoint.cpp",
-        "ChangeViewpoint.h"
+        "ChangeViewpoint.h",
+        "ChangeViewpoint.qml"
     ],
     "title": "Change viewpoint"
 }

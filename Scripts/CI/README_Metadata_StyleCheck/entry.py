@@ -284,8 +284,12 @@ class MetadataFile:
         if self.sample_type == "ArcGISRuntimeSDKQt_CppSamples":
             expected_snippets += [self.sample_name + ".cpp", self.sample_name + ".h"]
 
-        if not snippets[0] == expected_snippets[0]:
-            errors.append(f"The .qml snippet must be listed first in the list.")
+        if self.sample_type == "ArcGISRuntimeSDKQt_CppSamples":
+            if not snippets[-1] == expected_snippets[0]:
+                errors.append(f"The primary .qml snippet must be listed last in the list for C++ samples.")
+        else:
+            if not snippets[0] == expected_snippets[0]:
+                errors.append(f"The primary .qml snippet must be listed first in the list for QML samples.")
             
         for expected_snippet in expected_snippets:
             if expected_snippet not in snippets:

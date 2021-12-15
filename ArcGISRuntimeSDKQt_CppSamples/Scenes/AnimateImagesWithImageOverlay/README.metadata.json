@@ -33,9 +33,9 @@
         "SceneView"
     ],
     "snippets": [
-        "AnimateImagesWithImageOverlay.qml",
         "AnimateImagesWithImageOverlay.cpp",
-        "AnimateImagesWithImageOverlay.h"
+        "AnimateImagesWithImageOverlay.h",
+        "AnimateImagesWithImageOverlay.qml"
     ],
     "title": "Animate images with image overlay"
 }

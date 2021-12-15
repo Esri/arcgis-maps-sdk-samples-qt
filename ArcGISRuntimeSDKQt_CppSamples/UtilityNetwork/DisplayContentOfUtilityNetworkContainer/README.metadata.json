@@ -28,11 +28,11 @@
         "UtilityNetwork"
     ],
     "snippets": [
-        "DisplayContentOfUtilityNetworkContainer.qml",
         "DisplayContentOfUtilityNetworkContainer.cpp",
         "DisplayContentOfUtilityNetworkContainer.h",
         "SymbolImageProvider.cpp",
-        "SymbolImageProvider.h"
+        "SymbolImageProvider.h",
+        "DisplayContentOfUtilityNetworkContainer.qml"
     ],
     "title": "Display content of utility network container"
 }

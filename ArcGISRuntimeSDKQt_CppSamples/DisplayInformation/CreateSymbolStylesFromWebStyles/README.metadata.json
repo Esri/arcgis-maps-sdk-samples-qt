@@ -27,9 +27,9 @@
         "UniqueValueRenderer"
     ],
     "snippets": [
-        "CreateSymbolStylesFromWebStyles.qml",
         "CreateSymbolStylesFromWebStyles.cpp",
-        "CreateSymbolStylesFromWebStyles.h"
+        "CreateSymbolStylesFromWebStyles.h",
+        "CreateSymbolStylesFromWebStyles.qml"
     ],
     "title": "Create symbol styles from web styles"
 }

@@ -90,3 +90,27 @@ void setAPIKey(const QGuiApplication& app, QString apiKey)
 
   Esri::ArcGISRuntime::ArcGISRuntimeEnvironment::setApiKey(apiKey);
 }
+
+void setAPIKey(const QGuiApplication& app, QString apiKey)
+{
+  if (apiKey.isEmpty())
+  {
+    // Try parsing API key from command line argument, which uses the following syntax "-k <apiKey>".
+    QCommandLineParser cmdParser;
+    QCommandLineOption apiKeyArgument(QStringList{"k", "api"}, "The API Key property used to access Esri location services", "apiKeyInput");
+    cmdParser.addOption(apiKeyArgument);
+    cmdParser.process(app);
+
+    apiKey = cmdParser.value(apiKeyArgument);
+
+    if (apiKey.isEmpty())
+    {
+      qWarning() << "Use of Esri location services, including basemaps, requires" <<
+                    "you to authenticate with an ArcGIS identity or set the API Key property.";
+
+      return;
+    }
+  }
+
+  Esri::ArcGISRuntime::ArcGISRuntimeEnvironment::setApiKey(apiKey);
+}

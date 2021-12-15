@@ -29,11 +29,11 @@
         "UtilityNetwork"
     ],
     "snippets": [
-        "DisplayUtilityAssociations.qml",
         "DisplayUtilityAssociations.cpp",
         "DisplayUtilityAssociations.h",
         "SymbolImageProvider.cpp",
-        "SymbolImageProvider.h"
+        "SymbolImageProvider.h",
+        "DisplayUtilityAssociations.qml"
     ],
     "title": "Display utility associations"
 }

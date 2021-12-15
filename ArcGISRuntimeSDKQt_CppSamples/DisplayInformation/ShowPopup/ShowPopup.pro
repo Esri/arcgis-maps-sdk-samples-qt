@@ -27,7 +27,7 @@ QT += opengl qml quick
 TEMPLATE = app
 TARGET = ShowPopup
 
-ARCGIS_RUNTIME_VERSION = 100.12
+ARCGIS_RUNTIME_VERSION = 100.14
 include($$PWD/arcgisruntime.pri)
 
 # path of the toolkit relative to the sample

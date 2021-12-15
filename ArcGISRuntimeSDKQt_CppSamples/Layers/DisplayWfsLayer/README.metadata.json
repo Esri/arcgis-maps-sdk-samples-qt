@@ -30,9 +30,9 @@
         "WfsFeatureTable::populateFromService"
     ],
     "snippets": [
-        "DisplayWfsLayer.qml",
         "DisplayWfsLayer.cpp",
-        "DisplayWfsLayer.h"
+        "DisplayWfsLayer.h",
+        "DisplayWfsLayer.qml"
     ],
     "title": "Display a WFS layer"
 }

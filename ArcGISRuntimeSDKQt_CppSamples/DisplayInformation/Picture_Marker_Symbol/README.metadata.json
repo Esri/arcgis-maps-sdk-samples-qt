@@ -26,9 +26,9 @@
         "PictureMarkerSymbol"
     ],
     "snippets": [
-        "Picture_Marker_Symbol.qml",
         "Picture_Marker_Symbol.cpp",
-        "Picture_Marker_Symbol.h"
+        "Picture_Marker_Symbol.h",
+        "Picture_Marker_Symbol.qml"
     ],
     "title": "Picture marker symbol"
 }
