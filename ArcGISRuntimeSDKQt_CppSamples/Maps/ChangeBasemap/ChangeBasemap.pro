@@ -24,13 +24,13 @@ CONFIG += c++14
 # additional modules are pulled in via arcgisruntime.pri
 QT += opengl qml quick
 
-ARCGIS_RUNTIME_VERSION = 100.14
+ARCGIS_RUNTIME_VERSION = 100.13
 include($$PWD/arcgisruntime.pri)
 
 TEMPLATE = app
 TARGET = ChangeBasemap
 
-ARCGIS_RUNTIME_VERSION = 100.14
+ARCGIS_RUNTIME_VERSION = 100.13
 include($$PWD/arcgisruntime.pri)
 
 # path of the toolkit relative to the sample

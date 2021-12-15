@@ -27,7 +27,7 @@ QT += opengl qml quick
 TEMPLATE = app
 TARGET = EditWithBranchVersioning
 
-ARCGIS_RUNTIME_VERSION = 100.14
+ARCGIS_RUNTIME_VERSION = 100.13
 include($$PWD/arcgisruntime.pri)
 
 TOOLKIT_PRI_PATH = $$PWD/../../../arcgis-runtime-toolkit-qt

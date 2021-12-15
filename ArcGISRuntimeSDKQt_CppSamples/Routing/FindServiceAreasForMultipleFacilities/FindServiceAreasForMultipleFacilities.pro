@@ -27,7 +27,7 @@ QT += opengl qml quick
 TEMPLATE = app
 TARGET = FindServiceAreasForMultipleFacilities
 
-ARCGIS_RUNTIME_VERSION = 100.14
+ARCGIS_RUNTIME_VERSION = 100.13
 include($$PWD/arcgisruntime.pri)
 
 #-------------------------------------------------------------------------------
