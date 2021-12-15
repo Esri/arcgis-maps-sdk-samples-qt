@@ -29,7 +29,6 @@ Rectangle {
 
     readonly property url dataPath: System.userHomePath + "/ArcGIS/Runtime/Data/mmpk/"
     property string errorMessage: ""
-
     property int indexOfDimensionLayer: 0
 
     MapView {
@@ -118,8 +117,8 @@ Rectangle {
             }
 
             // Set viewpoint.
-            var viewpointPoint = ArcGISRuntimeEnvironment.createObject("Point", { x: -3.3098678, y: 55.9074044, spatialReference: Factory.SpatialReference.createWgs84()});
-            var viewpointCenter = ArcGISRuntimeEnvironment.createObject("ViewpointCenter", {center: viewpointPoint, targetScale: 30000});
+            const viewpointPoint = ArcGISRuntimeEnvironment.createObject("Point", { x: -3.3098678, y: 55.9074044, spatialReference: Factory.SpatialReference.createWgs84()});
+            const viewpointCenter = ArcGISRuntimeEnvironment.createObject("ViewpointCenter", {center: viewpointPoint, targetScale: 30000});
             mmpk.maps[0].initialViewpoint = viewpointCenter;
 
             // Set the map view's map to the first map in the mobile map package

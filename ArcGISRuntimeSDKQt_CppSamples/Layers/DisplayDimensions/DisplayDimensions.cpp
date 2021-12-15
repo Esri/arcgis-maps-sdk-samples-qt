@@ -112,6 +112,8 @@ void DisplayDimensions::findDimensionLayer()
       m_dimensionLayer = dynamic_cast<DimensionLayer*>(layer);
       // Use the name of the Dimension Layer to define the title of the UI element.
       setDimensionLayerName(m_dimensionLayer->name());
+      // There is only one Dimension Layer, so we can break out of the loop.
+      break;
     }
   }
 }
