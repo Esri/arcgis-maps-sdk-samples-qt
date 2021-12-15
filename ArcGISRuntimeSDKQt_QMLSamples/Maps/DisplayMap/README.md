@@ -22,7 +22,6 @@ Run the sample to view the map. Pan and zoom to navigate the map.
 
 * Enums.BasemapStyle
 * Map
-* Enums.BasemapStyle
 * MapView
 
 ## Tags
