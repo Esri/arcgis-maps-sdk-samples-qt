@@ -66,7 +66,7 @@ Rectangle {
     }
     //! [Rectangle-mapview-map-viewpoint]
 
-    Row {
+    Column {
         id: expressionRow
         anchors {
             bottom: parent.bottom
@@ -80,18 +80,46 @@ Rectangle {
         // button to apply a definition expression
         Button {
             text: "Apply Expression"
+            width: 200
             enabled: featureTable.loadStatus === Enums.LoadStatusLoaded
             onClicked: {
                 featureLayer.definitionExpression = "req_Type = \'Tree Maintenance or Damage\'"
+            }
+        }
+//        DisplayFilter
+//        ManualDisplayFilterDefinition
+        // button to apply display filter
+        Button {
+            text: "Apply Display Filter"
+            width: 200
+            enabled: featureTable.loadStatus === Enums.LoadStatusLoaded
+            onClicked: {
+                if (featureLayer.loadStatus === Enums.LoadStatusLoaded)
+                {
+                    var displayFilter = ArcGISRuntimeEnvironment.createObject("DisplayFilter", {name: "Damaged Trees", filterId: "Damaged Trees", whereClause: "req_Type = \'Tree Maintenance or Damage\'"});
+                    var displayFilterDefintionVar = ArcGISRuntimeEnvironment.createObject("ManualDisplayFilterDefinition");
+                    displayFilterDefintionVar.availableFilters.append(displayFilter);
+//                    displayFilterDefintionVar.activeFilter = displayFilterDefintionVar.availableFilters.get(0);
+                    displayFilterDefintionVar.activeFilter = displayFilter;
+
+                    featureLayer.displayFilterDefinition = displayFilterDefintionVar;
+                }
             }
         }
 
         // button to reset the definition expression
         Button {
             text: "Reset"
+            width: 200
             enabled: featureTable.loadStatus === Enums.LoadStatusLoaded
             onClicked: {
                 featureLayer.definitionExpression = "";
+
+                var displayFilter = ArcGISRuntimeEnvironment.createObject("DisplayFilter", {id: "No Filter", whereClause: "1=1"});
+                var displayFilterDefintionVar = ArcGISRuntimeEnvironment.createObject("ManualDisplayFilterDefinition");
+                displayFilterDefintionVar.activeFilter =  displayFilter;
+                displayFilterDefintionVar.availableFilters.append(displayFilter);
+                featureLayer.displayFilterDefinition = displayFilterDefintionVar;
             }
         }
     }
