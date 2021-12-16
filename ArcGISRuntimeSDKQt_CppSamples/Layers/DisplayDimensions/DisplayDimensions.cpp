@@ -89,7 +89,7 @@ void DisplayDimensions::addMapToMapView(const Error& error)
     // Set the minimum scale to prevent zooming out too far.
     m_map->setMinScale(35000);
 
-    // Check to ensure that m_map has been initialised properly.
+    // Check to ensure that m_mapView has been initialised properly.
     if (m_mapView != nullptr)
     {
       // Set m_map as the MapView's map.
