@@ -25,7 +25,7 @@ Tap on one or more features while 'Add starting locations' or 'Add barriers' is 
 9.  If the element is a junction with more than one terminal, display a terminal picker. Then set the junction's `terminal` property with the selected terminal.
 10.  If an edge, set its `fractionAlongEdge` property using `GeometryEngine.fractionAlong`.
 11. Add this `UtilityElement` to a collection of starting locations or barriers.
-12. Create `UtilityTraceParameters` with the selected trace type along with the collected starting locations and barriers (if applicable). 
+12. Create `UtilityTraceParameters` with the selected trace type along with the collected starting locations and barriers (if applicable).
 13. Set the `UtilityTraceParameters.traceConfiguration` with the utility tier's `traceConfiguration` property.
 14. Run a `UtilityNetwork.trace` with the specified parameters.
 15. For every `FeatureLayer` in the map, select the features using the `UtilityElement.objectId` from the filtered list of `UtilityElementTraceResult.elements`.

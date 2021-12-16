@@ -24,7 +24,7 @@ using namespace Esri::ArcGISRuntime;
 
 MapLoaded::MapLoaded(QWidget* parent) :
     QWidget(parent)
-{    
+{
     // Create a map using the streets basemap
     m_map = new Map(BasemapStyle::ArcGISStreets, this);
 
@@ -55,7 +55,7 @@ MapLoaded::MapLoaded(QWidget* parent) :
             m_loadStatus->setText(QString("Map Load Status: Unknown"));
             break;
         }
-    });    
+    });
 
     // Set up the UI
     QVBoxLayout *vBoxLayout = new QVBoxLayout();

@@ -25,7 +25,7 @@ ViewshedLocationSample {
     width: 800
     height: 600
 
-    
+
     SceneView {
         id: sceneView
         objectName: "sceneView"

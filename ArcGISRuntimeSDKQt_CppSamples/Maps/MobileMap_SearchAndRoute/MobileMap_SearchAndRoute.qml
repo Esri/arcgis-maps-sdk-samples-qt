@@ -24,7 +24,7 @@ MobileMap_SearchAndRouteSample {
     clip: true
     width: 800
     height: 600
-       
+
     property bool isMapOpen: false
 
     // make background a light gray

@@ -22,7 +22,7 @@ Rectangle {
     width: 800
     height: 600
 
-    
+
     property string displayText: "Click or tap to select features."
 
 

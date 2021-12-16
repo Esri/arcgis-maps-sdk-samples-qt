@@ -8,6 +8,10 @@ This sample demonstrates how to execute a geoprocessing task to calculate a hots
 
 This tool identifies statistically significant spatial clusters of high values (hot spots) and low values (cold spots). For example, a hotspot analysis based on the frequency of 911 calls within a set region.
 
+## How to use the sample
+
+Select a date range (between 1998-01-01 and 1998-05-31) from the dialog and tap on Analyze. The results will be shown on the map upon successful completion of the `GeoprocessingJob`.
+
 ## How it works
 
 1. Create a `GeoprocessingTask` with the URL set to the endpoint of a geoprocessing service.
@@ -20,11 +24,11 @@ This tool identifies statistically significant spatial clusters of high values (
 ## Relevant API
 
 * ArcGISMapImageLayer
-* GeoprocessingTask
 * GeoprocessingJob
 * GeoprocessingParameters
-* GeoprocessingString
 * GeoprocessingResult
+* GeoprocessingString
+* GeoprocessingTask
 * Map
 
 ## Tags

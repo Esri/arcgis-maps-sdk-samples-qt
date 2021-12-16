@@ -24,7 +24,7 @@ Two `Scenes` are created, each containing several `FeatureLayers`. Prior to load
 
 ## Relevant API
 
-* Camera 
+* Camera
 * FeatureLayer
 * FeatureLayer.renderingMode
 * LoadSettings

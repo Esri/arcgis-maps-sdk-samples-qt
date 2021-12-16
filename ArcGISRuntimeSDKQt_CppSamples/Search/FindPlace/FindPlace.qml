@@ -25,7 +25,7 @@ FindPlaceSample {
     clip: true
     width: 800
     height: 600
-    
+
     property bool isSearchingLocation: false
     property bool searchByExtent: false
 

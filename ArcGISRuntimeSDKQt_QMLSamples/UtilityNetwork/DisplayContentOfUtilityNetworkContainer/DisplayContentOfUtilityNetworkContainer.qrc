@@ -1,6 +1,6 @@
 <RCC>
     <qresource prefix="/Samples/UtilityNetwork/DisplayContentOfUtilityNetworkContainer">
-        <file alias="sample.json">README.metadata.json</file>        
+        <file alias="sample.json">README.metadata.json</file>
         <file>DisplayContentOfUtilityNetworkContainer.qml</file>
         <file>screenshot.png</file>
         <file>README.md</file>

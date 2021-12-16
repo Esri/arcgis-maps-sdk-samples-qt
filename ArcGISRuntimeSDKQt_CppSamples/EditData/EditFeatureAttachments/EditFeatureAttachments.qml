@@ -23,7 +23,7 @@ import Esri.ArcGISRuntime.Toolkit 100.13
 
 EditFeatureAttachmentsSample {
     id: editAttachmentsSample
-    
+
     readonly property var featAttributes: ["Destroyed", "Major", "Minor", "Affected", "Inaccessible"]
 
     // add a mapView component
@@ -31,7 +31,7 @@ EditFeatureAttachmentsSample {
         id: mapView
         anchors.fill: parent
         objectName: "mapView"
-        
+
         Component.onCompleted: {
             // Set the focus on MapView to initially enable keyboard navigation
             forceActiveFocus();

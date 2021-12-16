@@ -22,7 +22,7 @@ import Esri.ArcGISRuntime 100.13
 Rectangle {
     id: rootRectangle
     width: 800
-    height: 600    
+    height: 600
 
     // Create MapView that contains a Map
     MapView {

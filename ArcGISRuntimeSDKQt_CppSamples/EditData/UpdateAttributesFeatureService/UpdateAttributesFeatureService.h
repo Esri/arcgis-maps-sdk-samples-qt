@@ -47,7 +47,7 @@ public:
   static void init();
   Q_INVOKABLE void updateSelectedFeature(QString fieldVal);
 
-signals:  
+signals:
   void featureSelected();
   void featureTypeChanged();
   void hideWindow();

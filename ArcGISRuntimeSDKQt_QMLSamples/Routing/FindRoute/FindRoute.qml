@@ -22,7 +22,7 @@ Rectangle {
     id: mainRect
     width: 800
     height: 600
-    
+
     property Point stop1Geometry: null
     property Point stop2Geometry: null
     property var routeParameters: null
@@ -213,7 +213,7 @@ Rectangle {
                 }
             }
         }
-    }    
+    }
 
     //! [FindRoute RouteTask]
 

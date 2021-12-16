@@ -23,7 +23,7 @@ DeleteFeaturesFeatureServiceSample {
     id: deleteFeaturesSample
     width: 800
     height: 600
-    
+
     MapView {
         id: mapView
         anchors.fill: parent

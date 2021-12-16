@@ -12,7 +12,7 @@ When viewing layers that contain a large amount of data with timestamps, you may
 
 ## How to use the sample
 
-Use the slider at the bottom of the map to customize the date range for which you want to view the data. Once the start and end date have been selected, the mapview will update to only show the relevant data that falls in the time extent selected. 
+Use the slider at the bottom of the map to customize the date range for which you want to view the data. Once the start and end date have been selected, the mapview will update to only show the relevant data that falls in the time extent selected.
 Use the play button to step through the data one day at a time. Use the previous and next buttons to manually step through the data in one day increments.
 
 ## How it works

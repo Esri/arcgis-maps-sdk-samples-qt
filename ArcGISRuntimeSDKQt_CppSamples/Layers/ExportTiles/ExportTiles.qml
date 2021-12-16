@@ -23,7 +23,7 @@ ExportTilesSample {
     id: exportTilesSample
     width: 800
     height: 600
-        
+
     property string statusText: ""
 
     // add a mapView component

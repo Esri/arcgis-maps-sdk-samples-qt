@@ -1,6 +1,6 @@
 <RCC>
     <qresource prefix="/Samples/Maps/ChangeBasemap">
-        <file alias="sample.json">README.metadata.json</file>        
+        <file alias="sample.json">README.metadata.json</file>
         <file>ChangeBasemap.qml</file>
         <file>ChangeBasemap.h</file>
         <file>ChangeBasemap.cpp</file>

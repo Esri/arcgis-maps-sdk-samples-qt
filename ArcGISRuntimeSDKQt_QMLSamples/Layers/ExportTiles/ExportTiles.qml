@@ -23,7 +23,7 @@ import Esri.ArcGISExtras 1.1
 Rectangle {
     width: 800
     height: 600
-    
+
     readonly property url outputTileCache: System.temporaryFolder.url + "/TileCacheQml_%1.tpkx".arg(new Date().getTime().toString())
     property Envelope tileCacheExtent: null
     property string statusText: ""
@@ -39,7 +39,7 @@ Rectangle {
             // Set the focus on MapView to initially enable keyboard navigation
             forceActiveFocus();
         }
-        
+
         Map {
             id: map
             // Add an imagery basemap to the map and get the url of the raster baselayer once it has loaded

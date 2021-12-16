@@ -20,7 +20,7 @@ import Esri.ArcGISRuntime 100.13
 Rectangle {
     width: 800
     height: 600
-    
+
     property string statusText
 
     // Create MapView that contains a Map

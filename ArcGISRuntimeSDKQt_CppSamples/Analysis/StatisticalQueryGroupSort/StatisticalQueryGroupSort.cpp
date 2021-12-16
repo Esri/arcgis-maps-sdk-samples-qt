@@ -94,8 +94,8 @@ void StatisticalQueryGroupSort::connectSignals()
     // Delete rawResult when we leave local scope.
     auto result = std::unique_ptr<StatisticsQueryResult>(rawResult);
 
-    if (!result)    
-      return;    
+    if (!result)
+      return;
 
     // clear previous results
     m_resultsModel->clear();

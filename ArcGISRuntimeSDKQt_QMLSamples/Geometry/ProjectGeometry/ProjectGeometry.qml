@@ -22,7 +22,7 @@ Rectangle {
     id: rootRectangle
     clip: true
     width: 800
-    height: 600    
+    height: 600
 
     MapView {
         id: mapView

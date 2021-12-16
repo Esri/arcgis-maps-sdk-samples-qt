@@ -39,7 +39,7 @@ public:
 
   static void init();
 
-  void componentComplete() override;  
+  void componentComplete() override;
 
   Q_INVOKABLE void applyMinMax(double min, double max);
   Q_INVOKABLE void applyPercentClip(double min, double max);

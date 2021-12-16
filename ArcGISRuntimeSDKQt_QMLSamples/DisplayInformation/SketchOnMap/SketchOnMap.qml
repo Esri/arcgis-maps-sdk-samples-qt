@@ -37,7 +37,7 @@ Rectangle {
 
     MapView {
         id: mapView
-        anchors.fill: parent       
+        anchors.fill: parent
 
         // Force focus to remain on MapView so SketchEditor will respond to keystrokes
         onFocusChanged: focus = true;

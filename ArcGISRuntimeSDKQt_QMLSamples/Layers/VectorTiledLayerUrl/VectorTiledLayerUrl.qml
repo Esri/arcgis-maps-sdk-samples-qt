@@ -21,7 +21,7 @@ import Esri.ArcGISRuntime 100.13
 Rectangle {
     width: 800
     height: 600
-    
+
     //! [display vector tiled layer]
     // Create MapView that contains a Map
     MapView {
@@ -32,7 +32,7 @@ Rectangle {
             // Set the focus on MapView to initially enable keyboard navigation
             forceActiveFocus();
         }
-        
+
         Map {
             id: map
             Basemap {

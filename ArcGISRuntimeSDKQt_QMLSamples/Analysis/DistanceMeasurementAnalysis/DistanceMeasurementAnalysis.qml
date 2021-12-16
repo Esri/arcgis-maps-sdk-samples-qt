@@ -24,7 +24,7 @@ Rectangle {
     clip: true
     width: 800
     height: 600
-    
+
     property bool isNavigating: false
 
     SceneView {
@@ -70,7 +70,7 @@ Rectangle {
                     roll: 0
                 }
             }
-        }        
+        }
 
         // Declare an AnalysisOverlay
         AnalysisOverlay {
@@ -191,7 +191,7 @@ Rectangle {
         }
         Row {
             spacing: 5
-            Text {                
+            Text {
                 text: "Vertical Distance:"
                 color: "white"
             }

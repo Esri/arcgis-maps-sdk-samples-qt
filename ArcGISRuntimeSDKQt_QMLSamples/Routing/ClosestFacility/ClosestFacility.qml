@@ -23,7 +23,7 @@ Rectangle {
     clip: true
     width: 800
     height: 600
-    
+
     property bool busy: false
     property string message: ""
     property var facilities: []

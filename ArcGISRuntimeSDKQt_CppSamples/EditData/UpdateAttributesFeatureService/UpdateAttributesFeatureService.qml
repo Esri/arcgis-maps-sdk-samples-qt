@@ -25,7 +25,7 @@ UpdateAttributesFeatureServiceSample {
     id: updateFeaturesSample
     width: 800
     height: 600
-    
+
     readonly property var featAttributes: ["Destroyed", "Major", "Minor", "Affected", "Inaccessible"]
 
     // add a mapView component

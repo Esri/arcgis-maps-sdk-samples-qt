@@ -23,8 +23,8 @@ TakeScreenshotSample {
     id: rootRectangle
     clip: true
     width: 800
-    height: 600    
-    
+    height: 600
+
     // Declare a MapView
     MapView {
         id: mapView

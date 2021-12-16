@@ -17,15 +17,15 @@ Pan and zoom around the map. View the data loaded from the geopackage.
 1. Create a `GeoPackage` by passing the URL string to the `.gpkg` file.
 2. Load the `GeoPackage` with `GeoPackage.load`
 3. When it's done loading, get the `GeoPackageFeatureTable` objects from the geopackage with `geoPackage.geoPackageFeatureTables`
-4. Create a `FeatureLayer` for each feature table and add it to the map as an operational layer. Add each to 
+4. Create a `FeatureLayer` for each feature table and add it to the map as an operational layer. Add each to
    the map as an operational layer with `map.operationalLayers.append(featureLayer)`
 
 ## Relevant API
 
-* Map
 * FeatureLayer
 * GeoPackage
 * GeoPackageFeatureTable
+* Map
 
 ## Offline data
 

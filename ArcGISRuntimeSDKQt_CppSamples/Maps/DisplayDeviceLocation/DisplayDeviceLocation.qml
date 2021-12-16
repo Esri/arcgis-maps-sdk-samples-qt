@@ -22,7 +22,7 @@ DisplayDeviceLocationSample {
     id: deviceLocationSample
     width: 800
     height: 600
-    
+
     property string currentModeText: deviceLocationSample.stopMode
     property string currentModeImage: "qrc:/Samples/Maps/DisplayDeviceLocation/Stop.png"
 

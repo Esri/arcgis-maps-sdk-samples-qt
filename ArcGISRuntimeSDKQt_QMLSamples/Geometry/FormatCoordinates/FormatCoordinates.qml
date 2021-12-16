@@ -23,7 +23,7 @@ import Esri.ArcGISRuntime 100.13
 Rectangle {
     width: 800
     height: 600
-    
+
     readonly property int labelWidth: 100
     readonly property int coordinateTextWidth: 200
     readonly property int fontPixelSize: 14
@@ -85,7 +85,7 @@ Rectangle {
         }
 
         onMouseClicked: {  // on MapView
-            handleLocationUpdate(mouse.mapPoint);   
+            handleLocationUpdate(mouse.mapPoint);
         }
     }
 

@@ -1,6 +1,6 @@
 <RCC>
     <qresource prefix="/Samples/Routing/OfflineRouting">
-        <file alias="sample.json">README.metadata.json</file>        
+        <file alias="sample.json">README.metadata.json</file>
         <file>OfflineRouting.qml</file>
         <file>OfflineRouting.h</file>
         <file>OfflineRouting.cpp</file>

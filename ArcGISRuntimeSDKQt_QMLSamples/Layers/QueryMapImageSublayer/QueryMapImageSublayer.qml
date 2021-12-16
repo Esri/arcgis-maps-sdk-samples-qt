@@ -23,7 +23,7 @@ Rectangle {
     clip: true
     width: 800
     height: 600
-    
+
     property var citiesTable
     property var  statesTable
     property var  countiesTable

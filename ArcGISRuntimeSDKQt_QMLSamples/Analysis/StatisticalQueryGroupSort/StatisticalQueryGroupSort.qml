@@ -24,7 +24,7 @@ Rectangle {
     width: 800
     height: 600
 
-    
+
 
     ServiceFeatureTable {
         id: censusTable

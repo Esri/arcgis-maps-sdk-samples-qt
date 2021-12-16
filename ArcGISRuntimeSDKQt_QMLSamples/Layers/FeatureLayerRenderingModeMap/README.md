@@ -27,7 +27,7 @@ Use the 'Animated Zoom' button to trigger the same zoom animation on both static
 * FeatureLayer
 * FeatureLayer.renderingMode
 * LoadSettings
-* Map 
+* Map
 * MapView
 
 ## Tags

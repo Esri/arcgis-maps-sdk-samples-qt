@@ -1,6 +1,6 @@
 <RCC>
     <qresource prefix="/Samples/Scenes/Display3DLabelsInScene">
-        <file alias="sample.json">README.metadata.json</file>        
+        <file alias="sample.json">README.metadata.json</file>
         <file>Display3DLabelsInScene.qml</file>
         <file>Display3DLabelsInScene.h</file>
         <file>Display3DLabelsInScene.cpp</file>

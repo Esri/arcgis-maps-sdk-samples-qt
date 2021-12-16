@@ -25,7 +25,7 @@ Rectangle {
     height: 600
 
     property bool zoomedOut: true
-    
+
 
     MapView {
         id: topMapView

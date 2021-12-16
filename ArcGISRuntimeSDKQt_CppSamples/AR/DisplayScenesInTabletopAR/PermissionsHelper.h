@@ -17,7 +17,7 @@
 #include <QObject>
 
 class PermissionsHelper : public QObject
-{  
+{
   Q_OBJECT
 
   Q_PROPERTY(bool fileSystemAccessGranted READ fileSystemAccessGranted NOTIFY fileSystemAccessGrantedChanged)

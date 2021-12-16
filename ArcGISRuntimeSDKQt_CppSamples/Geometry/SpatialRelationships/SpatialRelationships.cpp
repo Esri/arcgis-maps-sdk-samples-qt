@@ -149,7 +149,7 @@ void SpatialRelationships::connectSignals()
   {
     // Delete rawReslt when we leave scope.
     auto result = std::unique_ptr<IdentifyGraphicsOverlayResult>(rawResult);
-    
+
     const QList<Graphic*> identifiedGraphics = result->graphics();
     if (identifiedGraphics.isEmpty())
       return;

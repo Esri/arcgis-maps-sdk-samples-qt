@@ -22,7 +22,7 @@ Rectangle {
     width: 800
     height: 600
 
-    
+
 
     // Map view UI presentation at top
     MapView {

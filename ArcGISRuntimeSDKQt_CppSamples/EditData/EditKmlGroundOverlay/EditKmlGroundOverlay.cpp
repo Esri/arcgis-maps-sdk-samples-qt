@@ -117,10 +117,10 @@ SceneQuickView* EditKmlGroundOverlay::sceneView() const
 void EditKmlGroundOverlay::setSceneView(SceneQuickView* sceneView)
 {
   if (!sceneView || sceneView == m_sceneView)
-    return;   
+    return;
 
   m_sceneView = sceneView;
-  m_sceneView->setArcGISScene(m_scene);  
+  m_sceneView->setArcGISScene(m_scene);
 
   emit sceneViewChanged();
 }

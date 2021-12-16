@@ -42,7 +42,7 @@ SpatialOperations::SpatialOperations(QQuickItem* parent /* = nullptr */):
                        , QStringLiteral("Difference"), QStringLiteral("Symmetric difference")
                        , QStringLiteral("Intersection") }
 {
-  
+
 }
 
 void SpatialOperations::init()

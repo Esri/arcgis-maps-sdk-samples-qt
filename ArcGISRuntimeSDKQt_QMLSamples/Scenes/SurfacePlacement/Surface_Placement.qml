@@ -21,7 +21,7 @@ import Esri.ArcGISRuntime 100.13
 
 Rectangle {
     width: 800
-    height: 600    
+    height: 600
 
     // Add a scene view
     SceneView {

@@ -142,6 +142,6 @@ void FindAddress::geocodeAddress(const QString& address)
 }
 
 void FindAddress::clearGraphics()
-{  
+{
   m_graphic->setGeometry(Point());
 }

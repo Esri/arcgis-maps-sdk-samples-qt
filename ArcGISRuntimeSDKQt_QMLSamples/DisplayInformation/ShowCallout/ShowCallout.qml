@@ -23,7 +23,7 @@ Rectangle {
     clip: true
     width: 800
     height: 600
-    
+
     property Point calloutLocation
     property real xCoor
     property real yCoor

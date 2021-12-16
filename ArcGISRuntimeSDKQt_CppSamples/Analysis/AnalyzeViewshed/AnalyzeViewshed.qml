@@ -24,11 +24,11 @@ AnalyzeViewshedSample {
     clip: true
     width: 800
     height: 600
-    
+
     MapView {
         anchors.fill: parent
         objectName: "mapView"
-        
+
         Component.onCompleted: {
             // Set the focus on MapView to initially enable keyboard navigation
             forceActiveFocus();

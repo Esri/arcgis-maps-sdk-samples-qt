@@ -55,7 +55,7 @@ private:
 
   Esri::ArcGISRuntime::Scene* m_scene = nullptr;
   Esri::ArcGISRuntime::SceneQuickView* m_sceneView = nullptr;
-  Esri::ArcGISRuntime::MobileScenePackage* m_scenePackage = nullptr;   
+  Esri::ArcGISRuntime::MobileScenePackage* m_scenePackage = nullptr;
 };
 
 #endif // OPENMOBILESCENEPACKAGE_H

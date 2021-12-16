@@ -22,7 +22,7 @@ import Esri.ArcGISRuntime 100.13
 Rectangle {
     width: 800
     height: 600
-    
+
     readonly property string compassMode: "Compass"
     readonly property string navigationMode: "Navigation"
     readonly property string recenterMode: "Re-Center"
@@ -41,7 +41,7 @@ Rectangle {
             // Set the focus on MapView to initially enable keyboard navigation
             forceActiveFocus();
         }
-        
+
         Map {
             Basemap {
                 initStyle: Enums.BasemapStyleArcGISImageryStandard
@@ -72,7 +72,7 @@ Rectangle {
         visible: autoPanListView.visible
         color: "black"
         opacity: 0.7
-    }    
+    }
 
     ListView {
         id: autoPanListView
@@ -135,7 +135,7 @@ Rectangle {
                     mapView.locationDisplay.autoPanMode = Enums.LocationDisplayAutoPanModeRecenter;
                     mapView.locationDisplay.start();
                     break;
-                case onMode:                   
+                case onMode:
                     mapView.locationDisplay.autoPanMode = Enums.LocationDisplayAutoPanModeOff;
                     mapView.locationDisplay.start();
                     break;
