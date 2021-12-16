@@ -1,0 +1,11 @@
+<RCC>
+    <qresource prefix="/Samples/Layers/DisplayDimensions">
+        <file alias="sample.json">README.metadata.json</file>        
+        <file>DisplayDimensions.qml</file>
+        <file>DisplayDimensions.h</file>
+        <file>DisplayDimensions.cpp</file>
+        <file>main.qml</file>
+        <file>screenshot.png</file>
+        <file>README.md</file>
+    </qresource>
+</RCC>
