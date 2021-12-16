@@ -27,10 +27,10 @@ Enter search terms into the search bar. Once the search is complete, a list is p
 ## Relevant API
 
 * Portal
+* PortalItem
+* PortalItemListModel
 * PortalQueryParametersForItems
 * PortalQueryResultSetForItems
-* PortalItemListModel
-* PortalItem
 
 ## Tags
 

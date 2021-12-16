@@ -24,10 +24,10 @@ Click to turn on the mouse move event listener, then move the mouse to update th
 ## Relevant API
 
 * AnalysisOverlay
+* ArcGISTiledElevationSource
 * LocationLineOfSight
 * SceneView
 * Surface
-* ArcGISTiledElevationSource
 
 ## Tags
 

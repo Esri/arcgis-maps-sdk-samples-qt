@@ -12,8 +12,6 @@ A feature layer hosted on ArcGIS Online has a preset renderer and will display i
 
 Use the button in the control panel to change the renderer on the feature layer. The original renderer displays red polygons around parcels that do not have a pool permit. When the blue renderer in this sample is applied, all parcels are indicated by blue polygons.
 
-## How it works
-
 A `SimpleRenderer` is created with a `SimpleLineSymbol`. When the button is clicked, the `renderer` property on the `FeatureLayer` is set to the new `SimpleRenderer`.
 
 ## How it works

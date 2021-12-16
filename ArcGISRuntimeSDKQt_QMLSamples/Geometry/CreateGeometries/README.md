@@ -23,15 +23,15 @@ Geometries are immutable in the ArcGIS Runtime API, so `GeometryBuilder` objects
 
 ## Relevant API
 
- * Envelope
- * Multipoint
- * MultipointBuilder
- * Polygon
- * PolygonBuilder
- * Polyline
- * PolylineBuilder
- * Point
- * PointCollection
+* Envelope
+* Multipoint
+* MultipointBuilder
+* Polygon
+* PolygonBuilder
+* Polyline
+* PolylineBuilder
+* Point
+* PointCollection
 
 ## Additional information
 

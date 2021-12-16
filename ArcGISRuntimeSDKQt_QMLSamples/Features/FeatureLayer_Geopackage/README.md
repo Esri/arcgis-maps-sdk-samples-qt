@@ -22,10 +22,10 @@ Pan and zoom around the map. View the data loaded from the geopackage.
 
 ## Relevant API
 
-* Map
 * FeatureLayer
 * GeoPackage
 * GeoPackageFeatureTable
+* Map
 
 ## Offline data
 
