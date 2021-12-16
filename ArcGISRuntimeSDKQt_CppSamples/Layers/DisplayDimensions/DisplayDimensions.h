@@ -40,7 +40,7 @@ class DisplayDimensions : public QObject
   Q_PROPERTY(QString dimensionLayerName READ dimensionLayerName WRITE setDimensionLayerName NOTIFY dimensionLayerNameChanged)
   Q_PROPERTY(bool dimensionLayerVisibility WRITE setDimensionLayerVisibility)
   Q_PROPERTY(bool definitionExpressionApplied WRITE applyDefinitionExpression)
-  Q_PROPERTY(bool checkBoxesEnabled READ checkBoxesEnabled NOTIFY checkBoxesEnabledChanged)
+  Q_PROPERTY(bool dimensionsAvailable READ dimensionsAvailable NOTIFY dimensionsAvailableChanged)
 
 public:
   explicit DisplayDimensions(QObject* parent = nullptr);
@@ -52,19 +52,19 @@ signals:
   void mapViewChanged();
   void errorMessageChanged();
   void dimensionLayerNameChanged();
-  void checkBoxesEnabledChanged();
+  void dimensionsAvailableChanged();
 
 private:
   Esri::ArcGISRuntime::MapQuickView* mapView() const;
   void setMapView(Esri::ArcGISRuntime::MapQuickView* mapView);
   QString errorMessage();
-  void setErrorMessage(const QString message);
+  void setErrorMessage(const QString& message);
   QString dimensionLayerName() const;
-  void setDimensionLayerName(const QString name);
+  void setDimensionLayerName(const QString& name);
   void setDimensionLayerVisibility(const bool visibility);
   void applyDefinitionExpression(const bool applied);
-  bool checkBoxesEnabled();
-  void setCheckBoxesEnabled(const bool& status);
+  bool dimensionsAvailable();
+  void setdimensionsAvailable(const bool status);
 
   void addMapToMapView(const Esri::ArcGISRuntime::Error& error);
   void handleError(const Esri::ArcGISRuntime::Error& error);
@@ -76,7 +76,7 @@ private:
   QString m_errorMessage;
   Esri::ArcGISRuntime::DimensionLayer* m_dimensionLayer = nullptr;
   QString m_dimensionLayerName;
-  bool m_checkBoxesEnabled;
+  bool m_dimensionsAvailable;
 };
 
 #endif // DISPLAYDIMENSIONS_H

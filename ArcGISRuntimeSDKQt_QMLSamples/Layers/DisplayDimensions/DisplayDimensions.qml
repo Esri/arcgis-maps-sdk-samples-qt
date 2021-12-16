@@ -71,7 +71,7 @@ Rectangle {
                     text: "Definition Expression: \nDimensions >= 450m"
                     checked: false
                     onCheckStateChanged: {
-                        if (definitionExpressionToggle.checkState == Qt.Checked) {
+                        if (definitionExpressionToggle.checkState === Qt.Checked) {
                             mmpk.maps[0].operationalLayers.get(indexOfDimensionLayer).definitionExpression = "DIMLENGTH >= 450";
                         }
                         else {
@@ -116,11 +116,6 @@ Rectangle {
                 return;
             }
 
-            // Set viewpoint.
-            const viewpointPoint = ArcGISRuntimeEnvironment.createObject("Point", { x: -3.3098678, y: 55.9074044, spatialReference: Factory.SpatialReference.createWgs84()});
-            const viewpointCenter = ArcGISRuntimeEnvironment.createObject("ViewpointCenter", {center: viewpointPoint, targetScale: 30000});
-            mmpk.maps[0].initialViewpoint = viewpointCenter;
-
             // Set the map view's map to the first map in the mobile map package
             mapView.map = mmpk.maps[0];
             // Set the minimum scale as 1:35000 to prevent zooming out too far.
@@ -134,6 +129,8 @@ Rectangle {
                     indexOfDimensionLayer = counter;
                     // Use the name of the DimensionLayer to define the title of the UI controls.
                     toggleBoxTitle.text = mmpk.maps[0].operationalLayers.get(counter).name;
+                    // There is only one Dimension Layer, so we can break out of the loop.
+                    break;
                 }
             }
 

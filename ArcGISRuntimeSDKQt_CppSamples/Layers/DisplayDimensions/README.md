@@ -30,7 +30,7 @@ When the sample loads, it will automatically display the map containing dimensio
 
 ## About the data
 
-This sample shows a subset of the network of pylons, substations, and power lines around Edinburgh, Scotland within a [Edinburgh Pylon Dimensions mobile map package](https://arcgis.com/home/item.html?id=f5ff6f5556a945bca87ca513b8729a1e). The data was digitised from satellite imagery and is intended to be used for illustrative purposes only.
+This sample shows a subset of the network of pylons, substations, and power lines around Edinburgh, Scotland within an [Edinburgh Pylon Dimensions mobile map package](https://arcgis.com/home/item.html?id=f5ff6f5556a945bca87ca513b8729a1e). The data was digitised from satellite imagery and is intended to be used for illustrative purposes only.
 
 ## Additional information
 

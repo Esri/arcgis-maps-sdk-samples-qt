@@ -57,14 +57,14 @@ Item {
                     text: "Dimension Layer visibility"
                     checked: true
                     onCheckStateChanged: model.dimensionLayerVisibility = visibilityToggle.checkState;
-                    enabled: model.checkBoxesEnabled;
+                    enabled: model.dimensionsAvailable;
                 }
                 CheckBox {
                     id: definitionExpressionToggle
                     text: "Definition Expression: \nDimensions >= 450m"
                     checked: false
                     onCheckStateChanged: model.definitionExpressionApplied = definitionExpressionToggle.checkState;
-                    enabled: model.checkBoxesEnabled && visibilityToggle.checked ? true : false;
+                    enabled: model.dimensionsAvailable && visibilityToggle.checked ? true : false;
                 }
             }
         }

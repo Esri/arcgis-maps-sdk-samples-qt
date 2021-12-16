@@ -76,28 +76,34 @@ void DisplayDimensions::init()
 
 void DisplayDimensions::addMapToMapView(const Error& error)
 {
-  // If no error's have occurred, the mmpk is loaded, and there is only one map in the mmpk, the map in the mmpk can be
-  // assigned to the MapView and the viewpoint set. Any errors will be managed by the handleError method.
+  // If no errors have occurred, the mmpk is loaded, and there is only one map in the mmpk, the map
+  // in the mmpk can be assigned to the MapView. Any errors will be managed by the handleError method.
   if (error.isEmpty() && m_mmpk->loadStatus() == LoadStatus::Loaded && m_mmpk->maps().count() > 0)
   {
     // Enable the checkboxes.
-    setCheckBoxesEnabled(true);
+    setdimensionsAvailable(true);
 
     // Assign the map in the mmpk to m_map.
     m_map = m_mmpk->maps().at(0);
-    // Set the viewpoint.
-    m_map->setInitialViewpoint(Viewpoint(Point(-3.3098678, 55.9074044, SpatialReference::wgs84()), 30000));
+
     // Set the minimum scale to prevent zooming out too far.
     m_map->setMinScale(35000);
-    // Set m_map as the MapView's map.
-    m_mapView->setMap(m_map);
+
+    // Check to ensure that m_map has been initialised properly.
+    if (m_mapView != nullptr)
+    {
+      // Set m_map as the MapView's map.
+      m_mapView->setMap(m_map);
+    }
 
     // From the map's layers, find the Dimension Layer.
     findDimensionLayer();
   }
   else
+  {
     // If the map hasn't loaded or an error has occurred, disable the checkboxes in the UI.
-    setCheckBoxesEnabled(false);
+    setdimensionsAvailable(false);
+  }
 }
 
 void DisplayDimensions::findDimensionLayer()
@@ -109,7 +115,7 @@ void DisplayDimensions::findDimensionLayer()
     if (layer->layerType() == LayerType::DimensionLayer)
     {
       // The current layer, which is the DimensionLayer, has type Layer*. Ths needs to be converted to a DimensionLayer*.
-      m_dimensionLayer = dynamic_cast<DimensionLayer*>(layer);
+      m_dimensionLayer = static_cast<DimensionLayer*>(layer);
       // Use the name of the Dimension Layer to define the title of the UI element.
       setDimensionLayerName(m_dimensionLayer->name());
       // There is only one Dimension Layer, so we can break out of the loop.
@@ -138,7 +144,9 @@ void DisplayDimensions::setMapView(MapQuickView* mapView)
     return;
 
   m_mapView = mapView;
-  m_mapView->setMap(m_map);
+
+  if (m_map)
+    m_mapView->setMap(m_map);
 
   emit mapViewChanged();
 }
@@ -148,7 +156,7 @@ QString DisplayDimensions::errorMessage()
   return m_errorMessage;
 }
 
-void DisplayDimensions::setErrorMessage(const QString message)
+void DisplayDimensions::setErrorMessage(const QString& message)
 {
   m_errorMessage = message;
   emit errorMessageChanged();
@@ -159,7 +167,7 @@ QString DisplayDimensions::dimensionLayerName() const
   return m_dimensionLayerName;
 }
 
-void DisplayDimensions::setDimensionLayerName(const QString name)
+void DisplayDimensions::setDimensionLayerName(const QString& name)
 {
   m_dimensionLayerName = name;
   emit dimensionLayerNameChanged();
@@ -178,13 +186,13 @@ void DisplayDimensions::applyDefinitionExpression(const bool applied)
     m_dimensionLayer->setDefinitionExpression("");
 }
 
-bool DisplayDimensions::checkBoxesEnabled()
+bool DisplayDimensions::dimensionsAvailable()
 {
-  return m_checkBoxesEnabled;
+  return m_dimensionsAvailable;
 }
 
-void DisplayDimensions::setCheckBoxesEnabled(const bool& status)
+void DisplayDimensions::setdimensionsAvailable(const bool status)
 {
-  m_checkBoxesEnabled = status;
-  emit checkBoxesEnabledChanged();
+  m_dimensionsAvailable = status;
+  emit dimensionsAvailableChanged();
 }
