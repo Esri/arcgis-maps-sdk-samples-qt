@@ -1,6 +1,6 @@
 <RCC>
     <qresource prefix="/Samples/Layers/BrowseOGCAPIFeatureService">
-        <file alias="sample.json">README.metadata.json</file>        
+        <file alias="sample.json">README.metadata.json</file>
         <file>BrowseOGCAPIFeatureService.qml</file>
         <file>BrowseOGCAPIFeatureService.h</file>
         <file>BrowseOGCAPIFeatureService.cpp</file>

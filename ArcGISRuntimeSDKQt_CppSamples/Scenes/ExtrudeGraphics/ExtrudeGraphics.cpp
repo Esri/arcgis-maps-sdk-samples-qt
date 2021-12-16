@@ -114,7 +114,7 @@ void ExtrudeGraphics::componentComplete()
     const QList<Point> points { Point(point.x(), point.y(), z)
                               , Point(point.x() + m_size, point.y(), z)
                               , Point(point.x() + m_size, point.y() + m_size, z)
-                              , Point(point.x(), point.y() + m_size, z) 
+                              , Point(point.x(), point.y() + m_size, z)
                               };
 
     // create a new graphic

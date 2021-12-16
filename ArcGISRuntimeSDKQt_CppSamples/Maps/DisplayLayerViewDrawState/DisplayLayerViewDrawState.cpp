@@ -106,7 +106,7 @@ void DisplayLayerViewDrawState::onLayerViewStateCompleted(Layer* layer, LayerVie
   // check if feature layer has been created otherwise do nothing.
   if (!m_featureLayer)
     return;
-  
+
   // only update the QStringList if the layer is the feature layer.
   if (layer->name() != m_featureLayer->name())
     return;

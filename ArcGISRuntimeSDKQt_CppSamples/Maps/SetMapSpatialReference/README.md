@@ -6,7 +6,7 @@ Specify a map's spatial reference.
 
 ## Use case
 
-Choosing the correct spatial reference is important for ensuring accurate projection of data points to a map.  
+Choosing the correct spatial reference is important for ensuring accurate projection of data points to a map.
 
 ## How to use the sample
 

@@ -23,7 +23,7 @@ import Esri.ArcGISExtras 1.1
 Rectangle {
     width: 800
     height: 600
-    
+
     readonly property url dataPath: System.userHomePath + "/ArcGIS/Runtime/Data"
 
     /**
@@ -38,7 +38,7 @@ Rectangle {
             // Set the focus on SceneView to initially enable keyboard navigation
             forceActiveFocus();
         }
-        
+
         Scene {
             id: scene
             Basemap {

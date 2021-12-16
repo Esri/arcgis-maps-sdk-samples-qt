@@ -1,6 +1,6 @@
 <RCC>
     <qresource prefix="/Samples/DisplayInformation/CustomDictionaryStyle">
-        <file alias="sample.json">README.metadata.json</file>        
+        <file alias="sample.json">README.metadata.json</file>
         <file>CustomDictionaryStyle.qml</file>
         <file>CustomDictionaryStyle.h</file>
         <file>CustomDictionaryStyle.cpp</file>

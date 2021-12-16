@@ -51,7 +51,7 @@ int main(int argc, char *argv[])
       Esri::ArcGISRuntime::ArcGISRuntimeEnvironment::setApiKey(apiKey);
   }
 
-  // Initialize the sample  
+  // Initialize the sample
   IdentifyLayers::init();
 
   // Initialize application view

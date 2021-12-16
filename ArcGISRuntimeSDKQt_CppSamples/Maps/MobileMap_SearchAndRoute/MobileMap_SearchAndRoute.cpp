@@ -96,7 +96,7 @@ void MobileMap_SearchAndRoute::componentComplete()
   m_mapView->setWrapAroundMode(WrapAroundMode::Disabled);
 
   // initialize Callout
-  m_mapView->calloutData()->setTitle("Address");  
+  m_mapView->calloutData()->setTitle("Address");
 
   // set reverse geocoding parameters
   m_reverseGeocodeParameters.setMaxResults(1);

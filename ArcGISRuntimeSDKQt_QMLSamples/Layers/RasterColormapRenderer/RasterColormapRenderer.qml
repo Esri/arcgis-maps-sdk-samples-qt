@@ -64,7 +64,7 @@ Rectangle {
                 return;
 
             mapView.setViewpointGeometryAndPadding(fullExtent, 50);
-        }   
+        }
     }
 
     function setColormap() {

@@ -40,7 +40,7 @@ The map opens to a view of the city of San Francisco, CA. In a disconnected envi
 
 ## Additional information
 
-`ArcGISTiledLayer` and `TileCache` supports both .tpk and .tpkx file formats.  
+`ArcGISTiledLayer` and `TileCache` supports both .tpk and .tpkx file formats.
 
 ## Tags
 

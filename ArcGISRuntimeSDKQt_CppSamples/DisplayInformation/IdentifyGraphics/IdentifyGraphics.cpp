@@ -113,7 +113,7 @@ void IdentifyGraphics::connectSignals()
   {
     // Delete rawIdentifyResult on leaving scope.
     auto identifyResult = std::unique_ptr<IdentifyGraphicsOverlayResult>(rawIdentifyResult);
-    
+
     if (identifyResult)
     {
       m_identifiedGraphicsCount = identifyResult->graphics().size();

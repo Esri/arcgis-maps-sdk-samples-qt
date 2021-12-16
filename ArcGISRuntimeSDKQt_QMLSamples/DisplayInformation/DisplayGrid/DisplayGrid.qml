@@ -25,7 +25,7 @@ Rectangle {
     clip: true
     width: 800
     height: 600
-    
+
     readonly property string utmGrid: "UTM"
     readonly property string usngGrid: "USNG"
     readonly property string latlonGrid: "LatLon"

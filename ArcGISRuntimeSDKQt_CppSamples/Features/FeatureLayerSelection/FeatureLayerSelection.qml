@@ -22,7 +22,7 @@ FeatureLayerSelectionSample {
     id: featureLayerSelectionSample
     width: 800
     height: 600
-    
+
     // add a mapView component
     MapView {
         id: mapView

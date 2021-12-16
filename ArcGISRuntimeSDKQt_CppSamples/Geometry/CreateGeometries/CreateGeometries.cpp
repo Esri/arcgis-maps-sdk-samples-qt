@@ -74,7 +74,7 @@ void CreateGeometries::componentComplete()
   });
 
   // Set map to map view
-  m_mapView->setMap(m_map);    
+  m_mapView->setMap(m_map);
 }
 
 // function to add Graphics to a Graphics Overlay

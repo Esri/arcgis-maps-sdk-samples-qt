@@ -24,7 +24,7 @@ Rectangle {
     clip: true
     width: 800
     height: 600
-    
+
     property bool peDataSet: true
     readonly property string dataPath: System.userHomePath + "/ArcGIS/Runtime/Data/PEDataRuntime"
 

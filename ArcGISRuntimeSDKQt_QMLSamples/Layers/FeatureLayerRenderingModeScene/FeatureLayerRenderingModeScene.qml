@@ -24,7 +24,7 @@ Rectangle {
     width: 800
     height: 600
 
-    property bool zoomedOut: true    
+    property bool zoomedOut: true
 
     SceneView {
         id: topSceneView

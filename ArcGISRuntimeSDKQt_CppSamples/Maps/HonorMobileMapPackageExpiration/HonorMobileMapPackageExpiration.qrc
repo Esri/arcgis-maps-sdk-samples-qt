@@ -1,6 +1,6 @@
 <RCC>
     <qresource prefix="/Samples/Maps/HonorMobileMapPackageExpiration">
-        <file alias="sample.json">README.metadata.json</file>        
+        <file alias="sample.json">README.metadata.json</file>
         <file>HonorMobileMapPackageExpiration.qml</file>
         <file>HonorMobileMapPackageExpiration.h</file>
         <file>HonorMobileMapPackageExpiration.cpp</file>

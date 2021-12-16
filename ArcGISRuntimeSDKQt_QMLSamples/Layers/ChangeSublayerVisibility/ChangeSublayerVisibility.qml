@@ -20,7 +20,7 @@ import Esri.ArcGISRuntime 100.14
 
 Rectangle {
     width: 800
-    height: 600    
+    height: 600
 
     // Create the MapView
     MapView {
@@ -30,7 +30,7 @@ Rectangle {
             // Set the focus on MapView to initially enable keyboard navigation
             forceActiveFocus();
         }
-        
+
         // Nest the Map as a child of the MapView
         Map {
             // Nest the Basemap to add it as the Map's Basemap

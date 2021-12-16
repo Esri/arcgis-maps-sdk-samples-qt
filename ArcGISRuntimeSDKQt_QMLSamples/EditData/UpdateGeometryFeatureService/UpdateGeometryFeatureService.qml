@@ -22,7 +22,7 @@ import Esri.ArcGISRuntime 100.14
 Rectangle {
     width: 800
     height: 600
-    
+
     property bool featureSelected: false
     property Point newLocation
     property var selectedFeature: null

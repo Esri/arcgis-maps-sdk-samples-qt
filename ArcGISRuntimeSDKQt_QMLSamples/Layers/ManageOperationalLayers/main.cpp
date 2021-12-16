@@ -24,7 +24,7 @@
 #define QUOTE(x) STRINGIZE(x)
 
 int main(int argc, char *argv[])
-{  
+{
   // register the draw order model
   qmlRegisterType<DrawOrderLayerListModel>("Esri.Samples", 1, 0, "DrawOrderListModel");
 

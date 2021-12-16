@@ -58,7 +58,7 @@
 
 using namespace Esri::ArcGISRuntime;
 
-namespace 
+namespace
 {
 const QString featureServiceUrl = QStringLiteral("https://sampleserver7.arcgisonline.com/server/rest/services/UtilityNetwork/NapervilleGas/FeatureServer");
 const QString domainNetworkName = QStringLiteral("Pipeline");

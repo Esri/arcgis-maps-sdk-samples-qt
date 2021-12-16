@@ -21,7 +21,7 @@ Rectangle {
     id: rootRectangle
     clip: true
     width: 800
-    height: 600    
+    height: 600
 
     MapView {
         id: mapView
@@ -115,7 +115,7 @@ Rectangle {
         // connect to mouse click signal
         onMouseClicked: {
             mapView.identifyGraphicsOverlay(graphicsOverlay, mouse.x, mouse.y, 1 /*tolerance*/, false /*returnPopupsOnly*/);
-        }       
+        }
 
         // connect to identify signal
         onIdentifyGraphicsOverlayStatusChanged: {
