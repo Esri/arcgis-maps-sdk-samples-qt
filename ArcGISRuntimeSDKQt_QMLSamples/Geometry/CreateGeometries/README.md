@@ -26,12 +26,12 @@ Geometries are immutable in the ArcGIS Runtime API, so `GeometryBuilder` objects
 * Envelope
 * Multipoint
 * MultipointBuilder
+* Point
+* PointCollection
 * Polygon
 * PolygonBuilder
 * Polyline
 * PolylineBuilder
-* Point
-* PointCollection
 
 ## Additional information
 

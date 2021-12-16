@@ -56,6 +56,11 @@ def check_files(file_list):
             errors = []
             # Set variables for file
             directory_list = file.split("/")
+
+            # Do not check widgets
+            if "ArcGISRuntimeSDKQt_CppSamples_Widgets" in directory_list:
+                continue
+
             file_name = directory_list[-1]
 
             # Check skip file conditions

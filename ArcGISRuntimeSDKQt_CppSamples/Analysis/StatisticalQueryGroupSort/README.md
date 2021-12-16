@@ -27,10 +27,6 @@ The sample will start with some default options selected. You can immediately cl
 7. To execute the query, call `featureTable::queryStatistics(queryParameters)`.
 8. Get the `StatisticQueryResult`. From this, you can get an iterator of `StatisticRecord`s to loop through and display.
 
-## About the data
-
-This sample uses a [Diabetes, Obesity, and Inactivity by US County](https://www.arcgis.com/home/item.html?id=392420848e634079bc7d0648586e818f) feature layer hosted on ArcGIS Online.
-
 ## Relevant API
 
 * Field
@@ -42,6 +38,10 @@ This sample uses a [Diabetes, Obesity, and Inactivity by US County](https://www.
 * StatisticsQueryParameters
 * StatisticsQueryResult
 * StatisticType
+
+## About the data
+
+This sample uses a [Diabetes, Obesity, and Inactivity by US County](https://www.arcgis.com/home/item.html?id=392420848e634079bc7d0648586e818f) feature layer hosted on ArcGIS Online.
 
 ## Tags
 
