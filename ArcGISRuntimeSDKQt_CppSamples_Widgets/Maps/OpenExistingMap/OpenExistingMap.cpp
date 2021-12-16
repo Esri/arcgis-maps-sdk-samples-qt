@@ -28,7 +28,7 @@ using namespace Esri::ArcGISRuntime;
 
 OpenExistingMap::OpenExistingMap(QWidget* parent) :
     QWidget(parent)
-{        
+{
     // Create a map view
     m_mapView = new MapGraphicsView(this);
 

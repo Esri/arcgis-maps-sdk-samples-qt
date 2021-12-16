@@ -31,7 +31,7 @@ int main(int argc, char *argv[])
 {
   QGuiApplication::setAttribute(Qt::AA_EnableHighDpiScaling);
   QGuiApplication app(argc, argv);
-  app.setApplicationName("Buffer - C++"); 
+  app.setApplicationName("Buffer - C++");
 
   // Use of Esri location services, including basemaps and geocoding,
   // requires authentication using either an ArcGIS identity or an API Key.
@@ -50,7 +50,7 @@ int main(int argc, char *argv[])
   {
       Esri::ArcGISRuntime::ArcGISRuntimeEnvironment::setApiKey(apiKey);
   }
-  
+
   // Initialize the sample
   Buffer::init();
 

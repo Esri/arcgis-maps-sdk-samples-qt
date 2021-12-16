@@ -20,7 +20,7 @@ import Esri.ArcGISRuntime 100.14
 
 Rectangle {
     width: 800
-    height: 600    
+    height: 600
 
     // Map view UI presentation at top
     MapView {

@@ -95,7 +95,7 @@ Rectangle {
 
         LocatorTask {
             id: locatorTask
-            
+
             // An ArcGIS Developer API key is required to utilize the world geocoding service
             url: "https://geocode-api.arcgis.com/arcgis/rest/services/World/GeocodeServer"
 

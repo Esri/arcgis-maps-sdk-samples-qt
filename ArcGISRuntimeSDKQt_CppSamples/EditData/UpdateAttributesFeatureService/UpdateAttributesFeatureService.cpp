@@ -51,7 +51,7 @@ namespace
 
 UpdateAttributesFeatureService::UpdateAttributesFeatureService(QQuickItem* parent) :
   QQuickItem(parent)
-{    
+{
 }
 
 UpdateAttributesFeatureService::~UpdateAttributesFeatureService() = default;
@@ -89,7 +89,7 @@ void UpdateAttributesFeatureService::componentComplete()
 }
 
 void UpdateAttributesFeatureService::connectSignals()
-{   
+{
   // connect to the mouse clicked signal on the MapQuickView
   connect(m_mapView, &MapQuickView::mouseClicked, this, [this](QMouseEvent& mouseEvent)
   {

@@ -23,7 +23,7 @@ using namespace Esri::ArcGISRuntime;
 
 DisplayMap::DisplayMap(QWidget* parent) :
   QWidget(parent)
-{    
+{
     // Create a map using the Imagery with labels basemap
     m_map = new Map(BasemapStyle::ArcGISImagery, this);
 

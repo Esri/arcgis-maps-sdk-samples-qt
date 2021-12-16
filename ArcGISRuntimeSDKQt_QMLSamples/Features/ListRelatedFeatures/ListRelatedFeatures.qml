@@ -24,7 +24,7 @@ Rectangle {
     width: 800
     height: 600
 
-    property FeatureLayer alaskaNationalParks: null    
+    property FeatureLayer alaskaNationalParks: null
 
     MapView {
         id: mapView
@@ -183,7 +183,7 @@ Rectangle {
                 Text {
                     anchors.horizontalCenter: parent.horizontalCenter
                     anchors.margins: 10
-                                    
+
                     text: displayFieldValue
                     font.pixelSize: 12
                 }

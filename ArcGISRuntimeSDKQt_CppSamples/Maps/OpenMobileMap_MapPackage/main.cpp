@@ -61,7 +61,7 @@ int main(int argc, char *argv[])
 
     // Add the import Path
     view.engine()->addImportPath(QDir(QCoreApplication::applicationDirPath()).filePath("qml"));
-  
+
   QString arcGISRuntimeImportPath = QUOTE(ARCGIS_RUNTIME_IMPORT_PATH);
 
  #if defined(LINUX_PLATFORM_REPLACEMENT)
@@ -76,7 +76,7 @@ int main(int argc, char *argv[])
 
     // Set the source
     view.setSource(QUrl("qrc:/Samples/Maps/OpenMobileMap_MapPackage/OpenMobileMap_MapPackage.qml"));
- 
+
     view.show();
 
     return app.exec();

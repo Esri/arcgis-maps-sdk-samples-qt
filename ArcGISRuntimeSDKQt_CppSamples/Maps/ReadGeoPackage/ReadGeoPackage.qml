@@ -21,7 +21,7 @@ ReadGeoPackageSample {
     id: root
     clip: true
     width: 800
-    height: 600    
+    height: 600
 
     // add a mapView component
     MapView {
@@ -31,7 +31,7 @@ ReadGeoPackageSample {
         Component.onCompleted: {
             // Set the focus on MapView to initially enable keyboard navigation
             forceActiveFocus();
-        }        
+        }
     }
 }
 

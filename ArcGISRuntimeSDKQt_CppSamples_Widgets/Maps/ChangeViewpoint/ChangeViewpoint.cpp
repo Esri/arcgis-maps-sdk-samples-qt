@@ -25,7 +25,7 @@ using namespace Esri::ArcGISRuntime;
 
 ChangeViewpoint::ChangeViewpoint(QWidget* parent) :
     QWidget(parent)
-{    
+{
     // Create a map using an imagery basemap
     m_map = new Map(BasemapStyle::ArcGISImagery, this);
 
@@ -36,7 +36,7 @@ ChangeViewpoint::ChangeViewpoint(QWidget* parent) :
     m_viewpointCombo = new QComboBox(this);
     m_viewpointCombo->adjustSize();
     m_viewpointCombo->setStyleSheet("QComboBox#combo {color: black; background-color:#000000;}");
-    m_viewpointCombo->addItems(QStringList 
+    m_viewpointCombo->addItems(QStringList
                                { "Center"
                                , "Center and scale"
                                , "Geometry"

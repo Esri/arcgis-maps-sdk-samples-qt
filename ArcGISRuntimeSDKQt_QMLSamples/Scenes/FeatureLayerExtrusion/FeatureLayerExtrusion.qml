@@ -23,7 +23,7 @@ Rectangle {
     id: rootRectangle
     clip: true
     width: 800
-    height: 600    
+    height: 600
 
     SceneView {
         id: sceneView
@@ -32,7 +32,7 @@ Rectangle {
         Component.onCompleted: {
             // Set the focus on SceneView to initially enable keyboard navigation
             forceActiveFocus();
-        }   
+        }
 
         Scene {
             id: scene

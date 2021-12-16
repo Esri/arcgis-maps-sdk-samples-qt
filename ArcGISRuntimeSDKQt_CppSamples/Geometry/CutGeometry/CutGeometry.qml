@@ -23,7 +23,7 @@ CutGeometrySample {
     clip: true
     width: 800
     height: 600
-    
+
     // add a mapView component
     MapView {
         anchors.fill: parent
@@ -33,7 +33,7 @@ CutGeometrySample {
             // Set the focus on MapView to initially enable keyboard navigation
             forceActiveFocus();
         }
-    }    
+    }
 
     Button {
         id: cutButton

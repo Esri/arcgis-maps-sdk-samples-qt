@@ -21,7 +21,7 @@ import Esri.Samples 1.0
 VectorTiledLayerUrlSample {
     id: vectorTiledLayerUrlSample
     width: 800
-    height: 600    
+    height: 600
 
     // add a mapView component
     MapView {

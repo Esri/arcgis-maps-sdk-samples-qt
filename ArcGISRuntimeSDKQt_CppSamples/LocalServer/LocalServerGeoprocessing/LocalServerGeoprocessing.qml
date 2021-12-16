@@ -21,7 +21,7 @@ import Esri.Samples 1.0
 LocalServerGeoprocessingSample {
     id: localServerGeoprocessingSample
     width: 800
-    height: 600   
+    height: 600
 
     // Create MapQuickView here, and create its Map etc. in C++ code
     MapView {

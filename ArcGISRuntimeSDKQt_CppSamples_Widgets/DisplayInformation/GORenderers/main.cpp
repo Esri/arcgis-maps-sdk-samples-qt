@@ -39,7 +39,7 @@ int main(int argc, char *argv[])
 
   QGuiApplication::setAttribute(Qt::AA_EnableHighDpiScaling);
   QApplication application(argc, argv);
-  
+
   GORenderers applicationWindow;
   applicationWindow.setMinimumWidth(800);
   applicationWindow.setMinimumHeight(600);

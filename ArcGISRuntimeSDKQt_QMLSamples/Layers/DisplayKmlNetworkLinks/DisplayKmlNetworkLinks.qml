@@ -23,7 +23,7 @@ import Esri.ArcGISRuntime 100.14
 Rectangle {
     id: rootRectangle
 
-    
+
     property string currentKmlNetworkMessage: "";
 
     clip: true
@@ -38,7 +38,7 @@ Rectangle {
             // Set the focus on SceneView to initially enable keyboard navigation
             forceActiveFocus();
         }
-        
+
         Scene {
             id: scene
             Basemap {

@@ -22,7 +22,7 @@ ListRelatedFeaturesSample {
     id: rootRectangle
     clip: true
     width: 800
-    height: 600    
+    height: 600
 
     onHideAttributeTable: attributeView.height = 0;
     onShowAttributeTable: attributeView.height = 200;
@@ -77,7 +77,7 @@ ListRelatedFeaturesSample {
                 Text {
                     anchors.horizontalCenter: parent.horizontalCenter
                     anchors.margins: 10
-                                    
+
                     text: displayFieldValue
                     font.pixelSize: 12
                 }

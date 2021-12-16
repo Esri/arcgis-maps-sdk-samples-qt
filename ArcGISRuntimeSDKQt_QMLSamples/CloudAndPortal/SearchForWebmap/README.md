@@ -15,7 +15,7 @@ Enter search terms into the search bar. Once the search is complete, a list is p
 ## How it works
 
 1. A `Portal` is created with no credential set, when the app starts, the portal is loaded.
-2. A search bar allows the user to enter a keyword (a tag) to search for * e.g. "usa". 
+2. A search bar allows the user to enter a keyword (a tag) to search for * e.g. "usa".
 3. The search term is passed as the `searchString` for a `PortalQueryParametersForItems` which also has the `itemType` set to `Enums.PortalItemTypeWebMap`. NOTE if multiple item types are required these can be set via the `types` property. Since webmaps authored prior to July 2nd, 2014 are not supported, a date filter is also applied.
 4. The query parameters are passed to the portal's `findItems` method.
 5. Once the `findItems` task is complete, a `PortalQueryResultSetForItems` is obtained by calling `findItemsResult` on the portal.

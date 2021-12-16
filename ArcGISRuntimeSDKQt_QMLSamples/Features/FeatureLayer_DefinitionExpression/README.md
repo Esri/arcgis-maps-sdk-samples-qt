@@ -1,6 +1,6 @@
 # Feature layer definition expression
 
-Limit the features displayed on a map with a definition expression. 
+Limit the features displayed on a map with a definition expression.
 
 ![](screenshot.png)
 

@@ -25,7 +25,7 @@ using namespace Esri::ArcGISRuntime;
 
 ChangeBasemap::ChangeBasemap(QWidget* parent) :
     QWidget(parent)
-{        
+{
     // Create a map initially using the topographic basemap
     m_map = new Map(BasemapStyle::ArcGISTopographic, this);
 
@@ -62,7 +62,7 @@ ChangeBasemap::ChangeBasemap(QWidget* parent) :
     QWidget* widget = new QWidget();
     QVBoxLayout* layout = new QVBoxLayout();
     layout->setMargin(0);
-    layout->addWidget(m_basemapCombo);   
+    layout->addWidget(m_basemapCombo);
     widget->setLayout(layout);
 
     QGraphicsProxyWidget *proxy = m_mapView->scene()->addWidget(widget);

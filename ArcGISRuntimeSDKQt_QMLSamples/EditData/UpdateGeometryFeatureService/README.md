@@ -20,7 +20,7 @@ Selecting a feature on the map highlights the feature. Selecting another locatio
 
 1. Create a `ServiceFeatureTable` object from a URL.
 2. Create a `FeatureLayer` object from the `ServiceFeatureTable`.
-3. Select a feature from the `FeatureLayer` using `featureLayer.selectFeatures`.  
+3. Select a feature from the `FeatureLayer` using `featureLayer.selectFeatures`.
 4. Load the selected feature.
 5. Change the selected feature's location using `feature.geometry`.
 6. After the change, update the table on the server using `applyEdits`.

@@ -26,7 +26,7 @@ Rectangle {
     SceneView {
         id: sceneView
         anchors.fill: parent
-        
+
         atmosphereEffect: Enums.AtmosphereEffectRealistic
         sunLighting: Enums.LightingModeLightAndShadows
         sunTime: "2018-08-10T08:30"

@@ -24,7 +24,7 @@ import Esri.ArcGISRuntime.Toolkit 100.14
 Rectangle {
     width: 800
     height: 600
-    
+
     readonly property var featAttributes: ["Destroyed", "Major", "Minor", "Affected", "Inaccessible"]
     property string damageType
     property var selectedFeature: null

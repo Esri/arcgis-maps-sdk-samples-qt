@@ -242,7 +242,7 @@ void OfflineGeocode::connectSignals()
   {
     // Delete rawIdentifyResult when we leave scope.
     auto identifyResult = std::unique_ptr<IdentifyGraphicsOverlayResult>(rawIdentifyResult);
-    
+
     if (!identifyResult)
       return;
 

@@ -24,7 +24,7 @@ Rectangle {
     clip: true
     width: 800
     height: 600
-    
+
     property var porInfo: portal.portalInfo
 
     function chooseBasemap(selectedBasemap) {

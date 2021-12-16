@@ -24,7 +24,7 @@ FeatureLayerDefinitionExpressionSample {
     id: definitionExpressionSample
     width: 800
     height: 600
-    
+
     //! [Declare map view in QML that will be accessed from Cpp]
     // add a mapView component
     MapView {

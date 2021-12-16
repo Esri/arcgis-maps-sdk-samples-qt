@@ -26,7 +26,7 @@ Rectangle {
 
     property Point calloutLocation
     property string damageType
-    
+
 
     // Create MapView that contains a Map
     MapView {

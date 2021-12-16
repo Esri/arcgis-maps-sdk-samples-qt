@@ -53,7 +53,7 @@ int main(int argc, char *argv[])
   {
       Esri::ArcGISRuntime::ArcGISRuntimeEnvironment::setApiKey(apiKey);
   }
-  
+
   // Initialize the sample
   FormatCoordinates::init();
 

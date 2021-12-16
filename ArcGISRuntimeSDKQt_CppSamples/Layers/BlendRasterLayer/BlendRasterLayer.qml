@@ -24,7 +24,7 @@ BlendRasterLayerSample {
     clip: true
     width: 800
     height: 600
-    
+
     property bool editingRenderer: false
 
     SlopeTypeModel {

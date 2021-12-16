@@ -59,7 +59,7 @@ const QString sampleFileYellowstone {"/ArcGIS/Runtime/Data/mmpk/Yellowstone.mmpk
 
 OpenMobileMap_MapPackage::OpenMobileMap_MapPackage(QQuickItem* parent) :
   QQuickItem(parent)
-{    
+{
   // connect to the Mobile Map Package instance to know when errors occur
   connect(MobileMapPackage::instance(), &MobileMapPackage::errorOccurred,
           [](Error e)

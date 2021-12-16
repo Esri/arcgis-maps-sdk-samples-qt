@@ -31,7 +31,7 @@ A `SimpleRenderer` is created with a `SimpleLineSymbol`. When the button is clic
 
 ## About the data
 
-This sample displays a feature layer showing areas that do or do not have pool permits. 
+This sample displays a feature layer showing areas that do or do not have pool permits.
 
 ## Tags
 

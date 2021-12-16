@@ -22,7 +22,7 @@ Rectangle {
     clip: true
     width: 800
     height: 600
-    
+
     property string distanceText
 
     MapView {
@@ -93,7 +93,7 @@ Rectangle {
             // calculate the path's geodetic length
             distanceText = GeometryEngine.lengthGeodetic(pathGeometry, unitOfMeasurement, curveType).toFixed(2);
         }
-    }    
+    }
 
     // create a line symbol
     SimpleLineSymbol {

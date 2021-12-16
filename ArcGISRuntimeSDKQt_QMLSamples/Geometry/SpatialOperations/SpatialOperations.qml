@@ -24,7 +24,7 @@ Rectangle {
     width: 800
     height: 600
 
-    property var geometryOperations: ["None", "Union", "Difference", "Symmetric difference", "Intersection"]    
+    property var geometryOperations: ["None", "Union", "Difference", "Symmetric difference", "Intersection"]
     property var geometry1
     property var geometry2
 

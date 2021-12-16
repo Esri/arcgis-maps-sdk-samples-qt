@@ -21,7 +21,7 @@ import Esri.Samples 1.0
 RasterLayerFileSample {
     id: rootRectangle
     clip: true
-    
+
     readonly property var supportedFormats: ["img","I12","dt0","dt1","dt2","tc2","geotiff","tif", "tiff", "hr1","jpg","jpeg","jp2","ntf","png","i21","ovr"]
 
     // add a mapView component
@@ -61,7 +61,7 @@ RasterLayerFileSample {
 
     RasterLoader {
         id: loader
-        anchors.fill: rootRectangle        
+        anchors.fill: rootRectangle
         supportedExtensions: supportedFormats
 
         onRasterFileChosen: createAndAddRasterLayer(url);

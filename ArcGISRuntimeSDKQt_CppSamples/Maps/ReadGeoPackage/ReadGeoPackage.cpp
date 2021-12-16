@@ -102,7 +102,7 @@ void ReadGeoPackage::readGeoPackage()
   connect(auroraGpkg, &GeoPackage::doneLoading, this, [auroraGpkg, this](Error error)
   {
     if (error.isEmpty())
-    {      
+    {
       // For each raster, create a raster layer and add the layer to the map
       for (GeoPackageRaster* rasterItm : auroraGpkg->geoPackageRasters())
       {

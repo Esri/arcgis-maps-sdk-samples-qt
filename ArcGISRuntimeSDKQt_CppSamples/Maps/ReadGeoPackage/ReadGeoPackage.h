@@ -32,7 +32,7 @@ namespace Esri
 
 class ReadGeoPackage : public QQuickItem
 {
-  Q_OBJECT  
+  Q_OBJECT
 
 public:
   explicit ReadGeoPackage(QQuickItem* parent = nullptr);
@@ -47,7 +47,7 @@ private:
 private:
   Esri::ArcGISRuntime::Map* m_map = nullptr;
   Esri::ArcGISRuntime::MapQuickView* m_mapView = nullptr;
-  Esri::ArcGISRuntime::GeoPackage* auroraGpkg = nullptr;  
+  Esri::ArcGISRuntime::GeoPackage* auroraGpkg = nullptr;
   QString m_dataPath;
 };
 

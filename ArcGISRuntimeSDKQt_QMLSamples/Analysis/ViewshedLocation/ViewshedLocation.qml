@@ -24,13 +24,13 @@ Rectangle {
     clip: true
     width: 800
     height: 600
-    
+
     property bool calculating: false
 
     SceneView {
         id: sceneView
         anchors.fill: parent
-        
+
         focus: true
         Component.onCompleted: {
             // Set the focus on SceneView to initially enable keyboard navigation
