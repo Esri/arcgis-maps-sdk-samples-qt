@@ -35,9 +35,9 @@
         "MapView"
     ],
     "snippets": [
-        "ClosestFacility.qml",
         "ClosestFacility.cpp",
-        "ClosestFacility.h"
+        "ClosestFacility.h",
+        "ClosestFacility.qml"
     ],
     "title": "Find closest facility to an incident (interactive)"
 }

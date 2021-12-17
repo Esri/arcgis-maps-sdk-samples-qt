@@ -51,7 +51,7 @@ int main(int argc, char *argv[])
   {
       Esri::ArcGISRuntime::ArcGISRuntimeEnvironment::setApiKey(apiKey);
   }
-  
+
   // Initialize the sample
   FeatureLayerFeatureService::init();
 
@@ -61,7 +61,7 @@ int main(int argc, char *argv[])
 
   // Add the import Path
   view.engine()->addImportPath(QDir(QCoreApplication::applicationDirPath()).filePath("qml"));
-  
+
   QString arcGISRuntimeImportPath = QUOTE(ARCGIS_RUNTIME_IMPORT_PATH);
 
  #if defined(LINUX_PLATFORM_REPLACEMENT)

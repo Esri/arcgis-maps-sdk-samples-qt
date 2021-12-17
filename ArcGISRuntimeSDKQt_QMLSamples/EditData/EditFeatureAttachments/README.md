@@ -22,10 +22,6 @@ Tap a feature on the map to open a callout displaying the number of attachments.
 6. To delete an attachment from the selected feature, use the `feature.deleteAttachment()`.
 7. By default, edits are automatically applied to the service and `applyEdits` does not need to be called.
 
-## Additional information
-
-Attachments can only be added to and accessed on service feature tables when their `hasAttachments` property is true.
-
 ## Relevant API
 
 * ApplyEdits
@@ -37,6 +33,10 @@ Attachments can only be added to and accessed on service feature tables when the
 * ServiceFeatureTable
 * UpdateFeature
 
+## Additional information
+
+Attachments can only be added to and accessed on service feature tables when their `hasAttachments` property is true.
+
 ## Tags
 
-Edit and Manage Data, image, picture, JPEG, PNG, PDF, TXT
+Edit and Manage Data, image, JPEG, PDF, picture, PNG, TXT

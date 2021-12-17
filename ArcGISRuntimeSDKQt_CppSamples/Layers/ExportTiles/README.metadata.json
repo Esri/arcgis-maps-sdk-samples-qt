@@ -26,9 +26,9 @@
         "TileCache"
     ],
     "snippets": [
-        "ExportTiles.qml",
         "ExportTiles.cpp",
-        "ExportTiles.h"
+        "ExportTiles.h",
+        "ExportTiles.qml"
     ],
     "title": "Export tiles"
 }

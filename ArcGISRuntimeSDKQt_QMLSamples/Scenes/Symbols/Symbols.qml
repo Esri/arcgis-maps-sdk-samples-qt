@@ -16,7 +16,7 @@
 
 import QtQuick 2.6
 import QtQuick.Controls 2.2
-import Esri.ArcGISRuntime 100.12
+import Esri.ArcGISRuntime 100.13
 
 Rectangle {
     width: 800
@@ -58,11 +58,11 @@ Rectangle {
         Component.onCompleted: {
             // Set the focus on SceneView to initially enable keyboard navigation
             forceActiveFocus();
-            
+
             // set viewpoint to the specified camera
             setViewpointCameraAndWait(camera);
 
-            addSymbols(); 
+            addSymbols();
         }
     }
 

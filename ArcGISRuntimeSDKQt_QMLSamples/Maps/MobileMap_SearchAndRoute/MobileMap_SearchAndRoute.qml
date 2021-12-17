@@ -17,15 +17,15 @@
 import QtQuick 2.6
 import QtQuick.Controls 2.2
 import Esri.ArcGISExtras 1.1
-import Esri.ArcGISRuntime 100.12
-import Esri.ArcGISRuntime.Toolkit 100.12
+import Esri.ArcGISRuntime 100.13
+import Esri.ArcGISRuntime.Toolkit 100.13
 
 Rectangle {
     clip: true
     width: 800
     height: 600
     color: "#E0E0E0"
-    
+
     readonly property url dataPath: System.userHomePath + "/ArcGIS/Runtime/Data/mmpk/"
     property LocatorTask currentLocatorTask: null
     property RouteTask currentRouteTask: null
@@ -42,12 +42,12 @@ Rectangle {
     // Map view UI presentation at top
     MapView {
         id: mapView
-        
+
         Component.onCompleted: {
             // Set the focus on MapView to initially enable keyboard navigation
             forceActiveFocus();
         }
-        
+
         calloutData {
             title : "Address";
         }

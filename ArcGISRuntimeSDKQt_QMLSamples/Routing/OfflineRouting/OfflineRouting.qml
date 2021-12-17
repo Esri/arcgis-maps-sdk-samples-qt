@@ -16,7 +16,7 @@
 
 import QtQuick 2.6
 import QtQuick.Controls 2.6
-import Esri.ArcGISRuntime 100.12
+import Esri.ArcGISRuntime 100.13
 import Esri.ArcGISExtras 1.1
 import QtQml 2.11
 import QtQuick.Layouts 1.11
@@ -35,7 +35,7 @@ Rectangle {
     MapView {
         id: mapView
         anchors.fill: parent
-        
+
         Component.onCompleted: {
             // Set the focus on MapView to initially enable keyboard navigation
             forceActiveFocus();

@@ -26,9 +26,9 @@
         "ServiceFeatureTable"
     ],
     "snippets": [
-        "FeatureLayerDefinitionExpression.qml",
         "FeatureLayerDefinitionExpression.cpp",
-        "FeatureLayerDefinitionExpression.h"
+        "FeatureLayerDefinitionExpression.h",
+        "FeatureLayerDefinitionExpression.qml"
     ],
     "title": "Feature layer definition expression"
 }

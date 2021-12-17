@@ -24,13 +24,10 @@ CONFIG += c++14
 # additional modules are pulled in via arcgisruntime.pri
 QT += opengl qml quick
 
-ARCGIS_RUNTIME_VERSION = 100.12
-include($$PWD/arcgisruntime.pri)
-
 TEMPLATE = app
 TARGET = Geotriggers
 
-ARCGIS_RUNTIME_VERSION = 100.12
+ARCGIS_RUNTIME_VERSION = 100.13
 include($$PWD/arcgisruntime.pri)
 
 #-------------------------------------------------------------------------------

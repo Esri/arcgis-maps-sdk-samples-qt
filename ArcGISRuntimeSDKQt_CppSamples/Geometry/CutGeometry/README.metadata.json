@@ -22,9 +22,9 @@
         "Polyline"
     ],
     "snippets": [
-        "CutGeometry.qml",
         "CutGeometry.cpp",
-        "CutGeometry.h"
+        "CutGeometry.h",
+        "CutGeometry.qml"
     ],
     "title": "Cut geometry"
 }

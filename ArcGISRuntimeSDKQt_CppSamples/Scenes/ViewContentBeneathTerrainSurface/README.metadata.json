@@ -21,9 +21,9 @@
         "Surface"
     ],
     "snippets": [
-        "ViewContentBeneathTerrainSurface.qml",
         "ViewContentBeneathTerrainSurface.cpp",
-        "ViewContentBeneathTerrainSurface.h"
+        "ViewContentBeneathTerrainSurface.h",
+        "ViewContentBeneathTerrainSurface.qml"
     ],
     "title": "View content beneath terrain surface"
 }

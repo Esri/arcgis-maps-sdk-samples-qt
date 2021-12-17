@@ -15,14 +15,14 @@
 // [Legal]
 
 import QtQuick 2.6
-import Esri.ArcGISRuntime 100.12
+import Esri.ArcGISRuntime 100.13
 import Esri.ArcGISExtras 1.1
 
 Rectangle {
     width: 800
     height: 600
 
-    property url dataPath: System.userHomePath + "/ArcGIS/Runtime/Data/mmpk/"    
+    property url dataPath: System.userHomePath + "/ArcGIS/Runtime/Data/mmpk/"
     property string expirationDate
     property string expirationTime
     property string expirationMessage

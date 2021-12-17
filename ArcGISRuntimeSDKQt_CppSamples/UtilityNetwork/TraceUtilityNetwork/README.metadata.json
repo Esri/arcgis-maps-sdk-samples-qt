@@ -54,9 +54,9 @@
         "UtilityTraversability"
     ],
     "snippets": [
-        "TraceUtilityNetwork.qml",
         "TraceUtilityNetwork.cpp",
-        "TraceUtilityNetwork.h"
+        "TraceUtilityNetwork.h",
+        "TraceUtilityNetwork.qml"
     ],
     "title": "Trace utility network"
 }

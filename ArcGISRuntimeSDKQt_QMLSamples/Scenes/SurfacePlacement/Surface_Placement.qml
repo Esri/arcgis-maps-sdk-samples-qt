@@ -17,11 +17,11 @@
 import QtQuick 2.6
 import QtQuick.Controls 2.12
 import QtQuick.Layouts 1.12
-import Esri.ArcGISRuntime 100.12
+import Esri.ArcGISRuntime 100.13
 
 Rectangle {
     width: 800
-    height: 600    
+    height: 600
 
     // Add a scene view
     SceneView {

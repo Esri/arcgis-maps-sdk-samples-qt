@@ -27,7 +27,7 @@ When the sample opens, it will automatically display the map with the OpenStreet
 
 ## Additional information
 
-The attribution text will be set to the required OpenStreetMap attribution automatically. 
+The attribution text will be set to the required OpenStreetMap attribution automatically.
 
 Apps that expect to make many requests to OpenStreetMap should consider using an alternative tile server via the `WebTiledLayer` class.
 

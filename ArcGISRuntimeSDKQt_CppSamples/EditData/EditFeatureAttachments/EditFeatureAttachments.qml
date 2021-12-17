@@ -19,11 +19,11 @@ import QtQuick.Controls 2.2
 import Qt.labs.platform 1.0
 import QtGraphicalEffects 1.0
 import Esri.Samples 1.0
-import Esri.ArcGISRuntime.Toolkit 100.12
+import Esri.ArcGISRuntime.Toolkit 100.13
 
 EditFeatureAttachmentsSample {
     id: editAttachmentsSample
-    
+
     readonly property var featAttributes: ["Destroyed", "Major", "Minor", "Affected", "Inaccessible"]
 
     // add a mapView component
@@ -31,7 +31,7 @@ EditFeatureAttachmentsSample {
         id: mapView
         anchors.fill: parent
         objectName: "mapView"
-        
+
         Component.onCompleted: {
             // Set the focus on MapView to initially enable keyboard navigation
             forceActiveFocus();

@@ -1,6 +1,6 @@
 <RCC>
     <qresource prefix="/Samples/DisplayInformation/ShowPopup">
-        <file alias="sample.json">README.metadata.json</file>        
+        <file alias="sample.json">README.metadata.json</file>
         <file>ShowPopup.qml</file>
         <file>screenshot.png</file>
         <file>README.md</file>

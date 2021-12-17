@@ -26,9 +26,9 @@
         "WmtsServiceInfo"
     ],
     "snippets": [
-        "WMTS_Layer.qml",
         "WMTS_Layer.cpp",
-        "WMTS_Layer.h"
+        "WMTS_Layer.h",
+        "WMTS_Layer.qml"
     ],
     "title": "WMTS layer"
 }

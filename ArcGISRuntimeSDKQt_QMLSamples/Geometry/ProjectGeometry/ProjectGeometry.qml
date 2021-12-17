@@ -15,14 +15,14 @@
 // [Legal]
 
 import QtQuick 2.6
-import Esri.ArcGISRuntime 100.12
-import Esri.ArcGISRuntime.Toolkit 100.12
+import Esri.ArcGISRuntime 100.13
+import Esri.ArcGISRuntime.Toolkit 100.13
 
 Rectangle {
     id: rootRectangle
     clip: true
     width: 800
-    height: 600    
+    height: 600
 
     MapView {
         id: mapView

@@ -34,9 +34,9 @@
         "LocalServerStatus"
     ],
     "snippets": [
-        "LocalServerFeatureLayer.qml",
         "LocalServerFeatureLayer.cpp",
-        "LocalServerFeatureLayer.h"
+        "LocalServerFeatureLayer.h",
+        "LocalServerFeatureLayer.qml"
     ],
     "title": "Local Server feature layer"
 }

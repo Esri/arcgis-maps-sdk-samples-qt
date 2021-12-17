@@ -23,7 +23,7 @@ StatisticalQueryGroupSortSample {
     clip: true
     width: 800
     height: 600
-    
+
     StackView {
         id: stackView
         anchors.fill: parent

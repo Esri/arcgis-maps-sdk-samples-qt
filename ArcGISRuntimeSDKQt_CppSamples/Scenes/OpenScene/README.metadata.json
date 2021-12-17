@@ -22,9 +22,9 @@
         "SceneView"
     ],
     "snippets": [
-        "OpenScene.qml",
         "OpenScene.cpp",
-        "OpenScene.h"
+        "OpenScene.h",
+        "OpenScene.qml"
     ],
     "title": "Open a scene (portal item)"
 }

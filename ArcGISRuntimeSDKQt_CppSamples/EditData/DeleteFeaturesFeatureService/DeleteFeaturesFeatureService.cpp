@@ -60,7 +60,7 @@ void DeleteFeaturesFeatureService::componentComplete()
 
   // find QML MapView component
   m_mapView = findChild<MapQuickView*>("mapView");
-  m_mapView->setWrapAroundMode(WrapAroundMode::Disabled);  
+  m_mapView->setWrapAroundMode(WrapAroundMode::Disabled);
 
   // create a Map by passing in the Basemap
   m_map = new Map(BasemapStyle::ArcGISStreets, this);
@@ -80,7 +80,7 @@ void DeleteFeaturesFeatureService::componentComplete()
 }
 
 void DeleteFeaturesFeatureService::connectSignals()
-{   
+{
   // connect to the mouse clicked signal on the MapQuickView
   connect(m_mapView, &MapQuickView::mouseClicked, this, [this](QMouseEvent& mouseEvent)
   {
@@ -153,7 +153,7 @@ void DeleteFeaturesFeatureService::connectSignals()
   {
     // Delete rawFeatureQueryResult pointer when we leave scope.
     auto featureQueryResult = std::unique_ptr<FeatureQueryResult>(rawFeatureQueryResult);
-    
+
     FeatureIterator iter = featureQueryResult->iterator();
     if (iter.hasNext())
     {

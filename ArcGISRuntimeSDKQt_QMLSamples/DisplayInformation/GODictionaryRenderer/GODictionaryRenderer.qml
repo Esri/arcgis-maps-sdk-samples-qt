@@ -17,13 +17,13 @@
 import QtQuick 2.6
 import QtQuick.Controls 2.2
 import QtQuick.XmlListModel 2.0
-import Esri.ArcGISRuntime 100.12
+import Esri.ArcGISRuntime 100.13
 import Esri.ArcGISExtras 1.1
 
 Rectangle {
     width: 800
     height: 600
-    
+
     readonly property url dataPath: System.userHomePath + "/ArcGIS/Runtime/Data"
     property bool graphicsLoaded: false
 

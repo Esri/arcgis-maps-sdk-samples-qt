@@ -24,9 +24,9 @@
         "SceneView"
     ],
     "snippets": [
-        "GetElevationAtPoint.qml",
         "GetElevationAtPoint.cpp",
-        "GetElevationAtPoint.h"
+        "GetElevationAtPoint.h",
+        "GetElevationAtPoint.qml"
     ],
     "title": "Get elevation at point"
 }

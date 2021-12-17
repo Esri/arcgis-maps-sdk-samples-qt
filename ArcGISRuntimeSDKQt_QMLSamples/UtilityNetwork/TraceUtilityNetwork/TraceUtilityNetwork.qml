@@ -17,7 +17,7 @@
 import QtQuick 2.6
 import QtQuick.Layouts 1.12
 import QtQuick.Controls 2.12
-import Esri.ArcGISRuntime 100.12
+import Esri.ArcGISRuntime 100.13
 
 Rectangle {
     id: rootRectangle
@@ -48,7 +48,7 @@ Rectangle {
             // Set the focus on MapView to initially enable keyboard navigation
             forceActiveFocus();
         }
-        
+
         Credential {
             id: credentials
             username: "viewer01"
@@ -59,7 +59,7 @@ Rectangle {
             Basemap {
                 initStyle: Enums.BasemapStyleArcGISStreetsNight
             }
-               
+
             onComponentCompleted: {
                 serviceGeodatabase.load();
                 utilityNetwork.load();

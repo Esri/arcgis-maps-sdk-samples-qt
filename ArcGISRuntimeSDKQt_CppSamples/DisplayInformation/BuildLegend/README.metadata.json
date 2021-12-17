@@ -25,9 +25,9 @@
         "LegendInfoListModel"
     ],
     "snippets": [
-        "BuildLegend.qml",
         "BuildLegend.cpp",
-        "BuildLegend.h"
+        "BuildLegend.h",
+        "BuildLegend.qml"
     ],
     "title": "Build a legend"
 }

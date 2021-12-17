@@ -23,12 +23,12 @@ GenerateGeodatabaseSample {
     id: generateSample
     width: 800
     height: 600
-    
-    property string statusText: ""    
+
+    property string statusText: ""
 
     // add a mapView component
     MapView {
-        id: mapView        
+        id: mapView
         anchors.fill: parent
         objectName: "mapView"
 

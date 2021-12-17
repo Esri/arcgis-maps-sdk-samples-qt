@@ -1,6 +1,6 @@
 <RCC>
     <qresource prefix="/Samples/AR/ExploreScenesInFlyoverAR">
-        <file alias="sample.json">README.metadata.json</file>        
+        <file alias="sample.json">README.metadata.json</file>
         <file>ExploreScenesInFlyoverAR.qml</file>
         <file>ExploreScenesInFlyoverAR.h</file>
         <file>ExploreScenesInFlyoverAR.cpp</file>

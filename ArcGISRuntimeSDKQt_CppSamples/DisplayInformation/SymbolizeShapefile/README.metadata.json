@@ -34,9 +34,9 @@
         "SimpleRenderer"
     ],
     "snippets": [
-        "SymbolizeShapefile.qml",
         "SymbolizeShapefile.cpp",
-        "SymbolizeShapefile.h"
+        "SymbolizeShapefile.h",
+        "SymbolizeShapefile.qml"
     ],
     "title": "Symbolize a shapefile"
 }

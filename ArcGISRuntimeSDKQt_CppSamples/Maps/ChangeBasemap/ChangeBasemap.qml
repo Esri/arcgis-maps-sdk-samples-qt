@@ -1,6 +1,6 @@
 // [WriteFile Name=ChangeBasemap, Category=Maps]
 // [Legal]
-// Copyright 2016 Esri.
+// Copyright 2021 Esri.
 
 // Licensed under the Apache License, Version 2.0 (the "License");
 // you may not use this file except in compliance with the License.
@@ -14,68 +14,44 @@
 // limitations under the License.
 // [Legal]
 
-import QtQuick 2.6
-import QtQuick.Controls 2.2
+import QtQuick 2.12
+import QtQuick.Controls 2.12
 import Esri.Samples 1.0
+import Esri.ArcGISRuntime.Toolkit 100.13
 
-ChangeBasemapSample {
-    id: changeBasemapSample
-    width: 800
-    height: 600
+Item {
 
     // add a mapView component
     MapView {
-        id: mapView
+        id: view
         anchors.fill: parent
-        objectName: "mapView"
 
-        Component.onCompleted: {
-            // Set the focus on MapView to initially enable keyboard navigation
-            forceActiveFocus();
+        Button {
+            id: changeBasemapButton
+            anchors {
+                horizontalCenter: view.horizontalCenter
+                bottom: view.attributionTop
+                bottomMargin: 10
+            }
+            text: "Change Basemap"
+            checkable: true
         }
+
+        BasemapGallery {
+            id: basemapGallery
+            anchors.centerIn: view
+            visible: changeBasemapButton.checked;
+            onCurrentBasemapChanged: {
+                changeBasemapButton.checked = false;
+            }
+        }
+
+        onMapChanged: basemapGallery.setGeoModelFromGeoView(view);
     }
 
-    ComboBox {
-        id: comboBoxBasemap
-        anchors {
-            left: parent.left
-            top: parent.top
-            margins: 15
-        }
-
-        property int bestWidth: implicitWidth
-
-        width: bestWidth + indicator.width + leftPadding + rightPadding
-
-        model: ["Topographic","Streets",
-            "Streets - Relief",
-            "Streets - Night",
-            "Imagery",
-            "Imagery with Labels",
-            "Labels without Imagery",
-            "Dark Gray Canvas",
-            "Light Gray Canvas",
-            "Navigation",
-            "OpenStreetMap",
-            "Oceans"]
-
-        onCurrentTextChanged: {
-            // Call C++ invokable function to switch the basemaps
-            changeBasemapSample.changeBasemap(currentText);
-        }
-
-        onModelChanged: {
-            let w = bestWidth;
-            for (let i = 0; i < comboBoxBasemap.model.length; ++i) {
-                metrics.text = comboBoxBasemap.model[i];
-                w = Math.max(w, metrics.width);
-            }
-            bestWidth = w;
-        }
-
-        TextMetrics {
-            id: metrics
-            font: comboBoxBasemap.font
-        }
+    // Declare the C++ instance which creates the scene etc. and supply the view
+    ChangeBasemapSample {
+        id: model
+        mapView: view
     }
 }

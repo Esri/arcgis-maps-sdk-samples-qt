@@ -24,7 +24,7 @@ DisplayGridSample {
     clip: true
     width: 800
     height: 600
-    
+
     property real centerWindowY: (displayGrid.height / 2) - (styleWindow.height / 2)
 
     MapView {

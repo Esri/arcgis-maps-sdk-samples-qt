@@ -29,9 +29,9 @@
         "TextSymbol"
     ],
     "snippets": [
-        "ShowLabelsOnLayers.qml",
         "ShowLabelsOnLayers.cpp",
-        "ShowLabelsOnLayers.h"
+        "ShowLabelsOnLayers.h",
+        "ShowLabelsOnLayers.qml"
     ],
     "title": "Show labels on layers"
 }

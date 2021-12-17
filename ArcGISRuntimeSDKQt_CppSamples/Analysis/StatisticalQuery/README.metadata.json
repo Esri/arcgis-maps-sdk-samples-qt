@@ -41,9 +41,9 @@
         "StatisticsQueryResult"
     ],
     "snippets": [
-        "StatisticalQuery.qml",
         "StatisticalQuery.cpp",
-        "StatisticalQuery.h"
+        "StatisticalQuery.h",
+        "StatisticalQuery.qml"
     ],
     "title": "Statistical query"
 }

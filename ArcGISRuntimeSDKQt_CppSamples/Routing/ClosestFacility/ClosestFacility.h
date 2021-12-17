@@ -76,7 +76,7 @@ private:
   Esri::ArcGISRuntime::Graphic* m_routeGraphic = nullptr;
   Esri::ArcGISRuntime::Graphic* m_incidentGraphic = nullptr;
   bool m_busy = false;
-  QString m_message;  
+  QString m_message;
 
   static const QUrl facilityImageUrl;
   static const QUrl sanDiegoRegion;

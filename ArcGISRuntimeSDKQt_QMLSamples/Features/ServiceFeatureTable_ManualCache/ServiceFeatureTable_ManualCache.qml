@@ -16,13 +16,13 @@
 
 import QtQuick 2.6
 import QtQuick.Controls 2.2
-import Esri.ArcGISRuntime 100.12
+import Esri.ArcGISRuntime 100.13
 
 Rectangle {
     width: 800
     height: 600
 
-    
+
 
     // Map view UI presentation at top
     MapView {

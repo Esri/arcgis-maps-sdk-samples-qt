@@ -18,16 +18,16 @@ import QtQuick 2.6
 import QtQuick.Controls 2.2
 import QtQuick.Layouts 1.3
 import QtQuick.Window 2.2
-import Esri.ArcGISRuntime 100.12
+import Esri.ArcGISRuntime 100.13
 import Esri.ArcGISExtras 1.1
-import Esri.ArcGISRuntime.Toolkit 100.12
+import Esri.ArcGISRuntime.Toolkit 100.13
 
 Rectangle {
     id: rootRectangle
     clip: true
     width: 800
     height: 600
-    
+
     readonly property url outputMapPackage: System.temporaryFolder.url + "/OfflineMap_Overrides_%1.mmpk".arg(new Date().getTime().toString())
     readonly property string webMapId: "acc027394bc84c2fb04d1ed317aac674"
     property var generateJob: null

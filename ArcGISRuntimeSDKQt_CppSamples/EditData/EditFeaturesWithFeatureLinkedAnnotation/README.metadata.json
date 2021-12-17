@@ -32,9 +32,9 @@
         "Geodatabase"
     ],
     "snippets": [
-        "EditFeaturesWithFeatureLinkedAnnotation.qml",
         "EditFeaturesWithFeatureLinkedAnnotation.cpp",
-        "EditFeaturesWithFeatureLinkedAnnotation.h"
+        "EditFeaturesWithFeatureLinkedAnnotation.h",
+        "EditFeaturesWithFeatureLinkedAnnotation.qml"
     ],
     "title": "Edit features with feature-linked annotation"
 }

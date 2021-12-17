@@ -1,6 +1,6 @@
 <RCC>
     <qresource prefix="/Samples/Layers/DisplaySubtypeFeatureLayer">
-        <file alias="sample.json">README.metadata.json</file>        
+        <file alias="sample.json">README.metadata.json</file>
         <file>DisplaySubtypeFeatureLayer.qml</file>
         <file>screenshot.png</file>
         <file>README.md</file>

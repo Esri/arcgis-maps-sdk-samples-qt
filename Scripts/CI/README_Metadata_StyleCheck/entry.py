@@ -38,7 +38,7 @@ def main():
         print(f"Unable to parse arguments. Either there are no arguments or the directory structure may have errors.\nException: {e}")
         exit(1)
     check_files(file_list)
-    
+
 def check_files(file_list):
     total_errors = 0
     tests = 0
@@ -56,13 +56,18 @@ def check_files(file_list):
             errors = []
             # Set variables for file
             directory_list = file.split("/")
+
+            # Do not check widgets
+            if "ArcGISRuntimeSDKQt_CppSamples_Widgets" in directory_list:
+                continue
+
             file_name = directory_list[-1]
-            
+
             # Check skip file conditions
             # Does the file exist, is it in a category, is it a .json or .md?
             if not is_file_valid(directory_list):
                 continue
-            
+
             tests += 1
             # If metadata file
             if file_name.lower() == 'readme.metadata.json':
@@ -79,7 +84,7 @@ def check_files(file_list):
                     errors += readme_file.check_readme_for_errors()
                 except Exception as e:
                     errors.append(f"Error checking {file}. Exception: {e}")
-            
+
             # Count and print the errors
             if len(errors) > 0:
                 print(f"Found {len(errors)} errors in file:\n{file}")
@@ -90,7 +95,7 @@ def check_files(file_list):
         except Exception as e:
             print(f"Critical failure on file: {file}. You may need to use a full file path rather than a relative path. Exception: {e}")
             total_errors += 1
-    
+
     if tests == 0:
         print("No files were tested.")
         exit(0)
@@ -110,7 +115,7 @@ def is_file_valid(directory_list: list)-> bool:
             return False
     except:
         return False
-    
+
     if not os.path.exists("/".join(directory_list)):
         # The file is not present on the disk, either because it never existed or because it was deleted
         # If the file was modified by deleting it, then we do not need to check it
@@ -205,7 +210,7 @@ class MetadataFile:
             if not data_items[i].get('path', None):
                 errors.append(f"dataItem {i} needs a path")
         return errors
-    
+
     def check_description(self, description: str) -> list:
         if not description:
             return ["No description written"]
@@ -219,7 +224,7 @@ class MetadataFile:
             return ["Ignore value must be true or false"]
         errors = []
         return errors
-    
+
     def check_images(self, images: list) -> list:
         if not images:
             return ["No images listed"]
@@ -284,9 +289,13 @@ class MetadataFile:
         if self.sample_type == "ArcGISRuntimeSDKQt_CppSamples":
             expected_snippets += [self.sample_name + ".cpp", self.sample_name + ".h"]
 
-        if not snippets[0] == expected_snippets[0]:
-            errors.append(f"The .qml snippet must be listed first in the list.")
-            
+        if self.sample_type == "ArcGISRuntimeSDKQt_CppSamples":
+            if not snippets[-1] == expected_snippets[0]:
+                errors.append(f"The primary .qml snippet must be listed last in the list for C++ samples.")
+        else:
+            if not snippets[0] == expected_snippets[0]:
+                errors.append(f"The primary .qml snippet must be listed first in the list for QML samples.")
+
         for expected_snippet in expected_snippets:
             if expected_snippet not in snippets:
                 errors.append(f"Expected {expected_snippet} in snippets")
@@ -319,7 +328,7 @@ class READMEFile:
         self.section_header_list = []
 
         self.parse_readme()
-    
+
     def parse_readme(self):
         # Split out sections by header 2
         text = self.readme_text.split("\n## ")
@@ -358,14 +367,14 @@ class READMEFile:
         # Check if missing essential headers
         missing_headers = []
         self.header_errors = []
-        
+
         for essential_header in essential_readme_headers:
             if essential_header not in self.section_header_list:
                 missing_headers.append(essential_header)
-        
+
         if missing_headers:
             self.header_errors.append(f"Missing essential headers: {missing_headers}. (This may be due to improper capitalization).")
-        
+
         # Check if README headers are in order
         if not is_subsequence(self.section_header_list, possible_readme_headers):
             self.header_errors.append(f"Section headers are not in the correct order.\nExpected order to be: {possible_readme_headers}.")

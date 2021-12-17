@@ -18,13 +18,13 @@ import QtQuick 2.6
 import QtQuick.Controls 2.2
 import QtQuick.Layouts 1.3
 import QtGraphicalEffects 1.0
-import Esri.ArcGISRuntime 100.12
-import Esri.ArcGISRuntime.Toolkit 100.12
+import Esri.ArcGISRuntime 100.13
+import Esri.ArcGISRuntime.Toolkit 100.13
 
 Rectangle {
     width: 800
     height: 600
-    
+
     readonly property var featAttributes: ["Destroyed", "Major", "Minor", "Affected", "Inaccessible"]
     property string damageType
     property var selectedFeature: null

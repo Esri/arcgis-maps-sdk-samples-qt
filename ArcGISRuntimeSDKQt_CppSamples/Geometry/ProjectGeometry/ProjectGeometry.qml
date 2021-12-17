@@ -18,14 +18,14 @@ import QtQuick 2.6
 import QtQuick.Window 2.3
 import QtQuick.Controls 2.2
 import Esri.Samples 1.0
-import Esri.ArcGISRuntime.Toolkit 100.12
+import Esri.ArcGISRuntime.Toolkit 100.13
 
 ProjectGeometrySample {
     id: rootRectangle
     clip: true
     width: 800
     height: 600
-    
+
     // add a mapView component
     MapView {
         id: mapView
@@ -46,5 +46,5 @@ ProjectGeometrySample {
             maxWidth: 350
             leaderPosition: leaderPositionEnum.Automatic
         }
-    }    
+    }
 }

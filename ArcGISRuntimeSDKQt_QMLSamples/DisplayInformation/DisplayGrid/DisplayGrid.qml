@@ -17,7 +17,7 @@
 import QtQuick 2.6
 import QtQuick.Controls 2.2
 import QtQuick.Layouts 1.1
-import Esri.ArcGISRuntime 100.12
+import Esri.ArcGISRuntime 100.13
 import Esri.ArcGISExtras 1.1
 
 Rectangle {
@@ -25,7 +25,7 @@ Rectangle {
     clip: true
     width: 800
     height: 600
-    
+
     readonly property string utmGrid: "UTM"
     readonly property string usngGrid: "USNG"
     readonly property string latlonGrid: "LatLon"

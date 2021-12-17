@@ -93,7 +93,7 @@ void EditFeatureAttachments::componentComplete()
 }
 
 void EditFeatureAttachments::connectSignals()
-{   
+{
   // connect to the mouse clicked signal on the MapQuickView
   connect(m_mapView, &MapQuickView::mouseClicked, this, [this](QMouseEvent& mouseEvent)
   {
@@ -196,7 +196,7 @@ void EditFeatureAttachments::connectSignals()
 }
 
 QAbstractListModel* EditFeatureAttachments::attachmentModel() const
-{    
+{
   return m_selectedFeature ? m_selectedFeature->attachments() : nullptr;
 }
 

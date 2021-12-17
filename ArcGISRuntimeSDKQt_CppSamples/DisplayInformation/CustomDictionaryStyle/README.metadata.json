@@ -35,9 +35,9 @@
         "PortalItem"
     ],
     "snippets": [
-        "CustomDictionaryStyle.qml",
         "CustomDictionaryStyle.cpp",
-        "CustomDictionaryStyle.h"
+        "CustomDictionaryStyle.h",
+        "CustomDictionaryStyle.qml"
     ],
     "title": "Custom dictionary style"
 }

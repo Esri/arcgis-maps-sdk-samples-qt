@@ -23,9 +23,9 @@
         "SceneView"
     ],
     "snippets": [
-        "LineOfSightLocation.qml",
         "LineOfSightLocation.cpp",
-        "LineOfSightLocation.h"
+        "LineOfSightLocation.h",
+        "LineOfSightLocation.qml"
     ],
     "title": "Line of sight (location)"
 }

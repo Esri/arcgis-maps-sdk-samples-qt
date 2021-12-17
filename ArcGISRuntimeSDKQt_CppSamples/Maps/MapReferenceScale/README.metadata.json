@@ -20,9 +20,9 @@
         "Map"
     ],
     "snippets": [
-        "MapReferenceScale.qml",
         "MapReferenceScale.cpp",
-        "MapReferenceScale.h"
+        "MapReferenceScale.h",
+        "MapReferenceScale.qml"
     ],
     "title": "Map reference scale"
 }

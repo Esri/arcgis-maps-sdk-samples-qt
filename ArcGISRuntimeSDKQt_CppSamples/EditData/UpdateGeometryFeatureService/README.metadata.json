@@ -25,9 +25,9 @@
         "ServiceFeatureTable"
     ],
     "snippets": [
-        "UpdateGeometryFeatureService.qml",
         "UpdateGeometryFeatureService.cpp",
-        "UpdateGeometryFeatureService.h"
+        "UpdateGeometryFeatureService.h",
+        "UpdateGeometryFeatureService.qml"
     ],
     "title": "Update geometry (feature service)"
 }

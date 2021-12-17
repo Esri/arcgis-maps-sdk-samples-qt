@@ -80,7 +80,7 @@ bool GODictionaryRenderer::graphicsLoaded() const
 
 void GODictionaryRenderer::componentComplete()
 {
-  QQuickItem::componentComplete();    
+  QQuickItem::componentComplete();
 
   //! [Apply Dictionary Renderer Graphics Overlay Cpp]
   // Create graphics overlay

@@ -43,7 +43,7 @@ ViewPointCloudDataOffline::ViewPointCloudDataOffline(QObject* parent /* = nullpt
         QUrl("https://elevation3d.arcgis.com/arcgis/rest/services/WorldElevation3D/Terrain3D/ImageServer"), this);
 
   // add the elevation source to the scene to display elevation
-  m_scene->baseSurface()->elevationSources()->append(elevationSource);  
+  m_scene->baseSurface()->elevationSources()->append(elevationSource);
 }
 
 ViewPointCloudDataOffline::~ViewPointCloudDataOffline() = default;

@@ -1,5 +1,5 @@
 #-------------------------------------------------
-# Copyright 2015 Esri.
+# Copyright 2021 Esri.
 
 # Licensed under the Apache License, Version 2.0 (the "License");
 # you may not use this file except in compliance with the License.
@@ -24,11 +24,20 @@ CONFIG += c++14
 # additional modules are pulled in via arcgisruntime.pri
 QT += opengl qml quick
 
-ARCGIS_RUNTIME_VERSION = 100.12
-include($$PWD/arcgisruntime.pri)
-
 TEMPLATE = app
 TARGET = ChangeBasemap
+
+ARCGIS_RUNTIME_VERSION = 100.13
+include($$PWD/arcgisruntime.pri)
+
+# path of the toolkit relative to the sample
+TOOLKIT_PRI_PATH = $$PWD/../../../arcgis-runtime-toolkit-qt
+
+exists($$TOOLKIT_PRI_PATH/uitools/toolkitqml.pri) {
+    include($$TOOLKIT_PRI_PATH/uitools/toolkitcpp.pri)
+} else {
+    error(TOOLKIT_PRI_PATH is missing which is required to build this application.)
+}
 
 #-------------------------------------------------------------------------------
 
@@ -62,4 +71,3 @@ android {
     INCLUDEPATH += $$PWD
     DEPENDPATH += $$PWD
 }
-

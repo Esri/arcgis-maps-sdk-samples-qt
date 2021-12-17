@@ -24,7 +24,7 @@ EditAndSyncFeaturesSample {
     clip: true
     width: 800
     height: 600
-    
+
     property string statusText: ""
     property string instructionText: ""
     property alias isOffline: editAndSyncSample.isOffline
@@ -34,7 +34,7 @@ EditAndSyncFeaturesSample {
     MapView {
         anchors.fill: parent
         objectName: "mapView"
-        
+
         Component.onCompleted: {
             // Set the focus on MapView to initially enable keyboard navigation
             forceActiveFocus();

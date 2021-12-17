@@ -29,10 +29,10 @@
         "RasterLayer"
     ],
     "snippets": [
-        "RasterLayerFile.qml",
         "RasterLayerFile.cpp",
         "RasterLayerFile.h",
-        "RasterLoader.qml"
+        "RasterLoader.qml",
+        "RasterLayerFile.qml"
     ],
     "title": "Raster layer (file)"
 }

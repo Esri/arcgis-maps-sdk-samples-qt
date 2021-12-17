@@ -25,7 +25,7 @@ using namespace Esri::ArcGISRuntime;
 
 BasicSceneView::BasicSceneView(QWidget* parent) :
   QWidget(parent)
-{    
+{
     // Create a scene using the Imagery basemap
     m_scene = new Scene(BasemapStyle::ArcGISImageryStandard, this);
 

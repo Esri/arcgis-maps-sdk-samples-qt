@@ -22,9 +22,9 @@
         "RenderingRule"
     ],
     "snippets": [
-        "RasterRenderingRule.qml",
         "RasterRenderingRule.cpp",
-        "RasterRenderingRule.h"
+        "RasterRenderingRule.h",
+        "RasterRenderingRule.qml"
     ],
     "title": "Raster rendering rule"
 }

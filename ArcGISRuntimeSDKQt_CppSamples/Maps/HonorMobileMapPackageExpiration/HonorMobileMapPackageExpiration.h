@@ -50,7 +50,7 @@ private:
   void setMapView(Esri::ArcGISRuntime::MapQuickView* mapView);
   void createMapPackage(const QString& path);
 
-  Esri::ArcGISRuntime::MapQuickView* m_mapView = nullptr;      
+  Esri::ArcGISRuntime::MapQuickView* m_mapView = nullptr;
   Esri::ArcGISRuntime::MobileMapPackage* m_mobileMapPackage = nullptr;
 
   QString m_dataPath;

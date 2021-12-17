@@ -55,7 +55,7 @@ void Buffer::componentComplete()
   m_mapView = findChild<MapQuickView*>("mapView");
 
   // Create a map using the topographic basemap
-  m_map = new Map(BasemapStyle::ArcGISTopographic, this);  
+  m_map = new Map(BasemapStyle::ArcGISTopographic, this);
 
   // add a graphics overlay for the geodesic buffer
   m_graphicsOverlayGeodesic = new GraphicsOverlay(this);

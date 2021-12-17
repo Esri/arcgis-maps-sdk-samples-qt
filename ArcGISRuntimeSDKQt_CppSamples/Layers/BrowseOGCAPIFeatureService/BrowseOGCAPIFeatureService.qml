@@ -20,7 +20,7 @@ import Esri.Samples 1.0
 import QtQuick.Layouts 1.12
 import QtQuick.Dialogs 1.2
 
-Item {   
+Item {
     // Declare the C++ instance which creates the map etc. and supply the view
     BrowseOGCAPIFeatureServiceSample {
         id: model

@@ -26,7 +26,7 @@ AnalyzeHotspotsSample {
     clip: true
     width: 800
     height: 600
-    
+
     property date fromThisDate : Date.fromLocaleDateString(Qt.locale(), "98/01/01", "yy/MM/dd")
     property date toThisDate : Date.fromLocaleDateString(Qt.locale(), "98/01/31", "yy/MM/dd")
 

@@ -16,8 +16,8 @@
 
 import QtQuick 2.6
 import QtQuick.Controls 2.2
-import Esri.ArcGISRuntime 100.12
-import Esri.ArcGISRuntime.Toolkit 100.12
+import Esri.ArcGISRuntime 100.13
+import Esri.ArcGISRuntime.Toolkit 100.13
 
 Rectangle {
     id: rootRectangle
@@ -47,8 +47,9 @@ Rectangle {
             const screenY = mouse.y;
             const tolerance = 12;
             const returnPopupsOnly = false;
+            const maximumResults = 10;
             featureLayer = mapView.map.operationalLayers.get(0);
-            mapView.identifyLayer(featureLayer, screenX, screenY, tolerance, returnPopupsOnly);
+            mapView.identifyLayerWithMaxResults(featureLayer, screenX, screenY, tolerance, returnPopupsOnly, maximumResults);
         }
 
         onIdentifyLayerStatusChanged: {
@@ -71,9 +72,7 @@ Rectangle {
 
             for (let i = 0; i < popups.length; i++) {
                 // create a popup manager
-                const popupManager = ArcGISRuntimeEnvironment.createObject("PopupManager", {
-                                                                               popup: popups[i]
-                                                                           });
+                const popupManager = ArcGISRuntimeEnvironment.createObject("PopupManager", {popup: popups[i]});
                 // push popup manager to list
                 popupManagers.push(popupManager);
                 popupStackView.popupManagers = popupManagers;

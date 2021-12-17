@@ -38,9 +38,9 @@
         "RasterLayer"
     ],
     "snippets": [
-        "IdentifyRasterCell.qml",
         "IdentifyRasterCell.cpp",
-        "IdentifyRasterCell.h"
+        "IdentifyRasterCell.h",
+        "IdentifyRasterCell.qml"
     ],
     "title": "Identify raster cell"
 }

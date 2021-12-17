@@ -37,9 +37,9 @@
         "EncLayer"
     ],
     "snippets": [
-        "AddEncExchangeSet.qml",
         "AddEncExchangeSet.cpp",
-        "AddEncExchangeSet.h"
+        "AddEncExchangeSet.h",
+        "AddEncExchangeSet.qml"
     ],
     "title": "Add ENC exchange set"
 }

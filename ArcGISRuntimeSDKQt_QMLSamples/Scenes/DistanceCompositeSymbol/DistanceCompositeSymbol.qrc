@@ -1,5 +1,5 @@
 <RCC>
-    <qresource prefix="/Samples/Scenes/DistanceCompositeSymbol">        
+    <qresource prefix="/Samples/Scenes/DistanceCompositeSymbol">
         <file alias="sample.json">README.metadata.json</file>
         <file>screenshot.png</file>
         <file>DistanceCompositeSymbol.qml</file>
