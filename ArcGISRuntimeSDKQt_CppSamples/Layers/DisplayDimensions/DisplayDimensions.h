@@ -38,8 +38,8 @@ class DisplayDimensions : public QObject
   Q_PROPERTY(Esri::ArcGISRuntime::MapQuickView* mapView READ mapView WRITE setMapView NOTIFY mapViewChanged)
   Q_PROPERTY(QString errorMessage READ errorMessage WRITE setErrorMessage NOTIFY errorMessageChanged)
   Q_PROPERTY(QString dimensionLayerName READ dimensionLayerName WRITE setDimensionLayerName NOTIFY dimensionLayerNameChanged)
-  Q_PROPERTY(bool dimensionLayerVisibility WRITE setDimensionLayerVisibility)
-  Q_PROPERTY(bool definitionExpressionApplied WRITE applyDefinitionExpression)
+  Q_PROPERTY(bool dimensionLayerVisible READ dimensionLayerVisible WRITE setDimensionLayerVisible)
+  Q_PROPERTY(bool useDefinitionExpression READ useDefinitionExpression WRITE setUseDefinitionExpression)
   Q_PROPERTY(bool dimensionsAvailable READ dimensionsAvailable NOTIFY dimensionsAvailableChanged)
 
 public:
@@ -61,10 +61,12 @@ private:
   void setErrorMessage(const QString& message);
   QString dimensionLayerName() const;
   void setDimensionLayerName(const QString& name);
-  void setDimensionLayerVisibility(const bool visibility);
-  void applyDefinitionExpression(const bool applied);
+  void setDimensionLayerVisible(bool visible);
+  bool dimensionLayerVisible() const;
+  bool useDefinitionExpression() const;
+  void setUseDefinitionExpression(bool applied);
   bool dimensionsAvailable();
-  void setdimensionsAvailable(const bool status);
+  void setDimensionsAvailable(bool status);
 
   void addMapToMapView(const Esri::ArcGISRuntime::Error& error);
   void handleError(const Esri::ArcGISRuntime::Error& error);

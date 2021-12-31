@@ -81,7 +81,7 @@ void DisplayDimensions::addMapToMapView(const Error& error)
   if (error.isEmpty() && m_mmpk->loadStatus() == LoadStatus::Loaded && m_mmpk->maps().count() > 0)
   {
     // Enable the checkboxes.
-    setdimensionsAvailable(true);
+    setDimensionsAvailable(true);
 
     // Assign the map in the mmpk to m_map.
     m_map = m_mmpk->maps().at(0);
@@ -102,7 +102,7 @@ void DisplayDimensions::addMapToMapView(const Error& error)
   else
   {
     // If the map hasn't loaded or an error has occurred, disable the checkboxes in the UI.
-    setdimensionsAvailable(false);
+    setDimensionsAvailable(false);
   }
 }
 
@@ -173,12 +173,22 @@ void DisplayDimensions::setDimensionLayerName(const QString& name)
   emit dimensionLayerNameChanged();
 }
 
-void DisplayDimensions::setDimensionLayerVisibility(const bool visibility)
+bool DisplayDimensions::dimensionLayerVisible() const
 {
-  m_dimensionLayer->setVisible(visibility);
+  return m_dimensionLayer && m_dimensionLayer->isVisible();
 }
 
-void DisplayDimensions::applyDefinitionExpression(const bool applied)
+void DisplayDimensions::setDimensionLayerVisible(bool visible)
+{
+  m_dimensionLayer->setVisible(visible);
+}
+
+bool DisplayDimensions::useDefinitionExpression() const
+{
+  return m_dimensionLayer && !m_dimensionLayer->definitionExpression().isEmpty();
+}
+
+void DisplayDimensions::setUseDefinitionExpression(bool applied)
 {
   if (applied)
     m_dimensionLayer->setDefinitionExpression("DIMLENGTH >= 450");
@@ -191,7 +201,7 @@ bool DisplayDimensions::dimensionsAvailable()
   return m_dimensionsAvailable;
 }
 
-void DisplayDimensions::setdimensionsAvailable(const bool status)
+void DisplayDimensions::setDimensionsAvailable(bool status)
 {
   m_dimensionsAvailable = status;
   emit dimensionsAvailableChanged();
