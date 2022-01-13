@@ -23,6 +23,7 @@
 #include "Map.h"
 #include "MapQuickView.h"
 #include "FeatureLayer.h"
+#include "GeodatabaseFeatureTable.h"
 #include "Basemap.h"
 #include "SpatialReference.h"
 #include "ServiceFeatureTable.h"
@@ -31,12 +32,9 @@
 #include "DisplayFilter.h"
 #include "DisplayFilterDefinition.h"
 #include "ManualDisplayFilterDefinition.h"
-#include <QUrl>
-
 #include "ScaleDisplayFilterDefinition.h"
 #include "ScaleRangeDisplayFilter.h"
-
-#include "GeodatabaseFeatureTable.h"
+#include <QUrl>
 
 using namespace Esri::ArcGISRuntime;
 
@@ -73,7 +71,7 @@ void FeatureLayerDefinitionExpression::componentComplete()
   //! [Obtain the instantiated map view in Cpp]
 
   // create the feature table
-  /*ServiceFeatureTable* */m_featureTable = new ServiceFeatureTable(QUrl("https://sampleserver6.arcgisonline.com/arcgis/rest/services/SF311/FeatureServer/0"), this);
+  m_featureTable = new ServiceFeatureTable(QUrl("https://sampleserver6.arcgisonline.com/arcgis/rest/services/SF311/FeatureServer/0"), this);
   // create the feature layer using the feature table
   m_featureLayer = new FeatureLayer(m_featureTable, this);
 
@@ -116,7 +114,7 @@ int FeatureLayerDefinitionExpression::getFeatureCount()
   parameters.setWhereClause("1=1");
 
   connect(m_featureTable, &GeodatabaseFeatureTable::queryFeatureCountCompleted,
-                             this, [&count](QUuid, int countResult)
+          this, [&count](QUuid, int countResult)
   {
     count = countResult;
   });
