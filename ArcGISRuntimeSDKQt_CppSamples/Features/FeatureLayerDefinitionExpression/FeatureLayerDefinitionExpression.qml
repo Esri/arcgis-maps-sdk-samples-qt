@@ -63,6 +63,7 @@ FeatureLayerDefinitionExpressionSample {
             onClicked: {
                 // Call C++ invokable function to set the definition expression
                 definitionExpressionSample.setDefExpression("req_type = \'Tree Maintenance or Damage\'");
+//                definitionExpressionSample.getFeatureCount();
             }
         }
 
@@ -74,6 +75,7 @@ FeatureLayerDefinitionExpressionSample {
             onClicked: {
                 // Call C++ invokable function to set the display filter
                  definitionExpressionSample.setDisplayFilter("req_type = \'Tree Maintenance or Damage\'");
+                 text: definitionExpressionSample.getFeatureCount();
             }
         }
 

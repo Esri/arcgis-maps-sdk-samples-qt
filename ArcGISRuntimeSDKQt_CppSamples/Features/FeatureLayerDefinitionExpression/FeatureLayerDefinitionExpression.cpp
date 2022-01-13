@@ -36,6 +36,8 @@
 #include "ScaleDisplayFilterDefinition.h"
 #include "ScaleRangeDisplayFilter.h"
 
+#include "GeodatabaseFeatureTable.h"
+
 using namespace Esri::ArcGISRuntime;
 
 FeatureLayerDefinitionExpression::FeatureLayerDefinitionExpression(QQuickItem* parent) :
@@ -71,9 +73,9 @@ void FeatureLayerDefinitionExpression::componentComplete()
   //! [Obtain the instantiated map view in Cpp]
 
   // create the feature table
-  ServiceFeatureTable* featureTable = new ServiceFeatureTable(QUrl("https://sampleserver6.arcgisonline.com/arcgis/rest/services/SF311/FeatureServer/0"), this);
+  /*ServiceFeatureTable* */m_featureTable = new ServiceFeatureTable(QUrl("https://sampleserver6.arcgisonline.com/arcgis/rest/services/SF311/FeatureServer/0"), this);
   // create the feature layer using the feature table
-  m_featureLayer = new FeatureLayer(featureTable, this);
+  m_featureLayer = new FeatureLayer(m_featureTable, this);
 
   connect(m_featureLayer, &FeatureLayer::loadStatusChanged, this, [this](LoadStatus loadStatus)
   {
@@ -108,45 +110,18 @@ void FeatureLayerDefinitionExpression::setDisplayFilter(const QString& whereClau
 int FeatureLayerDefinitionExpression::getFeatureCount()
 {
 
-  connect(m_featureTable, &ServiceFeatureTable::queryFeaturesCompleted, this, [this](QUuid, FeatureQueryResult* rawQueryResult)
+  int count;
+
+  QueryParameters parameters;
+  parameters.setWhereClause("1=1");
+
+  connect(m_featureTable, &GeodatabaseFeatureTable::queryFeatureCountCompleted,
+                             this, [&count](QUuid, int countResult)
   {
-    auto queryResult = std::unique_ptr<FeatureQueryResult>(rawQueryResult);
-
-    //          if (queryResult && !queryResult->iterator().hasNext())
-    //          {
-    //              m_queryResultsCount = 0;
-    //              emit queryResultsCountChanged();
-    //              return;
-    //          }
-
-    // clear any existing selection
-    //          m_featureLayer->clearSelection();
-    QList<Feature*> features;
-
-    // iterate over the result object
-    while(queryResult->iterator().hasNext())
-    {
-      Feature* feature = queryResult->iterator().next(this);
-      // add each feature to the list
-      features.append(feature);
-    }
-
-    // select the feature
-    //          m_featureLayer->selectFeatures(features);
-    // zoom to the first feature
-    //          m_mapView->setViewpointGeometry(features.at(0)->geometry(), 30);
-    // set the count for QML property
-    m_queryResultsCount = features.count();
-    //          emit queryResultsCountChanged();
+    count = countResult;
   });
-  // get extent
-  //  auto extent = m_mapView-> ;
 
-  //  if (extent == null)
-  //    return;
+  m_featureTable->queryFeatureCount(parameters);
 
-  //queryFeatureCountResult
-  //  auto totalDamagedTrees = m_featureLayer->featureTable()->queryFeatureCount(); //paramter: geometry is the extent
-
-  return m_queryResultsCount;
+  return count;
 }

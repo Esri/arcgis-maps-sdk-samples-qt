@@ -86,8 +86,6 @@ Rectangle {
                 featureLayer.definitionExpression = "req_Type = \'Tree Maintenance or Damage\'"
             }
         }
-//        DisplayFilter
-//        ManualDisplayFilterDefinition
         // button to apply display filter
         Button {
             text: "Apply Display Filter"
@@ -99,7 +97,6 @@ Rectangle {
                     var displayFilter = ArcGISRuntimeEnvironment.createObject("DisplayFilter", {name: "Damaged Trees", filterId: "Damaged Trees", whereClause: "req_Type = \'Tree Maintenance or Damage\'"});
                     var displayFilterDefintionVar = ArcGISRuntimeEnvironment.createObject("ManualDisplayFilterDefinition");
                     displayFilterDefintionVar.availableFilters.append(displayFilter);
-//                    displayFilterDefintionVar.activeFilter = displayFilterDefintionVar.availableFilters.get(0);
                     displayFilterDefintionVar.activeFilter = displayFilter;
 
                     featureLayer.displayFilterDefinition = displayFilterDefintionVar;
