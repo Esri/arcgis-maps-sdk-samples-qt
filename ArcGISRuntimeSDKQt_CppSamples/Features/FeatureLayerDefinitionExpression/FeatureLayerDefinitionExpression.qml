@@ -85,7 +85,7 @@ FeatureLayerDefinitionExpressionSample {
             enabled: definitionExpressionSample.layerInitialized
             width: 200
             onClicked: {
-                // Call C++ invokable function to reset the definition expression and display filer
+                // Call C++ invokable function to reset the definition expression and display filter
                 definitionExpressionSample.setDefExpression("");
                 definitionExpressionSample.setDisplayFilter("");
             }
