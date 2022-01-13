@@ -86,7 +86,6 @@ FeatureLayerDefinitionExpressionSample {
                 // Call C++ invokable function to reset the definition expression and display filter
                 definitionExpressionSample.setDefExpression("");
                 definitionExpressionSample.setDisplayFilter("");
-                definitionExpressionSample.currentFeatureCount = 0;
             }
         }
     }
