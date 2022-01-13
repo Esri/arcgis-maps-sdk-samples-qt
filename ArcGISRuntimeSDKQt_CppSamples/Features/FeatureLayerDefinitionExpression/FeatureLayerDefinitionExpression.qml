@@ -50,10 +50,10 @@ FeatureLayerDefinitionExpressionSample {
         }
         spacing: 5
 
-            Text {
-                id: featureCountText
-                text: qsTr("Current Feature Count: 551")
-            }
+        Label {
+
+            text: "Current feature count: " + definitionExpressionSample.currentFeatureCount
+        }
 
         // button to apply a definition expression
         Button {
@@ -63,7 +63,6 @@ FeatureLayerDefinitionExpressionSample {
             onClicked: {
                 // Call C++ invokable function to set the definition expression
                 definitionExpressionSample.setDefExpression("req_type = \'Tree Maintenance or Damage\'");
-//                definitionExpressionSample.getFeatureCount();
             }
         }
 
@@ -74,8 +73,7 @@ FeatureLayerDefinitionExpressionSample {
             width: 200
             onClicked: {
                 // Call C++ invokable function to set the display filter
-                 definitionExpressionSample.setDisplayFilter("req_type = \'Tree Maintenance or Damage\'");
-                 text: definitionExpressionSample.getFeatureCount();
+                definitionExpressionSample.setDisplayFilter("req_type = \'Tree Maintenance or Damage\'");
             }
         }
 
@@ -88,6 +86,7 @@ FeatureLayerDefinitionExpressionSample {
                 // Call C++ invokable function to reset the definition expression and display filter
                 definitionExpressionSample.setDefExpression("");
                 definitionExpressionSample.setDisplayFilter("");
+                definitionExpressionSample.currentFeatureCount = 0;
             }
         }
     }

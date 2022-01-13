@@ -41,7 +41,7 @@ int main(int argc, char *argv[])
   // 2. API key: A permanent key that gives your application access to Esri
   //    location services. Visit your ArcGIS Developers Dashboard create a new
   //    API keys or access an existing API key.
-  const QString apiKey = QStringLiteral("");
+  const QString apiKey = QStringLiteral("AAPKf57165170a3c47d0a0b4e331c87e20cfd22FFJSuAfvDGFQJWUnZnrWjDmB33vGmKUFpX7Yjdt_tCnZTnL5e-xAasYhRaB-g");
   if (apiKey.isEmpty())
   {
       qWarning() << "Use of Esri location services, including basemaps, requires"

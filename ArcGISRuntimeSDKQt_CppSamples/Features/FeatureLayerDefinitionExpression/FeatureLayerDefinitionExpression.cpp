@@ -90,10 +90,16 @@ bool FeatureLayerDefinitionExpression::layerInitialized() const
   return m_initialized;
 }
 
+int FeatureLayerDefinitionExpression::currentFeatureCount_() const
+{
+  return m_currentFeatureCount;
+}
+
 void FeatureLayerDefinitionExpression::setDefExpression(const QString& whereClause)
 {
   // In QML, "req_type = \'Tree Maintenance or Damage\'"
   m_featureLayer->setDefinitionExpression(whereClause);
+  updateFeatureCount();
 }
 
 void FeatureLayerDefinitionExpression::setDisplayFilter(const QString& whereClause)
@@ -103,23 +109,21 @@ void FeatureLayerDefinitionExpression::setDisplayFilter(const QString& whereClau
 
   ManualDisplayFilterDefinition* display_filter_defintion = new ManualDisplayFilterDefinition(displayFilter, available_filters);
   m_featureLayer->setDisplayFilterDefinition(display_filter_defintion);
+
+  updateFeatureCount();
 }
 
-int FeatureLayerDefinitionExpression::getFeatureCount()
-{
-
-  int count;
-
+void FeatureLayerDefinitionExpression::updateFeatureCount()
+{  
   QueryParameters parameters;
-  parameters.setWhereClause("1=1");
+  parameters.setGeometry(m_mapView->currentViewpoint(ViewpointType::BoundingGeometry).targetGeometry());
 
   connect(m_featureTable, &GeodatabaseFeatureTable::queryFeatureCountCompleted,
-          this, [&count](QUuid, int countResult)
+          this, [this](QUuid, int countResult)
   {
-    count = countResult;
+    m_currentFeatureCount = countResult;
+    emit currentFeatureCountChanged();
   });
 
   m_featureTable->queryFeatureCount(parameters);
-
-  return count;
 }

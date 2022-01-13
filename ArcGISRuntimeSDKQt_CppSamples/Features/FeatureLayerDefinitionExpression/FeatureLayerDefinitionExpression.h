@@ -35,6 +35,7 @@ class FeatureLayerDefinitionExpression : public QQuickItem
   Q_OBJECT
 
   Q_PROPERTY(bool layerInitialized READ layerInitialized NOTIFY layerInitializedChanged)
+  Q_PROPERTY(int currentFeatureCount READ currentFeatureCount_ NOTIFY currentFeatureCountChanged)
 
 public:
   explicit FeatureLayerDefinitionExpression(QQuickItem* parent = nullptr);
@@ -44,13 +45,15 @@ public:
   static void init();
   Q_INVOKABLE void setDefExpression(const QString& whereClause);
   Q_INVOKABLE void setDisplayFilter(const QString& whereClause);
-  Q_INVOKABLE int getFeatureCount();
+  Q_INVOKABLE void updateFeatureCount();
 
 signals:
   void layerInitializedChanged();
+  void currentFeatureCountChanged();
 
 private:
   bool layerInitialized() const;
+  int currentFeatureCount_() const;
 
 private:
   Esri::ArcGISRuntime::Map* m_map = nullptr;
@@ -58,7 +61,7 @@ private:
   Esri::ArcGISRuntime::FeatureLayer* m_featureLayer = nullptr;
   bool m_initialized = false;
   Esri::ArcGISRuntime::ServiceFeatureTable* m_featureTable = nullptr;
-  int m_queryResultsCount = 0;
+  int m_currentFeatureCount = 0;
 };
 
 #endif // FEATURE_LAYER_DEFINITION_EXPRESSION_H
