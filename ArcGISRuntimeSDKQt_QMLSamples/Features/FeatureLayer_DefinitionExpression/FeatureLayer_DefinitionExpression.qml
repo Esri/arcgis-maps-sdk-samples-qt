@@ -77,6 +77,12 @@ Rectangle {
         }
         spacing: 5
 
+
+        Label {
+
+            text: "Current feature count: " + getFeatureCount();
+        }
+
         // button to apply a definition expression
         Button {
             text: "Apply Expression"
@@ -119,5 +125,19 @@ Rectangle {
                 featureLayer.displayFilterDefinition = displayFilterDefintionVar;
             }
         }
+    }
+
+
+    function getFeatureCount()
+    {
+
+
+        const queryParams = ArcGISRuntimeEnvironment.createObject(
+                              "QueryParameters", {
+                                  "geometry": mv.currentViewpointExtent.extent
+                              });
+
+        featureTable.queryFeatureCount(queryParams);
+        return featureTable.queryFeatureCountResult;
     }
 }
