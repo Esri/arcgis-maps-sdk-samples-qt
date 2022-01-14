@@ -1,6 +1,6 @@
 {
     "category": "Features",
-    "description": "Limit the features displayed on a map with a definition expression.",
+    "description": "Filter features displayed on a map using a definition expression or a display filter.",
     "ignore": false,
     "images": [
         "screenshot.png"
@@ -8,6 +8,7 @@
     "keywords": [
         "SQL",
         "definition expression",
+		"display filter",
         "filter",
         "limit data",
         "query",
@@ -22,6 +23,7 @@
     ],
     "relevant_apis": [
         "DefinitionExpression",
+		"DisplayFilter",
         "FeatureLayer",
         "ServiceFeatureTable"
     ],
@@ -30,5 +32,5 @@
         "FeatureLayerDefinitionExpression.cpp",
         "FeatureLayerDefinitionExpression.h"
     ],
-    "title": "Feature layer definition expression"
+    "title": "Filter by definition expression or display filter"
 }
