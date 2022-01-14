@@ -25,11 +25,11 @@
         "Surface"
     ],
     "snippets": [
-        "DisplayScenesInTabletopAR.qml",
         "DisplayScenesInTabletopAR.cpp",
         "DisplayScenesInTabletopAR.h",
         "PermissionsHelper.cpp",
-        "PermissionsHelper.h"
+        "PermissionsHelper.h",
+        "DisplayScenesInTabletopAR.qml"
     ],
     "title": "Display scenes in tabletop AR"
 }

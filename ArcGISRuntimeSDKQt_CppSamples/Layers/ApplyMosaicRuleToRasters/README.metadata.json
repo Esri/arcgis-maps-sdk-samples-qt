@@ -25,9 +25,9 @@
         "MosaicRule::setMosaicOperation"
     ],
     "snippets": [
-        "ApplyMosaicRuleToRasters.qml",
         "ApplyMosaicRuleToRasters.cpp",
-        "ApplyMosaicRuleToRasters.h"
+        "ApplyMosaicRuleToRasters.h",
+        "ApplyMosaicRuleToRasters.qml"
     ],
     "title": "Apply mosaic rule to rasters"
 }

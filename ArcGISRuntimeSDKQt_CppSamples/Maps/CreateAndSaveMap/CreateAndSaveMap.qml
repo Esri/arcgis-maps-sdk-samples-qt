@@ -17,13 +17,13 @@
 import QtQuick 2.6
 import QtQuick.Controls 2.2
 import Esri.Samples 1.0
-import Esri.ArcGISRuntime.Toolkit 100.13
+import Esri.ArcGISRuntime.Toolkit 100.14
 
 CreateAndSaveMapSample {
     id: rootRectangle
     clip: true
     width: 800
-    height: 600    
+    height: 600
 
     onPortalLoaded: {
         stackView.push(options);

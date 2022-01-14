@@ -23,7 +23,7 @@ DistanceMeasurementAnalysisSample {
     clip: true
     width: 800
     height: 600
-    
+
     SceneView {
         objectName: "sceneView"
         anchors.fill: parent

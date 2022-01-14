@@ -24,9 +24,9 @@
         "ReverseGeocodeParameters"
     ],
     "snippets": [
-        "ReverseGeocodeOnline.qml",
         "ReverseGeocodeOnline.cpp",
-        "ReverseGeocodeOnline.h"
+        "ReverseGeocodeOnline.h",
+        "ReverseGeocodeOnline.qml"
     ],
     "title": "Reverse geocode"
 }

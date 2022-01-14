@@ -1,5 +1,5 @@
 {
-    "category": "Edit Data",
+    "category": "Edit data",
     "dataItems": [
         {
             "itemId": "74c0c9fa80f4498c9739cc42531e9948",
@@ -32,9 +32,9 @@
         "Geodatabase"
     ],
     "snippets": [
-        "EditFeaturesWithFeatureLinkedAnnotation.qml",
         "EditFeaturesWithFeatureLinkedAnnotation.cpp",
-        "EditFeaturesWithFeatureLinkedAnnotation.h"
+        "EditFeaturesWithFeatureLinkedAnnotation.h",
+        "EditFeaturesWithFeatureLinkedAnnotation.qml"
     ],
     "title": "Edit features with feature-linked annotation"
 }

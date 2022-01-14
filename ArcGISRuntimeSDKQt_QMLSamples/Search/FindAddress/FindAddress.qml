@@ -17,14 +17,14 @@
 import QtQuick 2.6
 import QtQuick.Controls 2.2
 import QtQuick.Layouts 1.3
-import Esri.ArcGISRuntime 100.13
-import Esri.ArcGISRuntime.Toolkit 100.13
+import Esri.ArcGISRuntime 100.14
+import Esri.ArcGISRuntime.Toolkit 100.14
 
 Rectangle {
     id: root
     width: 800
     height: 600
-    
+
     property string calloutText
     property Point calloutLocation
 
@@ -87,7 +87,7 @@ Rectangle {
 
         calloutData {
             location:  calloutLocation
-            title: calloutText            
+            title: calloutText
         }
 
         // map callout window
@@ -106,7 +106,7 @@ Rectangle {
     // Create a locator task using the World Geocoding Service
     LocatorTask {
         id: locatorTask
-        
+
         // An ArcGIS Developer API key is required to utilize the world geocoding service
         url: "https://geocode-api.arcgis.com/arcgis/rest/services/World/GeocodeServer"
 

@@ -39,9 +39,9 @@
         "SyncLayerOption"
     ],
     "snippets": [
-        "EditAndSyncFeatures.qml",
         "EditAndSyncFeatures.cpp",
-        "EditAndSyncFeatures.h"
+        "EditAndSyncFeatures.h",
+        "EditAndSyncFeatures.qml"
     ],
     "title": "Edit and sync features"
 }

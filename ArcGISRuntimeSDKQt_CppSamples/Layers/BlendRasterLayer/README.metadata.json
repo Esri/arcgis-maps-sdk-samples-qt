@@ -38,11 +38,11 @@
         "RasterLayer"
     ],
     "snippets": [
-        "BlendRasterLayer.qml",
         "BlendRasterLayer.cpp",
         "BlendRasterLayer.h",
         "ColorRampModel.qml",
-        "SlopeTypeModel.qml"
+        "SlopeTypeModel.qml",
+        "BlendRasterLayer.qml"
     ],
     "title": "Blend raster layer"
 }

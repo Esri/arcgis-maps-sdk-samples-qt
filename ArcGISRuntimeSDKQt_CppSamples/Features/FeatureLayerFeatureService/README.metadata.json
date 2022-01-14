@@ -27,9 +27,9 @@
         "ServiceFeatureTable"
     ],
     "snippets": [
-        "FeatureLayerFeatureService.qml",
         "FeatureLayerFeatureService.cpp",
-        "FeatureLayerFeatureService.h"
+        "FeatureLayerFeatureService.h",
+        "FeatureLayerFeatureService.qml"
     ],
     "title": "Feature layer (feature service)"
 }

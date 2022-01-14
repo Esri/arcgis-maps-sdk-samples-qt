@@ -15,14 +15,14 @@
 // [Legal]
 
 import QtQuick 2.6
-import Esri.ArcGISRuntime 100.13
+import Esri.ArcGISRuntime 100.14
 
 Rectangle {
     id: rootRectangle
     clip: true
     width: 800
     height: 600
-    
+
     property string distanceText
 
     MapView {
@@ -93,7 +93,7 @@ Rectangle {
             // calculate the path's geodetic length
             distanceText = GeometryEngine.lengthGeodetic(pathGeometry, unitOfMeasurement, curveType).toFixed(2);
         }
-    }    
+    }
 
     // create a line symbol
     SimpleLineSymbol {

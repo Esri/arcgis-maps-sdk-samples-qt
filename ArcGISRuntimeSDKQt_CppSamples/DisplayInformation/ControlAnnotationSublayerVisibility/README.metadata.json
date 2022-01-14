@@ -30,9 +30,9 @@
         "LayerContent"
     ],
     "snippets": [
-        "ControlAnnotationSublayerVisibility.qml",
         "ControlAnnotationSublayerVisibility.cpp",
-        "ControlAnnotationSublayerVisibility.h"
+        "ControlAnnotationSublayerVisibility.h",
+        "ControlAnnotationSublayerVisibility.qml"
     ],
     "title": "Control annotation sublayer visibility"
 }

@@ -54,10 +54,10 @@
         "UtilityTraceType"
     ],
     "snippets": [
-        "PerformValveIsolationTrace.qml",
         "PerformValveIsolationTrace.cpp",
         "PerformValveIsolationTrace.h",
-        "TerminalPickerView.qml"
+        "TerminalPickerView.qml",
+        "PerformValveIsolationTrace.qml"
     ],
     "title": "Perform valve isolation trace"
 }

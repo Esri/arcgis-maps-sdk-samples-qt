@@ -35,9 +35,9 @@
         "TextSymbol"
     ],
     "snippets": [
-        "Display3DLabelsInScene.qml",
         "Display3DLabelsInScene.cpp",
-        "Display3DLabelsInScene.h"
+        "Display3DLabelsInScene.h",
+        "Display3DLabelsInScene.qml"
     ],
     "title": "Display 3D labels in scene"
 }

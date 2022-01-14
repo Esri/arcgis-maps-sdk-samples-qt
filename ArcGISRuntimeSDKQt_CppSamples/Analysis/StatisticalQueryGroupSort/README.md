@@ -13,9 +13,7 @@ You can use statistical queries, grouping and sorting to process large amounts o
 The sample will start with some default options selected. You can immediately click the "Get Statistics" button to see the results for these options. There are several ways to customize your queries:
 
 * You can add statistic definitions to the top-left table using the combo boxes and "Add" button. Select a table row and click "Remove" to remove a definition.
-
 * To change the Group-by fields, check the box by the field you want to group by in the bottom-left list view.
-
 * To change the Order-by fields, select a Group-by field (it must be checked) and click the ">>" button to add it to the Order-by table. To remove a field from the Order-by table, select it and click the "<<" button. To change the sort order of the Order-by field, the cells of the "Sort Order" column are combo-boxes that may be either ASCENDING or DESCENDING.
 
 ## How it works
@@ -29,10 +27,6 @@ The sample will start with some default options selected. You can immediately cl
 7. To execute the query, call `featureTable::queryStatistics(queryParameters)`.
 8. Get the `StatisticQueryResult`. From this, you can get an iterator of `StatisticRecord`s to loop through and display.
 
-## About the data
-
-This sample uses a [Diabetes, Obesity, and Inactivity by US County](https://www.arcgis.com/home/item.html?id=392420848e634079bc7d0648586e818f) feature layer hosted on ArcGIS Online.
-
 ## Relevant API
 
 * Field
@@ -44,6 +38,10 @@ This sample uses a [Diabetes, Obesity, and Inactivity by US County](https://www.
 * StatisticsQueryParameters
 * StatisticsQueryResult
 * StatisticType
+
+## About the data
+
+This sample uses a [Diabetes, Obesity, and Inactivity by US County](https://www.arcgis.com/home/item.html?id=392420848e634079bc7d0648586e818f) feature layer hosted on ArcGIS Online.
 
 ## Tags
 

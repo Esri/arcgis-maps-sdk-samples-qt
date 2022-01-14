@@ -30,9 +30,9 @@
         "UniqueValueRenderer"
     ],
     "snippets": [
-        "Unique_Value_Renderer.qml",
         "Unique_Value_Renderer.cpp",
-        "Unique_Value_Renderer.h"
+        "Unique_Value_Renderer.h",
+        "Unique_Value_Renderer.qml"
     ],
     "title": "Unique value renderer"
 }

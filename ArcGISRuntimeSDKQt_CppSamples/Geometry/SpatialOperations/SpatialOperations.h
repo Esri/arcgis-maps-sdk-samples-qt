@@ -41,7 +41,7 @@ public:
   ~SpatialOperations() override = default;
 
   static void init();
-  void componentComplete() override;  
+  void componentComplete() override;
   Q_INVOKABLE void applyGeometryOperation(int index);
 
 signals:

@@ -38,9 +38,9 @@
         "ReverseGeocodeParameters"
     ],
     "snippets": [
-        "OfflineGeocode.qml",
         "OfflineGeocode.cpp",
-        "OfflineGeocode.h"
+        "OfflineGeocode.h",
+        "OfflineGeocode.qml"
     ],
     "title": "Offline geocode"
 }

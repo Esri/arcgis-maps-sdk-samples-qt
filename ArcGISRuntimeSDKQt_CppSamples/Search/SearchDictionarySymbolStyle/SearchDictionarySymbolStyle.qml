@@ -24,7 +24,7 @@ SearchDictionarySymbolStyleSample {
     id: searchDictionarySymbolStyleSample
     width: 800
     height: 600
-    
+
     readonly property double fontSize: 16
     readonly property var repeaterModel: ["Names", "Tags", "Symbol Classes", "Categories", "Keys"]
     readonly property var hintsModel: ["Fire", "Sustainment Points", "3", "Control Measure", "25212300_6"]

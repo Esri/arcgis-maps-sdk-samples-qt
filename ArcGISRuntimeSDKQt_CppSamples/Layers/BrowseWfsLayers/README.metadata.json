@@ -33,9 +33,9 @@
         "WfsServiceInfo"
     ],
     "snippets": [
-        "BrowseWfsLayers.qml",
         "BrowseWfsLayers.cpp",
-        "BrowseWfsLayers.h"
+        "BrowseWfsLayers.h",
+        "BrowseWfsLayers.qml"
     ],
     "title": "Browse WFS layers"
 }

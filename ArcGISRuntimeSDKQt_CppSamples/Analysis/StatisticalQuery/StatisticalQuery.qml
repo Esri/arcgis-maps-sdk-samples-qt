@@ -24,7 +24,7 @@ StatisticalQuerySample {
     clip: true
     width: 800
     height: 600
-    
+
     property alias extentOnly: extentCheckbox.checked
     property alias bigCitiesOnly: bigCitiesCheckbox.checked
     property string resultsText: ""

@@ -33,9 +33,9 @@
         "ServiceFeatureTable"
     ],
     "snippets": [
-        "FeatureCollectionLayerQuery.qml",
         "FeatureCollectionLayerQuery.cpp",
-        "FeatureCollectionLayerQuery.h"
+        "FeatureCollectionLayerQuery.h",
+        "FeatureCollectionLayerQuery.qml"
     ],
     "title": "Feature collection layer (query)"
 }

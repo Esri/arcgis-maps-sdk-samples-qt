@@ -64,12 +64,12 @@
         "SurfacePlacement"
     ],
     "snippets": [
-        "Animate3DSymbols.qml",
         "Animate3DSymbols.cpp",
         "Animate3DSymbols.h",
         "LabeledSlider.qml",
         "MissionData.cpp",
-        "MissionData.h"
+        "MissionData.h",
+        "Animate3DSymbols.qml"
     ],
     "title": "Animate 3D symbols"
 }

@@ -208,7 +208,7 @@ void ApplyScheduledMapUpdates::connectSyncSignals()
   connect(m_offlineSyncTask, &OfflineMapSyncTask::createDefaultOfflineMapSyncParametersCompleted, [this](QUuid, OfflineMapSyncParameters parameters)
   {
     // set the parameters to download all updates for the mobile map packages
-    parameters.setPreplannedScheduledUpdatesOption(PreplannedScheduledUpdatesOption::DownloadAllUpdates);  
+    parameters.setPreplannedScheduledUpdatesOption(PreplannedScheduledUpdatesOption::DownloadAllUpdates);
 
     // delete and disconnect previous jobs
     if (m_syncJob)

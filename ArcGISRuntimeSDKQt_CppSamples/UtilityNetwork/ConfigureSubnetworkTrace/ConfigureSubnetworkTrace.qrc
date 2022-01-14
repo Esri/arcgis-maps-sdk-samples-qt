@@ -1,6 +1,6 @@
 <RCC>
     <qresource prefix="/Samples/UtilityNetwork/ConfigureSubnetworkTrace">
-        <file alias="sample.json">README.metadata.json</file>        
+        <file alias="sample.json">README.metadata.json</file>
         <file>ConfigureSubnetworkTrace.qml</file>
         <file>ConfigureSubnetworkTrace.h</file>
         <file>ConfigureSubnetworkTrace.cpp</file>

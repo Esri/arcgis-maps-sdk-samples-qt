@@ -33,9 +33,9 @@
         "SceneView"
     ],
     "snippets": [
-        "ChooseCameraController.qml",
         "ChooseCameraController.cpp",
-        "ChooseCameraController.h"
+        "ChooseCameraController.h",
+        "ChooseCameraController.qml"
     ],
     "title": "Choose camera controller"
 }

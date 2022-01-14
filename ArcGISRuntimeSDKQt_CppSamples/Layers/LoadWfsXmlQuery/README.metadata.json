@@ -28,9 +28,9 @@
         "WfsFeatureTable::populateFromService"
     ],
     "snippets": [
-        "LoadWfsXmlQuery.qml",
         "LoadWfsXmlQuery.cpp",
-        "LoadWfsXmlQuery.h"
+        "LoadWfsXmlQuery.h",
+        "LoadWfsXmlQuery.qml"
     ],
     "title": "Load WFS with XML query"
 }

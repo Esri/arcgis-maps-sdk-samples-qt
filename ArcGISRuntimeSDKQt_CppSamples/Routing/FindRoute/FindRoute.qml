@@ -22,7 +22,7 @@ FindRouteSample {
     id: findRouteSample
     width: 800
     height: 600
-    
+
     onSolveRouteComplete: solveButton.visible = false
 
     // Create window for displaying the route directions

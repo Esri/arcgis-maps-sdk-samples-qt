@@ -31,9 +31,9 @@
         "Polyline"
     ],
     "snippets": [
-        "CreateGeometries.qml",
         "CreateGeometries.cpp",
-        "CreateGeometries.h"
+        "CreateGeometries.h",
+        "CreateGeometries.qml"
     ],
     "title": "Create geometries"
 }

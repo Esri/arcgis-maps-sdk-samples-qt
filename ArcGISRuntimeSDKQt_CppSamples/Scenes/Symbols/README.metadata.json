@@ -35,9 +35,9 @@
         "SimpleMarkerSceneSymbol::style"
     ],
     "snippets": [
-        "Symbols.qml",
         "Symbols.cpp",
-        "Symbols.h"
+        "Symbols.h",
+        "Symbols.qml"
     ],
     "title": "Scene symbols"
 }

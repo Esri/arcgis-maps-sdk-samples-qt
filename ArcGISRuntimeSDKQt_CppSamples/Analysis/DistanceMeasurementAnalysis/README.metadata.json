@@ -23,9 +23,9 @@
         "MeasurementChanged"
     ],
     "snippets": [
-        "DistanceMeasurementAnalysis.qml",
         "DistanceMeasurementAnalysis.cpp",
-        "DistanceMeasurementAnalysis.h"
+        "DistanceMeasurementAnalysis.h",
+        "DistanceMeasurementAnalysis.qml"
     ],
     "title": "Distance measurement analysis"
 }

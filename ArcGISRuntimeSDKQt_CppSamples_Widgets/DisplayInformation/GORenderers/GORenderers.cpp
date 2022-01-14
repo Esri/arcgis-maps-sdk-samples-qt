@@ -35,7 +35,7 @@ using namespace Esri::ArcGISRuntime;
 
 GORenderers::GORenderers(QWidget* parent) :
   QWidget(parent)
-{        
+{
   // Create a map using the imagery with labels basemap
   m_map = new Map(BasemapStyle::ArcGISTopographic, this);
 

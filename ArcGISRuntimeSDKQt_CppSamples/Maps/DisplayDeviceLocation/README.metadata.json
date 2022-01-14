@@ -28,9 +28,9 @@
         "MapView"
     ],
     "snippets": [
-        "DisplayDeviceLocation.qml",
         "DisplayDeviceLocation.cpp",
-        "DisplayDeviceLocation.h"
+        "DisplayDeviceLocation.h",
+        "DisplayDeviceLocation.qml"
     ],
     "title": "Display device location with autopan modes"
 }

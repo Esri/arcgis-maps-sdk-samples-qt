@@ -27,9 +27,9 @@
         "SimpleRenderer"
     ],
     "snippets": [
-        "ExtrudeGraphics.qml",
         "ExtrudeGraphics.cpp",
-        "ExtrudeGraphics.h"
+        "ExtrudeGraphics.h",
+        "ExtrudeGraphics.qml"
     ],
     "title": "Extrude graphics"
 }

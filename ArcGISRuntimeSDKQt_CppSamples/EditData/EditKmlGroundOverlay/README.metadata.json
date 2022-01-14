@@ -32,9 +32,9 @@
         "KmlLayer"
     ],
     "snippets": [
-        "EditKmlGroundOverlay.qml",
         "EditKmlGroundOverlay.cpp",
-        "EditKmlGroundOverlay.h"
+        "EditKmlGroundOverlay.h",
+        "EditKmlGroundOverlay.qml"
     ],
     "title": "Edit KML ground overlay"
 }

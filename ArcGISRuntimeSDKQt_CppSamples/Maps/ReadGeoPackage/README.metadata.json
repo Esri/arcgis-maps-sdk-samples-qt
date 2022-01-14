@@ -38,9 +38,9 @@
         "GeoPackageRaster"
     ],
     "snippets": [
-        "ReadGeoPackage.qml",
         "ReadGeoPackage.cpp",
-        "ReadGeoPackage.h"
+        "ReadGeoPackage.h",
+        "ReadGeoPackage.qml"
     ],
     "title": "Read a GeoPackage"
 }

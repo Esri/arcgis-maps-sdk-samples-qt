@@ -36,9 +36,9 @@
         "OfflineMapUpdatesInfo"
     ],
     "snippets": [
-        "ApplyScheduledMapUpdates.qml",
         "ApplyScheduledMapUpdates.cpp",
-        "ApplyScheduledMapUpdates.h"
+        "ApplyScheduledMapUpdates.h",
+        "ApplyScheduledMapUpdates.qml"
     ],
     "title": "Apply scheduled updates to preplanned map area"
 }

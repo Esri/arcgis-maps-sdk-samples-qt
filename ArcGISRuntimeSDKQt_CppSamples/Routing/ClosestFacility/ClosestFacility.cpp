@@ -207,7 +207,7 @@ void ClosestFacility::setupRouting()
   connect(m_mapView, &MapQuickView::mouseClicked, this, [this](QMouseEvent& mouseEvent)
   {
     if (busy())
-      return;    
+      return;
 
     Point mapPoint = m_mapView->screenToLocation(mouseEvent.x(), mouseEvent.y());
     Point incidentPoint(mapPoint.x(), mapPoint.y(), SpatialReference::webMercator());

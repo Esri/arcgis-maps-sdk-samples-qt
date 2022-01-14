@@ -18,13 +18,13 @@ import QtQuick 2.6
 import Esri.Samples 1.0
 import QtQuick.Controls 2.2
 import QtQuick.Layouts 1.3
-import Esri.ArcGISRuntime.Toolkit 100.13
+import Esri.ArcGISRuntime.Toolkit 100.14
 
 OfflineGeocodeSample {
     id: offlineGeocodeSample
     clip: true
     width: 800
-    height: 600    
+    height: 600
 
     // add a mapView component
     MapView {

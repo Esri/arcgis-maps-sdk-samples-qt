@@ -31,7 +31,7 @@ using namespace Esri::ArcGISRuntime;
 
 SetMapSpatialReference::SetMapSpatialReference(QQuickItem* parent) :
   QQuickItem(parent)
-{    
+{
 }
 
 SetMapSpatialReference::~SetMapSpatialReference() = default;

@@ -28,13 +28,9 @@ Run the sample and view the ENC data. Pan and zoom around the map. Take note of 
 * EncExchangeSet
 * EncLayer
 
-## Tags
-
-Data, ENC, maritime, nautical chart, layers, hydrographic
-
 ## Offline data
 
-Read more about how to set up the sample's offline data [here](http://links.esri.com/ArcGISRuntimeQtSamples#use-offline-data-in-the-samples).
+To set up the sample's offline data, see the [Use offline data in the samples](https://github.com/Esri/arcgis-runtime-samples-qt#use-offline-data-in-the-samples) section of the Qt Samples repository overview.
 
 Link | Local Location
 ---------|-------|

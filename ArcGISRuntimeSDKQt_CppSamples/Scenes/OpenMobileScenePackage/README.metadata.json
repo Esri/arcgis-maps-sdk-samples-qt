@@ -25,9 +25,9 @@
         "SceneView"
     ],
     "snippets": [
-        "OpenMobileScenePackage.qml",
         "OpenMobileScenePackage.cpp",
-        "OpenMobileScenePackage.h"
+        "OpenMobileScenePackage.h",
+        "OpenMobileScenePackage.qml"
     ],
     "title": "Open mobile scene package"
 }

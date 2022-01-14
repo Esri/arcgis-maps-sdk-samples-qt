@@ -19,13 +19,13 @@ import QtQuick.Controls 2.2
 import QtQuick.Layouts 1.3
 import QtGraphicalEffects 1.0
 import Esri.Samples 1.0
-import Esri.ArcGISRuntime.Toolkit 100.13
+import Esri.ArcGISRuntime.Toolkit 100.14
 
 UpdateAttributesFeatureServiceSample {
     id: updateFeaturesSample
     width: 800
     height: 600
-    
+
     readonly property var featAttributes: ["Destroyed", "Major", "Minor", "Affected", "Inaccessible"]
 
     // add a mapView component

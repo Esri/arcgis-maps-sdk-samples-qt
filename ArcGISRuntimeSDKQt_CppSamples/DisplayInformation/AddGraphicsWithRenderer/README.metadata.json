@@ -46,9 +46,9 @@
         "SimpleRenderer"
     ],
     "snippets": [
-        "AddGraphicsWithRenderer.qml",
         "AddGraphicsWithRenderer.cpp",
-        "AddGraphicsWithRenderer.h"
+        "AddGraphicsWithRenderer.h",
+        "AddGraphicsWithRenderer.qml"
     ],
     "title": "Add graphics with renderer"
 }

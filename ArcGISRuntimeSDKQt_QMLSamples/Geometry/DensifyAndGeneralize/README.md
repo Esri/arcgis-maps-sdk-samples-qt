@@ -10,7 +10,7 @@ The sample shows a polyline representing a ship's location at irregular interval
 
 Densifying a multipart geometry can be used to more accurately represent curved lines or to add more regularity to the vertices making up a multipart geometry.
 
-## How to use the sample 
+## How to use the sample
 
 Use the sliders to control the parameters of the densify and generalize methods. You can deselect the checkboxes for either method to remove its effect from the result polyline.
 

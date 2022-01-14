@@ -16,7 +16,7 @@
 
 import QtQuick 2.6
 import QtQuick.Controls 2.2
-import Esri.ArcGISRuntime 100.13
+import Esri.ArcGISRuntime 100.14
 import Esri.ArcGISExtras 1.1
 
 Rectangle {
@@ -24,7 +24,7 @@ Rectangle {
     clip: true
     width: 800
     height: 600
-    
+
     readonly property string dataPath: System.userHomePath + "/ArcGIS/Runtime/Data/raster/"
 
     MapView {

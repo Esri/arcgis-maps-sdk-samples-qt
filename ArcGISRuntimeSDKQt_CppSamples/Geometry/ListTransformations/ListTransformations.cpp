@@ -76,7 +76,7 @@ void ListTransformations::init()
 
 void ListTransformations::componentComplete()
 {
-  QQuickItem::componentComplete();   
+  QQuickItem::componentComplete();
 
   // get data path
   const QUrl dataPath = QUrl(defaultDataPath() + "/ArcGIS/Runtime/Data/PEDataRuntime");

@@ -34,7 +34,7 @@ The contents of the KML file are shown in a list of buttons. Select a node to zo
 
 ## Offline data
 
-Read more about how to set up the sample's offline data [here](http://links.esri.com/ArcGISRuntimeQtSamples).
+To set up the sample's offline data, see the [Use offline data in the samples](https://github.com/Esri/arcgis-runtime-samples-qt#use-offline-data-in-the-samples) section of the Qt Samples repository overview.
 
 Link | Local Location
 ---------|-------|

@@ -21,9 +21,9 @@
         "MapView"
     ],
     "snippets": [
-        "IdentifyGraphics.qml",
         "IdentifyGraphics.cpp",
-        "IdentifyGraphics.h"
+        "IdentifyGraphics.h",
+        "IdentifyGraphics.qml"
     ],
     "title": "Identify graphics"
 }

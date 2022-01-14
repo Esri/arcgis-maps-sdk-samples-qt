@@ -27,11 +27,11 @@
         "Portal"
     ],
     "snippets": [
-        "GenerateOfflineMap.qml",
-        "DownloadButton.qml",
         "GenerateOfflineMap.cpp",
         "GenerateOfflineMap.h",
-        "GenerateWindow.qml"
+        "DownloadButton.qml",
+        "GenerateWindow.qml",
+        "GenerateOfflineMap.qml"
     ],
     "title": "Generate offline map"
 }

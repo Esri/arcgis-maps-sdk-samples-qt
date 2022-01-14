@@ -33,9 +33,9 @@
         "TextSymbol"
     ],
     "snippets": [
-        "DisplaySubtypeFeatureLayer.qml",
         "DisplaySubtypeFeatureLayer.cpp",
-        "DisplaySubtypeFeatureLayer.h"
+        "DisplaySubtypeFeatureLayer.h",
+        "DisplaySubtypeFeatureLayer.qml"
     ],
     "title": "Display subtype feature layer"
 }

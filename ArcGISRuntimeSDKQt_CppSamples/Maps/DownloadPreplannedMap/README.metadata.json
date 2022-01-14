@@ -27,9 +27,9 @@
         "PreplannedMapArea"
     ],
     "snippets": [
-        "DownloadPreplannedMap.qml",
         "DownloadPreplannedMap.cpp",
-        "DownloadPreplannedMap.h"
+        "DownloadPreplannedMap.h",
+        "DownloadPreplannedMap.qml"
     ],
     "title": "Download a preplanned map area"
 }

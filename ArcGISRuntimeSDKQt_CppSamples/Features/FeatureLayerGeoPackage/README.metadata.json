@@ -33,9 +33,9 @@
         "Map"
     ],
     "snippets": [
-        "FeatureLayer_GeoPackage.qml",
+        "FeatureLayer_GeoPackage.cpp",
         "FeatureLayer_GeoPackage.h",
-        "FeatureLayer_GeoPackage.cpp"
+        "FeatureLayer_GeoPackage.qml"
     ],
     "title": "Feature layer (GeoPackage)"
 }

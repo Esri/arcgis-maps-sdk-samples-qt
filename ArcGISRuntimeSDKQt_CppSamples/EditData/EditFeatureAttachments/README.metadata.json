@@ -36,9 +36,9 @@
         "UpdateFeature"
     ],
     "snippets": [
-        "EditFeatureAttachments.qml",
         "EditFeatureAttachments.cpp",
-        "EditFeatureAttachments.h"
+        "EditFeatureAttachments.h",
+        "EditFeatureAttachments.qml"
     ],
     "title": "Edit feature attachments"
 }

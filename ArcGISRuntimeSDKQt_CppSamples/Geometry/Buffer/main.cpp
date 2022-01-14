@@ -31,7 +31,7 @@ int main(int argc, char *argv[])
 {
   QGuiApplication::setAttribute(Qt::AA_EnableHighDpiScaling);
   QGuiApplication app(argc, argv);
-  app.setApplicationName("Buffer - C++"); 
+  app.setApplicationName("Buffer - C++");
 
   // Use of Esri location services, including basemaps and geocoding,
   // requires authentication using either an ArcGIS identity or an API Key.
@@ -40,17 +40,17 @@ int main(int argc, char *argv[])
   // 2. API key: A permanent key that gives your application access to Esri
   //    location services. Visit your ArcGIS Developers Dashboard create a new
   //    API keys or access an existing API key.
-  const QString apiKey = QStringLiteral("");
+  const QString apiKey = QString("");
   if (apiKey.isEmpty())
   {
-      qWarning() << "Use of Esri location services, including basemaps, requires"
+      qWarning() << "Use of Esri location services, including basemaps, requires" <<
                     "you to authenticate with an ArcGIS identity or set the API Key property.";
   }
   else
   {
       Esri::ArcGISRuntime::ArcGISRuntimeEnvironment::setApiKey(apiKey);
   }
-  
+
   // Initialize the sample
   Buffer::init();
 

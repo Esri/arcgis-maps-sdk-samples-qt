@@ -39,9 +39,9 @@
         "TravelMode"
     ],
     "snippets": [
-        "OfflineRouting.qml",
         "OfflineRouting.cpp",
-        "OfflineRouting.h"
+        "OfflineRouting.h",
+        "OfflineRouting.qml"
     ],
     "title": "Offline routing"
 }

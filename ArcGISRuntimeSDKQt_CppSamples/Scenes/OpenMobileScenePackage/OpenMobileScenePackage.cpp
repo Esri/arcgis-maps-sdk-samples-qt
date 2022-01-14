@@ -55,7 +55,7 @@ namespace
 
 OpenMobileScenePackage::OpenMobileScenePackage(QObject* parent /* = nullptr */):
   QObject(parent)
-{  
+{
   // create the MSPK data path
   // data is downloaded automatically by the sample viewer app. Instructions to download
   // separately are specified in the readme.

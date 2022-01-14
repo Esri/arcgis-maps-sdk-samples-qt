@@ -17,8 +17,8 @@
 import QtQuick 2.6
 import QtQuick.Controls 2.6
 import Esri.ArcGISExtras 1.1
-import Esri.ArcGISRuntime 100.13
-import Esri.ArcGISRuntime.Toolkit 100.13
+import Esri.ArcGISRuntime 100.14
+import Esri.ArcGISRuntime.Toolkit 100.14
 
 Rectangle {
     id: rootRectangle
@@ -95,7 +95,7 @@ Rectangle {
 
         LocatorTask {
             id: locatorTask
-            
+
             // An ArcGIS Developer API key is required to utilize the world geocoding service
             url: "https://geocode-api.arcgis.com/arcgis/rest/services/World/GeocodeServer"
 

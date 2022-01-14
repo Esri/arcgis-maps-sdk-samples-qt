@@ -23,11 +23,11 @@
         "GeoView::exportImage"
     ],
     "snippets": [
-        "TakeScreenshot.qml",
+        "TakeScreenshot.cpp",
+        "TakeScreenshot.h",
         "MapImageProvider.cpp",
         "MapImageProvider.h",
-        "TakeScreenshot.cpp",
-        "TakeScreenshot.h"
+        "TakeScreenshot.qml"
     ],
     "title": "Take screenshot"
 }

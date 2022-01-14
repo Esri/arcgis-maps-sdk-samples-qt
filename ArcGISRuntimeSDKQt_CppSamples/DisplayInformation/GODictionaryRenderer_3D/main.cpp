@@ -29,7 +29,7 @@
 
 int main(int argc, char *argv[])
 {
-  
+
 #if defined(Q_OS_LINUX) && !defined(Q_OS_ANDROID)
   // Linux requires 3.2 OpenGL Context
   // in order to instance 3D symbols
@@ -48,17 +48,17 @@ int main(int argc, char *argv[])
   // 2. API key: A permanent key that gives your application access to Esri
   //    location services. Visit your ArcGIS Developers Dashboard create a new
   //    API keys or access an existing API key.
-  const QString apiKey = QStringLiteral("");
+  const QString apiKey = QString("");
   if (apiKey.isEmpty())
   {
-      qWarning() << "Use of Esri location services, including basemaps, requires"
+      qWarning() << "Use of Esri location services, including basemaps, requires" <<
                     "you to authenticate with an ArcGIS identity or set the API Key property.";
   }
   else
   {
       Esri::ArcGISRuntime::ArcGISRuntimeEnvironment::setApiKey(apiKey);
   }
-  
+
   // Initialize the sample
   GODictionaryRenderer_3D::init();
 
@@ -68,7 +68,7 @@ int main(int argc, char *argv[])
 
   // Add the import Path
   view.engine()->addImportPath(QDir(QCoreApplication::applicationDirPath()).filePath("qml"));
-  
+
   QString arcGISRuntimeImportPath = QUOTE(ARCGIS_RUNTIME_IMPORT_PATH);
 
  #if defined(LINUX_PLATFORM_REPLACEMENT)

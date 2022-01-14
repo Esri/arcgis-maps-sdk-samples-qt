@@ -21,9 +21,9 @@
         "GeometryEngine::lengthGeodetic"
     ],
     "snippets": [
-        "GeodesicOperations.qml",
         "GeodesicOperations.cpp",
-        "GeodesicOperations.h"
+        "GeodesicOperations.h",
+        "GeodesicOperations.qml"
     ],
     "title": "Geodesic operations"
 }
