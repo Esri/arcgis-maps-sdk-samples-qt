@@ -32,8 +32,6 @@
 #include "DisplayFilter.h"
 #include "DisplayFilterDefinition.h"
 #include "ManualDisplayFilterDefinition.h"
-#include "ScaleDisplayFilterDefinition.h"
-#include "ScaleRangeDisplayFilter.h"
 #include <QUrl>
 
 using namespace Esri::ArcGISRuntime;

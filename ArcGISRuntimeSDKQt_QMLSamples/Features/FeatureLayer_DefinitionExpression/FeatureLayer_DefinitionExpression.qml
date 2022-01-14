@@ -77,12 +77,10 @@ Rectangle {
         }
         spacing: 5
 
-
         Label {
 
-            text: "Current feature count: " + getFeatureCount();
+            text: "Current feature count: " + updateFeatureCount();
         }
-
         // button to apply a definition expression
         Button {
             text: "Apply Expression"
@@ -127,11 +125,8 @@ Rectangle {
         }
     }
 
-
-    function getFeatureCount()
+    function updateFeatureCount()
     {
-
-
         const queryParams = ArcGISRuntimeEnvironment.createObject(
                               "QueryParameters", {
                                   "geometry": mv.currentViewpointExtent.extent
