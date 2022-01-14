@@ -25,9 +25,9 @@
         "MapView::identifyLayers"
     ],
     "snippets": [
-        "IdentifyLayers.qml",
         "IdentifyLayers.cpp",
-        "IdentifyLayers.h"
+        "IdentifyLayers.h",
+        "IdentifyLayers.qml"
     ],
     "title": "Identify layers"
 }

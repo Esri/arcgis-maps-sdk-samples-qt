@@ -26,9 +26,9 @@
         "GeoprocessingTask"
     ],
     "snippets": [
-        "AnalyzeHotspots.qml",
         "AnalyzeHotspots.cpp",
-        "AnalyzeHotspots.h"
+        "AnalyzeHotspots.h",
+        "AnalyzeHotspots.qml"
     ],
     "title": "Analyze hotspots"
 }

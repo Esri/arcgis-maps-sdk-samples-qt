@@ -22,9 +22,9 @@
         "Portal"
     ],
     "snippets": [
-        "IntegratedWindowsAuthentication.qml",
         "IntegratedWindowsAuthentication.cpp",
-        "IntegratedWindowsAuthentication.h"
+        "IntegratedWindowsAuthentication.h",
+        "IntegratedWindowsAuthentication.qml"
     ],
     "title": "Integrated windows authentication"
 }

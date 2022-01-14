@@ -37,9 +37,9 @@
         "RasterLayer"
     ],
     "snippets": [
-        "RasterFunctionFile.qml",
         "RasterFunctionFile.cpp",
-        "RasterFunctionFile.h"
+        "RasterFunctionFile.h",
+        "RasterFunctionFile.qml"
     ],
     "title": "Raster function (file)"
 }

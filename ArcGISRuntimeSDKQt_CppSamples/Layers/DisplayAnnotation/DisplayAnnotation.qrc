@@ -1,6 +1,6 @@
 <RCC>
     <qresource prefix="/Samples/Layers/DisplayAnnotation">
-        <file alias="sample.json">README.metadata.json</file>        
+        <file alias="sample.json">README.metadata.json</file>
         <file>DisplayAnnotation.qml</file>
         <file>DisplayAnnotation.h</file>
         <file>DisplayAnnotation.cpp</file>

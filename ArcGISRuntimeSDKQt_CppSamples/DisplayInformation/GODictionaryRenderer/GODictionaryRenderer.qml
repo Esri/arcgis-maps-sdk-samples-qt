@@ -21,7 +21,7 @@ import Esri.Samples 1.0
 GODictionaryRendererSample {
     id: graphicsOverlayDictionaryRendererSample
     width: 800
-    height: 600    
+    height: 600
 
     // Create MapView here, and create its Map and GraphicsOverlay in C++ code
     MapView {

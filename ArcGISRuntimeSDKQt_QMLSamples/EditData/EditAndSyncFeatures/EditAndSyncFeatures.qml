@@ -17,13 +17,13 @@
 import QtQuick 2.6
 import QtQuick.Controls 2.2
 import QtGraphicalEffects 1.0
-import Esri.ArcGISRuntime 100.13
+import Esri.ArcGISRuntime 100.14
 import Esri.ArcGISExtras 1.1
 
 Rectangle {
     width: 800
     height: 600
-    
+
     readonly property url dataPath: System.userHomePath + "/ArcGIS/Runtime/Data/"
     readonly property url outputGdb: System.temporaryFolder.url + "/WildfireQml_%1.geodatabase".arg(new Date().getTime().toString())
     readonly property string featureServiceUrl: "https://sampleserver6.arcgisonline.com/arcgis/rest/services/Sync/WildfireSync/FeatureServer"

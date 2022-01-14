@@ -24,9 +24,9 @@
         "PointCloudLayer"
     ],
     "snippets": [
-        "ViewPointCloudDataOffline.qml",
         "ViewPointCloudDataOffline.cpp",
-        "ViewPointCloudDataOffline.h"
+        "ViewPointCloudDataOffline.h",
+        "ViewPointCloudDataOffline.qml"
     ],
     "title": "View point cloud data offline"
 }

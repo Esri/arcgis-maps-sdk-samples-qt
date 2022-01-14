@@ -1,6 +1,6 @@
 # Viewshed (location)
 
-Perform a viewshed analysis from a defined vantage point. 
+Perform a viewshed analysis from a defined vantage point.
 
 ![](screenshot.png)
 
@@ -15,7 +15,7 @@ Use the sliders to change the properties (heading, pitch, etc.), of the viewshed
 ## How it works
 
 1. Create a `LocationViewshed` passing in the observer location, heading, pitch, horizontal/vertical angles, and min/max distances.
-2. Set the property values on the viewshed instance for location, direction, range, and visibility properties. 
+2. Set the property values on the viewshed instance for location, direction, range, and visibility properties.
 
 ## Relevant API
 
@@ -27,7 +27,7 @@ Use the sliders to change the properties (heading, pitch, etc.), of the viewshed
 
 ## About the data
 
-The scene shows a [buildings layer in Brest, France](https://tiles.arcgis.com/tiles/P3ePLMYs2RVChkJx/arcgis/rest/services/Buildings_Brest/SceneServer/layers/0) hosted on ArcGIS Online.
+The scene shows a [buildings layer in Brest, France](https://www.arcgis.com/home/item.html?id=b343e14455fe45b98a2c20ebbceec0b0) hosted on ArcGIS Online.
 
 ## Tags
 

@@ -101,7 +101,7 @@ private:
 
   Esri::ArcGISRuntime::SceneQuickView* m_sceneView = nullptr;
   Esri::ArcGISRuntime::LocationViewshed* m_locationViewshed = nullptr;
-  Esri::ArcGISRuntime::AnalysisOverlay* m_analysisOverlay = nullptr;  
+  Esri::ArcGISRuntime::AnalysisOverlay* m_analysisOverlay = nullptr;
 
   bool m_viewshedVisible = true;
   bool m_frustumVisible = false;

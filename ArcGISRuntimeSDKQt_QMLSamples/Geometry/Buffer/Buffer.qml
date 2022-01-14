@@ -16,7 +16,7 @@
 
 import QtQuick 2.6
 import QtQuick.Controls 2.2
-import Esri.ArcGISRuntime 100.13
+import Esri.ArcGISRuntime 100.14
 
 Rectangle {
     id: rootRectangle
@@ -24,7 +24,7 @@ Rectangle {
     width: 800
     height: 600
 
-    
+
 
     // declare a map view
     MapView {

@@ -16,9 +16,9 @@
         "GroupLayer"
     ],
     "snippets": [
-        "GroupLayers.qml",
         "GroupLayers.cpp",
-        "GroupLayers.h"
+        "GroupLayers.h",
+        "GroupLayers.qml"
     ],
     "title": "Group layers"
 }

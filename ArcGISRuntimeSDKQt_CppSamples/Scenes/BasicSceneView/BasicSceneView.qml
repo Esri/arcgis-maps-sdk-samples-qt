@@ -20,7 +20,7 @@ import Esri.Samples 1.0
 
 BasicSceneSample {
     width: 800
-    height: 600    
+    height: 600
 
     // add a mapView component
     SceneView {

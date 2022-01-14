@@ -17,12 +17,12 @@
 import QtQuick 2.6
 import QtQuick.Controls 2.2
 import QtQuick.Layouts 1.3
-import Esri.ArcGISRuntime 100.13
+import Esri.ArcGISRuntime 100.14
 
 Rectangle {
     id: rootRectangle
     width: 800
-    height: 600    
+    height: 600
 
     // Create MapView that contains a Map
     MapView {

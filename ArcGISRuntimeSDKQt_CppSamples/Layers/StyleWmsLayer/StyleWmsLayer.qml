@@ -25,7 +25,7 @@ StyleWmsLayerSample {
     width: 800
     height: 600
 
-    
+
 
     // add a mapView component
     MapView {

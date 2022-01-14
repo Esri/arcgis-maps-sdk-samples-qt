@@ -25,9 +25,9 @@
         "MobileMapPackage"
     ],
     "snippets": [
-        "HonorMobileMapPackageExpiration.qml",
         "HonorMobileMapPackageExpiration.cpp",
-        "HonorMobileMapPackageExpiration.h"
+        "HonorMobileMapPackageExpiration.h",
+        "HonorMobileMapPackageExpiration.qml"
     ],
     "title": "Honor mobile map package expiration date"
 }

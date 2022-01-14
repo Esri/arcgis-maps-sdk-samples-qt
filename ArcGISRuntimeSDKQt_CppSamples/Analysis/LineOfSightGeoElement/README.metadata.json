@@ -29,9 +29,9 @@
         "LineOfSight::targetVisibility"
     ],
     "snippets": [
-        "LineOfSightGeoElement.qml",
         "LineOfSightGeoElement.cpp",
-        "LineOfSightGeoElement.h"
+        "LineOfSightGeoElement.h",
+        "LineOfSightGeoElement.qml"
     ],
     "title": "Line of sight (geoelement)"
 }

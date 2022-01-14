@@ -1,0 +1,39 @@
+{
+    "category": "Layers",
+    "dataItems": [
+        {
+            "itemId": "f5ff6f5556a945bca87ca513b8729a1e",
+            "path": "~/ArcGIS/Runtime/Data/mmpk/Edinburgh_Pylon_Dimensions.mmpk"
+        }
+    ],
+    "description": "Display dimension features from a mobile map package.",
+    "ignore": false,
+    "images": [
+        "screenshot.png"
+    ],
+    "keywords": [
+        "definition expression",
+        "dimension",
+        "distance",
+        "layer",
+        "length",
+        "mmpk",
+        "mobile map package",
+        "utility",
+        "DimensionLayer",
+        "MobileMapPackage"
+    ],
+    "redirect_from": [
+        ""
+    ],
+    "relevant_apis": [
+        "DimensionLayer",
+        "MobileMapPackage"
+    ],
+    "snippets": [
+        "DisplayDimensions.cpp",
+        "DisplayDimensions.h",
+        "DisplayDimensions.qml"
+    ],
+    "title": "Display dimensions"
+}

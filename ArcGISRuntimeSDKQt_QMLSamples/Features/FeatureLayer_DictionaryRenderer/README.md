@@ -6,7 +6,7 @@ Convert features into graphics to show them with mil2525d symbols.
 
 ## Use case
 
-A dictionary renderer uses a style file along with a rule engine to display advanced symbology. 
+A dictionary renderer uses a style file along with a rule engine to display advanced symbology.
 This is useful for displaying features using precise military symbology.
 
 ## How to use the sample
@@ -32,7 +32,7 @@ Pan and zoom around the map. Observe the displayed military symbology on the map
 * Geodatabase
 
 ## Offline Data
-Read more about how to set up the sample's offline data [here](http://links.esri.com/ArcGISRuntimeQtSamples).
+To set up the sample's offline data, see the [Use offline data in the samples](https://github.com/Esri/arcgis-runtime-samples-qt#use-offline-data-in-the-samples) section of the Qt Samples repository overview.
 
 Link | Local Location
 ---------|-------|

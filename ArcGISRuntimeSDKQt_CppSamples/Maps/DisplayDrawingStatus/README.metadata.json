@@ -25,9 +25,9 @@
         "drawStatus"
     ],
     "snippets": [
-        "DisplayDrawingStatus.qml",
         "DisplayDrawingStatus.cpp",
-        "DisplayDrawingStatus.h"
+        "DisplayDrawingStatus.h",
+        "DisplayDrawingStatus.qml"
     ],
     "title": "Display draw status"
 }

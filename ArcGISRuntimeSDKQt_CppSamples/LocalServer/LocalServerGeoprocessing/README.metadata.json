@@ -47,9 +47,9 @@
         "LocalServerStatus"
     ],
     "snippets": [
-        "LocalServerGeoprocessing.qml",
         "LocalServerGeoprocessing.cpp",
-        "LocalServerGeoprocessing.h"
+        "LocalServerGeoprocessing.h",
+        "LocalServerGeoprocessing.qml"
     ],
     "title": "Local server geoprocessing"
 }

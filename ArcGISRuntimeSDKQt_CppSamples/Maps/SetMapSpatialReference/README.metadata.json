@@ -25,9 +25,9 @@
         "SpatialReference"
     ],
     "snippets": [
-        "SetMapSpatialReference.qml",
         "SetMapSpatialReference.cpp",
-        "SetMapSpatialReference.h"
+        "SetMapSpatialReference.h",
+        "SetMapSpatialReference.qml"
     ],
     "title": "Set map spatial reference"
 }

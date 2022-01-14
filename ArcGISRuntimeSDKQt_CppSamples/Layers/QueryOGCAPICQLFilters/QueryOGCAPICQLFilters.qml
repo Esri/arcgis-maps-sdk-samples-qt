@@ -103,9 +103,9 @@ Item {
                 text: ""
                 selectByMouse: true
                 validator: RegExpValidator {
-                    regExp: /(0[1-9]|1[012])[-](0[1-9]|[12][0-9]|3[01])[-](19|20)\d\d/
+                    regExp: /(0[1-9]|1[012])[/](0[1-9]|[12][0-9]|3[01])[/](19|20)\d\d/
                 }
-                placeholderText: "MM-DD-YYYY"
+                placeholderText: "MM/DD/YYYY"
             }
         }
 
@@ -125,9 +125,9 @@ Item {
                 text: ""
                 selectByMouse: true
                 validator: RegExpValidator {
-                    regExp: /(0[1-9]|1[012])[-](0[1-9]|[12][0-9]|3[01])[-](19|20)\d\d/
+                    regExp: /(0[1-9]|1[012])[/](0[1-9]|[12][0-9]|3[01])[/](19|20)\d\d/
                 }
-                placeholderText: "MM-DD-YYYY"
+                placeholderText: "MM/DD/YYYY"
             }
         }
 

@@ -29,9 +29,9 @@
         "SimpleRenderer"
     ],
     "snippets": [
-        "Feature_Collection_Layer.qml",
         "Feature_Collection_Layer.cpp",
-        "Feature_Collection_Layer.h"
+        "Feature_Collection_Layer.h",
+        "Feature_Collection_Layer.qml"
     ],
     "title": "Feature collection layer"
 }

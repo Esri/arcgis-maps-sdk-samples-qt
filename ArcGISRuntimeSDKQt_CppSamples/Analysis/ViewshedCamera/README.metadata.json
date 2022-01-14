@@ -32,9 +32,9 @@
         "SceneView"
     ],
     "snippets": [
-        "ViewshedCamera.qml",
         "ViewshedCamera.cpp",
-        "ViewshedCamera.h"
+        "ViewshedCamera.h",
+        "ViewshedCamera.qml"
     ],
     "title": "Viewshed (camera)"
 }

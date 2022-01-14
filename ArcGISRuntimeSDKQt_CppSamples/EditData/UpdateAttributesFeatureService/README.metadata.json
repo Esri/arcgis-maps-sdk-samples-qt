@@ -26,9 +26,9 @@
         "ServiceFeatureTable"
     ],
     "snippets": [
-        "UpdateAttributesFeatureService.qml",
         "UpdateAttributesFeatureService.cpp",
-        "UpdateAttributesFeatureService.h"
+        "UpdateAttributesFeatureService.h",
+        "UpdateAttributesFeatureService.qml"
     ],
     "title": "Update attributes (feature service)"
 }

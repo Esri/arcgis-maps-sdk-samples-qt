@@ -64,7 +64,7 @@ void IntegratedWindowsAuthentication::setMapView(MapQuickView* mapView)
 }
 
 void IntegratedWindowsAuthentication::searchIwaSecurePortal(const QString& url)
-{  
+{
   if (m_iwaSecurePortal && m_iwaSecurePortal->loadStatus() == LoadStatus::FailedToLoad)
   {
     m_iwaSecurePortal = nullptr;

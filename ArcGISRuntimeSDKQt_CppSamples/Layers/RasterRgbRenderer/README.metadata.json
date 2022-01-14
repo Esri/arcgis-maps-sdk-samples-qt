@@ -41,9 +41,9 @@
         "StretchParameters"
     ],
     "snippets": [
-        "RasterRgbRenderer.qml",
         "RasterRgbRenderer.cpp",
-        "RasterRgbRenderer.h"
+        "RasterRgbRenderer.h",
+        "RasterRgbRenderer.qml"
     ],
     "title": "RGB renderer"
 }

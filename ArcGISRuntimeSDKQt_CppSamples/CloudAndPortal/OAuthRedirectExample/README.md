@@ -1,15 +1,15 @@
 # OAuth Redirect Example
 
 This sample demonstrates an approach to using OAuth2 for authenticating with an ArcGIS portal.
-Unlike the pattern used in other samples where an `AuthenticationView` displays a log-in screen 
+Unlike the pattern used in other samples where an `AuthenticationView` displays a log-in screen
 using a `WebView` within the App itself, this example sends an authorization request to an external
-browser along with a redirect URL. The user can then authenticate securely in the browser 
-(using their ArcGIS.com credentials) and upon successful authentication, the redirect URL 
+browser along with a redirect URL. The user can then authenticate securely in the browser
+(using their ArcGIS.com credentials) and upon successful authentication, the redirect URL
 is notified with an authorization code to allow the log-in process to continue.
 
-In order for the call-back to the redirect URL to be handled by the app, it is necessary to 
+In order for the call-back to the redirect URL to be handled by the app, it is necessary to
 register a custom URL protocol on the user's operating system: the process for doing this is
-different on each platform. 
+different on each platform.
 
 ## Setting up an App with a custom Url protocol
 The custom Url protocol defines a base URL which will be handled by the App itself rather than a browser.
@@ -24,7 +24,7 @@ Make a note of the `Client Id` for the App - this is what you will use in your A
 ### Add a Redirect URL
 Switch to the "Authentication" tab and scroll down to "Redirect URIs" section at the bottom of the page.
 
-Add the custom URL scheme you wish to use with the App - e.g. "exampleapp". This will be the base for the 
+Add the custom URL scheme you wish to use with the App - e.g. "exampleapp". This will be the base for the
 redirect URL that your App will be set to handle.
 
 ### Add the ClientID to your app
@@ -43,13 +43,13 @@ which should be run when the URL scheme is opened. This sample uses `QSettings` 
 using the path to the App's executable.
 
 In order for the exectuable to be runnable from the registry path, all dependencies for the App must be deployed even when
-running from QtCreator. An example deployment script (`windows_deployment.bat`) has been included in the sample to 
+running from QtCreator. An example deployment script (`windows_deployment.bat`) has been included in the sample to
 help with this process but you will need to update the various variables used such as the location of the `QT_KIT`
 and the `ARCGIS_SDK_DIR`.
 
 When the executable is called via the registry path a new instance of the App will be launched: however, in this example,
 the desired behaviour is that the same instance of the App should be notified with the authorization code. To achieve this,
-on windows the sample makes use of the `QtSingleApplication` from qt-solutions. Using this type, the original instance 
+on windows the sample makes use of the `QtSingleApplication` from qt-solutions. Using this type, the original instance
 is notified of the authorization code as a command line argument.
 
 ### Linux
@@ -89,13 +89,13 @@ First, build the project in QtCreator. Next, to create an XCode project from QtC
 
     `-spec macx-xcode`
 
-Open the generated project (e.g. `OAuthRedirectExample.xcodeproj`) in XCode. 
+Open the generated project (e.g. `OAuthRedirectExample.xcodeproj`) in XCode.
 
 You may need to adjust the Qt Postlink step created by QtCreator to point to the target which XCode will build (e.g. to reference the OAuthRedirectExample.app in the sub directory for Debug or Release).
 E.g. Go to Build Phases/Qt PostLink and edit the script to look something like:
 
 `
-install_name_tool -change libEsriCommonQt.dylib "~/ArcGIS_SDKs/Qt100.13/sdk/macOS/x64/lib/libEsriCommonQt.dylib" Release/OAuthRedirectExample.app/Contents/MacOS/OAuthRedirectExample
+install_name_tool -change libEsriCommonQt.dylib "~/ArcGIS_SDKs/Qt100.14/sdk/macOS/x64/lib/libEsriCommonQt.dylib" Release/OAuthRedirectExample.app/Contents/MacOS/OAuthRedirectExample
 `
 
 Next go to Info/URL Types and add a new URL type with Identifier and URL Schemes set to the custom URL scheme you set up for your App.
@@ -105,7 +105,7 @@ Now when you build and run the Project from XCode, the URL scheme will be recogn
 _NOTE: When deploying an App on Mac it should be possible to set the URL type in the Info.Plist as is done for iOS platforms._
 
 ### Android
-On Android, the custom URL scheme is handled with an Activity (see `MyActivity.java`) that handles an intent to open the custom URL by calling a JNI function exposed by the application. 
+On Android, the custom URL scheme is handled with an Activity (see `MyActivity.java`) that handles an intent to open the custom URL by calling a JNI function exposed by the application.
 
 The Custom URL scheme is set up in the `AndroidManifest.xml` file.
 You need to update `<data android:scheme="exampleapp"/>` to use your own scheme in place of "exampleapp".

@@ -24,9 +24,9 @@
         "WebTiledLayer"
     ],
     "snippets": [
-        "Web_Tiled_Layer.qml",
         "Web_Tiled_Layer.cpp",
-        "Web_Tiled_Layer.h"
+        "Web_Tiled_Layer.h",
+        "Web_Tiled_Layer.qml"
     ],
     "title": "Web tiled layer"
 }

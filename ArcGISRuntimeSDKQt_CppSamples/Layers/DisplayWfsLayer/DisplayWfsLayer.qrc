@@ -1,6 +1,6 @@
 <RCC>
     <qresource prefix="/Samples/Layers/DisplayWfsLayer">
-        <file alias="sample.json">README.metadata.json</file>        
+        <file alias="sample.json">README.metadata.json</file>
         <file>DisplayWfsLayer.qml</file>
         <file>DisplayWfsLayer.h</file>
         <file>DisplayWfsLayer.cpp</file>

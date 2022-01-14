@@ -33,9 +33,9 @@
         "MapView"
     ],
     "snippets": [
-        "SetInitialMapArea.qml",
         "SetInitialMapArea.cpp",
-        "SetInitialMapArea.h"
+        "SetInitialMapArea.h",
+        "SetInitialMapArea.qml"
     ],
     "title": "Set initial map area"
 }

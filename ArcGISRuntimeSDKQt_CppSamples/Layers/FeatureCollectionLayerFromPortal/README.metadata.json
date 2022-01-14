@@ -28,9 +28,9 @@
         "PortalItem"
     ],
     "snippets": [
-        "FeatureCollectionLayerFromPortal.qml",
         "FeatureCollectionLayerFromPortal.cpp",
-        "FeatureCollectionLayerFromPortal.h"
+        "FeatureCollectionLayerFromPortal.h",
+        "FeatureCollectionLayerFromPortal.qml"
     ],
     "title": "Create feature collection layer (Portal item)"
 }

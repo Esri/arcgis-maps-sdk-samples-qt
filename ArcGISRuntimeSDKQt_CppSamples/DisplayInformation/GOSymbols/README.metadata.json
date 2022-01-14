@@ -33,9 +33,9 @@
         "SimpleMarkerSymbol"
     ],
     "snippets": [
-        "GOSymbols.qml",
         "GOSymbols.cpp",
-        "GOSymbols.h"
+        "GOSymbols.h",
+        "GOSymbols.qml"
     ],
     "title": "Add graphics with symbols"
 }

@@ -34,9 +34,9 @@
         "RasterLayer"
     ],
     "snippets": [
-        "RasterFunctionService.qml",
         "RasterFunctionService.cpp",
-        "RasterFunctionService.h"
+        "RasterFunctionService.h",
+        "RasterFunctionService.qml"
     ],
     "title": "Raster function (service)"
 }

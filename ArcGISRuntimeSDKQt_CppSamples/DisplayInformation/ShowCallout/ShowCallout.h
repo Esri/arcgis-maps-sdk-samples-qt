@@ -30,7 +30,7 @@ namespace Esri
 
 class ShowCallout : public QQuickItem
 {
-  Q_OBJECT  
+  Q_OBJECT
 
 public:
   explicit ShowCallout(QQuickItem* parent = nullptr);

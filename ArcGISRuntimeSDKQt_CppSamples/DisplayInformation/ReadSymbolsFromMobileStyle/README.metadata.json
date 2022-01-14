@@ -41,12 +41,12 @@
         "SymbolStyleSearchResultListModel"
     ],
     "snippets": [
-        "ReadSymbolsFromMobileStyle.qml",
         "ReadSymbolsFromMobileStyle.cpp",
         "ReadSymbolsFromMobileStyle.h",
         "SymbolComboBox.qml",
         "SymbolImageProvider.cpp",
-        "SymbolImageProvider.h"
+        "SymbolImageProvider.h",
+        "ReadSymbolsFromMobileStyle.qml"
     ],
     "title": "Read symbols from a mobile style"
 }

@@ -15,7 +15,7 @@
 // [Legal]
 
 import QtQuick 2.6
-import Esri.ArcGISRuntime 100.13
+import Esri.ArcGISRuntime 100.14
 
 Rectangle {
     id: rootRectangle
@@ -31,7 +31,7 @@ Rectangle {
             // Set the focus on SceneView to initially enable keyboard navigation
             forceActiveFocus();
         }
-        
+
         Scene {
             id: scene
             initUrl: "https://www.arcgis.com/home/item.html?id=91a4fafd747a47c7bab7797066cb9272"

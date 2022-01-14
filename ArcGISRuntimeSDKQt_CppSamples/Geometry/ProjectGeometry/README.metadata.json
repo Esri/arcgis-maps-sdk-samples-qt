@@ -28,9 +28,9 @@
         "SpatialReference"
     ],
     "snippets": [
-        "ProjectGeometry.qml",
         "ProjectGeometry.cpp",
-        "ProjectGeometry.h"
+        "ProjectGeometry.h",
+        "ProjectGeometry.qml"
     ],
     "title": "Project"
 }

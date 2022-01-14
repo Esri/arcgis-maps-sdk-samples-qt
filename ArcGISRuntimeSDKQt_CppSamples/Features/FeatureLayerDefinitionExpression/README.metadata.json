@@ -28,9 +28,9 @@
         "ServiceFeatureTable"
     ],
     "snippets": [
-        "FeatureLayerDefinitionExpression.qml",
         "FeatureLayerDefinitionExpression.cpp",
-        "FeatureLayerDefinitionExpression.h"
+        "FeatureLayerDefinitionExpression.h",
+        "FeatureLayerDefinitionExpression.qml"
     ],
     "title": "Filter by definition expression or display filter"
 }

@@ -33,9 +33,9 @@
         "PortalUser"
     ],
     "snippets": [
-        "PortalUserInfo.qml",
         "PortalUserInfo.cpp",
-        "PortalUserInfo.h"
+        "PortalUserInfo.h",
+        "PortalUserInfo.qml"
     ],
     "title": "Access portal user info"
 }

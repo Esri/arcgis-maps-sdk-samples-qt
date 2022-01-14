@@ -40,9 +40,9 @@
         "SymbolStyleSearchResultListModel"
     ],
     "snippets": [
-        "SearchDictionarySymbolStyle.qml",
         "SearchDictionarySymbolStyle.cpp",
-        "SearchDictionarySymbolStyle.h"
+        "SearchDictionarySymbolStyle.h",
+        "SearchDictionarySymbolStyle.qml"
     ],
     "title": "Search dictionary symbol style"
 }

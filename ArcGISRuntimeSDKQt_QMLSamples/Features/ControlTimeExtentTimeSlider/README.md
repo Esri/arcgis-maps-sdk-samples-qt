@@ -12,7 +12,7 @@ When viewing layers that contain a large amount of data with timestamps, you may
 
 ## How to use the sample
 
-Use the slider at the bottom of the map to customize the date range for which you want to view the data. Once the start and end date have been selected, the mapview will update to only show the relevant data that falls in the time extent selected. 
+Use the slider at the bottom of the map to customize the date range for which you want to view the data. Once the start and end date have been selected, the mapview will update to only show the relevant data that falls in the time extent selected.
 Use the play button to step through the data one day at a time. Use the previous and next buttons to manually step through the data in one day increments.
 
 ## How it works
@@ -32,7 +32,7 @@ Use the play button to step through the data one day at a time. Use the previous
 
 ## Additional information
 
-This sample uses [Atlantic hurricane data](https://sampleserver6.arcgisonline.com/arcgis/rest/services/Hurricanes/MapServer) from the National Hurricane Center (NOAA / National Weather Service) and the `TimeSlider` toolkit component which requires the [toolkit](https://github.com/Esri/arcgis-runtime-toolkit-qt) to be cloned and set up locally. For information about setting up the toolkit, see the repository's root README.md [here](https://github.com/Esri/arcgis-runtime-toolkit-qt/blob/main/uitools/README.md).
+This sample uses [Atlantic hurricane data](https://www.arcgis.com/home/item.html?id=49925d814d7e40fb8fa64864ef62d55e) from the National Hurricane Center (NOAA / National Weather Service) and the `TimeSlider` toolkit component which requires the [toolkit](https://github.com/Esri/arcgis-runtime-toolkit-qt) to be cloned and set up locally. For information about setting up the toolkit, see the repository's root README.md [here](https://github.com/Esri/arcgis-runtime-toolkit-qt/blob/main/uitools/README.md).
 
 ## Tags
 

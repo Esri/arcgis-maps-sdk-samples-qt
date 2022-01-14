@@ -15,7 +15,7 @@
 // [Legal]
 
 import QtQuick 2.6
-import Esri.ArcGISRuntime 100.13
+import Esri.ArcGISRuntime 100.14
 
 Rectangle {
     width: 800
@@ -29,7 +29,7 @@ Rectangle {
             // Set the focus on MapView to initially enable keyboard navigation
             forceActiveFocus();
         }
-        
+
         // Nest the Map as a child of the MapView
         Map {
             // Nest the Basemap to add it as the Map's Basemap

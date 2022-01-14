@@ -134,7 +134,7 @@ void UpdateGeometryFeatureService::connectSignals()
       m_selectedFeature = static_cast<Feature*>(identifyResult->geoElements().at(0));
       // Prevent the feature from being deleted along with the identifyResult.
       m_selectedFeature->setParent(this);
-      
+
       // select the item in the result
       m_featureLayer->selectFeature(m_selectedFeature);
       m_featureSelected = true;

@@ -29,9 +29,9 @@
         "SceneView"
     ],
     "snippets": [
-        "FeatureLayerRenderingModeScene.qml",
         "FeatureLayerRenderingModeScene.cpp",
-        "FeatureLayerRenderingModeScene.h"
+        "FeatureLayerRenderingModeScene.h",
+        "FeatureLayerRenderingModeScene.qml"
     ],
     "title": "Feature layer rendering mode (scene)"
 }

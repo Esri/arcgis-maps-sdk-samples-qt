@@ -30,9 +30,9 @@
         "TimeExtent"
     ],
     "snippets": [
-        "QueryOGCAPICQLFilters.qml",
         "QueryOGCAPICQLFilters.cpp",
-        "QueryOGCAPICQLFilters.h"
+        "QueryOGCAPICQLFilters.h",
+        "QueryOGCAPICQLFilters.qml"
     ],
     "title": "Query OGC API with CQL Filters"
 }

@@ -34,9 +34,9 @@
         "GraphicsOverlay"
     ],
     "snippets": [
-        "GODictionaryRenderer.qml",
         "GODictionaryRenderer.cpp",
-        "GODictionaryRenderer.h"
+        "GODictionaryRenderer.h",
+        "GODictionaryRenderer.qml"
     ],
     "title": "Graphics overlay (dictionary renderer)"
 }

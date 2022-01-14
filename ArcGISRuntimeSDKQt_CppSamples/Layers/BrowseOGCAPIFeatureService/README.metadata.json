@@ -29,9 +29,9 @@
         "OgcFeatureServiceInfo"
     ],
     "snippets": [
-        "BrowseOGCAPIFeatureService.qml",
         "BrowseOGCAPIFeatureService.cpp",
-        "BrowseOGCAPIFeatureService.h"
+        "BrowseOGCAPIFeatureService.h",
+        "BrowseOGCAPIFeatureService.qml"
     ],
     "title": "Browse OGC API Feature Service"
 }

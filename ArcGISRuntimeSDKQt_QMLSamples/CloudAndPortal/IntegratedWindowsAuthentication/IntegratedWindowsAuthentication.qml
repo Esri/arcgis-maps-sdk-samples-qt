@@ -17,8 +17,8 @@
 import QtQuick 2.6
 import QtQuick.Controls 2.12
 import QtQuick.Layouts 1.12
-import Esri.ArcGISRuntime 100.13
-import Esri.ArcGISRuntime.Toolkit 100.13
+import Esri.ArcGISRuntime 100.14
+import Esri.ArcGISRuntime.Toolkit 100.14
 
 Rectangle {
     id: rootRectangle
@@ -78,27 +78,48 @@ Rectangle {
     }
 
     Rectangle {
+        id: connectionBox
         anchors {
             margins: 5
             left: parent.left
             top: parent.top
         }
         width: 275
-        height: 150
+        height: 175
         color: "#000000"
         opacity: .70
         radius: 5
 
+        // Prevent mouse interaction from propagating to the MapView
+        MouseArea {
+            anchors.fill: parent
+            onPressed: mouse.accepted = true;
+            onWheel: wheel.accepted = true;
+        }
+
         ColumnLayout {
-            anchors.centerIn: parent
-            width: 250
-            visible: !webmapsList.model
+            id: enterPortalPrompt
+            anchors {
+                fill: parent
+                margins: 5
+            }
+
+            visible: webmapsList.count === 0
+
+            Text {
+                text: qsTr("Enter portal url secured by IWA")
+                color: "white"
+                font {
+                    bold: true
+                    pixelSize: 14
+                }
+            }
+
 
             TextField {
                 id: securePortalUrl
                 Layout.fillWidth: true
                 Layout.margins: 2
-                placeholderText: qsTr("Enter portal url secured by IWA")
                 selectByMouse: true
 
                 background: Rectangle {
@@ -130,9 +151,12 @@ Rectangle {
         }
 
         ColumnLayout {
-            anchors.centerIn: parent
-            width: 250
-            visible: webmapsList.model
+            id: selectMapPrompt
+            anchors {
+                fill: parent
+                margins: 5
+            }
+            visible: webmapsList.count > 0
             Text {
                 id: header
                 text: "Connected to:"
@@ -145,7 +169,9 @@ Rectangle {
 
             Text {
                 id: portalName
+                Layout.fillWidth: true
                 text: securePortalUrl.text
+                horizontalAlignment: Text.AlignLeft
                 elide: Text.ElideMiddle
                 color: "white"
                 font {
@@ -164,7 +190,6 @@ Rectangle {
                 text: qsTr("Load Web Map")
                 Layout.fillWidth: true
                 Layout.margins: 2
-                visible: webmapsList.model
                 onClicked: {
                     const selectedWebmap = webmapsList.model.get(webmapsList.currentIndex);
                     mapView.map = ArcGISRuntimeEnvironment.createObject("Map", {"item": selectedWebmap});
@@ -192,10 +217,10 @@ Rectangle {
 
     Dialog {
         id: webMapMsg
+        anchors.centerIn: parent
         property alias text : textLabel.text
         modal: true
-        x: Math.round(parent.width - width) / 2
-        y: Math.round(parent.height - height) / 2
+
         standardButtons: Dialog.Ok
         title: qsTr("Could not load web map!")
         Text {

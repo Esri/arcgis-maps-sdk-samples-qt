@@ -22,9 +22,9 @@
         "Basemap"
     ],
     "snippets": [
-        "VectorTiledLayerUrl.qml",
         "VectorTiledLayerUrl.cpp",
-        "VectorTiledLayerUrl.h"
+        "VectorTiledLayerUrl.h",
+        "VectorTiledLayerUrl.qml"
     ],
     "title": "Vector tiled layer (URL)"
 }

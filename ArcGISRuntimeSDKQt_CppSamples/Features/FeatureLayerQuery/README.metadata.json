@@ -22,9 +22,9 @@
         "ServiceFeatureTable"
     ],
     "snippets": [
-        "FeatureLayerQuery.qml",
         "FeatureLayerQuery.cpp",
-        "FeatureLayerQuery.h"
+        "FeatureLayerQuery.h",
+        "FeatureLayerQuery.qml"
     ],
     "title": "Feature layer query"
 }

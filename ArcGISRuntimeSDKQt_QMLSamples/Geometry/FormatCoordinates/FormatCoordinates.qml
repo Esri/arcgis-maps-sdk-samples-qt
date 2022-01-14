@@ -18,12 +18,12 @@ import QtQuick 2.6
 import QtQuick.Controls 2.2
 import QtQuick.Layouts 1.3
 import QtQuick.Window 2.2
-import Esri.ArcGISRuntime 100.13
+import Esri.ArcGISRuntime 100.14
 
 Rectangle {
     width: 800
     height: 600
-    
+
     readonly property int labelWidth: 100
     readonly property int coordinateTextWidth: 200
     readonly property int fontPixelSize: 14
@@ -85,7 +85,7 @@ Rectangle {
         }
 
         onMouseClicked: {  // on MapView
-            handleLocationUpdate(mouse.mapPoint);   
+            handleLocationUpdate(mouse.mapPoint);
         }
     }
 

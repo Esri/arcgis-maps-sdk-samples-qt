@@ -34,9 +34,9 @@
         "Stop"
     ],
     "snippets": [
-        "FindRoute.qml",
         "FindRoute.cpp",
-        "FindRoute.h"
+        "FindRoute.h",
+        "FindRoute.qml"
     ],
     "title": "Find route"
 }

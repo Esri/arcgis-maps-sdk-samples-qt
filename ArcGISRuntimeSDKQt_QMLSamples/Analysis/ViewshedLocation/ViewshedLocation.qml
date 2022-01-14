@@ -17,20 +17,20 @@
 import QtQuick 2.6
 import QtQuick.Controls 2.2
 import Esri.ArcGISExtras 1.1
-import Esri.ArcGISRuntime 100.13
+import Esri.ArcGISRuntime 100.14
 
 Rectangle {
     id: viewshedSample
     clip: true
     width: 800
     height: 600
-    
+
     property bool calculating: false
 
     SceneView {
         id: sceneView
         anchors.fill: parent
-        
+
         focus: true
         Component.onCompleted: {
             // Set the focus on SceneView to initially enable keyboard navigation

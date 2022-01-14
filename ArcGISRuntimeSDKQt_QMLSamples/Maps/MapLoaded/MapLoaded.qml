@@ -15,12 +15,12 @@
 // [Legal]
 
 import QtQuick 2.6
-import Esri.ArcGISRuntime 100.13
+import Esri.ArcGISRuntime 100.14
 
 Rectangle {
     width: 800
     height: 600
-    
+
     property string statusText
 
     // Create MapView that contains a Map

@@ -24,9 +24,9 @@
         "ServiceFeatureTable"
     ],
     "snippets": [
-        "AddFeaturesFeatureService.qml",
         "AddFeaturesFeatureService.cpp",
-        "AddFeaturesFeatureService.h"
+        "AddFeaturesFeatureService.h",
+        "AddFeaturesFeatureService.qml"
     ],
     "title": "Add features (feature service)"
 }

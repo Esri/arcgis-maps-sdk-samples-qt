@@ -19,9 +19,9 @@
         "ArcGISMapImageLayer"
     ],
     "snippets": [
-        "ArcGISMapImageLayerUrl.qml",
         "ArcGISMapImageLayerUrl.cpp",
-        "ArcGISMapImageLayerUrl.h"
+        "ArcGISMapImageLayerUrl.h",
+        "ArcGISMapImageLayerUrl.qml"
     ],
     "title": "ArcGIS map image layer (URL)"
 }

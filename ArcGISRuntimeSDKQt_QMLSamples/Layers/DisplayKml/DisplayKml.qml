@@ -17,7 +17,7 @@
 import QtQuick 2.6
 import QtQuick.Controls 2.2
 import QtQuick.Window 2.3
-import Esri.ArcGISRuntime 100.13
+import Esri.ArcGISRuntime 100.14
 import Esri.ArcGISExtras 1.1
 
 Rectangle {
@@ -26,7 +26,7 @@ Rectangle {
     width: 800
     height: 600
 
-    
+
 
     SceneView {
         id: sceneView

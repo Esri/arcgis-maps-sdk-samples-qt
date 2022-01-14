@@ -29,9 +29,9 @@
         "SceneView"
     ],
     "snippets": [
-        "RealisticLightingAndShadows.qml",
         "RealisticLightingAndShadows.cpp",
-        "RealisticLightingAndShadows.h"
+        "RealisticLightingAndShadows.h",
+        "RealisticLightingAndShadows.qml"
     ],
     "title": "Realistic lighting and shadows"
 }

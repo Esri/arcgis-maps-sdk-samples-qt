@@ -1,6 +1,6 @@
 <RCC>
     <qresource prefix="/Samples/Routing/NavigateRoute">
-        <file alias="sample.json">README.metadata.json</file>        
+        <file alias="sample.json">README.metadata.json</file>
         <file>NavigateRoute.qml</file>
         <file>NavigateRouteSpeaker.h</file>
         <file>NavigateRouteSpeaker.cpp</file>

@@ -30,11 +30,11 @@
         "Map"
     ],
     "snippets": [
-        "ManageOperationalLayers.qml",
+        "ManageOperationalLayers.cpp",
+        "ManageOperationalLayers.h",
         "DrawOrderLayerListModel.cpp",
         "DrawOrderLayerListModel.h",
-        "ManageOperationalLayers.cpp",
-        "ManageOperationalLayers.h"
+        "ManageOperationalLayers.qml"
     ],
     "title": "Manage operational layers"
 }

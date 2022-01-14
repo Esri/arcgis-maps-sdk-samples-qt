@@ -40,7 +40,7 @@ public:
   ~DistanceMeasurementAnalysis() override = default;
 
   void componentComplete() override;
-  static void init();  
+  static void init();
   Q_INVOKABLE void setUnits(const QString& unitName);
 
 signals:

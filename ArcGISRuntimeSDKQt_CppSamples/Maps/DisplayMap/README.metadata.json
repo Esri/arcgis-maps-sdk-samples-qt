@@ -21,9 +21,9 @@
         "MapView"
     ],
     "snippets": [
-        "DisplayMap.qml",
         "DisplayMap.cpp",
-        "DisplayMap.h"
+        "DisplayMap.h",
+        "DisplayMap.qml"
     ],
     "title": "Display map"
 }

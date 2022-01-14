@@ -21,9 +21,9 @@
         "MapView"
     ],
     "snippets": [
-        "ChangeBasemap.qml",
         "ChangeBasemap.cpp",
-        "ChangeBasemap.h"
+        "ChangeBasemap.h",
+        "ChangeBasemap.qml"
     ],
     "title": "Change basemap"
 }

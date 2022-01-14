@@ -35,9 +35,9 @@
         "SimpleRenderer::sceneProperties"
     ],
     "snippets": [
-        "ScenePropertiesExpressions.qml",
         "ScenePropertiesExpressions.cpp",
-        "ScenePropertiesExpressions.h"
+        "ScenePropertiesExpressions.h",
+        "ScenePropertiesExpressions.qml"
     ],
     "title": "Scene properties expressions"
 }

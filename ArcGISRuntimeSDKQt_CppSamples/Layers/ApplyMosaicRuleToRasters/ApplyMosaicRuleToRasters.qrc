@@ -1,6 +1,6 @@
 <RCC>
     <qresource prefix="/Samples/Layers/ApplyMosaicRuleToRasters">
-        <file alias="sample.json">README.metadata.json</file>        
+        <file alias="sample.json">README.metadata.json</file>
         <file>ApplyMosaicRuleToRasters.qml</file>
         <file>ApplyMosaicRuleToRasters.h</file>
         <file>ApplyMosaicRuleToRasters.cpp</file>

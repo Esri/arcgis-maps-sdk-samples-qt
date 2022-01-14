@@ -24,9 +24,9 @@
         "SceneView"
     ],
     "snippets": [
-        "BasicSceneView.qml",
         "BasicSceneView.cpp",
-        "BasicSceneView.h"
+        "BasicSceneView.h",
+        "BasicSceneView.qml"
     ],
     "title": "Display a scene"
 }

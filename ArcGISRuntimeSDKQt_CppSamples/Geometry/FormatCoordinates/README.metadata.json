@@ -28,9 +28,9 @@
         "UtmConversionMode"
     ],
     "snippets": [
-        "FormatCoordinates.qml",
         "FormatCoordinates.cpp",
-        "FormatCoordinates.h"
+        "FormatCoordinates.h",
+        "FormatCoordinates.qml"
     ],
     "title": "Format coordinates"
 }

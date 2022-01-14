@@ -31,9 +31,9 @@
         "TileCache"
     ],
     "snippets": [
-        "TileCacheLayer.qml",
         "TileCacheLayer.cpp",
-        "TileCacheLayer.h"
+        "TileCacheLayer.h",
+        "TileCacheLayer.qml"
     ],
     "title": "ArcGIS tiled layer (tile cache)"
 }

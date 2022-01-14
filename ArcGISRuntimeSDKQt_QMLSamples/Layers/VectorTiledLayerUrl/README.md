@@ -14,7 +14,7 @@ Use the drop down menu to load different vector tile basemaps.
 
 ## How it works
 
-1. An `ArcGISVectorTiledLayer` is constructed with an ArcGIS Online service URL 
+1. An `ArcGISVectorTiledLayer` is constructed with an ArcGIS Online service URL
 2. The layer instance is added to the `Map`
 
 ## Relevant API

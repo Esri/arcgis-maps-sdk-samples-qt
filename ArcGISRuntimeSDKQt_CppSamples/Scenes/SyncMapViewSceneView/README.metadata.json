@@ -37,9 +37,9 @@
         "viewpointChanged"
     ],
     "snippets": [
-        "SyncMapViewSceneView.qml",
         "SyncMapViewSceneView.cpp",
-        "SyncMapViewSceneView.h"
+        "SyncMapViewSceneView.h",
+        "SyncMapViewSceneView.qml"
     ],
     "title": "Sync map and scene views"
 }

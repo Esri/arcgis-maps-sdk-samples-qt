@@ -60,7 +60,7 @@ namespace
 FeatureLayerDictionaryRenderer::FeatureLayerDictionaryRenderer(QQuickItem* parent) :
   QQuickItem(parent),
   m_dataPath(defaultDataPath() + "/ArcGIS/Runtime/Data")
-{ 
+{
 }
 
 FeatureLayerDictionaryRenderer::~FeatureLayerDictionaryRenderer() = default;
@@ -73,7 +73,7 @@ void FeatureLayerDictionaryRenderer::init()
 
 void FeatureLayerDictionaryRenderer::componentComplete()
 {
-  QQuickItem::componentComplete();  
+  QQuickItem::componentComplete();
 
   m_mapView = findChild<MapQuickView*>("mapView");
   // Create a map using the topo basemap

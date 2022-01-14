@@ -22,9 +22,9 @@
         "SimpleMarkerSymbol"
     ],
     "snippets": [
-        "Simple_Marker_Symbol.qml",
         "Simple_Marker_Symbol.cpp",
-        "Simple_Marker_Symbol.h"
+        "Simple_Marker_Symbol.h",
+        "Simple_Marker_Symbol.qml"
     ],
     "title": "Simple marker symbol"
 }

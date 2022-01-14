@@ -17,7 +17,7 @@
 import QtQuick 2.6
 import QtQuick.Controls 2.2
 import QtPositioning 5.6
-import Esri.ArcGISRuntime.Toolkit 100.13
+import Esri.ArcGISRuntime.Toolkit 100.14
 import Esri.Samples 1.0
 
 FindPlaceSample {
@@ -25,7 +25,7 @@ FindPlaceSample {
     clip: true
     width: 800
     height: 600
-    
+
     property bool isSearchingLocation: false
     property bool searchByExtent: false
 
