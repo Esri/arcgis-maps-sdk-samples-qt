@@ -8,7 +8,7 @@
     "keywords": [
         "SQL",
         "definition expression",
-		"display filter",
+        "display filter",
         "filter",
         "limit data",
         "query",
@@ -23,7 +23,7 @@
     ],
     "relevant_apis": [
         "DefinitionExpression",
-		"DisplayFilter",
+        "DisplayFilter",
         "FeatureLayer",
         "ServiceFeatureTable"
     ],

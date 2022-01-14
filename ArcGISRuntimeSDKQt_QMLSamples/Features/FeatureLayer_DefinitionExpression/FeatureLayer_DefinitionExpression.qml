@@ -79,7 +79,7 @@ Rectangle {
 
         Label {
 
-            text: "Current feature count: " + updateFeatureCount();
+            text: "Current feature count: " + queryFeatureCountInCurrentExtent();
         }
         // button to apply a definition expression
         Button {
@@ -96,15 +96,12 @@ Rectangle {
             width: 200
             enabled: featureTable.loadStatus === Enums.LoadStatusLoaded
             onClicked: {
-                if (featureLayer.loadStatus === Enums.LoadStatusLoaded)
-                {
-                    var displayFilter = ArcGISRuntimeEnvironment.createObject("DisplayFilter", {name: "Damaged Trees", filterId: "Damaged Trees", whereClause: "req_Type = \'Tree Maintenance or Damage\'"});
-                    var displayFilterDefintionVar = ArcGISRuntimeEnvironment.createObject("ManualDisplayFilterDefinition");
-                    displayFilterDefintionVar.availableFilters.append(displayFilter);
-                    displayFilterDefintionVar.activeFilter = displayFilter;
+                const displayFilter = ArcGISRuntimeEnvironment.createObject("DisplayFilter", {name: "Damaged Trees", filterId: "Damaged Trees", whereClause: "req_Type = \'Tree Maintenance or Damage\'"});
+                const displayFilterDefintionVar = ArcGISRuntimeEnvironment.createObject("ManualDisplayFilterDefinition");
+                displayFilterDefintionVar.availableFilters.append(displayFilter);
+                displayFilterDefintionVar.activeFilter = displayFilter;
 
-                    featureLayer.displayFilterDefinition = displayFilterDefintionVar;
-                }
+                featureLayer.displayFilterDefinition = displayFilterDefintionVar;
             }
         }
 
@@ -116,17 +113,16 @@ Rectangle {
             onClicked: {
                 featureLayer.definitionExpression = "";
 
-                var displayFilter = ArcGISRuntimeEnvironment.createObject("DisplayFilter", {id: "No Filter", whereClause: "1=1"});
-                var displayFilterDefintionVar = ArcGISRuntimeEnvironment.createObject("ManualDisplayFilterDefinition");
-                displayFilterDefintionVar.activeFilter =  displayFilter;
+                const displayFilter = ArcGISRuntimeEnvironment.createObject("DisplayFilter", {id: "No Filter", whereClause: "1=1"});
+                const displayFilterDefintionVar = ArcGISRuntimeEnvironment.createObject("ManualDisplayFilterDefinition");
+                displayFilterDefintionVar.activeFilter = displayFilter;
                 displayFilterDefintionVar.availableFilters.append(displayFilter);
                 featureLayer.displayFilterDefinition = displayFilterDefintionVar;
             }
         }
     }
 
-    function updateFeatureCount()
-    {
+    function queryFeatureCountInCurrentExtent() {
         const queryParams = ArcGISRuntimeEnvironment.createObject(
                               "QueryParameters", {
                                   "geometry": mv.currentViewpointExtent.extent

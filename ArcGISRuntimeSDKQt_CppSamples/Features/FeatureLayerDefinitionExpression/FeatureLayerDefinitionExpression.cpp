@@ -20,18 +20,19 @@
 
 #include "FeatureLayerDefinitionExpression.h"
 
-#include "Map.h"
-#include "MapQuickView.h"
+#include "Basemap.h"
+#include "DisplayFilter.h"
+#include "DisplayFilterDefinition.h"
 #include "FeatureLayer.h"
 #include "GeodatabaseFeatureTable.h"
-#include "Basemap.h"
+#include "ManualDisplayFilterDefinition.h"
+#include "Map.h"
+#include "MapQuickView.h"
+#include "Point.h"
 #include "SpatialReference.h"
 #include "ServiceFeatureTable.h"
 #include "Viewpoint.h"
-#include "Point.h"
-#include "DisplayFilter.h"
-#include "DisplayFilterDefinition.h"
-#include "ManualDisplayFilterDefinition.h"
+
 #include <QUrl>
 
 using namespace Esri::ArcGISRuntime;
@@ -97,21 +98,21 @@ void FeatureLayerDefinitionExpression::setDefExpression(const QString& whereClau
 {
   // In QML, "req_type = \'Tree Maintenance or Damage\'"
   m_featureLayer->setDefinitionExpression(whereClause);
-  updateFeatureCount();
+  queryFeatureCountInCurrentExtent();
 }
 
 void FeatureLayerDefinitionExpression::setDisplayFilter(const QString& whereClause)
 {
-  auto displayFilter = new DisplayFilter("Damaged Trees", whereClause);
-  QList<DisplayFilter*> available_filters{displayFilter};
+  auto displayFilter = new DisplayFilter("Damaged Trees", whereClause, this);
+  const QList<DisplayFilter*> available_filters{displayFilter};
 
-  ManualDisplayFilterDefinition* display_filter_defintion = new ManualDisplayFilterDefinition(displayFilter, available_filters);
+  ManualDisplayFilterDefinition* display_filter_defintion = new ManualDisplayFilterDefinition(displayFilter, available_filters, this);
   m_featureLayer->setDisplayFilterDefinition(display_filter_defintion);
 
-  updateFeatureCount();
+  queryFeatureCountInCurrentExtent();
 }
 
-void FeatureLayerDefinitionExpression::updateFeatureCount()
+void FeatureLayerDefinitionExpression::queryFeatureCountInCurrentExtent()
 {  
   QueryParameters parameters;
   parameters.setGeometry(m_mapView->currentViewpoint(ViewpointType::BoundingGeometry).targetGeometry());

@@ -45,7 +45,7 @@ public:
   static void init();
   Q_INVOKABLE void setDefExpression(const QString& whereClause);
   Q_INVOKABLE void setDisplayFilter(const QString& whereClause);
-  Q_INVOKABLE void updateFeatureCount();
+  void queryFeatureCountInCurrentExtent();
 
 signals:
   void layerInitializedChanged();
