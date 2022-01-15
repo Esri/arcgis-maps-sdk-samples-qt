@@ -35,7 +35,7 @@ class FeatureLayerDefinitionExpression : public QQuickItem
   Q_OBJECT
 
   Q_PROPERTY(bool layerInitialized READ layerInitialized NOTIFY layerInitializedChanged)
-  Q_PROPERTY(int currentFeatureCount READ currentFeatureCount_ NOTIFY currentFeatureCountChanged)
+  Q_PROPERTY(int currentFeatureCount READ currentFeatureCount NOTIFY currentFeatureCountChanged)
 
 public:
   explicit FeatureLayerDefinitionExpression(QQuickItem* parent = nullptr);
@@ -53,7 +53,7 @@ signals:
 
 private:
   bool layerInitialized() const;
-  int currentFeatureCount_() const;
+  int currentFeatureCount() const;
 
 private:
   Esri::ArcGISRuntime::Map* m_map = nullptr;

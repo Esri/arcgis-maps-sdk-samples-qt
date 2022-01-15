@@ -89,7 +89,7 @@ bool FeatureLayerDefinitionExpression::layerInitialized() const
   return m_initialized;
 }
 
-int FeatureLayerDefinitionExpression::currentFeatureCount_() const
+int FeatureLayerDefinitionExpression::currentFeatureCount() const
 {
   return m_currentFeatureCount;
 }
