@@ -98,12 +98,16 @@ void FilterByDefinitionExpressionOrDisplayFilter::setDefExpression(const QString
 {
   // In QML, "req_type = \'Tree Maintenance or Damage\'"
   m_featureLayer->setDefinitionExpression(whereClause);
+
+  // Feature count in the extent should not change with different definition expressions.
+  // If the extent changes and user clicks the button to reapply definition expression
+  // the feature count number will update to reflect the number of feature count in the new extent
   queryFeatureCountInCurrentExtent();
 }
 
 void FilterByDefinitionExpressionOrDisplayFilter::setDisplayFilter(const QString& whereClause)
 {
-  auto displayFilter = new DisplayFilter("Damaged Trees", whereClause, this);
+  DisplayFilter* displayFilter = new DisplayFilter("Damaged Trees", whereClause, this);
   const QList<DisplayFilter*> available_filters{displayFilter};
 
   ManualDisplayFilterDefinition* display_filter_defintion = new ManualDisplayFilterDefinition(displayFilter, available_filters, this);

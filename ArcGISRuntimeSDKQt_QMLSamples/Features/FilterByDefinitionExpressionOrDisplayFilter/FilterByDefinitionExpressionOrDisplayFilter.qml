@@ -78,8 +78,7 @@ Rectangle {
         spacing: 5
 
         Label {
-
-            text: "Current feature count: " + queryFeatureCountInCurrentExtent();
+            text: "Current feature count: " + featureTable.queryFeatureCountResult;
         }
         // button to apply a definition expression
         Button {
@@ -102,6 +101,8 @@ Rectangle {
                 displayFilterDefintionVar.activeFilter = displayFilter;
 
                 featureLayer.displayFilterDefinition = displayFilterDefintionVar;
+
+                queryFeatureCountInCurrentExtent();
             }
         }
 
@@ -118,6 +119,8 @@ Rectangle {
                 displayFilterDefintionVar.activeFilter = displayFilter;
                 displayFilterDefintionVar.availableFilters.append(displayFilter);
                 featureLayer.displayFilterDefinition = displayFilterDefintionVar;
+
+                queryFeatureCountInCurrentExtent();
             }
         }
     }
