@@ -51,7 +51,6 @@ FilterByDefinitionExpressionOrDisplayFilterSample {
         spacing: 5
 
         Label {
-
             text: "Current feature count: " + definitionExpressionOrDisplayFilterSample.currentFeatureCount
         }
 
