@@ -1,4 +1,4 @@
-// [WriteFile Name=FeatureLayerDefinitionExpression, Category=Features]
+// [WriteFile Name=FilterByDefinitionExpressionOrDisplayFilter, Category=Features]
 // [Legal]
 // Copyright 2016 Esri.
 
@@ -14,8 +14,8 @@
 // limitations under the License.
 // [Legal]
 
-#ifndef FEATURE_LAYER_DEFINITION_EXPRESSION_H
-#define FEATURE_LAYER_DEFINITION_EXPRESSION_H
+#ifndef FILTER_BY_DEFINITION_EXPRESSION_OR_DISPLAY_FILTER_H
+#define FILTER_BY_DEFINITION_EXPRESSION_OR_DISPLAY_FILTER_H
 
 namespace Esri
 {
@@ -30,7 +30,7 @@ namespace Esri
 
 #include <QQuickItem>
 
-class FeatureLayerDefinitionExpression : public QQuickItem
+class FilterByDefinitionExpressionOrDisplayFilter : public QQuickItem
 {
   Q_OBJECT
 
@@ -38,14 +38,13 @@ class FeatureLayerDefinitionExpression : public QQuickItem
   Q_PROPERTY(int currentFeatureCount READ currentFeatureCount NOTIFY currentFeatureCountChanged)
 
 public:
-  explicit FeatureLayerDefinitionExpression(QQuickItem* parent = nullptr);
-  ~FeatureLayerDefinitionExpression() override;
+  explicit FilterByDefinitionExpressionOrDisplayFilter(QQuickItem* parent = nullptr);
+  ~FilterByDefinitionExpressionOrDisplayFilter() override;
 
   void componentComplete() override;
   static void init();
   Q_INVOKABLE void setDefExpression(const QString& whereClause);
   Q_INVOKABLE void setDisplayFilter(const QString& whereClause);
-  void queryFeatureCountInCurrentExtent();
 
 signals:
   void layerInitializedChanged();
@@ -54,6 +53,7 @@ signals:
 private:
   bool layerInitialized() const;
   int currentFeatureCount() const;
+  void queryFeatureCountInCurrentExtent();
 
 private:
   Esri::ArcGISRuntime::Map* m_map = nullptr;
@@ -64,5 +64,5 @@ private:
   int m_currentFeatureCount = 0;
 };
 
-#endif // FEATURE_LAYER_DEFINITION_EXPRESSION_H
+#endif // FILTER_BY_DEFINITION_EXPRESSION_OR_DISPLAY_FILTER_H
 

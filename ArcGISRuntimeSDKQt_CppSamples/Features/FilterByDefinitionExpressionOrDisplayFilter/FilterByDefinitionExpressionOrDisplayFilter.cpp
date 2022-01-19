@@ -1,4 +1,4 @@
-// [WriteFile Name=FeatureLayerDefinitionExpression, Category=Features]
+// [WriteFile Name=FilterByDefinitionExpressionOrDisplayFilter, Category=Features]
 // [Legal]
 // Copyright 2016 Esri.
 
@@ -18,7 +18,7 @@
 #include "pch.hpp"
 #endif // PCH_BUILD
 
-#include "FeatureLayerDefinitionExpression.h"
+#include "FilterByDefinitionExpressionOrDisplayFilter.h"
 
 #include "Basemap.h"
 #include "DisplayFilter.h"
@@ -37,20 +37,20 @@
 
 using namespace Esri::ArcGISRuntime;
 
-FeatureLayerDefinitionExpression::FeatureLayerDefinitionExpression(QQuickItem* parent) :
+FilterByDefinitionExpressionOrDisplayFilter::FilterByDefinitionExpressionOrDisplayFilter(QQuickItem* parent) :
   QQuickItem(parent)
 {
 }
 
-FeatureLayerDefinitionExpression::~FeatureLayerDefinitionExpression() = default;
+FilterByDefinitionExpressionOrDisplayFilter::~FilterByDefinitionExpressionOrDisplayFilter() = default;
 
-void FeatureLayerDefinitionExpression::init()
+void FilterByDefinitionExpressionOrDisplayFilter::init()
 {
   qmlRegisterType<MapQuickView>("Esri.Samples", 1, 0, "MapView");
-  qmlRegisterType<FeatureLayerDefinitionExpression>("Esri.Samples", 1, 0, "FeatureLayerDefinitionExpressionSample");
+  qmlRegisterType<FilterByDefinitionExpressionOrDisplayFilter>("Esri.Samples", 1, 0, "FilterByDefinitionExpressionOrDisplayFilterSample");
 }
 
-void FeatureLayerDefinitionExpression::componentComplete()
+void FilterByDefinitionExpressionOrDisplayFilter::componentComplete()
 {
   QQuickItem::componentComplete();
 
@@ -77,6 +77,9 @@ void FeatureLayerDefinitionExpression::componentComplete()
   connect(m_featureLayer, &FeatureLayer::loadStatusChanged, this, [this](LoadStatus loadStatus)
   {
     loadStatus == LoadStatus::Loaded ? m_initialized = true : m_initialized = false;
+
+    // Initalize the feature count when the feature layer first loads
+    queryFeatureCountInCurrentExtent();
     emit layerInitializedChanged();
   });
 
@@ -84,26 +87,30 @@ void FeatureLayerDefinitionExpression::componentComplete()
   m_map->operationalLayers()->append(m_featureLayer);
 }
 
-bool FeatureLayerDefinitionExpression::layerInitialized() const
+bool FilterByDefinitionExpressionOrDisplayFilter::layerInitialized() const
 {
   return m_initialized;
 }
 
-int FeatureLayerDefinitionExpression::currentFeatureCount() const
+int FilterByDefinitionExpressionOrDisplayFilter::currentFeatureCount() const
 {
   return m_currentFeatureCount;
 }
 
-void FeatureLayerDefinitionExpression::setDefExpression(const QString& whereClause)
+void FilterByDefinitionExpressionOrDisplayFilter::setDefExpression(const QString& whereClause)
 {
   // In QML, "req_type = \'Tree Maintenance or Damage\'"
   m_featureLayer->setDefinitionExpression(whereClause);
+
+  // Feature count in the extent should not change with different definition expressions.
+  // If the extent changes and user clicks the button to reapply definition expression
+  // the feature count number will update to reflect the number of feature count in the new extent
   queryFeatureCountInCurrentExtent();
 }
 
-void FeatureLayerDefinitionExpression::setDisplayFilter(const QString& whereClause)
+void FilterByDefinitionExpressionOrDisplayFilter::setDisplayFilter(const QString& whereClause)
 {
-  auto displayFilter = new DisplayFilter("Damaged Trees", whereClause, this);
+  DisplayFilter* displayFilter = new DisplayFilter("Damaged Trees", whereClause, this);
   const QList<DisplayFilter*> available_filters{displayFilter};
 
   ManualDisplayFilterDefinition* display_filter_defintion = new ManualDisplayFilterDefinition(displayFilter, available_filters, this);
@@ -112,7 +119,7 @@ void FeatureLayerDefinitionExpression::setDisplayFilter(const QString& whereClau
   queryFeatureCountInCurrentExtent();
 }
 
-void FeatureLayerDefinitionExpression::queryFeatureCountInCurrentExtent()
+void FilterByDefinitionExpressionOrDisplayFilter::queryFeatureCountInCurrentExtent()
 {  
   QueryParameters parameters;
   parameters.setGeometry(m_mapView->currentViewpoint(ViewpointType::BoundingGeometry).targetGeometry());

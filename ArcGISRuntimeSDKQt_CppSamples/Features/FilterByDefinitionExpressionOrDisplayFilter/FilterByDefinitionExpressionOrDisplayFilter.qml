@@ -1,4 +1,4 @@
-// [WriteFile Name=FeatureLayerDefinitionExpression, Category=Features]
+// [WriteFile Name=FilterByDefinitionExpressionOrDisplayFilter, Category=Features]
 // [Legal]
 // Copyright 2016 Esri.
 
@@ -20,8 +20,8 @@ import QtQuick.Controls 2.2
 import Esri.Samples 1.0
 //! [Import the namespace that has QML type that was registered in Cpp]
 
-FeatureLayerDefinitionExpressionSample {
-    id: definitionExpressionSample
+FilterByDefinitionExpressionOrDisplayFilterSample {
+    id: definitionExpressionOrDisplayFilterSample
     width: 800
     height: 600
 
@@ -51,41 +51,40 @@ FeatureLayerDefinitionExpressionSample {
         spacing: 5
 
         Label {
-
-            text: "Current feature count: " + definitionExpressionSample.currentFeatureCount
+            text: "Current feature count: " + definitionExpressionOrDisplayFilterSample.currentFeatureCount
         }
 
         // button to apply a definition expression
         Button {
             text: "Apply Expression"
-            enabled: definitionExpressionSample.layerInitialized
+            enabled: definitionExpressionOrDisplayFilterSample.layerInitialized
             width: 200
             onClicked: {
                 // Call C++ invokable function to set the definition expression
-                definitionExpressionSample.setDefExpression("req_type = \'Tree Maintenance or Damage\'");
+                definitionExpressionOrDisplayFilterSample.setDefExpression("req_type = \'Tree Maintenance or Damage\'");
             }
         }
 
         // button to apply a display filter
         Button {
             text: "Apply Filter"
-            enabled: definitionExpressionSample.layerInitialized
+            enabled: definitionExpressionOrDisplayFilterSample.layerInitialized
             width: 200
             onClicked: {
                 // Call C++ invokable function to set the display filter
-                definitionExpressionSample.setDisplayFilter("req_type = \'Tree Maintenance or Damage\'");
+                definitionExpressionOrDisplayFilterSample.setDisplayFilter("req_type = \'Tree Maintenance or Damage\'");
             }
         }
 
         // button to reset the definition expression
         Button {
             text: "Reset"
-            enabled: definitionExpressionSample.layerInitialized
+            enabled: definitionExpressionOrDisplayFilterSample.layerInitialized
             width: 200
             onClicked: {
                 // Call C++ invokable function to reset the definition expression and display filter
-                definitionExpressionSample.setDefExpression("");
-                definitionExpressionSample.setDisplayFilter("");
+                definitionExpressionOrDisplayFilterSample.setDefExpression("");
+                definitionExpressionOrDisplayFilterSample.setDisplayFilter("");
             }
         }
     }
