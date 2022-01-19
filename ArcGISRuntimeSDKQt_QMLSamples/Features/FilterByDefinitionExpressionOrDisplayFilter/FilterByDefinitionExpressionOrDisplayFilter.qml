@@ -48,6 +48,11 @@ Rectangle {
                 ServiceFeatureTable {
                     id: featureTable
                     url: "https://sampleserver6.arcgisonline.com/arcgis/rest/services/SF311/FeatureServer/0"
+
+                    // Initalize the feature count when the feature layer first loads
+                    onLoadStatusChanged: {
+                        queryFeatureCountInCurrentExtent();
+                    }
                 }
             }
         }
@@ -66,7 +71,7 @@ Rectangle {
     }
     //! [Rectangle-mapview-map-viewpoint]
 
-    Row {
+    Column {
         id: expressionRow
         anchors {
             bottom: parent.bottom
@@ -77,22 +82,60 @@ Rectangle {
         }
         spacing: 5
 
+        Label {
+            text: "Current feature count: " + featureTable.queryFeatureCountResult;
+        }
         // button to apply a definition expression
         Button {
             text: "Apply Expression"
+            width: 200
             enabled: featureTable.loadStatus === Enums.LoadStatusLoaded
             onClicked: {
                 featureLayer.definitionExpression = "req_Type = \'Tree Maintenance or Damage\'"
+            }
+        }
+        // button to apply display filter
+        Button {
+            text: "Apply Display Filter"
+            width: 200
+            enabled: featureTable.loadStatus === Enums.LoadStatusLoaded
+            onClicked: {
+                const displayFilter = ArcGISRuntimeEnvironment.createObject("DisplayFilter", {name: "Damaged Trees", filterId: "Damaged Trees", whereClause: "req_Type = \'Tree Maintenance or Damage\'"});
+                const displayFilterDefintionVar = ArcGISRuntimeEnvironment.createObject("ManualDisplayFilterDefinition");
+                displayFilterDefintionVar.availableFilters.append(displayFilter);
+                displayFilterDefintionVar.activeFilter = displayFilter;
+
+                featureLayer.displayFilterDefinition = displayFilterDefintionVar;
+
+                queryFeatureCountInCurrentExtent();
             }
         }
 
         // button to reset the definition expression
         Button {
             text: "Reset"
+            width: 200
             enabled: featureTable.loadStatus === Enums.LoadStatusLoaded
             onClicked: {
                 featureLayer.definitionExpression = "";
+
+                const displayFilter = ArcGISRuntimeEnvironment.createObject("DisplayFilter", {id: "No Filter", whereClause: "1=1"});
+                const displayFilterDefintionVar = ArcGISRuntimeEnvironment.createObject("ManualDisplayFilterDefinition");
+                displayFilterDefintionVar.activeFilter = displayFilter;
+                displayFilterDefintionVar.availableFilters.append(displayFilter);
+                featureLayer.displayFilterDefinition = displayFilterDefintionVar;
+
+                queryFeatureCountInCurrentExtent();
             }
         }
+    }
+
+    function queryFeatureCountInCurrentExtent() {
+        const queryParams = ArcGISRuntimeEnvironment.createObject(
+                              "QueryParameters", {
+                                  "geometry": mv.currentViewpointExtent.extent
+                              });
+
+        featureTable.queryFeatureCount(queryParams);
     }
 }

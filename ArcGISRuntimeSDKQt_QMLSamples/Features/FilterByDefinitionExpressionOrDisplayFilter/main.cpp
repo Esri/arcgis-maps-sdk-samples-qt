@@ -25,7 +25,7 @@ int main(int argc, char *argv[])
 {
     QGuiApplication::setAttribute(Qt::AA_EnableHighDpiScaling);
     QGuiApplication app(argc, argv);
-    app.setApplicationName("FeatureLayer_DefinitionExpression - QML");
+    app.setApplicationName("FilterByDefinitionExpressionOrDisplayFilter - QML");
 
   // Use of Esri location services, including basemaps and geocoding,
   // requires authentication using either an ArcGIS identity or an API Key.
@@ -65,7 +65,7 @@ int main(int argc, char *argv[])
     view.engine()->addImportPath(arcGISRuntimeImportPath);
 
     // Set the source
-    view.setSource(QUrl("qrc:/Samples/Features/FeatureLayer_DefinitionExpression/FeatureLayer_DefinitionExpression.qml"));
+    view.setSource(QUrl("qrc:/Samples/Features/FilterByDefinitionExpressionOrDisplayFilter/FilterByDefinitionExpressionOrDisplayFilter.qml"));
 
     view.show();
 
