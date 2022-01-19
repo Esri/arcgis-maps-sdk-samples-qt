@@ -24,6 +24,7 @@
 #include "CodedValueDomain.h"
 #include "ContingentValue.h"
 #include "ContingentCodedValue.h"
+#include "ContingentRangeValue.h"
 #include "ContingentValuesDefinition.h"
 #include "ContingentValuesResult.h"
 #include "Domain.h"
@@ -116,18 +117,135 @@ void ContingentValues::setMapView(MapQuickView* mapView)
   emit mapViewChanged();
 }
 
-void ContingentValues::createNewNest(const QVariantMap attributes)
+QStringList ContingentValues::getContingentValues(QString field, QString fieldGroupName)
 {
-  if (m_gdbFeatureTable->loadStatus() != LoadStatus::Loaded)
+  if (m_geodatabase->loadStatus() != LoadStatus::Loaded ||
+      m_gdbFeatureTable->loadStatus() != LoadStatus::Loaded ||
+      m_contingentValuesDefinition->loadStatus() != LoadStatus::Loaded ||
+      m_featureAttributes.isEmpty())
+    return {};
+
+  QStringList contingentValuesNamesList;
+
+  if (!m_newFeature)
+    createNewEmptyFeature();
+
+  qDebug() << m_newFeature->attributes()->attributesMap();
+
+  ContingentValuesResult* contingentValuesResult = m_gdbFeatureTable->contingentValues(m_newFeature, field);
+
+  for (ContingentValue* contingentValue : contingentValuesResult->contingentValuesByFieldGroup(this).value(fieldGroupName))
   {
-    qDebug() << "Geodatabase feature table not loaded";
-    return;
+    if (contingentValue->contingentValueType() == ContingentValueType::ContingentCodedValue)
+    {
+      ContingentCodedValue* contingentCodedValue = static_cast<ContingentCodedValue*>(contingentValue);
+      if (contingentCodedValue)
+        contingentValuesNamesList.append(contingentCodedValue->codedValue().name());
+    }
+    else if (contingentValue->contingentValueType() == ContingentValueType::ContingentRangeValue)
+    {
+      ContingentRangeValue* contingentRangeValue = static_cast<ContingentRangeValue*>(contingentValue);
+      if (contingentRangeValue)
+      {
+        qDebug() << "minValue" << contingentRangeValue->minValue();
+        qDebug() << "maxValue" << contingentRangeValue->maxValue();
+      }
+    }
   }
 
-  const Point nestPoint = m_mapView->screenToLocation(m_featureAttributesPaneX, m_featureAttributesPaneY);
+  qDebug() << "contingent values name list" << contingentValuesNamesList;
 
-  ArcGISFeature* nestFeature = static_cast<ArcGISFeature*>(m_gdbFeatureTable->createFeature(attributes, nestPoint, this));
-  m_gdbFeatureTable->addFeature(nestFeature);
+  return contingentValuesNamesList;
+}
+
+void ContingentValues::createNewEmptyFeature()
+{
+  if (m_gdbFeatureTable->loadStatus() != LoadStatus::Loaded)
+    return;
+
+  qDebug() << "creating new empty feature";
+
+  delete m_newFeature;
+
+  m_newFeature = static_cast<ArcGISFeature*>(m_gdbFeatureTable->createFeature(this));
+  m_newFeature->attributes()->setAttributesMap(m_featureAttributes);
+}
+
+void ContingentValues::createNewNest(const QVariantMap attributes)
+{
+  if (m_geodatabase->loadStatus() != LoadStatus::Loaded ||
+      m_gdbFeatureTable->loadStatus() != LoadStatus::Loaded ||
+      m_contingentValuesDefinition->loadStatus() != LoadStatus::Loaded)
+    return;
+
+  ArcGISFeature* feature = static_cast<ArcGISFeature*>(m_gdbFeatureTable->createFeature(this));
+
+  QVariantMap attributesMap = {};
+
+  attributesMap.insert("Activity", "UNOCCUPIED");
+  //attributesMap.insert("Protection", "ENDANGERED");
+
+  //m_selectedFeature->attributes();
+  qDebug() << "current attributes map" << attributesMap;
+  feature->attributes()->setAttributesMap(attributesMap);
+
+  ContingentValuesResult* cvr = m_gdbFeatureTable->contingentValues(feature, "Protection");
+
+  QStringList validProtectionValues;
+
+  for (QString fieldGroupName : m_fieldGroups)
+  {
+    qDebug() << "length of" << fieldGroupName << "values list based on Protection:" <<
+                cvr->contingentValuesByFieldGroup(this).value(fieldGroupName).size();
+    for (ContingentValue* contingentValue : cvr->contingentValuesByFieldGroup(this).value(fieldGroupName))
+    {
+      ContingentCodedValue* contingentCodedValue = static_cast<ContingentCodedValue*>(contingentValue);
+      if (contingentCodedValue)
+      {
+        validProtectionValues.append(contingentCodedValue->codedValue().name());
+      }
+    }
+  }
+
+  qDebug() << validProtectionValues;
+
+  qDebug() << "\n";
+
+  attributesMap.insert("Protection", "NOT_ENDANGERED");
+
+  feature->attributes()->setAttributesMap(attributesMap);
+  qDebug() << "current attributes map" << feature->attributes()->attributesMap();
+
+  ContingentValuesResult* cvr2 = m_gdbFeatureTable->contingentValues(feature, "BufferSize");
+
+  for (QString fieldGroupName : m_fieldGroups)
+  {
+    qDebug() << "length of" << fieldGroupName << "values list based on BufferSize:" <<
+                cvr2->contingentValuesByFieldGroup(this).value(fieldGroupName).size();
+    for (ContingentValue* contingentValue : cvr2->contingentValuesByFieldGroup(this).value(fieldGroupName))
+    {
+      ContingentRangeValue* contingentRangeValue = static_cast<ContingentRangeValue*>(contingentValue);
+      if (contingentRangeValue)
+      {
+        qDebug() << "minValue" << contingentRangeValue->minValue();
+        qDebug() << "maxValue" << contingentRangeValue->maxValue();
+      }
+    }
+  }
+
+  qDebug() << "\n\n\n";
+
+
+  //  if (m_gdbFeatureTable->loadStatus() != LoadStatus::Loaded)
+  //  {
+  //    qDebug() << "Geodatabase feature table not loaded";
+  //    return;
+  //  }
+
+  //  const Point nestPoint = m_mapView->screenToLocation(m_featureAttributesPaneX, m_featureAttributesPaneY);
+
+  //  ArcGISFeature* nestFeature = static_cast<ArcGISFeature*>(m_gdbFeatureTable->createFeature(attributes, nestPoint, this));
+  //  m_gdbFeatureTable->addFeature(nestFeature);
 }
 
 void ContingentValues::createConnections()
@@ -148,6 +266,7 @@ void ContingentValues::createConnections()
 
   connect(m_mapView, &MapQuickView::identifyLayerCompleted, this, [this](QUuid, IdentifyLayerResult* identifyResult)
   {
+    setFeatureAttributesPaneVisibe(true);
     if (!identifyResult)
       return;
 
@@ -156,11 +275,13 @@ void ContingentValues::createConnections()
       m_selectedFeature = static_cast<ArcGISFeature*>(identifyResult->geoElements().at(0));
       m_nestsLayer->selectFeature(m_selectedFeature);
       setFeatureAttributes(m_selectedFeature->attributes()->attributesMap());
-      setFeatureAttributesPaneVisibe(true);
+      //setFeatureAttributesPaneVisibe(true);
     }
     else
     {
-      setFeatureAttributesPaneVisibe(false);
+      //setFeatureAttributesPaneVisibe(false);
+      //createNewEmptyFeature();
+      createNewNest({});
     }
   });
 
@@ -201,72 +322,13 @@ void ContingentValues::createConnections()
       if (!m_codedValueDomains.isEmpty() || !m_rangeDomains.isEmpty())
         emit domainsChanged();
 
-      //      qDebug() << m_codedValueDomains;
-      //      qDebug() << m_rangeDomains;
-
       m_contingentValuesDefinition = m_gdbFeatureTable->contingentValuesDefinition();
 
       connect(m_contingentValuesDefinition, &ContingentValuesDefinition::doneLoading, this, [this]()
       {
-//        for (FieldGroup* fieldGroup : m_contingentValuesDefinition->fieldGroups())
-//        {
-//          qDebug() << "field group name" << fieldGroup->name();
-//        }
-
-        //        if (!m_contingentValuesDefinition->loadError().isEmpty())
-        //        {
-        //          Error e = m_contingentValuesDefinition->loadError();
-        //          qDebug() << e.message() << e.additionalMessage();
-        //        }
-
-        //        if (m_contingentValuesDefinition->fieldGroups().size() == 0)
-        //          return;
-
-        ArcGISFeature* feature = static_cast<ArcGISFeature*>(m_gdbFeatureTable->createFeature(this));
-
-        QMap<QString, QVariant> featureAttributes;
-
-
-        //        ContingentValuesResult* cvr = m_gdbFeatureTable->contingentValues(feature, "Activity");
-
-        //        for (ContingentValue* contingentValue : cvr->contingentValuesByFieldGroup(this).value("NestBuffer"))
-        //        {
-        //          ContingentCodedValue* contingentCodedValue = static_cast<ContingentCodedValue*>(contingentValue);
-        //          if (contingentCodedValue)
-        //          {
-        //            CodedValue cd = contingentCodedValue->codedValue();
-        //            qDebug() << "coded value name" << cd.name();
-        //          }
-        //        }
-
-        featureAttributes.insert("Activity", "OCCUPIED");
-
-        //        cvr = m_gdbFeatureTable->contingentValues(feature, "Protection");
-
-        //        for (ContingentValue* contingentValue : cvr->contingentValuesByFieldGroup(this).value("NestBuffer"))
-        //        {
-        //          ContingentCodedValue* contingentCodedValue = static_cast<ContingentCodedValue*>(contingentValue);
-        //          if (contingentCodedValue)
-        //          {
-        //            CodedValue cd = contingentCodedValue->codedValue();
-        //            qDebug() << "coded value name" << cd.name();
-        //          }
-        //        }
-
-        featureAttributes.insert("Protection", "NOT_ENDANGERED");
-
-        feature->attributes()->setAttributesMap(featureAttributes);
-
-        ContingentValuesResult* cvr = m_gdbFeatureTable->contingentValues(feature, "BufferSize");
-
-        for (ContingentValue* contingentValue : cvr->contingentValuesByFieldGroup(this).value("BufferSizeRangeFieldGroup"))
+        for (FieldGroup* fieldGroup : m_contingentValuesDefinition->fieldGroups())
         {
-          ContingentCodedValue* contingentCodedValue = static_cast<ContingentCodedValue*>(contingentValue);
-          if (contingentCodedValue)
-          {
-            CodedValue cd = contingentCodedValue->codedValue();
-            qDebug() << "coded value name" << cd.name();
-          }
+          m_fieldGroups.append(fieldGroup->name());
         }
       });
 
@@ -307,7 +369,7 @@ void ContingentValues::createConnections()
   });
 }
 
-bool ContingentValues::validateContingentValues(QVariantMap attributes)
+bool ContingentValues::validateContingentValues(const QString &fieldName, const QVariant &fieldValue)
 {
   if (m_geodatabase->loadStatus() != LoadStatus::Loaded ||
       m_gdbFeatureTable->loadStatus() != LoadStatus::Loaded ||
@@ -315,17 +377,32 @@ bool ContingentValues::validateContingentValues(QVariantMap attributes)
     return false;
 
   ArcGISFeature* feature = static_cast<ArcGISFeature*>(m_gdbFeatureTable->createFeature(this));
-  feature->attributes()->setAttributesMap(attributes);
+  QVariantMap attributesMap = {};
+  attributesMap.insert(fieldName, fieldValue);
+  //m_selectedFeature->attributes();
+  qDebug() << attributesMap;
+  feature->attributes()->setAttributesMap(attributesMap);
 
   ContingentValuesResult* cvr = m_gdbFeatureTable->contingentValues(feature, "Activity");
 
-  for (ContingentValue* contingentValue : cvr->contingentValuesByFieldGroup(this).value("ProtectionFieldGroup"))
+  for (QString fieldGroupName : m_fieldGroups)
   {
-    ContingentCodedValue* contingentCodedValue = static_cast<ContingentCodedValue*>(contingentValue);
-    if (contingentCodedValue)
+    qDebug() << "length of" << fieldGroupName << "values list based on" << "Activity" <<
+                cvr->contingentValuesByFieldGroup(this).value(fieldGroupName).size();
+    for (ContingentValue* contingentValue : cvr->contingentValuesByFieldGroup(this).value(fieldGroupName))
     {
-      CodedValue cd = contingentCodedValue->codedValue();
-      qDebug() << "coded value name" << cd.name();
+      qDebug() << "contingentvalue created with" << fieldGroupName << "using value:" << fieldValue;
+      ContingentCodedValue* contingentCodedValue = static_cast<ContingentCodedValue*>(contingentValue);
+      if (contingentCodedValue)
+      {
+        CodedValue cd = contingentCodedValue->codedValue();
+        qDebug() << "cd name" << cd.name();
+        qDebug() << "cd code" << cd.code();
+        if (cd.name() == fieldValue)
+        {
+          return true;
+        }
+      }
     }
   }
 
@@ -390,13 +467,10 @@ void ContingentValues::modifyFeatures(QVariantMap attributes, QString modificati
   {
     createNewNest(attributes);
   }
-  else if (modificationType == "UPDATE")
-  {
-    m_selectedFeature->attributes()->setAttributesMap(attributes);
-  }
   else if (modificationType == "DELETE")
   {
     m_gdbFeatureTable->deleteFeature(m_selectedFeature);
+    m_featureAttributes.clear();
   }
   else
   {

@@ -62,7 +62,8 @@ public:
   static void init();
 
   Q_INVOKABLE void modifyFeatures(QVariantMap attributes, QString modificationType);
-  Q_INVOKABLE bool validateContingentValues(QVariantMap attributes);
+  Q_INVOKABLE bool validateContingentValues(const QString &fieldName, const QVariant &fieldValue);
+  Q_INVOKABLE QStringList getContingentValues(QString field, QString fieldGroupName);
 //  Q_INVOKABLE bool validateNestActivity(QString activity);
 //  Q_INVOKABLE bool validateProtection(QString protection);
 //  Q_INVOKABLE bool validateBufferSize(double bufferSize);
@@ -86,6 +87,8 @@ private:
   bool featureAttributesPaneVisibe() const;
   void setFeatureAttributesPaneVisibe(bool showFeatureAttributesPane);
 
+  void createNewEmptyFeature();
+
   QVariantMap codedValueDomains() const;
   QVariantMap rangeDomains() const;
 
@@ -104,6 +107,7 @@ private:
   Esri::ArcGISRuntime::Geodatabase* m_geodatabase = nullptr;
   Esri::ArcGISRuntime::GeodatabaseFeatureTable* m_gdbFeatureTable = nullptr;
   Esri::ArcGISRuntime::ArcGISFeature* m_selectedFeature = nullptr;
+  Esri::ArcGISRuntime::ArcGISFeature* m_newFeature = nullptr;
   bool m_featureAttributesPaneVisible = false;
   double m_featureAttributesPaneX;
   double m_featureAttributesPaneY;
@@ -111,6 +115,10 @@ private:
   QVariantMap m_codedValueDomains;
   QVariantMap m_rangeDomains;
   bool m_valuesAreValid;
+  QStringList m_fieldGroups;
+
+  QStringList fields();
+  QStringList validContingentValues();
 };
 
 #endif // CONTINGENTVALUES_H

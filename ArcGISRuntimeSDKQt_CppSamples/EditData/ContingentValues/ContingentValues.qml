@@ -22,6 +22,8 @@ import Esri.Samples 1.0
 Item {
     id: sampleWindow
 
+    property bool init: false
+
     // add a mapView component
     MapView {
         id: view
@@ -42,7 +44,7 @@ Item {
 
     // Declare the C++ instance which creates the scene etc. and supply the view
     ContingentValuesSample {
-        id: model
+        id: contingentValuesSample
         mapView: view
     }
 
@@ -52,8 +54,8 @@ Item {
         //            verticalCenter: sampleWindow.verticalCenter
         //            horizontalCenter: sampleWindow.horizontalCenter
         //        }
-        x: model.featureAttributesPaneX + width > sampleWindow.height ? model.featureAttributesPaneX - width : model.featureAttributesPaneX
-        y: model.featureAttributesPaneY + height > sampleWindow.height ? model.featureAttributesPaneY - height : model.featureAttributesPaneY
+        x: contingentValuesSample.featureAttributesPaneX + width > sampleWindow.height ? contingentValuesSample.featureAttributesPaneX - width : contingentValuesSample.featureAttributesPaneX
+        y: contingentValuesSample.featureAttributesPaneY + height > sampleWindow.height ? contingentValuesSample.featureAttributesPaneY - height : contingentValuesSample.featureAttributesPaneY
 
         height: 200
         width: 150
@@ -66,42 +68,53 @@ Item {
             Text { text: "Activity" }
             ComboBox {
                 id: activityComboBox
-                model: ["<NULL>", "Occupied", "Unoccupied"]
-                currentIndex: ["OCCUPIED", "UNOCCUPIED"].indexOf(model.featureAttributes.Activity) + 1
+                model: ["Occupied", "Unoccupied"]
+                currentIndex: ["OCCUPIED", "UNOCCUPIED"].indexOf(contingentValuesSample.featureAttributes.Activity)
                 onCurrentIndexChanged: {
-                    if (!model.featureAttributes.Activity)
+                    const currentActivity = ["OCCUPIED", "UNOCCUPIED"][currentIndex];
+
+                    if (currentActivity === contingentValuesSample.featureAttributes.Activity)
                         return;
 
-                    const currentActivity = ["OCCUPIED", "UNOCCUPIED"][currentIndex-1];
-
-                    if (currentActivity === model.featureAttributes.Activity)
-                        return;
-
-                    const featureAttributeMap = model.featureAttributes
+                    const featureAttributeMap = contingentValuesSample.featureAttributes
                     featureAttributeMap.Activity = currentActivity;
-                    model.featureAttributes = featureAttributeMap;
-                    let a = model.validateNestActivity(currentActivity);
+                    contingentValuesSample.featureAttributes = featureAttributeMap;
+
+                    console.log("running get contingent values with activity", currentActivity);
+
+                    init = true;
+
+                    protectionComboBox.model = contingentValuesSample.getContingentValues("Protection", "ProtectionFieldGroup");
                 }
             }
             Text { text: "Protection Status" }
             ComboBox {
                 id: protectionComboBox
-                model: ["<NULL>", "Endangered", "Not Endangered"]
-                currentIndex: ["ENDANGERED", "NOT_ENDANGERED"].indexOf(model.featureAttributes["Protection"]) + 1
+                model: [""]
+                currentIndex: ["", "ENDANGERED", "NOT_ENDANGERED"].indexOf(contingentValuesSample.featureAttributes.Protection)
 
                 onCurrentIndexChanged: {
-                    if (!model.featureAttributes.Activity)
+                    if (!contingentValuesSample.featureAttributes.Activity)
                         return;
 
-                    const currentActivity = ["OCCUPIED", "UNOCCUPIED"][currentIndex-1];
+                    if (init) {
+                        init = false;
+                        return;
+                    }
 
-                    if (currentActivity === model.featureAttributes.Activity)
+                    const currentStatus = ["","ENDANGERED", "NOT_ENDANGERED"][currentIndex];
+
+                    if (currentStatus === contingentValuesSample.featureAttributes.Protection)
                         return;
 
-                    const featureAttributeMap = model.featureAttributes
-                    featureAttributeMap.Activity = currentActivity;
-                    model.featureAttributes = featureAttributeMap;
-                    let a = model.validateNestActivity(currentActivity);
+                    const featureAttributeMap = contingentValuesSample.featureAttributes
+                    featureAttributeMap.Protection = currentStatus;
+                    contingentValuesSample.featureAttributes = featureAttributeMap;
+
+                    const minMax = contingentValuesSample.getContingentValues("BufferSize", "BufferSizeFieldGroup")
+                    console.log(minMax);
+                    //                    rangeValuesSpinBox.from = minMax[0];
+                    //                    rangeValuesSpinBox.to = minMax[1];
                 }
             }
 
@@ -114,7 +127,7 @@ Item {
                 from: 0
                 to: 100
                 stepSize: 10
-                value: model.featureAttributes["BufferSize"] ?? 0;
+                value: contingentValuesSample.featureAttributes["BufferSize"] ?? 0;
 
                 onValueChanged: {
 
@@ -122,41 +135,37 @@ Item {
 
 
             }
-            Row {
-                Button {
-                    Text {
-                        text: "Save edits & close"
-                    }
-                    onClicked: {
-                        model.featureAttributesPaneVisibe = false
-                        console.log(activityComboBox.currentValue, protectionComboBox.currentValue, rangeValuesSpinBox.value);
-                    }
+            Button {
+                Text {
+                    text: "Save edits & close"
                 }
-                Button {
-                    Text {
-                        text: "Discard edits & close"
-                    }
-                    onClicked: model.featureAttributesPaneVisibe = false
+                onClicked: {
+                    contingentValuesSample.featureAttributesPaneVisibe = false
+                    console.log(activityComboBox.currentValue, protectionComboBox.currentValue, rangeValuesSpinBox.value);
                 }
-                Button {
-                    Text {
-                        text: "Delete feature"
-                    }
-                    onClicked: {
-                        model.featureAttributesPaneVisibe = false;
-                        model.modifyFeatures([], "DELETE");
-                    }
+            }
+            Button {
+                Text {
+                    text: "Discard edits & close"
+                }
+                onClicked: contingentValuesSample.featureAttributesPaneVisibe = false
+            }
+            Button {
+                Text {
+                    text: "Delete feature"
+                }
+                onClicked: {
+                    contingentValuesSample.featureAttributesPaneVisibe = false;
+                    contingentValuesSample.modifyFeatures([], "DELETE");
                 }
             }
         }
 
-        visible: model.featureAttributesPaneVisibe
+        visible: contingentValuesSample.featureAttributesPaneVisibe
 
         onVisibleChanged: {
             if (!visible)
                 return;
         }
     }
-
-    // Catch mouse signals so they don't propagate to the map
 }
