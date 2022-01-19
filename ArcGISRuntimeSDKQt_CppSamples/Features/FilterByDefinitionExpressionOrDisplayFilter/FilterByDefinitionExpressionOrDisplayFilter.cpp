@@ -77,6 +77,9 @@ void FilterByDefinitionExpressionOrDisplayFilter::componentComplete()
   connect(m_featureLayer, &FeatureLayer::loadStatusChanged, this, [this](LoadStatus loadStatus)
   {
     loadStatus == LoadStatus::Loaded ? m_initialized = true : m_initialized = false;
+
+    // Initalize the feature count when the feature layer first loads
+    queryFeatureCountInCurrentExtent();
     emit layerInitializedChanged();
   });
 

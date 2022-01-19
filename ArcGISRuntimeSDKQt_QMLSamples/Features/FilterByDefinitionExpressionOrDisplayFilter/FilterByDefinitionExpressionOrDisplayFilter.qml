@@ -48,6 +48,11 @@ Rectangle {
                 ServiceFeatureTable {
                     id: featureTable
                     url: "https://sampleserver6.arcgisonline.com/arcgis/rest/services/SF311/FeatureServer/0"
+
+                    // Initalize the feature count when the feature layer first loads
+                    onLoadStatusChanged: {
+                        queryFeatureCountInCurrentExtent();
+                    }
                 }
             }
         }
