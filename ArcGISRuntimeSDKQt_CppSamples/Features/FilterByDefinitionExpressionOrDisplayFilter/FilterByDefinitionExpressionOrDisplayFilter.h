@@ -45,7 +45,6 @@ public:
   static void init();
   Q_INVOKABLE void setDefExpression(const QString& whereClause);
   Q_INVOKABLE void setDisplayFilter(const QString& whereClause);
-  void queryFeatureCountInCurrentExtent();
 
 signals:
   void layerInitializedChanged();
@@ -54,6 +53,7 @@ signals:
 private:
   bool layerInitialized() const;
   int currentFeatureCount() const;
+  void queryFeatureCountInCurrentExtent();
 
 private:
   Esri::ArcGISRuntime::Map* m_map = nullptr;

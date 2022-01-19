@@ -132,6 +132,5 @@ Rectangle {
                               });
 
         featureTable.queryFeatureCount(queryParams);
-        return featureTable.queryFeatureCountResult;
     }
 }
