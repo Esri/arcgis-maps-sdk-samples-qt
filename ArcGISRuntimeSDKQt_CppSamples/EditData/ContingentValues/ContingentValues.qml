@@ -22,8 +22,6 @@ import Esri.Samples 1.0
 Item {
     id: sampleWindow
 
-    property bool init: false
-
     // add a mapView component
     MapView {
         id: view
@@ -68,69 +66,74 @@ Item {
             Text { text: "Activity" }
             ComboBox {
                 id: activityComboBox
-                model: ["Occupied", "Unoccupied"]
-                currentIndex: ["OCCUPIED", "UNOCCUPIED"].indexOf(contingentValuesSample.featureAttributes.Activity)
-                onCurrentIndexChanged: {
-                    const currentActivity = ["OCCUPIED", "UNOCCUPIED"][currentIndex];
+                model: [""].concat(contingentValuesSample.contingentValuesMap.Activity) ?? [""];
 
-                    if (currentActivity === contingentValuesSample.featureAttributes.Activity)
+                enabled: true
+
+                onCurrentValueChanged: {
+                    if (activityComboBox.currentValue === "") {
+                        protectionComboBox.model = [""];
                         return;
+                    }
 
                     const featureAttributeMap = contingentValuesSample.featureAttributes
-                    featureAttributeMap.Activity = currentActivity;
+                    featureAttributeMap.Activity = activityComboBox.currentValue;
                     contingentValuesSample.featureAttributes = featureAttributeMap;
 
-                    console.log("running get contingent values with activity", currentActivity);
-
-                    init = true;
-
-                    protectionComboBox.model = contingentValuesSample.getContingentValues("Protection", "ProtectionFieldGroup");
+                    //protectionComboBox.model = [""].concat(contingentValuesSample.getContingentValues("Protection", "ProtectionFieldGroup"));
                 }
             }
             Text { text: "Protection Status" }
             ComboBox {
                 id: protectionComboBox
-                model: [""]
-                currentIndex: ["", "ENDANGERED", "NOT_ENDANGERED"].indexOf(contingentValuesSample.featureAttributes.Protection)
+                model: [""].concat(contingentValuesSample.contingentValuesMap.Protection) ?? [""];
 
-                onCurrentIndexChanged: {
-                    if (!contingentValuesSample.featureAttributes.Activity)
+                enabled: activityComboBox.currentText !== ""
+
+                onCurrentValueChanged: {
+
+                    if (protectionComboBox.currentValue === "")
                         return;
 
-                    if (init) {
-                        init = false;
-                        return;
-                    }
-
-                    const currentStatus = ["","ENDANGERED", "NOT_ENDANGERED"][currentIndex];
-
-                    if (currentStatus === contingentValuesSample.featureAttributes.Protection)
-                        return;
-
+                    console.log("hello");
                     const featureAttributeMap = contingentValuesSample.featureAttributes
-                    featureAttributeMap.Protection = currentStatus;
+                    featureAttributeMap.Protection = protectionComboBox.currentValue;
                     contingentValuesSample.featureAttributes = featureAttributeMap;
 
                     const minMax = contingentValuesSample.getContingentValues("BufferSize", "BufferSizeFieldGroup")
-                    console.log(minMax);
-                    //                    rangeValuesSpinBox.from = minMax[0];
-                    //                    rangeValuesSpinBox.to = minMax[1];
+                    console.log("minMax is", minMax);
+                    if (minMax[0] !== "<NULL>") {
+                    //rangeValuesSpinBox.from = minMax[0];
+                    //rangeValuesSpinBox.to = minMax[1];
+                    } else {
+                        //rangeValuesSpinBox.from = 0;
+                        //rangeValuesSpinBox.to = 0;
+                    }
+
+
                 }
             }
 
             Text {
                 text: "Buffer Size"
             }
+            Text {
+                text: rangeValuesSpinBox.from + " to " + rangeValuesSpinBox.to;
+            }
             SpinBox {
                 id: rangeValuesSpinBox
                 editable: true
-                from: 0
-                to: 100
+                from: contingentValuesSample.contingentValuesMap.BufferSize[0] ?? 0;
+                to: contingentValuesSample.contingentValuesMap.BufferSize[1] ?? 0;
                 stepSize: 10
                 value: contingentValuesSample.featureAttributes["BufferSize"] ?? 0;
 
-                onValueChanged: {
+                enabled: protectionComboBox.currentText !== ""
 
+                onValueChanged: {
+                    let temp = contingentValuesSample.featureAttributes;
+                    temp.BufferSize = rangeValuesSpinBox.value;
+                    contingentValuesSample.featureAttributes = temp;
                 }
 
 
@@ -140,23 +143,26 @@ Item {
                     text: "Save edits & close"
                 }
                 onClicked: {
-                    contingentValuesSample.featureAttributesPaneVisibe = false
-                    console.log(activityComboBox.currentValue, protectionComboBox.currentValue, rangeValuesSpinBox.value);
+                    contingentValuesSample.modifyFeatures([], "SAVE");
+                    contingentValuesSample.featureAttributesPaneVisibe = false;
                 }
             }
             Button {
                 Text {
                     text: "Discard edits & close"
                 }
-                onClicked: contingentValuesSample.featureAttributesPaneVisibe = false
+                onClicked: {
+                 contingentValuesSample.modifyFeatures([], "CANCEL");
+                    contingentValuesSample.featureAttributesPaneVisibe = false
+                }
             }
             Button {
                 Text {
                     text: "Delete feature"
                 }
                 onClicked: {
-                    contingentValuesSample.featureAttributesPaneVisibe = false;
                     contingentValuesSample.modifyFeatures([], "DELETE");
+                    contingentValuesSample.featureAttributesPaneVisibe = false;
                 }
             }
         }
