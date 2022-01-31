@@ -146,7 +146,6 @@ void BrowseWfsLayers::populateWfsFeatureTable()
 void BrowseWfsLayers::addFeatureLayerToMap()
 {
   // create feature layer from the feature table
-  FeatureLayer* featureLayer = new FeatureLayer(m_wfsFeatureTable, this);
   SimpleRenderer* sr = nullptr;
   SimpleMarkerSymbol* sms = nullptr;
   SimpleLineSymbol* sls = nullptr;
@@ -166,11 +165,12 @@ void BrowseWfsLayers::addFeatureLayerToMap()
     sr = new SimpleRenderer(sls, this);
     break;
   default:
-    delete featureLayer; // or unique_ptr?
     qDebug() << "Error! No Renderer defined for this GeometryType";
     return;
   }
+
   // apply renderer to layer
+  FeatureLayer* featureLayer = new FeatureLayer(m_wfsFeatureTable, this);
   featureLayer->setRenderer(sr);
 
   // add the layer to the map
