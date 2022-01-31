@@ -97,7 +97,7 @@ void ExtrudeGraphics::componentComplete()
   graphicsOverlay->setRenderer(renderer);
 
   // setup graphic locations
-  QList<Point> pointsList;
+  QVector<Point> pointsList;
   for (int i = 0; i <= 100; i++)
   {
     Point point(i / 10 * (m_size * 2) + lon, i % 10 * (m_size * 2) + lat, m_sceneView->spatialReference());
@@ -107,8 +107,9 @@ void ExtrudeGraphics::componentComplete()
   for (const Point& point : pointsList)
   {
     // create a random z value
-    int randNum = rand() % 6 + 1;
-    double z = m_maxZ * randNum;
+    const int randNum = rand() % 6 + 1; // security.insecureAPI.rand: Warn on uses of inferior random number generating functions (only if arc4random function is available): drand48, erand48, jrand48, lcong48, lrand48, mrand48, nrand48, random, rand_r.
+
+    const double z = m_maxZ * randNum;
 
     // create a list of points
     const QList<Point> points { Point(point.x(), point.y(), z)

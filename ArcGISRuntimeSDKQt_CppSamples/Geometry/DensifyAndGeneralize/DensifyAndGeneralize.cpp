@@ -126,10 +126,11 @@ void DensifyAndGeneralize::updateGeometry(bool densify, double maxSegmentLength,
   m_resultLineGraphic->setGeometry(polyline);
 
   // Update the multipoint graphic
-  MultipointBuilder multipointBuilder(polyline.spatialReference());
-  PointCollection* pointCollection = new PointCollection(polyline.spatialReference(), this);
   if (polyline.parts().size() < 1)
     return;
+
+  MultipointBuilder multipointBuilder(polyline.spatialReference());
+  PointCollection* pointCollection = new PointCollection(polyline.spatialReference(), this);
 
   ImmutablePointCollection polylinePoints = polyline.parts().part(0).points();
   const int polylinePointsSize = polylinePoints.size();

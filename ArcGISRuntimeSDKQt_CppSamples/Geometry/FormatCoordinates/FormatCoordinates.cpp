@@ -180,7 +180,7 @@ void FormatCoordinates::setMapView(MapQuickView* mapView)
     // using the point, refresh the graphic and the text
     handleLocationUpdate(std::move(mapPoint));
   },
-  Qt::UniqueConnection);
+  Qt::UniqueConnection); // Finds usages of Qt::UniqueConnection when the slot is a functor, lambda or non-member function. That connect() overload does not support Qt::UniqueConnection.
 
   handleLocationUpdate(startPoint);
 }

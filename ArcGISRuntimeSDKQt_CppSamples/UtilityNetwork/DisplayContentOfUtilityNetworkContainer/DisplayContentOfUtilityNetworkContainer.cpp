@@ -150,9 +150,11 @@ void DisplayContentOfUtilityNetworkContainer::getUtilityAssociationsOfFeature(QU
   {
     if (!m_containerElement && dynamic_cast<SubtypeFeatureLayer*>(layerResult->layerContent()))
     {
-      for (const IdentifyLayerResult* sublayerResult : layerResult->sublayerResults())
+      const auto results = layerResult->sublayerResults();
+      for (const IdentifyLayerResult* sublayerResult : results)
       {
-        for (GeoElement* geoElement : sublayerResult->geoElements())
+        const auto elements = sublayerResult->geoElements();
+        for (GeoElement* geoElement : elements)
         {
           if (ArcGISFeature* feature = dynamic_cast<ArcGISFeature*>(geoElement))
           {
@@ -193,7 +195,7 @@ void DisplayContentOfUtilityNetworkContainer::getFeaturesForElementsOfUtilityAss
 void DisplayContentOfUtilityNetworkContainer::displayFeaturesAndGetAssociations(QUuid)
 {
   // Display the features on the graphics overlay
-  QList<Feature*> contentFeatures = m_utilityNetwork->featuresForElementsResult()->features();
+  const QList<Feature*> contentFeatures = m_utilityNetwork->featuresForElementsResult()->features();
   for (Feature* content : contentFeatures)
   {
     Symbol* symbol = dynamic_cast<ArcGISFeatureTable*>(content->featureTable())->layerInfo().drawingInfo().renderer(this)->symbol(content);

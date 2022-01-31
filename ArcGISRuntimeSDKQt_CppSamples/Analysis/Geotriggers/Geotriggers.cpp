@@ -151,7 +151,7 @@ void Geotriggers::createGeotriggerMonitor(ServiceFeatureTable* serviceFeatureTab
 void Geotriggers::handleGeotriggerNotification(GeotriggerNotificationInfo* geotriggerNotificationInfo)
 {
   // Create a QScopedPointer so GeotriggerNotificationInfo does not persist outside this scope
-  QScopedPointer<GeotriggerNotificationInfo> scopedNotification(geotriggerNotificationInfo);
+  std::unique_ptr<GeotriggerNotificationInfo> scopedNotification(geotriggerNotificationInfo);
 
   // GeotriggerNotificationInfo provides access to information about the geotrigger that was triggered
   QString geotriggerName = geotriggerNotificationInfo->geotriggerMonitor()->geotrigger()->name();
@@ -183,7 +183,7 @@ void Geotriggers::handleGeotriggerNotification(GeotriggerNotificationInfo* geotr
     m_currentFeaturesEntered[geotriggerName].removeAll(featureName);
   }
 
-  displayInfoChanged();
+  emit displayInfoChanged();
 }
 
 void Geotriggers::getFeatureInformation(const QString& sectionName)
@@ -199,7 +199,7 @@ void Geotriggers::getFeatureInformation(const QString& sectionName)
   if (findIt == m_featureQMap.end())
   {
     m_currentFeatureDescription = "Unable to find information for this Garden feature.";
-    displayInfoChanged();
+    emit displayInfoChanged();
     return;
   }
 
@@ -209,11 +209,11 @@ void Geotriggers::getFeatureInformation(const QString& sectionName)
   if (m_featureAttachmentImageUrls.contains(sectionName))
   {
     m_currentFeatureImageUrl = m_featureAttachmentImageUrls[sectionName];
-    displayInfoChanged();
+    emit displayInfoChanged();
     return;
   }
 
-  displayInfoChanged();
+  emit displayInfoChanged();
 
   AttachmentListModel* featureAttachments = feature->attachments();
 
@@ -230,7 +230,7 @@ void Geotriggers::getFeatureInformation(const QString& sectionName)
     {
       m_featureAttachmentImageUrls[sectionName] = sectionImageAttachment->attachmentUrl();
       m_currentFeatureImageUrl = m_featureAttachmentImageUrls[sectionName];
-      displayInfoChanged();
+      emit displayInfoChanged();
     });
 
     sectionImageAttachment->fetchData();

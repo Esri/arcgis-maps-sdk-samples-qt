@@ -86,15 +86,15 @@ struct ScopedCleanup
 PerformValveIsolationTrace::PerformValveIsolationTrace(QObject* parent /* = nullptr */):
   QObject(parent),
   m_map(new Map(BasemapStyle::ArcGISStreetsNight, this)),
+  m_cred(new Credential{sampleServer7Username, sampleServer7Password, this}),
   m_startingLocationOverlay(new GraphicsOverlay(this)),
   m_filterBarriersOverlay(new GraphicsOverlay(this)),
-  m_cred(new Credential{sampleServer7Username, sampleServer7Password, this}),
-  m_graphicParent(new QObject()),
-  m_serviceGeodatabase(new ServiceGeodatabase(featureServiceUrl, m_cred, this))
+  m_serviceGeodatabase(new ServiceGeodatabase(featureServiceUrl, m_cred, this)),
+  m_graphicParent(new QObject())
 {
   // disable UI while loading service geodatabase and utility network
   m_tasksRunning = true;
-  emit tasksRunningChanged();
+  // emit tasksRunningChanged(); // emit inside constructor?
 
   connect(m_serviceGeodatabase, &ServiceGeodatabase::doneLoading, this, [this](Error error)
   {
@@ -342,7 +342,7 @@ void PerformValveIsolationTrace::connectSignals()
       // given local parent to clean up once we leave scope
       utilityElementTraceResult->setParent(&localParent);
 
-      QList<UtilityElement*> utilityElementList = utilityElementTraceResult->elements(this);
+      const QList<UtilityElement*> utilityElementList = utilityElementTraceResult->elements(this);
 
       // A convenience wrapper that deletes the contents of utilityElementList when we leave scope.
       ScopedCleanup<UtilityElement> utilityElementListCleanUp(utilityElementList);
@@ -413,14 +413,14 @@ void PerformValveIsolationTrace::onIdentifyLayersCompleted(QUuid, const QList<Id
     return;
 
   const IdentifyLayerResult* result = results[0];
-  ArcGISFeature* feature = static_cast<ArcGISFeature*>(result->geoElements()[0]);
+  ArcGISFeature* feature = static_cast<ArcGISFeature*>(qAsConst(result)->geoElements()[0]);
   m_element = m_utilityNetwork->createElementWithArcGISFeature(feature);
 
   const UtilityNetworkSourceType elementSourceType = m_element->networkSource()->sourceType();
 
   if (elementSourceType == UtilityNetworkSourceType::Junction)
   {
-    QList<UtilityTerminal*> terminals = m_element->assetType()->terminalConfiguration()->terminals();
+    const QList<UtilityTerminal*> terminals = m_element->assetType()->terminalConfiguration()->terminals();
 
     if (terminals.size() > 1)
     {

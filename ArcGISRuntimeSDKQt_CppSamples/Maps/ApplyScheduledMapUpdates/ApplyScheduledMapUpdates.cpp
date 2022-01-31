@@ -68,7 +68,8 @@ bool copyDir(const QString &srcPath, const QString &dstPath)
     return false;
 
   const QDir srcDir(srcPath);
-  for (const QFileInfo &info : srcDir.entryInfoList(QDir::Dirs | QDir::Files | QDir::NoDotAndDotDot))
+  const auto infos = srcDir.entryInfoList(QDir::Dirs | QDir::Files | QDir::NoDotAndDotDot);
+  for (const QFileInfo &info : infos)
   {
     const QString srcItemPath = srcPath + "/" + info.fileName();
     const QString dstItemPath = dstPath + "/" + info.fileName();
@@ -190,7 +191,7 @@ void ApplyScheduledMapUpdates::setMapView(MapQuickView* mapView)
 void ApplyScheduledMapUpdates::connectSyncSignals()
 {
   // connect to checkForUpdatesCompleted signal and update the UI accordingly
-  connect(m_offlineSyncTask, &OfflineMapSyncTask::checkForUpdatesCompleted, [this](QUuid, OfflineMapUpdatesInfo* info)
+  connect(m_offlineSyncTask, &OfflineMapSyncTask::checkForUpdatesCompleted, this, [this](QUuid, OfflineMapUpdatesInfo* info)
   {
     if (info->downloadAvailability() == OfflineUpdateAvailability::Available)
     {
@@ -205,7 +206,7 @@ void ApplyScheduledMapUpdates::connectSyncSignals()
   });
 
   // connect to createDefaultOfflineMapSyncParametersCompleted signal
-  connect(m_offlineSyncTask, &OfflineMapSyncTask::createDefaultOfflineMapSyncParametersCompleted, [this](QUuid, OfflineMapSyncParameters parameters)
+  connect(m_offlineSyncTask, &OfflineMapSyncTask::createDefaultOfflineMapSyncParametersCompleted, this, [this](QUuid, OfflineMapSyncParameters parameters)
   {
     // set the parameters to download all updates for the mobile map packages
     parameters.setPreplannedScheduledUpdatesOption(PreplannedScheduledUpdatesOption::DownloadAllUpdates);
@@ -221,14 +222,14 @@ void ApplyScheduledMapUpdates::connectSyncSignals()
     m_syncJob = m_offlineSyncTask->syncOfflineMap(parameters);
 
     // connect to know when job is complete
-    m_syncJobConnection = connect(m_syncJob, &OfflineMapSyncJob::jobDone, [this]()
+    m_syncJobConnection = connect(m_syncJob, &OfflineMapSyncJob::jobDone, this, [this]()
     {
       if (m_syncJob->result()->isMobileMapPackageReopenRequired())
       {
         // close mmpk out
         m_mobileMapPackage->close();
-        delete m_mobileMapPackage;
         disconnect(m_mobileMapPackage, &MobileMapPackage::doneLoading, this, &ApplyScheduledMapUpdates::onMmpkDoneLoading);
+        delete m_mobileMapPackage;
 
         // load mmpk again with new instance
         m_mobileMapPackage = new MobileMapPackage(m_TempDir.path() + "/" + sampleMmpk, this);

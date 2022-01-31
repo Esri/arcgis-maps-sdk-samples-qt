@@ -114,7 +114,10 @@ void FeatureLayerDictionaryRenderer::componentComplete()
       DictionarySymbolStyle* dictionarySymbolStyle = DictionarySymbolStyle::createFromFile(stylePath, this);
       //! [Create Dictionary Symbol Style Cpp]
 
-      for (GeodatabaseFeatureTable* table : m_geodatabase->geodatabaseFeatureTables())
+      Q_UNUSED(specType);
+
+      const auto tables = m_geodatabase->geodatabaseFeatureTables();
+      for (GeodatabaseFeatureTable* table : tables)
       {
         //! [Apply Dictionary Renderer Feature Layer Cpp]
         // Create a layer and set the feature table

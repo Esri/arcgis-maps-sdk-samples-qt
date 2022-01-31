@@ -158,7 +158,7 @@ void ListTransformations::refreshTransformationList(bool orderBySuitability)
 
   // update the QML property list
   m_transformationList.clear();
-  for (DatumTransformation* transformation : m_transformations)
+  for (DatumTransformation* transformation : qAsConst(m_transformations))
   {
     QVariantMap transformationMap;
     transformationMap["name"] = transformation->name();
@@ -177,9 +177,10 @@ void ListTransformations::updateGraphicTransformation(int index)
   {
     QString missingFiles = "Missing grid files: ";
     const QList<GeographicTransformationStep> steps = transform->steps();
-    for (GeographicTransformationStep step : steps)
+    for (const GeographicTransformationStep& step : steps)
     {
-      for (const QString& filename : step.projectionEngineFilenames())
+      const auto filenames = step.projectionEngineFilenames();
+      for (const QString& filename : filenames)
       {
         missingFiles += filename;
       }
