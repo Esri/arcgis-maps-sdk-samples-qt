@@ -48,10 +48,7 @@ Item {
 
     Control {
         id: attributePrompt
-        //        anchors {
-        //            verticalCenter: sampleWindow.verticalCenter
-        //            horizontalCenter: sampleWindow.horizontalCenter
-        //        }
+
         x: contingentValuesSample.featureAttributesPaneX + width > sampleWindow.height ? contingentValuesSample.featureAttributesPaneX - width : contingentValuesSample.featureAttributesPaneX
         y: contingentValuesSample.featureAttributesPaneY + height > sampleWindow.height ? contingentValuesSample.featureAttributesPaneY - height : contingentValuesSample.featureAttributesPaneY
 
@@ -63,10 +60,10 @@ Item {
         }
 
         contentItem: Column {
-            Text { text: "Activity" }
+            Text { text: "Status" }
             ComboBox {
                 id: activityComboBox
-                model: [""].concat(contingentValuesSample.contingentValuesMap.Activity) ?? [""];
+                model: [""].concat(contingentValuesSample.activityValues) ?? [""];
 
                 enabled: true
 
@@ -77,21 +74,24 @@ Item {
                     }
 
                     const featureAttributeMap = contingentValuesSample.featureAttributes
-                    featureAttributeMap.Activity = activityComboBox.currentValue;
-                    contingentValuesSample.featureAttributes = featureAttributeMap;
+                    contingentValuesSample.updateField("Status", activityComboBox.currentValue);
 
-                    //protectionComboBox.model = [""].concat(contingentValuesSample.getContingentValues("Protection", "ProtectionFieldGroup"));
+                    console.log(contingentValuesSample.featureAttributes);
+
+                    contingentValuesSample.protectionValues = contingentValuesSample.getContingentValues("Protection", "ProtectionFieldGroup");
+                    protectionComboBox.model = [""].concat(contingentValuesSample.protectionValues) ?? [""];
+
                 }
             }
             Text { text: "Protection Status" }
             ComboBox {
                 id: protectionComboBox
-                model: [""].concat(contingentValuesSample.contingentValuesMap.Protection) ?? [""];
+                model: [""].concat(contingentValuesSample.protectionValues) ?? [""];
 
                 enabled: activityComboBox.currentText !== ""
 
                 onCurrentValueChanged: {
-
+                    //return;
                     if (protectionComboBox.currentValue === "")
                         return;
 
@@ -102,12 +102,12 @@ Item {
 
                     const minMax = contingentValuesSample.getContingentValues("BufferSize", "BufferSizeFieldGroup")
                     console.log("minMax is", minMax);
-                    if (minMax[0] !== "<NULL>") {
-                    //rangeValuesSpinBox.from = minMax[0];
-                    //rangeValuesSpinBox.to = minMax[1];
+                    if (minMax[0] !== "") {
+                    rangeValuesSpinBox.from = minMax[0];
+                    rangeValuesSpinBox.to = minMax[1];
                     } else {
-                        //rangeValuesSpinBox.from = 0;
-                        //rangeValuesSpinBox.to = 0;
+                        rangeValuesSpinBox.from = 0;
+                        rangeValuesSpinBox.to = 0;
                     }
 
 
@@ -123,8 +123,8 @@ Item {
             SpinBox {
                 id: rangeValuesSpinBox
                 editable: true
-                from: contingentValuesSample.contingentValuesMap.BufferSize[0] ?? 0;
-                to: contingentValuesSample.contingentValuesMap.BufferSize[1] ?? 0;
+                from: contingentValuesSample.bufferSizeValues[0] ?? 0;
+                to: contingentValuesSample.bufferSizeValues[1] ?? 120;
                 stepSize: 10
                 value: contingentValuesSample.featureAttributes["BufferSize"] ?? 0;
 

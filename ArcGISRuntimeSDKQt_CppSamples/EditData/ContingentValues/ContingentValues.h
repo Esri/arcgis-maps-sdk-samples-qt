@@ -51,7 +51,11 @@ class ContingentValues : public QObject
   Q_PROPERTY(QVariantMap featureAttributes READ featureAttributes WRITE setFeatureAttributes NOTIFY featureAttributesChanged)
   Q_PROPERTY(QVariantMap codedValueDomains READ codedValueDomains NOTIFY domainsChanged)
   Q_PROPERTY(QVariantMap rangeDomains READ rangeDomains NOTIFY domainsChanged)
-  Q_PROPERTY(QVariantMap contingentValuesMap READ contingentValuesMap NOTIFY contingentValuesMapChanged)
+
+  Q_PROPERTY(QStringList activityValues READ activityValues WRITE setActivityValues NOTIFY featureValuesChanged)
+  Q_PROPERTY(QStringList protectionValues READ protectionValues WRITE setProtectionValues NOTIFY featureValuesChanged)
+  Q_PROPERTY(QVariantList bufferSizeValues READ bufferSizeValues NOTIFY featureValuesChanged)
+
   Q_PROPERTY(bool featureAttributesPaneVisibe READ featureAttributesPaneVisibe WRITE setFeatureAttributesPaneVisibe NOTIFY featureAttributesPaneVisibeChanged)
   Q_PROPERTY(double featureAttributesPaneX READ featureAttributesPaneX NOTIFY featureAttributesPaneVisibeChanged)
   Q_PROPERTY(double featureAttributesPaneY READ featureAttributesPaneY NOTIFY featureAttributesPaneVisibeChanged)
@@ -67,6 +71,7 @@ public:
   Q_INVOKABLE void modifyFeatures(QVariantMap attributes, QString modificationType);
   Q_INVOKABLE bool validateContingentValues();
   Q_INVOKABLE QStringList getContingentValues(QString field, QString fieldGroupName);
+  Q_INVOKABLE void updateField(QString field, QVariant value);
   // Q_INVOKABLE void createNewNest();
 
 signals:
@@ -74,18 +79,20 @@ signals:
   void featureAttributesChanged();
   void featureAttributesPaneVisibeChanged();
   void domainsChanged();
-  void contingentValuesMapChanged();
+  void featureValuesChanged();
 
 private:
   Esri::ArcGISRuntime::MapQuickView* mapView() const;
   void setMapView(Esri::ArcGISRuntime::MapQuickView* mapView);
-  QVariantMap contingentValuesMap() const;
+  //QVariantMap contingentValuesMap() const;
 
   double featureAttributesPaneX() const;
   double featureAttributesPaneY() const;
 
   QVariantMap featureAttributes() const;
   void setFeatureAttributes(QVariantMap featureAttributes);
+  void setActivityValues(QStringList activityValues);
+  void setProtectionValues(QStringList protectionValues);
 
   bool featureAttributesPaneVisibe() const;
   void setFeatureAttributesPaneVisibe(bool showFeatureAttributesPane);
@@ -94,6 +101,10 @@ private:
 
   QVariantMap codedValueDomains() const;
   QVariantMap rangeDomains() const;
+
+  QStringList activityValues() const;
+  QStringList protectionValues() const;
+  QVariantList bufferSizeValues() const;
 
 
   void deleteNest(Esri::ArcGISRuntime::ArcGISFeature* nestFeature);
@@ -120,7 +131,9 @@ private:
   bool m_valuesAreValid;
   QStringList m_fieldGroups;
 
-  QVariantMap m_contingentValuesMap;
+  QStringList m_activityValues;
+  QStringList m_protectionValues;
+  QVariantList m_bufferSizeValues;
 
   QStringList fields();
   QStringList validContingentValues();

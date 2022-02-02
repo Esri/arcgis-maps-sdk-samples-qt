@@ -78,10 +78,25 @@ ContingentValues::ContingentValues(QObject* parent /* = nullptr */):
   const QString dataPath = defaultDataPath() + "/ArcGIS/Runtime/Data/geodatabase/ContingentValuesBirdNests.geodatabase";
   m_geodatabase = new Geodatabase(dataPath, this);
 
+  setActivityValues(QStringList{"OCCUPIED", "UNOCCUPIED"});
+  setProtectionValues(QStringList{"ENDANGERED", "NOT_ENDANGERED", "NA"});
+  m_bufferSizeValues = {0, 120};
+
   //m_contingentValuesMap.insert("Activity", {"OCCUPIED", "UNOCCUPIED"});
 }
 
 ContingentValues::~ContingentValues() = default;
+
+void ContingentValues::updateField(QString field, QVariant value)
+{
+  m_featureAttributes.insert(field, value);
+}
+void ContingentValues::setProtectionValues(QStringList protectionValues)
+{
+  m_protectionValues = protectionValues;
+  emit featureValuesChanged();
+  qDebug() << "protection values" << m_protectionValues;
+}
 
 void ContingentValues::init()
 {
@@ -129,6 +144,7 @@ QStringList ContingentValues::getContingentValues(QString field, QString fieldGr
   QStringList contingentValuesNamesList;
 
   m_selectedFeature->attributes()->setAttributesMap(m_featureAttributes);
+  qDebug() << m_selectedFeature;
 
   qDebug() << m_selectedFeature->attributes()->attributesMap();
 
@@ -160,10 +176,10 @@ QStringList ContingentValues::getContingentValues(QString field, QString fieldGr
 
   qDebug() << "contingent values name list" << contingentValuesNamesList;
 
-  contingentValuesMap().value(field, contingentValuesNamesList);
+  //contingentValuesMap().value(field, contingentValuesNamesList);
 
   if (contingentValuesNamesList.isEmpty())
-    return {"<NULL>"};
+    return {};
 
   return contingentValuesNamesList;
 }
@@ -225,6 +241,7 @@ void ContingentValues::createConnections()
       m_map->operationalLayers()->append(m_nestsLayer);
 
       bufferFeatures();
+      qDebug() << "hello?";
 
 //      for (Field field : m_gdbFeatureTable->fields())
 //      {
@@ -235,19 +252,33 @@ void ContingentValues::createConnections()
 //          QList<QString> values = {""};
 //          for (CodedValue codedValue : codedValueDomain.codedValues())
 //          {
-//            values.append(codedValue.name());
+//            if (field.name() == "Activity")
+//            {
+//              m_activityValues.append(codedValue.name());
+//            }
+//            else if (field.name() == "Protection")
+//            {
+//              m_protectionValues.append(codedValue.name());
+//            }
 //          }
 //          m_codedValueDomains.insert(field.name(), (QVariant)values);
 //        }
 //        else if (field.domain().domainType() == DomainType::RangeDomain)
 //        {
 //          RangeDomain rangeDomain = static_cast<RangeDomain>(field.domain());
-//          m_rangeDomains.insert(field.name(), (QVariant)(QList<QString>({rangeDomain.minValue().toString(), rangeDomain.maxValue().toString()})));
+//          m_bufferSizeValues = {rangeDomain.minValue(), rangeDomain.maxValue()};
 //        }
 //      }
 
-//      if (!m_codedValueDomains.isEmpty() || !m_rangeDomains.isEmpty())
-//        emit domainsChanged();
+//      m_activityValues = QStringList{"OCCUPIED", "UNOCCUPIED"};
+//      m_protectionValues = QStringList{"ENDANGERED", "NOT_ENDANGERED", "NA"};
+//      m_bufferSizeValues = {0, 120};
+
+      //emit featureValuesChanged();
+      qDebug() << "yes?";
+
+      if (!m_codedValueDomains.isEmpty() || !m_rangeDomains.isEmpty())
+        emit domainsChanged();
 
       m_contingentValuesDefinition = m_gdbFeatureTable->contingentValuesDefinition();
 
@@ -345,6 +376,12 @@ void ContingentValues::setFeatureAttributesPaneVisibe(bool showFeatureAttributes
   emit featureAttributesPaneVisibeChanged();
 }
 
+void ContingentValues::setActivityValues(QStringList activityValues)
+{
+  m_activityValues = activityValues;
+  emit featureAttributesChanged();
+}
+
 double ContingentValues::featureAttributesPaneX() const
 {
   return m_featureAttributesPaneX;
@@ -353,14 +390,29 @@ double ContingentValues::featureAttributesPaneY() const
 {
   return m_featureAttributesPaneY;
 }
-QMap<QString, QList<QString>> ContingentValues::contingentValuesMap() const
-{
-  return m_contingentValuesMap;
-}
+//QMap<QString, QList<QString>> ContingentValues::contingentValuesMap() const
+//{
+//  return m_contingentValuesMap;
+//}
 
 QVariantMap ContingentValues::codedValueDomains() const
 {
   return m_codedValueDomains;
+}
+
+QStringList ContingentValues::activityValues() const
+{
+  return m_activityValues;
+}
+
+QStringList ContingentValues::protectionValues() const
+{
+  return m_protectionValues;
+}
+
+QVariantList ContingentValues::bufferSizeValues() const
+{
+  return m_bufferSizeValues;
 }
 
 QVariantMap ContingentValues::rangeDomains() const
@@ -372,10 +424,12 @@ void ContingentValues::modifyFeatures(QVariantMap attributes, QString modificati
 {
   if (modificationType == "SAVE")
   {
-    m_selectedFeature->attributes()->setAttributesMap(m_featureAttributes);
-    m_selectedFeature->setGeometry(Point(m_mapView->screenToLocation(m_featureAttributesPaneX, m_featureAttributesPaneY)));
+    Feature* newNest = m_gdbFeatureTable->createFeature(this);
+    newNest->attributes()->setAttributesMap(m_featureAttributes);
+    qDebug() << m_featureAttributes;
+    newNest->setGeometry(Point(m_mapView->screenToLocation(m_featureAttributesPaneX, m_featureAttributesPaneY)));
 
-    m_gdbFeatureTable->addFeature(m_selectedFeature);
+    m_gdbFeatureTable->addFeature(newNest);
 
   }
   else if (modificationType == "CANCEL")
@@ -396,4 +450,5 @@ void ContingentValues::modifyFeatures(QVariantMap attributes, QString modificati
 //  m_featureAttributes.clear();
 
   bufferFeatures();
+  m_featureAttributes.clear();
 }
