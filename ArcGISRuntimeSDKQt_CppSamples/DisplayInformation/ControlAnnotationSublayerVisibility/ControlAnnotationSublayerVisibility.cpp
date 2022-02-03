@@ -52,10 +52,11 @@ QString defaultDataPath()
 
   return dataPath;
 }
-} // namespace
 
 // sample MMPK location
-const QString sampleFileAnno {"/ArcGIS/Runtime/Data/mmpk/GasDeviceAnno.mmpk"}; // why not in namespace?
+const QString sampleFileAnno {"/ArcGIS/Runtime/Data/mmpk/GasDeviceAnno.mmpk"};
+
+} // namespace
 
 ControlAnnotationSublayerVisibility::ControlAnnotationSublayerVisibility(QObject* parent /* = nullptr */):
   QObject(parent)

@@ -103,7 +103,7 @@ void GOSymbols::addBuoyPoints(GraphicsOverlay* graphicsOverlay)
 
   // create the symbology for the points
   constexpr float size = 10.0f;
-  SimpleMarkerSymbol* sms = new SimpleMarkerSymbol(SimpleMarkerSymbolStyle::Circle, QColor("red"), size, this); // leak?
+  SimpleMarkerSymbol* sms = new SimpleMarkerSymbol(SimpleMarkerSymbolStyle::Circle, QColor("red"), size, this);
 
   // create a graphic and add each of them to the overlay
   for (const Point& buoyPoint : pointsList)
@@ -112,7 +112,6 @@ void GOSymbols::addBuoyPoints(GraphicsOverlay* graphicsOverlay)
     graphic->setSymbol(sms);
     graphicsOverlay->graphics()->append(graphic);
   }
-  delete sms;
 }
 //! [GOSymbols addBuoyPoints]
 
