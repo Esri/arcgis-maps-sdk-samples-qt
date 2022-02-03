@@ -46,7 +46,6 @@ FindClosestFacilityToMultipleIncidentsService::FindClosestFacilityToMultipleInci
 {
   // enable busy indicator while loading
   m_busy = true;
-  // emit busyChanged(); // emit in constuctor?
 
   createSymbols();
 

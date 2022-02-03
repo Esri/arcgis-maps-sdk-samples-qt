@@ -37,7 +37,6 @@ using namespace Esri::ArcGISRuntime;
 Buffer::Buffer(QQuickItem* parent /* = nullptr */):
   QQuickItem(parent)
 {
-  // emit bufferSizeChanged(); // emit in constructor?
 }
 
 void Buffer::init()

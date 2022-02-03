@@ -42,7 +42,6 @@ DisplaySubtypeFeatureLayer::DisplaySubtypeFeatureLayer(QObject* parent /* = null
   m_alternateRenderer(new SimpleRenderer(new SimpleMarkerSymbol(SimpleMarkerSymbolStyle::Diamond, QColor(Qt::magenta), 20, this), this))
 {
   m_busy = true;
-  // emit busyChanged(); // emit in constructor?
 
   // create the feature table
   ServiceFeatureTable* featureTable = new ServiceFeatureTable(QUrl("https://sampleserver7.arcgisonline.com/server/rest/services/UtilityNetwork/NapervilleElectric/FeatureServer/0"), m_cred, this);

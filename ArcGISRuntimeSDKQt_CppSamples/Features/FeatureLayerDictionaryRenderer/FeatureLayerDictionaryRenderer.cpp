@@ -114,7 +114,7 @@ void FeatureLayerDictionaryRenderer::componentComplete()
       DictionarySymbolStyle* dictionarySymbolStyle = DictionarySymbolStyle::createFromFile(stylePath, this);
       //! [Create Dictionary Symbol Style Cpp]
 
-      Q_UNUSED(specType);
+      Q_UNUSED(specType)
 
       const auto tables = m_geodatabase->geodatabaseFeatureTables();
       for (GeodatabaseFeatureTable* table : tables)

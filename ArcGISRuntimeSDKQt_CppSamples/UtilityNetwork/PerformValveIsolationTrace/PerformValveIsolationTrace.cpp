@@ -94,7 +94,6 @@ PerformValveIsolationTrace::PerformValveIsolationTrace(QObject* parent /* = null
 {
   // disable UI while loading service geodatabase and utility network
   m_tasksRunning = true;
-  // emit tasksRunningChanged(); // emit inside constructor?
 
   connect(m_serviceGeodatabase, &ServiceGeodatabase::doneLoading, this, [this](Error error)
   {

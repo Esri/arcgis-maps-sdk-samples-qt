@@ -228,7 +228,6 @@ void ApplyScheduledMapUpdates::connectSyncSignals()
       {
         // close mmpk out
         m_mobileMapPackage->close();
-        disconnect(m_mobileMapPackage, &MobileMapPackage::doneLoading, this, &ApplyScheduledMapUpdates::onMmpkDoneLoading);
         delete m_mobileMapPackage;
 
         // load mmpk again with new instance

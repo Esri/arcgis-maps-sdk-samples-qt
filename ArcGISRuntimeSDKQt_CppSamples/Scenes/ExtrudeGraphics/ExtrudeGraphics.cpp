@@ -107,8 +107,7 @@ void ExtrudeGraphics::componentComplete()
   for (const Point& point : pointsList)
   {
     // create a random z value
-    const int randNum = rand() % 6 + 1; // security.insecureAPI.rand: Warn on uses of inferior random number generating functions (only if arc4random function is available): drand48, erand48, jrand48, lcong48, lrand48, mrand48, nrand48, random, rand_r.
-
+    const int randNum = rand() % 6 + 1;
     const double z = m_maxZ * randNum;
 
     // create a list of points

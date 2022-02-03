@@ -94,7 +94,7 @@ void GODictionaryRenderer::componentComplete()
   m_graphicsOverlay->setRenderer(renderer);
   //! [Apply Dictionary Renderer Graphics Overlay Cpp]
 
-  Q_UNUSED(specType);
+  Q_UNUSED(specType)
 
   // Create a map and give it to the MapView
   m_mapView = findChild<MapQuickView*>("mapView");
