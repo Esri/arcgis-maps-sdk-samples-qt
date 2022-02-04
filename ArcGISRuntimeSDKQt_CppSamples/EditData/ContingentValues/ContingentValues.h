@@ -49,16 +49,12 @@ class ContingentValues : public QObject
 
   Q_PROPERTY(Esri::ArcGISRuntime::MapQuickView* mapView READ mapView WRITE setMapView NOTIFY mapViewChanged)
   Q_PROPERTY(QVariantMap featureAttributes READ featureAttributes WRITE setFeatureAttributes NOTIFY featureAttributesChanged)
-  Q_PROPERTY(QVariantMap codedValueDomains READ codedValueDomains NOTIFY domainsChanged)
-  Q_PROPERTY(QVariantMap rangeDomains READ rangeDomains NOTIFY domainsChanged)
 
-  Q_PROPERTY(QStringList activityValues READ activityValues WRITE setActivityValues NOTIFY featureValuesChanged)
-  Q_PROPERTY(QStringList protectionValues READ protectionValues WRITE setProtectionValues NOTIFY featureValuesChanged)
-  Q_PROPERTY(QVariantList bufferSizeValues READ bufferSizeValues NOTIFY featureValuesChanged)
+  Q_PROPERTY(QVariantMap activityValues READ activityValues WRITE setActivityValues NOTIFY featureValuesChanged)
+  Q_PROPERTY(QVariantMap protectionValues READ protectionValues WRITE setProtectionValues NOTIFY featureValuesChanged)
 
   Q_PROPERTY(bool featureAttributesPaneVisibe READ featureAttributesPaneVisibe WRITE setFeatureAttributesPaneVisibe NOTIFY featureAttributesPaneVisibeChanged)
-  Q_PROPERTY(double featureAttributesPaneX READ featureAttributesPaneX NOTIFY featureAttributesPaneVisibeChanged)
-  Q_PROPERTY(double featureAttributesPaneY READ featureAttributesPaneY NOTIFY featureAttributesPaneVisibeChanged)
+  Q_PROPERTY(QList<double> featureAttributesPaneXY READ featureAttributesPaneXY NOTIFY featureAttributesPaneVisibeChanged)
 
 
 
@@ -68,43 +64,35 @@ public:
 
   static void init();
 
-  Q_INVOKABLE void modifyFeatures(QVariantMap attributes, QString modificationType);
+  Q_INVOKABLE void createNewNest();
   Q_INVOKABLE bool validateContingentValues();
-  Q_INVOKABLE QStringList getContingentValues(QString field, QString fieldGroupName);
+  Q_INVOKABLE QVariantList getContingentValues(QString field, QString fieldGroupName);
   Q_INVOKABLE void updateField(QString field, QVariant value);
-  // Q_INVOKABLE void createNewNest();
 
 signals:
   void mapViewChanged();
   void featureAttributesChanged();
   void featureAttributesPaneVisibeChanged();
-  void domainsChanged();
   void featureValuesChanged();
 
 private:
   Esri::ArcGISRuntime::MapQuickView* mapView() const;
   void setMapView(Esri::ArcGISRuntime::MapQuickView* mapView);
-  //QVariantMap contingentValuesMap() const;
 
-  double featureAttributesPaneX() const;
-  double featureAttributesPaneY() const;
+  QList<double> featureAttributesPaneXY() const;
 
   QVariantMap featureAttributes() const;
   void setFeatureAttributes(QVariantMap featureAttributes);
-  void setActivityValues(QStringList activityValues);
-  void setProtectionValues(QStringList protectionValues);
+  void setActivityValues(QVariantMap activityValues);
+  void setProtectionValues(QVariantMap protectionValues);
 
   bool featureAttributesPaneVisibe() const;
   void setFeatureAttributesPaneVisibe(bool showFeatureAttributesPane);
 
   void createNewEmptyFeature();
 
-  QVariantMap codedValueDomains() const;
-  QVariantMap rangeDomains() const;
-
-  QStringList activityValues() const;
-  QStringList protectionValues() const;
-  QVariantList bufferSizeValues() const;
+  QVariantMap activityValues() const;
+  QVariantMap protectionValues() const;
 
 
   void deleteNest(Esri::ArcGISRuntime::ArcGISFeature* nestFeature);
@@ -123,17 +111,15 @@ private:
   Esri::ArcGISRuntime::ArcGISFeature* m_selectedFeature = nullptr;
   Esri::ArcGISRuntime::ArcGISFeature* m_newFeature = nullptr;
   bool m_featureAttributesPaneVisible = false;
-  double m_featureAttributesPaneX;
-  double m_featureAttributesPaneY;
+  QList<double> m_featureAttributesPaneXY;
   QVariantMap m_featureAttributes = {};
   QVariantMap m_codedValueDomains;
   QVariantMap m_rangeDomains;
   bool m_valuesAreValid;
   QStringList m_fieldGroups;
 
-  QStringList m_activityValues;
-  QStringList m_protectionValues;
-  QVariantList m_bufferSizeValues;
+  QVariantMap m_activityValues;
+  QVariantMap m_protectionValues;
 
   QStringList fields();
   QStringList validContingentValues();

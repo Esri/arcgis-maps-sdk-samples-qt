@@ -49,21 +49,20 @@ Item {
     Control {
         id: attributePrompt
 
-        x: contingentValuesSample.featureAttributesPaneX + width > sampleWindow.height ? contingentValuesSample.featureAttributesPaneX - width : contingentValuesSample.featureAttributesPaneX
-        y: contingentValuesSample.featureAttributesPaneY + height > sampleWindow.height ? contingentValuesSample.featureAttributesPaneY - height : contingentValuesSample.featureAttributesPaneY
-
+        x: (contingentValuesSample.featureAttributesPaneXY[0] + width > sampleWindow.height ? contingentValuesSample.featureAttributesPaneXY[0] - width : contingentValuesSample.featureAttributesPaneXY[0]) ?? 0;
+        y: (contingentValuesSample.featureAttributesPaneXY[1] + height > sampleWindow.height ? contingentValuesSample.featureAttributesPaneXY[1] - height : contingentValuesSample.featureAttributesPaneXY[1]) ?? 0;
         height: 200
         width: 150
 
         background: Rectangle {
-            color: "#d8e1ef"
+            color: "#3168ba" //"#d8e1ef"
         }
 
         contentItem: Column {
             Text { text: "Status" }
             ComboBox {
                 id: activityComboBox
-                model: [""].concat(contingentValuesSample.activityValues) ?? [""];
+                model: [""].concat(Object.keys(contingentValuesSample.activityValues));
 
                 enabled: true
 
@@ -72,45 +71,30 @@ Item {
                         protectionComboBox.model = [""];
                         return;
                     }
-
-                    const featureAttributeMap = contingentValuesSample.featureAttributes
                     contingentValuesSample.updateField("Status", activityComboBox.currentValue);
-
-                    console.log(contingentValuesSample.featureAttributes);
-
-                    contingentValuesSample.protectionValues = contingentValuesSample.getContingentValues("Protection", "ProtectionFieldGroup");
-                    protectionComboBox.model = [""].concat(contingentValuesSample.protectionValues) ?? [""];
-
+                    protectionComboBox.model = [""].concat(contingentValuesSample.getContingentValues("Protection", "ProtectionFieldGroup"));
                 }
             }
             Text { text: "Protection Status" }
             ComboBox {
                 id: protectionComboBox
-                model: [""].concat(contingentValuesSample.protectionValues) ?? [""];
+                model: [""];
 
                 enabled: activityComboBox.currentText !== ""
 
                 onCurrentValueChanged: {
-                    //return;
                     if (protectionComboBox.currentValue === "")
                         return;
 
-                    console.log("hello");
-                    const featureAttributeMap = contingentValuesSample.featureAttributes
-                    featureAttributeMap.Protection = protectionComboBox.currentValue;
-                    contingentValuesSample.featureAttributes = featureAttributeMap;
+                    contingentValuesSample.updateField("Protection", protectionComboBox.currentValue);
 
                     const minMax = contingentValuesSample.getContingentValues("BufferSize", "BufferSizeFieldGroup")
-                    console.log("minMax is", minMax);
                     if (minMax[0] !== "") {
-                    rangeValuesSpinBox.from = minMax[0];
-                    rangeValuesSpinBox.to = minMax[1];
-                    } else {
-                        rangeValuesSpinBox.from = 0;
-                        rangeValuesSpinBox.to = 0;
+                        rangeValuesSpinBox.from = minMax[0];
+                        rangeValuesSpinBox.to = minMax[1];
                     }
-
-
+                    if (minMax[1] === 0)
+                        contingentValuesSample.updateField("BufferSize", 0);
                 }
             }
 
@@ -123,46 +107,40 @@ Item {
             SpinBox {
                 id: rangeValuesSpinBox
                 editable: true
-                from: contingentValuesSample.bufferSizeValues[0] ?? 0;
-                to: contingentValuesSample.bufferSizeValues[1] ?? 120;
+                from: 0;
+                to: 0;
                 stepSize: 10
                 value: contingentValuesSample.featureAttributes["BufferSize"] ?? 0;
 
                 enabled: protectionComboBox.currentText !== ""
 
                 onValueChanged: {
-                    let temp = contingentValuesSample.featureAttributes;
-                    temp.BufferSize = rangeValuesSpinBox.value;
-                    contingentValuesSample.featureAttributes = temp;
-                }
+                    if (protectionComboBox.currentValue === "")
+                        return;
 
-
-            }
-            Button {
-                Text {
-                    text: "Save edits & close"
-                }
-                onClicked: {
-                    contingentValuesSample.modifyFeatures([], "SAVE");
-                    contingentValuesSample.featureAttributesPaneVisibe = false;
+                    contingentValuesSample.updateField("BufferSize", rangeValuesSpinBox.value);
                 }
             }
             Button {
                 Text {
-                    text: "Discard edits & close"
+                    text: "Save"
                 }
                 onClicked: {
-                 contingentValuesSample.modifyFeatures([], "CANCEL");
+                    const valid = contingentValuesSample.validateContingentValues();
+                    if (valid) {
+                        contingentValuesSample.createNewNest();
+                        contingentValuesSample.featureAttributesPaneVisibe = false;
+                    } else {
+                        console.log("feature not valid");
+                    }
+                }
+            }
+            Button {
+                Text {
+                    text: "Discard"
+                }
+                onClicked: {
                     contingentValuesSample.featureAttributesPaneVisibe = false
-                }
-            }
-            Button {
-                Text {
-                    text: "Delete feature"
-                }
-                onClicked: {
-                    contingentValuesSample.modifyFeatures([], "DELETE");
-                    contingentValuesSample.featureAttributesPaneVisibe = false;
                 }
             }
         }
@@ -172,6 +150,11 @@ Item {
         onVisibleChanged: {
             if (!visible)
                 return;
+
+            activityComboBox.currentIndex = 0;
+            protectionComboBox.currentIndex = 0;
+            rangeValuesSpinBox.from = 0;
+            rangeValuesSpinBox.to = 0;
         }
     }
 }
