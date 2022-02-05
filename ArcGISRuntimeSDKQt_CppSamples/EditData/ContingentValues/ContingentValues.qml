@@ -51,36 +51,50 @@ Item {
 
         x: (contingentValuesSample.featureAttributesPaneXY[0] + width > sampleWindow.height ? contingentValuesSample.featureAttributesPaneXY[0] - width : contingentValuesSample.featureAttributesPaneXY[0]) ?? 0;
         y: (contingentValuesSample.featureAttributesPaneXY[1] + height > sampleWindow.height ? contingentValuesSample.featureAttributesPaneXY[1] - height : contingentValuesSample.featureAttributesPaneXY[1]) ?? 0;
-        height: 200
-        width: 150
 
         background: Rectangle {
-            color: "#3168ba" //"#d8e1ef"
+            color: "#fdfdfd"
         }
 
-        contentItem: Column {
-            Text { text: "Status" }
-            ComboBox {
-                id: activityComboBox
-                model: [""].concat(Object.keys(contingentValuesSample.activityValues));
+        visible: contingentValuesSample.featureAttributesPaneVisibe
 
-                enabled: true
+        contentItem: Column {
+            id: column
+            spacing: 5
+            padding: 10
+
+            Text {
+                text: "Status"
+                font.bold: true
+                font.pointSize: 11
+            }
+
+            ComboBox {
+                id: statusComboBox
+                width: column.implicitWidth
+                model: [""].concat(Object.keys(contingentValuesSample.statusValues));
 
                 onCurrentValueChanged: {
-                    if (activityComboBox.currentValue === "") {
+                    if (statusComboBox.currentValue === "") {
                         protectionComboBox.model = [""];
                         return;
                     }
-                    contingentValuesSample.updateField("Status", activityComboBox.currentValue);
+                    contingentValuesSample.updateField("Status", statusComboBox.currentValue);
                     protectionComboBox.model = [""].concat(contingentValuesSample.getContingentValues("Protection", "ProtectionFieldGroup"));
                 }
             }
-            Text { text: "Protection Status" }
+
+            Text {
+                text: "Protection"
+                font.bold: true
+                font.pointSize: 11
+            }
+
             ComboBox {
                 id: protectionComboBox
                 model: [""];
 
-                enabled: activityComboBox.currentText !== ""
+                enabled: statusComboBox.currentText !== ""
 
                 onCurrentValueChanged: {
                     if (protectionComboBox.currentValue === "")
@@ -89,20 +103,29 @@ Item {
                     contingentValuesSample.updateField("Protection", protectionComboBox.currentValue);
 
                     const minMax = contingentValuesSample.getContingentValues("BufferSize", "BufferSizeFieldGroup")
+
+                    // If getContingentValues() returned results, update the spin box values
                     if (minMax[0] !== "") {
                         rangeValuesSpinBox.from = minMax[0];
                         rangeValuesSpinBox.to = minMax[1];
+
+                        // If the maxValue in the range is 0, set the buffer size to 0
+                        if (minMax[1] === 0) {
+                            contingentValuesSample.updateField("BufferSize", 0);
+                            saveButton.enabled = contingentValuesSample.validateContingentValues();
+                        }
                     }
-                    if (minMax[1] === 0)
-                        contingentValuesSample.updateField("BufferSize", 0);
                 }
             }
 
             Text {
                 text: "Buffer Size"
+                font.bold: true
+                font.pointSize: 11
             }
             Text {
                 text: rangeValuesSpinBox.from + " to " + rangeValuesSpinBox.to;
+                anchors.horizontalCenter: parent.horizontalCenter
             }
             SpinBox {
                 id: rangeValuesSpinBox
@@ -110,7 +133,7 @@ Item {
                 from: 0;
                 to: 0;
                 stepSize: 10
-                value: contingentValuesSample.featureAttributes["BufferSize"] ?? 0;
+                value: 0;
 
                 enabled: protectionComboBox.currentText !== ""
 
@@ -119,25 +142,38 @@ Item {
                         return;
 
                     contingentValuesSample.updateField("BufferSize", rangeValuesSpinBox.value);
+                    saveButton.enabled = contingentValuesSample.validateContingentValues();
                 }
             }
+
             Button {
+                id: saveButton
                 Text {
                     text: "Save"
+                    anchors.fill: parent
+                    horizontalAlignment: Text.AlignHCenter
+                    verticalAlignment: Text.AlignVCenter
                 }
+
+                enabled: false
+
                 onClicked: {
                     const valid = contingentValuesSample.validateContingentValues();
                     if (valid) {
                         contingentValuesSample.createNewNest();
                         contingentValuesSample.featureAttributesPaneVisibe = false;
-                    } else {
-                        console.log("feature not valid");
                     }
                 }
             }
+
             Button {
+                id: button
                 Text {
                     text: "Discard"
+                    anchors.verticalCenter: parent.verticalCenter
+                    horizontalAlignment: Text.AlignHCenter
+                    verticalAlignment: Text.AlignVCenter
+                    anchors.horizontalCenter: parent.horizontalCenter
                 }
                 onClicked: {
                     contingentValuesSample.featureAttributesPaneVisibe = false
@@ -145,13 +181,12 @@ Item {
             }
         }
 
-        visible: contingentValuesSample.featureAttributesPaneVisibe
-
         onVisibleChanged: {
             if (!visible)
                 return;
 
-            activityComboBox.currentIndex = 0;
+            // Reset attribute panel values
+            statusComboBox.currentIndex = 0;
             protectionComboBox.currentIndex = 0;
             rangeValuesSpinBox.from = 0;
             rangeValuesSpinBox.to = 0;

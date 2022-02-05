@@ -22,6 +22,7 @@ namespace Esri
 namespace ArcGISRuntime
 {
 class ArcGISFeature;
+class FeatureQueryResult;
 class CodedValue;
 class ContingentValuesDefinition;
 class FeatureLayer;
@@ -41,6 +42,7 @@ class Symbol;
 #include <QMap>
 #include <QList>
 #include <QStringList>
+#include <QMouseEvent>
 
 class ContingentValues : public QObject
 {
@@ -48,10 +50,8 @@ class ContingentValues : public QObject
 
 
   Q_PROPERTY(Esri::ArcGISRuntime::MapQuickView* mapView READ mapView WRITE setMapView NOTIFY mapViewChanged)
-  Q_PROPERTY(QVariantMap featureAttributes READ featureAttributes WRITE setFeatureAttributes NOTIFY featureAttributesChanged)
 
-  Q_PROPERTY(QVariantMap activityValues READ activityValues WRITE setActivityValues NOTIFY featureValuesChanged)
-  Q_PROPERTY(QVariantMap protectionValues READ protectionValues WRITE setProtectionValues NOTIFY featureValuesChanged)
+  Q_PROPERTY(QVariantMap statusValues READ statusValues NOTIFY featureValuesChanged)
 
   Q_PROPERTY(bool featureAttributesPaneVisibe READ featureAttributesPaneVisibe WRITE setFeatureAttributesPaneVisibe NOTIFY featureAttributesPaneVisibeChanged)
   Q_PROPERTY(QList<double> featureAttributesPaneXY READ featureAttributesPaneXY NOTIFY featureAttributesPaneVisibeChanged)
@@ -71,7 +71,6 @@ public:
 
 signals:
   void mapViewChanged();
-  void featureAttributesChanged();
   void featureAttributesPaneVisibeChanged();
   void featureValuesChanged();
 
@@ -81,48 +80,31 @@ private:
 
   QList<double> featureAttributesPaneXY() const;
 
-  QVariantMap featureAttributes() const;
-  void setFeatureAttributes(QVariantMap featureAttributes);
-  void setActivityValues(QVariantMap activityValues);
-  void setProtectionValues(QVariantMap protectionValues);
-
   bool featureAttributesPaneVisibe() const;
   void setFeatureAttributesPaneVisibe(bool showFeatureAttributesPane);
 
-  void createNewEmptyFeature();
+  void bufferFeaturesFromQueryResults(QUuid, Esri::ArcGISRuntime::FeatureQueryResult* results);
 
-  QVariantMap activityValues() const;
-  QVariantMap protectionValues() const;
-
+  QVariantMap statusValues() const;
 
   void deleteNest(Esri::ArcGISRuntime::ArcGISFeature* nestFeature);
   void bufferFeatures();
   void createConnections();
 
-  Esri::ArcGISRuntime::Map* m_map = nullptr;
-  Esri::ArcGISRuntime::MapQuickView* m_mapView = nullptr;
-  Esri::ArcGISRuntime::ServiceFeatureTable* m_serviceFeatureTable = nullptr;
-  Esri::ArcGISRuntime::GraphicsOverlay* m_graphicsOverlay = nullptr;
-  Esri::ArcGISRuntime::Symbol* m_bufferSymbol = nullptr;
-  Esri::ArcGISRuntime::FeatureLayer* m_nestsLayer = nullptr;
+  void createNewEmptyFeature(QMouseEvent mouseEvent);
+
+  Esri::ArcGISRuntime::ArcGISFeature* m_newFeature = nullptr;
   Esri::ArcGISRuntime::ContingentValuesDefinition* m_contingentValuesDefinition = nullptr;
   Esri::ArcGISRuntime::Geodatabase* m_geodatabase = nullptr;
   Esri::ArcGISRuntime::GeodatabaseFeatureTable* m_gdbFeatureTable = nullptr;
-  Esri::ArcGISRuntime::ArcGISFeature* m_selectedFeature = nullptr;
-  Esri::ArcGISRuntime::ArcGISFeature* m_newFeature = nullptr;
+  Esri::ArcGISRuntime::GraphicsOverlay* m_graphicsOverlay = nullptr;
+  Esri::ArcGISRuntime::Map* m_map = nullptr;
+  Esri::ArcGISRuntime::MapQuickView* m_mapView = nullptr;
+
+  QVariantMap m_statusValues;
+  QVariantMap m_protectionValues;
   bool m_featureAttributesPaneVisible = false;
   QList<double> m_featureAttributesPaneXY;
-  QVariantMap m_featureAttributes = {};
-  QVariantMap m_codedValueDomains;
-  QVariantMap m_rangeDomains;
-  bool m_valuesAreValid;
-  QStringList m_fieldGroups;
-
-  QVariantMap m_activityValues;
-  QVariantMap m_protectionValues;
-
-  QStringList fields();
-  QStringList validContingentValues();
 };
 
 #endif // CONTINGENTVALUES_H
