@@ -49,6 +49,7 @@ Item {
     Control {
         id: attributePrompt
 
+        // Expand the attributes pane depending on where the user clicks or taps
         x: (contingentValuesSample.featureAttributesPaneXY[0] + width > sampleWindow.height ? contingentValuesSample.featureAttributesPaneXY[0] - width : contingentValuesSample.featureAttributesPaneXY[0]) ?? 0;
         y: (contingentValuesSample.featureAttributesPaneXY[1] + height > sampleWindow.height ? contingentValuesSample.featureAttributesPaneXY[1] - height : contingentValuesSample.featureAttributesPaneXY[1]) ?? 0;
 
@@ -59,7 +60,7 @@ Item {
         visible: contingentValuesSample.featureAttributesPaneVisibe
 
         contentItem: Column {
-            id: column
+            id: inputColumn
             spacing: 5
             padding: 10
 
@@ -71,7 +72,8 @@ Item {
 
             ComboBox {
                 id: statusComboBox
-                width: column.implicitWidth
+
+                // This ComboBox is hardcoded, but can be dynamically obtained from the feature layer's domain values
                 model: [""].concat(Object.keys(contingentValuesSample.statusValues));
 
                 onCurrentValueChanged: {
@@ -79,7 +81,10 @@ Item {
                         protectionComboBox.model = [""];
                         return;
                     }
+
+                    // Update the feature's attribute map with the selection
                     contingentValuesSample.updateField("Status", statusComboBox.currentValue);
+                    // Append the valid contingent coded values to the subsequent ComboBox
                     protectionComboBox.model = [""].concat(contingentValuesSample.getContingentValues("Protection", "ProtectionFieldGroup"));
                 }
             }
@@ -100,8 +105,10 @@ Item {
                     if (protectionComboBox.currentValue === "")
                         return;
 
+                    // Update the feature's attribute map with the selection
                     contingentValuesSample.updateField("Protection", protectionComboBox.currentValue);
 
+                    // Get the valid contingent range values for the subsequent SpinBox
                     const minMax = contingentValuesSample.getContingentValues("BufferSize", "BufferSizeFieldGroup")
 
                     // If getContingentValues() returned results, update the spin box values
@@ -123,10 +130,11 @@ Item {
                 font.bold: true
                 font.pointSize: 11
             }
+
             Text {
                 text: rangeValuesSpinBox.from + " to " + rangeValuesSpinBox.to;
-                anchors.horizontalCenter: parent.horizontalCenter
             }
+
             SpinBox {
                 id: rangeValuesSpinBox
                 editable: true
@@ -142,6 +150,8 @@ Item {
                         return;
 
                     contingentValuesSample.updateField("BufferSize", rangeValuesSpinBox.value);
+
+                    // Validate that all contingencies are valid, if so, enable the save button
                     saveButton.enabled = contingentValuesSample.validateContingentValues();
                 }
             }
@@ -167,13 +177,12 @@ Item {
             }
 
             Button {
-                id: button
+                id: discardButton
                 Text {
                     text: "Discard"
-                    anchors.verticalCenter: parent.verticalCenter
+                    anchors.fill: parent
                     horizontalAlignment: Text.AlignHCenter
                     verticalAlignment: Text.AlignVCenter
-                    anchors.horizontalCenter: parent.horizontalCenter
                 }
                 onClicked: {
                     contingentValuesSample.featureAttributesPaneVisibe = false
@@ -185,7 +194,7 @@ Item {
             if (!visible)
                 return;
 
-            // Reset attribute panel values
+            // Reset attribute panel values when the panel opens
             statusComboBox.currentIndex = 0;
             protectionComboBox.currentIndex = 0;
             rangeValuesSpinBox.from = 0;
