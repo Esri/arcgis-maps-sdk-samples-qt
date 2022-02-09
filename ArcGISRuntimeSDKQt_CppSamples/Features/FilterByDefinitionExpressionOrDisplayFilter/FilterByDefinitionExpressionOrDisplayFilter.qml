@@ -83,8 +83,8 @@ FilterByDefinitionExpressionOrDisplayFilterSample {
             width: 200
             onClicked: {
                 // Call C++ invokable function to reset the definition expression and display filter
-                definitionExpressionOrDisplayFilterSample.setDefExpression("");
-                definitionExpressionOrDisplayFilterSample.setDisplayFilter("");
+                definitionExpressionOrDisplayFilterSample.resetDisplayFilterParams();
+                definitionExpressionOrDisplayFilterSample.resetDefExpressionParams();
             }
         }
     }

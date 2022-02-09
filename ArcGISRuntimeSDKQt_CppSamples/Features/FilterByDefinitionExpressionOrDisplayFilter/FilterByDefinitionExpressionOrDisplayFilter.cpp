@@ -133,3 +133,39 @@ void FilterByDefinitionExpressionOrDisplayFilter::queryFeatureCountInCurrentExte
 
   m_featureTable->queryFeatureCount(parameters);
 }
+
+void FilterByDefinitionExpressionOrDisplayFilter::resetDisplayFilterParams()
+{
+  DisplayFilter* displayFilter = new DisplayFilter("Damaged Trees", "", this);
+  const QList<DisplayFilter*> available_filters{displayFilter};
+
+  ManualDisplayFilterDefinition* display_filter_defintion = new ManualDisplayFilterDefinition(displayFilter, available_filters, this);
+  m_featureLayer->setDisplayFilterDefinition(display_filter_defintion);
+
+  queryFeatureCountInCurrentExtent();
+}
+
+void FilterByDefinitionExpressionOrDisplayFilter::resetDefExpressionParams()
+{
+  m_featureLayer->setDefinitionExpression("");
+
+  connect(m_mapView, &MapQuickView::drawStatusChanged, this, [this](DrawStatus drawStatus)
+  {
+    if (drawStatus == DrawStatus::Completed)
+    {
+      m_mapDrawing = false;
+      queryFeatureCountInCurrentExtent();
+    }
+    else
+    {
+      m_mapDrawing = true;
+    }
+    
+    emit mapDrawStatusChanged();
+  });
+}
+
+bool FilterByDefinitionExpressionOrDisplayFilter::mapDrawing() const
+{
+  return m_mapDrawing;
+}
