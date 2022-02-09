@@ -31,6 +31,7 @@ class GeodatabaseFeatureTable;
 class GraphicsOverlay;
 class Map;
 class MapQuickView;
+class MobileMapPackage;
 class ServiceFeatureTable;
 class Symbol;
 }
@@ -48,15 +49,10 @@ class ContingentValues : public QObject
 {
   Q_OBJECT
 
-
   Q_PROPERTY(Esri::ArcGISRuntime::MapQuickView* mapView READ mapView WRITE setMapView NOTIFY mapViewChanged)
-
   Q_PROPERTY(QVariantMap statusValues READ statusValues NOTIFY featureValuesChanged)
-
   Q_PROPERTY(bool featureAttributesPaneVisibe READ featureAttributesPaneVisibe WRITE setFeatureAttributesPaneVisibe NOTIFY featureAttributesPaneVisibeChanged)
   Q_PROPERTY(QList<double> featureAttributesPaneXY READ featureAttributesPaneXY NOTIFY featureAttributesPaneVisibeChanged)
-
-
 
 public:
   explicit ContingentValues(QObject* parent = nullptr);
@@ -65,9 +61,9 @@ public:
   static void init();
 
   Q_INVOKABLE void createNewNest();
-  Q_INVOKABLE bool validateContingentValues();
   Q_INVOKABLE QVariantList getContingentValues(QString field, QString fieldGroupName);
   Q_INVOKABLE void updateField(QString field, QVariant value);
+  Q_INVOKABLE bool validateContingentValues();
 
 signals:
   void mapViewChanged();
@@ -78,20 +74,14 @@ private:
   Esri::ArcGISRuntime::MapQuickView* mapView() const;
   void setMapView(Esri::ArcGISRuntime::MapQuickView* mapView);
 
-  QList<double> featureAttributesPaneXY() const;
-
-  bool featureAttributesPaneVisibe() const;
-  void setFeatureAttributesPaneVisibe(bool showFeatureAttributesPane);
-
-  void bufferFeaturesFromQueryResults(QUuid, Esri::ArcGISRuntime::FeatureQueryResult* results);
-
-  QVariantMap statusValues() const;
-
-  void deleteNest(Esri::ArcGISRuntime::ArcGISFeature* nestFeature);
   void bufferFeatures();
+  void bufferFeaturesFromQueryResults(QUuid, Esri::ArcGISRuntime::FeatureQueryResult* results);
   void createConnections();
-
   void createNewEmptyFeature(QMouseEvent mouseEvent);
+  bool featureAttributesPaneVisibe() const;
+  QList<double> featureAttributesPaneXY() const;
+  QVariantMap statusValues() const;
+  void setFeatureAttributesPaneVisibe(bool showFeatureAttributesPane);
 
   Esri::ArcGISRuntime::ArcGISFeature* m_newFeature = nullptr;
   Esri::ArcGISRuntime::ContingentValuesDefinition* m_contingentValuesDefinition = nullptr;
@@ -100,6 +90,7 @@ private:
   Esri::ArcGISRuntime::GraphicsOverlay* m_graphicsOverlay = nullptr;
   Esri::ArcGISRuntime::Map* m_map = nullptr;
   Esri::ArcGISRuntime::MapQuickView* m_mapView = nullptr;
+  Esri::ArcGISRuntime::MobileMapPackage* m_mmpk = nullptr;
 
   QVariantMap m_statusValues;
   QVariantMap m_protectionValues;

@@ -21,24 +21,19 @@
 #include "ContingentValues.h"
 
 #include "ArcGISFeature.h"
+#include "ArcGISVectorTiledLayer.h"
 #include "CodedValueDomain.h"
-#include "ContingentValue.h"
 #include "ContingentCodedValue.h"
 #include "ContingentRangeValue.h"
 #include "ContingentValuesDefinition.h"
 #include "ContingentValuesResult.h"
-#include "Domain.h"
 #include "FeatureLayer.h"
-#include "Field.h"
-#include "FieldGroup.h"
 #include "Geodatabase.h"
 #include "GeodatabaseFeatureTable.h"
 #include "GeometryEngine.h"
 #include "Map.h"
 #include "MapQuickView.h"
 #include "MobileMapPackage.h"
-#include "RangeDomain.h"
-#include "ServiceFeatureTable.h"
 #include "SimpleFillSymbol.h"
 #include "SimpleLineSymbol.h"
 #include "SimpleRenderer.h"
@@ -72,11 +67,17 @@ QString defaultDataPath()
 }
 
 ContingentValues::ContingentValues(QObject* parent /* = nullptr */):
-  QObject(parent),
-  m_map(new Map(BasemapStyle::ArcGISTerrain, this))
+  QObject(parent)
 {
-  const QString dataPath = defaultDataPath() + "/ArcGIS/Runtime/Data/geodatabase/ContingentValuesBirdNests.geodatabase";
-  m_geodatabase = new Geodatabase(dataPath, this);
+  // Load the basemap from a vector tile package
+  const QString vtpkDataPath = defaultDataPath() + "/ArcGIS/Runtime/Data/vtpk/FillmoreTopographicMap.vtpk";
+  ArcGISVectorTiledLayer* fillmoreVTPK = new ArcGISVectorTiledLayer(QUrl::fromLocalFile(vtpkDataPath), this);
+  Basemap* fillmoreBasemap = new Basemap(fillmoreVTPK, this);
+  m_map = new Map(fillmoreBasemap, this);
+
+  // Load the geodatabase from a mobile geodatabase
+  const QString gdbDataPath = defaultDataPath() + "/ArcGIS/Runtime/Data/geodatabase/ContingentValuesBirdNests.geodatabase";
+  m_geodatabase = new Geodatabase(gdbDataPath, this);
 
   // The coded value domains in this sample are hardcoded for simplicity, but can be retrieved from the GeodatabaseFeatureTable's Field's Domains.
   m_statusValues = QVariantMap{{"Occupied", "OCCUPIED"}, {"Unoccupied", "UNOCCUPIED"}};
@@ -120,25 +121,6 @@ void ContingentValues::setMapView(MapQuickView* mapView)
   emit mapViewChanged();
 }
 
-void ContingentValues::createNewEmptyFeature(QMouseEvent mouseEvent)
-{
-  // When the user clicks or taps on the map, instantiate a new feature and show the attribute form interface
-  if (m_newFeature)
-  {
-    delete m_newFeature;
-    m_newFeature = nullptr;
-  }
-
-  // Open the attribute form from where the user clicks
-  m_featureAttributesPaneXY = {(double)mouseEvent.x(), (double)mouseEvent.y()};
-
-  // Create a new empty feature to define attributes for
-  m_newFeature = static_cast<ArcGISFeature*>(m_gdbFeatureTable->createFeature(this));
-
-  // Show the attribute form interface
-  setFeatureAttributesPaneVisibe(true);
-}
-
 void ContingentValues::createConnections()
 {
   connect(m_geodatabase, &Geodatabase::doneLoading, this, [this]()
@@ -168,6 +150,25 @@ void ContingentValues::createConnections()
   });
 
   connect(m_mapView, &MapQuickView::mouseClicked, this, &ContingentValues::createNewEmptyFeature);
+}
+
+void ContingentValues::createNewEmptyFeature(QMouseEvent mouseEvent)
+{
+  // When the user clicks or taps on the map, instantiate a new feature and show the attribute form interface
+  if (m_newFeature)
+  {
+    delete m_newFeature;
+    m_newFeature = nullptr;
+  }
+
+  // Open the attribute form from where the user clicks
+  m_featureAttributesPaneXY = {(double)mouseEvent.x(), (double)mouseEvent.y()};
+
+  // Create a new empty feature to define attributes for
+  m_newFeature = static_cast<ArcGISFeature*>(m_gdbFeatureTable->createFeature(this));
+
+  // Show the attribute form interface
+  setFeatureAttributesPaneVisibe(true);
 }
 
 QVariantList ContingentValues::getContingentValues(QString field, QString fieldGroupName)
