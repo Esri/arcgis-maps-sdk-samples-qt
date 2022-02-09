@@ -151,10 +151,17 @@ void FilterByDefinitionExpressionOrDisplayFilter::resetDefExpressionParams()
 
   connect(m_mapView, &MapQuickView::drawStatusChanged, this, [this](DrawStatus drawStatus)
   {
-    drawStatus == DrawStatus::InProgress ? m_mapDrawing = true : m_mapDrawing = false;
+    if (drawStatus == DrawStatus::Completed)
+    {
+      m_mapDrawing = false;
+      queryFeatureCountInCurrentExtent();
+    }
+    else
+    {
+      m_mapDrawing = true;
+    }
+    
     emit mapDrawStatusChanged();
-
-    queryFeatureCountInCurrentExtent();
   });
 }
 
