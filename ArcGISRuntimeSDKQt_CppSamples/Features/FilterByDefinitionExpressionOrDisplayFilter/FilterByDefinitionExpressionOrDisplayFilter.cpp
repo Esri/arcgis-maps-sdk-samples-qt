@@ -33,15 +33,9 @@
 #include "ServiceFeatureTable.h"
 #include "Viewpoint.h"
 
-#include <chrono>
-#include <thread>
-
 #include <QUrl>
 
 using namespace Esri::ArcGISRuntime;
-//using namespace std::this_thread;     // sleep_for, sleep_until
-//using namespace std::chrono_literals; // ns, us, ms, s, h, etc.
-//using std::chrono::system_clock;
 
 FilterByDefinitionExpressionOrDisplayFilter::FilterByDefinitionExpressionOrDisplayFilter(QQuickItem* parent) :
   QQuickItem(parent)
@@ -153,17 +147,15 @@ void FilterByDefinitionExpressionOrDisplayFilter::resetDisplayFilterParams()
 
 void FilterByDefinitionExpressionOrDisplayFilter::resetDefExpressionParams()
 {
-   m_featureLayer->setDefinitionExpression("");
+  m_featureLayer->setDefinitionExpression("");
 
-   connect(m_mapView, &MapQuickView::drawStatusChanged, this, [this](DrawStatus drawStatus)
-   {
-     drawStatus == DrawStatus::InProgress ? m_mapDrawing = true : m_mapDrawing = false;
-     emit mapDrawStatusChanged();
+  connect(m_mapView, &MapQuickView::drawStatusChanged, this, [this](DrawStatus drawStatus)
+  {
+    drawStatus == DrawStatus::InProgress ? m_mapDrawing = true : m_mapDrawing = false;
+    emit mapDrawStatusChanged();
 
-     queryFeatureCountInCurrentExtent();
-   });
-
-
+    queryFeatureCountInCurrentExtent();
+  });
 }
 
 bool FilterByDefinitionExpressionOrDisplayFilter::mapDrawing() const
