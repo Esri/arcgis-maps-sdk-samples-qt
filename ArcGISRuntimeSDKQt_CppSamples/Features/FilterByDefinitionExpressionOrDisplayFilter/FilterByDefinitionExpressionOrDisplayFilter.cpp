@@ -33,9 +33,15 @@
 #include "ServiceFeatureTable.h"
 #include "Viewpoint.h"
 
+#include <chrono>
+#include <thread>
+
 #include <QUrl>
 
 using namespace Esri::ArcGISRuntime;
+//using namespace std::this_thread;     // sleep_for, sleep_until
+//using namespace std::chrono_literals; // ns, us, ms, s, h, etc.
+//using std::chrono::system_clock;
 
 FilterByDefinitionExpressionOrDisplayFilter::FilterByDefinitionExpressionOrDisplayFilter(QQuickItem* parent) :
   QQuickItem(parent)
@@ -132,4 +138,35 @@ void FilterByDefinitionExpressionOrDisplayFilter::queryFeatureCountInCurrentExte
   });
 
   m_featureTable->queryFeatureCount(parameters);
+}
+
+void FilterByDefinitionExpressionOrDisplayFilter::resetDisplayFilterParams()
+{
+  DisplayFilter* displayFilter = new DisplayFilter("Damaged Trees", "", this);
+  const QList<DisplayFilter*> available_filters{displayFilter};
+
+  ManualDisplayFilterDefinition* display_filter_defintion = new ManualDisplayFilterDefinition(displayFilter, available_filters, this);
+  m_featureLayer->setDisplayFilterDefinition(display_filter_defintion);
+
+  queryFeatureCountInCurrentExtent();
+}
+
+void FilterByDefinitionExpressionOrDisplayFilter::resetDefExpressionParams()
+{
+   m_featureLayer->setDefinitionExpression("");
+
+   connect(m_mapView, &MapQuickView::drawStatusChanged, this, [this](DrawStatus drawStatus)
+   {
+     drawStatus == DrawStatus::InProgress ? m_mapDrawing = true : m_mapDrawing = false;
+     emit mapDrawStatusChanged();
+
+     queryFeatureCountInCurrentExtent();
+   });
+
+
+}
+
+bool FilterByDefinitionExpressionOrDisplayFilter::mapDrawing() const
+{
+  return m_mapDrawing;
 }
