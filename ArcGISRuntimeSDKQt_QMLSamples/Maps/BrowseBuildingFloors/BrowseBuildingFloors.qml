@@ -24,25 +24,34 @@ Rectangle {
     width: 800
     height: 600
 
+    property FloorManager floorManager;
+
     MapView {
         id: mapView
         anchors.fill: parent
 
         PortalItem {
-                    id: portalItem
-                    itemId: "f133a698536f44c8884ad81f80b6cfc7"
-                    Component.onCompleted: load();
-                    onLoadStatusChanged: {
-                        if (loadStatus !== Enums.LoadStatusLoaded) {
-                            return;
-                        }
-                    }
+            id: portalItem
+            itemId: "f133a698536f44c8884ad81f80b6cfc7"
+            Component.onCompleted: load();
+            onLoadStatusChanged: {
+                if (loadStatus !== Enums.LoadStatusLoaded) {
+                    return;
                 }
+            }
+        }
 
         Map {
             id: arcgisOnlineMap
             item: portalItem
+
+            onLoadStatusChanged: {
+                if (arcgisOnlineMap.loadStatus === Enums.LoadStatusLoaded) {
+                    arcgisOnlineMap.floorManager.load();
+                }
+            }
         }
+
 
         Column {
             spacing: 15
@@ -61,25 +70,40 @@ Rectangle {
                 text: "Select Floor"
                 onClicked: {
 
-//                    const floorLevel = ArcGISRuntimeEnvironment.createObject(
-//                                                                "FloorManager", {
-//                                                                 });
+                    if (arcgisOnlineMap.loadStatus === Enums.LoadStatusLoaded) {
+                        arcgisOnlineMap.floorManager.load();
+                    }
 
-
+                    const levels = arcgisOnlineMap.floorManager.levels;
 
                     if (floor_level.currentText == "Level 1")
                     {
-                        //set the floor to level 1
+                        // Set the floor to level 1
+                        levels[0].visible = true
+
+                        // Make the other floors invisible
+                        levels[1].visible = false
+                        levels[2].visible = false
                     }
 
                     if (floor_level.currentText == "Level 2")
                     {
-                      //set the floor to level 2
+                        // Set the floor to level 2
+                        levels[1].visible = true
+
+                        // Make the other floors invisible
+                        levels[0].visible = false
+                        levels[2].visible = false
                     }
 
                     if (floor_level.currentText == "Level 3")
                     {
-                      //set the floor to level 3
+                        // Set the floor to level 3
+                        levels[2].visible = true
+
+                        // Make the other floors invisible
+                        levels[0].visible = false
+                        levels[1].visible = false
                     }
                 }
             }
