@@ -53,7 +53,6 @@ private:
   Esri::ArcGISRuntime::Map* m_map = nullptr;
   Esri::ArcGISRuntime::MapQuickView* m_mapView = nullptr;
   Esri::ArcGISRuntime::FloorManager* m_floorManager = nullptr;
-  Esri::ArcGISRuntime::FloorLevel* m_floorLevel = nullptr;
 };
 
 #endif // BROWSEBUILDINGFLOORS_H

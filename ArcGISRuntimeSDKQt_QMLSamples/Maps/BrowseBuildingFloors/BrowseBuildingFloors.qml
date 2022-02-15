@@ -52,7 +52,6 @@ Rectangle {
             }
         }
 
-
         Column {
             spacing: 15
             padding: 10
@@ -69,7 +68,6 @@ Rectangle {
                 anchors.horizontalCenter: parent.horizontalCenter
                 text: "Select Floor"
                 onClicked: {
-
                     if (arcgisOnlineMap.loadStatus === Enums.LoadStatusLoaded) {
                         arcgisOnlineMap.floorManager.load();
                     }

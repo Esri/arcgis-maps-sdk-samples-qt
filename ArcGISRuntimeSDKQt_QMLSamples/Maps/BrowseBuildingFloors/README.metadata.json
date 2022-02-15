@@ -3,7 +3,7 @@
     "description": "Display and browse through building floors from a floor-aware web map.",
     "ignore": false,
     "images": [
-        "BrowseBuildingFloors.png"
+        "screenshot.png"
     ],
     "keywords": [
         "building",
