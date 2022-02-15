@@ -20,13 +20,8 @@
 
 #include "BrowseBuildingFloors.h"
 
-//#include "FloorFacility.h"
 #include "FloorLevel.h"
 #include "FloorManager.h"
-//#include "FloorSite.h"
-#include <QDebug>
-
-
 #include "Map.h"
 #include "MapQuickView.h"
 
@@ -41,8 +36,6 @@ BrowseBuildingFloors::BrowseBuildingFloors(QObject* parent /* = nullptr */):
 
   // Create a map object using the portalItem
   m_map = new Map(portalItem, this);
-
-
 
   connect(m_map, &Map::doneLoading, this, [this]()
   {
@@ -60,6 +53,9 @@ BrowseBuildingFloors::BrowseBuildingFloors(QObject* parent /* = nullptr */):
         {
           level->setVisible(false);
         }
+
+        // Manually set the default floor level to the first floor
+        m_floorManager->levels().at(0)->setVisible(true);
       }
     });
   });
@@ -93,20 +89,17 @@ void BrowseBuildingFloors::setMapView(MapQuickView* mapView)
 
 void BrowseBuildingFloors::selectFloor(const QString& floor_number)
 {
-
-  qDebug() << floor_number;
-
-  if (floor_number == QString("LeveL 1"))
+  if (floor_number.compare("Level 1") == 0)
   {
     m_floorManager->levels().at(0)->setVisible(true);
   }
 
-  else if (floor_number == QString("LeveL 2"))
+  if (floor_number.compare("Level 2") == 0)
   {
     m_floorManager->levels().at(1)->setVisible(true);
   }
 
-  else if (floor_number == QString("LeveL 3"))
+  if (floor_number.compare("Level 3") == 0)
   {
     m_floorManager->levels().at(2)->setVisible(true);
   }

@@ -34,6 +34,7 @@ Item {
 
     Column {
         spacing: 15
+        padding: 10
 
         ComboBox {
             id: floor_level
@@ -43,6 +44,7 @@ Item {
 
         Button {
             id: select_floor
+            width: 200
             anchors.horizontalCenter: parent.horizontalCenter
             text: "Select Floor"
             onClicked: {
