@@ -1,31 +1,41 @@
-# BrowseBuildingFloors
+# Browse building floors
 
 Display and browse through building floors from a floor-aware web map.
-This sample demonstrates ...       
-This is **why** you would do it this way ...
 
-![](screenshot.png)
+![Image of browse building floors](BrowseBuildingFloors.png)
+
+## Use case
+
+Having map data to aid indoor navigation in buildings with multiple floors such as airports, museums, or offices can be incredibly useful. For example, you may wish to browse through all available floor maps for an office in order to find the location of an upcoming meeting in advance.
 
 ## How to use the sample
-e.g. Use the input controls to define a ... Click the "Go" button to ...
+
+Use the dropdown menu to browse different floor levels in the facility. Only the selected floor will be displayed.
 
 ## How it works
-e.g. In the `GeoView.Tapped` event, features in the `Map` are selected using an `Envelope` defined by the user's tap location ...
+
+1. Create a `PortalItem` using the identifier of a floor-aware web map.
+2. Create a map using the portal item.
+3. Create a map view and assign the map to it.
+4. Wait for the map to load and retrieve the map's `FloorManager`.
+5. Wait for the floor manager to load and get its list of `FloorLevel`s.
+6. Set the `isVisible` property to false for all floor levels.
+7. Set only the selected `FloorLevel` to visible using the `isVisible` property of the floor level.
+* **Note:** Manually set the default floor level to the first floor.
 
 ## Relevant API
- - ClassName1
- - MethodName
 
-## Offline data
-Read more about how to set up the sample's offline data [here](http://links.esri.com/ArcGISRuntimeQtSamples).
+* FloorLevel
+* FloorManager
 
-Link | Local Location
----------|-------|
-|[San Francisco Streets TPK](https://www.arcgis.com/home/item.html?id=3f1bbf0ec70b409a975f5c91f363fe7d)| `<userhome>`/ArcGIS/Runtime/Data/tpk/SanFrancisco.tpk |
+## About the data
+
+This sample uses a [floor-aware web map](https://www.arcgis.com/home/item.html?id=f133a698536f44c8884ad81f80b6cfc7) that displays the floors of Building L on the Esri Redlands campus.
 
 ## Additional information
-A standard level license is required to ...
+
+The `FloorManager` API also supports browsing different sites and facilities in addition to building floors.
 
 ## Tags
-Routing, Network analysis, Geocode
 
+building, facility, floor, floor-aware, floors, ground floor, indoor, level, site, story

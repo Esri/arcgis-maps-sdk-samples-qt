@@ -23,6 +23,8 @@ namespace ArcGISRuntime
 {
 class Map;
 class MapQuickView;
+class FloorManager;
+class FloorLevel;
 }
 }
 
@@ -39,6 +41,7 @@ public:
   ~BrowseBuildingFloors();
 
   static void init();
+  Q_INVOKABLE void selectFloor(const QString& floor_number);
 
 signals:
   void mapViewChanged();
@@ -49,6 +52,8 @@ private:
 
   Esri::ArcGISRuntime::Map* m_map = nullptr;
   Esri::ArcGISRuntime::MapQuickView* m_mapView = nullptr;
+  Esri::ArcGISRuntime::FloorManager* m_floorManager = nullptr;
+  Esri::ArcGISRuntime::FloorLevel* m_floorLevel = nullptr;
 };
 
 #endif // BROWSEBUILDINGFLOORS_H

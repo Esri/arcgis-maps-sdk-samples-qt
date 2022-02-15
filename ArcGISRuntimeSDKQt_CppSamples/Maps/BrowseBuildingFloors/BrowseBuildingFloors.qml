@@ -31,4 +31,23 @@ Item {
         id: model
         mapView: view
     }
+
+    Column {
+        spacing: 15
+
+        ComboBox {
+            id: floor_level
+            width: 200
+            model: ["Level 1", "Level 2", "Level 3"]
+        }
+
+        Button {
+            id: select_floor
+            anchors.horizontalCenter: parent.horizontalCenter
+            text: "Select Floor"
+            onClicked: {
+                model.selectFloor(floor_level.currentText);
+            }
+        }
+    }
 }

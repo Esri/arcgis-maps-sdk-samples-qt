@@ -20,6 +20,13 @@
 
 #include "BrowseBuildingFloors.h"
 
+//#include "FloorFacility.h"
+#include "FloorLevel.h"
+#include "FloorManager.h"
+//#include "FloorSite.h"
+#include <QDebug>
+
+
 #include "Map.h"
 #include "MapQuickView.h"
 
@@ -29,7 +36,33 @@ BrowseBuildingFloors::BrowseBuildingFloors(QObject* parent /* = nullptr */):
   QObject(parent),
   m_map(new Map(BasemapStyle::ArcGISTopographic, this))
 {
+  Portal* portal = new Portal(QUrl("https://www.arcgis.com/"), this);
+  PortalItem* portalItem = new PortalItem(portal, "f133a698536f44c8884ad81f80b6cfc7", this);
 
+  // Create a map object using the portalItem
+  m_map = new Map(portalItem, this);
+
+
+
+  connect(m_map, &Map::doneLoading, this, [this]()
+  {
+    if (m_map->loadStatus() == LoadStatus::Loaded)
+    {
+      m_floorManager = m_map->floorManager();
+    }
+
+    m_floorManager->load();
+    connect(m_floorManager, &FloorManager::doneLoading, this, [this]()
+    {
+      if (m_floorManager->loadStatus() == LoadStatus::Loaded)
+      {
+        for (auto& level : m_floorManager->levels())
+        {
+          level->setVisible(false);
+        }
+      }
+    });
+  });
 }
 
 BrowseBuildingFloors::~BrowseBuildingFloors() = default;
@@ -56,4 +89,25 @@ void BrowseBuildingFloors::setMapView(MapQuickView* mapView)
   m_mapView->setMap(m_map);
 
   emit mapViewChanged();
+}
+
+void BrowseBuildingFloors::selectFloor(const QString& floor_number)
+{
+
+  qDebug() << floor_number;
+
+  if (floor_number == QString("LeveL 1"))
+  {
+    m_floorManager->levels().at(0)->setVisible(true);
+  }
+
+  else if (floor_number == QString("LeveL 2"))
+  {
+    m_floorManager->levels().at(1)->setVisible(true);
+  }
+
+  else if (floor_number == QString("LeveL 3"))
+  {
+    m_floorManager->levels().at(2)->setVisible(true);
+  }
 }
