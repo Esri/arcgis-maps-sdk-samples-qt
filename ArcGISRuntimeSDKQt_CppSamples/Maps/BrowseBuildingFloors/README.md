@@ -2,7 +2,7 @@
 
 Display and browse through building floors from a floor-aware web map.
 
-![Image of browse building floors](BrowseBuildingFloors.png)
+![Image of browse building floors](screenshot.png)
 
 ## Use case
 
