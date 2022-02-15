@@ -5,7 +5,7 @@
         <file>BrowseBuildingFloors.h</file>
         <file>BrowseBuildingFloors.cpp</file>
         <file>main.qml</file>
-        <file>BrowseBuildingFloors.png</file>
         <file>README.md</file>
+        <file>screenshot.png</file>
     </qresource>
 </RCC>

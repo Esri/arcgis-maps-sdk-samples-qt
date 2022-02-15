@@ -33,7 +33,6 @@ Rectangle {
         PortalItem {
             id: portalItem
             itemId: "f133a698536f44c8884ad81f80b6cfc7"
-            Component.onCompleted: load();
             onLoadStatusChanged: {
                 if (loadStatus !== Enums.LoadStatusLoaded) {
                     return;
@@ -68,10 +67,6 @@ Rectangle {
                 anchors.horizontalCenter: parent.horizontalCenter
                 text: "Select Floor"
                 onClicked: {
-                    if (arcgisOnlineMap.loadStatus === Enums.LoadStatusLoaded) {
-                        arcgisOnlineMap.floorManager.load();
-                    }
-
                     const levels = arcgisOnlineMap.floorManager.levels;
 
                     if (floor_level.currentText == "Level 1")

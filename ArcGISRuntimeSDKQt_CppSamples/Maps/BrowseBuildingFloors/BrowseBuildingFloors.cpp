@@ -28,8 +28,7 @@
 using namespace Esri::ArcGISRuntime;
 
 BrowseBuildingFloors::BrowseBuildingFloors(QObject* parent /* = nullptr */):
-  QObject(parent),
-  m_map(new Map(BasemapStyle::ArcGISTopographic, this))
+  QObject(parent)
 {
   Portal* portal = new Portal(QUrl("https://www.arcgis.com/"), this);
   PortalItem* portalItem = new PortalItem(portal, "f133a698536f44c8884ad81f80b6cfc7", this);
@@ -44,12 +43,11 @@ BrowseBuildingFloors::BrowseBuildingFloors(QObject* parent /* = nullptr */):
       m_floorManager = m_map->floorManager();
     }
 
-    m_floorManager->load();
     connect(m_floorManager, &FloorManager::doneLoading, this, [this]()
     {
       if (m_floorManager->loadStatus() == LoadStatus::Loaded)
       {
-        for (auto& level : m_floorManager->levels())
+        for (Esri::ArcGISRuntime::FloorLevel* level : m_floorManager->levels())
         {
           level->setVisible(false);
         }
@@ -58,6 +56,7 @@ BrowseBuildingFloors::BrowseBuildingFloors(QObject* parent /* = nullptr */):
         m_floorManager->levels().at(0)->setVisible(true);
       }
     });
+    m_floorManager->load();
   });
 }
 
@@ -92,15 +91,27 @@ void BrowseBuildingFloors::selectFloor(const QString& floor_number)
   if (floor_number.compare("Level 1") == 0)
   {
     m_floorManager->levels().at(0)->setVisible(true);
+
+    //Make the other floors invisible
+    m_floorManager->levels().at(1)->setVisible(false);
+    m_floorManager->levels().at(2)->setVisible(false);
   }
 
   if (floor_number.compare("Level 2") == 0)
   {
     m_floorManager->levels().at(1)->setVisible(true);
+
+    //Make the other floors invisible
+    m_floorManager->levels().at(0)->setVisible(false);
+    m_floorManager->levels().at(2)->setVisible(false);
   }
 
   if (floor_number.compare("Level 3") == 0)
   {
     m_floorManager->levels().at(2)->setVisible(true);
+
+    //Make the other floors invisible
+    m_floorManager->levels().at(0)->setVisible(false);
+    m_floorManager->levels().at(1)->setVisible(false);
   }
 }
