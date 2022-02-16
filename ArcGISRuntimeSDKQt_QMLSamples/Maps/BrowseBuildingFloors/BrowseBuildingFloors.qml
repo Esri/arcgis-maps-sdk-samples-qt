@@ -33,11 +33,6 @@ Rectangle {
         PortalItem {
             id: portalItem
             itemId: "f133a698536f44c8884ad81f80b6cfc7"
-            onLoadStatusChanged: {
-                if (loadStatus !== Enums.LoadStatusLoaded) {
-                    return;
-                }
-            }
         }
 
         Map {
@@ -66,6 +61,7 @@ Rectangle {
                 width: 200
                 anchors.horizontalCenter: parent.horizontalCenter
                 text: "Select Floor"
+                enabled: arcgisOnlineMap.floorManager ? arcgisOnlineMap.floorManager.loadStatus === Enums.LoadStatusLoaded : false
                 onClicked: {
                     const levels = arcgisOnlineMap.floorManager.levels;
 
