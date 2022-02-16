@@ -41,7 +41,9 @@ Rectangle {
 
             onLoadStatusChanged: {
                 if (arcgisOnlineMap.loadStatus === Enums.LoadStatusLoaded) {
-                    arcgisOnlineMap.floorManager.load();
+                    if (arcgisOnlineMap.floorManager) {
+                        arcgisOnlineMap.floorManager.load();
+                    }
                 }
             }
         }

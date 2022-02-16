@@ -25,9 +25,9 @@
         "FloorManager"
     ],
     "snippets": [
-        "BrowseBuildingFloors.qml",
         "BrowseBuildingFloors.cpp",
-        "BrowseBuildingFloors.h"
+        "BrowseBuildingFloors.h",
+        "BrowseBuildingFloors.qml"
     ],
     "title": "BrowseBuildingFloors"
 }

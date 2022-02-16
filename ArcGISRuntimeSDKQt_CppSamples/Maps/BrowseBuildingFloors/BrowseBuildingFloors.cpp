@@ -45,7 +45,7 @@ BrowseBuildingFloors::BrowseBuildingFloors(QObject* parent /* = nullptr */):
 
     connect(m_floorManager, &FloorManager::doneLoading, this, [this]()
     {
-      if (m_floorManager->loadStatus() == LoadStatus::Loaded)
+      if (m_floorManager && m_floorManager->loadStatus() == LoadStatus::Loaded)
       {
         for (FloorLevel* level : m_floorManager->levels())
         {
@@ -88,7 +88,7 @@ void BrowseBuildingFloors::setMapView(MapQuickView* mapView)
 
 void BrowseBuildingFloors::selectFloor(const QString& floor_number)
 {
-  if (m_floorManager->loadStatus() == LoadStatus::Loaded)
+  if (m_floorManager && m_floorManager->loadStatus() == LoadStatus::Loaded)
   {
     if (floor_number.compare("Level 1") == 0)
     {
