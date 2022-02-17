@@ -1,0 +1,33 @@
+{
+    "category": "Maps",
+    "description": "Display and browse through building floors from a floor-aware web map.",
+    "ignore": false,
+    "images": [
+        "screenshot.png"
+    ],
+    "keywords": [
+        "building",
+        "facility",
+        "floor",
+        "floor-aware",
+        "floors",
+        "ground floor",
+        "indoor",
+        "level",
+        "site",
+        "story",
+        "FloorLevel",
+        "FloorManager"
+    ],
+    "redirect_from": "",
+    "relevant_apis": [
+        "FloorLevel",
+        "FloorManager"
+    ],
+    "snippets": [
+        "BrowseBuildingFloors.cpp",
+        "BrowseBuildingFloors.h",
+        "BrowseBuildingFloors.qml"
+    ],
+    "title": "BrowseBuildingFloors"
+}
