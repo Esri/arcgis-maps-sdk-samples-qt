@@ -2,7 +2,7 @@
 
 Parse NMEA sentences and use the results to show device location on the map.
 
-![Image of NMEA location data source](NMEA-location-data-source.pn
+![](NMEA-location-data-source.pn
 
 ## Use case
 
