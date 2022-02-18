@@ -20,7 +20,7 @@ Use the radio buttons to toggle between the dictionary symbols from the web styl
     *  If the file style toggle has been selected, create a new `DictionarySymbolStyle` using `DictionarySymbolStyle::createFromFile(const QString &styleFilePath)`
 3. Create a new `DictionaryRenderer`, providing the dictionary symbol style.
 4. Apply the dictionary renderer to a feature layer using `FeatureLayer::setRenderer(Renderer *renderer)`.
-5. Add the feature layer to the map's operational layers using `getOperationalLayers().add(featureLayer)`.
+5. Add the feature layer to the map's operational layers using `Map::OperationalLayers::append(Layer* layer)`.
 
 ## Relevant API
 
