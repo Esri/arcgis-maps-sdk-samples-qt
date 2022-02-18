@@ -12,7 +12,7 @@ The NMEA location data source allows for detailed interrogation of the informati
 
 ## How to use the sample
 
-Tap "Start" to parse the NMEA sentences into a simulated location data source, and initiate the location display. Tap "Recenter" to recenter the location display. Tap "Reset" to reset the location display.
+Tap "Start" to parse the NMEA sentences into a simulated location data source, and initiate the location display. Tap "Reset" to reset the location display.
 
 ## How it works
 
