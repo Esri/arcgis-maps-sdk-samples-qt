@@ -25,7 +25,6 @@ Pan and zoom to explore the scene. Notice the labels showing installation dates 
 
 ## Relevant API
 
-* AGSArcadeLabelExpression
 * ArcadeLabelExpression
 * FeatureLayer
 * LabelDefinition
