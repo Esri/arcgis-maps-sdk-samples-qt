@@ -2,7 +2,7 @@
 
 Use a custom dictionary style created from a web style or local style file (.stylx) to symbolize features using a variety of attribute values.
 
-![](CustomDictionaryStyle.png)
+![](screenshot.png)
 
 ## Use case
 
