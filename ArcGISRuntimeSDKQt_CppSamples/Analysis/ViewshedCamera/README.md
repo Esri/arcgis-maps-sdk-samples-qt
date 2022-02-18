@@ -14,7 +14,7 @@ The sample will start with a viewshed created from the initial camera location, 
 
 ## How it works
 
-1. Get the current camera from the scene with `SceneView.currentViewpointCamera`.
+1. Get the current camera from the scene with `SceneView::currentViewpointCamera`.
 2. Create a `LocationViewshed`, passing in the `Camera` and a min/max distance.
 3. Update the viewshed from a camera.
 
