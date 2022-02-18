@@ -23,17 +23,15 @@ Tap "Start" to parse the NMEA sentences into a simulated location data source, a
 
 ## Relevant API
 
-* AGSLocation
-* AGSLocationDisplay
-* AGSNMEALocationDataSource
-* AGSNMEASatelliteInfo
-* AGSSimulatedLocationDataSource ‼️ remove this if you don't use a simulated data source
+* Location
+* LocationDisplay
+* NmeaLocationDataSource
 
 ## About the data
 
-A list of NMEA sentences is used to initialize a `SimulatedNMEADataSource` object. This simulated data source provides NMEA data periodically, and allows the sample to be used on devices without a GPS dongle that produces NMEA data.
+This sample reads lines from a local file to simulate the feed of data into the `NmeaLocationDataSource`. This simulated data source provides NMEA data periodically, and allows the sample to be used on devices without a GPS dongle that produces NMEA data.
 
-he route taken in this sample features a [2-minute driving trip around Redlands, CA](https://arcgis.com/home/item.html?id=d5bad9f4fee9483791e405880fb466da).
+The route taken in this sample features a [two-minute driving trip around Redlands, CA](https://arcgis.com/home/item.html?id=d5bad9f4fee9483791e405880fb466da).
 
 ## Tags
 dongle, GPS, history, navigation, NMEA, real-time, trace

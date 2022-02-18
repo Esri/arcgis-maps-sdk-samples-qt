@@ -2,7 +2,7 @@
 
 This sample demonstrates how to display custom labels in a 3D scene.
 
-![](show-labels-on-layer-3d.png)
+![](screenshot.png)
 
 ## Use case
 
@@ -14,18 +14,17 @@ Pan and zoom to explore the scene. Notice the labels showing installation dates 
 
 ## How it works
 
-1. Create an `AGSScene` from a `PortalItem`.
-2. Add the scene to an `AGSSceneView` and load it.
-3. After loading is complete, obtain the `AGSFeatureLayer` from one of the `AGSGroupLayer`s in the scene's `operationalLayers`.
+1. Create a `Scene` from a `PortalItem`.
+2. Add the scene to a `SceneView` and load it.
+3. After loading is complete, obtain the `FeatureLayer` from one of the `GroupLayer`s in the scene's `operationalLayers`.
 4. Create a `TextSymbol` to define how labels are stylized.
 5. After the `Scene` has loaded, obtain the `FeatureLayer` from the scene's `operationalLayers`.
-6. Create an `AGSLabelDefinition` using an  `AGSArcadeLabelExpression`.
-* Set the "labelExpressionInfo.expression" key to define what text the label should display. You can use fields of the feature by using `$feature.NAME` in the expression.
+6. Create an `LabelDefinition` using an  `ArcadeLabelExpression`.
+    * Set the "labelExpressionInfo.expression" key to define what text the label should display. You can use fields of the feature by using `$feature.NAME` in the expression.
 7. Add the definition to the feature layer's `labelDefinitions` array.
 
 ## Relevant API
 
-* AGSArcadeLabelExpression
 * ArcadeLabelExpression
 * FeatureLayer
 * LabelDefinition

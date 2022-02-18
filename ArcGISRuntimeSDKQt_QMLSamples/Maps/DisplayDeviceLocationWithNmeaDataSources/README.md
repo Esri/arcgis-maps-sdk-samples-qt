@@ -2,7 +2,7 @@
 
 Parse NMEA sentences and use the results to show device location on the map.
 
-![](NMEA-location-data-source.pn
+![](screenshot.png)
 
 ## Use case
 
@@ -12,7 +12,7 @@ The NMEA location data source allows for detailed interrogation of the informati
 
 ## How to use the sample
 
-Tap "Start" to parse the NMEA sentences into a simulated location data source, and initiate the location display. Tap "Recenter" to recenter the location display. Tap "Reset" to reset the location display.
+Tap "Start" to parse the NMEA sentences into a simulated location data source, and initiate the location display. Tap "Reset" to reset the location display.
 
 ## How it works
 
@@ -23,17 +23,15 @@ Tap "Start" to parse the NMEA sentences into a simulated location data source, a
 
 ## Relevant API
 
-* AGSLocation
-* AGSLocationDisplay
-* AGSNMEALocationDataSource
-* AGSNMEASatelliteInfo
-* AGSSimulatedLocationDataSource ‼️ remove this if you don't use a simulated data source
+* Location
+* LocationDisplay
+* NmeaLocationDataSource
 
 ## About the data
 
-A list of NMEA sentences is used to initialize a `SimulatedNMEADataSource` object. This simulated data source provides NMEA data periodically, and allows the sample to be used on devices without a GPS dongle that produces NMEA data.
+This sample reads lines from a local file to simulate the feed of data into the `NmeaLocationDataSource`. This simulated data source provides NMEA data periodically, and allows the sample to be used on devices without a GPS dongle that produces NMEA data.
 
-he route taken in this sample features a [2-minute driving trip around Redlands, CA](https://arcgis.com/home/item.html?id=d5bad9f4fee9483791e405880fb466da).
+The route taken in this sample features a [two-minute driving trip around Redlands, CA](https://arcgis.com/home/item.html?id=d5bad9f4fee9483791e405880fb466da).
 
 ## Tags
 dongle, GPS, history, navigation, NMEA, real-time, trace
