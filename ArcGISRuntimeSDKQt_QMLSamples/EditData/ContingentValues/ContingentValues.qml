@@ -28,13 +28,34 @@ Rectangle {
     height: 600
 
     readonly property url dataPath: System.userHomePath + "/ArcGIS/Runtime/Data/"
+
+    // The X,Y coordinates from which to open the attribute pane and place new features
     property int attributePromptX: 0
     property int attributePromptY: 0
+
+    // Feature to define attributes for with ContingentValues
     property var newFeature: null;
+
+    // TaskId to track the queryFeatures() function of the GeodatabaseFeatureTable
+    property var taskId;
+
+    // GeodatabaseFeatureTable
+    property var birdNestsTable: null;
+
+    // Field Domains are hardcoded to simplify this sample, but can be obtained from a FeatureTable's Domain
+    property var statusValues: {"Occupied":"OCCUPIED", "Unoccupied":"UNOCCUPIED"};
+    property var protectionValues: {"Endangered":"ENDANGERED", "Not endangered":"NOT_ENDANGERED", "N/A":"NA"};
 
     MapView {
         id: mapView
         anchors.fill: parent
+
+        MouseArea {
+            anchors.fill: mapView
+            visible: attributePrompt.visible
+            onClicked: mouse.accepted = attributePrompt.visible
+            onWheel: wheel.accepted = attributePrompt.visible
+        }
 
         Component.onCompleted: {
             // Set and keep the focus on MapView to enable keyboard navigation
@@ -45,7 +66,6 @@ Rectangle {
             Basemap {
                 ArcGISVectorTiledLayer {
                     url: dataPath + "vtpk/FillmoreTopographicMap.vtpk"
-                    onErrorChanged: console.log("vtpk", error.message);
                 }
             }
 
@@ -60,39 +80,34 @@ Rectangle {
 
             FeatureLayer {
                 id: nestsLayer
-                featureTable: gdb.geodatabaseFeatureTablesByTableName["BirdNests"] ?? null;
+                featureTable: birdNestsTable ?? null;
 
                 Geodatabase {
                     id: gdb
                     path: dataPath + "geodatabase/ContingentValuesBirdNests.geodatabase"
-                    onErrorChanged: console.log("gdb", error.message);
 
                     onLoadStatusChanged: {
                         if (loadStatus === Enums.LoadStatusLoaded) {
-                            gdb.geodatabaseFeatureTablesByTableName["BirdNests"].contingentValuesDefinition.load();
+                            birdNestsTable = gdb.geodatabaseFeatureTablesByTableName["BirdNests"];
+                            birdNestsTable.load();
+
+                            // Load the ContingentValuesDefinition to enable access to the GeodatabaseFeatureTable's ContingentValues data such as FieldGroups and ContingentValuesResults
+                            birdNestsTable.contingentValuesDefinition.load();
                         }
                     }
-
-
                 }
 
-
                 onLoadStatusChanged: {
-                    console.log(nestsLayer.loadStatus);
                     if (nestsLayer.loadStatus === Enums.LoadStatusLoaded) {
+                        // Load map with initial nest buffers showing
                         bufferFeatures();
                     }
                 }
-
-                onErrorChanged: console.log("feature layer", error.message);
             }
-            //! [FeatureLayer Geodatabase create]
-
-            onErrorChanged: console.log("map", error.message);
         }
 
         GraphicsOverlay {
-            id: bufferGraphcis
+            id: bufferGraphicsOverlay
             renderer: SimpleRenderer {
                 SimpleFillSymbol {
                     style: Enums.SimpleFillSymbolStyleForwardDiagonal
@@ -107,20 +122,21 @@ Rectangle {
         }
 
         onMouseClicked: {
+            // Set the attribute prompt to open at the mouse click location
             attributePromptX = mouse.x;
             attributePromptY = mouse.y;
             attributePrompt.visible = true;
+
+            // Create a new feature to append attribute values to
             newFeature = nestsLayer.featureTable.createFeatureWithAttributes({}, mouse.mapPoint);
         }
-
-        onErrorChanged: console.log("map view", error.message);
     }
 
 
     Control {
         id: attributePrompt
 
-        // Expand the attributes pane depending on where the user clicks or taps
+        // Expand the attributes pane in a direction depending on where the user clicks or taps
         x: (attributePromptX + width > sampleWindow.height ? attributePromptX - width : attributePromptX) ?? 0;
         y: (attributePromptY + height > sampleWindow.height ? attributePromptY - height : attributePromptY) ?? 0;
 
@@ -137,8 +153,10 @@ Rectangle {
 
             Text {
                 text: "Status"
-                font.bold: true
-                font.pointSize: 11
+                font {
+                    bold: true
+                    pointSize: 11
+                }
             }
 
             ComboBox {
@@ -148,14 +166,14 @@ Rectangle {
                 model: ["", "Occupied", "Unoccupied"]
 
                 onCurrentValueChanged: {
-                    console.log(newFeature);
                     if (statusComboBox.currentValue === "") {
                         protectionComboBox.model = [""];
                         return;
                     }
 
                     // Update the feature's attribute map with the selection
-                    newFeature.attributes["Status"] = statusComboBox.currentValue;
+                    newFeature.attributes.replaceAttribute("Status", statusValues[statusComboBox.currentValue]);
+
                     // Append the valid contingent coded values to the subsequent ComboBox
                     protectionComboBox.model = [""].concat(getContingentValues("Protection", "ProtectionFieldGroup"));
                 }
@@ -163,8 +181,10 @@ Rectangle {
 
             Text {
                 text: "Protection"
-                font.bold: true
-                font.pointSize: 11
+                font {
+                    bold: true
+                    pointSize: 11
+                }
             }
 
             ComboBox {
@@ -178,7 +198,7 @@ Rectangle {
                         return;
 
                     // Update the feature's attribute map with the selection
-                    updateField("Protection", protectionComboBox.currentValue);
+                    newFeature.attributes.replaceAttribute("Protection", protectionValues[protectionComboBox.currentValue]);
 
                     // Get the valid contingent range values for the subsequent SpinBox
                     const minMax = getContingentValues("BufferSize", "BufferSizeFieldGroup")
@@ -188,19 +208,19 @@ Rectangle {
                         rangeValuesSpinBox.from = minMax[0];
                         rangeValuesSpinBox.to = minMax[1];
 
-                        // If the maxValue in the range is 0, set the buffer size to 0
-                        if (minMax[1] === 0) {
-                            updateField("BufferSize", 0);
-                            saveButton.enabled = validateContingentValues();
-                        }
+                        // Explicitly set the buffer size to the rangeValuesSpinBox value in case onValueChanged doesn't trigger
+                        newFeature.attributes.replaceAttribute("BufferSize", rangeValuesSpinBox.value);
+                        saveButton.enabled = validateContingentValues();
                     }
                 }
             }
 
             Text {
                 text: "Buffer Size"
-                font.bold: true
-                font.pointSize: 11
+                font {
+                    bold: true
+                    pointSize: 11
+                }
             }
 
             Text {
@@ -221,7 +241,7 @@ Rectangle {
                     if (protectionComboBox.currentValue === "")
                         return;
 
-                    updateField("BufferSize", rangeValuesSpinBox.value);
+                    newFeature.attributes.replaceAttribute("BufferSize", rangeValuesSpinBox.value);
 
                     // Validate that all contingencies are valid, if so, enable the save button
                     saveButton.enabled = validateContingentValues();
@@ -231,17 +251,17 @@ Rectangle {
             Button {
                 id: saveButton
                 Text {
-                    text: "Save"
                     anchors.fill: parent
                     horizontalAlignment: Text.AlignHCenter
                     verticalAlignment: Text.AlignVCenter
+                    text: "Save"
                 }
 
                 enabled: false
 
                 onClicked: {
                     const valid = validateContingentValues();
-                    if (valid) {
+                    if (validateContingentValues()) {
                         createNewNest();
                         attributePrompt.visible = false;
                     }
@@ -251,10 +271,10 @@ Rectangle {
             Button {
                 id: discardButton
                 Text {
-                    text: "Discard"
                     anchors.fill: parent
                     horizontalAlignment: Text.AlignHCenter
                     verticalAlignment: Text.AlignVCenter
+                    text: "Discard"
                 }
                 onClicked: {
                     attributePrompt.visible = false
@@ -274,26 +294,81 @@ Rectangle {
         }
     }
 
-    function getContingentValues() {
-        let contingentValuesResult = gdb.geodatabaseFeatureTablesByTableName["BirdNests"].contingentValues(newFeature, "Protection");
-        const contingentValuesList = contingentValuesResult.contingentValuesByFieldGroup.ProtectionFieldGroup;
+    function getContingentValues(field, fieldGroup) {
+        const contingentValuesResult = birdNestsTable.contingentValues(newFeature, field);
+        const contingentValuesList = contingentValuesResult.contingentValuesByFieldGroup[fieldGroup];
 
-        console.log(contingentValuesList);
+        const returnList = [];
+
+        contingentValuesList.forEach(contingentValue => {
+                                         if (contingentValue.objectType === Enums.ContingentValueTypeContingentCodedValue) {
+                                             returnList.push(contingentValue.codedValue.name);
+                                         } else if (contingentValue.objectType === Enums.ContingentValueTypeContingentRangeValue) {
+                                             returnList.push(contingentValue.minValue);
+                                             returnList.push(contingentValue.maxValue);
+                                         }
+                                     });
+        return returnList;
     }
 
     function validateContingentValues() {
+        const contingencyConstraintsList = birdNestsTable.validateContingencyConstraints(newFeature);
 
+        if (contingencyConstraintsList.length === 0)
+            return true;
+
+        return false;
     }
 
     function createNewNest() {
-
+        if (newFeature) {
+            birdNestsTable.addFeature(newFeature);
+            bufferFeatures();
+        }
     }
 
+    QueryParameters {
+        id: bufferParameters
+        whereClause: "BufferSize > 0"
+    }
+
+    // This function creates a buffer around nest features based on their BufferSize value.
+    // it is included to demonstrate the sample use case
     function bufferFeatures() {
-        console.log("and here we should be buffering");
-    }
+        const featureStatusChanged = ()=> {
+            switch (birdNestsTable.queryFeaturesStatus) {
+                case Enums.TaskStatusCompleted:
+                birdNestsTable.queryFeaturesStatusChanged.disconnect(featureStatusChanged);
+                bufferGraphicsOverlay.graphics.clear();
 
-    function updateField() {
+                const result = birdNestsTable.queryFeaturesResults[taskId];
+                if (result) {
+                    const features = Array.from(result.iterator.features);
+                    features.forEach(feature => {
+                                         const buffer = GeometryEngine.buffer(feature.geometry, feature.attributes.attributeValue("BufferSize"));
+                                         const bufferGraphic = ArcGISRuntimeEnvironment.createObject("Graphic", {geometry: buffer});
+                                         bufferGraphicsOverlay.graphics.append(bufferGraphic);
+                                     });
+                } else {
+                    console.log("The query finished but there was no result for this taskId");
+                }
+                break;
 
+                case Enums.TaskStatusErrored:
+                birdNestsTable.queryFeaturesStatusChanged.disconnect(featureStatusChanged);
+                if (birdNestsTable.error) {
+                    console.log("Feature query error", birdNestsTable.error.message, birdNestsTable.error.additionalMessage);
+                } else {
+                    console.log("The query encountered an error, but provided no error message");
+                }
+                break;
+
+                default:
+                break;
+            }
+        }
+
+        birdNestsTable.queryFeaturesStatusChanged.connect(featureStatusChanged);
+        taskId = birdNestsTable.queryFeatures(bufferParameters);
     }
 }

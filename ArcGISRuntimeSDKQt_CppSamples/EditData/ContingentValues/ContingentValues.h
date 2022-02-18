@@ -23,26 +23,15 @@ namespace ArcGISRuntime
 {
 class ArcGISFeature;
 class FeatureQueryResult;
-class CodedValue;
-class ContingentValuesDefinition;
-class FeatureLayer;
 class Geodatabase;
 class GeodatabaseFeatureTable;
 class GraphicsOverlay;
 class Map;
 class MapQuickView;
-class MobileMapPackage;
-class ServiceFeatureTable;
-class Symbol;
 }
 }
-
-#include "Point.h"
 
 #include <QObject>
-#include <QMap>
-#include <QList>
-#include <QStringList>
 #include <QMouseEvent>
 
 class ContingentValues : public QObject
@@ -50,7 +39,7 @@ class ContingentValues : public QObject
   Q_OBJECT
 
   Q_PROPERTY(Esri::ArcGISRuntime::MapQuickView* mapView READ mapView WRITE setMapView NOTIFY mapViewChanged)
-  Q_PROPERTY(QVariantMap statusValues READ statusValues NOTIFY featureValuesChanged)
+  Q_PROPERTY(QVariantMap statusValues READ statusValues CONSTANT)
   Q_PROPERTY(bool featureAttributesPaneVisibe READ featureAttributesPaneVisibe WRITE setFeatureAttributesPaneVisibe NOTIFY featureAttributesPaneVisibeChanged)
   Q_PROPERTY(QList<double> featureAttributesPaneXY READ featureAttributesPaneXY NOTIFY featureAttributesPaneVisibeChanged)
 
@@ -66,15 +55,14 @@ public:
   Q_INVOKABLE bool validateContingentValues();
 
 signals:
-  void mapViewChanged();
   void featureAttributesPaneVisibeChanged();
-  void featureValuesChanged();
+  void mapViewChanged();
 
 private:
   Esri::ArcGISRuntime::MapQuickView* mapView() const;
   void setMapView(Esri::ArcGISRuntime::MapQuickView* mapView);
 
-  void bufferFeatures();
+  void queryAndBufferFeatures();
   void bufferFeaturesFromQueryResults(QUuid, Esri::ArcGISRuntime::FeatureQueryResult* results);
   void createConnections();
   void createNewEmptyFeature(QMouseEvent mouseEvent);
@@ -84,13 +72,11 @@ private:
   void setFeatureAttributesPaneVisibe(bool showFeatureAttributesPane);
 
   Esri::ArcGISRuntime::ArcGISFeature* m_newFeature = nullptr;
-  Esri::ArcGISRuntime::ContingentValuesDefinition* m_contingentValuesDefinition = nullptr;
   Esri::ArcGISRuntime::Geodatabase* m_geodatabase = nullptr;
   Esri::ArcGISRuntime::GeodatabaseFeatureTable* m_gdbFeatureTable = nullptr;
   Esri::ArcGISRuntime::GraphicsOverlay* m_graphicsOverlay = nullptr;
   Esri::ArcGISRuntime::Map* m_map = nullptr;
   Esri::ArcGISRuntime::MapQuickView* m_mapView = nullptr;
-  Esri::ArcGISRuntime::MobileMapPackage* m_mmpk = nullptr;
 
   QVariantMap m_statusValues;
   QVariantMap m_protectionValues;

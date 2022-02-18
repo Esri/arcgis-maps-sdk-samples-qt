@@ -98,7 +98,7 @@ MapQuickView* ContingentValues::mapView() const
   return m_mapView;
 }
 
-// Set the view (created in QML)
+// Set the view with a graphics overlay
 void ContingentValues::setMapView(MapQuickView* mapView)
 {
   if (!mapView || mapView == m_mapView)
@@ -121,6 +121,7 @@ void ContingentValues::setMapView(MapQuickView* mapView)
   emit mapViewChanged();
 }
 
+// Load the Geodatabase, GeodatabaseFeatureTable, and the ContingentValuesDefinition
 void ContingentValues::createConnections()
 {
   connect(m_geodatabase, &Geodatabase::doneLoading, this, [this]()
@@ -134,14 +135,13 @@ void ContingentValues::createConnections()
     connect(m_gdbFeatureTable, &GeodatabaseFeatureTable::doneLoading, this, [this]
     {
       // Load the ContingentValuesDefinition to enable access to the GeodatabaseFeatureTable's ContingentValues data such as FieldGroups and ContingentValuesResults
-      m_contingentValuesDefinition = m_gdbFeatureTable->contingentValuesDefinition();
-      m_contingentValuesDefinition->load();
+      m_gdbFeatureTable->contingentValuesDefinition()->load();
 
       // Load and display the mobile geodatabase's predefined bird nests on the map
       FeatureLayer* nestLayer = new FeatureLayer(m_gdbFeatureTable, this);
       m_map->operationalLayers()->append(nestLayer);
 
-      bufferFeatures();
+      queryAndBufferFeatures();
     });
 
     connect(m_gdbFeatureTable, &GeodatabaseFeatureTable::queryFeaturesCompleted, this, &ContingentValues::bufferFeaturesFromQueryResults);
@@ -152,9 +152,9 @@ void ContingentValues::createConnections()
   connect(m_mapView, &MapQuickView::mouseClicked, this, &ContingentValues::createNewEmptyFeature);
 }
 
+// When the user clicks or taps on the map, instantiate a new feature and show the attribute form interface
 void ContingentValues::createNewEmptyFeature(QMouseEvent mouseEvent)
 {
-  // When the user clicks or taps on the map, instantiate a new feature and show the attribute form interface
   if (m_newFeature)
   {
     delete m_newFeature;
@@ -171,9 +171,10 @@ void ContingentValues::createNewEmptyFeature(QMouseEvent mouseEvent)
   setFeatureAttributesPaneVisibe(true);
 }
 
+// Get a list of a feature's valid contingent values for field within a participating contingent value field group
 QVariantList ContingentValues::getContingentValues(QString field, QString fieldGroupName)
 {
-  if (m_contingentValuesDefinition->loadStatus() != LoadStatus::Loaded)
+  if (m_gdbFeatureTable->contingentValuesDefinition()->loadStatus() != LoadStatus::Loaded)
     return {};
 
   // Create an empty list with which to return the valid contingent values
@@ -182,21 +183,21 @@ QVariantList ContingentValues::getContingentValues(QString field, QString fieldG
   // Instantiate a dictionary containing all possible values for a field in the context of the contingent field groups it participates in
   ContingentValuesResult* contingentValuesResult = m_gdbFeatureTable->contingentValues(m_newFeature, field);
 
+  // Loop through the contingent values. The QML UI is hardcoded to expect a list of contingent coded value names or a minimum and maximum value from a contingent range value
   for (ContingentValue* contingentValue : contingentValuesResult->contingentValuesByFieldGroup(this).value(fieldGroupName))
   {
-    // Loop through the contingent values. The QML UI is hardcoded to expect a list of contingent coded value names or a minimum and maximum value from a contingent range value
+    // Contingent coded values are contingent values defined from a coded value domain.
+    // There are often multiple results returned by the ContingentValuesResult
     if (contingentValue->contingentValueType() == ContingentValueType::ContingentCodedValue)
     {
-      // Contingent coded values are contingent values defined from a coded value domain.
-      // There are often multiple results returned by the ContingentValuesResult
       ContingentCodedValue* contingentCodedValue = static_cast<ContingentCodedValue*>(contingentValue);
       if (contingentCodedValue)
         contingentValuesNamesList.append(contingentCodedValue->codedValue().name());
     }
+    // Contingent range values constrain a range value domain
+    // the ContingentValuesResult for a field defined by a range value domain often contains only one entry with a minimum and maximum value
     else if (contingentValue->contingentValueType() == ContingentValueType::ContingentRangeValue)
     {
-      // Contingent range values constrain a range value domain
-      // the ContingentValuesResult for a field defined by a range value domain often contains only one entry with a minimum and maximum value
       ContingentRangeValue* contingentRangeValue = static_cast<ContingentRangeValue*>(contingentValue);
       if (contingentRangeValue)
       {
@@ -209,11 +210,11 @@ QVariantList ContingentValues::getContingentValues(QString field, QString fieldG
   return contingentValuesNamesList;
 }
 
+// Validates if the sample's new feature has any constraint violations
 bool ContingentValues::validateContingentValues()
 {
-  if (m_contingentValuesDefinition->loadStatus() != LoadStatus::Loaded)
+  if (m_gdbFeatureTable->contingentValuesDefinition()->loadStatus() != LoadStatus::Loaded || !m_newFeature)
     return false;
-
   // Returns a list of field groups whose contingencies are in violation as well as the type of violation
   QList<ContingencyConstraintViolation*> constraintViolations = m_gdbFeatureTable->validateContingencyConstraints(m_newFeature);
 
@@ -224,15 +225,17 @@ bool ContingentValues::validateContingentValues()
   return false;
 }
 
+// Save the sample's new feature to the map's geodatabse feature table
 void ContingentValues::createNewNest()
 {
   // Once the attribute map is filled and validated, save the feature to the geodatabase feature table
   m_newFeature->setGeometry(Point(m_mapView->screenToLocation(m_featureAttributesPaneXY.at(0), m_featureAttributesPaneXY.at(1))));
   m_gdbFeatureTable->addFeature(m_newFeature);
 
-  bufferFeatures();
+  queryAndBufferFeatures();
 }
 
+// Update a specific field with a new value in the new feature's attribute map
 void ContingentValues::updateField(QString field, QVariant value)
 {
   if (field == "Status")
@@ -245,7 +248,10 @@ void ContingentValues::updateField(QString field, QVariant value)
     qWarning() << field << "not found in any of the data dictionaries";
 }
 
-void ContingentValues::bufferFeatures()
+// This function creates a buffer around nest features based on their BufferSize value.
+// it is included to demonstrate the sample use case
+// Kicks off a query feature task to return all features with buffer sizes greater than zero
+void ContingentValues::queryAndBufferFeatures()
 {
   if (!m_gdbFeatureTable || m_gdbFeatureTable->loadStatus() != LoadStatus::Loaded)
     return;
@@ -257,6 +263,7 @@ void ContingentValues::bufferFeatures()
   m_gdbFeatureTable->queryFeatures(params);
 }
 
+// Buffers all features from the preceeding feature query using the BufferSize field value, create graphics with the results, and adds them to the graphics overlay
 void ContingentValues::bufferFeaturesFromQueryResults(QUuid, FeatureQueryResult* results)
 {
   FeatureIterator iterator = results->iterator();

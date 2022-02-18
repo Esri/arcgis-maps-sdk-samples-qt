@@ -66,8 +66,10 @@ Item {
 
             Text {
                 text: "Status"
-                font.bold: true
-                font.pointSize: 11
+                font {
+                    bold: true
+                    pointSize: 11
+                }
             }
 
             ComboBox {
@@ -91,8 +93,10 @@ Item {
 
             Text {
                 text: "Protection"
-                font.bold: true
-                font.pointSize: 11
+                font {
+                    bold: true
+                    pointSize: 11
+                }
             }
 
             ComboBox {
@@ -127,8 +131,10 @@ Item {
 
             Text {
                 text: "Buffer Size"
-                font.bold: true
-                font.pointSize: 11
+                font {
+                    bold: true
+                    pointSize: 11
+                }
             }
 
             Text {
@@ -159,10 +165,10 @@ Item {
             Button {
                 id: saveButton
                 Text {
-                    text: "Save"
                     anchors.fill: parent
                     horizontalAlignment: Text.AlignHCenter
                     verticalAlignment: Text.AlignVCenter
+                    text: "Save"
                 }
 
                 enabled: false
@@ -179,10 +185,10 @@ Item {
             Button {
                 id: discardButton
                 Text {
-                    text: "Discard"
                     anchors.fill: parent
                     horizontalAlignment: Text.AlignHCenter
                     verticalAlignment: Text.AlignVCenter
+                    text: "Discard"
                 }
                 onClicked: {
                     contingentValuesSample.featureAttributesPaneVisibe = false
