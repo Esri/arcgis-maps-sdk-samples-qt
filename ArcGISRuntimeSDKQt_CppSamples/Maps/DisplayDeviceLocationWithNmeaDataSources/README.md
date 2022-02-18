@@ -16,8 +16,8 @@ Tap "Start" to parse the NMEA sentences into a simulated location data source, a
 
 ## How it works
 
-1. Load an NMEA string and parse the sentences into a series of locations. ‼️ **(Desktop platform need more details about using GPS dongle)**
-2. Create an `AGSSimulatedLocationDataSource` and initialize it with the mock locations. ‼️ **(We can also directly parse the raw NMEA strings, and use `AGSNMEALocationDataSource` instead. Don't forget ti adjust the wordings)**
+1. Load an NMEA string and parse the sentences into a series of locations.
+2. Create an `NmeaLocationDataSource` and initialize it with the mock locations.
 3. Set it to the location display's data source.
 4. Start the location display to begin receiving location and satellite updates.
 
