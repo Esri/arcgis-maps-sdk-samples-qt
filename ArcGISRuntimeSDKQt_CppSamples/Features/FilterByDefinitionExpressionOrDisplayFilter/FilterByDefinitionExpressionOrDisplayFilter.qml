@@ -67,7 +67,7 @@ FilterByDefinitionExpressionOrDisplayFilterSample {
 
         // button to apply a display filter
         Button {
-            text: "Apply Filter"
+            text: "Apply Display Filter"
             enabled: definitionExpressionOrDisplayFilterSample.layerInitialized
             width: 200
             onClicked: {
