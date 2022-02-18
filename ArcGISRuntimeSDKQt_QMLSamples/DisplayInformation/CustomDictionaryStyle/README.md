@@ -16,8 +16,8 @@ Use the radio buttons to toggle between the dictionary symbols from the web styl
 
 1. Create a `PortalItem`, referring to a `Portal` and the item ID of the web style.
 2. Based on the style selected:
-*  If the web style toggle has been selected, create a new `DictionarySymbolStyle` from the portal item using `new DictionarySymbolStyle(portalItem)`, and load it
-*  If the file style toggle has been selected, create a new `DictionarySymbolStyle` using `DictionarySymbolStyle.createFromFile(stylxFile.getAbsolutePath())`
+    *  If the web style toggle has been selected, create a new `DictionarySymbolStyle` from the portal item, and load it.
+    *  If the file style toggle has been selected, create a new `DictionarySymbolStyle` using the local .stylx file.
 3. Create a new `DictionaryRenderer`, providing the dictionary symbol style.
 4. Apply the dictionary renderer to a feature layer using `featureLayer.setRenderer(dictionaryRenderer)`.
 5. Add the feature layer to the map's operational layers using `getOperationalLayers().add(featureLayer)`.
