@@ -48,7 +48,7 @@ void BasicSceneView::componentComplete()
   m_sceneView = findChild<SceneQuickView*>("sceneView");
 
   // Create a new basemap instance
-  Basemap* basemap = Basemap::imageryWithLabels(this);
+  Basemap* basemap = BasemapStyle::ArcGISImagery;
 
   // Create a new scene instance
   m_scene = new Scene(basemap, this);
