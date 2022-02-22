@@ -1,16 +1,35 @@
 {
-    "category": "TODO",
-    "description": "TODO",
+    "category": "Edit data",
+    "dataItems": [
+        {
+            "itemId": "e12b54ea799f4606a2712157cf9f6e41",
+            "path": "~/ArcGIS/Runtime/Data/geodatabase/ContingentValuesBirdNests.geodatabase"
+        },
+        {
+            "itemId": "b5106355f1634b8996e634c04b6a930a",
+            "path": "~/ArcGIS/Runtime/Data/vtpk/FillmoreTopographicMap.vtpk"
+        }
+    ],
+    "description": "Create and add features whose attribute values satisfy a predefined set of contingencies.",
     "ignore": false,
     "images": [
         "screenshot.png"
     ],
     "keywords": [
-        "TODO"
+        "contingent values",
+        "contingent coded values",
+        "feature table",
+        "geodatabase"
     ],
     "redirect_from": "",
     "relevant_apis": [
-        "TODO"
+    "ContingencyConstraintViolation",
+    "ContingentCodedValue",
+    "ContingentRangeValue",
+    "ContingentValuesDefinition",
+    "ContingentValuesResult",
+    "Geodatabase",
+    "GeodatabaseFeatureTable"
     ],
     "snippets": [
         "ContingentValues.qml"

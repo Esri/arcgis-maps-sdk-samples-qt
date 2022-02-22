@@ -20,7 +20,6 @@
 
 #include "ContingentValues.h"
 
-#include "ArcGISFeature.h"
 #include "ArcGISVectorTiledLayer.h"
 #include "CodedValueDomain.h"
 #include "ContingentCodedValue.h"
@@ -33,7 +32,6 @@
 #include "GeometryEngine.h"
 #include "Map.h"
 #include "MapQuickView.h"
-#include "MobileMapPackage.h"
 #include "SimpleFillSymbol.h"
 #include "SimpleLineSymbol.h"
 #include "SimpleRenderer.h"
