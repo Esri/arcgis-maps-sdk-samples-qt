@@ -42,7 +42,9 @@ Rectangle {
         Scene {
             id: scene
             // Set the basemap
-            BasemapTopographic {}
+            Basemap {
+                initStyle: Enums.BasemapStyleArcGISTopographic
+            }
 
             // Add a Scene Layer
             ArcGISSceneLayer {
