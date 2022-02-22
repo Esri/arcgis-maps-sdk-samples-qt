@@ -52,7 +52,9 @@ Rectangle {
         // create a scene, which is a default property of scene view
         Scene {
             // add a basemap
-            BasemapTopographic {}
+            Basemap {
+                initStyle: Enums.BasemapStyleArcGISTopographic
+            }
 
             // add a surface, which is a default property of scene
             Surface {
