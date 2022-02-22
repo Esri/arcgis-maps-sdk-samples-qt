@@ -78,7 +78,7 @@ void DisplayKml::componentComplete()
 
   // Create a scene and give it to the SceneView
   m_sceneView = findChild<SceneQuickView*>("sceneView");
-  m_scene = new Scene(Basemap::imageryWithLabels(this), this);
+  m_scene = new Scene(BasemapStyle::ArcGISImagery, this);
   Surface* surface = new Surface(this);
   surface->elevationSources()->append(
         new ArcGISTiledElevationSource(

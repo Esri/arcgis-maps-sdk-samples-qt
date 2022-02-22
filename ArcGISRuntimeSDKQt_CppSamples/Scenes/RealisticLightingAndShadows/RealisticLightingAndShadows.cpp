@@ -37,7 +37,7 @@ using namespace Esri::ArcGISRuntime;
 
 RealisticLightingAndShadows::RealisticLightingAndShadows(QObject* parent /* = nullptr */):
   QObject(parent),
-  m_scene(new Scene(Basemap::topographic(this), this))
+  m_scene(new Scene(BasemapStyle::ArcGISTopographic, this))
 {
   // create a new elevation source from Terrain3D REST service
   ArcGISTiledElevationSource* elevationSource = new ArcGISTiledElevationSource(
