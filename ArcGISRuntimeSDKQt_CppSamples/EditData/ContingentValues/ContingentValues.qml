@@ -41,11 +41,11 @@ Item {
 
     Control {
         id: attributePrompt
-        padding: 5
-
-        // Expand the attributes pane depending on where the user clicks or taps
-        x: sampleWindow.width - (attributePrompt.width + attributePrompt.padding)
-        y: attributePrompt.padding
+        anchors {
+            top: sampleWindow.top
+            right: sampleWindow.right
+            margins: 5
+        }
 
         background: Rectangle {
             color: "#fdfdfd"

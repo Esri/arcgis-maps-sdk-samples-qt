@@ -29,10 +29,6 @@ Rectangle {
 
     readonly property url dataPath: System.userHomePath + "/ArcGIS/Runtime/Data/"
 
-    // The X,Y coordinates from which to open the attribute pane and place new features
-    property int attributePromptX: 0
-    property int attributePromptY: 0
-
     // Feature to define attributes for with ContingentValues
     property var newFeature: null;
 
@@ -49,13 +45,6 @@ Rectangle {
     MapView {
         id: mapView
         anchors.fill: parent
-
-        MouseArea {
-            anchors.fill: mapView
-            visible: attributePrompt.visible
-            onClicked: mouse.accepted = attributePrompt.visible
-            onWheel: wheel.accepted = attributePrompt.visible
-        }
 
         Component.onCompleted: {
             // Set and keep the focus on MapView to enable keyboard navigation
@@ -90,15 +79,15 @@ Rectangle {
                         if (loadStatus === Enums.LoadStatusLoaded) {
                             birdNestsTable = gdb.geodatabaseFeatureTablesByTableName["BirdNests"];
                             birdNestsTable.load();
-
-                            // Load the ContingentValuesDefinition to enable access to the GeodatabaseFeatureTable's ContingentValues data such as FieldGroups and ContingentValuesResults
-                            birdNestsTable.contingentValuesDefinition.load();
                         }
                     }
                 }
 
                 onLoadStatusChanged: {
                     if (nestsLayer.loadStatus === Enums.LoadStatusLoaded) {
+                        // Load the ContingentValuesDefinition to enable access to the GeodatabaseFeatureTable's ContingentValues data such as FieldGroups and ContingentValuesResults
+                        birdNestsTable.contingentValuesDefinition.load();
+
                         // Load map with initial nest buffers showing
                         bufferFeatures();
                     }
@@ -122,23 +111,22 @@ Rectangle {
         }
 
         onMouseClicked: {
-            // Set the attribute prompt to open at the mouse click location
-            attributePromptX = mouse.x;
-            attributePromptY = mouse.y;
             attributePrompt.visible = true;
 
             // Create a new feature to append attribute values to
-            newFeature = nestsLayer.featureTable.createFeatureWithAttributes({}, mouse.mapPoint);
+            newFeature = birdNestsTable.createFeatureWithAttributes({}, mouse.mapPoint);
+            birdNestsTable.addFeature(newFeature);
         }
     }
 
 
     Control {
         id: attributePrompt
-
-        // Expand the attributes pane in a direction depending on where the user clicks or taps
-        x: (attributePromptX + width > sampleWindow.height ? attributePromptX - width : attributePromptX) ?? 0;
-        y: (attributePromptY + height > sampleWindow.height ? attributePromptY - height : attributePromptY) ?? 0;
+        anchors {
+            top: sampleWindow.top
+            right: sampleWindow.right
+            margins: 5
+        }
 
         background: Rectangle {
             color: "#fdfdfd"
@@ -162,7 +150,7 @@ Rectangle {
             ComboBox {
                 id: statusComboBox
 
-                // This ComboBox is hardcoded, but can be dynamically obtained from the feature layer's domain values
+                // This ComboBox is hardcoded, but can be dynamically obtained from the feature layer's field's domain values
                 model: ["", "Occupied", "Unoccupied"]
 
                 onCurrentValueChanged: {
@@ -262,7 +250,8 @@ Rectangle {
                 onClicked: {
                     const valid = validateContingentValues();
                     if (validateContingentValues()) {
-                        createNewNest();
+                        birdNestsTable.updateFeature(newFeature);
+                        bufferFeatures();
                         attributePrompt.visible = false;
                     }
                 }
@@ -277,6 +266,7 @@ Rectangle {
                     text: "Discard"
                 }
                 onClicked: {
+                    birdNestsTable.deleteFeature(newFeature);
                     attributePrompt.visible = false
                 }
             }
@@ -320,20 +310,13 @@ Rectangle {
         return false;
     }
 
-    function createNewNest() {
-        if (newFeature) {
-            birdNestsTable.addFeature(newFeature);
-            bufferFeatures();
-        }
-    }
-
     QueryParameters {
         id: bufferParameters
         whereClause: "BufferSize > 0"
     }
 
-    // This function creates a buffer around nest features based on their BufferSize value.
-    // it is included to demonstrate the sample use case
+    // This function creates a buffer around nest features based on their BufferSize value
+    // It is included to demonstrate the sample use case
     function bufferFeatures() {
         const featureStatusChanged = ()=> {
             switch (birdNestsTable.queryFeaturesStatus) {
