@@ -185,12 +185,11 @@ Rectangle {
                 retryLoad();
         }
     }
-
-    /* Uncomment this section when running as standalone application
+    
+    // Declare AuthenticationView to handle any authentication challenges
     AuthenticationView {
         id: authView
         anchors.fill: parent
     }
-    */
     //! [PortalUserInfo create portal]
 }
