@@ -27,20 +27,13 @@ Item {
         id: view
         anchors.fill: sampleWindow
 
-        MouseArea {
-            anchors.fill: view
-            visible: attributePrompt.visible
-            onClicked: mouse.accepted = attributePrompt.visible
-            onWheel: wheel.accepted = attributePrompt.visible
-        }
-
         Component.onCompleted: {
-            // Set and keep the focus on SceneView to enable keyboard navigation
+            // Set and keep the focus on MapView to enable keyboard navigation
             forceActiveFocus();
         }
     }
 
-    // Declare the C++ instance which creates the scene etc. and supply the view
+    // Declare the C++ instance which creates the map etc. and supply the view
     ContingentValuesSample {
         id: contingentValuesSample
         mapView: view
@@ -48,10 +41,11 @@ Item {
 
     Control {
         id: attributePrompt
+        padding: 5
 
         // Expand the attributes pane depending on where the user clicks or taps
-        x: (contingentValuesSample.featureAttributesPaneXY[0] + width > sampleWindow.height ? contingentValuesSample.featureAttributesPaneXY[0] - width : contingentValuesSample.featureAttributesPaneXY[0]) ?? 0;
-        y: (contingentValuesSample.featureAttributesPaneXY[1] + height > sampleWindow.height ? contingentValuesSample.featureAttributesPaneXY[1] - height : contingentValuesSample.featureAttributesPaneXY[1]) ?? 0;
+        x: sampleWindow.width - (attributePrompt.width + attributePrompt.padding)
+        y: attributePrompt.padding
 
         background: Rectangle {
             color: "#fdfdfd"
@@ -191,7 +185,8 @@ Item {
                     text: "Discard"
                 }
                 onClicked: {
-                    contingentValuesSample.featureAttributesPaneVisibe = false
+                    contingentValuesSample.featureAttributesPaneVisibe = false;
+                    contingentValuesSample.discardFeature();
                 }
             }
         }

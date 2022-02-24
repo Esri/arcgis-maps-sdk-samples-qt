@@ -41,7 +41,6 @@ class ContingentValues : public QObject
   Q_PROPERTY(Esri::ArcGISRuntime::MapQuickView* mapView READ mapView WRITE setMapView NOTIFY mapViewChanged)
   Q_PROPERTY(QVariantMap statusValues READ statusValues CONSTANT)
   Q_PROPERTY(bool featureAttributesPaneVisibe READ featureAttributesPaneVisibe WRITE setFeatureAttributesPaneVisibe NOTIFY featureAttributesPaneVisibeChanged)
-  Q_PROPERTY(QList<double> featureAttributesPaneXY READ featureAttributesPaneXY NOTIFY featureAttributesPaneVisibeChanged)
 
 public:
   explicit ContingentValues(QObject* parent = nullptr);
@@ -50,6 +49,7 @@ public:
   static void init();
 
   Q_INVOKABLE void createNewNest();
+  Q_INVOKABLE void discardFeature();
   Q_INVOKABLE QVariantList getContingentValues(QString field, QString fieldGroupName);
   Q_INVOKABLE void updateField(QString field, QVariant value);
   Q_INVOKABLE bool validateContingentValues();
@@ -67,7 +67,6 @@ private:
   void createConnections();
   void createNewEmptyFeature(QMouseEvent mouseEvent);
   bool featureAttributesPaneVisibe() const;
-  QList<double> featureAttributesPaneXY() const;
   QVariantMap statusValues() const;
   void setFeatureAttributesPaneVisibe(bool showFeatureAttributesPane);
 
@@ -81,7 +80,6 @@ private:
   QVariantMap m_statusValues;
   QVariantMap m_protectionValues;
   bool m_featureAttributesPaneVisible = false;
-  QList<double> m_featureAttributesPaneXY;
 };
 
 #endif // CONTINGENTVALUES_H

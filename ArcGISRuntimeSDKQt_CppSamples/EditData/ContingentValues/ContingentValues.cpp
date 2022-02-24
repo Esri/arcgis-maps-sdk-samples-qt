@@ -34,10 +34,10 @@
 #include "MapQuickView.h"
 #include "SimpleFillSymbol.h"
 #include "SimpleLineSymbol.h"
+#include "SimpleMarkerSymbol.h"
 #include "SimpleRenderer.h"
 
 #include <QDir>
-#include <QtCore/qglobal.h>
 
 #ifdef Q_OS_IOS
 #include <QStandardPaths>
@@ -153,17 +153,9 @@ void ContingentValues::createConnections()
 // When the user clicks or taps on the map, instantiate a new feature and show the attribute form interface
 void ContingentValues::createNewEmptyFeature(QMouseEvent mouseEvent)
 {
-  if (m_newFeature)
-  {
-    delete m_newFeature;
-    m_newFeature = nullptr;
-  }
-
-  // Open the attribute form from where the user clicks
-  m_featureAttributesPaneXY = {(double)mouseEvent.x(), (double)mouseEvent.y()};
-
   // Create a new empty feature to define attributes for
-  m_newFeature = static_cast<ArcGISFeature*>(m_gdbFeatureTable->createFeature(this));
+  m_newFeature = static_cast<ArcGISFeature*>(m_gdbFeatureTable->createFeature({}, m_mapView->screenToLocation(mouseEvent.x(), mouseEvent.y()), this));
+  m_gdbFeatureTable->addFeature(m_newFeature);
 
   // Show the attribute form interface
   setFeatureAttributesPaneVisibe(true);
@@ -227,10 +219,15 @@ bool ContingentValues::validateContingentValues()
 void ContingentValues::createNewNest()
 {
   // Once the attribute map is filled and validated, save the feature to the geodatabase feature table
-  m_newFeature->setGeometry(Point(m_mapView->screenToLocation(m_featureAttributesPaneXY.at(0), m_featureAttributesPaneXY.at(1))));
-  m_gdbFeatureTable->addFeature(m_newFeature);
+  //m_newFeature->setGeometry(Point(m_mapView->screenToLocation(m_featureAttributesPaneXY.at(0), m_featureAttributesPaneXY.at(1))));
+  m_gdbFeatureTable->updateFeature(m_newFeature);
 
   queryAndBufferFeatures();
+}
+
+void ContingentValues::discardFeature()
+{
+  m_gdbFeatureTable->deleteFeature(m_newFeature);
 }
 
 // Update a specific field with a new value in the new feature's attribute map
@@ -246,8 +243,9 @@ void ContingentValues::updateField(QString field, QVariant value)
     qWarning() << field << "not found in any of the data dictionaries";
 }
 
-// This function creates a buffer around nest features based on their BufferSize value.
-// it is included to demonstrate the sample use case
+// The following two functions create a buffer around nest features based on their BufferSize value
+// They are included to demonstrate the sample use case
+
 // Kicks off a query feature task to return all features with buffer sizes greater than zero
 void ContingentValues::queryAndBufferFeatures()
 {
@@ -273,11 +271,6 @@ void ContingentValues::bufferFeaturesFromQueryResults(QUuid, FeatureQueryResult*
     Polygon buffer = GeometryEngine::buffer(feature->geometry(), bufferDistance);
     m_mapView->graphicsOverlays()->at(0)->graphics()->append(new Graphic(buffer, this));
   }
-}
-
-QList<double> ContingentValues::featureAttributesPaneXY() const
-{
-  return m_featureAttributesPaneXY;
 }
 
 bool ContingentValues::featureAttributesPaneVisibe() const
