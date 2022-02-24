@@ -129,10 +129,8 @@ CreateAndSaveMapSample {
         }
     }
 
-    /*
     // Declare AuthenticationView to handle any authentication challenges
     AuthenticationView {
         anchors.fill: parent
     }
-    */
 }

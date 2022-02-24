@@ -209,11 +209,10 @@ Rectangle {
         types: [ Enums.PortalItemTypeWebMap ]
     }
 
-    // Uncomment this section when running as standalone application
-
-    //    AuthenticationView {
-    //        anchors.fill: parent
-    //    }
+    // Declare AuthenticationView to handle any authentication challenges
+    AuthenticationView {
+        anchors.fill: parent
+    }
 
     Dialog {
         id: webMapMsg
