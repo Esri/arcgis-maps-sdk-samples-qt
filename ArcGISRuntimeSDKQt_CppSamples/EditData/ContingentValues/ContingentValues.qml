@@ -27,6 +27,13 @@ Item {
         id: view
         anchors.fill: sampleWindow
 
+        MouseArea {
+            anchors.fill: parent
+            visible: attributePrompt.visible
+            onClicked: mouse.accepted = !attributePrompt.visible
+            onWheel:  wheel.accepted = !attributePrompt.visible
+        }
+
         Component.onCompleted: {
             // Set and keep the focus on MapView to enable keyboard navigation
             forceActiveFocus();

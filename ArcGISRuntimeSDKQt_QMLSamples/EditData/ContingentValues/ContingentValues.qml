@@ -46,6 +46,13 @@ Rectangle {
         id: mapView
         anchors.fill: parent
 
+        MouseArea {
+            anchors.fill: parent
+            visible: attributePrompt.visible
+            onClicked: mouse.accepted = !attributePrompt.visible
+            onWheel:  wheel.accepted = !attributePrompt.visible
+        }
+
         Component.onCompleted: {
             // Set and keep the focus on MapView to enable keyboard navigation
             forceActiveFocus();
@@ -111,9 +118,8 @@ Rectangle {
         }
 
         onMouseClicked: {
+            // Open attribute prompt and create a new feature for editing
             attributePrompt.visible = true;
-
-            // Create a new feature to append attribute values to
             newFeature = birdNestsTable.createFeatureWithAttributes({}, mouse.mapPoint);
             birdNestsTable.addFeature(newFeature);
         }
