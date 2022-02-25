@@ -219,7 +219,6 @@ bool ContingentValues::validateContingentValues()
 void ContingentValues::createNewNest()
 {
   // Once the attribute map is filled and validated, save the feature to the geodatabase feature table
-  //m_newFeature->setGeometry(Point(m_mapView->screenToLocation(m_featureAttributesPaneXY.at(0), m_featureAttributesPaneXY.at(1))));
   m_gdbFeatureTable->updateFeature(m_newFeature);
 
   queryAndBufferFeatures();
