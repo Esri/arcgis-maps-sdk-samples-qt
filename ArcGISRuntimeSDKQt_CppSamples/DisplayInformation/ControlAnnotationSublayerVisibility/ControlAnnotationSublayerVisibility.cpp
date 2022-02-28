@@ -52,10 +52,11 @@ QString defaultDataPath()
 
   return dataPath;
 }
-} // namespace
 
 // sample MMPK location
 const QString sampleFileAnno {"/ArcGIS/Runtime/Data/mmpk/GasDeviceAnno.mmpk"};
+
+} // namespace
 
 ControlAnnotationSublayerVisibility::ControlAnnotationSublayerVisibility(QObject* parent /* = nullptr */):
   QObject(parent)
@@ -108,7 +109,7 @@ void ControlAnnotationSublayerVisibility::setMapView(MapQuickView* mapView)
       return;
 
     m_visibleAtCurrentExtent = m_annotationSubLayerOpen->isVisibleAtScale(m_mapScale);
-    visibleAtCurrentExtentChanged();
+    emit visibleAtCurrentExtentChanged();
   });
 
   emit mapViewChanged();
@@ -152,8 +153,9 @@ void ControlAnnotationSublayerVisibility::createMapPackage(const QString& path)
             return;
           }
 
-          m_annotationSubLayerClosed = dynamic_cast<AnnotationSublayer*>(m_annoLayer->subLayerContents()[0]);
-          m_annotationSubLayerOpen = dynamic_cast<AnnotationSublayer*>(m_annoLayer->subLayerContents()[1]);
+          const auto contents = m_annoLayer->subLayerContents();
+          m_annotationSubLayerClosed = dynamic_cast<AnnotationSublayer*>(contents[0]);
+          m_annotationSubLayerOpen = dynamic_cast<AnnotationSublayer*>(contents[1]);
           m_closedLayerText = m_annotationSubLayerClosed->name();
           m_openLayerText = QString("%1 (1:%2 - 1:%3)").arg(m_annotationSubLayerOpen->name()).arg(m_annotationSubLayerOpen->maxScale()).arg(m_annotationSubLayerOpen->minScale());
           emit openLayerTextChanged();

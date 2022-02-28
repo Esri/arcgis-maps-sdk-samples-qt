@@ -52,7 +52,7 @@ public:
   bool hasMoreResults() const;
   QString mapLoadError() const;
 
-  Q_INVOKABLE void search(const QString keyword);
+  Q_INVOKABLE void search(const QString& keyword);
   Q_INVOKABLE void searchNext();
   Q_INVOKABLE void loadSelectedWebmap(int index);
   Q_INVOKABLE void errorAccepted();

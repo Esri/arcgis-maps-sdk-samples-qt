@@ -94,6 +94,8 @@ void GODictionaryRenderer::componentComplete()
   m_graphicsOverlay->setRenderer(renderer);
   //! [Apply Dictionary Renderer Graphics Overlay Cpp]
 
+  Q_UNUSED(specType)
+
   // Create a map and give it to the MapView
   m_mapView = findChild<MapQuickView*>("mapView");
   m_map = new Map(BasemapStyle::ArcGISTopographic, this);
@@ -144,10 +146,8 @@ void GODictionaryRenderer::parseXmlFile()
       }
       else
       {
-        /**
-                 * This is the end of a message element. Here we have a complete message that defines
-                 * a military feature to display on the map. Create a graphic from its attributes.
-                 */
+        // This is the end of a message element. Here we have a complete message that defines
+        // a military feature to display on the map. Create a graphic from its attributes.
         createGraphic(elementValues);
       }
       // Either we just started reading a message, or we just finished reading a message.
@@ -185,14 +185,15 @@ void GODictionaryRenderer::parseXmlFile()
 void GODictionaryRenderer::createGraphic(QVariantMap rawAttributes)
 {
   // If _wkid was absent, use WGS 1984 (4326) by default.
-  int wkid = rawAttributes.count(FIELD_WKID) > 0 ? rawAttributes[FIELD_WKID].toInt() : 4326;
-  SpatialReference sr(wkid);
+  const int wkid = rawAttributes.count(FIELD_WKID) > 0 ? rawAttributes[FIELD_WKID].toInt() : 4326;
+  const SpatialReference sr(wkid);
+  const QStringList pointStrings = rawAttributes[FIELD_CONTROL_POINTS].toString().split(";");
+
   Geometry geom;
-  QStringList pointStrings = rawAttributes[FIELD_CONTROL_POINTS].toString().split(";");
   if (pointStrings.length() == 1)
   {
     // It's a point
-    QStringList coords = pointStrings[0].split(",");
+    const QStringList coords = pointStrings[0].split(",");
     geom = Point(coords[0].toDouble(), coords[1].toDouble(), sr);
   }
   else {
@@ -201,7 +202,7 @@ void GODictionaryRenderer::createGraphic(QVariantMap rawAttributes)
     PointCollection* collection = new PointCollection(sr, this);
     for (const QString& pointString : pointStrings)
     {
-      QStringList coords = pointString.split(",");
+      const QStringList coords = pointString.split(",");
       if (coords.length() >= 2)
         collection->addPoint(coords[0].toDouble(), coords[1].toDouble());
     }

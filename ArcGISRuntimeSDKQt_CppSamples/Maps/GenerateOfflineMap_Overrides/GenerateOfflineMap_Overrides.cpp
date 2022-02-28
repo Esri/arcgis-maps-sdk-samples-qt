@@ -130,7 +130,7 @@ void GenerateOfflineMap_Overrides::setBasemapLOD(int min, int max)
     return;
 
   LayerListModel* layers = m_map->basemap()->baseLayers();
-  if (layers && layers->size() < 1)
+  if (!layers || layers->isEmpty())
     return;
 
   // Obtain a key for the given basemap-layer.
@@ -164,7 +164,7 @@ void GenerateOfflineMap_Overrides::setBasemapBuffer(int bufferMeters)
     return;
 
   LayerListModel* layers = m_map->basemap()->baseLayers();
-  if (layers && layers->isEmpty())
+  if (!layers || layers->isEmpty())
     return;
 
   OfflineMapParametersKey keyForTiledLayer(layers->at(0));
@@ -356,6 +356,8 @@ void GenerateOfflineMap_Overrides::takeMapOffline()
       emit updateStatus("Complete");
       emit hideWindow(1500, true);
       m_mapView->setMap(generateJob->result()->offlineMap(this));
+      break;
+    default: // do nothing
       break;
     }
   });

@@ -66,7 +66,7 @@ void ChangeSublayerVisibility::componentComplete()
 
   // set the map image layer's sublayer list model to the Q_PROPERTY
   m_sublayerModel = m_mapImageLayer->mapImageSublayers();
-  sublayerModelChanged();
+  emit sublayerModelChanged();
 }
 
 QAbstractListModel* ChangeSublayerVisibility::sublayerModel()

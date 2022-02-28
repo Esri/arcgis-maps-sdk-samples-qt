@@ -95,14 +95,15 @@ void ManageBookmarks::createInitialBookmarks()
 void ManageBookmarks::createBookmark(QString name, Viewpoint viewpoint)
 {
   //! [Add bookmarks to the list model]
-  // Create the bookmark from the name and viewpoint
-  Bookmark* bookmark = new Bookmark(name, viewpoint, this);
-
-  // Add it to the map's bookmark list
+  // Get the bookmark list
   BookmarkListModel* bookmarks = dynamic_cast<BookmarkListModel*>(m_bookmarks);
   if (!bookmarks)
     return;
 
+  // Create the bookmark from the name and viewpoint
+  Bookmark* bookmark = new Bookmark(name, viewpoint, this);
+
+  // Add it to the map's bookmark list
   bookmarks->append(bookmark);
 
   // emit that model has changed

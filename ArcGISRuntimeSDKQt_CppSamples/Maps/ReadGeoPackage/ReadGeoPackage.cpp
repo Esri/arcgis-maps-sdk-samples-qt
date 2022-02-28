@@ -104,7 +104,8 @@ void ReadGeoPackage::readGeoPackage()
     if (error.isEmpty())
     {
       // For each raster, create a raster layer and add the layer to the map
-      for (GeoPackageRaster* rasterItm : auroraGpkg->geoPackageRasters())
+      const auto rasters = auroraGpkg->geoPackageRasters();
+      for (GeoPackageRaster* rasterItm : rasters)
       {
         RasterLayer* rasterLyr = new RasterLayer(rasterItm, this);
         rasterLyr->setOpacity(0.55f);
@@ -112,7 +113,8 @@ void ReadGeoPackage::readGeoPackage()
       }
 
       // For each feature table, create a feature layer and add the layer to the map
-      for (GeoPackageFeatureTable* featureTbl : auroraGpkg->geoPackageFeatureTables())
+      const auto tables = auroraGpkg->geoPackageFeatureTables();
+      for (GeoPackageFeatureTable* featureTbl : tables)
       {
         FeatureLayer* layer = new FeatureLayer(featureTbl, this);
         m_map->operationalLayers()->append(layer);

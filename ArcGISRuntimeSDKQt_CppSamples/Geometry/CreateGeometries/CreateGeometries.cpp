@@ -65,7 +65,7 @@ void CreateGeometries::componentComplete()
   m_mapView->graphicsOverlays()->append(m_graphicsOverlay);
 
   // Add graphics to the overlay once the map loads
-  connect(m_map, &Map::doneLoading, [this](Error e)
+  connect(m_map, &Map::doneLoading, this, [this](Error e)
   {
     if (!e.isEmpty())
       return;
