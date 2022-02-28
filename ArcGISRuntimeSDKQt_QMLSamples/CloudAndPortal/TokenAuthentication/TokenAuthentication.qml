@@ -51,12 +51,8 @@ Rectangle {
         }
     }
 
-    // Uncomment this section when running as standalone application
-
-    /*
-    // Declare an AuthenticationView
+    // Declare AuthenticationView to handle any authentication challenges
     AuthenticationView {
         anchors.fill: parent
     }
-    */
 }
