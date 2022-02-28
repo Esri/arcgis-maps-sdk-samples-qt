@@ -14,7 +14,9 @@ In this sample you can filter a dataset of tree quality selecting for only those
 
 ## How to use the sample
 
-Press 'Apply Expression' to limit the features requested from the feature layer to those specified by the SQL query definition expression. Click 'Reset Expression' to remove the definition expression on the feature layer, which returns all the records.
+Press 'Apply Expression' to limit the features requested from the feature layer to those specified by the SQL query definition expression.
+Press 'Apply Display Filter' to limit the features shown on the feature layer to those specified by the SQL query without modifying the feature table.
+Click 'Reset' to remove the definition expression on the feature layer, which returns all the records.
 
 ## How it works
 

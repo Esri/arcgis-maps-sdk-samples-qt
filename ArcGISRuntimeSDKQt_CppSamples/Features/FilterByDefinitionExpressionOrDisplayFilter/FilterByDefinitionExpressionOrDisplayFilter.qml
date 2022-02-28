@@ -67,7 +67,7 @@ FilterByDefinitionExpressionOrDisplayFilterSample {
 
         // button to apply a display filter
         Button {
-            text: "Apply Filter"
+            text: "Apply Display Filter"
             enabled: definitionExpressionOrDisplayFilterSample.layerInitialized
             width: 200
             onClicked: {
@@ -83,8 +83,8 @@ FilterByDefinitionExpressionOrDisplayFilterSample {
             width: 200
             onClicked: {
                 // Call C++ invokable function to reset the definition expression and display filter
-                definitionExpressionOrDisplayFilterSample.setDefExpression("");
-                definitionExpressionOrDisplayFilterSample.setDisplayFilter("");
+                definitionExpressionOrDisplayFilterSample.resetDisplayFilterParams();
+                definitionExpressionOrDisplayFilterSample.resetDefExpressionParams();
             }
         }
     }

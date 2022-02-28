@@ -68,6 +68,15 @@ Rectangle {
             }
             targetScale: 300000
         }
+
+        onDrawStatusChanged: {
+
+            // Recalculate the feature count in current extent any time the map redraws
+            if (drawStatus === Enums.DrawStatusCompleted)
+            {
+                queryFeatureCountInCurrentExtent();
+            }
+        }
     }
     //! [Rectangle-mapview-map-viewpoint]
 
