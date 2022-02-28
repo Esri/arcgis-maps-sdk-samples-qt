@@ -38,8 +38,8 @@ class DisplayDimensions : public QObject
   Q_PROPERTY(Esri::ArcGISRuntime::MapQuickView* mapView READ mapView WRITE setMapView NOTIFY mapViewChanged)
   Q_PROPERTY(QString errorMessage READ errorMessage WRITE setErrorMessage NOTIFY errorMessageChanged)
   Q_PROPERTY(QString dimensionLayerName READ dimensionLayerName WRITE setDimensionLayerName NOTIFY dimensionLayerNameChanged)
-  Q_PROPERTY(bool dimensionLayerVisible READ dimensionLayerVisible WRITE setDimensionLayerVisible) // no NOTIFY?
-  Q_PROPERTY(bool useDefinitionExpression READ useDefinitionExpression WRITE setUseDefinitionExpression) // no NOTIFY?
+  Q_PROPERTY(bool dimensionLayerVisible READ dimensionLayerVisible WRITE setDimensionLayerVisible)
+  Q_PROPERTY(bool useDefinitionExpression READ useDefinitionExpression WRITE setUseDefinitionExpression)
   Q_PROPERTY(bool dimensionsAvailable READ dimensionsAvailable NOTIFY dimensionsAvailableChanged)
 
 public:

@@ -97,7 +97,7 @@ void ExtrudeGraphics::componentComplete()
   graphicsOverlay->setRenderer(renderer);
 
   // setup graphic locations
-  QVector<Point> pointsList;
+  QList<Point> pointsList;
   for (int i = 0; i <= 100; i++)
   {
     Point point(i / 10 * (m_size * 2) + lon, i % 10 * (m_size * 2) + lat, m_sceneView->spatialReference());

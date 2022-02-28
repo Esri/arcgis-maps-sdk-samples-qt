@@ -151,7 +151,7 @@ void Geotriggers::createGeotriggerMonitor(ServiceFeatureTable* serviceFeatureTab
 void Geotriggers::handleGeotriggerNotification(GeotriggerNotificationInfo* geotriggerNotificationInfo)
 {
   // Create a QScopedPointer so GeotriggerNotificationInfo does not persist outside this scope
-  std::unique_ptr<GeotriggerNotificationInfo> scopedNotification(geotriggerNotificationInfo);
+  QScopedPointer<GeotriggerNotificationInfo> scopedNotification(geotriggerNotificationInfo);
 
   // GeotriggerNotificationInfo provides access to information about the geotrigger that was triggered
   QString geotriggerName = geotriggerNotificationInfo->geotriggerMonitor()->geotrigger()->name();
