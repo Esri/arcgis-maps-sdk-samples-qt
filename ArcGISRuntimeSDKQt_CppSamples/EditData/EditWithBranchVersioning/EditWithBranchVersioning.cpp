@@ -184,7 +184,8 @@ void EditWithBranchVersioning::connectSgdbSignals()
 
     for (FeatureTableEditResult* featureTableEditResult : featureTableEditResults)
     {
-      for (FeatureEditResult* featureEditResult : featureTableEditResult->editResults())
+      const auto results = featureTableEditResult->editResults();
+      for (FeatureEditResult* featureEditResult : results)
       {
         if (!featureEditResult->error().isEmpty())
         {

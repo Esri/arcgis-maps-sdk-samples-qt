@@ -94,7 +94,7 @@ void SketchOnMap::setSketchCreationMode(SampleSketchMode sketchCreationMode)
     default:
       break;
   }
-  sketchEditorStartedChanged();
+  emit sketchEditorStartedChanged();
 }
 
 void SketchOnMap::stopSketching(bool saveGeometry)
@@ -102,7 +102,7 @@ void SketchOnMap::stopSketching(bool saveGeometry)
   if (!m_sketchEditor->isStarted() || !saveGeometry)
   {
     m_sketchEditor->stop();
-    sketchEditorStartedChanged();
+    emit sketchEditorStartedChanged();
     return;
   }
 
@@ -142,7 +142,7 @@ void SketchOnMap::stopSketching(bool saveGeometry)
   m_sketchOverlay->graphics()->append(sketchGraphic);
 
   m_sketchEditor->stop();
-  sketchEditorStartedChanged();
+  emit sketchEditorStartedChanged();
 }
 
 bool SketchOnMap::sketchEditorStarted() const

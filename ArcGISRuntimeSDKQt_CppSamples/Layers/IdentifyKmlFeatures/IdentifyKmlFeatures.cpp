@@ -29,7 +29,8 @@
 
 using namespace Esri::ArcGISRuntime;
 
-namespace  {
+namespace
+{
 const QUrl datasetUrl("https://www.wpc.ncep.noaa.gov/kml/noaa_chart/WPC_Day1_SigWx_latest.kml");
 }
 
@@ -81,7 +82,8 @@ void IdentifyKmlFeatures::setMapView(MapQuickView* mapView)
     }
 
     // find the first geoElement that is a KML placemark
-    for (GeoElement* geoElement : result->geoElements())
+    const auto elements = result->geoElements();
+    for (GeoElement* geoElement : elements)
     {
       if (KmlPlacemark* placemark = dynamic_cast<KmlPlacemark*>(geoElement))
       {

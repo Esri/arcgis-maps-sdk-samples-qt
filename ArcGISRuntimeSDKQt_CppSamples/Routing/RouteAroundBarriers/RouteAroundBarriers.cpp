@@ -168,7 +168,7 @@ void RouteAroundBarriers::connectRouteSignals()
     if (routeResult.isEmpty())
       return;
 
-    const Route route = routeResult.routes()[0];
+    const Route route = qAsConst(routeResult).routes()[0];
     const Geometry routeGeometry = route.routeGeometry();
     Graphic* routeGraphic = new Graphic(routeGeometry, this);
     m_routeOverlay->graphics()->append(routeGraphic);

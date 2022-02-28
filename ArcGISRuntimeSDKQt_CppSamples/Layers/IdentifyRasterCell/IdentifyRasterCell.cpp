@@ -107,9 +107,9 @@ void IdentifyRasterCell::connectSignals()
 
   connect(m_mapView, &MapQuickView::identifyLayerCompleted, this, [this](QUuid, IdentifyLayerResult* rawIdentifyResult)
   {
-    auto identifyResult = std::unique_ptr<IdentifyLayerResult>(rawIdentifyResult);
-
-    for (GeoElement* geoElement : identifyResult->geoElements())
+    const auto identifyResult = std::unique_ptr<IdentifyLayerResult>(rawIdentifyResult);
+    const auto elements = identifyResult->geoElements();
+    for (GeoElement* geoElement : elements)
     {
       if (RasterCell* rasterCell = dynamic_cast<RasterCell*>(geoElement))
       {

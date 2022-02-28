@@ -183,7 +183,8 @@ void ConfigureSubnetworkTrace::codedValueOrInputText(const QString& currentText)
       m_valueSelectionListModel.clear();
       const CodedValueDomain codedValueDomain = static_cast<CodedValueDomain>(domain);
 
-      for (CodedValue codedValue: codedValueDomain.codedValues())
+      const auto values = codedValueDomain.codedValues();
+      for (const CodedValue& codedValue: values)
         m_valueSelectionListModel.append(codedValue.name());
 
       m_textFieldVisible = false;
@@ -307,7 +308,8 @@ void ConfigureSubnetworkTrace::onUtilityNetworkLoaded(const Error& e)
   m_networkDefinition = m_utilityNetwork->definition();
 
   // Build the choice lists for network attribute comparison.
-  for (UtilityNetworkAttribute* networkAttribute : m_networkDefinition->networkAttributes())
+  const auto attributes = m_networkDefinition->networkAttributes();
+  for (UtilityNetworkAttribute* networkAttribute : attributes)
   {
     if (!networkAttribute->isSystemDefined())
       m_attributeListModel.append(networkAttribute->name());
