@@ -186,7 +186,10 @@ void PortalUserInfo::onPortalLoadStatusChanged(LoadStatus loadStatus)
     switch (loadStatus) {
     case LoadStatus::Loaded:
         if (m_portal)
+        {
             m_user = m_portal->portalUser();
+            connect(m_user, &PortalUser::thumbnailUrlChanged, this, &PortalUserInfo::thumbnailUrlChanged);
+        }
         emit fullNameChanged();
         emit usernameChanged();
         emit emailChanged();
