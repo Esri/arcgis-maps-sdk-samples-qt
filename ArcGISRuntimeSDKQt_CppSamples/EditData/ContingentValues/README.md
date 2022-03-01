@@ -17,7 +17,7 @@ Tap on the map to add a feature symbolizing a bird's nest. Then choose values de
 ## How it works
 
 1. Create and load a `Geodatabase`.
-2. Load the first `GeodatabaseFeatureTable`.
+2. Load the "BirdNests" `GeodatabaseFeatureTable`.
 3. Load the `ContingentValuesDefinition` from the feature table.
 4. Create a new `FeatureLayer` from the feature table and add it to the map.
 5. Create a new `Feature` from the feature table using `FeatureTable::createFeature`
