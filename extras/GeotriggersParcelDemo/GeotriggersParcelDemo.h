@@ -25,11 +25,9 @@ class Map;
 class MapQuickView;
 class SimulatedLocationDataSource;
 class LocationGeotriggerFeed;
-class ServiceFeatureTable;
 class Graphic;
 class FeatureLayer;
-class Geodatabase;
-class GeodatabaseFeatureTable;
+class FeatureTable;
 }
 }
 
@@ -55,7 +53,6 @@ private:
   void setMapView(Esri::ArcGISRuntime::MapQuickView* mapView);
 
   void loadMmpk();
-  void loadGdb();
   void initializeSimulatedLocationDisplay();
   void runGeotriggers();
 
@@ -65,8 +62,7 @@ private:
 
   Esri::ArcGISRuntime::LocationGeotriggerFeed* m_geotriggerFeed = nullptr;
   Esri::ArcGISRuntime::FeatureLayer* m_parcelsLayer = nullptr;
-  Esri::ArcGISRuntime::Geodatabase* m_geodatabase = nullptr;
-  Esri::ArcGISRuntime::GeodatabaseFeatureTable* m_parcelGdbFeatureTable = nullptr;
+  Esri::ArcGISRuntime::FeatureTable* m_parcelsTable = nullptr;
 };
 
 #endif // GEOTRIGGERSPARCELDEMO_H

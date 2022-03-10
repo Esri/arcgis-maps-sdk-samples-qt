@@ -73,7 +73,6 @@ void GeotriggersParcelDemo::setMapView(MapQuickView* mapView)
   m_mapView = mapView;
 
   loadMmpk();
-  loadGdb();
 
   emit mapViewChanged();
 }
@@ -86,21 +85,13 @@ void GeotriggersParcelDemo::loadMmpk()
   {
     m_map = mmpk->maps().at(0);
     m_mapView->setMap(m_map);
-  });
-
-  mmpk->load();
-}
-
-void GeotriggersParcelDemo::loadGdb()
-{
-  m_geodatabase = new Geodatabase(QDir::homePath() + "/ArcGIS/Runtime/Data/geodatabase/PalmSpringsParcels.geodatabase", this);
-  connect(m_geodatabase, &Geodatabase::doneLoading, this, [this]()
-  {
-    m_parcelGdbFeatureTable = m_geodatabase->geodatabaseFeatureTable("PalmSpringsParcels");
+    m_parcelsLayer = dynamic_cast<FeatureLayer*>(m_map->operationalLayers()->at(0));
+    m_parcelsTable = m_parcelsLayer->featureTable();
     initializeSimulatedLocationDisplay();
     runGeotriggers();
   });
-  m_geodatabase->load();
+
+  mmpk->load();
 }
 
 void GeotriggersParcelDemo::runGeotriggers()
@@ -108,7 +99,7 @@ void GeotriggersParcelDemo::runGeotriggers()
   m_geotriggerFeed = new LocationGeotriggerFeed(m_locationDataSource, this);
   m_geotriggerFeed->setFilter(new ArcadeExpression("$locationupdate.horizontalaccuracy <= 10", this));
 
-  FeatureFenceParameters* featureFenceParameters = new FeatureFenceParameters(m_parcelGdbFeatureTable, this);
+  FeatureFenceParameters* featureFenceParameters = new FeatureFenceParameters(m_parcelsTable, this);
   featureFenceParameters->setWhereClause("RecAC >= .25");
 
   FenceGeotrigger* fenceGeotrigger = new FenceGeotrigger(m_geotriggerFeed, FenceRuleType::EnterOrExit, featureFenceParameters, this);
