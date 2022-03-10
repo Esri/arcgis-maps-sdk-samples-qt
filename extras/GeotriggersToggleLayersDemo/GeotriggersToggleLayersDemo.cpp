@@ -113,7 +113,6 @@ void GeotriggersToggleLayersDemo::runGeotriggers()
     FenceGeotriggerNotificationInfo* fenceGeotriggerNotificationInfo = static_cast<FenceGeotriggerNotificationInfo*>(geotriggerNotificationInfo);
     if (fenceGeotriggerNotificationInfo->fenceNotificationType() == FenceNotificationType::Entered)
     {
-      qDebug() << "hi";
       m_indoorLayers->setVisible(true);
       m_map->operationalLayers()->at(0)->setVisible(false);
     }
@@ -124,21 +123,9 @@ void GeotriggersToggleLayersDemo::runGeotriggers()
     }
   });
 
+  m_mapView->locationDisplay()->start();
+  m_locationDataSource->start();
   geotriggerMonitor->start();
-}
-
-void GeotriggersToggleLayersDemo::displayInteriorLayers(bool display)
-{
-  if (display)
-  {
-    m_indoorLayers->setVisible(true);
-    m_map->operationalLayers()->at(0)->setVisible(false);
-  }
-  else
-  {
-    m_indoorLayers->setVisible(false);
-    m_map->operationalLayers()->at(0)->setVisible(true);
-  }
 }
 
 void GeotriggersToggleLayersDemo::initializeSimulatedLocationDisplay()
@@ -158,7 +145,4 @@ void GeotriggersToggleLayersDemo::initializeSimulatedLocationDisplay()
   m_mapView->locationDisplay()->setDataSource(m_locationDataSource);
   m_mapView->locationDisplay()->setAutoPanMode(LocationDisplayAutoPanMode::Recenter);
   m_mapView->locationDisplay()->setInitialZoomScale(2000);
-  m_mapView->locationDisplay()->start();
-
-  m_locationDataSource->start();
 }

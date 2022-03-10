@@ -55,7 +55,6 @@ private:
   void loadMmpk();
   void initializeSimulatedLocationDisplay();
   void runGeotriggers();
-  void displayInteriorLayers(bool display);
 
   Esri::ArcGISRuntime::Map* m_map = nullptr;
   Esri::ArcGISRuntime::MapQuickView* m_mapView = nullptr;

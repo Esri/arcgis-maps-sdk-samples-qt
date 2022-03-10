@@ -87,6 +87,8 @@ void GeotriggersParcelDemo::loadMmpk()
     m_mapView->setMap(m_map);
     m_parcelsLayer = dynamic_cast<FeatureLayer*>(m_map->operationalLayers()->at(0));
     m_parcelsTable = m_parcelsLayer->featureTable();
+    m_parcelsTable->load();
+
     initializeSimulatedLocationDisplay();
     runGeotriggers();
   });
@@ -100,24 +102,40 @@ void GeotriggersParcelDemo::runGeotriggers()
   m_geotriggerFeed->setFilter(new ArcadeExpression("$locationupdate.horizontalaccuracy <= 10", this));
 
   FeatureFenceParameters* featureFenceParameters = new FeatureFenceParameters(m_parcelsTable, this);
-  featureFenceParameters->setWhereClause("RecAC >= .25");
+  //featureFenceParameters->setWhereClause("RecAC > .18");
 
   FenceGeotrigger* fenceGeotrigger = new FenceGeotrigger(m_geotriggerFeed, FenceRuleType::EnterOrExit, featureFenceParameters, this);
-
   fenceGeotrigger->setFeedAccuracyMode(FenceGeotriggerFeedAccuracyMode::UseGeometryWithAccuracy);
-  fenceGeotrigger->setEnterExitSpatialRelationship(FenceEnterExitSpatialRelationship::EnterContainsAndExitDoesNotContain);
+  //fenceGeotrigger->setEnterExitSpatialRelationship(FenceEnterExitSpatialRelationship::EnterContainsAndExitDoesNotContain);
 
   GeotriggerMonitor* geotriggerMonitor = new GeotriggerMonitor(fenceGeotrigger, this);
 
-  connect(geotriggerMonitor, &GeotriggerMonitor::geotriggerNotification, this, [](GeotriggerNotificationInfo* geotriggerNotificationInfo)
+  connect(geotriggerMonitor, &GeotriggerMonitor::geotriggerNotification, this, [this](GeotriggerNotificationInfo* geotriggerNotificationInfo)
   {
     FenceGeotriggerNotificationInfo* fenceGeotriggerNotificationInfo = static_cast<FenceGeotriggerNotificationInfo*>(geotriggerNotificationInfo);
-
-    qDebug() << "welcome to APN:" << fenceGeotriggerNotificationInfo->fenceGeoElement()->attributes()->attributeValue("Name").toString();
-    qDebug() << "it has size:" << fenceGeotriggerNotificationInfo->fenceGeoElement()->attributes()->attributeValue("RecAC").toString();
+    if (fenceGeotriggerNotificationInfo->fenceNotificationType() == FenceNotificationType::Entered)
+    {
+      m_parcelsLayer->selectFeature(dynamic_cast<Feature*>(fenceGeotriggerNotificationInfo->fenceGeoElement()));
+    }
+    else
+    {
+      m_parcelsLayer->clearSelection();
+    }
   });
 
   geotriggerMonitor->start();
+
+  delay();
+
+  m_mapView->locationDisplay()->start();
+  m_locationDataSource->start();
+}
+
+void GeotriggersParcelDemo::delay()
+{
+    QTime dieTime= QTime::currentTime().addSecs(10);
+    while (QTime::currentTime() < dieTime)
+        QCoreApplication::processEvents(QEventLoop::AllEvents, 100);
 }
 
 void GeotriggersParcelDemo::initializeSimulatedLocationDisplay()
@@ -137,6 +155,5 @@ void GeotriggersParcelDemo::initializeSimulatedLocationDisplay()
   m_mapView->locationDisplay()->setDataSource(m_locationDataSource);
   m_mapView->locationDisplay()->setAutoPanMode(LocationDisplayAutoPanMode::Recenter);
   m_mapView->locationDisplay()->start();
-
-  m_locationDataSource->start();
+  m_locationDataSource->stop();
 }
