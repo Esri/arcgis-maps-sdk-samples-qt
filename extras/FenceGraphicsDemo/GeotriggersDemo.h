@@ -23,6 +23,7 @@ class Graphic;
 class GraphicsOverlay;
 class LocationGeotriggerFeed;
 class SimulatedLocationDataSource;
+class SimpleFillSymbol;
 }
 }
 
@@ -61,6 +62,9 @@ private:
   Esri::ArcGISRuntime::Polyline m_path;
 
   Esri::ArcGISRuntime::Graphic* m_fenceGraphic = nullptr;
+  Esri::ArcGISRuntime::SimpleFillSymbol* m_bufferSymbol = nullptr;
+
+  int m_horizontalAccuracy = 0;
 
   Esri::ArcGISRuntime::GraphicsOverlay* m_graphicsOverlay = nullptr;
 

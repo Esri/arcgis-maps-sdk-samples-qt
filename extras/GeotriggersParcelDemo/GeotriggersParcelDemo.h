@@ -64,6 +64,8 @@ private:
   Esri::ArcGISRuntime::LocationGeotriggerFeed* m_geotriggerFeed = nullptr;
   Esri::ArcGISRuntime::FeatureLayer* m_parcelsLayer = nullptr;
   Esri::ArcGISRuntime::FeatureTable* m_parcelsTable = nullptr;
+
+  int m_userHorizontalAccuracy = 0;
 };
 
 #endif // GEOTRIGGERSPARCELDEMO_H

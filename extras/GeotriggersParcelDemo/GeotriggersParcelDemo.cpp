@@ -89,7 +89,6 @@ void GeotriggersParcelDemo::loadMmpk()
     m_parcelsTable = m_parcelsLayer->featureTable();
     m_parcelsTable->load();
 
-    initializeSimulatedLocationDisplay();
     runGeotriggers();
   });
 
@@ -98,33 +97,39 @@ void GeotriggersParcelDemo::loadMmpk()
 
 void GeotriggersParcelDemo::runGeotriggers()
 {
+  m_userHorizontalAccuracy = 10;
+  initializeSimulatedLocationDisplay();
+  // user's location to be used as input data for geotrigger monitor
   m_geotriggerFeed = new LocationGeotriggerFeed(m_locationDataSource, this);
-  m_geotriggerFeed->setFilter(new ArcadeExpression("$locationupdate.horizontalaccuracy <= 10", this));
+
+  // Can filter out notifications when horizontal accuracy is too poor
+  // m_geotriggerFeed->setFilter(new ArcadeExpression("$locationupdate.horizontalaccuracy <= 10", this));
 
   FeatureFenceParameters* featureFenceParameters = new FeatureFenceParameters(m_parcelsTable, this);
-  //featureFenceParameters->setWhereClause("RecAC > .18");
 
-  FenceGeotrigger* fenceGeotrigger = new FenceGeotrigger(m_geotriggerFeed, FenceRuleType::EnterOrExit, featureFenceParameters, this);
+  // Read values from the fence feature's attributes table
+  featureFenceParameters->setWhereClause("RecAC > .18");
+
+  FenceGeotrigger* fenceGeotrigger = new FenceGeotrigger(m_geotriggerFeed, FenceRuleType::Enter, featureFenceParameters, this);
   fenceGeotrigger->setFeedAccuracyMode(FenceGeotriggerFeedAccuracyMode::UseGeometryWithAccuracy);
-  //fenceGeotrigger->setEnterExitSpatialRelationship(FenceEnterExitSpatialRelationship::EnterContainsAndExitDoesNotContain);
+  fenceGeotrigger->setEnterExitSpatialRelationship(FenceEnterExitSpatialRelationship::EnterIntersectsAndExitDoesNotIntersect);
 
+  // create a GeotriggerMonitor to monitor the fence features
   GeotriggerMonitor* geotriggerMonitor = new GeotriggerMonitor(fenceGeotrigger, this);
 
+  // Slot to handle notification signals that meet the parameters
   connect(geotriggerMonitor, &GeotriggerMonitor::geotriggerNotification, this, [this](GeotriggerNotificationInfo* geotriggerNotificationInfo)
   {
     FenceGeotriggerNotificationInfo* fenceGeotriggerNotificationInfo = static_cast<FenceGeotriggerNotificationInfo*>(geotriggerNotificationInfo);
-    if (fenceGeotriggerNotificationInfo->fenceNotificationType() == FenceNotificationType::Entered)
-    {
-      m_parcelsLayer->selectFeature(dynamic_cast<Feature*>(fenceGeotriggerNotificationInfo->fenceGeoElement()));
-    }
-    else
-    {
-      m_parcelsLayer->clearSelection();
-    }
+
+    // fence geotrigger notification info gives us access to the feature that triggered the notification
+    qDebug() << "Parcel recorded acreage: " << fenceGeotriggerNotificationInfo->fenceGeoElement()->attributes()->attributeValue("RecAC").toDouble();
+    m_parcelsLayer->selectFeature(dynamic_cast<Feature*>(fenceGeotriggerNotificationInfo->fenceGeoElement()));
   });
 
   geotriggerMonitor->start();
 
+  // Give the FenceGeotrigger a moment to load
   delay();
 
   m_mapView->locationDisplay()->start();
@@ -133,9 +138,9 @@ void GeotriggersParcelDemo::runGeotriggers()
 
 void GeotriggersParcelDemo::delay()
 {
-    QTime dieTime= QTime::currentTime().addSecs(10);
-    while (QTime::currentTime() < dieTime)
-        QCoreApplication::processEvents(QEventLoop::AllEvents, 100);
+  QTime dieTime= QTime::currentTime().addSecs(10);
+  while (QTime::currentTime() < dieTime)
+    QCoreApplication::processEvents(QEventLoop::AllEvents, 100);
 }
 
 void GeotriggersParcelDemo::initializeSimulatedLocationDisplay()
@@ -143,7 +148,7 @@ void GeotriggersParcelDemo::initializeSimulatedLocationDisplay()
   m_locationDataSource = new SimulatedLocationDataSource(this);
 
   // Create SimulationParameters starting at the current time, a velocity of 5 m/s, and a horizontal and vertical accuracy of 0.0
-  SimulationParameters* simulationParameters = new SimulationParameters(QDateTime::currentDateTime(), 50, 0.0, 0.0, this);
+  SimulationParameters* simulationParameters = new SimulationParameters(QDateTime::currentDateTime(), 50, m_userHorizontalAccuracy, 0.0, this);
 
   PolylineBuilder polylineBuilder(SpatialReference::webMercator());
   polylineBuilder.addPoint(-1.29641e+07, 4.00798e+06);

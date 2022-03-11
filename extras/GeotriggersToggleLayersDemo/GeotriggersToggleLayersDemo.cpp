@@ -100,24 +100,33 @@ void GeotriggersToggleLayersDemo::loadMmpk()
 
 void GeotriggersToggleLayersDemo::runGeotriggers()
 {
+  // Use the user's location as input data
   m_geotriggerFeed = new LocationGeotriggerFeed(m_locationDataSource, this);
 
+  // Monitor the convention center footprint polygon
   FeatureFenceParameters* featureFenceParameters = new FeatureFenceParameters(m_buildingFootprintTable, this);
 
+  // Create a fence geotrigger
   FenceGeotrigger* fenceGeotrigger = new FenceGeotrigger(m_geotriggerFeed, FenceRuleType::EnterOrExit, featureFenceParameters, this);
 
+  // Monitor the fence geotrigger
   GeotriggerMonitor* geotriggerMonitor = new GeotriggerMonitor(fenceGeotrigger, this);
 
   connect(geotriggerMonitor, &GeotriggerMonitor::geotriggerNotification, this, [this](GeotriggerNotificationInfo* geotriggerNotificationInfo)
   {
     FenceGeotriggerNotificationInfo* fenceGeotriggerNotificationInfo = static_cast<FenceGeotriggerNotificationInfo*>(geotriggerNotificationInfo);
+
+    // When we enter the feature fence...
     if (fenceGeotriggerNotificationInfo->fenceNotificationType() == FenceNotificationType::Entered)
     {
+      // show the indoor layers and hide the basemap
       m_indoorLayers->setVisible(true);
       m_map->operationalLayers()->at(0)->setVisible(false);
     }
+    // otherwise...
     else
     {
+      // hide the indoor layers and show the basemap
       m_indoorLayers->setVisible(false);
       m_map->operationalLayers()->at(0)->setVisible(true);
     }
@@ -132,7 +141,6 @@ void GeotriggersToggleLayersDemo::initializeSimulatedLocationDisplay()
 {
   m_locationDataSource = new SimulatedLocationDataSource(this);
 
-  // Create SimulationParameters starting at the current time, a velocity of 5 m/s, and a horizontal and vertical accuracy of 0.0
   SimulationParameters* simulationParameters = new SimulationParameters(QDateTime::currentDateTime(), 10, 0.0, 0.0, this);
 
   PolylineBuilder polylineBuilder(SpatialReference::webMercator());
