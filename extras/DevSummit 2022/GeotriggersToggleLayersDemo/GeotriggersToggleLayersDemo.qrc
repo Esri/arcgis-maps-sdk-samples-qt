@@ -1,0 +1,11 @@
+<RCC>
+    <qresource prefix="/Samples/Analysis/GeotriggersToggleLayersDemo">
+        <file alias="sample.json">README.metadata.json</file>        
+        <file>GeotriggersToggleLayersDemo.qml</file>
+        <file>GeotriggersToggleLayersDemo.h</file>
+        <file>GeotriggersToggleLayersDemo.cpp</file>
+        <file>main.qml</file>
+        <file>screenshot.png</file>
+        <file>README.md</file>
+    </qresource>
+</RCC>

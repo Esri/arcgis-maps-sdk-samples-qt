@@ -1,0 +1,11 @@
+<RCC>
+    <qresource prefix="/Samples/Analysis/FenceGraphicsDemo">
+        <file alias="sample.json">README.metadata.json</file>        
+        <file>FenceGraphicsDemo.qml</file>
+        <file>FenceGraphicsDemo.h</file>
+        <file>FenceGraphicsDemo.cpp</file>
+        <file>main.qml</file>
+        <file>screenshot.png</file>
+        <file>README.md</file>
+    </qresource>
+</RCC>

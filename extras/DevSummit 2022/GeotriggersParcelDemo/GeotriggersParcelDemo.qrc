@@ -1,0 +1,11 @@
+<RCC>
+    <qresource prefix="/Samples/Analysis/GeotriggersParcelDemo">
+        <file alias="sample.json">README.metadata.json</file>        
+        <file>GeotriggersParcelDemo.qml</file>
+        <file>GeotriggersParcelDemo.h</file>
+        <file>GeotriggersParcelDemo.cpp</file>
+        <file>main.qml</file>
+        <file>screenshot.png</file>
+        <file>README.md</file>
+    </qresource>
+</RCC>
