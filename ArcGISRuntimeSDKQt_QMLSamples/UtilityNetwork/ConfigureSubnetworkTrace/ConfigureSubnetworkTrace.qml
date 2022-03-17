@@ -114,7 +114,7 @@ Rectangle {
             const utilityTierSource = domainNetwork.tier(tierName);
 
             // Set the trace configuration.
-            traceConfiguration = utilityTierSource.defaultTraceConfiguration;
+            traceConfiguration = utilityTierSource.defaultTraceConfiguration();
 
             initialExpression = traceConfiguration.traversability.barriers;
 

@@ -267,7 +267,7 @@ Rectangle {
                         let domainNetwork = definition.domainNetwork(domainNetworkName);
                         if (domainNetwork.tier(tierName) !== null) {
                             let tier = domainNetwork.tier(tierName);
-                            traceConfiguration = tier.defaultTraceConfiguration;
+                            traceConfiguration = tier.defaultTraceConfiguration();
                         }
                     }
 
