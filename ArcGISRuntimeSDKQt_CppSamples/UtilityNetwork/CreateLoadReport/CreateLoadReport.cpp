@@ -89,7 +89,7 @@ CreateLoadReport::CreateLoadReport(QObject* parent /* = nullptr */):
       m_traceConfiguration = createDefaultTraceConfiguration();
 
       // Create a base condition to compare against
-      m_baseCondition = dynamic_cast<UtilityTraceConditionalExpression*>(m_utilityTier->traceConfiguration()->traversability()->barriers());
+      m_baseCondition = dynamic_cast<UtilityTraceConditionalExpression*>(m_utilityTier->defaultTraceConfiguration()->traversability()->barriers());
 
       // Create downstream trace parameters with function outputs
       m_traceParameters = new UtilityTraceParameters(UtilityTraceType::Downstream, {m_startingLocation}, this);
@@ -145,7 +145,7 @@ UtilityElement* CreateLoadReport::createStartingLocation()
 
 UtilityTraceConfiguration* CreateLoadReport::createDefaultTraceConfiguration()
 {
-  UtilityTraceConfiguration* traceConfig = m_utilityTier->traceConfiguration();
+  UtilityTraceConfiguration* traceConfig = m_utilityTier->defaultTraceConfiguration();
 
   // Service Category for counting total customers
   UtilityCategory* servicePointCategory = getUtilityCategory(m_serviceCategoryName);
