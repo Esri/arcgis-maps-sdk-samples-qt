@@ -20,7 +20,7 @@ Select phases to be included in the report. Press the "Run Report" button to ini
 4. Create a `UtilityCategoryComparison` where "ServicePoint" category exists.
 5. Reset the `functions` property of the trace configuration with a new `UtilityTraceFunction` adding a "Service Load" network attribute where this category comparison applies. This will limit the function results.
 6. Set `outputCondition` with the category comparison to limit the element results.
-7. Get a base condition from the utility tier's trace configuration.
+7. Get a base condition from the utility tier's default trace configuration.
 8. Create `UtilityTraceParameters` passing in `downstream` utility trace type and the default starting location. Set its `traceConfiguration` property with the trace configuration above.
 9. Populate a list of phases using the network attribute's `codedValues` property.
 10. When the "Run Report" button is tapped, run a trace for every checked `CodedValue` in the phases list. Do this by creating a `UtilityTraceOrCondition` with the base condition and a `UtilityNetworkAttributeComparison` where the "Phases Current" network attribute does not include the coded value.

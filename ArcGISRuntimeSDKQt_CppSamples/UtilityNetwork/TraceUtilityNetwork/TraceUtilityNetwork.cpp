@@ -248,7 +248,7 @@ void TraceUtilityNetwork::trace(int index)
   }
 
   if (m_mediumVoltageTier)
-    m_traceParams->setTraceConfiguration(m_mediumVoltageTier->traceConfiguration());
+    m_traceParams->setTraceConfiguration(m_mediumVoltageTier->defaultTraceConfiguration());
 
   m_traceParams->setStartingLocations(m_startingLocations);
   m_traceParams->setBarriers(m_barriers);

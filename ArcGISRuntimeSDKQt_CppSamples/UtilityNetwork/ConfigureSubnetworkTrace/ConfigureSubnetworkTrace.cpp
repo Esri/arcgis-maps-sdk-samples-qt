@@ -337,7 +337,7 @@ void ConfigureSubnetworkTrace::onUtilityNetworkLoaded(const Error& e)
   const UtilityTier* utilityTierSource = domainNetwork->tier(m_tierName);
 
   // Set the trace configuration.
-  m_traceConfiguration = utilityTierSource->traceConfiguration();
+  m_traceConfiguration = utilityTierSource->defaultTraceConfiguration();
 
   m_initialExpression = m_traceConfiguration->traversability()->barriers();
 
@@ -348,7 +348,7 @@ void ConfigureSubnetworkTrace::onUtilityNetworkLoaded(const Error& e)
   }
 
   // Set the traversability scope.
-  utilityTierSource->traceConfiguration()->traversability()->setScope(UtilityTraversabilityScope::Junctions);
+  utilityTierSource->defaultTraceConfiguration()->traversability()->setScope(UtilityTraversabilityScope::Junctions);
 }
 
 ConfigureSubnetworkTrace::~ConfigureSubnetworkTrace() = default;

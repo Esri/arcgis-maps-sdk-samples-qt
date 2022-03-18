@@ -23,7 +23,7 @@ Example barrier conditions for the default dataset:
 1. Create and load a `UtilityNetwork` with a feature service URL, then get an asset type and a tier by their names.
 2. Populate the choice list for the comparison source with the non-system defined `Definition.networkAttributes`. Populate the choice list for the comparison operator with the enum values from `UtilityAttributeComparisonOperator`.
 3. Create a `UtilityElement` from this asset type to use as the starting location for the trace.
-4. Update the selected barrier expression and the checked options in the UI using this tier's `TraceConfiguration`.
+4. Update the selected barrier expression and the checked options in the UI using this tier's `TraceConfiguration` returned from `defaultTraceConfiguration()`.
 5. When 'Network Attribute' is selected, if its `Domain` is a `CodedValueDomain`, populate the choice list for the comparison value with its `CodedValues`. Otherwise, display a free-form textbox for entering an attribute value.
 6. When 'Add' is clicked, create a new `UtilityNetworkAttributeComparison` using the selected comparison source, operator, and selected or typed value. Use the selected source's `NetworkAttribute.dataType` to convert the comparison value to the correct data type.
 7. If the Traversability's list of `Barriers` is not empty, create a `UtilityTraceOrCondition` with the existing `Barriers` and the new comparison from Step 6.
