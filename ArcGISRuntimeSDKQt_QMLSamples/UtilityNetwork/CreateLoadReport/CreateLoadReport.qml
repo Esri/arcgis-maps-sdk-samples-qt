@@ -193,7 +193,7 @@ Rectangle {
     }
 
     function createTraceConfiguration() {
-        const traceConfig = utilityTier.traceConfiguration;
+        const traceConfig = utilityTier.defaultTraceConfiguration();
         traceConfig.domainNetwork = utilityNetwork.definition.domainNetwork(domainNetworkName);
 
         serviceCategoryComparison.setServiceCategoryComparison();
