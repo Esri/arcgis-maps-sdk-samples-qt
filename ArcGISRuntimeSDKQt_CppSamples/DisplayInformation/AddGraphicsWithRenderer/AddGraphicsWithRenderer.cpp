@@ -22,6 +22,8 @@
 
 #include "CubicBezierSegment.h"
 #include "EllipticArcSegment.h"
+#include "GeodesicEllipseParameters.h"
+#include "GeometryEngine.h"
 #include "Map.h"
 #include "MapQuickView.h"
 #include "PolygonBuilder.h"
@@ -70,6 +72,8 @@ void AddGraphicsWithRenderer::addGraphicsOverlays()
   addPolygonGraphic();
 
   addCurveGraphic();
+
+  addEllipseGraphic();
 }
 
 void AddGraphicsWithRenderer::addPointGraphic()
@@ -121,6 +125,26 @@ void AddGraphicsWithRenderer::addCurveGraphic()
   SimpleFillSymbol* curveFillSymbol = new SimpleFillSymbol(SimpleFillSymbolStyle::Solid, QColor("red"), curveLineSymbol, this);
 
   createGraphicsOverlayWithGraphicAndSymbol(curveGraphic, curveFillSymbol);
+}
+
+void AddGraphicsWithRenderer::addEllipseGraphic()
+{
+  GeodesicEllipseParameters parameters = GeodesicEllipseParameters();
+  parameters.setCenter(Point(40e5, 25e5, SpatialReference::webMercator()));
+  parameters.setGeometryType(GeometryType::Polygon);
+  parameters.setSemiAxis1Length(200);
+  parameters.setSemiAxis2Length(400);
+  parameters.setAxisDirection(-45);
+  parameters.setMaxPointCount(100);
+  parameters.setAngularUnit(AngularUnit(AngularUnitId::Degrees));
+  parameters.setLinearUnit(LinearUnit(LinearUnitId::Kilometers));
+  parameters.setMaxSegmentLength(20);
+
+  const Polygon ellipsePolygon = GeometryEngine::ellipseGeodesic(parameters);
+
+  SimpleFillSymbol* ellipseSymbol = new SimpleFillSymbol(SimpleFillSymbolStyle::Solid, QColor(125, 0, 125), this);
+
+  createGraphicsOverlayWithGraphicAndSymbol(new Graphic(ellipsePolygon, this), ellipseSymbol);
 }
 
 void AddGraphicsWithRenderer::createGraphicsOverlayWithGraphicAndSymbol(Graphic* graphic, Symbol* symbol)

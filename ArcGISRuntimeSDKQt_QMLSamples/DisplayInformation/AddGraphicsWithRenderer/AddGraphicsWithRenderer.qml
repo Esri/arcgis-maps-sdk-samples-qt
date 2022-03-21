@@ -41,124 +41,129 @@ Rectangle {
         }
 
         GraphicsOverlay {
-            id: pointGraphicsOverlay
-            // assign a render to the graphics overlay
-            renderer: SimpleRenderer {
-                symbol: pointSymbol
+            id: graphicsOverlay
+        }
+
+        Graphic {
+            id: pointGraphic
+
+            // A point graphic's geometry can be defined declaratively
+            geometry: Point {
+                x: 40e5
+                y: 40e5
+                spatialReference: SpatialReference {
+                    wkid: 102100
+                }
             }
 
-            Graphic {
-                geometry: Point {
-                    x: 40e5
-                    y: 40e5
-                    spatialReference: SpatialReference {
-                        wkid: 102100
-                    }
+            symbol: SimpleMarkerSymbol {
+                style: Enums.SimpleMarkerSymbolStyleDiamond
+                color: "red"
+                size: 10
+            }
+        }
+
+        Graphic {
+            id: lineGraphic
+            symbol: SimpleLineSymbol {
+                style: Enums.SimpleLineSymbolStyleSolid
+                color: "blue"
+                width: 5
+                antiAlias: true
+            }
+        }
+
+        Graphic {
+            id: polygonGraphic
+            symbol: SimpleFillSymbol {
+                style: Enums.SimpleFillSymbolStyleSolid
+                color: Qt.rgba(1, 1, 0, 0.7)
+            }
+        }
+
+        Graphic {
+            id: ellipseGraphic
+            symbol: SimpleFillSymbol {
+                style: Enums.SimpleFillSymbolStyleSolid
+                color: "purple"
+            }
+        }
+
+        Graphic {
+            id: heartGraphic
+            symbol: SimpleFillSymbol {
+                style: Enums.SimpleFillSymbolStyleSolid
+                color: "red"
+                outline: SimpleLineSymbol {
+                    style: Enums.SimpleLineSymbolStyleSolid
+                    color: "black"
+                    width: 1
                 }
             }
         }
 
-        // graphics overlay for the line symbol
-        GraphicsOverlay {
-            id: lineGraphicsOverlay
-
-            renderer: SimpleRenderer {
-                symbol: lineSymbol
+        // Used to construct the line graphic geometry
+        PolylineBuilder {
+            id: polylineBuilder
+            spatialReference: SpatialReference {
+                wkid: 102100
             }
         }
 
-        // polygon graphics overlay
-        GraphicsOverlay {
-            id: polygonGraphicsOverlay
-
-            // default property: renderer
-            SimpleRenderer {
-                symbol: fillSymbol
+        // Used to construct the polygon graphic geometry
+        PolygonBuilder {
+            id: polygonBuilder
+            spatialReference: SpatialReference {
+                wkid: 102100
             }
         }
 
-        // graphics overlay to display the heart graphic
-        GraphicsOverlay {
-            id: heartGraphicsOverlay
-
-            renderer: SimpleRenderer {
-                symbol: SimpleFillSymbol {
-                    style: Enums.SimpleFillSymbolStyleSolid
-                    color: "red"
-                    outline: SimpleLineSymbol {
-                        style: Enums.SimpleLineSymbolStyleSolid
-                        color: "black"
-                        width: 1
-                    }
-                }
+        // Used to define the ellipse geometry
+        GeodesicEllipseParameters {
+            id: geodesicEllipseParameters
+            center: Point {
+                x: 40e5
+                y: 25e5
+                spatialReference: Factory.SpatialReference.createWebMercator();
             }
+            geometryType: Enums.GeometryTypePolygon
+            semiAxis1Length: 200
+            semiAxis2Length: 400
+            axisDirection: -45
+            maxPointCount: 100
+            angularUnit: AngularUnit {
+                angularUnitId: Enums.AngularUnitIdDegrees
+            }
+            linearUnit: LinearUnit {
+                linearUnitId: Enums.LinearUnitIdKilometers
+            }
+            maxSegmentLength: 20
         }
-    }
-
-    // the symbology for the point graphic
-    SimpleMarkerSymbol {
-        id: pointSymbol
-        style: Enums.SimpleMarkerSymbolStyleDiamond
-        color: "red"
-        size: 10
-    }
-
-    // line symbol for the line graphic
-    SimpleLineSymbol {
-        id: lineSymbol
-        style: Enums.SimpleLineSymbolStyleSolid
-        color: "blue"
-        width: 5
-        antiAlias: true
-    }
-
-    // the line graphic
-    Graphic {
-        id: lineGraphic
-    }
-
-    // for the line graphic
-    PolylineBuilder {
-        id: polylineBuilder
-        spatialReference: SpatialReference {
-            wkid: 102100
-        }
-    }
-
-    // symbology for the polygon graphic overlay's renderer
-    SimpleFillSymbol {
-        id: fillSymbol
-        style: Enums.SimpleFillSymbolStyleSolid
-        color: Qt.rgba(1, 1, 0, 0.7)
-    }
-
-    // the graphic for the polygon graphics overlay
-    Graphic {
-        id: polygonGraphic
-    }
-
-    // geometry for the polygon graphic
-    PolygonBuilder {
-        id: polygonBuilder
-        spatialReference: SpatialReference {
-            wkid: 102100
-        }
-    }
-
-    // The heart graphic to append the heart geometry to
-    Graphic {
-        id: heartGraphic
     }
 
     Component.onCompleted: {
+        addPointGraphic();
+        addLineGraphic();
+        addPolygonGraphic();
+        addHeartGraphic();
+        addEllipseGraphic();
+    }
+
+    function addPointGraphic() {
+        graphicsOverlay.graphics.append(pointGraphic);
+    }
+
+    function addLineGraphic() {
         // create the line by assigning points
         polylineBuilder.addPointXY(-10e5, 40e5);
         polylineBuilder.addPointXY(20e5, 50e5);
         // assign the graphics geometry to the line
         lineGraphic.geometry = polylineBuilder.geometry;
         // add the graphic to the polyline graphic overlay
-        lineGraphicsOverlay.graphics.append(lineGraphic);
+        graphicsOverlay.graphics.append(lineGraphic);
+    }
 
+    function addPolygonGraphic() {
         // create the polygon by assigning points
         polygonBuilder.addPointXY(-20e5, 20e5);
         polygonBuilder.addPointXY(20e5, 20e5);
@@ -167,11 +172,18 @@ Rectangle {
         // assign the geometry of the graphic to be the polygon
         polygonGraphic.geometry = polygonBuilder.geometry;
         // add the graphic to the polygon graphics overlay
-        polygonGraphicsOverlay.graphics.append(polygonGraphic);
+        graphicsOverlay.graphics.append(polygonGraphic);
+    }
 
-        // Create the heart graphic with curved line segments
+    function addEllipseGraphic() {
+        // Create Ellipse
+        ellipseGraphic.geometry = GeometryEngine.ellipseGeodesic(geodesicEllipseParameters);
+        graphicsOverlay.graphics.append(ellipseGraphic);
+    }
+
+    function addHeartGraphic() {
         heartGraphic.geometry = createHeartGeometry(40e5, 5e5, 10e5, Factory.SpatialReference.createWebMercator());
-        heartGraphicsOverlay.graphics.append(heartGraphic);
+        graphicsOverlay.graphics.append(heartGraphic);
     }
 
     function createHeartGeometry(centerX, centerY, sideLength, sr) {
