@@ -48,7 +48,7 @@ void LineOfSightLocation::componentComplete()
   // Create a scene and give it to the SceneView
   m_sceneView = findChild<SceneQuickView*>("sceneView");
 
-  Scene* scene = new Scene(Basemap::topographic(this), this);
+  Scene* scene = new Scene(BasemapStyle::ArcGISTopographic, this);
   Surface* surface = new Surface(this);
   surface->elevationSources()->append(
         new ArcGISTiledElevationSource(

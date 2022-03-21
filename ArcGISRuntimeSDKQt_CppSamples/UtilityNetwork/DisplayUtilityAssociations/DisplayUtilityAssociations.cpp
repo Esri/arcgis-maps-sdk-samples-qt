@@ -145,7 +145,7 @@ void DisplayUtilityAssociations::connectSignals()
     // get all the edges and junctions in the network
     QList<UtilityNetworkSource*> edges;
     QList<UtilityNetworkSource*> junctions;
-    QList<UtilityNetworkSource*> allSources = m_utilityNetwork->definition()->networkSources();
+    const QList<UtilityNetworkSource*> allSources = m_utilityNetwork->definition()->networkSources();
 
     for (UtilityNetworkSource* networkSource : allSources)
     {

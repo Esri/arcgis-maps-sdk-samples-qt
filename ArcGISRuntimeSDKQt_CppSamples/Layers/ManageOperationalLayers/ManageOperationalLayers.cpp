@@ -112,7 +112,7 @@ void ManageOperationalLayers::removeLayer(int index)
   // add the layer to the other list
   m_deletedLayers.append(lyr);
   m_deletedLayersListNames.append(lyr->name());
-  deletedLayersListChanged();
+  emit deletedLayersListChanged();
 
   // remove from the map
   m_map->operationalLayers()->removeAt(modelIndex);
@@ -131,7 +131,7 @@ void ManageOperationalLayers::addLayer(int index)
   // remove the layer from the deleted list
   m_deletedLayers.removeAt(index);
   m_deletedLayersListNames.removeAt(index);
-  deletedLayersListChanged();
+  emit deletedLayersListChanged();
 
   // add the layer to the map's operational layers
   m_map->operationalLayers()->append(lyr);

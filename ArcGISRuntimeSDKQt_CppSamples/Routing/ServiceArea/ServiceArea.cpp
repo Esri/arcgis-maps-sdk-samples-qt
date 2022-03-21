@@ -248,7 +248,7 @@ void ServiceArea::setupRouting()
     int numFacilities = m_facilitiesOverlay->graphics()->size();
     for (int i = 0; i < numFacilities; ++i)
     {
-      QList<ServiceAreaPolygon> results = serviceAreaResult.resultPolygons(i);
+      const QList<ServiceAreaPolygon> results = serviceAreaResult.resultPolygons(i);
       if (!m_graphicParent)
         m_graphicParent = new QObject(this);
       for (const ServiceAreaPolygon& poly : results)

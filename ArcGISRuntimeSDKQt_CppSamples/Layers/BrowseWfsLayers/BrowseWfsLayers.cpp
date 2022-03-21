@@ -47,7 +47,7 @@ BrowseWfsLayers::BrowseWfsLayers(QObject* parent /* = nullptr */):
       return;
 
       m_wfsLayersInfoList = m_wfsService->serviceInfo().layerInfos();
-      for (const WfsLayerInfo& i : m_wfsLayersInfoList)
+      for (const WfsLayerInfo& i : qAsConst(m_wfsLayersInfoList))
         m_layerInfoTitleList.append(i.title());
 
       emit layerInfoTitleListChanged();
@@ -146,7 +146,6 @@ void BrowseWfsLayers::populateWfsFeatureTable()
 void BrowseWfsLayers::addFeatureLayerToMap()
 {
   // create feature layer from the feature table
-  FeatureLayer* featureLayer = new FeatureLayer(m_wfsFeatureTable, this);
   SimpleRenderer* sr = nullptr;
   SimpleMarkerSymbol* sms = nullptr;
   SimpleLineSymbol* sls = nullptr;
@@ -169,7 +168,9 @@ void BrowseWfsLayers::addFeatureLayerToMap()
     qDebug() << "Error! No Renderer defined for this GeometryType";
     return;
   }
+
   // apply renderer to layer
+  FeatureLayer* featureLayer = new FeatureLayer(m_wfsFeatureTable, this);
   featureLayer->setRenderer(sr);
 
   // add the layer to the map

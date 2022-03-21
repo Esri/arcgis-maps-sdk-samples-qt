@@ -86,7 +86,8 @@ void ShowPopup::onIdentifyLayerCompleted(QUuid, IdentifyLayerResult* rawIdentify
   }
 
   m_featureLayer->clearSelection();
-  for (GeoElement* geoElement : identifyResult->geoElements())
+  const auto elements = identifyResult->geoElements();
+  for (GeoElement* geoElement : elements)
   {
     Feature* feature = static_cast<Feature*>(geoElement);
     m_featureLayer->selectFeature(feature);
@@ -96,7 +97,8 @@ void ShowPopup::onIdentifyLayerCompleted(QUuid, IdentifyLayerResult* rawIdentify
   {
     // clear the list of PopupManagers
     m_popupManagers.clear();
-    for (Popup* popup : identifyResult->popups())
+    const auto popups = identifyResult->popups();
+    for (Popup* popup : popups)
     {
       // create a popup manager
       PopupManager* popupManager = new PopupManager{popup, this};

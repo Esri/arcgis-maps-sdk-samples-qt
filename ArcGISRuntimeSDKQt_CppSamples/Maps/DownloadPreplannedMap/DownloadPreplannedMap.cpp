@@ -40,8 +40,6 @@ DownloadPreplannedMap::DownloadPreplannedMap(QObject* parent /* = nullptr */):
   m_lineSymbol(new SimpleLineSymbol(SimpleLineSymbolStyle::Solid, QColor(Qt::red), 5, this)),
   m_busy(true)
 {
-  emit busyChanged();
-
   m_graphicsOverlay->setRenderer(new SimpleRenderer(m_lineSymbol, this));
 
   connect(m_portalItem, &PortalItem::doneLoading, this, [this] ()

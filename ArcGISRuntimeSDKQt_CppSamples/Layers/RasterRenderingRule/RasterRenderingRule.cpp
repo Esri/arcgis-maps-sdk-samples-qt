@@ -71,7 +71,7 @@ void RasterRenderingRule::componentComplete()
     m_mapView->setViewpoint(Viewpoint(m_imageServiceRaster->serviceInfo().fullExtent()));
 
     // get the rendering rule infos
-    QList<RenderingRuleInfo> renderingRuleInfos = m_imageServiceRaster->serviceInfo().renderingRuleInfos();
+    const QList<RenderingRuleInfo> renderingRuleInfos = m_imageServiceRaster->serviceInfo().renderingRuleInfos();
     if (renderingRuleInfos.length() > 0)
     {
       for (const RenderingRuleInfo& renderingRuleInfo : renderingRuleInfos)

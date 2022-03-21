@@ -96,7 +96,7 @@ QString SearchForWebmap::mapLoadError() const
   return m_mapLoadeError;
 }
 
-void SearchForWebmap::search(const QString keyword)
+void SearchForWebmap::search(const QString& keyword)
 {
   if (!m_portal)
     return;

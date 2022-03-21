@@ -38,8 +38,9 @@ FeatureLayerDefinitionExpressionSample {
     }
     //! [Declare map view in QML that will be accessed from Cpp]
 
-    Row {
-        id: expressionRow
+    Column
+    {
+        id: expressionColumn
         anchors {
             bottom: parent.bottom
             left: parent.left
@@ -49,13 +50,30 @@ FeatureLayerDefinitionExpressionSample {
         }
         spacing: 5
 
+        Label {
+
+            text: "Current feature count: " + definitionExpressionSample.currentFeatureCount
+        }
+
         // button to apply a definition expression
         Button {
             text: "Apply Expression"
             enabled: definitionExpressionSample.layerInitialized
+            width: 200
             onClicked: {
                 // Call C++ invokable function to set the definition expression
-                definitionExpressionSample.setDefExpression("req_Type = \'Tree Maintenance or Damage\'");
+                definitionExpressionSample.setDefExpression("req_type = \'Tree Maintenance or Damage\'");
+            }
+        }
+
+        // button to apply a display filter
+        Button {
+            text: "Apply Filter"
+            enabled: definitionExpressionSample.layerInitialized
+            width: 200
+            onClicked: {
+                // Call C++ invokable function to set the display filter
+                definitionExpressionSample.setDisplayFilter("req_type = \'Tree Maintenance or Damage\'");
             }
         }
 
@@ -63,9 +81,11 @@ FeatureLayerDefinitionExpressionSample {
         Button {
             text: "Reset"
             enabled: definitionExpressionSample.layerInitialized
+            width: 200
             onClicked: {
-                // Call C++ invokable function to reset the definition expression
+                // Call C++ invokable function to reset the definition expression and display filter
                 definitionExpressionSample.setDefExpression("");
+                definitionExpressionSample.setDisplayFilter("");
             }
         }
     }

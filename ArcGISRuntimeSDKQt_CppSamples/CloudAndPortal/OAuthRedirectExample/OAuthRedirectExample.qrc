@@ -1,7 +1,0 @@
-<RCC>
-    <qresource prefix="/Samples/CloudAndPortal/OAuthRedirectExample">
-        <file>OAuthRedirectExample.qml</file>
-        <file>OAuthRedirectExample.h</file>
-        <file>OAuthRedirectExample.cpp</file>
-    </qresource>
-</RCC>

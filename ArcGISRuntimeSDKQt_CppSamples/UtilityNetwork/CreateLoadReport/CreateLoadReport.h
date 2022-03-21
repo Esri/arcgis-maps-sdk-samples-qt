@@ -54,7 +54,6 @@ public:
   static void init();
   Q_INVOKABLE void addPhase(const QString& phaseToAdd);
   Q_INVOKABLE void runReport(const QStringList& selectedPhaseNames);
-  Q_ENUMS(SampleStatus)
 
   enum SampleStatus
   {
@@ -63,6 +62,7 @@ public:
     SampleBusy = 1,
     SampleReady = 2
   };
+  Q_ENUM(SampleStatus)
 
 signals:
   void loadReportUpdated();

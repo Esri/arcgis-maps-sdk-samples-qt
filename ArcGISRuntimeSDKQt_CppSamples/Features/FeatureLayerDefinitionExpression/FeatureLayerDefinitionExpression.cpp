@@ -20,14 +20,19 @@
 
 #include "FeatureLayerDefinitionExpression.h"
 
+#include "Basemap.h"
+#include "DisplayFilter.h"
+#include "DisplayFilterDefinition.h"
+#include "FeatureLayer.h"
+#include "GeodatabaseFeatureTable.h"
+#include "ManualDisplayFilterDefinition.h"
 #include "Map.h"
 #include "MapQuickView.h"
-#include "FeatureLayer.h"
-#include "Basemap.h"
+#include "Point.h"
 #include "SpatialReference.h"
 #include "ServiceFeatureTable.h"
 #include "Viewpoint.h"
-#include "Point.h"
+
 #include <QUrl>
 
 using namespace Esri::ArcGISRuntime;
@@ -65,9 +70,9 @@ void FeatureLayerDefinitionExpression::componentComplete()
   //! [Obtain the instantiated map view in Cpp]
 
   // create the feature table
-  ServiceFeatureTable* featureTable = new ServiceFeatureTable(QUrl("https://sampleserver6.arcgisonline.com/arcgis/rest/services/SF311/FeatureServer/0"), this);
+  m_featureTable = new ServiceFeatureTable(QUrl("https://sampleserver6.arcgisonline.com/arcgis/rest/services/SF311/FeatureServer/0"), this);
   // create the feature layer using the feature table
-  m_featureLayer = new FeatureLayer(featureTable, this);
+  m_featureLayer = new FeatureLayer(m_featureTable, this);
 
   connect(m_featureLayer, &FeatureLayer::loadStatusChanged, this, [this](LoadStatus loadStatus)
   {
@@ -84,8 +89,40 @@ bool FeatureLayerDefinitionExpression::layerInitialized() const
   return m_initialized;
 }
 
-void FeatureLayerDefinitionExpression::setDefExpression(QString whereClause)
+int FeatureLayerDefinitionExpression::currentFeatureCount() const
 {
-  // In QML, "req_Type = \'Tree Maintenance or Damage\'"
+  return m_currentFeatureCount;
+}
+
+void FeatureLayerDefinitionExpression::setDefExpression(const QString& whereClause)
+{
+  // In QML, "req_type = \'Tree Maintenance or Damage\'"
   m_featureLayer->setDefinitionExpression(whereClause);
+  queryFeatureCountInCurrentExtent();
+}
+
+void FeatureLayerDefinitionExpression::setDisplayFilter(const QString& whereClause)
+{
+  auto displayFilter = new DisplayFilter("Damaged Trees", whereClause, this);
+  const QList<DisplayFilter*> available_filters{displayFilter};
+
+  ManualDisplayFilterDefinition* display_filter_defintion = new ManualDisplayFilterDefinition(displayFilter, available_filters, this);
+  m_featureLayer->setDisplayFilterDefinition(display_filter_defintion);
+
+  queryFeatureCountInCurrentExtent();
+}
+
+void FeatureLayerDefinitionExpression::queryFeatureCountInCurrentExtent()
+{  
+  QueryParameters parameters;
+  parameters.setGeometry(m_mapView->currentViewpoint(ViewpointType::BoundingGeometry).targetGeometry());
+
+  connect(m_featureTable, &GeodatabaseFeatureTable::queryFeatureCountCompleted,
+          this, [this](QUuid, int countResult)
+  {
+    m_currentFeatureCount = countResult;
+    emit currentFeatureCountChanged();
+  });
+
+  m_featureTable->queryFeatureCount(parameters);
 }

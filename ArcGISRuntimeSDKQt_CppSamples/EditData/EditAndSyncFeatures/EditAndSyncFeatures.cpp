@@ -277,7 +277,8 @@ void EditAndSyncFeatures::addOfflineData()
   connect(m_offlineGdb, &Geodatabase::doneLoading, this, [this](Error)
   {
     // create a feature layer from each feature table, and add to the map
-    for (GeodatabaseFeatureTable* featureTable : m_offlineGdb->geodatabaseFeatureTables())
+    const auto tables = m_offlineGdb->geodatabaseFeatureTables();
+    for (GeodatabaseFeatureTable* featureTable : tables)
     {
       FeatureLayer* featureLayer = new FeatureLayer(featureTable, this);
       m_map->operationalLayers()->append(featureLayer);

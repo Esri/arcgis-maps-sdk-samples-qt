@@ -52,7 +52,7 @@ void SceneLayerSelection::componentComplete()
   m_sceneView = findChild<SceneQuickView*>("sceneView");
 
   // Create a scene with the topographic basemap
-  Scene* scene = new Scene(Basemap::topographic(this), this);
+  Scene* scene = new Scene(BasemapStyle::ArcGISTopographic, this);
 
   // add a surface
   Surface* surface = new Surface(this);

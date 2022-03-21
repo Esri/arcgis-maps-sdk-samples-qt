@@ -1,0 +1,36 @@
+{
+    "category": "Features",
+    "description": "Filter features displayed on a map using a definition expression or a display filter.",
+    "ignore": false,
+    "images": [
+        "screenshot.png"
+    ],
+    "keywords": [
+        "SQL",
+        "definition expression",
+        "display filter",
+        "filter",
+        "limit data",
+        "query",
+        "restrict data",
+        "where clause",
+        "DefinitionExpression",
+        "FeatureLayer",
+        "ServiceFeatureTable"
+    ],
+    "redirect_from": [
+        "/qt/latest/cpp/sample-code/sample-qt-featurelayerdefinitionexpression.htm"
+    ],
+    "relevant_apis": [
+        "DefinitionExpression",
+        "DisplayFilter",
+        "FeatureLayer",
+        "ServiceFeatureTable"
+    ],
+    "snippets": [
+        "FilterByDefinitionExpressionOrDisplayFilter.cpp",
+        "FilterByDefinitionExpressionOrDisplayFilter.h",
+        "FilterByDefinitionExpressionOrDisplayFilter.qml"
+    ],
+    "title": "Filter by definition expression or display filter"
+}

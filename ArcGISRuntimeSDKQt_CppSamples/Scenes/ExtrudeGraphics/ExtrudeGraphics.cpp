@@ -107,8 +107,8 @@ void ExtrudeGraphics::componentComplete()
   for (const Point& point : pointsList)
   {
     // create a random z value
-    int randNum = rand() % 6 + 1;
-    double z = m_maxZ * randNum;
+    const int randNum = rand() % 6 + 1;
+    const double z = m_maxZ * randNum;
 
     // create a list of points
     const QList<Point> points { Point(point.x(), point.y(), z)
