@@ -27,6 +27,7 @@
 #include "PolygonBuilder.h"
 #include "MultipointBuilder.h"
 #include "DictionarySymbolStyle.h"
+#include "DictionarySymbolStyleConfiguration.h"
 
 #include <QDir>
 #include <QtCore/qglobal.h>
@@ -40,20 +41,20 @@ using namespace Esri::ArcGISRuntime;
 // helper method to get cross platform data path
 namespace
 {
-  QString defaultDataPath()
-  {
-    QString dataPath;
+QString defaultDataPath()
+{
+  QString dataPath;
 
-  #ifdef Q_OS_ANDROID
-    dataPath = "/sdcard";
-  #elif defined Q_OS_IOS
-    dataPath = QStandardPaths::writableLocation(QStandardPaths::DocumentsLocation);
-  #else
-    dataPath = QDir::homePath();
-  #endif
+#ifdef Q_OS_ANDROID
+  dataPath = "/sdcard";
+#elif defined Q_OS_IOS
+  dataPath = QStandardPaths::writableLocation(QStandardPaths::DocumentsLocation);
+#else
+  dataPath = QDir::homePath();
+#endif
 
-    return dataPath;
-  }
+  return dataPath;
+}
 } // namespace
 
 const QString GODictionaryRenderer::FIELD_CONTROL_POINTS = QStringLiteral("_control_points");
@@ -90,17 +91,34 @@ void GODictionaryRenderer::componentComplete()
   const QString specType = QStringLiteral("mil2525d");
   const QString styleLocation = m_dataPath + "/styles/arcade_style/mil2525d.stylx";
   DictionarySymbolStyle* dictionarySymbolStyle = DictionarySymbolStyle::createFromFile(styleLocation, this);
-  DictionaryRenderer* renderer = new DictionaryRenderer(dictionarySymbolStyle, this);
-  m_graphicsOverlay->setRenderer(renderer);
-  //! [Apply Dictionary Renderer Graphics Overlay Cpp]
 
+  // The style will be loaded automatically
+  connect(dictionarySymbolStyle, &DictionarySymbolStyle::loadStatusChanged, this, [dictionarySymbolStyle]
+  {
+    if (dictionarySymbolStyle->loadStatus() == LoadStatus::Loaded)
+    {
+      const auto dictionarySymbolStyleConfigurations = dictionarySymbolStyle->configurations();
+      for (DictionarySymbolStyleConfiguration* dictionarySymbolStyleConfiguration : dictionarySymbolStyleConfigurations)
+      {
+        if (dictionarySymbolStyleConfiguration->name() == "model")
+        {
+          dictionarySymbolStyleConfiguration->setValue("ORDERED ANCHOR POINTS");
+        }
+      }
+    }
+  });
+
+  //! [Apply Dictionary Renderer Graphics Overlay Cpp]
   Q_UNUSED(specType)
 
+  DictionaryRenderer* renderer = new DictionaryRenderer(dictionarySymbolStyle, this);
+  m_graphicsOverlay->setRenderer(renderer);
   // Create a map and give it to the MapView
   m_mapView = findChild<MapQuickView*>("mapView");
   m_map = new Map(BasemapStyle::ArcGISTopographic, this);
 
   parseXmlFile();
+
   m_mapView->graphicsOverlays()->append(m_graphicsOverlay);
 
   // The GraphicsOverlay will not have a valid extent until it is part of

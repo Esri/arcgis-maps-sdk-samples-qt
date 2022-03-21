@@ -2,11 +2,11 @@
     "category": "Display information",
     "dataItems": [
         {
-            "itemId": "c78b149a1d52414682c86a5feeb13d30",
+            "itemId": "44b781991d194dd8bc423e642c1932c5",
             "path": "~/ArcGIS/Runtime/Data/styles/arcade_style/mil2525d.stylx"
         },
         {
-            "itemId": "1e4ea99af4b440c092e7959cf3957bfa",
+            "itemId": "623382e0113d40698538f249e3bcb1c0",
             "path": "~/ArcGIS/Runtime/Data/xml/arcade_style/Mil2525DMessages.xml"
         }
     ],

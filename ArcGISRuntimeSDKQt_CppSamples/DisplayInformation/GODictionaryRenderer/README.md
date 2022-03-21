@@ -18,11 +18,11 @@ Pan and zoom to explore military symbols on the map.
 2. Create a new `DictionaryRenderer(symbolDictionary)`.
 3. Create a new `GraphicsOverlay`
 4. Set the  dictionary renderer to the graphics overlay.
-5. Parse through the XML and create a graphic for each element.
+5. Parse through the XML and create a map of key/value pairs for each block of attributes.
 6. Use the `_wkid` key to get the geometry's spatial reference.
 7. Use the `_control_points` key to get the geometry's shape.
-8. Create a geometry using the shape and spatial reference from above.
-9. Create a `Graphic` for each attribute, utilizing it's defined geometry.
+8. Create a geometry using the spatial reference and shape from above.
+9. Create a `Graphic` for each attribute, utilizing its defined geometry.
 10. Add the graphic to the graphics overlay.
 
 ## Relevant API
@@ -37,8 +37,8 @@ To set up the sample's offline data, see the [Use offline data in the samples](h
 
 Link | Local Location
 ---------|-------|
-|[Mil2525d Stylx File](https://www.arcgis.com/home/item.html?id=c78b149a1d52414682c86a5feeb13d30)| `<userhome>`/ArcGIS/Runtime/Data/styles/arcade_style/mil2525d.stylx |
-|[MIL-STD-2525D XML Message File](https://arcgisruntime.maps.arcgis.com/home/item.html?id=1e4ea99af4b440c092e7959cf3957bfa)| `<userhome>`/ArcGIS/Runtime/Data/xml/arcade_style/Mil2525DMessages.xml |
+|[Mil2525d Stylx File](https://www.arcgis.com/home/item.html?id=44b781991d194dd8bc423e642c1932c5)| `<userhome>`/ArcGIS/Runtime/Data/styles/arcade_style/mil2525d.stylx |
+|[MIL-STD-2525D XML Message File](https://arcgisruntime.maps.arcgis.com/home/item.html?id=623382e0113d40698538f249e3bcb1c0)| `<userhome>`/ArcGIS/Runtime/Data/xml/arcade_style/Mil2525DMessages.xml |
 
 ## About the data
 
