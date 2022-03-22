@@ -18,12 +18,12 @@ Pan and zoom to explore military symbols on the map.
 2. Create a new `DictionaryRenderer(symbolDictionary)`.
 3. Create a new `GraphicsOverlay`
 4. Set the  dictionary renderer to the graphics overlay.
-5. Parse through the XML and create a map of key/value pairs for each block of attributes.
-6. Use the `_wkid` key to get the geometry's spatial reference.
-7. Use the `_control_points` key to get the geometry's shape.
-8. Create a geometry using the spatial reference and shape from above.
-9. Create a `Graphic` for each attribute, utilizing its defined geometry.
-10. Add the graphic to the graphics overlay.
+5. Parse through the XML and create a `Graphic` for each element:
+  i. Use the `_wkid` key to get the geometry's spatial reference.
+  ii. Use the `_control_points` key to get the geometry's shape.
+  iii. Create a geometry using the spatial reference and shape from above.
+  iv. Create a `Graphic` for each attribute, utilizing its defined geometry.
+  v. Add the graphic to the graphics overlay.
 
 ## Relevant API
 
