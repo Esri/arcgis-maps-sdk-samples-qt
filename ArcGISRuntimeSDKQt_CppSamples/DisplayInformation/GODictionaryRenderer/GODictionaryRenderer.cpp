@@ -97,7 +97,7 @@ void GODictionaryRenderer::componentComplete()
   {
     if (dictionarySymbolStyle->loadStatus() == LoadStatus::Loaded)
     {
-      const auto dictionarySymbolStyleConfigurations = dictionarySymbolStyle->configurations();
+      const QList<DictionarySymbolStyleConfiguration*> dictionarySymbolStyleConfigurations = dictionarySymbolStyle->configurations();
       for (DictionarySymbolStyleConfiguration* dictionarySymbolStyleConfiguration : dictionarySymbolStyleConfigurations)
       {
         if (dictionarySymbolStyleConfiguration->name() == "model")
@@ -138,6 +138,7 @@ void GODictionaryRenderer::parseXmlFile()
   QString currentElementName;
 
   QFile xmlFile(m_dataPath + "/xml/arcade_style/Mil2525DMessages.xml");
+
   // Open the file for reading
   if (xmlFile.isOpen())
   {
