@@ -38,7 +38,7 @@ To set up the sample's offline data, see the [Use offline data in the samples](h
 Link | Local Location
 ---------|-------|
 |[Mil2525d Stylx File](https://www.arcgis.com/home/item.html?id=44b781991d194dd8bc423e642c1932c5)| `<userhome>`/ArcGIS/Runtime/Data/styles/arcade_style/mil2525d.stylx |
-|[MIL-STD-2525D XML Message File](https://arcgisruntime.maps.arcgis.com/home/item.html?id=623382e0113d40698538f249e3bcb1c0)| `<userhome>`/ArcGIS/Runtime/Data/xml/arcade_style/Mil2525DMessages.xml |
+|[MIL-STD-2525D XML Message File](https://arcgisruntime.maps.arcgis.com/home/item.html?id=8776cfc26eed4485a03de6316826384c)| `<userhome>`/ArcGIS/Runtime/Data/xml/arcade_style/Mil2525DMessages.xml |
 
 ## About the data
 
