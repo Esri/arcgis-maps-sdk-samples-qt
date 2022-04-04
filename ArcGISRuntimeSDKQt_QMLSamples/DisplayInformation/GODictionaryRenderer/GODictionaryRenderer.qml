@@ -58,6 +58,19 @@ Rectangle {
             DictionaryRenderer {
                 id: dictionaryRenderer
                 dictionarySymbolStyle: Factory.DictionarySymbolStyle.createFromFile(dataPath + "/styles/arcade_style/mil2525d.stylx")
+
+                Component.onCompleted: {
+                    dictionarySymbolStyle.loadStatusChanged.connect(() => {
+                                                                        if (dictionarySymbolStyle.loadStatus === Enums.LoadStatusLoaded) {
+                                                                            const dictionarySymbolStyleConfigurations = dictionarySymbolStyle.configurations;
+                                                                            for (let i = 0; i < dictionarySymbolStyleConfigurations.length; i++) {
+                                                                                if (dictionarySymbolStyleConfigurations[i].name === "model") {
+                                                                                    dictionarySymbolStyleConfigurations[i].value = "ORDERED ANCHOR POINTS";
+                                                                                }
+                                                                            }
+                                                                        }
+                                                                    });
+                }
             }
         }
         //! [Apply Dictionary Renderer Graphics Overlay QML]
