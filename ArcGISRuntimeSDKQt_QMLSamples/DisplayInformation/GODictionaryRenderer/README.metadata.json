@@ -2,15 +2,15 @@
     "category": "Display information",
     "dataItems": [
         {
-            "itemId": "c78b149a1d52414682c86a5feeb13d30",
+            "itemId": "44b781991d194dd8bc423e642c1932c5",
             "path": "~/ArcGIS/Runtime/Data/styles/arcade_style/mil2525d.stylx"
         },
         {
-            "itemId": "1e4ea99af4b440c092e7959cf3957bfa",
+            "itemId": "8776cfc26eed4485a03de6316826384c",
             "path": "~/ArcGIS/Runtime/Data/xml/arcade_style/Mil2525DMessages.xml"
         }
     ],
-    "description": "Create graphics using a local mil2525d style file and an XML file with key/value pairs for each graphic.",
+    "description": "This sample demonstrates applying a dictionary renderer to graphics, in order to display military symbology without the need for a feature table.",
     "ignore": false,
     "images": [
         "screenshot.png"
