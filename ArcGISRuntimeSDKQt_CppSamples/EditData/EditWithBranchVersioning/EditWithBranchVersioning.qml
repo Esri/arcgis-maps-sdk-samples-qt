@@ -280,7 +280,6 @@ Item {
 
     // Declare AuthenticationView to handle any authentication challenges
     AuthenticationView {
-        authenticationManager: model.authManager
     }
 
     // Declare the C++ instance which creates the scene etc. and supply the view
