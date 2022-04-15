@@ -20,7 +20,7 @@
         "longitude",
         "scale",
         "zoom level",
-        "BasemapType",
+        "Basemap",
         "Map",
         "MapView"
     ],
@@ -28,7 +28,7 @@
         "/qt/latest/qml/sample-code/sample-qt-setinitialmaplocation.htm"
     ],
     "relevant_apis": [
-        "BasemapType",
+        "Basemap",
         "Map",
         "MapView"
     ],

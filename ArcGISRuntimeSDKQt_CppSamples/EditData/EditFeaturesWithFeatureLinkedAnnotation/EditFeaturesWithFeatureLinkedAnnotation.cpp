@@ -79,10 +79,15 @@ namespace
 
 EditFeaturesWithFeatureLinkedAnnotation::EditFeaturesWithFeatureLinkedAnnotation(QObject* parent /* = nullptr */):
   QObject(parent),
-  m_map(new Map(BasemapType::LightGrayCanvasVector, 39.0204, -77.4159, 18, this)),
   s_ad_address(QStringLiteral("AD_ADDRESS")),
   s_st_str_nam(QStringLiteral("ST_STR_NAM"))
 {
+  constexpr double lat = 39.0204;
+  constexpr double lon = -77.4159;
+  constexpr double scale = 2256.994353;
+  m_map = new Map(BasemapStyle::ArcGISLightGray, this);
+  m_map->setInitialViewpoint(Viewpoint(lat, lon, scale));
+
   const QString dataPath = defaultDataPath() + "/ArcGIS/Runtime/Data/geodatabase/loudoun_anno.geodatabase";
 
   m_geodatabase = new Geodatabase(dataPath, this);

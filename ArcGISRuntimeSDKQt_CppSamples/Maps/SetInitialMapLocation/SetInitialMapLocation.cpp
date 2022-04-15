@@ -45,8 +45,13 @@ void SetInitialMapLocation::componentComplete()
   // find QML MapView component
   m_mapView = findChild<MapQuickView*>("mapView");
 
-  // Create a new map with the basemap type enum and pass in initial lat, lon, and scale
-  m_map = new Map(BasemapType::ImageryWithLabels, -33.867886, -63.985, 16, this);
+  // Create a new map with the imagery basemap style enum and set its initial lat, long, and scale
+  constexpr double lat = -33.867886;
+  constexpr double lon = -63.985;
+  constexpr double scale = 9027.977411;
+
+  m_map = new Map(BasemapStyle::ArcGISImagery, this);
+  m_map->setInitialViewpoint(Viewpoint(lat, lon, scale));
   // set map on the map view
   m_mapView->setMap(m_map);
 }
