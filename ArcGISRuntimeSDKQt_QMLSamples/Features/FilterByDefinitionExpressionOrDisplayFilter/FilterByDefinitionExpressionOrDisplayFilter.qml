@@ -130,8 +130,8 @@ Rectangle {
 
                 const displayFilter = ArcGISRuntimeEnvironment.createObject("DisplayFilter", {id: "No Filter", whereClause: "1=1"});
                 const displayFilterDefintionVar = ArcGISRuntimeEnvironment.createObject("ManualDisplayFilterDefinition");
-                displayFilterDefintionVar.activeFilter = displayFilter;
                 displayFilterDefintionVar.availableFilters.append(displayFilter);
+                displayFilterDefintionVar.activeFilter = displayFilter;
                 featureLayer.displayFilterDefinition = displayFilterDefintionVar;
 
                 queryFeatureCountInCurrentExtent();
