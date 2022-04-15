@@ -21,7 +21,6 @@ When the sample opens, it will automatically display the map with the OpenStreet
 ## Relevant API
 
 * Basemap
-* Basemap::openStreetMap
 * Map
 * MapView
 * OpenStreetMapLayer
