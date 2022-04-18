@@ -49,7 +49,7 @@ Item {
 
                 Binding {
                     target: callout
-                    value: contentHeight + callout.calloutFramePadding
+                    value: contentHeight + 15
                     property: "calloutHeight"
                 }
 
