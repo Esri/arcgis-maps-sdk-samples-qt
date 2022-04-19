@@ -128,7 +128,7 @@ Rectangle {
             onClicked: {
                 featureLayer.definitionExpression = "";
 
-                const displayFilter = ArcGISRuntimeEnvironment.createObject("DisplayFilter", {filterId: "No Filter", whereClause: "1=1"});
+                const displayFilter = ArcGISRuntimeEnvironment.createObject("DisplayFilter", {name: "No Filter", whereClause: "1=1"});
                 const displayFilterDefintionVar = ArcGISRuntimeEnvironment.createObject("ManualDisplayFilterDefinition");
                 displayFilterDefintionVar.availableFilters.append(displayFilter);
                 displayFilterDefintionVar.activeFilter = displayFilter;
