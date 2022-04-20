@@ -109,7 +109,7 @@ Rectangle {
             width: 200
             enabled: featureTable.loadStatus === Enums.LoadStatusLoaded
             onClicked: {
-                const displayFilter = ArcGISRuntimeEnvironment.createObject("DisplayFilter", {name: "Damaged Trees", filterId: "Damaged Trees", whereClause: "req_Type = \'Tree Maintenance or Damage\'"});
+                const displayFilter = ArcGISRuntimeEnvironment.createObject("DisplayFilter", {name: "Damaged Trees", whereClause: "req_Type = \'Tree Maintenance or Damage\'"});
                 const displayFilterDefintionVar = ArcGISRuntimeEnvironment.createObject("ManualDisplayFilterDefinition");
                 displayFilterDefintionVar.availableFilters.append(displayFilter);
                 displayFilterDefintionVar.activeFilter = displayFilter;
