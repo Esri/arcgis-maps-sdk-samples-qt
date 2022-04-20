@@ -136,7 +136,7 @@ void FilterByDefinitionExpressionOrDisplayFilter::queryFeatureCountInCurrentExte
 
 void FilterByDefinitionExpressionOrDisplayFilter::resetDisplayFilterParams()
 {
-  DisplayFilter* displayFilter = new DisplayFilter("Damaged Trees", "", this);
+  DisplayFilter* displayFilter = new DisplayFilter("No Filter", "1=1", this);
   const QList<DisplayFilter*> availableFilters{displayFilter};
 
   ManualDisplayFilterDefinition* displayFilterDefinition = new ManualDisplayFilterDefinition(displayFilter, availableFilters, this);
