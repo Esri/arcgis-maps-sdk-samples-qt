@@ -113,8 +113,8 @@ void FilterByDefinitionExpressionOrDisplayFilter::setDisplayFilter(const QString
   DisplayFilter* displayFilter = new DisplayFilter("Damaged Trees", whereClause, this);
   const QList<DisplayFilter*> availableFilters{displayFilter};
 
-  ManualDisplayFilterDefinition* displayFilterDefintion = new ManualDisplayFilterDefinition(displayFilter, availableFilters, this);
-  m_featureLayer->setDisplayFilterDefinition(displayFilterDefintion);
+  ManualDisplayFilterDefinition* displayFilterDefinition = new ManualDisplayFilterDefinition(displayFilter, availableFilters, this);
+  m_featureLayer->setDisplayFilterDefinition(displayFilterDefinition);
 
   queryFeatureCountInCurrentExtent();
 }
@@ -139,8 +139,8 @@ void FilterByDefinitionExpressionOrDisplayFilter::resetDisplayFilterParams()
   DisplayFilter* displayFilter = new DisplayFilter("Damaged Trees", "", this);
   const QList<DisplayFilter*> availableFilters{displayFilter};
 
-  ManualDisplayFilterDefinition* displayFilterDefintion = new ManualDisplayFilterDefinition(displayFilter, availableFilters, this);
-  m_featureLayer->setDisplayFilterDefinition(displayFilterDefintion);
+  ManualDisplayFilterDefinition* displayFilterDefinition = new ManualDisplayFilterDefinition(displayFilter, availableFilters, this);
+  m_featureLayer->setDisplayFilterDefinition(displayFilterDefinition);
 
   queryFeatureCountInCurrentExtent();
 }
