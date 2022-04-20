@@ -111,10 +111,10 @@ void FilterByDefinitionExpressionOrDisplayFilter::setDefExpression(const QString
 void FilterByDefinitionExpressionOrDisplayFilter::setDisplayFilter(const QString& whereClause)
 {
   DisplayFilter* displayFilter = new DisplayFilter("Damaged Trees", whereClause, this);
-  const QList<DisplayFilter*> available_filters{displayFilter};
+  const QList<DisplayFilter*> availableFilters{displayFilter};
 
-  ManualDisplayFilterDefinition* display_filter_defintion = new ManualDisplayFilterDefinition(displayFilter, available_filters, this);
-  m_featureLayer->setDisplayFilterDefinition(display_filter_defintion);
+  ManualDisplayFilterDefinition* displayFilterDefinition = new ManualDisplayFilterDefinition(displayFilter, availableFilters, this);
+  m_featureLayer->setDisplayFilterDefinition(displayFilterDefinition);
 
   queryFeatureCountInCurrentExtent();
 }
@@ -137,10 +137,10 @@ void FilterByDefinitionExpressionOrDisplayFilter::queryFeatureCountInCurrentExte
 void FilterByDefinitionExpressionOrDisplayFilter::resetDisplayFilterParams()
 {
   DisplayFilter* displayFilter = new DisplayFilter("Damaged Trees", "", this);
-  const QList<DisplayFilter*> available_filters{displayFilter};
+  const QList<DisplayFilter*> availableFilters{displayFilter};
 
-  ManualDisplayFilterDefinition* display_filter_defintion = new ManualDisplayFilterDefinition(displayFilter, available_filters, this);
-  m_featureLayer->setDisplayFilterDefinition(display_filter_defintion);
+  ManualDisplayFilterDefinition* displayFilterDefinition = new ManualDisplayFilterDefinition(displayFilter, availableFilters, this);
+  m_featureLayer->setDisplayFilterDefinition(displayFilterDefinition);
 
   queryFeatureCountInCurrentExtent();
 }
