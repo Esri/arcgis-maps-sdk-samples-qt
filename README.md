@@ -1,6 +1,6 @@
 # Overview
 
-ArcGIS Runtime SDK 100.14 for Qt sample applications.  The repo contains [Qt](http://qt.io) projects for each sample that can be run from within the Qt Creator IDE.
+ArcGIS Runtime SDK 100.14 for Qt sample applications. The repo contains [Qt](http://qt.io) projects for each sample that can be run from within the Qt Creator IDE. It also contians source code to build and run the [C++](https://www.arcgis.com/home/search.html?t=content&q=tags%3A%22CppSampleViewer%22) and [QML](https://www.arcgis.com/home/search.html?t=content&q=tags%3A%22QmlSampleViewer%22) sample viewer apps locally.
 
 ## Prerequisites
 
@@ -75,7 +75,7 @@ Once you have set up a remote upstream you can keep your fork up to date with ou
 
 * Open a terminal (Mac users) or command prompt (Windows & Linux users)
 * Change to the current working directory of your local repository
-* Fetch the branches and commits from the upstream repository.  Commits to `main` will be stored in a local branch, `upstream/main`.
+* Fetch the branches and commits from the upstream repository. Commits to `main` will be stored in a local branch, `upstream/main`.
 
 ```bash
 git fetch upstream
@@ -87,7 +87,7 @@ git fetch upstream
 git checkout main
 ```
 
-* Merge changes from `upstream/main` into  your local `main` branch which syncs your forks `main` branch with our samples repository.
+* Merge changes from `upstream/main` into your local `main` branch which syncs your forks `main` branch with our samples repository.
 
 ```bash
 git merge upstream/main
@@ -126,7 +126,7 @@ Link | Local Location
 
 In this case, you would download the VTPK from the ArcGIS Online Location, and place in specified location. `<userhome>` is used throughout to denote a generic location on the different platforms. The below table specifies where this is on all of the supported platforms:
 
-Platform |  Userhome Location | Example Location
+Platform | Userhome Location  | Example Location
 ---------|--------------------|------------------|
 Windows  | `%userprofile%`    | `C:\Users\Bob\ArcGIS\Runtime\Data` |
 Linux    | `~`                | `/users/bob/ArcGIS/Runtime/Data`   |
@@ -143,7 +143,7 @@ iOS      | `<your app bundle>`| `<appbundle>/ArcGIS/Runtime/Data`  |
 
 ## Issues
 
-Find a bug or want to request a new feature?  Please let us know by submitting an issue.
+Find a bug or want to request a new feature? Please let us know by submitting an issue.
 
 ## Contributing
 
