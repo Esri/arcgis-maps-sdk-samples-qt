@@ -27,13 +27,13 @@ COMMONVIEWER = $$PWD/../ArcGISRuntimeSDKQt_Samples
 PCH_HEADER = $$COMMONVIEWER/pch.hpp
 
 # This block determines whether to build against the installed SDK or the local dev build area
-exists($$PWD/../../../../DevBuildCpp.pri) {
+exists($$PWD/../../../../../DevBuildCpp.pri) {
   message("building against the dev environment")
   DEFINES += ESRI_BUILD
-  include ($$PWD/../../../../DevBuildCpp.pri)
+  include ($$PWD/../../../../../DevBuildCpp.pri)
 
   # include the toolkitcpp.pri, which contains all the toolkit resources
-  include($$PWD/../../../toolkit/uitools/toolkitcpp.pri)
+  include($$PWD/../../../../toolkit/uitools/toolkitcpp.pri)
 
   INCLUDEPATH += \
       $$COMMONVIEWER \
