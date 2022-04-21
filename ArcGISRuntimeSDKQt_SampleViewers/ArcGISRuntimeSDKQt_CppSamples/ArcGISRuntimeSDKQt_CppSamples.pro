@@ -25,13 +25,17 @@ DEFINES += Qt_Version=\"$$QT_VERSION\"
 SAMPLEPATHCPP = $$PWD/../../ArcGISRuntimeSDKQt_CppSamples
 COMMONVIEWER = $$PWD/../ArcGISRuntimeSDKQt_Samples
 PCH_HEADER = $$COMMONVIEWER/pch.hpp
+ARCGIS_RUNTIME_VERSION = 100.14
+DEFINES += ArcGIS_Runtime_Version=$$ARCGIS_RUNTIME_VERSION
 
 # This block determines whether to build against the installed SDK or the local dev build area
 exists($$PWD/../../../../DevBuildCpp.pri) {
-  message("building against the dev environment")
+  message("Building against the dev environment")
   DEFINES += ESRI_BUILD
-  include ($$PWD/../../../../DevBuildCpp.pri)
+  DEFINES += SAMPLE_VIEWER_API_KEY=$$(SAMPLEVIEWERAPIKEY_INTERNAL)
 
+  # use the Esri dev build script
+  include ($$PWD/../../../../DevBuildCpp.pri)
   # include the toolkitcpp.pri, which contains all the toolkit resources
   include($$PWD/../../../toolkit/uitools/toolkitcpp.pri)
 
@@ -41,10 +45,9 @@ exists($$PWD/../../../../DevBuildCpp.pri) {
       $$PWD/../../../../api/qt_cpp/Include \
       $$PWD/../../../../api/qt_cpp/Include/LocalServer/ \
 } else {
-  message("building against the installed SDK")
+  message("Building against the installed SDK")
   CONFIG += build_from_setup
   CONFIG += c++14
-  ARCGIS_RUNTIME_VERSION = 100.14
 
   # include the toolkitcpp.pri, which contains all the toolkit resources
   !include($$PWD/../../arcgis-runtime-toolkit-qt/uitools/toolkitcpp.pri) {

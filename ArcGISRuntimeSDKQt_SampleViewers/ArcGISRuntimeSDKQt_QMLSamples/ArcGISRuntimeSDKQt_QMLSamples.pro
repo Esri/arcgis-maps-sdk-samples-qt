@@ -17,18 +17,23 @@ DEFINES += QML_VIEWER
 DEFINES += Qt_Version=\"$$QT_VERSION\"
 SAMPLEPATHQML = $$PWD/../../ArcGISRuntimeSDKQt_QMLSamples
 COMMONVIEWER = $$PWD/../ArcGISRuntimeSDKQt_Samples
+ARCGIS_RUNTIME_VERSION = 100.14
+DEFINES += ArcGIS_Runtime_Version=$$ARCGIS_RUNTIME_VERSION
 
 # This block determines whether to build against the SDK dev build area or the installed SDK
 exists($$PWD/../../../../DevBuildQml.pri) {
-  include ($$PWD/../../../../DevBuildQml.pri)
+  message("Building against the dev environment")
+  DEFINES += ESRI_BUILD
+  DEFINES += SAMPLE_VIEWER_API_KEY=$$(SAMPLEVIEWERAPIKEY_INTERNAL)
 
+  # use the Esri dev build script
+  include ($$PWD/../../../../DevBuildQml.pri)
   # include the toolkitqml.pri, which contains all the toolkit resources
   include($$PWD/../../../toolkit/uitools/toolkitqml.pri)
 } else {
+  message("Building against the installed SDK")
   CONFIG+=build_from_setup
-  message("building against the installed SDK")
   CONFIG += c++14
-  ARCGIS_RUNTIME_VERSION = 100.14
 
   # include the toolkitqml.pri, which contains all the toolkit resources
   include($$PWD/../../arcgis-runtime-toolkit-qt/uitools/toolkitqml.pri) {

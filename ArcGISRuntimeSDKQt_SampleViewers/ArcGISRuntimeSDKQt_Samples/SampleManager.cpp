@@ -57,10 +57,12 @@ using namespace Esri::ArcGISRuntime;
 #include "LocalServer.h"
 #endif
 
+#define STRINGIZE(x) #x
+#define QUOTE(x) STRINGIZE(x)
+
 namespace
 {
-// Define your API key here
-const QString apiKey = ""; // Provide your API key here
+QString apiKey = ""; // Provide your API key here
 }
 
 SampleManager::SampleManager(QObject *parent):
@@ -346,6 +348,12 @@ void SampleManager::setDownloadText(const QString& downloadText)
 
 void SampleManager::setApiKey(bool isSupportsApiKey)
 {
+#ifdef SAMPLE_VIEWER_API_KEY
+  // If the API key environment variable exists at compile time it will be used here
+  // Otherwise use the API key provided by the user at the top of this file
+  apiKey = QUOTE(SAMPLE_VIEWER_API_KEY);
+#endif
+
   if (isSupportsApiKey && apiKey == "")
   {
     qWarning() << "This sample expects an API key to be set, but none was provided. Please provide an API key in ArcGISRuntimeSDKQt_Samples/SampleManager.cpp";

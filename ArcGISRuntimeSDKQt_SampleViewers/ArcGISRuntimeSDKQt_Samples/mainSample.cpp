@@ -324,7 +324,7 @@ int main(int argc, char *argv[])
 #ifdef ESRI_BUILD
   engine.rootContext()->setContextProperty("buildNum", BUILD_NUM);
 #else
-  engine.rootContext()->setContextProperty("buildNum", "100.14 Local Build");
+  engine.rootContext()->setContextProperty("buildNum", QUOTE(ArcGIS_Runtime_Version));
 #endif
   engine.rootContext()->setContextProperty("qtVersion", QUOTE(Qt_Version));
   engine.addImportPath(QString("qrc:/qml"));
