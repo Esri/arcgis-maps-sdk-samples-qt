@@ -1,0 +1,17 @@
+<RCC>
+    <qresource prefix="/">
+        <file>menu.png</file>
+        <file>back.png</file>
+        <file>drawer.png</file>
+        <file>back@2x.png</file>
+        <file>drawer@2x.png</file>
+        <file>logo.png</file>
+        <file>logo@2x.png</file>
+        <file>menu@2x.png</file>
+        <file>esri_logo.png</file>
+        <file>esri_logo@2x.png</file>
+        <file>Built_with_Qt_RGB_logo.png</file>
+        <file>Built_with_Qt_RGB_logo@2x.png</file>
+        <file>ic_menu_closeclear_light.png</file>
+    </qresource>
+</RCC>
