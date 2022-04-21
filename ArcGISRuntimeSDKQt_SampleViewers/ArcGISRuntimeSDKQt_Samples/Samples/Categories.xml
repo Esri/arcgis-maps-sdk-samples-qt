@@ -1,0 +1,50 @@
+<samplelist>
+  <category>
+    <categoryName>Maps</categoryName>
+    <categoryDisplayName>Maps</categoryDisplayName>
+  </category>
+  <category>
+    <categoryName>Scenes</categoryName>
+    <categoryDisplayName>Scenes</categoryDisplayName>
+  </category>
+  <category>
+    <categoryName>Layers</categoryName>
+    <categoryDisplayName>Layers</categoryDisplayName>
+  </category>
+  <category>
+    <categoryName>Features</categoryName>
+    <categoryDisplayName>Features</categoryDisplayName>
+  </category>
+  <category>
+    <categoryName>DisplayInformation</categoryName>
+    <categoryDisplayName>Display Information</categoryDisplayName>
+  </category>
+  <category>
+    <categoryName>Search</categoryName>
+    <categoryDisplayName>Search</categoryDisplayName>
+  </category>
+  <category>
+    <categoryName>Geometry</categoryName>
+    <categoryDisplayName>Geometry</categoryDisplayName>
+  </category>
+  <category>
+    <categoryName>Routing</categoryName>
+    <categoryDisplayName>Routing</categoryDisplayName>
+  </category>
+  <category>
+    <categoryName>EditData</categoryName>
+    <categoryDisplayName>Edit Data</categoryDisplayName>
+  </category>
+  <category>
+    <categoryName>CloudAndPortal</categoryName>
+    <categoryDisplayName>Cloud and Portal</categoryDisplayName>
+  </category>
+  <category>
+    <categoryName>Analysis</categoryName>
+    <categoryDisplayName>Analysis</categoryDisplayName>
+  </category>
+  <category>
+     <categoryName>UtilityNetwork</categoryName>
+     <categoryDisplayName>Utility Network</categoryDisplayName>
+  </category>
+</sampleList>
