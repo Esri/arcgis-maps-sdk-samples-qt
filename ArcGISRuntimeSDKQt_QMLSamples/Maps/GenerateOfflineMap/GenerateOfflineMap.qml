@@ -27,7 +27,7 @@ Rectangle {
     width: 800
     height: 600
 
-    readonly property url outputMapPackage: System.temporaryFolder.url + "/OfflineMap_%1.mmpk".arg(new Date().getTime().toString())
+    readonly property url outputMapPackagePath: System.temporaryFolder.url + "/OfflineMap_%1".arg(new Date().getTime().toString())
     readonly property string webMapId: "acc027394bc84c2fb04d1ed317aac674"
 
     MapView {
@@ -110,7 +110,7 @@ Rectangle {
 
         function takeMapOffline(parameters) {
             // create the job
-            generateJob = offlineMapTask.generateOfflineMap(parameters, outputMapPackage);
+            generateJob = offlineMapTask.generateOfflineMap(parameters, outputMapPackagePath);
 
             // check if job is valid
             if (generateJob) {

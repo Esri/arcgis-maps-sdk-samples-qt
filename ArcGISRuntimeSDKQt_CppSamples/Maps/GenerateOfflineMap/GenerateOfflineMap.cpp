@@ -99,7 +99,7 @@ void GenerateOfflineMap::generateMapByExtent(double xCorner1, double yCorner1, d
           this, [this](QUuid, const GenerateOfflineMapParameters& params)
   {
     // Take the map offline once the parameters are generated
-    GenerateOfflineMapJob* generateJob = m_offlineMapTask->generateOfflineMap(params, m_tempPath.path() + "/offlinemap.mmpk");
+    GenerateOfflineMapJob* generateJob = m_offlineMapTask->generateOfflineMap(params, m_tempPath.path() + "/offlinemap");
 
     // check if there is a valid job
     if (generateJob)
