@@ -1,4 +1,4 @@
-# ArcGIS Runtime SDK 100.14 for Qt sample applications.
+# ArcGIS Runtime SDK 100.14 for Qt sample applications
 
 ## Overview
 
@@ -7,16 +7,15 @@ The repo contains [Qt](http://qt.io) projects for each sample that can be run fr
 ## Table of Contents
 
 1. [Prerequisites](#prerequisites)
-2. [Fork the repo](#fork-the-repo)
-3. [Clone the repo](#clone-the-repo)
-4. [Open a sample project file in Qt Creator](#open-a-sample-project-file-in-qt-creator)
-5. [Build and run the Qt Runtime Samples Viewer locally](#build-and-run-the-qt-runtime-samples-viewer-locally)
-6. [Use a previous version](#use-a-previous-version)
-7. [Use offline data in the samples](#use-offline-data-in-the-samples)
-8. [Resources](#resources)
-9. [Issues](#issues)
-10. [Contributing](#contributing)
-11. [Licensing](#licensing)
+2. [Set up the ArcGIS Runtime SDK for Qt samples repo locally](#set-up-the-arcgis-runtime-sdk-for-qt-samples-repo-locally)
+3. [Open a sample project file in Qt Creator](#open-a-sample-project-file-in-qt-creator)
+4. [Build and run the Qt Runtime Samples Viewer locally](#build-and-run-the-qt-runtime-samples-viewer-locally)
+5. [Use a previous version](#use-a-previous-version)
+6. [Use offline data in the samples](#use-offline-data-in-the-samples)
+7. [Resources](#resources)
+8. [Issues](#issues)
+9. [Contributing](#contributing)
+10. [Licensing](#licensing)
 
 ## Prerequisites
 
@@ -34,9 +33,9 @@ If you haven't already, fork [the repo](https://github.com/Esri/arcgis-runtime-s
 
 ### Clone the repo
 
-#### Clone the sample code repo
+[How to clone a forked repository](https://docs.github.com/en/get-started/quickstart/fork-a-repo#cloning-your-forked-repository)
 
-[Clone the ArcGIS Qt SDK Samples](https://docs.github.com/en/get-started/quickstart/fork-a-repo#cloning-your-forked-repository)
+#### Clone the sample code repo
 
 Open your terminal, navigate to your working directory, use ```git clone``` to get a copy of the repo.
 
@@ -119,6 +118,8 @@ Start Qt Creator. When the IDE opens to the Welcome screen, click on the **Open 
 ## Build and run the Qt Runtime Samples Viewer locally
 
 Start Qt Creator. When the IDE opens to the Welcome screen, click on the **Open Project** button and browse to either sample viewer's project file (.pro) within your forked repo location. The sample viewer project files are located at `arcgis-runtime-samples-qt\ArcGISRuntimeSDKQt_SampleViewers\`, in either `ArcGISRuntimeSDKQt_CppSamples` or `ArcGISRuntimeSDKQt_QMLSamples`. Configure the project, [set your ArcGIS Developer API key](https://developers.arcgis.com/documentation/mapping-apis-and-services/security/tutorials/create-and-manage-an-api-key/#set-your-api-key) in `ArcGISRuntimeSDKQt_Samples\SampleManager.cpp`, and run the sample.
+
+NOTE: the sample viewer project files search for the toolkit.pri at the [default location specified above](#clone-the-toolkit-repo). If you cloned the toolkit repo to a different location, you will need to update the path in the respective sample viewer's project file.
 
 ## Use a previous version
 
