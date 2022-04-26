@@ -60,7 +60,7 @@ void RasterLayerService::componentComplete()
   //! [ImageServiceRaster Create a new image service raster]
   // create an image service raster
   ImageServiceRaster* imageServiceRaster = new ImageServiceRaster(
-        QUrl(QStringLiteral("https://gis.ngdc.noaa.gov/arcgis/rest/services/bag_hillshades/ImageServer")), this);
+        QUrl(QStringLiteral("https://gis.ngdc.noaa.gov/arcgis/rest/services/bag_hillshades_subsets/ImageServer")), this);
   // zoom to the center of the raster once it's loaded
   connect(imageServiceRaster, &ImageServiceRaster::doneLoading, this, [this]()
   {
