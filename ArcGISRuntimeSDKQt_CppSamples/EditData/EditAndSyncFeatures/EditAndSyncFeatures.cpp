@@ -226,7 +226,7 @@ void EditAndSyncFeatures::generateGeodatabaseFromCorners(double xCorner1, double
   // connect to the job's status changed signal
   if (generateJob)
   {
-    connect(generateJob, &GenerateGeodatabaseJob::jobStatusChanged, this, [this, generateJob]()
+    connect(generateJob, &GenerateGeodatabaseJob::statusChanged, this, [this, generateJob]()
     {
       // connect to the job's status changed signal to know once it is done
       switch (generateJob->jobStatus()) {
@@ -304,7 +304,7 @@ void EditAndSyncFeatures::executeSync()
   // connect to the job's status changed signal
   if (syncJob)
   {
-    connect(syncJob, &GenerateGeodatabaseJob::jobStatusChanged, this, [this, syncJob]()
+    connect(syncJob, &GenerateGeodatabaseJob::statusChanged, this, [this, syncJob]()
     {
       // connect to the job's status changed signal to know once it is done
       switch (syncJob->jobStatus()) {
