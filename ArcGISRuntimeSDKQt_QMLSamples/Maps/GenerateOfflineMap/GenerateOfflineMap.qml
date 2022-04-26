@@ -117,7 +117,7 @@ Rectangle {
                 generateWindow.visible = true;
 
                 // connect to the job's status changed signal to know once it is done
-                generateJob.jobStatusChanged.connect(updateJobStatus);
+                generateJob.statusChanged.connect(updateJobStatus);
                 // connect to the job's progress changed signal
                 generateJob.progressChanged.connect(updateProgress);
 
@@ -181,7 +181,7 @@ Rectangle {
 
         Component.onDestruction: {
             if (generateJob) {
-                generateJob.jobStatusChanged.disconnect(updateJobStatus);
+                generateJob.statusChanged.disconnect(updateJobStatus);
                 generateJob.progressChanged.disconnect(updateProgress);
             }
         }
