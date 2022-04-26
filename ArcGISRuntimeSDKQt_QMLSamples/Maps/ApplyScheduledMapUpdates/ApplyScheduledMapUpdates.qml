@@ -133,7 +133,7 @@ Rectangle {
                 syncJob = offlineMapSyncTask.syncOfflineMap(createDefaultOfflineMapSyncParametersResult);
 
                 // connect to the job signals
-                syncJob.jobStatusChanged.connect(()=> {
+                syncJob.statusChanged.connect(()=> {
                                                      if (syncJob.jobStatus === Enums.JobStatusSucceeded) {
                                                          const mapResult = syncJob.result;
 
