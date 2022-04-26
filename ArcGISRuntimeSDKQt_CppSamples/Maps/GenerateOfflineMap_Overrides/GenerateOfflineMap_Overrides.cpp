@@ -322,7 +322,7 @@ void GenerateOfflineMap_Overrides::takeMapOffline()
     return;
 
   // connect to the job's status changed signal
-  connect(generateJob, &GenerateOfflineMapJob::jobStatusChanged, this, [this, generateJob]()
+  connect(generateJob, &GenerateOfflineMapJob::statusChanged, this, [this, generateJob]()
   {
     // connect to the job's status changed signal to know once it is done
     switch (generateJob->jobStatus()) {
