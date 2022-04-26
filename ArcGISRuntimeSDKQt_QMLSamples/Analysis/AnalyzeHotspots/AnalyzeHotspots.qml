@@ -66,7 +66,7 @@ Rectangle {
             job = hotspotTask.createJob(hotspotParameters);
 
             // Connect to the job's status changed signal
-            job.jobStatusChanged.connect(()=> {
+            job.statusChanged.connect(()=> {
                 if (job.jobStatus === Enums.JobStatusFailed) {
                     showErrorDialog(job.error);
                     jobInProgress = false;
