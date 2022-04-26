@@ -138,7 +138,7 @@ Rectangle {
                 } else {
                     job = offlineMapTask.downloadPreplannedOfflineMapWithParameters(createDefaultDownloadPreplannedOfflineMapParametersResult, path);
 
-                    job.jobStatusChanged.connect(()=> {
+                    job.statusChanged.connect(()=> {
                         if (job.jobStatus === Enums.JobStatusFailed) {
                             console.log(job.error.message + " - " + job.error.additionalMessage)
                             busy = false;
