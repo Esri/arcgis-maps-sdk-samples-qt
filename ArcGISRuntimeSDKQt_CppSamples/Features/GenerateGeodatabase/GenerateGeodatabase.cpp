@@ -196,7 +196,7 @@ void GenerateGeodatabase::generateGeodatabaseFromCorners(double xCorner1, double
   // connect to the job's status changed signal
   if (generateJob)
   {
-    connect(generateJob, &GenerateGeodatabaseJob::jobStatusChanged, this, [this, generateJob]()
+    connect(generateJob, &GenerateGeodatabaseJob::statusChanged, this, [this, generateJob]()
     {
       // connect to the job's status changed signal to know once it is done
       switch (generateJob->jobStatus()) {
