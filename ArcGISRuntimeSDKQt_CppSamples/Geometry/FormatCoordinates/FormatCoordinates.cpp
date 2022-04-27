@@ -179,8 +179,7 @@ void FormatCoordinates::setMapView(MapQuickView* mapView)
 
     // using the point, refresh the graphic and the text
     handleLocationUpdate(std::move(mapPoint));
-  },
-  Qt::UniqueConnection);
+  });
 
   handleLocationUpdate(startPoint);
 }

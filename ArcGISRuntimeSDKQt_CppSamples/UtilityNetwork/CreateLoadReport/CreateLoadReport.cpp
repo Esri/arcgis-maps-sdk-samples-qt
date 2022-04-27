@@ -89,7 +89,7 @@ CreateLoadReport::CreateLoadReport(QObject* parent /* = nullptr */):
       m_traceConfiguration = createDefaultTraceConfiguration();
 
       // Create a base condition to compare against
-      m_baseCondition = dynamic_cast<UtilityTraceConditionalExpression*>(m_utilityTier->traceConfiguration()->traversability()->barriers());
+      m_baseCondition = dynamic_cast<UtilityTraceConditionalExpression*>(m_utilityTier->defaultTraceConfiguration()->traversability()->barriers());
 
       // Create downstream trace parameters with function outputs
       m_traceParameters = new UtilityTraceParameters(UtilityTraceType::Downstream, {m_startingLocation}, this);
@@ -109,7 +109,7 @@ CreateLoadReport::CreateLoadReport(QObject* parent /* = nullptr */):
     else if (m_utilityNetwork->loadStatus() == LoadStatus::FailedToLoad)
     {
       m_sampleStatus = CreateLoadReport::SampleError;
-      sampleStatusChanged();
+      emit sampleStatusChanged();
     }
   });
 
@@ -121,7 +121,7 @@ UtilityElement* CreateLoadReport::createStartingLocation()
   if (!m_utilityAssetType)
     return nullptr;
 
-  QList<UtilityTerminal*> utilityTerminals = m_utilityAssetType->terminalConfiguration()->terminals();
+  const QList<UtilityTerminal*> utilityTerminals = m_utilityAssetType->terminalConfiguration()->terminals();
   if (!utilityTerminals.first())
     return nullptr;
 
@@ -145,7 +145,7 @@ UtilityElement* CreateLoadReport::createStartingLocation()
 
 UtilityTraceConfiguration* CreateLoadReport::createDefaultTraceConfiguration()
 {
-  UtilityTraceConfiguration* traceConfig = m_utilityTier->traceConfiguration();
+  UtilityTraceConfiguration* traceConfig = m_utilityTier->defaultTraceConfiguration();
 
   // Service Category for counting total customers
   UtilityCategory* servicePointCategory = getUtilityCategory(m_serviceCategoryName);
@@ -172,7 +172,7 @@ UtilityTraceConfiguration* CreateLoadReport::createDefaultTraceConfiguration()
 
 UtilityCategory* CreateLoadReport::getUtilityCategory(const QString& categoryName)
 {
-  QList<UtilityCategory*> utilityCategories = m_utilityNetwork->definition()->categories();
+  const QList<UtilityCategory*> utilityCategories = m_utilityNetwork->definition()->categories();
 
   for (UtilityCategory* utilityCategory : utilityCategories)
   {
@@ -204,8 +204,8 @@ void CreateLoadReport::runReport(const QStringList& selectedPhaseNames)
   m_sampleStatus = CreateLoadReport::SampleBusy;
   emit sampleStatusChanged();
 
-  QList<CodedValue> activeValues;
-  for (CodedValue codedValue : m_phaseList)
+  QVector<CodedValue> activeValues;
+  for (const CodedValue& codedValue : qAsConst(m_phaseList))
   {
     if (selectedPhaseNames.contains(codedValue.name()))
       activeValues.append(codedValue);
@@ -217,7 +217,7 @@ void CreateLoadReport::runReport(const QStringList& selectedPhaseNames)
     emit loadReportUpdated();
   }
 
-  for (CodedValue codedValue : activeValues)
+  for (const CodedValue& codedValue : activeValues)
   {
     setUtilityTraceOrconditionWithCodedValue(codedValue);
     TaskWatcher task = m_utilityNetwork->trace(m_traceParameters);
@@ -233,6 +233,9 @@ void CreateLoadReport::runReport(const QStringList& selectedPhaseNames)
 
 void CreateLoadReport::setUtilityTraceOrconditionWithCodedValue(CodedValue codedValue)
 {
+  if (!m_baseCondition)
+    return;
+
   // Create a conditional expression with the CodedValue
   UtilityNetworkAttributeComparison* utilityNetworkAttributeComparison =
         new UtilityNetworkAttributeComparison(
@@ -240,14 +243,9 @@ void CreateLoadReport::setUtilityTraceOrconditionWithCodedValue(CodedValue coded
           UtilityAttributeComparisonOperator::DoesNotIncludeAny,
           codedValue.code(), this);
 
-  UtilityTraceOrCondition* utilityTraceOrCondition = nullptr;
-
   // Chain it with the base condition using an OR operator.
-  if (utilityNetworkAttributeComparison && m_baseCondition)
-    utilityTraceOrCondition = new UtilityTraceOrCondition(m_baseCondition, utilityNetworkAttributeComparison, this);
-
-  if (utilityTraceOrCondition)
-    m_traceParameters->traceConfiguration()->traversability()->setBarriers(utilityTraceOrCondition);
+  UtilityTraceOrCondition* utilityTraceOrCondition = new UtilityTraceOrCondition(m_baseCondition, utilityNetworkAttributeComparison, this);
+  m_traceParameters->traceConfiguration()->traversability()->setBarriers(utilityTraceOrCondition);
 }
 
 void CreateLoadReport::createTraceCompletedConnection()
@@ -258,20 +256,22 @@ void CreateLoadReport::createTraceCompletedConnection()
 
     UtilityTraceResultListModel* results = m_utilityNetwork->traceResult();
 
-    for (UtilityTraceResult* result : *results) {
+    for (UtilityTraceResult* result : *results)
+    {
       // Get the total customers from the UtilityElementTraceResult
       if (UtilityElementTraceResult* elementResult = dynamic_cast<UtilityElementTraceResult*>(result))
         m_phaseCust[codedValueName] = elementResult->elements(this).size();
 
       // Get the total load from the UtilityFunctionTraceResult
       else if (UtilityFunctionTraceResult* functionResult = dynamic_cast<UtilityFunctionTraceResult*>(result))
-        m_phaseLoad[codedValueName] = functionResult->functionOutputs().first()->result().toInt();
+        m_phaseLoad[codedValueName] = qAsConst(functionResult)->functionOutputs().first()->result().toInt();
     }
 
     emit loadReportUpdated();
 
     // If the tasks queue is empty, all trace tasks have completed
-    if (m_tasks.keys().size() == 0) {
+    if (m_tasks.isEmpty())
+    {
       m_sampleStatus = CreateLoadReport::SampleReady;
       emit sampleStatusChanged();
     }

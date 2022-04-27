@@ -1,4 +1,4 @@
-# Display 3D labels in scene
+# Show labels on layer in 3D
 
 This sample demonstrates how to display custom labels in a 3D scene.
 
@@ -14,12 +14,14 @@ Pan and zoom to explore the scene. Notice the labels showing installation dates 
 
 ## How it works
 
-1. Create a `Scene` from a URL.
-2. Obtain the `FeatureLayer` from one of the `GroupLayer`s in the scene's `operationalLayers`.
-3. Create a `TextSymbol` to use for displaying the label text.
-4. Create a `LabelDefinition` with an `ArcadeLabelExpression`.
-5. Add the definition to the feature layer's `labelDefinitions` array.
-6. Set the feature layer's `labelsEnabled` property to `true`.
+1. Create a `Scene` from a `PortalItem`.
+2. Add the scene to a `SceneView` and load it.
+3. After loading is complete, obtain the `FeatureLayer` from one of the `GroupLayer`s in the scene's `operationalLayers`.
+4. Create a `TextSymbol` to define how labels are stylized.
+5. After the `Scene` has loaded, obtain the `FeatureLayer` from the scene's `operationalLayers`.
+6. Create an `LabelDefinition` using an  `ArcadeLabelExpression`.
+    * Set the "labelExpressionInfo.expression" key to define what text the label should display. You can use fields of the feature by using `$feature.NAME` in the expression.
+7. Add the definition to the feature layer's `labelDefinitions` array.
 
 ## Relevant API
 
@@ -36,5 +38,5 @@ This sample shows a [New York City infrastructure](https://www.arcgis.com/home/i
 
 ## Tags
 
-3D, attribute, buildings, label, model, scene, symbol, text, URL, visualization
+3D, arcade, attribute, buildings, label, model, scene, symbol, text, URL, visualization
 

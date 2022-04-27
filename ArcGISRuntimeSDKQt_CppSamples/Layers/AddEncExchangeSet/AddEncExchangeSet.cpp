@@ -100,7 +100,8 @@ void AddEncExchangeSet::setMapView(MapQuickView* mapView)
       return;
 
     // loop through datasets
-    for (EncDataset* dataset : m_encExchangeSet->datasets())
+    const auto datasets = m_encExchangeSet->datasets();
+    for (EncDataset* dataset : datasets)
     {
       // create an EncCell from each dataset
       EncCell* cell = new EncCell(dataset, this);

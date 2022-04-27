@@ -152,7 +152,7 @@ void BrowseOGCAPIFeatureService::createFeatureCollectionList()
   m_featureCollectionList.clear();
 
   // Populate list with names of each feature collection
-  for (OgcFeatureCollectionInfo* info : m_collectionInfo)
+  for (OgcFeatureCollectionInfo* info : qAsConst(m_collectionInfo))
   {
     m_featureCollectionList.push_back(info->title());
   }

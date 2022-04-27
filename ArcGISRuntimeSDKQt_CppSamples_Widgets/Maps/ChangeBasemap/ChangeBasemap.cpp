@@ -32,7 +32,7 @@ ChangeBasemap::ChangeBasemap(QWidget* parent) :
     // Create a map view, and pass in the map
     m_mapView = new MapGraphicsView(m_map, this);
 
-    // Create and populate a combo box with several basemap types
+    // Create and populate a combo box with several basemap styles
     m_basemapCombo = new QComboBox(this);
     m_basemapCombo->adjustSize();
     m_basemapCombo->setStyleSheet("QComboBox#combo {color: black; background-color:#000000;}");

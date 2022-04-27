@@ -213,7 +213,8 @@ void AnalyzeViewshed::calculateViewshed()
 void AnalyzeViewshed::processResults(GeoprocessingResult *results)
 {
   // Get the results from the outputs as GeoprocessingFeatures
-  GeoprocessingFeatures* viewshedResultFeatures = static_cast<GeoprocessingFeatures*>(results->outputs()["Viewshed_Result"]);
+  const auto outputs = results->outputs();
+  GeoprocessingFeatures* viewshedResultFeatures = static_cast<GeoprocessingFeatures*>(outputs["Viewshed_Result"]);
 
   // Create the parent for the graphic
   if (!m_graphicParent)

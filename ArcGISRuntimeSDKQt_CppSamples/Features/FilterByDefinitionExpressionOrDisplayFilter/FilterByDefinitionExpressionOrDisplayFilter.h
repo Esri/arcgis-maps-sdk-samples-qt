@@ -36,6 +36,7 @@ class FilterByDefinitionExpressionOrDisplayFilter : public QQuickItem
 
   Q_PROPERTY(bool layerInitialized READ layerInitialized NOTIFY layerInitializedChanged)
   Q_PROPERTY(int currentFeatureCount READ currentFeatureCount NOTIFY currentFeatureCountChanged)
+  Q_PROPERTY(bool mapDrawing READ mapDrawing NOTIFY mapDrawStatusChanged)
 
 public:
   explicit FilterByDefinitionExpressionOrDisplayFilter(QQuickItem* parent = nullptr);
@@ -45,15 +46,19 @@ public:
   static void init();
   Q_INVOKABLE void setDefExpression(const QString& whereClause);
   Q_INVOKABLE void setDisplayFilter(const QString& whereClause);
+  Q_INVOKABLE void resetDisplayFilterParams();
+  Q_INVOKABLE void resetDefExpressionParams();
 
 signals:
   void layerInitializedChanged();
   void currentFeatureCountChanged();
+  void mapDrawStatusChanged();
 
 private:
   bool layerInitialized() const;
   int currentFeatureCount() const;
   void queryFeatureCountInCurrentExtent();
+  bool mapDrawing() const;
 
 private:
   Esri::ArcGISRuntime::Map* m_map = nullptr;
@@ -62,6 +67,7 @@ private:
   bool m_initialized = false;
   Esri::ArcGISRuntime::ServiceFeatureTable* m_featureTable = nullptr;
   int m_currentFeatureCount = 0;
+  bool m_mapDrawing = false;
 };
 
 #endif // FILTER_BY_DEFINITION_EXPRESSION_OR_DISPLAY_FILTER_H

@@ -419,7 +419,7 @@ Rectangle {
 
                         // check to see if it exists before assigning it to the parameters.
                         if (mediumVoltageTier)
-                            params.traceConfiguration = mediumVoltageTier.traceConfiguration;
+                            params.traceConfiguration = mediumVoltageTier.defaultTraceConfiguration();
 
                         // Perform a connected trace on the utility network
                         utilityNetwork.trace(params);

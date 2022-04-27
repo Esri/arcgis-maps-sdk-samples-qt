@@ -68,6 +68,15 @@ Rectangle {
             }
             targetScale: 300000
         }
+
+        onDrawStatusChanged: {
+
+            // Recalculate the feature count in current extent any time the map redraws
+            if (drawStatus === Enums.DrawStatusCompleted)
+            {
+                queryFeatureCountInCurrentExtent();
+            }
+        }
     }
     //! [Rectangle-mapview-map-viewpoint]
 
@@ -100,7 +109,7 @@ Rectangle {
             width: 200
             enabled: featureTable.loadStatus === Enums.LoadStatusLoaded
             onClicked: {
-                const displayFilter = ArcGISRuntimeEnvironment.createObject("DisplayFilter", {name: "Damaged Trees", filterId: "Damaged Trees", whereClause: "req_Type = \'Tree Maintenance or Damage\'"});
+                const displayFilter = ArcGISRuntimeEnvironment.createObject("DisplayFilter", {name: "Damaged Trees", whereClause: "req_Type = \'Tree Maintenance or Damage\'"});
                 const displayFilterDefintionVar = ArcGISRuntimeEnvironment.createObject("ManualDisplayFilterDefinition");
                 displayFilterDefintionVar.availableFilters.append(displayFilter);
                 displayFilterDefintionVar.activeFilter = displayFilter;
@@ -119,10 +128,10 @@ Rectangle {
             onClicked: {
                 featureLayer.definitionExpression = "";
 
-                const displayFilter = ArcGISRuntimeEnvironment.createObject("DisplayFilter", {id: "No Filter", whereClause: "1=1"});
+                const displayFilter = ArcGISRuntimeEnvironment.createObject("DisplayFilter", {name: "No Filter", whereClause: "1=1"});
                 const displayFilterDefintionVar = ArcGISRuntimeEnvironment.createObject("ManualDisplayFilterDefinition");
-                displayFilterDefintionVar.activeFilter = displayFilter;
                 displayFilterDefintionVar.availableFilters.append(displayFilter);
+                displayFilterDefintionVar.activeFilter = displayFilter;
                 featureLayer.displayFilterDefinition = displayFilterDefintionVar;
 
                 queryFeatureCountInCurrentExtent();

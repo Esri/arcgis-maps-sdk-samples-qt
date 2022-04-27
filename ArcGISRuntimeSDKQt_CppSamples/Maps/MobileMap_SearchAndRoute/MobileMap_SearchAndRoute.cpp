@@ -231,7 +231,8 @@ void MobileMap_SearchAndRoute::createMapList(int index)
 
   int counter = 1;
 
-  for (const Map* map : m_mobileMapPackages[index]->maps())
+  const auto maps = m_mobileMapPackages[index]->maps();
+  for (const Map* map : maps)
   {
     QVariantMap mapList;
     mapList["name"] = map->item()->title() + " " + QString::number(counter);
@@ -339,7 +340,8 @@ void MobileMap_SearchAndRoute::selectMap(int index)
 
       if (!routeResult.isEmpty())
       {
-        Graphic* routeGraphic = new Graphic(routeResult.routes()[0].routeGeometry(), m_routeGraphicParent);
+        const auto routes = routeResult.routes();
+        Graphic* routeGraphic = new Graphic(routes[0].routeGeometry(), m_routeGraphicParent);
         m_routeGraphicsOverlay->graphics()->append(routeGraphic);
       }
     });

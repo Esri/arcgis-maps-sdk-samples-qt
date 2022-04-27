@@ -81,7 +81,8 @@ ListKmlContents::ListKmlContents(QObject* parent /* = nullptr */):
     }
 
     // recursively build tree to display KML contents
-    for (KmlNode* node : m_kmlDataset->rootNodes())
+    const auto nodes = m_kmlDataset->rootNodes();
+    for (KmlNode* node : nodes)
     {
       m_kmlNodesList << node;
       buildTree(node);
@@ -180,7 +181,7 @@ void ListKmlContents::processSelectedNode(const QString& nodeName)
   }
 
   // find node in the list
-  for (KmlNode* node : m_kmlNodesList)
+  for (KmlNode* node : qAsConst(m_kmlNodesList))
   {
     if (extractedNodeName == node->name())
     {

@@ -248,7 +248,7 @@ void TraceUtilityNetwork::trace(int index)
   }
 
   if (m_mediumVoltageTier)
-    m_traceParams->setTraceConfiguration(m_mediumVoltageTier->traceConfiguration());
+    m_traceParams->setTraceConfiguration(m_mediumVoltageTier->defaultTraceConfiguration());
 
   m_traceParams->setStartingLocations(m_startingLocations);
   m_traceParams->setBarriers(m_barriers);
@@ -295,7 +295,7 @@ void TraceUtilityNetwork::onIdentifyLayersCompleted(QUuid, const QList<IdentifyL
   m_mediumVoltageTier = domainNetwork->tier("Medium Voltage Radial");
 
   const IdentifyLayerResult* result = results[0];
-  m_feature = static_cast<ArcGISFeature*>(result->geoElements()[0]);
+  m_feature = static_cast<ArcGISFeature*>(qAsConst(result)->geoElements()[0]);
   UtilityElement* element = nullptr;
   const UtilityNetworkSource* networkSource = m_utilityNetwork->definition()->networkSource(m_feature->featureTable()->tableName());
 
@@ -308,7 +308,8 @@ void TraceUtilityNetwork::onIdentifyLayersCompleted(QUuid, const QList<IdentifyL
     const int assetGroupCode = m_feature->attributes()->attributeValue(assetGroupFieldName).toInt();
     UtilityAssetGroup* assetGroup = nullptr;
 
-    for (UtilityAssetGroup* group : networkSource->assetGroups())
+    const auto groups = networkSource->assetGroups();
+    for (UtilityAssetGroup* group : groups)
     {
       if (group->code() == assetGroupCode)
       {
@@ -316,11 +317,14 @@ void TraceUtilityNetwork::onIdentifyLayersCompleted(QUuid, const QList<IdentifyL
         break;
       }
     }
+    if (!assetGroup)
+      return;
 
     const int assetTypeCode = m_feature->attributes()->attributeValue("assettype").toInt();
 
     UtilityAssetType* assetType = nullptr;
-    for (UtilityAssetType* type : assetGroup->assetTypes())
+    const auto types = assetGroup->assetTypes();
+    for (UtilityAssetType* type : types)
     {
       if (type->code() == assetTypeCode)
       {

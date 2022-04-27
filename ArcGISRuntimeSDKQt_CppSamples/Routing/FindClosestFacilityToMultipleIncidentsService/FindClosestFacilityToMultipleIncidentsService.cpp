@@ -46,7 +46,6 @@ FindClosestFacilityToMultipleIncidentsService::FindClosestFacilityToMultipleInci
 {
   // enable busy indicator while loading
   m_busy = true;
-  emit busyChanged();
 
   createSymbols();
 
@@ -148,7 +147,8 @@ void FindClosestFacilityToMultipleIncidentsService::setupRouting()
     // finding the closest facility for each incident to create a route graphic between each pair
     for (int incidentIndex = 0; incidentIndex < m_incidentsFeatureTable->numberOfFeatures(); incidentIndex++)
     {
-      const int closestFacilityIndex = closestFacilityResult.rankedFacilityIndexes(incidentIndex).first();
+      const auto indexes = closestFacilityResult.rankedFacilityIndexes(incidentIndex);
+      const int closestFacilityIndex = indexes.first();
       const ClosestFacilityRoute route = closestFacilityResult.route(closestFacilityIndex, incidentIndex);
       Graphic* m_routeGraphic = new Graphic(route.routeGeometry(), m_routeSymbol, this);
 

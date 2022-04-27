@@ -55,7 +55,7 @@ void ShowLabelsOnLayers::componentComplete()
   // Create a feature layer
   ServiceFeatureTable* featureTable = new ServiceFeatureTable(QUrl("https://services.arcgis.com/P3ePLMYs2RVChkJx/arcgis/rest/services/USA_115th_Congressional_Districts/FeatureServer/0"), this);
   FeatureLayer* featureLayer = new FeatureLayer(featureTable, this);
-  connect(featureLayer, &FeatureLayer::doneLoading, [this, featureLayer](Error e)
+  connect(featureLayer, &FeatureLayer::doneLoading, this, [this, featureLayer](Error e)
   {
     if (!e.isEmpty())
       return;

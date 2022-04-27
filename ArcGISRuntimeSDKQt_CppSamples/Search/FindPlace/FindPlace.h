@@ -59,7 +59,7 @@ public:
   Q_INVOKABLE void setSuggestionsText(const QString& searchText);
   Q_INVOKABLE void geocodePOIs(const QString& poi, const QString& location);
   Q_INVOKABLE void geocodePOIs(const QString& poi, const Esri::ArcGISRuntime::Point& location);
-  Q_INVOKABLE void geocodePOIs(const QString& poi, SearchMode mode);
+  Q_INVOKABLE void geocodePOIs(const QString& poi, FindPlace::SearchMode mode);
   Q_INVOKABLE void geocodePOIs(const QString& poi);
 
 signals:

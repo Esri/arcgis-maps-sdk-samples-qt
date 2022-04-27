@@ -278,10 +278,9 @@ Item {
         accessComboBox.currentIndex = 0;
     }
 
-    // Uncomment this section when running as standalone application
-    /*AuthenticationView {
-        authenticationManager: model.authManager
-    }*/
+    // Declare AuthenticationView to handle any authentication challenges
+    AuthenticationView {
+    }
 
     // Declare the C++ instance which creates the scene etc. and supply the view
     EditWithBranchVersioningSample {

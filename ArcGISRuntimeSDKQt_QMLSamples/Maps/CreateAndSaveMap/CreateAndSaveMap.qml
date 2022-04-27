@@ -138,12 +138,10 @@ Rectangle {
         }
     }
 
-    /*
     // Declare AuthenticationView to handle any authentication challenges
     AuthenticationView {
         anchors.fill: parent
     }
-    */
 
     function createMap(basemap, layerList) {
         // Create the Basemap

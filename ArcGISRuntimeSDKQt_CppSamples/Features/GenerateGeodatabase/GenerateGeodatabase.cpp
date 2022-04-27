@@ -118,7 +118,8 @@ void GenerateGeodatabase::componentComplete()
 
     // add online feature layers to the map, and obtain service IDs
     m_featureServiceInfo = m_syncTask->featureServiceInfo();
-    for (const IdInfo& idInfo : m_featureServiceInfo.layerInfos())
+    const auto infos = m_featureServiceInfo.layerInfos();
+    for (const IdInfo& idInfo : infos)
     {
       // get the layer ID from the idInfo
       QString id = QString::number(idInfo.infoId());
@@ -167,7 +168,7 @@ GenerateGeodatabaseParameters GenerateGeodatabase::getUpdatedParameters(Envelope
 
   // set the layer options for all of the service IDs
   QList<GenerateLayerOption> layerOptions;
-  for (const QString& id : m_serviceIds)
+  for (const QString& id : qAsConst(m_serviceIds))
   {
     GenerateLayerOption generateLayerOption(id.toInt());
     layerOptions << generateLayerOption;
@@ -242,7 +243,8 @@ void GenerateGeodatabase::addOfflineData(Geodatabase* gdb)
   connect(gdb, &Geodatabase::doneLoading, this, [this, gdb](Error)
   {
     // create a feature layer from each feature table, and add to the map
-    for (GeodatabaseFeatureTable* featureTable : gdb->geodatabaseFeatureTables())
+    const auto tables = gdb->geodatabaseFeatureTables();
+    for (GeodatabaseFeatureTable* featureTable : tables)
     {
       FeatureLayer* featureLayer = new FeatureLayer(featureTable, this);
       m_map->operationalLayers()->append(featureLayer);

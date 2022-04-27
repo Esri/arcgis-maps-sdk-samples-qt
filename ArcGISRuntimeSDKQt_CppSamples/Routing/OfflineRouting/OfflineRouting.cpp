@@ -121,7 +121,7 @@ QStringList OfflineRouting::travelModeNames() const
   if(m_routeTask->loadStatus() != LoadStatus::Loaded)
     return { };
 
-  QList<TravelMode> modesList = m_routeTask->routeTaskInfo().travelModes();
+  const QList<TravelMode> modesList = m_routeTask->routeTaskInfo().travelModes();
   QStringList strList;
   for (const TravelMode& mode : modesList)
   {
@@ -237,7 +237,7 @@ void OfflineRouting::connectSignals()
 
     // clear old route
     m_routeOverlay->graphics()->clear();
-    Polyline routeGeometry = routeResult.routes().first().routeGeometry();
+    Polyline routeGeometry = qAsConst(routeResult).routes().first().routeGeometry();
     Graphic* routeGraphic = new Graphic(routeGeometry, this);
 
     m_routeOverlay->graphics()->append(routeGraphic);
