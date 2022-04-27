@@ -18,7 +18,7 @@ import QtQuick 2.6
 import QtQuick.Controls 2.12
 import QtQuick.Layouts 1.12
 import QtQuick.Shapes 1.12
-import Esri.ArcGISRuntime 100.13
+import Esri.ArcGISRuntime 100.14
 
 Rectangle {
     id: rootRectangle
@@ -114,7 +114,7 @@ Rectangle {
             const utilityTierSource = domainNetwork.tier(tierName);
 
             // Set the trace configuration.
-            traceConfiguration = utilityTierSource.traceConfiguration;
+            traceConfiguration = utilityTierSource.defaultTraceConfiguration();
 
             initialExpression = traceConfiguration.traversability.barriers;
 

@@ -17,7 +17,7 @@
 import QtQuick 2.6
 import QtQuick.Layouts 1.12
 import QtQuick.Controls 2.12
-import Esri.ArcGISRuntime 100.13
+import Esri.ArcGISRuntime 100.14
 
 Rectangle {
     id: rootRectangle
@@ -419,7 +419,7 @@ Rectangle {
 
                         // check to see if it exists before assigning it to the parameters.
                         if (mediumVoltageTier)
-                            params.traceConfiguration = mediumVoltageTier.traceConfiguration;
+                            params.traceConfiguration = mediumVoltageTier.defaultTraceConfiguration();
 
                         // Perform a connected trace on the utility network
                         utilityNetwork.trace(params);

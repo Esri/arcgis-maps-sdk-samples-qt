@@ -16,7 +16,7 @@
 
 import QtQuick 2.6
 import QtQuick.Controls 2.2
-import Esri.ArcGISRuntime 100.13
+import Esri.ArcGISRuntime 100.14
 import QtQuick.Layouts 1.11
 import QtQuick.Dialogs 1.1
 
@@ -267,7 +267,7 @@ Rectangle {
                         let domainNetwork = definition.domainNetwork(domainNetworkName);
                         if (domainNetwork.tier(tierName) !== null) {
                             let tier = domainNetwork.tier(tierName);
-                            traceConfiguration = tier.traceConfiguration;
+                            traceConfiguration = tier.defaultTraceConfiguration();
                         }
                     }
 

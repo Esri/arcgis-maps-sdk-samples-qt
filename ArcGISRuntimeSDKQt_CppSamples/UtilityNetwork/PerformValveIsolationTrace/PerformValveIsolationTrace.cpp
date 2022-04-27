@@ -285,7 +285,7 @@ void PerformValveIsolationTrace::connectSignals()
     {
       UtilityTier* tier = domainNetwork->tier(tierName);
       if (tier)
-        m_traceConfiguration = tier->traceConfiguration();
+        m_traceConfiguration = tier->defaultTraceConfiguration();
     }
 
     if (!m_traceConfiguration)

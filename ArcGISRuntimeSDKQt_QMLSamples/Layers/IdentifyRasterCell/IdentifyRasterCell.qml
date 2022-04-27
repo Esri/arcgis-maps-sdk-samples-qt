@@ -15,9 +15,9 @@
 // [Legal]
 
 import QtQuick 2.6
-import Esri.ArcGISRuntime 100.13
+import Esri.ArcGISRuntime 100.14
 import Esri.ArcGISExtras 1.1
-import Esri.ArcGISRuntime.Toolkit 100.13
+import Esri.ArcGISRuntime.Toolkit 100.14
 
 Rectangle {
     id: rootRectangle
@@ -57,7 +57,7 @@ Rectangle {
                   text: calloutText
                   Binding {
                       target: callout
-                      value: contentHeight + callout.calloutFramePadding
+                      value: contentHeight + 15
                       property: "calloutHeight"
                   }
 

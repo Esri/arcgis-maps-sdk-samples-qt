@@ -63,8 +63,9 @@ void GOSymbols::componentComplete()
   // Create a map using the oceans basemap
   constexpr double lat = 56.075844;
   constexpr double lon = -2.681572;
-  constexpr int levelOfDetail = 11;
-  m_map = new Map(BasemapType::Oceans, lat, lon, levelOfDetail, this);
+  constexpr double scale = 288895.277144;
+  m_map = new Map(BasemapStyle::ArcGISOceans, this);
+  m_map->setInitialViewpoint(Viewpoint(lat, lon, scale));
   // set map on the map view
   m_mapView->setMap(m_map);
 

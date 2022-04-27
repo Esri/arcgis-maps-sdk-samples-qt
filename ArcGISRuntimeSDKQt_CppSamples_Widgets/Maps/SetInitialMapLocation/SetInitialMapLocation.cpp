@@ -22,18 +22,23 @@
 using namespace Esri::ArcGISRuntime;
 
 SetInitialMapLocation::SetInitialMapLocation(QWidget* parent) :
-    QWidget(parent)
+  QWidget(parent)
 {
-    // Create a new map with the basemap type enum and pass in initial lat, lon, and scale
-    m_map = new Map(BasemapType::ImageryWithLabels, -33.867886, -63.985, 16, this);
+  // Create a new map with the imagery basemap style enum and set its initial lat, long, and scale
+  constexpr double lat = -33.867886;
+  constexpr double lon = -63.985;
+  constexpr double scale = 9027.977411;
 
-    // Create a map view, and pass in the map
-    m_mapView = new MapGraphicsView(m_map, this);
+  m_map = new Map(BasemapStyle::ArcGISImagery, this);
+  m_map->setInitialViewpoint(Viewpoint(lat, lon, scale));
 
-    // Set up the UI
-    QVBoxLayout *vBoxLayout = new QVBoxLayout();
-    vBoxLayout->addWidget(m_mapView);
-    setLayout(vBoxLayout);
+  // Create a map view, and pass in the map
+  m_mapView = new MapGraphicsView(m_map, this);
+
+  // Set up the UI
+  QVBoxLayout *vBoxLayout = new QVBoxLayout();
+  vBoxLayout->addWidget(m_mapView);
+  setLayout(vBoxLayout);
 }
 
 SetInitialMapLocation::~SetInitialMapLocation() = default;

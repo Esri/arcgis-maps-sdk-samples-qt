@@ -40,7 +40,11 @@ GOSymbols::GOSymbols(QWidget* parent) :
   QWidget(parent)
 {
   // Create a map using the imagery with labels basemap
-  m_map = new Map(BasemapType::Oceans, 56.075844, -2.681572, 11, this);
+  constexpr double lat = 56.075844;
+  constexpr double lon = -2.681572;
+  constexpr double scale = 288895.277144;
+  m_map = new Map(BasemapStyle::ArcGISOceans, this);
+  m_map->setInitialViewpoint(Viewpoint(lat, lon, scale));
 
   // Create a map view, and pass in the map
   m_mapView = new MapGraphicsView(m_map, this);
@@ -82,10 +86,10 @@ void GOSymbols::createUi()
 void GOSymbols::addBuoyPoints(GraphicsOverlay* graphicsOverlay)
 {
   // create a list of points
-  const QList<Point> pointsList { Point(-2.712642647560347, 56.062812566811544, SpatialReference::wgs84())
-                                , Point(-2.6908416959572303, 56.06444173689877, SpatialReference::wgs84())
-                                , Point(-2.6697273884990937, 56.064250073402874, SpatialReference::wgs84())
-                                , Point(-2.6395150461199726, 56.06127916736989, SpatialReference::wgs84())
+  const QList<Point> pointsList { Point(-2.712642647560347, 56.062812566811544, SpatialReference::wgs84()),
+        Point(-2.6908416959572303, 56.06444173689877, SpatialReference::wgs84()),
+        Point(-2.6697273884990937, 56.064250073402874, SpatialReference::wgs84()),
+        Point(-2.6395150461199726, 56.06127916736989, SpatialReference::wgs84())
                                 };
 
   // create the symbology for the points
