@@ -18,10 +18,6 @@ import QtQuick 2.6
 import QtQuick.Controls 2.2
 import QtQuick.Layouts 1.3
 import Esri.Samples 1.0
-<<<<<<< HEAD
-import Esri.ArcGISRuntime.Toolkit 100.15
-=======
->>>>>>> origin/v.next
 
 GenerateOfflineMapSample {
     id: offlineMapSample
