@@ -15,7 +15,7 @@
 
 import QtQuick 2.5
 import Esri.ArcGISRuntime 100.14
-import Esri.ArcGISRuntime.Toolkit 100.14
+import Esri.ArcGISRuntime.Toolkit 100.15
 
 Item {
     AuthenticationView {
