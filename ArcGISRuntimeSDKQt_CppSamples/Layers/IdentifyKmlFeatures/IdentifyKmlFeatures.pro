@@ -27,7 +27,6 @@ QT += opengl qml quick
 TEMPLATE = app
 TARGET = IdentifyKmlFeatures
 
-ARCGIS_RUNTIME_VERSION = 100.13
 ARCGIS_RUNTIME_VERSION = 100.14
 include($$PWD/arcgisruntime.pri)
 
