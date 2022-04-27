@@ -14,7 +14,6 @@
         "open",
         "street",
         "Basemap",
-        "Basemap::openStreetMap",
         "Map",
         "MapView",
         "OpenStreetMapLayer"
@@ -24,7 +23,6 @@
     ],
     "relevant_apis": [
         "Basemap",
-        "Basemap::openStreetMap",
         "Map",
         "MapView",
         "OpenStreetMapLayer"

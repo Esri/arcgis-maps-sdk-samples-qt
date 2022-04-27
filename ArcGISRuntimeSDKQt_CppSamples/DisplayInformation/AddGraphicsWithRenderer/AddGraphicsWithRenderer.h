@@ -48,6 +48,7 @@ private:
   void addLineGraphic();
   void addPolygonGraphic();
   void addCurveGraphic();
+  void addEllipseGraphic();
   void createGraphicsOverlayWithGraphicAndSymbol(Esri::ArcGISRuntime::Graphic* graphic, Esri::ArcGISRuntime::Symbol* symbol);
   Esri::ArcGISRuntime::Geometry createHeart();
 

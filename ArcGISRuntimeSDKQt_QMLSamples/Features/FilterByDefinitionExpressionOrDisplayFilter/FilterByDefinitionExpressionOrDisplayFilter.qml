@@ -16,7 +16,7 @@
 
 import QtQuick 2.6
 import QtQuick.Controls 2.2
-import Esri.ArcGISRuntime 100.13
+import Esri.ArcGISRuntime 100.14
 
 //! [Rectangle-mapview-map-viewpoint]
 Rectangle {
@@ -109,7 +109,7 @@ Rectangle {
             width: 200
             enabled: featureTable.loadStatus === Enums.LoadStatusLoaded
             onClicked: {
-                const displayFilter = ArcGISRuntimeEnvironment.createObject("DisplayFilter", {name: "Damaged Trees", filterId: "Damaged Trees", whereClause: "req_Type = \'Tree Maintenance or Damage\'"});
+                const displayFilter = ArcGISRuntimeEnvironment.createObject("DisplayFilter", {name: "Damaged Trees", whereClause: "req_Type = \'Tree Maintenance or Damage\'"});
                 const displayFilterDefintionVar = ArcGISRuntimeEnvironment.createObject("ManualDisplayFilterDefinition");
                 displayFilterDefintionVar.availableFilters.append(displayFilter);
                 displayFilterDefintionVar.activeFilter = displayFilter;
@@ -128,10 +128,10 @@ Rectangle {
             onClicked: {
                 featureLayer.definitionExpression = "";
 
-                const displayFilter = ArcGISRuntimeEnvironment.createObject("DisplayFilter", {id: "No Filter", whereClause: "1=1"});
+                const displayFilter = ArcGISRuntimeEnvironment.createObject("DisplayFilter", {name: "No Filter", whereClause: "1=1"});
                 const displayFilterDefintionVar = ArcGISRuntimeEnvironment.createObject("ManualDisplayFilterDefinition");
-                displayFilterDefintionVar.activeFilter = displayFilter;
                 displayFilterDefintionVar.availableFilters.append(displayFilter);
+                displayFilterDefintionVar.activeFilter = displayFilter;
                 featureLayer.displayFilterDefinition = displayFilterDefintionVar;
 
                 queryFeatureCountInCurrentExtent();

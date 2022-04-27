@@ -15,7 +15,7 @@
 // [Legal]
 
 import QtQuick 2.6
-import Esri.ArcGISRuntime 100.13
+import Esri.ArcGISRuntime 100.14
 import QtQuick.Controls 2.2
 import QtQuick.Layouts 1.3
 
@@ -193,7 +193,7 @@ Rectangle {
     }
 
     function createTraceConfiguration() {
-        const traceConfig = utilityTier.traceConfiguration;
+        const traceConfig = utilityTier.defaultTraceConfiguration();
         traceConfig.domainNetwork = utilityNetwork.definition.domainNetwork(domainNetworkName);
 
         serviceCategoryComparison.setServiceCategoryComparison();

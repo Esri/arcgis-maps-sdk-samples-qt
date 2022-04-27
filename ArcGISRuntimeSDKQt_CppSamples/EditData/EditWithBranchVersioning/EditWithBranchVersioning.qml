@@ -19,7 +19,7 @@ import QtQuick.Controls 2.12
 import QtQuick.Layouts 1.12
 import QtGraphicalEffects 1.0
 import Esri.Samples 1.0
-import Esri.ArcGISRuntime.Toolkit 100.13
+import Esri.ArcGISRuntime.Toolkit 100.14
 
 Item {
 
@@ -280,7 +280,6 @@ Item {
 
     // Declare AuthenticationView to handle any authentication challenges
     AuthenticationView {
-        authenticationManager: model.authManager
     }
 
     // Declare the C++ instance which creates the scene etc. and supply the view
