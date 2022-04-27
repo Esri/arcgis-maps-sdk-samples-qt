@@ -1,4 +1,3 @@
-<<<<<<< HEAD
 # ArcGIS Runtime SDK 100.14 for Qt sample applications
 
 ## Overview
@@ -19,10 +18,6 @@ The repo contains [Qt](http://qt.io) projects for each sample that can be run fr
 10. [Licensing](#licensing)
 
 ## Prerequisites
-=======
-# Overview
-ArcGIS Runtime SDK 100.14 for Qt sample applications.  The repo contains [Qt](http://qt.io) projects for each sample that can be run from within the Qt Creator IDE.
->>>>>>> 214b9bab5... Marton/100.14 (#1332)
 
 * Qt SDK 5.15.2 or higher (Open source or commercial)
 * Qt Creator
