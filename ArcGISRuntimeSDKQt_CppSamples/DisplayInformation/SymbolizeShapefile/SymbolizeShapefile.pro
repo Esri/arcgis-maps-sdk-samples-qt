@@ -28,6 +28,7 @@ TEMPLATE = app
 TARGET = SymbolizeShapefile
 
 ARCGIS_RUNTIME_VERSION = 100.13
+ARCGIS_RUNTIME_VERSION = 100.14
 include($$PWD/arcgisruntime.pri)
 
 #-------------------------------------------------------------------------------

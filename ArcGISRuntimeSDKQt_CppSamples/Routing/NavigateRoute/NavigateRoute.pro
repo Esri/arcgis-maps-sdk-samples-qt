@@ -29,6 +29,7 @@ TEMPLATE = app
 TARGET = NavigateRoute
 
 ARCGIS_RUNTIME_VERSION = 100.13
+ARCGIS_RUNTIME_VERSION = 100.14
 include($$PWD/arcgisruntime.pri)
 
 #-------------------------------------------------------------------------------
