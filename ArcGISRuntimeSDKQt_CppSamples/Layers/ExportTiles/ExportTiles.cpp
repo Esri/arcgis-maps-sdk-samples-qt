@@ -120,10 +120,10 @@ void ExportTiles::exportTileCacheFromCorners(double xCorner1, double yCorner1, d
       });
 
       // connect to the job's status changed signal
-      connect(exportJob, &ExportTileCacheJob::statusChanged, this, [this, exportJob]()
+      connect(exportJob, &ExportTileCacheJob::statusChanged, this, [this, exportJob](JobStatus jobStatus)
       {
         // connect to the job's status changed signal to know once it is done
-        switch (exportJob->jobStatus()) {
+        switch (jobStatus) {
           case JobStatus::Failed:
             emit updateStatus("Export failed");
             emit hideWindow(5000, false);

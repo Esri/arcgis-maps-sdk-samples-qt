@@ -170,9 +170,9 @@ void AnalyzeViewshed::calculateViewshed()
     GeoprocessingJob* viewshedJob = m_viewshedTask->createJob(viewshedParameters);
 
     // Create signal handler for the job
-    connect(viewshedJob, &GeoprocessingJob::statusChanged, this, [this, viewshedJob]()
+    connect(viewshedJob, &GeoprocessingJob::statusChanged, this, [this, viewshedJob](JobStatus jobStatus)
     {
-      switch (viewshedJob->jobStatus())
+      switch (jobStatus)
       {
       case JobStatus::Failed:
         emit displayErrorDialog("Geoprocessing Task failed", !viewshedJob->error().isEmpty() ? viewshedJob->error().message() : "Unknown error.");

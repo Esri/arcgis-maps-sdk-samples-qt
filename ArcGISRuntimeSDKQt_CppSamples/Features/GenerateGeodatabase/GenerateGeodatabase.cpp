@@ -196,10 +196,10 @@ void GenerateGeodatabase::generateGeodatabaseFromCorners(double xCorner1, double
   // connect to the job's status changed signal
   if (generateJob)
   {
-    connect(generateJob, &GenerateGeodatabaseJob::statusChanged, this, [this, generateJob]()
+    connect(generateJob, &GenerateGeodatabaseJob::statusChanged, this, [this, generateJob](JobStatus jobStatus)
     {
       // connect to the job's status changed signal to know once it is done
-      switch (generateJob->jobStatus()) {
+      switch (jobStatus) {
       case JobStatus::Failed:
         emit updateStatus("Generate failed");
         emit hideWindow(5000, false);
