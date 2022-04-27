@@ -16,7 +16,7 @@ import QtQuick 2.6
 import QtQuick.Controls 2.2
 import QtQuick.Layouts 1.3
 import Esri.Samples 1.0
-import Esri.ArcGISRuntime.Toolkit.CppApi 100.15
+import Esri.ArcGISRuntime.Toolkit 100.15
 
 SearchForWebmapSample {
     id: root
