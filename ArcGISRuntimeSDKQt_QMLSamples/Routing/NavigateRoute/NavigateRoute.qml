@@ -16,7 +16,7 @@
 
 import QtQuick 2.6
 import QtQuick.Controls 2.2
-import Esri.ArcGISRuntime 100.14
+import Esri.ArcGISRuntime 100.15
 import QtQuick.Layouts 1.11
 import QtPositioning 5.2
 import Esri.samples 1.0

@@ -17,7 +17,7 @@
 
 import QtQuick 2.6
 import QtQuick.Controls 2.2
-import Esri.ArcGISRuntime 100.14
+import Esri.ArcGISRuntime 100.15
 
 Rectangle {
     id: rootRectangle
