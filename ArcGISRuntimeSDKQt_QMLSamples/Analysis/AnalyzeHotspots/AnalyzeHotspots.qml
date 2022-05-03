@@ -18,7 +18,7 @@ import QtQuick 2.6
 import QtQuick.Controls 2.2
 import Qt.labs.calendar 1.0
 import QtGraphicalEffects 1.0
-import Esri.ArcGISRuntime 100.14
+import Esri.ArcGISRuntime 100.15
 import QtQuick.Layouts 1.3
 
 Rectangle {
