@@ -22,6 +22,8 @@
 #include "SimpleLineSymbol.h"
 #include "ArcGISMapImageLayer.h"
 #include "ArcGISMapImageSublayer.h"
+#include "MultilayerPolygonSymbol.h"
+#include "SymbolReferenceProperties.h"
 
 #include <QUrl>
 
@@ -109,4 +111,27 @@ void ClassBreaksWithAlternateSymbols::resetRenderer()
     return;
 
   m_sublayer->setRenderer(m_originalRenderer);
+}
+
+QList<ClassBreak*> ClassBreaksWithAlternateSymbols::createClassBreaks_(MultilayerPolygonSymbol* mlSym1, const QList<Symbol*>& alternateSymbols)
+{
+  // create first class break for primary symbol
+  auto cb1 = new ClassBreak("CB1", "CB1", 0, 6, mlSym1, alternateSymbols, this);
+
+  // create second class break with scale based symbol (no alternates)
+  auto sym2 = new SimpleFillSymbol(this);
+  sym2->setColor(QColor("green"));
+
+  auto mlSym2 = sym2->toMultilayerSymbol();
+
+  mlSym2->setReferenceProperties(new SymbolReferenceProperties(m_symbolScale1, m_symbolScale2, this));
+  auto cb2 = new ClassBreak("CB2", "CB2", 6, 10, mlSym2, this);
+
+  // create third class break, not scale enabled or with alternate symbols
+  auto sym3 = new SimpleFillSymbol(this);
+  sym3->setColor(QColor("blue"));
+  auto mlSym3 = sym3->toMultilayerSymbol();
+  auto cb3 = new ClassBreak("CB3", "CB3", 10, 12, mlSym3, this);
+
+  return {cb1, cb2, cb3};
 }

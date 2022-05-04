@@ -25,6 +25,8 @@ class Renderer;
 class ClassBreaksRenderer;
 class ArcGISMapImageSublayer;
 class ClassBreak;
+class MultilayerPolygonSymbol;
+class Symbol;
 }
 }
 
@@ -56,12 +58,21 @@ private:
   void createClassBreaksRenderer();
   Esri::ArcGISRuntime::ClassBreak* createClassBreak(const QColor& color, double min, double max);
 
+  QList<Esri::ArcGISRuntime::ClassBreak*> createClassBreaks_(Esri::ArcGISRuntime::MultilayerPolygonSymbol* mlSym1, const QList<Esri::ArcGISRuntime::Symbol*>& alternateSymbols);
+
   Esri::ArcGISRuntime::Map* m_map = nullptr;
   Esri::ArcGISRuntime::MapQuickView* m_mapView = nullptr;
 
   Esri::ArcGISRuntime::FeatureLayer* m_featureLayer = nullptr;
   bool m_initialized = false;
   Esri::ArcGISRuntime::ServiceFeatureTable* m_featureTable = nullptr;
+
+  static constexpr double m_symbolScale1 = 40'000'000;
+  static constexpr double m_symbolScale2 = 35'000'000;
+
+  static constexpr double m_mapScale1 = 6'000'000;
+  static constexpr double m_mapScale2 = 5'000'000;
+  static constexpr double m_mapScale3 = 3'000'000;
 };
 
 #endif // CLASSBREAKSWITHALTERNATESYMBOLS_H
