@@ -27,6 +27,7 @@ class ArcGISMapImageSublayer;
 class ClassBreak;
 class MultilayerPolygonSymbol;
 class Symbol;
+class SimpleFillSymbol;
 }
 }
 
@@ -59,6 +60,8 @@ private:
   Esri::ArcGISRuntime::ClassBreak* createClassBreak(const QColor& color, double min, double max);
 
   QList<Esri::ArcGISRuntime::ClassBreak*> createClassBreaks_(Esri::ArcGISRuntime::MultilayerPolygonSymbol* mlSym1, const QList<Esri::ArcGISRuntime::Symbol*>& alternateSymbols);
+  void setupClassBreaksRenderer_();
+  QList<Esri::ArcGISRuntime::Symbol*> createAlternateSymbols_(const Esri::ArcGISRuntime::SimpleFillSymbol* sfs);
 
   Esri::ArcGISRuntime::Map* m_map = nullptr;
   Esri::ArcGISRuntime::MapQuickView* m_mapView = nullptr;

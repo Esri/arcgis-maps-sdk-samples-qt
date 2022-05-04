@@ -24,6 +24,7 @@
 #include "ArcGISMapImageSublayer.h"
 #include "MultilayerPolygonSymbol.h"
 #include "SymbolReferenceProperties.h"
+#include "SimpleFillSymbol.h"
 
 #include <QUrl>
 
@@ -51,6 +52,9 @@ void ClassBreaksWithAlternateSymbols::setMapView(MapQuickView* mapView)
   {
     return;
   }
+
+//  createClassBreaksRenderer();
+  setupClassBreaksRenderer_();
 
   m_mapView = mapView;
   m_mapView->setMap(m_map);
@@ -134,4 +138,48 @@ QList<ClassBreak*> ClassBreaksWithAlternateSymbols::createClassBreaks_(Multilaye
   auto cb3 = new ClassBreak("CB3", "CB3", 10, 12, mlSym3, this);
 
   return {cb1, cb2, cb3};
+}
+
+void ClassBreaksWithAlternateSymbols::setupClassBreaksRenderer_()
+{
+  auto cbr = new ClassBreaksRenderer(this);
+  cbr->setFieldName("SmallIntF");
+
+  auto defaultSymbol = new SimpleFillSymbol(SimpleFillSymbolStyle::Solid, QColor("cyan"), this);
+  cbr->setDefaultSymbol(defaultSymbol->toMultilayerSymbol());
+  cbr->setMinValue(0);
+
+  // create primary symbol to be used by first class break
+  auto sfs = new SimpleFillSymbol(this);
+  sfs->setColor(QColor("red"));
+
+  // add support for alternate symbols for primary symbol
+  auto mlSym1 = sfs->toMultilayerSymbol();
+  mlSym1->setReferenceProperties(new SymbolReferenceProperties(0, m_symbolScale1, this));
+
+  auto alternateSymbols = createAlternateSymbols_(sfs);
+//  addToRenderer_<ClassBreak*>(createClassBreaks_(mlSym1, alternateSymbols)), cbr);
+
+  QList<ClassBreak*> class_breaks = createClassBreaks_(mlSym1, alternateSymbols);
+
+  cbr->classBreaks()->append(qobject_cast<ClassBreak*>(class_breaks.at(0)));
+  cbr->classBreaks()->append(qobject_cast<ClassBreak*>(class_breaks.at(1)));
+  cbr->classBreaks()->append(qobject_cast<ClassBreak*>(class_breaks.at(2)));
+
+  m_sublayer->setRenderer(cbr);
+}
+
+QList<Symbol*> ClassBreaksWithAlternateSymbols::createAlternateSymbols_(const SimpleFillSymbol* sfs)
+{
+  // create first alternate symbol
+  auto mlAltSym1 = sfs->toMultilayerSymbol();
+  mlAltSym1->setColor(QColor("yellow"));
+  mlAltSym1->setReferenceProperties(new SymbolReferenceProperties(m_symbolScale1, m_symbolScale2, this));
+
+  // create second alternate symbol
+  auto mlAltSym2 = sfs->toMultilayerSymbol();
+  mlAltSym2->setColor(QColor("magenta"));
+  mlAltSym2->setReferenceProperties(new SymbolReferenceProperties(m_symbolScale2, 0, this));
+
+  return {mlAltSym1, mlAltSym2};
 }
