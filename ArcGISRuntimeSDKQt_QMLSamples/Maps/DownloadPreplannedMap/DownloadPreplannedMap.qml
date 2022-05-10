@@ -137,6 +137,7 @@ Rectangle {
                     mmpk.load();
                 } else {
                     job = offlineMapTask.downloadPreplannedOfflineMapWithParameters(createDefaultDownloadPreplannedOfflineMapParametersResult, path);
+                    var jobStatus = job.jobStatus;
 
                     job.statusChanged.connect(()=> {
                         if (job.jobStatus === Enums.JobStatusFailed) {
