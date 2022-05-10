@@ -135,7 +135,7 @@ Rectangle {
                 syncWindow.visible = true;
 
                 // connect to the job's status changed signal to know once it is done
-                generateJob.jobStatusChanged.connect(updateGenerateJobStatus);
+                generateJob.statusChanged.connect(updateGenerateJobStatus);
 
                 // start the job
                 generateJob.start();
@@ -185,7 +185,7 @@ Rectangle {
                 syncWindow.visible = true;
 
                 // connect to the job's status changed signal to know once it is done
-                syncJob.jobStatusChanged.connect(updateSyncJobStatus);
+                syncJob.statusChanged.connect(updateSyncJobStatus);
 
                 // start the job
                 syncJob.start();
@@ -249,8 +249,8 @@ Rectangle {
         }
 
         Component.onDestruction: {
-            generateJob.jobStatusChanged.disconnect(updateGenerateJobStatus);
-            syncJob.jobStatusChanged.disconnect(updateSyncJobStatus);
+            generateJob.statusChanged.disconnect(updateGenerateJobStatus);
+            syncJob.statusChanged.disconnect(updateSyncJobStatus);
         }
     }
 
