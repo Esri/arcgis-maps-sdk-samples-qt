@@ -142,10 +142,10 @@ void GenerateOfflineMapLocalBasemap::generateMapByExtent(double xCorner1, double
     if (generateJob)
     {
       // connect to the job's status changed signal
-      connect(generateJob, &GenerateOfflineMapJob::jobStatusChanged, this, [this, generateJob]()
+      connect(generateJob, &GenerateOfflineMapJob::statusChanged, this, [this, generateJob](JobStatus jobStatus)
       {
         // connect to the job's status changed signal to know once it is done
-        switch (generateJob->jobStatus()) {
+        switch (jobStatus) {
           case JobStatus::Failed:
             emit updateStatus("Generate failed");
             emit hideWindow(5000, false);
