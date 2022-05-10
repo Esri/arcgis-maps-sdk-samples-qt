@@ -139,12 +139,12 @@ Rectangle {
                     job = offlineMapTask.downloadPreplannedOfflineMapWithParameters(createDefaultDownloadPreplannedOfflineMapParametersResult, path);
                     var jobStatus = job.jobStatus;
 
-                    job.statusChanged.connect(()=> {
-                        if (job.jobStatus === Enums.JobStatusFailed) {
+                    job.statusChanged.connect((jobStatus)=> {
+                        if (jobStatus === Enums.JobStatusFailed) {
                             console.log(job.error.message + " - " + job.error.additionalMessage)
                             busy = false;
                             return;
-                        } else if (job.jobStatus !== Enums.JobStatusSucceeded) {
+                        } else if (jobStatus !== Enums.JobStatusSucceeded) {
                             return;
                         }
 
