@@ -229,7 +229,7 @@ void EditAndSyncFeatures::generateGeodatabaseFromCorners(double xCorner1, double
     connect(generateJob, &GenerateGeodatabaseJob::statusChanged, this, [this, generateJob](JobStatus jobStatus)
     {
       // connect to the job's status changed signal to know once it is done
-      switch (jobStatus)) {
+      switch (jobStatus) {
       case JobStatus::Failed:
         emit updateStatus("Generate failed");
         emit hideWindow(5000, false);
