@@ -147,7 +147,7 @@ void LocalServerGeoprocessing::generateContours(double interval)
 
   GeoprocessingJob* gpJob = m_gpTask->createJob(gpParams);
 
-  connect(gpJob, &GeoprocessingJob::jobDone, this, [this, gpJob](JobStatus jobStatus)
+  connect(gpJob, &GeoprocessingJob::statusChanged, this, [this, gpJob](JobStatus jobStatus)
   {
     if (jobStatus == JobStatus::Succeeded)
     {
