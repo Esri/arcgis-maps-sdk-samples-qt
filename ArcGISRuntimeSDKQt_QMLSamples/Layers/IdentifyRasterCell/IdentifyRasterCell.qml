@@ -14,7 +14,6 @@
 // limitations under the License.
 // [Legal]
 
-<<<<<<< HEAD
 import QtQuick 2.15
 import QtQuick.Controls 2.15
 import Esri.ArcGISRuntime 100.15
