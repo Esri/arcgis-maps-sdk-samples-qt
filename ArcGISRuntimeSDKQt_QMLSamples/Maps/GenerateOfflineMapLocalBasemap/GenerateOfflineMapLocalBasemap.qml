@@ -17,9 +17,9 @@
 import QtQuick 2.6
 import QtQuick.Controls 2.2
 import QtQuick.Layouts 1.3
-import Esri.ArcGISRuntime 100.14
+import Esri.ArcGISRuntime 100.15
 import Esri.ArcGISExtras 1.1
-import Esri.ArcGISRuntime.Toolkit 100.14
+import Esri.ArcGISRuntime.Toolkit 100.15
 
 Rectangle {
     id: rootRectangle
@@ -128,7 +128,7 @@ Rectangle {
                 generateWindow.visible = true;
 
                 // connect to the job's status changed signal to know once it is done
-                generateJob.jobStatusChanged.connect(updateJobStatus);
+                generateJob.statusChanged.connect(updateJobStatus);
                 // connect to the job's progress changed signal
                 generateJob.progressChanged.connect(updateProgress);
 
@@ -192,7 +192,7 @@ Rectangle {
 
         Component.onDestruction: {
             if (generateJob) {
-                generateJob.jobStatusChanged.disconnect(updateJobStatus);
+                generateJob.statusChanged.disconnect(updateJobStatus);
                 generateJob.progressChanged.disconnect(updateProgress);
             }
         }

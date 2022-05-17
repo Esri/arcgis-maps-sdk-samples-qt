@@ -17,7 +17,7 @@
 import QtQuick 2.6
 import QtQuick.Controls 2.2
 import QtQuick.Layouts 1.3
-import Esri.ArcGISRuntime 100.14
+import Esri.ArcGISRuntime 100.15
 
 Rectangle {
     id: rootRectangle
@@ -148,7 +148,7 @@ Rectangle {
                     viewshedJob = viewshedTask.createJob(viewshedParameters);
 
                     // Create signal handler for the job
-                    viewshedJob.jobStatusChanged.connect(viewshedJobHandler);
+                    viewshedJob.statusChanged.connect(viewshedJobHandler);
 
                     // start the job
                     viewshedJob.start();

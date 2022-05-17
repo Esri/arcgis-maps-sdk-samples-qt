@@ -15,7 +15,7 @@
 // [Legal]
 
 import QtQuick 2.6
-import Esri.ArcGISRuntime 100.14
+import Esri.ArcGISRuntime 100.15
 
 Rectangle {
     id: rootRectangle
@@ -35,7 +35,7 @@ Rectangle {
         Map {
             // Declare a Basemap with an OpenStreetMapLayer baselayer
             Basemap {
-                OpenStreetMapLayer {}
+                initStyle: Enums.BasemapStyleOsmStandard
             }
         }
     }

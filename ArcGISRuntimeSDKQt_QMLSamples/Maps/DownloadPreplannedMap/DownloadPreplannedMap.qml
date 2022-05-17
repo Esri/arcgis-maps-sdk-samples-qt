@@ -17,7 +17,7 @@
 import QtQuick 2.6
 import QtQuick.Controls 2.12
 import QtQuick.Layouts 1.12
-import Esri.ArcGISRuntime 100.14
+import Esri.ArcGISRuntime 100.15
 import Esri.ArcGISExtras 1.1
 
 Rectangle {
@@ -137,13 +137,14 @@ Rectangle {
                     mmpk.load();
                 } else {
                     job = offlineMapTask.downloadPreplannedOfflineMapWithParameters(createDefaultDownloadPreplannedOfflineMapParametersResult, path);
+                    var jobStatus = job.jobStatus;
 
-                    job.jobStatusChanged.connect(()=> {
-                        if (job.jobStatus === Enums.JobStatusFailed) {
+                    job.statusChanged.connect((jobStatus)=> {
+                        if (jobStatus === Enums.JobStatusFailed) {
                             console.log(job.error.message + " - " + job.error.additionalMessage)
                             busy = false;
                             return;
-                        } else if (job.jobStatus !== Enums.JobStatusSucceeded) {
+                        } else if (jobStatus !== Enums.JobStatusSucceeded) {
                             return;
                         }
 

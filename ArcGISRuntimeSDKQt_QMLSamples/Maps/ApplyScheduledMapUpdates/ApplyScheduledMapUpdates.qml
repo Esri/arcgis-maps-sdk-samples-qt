@@ -16,7 +16,7 @@
 
 import QtQuick 2.6
 import QtQuick.Controls 2.4
-import Esri.ArcGISRuntime 100.14
+import Esri.ArcGISRuntime 100.15
 import Esri.ArcGISExtras 1.1
 
 Rectangle {
@@ -131,10 +131,11 @@ Rectangle {
 
                 // create the job
                 syncJob = offlineMapSyncTask.syncOfflineMap(createDefaultOfflineMapSyncParametersResult);
+                var jobStatus = syncJob.jobStatus;
 
                 // connect to the job signals
-                syncJob.jobStatusChanged.connect(()=> {
-                                                     if (syncJob.jobStatus === Enums.JobStatusSucceeded) {
+                syncJob.statusChanged.connect((jobStatus)=> {
+                                                     if (jobStatus === Enums.JobStatusSucceeded) {
                                                          const mapResult = syncJob.result;
 
                                                          if (mapResult.mobileMapPackageReopenRequired) {
@@ -148,7 +149,7 @@ Rectangle {
 
                                                          // re-check if updates are available
                                                          offlineMapSyncTask.checkForUpdates();
-                                                     } else if (syncJob.jobStatus === Enums.JobStatusFailed) {
+                                                     } else if (jobStatus === Enums.JobStatusFailed) {
                                                          console.log("sync job failed");
                                                          busyIndicator.visible = false;
                                                      }

@@ -17,7 +17,7 @@
 import QtQuick 2.6
 import QtQuick.Controls 2.2
 import QtGraphicalEffects 1.0
-import Esri.ArcGISRuntime 100.14
+import Esri.ArcGISRuntime 100.15
 import Esri.ArcGISExtras 1.1
 
 Rectangle {
@@ -110,7 +110,7 @@ Rectangle {
                 generateWindow.visible = true;
 
                 // connect to the job's status changed signal to know once it is done
-                generateJob.jobStatusChanged.connect(updateGenerateJobStatus);
+                generateJob.statusChanged.connect(updateGenerateJobStatus);
 
                 // start the job
                 generateJob.start();
@@ -175,7 +175,7 @@ Rectangle {
 
         Component.onDestruction: {
             if (generateJob) {
-                generateJob.jobStatusChanged.disconnect(updateGenerateJobStatus);
+                generateJob.statusChanged.disconnect(updateGenerateJobStatus);
             }
         }
     }

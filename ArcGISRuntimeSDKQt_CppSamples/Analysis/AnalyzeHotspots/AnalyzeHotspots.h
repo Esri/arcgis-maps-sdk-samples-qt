@@ -37,7 +37,7 @@ class AnalyzeHotspots : public QQuickItem
   Q_OBJECT
 
   Q_PROPERTY(bool jobInProgress MEMBER m_jobInProgress NOTIFY jobInProgressChanged)
-  Q_PROPERTY(QString statusText MEMBER m_jobStatus NOTIFY jobStatusChanged)
+  Q_PROPERTY(QString statusText MEMBER m_jobStatus NOTIFY statusChanged)
 
 public:
   explicit AnalyzeHotspots(QQuickItem* parent = nullptr);
@@ -50,7 +50,7 @@ public:
 
 signals:
   void jobInProgressChanged();
-  void jobStatusChanged();
+  void statusChanged();
   void displayErrorDialog(const QString& titleText, const QString& detailedText);
 
 private:

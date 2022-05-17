@@ -16,7 +16,7 @@
 
 import QtQuick 2.6
 import QtQuick.Controls 2.2
-import Esri.ArcGISRuntime 100.14
+import Esri.ArcGISRuntime 100.15
 
 Rectangle {
     id: rootRectangle
@@ -48,7 +48,7 @@ Rectangle {
                 // create the raster layer from an image service raster
                 ImageServiceRaster {
                     id: imageServiceRaster
-                    url: "https://gis.ngdc.noaa.gov/arcgis/rest/services/bag_hillshades/ImageServer"
+                    url: "https://gis.ngdc.noaa.gov/arcgis/rest/services/bag_hillshades_subsets/ImageServer"
 
                     // zoom to the center of the raster once it's loaded
                     onLoadStatusChanged: {
