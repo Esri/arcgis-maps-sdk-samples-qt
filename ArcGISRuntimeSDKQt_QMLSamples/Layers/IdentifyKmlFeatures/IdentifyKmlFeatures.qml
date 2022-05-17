@@ -14,7 +14,8 @@
 // limitations under the License.
 // [Legal]
 
-import QtQuick 2.6
+import QtQuick 2.15
+import QtQuick.Controls 2.15
 import Esri.ArcGISRuntime 100.14
 import Esri.ArcGISRuntime.Toolkit 100.14
 
@@ -40,11 +41,15 @@ Rectangle {
         Callout {
             id: callout
             calloutData: parent.calloutData
-            autoAdjustWidth: false
-            calloutWidth: 300
-            accessoryButtonHidden: true
-            leaderPosition: leaderPositionEnum.Top
-            calloutContent: customComponent
+            implicitWidth: 150
+            calloutContent: Label {
+                id: componentText
+                text: calloutText
+                wrapMode: Text.WordWrap
+                textFormat: Text.RichText
+                horizontalAlignment: Qt.AlignHCenter
+                verticalAlignment: Qt.AlignVCenter
+            }
         }
 
         Map {
@@ -94,23 +99,6 @@ Rectangle {
                 calloutText = identifyLayerResult.geoElements[0].balloonContent;
                 callout.calloutData.location = clickedPoint;
                 callout.showCallout();
-            }
-        }
-
-        Component {
-            id: customComponent
-
-            Text {
-                id: componentText
-                text: calloutText
-                Binding {
-                    target: callout
-                    value: contentHeight + 15
-                    property: "calloutHeight"
-                }
-
-                wrapMode: Text.WordWrap
-                textFormat: Text.RichText
             }
         }
     }
