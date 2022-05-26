@@ -44,8 +44,7 @@ public:
   ~ClassBreaksWithAlternateSymbols() override;
 
   static void init();
-  Q_INVOKABLE void applyRenderer();
-  Q_INVOKABLE void resetRenderer();
+  Q_INVOKABLE void setScale(int16_t scale);
 
 signals:
   void mapViewChanged();
@@ -53,15 +52,15 @@ signals:
 private:
   Esri::ArcGISRuntime::MapQuickView* mapView() const;
   void setMapView(Esri::ArcGISRuntime::MapQuickView* mapView);
-  Esri::ArcGISRuntime::Renderer* m_originalRenderer = nullptr;
+  Esri::ArcGISRuntime::Renderer* m_renderer = nullptr;
   Esri::ArcGISRuntime::ClassBreaksRenderer* m_classBreaksRenderer = nullptr;
   Esri::ArcGISRuntime::ArcGISMapImageSublayer* m_sublayer = nullptr;
-  void createClassBreaksRenderer();
-  Esri::ArcGISRuntime::ClassBreak* createClassBreak(const QColor& color, double min, double max);
 
-  QList<Esri::ArcGISRuntime::ClassBreak*> createClassBreaks_(Esri::ArcGISRuntime::MultilayerPolygonSymbol* mlSym1, const QList<Esri::ArcGISRuntime::Symbol*>& alternateSymbols);
-  void setupClassBreaksRenderer_();
-  QList<Esri::ArcGISRuntime::Symbol*> createAlternateSymbols_(const Esri::ArcGISRuntime::SimpleFillSymbol* sfs);
+
+  void createClassBreaksRenderer();
+  QList<Esri::ArcGISRuntime::Symbol*> createClassBreak(Esri::ArcGISRuntime::MultilayerPolygonSymbol* ml_symbol, const QList<Esri::ArcGISRuntime::Symbol*>& alternateSymbols);
+  QList<Esri::ArcGISRuntime::Symbol*> createAlternateSymbols();
+
 
   Esri::ArcGISRuntime::Map* m_map = nullptr;
   Esri::ArcGISRuntime::MapQuickView* m_mapView = nullptr;
@@ -70,12 +69,6 @@ private:
   bool m_initialized = false;
   Esri::ArcGISRuntime::ServiceFeatureTable* m_featureTable = nullptr;
 
-  static constexpr double m_symbolScale1 = 40'000'000;
-  static constexpr double m_symbolScale2 = 35'000'000;
-
-  static constexpr double m_mapScale1 = 6'000'000;
-  static constexpr double m_mapScale2 = 5'000'000;
-  static constexpr double m_mapScale3 = 3'000'000;
 };
 
 #endif // CLASSBREAKSWITHALTERNATESYMBOLS_H

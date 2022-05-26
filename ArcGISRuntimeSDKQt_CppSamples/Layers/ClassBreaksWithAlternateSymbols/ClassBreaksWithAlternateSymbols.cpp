@@ -25,6 +25,8 @@
 #include "MultilayerPolygonSymbol.h"
 #include "SymbolReferenceProperties.h"
 #include "SimpleFillSymbol.h"
+#include "PictureMarkerSymbol.h"
+#include "MultilayerPointSymbol.h"
 
 #include <QUrl>
 
@@ -53,9 +55,6 @@ void ClassBreaksWithAlternateSymbols::setMapView(MapQuickView* mapView)
     return;
   }
 
-//  createClassBreaksRenderer();
-  setupClassBreaksRenderer_();
-
   m_mapView = mapView;
   m_mapView->setMap(m_map);
 
@@ -69,117 +68,66 @@ void ClassBreaksWithAlternateSymbols::setMapView(MapQuickView* mapView)
     loadStatus == LoadStatus::Loaded ? m_initialized = true : m_initialized = false;
   });
 
+  m_featureLayer->setRenderer(m_renderer);
+
   // add the feature layer to the map
   m_map->operationalLayers()->append(m_featureLayer);
+
+  m_map->setInitialViewpoint(Viewpoint(Envelope(-229100, 6550700, -223300, 6552100, SpatialReference::webMercator())));
+
+
+  emit mapViewChanged();
+}
+void ClassBreaksWithAlternateSymbols::createClassBreaksRenderer()
+{
+  // create class breaks renderer using a default symbol and the alternate symbols list
+  auto alternate_symbols = createAlternateSymbols();
+
+  auto orange_tent = new PictureMarkerSymbol(QUrl("qrc:/Samples/Layers/ClassBreaksWithAlternateSymbols/tent_orange.png"), this);
+  orange_tent->setWidth(80);
+  orange_tent->setHeight(80);
+  auto multilayer_orange_tent = orange_tent->toMultilayerSymbol();
+
+  auto class_break = new ClassBreak("CB1", "CB1", 0, 10000000, multilayer_orange_tent, alternate_symbols, this);
+
+  //create a class breaks renderer
+  m_classBreaksRenderer = new ClassBreaksRenderer(this);
+  //  m_classBreaksRenderer->setFieldName(QStringLiteral("POP2007"));
+
+  // create and append class breaks
+  m_classBreaksRenderer->classBreaks()->append(class_break);
+  m_renderer = m_classBreaksRenderer;
+}
+
+// helper function to create class breaks for the renderer
+QList<Symbol*> ClassBreaksWithAlternateSymbols::createAlternateSymbols()
+{
+  // create the first symbol for alternate symbols
+  auto red_tent = new PictureMarkerSymbol(QUrl("qrc:/Samples/Layers/ClassBreaksWithAlternateSymbols/tent_red.png"), this);
+  red_tent->setWidth(800);
+  red_tent->setHeight(800);
+  auto multilayer_red_tent = red_tent->toMultilayerSymbol();
+  multilayer_red_tent->setReferenceProperties(new SymbolReferenceProperties(0, 4000000, this));
+
+  // create the picture marker symbol for the alternate symbol
+  auto blue_tent = new PictureMarkerSymbol(QUrl("qrc:/Samples/Layers/ClassBreaksWithAlternateSymbols/tent_blue.png"), this);
+  red_tent->setWidth(80);
+  red_tent->setHeight(80);
+  auto multilayer_blue_tent = blue_tent->toMultilayerSymbol();
+  multilayer_blue_tent->setReferenceProperties(new SymbolReferenceProperties(4000000, 5000000, this));
+
+  return {multilayer_red_tent, multilayer_blue_tent};
+}
+
+void ClassBreaksWithAlternateSymbols::setScale(int16_t scale)
+{
+  if(!m_map)
+    return;
+
+  m_map->setReferenceScale(scale);
 
   emit mapViewChanged();
 }
 
-void ClassBreaksWithAlternateSymbols::createClassBreaksRenderer()
-{
-  // create class breaks renderer
-  m_classBreaksRenderer = new ClassBreaksRenderer(this);
-  m_classBreaksRenderer->setFieldName(QStringLiteral("POP2007"));
 
-  // create and append class breaks
-  m_classBreaksRenderer->classBreaks()->append(createClassBreak(QColor(227, 235, 207), -99, 8560));
-  m_classBreaksRenderer->classBreaks()->append(createClassBreak(QColor(150, 194, 191), 8560, 18109));
-  m_classBreaksRenderer->classBreaks()->append(createClassBreak(QColor(97, 166, 181), 18109, 35501));
-  m_classBreaksRenderer->classBreaks()->append(createClassBreak(QColor(69, 125, 150), 35501, 86100));
-  m_classBreaksRenderer->classBreaks()->append(createClassBreak(QColor(41, 84, 120), 86100, 10110975));
-}
 
-// helper function to create class breaks for the renderer
-ClassBreak* ClassBreaksWithAlternateSymbols::createClassBreak(const QColor &color, double min, double max)
-{
-  SimpleLineSymbol* outline = new SimpleLineSymbol(SimpleLineSymbolStyle::Solid, QColor(153, 153, 153), 1.0f /*width*/, this);
-  SimpleFillSymbol* sfs1 = new SimpleFillSymbol(SimpleFillSymbolStyle::Solid, color, outline, this);
-  const QString description = QString("> %1 to %2").arg(QString::number(min), QString::number(max));
-  const QString label = description;
-  return new ClassBreak(description, label, min, max, sfs1);
-}
-
-// apply the class breaks renderer
-void ClassBreaksWithAlternateSymbols::applyRenderer()
-{
-  if (!m_sublayer || !m_classBreaksRenderer)
-    return;
-
-  m_sublayer->setRenderer(m_classBreaksRenderer);
-}
-
-// reset to the original renderer
-void ClassBreaksWithAlternateSymbols::resetRenderer()
-{
-  if (!m_sublayer || !m_originalRenderer)
-    return;
-
-  m_sublayer->setRenderer(m_originalRenderer);
-}
-
-QList<ClassBreak*> ClassBreaksWithAlternateSymbols::createClassBreaks_(MultilayerPolygonSymbol* mlSym1, const QList<Symbol*>& alternateSymbols)
-{
-  // create first class break for primary symbol
-  auto cb1 = new ClassBreak("CB1", "CB1", 0, 6, mlSym1, alternateSymbols, this);
-
-  // create second class break with scale based symbol (no alternates)
-  auto sym2 = new SimpleFillSymbol(this);
-  sym2->setColor(QColor("green"));
-
-  auto mlSym2 = sym2->toMultilayerSymbol();
-
-  mlSym2->setReferenceProperties(new SymbolReferenceProperties(m_symbolScale1, m_symbolScale2, this));
-  auto cb2 = new ClassBreak("CB2", "CB2", 6, 10, mlSym2, this);
-
-  // create third class break, not scale enabled or with alternate symbols
-  auto sym3 = new SimpleFillSymbol(this);
-  sym3->setColor(QColor("blue"));
-  auto mlSym3 = sym3->toMultilayerSymbol();
-  auto cb3 = new ClassBreak("CB3", "CB3", 10, 12, mlSym3, this);
-
-  return {cb1, cb2, cb3};
-}
-
-void ClassBreaksWithAlternateSymbols::setupClassBreaksRenderer_()
-{
-  auto cbr = new ClassBreaksRenderer(this);
-  cbr->setFieldName("SmallIntF");
-
-  auto defaultSymbol = new SimpleFillSymbol(SimpleFillSymbolStyle::Solid, QColor("cyan"), this);
-  cbr->setDefaultSymbol(defaultSymbol->toMultilayerSymbol());
-  cbr->setMinValue(0);
-
-  // create primary symbol to be used by first class break
-  auto sfs = new SimpleFillSymbol(this);
-  sfs->setColor(QColor("red"));
-
-  // add support for alternate symbols for primary symbol
-  auto mlSym1 = sfs->toMultilayerSymbol();
-  mlSym1->setReferenceProperties(new SymbolReferenceProperties(0, m_symbolScale1, this));
-
-  auto alternateSymbols = createAlternateSymbols_(sfs);
-//  addToRenderer_<ClassBreak*>(createClassBreaks_(mlSym1, alternateSymbols)), cbr);
-
-  QList<ClassBreak*> class_breaks = createClassBreaks_(mlSym1, alternateSymbols);
-
-  cbr->classBreaks()->append(qobject_cast<ClassBreak*>(class_breaks.at(0)));
-  cbr->classBreaks()->append(qobject_cast<ClassBreak*>(class_breaks.at(1)));
-  cbr->classBreaks()->append(qobject_cast<ClassBreak*>(class_breaks.at(2)));
-
-  m_sublayer->setRenderer(cbr);
-}
-
-QList<Symbol*> ClassBreaksWithAlternateSymbols::createAlternateSymbols_(const SimpleFillSymbol* sfs)
-{
-  // create first alternate symbol
-  auto mlAltSym1 = sfs->toMultilayerSymbol();
-  mlAltSym1->setColor(QColor("yellow"));
-  mlAltSym1->setReferenceProperties(new SymbolReferenceProperties(m_symbolScale1, m_symbolScale2, this));
-
-  // create second alternate symbol
-  auto mlAltSym2 = sfs->toMultilayerSymbol();
-  mlAltSym2->setColor(QColor("magenta"));
-  mlAltSym2->setReferenceProperties(new SymbolReferenceProperties(m_symbolScale2, 0, this));
-
-  return {mlAltSym1, mlAltSym2};
-}
