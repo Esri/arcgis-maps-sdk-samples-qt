@@ -92,14 +92,12 @@ void ClassBreaksWithAlternateSymbols::createClassBreaksRenderer()
 
   //create a class breaks renderer
   m_classBreaksRenderer = new ClassBreaksRenderer(this);
-  //  m_classBreaksRenderer->setFieldName(QStringLiteral("POP2007"));
 
   // create and append class breaks
   m_classBreaksRenderer->classBreaks()->append(class_break);
   m_renderer = m_classBreaksRenderer;
 }
 
-// helper function to create class breaks for the renderer
 QList<Symbol*> ClassBreaksWithAlternateSymbols::createAlternateSymbols()
 {
   // create the first symbol for alternate symbols
@@ -128,6 +126,3 @@ void ClassBreaksWithAlternateSymbols::setScale(int16_t scale)
 
   emit mapViewChanged();
 }
-
-
-
