@@ -68,7 +68,7 @@ void ClassBreaksWithAlternateSymbols::setMapView(MapQuickView* mapView)
     loadStatus == LoadStatus::Loaded ? m_initialized = true : m_initialized = false;
   });
 
-  m_featureLayer->setRenderer(m_renderer);
+  createClassBreaksRenderer();
 
   // add the feature layer to the map
   m_map->operationalLayers()->append(m_featureLayer);
@@ -95,7 +95,8 @@ void ClassBreaksWithAlternateSymbols::createClassBreaksRenderer()
 
   // create and append class breaks
   m_classBreaksRenderer->classBreaks()->append(class_break);
-  m_renderer = m_classBreaksRenderer;
+
+  m_featureLayer->setRenderer(m_classBreaksRenderer);
 }
 
 QList<Symbol*> ClassBreaksWithAlternateSymbols::createAlternateSymbols()

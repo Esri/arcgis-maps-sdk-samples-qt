@@ -68,7 +68,6 @@ private:
   Esri::ArcGISRuntime::FeatureLayer* m_featureLayer = nullptr;
   bool m_initialized = false;
   Esri::ArcGISRuntime::ServiceFeatureTable* m_featureTable = nullptr;
-
 };
 
 #endif // CLASSBREAKSWITHALTERNATESYMBOLS_H
