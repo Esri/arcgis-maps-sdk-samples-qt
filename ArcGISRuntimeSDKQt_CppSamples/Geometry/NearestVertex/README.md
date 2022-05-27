@@ -25,6 +25,11 @@ Click anywhere on the map. A yellow cross will show at that location. A blue cir
 * GeometryEngine
 * ProximityResult
 
+## Additional information
+
+The value of `ProximityResult::distance()` is planar (Euclidean) distance. Planar distances are only accurate for geometries that have a defined projected coordinate system, which maintain the desired level of accuracy. The example polygon in this sample is defined in California State Plane Coordinate System - Zone 5 (WKID 2229), which maintains accuracy near Southern California. Accuracy declines outside the state plane zone.
+
+
 ## Tags
 
 analysis, coordinate, geometry, nearest, proximity, vertex

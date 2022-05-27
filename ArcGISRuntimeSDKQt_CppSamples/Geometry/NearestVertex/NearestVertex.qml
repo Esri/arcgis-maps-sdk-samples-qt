@@ -47,7 +47,7 @@ Item {
         border.width: 2
         Label {
             id: distancesLabel
-            text: "Vertex distance: " + model.vertexDistance + " km\nCoordinate distance: " + model.coordinateDistance + " km";
+            text: "Vertex distance: " + model.vertexDistance + " mi\nCoordinate distance: " + model.coordinateDistance + " mi";
             font.pointSize: 14
             padding: 5
         }
