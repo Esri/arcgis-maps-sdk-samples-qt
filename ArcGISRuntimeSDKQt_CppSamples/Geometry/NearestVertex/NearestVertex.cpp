@@ -20,25 +20,33 @@
 
 #include "NearestVertex.h"
 
+#include "FeatureLayer.h"
 #include "GeometryEngine.h"
 #include "Graphic.h"
 #include "GraphicsOverlay.h"
 #include "Map.h"
 #include "MapQuickView.h"
 #include "PolygonBuilder.h"
+#include "PortalItem.h"
 #include "SimpleFillSymbol.h"
 #include "SimpleLineSymbol.h"
 #include "SimpleMarkerSymbol.h"
+#include "SpatialReference.h"
 
 using namespace Esri::ArcGISRuntime;
 
+namespace {
+  const SpatialReference statePlaneCaliforniaZone5SpatialReference = SpatialReference(2229);
+}
+
 NearestVertex::NearestVertex(QObject* parent /* = nullptr */):
-  QObject(parent),
-  m_map(new Map(BasemapStyle::ArcGISTopographic, this))
+  QObject(parent)
 {
-  const Point center(-4487263.495911, 3699176.480377, SpatialReference::webMercator());
-  const Viewpoint viewpoint(center, 80000000);
-  m_map->setInitialViewpoint(viewpoint);
+  m_map = new Map(statePlaneCaliforniaZone5SpatialReference, this);
+
+  PortalItem* portalItem = new PortalItem("99fd67933e754a1181cc755146be21ca", this);
+  FeatureLayer* usStatesGeneralizedLayer = new FeatureLayer(portalItem, this);
+  m_map->basemap()->baseLayers()->append(usStatesGeneralizedLayer);
 }
 
 NearestVertex::~NearestVertex() = default;
@@ -77,6 +85,9 @@ void NearestVertex::setMapView(MapQuickView* mapView)
   // shows the polygon, clicked location, and nearest coordinate and vertex on polygon
   setupGraphics();
 
+  // Set viewpoint to the polygon graphic
+  m_mapView->setViewpointCenter(m_mapView->graphicsOverlays()->first()->graphics()->first()->geometry().extent().center(), 8e6);
+
   emit mapViewChanged();
 }
 
@@ -85,16 +96,16 @@ void NearestVertex::setupGraphics()
   // create a graphics overlay to show the polygon, clicked location, and nearest vertex
   GraphicsOverlay* graphicsOverlay = new GraphicsOverlay(this);
 
-  // Points for polygon in the middle of Atlantic Ocean
+  // Construct a polygon from a point collection that uses the California zone 5 (ftUS) state plane coordinate system
   QList<Point> points = {
-    Point(-5991501.677830, 5599295.131468),
-    Point(-6928550.398185, 2087936.739807),
-    Point(-3149463.800709, 1840803.011362),
-    Point(-1563689.043184, 3714900.452072),
-    Point(-3180355.516764, 5619889.608838)
+    Point(6627416.41469281, 1804532.53233782),
+    Point(6669147.89779046, 2479145.16609522),
+    Point(7265673.02678292, 2484254.50442408),
+    Point(7676192.55880379, 2001458.66365744),
+    Point(7175695.94143837, 1840722.34474458)
   };
 
-  PolygonBuilder* polygonBuilder = new PolygonBuilder(SpatialReference::webMercator(), this);
+  PolygonBuilder* polygonBuilder = new PolygonBuilder(statePlaneCaliforniaZone5SpatialReference, this);
   polygonBuilder->addPoints(points);
   SimpleLineSymbol* polygonOutlineSymbol = new SimpleLineSymbol(SimpleLineSymbolStyle::Solid, Qt::green, 2, this);
   SimpleFillSymbol* polygonFillSymbol = new SimpleFillSymbol(SimpleFillSymbolStyle::ForwardDiagonal, Qt::green, polygonOutlineSymbol, this);
@@ -135,9 +146,9 @@ void NearestVertex::setupGraphics()
     const ProximityResult nearestVertexResult = GeometryEngine::nearestVertex(polygonBuilder->toGeometry(), normalizedPoint);
     nearestVertexGraphic->setGeometry(nearestVertexResult.coordinate());
 
-    // get distance in kilometers
-    m_vertexDistance = nearestVertexResult.distance()/1000;
-    m_coordinateDistance = nearestCoordinateResult.distance()/1000;
+    // get the distances to the nearest vertex and nearest coordinate, converted from feet to miles
+    m_vertexDistance = nearestVertexResult.distance()/5280;
+    m_coordinateDistance = nearestCoordinateResult.distance()/5280;
 
     e.accept();
     emit vertexDistanceCalculated();

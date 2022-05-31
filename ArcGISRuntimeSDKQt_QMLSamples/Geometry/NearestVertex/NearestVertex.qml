@@ -47,7 +47,7 @@ Rectangle {
 
         PolygonBuilder {
             id: polygonBuilder
-            SpatialReference { wkid: 3857 }
+            spatialReference: statePlaneCaliforniaZone5SpatialReference
         }
 
         Graphic {
@@ -79,11 +79,11 @@ Rectangle {
 
         Component.onCompleted: {
             // create polygon in middle of Atlantic Ocean
-            polygonBuilder.addPointXY(-5991501.677830, 5599295.131468);
-            polygonBuilder.addPointXY(-6928550.398185, 2087936.739807);
-            polygonBuilder.addPointXY(-3149463.800709, 1840803.011362);
-            polygonBuilder.addPointXY(-1563689.043184, 3714900.452072);
-            polygonBuilder.addPointXY(-3180355.516764, 5619889.608838);
+            polygonBuilder.addPointXY(6627416.41469281, 1804532.53233782);
+            polygonBuilder.addPointXY(6669147.89779046, 2479145.16609522);
+            polygonBuilder.addPointXY(7265673.02678292, 2484254.50442408);
+            polygonBuilder.addPointXY(7676192.55880379, 2001458.66365744);
+            polygonBuilder.addPointXY(7175695.94143837, 1840722.34474458);
             polygonGraphic.geometry = polygonBuilder.geometry;
 
             // append graphics to overlay
@@ -92,22 +92,29 @@ Rectangle {
             graphicsOverlay.graphics.append(nearestVertexGraphic);
             graphicsOverlay.graphics.append(nearestCoordinateGraphic);
 
+            mapView.map.basemap.baseLayers.append(usStatesGeneralizedLayer);
+            mapView.setViewpointCenterAndScale(polygonGraphic.geometry.extent.center, 8e6);
+
             // Set the focus on MapView to initially enable keyboard navigation
             forceActiveFocus();
         }
 
         Map {
-            Basemap {
-                initStyle: Enums.BasemapStyleArcGISTopographic
+            id: map
+            spatialReference: SpatialReference {
+                wkid: 2229
             }
+        }
 
-            ViewpointCenter {
-                Point {
-                    x: -4487263.495911
-                    y: 3699176.480377
-                    SpatialReference {wkid: 3857}
-                }
-                targetScale: 50000000
+        SpatialReference {
+            id: statePlaneCaliforniaZone5SpatialReference
+            wkid: 2229
+        }
+
+        FeatureLayer {
+            id: usStatesGeneralizedLayer
+            PortalItem {
+                itemId: "99fd67933e754a1181cc755146be21ca"
             }
         }
     }
@@ -126,8 +133,8 @@ Rectangle {
             const nearestCoordinateResult = GeometryEngine.nearestCoordinate(polygonBuilder.geometry, normalizedPoint);
             nearestCoordinateGraphic.geometry = nearestCoordinateResult.coordinate;
 
-            distancesLabel.text = `Vertex distance: ${(nearestVertexPoint.distance/1000.0).toFixed()} km
-Coordinate distance: ${(nearestCoordinateResult.distance/1000.0).toFixed()} km` ;
+            distancesLabel.text = `Vertex distance: ${(nearestVertexPoint.distance/5280.0).toFixed()} mi
+Coordinate distance: ${(nearestCoordinateResult.distance/5280.0).toFixed()} mi` ;
         }
     }
 
@@ -149,7 +156,7 @@ Coordinate distance: ${(nearestCoordinateResult.distance/1000.0).toFixed()} km` 
             id: distancesLabel
             font.pointSize: 14
             padding: 5
-            text: "Vertex Distance: 0 km\nCoordinate distance: 0 km"
+            text: "Vertex Distance: 0 mi\nCoordinate distance: 0 mi"
         }
     }
 }
