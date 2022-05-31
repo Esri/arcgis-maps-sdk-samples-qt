@@ -98,6 +98,7 @@ void ClassBreaksWithAlternateSymbols::createClassBreaksRenderer()
 
   m_classBreaksRenderer->setFieldName("campsite");
   m_classBreaksRenderer->setDefaultSymbol(multilayer_orange_tent);
+  m_classBreaksRenderer->setMinValue(0);
 
   //set the cbr on the feature layer
   m_featureLayer->setRenderer(m_classBreaksRenderer);
