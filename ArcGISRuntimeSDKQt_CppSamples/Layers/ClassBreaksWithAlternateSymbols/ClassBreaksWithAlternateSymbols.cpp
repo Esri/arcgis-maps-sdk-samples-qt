@@ -96,6 +96,10 @@ void ClassBreaksWithAlternateSymbols::createClassBreaksRenderer()
   // create and append class breaks
   m_classBreaksRenderer->classBreaks()->append(class_break);
 
+  m_classBreaksRenderer->setFieldName("campsite");
+  m_classBreaksRenderer->setDefaultSymbol(multilayer_orange_tent);
+
+  //set the cbr on the feature layer
   m_featureLayer->setRenderer(m_classBreaksRenderer);
 }
 
@@ -124,6 +128,8 @@ void ClassBreaksWithAlternateSymbols::setScale(int16_t scale)
     return;
 
   m_map->setReferenceScale(scale);
+
+  //TODO: also reset the viewpoint back to the tents
 
   emit mapViewChanged();
 }
