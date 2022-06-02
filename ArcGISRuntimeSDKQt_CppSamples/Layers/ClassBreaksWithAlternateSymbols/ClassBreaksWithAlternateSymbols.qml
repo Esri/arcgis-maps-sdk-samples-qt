@@ -39,10 +39,10 @@ Item {
                 id: four_million_scale
                 width: 200
                 enabled: true
-                text: "Set Scale to 500000"
+                text: "Set Scale to 2500"
                 onClicked:
                 {
-                    model.setScale(500000);
+                    model.setScale(2500);
                 }
             }
 
@@ -50,16 +50,16 @@ Item {
                 id: five_million_scale
                 width: 200
                 enabled: true
-                text: "Set Scale to 1000000"
-                onClicked: model.setScale(1000000);
+                text: "Set Scale to 7500"
+                onClicked: model.setScale(7500);
             }
 
             Button {
                 id: six_million_scale
                 width: 200
                 enabled: true
-                text: "Set Scale to 1500000"
-                onClicked: model.setScale(1500000);
+                text: "Set Scale to 15000"
+                onClicked: model.setScale(15000);
             }
         }
 

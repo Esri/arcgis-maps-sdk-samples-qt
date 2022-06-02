@@ -54,17 +54,9 @@ ClassBreaksWithAlternateSymbols::ClassBreaksWithAlternateSymbols(QObject* parent
   // create the feature layer using the feature table
   m_featureLayer = new FeatureLayer(featureTable, this);
 
-  connect(m_featureLayer, &FeatureLayer::doneLoading, this, [](Error e)
-  {
-    if (!e.isEmpty())
-    {
-      qDebug() << "Error" << e.message() << e.additionalMessage();
-      return;
-    }
-
-    qDebug() << "done loading";
-  });
-
+  // this function creates a class breaks renderer using
+  // one class break that includes a list of alternate symbols
+  // for various scales
   createClassBreaksRenderer();
 
   // add the feature layer to the map
@@ -96,9 +88,9 @@ void ClassBreaksWithAlternateSymbols::setMapView(MapQuickView* mapView)
   m_mapView = mapView;
   m_mapView->setMap(m_map);
 
-  connect(m_mapView, &MapQuickView::viewpointChanged, this, [this](){
-    qDebug() << (int)m_mapView->mapScale();
-  });
+  // set the initial view point upon opening the sample to focus on an area with a lot of features
+  Viewpoint vpCenter = Viewpoint(Point(-13632095.660131, 4545009.846004, SpatialReference::webMercator()), 50000);
+  m_mapView->setViewpoint(vpCenter);
 
   emit mapViewChanged();
 }
@@ -106,22 +98,15 @@ void ClassBreaksWithAlternateSymbols::setMapView(MapQuickView* mapView)
 void ClassBreaksWithAlternateSymbols::createClassBreaksRenderer()
 {
   // create class breaks renderer using a default symbol and the alternate symbols list
-  auto alternate_symbols = createAlternateSymbols();
+  QList<Symbol*> alternate_symbols = createAlternateSymbols();
 
-//  auto red_tent = new PictureMarkerSymbol(QUrl("qrc:/Samples/Layers/ClassBreaksWithAlternateSymbols/tent_red.png"), this);
-//  red_tent->setWidth(30);
-//  red_tent->setHeight(30);
-//  auto multilayer_red_tent = red_tent->toMultilayerSymbol();
-//  multilayer_red_tent->setReferenceProperties(new SymbolReferenceProperties(0, 4000000, this));
 
-  SimpleMarkerSymbol* sym1 = new SimpleMarkerSymbol(SimpleMarkerSymbolStyle::Triangle, QColor("red"), 30, this);
-  auto mlSym1 = sym1->toMultilayerSymbol();
-  mlSym1->setReferenceProperties(new SymbolReferenceProperties(500000, 0, this));
+  SimpleMarkerSymbol* symbol_1 = new SimpleMarkerSymbol(SimpleMarkerSymbolStyle::Triangle, QColor("red"), 30, this);
+  MultilayerPointSymbol* multi_layer_symbol_1 = symbol_1->toMultilayerSymbol();
+  multi_layer_symbol_1->setReferenceProperties(new SymbolReferenceProperties(5000, 0, this));
+
   //create a classbreak with alternate symbols
-  ClassBreak* class_break = new ClassBreak("classbreak_1", "classbreak_1", 0, 1, mlSym1, alternate_symbols, this);
-
-
-//  auto class_break = new ClassBreak("CB1", "CB1", 0, 10000000, multilayer_red_tent, alternate_symbols, this);
+  ClassBreak* class_break = new ClassBreak("classbreak", "classbreak", 0, 1, multi_layer_symbol_1, alternate_symbols, this);
 
   //create a class breaks renderer
   m_classBreaksRenderer = new ClassBreaksRenderer(this);
@@ -131,56 +116,30 @@ void ClassBreaksWithAlternateSymbols::createClassBreaksRenderer()
 
   m_classBreaksRenderer->setFieldName("status");
   SimpleMarkerSymbol* default_sym = new SimpleMarkerSymbol(SimpleMarkerSymbolStyle::Diamond, QColor("purple"), 30, this);
-  auto default_sym_ml = default_sym->toMultilayerSymbol();
+  MultilayerPointSymbol* default_sym_ml = default_sym->toMultilayerSymbol();
 
   m_classBreaksRenderer->setDefaultSymbol(default_sym_ml);
   m_classBreaksRenderer->setMinValue(0);
 
-  //set the cbr on the feature layer
+  //set the class breaks renderer on the feature layer
   m_featureLayer->setRenderer(m_classBreaksRenderer);
 }
 
 QList<Symbol*> ClassBreaksWithAlternateSymbols::createAlternateSymbols()
 {
-  // create the first symbol for alternate symbols
-//  auto orange_tent = new PictureMarkerSymbol(QUrl("qrc:/Samples/Layers/ClassBreaksWithAlternateSymbols/tent_orange.png"), this);
-//  orange_tent->setWidth(30);
-//  orange_tent->setHeight(30);
-//  auto multilayer_orange_tent = orange_tent->toMultilayerSymbol();
-//  multilayer_orange_tent->setReferenceProperties(new SymbolReferenceProperties(4000000, 6000000, this));
+  SimpleMarkerSymbol* alternate_symbol_1 = new SimpleMarkerSymbol(SimpleMarkerSymbolStyle::Square, QColor("blue"), 30, this);
+  MultilayerPointSymbol* alternate_symbol_1_ml = alternate_symbol_1->toMultilayerSymbol();
+  alternate_symbol_1_ml->setReferenceProperties(new SymbolReferenceProperties(10000, 5000, this));
 
-  SimpleMarkerSymbol* sym2 = new SimpleMarkerSymbol(SimpleMarkerSymbolStyle::Square, QColor("blue"), 30, this);
-  auto mlSym2 = sym2->toMultilayerSymbol();
-  mlSym2->setReferenceProperties(new SymbolReferenceProperties(1000000, 500000, this));
+  SimpleMarkerSymbol* alternate_symbol_2 = new SimpleMarkerSymbol(SimpleMarkerSymbolStyle::Diamond, QColor("yellow"), 30, this);
+  MultilayerPointSymbol* alternate_symbol_2_ml = alternate_symbol_2->toMultilayerSymbol();
+  alternate_symbol_2_ml->setReferenceProperties(new SymbolReferenceProperties(20000, 10000, this));
 
-  SimpleMarkerSymbol* sym3 = new SimpleMarkerSymbol(SimpleMarkerSymbolStyle::Diamond, QColor("yellow"), 30, this);
-  auto mlSym3 = sym3->toMultilayerSymbol();
-  mlSym3->setReferenceProperties(new SymbolReferenceProperties(1500000, 1000000, this));
-
-  // create the picture marker symbol for the alternate symbol
-//  auto blue_tent = new PictureMarkerSymbol(QUrl("qrc:/Samples/Layers/ClassBreaksWithAlternateSymbols/tent_blue.png"), this);
-//  blue_tent->setWidth(30);
-//  blue_tent->setHeight(30);
-//  auto multilayer_blue_tent = blue_tent->toMultilayerSymbol();
-//  multilayer_blue_tent->setReferenceProperties(new SymbolReferenceProperties(6000000, 8000000, this));
-
-//  qDebug() << multilayer_orange_tent;
-//  qDebug() << multilayer_blue_tent;
-
-//  return {multilayer_orange_tent, multilayer_blue_tent};
-    return {mlSym2, mlSym3};
+  return {alternate_symbol_1_ml, alternate_symbol_2_ml};
 }
 
 void ClassBreaksWithAlternateSymbols::setScale(double scale)
 {
-//  if(!m_map)
-//    return;
-
-//  m_map->setReferenceScale(scale);
-
-//  //TODO: also reset the viewpoint back to the tents
-
-//  emit mapViewChanged();
   if(m_mapView)
     m_mapView->setViewpointScale(scale);
 }
