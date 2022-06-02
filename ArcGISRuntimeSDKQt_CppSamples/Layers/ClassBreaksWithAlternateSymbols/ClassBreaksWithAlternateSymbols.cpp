@@ -1,0 +1,153 @@
+// [WriteFile Name=ClassBreaksWithAlternateSymbols, Category=Layers]
+// [Legal]
+// Copyright 2022 Esri.
+
+// Licensed under the Apache License, Version 2.0 (the "License");
+// you may not use this file except in compliance with the License.
+// You may obtain a copy of the License at
+// http://www.apache.org/licenses/LICENSE-2.0
+
+// Unless required by applicable law or agreed to in writing, software
+// distributed under the License is distributed on an "AS IS" BASIS,
+// WITHOUT WARRANTIES OR CONDITIONS OF ANY KIND, either express or implied.
+// See the License for the specific language governing permissions and
+// limitations under the License.
+// [Legal]
+
+#ifdef PCH_BUILD
+#include "pch.hpp"
+#endif // PCH_BUILD
+
+#include "ClassBreaksWithAlternateSymbols.h"
+
+#include "FeatureLayer.h"
+#include "ServiceFeatureTable.h"
+#include "Map.h"
+#include "MapQuickView.h"
+
+#include "Basemap.h"
+#include "Map.h"
+#include "MapQuickView.h"
+#include "ServiceFeatureTable.h"
+#include "FeatureLayer.h"
+#include "ClassBreaksRenderer.h"
+#include "SimpleFillSymbol.h"
+#include "SimpleLineSymbol.h"
+#include "ArcGISMapImageLayer.h"
+#include "ArcGISMapImageSublayer.h"
+#include "MultilayerPolygonSymbol.h"
+#include "SymbolReferenceProperties.h"
+#include "SimpleFillSymbol.h"
+#include "PictureMarkerSymbol.h"
+#include "MultilayerPointSymbol.h"
+
+using namespace Esri::ArcGISRuntime;
+
+ClassBreaksWithAlternateSymbols::ClassBreaksWithAlternateSymbols(QObject* parent /* = nullptr */):
+  QObject(parent),
+  m_map(new Map(BasemapStyle::ArcGISTopographic, this))
+{
+
+  // create the feature table
+  ServiceFeatureTable* featureTable = new ServiceFeatureTable(QUrl("https://sampleserver6.arcgisonline.com/arcgis/rest/services/SF311/FeatureServer/0"), this);
+  // create the feature layer using the feature table
+  m_featureLayer = new FeatureLayer(featureTable, this);
+
+  // add the feature layer to the map
+  m_map->operationalLayers()->append(m_featureLayer);
+
+  createClassBreaksRenderer();
+
+  emit mapViewChanged();
+}
+
+ClassBreaksWithAlternateSymbols::~ClassBreaksWithAlternateSymbols() = default;
+
+void ClassBreaksWithAlternateSymbols::init()
+{
+  // Register the map view for QML
+  qmlRegisterType<MapQuickView>("Esri.Samples", 1, 0, "MapView");
+  qmlRegisterType<ClassBreaksWithAlternateSymbols>("Esri.Samples", 1, 0, "ClassBreaksWithAlternateSymbolsSample");
+}
+
+MapQuickView* ClassBreaksWithAlternateSymbols::mapView() const
+{
+  return m_mapView;
+}
+
+// Set the view (created in QML)
+void ClassBreaksWithAlternateSymbols::setMapView(MapQuickView* mapView)
+{
+  if (!mapView || mapView == m_mapView)
+    return;
+
+  m_mapView = mapView;
+  m_mapView->setMap(m_map);
+
+  emit mapViewChanged();
+}
+
+void ClassBreaksWithAlternateSymbols::createClassBreaksRenderer()
+{
+  // create class breaks renderer using a default symbol and the alternate symbols list
+  auto alternate_symbols = createAlternateSymbols();
+
+  auto red_tent = new PictureMarkerSymbol(QUrl("qrc:/Resources/tent_red.png"), this);
+  red_tent->setWidth(30);
+  red_tent->setHeight(30);
+  auto multilayer_red_tent = red_tent->toMultilayerSymbol();
+
+  auto class_break = new ClassBreak("CB1", "CB1", 0, 10000000, multilayer_red_tent, alternate_symbols, this);
+
+  //create a class breaks renderer
+  m_classBreaksRenderer = new ClassBreaksRenderer(this);
+
+  // create and append class breaks
+  m_classBreaksRenderer->classBreaks()->append(class_break);
+
+  m_classBreaksRenderer->setFieldName("objectid");
+  m_classBreaksRenderer->setDefaultSymbol(multilayer_red_tent);
+  m_classBreaksRenderer->setMinValue(0);
+
+  //set the cbr on the feature layer
+  m_featureLayer->setRenderer(m_classBreaksRenderer);
+}
+
+QList<Symbol*> ClassBreaksWithAlternateSymbols::createAlternateSymbols()
+{
+  // create the first symbol for alternate symbols
+  auto orange_tent = new PictureMarkerSymbol(QUrl("qrc:/Resources/tent_orange.png"), this);
+  orange_tent->setWidth(30);
+  orange_tent->setHeight(30);
+  auto multilayer_orange_tent = orange_tent->toMultilayerSymbol();
+  multilayer_orange_tent->setReferenceProperties(new SymbolReferenceProperties(0, 4000000, this));
+
+  // create the picture marker symbol for the alternate symbol
+  auto blue_tent = new PictureMarkerSymbol(QUrl("qrc:/Resources/tent_blue.png"), this);
+  blue_tent->setWidth(30);
+  blue_tent->setHeight(30);
+  auto multilayer_blue_tent = blue_tent->toMultilayerSymbol();
+  multilayer_blue_tent->setReferenceProperties(new SymbolReferenceProperties(4000000, 5000000, this));
+
+//  qDebug() << multilayer_orange_tent;
+//  qDebug() << multilayer_blue_tent;
+
+  return {multilayer_orange_tent, multilayer_blue_tent};
+}
+
+void ClassBreaksWithAlternateSymbols::setScale(double scale)
+{
+  if(!m_map)
+    return;
+
+  m_map->setReferenceScale(scale);
+
+  //TODO: also reset the viewpoint back to the tents
+
+  emit mapViewChanged();
+}
+
+int ClassBreaksWithAlternateSymbols::test()
+{
+  return 1;
+}
