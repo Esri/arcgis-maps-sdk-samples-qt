@@ -14,8 +14,8 @@
 // limitations under the License.
 // [Legal]
 
-import QtQuick 2.6
-import QtQuick.Controls 2.2
+import QtQuick 2.15
+import QtQuick.Controls 2.15
 import Esri.Samples 1.0
 import Esri.ArcGISRuntime.Toolkit 100.15
 
@@ -34,25 +34,13 @@ Item {
         Callout {
             id: callout
             calloutData: view.calloutData
-            accessoryButtonHidden: true
-            calloutContent: customComponent
-            leaderHeight: 30
-        }
-
-        Component {
-            id: customComponent
-
-            Text {
+            implicitWidth: 300
+            contentItem: Label {
                 id: customComponentText
                 text: view.calloutData.detail
-
-                Binding {
-                    target: callout
-                    value: contentHeight + 15
-                    property: "calloutHeight"
-                }
-
                 wrapMode: Text.WordWrap
+                horizontalAlignment: Qt.AlignHCenter
+                verticalAlignment: Qt.AlignVCenter
             }
         }
     }
