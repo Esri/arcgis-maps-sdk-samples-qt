@@ -37,6 +37,9 @@ class PreplannedMapAreaListModel;
 #include <QObject>
 #include <QTemporaryDir>
 
+Q_MOC_INCLUDE("MapQuickView.h")
+Q_MOC_INCLUDE("PreplannedMapAreaListModel.h")
+
 #include "DownloadPreplannedOfflineMapParameters.h"
 
 class DownloadPreplannedMap : public QObject

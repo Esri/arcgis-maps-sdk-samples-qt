@@ -28,7 +28,7 @@ class FeatureLayer;
 }
 
 #include <QObject>
-
+Q_MOC_INCLUDE("SceneQuickView.h")
 class Display3DLabelsInScene : public QObject
 {
   Q_OBJECT

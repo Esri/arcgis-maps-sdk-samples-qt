@@ -150,7 +150,7 @@ void IdentifyRasterCell::connectSignals()
     m_mousePressed = true;
   });
 
-  connect(m_mapView, &MapQuickView::mouseReleased, this, [this](QMouseEvent)
+  connect(m_mapView, &MapQuickView::mouseReleased, this, [this](QMouseEvent&)
   {
     m_mousePressed = false;
   });

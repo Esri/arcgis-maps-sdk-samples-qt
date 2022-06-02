@@ -29,7 +29,7 @@ class SceneQuickView;
 #include <QObject>
 
 #include "SceneViewTypes.h"
-
+Q_MOC_INCLUDE("SceneQuickView.h")
 class ChangeAtmosphereEffect : public QObject
 {
   Q_OBJECT

@@ -29,7 +29,7 @@ namespace Esri
 #include "Error.h"
 
 #include <QObject>
-
+Q_MOC_INCLUDE("SceneQuickView.h")
 class CreateTerrainSurfaceFromLocalTilePackage : public QObject
 {
   Q_OBJECT

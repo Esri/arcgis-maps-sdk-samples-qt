@@ -30,6 +30,8 @@ class Graphic;
 #include <QObject>
 #include <QTimer>
 
+Q_MOC_INCLUDE("SceneQuickView.h")
+
 class LineOfSightGeoElement : public QObject
 {
     Q_OBJECT

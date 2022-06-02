@@ -34,6 +34,8 @@ class SimulatedLocationDataSource;
 }
 }
 
+Q_MOC_INCLUDE("MapQuickView.h")
+
 class ShowLocationHistory : public QObject
 {
   Q_OBJECT

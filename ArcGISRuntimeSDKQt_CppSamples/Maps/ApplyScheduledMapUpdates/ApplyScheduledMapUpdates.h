@@ -33,6 +33,8 @@ class OfflineMapSyncJob;
 #include <QObject>
 #include <QTemporaryDir>
 
+Q_MOC_INCLUDE("MapQuickView.h")
+
 class ApplyScheduledMapUpdates : public QObject
 {
   Q_OBJECT

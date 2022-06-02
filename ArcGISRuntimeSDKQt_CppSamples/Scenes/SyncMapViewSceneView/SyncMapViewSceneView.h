@@ -31,6 +31,9 @@ class MapQuickView;
 
 #include <QObject>
 
+Q_MOC_INCLUDE("MapQuickView.h")
+Q_MOC_INCLUDE("SceneQuickView.h")
+
 class SyncMapViewSceneView : public QObject
 {
   Q_OBJECT

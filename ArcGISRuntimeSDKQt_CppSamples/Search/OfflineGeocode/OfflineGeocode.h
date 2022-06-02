@@ -39,6 +39,7 @@ namespace Esri
 #include "ReverseGeocodeParameters.h"
 
 #include <QQuickItem>
+Q_MOC_INCLUDE("SuggestListModel.h")
 
 class OfflineGeocode : public QQuickItem
 {

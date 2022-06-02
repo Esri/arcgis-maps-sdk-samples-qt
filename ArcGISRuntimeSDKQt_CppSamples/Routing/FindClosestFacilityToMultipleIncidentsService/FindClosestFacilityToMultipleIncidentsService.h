@@ -40,6 +40,8 @@ class QueryParameters;
 #include "TaskWatcher.h"
 #include <QObject>
 
+Q_MOC_INCLUDE("MapQuickView.h")
+
 class FindClosestFacilityToMultipleIncidentsService : public QObject
 {
   Q_OBJECT

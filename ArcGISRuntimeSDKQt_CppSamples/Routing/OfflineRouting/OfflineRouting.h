@@ -36,6 +36,8 @@ class RouteTask;
 
 #include <QObject>
 
+Q_MOC_INCLUDE("MapQuickView.h")
+
 class OfflineRouting : public QObject
 {
   Q_OBJECT

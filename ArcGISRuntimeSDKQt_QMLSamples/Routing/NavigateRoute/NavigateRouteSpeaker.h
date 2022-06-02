@@ -16,7 +16,7 @@ public:
   Q_INVOKABLE bool textToSpeechEngineReady() const;
 
 private:
-  QTextToSpeech* m_speaker = nullptr;
+//  QTextToSpeech* m_speaker = nullptr;
 };
 
 #endif // NAVIGATEROUTESPEAKER_H

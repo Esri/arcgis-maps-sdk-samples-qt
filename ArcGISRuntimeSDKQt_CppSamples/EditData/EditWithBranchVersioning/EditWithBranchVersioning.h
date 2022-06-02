@@ -41,6 +41,9 @@ class Point;
 #include <QObject>
 #include <QUrl>
 
+Q_MOC_INCLUDE("AuthenticationManager.h")
+Q_MOC_INCLUDE("MapQuickView.h")
+
 class EditWithBranchVersioning : public QObject
 {
   Q_OBJECT

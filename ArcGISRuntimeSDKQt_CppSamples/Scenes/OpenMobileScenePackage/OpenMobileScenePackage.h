@@ -29,7 +29,7 @@ class MobileScenePackage;
 }
 
 #include <QObject>
-
+Q_MOC_INCLUDE("SceneQuickView.h")
 class OpenMobileScenePackage : public QObject
 {
   Q_OBJECT

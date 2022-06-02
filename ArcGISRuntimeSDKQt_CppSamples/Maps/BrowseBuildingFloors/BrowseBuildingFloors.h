@@ -30,6 +30,8 @@ class FloorLevel;
 
 #include <QObject>
 
+Q_MOC_INCLUDE("MapQuickView.h")
+
 class BrowseBuildingFloors : public QObject
 {
   Q_OBJECT

@@ -196,7 +196,7 @@ void ReadSymbolsFromMobileStyle::setMapView(MapQuickView* mapView)
   m_mapView->graphicsOverlays()->append(overlay);
 
   // connect to mouse clicked signal
-  connect(m_mapView, &MapQuickView::mouseClicked, this, [this, overlay](QMouseEvent mouseEvent)
+  connect(m_mapView, &MapQuickView::mouseClicked, this, [this, overlay](QMouseEvent& mouseEvent)
   {
     if (!m_currentSymbol)
       return;

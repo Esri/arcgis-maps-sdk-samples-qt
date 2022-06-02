@@ -28,6 +28,8 @@ class MapQuickView;
 
 #include <QObject>
 
+Q_MOC_INCLUDE("MapQuickView.h")
+
 class DisplayOverviewMap : public QObject
 {
   Q_OBJECT

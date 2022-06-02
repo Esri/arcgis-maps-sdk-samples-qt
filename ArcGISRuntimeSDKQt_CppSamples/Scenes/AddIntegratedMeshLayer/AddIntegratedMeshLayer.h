@@ -29,7 +29,7 @@ class SceneQuickView;
 }
 
 #include <QObject>
-
+Q_MOC_INCLUDE("SceneQuickView.h")
 class AddIntegratedMeshLayer : public QObject
 {
   Q_OBJECT

@@ -36,6 +36,9 @@ class PopupManager;
 #include <QQmlListProperty>
 #include <QMouseEvent>
 
+Q_MOC_INCLUDE("MapQuickView.h")
+Q_MOC_INCLUDE("PopupManager.h")
+
 class ShowPopup : public QObject
 {
   Q_OBJECT

@@ -32,6 +32,9 @@ class MapQuickView;
 
 #include <QObject>
 
+Q_MOC_INCLUDE("MapQuickView.h")
+Q_MOC_INCLUDE("CalloutData.h")
+
 class ReverseGeocodeOnline : public QObject
 {
   Q_OBJECT

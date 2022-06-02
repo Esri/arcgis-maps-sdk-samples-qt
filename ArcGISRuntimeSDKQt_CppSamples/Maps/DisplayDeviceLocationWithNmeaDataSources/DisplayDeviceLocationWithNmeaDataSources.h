@@ -32,6 +32,8 @@ class NmeaLocationDataSource;
 #include <QFile>
 #include <QTimer>
 
+Q_MOC_INCLUDE("MapQuickView.h")
+
 class DisplayDeviceLocationWithNmeaDataSources : public QObject
 {
   Q_OBJECT

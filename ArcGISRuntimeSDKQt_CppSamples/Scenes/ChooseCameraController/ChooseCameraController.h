@@ -32,7 +32,7 @@ class Scene;
 class SceneQuickView;
 }
 }
-
+Q_MOC_INCLUDE("SceneQuickView.h")
 class ChooseCameraController : public QObject
 {
   Q_OBJECT

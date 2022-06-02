@@ -50,6 +50,8 @@ class UtilityTraceParameters;
 #include <QUuid>
 #include "Point.h"
 
+Q_MOC_INCLUDE("MapQuickView.h")
+
 class TraceUtilityNetwork : public QObject
 {
   Q_OBJECT

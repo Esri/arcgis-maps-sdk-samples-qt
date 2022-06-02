@@ -30,6 +30,8 @@ class Geometry;
 
 #include <QObject>
 
+Q_MOC_INCLUDE("MapQuickView.h")
+
 class AddEncExchangeSet : public QObject
 {
   Q_OBJECT

@@ -30,6 +30,8 @@ class LayerListModel;
 class QAbstractListModel;
 
 #include <QObject>
+Q_MOC_INCLUDE("SceneQuickView.h")
+Q_MOC_INCLUDE("LayerListModel.h")
 
 class GroupLayers : public QObject
 {

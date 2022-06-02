@@ -35,7 +35,7 @@ namespace Esri
 }
 
 class QMouseEvent;
-
+Q_MOC_INCLUDE("SceneQuickView.h")
 class GetElevationAtPoint : public QObject
 {
   Q_OBJECT

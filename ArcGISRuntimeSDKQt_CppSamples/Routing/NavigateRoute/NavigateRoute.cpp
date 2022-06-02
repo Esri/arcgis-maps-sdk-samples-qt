@@ -44,7 +44,7 @@
 
 #include <memory>
 #include <QList>
-#include <QTextToSpeech>
+//#include <QTextToSpeech>
 #include <QTime>
 #include <QUrl>
 
@@ -63,7 +63,7 @@ NavigateRoute::NavigateRoute(QObject* parent /* = nullptr */):
 {
   m_routeOverlay = new GraphicsOverlay(this);
   m_routeTask = new RouteTask(routeTaskUrl, this);
-  m_speaker = new QTextToSpeech(this);
+//  m_speaker = new QTextToSpeech(this);
 }
 
 NavigateRoute::~NavigateRoute() = default;
@@ -186,10 +186,10 @@ void NavigateRoute::startNavigation()
   connectRouteTrackerSignals();
 
   // enable the RouteTracker to know when the QTextToSpeech engine is ready
-  m_routeTracker->setSpeechEngineReadyFunction([speaker = m_speaker]() -> bool
-  {
-    return speaker->state() == QTextToSpeech::State::Ready;
-  });
+//  m_routeTracker->setSpeechEngineReadyFunction([speaker = m_speaker]() -> bool
+//  {
+//    return speaker->state() == QTextToSpeech::State::Ready;
+//  });
 
   // enable "recenter" button when location display is moved from nagivation mode
   connect(m_mapView->locationDisplay(), &LocationDisplay::autoPanModeChanged, this, [this](LocationDisplayAutoPanMode autoPanMode)
@@ -219,7 +219,7 @@ void NavigateRoute::connectRouteTrackerSignals()
   connect(m_routeTracker, &RouteTracker::newVoiceGuidance, this, [this](VoiceGuidance* rawVoiceGuidance)
   {
     auto voiceGuidance = std::unique_ptr<VoiceGuidance>(rawVoiceGuidance);
-    m_speaker->say(voiceGuidance->text());
+//    m_speaker->say(voiceGuidance->text());
   });
 
   connect(m_routeTracker, &RouteTracker::trackingStatusChanged, this, [this](TrackingStatus* rawTrackingStatus)

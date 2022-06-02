@@ -33,7 +33,7 @@ class KmlNodeListModel;
 }
 
 #include <QObject>
-
+Q_MOC_INCLUDE("SceneQuickView.h")
 class PlayAKmlTour : public QObject
 {
   Q_OBJECT

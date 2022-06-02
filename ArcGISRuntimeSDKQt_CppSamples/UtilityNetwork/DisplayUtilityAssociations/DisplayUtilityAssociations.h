@@ -35,6 +35,7 @@ class UtilityNetwork;
 }
 
 class SymbolImageProvider;
+Q_MOC_INCLUDE("MapQuickView.h")
 
 class DisplayUtilityAssociations : public QObject
 {

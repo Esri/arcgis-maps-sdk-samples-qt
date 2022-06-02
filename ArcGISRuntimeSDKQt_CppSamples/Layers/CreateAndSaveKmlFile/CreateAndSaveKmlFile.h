@@ -37,6 +37,8 @@ class KmlStyle;
 #include "Polyline.h"
 #include "Polygon.h"
 
+Q_MOC_INCLUDE("MapQuickView.h")
+
 class CreateAndSaveKmlFile : public QObject
 {
   Q_OBJECT

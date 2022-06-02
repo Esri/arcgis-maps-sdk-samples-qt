@@ -35,6 +35,8 @@ class SimpleFillSymbol;
 
 #include <QObject>
 
+Q_MOC_INCLUDE("MapQuickView.h")
+
 class SketchOnMap : public QObject
 {
   Q_OBJECT

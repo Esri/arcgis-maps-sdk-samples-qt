@@ -27,7 +27,7 @@ class SceneQuickView;
 }
 
 #include <QObject>
-
+Q_MOC_INCLUDE("SceneQuickView.h")
 class ViewPointCloudDataOffline : public QObject
 {
   Q_OBJECT

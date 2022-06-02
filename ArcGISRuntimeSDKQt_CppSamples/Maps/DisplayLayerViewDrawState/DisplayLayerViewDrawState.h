@@ -32,6 +32,8 @@ class LayerViewState;
 
 #include <QObject>
 
+Q_MOC_INCLUDE("MapQuickView.h")
+
 class DisplayLayerViewDrawState : public QObject
 {
   Q_OBJECT

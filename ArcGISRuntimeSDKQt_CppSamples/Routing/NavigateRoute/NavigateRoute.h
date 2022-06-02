@@ -36,7 +36,9 @@ class SimulatedLocationDataSource;
 
 #include <QObject>
 #include <QString>
-class QTextToSpeech;
+//class QTextToSpeech;
+
+Q_MOC_INCLUDE("MapQuickView.h")
 
 class NavigateRoute : public QObject
 {
@@ -85,7 +87,7 @@ private:
   bool m_navigationEnabled = false;
   bool m_recenterEnabled = false;
   QString m_textString = "";
-  QTextToSpeech* m_speaker = nullptr;
+//  QTextToSpeech* m_speaker = nullptr;
 };
 
 #endif // NAVIGATEROUTE_H

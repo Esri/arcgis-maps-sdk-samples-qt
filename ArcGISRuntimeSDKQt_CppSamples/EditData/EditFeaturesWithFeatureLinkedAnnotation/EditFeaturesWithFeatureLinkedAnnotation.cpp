@@ -153,7 +153,7 @@ void EditFeaturesWithFeatureLinkedAnnotation::onGeodatabaseDoneLoading(Error err
   m_map->operationalLayers()->append(m_parcelLinesAnnotationLayer);
 }
 
-void EditFeaturesWithFeatureLinkedAnnotation::onMouseClicked(QMouseEvent mouseEvent)
+void EditFeaturesWithFeatureLinkedAnnotation::onMouseClicked(QMouseEvent& mouseEvent)
 {
   clearSelection();
 
