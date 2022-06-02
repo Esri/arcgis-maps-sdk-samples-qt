@@ -45,8 +45,6 @@ class ClassBreaksWithAlternateSymbols : public QObject
 
   Q_INVOKABLE void setScale(double scale);
 
-  Q_INVOKABLE int test();
-
 public:
   explicit ClassBreaksWithAlternateSymbols(QObject* parent = nullptr);
   ~ClassBreaksWithAlternateSymbols();

@@ -1,0 +1,11 @@
+<RCC>
+    <qresource prefix="/Samples/Layers/ClassBreaksWithAlternateSymbols">
+        <file alias="sample.json">README.metadata.json</file>
+        <file>ClassBreaksWithAlternateSymbols.qml</file>
+        <file>screenshot.png</file>
+        <file>README.md</file>
+        <file>tent_blue.png</file>
+        <file>tent_orange.png</file>
+        <file>tent_red.png</file>
+    </qresource>
+</RCC>

@@ -96,6 +96,7 @@ void ClassBreaksWithAlternateSymbols::createClassBreaksRenderer()
   red_tent->setWidth(30);
   red_tent->setHeight(30);
   auto multilayer_red_tent = red_tent->toMultilayerSymbol();
+  multilayer_red_tent->setReferenceProperties(new SymbolReferenceProperties(0, 4000000, this));
 
   auto class_break = new ClassBreak("CB1", "CB1", 0, 10000000, multilayer_red_tent, alternate_symbols, this);
 
@@ -120,14 +121,14 @@ QList<Symbol*> ClassBreaksWithAlternateSymbols::createAlternateSymbols()
   orange_tent->setWidth(30);
   orange_tent->setHeight(30);
   auto multilayer_orange_tent = orange_tent->toMultilayerSymbol();
-  multilayer_orange_tent->setReferenceProperties(new SymbolReferenceProperties(0, 4000000, this));
+  multilayer_orange_tent->setReferenceProperties(new SymbolReferenceProperties(4000000, 6000000, this));
 
   // create the picture marker symbol for the alternate symbol
   auto blue_tent = new PictureMarkerSymbol(QUrl("qrc:/Resources/tent_blue.png"), this);
   blue_tent->setWidth(30);
   blue_tent->setHeight(30);
   auto multilayer_blue_tent = blue_tent->toMultilayerSymbol();
-  multilayer_blue_tent->setReferenceProperties(new SymbolReferenceProperties(4000000, 5000000, this));
+  multilayer_blue_tent->setReferenceProperties(new SymbolReferenceProperties(6000000, 8000000, this));
 
 //  qDebug() << multilayer_orange_tent;
 //  qDebug() << multilayer_blue_tent;
@@ -145,9 +146,4 @@ void ClassBreaksWithAlternateSymbols::setScale(double scale)
   //TODO: also reset the viewpoint back to the tents
 
   emit mapViewChanged();
-}
-
-int ClassBreaksWithAlternateSymbols::test()
-{
-  return 1;
 }
