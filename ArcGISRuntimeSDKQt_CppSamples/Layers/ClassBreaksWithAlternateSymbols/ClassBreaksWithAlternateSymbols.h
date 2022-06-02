@@ -44,7 +44,7 @@ public:
   ~ClassBreaksWithAlternateSymbols() override;
 
   static void init();
-  Q_INVOKABLE void setScale(int16_t scale);
+  Q_INVOKABLE void setScale(double scale);
 
 signals:
   void mapViewChanged();

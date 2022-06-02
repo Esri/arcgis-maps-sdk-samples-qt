@@ -28,6 +28,8 @@
 #include "PictureMarkerSymbol.h"
 #include "MultilayerPointSymbol.h"
 
+#include <QDebug>
+
 #include <QUrl>
 
 using namespace Esri::ArcGISRuntime;
@@ -68,12 +70,12 @@ void ClassBreaksWithAlternateSymbols::setMapView(MapQuickView* mapView)
     loadStatus == LoadStatus::Loaded ? m_initialized = true : m_initialized = false;
   });
 
-  createClassBreaksRenderer();
-
   // add the feature layer to the map
   m_map->operationalLayers()->append(m_featureLayer);
 
-  m_map->setInitialViewpoint(Viewpoint(Envelope(-229100, 6550700, -223300, 6552100, SpatialReference::webMercator())));
+  createClassBreaksRenderer();
+
+//  m_map->setInitialViewpoint(Viewpoint(Envelope(-229100, 6550700, -223300, 6552100, SpatialReference::webMercator())));
 
 
   emit mapViewChanged();
@@ -83,12 +85,12 @@ void ClassBreaksWithAlternateSymbols::createClassBreaksRenderer()
   // create class breaks renderer using a default symbol and the alternate symbols list
   auto alternate_symbols = createAlternateSymbols();
 
-  auto orange_tent = new PictureMarkerSymbol(QUrl("qrc:/Samples/Layers/ClassBreaksWithAlternateSymbols/tent_orange.png"), this);
-  orange_tent->setWidth(80);
-  orange_tent->setHeight(80);
-  auto multilayer_orange_tent = orange_tent->toMultilayerSymbol();
+  auto red_tent = new PictureMarkerSymbol(QUrl("qrc:/Resources/tent_red.png"), this);
+  red_tent->setWidth(30);
+  red_tent->setHeight(30);
+  auto multilayer_red_tent = red_tent->toMultilayerSymbol();
 
-  auto class_break = new ClassBreak("CB1", "CB1", 0, 10000000, multilayer_orange_tent, alternate_symbols, this);
+  auto class_break = new ClassBreak("CB1", "CB1", 0, 10000000, multilayer_red_tent, alternate_symbols, this);
 
   //create a class breaks renderer
   m_classBreaksRenderer = new ClassBreaksRenderer(this);
@@ -96,8 +98,8 @@ void ClassBreaksWithAlternateSymbols::createClassBreaksRenderer()
   // create and append class breaks
   m_classBreaksRenderer->classBreaks()->append(class_break);
 
-  m_classBreaksRenderer->setFieldName("campsite");
-  m_classBreaksRenderer->setDefaultSymbol(multilayer_orange_tent);
+  m_classBreaksRenderer->setFieldName("objectid");
+  m_classBreaksRenderer->setDefaultSymbol(multilayer_red_tent);
   m_classBreaksRenderer->setMinValue(0);
 
   //set the cbr on the feature layer
@@ -107,23 +109,26 @@ void ClassBreaksWithAlternateSymbols::createClassBreaksRenderer()
 QList<Symbol*> ClassBreaksWithAlternateSymbols::createAlternateSymbols()
 {
   // create the first symbol for alternate symbols
-  auto red_tent = new PictureMarkerSymbol(QUrl("qrc:/Samples/Layers/ClassBreaksWithAlternateSymbols/tent_red.png"), this);
-  red_tent->setWidth(800);
-  red_tent->setHeight(800);
-  auto multilayer_red_tent = red_tent->toMultilayerSymbol();
-  multilayer_red_tent->setReferenceProperties(new SymbolReferenceProperties(0, 4000000, this));
+  auto orange_tent = new PictureMarkerSymbol(QUrl("qrc:/Resources/tent_orange.png"), this);
+  orange_tent->setWidth(30);
+  orange_tent->setHeight(30);
+  auto multilayer_orange_tent = orange_tent->toMultilayerSymbol();
+  multilayer_orange_tent->setReferenceProperties(new SymbolReferenceProperties(0, 4000000, this));
 
   // create the picture marker symbol for the alternate symbol
-  auto blue_tent = new PictureMarkerSymbol(QUrl("qrc:/Samples/Layers/ClassBreaksWithAlternateSymbols/tent_blue.png"), this);
-  red_tent->setWidth(80);
-  red_tent->setHeight(80);
+  auto blue_tent = new PictureMarkerSymbol(QUrl("qrc:/Resources/tent_blue.png"), this);
+  blue_tent->setWidth(30);
+  blue_tent->setHeight(30);
   auto multilayer_blue_tent = blue_tent->toMultilayerSymbol();
   multilayer_blue_tent->setReferenceProperties(new SymbolReferenceProperties(4000000, 5000000, this));
 
-  return {multilayer_red_tent, multilayer_blue_tent};
+  qDebug() << multilayer_orange_tent;
+  qDebug() << multilayer_blue_tent;
+
+  return {multilayer_orange_tent, multilayer_blue_tent};
 }
 
-void ClassBreaksWithAlternateSymbols::setScale(int16_t scale)
+void ClassBreaksWithAlternateSymbols::setScale(double scale)
 {
   if(!m_map)
     return;
