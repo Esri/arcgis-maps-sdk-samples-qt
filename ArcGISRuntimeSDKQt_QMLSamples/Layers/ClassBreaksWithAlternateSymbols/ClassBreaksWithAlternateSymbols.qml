@@ -97,17 +97,17 @@ Rectangle {
        // Javascript code goes here
        function createClassBreaksRenderer_() {
 
-           const orange_tent = ArcGISRuntimeEnvironment.createObject("PictureMarkerSymbol", {url: "qrc:/Samples/Layers/ClassBreaksWithAlternateSymbols/tent_orange.png"})
+           const orange_tent = ArcGISRuntimeEnvironment.createObject("PictureMarkerSymbol", {url: "qrc:/Samples/Layers/ClassBreaksWithAlternateSymbols/tent_orange.png", height: 30, width: 30})
            const multilayer_orange_tent = orange_tent.toMultilayerSymbol();
            multilayer_orange_tent.referenceProperties = ArcGISRuntimeEnvironment.createObject("SymbolReferenceProperties", {minScale: 0, maxScale: 4000000})
 
            //alternate symbol 1
-           const red_tent = ArcGISRuntimeEnvironment.createObject("PictureMarkerSymbol", {url: "qrc:/Samples/Layers/ClassBreaksWithAlternateSymbols/tent_red.png"})
+           const red_tent = ArcGISRuntimeEnvironment.createObject("PictureMarkerSymbol", {url: "qrc:/Samples/Layers/ClassBreaksWithAlternateSymbols/tent_red.png", height: 30, width: 30})
            const multilayer_red_tent = red_tent.toMultilayerSymbol();
            multilayer_red_tent.referenceProperties = ArcGISRuntimeEnvironment.createObject("SymbolReferenceProperties", {minScale: 4000000, maxScale: 6000000})
 
            //alternate symbol 2
-           const blue_tent = ArcGISRuntimeEnvironment.createObject("PictureMarkerSymbol", {url: "qrc:/Samples/Layers/ClassBreaksWithAlternateSymbols/tent_blue.png"})
+           const blue_tent = ArcGISRuntimeEnvironment.createObject("PictureMarkerSymbol", {url: "qrc:/Samples/Layers/ClassBreaksWithAlternateSymbols/tent_blue.png", height: 30, width: 30})
            const multilayer_blue_tent = blue_tent.toMultilayerSymbol();
            multilayer_blue_tent.referenceProperties = ArcGISRuntimeEnvironment.createObject("SymbolReferenceProperties", {minScale: 6000000, maxScale: 8000000})
 
@@ -121,6 +121,7 @@ Rectangle {
            const renderer = ArcGISRuntimeEnvironment.createObject("ClassBreaksRenderer");
            renderer.minValue = 0;
            renderer.defaultSymbol = multilayer_orange_tent;
+           renderer.fieldName = "status";
 
            renderer.classBreaks.append(class_break);
 

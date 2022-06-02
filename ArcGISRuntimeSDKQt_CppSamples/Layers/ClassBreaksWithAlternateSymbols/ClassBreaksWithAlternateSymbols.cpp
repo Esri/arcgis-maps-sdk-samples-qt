@@ -54,10 +54,21 @@ ClassBreaksWithAlternateSymbols::ClassBreaksWithAlternateSymbols(QObject* parent
   // create the feature layer using the feature table
   m_featureLayer = new FeatureLayer(featureTable, this);
 
-  // add the feature layer to the map
-  m_map->operationalLayers()->append(m_featureLayer);
+  connect(m_featureLayer, &FeatureLayer::doneLoading, this, [](Error e)
+  {
+    if (!e.isEmpty())
+    {
+      qDebug() << "Error" << e.message() << e.additionalMessage();
+      return;
+    }
+
+    qDebug() << "done loading";
+  });
 
   createClassBreaksRenderer();
+
+  // add the feature layer to the map
+  m_map->operationalLayers()->append(m_featureLayer);
 
   emit mapViewChanged();
 }
@@ -85,6 +96,10 @@ void ClassBreaksWithAlternateSymbols::setMapView(MapQuickView* mapView)
   m_mapView = mapView;
   m_mapView->setMap(m_map);
 
+  connect(m_mapView, &MapQuickView::viewpointChanged, this, [this](){
+    qDebug() << (int)m_mapView->mapScale();
+  });
+
   emit mapViewChanged();
 }
 
@@ -101,9 +116,9 @@ void ClassBreaksWithAlternateSymbols::createClassBreaksRenderer()
 
   SimpleMarkerSymbol* sym1 = new SimpleMarkerSymbol(SimpleMarkerSymbolStyle::Triangle, QColor("red"), 30, this);
   auto mlSym1 = sym1->toMultilayerSymbol();
-  mlSym1->setReferenceProperties(new SymbolReferenceProperties(0, 500000, this));
+  mlSym1->setReferenceProperties(new SymbolReferenceProperties(500000, 0, this));
   //create a classbreak with alternate symbols
-  ClassBreak* class_break = new ClassBreak("classbreak_1", "classbreak_1", 0, 10000000, mlSym1, alternate_symbols, this);
+  ClassBreak* class_break = new ClassBreak("classbreak_1", "classbreak_1", 0, 1, mlSym1, alternate_symbols, this);
 
 
 //  auto class_break = new ClassBreak("CB1", "CB1", 0, 10000000, multilayer_red_tent, alternate_symbols, this);
@@ -136,11 +151,11 @@ QList<Symbol*> ClassBreaksWithAlternateSymbols::createAlternateSymbols()
 
   SimpleMarkerSymbol* sym2 = new SimpleMarkerSymbol(SimpleMarkerSymbolStyle::Square, QColor("blue"), 30, this);
   auto mlSym2 = sym2->toMultilayerSymbol();
-  mlSym2->setReferenceProperties(new SymbolReferenceProperties(500000, 1000000, this));
+  mlSym2->setReferenceProperties(new SymbolReferenceProperties(1000000, 500000, this));
 
   SimpleMarkerSymbol* sym3 = new SimpleMarkerSymbol(SimpleMarkerSymbolStyle::Diamond, QColor("yellow"), 30, this);
   auto mlSym3 = sym3->toMultilayerSymbol();
-  mlSym3->setReferenceProperties(new SymbolReferenceProperties(1000000, 1500000, this));
+  mlSym3->setReferenceProperties(new SymbolReferenceProperties(1500000, 1000000, this));
 
   // create the picture marker symbol for the alternate symbol
 //  auto blue_tent = new PictureMarkerSymbol(QUrl("qrc:/Samples/Layers/ClassBreaksWithAlternateSymbols/tent_blue.png"), this);
