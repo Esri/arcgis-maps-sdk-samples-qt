@@ -43,13 +43,12 @@ class ClassBreaksWithAlternateSymbols : public QObject
 
   Q_PROPERTY(Esri::ArcGISRuntime::MapQuickView* mapView READ mapView WRITE setMapView NOTIFY mapViewChanged)
 
-  Q_INVOKABLE void setScale(double scale);
-
 public:
   explicit ClassBreaksWithAlternateSymbols(QObject* parent = nullptr);
   ~ClassBreaksWithAlternateSymbols();
 
   static void init();
+  Q_INVOKABLE void setScale(double scale);
 
 signals:
   void mapViewChanged();

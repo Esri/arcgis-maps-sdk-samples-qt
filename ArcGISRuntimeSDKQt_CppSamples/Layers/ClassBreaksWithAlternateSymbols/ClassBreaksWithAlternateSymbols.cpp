@@ -40,6 +40,7 @@
 #include "SimpleFillSymbol.h"
 #include "PictureMarkerSymbol.h"
 #include "MultilayerPointSymbol.h"
+#include "SimpleMarkerSymbol.h"
 
 using namespace Esri::ArcGISRuntime;
 
@@ -92,13 +93,20 @@ void ClassBreaksWithAlternateSymbols::createClassBreaksRenderer()
   // create class breaks renderer using a default symbol and the alternate symbols list
   auto alternate_symbols = createAlternateSymbols();
 
-  auto red_tent = new PictureMarkerSymbol(QUrl("qrc:/Resources/tent_red.png"), this);
-  red_tent->setWidth(30);
-  red_tent->setHeight(30);
-  auto multilayer_red_tent = red_tent->toMultilayerSymbol();
-  multilayer_red_tent->setReferenceProperties(new SymbolReferenceProperties(0, 4000000, this));
+//  auto red_tent = new PictureMarkerSymbol(QUrl("qrc:/Samples/Layers/ClassBreaksWithAlternateSymbols/tent_red.png"), this);
+//  red_tent->setWidth(30);
+//  red_tent->setHeight(30);
+//  auto multilayer_red_tent = red_tent->toMultilayerSymbol();
+//  multilayer_red_tent->setReferenceProperties(new SymbolReferenceProperties(0, 4000000, this));
 
-  auto class_break = new ClassBreak("CB1", "CB1", 0, 10000000, multilayer_red_tent, alternate_symbols, this);
+  SimpleMarkerSymbol* sym1 = new SimpleMarkerSymbol(SimpleMarkerSymbolStyle::Triangle, QColor("red"), 30, this);
+  auto mlSym1 = sym1->toMultilayerSymbol();
+  mlSym1->setReferenceProperties(new SymbolReferenceProperties(0, 500000, this));
+  //create a classbreak with alternate symbols
+  ClassBreak* class_break = new ClassBreak("classbreak_1", "classbreak_1", 0, 10000000, mlSym1, alternate_symbols, this);
+
+
+//  auto class_break = new ClassBreak("CB1", "CB1", 0, 10000000, multilayer_red_tent, alternate_symbols, this);
 
   //create a class breaks renderer
   m_classBreaksRenderer = new ClassBreaksRenderer(this);
@@ -106,8 +114,11 @@ void ClassBreaksWithAlternateSymbols::createClassBreaksRenderer()
   // create and append class breaks
   m_classBreaksRenderer->classBreaks()->append(class_break);
 
-  m_classBreaksRenderer->setFieldName("objectid");
-  m_classBreaksRenderer->setDefaultSymbol(multilayer_red_tent);
+  m_classBreaksRenderer->setFieldName("status");
+  SimpleMarkerSymbol* default_sym = new SimpleMarkerSymbol(SimpleMarkerSymbolStyle::Diamond, QColor("purple"), 30, this);
+  auto default_sym_ml = default_sym->toMultilayerSymbol();
+
+  m_classBreaksRenderer->setDefaultSymbol(default_sym_ml);
   m_classBreaksRenderer->setMinValue(0);
 
   //set the cbr on the feature layer
@@ -117,33 +128,44 @@ void ClassBreaksWithAlternateSymbols::createClassBreaksRenderer()
 QList<Symbol*> ClassBreaksWithAlternateSymbols::createAlternateSymbols()
 {
   // create the first symbol for alternate symbols
-  auto orange_tent = new PictureMarkerSymbol(QUrl("qrc:/Resources/tent_orange.png"), this);
-  orange_tent->setWidth(30);
-  orange_tent->setHeight(30);
-  auto multilayer_orange_tent = orange_tent->toMultilayerSymbol();
-  multilayer_orange_tent->setReferenceProperties(new SymbolReferenceProperties(4000000, 6000000, this));
+//  auto orange_tent = new PictureMarkerSymbol(QUrl("qrc:/Samples/Layers/ClassBreaksWithAlternateSymbols/tent_orange.png"), this);
+//  orange_tent->setWidth(30);
+//  orange_tent->setHeight(30);
+//  auto multilayer_orange_tent = orange_tent->toMultilayerSymbol();
+//  multilayer_orange_tent->setReferenceProperties(new SymbolReferenceProperties(4000000, 6000000, this));
+
+  SimpleMarkerSymbol* sym2 = new SimpleMarkerSymbol(SimpleMarkerSymbolStyle::Square, QColor("blue"), 30, this);
+  auto mlSym2 = sym2->toMultilayerSymbol();
+  mlSym2->setReferenceProperties(new SymbolReferenceProperties(500000, 1000000, this));
+
+  SimpleMarkerSymbol* sym3 = new SimpleMarkerSymbol(SimpleMarkerSymbolStyle::Diamond, QColor("yellow"), 30, this);
+  auto mlSym3 = sym3->toMultilayerSymbol();
+  mlSym3->setReferenceProperties(new SymbolReferenceProperties(1000000, 1500000, this));
 
   // create the picture marker symbol for the alternate symbol
-  auto blue_tent = new PictureMarkerSymbol(QUrl("qrc:/Resources/tent_blue.png"), this);
-  blue_tent->setWidth(30);
-  blue_tent->setHeight(30);
-  auto multilayer_blue_tent = blue_tent->toMultilayerSymbol();
-  multilayer_blue_tent->setReferenceProperties(new SymbolReferenceProperties(6000000, 8000000, this));
+//  auto blue_tent = new PictureMarkerSymbol(QUrl("qrc:/Samples/Layers/ClassBreaksWithAlternateSymbols/tent_blue.png"), this);
+//  blue_tent->setWidth(30);
+//  blue_tent->setHeight(30);
+//  auto multilayer_blue_tent = blue_tent->toMultilayerSymbol();
+//  multilayer_blue_tent->setReferenceProperties(new SymbolReferenceProperties(6000000, 8000000, this));
 
 //  qDebug() << multilayer_orange_tent;
 //  qDebug() << multilayer_blue_tent;
 
-  return {multilayer_orange_tent, multilayer_blue_tent};
+//  return {multilayer_orange_tent, multilayer_blue_tent};
+    return {mlSym2, mlSym3};
 }
 
 void ClassBreaksWithAlternateSymbols::setScale(double scale)
 {
-  if(!m_map)
-    return;
+//  if(!m_map)
+//    return;
 
-  m_map->setReferenceScale(scale);
+//  m_map->setReferenceScale(scale);
 
-  //TODO: also reset the viewpoint back to the tents
+//  //TODO: also reset the viewpoint back to the tents
 
-  emit mapViewChanged();
+//  emit mapViewChanged();
+  if(m_mapView)
+    m_mapView->setViewpointScale(scale);
 }
