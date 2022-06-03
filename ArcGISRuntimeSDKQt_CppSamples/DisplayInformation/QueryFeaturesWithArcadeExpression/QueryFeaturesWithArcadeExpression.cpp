@@ -20,8 +20,10 @@
 
 #include "QueryFeaturesWithArcadeExpression.h"
 
+#include "CalloutData.h"
 #include "Map.h"
 #include "MapQuickView.h"
+#include "Point.h"
 #include "PortalItem.h"
 
 #include <QDebug>
@@ -83,5 +85,19 @@ void QueryFeaturesWithArcadeExpression::setMapView(MapQuickView* mapView)
   m_mapView = mapView;
   m_mapView->setMap(m_map);
 
+  // identify clicked features
+    connect(m_mapView, &MapQuickView::mouseClicked, this, [this](QMouseEvent& mouseEvent)
+    {
+      m_mapView->identifyLayers(mouseEvent.x(), mouseEvent.y(), 12, false);
+      // call showEvaluatedArcadeInCallout with the results from the above call
+    });
+
+//    connect(m_mapView, &MapQuickView::identifyLayersCompleted, this, &PerformValveIsolationTrace::onIdentifyLayersCompleted);
+
   emit mapViewChanged();
 }
+
+//void QueryFeaturesWithArcadeExpression::showEvaluatedArcadeInCallout()
+//{
+
+//}

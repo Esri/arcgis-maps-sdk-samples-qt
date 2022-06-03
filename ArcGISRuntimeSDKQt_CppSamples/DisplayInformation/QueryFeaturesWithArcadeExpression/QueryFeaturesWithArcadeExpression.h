@@ -17,12 +17,17 @@
 #ifndef QUERYFEATURESWITHARCADEEXPRESSION_H
 #define QUERYFEATURESWITHARCADEEXPRESSION_H
 
+#include "Point.h"
+
 namespace Esri
 {
 namespace ArcGISRuntime
 {
+class CalloutData;
+class FeatureLayer;
 class Map;
 class MapQuickView;
+class Point;
 }
 }
 
@@ -42,6 +47,7 @@ public:
 
 signals:
   void mapViewChanged();
+  void showEvaluatedArcadeInCallout();
 
 private:
   Esri::ArcGISRuntime::MapQuickView* mapView() const;
@@ -49,6 +55,10 @@ private:
 
   Esri::ArcGISRuntime::Map* m_map = nullptr;
   Esri::ArcGISRuntime::MapQuickView* m_mapView = nullptr;
+  Esri::ArcGISRuntime::FeatureLayer* m_beatsLayer = nullptr;
+  Esri::ArcGISRuntime::CalloutData* m_calloutData = nullptr;
+  Esri::ArcGISRuntime::Point m_clickedPoint;
+  QString m_calloutText;
 };
 
 #endif // QUERYFEATURESWITHARCADEEXPRESSION_H
