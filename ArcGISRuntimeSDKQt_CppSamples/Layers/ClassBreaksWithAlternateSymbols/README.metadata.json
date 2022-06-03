@@ -19,9 +19,9 @@
         "SimpleMarkerSymbol"
     ],
     "snippets": [
-        "ClassBreaksWithAlternateSymbols.qml",
         "ClassBreaksWithAlternateSymbols.cpp",
-        "ClassBreaksWithAlternateSymbols.h"
+        "ClassBreaksWithAlternateSymbols.h",
+        "ClassBreaksWithAlternateSymbols.qml"
     ],
     "title": "Class Breaks With Alternate Symbols"
 }

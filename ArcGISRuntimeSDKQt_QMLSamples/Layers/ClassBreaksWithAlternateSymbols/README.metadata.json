@@ -6,17 +6,17 @@
         "screenshot.png"
     ],
     "keywords": [
-    "alternate symbols",
-    "class break",
-    "class breaks renderer",
-    "scale based rendering"
+        "alternate symbols",
+        "class break",
+        "class breaks renderer",
+        "scale based rendering"
     ],
     "redirect_from": "",
     "relevant_apis": [
-    "ClassBreaksRenderer",
-    "ClassBreaksRenderer.ClassBreak",
-    "SymbolReferenceProperties",
-    "SimpleMarkerSymbol"
+        "ClassBreaksRenderer",
+        "ClassBreaksRenderer.ClassBreak",
+        "SymbolReferenceProperties",
+        "SimpleMarkerSymbol"
     ],
     "snippets": [
         "ClassBreaksWithAlternateSymbols.qml"
