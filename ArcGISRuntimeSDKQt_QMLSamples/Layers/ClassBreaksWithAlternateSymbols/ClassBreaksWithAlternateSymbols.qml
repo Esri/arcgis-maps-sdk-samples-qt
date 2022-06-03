@@ -119,7 +119,6 @@ Rectangle {
                                                                              style: Enums.SimpleMarkerSymbolStyleDiamond
                                                                          });
         const purple_diamond_ml = purple_diamond.toMultilayerSymbol();
-        purple_diamond_ml.referenceProperties = ArcGISRuntimeEnvironment.createObject("SymbolReferenceProperties", {minScale: 5000, maxScale: 0});
 
         const red_triangle = ArcGISRuntimeEnvironment.createObject("SimpleMarkerSymbol", {
                                                                              color: "red",

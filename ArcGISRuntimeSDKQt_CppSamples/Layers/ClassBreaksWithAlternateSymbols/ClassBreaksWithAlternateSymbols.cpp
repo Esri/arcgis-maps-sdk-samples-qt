@@ -93,10 +93,11 @@ void ClassBreaksWithAlternateSymbols::createClassBreaksRenderer()
   // create class breaks renderer using a default symbol and the alternate symbols list
   QList<Symbol*> alternate_symbols = createAlternateSymbols();
 
-
+  double min_scale = 5000;
+  double max_scale = 0;
   SimpleMarkerSymbol* symbol_1 = new SimpleMarkerSymbol(SimpleMarkerSymbolStyle::Triangle, QColor("red"), 30, this);
   MultilayerPointSymbol* multi_layer_symbol_1 = symbol_1->toMultilayerSymbol();
-  multi_layer_symbol_1->setReferenceProperties(new SymbolReferenceProperties(5000, 0, this));
+  multi_layer_symbol_1->setReferenceProperties(new SymbolReferenceProperties(min_scale, max_scale, this));
 
   //create a classbreak with alternate symbolsre
   ClassBreak* class_break = new ClassBreak("classbreak", "classbreak", 0, 1, multi_layer_symbol_1, alternate_symbols, this);
@@ -120,13 +121,17 @@ void ClassBreaksWithAlternateSymbols::createClassBreaksRenderer()
 
 QList<Symbol*> ClassBreaksWithAlternateSymbols::createAlternateSymbols()
 {
+  double min_scale_1 = 10000;
+  double max_scale_1 = 5000;
   SimpleMarkerSymbol* alternate_symbol_1 = new SimpleMarkerSymbol(SimpleMarkerSymbolStyle::Square, QColor("blue"), 30, this);
   MultilayerPointSymbol* alternate_symbol_1_ml = alternate_symbol_1->toMultilayerSymbol();
-  alternate_symbol_1_ml->setReferenceProperties(new SymbolReferenceProperties(10000, 5000, this));
+  alternate_symbol_1_ml->setReferenceProperties(new SymbolReferenceProperties(min_scale_1, max_scale_1, this));
 
+  double min_scale_2 = 20000;
+  double max_scale_2 = 10000;
   SimpleMarkerSymbol* alternate_symbol_2 = new SimpleMarkerSymbol(SimpleMarkerSymbolStyle::Diamond, QColor("yellow"), 30, this);
   MultilayerPointSymbol* alternate_symbol_2_ml = alternate_symbol_2->toMultilayerSymbol();
-  alternate_symbol_2_ml->setReferenceProperties(new SymbolReferenceProperties(20000, 10000, this));
+  alternate_symbol_2_ml->setReferenceProperties(new SymbolReferenceProperties(min_scale_2, max_scale_2, this));
 
   return {alternate_symbol_1_ml, alternate_symbol_2_ml};
 }
