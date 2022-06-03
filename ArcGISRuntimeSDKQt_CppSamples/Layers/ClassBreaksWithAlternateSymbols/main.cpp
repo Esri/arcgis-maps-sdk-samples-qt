@@ -37,7 +37,7 @@ int main(int argc, char *argv[])
   setAPIKey(app, apiKey);
 
   // Initialize the sample
-  ClassBreaksWithAlternateSymbols::init();
+  UniqueValuesWithAlternateSymbols::init();
 
   // Initialize application view
   QQmlApplicationEngine engine;

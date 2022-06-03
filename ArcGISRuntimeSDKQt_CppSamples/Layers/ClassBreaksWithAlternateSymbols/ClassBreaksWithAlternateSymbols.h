@@ -34,15 +34,15 @@ class Symbol;
 
 #include <QObject>
 
-class ClassBreaksWithAlternateSymbols : public QObject
+class UniqueValuesWithAlternateSymbols : public QObject
 {
   Q_OBJECT
 
   Q_PROPERTY(Esri::ArcGISRuntime::MapQuickView* mapView READ mapView WRITE setMapView NOTIFY mapViewChanged)
 
 public:
-  explicit ClassBreaksWithAlternateSymbols(QObject* parent = nullptr);
-  ~ClassBreaksWithAlternateSymbols();
+  explicit UniqueValuesWithAlternateSymbols(QObject* parent = nullptr);
+  ~UniqueValuesWithAlternateSymbols();
 
   static void init();
   Q_INVOKABLE void setScale(double scale);

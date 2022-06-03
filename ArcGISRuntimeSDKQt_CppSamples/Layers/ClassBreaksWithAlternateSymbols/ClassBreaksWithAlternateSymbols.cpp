@@ -38,7 +38,7 @@
 
 using namespace Esri::ArcGISRuntime;
 
-ClassBreaksWithAlternateSymbols::ClassBreaksWithAlternateSymbols(QObject* parent /* = nullptr */):
+UniqueValuesWithAlternateSymbols::UniqueValuesWithAlternateSymbols(QObject* parent /* = nullptr */):
   QObject(parent),
   m_map(new Map(BasemapStyle::ArcGISTopographic, this))
 {
@@ -59,22 +59,22 @@ ClassBreaksWithAlternateSymbols::ClassBreaksWithAlternateSymbols(QObject* parent
   emit mapViewChanged();
 }
 
-ClassBreaksWithAlternateSymbols::~ClassBreaksWithAlternateSymbols() = default;
+UniqueValuesWithAlternateSymbols::~UniqueValuesWithAlternateSymbols() = default;
 
-void ClassBreaksWithAlternateSymbols::init()
+void UniqueValuesWithAlternateSymbols::init()
 {
   // Register the map view for QML
   qmlRegisterType<MapQuickView>("Esri.Samples", 1, 0, "MapView");
-  qmlRegisterType<ClassBreaksWithAlternateSymbols>("Esri.Samples", 1, 0, "ClassBreaksWithAlternateSymbolsSample");
+  qmlRegisterType<UniqueValuesWithAlternateSymbols>("Esri.Samples", 1, 0, "ClassBreaksWithAlternateSymbolsSample");
 }
 
-MapQuickView* ClassBreaksWithAlternateSymbols::mapView() const
+MapQuickView* UniqueValuesWithAlternateSymbols::mapView() const
 {
   return m_mapView;
 }
 
 // Set the view (created in QML)
-void ClassBreaksWithAlternateSymbols::setMapView(MapQuickView* mapView)
+void UniqueValuesWithAlternateSymbols::setMapView(MapQuickView* mapView)
 {
   if (!mapView || mapView == m_mapView)
     return;
@@ -89,7 +89,7 @@ void ClassBreaksWithAlternateSymbols::setMapView(MapQuickView* mapView)
   emit mapViewChanged();
 }
 
-void ClassBreaksWithAlternateSymbols::createUniqueValueRenderer()
+void UniqueValuesWithAlternateSymbols::createUniqueValueRenderer()
 {
   // create class breaks renderer using a default symbol and the alternate symbols list
   QList<Symbol*> alternate_symbols = createAlternateSymbols();
@@ -120,7 +120,7 @@ void ClassBreaksWithAlternateSymbols::createUniqueValueRenderer()
   m_featureLayer->setRenderer(m_uniqueValueRenderer);
 }
 
-QList<Symbol*> ClassBreaksWithAlternateSymbols::createAlternateSymbols()
+QList<Symbol*> UniqueValuesWithAlternateSymbols::createAlternateSymbols()
 {
   double min_scale_1 = 10000;
   double max_scale_1 = 5000;
@@ -137,7 +137,7 @@ QList<Symbol*> ClassBreaksWithAlternateSymbols::createAlternateSymbols()
   return {alternate_symbol_1_ml, alternate_symbol_2_ml};
 }
 
-void ClassBreaksWithAlternateSymbols::setScale(double scale)
+void UniqueValuesWithAlternateSymbols::setScale(double scale)
 {
   if(m_mapView)
     m_mapView->setViewpointScale(scale);
