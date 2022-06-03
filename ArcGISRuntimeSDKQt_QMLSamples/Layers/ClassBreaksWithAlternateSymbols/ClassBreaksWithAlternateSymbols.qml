@@ -131,7 +131,7 @@ Rectangle {
 
         const alternate_symbols = createAlternateSymbols_();
 
-        let class_break = ArcGISRuntimeEnvironment.createObject("ClassBreak", {label: "CB1", description: "CB1", minValue: 0, maxValue: 1, symbol: red_triangle});
+        let class_break = ArcGISRuntimeEnvironment.createObject("ClassBreak", {label: "CB1", description: "CB1", minValue: 0, maxValue: 1, symbol: red_triangle_ml});
 
         class_break.alternateSymbols.append(alternate_symbols[0]);
         class_break.alternateSymbols.append(alternate_symbols[1]);
@@ -139,12 +139,12 @@ Rectangle {
         //create the class breaks renderer using the class break created above
         const class_breaks_renderer = ArcGISRuntimeEnvironment.createObject("ClassBreaksRenderer");
         class_breaks_renderer.minValue = 0;
-        class_breaks_renderer.defaultSymbol = purple_diamond;
+        class_breaks_renderer.defaultSymbol = purple_diamond_ml;
         class_breaks_renderer.fieldName = "status";
 
         class_breaks_renderer.classBreaks.append(class_break);
 
-//        return renderer;
+        return class_breaks_renderer;
     }
 
     function createAlternateSymbols_()
