@@ -108,34 +108,63 @@ Rectangle {
     // Javascript code goes here
     function createClassBreaksRenderer_() {
 
-        const orange_tent = ArcGISRuntimeEnvironment.createObject("PictureMarkerSymbol", {url: "qrc:/Samples/Layers/ClassBreaksWithAlternateSymbols/tent_orange.png", height: 30, width: 30})
-        const multilayer_orange_tent = orange_tent.toMultilayerSymbol();
-        multilayer_orange_tent.referenceProperties = ArcGISRuntimeEnvironment.createObject("SymbolReferenceProperties", {minScale: 0, maxScale: 4000000})
 
-        //alternate symbol 1
-        const red_tent = ArcGISRuntimeEnvironment.createObject("PictureMarkerSymbol", {url: "qrc:/Samples/Layers/ClassBreaksWithAlternateSymbols/tent_red.png", height: 30, width: 30})
-        const multilayer_red_tent = red_tent.toMultilayerSymbol();
-        multilayer_red_tent.referenceProperties = ArcGISRuntimeEnvironment.createObject("SymbolReferenceProperties", {minScale: 4000000, maxScale: 6000000})
+        // create the default symbol
+        const purple_diamond = ArcGISRuntimeEnvironment.createObject("SimpleMarkerSymbol", {
+                                                                             color: "purple",
+                                                                             size: 30,
+                                                                             style: Enums.SimpleMarkerSymbolStyleDiamond
+                                                                         });
+        const purple_diamond_ml = purple_diamond.toMultilayerSymbol();
+        purple_diamond_ml.referenceProperties = ArcGISRuntimeEnvironment.createObject("SymbolReferenceProperties", {minScale: 5000, maxScale: 0});
 
-        //alternate symbol 2
-        const blue_tent = ArcGISRuntimeEnvironment.createObject("PictureMarkerSymbol", {url: "qrc:/Samples/Layers/ClassBreaksWithAlternateSymbols/tent_blue.png", height: 30, width: 30})
-        const multilayer_blue_tent = blue_tent.toMultilayerSymbol();
-        multilayer_blue_tent.referenceProperties = ArcGISRuntimeEnvironment.createObject("SymbolReferenceProperties", {minScale: 6000000, maxScale: 8000000})
+        const red_triangle = ArcGISRuntimeEnvironment.createObject("SimpleMarkerSymbol", {
+                                                                             color: "red",
+                                                                             size: 30,
+                                                                             style: Enums.SimpleMarkerSymbolStyleTriangle
+                                                                         });
+        const red_triangle_ml = red_triangle.toMultilayerSymbol();
+        red_triangle_ml.referenceProperties = ArcGISRuntimeEnvironment.createObject("SymbolReferenceProperties", {minScale: 5000, maxScale: 0});
 
+        const alternate_symbols = createAlternateSymbols_();
 
-        let class_break = ArcGISRuntimeEnvironment.createObject("ClassBreak", {label: "CB1", description: "CB1", minValue: 0, maxValue: 10000000, symbol: multilayer_orange_tent});
+        let class_break = ArcGISRuntimeEnvironment.createObject("ClassBreak", {label: "CB1", description: "CB1", minValue: 0, maxValue: 1, symbol: red_triangle});
 
-        class_break.alternateSymbols.append(multilayer_red_tent);
-        class_break.alternateSymbols.append(multilayer_blue_tent);
+        class_break.alternateSymbols.append(alternate_symbols[0]);
+        class_break.alternateSymbols.append(alternate_symbols[1]);
 
         //create the class breaks renderer using the class break created above
-        const renderer = ArcGISRuntimeEnvironment.createObject("ClassBreaksRenderer");
-        renderer.minValue = 0;
-        renderer.defaultSymbol = multilayer_orange_tent;
-        renderer.fieldName = "status";
+        const class_breaks_renderer = ArcGISRuntimeEnvironment.createObject("ClassBreaksRenderer");
+        class_breaks_renderer.minValue = 0;
+        class_breaks_renderer.defaultSymbol = purple_diamond;
+        class_breaks_renderer.fieldName = "status";
 
-        renderer.classBreaks.append(class_break);
+        class_breaks_renderer.classBreaks.append(class_break);
 
-        return renderer;
+//        return renderer;
+    }
+
+    function createAlternateSymbols_()
+    {
+        // alternate symbol 1
+        const blue_square = ArcGISRuntimeEnvironment.createObject("SimpleMarkerSymbol", {
+                                                                             color: "blue",
+                                                                             size: 30,
+                                                                             style: Enums.SimpleMarkerSymbolStyleSquare
+                                                                         });
+        const blue_square_ml = blue_square.toMultilayerSymbol();
+        blue_square_ml.referenceProperties = ArcGISRuntimeEnvironment.createObject("SymbolReferenceProperties", {minScale: 10000, maxScale: 5000});
+
+        // alternate symbol 2
+        const yellow_diamond = ArcGISRuntimeEnvironment.createObject("SimpleMarkerSymbol", {
+                                                                             color: "yellow",
+                                                                             size: 30,
+                                                                             style: Enums.SimpleMarkerSymbolStyleDiamond
+                                                                         });
+        const yellow_diamond_ml = yellow_diamond.toMultilayerSymbol();
+        yellow_diamond_ml.referenceProperties = ArcGISRuntimeEnvironment.createObject("SymbolReferenceProperties", {minScale: 20000, maxScale: 10000});
+
+        return [blue_square_ml, yellow_diamond_ml];
+
     }
 }

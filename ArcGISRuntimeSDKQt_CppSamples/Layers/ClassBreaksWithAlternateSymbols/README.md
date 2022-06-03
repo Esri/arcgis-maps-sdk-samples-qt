@@ -30,10 +30,10 @@ This sample uses a class breaks renderer that is created with a class break that
 10. Assign this class breaks renderer as the renderer on the feature layer from step 1
 
 ## Relevant API
- - ClassBreaksRenderer
- - ClassBreaksRenderer.ClassBreak
- - SymbolReferenceProperties
- - SimpleMarkerSymbol
+ * ClassBreaksRenderer
+ * ClassBreaksRenderer.ClassBreak
+ * SymbolReferenceProperties
+ * SimpleMarkerSymbol
 
 ## Additional information
 A standard level license is required to ...
