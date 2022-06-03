@@ -2,6 +2,8 @@
 
 This sample demonstrates how to create a class breaks renderer with alternate symbols.
 
+## Use case
+
 When a layer is symbolized with class break symbology, you can specify the visible scale range for each symbol class. This is an effective strategy to limit the amount of detailed data at smaller scales without having to make multiple versions of the layer, each with a unique definition query.
 
 Once scale ranges are applied to symbol classes, you can further refine the appearance of features within those scale ranges by establishing alternate symbols to different parts of the symbol class scale range.
@@ -32,11 +34,11 @@ This sample uses a class breaks renderer that is created with a class break that
 ## Relevant API
 * ClassBreaksRenderer
 * ClassBreaksRenderer.ClassBreak
-* SymbolReferenceProperties
 * SimpleMarkerSymbol
+* SymbolReferenceProperties
 
 ## Additional information
-A standard level license is required to ...
+This sample uses a feature layer to visualize the alternate symbols.
 
 ## Tags
 alternate symbols, class breaks, class breaks renderer, scale based rendering
