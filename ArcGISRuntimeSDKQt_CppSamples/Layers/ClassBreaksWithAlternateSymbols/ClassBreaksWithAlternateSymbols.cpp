@@ -83,7 +83,7 @@ void ClassBreaksWithAlternateSymbols::setMapView(MapQuickView* mapView)
   m_mapView->setMap(m_map);
 
   // set the initial view point upon opening the sample to focus on an area with a lot of features
-  Viewpoint vpCenter = Viewpoint(Point(-13632095.660131, 4545009.846004, SpatialReference::webMercator()), 25000);
+  Viewpoint vpCenter = Viewpoint(Point(-13631205.660131, 4546829.846004, SpatialReference::webMercator()), 25000);
   m_mapView->setViewpoint(vpCenter);
 
   emit mapViewChanged();
@@ -110,16 +110,11 @@ void ClassBreaksWithAlternateSymbols::createUniqueValueRenderer()
   // create and append class breaks
   m_uniqueValueRenderer->uniqueValues()->append(unique_value);
 
-  double purple_diamond_min_scale = 1000000;
-  double purple_diamond_max_scale = 500000;
   m_uniqueValueRenderer->setFieldNames({"req_type"});
 
   SimpleMarkerSymbol* default_sym = new SimpleMarkerSymbol(SimpleMarkerSymbolStyle::Diamond, QColor("purple"), 30, this);
-//  MultilayerPointSymbol* default_sym_ml = default_sym->toMultilayerSymbol();
-//  multi_layer_symbol_1->setReferenceProperties(new SymbolReferenceProperties(purple_diamond_min_scale, purple_diamond_max_scale, this));
 
   m_uniqueValueRenderer->setDefaultSymbol(default_sym->toMultilayerSymbol());
-//  m_uniqueValueRenderer->setMinValue(0);
 
   //set the class breaks renderer on the feature layer
   m_featureLayer->setRenderer(m_uniqueValueRenderer);
