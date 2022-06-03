@@ -1,16 +1,22 @@
 {
-    "category": "TODO",
-    "description": "TODO",
+    "category": "Layers",
+    "description": "Create a class break with alternate symbols.",
     "ignore": false,
     "images": [
         "screenshot.png"
     ],
     "keywords": [
-        "TODO"
+    "alternate symbols",
+    "class break",
+    "class breaks renderer",
+    "scale based rendering"
     ],
     "redirect_from": "",
     "relevant_apis": [
-        "TODO"
+    "ClassBreaksRenderer",
+    "ClassBreaksRenderer.ClassBreak",
+    "SymbolReferenceProperties",
+    "SimpleMarkerSymbol"
     ],
     "snippets": [
         "ClassBreaksWithAlternateSymbols.qml"
