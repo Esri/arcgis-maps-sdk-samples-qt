@@ -49,8 +49,11 @@ Rectangle {
                 }
 
                 // create the class breaks renderer with alternate symbols and assign it to the feature layer renderer
-                FeatureLayer.renderer = createClassBreaksRenderer_();
+                featureLayer.renderer = createClassBreaksRenderer_();
             }
+
+
+
         }
     }
 
