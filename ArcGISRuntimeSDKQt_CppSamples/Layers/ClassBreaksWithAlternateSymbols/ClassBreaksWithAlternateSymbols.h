@@ -21,17 +21,14 @@ namespace Esri
 {
 namespace ArcGISRuntime
 {
+class ClassBreaksRenderer;
+class ClassBreak;
 class FeatureLayer;
 class Map;
 class MapQuickView;
-class ServiceFeatureTable;
 class Renderer;
-class ClassBreaksRenderer;
-class ArcGISMapImageSublayer;
-class ClassBreak;
-class MultilayerPolygonSymbol;
+class ServiceFeatureTable;
 class Symbol;
-class SimpleFillSymbol;
 }
 }
 
@@ -57,13 +54,12 @@ private:
   Esri::ArcGISRuntime::MapQuickView* mapView() const;
   void setMapView(Esri::ArcGISRuntime::MapQuickView* mapView);
   void createClassBreaksRenderer();
-    QList<Esri::ArcGISRuntime::Symbol*> createAlternateSymbols();
+  QList<Esri::ArcGISRuntime::Symbol*> createAlternateSymbols();
 
   Esri::ArcGISRuntime::Map* m_map = nullptr;
   Esri::ArcGISRuntime::MapQuickView* m_mapView = nullptr;
   Esri::ArcGISRuntime::FeatureLayer* m_featureLayer = nullptr;
   Esri::ArcGISRuntime::ClassBreaksRenderer* m_classBreaksRenderer = nullptr;
-//  Esri::ArcGISRuntime::ServiceFeatureTable* m_featureTable = nullptr;
 };
 
 #endif // CLASSBREAKSWITHALTERNATESYMBOLS_H

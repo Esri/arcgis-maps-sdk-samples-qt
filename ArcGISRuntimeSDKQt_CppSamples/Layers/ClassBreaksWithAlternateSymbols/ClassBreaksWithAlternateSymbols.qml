@@ -36,7 +36,6 @@ Item {
             spacing: 5
 
             Button {
-                id: four_million_scale
                 width: 200
                 enabled: true
                 text: "Set Scale to 2500"
@@ -47,7 +46,6 @@ Item {
             }
 
             Button {
-                id: five_million_scale
                 width: 200
                 enabled: true
                 text: "Set Scale to 7500"
@@ -55,7 +53,6 @@ Item {
             }
 
             Button {
-                id: six_million_scale
                 width: 200
                 enabled: true
                 text: "Set Scale to 15000"

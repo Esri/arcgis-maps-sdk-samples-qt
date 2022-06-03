@@ -31,14 +31,7 @@
 #include "ServiceFeatureTable.h"
 #include "FeatureLayer.h"
 #include "ClassBreaksRenderer.h"
-#include "SimpleFillSymbol.h"
-#include "SimpleLineSymbol.h"
-#include "ArcGISMapImageLayer.h"
-#include "ArcGISMapImageSublayer.h"
-#include "MultilayerPolygonSymbol.h"
 #include "SymbolReferenceProperties.h"
-#include "SimpleFillSymbol.h"
-#include "PictureMarkerSymbol.h"
 #include "MultilayerPointSymbol.h"
 #include "SimpleMarkerSymbol.h"
 
@@ -105,7 +98,7 @@ void ClassBreaksWithAlternateSymbols::createClassBreaksRenderer()
   MultilayerPointSymbol* multi_layer_symbol_1 = symbol_1->toMultilayerSymbol();
   multi_layer_symbol_1->setReferenceProperties(new SymbolReferenceProperties(5000, 0, this));
 
-  //create a classbreak with alternate symbols
+  //create a classbreak with alternate symbolsre
   ClassBreak* class_break = new ClassBreak("classbreak", "classbreak", 0, 1, multi_layer_symbol_1, alternate_symbols, this);
 
   //create a class breaks renderer
