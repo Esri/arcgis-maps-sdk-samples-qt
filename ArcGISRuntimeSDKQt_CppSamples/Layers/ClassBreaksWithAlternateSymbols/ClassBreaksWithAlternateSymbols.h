@@ -21,7 +21,7 @@ namespace Esri
 {
 namespace ArcGISRuntime
 {
-class ClassBreaksRenderer;
+class UniqueValueRenderer;
 class ClassBreak;
 class FeatureLayer;
 class Map;
@@ -53,13 +53,13 @@ signals:
 private:
   Esri::ArcGISRuntime::MapQuickView* mapView() const;
   void setMapView(Esri::ArcGISRuntime::MapQuickView* mapView);
-  void createClassBreaksRenderer();
+  void createUniqueValueRenderer();
   QList<Esri::ArcGISRuntime::Symbol*> createAlternateSymbols();
 
   Esri::ArcGISRuntime::Map* m_map = nullptr;
   Esri::ArcGISRuntime::MapQuickView* m_mapView = nullptr;
   Esri::ArcGISRuntime::FeatureLayer* m_featureLayer = nullptr;
-  Esri::ArcGISRuntime::ClassBreaksRenderer* m_classBreaksRenderer = nullptr;
+  Esri::ArcGISRuntime::UniqueValueRenderer* m_uniqueValueRenderer  = nullptr;
 };
 
 #endif // CLASSBREAKSWITHALTERNATESYMBOLS_H

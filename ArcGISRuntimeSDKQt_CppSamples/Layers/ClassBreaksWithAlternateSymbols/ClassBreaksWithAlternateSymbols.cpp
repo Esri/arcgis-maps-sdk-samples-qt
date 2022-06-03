@@ -34,6 +34,7 @@
 #include "SymbolReferenceProperties.h"
 #include "MultilayerPointSymbol.h"
 #include "SimpleMarkerSymbol.h"
+#include "UniqueValueRenderer.h"
 
 using namespace Esri::ArcGISRuntime;
 
@@ -50,7 +51,7 @@ ClassBreaksWithAlternateSymbols::ClassBreaksWithAlternateSymbols(QObject* parent
   // this function creates a class breaks renderer using
   // one class break that includes a list of alternate symbols
   // for various scales
-  createClassBreaksRenderer();
+  createUniqueValueRenderer();
 
   // add the feature layer to the map
   m_map->operationalLayers()->append(m_featureLayer);
@@ -82,13 +83,13 @@ void ClassBreaksWithAlternateSymbols::setMapView(MapQuickView* mapView)
   m_mapView->setMap(m_map);
 
   // set the initial view point upon opening the sample to focus on an area with a lot of features
-  Viewpoint vpCenter = Viewpoint(Point(-13632095.660131, 4545009.846004, SpatialReference::webMercator()), 50000);
+  Viewpoint vpCenter = Viewpoint(Point(-13632095.660131, 4545009.846004, SpatialReference::webMercator()), 25000);
   m_mapView->setViewpoint(vpCenter);
 
   emit mapViewChanged();
 }
 
-void ClassBreaksWithAlternateSymbols::createClassBreaksRenderer()
+void ClassBreaksWithAlternateSymbols::createUniqueValueRenderer()
 {
   // create class breaks renderer using a default symbol and the alternate symbols list
   QList<Symbol*> alternate_symbols = createAlternateSymbols();
@@ -100,23 +101,28 @@ void ClassBreaksWithAlternateSymbols::createClassBreaksRenderer()
   multi_layer_symbol_1->setReferenceProperties(new SymbolReferenceProperties(min_scale, max_scale, this));
 
   //create a classbreak with alternate symbolsre
-  ClassBreak* class_break = new ClassBreak("classbreak", "classbreak", 0, 1, multi_layer_symbol_1, alternate_symbols, this);
+
+  UniqueValue* unique_value = new UniqueValue("unique value", "unique values based on request type", QVariantList{"Damaged Property"}, multi_layer_symbol_1, alternate_symbols, this);
 
   //create a class breaks renderer
-  m_classBreaksRenderer = new ClassBreaksRenderer(this);
+  m_uniqueValueRenderer = new UniqueValueRenderer(this);
 
   // create and append class breaks
-  m_classBreaksRenderer->classBreaks()->append(class_break);
+  m_uniqueValueRenderer->uniqueValues()->append(unique_value);
 
-  m_classBreaksRenderer->setFieldName("status");
+  double purple_diamond_min_scale = 1000000;
+  double purple_diamond_max_scale = 500000;
+  m_uniqueValueRenderer->setFieldNames({"req_type"});
+
   SimpleMarkerSymbol* default_sym = new SimpleMarkerSymbol(SimpleMarkerSymbolStyle::Diamond, QColor("purple"), 30, this);
-  MultilayerPointSymbol* default_sym_ml = default_sym->toMultilayerSymbol();
+//  MultilayerPointSymbol* default_sym_ml = default_sym->toMultilayerSymbol();
+//  multi_layer_symbol_1->setReferenceProperties(new SymbolReferenceProperties(purple_diamond_min_scale, purple_diamond_max_scale, this));
 
-  m_classBreaksRenderer->setDefaultSymbol(default_sym_ml);
-  m_classBreaksRenderer->setMinValue(0);
+  m_uniqueValueRenderer->setDefaultSymbol(default_sym->toMultilayerSymbol());
+//  m_uniqueValueRenderer->setMinValue(0);
 
   //set the class breaks renderer on the feature layer
-  m_featureLayer->setRenderer(m_classBreaksRenderer);
+  m_featureLayer->setRenderer(m_uniqueValueRenderer);
 }
 
 QList<Symbol*> ClassBreaksWithAlternateSymbols::createAlternateSymbols()
