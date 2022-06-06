@@ -43,7 +43,7 @@ Item {
             Button {
                 width: 200
                 enabled: true
-                text: "Set Scale to 2500"
+                text: "Set Scale to 1:2500"
                 onClicked:
                 {
                     model.setScale(2500);
@@ -53,14 +53,14 @@ Item {
             Button {
                 width: 200
                 enabled: true
-                text: "Set Scale to 7500"
+                text: "Set Scale to 1:7500"
                 onClicked: model.setScale(7500);
             }
 
             Button {
                 width: 200
                 enabled: true
-                text: "Set Scale to 15000"
+                text: "Set Scale to 1:15000"
                 onClicked: model.setScale(15000);
             }
         }
