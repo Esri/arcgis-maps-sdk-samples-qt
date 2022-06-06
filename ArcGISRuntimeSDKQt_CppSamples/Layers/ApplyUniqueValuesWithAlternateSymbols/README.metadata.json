@@ -1,0 +1,27 @@
+{
+    "category": "Layers",
+    "description": "Create a unique value with alternate symbols.",
+    "ignore": false,
+    "images": [
+        "screenshot.png"
+    ],
+    "keywords": [
+        "alternate symbols",
+        "scale based rendering",
+        "unique value",
+        "unique value renderer"
+    ],
+    "redirect_from": "",
+    "relevant_apis": [
+        "ClassBreak",
+        "ClassBreaksRenderer",
+        "SymbolReferenceProperties",
+        "SimpleMarkerSymbol"
+    ],
+    "snippets": [
+        "ApplyUniqueValuesWithAlternateSymbols.cpp",
+        "ApplyUniqueValuesWithAlternateSymbols.h",
+        "ApplyUniqueValuesWithAlternateSymbols.qml"
+    ],
+    "title": "Apply unique values with alternate symbols"
+}
