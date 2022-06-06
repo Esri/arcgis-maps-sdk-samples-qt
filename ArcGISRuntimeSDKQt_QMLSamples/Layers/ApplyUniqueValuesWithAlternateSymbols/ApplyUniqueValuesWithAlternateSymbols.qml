@@ -16,7 +16,7 @@
 
 import QtQuick 2.12
 import QtQuick.Controls 2.12
-import Esri.ArcGISRuntime 100.14
+import Esri.ArcGISRuntime 100.15
 import Esri.ArcGISExtras 1.1
 
 Rectangle {
@@ -111,7 +111,6 @@ Rectangle {
 
     function createUniqueValueRenderer_() {
 
-
         // create the default symbol
         const purpleDiamond = ArcGISRuntimeEnvironment.createObject("SimpleMarkerSymbol", {
                                                                          color: "purple",
@@ -145,8 +144,7 @@ Rectangle {
         return uniqueValueRenderer;
     }
 
-    function createAlternateSymbols_()
-    {
+    function createAlternateSymbols_() {
         // alternate symbol 1
         const blueSquare = ArcGISRuntimeEnvironment.createObject("SimpleMarkerSymbol", {
                                                                       color: "blue",
