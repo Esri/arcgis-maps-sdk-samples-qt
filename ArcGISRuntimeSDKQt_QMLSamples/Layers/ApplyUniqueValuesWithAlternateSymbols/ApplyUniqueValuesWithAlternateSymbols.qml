@@ -37,11 +37,11 @@ Rectangle {
         Map {
             initBasemapStyle: Enums.BasemapStyleArcGISTopographic
 
-            // create the feature layer
+            // Create the feature layer
             FeatureLayer {
                 id: featureLayer
 
-                // feature table
+                // Feature table
                 ServiceFeatureTable {
                     id: featureTable
                     url: "https://sampleserver6.arcgisonline.com/arcgis/rest/services/SF311/FeatureServer/0"
@@ -52,8 +52,7 @@ Rectangle {
                 if (loadStatus === Enums.LoadStatusLoaded) {
                     mapView.setViewpoint(initialViewpoint);
                 }
-
-                // create the class breaks renderer with alternate symbols and assign it to the feature layer renderer
+                // Create the class breaks renderer with alternate symbols and assign it to the feature layer renderer
                 featureLayer.renderer = createUniqueValueRenderer_();
             }
         }
@@ -110,8 +109,7 @@ Rectangle {
     }
 
     function createUniqueValueRenderer_() {
-
-        // create the default symbol
+        // Create the default symbol
         const purpleDiamond = ArcGISRuntimeEnvironment.createObject("SimpleMarkerSymbol", {
                                                                          color: "purple",
                                                                          size: 15,
@@ -134,7 +132,7 @@ Rectangle {
         uniqueValue.alternateSymbols.append(alternateSymbols[0]);
         uniqueValue.alternateSymbols.append(alternateSymbols[1]);
 
-        //create the unique value renderer using the class break created above
+        // Create the unique value renderer using the class break created above
         const uniqueValueRenderer = ArcGISRuntimeEnvironment.createObject("UniqueValueRenderer");
         uniqueValueRenderer.defaultSymbol = purpleDiamondMultilayer;
         uniqueValueRenderer.fieldNames = ["req_type"];
@@ -145,7 +143,7 @@ Rectangle {
     }
 
     function createAlternateSymbols_() {
-        // alternate symbol 1
+        // Alternate symbol 1
         const blueSquare = ArcGISRuntimeEnvironment.createObject("SimpleMarkerSymbol", {
                                                                       color: "blue",
                                                                       size: 30,
@@ -154,7 +152,7 @@ Rectangle {
         const blueSquareMultilayer = blueSquare.toMultilayerSymbol();
         blueSquareMultilayer.referenceProperties = ArcGISRuntimeEnvironment.createObject("SymbolReferenceProperties", {minScale: 10000, maxScale: 5000});
 
-        // alternate symbol 2
+        // Alternate symbol 2
         const yellowDiamond = ArcGISRuntimeEnvironment.createObject("SimpleMarkerSymbol", {
                                                                          color: "yellow",
                                                                          size: 30,
