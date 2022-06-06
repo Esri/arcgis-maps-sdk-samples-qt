@@ -17,6 +17,7 @@
 import QtQuick 2.12
 import QtQuick.Controls 2.12
 import Esri.Samples 1.0
+import Esri.ArcGISRuntime.Toolkit 100.13
 
 Item {
 
@@ -28,6 +29,13 @@ Item {
         Component.onCompleted: {
             // Set and keep the focus on SceneView to enable keyboard navigation
             forceActiveFocus();
+        }
+
+        Callout {
+            id: callout
+            calloutData: view.calloutData // bind to the property that is exposed
+            accessoryButtonHidden: true
+            leaderPosition: leaderPositionEnum.Automatic
         }
     }
 

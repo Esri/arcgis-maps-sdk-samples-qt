@@ -92,6 +92,24 @@ void QueryFeaturesWithArcadeExpression::setMapView(MapQuickView* mapView)
       // call showEvaluatedArcadeInCallout with the results from the above call
     });
 
+    m_mapView->calloutData()->setVisible(false);
+      m_mapView->calloutData()->setTitle("Location");
+
+    connect(m_mapView, &MapQuickView::mouseClicked, this, [this](QMouseEvent& mouseEvent){
+        if (m_mapView->calloutData()->isVisible())
+          m_mapView->calloutData()->setVisible(false);
+        else
+        {
+          // set callout position
+          Point mapPoint(m_mapView->screenToLocation(mouseEvent.x(), mouseEvent.y()));
+          m_mapView->calloutData()->setLocation(mapPoint);
+
+          // set detail as coordinates formatted to decimal numbers with precision 2
+          m_mapView->calloutData()->setDetail("x: " + QString::number(mapPoint.x(), 'f', 2) + " y: " + QString::number(mapPoint.y(), 'f', 2));
+          m_mapView->calloutData()->setVisible(true);
+        }
+      });
+
 //    connect(m_mapView, &MapQuickView::identifyLayersCompleted, this, &PerformValveIsolationTrace::onIdentifyLayersCompleted);
 
   emit mapViewChanged();

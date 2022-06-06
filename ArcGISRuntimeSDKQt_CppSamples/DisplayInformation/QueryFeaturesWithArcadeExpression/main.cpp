@@ -24,6 +24,8 @@
 #include <QGuiApplication>
 #include <QQmlApplicationEngine>
 
+#include "Esri/ArcGISRuntime/Toolkit/register.h"
+
 void setAPIKey(const QGuiApplication& app, QString apiKey);
 
 int main(int argc, char *argv[])
@@ -44,9 +46,12 @@ int main(int argc, char *argv[])
   // Add the import Path
   engine.addImportPath(QDir(QCoreApplication::applicationDirPath()).filePath("qml"));
 
+
 #ifdef ARCGIS_RUNTIME_IMPORT_PATH_2
   engine.addImportPath(ARCGIS_RUNTIME_IMPORT_PATH_2);
 #endif
+
+  Esri::ArcGISRuntime::Toolkit::registerComponents(engine);
 
   // Set the source
   engine.load(QUrl("qrc:/Samples/DisplayInformation/QueryFeaturesWithArcadeExpression/main.qml"));
