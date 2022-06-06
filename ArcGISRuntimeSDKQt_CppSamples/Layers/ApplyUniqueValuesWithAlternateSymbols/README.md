@@ -46,6 +46,10 @@ This sample uses a unique value renderer that is created with a unique value tha
 * UniqueValue
 * UniqueValueRenderer
 
+## About the data
+
+The [San Francisco 311 incidents layer](https://services2.arcgis.com/ZQgQTuoyBrtmoGdP/arcgis/rest/services/SF_311_Incidents/FeatureServer/0) in this sample displays point features related to crime incidents such as grafitti and tree damage that have been reported by city residents.
+
 ## Tags
 
 alternate symbols, scale based rendering, unique value, unique value renderer
