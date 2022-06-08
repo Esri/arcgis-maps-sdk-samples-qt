@@ -29,7 +29,7 @@ exists($$PWD/../../../../DevBuildQml.pri) {
   # use the Esri dev build script
   include ($$PWD/../../../../DevBuildQml.pri)
   # include the toolkitqml.pri, which contains all the toolkit resources
-  include($$PWD/../../../toolkit/uitools/toolkitqml.pri)
+  include($$PWD/../../../../arcgis-runtime-toolkit-qt/uitools/toolkitqml.pri)
 } else {
   message("Building against the installed SDK")
   CONFIG+=build_from_setup
