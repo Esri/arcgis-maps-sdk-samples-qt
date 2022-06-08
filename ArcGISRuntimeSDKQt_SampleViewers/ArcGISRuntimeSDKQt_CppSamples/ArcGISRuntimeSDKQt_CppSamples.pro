@@ -37,7 +37,7 @@ exists($$PWD/../../../../DevBuildCpp.pri) {
   # use the Esri dev build script
   include ($$PWD/../../../../DevBuildCpp.pri)
   # include the toolkitcpp.pri, which contains all the toolkit resources
-  include($$PWD/../../../arcgis-runtime-samples-qt/uitools/toolkitcpp.pri)
+  include($$PWD/../../../../arcgis-runtime-toolkit-qt/uitools/toolkitcpp.pri)
 
   INCLUDEPATH += \
       $$COMMONVIEWER \
