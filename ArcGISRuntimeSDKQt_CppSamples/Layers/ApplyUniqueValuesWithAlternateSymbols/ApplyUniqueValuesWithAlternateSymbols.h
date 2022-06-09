@@ -38,27 +38,32 @@ class ApplyUniqueValuesWithAlternateSymbols : public QObject
   Q_OBJECT
 
   Q_PROPERTY(Esri::ArcGISRuntime::MapQuickView* mapView READ mapView WRITE setMapView NOTIFY mapViewChanged)
+  Q_PROPERTY(double currentScale READ currentScale NOTIFY currentScaleChanged)
 
 public:
   explicit ApplyUniqueValuesWithAlternateSymbols(QObject* parent = nullptr);
   ~ApplyUniqueValuesWithAlternateSymbols();
 
   static void init();
-  Q_INVOKABLE void setScale(double scale);
+  Q_INVOKABLE void resetViewpoint();
 
 signals:
   void mapViewChanged();
+  void currentScaleChanged();
 
 private:
   Esri::ArcGISRuntime::MapQuickView* mapView() const;
   void setMapView(Esri::ArcGISRuntime::MapQuickView* mapView);
   void createUniqueValueRenderer();
   QList<Esri::ArcGISRuntime::Symbol*> createAlternateSymbols();
+  void queryCurrentScale();
+  double currentScale() const;
 
   Esri::ArcGISRuntime::Map* m_map = nullptr;
   Esri::ArcGISRuntime::MapQuickView* m_mapView = nullptr;
   Esri::ArcGISRuntime::FeatureLayer* m_featureLayer = nullptr;
   Esri::ArcGISRuntime::UniqueValueRenderer* m_uniqueValueRenderer  = nullptr;
+  double m_currentScale;
 };
 
 #endif // APPLYUNIQUEVALUESWITHALTERNATESYMBOLS_H

@@ -34,34 +34,21 @@ Item {
     Column {
         id: scaleColumn
         anchors {
-            left: parent.left
-            top: parent.top
-            margins: 15
+            bottom: parent.bottom
+            horizontalCenter: parent.horizontalCenter
+            margins: 30
         }
         spacing: 5
 
-        Button {
-            width: 200
-            enabled: true
-            text: "Set Scale to 1:2500"
-            onClicked:
-            {
-                model.setScale(2500);
-            }
+        Label {
+            text: "Current scale: " + ApplyUniqueValuesWithAlternateSymbolsSample.currentScale
         }
 
         Button {
             width: 200
             enabled: true
-            text: "Set Scale to 1:7500"
-            onClicked: model.setScale(7500);
-        }
-
-        Button {
-            width: 200
-            enabled: true
-            text: "Set Scale to 1:15000"
-            onClicked: model.setScale(15000);
+            text: "Reset Viewpoint"
+            onClicked: model.resetViewpoint();
         }
     }
 

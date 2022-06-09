@@ -78,6 +78,18 @@ void ApplyUniqueValuesWithAlternateSymbols::setMapView(MapQuickView* mapView)
   Viewpoint vpCenter = Viewpoint(Point(-13631205.660131, 4546829.846004, SpatialReference::webMercator()), 25000);
   m_mapView->setViewpoint(vpCenter);
 
+  connect(m_mapView, &MapQuickView::viewpointChanged, this, [this](){
+    qDebug() << (int)m_mapView->mapScale();
+  });
+
+  queryCurrentScale();
+
+  connect(m_mapView, &MapQuickView::viewpointChanged, this, [this](){
+    /*qDebug() << */
+    m_currentScale = m_mapView->mapScale();
+    emit currentScaleChanged();
+  });
+
   emit mapViewChanged();
 }
 
@@ -113,7 +125,7 @@ QList<Symbol*> ApplyUniqueValuesWithAlternateSymbols::createAlternateSymbols()
 {
   double minScale1 = 10000;
   double maxScale1 = 5000;
-  SimpleMarkerSymbol* alternateSymbol1 = new SimpleMarkerSymbol(SimpleMarkerSymbolStyle::Square, QColor("blue"), 30, this);
+  SimpleMarkerSymbol* alternateSymbol1 = new SimpleMarkerSymbol(SimpleMarkerSymbolStyle::Square, QColor("blue"), 45, this);
   MultilayerPointSymbol* alternateSymbolMultilayer1 = alternateSymbol1->toMultilayerSymbol();
   alternateSymbolMultilayer1->setReferenceProperties(new SymbolReferenceProperties(minScale1, maxScale1, this));
 
@@ -126,8 +138,28 @@ QList<Symbol*> ApplyUniqueValuesWithAlternateSymbols::createAlternateSymbols()
   return {alternateSymbolMultilayer1, alternateSymbolMultilayer2};
 }
 
-void ApplyUniqueValuesWithAlternateSymbols::setScale(double scale)
+void ApplyUniqueValuesWithAlternateSymbols::resetViewpoint()
 {
   if(m_mapView)
-    m_mapView->setViewpointScale(scale);
+  {
+    //    m_mapView->setViewpointScale(scale);
+        Viewpoint vpCenter = Viewpoint(Point(-13631205.660131, 4546829.846004, SpatialReference::webMercator()), 25000);
+      m_mapView->setViewpoint(vpCenter, 5);
+  }
+
+}
+
+double ApplyUniqueValuesWithAlternateSymbols::currentScale() const
+{
+  return m_currentScale;
+}
+
+void ApplyUniqueValuesWithAlternateSymbols::queryCurrentScale()
+{
+  connect(m_mapView, &MapQuickView::viewpointChanged, this, [this](){
+    /*qDebug() << */
+    m_currentScale = m_mapView->mapScale();
+    emit currentScaleChanged();
+  });
+
 }
