@@ -68,42 +68,21 @@ Rectangle {
 
     Column {
         anchors {
-            left: parent.left
-            top: parent.top
-            margins: 15
+            bottom: parent.bottom
+            horizontalCenter: parent.horizontalCenter
+            margins: 30
         }
-        spacing: 5
-
-        Button {
-            width: 200
-            enabled: true
-            text: "Set Scale to 1:2500"
-            onClicked:
-            {
-                const scale = 2500;
-                mapView.setViewpointCenterAndScale(ArcGISRuntimeEnvironment.createObject("Point", {x: -13631305.660131, y: 4546909.846004}), scale);
-            }
+        Label {
+            bottomPadding: 5
+            text: "Current scale: " + Math.round(mapView.mapScale)
         }
 
         Button {
             width: 200
             enabled: true
-            text: "Set Scale to 1:7500"
-            onClicked:
-            {
-                const scale = 7500;
-                mapView.setViewpointCenterAndScale(ArcGISRuntimeEnvironment.createObject("Point", {x: -13631305.660131, y: 4546909.846004}), scale);
-            }
-        }
-
-        Button {
-            width: 200
-            enabled: true
-            text: "Set Scale to 1:15000"
-            onClicked:
-            {
-                const scale = 15000;
-                mapView.setViewpointCenterAndScale(ArcGISRuntimeEnvironment.createObject("Point", {x: -13631305.660131, y: 4546909.846004}), scale);
+            text: "Reset Viewpoint"
+            onClicked: {
+                mapView.setViewpointAndSeconds(initialViewpoint, 5);
             }
         }
     }
@@ -111,17 +90,17 @@ Rectangle {
     function createUniqueValueRenderer_() {
         // Create the default symbol
         const purpleDiamond = ArcGISRuntimeEnvironment.createObject("SimpleMarkerSymbol", {
-                                                                         color: "purple",
-                                                                         size: 15,
-                                                                         style: Enums.SimpleMarkerSymbolStyleDiamond
-                                                                     });
+                                                                        color: "purple",
+                                                                        size: 15,
+                                                                        style: Enums.SimpleMarkerSymbolStyleDiamond
+                                                                    });
         const purpleDiamondMultilayer = purpleDiamond.toMultilayerSymbol();
 
         const redTriangle = ArcGISRuntimeEnvironment.createObject("SimpleMarkerSymbol", {
-                                                                       color: "red",
-                                                                       size: 30,
-                                                                       style: Enums.SimpleMarkerSymbolStyleTriangle
-                                                                   });
+                                                                      color: "red",
+                                                                      size: 30,
+                                                                      style: Enums.SimpleMarkerSymbolStyleTriangle
+                                                                  });
         const redTriangleMultilayer = redTriangle.toMultilayerSymbol();
         redTriangleMultilayer.referenceProperties = ArcGISRuntimeEnvironment.createObject("SymbolReferenceProperties", {minScale: 5000, maxScale: 0});
 
@@ -145,19 +124,19 @@ Rectangle {
     function createAlternateSymbols_() {
         // Alternate symbol 1
         const blueSquare = ArcGISRuntimeEnvironment.createObject("SimpleMarkerSymbol", {
-                                                                      color: "blue",
-                                                                      size: 30,
-                                                                      style: Enums.SimpleMarkerSymbolStyleSquare
-                                                                  });
+                                                                     color: "blue",
+                                                                     size: 30,
+                                                                     style: Enums.SimpleMarkerSymbolStyleSquare
+                                                                 });
         const blueSquareMultilayer = blueSquare.toMultilayerSymbol();
         blueSquareMultilayer.referenceProperties = ArcGISRuntimeEnvironment.createObject("SymbolReferenceProperties", {minScale: 10000, maxScale: 5000});
 
         // Alternate symbol 2
         const yellowDiamond = ArcGISRuntimeEnvironment.createObject("SimpleMarkerSymbol", {
-                                                                         color: "yellow",
-                                                                         size: 30,
-                                                                         style: Enums.SimpleMarkerSymbolStyleDiamond
-                                                                     });
+                                                                        color: "yellow",
+                                                                        size: 30,
+                                                                        style: Enums.SimpleMarkerSymbolStyleDiamond
+                                                                    });
         const yellowDiamondMultilayer = yellowDiamond.toMultilayerSymbol();
         yellowDiamondMultilayer.referenceProperties = ArcGISRuntimeEnvironment.createObject("SymbolReferenceProperties", {minScale: 20000, maxScale: 10000});
 
