@@ -78,18 +78,7 @@ void ApplyUniqueValuesWithAlternateSymbols::setMapView(MapQuickView* mapView)
   Viewpoint vpCenter = Viewpoint(Point(-13631205.660131, 4546829.846004, SpatialReference::webMercator()), 25000);
   m_mapView->setViewpoint(vpCenter);
 
-  connect(m_mapView, &MapQuickView::viewpointChanged, this, [this](){
-    qDebug() << (int)m_mapView->mapScale();
-  });
-
   queryCurrentScale();
-
-  connect(m_mapView, &MapQuickView::viewpointChanged, this, [this](){
-    /*qDebug() << */
-    m_currentScale = m_mapView->mapScale();
-    emit currentScaleChanged();
-  });
-
   emit mapViewChanged();
 }
 
@@ -155,7 +144,6 @@ double ApplyUniqueValuesWithAlternateSymbols::currentScale() const
 void ApplyUniqueValuesWithAlternateSymbols::queryCurrentScale()
 {
   connect(m_mapView, &MapQuickView::viewpointChanged, this, [this](){
-    /*qDebug() << */
     m_currentScale = m_mapView->mapScale();
     emit currentScaleChanged();
   });
