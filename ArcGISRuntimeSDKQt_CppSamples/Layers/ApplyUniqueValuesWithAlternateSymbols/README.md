@@ -12,7 +12,7 @@ Once scale ranges are applied to unique values, you can further refine the appea
 
 ## How to use the sample
 
-From the UI, select one of the predetermined scales (1:2500, 1:7500 or 1:15000) to view the point symbology at that scale in different colors and geometries which is dependent on the scale. In addition to using the predetermined buttons, you can also manually zoom in an out of the map to see alternate symbols in action dynamically.
+Zoom in and out of the map to see alternate symbols at each scale. To go back to the initial viewpoint, press "Reset Viewpoint".
 
 ## How it works
 

@@ -142,11 +142,9 @@ void ApplyUniqueValuesWithAlternateSymbols::resetViewpoint()
 {
   if(m_mapView)
   {
-    //    m_mapView->setViewpointScale(scale);
-        Viewpoint vpCenter = Viewpoint(Point(-13631205.660131, 4546829.846004, SpatialReference::webMercator()), 25000);
-      m_mapView->setViewpoint(vpCenter, 5);
+    Viewpoint vpCenter = Viewpoint(Point(-13631205.660131, 4546829.846004, SpatialReference::webMercator()), 25000);
+    m_mapView->setViewpoint(vpCenter, 5);
   }
-
 }
 
 double ApplyUniqueValuesWithAlternateSymbols::currentScale() const
