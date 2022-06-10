@@ -36,16 +36,16 @@ ApplyUniqueValuesWithAlternateSymbols::ApplyUniqueValuesWithAlternateSymbols(QOb
   QObject(parent),
   m_map(new Map(BasemapStyle::ArcGISTopographic, this))
 {
-  // create the feature table
+  // Create the feature table
   ServiceFeatureTable* featureTable = new ServiceFeatureTable(QUrl("https://sampleserver6.arcgisonline.com/arcgis/rest/services/SF311/FeatureServer/0"), this);
 
-  // create the feature layer using the feature table
+  // Create the feature layer using the feature table
   m_featureLayer = new FeatureLayer(featureTable, this);
 
-  // add the feature layer to the map
+  // Add the feature layer to the map
   m_map->operationalLayers()->append(m_featureLayer);
 
-  // this function creates a unique value renderer using
+  // This function creates a unique value renderer using
   // one unique value "req_type" that includes a list of
   // alternate symbols for various scales
   createUniqueValueRenderer();
