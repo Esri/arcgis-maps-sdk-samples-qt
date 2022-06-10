@@ -1,0 +1,28 @@
+{
+    "category": "Layers",
+    "description": "Create a unique value with alternate symbols.",
+    "ignore": false,
+    "images": [
+        "screenshot.png"
+    ],
+    "keywords": [
+        "alternate symbols",
+        "multilayer symbol",
+        "scale based rendering",
+        "SimpleMarkerSymbol",
+        "SymbolReferenceProperties",
+        "UniqueValue",
+        "UniqueValueRenderer"
+    ],
+    "redirect_from": "",
+    "relevant_apis": [
+        "SymbolReferenceProperties",
+        "SimpleMarkerSymbol",
+        "UniqueValue",
+        "UniqueValueRenderer"
+    ],
+    "snippets": [
+        "ApplyUniqueValuesWithAlternateSymbols.qml"
+    ],
+    "title": "Apply unique values with alternate symbols"
+}
