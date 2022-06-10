@@ -9,10 +9,10 @@
         "alternate symbols",
         "multilayer symbol",
         "scale based rendering",
-        "simple marker symbol",
-        "symbol reference properties",
-        "unique value",
-        "unique value renderer"
+        "SimpleMarkerSymbol",
+        "SymbolReferenceProperties",
+        "UniqueValue",
+        "UniqueValueRenderer"
     ],
     "redirect_from": "",
     "relevant_apis": [
