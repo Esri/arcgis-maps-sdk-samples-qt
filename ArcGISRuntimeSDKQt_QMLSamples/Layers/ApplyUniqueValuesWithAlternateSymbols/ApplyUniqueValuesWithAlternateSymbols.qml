@@ -16,6 +16,7 @@
 
 import QtQuick 2.12
 import QtQuick.Controls 2.12
+import QtQuick.Layouts 1.12
 import Esri.ArcGISRuntime 100.15
 import Esri.ArcGISExtras 1.1
 
@@ -61,27 +62,41 @@ Rectangle {
         }
         targetScale: 25000
     }
-
-    Column {
+    Rectangle {
         anchors {
-            bottom: parent.bottom
-            horizontalCenter: parent.horizontalCenter
-            margins: 30
+            margins: 5
+            left: parent.left
+            top: parent.top
         }
-        Label {
-            bottomPadding: 5
-            text: "Current scale: 1:" + Math.round(mapView.mapScale)
-        }
-        Button {
-            width: 200
-            enabled: true
-            text: "Reset Viewpoint"
-            onClicked: {
-                mapView.setViewpointAndSeconds(initialViewpoint, 5);
+        width: childrenRect.width
+        height: childrenRect.height
+        color: "#000000"
+        opacity: .75
+        radius: 5
+
+        ColumnLayout {
+            Text {
+                color: "#ffffff"
+                text: "Current scale: 1:" + Math.round(mapView.mapScale)
+                Layout.fillWidth: true
+                Layout.margins: 3
+                font {
+                    weight: Font.DemiBold
+                    pointSize: 10
+                }
+            }
+            Button {
+                text: qsTr("Reset Viewpoint")
+                font {
+                    weight: Font.DemiBold
+                    pointSize: 10
+                }
+                Layout.margins: 3
+                Layout.fillWidth: true
+                onClicked: mapView.setViewpointAndSeconds(initialViewpoint, 5);
             }
         }
     }
-
     function createUniqueValueRenderer() {
         // Create the default symbol
         const purpleDiamond = ArcGISRuntimeEnvironment.createObject("SimpleMarkerSymbol", {
