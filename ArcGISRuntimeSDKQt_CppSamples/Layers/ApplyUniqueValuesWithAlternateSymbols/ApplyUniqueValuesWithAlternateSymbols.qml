@@ -19,7 +19,6 @@ import QtQuick.Controls 2.12
 import Esri.Samples 1.0
 
 Item {
-
     // add a mapView component
     MapView {
         id: view
@@ -38,12 +37,9 @@ Item {
             horizontalCenter: parent.horizontalCenter
             margins: 30
         }
-        spacing: 5
-
         Label {
-            text: "Current scale: " + ApplyUniqueValuesWithAlternateSymbolsSample.currentScale
+            text: "Current scale: 1:" + Math.round(model.currentScale)
         }
-
         Button {
             width: 200
             enabled: true

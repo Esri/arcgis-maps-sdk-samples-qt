@@ -42,13 +42,13 @@ ApplyUniqueValuesWithAlternateSymbols::ApplyUniqueValuesWithAlternateSymbols(QOb
   // create the feature layer using the feature table
   m_featureLayer = new FeatureLayer(featureTable, this);
 
+  // add the feature layer to the map
+  m_map->operationalLayers()->append(m_featureLayer);
+
   // this function creates a unique value renderer using
   // one unique value "req_type" that includes a list of
   // alternate symbols for various scales
   createUniqueValueRenderer();
-
-  // add the feature layer to the map
-  m_map->operationalLayers()->append(m_featureLayer);
 }
 
 ApplyUniqueValuesWithAlternateSymbols::~ApplyUniqueValuesWithAlternateSymbols() = default;
@@ -74,7 +74,7 @@ void ApplyUniqueValuesWithAlternateSymbols::setMapView(MapQuickView* mapView)
   m_mapView = mapView;
   m_mapView->setMap(m_map);
 
-  // set the initial view point upon opening the sample to focus on an area with a lot of features
+  // Set the initial view point upon opening the sample to focus on an area with a lot of features
   Viewpoint vpCenter = Viewpoint(Point(-13631205.660131, 4546829.846004, SpatialReference::webMercator()), 25000);
   m_mapView->setViewpoint(vpCenter);
 
@@ -92,21 +92,21 @@ void ApplyUniqueValuesWithAlternateSymbols::createUniqueValueRenderer()
   MultilayerPointSymbol* multilayerSymbol1 = symbol1->toMultilayerSymbol();
   multilayerSymbol1->setReferenceProperties(new SymbolReferenceProperties(minScale, maxScale, this));
 
-  //create a unique value with alternate symbols
-  UniqueValue* unique_value = new UniqueValue("unique value", "unique values based on request type", QVariantList{"Damaged Property"}, multilayerSymbol1, alternateSymbols, this);
+  // Create a unique value with alternate symbols
+  UniqueValue* uniqueValue = new UniqueValue("unique value", "unique values based on request type", QVariantList{"Damaged Property"}, multilayerSymbol1, alternateSymbols, this);
 
-  //create a unique value renderer
+  // Create a unique value renderer
   m_uniqueValueRenderer = new UniqueValueRenderer(this);
 
-  // create and append unique value
-  m_uniqueValueRenderer->uniqueValues()->append(unique_value);
+  // Create and append unique value
+  m_uniqueValueRenderer->uniqueValues()->append(uniqueValue);
 
   m_uniqueValueRenderer->setFieldNames({"req_type"});
 
   SimpleMarkerSymbol* defaultSym = new SimpleMarkerSymbol(SimpleMarkerSymbolStyle::Diamond, QColor("purple"), 15, this);
   m_uniqueValueRenderer->setDefaultSymbol(defaultSym->toMultilayerSymbol());
 
-  //set the unique value renderer on the feature layer
+  // Set the unique value renderer on the feature layer
   m_featureLayer->setRenderer(m_uniqueValueRenderer);
 }
 

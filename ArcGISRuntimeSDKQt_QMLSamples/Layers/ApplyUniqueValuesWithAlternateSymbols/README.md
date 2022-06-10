@@ -20,15 +20,11 @@ This sample uses a unique value renderer that is created with a unique value tha
 
 1. Create a feature layer using the service url and add it to the list of operational layers.
 2. Create two alternate symbols (a blue square and a yellow diamond) to be used for the unique value. To create an alternate symbol:
-
     a. Create a symbol using `SimpleMarkerSymbol`.
-    
-    b. Convert the Simple Marker Symbol to a Multilayer Symbol.
-    
-    c. Set the valid scale range through reference properties on the multilayer point symbols blue square and yellow diamond by calling `MultilayerSymbol::setReferenceProperties(new SymbolReferenceProperties(double minScale, double maxScale, QObject *parent = nullptr));`.
+    b. Convert the Simple Marker Symbol to a Multilayer Symbol.   
+    c. Set the valid scale range through reference properties on the multilayer point symbols blue square and yellow diamond by calling `SymbolReferenceProperties`.
     
 3. Create a third multilayer symbol to be used when creating the unique value:
-    
     a. Create a red triangle and set the reference properties.
     
 4. Create a unique value using the red triangle from step three and the list of alternate symbols from step two.
@@ -52,5 +48,4 @@ The [San Francisco 311 incidents layer](https://services2.arcgis.com/ZQgQTuoyBrt
 
 ## Tags
 
-alternate symbols, scale based rendering, unique value, unique value renderer
-
+alternate symbols, multilayer symbol, scale based rendering, simple marker symbol, symbol reference properties, unique value, unique value renderer

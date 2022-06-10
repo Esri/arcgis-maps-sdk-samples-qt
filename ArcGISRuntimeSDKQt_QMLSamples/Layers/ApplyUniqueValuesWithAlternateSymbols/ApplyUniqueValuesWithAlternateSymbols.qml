@@ -33,35 +33,31 @@ Rectangle {
             // Set and keep the focus on MapView to enable keyboard navigation
             forceActiveFocus();
         }
-
         Map {
             initBasemapStyle: Enums.BasemapStyleArcGISTopographic
 
-            // Create the feature layer
             FeatureLayer {
                 id: featureLayer
 
-                // Feature table
                 ServiceFeatureTable {
                     id: featureTable
                     url: "https://sampleserver6.arcgisonline.com/arcgis/rest/services/SF311/FeatureServer/0"
                 }
             }
             onLoadStatusChanged: {
-
                 if (loadStatus === Enums.LoadStatusLoaded) {
                     mapView.setViewpoint(initialViewpoint);
                 }
                 // Create the class breaks renderer with alternate symbols and assign it to the feature layer renderer
-                featureLayer.renderer = createUniqueValueRenderer_();
+                featureLayer.renderer = createUniqueValueRenderer();
             }
         }
     }
     ViewpointCenter {
         id: initialViewpoint
         center: Point {
-            x: -13631305.660131
-            y: 4546909.846004
+            x: -13631205.660131
+            y: 4546829.846004
         }
         targetScale: 25000
     }
@@ -74,9 +70,8 @@ Rectangle {
         }
         Label {
             bottomPadding: 5
-            text: "Current scale: " + Math.round(mapView.mapScale)
+            text: "Current scale: 1:" + Math.round(mapView.mapScale)
         }
-
         Button {
             width: 200
             enabled: true
@@ -87,7 +82,7 @@ Rectangle {
         }
     }
 
-    function createUniqueValueRenderer_() {
+    function createUniqueValueRenderer() {
         // Create the default symbol
         const purpleDiamond = ArcGISRuntimeEnvironment.createObject("SimpleMarkerSymbol", {
                                                                         color: "purple",
@@ -104,9 +99,9 @@ Rectangle {
         const redTriangleMultilayer = redTriangle.toMultilayerSymbol();
         redTriangleMultilayer.referenceProperties = ArcGISRuntimeEnvironment.createObject("SymbolReferenceProperties", {minScale: 5000, maxScale: 0});
 
-        const alternateSymbols = createAlternateSymbols_();
+        const alternateSymbols = createAlternateSymbols();
 
-        let uniqueValue = ArcGISRuntimeEnvironment.createObject("UniqueValue", {label: "unique value", description: "unique value with alternate symbols", values: ["Damaged Property"], symbol: redTriangleMultilayer});
+        const uniqueValue = ArcGISRuntimeEnvironment.createObject("UniqueValue", {label: "unique value", description: "unique value with alternate symbols", values: ["Damaged Property"], symbol: redTriangleMultilayer});
 
         uniqueValue.alternateSymbols.append(alternateSymbols[0]);
         uniqueValue.alternateSymbols.append(alternateSymbols[1]);
@@ -121,11 +116,11 @@ Rectangle {
         return uniqueValueRenderer;
     }
 
-    function createAlternateSymbols_() {
+    function createAlternateSymbols() {
         // Alternate symbol 1
         const blueSquare = ArcGISRuntimeEnvironment.createObject("SimpleMarkerSymbol", {
                                                                      color: "blue",
-                                                                     size: 30,
+                                                                     size: 45,
                                                                      style: Enums.SimpleMarkerSymbolStyleSquare
                                                                  });
         const blueSquareMultilayer = blueSquare.toMultilayerSymbol();
