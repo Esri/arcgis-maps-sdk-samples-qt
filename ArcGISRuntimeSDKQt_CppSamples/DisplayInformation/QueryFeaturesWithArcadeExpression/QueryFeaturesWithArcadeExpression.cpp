@@ -51,6 +51,7 @@ QueryFeaturesWithArcadeExpression::QueryFeaturesWithArcadeExpression(QObject* pa
       // Set the visibility of all but the RDT Beats layer to false to avoid cluttering the UI
       for (int i = 0; i < m_map->operationalLayers()->size(); ++i)
       {
+
         auto current_layer_name = m_map->operationalLayers()->at(i)->name();
         if ((current_layer_name == "Crime in the last 60 days") || (current_layer_name == "Police Stations"))
         {
