@@ -1,6 +1,6 @@
 # Description
 
-Summary of the change and any relevant info.
+<!--- Summary of the change and any relevant info. -->
 
 ## Type of change
 
