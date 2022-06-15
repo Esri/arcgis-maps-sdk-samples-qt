@@ -26,6 +26,10 @@
 #include "Point.h"
 #include "PortalItem.h"
 #include "Feature.h"
+#include "ArcadeEvaluator.h"
+#include "ArcadeExpression.h"
+#include "ArcadeEvaluationResult.h"
+#include "FeatureLayer.h"
 
 #include <QDebug>
 
@@ -41,10 +45,6 @@ QueryFeaturesWithArcadeExpression::QueryFeaturesWithArcadeExpression(QObject* pa
   // Create a map object using the portalItem
   m_map = new Map(portalItem, this);
 
-  //  for (const auto layer : m_map->operationalLayers()) {
-  //    qDebug() << layer;
-  //  }
-
   connect(m_map, &Map::doneLoading, this, [this]()
   {
     if (m_map->loadStatus() == LoadStatus::Loaded)
@@ -57,6 +57,11 @@ QueryFeaturesWithArcadeExpression::QueryFeaturesWithArcadeExpression(QObject* pa
         if ((current_layer_name == "Crime in the last 60 days") || (current_layer_name == "Police Stations"))
         {
           m_map->operationalLayers()->at(i)->setVisible(false);
+        }
+
+        if (current_layer_name == "RPD Beats  - City_Beats_Border_1128-4500")
+        {
+          m_beatsLayer = static_cast<FeatureLayer*>(m_map->operationalLayers()->at(i));
         }
       }
     }
@@ -110,8 +115,6 @@ void QueryFeaturesWithArcadeExpression::setMapView(MapQuickView* mapView)
         if (!identifyResult)
           return;
 
-        QList<Feature*> identifiedFeature;
-
         GeoElement* element = identifyResult->geoElements().at(0);
         m_identifiedFeature = static_cast<Feature*>(element);
 
@@ -127,5 +130,26 @@ void QueryFeaturesWithArcadeExpression::setMapView(MapQuickView* mapView)
 
 void QueryFeaturesWithArcadeExpression::showEvaluatedArcadeInCallout(Feature* feature, Point mapPoint)
 {
+  const QString& expressionValue =
+      "// Get a feature set of crimes from the map by referencing a layer name\n"
+      "var crimes = FeatureSetByName(${'$'}map, \"Crime in the last 60 days\")\n"
 
+      "// Count the number of crimes that intersect the provided police beat polygon\n"
+      "return Count(Intersects(${'$'}feature, crimes))";
+
+  ArcadeExpression expression {expressionValue};
+  ArcadeEvaluator* evaluator = new ArcadeEvaluator(&expression, ArcadeProfile::FormCalculation, this);
+
+  // Create a map for key-value pairs
+  auto profileVariables = QVariantMap{{"Endangered", "ENDANGERED"}, {"Not endangered", "NOT_ENDANGERED"}, {"N/A", "NA"}};
+
+  connect(evaluator, &ArcadeEvaluator::evaluateCompleted, this, [this](QUuid taskId)
+  {
+    // TODO: Find a way to get back the result from evaluate here???
+    //    ArcadeEvaluationResult* result = evaluator->
+  });
+
+  evaluator->evaluate(profileVariables);
+
+  m_mapView->calloutData()->setDetail("Beat: $beat - $section\n $result crimes in the past two months");
 }
