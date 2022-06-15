@@ -18,6 +18,7 @@ import QtQuick.Controls 2.2
 import QtQuick.Controls.Material 2.1
 import Esri.ArcGISRuntimeSamples 1.0
 import Esri.ArcGISExtras 1.1
+import Telemetry 0.1
 
 ApplicationWindow {
     id: window
@@ -88,8 +89,12 @@ ApplicationWindow {
                         text: qsTr("Live Sample")
                         onTriggered: {
                             aboutView.visible = false;
+                            gAnalyticsView.visible = false;
                             proxySetupView.visible = false;
                             SampleManager.currentMode = SampleManager.LiveSampleView
+                            // postEvent handled in
+                            // - SampleListView.qml for categories
+                            // - SearchView.qml for searches
                         }
                     }
                     MenuItem {
@@ -98,8 +103,10 @@ ApplicationWindow {
                         text: qsTr("Source Code")
                         onTriggered: {
                             aboutView.visible = false;
+                            gAnalyticsView.visible = false;
                             proxySetupView.visible = false;
                             SampleManager.currentMode = SampleManager.SourceCodeView
+                            GAnalytics.postEvent("samplecode_view", {"sample name": SampleManager.currentSample.name})
                         }
                     }
                     MenuItem {
@@ -108,8 +115,10 @@ ApplicationWindow {
                         text: qsTr("Description")
                         onTriggered: {
                             aboutView.visible = false;
+                            gAnalyticsView.visible = false;
                             proxySetupView.visible = false;
                             SampleManager.currentMode = SampleManager.DescriptionView
+                            GAnalytics.postEvent("description_view", {"sample name": SampleManager.currentSample.name})
                         }
                     }
                     MenuItem {
@@ -118,6 +127,7 @@ ApplicationWindow {
                         text: qsTr("Manage offline data")
                         onTriggered: {
                             aboutView.visible = false;
+                            gAnalyticsView.visible = false;
                             proxySetupView.visible = false;
                             if (SampleManager.currentMode != SampleManager.DownloadDataView || !SampleManager.downloadInProgress)
                                 SampleManager.currentMode = SampleManager.ManageOfflineDataView
@@ -129,6 +139,7 @@ ApplicationWindow {
                         text: qsTr("API Reference")
                         onTriggered: {
                             aboutView.visible = false;
+                            gAnalyticsView.visible = false;
                             proxySetupView.visible = false;
                             Qt.openUrlExternally(SampleManager.apiReferenceUrl)
                         }
@@ -136,9 +147,21 @@ ApplicationWindow {
                     MenuItem {
                         width: parent.width
                         height: 48
-                        text: qsTr("Settings")
+                        text: qsTr("Telemetry Settings")
                         onTriggered: {
                             aboutView.visible = false;
+                            gAnalyticsView.visible = true;
+                            proxySetupView.visible = false;
+                        }
+                    }
+
+                    MenuItem {
+                        width: parent.width
+                        height: 48
+                        text: qsTr("Proxy Settings")
+                        onTriggered: {
+                            aboutView.visible = false;
+                            gAnalyticsView.visible = false;
                             proxySetupView.visible = true;
                         }
                     }
@@ -149,6 +172,7 @@ ApplicationWindow {
                         text: qsTr("About")
                         onTriggered: {
                             aboutView.visible = true;
+                            gAnalyticsView.visible = false;
                             proxySetupView.visible = false;
                         }
                     }
@@ -190,6 +214,11 @@ ApplicationWindow {
 
     DataDownloadView {
         id: dataDownloadView
+        anchors.fill: parent
+    }
+
+    GAnalyticsView {
+        id: gAnalyticsView
         anchors.fill: parent
     }
 
@@ -356,5 +385,8 @@ ApplicationWindow {
     Component.onCompleted: {
         // initialize the SampleManager singleton
         SampleManager.init();
+
+        // initialize the Google Analytics singleton
+        GAnalytics.init();
     }
 }

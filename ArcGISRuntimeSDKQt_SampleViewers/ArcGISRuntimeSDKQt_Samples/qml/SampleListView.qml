@@ -16,6 +16,7 @@
 import QtQuick 2.7
 import QtQuick.Controls 2.2
 import Esri.ArcGISRuntimeSamples 1.0
+import Telemetry 0.1
 
 Page {
     id: sampleListView
@@ -101,6 +102,7 @@ Page {
                             drawer.close();
                             // launch sample...
                             SampleManager.currentSample = sample;
+                            GAnalytics.postEvent("sample_opened", {"sample name": sample.name, "referrer": "category list"});
                         }
                     }
                 }

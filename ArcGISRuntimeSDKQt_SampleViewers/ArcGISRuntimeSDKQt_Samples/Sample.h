@@ -38,6 +38,7 @@ public:
   Q_PROPERTY(QVariant description READ description CONSTANT)
   Q_PROPERTY(QVariant thumbnailUrl READ thumbnailUrl CONSTANT)
   Q_PROPERTY(DataItemListModel* dataItems READ dataItems CONSTANT)
+  Q_PROPERTY(QVariant name READ name CONSTANT)
 
   QVariant name() const { return m_name; }
   QVariant path() const { return m_path; }
