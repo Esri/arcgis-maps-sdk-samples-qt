@@ -18,6 +18,8 @@
 #include <QDir>
 #include <QQmlEngine>
 
+#include <Esri/ArcGISRuntime/Toolkit/register.h>
+
 void setAPIKey(const QGuiApplication& app, QString apiKey);
 
 int main(int argc, char *argv[])
@@ -40,6 +42,8 @@ int main(int argc, char *argv[])
 #ifdef ARCGIS_RUNTIME_IMPORT_PATH_2
   view.engine()->addImportPath(ARCGIS_RUNTIME_IMPORT_PATH_2);
 #endif
+
+  Esri::ArcGISRuntime::Toolkit::registerComponents(*(view.engine()));
 
   // Set the source
   view.setSource(QUrl("qrc:/Samples/DisplayInformation/QueryFeaturesWithArcadeExpression/QueryFeaturesWithArcadeExpression.qml"));

@@ -23,7 +23,8 @@ ARCGIS_RUNTIME_VERSION = 100.15
 include($$PWD/arcgisruntime.pri)
 
 # path of the toolkit relative to the sample
-TOOLKIT_PRI_PATH = $$PWD/../../../arcgis-runtime-toolkit-qt
+#TOOLKIT_PRI_PATH = $$PWD/../../../arcgis-runtime-toolkit-qt
+TOOLKIT_PRI_PATH = $$absolute_path("", "D:\applications\qt\sdk\toolkit")
 
 exists($$TOOLKIT_PRI_PATH/uitools/toolkitqml.pri) {
     include($$TOOLKIT_PRI_PATH/uitools/toolkitqml.pri)

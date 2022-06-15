@@ -60,7 +60,6 @@ QueryFeaturesWithArcadeExpression::QueryFeaturesWithArcadeExpression(QObject* pa
       }
     }
   });
-
 }
 
 QueryFeaturesWithArcadeExpression::~QueryFeaturesWithArcadeExpression() = default;

@@ -15,13 +15,19 @@
 // [Legal]
 
 import QtQuick 2.12
-import Esri.ArcGISRuntime 100.14
+import Esri.ArcGISRuntime 100.15
+import Esri.ArcGISExtras 1.1
+import Esri.ArcGISRuntime.Toolkit 100.13
 
 Rectangle {
     id: rootRectangle
     clip: true
     width: 800
     height: 600
+
+    property Point calloutLocation
+    property real xCoor
+    property real yCoor
 
     MapView {
         id: mapView
@@ -31,38 +37,65 @@ Rectangle {
             // Set and keep the focus on MapView to enable keyboard navigation
             forceActiveFocus();
         }
-        Map {
-            id: map
-            initBasemapStyle: Enums.BasemapStyleArcGISTopographic
-            FeatureLayer{
-            }
-            PortalItem {
-                id: mapPortalItem
-                portal: portal
-                itemId: "14562fced3474190b52d315bc19127f6"
-                //                onErrorChanged: {
-                //                    console.log("Error in portal item: %1(%2)".arg(error.message).arg(error.additionalMessage));
-                //                }
-                onLoadStatusChanged: {
-                    if (loadStatus === Enums.LoadStatusLoaded) {
-//                        map.operationalLayers.forEach(fl => {
-//                                                          if (fl.name !== "RPD Beats  - City_Beats_Border_1128-4500") {
-//                                                              fl.visible = false;
-//                                                          }
-//                                                      });
-                        map.operationalLayers.append(mapPortalItem);
-                        let count = map.operationalLayers.count;
-                        for (let i = 0; i < map.operationalLayers.count; ++i) {
-                            let currentFeatureLayer = map.operationalLayers.get(i);
-                            let featureLayerName = currentFeatureLayer.name;
 
-
-                        }
-                    }
-                }
+        PortalItem {
+            id: mapPortalItem
+            portal: portal
+            itemId: "14562fced3474190b52d315bc19127f6"
+            //                onErrorChanged: {
+            //                    console.log("Error in portal item: %1(%2)".arg(error.message).arg(error.additionalMessage));
+            //                }
+            onLoadStatusChanged: {
+                                    if (loadStatus === Enums.LoadStatusLoaded) {
+                //                        map.operationalLayers.forEach(fl => {
+                //                                                          if (fl.name !== "RPD Beats  - City_Beats_Border_1128-4500") {
+                //                                                              fl.visible = false;
+                //                                                          }
+                //                                                      });
+                                        map.operationalLayers.append(mapPortalItem);
+//                                            let count = map.operationalLayers.count;
+//                                            for (let i = 0; i < map.operationalLayers.count; ++i) {
+//                                                let currentFeatureLayer = map.operationalLayers.get(i);
+//                                                let featureLayerName = currentFeatureLayer.name;
+//                                            }
+                                    }
             }
         }
 
+        Map {
+            id: map
+            initBasemapStyle: Enums.BasemapStyleArcGISTopographic
+            item: mapPortalItem
+        }
+        //! [show callout qml api snippet]
+//         initialize Callout
+        calloutData {
+            imageUrl: "qrc:/Samples/DisplayInformation/ShowCallout/RedShinyPin.png"
+            title: "Location"
+            location: calloutLocation
+            detail: "x: " + xCoor + " y: " + yCoor
+        }
+
+        Callout {
+            id: callout
+            calloutData: parent.calloutData
+            leaderPosition: leaderPositionEnum.Automatic
+        }
+//        ! [show callout qml api snippet]
+
+//         display callout on mouseClicked
+        onMouseClicked: {
+            if (callout.calloutVisible)
+                callout.dismiss()
+            else
+            {
+                calloutLocation = mouse.mapPoint;
+                xCoor = mouse.mapPoint.x.toFixed(2);
+                yCoor = mouse.mapPoint.y.toFixed(2);
+                callout.accessoryButtonHidden = true;
+                callout.showCallout();
+            }
+        }
 
     }
 }
