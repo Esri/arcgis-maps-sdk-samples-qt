@@ -23,13 +23,12 @@ namespace Esri
 {
 namespace ArcGISRuntime
 {
+class ArcGISFeature;
 class CalloutData;
-class FeatureLayer;
 class Feature;
 class Map;
 class MapQuickView;
 class Point;
-class ArcGISFeature;
 }
 }
 
@@ -57,11 +56,7 @@ private:
 
   Esri::ArcGISRuntime::Map* m_map = nullptr;
   Esri::ArcGISRuntime::MapQuickView* m_mapView = nullptr;
-  Esri::ArcGISRuntime::FeatureLayer* m_beatsLayer = nullptr;
-  Esri::ArcGISRuntime::CalloutData* m_calloutData = nullptr;
   Esri::ArcGISRuntime::ArcGISFeature* m_identifiedFeature = nullptr;
-  Esri::ArcGISRuntime::Point* m_clickedPoint;
-  QString m_calloutText;
 };
 
 #endif // QUERYFEATURESWITHARCADEEXPRESSION_H
