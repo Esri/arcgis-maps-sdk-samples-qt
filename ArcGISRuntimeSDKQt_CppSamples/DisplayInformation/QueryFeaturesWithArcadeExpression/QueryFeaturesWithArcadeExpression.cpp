@@ -152,21 +152,26 @@ void QueryFeaturesWithArcadeExpression::showEvaluatedArcadeInCallout(Feature* fe
 {
 
   qDebug() << "showEvaluatedArcadeInCallout";
-  const QString& expressionValue =
-      "// Get a feature set of crimes from the map by referencing a layer name\n"
-      "var crimes = FeatureSetByName($map, \"Crime in the last 60 days\")\n"
+//  const QString& expressionValue =
+//      "// Get a feature set of crimes from the map by referencing a layer name\n"
+//      "var crimes = FeatureSetByName($map, \"Crime in the last 60 days\")\n"
 
-      "// Count the number of crimes that intersect the provided police beat polygon\n"
-      "return Count(Intersects($feature, crimes))";
+//      "// Count the number of crimes that intersect the provided police beat polygon\n"
+//      "return Count(Intersects($feature, crimes))";
+  QVariantMap profileVariables;
+  profileVariables["$feature"] = QVariant::fromValue(feature);
+  profileVariables["$map"] = QVariant::fromValue(m_map);
+
+  const auto expressionValue =
+      "var crimes = FeatureSetByName($map, 'Crime in the last 60 days');\n"
+      "return Count(Intersects($feature, crimes));";
 
   ArcadeExpression expression {expressionValue};
   ArcadeEvaluator* evaluator = new ArcadeEvaluator(&expression, ArcadeProfile::FormCalculation, this);
 
   qDebug() << "Made it past evaluator";
 
-  QVariantMap profileVariables;
-  profileVariables["$feature"] = QVariant::fromValue(feature);
-  profileVariables["$map"] = QVariant::fromValue(m_mapView);
+
 
   qDebug() << "Made it past profileVariables";
 
@@ -182,9 +187,14 @@ void QueryFeaturesWithArcadeExpression::showEvaluatedArcadeInCallout(Feature* fe
       return;
     }
 
+    auto eval_result = arcadeEvaluationResult->result();
 
+    qDebug() <<  eval_result;
     qDebug() << "Made it past eval_result";
-    m_mapView->calloutData()->setDetail("$eval_result crimes in the past two months");
+    int crimeCount = eval_result.toInt();
+
+    qDebug() << crimeCount;
+    m_mapView->calloutData()->setDetail("Crimes in the last 60 days: " + QString::number(crimeCount));
   });
 
   connect(evaluator, &ArcadeEvaluator::errorOccurred, this, [](Error e)
