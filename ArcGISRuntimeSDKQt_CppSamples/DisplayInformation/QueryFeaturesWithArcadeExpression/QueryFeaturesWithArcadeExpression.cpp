@@ -30,8 +30,12 @@
 #include "ArcadeExpression.h"
 #include "ArcadeEvaluationResult.h"
 #include "FeatureLayer.h"
+#include "ArcGISFeatureListModel.h"
+#include "ArcGISFeatureTable.h"
 
 #include <QDebug>
+#include <QVariantMap>
+#include <QMap>
 
 using namespace Esri::ArcGISRuntime;
 
@@ -59,10 +63,10 @@ QueryFeaturesWithArcadeExpression::QueryFeaturesWithArcadeExpression(QObject* pa
           m_map->operationalLayers()->at(i)->setVisible(false);
         }
 
-        if (current_layer_name == "RPD Beats  - City_Beats_Border_1128-4500")
-        {
-          m_beatsLayer = static_cast<FeatureLayer*>(m_map->operationalLayers()->at(i));
-        }
+        //        if (current_layer_name == "RPD Beats  - City_Beats_Border_1128-4500")
+        //        {
+        //          m_beatsLayer = static_cast<FeatureLayer*>(m_map->operationalLayers()->at(i));
+        //        }
       }
     }
   });
@@ -93,7 +97,7 @@ void QueryFeaturesWithArcadeExpression::setMapView(MapQuickView* mapView)
   m_mapView->setMap(m_map);
 
   m_mapView->calloutData()->setVisible(false);
-  m_mapView->calloutData()->setTitle("Crimes");
+  m_mapView->calloutData()->setTitle("RPD Beats");
 
   connect(m_mapView, &MapQuickView::mouseClicked, this, [this](QMouseEvent& mouseEvent){
     if (m_mapView->calloutData()->isVisible())
@@ -104,22 +108,38 @@ void QueryFeaturesWithArcadeExpression::setMapView(MapQuickView* mapView)
       Point mapPoint(m_mapView->screenToLocation(mouseEvent.x(), mouseEvent.y()));
       m_mapView->calloutData()->setLocation(mapPoint);
 
-      // Identify the visible layer
-      m_mapView->identifyLayers(mouseEvent.x(), mouseEvent.y(), 12, false);
-
       // once the identify is done
-      connect(m_mapView, &MapQuickView::identifyLayerCompleted, this, [this, mapPoint](QUuid, Esri::ArcGISRuntime::IdentifyLayerResult* rawIdentifyResult)
+      connect(m_mapView, &MapQuickView::identifyLayersCompleted, this, [this, mapPoint](QUuid, const QList<IdentifyLayerResult*>& results)
       {
-        auto identifyResult = std::unique_ptr<IdentifyLayerResult>(rawIdentifyResult);
+        //        auto identifyResult = std::unique_ptr<IdentifyLayerResult>(results);
 
-        if (!identifyResult)
+        qDebug() << results.count();
+
+        if (results.empty())
+        {
+          qDebug() << "results is empty";
           return;
+        }
 
-        GeoElement* element = identifyResult->geoElements().at(0);
-        m_identifiedFeature = static_cast<Feature*>(element);
+        //        GeoElement* element = identifyResult->geoElements().at(0);
+        QList<GeoElement*> element_list = results.first()->geoElements();
+        qDebug() << element_list.count();
+        GeoElement* element;
+
+        if (element_list.empty())
+        {
+          //          element = element_list.at(0);
+          qDebug() << "Element list is empty";
+          return;
+        }
+        element = element_list.at(0);
+        m_identifiedFeature = dynamic_cast<ArcGISFeature*>(element);
 
         showEvaluatedArcadeInCallout(m_identifiedFeature, mapPoint);
       });
+
+      // Identify the visible layer
+      m_mapView->identifyLayers(mouseEvent.x(), mouseEvent.y(), 12, false);
 
       m_mapView->calloutData()->setVisible(true);
     }
@@ -130,26 +150,52 @@ void QueryFeaturesWithArcadeExpression::setMapView(MapQuickView* mapView)
 
 void QueryFeaturesWithArcadeExpression::showEvaluatedArcadeInCallout(Feature* feature, Point mapPoint)
 {
+
+  qDebug() << "showEvaluatedArcadeInCallout";
   const QString& expressionValue =
       "// Get a feature set of crimes from the map by referencing a layer name\n"
-      "var crimes = FeatureSetByName(${'$'}map, \"Crime in the last 60 days\")\n"
+      "var crimes = FeatureSetByName($map, \"Crime in the last 60 days\")\n"
 
       "// Count the number of crimes that intersect the provided police beat polygon\n"
-      "return Count(Intersects(${'$'}feature, crimes))";
+      "return Count(Intersects($feature, crimes))";
 
   ArcadeExpression expression {expressionValue};
   ArcadeEvaluator* evaluator = new ArcadeEvaluator(&expression, ArcadeProfile::FormCalculation, this);
 
-  // Create a map for key-value pairs
-  auto profileVariables = QVariantMap{{"Endangered", "ENDANGERED"}, {"Not endangered", "NOT_ENDANGERED"}, {"N/A", "NA"}};
+  qDebug() << "Made it past evaluator";
 
-  connect(evaluator, &ArcadeEvaluator::evaluateCompleted, this, [this](QUuid taskId)
+  QVariantMap profileVariables;
+  profileVariables["$feature"] = QVariant::fromValue(feature);
+  profileVariables["$map"] = QVariant::fromValue(m_mapView);
+
+  qDebug() << "Made it past profileVariables";
+
+  //  QVariant eval_result;
+  connect(evaluator, &ArcadeEvaluator::evaluateCompleted, this, [this](QUuid, ArcadeEvaluationResult* arcadeEvaluationResult)
   {
-    // TODO: Find a way to get back the result from evaluate here???
-    //    ArcadeEvaluationResult* result = evaluator->
+    qDebug() << "Made it into lambda";
+    //eval_result =  arcadeEvaluationResult ? arcadeEvaluationResult->result() : QVariant{};
+    if (!arcadeEvaluationResult/*->result()*/)
+    {
+      //      auto eval_result = arcadeEvaluationResult->result();
+      qDebug() << "arcadeEvaluationResult is empty";
+      return;
+    }
+
+
+    qDebug() << "Made it past eval_result";
+    m_mapView->calloutData()->setDetail("$eval_result crimes in the past two months");
   });
 
-  evaluator->evaluate(profileVariables);
+  connect(evaluator, &ArcadeEvaluator::errorOccurred, this, [](Error e)
+  {
+    qDebug() << e.message() + e.additionalMessage();
+  });
 
-  m_mapView->calloutData()->setDetail("Beat: $beat - $section\n $result crimes in the past two months");
+
+//  qDebug() << "Made it past eval_result";
+//  m_mapView->calloutData()->setDetail("$eval_result crimes in the past two months");
+//});
+
+evaluator->evaluate(profileVariables);
 }
