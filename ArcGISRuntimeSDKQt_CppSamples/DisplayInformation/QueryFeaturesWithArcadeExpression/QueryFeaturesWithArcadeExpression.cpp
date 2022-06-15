@@ -25,6 +25,7 @@
 #include "MapQuickView.h"
 #include "Point.h"
 #include "PortalItem.h"
+#include "Feature.h"
 
 #include <QDebug>
 
@@ -86,37 +87,45 @@ void QueryFeaturesWithArcadeExpression::setMapView(MapQuickView* mapView)
   m_mapView = mapView;
   m_mapView->setMap(m_map);
 
-  // identify clicked features
-    connect(m_mapView, &MapQuickView::mouseClicked, this, [this](QMouseEvent& mouseEvent)
+  m_mapView->calloutData()->setVisible(false);
+  m_mapView->calloutData()->setTitle("Crimes");
+
+  connect(m_mapView, &MapQuickView::mouseClicked, this, [this](QMouseEvent& mouseEvent){
+    if (m_mapView->calloutData()->isVisible())
+      m_mapView->calloutData()->setVisible(false);
+    else
     {
+      // set callout position
+      Point mapPoint(m_mapView->screenToLocation(mouseEvent.x(), mouseEvent.y()));
+      m_mapView->calloutData()->setLocation(mapPoint);
+
+      // Identify the visible layer
       m_mapView->identifyLayers(mouseEvent.x(), mouseEvent.y(), 12, false);
-      // call showEvaluatedArcadeInCallout with the results from the above call
-    });
 
-    m_mapView->calloutData()->setVisible(false);
-      m_mapView->calloutData()->setTitle("Location");
+      // once the identify is done
+      connect(m_mapView, &MapQuickView::identifyLayerCompleted, this, [this, mapPoint](QUuid, Esri::ArcGISRuntime::IdentifyLayerResult* rawIdentifyResult)
+      {
+        auto identifyResult = std::unique_ptr<IdentifyLayerResult>(rawIdentifyResult);
 
-    connect(m_mapView, &MapQuickView::mouseClicked, this, [this](QMouseEvent& mouseEvent){
-        if (m_mapView->calloutData()->isVisible())
-          m_mapView->calloutData()->setVisible(false);
-        else
-        {
-          // set callout position
-          Point mapPoint(m_mapView->screenToLocation(mouseEvent.x(), mouseEvent.y()));
-          m_mapView->calloutData()->setLocation(mapPoint);
+        if (!identifyResult)
+          return;
 
-          // set detail as coordinates formatted to decimal numbers with precision 2
-          m_mapView->calloutData()->setDetail("x: " + QString::number(mapPoint.x(), 'f', 2) + " y: " + QString::number(mapPoint.y(), 'f', 2));
-          m_mapView->calloutData()->setVisible(true);
-        }
+        QList<Feature*> identifiedFeature;
+
+        GeoElement* element = identifyResult->geoElements().at(0);
+        m_identifiedFeature = static_cast<Feature*>(element);
+
+        showEvaluatedArcadeInCallout(m_identifiedFeature, mapPoint);
       });
 
-//    connect(m_mapView, &MapQuickView::identifyLayersCompleted, this, &PerformValveIsolationTrace::onIdentifyLayersCompleted);
+      m_mapView->calloutData()->setVisible(true);
+    }
+  });
 
   emit mapViewChanged();
 }
 
-//void QueryFeaturesWithArcadeExpression::showEvaluatedArcadeInCallout()
-//{
+void QueryFeaturesWithArcadeExpression::showEvaluatedArcadeInCallout(Feature* feature, Point mapPoint)
+{
 
-//}
+}

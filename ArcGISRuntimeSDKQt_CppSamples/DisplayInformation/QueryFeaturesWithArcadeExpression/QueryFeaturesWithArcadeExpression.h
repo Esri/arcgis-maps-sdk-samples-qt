@@ -25,6 +25,7 @@ namespace ArcGISRuntime
 {
 class CalloutData;
 class FeatureLayer;
+class Feature;
 class Map;
 class MapQuickView;
 class Point;
@@ -47,17 +48,18 @@ public:
 
 signals:
   void mapViewChanged();
-  void showEvaluatedArcadeInCallout();
 
 private:
   Esri::ArcGISRuntime::MapQuickView* mapView() const;
   void setMapView(Esri::ArcGISRuntime::MapQuickView* mapView);
+  void showEvaluatedArcadeInCallout(Esri::ArcGISRuntime::Feature* feature, Esri::ArcGISRuntime::Point mapPoint);
 
   Esri::ArcGISRuntime::Map* m_map = nullptr;
   Esri::ArcGISRuntime::MapQuickView* m_mapView = nullptr;
   Esri::ArcGISRuntime::FeatureLayer* m_beatsLayer = nullptr;
   Esri::ArcGISRuntime::CalloutData* m_calloutData = nullptr;
-  Esri::ArcGISRuntime::Point m_clickedPoint;
+  Esri::ArcGISRuntime::Feature* m_identifiedFeature = nullptr;
+  Esri::ArcGISRuntime::Point* m_clickedPoint;
   QString m_calloutText;
 };
 
