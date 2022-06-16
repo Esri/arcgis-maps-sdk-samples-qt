@@ -60,8 +60,9 @@ exists($$PWD/../../../../DevBuildQml.pri) {
 }
 
 contains(QMAKE_HOST.os, Windows):{
-  CONFIG-=qtquickcompiler
+  message("Disabling Qt Quick Compiler for Windows build")
 }
+CONFIG-=qtquickcompiler
 
 qtHaveModule(webengine) {
   QT += webengine
