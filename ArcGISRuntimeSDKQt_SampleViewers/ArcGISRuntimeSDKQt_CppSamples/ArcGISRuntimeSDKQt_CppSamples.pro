@@ -93,8 +93,6 @@ QMAKE_TARGET_COPYRIGHT = Copyright 2017 Esri Inc.
 # include the samples.pri, which contains all the sample resources
 include(samples.pri)
 
-
-
 CONFIG(precompile_header): DEFINES += PCH_BUILD
 
 android {
