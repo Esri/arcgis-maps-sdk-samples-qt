@@ -78,11 +78,6 @@ exists($$PWD/../../../../DevBuildCpp.pri) {
   DEFINES += BUILD_FROM_SETUP
 }
 
-contains(QMAKE_HOST.os, Windows):{
-  message("Disabling Qt Quick Compiler for Windows build")
-}
-CONFIG-=qtquickcompiler
-
 qtHaveModule(webengine) {
   QT += webengine
   DEFINES += QT_WEBVIEW_WEBENGINE_BACKEND
