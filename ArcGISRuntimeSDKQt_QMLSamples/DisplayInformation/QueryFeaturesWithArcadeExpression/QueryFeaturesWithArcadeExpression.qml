@@ -52,7 +52,7 @@ Rectangle {
                 //                                                              fl.visible = false;
                 //                                                          }
                 //                                                      });
-                                        map.operationalLayers.append(mapPortalItem);
+//                                        map.operationalLayers.append(mapPortalItem);
 //                                            let count = map.operationalLayers.count;
 //                                            for (let i = 0; i < map.operationalLayers.count; ++i) {
 //                                                let currentFeatureLayer = map.operationalLayers.get(i);
@@ -70,7 +70,7 @@ Rectangle {
         //! [show callout qml api snippet]
 //         initialize Callout
         calloutData {
-            imageUrl: "qrc:/Samples/DisplayInformation/ShowCallout/RedShinyPin.png"
+//            imageUrl: "qrc:/Samples/DisplayInformation/ShowCallout/RedShinyPin.png"
             title: "Location"
             location: calloutLocation
             detail: "x: " + xCoor + " y: " + yCoor
