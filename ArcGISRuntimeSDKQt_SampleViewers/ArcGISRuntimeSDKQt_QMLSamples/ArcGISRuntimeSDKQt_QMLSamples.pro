@@ -220,11 +220,11 @@ CONFIG(daily){
     CONFIG(release, debug | release){
         win32 {
             contains(QT_ARCH, i386) {
-                message($${PWD}/../../scripts/windows/deploy_windows.bat -bin $${DESTDIR} -dep ArcGISRuntimeSDKQt_QMLSamples -exe ArcGISQt_QMLSamples.exe -qt $${QMAKESPEC}/../.. -b x86 -toolkit -tk_qml)
-                QMAKE_POST_LINK +=$$quote(cmd /c $${PWD}/../../scripts/windows/deploy_windows.bat -bin $${DESTDIR} -dep ArcGISRuntimeSDKQt_QMLSamples -exe ArcGISQt_QMLSamples.exe -qt $${QMAKESPEC}/../.. -b x86 -toolkit -tk_qml $$escape_expand(\n\t))
+                message($${PWD}/../../../scripts/windows/deploy_windows.bat -bin $${DESTDIR} -dep ArcGISRuntimeSDKQt_QMLSamples -exe ArcGISQt_QMLSamples.exe -qt $${QMAKESPEC}/../.. -b x86 -toolkit -tk_qml)
+                QMAKE_POST_LINK +=$$quote(cmd /c $${PWD}/../../../scripts/windows/deploy_windows.bat -bin $${DESTDIR} -dep ArcGISRuntimeSDKQt_QMLSamples -exe ArcGISQt_QMLSamples.exe -qt $${QMAKESPEC}/../.. -b x86 -toolkit -tk_qml $$escape_expand(\n\t))
             } else {
-                message($${PWD}/../../scripts/windows/deploy_windows.bat -bin $${DESTDIR} -dep ArcGISRuntimeSDKQt_QMLSamples -exe ArcGISQt_QMLSamples.exe -qt $${QMAKESPEC}/../.. -b x64 -toolkit -tk_qml)
-                QMAKE_POST_LINK +=$$quote(cmd /c $${PWD}/../../scripts/windows/deploy_windows.bat -bin $${DESTDIR} -dep ArcGISRuntimeSDKQt_QMLSamples -exe ArcGISQt_QMLSamples.exe -qt $${QMAKESPEC}/../.. -b x64 -toolkit -tk_qml $$escape_expand(\n\t))
+                message($${PWD}/../../../scripts/windows/deploy_windows.bat -bin $${DESTDIR} -dep ArcGISRuntimeSDKQt_QMLSamples -exe ArcGISQt_QMLSamples.exe -qt $${QMAKESPEC}/../.. -b x64 -toolkit -tk_qml)
+                QMAKE_POST_LINK +=$$quote(cmd /c $${PWD}/../../../scripts/windows/deploy_windows.bat -bin $${DESTDIR} -dep ArcGISRuntimeSDKQt_QMLSamples -exe ArcGISQt_QMLSamples.exe -qt $${QMAKESPEC}/../.. -b x64 -toolkit -tk_qml $$escape_expand(\n\t))
             }
         }
     }
