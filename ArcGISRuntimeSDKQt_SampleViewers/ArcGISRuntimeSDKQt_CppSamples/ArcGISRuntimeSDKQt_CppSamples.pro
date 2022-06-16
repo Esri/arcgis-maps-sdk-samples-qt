@@ -78,6 +78,10 @@ exists($$PWD/../../../../DevBuildCpp.pri) {
   DEFINES += BUILD_FROM_SETUP
 }
 
+contains(QMAKE_HOST.os, Windows):{
+  CONFIG-=qtquickcompiler
+}
+
 qtHaveModule(webengine) {
   QT += webengine
   DEFINES += QT_WEBVIEW_WEBENGINE_BACKEND
