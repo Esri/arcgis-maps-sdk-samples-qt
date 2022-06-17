@@ -17,7 +17,7 @@
 import QtQuick 2.12
 import Esri.ArcGISRuntime 100.15
 import Esri.ArcGISExtras 1.1
-import Esri.ArcGISRuntime.Toolkit 100.15
+import Esri.ArcGISRuntime.Toolkit 100.14
 
 Rectangle {
     id: rootRectangle
@@ -88,8 +88,8 @@ Rectangle {
     }
 
     function showEvaluatedArcadeInCallout(feature, mapPoint) {
-        const expressionString = 'var crimes = FeatureSetByName($map, \'Crime in the last 60 days\');\n"
-        "return Count(Intersects($feature, crimes));';
+        const expressionString = "var crimes = FeatureSetByName($map, \'Crime in the last 60 days\');\n
+        return Count(Intersects($feature, crimes));";
         const arcadeExpression = ArcGISRuntimeEnvironment.createObject("ArcadeExpression", {expression: expressionString});
         const arcadeEvaluator = ArcGISRuntimeEnvironment.createObject("ArcadeEvaluator", {initExpression: arcadeExpression, initProfile: Enums.ArcadeProfileFormCalculation});
 
@@ -97,13 +97,15 @@ Rectangle {
             "$feature": feature,
             "$map": map
         };
+        arcadeEvaluator.evaluateStatusChanged.connect(()=> {
+                                                          if (arcadeEvaluator.evaluateStatus !== Enums.TaskStatusCompleted)
+                                                          return;
 
+                                                          const result = arcadeEvaluator.evaluateResult.result;
+                                                          callout.calloutData.detail = "Crimes in the last 60 days: " + result;
+                                                          callout.calloutData.location = mapPoint;
+                                                          callout.showCallout();
+                                                      });
         const evaluationResult = arcadeEvaluator.evaluate(profileVariables);
-        const result = evaluationResult.result;
-        console.log("eval result:" + evaluationResult);
-        console.log("result:" + result);
-        callout.calloutData.detail = "Crimes in the last 60 days: " + evaluationResult;
-        callout.calloutData.location = mapPoint;
-        callout.showCallout();
     }
 }
