@@ -2,7 +2,7 @@
 
 Query features on a map using an arcade expression.
 
-![QueryFeaturesWithArcadeExpression](image.PNG)
+![](screenshot.png)
 
 ## Use case
 Arcade is a portable, lightweight, and secure expression language used to create custom content in ArcGIS applications. Like other expression languages, it can perform mathematical calculations, manipulate text, and evaluate logical statements. It also supports multi-statement expressions, variables, and flow control statements. What makes Arcade particularly unique when compared to other expression and scripting languages is its inclusion of feature and geometry data types. This sample uses an arcade expression to query the number of crimes in a neighborhood in the last 60 days.
