@@ -96,6 +96,7 @@ void QueryFeaturesWithArcadeExpression::setMapView(MapQuickView* mapView)
       // Set callout position
       Point mapPoint(m_mapView->screenToLocation(mouseEvent.x(), mouseEvent.y()));
       m_mapView->calloutData()->setLocation(mapPoint);
+      m_mapView->calloutData()->setVisible(true);
 
       connect(m_mapView, &MapQuickView::identifyLayersCompleted, this, [this, mapPoint](QUuid, const QList<IdentifyLayerResult*>& results)
       {
@@ -103,14 +104,12 @@ void QueryFeaturesWithArcadeExpression::setMapView(MapQuickView* mapView)
         {
           return;
         }
-
         QList<GeoElement*> element_list = results.first()->geoElements();
 
         if (element_list.empty())
         {
           return;
         }
-
         GeoElement* element = element_list.at(0);
         Esri::ArcGISRuntime::ArcGISFeature* identifiedFeature = dynamic_cast<ArcGISFeature*>(element);
 
@@ -118,8 +117,6 @@ void QueryFeaturesWithArcadeExpression::setMapView(MapQuickView* mapView)
       });
 
       m_mapView->identifyLayers(mouseEvent.x(), mouseEvent.y(), 12, false);
-
-      m_mapView->calloutData()->setVisible(true);
     }
   });
 
@@ -147,7 +144,6 @@ void QueryFeaturesWithArcadeExpression::showEvaluatedArcadeInCallout(Feature* fe
     }
 
     auto evalResult = arcadeEvaluationResult->result();
-
     int crimeCount = evalResult.toInt();
     m_mapView->calloutData()->setDetail("Crimes in the last 60 days: " + QString::number(crimeCount));
   });

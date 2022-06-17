@@ -28,7 +28,6 @@ class CalloutData;
 class Feature;
 class Map;
 class MapQuickView;
-class Point;
 }
 }
 
@@ -56,7 +55,6 @@ private:
 
   Esri::ArcGISRuntime::Map* m_map = nullptr;
   Esri::ArcGISRuntime::MapQuickView* m_mapView = nullptr;
-  Esri::ArcGISRuntime::ArcGISFeature* m_identifiedFeature = nullptr;
 };
 
 #endif // QUERYFEATURESWITHARCADEEXPRESSION_H
