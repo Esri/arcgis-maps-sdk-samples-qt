@@ -34,8 +34,6 @@ Rectangle {
         Component.onCompleted: {
             // Set and keep the focus on MapView to enable keyboard navigation
             forceActiveFocus();
-
-
         }
 
         PortalItem {
@@ -48,32 +46,25 @@ Rectangle {
             id: map
             item: mapPortalItem
 
-//            onLoadStatusChanged: {
-//                mapView.map.operationalLayers.get(1).visible = false;
-//                mapView.map.operationalLayers.get(2).visible = false;
-//                mapView.map.operationalLayers.get(3).visible = false;
-//            }
-        }
+            onLoadStatusChanged: {
+                if (loadStatus === Enums.LoadStatusLoaded) {
 
-        //        onLoadStatusChanged: {
-        //            mapView.map.operationalLayers.get(1).visible = false;
-        //            mapView.map.operationalLayers.get(2).visible = false;
-        //            mapView.map.operationalLayers.get(3).visible = false;
-        //        }
+                    // Set the visibility of all the other layers to false to avoid cluttering the UI
+                    mapView.map.operationalLayers.get(1).visible = false;
+                    mapView.map.operationalLayers.get(2).visible = false;
+                    mapView.map.operationalLayers.get(3).visible = false;
+                }
+            }
+        }
         onMouseClicked: {
             mapPoint = screenToLocation(mouse.x, mouse.y);
             if (identifyLayerStatus !== Enums.TaskStatusInProgress) {
                 if (map.operationalLayers.get(0))
                 {
                     identifyLayer(map.operationalLayers.get(0), mouse.x, mouse.y, 12, false, 1);
-
-                    console.log(map.operationalLayers.count);
-
-
                 }
             }
         }
-
         onIdentifyLayerStatusChanged: {
             if (identifyLayerStatus === Enums.TaskStatusCompleted) {
                 if (identifyLayerResult.geoElements.length < 1) {
@@ -110,9 +101,7 @@ Rectangle {
         const evaluationResult = arcadeEvaluator.evaluate(profileVariables);
         console.log("eval result:" + evaluationResult);
         callout.calloutData.detail = "Crimes in the last 60 days: " + evaluationResult;
-
         callout.calloutData.location = mapPoint;
         callout.showCallout();
-
     }
 }
