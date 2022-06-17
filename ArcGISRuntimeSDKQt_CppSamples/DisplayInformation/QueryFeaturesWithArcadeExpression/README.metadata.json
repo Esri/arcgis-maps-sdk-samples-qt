@@ -1,16 +1,26 @@
 {
-    "category": "TODO",
-    "description": "TODO",
+    "category": "DisplayInformation",
+    "description": "Query features on a map using an arcade expression.",
     "ignore": false,
     "images": [
         "screenshot.png"
     ],
     "keywords": [
-        "TODO"
+        "arcade evaluator",
+        "arcade expression",
+        "identify layers",
+        "portal",
+        "portal item",
+        "query"
     ],
     "redirect_from": "",
     "relevant_apis": [
-        "TODO"
+        "ArcadeEvaluationResult",
+        "ArcadeEvaluator",
+        "ArcadeExpression",
+        "ArcadeProfile",
+        "Portal",
+        "PortalItem"
     ],
     "snippets": [
         "QueryFeaturesWithArcadeExpression.cpp",

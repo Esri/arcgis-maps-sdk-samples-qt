@@ -17,7 +17,7 @@
 import QtQuick 2.12
 import Esri.ArcGISRuntime 100.15
 import Esri.ArcGISExtras 1.1
-import Esri.ArcGISRuntime.Toolkit 100.13
+import Esri.ArcGISRuntime.Toolkit 100.15
 
 Rectangle {
     id: rootRectangle
@@ -99,7 +99,9 @@ Rectangle {
         };
 
         const evaluationResult = arcadeEvaluator.evaluate(profileVariables);
+        const result = evaluationResult.result;
         console.log("eval result:" + evaluationResult);
+        console.log("result:" + result);
         callout.calloutData.detail = "Crimes in the last 60 days: " + evaluationResult;
         callout.calloutData.location = mapPoint;
         callout.showCallout();
