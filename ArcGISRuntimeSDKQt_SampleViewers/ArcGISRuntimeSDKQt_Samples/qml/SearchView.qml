@@ -17,7 +17,7 @@ import QtQuick 2.9
 
 import QtQuick.Controls 2.2
 import Esri.ArcGISRuntimeSamples 1.0
-import Telemetry 0.1
+import Telemetry 1.0
 
 ListView {
     spacing: 10

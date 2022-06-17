@@ -17,7 +17,7 @@ import QtQuick 2.5
 import QtQuick.Controls 2.2
 import QtGraphicalEffects 1.0
 import Esri.ArcGISRuntimeSamples 1.0
-import Telemetry 0.1
+import Telemetry 1.0
 
 Component {
     id: categoryDelegate

@@ -25,16 +25,14 @@
 #include <QSettings>
 #include <QUuid>
 
-#ifdef GANALYTICS_API_KEY
-#ifdef GANALYTICS_STREAM_ID
+#if defined (GANALYTICS_API_KEY) && defined (GANALYTICS_STREAM_ID)
 GAnalytics::GAnalytics(QObject* parent /* = nullptr */):
   QObject(parent),
   m_apiSecret(QUOTE(GANALYTICS_API_KEY)),
   m_measurementId(QUOTE(GANALYTICS_STREAM_ID))
 {
 }
-#endif // GANALYTICS_STREAM_ID
-#endif // GANALYTICS_API_KEY
+#endif // GANALYTICS_API_KEY && GANALYTICS_STREAM_ID
 
 GAnalytics::GAnalytics(QObject* parent /* = nullptr */):
   QObject(parent),
@@ -57,34 +55,34 @@ void GAnalytics::init()
     return;
   }
 
-  QSettings settings;
   generateClientId();
-  if (!settings.contains("GAnalytics-telemetry-enabled"))
+  if (!m_settings.contains("GAnalytics-telemetry-enabled"))
   {
     m_telemetryEnabled = true;
-    settings.setValue("GAnalytics-telemetry-enabled", m_telemetryEnabled);
+    m_settings.setValue("GAnalytics-telemetry-enabled", m_telemetryEnabled);
     setIsVisible(true);
   }
   else
   {
-    m_telemetryEnabled = settings.value("GAnalytics-telemetry-enabled").toBool();
+    m_telemetryEnabled = m_settings.value("GAnalytics-telemetry-enabled").toBool();
   }
-}
 
-void GAnalytics::postEvent(const QString eventName, QVariantMap parameters)
-{
-  if (!m_telemetryEnabled || m_apiSecret == "" || m_measurementId == "")
-    return;
+  m_networkAccessManager = new QNetworkAccessManager();
 
 #ifdef CPP_VIEWER
-  parameters.insert("sample_viewer_type", "Cpp");
+  m_defaultParameters.insert("sample_viewer_type", "Cpp");
 #else // QML_VIEWER
-  parameters.insert("sample_viewer_type", "QML");
+  m_defaultParameters.insert("sample_viewer_type", "QML");
 #endif // CPP_VIEWER / QML_VIEWER
 
   auto os = QOperatingSystemVersion::current();
+  m_defaultParameters.insert("operating_system", QString{"%1 %2.%3"}.arg(os.name()).arg(os.majorVersion()).arg(os.minorVersion()));
+}
 
-  parameters.insert("operating_system", os.name() + " " + QString::number(os.majorVersion()) + "." + QString::number(os.minorVersion()));
+void GAnalytics::postEvent(const QString& eventName, QVariantMap parameters)
+{
+  if (!m_telemetryEnabled || m_apiSecret == "" || m_measurementId == "")
+    return;
 
   int sessionTime = (QDateTime::currentSecsSinceEpoch()-m_startTime)*1000;
 
@@ -96,6 +94,7 @@ void GAnalytics::postEvent(const QString eventName, QVariantMap parameters)
 
   QJsonObject event;
   event.insert("name", eventName);
+  parameters.unite(m_defaultParameters);
   event.insert("params", QJsonObject::fromVariantMap(parameters));
 
   QJsonObject body;
@@ -121,43 +120,21 @@ void GAnalytics::startSession()
 
 void GAnalytics::endSession()
 {
-  QVariantMap params;
-  params.insert("session_duration_sec", QDateTime::currentSecsSinceEpoch() - m_startTime);
-  postEvent("close_sample_viewer", params);
+  m_defaultParameters.insert("session_duration_sec", QDateTime::currentSecsSinceEpoch() - m_startTime);
+  postEvent("close_sample_viewer", m_defaultParameters);
 }
 
 void GAnalytics::generateClientId()
 {
-  QSettings settings;
-  if (!settings.contains("GAnalytics-clientId"))
+  if (!m_settings.contains("GAnalytics-clientId"))
   {
     m_clientId= QUuid::createUuid().toString();
-    settings.setValue("GAnalytics-clientId", m_clientId);
+    m_settings.setValue("GAnalytics-clientId", m_clientId);
   }
   else
   {
-    m_clientId = settings.value("GAnalytics-clientId").toString();
+    m_clientId = m_settings.value("GAnalytics-clientId").toString();
   }
-}
-
-QString GAnalytics::apiSecret() const
-{
-  return m_apiSecret;
-}
-
-void GAnalytics::setApiSecret(const QString apiSecret)
-{
-  m_apiSecret = apiSecret;
-}
-
-QString GAnalytics::measurementId() const
-{
-  return m_measurementId;
-}
-
-void GAnalytics::setMeasurementId(const QString measurementId)
-{
-  m_measurementId = measurementId;
 }
 
 bool GAnalytics::telemetryEnabled() const
@@ -169,8 +146,7 @@ void GAnalytics::setTelemetryEnabled(const bool telemetryEnabled)
 {
   m_telemetryEnabled = telemetryEnabled;
 
-  QSettings settings;
-  settings.setValue("GAnalytics-telemetry-enabled", m_telemetryEnabled);
+  m_settings.setValue("GAnalytics-telemetry-enabled", m_telemetryEnabled);
 
   if (telemetryEnabled)
     startSession();
@@ -184,9 +160,4 @@ bool GAnalytics::isVisible() const
 void GAnalytics::setIsVisible(bool isVisible)
 {
   m_isVisible = isVisible;
-}
-
-QString GAnalytics::clientId() const
-{
-  return m_clientId;
 }

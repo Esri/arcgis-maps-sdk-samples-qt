@@ -17,7 +17,7 @@ import QtQuick 2.9
 import QtQuick.Controls 2.2
 import QtGraphicalEffects 1.0
 import Esri.ArcGISRuntimeSamples 1.0
-import Telemetry 0.1
+import Telemetry 1.0
 
 Page {
     id: categoryView
@@ -52,7 +52,8 @@ Page {
             padding: 10
 
             onTextChanged: {
-                searchQueryEventTimer.start();
+                if (GAnalytics.telemetryEnabled)
+                    searchQueryEventTimer.start();
             }
         }
     }
@@ -96,11 +97,11 @@ Page {
 
     Timer {
         id: searchQueryEventTimer
-        interval: 3000 // milliseconds
+        interval: 2500 // milliseconds
         running: false
         repeat: false
         onTriggered: {
-            if (searchBar.text !== "")
+            if (searchBar.text !== "" && GAnalytics.telemetryEnabled)
                 GAnalytics.postEvent("search_query", {"search text": searchBar.text});
         }
     }

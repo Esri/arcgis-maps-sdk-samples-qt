@@ -18,7 +18,7 @@ import QtQuick.Controls 2.2
 import QtQuick.Controls.Material 2.1
 import Esri.ArcGISRuntimeSamples 1.0
 import Esri.ArcGISExtras 1.1
-import Telemetry 0.1
+import Telemetry 1.0
 
 ApplicationWindow {
     id: window

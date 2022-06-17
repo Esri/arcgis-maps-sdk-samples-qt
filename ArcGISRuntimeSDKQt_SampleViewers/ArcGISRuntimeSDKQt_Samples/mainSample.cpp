@@ -599,7 +599,7 @@ void registerClasses()
   qmlRegisterSingletonType<DownloadSampleManager>("Esri.ArcGISRuntimeSamples", 1, 0, "SampleManager",
                                                   &esriSampleManagerProvider);
   // Register the Google Analytics class
-  qmlRegisterSingletonType<GAnalytics>("Telemetry", 0, 1, "GAnalytics", &gAnalyticsProvider);
+  qmlRegisterSingletonType<GAnalytics>("Telemetry", 1, 0, "GAnalytics", &gAnalyticsProvider);
 
   qmlRegisterSingletonType<SyntaxHighlighter>("Esri.ArcGISRuntimeSamples", 1, 0, "SyntaxHighlighter",
                                               &syntaxHighlighterProvider);
