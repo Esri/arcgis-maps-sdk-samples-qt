@@ -56,6 +56,7 @@ void GAnalytics::init()
   }
 
   generateClientId();
+
   if (!m_settings.contains("GAnalytics-telemetry-enabled"))
   {
     m_telemetryEnabled = true;
@@ -67,6 +68,8 @@ void GAnalytics::init()
     m_telemetryEnabled = m_settings.value("GAnalytics-telemetry-enabled").toBool();
   }
 
+  m_startTime = QDateTime::currentSecsSinceEpoch();
+
   m_networkAccessManager = new QNetworkAccessManager();
 
 #ifdef CPP_VIEWER
@@ -76,7 +79,7 @@ void GAnalytics::init()
 #endif // CPP_VIEWER / QML_VIEWER
 
   auto os = QOperatingSystemVersion::current();
-  m_defaultParameters.insert("operating_system", QString{"%1 %2.%3"}.arg(os.name()).arg(os.majorVersion()).arg(os.minorVersion()));
+  m_defaultParameters.insert("operating_system", QString{"%1 %2.%3"}.arg(os.name(), os.majorVersion(), os.minorVersion()));
 }
 
 void GAnalytics::postEvent(const QString& eventName, QVariantMap parameters)
@@ -84,7 +87,7 @@ void GAnalytics::postEvent(const QString& eventName, QVariantMap parameters)
   if (!m_telemetryEnabled || m_apiSecret == "" || m_measurementId == "")
     return;
 
-  int sessionTime = (QDateTime::currentSecsSinceEpoch()-m_startTime)*1000;
+  int sessionTime = (QDateTime::currentSecsSinceEpoch() - m_startTime) * 1000;
 
   // Google will not accept the POST request if the engagement time is 0 or undefined
   if (sessionTime <= 0)
@@ -100,22 +103,20 @@ void GAnalytics::postEvent(const QString& eventName, QVariantMap parameters)
   QJsonObject body;
   body.insert("client_id", m_clientId);
   body.insert("events", event);
-  QNetworkAccessManager* mgr = new QNetworkAccessManager();
-  const QUrl url(QString("https://google-analytics.com/mp/collect?"
-                         "api_secret=" + m_apiSecret +
-                         "&measurement_id=" + m_measurementId));
+  const QUrl url(QString{"https://google-analytics.com/mp/collect?api_secret=%1&measurement_id=%2"}.arg(m_apiSecret, m_measurementId));
 
   QNetworkRequest request(url);
   request.setHeader(QNetworkRequest::ContentTypeHeader, "application, json");
   QJsonDocument data(body);
 
-  mgr->post(request, data.toJson());
+  m_networkAccessManager->post(request, data.toJson());
 }
 
 void GAnalytics::startSession()
 {
-  m_startTime = QDateTime::currentSecsSinceEpoch();
   postEvent("open_sample_viewer", QVariantMap());
+  // Prevent additional start session posts from being made
+  m_appSessionStarted = true;
 }
 
 void GAnalytics::endSession()
@@ -148,7 +149,7 @@ void GAnalytics::setTelemetryEnabled(const bool telemetryEnabled)
 
   m_settings.setValue("GAnalytics-telemetry-enabled", m_telemetryEnabled);
 
-  if (telemetryEnabled)
+  if (telemetryEnabled && !m_appSessionStarted)
     startSession();
 }
 
