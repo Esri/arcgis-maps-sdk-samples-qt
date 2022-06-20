@@ -23,7 +23,7 @@ Zoom in and out of the map to see alternate symbols at each scale. To go back to
     
     b. Convert the simple marker symbol to a `MultilayerSymbol` using `SimpleMarkerSymbol.toMultilayerSymbol()`.
     
-    c. Set the valid scale range through reference properties on the multilayer point symbols blue square and yellow diamond by calling `MultilayerSymbol.referenceProperties;`.
+    c. Set the valid scale range through reference properties on the multilayer point symbols blue square and yellow diamond by calling `MultilayerSymbol.referenceProperties`.
     
 3. Create a third multilayer symbol to be used to create a `UniqueValue` class.
 4. Create a unique value using the red triangle from step 3 and the list of alternate symbols from step 2.
