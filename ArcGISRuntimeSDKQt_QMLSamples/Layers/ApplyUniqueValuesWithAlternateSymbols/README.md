@@ -16,23 +16,22 @@ Zoom in and out of the map to see alternate symbols at each scale. To go back to
 
 ## How it works
 
-This sample uses a unique value renderer that is created with a unique value that has a list of alternate symbols and their corresponding reference properties to specify at which scales each symbol should appear. Once a unique value renderer with alternate sybmols is created, it is assigned as the renderer of the feature layer.
+1. Create a `featureLayer` using the service url and add it to the map's list of operational layers.
+2. Create two alternate symbols (a blue square and a yellow diamond) to be used as alternate symbols. To create an alternate symbol:
 
-1. Create a feature layer using the service url and add it to the list of operational layers.
-2. Create two alternate symbols (a blue square and a yellow diamond) to be used for the unique value. To create an alternate symbol:
     a. Create a symbol using `SimpleMarkerSymbol`.
-    b. Convert the Simple Marker Symbol to a Multilayer Symbol.   
-    c. Set the valid scale range through reference properties on the multilayer point symbols blue square and yellow diamond by calling `SymbolReferenceProperties`.
     
-3. Create a third multilayer symbol to be used when creating the unique value:
-    a. Create a red triangle and set the reference properties.
+    b. Convert the simple marker symbol to a `MultilayerSymbol` using `SimpleMarkerSymbol::toMultilayerSymbol`.
     
-4. Create a unique value using the red triangle from step three and the list of alternate symbols from step two.
-5. Create a unique value renderer and add the unique value from step four to it.
+    c. Set the valid scale range through reference properties on the multilayer point symbols blue square and yellow diamond by calling `MultilayerSymbol::setReferenceProperties(new SymbolReferenceProperties(minScale, maxScale));`.
+    
+3. Create a third multilayer symbol to be used to create a `UniqueValue` class.
+4. Create a unique value using the red triangle from step 3 and the list of alternate symbols from step 2.
+5. Create a `UniqueValueRenderer` and add the unique value from step 4 to it.
 6. Create a purple diamond simple marker and convert it to a multilayer symbol to be used as the default symbol.
-7. Set the default symbol on the unique value renderer to the purple diamond from step six.
-8. Set the fieldName on the unique value renderer to "req_type".
-9. Assign this unique value renderer as the renderer on the feature layer from step one.
+7. Set the default symbol on the unique value renderer to the purple diamond from step 6 using `setDefaultSymbol`.
+8. Set the `fieldNames` on the unique value renderer to "req_type".
+9. Apply this unique value renderer to the renderer on feature layer.
 
 ## Relevant API
 
