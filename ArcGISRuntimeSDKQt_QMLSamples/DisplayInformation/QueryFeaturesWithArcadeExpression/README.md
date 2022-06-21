@@ -1,12 +1,12 @@
-# Query features with arcade expression
+# Query features with Arcade expression
 
-Query features on a map using an arcade expression.
+Query features on a map using an Arcade expression.
 
 ![](screenshot.png)
 
 ## Use case
 
-Arcade is a portable, lightweight, and secure expression language used to create custom content in ArcGIS applications. Like other expression languages, it can perform mathematical calculations, manipulate text, and evaluate logical statements. It also supports multi-statement expressions, variables, and flow control statements. What makes Arcade particularly unique when compared to other expression and scripting languages is its inclusion of feature and geometry data types. This sample uses an arcade expression to query the number of crimes in a neighborhood in the last 60 days.
+Arcade is a portable, lightweight, and secure expression language used to create custom content in ArcGIS applications. Like other expression languages, it can perform mathematical calculations, manipulate text, and evaluate logical statements. It also supports multi-statement expressions, variables, and flow control statements. What makes Arcade particularly unique when compared to other expression and scripting languages is its inclusion of feature and geometry data types. This sample uses an Arcade expression to query the number of crimes in a neighborhood in the last 60 days.
 
 ## How to use the sample
 
@@ -24,12 +24,12 @@ Click on any neighborhood to see the number of crimes in the last 60 days in a c
     "var crimes = FeatureSetByName($map, 'Crime in the last 60 days');\n"
     "return Count(Intersects($feature, crimes));"
 
-7. Create an `ArcadeEvaluator` using the arcade expression and `Enums.ArcadeProfileFormCalculation`.
+7. Create an `ArcadeEvaluator` using the Arcade expression and `Enums.ArcadeProfileFormCalculation`.
 8. Create a dictionary of profile variables with the following key-value pairs. This will be passed to `ArcadeEvaluator.evaluate()` in the next step.
          `{"$feature", identifiedFeature}`
          `{"$map", map}`
 
-9. Call `ArcadeEvaluator.evaluate()` on the arcade evaluator object and pass the profile variables map.
+9. Call `ArcadeEvaluator.evaluate()` on the Arcade evaluator object and pass the profile variables map.
 10. Call `ArcadeEvaluationResult.result()` to get the result from `ArcadeEvaluator.ArcadeEvaluationResult`.
 
 ## Relevant API
@@ -47,8 +47,8 @@ This sample uses the [Crimes in Police Beats Sample](https://www.arcgis.com/home
 
 ## Additional information
 
-Visit [Getting Started](https://developers.arcgis.com/arcade/) on the *ArcGIS Developer* website to learn more about Arcade expressions.
+Visit [Getting Started](https://developers.arcgis.com/Arcade/) on the *ArcGIS Developer* website to learn more about Arcade expressions.
 
 ## Tags
 
-arcade evaluator, arcade expression, identify layers, portal, portal item, query
+Arcade evaluator, Arcade expression, identify layers, portal, portal item, query
