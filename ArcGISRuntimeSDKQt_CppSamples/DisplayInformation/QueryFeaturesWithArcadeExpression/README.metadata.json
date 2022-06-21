@@ -11,7 +11,13 @@
         "identify layers",
         "portal",
         "portal item",
-        "query"
+        "query",
+        "ArcadeEvaluationResult",
+        "ArcadeEvaluator",
+        "ArcadeExpression",
+        "ArcadeProfile",
+        "Portal",
+        "PortalItem"
     ],
     "redirect_from": "",
     "relevant_apis": [

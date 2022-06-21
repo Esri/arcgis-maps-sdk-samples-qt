@@ -51,7 +51,7 @@ signals:
 private:
   Esri::ArcGISRuntime::MapQuickView* mapView() const;
   void setMapView(Esri::ArcGISRuntime::MapQuickView* mapView);
-  void showEvaluatedArcadeInCallout(Esri::ArcGISRuntime::Feature* feature, Esri::ArcGISRuntime::Point mapPoint);
+  void showEvaluatedArcadeInCallout(Esri::ArcGISRuntime::Feature* feature);
 
   Esri::ArcGISRuntime::Map* m_map = nullptr;
   Esri::ArcGISRuntime::MapQuickView* m_mapView = nullptr;

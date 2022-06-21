@@ -49,15 +49,9 @@ QueryFeaturesWithArcadeExpression::QueryFeaturesWithArcadeExpression(QObject* pa
     if (m_map->loadStatus() == LoadStatus::Loaded)
     {
       // Set the visibility of all but the RDT Beats layer to false to avoid cluttering the UI
-      for (int i = 0; i < m_map->operationalLayers()->size(); ++i)
-      {
-
-        auto currentLayerName = m_map->operationalLayers()->at(i)->name();
-        if ((currentLayerName == "Crime in the last 60 days") || (currentLayerName == "Police Stations"))
-        {
-          m_map->operationalLayers()->at(i)->setVisible(false);
-        }
-      }
+      m_map->operationalLayers()->at(1)->setVisible(false);
+      m_map->operationalLayers()->at(2)->setVisible(false);
+      m_map->operationalLayers()->at(3)->setVisible(false);
     }
   });
 }
@@ -89,47 +83,44 @@ void QueryFeaturesWithArcadeExpression::setMapView(MapQuickView* mapView)
   m_mapView->calloutData()->setTitle("RPD Beats");
 
   connect(m_mapView, &MapQuickView::mouseClicked, this, [this](QMouseEvent& mouseEvent){
+    qDebug() << "mouseClicked";
     if (m_mapView->calloutData()->isVisible())
       m_mapView->calloutData()->setVisible(false);
-    else
-    {
-      // Set callout position
-      Point mapPoint(m_mapView->screenToLocation(mouseEvent.x(), mouseEvent.y()));
-      m_mapView->calloutData()->setLocation(mapPoint);
-      m_mapView->calloutData()->setVisible(true);
+    m_mapView->calloutData()->setDetail("");
+    // Set callout position
+    const Point mapPoint(m_mapView->screenToLocation(mouseEvent.x(), mouseEvent.y()));
+    m_mapView->calloutData()->setLocation(mapPoint);
+    m_mapView->identifyLayers(mouseEvent.x(), mouseEvent.y(), 12, false);
 
-      connect(m_mapView, &MapQuickView::identifyLayersCompleted, this, [this, mapPoint](QUuid, const QList<IdentifyLayerResult*>& results)
-      {
-        if (results.empty())
-        {
-          return;
-        }
-        QList<GeoElement*> element_list = results.first()->geoElements();
+  });
 
-        if (element_list.empty())
-        {
-          return;
-        }
-        GeoElement* element = element_list.at(0);
-        Esri::ArcGISRuntime::ArcGISFeature* identifiedFeature = dynamic_cast<ArcGISFeature*>(element);
+  connect(m_mapView, &MapQuickView::identifyLayersCompleted, this, [this](QUuid, const QList<IdentifyLayerResult*>& results)
+  {
+    qDebug() << "identifyLayersCompleted";
+    if (results.empty())
+      return;
 
-        showEvaluatedArcadeInCallout(identifiedFeature, mapPoint);
-      });
+    QList<GeoElement*> element_list = results.first()->geoElements();
+    if (element_list.empty())
+      return;
 
-      m_mapView->identifyLayers(mouseEvent.x(), mouseEvent.y(), 12, false);
-    }
+    GeoElement* element = element_list.at(0);
+    ArcGISFeature* identifiedFeature = dynamic_cast<ArcGISFeature*>(element);
+    m_mapView->calloutData()->setVisible(true);
+
+    showEvaluatedArcadeInCallout(identifiedFeature);
   });
 
   emit mapViewChanged();
 }
 
-void QueryFeaturesWithArcadeExpression::showEvaluatedArcadeInCallout(Feature* feature, Point mapPoint)
+void QueryFeaturesWithArcadeExpression::showEvaluatedArcadeInCallout(Feature* feature)
 {
   QVariantMap profileVariables;
   profileVariables["$feature"] = QVariant::fromValue(feature);
   profileVariables["$map"] = QVariant::fromValue(m_map);
 
-  const auto expressionValue =
+  const QString expressionValue =
       "var crimes = FeatureSetByName($map, 'Crime in the last 60 days');\n"
       "return Count(Intersects($feature, crimes));";
 
@@ -139,12 +130,10 @@ void QueryFeaturesWithArcadeExpression::showEvaluatedArcadeInCallout(Feature* fe
   connect(evaluator, &ArcadeEvaluator::evaluateCompleted, this, [this](QUuid, ArcadeEvaluationResult* arcadeEvaluationResult)
   {
     if (!arcadeEvaluationResult)
-    {
       return;
-    }
 
-    auto evalResult = arcadeEvaluationResult->result();
-    int crimeCount = evalResult.toInt();
+    QVariant evalResult = arcadeEvaluationResult->result();
+    const int crimeCount = evalResult.toInt();
     m_mapView->calloutData()->setDetail("Crimes in the last 60 days: " + QString::number(crimeCount));
   });
   evaluator->evaluate(profileVariables);

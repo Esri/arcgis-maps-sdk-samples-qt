@@ -17,7 +17,7 @@
 import QtQuick 2.12
 import Esri.ArcGISRuntime 100.15
 import Esri.ArcGISExtras 1.1
-import Esri.ArcGISRuntime.Toolkit 100.14
+import Esri.ArcGISRuntime.Toolkit 100.15
 
 Rectangle {
     id: rootRectangle
