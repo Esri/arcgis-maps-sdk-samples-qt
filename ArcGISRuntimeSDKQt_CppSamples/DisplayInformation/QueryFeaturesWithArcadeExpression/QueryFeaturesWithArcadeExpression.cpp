@@ -83,7 +83,6 @@ void QueryFeaturesWithArcadeExpression::setMapView(MapQuickView* mapView)
   m_mapView->calloutData()->setTitle("RPD Beats");
 
   connect(m_mapView, &MapQuickView::mouseClicked, this, [this](QMouseEvent& mouseEvent){
-    qDebug() << "mouseClicked";
     if (m_mapView->calloutData()->isVisible())
       m_mapView->calloutData()->setVisible(false);
     m_mapView->calloutData()->setDetail("");
@@ -96,7 +95,6 @@ void QueryFeaturesWithArcadeExpression::setMapView(MapQuickView* mapView)
 
   connect(m_mapView, &MapQuickView::identifyLayersCompleted, this, [this](QUuid, const QList<IdentifyLayerResult*>& results)
   {
-    qDebug() << "identifyLayersCompleted";
     if (results.empty())
       return;
 
