@@ -92,6 +92,7 @@ RESOURCES += \
     "$$SAMPLEPATHQML/Geometry/SpatialRelationships/SpatialRelationships.qrc" \
     "$$SAMPLEPATHQML/Layers/AddEncExchangeSet/AddEncExchangeSet.qrc" \
     "$$SAMPLEPATHQML/Layers/ApplyMosaicRuleToRasters/ApplyMosaicRuleToRasters.qrc" \
+    "$$SAMPLEPATHQML/Layers/ApplyUniqueValuesWithAlternateSymbols/ApplyUniqueValuesWithAlternateSymbols.qrc" \
     "$$SAMPLEPATHQML/Layers/ArcGISMapImageLayerUrl/ArcGISMapImageLayerUrl.qrc" \
     "$$SAMPLEPATHQML/Layers/ArcGISTiledLayerUrl/ArcGISTiledLayerUrl.qrc" \
     "$$SAMPLEPATHQML/Layers/BlendRasterLayer/BlendRasterLayer.qrc" \

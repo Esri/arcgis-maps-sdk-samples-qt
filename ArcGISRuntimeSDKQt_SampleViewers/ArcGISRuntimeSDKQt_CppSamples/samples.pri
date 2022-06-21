@@ -94,6 +94,7 @@ INCLUDEPATH += \
     "$$SAMPLEPATHCPP/Geometry/SpatialRelationships" \
     "$$SAMPLEPATHCPP/Layers/AddEncExchangeSet" \
     "$$SAMPLEPATHCPP/Layers/ApplyMosaicRuleToRasters" \
+    "$$SAMPLEPATHCPP/Layers/ApplyUniqueValuesWithAlternateSymbols" \
     "$$SAMPLEPATHCPP/Layers/ArcGISMapImageLayerUrl" \
     "$$SAMPLEPATHCPP/Layers/ArcGISTiledLayerUrl" \
     "$$SAMPLEPATHCPP/Layers/BlendRasterLayer" \
@@ -297,6 +298,7 @@ HEADERS += \
     "$$SAMPLEPATHCPP/Geometry/SpatialRelationships/SpatialRelationships.h" \
     "$$SAMPLEPATHCPP/Layers/AddEncExchangeSet/AddEncExchangeSet.h" \
     "$$SAMPLEPATHCPP/Layers/ApplyMosaicRuleToRasters/ApplyMosaicRuleToRasters.h" \
+    "$$SAMPLEPATHCPP/Layers/ApplyUniqueValuesWithAlternateSymbols/ApplyUniqueValuesWithAlternateSymbols.h" \
     "$$SAMPLEPATHCPP/Layers/ArcGISMapImageLayerUrl/ArcGISMapImageLayerUrl.h" \
     "$$SAMPLEPATHCPP/Layers/ArcGISTiledLayerUrl/ArcGISTiledLayerUrl.h" \
     "$$SAMPLEPATHCPP/Layers/BlendRasterLayer/BlendRasterLayer.h" \
@@ -503,6 +505,7 @@ SOURCES += \
     "$$SAMPLEPATHCPP/Geometry/SpatialRelationships/SpatialRelationships.cpp" \
     "$$SAMPLEPATHCPP/Layers/AddEncExchangeSet/AddEncExchangeSet.cpp" \
     "$$SAMPLEPATHCPP/Layers/ApplyMosaicRuleToRasters/ApplyMosaicRuleToRasters.cpp" \
+    "$$SAMPLEPATHCPP/Layers/ApplyUniqueValuesWithAlternateSymbols/ApplyUniqueValuesWithAlternateSymbols.cpp" \
     "$$SAMPLEPATHCPP/Layers/ArcGISMapImageLayerUrl/ArcGISMapImageLayerUrl.cpp" \
     "$$SAMPLEPATHCPP/Layers/ArcGISTiledLayerUrl/ArcGISTiledLayerUrl.cpp" \
     "$$SAMPLEPATHCPP/Layers/BlendRasterLayer/BlendRasterLayer.cpp" \
@@ -706,6 +709,7 @@ RESOURCES += \
     "$$SAMPLEPATHCPP/Geometry/SpatialRelationships/SpatialRelationships.qrc" \
     "$$SAMPLEPATHCPP/Layers/AddEncExchangeSet/AddEncExchangeSet.qrc" \
     "$$SAMPLEPATHCPP/Layers/ApplyMosaicRuleToRasters/ApplyMosaicRuleToRasters.qrc" \
+    "$$SAMPLEPATHCPP/Layers/ApplyUniqueValuesWithAlternateSymbols/ApplyUniqueValuesWithAlternateSymbols.qrc" \
     "$$SAMPLEPATHCPP/Layers/ArcGISMapImageLayerUrl/ArcGISMapImageLayerUrl.qrc" \
     "$$SAMPLEPATHCPP/Layers/ArcGISTiledLayerUrl/ArcGISTiledLayerUrl.qrc" \
     "$$SAMPLEPATHCPP/Layers/BlendRasterLayer/BlendRasterLayer.qrc" \

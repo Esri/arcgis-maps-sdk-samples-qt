@@ -73,6 +73,7 @@
 #include "AnimateImagesWithImageOverlay.h"
 #include "ApplyMosaicRuleToRasters.h"
 #include "ApplyScheduledMapUpdates.h"
+#include "ApplyUniqueValuesWithAlternateSymbols.h"
 #include "ArcGISMapImageLayerUrl.h"
 #include "ArcGISTiledLayerUrl.h"
 #include "BasicSceneView.h"
@@ -381,6 +382,7 @@ void registerCppSampleClasses()
   AnimateImagesWithImageOverlay::init();
   ApplyMosaicRuleToRasters::init();
   ApplyScheduledMapUpdates::init();
+  ApplyUniqueValuesWithAlternateSymbols::init();
   ArcGISMapImageLayerUrl::init();
   ArcGISTiledLayerUrl::init();
   BasicSceneView::init();
