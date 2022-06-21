@@ -46,6 +46,7 @@ INCLUDEPATH += \
     "$$SAMPLEPATHCPP/DisplayInformation/GOSymbols" \
     "$$SAMPLEPATHCPP/DisplayInformation/IdentifyGraphics" \
     "$$SAMPLEPATHCPP/DisplayInformation/Picture_Marker_Symbol" \
+    "$$SAMPLEPATHCPP/DisplayInformation/QueryFeaturesWithArcadeExpression" \
     "$$SAMPLEPATHCPP/DisplayInformation/ReadSymbolsFromMobileStyle" \
     "$$SAMPLEPATHCPP/DisplayInformation/ShowCallout" \
     "$$SAMPLEPATHCPP/DisplayInformation/ShowLabelsOnLayers" \
@@ -247,6 +248,7 @@ HEADERS += \
     "$$SAMPLEPATHCPP/DisplayInformation/GOSymbols/GOSymbols.h" \
     "$$SAMPLEPATHCPP/DisplayInformation/IdentifyGraphics/IdentifyGraphics.h" \
     "$$SAMPLEPATHCPP/DisplayInformation/Picture_Marker_Symbol/Picture_Marker_Symbol.h" \
+    "$$SAMPLEPATHCPP/DisplayInformation/QueryFeaturesWithArcadeExpression/QueryFeaturesWithArcadeExpression.h" \
     "$$SAMPLEPATHCPP/DisplayInformation/ReadSymbolsFromMobileStyle/ReadSymbolsFromMobileStyle.h" \
     "$$SAMPLEPATHCPP/DisplayInformation/ReadSymbolsFromMobileStyle/SymbolImageProvider.h" \
     "$$SAMPLEPATHCPP/DisplayInformation/ShowCallout/ShowCallout.h" \
@@ -454,6 +456,7 @@ SOURCES += \
     "$$SAMPLEPATHCPP/DisplayInformation/GOSymbols/GOSymbols.cpp" \
     "$$SAMPLEPATHCPP/DisplayInformation/IdentifyGraphics/IdentifyGraphics.cpp" \
     "$$SAMPLEPATHCPP/DisplayInformation/Picture_Marker_Symbol/Picture_Marker_Symbol.cpp" \
+    "$$SAMPLEPATHCPP/DisplayInformation/QueryFeaturesWithArcadeExpression/QueryFeaturesWithArcadeExpression.cpp" \
     "$$SAMPLEPATHCPP/DisplayInformation/ReadSymbolsFromMobileStyle/ReadSymbolsFromMobileStyle.cpp" \
     "$$SAMPLEPATHCPP/DisplayInformation/ReadSymbolsFromMobileStyle/SymbolImageProvider.cpp" \
     "$$SAMPLEPATHCPP/DisplayInformation/ShowCallout/ShowCallout.cpp" \
@@ -661,6 +664,7 @@ RESOURCES += \
     "$$SAMPLEPATHCPP/DisplayInformation/GOSymbols/GOSymbols.qrc" \
     "$$SAMPLEPATHCPP/DisplayInformation/IdentifyGraphics/IdentifyGraphics.qrc" \
     "$$SAMPLEPATHCPP/DisplayInformation/Picture_Marker_Symbol/Picture_Marker_Symbol.qrc" \
+    "$$SAMPLEPATHCPP/DisplayInformation/QueryFeaturesWithArcadeExpression/QueryFeaturesWithArcadeExpression.qrc" \
     "$$SAMPLEPATHCPP/DisplayInformation/ReadSymbolsFromMobileStyle/ReadSymbolsFromMobileStyle.qrc" \
     "$$SAMPLEPATHCPP/DisplayInformation/ShowCallout/ShowCallout.qrc" \
     "$$SAMPLEPATHCPP/DisplayInformation/ShowLabelsOnLayers/ShowLabelsOnLayers.qrc" \

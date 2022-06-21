@@ -44,6 +44,7 @@ RESOURCES += \
     "$$SAMPLEPATHQML/DisplayInformation/GOSymbols/GOSymbols.qrc" \
     "$$SAMPLEPATHQML/DisplayInformation/IdentifyGraphics/IdentifyGraphics.qrc" \
     "$$SAMPLEPATHQML/DisplayInformation/Picture_Marker_Symbol/Picture_Marker_Symbol.qrc" \
+    "$$SAMPLEPATHQML/DisplayInformation/QueryFeaturesWithArcadeExpression/QueryFeaturesWithArcadeExpression.qrc" \
     "$$SAMPLEPATHQML/DisplayInformation/ReadSymbolsFromMobileStyle/ReadSymbolsFromMobileStyle.qrc" \
     "$$SAMPLEPATHQML/DisplayInformation/ShowCallout/ShowCallout.qrc" \
     "$$SAMPLEPATHQML/DisplayInformation/ShowLabelsOnLayers/ShowLabelsOnLayers.qrc" \

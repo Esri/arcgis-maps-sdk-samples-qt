@@ -205,6 +205,7 @@
 #include "PlayAKmlTour.h"
 #include "PortalUserInfo.h"
 #include "ProjectGeometry.h"
+#include "QueryFeaturesWithArcadeExpression.h"
 #include "QueryMapImageSublayer.h"
 #include "QueryOGCAPICQLFilters.h"
 #include "RasterColormapRenderer.h"
@@ -510,6 +511,7 @@ void registerCppSampleClasses()
   Picture_Marker_Symbol::init();
   PlayAKmlTour::init();
   ProjectGeometry::init();
+  QueryFeaturesWithArcadeExpression::init();
   QueryMapImageSublayer::init();
   QueryOGCAPICQLFilters::init();
   RasterColormapRenderer::init();
