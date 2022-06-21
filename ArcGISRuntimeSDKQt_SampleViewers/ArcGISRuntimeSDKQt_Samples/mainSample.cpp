@@ -73,6 +73,7 @@
 #include "AnimateImagesWithImageOverlay.h"
 #include "ApplyMosaicRuleToRasters.h"
 #include "ApplyScheduledMapUpdates.h"
+#include "ApplyUniqueValuesWithAlternateSymbols.h"
 #include "ArcGISMapImageLayerUrl.h"
 #include "ArcGISTiledLayerUrl.h"
 #include "BasicSceneView.h"
@@ -204,6 +205,7 @@
 #include "PlayAKmlTour.h"
 #include "PortalUserInfo.h"
 #include "ProjectGeometry.h"
+#include "QueryFeaturesWithArcadeExpression.h"
 #include "QueryMapImageSublayer.h"
 #include "QueryOGCAPICQLFilters.h"
 #include "RasterColormapRenderer.h"
@@ -381,6 +383,7 @@ void registerCppSampleClasses()
   AnimateImagesWithImageOverlay::init();
   ApplyMosaicRuleToRasters::init();
   ApplyScheduledMapUpdates::init();
+  ApplyUniqueValuesWithAlternateSymbols::init();
   ArcGISMapImageLayerUrl::init();
   ArcGISTiledLayerUrl::init();
   BasicSceneView::init();
@@ -508,6 +511,7 @@ void registerCppSampleClasses()
   Picture_Marker_Symbol::init();
   PlayAKmlTour::init();
   ProjectGeometry::init();
+  QueryFeaturesWithArcadeExpression::init();
   QueryMapImageSublayer::init();
   QueryOGCAPICQLFilters::init();
   RasterColormapRenderer::init();
