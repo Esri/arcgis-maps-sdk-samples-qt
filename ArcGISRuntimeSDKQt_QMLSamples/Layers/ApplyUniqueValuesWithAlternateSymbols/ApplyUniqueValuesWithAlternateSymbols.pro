@@ -20,7 +20,7 @@ QT += qml quick
 
 CONFIG += c++14
 
-ARCGIS_RUNTIME_VERSION = 100.15
+ARCGIS_RUNTIME_VERSION = 100.14
 include($$PWD/arcgisruntime.pri)
 
 SOURCES += \
