@@ -26,6 +26,8 @@
 #include <QQuickWindow>
 #include <QtGlobal>
 
+#include "GAnalytics.h"
+
 #ifdef QT_WEBVIEW_WEBENGINE_BACKEND
 #  include <QtWebEngine>
 #endif // QT_WEBVIEW_WEBENGINE_BACKEND
@@ -56,7 +58,7 @@
 #include "DrawOrderLayerListModel.h"
 
 #ifdef ESRI_BUILD
-#include "../../../../buildnum/buildnum.h"
+#include "../../../../../buildnum/buildnum.h"
 #endif
 
 // All CPP Samples
@@ -73,6 +75,7 @@
 #include "AnimateImagesWithImageOverlay.h"
 #include "ApplyMosaicRuleToRasters.h"
 #include "ApplyScheduledMapUpdates.h"
+#include "ApplyUniqueValuesWithAlternateSymbols.h"
 #include "ArcGISMapImageLayerUrl.h"
 #include "ArcGISTiledLayerUrl.h"
 #include "BasicSceneView.h"
@@ -204,6 +207,7 @@
 #include "PlayAKmlTour.h"
 #include "PortalUserInfo.h"
 #include "ProjectGeometry.h"
+#include "QueryFeaturesWithArcadeExpression.h"
 #include "QueryMapImageSublayer.h"
 #include "QueryOGCAPICQLFilters.h"
 #include "RasterColormapRenderer.h"
@@ -293,6 +297,7 @@
 #define QUOTE(x) STRINGIZE(x)
 
 QObject* esriSampleManagerProvider(QQmlEngine* engine, QJSEngine* scriptEngine);
+QObject* gAnalyticsProvider(QQmlEngine* engine, QJSEngine* scriptEngine);
 QObject* syntaxHighlighterProvider(QQmlEngine* engine, QJSEngine* scriptEngine);
 void registerClasses();
 void registerCppSampleClasses();
@@ -381,6 +386,7 @@ void registerCppSampleClasses()
   AnimateImagesWithImageOverlay::init();
   ApplyMosaicRuleToRasters::init();
   ApplyScheduledMapUpdates::init();
+  ApplyUniqueValuesWithAlternateSymbols::init();
   ArcGISMapImageLayerUrl::init();
   ArcGISTiledLayerUrl::init();
   BasicSceneView::init();
@@ -508,6 +514,7 @@ void registerCppSampleClasses()
   Picture_Marker_Symbol::init();
   PlayAKmlTour::init();
   ProjectGeometry::init();
+  QueryFeaturesWithArcadeExpression::init();
   QueryMapImageSublayer::init();
   QueryOGCAPICQLFilters::init();
   RasterColormapRenderer::init();
@@ -595,6 +602,8 @@ void registerClasses()
 
   qmlRegisterSingletonType<DownloadSampleManager>("Esri.ArcGISRuntimeSamples", 1, 0, "SampleManager",
                                                   &esriSampleManagerProvider);
+  // Register the Google Analytics class
+  qmlRegisterSingletonType<GAnalytics>("Telemetry", 1, 0, "GAnalytics", &gAnalyticsProvider);
 
   qmlRegisterSingletonType<SyntaxHighlighter>("Esri.ArcGISRuntimeSamples", 1, 0, "SyntaxHighlighter",
                                               &syntaxHighlighterProvider);
@@ -635,6 +644,12 @@ QObject* esriSampleManagerProvider(QQmlEngine* engine, QJSEngine*)
   static QObject* sampleManager = new QmlSampleManager(engine, engine);
 #endif
   return sampleManager;
+}
+
+QObject* gAnalyticsProvider(QQmlEngine* engine, QJSEngine*)
+{
+  static QObject* gAnalytics = new GAnalytics(engine);
+  return gAnalytics;
 }
 
 QObject* syntaxHighlighterProvider(QQmlEngine* engine, QJSEngine*)
