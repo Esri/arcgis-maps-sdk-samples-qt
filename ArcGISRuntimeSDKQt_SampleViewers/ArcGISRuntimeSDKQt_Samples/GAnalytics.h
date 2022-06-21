@@ -50,8 +50,8 @@ private:
   bool telemetryEnabled() const;
   bool isVisible() const;
 
-  QString m_apiSecret;
-  QString m_measurementId;
+  const QString m_apiSecret;
+  const QString m_measurementId;
   QString m_clientId;
   qint64 m_startTime;
   bool m_telemetryEnabled;

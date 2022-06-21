@@ -101,7 +101,7 @@ Page {
         running: false
         repeat: false
         onTriggered: {
-            if (searchBar.text !== "" && GAnalytics.telemetryEnabled)
+            if (GAnalytics.telemetryEnabled && searchBar.text !== "")
                 GAnalytics.postEvent("search_query", {"search text": searchBar.text});
         }
     }

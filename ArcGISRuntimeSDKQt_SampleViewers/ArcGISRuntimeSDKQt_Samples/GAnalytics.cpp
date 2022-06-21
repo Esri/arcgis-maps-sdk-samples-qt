@@ -25,19 +25,15 @@
 #include <QSettings>
 #include <QUuid>
 
-#if defined (GANALYTICS_API_KEY) && defined (GANALYTICS_STREAM_ID)
 GAnalytics::GAnalytics(QObject* parent /* = nullptr */):
   QObject(parent),
+#if defined (GANALYTICS_API_KEY) && defined (GANALYTICS_STREAM_ID)
   m_apiSecret(QUOTE(GANALYTICS_API_KEY)),
   m_measurementId(QUOTE(GANALYTICS_STREAM_ID))
-{
-}
-#endif // GANALYTICS_API_KEY && GANALYTICS_STREAM_ID
-
-GAnalytics::GAnalytics(QObject* parent /* = nullptr */):
-  QObject(parent),
+#else
   m_apiSecret(""),
   m_measurementId("")
+#endif // GANALYTICS_API_KEY && GANALYTICS_STREAM_ID
 {
 }
 
@@ -48,14 +44,14 @@ GAnalytics::~GAnalytics()
 
 void GAnalytics::init()
 {
-  if (m_apiSecret == "" || m_measurementId == "")
+  generateClientId();
+  if (m_apiSecret.isEmpty() || m_measurementId.isEmpty())
   {
     m_telemetryEnabled = false;
     setIsVisible(false);
     return;
   }
 
-  generateClientId();
   if (!m_settings.contains("GAnalytics-telemetry-enabled"))
   {
     m_telemetryEnabled = true;
@@ -67,7 +63,7 @@ void GAnalytics::init()
     m_telemetryEnabled = m_settings.value("GAnalytics-telemetry-enabled").toBool();
   }
 
-  m_networkAccessManager = new QNetworkAccessManager();
+  m_networkAccessManager = new QNetworkAccessManager(this);
 
 #ifdef CPP_VIEWER
   m_defaultParameters.insert("sample_viewer_type", "Cpp");
@@ -75,22 +71,22 @@ void GAnalytics::init()
   m_defaultParameters.insert("sample_viewer_type", "QML");
 #endif // CPP_VIEWER / QML_VIEWER
 
-  auto os = QOperatingSystemVersion::current();
+  const auto os = QOperatingSystemVersion::current();
   m_defaultParameters.insert("operating_system", QString{"%1 %2.%3"}.arg(os.name()).arg(os.majorVersion()).arg(os.minorVersion()));
 }
 
 void GAnalytics::postEvent(const QString& eventName, QVariantMap parameters)
 {
-  if (!m_telemetryEnabled || m_apiSecret == "" || m_measurementId == "")
+  if (!m_telemetryEnabled || m_apiSecret.isEmpty() || m_measurementId.isEmpty())
     return;
 
-  int sessionTime = (QDateTime::currentSecsSinceEpoch()-m_startTime)*1000;
+  int sessionTimeInSeconds = (QDateTime::currentSecsSinceEpoch()-m_startTime)*1000;
 
   // Google will not accept the POST request if the engagement time is 0 or undefined
-  if (sessionTime <= 0)
-    sessionTime = 1;
+  if (sessionTimeInSeconds <= 0)
+    sessionTimeInSeconds = 1;
 
-  parameters.insert("engagement_time_msec", sessionTime);
+  parameters.insert("engagement_time_msec", sessionTimeInSeconds);
 
   QJsonObject event;
   event.insert("name", eventName);
@@ -107,7 +103,7 @@ void GAnalytics::postEvent(const QString& eventName, QVariantMap parameters)
 
   QNetworkRequest request(url);
   request.setHeader(QNetworkRequest::ContentTypeHeader, "application, json");
-  QJsonDocument data(body);
+  const QJsonDocument data(body);
 
   mgr->post(request, data.toJson());
 }
