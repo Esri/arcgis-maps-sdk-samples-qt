@@ -1,6 +1,6 @@
 # Apply unique values with alternate symbols
 
-This sample demonstrates how to create a unique value with alternate symbols.
+Apply a unique value with alternate symbols at different scales.
 
 ![](screenshot.png)
 
@@ -12,7 +12,7 @@ Once scale ranges are applied to unique values, you can further refine the appea
 
 ## How to use the sample
 
-Zoom in and out of the map to see alternate symbols at each scale. To go back to the initial viewpoint, press "Reset Viewpoint".
+Zoom in and out of the map to see alternate symbols at each scale. The symbology changes according to the following scale ranges: 0-5000, 5000-10000, 10000-20000. To go back to the initial viewpoint, press "Reset Viewpoint".
 
 ## How it works
 
