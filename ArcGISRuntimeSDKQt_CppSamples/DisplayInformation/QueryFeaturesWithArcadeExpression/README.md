@@ -49,7 +49,7 @@ This sample uses the [Crimes in Police Beats Sample](https://www.arcgis.com/home
 
 ## Additional information
 
-Visit [Getting Started](https://developers.arcgis.com/Arcade/) on the *ArcGIS Developer* website to learn more about Arcade expressions.
+Visit [Getting Started](https://developers.arcgis.com/arcade/) on the *ArcGIS Developer* website to learn more about Arcade expressions.
 
 ## Tags
 
