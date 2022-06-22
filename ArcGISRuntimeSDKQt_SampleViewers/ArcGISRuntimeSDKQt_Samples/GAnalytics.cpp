@@ -91,7 +91,7 @@ void GAnalytics::postEvent(const QString& eventName, QVariantMap parameters)
 
   QJsonObject event;
   event.insert("name", eventName);
-  parameters.unite(m_defaultParameters);
+  parameters.insert(m_defaultParameters);
   event.insert("params", QJsonObject::fromVariantMap(parameters));
 
   QJsonObject body;
