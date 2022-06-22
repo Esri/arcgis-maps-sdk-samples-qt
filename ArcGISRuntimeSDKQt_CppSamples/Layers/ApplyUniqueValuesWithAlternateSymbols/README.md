@@ -16,8 +16,6 @@ Zoom in and out of the map to see alternate symbols at each scale. The symbology
 
 ## How it works
 
-This sample uses a unique value renderer that is created with a unique value that has a list of alternate symbols and their corresponding reference properties to specify at which scales each symbol should appear. Once a unique value renderer with alternate sybmols is created, it is assigned as the renderer of the feature layer.
-
 1. Create a `featureLayer` using the service url and add it to the map's list of operational layers.
 2. Create two alternate symbols (a blue square and a yellow diamond) to be used as alternate symbols. To create an alternate symbol:
 
