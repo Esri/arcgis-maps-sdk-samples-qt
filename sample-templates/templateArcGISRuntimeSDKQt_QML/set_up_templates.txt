@@ -1,0 +1,11 @@
+To add this custom template to QtCreator:
+
+1. copy the directory to:
+the local user's configuration folder, $HOME/.config/QtProject/qtcreator/templates/wizards on Linux and OS X or %APPDATA%\QtProject\qtcreator\templates\wizards on Windows
+
+2. restart QtCreator
+
+3. choose File/New Project/ArcGIS to see the new template
+
+see http://doc.qt.io/qtcreator/creator-project-wizards.html
+json constants for qtcreator https://github.com/danimo/qt-creator/blob/master/src/plugins/qtsupport/qtsupportconstants.h
