@@ -1,0 +1,81 @@
+// [WriteFile Name=%{SampleName}, Category=%{SampleCategory}]
+// [Legal]
+// Copyright %{CurrentYear} Esri.
+
+// Licensed under the Apache License, Version 2.0 (the "License");
+// you may not use this file except in compliance with the License.
+// You may obtain a copy of the License at
+// http://www.apache.org/licenses/LICENSE-2.0
+
+// Unless required by applicable law or agreed to in writing, software
+// distributed under the License is distributed on an "AS IS" BASIS,
+// WITHOUT WARRANTIES OR CONDITIONS OF ANY KIND, either express or implied.
+// See the License for the specific language governing permissions and
+// limitations under the License.
+// [Legal]
+
+#ifndef %{IncludeGuard}
+#define %{IncludeGuard}
+
+namespace Esri
+{
+  namespace ArcGISRuntime
+  {
+    @if %{UseFeatureLayer}
+    class FeatureLayer;
+    @endif
+    @if %{ThreeDSample}
+    class Scene;
+    class SceneQuickView;
+    @else
+    class Map;
+    class MapQuickView;
+    @endif
+  }
+}
+
+#include <QObject>
+
+class %{SampleName} : public QObject
+{
+  Q_OBJECT
+
+@if %{ThreeDSample}
+  Q_PROPERTY(Esri::ArcGISRuntime::SceneQuickView* sceneView READ sceneView WRITE setSceneView NOTIFY sceneViewChanged)
+@else
+  Q_PROPERTY(Esri::ArcGISRuntime::MapQuickView* mapView READ mapView WRITE setMapView NOTIFY mapViewChanged)
+@endif
+
+public:
+  explicit %{SampleName}(QObject* parent = nullptr);
+  ~%{SampleName}();
+
+  static void init();
+
+signals:
+@if %{ThreeDSample}
+  void sceneViewChanged();
+@else
+  void mapViewChanged();
+@endif
+
+private:
+@if %{ThreeDSample}
+  Esri::ArcGISRuntime::SceneQuickView* sceneView() const;
+  void setSceneView(Esri::ArcGISRuntime::SceneQuickView* sceneView);
+
+  Esri::ArcGISRuntime::Scene* m_scene = nullptr;
+  Esri::ArcGISRuntime::SceneQuickView* m_sceneView = nullptr;
+@else
+  Esri::ArcGISRuntime::MapQuickView* mapView() const;
+  void setMapView(Esri::ArcGISRuntime::MapQuickView* mapView);
+
+  Esri::ArcGISRuntime::Map* m_map = nullptr;
+  Esri::ArcGISRuntime::MapQuickView* m_mapView = nullptr;
+@endif
+@if %{UseFeatureLayer}
+  Esri::ArcGISRuntime::FeatureLayer* m_featureLayer = nullptr;
+@endif
+};
+
+#endif // %{IncludeGuard}

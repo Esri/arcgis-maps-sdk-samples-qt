@@ -1,0 +1,216 @@
+{
+    "version": 1,
+    "kind": "project",
+    "supportedProjectTypes": [ "Qt4ProjectManager.Qt4Project" ],
+    "id": "A.Sample_ArcGISQt_Qml_100_14",
+    "category": "B.CustomProjects",
+    "trDescription": "Creates a Sample ArcGIS Runtime 100.15 QML application.",
+    "trDisplayName": "Sample ArcGIS Runtime 100.15 QML Qt Quick App",
+    "trDisplayCategory": "ArcGIS",
+    "icon": "wizard.png",
+    "featuresRequired": [ "QtSupport.Wizards.FeatureQt" ],
+    "platformIndependent": "true",
+    "enabled": "%{JS: [ %{Plugins} ].indexOf('QmakeProjectManager') >= 0 }",
+
+    "options":
+    [
+        { "key": "ProFileName", "value": "%{JS: Util.fileName('%{ProjectDirectory}/%{ProjectName}', 'pro')}" },
+        { "key": "MainCppFileName", "value": "%{JS: 'main.' + Util.preferredSuffix('text/x-c++src')}" },
+        { "key": "QtQuickVersion", "value": "%{JS: %{QtVersion}.qtQuickVersion}" },
+        { "key": "QtQuickWindowVersion", "value": "%{JS: %{QtVersion}.qtQuickWindowVersion}" },
+        { "key": "QtQuickFeature", "value": "QtSupport.Wizards.FeatureQtQuick.%{QtQuickVersion}" },
+        { "key": "SampleName", "value": "%{JS: '%{Class}'.charAt(0).toUpperCase() + '%{Class}'.substring(1)}" },
+        { "key": "SampleDescription", "value": "%{SampleDesc}" },
+        { "key": "SampleCategory", "value": "%{SampleCat}" },
+        { "key": "ThreeDSample", "value": "%{threeD}" },
+        { "key": "UseFeatureLayer", "value": "%{JS: ( '%{FeatureLayerURL}'.length === 0 ) ? 'false' : 'true'}" },
+        { "key": "UseAPIKey", "value": "%{apiKey}" },
+        { "key": "CurrentYear", "value": "%{JS: new Date().getFullYear()}" }
+    ],
+
+    "pages":
+    [
+        {
+            "trDisplayName": "Project Location",
+            "trShortTitle": "Location",
+            "typeId": "Project"
+        },
+        {
+            "trDisplayName": "Define Project Details",
+            "trShortTitle": "Details",
+            "typeId": "Fields",
+            "data":
+            [
+				{
+                    "name": "SampleCat",
+                    "trDisplayName": "ArcGIS SDK Samples Category:",
+                    "type": "ComboBox",
+                    "data":
+                    {
+                        "index": 0,
+                        "items":
+                        [
+                            {
+                                "trKey": "Analysis",
+                                "value": "Analysis"
+                            },
+                            {
+                                "trKey": "CloudAndPortal",
+                                "value": "CloudAndPortal"
+                            },
+							{
+                                "trKey": "DisplayInformation",
+                                "value": "DisplayInformation"
+                            },
+							{
+                                "trKey": "EditData",
+                                "value": "EditData"
+                            },
+							{
+                                "trKey": "Features",
+                                "value": "Features"
+                            },
+                            {
+                                "trKey": "Geometry",
+                                "value": "Geometry"
+                            },
+							{
+                                "trKey": "Layers",
+                                "value": "Layers"
+                            },
+							{
+                                "trKey": "Maps",
+                                "value": "Maps"
+                            },
+							{
+                                "trKey": "Routing",
+                                "value": "Routing"
+                            },
+							{
+                                "trKey": "Scenes",
+                                "value": "Scenes"
+                            },
+							{
+                                "trKey": "Search",
+                                "value": "Search"
+                            },
+                            {
+                                "trKey": "UtilityNetwork",
+                                "value": "UtilityNetwork"
+                            }
+                        ]
+                    }
+                },
+				{
+					"name": "DisplayName",
+					"trDisplayName": "Display Name:",
+					"mandatory": true,
+					"type": "LineEdit",
+					"data": { "trPlaceholder" : "This will be the name we display to the user etc." }
+				},
+				{
+					"name": "Class",
+					"trDisplayName": "Sample Name:",
+					"mandatory": true,
+					"type": "LineEdit",
+					"data": { "validator": "(?:[a-zA-Z_0-9]*)", "trPlaceholder" : "This will be the name of files/classes etc." }
+				},
+				{
+					"name": "SampleDesc",
+					"trDisplayName": "Sample Description:",
+					"mandatory": false,
+					"type": "LineEdit",
+					"data":
+					{
+						"trText": "This sample demonstrates how to XXXXX."
+					}
+				},
+				{
+					"name": "threeD",
+					"trDisplayName": "3-D sample",
+					"type": "CheckBox",
+					"data":{"checked": false}
+				},
+				{
+					"name": "FeatureLayerURL",
+					"trDisplayName": "Feature Layer URL:",
+					"mandatory": false,
+					"type": "LineEdit",
+					"data":
+					{
+						"trPlaceholder" : "Optionally add the URL for a FeatureLayer"
+					}
+                                },
+                                {
+                                        "name": "apiKey",
+                                        "trDisplayName": "Use API Key",
+                                        "type": "CheckBox",
+                                        "data":{"checked": true}
+                                }
+            ]
+        },
+        {
+            "trDisplayName": "Kit Selection",
+            "trShortTitle": "Kits",
+            "typeId": "Kits",
+            "data": {
+                "projectFilePath": "%{ProFileName}"
+            }
+        },
+        {
+            "trDisplayName": "Project Management",
+            "trShortTitle": "Summary",
+            "typeId": "Summary"
+        }
+    ],
+    "generators":
+    [
+        {
+            "typeId": "File",
+            "data":
+            [
+				{
+                    "source": "deployment.pri"
+                },
+				{
+                    "source": "Info.plist.tmpl",
+					"target": "Info.plist"
+                },
+				{
+                    "source": "main.cpp.tmpl",
+                    "target": "%{MainCppFileName}"
+                },
+				{
+                    "source": "sample.pro.tmpl",
+                    "target": "%{ProFileName}",
+                    "openAsProject": true
+                },
+				{
+                    "source": "sample.qml.tmpl",
+                    "target": "%{SampleName}.qml",
+                    "openInEditor": true
+                },
+				{
+                    "source": "sample.qrc.tmpl",
+                    "target": "%{SampleName}.qrc"
+                },
+				{
+                    "source": "screenshot.png",
+					"isBinary": true
+                },
+				{
+                    "source": "README.md.tmpl",
+                    "target": "README.md"
+                },
+                {
+                    "source": "README.metadata.json.tmpl",
+                    "target": "README.metadata.json"
+                },
+                {
+                    "source": "arcgisruntime.pri",
+                    "target": "arcgisruntime.pri"
+                }
+            ]
+        }
+    ]
+}
