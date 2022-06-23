@@ -33,18 +33,8 @@ exists($$PWD/../../../../DevBuildCpp.pri) {
   message("Building against the dev environment")
   DEFINES += ESRI_BUILD
   DEFINES += SAMPLE_VIEWER_API_KEY=$$(SAMPLEVIEWERAPIKEY_INTERNAL)
-
-  !isEmpty(GANALYTICS_API_KEY) {
-      DEFINES += GANALYTICS_API_KEY=$$(GANALYTICS_API_KEY)
-  } else {
-      message("Google Analytics API key is empty")
-  }
-
-  !isEmpty(GANALYTICS_STREAM_ID)) {
-      DEFINES += GANALYTICS_STREAM_ID=$$(GANALYTICS_STREAM_ID)
-  } else {
-      message("Google Analytics Stream ID is empty")
-  }
+  DEFINES += GANALYTICS_API_KEY=$$(GANALYTICS_API_KEY)
+  DEFINES += GANALYTICS_STREAM_ID=$$(GANALYTICS_STREAM_ID)
 
   # use the Esri dev build script
   include ($$PWD/../../../../DevBuildCpp.pri)
