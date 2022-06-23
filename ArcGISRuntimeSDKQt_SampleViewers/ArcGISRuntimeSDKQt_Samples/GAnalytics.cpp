@@ -25,6 +25,11 @@
 #include <QSettings>
 #include <QUuid>
 
+// Allow retrieval of analytics keys
+#include <cstdlib>
+#define STRINGIZE(x) #x
+#define QUOTE(x) STRINGIZE(x)
+
 GAnalytics::GAnalytics(QObject* parent /* = nullptr */):
   QObject(parent),
 #if defined (GANALYTICS_API_KEY) && defined (GANALYTICS_STREAM_ID)
