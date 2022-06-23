@@ -304,7 +304,7 @@ void EditAndSyncFeatures::executeSync()
   // connect to the job's status changed signal
   if (syncJob)
   {
-    connect(syncJob, &GenerateGeodatabaseJob::statusChanged, this, [this, syncJob](JobStatus jobStatus)
+    connect(syncJob, &GenerateGeodatabaseJob::statusChanged, this, [this](JobStatus jobStatus)
     {
       // connect to the job's status changed signal to know once it is done
       switch (jobStatus) {
