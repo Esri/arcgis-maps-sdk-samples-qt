@@ -21,6 +21,8 @@
 #include <QObject>
 #include <QSettings>
 #include <QVariantMap>
+#include <QUrl>
+#include <QNetworkRequest>
 
 class GAnalytics : public QObject
 {
@@ -60,6 +62,8 @@ private:
   QNetworkAccessManager* m_networkAccessManager = nullptr;
   QSettings m_settings;
   QVariantMap m_defaultParameters;
+  QUrl m_googleAnalyticsUrl;
+  QNetworkRequest m_networkRequest;
 };
 
 #endif // GANALYTICS_H
