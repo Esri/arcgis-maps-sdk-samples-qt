@@ -18,6 +18,7 @@
 #include <QDebug>
 #include <QJsonDocument>
 #include <QJsonObject>
+#include <QLocale>
 #include <QNetworkAccessManager>
 #include <QNetworkReply>
 #include <QOperatingSystemVersion>
@@ -77,6 +78,7 @@ void GAnalytics::init()
 
   const auto os = QOperatingSystemVersion::current();
   m_defaultParameters.insert("operating_system", QString{"%1 %2.%3"}.arg(os.name(), QString::number(os.majorVersion()), QString::number(os.minorVersion())));
+  m_defaultParameters.insert("language", QLocale::system().nativeLanguageName());
 
   m_googleAnalyticsUrl = QString{"https://google-analytics.com/mp/collect?api_secret=%1&measurement_id=%2"}.arg(m_apiSecret, m_measurementId);
   m_networkRequest = QNetworkRequest(m_googleAnalyticsUrl);
