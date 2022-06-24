@@ -24,6 +24,10 @@ Item {
     id: dialogComponent
     visible: GAnalytics.isVisible
 
+    Component.onCompleted: {
+        dialogComponent.visible = GAnalytics.isVisible;
+    }
+
     RadialGradient {
         id: overlay
         anchors.fill: parent

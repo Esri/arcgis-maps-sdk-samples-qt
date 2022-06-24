@@ -102,7 +102,7 @@ Page {
         repeat: false
         onTriggered: {
             if (GAnalytics.telemetryEnabled && searchBar.text !== "")
-                GAnalytics.postEvent("search_query", {"search text": searchBar.text});
+                GAnalytics.postEvent("search_query", {"search_text": searchBar.text});
         }
     }
 }

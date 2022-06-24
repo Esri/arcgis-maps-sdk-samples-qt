@@ -53,7 +53,7 @@ ListView {
                     drawer.close();
                     // launch sample...
                     SampleManager.currentSample = sample;
-                    GAnalytics.postEvent("sample_opened", {"sample name": sample.name, "referrer": "search"});
+                    GAnalytics.postEvent("sample_opened", {"sample_name": sample.name, "referrer": "search"});
                 }
             }
         }
