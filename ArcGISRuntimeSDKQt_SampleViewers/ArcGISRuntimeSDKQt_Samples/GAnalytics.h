@@ -57,7 +57,7 @@ private:
   QString m_clientId;
   qint64 m_startTime;
   bool m_telemetryEnabled;
-  bool m_isVisible;
+  bool m_isVisible = false;
   bool m_appSessionStarted = false;
   QNetworkAccessManager* m_networkAccessManager = nullptr;
   QSettings m_settings;

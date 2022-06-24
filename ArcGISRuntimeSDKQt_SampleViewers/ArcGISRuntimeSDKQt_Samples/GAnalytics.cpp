@@ -32,13 +32,9 @@
 
 GAnalytics::GAnalytics(QObject* parent /* = nullptr */):
   QObject(parent),
-#if defined (GANALYTICS_API_KEY) && defined (GANALYTICS_STREAM_ID)
+  // the following evaluate to "" if not provided in system environment
   m_apiSecret(QUOTE(GANALYTICS_API_KEY)),
   m_measurementId(QUOTE(GANALYTICS_STREAM_ID))
-#else
-  m_apiSecret(""),
-  m_measurementId("")
-#endif // GANALYTICS_API_KEY && GANALYTICS_STREAM_ID
 {
 }
 
@@ -52,10 +48,10 @@ void GAnalytics::init()
   generateClientId();
 
   // If this is an Esri daily build or a local user build, disable analytics
-  if (m_apiSecret.isEmpty() || m_measurementId.isEmpty() || m_apiSecret == "GANALYTICS_API_KEY" || m_measurementId == "GANALYTICS_STREAM_ID")
+  if (m_apiSecret.isEmpty() || m_measurementId.isEmpty())
   {
+    qDebug() << "No analytics API key or mesurement ID was provided, disabling telemetry";
     m_telemetryEnabled = false;
-    setIsVisible(false);
     return;
   }
 
@@ -68,7 +64,6 @@ void GAnalytics::init()
   else
   {
     m_telemetryEnabled = m_settings.value("GAnalytics-telemetry-enabled").toBool();
-    setIsVisible(false);
   }
 
   m_startTime = QDateTime::currentSecsSinceEpoch();
@@ -81,10 +76,9 @@ void GAnalytics::init()
 #endif // CPP_VIEWER / QML_VIEWER
 
   const auto os = QOperatingSystemVersion::current();
-  m_defaultParameters.insert("operating_system", QString{"%1 %2.%3"}.arg(os.name()).arg(os.majorVersion()).arg(os.minorVersion()));
+  m_defaultParameters.insert("operating_system", QString{"%1 %2.%3"}.arg(os.name(), QString::number(os.majorVersion()), QString::number(os.minorVersion())));
 
-  m_googleAnalyticsUrl = QString{"https://google-analytics.com/mp/collect?api_secret=%1&measurement_id=%2"}.arg(m_apiSecret).arg(m_measurementId);
-
+  m_googleAnalyticsUrl = QString{"https://google-analytics.com/mp/collect?api_secret=%1&measurement_id=%2"}.arg(m_apiSecret, m_measurementId);
   m_networkRequest = QNetworkRequest(m_googleAnalyticsUrl);
   m_networkRequest.setHeader(QNetworkRequest::ContentTypeHeader, "application, json");
 }
