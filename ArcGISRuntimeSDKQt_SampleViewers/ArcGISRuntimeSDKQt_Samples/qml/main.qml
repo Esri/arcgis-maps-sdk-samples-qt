@@ -106,7 +106,7 @@ ApplicationWindow {
                             gAnalyticsView.visible = false;
                             proxySetupView.visible = false;
                             SampleManager.currentMode = SampleManager.SourceCodeView
-                            GAnalytics.postEvent("samplecode_view", {"sample name": SampleManager.currentSample.name})
+                            GAnalytics.postEvent("sourcecode_view", {"sample_name": SampleManager.currentSample.name})
                         }
                     }
                     MenuItem {
@@ -118,7 +118,7 @@ ApplicationWindow {
                             gAnalyticsView.visible = false;
                             proxySetupView.visible = false;
                             SampleManager.currentMode = SampleManager.DescriptionView
-                            GAnalytics.postEvent("description_view", {"sample name": SampleManager.currentSample.name})
+                            GAnalytics.postEvent("description_view", {"sample_name": SampleManager.currentSample.name})
                         }
                     }
                     MenuItem {
