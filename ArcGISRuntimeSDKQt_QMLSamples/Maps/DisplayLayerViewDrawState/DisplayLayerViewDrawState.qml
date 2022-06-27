@@ -45,28 +45,28 @@ Rectangle {
             Basemap {
                 initStyle: Enums.BasemapStyleArcGISTopographic
             }
+        }
 
-            FeatureLayer {
-                id: featureLayer
-                serviceLayerIdAsInt: 0
-                minScale: 400000000
-                maxScale: 400000000 / 10
-                visible: loadLayerButton.text === qsTr("Hide Layer") ? true : false
+        FeatureLayer {
+            id: featureLayer
+            serviceLayerIdAsInt: 0
+            minScale: 400000000
+            maxScale: 400000000 / 10
+            visible: loadLayerButton.text === qsTr("Hide Layer") ? true : false
 
-                PortalItem {
-                    id: portalItem
-                    itemId: portalItemId
-                }
+            PortalItem {
+                id: portalItem
+                itemId: portalItemId
+            }
 
-                // once loaded set the viewpoint
-                onLoadStatusChanged: {
-                    if (loadStatus !== Enums.LoadStatusLoaded)
-                        return;
+            // once loaded set the viewpoint
+            onLoadStatusChanged: {
+                if (loadStatus !== Enums.LoadStatusLoaded)
+                    return;
 
-                    mapView.map.operationalLayers.append(featureLayer);
-                    mapView.setViewpointCenter(viewPoint);
-                    mapView.setViewpointScale(40000000.0);
-                }
+                mapView.map.operationalLayers.append(featureLayer);
+                mapView.setViewpointCenter(viewPoint);
+                mapView.setViewpointScale(40000000.0);
             }
         }
 

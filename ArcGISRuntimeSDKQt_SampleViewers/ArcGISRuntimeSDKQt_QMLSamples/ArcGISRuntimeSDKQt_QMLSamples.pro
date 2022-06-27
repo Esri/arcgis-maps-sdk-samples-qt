@@ -25,6 +25,8 @@ exists($$PWD/../../../../DevBuildQml.pri) {
   message("Building against the dev environment")
   DEFINES += ESRI_BUILD
   DEFINES += SAMPLE_VIEWER_API_KEY=$$(SAMPLEVIEWERAPIKEY_INTERNAL)
+  DEFINES += GANALYTICS_API_KEY=$$(GANALYTICS_API_KEY)
+  DEFINES += GANALYTICS_STREAM_ID=$$(GANALYTICS_STREAM_ID)
 
   # use the Esri dev build script
   include ($$PWD/../../../../DevBuildQml.pri)
@@ -95,6 +97,7 @@ HEADERS += \
     $$COMMONVIEWER/DataItem.h \
     $$COMMONVIEWER/DataItemListModel.h \
     $$COMMONVIEWER/DownloadSampleManager.h \
+    $$COMMONVIEWER/GAnalytics.h \
     $$COMMONVIEWER/Sample.h \
     $$COMMONVIEWER/SampleCategory.h \
     $$COMMONVIEWER/SampleListModel.h \
@@ -116,6 +119,7 @@ SOURCES += \
     $$COMMONVIEWER/DataItem.cpp \
     $$COMMONVIEWER/DataItemListModel.cpp \
     $$COMMONVIEWER/DownloadSampleManager.cpp \
+    $$COMMONVIEWER/GAnalytics.cpp \
     $$COMMONVIEWER/Sample.cpp \
     $$COMMONVIEWER/SampleCategory.cpp \
     $$COMMONVIEWER/SampleListModel.cpp \
@@ -220,11 +224,11 @@ CONFIG(daily){
     CONFIG(release, debug | release){
         win32 {
             contains(QT_ARCH, i386) {
-                message($${PWD}/../../scripts/windows/deploy_windows.bat -bin $${DESTDIR} -dep ArcGISRuntimeSDKQt_QMLSamples -exe ArcGISQt_QMLSamples.exe -qt $${QMAKESPEC}/../.. -b x86 -toolkit -tk_qml)
-                QMAKE_POST_LINK +=$$quote(cmd /c $${PWD}/../../scripts/windows/deploy_windows.bat -bin $${DESTDIR} -dep ArcGISRuntimeSDKQt_QMLSamples -exe ArcGISQt_QMLSamples.exe -qt $${QMAKESPEC}/../.. -b x86 -toolkit -tk_qml $$escape_expand(\n\t))
+                message($${PWD}/../../../scripts/windows/deploy_windows.bat -bin $${DESTDIR} -dep ArcGISRuntimeSDKQt_QMLSamples -exe ArcGISQt_QMLSamples.exe -qt $${QMAKESPEC}/../.. -b x86 -toolkit -tk_qml)
+                QMAKE_POST_LINK +=$$quote(cmd /c $${PWD}/../../../scripts/windows/deploy_windows.bat -bin $${DESTDIR} -dep ArcGISRuntimeSDKQt_QMLSamples -exe ArcGISQt_QMLSamples.exe -qt $${QMAKESPEC}/../.. -b x86 -toolkit -tk_qml $$escape_expand(\n\t))
             } else {
-                message($${PWD}/../../scripts/windows/deploy_windows.bat -bin $${DESTDIR} -dep ArcGISRuntimeSDKQt_QMLSamples -exe ArcGISQt_QMLSamples.exe -qt $${QMAKESPEC}/../.. -b x64 -toolkit -tk_qml)
-                QMAKE_POST_LINK +=$$quote(cmd /c $${PWD}/../../scripts/windows/deploy_windows.bat -bin $${DESTDIR} -dep ArcGISRuntimeSDKQt_QMLSamples -exe ArcGISQt_QMLSamples.exe -qt $${QMAKESPEC}/../.. -b x64 -toolkit -tk_qml $$escape_expand(\n\t))
+                message($${PWD}/../../../scripts/windows/deploy_windows.bat -bin $${DESTDIR} -dep ArcGISRuntimeSDKQt_QMLSamples -exe ArcGISQt_QMLSamples.exe -qt $${QMAKESPEC}/../.. -b x64 -toolkit -tk_qml)
+                QMAKE_POST_LINK +=$$quote(cmd /c $${PWD}/../../../scripts/windows/deploy_windows.bat -bin $${DESTDIR} -dep ArcGISRuntimeSDKQt_QMLSamples -exe ArcGISQt_QMLSamples.exe -qt $${QMAKESPEC}/../.. -b x64 -toolkit -tk_qml $$escape_expand(\n\t))
             }
         }
     }

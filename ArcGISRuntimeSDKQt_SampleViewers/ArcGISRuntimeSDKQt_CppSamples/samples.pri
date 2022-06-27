@@ -46,6 +46,7 @@ INCLUDEPATH += \
     "$$SAMPLEPATHCPP/DisplayInformation/GOSymbols" \
     "$$SAMPLEPATHCPP/DisplayInformation/IdentifyGraphics" \
     "$$SAMPLEPATHCPP/DisplayInformation/Picture_Marker_Symbol" \
+    "$$SAMPLEPATHCPP/DisplayInformation/QueryFeaturesWithArcadeExpression" \
     "$$SAMPLEPATHCPP/DisplayInformation/ReadSymbolsFromMobileStyle" \
     "$$SAMPLEPATHCPP/DisplayInformation/ShowCallout" \
     "$$SAMPLEPATHCPP/DisplayInformation/ShowLabelsOnLayers" \
@@ -94,6 +95,7 @@ INCLUDEPATH += \
     "$$SAMPLEPATHCPP/Geometry/SpatialRelationships" \
     "$$SAMPLEPATHCPP/Layers/AddEncExchangeSet" \
     "$$SAMPLEPATHCPP/Layers/ApplyMosaicRuleToRasters" \
+    "$$SAMPLEPATHCPP/Layers/ApplyUniqueValuesWithAlternateSymbols" \
     "$$SAMPLEPATHCPP/Layers/ArcGISMapImageLayerUrl" \
     "$$SAMPLEPATHCPP/Layers/ArcGISTiledLayerUrl" \
     "$$SAMPLEPATHCPP/Layers/BlendRasterLayer" \
@@ -246,6 +248,7 @@ HEADERS += \
     "$$SAMPLEPATHCPP/DisplayInformation/GOSymbols/GOSymbols.h" \
     "$$SAMPLEPATHCPP/DisplayInformation/IdentifyGraphics/IdentifyGraphics.h" \
     "$$SAMPLEPATHCPP/DisplayInformation/Picture_Marker_Symbol/Picture_Marker_Symbol.h" \
+    "$$SAMPLEPATHCPP/DisplayInformation/QueryFeaturesWithArcadeExpression/QueryFeaturesWithArcadeExpression.h" \
     "$$SAMPLEPATHCPP/DisplayInformation/ReadSymbolsFromMobileStyle/ReadSymbolsFromMobileStyle.h" \
     "$$SAMPLEPATHCPP/DisplayInformation/ReadSymbolsFromMobileStyle/SymbolImageProvider.h" \
     "$$SAMPLEPATHCPP/DisplayInformation/ShowCallout/ShowCallout.h" \
@@ -297,6 +300,7 @@ HEADERS += \
     "$$SAMPLEPATHCPP/Geometry/SpatialRelationships/SpatialRelationships.h" \
     "$$SAMPLEPATHCPP/Layers/AddEncExchangeSet/AddEncExchangeSet.h" \
     "$$SAMPLEPATHCPP/Layers/ApplyMosaicRuleToRasters/ApplyMosaicRuleToRasters.h" \
+    "$$SAMPLEPATHCPP/Layers/ApplyUniqueValuesWithAlternateSymbols/ApplyUniqueValuesWithAlternateSymbols.h" \
     "$$SAMPLEPATHCPP/Layers/ArcGISMapImageLayerUrl/ArcGISMapImageLayerUrl.h" \
     "$$SAMPLEPATHCPP/Layers/ArcGISTiledLayerUrl/ArcGISTiledLayerUrl.h" \
     "$$SAMPLEPATHCPP/Layers/BlendRasterLayer/BlendRasterLayer.h" \
@@ -452,6 +456,7 @@ SOURCES += \
     "$$SAMPLEPATHCPP/DisplayInformation/GOSymbols/GOSymbols.cpp" \
     "$$SAMPLEPATHCPP/DisplayInformation/IdentifyGraphics/IdentifyGraphics.cpp" \
     "$$SAMPLEPATHCPP/DisplayInformation/Picture_Marker_Symbol/Picture_Marker_Symbol.cpp" \
+    "$$SAMPLEPATHCPP/DisplayInformation/QueryFeaturesWithArcadeExpression/QueryFeaturesWithArcadeExpression.cpp" \
     "$$SAMPLEPATHCPP/DisplayInformation/ReadSymbolsFromMobileStyle/ReadSymbolsFromMobileStyle.cpp" \
     "$$SAMPLEPATHCPP/DisplayInformation/ReadSymbolsFromMobileStyle/SymbolImageProvider.cpp" \
     "$$SAMPLEPATHCPP/DisplayInformation/ShowCallout/ShowCallout.cpp" \
@@ -503,6 +508,7 @@ SOURCES += \
     "$$SAMPLEPATHCPP/Geometry/SpatialRelationships/SpatialRelationships.cpp" \
     "$$SAMPLEPATHCPP/Layers/AddEncExchangeSet/AddEncExchangeSet.cpp" \
     "$$SAMPLEPATHCPP/Layers/ApplyMosaicRuleToRasters/ApplyMosaicRuleToRasters.cpp" \
+    "$$SAMPLEPATHCPP/Layers/ApplyUniqueValuesWithAlternateSymbols/ApplyUniqueValuesWithAlternateSymbols.cpp" \
     "$$SAMPLEPATHCPP/Layers/ArcGISMapImageLayerUrl/ArcGISMapImageLayerUrl.cpp" \
     "$$SAMPLEPATHCPP/Layers/ArcGISTiledLayerUrl/ArcGISTiledLayerUrl.cpp" \
     "$$SAMPLEPATHCPP/Layers/BlendRasterLayer/BlendRasterLayer.cpp" \
@@ -658,6 +664,7 @@ RESOURCES += \
     "$$SAMPLEPATHCPP/DisplayInformation/GOSymbols/GOSymbols.qrc" \
     "$$SAMPLEPATHCPP/DisplayInformation/IdentifyGraphics/IdentifyGraphics.qrc" \
     "$$SAMPLEPATHCPP/DisplayInformation/Picture_Marker_Symbol/Picture_Marker_Symbol.qrc" \
+    "$$SAMPLEPATHCPP/DisplayInformation/QueryFeaturesWithArcadeExpression/QueryFeaturesWithArcadeExpression.qrc" \
     "$$SAMPLEPATHCPP/DisplayInformation/ReadSymbolsFromMobileStyle/ReadSymbolsFromMobileStyle.qrc" \
     "$$SAMPLEPATHCPP/DisplayInformation/ShowCallout/ShowCallout.qrc" \
     "$$SAMPLEPATHCPP/DisplayInformation/ShowLabelsOnLayers/ShowLabelsOnLayers.qrc" \
@@ -706,6 +713,7 @@ RESOURCES += \
     "$$SAMPLEPATHCPP/Geometry/SpatialRelationships/SpatialRelationships.qrc" \
     "$$SAMPLEPATHCPP/Layers/AddEncExchangeSet/AddEncExchangeSet.qrc" \
     "$$SAMPLEPATHCPP/Layers/ApplyMosaicRuleToRasters/ApplyMosaicRuleToRasters.qrc" \
+    "$$SAMPLEPATHCPP/Layers/ApplyUniqueValuesWithAlternateSymbols/ApplyUniqueValuesWithAlternateSymbols.qrc" \
     "$$SAMPLEPATHCPP/Layers/ArcGISMapImageLayerUrl/ArcGISMapImageLayerUrl.qrc" \
     "$$SAMPLEPATHCPP/Layers/ArcGISTiledLayerUrl/ArcGISTiledLayerUrl.qrc" \
     "$$SAMPLEPATHCPP/Layers/BlendRasterLayer/BlendRasterLayer.qrc" \

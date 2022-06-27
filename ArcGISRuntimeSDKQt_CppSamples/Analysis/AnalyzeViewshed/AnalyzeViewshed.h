@@ -37,7 +37,7 @@ class AnalyzeViewshed : public QQuickItem
   Q_OBJECT
 
   Q_PROPERTY(bool viewshedInProgress MEMBER m_viewshedInProgress NOTIFY viewshedInProgressChanged)
-  Q_PROPERTY(QString statusText READ jobStatus NOTIFY jobStatusChanged)
+  Q_PROPERTY(QString statusText READ jobStatus NOTIFY statusChanged)
 
 public:
   explicit AnalyzeViewshed(QQuickItem* parent = nullptr);
@@ -49,7 +49,7 @@ public:
 signals:
   void viewshedInProgressChanged();
   void displayErrorDialog(const QString& titleText, const QString& detailedText);
-  void jobStatusChanged();
+  void statusChanged();
 
 private:
   Esri::ArcGISRuntime::Map* m_map = nullptr;

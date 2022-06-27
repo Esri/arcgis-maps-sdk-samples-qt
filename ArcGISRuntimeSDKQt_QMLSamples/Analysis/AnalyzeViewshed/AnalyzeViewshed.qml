@@ -148,7 +148,7 @@ Rectangle {
                     viewshedJob = viewshedTask.createJob(viewshedParameters);
 
                     // Create signal handler for the job
-                    viewshedJob.jobStatusChanged.connect(viewshedJobHandler);
+                    viewshedJob.statusChanged.connect(viewshedJobHandler);
 
                     // start the job
                     viewshedJob.start();

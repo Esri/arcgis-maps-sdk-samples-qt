@@ -147,9 +147,9 @@ void LocalServerGeoprocessing::generateContours(double interval)
 
   GeoprocessingJob* gpJob = m_gpTask->createJob(gpParams);
 
-  connect(gpJob, &GeoprocessingJob::jobDone, this, [this, gpJob]()
+  connect(gpJob, &GeoprocessingJob::statusChanged, this, [this, gpJob](JobStatus jobStatus)
   {
-    if (gpJob->jobStatus() == JobStatus::Succeeded)
+    if (jobStatus == JobStatus::Succeeded)
     {
       QString url = m_localGPService->url().toString().replace("GPServer", "MapServer/jobs/" + gpJob->serverJobId());
       ArcGISMapImageLayer* mapImageLayer = new ArcGISMapImageLayer(QUrl(url), this);

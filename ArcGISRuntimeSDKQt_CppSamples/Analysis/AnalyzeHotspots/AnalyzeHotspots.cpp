@@ -74,9 +74,9 @@ void AnalyzeHotspots::executeTaskWithDates(const QString& fromDate, const QStrin
 
   // Create the GP Job and connect to the status signals
   GeoprocessingJob* job = m_hotspotTask->createJob(hotspotParameters);
-  connect(job, &GeoprocessingJob::jobStatusChanged, this, [this, job]()
+  connect(job, &GeoprocessingJob::statusChanged, this, [this, job](JobStatus jobStatus)
   {
-    switch (job->jobStatus())
+    switch (jobStatus)
     {
       case JobStatus::Failed:
         emit displayErrorDialog("Geoprocessing Task failed", !job->error().isEmpty() ? job->error().additionalMessage() : "Unknown error.");
@@ -103,7 +103,7 @@ void AnalyzeHotspots::executeTaskWithDates(const QString& fromDate, const QStrin
 
     // emit signals
     emit jobInProgressChanged();
-    emit jobStatusChanged();
+    emit statusChanged();
   });
 
   // Start the job
@@ -111,7 +111,7 @@ void AnalyzeHotspots::executeTaskWithDates(const QString& fromDate, const QStrin
   m_jobInProgress = true;
   emit jobInProgressChanged();
   m_jobStatus = "Job in progress...";
-  emit jobStatusChanged();
+  emit statusChanged();
 }
 
 GeoprocessingParameters AnalyzeHotspots::createParameters(const QString& fromDate, const QString& toDate)
