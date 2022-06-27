@@ -33,8 +33,9 @@ int main(int argc, char *argv[])
   app.setApplicationName(QString("ShowDeviceLocationUsingIndoorPositioning - C++"));
 
   // Access to Esri location services requires an API key. This can be copied below or used as a command line argument.
-  const QString apiKey = QString("");
-  setAPIKey(app, apiKey);
+  // This sample does not use an API key
+  // const QString apiKey = QString("");
+  // setAPIKey(app, apiKey);
 
   // Initialize the sample
   ShowDeviceLocationUsingIndoorPositioning::init();

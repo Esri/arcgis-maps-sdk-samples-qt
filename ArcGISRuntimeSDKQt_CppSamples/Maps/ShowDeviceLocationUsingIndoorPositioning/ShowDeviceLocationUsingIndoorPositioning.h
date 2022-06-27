@@ -21,6 +21,9 @@ namespace Esri
 {
 namespace ArcGISRuntime
 {
+class ArcGISFeatureTable;
+class FeatureTable;
+class Location;
 class Map;
 class MapQuickView;
 }
@@ -46,9 +49,16 @@ signals:
 private:
   Esri::ArcGISRuntime::MapQuickView* mapView() const;
   void setMapView(Esri::ArcGISRuntime::MapQuickView* mapView);
+  void findPositioningTable();
+  void findPathwaysTable();
+  void findGlobalID();
+  void setupIndoorLocationDataSource(QUuid globalID);
+  void locationChanged(Esri::ArcGISRuntime::Location loc);
 
   Esri::ArcGISRuntime::Map* m_map = nullptr;
   Esri::ArcGISRuntime::MapQuickView* m_mapView = nullptr;
+  Esri::ArcGISRuntime::FeatureTable* m_positioningTable = nullptr;
+  Esri::ArcGISRuntime::ArcGISFeatureTable* m_pathwaysTable = nullptr;
 };
 
 #endif // SHOWDEVICELOCATIONUSINGINDOORPOSITIONING_H
