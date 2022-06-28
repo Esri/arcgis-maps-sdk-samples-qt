@@ -31,7 +31,7 @@ import QtGraphicalEffects 1.0
 import QtWebView 1.1
 import Esri.ArcGISExtras 1.1
 import Esri.ArcGISRuntime 100.15
-import Esri.ArcGISRuntime.Toolkit 100.15
+import Esri.ArcGISRuntime.Toolkit 100.15.0
 
 Item {
 
