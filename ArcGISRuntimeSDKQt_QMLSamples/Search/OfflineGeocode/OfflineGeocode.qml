@@ -18,7 +18,7 @@ import QtQuick 2.6
 import QtQuick.Controls 2.2
 import QtQuick.Layouts 1.3
 import Esri.ArcGISExtras 1.1
-import Esri.ArcGISRuntime 100.15.0
+import Esri.ArcGISRuntime 100.15
 import Esri.ArcGISRuntime.Toolkit 100.15.0
 
 Rectangle {
