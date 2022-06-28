@@ -6,25 +6,16 @@ The repo contains [Qt](http://qt.io) projects for each sample that can be run fr
 
 ## Table of Contents
 
-- [ArcGIS Runtime SDK 100.15.0 for Qt sample applications](#arcgis-runtime-sdk-100150-for-qt-sample-applications)
-  - [Overview](#overview)
-  - [Table of Contents](#table-of-contents)
-  - [Prerequisites](#prerequisites)
-  - [Set up the ArcGIS Runtime SDK for Qt samples repo locally](#set-up-the-arcgis-runtime-sdk-for-qt-samples-repo-locally)
-    - [Fork the repo](#fork-the-repo)
-    - [Clone the repo](#clone-the-repo)
-      - [Clone the sample code repo](#clone-the-sample-code-repo)
-      - [Clone the toolkit repo](#clone-the-toolkit-repo)
-    - [Configure remote upstream for your fork](#configure-remote-upstream-for-your-fork)
-    - [Sync your fork](#sync-your-fork)
-  - [Open a sample project file in Qt Creator](#open-a-sample-project-file-in-qt-creator)
-  - [Build and run the Qt Runtime Samples Viewer locally](#build-and-run-the-qt-runtime-samples-viewer-locally)
-  - [Use a previous version](#use-a-previous-version)
-  - [Use offline data in the samples](#use-offline-data-in-the-samples)
-  - [Resources](#resources)
-  - [Issues](#issues)
-  - [Contributing](#contributing)
-  - [Licensing](#licensing)
+1. [Prerequisites](#prerequisites)
+2. [Set up the ArcGIS Runtime SDK for Qt samples repo locally](#set-up-the-arcgis-runtime-sdk-for-qt-samples-repo-locally)
+3. [Open a sample project file in Qt Creator](#open-a-sample-project-file-in-qt-creator)
+4. [Build and run the Qt Runtime Samples Viewer locally](#build-and-run-the-qt-runtime-samples-viewer-locally)
+5. [Use a previous version](#use-a-previous-version)
+6. [Use offline data in the samples](#use-offline-data-in-the-samples)
+7. [Resources](#resources)
+8. [Issues](#issues)
+9. [Contributing](#contributing)
+10. [Licensing](#licensing)
 
 ## Prerequisites
 
