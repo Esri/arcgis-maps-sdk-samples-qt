@@ -18,7 +18,7 @@ import QtQuick 2.6
 import QtQuick.Controls 2.12
 import QtQuick.Layouts 1.12
 import Esri.Samples 1.0
-import Esri.ArcGISRuntime.Toolkit 100.15
+import Esri.ArcGISRuntime.Toolkit 100.15.0
 
 Item {
     // Declare the C++ instance which creates the scene etc. and supply the view

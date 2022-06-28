@@ -22,7 +22,7 @@ import QtSensors 5.3
 import QtPositioning 5.3
 import QtQuick.XmlListModel 2.0
 import Esri.ArcGISExtras 1.1
-import Esri.ArcGISRuntime.Toolkit 100.15
+import Esri.ArcGISRuntime.Toolkit 100.15.0
 
 Item {
 

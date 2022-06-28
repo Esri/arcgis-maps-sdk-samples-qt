@@ -29,6 +29,7 @@ TARGET = ContingentValues
 
 ARCGIS_RUNTIME_VERSION = 100.14
 ARCGIS_RUNTIME_VERSION = 100.15
+ARCGIS_RUNTIME_VERSION = 100.15.0
 include($$PWD/arcgisruntime.pri)
 
 #-------------------------------------------------------------------------------

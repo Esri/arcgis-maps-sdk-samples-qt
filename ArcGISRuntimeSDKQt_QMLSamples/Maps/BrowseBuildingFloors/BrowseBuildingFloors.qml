@@ -17,10 +17,14 @@
 import QtQuick 2.12
 import QtQuick.Controls 2.2
 <<<<<<< HEAD
+<<<<<<< HEAD
 import Esri.ArcGISRuntime 100.14
 =======
 import Esri.ArcGISRuntime 100.15
 >>>>>>> 87ac2854f... Marton/100.15 (#1384)
+=======
+import Esri.ArcGISRuntime 100.15.0
+>>>>>>> a6bab3d2a... Add patch version (#1423)
 
 Rectangle {
     id: rootRectangle

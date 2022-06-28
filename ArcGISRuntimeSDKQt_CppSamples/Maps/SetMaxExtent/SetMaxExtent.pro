@@ -23,6 +23,10 @@ CONFIG += c++14
 
 # additional modules are pulled in via arcgisruntime.pri
 QT += qml quick
+QT += opengl qml quick
+
+ARCGIS_RUNTIME_VERSION = 100.15.0
+include($$PWD/arcgisruntime.pri)
 
 TEMPLATE = app
 TARGET = SetMaxExtent

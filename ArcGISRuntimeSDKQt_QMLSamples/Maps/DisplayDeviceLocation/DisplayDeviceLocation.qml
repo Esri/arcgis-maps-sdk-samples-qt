@@ -17,7 +17,7 @@
 import QtQuick 2.6
 import QtPositioning 5.3
 import QtSensors 5.3
-import Esri.ArcGISRuntime 100.15
+import Esri.ArcGISRuntime 100.15.0
 
 Rectangle {
     width: 800
