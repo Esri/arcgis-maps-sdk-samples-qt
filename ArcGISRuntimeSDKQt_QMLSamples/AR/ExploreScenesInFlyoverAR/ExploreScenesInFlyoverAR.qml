@@ -16,7 +16,7 @@
 
 import QtQuick 2.6
 import QtQuick.Controls 2.12
-import Esri.ArcGISRuntime 100.15
+import Esri.ArcGISRuntime 100.15.0
 import Esri.ArcGISExtras 1.1
 import Esri.ArcGISArToolkit 1.0
 
