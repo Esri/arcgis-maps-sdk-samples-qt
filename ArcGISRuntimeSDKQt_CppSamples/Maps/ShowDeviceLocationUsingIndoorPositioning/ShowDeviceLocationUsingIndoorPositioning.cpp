@@ -31,6 +31,8 @@
 #include "Portal.h"
 #include "PortalItem.h"
 
+#include "IndoorsLocationDataSourceCreator.h"
+
 using namespace Esri::ArcGISRuntime;
 
 ShowDeviceLocationUsingIndoorPositioning::ShowDeviceLocationUsingIndoorPositioning(QObject* parent /* = nullptr */):
@@ -64,6 +66,8 @@ void ShowDeviceLocationUsingIndoorPositioning::setMapView(MapQuickView* mapView)
 
   m_mapView = mapView;
   m_mapView->setMap(m_map);
+
+  setupIndoorsLocationDataSource(QUuid());
 
   emit mapViewChanged();
 }
@@ -136,19 +140,22 @@ void ShowDeviceLocationUsingIndoorPositioning::findGlobalID()
     {
       Feature* feat = iter.next();
       QUuid globalID = feat->attributes()->attributesMap().value("GlobalID").toUuid();
-      setupIndoorLocationDataSource(globalID);
+      setupIndoorsLocationDataSource(globalID);
     }
   });
   m_positioningTable->queryFeatures(queryParameters);
 }
 
-void ShowDeviceLocationUsingIndoorPositioning::setupIndoorLocationDataSource(QUuid globalID)
+void ShowDeviceLocationUsingIndoorPositioning::setupIndoorsLocationDataSource(QUuid globalID)
 {
-  IndoorsLocationDataSource* indoorsLocationDataSource = new IndoorsLocationDataSource(m_positioningTable, m_pathwaysTable, globalID, this);
-  IndoorsLocationDataSource* indoorsLocationDataSource2 = new IndoorsLocationDataSource(m_positioningTable, m_pathwaysTable, this);
-  qDebug() << indoorsLocationDataSource->positioningId();
-  qDebug() << indoorsLocationDataSource2->positioningId();
+  IndoorsLocationDataSourceCreator* ildsCreator = new IndoorsLocationDataSourceCreator(this);
+  connect(ildsCreator, &IndoorsLocationDataSourceCreator::, this, [this](IndoorsLocationDataSource* ilds)
+  {
 
+  });
+
+  IndoorsLocationDataSource* indoorsLocationDataSource = new IndoorsLocationDataSource(m_positioningTable, m_pathwaysTable, globalID, this);
+  qDebug() << indoorsLocationDataSource->positioningId();
 
   m_mapView->locationDisplay()->setDataSource(indoorsLocationDataSource);
   m_mapView->locationDisplay()->setAutoPanMode(LocationDisplayAutoPanMode::Navigation);

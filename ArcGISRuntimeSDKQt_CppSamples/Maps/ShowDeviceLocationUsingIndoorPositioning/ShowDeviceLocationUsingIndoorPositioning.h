@@ -52,7 +52,7 @@ private:
   void findPositioningTable();
   void findPathwaysTable();
   void findGlobalID();
-  void setupIndoorLocationDataSource(QUuid globalID);
+  void setupIndoorsLocationDataSource(QUuid globalID);
   void locationChanged(Esri::ArcGISRuntime::Location loc);
 
   Esri::ArcGISRuntime::Map* m_map = nullptr;

@@ -34,10 +34,10 @@ include($$PWD/arcgisruntime.pri)
 
 HEADERS += \
     ShowDeviceLocationUsingIndoorPositioning.h \
-    IndoorLocationDataSourceCreator.h
+    IndoorsLocationDataSourceCreator.h
 
 SOURCES += \
-    IndoorLocationDataSourceCreator.cpp \
+    IndoorsLocationDataSourceCreator.cpp \
     main.cpp \
     ShowDeviceLocationUsingIndoorPositioning.cpp
 

@@ -1,5 +1,5 @@
-#ifndef INDOORLOCATIONDATASOURCECREATOR_H
-#define INDOORLOCATIONDATASOURCECREATOR_H
+#ifndef INDOORSLOCATIONDATASOURCECREATOR_H
+#define INDOORSLOCATIONDATASOURCECREATOR_H
 
 #include <QUuid>
 #include <QObject>
@@ -16,22 +16,22 @@ class Map;
 }
 
 
-class IndoorLocationDataSourceCreator : public QObject
+class IndoorsLocationDataSourceCreator : public QObject
 {
   Q_OBJECT
 
 public:
-  IndoorLocationDataSourceCreator(QObject* parent = nullptr);
-  ~IndoorLocationDataSourceCreator();
+  IndoorsLocationDataSourceCreator(QObject* parent = nullptr);
+  ~IndoorsLocationDataSourceCreator();
 
 public slots:
-  void createIndoorLocationDataSource(Esri::ArcGISRuntime::Map* map, const QString &positioningTableName, const QString &pathwaysTableName, const QStringList &globalIdSortNames);
+  void createIndoorsLocationDataSource(Esri::ArcGISRuntime::Map* map, const QString &positioningTableName, const QString &pathwaysTableName, const QStringList &globalIdSortNames);
 
 signals:
-  void createIndoorLocationDataSourceCompleted(Esri::ArcGISRuntime::IndoorsLocationDataSource* indoorLocationDataSource);
+  void createIndoorsLocationDataSourceCompleted(Esri::ArcGISRuntime::IndoorsLocationDataSource* IndoorsLocationDataSource);
 
 private:
-  void returnIndoorLocationDataSource();
+  void returnIndoorsLocationDataSource();
   void findPositioningTable();
   void findPathwaysTable();
   void findGlobalId();
@@ -45,4 +45,4 @@ private:
   QStringList m_globalIdSortNames;
 };
 
-#endif // INDOORLOCATIONDATASOURCECREATOR_H
+#endif // INDOORSLOCATIONDATASOURCECREATOR_H
