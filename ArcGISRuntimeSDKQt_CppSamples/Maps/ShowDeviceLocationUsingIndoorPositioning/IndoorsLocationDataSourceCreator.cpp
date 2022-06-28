@@ -1,4 +1,4 @@
-#include "IndoorLocationDataSourceCreator.h"
+#include "IndoorsLocationDataSourceCreator.h"
 
 #include "FeatureTableListModel.h"
 #include "FeatureTable.h"
@@ -9,20 +9,20 @@
 
 using namespace Esri::ArcGISRuntime;
 
-IndoorLocationDataSourceCreator::IndoorLocationDataSourceCreator(QObject* parent /* = nullptr */):
+IndoorsLocationDataSourceCreator::IndoorsLocationDataSourceCreator(QObject* parent /* = nullptr */):
   QObject(parent)
 {
 }
 
-IndoorLocationDataSourceCreator::~IndoorLocationDataSourceCreator() = default;
+IndoorsLocationDataSourceCreator::~IndoorsLocationDataSourceCreator() = default;
 
-void IndoorLocationDataSourceCreator::createIndoorLocationDataSource(Map* map, const QString &positioningTableName, const QString &pathwaysTableName, const QStringList &globalIdSortNames)
+void IndoorsLocationDataSourceCreator::createIndoorsLocationDataSource(Map* map, const QString &positioningTableName, const QString &pathwaysTableName, const QStringList &globalIdSortNames)
 {
   if (map->loadStatus() != LoadStatus::Loaded)
   {
     connect(m_map, &Map::doneLoading, this, [&]()
     {
-      createIndoorLocationDataSource(m_map, positioningTableName, pathwaysTableName, globalIdSortNames);
+      createIndoorsLocationDataSource(m_map, positioningTableName, pathwaysTableName, globalIdSortNames);
     });
     return;
   }
@@ -38,7 +38,7 @@ void IndoorLocationDataSourceCreator::createIndoorLocationDataSource(Map* map, c
   findGlobalId();
 }
 
-void IndoorLocationDataSourceCreator::findPositioningTable()
+void IndoorsLocationDataSourceCreator::findPositioningTable()
 {
   FeatureTableListModel* tables = m_map->tables();
 
@@ -50,14 +50,14 @@ void IndoorLocationDataSourceCreator::findPositioningTable()
       {
         m_positioningTable = table;
         if (m_pathwaysTable && m_positioningTable && !m_globalId.isNull())
-          returnIndoorLocationDataSource();
+          returnIndoorsLocationDataSource();
       }
     });
     table->load();
   }
 }
 
-void IndoorLocationDataSourceCreator::findPathwaysTable()
+void IndoorsLocationDataSourceCreator::findPathwaysTable()
 {
   LayerListModel* layers = m_map->operationalLayers();
   for (Layer* layer : *layers)
@@ -68,13 +68,13 @@ void IndoorLocationDataSourceCreator::findPathwaysTable()
       {
         m_pathwaysTable = dynamic_cast<ArcGISFeatureTable*>(featureLayer->featureTable());
         if (m_pathwaysTable && m_positioningTable && !m_globalId.isNull())
-          returnIndoorLocationDataSource();
+          returnIndoorsLocationDataSource();
       }
     }
   }
 }
 
-void IndoorLocationDataSourceCreator::findGlobalId()
+void IndoorsLocationDataSourceCreator::findGlobalId()
 {
   const QList<Field> fields = m_positioningTable->fields();
   Field dateCreatedField;
@@ -107,13 +107,13 @@ void IndoorLocationDataSourceCreator::findGlobalId()
       Feature* feat = iter.next();
       m_globalId = feat->attributes()->attributesMap().value("GlobalID").toUuid();
       if (m_pathwaysTable && m_positioningTable && !m_globalId.isNull())
-        returnIndoorLocationDataSource();
+        returnIndoorsLocationDataSource();
     }
   });
   m_positioningTable->queryFeatures(queryParameters);
 }
 
-void IndoorLocationDataSourceCreator::returnIndoorLocationDataSource()
+void IndoorsLocationDataSourceCreator::returnIndoorsLocationDataSource()
 {
-  emit createIndoorLocationDataSourceCompleted(new IndoorsLocationDataSource(m_positioningTable, m_pathwaysTable, m_globalId, this));
+  emit createIndoorsLocationDataSourceCompleted(new IndoorsLocationDataSource(m_positioningTable, m_pathwaysTable, m_globalId, this));
 }
