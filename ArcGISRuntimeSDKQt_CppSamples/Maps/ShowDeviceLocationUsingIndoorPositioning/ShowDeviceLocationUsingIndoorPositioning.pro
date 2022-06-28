@@ -27,15 +27,17 @@ QT += qml quick
 TEMPLATE = app
 TARGET = ShowDeviceLocationUsingIndoorPositioning
 
-ARCGIS_RUNTIME_VERSION = 100.15
+ARCGIS_RUNTIME_VERSION = 100.15.0
 include($$PWD/arcgisruntime.pri)
 
 #-------------------------------------------------------------------------------
 
 HEADERS += \
-    ShowDeviceLocationUsingIndoorPositioning.h
+    ShowDeviceLocationUsingIndoorPositioning.h \
+    IndoorLocationDataSourceCreator.h
 
 SOURCES += \
+    IndoorLocationDataSourceCreator.cpp \
     main.cpp \
     ShowDeviceLocationUsingIndoorPositioning.cpp
 
