@@ -25,7 +25,8 @@ Click on any neighborhood to see the number of crimes in the last 60 days in a c
     "return Count(Intersects($feature, crimes));"
 
 7. Create an `ArcadeEvaluator` using the Arcade expression and `Enums.ArcadeProfileFormCalculation`.
-8. Create a dictionary of profile variables with the following key-value pairs. This will be passed to `ArcadeEvaluator.evaluate()` in the next step.
+8. Create a map of profile variables with the following key-value pairs. This will be passed to `ArcadeEvaluator.evaluate()` in the next step.
+
          `{"$feature", identifiedFeature}`
          `{"$map", map}`
 
