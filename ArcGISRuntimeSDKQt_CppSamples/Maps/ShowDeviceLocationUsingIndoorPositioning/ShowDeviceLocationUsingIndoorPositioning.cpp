@@ -41,7 +41,6 @@ ShowDeviceLocationUsingIndoorPositioning::ShowDeviceLocationUsingIndoorPositioni
   Credential* cred = new Credential("tester_viennardc", "password.testing12345", this);
   Portal* portal = new Portal(QUrl("https://viennardc.maps.arcgis.com"), cred, this);
   m_map = new Map(new PortalItem(portal, "89f88764c29b48218366855d7717d266", this), this);
-  connect(m_map, &Map::doneLoading, this, &ShowDeviceLocationUsingIndoorPositioning::findPositioningTable);
 }
 
 ShowDeviceLocationUsingIndoorPositioning::~ShowDeviceLocationUsingIndoorPositioning() = default;
@@ -67,100 +66,28 @@ void ShowDeviceLocationUsingIndoorPositioning::setMapView(MapQuickView* mapView)
   m_mapView = mapView;
   m_mapView->setMap(m_map);
 
-  setupIndoorsLocationDataSource(QUuid());
+  setupIndoorsLocationDataSource();
+
+  qDebug() << m_mapView->locationDisplay()->isStarted();
+
+  connect(m_mapView->locationDisplay(), &LocationDisplay::statusChanged, this, [](bool started){qDebug() << started;});
 
   emit mapViewChanged();
 }
 
-void ShowDeviceLocationUsingIndoorPositioning::findPositioningTable()
+void ShowDeviceLocationUsingIndoorPositioning::setupIndoorsLocationDataSource()
 {
-  FeatureTableListModel* tables = m_map->tables();
-
-  for (FeatureTable* table : *tables)
+  auto indoorsLocationDataSourceCreator = new IndoorsLocationDataSourceCreator(this);
+  connect(indoorsLocationDataSourceCreator, &IndoorsLocationDataSourceCreator::createIndoorsLocationDataSourceCompleted, this, [this](IndoorsLocationDataSource* indoorsLocationDataSource)
   {
-    connect(table, &FeatureTable::doneLoading, this, [table, this]()
-    {
-      if (table->tableName() == "ips_positioning")
-      {
-        m_positioningTable = table;
-        findPathwaysTable();
-      }
-    });
-    table->load();
-  }
-}
-
-void ShowDeviceLocationUsingIndoorPositioning::findPathwaysTable()
-{
-  LayerListModel* layers = m_map->operationalLayers();
-  for (Layer* layer : *layers)
-  {
-    if(FeatureLayer* featureLayer = dynamic_cast<FeatureLayer*>(layer))
-    {
-      if (featureLayer->name() == "Pathways")
-      {
-        m_pathwaysTable = dynamic_cast<ArcGISFeatureTable*>(featureLayer->featureTable());
-        findGlobalID();
-      }
-    }
-  }
-}
-
-void ShowDeviceLocationUsingIndoorPositioning::findGlobalID()
-{
-  const QList<Field> fields = m_positioningTable->fields();
-  Field dateCreatedField;
-
-  for (const Field &field : fields)
-  {
-    if (field.name().contains("DateCreated", Qt::CaseSensitivity::CaseInsensitive) || field.name().contains("DATE_CREATED", Qt::CaseInsensitive))
-    {
-      dateCreatedField = field;
-    }
-  }
-
-  if (dateCreatedField.isEmpty())
-  {
-    qWarning() << "Date created field not found";
-    return;
-  }
-
-  QueryParameters queryParameters;
-  queryParameters.setMaxFeatures(1);
-  queryParameters.setWhereClause("1=1");
-  queryParameters.orderByFields().append(OrderBy(dateCreatedField.name(), SortOrder::Descending));
-
-  connect(m_positioningTable, &FeatureTable::queryFeaturesCompleted, this, [this](QUuid, FeatureQueryResult* rawFeatureQueryResult)
-  {
-    // Delete rawFeatureQueryResult pointer when we leave scope.
-    auto featureQueryResult = std::unique_ptr<FeatureQueryResult>(rawFeatureQueryResult);
-
-    FeatureIterator iter = featureQueryResult->iterator();
-    if (iter.hasNext())
-    {
-      Feature* feat = iter.next();
-      QUuid globalID = feat->attributes()->attributesMap().value("GlobalID").toUuid();
-      setupIndoorsLocationDataSource(globalID);
-    }
-  });
-  m_positioningTable->queryFeatures(queryParameters);
-}
-
-void ShowDeviceLocationUsingIndoorPositioning::setupIndoorsLocationDataSource(QUuid globalID)
-{
-  IndoorsLocationDataSourceCreator* ildsCreator = new IndoorsLocationDataSourceCreator(this);
-  connect(ildsCreator, &IndoorsLocationDataSourceCreator::, this, [this](IndoorsLocationDataSource* ilds)
-  {
-
+    qDebug() << "indoors location data source created";
+    m_mapView->locationDisplay()->setDataSource(indoorsLocationDataSource);
+    m_mapView->locationDisplay()->setAutoPanMode(LocationDisplayAutoPanMode::Navigation);
+    m_mapView->locationDisplay()->start();
+    connect(m_mapView->locationDisplay(), &LocationDisplay::locationChanged, this, &ShowDeviceLocationUsingIndoorPositioning::locationChanged);
   });
 
-  IndoorsLocationDataSource* indoorsLocationDataSource = new IndoorsLocationDataSource(m_positioningTable, m_pathwaysTable, globalID, this);
-  qDebug() << indoorsLocationDataSource->positioningId();
-
-  m_mapView->locationDisplay()->setDataSource(indoorsLocationDataSource);
-  m_mapView->locationDisplay()->setAutoPanMode(LocationDisplayAutoPanMode::Navigation);
-  m_mapView->locationDisplay()->start();
-  connect(m_mapView->locationDisplay(), &LocationDisplay::locationChanged, this, &ShowDeviceLocationUsingIndoorPositioning::locationChanged);
+  indoorsLocationDataSourceCreator->createIndoorsLocationDataSource(m_map, "ips_positioning", "Pathways", {"DateCreated", "DATE_CREATED"});
 }
 
 void ShowDeviceLocationUsingIndoorPositioning::locationChanged(Location loc)

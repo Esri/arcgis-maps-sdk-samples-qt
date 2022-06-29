@@ -18,11 +18,12 @@ IndoorsLocationDataSourceCreator::~IndoorsLocationDataSourceCreator() = default;
 
 void IndoorsLocationDataSourceCreator::createIndoorsLocationDataSource(Map* map, const QString &positioningTableName, const QString &pathwaysTableName, const QStringList &globalIdSortNames)
 {
+  qDebug() << "createIndoorsLocationDataSource";
   if (map->loadStatus() != LoadStatus::Loaded)
   {
-    connect(m_map, &Map::doneLoading, this, [&]()
+    connect(map, &Map::doneLoading, this, [=]()
     {
-      createIndoorsLocationDataSource(m_map, positioningTableName, pathwaysTableName, globalIdSortNames);
+      createIndoorsLocationDataSource(map, positioningTableName, pathwaysTableName, globalIdSortNames);
     });
     return;
   }
@@ -35,22 +36,24 @@ void IndoorsLocationDataSourceCreator::createIndoorsLocationDataSource(Map* map,
 
   findPositioningTable();
   findPathwaysTable();
-  findGlobalId();
 }
 
 void IndoorsLocationDataSourceCreator::findPositioningTable()
 {
+  qDebug() << "findPositioningTable";
   FeatureTableListModel* tables = m_map->tables();
 
   for (FeatureTable* table : *tables)
   {
     connect(table, &FeatureTable::doneLoading, this, [table, this]()
     {
+      qDebug() << "table done loading";
       if (table->tableName() == m_positioningTableName)
       {
+        qDebug() << "positioning table found ";
         m_positioningTable = table;
-        if (m_pathwaysTable && m_positioningTable && !m_globalId.isNull())
-          returnIndoorsLocationDataSource();
+        // Finding the GlobalId requires the positioning table
+        findGlobalId();
       }
     });
     table->load();
@@ -59,16 +62,20 @@ void IndoorsLocationDataSourceCreator::findPositioningTable()
 
 void IndoorsLocationDataSourceCreator::findPathwaysTable()
 {
+  qDebug() << "findPathwaysTable";
   LayerListModel* layers = m_map->operationalLayers();
+
   for (Layer* layer : *layers)
   {
     if(FeatureLayer* featureLayer = dynamic_cast<FeatureLayer*>(layer))
     {
       if (featureLayer->name() == m_pathwaysTableName)
       {
+        qDebug() << "pathways table found";
         m_pathwaysTable = dynamic_cast<ArcGISFeatureTable*>(featureLayer->featureTable());
         if (m_pathwaysTable && m_positioningTable && !m_globalId.isNull())
           returnIndoorsLocationDataSource();
+        return;
       }
     }
   }
@@ -76,6 +83,7 @@ void IndoorsLocationDataSourceCreator::findPathwaysTable()
 
 void IndoorsLocationDataSourceCreator::findGlobalId()
 {
+  qDebug() << "findGlobalId";
   const QList<Field> fields = m_positioningTable->fields();
   Field dateCreatedField;
 
@@ -98,6 +106,7 @@ void IndoorsLocationDataSourceCreator::findGlobalId()
 
   connect(m_positioningTable, &FeatureTable::queryFeaturesCompleted, this, [this](QUuid, FeatureQueryResult* rawFeatureQueryResult)
   {
+    qDebug() << "global id - queryFeaturesCompleted";
     // Delete rawFeatureQueryResult pointer when we leave scope.
     auto featureQueryResult = std::unique_ptr<FeatureQueryResult>(rawFeatureQueryResult);
 
@@ -108,6 +117,7 @@ void IndoorsLocationDataSourceCreator::findGlobalId()
       m_globalId = feat->attributes()->attributesMap().value("GlobalID").toUuid();
       if (m_pathwaysTable && m_positioningTable && !m_globalId.isNull())
         returnIndoorsLocationDataSource();
+      return;
     }
   });
   m_positioningTable->queryFeatures(queryParameters);

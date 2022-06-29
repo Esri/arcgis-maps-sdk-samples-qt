@@ -49,10 +49,7 @@ signals:
 private:
   Esri::ArcGISRuntime::MapQuickView* mapView() const;
   void setMapView(Esri::ArcGISRuntime::MapQuickView* mapView);
-  void findPositioningTable();
-  void findPathwaysTable();
-  void findGlobalID();
-  void setupIndoorsLocationDataSource(QUuid globalID);
+  void setupIndoorsLocationDataSource();
   void locationChanged(Esri::ArcGISRuntime::Location loc);
 
   Esri::ArcGISRuntime::Map* m_map = nullptr;
