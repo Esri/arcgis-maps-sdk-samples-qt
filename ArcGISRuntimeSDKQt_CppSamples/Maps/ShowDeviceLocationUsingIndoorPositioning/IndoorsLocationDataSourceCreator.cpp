@@ -73,6 +73,7 @@ void IndoorsLocationDataSourceCreator::findPathwaysTable()
       {
         qDebug() << "pathways table found";
         m_pathwaysTable = dynamic_cast<ArcGISFeatureTable*>(featureLayer->featureTable());
+        qDebug() << (int)m_pathwaysTable->featureTableType();
         if (m_pathwaysTable && m_positioningTable && !m_globalId.isNull())
           returnIndoorsLocationDataSource();
         return;
@@ -125,5 +126,5 @@ void IndoorsLocationDataSourceCreator::findGlobalId()
 
 void IndoorsLocationDataSourceCreator::returnIndoorsLocationDataSource()
 {
-  emit createIndoorsLocationDataSourceCompleted(new IndoorsLocationDataSource(m_positioningTable, m_pathwaysTable, m_globalId, this));
+  emit createIndoorsLocationDataSourceCompleted(new IndoorsLocationDataSource(m_positioningTable, m_pathwaysTable, /*m_globalId,*/ this));
 }

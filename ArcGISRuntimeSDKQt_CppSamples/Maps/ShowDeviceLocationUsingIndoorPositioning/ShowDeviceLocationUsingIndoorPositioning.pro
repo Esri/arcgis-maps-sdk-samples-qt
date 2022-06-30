@@ -64,3 +64,4 @@ android {
     INCLUDEPATH += $$PWD
     DEPENDPATH += $$PWD
 }
+android: include(/Users/tan11389/Library/Application Support/QtProject/QtCreator/../Android/sdk/android_openssl/openssl.pri)

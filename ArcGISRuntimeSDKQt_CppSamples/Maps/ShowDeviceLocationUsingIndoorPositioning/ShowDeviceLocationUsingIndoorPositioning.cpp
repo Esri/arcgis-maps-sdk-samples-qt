@@ -70,21 +70,28 @@ void ShowDeviceLocationUsingIndoorPositioning::setMapView(MapQuickView* mapView)
 
   qDebug() << m_mapView->locationDisplay()->isStarted();
 
-  connect(m_mapView->locationDisplay(), &LocationDisplay::statusChanged, this, [](bool started){qDebug() << started;});
-
   emit mapViewChanged();
 }
 
 void ShowDeviceLocationUsingIndoorPositioning::setupIndoorsLocationDataSource()
 {
   auto indoorsLocationDataSourceCreator = new IndoorsLocationDataSourceCreator(this);
-  connect(indoorsLocationDataSourceCreator, &IndoorsLocationDataSourceCreator::createIndoorsLocationDataSourceCompleted, this, [this](IndoorsLocationDataSource* indoorsLocationDataSource)
+  connect(indoorsLocationDataSourceCreator, &IndoorsLocationDataSourceCreator::createIndoorsLocationDataSourceCompleted, this, [this](IndoorsLocationDataSource* indoorsLDS)
   {
     qDebug() << "indoors location data source created";
-    m_mapView->locationDisplay()->setDataSource(indoorsLocationDataSource);
+    m_mapView->locationDisplay()->setDataSource(indoorsLDS);
     m_mapView->locationDisplay()->setAutoPanMode(LocationDisplayAutoPanMode::Navigation);
     m_mapView->locationDisplay()->start();
     connect(m_mapView->locationDisplay(), &LocationDisplay::locationChanged, this, &ShowDeviceLocationUsingIndoorPositioning::locationChanged);
+    connect(indoorsLDS, &IndoorsLocationDataSource::errorOccurred, this, [](Error e)
+    {
+      qDebug() << "IndoorsLocationDataSource::errorOccurred" << e.message() << e.additionalMessage();
+    });
+
+    connect(indoorsLDS, &IndoorsLocationDataSource::statusChanged, this, [indoorsLDS](bool started)
+    {
+      qDebug() << "IndoorsLocationDataSource::statusChanged" << "started" << started << "isStarted" << indoorsLDS->isStarted();
+    });
   });
 
   indoorsLocationDataSourceCreator->createIndoorsLocationDataSource(m_map, "ips_positioning", "Pathways", {"DateCreated", "DATE_CREATED"});
@@ -93,4 +100,5 @@ void ShowDeviceLocationUsingIndoorPositioning::setupIndoorsLocationDataSource()
 void ShowDeviceLocationUsingIndoorPositioning::locationChanged(Location loc)
 {
   qDebug() << loc.additionalSourceProperties();
+  qDebug() << "horizontal accuracy" << loc.horizontalAccuracy();
 }
