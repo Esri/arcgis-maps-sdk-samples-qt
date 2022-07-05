@@ -63,8 +63,8 @@ void SetMaxExtent::setMapView(MapQuickView* mapView)
   m_mapView->setMap(m_map);
   m_mapView->graphicsOverlays()->append(m_coloradoOverlay);
   m_map->setMaxExtent(m_coloradoEnvelope);
-
   createExtentBorder();
+
   emit mapViewChanged();
 }
 
@@ -84,5 +84,6 @@ void SetMaxExtent::toggleMaxExtent()
   }
   else {
     m_map->setMaxExtent(m_coloradoEnvelope);
+    m_mapView->setViewpointGeometry(Envelope(-12138232.018408, 4441198.773776, -11362327.128340, 5012861.290274, SpatialReference(3857)), 50);
   }
 }
