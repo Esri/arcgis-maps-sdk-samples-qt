@@ -1,8 +1,12 @@
 # Set max extent
 
-Limit the view of a map to a particular area by setting a max extent to constrain the user's ability to pan or zoom away. 
+Set a max extent on the map.
 
 ![](screenshot.png)
+
+## Use case
+
+Limit the view of a map to a particular area by setting a max extent to constrain the user's ability to pan or zoom away. 
 
 ## How to use the sample
 
