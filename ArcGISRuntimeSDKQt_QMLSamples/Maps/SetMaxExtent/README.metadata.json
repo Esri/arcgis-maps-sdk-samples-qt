@@ -1,0 +1,26 @@
+{
+    "category": "Maps",
+    "description": "Limit the view of a map to a particular area.",
+    "ignore": false,
+    "images": [
+        "screenshot.png"
+    ],
+    "keywords": [
+        "envelope",
+        "extent",
+        "limit panning",
+        "map",
+        "mapview",
+        "max extent",
+        "zoom"
+    ],
+    "redirect_from": "",
+    "relevant_apis": [
+        "Envelope",
+        "Map"
+    ],
+    "snippets": [
+        "SetMaxExtent.qml"
+    ],
+    "title": "Set max extent"
+}
