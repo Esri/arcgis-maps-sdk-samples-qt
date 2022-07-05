@@ -1,0 +1,21 @@
+{
+    "category": "TODO",
+    "description": "TODO",
+    "ignore": false,
+    "images": [
+        "screenshot.png"
+    ],
+    "keywords": [
+        "TODO"
+    ],
+    "redirect_from": "",
+    "relevant_apis": [
+        "TODO"
+    ],
+    "snippets": [
+        "SetMaxExtent.cpp",
+        "SetMaxExtent.h",
+        "SetMaxExtent.qml"
+    ],
+    "title": "Set max extent"
+}
