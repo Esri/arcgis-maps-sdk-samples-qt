@@ -27,7 +27,7 @@ QT += qml quick
 TEMPLATE = app
 TARGET = SetMaxExtent
 
-ARCGIS_RUNTIME_VERSION = 100.15
+ARCGIS_RUNTIME_VERSION = 100.15.0
 include($$PWD/arcgisruntime.pri)
 
 #-------------------------------------------------------------------------------
