@@ -1,31 +1,27 @@
 # Set max extent
 
-Set a max extent on a map.
-This sample demonstrates ...
-This is **why** you would do it this way ...
+Limit the view of a map to a particular area by setting a max extent to constrain the user's ability to pan or zoom away. 
 
 ![](screenshot.png)
 
 ## How to use the sample
-e.g. Use the input controls to define a ... Click the "Go" button to ...
+
+The application loads with a map whose maximum extent has been set to the borders of Colorado. Note that you won't be able to pan far from the Colorado border or zoom out beyond the minimum scale set by the max extent. Use the toggle switch to disable the max extent to freely pan/zoom around the map.
 
 ## How it works
-e.g. In the `GeoView.Tapped` event, features in the `Map` are selected using an `Envelope` defined by the user's tap location ...
+
+1. Create a `Map` object.
+2. Create an `Envelope` of the Colorado extent.
+3. Set the map to a `MapView` object.
+4. Set the maximum extent of the map to be the Colorado envelope with `Map::setMaxExtent()`.
+5. Set `MaxExtent` to an empty envelope to disable the maximum extent of the map.
 
 ## Relevant API
- - ClassName1
- - MethodName
 
-## Offline data
-Read more about how to set up the sample's offline data [here](http://links.esri.com/ArcGISRuntimeQtSamples).
-
-Link | Local Location
----------|-------|
-|[San Francisco Streets TPK](https://www.arcgis.com/home/item.html?id=3f1bbf0ec70b409a975f5c91f363fe7d)| `<userhome>`/ArcGIS/Runtime/Data/tpk/SanFrancisco.tpk |
-
-## Additional information
-A standard level license is required to ...
+* Envelope
+* Map
 
 ## Tags
-Routing, Network analysis, Geocode
+
+extent, limit panning, map, mapview, max extent, zoom
 

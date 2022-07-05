@@ -30,7 +30,7 @@ using namespace Esri::ArcGISRuntime;
 
 SetMaxExtent::SetMaxExtent(QObject* parent /* = nullptr */):
   QObject(parent),
-  m_map(new Map(BasemapStyle::ArcGISTopographic, this))
+  m_map(new Map(BasemapStyle::ArcGISStreets, this))
 {
 
 }

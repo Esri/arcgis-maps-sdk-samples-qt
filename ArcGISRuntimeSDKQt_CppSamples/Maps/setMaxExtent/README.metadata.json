@@ -1,16 +1,23 @@
 {
-    "category": "TODO",
-    "description": "TODO",
+    "category": "Maps",
+    "description": "Limit the view of a map to a particular area.",
     "ignore": false,
     "images": [
         "screenshot.png"
     ],
     "keywords": [
-        "TODO"
+        "envelope",
+        "extent",
+        "limit panning",
+        "map",
+        "mapview",
+        "max extent",
+        "zoom"
     ],
     "redirect_from": "",
     "relevant_apis": [
-        "TODO"
+        "Envelope",
+        "Map"
     ],
     "snippets": [
         "SetMaxExtent.cpp",
