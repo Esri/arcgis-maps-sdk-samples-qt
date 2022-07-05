@@ -42,7 +42,7 @@ Rectangle {
             initBasemapStyle: Enums.BasemapStyleArcGISStreets
             onLoadStatusChanged: {
                 if (loadStatus === Enums.LoadStatusLoaded) {
-                    mapView.setViewpoint(vc);
+                    mapView.setViewpoint(vpe);
                     map.maxExtent = coloradoGeometry;
                 }
             }
@@ -56,6 +56,19 @@ Rectangle {
                     wkid: 3857
                 }
             }
+            ViewpointExtent {
+                id: vpe
+                extent: Envelope {
+                    xMax: -11362327.128340
+                    xMin: -12138232.018408
+                    yMin: 4441198.773776
+                    yMax: 5012861.290274
+                    spatialReference: SpatialReference {
+                        wkid: 3857
+                    }
+                }
+            }
+
             // Create the dotted outline for the clipping envelopes
             SimpleLineSymbol {
                 id: redOutline
@@ -63,17 +76,6 @@ Rectangle {
                 color: "#FFFF0000"
                 width: 3
             }
-        }
-        ViewpointCenter {
-            id: vc
-            center: Point {
-                x: -11655182.595204
-                y: 4741618.772994
-                spatialReference: SpatialReference {
-                    wkid: 3857
-                }
-            }
-            targetScale: 5000000
         }
         GraphicsOverlay {
             id: coloradoOverlay
@@ -113,7 +115,7 @@ Rectangle {
                 onCheckedChanged: {
                     if (checked) {
                         maxExtentToggle = true;
-                        mapView.setViewpoint(vc);
+                        mapView.setViewpoint(vpe);
                         map.maxExtent = coloradoGeometry;
                     }
                     else {
