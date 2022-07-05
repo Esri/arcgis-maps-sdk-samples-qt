@@ -74,3 +74,15 @@ void SetMaxExtent::createExtentBorder()
   m_coloradoGraphic = new Graphic(m_coloradoEnvelope, m_coloradoOutline, this);
   m_coloradoOverlay->graphics()->append(m_coloradoGraphic);
 }
+
+void SetMaxExtent::toggleMaxExtent()
+{
+  m_maxExtentEnabled ? m_maxExtentEnabled = false : m_maxExtentEnabled = true;
+
+  if (!m_maxExtentEnabled) {
+    m_map->setMaxExtent(Envelope{});
+  }
+  else {
+    m_map->setMaxExtent(m_coloradoEnvelope);
+  }
+}

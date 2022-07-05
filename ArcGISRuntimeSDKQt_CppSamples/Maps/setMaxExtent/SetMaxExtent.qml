@@ -16,6 +16,7 @@
 
 import QtQuick 2.12
 import QtQuick.Controls 2.12
+import QtQuick.Layouts 1.12
 import Esri.Samples 1.0
 
 Item {
@@ -28,6 +29,37 @@ Item {
         Component.onCompleted: {
             // Set and keep the focus on SceneView to enable keyboard navigation
             forceActiveFocus();
+        }
+    }
+
+    Rectangle {
+        anchors {
+            margins: 5
+            left: parent.left
+            bottom: parent.bottom
+        }
+        width: childrenRect.width
+        height: childrenRect.height
+        color: "#ff0000"
+        opacity: .75
+        radius: 3
+
+        ColumnLayout {
+            Text {
+                color: "#ffffff"
+                text: "Max extent enabled"
+                Layout.fillWidth: true
+                Layout.margins: 3
+                font {
+                    weight: Font.DemiBold
+                    pointSize: 10
+                }
+            }
+            Switch {
+                id: maxExtentSwitch
+                checked: true
+                onClicked: model.toggleMaxExtent();
+            }
         }
     }
 

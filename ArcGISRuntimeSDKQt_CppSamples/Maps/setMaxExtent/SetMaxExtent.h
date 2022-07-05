@@ -44,6 +44,7 @@ public:
   ~SetMaxExtent();
 
   static void init();
+  Q_INVOKABLE void toggleMaxExtent();
 
 signals:
   void mapViewChanged();
@@ -60,6 +61,7 @@ private:
   Esri::ArcGISRuntime::GraphicsOverlay* m_coloradoOverlay = nullptr;
   Esri::ArcGISRuntime::Envelope m_coloradoEnvelope;
   Esri::ArcGISRuntime::SimpleLineSymbol* m_coloradoOutline = nullptr;
+  bool m_maxExtentEnabled = true;
 };
 
 #endif // SETMAXEXTENT_H
