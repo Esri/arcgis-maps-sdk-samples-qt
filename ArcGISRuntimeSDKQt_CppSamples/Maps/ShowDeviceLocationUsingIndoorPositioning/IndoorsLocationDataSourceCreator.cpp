@@ -1,9 +1,20 @@
+// Copyright 2022 Esri.
+
+// Licensed under the Apache License, Version 2.0 (the "License");
+// you may not use this file except in compliance with the License.
+// You may obtain a copy of the License at
+// http://www.apache.org/licenses/LICENSE-2.0
+
+// Unless required by applicable law or agreed to in writing, software
+// distributed under the License is distributed on an "AS IS" BASIS,
+// WITHOUT WARRANTIES OR CONDITIONS OF ANY KIND, either express or implied.
+// See the License for the specific language governing permissions and
+// limitations under the License.
+
 #include "IndoorsLocationDataSourceCreator.h"
 
-#include "FeatureTableListModel.h"
-#include "FeatureTable.h"
-#include "FeatureLayer.h"
 #include "ArcGISFeatureTable.h"
+#include "FeatureLayer.h"
 #include "IndoorsLocationDataSource.h"
 #include "Map.h"
 
@@ -21,9 +32,11 @@ void IndoorsLocationDataSourceCreator::createIndoorsLocationDataSource(Map* map,
   qDebug() << "createIndoorsLocationDataSource";
   if (map->loadStatus() != LoadStatus::Loaded)
   {
+    qDebug() << "map is not done loading, retrying when done loading";
     connect(map, &Map::doneLoading, this, [=]()
     {
       createIndoorsLocationDataSource(map, positioningTableName, pathwaysTableName, globalIdSortNames);
+      map->disconnect();
     });
     return;
   }
@@ -73,7 +86,6 @@ void IndoorsLocationDataSourceCreator::findPathwaysTable()
       {
         qDebug() << "pathways table found";
         m_pathwaysTable = dynamic_cast<ArcGISFeatureTable*>(featureLayer->featureTable());
-        qDebug() << (int)m_pathwaysTable->featureTableType();
         if (m_pathwaysTable && m_positioningTable && !m_globalId.isNull())
           returnIndoorsLocationDataSource();
         return;
@@ -91,7 +103,10 @@ void IndoorsLocationDataSourceCreator::findGlobalId()
   for (const Field &field : fields)
   {
     if (m_globalIdSortNames.contains(field.name(), Qt::CaseInsensitive))
+    {
+      qDebug() << "Found global id sort field" << field.name();
       dateCreatedField = field;
+    }
   }
 
   if (dateCreatedField.isEmpty())
@@ -103,7 +118,7 @@ void IndoorsLocationDataSourceCreator::findGlobalId()
   QueryParameters queryParameters;
   queryParameters.setMaxFeatures(1);
   queryParameters.setWhereClause("1=1");
-  queryParameters.orderByFields().append(OrderBy(dateCreatedField.name(), SortOrder::Descending));
+  queryParameters.setOrderByFields({OrderBy(dateCreatedField.name(), SortOrder::Descending)});
 
   connect(m_positioningTable, &FeatureTable::queryFeaturesCompleted, this, [this](QUuid, FeatureQueryResult* rawFeatureQueryResult)
   {
@@ -116,6 +131,7 @@ void IndoorsLocationDataSourceCreator::findGlobalId()
     {
       Feature* feat = iter.next();
       m_globalId = feat->attributes()->attributesMap().value("GlobalID").toUuid();
+      qDebug() << "Found global id" << m_globalId;
       if (m_pathwaysTable && m_positioningTable && !m_globalId.isNull())
         returnIndoorsLocationDataSource();
       return;
@@ -126,5 +142,5 @@ void IndoorsLocationDataSourceCreator::findGlobalId()
 
 void IndoorsLocationDataSourceCreator::returnIndoorsLocationDataSource()
 {
-  emit createIndoorsLocationDataSourceCompleted(new IndoorsLocationDataSource(m_positioningTable, m_pathwaysTable, /*m_globalId,*/ this));
+  emit createIndoorsLocationDataSourceCompleted(new IndoorsLocationDataSource(m_positioningTable, m_pathwaysTable, m_globalId, this));
 }

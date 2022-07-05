@@ -23,19 +23,22 @@ namespace ArcGISRuntime
 {
 class ArcGISFeatureTable;
 class FeatureTable;
-class Location;
 class Map;
 class MapQuickView;
 }
 }
 
+#include "Location.h"
+
 #include <QObject>
+#include <QMap>
 
 class ShowDeviceLocationUsingIndoorPositioning : public QObject
 {
   Q_OBJECT
 
   Q_PROPERTY(Esri::ArcGISRuntime::MapQuickView* mapView READ mapView WRITE setMapView NOTIFY mapViewChanged)
+  Q_PROPERTY(QVariantMap locationProperties READ locationProperties NOTIFY locationChanged)
 
 public:
   explicit ShowDeviceLocationUsingIndoorPositioning(QObject* parent = nullptr);
@@ -45,17 +48,23 @@ public:
 
 signals:
   void mapViewChanged();
+  void locationChanged();
 
 private:
   Esri::ArcGISRuntime::MapQuickView* mapView() const;
+  QVariantMap locationProperties() const;
+
   void setMapView(Esri::ArcGISRuntime::MapQuickView* mapView);
   void setupIndoorsLocationDataSource();
-  void locationChanged(Esri::ArcGISRuntime::Location loc);
+  void locationChangedHandler(Esri::ArcGISRuntime::Location loc);
+  void changeFloorDisplay();
 
   Esri::ArcGISRuntime::Map* m_map = nullptr;
   Esri::ArcGISRuntime::MapQuickView* m_mapView = nullptr;
   Esri::ArcGISRuntime::FeatureTable* m_positioningTable = nullptr;
   Esri::ArcGISRuntime::ArcGISFeatureTable* m_pathwaysTable = nullptr;
+  QVariantMap m_locationProperties;
+  int m_currentFloor;
 };
 
 #endif // SHOWDEVICELOCATIONUSINGINDOORPOSITIONING_H

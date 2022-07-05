@@ -16,6 +16,7 @@
 
 import QtQuick 2.12
 import QtQuick.Controls 2.12
+import QtQuick.Layouts 1.13
 import Esri.Samples 1.0
 
 Item {
@@ -28,6 +29,35 @@ Item {
         Component.onCompleted: {
             // Set and keep the focus on SceneView to enable keyboard navigation
             forceActiveFocus();
+        }
+    }
+
+    Rectangle {
+        id: debugInfoRectangle
+        width: parent.width
+        height: textColumn.height + 20
+        color: "lightgray"
+
+        ColumnLayout {
+            id: textColumn
+            anchors {
+                top: parent.top
+                left: parent.left
+                margins: 10
+            }
+
+            Text {
+                text: "Floor: " + model.locationProperties.floor
+            }
+            Text {
+                text: "Position source: " + model.locationProperties.positionSource
+            }
+            Text {
+                text: "Transmitter count: " + model.locationProperties.satelliteCount
+            }
+            Text {
+                text: "Horizontal accuracy: " + (model.locationProperties.horizontalAccuracy ? model.locationProperties.horizontalAccuracy.toFixed(2) + " m" : "undefined")
+            }
         }
     }
 

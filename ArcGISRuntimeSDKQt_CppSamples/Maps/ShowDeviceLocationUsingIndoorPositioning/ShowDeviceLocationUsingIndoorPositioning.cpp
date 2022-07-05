@@ -20,27 +20,35 @@
 
 #include "ShowDeviceLocationUsingIndoorPositioning.h"
 
-#include "ArcGISFeatureTable.h"
 #include "FeatureLayer.h"
-#include "FeatureTable.h"
 #include "IndoorsLocationDataSource.h"
-#include "Location.h"
 #include "Map.h"
 #include "MapQuickView.h"
-#include "OrderBy.h"
-#include "Portal.h"
-#include "PortalItem.h"
 
 #include "IndoorsLocationDataSourceCreator.h"
 
 using namespace Esri::ArcGISRuntime;
 
+namespace {
+  const QString username = "tester_viennardc";
+  const QString password = "password.testing12345";
+
+  const QUrl portalUrl = QUrl("https://viennardc.maps.arcgis.com");
+  const QString itemId = "89f88764c29b48218366855d7717d266";
+
+  const QString positioningTableName = "ips_positioning";
+  const QString pathwaysLayerName = "Pathways";
+  const QStringList globalIdSortNames = {"DateCreated", "DATE_CREATED"};
+
+  const QStringList layerNames = {"Details", "Units", "Levels"};
+}
+
 ShowDeviceLocationUsingIndoorPositioning::ShowDeviceLocationUsingIndoorPositioning(QObject* parent /* = nullptr */):
   QObject(parent)
 {
-  Credential* cred = new Credential("tester_viennardc", "password.testing12345", this);
-  Portal* portal = new Portal(QUrl("https://viennardc.maps.arcgis.com"), cred, this);
-  m_map = new Map(new PortalItem(portal, "89f88764c29b48218366855d7717d266", this), this);
+  Credential* cred = new Credential(username, password, this);
+  Portal* portal = new Portal(portalUrl, cred, this);
+  m_map = new Map(new PortalItem(portal, itemId, this), this);
 }
 
 ShowDeviceLocationUsingIndoorPositioning::~ShowDeviceLocationUsingIndoorPositioning() = default;
@@ -68,37 +76,59 @@ void ShowDeviceLocationUsingIndoorPositioning::setMapView(MapQuickView* mapView)
 
   setupIndoorsLocationDataSource();
 
-  qDebug() << m_mapView->locationDisplay()->isStarted();
-
   emit mapViewChanged();
 }
 
 void ShowDeviceLocationUsingIndoorPositioning::setupIndoorsLocationDataSource()
 {
-  auto indoorsLocationDataSourceCreator = new IndoorsLocationDataSourceCreator(this);
+  IndoorsLocationDataSourceCreator* indoorsLocationDataSourceCreator = new IndoorsLocationDataSourceCreator(this);
   connect(indoorsLocationDataSourceCreator, &IndoorsLocationDataSourceCreator::createIndoorsLocationDataSourceCompleted, this, [this](IndoorsLocationDataSource* indoorsLDS)
   {
     qDebug() << "indoors location data source created";
     m_mapView->locationDisplay()->setDataSource(indoorsLDS);
     m_mapView->locationDisplay()->setAutoPanMode(LocationDisplayAutoPanMode::Navigation);
     m_mapView->locationDisplay()->start();
-    connect(m_mapView->locationDisplay(), &LocationDisplay::locationChanged, this, &ShowDeviceLocationUsingIndoorPositioning::locationChanged);
+
+    connect(m_mapView->locationDisplay(), &LocationDisplay::locationChanged, this, &ShowDeviceLocationUsingIndoorPositioning::locationChangedHandler);
     connect(indoorsLDS, &IndoorsLocationDataSource::errorOccurred, this, [](Error e)
     {
       qDebug() << "IndoorsLocationDataSource::errorOccurred" << e.message() << e.additionalMessage();
     });
-
-    connect(indoorsLDS, &IndoorsLocationDataSource::statusChanged, this, [indoorsLDS](bool started)
-    {
-      qDebug() << "IndoorsLocationDataSource::statusChanged" << "started" << started << "isStarted" << indoorsLDS->isStarted();
-    });
   });
 
-  indoorsLocationDataSourceCreator->createIndoorsLocationDataSource(m_map, "ips_positioning", "Pathways", {"DateCreated", "DATE_CREATED"});
+  indoorsLocationDataSourceCreator->createIndoorsLocationDataSource(m_map, positioningTableName, pathwaysLayerName, globalIdSortNames);
 }
 
-void ShowDeviceLocationUsingIndoorPositioning::locationChanged(Location loc)
+void ShowDeviceLocationUsingIndoorPositioning::locationChangedHandler(Location loc)
 {
-  qDebug() << loc.additionalSourceProperties();
-  qDebug() << "horizontal accuracy" << loc.horizontalAccuracy();
+  if (m_locationProperties["floor"] != m_currentFloor)
+  {
+    m_currentFloor = m_locationProperties["floor"].toInt();
+    changeFloorDisplay();
+  }
+  m_locationProperties = loc.additionalSourceProperties();
+  m_locationProperties.insert("horizontalAccuracy", loc.horizontalAccuracy());
+  qDebug() << m_locationProperties;
+
+  emit locationChanged();
+}
+
+void ShowDeviceLocationUsingIndoorPositioning::changeFloorDisplay()
+{
+  const LayerListModel* layers = m_map->operationalLayers();
+  for (Layer* layer : *layers)
+  {
+    if (layerNames.contains(layer->name()))
+    {
+      if (FeatureLayer* featureLayer = dynamic_cast<FeatureLayer*>(layer))
+      {
+        featureLayer->definitionExpression() = QString{"VERTICAL_ORDER = %1"}.arg(m_currentFloor);
+      }
+    }
+  }
+}
+
+QVariantMap ShowDeviceLocationUsingIndoorPositioning::locationProperties() const
+{
+  return m_locationProperties;
 }
