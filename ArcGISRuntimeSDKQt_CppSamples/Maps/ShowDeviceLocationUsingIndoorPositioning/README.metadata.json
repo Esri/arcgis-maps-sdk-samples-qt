@@ -1,16 +1,43 @@
 {
-    "category": "TODO",
-    "description": "TODO",
+    "category": "Maps",
+    "description": "Show your device's real-time location while inside a building by using signals from indoor positioning beacons.",
     "ignore": false,
     "images": [
         "screenshot.png"
     ],
     "keywords": [
-        "TODO"
+        "beacon",
+        "BLE",
+        "blue dot",
+        "Bluetooth",
+        "building",
+        "facility",
+        "GPS",
+        "indoor",
+        "IPS",
+        "location",
+        "map",
+        "mobile",
+        "navigation",
+        "site",
+        "transmitter",
+        "ArcGISFeatureTable",
+        "FeatureTable",
+        "IndoorsLocationDataSource",
+        "LocationDisplay",
+        "LocationDisplayAutoPanMode",
+        "Map",
+        "MapView"
     ],
     "redirect_from": "",
     "relevant_apis": [
-        "TODO"
+        "ArcGISFeatureTable",
+        "FeatureTable",
+        "IndoorsLocationDataSource",
+        "LocationDisplay",
+        "LocationDisplayAutoPanMode",
+        "Map",
+        "MapView"
     ],
     "snippets": [
         "ShowDeviceLocationUsingIndoorPositioning.cpp",
