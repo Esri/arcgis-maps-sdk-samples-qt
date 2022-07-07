@@ -27,7 +27,7 @@ IndoorsLocationDataSourceCreator::IndoorsLocationDataSourceCreator(QObject* pare
 
 IndoorsLocationDataSourceCreator::~IndoorsLocationDataSourceCreator() = default;
 
-void IndoorsLocationDataSourceCreator::createIndoorsLocationDataSource(Map* map, const QString &positioningTableName, const QString &pathwaysTableName, const QUuid &globalId)
+void IndoorsLocationDataSourceCreator::createIndoorsLocationDataSource(Map* map, const QString& positioningTableName, const QString& pathwaysTableName, const QUuid& globalId)
 {
   if (map->loadStatus() != LoadStatus::Loaded)
   {
