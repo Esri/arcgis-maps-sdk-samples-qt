@@ -234,6 +234,7 @@
 #include "SetInitialMapArea.h"
 #include "SetInitialMapLocation.h"
 #include "SetMapSpatialReference.h"
+#include "SetMaxExtent.h"
 #include "ShowCallout.h"
 #include "ShowLabelsOnLayers.h"
 #include "ShowLocationHistory.h"
@@ -540,6 +541,7 @@ void registerCppSampleClasses()
   SetInitialMapArea::init();
   SetInitialMapLocation::init();
   SetMapSpatialReference::init();
+  SetMaxExtent::init();
   ShowCallout::init();
   ShowLabelsOnLayers::init();
   ShowLocationHistory::init();
