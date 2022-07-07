@@ -235,6 +235,7 @@
 #include "SetInitialMapLocation.h"
 #include "SetMapSpatialReference.h"
 #include "ShowCallout.h"
+#include "ShowDeviceLocationUsingIndoorPositioning.h"
 #include "ShowLabelsOnLayers.h"
 #include "ShowLocationHistory.h"
 #include "ShowMagnifier.h"
@@ -541,6 +542,7 @@ void registerCppSampleClasses()
   SetInitialMapLocation::init();
   SetMapSpatialReference::init();
   ShowCallout::init();
+  ShowDeviceLocationUsingIndoorPositioning::init();
   ShowLabelsOnLayers::init();
   ShowLocationHistory::init();
   ShowMagnifier::init();

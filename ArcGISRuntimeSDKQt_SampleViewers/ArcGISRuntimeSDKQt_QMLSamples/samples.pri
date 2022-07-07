@@ -170,6 +170,7 @@ RESOURCES += \
     "$$SAMPLEPATHQML/Maps/SetInitialMapArea/SetInitialMapArea.qrc" \
     "$$SAMPLEPATHQML/Maps/SetInitialMapLocation/SetInitialMapLocation.qrc" \
     "$$SAMPLEPATHQML/Maps/SetMapSpatialReference/SetMapSpatialReference.qrc" \
+    "$$SAMPLEPATHQML/Maps/ShowDeviceLocationUsingIndoorPositioning/ShowDeviceLocationUsingIndoorPositioning.qrc" \
     "$$SAMPLEPATHQML/Maps/ShowLocationHistory/ShowLocationHistory.qrc" \
     "$$SAMPLEPATHQML/Maps/ShowMagnifier/ShowMagnifier.qrc" \
     "$$SAMPLEPATHQML/Maps/TakeScreenshot/TakeScreenshot.qrc" \
