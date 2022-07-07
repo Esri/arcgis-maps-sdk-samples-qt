@@ -79,26 +79,24 @@ void ShowDeviceLocationUsingIndoorPositioning::setMapView(MapQuickView* mapView)
   emit mapViewChanged();
 }
 
+// This function uses a helper class `IndoorsLocationDataSourceCreator` to construct the IndoorsLocationDataSource
 void ShowDeviceLocationUsingIndoorPositioning::setupIndoorsLocationDataSource()
 {
   IndoorsLocationDataSourceCreator* indoorsLocationDataSourceCreator = new IndoorsLocationDataSourceCreator(this);
+
   connect(indoorsLocationDataSourceCreator, &IndoorsLocationDataSourceCreator::createIndoorsLocationDataSourceCompleted, this, [this](IndoorsLocationDataSource* indoorsLDS)
   {
-    qDebug() << "indoors location data source created";
+    connect(m_mapView->locationDisplay(), &LocationDisplay::locationChanged, this, &ShowDeviceLocationUsingIndoorPositioning::locationChangedHandler);
+
     m_mapView->locationDisplay()->setDataSource(indoorsLDS);
     m_mapView->locationDisplay()->setAutoPanMode(LocationDisplayAutoPanMode::Navigation);
     m_mapView->locationDisplay()->start();
-
-    connect(m_mapView->locationDisplay(), &LocationDisplay::locationChanged, this, &ShowDeviceLocationUsingIndoorPositioning::locationChangedHandler);
-    connect(indoorsLDS, &IndoorsLocationDataSource::errorOccurred, this, [](Error e)
-    {
-      qDebug() << "IndoorsLocationDataSource::errorOccurred" << e.message() << e.additionalMessage();
-    });
   });
 
-  indoorsLocationDataSourceCreator->createIndoorsLocationDataSource(m_map, positioningTableName, pathwaysLayerName, globalIdSortNames);
+  indoorsLocationDataSourceCreator->createIndoorsLocationDataSource(m_map, positioningTableName, pathwaysLayerName);
 }
 
+// Change currently displayed location information and change floor display if necessary
 void ShowDeviceLocationUsingIndoorPositioning::locationChangedHandler(Location loc)
 {
   if (m_locationProperties["floor"] != m_currentFloor)

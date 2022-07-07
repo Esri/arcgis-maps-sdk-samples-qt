@@ -27,48 +27,12 @@ Rectangle {
 
     property FeatureTable positioningTable: null
     property ArcGISFeatureTable pathwaysTable: null
-    property Field dateCreatedField: null
-    property string globalId: ""
     property int currentFloor: -1
+    property var locationProperties: ({})
 
     onPositioningTableChanged: setupIndoors()
     onPathwaysTableChanged: setupIndoors()
-    onGlobalIdChanged: setupIndoors()
     onCurrentFloorChanged: changeFloorDisplay()
-
-    function setupIndoors() {
-        if (!positioningTable || !pathwaysTable || !globalId)
-            return;
-
-        const indoorsLDS = ArcGISRuntimeEnvironment.createObject("IndoorsLocationDataSource",
-                                                                 {
-                                                                     positioningTable: positioningTable,
-                                                                     pathwaysTable: pathwaysTable,
-                                                                     positioningId: globalId
-                                                                 });
-
-        indoorsLDS.statusChanged.connect(()=>
-                                         {
-                                             console.log("IndoorsLocationDataSource statusChanged", indoorsLDS.started);
-                                         });
-
-        indoorsLDS.errorChanged.connect(()=>
-                                        {
-                                            console.log("IndoorsLocationDataSource errorChanged", indoorsLDS.error.message, indoorsLDS.error.additionalMessage);
-                                        });
-
-        mapView.locationDisplay.locationChanged.connect(() => {
-                                                            currentFloor = mapView.locationDisplay.location.additionalSourceProperties.floor;
-
-                                                            floorText.text = "Floor: " + currentFloor;
-                                                            positionSourceText.text = "Position Source: " + mapView.locationDisplay.location.additionalSourceProperties.positionSource;
-                                                            transmitterCountText.text = "Transmitter Count: " + mapView.locationDisplay.location.additionalSourceProperties.satelliteCount;
-                                                            horizontalAccuracyText.text = "Horizontal Accuracy: " + mapView.locationDisplay.location.horizontalAccuracy.toFixed(2) + " m";
-                                                        });
-
-        mapView.locationDisplay.dataSource = indoorsLDS;
-        mapView.locationDisplay.start();
-    }
 
     MapView {
         id: mapView
@@ -96,8 +60,6 @@ Rectangle {
                 if (loadStatus !== Enums.LoadStatusLoaded)
                     return;
 
-                console.log("loaded");
-
                 findPositioningTable("ips_positioning")
                 findPathwaysTable("Pathways");
             }
@@ -110,6 +72,8 @@ Rectangle {
         height: textColumn.height + 20
         color: "lightgray"
 
+        visible: false
+
         ColumnLayout {
             id: textColumn
             anchors {
@@ -120,43 +84,44 @@ Rectangle {
 
             Text {
                 id: floorText
-                text: "Floor: undefined"
+                visible: false
             }
             Text {
                 id: positionSourceText
-                text: "Position source: undefined"
+                visible: false
             }
             Text {
                 id: transmitterCountText
-                text: "Transmitter count: 0"
+                visible: false
             }
             Text {
                 id: horizontalAccuracyText
-                text: "Horizontal accuracy: undefined"
+                visible: false
             }
         }
     }
 
+    // An IPS positioning feature table is stored with an IPS-enabled map. Each row in the table contains an indoor positioning file.
+    // The IndoorsLocationDataSource will use the most recently created row unless given an alternative GlobalId in the constructor.
     function findPositioningTable(tableName) {
         map.tables.forEach((table) => {
                                table.loadStatusChanged.connect(() => {
                                                                    if (table.loadStatus === Enums.LoadStatusLoaded && table.tableName === tableName) {
-                                                                       console.log("found the ips_positioning table!")
                                                                        positioningTable = table;
-                                                                       findGlobalId(["DateCreated", "DATE_CREATED"]);
                                                                    }
                                                                });
                                table.load();
                            });
     }
 
+    // The pathways table is an ArcGISFeatureTable with line features that represent paths through the indoor space.
+    // Locations provided by the IndoorsLocationDataSource are snapped to the lines in this feature class.
     function findPathwaysTable(layerName) {
         for (let i = 0; i < map.operationalLayers.count; ++i) {
             const layer = map.operationalLayers.get(i);
             if (layer.name === layerName && layer.layerType === Enums.LayerTypeFeatureLayer) {
                 const table = layer.featureTable;
                 if (table.featureTableType === Enums.FeatureTableTypeServiceFeatureTable) {
-                    console.log("Found the pathways table");
                     pathwaysTable = table;
                     return;
                 }
@@ -164,37 +129,69 @@ Rectangle {
         }
     }
 
-    QueryParameters {
-        id: globalIdQueryParameters
-        maxFeatures: 1
-        whereClause: "1=1"
+    function setupIndoors() {
+        if (!positioningTable || !pathwaysTable)
+            return;
+
+        const indoorsLDS = ArcGISRuntimeEnvironment.createObject("IndoorsLocationDataSource",
+                                                                 {
+                                                                     positioningTable: positioningTable,
+                                                                     pathwaysTable: pathwaysTable
+                                                                 });
+
+        indoorsLDS.errorChanged.connect(()=>
+                                        {
+                                            console.log("IndoorsLocationDataSource errorChanged", indoorsLDS.error.message, indoorsLDS.error.additionalMessage);
+                                        });
+
+        // Update information text box and floor view if necessary
+        mapView.locationDisplay.locationChanged.connect(() => {
+                                                            if (mapView.locationDisplay.location !== undefined) {
+                                                                debugInfoRectangle.visible = true;
+                                                            } else {
+                                                                debugInfoRectangle.visible = false;
+                                                            }
+
+                                                            if (mapView.locationDisplay.location.additionalSourceProperties.floor !== undefined) {
+                                                                currentFloor = mapView.locationDisplay.location.additionalSourceProperties.floor;
+                                                                floorText.text = "Floor: " + currentFloor;
+                                                                floorText.visible = true;
+                                                            } else {
+                                                                floorText.visible = false;
+                                                            }
+
+                                                            if (mapView.locationDisplay.location.additionalSourceProperties.positionSource !== undefined) {
+                                                                positionSourceText.text = "Position Source: " + mapView.locationDisplay.location.additionalSourceProperties.positionSource;
+                                                                positionSourceText.visible = true;
+                                                            } else {
+                                                                positionSourceText.visible = false;
+                                                            }
+
+                                                            if (mapView.locationDisplay.location.additionalSourceProperties.satelliteCount !== undefined) {
+                                                                transmitterCountText.text = "Transmitter Count: " + mapView.locationDisplay.location.additionalSourceProperties.satelliteCount;
+                                                                transmitterCountText.visible = true;
+                                                            } else {
+                                                                transmitterCountText.visible = false;
+                                                            }
+
+                                                            if (mapView.locationDisplay.location.horizontalAccuracy !== undefined) {
+                                                                horizontalAccuracyText.text = "Horizontal accuracy: " + mapView.locationDisplay.location.horizontalAccuracy.toFixed(2) + " m";
+                                                                horizontalAccuracyText.visible = true;
+                                                            } else {
+                                                                horizontalAccuracyText.visible = false;
+                                                            }
+                                                        });
+
+        mapView.locationDisplay.dataSource = indoorsLDS;
+        mapView.locationDisplay.start();
     }
 
-    function findGlobalId(globalIdSortNames) {
-        const fields = positioningTable.fields;
-        for (let i = 0; i < fields.length; i++) {
-            globalIdSortNames.forEach((sortName) => {
-                                          if (sortName.toLowerCase() === fields[i].name.toLowerCase()) {
-                                              dateCreatedField = fields[i];
-                                              const orderByField = ArcGISRuntimeEnvironment.createObject("OrderBy", {fieldName: fields[i].name, sortOrder: Enums.SortOrderDescending});
-                                              globalIdQueryParameters.orderByFields = [orderByField];
-                                          }
-                                      });
-        }
-
-        positioningTable.queryFeaturesResultChanged.connect(() => {
-                                                                globalId = positioningTable.queryFeaturesResult.iterator.features[0].attributes.attributesJson.GlobalID;
-                                                                console.log("Found the global id!");
-                                                            });
-
-        positioningTable.queryFeatures(globalIdQueryParameters);
-    }
-
+    // Toggle the visibility of floor features depending on the user's current floor
     function changeFloorDisplay() {
         const layers = map.operationalLayers;
         layers.forEach((layer) => {
                            if (["Details", "Units", "Levels"].indexOf(layer.name) >= 0) {
-                                   layer.definitionExpression = "VERTICAL_ORDER = " + currentFloor;
+                               layer.definitionExpression = "VERTICAL_ORDER = " + currentFloor;
                            }
                        });
     }

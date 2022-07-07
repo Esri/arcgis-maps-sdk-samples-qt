@@ -27,15 +27,13 @@ IndoorsLocationDataSourceCreator::IndoorsLocationDataSourceCreator(QObject* pare
 
 IndoorsLocationDataSourceCreator::~IndoorsLocationDataSourceCreator() = default;
 
-void IndoorsLocationDataSourceCreator::createIndoorsLocationDataSource(Map* map, const QString &positioningTableName, const QString &pathwaysTableName, const QStringList &globalIdSortNames)
+void IndoorsLocationDataSourceCreator::createIndoorsLocationDataSource(Map* map, const QString &positioningTableName, const QString &pathwaysTableName, const QUuid &globalId)
 {
-  qDebug() << "createIndoorsLocationDataSource";
   if (map->loadStatus() != LoadStatus::Loaded)
   {
-    qDebug() << "map is not done loading, retrying when done loading";
     connect(map, &Map::doneLoading, this, [=]()
     {
-      createIndoorsLocationDataSource(map, positioningTableName, pathwaysTableName, globalIdSortNames);
+      createIndoorsLocationDataSource(map, positioningTableName, pathwaysTableName, globalId);
       map->disconnect();
     });
     return;
@@ -45,37 +43,38 @@ void IndoorsLocationDataSourceCreator::createIndoorsLocationDataSource(Map* map,
 
   m_positioningTableName = positioningTableName;
   m_pathwaysTableName = pathwaysTableName;
-  m_globalIdSortNames = globalIdSortNames;
+  m_globalId = globalId;
 
   findPositioningTable();
   findPathwaysTable();
 }
 
+// An IPS positioning feature table is stored with an IPS-enabled map. Each row in the table contains an indoor positioning file.
+// The IndoorsLocationDataSource will use the most recently created row unless given an alternative GlobalId in the constructor.
 void IndoorsLocationDataSourceCreator::findPositioningTable()
 {
-  qDebug() << "findPositioningTable";
   FeatureTableListModel* tables = m_map->tables();
 
   for (FeatureTable* table : *tables)
   {
     connect(table, &FeatureTable::doneLoading, this, [table, this]()
     {
-      qDebug() << "table done loading";
       if (table->tableName() == m_positioningTableName)
       {
-        qDebug() << "positioning table found ";
         m_positioningTable = table;
-        // Finding the GlobalId requires the positioning table
-        findGlobalId();
+
+        if (m_pathwaysTable && m_positioningTable)
+          returnIndoorsLocationDataSource();
       }
     });
     table->load();
   }
 }
 
+// The pathways table is an ArcGISFeatureTable with line features that represent paths through the indoor space.
+// Locations provided by the IndoorsLocationDataSource are snapped to the lines in this feature class.
 void IndoorsLocationDataSourceCreator::findPathwaysTable()
 {
-  qDebug() << "findPathwaysTable";
   LayerListModel* layers = m_map->operationalLayers();
 
   for (Layer* layer : *layers)
@@ -84,9 +83,8 @@ void IndoorsLocationDataSourceCreator::findPathwaysTable()
     {
       if (featureLayer->name() == m_pathwaysTableName)
       {
-        qDebug() << "pathways table found";
         m_pathwaysTable = dynamic_cast<ArcGISFeatureTable*>(featureLayer->featureTable());
-        if (m_pathwaysTable && m_positioningTable && !m_globalId.isNull())
+        if (m_pathwaysTable && m_positioningTable)
           returnIndoorsLocationDataSource();
         return;
       }
@@ -94,53 +92,12 @@ void IndoorsLocationDataSourceCreator::findPathwaysTable()
   }
 }
 
-void IndoorsLocationDataSourceCreator::findGlobalId()
-{
-  qDebug() << "findGlobalId";
-  const QList<Field> fields = m_positioningTable->fields();
-  Field dateCreatedField;
-
-  for (const Field &field : fields)
-  {
-    if (m_globalIdSortNames.contains(field.name(), Qt::CaseInsensitive))
-    {
-      qDebug() << "Found global id sort field" << field.name();
-      dateCreatedField = field;
-    }
-  }
-
-  if (dateCreatedField.isEmpty())
-  {
-    qWarning() << "Date created field not found";
-    return;
-  }
-
-  QueryParameters queryParameters;
-  queryParameters.setMaxFeatures(1);
-  queryParameters.setWhereClause("1=1");
-  queryParameters.setOrderByFields({OrderBy(dateCreatedField.name(), SortOrder::Descending)});
-
-  connect(m_positioningTable, &FeatureTable::queryFeaturesCompleted, this, [this](QUuid, FeatureQueryResult* rawFeatureQueryResult)
-  {
-    qDebug() << "global id - queryFeaturesCompleted";
-    // Delete rawFeatureQueryResult pointer when we leave scope.
-    auto featureQueryResult = std::unique_ptr<FeatureQueryResult>(rawFeatureQueryResult);
-
-    FeatureIterator iter = featureQueryResult->iterator();
-    if (iter.hasNext())
-    {
-      Feature* feat = iter.next();
-      m_globalId = feat->attributes()->attributesMap().value("GlobalID").toUuid();
-      qDebug() << "Found global id" << m_globalId;
-      if (m_pathwaysTable && m_positioningTable && !m_globalId.isNull())
-        returnIndoorsLocationDataSource();
-      return;
-    }
-  });
-  m_positioningTable->queryFeatures(queryParameters);
-}
-
 void IndoorsLocationDataSourceCreator::returnIndoorsLocationDataSource()
 {
-  emit createIndoorsLocationDataSourceCompleted(new IndoorsLocationDataSource(m_positioningTable, m_pathwaysTable, m_globalId, this));
+  // The IndoorsLocationDataSource constructor takes an optional GlobalId to identify which row of the positioning table to use.
+  // If not specified, the constructor will use the row from the most recent survey
+  if (m_globalId.isNull())
+    emit createIndoorsLocationDataSourceCompleted(new IndoorsLocationDataSource(m_positioningTable, m_pathwaysTable, this));
+  else
+    emit createIndoorsLocationDataSourceCompleted(new IndoorsLocationDataSource(m_positioningTable, m_pathwaysTable, m_globalId, this));
 }

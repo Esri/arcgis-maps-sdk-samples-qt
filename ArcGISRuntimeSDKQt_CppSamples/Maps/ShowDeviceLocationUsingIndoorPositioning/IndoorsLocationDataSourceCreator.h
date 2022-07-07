@@ -38,7 +38,7 @@ public:
   ~IndoorsLocationDataSourceCreator();
 
 public slots:
-  void createIndoorsLocationDataSource(Esri::ArcGISRuntime::Map* map, const QString &positioningTableName, const QString &pathwaysTableName, const QStringList &globalIdSortNames);
+  void createIndoorsLocationDataSource(Esri::ArcGISRuntime::Map* map, const QString &positioningTableName, const QString &pathwaysTableName, const QUuid &globalId = QUuid());
 
 signals:
   void createIndoorsLocationDataSourceCompleted(Esri::ArcGISRuntime::IndoorsLocationDataSource* IndoorsLocationDataSource);
@@ -47,7 +47,6 @@ private:
   void returnIndoorsLocationDataSource();
   void findPositioningTable();
   void findPathwaysTable();
-  void findGlobalId();
 
   Esri::ArcGISRuntime::Map* m_map = nullptr;
   Esri::ArcGISRuntime::FeatureTable* m_positioningTable = nullptr;

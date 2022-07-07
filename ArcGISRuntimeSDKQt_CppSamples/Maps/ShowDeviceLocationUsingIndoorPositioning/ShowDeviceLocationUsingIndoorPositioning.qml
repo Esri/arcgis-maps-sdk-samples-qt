@@ -38,6 +38,8 @@ Item {
         height: textColumn.height + 20
         color: "lightgray"
 
+        visible: Object.keys(model.locationProperties).length > 0;
+
         ColumnLayout {
             id: textColumn
             anchors {
@@ -46,17 +48,22 @@ Item {
                 margins: 10
             }
 
+
             Text {
                 text: "Floor: " + model.locationProperties.floor
+                visible: model.locationProperties.floor !== undefined
             }
             Text {
                 text: "Position source: " + model.locationProperties.positionSource
+                visible: model.locationProperties.positionSource !== undefined
             }
             Text {
                 text: "Transmitter count: " + model.locationProperties.satelliteCount
+                visible: model.locationProperties.satelliteCount !== undefined
             }
             Text {
                 text: "Horizontal accuracy: " + (model.locationProperties.horizontalAccuracy ? model.locationProperties.horizontalAccuracy.toFixed(2) + " m" : "undefined")
+                visible: model.locationProperties.horizontalAccuracy !== undefined
             }
         }
     }
