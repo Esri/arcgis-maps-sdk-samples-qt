@@ -1,0 +1,11 @@
+<RCC>
+    <qresource prefix="/Samples/Maps/SetMaxExtent">
+        <file alias="sample.json">README.metadata.json</file>
+        <file>SetMaxExtent.qml</file>
+        <file>SetMaxExtent.h</file>
+        <file>SetMaxExtent.cpp</file>
+        <file>main.qml</file>
+        <file>screenshot.png</file>
+        <file>README.md</file>
+    </qresource>
+</RCC>

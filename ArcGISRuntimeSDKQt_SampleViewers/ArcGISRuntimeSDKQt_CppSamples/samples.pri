@@ -172,6 +172,7 @@ INCLUDEPATH += \
     "$$SAMPLEPATHCPP/Maps/SetInitialMapArea" \
     "$$SAMPLEPATHCPP/Maps/SetInitialMapLocation" \
     "$$SAMPLEPATHCPP/Maps/SetMapSpatialReference" \
+    "$$SAMPLEPATHCPP/Maps/SetMaxExtent" \
     "$$SAMPLEPATHCPP/Maps/ShowDeviceLocationUsingIndoorPositioning" \
     "$$SAMPLEPATHCPP/Maps/ShowLocationHistory" \
     "$$SAMPLEPATHCPP/Maps/ShowMagnifier" \
@@ -379,6 +380,7 @@ HEADERS += \
     "$$SAMPLEPATHCPP/Maps/SetInitialMapArea/SetInitialMapArea.h" \
     "$$SAMPLEPATHCPP/Maps/SetInitialMapLocation/SetInitialMapLocation.h" \
     "$$SAMPLEPATHCPP/Maps/SetMapSpatialReference/SetMapSpatialReference.h" \
+    "$$SAMPLEPATHCPP/Maps/SetMaxExtent/SetMaxExtent.h" \
     "$$SAMPLEPATHCPP/Maps/ShowDeviceLocationUsingIndoorPositioning/ShowDeviceLocationUsingIndoorPositioning.h" \
     "$$SAMPLEPATHCPP/Maps/ShowLocationHistory/ShowLocationHistory.h" \
     "$$SAMPLEPATHCPP/Maps/ShowMagnifier/ShowMagnifier.h" \
@@ -588,6 +590,7 @@ SOURCES += \
     "$$SAMPLEPATHCPP/Maps/SetInitialMapArea/SetInitialMapArea.cpp" \
     "$$SAMPLEPATHCPP/Maps/SetInitialMapLocation/SetInitialMapLocation.cpp" \
     "$$SAMPLEPATHCPP/Maps/SetMapSpatialReference/SetMapSpatialReference.cpp" \
+    "$$SAMPLEPATHCPP/Maps/SetMaxExtent/SetMaxExtent.cpp" \
     "$$SAMPLEPATHCPP/Maps/ShowDeviceLocationUsingIndoorPositioning/ShowDeviceLocationUsingIndoorPositioning.cpp" \
     "$$SAMPLEPATHCPP/Maps/ShowLocationHistory/ShowLocationHistory.cpp" \
     "$$SAMPLEPATHCPP/Maps/ShowMagnifier/ShowMagnifier.cpp" \
@@ -793,6 +796,7 @@ RESOURCES += \
     "$$SAMPLEPATHCPP/Maps/SetInitialMapArea/SetInitialMapArea.qrc" \
     "$$SAMPLEPATHCPP/Maps/SetInitialMapLocation/SetInitialMapLocation.qrc" \
     "$$SAMPLEPATHCPP/Maps/SetMapSpatialReference/SetMapSpatialReference.qrc" \
+    "$$SAMPLEPATHCPP/Maps/SetMaxExtent/SetMaxExtent.qrc" \
     "$$SAMPLEPATHCPP/Maps/ShowDeviceLocationUsingIndoorPositioning/ShowDeviceLocationUsingIndoorPositioning.qrc" \
     "$$SAMPLEPATHCPP/Maps/ShowLocationHistory/ShowLocationHistory.qrc" \
     "$$SAMPLEPATHCPP/Maps/ShowMagnifier/ShowMagnifier.qrc" \
