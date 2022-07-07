@@ -21,11 +21,11 @@ namespace Esri
 {
 namespace ArcGISRuntime
 {
-class Map;
-class MapQuickView;
 class Envelope;
 class Graphic;
 class GraphicsOverlay;
+class Map;
+class MapQuickView;
 class SimpleLineSymbol;
 }
 }

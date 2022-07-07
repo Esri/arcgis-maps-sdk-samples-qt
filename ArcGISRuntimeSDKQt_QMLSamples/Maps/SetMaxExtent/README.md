@@ -27,5 +27,5 @@ The application loads with a map whose maximum extent has been set to the border
 
 ## Tags
 
-extent, limit panning, map, mapview, max extent, zoom
+envelope, extent, limit panning, map, mapview, max extent, zoom
 

@@ -43,26 +43,26 @@ Rectangle {
             onLoadStatusChanged: {
                 if (loadStatus === Enums.LoadStatusLoaded) {
                     mapView.setViewpoint(vpe);
-                    map.maxExtent = coloradoGeometry;
+                    map.maxExtent = coloradoEnvelope;
                 }
             }
             Envelope {
-                id: coloradoGeometry
-                xMax: -11362327.128340
-                xMin: -12138232.018408
-                yMin: 4441198.773776
-                yMax: 5012861.290274
+                id: coloradoEnvelope
+                xMax: -11362327
+                xMin: -12138232
+                yMin: 4441198
+                yMax: 5012861
                 spatialReference: SpatialReference {
                     wkid: 3857
                 }
             }
             ViewpointExtent {
-                id: vpe
+                id: viewPointExtent
                 extent: Envelope {
-                    xMax: -11362327.128340
-                    xMin: -12138232.018408
-                    yMin: 4441198.773776
-                    yMax: 5012861.290274
+                    xMax: -11362327
+                    xMin: -12138232
+                    yMin: 4441198
+                    yMax: 5012861
                     spatialReference: SpatialReference {
                         wkid: 3857
                     }
@@ -81,7 +81,7 @@ Rectangle {
             id: coloradoOverlay
             Graphic {
                 id: coloradoGraphic
-                geometry: coloradoGeometry
+                geometry: coloradoEnvelope
                 symbol: redOutline
             }
         }
@@ -115,8 +115,8 @@ Rectangle {
                 onCheckedChanged: {
                     if (checked) {
                         maxExtentToggle = true;
-                        mapView.setViewpoint(vpe);
-                        map.maxExtent = coloradoGeometry;
+                        mapView.setViewpoint(viewPointExtent);
+                        map.maxExtent = coloradoEnvelope;
                     }
                     else {
                         maxExtentToggle = false;

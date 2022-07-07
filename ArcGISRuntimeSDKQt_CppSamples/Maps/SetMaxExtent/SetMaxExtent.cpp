@@ -20,10 +20,10 @@
 
 #include "SetMaxExtent.h"
 
-#include "Map.h"
-#include "MapQuickView.h"
 #include "Graphic.h"
 #include "GraphicsOverlay.h"
+#include "Map.h"
+#include "MapQuickView.h"
 #include "SimpleLineSymbol.h"
 
 using namespace Esri::ArcGISRuntime;
@@ -32,7 +32,6 @@ SetMaxExtent::SetMaxExtent(QObject* parent /* = nullptr */):
   QObject(parent),
   m_map(new Map(BasemapStyle::ArcGISStreets, this))
 {
-
 }
 
 SetMaxExtent::~SetMaxExtent() = default;
@@ -57,7 +56,7 @@ void SetMaxExtent::setMapView(MapQuickView* mapView)
 
   m_coloradoOverlay = new GraphicsOverlay(this);
   // Create an envelope to be used as the Colorado geometry
-  m_coloradoEnvelope = Envelope(-12138232.018408, 4441198.773776, -11362327.128340, 5012861.290274, SpatialReference(3857));
+  m_coloradoEnvelope = Envelope(-12138232, 4441198, -11362327, 5012861, SpatialReference(3857));
 
   m_mapView = mapView;
   m_mapView->setMap(m_map);
@@ -84,6 +83,6 @@ void SetMaxExtent::toggleMaxExtent()
   }
   else {
     m_map->setMaxExtent(m_coloradoEnvelope);
-    m_mapView->setViewpointGeometry(Envelope(-12138232.018408, 4441198.773776, -11362327.128340, 5012861.290274, SpatialReference(3857)), 50);
+    m_mapView->setViewpointGeometry(Envelope(-12138232, 4441198, -11362327, 5012861, SpatialReference(3857)), 50);
   }
 }

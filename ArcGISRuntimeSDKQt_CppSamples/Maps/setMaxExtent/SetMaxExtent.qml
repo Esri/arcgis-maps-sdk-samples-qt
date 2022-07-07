@@ -27,7 +27,7 @@ Item {
         anchors.fill: parent
 
         Component.onCompleted: {
-            // Set and keep the focus on SceneView to enable keyboard navigation
+            // Set and keep the focus on MapView to enable keyboard navigation
             forceActiveFocus();
         }
     }
