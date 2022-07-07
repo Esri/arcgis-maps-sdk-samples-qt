@@ -25,7 +25,6 @@ Rectangle {
     width: 800
     height: 600
 
-    property bool maxExtentToggle: maxExtentSwitch.checked
     property Envelope nullEnvelope: null
 
     MapView {
@@ -42,7 +41,7 @@ Rectangle {
             initBasemapStyle: Enums.BasemapStyleArcGISStreets
             onLoadStatusChanged: {
                 if (loadStatus === Enums.LoadStatusLoaded) {
-                    mapView.setViewpoint(vpe);
+                    mapView.setViewpoint(viewpointExtent);
                     map.maxExtent = coloradoEnvelope;
                 }
             }
@@ -57,7 +56,7 @@ Rectangle {
                 }
             }
             ViewpointExtent {
-                id: viewPointExtent
+                id: viewpointExtent
                 extent: Envelope {
                     xMax: -11362327
                     xMin: -12138232
@@ -114,12 +113,10 @@ Rectangle {
                 checked: true
                 onCheckedChanged: {
                     if (checked) {
-                        maxExtentToggle = true;
-                        mapView.setViewpoint(viewPointExtent);
+                        mapView.setViewpoint(viewpointExtent);
                         map.maxExtent = coloradoEnvelope;
                     }
                     else {
-                        maxExtentToggle = false;
                         map.maxExtent = nullEnvelope;
                     }
                 }
