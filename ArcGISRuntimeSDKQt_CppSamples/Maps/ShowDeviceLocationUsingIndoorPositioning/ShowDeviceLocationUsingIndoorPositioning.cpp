@@ -18,14 +18,13 @@
 #include "pch.hpp"
 #endif // PCH_BUILD
 
+#include "IndoorsLocationDataSourceCreator.h"
 #include "ShowDeviceLocationUsingIndoorPositioning.h"
 
 #include "FeatureLayer.h"
 #include "IndoorsLocationDataSource.h"
 #include "Map.h"
 #include "MapQuickView.h"
-
-#include "IndoorsLocationDataSourceCreator.h"
 
 using namespace Esri::ArcGISRuntime;
 
