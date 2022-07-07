@@ -6,13 +6,13 @@
         "screenshot.png"
     ],
     "keywords": [
-        "envelope",
         "extent",
         "limit panning",
-        "map",
-        "mapview",
         "max extent",
-        "zoom"
+        "zoom",
+        "Envelope",
+        "Map",
+        "MapView"
     ],
     "redirect_from": "",
     "relevant_apis": [
