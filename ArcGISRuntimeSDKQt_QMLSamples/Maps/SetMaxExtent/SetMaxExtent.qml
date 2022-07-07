@@ -94,13 +94,13 @@ Rectangle {
         }
         width: childrenRect.width
         height: childrenRect.height
-        color: "#ff0000"
+        color: "#D3D3D3"
         opacity: .75
         radius: 3
 
         ColumnLayout {
             Text {
-                color: "#ffffff"
+                color: "#000000"
                 text: "Max extent enabled"
                 Layout.fillWidth: true
                 Layout.margins: 3
