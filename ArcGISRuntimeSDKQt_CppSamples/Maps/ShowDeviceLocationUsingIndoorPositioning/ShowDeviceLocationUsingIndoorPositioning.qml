@@ -48,7 +48,6 @@ Item {
 
             Text {
                 text: "Initializing location data source\nand retrieving user location..."
-                wrapMode: Text.WordWrap
                 // Display if there are no location properties to display
                 visible: Object.keys(model.locationProperties).length === 0;
             }

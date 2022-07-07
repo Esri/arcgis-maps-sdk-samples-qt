@@ -35,4 +35,3 @@ ios {
 
 # Default rules for deployment.
 include(deployment.pri)
-android: include(/Users/tan11389/Library/Application Support/QtProject/QtCreator/../Android/sdk/android_openssl/openssl.pri)

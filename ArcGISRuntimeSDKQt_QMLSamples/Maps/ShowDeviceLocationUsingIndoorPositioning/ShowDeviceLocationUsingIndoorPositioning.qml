@@ -67,12 +67,10 @@ Rectangle {
     }
 
     Rectangle {
-        id: debugInfoRectangle
+        id: locationInformationRectangle
         width: parent.width
         height: textColumn.height + 20
         color: "lightgray"
-
-        visible: false
 
         ColumnLayout {
             id: textColumn
@@ -80,6 +78,12 @@ Rectangle {
                 top: parent.top
                 left: parent.left
                 margins: 10
+            }
+
+            Text {
+                id: initializingText
+                text: "Initializing location data source\nand retrieving user location..."
+                visible: true
             }
 
             Text {
@@ -105,13 +109,13 @@ Rectangle {
     // The IndoorsLocationDataSource will use the most recently created row unless given an alternative GlobalId in the constructor.
     function findPositioningTable(tableName) {
         map.tables.forEach((table) => {
-                               table.loadStatusChanged.connect(() => {
-                                                                   if (table.loadStatus === Enums.LoadStatusLoaded && table.tableName === tableName) {
-                                                                       positioningTable = table;
-                                                                   }
-                                                               });
-                               table.load();
-                           });
+           table.loadStatusChanged.connect(() => {
+               if (table.loadStatus === Enums.LoadStatusLoaded && table.tableName === tableName) {
+                   positioningTable = table;
+               }
+           });
+           table.load();
+       });
     }
 
     // The pathways table is an ArcGISFeatureTable with line features that represent paths through the indoor space.
@@ -139,48 +143,43 @@ Rectangle {
                                                                      pathwaysTable: pathwaysTable
                                                                  });
 
-        indoorsLDS.errorChanged.connect(()=>
-                                        {
-                                            console.log("IndoorsLocationDataSource errorChanged", indoorsLDS.error.message, indoorsLDS.error.additionalMessage);
-                                        });
-
         // Update information text box and floor view if necessary
         mapView.locationDisplay.locationChanged.connect(() => {
-                                                            if (mapView.locationDisplay.location !== undefined) {
-                                                                debugInfoRectangle.visible = true;
-                                                            } else {
-                                                                debugInfoRectangle.visible = false;
-                                                            }
+            if (mapView.locationDisplay.location !== undefined) {
+                initializingText.visible = true;
+            } else {
+                initializingText.visible = false;
+            }
 
-                                                            if (mapView.locationDisplay.location.additionalSourceProperties.floor !== undefined) {
-                                                                currentFloor = mapView.locationDisplay.location.additionalSourceProperties.floor;
-                                                                floorText.text = "Floor: " + currentFloor;
-                                                                floorText.visible = true;
-                                                            } else {
-                                                                floorText.visible = false;
-                                                            }
+            if (mapView.locationDisplay.location.additionalSourceProperties.floor !== undefined) {
+                currentFloor = mapView.locationDisplay.location.additionalSourceProperties.floor;
+                floorText.text = "Floor: " + currentFloor;
+                floorText.visible = true;
+            } else {
+                floorText.visible = false;
+            }
 
-                                                            if (mapView.locationDisplay.location.additionalSourceProperties.positionSource !== undefined) {
-                                                                positionSourceText.text = "Position Source: " + mapView.locationDisplay.location.additionalSourceProperties.positionSource;
-                                                                positionSourceText.visible = true;
-                                                            } else {
-                                                                positionSourceText.visible = false;
-                                                            }
+            if (mapView.locationDisplay.location.additionalSourceProperties.positionSource !== undefined) {
+                positionSourceText.text = "Position Source: " + mapView.locationDisplay.location.additionalSourceProperties.positionSource;
+                positionSourceText.visible = true;
+            } else {
+                positionSourceText.visible = false;
+            }
 
-                                                            if (mapView.locationDisplay.location.additionalSourceProperties.satelliteCount !== undefined) {
-                                                                transmitterCountText.text = "Transmitter Count: " + mapView.locationDisplay.location.additionalSourceProperties.satelliteCount;
-                                                                transmitterCountText.visible = true;
-                                                            } else {
-                                                                transmitterCountText.visible = false;
-                                                            }
+            if (mapView.locationDisplay.location.additionalSourceProperties.satelliteCount !== undefined) {
+                transmitterCountText.text = "Transmitter Count: " + mapView.locationDisplay.location.additionalSourceProperties.satelliteCount;
+                transmitterCountText.visible = true;
+            } else {
+                transmitterCountText.visible = false;
+            }
 
-                                                            if (mapView.locationDisplay.location.horizontalAccuracy !== undefined) {
-                                                                horizontalAccuracyText.text = "Horizontal accuracy: " + mapView.locationDisplay.location.horizontalAccuracy.toFixed(2) + " m";
-                                                                horizontalAccuracyText.visible = true;
-                                                            } else {
-                                                                horizontalAccuracyText.visible = false;
-                                                            }
-                                                        });
+            if (mapView.locationDisplay.location.horizontalAccuracy !== undefined) {
+                horizontalAccuracyText.text = "Horizontal accuracy: " + mapView.locationDisplay.location.horizontalAccuracy.toFixed(2) + " m";
+                horizontalAccuracyText.visible = true;
+            } else {
+                horizontalAccuracyText.visible = false;
+            }
+        });
 
         mapView.locationDisplay.dataSource = indoorsLDS;
         mapView.locationDisplay.start();
@@ -190,9 +189,9 @@ Rectangle {
     function changeFloorDisplay() {
         const layers = map.operationalLayers;
         layers.forEach((layer) => {
-                           if (["Details", "Units", "Levels"].indexOf(layer.name) >= 0) {
-                               layer.definitionExpression = "VERTICAL_ORDER = " + currentFloor;
-                           }
-                       });
+            if (["Details", "Units", "Levels"].includes(layer.name)) {
+                layer.definitionExpression = "VERTICAL_ORDER = " + currentFloor;
+            }
+        });
     }
 }
