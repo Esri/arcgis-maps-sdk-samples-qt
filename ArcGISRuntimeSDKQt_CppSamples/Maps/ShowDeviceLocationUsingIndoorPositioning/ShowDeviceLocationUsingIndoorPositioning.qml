@@ -33,12 +33,10 @@ Item {
     }
 
     Rectangle {
-        id: debugInfoRectangle
+        id: locationInformationRectangle
         width: parent.width
         height: textColumn.height + 20
         color: "lightgray"
-
-        visible: Object.keys(model.locationProperties).length > 0;
 
         ColumnLayout {
             id: textColumn
@@ -48,6 +46,12 @@ Item {
                 margins: 10
             }
 
+            Text {
+                text: "Initializing location data source\nand retrieving user location..."
+                wrapMode: Text.WordWrap
+                // Display if there are no location properties to display
+                visible: Object.keys(model.locationProperties).length === 0;
+            }
 
             Text {
                 text: "Floor: " + model.locationProperties.floor

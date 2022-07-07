@@ -38,7 +38,7 @@ class ShowDeviceLocationUsingIndoorPositioning : public QObject
   Q_OBJECT
 
   Q_PROPERTY(Esri::ArcGISRuntime::MapQuickView* mapView READ mapView WRITE setMapView NOTIFY mapViewChanged)
-  Q_PROPERTY(QVariantMap locationProperties READ locationProperties NOTIFY locationChanged)
+  Q_PROPERTY(QVariantMap locationProperties READ locationProperties NOTIFY locationPropertiesChanged)
 
 public:
   explicit ShowDeviceLocationUsingIndoorPositioning(QObject* parent = nullptr);
@@ -48,7 +48,7 @@ public:
 
 signals:
   void mapViewChanged();
-  void locationChanged();
+  void locationPropertiesChanged();
 
 private:
   Esri::ArcGISRuntime::MapQuickView* mapView() const;
@@ -56,7 +56,7 @@ private:
 
   void setMapView(Esri::ArcGISRuntime::MapQuickView* mapView);
   void setupIndoorsLocationDataSource();
-  void locationChangedHandler(Esri::ArcGISRuntime::Location loc);
+  void locationChangedHandler(const Esri::ArcGISRuntime::Location& loc);
   void changeFloorDisplay();
 
   Esri::ArcGISRuntime::Map* m_map = nullptr;

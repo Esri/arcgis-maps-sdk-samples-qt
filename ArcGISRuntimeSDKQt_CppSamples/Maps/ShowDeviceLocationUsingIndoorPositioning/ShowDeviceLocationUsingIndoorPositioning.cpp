@@ -30,17 +30,17 @@
 using namespace Esri::ArcGISRuntime;
 
 namespace {
-  const QString username = "tester_viennardc";
-  const QString password = "password.testing12345";
+const QString username = "tester_viennardc";
+const QString password = "password.testing12345";
 
-  const QUrl portalUrl = QUrl("https://viennardc.maps.arcgis.com");
-  const QString itemId = "89f88764c29b48218366855d7717d266";
+const QUrl portalUrl = QUrl("https://viennardc.maps.arcgis.com");
+const QString itemId = "89f88764c29b48218366855d7717d266";
 
-  const QString positioningTableName = "ips_positioning";
-  const QString pathwaysLayerName = "Pathways";
-  const QStringList globalIdSortNames = {"DateCreated", "DATE_CREATED"};
+const QString positioningTableName = "ips_positioning";
+const QString pathwaysLayerName = "Pathways";
+const QStringList globalIdSortNames = {"DateCreated", "DATE_CREATED"};
 
-  const QStringList layerNames = {"Details", "Units", "Levels"};
+const QStringList layerNames = {"Details", "Units", "Levels"};
 }
 
 ShowDeviceLocationUsingIndoorPositioning::ShowDeviceLocationUsingIndoorPositioning(QObject* parent /* = nullptr */):
@@ -97,7 +97,7 @@ void ShowDeviceLocationUsingIndoorPositioning::setupIndoorsLocationDataSource()
 }
 
 // Change currently displayed location information and change floor display if necessary
-void ShowDeviceLocationUsingIndoorPositioning::locationChangedHandler(Location loc)
+void ShowDeviceLocationUsingIndoorPositioning::locationChangedHandler(const Location& loc)
 {
   if (m_locationProperties["floor"] != m_currentFloor)
   {
@@ -105,10 +105,9 @@ void ShowDeviceLocationUsingIndoorPositioning::locationChangedHandler(Location l
     changeFloorDisplay();
   }
   m_locationProperties = loc.additionalSourceProperties();
-  m_locationProperties.insert("horizontalAccuracy", loc.horizontalAccuracy());
-  qDebug() << m_locationProperties;
+  m_locationProperties["horizontalAccuracy"] = QVariant::fromValue(loc.horizontalAccuracy());
 
-  emit locationChanged();
+  emit locationPropertiesChanged();
 }
 
 void ShowDeviceLocationUsingIndoorPositioning::changeFloorDisplay()
@@ -118,15 +117,16 @@ void ShowDeviceLocationUsingIndoorPositioning::changeFloorDisplay()
   {
     if (layerNames.contains(layer->name()))
     {
-      if (FeatureLayer* featureLayer = dynamic_cast<FeatureLayer*>(layer))
+      if (layer->layerType() == LayerType::FeatureLayer)
       {
-        featureLayer->definitionExpression() = QString{"VERTICAL_ORDER = %1"}.arg(m_currentFloor);
+        FeatureLayer* featureLayer = static_cast<FeatureLayer*>(layer);
+        featureLayer->setDefinitionExpression(QString{"VERTICAL_ORDER = %1"}.arg(m_currentFloor));
       }
     }
   }
 }
 
-QVariantMap ShowDeviceLocationUsingIndoorPositioning::locationProperties() const
-{
-  return m_locationProperties;
-}
+  QVariantMap ShowDeviceLocationUsingIndoorPositioning::locationProperties() const
+  {
+    return m_locationProperties;
+  }

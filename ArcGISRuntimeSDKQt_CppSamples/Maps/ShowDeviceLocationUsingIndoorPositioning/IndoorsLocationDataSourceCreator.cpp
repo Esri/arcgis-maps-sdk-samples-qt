@@ -31,10 +31,9 @@ void IndoorsLocationDataSourceCreator::createIndoorsLocationDataSource(Map* map,
 {
   if (map->loadStatus() != LoadStatus::Loaded)
   {
-    connect(map, &Map::doneLoading, this, [=]()
+    connect(map, &Map::doneLoading, this, [map, positioningTableName, pathwaysTableName, globalId, this]()
     {
       createIndoorsLocationDataSource(map, positioningTableName, pathwaysTableName, globalId);
-      map->disconnect();
     });
     return;
   }
@@ -57,7 +56,7 @@ void IndoorsLocationDataSourceCreator::findPositioningTable()
 
   for (FeatureTable* table : *tables)
   {
-    connect(table, &FeatureTable::doneLoading, this, [table, this]()
+    if (table->loadStatus() == LoadStatus::Loaded)
     {
       if (table->tableName() == m_positioningTableName)
       {
@@ -66,8 +65,22 @@ void IndoorsLocationDataSourceCreator::findPositioningTable()
         if (m_pathwaysTable && m_positioningTable)
           returnIndoorsLocationDataSource();
       }
-    });
-    table->load();
+    }
+    else
+    {
+      connect(table, &FeatureTable::doneLoading, this, [table, this]()
+      {
+        if (table->tableName() == m_positioningTableName)
+        {
+          m_positioningTable = table;
+
+          if (m_pathwaysTable && m_positioningTable)
+            returnIndoorsLocationDataSource();
+        }
+      });
+
+      table->load();
+    }
   }
 }
 
@@ -79,7 +92,7 @@ void IndoorsLocationDataSourceCreator::findPathwaysTable()
 
   for (Layer* layer : *layers)
   {
-    if(FeatureLayer* featureLayer = dynamic_cast<FeatureLayer*>(layer))
+    if (FeatureLayer* featureLayer = dynamic_cast<FeatureLayer*>(layer))
     {
       if (featureLayer->name() == m_pathwaysTableName)
       {
