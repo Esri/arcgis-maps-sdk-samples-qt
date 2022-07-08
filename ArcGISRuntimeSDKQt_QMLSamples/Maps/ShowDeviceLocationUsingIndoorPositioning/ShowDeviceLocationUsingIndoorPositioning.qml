@@ -109,12 +109,19 @@ Rectangle {
     // The IndoorsLocationDataSource will use the most recently created row unless given an alternative GlobalId in the constructor.
     function findPositioningTable(tableName) {
         map.tables.forEach((table) => {
-           table.loadStatusChanged.connect(() => {
-               if (table.loadStatus === Enums.LoadStatusLoaded && table.tableName === tableName) {
+           if (table.loadStatus === Enums.LoadStatusLoaded) {
+               if (table.tableName === tableName) {
                    positioningTable = table;
+                   return;
                }
-           });
-           table.load();
+           } else {
+               table.loadStatusChanged.connect(() => {
+                   if (table.loadStatus === Enums.LoadStatusLoaded && table.tableName === tableName) {
+                       positioningTable = table;
+                   }
+               });
+               table.load();
+           }
        });
     }
 

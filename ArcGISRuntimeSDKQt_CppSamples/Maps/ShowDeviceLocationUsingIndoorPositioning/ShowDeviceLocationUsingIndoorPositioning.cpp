@@ -111,8 +111,7 @@ void ShowDeviceLocationUsingIndoorPositioning::locationChangedHandler(const Loca
 
 void ShowDeviceLocationUsingIndoorPositioning::changeFloorDisplay()
 {
-  const LayerListModel* layers = m_map->operationalLayers();
-  for (Layer* layer : *layers)
+  for (Layer* layer : *(m_map->operationalLayers()))
   {
     if (layerNames.contains(layer->name()))
     {
