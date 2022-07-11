@@ -305,9 +305,6 @@ void registerCppSampleClasses();
 
 int main(int argc, char *argv[])
 {
-  // add support for feature toggles on mobile, which is disabled by default
-  qputenv("QT_ENABLE_FEATURE_TOGGLE_MOBILE", "true");
-
 #ifdef QT_WEBVIEW_WEBENGINE_BACKEND
   QtWebEngine::initialize();
 #endif // QT_WEBVIEW_WEBENGINE_BACKEND
