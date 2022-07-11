@@ -54,7 +54,7 @@ Rectangle {
             // Create the dotted outline for the clipping envelopes
             SimpleLineSymbol {
                 id: redOutline
-                style: Enums.SimpleLineSymbolStyleDot
+                style: Enums.SimpleLineSymbolStyleDash
                 color: "#FFFF0000"
                 width: 3
             }

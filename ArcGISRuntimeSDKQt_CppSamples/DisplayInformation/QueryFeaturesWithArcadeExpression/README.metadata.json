@@ -1,13 +1,13 @@
 {
     "category": "Display information",
-    "description": "Query features on a map using an arcade expression.",
+    "description": "Query features on a map using an Arcade expression.",
     "ignore": false,
     "images": [
         "screenshot.png"
     ],
     "keywords": [
-        "arcade evaluator",
-        "arcade expression",
+        "Arcade evaluator",
+        "Arcade expression",
         "identify layers",
         "portal",
         "portal item",
@@ -33,5 +33,5 @@
         "QueryFeaturesWithArcadeExpression.h",
         "QueryFeaturesWithArcadeExpression.qml"
     ],
-    "title": "Query Features With Arcade Expression"
+    "title": "Query features with Arcade expression"
 }

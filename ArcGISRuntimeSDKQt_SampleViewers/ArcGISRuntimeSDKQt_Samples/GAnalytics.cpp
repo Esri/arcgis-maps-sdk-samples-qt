@@ -18,6 +18,7 @@
 #include <QDebug>
 #include <QJsonDocument>
 #include <QJsonObject>
+#include <QLocale>
 #include <QNetworkAccessManager>
 #include <QNetworkReply>
 #include <QOperatingSystemVersion>
@@ -25,15 +26,16 @@
 #include <QSettings>
 #include <QUuid>
 
+// Allow retrieval of analytics keys
+#include <cstdlib>
+#define STRINGIZE(x) #x
+#define QUOTE(x) STRINGIZE(x)
+
 GAnalytics::GAnalytics(QObject* parent /* = nullptr */):
   QObject(parent),
-#if defined (GANALYTICS_API_KEY) && defined (GANALYTICS_STREAM_ID)
+  // the following evaluate to "" if not provided in system environment
   m_apiSecret(QUOTE(GANALYTICS_API_KEY)),
   m_measurementId(QUOTE(GANALYTICS_STREAM_ID))
-#else
-  m_apiSecret(""),
-  m_measurementId("")
-#endif // GANALYTICS_API_KEY && GANALYTICS_STREAM_ID
 {
 }
 
@@ -45,10 +47,12 @@ GAnalytics::~GAnalytics()
 void GAnalytics::init()
 {
   generateClientId();
+
+  // If this is an Esri daily build or a local user build, disable analytics
   if (m_apiSecret.isEmpty() || m_measurementId.isEmpty())
   {
+    qDebug() << "No analytics API key or mesurement ID was provided, disabling telemetry";
     m_telemetryEnabled = false;
-    setIsVisible(false);
     return;
   }
 
@@ -73,7 +77,12 @@ void GAnalytics::init()
 #endif // CPP_VIEWER / QML_VIEWER
 
   const auto os = QOperatingSystemVersion::current();
-  m_defaultParameters.insert("operating_system", QString{"%1 %2.%3"}.arg(os.name(), os.majorVersion(), os.minorVersion()));
+  m_defaultParameters.insert("operating_system", QString{"%1 %2.%3"}.arg(os.name(), QString::number(os.majorVersion()), QString::number(os.minorVersion())));
+  m_defaultParameters.insert("language", QLocale::system().nativeLanguageName());
+
+  m_googleAnalyticsUrl = QString{"https://google-analytics.com/mp/collect?api_secret=%1&measurement_id=%2"}.arg(m_apiSecret, m_measurementId);
+  m_networkRequest = QNetworkRequest(m_googleAnalyticsUrl);
+  m_networkRequest.setHeader(QNetworkRequest::ContentTypeHeader, "application, json");
 }
 
 void GAnalytics::postEvent(const QString& eventName, QVariantMap parameters)
@@ -91,19 +100,16 @@ void GAnalytics::postEvent(const QString& eventName, QVariantMap parameters)
 
   QJsonObject event;
   event.insert("name", eventName);
-  parameters.unite(m_defaultParameters);
+  parameters.insert(m_defaultParameters);
   event.insert("params", QJsonObject::fromVariantMap(parameters));
 
   QJsonObject body;
   body.insert("client_id", m_clientId);
   body.insert("events", event);
-  const QUrl url(QString{"https://google-analytics.com/mp/collect?api_secret=%1&measurement_id=%2"}.arg(m_apiSecret, m_measurementId));
 
-  QNetworkRequest request(url);
-  request.setHeader(QNetworkRequest::ContentTypeHeader, "application, json");
   const QJsonDocument data(body);
 
-  m_networkAccessManager->post(request, data.toJson());
+  m_networkAccessManager->post(m_networkRequest, data.toJson());
 }
 
 void GAnalytics::startSession()
@@ -123,7 +129,7 @@ void GAnalytics::generateClientId()
 {
   if (!m_settings.contains("GAnalytics-clientId"))
   {
-    m_clientId= QUuid::createUuid().toString();
+    m_clientId = QUuid::createUuid().toString();
     m_settings.setValue("GAnalytics-clientId", m_clientId);
   }
   else
