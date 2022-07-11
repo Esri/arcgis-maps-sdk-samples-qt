@@ -120,7 +120,7 @@ void AnalyzeViewshed::connectSignals()
     }
 
     // Create a marker graphic where the user clicked on the map and add it to the existing graphics overlay
-    Point mapPoint = m_mapView->screenToLocation(mouse.x(), mouse.y());
+    Point mapPoint = m_mapView->screenToLocation(mouse.pos().x(), mouse.pos().y());
     if (m_inputGraphic)
       m_inputGraphic->setGeometry(mapPoint);
 

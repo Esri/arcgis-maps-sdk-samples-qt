@@ -16,7 +16,9 @@
 #ifndef CPPSAMPLEMANAGER_H
 #define CPPSAMPLEMANAGER_H
 
+#include <QObject>
 #include "DownloadSampleManager.h"
+Q_MOC_INCLUDE("AuthenticationManager.h")
 
 namespace Esri
 {

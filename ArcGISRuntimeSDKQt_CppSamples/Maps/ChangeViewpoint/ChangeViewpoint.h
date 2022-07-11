@@ -27,6 +27,7 @@ namespace Esri
 }
 
 #include <QQuickItem>
+Q_MOC_INCLUDE("MapQuickView.h")
 
 class ChangeViewpoint : public QQuickItem
 {
@@ -56,4 +57,3 @@ private:
 };
 
 #endif // CHANGE_VIEWPOINT_H
-

@@ -154,7 +154,7 @@ void ContingentValues::createConnections()
 void ContingentValues::createNewEmptyFeature(QMouseEvent& mouseEvent)
 {
   // Create a new empty feature to define attributes for
-  m_newFeature = static_cast<ArcGISFeature*>(m_gdbFeatureTable->createFeature({}, m_mapView->screenToLocation(mouseEvent.x(), mouseEvent.y()), this));
+  m_newFeature = static_cast<ArcGISFeature*>(m_gdbFeatureTable->createFeature({}, m_mapView->screenToLocation(mouseEvent.pos().x(), mouseEvent.pos().y()), this));
   m_gdbFeatureTable->addFeature(m_newFeature);
 
   // Show the attribute form interface

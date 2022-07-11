@@ -107,11 +107,11 @@ void FindAddress::connectSignals()
   connect(m_mapView, &MapQuickView::mouseClicked, this, [this](QMouseEvent& mouseEvent)
   {
     // set the properties for qml
-    m_mapView->calloutData()->setLocation(m_mapView->screenToLocation(mouseEvent.x(), mouseEvent.y()));
+    m_mapView->calloutData()->setLocation(m_mapView->screenToLocation(mouseEvent.pos().x(), mouseEvent.pos().y()));
     emit hideCallout();
 
     // call identify on the map view
-    m_mapView->identifyGraphicsOverlay(m_graphicsOverlay, mouseEvent.x(), mouseEvent.y(), 5, false, 1);
+    m_mapView->identifyGraphicsOverlay(m_graphicsOverlay, mouseEvent.pos().x(), mouseEvent.pos().y(), 5, false, 1);
   });
 
   // connect to the identifyGraphicsOverlayCompleted signal on the map view

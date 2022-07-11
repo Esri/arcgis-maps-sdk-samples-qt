@@ -39,6 +39,7 @@ class MissionData;
 
 #include <QQuickItem>
 #include <QString>
+Q_MOC_INCLUDE("QAbstractListModel")
 
 #include <memory>
 

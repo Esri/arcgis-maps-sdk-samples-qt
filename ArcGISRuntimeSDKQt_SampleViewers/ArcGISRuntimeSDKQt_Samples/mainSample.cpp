@@ -319,7 +319,6 @@ int main(int argc, char *argv[])
 #endif
 
   QGuiApplication::setOrganizationName("Esri");
-  QGuiApplication::setAttribute(Qt::AA_EnableHighDpiScaling);
   QApplication app(argc, argv);
 
   // register sample viewer classes

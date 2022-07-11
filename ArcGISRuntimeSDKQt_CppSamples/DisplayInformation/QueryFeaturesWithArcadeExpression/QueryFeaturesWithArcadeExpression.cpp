@@ -87,9 +87,9 @@ void QueryFeaturesWithArcadeExpression::setMapView(MapQuickView* mapView)
       m_mapView->calloutData()->setVisible(false);
     m_mapView->calloutData()->setDetail("");
     // Set callout position
-    const Point mapPoint(m_mapView->screenToLocation(mouseEvent.x(), mouseEvent.y()));
+    const Point mapPoint(m_mapView->screenToLocation(mouseEvent.pos().x(), mouseEvent.pos().y()));
     m_mapView->calloutData()->setLocation(mapPoint);
-    m_mapView->identifyLayers(mouseEvent.x(), mouseEvent.y(), 12, false);
+    m_mapView->identifyLayers(mouseEvent.pos().x(), mouseEvent.pos().y(), 12, false);
 
   });
 

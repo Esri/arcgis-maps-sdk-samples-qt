@@ -125,7 +125,7 @@ void EditAndSyncFeatures::connectSignals()
     {
       if (!m_selectedFeature)
       {
-        m_mapView->identifyLayer(m_map->operationalLayers()->first(), mouseEvent.x(), mouseEvent.y(), 5, false, 1);
+        m_mapView->identifyLayer(m_map->operationalLayers()->first(), mouseEvent.pos().x(), mouseEvent.pos().y(), 5, false, 1);
       }
       else
       {
@@ -143,7 +143,7 @@ void EditAndSyncFeatures::connectSignals()
         });
 
         // get the point from the mouse point
-        Point mapPoint = m_mapView->screenToLocation(mouseEvent.x(), mouseEvent.y());
+        Point mapPoint = m_mapView->screenToLocation(mouseEvent.pos().x(), mouseEvent.pos().y());
         m_selectedFeature->setGeometry(mapPoint);
         featureLayer->featureTable()->updateFeature(m_selectedFeature);
       }

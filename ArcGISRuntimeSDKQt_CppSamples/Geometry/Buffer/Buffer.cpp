@@ -93,7 +93,7 @@ void Buffer::componentComplete()
 void Buffer::onMouseClicked(QMouseEvent& mouse)
 {
   // get the map point from the mouse click
-  const Point point = m_mapView->screenToLocation(mouse.x(), mouse.y());
+  const Point point = m_mapView->screenToLocation(mouse.pos().x(), mouse.pos().y());
 
   // Create a variable to be the buffer size in meters. There are 1609.34 meters in one mile.
   const int bufferInMeters = bufferSize() * 1609.34;

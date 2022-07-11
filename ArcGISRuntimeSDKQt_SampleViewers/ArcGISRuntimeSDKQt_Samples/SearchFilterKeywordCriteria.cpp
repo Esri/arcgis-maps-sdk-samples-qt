@@ -20,6 +20,8 @@
 // STL headers
 #include <algorithm>
 
+#include <QStringRef>
+
 // Other headers
 #include "SampleListModel.h"
 
@@ -47,7 +49,7 @@ QString highlightedMidpoint(const QString& string,
                       + QStringLiteral("</b>");
 
     // Find the portion of string that goes after the catchment.
-    int endPos = std::min(string.length(), pos+ subStringLength + catchment);
+    int endPos = std::min(string.length(), static_cast<qsizetype>(pos+ subStringLength + catchment));
     QStringRef endPart(&string, pos + subStringLength, endPos);
     builder = builder + endPart.toString().toHtmlEscaped();
 

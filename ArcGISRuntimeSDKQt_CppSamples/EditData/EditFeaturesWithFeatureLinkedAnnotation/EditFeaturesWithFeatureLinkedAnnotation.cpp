@@ -160,13 +160,13 @@ void EditFeaturesWithFeatureLinkedAnnotation::onMouseClicked(QMouseEvent& mouseE
   if (m_selectedFeature)
   {
     // move feature to clicked locaiton if already selected
-    const Point clickedPoint = m_mapView->screenToLocation(mouseEvent.x(), mouseEvent.y());
+    const Point clickedPoint = m_mapView->screenToLocation(mouseEvent.pos().x(), mouseEvent.pos().y());
     moveFeature(clickedPoint);
   }
   else
   {
     // identify and select feature
-    m_mapView->identifyLayers(mouseEvent.x(), mouseEvent.y(), 10, false);
+    m_mapView->identifyLayers(mouseEvent.pos().x(), mouseEvent.pos().y(), 10, false);
   }
 }
 

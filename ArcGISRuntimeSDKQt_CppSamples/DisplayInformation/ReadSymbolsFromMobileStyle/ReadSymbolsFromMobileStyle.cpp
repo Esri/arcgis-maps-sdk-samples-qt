@@ -201,7 +201,7 @@ void ReadSymbolsFromMobileStyle::setMapView(MapQuickView* mapView)
     if (!m_currentSymbol)
       return;
 
-    const Point clickedPoint = m_mapView->screenToLocation(mouseEvent.x(), mouseEvent.y());
+    const Point clickedPoint = m_mapView->screenToLocation(mouseEvent.pos().x(), mouseEvent.pos().y());
     Graphic* graphic = new Graphic(clickedPoint, m_currentSymbol, m_graphicParent.get());
     overlay->graphics()->append(graphic);
   });

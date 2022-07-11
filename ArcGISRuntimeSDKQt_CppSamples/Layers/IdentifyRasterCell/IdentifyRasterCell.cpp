@@ -139,14 +139,14 @@ void IdentifyRasterCell::connectSignals()
 
   connect(m_mapView, &MapQuickView::mouseClicked, this, [this](const QMouseEvent& e)
   {
-    m_mapView->identifyLayer(m_rasterLayer, e.x(), e.y(), 10, false, 1);
-    m_clickedPoint = m_mapView->screenToLocation(e.x(), e.y());
+    m_mapView->identifyLayer(m_rasterLayer, e.pos().x(), e.pos().y(), 10, false, 1);
+    m_clickedPoint = m_mapView->screenToLocation(e.pos().x(), e.pos().y());
   });
 
   connect(m_mapView, &MapQuickView::mousePressedAndHeld, this, [this](const QMouseEvent& e)
   {
-    m_mapView->identifyLayer(m_rasterLayer, e.x(), e.y(), 10, false, 1);
-    m_clickedPoint = m_mapView->screenToLocation(e.x(), e.y());
+    m_mapView->identifyLayer(m_rasterLayer, e.pos().x(), e.pos().y(), 10, false, 1);
+    m_clickedPoint = m_mapView->screenToLocation(e.pos().x(), e.pos().y());
     m_mousePressed = true;
   });
 
@@ -160,8 +160,8 @@ void IdentifyRasterCell::connectSignals()
   {
     if (m_mousePressed)
     {
-      m_mapView->identifyLayer(m_rasterLayer, e.x(), e.y(), 10, false, 1);
-      m_clickedPoint = m_mapView->screenToLocation(e.x(), e.y());
+      m_mapView->identifyLayer(m_rasterLayer, e.pos().x(), e.pos().y(), 10, false, 1);
+      m_clickedPoint = m_mapView->screenToLocation(e.pos().x(), e.pos().y());
     }
   });
 }
