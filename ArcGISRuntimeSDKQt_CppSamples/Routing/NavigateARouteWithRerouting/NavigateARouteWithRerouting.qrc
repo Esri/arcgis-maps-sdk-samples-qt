@@ -1,0 +1,11 @@
+<RCC>
+    <qresource prefix="/Samples/Routing/NavigateARouteWithRerouting">
+        <file alias="sample.json">README.metadata.json</file>
+        <file>NavigateARouteWithRerouting.qml</file>
+        <file>NavigateARouteWithRerouting.h</file>
+        <file>NavigateARouteWithRerouting.cpp</file>
+        <file>main.qml</file>
+        <file>screenshot.png</file>
+        <file>README.md</file>
+    </qresource>
+</RCC>
