@@ -173,6 +173,7 @@ INCLUDEPATH += \
     "$$SAMPLEPATHCPP/Maps/SetInitialMapLocation" \
     "$$SAMPLEPATHCPP/Maps/SetMapSpatialReference" \
     "$$SAMPLEPATHCPP/Maps/SetMaxExtent" \
+    "$$SAMPLEPATHCPP/Maps/ShowDeviceLocationUsingIndoorPositioning" \
     "$$SAMPLEPATHCPP/Maps/ShowLocationHistory" \
     "$$SAMPLEPATHCPP/Maps/ShowMagnifier" \
     "$$SAMPLEPATHCPP/Maps/TakeScreenshot" \
@@ -380,6 +381,7 @@ HEADERS += \
     "$$SAMPLEPATHCPP/Maps/SetInitialMapLocation/SetInitialMapLocation.h" \
     "$$SAMPLEPATHCPP/Maps/SetMapSpatialReference/SetMapSpatialReference.h" \
     "$$SAMPLEPATHCPP/Maps/SetMaxExtent/SetMaxExtent.h" \
+    "$$SAMPLEPATHCPP/Maps/ShowDeviceLocationUsingIndoorPositioning/ShowDeviceLocationUsingIndoorPositioning.h" \
     "$$SAMPLEPATHCPP/Maps/ShowLocationHistory/ShowLocationHistory.h" \
     "$$SAMPLEPATHCPP/Maps/ShowMagnifier/ShowMagnifier.h" \
     "$$SAMPLEPATHCPP/Maps/TakeScreenshot/MapImageProvider.h" \
@@ -589,6 +591,7 @@ SOURCES += \
     "$$SAMPLEPATHCPP/Maps/SetInitialMapLocation/SetInitialMapLocation.cpp" \
     "$$SAMPLEPATHCPP/Maps/SetMapSpatialReference/SetMapSpatialReference.cpp" \
     "$$SAMPLEPATHCPP/Maps/SetMaxExtent/SetMaxExtent.cpp" \
+    "$$SAMPLEPATHCPP/Maps/ShowDeviceLocationUsingIndoorPositioning/ShowDeviceLocationUsingIndoorPositioning.cpp" \
     "$$SAMPLEPATHCPP/Maps/ShowLocationHistory/ShowLocationHistory.cpp" \
     "$$SAMPLEPATHCPP/Maps/ShowMagnifier/ShowMagnifier.cpp" \
     "$$SAMPLEPATHCPP/Maps/TakeScreenshot/MapImageProvider.cpp" \
@@ -794,6 +797,7 @@ RESOURCES += \
     "$$SAMPLEPATHCPP/Maps/SetInitialMapLocation/SetInitialMapLocation.qrc" \
     "$$SAMPLEPATHCPP/Maps/SetMapSpatialReference/SetMapSpatialReference.qrc" \
     "$$SAMPLEPATHCPP/Maps/SetMaxExtent/SetMaxExtent.qrc" \
+    "$$SAMPLEPATHCPP/Maps/ShowDeviceLocationUsingIndoorPositioning/ShowDeviceLocationUsingIndoorPositioning.qrc" \
     "$$SAMPLEPATHCPP/Maps/ShowLocationHistory/ShowLocationHistory.qrc" \
     "$$SAMPLEPATHCPP/Maps/ShowMagnifier/ShowMagnifier.qrc" \
     "$$SAMPLEPATHCPP/Maps/TakeScreenshot/TakeScreenshot.qrc" \
