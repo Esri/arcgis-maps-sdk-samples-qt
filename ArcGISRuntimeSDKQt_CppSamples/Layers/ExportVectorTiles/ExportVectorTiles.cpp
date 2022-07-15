@@ -20,14 +20,22 @@
 
 #include "ExportVectorTiles.h"
 
+#include "ArcGISVectorTiledLayer.h"
+#include "ExportVectorTilesTask.h"
+#include "ExportVectorTilesParameters.h"
+#include "GraphicsOverlay.h"
 #include "Map.h"
 #include "MapQuickView.h"
+#include "Symbol.h"
+#include "SimpleLineSymbol.h"
+
+#include <QTemporaryDir>
 
 using namespace Esri::ArcGISRuntime;
 
 ExportVectorTiles::ExportVectorTiles(QObject* parent /* = nullptr */):
   QObject(parent),
-  m_map(new Map(BasemapStyle::ArcGISTopographic, this))
+  m_map(new Map(BasemapStyle::ArcGISStreetsNight, this))
 {
 
 }
@@ -54,6 +62,33 @@ void ExportVectorTiles::setMapView(MapQuickView* mapView)
 
   m_mapView = mapView;
   m_mapView->setMap(m_map);
+  m_mapView->setViewpoint(Viewpoint(34.049, -117.181, 1e4));
+
+  Graphic* downloadArea = new Graphic(this);
+  downloadArea->setSymbol(new SimpleLineSymbol(SimpleLineSymbolStyle::Solid, Qt::red, 2, this));
+  downloadArea->setGeometry(Viewpoint(34.049, -117.181, 1e4).targetGeometry());
+
+  GraphicsOverlay* graphicsOverlay = new GraphicsOverlay(this);
+  graphicsOverlay->graphics()->append(downloadArea);
+
+  m_mapView->graphicsOverlays()->append(graphicsOverlay);
 
   emit mapViewChanged();
+}
+
+void ExportVectorTiles::startExport()
+{
+  if (m_map->basemap()->baseLayers()->first()->layerType() != LayerType::ArcGISVectorTiledLayer)
+    return;
+
+  ArcGISVectorTiledLayer* vectorTiledLayer = static_cast<ArcGISVectorTiledLayer*>(m_map->basemap()->baseLayers()->first());
+  ExportVectorTilesTask* exportTask = new ExportVectorTilesTask(vectorTiledLayer->sourceInfo().url(), this);
+  ExportVectorTilesParameters exportParameters(m_mapView->graphicsOverlays()->first()->graphics()->first()->geometry());
+  exportParameters.setMaxLevel(m_mapView->mapScale());
+  exportParameters.setEsriVectorTilesDownloadOption(EsriVectorTilesDownloadOption::UseReducedFontsService);
+  QTemporaryDir dir;
+  QString vectorTileCachePath = dir.path();
+  QString itemResourcePath;
+  exportTask->exportVectorTiles(exportParameters, vectorTileCachePath, itemResourcePath);
+
 }
