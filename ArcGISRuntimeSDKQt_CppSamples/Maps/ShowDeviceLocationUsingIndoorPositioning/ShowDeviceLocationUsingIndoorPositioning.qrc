@@ -1,0 +1,11 @@
+<RCC>
+    <qresource prefix="/Samples/Maps/ShowDeviceLocationUsingIndoorPositioning">
+        <file alias="sample.json">README.metadata.json</file>
+        <file>ShowDeviceLocationUsingIndoorPositioning.qml</file>
+        <file>ShowDeviceLocationUsingIndoorPositioning.h</file>
+        <file>ShowDeviceLocationUsingIndoorPositioning.cpp</file>
+        <file>main.qml</file>
+        <file>screenshot.png</file>
+        <file>README.md</file>
+    </qresource>
+</RCC>
