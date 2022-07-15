@@ -97,8 +97,10 @@ void IndoorsLocationDataSourceCreator::findPathwaysTable()
       if (featureLayer->name() == m_pathwaysTableName)
       {
         m_pathwaysTable = dynamic_cast<ArcGISFeatureTable*>(featureLayer->featureTable());
+
         if (m_pathwaysTable && m_positioningTable)
           returnIndoorsLocationDataSource();
+
         return;
       }
     }

@@ -29,11 +29,7 @@
 using namespace Esri::ArcGISRuntime;
 
 namespace {
-const QString username = "tester_viennardc";
-const QString password = "password.testing12345";
-
-const QUrl portalUrl = QUrl("https://viennardc.maps.arcgis.com");
-const QString itemId = "89f88764c29b48218366855d7717d266";
+const QString itemId = "8fa941613b4b4b2b8a34ad4cdc3e4bba";
 
 const QString positioningTableName = "ips_positioning";
 const QString pathwaysLayerName = "Pathways";
@@ -45,9 +41,7 @@ const QStringList layerNames = {"Details", "Units", "Levels"};
 ShowDeviceLocationUsingIndoorPositioning::ShowDeviceLocationUsingIndoorPositioning(QObject* parent /* = nullptr */):
   QObject(parent)
 {
-  Credential* cred = new Credential(username, password, this);
-  Portal* portal = new Portal(portalUrl, cred, this);
-  m_map = new Map(new PortalItem(portal, itemId, this), this);
+  m_map = new Map(new PortalItem(itemId, this), this);
 }
 
 ShowDeviceLocationUsingIndoorPositioning::~ShowDeviceLocationUsingIndoorPositioning() = default;
