@@ -14,9 +14,6 @@
 #ifndef INDOORSLOCATIONDATASOURCECREATOR_H
 #define INDOORSLOCATIONDATASOURCECREATOR_H
 
-#include <QUuid>
-#include <QObject>
-
 namespace Esri
 {
 namespace ArcGISRuntime
@@ -27,6 +24,9 @@ class IndoorsLocationDataSource;
 class Map;
 }
 }
+
+#include <QObject>
+#include <QUuid>
 
 
 class IndoorsLocationDataSourceCreator : public QObject
