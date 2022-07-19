@@ -21,7 +21,8 @@
 
 ## Checklist
 
-- [ ] Runs and compiles on all active platforms
+- [ ] Runs and compiles on all active platforms as a standalone sample
+- [ ] Runs and compiles in the sample viewer(s)
 - [ ] Branch is up to date with the latest main/v.next
 - [ ] All merge conflicts have been resolved
 - [ ] Self-review of changes
