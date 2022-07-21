@@ -23,6 +23,7 @@
 #include "ArcGISVectorTiledLayer.h"
 #include "ExportVectorTilesTask.h"
 #include "ExportVectorTilesParameters.h"
+#include "GeometryEngine.h"
 #include "GraphicsOverlay.h"
 #include "Map.h"
 #include "MapQuickView.h"
@@ -37,7 +38,6 @@ ExportVectorTiles::ExportVectorTiles(QObject* parent /* = nullptr */):
   QObject(parent),
   m_map(new Map(BasemapStyle::ArcGISStreetsNight, this))
 {
-
 }
 
 ExportVectorTiles::~ExportVectorTiles() = default;
@@ -64,31 +64,73 @@ void ExportVectorTiles::setMapView(MapQuickView* mapView)
   m_mapView->setMap(m_map);
   m_mapView->setViewpoint(Viewpoint(34.049, -117.181, 1e4));
 
-  Graphic* downloadArea = new Graphic(this);
-  downloadArea->setSymbol(new SimpleLineSymbol(SimpleLineSymbolStyle::Solid, Qt::red, 2, this));
-  downloadArea->setGeometry(Viewpoint(34.049, -117.181, 1e4).targetGeometry());
+  m_graphicsOverlay = new GraphicsOverlay(this);
+  m_mapView->graphicsOverlays()->append(m_graphicsOverlay);
 
-  GraphicsOverlay* graphicsOverlay = new GraphicsOverlay(this);
-  graphicsOverlay->graphics()->append(downloadArea);
+  m_downloadAreaGraphic = new Graphic(this);
+  m_downloadAreaGraphic->setSymbol(new SimpleLineSymbol(SimpleLineSymbolStyle::Solid, Qt::green, 3, this));
 
-  m_mapView->graphicsOverlays()->append(graphicsOverlay);
+  m_graphicsOverlay->graphics()->append(m_downloadAreaGraphic);
 
   emit mapViewChanged();
 }
 
-void ExportVectorTiles::startExport()
+void ExportVectorTiles::startExport(double xSW, double ySW, double xNE, double yNE)
 {
   if (m_map->basemap()->baseLayers()->first()->layerType() != LayerType::ArcGISVectorTiledLayer)
     return;
 
   ArcGISVectorTiledLayer* vectorTiledLayer = static_cast<ArcGISVectorTiledLayer*>(m_map->basemap()->baseLayers()->first());
-  ExportVectorTilesTask* exportTask = new ExportVectorTilesTask(vectorTiledLayer->sourceInfo().url(), this);
-  ExportVectorTilesParameters exportParameters(m_mapView->graphicsOverlays()->first()->graphics()->first()->geometry());
-  exportParameters.setMaxLevel(m_mapView->mapScale());
-  exportParameters.setEsriVectorTilesDownloadOption(EsriVectorTilesDownloadOption::UseReducedFontsService);
-  QTemporaryDir dir;
-  QString vectorTileCachePath = dir.path();
-  QString itemResourcePath;
-  exportTask->exportVectorTiles(exportParameters, vectorTileCachePath, itemResourcePath);
+  ExportVectorTilesTask* exportTask = new ExportVectorTilesTask(vectorTiledLayer->url(), this);
 
+  // Create an envelope from the QML rectangle corners
+  const Point corner1 = m_mapView->screenToLocation(xSW, ySW);
+  const Point corner2 = m_mapView->screenToLocation(xNE, yNE);
+  const Envelope extent = Envelope(corner1, corner2);
+  const Envelope exportArea = GeometryEngine::project(extent, vectorTiledLayer->spatialReference());
+
+  m_downloadAreaGraphic->setGeometry(exportArea);
+
+  const QString vectorTileCachePath = m_tempDir.path() + ("/vectorTiles.vtpk");
+  const QString itemResourcePath = m_tempDir.path() + "/itemResources";
+
+  connect(exportTask, &ExportVectorTilesTask::createDefaultExportVectorTilesParametersCompleted, this,
+          [exportTask, vectorTileCachePath, itemResourcePath, this](QUuid, ExportVectorTilesParameters exportParameters)
+  {
+    exportParameters.setEsriVectorTilesDownloadOption(EsriVectorTilesDownloadOption::UseReducedFontsService);
+
+    m_exportJob = exportTask->exportVectorTiles(exportParameters, vectorTileCachePath, itemResourcePath);
+
+    connect(m_exportJob, &ExportVectorTilesJob::jobDone, this, [this]()
+    {
+      if (m_exportJob->error().isEmpty())
+      {
+        VectorTileCache* vectorTileCache = m_exportJob->result()->vectorTileCache();
+        ItemResourceCache* itemResourceCache = m_exportJob->result()->itemResourceCache();
+
+        ArcGISVectorTiledLayer* downloadedLayer = new ArcGISVectorTiledLayer(vectorTileCache, itemResourceCache, this);
+        m_map->setBasemap(new Basemap(downloadedLayer, this));
+      }
+    });
+
+    connect(m_exportJob, &Job::progressChanged, this, [this]()
+    {
+      m_downloadProgress = m_exportJob->progress();
+      emit downloadProgressChanged();
+    });
+
+    m_exportJob->start();
+  });
+
+  exportTask->createDefaultExportVectorTilesParameters(exportArea, m_mapView->mapScale() * 0.1);
+}
+
+int ExportVectorTiles::downloadProgress() const
+{
+  return m_downloadProgress;
+}
+
+void ExportVectorTiles::cancelExport()
+{
+  m_exportJob->cancel();
 }

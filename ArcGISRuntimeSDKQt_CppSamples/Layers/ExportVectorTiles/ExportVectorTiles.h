@@ -21,18 +21,23 @@ namespace Esri
 {
 namespace ArcGISRuntime
 {
+class ExportVectorTilesJob;
+class Graphic;
+class GraphicsOverlay;
 class Map;
 class MapQuickView;
 }
 }
 
 #include <QObject>
+#include <QTemporaryDir>
 
 class ExportVectorTiles : public QObject
 {
   Q_OBJECT
 
   Q_PROPERTY(Esri::ArcGISRuntime::MapQuickView* mapView READ mapView WRITE setMapView NOTIFY mapViewChanged)
+  Q_PROPERTY(int downloadProgress READ downloadProgress NOTIFY downloadProgressChanged)
 
 public:
   explicit ExportVectorTiles(QObject* parent = nullptr);
@@ -40,16 +45,28 @@ public:
 
   static void init();
 
+  Q_INVOKABLE void startExport(double xSW, double ySW, double xNE, double yNE);
+  Q_INVOKABLE void cancelExport();
+
 signals:
   void mapViewChanged();
+  void downloadProgressChanged();
 
 private:
   Esri::ArcGISRuntime::MapQuickView* mapView() const;
   void setMapView(Esri::ArcGISRuntime::MapQuickView* mapView);
-  void startExport();
+  int downloadProgress() const;
 
   Esri::ArcGISRuntime::Map* m_map = nullptr;
   Esri::ArcGISRuntime::MapQuickView* m_mapView = nullptr;
+  QScopedPointer<QObject> m_graphicsParent;
+  Esri::ArcGISRuntime::Graphic* m_downloadAreaGraphic = nullptr;
+  Esri::ArcGISRuntime::GraphicsOverlay* m_graphicsOverlay = nullptr;
+  Esri::ArcGISRuntime::ExportVectorTilesJob* m_exportJob = nullptr;
+
+  int m_downloadProgress = 0;
+
+  QTemporaryDir m_tempDir;
 };
 
 #endif // EXPORTVECTORTILES_H
