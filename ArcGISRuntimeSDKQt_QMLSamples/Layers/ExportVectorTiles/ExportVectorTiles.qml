@@ -16,6 +16,9 @@
 
 import QtQuick 2.12
 import Esri.ArcGISRuntime 100.15
+import QtQuick.Controls 2.12
+import QtQuick.Layouts 1.15
+import Esri.ArcGISExtras 1.1
 
 Rectangle {
     id: rootRectangle
@@ -23,17 +26,202 @@ Rectangle {
     width: 800
     height: 600
 
+    readonly property url vectorTileCachePath: System.temporaryFolder.url + "/vectorTiles_%1.vtpk".arg(new Date().getTime().toString())
+    readonly property url itemResourcePath: System.temporaryFolder.url + "/itemResources_%1".arg(new Date().getTime().toString())
+    property int exportProgress: 0
+
+    // add a mapView component
     MapView {
         id: mapView
         anchors.fill: parent
+
+        Map {
+            id: map
+            initBasemapStyle: Enums.BasemapStyleArcGISStreetsNight
+            initialViewpoint: ViewpointCenter {
+                id: viewpoint
+                Point {
+                    x: -117.181
+                    y: 34.049
+                    spatialReference: SpatialReference { wkid: 4326 }
+                }
+                targetScale: 1e4
+            }
+        }
+
+
+
+        GraphicsOverlay {
+            id: graphicsOverlay
+
+            Graphic {
+                id: exportAreaGraphic
+                symbol: SimpleLineSymbol {
+                    style: Enums.SimpleLineSymbolStyleSolid
+                    color: "green"
+                    width: 3
+                }
+            }
+        }
 
         Component.onCompleted: {
             // Set and keep the focus on MapView to enable keyboard navigation
             forceActiveFocus();
         }
+    }
 
-        Map {
-            initBasemapStyle: Enums.BasemapStyleArcGISTopographic
+    Rectangle {
+        id: exportProgressWindow
+        anchors.centerIn: parent
+
+        color: "white"
+        visible: false
+
+        border {
+            color: "black"
+            width: 2
+        }
+
+        Column {
+            id: exportProgressColumn
+            anchors.centerIn: parent
+            spacing: 10
+
+            BusyIndicator {
+                id: busyIndicator
+                anchors.horizontalCenter: parent.horizontalCenter
+            }
+
+            Text {
+                id: statusText
+                anchors.horizontalCenter: parent.horizontalCenter
+                text: "Export in progress..."
+                font.pixelSize: 16
+            }
+
+            Text {
+                id: progressText
+                anchors.horizontalCenter: parent.horizontalCenter
+                text: exportProgress + "% Completed"
+                font.pixelSize: 16
+            }
+
+            onWidthChanged: {
+                exportProgressWindow.width = exportProgressColumn.width + 20
+            }
+
+            onHeightChanged: {
+                exportProgressWindow.height = exportProgressColumn.height + 20
+            }
+        }
+    }
+
+    // Create an extent rectangle for selecting the offline area
+    Rectangle {
+        id: extentRectangle
+        anchors.centerIn: parent
+
+        width: parent.width - parent.width * 0.1
+        height: parent.height - parent.height * 0.25
+        color: "transparent"
+        border {
+            color: "red"
+            width: 3
+        }
+    }
+
+    Button {
+        id: button
+        width: buttonImage.width + buttonText.width + (buttonTextRow.spacing * 2)
+
+        Row {
+            id: buttonTextRow
+            anchors.fill: parent
+            layoutDirection: Qt.LeftToRight
+            spacing: 5
+            Image {
+                id: buttonImage
+                width: button.height
+                height: button.height
+                anchors.verticalCenter: parent.verticalCenter
+                source: "qrc:/Samples/Layers/ExportVectorTiles/download.png"
+            }
+
+            Text {
+                id: buttonText
+                text: "Export area"
+                anchors.verticalCenter: parent.verticalCenter
+            }
+        }
+        anchors {
+            bottom: parent.bottom
+            bottomMargin: parent.height * .05
+            horizontalCenter: parent.horizontalCenter
+        }
+
+        onClicked: {
+            startExport(extentRectangle.x, (extentRectangle.y + extentRectangle.height), (extentRectangle.x + extentRectangle.width), extentRectangle.y);
+            extentRectangle.visible = false;
+            button.visible = false;
+            exportProgressWindow.visible = true;
+            statusText.text = "Exporting vector tiles";
+        }
+    }
+
+    function startExport(xSW, ySW, xNE, yNE) {
+        const vectorTiledLayer = map.basemap.baseLayers.get(0);
+        if (vectorTiledLayer.layerType !== Enums.LayerTypeArcGISVectorTiledLayer)
+            return;
+
+        const pointSW = mapView.screenToLocation(xSW, ySW);
+        const pointNE = mapView.screenToLocation(xNE, yNE);
+        const extent = ArcGISRuntimeEnvironment.createObject("Envelope", {
+                                                                 xMin: pointSW.x,
+                                                                 xMax: pointNE.x,
+                                                                 yMin: pointNE.y,
+                                                                 yMax: pointSW.y
+                                                             });
+        const exportArea = GeometryEngine.project(extent, vectorTiledLayer.spatialReference);
+        extentRectangle.visible = false;
+        exportAreaGraphic.geometry = exportArea;
+
+        exportVectorTilesTask.url = vectorTiledLayer.url;
+        exportVectorTilesTask.createDefaultExportVectorTilesParameters(exportArea, mapView.mapScale * 0.1);
+    }
+
+    ExportVectorTilesTask {
+        id: exportVectorTilesTask
+
+        onCreateDefaultExportVectorTilesParametersStatusChanged: {
+
+            console.log(vectorTileCachePath);
+            console.log(itemResourcePath);
+
+            if (createDefaultExportVectorTilesParametersStatus !== Enums.TaskStatusCompleted)
+                return;
+
+            defaultExportVectorTilesParameters.esriVectorTilesDownloadOption = Enums.EsriVectorTilesDownloadOptionUseReducedFontsService;
+            const exportVectorTilesJob = exportVectorTilesWithStyleResources(defaultExportVectorTilesParameters, vectorTileCachePath, itemResourcePath);
+
+            exportVectorTilesJob.resultChanged.connect(() => {
+                                                           if (exportVectorTilesJob.result !== null) {
+                                                               const exportedVectorTiledLayer = ArcGISRuntimeEnvironment.createObject("ArcGISVectorTiledLayer", {
+                                                                                                                                          vectorTileCache: exportVectorTilesJob.result.vectorTileCache,
+                                                                                                                                          itemResourceCache: exportVectorTilesJob.result.itemResourceCache
+                                                                                                                                      });
+                                                               const basemap = ArcGISRuntimeEnvironment.createObject("Basemap");
+                                                               basemap.baseLayers.append(exportedVectorTiledLayer);
+                                                               map.basemap = basemap;
+                                                               exportProgressWindow.visible = false;
+                                                           }
+                                                       });
+
+            exportVectorTilesJob.progressChanged.connect(() => {
+                                                             console.log(exportVectorTilesJob.progress);
+                                                             exportProgress = exportVectorTilesJob.progress;
+                                                         });
+            console.log(exportVectorTilesJob.start());
         }
     }
 }
+
