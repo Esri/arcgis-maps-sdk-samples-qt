@@ -67,10 +67,10 @@ void ExportVectorTiles::setMapView(MapQuickView* mapView)
   m_graphicsOverlay = new GraphicsOverlay(this);
   m_mapView->graphicsOverlays()->append(m_graphicsOverlay);
 
-  m_downloadAreaGraphic = new Graphic(this);
-  m_downloadAreaGraphic->setSymbol(new SimpleLineSymbol(SimpleLineSymbolStyle::Solid, Qt::green, 3, this));
+  m_exportAreaGraphic = new Graphic(this);
+  m_exportAreaGraphic->setSymbol(new SimpleLineSymbol(SimpleLineSymbolStyle::Solid, Qt::green, 3, this));
 
-  m_graphicsOverlay->graphics()->append(m_downloadAreaGraphic);
+  m_graphicsOverlay->graphics()->append(m_exportAreaGraphic);
 
   emit mapViewChanged();
 }
@@ -89,7 +89,7 @@ void ExportVectorTiles::startExport(double xSW, double ySW, double xNE, double y
   const Envelope extent = Envelope(corner1, corner2);
   const Envelope exportArea = GeometryEngine::project(extent, vectorTiledLayer->spatialReference());
 
-  m_downloadAreaGraphic->setGeometry(exportArea);
+  m_exportAreaGraphic->setGeometry(exportArea);
 
   const QString vectorTileCachePath = m_tempDir.path() + ("/vectorTiles.vtpk");
   const QString itemResourcePath = m_tempDir.path() + "/itemResources";
@@ -108,15 +108,15 @@ void ExportVectorTiles::startExport(double xSW, double ySW, double xNE, double y
         VectorTileCache* vectorTileCache = m_exportJob->result()->vectorTileCache();
         ItemResourceCache* itemResourceCache = m_exportJob->result()->itemResourceCache();
 
-        ArcGISVectorTiledLayer* downloadedLayer = new ArcGISVectorTiledLayer(vectorTileCache, itemResourceCache, this);
-        m_map->setBasemap(new Basemap(downloadedLayer, this));
+        ArcGISVectorTiledLayer* exportedLayer = new ArcGISVectorTiledLayer(vectorTileCache, itemResourceCache, this);
+        m_map->setBasemap(new Basemap(exportedLayer, this));
       }
     });
 
     connect(m_exportJob, &Job::progressChanged, this, [this]()
     {
-      m_downloadProgress = m_exportJob->progress();
-      emit downloadProgressChanged();
+      m_exportProgress = m_exportJob->progress();
+      emit exportProgressChanged();
     });
 
     m_exportJob->start();
@@ -125,9 +125,9 @@ void ExportVectorTiles::startExport(double xSW, double ySW, double xNE, double y
   exportTask->createDefaultExportVectorTilesParameters(exportArea, m_mapView->mapScale() * 0.1);
 }
 
-int ExportVectorTiles::downloadProgress() const
+int ExportVectorTiles::exportProgress() const
 {
-  return m_downloadProgress;
+  return m_exportProgress;
 }
 
 void ExportVectorTiles::cancelExport()

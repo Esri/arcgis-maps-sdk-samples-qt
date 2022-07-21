@@ -66,7 +66,7 @@ Item {
             Text {
                 id: progressText
                 anchors.horizontalCenter: parent.horizontalCenter
-                text: model.downloadProgress + "% Completed"
+                text: model.exportProgress + "% Completed"
                 font.pixelSize: 16
             }
 
@@ -114,7 +114,7 @@ Item {
 
             Text {
                 id: buttonText
-                text: "Download area"
+                text: "Export area"
                 anchors.verticalCenter: parent.verticalCenter
             }
         }
@@ -139,11 +139,11 @@ Item {
         mapView: view
         property bool exportInProgress: false
 
-        onDownloadProgressChanged: {
-            if (!exportInProgress && downloadProgress !== 100) {
+        onExportProgressChanged: {
+            if (!exportInProgress && exportProgress !== 100) {
                 statusText.text = "Exporting vector tiles";
                 exportInProgress = true;
-            } else if (downloadProgress === 100) {
+            } else if (exportProgress === 100) {
                 exportProgressWindow.visible = false
             }
         }
