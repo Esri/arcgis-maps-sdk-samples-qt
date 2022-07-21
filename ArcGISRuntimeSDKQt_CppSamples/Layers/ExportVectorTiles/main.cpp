@@ -33,7 +33,7 @@ int main(int argc, char *argv[])
   app.setApplicationName(QString("ExportVectorTiles - C++"));
 
   // Access to Esri location services requires an API key. This can be copied below or used as a command line argument.
-  const QString apiKey = QString("AAPKca0387ea99ad4150a6c1cf4c37fcea19LhHwSHsMga7ZkTIxq1S2Rq_ZjP626c-BNmQvB2ewzYwTSRCfFO419RyNsoN4Fafs");
+  const QString apiKey = QString("");
   setAPIKey(app, apiKey);
 
   // Initialize the sample
