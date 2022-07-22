@@ -179,11 +179,11 @@ Rectangle {
         const pointSW = mapView.screenToLocation(xSW, ySW);
         const pointNE = mapView.screenToLocation(xNE, yNE);
         const extent = ArcGISRuntimeEnvironment.createObject("Envelope", {
-                                                                 xMin: pointSW.x,
-                                                                 xMax: pointNE.x,
-                                                                 yMin: pointNE.y,
-                                                                 yMax: pointSW.y
-                                                             });
+            xMin: pointSW.x,
+            xMax: pointNE.x,
+            yMin: pointNE.y,
+            yMax: pointSW.y
+        });
         const exportArea = GeometryEngine.project(extent, vectorTiledLayer.spatialReference);
         extentRectangle.visible = false;
         exportAreaGraphic.geometry = exportArea;
@@ -208,18 +208,18 @@ Rectangle {
             const exportVectorTilesJob = exportVectorTilesWithStyleResources(defaultExportVectorTilesParameters, vectorTileCachePath, itemResourcePath);
 
             exportVectorTilesJob.resultChanged.connect(() => {
-                                                           if (exportVectorTilesJob.result !== null) {
-                                                               // Create a vector tiled layer when the download is completed
-                                                               const exportedVectorTiledLayer = ArcGISRuntimeEnvironment.createObject("ArcGISVectorTiledLayer", {
-                                                                                                                                          vectorTileCache: exportVectorTilesJob.result.vectorTileCache,
-                                                                                                                                          itemResourceCache: exportVectorTilesJob.result.itemResourceCache
-                                                                                                                                      });
-                                                               const basemap = ArcGISRuntimeEnvironment.createObject("Basemap");
-                                                               basemap.baseLayers.append(exportedVectorTiledLayer);
-                                                               map.basemap = basemap;
-                                                               exportProgressWindow.visible = false;
-                                                           }
-                                                       });
+                if (exportVectorTilesJob.result !== null) {
+                    // Create a vector tiled layer when the download is completed
+                    const exportedVectorTiledLayer = ArcGISRuntimeEnvironment.createObject("ArcGISVectorTiledLayer", {
+                        vectorTileCache: exportVectorTilesJob.result.vectorTileCache,
+                        itemResourceCache: exportVectorTilesJob.result.itemResourceCache
+                    });
+                    const basemap = ArcGISRuntimeEnvironment.createObject("Basemap");
+                    basemap.baseLayers.append(exportedVectorTiledLayer);
+                    map.basemap = basemap;
+                    exportProgressWindow.visible = false;
+                }
+            });
 
             // Display the download progress to the user
             exportVectorTilesJob.progressChanged.connect(() => {
