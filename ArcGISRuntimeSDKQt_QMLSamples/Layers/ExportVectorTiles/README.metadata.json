@@ -1,16 +1,32 @@
 {
-    "category": "TODO",
-    "description": "TODO",
+    "category": "Layers",
+    "description": "Export tiles from an online vector tile service.",
     "ignore": false,
     "images": [
         "screenshot.png"
     ],
     "keywords": [
-        "TODO"
+        "cache",
+        "download",
+        "offline",
+        "vector",
+        "ExportVectorTilesJob",
+        "ExportVectorTilesParameters",
+        "ExportVectorTilesResult",
+        "ExportVectorTilesTask",
+        "ItemResourceCache",
+        "VectorTileCache",
+        "ArcGISVectorTiledLayer"
     ],
     "redirect_from": "",
     "relevant_apis": [
-        "TODO"
+        "ExportVectorTilesJob",
+        "ExportVectorTilesParameters",
+        "ExportVectorTilesResult",
+        "ExportVectorTilesTask",
+        "ItemResourceCache",
+        "VectorTileCache",
+        "ArcGISVectorTiledLayer"
     ],
     "snippets": [
         "ExportVectorTiles.qml"

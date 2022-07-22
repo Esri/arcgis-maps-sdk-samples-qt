@@ -1,31 +1,42 @@
 # Export vector tiles
 
-This sample demonstrates how to export tiles from an online vector tile serviceX.
-This sample demonstrates ...
-This is **why** you would do it this way ...
+Export tiles from an online vector tile service.
 
 ![](screenshot.png)
 
+## Use case
+
+Field workers with limited network connectivity can use exported vector tiles as a basemap for use while offline.
+
 ## How to use the sample
-e.g. Use the input controls to define a ... Click the "Go" button to ...
+
+When the vector tiled layer loads, zoom in to the extent you want to export. The red box shows the extent that will be exported. Click the "Export Vector Tiles" button to start the job. When finished, a dialog will show the exported result as a new basemap.
 
 ## How it works
-e.g. In the `GeoView.Tapped` event, features in the `Map` are selected using an `Envelope` defined by the user's tap location ...
+
+1. Create an `ArcGISVectorTiledLayer` from the map's base layers.
+2. Create an `ExportVectorTilesTask` using the vector tiled layer's URL.
+3. Create default `ExportVectorTilesParameters` from the task, specifying extent and maximum scale.
+4. Create a `ExportVectorTilesJob` from the task using the parameters, and specifying a vector tile cache path and an item resource path. The resource path is required if you want to export the tiles with the style.
+5. Start the job, and once it completes successfully, get the resulting `ExportVectorTilesResult`.
+6. Get the `VectorTileCache` and `ItemResourceCache` from the result to create an `ArcGISVectorTiledLayer` that can be displayed to the map view.
 
 ## Relevant API
- - ClassName1
- - MethodName
 
-## Offline data
-Read more about how to set up the sample's offline data [here](http://links.esri.com/ArcGISRuntimeQtSamples).
-
-Link | Local Location
----------|-------|
-|[San Francisco Streets TPK](https://www.arcgis.com/home/item.html?id=3f1bbf0ec70b409a975f5c91f363fe7d)| `<userhome>`/ArcGIS/Runtime/Data/tpk/SanFrancisco.tpk |
+* ArcGISVectorTiledLayer
+* ExportVectorTilesJob
+* ExportVectorTilesParameters
+* ExportVectorTilesResult
+* ExportVectorTilesTask
+* ItemResourceCache
+* VectorTileCache
 
 ## Additional information
-A standard level license is required to ...
+
+**NOTE:** Downloading Tiles for offline use requires authentication with the web map's server. To use this sample, you will require an [ArcGIS Online account](https://www.arcgis.com/).
+
+Vector tiles have high drawing performance and smaller file size compared to regular tiled layers, due to consisting solely of points, lines, and polygons. However, in ArcGIS Runtime SDK they cannot be displayed in scenes. Visit the [ArcGIS Online Developer's portal](https://developers.arcgis.com/java/latest/guide/layer-types-described.htm#ESRI_SECTION1_0A26749D5D094DAAA9DC12B2F9559E9E) to Learn more about the characteristics of ArcGIS vector tiled layers.
 
 ## Tags
-Routing, Network analysis, Geocode
 
+cache, download, offline, vector
