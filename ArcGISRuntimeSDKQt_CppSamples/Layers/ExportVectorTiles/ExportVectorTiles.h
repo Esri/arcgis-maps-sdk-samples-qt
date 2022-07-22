@@ -46,7 +46,6 @@ public:
   static void init();
 
   Q_INVOKABLE void startExport(double xSW, double ySW, double xNE, double yNE);
-  Q_INVOKABLE void cancelExport();
 
 signals:
   void mapViewChanged();
@@ -59,7 +58,6 @@ private:
 
   Esri::ArcGISRuntime::Map* m_map = nullptr;
   Esri::ArcGISRuntime::MapQuickView* m_mapView = nullptr;
-  QScopedPointer<QObject> m_graphicsParent;
   Esri::ArcGISRuntime::Graphic* m_exportAreaGraphic = nullptr;
   Esri::ArcGISRuntime::GraphicsOverlay* m_graphicsOverlay = nullptr;
   Esri::ArcGISRuntime::ExportVectorTilesJob* m_exportJob = nullptr;

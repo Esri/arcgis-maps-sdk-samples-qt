@@ -27,7 +27,6 @@
 #include "GraphicsOverlay.h"
 #include "Map.h"
 #include "MapQuickView.h"
-#include "Symbol.h"
 #include "SimpleLineSymbol.h"
 
 #include <QTemporaryDir>
@@ -138,9 +137,4 @@ void ExportVectorTiles::startExport(double xSW, double ySW, double xNE, double y
 int ExportVectorTiles::exportProgress() const
 {
   return m_exportProgress;
-}
-
-void ExportVectorTiles::cancelExport()
-{
-  m_exportJob->cancel();
 }
