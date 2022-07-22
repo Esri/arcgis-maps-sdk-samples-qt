@@ -138,6 +138,7 @@
 #include "EditKmlGroundOverlay.h"
 #include "EditWithBranchVersioning.h"
 #include "ExportTiles.h"
+#include "ExportVectorTiles.h"
 #include "ExtrudeGraphics.h"
 #include "Feature_Collection_Layer.h"
 #include "FeatureCollectionLayerFromPortal.h"
@@ -448,6 +449,7 @@ void registerCppSampleClasses()
   EditKmlGroundOverlay::init();
   EditWithBranchVersioning::init();
   ExportTiles::init();
+  ExportVectorTiles::init();
   ExtrudeGraphics::init();
   Feature_Collection_Layer::init();
   FeatureCollectionLayerFromPortal::init();

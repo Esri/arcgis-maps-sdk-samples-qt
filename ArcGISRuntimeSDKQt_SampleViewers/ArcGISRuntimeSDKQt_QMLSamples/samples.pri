@@ -110,6 +110,7 @@ RESOURCES += \
     "$$SAMPLEPATHQML/Layers/DisplaySubtypeFeatureLayer/DisplaySubtypeFeatureLayer.qrc" \
     "$$SAMPLEPATHQML/Layers/DisplayWfsLayer/DisplayWfsLayer.qrc" \
     "$$SAMPLEPATHQML/Layers/ExportTiles/ExportTiles.qrc" \
+    "$$SAMPLEPATHQML/Layers/ExportVectorTiles/ExportVectorTiles.qrc" \
     "$$SAMPLEPATHQML/Layers/Feature_Collection_Layer/Feature_Collection_Layer.qrc" \
     "$$SAMPLEPATHQML/Layers/FeatureCollectionLayerFromPortal/FeatureCollectionLayerFromPortal.qrc" \
     "$$SAMPLEPATHQML/Layers/FeatureCollectionLayerQuery/FeatureCollectionLayerQuery.qrc" \

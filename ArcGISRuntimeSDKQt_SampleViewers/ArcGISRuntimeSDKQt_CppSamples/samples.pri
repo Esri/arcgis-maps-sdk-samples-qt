@@ -112,6 +112,7 @@ INCLUDEPATH += \
     "$$SAMPLEPATHCPP/Layers/DisplaySubtypeFeatureLayer" \
     "$$SAMPLEPATHCPP/Layers/DisplayWfsLayer" \
     "$$SAMPLEPATHCPP/Layers/ExportTiles" \
+    "$$SAMPLEPATHCPP/Layers/ExportVectorTiles" \
     "$$SAMPLEPATHCPP/Layers/Feature_Collection_Layer" \
     "$$SAMPLEPATHCPP/Layers/FeatureCollectionLayerFromPortal" \
     "$$SAMPLEPATHCPP/Layers/FeatureCollectionLayerQuery" \
@@ -318,6 +319,7 @@ HEADERS += \
     "$$SAMPLEPATHCPP/Layers/DisplaySubtypeFeatureLayer/DisplaySubtypeFeatureLayer.h" \
     "$$SAMPLEPATHCPP/Layers/DisplayWfsLayer/DisplayWfsLayer.h" \
     "$$SAMPLEPATHCPP/Layers/ExportTiles/ExportTiles.h" \
+    "$$SAMPLEPATHCPP/Layers/ExportVectorTiles/ExportVectorTiles.h" \
     "$$SAMPLEPATHCPP/Layers/Feature_Collection_Layer/Feature_Collection_Layer.h" \
     "$$SAMPLEPATHCPP/Layers/FeatureCollectionLayerFromPortal/FeatureCollectionLayerFromPortal.h" \
     "$$SAMPLEPATHCPP/Layers/FeatureCollectionLayerQuery/FeatureCollectionLayerQuery.h" \
@@ -527,6 +529,7 @@ SOURCES += \
     "$$SAMPLEPATHCPP/Layers/DisplaySubtypeFeatureLayer/DisplaySubtypeFeatureLayer.cpp" \
     "$$SAMPLEPATHCPP/Layers/DisplayWfsLayer/DisplayWfsLayer.cpp" \
     "$$SAMPLEPATHCPP/Layers/ExportTiles/ExportTiles.cpp" \
+    "$$SAMPLEPATHCPP/Layers/ExportVectorTiles/ExportVectorTiles.cpp" \
     "$$SAMPLEPATHCPP/Layers/Feature_Collection_Layer/Feature_Collection_Layer.cpp" \
     "$$SAMPLEPATHCPP/Layers/FeatureCollectionLayerFromPortal/FeatureCollectionLayerFromPortal.cpp" \
     "$$SAMPLEPATHCPP/Layers/FeatureCollectionLayerQuery/FeatureCollectionLayerQuery.cpp" \
@@ -733,6 +736,7 @@ RESOURCES += \
     "$$SAMPLEPATHCPP/Layers/DisplaySubtypeFeatureLayer/DisplaySubtypeFeatureLayer.qrc" \
     "$$SAMPLEPATHCPP/Layers/DisplayWfsLayer/DisplayWfsLayer.qrc" \
     "$$SAMPLEPATHCPP/Layers/ExportTiles/ExportTiles.qrc" \
+    "$$SAMPLEPATHCPP/Layers/ExportVectorTiles/ExportVectorTiles.qrc" \
     "$$SAMPLEPATHCPP/Layers/Feature_Collection_Layer/Feature_Collection_Layer.qrc" \
     "$$SAMPLEPATHCPP/Layers/FeatureCollectionLayerFromPortal/FeatureCollectionLayerFromPortal.qrc" \
     "$$SAMPLEPATHCPP/Layers/FeatureCollectionLayerQuery/FeatureCollectionLayerQuery.qrc" \
