@@ -67,6 +67,7 @@ void ExportVectorTiles::setMapView(MapQuickView* mapView)
   m_graphicsOverlay = new GraphicsOverlay(this);
   m_mapView->graphicsOverlays()->append(m_graphicsOverlay);
 
+  // Create the graphic that will be used to show the export extent
   m_exportAreaGraphic = new Graphic(this);
   m_exportAreaGraphic->setSymbol(new SimpleLineSymbol(SimpleLineSymbolStyle::Solid, Qt::green, 3, this));
 
@@ -80,6 +81,7 @@ void ExportVectorTiles::startExport(double xSW, double ySW, double xNE, double y
   if (m_map->basemap()->baseLayers()->first()->layerType() != LayerType::ArcGISVectorTiledLayer)
     return;
 
+  // Get the first layer of the basemap baselayers as a vector tiled layer for export
   ArcGISVectorTiledLayer* vectorTiledLayer = static_cast<ArcGISVectorTiledLayer*>(m_map->basemap()->baseLayers()->first());
   ExportVectorTilesTask* exportTask = new ExportVectorTilesTask(vectorTiledLayer->url(), this);
 
@@ -91,14 +93,20 @@ void ExportVectorTiles::startExport(double xSW, double ySW, double xNE, double y
 
   m_exportAreaGraphic->setGeometry(exportArea);
 
-  const QString vectorTileCachePath = m_tempDir.path() + ("/vectorTiles.vtpk");
-  const QString itemResourcePath = m_tempDir.path() + "/itemResources";
-
+  // Create an async connection for when the default export parameters are created
   connect(exportTask, &ExportVectorTilesTask::createDefaultExportVectorTilesParametersCompleted, this,
-          [exportTask, vectorTileCachePath, itemResourcePath, this](QUuid, ExportVectorTilesParameters exportParameters)
+          [exportTask, this](QUuid, ExportVectorTilesParameters exportParameters)
   {
+    // Using the reduced fonts service will reduce the download size of a vtpk by around 80 Mb
+    // It is useful for taking the basemap offline but not recommended if you plan to later upload the vtpk
     exportParameters.setEsriVectorTilesDownloadOption(EsriVectorTilesDownloadOption::UseReducedFontsService);
 
+    // Create a path to store the vector tile package
+    const QString vectorTileCachePath = m_tempDir.path() + "/vectorTiles.vtpk";
+    // Create a path to store the styling resources (in this case, the night mode version of the layer)
+    const QString itemResourcePath = m_tempDir.path() + "/itemResources";
+
+    // Create a job that will download the vector tiles to the given paths
     m_exportJob = exportTask->exportVectorTiles(exportParameters, vectorTileCachePath, itemResourcePath);
 
     connect(m_exportJob, &ExportVectorTilesJob::jobDone, this, [this]()
@@ -108,6 +116,7 @@ void ExportVectorTiles::startExport(double xSW, double ySW, double xNE, double y
         VectorTileCache* vectorTileCache = m_exportJob->result()->vectorTileCache();
         ItemResourceCache* itemResourceCache = m_exportJob->result()->itemResourceCache();
 
+        // Create a vector tiled layer when the download is completed
         ArcGISVectorTiledLayer* exportedLayer = new ArcGISVectorTiledLayer(vectorTileCache, itemResourceCache, this);
         m_map->setBasemap(new Basemap(exportedLayer, this));
       }
@@ -122,6 +131,7 @@ void ExportVectorTiles::startExport(double xSW, double ySW, double xNE, double y
     m_exportJob->start();
   });
 
+  // Instantiate export parameters to create the export job with
   exportTask->createDefaultExportVectorTilesParameters(exportArea, m_mapView->mapScale() * 0.1);
 }
 

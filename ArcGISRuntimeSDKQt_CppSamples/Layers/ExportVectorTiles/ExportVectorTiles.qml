@@ -95,6 +95,7 @@ Item {
         visible: button.enabled
     }
 
+    // Button to start the download
     Button {
         id: button
         width: buttonImage.width + buttonText.width + (buttonTextRow.spacing * 2)

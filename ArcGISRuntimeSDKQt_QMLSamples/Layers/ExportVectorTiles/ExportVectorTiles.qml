@@ -26,7 +26,9 @@ Rectangle {
     width: 800
     height: 600
 
+    // Create a path to store the vector tile package
     readonly property url vectorTileCachePath: System.temporaryFolder.url + "/vectorTiles_%1.vtpk".arg(new Date().getTime().toString())
+    // Create a path to store the styling resources (in this case, the night mode version of the layer)
     readonly property url itemResourcePath: System.temporaryFolder.url + "/itemResources_%1".arg(new Date().getTime().toString())
     property int exportProgress: 0
 
@@ -173,6 +175,7 @@ Rectangle {
         if (vectorTiledLayer.layerType !== Enums.LayerTypeArcGISVectorTiledLayer)
             return;
 
+        // Create an envelope from the QML rectangle corners
         const pointSW = mapView.screenToLocation(xSW, ySW);
         const pointNE = mapView.screenToLocation(xNE, yNE);
         const extent = ArcGISRuntimeEnvironment.createObject("Envelope", {
@@ -186,6 +189,8 @@ Rectangle {
         exportAreaGraphic.geometry = exportArea;
 
         exportVectorTilesTask.url = vectorTiledLayer.url;
+
+        // Instantiate export parameters to create the export job with
         exportVectorTilesTask.createDefaultExportVectorTilesParameters(exportArea, mapView.mapScale * 0.1);
     }
 
@@ -193,18 +198,18 @@ Rectangle {
         id: exportVectorTilesTask
 
         onCreateDefaultExportVectorTilesParametersStatusChanged: {
-
-            console.log(vectorTileCachePath);
-            console.log(itemResourcePath);
-
             if (createDefaultExportVectorTilesParametersStatus !== Enums.TaskStatusCompleted)
                 return;
 
+            // Using the reduced fonts service will reduce the download size of a vtpk by around 80 Mb
+            // It is useful for taking the basemap offline but not recommended if you plan to later upload the vtpk
             defaultExportVectorTilesParameters.esriVectorTilesDownloadOption = Enums.EsriVectorTilesDownloadOptionUseReducedFontsService;
+
             const exportVectorTilesJob = exportVectorTilesWithStyleResources(defaultExportVectorTilesParameters, vectorTileCachePath, itemResourcePath);
 
             exportVectorTilesJob.resultChanged.connect(() => {
                                                            if (exportVectorTilesJob.result !== null) {
+                                                               // Create a vector tiled layer when the download is completed
                                                                const exportedVectorTiledLayer = ArcGISRuntimeEnvironment.createObject("ArcGISVectorTiledLayer", {
                                                                                                                                           vectorTileCache: exportVectorTilesJob.result.vectorTileCache,
                                                                                                                                           itemResourceCache: exportVectorTilesJob.result.itemResourceCache
@@ -216,11 +221,13 @@ Rectangle {
                                                            }
                                                        });
 
+            // Display the download progress to the user
             exportVectorTilesJob.progressChanged.connect(() => {
-                                                             console.log(exportVectorTilesJob.progress);
                                                              exportProgress = exportVectorTilesJob.progress;
                                                          });
-            console.log(exportVectorTilesJob.start());
+
+            // Start the export job once export parameters have been created
+            exportVectorTilesJob.start();
         }
     }
 }
