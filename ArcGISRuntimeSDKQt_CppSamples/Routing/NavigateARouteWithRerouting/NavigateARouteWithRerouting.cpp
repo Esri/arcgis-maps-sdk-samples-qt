@@ -29,10 +29,13 @@
 #include "MapQuickView.h"
 #include "NavigationTypes.h"
 #include "Point.h"
+#include "ReroutingParameters.h"
 #include "Route.h"
+#include "RouteParameters.h"
 #include "RouteResult.h"
 #include "RouteTask.h"
 #include "RouteTracker.h"
+#include "RouteTrackerLocationDataSource.h"
 #include "SimpleMarkerSymbol.h"
 #include "SimulatedLocationDataSource.h"
 #include "SimulationParameters.h"
@@ -53,7 +56,7 @@ using namespace Esri::ArcGISRuntime;
 namespace  {
 const QUrl routeTaskUrl("https://sampleserver6.arcgisonline.com/arcgis/rest/services/NetworkAnalysis/SanDiego/NAServer/Route");
 const Point conventionCenterPoint(-117.160386727, 32.706608, SpatialReference::wgs84());
-const Point memorialPoint(-117.173034, 32.712327, SpatialReference::wgs84());
+//const Point memorialPoint(-117.173034, 32.712327, SpatialReference::wgs84());
 const Point aerospaceMuseumPoint(-117.147230, 32.730467, SpatialReference::wgs84());
 }
 
@@ -97,7 +100,7 @@ void NavigateARouteWithRerouting::setMapView(MapQuickView* mapView)
   // add graphics for the predefined stops
   SimpleMarkerSymbol* stopSymbol = new SimpleMarkerSymbol(SimpleMarkerSymbolStyle::Diamond, Qt::red, 20, this);
   m_routeOverlay->graphics()->append(new Graphic(conventionCenterPoint, stopSymbol, this));
-  m_routeOverlay->graphics()->append(new Graphic(memorialPoint, stopSymbol, this));
+//  m_routeOverlay->graphics()->append(new Graphic(memorialPoint, stopSymbol, this));
   m_routeOverlay->graphics()->append(new Graphic(aerospaceMuseumPoint, stopSymbol, this));
 
   emit mapViewChanged();
@@ -140,10 +143,10 @@ void NavigateARouteWithRerouting::connectRouteTaskSignals()
     defaultParameters.setOutputSpatialReference(SpatialReference::wgs84());
 
     Stop stop1(conventionCenterPoint);
-    Stop stop2(memorialPoint);
+//    Stop stop2(memorialPoint);
     Stop stop3(aerospaceMuseumPoint);
 
-    QList<Stop> stopsList = {stop1, stop2, stop3};
+    QList<Stop> stopsList = {stop1, /*stop2,*/ stop3};
     defaultParameters.setStops(stopsList);
 
     m_routeTask->solveRoute(defaultParameters);
@@ -172,6 +175,11 @@ bool NavigateARouteWithRerouting::recenterEnabled() const
   return m_recenterEnabled;
 }
 
+bool NavigateARouteWithRerouting::reroutingEnabled() const
+{
+  return m_recenterEnabled;
+}
+
 void NavigateARouteWithRerouting::startNavigation()
 {
   // disable the navigation button
@@ -183,6 +191,17 @@ void NavigateARouteWithRerouting::startNavigation()
 
   // create a route tracker
   m_routeTracker = new RouteTracker(m_routeResult, 0, this);
+//  const RouteParameters* routeParameters = new RouteParameters(this);
+
+//  ReroutingParameters* reroutingParams = new ReroutingParameters(m_routeTask, m_routeTask->createDefaultParameters(), this);
+//  m_routeTracker->enableRerouting(m_routeTask, reroutingParams, ReroutingStrategy::ToNextWaypoint, false);
+  //  RouteParameters* routeParameters = new RouteParameters(this);
+  //  m_rerouteParams->setReturnStops(true);
+  //  m_rerouteParams->setReturnDirections(true);
+  //  m_rerouteParams->setReturnRoutes(true);
+  //  m_rerouteParams->setOutputSpatialReference(SpatialReference::wgs84());
+
+
   connectRouteTrackerSignals();
 
   // enable the RouteTracker to know when the QTextToSpeech engine is ready
@@ -203,8 +222,25 @@ void NavigateARouteWithRerouting::startNavigation()
     m_routeTracker->trackLocation(location);
   });
 
+  connect(m_routeTracker, &RouteTracker::enableReroutingCompleted, this, [this](QUuid)
+  {
+    emit reroutingEnabledChanged();
+  });
+
   // turn on map view's navigation mode
   m_mapView->locationDisplay()->setAutoPanMode(LocationDisplayAutoPanMode::Navigation);
+  RouteTrackerLocationDataSource* dataSource = new RouteTrackerLocationDataSource(m_routeTracker, this);
+  m_mapView->locationDisplay()->setDataSource(dataSource);
+  m_routeParameters.setReturnStops(true);
+  m_routeParameters.setReturnDirections(true);
+  m_routeParameters.setReturnRoutes(true);
+  m_routeParameters.setOutputSpatialReference(SpatialReference::wgs84());
+
+
+  ReroutingParameters* rerouteParameters = new ReroutingParameters(m_routeTask, m_routeParameters, this);
+  rerouteParameters->setStrategy(ReroutingStrategy::ToNextWaypoint);
+  rerouteParameters->setVisitFirstStopOnStart(false);
+  m_routeTracker->enableRerouting(rerouteParameters);
 
   // add a data source for the location display
   SimulationParameters* simulationParameters = new SimulationParameters(QDateTime::currentDateTime(), 40.0, 0.0, 0.0, this); // set speed
