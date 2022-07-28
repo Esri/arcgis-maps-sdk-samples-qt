@@ -11,7 +11,7 @@
         "offline",
         "vector",
         "vector tiled layer",
-        "ArcGISVectorTiledLayer"
+        "ArcGISVectorTiledLayer",
         "ExportVectorTilesJob",
         "ExportVectorTilesParameters",
         "ExportVectorTilesResult",

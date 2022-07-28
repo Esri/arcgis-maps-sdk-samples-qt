@@ -20,7 +20,7 @@
     ],
     "redirect_from": "",
     "relevant_apis": [
-        "ArcGISVectorTiledLayer"
+        "ArcGISVectorTiledLayer",
         "ExportVectorTilesJob",
         "ExportVectorTilesParameters",
         "ExportVectorTilesResult",
