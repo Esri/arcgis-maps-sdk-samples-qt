@@ -182,7 +182,7 @@ Rectangle {
             yMin: pointNE.y,
             yMax: pointSW.y
         });
-        const exportArea = GeometryEngine.project(extent, vectorTiledLayer.spatialReference);
+        const exportArea = GeometryEngine.normalizeCentralMeridian(GeometryEngine.project(extent, vectorTiledLayer.spatialReference));
         extentRectangle.visible = false;
         exportAreaGraphic.geometry = exportArea;
 

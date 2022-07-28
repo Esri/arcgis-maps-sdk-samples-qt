@@ -88,7 +88,8 @@ void ExportVectorTiles::startExport(double xSW, double ySW, double xNE, double y
   const Point corner1 = m_mapView->screenToLocation(xSW, ySW);
   const Point corner2 = m_mapView->screenToLocation(xNE, yNE);
   const Envelope extent = Envelope(corner1, corner2);
- const Geometry exportArea = GeometryEngine::normalizeCentralMeridian(GeometryEngine::project(extent, vectorTiledLayer->spatialReference()));
+  // Normalize the central meridian to export tiles if the export area crosses the antemeridian
+  const Geometry exportArea = GeometryEngine::normalizeCentralMeridian(GeometryEngine::project(extent, vectorTiledLayer->spatialReference()));
 
   m_exportAreaGraphic->setGeometry(exportArea);
 

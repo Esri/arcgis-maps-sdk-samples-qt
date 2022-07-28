@@ -11,7 +11,7 @@
         "offline",
         "vector",
         "vector tiled layer",
-         "ArcGISVectorTiledLayer"
+        "ArcGISVectorTiledLayer"
         "ExportVectorTilesJob",
         "ExportVectorTilesParameters",
         "ExportVectorTilesResult",
@@ -21,7 +21,7 @@
     ],
     "redirect_from": "",
     "relevant_apis": [
-         "ArcGISVectorTiledLayer",
+        "ArcGISVectorTiledLayer",
         "ExportVectorTilesJob",
         "ExportVectorTilesParameters",
         "ExportVectorTilesResult",
