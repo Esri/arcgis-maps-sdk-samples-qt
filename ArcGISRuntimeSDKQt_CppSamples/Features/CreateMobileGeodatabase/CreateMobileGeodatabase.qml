@@ -31,6 +31,10 @@ Item {
         }
     }
 
+    Button {
+        onClicked: model.test();
+    }
+
     // Declare the C++ instance which creates the scene etc. and supply the view
     CreateMobileGeodatabaseSample {
         id: model

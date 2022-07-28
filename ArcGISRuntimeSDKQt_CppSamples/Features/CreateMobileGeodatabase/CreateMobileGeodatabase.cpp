@@ -20,8 +20,14 @@
 
 #include "CreateMobileGeodatabase.h"
 
+#include "FeatureLayer.h"
+#include "FieldDescription.h"
+#include "FieldDescriptionListModel.h"
+#include "Geodatabase.h"
+#include "GeodatabaseFeatureTable.h"
 #include "Map.h"
 #include "MapQuickView.h"
+#include "TableDescription.h"
 
 using namespace Esri::ArcGISRuntime;
 
@@ -54,6 +60,63 @@ void CreateMobileGeodatabase::setMapView(MapQuickView* mapView)
 
   m_mapView = mapView;
   m_mapView->setMap(m_map);
+  m_mapView->setViewpoint(Viewpoint(39.3238, -77.7332, 10'000));
+
+  connect(m_mapView, &MapQuickView::mouseClicked, this, &CreateMobileGeodatabase::addFeature);
+
+  createGeodatabase();
 
   emit mapViewChanged();
+}
+
+void CreateMobileGeodatabase::createGeodatabase()
+{
+  QString path = m_tempDir.path() + "/LocationHistory.geodatabase";
+  connect(Geodatabase::instance(), &Geodatabase::createCompleted, this, [this](QUuid, Geodatabase* geodatabaseResult)
+  {
+    m_gdb = geodatabaseResult;
+    m_gdb->setParent(this);
+    createTable();
+  });
+  Geodatabase::create(path);
+}
+
+void CreateMobileGeodatabase::createTable()
+{
+  auto tableDescription = new TableDescription("LocationHistory", SpatialReference::wgs84(), GeometryType::Point, this);
+  tableDescription->setHasAttachments(false);
+  tableDescription->setHasM(false);
+  tableDescription->setHasZ(false);
+  tableDescription->fieldDescriptions()->append(new FieldDescription("oid", FieldType::OID));
+  tableDescription->fieldDescriptions()->append(new FieldDescription("collection_timestamp", FieldType::Date));
+
+  connect(m_gdb, &Geodatabase::createTableCompleted, this, [this](QUuid, GeodatabaseFeatureTable* gdbFeatureTableResult)
+  {
+    m_featureTable = gdbFeatureTableResult;
+
+    connect(m_featureTable, &FeatureTable::addFeatureCompleted, this, [this](QUuid, bool)
+    {
+      qDebug() << m_featureTable->numberOfFeatures();
+    });
+
+    FeatureLayer* featureLayer = new FeatureLayer(m_featureTable, this);
+    m_map->operationalLayers()->append(featureLayer);
+  });
+  m_gdb->createTable(tableDescription);
+}
+
+void CreateMobileGeodatabase::test()
+{
+  qDebug() << m_map->operationalLayers()->rowCount();
+  qDebug() << m_map->operationalLayers()->first()->name();
+}
+
+void CreateMobileGeodatabase::addFeature(QMouseEvent mouseEvent)
+{
+  const Point mousePoint = m_mapView->screenToLocation(mouseEvent.x(), mouseEvent.y());
+  QVariantMap attributes = {};
+  attributes.insert("collection_timestamp", QDateTime::currentDateTime());
+  Feature* feature = m_featureTable->createFeature(attributes, mousePoint, this);
+  qDebug() << feature->attributes()->attributeValue("collection_timestamp");
+  m_featureTable->addFeature(feature);
 }

@@ -21,12 +21,17 @@ namespace Esri
 {
 namespace ArcGISRuntime
 {
+class FeatureTable;
+class Geodatabase;
 class Map;
 class MapQuickView;
 }
 }
 
+
 #include <QObject>
+#include <QMouseEvent>
+#include <QTemporaryDir>
 
 class CreateMobileGeodatabase : public QObject
 {
@@ -40,15 +45,24 @@ public:
 
   static void init();
 
+  Q_INVOKABLE void test();
+
 signals:
   void mapViewChanged();
 
 private:
   Esri::ArcGISRuntime::MapQuickView* mapView() const;
   void setMapView(Esri::ArcGISRuntime::MapQuickView* mapView);
+  void createGeodatabase();
+  void createTable();
+  void addFeature(QMouseEvent mouseEvent);
 
   Esri::ArcGISRuntime::Map* m_map = nullptr;
   Esri::ArcGISRuntime::MapQuickView* m_mapView = nullptr;
+  Esri::ArcGISRuntime::FeatureTable* m_featureTable = nullptr;
+  Esri::ArcGISRuntime::Geodatabase* m_gdb = nullptr;
+
+  QTemporaryDir m_tempDir;
 };
 
 #endif // CREATEMOBILEGEODATABASE_H
