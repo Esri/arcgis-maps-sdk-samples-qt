@@ -138,8 +138,6 @@ Rectangle {
 
         Row {
             id: buttonTextRow
-            anchors.fill: parent
-            layoutDirection: Qt.LeftToRight
             spacing: 5
             Image {
                 id: buttonImage

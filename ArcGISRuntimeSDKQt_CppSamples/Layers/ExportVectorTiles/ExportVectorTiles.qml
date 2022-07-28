@@ -102,14 +102,11 @@ Item {
 
         Row {
             id: buttonTextRow
-            anchors.fill: parent
-            layoutDirection: Qt.LeftToRight
             spacing: 5
             Image {
                 id: buttonImage
                 width: button.height
                 height: button.height
-                anchors.verticalCenter: parent.verticalCenter
                 source: "qrc:/Samples/Layers/ExportVectorTiles/download.png"
             }
 

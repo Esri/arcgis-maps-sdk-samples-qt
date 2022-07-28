@@ -39,4 +39,4 @@ Vector tiles have high drawing performance and smaller file size compared to reg
 
 ## Tags
 
-cache, download, offline, vector
+cache, download, offline, vector, vector tiled layer

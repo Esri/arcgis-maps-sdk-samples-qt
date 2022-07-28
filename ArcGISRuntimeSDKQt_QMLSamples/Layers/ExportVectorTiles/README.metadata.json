@@ -10,23 +10,23 @@
         "download",
         "offline",
         "vector",
+        "ArcGISVectorTiledLayer",
         "ExportVectorTilesJob",
         "ExportVectorTilesParameters",
         "ExportVectorTilesResult",
         "ExportVectorTilesTask",
         "ItemResourceCache",
-        "VectorTileCache",
-        "ArcGISVectorTiledLayer"
+        "VectorTileCache"
     ],
     "redirect_from": "",
     "relevant_apis": [
+        "ArcGISVectorTiledLayer"
         "ExportVectorTilesJob",
         "ExportVectorTilesParameters",
         "ExportVectorTilesResult",
         "ExportVectorTilesTask",
         "ItemResourceCache",
-        "VectorTileCache",
-        "ArcGISVectorTiledLayer"
+        "VectorTileCache"
     ],
     "snippets": [
         "ExportVectorTiles.qml"
