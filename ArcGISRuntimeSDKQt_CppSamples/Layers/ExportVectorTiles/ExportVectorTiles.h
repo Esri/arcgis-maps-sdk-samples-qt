@@ -38,6 +38,7 @@ class ExportVectorTiles : public QObject
 
   Q_PROPERTY(Esri::ArcGISRuntime::MapQuickView* mapView READ mapView WRITE setMapView NOTIFY mapViewChanged)
   Q_PROPERTY(int exportProgress READ exportProgress NOTIFY exportProgressChanged)
+  Q_PROPERTY(int jobStatus READ jobStatus NOTIFY jobStatusChanged)
 
 public:
   explicit ExportVectorTiles(QObject* parent = nullptr);
@@ -46,15 +47,19 @@ public:
   static void init();
 
   Q_INVOKABLE void startExport(double xSW, double ySW, double xNE, double yNE);
+  Q_INVOKABLE void cancel();
+  Q_INVOKABLE void reset();
 
 signals:
   void mapViewChanged();
   void exportProgressChanged();
+  void jobStatusChanged();
 
 private:
   Esri::ArcGISRuntime::MapQuickView* mapView() const;
   void setMapView(Esri::ArcGISRuntime::MapQuickView* mapView);
   int exportProgress() const;
+  int jobStatus() const;
 
   Esri::ArcGISRuntime::Map* m_map = nullptr;
   Esri::ArcGISRuntime::MapQuickView* m_mapView = nullptr;
@@ -63,6 +68,7 @@ private:
   Esri::ArcGISRuntime::ExportVectorTilesJob* m_exportJob = nullptr;
 
   int m_exportProgress = 0;
+  int m_jobStatus = 0;
 
   QTemporaryDir m_tempDir;
 };

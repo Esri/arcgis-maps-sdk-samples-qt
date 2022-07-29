@@ -21,7 +21,7 @@ import Esri.Samples 1.0
 import QtGraphicalEffects 1.0
 
 Item {
-    id: item1
+    id: item
 
     // add a mapView component
     MapView {
@@ -39,7 +39,7 @@ Item {
         anchors.centerIn: parent
 
         color: "white"
-        visible: false
+        visible: model.jobStatus !== 0 && model.jobStatus !== 3 && model.jobStatus !== 4
 
         border {
             color: "black"
@@ -59,7 +59,7 @@ Item {
             Text {
                 id: statusText
                 anchors.horizontalCenter: parent.horizontalCenter
-                text: "Export in progress..."
+                text: "Export job status: " + ["Not started", "Started", "Paused", "Succeeded", "Failed", "Cancelling"][model.jobStatus]
                 font.pixelSize: 16
             }
 
@@ -92,42 +92,43 @@ Item {
             color: "red"
             width: 3
         }
-        visible: button.enabled
+
+        visible: model.jobStatus === 0 || model.jobStatus === 4
     }
 
     // Button to start the download
     Button {
         id: button
-        width: buttonImage.width + buttonText.width + (buttonTextRow.spacing * 2)
-
-        Row {
-            id: buttonTextRow
-            spacing: 5
-            Image {
-                id: buttonImage
-                width: button.height
-                height: button.height
-                source: "qrc:/Samples/Layers/ExportVectorTiles/download.png"
-            }
-
-            Text {
-                id: buttonText
-                text: "Export area"
-                anchors.verticalCenter: parent.verticalCenter
-            }
-        }
         anchors {
             bottom: parent.bottom
-            bottomMargin: item1.height * .05
+            bottomMargin: item.height * .05
             horizontalCenter: parent.horizontalCenter
         }
+        width: 150
+
+        text: "Export area"
 
         onClicked: {
-            model.startExport(extentRectangle.x, (extentRectangle.y + extentRectangle.height), (extentRectangle.x + extentRectangle.width), extentRectangle.y);
-            extentRectangle.visible = false;
-            button.visible = false;
-            exportProgressWindow.visible = true
-            statusText.text = "Initializing export task";
+            switch(model.jobStatus) {
+            case 0: // Not started
+                model.startExport(extentRectangle.x, (extentRectangle.y + extentRectangle.height), (extentRectangle.x + extentRectangle.width), extentRectangle.y);
+                break;
+            case 1: // Started
+                model.cancel();
+                break;
+            case 2: // Paused
+                break;
+            case 3: // Succeeded
+                model.reset();
+                break;
+            case 4: // Failed
+                model.startExport(extentRectangle.x, (extentRectangle.y + extentRectangle.height), (extentRectangle.x + extentRectangle.width), extentRectangle.y);
+                break;
+            case 5: // Cancelling
+                break;
+            default:
+                break;
+            }
         }
     }
 
@@ -135,14 +136,27 @@ Item {
     ExportVectorTilesSample {
         id: model
         mapView: view
-        property bool exportInProgress: false
 
-        onExportProgressChanged: {
-            if (!exportInProgress && exportProgress !== 100) {
-                statusText.text = "Exporting vector tiles";
-                exportInProgress = true;
-            } else if (exportProgress === 100) {
-                exportProgressWindow.visible = false
+        onJobStatusChanged: {
+            switch(jobStatus) {
+            case 0: // Not started
+                button.text = "Export area"
+                break;
+            case 1: // Started
+                button.text = "Cancel export"
+                break;
+            case 2: // Paused
+                break;
+            case 3: // Succeeded
+                button.text = "Reset"
+                break;
+            case 4: // Failed
+                button.text = "Export area"
+                break;
+            case 5: // Cancelling
+                break;
+            default:
+                break;
             }
         }
     }

@@ -102,9 +102,9 @@ void ExportVectorTiles::startExport(double xSW, double ySW, double xNE, double y
     exportParameters.setEsriVectorTilesDownloadOption(EsriVectorTilesDownloadOption::UseReducedFontsService);
 
     // Create a path to store the vector tile package
-    const QString vectorTileCachePath = m_tempDir.path() + "/vectorTiles.vtpk";
+    const QString vectorTileCachePath = m_tempDir.path() + QString("/vectorTiles%1.vtpk").arg(QDateTime::currentSecsSinceEpoch());
     // Create a path to store the styling resources (in this case, the night mode version of the layer)
-    const QString itemResourcePath = m_tempDir.path() + "/itemResources";
+    const QString itemResourcePath = m_tempDir.path() + QString("/itemResources%1").arg(QDateTime::currentSecsSinceEpoch());
 
     // Create a job that will download the vector tiles to the given paths
     m_exportJob = exportTask->exportVectorTiles(exportParameters, vectorTileCachePath, itemResourcePath);
@@ -119,6 +119,7 @@ void ExportVectorTiles::startExport(double xSW, double ySW, double xNE, double y
         // Create a vector tiled layer when the download is completed
         ArcGISVectorTiledLayer* exportedLayer = new ArcGISVectorTiledLayer(vectorTileCache, itemResourceCache, this);
         m_map->setBasemap(new Basemap(exportedLayer, this));
+        m_exportJob->disconnect();
       }
     });
 
@@ -128,6 +129,12 @@ void ExportVectorTiles::startExport(double xSW, double ySW, double xNE, double y
       emit exportProgressChanged();
     });
 
+    connect(m_exportJob, &Job::statusChanged, this, [this](JobStatus s)
+    {
+      m_jobStatus = (int)s;
+      emit jobStatusChanged();
+    });
+
     m_exportJob->start();
   });
 
@@ -135,7 +142,26 @@ void ExportVectorTiles::startExport(double xSW, double ySW, double xNE, double y
   exportTask->createDefaultExportVectorTilesParameters(exportArea, m_mapView->mapScale() * 0.1);
 }
 
+void ExportVectorTiles::cancel()
+{
+  m_exportJob->cancel();
+  reset();
+}
+
+void ExportVectorTiles::reset()
+{
+  m_map->setBasemap(new Basemap(BasemapStyle::ArcGISStreetsNight, this));
+  m_exportAreaGraphic->setGeometry(Geometry());
+  m_jobStatus = 0; // Override the job status to set the UI button to "Export area" again
+  emit jobStatusChanged();
+}
+
 int ExportVectorTiles::exportProgress() const
 {
   return m_exportProgress;
+}
+
+int ExportVectorTiles::jobStatus() const
+{
+  return m_jobStatus;
 }
