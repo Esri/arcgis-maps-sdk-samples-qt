@@ -48,8 +48,6 @@ Rectangle {
             }
         }
 
-
-
         GraphicsOverlay {
             id: graphicsOverlay
 
