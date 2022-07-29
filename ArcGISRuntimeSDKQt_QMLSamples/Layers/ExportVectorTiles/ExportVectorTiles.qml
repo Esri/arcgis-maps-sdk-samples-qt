@@ -26,11 +26,8 @@ Rectangle {
     width: 800
     height: 600
 
-    // Create a path to store the vector tile package
-    readonly property url vectorTileCachePath: System.temporaryFolder.url + "/vectorTiles_%1.vtpk".arg(new Date().getTime().toString())
-    // Create a path to store the styling resources (in this case, the night mode version of the layer)
-    readonly property url itemResourcePath: System.temporaryFolder.url + "/itemResources_%1".arg(new Date().getTime().toString())
     property int exportProgress: 0
+    property int exportJobStatus: 0
 
     // add a mapView component
     MapView {
@@ -77,7 +74,7 @@ Rectangle {
         anchors.centerIn: parent
 
         color: "white"
-        visible: false
+        visible: exportJobStatus !== 0 && exportJobStatus !== 3 && exportJobStatus !== 4
 
         border {
             color: "black"
@@ -97,7 +94,7 @@ Rectangle {
             Text {
                 id: statusText
                 anchors.horizontalCenter: parent.horizontalCenter
-                text: "Export in progress..."
+                text: "Export job status: " + ["Not started", "Started", "Paused", "Succeeded", "Failed", "Cancelling"][exportJobStatus]
                 font.pixelSize: 16
             }
 
@@ -130,40 +127,43 @@ Rectangle {
             color: "red"
             width: 3
         }
+
+        visible: exportJobStatus === 0 || exportJobStatus === 4
     }
 
+    // Button to start the download
     Button {
         id: button
-        width: buttonImage.width + buttonText.width + (buttonTextRow.spacing * 2)
-
-        Row {
-            id: buttonTextRow
-            spacing: 5
-            Image {
-                id: buttonImage
-                width: button.height
-                height: button.height
-                source: "qrc:/Samples/Layers/ExportVectorTiles/download.png"
-            }
-
-            Text {
-                id: buttonText
-                text: "Export area"
-                anchors.verticalCenter: parent.verticalCenter
-            }
-        }
         anchors {
             bottom: parent.bottom
-            bottomMargin: parent.height * .05
+            bottomMargin: rootRectangle.height * .05
             horizontalCenter: parent.horizontalCenter
         }
+        width: 150
+
+        text: "Export area"
 
         onClicked: {
-            startExport(extentRectangle.x, (extentRectangle.y + extentRectangle.height), (extentRectangle.x + extentRectangle.width), extentRectangle.y);
-            extentRectangle.visible = false;
-            button.visible = false;
-            exportProgressWindow.visible = true;
-            statusText.text = "Exporting vector tiles";
+            switch(exportJobStatus) {
+            case 0: // Not started
+                startExport(extentRectangle.x, (extentRectangle.y + extentRectangle.height), (extentRectangle.x + extentRectangle.width), extentRectangle.y);
+                break;
+            case 1: // Started
+                cancel();
+                break;
+            case 2: // Paused
+                break;
+            case 3: // Succeeded
+                reset();
+                break;
+            case 4: // Failed
+                startExport(extentRectangle.x, (extentRectangle.y + extentRectangle.height), (extentRectangle.x + extentRectangle.width), extentRectangle.y);
+                break;
+            case 5: // Cancelling
+                break;
+            default:
+                break;
+            }
         }
     }
 
@@ -194,6 +194,8 @@ Rectangle {
     ExportVectorTilesTask {
         id: exportVectorTilesTask
 
+        property ExportVectorTilesJob exportVectorTilesJob;
+
         onCreateDefaultExportVectorTilesParametersStatusChanged: {
             if (createDefaultExportVectorTilesParametersStatus !== Enums.TaskStatusCompleted)
                 return;
@@ -202,10 +204,15 @@ Rectangle {
             // It is useful for taking the basemap offline but not recommended if you plan to later upload the vtpk
             defaultExportVectorTilesParameters.esriVectorTilesDownloadOption = Enums.EsriVectorTilesDownloadOptionUseReducedFontsService;
 
-            const exportVectorTilesJob = exportVectorTilesWithStyleResources(defaultExportVectorTilesParameters, vectorTileCachePath, itemResourcePath);
+            // Create a path to store the vector tile package
+            const vectorTileCachePath = System.temporaryFolder.url + "/vectorTiles_%1.vtpk".arg(new Date().getTime().toString());
+            // Create a path to store the styling resources (in this case, the night mode version of the layer)
+            const itemResourcePath = System.temporaryFolder.url + "/itemResources_%1".arg(new Date().getTime().toString());
+
+            exportVectorTilesJob = exportVectorTilesWithStyleResources(defaultExportVectorTilesParameters, vectorTileCachePath, itemResourcePath);
 
             exportVectorTilesJob.resultChanged.connect(() => {
-                if (exportVectorTilesJob.result !== null) {
+                if (exportVectorTilesJob.result) {
                     // Create a vector tiled layer when the download is completed
                     const exportedVectorTiledLayer = ArcGISRuntimeEnvironment.createObject("ArcGISVectorTiledLayer", {
                         vectorTileCache: exportVectorTilesJob.result.vectorTileCache,
@@ -220,12 +227,49 @@ Rectangle {
 
             // Display the download progress to the user
             exportVectorTilesJob.progressChanged.connect(() => {
-                                                             exportProgress = exportVectorTilesJob.progress;
-                                                         });
+               exportProgress = exportVectorTilesJob.progress;
+            });
+
+            exportVectorTilesJob.statusChanged.connect((status) => {
+                exportJobStatus = status;
+                switch(exportJobStatus) {
+                case 0: // Not started
+                    button.text = "Export area"
+                    break;
+                case 1: // Started
+                    button.text = "Cancel export"
+                    break;
+                case 2: // Paused
+                    break;
+                case 3: // Succeeded
+                    button.text = "Reset"
+                    break;
+                case 4: // Failed
+                    button.text = "Export area"
+                    break;
+                case 5: // Cancelling
+                    break;
+                default:
+                    break;
+                }
+            });
 
             // Start the export job once export parameters have been created
             exportVectorTilesJob.start();
         }
+    }
+
+    function cancel() {
+        exportVectorTilesTask.exportVectorTilesJob.cancelAsync();
+        reset();
+    }
+
+    function reset() {
+        map.basemap = ArcGISRuntimeEnvironment.createObject("Basemap", {initStyle: Enums.BasemapStyleArcGISStreetsNight});
+        exportAreaGraphic.geometry = ArcGISRuntimeEnvironment.createObject("Geometry");
+        extentRectangle.visible = true;
+        button.text = "Export area"
+        exportJobStatus = 0;
     }
 }
 
