@@ -4,6 +4,5 @@
         <file>ExportVectorTiles.qml</file>
         <file>screenshot.png</file>
         <file>README.md</file>
-        <file>download.png</file>
     </qresource>
 </RCC>
