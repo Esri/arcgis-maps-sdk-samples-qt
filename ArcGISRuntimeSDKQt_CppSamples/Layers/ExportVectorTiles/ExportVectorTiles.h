@@ -44,6 +44,17 @@ public:
   explicit ExportVectorTiles(QObject* parent = nullptr);
   ~ExportVectorTiles();
 
+  enum ExportJobStatus
+  {
+    ExportStatusNotStarted,
+    ExportStatusStarted,
+    ExportStatusPaused,
+    ExportStatusSucceeded,
+    ExportStatusFailed,
+    ExportStatusCancelling
+  };
+  Q_ENUM(ExportJobStatus)
+
   static void init();
 
   Q_INVOKABLE void startExport(double xSW, double ySW, double xNE, double yNE);

@@ -27,7 +27,17 @@ Rectangle {
     height: 600
 
     property int exportProgress: 0
-    property int exportJobStatus: 0
+
+    enum ExportJobStatus {
+      NotStarted,
+      Started,
+      Paused,
+      Succeeded,
+      Failed,
+      Cancelling
+    }
+
+    property int exportJobStatus: ExportVectorTiles.ExportJobStatus.NotStarted
 
     // add a mapView component
     MapView {
@@ -47,8 +57,6 @@ Rectangle {
                 targetScale: 1e4
             }
         }
-
-
 
         GraphicsOverlay {
             id: graphicsOverlay
@@ -74,7 +82,7 @@ Rectangle {
         anchors.centerIn: parent
 
         color: "white"
-        visible: exportJobStatus !== 0 && exportJobStatus !== 3 && exportJobStatus !== 4
+        visible: false
 
         border {
             color: "black"
@@ -127,8 +135,6 @@ Rectangle {
             color: "red"
             width: 3
         }
-
-        visible: exportJobStatus === 0 || exportJobStatus === 4
     }
 
     // Button to start the download
@@ -145,21 +151,21 @@ Rectangle {
 
         onClicked: {
             switch(exportJobStatus) {
-            case 0: // Not started
+            case ExportVectorTiles.ExportJobStatus.NotStarted:
                 startExport(extentRectangle.x, (extentRectangle.y + extentRectangle.height), (extentRectangle.x + extentRectangle.width), extentRectangle.y);
                 break;
-            case 1: // Started
+            case ExportVectorTiles.ExportJobStatus.Started:
                 cancel();
                 break;
-            case 2: // Paused
+            case ExportVectorTiles.ExportJobStatus.Paused:
                 break;
-            case 3: // Succeeded
+            case ExportVectorTiles.ExportJobStatus.Succeeded:
                 reset();
                 break;
-            case 4: // Failed
+            case ExportVectorTiles.ExportJobStatus.Failed:
                 startExport(extentRectangle.x, (extentRectangle.y + extentRectangle.height), (extentRectangle.x + extentRectangle.width), extentRectangle.y);
                 break;
-            case 5: // Cancelling
+            case ExportVectorTiles.ExportJobStatus.Cancelling:
                 break;
             default:
                 break;
@@ -168,8 +174,11 @@ Rectangle {
     }
 
     function startExport(xSW, ySW, xNE, yNE) {
+        if (map.basemap === undefined || map.basemap.loadStatus !== Enums.LoadStatusLoaded)
+            return;
+
         const vectorTiledLayer = map.basemap.baseLayers.get(0);
-        if (vectorTiledLayer.layerType !== Enums.LayerTypeArcGISVectorTiledLayer)
+        if (vectorTiledLayer === undefined || vectorTiledLayer.layerType !== Enums.LayerTypeArcGISVectorTiledLayer)
             return;
 
         // Create an envelope from the QML rectangle corners
@@ -183,6 +192,7 @@ Rectangle {
         });
         const exportArea = GeometryEngine.normalizeCentralMeridian(GeometryEngine.project(extent, vectorTiledLayer.spatialReference));
         extentRectangle.visible = false;
+        exportProgressWindow.visible = true;
         exportAreaGraphic.geometry = exportArea;
 
         exportVectorTilesTask.url = vectorTiledLayer.url;
@@ -233,21 +243,24 @@ Rectangle {
             exportVectorTilesJob.statusChanged.connect((status) => {
                 exportJobStatus = status;
                 switch(exportJobStatus) {
-                case 0: // Not started
+                case ExportVectorTiles.ExportJobStatus.NotStarted:
                     button.text = "Export area"
+                    exportProgressWindow.visible = false;
                     break;
-                case 1: // Started
+                case ExportVectorTiles.ExportJobStatus.Started:
                     button.text = "Cancel export"
                     break;
-                case 2: // Paused
+                case ExportVectorTiles.ExportJobStatus.Paused:
                     break;
-                case 3: // Succeeded
+                case ExportVectorTiles.ExportJobStatus.Succeeded:
                     button.text = "Reset"
+                    exportProgressWindow.visible = false;
                     break;
-                case 4: // Failed
+                case ExportVectorTiles.ExportJobStatus.Failed:
                     button.text = "Export area"
+                    exportProgressWindow.visible = false;
                     break;
-                case 5: // Cancelling
+                case ExportVectorTiles.ExportJobStatus.Cancelling:
                     break;
                 default:
                     break;
@@ -266,7 +279,7 @@ Rectangle {
 
     function reset() {
         map.basemap = ArcGISRuntimeEnvironment.createObject("Basemap", {initStyle: Enums.BasemapStyleArcGISStreetsNight});
-        exportAreaGraphic.geometry = ArcGISRuntimeEnvironment.createObject("Geometry");
+        exportAreaGraphic.geometry = ArcGISRuntimeEnvironment.createObject("Geometry", {});
         extentRectangle.visible = true;
         button.text = "Export area"
         exportJobStatus = 0;

@@ -92,8 +92,6 @@ Item {
             color: "red"
             width: 3
         }
-
-        visible: model.jobStatus === 0 || model.jobStatus === 4
     }
 
     // Button to start the download
@@ -110,21 +108,24 @@ Item {
 
         onClicked: {
             switch(model.jobStatus) {
-            case 0: // Not started
+            case ExportVectorTilesSample.ExportStatusNotStarted:
                 model.startExport(extentRectangle.x, (extentRectangle.y + extentRectangle.height), (extentRectangle.x + extentRectangle.width), extentRectangle.y);
+                extentRectangle.visible = false;
                 break;
-            case 1: // Started
+            case ExportVectorTilesSample.ExportStatusStarted:
                 model.cancel();
+                extentRectangle.visible = true;
                 break;
-            case 2: // Paused
+            case ExportVectorTilesSample.ExportStatusPaused:
                 break;
-            case 3: // Succeeded
+            case ExportVectorTilesSample.ExportStatusSucceeded:
                 model.reset();
+                extentRectangle.visible = true;
                 break;
-            case 4: // Failed
+            case ExportVectorTilesSample.ExportStatusFailed:
                 model.startExport(extentRectangle.x, (extentRectangle.y + extentRectangle.height), (extentRectangle.x + extentRectangle.width), extentRectangle.y);
                 break;
-            case 5: // Cancelling
+            case ExportVectorTilesSample.ExportStatusCancelling:
                 break;
             default:
                 break;
@@ -138,22 +139,25 @@ Item {
         mapView: view
 
         onJobStatusChanged: {
-            switch(jobStatus) {
-            case 0: // Not started
-                button.text = "Export area"
+            switch(model.jobStatus) {
+            case ExportVectorTilesSample.ExportStatusNotStarted:
+                button.text = "Export area";
                 break;
-            case 1: // Started
-                button.text = "Cancel export"
+            case ExportVectorTilesSample.ExportStatusStarted:
+                button.text = "Cancel export";
+                exportProgressWindow.visible = true;
                 break;
-            case 2: // Paused
+            case ExportVectorTilesSample.ExportStatusPaused:
                 break;
-            case 3: // Succeeded
-                button.text = "Reset"
+            case ExportVectorTilesSample.ExportStatusSucceeded:
+                button.text = "Reset";
+                exportProgressWindow.visible = false;
                 break;
-            case 4: // Failed
-                button.text = "Export area"
+            case ExportVectorTilesSample.ExportStatusFailed:
+                button.text = "Export area";
+                exportProgressWindow.visible = false;
                 break;
-            case 5: // Cancelling
+            case ExportVectorTilesSample.ExportStatusCancelling:
                 break;
             default:
                 break;
