@@ -17,7 +17,6 @@
 import QtQuick 2.12
 import Esri.ArcGISRuntime 100.15
 import QtQuick.Controls 2.12
-import QtQuick.Layouts 1.15
 import Esri.ArcGISExtras 1.1
 
 Rectangle {
@@ -27,6 +26,7 @@ Rectangle {
     height: 600
 
     property int exportProgress: 0
+    property bool isUsingOfflineBasemap: false
 
     enum ExportJobStatus {
       NotStarted,
@@ -214,9 +214,9 @@ Rectangle {
             // It is useful for taking the basemap offline but not recommended if you plan to later upload the vtpk
             defaultExportVectorTilesParameters.esriVectorTilesDownloadOption = Enums.EsriVectorTilesDownloadOptionUseReducedFontsService;
 
-            // Create a path to store the vector tile package
+            // Create a path to store the vector tile package, the file must not already exist
             const vectorTileCachePath = System.temporaryFolder.url + "/vectorTiles_%1.vtpk".arg(new Date().getTime().toString());
-            // Create a path to store the styling resources (in this case, the night mode version of the layer)
+            // Create a path to an empty directory store the styling resources (in this case, the night mode version of the layer)
             const itemResourcePath = System.temporaryFolder.url + "/itemResources_%1".arg(new Date().getTime().toString());
 
             exportVectorTilesJob = exportVectorTilesWithStyleResources(defaultExportVectorTilesParameters, vectorTileCachePath, itemResourcePath);
@@ -231,6 +231,7 @@ Rectangle {
                     const basemap = ArcGISRuntimeEnvironment.createObject("Basemap");
                     basemap.baseLayers.append(exportedVectorTiledLayer);
                     map.basemap = basemap;
+                    isUsingOfflineBasemap = true;
                     exportProgressWindow.visible = false;
                 }
             });
@@ -273,12 +274,17 @@ Rectangle {
     }
 
     function cancel() {
+        exportProgressWindow.visible = false;
         exportVectorTilesTask.exportVectorTilesJob.cancelAsync();
         reset();
     }
 
     function reset() {
-        map.basemap = ArcGISRuntimeEnvironment.createObject("Basemap", {initStyle: Enums.BasemapStyleArcGISStreetsNight});
+        if (isUsingOfflineBasemap) {
+            map.basemap = ArcGISRuntimeEnvironment.createObject("Basemap", {initStyle: Enums.BasemapStyleArcGISStreetsNight});
+            isUsingOfflineBasemap = false;
+        }
+
         exportAreaGraphic.geometry = ArcGISRuntimeEnvironment.createObject("Geometry", {});
         extentRectangle.visible = true;
         button.text = "Export area"
