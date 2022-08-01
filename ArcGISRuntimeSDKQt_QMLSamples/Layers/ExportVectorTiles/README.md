@@ -10,7 +10,7 @@ Field workers with limited network connectivity can use exported vector tiles as
 
 ## How to use the sample
 
-When the vector tiled layer loads, zoom in to the extent you want to export. The red box shows the extent that will be exported. Click the "Export Vector Tiles" button to start the job. When finished, a dialog will show the exported result as a new basemap.
+When the vector tiled layer loads, zoom in to the extent you want to export. The red box shows the extent that will be exported. Click the "Export area" button to start the job. When finished, a dialog will show the exported result as a new basemap.
 
 ## How it works
 
