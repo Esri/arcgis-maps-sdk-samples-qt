@@ -77,7 +77,7 @@ void ExportVectorTiles::setMapView(MapQuickView* mapView)
 
 void ExportVectorTiles::startExport(double xSW, double ySW, double xNE, double yNE)
 {
-  if (m_map->basemap()->baseLayers()->first()->layerType() != LayerType::ArcGISVectorTiledLayer)
+  if (!m_map->basemap() || m_map->basemap()->baseLayers()->isEmpty() || m_map->basemap()->baseLayers()->first()->layerType() != LayerType::ArcGISVectorTiledLayer)
     return;
 
   // Get the first layer of the basemap baselayers as a vector tiled layer for export
@@ -101,10 +101,10 @@ void ExportVectorTiles::startExport(double xSW, double ySW, double xNE, double y
     // It is useful for taking the basemap offline but not recommended if you plan to later upload the vtpk
     exportParameters.setEsriVectorTilesDownloadOption(EsriVectorTilesDownloadOption::UseReducedFontsService);
 
-    // Create a path to store the vector tile package
-    const QString vectorTileCachePath = m_tempDir.path() + QString("/vectorTiles%1.vtpk").arg(QDateTime::currentSecsSinceEpoch());
-    // Create a path to store the styling resources (in this case, the night mode version of the layer)
-    const QString itemResourcePath = m_tempDir.path() + QString("/itemResources%1").arg(QDateTime::currentSecsSinceEpoch());
+    // Create a path to store the vector tile package, the file cannot already exist
+    const QString vectorTileCachePath = m_tempDir.path() + QString("/vectorTiles%1.vtpk").arg(QDateTime::currentMSecsSinceEpoch());
+    // Create a path to an empty directory to store the styling resources (in this case, the night mode version of the layer)
+    const QString itemResourcePath = m_tempDir.path() + QString("/itemResources%1").arg(QDateTime::currentMSecsSinceEpoch());
 
     // Create a job that will download the vector tiles to the given paths
     m_exportJob = exportTask->exportVectorTiles(exportParameters, vectorTileCachePath, itemResourcePath);
@@ -119,6 +119,7 @@ void ExportVectorTiles::startExport(double xSW, double ySW, double xNE, double y
         // Create a vector tiled layer when the download is completed
         ArcGISVectorTiledLayer* exportedLayer = new ArcGISVectorTiledLayer(vectorTileCache, itemResourceCache, this);
         m_map->setBasemap(new Basemap(exportedLayer, this));
+        m_isUsingOfflineBasemap = true;
         m_exportJob->disconnect();
       }
     });
@@ -150,7 +151,12 @@ void ExportVectorTiles::cancel()
 
 void ExportVectorTiles::reset()
 {
-  m_map->setBasemap(new Basemap(BasemapStyle::ArcGISStreetsNight, this));
+  if (m_isUsingOfflineBasemap)
+  {
+    m_map->setBasemap(new Basemap(BasemapStyle::ArcGISStreetsNight, this));
+    m_isUsingOfflineBasemap = false;
+  }
+
   m_exportAreaGraphic->setGeometry(Geometry());
   m_jobStatus = 0; // Override the job status to set the UI button to "Export area" again
   emit jobStatusChanged();
