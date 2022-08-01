@@ -288,7 +288,10 @@ Rectangle {
             isUsingOfflineBasemap = false;
         }
 
-        exportAreaGraphic.geometry = ArcGISRuntimeEnvironment.createObject("Geometry", {});
+        if (!exportAreaGraphic.geometry) {
+            exportAreaGraphic.geometry = ArcGISRuntimeEnvironment.createObject("Geometry", {});
+        }
+
         extentRectangle.visible = true;
         button.text = "Export area"
         exportJobStatus = 0;
