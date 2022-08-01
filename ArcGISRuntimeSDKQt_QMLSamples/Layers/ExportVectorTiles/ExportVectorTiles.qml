@@ -195,7 +195,10 @@ Rectangle {
         exportProgressWindow.visible = true;
         exportAreaGraphic.geometry = exportArea;
 
-        exportVectorTilesTask.url = vectorTiledLayer.url;
+        // Ensure exportVectorTilesTask is not loaded because we can't set the url after it is loaded
+        if (exportVectorTilesTask.loadStatus !== Enums.LoadStatusLoaded) {
+            exportVectorTilesTask.url = vectorTiledLayer.url;
+        }
 
         // Instantiate export parameters to create the export job with
         exportVectorTilesTask.createDefaultExportVectorTilesParameters(exportArea, mapView.mapScale * 0.1);
