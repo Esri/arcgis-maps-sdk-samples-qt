@@ -1,4 +1,4 @@
-// [WriteFile Name=GenerateGeodatabase, Category=Features]
+// [WriteFile Name=GenerateGeodatabaseReplicaFromFeatureService, Category=Features]
 // [Legal]
 // Copyright 2016 Esri.
 
@@ -35,13 +35,13 @@ namespace Esri
 #include <QStringList>
 #include <QTemporaryDir>
 
-class GenerateGeodatabase : public QQuickItem
+class GenerateGeodatabaseReplicaFromFeatureService : public QQuickItem
 {
   Q_OBJECT
 
 public:
-  explicit GenerateGeodatabase(QQuickItem* parent = nullptr);
-  ~GenerateGeodatabase() override;
+  explicit GenerateGeodatabaseReplicaFromFeatureService(QQuickItem* parent = nullptr);
+  ~GenerateGeodatabaseReplicaFromFeatureService() override;
 
   void componentComplete() override;
   static void init();

@@ -31,9 +31,9 @@
         "GeodatabaseSyncTask"
     ],
     "snippets": [
-        "GenerateGeodatabase.cpp",
-        "GenerateGeodatabase.h",
-        "GenerateGeodatabase.qml"
+        "GenerateGeodatabaseReplicaFromFeatureService.cpp",
+        "GenerateGeodatabaseReplicaFromFeatureService.h",
+        "GenerateGeodatabaseReplicaFromFeatureService.qml"
     ],
-    "title": "Generate geodatabase"
+    "title": "Generate geodatabase replica from feature service"
 }

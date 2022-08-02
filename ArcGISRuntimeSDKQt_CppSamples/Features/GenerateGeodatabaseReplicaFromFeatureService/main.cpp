@@ -22,7 +22,7 @@
 #include <Windows.h>
 #endif
 
-#include "GenerateGeodatabase.h"
+#include "GenerateGeodatabaseReplicaFromFeatureService.h"
 #include "ArcGISRuntimeEnvironment.h"
 
 #define STRINGIZE(x) #x
@@ -32,7 +32,7 @@ int main(int argc, char *argv[])
 {
   QGuiApplication::setAttribute(Qt::AA_EnableHighDpiScaling);
   QGuiApplication app(argc, argv);
-  app.setApplicationName("GenerateGeodatabase- C++");
+  app.setApplicationName("GenerateGeodatabaseReplicaFromFeatureService- C++");
 
   // Use of Esri location services, including basemaps and geocoding,
   // requires authentication using either an ArcGIS identity or an API Key.
@@ -53,7 +53,7 @@ int main(int argc, char *argv[])
   }
 
   // Initialize the sample
-  GenerateGeodatabase::init();
+  GenerateGeodatabaseReplicaFromFeatureService::init();
 
   // Initialize application view
   QQuickView view;
@@ -75,7 +75,7 @@ int main(int argc, char *argv[])
   view.engine()->addImportPath(arcGISRuntimeImportPath);
 
   // Set the source
-  view.setSource(QUrl("qrc:/Samples/Features/GenerateGeodatabase/GenerateGeodatabase.qml"));
+  view.setSource(QUrl("qrc:/Samples/Features/GenerateGeodatabaseReplicaFromFeatureService/GenerateGeodatabaseReplicaFromFeatureService.qml"));
 
   view.show();
 
