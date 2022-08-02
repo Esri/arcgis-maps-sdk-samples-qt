@@ -1,4 +1,4 @@
-// [WriteFile Name=GenerateGeodatabase, Category=Features]
+// [WriteFile Name=GenerateGeodatabaseReplicaFromFeatureService, Category=Features]
 // [Legal]
 // Copyright 2016 Esri.
 
@@ -227,7 +227,7 @@ Rectangle {
             Image {
                 width: 38
                 height: width
-                source: "qrc:/Samples/Features/GenerateGeodatabase/download.png"
+                source: "qrc:/Samples/Features/GenerateGeodatabaseReplicaFromFeatureService/download.png"
             }
 
             Text {

@@ -1,4 +1,4 @@
-# Generate geodatabase
+# Generate geodatabase replica from feature service
 
 Generate a local geodatabase from an online feature service.
 
@@ -36,4 +36,4 @@ Link | Local Location
 
 ## Tags
 
-disconnected, local geodatabase, offline, sync
+disconnected, local geodatabase, offline, replica, sync

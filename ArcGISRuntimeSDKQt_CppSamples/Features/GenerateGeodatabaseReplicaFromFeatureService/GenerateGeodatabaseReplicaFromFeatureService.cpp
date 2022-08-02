@@ -1,4 +1,4 @@
-// [WriteFile Name=GenerateGeodatabase, Category=Features]
+// [WriteFile Name=GenerateGeodatabaseReplicaFromFeatureService, Category=Features]
 // [Legal]
 // Copyright 2016 Esri.
 
@@ -18,7 +18,7 @@
 #include "pch.hpp"
 #endif // PCH_BUILD
 
-#include "GenerateGeodatabase.h"
+#include "GenerateGeodatabaseReplicaFromFeatureService.h"
 
 #include "Map.h"
 #include "MapQuickView.h"
@@ -64,21 +64,21 @@ namespace
   }
 } // namespace
 
-GenerateGeodatabase::GenerateGeodatabase(QQuickItem* parent) :
+GenerateGeodatabaseReplicaFromFeatureService::GenerateGeodatabaseReplicaFromFeatureService(QQuickItem* parent) :
   QQuickItem(parent),
   m_dataPath(defaultDataPath() + "/ArcGIS/Runtime/Data/")
 {
 }
 
-GenerateGeodatabase::~GenerateGeodatabase() = default;
+GenerateGeodatabaseReplicaFromFeatureService::~GenerateGeodatabaseReplicaFromFeatureService() = default;
 
-void GenerateGeodatabase::init()
+void GenerateGeodatabaseReplicaFromFeatureService::init()
 {
   qmlRegisterType<MapQuickView>("Esri.Samples", 1, 0, "MapView");
-  qmlRegisterType<GenerateGeodatabase>("Esri.Samples", 1, 0, "GenerateGeodatabaseSample");
+  qmlRegisterType<GenerateGeodatabaseReplicaFromFeatureService>("Esri.Samples", 1, 0, "GenerateGeodatabaseReplicaFromFeatureServiceSample");
 }
 
-void GenerateGeodatabase::componentComplete()
+void GenerateGeodatabaseReplicaFromFeatureService::componentComplete()
 {
   QQuickItem::componentComplete();
 
@@ -147,7 +147,7 @@ void GenerateGeodatabase::componentComplete()
   });
 }
 
-void GenerateGeodatabase::addFeatureLayers(const QString& serviceUrl, const QStringList& serviceIds)
+void GenerateGeodatabaseReplicaFromFeatureService::addFeatureLayers(const QString& serviceUrl, const QStringList& serviceIds)
 {
   for (const QString& id : serviceIds)
   {
@@ -158,7 +158,7 @@ void GenerateGeodatabase::addFeatureLayers(const QString& serviceUrl, const QStr
 }
 
 //! [Features GenerateGeodatabase Part 2]
-GenerateGeodatabaseParameters GenerateGeodatabase::getUpdatedParameters(Envelope gdbExtent)
+GenerateGeodatabaseParameters GenerateGeodatabaseReplicaFromFeatureService::getUpdatedParameters(Envelope gdbExtent)
 {
   // create the parameters
   GenerateGeodatabaseParameters params;
@@ -178,7 +178,7 @@ GenerateGeodatabaseParameters GenerateGeodatabase::getUpdatedParameters(Envelope
   return params;
 }
 
-void GenerateGeodatabase::generateGeodatabaseFromCorners(double xCorner1, double yCorner1, double xCorner2, double yCorner2)
+void GenerateGeodatabaseReplicaFromFeatureService::generateGeodatabaseFromCorners(double xCorner1, double yCorner1, double xCorner2, double yCorner2)
 {
   // create an envelope from the QML rectangle corners
   const Point corner1 = m_mapView->screenToLocation(xCorner1, yCorner1);
@@ -234,7 +234,7 @@ void GenerateGeodatabase::generateGeodatabaseFromCorners(double xCorner1, double
 }
 //! [Features GenerateGeodatabase Part 2]
 
-void GenerateGeodatabase::addOfflineData(Geodatabase* gdb)
+void GenerateGeodatabaseReplicaFromFeatureService::addOfflineData(Geodatabase* gdb)
 {
   // remove the original online feature layers
   m_map->operationalLayers()->clear();

@@ -161,7 +161,7 @@
 #include "FindRoute.h"
 #include "FindServiceAreasForMultipleFacilities.h"
 #include "FormatCoordinates.h"
-#include "GenerateGeodatabase.h"
+#include "GenerateGeodatabaseReplicaFromFeatureService.h"
 #include "GenerateOfflineMap_Overrides.h"
 #include "GenerateOfflineMap.h"
 #include "GenerateOfflineMapLocalBasemap.h"
@@ -470,7 +470,7 @@ void registerCppSampleClasses()
   FindRoute::init();
   FindServiceAreasForMultipleFacilities::init();
   FormatCoordinates::init();
-  GenerateGeodatabase::init();
+  GenerateGeodatabaseReplicaFromFeatureService::init();
   GenerateOfflineMap_Overrides::init();
   GenerateOfflineMap::init();
   GenerateOfflineMapLocalBasemap::init();

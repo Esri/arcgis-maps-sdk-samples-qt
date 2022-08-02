@@ -28,18 +28,18 @@ ARCGIS_RUNTIME_VERSION = 100.14
 include($$PWD/arcgisruntime.pri)
 
 TEMPLATE = app
-TARGET = GenerateGeodatabase
+TARGET = GenerateGeodatabaseReplicaFromFeatureService
 
 #-------------------------------------------------------------------------------
 
 HEADERS += \
-    GenerateGeodatabase.h
+    GenerateGeodatabaseReplicaFromFeatureService.h
 
 SOURCES += \
-    main.cpp \
-    GenerateGeodatabase.cpp
+    GenerateGeodatabaseReplicaFromFeatureService.cpp \
+    main.cpp
 
-RESOURCES += GenerateGeodatabase.qrc
+RESOURCES += GenerateGeodatabaseReplicaFromFeatureService.qrc
 
 #-------------------------------------------------------------------------------
 

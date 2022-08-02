@@ -15,6 +15,7 @@
         "disconnected",
         "local geodatabase",
         "offline",
+        "replica",
         "sync",
         "GenerateGeodatabaseJob",
         "GenerateGeodatabaseParameters",
@@ -22,7 +23,7 @@
         "GeodatabaseSyncTask"
     ],
     "redirect_from": [
-        "/qt/latest/cpp/sample-code/sample-qt-generategeodatabase.htm"
+        "/qt/latest/cpp/sample-code/sample-qt-generategeodatabasereplicafromfeatureservice.htm"
     ],
     "relevant_apis": [
         "GenerateGeodatabaseJob",
@@ -31,9 +32,9 @@
         "GeodatabaseSyncTask"
     ],
     "snippets": [
-        "GenerateGeodatabase.cpp",
-        "GenerateGeodatabase.h",
-        "GenerateGeodatabase.qml"
+        "GenerateGeodatabaseReplicaFromFeatureService.cpp",
+        "GenerateGeodatabaseReplicaFromFeatureService.h",
+        "GenerateGeodatabaseReplicaFromFeatureService.qml"
     ],
-    "title": "Generate geodatabase"
+    "title": "Generate geodatabase replica from feature service"
 }

@@ -11,21 +11,28 @@
 // See the License for the specific language governing permissions and
 // limitations under the License.
 
+#include <QSettings>
 #include <QGuiApplication>
 #include <QQuickView>
-#include <QUrl>
-#include <QCoreApplication>
+#include <QCommandLineParser>
 #include <QDir>
 #include <QQmlEngine>
+
+#ifdef Q_OS_WIN
+#include <Windows.h>
+#endif
+
+#include "GenerateGeodatabaseReplicaFromFeatureService.h"
+#include "ArcGISRuntimeEnvironment.h"
 
 #define STRINGIZE(x) #x
 #define QUOTE(x) STRINGIZE(x)
 
 int main(int argc, char *argv[])
 {
-    QGuiApplication::setAttribute(Qt::AA_EnableHighDpiScaling);
-    QGuiApplication app(argc, argv);
-    app.setApplicationName("GenerateGeodatabase - QML");
+  QGuiApplication::setAttribute(Qt::AA_EnableHighDpiScaling);
+  QGuiApplication app(argc, argv);
+  app.setApplicationName("GenerateGeodatabaseReplicaFromFeatureService- C++");
 
   // Use of Esri location services, including basemaps and geocoding,
   // requires authentication using either an ArcGIS identity or an API Key.
@@ -42,32 +49,37 @@ int main(int argc, char *argv[])
   }
   else
   {
-      QCoreApplication::instance()->setProperty("Esri.ArcGISRuntime.apiKey", apiKey);
+      Esri::ArcGISRuntime::ArcGISRuntimeEnvironment::setApiKey(apiKey);
   }
 
-    // Initialize application view
-    QQuickView view;
-    view.setResizeMode(QQuickView::SizeRootObjectToView);
+  // Initialize the sample
+  GenerateGeodatabaseReplicaFromFeatureService::init();
 
-    // Add the import Path
-    view.engine()->addImportPath(QDir(QCoreApplication::applicationDirPath()).filePath("qml"));
+  // Initialize application view
+  QQuickView view;
+  view.setResizeMode(QQuickView::SizeRootObjectToView);
 
-    QString arcGISRuntimeImportPath = QUOTE(ARCGIS_RUNTIME_IMPORT_PATH);
+  // Add the import Path
+  view.engine()->addImportPath(QDir(QCoreApplication::applicationDirPath()).filePath("qml"));
 
-#if defined(LINUX_PLATFORM_REPLACEMENT)
-    // on some linux platforms the string 'linux' is replaced with 1
-    // fix the replacement paths which were created
-    QString replaceString = QUOTE(LINUX_PLATFORM_REPLACEMENT);
-    arcGISRuntimeImportPath = arcGISRuntimeImportPath.replace(replaceString, "linux", Qt::CaseSensitive);
-#endif
+  QString arcGISRuntimeImportPath = QUOTE(ARCGIS_RUNTIME_IMPORT_PATH);
 
-    // Add the Runtime and Extras path
-    view.engine()->addImportPath(arcGISRuntimeImportPath);
+ #if defined(LINUX_PLATFORM_REPLACEMENT)
+  // on some linux platforms the string 'linux' is replaced with 1
+  // fix the replacement paths which were created
+  QString replaceString = QUOTE(LINUX_PLATFORM_REPLACEMENT);
+  arcGISRuntimeImportPath = arcGISRuntimeImportPath.replace(replaceString, "linux", Qt::CaseSensitive);
+ #endif
 
-    // Set the source
-    view.setSource(QUrl("qrc:/Samples/Features/GenerateGeodatabase/GenerateGeodatabase.qml"));
+  // Add the Runtime and Extras path
+  view.engine()->addImportPath(arcGISRuntimeImportPath);
 
-    view.show();
+  // Set the source
+  view.setSource(QUrl("qrc:/Samples/Features/GenerateGeodatabaseReplicaFromFeatureService/GenerateGeodatabaseReplicaFromFeatureService.qml"));
 
-    return app.exec();
+  view.show();
+
+  return app.exec();
 }
+
+
