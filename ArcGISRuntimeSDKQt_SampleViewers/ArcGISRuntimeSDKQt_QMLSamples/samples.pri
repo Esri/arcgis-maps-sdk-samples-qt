@@ -73,7 +73,7 @@ RESOURCES += \
     "$$SAMPLEPATHQML/Features/FeatureLayer_Query/FeatureLayer_Query.qrc" \
     "$$SAMPLEPATHQML/Features/FeatureLayer_Selection/FeatureLayer_Selection.qrc" \
     "$$SAMPLEPATHQML/Features/FilterByDefinitionExpressionOrDisplayFilter/FilterByDefinitionExpressionOrDisplayFilter.qrc" \
-    "$$SAMPLEPATHQML/Features/GenerateGeodatabase/GenerateGeodatabase.qrc" \
+    "$$SAMPLEPATHQML/Features/GenerateGeodatabaseReplicaFromFeatureService/GenerateGeodatabaseReplicaFromFeatureService.qrc" \
     "$$SAMPLEPATHQML/Features/ListRelatedFeatures/ListRelatedFeatures.qrc" \
     "$$SAMPLEPATHQML/Features/ServiceFeatureTable_Cache/ServiceFeatureTable_Cache.qrc" \
     "$$SAMPLEPATHQML/Features/ServiceFeatureTable_ManualCache/ServiceFeatureTable_ManualCache.qrc" \
