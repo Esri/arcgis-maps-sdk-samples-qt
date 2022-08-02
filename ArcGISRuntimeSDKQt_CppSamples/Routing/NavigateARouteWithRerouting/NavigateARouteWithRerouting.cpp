@@ -205,10 +205,10 @@ bool NavigateARouteWithRerouting::recenterEnabled() const
   return m_recenterEnabled;
 }
 
-bool NavigateARouteWithRerouting::reroutingEnabled() const
-{
-  return m_recenterEnabled;
-}
+//bool NavigateARouteWithRerouting::reroutingEnabled() const
+//{
+//  return m_recenterEnabled;
+//}
 
 void NavigateARouteWithRerouting::startNavigation()
 {
@@ -242,11 +242,6 @@ void NavigateARouteWithRerouting::startNavigation()
     m_routeTracker->trackLocation(location);
   });
 
-  connect(m_routeTracker, &RouteTracker::enableReroutingCompleted, this, [this](QUuid)
-  {
-    emit reroutingEnabledChanged();
-  });
-
   // turn on map view's navigation mode
   m_mapView->locationDisplay()->setAutoPanMode(LocationDisplayAutoPanMode::Navigation);
   RouteTrackerLocationDataSource* dataSource = new RouteTrackerLocationDataSource(m_routeTracker, this);
@@ -259,7 +254,19 @@ void NavigateARouteWithRerouting::startNavigation()
   ReroutingParameters* rerouteParameters = new ReroutingParameters(m_routeTask, m_routeParameters, this);
   rerouteParameters->setStrategy(ReroutingStrategy::ToNextWaypoint);
   rerouteParameters->setVisitFirstStopOnStart(false);
+
+  //setup a lambda for rerouting enabled signal/call
+  connect(m_routeTracker, &RouteTracker::enableReroutingCompleted, this, [this](QUuid)
+  {
+    qDebug() << "Made it into enableReroutingCompleted";
+    qDebug() << "is rerouting enabled:" << m_routeTracker->isReroutingEnabled();
+    qDebug() << "completed enableReroutingCompleted";
+  });
+
   m_routeTracker->enableRerouting(rerouteParameters);
+
+  qDebug() << "is rerouting enabled: ";
+  qDebug() << m_routeTracker->isReroutingEnabled();
 
   // add a data source for the location display
   //TODO read the gpx file here and set data source
@@ -285,21 +292,27 @@ void NavigateARouteWithRerouting::connectRouteTrackerSignals()
     QString textString("Route status: \n");
     if (trackingStatus->destinationStatus() == DestinationStatus::NotReached || trackingStatus->destinationStatus() == DestinationStatus::Approaching)
     {
-      textString += "Distance remaining: " + trackingStatus->routeProgress()->remainingDistance()->displayText() + " " +
-          trackingStatus->routeProgress()->remainingDistance()->displayTextUnits().pluralDisplayName() + "\n";
-      QTime time = QTime::fromMSecsSinceStartOfDay(trackingStatus->routeProgress()->remainingTime() * 60 * 1000); // convert time to milliseconds
-      textString += "Time remaining: " + time.toString("hh:mm:ss") + "\n";
-
-      // display next direction
-      if (DirectionManeuverListModel* directionList = dynamic_cast<DirectionManeuverListModel*>(m_directions))
+      if (trackingStatus->isOnRoute())
       {
-        if (trackingStatus->currentManeuverIndex() + 1 < directionList->directionManeuvers().length())
+        textString += "Distance remaining: " + trackingStatus->routeProgress()->remainingDistance()->displayText() + " " +
+            trackingStatus->routeProgress()->remainingDistance()->displayTextUnits().pluralDisplayName() + "\n";
+        QTime time = QTime::fromMSecsSinceStartOfDay(trackingStatus->routeProgress()->remainingTime() * 60 * 1000); // convert time to milliseconds
+        textString += "Time remaining: " + time.toString("hh:mm:ss") + "\n";
+
+        // display next direction
+        if (DirectionManeuverListModel* directionList = dynamic_cast<DirectionManeuverListModel*>(m_directions))
         {
-          textString += "Next direction: " + qAsConst(directionList)->directionManeuvers()[trackingStatus->currentManeuverIndex() + 1].directionText() + "\n";
+          if (trackingStatus->currentManeuverIndex() + 1 < directionList->directionManeuvers().length())
+          {
+            textString += "Next direction: " + qAsConst(directionList)->directionManeuvers()[trackingStatus->currentManeuverIndex() + 1].directionText() + "\n";
+          }
         }
+        m_routeTraveledGraphic->setGeometry(trackingStatus->routeProgress()->traversedGeometry());
+        m_routeAheadGraphic->setGeometry(trackingStatus->routeProgress()->remainingGeometry());
       }
-      m_routeTraveledGraphic->setGeometry(trackingStatus->routeProgress()->traversedGeometry());
-      m_routeAheadGraphic->setGeometry(trackingStatus->routeProgress()->remainingGeometry());
+      else { //we have gone off route
+        qDebug() << "off the route!!";
+      }
     }
     else if (trackingStatus->destinationStatus() == DestinationStatus::Reached)
     {
@@ -326,15 +339,6 @@ void NavigateARouteWithRerouting::connectRouteTrackerSignals()
   connect(m_routeTracker, &RouteTracker::trackLocationCompleted, this, [this](QUuid)
   {
     m_routeTracker->generateVoiceGuidance();
-  });
-
-  connect(m_routeTracker, &RouteTracker::rerouteCompleted, this, [this](TrackingStatus* rawTrackingStatus, Error error)
-  {
-    auto trackingStatus = std::unique_ptr<TrackingStatus>(rawTrackingStatus);
-    //    m_routeAheadGraphic->setGeometry(Geometry());
-    //    m_routeTraveledGraphic->setGeometry(trackingStatus->routeResult().routes()[0].routeGeometry());
-    m_routeTraveledGraphic->setGeometry(trackingStatus->routeProgress()->traversedGeometry());
-    m_routeAheadGraphic->setGeometry(trackingStatus->routeProgress()->remainingGeometry());
   });
 }
 
