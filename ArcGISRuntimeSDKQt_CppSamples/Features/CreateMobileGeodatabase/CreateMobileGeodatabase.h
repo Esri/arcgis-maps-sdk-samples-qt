@@ -28,6 +28,7 @@ class MapQuickView;
 }
 }
 
+#include <FeatureListModel.h>
 
 #include <QObject>
 #include <QMouseEvent>
@@ -38,6 +39,7 @@ class CreateMobileGeodatabase : public QObject
   Q_OBJECT
 
   Q_PROPERTY(Esri::ArcGISRuntime::MapQuickView* mapView READ mapView WRITE setMapView NOTIFY mapViewChanged)
+  Q_PROPERTY(FeatureListModel* featureListModel READ featureListModel NOTIFY featureListModelChanged)
 
 public:
   explicit CreateMobileGeodatabase(QObject* parent = nullptr);
@@ -46,21 +48,26 @@ public:
   static void init();
 
   Q_INVOKABLE void test();
+  Q_INVOKABLE void clearTable();
 
 signals:
   void mapViewChanged();
+  void featureListModelChanged();
 
 private:
   Esri::ArcGISRuntime::MapQuickView* mapView() const;
+  FeatureListModel* featureListModel() const;
   void setMapView(Esri::ArcGISRuntime::MapQuickView* mapView);
   void createGeodatabase();
   void createTable();
   void addFeature(QMouseEvent mouseEvent);
+  void deleteFeatures();
 
   Esri::ArcGISRuntime::Map* m_map = nullptr;
   Esri::ArcGISRuntime::MapQuickView* m_mapView = nullptr;
   Esri::ArcGISRuntime::FeatureTable* m_featureTable = nullptr;
   Esri::ArcGISRuntime::Geodatabase* m_gdb = nullptr;
+  FeatureListModel* m_featureListModel = nullptr;
 
   QTemporaryDir m_tempDir;
 };

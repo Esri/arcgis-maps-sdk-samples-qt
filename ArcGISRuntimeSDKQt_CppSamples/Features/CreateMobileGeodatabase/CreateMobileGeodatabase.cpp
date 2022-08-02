@@ -20,6 +20,8 @@
 
 #include "CreateMobileGeodatabase.h"
 
+#include "FeatureListModel.h"
+
 #include "FeatureLayer.h"
 #include "FieldDescription.h"
 #include "FieldDescriptionListModel.h"
@@ -35,7 +37,6 @@ CreateMobileGeodatabase::CreateMobileGeodatabase(QObject* parent /* = nullptr */
   QObject(parent),
   m_map(new Map(BasemapStyle::ArcGISTopographic, this))
 {
-
 }
 
 CreateMobileGeodatabase::~CreateMobileGeodatabase() = default;
@@ -63,6 +64,8 @@ void CreateMobileGeodatabase::setMapView(MapQuickView* mapView)
   m_mapView->setViewpoint(Viewpoint(39.3238, -77.7332, 10'000));
 
   connect(m_mapView, &MapQuickView::mouseClicked, this, &CreateMobileGeodatabase::addFeature);
+
+  m_featureListModel = new FeatureListModel(this);
 
   createGeodatabase();
 
@@ -96,7 +99,7 @@ void CreateMobileGeodatabase::createTable()
 
     connect(m_featureTable, &FeatureTable::addFeatureCompleted, this, [this](QUuid, bool)
     {
-      qDebug() << m_featureTable->numberOfFeatures();
+      emit featureListModelChanged();
     });
 
     FeatureLayer* featureLayer = new FeatureLayer(m_featureTable, this);
@@ -107,8 +110,7 @@ void CreateMobileGeodatabase::createTable()
 
 void CreateMobileGeodatabase::test()
 {
-  qDebug() << m_map->operationalLayers()->rowCount();
-  qDebug() << m_map->operationalLayers()->first()->name();
+  clearTable();
 }
 
 void CreateMobileGeodatabase::addFeature(QMouseEvent mouseEvent)
@@ -117,6 +119,35 @@ void CreateMobileGeodatabase::addFeature(QMouseEvent mouseEvent)
   QVariantMap attributes = {};
   attributes.insert("collection_timestamp", QDateTime::currentDateTime());
   Feature* feature = m_featureTable->createFeature(attributes, mousePoint, this);
-  qDebug() << feature->attributes()->attributeValue("collection_timestamp");
   m_featureTable->addFeature(feature);
+  m_featureListModel->addFeature(feature);
+}
+
+void CreateMobileGeodatabase::deleteFeatures()
+{
+  QueryParameters params;
+  params.setWhereClause("1=1");
+  connect(m_featureTable, &FeatureTable::queryFeaturesCompleted, this, [this](QUuid, FeatureQueryResult* rawQueryResult)
+  {
+    auto queryResults = std::unique_ptr<FeatureQueryResult>(rawQueryResult);
+    auto resultIterator = queryResults->iterator();
+
+    m_featureTable->deleteFeatures(resultIterator.features());
+
+    m_featureTable->disconnect();
+  });
+  m_featureTable->queryFeatures(params);
+}
+
+void CreateMobileGeodatabase::clearTable()
+{
+  if (m_featureTable->numberOfFeatures() > 0)
+    deleteFeatures();
+
+  m_featureListModel->clear();
+}
+
+FeatureListModel* CreateMobileGeodatabase::featureListModel() const
+{
+  return m_featureListModel;
 }

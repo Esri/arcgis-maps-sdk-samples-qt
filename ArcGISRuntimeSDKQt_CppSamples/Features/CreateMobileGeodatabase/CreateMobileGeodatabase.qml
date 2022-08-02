@@ -16,9 +16,11 @@
 
 import QtQuick 2.12
 import QtQuick.Controls 2.12
+import QtQuick.Layouts 1.2
 import Esri.Samples 1.0
 
 Item {
+    id: item1
 
     // add a mapView component
     MapView {
@@ -31,8 +33,92 @@ Item {
         }
     }
 
+    Rectangle {
+        id: gridRectangle
+        width: parent.width - parent.width * 0.2
+        height: parent.height - parent.height * 0.2
+        anchors.verticalCenter: parent.verticalCenter
+        anchors.horizontalCenter: parent.horizontalCenter
+        color: "#3168ba"
+
+        ListView {
+            id: tableView
+            anchors.fill: parent
+            anchors.margins: 10
+            ScrollBar.vertical: ScrollBar {
+                active: true
+            }
+            clip: true
+
+            header: Row {
+                height: 40
+                width: tableView.width
+                Rectangle {
+                    color: "white"
+                    border.color: "black"
+                    width: parent.width * 0.2
+                    height: parent.height
+                    Text {
+                        anchors.centerIn: parent
+                        text: "featureOidRole"
+
+                    }
+                }
+                Rectangle {
+                    color: "white"
+                    border.color: "black"
+                    width: parent.width * 0.8
+                    height: parent.height
+                    Text {
+                        anchors.centerIn: parent
+                        text: "featureTimestampRole"
+                    }
+                }
+            }
+
+            model: model.featureListModel
+            delegate: Row {
+                height: 40
+                width: tableView.width
+                Rectangle {
+                    color: "white"
+                    border.color: "black"
+                    width: parent.width * 0.2
+                    height: parent.height
+                    Text {
+                        anchors.centerIn: parent
+                        text: featureOidRole
+
+                    }
+                }
+                Rectangle {
+                    color: "white"
+                    border.color: "black"
+                    width: parent.width * 0.8
+                    height: parent.height
+                    Text {
+                        anchors.centerIn: parent
+                        text: featureTimestampRole
+                    }
+                }
+            }
+        }
+    }
+
     Button {
-        onClicked: model.test();
+        id: tableToggle
+        text: "toggle table"
+        onClicked: {
+            gridRectangle.visible = !gridRectangle.visible;
+        }
+    }
+    Button {
+        id: clearFeatures
+        anchors.top: tableToggle.bottom
+        text: "clear features"
+        onClicked: {
+            model.clearTable();
+        }
     }
 
     // Declare the C++ instance which creates the scene etc. and supply the view

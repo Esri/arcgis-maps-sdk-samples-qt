@@ -33,9 +33,11 @@ include($$PWD/arcgisruntime.pri)
 #-------------------------------------------------------------------------------
 
 HEADERS += \
-    CreateMobileGeodatabase.h
+    CreateMobileGeodatabase.h \
+    FeatureListModel.h
 
 SOURCES += \
+    FeatureListModel.cpp \
     main.cpp \
     CreateMobileGeodatabase.cpp
 

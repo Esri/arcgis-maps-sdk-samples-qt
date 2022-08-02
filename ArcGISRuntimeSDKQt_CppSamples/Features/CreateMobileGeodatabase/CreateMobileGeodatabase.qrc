@@ -7,5 +7,6 @@
         <file>main.qml</file>
         <file>screenshot.png</file>
         <file>README.md</file>
+        <file>FeatureTableGrid.qml</file>
     </qresource>
 </RCC>
