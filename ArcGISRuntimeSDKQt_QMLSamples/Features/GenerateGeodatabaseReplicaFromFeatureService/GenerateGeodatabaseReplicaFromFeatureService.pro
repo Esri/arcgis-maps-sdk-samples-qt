@@ -26,7 +26,7 @@ CONFIG += c++14
 
 SOURCES += main.cpp
 
-RESOURCES += GenerateGeodatabase.qrc
+RESOURCES += GenerateGeodatabaseReplicaFromFeatureService.qrc
 
 ios {
     QMAKE_INFO_PLIST = $$PWD/Info.plist

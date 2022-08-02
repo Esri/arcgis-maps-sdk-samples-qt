@@ -25,7 +25,7 @@ int main(int argc, char *argv[])
 {
     QGuiApplication::setAttribute(Qt::AA_EnableHighDpiScaling);
     QGuiApplication app(argc, argv);
-    app.setApplicationName("GenerateGeodatabase - QML");
+    app.setApplicationName("GenerateGeodatabaseReplicaFromFeatureService - QML");
 
   // Use of Esri location services, including basemaps and geocoding,
   // requires authentication using either an ArcGIS identity or an API Key.
@@ -65,7 +65,7 @@ int main(int argc, char *argv[])
     view.engine()->addImportPath(arcGISRuntimeImportPath);
 
     // Set the source
-    view.setSource(QUrl("qrc:/Samples/Features/GenerateGeodatabase/GenerateGeodatabase.qml"));
+    view.setSource(QUrl("qrc:/Samples/Features/GenerateGeodatabaseReplicaFromFeatureService/GenerateGeodatabaseReplicaFromFeatureService.qml"));
 
     view.show();
 
