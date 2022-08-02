@@ -331,8 +331,10 @@ void NavigateARouteWithRerouting::connectRouteTrackerSignals()
   connect(m_routeTracker, &RouteTracker::rerouteCompleted, this, [this](TrackingStatus* rawTrackingStatus, Error error)
   {
     auto trackingStatus = std::unique_ptr<TrackingStatus>(rawTrackingStatus);
-    m_routeAheadGraphic->setGeometry(Geometry());
-    m_routeTraveledGraphic->setGeometry(trackingStatus->routeResult().routes()[0].routeGeometry());
+    //    m_routeAheadGraphic->setGeometry(Geometry());
+    //    m_routeTraveledGraphic->setGeometry(trackingStatus->routeResult().routes()[0].routeGeometry());
+    m_routeTraveledGraphic->setGeometry(trackingStatus->routeProgress()->traversedGeometry());
+    m_routeAheadGraphic->setGeometry(trackingStatus->routeProgress()->remainingGeometry());
   });
 }
 
