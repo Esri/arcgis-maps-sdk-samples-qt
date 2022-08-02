@@ -75,7 +75,7 @@ INCLUDEPATH += \
     "$$SAMPLEPATHCPP/Features/FeatureLayerQuery" \
     "$$SAMPLEPATHCPP/Features/FeatureLayerSelection" \
     "$$SAMPLEPATHCPP/Features/FilterByDefinitionExpressionOrDisplayFilter" \
-    "$$SAMPLEPATHCPP/Features/GenerateGeodatabase" \
+    "$$SAMPLEPATHCPP/Features/GenerateGeodatabaseReplicaFromFeatureService" \
     "$$SAMPLEPATHCPP/Features/ListRelatedFeatures" \
     "$$SAMPLEPATHCPP/Features/ServiceFeatureTableCache" \
     "$$SAMPLEPATHCPP/Features/ServiceFeatureTableManualCache" \
@@ -281,7 +281,7 @@ HEADERS += \
     "$$SAMPLEPATHCPP/Features/FeatureLayerQuery/FeatureLayerQuery.h" \
     "$$SAMPLEPATHCPP/Features/FeatureLayerSelection/FeatureLayerSelection.h" \
     "$$SAMPLEPATHCPP/Features/FilterByDefinitionExpressionOrDisplayFilter/FilterByDefinitionExpressionOrDisplayFilter.h" \
-    "$$SAMPLEPATHCPP/Features/GenerateGeodatabase/GenerateGeodatabase.h" \
+    "$$SAMPLEPATHCPP/Features/GenerateGeodatabaseReplicaFromFeatureService/GenerateGeodatabaseReplicaFromFeatureService.h" \
     "$$SAMPLEPATHCPP/Features/ListRelatedFeatures/ListRelatedFeatures.h" \
     "$$SAMPLEPATHCPP/Features/ListRelatedFeatures/RelatedFeature.h" \
     "$$SAMPLEPATHCPP/Features/ListRelatedFeatures/RelatedFeatureListModel.h" \
@@ -493,7 +493,7 @@ SOURCES += \
     "$$SAMPLEPATHCPP/Features/FeatureLayerQuery/FeatureLayerQuery.cpp" \
     "$$SAMPLEPATHCPP/Features/FeatureLayerSelection/FeatureLayerSelection.cpp" \
     "$$SAMPLEPATHCPP/Features/FilterByDefinitionExpressionOrDisplayFilter/FilterByDefinitionExpressionOrDisplayFilter.cpp" \
-    "$$SAMPLEPATHCPP/Features/GenerateGeodatabase/GenerateGeodatabase.cpp" \
+    "$$SAMPLEPATHCPP/Features/GenerateGeodatabaseReplicaFromFeatureService/GenerateGeodatabaseReplicaFromFeatureService.cpp" \
     "$$SAMPLEPATHCPP/Features/ListRelatedFeatures/ListRelatedFeatures.cpp" \
     "$$SAMPLEPATHCPP/Features/ListRelatedFeatures/RelatedFeature.cpp" \
     "$$SAMPLEPATHCPP/Features/ListRelatedFeatures/RelatedFeatureListModel.cpp" \
@@ -704,7 +704,7 @@ RESOURCES += \
     "$$SAMPLEPATHCPP/Features/FeatureLayerQuery/FeatureLayerQuery.qrc" \
     "$$SAMPLEPATHCPP/Features/FeatureLayerSelection/FeatureLayerSelection.qrc" \
     "$$SAMPLEPATHCPP/Features/FilterByDefinitionExpressionOrDisplayFilter/FilterByDefinitionExpressionOrDisplayFilter.qrc" \
-    "$$SAMPLEPATHCPP/Features/GenerateGeodatabase/GenerateGeodatabase.qrc" \
+    "$$SAMPLEPATHCPP/Features/GenerateGeodatabaseReplicaFromFeatureService/GenerateGeodatabaseReplicaFromFeatureService.qrc" \
     "$$SAMPLEPATHCPP/Features/ListRelatedFeatures/ListRelatedFeatures.qrc" \
     "$$SAMPLEPATHCPP/Features/ServiceFeatureTableCache/ServiceFeatureTableCache.qrc" \
     "$$SAMPLEPATHCPP/Features/ServiceFeatureTableManualCache/ServiceFeatureTableManualCache.qrc" \

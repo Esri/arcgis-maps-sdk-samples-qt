@@ -1,4 +1,4 @@
-// [WriteFile Name=GenerateGeodatabase, Category=Features]
+// [WriteFile Name=GenerateGeodatabaseReplicaFromFeatureService, Category=Features]
 // [Legal]
 // Copyright 2016 Esri.
 
@@ -19,7 +19,7 @@ import QtQuick.Controls 2.2
 import QtGraphicalEffects 1.0
 import Esri.Samples 1.0
 
-GenerateGeodatabaseSample {
+GenerateGeodatabaseReplicaFromFeatureServiceSample {
     id: generateSample
     width: 800
     height: 600
@@ -86,7 +86,7 @@ GenerateGeodatabaseSample {
             Image {
                 width: 38
                 height: width
-                source: "qrc:/Samples/Features/GenerateGeodatabase/download.png"
+                source: "qrc:/Samples/Features/GenerateGeodatabaseReplicaFromFeatureService/download.png"
             }
 
             Text {
