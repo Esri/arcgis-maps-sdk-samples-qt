@@ -17,11 +17,12 @@
 import QtQuick 2.12
 import QtQuick.Controls 2.12
 import QtQuick.Layouts 1.2
+import Qt.labs.platform 1.1
 import Esri.Samples 1.0
+//import Esri.ArcGISExtras 1.1
 
 Item {
-    id: item1
-
+    id: rootItem
     // add a mapView component
     MapView {
         id: view
@@ -33,13 +34,136 @@ Item {
         }
     }
 
+
+
+
+    CreateMobileGeodatabaseSample {
+        id: model
+        mapView: view
+    }
+
+    Rectangle {
+        id: rectangle
+        width: 200
+        height: 400
+        color: "#ffffff"
+        anchors.right: parent.right
+        anchors.top: parent.top
+        anchors.topMargin: 10
+        anchors.rightMargin: 10
+
+        // Prevent mouse interaction from propagating to the MapView
+        MouseArea {
+            anchors.fill: parent
+            onPressed: mouse.accepted = true;
+            onWheel: wheel.accepted = true;
+        }
+
+        Column {
+            id: column1
+            anchors.fill: parent
+            anchors.rightMargin: 10
+            anchors.leftMargin: 10
+            anchors.bottomMargin: 10
+            anchors.topMargin: 10
+            spacing: 5
+
+            Button {
+                id: createGdbButton
+                text: qsTr("Create new .geodatabase")
+                anchors.left: parent.left
+                anchors.right: parent.right
+                anchors.rightMargin: 0
+                anchors.leftMargin: 0
+                enabled: !model.gdbOpen
+                onClicked: {
+                    model.createGeodatabase();
+                }
+            }
+
+            Button {
+                id: viewGdbTableButton
+                text: qsTr("View feature table")
+                anchors.left: parent.left
+                anchors.right: parent.right
+                anchors.rightMargin: 0
+                anchors.leftMargin: 0
+                enabled: model.gdbOpen
+                onClicked: {
+                    gridRectangle.visible = true;
+                    rectangle.visible = false;
+                }
+            }
+            Button {
+                id: clearFeaturesButton
+                text: qsTr("Clear features")
+                anchors.left: parent.left
+                anchors.right: parent.right
+                anchors.rightMargin: 0
+                anchors.leftMargin: 0
+                enabled: model.gdbOpen
+                onClicked: {
+                    model.clearTable();
+                }
+            }
+
+
+            Button {
+                id: closeGdbButton
+                text: qsTr("Close .geodatabase")
+                anchors.left: parent.left
+                anchors.right: parent.right
+                anchors.rightMargin: 0
+                anchors.leftMargin: 0
+                enabled: model.gdbOpen
+                onClicked: {
+                    model.closeGdb();
+                }
+            }
+
+            Text {
+                id: text1
+                text: model.gdbFilePath ? model.gdbFilePath.split("/").pop() : ""
+                //elide: Text.ElideLeft
+                anchors.left: parent.left
+                anchors.right: parent.right
+                font.pixelSize: 12
+                wrapMode: Text.WrapAnywhere
+                anchors.rightMargin: 0
+                anchors.leftMargin: 0
+            }
+
+            Text {
+                id: text2
+                text: qsTr("Text")
+                anchors.left: parent.left
+                anchors.right: parent.right
+                font.pixelSize: 12
+                wrapMode: Text.WordWrap
+                anchors.rightMargin: 0
+                anchors.leftMargin: 0
+            }
+        }
+    }
+
+    // Declare the C++ instance which creates the scene etc. and supply the view
     Rectangle {
         id: gridRectangle
+        anchors {
+            verticalCenter: parent.verticalCenter
+            horizontalCenter: parent.horizontalCenter
+        }
         width: parent.width - parent.width * 0.2
-        height: parent.height - parent.height * 0.2
-        anchors.verticalCenter: parent.verticalCenter
-        anchors.horizontalCenter: parent.horizontalCenter
-        color: "#3168ba"
+        height: parent.height - parent.height * 0.3
+        color: "#80808080"
+        visible: false
+
+        // Prevent mouse interaction from propagating to the MapView
+        MouseArea {
+            anchors.fill: parent
+            onPressed: mouse.accepted = true;
+            onWheel: wheel.accepted = true;
+        }
 
         ListView {
             id: tableView
@@ -54,24 +178,28 @@ Item {
                 height: 40
                 width: tableView.width
                 Rectangle {
-                    color: "white"
+                    color: "grey"
                     border.color: "black"
                     width: parent.width * 0.2
                     height: parent.height
                     Text {
                         anchors.centerIn: parent
-                        text: "featureOidRole"
+                        text: "Object ID"
+                        color: "white"
+                        font.bold: true
 
                     }
                 }
                 Rectangle {
-                    color: "white"
+                    color: "grey"
                     border.color: "black"
                     width: parent.width * 0.8
                     height: parent.height
                     Text {
                         anchors.centerIn: parent
-                        text: "featureTimestampRole"
+                        text: "Timestamp"
+                        color: "white"
+                        font.bold: true
                     }
                 }
             }
@@ -106,24 +234,25 @@ Item {
     }
 
     Button {
-        id: tableToggle
-        text: "toggle table"
-        onClicked: {
-            gridRectangle.visible = !gridRectangle.visible;
+        id: closeTableButton
+        anchors {
+            top: gridRectangle.bottom
         }
-    }
-    Button {
-        id: clearFeatures
-        anchors.top: tableToggle.bottom
-        text: "clear features"
+
+        text: "Close table"
+        anchors.topMargin: 10
+        anchors.horizontalCenter: parent.horizontalCenter
+        visible: gridRectangle.visible
         onClicked: {
-            model.clearTable();
+            gridRectangle.visible = false;
+            rectangle.visible = true;
         }
     }
 
-    // Declare the C++ instance which creates the scene etc. and supply the view
-    CreateMobileGeodatabaseSample {
-        id: model
-        mapView: view
-    }
 }
+
+/*##^##
+Designer {
+    D{i:0;autoSize:true;height:480;width:640}
+}
+##^##*/

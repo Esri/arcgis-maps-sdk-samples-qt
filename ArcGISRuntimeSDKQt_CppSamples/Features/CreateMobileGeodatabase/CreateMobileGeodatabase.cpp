@@ -37,6 +37,7 @@ CreateMobileGeodatabase::CreateMobileGeodatabase(QObject* parent /* = nullptr */
   QObject(parent),
   m_map(new Map(BasemapStyle::ArcGISTopographic, this))
 {
+  m_featureListModel = new FeatureListModel(this);
 }
 
 CreateMobileGeodatabase::~CreateMobileGeodatabase() = default;
@@ -63,29 +64,44 @@ void CreateMobileGeodatabase::setMapView(MapQuickView* mapView)
   m_mapView->setMap(m_map);
   m_mapView->setViewpoint(Viewpoint(39.3238, -77.7332, 10'000));
 
-  connect(m_mapView, &MapQuickView::mouseClicked, this, &CreateMobileGeodatabase::addFeature);
+  createConnections();
 
-  m_featureListModel = new FeatureListModel(this);
 
-  createGeodatabase();
+
 
   emit mapViewChanged();
 }
 
-void CreateMobileGeodatabase::createGeodatabase()
+void CreateMobileGeodatabase::createConnections()
 {
-  QString path = m_tempDir.path() + "/LocationHistory.geodatabase";
-  connect(Geodatabase::instance(), &Geodatabase::createCompleted, this, [this](QUuid, Geodatabase* geodatabaseResult)
+  connect(m_mapView, &MapQuickView::mouseClicked, this, &CreateMobileGeodatabase::addFeature);
+
+  connect(Geodatabase::instance(), &Geodatabase::createCompleted, this, [this](QUuid, Geodatabase* geodatabase)
   {
-    m_gdb = geodatabaseResult;
-    m_gdb->setParent(this);
+    qDebug() << "create gdb completed";
+    m_gdb = geodatabase;
     createTable();
   });
-  Geodatabase::create(path);
+}
+
+void CreateMobileGeodatabase::createGeodatabase()
+{
+  m_gdbFilePath = QString{m_tempDir.path() + "/LocationHistory%1.geodatabase"}.arg(QDateTime::currentSecsSinceEpoch());
+  qDebug() << m_gdbFilePath;
+  emit gdbFilePathChanged();
+
+  // We cannot overwrite an existing geodatabase
+  if (QFile::exists(m_gdbFilePath))
+    return;
+
+  Geodatabase::create(m_gdbFilePath);
 }
 
 void CreateMobileGeodatabase::createTable()
 {
+  m_gdbOpen = true;
+  emit gdbOpenChanged();
+
   auto tableDescription = new TableDescription("LocationHistory", SpatialReference::wgs84(), GeometryType::Point, this);
   tableDescription->setHasAttachments(false);
   tableDescription->setHasM(false);
@@ -95,16 +111,13 @@ void CreateMobileGeodatabase::createTable()
 
   connect(m_gdb, &Geodatabase::createTableCompleted, this, [this](QUuid, GeodatabaseFeatureTable* gdbFeatureTableResult)
   {
+    qDebug() << "create table completed";
     m_featureTable = gdbFeatureTableResult;
-
-    connect(m_featureTable, &FeatureTable::addFeatureCompleted, this, [this](QUuid, bool)
-    {
-      emit featureListModelChanged();
-    });
 
     FeatureLayer* featureLayer = new FeatureLayer(m_featureTable, this);
     m_map->operationalLayers()->append(featureLayer);
   });
+
   m_gdb->createTable(tableDescription);
 }
 
@@ -113,14 +126,37 @@ void CreateMobileGeodatabase::test()
   clearTable();
 }
 
+bool CreateMobileGeodatabase::gdbOpen() const
+{
+  return m_gdbOpen;
+}
+
+void CreateMobileGeodatabase::closeGdb()
+{
+  if (!m_gdb)
+    return;
+
+  m_gdb->close();
+  m_gdbOpen = false;
+
+  m_map->operationalLayers()->clear();
+  m_featureListModel->clear();
+
+  emit gdbOpenChanged();
+}
+
 void CreateMobileGeodatabase::addFeature(QMouseEvent mouseEvent)
 {
+  if (!m_featureTable)
+    return;
+
   const Point mousePoint = m_mapView->screenToLocation(mouseEvent.x(), mouseEvent.y());
   QVariantMap attributes = {};
   attributes.insert("collection_timestamp", QDateTime::currentDateTime());
   Feature* feature = m_featureTable->createFeature(attributes, mousePoint, this);
   m_featureTable->addFeature(feature);
   m_featureListModel->addFeature(feature);
+  emit featureListModelChanged();
 }
 
 void CreateMobileGeodatabase::deleteFeatures()
@@ -129,6 +165,7 @@ void CreateMobileGeodatabase::deleteFeatures()
   params.setWhereClause("1=1");
   connect(m_featureTable, &FeatureTable::queryFeaturesCompleted, this, [this](QUuid, FeatureQueryResult* rawQueryResult)
   {
+    qDebug() << "query features completed";
     auto queryResults = std::unique_ptr<FeatureQueryResult>(rawQueryResult);
     auto resultIterator = queryResults->iterator();
 
@@ -150,4 +187,9 @@ void CreateMobileGeodatabase::clearTable()
 FeatureListModel* CreateMobileGeodatabase::featureListModel() const
 {
   return m_featureListModel;
+}
+
+QString CreateMobileGeodatabase::gdbFilePath() const
+{
+  return m_gdbFilePath;
 }

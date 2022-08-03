@@ -40,6 +40,8 @@ class CreateMobileGeodatabase : public QObject
 
   Q_PROPERTY(Esri::ArcGISRuntime::MapQuickView* mapView READ mapView WRITE setMapView NOTIFY mapViewChanged)
   Q_PROPERTY(FeatureListModel* featureListModel READ featureListModel NOTIFY featureListModelChanged)
+  Q_PROPERTY(QString gdbFilePath READ gdbFilePath NOTIFY gdbFilePathChanged)
+  Q_PROPERTY(bool gdbOpen READ gdbOpen NOTIFY gdbOpenChanged)
 
 public:
   explicit CreateMobileGeodatabase(QObject* parent = nullptr);
@@ -48,26 +50,35 @@ public:
   static void init();
 
   Q_INVOKABLE void test();
+  Q_INVOKABLE void createGeodatabase();
   Q_INVOKABLE void clearTable();
+  Q_INVOKABLE void closeGdb();
+  //Q_INVOKABLE void selectFilePath();
 
 signals:
   void mapViewChanged();
   void featureListModelChanged();
+  void gdbFilePathChanged();
+  void gdbOpenChanged();
 
 private:
   Esri::ArcGISRuntime::MapQuickView* mapView() const;
   FeatureListModel* featureListModel() const;
+  QString gdbFilePath() const;
+  bool gdbOpen() const;
   void setMapView(Esri::ArcGISRuntime::MapQuickView* mapView);
-  void createGeodatabase();
   void createTable();
   void addFeature(QMouseEvent mouseEvent);
   void deleteFeatures();
+  void createConnections();
 
   Esri::ArcGISRuntime::Map* m_map = nullptr;
   Esri::ArcGISRuntime::MapQuickView* m_mapView = nullptr;
   Esri::ArcGISRuntime::FeatureTable* m_featureTable = nullptr;
   Esri::ArcGISRuntime::Geodatabase* m_gdb = nullptr;
   FeatureListModel* m_featureListModel = nullptr;
+  QString m_gdbFilePath;
+  bool m_gdbOpen = false;
 
   QTemporaryDir m_tempDir;
 };
