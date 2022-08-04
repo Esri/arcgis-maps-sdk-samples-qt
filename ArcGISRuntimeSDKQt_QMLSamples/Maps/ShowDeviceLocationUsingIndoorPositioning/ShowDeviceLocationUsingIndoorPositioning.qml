@@ -146,9 +146,9 @@ Rectangle {
         // Update information text box and floor view if necessary
         mapView.locationDisplay.locationChanged.connect(() => {
             if (mapView.locationDisplay.location !== undefined) {
-                initializingText.visible = false;
-            } else {
                 initializingText.visible = true;
+            } else {
+                initializingText.visible = false;
             }
 
             if (mapView.locationDisplay.location.additionalSourceProperties.floor !== undefined) {

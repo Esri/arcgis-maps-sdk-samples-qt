@@ -78,8 +78,6 @@
     <string></string>
     <key>NSPhotoLibraryUsageDescription</key>
     <string></string>
-    <key>NSBluetoothAlwaysUsageDescription</key>
-    <string>Bluetooth access is required for Indoor Positioning</string>
     <key>UISupportedInterfaceOrientations</key>
     <array>
         <string>UIInterfaceOrientationPortrait</string>
