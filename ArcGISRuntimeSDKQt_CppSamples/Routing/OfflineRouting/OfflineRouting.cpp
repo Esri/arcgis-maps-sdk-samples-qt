@@ -42,6 +42,7 @@
 #include <memory>
 #include <QDir>
 #include <QScopedPointer>
+#include <QStandardPaths>
 
 using namespace Esri::ArcGISRuntime;
 

@@ -26,6 +26,7 @@
 #include "TileCache.h"
 
 #include <QDir>
+#include <QStandardPaths>
 
 using namespace Esri::ArcGISRuntime;
 

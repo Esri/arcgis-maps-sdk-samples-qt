@@ -30,6 +30,7 @@
 #include <QDir>
 #include <QString>
 #include <memory>
+#include <QStandardPaths>
 
 using namespace Esri::ArcGISRuntime;
 

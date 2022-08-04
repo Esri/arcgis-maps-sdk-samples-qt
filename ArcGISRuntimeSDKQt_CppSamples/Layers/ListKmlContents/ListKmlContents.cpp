@@ -32,6 +32,7 @@
 
 #include <QDir>
 #include <algorithm>
+#include <QStandardPaths>
 
 using namespace Esri::ArcGISRuntime;
 
