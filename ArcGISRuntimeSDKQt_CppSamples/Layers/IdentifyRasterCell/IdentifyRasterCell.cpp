@@ -27,9 +27,13 @@
 #include "RasterCell.h"
 #include "RasterLayer.h"
 
+#include <memory>
 #include <QDir>
 #include <QString>
-#include <memory>
+
+#ifdef Q_OS_IOS
+#include <QStandardPaths>
+#endif // Q_OS_IOS
 
 using namespace Esri::ArcGISRuntime;
 

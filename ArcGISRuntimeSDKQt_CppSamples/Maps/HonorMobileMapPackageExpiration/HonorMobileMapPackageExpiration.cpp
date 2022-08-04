@@ -28,7 +28,7 @@
 
 #ifdef Q_OS_IOS
 #include <QStandardPaths>
-#endif
+#endif // Q_OS_IOS
 
 using namespace Esri::ArcGISRuntime;
 
