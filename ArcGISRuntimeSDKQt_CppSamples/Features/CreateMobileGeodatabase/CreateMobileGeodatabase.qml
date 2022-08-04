@@ -44,7 +44,7 @@ Item {
 
     Rectangle {
         id: rectangle
-        width: 200
+        width: 250
         height: 400
         color: "#ffffff"
         anchors.right: parent.right
@@ -135,7 +135,7 @@ Item {
 
             Text {
                 id: text2
-                text: qsTr("Text")
+                text: "Number of features: " + model.featureCount
                 anchors.left: parent.left
                 anchors.right: parent.right
                 font.pixelSize: 12
@@ -235,13 +235,12 @@ Item {
 
     Button {
         id: closeTableButton
-        anchors {
-            top: gridRectangle.bottom
-        }
+        anchors.right: parent.right
+        anchors.top: parent.top
+        anchors.topMargin: 10
+        anchors.rightMargin: 10
 
         text: "Close table"
-        anchors.topMargin: 10
-        anchors.horizontalCenter: parent.horizontalCenter
         visible: gridRectangle.visible
         onClicked: {
             gridRectangle.visible = false;

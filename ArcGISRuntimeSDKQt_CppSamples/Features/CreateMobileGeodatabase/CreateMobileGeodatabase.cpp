@@ -66,9 +66,6 @@ void CreateMobileGeodatabase::setMapView(MapQuickView* mapView)
 
   createConnections();
 
-
-
-
   emit mapViewChanged();
 }
 
@@ -78,7 +75,6 @@ void CreateMobileGeodatabase::createConnections()
 
   connect(Geodatabase::instance(), &Geodatabase::createCompleted, this, [this](QUuid, Geodatabase* geodatabase)
   {
-    qDebug() << "create gdb completed";
     m_gdb = geodatabase;
     createTable();
   });
@@ -86,8 +82,7 @@ void CreateMobileGeodatabase::createConnections()
 
 void CreateMobileGeodatabase::createGeodatabase()
 {
-  m_gdbFilePath = QString{m_tempDir.path() + "/LocationHistory%1.geodatabase"}.arg(QDateTime::currentSecsSinceEpoch());
-  qDebug() << m_gdbFilePath;
+  m_gdbFilePath = QString{m_tempDir.path() + "/LocationHistory_%1.geodatabase"}.arg(QDateTime::currentSecsSinceEpoch() % 1000);
   emit gdbFilePathChanged();
 
   // We cannot overwrite an existing geodatabase
@@ -111,7 +106,6 @@ void CreateMobileGeodatabase::createTable()
 
   connect(m_gdb, &Geodatabase::createTableCompleted, this, [this](QUuid, GeodatabaseFeatureTable* gdbFeatureTableResult)
   {
-    qDebug() << "create table completed";
     m_featureTable = gdbFeatureTableResult;
 
     FeatureLayer* featureLayer = new FeatureLayer(m_featureTable, this);
@@ -121,9 +115,9 @@ void CreateMobileGeodatabase::createTable()
   m_gdb->createTable(tableDescription);
 }
 
-void CreateMobileGeodatabase::test()
+int CreateMobileGeodatabase::featureCount() const
 {
-  clearTable();
+  return m_featureCount;
 }
 
 bool CreateMobileGeodatabase::gdbOpen() const
@@ -155,8 +149,12 @@ void CreateMobileGeodatabase::addFeature(QMouseEvent mouseEvent)
   attributes.insert("collection_timestamp", QDateTime::currentDateTime());
   Feature* feature = m_featureTable->createFeature(attributes, mousePoint, this);
   m_featureTable->addFeature(feature);
+
   m_featureListModel->addFeature(feature);
   emit featureListModelChanged();
+
+  m_featureCount = m_featureTable->numberOfFeatures();
+  emit featureCountChanged();
 }
 
 void CreateMobileGeodatabase::deleteFeatures()
