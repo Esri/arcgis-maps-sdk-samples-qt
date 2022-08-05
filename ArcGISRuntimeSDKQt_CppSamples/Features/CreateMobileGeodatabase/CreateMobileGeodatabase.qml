@@ -45,7 +45,7 @@ Item {
     Rectangle {
         id: rectangle
         width: 250
-        height: 400
+        height: column1.height + 20
         color: "#ffffff"
         anchors.right: parent.right
         anchors.top: parent.top
@@ -61,12 +61,18 @@ Item {
 
         Column {
             id: column1
-            anchors.fill: parent
+            anchors.left: parent.left
+            anchors.right: parent.right
+            anchors.top: parent.top
             anchors.rightMargin: 10
             anchors.leftMargin: 10
-            anchors.bottomMargin: 10
             anchors.topMargin: 10
+            height: children.height
             spacing: 5
+
+            onHeightChanged: {
+                rectangle.height = height + 20
+            }
 
             Button {
                 id: createGdbButton
@@ -118,12 +124,16 @@ Item {
                 enabled: model.gdbOpen
                 onClicked: {
                     model.closeGdb();
+                    pathRectangle.visible = true;
+                    rectangle.visible = false;
+
+
                 }
             }
 
             Text {
                 id: text1
-                text: model.gdbFilePath ? model.gdbFilePath.split("/").pop() : ""
+                text: "Created new geodatabase:\n" + model.gdbFilePath ? model.gdbFilePath.split("/").pop() : ""
                 //elide: Text.ElideLeft
                 anchors.left: parent.left
                 anchors.right: parent.right
@@ -131,6 +141,7 @@ Item {
                 wrapMode: Text.WrapAnywhere
                 anchors.rightMargin: 0
                 anchors.leftMargin: 0
+                visible: model.gdbOpen
             }
 
             Text {
@@ -142,8 +153,62 @@ Item {
                 wrapMode: Text.WordWrap
                 anchors.rightMargin: 0
                 anchors.leftMargin: 0
+                visible: model.gdbOpen
             }
         }
+    }
+
+    Rectangle {
+        id: pathRectangle
+        anchors.centerIn: parent
+        width: parent.width * 0.75
+        height: gdbInfoColumn.height + 20
+        color: "white"
+        border.color: "black"
+        clip: true
+        visible: false
+
+        // Prevent mouse interaction from propagating to the MapView
+        MouseArea {
+            anchors.fill: parent
+            onPressed: mouse.accepted = true;
+            onWheel: wheel.accepted = true;
+        }
+
+        Column {
+            id: gdbInfoColumn
+            anchors.centerIn: parent
+            anchors.margins: 10
+            spacing: 10
+            width: parent.width - 20
+            height: children.height
+
+            Text {
+                id: gdbNameText
+                width: parent.width
+                text: "Closed and saved geodatabase to the temporary path:"
+                wrapMode: Text.WordWrap
+            }
+            TextEdit {
+                id: gdbPathText
+                width: parent.width
+                readOnly: true
+                selectByMouse: true
+                text: model.gdbFilePath
+                wrapMode: Text.WrapAnywhere
+            }
+            Button {
+                id: gdbInfoClose
+                anchors.horizontalCenter: parent.horizontalCenter
+                text: "ok"
+                onClicked: {
+                    pathRectangle.visible = false;
+                    rectangle.visible = true;
+                }
+            }
+        }
+
+
     }
 
     // Declare the C++ instance which creates the scene etc. and supply the view
@@ -233,21 +298,36 @@ Item {
         }
     }
 
-    Button {
-        id: closeTableButton
+    Rectangle {
+        id: buttonRectangle
+        width: closeTableButton.width + 10
+        height: closeTableButton.height + 10
+        color: "#ffffff"
         anchors.right: parent.right
         anchors.top: parent.top
         anchors.topMargin: 10
         anchors.rightMargin: 10
-
-        text: "Close table"
         visible: gridRectangle.visible
-        onClicked: {
-            gridRectangle.visible = false;
-            rectangle.visible = true;
+
+        // Prevent mouse interaction from propagating to the MapView
+        MouseArea {
+            anchors.fill: parent
+            onPressed: mouse.accepted = true;
+            onWheel: wheel.accepted = true;
+        }
+
+        Button {
+            id: closeTableButton
+            anchors.centerIn: parent
+
+            text: "Close table view"
+
+            onClicked: {
+                gridRectangle.visible = false;
+                rectangle.visible = true;
+            }
         }
     }
-
 }
 
 /*##^##
