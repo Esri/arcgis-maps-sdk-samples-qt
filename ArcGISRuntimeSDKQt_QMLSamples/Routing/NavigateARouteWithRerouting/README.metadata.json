@@ -1,6 +1,6 @@
 {
     "category": "Routing",
-    "description": "Use a routing service to navigate between points.",
+    "description": "Navigate between two points and dynamically recalculate an alternate route when the original route is unavailable",
     "ignore": false,
     "images": [
         "screenshot.png"
@@ -15,11 +15,12 @@
         "DestinationStatus",
         "DirectionManeuver",
         "Location",
+        "LocationDataSource",
+        "ReroutingStrategy",
         "Route",
         "RouteParameters",
         "RouteTask",
         "RouteTracker",
-        "SimulatedLocationDataSource",
         "Stop",
         "VoiceGuidance"
     ],
@@ -30,11 +31,12 @@
         "DestinationStatus",
         "DirectionManeuver",
         "Location",
+        "LocationDataSource",
+        "ReroutingStrategy",
         "Route",
         "RouteParameters",
         "RouteTask",
         "RouteTracker",
-        "SimulatedLocationDataSource",
         "Stop",
         "VoiceGuidance"
     ],
@@ -43,5 +45,5 @@
         "NavigateRouteSpeaker.cpp",
         "NavigateRouteSpeaker.h"
     ],
-    "title": "Navigate route"
+    "title": "Navigate a route with rerouting"
 }
