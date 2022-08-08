@@ -181,6 +181,7 @@ RESOURCES += \
     "$$SAMPLEPATHQML/Routing/FindRoute/FindRoute.qrc" \
     "$$SAMPLEPATHQML/Routing/FindServiceAreasForMultipleFacilities/FindServiceAreasForMultipleFacilities.qrc" \
     "$$SAMPLEPATHQML/Routing/NavigateRoute/NavigateRoute.qrc" \
+    "$$SAMPLEPATHQML/Routing/NavigateARouteWithRerouting/NavigateARouteWithRerouting.qrc" \
     "$$SAMPLEPATHQML/Routing/OfflineRouting/OfflineRouting.qrc" \
     "$$SAMPLEPATHQML/Routing/RouteAroundBarriers/RouteAroundBarriers.qrc" \
     "$$SAMPLEPATHQML/Routing/ServiceArea/ServiceArea.qrc" \

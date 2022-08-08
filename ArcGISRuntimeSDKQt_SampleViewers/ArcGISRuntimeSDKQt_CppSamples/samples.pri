@@ -183,6 +183,7 @@ INCLUDEPATH += \
     "$$SAMPLEPATHCPP/Routing/FindRoute" \
     "$$SAMPLEPATHCPP/Routing/FindServiceAreasForMultipleFacilities" \
     "$$SAMPLEPATHCPP/Routing/NavigateRoute" \
+    "$$SAMPLEPATHCPP/Routing/NavigateARouteWithRerouting" \
     "$$SAMPLEPATHCPP/Routing/OfflineRouting" \
     "$$SAMPLEPATHCPP/Routing/RouteAroundBarriers" \
     "$$SAMPLEPATHCPP/Routing/ServiceArea" \
@@ -394,6 +395,7 @@ HEADERS += \
     "$$SAMPLEPATHCPP/Routing/FindRoute/FindRoute.h" \
     "$$SAMPLEPATHCPP/Routing/FindServiceAreasForMultipleFacilities/FindServiceAreasForMultipleFacilities.h" \
     "$$SAMPLEPATHCPP/Routing/NavigateRoute/NavigateRoute.h" \
+    "$$SAMPLEPATHCPP/Routing/NavigateARouteWithRerouting/NavigateARouteWithRerouting.h" \
     "$$SAMPLEPATHCPP/Routing/OfflineRouting/OfflineRouting.h" \
     "$$SAMPLEPATHCPP/Routing/RouteAroundBarriers/RouteAroundBarriers.h" \
     "$$SAMPLEPATHCPP/Routing/ServiceArea/ServiceArea.h" \
@@ -606,6 +608,7 @@ SOURCES += \
     "$$SAMPLEPATHCPP/Routing/FindRoute/FindRoute.cpp" \
     "$$SAMPLEPATHCPP/Routing/FindServiceAreasForMultipleFacilities/FindServiceAreasForMultipleFacilities.cpp" \
     "$$SAMPLEPATHCPP/Routing/NavigateRoute/NavigateRoute.cpp" \
+    "$$SAMPLEPATHCPP/Routing/NavigateARouteWithRerouting/NavigateARouteWithRerouting.cpp" \
     "$$SAMPLEPATHCPP/Routing/OfflineRouting/OfflineRouting.cpp" \
     "$$SAMPLEPATHCPP/Routing/RouteAroundBarriers/RouteAroundBarriers.cpp" \
     "$$SAMPLEPATHCPP/Routing/ServiceArea/ServiceArea.cpp" \
@@ -812,6 +815,7 @@ RESOURCES += \
     "$$SAMPLEPATHCPP/Routing/FindRoute/FindRoute.qrc" \
     "$$SAMPLEPATHCPP/Routing/FindServiceAreasForMultipleFacilities/FindServiceAreasForMultipleFacilities.qrc" \
     "$$SAMPLEPATHCPP/Routing/NavigateRoute/NavigateRoute.qrc" \
+    "$$SAMPLEPATHCPP/Routing/NavigateARouteWithRerouting/NavigateARouteWithRerouting.qrc" \
     "$$SAMPLEPATHCPP/Routing/OfflineRouting/OfflineRouting.qrc" \
     "$$SAMPLEPATHCPP/Routing/RouteAroundBarriers/RouteAroundBarriers.qrc" \
     "$$SAMPLEPATHCPP/Routing/ServiceArea/ServiceArea.qrc" \
