@@ -31,6 +31,7 @@ Rectangle {
     property var m_route: null
     property var m_routeResult: null
     property var directionListModel: null
+    property var defaultRouteParameters: null
     property string textString: ""
 
     MapView {
@@ -114,7 +115,7 @@ Rectangle {
         }
 
         RouteTask {
-            id: routeTask
+            id: routeTaskID
             url: routeTaskUrl
             Component.onCompleted: {
                 load();
@@ -129,14 +130,17 @@ Rectangle {
                     return;
                 }
 
+                defaultRouteParameters = createDefaultParametersResult;
+
                 createDefaultParametersResult.returnStops = true;
                 createDefaultParametersResult.returnDirections = true;
                 createDefaultParametersResult.returnRoutes = true;
                 createDefaultParametersResult.outputSpatialReference = Factory.SpatialReference.createWgs84();
                 createDefaultParametersResult.setStops([stop1, stop3]);
+                //                routingParameters = createDefaultParametersResult;
 
                 //solve the route with these parameters
-                routeTask.solveRoute(createDefaultParametersResult);
+                routeTaskID.solveRoute(createDefaultParametersResult);
             }
             onSolveRouteStatusChanged: {
                 if (solveRouteStatus === Enums.TaskStatusCompleted) {
@@ -149,6 +153,12 @@ Rectangle {
                     }
                 }
             }
+        }
+
+        ReroutingParameters {
+            id: reroutingParameters
+            routeTask: routeTaskID;
+            routeParameters: defaultRouteParameters;
         }
 
         locationDisplay.onLocationChanged: {
@@ -186,7 +196,6 @@ Rectangle {
                         startNavigation();
                         enabled = false;
                     }
-
                 }
                 Button {
                     id: recenterButton
@@ -227,24 +236,35 @@ Rectangle {
             id: routeTracker
 
             onTrackingStatusResultChanged: {
+                routeTracker.enableReroutingWithReroutingParameters(reroutingParameters);
+                console.log(routeTracker.enableReroutingStatus);
+
                 textString = "Route status: \n";
                 if (routeTracker.trackingStatusResult.destinationStatus === Enums.DestinationStatusApproaching || routeTracker.trackingStatusResult.destinationStatus === Enums.DestinationStatusNotReached) {
-                    textString += "Distance remaining: " + trackingStatusResult.routeProgress.remainingDistance.displayText + " " +
-                            trackingStatusResult.routeProgress.remainingDistance.displayTextUnits.pluralDisplayName + "\n";
-                    const time = new Date(trackingStatusResult.routeProgress.remainingTime * 60 * 1000);
-                    const hours = time.getUTCHours();
-                    const minutes = time.getUTCMinutes();
-                    const seconds = time.getSeconds();
-                    textString += "Time remaining: " + hours.toString().padStart(2, '0') + ':' + minutes.toString().padStart(2, '0') + ':' +
-                            seconds.toString().padStart(2, '0') + "\n";
+                    if (routeTracker.trackingStatusResult.onRoute === true)
+                    {
+                        console.log("we are on route");
+                        textString += "Distance remaining: " + trackingStatusResult.routeProgress.remainingDistance.displayText + " " +
+                                trackingStatusResult.routeProgress.remainingDistance.displayTextUnits.pluralDisplayName + "\n";
+                        const time = new Date(trackingStatusResult.routeProgress.remainingTime * 60 * 1000);
+                        const hours = time.getUTCHours();
+                        const minutes = time.getUTCMinutes();
+                        const seconds = time.getSeconds();
+                        textString += "Time remaining: " + hours.toString().padStart(2, '0') + ':' + minutes.toString().padStart(2, '0') + ':' +
+                                seconds.toString().padStart(2, '0') + "\n";
 
-                    // display next direction
-                    if (trackingStatusResult.currentManeuverIndex + 1 < directionListModel.count) {
-                        textString += "Next direction: " + directionListModel.get(trackingStatusResult.currentManeuverIndex + 1).directionText;
+                        // display next direction
+                        if (trackingStatusResult.currentManeuverIndex + 1 < directionListModel.count) {
+                            textString += "Next direction: " + directionListModel.get(trackingStatusResult.currentManeuverIndex + 1).directionText;
+                        }
+
+                        routeTraveledGraphic.geometry = trackingStatusResult.routeProgress.traversedGeometry;
+                        routeAheadGraphic.geometry = trackingStatusResult.routeProgress.remainingGeometry;
                     }
-
-                    routeTraveledGraphic.geometry = trackingStatusResult.routeProgress.traversedGeometry;
-                    routeAheadGraphic.geometry = trackingStatusResult.routeProgress.remainingGeometry;
+                    else
+                    {
+                        console.log("we are off route!!!");
+                    }
                 } else if (routeTracker.trackingStatusResult.destinationStatus === Enums.DestinationStatusReached) {
                     textString += "Destination reached.\n";
 
