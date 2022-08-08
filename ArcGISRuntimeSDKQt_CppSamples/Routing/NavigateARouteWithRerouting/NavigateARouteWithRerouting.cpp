@@ -127,19 +127,19 @@ void NavigateARouteWithRerouting::setMapView(MapQuickView* mapView)
   connectRouteTaskSignals();
 
   connect(m_routeTask, &RouteTask::loadStatusChanged, this, [this](LoadStatus loadStatus)
+  {
+    if (loadStatus == LoadStatus::Loaded)
     {
-      if (loadStatus == LoadStatus::Loaded)
-      {
-        // Request default parameters once the task is loaded
-        m_routeTask->createDefaultParameters();
-      }
-    });
+      // Request default parameters once the task is loaded
+      m_routeTask->createDefaultParameters();
+    }
+  });
 
   connect(m_routeTask, &RouteTask::createDefaultParametersCompleted, this, [this](QUuid, RouteParameters routeParameters)
-    {
-      // Store the resulting route parameters
-      m_routeParameters = routeParameters;
-    });
+  {
+    // Store the resulting route parameters
+    m_routeParameters = routeParameters;
+  });
 
   m_routeTask->load();
 
@@ -261,46 +261,19 @@ void NavigateARouteWithRerouting::startNavigation()
   m_mapView->locationDisplay()->setAutoPanMode(LocationDisplayAutoPanMode::Navigation);
   RouteTrackerLocationDataSource* dataSource = new RouteTrackerLocationDataSource(m_routeTracker, this);
   m_mapView->locationDisplay()->setDataSource(dataSource);
-//  m_routeParameters.setReturnStops(true);
-//  m_routeParameters.setReturnDirections(true);
-//  m_routeParameters.setReturnRoutes(true);
-//  m_routeParameters.setOutputSpatialReference(SpatialReference::wgs84());
-
-//  m_routeParameters = m_routeTask->createDefaultParameters();
 
   ReroutingParameters* rerouteParameters = new ReroutingParameters(m_routeTask, m_routeParameters, this);
   rerouteParameters->setStrategy(ReroutingStrategy::ToNextWaypoint);
   rerouteParameters->setVisitFirstStopOnStart(false);
 
-  //setup a lambda for rerouting enabled signal/call
-  connect(m_routeTracker, &RouteTracker::enableReroutingCompleted, this, [this](QUuid)
+  connect(m_routeTracker, &RouteTracker::rerouteCompleted, this, [this](TrackingStatus* rawTrackingStatus, Error error)
   {
-    qDebug() << "Made it into enableReroutingCompleted";
-    qDebug() << "is rerouting enabled:" << m_routeTracker->isReroutingEnabled();
-    qDebug() << "completed enableReroutingCompleted";
+    auto trackingStatus = std::unique_ptr<TrackingStatus>(rawTrackingStatus);
+    m_routeTraveledGraphic->setGeometry(trackingStatus->routeProgress()->traversedGeometry());
+    m_routeAheadGraphic->setGeometry(trackingStatus->routeProgress()->remainingGeometry());
   });
 
-  connect(m_routeTracker, &RouteTracker::rerouteStarted, this, [this]()
-    {
-      qDebug() << "Made it into rerouteStarted";
-      qDebug() << "completed rerouteStarted";
-    });
-
-    connect(m_routeTracker, &RouteTracker::rerouteCompleted, this, [this](TrackingStatus* rawTrackingStatus, Error error)
-    {
-      qDebug() << "Made it into rerouteCompleted";
-      auto trackingStatus = std::unique_ptr<TrackingStatus>(rawTrackingStatus);
-      m_routeTraveledGraphic->setGeometry(trackingStatus->routeProgress()->traversedGeometry());
-      m_routeAheadGraphic->setGeometry(trackingStatus->routeProgress()->remainingGeometry());
-
-      qDebug() << "finished rerouteCompleted";
-      qDebug() << error.message() + error.additionalMessage();
-    });
-
   m_routeTracker->enableRerouting(rerouteParameters);
-
-  qDebug() << "is rerouting enabled: ";
-  qDebug() << m_routeTracker->isReroutingEnabled();
 
   // add a data source for the location display
   SimulationParameters* simulationParameters = new SimulationParameters(QDateTime::currentDateTime(), 40.0, 0.0, 0.0, this); // set speed
@@ -345,7 +318,6 @@ void NavigateARouteWithRerouting::connectRouteTrackerSignals()
       else { //we have gone off route
         m_routeAheadGraphic->setGeometry(Geometry());
         m_routeTraveledGraphic->setGeometry(Geometry());
-        qDebug() << "off the route!!";
       }
     }
     else if (trackingStatus->destinationStatus() == DestinationStatus::Reached)
