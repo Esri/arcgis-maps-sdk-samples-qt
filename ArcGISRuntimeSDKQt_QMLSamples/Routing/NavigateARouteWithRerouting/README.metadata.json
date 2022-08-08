@@ -1,0 +1,47 @@
+{
+    "category": "Routing",
+    "description": "Use a routing service to navigate between points.",
+    "ignore": false,
+    "images": [
+        "screenshot.png"
+    ],
+    "keywords": [
+        "directions",
+        "maneuver",
+        "navigation",
+        "route",
+        "turn-by-turn",
+        "voice",
+        "DestinationStatus",
+        "DirectionManeuver",
+        "Location",
+        "Route",
+        "RouteParameters",
+        "RouteTask",
+        "RouteTracker",
+        "SimulatedLocationDataSource",
+        "Stop",
+        "VoiceGuidance"
+    ],
+    "redirect_from": [
+        ""
+    ],
+    "relevant_apis": [
+        "DestinationStatus",
+        "DirectionManeuver",
+        "Location",
+        "Route",
+        "RouteParameters",
+        "RouteTask",
+        "RouteTracker",
+        "SimulatedLocationDataSource",
+        "Stop",
+        "VoiceGuidance"
+    ],
+    "snippets": [
+        "NavigateARouteWithRerouting.qml",
+        "NavigateRouteSpeaker.cpp",
+        "NavigateRouteSpeaker.h"
+    ],
+    "title": "Navigate route"
+}
