@@ -126,6 +126,21 @@ void NavigateARouteWithRerouting::setMapView(MapQuickView* mapView)
   m_mapView->graphicsOverlays()->append(m_routeOverlay);
   connectRouteTaskSignals();
 
+  connect(m_routeTask, &RouteTask::loadStatusChanged, this, [this](LoadStatus loadStatus)
+    {
+      if (loadStatus == LoadStatus::Loaded)
+      {
+        // Request default parameters once the task is loaded
+        m_routeTask->createDefaultParameters();
+      }
+    });
+
+  connect(m_routeTask, &RouteTask::createDefaultParametersCompleted, this, [this](QUuid, RouteParameters routeParameters)
+    {
+      // Store the resulting route parameters
+      m_routeParameters = routeParameters;
+    });
+
   m_routeTask->load();
 
   // add graphics for the predefined stops
@@ -246,10 +261,12 @@ void NavigateARouteWithRerouting::startNavigation()
   m_mapView->locationDisplay()->setAutoPanMode(LocationDisplayAutoPanMode::Navigation);
   RouteTrackerLocationDataSource* dataSource = new RouteTrackerLocationDataSource(m_routeTracker, this);
   m_mapView->locationDisplay()->setDataSource(dataSource);
-  m_routeParameters.setReturnStops(true);
-  m_routeParameters.setReturnDirections(true);
-  m_routeParameters.setReturnRoutes(true);
-  m_routeParameters.setOutputSpatialReference(SpatialReference::wgs84());
+//  m_routeParameters.setReturnStops(true);
+//  m_routeParameters.setReturnDirections(true);
+//  m_routeParameters.setReturnRoutes(true);
+//  m_routeParameters.setOutputSpatialReference(SpatialReference::wgs84());
+
+//  m_routeParameters = m_routeTask->createDefaultParameters();
 
   ReroutingParameters* rerouteParameters = new ReroutingParameters(m_routeTask, m_routeParameters, this);
   rerouteParameters->setStrategy(ReroutingStrategy::ToNextWaypoint);
@@ -263,16 +280,31 @@ void NavigateARouteWithRerouting::startNavigation()
     qDebug() << "completed enableReroutingCompleted";
   });
 
+  connect(m_routeTracker, &RouteTracker::rerouteStarted, this, [this]()
+    {
+      qDebug() << "Made it into rerouteStarted";
+      qDebug() << "completed rerouteStarted";
+    });
+
+    connect(m_routeTracker, &RouteTracker::rerouteCompleted, this, [this](TrackingStatus* rawTrackingStatus, Error error)
+    {
+      qDebug() << "Made it into rerouteCompleted";
+      auto trackingStatus = std::unique_ptr<TrackingStatus>(rawTrackingStatus);
+      m_routeTraveledGraphic->setGeometry(trackingStatus->routeProgress()->traversedGeometry());
+      m_routeAheadGraphic->setGeometry(trackingStatus->routeProgress()->remainingGeometry());
+
+      qDebug() << "finished rerouteCompleted";
+      qDebug() << error.message() + error.additionalMessage();
+    });
+
   m_routeTracker->enableRerouting(rerouteParameters);
 
   qDebug() << "is rerouting enabled: ";
   qDebug() << m_routeTracker->isReroutingEnabled();
 
   // add a data source for the location display
-  //TODO read the gpx file here and set data source
   SimulationParameters* simulationParameters = new SimulationParameters(QDateTime::currentDateTime(), 40.0, 0.0, 0.0, this); // set speed
   m_simulatedLocationDataSource = new SimulatedLocationDataSource(this);
-  //  m_simulatedLocationDataSource->setLocationsWithPolyline(m_route.routeGeometry(), simulationParameters);
   m_simulatedLocationDataSource->setLocationsWithPolyline(Polyline::fromJson(walkingTourPolyineJson), simulationParameters);
   m_mapView->locationDisplay()->setDataSource(m_simulatedLocationDataSource);
   m_simulatedLocationDataSource->start();
@@ -311,6 +343,8 @@ void NavigateARouteWithRerouting::connectRouteTrackerSignals()
         m_routeAheadGraphic->setGeometry(trackingStatus->routeProgress()->remainingGeometry());
       }
       else { //we have gone off route
+        m_routeAheadGraphic->setGeometry(Geometry());
+        m_routeTraveledGraphic->setGeometry(Geometry());
         qDebug() << "off the route!!";
       }
     }
