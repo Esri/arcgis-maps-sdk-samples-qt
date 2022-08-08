@@ -193,6 +193,7 @@
 #include "MinMaxScale.h"
 #include "MobileMap_SearchAndRoute.h"
 #include "NavigateRoute.h"
+#include "NavigateARouteWithRerouting.h"
 #include "NearestVertex.h"
 #include "OfflineGeocode.h"
 #include "OfflineRouting.h"
@@ -501,6 +502,7 @@ void registerCppSampleClasses()
   MinMaxScale::init();
   MobileMap_SearchAndRoute::init();
   NavigateRoute::init();
+  NavigateARouteWithRerouting::init();
   NearestVertex::init();
   OfflineGeocode::init();
   OfflineRouting::init();
