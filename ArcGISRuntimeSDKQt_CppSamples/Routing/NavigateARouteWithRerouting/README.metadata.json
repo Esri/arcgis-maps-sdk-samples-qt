@@ -1,16 +1,42 @@
 {
-    "category": "TODO",
-    "description": "TODO",
+    "category": "Routing",
+    "description": "Navigate between two points and dynamically recalculate an alternate route when the original route is unavailable",
     "ignore": false,
     "images": [
         "screenshot.png"
     ],
     "keywords": [
-        "TODO"
+        "directions",
+        "maneuver",
+        "navigation",
+        "route",
+        "turn-by-turn",
+        "voice",
+        "DestinationStatus",
+        "DirectionManeuver",
+        "Location",
+        "LocationDataSource",
+        "ReroutingStrategy",
+        "Route",
+        "RouteParameters",
+        "RouteTask",
+        "RouteTracker",
+        "Stop",
+        "VoiceGuidance"
     ],
     "redirect_from": "",
     "relevant_apis": [
-        "TODO"
+        "DestinationStatus",
+        "DirectionManeuver",
+        "Location",
+        "LocationDataSource",
+        "ReroutingStrategy",
+        "Route",
+        "RouteParameters",
+        "RouteTask",
+        "RouteTracker",
+        "Stop",
+        "VoiceGuidance"
     ],
     "snippets": [
         "NavigateARouteWithRerouting.cpp",
