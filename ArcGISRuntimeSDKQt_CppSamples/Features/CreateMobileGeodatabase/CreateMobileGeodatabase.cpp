@@ -37,6 +37,7 @@ CreateMobileGeodatabase::CreateMobileGeodatabase(QObject* parent /* = nullptr */
   QObject(parent),
   m_map(new Map(BasemapStyle::ArcGISTopographic, this))
 {
+  // The FeatureListModel is a helper class created specifically for this sample to display all features in the table view
   m_featureListModel = new FeatureListModel(this);
 }
 
@@ -73,6 +74,7 @@ void CreateMobileGeodatabase::createConnections()
 {
   connect(m_mapView, &MapQuickView::mouseClicked, this, &CreateMobileGeodatabase::addFeature);
 
+  // Use the Geodatabase::instance() singleton to connect to createCompleted
   connect(Geodatabase::instance(), &Geodatabase::createCompleted, this, [this](QUuid, Geodatabase* geodatabase)
   {
     m_gdb = geodatabase;
@@ -80,6 +82,7 @@ void CreateMobileGeodatabase::createConnections()
   });
 }
 
+// Create a Geodatabase in an empty directory with the Geodatabase::instance() singleton
 void CreateMobileGeodatabase::createGeodatabase()
 {
   m_gdbFilePath = QString{m_tempDir.path() + "/LocationHistory_%1.geodatabase"}.arg(QDateTime::currentSecsSinceEpoch() % 1000);
@@ -89,15 +92,18 @@ void CreateMobileGeodatabase::createGeodatabase()
   if (QFile::exists(m_gdbFilePath))
     return;
 
+  // Use the Geodatabase::instance() singleton to call create() with an empty file path
   Geodatabase::create(m_gdbFilePath);
 }
 
+// Create a GeodatabaseFeatureTable from the new Geodatabase with a TableDescription
 void CreateMobileGeodatabase::createTable()
 {
   m_gdbOpen = true;
   emit gdbOpenChanged();
 
-  auto tableDescription = new TableDescription("LocationHistory", SpatialReference::wgs84(), GeometryType::Point, this);
+  // Create a TableDescription to define the GeodatabaseFeatureTable's attributes and fields
+  TableDescription* tableDescription = new TableDescription("LocationHistory", SpatialReference::wgs84(), GeometryType::Point, this);
   tableDescription->setHasAttachments(false);
   tableDescription->setHasM(false);
   tableDescription->setHasZ(false);
@@ -115,6 +121,7 @@ void CreateMobileGeodatabase::createTable()
   m_gdb->createTable(tableDescription);
 }
 
+// Close the Geodatabase so that it can be safely shared
 void CreateMobileGeodatabase::closeGdb()
 {
   if (!m_gdb)
@@ -162,8 +169,9 @@ void CreateMobileGeodatabase::deleteFeatures()
   params.setWhereClause("1=1");
   connect(m_featureTable, &FeatureTable::queryFeaturesCompleted, this, [this](QUuid, FeatureQueryResult* rawQueryResult)
   {
+    // Cast the FeatureQueryResult to a unique pointer to delete it when it goes out of scope
     auto queryResults = std::unique_ptr<FeatureQueryResult>(rawQueryResult);
-    auto resultIterator = queryResults->iterator();
+    FeatureIterator resultIterator = queryResults->iterator();
 
     m_featureTable->deleteFeatures(resultIterator.features());
     m_featureCount = 0;

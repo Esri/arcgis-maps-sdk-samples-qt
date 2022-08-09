@@ -1,16 +1,35 @@
 {
-    "category": "TODO",
-    "description": "TODO",
+    "category": "Features",
+    "description": "This sample demonstrates how to create and share a mobile geodatabase.",
     "ignore": false,
     "images": [
         "screenshot.png"
     ],
     "keywords": [
-        "TODO"
+        "arcgis pro",
+        "database",
+        "feature",
+        "feature table",
+        "geodatabase",
+        "mobile geodatabase",
+        "sqlite",
+        "ArcGISFeature",
+        "FeatureLayer",
+        "FeatureTable",
+        "FieldDescription",
+        "Geodatabase",
+        "GeodatabaseFeatureTable",
+        "TableDescription"
     ],
     "redirect_from": "",
     "relevant_apis": [
-        "TODO"
+        "ArcGISFeature",
+        "FeatureLayer",
+        "FeatureTable",
+        "FieldDescription",
+        "Geodatabase",
+        "GeodatabaseFeatureTable",
+        "TableDescription"
     ],
     "snippets": [
         "CreateMobileGeodatabase.qml"

@@ -50,12 +50,13 @@ Rectangle {
         }
 
         onMouseClicked: {
+            // Add a feature to the current feature table at the given mouse click or screen tap
             if (!featureTable)
                 return;
 
             const addFeatureToFeatureTable = () => {
                 if (featureTable.addFeatureStatus !== Enums.TaskStatusCompleted)
-                return;
+                    return;
 
                 featureListModel.push({"oid": feature.attributes.attributeValue("oid"), "collection_timestamp": feature.attributes.attributeValue("collection_timestamp")})
                 tableView.model = featureListModel;
@@ -351,6 +352,7 @@ Rectangle {
         }
     }
 
+    // Create a table description with which to create a feature table from the mobile geodatabase
     TableDescription {
         id: tableDescription
         tableName: "LocationHistory"
@@ -381,12 +383,14 @@ Rectangle {
         const createGdbStatusChanged = () => {
             if (GeodatabaseUtility.createStatus === Enums.TaskStatusCompleted) {
                 mobileGeodatabase = GeodatabaseUtility.createResult;
+
+                // Create a feature table from the geodatabase once it has been created
                 createTable();
                 GeodatabaseUtility.createStatusChanged.disconnect(createGdbStatusChanged);
             }
         }
-        GeodatabaseUtility.createStatusChanged.connect(createGdbStatusChanged);
 
+        GeodatabaseUtility.createStatusChanged.connect(createGdbStatusChanged);
         GeodatabaseUtility.create(path);
     }
 
@@ -394,7 +398,7 @@ Rectangle {
         gdbOpen = true;
         const tableCreationStatusChanged = () => {
             if (mobileGeodatabase.createTableStatus !== Enums.TaskStatusCompleted)
-            return;
+                return;
 
             featureTable = mobileGeodatabase.createTableResult;
             const layer = ArcGISRuntimeEnvironment.createObject("FeatureLayer", {featureTable: featureTable});
@@ -406,7 +410,10 @@ Rectangle {
     }
 
     function closeGeodatabase() {
+        // Call Geodatabase.close() to safely share the ".geodatabase" file
         mobileGeodatabase.close();
+
+        // Clear any information in the UI about the previous geodatabase
         gdbOpen = false;
         map.operationalLayers.clear();
         featureListModel = [];
@@ -427,11 +434,10 @@ Rectangle {
         whereClause: "1=1"
     }
 
-
     function deleteAllFeatures() {
         const queryFeaturesCompleted = () => {
             if (featureTable.queryFeaturesStatus !== Enums.TaskStatusCompleted)
-            return;
+                return;
 
             const results = featureTable.queryFeaturesResult;
             const features = results.iterator.features;
