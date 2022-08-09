@@ -77,7 +77,6 @@ private:
     void connectRouteTrackerSignals();
 
     Esri::ArcGISRuntime::Graphic* m_routeAheadGraphic = nullptr;
-    Esri::ArcGISRuntime::Graphic* m_routeTraveledGraphic = nullptr;
     Esri::ArcGISRuntime::GraphicsOverlay* m_routeOverlay = nullptr;
     Esri::ArcGISRuntime::Map* m_map = nullptr;
     Esri::ArcGISRuntime::MapQuickView* m_mapView = nullptr;

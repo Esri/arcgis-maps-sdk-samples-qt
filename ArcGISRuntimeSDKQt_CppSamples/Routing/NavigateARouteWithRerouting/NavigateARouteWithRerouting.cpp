@@ -79,7 +79,7 @@ QString defaultDataPath()
 
 NavigateARouteWithRerouting::NavigateARouteWithRerouting(QObject* parent /* = nullptr */):
   QObject(parent),
-  m_map(new Map(BasemapStyle::ArcGISTopographic, this))
+  m_map(new Map(BasemapStyle::ArcGISNavigation, this))
 {
   m_routeOverlay = new GraphicsOverlay(this);
 

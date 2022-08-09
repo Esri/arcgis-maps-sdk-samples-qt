@@ -72,14 +72,6 @@ Rectangle {
                 }
             }
             Graphic {
-                id: routeTraveledGraphic
-                SimpleLineSymbol {
-                    style: Enums.SimpleLineSymbolStyleSolid
-                    color: "cyan"
-                    width: 3
-                }
-            }
-            Graphic {
                 Point {
                     id: conventionCenterPoint
                     x: -117.160386727
@@ -255,13 +247,7 @@ Rectangle {
                         if (trackingStatusResult.currentManeuverIndex + 1 < directionListModel.count) {
                             textString += "Next direction: " + directionListModel.get(trackingStatusResult.currentManeuverIndex + 1).directionText;
                         }
-
-                        routeTraveledGraphic.geometry = trackingStatusResult.routeProgress.traversedGeometry;
                         routeAheadGraphic.geometry = trackingStatusResult.routeProgress.remainingGeometry;
-                    }
-                    else
-                    {
-                        console.log("we are off route!!!");
                     }
                 } else if (routeTracker.trackingStatusResult.destinationStatus === Enums.DestinationStatusReached) {
                     textString += "Destination reached.\n";
