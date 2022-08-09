@@ -2,9 +2,6 @@
 #define FEATURELISTMODEL_H
 
 #include <QAbstractListModel>
-#include <QByteArray>
-#include <QHash>
-#include <QList>
 
 namespace Esri
 {
