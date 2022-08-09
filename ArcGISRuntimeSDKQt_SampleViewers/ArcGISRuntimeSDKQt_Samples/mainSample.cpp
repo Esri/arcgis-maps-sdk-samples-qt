@@ -103,6 +103,7 @@
 #include "CreateAndSaveMap.h"
 #include "CreateGeometries.h"
 #include "CreateLoadReport.h"
+#include "CreateMobileGeodatabase.h"
 #include "CreateSymbolStylesFromWebStyles.h"
 #include "CreateTerrainSurfaceFromLocalRaster.h"
 #include "CreateTerrainSurfaceFromLocalTilePackage.h"
@@ -412,6 +413,7 @@ void registerCppSampleClasses()
   CreateAndSaveMap::init();
   CreateGeometries::init();
   CreateLoadReport::init();
+  CreateMobileGeodatabase::init();
   CreateSymbolStylesFromWebStyles::init();
   CreateTerrainSurfaceFromLocalRaster::init();
   CreateTerrainSurfaceFromLocalTilePackage::init();

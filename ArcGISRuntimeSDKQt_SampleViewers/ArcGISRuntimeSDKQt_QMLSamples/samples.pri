@@ -65,6 +65,7 @@ RESOURCES += \
     "$$SAMPLEPATHQML/EditData/UpdateAttributesFeatureService/UpdateAttributesFeatureService.qrc" \
     "$$SAMPLEPATHQML/EditData/UpdateGeometryFeatureService/UpdateGeometryFeatureService.qrc" \
     "$$SAMPLEPATHQML/Features/ControlTimeExtentTimeSlider/ControlTimeExtentTimeSlider.qrc" \
+    "$$SAMPLEPATHQML/Features/CreateMobileGeodatabase/CreateMobileGeodatabase.qrc" \
     "$$SAMPLEPATHQML/Features/FeatureLayer_ChangeRenderer/FeatureLayer_ChangeRenderer.qrc" \
     "$$SAMPLEPATHQML/Features/FeatureLayer_DictionaryRenderer/FeatureLayer_DictionaryRenderer.qrc" \
     "$$SAMPLEPATHQML/Features/FeatureLayer_FeatureService/FeatureLayer_FeatureService.qrc" \
