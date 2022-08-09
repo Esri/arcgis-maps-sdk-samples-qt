@@ -1,6 +1,6 @@
 {
     "category": "Routing",
-    "description": "Navigate between two points and dynamically recalculate an alternate route when the original route is unavailable",
+    "description": "Navigate between two points and dynamically recalculate an alternate route when the original route is unavailable.",
     "ignore": false,
     "images": [
         "screenshot.png"
