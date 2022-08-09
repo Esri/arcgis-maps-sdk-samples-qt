@@ -274,6 +274,7 @@ HEADERS += \
     "$$SAMPLEPATHCPP/EditData/UpdateGeometryFeatureService/UpdateGeometryFeatureService.h" \
     "$$SAMPLEPATHCPP/Features/ControlTimeExtentTimeSlider/ControlTimeExtentTimeSlider.h" \
     "$$SAMPLEPATHCPP/Features/CreateMobileGeodatabase/CreateMobileGeodatabase.h" \
+    "$$SAMPLEPATHCPP/Features/CreateMobileGeodatabase/FeatureListModel.h" \
     "$$SAMPLEPATHCPP/Features/FeatureLayerChangeRenderer/FeatureLayerChangeRenderer.h" \
     "$$SAMPLEPATHCPP/Features/FeatureLayerDictionaryRenderer/FeatureLayerDictionaryRenderer.h" \
     "$$SAMPLEPATHCPP/Features/FeatureLayerFeatureService/FeatureLayerFeatureService.h" \
@@ -486,6 +487,7 @@ SOURCES += \
     "$$SAMPLEPATHCPP/EditData/UpdateGeometryFeatureService/UpdateGeometryFeatureService.cpp" \
     "$$SAMPLEPATHCPP/Features/ControlTimeExtentTimeSlider/ControlTimeExtentTimeSlider.cpp" \
     "$$SAMPLEPATHCPP/Features/CreateMobileGeodatabase/CreateMobileGeodatabase.cpp" \
+    "$$SAMPLEPATHCPP/Features/CreateMobileGeodatabase/FeatureListModel.cpp" \
     "$$SAMPLEPATHCPP/Features/FeatureLayerChangeRenderer/FeatureLayerChangeRenderer.cpp" \
     "$$SAMPLEPATHCPP/Features/FeatureLayerDictionaryRenderer/FeatureLayerDictionaryRenderer.cpp" \
     "$$SAMPLEPATHCPP/Features/FeatureLayerFeatureService/FeatureLayerFeatureService.cpp" \

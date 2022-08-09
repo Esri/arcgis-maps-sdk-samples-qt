@@ -34,6 +34,8 @@
     "snippets": [
         "CreateMobileGeodatabase.cpp",
         "CreateMobileGeodatabase.h",
+        "FeatureListModel.cpp",
+        "FeatureListModel.h",
         "CreateMobileGeodatabase.qml"
     ],
     "title": "Create mobile geodatabase"

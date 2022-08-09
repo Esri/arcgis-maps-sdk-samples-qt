@@ -7,5 +7,7 @@
         <file>main.qml</file>
         <file>screenshot.png</file>
         <file>README.md</file>
+        <file>FeatureListModel.cpp</file>
+        <file>FeatureListModel.h</file>
     </qresource>
 </RCC>

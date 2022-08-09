@@ -133,7 +133,10 @@ void CreateMobileGeodatabase::closeGdb()
   m_map->operationalLayers()->clear();
   m_featureListModel->clear();
 
+  m_featureCount = 0;
+
   emit gdbOpenChanged();
+  emit featureCountChanged();
 }
 
 void CreateMobileGeodatabase::addFeature(QMouseEvent mouseEvent)
