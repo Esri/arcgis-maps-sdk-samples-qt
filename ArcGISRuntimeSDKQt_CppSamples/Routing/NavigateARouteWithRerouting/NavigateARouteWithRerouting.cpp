@@ -188,10 +188,9 @@ void NavigateARouteWithRerouting::connectRouteTaskSignals()
     defaultParameters.setOutputSpatialReference(SpatialReference::wgs84());
 
     Stop stop1(conventionCenterPoint);
-    //    Stop stop2(memorialPoint);
-    Stop stop3(aerospaceMuseumPoint);
+    Stop stop2(aerospaceMuseumPoint);
 
-    QList<Stop> stopsList = {stop1, /*stop2,*/ stop3};
+    QList<Stop> stopsList = {stop1, stop2};
     defaultParameters.setStops(stopsList);
 
     m_routeTask->solveRoute(defaultParameters);
@@ -219,11 +218,6 @@ bool NavigateARouteWithRerouting::recenterEnabled() const
 {
   return m_recenterEnabled;
 }
-
-//bool NavigateARouteWithRerouting::reroutingEnabled() const
-//{
-//  return m_recenterEnabled;
-//}
 
 void NavigateARouteWithRerouting::startNavigation()
 {
@@ -268,9 +262,9 @@ void NavigateARouteWithRerouting::startNavigation()
 
   connect(m_routeTracker, &RouteTracker::rerouteCompleted, this, [this](TrackingStatus* rawTrackingStatus, Error error)
   {
-    auto trackingStatus = std::unique_ptr<TrackingStatus>(rawTrackingStatus);
-    m_routeTraveledGraphic->setGeometry(trackingStatus->routeProgress()->traversedGeometry());
-    m_routeAheadGraphic->setGeometry(trackingStatus->routeProgress()->remainingGeometry());
+    m_routeOverlay->graphics()->clear();
+    m_routeOverlay->graphics()->append(m_routeAheadGraphic);
+    m_routeOverlay->graphics()->append(m_routeTraveledGraphic);
   });
 
   m_routeTracker->enableRerouting(rerouteParameters);
