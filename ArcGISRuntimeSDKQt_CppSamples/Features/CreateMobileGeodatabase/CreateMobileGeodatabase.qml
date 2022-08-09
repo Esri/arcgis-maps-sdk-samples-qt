@@ -34,16 +34,13 @@ Item {
         }
     }
 
-
-
-
     CreateMobileGeodatabaseSample {
         id: model
         mapView: view
     }
 
     Rectangle {
-        id: rectangle
+        id: buttonListRectangle
         width: 250
         height: column1.height + 20
         color: "#ffffff"
@@ -71,7 +68,7 @@ Item {
             spacing: 5
 
             onHeightChanged: {
-                rectangle.height = height + 20
+                buttonListRectangle.height = height + 20
             }
 
             Button {
@@ -96,8 +93,8 @@ Item {
                 anchors.leftMargin: 0
                 enabled: model.gdbOpen
                 onClicked: {
-                    gridRectangle.visible = true;
-                    rectangle.visible = false;
+                    featureTableDisplay.visible = true;
+                    buttonListRectangle.visible = false;
                 }
             }
             Button {
@@ -109,7 +106,7 @@ Item {
                 anchors.leftMargin: 0
                 enabled: model.gdbOpen
                 onClicked: {
-                    model.clearTable();
+                    model.clearFeatures();
                 }
             }
 
@@ -124,17 +121,16 @@ Item {
                 enabled: model.gdbOpen
                 onClicked: {
                     model.closeGdb();
-                    pathRectangle.visible = true;
-                    rectangle.visible = false;
+                    gdbClosedNoticeRectangle.visible = true;
+                    buttonListRectangle.visible = false;
 
 
                 }
             }
 
             Text {
-                id: text1
-                text: "Created new geodatabase:\n" + model.gdbFilePath ? model.gdbFilePath.split("/").pop() : ""
-                //elide: Text.ElideLeft
+                id: fileNameText
+                text: model.gdbFilePath ? "Created new geodatabase:\n" + model.gdbFilePath.split("/").pop() : "Geodatabase path not found"
                 anchors.left: parent.left
                 anchors.right: parent.right
                 font.pixelSize: 12
@@ -145,8 +141,8 @@ Item {
             }
 
             Text {
-                id: text2
-                text: "Number of features: " + model.featureCount
+                id: featureCountText
+                text: "Number of features: " + model.featureCount + (model.featureCount === 0 ? "\n(Click or tap on the map to add new features)" : "")
                 anchors.left: parent.left
                 anchors.right: parent.right
                 font.pixelSize: 12
@@ -159,7 +155,7 @@ Item {
     }
 
     Rectangle {
-        id: pathRectangle
+        id: gdbClosedNoticeRectangle
         anchors.centerIn: parent
         width: parent.width * 0.75
         height: gdbInfoColumn.height + 20
@@ -200,10 +196,10 @@ Item {
             Button {
                 id: gdbInfoClose
                 anchors.horizontalCenter: parent.horizontalCenter
-                text: "ok"
+                text: "Ok"
                 onClicked: {
-                    pathRectangle.visible = false;
-                    rectangle.visible = true;
+                    gdbClosedNoticeRectangle.visible = false;
+                    buttonListRectangle.visible = true;
                 }
             }
         }
@@ -213,7 +209,7 @@ Item {
 
     // Declare the C++ instance which creates the scene etc. and supply the view
     Rectangle {
-        id: gridRectangle
+        id: featureTableDisplay
         anchors {
             verticalCenter: parent.verticalCenter
             horizontalCenter: parent.horizontalCenter
@@ -299,7 +295,7 @@ Item {
     }
 
     Rectangle {
-        id: buttonRectangle
+        id: closeTableButtonRectangle
         width: closeTableButton.width + 10
         height: closeTableButton.height + 10
         color: "#ffffff"
@@ -307,7 +303,7 @@ Item {
         anchors.top: parent.top
         anchors.topMargin: 10
         anchors.rightMargin: 10
-        visible: gridRectangle.visible
+        visible: featureTableDisplay.visible
 
         // Prevent mouse interaction from propagating to the MapView
         MouseArea {
@@ -323,15 +319,9 @@ Item {
             text: "Close table view"
 
             onClicked: {
-                gridRectangle.visible = false;
-                rectangle.visible = true;
+                featureTableDisplay.visible = false;
+                buttonListRectangle.visible = true;
             }
         }
     }
 }
-
-/*##^##
-Designer {
-    D{i:0;autoSize:true;height:480;width:640}
-}
-##^##*/

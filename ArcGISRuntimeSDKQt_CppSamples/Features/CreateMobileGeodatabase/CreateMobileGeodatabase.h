@@ -51,7 +51,7 @@ public:
   static void init();
 
   Q_INVOKABLE void createGeodatabase();
-  Q_INVOKABLE void clearTable();
+  Q_INVOKABLE void clearFeatures();
   Q_INVOKABLE void closeGdb();
 
 signals:

@@ -115,16 +115,6 @@ void CreateMobileGeodatabase::createTable()
   m_gdb->createTable(tableDescription);
 }
 
-int CreateMobileGeodatabase::featureCount() const
-{
-  return m_featureCount;
-}
-
-bool CreateMobileGeodatabase::gdbOpen() const
-{
-  return m_gdbOpen;
-}
-
 void CreateMobileGeodatabase::closeGdb()
 {
   if (!m_gdb)
@@ -148,13 +138,22 @@ void CreateMobileGeodatabase::addFeature(QMouseEvent mouseEvent)
   QVariantMap attributes = {};
   attributes.insert("collection_timestamp", QDateTime::currentDateTime());
   Feature* feature = m_featureTable->createFeature(attributes, mousePoint, this);
+
+  connect(m_featureTable, &FeatureTable::addFeatureCompleted, this, [feature, this](QUuid, bool success)
+  {
+    if (!success)
+      return;
+
+    m_featureListModel->addFeature(feature);
+    emit featureListModelChanged();
+
+    m_featureCount = m_featureTable->numberOfFeatures();
+    emit featureCountChanged();
+
+    m_featureTable->disconnect();
+  });
+
   m_featureTable->addFeature(feature);
-
-  m_featureListModel->addFeature(feature);
-  emit featureListModelChanged();
-
-  m_featureCount = m_featureTable->numberOfFeatures();
-  emit featureCountChanged();
 }
 
 void CreateMobileGeodatabase::deleteFeatures()
@@ -163,18 +162,19 @@ void CreateMobileGeodatabase::deleteFeatures()
   params.setWhereClause("1=1");
   connect(m_featureTable, &FeatureTable::queryFeaturesCompleted, this, [this](QUuid, FeatureQueryResult* rawQueryResult)
   {
-    qDebug() << "query features completed";
     auto queryResults = std::unique_ptr<FeatureQueryResult>(rawQueryResult);
     auto resultIterator = queryResults->iterator();
 
     m_featureTable->deleteFeatures(resultIterator.features());
+    m_featureCount = 0;
+    emit featureCountChanged();
 
     m_featureTable->disconnect();
   });
   m_featureTable->queryFeatures(params);
 }
 
-void CreateMobileGeodatabase::clearTable()
+void CreateMobileGeodatabase::clearFeatures()
 {
   if (m_featureTable->numberOfFeatures() > 0)
     deleteFeatures();
@@ -190,4 +190,14 @@ FeatureListModel* CreateMobileGeodatabase::featureListModel() const
 QString CreateMobileGeodatabase::gdbFilePath() const
 {
   return m_gdbFilePath;
+}
+
+int CreateMobileGeodatabase::featureCount() const
+{
+  return m_featureCount;
+}
+
+bool CreateMobileGeodatabase::gdbOpen() const
+{
+  return m_gdbOpen;
 }
