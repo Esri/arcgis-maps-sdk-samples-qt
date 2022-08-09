@@ -1,6 +1,6 @@
 # Create mobile geodatabase
 
-This sample demonstrates how to create and share a mobile geodatabase.
+Create and share a mobile geodatabase.
 
 ![](screenshot.png)
 
@@ -12,7 +12,7 @@ For example, a user would like to track the location of their device at various 
 
 ## How to use the sample
 
-Select "Create new .geodatabase" to create a new mobile geodatabase in a temporary directory. Click or tap on the map to add features to the mobile geodatabase. Select "View table" to view the contents of the geodatabase feature table. Select "Clear features" to remove all features from the geodatabase feature table. Select "Close .geodatabase" to save and close the geodatabase so it is ready to be hypothetically shared or uploaded to ArcGIS Online.
+Select "Create new .geodatabase" to create a new mobile geodatabase in a temporary directory. Click or tap on the map to add features to the mobile geodatabase. Select "View feature table" to view the contents of the geodatabase feature table. Select "Clear features" to remove all features from the geodatabase feature table. Select "Close .geodatabase" to save and close the geodatabase so it is ready to be shared or uploaded to ArcGIS Online.
 
 ## How it works
 
@@ -36,9 +36,9 @@ Select "Create new .geodatabase" to create a new mobile geodatabase in a tempora
 
 ## Additional information
 
-Learn more about mobile geodatabases and how to utilize them on the [ArcGIS Pro documentation](https://pro.arcgis.com/en/pro-app/latest/help/data/geodatabases/manage-mobile-gdb/mobile-geodatabases.htm) page. The following mobile geodatabase behaviors are supported in ArcGIS Runtime: annotation, attachments, attribute rules, contingent values, dimensions, domains, feature-linked annotation, subtypes, utility network and relationship classes.
+Learn more about mobile geodatabases and how to utilize them on the [Mobile geodatabases](https://pro.arcgis.com/en/pro-app/latest/help/data/geodatabases/manage-mobile-gdb/mobile-geodatabases.htm) page. The following mobile geodatabase behaviors are supported in ArcGIS Runtime: annotation, attachments, attribute rules, contingent values, dimensions, domains, feature-linked annotation, subtypes, utility network and relationship classes.
 
-Learn more about the types of fields supported with mobile geodatabases on the [ArcGIS Pro documentation](https://pro.arcgis.com/en/pro-app/latest/help/data/geodatabases/overview/arcgis-field-data-types.htm) page.
+Visit [ArcGIS field data types](https://pro.arcgis.com/en/pro-app/latest/help/data/geodatabases/overview/arcgis-field-data-types.htm) to learn more about the types of fields supported.
 
 ## Tags
 

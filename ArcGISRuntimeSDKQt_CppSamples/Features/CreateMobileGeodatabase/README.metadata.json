@@ -1,6 +1,6 @@
 {
     "category": "Features",
-    "description": "This sample demonstrates how to create and share a mobile geodatabase.",
+    "description": "Create and share a mobile geodatabase.",
     "ignore": false,
     "images": [
         "screenshot.png"

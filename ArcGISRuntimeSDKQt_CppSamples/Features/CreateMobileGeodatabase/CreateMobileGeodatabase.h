@@ -81,7 +81,6 @@ private:
   QString m_gdbFilePath;
   bool m_gdbOpen = false;
   int m_featureCount = 0;
-
   QTemporaryDir m_tempDir;
 };
 
