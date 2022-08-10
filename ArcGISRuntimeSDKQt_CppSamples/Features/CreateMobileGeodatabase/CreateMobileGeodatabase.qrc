@@ -1,0 +1,13 @@
+<RCC>
+    <qresource prefix="/Samples/Features/CreateMobileGeodatabase">
+        <file alias="sample.json">README.metadata.json</file>
+        <file>CreateMobileGeodatabase.qml</file>
+        <file>CreateMobileGeodatabase.h</file>
+        <file>CreateMobileGeodatabase.cpp</file>
+        <file>main.qml</file>
+        <file>screenshot.png</file>
+        <file>README.md</file>
+        <file>FeatureListModel.cpp</file>
+        <file>FeatureListModel.h</file>
+    </qresource>
+</RCC>

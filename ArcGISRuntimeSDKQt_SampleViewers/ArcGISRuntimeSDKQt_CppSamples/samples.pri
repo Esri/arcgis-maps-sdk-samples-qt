@@ -67,6 +67,7 @@ INCLUDEPATH += \
     "$$SAMPLEPATHCPP/EditData/UpdateAttributesFeatureService" \
     "$$SAMPLEPATHCPP/EditData/UpdateGeometryFeatureService" \
     "$$SAMPLEPATHCPP/Features/ControlTimeExtentTimeSlider" \
+    "$$SAMPLEPATHCPP/Features/CreateMobileGeodatabase" \
     "$$SAMPLEPATHCPP/Features/FeatureLayerChangeRenderer" \
     "$$SAMPLEPATHCPP/Features/FeatureLayerDictionaryRenderer" \
     "$$SAMPLEPATHCPP/Features/FeatureLayerFeatureService" \
@@ -273,6 +274,8 @@ HEADERS += \
     "$$SAMPLEPATHCPP/EditData/UpdateAttributesFeatureService/UpdateAttributesFeatureService.h" \
     "$$SAMPLEPATHCPP/EditData/UpdateGeometryFeatureService/UpdateGeometryFeatureService.h" \
     "$$SAMPLEPATHCPP/Features/ControlTimeExtentTimeSlider/ControlTimeExtentTimeSlider.h" \
+    "$$SAMPLEPATHCPP/Features/CreateMobileGeodatabase/CreateMobileGeodatabase.h" \
+    "$$SAMPLEPATHCPP/Features/CreateMobileGeodatabase/FeatureListModel.h" \
     "$$SAMPLEPATHCPP/Features/FeatureLayerChangeRenderer/FeatureLayerChangeRenderer.h" \
     "$$SAMPLEPATHCPP/Features/FeatureLayerDictionaryRenderer/FeatureLayerDictionaryRenderer.h" \
     "$$SAMPLEPATHCPP/Features/FeatureLayerFeatureService/FeatureLayerFeatureService.h" \
@@ -485,6 +488,8 @@ SOURCES += \
     "$$SAMPLEPATHCPP/EditData/UpdateAttributesFeatureService/UpdateAttributesFeatureService.cpp" \
     "$$SAMPLEPATHCPP/EditData/UpdateGeometryFeatureService/UpdateGeometryFeatureService.cpp" \
     "$$SAMPLEPATHCPP/Features/ControlTimeExtentTimeSlider/ControlTimeExtentTimeSlider.cpp" \
+    "$$SAMPLEPATHCPP/Features/CreateMobileGeodatabase/CreateMobileGeodatabase.cpp" \
+    "$$SAMPLEPATHCPP/Features/CreateMobileGeodatabase/FeatureListModel.cpp" \
     "$$SAMPLEPATHCPP/Features/FeatureLayerChangeRenderer/FeatureLayerChangeRenderer.cpp" \
     "$$SAMPLEPATHCPP/Features/FeatureLayerDictionaryRenderer/FeatureLayerDictionaryRenderer.cpp" \
     "$$SAMPLEPATHCPP/Features/FeatureLayerFeatureService/FeatureLayerFeatureService.cpp" \
@@ -696,6 +701,7 @@ RESOURCES += \
     "$$SAMPLEPATHCPP/EditData/UpdateAttributesFeatureService/UpdateAttributesFeatureService.qrc" \
     "$$SAMPLEPATHCPP/EditData/UpdateGeometryFeatureService/UpdateGeometryFeatureService.qrc" \
     "$$SAMPLEPATHCPP/Features/ControlTimeExtentTimeSlider/ControlTimeExtentTimeSlider.qrc" \
+    "$$SAMPLEPATHCPP/Features/CreateMobileGeodatabase/CreateMobileGeodatabase.qrc" \
     "$$SAMPLEPATHCPP/Features/FeatureLayerChangeRenderer/FeatureLayerChangeRenderer.qrc" \
     "$$SAMPLEPATHCPP/Features/FeatureLayerDictionaryRenderer/FeatureLayerDictionaryRenderer.qrc" \
     "$$SAMPLEPATHCPP/Features/FeatureLayerFeatureService/FeatureLayerFeatureService.qrc" \
