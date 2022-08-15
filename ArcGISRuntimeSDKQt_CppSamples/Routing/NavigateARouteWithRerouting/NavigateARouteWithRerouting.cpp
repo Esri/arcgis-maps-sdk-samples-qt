@@ -216,8 +216,7 @@ void NavigateARouteWithRerouting::startNavigation()
   m_navigationEnabled = false;
   emit navigationEnabledChanged();
 
-  // get the directions for the route
-  m_directions = m_route.directionManeuvers(this);
+  m_directionManeuvers = m_route.directionManeuvers(this)->directionManeuvers();
 
   // create a route tracker
   m_routeTracker = new RouteTracker(m_routeResult, 0, this);
@@ -294,11 +293,13 @@ void NavigateARouteWithRerouting::connectRouteTrackerSignals()
         textString += "Time remaining: " + time.toString("hh:mm:ss") + "\n";
 
         // display next direction
-        if (DirectionManeuverListModel* directionList = dynamic_cast<DirectionManeuverListModel*>(m_directions))
+        m_directionManeuvers.clear();
+        m_directionManeuvers = m_route.directionManeuvers(this)->directionManeuvers();
+        if (m_directionManeuvers.size() > 0)
         {
-          if (trackingStatus->currentManeuverIndex() + 1 < directionList->directionManeuvers().length())
+          if (trackingStatus->currentManeuverIndex() + 1 < m_directionManeuvers.length())
           {
-            textString += "Next direction: " + qAsConst(directionList)->directionManeuvers()[trackingStatus->currentManeuverIndex() + 1].directionText() + "\n";
+            textString += "Next direction: " + m_directionManeuvers[trackingStatus->currentManeuverIndex() + 1].directionText() + "\n";
           }
         }
         m_routeAheadGraphic->setGeometry(trackingStatus->routeProgress()->remainingGeometry());

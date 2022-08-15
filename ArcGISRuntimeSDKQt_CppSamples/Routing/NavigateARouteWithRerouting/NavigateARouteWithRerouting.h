@@ -85,12 +85,13 @@ private:
     Esri::ArcGISRuntime::RouteResult m_routeResult;
     Esri::ArcGISRuntime::RouteTracker* m_routeTracker = nullptr;
     Esri::ArcGISRuntime::SimulatedLocationDataSource* m_simulatedLocationDataSource = nullptr;
-    QAbstractListModel* m_directions = nullptr;
+//    QAbstractListModel* m_directions = nullptr;
     bool m_navigationEnabled = false;
     bool m_recenterEnabled = false;
     QString m_textString = "";
     QTextToSpeech* m_speaker = nullptr;
     Esri::ArcGISRuntime::RouteParameters m_routeParameters;
+    QList<Esri::ArcGISRuntime::DirectionManeuver> m_directionManeuvers;
 
 };
 
