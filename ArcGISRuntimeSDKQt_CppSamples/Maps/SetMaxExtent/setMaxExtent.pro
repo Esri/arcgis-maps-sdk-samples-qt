@@ -31,9 +31,6 @@ include($$PWD/arcgisruntime.pri)
 TEMPLATE = app
 TARGET = SetMaxExtent
 
-ARCGIS_RUNTIME_VERSION = 100.15.0
-include($$PWD/arcgisruntime.pri)
-
 #-------------------------------------------------------------------------------
 
 HEADERS += \

@@ -25,9 +25,6 @@ CONFIG += c++14
 QT += qml quick
 QT += opengl qml quick
 
-ARCGIS_RUNTIME_VERSION = 100.15
-include($$PWD/arcgisruntime.pri)
-
 TEMPLATE = app
 TARGET = ExportVectorTiles
 

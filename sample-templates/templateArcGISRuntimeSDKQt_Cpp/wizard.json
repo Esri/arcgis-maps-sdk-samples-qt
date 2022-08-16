@@ -2,7 +2,7 @@
     "version": 1,
     "kind": "project",
     "supportedProjectTypes": [ "Qt4ProjectManager.Qt4Project" ],
-    "id": "A.Sample_ArcGISQt_CPP_100_14",
+    "id": "A.Sample_ArcGISQt_CPP_100_15",
     "category": "B.CustomProjects",
     "trDescription": "Creates a Sample ArcGIS Runtime 100.15 Qt Quick C++ application.",
     "trDisplayName": "Sample ArcGIS Runtime 100.15 C++ Qt Quick App",
