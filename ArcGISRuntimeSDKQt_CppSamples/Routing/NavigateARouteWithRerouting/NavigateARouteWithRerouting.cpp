@@ -254,6 +254,9 @@ void NavigateARouteWithRerouting::startNavigation()
   {
     // When a reroute is completed, clear the previous graphics overlay and append the new ones for the new path
     m_routeOverlay->graphics()->clear();
+
+    m_directionManeuvers.clear();
+    m_directionManeuvers = m_route.directionManeuvers(this)->directionManeuvers();
     // add graphics for the predefined stops
     SimpleMarkerSymbol* stopSymbol = new SimpleMarkerSymbol(SimpleMarkerSymbolStyle::Diamond, Qt::red, 20, this);
     m_routeOverlay->graphics()->append(new Graphic(conventionCenterPoint, stopSymbol, this));
@@ -293,8 +296,6 @@ void NavigateARouteWithRerouting::connectRouteTrackerSignals()
         textString += "Time remaining: " + time.toString("hh:mm:ss") + "\n";
 
         // display next direction
-        m_directionManeuvers.clear();
-        m_directionManeuvers = m_route.directionManeuvers(this)->directionManeuvers();
         if (m_directionManeuvers.size() > 0)
         {
           if (trackingStatus->currentManeuverIndex() + 1 < m_directionManeuvers.length())
