@@ -23,7 +23,8 @@
         "GeodatabaseSyncTask"
     ],
     "redirect_from": [
-        "/qt/latest/cpp/sample-code/sample-qt-generategeodatabase.htm"
+        "/qt/latest/cpp/sample-code/sample-qt-generategeodatabase.htm",
+        "/qt/cpp/sample-code/generate-geodatabase/"
     ],
     "relevant_apis": [
         "GenerateGeodatabaseJob",
