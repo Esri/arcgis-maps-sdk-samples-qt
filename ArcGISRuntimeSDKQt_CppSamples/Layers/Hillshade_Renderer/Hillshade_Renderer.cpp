@@ -27,8 +27,8 @@
 #include "Basemap.h"
 #include "HillshadeRenderer.h"
 
-#include <QUrl>
 #include <QDir>
+#include <QUrl>
 #include <QtCore/qglobal.h>
 
 #ifdef Q_OS_IOS

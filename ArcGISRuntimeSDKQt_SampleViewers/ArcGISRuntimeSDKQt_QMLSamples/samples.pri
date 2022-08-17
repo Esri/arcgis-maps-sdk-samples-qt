@@ -65,6 +65,7 @@ RESOURCES += \
     "$$SAMPLEPATHQML/EditData/UpdateAttributesFeatureService/UpdateAttributesFeatureService.qrc" \
     "$$SAMPLEPATHQML/EditData/UpdateGeometryFeatureService/UpdateGeometryFeatureService.qrc" \
     "$$SAMPLEPATHQML/Features/ControlTimeExtentTimeSlider/ControlTimeExtentTimeSlider.qrc" \
+    "$$SAMPLEPATHQML/Features/CreateMobileGeodatabase/CreateMobileGeodatabase.qrc" \
     "$$SAMPLEPATHQML/Features/FeatureLayer_ChangeRenderer/FeatureLayer_ChangeRenderer.qrc" \
     "$$SAMPLEPATHQML/Features/FeatureLayer_DictionaryRenderer/FeatureLayer_DictionaryRenderer.qrc" \
     "$$SAMPLEPATHQML/Features/FeatureLayer_FeatureService/FeatureLayer_FeatureService.qrc" \
@@ -73,7 +74,7 @@ RESOURCES += \
     "$$SAMPLEPATHQML/Features/FeatureLayer_Query/FeatureLayer_Query.qrc" \
     "$$SAMPLEPATHQML/Features/FeatureLayer_Selection/FeatureLayer_Selection.qrc" \
     "$$SAMPLEPATHQML/Features/FilterByDefinitionExpressionOrDisplayFilter/FilterByDefinitionExpressionOrDisplayFilter.qrc" \
-    "$$SAMPLEPATHQML/Features/GenerateGeodatabase/GenerateGeodatabase.qrc" \
+    "$$SAMPLEPATHQML/Features/GenerateGeodatabaseReplicaFromFeatureService/GenerateGeodatabaseReplicaFromFeatureService.qrc" \
     "$$SAMPLEPATHQML/Features/ListRelatedFeatures/ListRelatedFeatures.qrc" \
     "$$SAMPLEPATHQML/Features/ServiceFeatureTable_Cache/ServiceFeatureTable_Cache.qrc" \
     "$$SAMPLEPATHQML/Features/ServiceFeatureTable_ManualCache/ServiceFeatureTable_ManualCache.qrc" \
@@ -110,6 +111,7 @@ RESOURCES += \
     "$$SAMPLEPATHQML/Layers/DisplaySubtypeFeatureLayer/DisplaySubtypeFeatureLayer.qrc" \
     "$$SAMPLEPATHQML/Layers/DisplayWfsLayer/DisplayWfsLayer.qrc" \
     "$$SAMPLEPATHQML/Layers/ExportTiles/ExportTiles.qrc" \
+    "$$SAMPLEPATHQML/Layers/ExportVectorTiles/ExportVectorTiles.qrc" \
     "$$SAMPLEPATHQML/Layers/Feature_Collection_Layer/Feature_Collection_Layer.qrc" \
     "$$SAMPLEPATHQML/Layers/FeatureCollectionLayerFromPortal/FeatureCollectionLayerFromPortal.qrc" \
     "$$SAMPLEPATHQML/Layers/FeatureCollectionLayerQuery/FeatureCollectionLayerQuery.qrc" \
@@ -170,6 +172,8 @@ RESOURCES += \
     "$$SAMPLEPATHQML/Maps/SetInitialMapArea/SetInitialMapArea.qrc" \
     "$$SAMPLEPATHQML/Maps/SetInitialMapLocation/SetInitialMapLocation.qrc" \
     "$$SAMPLEPATHQML/Maps/SetMapSpatialReference/SetMapSpatialReference.qrc" \
+    "$$SAMPLEPATHQML/Maps/SetMaxExtent/SetMaxExtent.qrc" \
+    "$$SAMPLEPATHQML/Maps/ShowDeviceLocationUsingIndoorPositioning/ShowDeviceLocationUsingIndoorPositioning.qrc" \
     "$$SAMPLEPATHQML/Maps/ShowLocationHistory/ShowLocationHistory.qrc" \
     "$$SAMPLEPATHQML/Maps/ShowMagnifier/ShowMagnifier.qrc" \
     "$$SAMPLEPATHQML/Maps/TakeScreenshot/TakeScreenshot.qrc" \

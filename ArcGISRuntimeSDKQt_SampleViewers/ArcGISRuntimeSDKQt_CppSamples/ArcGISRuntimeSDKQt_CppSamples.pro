@@ -25,16 +25,14 @@ DEFINES += Qt_Version=\"$$QT_VERSION\"
 SAMPLEPATHCPP = $$PWD/../../ArcGISRuntimeSDKQt_CppSamples
 COMMONVIEWER = $$PWD/../ArcGISRuntimeSDKQt_Samples
 PCH_HEADER = $$COMMONVIEWER/pch.hpp
-ARCGIS_RUNTIME_VERSION = 100.14
+ARCGIS_RUNTIME_VERSION = 100.15.0
 DEFINES += ArcGIS_Runtime_Version=$$ARCGIS_RUNTIME_VERSION
 
 # This block determines whether to build against the installed SDK or the local dev build area
 exists($$PWD/../../../../DevBuildCpp.pri) {
   message("Building against the dev environment")
   DEFINES += ESRI_BUILD
-  DEFINES += SAMPLE_VIEWER_API_KEY=$$(SAMPLEVIEWERAPIKEY_INTERNAL)
-  DEFINES += GANALYTICS_API_KEY=$$(GANALYTICS_API_KEY)
-  DEFINES += GANALYTICS_STREAM_ID=$$(GANALYTICS_STREAM_ID)
+  DEFINES += SAMPLE_VIEWER_API_KEY=$$(SAMPLEVIEWERAPIKEY_RELEASE)
 
   # use the Esri dev build script
   include ($$PWD/../../../../DevBuildCpp.pri)
@@ -79,6 +77,10 @@ exists($$PWD/../../../../DevBuildCpp.pri) {
 
   DEFINES += BUILD_FROM_SETUP
 }
+
+# Set analytics API key and stream id, these will be empty strings if not provided in the command line arguments
+DEFINES += GANALYTICS_API_KEY=$$(GANALYTICS_API_KEY)
+DEFINES += GANALYTICS_STREAM_ID=$$(GANALYTICS_STREAM_ID)
 
 qtHaveModule(webengine) {
   QT += webengine

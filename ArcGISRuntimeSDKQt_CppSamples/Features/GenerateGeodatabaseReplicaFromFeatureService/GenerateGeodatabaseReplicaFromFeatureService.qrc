@@ -1,0 +1,11 @@
+<RCC>
+    <qresource prefix="/Samples/Features/GenerateGeodatabaseReplicaFromFeatureService">
+        <file alias="sample.json">README.metadata.json</file>
+        <file>screenshot.png</file>
+        <file>GenerateGeodatabaseReplicaFromFeatureService.qml</file>
+        <file>GenerateGeodatabaseReplicaFromFeatureService.h</file>
+        <file>GenerateGeodatabaseReplicaFromFeatureService.cpp</file>
+        <file>README.md</file>
+        <file>download.png</file>
+    </qresource>
+</RCC>

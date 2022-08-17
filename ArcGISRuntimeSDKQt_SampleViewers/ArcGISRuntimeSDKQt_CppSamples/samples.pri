@@ -67,6 +67,7 @@ INCLUDEPATH += \
     "$$SAMPLEPATHCPP/EditData/UpdateAttributesFeatureService" \
     "$$SAMPLEPATHCPP/EditData/UpdateGeometryFeatureService" \
     "$$SAMPLEPATHCPP/Features/ControlTimeExtentTimeSlider" \
+    "$$SAMPLEPATHCPP/Features/CreateMobileGeodatabase" \
     "$$SAMPLEPATHCPP/Features/FeatureLayerChangeRenderer" \
     "$$SAMPLEPATHCPP/Features/FeatureLayerDictionaryRenderer" \
     "$$SAMPLEPATHCPP/Features/FeatureLayerFeatureService" \
@@ -75,7 +76,7 @@ INCLUDEPATH += \
     "$$SAMPLEPATHCPP/Features/FeatureLayerQuery" \
     "$$SAMPLEPATHCPP/Features/FeatureLayerSelection" \
     "$$SAMPLEPATHCPP/Features/FilterByDefinitionExpressionOrDisplayFilter" \
-    "$$SAMPLEPATHCPP/Features/GenerateGeodatabase" \
+    "$$SAMPLEPATHCPP/Features/GenerateGeodatabaseReplicaFromFeatureService" \
     "$$SAMPLEPATHCPP/Features/ListRelatedFeatures" \
     "$$SAMPLEPATHCPP/Features/ServiceFeatureTableCache" \
     "$$SAMPLEPATHCPP/Features/ServiceFeatureTableManualCache" \
@@ -112,6 +113,7 @@ INCLUDEPATH += \
     "$$SAMPLEPATHCPP/Layers/DisplaySubtypeFeatureLayer" \
     "$$SAMPLEPATHCPP/Layers/DisplayWfsLayer" \
     "$$SAMPLEPATHCPP/Layers/ExportTiles" \
+    "$$SAMPLEPATHCPP/Layers/ExportVectorTiles" \
     "$$SAMPLEPATHCPP/Layers/Feature_Collection_Layer" \
     "$$SAMPLEPATHCPP/Layers/FeatureCollectionLayerFromPortal" \
     "$$SAMPLEPATHCPP/Layers/FeatureCollectionLayerQuery" \
@@ -172,6 +174,8 @@ INCLUDEPATH += \
     "$$SAMPLEPATHCPP/Maps/SetInitialMapArea" \
     "$$SAMPLEPATHCPP/Maps/SetInitialMapLocation" \
     "$$SAMPLEPATHCPP/Maps/SetMapSpatialReference" \
+    "$$SAMPLEPATHCPP/Maps/SetMaxExtent" \
+    "$$SAMPLEPATHCPP/Maps/ShowDeviceLocationUsingIndoorPositioning" \
     "$$SAMPLEPATHCPP/Maps/ShowLocationHistory" \
     "$$SAMPLEPATHCPP/Maps/ShowMagnifier" \
     "$$SAMPLEPATHCPP/Maps/TakeScreenshot" \
@@ -270,6 +274,8 @@ HEADERS += \
     "$$SAMPLEPATHCPP/EditData/UpdateAttributesFeatureService/UpdateAttributesFeatureService.h" \
     "$$SAMPLEPATHCPP/EditData/UpdateGeometryFeatureService/UpdateGeometryFeatureService.h" \
     "$$SAMPLEPATHCPP/Features/ControlTimeExtentTimeSlider/ControlTimeExtentTimeSlider.h" \
+    "$$SAMPLEPATHCPP/Features/CreateMobileGeodatabase/CreateMobileGeodatabase.h" \
+    "$$SAMPLEPATHCPP/Features/CreateMobileGeodatabase/FeatureListModel.h" \
     "$$SAMPLEPATHCPP/Features/FeatureLayerChangeRenderer/FeatureLayerChangeRenderer.h" \
     "$$SAMPLEPATHCPP/Features/FeatureLayerDictionaryRenderer/FeatureLayerDictionaryRenderer.h" \
     "$$SAMPLEPATHCPP/Features/FeatureLayerFeatureService/FeatureLayerFeatureService.h" \
@@ -278,7 +284,7 @@ HEADERS += \
     "$$SAMPLEPATHCPP/Features/FeatureLayerQuery/FeatureLayerQuery.h" \
     "$$SAMPLEPATHCPP/Features/FeatureLayerSelection/FeatureLayerSelection.h" \
     "$$SAMPLEPATHCPP/Features/FilterByDefinitionExpressionOrDisplayFilter/FilterByDefinitionExpressionOrDisplayFilter.h" \
-    "$$SAMPLEPATHCPP/Features/GenerateGeodatabase/GenerateGeodatabase.h" \
+    "$$SAMPLEPATHCPP/Features/GenerateGeodatabaseReplicaFromFeatureService/GenerateGeodatabaseReplicaFromFeatureService.h" \
     "$$SAMPLEPATHCPP/Features/ListRelatedFeatures/ListRelatedFeatures.h" \
     "$$SAMPLEPATHCPP/Features/ListRelatedFeatures/RelatedFeature.h" \
     "$$SAMPLEPATHCPP/Features/ListRelatedFeatures/RelatedFeatureListModel.h" \
@@ -317,6 +323,7 @@ HEADERS += \
     "$$SAMPLEPATHCPP/Layers/DisplaySubtypeFeatureLayer/DisplaySubtypeFeatureLayer.h" \
     "$$SAMPLEPATHCPP/Layers/DisplayWfsLayer/DisplayWfsLayer.h" \
     "$$SAMPLEPATHCPP/Layers/ExportTiles/ExportTiles.h" \
+    "$$SAMPLEPATHCPP/Layers/ExportVectorTiles/ExportVectorTiles.h" \
     "$$SAMPLEPATHCPP/Layers/Feature_Collection_Layer/Feature_Collection_Layer.h" \
     "$$SAMPLEPATHCPP/Layers/FeatureCollectionLayerFromPortal/FeatureCollectionLayerFromPortal.h" \
     "$$SAMPLEPATHCPP/Layers/FeatureCollectionLayerQuery/FeatureCollectionLayerQuery.h" \
@@ -378,6 +385,9 @@ HEADERS += \
     "$$SAMPLEPATHCPP/Maps/SetInitialMapArea/SetInitialMapArea.h" \
     "$$SAMPLEPATHCPP/Maps/SetInitialMapLocation/SetInitialMapLocation.h" \
     "$$SAMPLEPATHCPP/Maps/SetMapSpatialReference/SetMapSpatialReference.h" \
+    "$$SAMPLEPATHCPP/Maps/SetMaxExtent/SetMaxExtent.h" \
+    "$$SAMPLEPATHCPP/Maps/ShowDeviceLocationUsingIndoorPositioning/IndoorsLocationDataSourceCreator.h" \
+    "$$SAMPLEPATHCPP/Maps/ShowDeviceLocationUsingIndoorPositioning/ShowDeviceLocationUsingIndoorPositioning.h" \
     "$$SAMPLEPATHCPP/Maps/ShowLocationHistory/ShowLocationHistory.h" \
     "$$SAMPLEPATHCPP/Maps/ShowMagnifier/ShowMagnifier.h" \
     "$$SAMPLEPATHCPP/Maps/TakeScreenshot/MapImageProvider.h" \
@@ -478,6 +488,8 @@ SOURCES += \
     "$$SAMPLEPATHCPP/EditData/UpdateAttributesFeatureService/UpdateAttributesFeatureService.cpp" \
     "$$SAMPLEPATHCPP/EditData/UpdateGeometryFeatureService/UpdateGeometryFeatureService.cpp" \
     "$$SAMPLEPATHCPP/Features/ControlTimeExtentTimeSlider/ControlTimeExtentTimeSlider.cpp" \
+    "$$SAMPLEPATHCPP/Features/CreateMobileGeodatabase/CreateMobileGeodatabase.cpp" \
+    "$$SAMPLEPATHCPP/Features/CreateMobileGeodatabase/FeatureListModel.cpp" \
     "$$SAMPLEPATHCPP/Features/FeatureLayerChangeRenderer/FeatureLayerChangeRenderer.cpp" \
     "$$SAMPLEPATHCPP/Features/FeatureLayerDictionaryRenderer/FeatureLayerDictionaryRenderer.cpp" \
     "$$SAMPLEPATHCPP/Features/FeatureLayerFeatureService/FeatureLayerFeatureService.cpp" \
@@ -486,7 +498,7 @@ SOURCES += \
     "$$SAMPLEPATHCPP/Features/FeatureLayerQuery/FeatureLayerQuery.cpp" \
     "$$SAMPLEPATHCPP/Features/FeatureLayerSelection/FeatureLayerSelection.cpp" \
     "$$SAMPLEPATHCPP/Features/FilterByDefinitionExpressionOrDisplayFilter/FilterByDefinitionExpressionOrDisplayFilter.cpp" \
-    "$$SAMPLEPATHCPP/Features/GenerateGeodatabase/GenerateGeodatabase.cpp" \
+    "$$SAMPLEPATHCPP/Features/GenerateGeodatabaseReplicaFromFeatureService/GenerateGeodatabaseReplicaFromFeatureService.cpp" \
     "$$SAMPLEPATHCPP/Features/ListRelatedFeatures/ListRelatedFeatures.cpp" \
     "$$SAMPLEPATHCPP/Features/ListRelatedFeatures/RelatedFeature.cpp" \
     "$$SAMPLEPATHCPP/Features/ListRelatedFeatures/RelatedFeatureListModel.cpp" \
@@ -525,6 +537,7 @@ SOURCES += \
     "$$SAMPLEPATHCPP/Layers/DisplaySubtypeFeatureLayer/DisplaySubtypeFeatureLayer.cpp" \
     "$$SAMPLEPATHCPP/Layers/DisplayWfsLayer/DisplayWfsLayer.cpp" \
     "$$SAMPLEPATHCPP/Layers/ExportTiles/ExportTiles.cpp" \
+    "$$SAMPLEPATHCPP/Layers/ExportVectorTiles/ExportVectorTiles.cpp" \
     "$$SAMPLEPATHCPP/Layers/Feature_Collection_Layer/Feature_Collection_Layer.cpp" \
     "$$SAMPLEPATHCPP/Layers/FeatureCollectionLayerFromPortal/FeatureCollectionLayerFromPortal.cpp" \
     "$$SAMPLEPATHCPP/Layers/FeatureCollectionLayerQuery/FeatureCollectionLayerQuery.cpp" \
@@ -586,6 +599,9 @@ SOURCES += \
     "$$SAMPLEPATHCPP/Maps/SetInitialMapArea/SetInitialMapArea.cpp" \
     "$$SAMPLEPATHCPP/Maps/SetInitialMapLocation/SetInitialMapLocation.cpp" \
     "$$SAMPLEPATHCPP/Maps/SetMapSpatialReference/SetMapSpatialReference.cpp" \
+    "$$SAMPLEPATHCPP/Maps/SetMaxExtent/SetMaxExtent.cpp" \
+    "$$SAMPLEPATHCPP/Maps/ShowDeviceLocationUsingIndoorPositioning/IndoorsLocationDataSourceCreator.cpp" \
+    "$$SAMPLEPATHCPP/Maps/ShowDeviceLocationUsingIndoorPositioning/ShowDeviceLocationUsingIndoorPositioning.cpp" \
     "$$SAMPLEPATHCPP/Maps/ShowLocationHistory/ShowLocationHistory.cpp" \
     "$$SAMPLEPATHCPP/Maps/ShowMagnifier/ShowMagnifier.cpp" \
     "$$SAMPLEPATHCPP/Maps/TakeScreenshot/MapImageProvider.cpp" \
@@ -685,6 +701,7 @@ RESOURCES += \
     "$$SAMPLEPATHCPP/EditData/UpdateAttributesFeatureService/UpdateAttributesFeatureService.qrc" \
     "$$SAMPLEPATHCPP/EditData/UpdateGeometryFeatureService/UpdateGeometryFeatureService.qrc" \
     "$$SAMPLEPATHCPP/Features/ControlTimeExtentTimeSlider/ControlTimeExtentTimeSlider.qrc" \
+    "$$SAMPLEPATHCPP/Features/CreateMobileGeodatabase/CreateMobileGeodatabase.qrc" \
     "$$SAMPLEPATHCPP/Features/FeatureLayerChangeRenderer/FeatureLayerChangeRenderer.qrc" \
     "$$SAMPLEPATHCPP/Features/FeatureLayerDictionaryRenderer/FeatureLayerDictionaryRenderer.qrc" \
     "$$SAMPLEPATHCPP/Features/FeatureLayerFeatureService/FeatureLayerFeatureService.qrc" \
@@ -693,7 +710,7 @@ RESOURCES += \
     "$$SAMPLEPATHCPP/Features/FeatureLayerQuery/FeatureLayerQuery.qrc" \
     "$$SAMPLEPATHCPP/Features/FeatureLayerSelection/FeatureLayerSelection.qrc" \
     "$$SAMPLEPATHCPP/Features/FilterByDefinitionExpressionOrDisplayFilter/FilterByDefinitionExpressionOrDisplayFilter.qrc" \
-    "$$SAMPLEPATHCPP/Features/GenerateGeodatabase/GenerateGeodatabase.qrc" \
+    "$$SAMPLEPATHCPP/Features/GenerateGeodatabaseReplicaFromFeatureService/GenerateGeodatabaseReplicaFromFeatureService.qrc" \
     "$$SAMPLEPATHCPP/Features/ListRelatedFeatures/ListRelatedFeatures.qrc" \
     "$$SAMPLEPATHCPP/Features/ServiceFeatureTableCache/ServiceFeatureTableCache.qrc" \
     "$$SAMPLEPATHCPP/Features/ServiceFeatureTableManualCache/ServiceFeatureTableManualCache.qrc" \
@@ -730,6 +747,7 @@ RESOURCES += \
     "$$SAMPLEPATHCPP/Layers/DisplaySubtypeFeatureLayer/DisplaySubtypeFeatureLayer.qrc" \
     "$$SAMPLEPATHCPP/Layers/DisplayWfsLayer/DisplayWfsLayer.qrc" \
     "$$SAMPLEPATHCPP/Layers/ExportTiles/ExportTiles.qrc" \
+    "$$SAMPLEPATHCPP/Layers/ExportVectorTiles/ExportVectorTiles.qrc" \
     "$$SAMPLEPATHCPP/Layers/Feature_Collection_Layer/Feature_Collection_Layer.qrc" \
     "$$SAMPLEPATHCPP/Layers/FeatureCollectionLayerFromPortal/FeatureCollectionLayerFromPortal.qrc" \
     "$$SAMPLEPATHCPP/Layers/FeatureCollectionLayerQuery/FeatureCollectionLayerQuery.qrc" \
@@ -790,6 +808,8 @@ RESOURCES += \
     "$$SAMPLEPATHCPP/Maps/SetInitialMapArea/SetInitialMapArea.qrc" \
     "$$SAMPLEPATHCPP/Maps/SetInitialMapLocation/SetInitialMapLocation.qrc" \
     "$$SAMPLEPATHCPP/Maps/SetMapSpatialReference/SetMapSpatialReference.qrc" \
+    "$$SAMPLEPATHCPP/Maps/SetMaxExtent/SetMaxExtent.qrc" \
+    "$$SAMPLEPATHCPP/Maps/ShowDeviceLocationUsingIndoorPositioning/ShowDeviceLocationUsingIndoorPositioning.qrc" \
     "$$SAMPLEPATHCPP/Maps/ShowLocationHistory/ShowLocationHistory.qrc" \
     "$$SAMPLEPATHCPP/Maps/ShowMagnifier/ShowMagnifier.qrc" \
     "$$SAMPLEPATHCPP/Maps/TakeScreenshot/TakeScreenshot.qrc" \

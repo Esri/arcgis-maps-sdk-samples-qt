@@ -1,0 +1,38 @@
+{
+    "category": "Layers",
+    "description": "Export tiles from an online vector tile service.",
+    "ignore": false,
+    "images": [
+        "screenshot.png"
+    ],
+    "keywords": [
+        "cache",
+        "download",
+        "offline",
+        "vector",
+        "vector tiled layer",
+        "ArcGISVectorTiledLayer",
+        "ExportVectorTilesJob",
+        "ExportVectorTilesParameters",
+        "ExportVectorTilesResult",
+        "ExportVectorTilesTask",
+        "ItemResourceCache",
+        "VectorTileCache"
+    ],
+    "redirect_from": "",
+    "relevant_apis": [
+        "ArcGISVectorTiledLayer",
+        "ExportVectorTilesJob",
+        "ExportVectorTilesParameters",
+        "ExportVectorTilesResult",
+        "ExportVectorTilesTask",
+        "ItemResourceCache",
+        "VectorTileCache"
+    ],
+    "snippets": [
+        "ExportVectorTiles.cpp",
+        "ExportVectorTiles.h",
+        "ExportVectorTiles.qml"
+    ],
+    "title": "Export vector tiles"
+}

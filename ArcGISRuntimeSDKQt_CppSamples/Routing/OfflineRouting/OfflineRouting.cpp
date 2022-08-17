@@ -43,6 +43,10 @@
 #include <QDir>
 #include <QScopedPointer>
 
+#ifdef Q_OS_IOS
+#include <QStandardPaths>
+#endif // Q_OS_IOS
+
 using namespace Esri::ArcGISRuntime;
 
 // helper method to get cross platform data path

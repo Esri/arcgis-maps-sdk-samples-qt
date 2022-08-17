@@ -103,6 +103,7 @@
 #include "CreateAndSaveMap.h"
 #include "CreateGeometries.h"
 #include "CreateLoadReport.h"
+#include "CreateMobileGeodatabase.h"
 #include "CreateSymbolStylesFromWebStyles.h"
 #include "CreateTerrainSurfaceFromLocalRaster.h"
 #include "CreateTerrainSurfaceFromLocalTilePackage.h"
@@ -138,6 +139,7 @@
 #include "EditKmlGroundOverlay.h"
 #include "EditWithBranchVersioning.h"
 #include "ExportTiles.h"
+#include "ExportVectorTiles.h"
 #include "ExtrudeGraphics.h"
 #include "Feature_Collection_Layer.h"
 #include "FeatureCollectionLayerFromPortal.h"
@@ -160,7 +162,7 @@
 #include "FindRoute.h"
 #include "FindServiceAreasForMultipleFacilities.h"
 #include "FormatCoordinates.h"
-#include "GenerateGeodatabase.h"
+#include "GenerateGeodatabaseReplicaFromFeatureService.h"
 #include "GenerateOfflineMap_Overrides.h"
 #include "GenerateOfflineMap.h"
 #include "GenerateOfflineMapLocalBasemap.h"
@@ -234,7 +236,9 @@
 #include "SetInitialMapArea.h"
 #include "SetInitialMapLocation.h"
 #include "SetMapSpatialReference.h"
+#include "SetMaxExtent.h"
 #include "ShowCallout.h"
+#include "ShowDeviceLocationUsingIndoorPositioning.h"
 #include "ShowLabelsOnLayers.h"
 #include "ShowLocationHistory.h"
 #include "ShowMagnifier.h"
@@ -304,9 +308,6 @@ void registerCppSampleClasses();
 
 int main(int argc, char *argv[])
 {
-  // add support for feature toggles on mobile, which is disabled by default
-  qputenv("QT_ENABLE_FEATURE_TOGGLE_MOBILE", "true");
-
 #ifdef QT_WEBVIEW_WEBENGINE_BACKEND
   QtWebEngine::initialize();
 #endif // QT_WEBVIEW_WEBENGINE_BACKEND
@@ -413,6 +414,7 @@ void registerCppSampleClasses()
   CreateAndSaveMap::init();
   CreateGeometries::init();
   CreateLoadReport::init();
+  CreateMobileGeodatabase::init();
   CreateSymbolStylesFromWebStyles::init();
   CreateTerrainSurfaceFromLocalRaster::init();
   CreateTerrainSurfaceFromLocalTilePackage::init();
@@ -447,6 +449,7 @@ void registerCppSampleClasses()
   EditKmlGroundOverlay::init();
   EditWithBranchVersioning::init();
   ExportTiles::init();
+  ExportVectorTiles::init();
   ExtrudeGraphics::init();
   Feature_Collection_Layer::init();
   FeatureCollectionLayerFromPortal::init();
@@ -469,7 +472,7 @@ void registerCppSampleClasses()
   FindRoute::init();
   FindServiceAreasForMultipleFacilities::init();
   FormatCoordinates::init();
-  GenerateGeodatabase::init();
+  GenerateGeodatabaseReplicaFromFeatureService::init();
   GenerateOfflineMap_Overrides::init();
   GenerateOfflineMap::init();
   GenerateOfflineMapLocalBasemap::init();
@@ -540,7 +543,9 @@ void registerCppSampleClasses()
   SetInitialMapArea::init();
   SetInitialMapLocation::init();
   SetMapSpatialReference::init();
+  SetMaxExtent::init();
   ShowCallout::init();
+  ShowDeviceLocationUsingIndoorPositioning::init();
   ShowLabelsOnLayers::init();
   ShowLocationHistory::init();
   ShowMagnifier::init();

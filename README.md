@@ -1,4 +1,4 @@
-# ArcGIS Runtime SDK 100.14 for Qt sample applications
+# ArcGIS Runtime SDK 100.15.0 for Qt sample applications
 
 ## Overview
 

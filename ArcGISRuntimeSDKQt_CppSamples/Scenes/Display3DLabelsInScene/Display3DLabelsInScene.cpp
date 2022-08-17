@@ -66,11 +66,10 @@ void Display3DLabelsInScene::display3DLabelsOnFeatureLayer(FeatureLayer* feature
   textSymbol->setHaloWidth(2.0);
   textSymbol->setSize(14.0);
 
-  LabelDefinition* labelDefinition = new LabelDefinition(this);
-  labelDefinition->setExpression(new ArcadeLabelExpression("Text($feature.INSTALLATIONDATE, 'D MMM Y')", this));
+  ArcadeLabelExpression* labelExpression = new ArcadeLabelExpression("Text($feature.INSTALLATIONDATE, 'D MMM Y')", this);
+  LabelDefinition* labelDefinition = new LabelDefinition(labelExpression, textSymbol, this);
   labelDefinition->setPlacement(LabelingPlacement::LineAboveAlong);
   labelDefinition->setUseCodedValues(true);
-  labelDefinition->setTextSymbol(textSymbol);
 
   featureLayer->labelDefinitions()->clear();
   featureLayer->labelDefinitions()->append(labelDefinition);

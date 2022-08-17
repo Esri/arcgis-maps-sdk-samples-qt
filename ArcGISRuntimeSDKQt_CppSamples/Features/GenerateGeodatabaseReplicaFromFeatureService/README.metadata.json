@@ -1,0 +1,41 @@
+{
+    "category": "Features",
+    "dataItems": [
+        {
+            "itemId": "e4a398afe9a945f3b0f4dca1e4faccb5",
+            "path": "~/ArcGIS/Runtime/Data/tpkx/SanFrancisco.tpkx"
+        }
+    ],
+    "description": "Generate a local geodatabase from an online feature service.",
+    "ignore": false,
+    "images": [
+        "screenshot.png"
+    ],
+    "keywords": [
+        "disconnected",
+        "local geodatabase",
+        "offline",
+        "replica",
+        "sync",
+        "GenerateGeodatabaseJob",
+        "GenerateGeodatabaseParameters",
+        "Geodatabase",
+        "GeodatabaseSyncTask"
+    ],
+    "redirect_from": [
+        "/qt/latest/cpp/sample-code/sample-qt-generategeodatabase.htm",
+        "/qt/cpp/sample-code/generate-geodatabase/"
+    ],
+    "relevant_apis": [
+        "GenerateGeodatabaseJob",
+        "GenerateGeodatabaseParameters",
+        "Geodatabase",
+        "GeodatabaseSyncTask"
+    ],
+    "snippets": [
+        "GenerateGeodatabaseReplicaFromFeatureService.cpp",
+        "GenerateGeodatabaseReplicaFromFeatureService.h",
+        "GenerateGeodatabaseReplicaFromFeatureService.qml"
+    ],
+    "title": "Generate geodatabase replica from feature service"
+}

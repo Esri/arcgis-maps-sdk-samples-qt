@@ -28,11 +28,11 @@
 #include "SceneQuickView.h"
 #include "SimpleRenderer.h"
 
+#include <QDir>
+
 #ifdef Q_OS_IOS
 #include <QStandardPaths>
-#endif
-
-#include <QDir>
+#endif // Q_OS_IOS
 
 using namespace Esri::ArcGISRuntime;
 
