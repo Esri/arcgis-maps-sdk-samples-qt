@@ -342,9 +342,8 @@ void NavigateARouteWithRerouting::connectRouteTrackerSignals()
     // When a reroute is completed, clear the previous graphics overlay and append the new ones for the new path
     m_routeOverlay->graphics()->clear();
 
-    // reinitialize the route to get the updated direction maneuvers list from it
-    m_route = rawTrackingStatus->routeResult().routes().at(0);
-    m_directionManeuvers = m_route.directionManeuvers(this)->directionManeuvers();
+    // Use the updated route to get the new direction maneuvers list
+    m_directionManeuvers = rawTrackingStatus->routeResult().routes().at(0).directionManeuvers(this)->directionManeuvers();
 
     // add graphics for the predefined stops
     SimpleMarkerSymbol* stopSymbol = new SimpleMarkerSymbol(SimpleMarkerSymbolStyle::Diamond, Qt::red, 20, this);
