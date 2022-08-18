@@ -159,6 +159,12 @@ void NavigateARouteWithRerouting::connectRouteTaskSignals()
     m_routeResult = routeResult;
     m_route = qAsConst(m_routeResult).routes()[0];
 
+    m_directionManeuvers = m_route.directionManeuvers(this)->directionManeuvers();
+
+//    foreach (auto item, m_directionManeuvers) {
+//      qDebug() << static_cast<std::string>(item);
+//    }
+
     // adjust viewpoint to enclose the route with a 100 DPI padding
     m_mapView->setViewpointGeometry(m_route.routeGeometry(), 100);
 
@@ -250,20 +256,6 @@ void NavigateARouteWithRerouting::startNavigation()
   rerouteParameters->setStrategy(ReroutingStrategy::ToNextWaypoint);
   rerouteParameters->setVisitFirstStopOnStart(false);
 
-  connect(m_routeTracker, &RouteTracker::rerouteCompleted, this, [this](TrackingStatus* rawTrackingStatus, Error error)
-  {
-    // When a reroute is completed, clear the previous graphics overlay and append the new ones for the new path
-    m_routeOverlay->graphics()->clear();
-
-    m_directionManeuvers.clear();
-    m_directionManeuvers = m_route.directionManeuvers(this)->directionManeuvers();
-    // add graphics for the predefined stops
-    SimpleMarkerSymbol* stopSymbol = new SimpleMarkerSymbol(SimpleMarkerSymbolStyle::Diamond, Qt::red, 20, this);
-    m_routeOverlay->graphics()->append(new Graphic(conventionCenterPoint, stopSymbol, this));
-    m_routeOverlay->graphics()->append(new Graphic(aerospaceMuseumPoint, stopSymbol, this));
-    m_routeOverlay->graphics()->append(m_routeAheadGraphic);
-  });
-
   m_routeTracker->enableRerouting(rerouteParameters);
 
   // add a data source for the location display
@@ -282,8 +274,24 @@ void NavigateARouteWithRerouting::connectRouteTrackerSignals()
     m_speaker->say(voiceGuidance->text());
   });
 
+  connect(m_routeTask, &RouteTask::solveRouteCompleted, this, [this](QUuid, RouteResult routeResult)
+    {
+      if (routeResult.isEmpty())
+        return;
+
+      if (routeResult.routes().empty())
+        return;
+
+      m_routeResult = routeResult;
+      m_route = qAsConst(m_routeResult).routes()[0];
+      m_directionManeuvers = m_route.directionManeuvers(this)->directionManeuvers();
+  });
+
   connect(m_routeTracker, &RouteTracker::trackingStatusChanged, this, [this](TrackingStatus* rawTrackingStatus)
   {
+    m_directionManeuvers.clear();
+    m_directionManeuvers = m_route.directionManeuvers(this)->directionManeuvers();
+
     auto trackingStatus = std::unique_ptr<TrackingStatus>(rawTrackingStatus);
     QString textString("Route status: \n");
     if (trackingStatus->destinationStatus() == DestinationStatus::NotReached || trackingStatus->destinationStatus() == DestinationStatus::Approaching)
@@ -330,6 +338,21 @@ void NavigateARouteWithRerouting::connectRouteTrackerSignals()
   connect(m_routeTracker, &RouteTracker::trackLocationCompleted, this, [this](QUuid)
   {
     m_routeTracker->generateVoiceGuidance();
+  });
+
+  connect(m_routeTracker, &RouteTracker::rerouteCompleted, this, [this](TrackingStatus* rawTrackingStatus, Error error)
+  {
+    // When a reroute is completed, clear the previous graphics overlay and append the new ones for the new path
+    m_routeOverlay->graphics()->clear();
+
+    m_route = rawTrackingStatus->routeResult().routes().at(0);
+    m_directionManeuvers.clear();
+    m_directionManeuvers = m_route.directionManeuvers(this)->directionManeuvers();
+    // add graphics for the predefined stops
+    SimpleMarkerSymbol* stopSymbol = new SimpleMarkerSymbol(SimpleMarkerSymbolStyle::Diamond, Qt::red, 20, this);
+    m_routeOverlay->graphics()->append(new Graphic(conventionCenterPoint, stopSymbol, this));
+    m_routeOverlay->graphics()->append(new Graphic(aerospaceMuseumPoint, stopSymbol, this));
+    m_routeOverlay->graphics()->append(m_routeAheadGraphic);
   });
 }
 
