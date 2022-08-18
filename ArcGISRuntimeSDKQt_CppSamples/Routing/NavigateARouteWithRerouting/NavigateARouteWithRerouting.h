@@ -48,7 +48,6 @@ class NavigateARouteWithRerouting : public QObject
   Q_PROPERTY(bool navigationEnabled READ navigationEnabled NOTIFY navigationEnabledChanged)
   Q_PROPERTY(bool recenterEnabled READ recenterEnabled NOTIFY recenterEnabledChanged)
   Q_PROPERTY(QString textString READ textString NOTIFY textStringChanged)
-//  Q_PROPERTY(bool reroutingEnabled READ reroutingEnabled NOTIFY reroutingEnabledChanged)
 
 public:
   explicit NavigateARouteWithRerouting(QObject* parent = nullptr);
@@ -63,7 +62,6 @@ signals:
   void navigationEnabledChanged();
   void recenterEnabledChanged();
   void textStringChanged();
-//  bool reroutingEnabledChanged();
 
 private:
   Esri::ArcGISRuntime::MapQuickView* mapView() const;
@@ -71,7 +69,6 @@ private:
 
   bool navigationEnabled() const;
     bool recenterEnabled() const;
-//    bool reroutingEnabled() const;
     QString textString() const;
     void connectRouteTaskSignals();
     void connectRouteTrackerSignals();

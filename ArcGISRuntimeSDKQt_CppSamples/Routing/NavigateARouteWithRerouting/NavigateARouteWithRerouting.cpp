@@ -164,7 +164,7 @@ void NavigateARouteWithRerouting::connectRouteTaskSignals()
     // adjust viewpoint to enclose the route with a 100 DPI padding
     m_mapView->setViewpointGeometry(m_route.routeGeometry(), 100);
 
-    // create a graphic to show the route
+    // create graphics to show the route traversed and route ahead
     m_routeAheadGraphic = new Graphic(m_route.routeGeometry(), new SimpleLineSymbol(SimpleLineSymbolStyle::Solid, Qt::blue, 5, this), this);
     m_routeTraveledGraphic = new Graphic(Geometry(), new SimpleLineSymbol(SimpleLineSymbolStyle::Solid, Qt::cyan, 3, this), this);
     m_routeOverlay->graphics()->append(m_routeAheadGraphic);
@@ -345,11 +345,12 @@ void NavigateARouteWithRerouting::connectRouteTrackerSignals()
     // Use the updated route to get the new direction maneuvers list
     m_directionManeuvers = rawTrackingStatus->routeResult().routes().at(0).directionManeuvers(this)->directionManeuvers();
 
-    // add graphics for the predefined stops
+    // Since we cleared the routeOverlay above, re-add the graphics for the predefined stops
     SimpleMarkerSymbol* stopSymbol = new SimpleMarkerSymbol(SimpleMarkerSymbolStyle::Diamond, Qt::red, 20, this);
     m_routeOverlay->graphics()->append(new Graphic(conventionCenterPoint, stopSymbol, this));
     m_routeOverlay->graphics()->append(new Graphic(aerospaceMuseumPoint, stopSymbol, this));
 
+    // Add the new routeAhead and routeTraveled graphics to the overlay
     m_routeOverlay->graphics()->append(m_routeAheadGraphic);
     m_routeOverlay->graphics()->append(m_routeTraveledGraphic);
   });
