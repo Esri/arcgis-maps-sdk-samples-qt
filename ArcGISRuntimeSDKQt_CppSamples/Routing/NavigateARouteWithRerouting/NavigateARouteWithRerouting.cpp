@@ -170,7 +170,9 @@ void NavigateARouteWithRerouting::connectRouteTaskSignals()
 
     // create a graphic to show the route
     m_routeAheadGraphic = new Graphic(m_route.routeGeometry(), new SimpleLineSymbol(SimpleLineSymbolStyle::Solid, Qt::blue, 5, this), this);
+    m_routeTraveledGraphic = new Graphic(Geometry(), new SimpleLineSymbol(SimpleLineSymbolStyle::Solid, Qt::cyan, 3, this), this);
     m_routeOverlay->graphics()->append(m_routeAheadGraphic);
+    m_routeOverlay->graphics()->append(m_routeTraveledGraphic);
 
     m_navigationEnabled = true;
     emit navigationEnabledChanged();
@@ -311,6 +313,7 @@ void NavigateARouteWithRerouting::connectRouteTrackerSignals()
             textString += "Next direction: " + m_directionManeuvers[trackingStatus->currentManeuverIndex() + 1].directionText() + "\n";
           }
         }
+        m_routeTraveledGraphic->setGeometry(trackingStatus->routeProgress()->traversedGeometry());
         m_routeAheadGraphic->setGeometry(trackingStatus->routeProgress()->remainingGeometry());
       }
     }
@@ -320,6 +323,7 @@ void NavigateARouteWithRerouting::connectRouteTrackerSignals()
 
       // set the route geometries to reflect the completed route
       m_routeAheadGraphic->setGeometry(Geometry());
+      m_routeTraveledGraphic->setGeometry(trackingStatus->routeResult().routes()[0].routeGeometry());
 
       // navigate to next stop, if available
       if (trackingStatus->remainingDestinationCount() > 1)
@@ -353,6 +357,8 @@ void NavigateARouteWithRerouting::connectRouteTrackerSignals()
     m_routeOverlay->graphics()->append(new Graphic(conventionCenterPoint, stopSymbol, this));
     m_routeOverlay->graphics()->append(new Graphic(aerospaceMuseumPoint, stopSymbol, this));
     m_routeOverlay->graphics()->append(m_routeAheadGraphic);
+
+    m_routeOverlay->graphics()->append(m_routeTraveledGraphic);
   });
 }
 
