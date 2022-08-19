@@ -98,8 +98,8 @@ Rectangle {
         anchors {
             left: parent.left
             top: parent.top
-            topMargin: 60;
-            leftMargin: 10;
+            topMargin: 60
+            leftMargin: 10
         }
 
         text: "Reset"

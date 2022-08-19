@@ -49,4 +49,20 @@ CutGeometrySample {
             enabled = false;
         }
     }
+
+    Button {
+        id: resetButton
+        anchors {
+            left: parent.left
+            top: parent.top
+            topMargin: 60
+            leftMargin: 10;
+        }
+
+        text: "Reset"
+        onClicked: {
+            resetPolygon();
+            enabled = false;
+        }
+    }
 }
