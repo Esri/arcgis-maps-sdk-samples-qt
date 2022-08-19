@@ -30,7 +30,7 @@ Rectangle {
 
     readonly property url dataPath: System.userHomePath + "/ArcGIS/Runtime/Data/tpkx/"
     property var directionListModel: null
-    property bool navigationEnded: false
+    property bool navigatingInProgress: false
 
     MapView {
         id: mapView
@@ -61,8 +61,7 @@ Rectangle {
             }
             Graphic {
                 id: routeTraveledGraphic
-                geometry: polylineBuilder.geometry
-                symbol: SimpleLineSymbol {
+                SimpleLineSymbol {
                     style: Enums.SimpleLineSymbolStyleSolid
                     color: "cyan"
                     width: 3
@@ -88,7 +87,7 @@ Rectangle {
             routeTracker.trackRuntimeLocation(locationDisplay.location);
         }
 
-        // enable "recenter" button
+        // Enable "recenter" button
         locationDisplay.onAutoPanModeChanged: {
             recenterButton.enabled = locationDisplay.autoPanMode !== Enums.LocationDisplayAutoPanModeNavigation;
         }
@@ -160,7 +159,7 @@ Rectangle {
                     routeTracker.routeResult = solveRouteResult;
                     routeTracker.routeIndex = 0;
 
-                    // rerouting can only be enabled after the RouteTracker.routeResult property has been instantiated
+                    // Rerouting can only be enabled after the RouteTracker.routeResult property has been instantiated
                     routeTracker.enableReroutingWithReroutingParameters(reroutingParameters);
 
                     const route = solveRouteResult.routes[0];
@@ -168,7 +167,7 @@ Rectangle {
                     routeAheadGraphic.geometry = route.routeGeometry;
                     directionListModel = route.directionManeuvers;
 
-                    // turn on mapview's navigation mode
+                    // Turn on mapview's navigation mode
                     mapView.locationDisplay.autoPanMode = Enums.LocationDisplayAutoPanModeNavigation;
                 }
             }
@@ -180,11 +179,6 @@ Rectangle {
         routeTask: routeTask
         strategy: Enums.ReroutingStrategyToNextWaypoint
         visitFirstStopOnStart: false
-    }
-
-    PolylineBuilder {
-        id: polylineBuilder
-        spatialReference: SpatialReference { wkid: 4326 }
     }
 
     RouteTracker {
@@ -203,13 +197,21 @@ Rectangle {
         }
 
         onTrackingStatusResultChanged: {
-            // display route information text
+            // Display route information text
             routeStatusText.text = "Route status: " + ["Navigating", "Approaching destination", "Destination reached"][routeTracker.trackingStatus.destinationStatus];
 
             if (routeTracker.trackingStatusResult.destinationStatus === Enums.DestinationStatusApproaching || routeTracker.trackingStatusResult.destinationStatus === Enums.DestinationStatusNotReached) {
                 routeStatusText.text = "Route status: Navigating";
+
+                // Ensure simulated location data source starts properly after previously reaching its end point
+                if (!navigatingInProgress)
+                    navigatingInProgress = true;
+
+                // Display distance to destination remaining
                 distanceRemainingText.text = "Distance remaining: " + trackingStatusResult.routeProgress.remainingDistance.displayText + " " +
                         trackingStatusResult.routeProgress.remainingDistance.displayTextUnits.pluralDisplayName;
+
+                // Display estimated time to destination
                 const time = new Date(trackingStatusResult.routeProgress.remainingTime * 60 * 1000);
                 const hours = time.getUTCHours();
                 const minutes = time.getUTCMinutes();
@@ -217,45 +219,44 @@ Rectangle {
                 timeRemainingText.text = "Time remaining: " + hours.toString().padStart(2, '0') + ':' + minutes.toString().padStart(2, '0') + ':' +
                         seconds.toString().padStart(2, '0');
 
-                // display next direction
+                // Display next direction
                 if (trackingStatusResult.currentManeuverIndex + 1 < directionListModel.count) {
                     nextDirectionText.text = "Next direction: " + directionListModel.get(trackingStatusResult.currentManeuverIndex + 1).directionText;
                 }
 
-                polylineBuilder.addPoint(trackingStatusResult.locationOnRoute.position);
-                routeTraveledGraphic.geometry = polylineBuilder.geometry;
-
+                routeTraveledGraphic.geometry = trackingStatusResult.routeProgress.traversedGeometry;
                 routeAheadGraphic.geometry = trackingStatusResult.routeProgress.remainingGeometry;
             } else if (routeTracker.trackingStatusResult.destinationStatus === Enums.DestinationStatusReached) {
                 routeStatusText.text = "Route status: Destination reached";
 
-                // set the route geometries to reflect the completed route
-                polylineBuilder.addPoint(trackingStatusResult.locationOnRoute.position);
-                routeTraveledGraphic.geometry = polylineBuilder.geometry;
+                distanceRemainingText.text = "";
+                timeRemainingText.text = "";
+                nextDirectionText.text = "";
 
-                // navigate to next stop, if available
+                // Set the route geometries to reflect the completed route
+                routeTraveledGraphic.geometry = trackingStatusResult.routeProgress.traversedGeometry;
+
+                // Navigate to next stop, if available
                 if (trackingStatusResult.remainingDestinationCount > 1) {
                     switchToNextDestination();
                 } else {
-                    // the simulated location data source will start at the most recent location
-                    // this logic ensures that if navigation starts at the end point, it is not immediately stopped
-                    if (!navigationEnded) {
+                    // The simulated location data source will start at the most recent location
+                    // this logic ensures that if the simulated location data source starts at the end point, it is not immediately stopped
+                    if (navigatingInProgress) {
+                        navigatingInProgress = false;
                         simulatedLocationDataSource.stop();
-                        navigationEnded = true;
-                    } else {
-                        navigationEnded = false;
-                        polylineBuilder.parts.removeAll();
+                        navigateButton.enabled = true;
                     }
                 }
             }
         }
 
-        // output new voice guidance
+        // Output new voice guidance
         onNewVoiceGuidanceResultChanged: {
             speaker.textToSpeech(newVoiceGuidanceResult.text);
         }
 
-        // set a callback to indicate if the speech engine is ready to speak
+        // Set a callback to indicate if the speech engine is ready to speak
         speechEngineReadyCallback: function() {
             return speaker.textToSpeechEngineReady();
         }
@@ -266,18 +267,19 @@ Rectangle {
     }
 
     function startNavigation() {
-        //solve the route with the default parameters
+        // Solve the route with the default parameters
         routeTask.solveRoute(routeTask.createDefaultParametersResult);
 
-        // clear past route geometry (if any)
-        polylineBuilder.parts.removeAll();
-
-        // add a data source for the location display
+        // Add a data source for the location display
         simulatedLocationDataSource.setLocationsWithPolylineAndParameters(tourPath, simulationParameters);
         mapView.locationDisplay.dataSource = simulatedLocationDataSource;
         simulatedLocationDataSource.start();
 
-        // turn on mapview's navigation mode
+        // Turn on mapview's navigation mode
+        mapView.locationDisplay.autoPanMode = Enums.LocationDisplayAutoPanModeNavigation;
+    }
+
+    function recenterMap() {
         mapView.locationDisplay.autoPanMode = Enums.LocationDisplayAutoPanModeNavigation;
     }
 
@@ -334,7 +336,7 @@ Rectangle {
                     text: "Recenter"
                     enabled: false
                     onClicked: {
-                        mapView.locationDisplay.autoPanMode = Enums.LocationDisplayAutoPanModeNavigation;
+                        recenterMap();
                     }
                 }
             }
