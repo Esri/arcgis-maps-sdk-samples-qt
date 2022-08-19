@@ -16,9 +16,10 @@
 
 import QtQuick 2.6
 import QtQuick.Controls 2.2
-import Esri.ArcGISRuntime 100.14
+import Esri.ArcGISRuntime 100.15
 import QtQuick.Layouts 1.11
 import QtPositioning 5.2
+import Esri.ArcGISExtras 1.1
 import Esri.samples 1.0
 
 Rectangle {
@@ -28,11 +29,10 @@ Rectangle {
     height: 600
 
     readonly property url routeTaskUrl: "https://sampleserver6.arcgisonline.com/arcgis/rest/services/NetworkAnalysis/SanDiego/NAServer/Route"
+    readonly property url dataPath: System.userHomePath + "/ArcGIS/Runtime/Data/tpkx/"
     property var m_route: null
     property var m_routeResult: null
     property var directionListModel: null
-    property var defaultRouteParameters: null
-    property var m_rerouteParameters: null
     property string textString: ""
 
     MapView {
@@ -72,10 +72,27 @@ Rectangle {
                 }
             }
             Graphic {
+                id: routeTraveledGraphic
+                SimpleLineSymbol {
+                    style: Enums.SimpleLineSymbolStyleSolid
+                    color: "cyan"
+                    width: 3
+                }
+            }
+            Graphic {
                 Point {
                     id: conventionCenterPoint
                     x: -117.160386727
                     y: 32.706608
+                    SpatialReference {wkid: 4326}
+                }
+                symbol: stopSymbol
+            }
+            Graphic {
+                Point {
+                    id: memorialPoint
+                    x: -117.173034
+                    y: 32.712327
                     SpatialReference {wkid: 4326}
                 }
                 symbol: stopSymbol
@@ -104,12 +121,24 @@ Rectangle {
         }
         Stop {
             id: stop2
+            geometry: memorialPoint
+        }
+        Stop {
+            id: stop3
             geometry: aerospaceMuseumPoint
         }
 
         RouteTask {
-            id: routeTaskID
-            url: routeTaskUrl
+            id: routeTask
+
+            onErrorChanged: {
+                console.log("routeTask error:", error.message, error.additionalMessage);
+            }
+
+            url: dataPath + "san_diego/sandiego.geodatabase"
+            networkName: "Streets_ND"
+
+
             Component.onCompleted: {
                 load();
             }
@@ -123,22 +152,22 @@ Rectangle {
                     return;
                 }
 
-                if (createDefaultParametersStatus === Enums.TaskStatusCompleted) {
-                    defaultRouteParameters = createDefaultParametersResult;
+                createDefaultParametersResult.returnStops = true;
+                createDefaultParametersResult.returnDirections = true;
+                createDefaultParametersResult.returnRoutes = true;
+                createDefaultParametersResult.outputSpatialReference = Factory.SpatialReference.createWgs84();
+                createDefaultParametersResult.setStops([stop1, stop3]);
 
-                    defaultRouteParameters.returnStops = true;
-                    defaultRouteParameters.returnDirections = true;
-                    defaultRouteParameters.returnRoutes = true;
-                    defaultRouteParameters.outputSpatialReference = Factory.SpatialReference.createWgs84();
-                    defaultRouteParameters.setStops([stop1, stop2]);
-                }
+                reroutingParameters.routeParameters = createDefaultParametersResult;
 
-                m_rerouteParameters = ArcGISRuntimeEnvironment.createObject("ReroutingParameters", {RouteParameters: defaultRouteParameters, RouteTask: routeTaskID, strategy: Enums.ReroutingStrategyToNextWaypoint});
+                //routeTracker.enableRerouting(routeTask, createDefaultParametersResult, Enums.ReroutingStrategyToNextWaypoint, false);
+                //routeTracker.enableReroutingWithReroutingParameters(reroutingParameters);
 
                 //solve the route with these parameters
-                routeTaskID.solveRoute(createDefaultParametersResult);
+                routeTask.solveRoute(createDefaultParametersResult);
             }
             onSolveRouteStatusChanged: {
+                console.log("solving route...", solveRouteStatus);
                 if (solveRouteStatus === Enums.TaskStatusCompleted) {
                     if (solveRouteResult.routes.length > 0) {
                         m_routeResult = solveRouteResult;
@@ -186,6 +215,7 @@ Rectangle {
                         startNavigation();
                         enabled = false;
                     }
+
                 }
                 Button {
                     id: recenterButton
@@ -222,33 +252,65 @@ Rectangle {
             velocity: 40
         }
 
+        ReroutingParameters {
+            id: reroutingParameters
+            routeTask: routeTask
+            strategy: Enums.ReroutingStrategyToNextWaypoint
+            visitFirstStopOnStart: false
+
+            onErrorChanged: {
+                console.log("reroutingParameters error:", error.message, error.additionalMessage);
+            }
+        }
+
         RouteTracker {
             id: routeTracker
 
+            onEnableReroutingStatusChanged: {
+                console.log("rerouting status", enableReroutingStatus);
+            }
+
+            onErrorChanged: {
+                console.log("routeTracker error:", error.message, error.additionalMessage);
+            }
+
+            onRerouteStarted: {
+                console.log("starting reroute");
+            }
+
+            onRerouteCompletedResultChanged: {
+                console.log("rerouting completed");
+                m_routeResult = rerouteCompletedResult.routeResult;
+                m_route = m_routeResult.routes[0];
+
+                directionListModel = m_route.directionManeuvers;
+                routeAheadGraphic.geometry = m_route.routeGeometry;
+                navigateButton.enabled = true;
+            }
+
             onTrackingStatusResultChanged: {
-                routeTracker.enableReroutingWithReroutingParameters(m_rerouteParameters);
-                console.log(routeTracker.reroutingEnabled);
+                if (!routeTracker.reroutingEnabled) {
+                    routeTracker.enableReroutingWithReroutingParameters(reroutingParameters);
+                }
 
                 textString = "Route status: \n";
                 if (routeTracker.trackingStatusResult.destinationStatus === Enums.DestinationStatusApproaching || routeTracker.trackingStatusResult.destinationStatus === Enums.DestinationStatusNotReached) {
-                    if (routeTracker.trackingStatusResult.onRoute === true)
-                    {
-                        console.log("we are on route");
-                        textString += "Distance remaining: " + trackingStatusResult.routeProgress.remainingDistance.displayText + " " +
-                                trackingStatusResult.routeProgress.remainingDistance.displayTextUnits.pluralDisplayName + "\n";
-                        const time = new Date(trackingStatusResult.routeProgress.remainingTime * 60 * 1000);
-                        const hours = time.getUTCHours();
-                        const minutes = time.getUTCMinutes();
-                        const seconds = time.getSeconds();
-                        textString += "Time remaining: " + hours.toString().padStart(2, '0') + ':' + minutes.toString().padStart(2, '0') + ':' +
-                                seconds.toString().padStart(2, '0') + "\n";
+                    textString += "Distance remaining: " + trackingStatusResult.routeProgress.remainingDistance.displayText + " " +
+                            trackingStatusResult.routeProgress.remainingDistance.displayTextUnits.pluralDisplayName + "\n";
+                    const time = new Date(trackingStatusResult.routeProgress.remainingTime * 60 * 1000);
+                    const hours = time.getUTCHours();
+                    const minutes = time.getUTCMinutes();
+                    const seconds = time.getSeconds();
+                    textString += "Time remaining: " + hours.toString().padStart(2, '0') + ':' + minutes.toString().padStart(2, '0') + ':' +
+                            seconds.toString().padStart(2, '0') + "\n";
 
-                        // display next direction
-                        if (trackingStatusResult.currentManeuverIndex + 1 < directionListModel.count) {
-                            textString += "Next direction: " + directionListModel.get(trackingStatusResult.currentManeuverIndex + 1).directionText;
-                        }
-                        routeAheadGraphic.geometry = trackingStatusResult.routeProgress.remainingGeometry;
+                    // display next direction
+                    if (trackingStatusResult.currentManeuverIndex + 1 < directionListModel.count) {
+                        textString += "Next direction: " + directionListModel.get(trackingStatusResult.currentManeuverIndex + 1).directionText;
                     }
+
+                    routeTraveledGraphic.geometry = trackingStatusResult.routeProgress.traversedGeometry;
+                    routeAheadGraphic.geometry = trackingStatusResult.routeProgress.remainingGeometry;
                 } else if (routeTracker.trackingStatusResult.destinationStatus === Enums.DestinationStatusReached) {
                     textString += "Destination reached.\n";
 
