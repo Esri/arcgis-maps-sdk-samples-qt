@@ -132,3 +132,9 @@ void ClipGeometry::clipAreas()
     }
   }
 }
+
+void ClipGeometry::resetAreas()
+{
+  m_clippedAreasOverlay->graphics()->clear();
+  m_coloradoGraphic->setVisible(true);
+}

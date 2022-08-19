@@ -40,13 +40,27 @@ ClipGeometrySample {
         anchors {
             horizontalCenter: parent.horizontalCenter
             bottom: parent.bottom
-            bottomMargin: 25
+            bottomMargin: 75
         }
         text: "Clip"
         onClicked: {
             // Only allow clipAreas(); to be called once
             clipButton.enabled = false;
             clipAreas();
+        }
+    }
+
+    Button {
+        id: resetButton
+        anchors {
+            horizontalCenter: parent.horizontalCenter
+            bottom: parent.bottom
+            bottomMargin: 25
+        }
+        text: "Reset"
+        onClicked: {
+            clipButton.enabled = true;
+            resetAreas();
         }
     }
 }

@@ -44,6 +44,7 @@ public:
   void componentComplete() override;
   static void init();
   Q_INVOKABLE void clipAreas();
+  Q_INVOKABLE void resetAreas();
 
 private:
   void createGraphics();
