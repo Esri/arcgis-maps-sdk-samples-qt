@@ -170,7 +170,7 @@ Rectangle {
         anchors {
             horizontalCenter: parent.horizontalCenter
             bottom: parent.bottom
-            bottomMargin: 25
+            bottomMargin: 75
         }
         text: "Clip"
         onClicked: {
@@ -194,6 +194,21 @@ Rectangle {
 
             // Only allow the clip action to fire once
             clipButton.enabled = false;
+        }
+    }
+
+    Button {
+        id: resetButton
+        anchors {
+            horizontalCenter: parent.horizontalCenter
+            bottom: parent.bottom
+            bottomMargin: 25
+        }
+        text: "Reset"
+        onClicked: {
+            coloradoOverlay.visible = true;
+            clippedAreasOverlay.graphics.clear();
+            clipButton.enabled = true;
         }
     }
 }
