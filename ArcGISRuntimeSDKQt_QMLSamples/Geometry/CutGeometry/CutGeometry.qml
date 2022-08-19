@@ -93,6 +93,19 @@ Rectangle {
         onClicked: cutPolygon();
     }
 
+    Button {
+        id: resetButton
+        anchors {
+            left: parent.left
+            top: parent.top
+            topMargin: 60;
+            leftMargin: 10;
+        }
+
+        text: "Reset"
+        onClicked: resetPolygon();
+    }
+
     SpatialReference {
         id: spatialRef
         wkid: 3857
@@ -130,6 +143,14 @@ Rectangle {
 
         // disable button (only cut once)
         cutButton.enabled = false;
+    }
+
+    function resetPolygon() {
+        cutButton.enabled = true;
+        graphicsOverlay.graphics.clear();
+
+        graphicsOverlay.graphics.append(lakeSuperiorGraphic);
+        graphicsOverlay.graphics.append(borderGraphic);
     }
 
     // Creates a line between the border of Canada and the United States
