@@ -201,8 +201,6 @@ Rectangle {
             routeStatusText.text = "Route status: " + ["Navigating", "Approaching destination", "Destination reached"][routeTracker.trackingStatus.destinationStatus];
 
             if (routeTracker.trackingStatusResult.destinationStatus === Enums.DestinationStatusApproaching || routeTracker.trackingStatusResult.destinationStatus === Enums.DestinationStatusNotReached) {
-                routeStatusText.text = "Route status: Navigating";
-
                 // Ensure simulated location data source starts properly after previously reaching its end point
                 if (!navigatingInProgress)
                     navigatingInProgress = true;
@@ -227,8 +225,6 @@ Rectangle {
                 routeTraveledGraphic.geometry = trackingStatusResult.routeProgress.traversedGeometry;
                 routeAheadGraphic.geometry = trackingStatusResult.routeProgress.remainingGeometry;
             } else if (routeTracker.trackingStatusResult.destinationStatus === Enums.DestinationStatusReached) {
-                routeStatusText.text = "Route status: Destination reached";
-
                 distanceRemainingText.text = "";
                 timeRemainingText.text = "";
                 nextDirectionText.text = "";
