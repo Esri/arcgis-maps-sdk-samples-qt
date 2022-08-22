@@ -30,7 +30,9 @@ Rectangle {
 
     readonly property url dataPath: System.userHomePath + "/ArcGIS/Runtime/Data/tpkx/"
     property var directionListModel: null
+    property Route route: null
     property bool navigatingInProgress: false
+    property string routeText: "Route status:"
 
     MapView {
         id: mapView
@@ -162,13 +164,13 @@ Rectangle {
                     // Rerouting can only be enabled after the RouteTracker.routeResult property has been instantiated
                     routeTracker.enableReroutingWithReroutingParameters(reroutingParameters);
 
-                    const route = solveRouteResult.routes[0];
+                    route = solveRouteResult.routes[0];
                     mapView.setViewpointGeometryAndPadding(route.routeGeometry, 100);
                     routeAheadGraphic.geometry = route.routeGeometry;
                     directionListModel = route.directionManeuvers;
 
                     // Turn on mapview's navigation mode
-                    mapView.locationDisplay.autoPanMode = Enums.LocationDisplayAutoPanModeNavigation;
+                    recenterMap();
                 }
             }
         }
@@ -186,19 +188,17 @@ Rectangle {
 
         onRerouteCompletedResultChanged: {
             routeResult = rerouteCompletedResult.routeResult;
-            const route = routeResult.routes[0];
+            route = routeResult.routes[0];
 
             directionListModel = route.directionManeuvers;
             routeAheadGraphic.geometry = route.routeGeometry;
-        }
 
-        onRerouteStarted: {
-            routeStatusText.text = "Route status: Rerouting";
+            recenterMap();
         }
 
         onTrackingStatusResultChanged: {
             // Display route information text
-            routeStatusText.text = "Route status: " + ["Navigating", "Approaching destination", "Destination reached"][routeTracker.trackingStatus.destinationStatus];
+            routeText = "Route status:"
 
             if (routeTracker.trackingStatusResult.destinationStatus === Enums.DestinationStatusApproaching || routeTracker.trackingStatusResult.destinationStatus === Enums.DestinationStatusNotReached) {
                 // Ensure simulated location data source starts properly after previously reaching its end point
@@ -206,7 +206,7 @@ Rectangle {
                     navigatingInProgress = true;
 
                 // Display distance to destination remaining
-                distanceRemainingText.text = "Distance remaining: " + trackingStatusResult.routeProgress.remainingDistance.displayText + " " +
+                routeText += "\nDistance remaining: " + trackingStatusResult.routeProgress.remainingDistance.displayText + " " +
                         trackingStatusResult.routeProgress.remainingDistance.displayTextUnits.pluralDisplayName;
 
                 // Display estimated time to destination
@@ -214,20 +214,18 @@ Rectangle {
                 const hours = time.getUTCHours();
                 const minutes = time.getUTCMinutes();
                 const seconds = time.getSeconds();
-                timeRemainingText.text = "Time remaining: " + hours.toString().padStart(2, '0') + ':' + minutes.toString().padStart(2, '0') + ':' +
+                routeText += "\nTime remaining: " + hours.toString().padStart(2, '0') + ':' + minutes.toString().padStart(2, '0') + ':' +
                         seconds.toString().padStart(2, '0');
 
                 // Display next direction
                 if (trackingStatusResult.currentManeuverIndex + 1 < directionListModel.count) {
-                    nextDirectionText.text = "Next direction: " + directionListModel.get(trackingStatusResult.currentManeuverIndex + 1).directionText;
+                   routeText += "\nNext direction: " + directionListModel.get(trackingStatusResult.currentManeuverIndex + 1).directionText;
                 }
 
                 routeTraveledGraphic.geometry = trackingStatusResult.routeProgress.traversedGeometry;
                 routeAheadGraphic.geometry = trackingStatusResult.routeProgress.remainingGeometry;
             } else if (routeTracker.trackingStatusResult.destinationStatus === Enums.DestinationStatusReached) {
-                distanceRemainingText.text = "";
-                timeRemainingText.text = "";
-                nextDirectionText.text = "";
+                routeText += "\nDestination reached"
 
                 // Set the route geometries to reflect the completed route
                 routeTraveledGraphic.geometry = trackingStatusResult.routeProgress.traversedGeometry;
@@ -270,9 +268,6 @@ Rectangle {
         simulatedLocationDataSource.setLocationsWithPolylineAndParameters(tourPath, simulationParameters);
         mapView.locationDisplay.dataSource = simulatedLocationDataSource;
         simulatedLocationDataSource.start();
-
-        // Turn on mapview's navigation mode
-        mapView.locationDisplay.autoPanMode = Enums.LocationDisplayAutoPanModeNavigation;
     }
 
     function recenterMap() {
@@ -287,7 +282,7 @@ Rectangle {
             margins: 20
         }
         width: buttonRow.width * 1.5
-        height: buttonRow.height + 20
+        height: 200
         color: "#FBFBFB"
         border.color: "black"
 
@@ -308,10 +303,6 @@ Rectangle {
             }
 
             spacing: 10
-
-            onHeightChanged: {
-                routeInformationBox.height = height + 20
-            }
 
             RowLayout {
                 id: buttonRow
@@ -343,43 +334,9 @@ Rectangle {
                     left: parent.left
                     right: parent.right
                 }
-                text: "Route status: Navigation not started"
+                text: routeText
                 font.pixelSize: 12
                 wrapMode: Text.WordWrap
-                visible: text !== ""
-            }
-
-            Text {
-                id: distanceRemainingText
-                anchors {
-                    left: parent.left
-                    right: parent.right
-                }
-                font.pixelSize: 12
-                wrapMode: Text.WordWrap
-                visible: text !== ""
-            }
-
-            Text {
-                id: timeRemainingText
-                anchors {
-                    left: parent.left
-                    right: parent.right
-                }
-                font.pixelSize: 12
-                wrapMode: Text.WordWrap
-                visible: text !== ""
-            }
-
-            Text {
-                id: nextDirectionText
-                anchors {
-                    left: parent.left
-                    right: parent.right
-                }
-                font.pixelSize: 12
-                wrapMode: Text.WordWrap
-                visible: text !== ""
             }
         }
     }
