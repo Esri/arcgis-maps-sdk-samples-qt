@@ -219,7 +219,7 @@ Rectangle {
 
                 // Display next direction
                 if (trackingStatusResult.currentManeuverIndex + 1 < directionListModel.count) {
-                   routeText += "\nNext direction: " + directionListModel.get(trackingStatusResult.currentManeuverIndex + 1).directionText;
+                    routeText += "\nNext direction: " + directionListModel.get(trackingStatusResult.currentManeuverIndex + 1).directionText;
                 }
 
                 routeTraveledGraphic.geometry = trackingStatusResult.routeProgress.traversedGeometry;
