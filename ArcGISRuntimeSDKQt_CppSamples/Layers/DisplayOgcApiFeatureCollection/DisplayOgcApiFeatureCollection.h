@@ -19,16 +19,13 @@
 
 #include "QueryParameters.h"
 
-namespace Esri
-{
-namespace ArcGISRuntime
+namespace Esri::ArcGISRuntime
 {
 class FeatureLayer;
 class Map;
 class MapQuickView;
 class OgcFeatureCollectionTable;
 class QueryParameters;
-}
 }
 
 #include <QObject>

@@ -17,16 +17,13 @@
 #ifndef FINDPLACE_H
 #define FINDPLACE_H
 
-namespace Esri
+namespace Esri::ArcGISRuntime
 {
-  namespace ArcGISRuntime
-  {
     class CalloutData;
     class Map;
     class MapQuickView;
     class GraphicsOverlay;
     class LocatorTask;
-  }
 }
 
 #include "Point.h"

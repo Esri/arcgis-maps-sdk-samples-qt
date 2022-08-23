@@ -17,14 +17,11 @@
 #ifndef CHANGE_SUBLAYER_VISIBILITY_H
 #define CHANGE_SUBLAYER_VISIBILITY_H
 
-namespace Esri
+namespace Esri::ArcGISRuntime
 {
-  namespace ArcGISRuntime
-  {
-    class Map;
-    class MapQuickView;
-    class ArcGISMapImageLayer;
-  }
+  class Map;
+  class MapQuickView;
+  class ArcGISMapImageLayer;
 }
 
 #include <QAbstractListModel>

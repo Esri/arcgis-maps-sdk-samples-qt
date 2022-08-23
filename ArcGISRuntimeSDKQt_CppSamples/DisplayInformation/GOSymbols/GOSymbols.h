@@ -17,15 +17,12 @@
 #ifndef GO_SYMBOLS_H
 #define GO_SYMBOLS_H
 
-namespace Esri
+namespace Esri::ArcGISRuntime
 {
-  namespace ArcGISRuntime
-  {
-    class Map;
-    class MapQuickView;
-    class Geometry;
-    class GraphicsOverlay;
-  }
+  class Map;
+  class MapQuickView;
+  class Geometry;
+  class GraphicsOverlay;
 }
 
 #include <QQuickItem>

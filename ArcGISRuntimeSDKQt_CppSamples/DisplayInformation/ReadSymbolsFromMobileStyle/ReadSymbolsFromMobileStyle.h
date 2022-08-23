@@ -17,16 +17,13 @@
 #ifndef READSYMBOLSFROMMOBILESTYLE_H
 #define READSYMBOLSFROMMOBILESTYLE_H
 
-namespace Esri
-{
-namespace ArcGISRuntime
+namespace Esri::ArcGISRuntime
 {
 class Map;
 class MapQuickView;
 class MultilayerPointSymbol;
 class SymbolStyle;
 class SymbolStyleSearchResultListModel;
-}
 }
 
 class SymbolImageProvider;

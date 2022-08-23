@@ -17,15 +17,12 @@
 #ifndef SCENEPROPERTIESEXPRESSIONS_H
 #define SCENEPROPERTIESEXPRESSIONS_H
 
-namespace Esri
-{
-namespace ArcGISRuntime
+namespace Esri::ArcGISRuntime
 {
 class Graphic;
 class GraphicsOverlay;
 class Scene;
 class SceneQuickView;
-}
 }
 
 #include <QObject>

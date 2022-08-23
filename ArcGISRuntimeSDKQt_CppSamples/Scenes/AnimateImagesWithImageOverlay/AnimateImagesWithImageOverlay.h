@@ -17,15 +17,12 @@
 #ifndef ANIMATEIMAGESWITHIMAGEOVERLAY_H
 #define ANIMATEIMAGESWITHIMAGEOVERLAY_H
 
-namespace Esri
-{
-namespace ArcGISRuntime
+namespace Esri::ArcGISRuntime
 {
 class Scene;
 class SceneQuickView;
 class ImageFrame;
 class ImageOverlay;
-}
 }
 
 class QTimer;

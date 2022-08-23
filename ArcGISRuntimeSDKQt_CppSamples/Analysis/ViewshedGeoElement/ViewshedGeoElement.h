@@ -17,16 +17,13 @@
 #ifndef VIEWSHEDGEOELEMENT_H
 #define VIEWSHEDGEOELEMENT_H
 
-namespace Esri
-{
-namespace ArcGISRuntime
+namespace Esri::ArcGISRuntime
 {
 class SceneQuickView;
 class AnalysisOverlay;
 class GeoElementViewshed;
 class GraphicsOverlay;
 class Graphic;
-}
 }
 
 #include "Point.h"

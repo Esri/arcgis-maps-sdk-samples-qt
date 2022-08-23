@@ -17,13 +17,10 @@
 #ifndef FEATURELAYERRENDERINGMODESCENE_H
 #define FEATURELAYERRENDERINGMODESCENE_H
 
-namespace Esri
-{
-namespace ArcGISRuntime
+namespace Esri::ArcGISRuntime
 {
 class SceneQuickView;
 class Scene;
-}
 }
 
 class QTimer;

@@ -17,9 +17,7 @@
 #ifndef FINDCLOSESTFACILITYTOMULTIPLEINCIDENTSSERVICE_H
 #define FINDCLOSESTFACILITYTOMULTIPLEINCIDENTSSERVICE_H
 
-namespace Esri
-{
-namespace ArcGISRuntime
+namespace Esri::ArcGISRuntime
 {
 class Map;
 class MapQuickView;
@@ -33,7 +31,6 @@ class Incident;
 class PictureMarkerSymbol;
 class SimpleLineSymbol;
 class QueryParameters;
-}
 }
 
 #include <QObject>

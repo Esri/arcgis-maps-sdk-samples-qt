@@ -17,13 +17,10 @@
 #ifndef CONTROLTIMEEXTENTTIMESLIDER_H
 #define CONTROLTIMEEXTENTTIMESLIDER_H
 
-namespace Esri
-{
-namespace ArcGISRuntime
+namespace Esri::ArcGISRuntime
 {
 class Map;
 class MapQuickView;
-}
 }
 
 #include <QObject>

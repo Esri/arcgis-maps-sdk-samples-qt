@@ -17,14 +17,11 @@
 #ifndef READGEOPACKAGE_H
 #define READGEOPACKAGE_H
 
-namespace Esri
+namespace Esri::ArcGISRuntime
 {
-  namespace ArcGISRuntime
-  {
-    class Map;
-    class MapQuickView;
-    class GeoPackage;
-  }
+  class Map;
+  class MapQuickView;
+  class GeoPackage;
 }
 
 #include <QQuickItem>

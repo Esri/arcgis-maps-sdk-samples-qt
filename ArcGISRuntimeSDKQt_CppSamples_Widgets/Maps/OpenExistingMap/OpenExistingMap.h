@@ -17,11 +17,9 @@
 #ifndef OPEN_EXISTING_MAP_H
 #define OPEN_EXISTING_MAP_H
 
-namespace Esri {
-namespace ArcGISRuntime {
+namespace Esri::ArcGISRuntime {
   class Map;
   class MapGraphicsView;
-  }
 }
 
 class QPushButton;

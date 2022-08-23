@@ -17,16 +17,13 @@
 #ifndef FIND_ROUTE_H
 #define FIND_ROUTE_H
 
-namespace Esri
+namespace Esri::ArcGISRuntime
 {
-  namespace ArcGISRuntime
-  {
-    class Map;
-    class MapQuickView;
-    class GraphicsOverlay;
-    class PictureMarkerSymbol;
-    class RouteTask;
-  }
+  class Map;
+  class MapQuickView;
+  class GraphicsOverlay;
+  class PictureMarkerSymbol;
+  class RouteTask;
 }
 
 #include <RouteParameters.h>

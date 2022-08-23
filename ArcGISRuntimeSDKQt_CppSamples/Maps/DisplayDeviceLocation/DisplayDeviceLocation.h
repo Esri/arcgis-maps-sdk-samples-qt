@@ -17,13 +17,10 @@
 #ifndef DISPLAY_DEVICE_LOCATION_H
 #define DISPLAY_DEVICE_LOCATION_H
 
-namespace Esri
+namespace Esri::ArcGISRuntime
 {
-  namespace ArcGISRuntime
-  {
-    class Map;
-    class MapQuickView;
-  }
+  class Map;
+  class MapQuickView;
 }
 
 #include <QQuickItem>

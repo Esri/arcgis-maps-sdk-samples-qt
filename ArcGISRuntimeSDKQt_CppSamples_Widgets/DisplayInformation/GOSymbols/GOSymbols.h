@@ -17,13 +17,12 @@
 #ifndef GOSYMBOLS_H
 #define GOSYMBOLS_H
 
-namespace Esri {
-namespace ArcGISRuntime {
+namespace Esri::ArcGISRuntime 
+{
   class Map;
   class MapGraphicsView;
   class Viewpoint;
   class GraphicsOverlay;
-  }
 }
 
 #include "Geometry.h"

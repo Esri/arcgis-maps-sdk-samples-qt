@@ -17,11 +17,9 @@
 #ifndef CHANGE_VIEWPOINT_H
 #define CHANGE_VIEWPOINT_H
 
-namespace Esri {
-namespace ArcGISRuntime {
+namespace Esri::ArcGISRuntime {
   class Map;
   class MapGraphicsView;
-  }
 }
 
 class QComboBox;

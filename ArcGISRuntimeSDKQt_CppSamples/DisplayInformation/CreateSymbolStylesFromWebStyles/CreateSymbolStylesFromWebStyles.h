@@ -17,18 +17,15 @@
 #ifndef CREATESYMBOLSTYLESFROMWEBSTYLES_H
 #define CREATESYMBOLSTYLESFROMWEBSTYLES_H
 
-namespace Esri
+namespace Esri::ArcGISRuntime
 {
-namespace ArcGISRuntime
-{
-class FeatureLayer;
-class Map;
-class MapQuickView;
-class UniqueValue;
-class UniqueValueRenderer;
-class LegendInfo;
-class SymbolStyle;
-}
+  class FeatureLayer;
+  class Map;
+  class MapQuickView;
+  class UniqueValue;
+  class UniqueValueRenderer;
+  class LegendInfo;
+  class SymbolStyle;
 }
 
 #include <QObject>

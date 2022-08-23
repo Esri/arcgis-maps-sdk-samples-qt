@@ -17,12 +17,9 @@
 #ifndef OPENSCENE_H
 #define OPENSCENE_H
 
-namespace Esri
-{
-namespace ArcGISRuntime
+namespace Esri::ArcGISRuntime
 {
 class SceneQuickView;
-}
 }
 
 #include <QQuickItem>

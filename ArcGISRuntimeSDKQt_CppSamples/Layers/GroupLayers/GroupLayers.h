@@ -17,14 +17,11 @@
 #ifndef GROUPLAYERS_H
 #define GROUPLAYERS_H
 
-namespace Esri
-{
-namespace ArcGISRuntime
+namespace Esri::ArcGISRuntime
 {
 class Scene;
 class SceneQuickView;
 class LayerListModel;
-}
 }
 
 class QAbstractListModel;

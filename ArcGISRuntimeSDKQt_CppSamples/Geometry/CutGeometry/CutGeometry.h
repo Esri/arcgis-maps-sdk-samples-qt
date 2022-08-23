@@ -17,15 +17,12 @@
 #ifndef CUTGEOMETRY_H
 #define CUTGEOMETRY_H
 
-namespace Esri
-{
-namespace ArcGISRuntime
+namespace Esri::ArcGISRuntime
 {
 class Map;
 class MapQuickView;
 class Graphic;
 class GraphicsOverlay;
-}
 }
 
 #include <QQuickItem>

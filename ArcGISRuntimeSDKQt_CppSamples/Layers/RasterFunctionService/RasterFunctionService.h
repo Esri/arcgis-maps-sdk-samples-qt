@@ -17,16 +17,13 @@
 #ifndef RASTERFUNCTIONSERVICE_H
 #define RASTERFUNCTIONSERVICE_H
 
-namespace Esri
+namespace Esri::ArcGISRuntime
 {
-  namespace ArcGISRuntime
-  {
-    class Basemap;
-    class Map;
-    class MapQuickView;
-    class ImageServiceRaster;
-    class RasterLayer;
-  }
+  class Basemap;
+  class Map;
+  class MapQuickView;
+  class ImageServiceRaster;
+  class RasterLayer;
 }
 
 #include <QQuickItem>

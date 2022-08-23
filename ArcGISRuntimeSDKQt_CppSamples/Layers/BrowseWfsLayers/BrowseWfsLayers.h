@@ -17,9 +17,7 @@
 #ifndef BROWSEWFSLAYERS_H
 #define BROWSEWFSLAYERS_H
 
-namespace Esri
-{
-namespace ArcGISRuntime
+namespace Esri::ArcGISRuntime
 {
 class Map;
 class MapQuickView;
@@ -27,7 +25,6 @@ class WfsService;
 class WfsFeatureTable;
 class WfsLayerInfo;
 class LayerListModel;
-}
 }
 
 #include <QObject>

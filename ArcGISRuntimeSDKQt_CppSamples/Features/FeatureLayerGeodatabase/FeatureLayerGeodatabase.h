@@ -17,14 +17,11 @@
 #ifndef FEATURE_LAYER_GEODATABASE_H
 #define FEATURE_LAYER_GEODATABASE_H
 
-namespace Esri
+namespace Esri::ArcGISRuntime
 {
-  namespace ArcGISRuntime
-  {
-    class Map;
-    class MapQuickView;
-    class Geodatabase;
-  }
+  class Map;
+  class MapQuickView;
+  class Geodatabase;
 }
 
 #include <QQuickItem>

@@ -15,14 +15,11 @@
 #ifndef ADDITEMSTOPORTAL_H
 #define ADDITEMSTOPORTAL_H
 
-namespace Esri
+namespace Esri::ArcGISRuntime
 {
-  namespace ArcGISRuntime
-  {
     class Portal;
     class PortalItem;
     class PortalUser;
-  }
 }
 
 #include <QQuickItem>

@@ -17,15 +17,12 @@
 #ifndef SERVICE_FEATURE_TABLE_MANUAL_CACHE_H
 #define SERVICE_FEATURE_TABLE_MANUAL_CACHE_H
 
-namespace Esri
+namespace Esri::ArcGISRuntime
 {
-  namespace ArcGISRuntime
-  {
-    class Map;
-    class MapQuickView;
-    class FeatureLayer;
-    class ServiceFeatureTable;
-  }
+  class Map;
+  class MapQuickView;
+  class FeatureLayer;
+  class ServiceFeatureTable;
 }
 
 #include <QQuickItem>

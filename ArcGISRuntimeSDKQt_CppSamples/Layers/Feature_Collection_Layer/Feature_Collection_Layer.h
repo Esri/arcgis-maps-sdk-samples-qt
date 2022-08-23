@@ -17,16 +17,13 @@
 #ifndef FEATURE_COLLECTION_LAYER_H
 #define FEATURE_COLLECTION_LAYER_H
 
-namespace Esri
+namespace Esri::ArcGISRuntime
 {
-  namespace ArcGISRuntime
-  {
-    class Map;
-    class MapQuickView;
-    class FeatureCollection;
-    class FeatureCollectionLayer;
-    class FeatureCollectionTable;
-  }
+  class Map;
+  class MapQuickView;
+  class FeatureCollection;
+  class FeatureCollectionLayer;
+  class FeatureCollectionTable;
 }
 
 #include "Point.h"

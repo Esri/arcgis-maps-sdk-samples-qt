@@ -17,13 +17,10 @@
 #ifndef OSM_LAYER_H
 #define OSM_LAYER_H
 
-namespace Esri
-{
-namespace ArcGISRuntime
+namespace Esri::ArcGISRuntime
 {
 class Map;
 class MapQuickView;
-}
 }
 
 #include <QQuickItem>

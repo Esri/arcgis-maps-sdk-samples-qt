@@ -17,16 +17,11 @@
 #ifndef PORTALUSERINFO_H
 #define PORTALUSERINFO_H
 
-namespace Esri
+namespace Esri::ArcGISRuntime
 {
-  namespace ArcGISRuntime
-  {
     class Credential;
     class Portal;
     class PortalUser;
-
-    enum class LoadStatus;
-  }
 }
 
 #include <QQuickItem>

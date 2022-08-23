@@ -17,14 +17,11 @@
 #ifndef DISPLAYSCENELAYER_H
 #define DISPLAYSCENELAYER_H
 
-namespace Esri
+namespace Esri::ArcGISRuntime
 {
-  namespace ArcGISRuntime
-  {
-    class Scene;
-    class SceneQuickView;
-    class ArcGISSceneLayer;
-  }
+  class Scene;
+  class SceneQuickView;
+  class ArcGISSceneLayer;
 }
 
 #include <QQuickItem>

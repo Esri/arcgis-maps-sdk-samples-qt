@@ -18,10 +18,9 @@
 #define DISPLAYUTILITYASSOCIATIONS_H
 
 #include "UtilityNetworkTypes.h"
+#include <QObject>
 
-namespace Esri
-{
-namespace ArcGISRuntime
+namespace Esri::ArcGISRuntime
 {
 class Credential;
 class GraphicsOverlay;
@@ -29,7 +28,6 @@ class Map;
 class MapQuickView;
 class Symbol;
 class UtilityNetwork;
-}
 }
 
 class SymbolImageProvider;

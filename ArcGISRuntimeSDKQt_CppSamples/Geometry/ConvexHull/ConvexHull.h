@@ -17,9 +17,7 @@
 #ifndef CONVEXHULL_H
 #define CONVEXHULL_H
 
-namespace Esri
-{
-namespace ArcGISRuntime
+namespace Esri::ArcGISRuntime
 {
 class Graphic;
 class GraphicsOverlay;
@@ -29,7 +27,6 @@ class MultipointBuilder;
 class SimpleFillSymbol;
 class SimpleLineSymbol;
 class SimpleMarkerSymbol;
-}
 }
 
 #include <QObject>

@@ -19,13 +19,10 @@
 
 #include "SceneViewTypes.h"
 
-namespace Esri
-{
-namespace ArcGISRuntime
+namespace Esri::ArcGISRuntime
 {
 class Scene;
 class SceneQuickView;
-}
 }
 
 #include <QObject>

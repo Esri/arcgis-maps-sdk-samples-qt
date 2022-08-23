@@ -17,15 +17,12 @@
 #ifndef ADD_FEATURES_FEATURE_SERVICE_H
 #define ADD_FEATURES_FEATURE_SERVICE_H
 
-namespace Esri
+namespace Esri::ArcGISRuntime
 {
-  namespace ArcGISRuntime
-  {
-    class Map;
-    class MapQuickView;
-    class FeatureLayer;
-    class ServiceFeatureTable;
-  }
+  class Map;
+  class MapQuickView;
+  class FeatureLayer;
+  class ServiceFeatureTable;
 }
 
 #include <QQuickItem>

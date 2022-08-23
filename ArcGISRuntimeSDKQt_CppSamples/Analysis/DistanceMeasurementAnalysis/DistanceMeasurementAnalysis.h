@@ -17,13 +17,10 @@
 #ifndef DISTANCEMEASUREMENTANALYSIS_H
 #define DISTANCEMEASUREMENTANALYSIS_H
 
-namespace Esri
-{
-namespace ArcGISRuntime
+namespace Esri::ArcGISRuntime
 {
 class SceneQuickView;
 class LocationDistanceMeasurement;
-}
 }
 
 #include <QQuickItem>

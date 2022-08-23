@@ -17,13 +17,10 @@
 #ifndef ARCGIS_TILED_LAYER_URL_H
 #define ARCGIS_TILED_LAYER_URL_H
 
-namespace Esri
+namespace Esri::ArcGISRuntime
 {
-  namespace ArcGISRuntime
-  {
-    class Map;
-    class MapQuickView;
-  }
+  class Map;
+  class MapQuickView;
 }
 
 #include <QQuickItem>

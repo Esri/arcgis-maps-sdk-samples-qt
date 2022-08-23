@@ -17,10 +17,8 @@
 #ifndef EDITFEATURESWITHFEATURELINKEDANNOTATION_H
 #define EDITFEATURESWITHFEATURELINKEDANNOTATION_H
 
-namespace Esri
-{
-namespace ArcGISRuntime
-{
+namespace Esri::ArcGISRuntime
+{=
 class AnnotationLayer;
 class Feature;
 class FeatureLayer;
@@ -28,7 +26,6 @@ class Geodatabase;
 class IdentifyLayerResult;
 class Map;
 class MapQuickView;
-}
 }
 
 #include <QObject>

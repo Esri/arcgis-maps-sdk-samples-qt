@@ -17,17 +17,14 @@
 #ifndef SERVICEAREA_H
 #define SERVICEAREA_H
 
-namespace Esri
+namespace Esri::ArcGISRuntime
 {
-  namespace ArcGISRuntime
-  {
-    class GraphicsOverlay;
-    class Map;
-    class MapQuickView;
-    class Point;
-    class PolylineBuilder;
-    class ServiceAreaTask;
-  }
+  class GraphicsOverlay;
+  class Map;
+  class MapQuickView;
+  class Point;
+  class PolylineBuilder;
+  class ServiceAreaTask;
 }
 
 #include "ServiceAreaParameters.h"

@@ -17,9 +17,7 @@
 #ifndef CONTINGENTVALUES_H
 #define CONTINGENTVALUES_H
 
-namespace Esri
-{
-namespace ArcGISRuntime
+namespace Esri::ArcGISRuntime
 {
 class ArcGISFeature;
 class FeatureQueryResult;
@@ -28,7 +26,6 @@ class GeodatabaseFeatureTable;
 class GraphicsOverlay;
 class Map;
 class MapQuickView;
-}
 }
 
 #include <QObject>

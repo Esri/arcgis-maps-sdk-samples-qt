@@ -24,14 +24,11 @@
 #include <QQuickItem>
 #include <QXmlStreamReader>
 
-namespace Esri
+namespace Esri::ArcGISRuntime
 {
-  namespace ArcGISRuntime
-  {
-    class Map;
-    class GraphicsOverlay;
-    class MapQuickView;
-  }
+  class Map;
+  class GraphicsOverlay;
+  class MapQuickView;
 }
 
 class GODictionaryRenderer : public QQuickItem

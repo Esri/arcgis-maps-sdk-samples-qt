@@ -17,14 +17,11 @@
 #ifndef FEATURE_LAYER_CHANGE_RENDERER_H
 #define FEATURE_LAYER_CHANGE_RENDERER_H
 
-namespace Esri
+namespace Esri::ArcGISRuntime
 {
-  namespace ArcGISRuntime
-  {
-    class Map;
-    class MapQuickView;
-    class FeatureLayer;
-  }
+  class Map;
+  class MapQuickView;
+  class FeatureLayer;
 }
 
 #include <QQuickItem>

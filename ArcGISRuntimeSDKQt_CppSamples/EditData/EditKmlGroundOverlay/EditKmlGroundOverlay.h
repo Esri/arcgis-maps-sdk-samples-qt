@@ -17,14 +17,11 @@
 #ifndef EDITKMLGROUNDOVERLAY_H
 #define EDITKMLGROUNDOVERLAY_H
 
-namespace Esri
-{
-namespace ArcGISRuntime
+namespace Esri::ArcGISRuntime
 {
 class Scene;
 class SceneQuickView;
 class KmlGroundOverlay;
-}
 }
 
 #include <QObject>
