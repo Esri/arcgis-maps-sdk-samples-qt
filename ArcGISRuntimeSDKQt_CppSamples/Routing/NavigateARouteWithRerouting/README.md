@@ -41,6 +41,14 @@ Click 'Navigate' to simulate traveling and to receive directions from a preset s
 * Stop
 * VoiceGuidance
 
+## Offline data
+
+The data used by this sample is available on [ArcGIS Online](https://arcgisruntime.maps.arcgis.com/home/item.html?id=df193653ed39449195af0c9725701dca).
+
+Link | Local Location
+---------|-------|
+|[San Diego Streets TPKX](https://arcgisruntime.maps.arcgis.com/home/item.html?id=df193653ed39449195af0c9725701dca)| `<userhome>`/ArcGIS/Runtime/Data/tpkx/san_diego |
+
 ## About the data
 
 The route taken in this sample goes from the San Diego Convention Center, site of the annual Esri User Conference, to the Fleet Science Center, San Diego.

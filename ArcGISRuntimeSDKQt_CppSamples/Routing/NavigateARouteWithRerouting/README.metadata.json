@@ -1,5 +1,11 @@
 {
     "category": "Routing",
+    "dataItems": [
+        {
+            "itemId": "df193653ed39449195af0c9725701dca",
+            "path": "~/ArcGIS/Runtime/Data/tpkx/san_diego/san_diego_offline_routing.zip"
+        }
+    ],
     "description": "Navigate between two points and dynamically recalculate an alternate route when the original route is unavailable.",
     "ignore": false,
     "images": [

@@ -33,14 +33,16 @@ Item {
         }
         Rectangle {
                     id: backBox
+                    anchors {
+                        top: parent.top
+                        left: parent.left
+                        margins: 20
+                    }
                     z: 1
                     width: buttonRow.width * 1.5
                     height: 200
                     color: "#FBFBFB"
                     border.color: "black"
-                    anchors.top: parent.top
-                    anchors.left: parent.left
-                    anchors.margins: 20
 
                     RowLayout {
                         id: buttonRow
