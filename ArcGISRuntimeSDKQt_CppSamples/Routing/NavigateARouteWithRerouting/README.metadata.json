@@ -1,0 +1,53 @@
+{
+    "category": "Routing",
+    "dataItems": [
+        {
+            "itemId": "df193653ed39449195af0c9725701dca",
+            "path": "~/ArcGIS/Runtime/Data/tpkx/san_diego/san_diego_offline_routing.zip"
+        }
+    ],
+    "description": "Navigate between two points and dynamically recalculate an alternate route when the original route is unavailable.",
+    "ignore": false,
+    "images": [
+        "screenshot.png"
+    ],
+    "keywords": [
+        "directions",
+        "maneuver",
+        "navigation",
+        "route",
+        "turn-by-turn",
+        "voice",
+        "DestinationStatus",
+        "DirectionManeuver",
+        "Location",
+        "LocationDataSource",
+        "ReroutingStrategy",
+        "Route",
+        "RouteParameters",
+        "RouteTask",
+        "RouteTracker",
+        "Stop",
+        "VoiceGuidance"
+    ],
+    "redirect_from": "",
+    "relevant_apis": [
+        "DestinationStatus",
+        "DirectionManeuver",
+        "Location",
+        "LocationDataSource",
+        "ReroutingStrategy",
+        "Route",
+        "RouteParameters",
+        "RouteTask",
+        "RouteTracker",
+        "Stop",
+        "VoiceGuidance"
+    ],
+    "snippets": [
+        "NavigateARouteWithRerouting.cpp",
+        "NavigateARouteWithRerouting.h",
+        "NavigateARouteWithRerouting.qml"
+    ],
+    "title": "Navigate a route with rerouting"
+}
