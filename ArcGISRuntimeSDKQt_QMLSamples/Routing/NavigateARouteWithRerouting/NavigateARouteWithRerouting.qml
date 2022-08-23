@@ -234,6 +234,7 @@ Rectangle {
                     if (navigatingInProgress) {
                         navigatingInProgress = false;
                         simulatedLocationDataSource.stop();
+                        recenterButton.enabled = false;
                         navigateButton.enabled = true;
                     }
                 }
@@ -263,6 +264,7 @@ Rectangle {
         simulatedLocationDataSource.setLocationsWithPolylineAndParameters(tourPath, simulationParameters);
         mapView.locationDisplay.dataSource = simulatedLocationDataSource;
         simulatedLocationDataSource.start();
+        recenterButton.enabled = true;
     }
 
     function recenterMap() {
@@ -316,6 +318,7 @@ Rectangle {
                 Button {
                     id: recenterButton
                     text: "Recenter"
+                    enabled: false;
                     onClicked: {
                         recenterMap();
                     }
