@@ -88,11 +88,6 @@ Rectangle {
         locationDisplay.onLocationChanged: {
             routeTracker.trackRuntimeLocation(locationDisplay.location);
         }
-
-        // Enable "recenter" button
-        locationDisplay.onAutoPanModeChanged: {
-            recenterButton.enabled = locationDisplay.autoPanMode !== Enums.LocationDisplayAutoPanModeNavigation;
-        }
     }
 
     SimulatedLocationDataSource {
@@ -321,7 +316,6 @@ Rectangle {
                 Button {
                     id: recenterButton
                     text: "Recenter"
-                    enabled: false
                     onClicked: {
                         recenterMap();
                     }
