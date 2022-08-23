@@ -31,11 +31,13 @@
 #include "SceneQuickView.h"
 
 #include <algorithm>
-#include <QDir>
 
-#ifdef Q_OS_IOS
+#ifdef Q_OS_ANDROID
+#elif defined Q_OS_IOS
 #include <QStandardPaths>
-#endif // Q_OS_IOS
+#else
+#include <QDir>
+#endif
 
 using namespace Esri::ArcGISRuntime;
 
