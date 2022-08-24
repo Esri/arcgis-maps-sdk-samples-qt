@@ -120,7 +120,6 @@ Rectangle {
     }
 
     MouseArea {
-        anchors.fill: parent
         onClicked: {
             const clickedPoint = mapView.screenToLocation(mouseX, mouseY);
             // normalizing the geometry before performing geometric operations
