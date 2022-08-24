@@ -36,31 +36,24 @@ ClipGeometrySample {
     }
 
     Button {
-        id: clipButton
-        anchors {
-            horizontalCenter: parent.horizontalCenter
-            bottom: parent.bottom
-            bottomMargin: 75
-        }
-        text: "Clip"
-        onClicked: {
-            // Only allow clipAreas(); to be called once
-            clipButton.enabled = false;
-            clipAreas();
-        }
-    }
-
-    Button {
-        id: resetButton
+        id: clipOrResetButton
         anchors {
             horizontalCenter: parent.horizontalCenter
             bottom: parent.bottom
             bottomMargin: 25
         }
-        text: "Reset"
+        text: "Clip"
         onClicked: {
-            clipButton.enabled = true;
-            resetAreas();
+            if (clipOrResetButton.text == "Clip")
+            {
+                clipAreas();
+                clipOrResetButton.text = "Reset"
+            }
+            else
+            {
+                resetAreas();
+                clipOrResetButton.text = "Clip"
+            }
         }
     }
 }

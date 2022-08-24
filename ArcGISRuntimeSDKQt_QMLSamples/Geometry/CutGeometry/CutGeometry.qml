@@ -82,7 +82,7 @@ Rectangle {
     }
 
     Button {
-        id: cutButton
+        id: cutOrResetButton
         anchors {
             left: parent.left
             top: parent.top
@@ -90,20 +90,18 @@ Rectangle {
         }
 
         text: "Cut"
-        onClicked: cutPolygon();
-    }
-
-    Button {
-        id: resetButton
-        anchors {
-            left: parent.left
-            top: parent.top
-            topMargin: 60
-            leftMargin: 10
+        onClicked: {
+            if (cutOrResetButton.text == "Cut")
+            {
+                cutOrResetButton.text = "Reset";
+                cutPolygon();
+            }
+            else
+            {
+                cutOrResetButton.text = "Cut";
+                resetPolygon();
+            }
         }
-
-        text: "Reset"
-        onClicked: resetPolygon();
     }
 
     SpatialReference {
@@ -140,13 +138,9 @@ Rectangle {
         // add graphics
         graphicsOverlay.graphics.append(canadaSide);
         graphicsOverlay.graphics.append(usSide);
-
-        // disable button (only cut once)
-        cutButton.enabled = false;
     }
 
     function resetPolygon() {
-        cutButton.enabled = true;
         graphicsOverlay.graphics.clear();
 
         graphicsOverlay.graphics.append(lakeSuperiorGraphic);
