@@ -45,7 +45,7 @@ CutGeometrySample {
 
         text: "Cut"
         onClicked: {
-            if (cutOrResetButton.text == "Cut")
+            if (cutOrResetButton.text === "Cut")
             {
                 cutPolygon();
                 cutOrResetButton.text = "Reset";

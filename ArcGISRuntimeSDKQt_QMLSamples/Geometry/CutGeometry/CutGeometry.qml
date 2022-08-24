@@ -91,7 +91,7 @@ Rectangle {
 
         text: "Cut"
         onClicked: {
-            if (cutOrResetButton.text == "Cut")
+            if (cutOrResetButton.text === "Cut")
             {
                 cutOrResetButton.text = "Reset";
                 cutPolygon();

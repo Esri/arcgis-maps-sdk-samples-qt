@@ -44,7 +44,7 @@ ClipGeometrySample {
         }
         text: "Clip"
         onClicked: {
-            if (clipOrResetButton.text == "Clip")
+            if (clipOrResetButton.text === "Clip")
             {
                 clipAreas();
                 clipOrResetButton.text = "Reset"

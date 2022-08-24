@@ -174,7 +174,7 @@ Rectangle {
         }
         text: "Clip"
         onClicked: {
-            if (clipOrResetButton.text == "Clip")
+            if (clipOrResetButton.text === "Clip")
             {
                 // Immediately hide the Colorado graphic to prevent overlap
                 coloradoOverlay.visible = false;
