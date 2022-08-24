@@ -18,7 +18,7 @@
 #define EDITFEATURESWITHFEATURELINKEDANNOTATION_H
 
 namespace Esri::ArcGISRuntime
-{=
+{
 class AnnotationLayer;
 class Feature;
 class FeatureLayer;
