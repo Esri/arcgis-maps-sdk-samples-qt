@@ -89,6 +89,14 @@ void CutGeometry::cutPolygon()
   m_overlay->graphics()->append(usSide);
 }
 
+void CutGeometry::resetPolygon()
+{
+  m_overlay->graphics()->clear();
+
+  m_overlay->graphics()->append(m_lakeSuperiorGraphic);
+  m_overlay->graphics()->append(m_borderGraphic);
+}
+
 // Create the two baseline graphics
 void CutGeometry::createGraphics()
 {

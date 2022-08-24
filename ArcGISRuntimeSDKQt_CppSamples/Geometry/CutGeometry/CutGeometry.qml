@@ -36,7 +36,7 @@ CutGeometrySample {
     }
 
     Button {
-        id: cutButton
+        id: cutOrResetButton
         anchors {
             left: parent.left
             top: parent.top
@@ -45,8 +45,16 @@ CutGeometrySample {
 
         text: "Cut"
         onClicked: {
-            cutPolygon();
-            enabled = false;
+            if (cutOrResetButton.text === "Cut")
+            {
+                cutPolygon();
+                cutOrResetButton.text = "Reset";
+            }
+            else
+            {
+                cutOrResetButton.text = "Cut";
+                resetPolygon();
+            }
         }
     }
 }

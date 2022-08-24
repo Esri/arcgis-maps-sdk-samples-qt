@@ -43,6 +43,7 @@ public:
   void componentComplete() override;
   static void init();
   Q_INVOKABLE void cutPolygon();
+  Q_INVOKABLE void resetPolygon();
 
 private:
   Esri::ArcGISRuntime::Map* m_map = nullptr;

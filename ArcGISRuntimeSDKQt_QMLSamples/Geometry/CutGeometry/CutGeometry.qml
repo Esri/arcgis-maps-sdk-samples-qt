@@ -82,7 +82,7 @@ Rectangle {
     }
 
     Button {
-        id: cutButton
+        id: cutOrResetButton
         anchors {
             left: parent.left
             top: parent.top
@@ -90,7 +90,18 @@ Rectangle {
         }
 
         text: "Cut"
-        onClicked: cutPolygon();
+        onClicked: {
+            if (cutOrResetButton.text === "Cut")
+            {
+                cutOrResetButton.text = "Reset";
+                cutPolygon();
+            }
+            else
+            {
+                cutOrResetButton.text = "Cut";
+                resetPolygon();
+            }
+        }
     }
 
     SpatialReference {
@@ -127,9 +138,13 @@ Rectangle {
         // add graphics
         graphicsOverlay.graphics.append(canadaSide);
         graphicsOverlay.graphics.append(usSide);
+    }
 
-        // disable button (only cut once)
-        cutButton.enabled = false;
+    function resetPolygon() {
+        graphicsOverlay.graphics.clear();
+
+        graphicsOverlay.graphics.append(lakeSuperiorGraphic);
+        graphicsOverlay.graphics.append(borderGraphic);
     }
 
     // Creates a line between the border of Canada and the United States

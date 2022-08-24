@@ -166,7 +166,7 @@ Rectangle {
 
     // Create a button that clips the geometry into the envelopes
     Button {
-        id: clipButton
+        id: clipOrResetButton
         anchors {
             horizontalCenter: parent.horizontalCenter
             bottom: parent.bottom
@@ -174,26 +174,35 @@ Rectangle {
         }
         text: "Clip"
         onClicked: {
-            // Immediately hide the Colorado graphic to prevent overlap
-            coloradoOverlay.visible = false;
+            if (clipOrResetButton.text === "Clip")
+            {
+                // Immediately hide the Colorado graphic to prevent overlap
+                coloradoOverlay.visible = false;
 
-            // Iterate through the clipping envelopes
-            envelopesOverlay.graphics.forEach(graphic => {
+                // Iterate through the clipping envelopes
+                envelopesOverlay.graphics.forEach(graphic => {
 
-                // Create a variable that contains the clip result, which is an envelope of the overlap between colorado and the current graphic
-                const clippedGeometry = GeometryEngine.clip(coloradoGraphic.geometry, graphic.geometry.extent);
-                if (clippedGeometry !== null) {
+                    // Create a variable that contains the clip result, which is an envelope of the overlap between colorado and the current graphic
+                    const clippedGeometry = GeometryEngine.clip(coloradoGraphic.geometry, graphic.geometry.extent);
+                    if (clippedGeometry !== null) {
 
-                    // Create a new graphic using the clip envelope, and fill it in with the colorado fill symbol
-                    const clippedGraphic = ArcGISRuntimeEnvironment.createObject("Graphic", { geometry: clippedGeometry, symbol: coloradoFillSymbol });
+                        // Create a new graphic using the clip envelope, and fill it in with the colorado fill symbol
+                        const clippedGraphic = ArcGISRuntimeEnvironment.createObject("Graphic", { geometry: clippedGeometry, symbol: coloradoFillSymbol });
 
-                    // Add the new clipped graphic to the map
-                    clippedAreasOverlay.graphics.append(clippedGraphic);
-                }
-            });
+                        // Add the new clipped graphic to the map
+                        clippedAreasOverlay.graphics.append(clippedGraphic);
+                    }
+                });
 
-            // Only allow the clip action to fire once
-            clipButton.enabled = false;
+                clipOrResetButton.text = "Reset";
+            }
+            else
+            {
+                clipOrResetButton.text = "Clip";
+                coloradoOverlay.visible = true;
+                clippedAreasOverlay.graphics.clear();
+
+            }
         }
     }
 }
