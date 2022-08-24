@@ -205,18 +205,4 @@ Rectangle {
             }
         }
     }
-
-//    Button {
-//        id: resetButton
-//        anchors {
-//            horizontalCenter: parent.horizontalCenter
-//            bottom: parent.bottom
-//            bottomMargin: 25
-//        }
-//        text: "Reset"
-//        onClicked: {
-
-//            clipButton.enabled = true;
-//        }
-//    }
 }
