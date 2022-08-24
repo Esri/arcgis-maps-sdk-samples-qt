@@ -117,24 +117,23 @@ Rectangle {
                 itemId: "99fd67933e754a1181cc755146be21ca"
             }
         }
-    }
 
-    MouseArea {
-        anchors.fill: parent
-        onClicked: {
-            const clickedPoint = mapView.screenToLocation(mouseX, mouseY);
-            // normalizing the geometry before performing geometric operations
-            const normalizedPoint = GeometryEngine.normalizeCentralMeridian(clickedPoint);
-            clickedPointGraphic.geometry = normalizedPoint;
+        onMouseClicked: {
+            anchors.fill = parent;
+                const clickedPoint = mapView.screenToLocation(mouse.x, mouse.y);
+                // normalizing the geometry before performing geometric operations
+                const normalizedPoint = GeometryEngine.normalizeCentralMeridian(clickedPoint);
+                clickedPointGraphic.geometry = normalizedPoint;
 
-            const nearestVertexPoint = GeometryEngine.nearestVertex(polygonBuilder.geometry, normalizedPoint);
-            nearestVertexGraphic.geometry = nearestVertexPoint.coordinate;
+                const nearestVertexPoint = GeometryEngine.nearestVertex(polygonBuilder.geometry, normalizedPoint);
+                nearestVertexGraphic.geometry = nearestVertexPoint.coordinate;
 
-            const nearestCoordinateResult = GeometryEngine.nearestCoordinate(polygonBuilder.geometry, normalizedPoint);
-            nearestCoordinateGraphic.geometry = nearestCoordinateResult.coordinate;
+                const nearestCoordinateResult = GeometryEngine.nearestCoordinate(polygonBuilder.geometry, normalizedPoint);
+                nearestCoordinateGraphic.geometry = nearestCoordinateResult.coordinate;
 
-            distancesLabel.text = `Vertex distance: ${(nearestVertexPoint.distance/5280.0).toFixed()} mi
-Coordinate distance: ${(nearestCoordinateResult.distance/5280.0).toFixed()} mi` ;
+                distancesLabel.text = `Vertex distance: ${(nearestVertexPoint.distance/5280.0).toFixed()} mi
+    Coordinate distance: ${(nearestCoordinateResult.distance/5280.0).toFixed()} mi` ;
+
         }
     }
 
