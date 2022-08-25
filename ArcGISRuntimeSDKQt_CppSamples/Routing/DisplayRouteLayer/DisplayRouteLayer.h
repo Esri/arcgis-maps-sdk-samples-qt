@@ -23,6 +23,7 @@ namespace Esri
 {
 namespace ArcGISRuntime
 {
+class Feature;
 class FeatureCollection;
 class FeatureCollectionLayer;
 class FeatureCollectionTableListModel;
@@ -59,7 +60,9 @@ private:
   Esri::ArcGISRuntime::PortalItem* m_portalItem = nullptr;
   Esri::ArcGISRuntime::FeatureCollection* m_featureCollection;
   Esri::ArcGISRuntime::FeatureCollectionLayer* m_featureCollectionLayer;
-  Esri::ArcGISRuntime::FeatureTable* m_table;
+  Esri::ArcGISRuntime::FeatureTable* m_directionsTable;
+  Esri::ArcGISRuntime::FeatureQueryResult* m_featureQueryResult;
+  Esri::ArcGISRuntime::Feature* m_feature;
 //  Esri::ArcGISRuntime::FeatureCollectionTableListModel m_featureCollectionTable;
 };
 

@@ -27,6 +27,7 @@
 #include "MapQuickView.h"
 #include "Portal.h"
 #include "PortalItem.h"
+#include "ServiceFeatureTable.h"
 
 #include <QJsonValue>
 
@@ -71,9 +72,43 @@ DisplayRouteLayer::DisplayRouteLayer(QObject* parent /* = nullptr */):
             {
               if (table->tableName() == "DirectionPoints")
               {
-                m_table = table;
-                qDebug() << "Located DirectionPoints";
-                auto feature = m_table->createFeature(this);
+
+                m_directionsTable = table;
+
+                connect(m_directionsTable, &ServiceFeatureTable::queryFeaturesCompleted, this, [this](QUuid, FeatureQueryResult* featureQueryResult)
+                {
+                  if (!featureQueryResult)
+                  {
+                    return;
+                  }
+                  else
+                  {
+                    m_featureQueryResult = featureQueryResult;
+                  }
+
+                  if (featureQueryResult && featureQueryResult->iterator().hasNext())
+                  {
+                    qDebug() << "featureQueryResult->iterator().hasNext()";
+                    qDebug() << featureQueryResult;
+
+                    m_feature = static_cast<ArcGISFeature*>(featureQueryResult->iterator().next(this));
+                    qDebug() << m_feature;
+                    const QString featureDirection = m_feature->attributes()->attributeValue(QStringLiteral("DisplayText")).toString();
+                    qDebug() << featureDirection;
+                  }
+                });
+
+                //                qDebug() << m_featureQueryResult;
+
+                QueryParameters queryParams;
+                queryParams.setWhereClause("1=1");
+                m_directionsTable->queryFeatures(queryParams);
+//                m_featureQueryResult-
+
+                    //qDebug() << m_featureQueryResult;
+
+                    qDebug() << "Located DirectionPoints";
+                auto feature = m_directionsTable->createFeature(this);
                 auto attributesMap = feature->attributes()->attributesMap();
 
                 auto displayTextValue = attributesMap.value("DisplayText");
