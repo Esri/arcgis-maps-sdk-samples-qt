@@ -33,10 +33,19 @@ Item {
 
         Button {
             text: "Open"
-            onClicked: popup.open()
+//            onClicked: popup.open()
             anchors.bottom: parent.bottom
             anchors.margins: 40
             anchors.horizontalCenter: parent.horizontalCenter
+            onClicked: {
+                popup.open()
+                if (popup.opened)
+                {
+
+                    popup.contentData = model.getDirections();
+
+                }
+            }
         }
 
         Popup {
@@ -46,9 +55,10 @@ Item {
             height: 300
             focus: true
             contentItem: Text {
-                text: qsTr("TEST");
+//                text: popup.contentData
 
             }
+//            text: model.getDirections()
 //            onAboutToShow: {
 //                var content = model.getDirections();
 //            }

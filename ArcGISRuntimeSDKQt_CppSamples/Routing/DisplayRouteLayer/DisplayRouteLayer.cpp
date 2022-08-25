@@ -58,17 +58,6 @@ DisplayRouteLayer::DisplayRouteLayer(QObject* parent /* = nullptr */):
       m_featureCollection = new FeatureCollection(m_portalItem, this);
       m_featureCollectionLayer = new FeatureCollectionLayer(m_featureCollection, this);
       m_map->operationalLayers()->append(m_featureCollectionLayer);
-
-      connect(m_featureCollection, &FeatureCollection::loadStatusChanged, this, [this]()
-      {
-        if (m_featureCollection->loadStatus() == LoadStatus::Loaded)
-        {
-          qDebug() << m_featureCollection->tables()->size();
-//          getDirections();
-
-
-        }
-      });
     }
     else
     {
@@ -130,34 +119,18 @@ QString DisplayRouteLayer::getDirections()
             m_featureQueryResult = featureQueryResult;
           }
 
-          if (featureQueryResult && featureQueryResult->iterator().hasNext())
+          while (featureQueryResult && featureQueryResult->iterator().hasNext())
           {
-            qDebug() << "featureQueryResult->iterator().hasNext()";
-            qDebug() << featureQueryResult;
-
             m_feature = static_cast<ArcGISFeature*>(featureQueryResult->iterator().next(this));
-            qDebug() << m_feature;
             m_featureDirection = m_feature->attributes()->attributeValue(QStringLiteral("DisplayText")).toString();
             qDebug() << m_featureDirection;
+            featureQueryResult->iterator().next();
           }
         });
-
-        //                qDebug() << m_featureQueryResult;
 
         QueryParameters queryParams;
         queryParams.setWhereClause("1=1");
         m_directionsTable->queryFeatures(queryParams);
-        //                m_featureQueryResult-
-
-        //qDebug() << m_featureQueryResult;
-
-//        qDebug() << "Located DirectionPoints";
-//        auto feature = m_directionsTable->createFeature(this);
-//        auto attributesMap = feature->attributes()->attributesMap();
-
-//        auto displayTextValue = attributesMap.value("DisplayText");
-//        qDebug() << "displayTextValue" << displayTextValue.type();
-
       }
     }
   }
