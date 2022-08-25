@@ -64,7 +64,7 @@ DisplayRouteLayer::DisplayRouteLayer(QObject* parent /* = nullptr */):
         if (m_featureCollection->loadStatus() == LoadStatus::Loaded)
         {
           qDebug() << m_featureCollection->tables()->size();
-          getDirections();
+//          getDirections();
 
 
         }
@@ -107,7 +107,7 @@ void DisplayRouteLayer::setMapView(MapQuickView* mapView)
   emit mapViewChanged();
 }
 
-void DisplayRouteLayer::getDirections()
+QString DisplayRouteLayer::getDirections()
 {
   FeatureCollectionTableListModel* tables = m_featureCollection->tables();
   for (FeatureTable* table : *tables)
@@ -137,8 +137,8 @@ void DisplayRouteLayer::getDirections()
 
             m_feature = static_cast<ArcGISFeature*>(featureQueryResult->iterator().next(this));
             qDebug() << m_feature;
-            const QString featureDirection = m_feature->attributes()->attributeValue(QStringLiteral("DisplayText")).toString();
-            qDebug() << featureDirection;
+            m_featureDirection = m_feature->attributes()->attributeValue(QStringLiteral("DisplayText")).toString();
+            qDebug() << m_featureDirection;
           }
         });
 
@@ -151,14 +151,15 @@ void DisplayRouteLayer::getDirections()
 
         //qDebug() << m_featureQueryResult;
 
-        qDebug() << "Located DirectionPoints";
-        auto feature = m_directionsTable->createFeature(this);
-        auto attributesMap = feature->attributes()->attributesMap();
+//        qDebug() << "Located DirectionPoints";
+//        auto feature = m_directionsTable->createFeature(this);
+//        auto attributesMap = feature->attributes()->attributesMap();
 
-        auto displayTextValue = attributesMap.value("DisplayText");
-        qDebug() << displayTextValue.type();
+//        auto displayTextValue = attributesMap.value("DisplayText");
+//        qDebug() << "displayTextValue" << displayTextValue.type();
 
       }
     }
   }
+  return m_featureDirection;
 }

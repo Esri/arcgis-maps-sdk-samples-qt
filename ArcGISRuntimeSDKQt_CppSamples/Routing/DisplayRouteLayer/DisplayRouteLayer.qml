@@ -44,12 +44,15 @@ Item {
             anchors.centerIn: Overlay.overlay
             width: 200
             height: 300
-            modal: true
             focus: true
-            closePolicy: Popup.CloseOnEscape | Popup.CloseOnPressOutsideParent | Popup.CloseOnPressOutside | Popup.CloseOnReleaseOutsideParent
             contentItem: Text {
-//                text: model.getDirections();
+                text: qsTr("TEST");
+
             }
+//            onAboutToShow: {
+//                var content = model.getDirections();
+//            }
+
         }
     }
 

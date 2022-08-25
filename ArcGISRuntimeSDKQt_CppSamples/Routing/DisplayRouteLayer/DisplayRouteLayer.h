@@ -47,7 +47,7 @@ public:
   ~DisplayRouteLayer();
 
   static void init();
-//  Q_INVOKABLE void getDirections();
+  Q_INVOKABLE QString getDirections();
 
 signals:
   void mapViewChanged();
@@ -55,7 +55,7 @@ signals:
 private:
   Esri::ArcGISRuntime::MapQuickView* mapView() const;
   void setMapView(Esri::ArcGISRuntime::MapQuickView* mapView);
-  void getDirections();
+//  QString getDirections();
 
   Esri::ArcGISRuntime::Map* m_map = nullptr;
   Esri::ArcGISRuntime::MapQuickView* m_mapView = nullptr;
@@ -65,6 +65,7 @@ private:
   Esri::ArcGISRuntime::FeatureTable* m_directionsTable;
   Esri::ArcGISRuntime::FeatureQueryResult* m_featureQueryResult;
   Esri::ArcGISRuntime::Feature* m_feature;
+  QString m_featureDirection = "";
 //  Esri::ArcGISRuntime::FeatureCollectionTableListModel m_featureCollectionTable;
 };
 
