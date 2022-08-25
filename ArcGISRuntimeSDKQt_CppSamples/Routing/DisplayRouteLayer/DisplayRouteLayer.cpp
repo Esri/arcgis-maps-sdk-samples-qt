@@ -64,59 +64,9 @@ DisplayRouteLayer::DisplayRouteLayer(QObject* parent /* = nullptr */):
         if (m_featureCollection->loadStatus() == LoadStatus::Loaded)
         {
           qDebug() << m_featureCollection->tables()->size();
+          getDirections();
 
-          FeatureCollectionTableListModel* tables = m_featureCollection->tables();
-          for (FeatureTable* table : *tables)
-          {
-            if (table->loadStatus() == LoadStatus::Loaded)
-            {
-              if (table->tableName() == "DirectionPoints")
-              {
 
-                m_directionsTable = table;
-
-                connect(m_directionsTable, &ServiceFeatureTable::queryFeaturesCompleted, this, [this](QUuid, FeatureQueryResult* featureQueryResult)
-                {
-                  if (!featureQueryResult)
-                  {
-                    return;
-                  }
-                  else
-                  {
-                    m_featureQueryResult = featureQueryResult;
-                  }
-
-                  if (featureQueryResult && featureQueryResult->iterator().hasNext())
-                  {
-                    qDebug() << "featureQueryResult->iterator().hasNext()";
-                    qDebug() << featureQueryResult;
-
-                    m_feature = static_cast<ArcGISFeature*>(featureQueryResult->iterator().next(this));
-                    qDebug() << m_feature;
-                    const QString featureDirection = m_feature->attributes()->attributeValue(QStringLiteral("DisplayText")).toString();
-                    qDebug() << featureDirection;
-                  }
-                });
-
-                //                qDebug() << m_featureQueryResult;
-
-                QueryParameters queryParams;
-                queryParams.setWhereClause("1=1");
-                m_directionsTable->queryFeatures(queryParams);
-//                m_featureQueryResult-
-
-                    //qDebug() << m_featureQueryResult;
-
-                    qDebug() << "Located DirectionPoints";
-                auto feature = m_directionsTable->createFeature(this);
-                auto attributesMap = feature->attributes()->attributesMap();
-
-                auto displayTextValue = attributesMap.value("DisplayText");
-                qDebug() << displayTextValue.type();
-
-              }
-            }
-          }
         }
       });
     }
@@ -151,24 +101,64 @@ void DisplayRouteLayer::setMapView(MapQuickView* mapView)
 
   m_mapView = mapView;
   m_mapView->setMap(m_map);
-
-  //  Viewpoint vpCenter = Viewpoint(Point(123.0304, 35.338/*8,  SpatialReference::wgs84()*/), 100000);
-  //  m_mapView->setViewpoint(vpCenter);
-
-  constexpr double xMin = -10338668.348591767;
-  constexpr double yMin = 5546908.424239618;
-  constexpr double xMax = -18388247.594362013;
-  constexpr double yMax = 2047223.989911933;
-  constexpr int wkid = 102100;
-  Viewpoint vpSpring(Envelope(xMin, yMin, xMax, yMax, SpatialReference(wkid)));
-  constexpr float duration = 4.0f;
-  //  m_mapView->setViewpoint/*Animated*/(vpSpring/*, duration, AnimationCurve::EaseInOutCubic*/);
-
-  //122.8330046°W 45.2034128°N
-  Viewpoint initialViewpoint(Point(122.8330046, 45.2034128, SpatialReference::wgs84()), 800000);
-  //  m_map->setInitialViewpoint(initialViewpoint);
-
-  //  m_mapView->
+  Point vpCenter(-122.8309, 45.2281, SpatialReference(4326));
+  m_mapView->setViewpointCenter(vpCenter, 800000);
 
   emit mapViewChanged();
+}
+
+void DisplayRouteLayer::getDirections()
+{
+  FeatureCollectionTableListModel* tables = m_featureCollection->tables();
+  for (FeatureTable* table : *tables)
+  {
+    if (table->loadStatus() == LoadStatus::Loaded)
+    {
+      if (table->tableName() == "DirectionPoints")
+      {
+
+        m_directionsTable = table;
+
+        connect(m_directionsTable, &ServiceFeatureTable::queryFeaturesCompleted, this, [this](QUuid, FeatureQueryResult* featureQueryResult)
+        {
+          if (!featureQueryResult)
+          {
+            return;
+          }
+          else
+          {
+            m_featureQueryResult = featureQueryResult;
+          }
+
+          if (featureQueryResult && featureQueryResult->iterator().hasNext())
+          {
+            qDebug() << "featureQueryResult->iterator().hasNext()";
+            qDebug() << featureQueryResult;
+
+            m_feature = static_cast<ArcGISFeature*>(featureQueryResult->iterator().next(this));
+            qDebug() << m_feature;
+            const QString featureDirection = m_feature->attributes()->attributeValue(QStringLiteral("DisplayText")).toString();
+            qDebug() << featureDirection;
+          }
+        });
+
+        //                qDebug() << m_featureQueryResult;
+
+        QueryParameters queryParams;
+        queryParams.setWhereClause("1=1");
+        m_directionsTable->queryFeatures(queryParams);
+        //                m_featureQueryResult-
+
+        //qDebug() << m_featureQueryResult;
+
+        qDebug() << "Located DirectionPoints";
+        auto feature = m_directionsTable->createFeature(this);
+        auto attributesMap = feature->attributes()->attributesMap();
+
+        auto displayTextValue = attributesMap.value("DisplayText");
+        qDebug() << displayTextValue.type();
+
+      }
+    }
+  }
 }

@@ -47,6 +47,7 @@ public:
   ~DisplayRouteLayer();
 
   static void init();
+//  Q_INVOKABLE void getDirections();
 
 signals:
   void mapViewChanged();
@@ -54,6 +55,7 @@ signals:
 private:
   Esri::ArcGISRuntime::MapQuickView* mapView() const;
   void setMapView(Esri::ArcGISRuntime::MapQuickView* mapView);
+  void getDirections();
 
   Esri::ArcGISRuntime::Map* m_map = nullptr;
   Esri::ArcGISRuntime::MapQuickView* m_mapView = nullptr;

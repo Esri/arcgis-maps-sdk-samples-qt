@@ -48,7 +48,7 @@ Item {
             focus: true
             closePolicy: Popup.CloseOnEscape | Popup.CloseOnPressOutsideParent | Popup.CloseOnPressOutside | Popup.CloseOnReleaseOutsideParent
             contentItem: Text {
-                text: "Content"
+//                text: model.getDirections();
             }
         }
     }
