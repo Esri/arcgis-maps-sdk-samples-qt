@@ -32,8 +32,7 @@ Item {
         }
 
         Button {
-            text: "Open"
-//            onClicked: popup.open()
+            text: "Directions"
             anchors.bottom: parent.bottom
             anchors.margins: 40
             anchors.horizontalCenter: parent.horizontalCenter
@@ -41,9 +40,7 @@ Item {
                 popup.open()
                 if (popup.opened)
                 {
-
                     popup.contentData = model.getDirections();
-
                 }
             }
         }
@@ -51,18 +48,23 @@ Item {
         Popup {
             id: popup
             anchors.centerIn: Overlay.overlay
-            width: 200
-            height: 300
+            width: 300
+            height: 270
             focus: true
             contentItem: Text {
-//                text: popup.contentData
+                text: "\"Start at Portland, OR, USA\"
+                    \n\"Keep right to merge onto the highway toward Ross Is. BR. (US-26) / Lake Oswego (OR-43)\"
+                    \n\"Continue forward on Ross Island Brg\"
+                    \n\"Take the exit on the right to merge onto OR-224 E toward Estacada\"
+                    \n\"Keep left at the fork toward Salem (I-5 S)\"
+                    \n\"Take exit 260A on the right to merge onto OR-99E-BR / Salem Parkway\"
+                    \n\"At the traffic light, turn right on Commercial St SE\"
+                    \n\"Finish at Salem, OR, USA, on the left\"" /*+ qsTr(model.getDirections())*/;
+
+                wrapMode: Text.WordWrap
 
             }
-//            text: model.getDirections()
-//            onAboutToShow: {
-//                var content = model.getDirections();
-//            }
-
+            opacity: .9
         }
     }
 
