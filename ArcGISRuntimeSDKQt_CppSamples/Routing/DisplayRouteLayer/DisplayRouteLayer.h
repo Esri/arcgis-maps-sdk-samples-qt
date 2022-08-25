@@ -26,6 +26,7 @@ namespace ArcGISRuntime
 class FeatureCollection;
 class FeatureCollectionLayer;
 class FeatureCollectionTableListModel;
+class FeatureTable;
 class Map;
 class MapQuickView;
 class PortalItem;
@@ -58,6 +59,7 @@ private:
   Esri::ArcGISRuntime::PortalItem* m_portalItem = nullptr;
   Esri::ArcGISRuntime::FeatureCollection* m_featureCollection;
   Esri::ArcGISRuntime::FeatureCollectionLayer* m_featureCollectionLayer;
+  Esri::ArcGISRuntime::FeatureTable* m_table;
 //  Esri::ArcGISRuntime::FeatureCollectionTableListModel m_featureCollectionTable;
 };
 

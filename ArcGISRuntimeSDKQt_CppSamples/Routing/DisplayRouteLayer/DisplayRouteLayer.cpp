@@ -28,6 +28,8 @@
 #include "Portal.h"
 #include "PortalItem.h"
 
+#include <QJsonValue>
+
 using namespace Esri::ArcGISRuntime;
 namespace
 {
@@ -69,28 +71,15 @@ DisplayRouteLayer::DisplayRouteLayer(QObject* parent /* = nullptr */):
             {
               if (table->tableName() == "DirectionPoints")
               {
+                m_table = table;
                 qDebug() << "Located DirectionPoints";
-                auto feature = table->createFeature(this);
-                auto attributes = feature->attributes();
-                if (attributes)
-                {
-                  for (const auto attr : attributes->attributeNames())
-                  {
-                    if (attr == "DisplayText")
-                    {
-                      qDebug() << "hi";
-                      auto value = attributes->attributeValue(attr);
-                      auto str_val = value.toString();
-                      qDebug() << str_val;
-//                      if (str_val)
-//                      {
-//                        qDebug() << str_val;
-//                      }
-                    }
-                  }
-                }
-              }
+                auto feature = m_table->createFeature(this);
+                auto attributesMap = feature->attributes()->attributesMap();
 
+                auto displayTextValue = attributesMap.value("DisplayText");
+                qDebug() << displayTextValue.type();
+
+              }
             }
           }
         }
