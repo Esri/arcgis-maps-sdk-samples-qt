@@ -1,0 +1,8 @@
+<RCC>
+    <qresource prefix="/Samples/Routing/DisplayRouteLayer">
+        <file alias="sample.json">README.metadata.json</file>
+        <file>DisplayRouteLayer.qml</file>
+        <file>screenshot.png</file>
+        <file>README.md</file>
+    </qresource>
+</RCC>
