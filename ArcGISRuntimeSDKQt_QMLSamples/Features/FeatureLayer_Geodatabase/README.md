@@ -1,4 +1,4 @@
-# Feature layer (geodatabase)
+# Display feature layer from geodatabase
 
 Display features from a local geodatabase.
 
