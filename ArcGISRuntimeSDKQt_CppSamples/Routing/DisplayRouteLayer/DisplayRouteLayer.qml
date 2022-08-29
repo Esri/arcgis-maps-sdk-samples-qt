@@ -32,7 +32,9 @@ Item {
         }
 
         Button {
+            id: directionsButton
             text: "Directions"
+            enabled: false
             anchors.bottom: parent.bottom
             anchors.margins: 40
             anchors.horizontalCenter: parent.horizontalCenter
