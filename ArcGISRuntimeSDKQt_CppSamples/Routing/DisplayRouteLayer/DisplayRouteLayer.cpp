@@ -122,11 +122,13 @@ void DisplayRouteLayer::getDirections()
             m_featureQueryResult = featureQueryResult;
           }
 
+          // Clear the directions list before repopulating it
+          m_featureDirection.clear();
+
           while (featureQueryResult && featureQueryResult->iterator().hasNext())
           {
             m_feature = static_cast<ArcGISFeature*>(featureQueryResult->iterator().next(this));
-            m_featureDirection = m_featureDirection + "\n" + m_feature->attributes()->attributeValue(QStringLiteral("DisplayText")).toString();
-            qDebug() << m_featureDirection;
+            m_featureDirection = m_featureDirection + "\n\n" + m_feature->attributes()->attributeValue(QStringLiteral("DisplayText")).toString();
             featureQueryResult->iterator().next();
             emit directionsChanged();
           }

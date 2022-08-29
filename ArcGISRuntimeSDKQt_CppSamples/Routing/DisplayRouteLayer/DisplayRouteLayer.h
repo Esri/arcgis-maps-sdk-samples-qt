@@ -58,7 +58,6 @@ private:
   Esri::ArcGISRuntime::MapQuickView* mapView() const;
   void setMapView(Esri::ArcGISRuntime::MapQuickView* mapView);
   QString directions() const;
-//  QString getDirections();
 
   Esri::ArcGISRuntime::Map* m_map = nullptr;
   Esri::ArcGISRuntime::MapQuickView* m_mapView = nullptr;
@@ -69,7 +68,6 @@ private:
   Esri::ArcGISRuntime::FeatureQueryResult* m_featureQueryResult;
   Esri::ArcGISRuntime::Feature* m_feature;
   QString m_featureDirection = "";
-//  Esri::ArcGISRuntime::FeatureCollectionTableListModel m_featureCollectionTable;
 };
 
 #endif // DISPLAYROUTELAYER_H

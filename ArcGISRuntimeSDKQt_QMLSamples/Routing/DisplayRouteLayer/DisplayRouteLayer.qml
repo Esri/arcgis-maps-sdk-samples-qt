@@ -124,15 +124,7 @@ Rectangle {
         height: 270
         focus: true
         contentItem: Text {
-            //            text: "\"Start at Portland, OR, USA\"
-            //                \n\"Keep right to merge onto the highway toward Ross Is. BR. (US-26) / Lake Oswego (OR-43)\"
-            //                \n\"Continue forward on Ross Island Brg\"
-            //                \n\"Take the exit on the right to merge onto OR-224 E toward Estacada\"
-            //                \n\"Keep left at the fork toward Salem (I-5 S)\"
-            //                \n\"Take exit 260A on the right to merge onto OR-99E-BR / Salem Parkway\"
-            //                \n\"At the traffic light, turn right on Commercial St SE\"
-            //                \n\"Finish at Salem, OR, USA, on the left\"" /*+ qsTr(model.getDirections())*/;
-
+//            text:
             wrapMode: Text.WordWrap
 
         }
