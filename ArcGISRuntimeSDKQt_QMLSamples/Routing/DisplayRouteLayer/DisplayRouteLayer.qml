@@ -80,6 +80,7 @@ Rectangle {
         text: "Directions"
         anchors.bottom: parent.bottom
         anchors.margins: 40
+        enabled: featureCollection ? featureCollection.loadStatus === Enums.LoadStatusLoaded : false
         anchors.horizontalCenter: parent.horizontalCenter
         onClicked: {
             popup.open()
@@ -132,7 +133,7 @@ Rectangle {
                                 if (result) {
                                     resolve(result);
                                     var features = Array.from(result.iterator.features);
-
+                                    directions = "";
                                     features.forEach((feature) => {
                                                          directions = directions + "\n - " + feature.attributes.attributeValue("DisplayText");
                                                      });
