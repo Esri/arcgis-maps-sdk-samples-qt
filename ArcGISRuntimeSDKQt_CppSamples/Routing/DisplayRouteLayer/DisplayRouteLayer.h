@@ -41,20 +41,23 @@ class DisplayRouteLayer : public QObject
   Q_OBJECT
 
   Q_PROPERTY(Esri::ArcGISRuntime::MapQuickView* mapView READ mapView WRITE setMapView NOTIFY mapViewChanged)
+  Q_PROPERTY(QString directions READ directions NOTIFY directionsChanged)
 
 public:
   explicit DisplayRouteLayer(QObject* parent = nullptr);
   ~DisplayRouteLayer();
 
   static void init();
-  Q_INVOKABLE QString getDirections();
+  Q_INVOKABLE void getDirections();
 
 signals:
   void mapViewChanged();
+  void directionsChanged();
 
 private:
   Esri::ArcGISRuntime::MapQuickView* mapView() const;
   void setMapView(Esri::ArcGISRuntime::MapQuickView* mapView);
+  QString directions() const;
 //  QString getDirections();
 
   Esri::ArcGISRuntime::Map* m_map = nullptr;

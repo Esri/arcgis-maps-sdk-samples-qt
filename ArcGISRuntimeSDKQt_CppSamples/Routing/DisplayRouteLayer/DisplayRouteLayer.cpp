@@ -96,8 +96,11 @@ void DisplayRouteLayer::setMapView(MapQuickView* mapView)
   emit mapViewChanged();
 }
 
-QString DisplayRouteLayer::getDirections()
+void DisplayRouteLayer::getDirections()
 {
+  if (!m_featureCollectionLayer)
+    return;
+
   FeatureCollectionTableListModel* tables = m_featureCollection->tables();
   for (FeatureTable* table : *tables)
   {
@@ -122,9 +125,10 @@ QString DisplayRouteLayer::getDirections()
           while (featureQueryResult && featureQueryResult->iterator().hasNext())
           {
             m_feature = static_cast<ArcGISFeature*>(featureQueryResult->iterator().next(this));
-            m_featureDirection = m_feature->attributes()->attributeValue(QStringLiteral("DisplayText")).toString();
+            m_featureDirection = m_featureDirection + "\n" + m_feature->attributes()->attributeValue(QStringLiteral("DisplayText")).toString();
             qDebug() << m_featureDirection;
             featureQueryResult->iterator().next();
+            emit directionsChanged();
           }
         });
 
@@ -134,5 +138,10 @@ QString DisplayRouteLayer::getDirections()
       }
     }
   }
+}
+
+
+QString DisplayRouteLayer::directions() const
+{
   return m_featureDirection;
 }
