@@ -32,7 +32,9 @@ Rectangle {
 
     property var featureCollection: null
     property var featureCollectionLayer: null
-    property string directionsList: ""
+    //    property string directionsList: ""
+    property var directionsTable: null
+    property var features: null
 
 
     MapView {
@@ -91,7 +93,26 @@ Rectangle {
             if (popup.opened)
             {
                 // populate the list string here and assign to popup.contentData I think
-//                directionsList =
+                //                directionsList =
+                const tables = featureCollection.tables;
+
+                featureCollection.tables.forEach((table) => {
+                                                     console.log(table);
+                                                     if (table.displayName === "DirectionPoints")
+                                                     {
+                                                         console.log("Table found!");
+                                                         if (table.loadStatus === Enums.LoadStatusLoaded)
+                                                         {
+                                                             queryFeatures(table);
+
+                                                         }
+
+
+
+                                                     }
+                                                 }
+                                                 )
+
             }
         }
     }
@@ -103,18 +124,68 @@ Rectangle {
         height: 270
         focus: true
         contentItem: Text {
-//            text: "\"Start at Portland, OR, USA\"
-//                \n\"Keep right to merge onto the highway toward Ross Is. BR. (US-26) / Lake Oswego (OR-43)\"
-//                \n\"Continue forward on Ross Island Brg\"
-//                \n\"Take the exit on the right to merge onto OR-224 E toward Estacada\"
-//                \n\"Keep left at the fork toward Salem (I-5 S)\"
-//                \n\"Take exit 260A on the right to merge onto OR-99E-BR / Salem Parkway\"
-//                \n\"At the traffic light, turn right on Commercial St SE\"
-//                \n\"Finish at Salem, OR, USA, on the left\"" /*+ qsTr(model.getDirections())*/;
+            //            text: "\"Start at Portland, OR, USA\"
+            //                \n\"Keep right to merge onto the highway toward Ross Is. BR. (US-26) / Lake Oswego (OR-43)\"
+            //                \n\"Continue forward on Ross Island Brg\"
+            //                \n\"Take the exit on the right to merge onto OR-224 E toward Estacada\"
+            //                \n\"Keep left at the fork toward Salem (I-5 S)\"
+            //                \n\"Take exit 260A on the right to merge onto OR-99E-BR / Salem Parkway\"
+            //                \n\"At the traffic light, turn right on Commercial St SE\"
+            //                \n\"Finish at Salem, OR, USA, on the left\"" /*+ qsTr(model.getDirections())*/;
 
             wrapMode: Text.WordWrap
 
         }
         opacity: .9
+    }
+
+    function query(table) {
+        let parameters = ArcGISRuntimeEnvironment.createObject("QueryParameters");
+        parameters.whereClause = "1=1";
+    }
+
+    function queryFeatures(table){
+        return new Promise(
+                    (resolve, reject)=>{
+                        let taskId;
+                        let parameters = ArcGISRuntimeEnvironment.createObject("QueryParameters");
+                        parameters.whereClause = "1=1";
+
+                        const featureStatusChanged = ()=> {
+                            switch (table.queryFeaturesStatus) {
+                                case Enums.TaskStatusCompleted:
+                                table.queryFeaturesStatusChanged.disconnect(featureStatusChanged);
+                                const result = table.queryFeaturesResults[taskId];
+                                if (result) {
+                                    resolve(result);
+                                    features = Array.from(result.iterator.features);
+
+                                    features.forEach((feature) => {
+                                                         console.log(feature.attributes.attributeValue("DisplayText"));
+                                                     });
+
+                                }
+                                else {
+                                    reject({message: "The query finished but there was no result for this taskId", taskId: taskId});
+                                }
+                                break;
+                                case Enums.TaskStatusErrored:
+                                table.queryFeaturesStatusChanged.disconnect(featureStatusChanged);
+                                if (table.error) {
+                                    reject(table.error);
+                                } else {
+                                    reject({message: table.tableName + ": query task errored++++"});
+                                }
+                                break;
+                                default:
+                                break;
+                            }
+                        }
+
+                        table.queryFeaturesStatusChanged.connect(featureStatusChanged);
+                        taskId = table.queryFeatures(parameters);
+
+                        console.log("Query features ran");
+                    });
     }
 }
