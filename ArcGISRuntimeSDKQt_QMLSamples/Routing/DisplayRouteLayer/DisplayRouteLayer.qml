@@ -19,11 +19,6 @@ import Esri.ArcGISRuntime 100.14
 import QtQuick.Controls 2.12
 import QtQuick.Layouts 1.11
 
-//import QtQuick 2.12
-//import QtQuick.Controls 2.12
-//import Esri.Samples 1.0
-//import QtQuick.Layouts 1.11
-
 Rectangle {
     id: rootRectangle
     clip: true
@@ -32,9 +27,7 @@ Rectangle {
 
     property var featureCollection: null
     property var featureCollectionLayer: null
-    //    property string directionsList: ""
-    property var directionsTable: null
-    property var features: null
+    property string directions: ""
 
 
     MapView {
@@ -92,27 +85,16 @@ Rectangle {
             popup.open()
             if (popup.opened)
             {
-                // populate the list string here and assign to popup.contentData I think
-                //                directionsList =
                 const tables = featureCollection.tables;
-
                 featureCollection.tables.forEach((table) => {
-                                                     console.log(table);
                                                      if (table.displayName === "DirectionPoints")
                                                      {
-                                                         console.log("Table found!");
                                                          if (table.loadStatus === Enums.LoadStatusLoaded)
                                                          {
                                                              queryFeatures(table);
-
                                                          }
-
-
-
                                                      }
-                                                 }
-                                                 )
-
+                                                 });
             }
         }
     }
@@ -121,12 +103,11 @@ Rectangle {
         id: popup
         anchors.centerIn: Overlay.overlay
         width: 300
-        height: 270
+        height: 320
         focus: true
         contentItem: Text {
-//            text:
+            text: directions
             wrapMode: Text.WordWrap
-
         }
         opacity: .9
     }
@@ -150,12 +131,11 @@ Rectangle {
                                 const result = table.queryFeaturesResults[taskId];
                                 if (result) {
                                     resolve(result);
-                                    features = Array.from(result.iterator.features);
+                                    var features = Array.from(result.iterator.features);
 
                                     features.forEach((feature) => {
-                                                         console.log(feature.attributes.attributeValue("DisplayText"));
+                                                         directions = directions + "\n - " + feature.attributes.attributeValue("DisplayText");
                                                      });
-
                                 }
                                 else {
                                     reject({message: "The query finished but there was no result for this taskId", taskId: taskId});
@@ -173,11 +153,8 @@ Rectangle {
                                 break;
                             }
                         }
-
                         table.queryFeaturesStatusChanged.connect(featureStatusChanged);
                         taskId = table.queryFeatures(parameters);
-
-                        console.log("Query features ran");
                     });
     }
 }

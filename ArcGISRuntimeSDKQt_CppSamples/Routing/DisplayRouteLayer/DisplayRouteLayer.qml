@@ -49,7 +49,7 @@ Item {
             id: popup
             anchors.centerIn: Overlay.overlay
             width: 300
-            height: 300
+            height: 320
             focus: true
             contentItem: Text {
                 text: model.directions
