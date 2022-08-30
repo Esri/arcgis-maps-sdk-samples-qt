@@ -28,9 +28,8 @@
 
 int main(int argc, char *argv[])
 {
-    QGuiApplication::setAttribute(Qt::AA_EnableHighDpiScaling);
-    QGuiApplication app(argc, argv);
-    app.setApplicationName("AddItemsToPortal - QML");
+  QGuiApplication app(argc, argv);
+  app.setApplicationName("AddItemsToPortal - QML");
 
 #ifdef QT_WEBVIEW_WEBENGINE_BACKEND
     QtWebEngine::initialize();

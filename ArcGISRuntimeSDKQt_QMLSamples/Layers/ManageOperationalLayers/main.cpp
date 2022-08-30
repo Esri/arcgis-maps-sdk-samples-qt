@@ -27,8 +27,6 @@ int main(int argc, char *argv[])
 {
   // register the draw order model
   qmlRegisterType<DrawOrderLayerListModel>("Esri.Samples", 1, 0, "DrawOrderListModel");
-
-  QGuiApplication::setAttribute(Qt::AA_EnableHighDpiScaling);
   QGuiApplication app(argc, argv);
   app.setApplicationName(QStringLiteral("ManageOperationalLayers - QML"));
 

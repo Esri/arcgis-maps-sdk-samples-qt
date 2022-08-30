@@ -19,7 +19,6 @@
 
 int main(int argc, char *argv[])
 {
-  QGuiApplication::setAttribute(Qt::AA_EnableHighDpiScaling);
   QApplication application(argc, argv);
 
   // Use of Esri location services, including basemaps and geocoding,
