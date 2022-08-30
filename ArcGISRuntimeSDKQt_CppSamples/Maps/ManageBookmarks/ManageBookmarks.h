@@ -27,7 +27,6 @@ namespace Esri
   }
 }
 
-class QStringList;
 class QString;
 
 #include <QAbstractListModel>
