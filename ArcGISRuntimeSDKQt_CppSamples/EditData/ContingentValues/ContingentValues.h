@@ -34,6 +34,8 @@ class MapQuickView;
 #include <QObject>
 #include <QMouseEvent>
 
+Q_MOC_INCLUDE("MapQuickView.h")
+
 class ContingentValues : public QObject
 {
   Q_OBJECT
@@ -65,7 +67,7 @@ private:
   void queryAndBufferFeatures();
   void bufferFeaturesFromQueryResults(QUuid, Esri::ArcGISRuntime::FeatureQueryResult* results);
   void createConnections();
-  void createNewEmptyFeature(QMouseEvent mouseEvent);
+  void createNewEmptyFeature(QMouseEvent& mouseEvent);
   bool featureAttributesPaneVisibe() const;
   QVariantMap statusValues() const;
   void setFeatureAttributesPaneVisibe(bool showFeatureAttributesPane);

@@ -28,6 +28,8 @@ namespace Esri
 
 #include <QQuickItem>
 
+Q_MOC_INCLUDE("MapQuickView.h")
+
 class ChangeViewpoint : public QQuickItem
 {
   Q_PROPERTY(Esri::ArcGISRuntime::MapQuickView* mapView READ mapQuickView WRITE setMapQuickView NOTIFY mapQuickViewChanged)
@@ -56,4 +58,3 @@ private:
 };
 
 #endif // CHANGE_VIEWPOINT_H
-

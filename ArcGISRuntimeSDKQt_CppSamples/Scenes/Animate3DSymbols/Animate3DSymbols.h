@@ -39,8 +39,9 @@ class MissionData;
 
 #include <QQuickItem>
 #include <QString>
-
 #include <memory>
+
+Q_MOC_INCLUDE("QAbstractListModel")
 
 class Animate3DSymbols : public QQuickItem
 {

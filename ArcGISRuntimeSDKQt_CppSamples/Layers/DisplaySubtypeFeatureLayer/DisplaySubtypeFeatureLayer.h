@@ -34,7 +34,10 @@ class SubtypeSublayer;
 }
 
 #include <QObject>
+
 #include "SubtypeSublayer.h"
+
+Q_MOC_INCLUDE("MapQuickView.h")
 
 class DisplaySubtypeFeatureLayer : public QObject
 {

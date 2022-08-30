@@ -17,6 +17,8 @@
 #ifndef CreateTerrainSurfaceFromLocalTilePackage_H
 #define CreateTerrainSurfaceFromLocalTilePackage_H
 
+#include "Error.h"
+
 namespace Esri
 {
   namespace ArcGISRuntime
@@ -26,9 +28,9 @@ namespace Esri
   }
 }
 
-#include "Error.h"
-
 #include <QObject>
+
+Q_MOC_INCLUDE("SceneQuickView.h")
 
 class CreateTerrainSurfaceFromLocalTilePackage : public QObject
 {

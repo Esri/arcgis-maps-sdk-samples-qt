@@ -35,6 +35,8 @@ class SceneQuickView;
 #include <QList>
 #include <QStringList>
 
+Q_MOC_INCLUDE("SceneQuickView.h")
+
 class ListKmlContents : public QObject
 {
   Q_OBJECT

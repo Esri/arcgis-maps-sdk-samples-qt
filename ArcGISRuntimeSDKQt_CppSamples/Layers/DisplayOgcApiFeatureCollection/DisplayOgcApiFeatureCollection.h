@@ -33,6 +33,8 @@ class QueryParameters;
 
 #include <QObject>
 
+Q_MOC_INCLUDE("MapQuickView.h")
+
 class DisplayOgcApiFeatureCollection : public QObject
 {
   Q_OBJECT

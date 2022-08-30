@@ -30,6 +30,9 @@ namespace Esri
 #include <QQuickItem>
 #include <QStringList>
 #include "Geometry.h"
+
+Q_MOC_INCLUDE("MapQuickView.h")
+
 class SpatialOperations : public QQuickItem
 {
   Q_OBJECT

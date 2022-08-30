@@ -17,9 +17,6 @@
 #ifndef CHOOSECAMERACONTROLLER_H
 #define CHOOSECAMERACONTROLLER_H
 
-// Qt headers
-#include <QObject>
-
 namespace Esri
 {
 namespace ArcGISRuntime
@@ -32,6 +29,10 @@ class Scene;
 class SceneQuickView;
 }
 }
+
+#include <QObject>
+
+Q_MOC_INCLUDE("SceneQuickView.h")
 
 class ChooseCameraController : public QObject
 {

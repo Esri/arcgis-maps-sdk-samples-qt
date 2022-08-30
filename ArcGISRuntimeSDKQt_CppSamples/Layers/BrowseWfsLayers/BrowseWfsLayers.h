@@ -34,6 +34,8 @@ class LayerListModel;
 #include <QList>
 #include <QStringListModel>
 
+Q_MOC_INCLUDE("MapQuickView.h")
+
 class BrowseWfsLayers : public QObject
 {
   Q_OBJECT

@@ -41,6 +41,8 @@ class SymbolImageProvider;
 #include "TaskWatcher.h"
 #include "Viewpoint.h"
 
+Q_MOC_INCLUDE("MapQuickView.h")
+
 class DisplayContentOfUtilityNetworkContainer : public QObject
 {
   Q_OBJECT

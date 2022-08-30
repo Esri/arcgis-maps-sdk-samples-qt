@@ -17,6 +17,8 @@
 #ifndef CREATETERRAINSURFACEFROMLOCALRASTER_H
 #define CREATETERRAINSURFACEFROMLOCALRASTER_H
 
+#include "Error.h"
+
 namespace Esri
 {
   namespace ArcGISRuntime
@@ -26,9 +28,9 @@ namespace Esri
   }
 }
 
-#include "Error.h"
-
 #include <QObject>
+
+Q_MOC_INCLUDE("SceneQuickView.h")
 
 class CreateTerrainSurfaceFromLocalRaster : public QObject
 {

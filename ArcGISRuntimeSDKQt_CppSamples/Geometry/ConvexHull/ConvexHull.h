@@ -35,6 +35,8 @@ class SimpleMarkerSymbol;
 #include <QObject>
 #include <QList>
 
+Q_MOC_INCLUDE("MapQuickView.h")
+
 class ConvexHull : public QObject
 {
   Q_OBJECT

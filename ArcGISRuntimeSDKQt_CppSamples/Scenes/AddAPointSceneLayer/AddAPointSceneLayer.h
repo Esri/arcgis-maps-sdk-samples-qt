@@ -28,6 +28,8 @@ class SceneQuickView;
 
 #include <QObject>
 
+Q_MOC_INCLUDE("SceneQuickView.h")
+
 class AddAPointSceneLayer : public QObject
 {
   Q_OBJECT

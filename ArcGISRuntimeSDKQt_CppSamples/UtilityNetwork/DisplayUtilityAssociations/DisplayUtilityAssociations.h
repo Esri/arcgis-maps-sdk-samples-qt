@@ -19,8 +19,6 @@
 
 #include "UtilityNetworkTypes.h"
 
-#include <QObject>
-
 namespace Esri
 {
 namespace ArcGISRuntime
@@ -35,6 +33,10 @@ class UtilityNetwork;
 }
 
 class SymbolImageProvider;
+
+#include <QObject>
+
+Q_MOC_INCLUDE("MapQuickView.h")
 
 class DisplayUtilityAssociations : public QObject
 {

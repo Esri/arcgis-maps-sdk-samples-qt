@@ -36,6 +36,8 @@ class SimpleFillSymbol;
 
 #include <QObject>
 
+Q_MOC_INCLUDE("MapQuickView.h")
+
 class RouteAroundBarriers : public QObject
 {
   Q_OBJECT

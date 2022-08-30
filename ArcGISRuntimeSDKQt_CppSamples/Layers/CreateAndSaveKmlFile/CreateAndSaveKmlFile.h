@@ -32,10 +32,13 @@ class KmlStyle;
 
 #include <QObject>
 #include <QUrl>
+
 #include "Geometry.h"
 #include "Point.h"
 #include "Polyline.h"
 #include "Polygon.h"
+
+Q_MOC_INCLUDE("MapQuickView.h")
 
 class CreateAndSaveKmlFile : public QObject
 {

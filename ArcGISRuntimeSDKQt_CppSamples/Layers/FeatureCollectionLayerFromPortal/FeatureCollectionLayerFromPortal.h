@@ -29,6 +29,8 @@ class PortalItem;
 
 #include <QObject>
 
+Q_MOC_INCLUDE("MapQuickView.h")
+
 class FeatureCollectionLayerFromPortal : public QObject
 {
   Q_OBJECT

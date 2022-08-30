@@ -32,6 +32,11 @@ class PermissionsHelper;
 #include <QUrl>
 #include <QVariantList>
 
+Q_MOC_INCLUDE("SampleListModel.h")
+Q_MOC_INCLUDE("CategoryListModel.h")
+Q_MOC_INCLUDE("Sample.h")
+Q_MOC_INCLUDE("SampleCategory.h")
+
 class SampleManager : public QObject
 {
   Q_OBJECT

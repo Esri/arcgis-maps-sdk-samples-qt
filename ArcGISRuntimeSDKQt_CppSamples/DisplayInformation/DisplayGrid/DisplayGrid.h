@@ -28,6 +28,8 @@ namespace Esri
 
 #include <QQuickItem>
 
+Q_MOC_INCLUDE("MapQuickView.h")
+
 class DisplayGrid : public QQuickItem
 {
   Q_OBJECT
