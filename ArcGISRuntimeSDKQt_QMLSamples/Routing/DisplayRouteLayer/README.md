@@ -1,31 +1,36 @@
 # Display route layer
 
 Display a route layer and its directions using feature collection.
-This sample demonstrates ...
-This is **why** you would do it this way ...
 
 ![](screenshot.png)
 
+## Use case
+
+Routes can be stored as feature collection layers. These layers can store useful information such as directions, estimated trip time, and more. 
+
+You can create a route layer in ArcGIS Pro and store a route layer as a portal item, making it easy to access, share, or display.
+
 ## How to use the sample
-e.g. Use the input controls to define a ... Click the "Go" button to ...
+Pan and zoom to view the route displayed by the feature collection layer. Press the Directions button to view the list of directions.
 
 ## How it works
-e.g. In the `GeoView.Tapped` event, features in the `Map` are selected using an `Envelope` defined by the user's tap location ...
+
+1. Create a `PortalItem` with the item ID.
+2. Create and load a `FeatureCollection` with the item.
+3. After loading, get the specified `AGSFeatureCollectionTable` by name.
+4. Create an array of `ArcGISFeature`s.
+5. Get the direction text from the attributes of each feature in the array.
+6. Create an `FeatureCollectionLayer` with the feature collection and set it to the map's `operationalLayers`.
 
 ## Relevant API
- - ClassName1
- - MethodName
 
-## Offline data
-Read more about how to set up the sample's offline data [here](http://links.esri.com/ArcGISRuntimeQtSamples).
-
-Link | Local Location
----------|-------|
-|[San Francisco Streets TPK](https://www.arcgis.com/home/item.html?id=3f1bbf0ec70b409a975f5c91f363fe7d)| `<userhome>`/ArcGIS/Runtime/Data/tpk/SanFrancisco.tpk |
-
-## Additional information
-A standard level license is required to ...
+* FeatureCollection
+* FeatureCollectionLayer
+* FeatureCollectionTableListModel
+* FeatureQueryResult
+* Portal
+* PortalItem
 
 ## Tags
-Routing, Network analysis, Geocode
 
+directions, feature collection, feature collection layer, portal, portal item, route layer, routing
