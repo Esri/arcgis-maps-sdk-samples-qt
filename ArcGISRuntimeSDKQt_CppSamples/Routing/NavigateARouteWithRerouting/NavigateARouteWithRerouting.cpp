@@ -121,21 +121,6 @@ void NavigateARouteWithRerouting::setMapView(MapQuickView* mapView)
   m_mapView->graphicsOverlays()->append(m_routeOverlay);
   connectRouteTaskSignals();
 
-  connect(m_routeTask, &RouteTask::loadStatusChanged, this, [this](LoadStatus loadStatus)
-  {
-    if (loadStatus == LoadStatus::Loaded)
-    {
-      // Request default parameters once the task is loaded
-      m_routeTask->createDefaultParameters();
-    }
-  });
-
-  connect(m_routeTask, &RouteTask::createDefaultParametersCompleted, this, [this](QUuid, RouteParameters routeParameters)
-  {
-    // Store the resulting route parameters
-    m_routeParameters = routeParameters;
-  });
-
   m_routeTask->load();
 
   // add graphics for the predefined stops
@@ -187,6 +172,8 @@ void NavigateARouteWithRerouting::connectRouteTaskSignals()
 
     QList<Stop> stopsList = {stop1, stop2};
     defaultParameters.setStops(stopsList);
+
+    m_routeParameters = defaultParameters;
 
     m_routeTask->solveRoute(defaultParameters);
   });
@@ -256,8 +243,12 @@ void NavigateARouteWithRerouting::startNavigation()
 
   m_routeTracker->enableRerouting(rerouteParameters);
 
+  double velocity = 40.0;
+  double horizontalAccuracy = 0.0;
+  double verticalAccuracy = 0.0;
+
   // add a data source for the location display
-  SimulationParameters* simulationParameters = new SimulationParameters(QDateTime::currentDateTime(), 40.0, 0.0, 0.0, this); // set speed
+  SimulationParameters* simulationParameters = new SimulationParameters(QDateTime::currentDateTime(), velocity, horizontalAccuracy, verticalAccuracy, this);
   m_simulatedLocationDataSource = new SimulatedLocationDataSource(this);
   m_simulatedLocationDataSource->setLocationsWithPolyline(Polyline::fromJson(tourPolyineJson), simulationParameters);
   m_mapView->locationDisplay()->setDataSource(m_simulatedLocationDataSource);
@@ -273,16 +264,16 @@ void NavigateARouteWithRerouting::connectRouteTrackerSignals()
   });
 
   connect(m_routeTask, &RouteTask::solveRouteCompleted, this, [this](QUuid, RouteResult routeResult)
-    {
-      if (routeResult.isEmpty())
-        return;
+  {
+    if (routeResult.isEmpty())
+      return;
 
-      if (routeResult.routes().empty())
-        return;
+    if (routeResult.routes().empty())
+      return;
 
-      m_routeResult = routeResult;
-      m_route = qAsConst(m_routeResult).routes()[0];
-      m_directionManeuvers = m_route.directionManeuvers(this)->directionManeuvers();
+    m_routeResult = routeResult;
+    m_route = qAsConst(m_routeResult).routes()[0];
+    m_directionManeuvers = m_route.directionManeuvers(this)->directionManeuvers();
   });
 
   connect(m_routeTracker, &RouteTracker::trackingStatusChanged, this, [this](TrackingStatus* rawTrackingStatus)

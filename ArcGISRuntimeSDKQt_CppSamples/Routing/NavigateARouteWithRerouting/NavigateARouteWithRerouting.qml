@@ -32,56 +32,56 @@ Item {
             forceActiveFocus();
         }
         Rectangle {
-                    id: backBox
-                    anchors {
-                        top: parent.top
-                        left: parent.left
-                        margins: 20
-                    }
-                    z: 1
-                    width: buttonRow.width * 1.5
-                    height: 200
-                    color: "#FBFBFB"
-                    border.color: "black"
+            id: backBox
+            anchors {
+                top: parent.top
+                left: parent.left
+                margins: 20
+            }
+            z: 1
+            width: buttonRow.width * 1.5
+            height: 200
+            color: "#FBFBFB"
+            border.color: "black"
 
-                    RowLayout {
-                        id: buttonRow
-                        anchors {
-                            top: parent.top
-                            horizontalCenter: parent.horizontalCenter
-                            margins: 5
-                        }
-                        Button {
-                            text: "Navigate"
-                            enabled: model.navigationEnabled
-                            onClicked: {
-                                model.startNavigation();
-                            }
-                        }
-                        Button {
-                            text: "Recenter"
-                            enabled: model.recenterEnabled
-                            onClicked: {
-                                model.recenterMap();
-                            }
-                        }
-                    }
-
-                    Rectangle {
-                        anchors {
-                            top: buttonRow.bottom
-                            left: parent.left
-                            margins: 5
-                        }
-                        width: parent.width
-                        Text {
-                            padding: 5
-                            width: parent.width
-                            wrapMode: Text.Wrap
-                            text: model.textString
-                        }
+            RowLayout {
+                id: buttonRow
+                anchors {
+                    top: parent.top
+                    horizontalCenter: parent.horizontalCenter
+                    margins: 5
+                }
+                Button {
+                    text: "Navigate"
+                    enabled: model.navigationEnabled
+                    onClicked: {
+                        model.startNavigation();
                     }
                 }
+                Button {
+                    text: "Recenter"
+                    enabled: model.recenterEnabled
+                    onClicked: {
+                        model.recenterMap();
+                    }
+                }
+            }
+
+            Rectangle {
+                anchors {
+                    top: buttonRow.bottom
+                    left: parent.left
+                    margins: 5
+                }
+                width: parent.width
+                Text {
+                    padding: 5
+                    width: parent.width
+                    wrapMode: Text.Wrap
+                    text: model.textString
+                }
+            }
+        }
     }
 
     // Declare the C++ instance which creates the scene etc. and supply the view
