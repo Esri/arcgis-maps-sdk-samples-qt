@@ -50,7 +50,6 @@ Rectangle {
             }
         }
 
-
         GraphicsOverlay {
             id: routeOverlay
             Graphic {
@@ -119,7 +118,6 @@ Rectangle {
 
     RouteTask {
         id: routeTask
-
         url: dataPath + "san_diego/sandiego.geodatabase"
         networkName: "Streets_ND"
 

@@ -14,7 +14,7 @@ Click 'Navigate' to simulate traveling and to receive directions from a preset s
 
 ## How it works
 
-1. Create a `RouteTask` using a URL to an online route service.
+1. Create a `RouteTask` using a local geodatabase.
 2. Generate default `RouteParameters` using `createDefaultParameters`.
 3. Set `returnStops` and `returnDirections` on the parameters to true.
 4. Add `Stop`s to the parameters `stops` collection for each destination.
@@ -43,11 +43,11 @@ Click 'Navigate' to simulate traveling and to receive directions from a preset s
 
 ## Offline data
 
-The data used by this sample is available on [ArcGIS Online](https://arcgisruntime.maps.arcgis.com/home/item.html?id=df193653ed39449195af0c9725701dca).
+The data used by this sample is available on [ArcGIS Online](https://www.arcgis.com/home/item.html?id=4caec8c55ea2463982f1af7d9611b8d5).
 
 Link | Local Location
 ---------|-------|
-|[San Diego Streets TPKX](https://arcgisruntime.maps.arcgis.com/home/item.html?id=df193653ed39449195af0c9725701dca)| `<userhome>`/ArcGIS/Runtime/Data/tpkx/san_diego |
+|[Navigate a Route JSON Track](https://www.arcgis.com/home/item.html?id=4caec8c55ea2463982f1af7d9611b8d5)| `<userhome>`/ArcGIS/Runtime/Data/tpkx/san_diego |
 
 ## About the data
 
