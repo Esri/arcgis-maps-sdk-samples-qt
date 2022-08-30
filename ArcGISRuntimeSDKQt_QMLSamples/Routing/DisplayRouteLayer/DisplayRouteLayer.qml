@@ -15,7 +15,7 @@
 // [Legal]
 
 import QtQuick 2.12
-import Esri.ArcGISRuntime 100.14
+import Esri.ArcGISRuntime 100.15
 import QtQuick.Controls 2.12
 import QtQuick.Layouts 1.11
 
@@ -28,7 +28,6 @@ Rectangle {
     property var featureCollection: null
     property var featureCollectionLayer: null
     property string directions: ""
-
 
     MapView {
         id: mapView
@@ -83,7 +82,7 @@ Rectangle {
         enabled: featureCollection ? featureCollection.loadStatus === Enums.LoadStatusLoaded : false
         anchors.horizontalCenter: parent.horizontalCenter
         onClicked: {
-            popup.open()
+            popup.open();
             if (popup.opened)
             {
                 const tables = featureCollection.tables;
@@ -113,11 +112,6 @@ Rectangle {
         opacity: .9
     }
 
-    function query(table) {
-        let parameters = ArcGISRuntimeEnvironment.createObject("QueryParameters");
-        parameters.whereClause = "1=1";
-    }
-
     function queryFeatures(table){
         return new Promise(
                     (resolve, reject)=>{
@@ -133,6 +127,7 @@ Rectangle {
                                 if (result) {
                                     resolve(result);
                                     var features = Array.from(result.iterator.features);
+                                    // Clear the directions list before repopulating it
                                     directions = "";
                                     features.forEach((feature) => {
                                                          directions = directions + "\n - " + feature.attributes.attributeValue("DisplayText");

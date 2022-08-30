@@ -19,6 +19,8 @@ import QtQuick.Controls 2.12
 import Esri.Samples 1.0
 import QtQuick.Layouts 1.11
 
+import QtQuick.Window 2.3
+
 Item {
 
     // add a mapView component
@@ -39,7 +41,7 @@ Item {
             anchors.margins: 40
             anchors.horizontalCenter: parent.horizontalCenter
             onClicked: {
-                popup.open()
+                popup.open();
                 if (popup.opened)
                 {
                     model.getDirections();
