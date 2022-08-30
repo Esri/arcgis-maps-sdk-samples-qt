@@ -158,7 +158,7 @@ void GODictionaryRenderer::parseXmlFile()
     m_xmlParser.readNext();
 
     // Is this the start or end of a message element?
-    if (m_xmlParser.name() == "message")
+    if (m_xmlParser.name() == QString("message"))
     {
       if (!readingMessage)
       {
@@ -190,7 +190,7 @@ void GODictionaryRenderer::parseXmlFile()
         if (!currentElementName.isEmpty())
         {
           // Get the text and store it as the current element's value
-          QStringRef trimmedText = m_xmlParser.text().trimmed();
+          const auto trimmedText = m_xmlParser.text().trimmed();
           if (!trimmedText.isEmpty())
           {
             elementValues[currentElementName] = trimmedText.toString();
