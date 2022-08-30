@@ -67,5 +67,9 @@ Item {
     DisplayRouteLayerSample {
         id: model
         mapView: view
+
+        onEnableDirectionsButton: {
+            directionsButton.enabled = true;
+        }
     }
 }

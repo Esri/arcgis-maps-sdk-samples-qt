@@ -53,6 +53,7 @@ public:
 signals:
   void mapViewChanged();
   void directionsChanged();
+  void enableDirectionsButton();
 
 private:
   Esri::ArcGISRuntime::MapQuickView* mapView() const;

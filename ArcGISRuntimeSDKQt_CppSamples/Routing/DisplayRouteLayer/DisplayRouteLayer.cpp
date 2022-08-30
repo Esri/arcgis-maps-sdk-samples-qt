@@ -34,7 +34,7 @@
 using namespace Esri::ArcGISRuntime;
 namespace
 {
-const QString featureCollectionItemId("0e3c8e86b4544274b45ecb61c9f41336");
+static const QString featureCollectionItemId("0e3c8e86b4544274b45ecb61c9f41336");
 }
 
 DisplayRouteLayer::DisplayRouteLayer(QObject* parent /* = nullptr */):
@@ -63,6 +63,8 @@ DisplayRouteLayer::DisplayRouteLayer(QObject* parent /* = nullptr */):
     {
       qWarning() << "Portal item with ID " << featureCollectionItemId << " is not a feature collection.";
     }
+
+    emit enableDirectionsButton();
   });
 
   m_portalItem->load();
