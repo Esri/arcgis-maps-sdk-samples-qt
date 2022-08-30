@@ -174,7 +174,7 @@ void ListRelatedFeatures::connectSignals()
     m_relatedFeaturesModel->clear();
 
     // create objects required to do a selection with a query
-    Point clickPoint = m_mapView->screenToLocation(mouseEvent.x(), mouseEvent.y());
+    Point clickPoint = m_mapView->screenToLocation(mouseEvent.pos().x(), mouseEvent.pos().y());
     double mapTolerance = 10 * m_mapView->unitsPerDIP();
     Envelope envelope = Envelope(clickPoint.x() - mapTolerance,
                                  clickPoint.y() - mapTolerance,

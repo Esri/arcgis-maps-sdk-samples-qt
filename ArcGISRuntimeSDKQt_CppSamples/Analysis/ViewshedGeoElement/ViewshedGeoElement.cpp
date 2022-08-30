@@ -141,7 +141,7 @@ void ViewshedGeoElement::componentComplete()
   // connect to the mouse clicked signal
   connect(m_sceneView, &SceneQuickView::mouseClicked, this, [this](QMouseEvent& event)
   {
-    m_waypoint = m_sceneView->screenToBaseSurface(event.x(), event.y());
+    m_waypoint = m_sceneView->screenToBaseSurface(event.pos().x(), event.pos().y());
     m_timer->start();
   });
 }

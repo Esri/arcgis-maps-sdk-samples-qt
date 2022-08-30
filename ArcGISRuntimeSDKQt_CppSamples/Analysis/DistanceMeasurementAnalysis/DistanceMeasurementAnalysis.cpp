@@ -114,7 +114,7 @@ void DistanceMeasurementAnalysis::connectSignals()
   connect(m_sceneView, &SceneQuickView::mousePressedAndHeld, this, [this](QMouseEvent& mouseEvent)
   {
     m_isPressAndHold = true;
-    m_sceneView->screenToLocation(mouseEvent.x(), mouseEvent.y());
+    m_sceneView->screenToLocation(mouseEvent.pos().x(), mouseEvent.pos().y());
   });
 
   // When the mouse is released...
@@ -136,14 +136,14 @@ void DistanceMeasurementAnalysis::connectSignals()
       m_isPressAndHold = false;
     // Else get the location from the screen coordinates
     else
-      m_sceneView->screenToLocation(mouseEvent.x(), mouseEvent.y());
+      m_sceneView->screenToLocation(mouseEvent.pos().x(), mouseEvent.pos().y());
   });
 
   // Update the distance analysis when the mouse moves if it is a press and hold movement
   connect(m_sceneView, &SceneQuickView::mouseMoved, this, [this](QMouseEvent& mouseEvent)
   {
     if (m_isPressAndHold)
-      m_sceneView->screenToLocation(mouseEvent.x(), mouseEvent.y());
+      m_sceneView->screenToLocation(mouseEvent.pos().x(), mouseEvent.pos().y());
   });
 
   // Set a flag when mousePressed signal emits

@@ -175,7 +175,7 @@ void FormatCoordinates::setMapView(MapQuickView* mapView)
   connect(m_mapView, &MapQuickView::mouseClicked, this, [this](QMouseEvent& mouseEvent)
   {
     // get the point from the mouse point
-    Point mapPoint = m_mapView->screenToLocation(mouseEvent.x(), mouseEvent.y());
+    Point mapPoint = m_mapView->screenToLocation(mouseEvent.pos().x(), mouseEvent.pos().y());
 
     // using the point, refresh the graphic and the text
     handleLocationUpdate(std::move(mapPoint));

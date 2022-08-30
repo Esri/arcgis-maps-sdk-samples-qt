@@ -86,8 +86,8 @@ void FeatureLayerSelection::connectSignals()
     constexpr double tolerance = 22.0;
     constexpr bool returnPopupsOnly = false;
     constexpr int maximumResults = 1000;
-    const double screenX = mouseEvent.x();
-    const double screenY = mouseEvent.y();
+    const double screenX = mouseEvent.pos().x();
+    const double screenY = mouseEvent.pos().y();
     m_mapView->identifyLayer(m_featureLayer, screenX, screenY, tolerance, returnPopupsOnly, maximumResults);
   });
 

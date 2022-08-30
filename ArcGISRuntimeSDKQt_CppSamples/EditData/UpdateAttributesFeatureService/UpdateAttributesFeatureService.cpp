@@ -100,7 +100,7 @@ void UpdateAttributesFeatureService::connectSignals()
     emit hideWindow();
 
     // call identify on the map view
-    m_mapView->identifyLayer(m_featureLayer, mouseEvent.x(), mouseEvent.y(), 5, false, 1);
+    m_mapView->identifyLayer(m_featureLayer, mouseEvent.pos().x(), mouseEvent.pos().y(), 5, false, 1);
   });
 
   // connect to the viewpoint changed signal on the MapQuickView
