@@ -57,14 +57,21 @@ DisplayRouteLayer::DisplayRouteLayer(QObject* parent /* = nullptr */):
     {
       m_featureCollection = new FeatureCollection(m_portalItem, this);
       m_featureCollectionLayer = new FeatureCollectionLayer(m_featureCollection, this);
+
+      connect(m_featureCollectionLayer, &FeatureCollectionLayer::doneLoading, this, [this](Error e)
+      {
+        if (!e.isEmpty())
+          return;
+
+        emit enableDirectionsButton();
+      });
+
       m_map->operationalLayers()->append(m_featureCollectionLayer);
     }
     else
     {
       qWarning() << "Portal item with ID " << featureCollectionItemId << " is not a feature collection.";
     }
-
-    emit enableDirectionsButton();
   });
 
   m_portalItem->load();
