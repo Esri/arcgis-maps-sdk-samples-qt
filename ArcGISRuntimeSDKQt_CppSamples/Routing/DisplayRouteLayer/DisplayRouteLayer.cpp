@@ -99,7 +99,7 @@ void DisplayRouteLayer::setMapView(MapQuickView* mapView)
 
   m_mapView = mapView;
   m_mapView->setMap(m_map);
-  Point vpCenter(-122.8309, 45.2281, SpatialReference(4326));
+  const Point vpCenter(-122.8309, 45.2281, SpatialReference(4326));
   m_mapView->setViewpointCenter(vpCenter, 800000);
 
   emit mapViewChanged();
@@ -120,7 +120,7 @@ void DisplayRouteLayer::getDirections()
 
         m_directionsTable = table;
 
-        connect(m_directionsTable, &ServiceFeatureTable::queryFeaturesCompleted, this, [this](QUuid, FeatureQueryResult* featureQueryResult)
+        connect(m_directionsTable, &FeatureTable::queryFeaturesCompleted, this, [this](QUuid, FeatureQueryResult* featureQueryResult)
         {
           if (!featureQueryResult)
           {

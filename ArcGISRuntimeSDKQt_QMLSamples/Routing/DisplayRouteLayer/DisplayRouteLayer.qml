@@ -25,8 +25,7 @@ Rectangle {
     width: 800
     height: 600
 
-    property var featureCollection: null
-    property var featureCollectionLayer: null
+    property FeatureCollection featureCollection: null
     property string directions: ""
 
     MapView {
@@ -50,7 +49,22 @@ Rectangle {
                 // if the portal item is a feature collection, add the feature collection to the map's operational layers
                 if (type === Enums.PortalItemTypeFeatureCollection) {
                     featureCollection = ArcGISRuntimeEnvironment.createObject("FeatureCollection", {item: portalItem});
-                    featureCollectionLayer = ArcGISRuntimeEnvironment.createObject("FeatureCollectionLayer", {featureCollection: featureCollection});
+                    const featureCollectionLayer = ArcGISRuntimeEnvironment.createObject("FeatureCollectionLayer", {featureCollection: featureCollection});
+
+                    featureCollection.onLoadStatusChanged.connect(() => {
+                                                                      if (featureCollection.loadStatus === Enums.LoadStatusLoaded) {
+                                                                          featureCollection.tables.forEach((table) => {
+                                                                                                               if (table.displayName === "DirectionPoints")
+                                                                                                               {
+                                                                                                                   if (table.loadStatus === Enums.LoadStatusLoaded)
+                                                                                                                   {
+                                                                                                                       queryFeatures(table);
+                                                                                                                   }
+                                                                                                               }
+                                                                                                           });
+                                                                      }
+                                                                  });
+
                     map.operationalLayers.append(featureCollectionLayer);
                 } else {
                     console.warn("Portal item with ID '" + itemId + "' is not a feature collection.")
@@ -77,25 +91,14 @@ Rectangle {
     }
     Button {
         text: "Directions"
-        anchors.bottom: parent.bottom
-        anchors.margins: 40
+        anchors {
+            bottom: parent.bottom
+            horizontalCenter: parent.horizontalCenter
+            margins: 40
+        }
         enabled: featureCollection ? featureCollection.loadStatus === Enums.LoadStatusLoaded : false
-        anchors.horizontalCenter: parent.horizontalCenter
         onClicked: {
             popup.open();
-            if (popup.opened)
-            {
-                const tables = featureCollection.tables;
-                featureCollection.tables.forEach((table) => {
-                                                     if (table.displayName === "DirectionPoints")
-                                                     {
-                                                         if (table.loadStatus === Enums.LoadStatusLoaded)
-                                                         {
-                                                             queryFeatures(table);
-                                                         }
-                                                     }
-                                                 });
-            }
         }
     }
 
@@ -105,48 +108,53 @@ Rectangle {
         width: 300
         height: 320
         focus: true
-        contentItem: Text {
-            text: directions
-            wrapMode: Text.WordWrap
+        contentItem: ScrollView {
+            contentWidth: parent.width - 30
+            Text {
+                width: parent.width
+                text: directions
+                wrapMode: Text.WordWrap
+            }
+            clip: true
         }
         opacity: .9
     }
 
     function queryFeatures(table){
         return new Promise(
-                    (resolve, reject)=>{
+                    (resolve, reject) => {
                         let taskId;
                         let parameters = ArcGISRuntimeEnvironment.createObject("QueryParameters");
                         parameters.whereClause = "1=1";
 
-                        const featureStatusChanged = ()=> {
+                        const featureStatusChanged = () => {
                             switch (table.queryFeaturesStatus) {
                                 case Enums.TaskStatusCompleted:
-                                table.queryFeaturesStatusChanged.disconnect(featureStatusChanged);
-                                const result = table.queryFeaturesResults[taskId];
-                                if (result) {
-                                    resolve(result);
-                                    var features = Array.from(result.iterator.features);
-                                    // Clear the directions list before repopulating it
-                                    directions = "";
-                                    features.forEach((feature) => {
-                                                         directions = directions + "\n - " + feature.attributes.attributeValue("DisplayText");
-                                                     });
-                                }
-                                else {
-                                    reject({message: "The query finished but there was no result for this taskId", taskId: taskId});
-                                }
-                                break;
+                                    table.queryFeaturesStatusChanged.disconnect(featureStatusChanged);
+                                    const result = table.queryFeaturesResults[taskId];
+                                    if (result) {
+                                        resolve(result);
+                                        var features = Array.from(result.iterator.features);
+                                        // Clear the directions list before repopulating it
+                                        directions = "";
+                                        features.forEach((feature) => {
+                                                             directions = directions + "\n - " + feature.attributes.attributeValue("DisplayText");
+                                                         });
+                                    }
+                                    else {
+                                        reject({message: "The query finished but there was no result for this taskId", taskId: taskId});
+                                    }
+                                    break;
                                 case Enums.TaskStatusErrored:
-                                table.queryFeaturesStatusChanged.disconnect(featureStatusChanged);
-                                if (table.error) {
-                                    reject(table.error);
-                                } else {
-                                    reject({message: table.tableName + ": query task errored++++"});
-                                }
-                                break;
+                                    table.queryFeaturesStatusChanged.disconnect(featureStatusChanged);
+                                    if (table.error) {
+                                        reject(table.error);
+                                    } else {
+                                        reject({message: table.tableName + ": query task errored++++"});
+                                    }
+                                    break;
                                 default:
-                                break;
+                                    break;
                             }
                         }
                         table.queryFeaturesStatusChanged.connect(featureStatusChanged);

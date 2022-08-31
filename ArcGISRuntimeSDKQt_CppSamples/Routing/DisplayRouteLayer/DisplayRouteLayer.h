@@ -63,11 +63,11 @@ private:
   Esri::ArcGISRuntime::Map* m_map = nullptr;
   Esri::ArcGISRuntime::MapQuickView* m_mapView = nullptr;
   Esri::ArcGISRuntime::PortalItem* m_portalItem = nullptr;
-  Esri::ArcGISRuntime::FeatureCollection* m_featureCollection;
-  Esri::ArcGISRuntime::FeatureCollectionLayer* m_featureCollectionLayer;
-  Esri::ArcGISRuntime::FeatureTable* m_directionsTable;
-  Esri::ArcGISRuntime::FeatureQueryResult* m_featureQueryResult;
-  Esri::ArcGISRuntime::Feature* m_feature;
+  Esri::ArcGISRuntime::FeatureCollection* m_featureCollection = nullptr;
+  Esri::ArcGISRuntime::FeatureCollectionLayer* m_featureCollectionLayer = nullptr;
+  Esri::ArcGISRuntime::FeatureTable* m_directionsTable = nullptr;
+  Esri::ArcGISRuntime::FeatureQueryResult* m_featureQueryResult = nullptr;
+  Esri::ArcGISRuntime::Feature* m_feature = nullptr;
   QString m_featureDirection = "";
 };
 

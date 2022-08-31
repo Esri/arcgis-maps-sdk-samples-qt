@@ -19,8 +19,6 @@ import QtQuick.Controls 2.12
 import Esri.Samples 1.0
 import QtQuick.Layouts 1.11
 
-import QtQuick.Window 2.3
-
 Item {
 
     // add a mapView component
@@ -35,18 +33,14 @@ Item {
 
         Button {
             id: directionsButton
+            anchors {
+                bottom: parent.bottom
+                horizontalCenter: parent.horizontalCenter
+                margins: 40
+            }
             text: "Directions"
             enabled: false
-            anchors.bottom: parent.bottom
-            anchors.margins: 40
-            anchors.horizontalCenter: parent.horizontalCenter
-            onClicked: {
-                popup.open();
-                if (popup.opened)
-                {
-                    model.getDirections();
-                }
-            }
+            onClicked: popup.open();
         }
 
         Popup {
@@ -55,9 +49,15 @@ Item {
             width: 300
             height: 320
             focus: true
-            contentItem: Text {
-                text: model.directions
-                wrapMode: Text.WordWrap
+            onOpened: model.getDirections()
+            contentItem: ScrollView {
+                contentWidth: parent.width - 30
+                Text {
+                    width: parent.width
+                    text: model.directions
+                    wrapMode: Text.WordWrap
+                }
+                clip: true
             }
             opacity: .9
         }
