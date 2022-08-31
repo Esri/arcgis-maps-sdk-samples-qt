@@ -25,7 +25,7 @@
 	<key>NOTE</key>
 	<string>This app is cool</string>
 	<key>UIFileSharingEnabled</key>
-        <string>FALSE</string>
+        <string>TRUE</string>
 	<key>UIRequiresPersistentWiFi</key>
 	<string>NO</string>
 	<key>LSRequiresIPhoneOS</key>
