@@ -19,7 +19,7 @@ QT += qml quick positioning sensors
 
 CONFIG += c++14
 
-ARCGIS_RUNTIME_VERSION = 100.15.0
+ARCGIS_RUNTIME_VERSION = 200.0.0
 include($$PWD/arcgisruntime.pri)
 
 SOURCES += \
