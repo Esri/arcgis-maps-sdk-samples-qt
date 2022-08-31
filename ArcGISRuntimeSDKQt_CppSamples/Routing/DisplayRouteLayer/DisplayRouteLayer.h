@@ -65,8 +65,6 @@ private:
   Esri::ArcGISRuntime::PortalItem* m_portalItem = nullptr;
   Esri::ArcGISRuntime::FeatureCollection* m_featureCollection = nullptr;
   Esri::ArcGISRuntime::FeatureCollectionLayer* m_featureCollectionLayer = nullptr;
-  Esri::ArcGISRuntime::FeatureTable* m_directionsTable = nullptr;
-  Esri::ArcGISRuntime::FeatureQueryResult* m_featureQueryResult = nullptr;
   Esri::ArcGISRuntime::Feature* m_feature = nullptr;
   QString m_featureDirection = "";
 };

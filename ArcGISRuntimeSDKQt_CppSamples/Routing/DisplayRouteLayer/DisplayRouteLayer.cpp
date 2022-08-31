@@ -117,20 +117,12 @@ void DisplayRouteLayer::getDirections()
     {
       if (table->tableName() == "DirectionPoints")
       {
-
-        m_directionsTable = table;
-
-        connect(m_directionsTable, &FeatureTable::queryFeaturesCompleted, this, [this](QUuid, FeatureQueryResult* featureQueryResult)
+        connect(table, &FeatureTable::queryFeaturesCompleted, this, [this](QUuid, FeatureQueryResult* featureQueryResult)
         {
           if (!featureQueryResult)
           {
             return;
           }
-          else
-          {
-            m_featureQueryResult = featureQueryResult;
-          }
-
           // Clear the directions list before repopulating it
           m_featureDirection.clear();
 
@@ -144,7 +136,7 @@ void DisplayRouteLayer::getDirections()
 
         QueryParameters queryParams;
         queryParams.setWhereClause("1=1");
-        m_directionsTable->queryFeatures(queryParams);
+        table->queryFeatures(queryParams);
       }
     }
   }
