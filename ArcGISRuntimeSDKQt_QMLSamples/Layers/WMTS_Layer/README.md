@@ -22,9 +22,8 @@ To display a WMTS layer directly from a URL:
 To explore layers from a WMTS service:
 
 1. Create a `WmtsService` object using the URL of the WMTS service.
-2. After loading the WMTS service, get the list of `WmtsLayerInfo` objects from the service info of the WMTS service.
-3. Use one of the layer infos to create the WMTS layer.
-4. Create a basemap with the WMTS layer and set it to the map.
+2. After loading the WMTS service, create a `WmtsLayer` using the URI and Id value.
+3. Create a basemap with the WMTS layer and set it to the map.
 
 ## Relevant API
 
