@@ -21,7 +21,8 @@
 #include "RouteResult.h"
 #include "RouteParameters.h"
 
-class QTextToSpeech;
+// NOTE: As of Qt 6.2, QTextToSpeech is not supported. Instances of this class have been commented out for compatibility, but remain for reference
+// class QTextToSpeech;
 
 namespace Esri
 {
@@ -39,6 +40,8 @@ class SimulatedLocationDataSource;
 }
 
 #include <QObject>
+
+Q_MOC_INCLUDE("MapQuickView.h")
 
 class NavigateARouteWithRerouting : public QObject
 {
@@ -68,27 +71,27 @@ private:
   void setMapView(Esri::ArcGISRuntime::MapQuickView* mapView);
 
   bool navigationEnabled() const;
-    bool recenterEnabled() const;
-    QString textString() const;
-    void connectRouteTaskSignals();
-    void connectRouteTrackerSignals();
+  bool recenterEnabled() const;
+  QString textString() const;
+  void connectRouteTaskSignals();
+  void connectRouteTrackerSignals();
 
-    Esri::ArcGISRuntime::Graphic* m_routeAheadGraphic = nullptr;
-    Esri::ArcGISRuntime::Graphic* m_routeTraveledGraphic = nullptr;
-    Esri::ArcGISRuntime::GraphicsOverlay* m_routeOverlay = nullptr;
-    Esri::ArcGISRuntime::Map* m_map = nullptr;
-    Esri::ArcGISRuntime::MapQuickView* m_mapView = nullptr;
-    Esri::ArcGISRuntime::RouteTask* m_routeTask = nullptr;
-    Esri::ArcGISRuntime::Route m_route;
-    Esri::ArcGISRuntime::RouteResult m_routeResult;
-    Esri::ArcGISRuntime::RouteTracker* m_routeTracker = nullptr;
-    Esri::ArcGISRuntime::SimulatedLocationDataSource* m_simulatedLocationDataSource = nullptr;
-    bool m_navigationEnabled = false;
-    bool m_recenterEnabled = false;
-    QString m_textString = "";
-    QTextToSpeech* m_speaker = nullptr;
-    Esri::ArcGISRuntime::RouteParameters m_routeParameters;
-    QList<Esri::ArcGISRuntime::DirectionManeuver> m_directionManeuvers;
+  Esri::ArcGISRuntime::Graphic* m_routeAheadGraphic = nullptr;
+  Esri::ArcGISRuntime::Graphic* m_routeTraveledGraphic = nullptr;
+  Esri::ArcGISRuntime::GraphicsOverlay* m_routeOverlay = nullptr;
+  Esri::ArcGISRuntime::Map* m_map = nullptr;
+  Esri::ArcGISRuntime::MapQuickView* m_mapView = nullptr;
+  Esri::ArcGISRuntime::RouteTask* m_routeTask = nullptr;
+  Esri::ArcGISRuntime::Route m_route;
+  Esri::ArcGISRuntime::RouteResult m_routeResult;
+  Esri::ArcGISRuntime::RouteTracker* m_routeTracker = nullptr;
+  Esri::ArcGISRuntime::SimulatedLocationDataSource* m_simulatedLocationDataSource = nullptr;
+  bool m_navigationEnabled = false;
+  bool m_recenterEnabled = false;
+  QString m_textString = "";
+  Esri::ArcGISRuntime::RouteParameters m_routeParameters;
+  QList<Esri::ArcGISRuntime::DirectionManeuver> m_directionManeuvers;
+  // QTextToSpeech* m_speaker = nullptr;
 
 };
 
