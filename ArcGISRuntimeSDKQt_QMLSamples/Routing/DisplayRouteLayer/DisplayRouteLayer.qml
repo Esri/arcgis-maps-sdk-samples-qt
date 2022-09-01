@@ -54,10 +54,8 @@ Rectangle {
                     featureCollection.onLoadStatusChanged.connect(() => {
                                                                       if (featureCollection.loadStatus === Enums.LoadStatusLoaded) {
                                                                           featureCollection.tables.forEach((table) => {
-                                                                                                               if (table.displayName === "DirectionPoints")
-                                                                                                               {
-                                                                                                                   if (table.loadStatus === Enums.LoadStatusLoaded)
-                                                                                                                   {
+                                                                                                               if (table.displayName === "DirectionPoints") {
+                                                                                                                   if (table.loadStatus === Enums.LoadStatusLoaded) {
                                                                                                                        queryFeatures(table);
                                                                                                                    }
                                                                                                                }

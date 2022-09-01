@@ -63,6 +63,7 @@ DisplayRouteLayer::DisplayRouteLayer(QObject* parent /* = nullptr */):
         if (!e.isEmpty())
           return;
 
+        getDirections();
         emit enableDirectionsButton();
       });
 

@@ -49,7 +49,6 @@ Item {
             width: 300
             height: 320
             focus: true
-            onOpened: model.getDirections()
             contentItem: ScrollView {
                 contentWidth: parent.width - 30
                 Text {
