@@ -42,7 +42,7 @@ constexpr qint64 DEFAULT_START_MODIFIER = 2;
  * \param subString Substring to see if partially or fully matches begining.
  * \return score value based on score system values.
  */
-qint64 stringCompare(QStringView string, const QString& subString)
+qint64 stringCompare(const QStringView string, const QString& subString)
 {
   qint64 score = 0;
 
