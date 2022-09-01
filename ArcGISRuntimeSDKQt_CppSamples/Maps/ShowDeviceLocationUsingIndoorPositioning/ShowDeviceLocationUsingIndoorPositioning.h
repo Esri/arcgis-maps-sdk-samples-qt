@@ -33,6 +33,8 @@ class MapQuickView;
 #include <QObject>
 #include <QMap>
 
+Q_MOC_INCLUDE("MapQuickView.h")
+
 class ShowDeviceLocationUsingIndoorPositioning : public QObject
 {
   Q_OBJECT
