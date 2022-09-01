@@ -190,7 +190,7 @@ void GODictionaryRenderer::parseXmlFile()
         if (!currentElementName.isEmpty())
         {
           // Get the text and store it as the current element's value
-          QStringRef trimmedText = m_xmlParser.text().trimmed();
+          QStringView trimmedText = m_xmlParser.text().trimmed();
           if (!trimmedText.isEmpty())
           {
             elementValues[currentElementName] = trimmedText.toString();
