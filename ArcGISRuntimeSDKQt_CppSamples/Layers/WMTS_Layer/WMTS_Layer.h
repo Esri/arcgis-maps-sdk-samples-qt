@@ -44,8 +44,6 @@ private:
 
 private:
   Esri::ArcGISRuntime::MapQuickView* m_mapView = nullptr;
-  Esri::ArcGISRuntime::WmtsService* m_service = nullptr;
-  const QUrl m_wmtsServiceUrl = QUrl("https://sampleserver6.arcgisonline.com/arcgis/rest/services/WorldTimeZones/MapServer/WMTS");
 };
 
 #endif // WMTS_LAYER_H

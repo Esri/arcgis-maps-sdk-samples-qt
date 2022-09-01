@@ -56,10 +56,11 @@ void WMTS_Layer::componentComplete()
 void WMTS_Layer::createWmtsLayer()
 {
   // create the service
-  m_service = new WmtsService(m_wmtsServiceUrl, this);
+  const QUrl wmtsServiceUrl = QUrl("https://gibs.earthdata.nasa.gov/wmts/epsg4326/best");
+  WmtsService* service = new WmtsService(wmtsServiceUrl, this);
 
   // connect to the doneLoading signal of the service
-  connect(m_service, &WmtsService::doneLoading, this, [this](Error loadError)
+  connect(service, &WmtsService::doneLoading, this, [this, wmtsServiceUrl](Error loadError)
   {
     if (!loadError.isEmpty())
     {
@@ -67,13 +68,8 @@ void WMTS_Layer::createWmtsLayer()
       return;
     }
 
-    // get the layer info list
-    WmtsServiceInfo serviceInfo = m_service->serviceInfo();
-    QList<WmtsLayerInfo> layerInfos = serviceInfo.layerInfos();
-    // get the first layer ID from the list
-    QString layerId = layerInfos.at(0).wmtsLayerId();
     // create the WMTS layer
-    WmtsLayer* wmtsLayer = new WmtsLayer(m_wmtsServiceUrl, layerId, this);
+    WmtsLayer* wmtsLayer = new WmtsLayer(wmtsServiceUrl, "SRTM_Color_Index", this);
     // create a basemap from the layer
     Basemap* basemap = new Basemap(wmtsLayer, this);
     // create a map
@@ -83,5 +79,5 @@ void WMTS_Layer::createWmtsLayer()
   });
 
   // load the service
-  m_service->load();
+  service->load();
 }

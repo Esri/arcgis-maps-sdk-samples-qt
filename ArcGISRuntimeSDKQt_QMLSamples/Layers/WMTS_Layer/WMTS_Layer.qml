@@ -23,7 +23,7 @@ Rectangle {
     width: 800
     height: 600
 
-    readonly property url wmtsServiceUrl: "https://sampleserver6.arcgisonline.com/arcgis/rest/services/WorldTimeZones/MapServer/WMTS"
+    readonly property url wmtsServiceUrl: "https://gibs.earthdata.nasa.gov/wmts/epsg4326/best"
     property WmtsService service;
 
     MapView {
@@ -44,11 +44,8 @@ Rectangle {
         // connect to loadStatusChanged signal of the service
         service.loadStatusChanged.connect(()=> {
             if (service.loadStatus === Enums.LoadStatusLoaded) {
-                // get the layer info list
-                const serviceInfo = service.serviceInfo;
-                const layerInfos = serviceInfo.layerInfos;
-                // get the first layer id from the list
-                const layerId = layerInfos[0].wmtsLayerId;
+                // get the layer by name
+                const layerId = "SRTM_Color_Index";
                 // create WMTS layer
                 const wmtsLayer = ArcGISRuntimeEnvironment.createObject("WmtsLayer", {
                                                                             url: wmtsServiceUrl,
