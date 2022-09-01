@@ -178,6 +178,7 @@ RESOURCES += \
     "$$SAMPLEPATHQML/Maps/ShowMagnifier/ShowMagnifier.qrc" \
     "$$SAMPLEPATHQML/Maps/TakeScreenshot/TakeScreenshot.qrc" \
     "$$SAMPLEPATHQML/Routing/ClosestFacility/ClosestFacility.qrc" \
+    "$$SAMPLEPATHQML/Routing/DisplayRouteLayer/DisplayRouteLayer.qrc" \
     "$$SAMPLEPATHQML/Routing/FindClosestFacilityToMultipleIncidentsService/FindClosestFacilityToMultipleIncidentsService.qrc" \
     "$$SAMPLEPATHQML/Routing/FindRoute/FindRoute.qrc" \
     "$$SAMPLEPATHQML/Routing/FindServiceAreasForMultipleFacilities/FindServiceAreasForMultipleFacilities.qrc" \
