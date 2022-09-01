@@ -27,7 +27,7 @@ import QtQuick.Dialogs 1.2
 import QtSensors 5.3
 import QtPositioning 5.3
 import QtQuick.XmlListModel 2.0
-import QtGraphicalEffects 1.0
+import Qt5Compat.GraphicalEffects
 import QtWebView 1.1
 import Esri.ArcGISExtras 1.1
 import Esri.ArcGISRuntime

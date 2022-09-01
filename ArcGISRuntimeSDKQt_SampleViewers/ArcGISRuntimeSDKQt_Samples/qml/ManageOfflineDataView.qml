@@ -15,7 +15,7 @@
 
 import QtQuick 2.5
 import QtQuick.Controls 2.2
-import QtQuick.Dialogs 1.2
+import Qt.labs.platform
 import QtQuick.Layouts 1.2
 import Esri.ArcGISRuntimeSamples 1.0
 import Esri.ArcGISExtras 1.1
