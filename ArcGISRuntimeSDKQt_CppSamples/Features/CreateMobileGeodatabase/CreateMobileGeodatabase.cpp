@@ -139,12 +139,12 @@ void CreateMobileGeodatabase::closeGdb()
   emit featureCountChanged();
 }
 
-void CreateMobileGeodatabase::addFeature(QMouseEvent mouseEvent)
+void CreateMobileGeodatabase::addFeature(QMouseEvent& mouseEvent)
 {
   if (!m_featureTable)
     return;
 
-  const Point mousePoint = m_mapView->screenToLocation(mouseEvent.x(), mouseEvent.y());
+  const Point mousePoint = m_mapView->screenToLocation(mouseEvent.pos().x(), mouseEvent.pos().y());
   QVariantMap attributes = {};
   attributes.insert("collection_timestamp", QDateTime::currentDateTime());
   Feature* feature = m_featureTable->createFeature(attributes, mousePoint, this);

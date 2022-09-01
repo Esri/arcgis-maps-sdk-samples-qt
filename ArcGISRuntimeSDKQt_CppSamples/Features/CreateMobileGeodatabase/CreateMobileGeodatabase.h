@@ -34,6 +34,8 @@ class MapQuickView;
 #include <QMouseEvent>
 #include <QTemporaryDir>
 
+Q_MOC_INCLUDE("MapQuickView.h")
+
 class CreateMobileGeodatabase : public QObject
 {
   Q_OBJECT
@@ -69,7 +71,7 @@ private:
   bool gdbOpen() const;
   void setMapView(Esri::ArcGISRuntime::MapQuickView* mapView);
   void createTable();
-  void addFeature(QMouseEvent mouseEvent);
+  void addFeature(QMouseEvent& mouseEvent);
   void deleteFeatures();
   void createConnections();
 
