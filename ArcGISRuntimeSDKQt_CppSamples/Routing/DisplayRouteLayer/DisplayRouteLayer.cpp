@@ -121,9 +121,7 @@ void DisplayRouteLayer::getDirections()
         connect(table, &FeatureTable::queryFeaturesCompleted, this, [this](QUuid, FeatureQueryResult* featureQueryResult)
         {
           if (!featureQueryResult)
-          {
             return;
-          }
           // Clear the directions list before repopulating it
           m_featureDirection.clear();
 
