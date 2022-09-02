@@ -89,7 +89,7 @@ qint64 stringCompare(const QStringView string, const QString& subString)
  *  returned being the position associated with the best score found.
  * \return pair of: score of match(es), and position of the best match.
  */
-QPair<qint64, int> subStringCompare(const QStringView& string,
+QPair<qint64, int> subStringCompare(const QStringView string,
                                     const QString& subString,
                                     bool lazy = true)
 {
