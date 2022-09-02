@@ -188,7 +188,7 @@ void GODictionaryRenderer_3D::parseXmlFile()
         if (!currentElementName.isEmpty())
         {
           // Get the text and store it as the current element's value
-          const auto trimmedText = m_xmlParser.text().trimmed();
+          const QStringView trimmedText = m_xmlParser.text().trimmed();
           if (!trimmedText.isEmpty())
           {
             elementValues[currentElementName] = trimmedText.toString();

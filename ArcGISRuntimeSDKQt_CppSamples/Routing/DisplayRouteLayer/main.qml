@@ -1,5 +1,3 @@
-// [WriteFile Name=NavigateARouteWithRerouting, Category=Routing]
-// [Legal]
 // Copyright 2022 Esri.
 
 // Licensed under the Apache License, Version 2.0 (the "License");
@@ -12,25 +10,16 @@
 // WITHOUT WARRANTIES OR CONDITIONS OF ANY KIND, either express or implied.
 // See the License for the specific language governing permissions and
 // limitations under the License.
-// [Legal]
 
-#include "NavigateRouteSpeaker.h"
-#include <QTextToSpeech>
+import QtQuick.Controls 2.12
+import Esri.Samples 1.0
 
-NavigateRouteSpeaker::NavigateRouteSpeaker(QObject* parent):
-  QObject(parent),
-  m_speaker(new QTextToSpeech(this))
-{
-}
+ApplicationWindow {
+    visible: true
+    width: 800
+    height: 600
 
-NavigateRouteSpeaker::~NavigateRouteSpeaker() = default;
-
-void NavigateRouteSpeaker::textToSpeech(const QString& text)
-{
-  m_speaker->say(text);
-}
-
-bool NavigateRouteSpeaker::textToSpeechEngineReady() const
-{
-  return m_speaker->state() == QTextToSpeech::State::Ready;
+    DisplayRouteLayer {
+        anchors.fill: parent
+    }
 }

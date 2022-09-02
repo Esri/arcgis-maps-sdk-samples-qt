@@ -1,0 +1,36 @@
+{
+    "category": "Routing",
+    "description": "Display a route layer and its directions using a feature collection.",
+    "ignore": false,
+    "images": [
+        "screenshot.png"
+    ],
+    "keywords": [
+        "directions",
+        "feature collection",
+        "feature collection layer",
+        "portal",
+        "portal item",
+        "route layer",
+        "routing",
+        "FeatureCollection",
+        "FeatureCollectionLayer",
+        "FeatureCollectionTableListModel",
+        "FeatureQueryResult",
+        "Portal",
+        "PortalItem"
+    ],
+    "redirect_from": "",
+    "relevant_apis": [
+        "FeatureCollection",
+        "FeatureCollectionLayer",
+        "FeatureCollectionTableListModel",
+        "FeatureQueryResult",
+        "Portal",
+        "PortalItem"
+    ],
+    "snippets": [
+        "DisplayRouteLayer.qml"
+    ],
+    "title": "Display route layer"
+}

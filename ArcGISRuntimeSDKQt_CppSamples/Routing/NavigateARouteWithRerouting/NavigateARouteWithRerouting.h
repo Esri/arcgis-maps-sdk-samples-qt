@@ -92,7 +92,6 @@ private:
   Esri::ArcGISRuntime::RouteParameters m_routeParameters;
   QList<Esri::ArcGISRuntime::DirectionManeuver> m_directionManeuvers;
   // QTextToSpeech* m_speaker = nullptr;
-
 };
 
 #endif // NAVIGATEAROUTEWITHREROUTING_H

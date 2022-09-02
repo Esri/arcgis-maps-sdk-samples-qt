@@ -37,20 +37,20 @@ QString highlightedMidpoint(const QString& string,
 
     // Find the portion of string that goes before the catchment.
     int startPos = std::max(0, pos-catchment);
-    QStringRef startPart(&string, startPos, catchment);
+    const QStringView startPart(&string, startPos, catchment);
 
     // Start section
     builder = builder + startPart.toString().toHtmlEscaped();
 
     // The found portion of string to be highlighted
-    QStringRef caughtString(&string, pos, subStringLength);
+    const QStringView caughtString(&string, pos, subStringLength);
     builder = builder + QStringLiteral("<b>")
                       + caughtString.toString().toHtmlEscaped()
                       + QStringLiteral("</b>");
 
     // Find the portion of string that goes after the catchment.
-    int endPos = std::min(string.length(), static_cast<qsizetype>(pos+ subStringLength + catchment));
-    QStringRef endPart(&string, pos + subStringLength, endPos);
+    int endPos = std::min(string.length(), pos+ subStringLength + catchment);
+    const QStringView endPart(&string, pos + subStringLength, endPos);
     builder = builder + endPart.toString().toHtmlEscaped();
 
     return builder;
