@@ -15,7 +15,7 @@
 // [Legal]
 
 import QtQuick 2.6
-import QtGraphicalEffects 1.0
+import Qt5Compat.GraphicalEffects
 import Esri.ArcGISRuntime
 
 Rectangle {

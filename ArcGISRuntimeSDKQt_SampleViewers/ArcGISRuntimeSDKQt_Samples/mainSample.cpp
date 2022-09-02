@@ -311,6 +311,7 @@ int main(int argc, char *argv[])
 {
   // add support for feature toggles on mobile, which is disabled by default
   qputenv("QT_ENABLE_FEATURE_TOGGLE_MOBILE", "true");
+  qputenv("QSG_RHI_BACKEND", "opengl");
 
 #ifdef QT_WEBVIEW_WEBENGINE_BACKEND
   QtWebEngine::initialize();

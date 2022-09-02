@@ -16,7 +16,7 @@
 
 import QtQuick 2.3
 import QtQuick.Controls 2.2
-import QtGraphicalEffects 1.0
+import Qt5Compat.GraphicalEffects
 import Esri.Samples 1.0
 
 GenerateGeodatabaseReplicaFromFeatureServiceSample {

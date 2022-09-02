@@ -15,7 +15,7 @@
 // [Legal]
 
 import QtQuick 2.5
-import QtGraphicalEffects 1.0
+import Qt5Compat.GraphicalEffects
 import QtQuick.Controls 2.2
 import QtQuick.Layouts 1.3
 import Esri.Samples 1.0
