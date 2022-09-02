@@ -18,6 +18,7 @@
 #include "SearchFilterSimpleKeywordCriteria.h"
 
 #include <QStringBuilder>
+#include <QStringView>
 
 #include "SampleListModel.h"
 
@@ -88,7 +89,7 @@ qint64 stringCompare(const QStringView string, const QString& subString)
  *  returned being the position associated with the best score found.
  * \return pair of: score of match(es), and position of the best match.
  */
-QPair<qint64, int> subStringCompare(const QString& string,
+QPair<qint64, int> subStringCompare(const QStringView& string,
                                     const QString& subString,
                                     bool lazy = true)
 {
@@ -98,8 +99,7 @@ QPair<qint64, int> subStringCompare(const QString& string,
   const int length = string.length();
   for (int i = 0; i < length; ++i)
   {
-    auto result = stringCompare(QStringView(&string, i, length - i),
-                                subString);
+    auto result = stringCompare(string.sliced(i, length - i), subString);
     if (i == 0)
       result *= DEFAULT_START_MODIFIER;
     output.first += std::max(0LL, result);
