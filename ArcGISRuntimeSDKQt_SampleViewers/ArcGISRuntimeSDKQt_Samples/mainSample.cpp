@@ -51,7 +51,6 @@
 #include "SampleListModel.h"
 #include "SampleSearchFilterModel.h"
 #include "SearchFilterCriteria.h"
-#include "SearchFilterKeywordCriteria.h"
 #include "SourceCode.h"
 #include "SourceCodeListModel.h"
 #include "SyntaxHighlighter/syntax_highlighter.h"
@@ -638,7 +637,6 @@ void registerClasses()
 
   qmlRegisterType<SampleSearchFilterModel>("Esri.ArcGISRuntimeSamples", 1, 0, "SampleSearchFilterModel");
   qmlRegisterUncreatableType<SearchFilterCriteria>("Esri.ArcGISRuntimeSamples", 1, 0, "SearchFilterCriteria", "Abstract base class");
-  qmlRegisterType<SearchFilterKeywordCriteria>("Esri.ArcGISRuntimeSamples", 1, 0, "SearchFilterKeywordCriteria");
 
 #ifndef CPP_VIEWER
   qmlRegisterType<NavigateRouteSpeaker>("Esri.samples", 1, 0, "NavigateRouteSpeaker");
