@@ -16,7 +16,6 @@
 
 import QtQuick
 import Esri.Samples
-import QtQuick
 import QtQuick.Controls
 import QtQuick.Layouts
 
