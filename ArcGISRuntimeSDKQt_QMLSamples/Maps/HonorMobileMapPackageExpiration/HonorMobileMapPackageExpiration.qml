@@ -14,9 +14,9 @@
 // limitations under the License.
 // [Legal]
 
-import QtQuick 2.6
+import QtQuick
 import Esri.ArcGISRuntime
-import Esri.ArcGISExtras 1.1
+import Esri.ArcGISExtras
 
 Rectangle {
     width: 800

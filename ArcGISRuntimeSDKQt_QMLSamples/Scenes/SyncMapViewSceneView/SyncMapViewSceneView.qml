@@ -14,8 +14,8 @@
 // limitations under the License.
 // [Legal]
 
-import QtQuick 2.6
-import QtQuick.Layouts 1.2
+import QtQuick
+import QtQuick.Layouts
 import Esri.ArcGISRuntime
 
 Rectangle {

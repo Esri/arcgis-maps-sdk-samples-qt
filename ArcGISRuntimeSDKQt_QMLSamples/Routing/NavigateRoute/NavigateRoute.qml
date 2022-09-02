@@ -14,12 +14,12 @@
 // limitations under the License.
 // [Legal]
 
-import QtQuick 2.6
-import QtQuick.Controls 2.2
+import QtQuick
+import QtQuick.Controls
 import Esri.ArcGISRuntime
-import QtQuick.Layouts 1.11
-import QtPositioning 5.2
-import Esri.samples 1.0
+import QtQuick.Layouts
+import QtPositioning
+import Esri.Samples
 
 Rectangle {
     id: rootRectangle

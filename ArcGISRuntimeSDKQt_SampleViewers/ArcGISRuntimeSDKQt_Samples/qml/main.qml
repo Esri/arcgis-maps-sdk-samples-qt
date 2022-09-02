@@ -13,12 +13,11 @@
 // limitations under the License.
 // [Legal]
 
-import QtQuick 2.5
-import QtQuick.Controls 2.2
-import QtQuick.Controls.Material 2.1
-import Esri.ArcGISRuntimeSamples 1.0
-import Esri.ArcGISExtras 1.1
-import Telemetry 1.0
+import QtQuick
+import QtQuick.Controls
+import Esri.ArcGISRuntimeSamples
+import Esri.ArcGISExtras
+import Telemetry
 
 ApplicationWindow {
     id: window

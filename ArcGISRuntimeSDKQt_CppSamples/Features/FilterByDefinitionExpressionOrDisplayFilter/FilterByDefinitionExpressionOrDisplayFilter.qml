@@ -14,10 +14,10 @@
 // limitations under the License.
 // [Legal]
 
-import QtQuick 2.6
-import QtQuick.Controls 2.2
+import QtQuick
+import QtQuick.Controls
 //! [Import the namespace that has QML type that was registered in Cpp]
-import Esri.Samples 1.0
+import Esri.Samples
 //! [Import the namespace that has QML type that was registered in Cpp]
 
 FilterByDefinitionExpressionOrDisplayFilterSample {

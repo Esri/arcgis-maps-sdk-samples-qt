@@ -13,9 +13,9 @@
 // limitations under the License.
 // [Legal]
 
-import QtQuick 2.5
-import Esri.ArcGISExtras 1.1
-import Esri.ArcGISRuntimeSamples 1.0
+import QtQuick
+import Esri.ArcGISExtras
+import Esri.ArcGISRuntimeSamples
 
 Item {
     property var currentItem

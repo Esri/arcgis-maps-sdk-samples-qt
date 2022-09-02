@@ -14,10 +14,10 @@
 // limitations under the License.
 // [Legal]
 
-import QtQuick 2.3
-import QtQuick.Controls 2.2
-import QtGraphicalEffects 1.0
-import Esri.Samples 1.0
+import QtQuick
+import QtQuick.Controls
+import Qt5Compat.GraphicalEffects
+import Esri.Samples
 
 GenerateGeodatabaseReplicaFromFeatureServiceSample {
     id: generateSample

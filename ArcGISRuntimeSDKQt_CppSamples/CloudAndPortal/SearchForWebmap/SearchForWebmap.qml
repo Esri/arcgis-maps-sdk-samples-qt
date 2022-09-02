@@ -12,10 +12,10 @@
 // See the Sample code usage restrictions document for further information.
 // [Legal]
 
-import QtQuick 2.6
-import QtQuick.Controls 2.2
-import QtQuick.Layouts 1.3
-import Esri.Samples 1.0
+import QtQuick
+import QtQuick.Controls
+import QtQuick.Layouts
+import Esri.Samples
 import Esri.ArcGISRuntime.Toolkit
 
 SearchForWebmapSample {

@@ -14,11 +14,11 @@
 // limitations under the License.
 // [Legal]
 
-import QtQuick 2.6
-import QtQuick.Controls 2.2
-import QtPositioning 5.6
+import QtQuick
+import QtQuick.Controls
+import QtPositioning
 import Esri.ArcGISRuntime.Toolkit
-import Esri.Samples 1.0
+import Esri.Samples
 
 FindPlaceSample {
     id: findPlaceSample

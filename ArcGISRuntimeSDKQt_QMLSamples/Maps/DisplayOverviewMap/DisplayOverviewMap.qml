@@ -14,7 +14,7 @@
 // limitations under the License.
 // [Legal]
 
-import QtQuick 2.12
+import QtQuick
 import Esri.ArcGISRuntime
 import Esri.ArcGISRuntime.Toolkit
 
