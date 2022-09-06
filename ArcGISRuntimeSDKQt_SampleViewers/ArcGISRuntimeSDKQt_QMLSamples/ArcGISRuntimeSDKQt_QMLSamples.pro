@@ -107,7 +107,6 @@ HEADERS += \
     $$COMMONVIEWER/SampleManager_definitions.h \
     $$COMMONVIEWER/SampleSearchFilterModel.h \
     $$COMMONVIEWER/SearchFilterCriteria.h \
-    $$COMMONVIEWER/SearchFilterKeywordCriteria.h \
     $$COMMONVIEWER/SearchFilterSimpleKeywordCriteria.h \
     $$COMMONVIEWER/SourceCode.h \
     $$COMMONVIEWER/SourceCodeListModel.h \
@@ -128,7 +127,6 @@ SOURCES += \
     $$COMMONVIEWER/SampleManager.cpp \
     $$COMMONVIEWER/SampleSearchFilterModel.cpp \
     $$COMMONVIEWER/SearchFilterCriteria.cpp \
-    $$COMMONVIEWER/SearchFilterKeywordCriteria.cpp \
     $$COMMONVIEWER/SearchFilterSimpleKeywordCriteria.cpp \
     $$COMMONVIEWER/SourceCode.cpp \
     $$COMMONVIEWER/SourceCodeListModel.cpp \
