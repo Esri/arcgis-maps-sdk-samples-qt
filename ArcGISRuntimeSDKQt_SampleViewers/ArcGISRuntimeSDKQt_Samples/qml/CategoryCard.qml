@@ -13,11 +13,11 @@
 // limitations under the License.
 // [Legal]
 
-import QtQuick 2.5
-import QtQuick.Controls 2.2
-import QtGraphicalEffects 1.0
-import Esri.ArcGISRuntimeSamples 1.0
-import Telemetry 1.0
+import QtQuick
+import QtQuick.Controls
+import Qt5Compat.GraphicalEffects
+import Esri.ArcGISRuntimeSamples
+import Telemetry
 
 Component {
     id: categoryDelegate

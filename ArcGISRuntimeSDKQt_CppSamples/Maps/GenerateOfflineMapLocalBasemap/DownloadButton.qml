@@ -11,7 +11,7 @@
 // See the License for the specific language governing permissions and
 // limitations under the License.
 
-import QtQuick 2.5
+import QtQuick
 
 // Create the download button to export the tile cache
 Rectangle {

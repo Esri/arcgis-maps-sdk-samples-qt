@@ -14,10 +14,10 @@
 // limitations under the License.
 // [Legal]
 
-import QtQuick 2.6
-import QtQuick.Controls 2.2
-import Qt.labs.platform 1.1 as Dialogs
-import Esri.Samples 1.0
+import QtQuick
+import QtQuick.Controls
+import Qt.labs.platform
+import Esri.Samples
 
 Item {
 

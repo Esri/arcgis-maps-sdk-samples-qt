@@ -13,10 +13,9 @@
 // limitations under the License.
 // [Legal]
 
-import QtQuick 2.5
-import QtQuick.Controls 2.2
-import Esri.ArcGISRuntimeSamples 1.0
-import QtQuick.Controls.Material 2.12
+import QtQuick
+import QtQuick.Controls
+import Esri.ArcGISRuntimeSamples
 
 Rectangle {
     visible: SampleManager.currentMode === SampleManager.SourceCodeView

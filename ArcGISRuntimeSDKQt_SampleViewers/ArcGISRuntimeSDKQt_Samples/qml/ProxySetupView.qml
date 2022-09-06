@@ -13,11 +13,10 @@
 // limitations under the License.
 // [Legal]
 
-import QtGraphicalEffects 1.0
-import QtQuick 2.5
-import QtQuick.Controls 2.2
-import QtQuick.Controls.Material 2.3
-import Esri.ArcGISRuntimeSamples 1.0
+import Qt5Compat.GraphicalEffects
+import QtQuick
+import QtQuick.Controls
+import Esri.ArcGISRuntimeSamples
 
 Item {
     id: dialogComponent

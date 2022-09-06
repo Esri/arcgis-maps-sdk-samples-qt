@@ -14,11 +14,11 @@
 // limitations under the License.
 // [Legal]
 
-import QtQuick 2.12
-import QtQuick.Controls 2.12
-import Esri.Samples 1.0
-import QtQuick.Layouts 1.12
-import QtQuick.Dialogs 1.2
+import QtQuick
+import QtQuick.Controls
+import Esri.Samples
+import QtQuick.Layouts
+import QtQuick.Dialogs
 
 Item {
     // Declare the C++ instance which creates the map etc. and supply the view

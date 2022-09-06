@@ -14,7 +14,7 @@
 // limitations under the License.
 // [Legal]
 
-import QtQuick 2.5
+import QtQuick
 import Esri.ArcGISRuntime
 
 ListModel {

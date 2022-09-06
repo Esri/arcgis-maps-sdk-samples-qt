@@ -13,9 +13,9 @@
 // limitations under the License.
 // [Legal]
 
-import QtQuick 2.5
-import QtQuick.Controls 2.2
-import Esri.ArcGISRuntimeSamples 1.0
+import QtQuick
+import QtQuick.Controls
+import Esri.ArcGISRuntimeSamples
 
 Drawer {
     clip: true

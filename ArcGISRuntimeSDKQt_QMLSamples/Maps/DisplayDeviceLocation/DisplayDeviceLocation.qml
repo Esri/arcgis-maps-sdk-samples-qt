@@ -14,9 +14,9 @@
 // limitations under the License.
 // [Legal]
 
-import QtQuick 2.6
-import QtPositioning 5.3
-import QtSensors 5.3
+import QtQuick
+import QtPositioning
+import QtSensors
 import Esri.ArcGISRuntime
 
 Rectangle {

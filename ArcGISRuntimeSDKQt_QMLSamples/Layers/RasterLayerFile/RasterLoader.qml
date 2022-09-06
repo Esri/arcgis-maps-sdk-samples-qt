@@ -14,8 +14,8 @@
 // limitations under the License.
 // [Legal]
 
-import QtQuick 2.6
-import Qt.labs.platform 1.0 as Dialogs
+import QtQuick
+import Qt.labs.platform
 
 Item {
     id: root
