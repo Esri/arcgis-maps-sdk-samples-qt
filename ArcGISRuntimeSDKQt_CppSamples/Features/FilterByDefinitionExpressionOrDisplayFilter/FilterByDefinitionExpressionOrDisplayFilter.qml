@@ -18,7 +18,6 @@ import QtQuick
 import QtQuick.Controls
 //! [Import the namespace that has QML type that was registered in Cpp]
 import Esri.Samples
-//! [Import the namespace that has QML type that was registered in Cpp]
 
 FilterByDefinitionExpressionOrDisplayFilterSample {
     id: definitionExpressionOrDisplayFilterSample

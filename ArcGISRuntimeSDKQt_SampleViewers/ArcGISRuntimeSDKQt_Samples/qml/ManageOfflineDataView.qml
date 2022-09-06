@@ -13,12 +13,12 @@
 // limitations under the License.
 // [Legal]
 
-import QtQuick 2.5
-import QtQuick.Controls 2.2
+import QtQuick
+import QtQuick.Controls
 import Qt.labs.platform
-import QtQuick.Layouts 1.2
-import Esri.ArcGISRuntimeSamples 1.0
-import Esri.ArcGISExtras 1.1
+import QtQuick.Layouts
+import Esri.ArcGISRuntimeSamples
+import Esri.ArcGISExtras
 
 Page {
     id: manageOfflineDataViewPage

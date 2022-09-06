@@ -13,23 +13,23 @@
 // limitations under the License.
 // [Legal]
 
-import Qt.labs.calendar 1.0
-import Qt.labs.controls 1.0
-import Qt.labs.platform 1.0
-import QtQuick 2.5
-import QtQuick.Controls 1.4
-import QtQuick.Controls 2.2
-import QtQuick.Controls.Material 2.1
-import QtQuick.Layouts 1.1
-import QtQuick.Shapes 1.12
-import QtQuick.Window 2.0
-import QtQuick.Dialogs 1.2
-import QtSensors 5.3
-import QtPositioning 5.3
-import QtQuick.XmlListModel 2.0
+import Qt.labs.calendar
+import Qt.labs.controls
+import Qt.labs.platform
+import QtQuick
+import QtQuick.Controls
+import QtQuick.Controls
+import QtQuick.Controls.Material
+import QtQuick.Layouts
+import QtQuick.Shapes
+import QtQuick.Window
+import QtQuick.Dialogs
+import QtSensors
+import QtPositioning
+import QtQuick.XmlListModel
 import Qt5Compat.GraphicalEffects
-import QtWebView 1.1
-import Esri.ArcGISExtras 1.1
+import QtWebView
+import Esri.ArcGISExtras
 import Esri.ArcGISRuntime
 import Esri.ArcGISRuntime.Toolkit
 

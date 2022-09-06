@@ -14,7 +14,7 @@
 // limitations under the License.
 // [Legal]
 
-import QtQuick 2.6
+import QtQuick
 import Qt5Compat.GraphicalEffects
 import Esri.ArcGISRuntime
 
