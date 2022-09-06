@@ -18,7 +18,7 @@ import QtQuick 2.6
 import QtQuick.Controls 2.2
 import Qt5Compat.GraphicalEffects
 import Esri.ArcGISRuntime
-import Esri.ArcGISExtras 1.1
+import Esri.ArcGISExtras
 
 Rectangle {
     width: 800

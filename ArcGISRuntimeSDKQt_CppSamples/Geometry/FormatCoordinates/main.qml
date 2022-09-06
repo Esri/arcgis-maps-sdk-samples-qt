@@ -14,7 +14,7 @@
 // limitations under the License.
 // [Legal]
 
-import QtQuick.Controls 2.2
+import QtQuick.Controls
 
 ApplicationWindow {
     visible: true

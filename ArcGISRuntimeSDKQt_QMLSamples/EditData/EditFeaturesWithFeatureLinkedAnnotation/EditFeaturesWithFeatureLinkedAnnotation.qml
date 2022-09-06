@@ -19,7 +19,7 @@ import QtQuick.Controls 2.2
 import QtQuick.Layouts 1.3
 import Qt5Compat.GraphicalEffects
 import Esri.ArcGISRuntime
-import Esri.ArcGISExtras 1.1
+import Esri.ArcGISExtras
 
 Rectangle {
     id: rootRectangle

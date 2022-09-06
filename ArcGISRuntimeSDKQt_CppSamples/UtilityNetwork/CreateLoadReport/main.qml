@@ -11,10 +11,10 @@
 // See the License for the specific language governing permissions and
 // limitations under the License.
 
-import QtQuick 2.15
-import QtQuick.Controls 2.2
-import Esri.Samples 1.0
-import Qt.labs.qmlmodels 1.0
+import QtQuick
+import QtQuick.Controls
+import Esri.Samples
+import Qt.labs.qmlmodels
 
 ApplicationWindow {
     visible: true

@@ -19,7 +19,7 @@ import QtQuick.Controls 2.2
 import Qt.labs.calendar 1.0
 import Qt5Compat.GraphicalEffects
 import Esri.ArcGISRuntime
-import QtQuick.Layouts 1.3
+import QtQuick.Layouts
 
 Rectangle {
     id: rootRectangle

@@ -14,10 +14,10 @@
 // limitations under the License.
 // [Legal]
 
-import QtQuick 2.12
-import QtQuick.Controls 2.12
+import QtQuick
+import QtQuick.Controls
 import Esri.ArcGISRuntime.Toolkit
-import Esri.Samples 1.0
+import Esri.Samples
 
 Item {
 
