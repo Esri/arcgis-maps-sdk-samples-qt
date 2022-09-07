@@ -55,7 +55,7 @@ Rectangle {
 
         //! [identify graphics api snippet]
         // Signal handler for mouse click event on the map view
-        onMouseClicked: {
+        onMouseClicked: mouse => {
             const tolerance = 22;
             const returnPopupsOnly = false;
             const maximumResults = 1000;

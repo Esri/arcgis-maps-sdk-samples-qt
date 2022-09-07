@@ -18,6 +18,10 @@
 
 #include "DownloadSampleManager.h"
 
+#include <QObject>
+
+Q_MOC_INCLUDE("AuthenticationManager.h")
+
 namespace Esri
 {
 namespace ArcGISRuntime

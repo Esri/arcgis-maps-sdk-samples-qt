@@ -52,7 +52,7 @@ Rectangle {
             id: graphicsOverlay
         }
 
-        onMouseClicked: {
+        onMouseClicked: mouse => {
             const graphic = ArcGISRuntimeEnvironment.createObject("Graphic");
             graphic.geometry = mouse.mapPoint;
             graphic.symbol = currentSymbol;

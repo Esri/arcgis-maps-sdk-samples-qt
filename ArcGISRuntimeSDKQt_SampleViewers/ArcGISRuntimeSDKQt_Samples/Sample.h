@@ -22,6 +22,9 @@ class DataItemListModel;
 #include <QObject>
 #include <QVariant>
 
+Q_MOC_INCLUDE("SourceCodeListModel.h")
+Q_MOC_INCLUDE("DataItemListModel.h")
+
 class Sample : public QObject
 {
   Q_OBJECT

@@ -58,7 +58,7 @@ Rectangle {
             initialViewpoint: viewpoint
         }
 
-        onMouseClicked: {
+        onMouseClicked: mouse => {
             const clickPoint = mapView.screenToLocation(mouse.x, mouse.y);
 
             if (updateWindow.visible)

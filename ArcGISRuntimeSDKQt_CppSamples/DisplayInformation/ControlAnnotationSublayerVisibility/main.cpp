@@ -27,9 +27,8 @@
 
 int main(int argc, char *argv[])
 {
-    QGuiApplication::setAttribute(Qt::AA_EnableHighDpiScaling);
-    QGuiApplication app(argc, argv);
-    app.setApplicationName(QStringLiteral("ControlAnnotationSublayerVisibility - C++"));
+  QGuiApplication app(argc, argv);
+  app.setApplicationName(QStringLiteral("ControlAnnotationSublayerVisibility - C++"));
 
   // Use of Esri location services, including basemaps and geocoding,
   // requires authentication using either an ArcGIS identity or an API Key.

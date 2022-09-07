@@ -51,7 +51,7 @@ qint64 stringCompare(const QStringView string, const QString& subString)
   if (subString.length() > string.length())
     return score;
 
-  const int total = std::min(string.length(), subString.length());
+  const int total = std::min(static_cast<qsizetype>(string.length()), subString.length());
   for (int i = 0; i < total; ++i)
   {
     const auto& a = string.at(i);

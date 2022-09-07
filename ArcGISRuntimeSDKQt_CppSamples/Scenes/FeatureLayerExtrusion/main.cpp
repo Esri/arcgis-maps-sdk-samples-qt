@@ -38,8 +38,7 @@ int main(int argc, char *argv[])
     QSurfaceFormat::setDefaultFormat(fmt);
 #endif
 
-  QGuiApplication::setAttribute(Qt::AA_EnableHighDpiScaling);
-    QGuiApplication app(argc, argv);
+  QGuiApplication app(argc, argv);
     app.setApplicationName("FeatureLayerExtrusion - C++");
 
   // Use of Esri location services, including basemaps and geocoding,

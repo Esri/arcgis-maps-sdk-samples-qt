@@ -32,6 +32,8 @@ class MapQuickView;
 #include <QObject>
 #include <QTemporaryDir>
 
+Q_MOC_INCLUDE("MapQuickView.h")
+
 class ExportVectorTiles : public QObject
 {
   Q_OBJECT

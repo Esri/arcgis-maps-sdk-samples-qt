@@ -28,12 +28,14 @@ class ImageOverlay;
 }
 }
 
+class QTimer;
+
 #include <QDir>
 #include <QObject>
 
-class QTimer;
-
 #include "Envelope.h"
+
+Q_MOC_INCLUDE("SceneQuickView.h")
 
 class AnimateImagesWithImageOverlay : public QObject
 {

@@ -80,7 +80,7 @@ Rectangle {
         }
 
         //! [identify feature layer qml api snippet]
-        onMouseClicked: {
+        onMouseClicked: mouse => {
             const tolerance = 22;
             const returnPopupsOnly = false;
             const maximumResults = 1000;

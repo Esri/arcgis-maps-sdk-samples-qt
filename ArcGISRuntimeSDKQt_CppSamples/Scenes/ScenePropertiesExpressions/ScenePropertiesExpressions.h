@@ -30,6 +30,8 @@ class SceneQuickView;
 
 #include <QObject>
 
+Q_MOC_INCLUDE("SceneQuickView.h")
+
 class ScenePropertiesExpressions : public QObject
 {
   Q_OBJECT

@@ -38,6 +38,8 @@ class MapQuickView;
 #include "Point.h"
 #include "Error.h"
 
+Q_MOC_INCLUDE("MapQuickView.h")
+
 class EditFeaturesWithFeatureLinkedAnnotation : public QObject
 {
   Q_OBJECT
@@ -57,7 +59,7 @@ public:
 
 private slots:
   void onIdentifyLayersCompleted(QUuid,const QList<Esri::ArcGISRuntime::IdentifyLayerResult*>& identifyResults);
-  void onMouseClicked(QMouseEvent mouseEvent);
+  void onMouseClicked(QMouseEvent& mouseEvent);
   void onGeodatabaseDoneLoading(Esri::ArcGISRuntime::Error error);
 
 signals:

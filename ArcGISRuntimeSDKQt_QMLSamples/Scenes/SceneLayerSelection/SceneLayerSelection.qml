@@ -89,7 +89,7 @@ Rectangle {
         }
 
         // when the scene is clicked, identify the clicked feature and select it
-        onMouseClicked: {
+        onMouseClicked: mouse => {
             // clear any previous selection
             sceneLayer.clearSelection();
 

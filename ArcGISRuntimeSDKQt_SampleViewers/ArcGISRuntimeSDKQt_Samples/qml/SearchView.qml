@@ -46,15 +46,15 @@ ListView {
                 color: "gray"
                 width: 1
             }
+        }
 
-            MouseArea {
-                anchors.fill: parent
-                onClicked: {
-                    drawer.close();
-                    // launch sample...
-                    SampleManager.currentSample = sample;
-                    GAnalytics.postEvent("sample_opened", {"sample_name": sample.name, "referrer": "search"});
-                }
+        MouseArea {
+            anchors.fill: parent
+            onClicked: {
+                drawer.close();
+                // launch sample...
+                SampleManager.currentSample = sample;
+                GAnalytics.postEvent("sample_opened", {"sample_name": sample.name, "referrer": "search"});
             }
         }
     }

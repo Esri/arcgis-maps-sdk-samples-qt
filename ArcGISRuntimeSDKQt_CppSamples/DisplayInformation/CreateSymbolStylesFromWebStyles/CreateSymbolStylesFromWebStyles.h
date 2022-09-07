@@ -35,6 +35,8 @@ class SymbolStyle;
 #include <QMap>
 #include <QAbstractListModel>
 
+Q_MOC_INCLUDE("MapQuickView.h")
+
 class CreateSymbolStylesFromWebStyles : public QObject
 {
   Q_OBJECT

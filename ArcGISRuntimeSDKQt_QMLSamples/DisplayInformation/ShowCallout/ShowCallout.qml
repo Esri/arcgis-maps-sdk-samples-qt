@@ -72,7 +72,7 @@ Rectangle {
         //! [show callout qml api snippet]
 
         // display callout on mouseClicked
-        onMouseClicked: {
+        onMouseClicked: mouse => {
             if (callout.calloutVisible)
                 callout.dismiss()
             else

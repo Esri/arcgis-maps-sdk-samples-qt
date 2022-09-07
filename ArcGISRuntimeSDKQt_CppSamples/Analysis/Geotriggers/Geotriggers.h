@@ -40,6 +40,8 @@ class SimulatedLocationDataSource;
 #include <QMap>
 #include <QUrl>
 
+Q_MOC_INCLUDE("MapQuickView.h")
+
 class Geotriggers : public QObject
 {
   Q_OBJECT

@@ -39,6 +39,9 @@ class QAbstractListModel;
 #include <QList>
 #include <QScopedPointer>
 
+Q_MOC_INCLUDE("MapQuickView.h")
+Q_MOC_INCLUDE("SymbolStyleSearchResultListModel.h")
+
 class ReadSymbolsFromMobileStyle : public QObject
 {
   Q_OBJECT

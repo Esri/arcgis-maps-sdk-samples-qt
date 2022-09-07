@@ -110,7 +110,7 @@ void SceneLayerSelection::connectSignals()
     m_sceneLayer->clearSelection();
 
     // identify from the click
-    m_sceneView->identifyLayer(m_sceneLayer, mouseEvent.x(), mouseEvent.y(), 10, false);
+    m_sceneView->identifyLayer(m_sceneLayer, mouseEvent.pos().x(), mouseEvent.pos().y(), 10, false);
   });
 }
 

@@ -73,7 +73,7 @@ Rectangle {
             }
         }
 
-        onMouseClicked: {
+        onMouseClicked: mouse => {
             if (isOffline && !selectedFeature) {
                 // identify to select a feature
                 mapView.identifyLayer(map.operationalLayers.get(0), mouse.x, mouse.y, 5, false);

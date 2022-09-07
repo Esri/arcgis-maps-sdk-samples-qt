@@ -36,6 +36,8 @@ class Error;
 #include <QObject>
 #include <QAbstractListModel>
 
+Q_MOC_INCLUDE("MapQuickView.h")
+
 class IntegratedWindowsAuthentication : public QObject
 {
   Q_OBJECT

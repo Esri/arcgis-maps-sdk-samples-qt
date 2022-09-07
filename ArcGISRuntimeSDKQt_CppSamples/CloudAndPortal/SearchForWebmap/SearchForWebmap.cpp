@@ -27,6 +27,7 @@
 #include "SearchForWebmap.h"
 
 #include <QDate>
+#include <QDateTime>
 
 using namespace Esri::ArcGISRuntime;
 
@@ -104,7 +105,7 @@ void SearchForWebmap::search(const QString& keyword)
   //! [SearchForWebmap CPP Portal find items]
   // webmaps authored prior to July 2nd, 2014 are not supported
   // so search only from that date to the current time (in milliseconds)
-  QString fromDate = QString("000000%1").arg(QDateTime(QDate(2014, 7, 2)).toMSecsSinceEpoch());
+  QString fromDate = QString("000000%1").arg(QDateTime::fromString(QDate(2014, 7, 2).toString()).toMSecsSinceEpoch());
   QString toDate = QString("000000%1").arg(QDateTime::currentDateTime().toMSecsSinceEpoch());
 
   PortalQueryParametersForItems query;

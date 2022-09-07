@@ -58,7 +58,7 @@ Rectangle {
             forceActiveFocus();
         }
 
-        onMouseClicked: {
+        onMouseClicked: mouse => {
             const screenX = mouse.x;
             const screenY = mouse.y;
             const tolerance = 10;

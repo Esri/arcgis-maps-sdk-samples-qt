@@ -158,7 +158,7 @@ void GODictionaryRenderer::parseXmlFile()
     m_xmlParser.readNext();
 
     // Is this the start or end of a message element?
-    if (m_xmlParser.name() == "message")
+    if (m_xmlParser.name() == QString("message"))
     {
       if (!readingMessage)
       {

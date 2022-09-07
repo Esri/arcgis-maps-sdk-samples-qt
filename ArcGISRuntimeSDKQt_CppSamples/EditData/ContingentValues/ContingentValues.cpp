@@ -152,10 +152,10 @@ void ContingentValues::createConnections()
 }
 
 // When the user clicks or taps on the map, instantiate a new feature and show the attribute form interface
-void ContingentValues::createNewEmptyFeature(QMouseEvent mouseEvent)
+void ContingentValues::createNewEmptyFeature(QMouseEvent& mouseEvent)
 {
   // Create a new empty feature to define attributes for
-  m_newFeature = static_cast<ArcGISFeature*>(m_gdbFeatureTable->createFeature({}, m_mapView->screenToLocation(mouseEvent.x(), mouseEvent.y()), this));
+  m_newFeature = static_cast<ArcGISFeature*>(m_gdbFeatureTable->createFeature({}, m_mapView->screenToLocation(mouseEvent.pos().x(), mouseEvent.pos().y()), this));
   m_gdbFeatureTable->addFeature(m_newFeature);
 
   // Show the attribute form interface

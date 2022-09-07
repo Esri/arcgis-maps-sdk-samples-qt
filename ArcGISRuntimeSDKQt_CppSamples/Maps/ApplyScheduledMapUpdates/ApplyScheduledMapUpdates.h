@@ -29,9 +29,12 @@ class OfflineMapSyncJob;
 }
 }
 
-#include "Error.h"
 #include <QObject>
 #include <QTemporaryDir>
+
+#include "Error.h"
+
+Q_MOC_INCLUDE("MapQuickView.h")
 
 class ApplyScheduledMapUpdates : public QObject
 {

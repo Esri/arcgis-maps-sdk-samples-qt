@@ -117,7 +117,7 @@ Rectangle {
             }
         }
 
-        onMouseClicked: {
+        onMouseClicked: mouse => {
             // Open attribute prompt and create a new feature for editing
             attributePrompt.visible = true;
             newFeature = birdNestsTable.createFeatureWithAttributes({}, mouse.mapPoint);

@@ -75,7 +75,7 @@ Rectangle {
             spatialReference: mapView.spatialReference
         }
 
-        onMouseClicked: {
+        onMouseClicked: mouse => {
             const clickedPoint = mapView.screenToLocation(mouse.x, mouse.y);
             multipointBuilder.points.addPoint(clickedPoint);
             inputsGraphic.geometry = multipointBuilder.geometry;

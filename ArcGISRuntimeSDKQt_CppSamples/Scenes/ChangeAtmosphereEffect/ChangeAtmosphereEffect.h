@@ -17,6 +17,8 @@
 #ifndef CHANGEATMOSPHEREEFFECT_H
 #define CHANGEATMOSPHEREEFFECT_H
 
+#include "SceneViewTypes.h"
+
 namespace Esri
 {
 namespace ArcGISRuntime
@@ -28,7 +30,7 @@ class SceneQuickView;
 
 #include <QObject>
 
-#include "SceneViewTypes.h"
+Q_MOC_INCLUDE("SceneQuickView.h")
 
 class ChangeAtmosphereEffect : public QObject
 {

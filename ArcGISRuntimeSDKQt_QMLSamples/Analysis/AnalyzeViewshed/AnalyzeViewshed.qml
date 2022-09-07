@@ -81,7 +81,7 @@ Rectangle {
         }
 
         // Set up signal handler for the mouse clicked signal
-        onMouseClicked: {
+        onMouseClicked: mouse => {
             // The geoprocessing task is still executing, don't do anything else (i.e. respond to
             // more user taps) until the processing is complete.
             if (viewshedInProgress)

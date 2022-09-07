@@ -97,7 +97,7 @@ Rectangle {
             }
         }
 
-        onMouseClicked: {
+        onMouseClicked: mouse => {
             if (busy === true)
                 return;
 

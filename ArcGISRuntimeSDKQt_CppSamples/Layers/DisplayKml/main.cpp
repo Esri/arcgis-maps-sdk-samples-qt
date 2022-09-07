@@ -37,9 +37,9 @@ int main(int argc, char *argv[])
     fmt.setVersion(3, 2);
     QSurfaceFormat::setDefaultFormat(fmt);
 #endif
-    QGuiApplication::setAttribute(Qt::AA_EnableHighDpiScaling);
-    QGuiApplication app(argc, argv);
-    app.setApplicationName(QStringLiteral("DisplayKml - C++"));
+
+  QGuiApplication app(argc, argv);
+  app.setApplicationName(QStringLiteral("DisplayKml - C++"));
 
   // Use of Esri location services, including basemaps and geocoding,
   // requires authentication using either an ArcGIS identity or an API Key.

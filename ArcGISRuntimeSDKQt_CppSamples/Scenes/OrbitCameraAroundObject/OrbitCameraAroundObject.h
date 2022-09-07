@@ -32,6 +32,8 @@ namespace Esri
 #include <QObject>
 #include <QPointF>
 
+Q_MOC_INCLUDE("SceneQuickView.h")
+
 class OrbitCameraAroundObject : public QObject
 {
   Q_OBJECT

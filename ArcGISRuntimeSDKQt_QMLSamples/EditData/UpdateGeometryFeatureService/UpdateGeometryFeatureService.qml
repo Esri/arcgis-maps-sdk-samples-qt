@@ -123,7 +123,7 @@ Rectangle {
             id: params
         }
 
-        onMouseClicked: {
+        onMouseClicked: mouse => {
             // if a feature is selected, move it to a new location
             if (featureSelected) {
                 // obtain the new point to move the feature to

@@ -32,6 +32,8 @@ class LayerListModel;
 #include <QAbstractListModel>
 #include <QObject>
 
+Q_MOC_INCLUDE("MapQuickView.h")
+
 class MapReferenceScale : public QObject
 {
   Q_OBJECT

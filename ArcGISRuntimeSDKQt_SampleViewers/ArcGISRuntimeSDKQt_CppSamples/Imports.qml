@@ -18,6 +18,8 @@ import Qt.labs.controls
 import Qt.labs.platform
 import QtQuick
 import QtQuick.Controls
+import QtQuick.Controls
+import QtQuick.Controls.Material
 import QtQuick.Layouts
 import QtQuick.Shapes
 import QtQuick.Window

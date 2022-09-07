@@ -211,7 +211,7 @@ Rectangle {
             }
         }
 
-        onMouseClicked: {
+        onMouseClicked: mouse => {
             if (currentLocatorTask !== null) {
                 clickedPoint = mouse.mapPoint;
                 identifyGraphicsOverlayWithMaxResults(stopsGraphicsOverlay, mouse.x, mouse.y, 5, false, 2);

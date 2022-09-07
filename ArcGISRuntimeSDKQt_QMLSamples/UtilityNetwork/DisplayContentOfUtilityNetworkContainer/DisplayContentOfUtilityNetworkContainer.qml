@@ -96,7 +96,7 @@ Rectangle {
 
         onErrorChanged: messageBoxText.text = ("MapView error: " + error.message + " " + error.additionalMessage);
 
-        onMouseClicked: identifyLayers(mouse.x, mouse.y, 5, false);
+        onMouseClicked: mouse => identifyLayers(mouse.x, mouse.y, 5, false);
 
         onIdentifyLayersStatusChanged: {
             if (mapView.identifyLayersStatus !== Enums.TaskStatusCompleted ||

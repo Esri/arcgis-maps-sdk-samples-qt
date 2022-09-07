@@ -23,9 +23,8 @@
 
 int main(int argc, char *argv[])
 {
-    QGuiApplication::setAttribute(Qt::AA_EnableHighDpiScaling);
-    QGuiApplication app(argc, argv);
-    app.setApplicationName("Web_Tiled_Layer - QML");
+  QGuiApplication app(argc, argv);
+  app.setApplicationName("Web_Tiled_Layer - QML");
 
   // Use of Esri location services, including basemaps and geocoding,
   // requires authentication using either an ArcGIS identity or an API Key.

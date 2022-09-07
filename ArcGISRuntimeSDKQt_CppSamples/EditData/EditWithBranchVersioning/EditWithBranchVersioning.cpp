@@ -119,13 +119,13 @@ void EditWithBranchVersioning::onMapDoneLoading(const Error& error)
         emit busyChanged();
         return;
       }
-      const Point clickedPoint = m_mapView->screenToLocation(mouseEvent.x(), mouseEvent.y());
+      const Point clickedPoint = m_mapView->screenToLocation(mouseEvent.pos().x(), mouseEvent.pos().y());
       moveFeature(clickedPoint);
     }
     else
     {
       // call identify on the map view
-      m_mapView->identifyLayer(m_featureLayer, mouseEvent.x(), mouseEvent.y(), 5, false, 1);
+      m_mapView->identifyLayer(m_featureLayer, mouseEvent.pos().x(), mouseEvent.pos().y(), 5, false, 1);
     }
   });
 

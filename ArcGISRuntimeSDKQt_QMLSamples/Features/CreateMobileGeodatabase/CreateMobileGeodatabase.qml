@@ -49,7 +49,7 @@ Rectangle {
             }
         }
 
-        onMouseClicked: {
+        onMouseClicked: mouse => {
             // Add a feature to the current feature table at the given mouse click or screen tap
             if (!featureTable)
                 return;

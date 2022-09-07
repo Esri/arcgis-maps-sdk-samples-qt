@@ -32,6 +32,8 @@ class RelatedFeatureListModel;
 
 #include <QQuickItem>
 
+Q_MOC_INCLUDE("RelatedFeatureListModel.h")
+
 class ListRelatedFeatures : public QQuickItem
 {
   Q_OBJECT

@@ -129,7 +129,7 @@ Rectangle {
             }
         }
 
-        onMouseClicked: {
+        onMouseClicked: mouse => {
             waypoint = sceneView.screenToBaseSurface(mouse.x, mouse.y);
             timer.start();
         }

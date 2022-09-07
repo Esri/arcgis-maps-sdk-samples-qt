@@ -31,6 +31,8 @@ class MobileMapPackage;
 
 #include <QObject>
 
+Q_MOC_INCLUDE("MapQuickView.h")
+
 class DisplayDimensions : public QObject
 {
   Q_OBJECT

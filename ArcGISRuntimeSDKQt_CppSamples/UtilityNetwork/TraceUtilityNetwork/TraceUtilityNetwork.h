@@ -17,6 +17,8 @@
 #ifndef TraceUtilityNetwork_H
 #define TraceUtilityNetwork_H
 
+#include "Point.h"
+
 namespace Esri
 {
 namespace ArcGISRuntime
@@ -48,7 +50,8 @@ class UtilityTraceParameters;
 #include <QObject>
 #include <QUrl>
 #include <QUuid>
-#include "Point.h"
+
+Q_MOC_INCLUDE("MapQuickView.h")
 
 class TraceUtilityNetwork : public QObject
 {

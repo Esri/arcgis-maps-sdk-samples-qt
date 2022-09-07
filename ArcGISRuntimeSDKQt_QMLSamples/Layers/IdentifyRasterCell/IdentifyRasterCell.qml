@@ -76,7 +76,7 @@ Rectangle {
             }
         }
 
-        onMouseClicked: {
+        onMouseClicked: mouse => {
             clickedPoint = screenToLocation(mouse.x, mouse.y);
             if (identifyLayerStatus !== Enums.TaskStatusInProgress) {
                 identifyLayer(rasterLayer, mouse.x, mouse.y, 10, false, 1);

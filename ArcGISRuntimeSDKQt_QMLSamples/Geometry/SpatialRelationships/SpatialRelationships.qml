@@ -113,7 +113,7 @@ Rectangle {
         }
 
         // connect to mouse click signal
-        onMouseClicked: {
+        onMouseClicked: mouse => {
             mapView.identifyGraphicsOverlay(graphicsOverlay, mouse.x, mouse.y, 1 /*tolerance*/, false /*returnPopupsOnly*/);
         }
 

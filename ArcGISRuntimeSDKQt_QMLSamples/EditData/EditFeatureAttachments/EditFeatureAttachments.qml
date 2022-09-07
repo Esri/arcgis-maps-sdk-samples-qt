@@ -100,7 +100,7 @@ Rectangle {
             attachmentWindow.visible = false;
         }
 
-        onMouseClicked: {
+        onMouseClicked: mouse => {
             // reset to defaults
             featureLayer.clearSelection();
             if (callout.visible)

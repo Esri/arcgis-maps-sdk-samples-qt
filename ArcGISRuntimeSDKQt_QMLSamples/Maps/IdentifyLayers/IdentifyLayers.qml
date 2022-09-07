@@ -77,7 +77,7 @@ Rectangle {
         }
 
         // identify layers on mouse click
-        onMouseClicked: {
+        onMouseClicked: mouse => {
             const screenX = mouse.x;
             const screenY = mouse.y;
             const tolerance = 12;

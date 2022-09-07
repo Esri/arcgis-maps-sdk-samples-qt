@@ -28,6 +28,8 @@ class MapQuickView;
 
 #include <QObject>
 
+Q_MOC_INCLUDE("MapQuickView.h")
+
 class ControlTimeExtentTimeSlider : public QObject
 {
   Q_OBJECT

@@ -29,6 +29,8 @@ class KmlGroundOverlay;
 
 #include <QObject>
 
+Q_MOC_INCLUDE("SceneQuickView.h")
+
 class EditKmlGroundOverlay : public QObject
 {
   Q_OBJECT

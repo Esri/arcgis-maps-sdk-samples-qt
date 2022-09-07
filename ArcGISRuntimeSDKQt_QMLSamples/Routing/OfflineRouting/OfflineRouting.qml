@@ -200,7 +200,7 @@ Rectangle {
         }
 
         // get stops from clicked locations and find route
-        onMouseClicked: {
+        onMouseClicked: mouse => {
             if (!selectedGraphic) {
                 const clickedPoint = mapView.screenToLocation(mouse.x, mouse.y);
                 if (!GeometryEngine.within(clickedPoint, routableArea)) {

@@ -27,7 +27,11 @@ class GraphicsOverlay;
 }
 }
 
+#include <QObject>
+
 #include "Point.h"
+
+Q_MOC_INCLUDE("MapQuickView.h")
 
 class FormatCoordinates : public QObject
 {

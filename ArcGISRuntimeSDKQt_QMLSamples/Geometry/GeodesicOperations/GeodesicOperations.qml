@@ -69,7 +69,7 @@ Rectangle {
         }
 
         // handle the mouse click
-        onMouseClicked: {
+        onMouseClicked: mouse => {
             // re-project the point to match the NYC graphic
             const destination = GeometryEngine.project(mouse.mapPoint, nycGraphic.geometry.spatialReference);
 

@@ -35,6 +35,8 @@ class OgcFeatureServiceInfo;
 #include <QObject>
 #include <QUrl>
 
+Q_MOC_INCLUDE("MapQuickView.h")
+
 class BrowseOGCAPIFeatureService : public QObject
 {
   Q_OBJECT

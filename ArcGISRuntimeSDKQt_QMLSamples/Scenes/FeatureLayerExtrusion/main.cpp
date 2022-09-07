@@ -32,9 +32,8 @@ int main(int argc, char *argv[])
     QSurfaceFormat::setDefaultFormat(fmt);
 #endif
 
-    QGuiApplication::setAttribute(Qt::AA_EnableHighDpiScaling);
-    QGuiApplication app(argc, argv);
-    app.setApplicationName("FeatureLayerExtrusion - QML");
+  QGuiApplication app(argc, argv);
+  app.setApplicationName("FeatureLayerExtrusion - QML");
 
   // Use of Esri location services, including basemaps and geocoding,
   // requires authentication using either an ArcGIS identity or an API Key.
