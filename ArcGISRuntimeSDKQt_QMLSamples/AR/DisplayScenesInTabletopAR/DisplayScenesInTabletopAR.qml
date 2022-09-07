@@ -53,7 +53,7 @@ Rectangle {
             forceActiveFocus();
         }
 
-        onMouseClicked: {
+        onMouseClicked: mouse => {
             if (mspk.loadStatus !== Enums.LoadStatusLoaded || !arcGISArView.tracking || !philadelphiaScene)
                 return;
 

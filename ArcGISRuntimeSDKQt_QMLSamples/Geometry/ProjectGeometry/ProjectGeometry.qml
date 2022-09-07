@@ -76,7 +76,7 @@ Rectangle {
         }
 
         // handle mouseClicked signal
-        onMouseClicked: {
+        onMouseClicked: mouse => {
             // get the mouse click as a point
             const originalPoint = mouse.mapPoint;
 

@@ -84,7 +84,7 @@ Rectangle {
             }
         }
 
-        onMouseClicked: {  // on MapView
+        onMouseClicked: mouse => {  // on MapView
             handleLocationUpdate(mouse.mapPoint);
         }
     }

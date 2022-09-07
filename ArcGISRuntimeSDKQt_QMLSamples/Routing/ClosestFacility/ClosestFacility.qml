@@ -139,7 +139,7 @@ Rectangle {
             id: resultsOverlay
         }
 
-        onMouseClicked: {
+        onMouseClicked: mouse => {
             if (busy === true)
                 return;
 

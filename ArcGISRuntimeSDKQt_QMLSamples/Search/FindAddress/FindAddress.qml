@@ -72,7 +72,7 @@ Rectangle {
         }
 
         // perform identify operation on mapview
-        onMouseClicked: {
+        onMouseClicked: mouse => {
             if (callout.visible)
                 callout.dismiss();
             calloutLocation = mouse.mapPoint;

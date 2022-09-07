@@ -56,7 +56,7 @@ Rectangle {
                 }
             }
         }
-        onMouseClicked: {
+        onMouseClicked: mouse => {
             mapPoint = screenToLocation(mouse.x, mouse.y);
             if (identifyLayerStatus !== Enums.TaskStatusInProgress) {
                 if (map.operationalLayers.get(0))

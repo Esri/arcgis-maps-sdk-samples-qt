@@ -79,7 +79,7 @@ Rectangle {
         }
 
         //! [AddFeaturesFeatureService new feature at mouse click]
-        onMouseClicked: {  // mouseClicked came from the MapView
+        onMouseClicked: mouse => {  // mouseClicked came from the MapView
             // create attributes json for the new feature
             const featureAttributes = {"typdamage" : "Minor", "primcause" : "Earthquake"};
 

@@ -44,7 +44,7 @@ Rectangle {
             leaderPosition: leaderPositionEnum.Top
             padding: 5
         }
-        onMouseClicked: {
+        onMouseClicked: mouse => {
             clickedPoint = mapView.screenToLocation(mouse.x, mouse.y);
             mapView.identifyGraphicsOverlayWithMaxResults(graphicsOverlay, mouse.x, mouse.y, 5, false, 1);
         }

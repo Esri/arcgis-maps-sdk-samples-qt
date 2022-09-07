@@ -59,7 +59,7 @@ Rectangle {
             }
         }
 
-        onMouseClicked: {
+        onMouseClicked: mouse => {
             // hide the attribute view
             attributeView.height = 0;
 

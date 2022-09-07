@@ -44,7 +44,7 @@ Rectangle {
         }
 
         // handle the mouse click - perform a buffer on click
-        onMouseClicked: bufferPoint(mouse.mapPoint);
+        onMouseClicked: mouse => bufferPoint(mouse.mapPoint);
 
         // create graphics overlay for geodesic buffer graphics
         GraphicsOverlay {

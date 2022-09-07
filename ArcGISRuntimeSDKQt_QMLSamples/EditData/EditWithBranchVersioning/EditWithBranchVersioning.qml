@@ -53,7 +53,7 @@ Rectangle {
             callout.dismiss();
         }
 
-        onMouseClicked: {
+        onMouseClicked: mouse => {
             busyIndicator.visible = true;
             featureLayer.clearSelection();
 

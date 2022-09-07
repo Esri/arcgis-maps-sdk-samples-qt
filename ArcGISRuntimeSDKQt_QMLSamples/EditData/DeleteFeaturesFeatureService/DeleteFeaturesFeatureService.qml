@@ -121,7 +121,7 @@ Rectangle {
                 callout.dismiss();
         }
 
-        onMouseClicked: {
+        onMouseClicked: mouse => {
             // reset the map callout and update window
             featureLayer.clearSelection();
             if (callout.calloutVisible)

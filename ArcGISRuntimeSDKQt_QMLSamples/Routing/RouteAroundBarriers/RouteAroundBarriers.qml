@@ -173,7 +173,7 @@ Rectangle {
             }
         }
 
-        onMouseClicked: {
+        onMouseClicked: mouse => {
             const clickedPoint = mapView.screenToLocation(mouse.x, mouse.y);
 
             if (addStops) {

@@ -118,7 +118,7 @@ Rectangle {
             }
         }
 
-        onMouseClicked: {
+        onMouseClicked: mouse => {
             anchors.fill = parent;
                 const clickedPoint = mapView.screenToLocation(mouse.x, mouse.y);
                 // normalizing the geometry before performing geometric operations

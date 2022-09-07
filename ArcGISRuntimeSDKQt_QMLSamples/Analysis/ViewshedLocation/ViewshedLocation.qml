@@ -87,10 +87,10 @@ Rectangle {
             }
         }
 
-        onMouseClicked: locationViewshed.location = sceneView.screenToBaseSurface(mouse.x, mouse.y);
+        onMouseClicked: mouse => locationViewshed.location = sceneView.screenToBaseSurface(mouse.x, mouse.y);
         onMousePressedAndHeld: calculating = true;
         onMouseReleased: calculating = false;
-        onMousePositionChanged: locationViewshed.location = sceneView.screenToBaseSurface(mouse.x, mouse.y);
+        onMousePositionChanged: mouse => locationViewshed.location = sceneView.screenToBaseSurface(mouse.x, mouse.y);
 
         Rectangle {
             anchors {

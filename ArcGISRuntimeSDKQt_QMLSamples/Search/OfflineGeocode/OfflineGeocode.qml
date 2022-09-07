@@ -108,7 +108,7 @@ Rectangle {
             suggestionRect.visible = false;
         }
 
-        onMouseClicked: {
+        onMouseClicked: mouse => {
             clickedPoint = mouse.mapPoint;
             mapView.identifyGraphicsOverlayWithMaxResults(graphicsOverlay, mouse.x, mouse.y, 5, false, 1);
         }
