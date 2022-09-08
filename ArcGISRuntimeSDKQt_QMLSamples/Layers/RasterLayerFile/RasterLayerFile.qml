@@ -92,7 +92,7 @@ Rectangle {
         folder: dataPath
         supportedExtensions: supportedFormats
 
-        onRasterFileChosen: {
+        onRasterFileChosen: url => {
             createAndAddRasterLayer(url);
         }
     }

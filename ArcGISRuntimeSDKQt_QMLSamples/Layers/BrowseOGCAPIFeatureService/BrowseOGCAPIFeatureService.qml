@@ -14,6 +14,7 @@
 // limitations under the License.
 // [Legal]
 
+import Qt.labs.platform
 import QtQuick
 import QtQuick.Controls
 import QtQuick.Layouts
@@ -111,9 +112,7 @@ Rectangle {
         // Pop-up error message box
         MessageDialog {
             id: errorMessageBox
-            title: "Error message!"
             text: errorMessage
-            icon: StandardIcon.Warning
             visible: errorMessage === "" ? false : true;
             onAccepted: errorMessage = "";
         }
