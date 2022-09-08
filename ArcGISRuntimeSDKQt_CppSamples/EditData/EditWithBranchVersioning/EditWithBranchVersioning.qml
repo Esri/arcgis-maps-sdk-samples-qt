@@ -134,7 +134,7 @@ Item {
                 placeholderText: qsTr("Name must be unique")
                 Layout.alignment: Qt.AlignHCenter
                 Layout.margins: 5
-                validator: RegExpValidator { regExp: /\w{0,50}/ }
+                validator: RegularExpressionValidator { regularExpression: /\w{0,50}/ }
             }
 
             ComboBox {
