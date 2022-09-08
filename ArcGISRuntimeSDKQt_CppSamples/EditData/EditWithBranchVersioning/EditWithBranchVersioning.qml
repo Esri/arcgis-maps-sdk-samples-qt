@@ -120,13 +120,6 @@ Item {
         radius: 10
         visible: false
 
-        GaussianBlur {
-            anchors.fill: createVersionWindow
-            source: view
-            radius: 40
-            samples: 20
-        }
-
         MouseArea {
             anchors.fill: parent
             onClicked: mouse.accepted = true;
@@ -195,13 +188,6 @@ Item {
         height: childrenRect.height
         radius: 10
         visible: false
-
-        GaussianBlur {
-            anchors.fill: updateWindow
-            source: view
-            radius: 40
-            samples: 20
-        }
 
         MouseArea {
             anchors.fill: parent
