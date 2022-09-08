@@ -27,7 +27,7 @@ QT += opengl qml quick
 TEMPLATE = app
 TARGET = DisplayWfsLayer
 
-ARCGIS_RUNTIME_VERSION = 100.5
+ARCGIS_RUNTIME_VERSION = 200.0.0
 include($$PWD/arcgisruntime.pri)
 
 #-------------------------------------------------------------------------------
