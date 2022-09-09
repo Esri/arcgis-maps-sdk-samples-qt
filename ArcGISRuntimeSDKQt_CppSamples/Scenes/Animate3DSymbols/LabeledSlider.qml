@@ -23,7 +23,7 @@ Slider {
             radius: 3
             x: handleNub.x - width / 2 + handleNub.width / 2
             y: handleNub.y - handleNub.height * 2
-            color: progressSlider.background.children[0].color
+            color: "purple"
             Text {
                 id: handleText
                 padding: 3

@@ -65,7 +65,7 @@ Animate3DSymbolsSample {
                 model: missionsModel
                 textRole: "display"
                 property real modelWidth: 0
-                Layout.minimumWidth: leftPadding + rightPadding + indicator.width + modelWidth
+                Layout.minimumWidth: leftPadding + rightPadding + modelWidth
 
                 onModelChanged: {
                     for (let i = 0; i < missionsModel.rowCount(); ++i) {
@@ -168,7 +168,7 @@ Animate3DSymbolsSample {
 
                     MouseArea {
                         anchors.fill: parent
-                        onPressed: mouse.accepted
+                        onPressed: mouse => mouse.accepted
                         onWheel: wheel.accepted
                     }
                 }
