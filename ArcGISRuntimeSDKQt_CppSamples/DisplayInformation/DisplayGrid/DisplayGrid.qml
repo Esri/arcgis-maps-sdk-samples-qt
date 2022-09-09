@@ -89,7 +89,7 @@ DisplayGridSample {
 
         MouseArea {
             anchors.fill: parent
-            onClicked: (mouse) => mouse.accepted = true;
+            onClicked: mouse => mouse.accepted = true;
         }
     }
 
