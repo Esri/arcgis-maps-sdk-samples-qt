@@ -17,8 +17,6 @@
 #define CPPSAMPLEMANAGER_H
 
 #include "DownloadSampleManager.h"
-
-<<<<<<< HEAD
 #include <QObject>
 
 Q_MOC_INCLUDE("AuthenticationManager.h")
