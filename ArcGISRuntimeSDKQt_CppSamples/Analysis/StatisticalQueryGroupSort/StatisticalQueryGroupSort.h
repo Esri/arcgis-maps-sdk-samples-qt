@@ -17,14 +17,11 @@
 #ifndef STATISTICALQUERYGROUPSORT_H
 #define STATISTICALQUERYGROUPSORT_H
 
-namespace Esri
-{
-  namespace ArcGISRuntime
-  {
+namespace Esri::ArcGISRuntime
+{=
     class ServiceFeatureTable;
     enum class SortOrder;
     enum class StatisticType;
-  }
 }
 
 class StatisticResultListModel;

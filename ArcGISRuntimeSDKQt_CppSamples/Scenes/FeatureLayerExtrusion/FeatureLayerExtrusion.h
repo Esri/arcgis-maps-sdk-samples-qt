@@ -17,9 +17,7 @@
 #ifndef FEATURELAYEREXTRUSION_H
 #define FEATURELAYEREXTRUSION_H
 
-namespace Esri
-{
-namespace ArcGISRuntime
+namespace Esri::ArcGISRuntime
 {
 class FeatureLayer;
 class ServiceFeatureTable;
@@ -29,7 +27,6 @@ class SimpleLineSymbol;
 class SimpleFillSymbol;
 class SimpleRenderer;
 enum class FeatureRenderingMode;
-}
 }
 
 #include <QQuickItem>

@@ -17,16 +17,13 @@
 #ifndef RasterRenderingRule_H
 #define RasterRenderingRule_H
 
-namespace Esri
+namespace Esri::ArcGISRuntime
 {
-  namespace ArcGISRuntime
-  {
-    class Basemap;
-    class Map;
-    class MapQuickView;
-    class RasterLayer;
-    class ImageServiceRaster;
-  }
+  class Basemap;
+  class Map;
+  class MapQuickView;
+  class RasterLayer;
+  class ImageServiceRaster;
 }
 
 #include <QQuickItem>

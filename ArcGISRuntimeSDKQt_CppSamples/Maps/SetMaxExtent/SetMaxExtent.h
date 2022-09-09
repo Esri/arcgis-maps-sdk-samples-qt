@@ -17,9 +17,7 @@
 #ifndef SETMAXEXTENT_H
 #define SETMAXEXTENT_H
 
-namespace Esri
-{
-namespace ArcGISRuntime
+namespace Esri::ArcGISRuntime
 {
 class Envelope;
 class Graphic;
@@ -27,7 +25,6 @@ class GraphicsOverlay;
 class Map;
 class MapQuickView;
 class SimpleLineSymbol;
-}
 }
 
 #include <QObject>

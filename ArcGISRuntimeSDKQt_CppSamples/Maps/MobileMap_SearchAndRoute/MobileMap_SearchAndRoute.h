@@ -17,19 +17,16 @@
 #ifndef MOBILEMAP_SEARCHANDROUTE_H
 #define MOBILEMAP_SEARCHANDROUTE_H
 
-namespace Esri
+namespace Esri::ArcGISRuntime
 {
-  namespace ArcGISRuntime
-  {
-    class Map;
-    class RouteTask;
-    class LocatorTask;
-    class MapQuickView;
-    class GraphicsOverlay;
-    class MobileMapPackage;
-    class PictureMarkerSymbol;
-    class ReverseGeocodeParameters;
-  }
+  class Map;
+  class RouteTask;
+  class LocatorTask;
+  class MapQuickView;
+  class GraphicsOverlay;
+  class MobileMapPackage;
+  class PictureMarkerSymbol;
+  class ReverseGeocodeParameters;
 }
 
 #include "Stop.h"

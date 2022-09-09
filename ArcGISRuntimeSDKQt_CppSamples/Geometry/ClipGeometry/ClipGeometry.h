@@ -17,9 +17,7 @@
 #ifndef CLIPGEOMETRY_H
 #define CLIPGEOMETRY_H
 
-namespace Esri
-{
-namespace ArcGISRuntime
+namespace Esri::ArcGISRuntime
 {
 class Map;
 class MapQuickView;
@@ -27,7 +25,6 @@ class Graphic;
 class GraphicsOverlay;
 class SimpleLineSymbol;
 class SimpleFillSymbol;
-}
 }
 
 #include <QQuickItem>

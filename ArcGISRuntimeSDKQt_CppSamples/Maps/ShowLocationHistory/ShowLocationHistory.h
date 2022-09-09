@@ -21,9 +21,7 @@
 
 #include <QObject>
 
-namespace Esri
-{
-namespace ArcGISRuntime
+namespace Esri::ArcGISRuntime
 {
 class Graphic;
 class GraphicsOverlay;
@@ -31,7 +29,6 @@ class Map;
 class MapQuickView;
 class PolylineBuilder;
 class SimulatedLocationDataSource;
-}
 }
 
 Q_MOC_INCLUDE("MapQuickView.h")

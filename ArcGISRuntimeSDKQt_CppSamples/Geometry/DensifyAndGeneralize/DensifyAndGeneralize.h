@@ -17,16 +17,13 @@
 #ifndef DENSIFYANDGENERALIZE_H
 #define DENSIFYANDGENERALIZE_H
 
-namespace Esri
-{
-namespace ArcGISRuntime
+namespace Esri::ArcGISRuntime
 {
 class Map;
 class MapQuickView;
 class GraphicsOverlay;
 class Graphic;
 class PointCollection;
-}
 }
 
 #include <QQuickItem>

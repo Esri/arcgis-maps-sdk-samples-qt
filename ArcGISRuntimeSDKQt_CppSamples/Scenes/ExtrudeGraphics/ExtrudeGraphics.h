@@ -17,13 +17,10 @@
 #ifndef EXTRUDE_GRAPHICS_H
 #define EXTRUDE_GRAPHICS_H
 
-namespace Esri
+namespace Esri::ArcGISRuntime
 {
-  namespace ArcGISRuntime
-  {
-    class Scene;
-    class SceneQuickView;
-  }
+  class Scene;
+  class SceneQuickView;
 }
 
 #include "Polygon.h"

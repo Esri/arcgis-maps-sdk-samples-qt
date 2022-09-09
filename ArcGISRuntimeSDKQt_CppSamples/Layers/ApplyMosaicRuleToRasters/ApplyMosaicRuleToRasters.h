@@ -17,16 +17,13 @@
 #ifndef APPLYMOSAICRULETORASTERS_H
 #define APPLYMOSAICRULETORASTERS_H
 
-namespace Esri
-{
-namespace ArcGISRuntime
+namespace Esri::ArcGISRuntime
 {
 class ImageServiceRaster;
 class Map;
 class MapQuickView;
 class MosaicRule;
 class RasterLayer;
-}
 }
 
 #include <QObject>

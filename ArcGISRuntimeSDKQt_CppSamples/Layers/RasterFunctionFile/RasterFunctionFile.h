@@ -17,15 +17,12 @@
 #ifndef RASTERFUNCTIONFILE_H
 #define RASTERFUNCTIONFILE_H
 
-namespace Esri
+namespace Esri::ArcGISRuntime
 {
-  namespace ArcGISRuntime
-  {
-    class Map;
-    class MapQuickView;
-    class Raster;
-    class RasterFunction;
-  }
+  class Map;
+  class MapQuickView;
+  class Raster;
+  class RasterFunction;
 }
 
 #include <QQuickItem>

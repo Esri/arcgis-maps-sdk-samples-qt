@@ -17,9 +17,7 @@
 #ifndef DISPLAYSUBTYPEFEATURELAYER_H
 #define DISPLAYSUBTYPEFEATURELAYER_H
 
-namespace Esri
-{
-namespace ArcGISRuntime
+namespace Esri::ArcGISRuntime
 {
 class FeatureLayer;
 class Credential;
@@ -30,7 +28,6 @@ class Renderer;
 class SimpleRenderer;
 class SubtypeFeatureLayer;
 class SubtypeSublayer;
-}
 }
 
 #include <QObject>

@@ -17,14 +17,11 @@
 #ifndef STRETCHRENDERER_H
 #define STRETCHRENDERER_H
 
-namespace Esri
+namespace Esri::ArcGISRuntime
 {
-  namespace ArcGISRuntime
-  {
-    class Map;
-    class MapQuickView;
-    class RasterLayer;
-  }
+  class Map;
+  class MapQuickView;
+  class RasterLayer;
 }
 
 #include <QQuickItem>

@@ -17,14 +17,11 @@
 #ifndef DISPLAYDEVICELOCATIONWITHNMEADATASOURCES_H
 #define DISPLAYDEVICELOCATIONWITHNMEADATASOURCES_H
 
-namespace Esri
-{
-namespace ArcGISRuntime
+namespace Esri::ArcGISRuntime
 {
 class Map;
 class MapQuickView;
 class NmeaLocationDataSource;
-}
 }
 
 #include <QObject>

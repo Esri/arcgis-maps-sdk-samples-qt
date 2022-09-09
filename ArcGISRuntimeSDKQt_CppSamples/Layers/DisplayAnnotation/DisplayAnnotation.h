@@ -17,13 +17,10 @@
 #ifndef DISPLAYANNOTATION_H
 #define DISPLAYANNOTATION_H
 
-namespace Esri
-{
-namespace ArcGISRuntime
+namespace Esri::ArcGISRuntime
 {
 class Map;
 class MapQuickView;
-}
 }
 
 #include <QObject>

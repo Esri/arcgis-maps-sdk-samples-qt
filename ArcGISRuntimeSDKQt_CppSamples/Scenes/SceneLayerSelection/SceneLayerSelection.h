@@ -17,13 +17,10 @@
 #ifndef SCENELAYERSELECTION_H
 #define SCENELAYERSELECTION_H
 
-namespace Esri
-{
-namespace ArcGISRuntime
+namespace Esri::ArcGISRuntime
 {
 class SceneQuickView;
 class ArcGISSceneLayer;
-}
 }
 
 #include <QQuickItem>

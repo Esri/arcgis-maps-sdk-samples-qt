@@ -17,9 +17,7 @@
 #ifndef DISPLAYCONTENTOFUTILITYNETWORKCONTAINER_H
 #define DISPLAYCONTENTOFUTILITYNETWORKCONTAINER_H
 
-namespace Esri
-{
-namespace ArcGISRuntime
+namespace Esri::ArcGISRuntime
 {
 class Credential;
 class GraphicsOverlay;
@@ -31,7 +29,6 @@ class Symbol;
 class UtilityAssociation;
 class UtilityElement;
 class UtilityNetwork;
-}
 }
 
 class SymbolImageProvider;

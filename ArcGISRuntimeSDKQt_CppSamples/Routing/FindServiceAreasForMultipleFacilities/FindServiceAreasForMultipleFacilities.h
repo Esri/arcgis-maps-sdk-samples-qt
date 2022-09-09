@@ -19,9 +19,7 @@
 
 #include "TaskWatcher.h"
 
-namespace Esri
-{
-namespace ArcGISRuntime
+namespace Esri::ArcGISRuntime
 {
 class FeatureLayer;
 class GraphicsOverlay;
@@ -30,7 +28,6 @@ class MapQuickView;
 class ServiceAreaTask;
 class ServiceFeatureTable;
 class SimpleFillSymbol;
-}
 }
 
 #include <QObject>

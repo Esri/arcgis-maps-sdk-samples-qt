@@ -18,18 +18,16 @@
 
 #include "DownloadSampleManager.h"
 
+<<<<<<< HEAD
 #include <QObject>
 
 Q_MOC_INCLUDE("AuthenticationManager.h")
 
-namespace Esri
-{
-namespace ArcGISRuntime
+namespace Esri::ArcGISRuntime
 {
 class AuthenticationManager;
 class Portal;
 class PortalItem;
-}
 }
 
 class CppSampleManager : public DownloadSampleManager

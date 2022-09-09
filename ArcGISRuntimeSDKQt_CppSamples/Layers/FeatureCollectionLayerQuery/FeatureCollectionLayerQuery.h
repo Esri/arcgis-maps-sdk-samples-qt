@@ -17,14 +17,11 @@
 #ifndef FEATURECOLLECTIONLAYERQUERY_H
 #define FEATURECOLLECTIONLAYERQUERY_H
 
-namespace Esri
+namespace Esri::ArcGISRuntime
 {
-  namespace ArcGISRuntime
-  {
-    class Map;
-    class MapQuickView;
-    class ServiceFeatureTable;
-  }
+  class Map;
+  class MapQuickView;
+  class ServiceFeatureTable;
 }
 
 #include <QQuickItem>

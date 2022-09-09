@@ -17,16 +17,13 @@
 #ifndef BUFFER_H
 #define BUFFER_H
 
-namespace Esri
-{
-namespace ArcGISRuntime
+namespace Esri::ArcGISRuntime
 {
 class Map;
 class MapQuickView;
 class GraphicsOverlay;
 class SimpleMarkerSymbol;
 class SimpleFillSymbol;
-}
 }
 
 #include <QMouseEvent>

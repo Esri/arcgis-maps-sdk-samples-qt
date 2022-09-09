@@ -17,9 +17,10 @@
 #ifndef CHOOSECAMERACONTROLLER_H
 #define CHOOSECAMERACONTROLLER_H
 
-namespace Esri
-{
-namespace ArcGISRuntime
+// Qt headers
+#include <QObject>
+
+namespace Esri::ArcGISRuntime
 {
 class GlobeCameraController;
 class GraphicsOverlay;
@@ -27,7 +28,6 @@ class OrbitGeoElementCameraController;
 class OrbitLocationCameraController;
 class Scene;
 class SceneQuickView;
-}
 }
 
 #include <QObject>

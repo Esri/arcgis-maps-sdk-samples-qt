@@ -17,19 +17,16 @@
 #ifndef OFFLINEGEOCODE_H
 #define OFFLINEGEOCODE_H
 
-namespace Esri
+namespace Esri::ArcGISRuntime
 {
-  namespace ArcGISRuntime
-  {
-    class Map;
-    class Graphic;
-    class LocatorTask;
-    class CalloutData;
-    class MapQuickView;
-    class GraphicsOverlay;
-    class ArcGISTiledLayer;
-    class SuggestListModel;
-  }
+  class Map;
+  class Graphic;
+  class LocatorTask;
+  class CalloutData;
+  class MapQuickView;
+  class GraphicsOverlay;
+  class ArcGISTiledLayer;
+  class SuggestListModel;
 }
 
 #include "Point.h"

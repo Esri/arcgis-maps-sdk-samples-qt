@@ -17,15 +17,12 @@
 #ifndef GENERATE_GEODATABASE_H
 #define GENERATE_GEODATABASE_H
 
-namespace Esri
+namespace Esri::ArcGISRuntime
 {
-  namespace ArcGISRuntime
-  {
-    class Map;
-    class MapQuickView;
-    class GeodatabaseSyncTask;
-    class Geodatabase;
-  }
+  class Map;
+  class MapQuickView;
+  class GeodatabaseSyncTask;
+  class Geodatabase;
 }
 
 #include "Envelope.h"

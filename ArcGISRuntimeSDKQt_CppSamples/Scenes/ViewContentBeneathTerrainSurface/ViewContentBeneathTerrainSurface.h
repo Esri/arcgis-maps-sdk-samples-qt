@@ -17,13 +17,10 @@
 #ifndef VIEWCONTENTBENEATHTERRAINSURFACE_H
 #define VIEWCONTENTBENEATHTERRAINSURFACE_H
 
-namespace Esri
-{
-namespace ArcGISRuntime
+namespace Esri::ArcGISRuntime
 {
 class Scene;
 class SceneQuickView;
-}
 }
 
 #include <QObject>

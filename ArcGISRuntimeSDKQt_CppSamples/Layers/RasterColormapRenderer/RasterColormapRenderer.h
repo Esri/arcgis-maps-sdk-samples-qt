@@ -17,15 +17,12 @@
 #ifndef COLORMAPRENDERER_H
 #define COLORMAPRENDERER_H
 
-namespace Esri
+namespace Esri::ArcGISRuntime
 {
-  namespace ArcGISRuntime
-  {
-    class ColormapRenderer;
-    class Map;
-    class MapQuickView;
-    class RasterLayer;
-  }
+  class ColormapRenderer;
+  class Map;
+  class MapQuickView;
+  class RasterLayer;
 }
 
 #include <QQuickItem>

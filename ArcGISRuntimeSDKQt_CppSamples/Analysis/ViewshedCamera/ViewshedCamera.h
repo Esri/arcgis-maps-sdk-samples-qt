@@ -17,15 +17,12 @@
 #ifndef VIEWSHEDCAMERA_H
 #define VIEWSHEDCAMERA_H
 
-namespace Esri
-{
-namespace ArcGISRuntime
+namespace Esri::ArcGISRuntime
 {
 class Scene;
 class SceneQuickView;
 class AnalysisOverlay;
 class LocationViewshed;
-}
 }
 
 #include <QQuickItem>

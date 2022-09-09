@@ -17,15 +17,12 @@
 #ifndef FILTER_BY_DEFINITION_EXPRESSION_OR_DISPLAY_FILTER_H
 #define FILTER_BY_DEFINITION_EXPRESSION_OR_DISPLAY_FILTER_H
 
-namespace Esri
+namespace Esri::ArcGISRuntime
 {
-  namespace ArcGISRuntime
-  {
-    class Map;
-    class MapQuickView;
-    class FeatureLayer;
-    class ServiceFeatureTable;
-  }
+  class Map;
+  class MapQuickView;
+  class FeatureLayer;
+  class ServiceFeatureTable;
 }
 
 #include <QQuickItem>

@@ -17,21 +17,18 @@
 #ifndef %{IncludeGuard}
 #define %{IncludeGuard}
 
-namespace Esri
+namespace Esri::ArcGISRuntime
 {
-  namespace ArcGISRuntime
-  {
-    @if %{UseFeatureLayer}
-    class FeatureLayer;
-    @endif
-    @if %{ThreeDSample}
-    class Scene;
-    class SceneQuickView;
-    @else
-    class Map;
-    class MapQuickView;
-    @endif
-  }
+@if %{UseFeatureLayer}
+  class FeatureLayer;
+@endif
+@if %{ThreeDSample}
+  class Scene;
+  class SceneQuickView;
+@else
+  class Map;
+  class MapQuickView;
+@endif
 }
 
 #include <QObject>

@@ -17,13 +17,10 @@
 #ifndef HONORMOBILEMAPPACKAGEEXPIRATION_H
 #define HONORMOBILEMAPPACKAGEEXPIRATION_H
 
-namespace Esri
-{
-namespace ArcGISRuntime
+namespace Esri::ArcGISRuntime
 {
 class MapQuickView;
 class MobileMapPackage;
-}
 }
 
 #include <QObject>

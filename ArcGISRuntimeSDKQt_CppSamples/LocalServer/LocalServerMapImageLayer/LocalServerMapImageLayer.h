@@ -17,15 +17,12 @@
 #ifndef LOCAL_SERVER_MAPIMAGELAYER_H
 #define LOCAL_SERVER_MAPIMAGELAYER_H
 
-namespace Esri
+namespace Esri::ArcGISRuntime
 {
-  namespace ArcGISRuntime
-  {
-    class Map;
-    class MapQuickView;
-    class LocalServer;
-    class LocalMapService;
-  }
+  class Map;
+  class MapQuickView;
+  class LocalServer;
+  class LocalMapService;
 }
 
 class QTemporaryDir;

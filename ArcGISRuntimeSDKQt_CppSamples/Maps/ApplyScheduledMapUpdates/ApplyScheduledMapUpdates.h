@@ -17,16 +17,13 @@
 #ifndef APPLYSCHEDULEDMAPUPDATES_H
 #define APPLYSCHEDULEDMAPUPDATES_H
 
-namespace Esri
-{
-namespace ArcGISRuntime
+namespace Esri::ArcGISRuntime
 {
 class Map;
 class MapQuickView;
 class MobileMapPackage;
 class OfflineMapSyncTask;
 class OfflineMapSyncJob;
-}
 }
 
 #include <QObject>

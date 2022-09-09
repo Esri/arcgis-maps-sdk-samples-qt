@@ -17,9 +17,7 @@
 #ifndef APPLYUNIQUEVALUESWITHALTERNATESYMBOLS_H
 #define APPLYUNIQUEVALUESWITHALTERNATESYMBOLS_H
 
-namespace Esri
-{
-namespace ArcGISRuntime
+namespace Esri::ArcGISRuntime
 {
 class FeatureLayer;
 class Map;
@@ -28,7 +26,6 @@ class Renderer;
 class ServiceFeatureTable;
 class Symbol;
 class UniqueValueRenderer;
-}
 }
 
 #include <QObject>

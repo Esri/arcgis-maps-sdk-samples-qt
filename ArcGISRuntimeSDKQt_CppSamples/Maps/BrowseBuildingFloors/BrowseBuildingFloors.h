@@ -17,15 +17,12 @@
 #ifndef BROWSEBUILDINGFLOORS_H
 #define BROWSEBUILDINGFLOORS_H
 
-namespace Esri
-{
-namespace ArcGISRuntime
+namespace Esri::ArcGISRuntime
 {
 class Map;
 class MapQuickView;
 class FloorManager;
 class FloorLevel;
-}
 }
 
 #include <QObject>

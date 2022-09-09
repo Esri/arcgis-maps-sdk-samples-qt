@@ -17,14 +17,11 @@
 #ifndef IDENTIFY_GRAPHICS_H
 #define IDENTIFY_GRAPHICS_H
 
-namespace Esri
+namespace Esri::ArcGISRuntime
 {
-  namespace ArcGISRuntime
-  {
-    class Map;
-    class MapQuickView;
-    class GraphicsOverlay;
-  }
+  class Map;
+  class MapQuickView;
+  class GraphicsOverlay;
 }
 
 #include <QQuickItem>

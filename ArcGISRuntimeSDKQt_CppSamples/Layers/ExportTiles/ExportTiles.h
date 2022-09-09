@@ -20,15 +20,12 @@
 // C++ API headers
 #include "ExportTileCacheParameters.h"
 
-namespace Esri
+namespace Esri::ArcGISRuntime
 {
-  namespace ArcGISRuntime
-  {
-    class ExportTileCacheTask;
-    class Map;
-    class MapQuickView;
-    class TileCache;
-  }
+  class ExportTileCacheTask;
+  class Map;
+  class MapQuickView;
+  class TileCache;
 }
 
 #include <QQuickItem>

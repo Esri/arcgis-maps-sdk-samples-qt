@@ -17,16 +17,13 @@
 #ifndef LISTRELATEDFEATURES_H
 #define LISTRELATEDFEATURES_H
 
-namespace Esri
+namespace Esri::ArcGISRuntime
 {
-  namespace ArcGISRuntime
-  {
-    class ArcGISFeature;
-    class ArcGISFeatureTable;
-    class FeatureLayer;
-    class Map;
-    class MapQuickView;
-  }
+  class ArcGISFeature;
+  class ArcGISFeatureTable;
+  class FeatureLayer;
+  class Map;
+  class MapQuickView;
 }
 class RelatedFeatureListModel;
 

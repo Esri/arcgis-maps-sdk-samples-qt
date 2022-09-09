@@ -17,13 +17,12 @@
 #ifndef ARCGISTILEDLAYER_URL_H
 #define ARCGISTILEDLAYER_URL_H
 
-namespace Esri {
-namespace ArcGISRuntime {
-    class Map;
-    class MapGraphicsView;
-    class Basemap;
-    class ArcGISTiledLayer;
-  }
+namespace Esri::ArcGISRuntime {
+ 
+  class Map;
+  class MapGraphicsView;
+  class Basemap;
+  class ArcGISTiledLayer;
 }
 
 #include <QWidget>

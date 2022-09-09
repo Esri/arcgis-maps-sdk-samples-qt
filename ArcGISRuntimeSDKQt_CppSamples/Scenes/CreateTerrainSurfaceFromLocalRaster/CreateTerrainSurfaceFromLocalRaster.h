@@ -19,13 +19,10 @@
 
 #include "Error.h"
 
-namespace Esri
+namespace Esri::ArcGISRuntime
 {
-  namespace ArcGISRuntime
-  {
-    class Scene;
-    class SceneQuickView;
-  }
+  class Scene;
+  class SceneQuickView;
 }
 
 #include <QObject>

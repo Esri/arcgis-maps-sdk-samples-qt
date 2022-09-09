@@ -17,15 +17,12 @@
 #ifndef SIMPLE_RENDERER_H
 #define SIMPLE_RENDERER_H
 
-namespace Esri
+namespace Esri::ArcGISRuntime
 {
-  namespace ArcGISRuntime
-  {
     class Map;
     class MapQuickView;
     class GraphicsOverlay;
     class Point;
-  }
 }
 
 #include <QQuickItem>

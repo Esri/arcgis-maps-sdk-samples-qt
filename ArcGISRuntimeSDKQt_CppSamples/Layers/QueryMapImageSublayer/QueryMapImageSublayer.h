@@ -17,9 +17,7 @@
 #ifndef QUERYMAPIMAGESUBLAYER_H
 #define QUERYMAPIMAGESUBLAYER_H
 
-namespace Esri
-{
-namespace ArcGISRuntime
+namespace Esri::ArcGISRuntime
 {
 class Map;
 class MapQuickView;
@@ -30,7 +28,6 @@ class SimpleMarkerSymbol;
 class SimpleFillSymbol;
 class Symbol;
 class FeatureQueryResult;
-}
 }
 
 #include <QQuickItem>

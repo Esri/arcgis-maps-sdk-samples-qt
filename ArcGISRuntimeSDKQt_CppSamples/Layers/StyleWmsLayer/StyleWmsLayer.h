@@ -17,14 +17,11 @@
 #ifndef STYLEWMSLAYER_H
 #define STYLEWMSLAYER_H
 
-namespace Esri
-{
-namespace ArcGISRuntime
+namespace Esri::ArcGISRuntime
 {
 class Map;
 class MapQuickView;
 class WmsSublayer;
-}
 }
 
 #include <QQuickItem>

@@ -17,9 +17,7 @@
 #ifndef EDITWITHBRANCHVERSIONING_H
 #define EDITWITHBRANCHVERSIONING_H
 
-namespace Esri
-{
-namespace ArcGISRuntime
+namespace Esri::ArcGISRuntime
 {
 class AuthenticationManager;
 class ServiceVersionParameters;
@@ -32,7 +30,6 @@ class ServiceVersionInfo;
 class ArcGISFeature;
 class Credential;
 class Point;
-}
 }
 
 #include "Error.h"

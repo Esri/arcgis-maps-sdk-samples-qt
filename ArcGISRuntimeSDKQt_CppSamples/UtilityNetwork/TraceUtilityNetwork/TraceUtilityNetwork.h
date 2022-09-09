@@ -19,9 +19,7 @@
 
 #include "Point.h"
 
-namespace Esri
-{
-namespace ArcGISRuntime
+namespace Esri::ArcGISRuntime
 {
 class ArcGISFeature;
 class Credential;
@@ -44,7 +42,6 @@ class UtilityNetwork;
 class UtilityTerminal;
 class UtilityTier;
 class UtilityTraceParameters;
-}
 }
 
 #include <QObject>

@@ -17,12 +17,9 @@
 #ifndef OPEN_MAP_URL_H
 #define OPEN_MAP_URL_H
 
-namespace Esri
+namespace Esri::ArcGISRuntime
 {
-  namespace ArcGISRuntime
-  {
-    class MapQuickView;
-  }
+  class MapQuickView;
 }
 
 class QString;

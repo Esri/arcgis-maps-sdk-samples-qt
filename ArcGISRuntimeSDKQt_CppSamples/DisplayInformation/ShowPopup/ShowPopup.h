@@ -19,9 +19,7 @@
 
 #include "TaskWatcher.h"
 
-namespace Esri
-{
-namespace ArcGISRuntime
+namespace Esri::ArcGISRuntime
 {
 class FeatureLayer;
 class GeoElement;
@@ -29,7 +27,6 @@ class IdentifyLayerResult;
 class Map;
 class MapQuickView;
 class PopupManager;
-}
 }
 
 #include <QObject>

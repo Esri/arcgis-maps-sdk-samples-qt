@@ -17,9 +17,7 @@
 #ifndef GEOTRIGGERS_H
 #define GEOTRIGGERS_H
 
-namespace Esri
-{
-namespace ArcGISRuntime
+namespace Esri::ArcGISRuntime
 {
 class ArcGISFeature;
 class AttachmentListModel;
@@ -33,7 +31,6 @@ class MapQuickView;
 class Point;
 class ServiceFeatureTable;
 class SimulatedLocationDataSource;
-}
 }
 
 #include <QObject>

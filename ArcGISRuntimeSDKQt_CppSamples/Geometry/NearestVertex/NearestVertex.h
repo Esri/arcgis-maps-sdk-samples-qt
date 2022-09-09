@@ -17,13 +17,10 @@
 #ifndef NEARESTVERTEX_H
 #define NEARESTVERTEX_H
 
-namespace Esri
-{
-namespace ArcGISRuntime
+namespace Esri::ArcGISRuntime
 {
 class Map;
 class MapQuickView;
-}
 }
 
 #include <QObject>

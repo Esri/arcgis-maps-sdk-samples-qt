@@ -17,14 +17,11 @@
 #ifndef GEODESICOPERATIONS_H
 #define GEODESICOPERATIONS_H
 
-namespace Esri
-{
-namespace ArcGISRuntime
+namespace Esri::ArcGISRuntime
 {
 class Map;
 class MapQuickView;
 class Graphic;
-}
 }
 
 #include "Point.h"

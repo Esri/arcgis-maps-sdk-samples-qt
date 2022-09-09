@@ -21,9 +21,7 @@
 #include "RouteParameters.h"
 #include "Stop.h"
 
-namespace Esri
-{
-namespace ArcGISRuntime
+namespace Esri::ArcGISRuntime
 {
 class GraphicsOverlay;
 class Map;
@@ -31,7 +29,6 @@ class MapQuickView;
 class PictureMarkerSymbol;
 class RouteTask;
 class SimpleFillSymbol;
-}
 }
 
 #include <QObject>

@@ -17,16 +17,13 @@
 #ifndef GO_RENDERERS_H
 #define GO_RENDERERS_H
 
-namespace Esri
-{
-namespace ArcGISRuntime
+namespace Esri::ArcGISRuntime
 {
 class Geometry;
 class Graphic;
 class Map;
 class MapQuickView;
 class Symbol;
-}
 }
 
 #include <QQuickItem>

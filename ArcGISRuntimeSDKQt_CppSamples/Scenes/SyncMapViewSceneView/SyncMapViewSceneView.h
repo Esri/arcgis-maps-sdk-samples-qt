@@ -17,16 +17,13 @@
 #ifndef SYNCMAPVIEWSCENEVIEW_H
 #define SYNCMAPVIEWSCENEVIEW_H
 
-namespace Esri
-{
-namespace ArcGISRuntime
+namespace Esri::ArcGISRuntime
 {
 class Scene;
 class SceneQuickView;
 
 class Map;
 class MapQuickView;
-}
 }
 
 #include <QObject>

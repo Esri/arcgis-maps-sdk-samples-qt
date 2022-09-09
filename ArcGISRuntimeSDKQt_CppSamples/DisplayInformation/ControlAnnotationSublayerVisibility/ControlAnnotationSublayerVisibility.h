@@ -17,9 +17,7 @@
 #ifndef CONTROLANNOTATIONSUBLAYERVISIBILITY_H
 #define CONTROLANNOTATIONSUBLAYERVISIBILITY_H
 
-namespace Esri
-{
-namespace ArcGISRuntime
+namespace Esri::ArcGISRuntime
 {
 class Map;
 class MapQuickView;
@@ -27,7 +25,6 @@ class MobileMapPackage;
 class AnnotationSublayer;
 class LayerListModel;
 class Layer;
-}
 }
 
 #include <QObject>

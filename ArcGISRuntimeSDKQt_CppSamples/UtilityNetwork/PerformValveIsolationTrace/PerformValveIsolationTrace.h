@@ -17,9 +17,7 @@
 #ifndef PERFORMVALVEISOLATIONTRACE_H
 #define PERFORMVALVEISOLATIONTRACE_H
 
-namespace Esri
-{
-namespace ArcGISRuntime
+namespace Esri::ArcGISRuntime
 {
 class ArcGISFeature;
 class Credential;
@@ -34,7 +32,6 @@ class UtilityTraceConfiguration;
 class UtilityTraceParameters;
 class IdentifyLayerResult;
 class ServiceGeodatabase;
-}
 }
 
 #include <QObject>

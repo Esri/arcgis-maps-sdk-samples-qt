@@ -17,17 +17,14 @@
 #ifndef UNIQUE_VALUE_RENDERER_H
 #define UNIQUE_VALUE_RENDERER_H
 
-namespace Esri
+namespace Esri::ArcGISRuntime
 {
-  namespace ArcGISRuntime
-  {
-    class Map;
-    class MapQuickView;
-    class FeatureLayer;
-    class ServiceFeatureTable;
-    class UniqueValueRenderer;
-    class SimpleFillSymbol;
-  }
+  class Map;
+  class MapQuickView;
+  class FeatureLayer;
+  class ServiceFeatureTable;
+  class UniqueValueRenderer;
+  class SimpleFillSymbol;
 }
 
 #include <QQuickItem>

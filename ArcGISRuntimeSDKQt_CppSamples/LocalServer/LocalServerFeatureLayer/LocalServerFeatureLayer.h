@@ -17,16 +17,13 @@
 #ifndef LOCAL_SERVER_FEATURELAYER_H
 #define LOCAL_SERVER_FEATURELAYER_H
 
-namespace Esri
+namespace Esri::ArcGISRuntime
 {
-  namespace ArcGISRuntime
-  {
-    class Map;
-    class MapQuickView;
-    class LocalServer;
-    class LocalFeatureService;
-    class LocalService;
-  }
+  class Map;
+  class MapQuickView;
+  class LocalServer;
+  class LocalFeatureService;
+  class LocalService;
 }
 
 class QTemporaryDir;

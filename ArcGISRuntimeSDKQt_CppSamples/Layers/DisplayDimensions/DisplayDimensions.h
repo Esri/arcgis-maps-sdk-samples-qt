@@ -17,16 +17,13 @@
 #ifndef DISPLAYDIMENSIONS_H
 #define DISPLAYDIMENSIONS_H
 
-namespace Esri
-{
-namespace ArcGISRuntime
+namespace Esri::ArcGISRuntime
 {
 class DimensionLayer;
 class Error;
 class Map;
 class MapQuickView;
 class MobileMapPackage;
-}
 }
 
 #include <QObject>

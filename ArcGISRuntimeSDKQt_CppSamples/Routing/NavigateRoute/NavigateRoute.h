@@ -20,9 +20,7 @@
 #include "Route.h"
 #include "RouteResult.h"
 
-namespace Esri
-{
-namespace ArcGISRuntime
+namespace Esri::ArcGISRuntime
 {
 class Graphic;
 class GraphicsOverlay;
@@ -31,7 +29,6 @@ class MapQuickView;
 class RouteTask;
 class RouteTracker;
 class SimulatedLocationDataSource;
-}
 }
 
 // NOTE: As of Qt 6.2, QTextToSpeech is not supported. Instances of this class have been commented out for compatibility, but remain for reference

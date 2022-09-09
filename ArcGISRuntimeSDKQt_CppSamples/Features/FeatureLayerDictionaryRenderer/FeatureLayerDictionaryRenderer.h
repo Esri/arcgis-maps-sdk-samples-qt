@@ -19,13 +19,10 @@
 
 #include <QQuickItem>
 
-namespace Esri
+namespace Esri::ArcGISRuntime
 {
-  namespace ArcGISRuntime
-  {
-    class Geodatabase;
-    class MapQuickView;
-  }
+  class Geodatabase;
+  class MapQuickView;
 }
 
 class FeatureLayerDictionaryRenderer : public QQuickItem

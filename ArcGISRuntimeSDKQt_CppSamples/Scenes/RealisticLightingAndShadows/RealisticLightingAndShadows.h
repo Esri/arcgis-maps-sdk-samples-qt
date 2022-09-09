@@ -17,13 +17,10 @@
 #ifndef REALISTICLIGHTINGANDSHADOWS_H
 #define REALISTICLIGHTINGANDSHADOWS_H
 
-namespace Esri
-{
-namespace ArcGISRuntime
+namespace Esri::ArcGISRuntime
 {
 class Scene;
 class SceneQuickView;
-}
 }
 
 #include <QObject>

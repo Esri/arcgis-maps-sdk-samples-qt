@@ -17,13 +17,12 @@
 #ifndef SET_MAP_SPATIAL_REFERENCE
 #define SET_MAP_SPATIAL_REFERENCE
 
-namespace Esri {
-namespace ArcGISRuntime {
+namespace Esri::ArcGISRuntime
+{
   class Map;
   class MapGraphicsView;
   class Basemap;
   class ArcGISMapImageLayer;
-  }
 }
 
 #include <QWidget>

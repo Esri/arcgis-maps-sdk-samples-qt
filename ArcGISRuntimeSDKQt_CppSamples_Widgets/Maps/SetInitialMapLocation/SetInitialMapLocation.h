@@ -17,11 +17,10 @@
 #ifndef SET_INITIAL_MAP_LOCATION_H
 #define SET_INITIAL_MAP_LOCATION_H
 
-namespace Esri {
-namespace ArcGISRuntime {
+namespace Esri::ArcGISRuntime
+{
   class Map;
   class MapGraphicsView;
-  }
 }
 
 #include <QWidget>

@@ -17,16 +17,13 @@
 #ifndef EXPORTVECTORTILES_H
 #define EXPORTVECTORTILES_H
 
-namespace Esri
-{
-namespace ArcGISRuntime
+namespace Esri::ArcGISRuntime
 {
 class ExportVectorTilesJob;
 class Graphic;
 class GraphicsOverlay;
 class Map;
 class MapQuickView;
-}
 }
 
 #include <QObject>

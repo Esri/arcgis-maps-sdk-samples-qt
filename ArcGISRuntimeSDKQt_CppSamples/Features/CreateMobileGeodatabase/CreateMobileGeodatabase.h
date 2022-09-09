@@ -17,15 +17,12 @@
 #ifndef CREATEMOBILEGEODATABASE_H
 #define CREATEMOBILEGEODATABASE_H
 
-namespace Esri
-{
-namespace ArcGISRuntime
+namespace Esri::ArcGISRuntime
 {
 class FeatureTable;
 class Geodatabase;
 class Map;
 class MapQuickView;
-}
 }
 
 #include <FeatureListModel.h>

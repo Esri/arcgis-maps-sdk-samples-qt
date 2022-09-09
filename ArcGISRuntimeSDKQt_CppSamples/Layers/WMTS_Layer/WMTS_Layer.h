@@ -17,13 +17,10 @@
 #ifndef WMTS_LAYER_H
 #define WMTS_LAYER_H
 
-namespace Esri
+namespace Esri::ArcGISRuntime
 {
-  namespace ArcGISRuntime
-  {
-    class MapQuickView;
-    class WmtsService;
-  }
+  class MapQuickView;
+  class WmtsService;
 }
 
 #include <QQuickItem>

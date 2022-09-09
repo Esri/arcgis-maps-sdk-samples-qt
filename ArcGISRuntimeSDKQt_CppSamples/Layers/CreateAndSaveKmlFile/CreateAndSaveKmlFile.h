@@ -17,9 +17,7 @@
 #ifndef CREATEANDSAVEKMLFILE_H
 #define CREATEANDSAVEKMLFILE_H
 
-namespace Esri
-{
-namespace ArcGISRuntime
+namespace Esri::ArcGISRuntime
 {
 class Map;
 class MapQuickView;
@@ -27,7 +25,6 @@ class KmlDocument;
 class KmlDataset;
 class KmlLayer;
 class KmlStyle;
-}
 }
 
 #include <QObject>

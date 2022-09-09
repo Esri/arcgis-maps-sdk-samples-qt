@@ -17,14 +17,11 @@
 #ifndef CREATEANDSAVEMAP_H
 #define CREATEANDSAVEMAP_H
 
-namespace Esri
-{
-namespace ArcGISRuntime
+namespace Esri::ArcGISRuntime
 {
 class Map;
 class MapQuickView;
 class Portal;
-}
 }
 
 #include <QQuickItem>
