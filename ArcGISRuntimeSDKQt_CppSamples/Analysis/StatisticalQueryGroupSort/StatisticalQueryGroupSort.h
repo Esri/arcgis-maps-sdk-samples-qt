@@ -18,7 +18,7 @@
 #define STATISTICALQUERYGROUPSORT_H
 
 namespace Esri::ArcGISRuntime
-{=
+{
     class ServiceFeatureTable;
     enum class SortOrder;
     enum class StatisticType;
