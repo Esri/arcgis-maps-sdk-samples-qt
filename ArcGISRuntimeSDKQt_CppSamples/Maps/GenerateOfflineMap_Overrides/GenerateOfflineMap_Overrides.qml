@@ -18,7 +18,6 @@ import QtQuick
 import QtQuick.Controls
 import QtQuick.Layouts
 import Esri.Samples
-import Esri.ArcGISRuntime.Toolkit
 
 GenerateOfflineMap_OverridesSample {
     id: offlineMapOverridesSample
@@ -26,9 +25,9 @@ GenerateOfflineMap_OverridesSample {
     width: 800
     height: 600
 
-    onUpdateStatus: generateWindow.statusText = status;
-    onUpdateProgress: generateWindow.progressText = progress;
-    onHideWindow: {
+    onUpdateStatus: status => generateWindow.statusText = status;
+    onUpdateProgress: progress => generateWindow.progressText = progress;
+    onHideWindow: (time, success) => {
         generateWindow.hideWindow(time);
 
         if (success) {
@@ -88,11 +87,11 @@ GenerateOfflineMap_OverridesSample {
         anchors.fill: parent
         visible: overridesReady
 
-        onBasemapLODSelected: setBasemapLOD(min, max);
-        onBasemapBufferChanged: setBasemapBuffer(buffer);
+        onBasemapLODSelected: (min, max) => setBasemapLOD(min, max);
+        onBasemapBufferChanged: (buffer) => setBasemapBuffer(buffer);
         onRemoveSystemValvesChanged: removeSystemValves();
         onRemoveServiceConnectionChanged: removeServiceConnection();
-        onHydrantWhereClauseChanged: setHydrantWhereClause(whereClause);
+        onHydrantWhereClauseChanged: (whereClause) => setHydrantWhereClause(whereClause);
         onClipWaterPipesAOIChanged: setClipWaterPipesAOI(clip);
         onOverridesAccepted: {
             generateWindow.visible = true;
