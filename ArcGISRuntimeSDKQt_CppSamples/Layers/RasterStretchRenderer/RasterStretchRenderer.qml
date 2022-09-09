@@ -92,7 +92,7 @@ RasterStretchRendererSample {
                 anchors.horizontalCenter: parent.horizontalCenter
                 model: stretchTypes
                 property int modelWidth: 0
-                width: modelWidth + leftPadding + rightPadding + indicator.width
+                width: modelWidth + leftPadding + rightPadding
                 Component.onCompleted : {
                     for (let i = 0; i < model.length; ++i) {
                         metrics.text = model[i];
