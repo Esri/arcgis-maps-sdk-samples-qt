@@ -23,7 +23,9 @@ CONFIG += c++14
 
 # additional modules are pulled in via arcgisruntime.pri
 QT += opengl qml quick
-QT += texttospeech
+
+# NOTE: As of Qt 6.2, QTextToSpeech is not supported. Instances of this class have been commented out for compatibility, but remain for reference
+# QT += texttospeech
 
 TEMPLATE = app
 TARGET = NavigateRoute
