@@ -98,7 +98,7 @@ ServiceAreaSample {
             model: ["Facility", "Barrier"]
 
             property int modelWidth: 0
-            width: modelWidth + leftPadding + rightPadding + indicator.width
+            width: modelWidth + leftPadding + rightPadding
 
             onCurrentTextChanged: {
                 if (currentText === "Facility")
@@ -138,6 +138,7 @@ ServiceAreaSample {
 
     Dialog {
         modal: true
+        width: parent.width / 4
         x: Math.round(parent.width - width) / 2
         y: Math.round(parent.height - height) / 2
         standardButtons: Dialog.Ok
