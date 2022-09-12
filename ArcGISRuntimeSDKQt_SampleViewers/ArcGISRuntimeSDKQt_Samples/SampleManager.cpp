@@ -349,7 +349,7 @@ void SampleManager::setDownloadText(const QString& downloadText)
 void SampleManager::setApiKey(bool isSupportsApiKey)
 {
 #ifdef SAMPLE_VIEWER_API_KEY
-  // If the API key environment variable exists at compile time it will be used here
+  // If the API key identifier is defined in the respective .pro file it will be used here
   // Otherwise use the API key provided by the user at the top of this file
   apiKey = QUOTE(SAMPLE_VIEWER_API_KEY);
 #endif
