@@ -15,7 +15,7 @@
 // [Legal]
 
 import QtQuick
-import QtQuick.Controls
+import QtQuick.Controls as Controls
 import Esri.Samples
 import QtQuick.Layouts
 
@@ -31,7 +31,7 @@ Item {
             forceActiveFocus();
         }
 
-        Button {
+        Controls.Button {
             id: directionsButton
             anchors {
                 bottom: parent.bottom
@@ -43,13 +43,13 @@ Item {
             onClicked: popup.open();
         }
 
-        Popup {
+        Controls.Popup {
             id: popup
-            anchors.centerIn: Overlay.overlay
+            anchors.centerIn: Controls.Overlay.overlay
             width: 300
             height: 320
             focus: true
-            contentItem: ScrollView {
+            contentItem: Controls.ScrollView {
                 contentWidth: parent.width - 30
                 Text {
                     width: parent.width
