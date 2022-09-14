@@ -15,9 +15,9 @@
 // [Legal]
 
 import QtQuick
-import Esri.ArcGISRuntime
-import QtQuick.Controls
+import QtQuick.Controls as Controls
 import QtQuick.Layouts
+import Esri.ArcGISRuntime
 
 Rectangle {
     id: rootRectangle
@@ -87,7 +87,7 @@ Rectangle {
         // Specify the scale
         targetScale: 800000
     }
-    Button {
+    Controls.Button {
         text: "Directions"
         anchors {
             bottom: parent.bottom
@@ -100,13 +100,13 @@ Rectangle {
         }
     }
 
-    Popup {
+    Controls.Popup {
         id: popup
-        anchors.centerIn: Overlay.overlay
+        anchors.centerIn: Controls.Overlay.overlay
         width: 300
         height: 320
         focus: true
-        contentItem: ScrollView {
+        contentItem: Controls.ScrollView {
             contentWidth: parent.width - 30
             Text {
                 width: parent.width
