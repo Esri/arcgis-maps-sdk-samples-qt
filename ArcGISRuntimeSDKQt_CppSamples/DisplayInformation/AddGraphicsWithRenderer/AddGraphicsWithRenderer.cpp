@@ -140,7 +140,7 @@ void AddGraphicsWithRenderer::addEllipseGraphic()
   parameters.setLinearUnit(LinearUnit(LinearUnitId::Kilometers));
   parameters.setMaxSegmentLength(20);
 
-  const Polygon ellipsePolygon = GeometryEngine::ellipseGeodesic(parameters);
+  const Polygon ellipsePolygon = geometry_cast<Polygon>(GeometryEngine::ellipseGeodesic(parameters));
 
   SimpleFillSymbol* ellipseSymbol = new SimpleFillSymbol(SimpleFillSymbolStyle::Solid, QColor(125, 0, 125), this);
 

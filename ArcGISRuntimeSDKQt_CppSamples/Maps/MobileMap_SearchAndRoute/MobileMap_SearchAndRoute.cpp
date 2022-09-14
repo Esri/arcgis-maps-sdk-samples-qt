@@ -291,7 +291,7 @@ void MobileMap_SearchAndRoute::selectMap(int index)
         if (m_currentRouteTask)
         {
           // create a stop based on added graphic
-          m_stops << Stop(bluePinGraphic->geometry());
+          m_stops << Stop(geometry_cast<Point>(bluePinGraphic->geometry()));
 
           // create a Text Symbol to display stop number
           TextSymbol* textSymbol = new TextSymbol(m_stopGraphicParent);

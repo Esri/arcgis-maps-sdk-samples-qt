@@ -113,7 +113,7 @@ void ShowLocationHistory::handleLocationChanges()
 {
   SimulationParameters* simulationParameters = new SimulationParameters(QDateTime::currentDateTime(), 30.0, 0.0, 0.0, this); // set speed
 
-  m_simulatedLocationDataSource->setLocationsWithPolyline(Polyline::fromJson(polylineJson), simulationParameters);
+  m_simulatedLocationDataSource->setLocationsWithPolyline(geometry_cast<Polyline>(Geometry::fromJson(polylineJson)), simulationParameters);
 
   m_mapView->locationDisplay()->setDataSource(m_simulatedLocationDataSource);
   m_mapView->locationDisplay()->setAutoPanMode(LocationDisplayAutoPanMode::Recenter);

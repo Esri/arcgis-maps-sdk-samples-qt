@@ -194,7 +194,7 @@ void EditFeaturesWithFeatureLinkedAnnotation::onIdentifyLayersCompleted(QUuid, c
 
         if (selectedFeatureGeomType == GeometryType::Polyline)
         {
-          const Geometry geom = m_selectedFeature->geometry();
+          const Polyline geom = geometry_cast<Polyline>(m_selectedFeature->geometry());
           const PolylineBuilder polylineBuilder(geom);
 
           // if the selected feature is a polyline with any part containing more than one segment
@@ -246,7 +246,7 @@ void EditFeaturesWithFeatureLinkedAnnotation::moveFeature(Point mapPoint)
   {
     // get nearest vertex to the map point on the selected polyline
     const ProximityResult nearestVertex = GeometryEngine::nearestVertex(geom, projectedMapPoint);
-    const PolylineBuilder polylineBuilder(geom);
+    const PolylineBuilder polylineBuilder(geometry_cast<Polyline>(geom));
 
     // get part of polyline nearest to map point
     Part* part = polylineBuilder.parts()->part(nearestVertex.partIndex());

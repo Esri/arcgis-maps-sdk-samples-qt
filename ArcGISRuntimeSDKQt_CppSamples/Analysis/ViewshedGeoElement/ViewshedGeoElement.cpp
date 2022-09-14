@@ -191,7 +191,7 @@ void ViewshedGeoElement::animate()
     return;
 
   // get current location and distance from waypoint
-  Point location = m_tank->geometry();
+  Point location = geometry_cast<Point>(m_tank->geometry());
   const GeodeticDistanceResult distance = GeometryEngine::distanceGeodetic(location, m_waypoint,
                                                                            m_linearUnit, m_angularUnit,
                                                                            m_curveType);

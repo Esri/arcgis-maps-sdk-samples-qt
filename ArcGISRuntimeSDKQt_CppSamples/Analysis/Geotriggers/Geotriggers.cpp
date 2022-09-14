@@ -120,7 +120,8 @@ void Geotriggers::initializeSimulatedLocationDisplay()
   SimulationParameters* simulationParameters = new SimulationParameters(QDateTime::currentDateTime(), 5.0, 0.0, 0.0, this);
 
   // Use the polyline as defined above or from this AGOL GeoJSON to define the path. retrieved from https://https://arcgisruntime.maps.arcgis.com/home/item.html?id=2a346cf1668d4564b8413382ae98a956
-  m_simulatedLocationDataSource->setLocationsWithPolyline(Polyline::fromJson(walkingTourPolyineJson), simulationParameters);
+  m_simulatedLocationDataSource->setLocationsWithPolyline(
+        geometry_cast<Polyline>(Polyline::fromJson(walkingTourPolyineJson)), simulationParameters);
 
   m_mapView->locationDisplay()->setDataSource(m_simulatedLocationDataSource);
   m_mapView->locationDisplay()->setAutoPanMode(LocationDisplayAutoPanMode::Recenter);

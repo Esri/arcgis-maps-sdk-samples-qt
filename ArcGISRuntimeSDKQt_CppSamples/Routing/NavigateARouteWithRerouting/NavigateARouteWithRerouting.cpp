@@ -251,7 +251,7 @@ void NavigateARouteWithRerouting::startNavigation()
   // add a data source for the location display
   SimulationParameters* simulationParameters = new SimulationParameters(QDateTime::currentDateTime(), velocity, horizontalAccuracy, verticalAccuracy, this);
   m_simulatedLocationDataSource = new SimulatedLocationDataSource(this);
-  m_simulatedLocationDataSource->setLocationsWithPolyline(Polyline::fromJson(tourPolyineJson), simulationParameters);
+  m_simulatedLocationDataSource->setLocationsWithPolyline(geometry_cast<Polyline>(Geometry::fromJson(tourPolyineJson)), simulationParameters);
   m_mapView->locationDisplay()->setDataSource(m_simulatedLocationDataSource);
   m_simulatedLocationDataSource->start();
 }

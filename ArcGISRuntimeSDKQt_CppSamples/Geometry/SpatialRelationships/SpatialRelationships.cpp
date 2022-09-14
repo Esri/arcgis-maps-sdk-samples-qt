@@ -72,7 +72,7 @@ void SpatialRelationships::componentComplete()
   addGraphics();
 
   // Set viewpoint
-  m_mapView->setViewpointCenter(m_pointGraphic->geometry(), 200000000);
+  m_mapView->setViewpointCenter(geometry_cast<Point>(m_pointGraphic->geometry()), 200000000);
 
   // connect signals
   connectSignals();

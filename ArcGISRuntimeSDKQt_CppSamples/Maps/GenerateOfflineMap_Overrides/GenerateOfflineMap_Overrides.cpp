@@ -116,7 +116,7 @@ void GenerateOfflineMap_Overrides::setAreaOfInterest(double xCorner1, double yCo
   const Point corner1 = m_mapView->screenToLocation(xCorner1, yCorner1);
   const Point corner2 = m_mapView->screenToLocation(xCorner2, yCorner2);
   const Envelope extent(corner1, corner2);
-  const Envelope mapExtent = GeometryEngine::project(extent, SpatialReference::webMercator());
+  const Envelope mapExtent = geometry_cast<Envelope>(GeometryEngine::project(extent, SpatialReference::webMercator()));
 
   // generate parameters
   m_offlineMapTask->createDefaultGenerateOfflineMapParameters(mapExtent);

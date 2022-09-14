@@ -110,17 +110,17 @@ void DensifyAndGeneralize::updateGeometry(bool densify, double maxSegmentLength,
     return;
 
   // Get the initial Geometry
-  Polyline polyline = m_originalLineGraphic->geometry();
+  Polyline polyline = geometry_cast<Polyline>(m_originalLineGraphic->geometry());
   if (polyline.isEmpty())
     return;
 
   // Generalize the polyline
   if (generalize)
-    polyline = GeometryEngine::generalize(polyline, maxDeviation, true);
+    polyline = geometry_cast<Polyline>(GeometryEngine::generalize(polyline, maxDeviation, true));
 
   // Densify the polyline
   if (densify)
-    polyline = GeometryEngine::densify(polyline, maxSegmentLength);
+    polyline = geometry_cast<Polyline>(GeometryEngine::densify(polyline, maxSegmentLength));
 
   // Update the line graphic
   m_resultLineGraphic->setGeometry(polyline);

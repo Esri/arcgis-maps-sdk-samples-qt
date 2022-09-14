@@ -94,7 +94,7 @@ void ProjectGeometry::onMouseClicked(QMouseEvent& event)
   const SpatialReference spatialReference(4326);
 
   // project the web mercator point to WGS84
-  const Point projectedPoint = GeometryEngine::project(originalPoint, spatialReference);
+  const Point projectedPoint = geometry_cast<Point>(GeometryEngine::project(originalPoint, spatialReference));
 
   // update callout data
   m_calloutData->setLocation(originalPoint);

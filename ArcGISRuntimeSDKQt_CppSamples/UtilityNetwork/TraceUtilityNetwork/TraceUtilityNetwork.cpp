@@ -360,7 +360,7 @@ void TraceUtilityNetwork::onIdentifyLayersCompleted(QUuid, const QList<IdentifyL
     // Compute how far tapped location is along the edge feature.
     if (m_feature->geometry().geometryType() == GeometryType::Polyline)
     {
-      const Polyline line = GeometryEngine::removeZ(m_feature->geometry());
+      const Polyline line = geometry_cast<Polyline>(GeometryEngine::removeZ(m_feature->geometry()));
       // Set how far the element is along the edge.
       element->setFractionAlongEdge(GeometryEngine::fractionAlong(line, m_clickPoint, -1));
       m_fractionAlongEdge = element->fractionAlongEdge();
