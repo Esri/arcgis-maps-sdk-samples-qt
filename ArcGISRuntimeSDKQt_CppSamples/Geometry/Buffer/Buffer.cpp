@@ -26,6 +26,7 @@
 #include "GeometryEngine.h"
 #include "GraphicsOverlay.h"
 #include "Graphic.h"
+#include "LinearUnit.h"
 #include "SimpleFillSymbol.h"
 #include "SimpleLineSymbol.h"
 #include "SimpleMarkerSymbol.h"
@@ -106,7 +107,7 @@ void Buffer::onMouseClicked(QMouseEvent& mouse)
   m_graphicsOverlayPlanar->graphics()->append(resultGraphicPlanar);
 
   // Create a geodesic buffer graphic around the input location at the specified distance.
-  const Geometry bufferGeodesic = GeometryEngine::bufferGeodetic(point, bufferInMeters, LinearUnitId::Meters, NAN, GeodeticCurveType::Geodesic);
+  const Geometry bufferGeodesic = GeometryEngine::bufferGeodetic(point, bufferInMeters, LinearUnit(LinearUnitId::Meters), NAN, GeodeticCurveType::Geodesic);
 
   // Add the result geodesic buffer as a graphic
   Graphic* resultGraphicGeodesic = new Graphic(bufferGeodesic, this);
