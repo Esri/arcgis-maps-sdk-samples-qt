@@ -28,6 +28,8 @@
 #include "Viewpoint.h"
 #include "ArcGISSceneLayer.h"
 #include "SimpleRenderer.h"
+#include "LinearUnit.h"
+#include "AngularUnit.h"
 #include "ModelSceneSymbol.h"
 #include "GeoElementViewshed.h"
 #include "GeometryEngine.h"
@@ -193,12 +195,15 @@ void ViewshedGeoElement::animate()
   // get current location and distance from waypoint
   Point location = m_tank->geometry();
   const GeodeticDistanceResult distance = GeometryEngine::distanceGeodetic(location, m_waypoint,
-                                                                           m_linearUnit, m_angularUnit,
+                                                                           LinearUnit(m_linearUnit),
+                                                                           AngularUnit(m_angularUnit),
                                                                            m_curveType);
 
   // move toward waypoint based on speed and update orientation
-  location = GeometryEngine::moveGeodetic(QList<Point>{location}, 1.0, m_linearUnit,
-                                          distance.azimuth1(), m_angularUnit,
+  location = GeometryEngine::moveGeodetic(QList<Point>{location}, 1.0,
+                                          LinearUnit(m_linearUnit),
+                                          distance.azimuth1(),
+                                          AngularUnit(m_angularUnit),
                                           m_curveType).at(0);
   m_tank->setGeometry(location);
 

@@ -25,12 +25,11 @@ using namespace Esri::ArcGISRuntime;
 
 AddItemsToPortal::AddItemsToPortal(QQuickItem* parent /* = nullptr */):
   QQuickItem(parent),
-  m_portal(new Portal(new Credential(OAuthClientInfo("iLkGIj0nX8A4EJda", OAuthMode::User), this), this)),
-  m_item(new PortalItem(m_portal, this))
+  m_portal(new Portal(new Credential(OAuthClientInfo("iLkGIj0nX8A4EJda", OAuthMode::User), this), this))
 {
   AuthenticationManager::instance()->setCredentialCacheEnabled(false);
+  m_item = new PortalItem(m_portal, PortalItemType::CSV, this);
   m_item->setTitle("Add Items Sample");
-  m_item->setType(PortalItemType::CSV);
 }
 
 AddItemsToPortal::~AddItemsToPortal() = default;
