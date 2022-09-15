@@ -349,7 +349,7 @@ void EditWithBranchVersioning::moveFeature(const Point& mapPoint)
     clearSelectedFeature();
     return;
   }
-  const Polyline geom = m_selectedFeature->geometry();
+  const Polyline geom = geometry_cast<Polyline>(m_selectedFeature->geometry());
   m_selectedFeature->setGeometry(mapPoint);
 
   // update the selected feature with the new geometry

@@ -184,9 +184,9 @@ void FindRoute::solveRoute()
       m_routeParameters.clearStops();
 
       // set the stops to the parameters
-      Stop stop1(m_stopsGraphicsOverlay->graphics()->at(0)->geometry());
+      Stop stop1(geometry_cast<Point>(m_stopsGraphicsOverlay->graphics()->at(0)->geometry()));
       stop1.setName("Origin");
-      Stop stop2(m_stopsGraphicsOverlay->graphics()->at(1)->geometry());
+      Stop stop2(geometry_cast<Point>(m_stopsGraphicsOverlay->graphics()->at(1)->geometry()));
       stop2.setName("Destination");
       m_routeParameters.setStops(QList<Stop> { stop1, stop2 });
 

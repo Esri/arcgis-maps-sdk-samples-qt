@@ -260,7 +260,7 @@ void OfflineRouting::findRoute()
     QList<Stop> stops;
     for (const Graphic* graphic : *m_stopsOverlay->graphics())
     {
-      stops << Stop(graphic->geometry());
+      stops << Stop(geometry_cast<Point>(graphic->geometry()));
     }
 
     // configure stops and travel mode

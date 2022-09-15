@@ -119,7 +119,7 @@ void GenerateOfflineMapLocalBasemap::generateMapByExtent(double xCorner1, double
   const Point corner1 = m_mapView->screenToLocation(xCorner1, yCorner1);
   const Point corner2 = m_mapView->screenToLocation(xCorner2, yCorner2);
   const Envelope extent = Envelope(corner1, corner2);
-  const Envelope mapExtent = GeometryEngine::project(extent, SpatialReference::webMercator());
+  const Envelope mapExtent = geometry_cast<Envelope>(GeometryEngine::project(extent, SpatialReference::webMercator()));
   const QString tempPath = m_tempDir.path() + "/OfflineMap.mmpk";
   const QString dataPath = defaultDataPath() + "/ArcGIS/Runtime/Data/tpkx";
 

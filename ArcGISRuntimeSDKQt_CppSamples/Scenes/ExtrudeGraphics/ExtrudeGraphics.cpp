@@ -130,9 +130,9 @@ void ExtrudeGraphics::componentComplete()
 }
 
 // helper to create polygon from points
-Esri::ArcGISRuntime::Polygon ExtrudeGraphics::createPolygonFromPoints(QList<Point> points)
+Polygon ExtrudeGraphics::createPolygonFromPoints(QList<Point> points)
 {
-  Esri::ArcGISRuntime::Polygon polygon;
+  Polygon polygon;
   if (points.length() == 0)
     return polygon;
 
@@ -143,6 +143,6 @@ Esri::ArcGISRuntime::Polygon ExtrudeGraphics::createPolygonFromPoints(QList<Poin
     // add each point to the builder object
     pb->addPoint(point);
   }
-  return polygon = pb->toGeometry();
+  return polygon = pb->toPolygon();
 }
 
