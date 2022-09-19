@@ -159,8 +159,8 @@ Rectangle {
                         return true;
                     }
 
-                    for (let i = 0; i < associationsResult.length; i++) {
-                        const association = associationsResult[i];
+                    for (let i = 0; i < associationsResults.length; i++) {
+                        const association = associationsResults[i];
 
                         if (isGraphicUnique(associationsOverlay.graphics, association.globalId)) {
                             const graphic = ArcGISRuntimeEnvironment.createObject("Graphic", {geometry: association.geometry});
@@ -236,7 +236,7 @@ Rectangle {
             utilityNetwork.associationsWithEnvelope(currentExtent);
         }
 
-        onSetViewpointCompleted: {
+        onSetViewpointCompleted: succeeded => {
             if (!succeeded)
                 return;
 
