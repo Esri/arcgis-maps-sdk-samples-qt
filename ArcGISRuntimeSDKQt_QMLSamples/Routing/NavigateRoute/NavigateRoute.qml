@@ -262,19 +262,19 @@ Rectangle {
                 }
             }
 
-//            // output new voice guidance
+// output new voice guidance
 //            onNewVoiceGuidanceResultChanged: {
 //                speaker.textToSpeech(newVoiceGuidanceResult.text);
 //            }
 
-//            // set a callback to indicate if the speech engine is ready to speak
+// set a callback to indicate if the speech engine is ready to speak
 //            speechEngineReadyCallback: function() {
 //                return speaker.textToSpeechEngineReady();
 //            }
         }
     }
 
-//    // NOTE: As of Qt 6.2, QTextToSpeech is not supported. Uses of this class have been commented out for compatibility, but remain for reference
+// NOTE: As of Qt 6.2, QTextToSpeech is not supported. Uses of this class have been commented out for compatibility, but remain for reference
 //    NavigateRouteSpeaker {
 //        id: speaker
 //    }
