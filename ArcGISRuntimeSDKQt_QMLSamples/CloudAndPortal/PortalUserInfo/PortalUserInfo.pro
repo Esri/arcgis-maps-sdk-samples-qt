@@ -36,7 +36,7 @@ qtHaveModule(webengine) {
   DEFINES += QT_WEBVIEW_WEBENGINE_BACKEND
 }
 
-CONFIG += c++14
+CONFIG += c++17
 
 SOURCES += main.cpp
 

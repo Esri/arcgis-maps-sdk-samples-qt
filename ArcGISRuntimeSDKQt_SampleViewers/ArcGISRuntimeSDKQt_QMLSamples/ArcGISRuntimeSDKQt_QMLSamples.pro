@@ -32,7 +32,7 @@ exists($$PWD/../../../../DevBuildQml.pri) {
 } else {
   message("Building against the installed SDK")
   CONFIG+=build_from_setup
-  CONFIG += c++14
+  CONFIG += c++17
 
   # include the toolkitqml.pri, which contains all the toolkit resources
   !include($$PWD/../../arcgis-runtime-toolkit-qt/uitools/toolkitqml.pri) {
