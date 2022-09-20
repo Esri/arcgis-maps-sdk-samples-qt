@@ -215,7 +215,7 @@ void NavigateARouteWithRerouting::startNavigation()
 
   connectRouteTrackerSignals();
 
-  //  // enable the RouteTracker to know when the QTextToSpeech engine is ready
+  // enable the RouteTracker to know when the QTextToSpeech engine is ready
   //  m_routeTracker->setSpeechEngineReadyFunction([speaker = m_speaker]() -> bool
   //  {
   //    return speaker->state() == QTextToSpeech::State::Ready;
