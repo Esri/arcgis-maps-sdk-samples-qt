@@ -32,7 +32,7 @@ exists($$TOOLKIT_PRI_PATH/uitools/toolkitqml.pri) {
 }
 
 
-CONFIG += c++14
+CONFIG += c++17
 
 SOURCES += main.cpp
 

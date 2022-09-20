@@ -22,7 +22,7 @@ QT += opengl qml quick
 ARCGIS_RUNTIME_VERSION = 200.0.0
 include($$PWD/arcgisruntime.pri)
 
-CONFIG += c++14
+CONFIG += c++17
 
 SOURCES += main.cpp
 
