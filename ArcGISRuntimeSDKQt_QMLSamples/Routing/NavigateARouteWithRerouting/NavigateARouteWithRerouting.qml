@@ -238,12 +238,12 @@ Rectangle {
             }
         }
 
-        //        // Output new voice guidance
+        // Output new voice guidance
         //        onNewVoiceGuidanceResultChanged: {
         //            speaker.textToSpeech(newVoiceGuidanceResult.text);
         //        }
 
-        //        // Set a callback to indicate if the speech engine is ready to speak
+        // Set a callback to indicate if the speech engine is ready to speak
         //        speechEngineReadyCallback: function() {
         //            return speaker.textToSpeechEngineReady();
         //        }
