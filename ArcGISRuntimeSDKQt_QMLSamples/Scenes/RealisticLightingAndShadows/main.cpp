@@ -66,7 +66,7 @@ int main(int argc, char *argv[])
 #endif
 
     // Set the source
-    view.setSource(QUrl("qrc:/Samples/Analysis/RealisticLightingAndShadows/RealisticLightingAndShadows.qml"));
+    view.setSource(QUrl("qrc:/Samples/Scenes/RealisticLightingAndShadows/RealisticLightingAndShadows.qml"));
 
     view.show();
 
