@@ -89,7 +89,7 @@ Rectangle {
         onMouseClicked: mouse => locationLineOfSight.targetLocation = sceneView.screenToBaseSurface(mouse.x, mouse.y);
         onMousePressedAndHeld: calculating = true;
         onMouseReleased: calculating = false;
-        onMousePositionChanged: {
+        onMousePositionChanged: mouse => {
             if (!calculating)
                 return;
 
