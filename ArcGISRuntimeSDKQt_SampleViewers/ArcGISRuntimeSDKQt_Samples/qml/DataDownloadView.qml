@@ -65,7 +65,7 @@ Page {
             Layout.alignment: Qt.AlignHCenter | Qt.AlignVCenter
             visible: !SampleManager.downloadInProgress
             onClicked: {
-                if (System.reachability) {
+                if (System.reachability === System.ReachabilityOnline) {
                     dataDownloadLoader.item.downloadDataItems();
                     pageDownloadInProgress = true;
                 } else {
