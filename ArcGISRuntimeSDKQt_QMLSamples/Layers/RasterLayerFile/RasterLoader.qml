@@ -49,7 +49,7 @@ Item {
         }
     }
 
-    Dialogs.FileDialog {
+    FileDialog {
         id: fileDialog
 
         onAccepted: {

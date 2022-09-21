@@ -14,6 +14,7 @@
 // limitations under the License.
 // [Legal]
 
+import Qt.labs.platform
 import QtQuick
 import QtQuick.Controls
 import Esri.ArcGISRuntime
@@ -442,7 +443,6 @@ Rectangle {
 
     MessageDialog {
         id: messageDialog
-        title: "Perform valve isolation trace"
         text: "Isolation trace returned no elements."
         visible: false
         onRejected: {

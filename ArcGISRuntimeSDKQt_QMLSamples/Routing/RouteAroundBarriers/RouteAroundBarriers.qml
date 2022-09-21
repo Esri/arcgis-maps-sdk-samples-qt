@@ -14,6 +14,7 @@
 // limitations under the License.
 // [Legal]
 
+import Qt.labs.platform
 import QtQuick
 import QtQuick.Controls
 import Esri.ArcGISRuntime
@@ -43,7 +44,6 @@ Rectangle {
 
     MessageDialog {
         id: messageDialog
-        title: "Route around barriers"
         text: "No route found."
         visible: false
         onRejected: {

@@ -54,7 +54,7 @@ FeatureLayerQuerySample {
             placeholderText: "Enter a state name to select"
             inputMethodHints: Qt.ImhNoPredictiveText
             selectByMouse: true
-            validator: RegExpValidator{ regExp: /^[a-zA-Z ]*$/ }
+            validator: RegularExpressionValidator{ regularExpression: /^[a-zA-Z ]*$/ }
             Keys.onReturnPressed: {
                 // Call C++ invokable function to run the query
                 featureLayerQuerySample.runQuery(findText.text);

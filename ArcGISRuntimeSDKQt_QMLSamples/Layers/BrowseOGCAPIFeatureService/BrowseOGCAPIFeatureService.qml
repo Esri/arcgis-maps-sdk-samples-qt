@@ -14,6 +14,7 @@
 // limitations under the License.
 // [Legal]
 
+import Qt.labs.platform
 import QtQuick
 import QtQuick.Controls
 import QtQuick.Layouts
@@ -100,7 +101,7 @@ Rectangle {
                 Button {
                     id: loadLayerButton
                     text: "Load selected layer"
-                    enabled: featureLayer.loadStatus !== Enums.LoadStatusLoading
+                    enabled: featureCollectionListComboBox.model.length > 0
                     onClicked: loadFeatureCollection(featureCollectionListComboBox.currentIndex);
                     Layout.columnSpan: 2
                     Layout.fillWidth: true
@@ -111,9 +112,7 @@ Rectangle {
         // Pop-up error message box
         MessageDialog {
             id: errorMessageBox
-            title: "Error message!"
             text: errorMessage
-            icon: StandardIcon.Warning
             visible: errorMessage === "" ? false : true;
             onAccepted: errorMessage = "";
         }

@@ -76,13 +76,6 @@ UpdateAttributesFeatureServiceSample {
         radius: 10
         visible: false
 
-        GaussianBlur {
-            anchors.fill: updateWindow
-            source: mapView
-            radius: 40
-            samples: 20
-        }
-
         MouseArea {
             anchors.fill: parent
             onClicked: mouse.accepted = true;
