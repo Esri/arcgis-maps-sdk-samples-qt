@@ -17,7 +17,6 @@
 import QtQuick
 import QtQuick.Controls
 import QtQuick.Layouts
-import Qt5Compat.GraphicalEffects
 import Esri.ArcGISRuntime
 import Esri.ArcGISRuntime.Toolkit
 
@@ -159,13 +158,6 @@ Rectangle {
         anchors.centerIn: parent
         radius: 10
         visible: false
-
-        GaussianBlur {
-            anchors.fill: updateWindow
-            source: mapView
-            radius: 40
-            samples: 20
-        }
 
         MouseArea {
             anchors.fill: parent

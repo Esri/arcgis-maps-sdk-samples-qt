@@ -101,7 +101,7 @@ Rectangle {
                 placeholderText: "Enter a state name to select"
                 inputMethodHints: Qt.ImhNoPredictiveText
                 selectByMouse: true
-                validator: RegExpValidator{ regExp: /^[a-zA-Z ]*$/ }
+                validator: RegularExpressionValidator{ regularExpression: /^[a-zA-Z ]*$/ }
                 Keys.onReturnPressed: {
                     btn.clicked();
                 }

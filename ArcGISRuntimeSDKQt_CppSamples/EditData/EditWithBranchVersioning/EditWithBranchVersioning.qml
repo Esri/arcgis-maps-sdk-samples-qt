@@ -120,13 +120,6 @@ Item {
         radius: 10
         visible: false
 
-        GaussianBlur {
-            anchors.fill: createVersionWindow
-            source: view
-            radius: 40
-            samples: 20
-        }
-
         MouseArea {
             anchors.fill: parent
             onClicked: mouse.accepted = true;
@@ -141,7 +134,7 @@ Item {
                 placeholderText: qsTr("Name must be unique")
                 Layout.alignment: Qt.AlignHCenter
                 Layout.margins: 5
-                validator: RegExpValidator { regExp: /\w{0,50}/ }
+                validator: RegularExpressionValidator { regularExpression: /\w{0,50}/ }
             }
 
             ComboBox {
@@ -195,13 +188,6 @@ Item {
         height: childrenRect.height
         radius: 10
         visible: false
-
-        GaussianBlur {
-            anchors.fill: updateWindow
-            source: view
-            radius: 40
-            samples: 20
-        }
 
         MouseArea {
             anchors.fill: parent

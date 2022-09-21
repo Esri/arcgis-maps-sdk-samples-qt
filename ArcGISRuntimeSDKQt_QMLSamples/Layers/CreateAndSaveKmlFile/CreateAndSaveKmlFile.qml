@@ -110,10 +110,10 @@ Rectangle {
         visible: kmlDocument.saveStatus === Enums.TaskStatusInProgress
     }
 
-    Dialogs.FileDialog {
+    FileDialog {
         id: fileDialog
         defaultSuffix: "kmz"
-        fileMode: Dialogs.FileDialog.SaveFile
+        fileMode: FileDialog.SaveFile
         nameFilters: ["Kml files (*.kmz *.kml)"]
         onAccepted: {
             // Write the KML document to the chosen path.
@@ -126,16 +126,11 @@ Rectangle {
         }
     }
 
-    Dialog {
+    MessageDialog {
         id: saveCompleteDialog
-        anchors.centerIn: parent
-        modal: true
-        standardButtons: Dialog.Ok
-        Text {
-            id:textLabel
-            anchors.centerIn: parent
-            text: qsTr("Item saved.")
-        }
+        modality: Qt.WindowModal
+        buttons: MessageDialog.Ok
+        text: qsTr("Item saved.")
     }
 
     KmlStyle {
