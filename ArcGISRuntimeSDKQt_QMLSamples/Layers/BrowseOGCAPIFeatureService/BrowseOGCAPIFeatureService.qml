@@ -101,7 +101,7 @@ Rectangle {
                 Button {
                     id: loadLayerButton
                     text: "Load selected layer"
-                    enabled: featureLayer.loadStatus !== Enums.LoadStatusLoading
+                    enabled: featureCollectionListComboBox.model.length > 0
                     onClicked: loadFeatureCollection(featureCollectionListComboBox.currentIndex);
                     Layout.columnSpan: 2
                     Layout.fillWidth: true
