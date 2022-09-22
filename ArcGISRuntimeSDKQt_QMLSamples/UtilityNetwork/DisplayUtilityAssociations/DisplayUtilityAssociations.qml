@@ -58,6 +58,7 @@ Rectangle {
 
                 Label {
                     text: "Utility association types"
+                    color: "#000000"
                     Layout.alignment: Qt.AlignHCenter
                     Layout.fillWidth: true
                     Layout.columnSpan: 2
@@ -70,6 +71,7 @@ Rectangle {
                 Label {
                     id: attachmentLabel
                     text: "Attachment symbol"
+                    color: "#000000"
                 }
 
                 Image {
@@ -78,6 +80,7 @@ Rectangle {
                 Label {
                     id: connectivityLabel
                     text: "Connectivity symbol"
+                    color: "#000000"
                 }
             }
         }
