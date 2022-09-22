@@ -73,9 +73,9 @@ Rectangle {
                         return;
 
                     if (!containerViewIsVisible)
-                        getContainmentAssociations(associationsResult);
+                        getContainmentAssociations(associationsResults);
                     else
-                        showAttachmentAndConnectivitySymbols(associationsResult);
+                        showAttachmentAndConnectivitySymbols(associationsResults);
                 }
 
                 onFeaturesForElementsStatusChanged: {
@@ -310,7 +310,7 @@ Rectangle {
 
                     if (containerElement) {
                         // Queries for a list of all UtilityAssociation objects of containment association types present in the geodatabase for the containerElement.
-                        utilityNetwork.associations(containerElement, Enums.UtilityAssociationTypeContainment);
+                        utilityNetwork.associationsWithType(containerElement, Enums.UtilityAssociationTypeContainment);
                         return;
                     }
                 }
