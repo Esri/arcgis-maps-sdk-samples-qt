@@ -83,7 +83,7 @@ Rectangle {
             }
         }
 
-        onMousePressedAndHeld: {
+        onMousePressedAndHeld: mouse => {
             pressedMouse = true;
             clickedPoint = screenToLocation(mouse.x, mouse.y);
             if (identifyLayerStatus !== Enums.TaskStatusInProgress) {
@@ -91,7 +91,7 @@ Rectangle {
             }
         }
         onMouseReleased: pressedMouse = false;
-        onMousePositionChanged: {
+        onMousePositionChanged: mouse => {
             if (pressedMouse) {
                 clickedPoint = screenToLocation(mouse.x, mouse.y);
                 if (identifyLayerStatus !== Enums.TaskStatusInProgress) {

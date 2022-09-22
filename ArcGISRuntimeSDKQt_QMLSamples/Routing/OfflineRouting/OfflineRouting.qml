@@ -195,7 +195,7 @@ Rectangle {
         }
 
         // check whether mouse pressed over an existing stop
-        onMousePressed: {
+        onMousePressed: mouse => {
             mapView.identifyGraphicsOverlay(stopsOverlay, mouse.x, mouse.y, 10, false);
         }
 
@@ -225,7 +225,7 @@ Rectangle {
 
         // if mouse is moved while pressing on a graphic, the click-and-pan effect of the MapView is prevented by mouse.accepted = true
         // and the mouse position is tracked and route is updated on-the-fly
-        onMousePositionChanged: {
+        onMousePositionChanged: mouse => {
             mouse.accepted = !!selectedGraphic; // whether to pass mouse event to MapView
             if (selectedGraphic) {
                 if (!GeometryEngine.within(mapView.screenToLocation(mouse.x, mouse.y), routableArea)) {
@@ -238,7 +238,7 @@ Rectangle {
         }
 
         // mouseMoved is processed before identifyGraphicsOverlayCompleted, so must clear graphic upon mouseReleased
-        onMouseReleased: {
+        onMouseReleased: mouse => {
             if (selectedGraphic) {
                 selectedGraphic = null;
                 mouse.accepted = true;
