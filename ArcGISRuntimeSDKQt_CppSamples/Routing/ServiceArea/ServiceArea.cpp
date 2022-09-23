@@ -28,6 +28,20 @@
 #include "SimpleFillSymbol.h"
 #include "SimpleLineSymbol.h"
 #include "SimpleRenderer.h"
+#include "MapTypes.h"
+#include "MapViewTypes.h"
+#include "SymbolTypes.h"
+#include "TaskWatcher.h"
+#include "Error.h"
+#include "GraphicsOverlayListModel.h"
+#include "GraphicListModel.h"
+#include "ServiceAreaFacility.h"
+#include "PolylineBarrier.h"
+#include "NetworkAnalystTypes.h"
+#include "ServiceAreaResult.h"
+#include "ServiceAreaPolygon.h"
+
+#include <QUuid>
 
 using namespace Esri::ArcGISRuntime;
 

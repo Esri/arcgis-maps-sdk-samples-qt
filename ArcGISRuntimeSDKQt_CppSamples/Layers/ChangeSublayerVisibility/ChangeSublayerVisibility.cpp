@@ -28,6 +28,8 @@
 #include "Point.h"
 #include "Viewpoint.h"
 #include "SpatialReference.h"
+#include "MapTypes.h"
+#include "LayerListModel.h"
 #include <QUrl>
 
 using namespace Esri::ArcGISRuntime;

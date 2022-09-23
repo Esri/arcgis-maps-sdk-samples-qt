@@ -24,6 +24,9 @@
 #include "MapQuickView.h"
 #include "FeatureLayer.h"
 #include "ServiceFeatureTable.h"
+#include "MapTypes.h"
+#include "MapViewTypes.h"
+#include "LayerListModel.h"
 
 #include <QUrl>
 

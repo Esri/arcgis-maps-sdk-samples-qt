@@ -20,10 +20,14 @@
 
 #include "AddIntegratedMeshLayer.h"
 
-#include "ArcGISTiledElevationSource.h"
 #include "Scene.h"
 #include "SceneQuickView.h"
 #include "IntegratedMeshLayer.h"
+#include "Error.h"
+#include "LayerListModel.h"
+#include "Camera.h"
+
+#include <QUuid>
 
 using namespace Esri::ArcGISRuntime;
 

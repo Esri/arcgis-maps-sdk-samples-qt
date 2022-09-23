@@ -27,6 +27,7 @@
 #include "WmtsServiceInfo.h"
 #include "WmtsLayerInfo.h"
 #include "Basemap.h"
+#include "Error.h"
 
 using namespace Esri::ArcGISRuntime;
 

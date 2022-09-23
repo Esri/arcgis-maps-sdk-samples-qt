@@ -24,6 +24,10 @@
 #include "SceneQuickView.h"
 #include "Basemap.h"
 #include "ArcGISTiledElevationSource.h"
+#include "MapTypes.h"
+#include "Surface.h"
+#include "ElevationSourceListModel.h"
+#include "Camera.h"
 
 using namespace Esri::ArcGISRuntime;
 

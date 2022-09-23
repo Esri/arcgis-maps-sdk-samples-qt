@@ -25,7 +25,9 @@
 #include "Raster.h"
 #include "RasterLayer.h"
 #include "BlendRenderer.h"
-
+#include "MapViewTypes.h"
+#include "RasterTypes.h"
+#include "ColorRamp.h"
 #include <QtCore/qglobal.h>
 
 #ifdef Q_OS_ANDROID

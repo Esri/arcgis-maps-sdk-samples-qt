@@ -29,6 +29,12 @@
 #include "SimpleMarkerSymbol.h"
 #include "SymbolReferenceProperties.h"
 #include "UniqueValueRenderer.h"
+#include "MapTypes.h"
+#include "SymbolTypes.h"
+#include "LayerListModel.h"
+#include "TaskWatcher.h"
+#include "UniqueValueListModel.h"
+#include "UniqueValue.h"
 
 using namespace Esri::ArcGISRuntime;
 

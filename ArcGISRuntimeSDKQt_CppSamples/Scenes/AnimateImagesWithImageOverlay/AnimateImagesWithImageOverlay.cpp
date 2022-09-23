@@ -32,6 +32,9 @@
 #include "Point.h"
 #include "Camera.h"
 #include "Viewpoint.h"
+#include "Surface.h"
+#include "ElevationSourceListModel.h"
+#include "LayerListModel.h"
 
 // Qt headers
 #include <QString>

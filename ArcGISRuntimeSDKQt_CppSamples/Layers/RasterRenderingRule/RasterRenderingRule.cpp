@@ -24,10 +24,15 @@
 #include "MapQuickView.h"
 #include "RasterLayer.h"
 #include "Basemap.h"
-#include "ArcGISTiledLayer.h"
 #include "ImageServiceRaster.h"
 #include "RenderingRule.h"
 #include "RenderingRuleInfo.h"
+#include "Error.h"
+#include "MapTypes.h"
+#include "MapViewTypes.h"
+#include "TaskWatcher.h"
+#include "LayerListModel.h"
+#include "ArcGISImageServiceInfo.h"
 
 #include <QJsonObject>
 #include <QJsonDocument>

@@ -30,6 +30,10 @@
 #include "MapTypes.h"
 #include "LayerListModel.h"
 #include "Feature.h"
+#include "PopupManager.h"
+#include "PopupAttachmentManager.h"
+#include "PopupAttributeListModel.h"
+#include "PopupAttachmentListModel.h"
 
 #include <QUuid>
 

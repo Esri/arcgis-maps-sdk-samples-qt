@@ -24,12 +24,18 @@
 #include "MapQuickView.h"
 #include "Basemap.h"
 #include "ArcGISMapImageLayer.h"
-#include "ArcGISMapImageSublayer.h"
 #include "FeatureLayer.h"
 #include "ServiceFeatureTable.h"
 #include "Viewpoint.h"
 #include "Point.h"
 #include "IdentifyLayerResult.h"
+#include "Error.h"
+#include "MapTypes.h"
+#include "TaskWatcher.h"
+#include "LayerListModel.h"
+#include "ArcGISSublayerListModel.h"
+#include "ArcGISSublayer.h"
+#include <QUuid>
 
 using namespace Esri::ArcGISRuntime;
 

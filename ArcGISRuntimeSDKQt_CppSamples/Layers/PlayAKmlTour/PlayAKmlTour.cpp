@@ -28,6 +28,12 @@
 #include "KmlLayer.h"
 #include "KmlContainer.h"
 #include "KmlNodeListModel.h"
+#include "Error.h"
+#include "MapTypes.h"
+#include "LayerListModel.h"
+#include "Surface.h"
+#include "ElevationSourceListModel.h"
+#include "KmlDataset.h"
 
 #include <QtCore/qglobal.h>
 

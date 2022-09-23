@@ -25,6 +25,11 @@
 #include "MapQuickView.h"
 #include "Raster.h"
 #include "RasterLayer.h"
+#include "Error.h"
+#include "MapTypes.h"
+#include "MapViewTypes.h"
+#include "TaskWatcher.h"
+#include "LayerListModel.h"
 
 #include <QtCore/qglobal.h>
 

@@ -30,8 +30,15 @@
 #include "GeometryEngine.h"
 #include "SpatialReference.h"
 #include "TileCache.h"
+#include "Error.h"
+#include "MapTypes.h"
+#include "TaskWatcher.h"
+#include "LayerListModel.h"
+#include "ExportTileCacheJob.h"
+#include "TaskTypes.h"
 
 #include <QUrl>
+#include <QUuid>
 
 using namespace Esri::ArcGISRuntime;
 

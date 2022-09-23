@@ -36,6 +36,7 @@
 #include "FieldDescriptionListModel.h"
 #include "QueryParameters.h"
 #include "FeatureIterator.h"
+#include "FeatureQueryResult.h"
 #include <QUuid>
 
 using namespace Esri::ArcGISRuntime;

@@ -25,6 +25,11 @@
 #include "Map.h"
 #include "MapQuickView.h"
 #include "SimpleLineSymbol.h"
+#include "MapTypes.h"
+#include "TaskWatcher.h"
+#include "GraphicsOverlayListModel.h"
+#include "SymbolTypes.h"
+#include "GraphicListModel.h"
 
 using namespace Esri::ArcGISRuntime;
 

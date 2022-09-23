@@ -24,6 +24,7 @@
 #include "MapQuickView.h"
 #include "OpenStreetMapLayer.h"
 #include "Basemap.h"
+#include "LayerListModel.h"
 
 using namespace Esri::ArcGISRuntime;
 

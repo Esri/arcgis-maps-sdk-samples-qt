@@ -25,6 +25,7 @@
 #include "Basemap.h"
 #include "Viewpoint.h"
 #include "Envelope.h"
+#include "MapTypes.h"
 
 using namespace Esri::ArcGISRuntime;
 

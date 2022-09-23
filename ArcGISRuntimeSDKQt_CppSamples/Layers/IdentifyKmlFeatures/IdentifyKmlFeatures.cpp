@@ -23,9 +23,14 @@
 #include "CalloutData.h"
 #include "KmlDataset.h"
 #include "KmlLayer.h"
-#include "KmlPlacemark.h"
 #include "Map.h"
 #include "MapQuickView.h"
+#include "MapTypes.h"
+#include "TaskWatcher.h"
+#include "LayerListModel.h"
+#include "IdentifyLayerResult.h"
+#include "KmlPlacemark.h"
+#include <QUuid>
 
 using namespace Esri::ArcGISRuntime;
 
@@ -70,7 +75,7 @@ void IdentifyKmlFeatures::setMapView(MapQuickView* mapView)
   // start zoomed in over the US
   m_mapView->setViewpointGeometry(Envelope(-19195297.778679, 512343.939994, -3620418.579987, 8658913.035426, SpatialReference::webMercator()));
 
-  connect(m_mapView, &MapQuickView::identifyLayerCompleted, this, [this](QUuid, Esri::ArcGISRuntime::IdentifyLayerResult *rawResult)
+  connect(m_mapView, &MapQuickView::identifyLayerCompleted, this, [this](QUuid, Esri::ArcGISRuntime::IdentifyLayerResult* rawResult)
   {
     auto result = std::unique_ptr<IdentifyLayerResult>(rawResult);
 

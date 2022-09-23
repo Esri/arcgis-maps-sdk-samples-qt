@@ -44,7 +44,15 @@
 #include "TrackingProgress.h"
 #include "TrackingStatus.h"
 #include "VoiceGuidance.h"
+#include "MapTypes.h"
+#include "MapViewTypes.h"
+#include "SymbolTypes.h"
+#include "TaskWatcher.h"
+#include "Error.h"
+#include "GraphicsOverlayListModel.h"
+#include "GraphicListModel.h"
 
+#include <QUuid>
 #include <memory>
 #include <QDir>
 #include <QList>

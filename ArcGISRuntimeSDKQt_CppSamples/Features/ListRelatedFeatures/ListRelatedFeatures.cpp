@@ -22,7 +22,6 @@
 
 #include "Map.h"
 #include "MapQuickView.h"
-#include "Basemap.h"
 #include "FeatureLayer.h"
 #include "ViewInsets.h"
 #include "Envelope.h"
@@ -40,6 +39,9 @@
 #include "ArcGISFeatureLayerInfo.h"
 #include "AttributeListModel.h"
 #include "TaskWatcher.h"
+#include "SpatialReference.h"
+#include "CoreTypes.h"
+#include "MapTypes.h"
 
 #include <QUuid>
 #include <QList>

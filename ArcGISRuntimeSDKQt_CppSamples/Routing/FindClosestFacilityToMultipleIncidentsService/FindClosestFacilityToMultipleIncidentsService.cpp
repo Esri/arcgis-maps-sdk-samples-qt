@@ -35,6 +35,16 @@
 #include "ClosestFacilityParameters.h"
 #include "ClosestFacilityResult.h"
 #include "ClosestFacilityRoute.h"
+#include "MapTypes.h"
+#include "SymbolTypes.h"
+#include "TaskWatcher.h"
+#include "Error.h"
+#include "GraphicsOverlayListModel.h"
+#include "GraphicListModel.h"
+#include "LayerListModel.h"
+#include "QueryParameters.h"
+
+#include <QUuid>
 
 using namespace Esri::ArcGISRuntime;
 

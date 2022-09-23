@@ -20,13 +20,16 @@
 
 #include "FormatCoordinates.h"
 
-#include "Basemap.h"
 #include "CoordinateFormatter.h"
 #include "Graphic.h"
 #include "Map.h"
 #include "MapQuickView.h"
 #include "Point.h"
 #include "SimpleMarkerSymbol.h"
+#include "MapTypes.h"
+#include "GraphicListModel.h"
+#include "SymbolTypes.h"
+#include "GraphicsOverlayListModel.h"
 
 using namespace Esri::ArcGISRuntime;
 

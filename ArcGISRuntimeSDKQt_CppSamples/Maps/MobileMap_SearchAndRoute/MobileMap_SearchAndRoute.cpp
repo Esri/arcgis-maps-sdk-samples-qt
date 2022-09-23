@@ -29,14 +29,24 @@
 #include "RouteResult.h"
 #include "MapQuickView.h"
 #include "GeocodeResult.h"
-#include "SimpleRenderer.h"
 #include "GraphicsOverlay.h"
 #include "RouteParameters.h"
-#include "SimpleLineSymbol.h"
 #include "MobileMapPackage.h"
 #include "PictureMarkerSymbol.h"
 #include "ReverseGeocodeParameters.h"
+#include "Error.h"
+#include "MapTypes.h"
+#include "MapViewTypes.h"
+#include "TaskWatcher.h"
+#include "CalloutData.h"
+#include "GraphicsOverlayListModel.h"
+#include "IdentifyGraphicsOverlayResult.h"
+#include "SymbolTypes.h"
+#include "AttributeListModel.h"
+#include "GraphicListModel.h"
+#include "Route.h"
 
+#include <QUuid>
 #include <QFileInfoList>
 #include <QFile>
 #include <QtCore/qglobal.h>

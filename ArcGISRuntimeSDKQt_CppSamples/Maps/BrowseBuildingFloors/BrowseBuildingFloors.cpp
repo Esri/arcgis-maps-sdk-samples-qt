@@ -24,6 +24,9 @@
 #include "FloorManager.h"
 #include "Map.h"
 #include "MapQuickView.h"
+#include "Error.h"
+#include "MapTypes.h"
+#include "Portal.h"
 
 using namespace Esri::ArcGISRuntime;
 

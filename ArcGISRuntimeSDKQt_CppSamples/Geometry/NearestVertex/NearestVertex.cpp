@@ -32,6 +32,12 @@
 #include "SimpleLineSymbol.h"
 #include "SimpleMarkerSymbol.h"
 #include "SpatialReference.h"
+#include "GraphicsOverlayListModel.h"
+#include "GraphicListModel.h"
+#include "SymbolTypes.h"
+#include "TaskWatcher.h"
+#include "LayerListModel.h"
+#include "ProximityResult.h"
 
 using namespace Esri::ArcGISRuntime;
 

@@ -27,6 +27,9 @@
 #include "RasterLayer.h"
 #include "Point.h"
 #include "Viewpoint.h"
+#include "Error.h"
+#include "MapTypes.h"
+#include "LayerListModel.h"
 
 #include <QUrl>
 #include <QtCore/qglobal.h>

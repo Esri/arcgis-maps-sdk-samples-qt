@@ -29,6 +29,10 @@
 #include "FeatureLayer.h"
 #include "GeoPackageRaster.h"
 #include "GeoPackageFeatureTable.h"
+#include "Error.h"
+#include "MapTypes.h"
+#include "TaskWatcher.h"
+#include "LayerListModel.h"
 
 #include <QtCore/qglobal.h>
 

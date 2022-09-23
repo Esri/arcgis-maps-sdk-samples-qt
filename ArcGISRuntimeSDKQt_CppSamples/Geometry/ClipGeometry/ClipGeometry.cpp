@@ -29,6 +29,10 @@
 #include "GraphicsOverlay.h"
 #include "SimpleLineSymbol.h"
 #include "SimpleFillSymbol.h"
+#include "MapTypes.h"
+#include "GraphicsOverlayListModel.h"
+#include "SymbolTypes.h"
+#include "GraphicListModel.h"
 
 using namespace Esri::ArcGISRuntime;
 

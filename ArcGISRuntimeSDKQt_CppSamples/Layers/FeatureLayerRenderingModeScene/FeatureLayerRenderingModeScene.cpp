@@ -20,7 +20,6 @@
 
 #include "FeatureLayerRenderingModeScene.h"
 
-#include "ArcGISTiledElevationSource.h"
 #include "Scene.h"
 #include "SceneQuickView.h"
 #include "LoadSettings.h"
@@ -29,6 +28,9 @@
 #include "Point.h"
 #include "SpatialReference.h"
 #include "Camera.h"
+#include "MapTypes.h"
+#include "TaskWatcher.h"
+#include "LayerListModel.h"
 
 #include <QString>
 #include <QStringList>

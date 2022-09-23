@@ -43,6 +43,7 @@
 #include "FeatureIterator.h"
 #include "CalloutData.h"
 #include "Error.h"
+#include "Attachment.h"
 
 #include <QUrl>
 #include <QUuid>

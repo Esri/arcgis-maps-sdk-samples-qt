@@ -24,6 +24,9 @@
 #include "Map.h"
 #include "MapQuickView.h"
 #include "WmsLayer.h"
+#include "MapTypes.h"
+#include "TaskWatcher.h"
+#include "LayerListModel.h"
 
 #include <QUrl>
 #include <QStringList>

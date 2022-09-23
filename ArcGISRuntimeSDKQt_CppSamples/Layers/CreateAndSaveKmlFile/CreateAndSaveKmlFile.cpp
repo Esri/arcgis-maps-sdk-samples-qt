@@ -24,9 +24,6 @@
 #include "MapQuickView.h"
 #include "PolygonBuilder.h"
 #include "PolylineBuilder.h"
-#include "SimpleFillSymbol.h"
-#include "SimpleLineSymbol.h"
-#include "SimpleMarkerSymbol.h"
 #include "KmlDocument.h"
 #include "KmlPlacemark.h"
 #include "KmlNodeListModel.h"
@@ -37,6 +34,11 @@
 #include "KmlIconStyle.h"
 #include "KmlPolygonStyle.h"
 #include "KmlStyle.h"
+#include "Error.h"
+#include "MapTypes.h"
+#include "TaskWatcher.h"
+#include "LayerListModel.h"
+#include "KmlGeometry.h"
 
 using namespace Esri::ArcGISRuntime;
 

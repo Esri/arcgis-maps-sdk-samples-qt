@@ -25,6 +25,8 @@
 #include "Map.h"
 #include "MapQuickView.h"
 #include "ServiceFeatureTable.h"
+#include "MapTypes.h"
+#include "LayerListModel.h"
 
 using namespace Esri::ArcGISRuntime;
 
