@@ -37,9 +37,9 @@ Item {
         mapView: view
 
         onUpdateUi: {
-            downloadUpdatesButton.enabled = enabled;
-            availabilityText.text = text;
-            availabilityDetailsText.text = detailedText;
+            enabled => downloadUpdatesButton.enabled = enabled;
+            text => availabilityText.text = text;
+            detailedText => availabilityDetailsText.text = detailedText;
             busyIndicator.visible = false;
         }
     }
@@ -62,11 +62,12 @@ Item {
         Button {
             id: downloadUpdatesButton
             text: "Apply Scheduled Updates"
-            enabled: false
+            enabled: true
 
             onClicked: {
                 busyIndicator.visible = true;
                 model.updateMap();
+                downloadUpdatesButton.enabled = false;
             }
         }
 

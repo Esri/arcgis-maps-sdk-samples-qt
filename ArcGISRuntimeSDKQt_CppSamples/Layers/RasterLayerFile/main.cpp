@@ -11,7 +11,7 @@
 // See the License for the specific language governing permissions and
 // limitations under the License.
 
-#include <QApplication>
+#include <QGuiApplication>
 #include <QQuickView>
 #include <QCommandLineParser>
 #include <QDir>
@@ -30,7 +30,7 @@
 
 int main(int argc, char *argv[])
 {
-  QApplication app(argc, argv);
+  QGuiApplication app(argc, argv);
   app.setApplicationName("RasterLayerFile - C++");
 
   // Use of Esri location services, including basemaps and geocoding,

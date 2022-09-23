@@ -99,7 +99,7 @@ StatisticalQuerySample {
         }
     }
 
-    onShowStatistics: {
+    onShowStatistics: results => {
         msgDialog.informativeText = results;
         msgDialog.open();
     }

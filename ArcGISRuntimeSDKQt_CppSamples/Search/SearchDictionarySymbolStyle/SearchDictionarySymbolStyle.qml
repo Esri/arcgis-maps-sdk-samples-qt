@@ -295,7 +295,7 @@ SearchDictionarySymbolStyleSample {
     }
 
     //Search completed
-    onSearchCompleted: {
+    onSearchCompleted: count => {
         seachBtn.enabled = true;
         resultView.visible = true;
 
