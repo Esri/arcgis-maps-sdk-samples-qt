@@ -14,6 +14,7 @@
 // limitations under the License.
 // [Legal]
 
+#include "ArcGISFeature.h"
 #ifdef PCH_BUILD
 #include "pch.hpp"
 #endif // PCH_BUILD
@@ -28,12 +29,20 @@
 #include "GeotriggersTypes.h"
 #include "FeatureFenceParameters.h"
 #include "LocationGeotriggerFeed.h"
+#include "LocationDisplay.h"
 #include "Map.h"
 #include "MapQuickView.h"
+#include "MapViewTypes.h"
 #include "PortalItem.h"
 #include "ServiceFeatureTable.h"
 #include "SimulatedLocationDataSource.h"
 #include "SimulationParameters.h"
+#include "TaskWatcher.h"
+#include "ArcGISFeature.h"
+#include "AttributeListModel.h"
+#include "Attachment.h"
+#include "AttachmentListModel.h"
+#include <QUuid>
 
 using namespace Esri::ArcGISRuntime;
 

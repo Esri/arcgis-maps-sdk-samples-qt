@@ -24,10 +24,13 @@
 #include "GraphicListModel.h"
 #include "Map.h"
 #include "MapQuickView.h"
-#include "PolygonBuilder.h"
 #include "MultipointBuilder.h"
 #include "DictionarySymbolStyle.h"
 #include "DictionarySymbolStyleConfiguration.h"
+#include "MapTypes.h"
+#include "GraphicsOverlayListModel.h"
+#include "PointCollection.h"
+#include "TaskWatcher.h"
 
 #include <QtCore/qglobal.h>
 

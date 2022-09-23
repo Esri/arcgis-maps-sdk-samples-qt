@@ -30,12 +30,24 @@
 #include "GeometryEngine.h"
 #include "PolylineBuilder.h"
 #include "PartCollection.h"
+#include "MapTypes.h"
+#include "LayerListModel.h"
+#include "TaskWatcher.h"
+#include "IdentifyLayerResult.h"
+#include "GeoElement.h"
+#include "Feature.h"
+#include "ImmutablePartCollection.h"
+#include "ImmutablePart.h"
+#include "AttributeListModel.h"
+#include "ProximityResult.h"
+#include "Part.h"
 
 // Qt headers
 #include <QString>
 #include <QFile>
 #include <QtCore/qglobal.h>
 #include <QTimer>
+#include <QUuid>
 
 #include <memory>
 

@@ -31,10 +31,17 @@
 #include "ArcGISFeatureTable.h"
 #include "RelatedFeatureQueryResult.h"
 #include "FeatureQueryResult.h"
-
 #include "RelatedFeature.h"
 #include "RelatedFeatureListModel.h"
+#include "SelectionProperties.h"
+#include "Error.h"
+#include "LayerListModel.h"
+#include "FeatureIterator.h"
+#include "ArcGISFeatureLayerInfo.h"
+#include "AttributeListModel.h"
+#include "TaskWatcher.h"
 
+#include <QUuid>
 #include <QList>
 #include <QUrl>
 #include <memory>

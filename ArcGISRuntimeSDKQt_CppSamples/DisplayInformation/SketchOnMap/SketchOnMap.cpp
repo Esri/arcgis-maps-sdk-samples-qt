@@ -22,11 +22,15 @@
 
 #include "Map.h"
 #include "MapQuickView.h"
-
-#include "PolygonBuilder.h"
 #include "SimpleFillSymbol.h"
 #include "SimpleMarkerSymbol.h"
 #include "SketchEditor.h"
+#include "MapTypes.h"
+#include "TaskWatcher.h"
+#include "GraphicsOverlayListModel.h"
+#include "MapViewTypes.h"
+#include "GraphicListModel.h"
+#include "SymbolTypes.h"
 
 using namespace Esri::ArcGISRuntime;
 

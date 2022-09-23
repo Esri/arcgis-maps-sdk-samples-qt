@@ -19,8 +19,6 @@
 #endif // PCH_BUILD
 
 #include "Simple_Marker_Symbol.h"
-
-#include "Basemap.h"
 #include "Graphic.h"
 #include "GraphicsOverlay.h"
 #include "Point.h"
@@ -29,6 +27,11 @@
 #include "SimpleMarkerSymbol.h"
 #include "SpatialReference.h"
 #include "Viewpoint.h"
+#include "MapViewTypes.h"
+#include "MapTypes.h"
+#include "GraphicListModel.h"
+#include "GraphicsOverlayListModel.h"
+#include "SymbolTypes.h"
 
 using namespace Esri::ArcGISRuntime;
 

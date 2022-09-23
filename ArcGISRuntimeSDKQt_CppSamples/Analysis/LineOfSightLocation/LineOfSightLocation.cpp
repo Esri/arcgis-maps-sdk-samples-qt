@@ -26,6 +26,12 @@
 #include "LocationLineOfSight.h"
 #include "AnalysisOverlay.h"
 #include "Camera.h"
+#include "MapTypes.h"
+#include "Surface.h"
+#include "ElevationSourceListModel.h"
+#include "AnalysisOverlayListModel.h"
+#include "AnalysisListModel.h"
+#include "TaskWatcher.h"
 
 using namespace Esri::ArcGISRuntime;
 

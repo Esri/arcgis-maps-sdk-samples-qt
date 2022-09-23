@@ -32,10 +32,20 @@
 #include "GeometryEngine.h"
 #include "Map.h"
 #include "MapQuickView.h"
-#include "SimpleFillSymbol.h"
-#include "SimpleLineSymbol.h"
-#include "SimpleMarkerSymbol.h"
 #include "SimpleRenderer.h"
+#include "TaskWatcher.h"
+#include "GraphicsOverlayListModel.h"
+#include "SymbolTypes.h"
+#include "LayerListModel.h"
+#include "ArcGISFeature.h"
+#include "MapTypes.h"
+#include "GeodatabaseTypes.h"
+#include "AttributeListModel.h"
+#include "GraphicListModel.h"
+#include "QueryParameters.h"
+#include "FeatureIterator.h"
+#include "FeatureQueryResult.h"
+#include <QUuid>
 
 #ifdef Q_OS_ANDROID
 #elif defined Q_OS_IOS

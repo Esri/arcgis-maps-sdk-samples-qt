@@ -28,6 +28,8 @@
 #include "ServiceFeatureTable.h"
 #include "Viewpoint.h"
 #include "PortalItem.h"
+#include "MapTypes.h"
+#include "LayerListModel.h"
 
 #include <QtCore/qglobal.h>
 

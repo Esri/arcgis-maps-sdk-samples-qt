@@ -27,11 +27,19 @@
 #include "Map.h"
 #include "MapQuickView.h"
 #include "PolygonBuilder.h"
-#include "PolylineBuilder.h"
 #include "SimpleFillSymbol.h"
 #include "SimpleLineSymbol.h"
 #include "SimpleMarkerSymbol.h"
 #include "SimpleRenderer.h"
+#include "MapTypes.h"
+#include "SimpleMarkerSymbol.h"
+#include "SymbolTypes.h"
+#include "AngularUnit.h"
+#include "LinearUnit.h"
+#include "GraphicListModel.h"
+#include "GraphicsOverlayListModel.h"
+#include "Part.h"
+#include "PartCollection.h"
 
 using namespace Esri::ArcGISRuntime;
 

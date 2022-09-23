@@ -28,8 +28,17 @@
 #include "MultilayerSymbol.h"
 #include "Point.h"
 #include "MultilayerPointSymbol.h"
-
 #include "SymbolImageProvider.h"
+#include "SymbolStyleSearchResultListModel.h"
+#include "MapTypes.h"
+#include "Error.h"
+#include "SymbolStyleSearchParameters.h"
+#include "TaskWatcher.h"
+#include "SymbolLayerListModel.h"
+#include "SymbolLayer.h"
+#include "GraphicsOverlayListModel.h"
+#include "GraphicListModel.h"
+#include "SymbolStyleSearchResult.h"
 
 #include <QObject>
 #include <QQmlContext>

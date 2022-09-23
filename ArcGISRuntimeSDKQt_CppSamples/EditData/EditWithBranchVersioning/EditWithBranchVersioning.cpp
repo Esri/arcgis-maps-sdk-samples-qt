@@ -20,8 +20,6 @@
 
 #include "EditWithBranchVersioning.h"
 
-#include "ArcGISFeatureServiceInfo.h"
-#include "AttributeListModel.h"
 #include "AuthenticationManager.h"
 #include "FeatureEditResult.h"
 #include "FeatureLayer.h"
@@ -33,6 +31,15 @@
 #include "ServiceGeodatabase.h"
 #include "ServiceVersionInfo.h"
 #include "ServiceVersionParameters.h"
+#include "MapTypes.h"
+#include "Credential.h"
+#include "TaskWatcher.h"
+#include "IdentifyLayerResult.h"
+#include "ArcGISFeature.h"
+#include "AttributeListModel.h"
+#include "CalloutData.h"
+#include "LayerListModel.h"
+#include "ServiceTypes.h"
 
 using namespace Esri::ArcGISRuntime;
 

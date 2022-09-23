@@ -23,13 +23,20 @@
 #include "FeatureListModel.h"
 
 #include "FeatureLayer.h"
-#include "FieldDescription.h"
-#include "FieldDescriptionListModel.h"
 #include "Geodatabase.h"
 #include "GeodatabaseFeatureTable.h"
 #include "Map.h"
 #include "MapQuickView.h"
 #include "TableDescription.h"
+#include "MapTypes.h"
+#include "TaskWatcher.h"
+#include "FieldDescription.h"
+#include "ServiceTypes.h"
+#include "LayerListModel.h"
+#include "FieldDescriptionListModel.h"
+#include "QueryParameters.h"
+#include "FeatureIterator.h"
+#include <QUuid>
 
 using namespace Esri::ArcGISRuntime;
 

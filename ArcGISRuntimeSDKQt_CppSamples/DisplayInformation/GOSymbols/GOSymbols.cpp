@@ -24,17 +24,19 @@
 #include "MapQuickView.h"
 #include "SpatialReference.h"
 #include "Point.h"
-#include "PolylineBuilder.h"
 #include "Polyline.h"
 #include "PolygonBuilder.h"
-#include "Polygon.h"
 #include "Graphic.h"
 #include "GraphicsOverlay.h"
 #include "SimpleMarkerSymbol.h"
 #include "SimpleLineSymbol.h"
 #include "SimpleFillSymbol.h"
 #include "TextSymbol.h"
-#include "SimpleRenderer.h"
+#include "MapTypes.h"
+#include "GraphicsOverlayListModel.h"
+#include "SymbolTypes.h"
+#include "GraphicListModel.h"
+
 #include <QList>
 
 using namespace Esri::ArcGISRuntime;

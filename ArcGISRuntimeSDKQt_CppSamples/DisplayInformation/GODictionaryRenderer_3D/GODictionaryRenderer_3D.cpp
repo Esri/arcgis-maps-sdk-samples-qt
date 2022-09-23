@@ -31,6 +31,9 @@
 #include "SceneQuickView.h"
 #include "Surface.h"
 #include "DictionarySymbolStyle.h"
+#include "MapTypes.h"
+#include "ElevationSourceListModel.h"
+#include "GraphicsOverlayListModel.h"
 
 #include <QtCore/qglobal.h>
 

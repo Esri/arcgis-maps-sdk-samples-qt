@@ -23,13 +23,20 @@
 #include "ArcadeEvaluator.h"
 #include "ArcadeEvaluationResult.h"
 #include "ArcadeExpression.h"
-#include "ArcGISFeatureTable.h"
 #include "CalloutData.h"
 #include "Map.h"
 #include "MapQuickView.h"
 #include "Point.h"
 #include "PortalItem.h"
+#include "MapTypes.h"
+#include "Portal.h"
+#include "LayerListModel.h"
+#include "TaskWatcher.h"
+#include "IdentifyLayerResult.h"
+#include "ArcGISFeature.h"
+#include "ExpressionTypes.h"
 
+#include <QUuid>
 #include <QVariantMap>
 
 using namespace Esri::ArcGISRuntime;

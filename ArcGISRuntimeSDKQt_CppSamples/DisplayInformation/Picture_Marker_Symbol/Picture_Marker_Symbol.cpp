@@ -23,12 +23,15 @@
 #include "Map.h"
 #include "Point.h"
 #include "Graphic.h"
-#include "Basemap.h"
 #include "Viewpoint.h"
 #include "MapQuickView.h"
 #include "GraphicsOverlay.h"
 #include "SpatialReference.h"
 #include "PictureMarkerSymbol.h"
+#include "MapTypes.h"
+#include "MapViewTypes.h"
+#include "GraphicsOverlayListModel.h"
+#include "GraphicListModel.h"
 
 #include <QUrl>
 #include <QString>

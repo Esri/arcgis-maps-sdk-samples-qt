@@ -34,6 +34,15 @@
 #include "GeometryEngine.h"
 #include "GenerateLayerOption.h"
 #include "GeodatabaseFeatureTable.h"
+#include "MapViewTypes.h"
+#include "TileCache.h"
+#include "Error.h"
+#include "IdInfo.h"
+#include "LayerListModel.h"
+#include "GenerateGeodatabaseJob.h"
+#include "TaskTypes.h"
+#include "Geodatabase.h"
+#include "TaskWatcher.h"
 
 #include <QtCore/qglobal.h>
 #include <QUrl>

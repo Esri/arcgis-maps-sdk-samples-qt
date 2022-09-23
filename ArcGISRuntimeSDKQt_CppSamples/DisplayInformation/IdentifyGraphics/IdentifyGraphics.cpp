@@ -23,12 +23,18 @@
 #include "Map.h"
 #include "MapQuickView.h"
 #include "SpatialReference.h"
-#include "Basemap.h"
 #include "GraphicsOverlay.h"
 #include "SimpleFillSymbol.h"
 #include "SimpleRenderer.h"
 #include "PolygonBuilder.h"
 #include "Graphic.h"
+#include "MapTypes.h"
+#include "SymbolTypes.h"
+#include "GraphicsOverlayListModel.h"
+#include "GraphicListModel.h"
+#include "IdentifyGraphicsOverlayResult.h"
+#include "TaskWatcher.h"
+
 #include <QMouseEvent>
 #include <QList>
 #include <QUuid>

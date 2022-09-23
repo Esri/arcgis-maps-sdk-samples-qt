@@ -30,6 +30,11 @@
 #include "FeatureLayer.h"
 #include "Feature.h"
 #include "FeatureEditResult.h"
+#include "MapViewTypes.h"
+#include "MapTypes.h"
+#include "LayerListModel.h"
+#include "TaskWatcher.h"
+
 #include <QUrl>
 #include <QMap>
 #include <QUuid>

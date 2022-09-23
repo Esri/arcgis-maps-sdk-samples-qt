@@ -24,6 +24,14 @@
 #include "Map.h"
 #include "MapQuickView.h"
 #include "PopupManager.h"
+#include "PopupAttachmentListModel.h"
+#include "IdentifyLayerResult.h"
+#include "Error.h"
+#include "MapTypes.h"
+#include "LayerListModel.h"
+#include "Feature.h"
+
+#include <QUuid>
 
 using namespace Esri::ArcGISRuntime;
 

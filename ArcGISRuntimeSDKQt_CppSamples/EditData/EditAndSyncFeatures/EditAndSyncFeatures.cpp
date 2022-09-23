@@ -35,7 +35,19 @@
 #include "GeometryEngine.h"
 #include "Geodatabase.h"
 #include "Point.h"
+#include "TaskWatcher.h"
+#include "MapViewTypes.h"
+#include "LayerListModel.h"
+#include "ArcGISFeature.h"
+#include "IdentifyLayerResult.h"
+#include "GenerateLayerOption.h"
+#include "SyncLayerOption.h"
+#include "TaskTypes.h"
+#include "GenerateGeodatabaseJob.h"
+#include "Error.h"
+#include "SyncGeodatabaseJob.h"
 
+#include <QUuid>
 #include <QUrl>
 #include <QtCore/qglobal.h>
 

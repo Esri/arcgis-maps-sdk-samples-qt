@@ -22,11 +22,17 @@
 
 #include "Map.h"
 #include "MapQuickView.h"
+#include "MapTypes.h"
 #include "GeoprocessingTask.h"
 #include "GeoprocessingJob.h"
 #include "GeoprocessingString.h"
-#include "GeocodeParameters.h"
+#include "GeoprocessingTypes.h"
 #include "ArcGISMapImageLayer.h"
+#include "Error.h"
+#include "TaskWatcher.h"
+#include "TaskTypes.h"
+#include "LayerListModel.h"
+#include "GeoprocessingResult.h"
 
 using namespace Esri::ArcGISRuntime;
 

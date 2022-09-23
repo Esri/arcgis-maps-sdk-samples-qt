@@ -30,6 +30,13 @@
 #include "Envelope.h"
 #include "Feature.h"
 #include "GeoElement.h"
+#include "MapViewTypes.h"
+#include "MapTypes.h"
+#include "LayerListModel.h"
+#include "TaskWatcher.h"
+#include "IdentifyLayerResult.h"
+
+#include <QUuid>
 #include <QList>
 #include <QString>
 #include <QUrl>
