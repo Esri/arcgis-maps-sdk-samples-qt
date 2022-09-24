@@ -49,6 +49,9 @@ int main(int argc, char *argv[])
   QCoreApplication::setAttribute(Qt::AA_UseOpenGLES);
 #endif
 
+  // Enable OpenGL
+  qputenv("QSG_RHI_BACKEND", "opengl");
+
   // Initialize application view
   QQuickView view;
   view.setResizeMode(QQuickView::SizeRootObjectToView);

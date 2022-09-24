@@ -29,6 +29,9 @@ int main(int argc, char *argv[])
   const QString apiKey = QString("");
   setAPIKey(app, apiKey);
 
+  // Enable OpenGL
+  qputenv("QSG_RHI_BACKEND", "opengl");
+
   // Initialize application view
   QQuickView view;
   view.setResizeMode(QQuickView::SizeRootObjectToView);

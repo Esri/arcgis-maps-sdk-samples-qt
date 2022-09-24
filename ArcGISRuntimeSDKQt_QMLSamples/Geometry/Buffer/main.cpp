@@ -44,6 +44,9 @@ int main(int argc, char *argv[])
       QCoreApplication::instance()->setProperty("Esri.ArcGISRuntime.apiKey", apiKey);
   }
 
+  // Enable OpenGL
+  qputenv("QSG_RHI_BACKEND", "opengl");
+
   // Initialize application view
   QQuickView view;
   view.setResizeMode(QQuickView::SizeRootObjectToView);

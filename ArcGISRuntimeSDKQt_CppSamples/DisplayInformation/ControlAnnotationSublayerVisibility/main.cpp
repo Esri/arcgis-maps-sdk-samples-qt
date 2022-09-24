@@ -60,7 +60,10 @@ int main(int argc, char *argv[])
     arcGISRuntimeImportPath = arcGISRuntimeImportPath.replace(replaceString, "linux", Qt::CaseSensitive);
 #endif
 
-    // Initialize application view
+    // Enable OpenGL
+  qputenv("QSG_RHI_BACKEND", "opengl");
+
+  // Initialize application view
     QQmlApplicationEngine engine;
     // Add the import Path
     engine.addImportPath(QDir(QCoreApplication::applicationDirPath()).filePath("qml"));

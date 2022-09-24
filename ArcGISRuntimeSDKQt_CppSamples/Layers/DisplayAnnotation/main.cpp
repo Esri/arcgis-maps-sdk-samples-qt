@@ -48,7 +48,10 @@ int main(int argc, char *argv[])
     // Initialize the sample
     DisplayAnnotation::init();
 
-    // Initialize application view
+    // Enable OpenGL
+  qputenv("QSG_RHI_BACKEND", "opengl");
+
+  // Initialize application view
     QQmlApplicationEngine engine;
     // Add the import Path
     engine.addImportPath(QDir(QCoreApplication::applicationDirPath()).filePath("qml"));

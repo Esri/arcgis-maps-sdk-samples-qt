@@ -68,6 +68,9 @@ int main(int argc, char *argv[])
   // Initialize the sample
   Animate3DSymbols::init();
 
+  // Enable OpenGL
+  qputenv("QSG_RHI_BACKEND", "opengl");
+
   // Initialize application view
   QQmlApplicationEngine engine;
 

@@ -54,7 +54,10 @@ int main(int argc, char *argv[])
     // Initialize the sample
     OpenMobileMap_MapPackage::init();
 
-    // Initialize application view
+    // Enable OpenGL
+  qputenv("QSG_RHI_BACKEND", "opengl");
+
+  // Initialize application view
     QQuickView view;
     view.setResizeMode(QQuickView::SizeRootObjectToView);
 

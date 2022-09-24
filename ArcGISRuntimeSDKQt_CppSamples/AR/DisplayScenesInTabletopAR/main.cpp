@@ -80,6 +80,9 @@ int main(int argc, char *argv[])
 
   Esri::ArcGISRuntime::Toolkit::ArcGISArView::qmlRegisterTypes();
 
+  // Enable OpenGL
+  qputenv("QSG_RHI_BACKEND", "opengl");
+
   // Initialize application view
   QQmlApplicationEngine engine;
   // Add the import Path
