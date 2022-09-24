@@ -36,9 +36,9 @@ int main(int argc, char *argv[])
 #endif // QT_WEBVIEW_WEBENGINE_BACKEND
 
     // Enable OpenGL
-  qputenv("QSG_RHI_BACKEND", "opengl");
+    qputenv("QSG_RHI_BACKEND", "opengl");
 
-  // Initialize application view
+    // Initialize application view
     QQuickView view;
     view.setResizeMode(QQuickView::SizeRootObjectToView);
 
