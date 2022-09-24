@@ -27,17 +27,30 @@
 #include "GeometryEngine.h"
 #include "Map.h"
 #include "MapQuickView.h"
-#include "SimpleLineSymbol.h"
 #include "SubtypeFeatureLayer.h"
 #include "UtilityAssetType.h"
 #include "UtilityAssociation.h"
 #include "UtilityElement.h"
 #include "UtilityNetwork.h"
-#include "UtilityNetworkListModel.h"
 #include "UtilityNetworkTypes.h"
+#include "MapTypes.h"
+#include "SymbolTypes.h"
+#include "TaskWatcher.h"
+#include "Error.h"
+#include "GraphicsOverlayListModel.h"
+#include "GraphicListModel.h"
+#include "LayerListModel.h"
+#include "Credential.h"
+#include "AuthenticationChallenge.h"
+#include "IdentifyLayerResult.h"
+#include "ArcGISFeature.h"
+#include "ArcGISFeatureTable.h"
+#include "ArcGISFeatureLayerInfo.h"
+#include "DrawingInfo.h"
 
 #include <QImage>
 #include <QQmlContext>
+#include <QUuid>
 
 using namespace Esri::ArcGISRuntime;
 

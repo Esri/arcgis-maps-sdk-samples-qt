@@ -33,10 +33,18 @@
 #include "GeocodeParameters.h"
 #include "PictureMarkerSymbol.h"
 #include "IdentifyGraphicsOverlayResult.h"
+#include "MapViewTypes.h"
+#include "TaskWatcher.h"
+#include "Error.h"
+#include "GraphicsOverlayListModel.h"
+#include "GraphicListModel.h"
+#include "LayerListModel.h"
+#include "TileCache.h"
 
 #include <QScopedPointer>
 #include <QtCore/qglobal.h>
 #include <memory>
+#include <QUuid>
 
 #ifdef Q_OS_ANDROID
 #elif defined Q_OS_IOS

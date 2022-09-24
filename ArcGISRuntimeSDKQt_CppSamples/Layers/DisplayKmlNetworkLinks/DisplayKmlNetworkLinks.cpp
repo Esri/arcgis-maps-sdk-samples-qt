@@ -27,6 +27,7 @@
 #include "MapTypes.h"
 #include "TaskWatcher.h"
 #include "LayerListModel.h"
+#include "KmlNetworkLink.h"
 
 using namespace Esri::ArcGISRuntime;
 

@@ -30,12 +30,21 @@
 #include "PictureMarkerSymbol.h"
 #include "IdentifyGraphicsOverlayResult.h"
 #include "Point.h"
-#include "Envelope.h"
 #include "SimpleRenderer.h"
 #include "LocatorTask.h"
 #include "LocationDisplay.h"
 #include "SuggestListModel.h"
+#include "MapTypes.h"
+#include "MapViewTypes.h"
+#include "TaskWatcher.h"
+#include "GraphicsOverlayListModel.h"
+#include "GraphicListModel.h"
+#include "AttributeListModel.h"
+#include "SuggestParameters.h"
+#include "Location.h"
+
 #include <QUrl>
+#include <QUuid>
 
 using namespace Esri::ArcGISRuntime;
 

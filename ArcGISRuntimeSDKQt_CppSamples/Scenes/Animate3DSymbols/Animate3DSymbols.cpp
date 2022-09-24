@@ -39,8 +39,17 @@
 #include "SimpleMarkerSceneSymbol.h"
 #include "SimpleRenderer.h"
 #include "SpatialReference.h"
-
 #include "MissionData.h"
+#include "MapTypes.h"
+#include "SymbolTypes.h"
+#include "TaskWatcher.h"
+#include "GraphicsOverlayListModel.h"
+#include "GraphicListModel.h"
+#include "Surface.h"
+#include "ElevationSourceListModel.h"
+#include "LayerSceneProperties.h"
+#include "RendererSceneProperties.h"
+#include "AttributeListModel.h"
 
 #include <QFileInfo>
 #include <QStringListModel>

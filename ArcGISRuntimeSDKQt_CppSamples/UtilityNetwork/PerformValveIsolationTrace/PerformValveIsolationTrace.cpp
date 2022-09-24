@@ -22,7 +22,6 @@
 
 #include "ArcGISFeatureListModel.h"
 #include "FeatureLayer.h"
-#include "FeatureQueryResult.h"
 #include "Graphic.h"
 #include "GraphicsOverlay.h"
 #include "Map.h"
@@ -53,6 +52,16 @@
 #include "UtilityTraceFilter.h"
 #include "UtilityTraceParameters.h"
 #include "GeometryEngine.h"
+#include "MapTypes.h"
+#include "SymbolTypes.h"
+#include "TaskWatcher.h"
+#include "Error.h"
+#include "GraphicsOverlayListModel.h"
+#include "GraphicListModel.h"
+#include "LayerListModel.h"
+#include "Credential.h"
+#include "IdentifyLayerResult.h"
+#include "ArcGISFeature.h"
 
 #include <QUuid>
 

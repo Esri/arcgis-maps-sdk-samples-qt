@@ -20,11 +20,12 @@
 
 #include "SyncMapViewSceneView.h"
 
-#include "ArcGISTiledElevationSource.h"
 #include "Scene.h"
 #include "SceneQuickView.h"
 #include "Map.h"
 #include "MapQuickView.h"
+#include "MapTypes.h"
+#include "TaskWatcher.h"
 
 using namespace Esri::ArcGISRuntime;
 

@@ -35,9 +35,11 @@ class ServiceGeodatabase;
 }
 
 #include <QObject>
+#include <QUuid>
 #include <Point.h>
 
 Q_MOC_INCLUDE("MapQuickView.h")
+Q_MOC_INCLUDE("IdentifyLayerResult.h")
 
 class PerformValveIsolationTrace : public QObject
 {
