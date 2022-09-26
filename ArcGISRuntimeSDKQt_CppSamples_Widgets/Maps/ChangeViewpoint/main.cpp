@@ -19,6 +19,9 @@
 
 int main(int argc, char *argv[])
 {
+  // Enable OpenGL
+  qputenv("QSG_RHI_BACKEND", "opengl");
+
   QApplication application(argc, argv);
 
   // Use of Esri location services, including basemaps and geocoding,

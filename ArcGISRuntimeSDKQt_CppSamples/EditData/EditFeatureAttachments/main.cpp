@@ -33,6 +33,9 @@
 
 int main(int argc, char *argv[])
 {
+  // Enable OpenGL
+  qputenv("QSG_RHI_BACKEND", "opengl");
+
   QApplication app(argc, argv);
   app.setApplicationName("Edit Feature Attachments - C++");
 

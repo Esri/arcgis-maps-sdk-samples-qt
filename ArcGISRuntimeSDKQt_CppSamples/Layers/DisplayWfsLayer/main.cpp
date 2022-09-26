@@ -27,6 +27,9 @@
 
 int main(int argc, char *argv[])
 {
+  // Enable OpenGL
+  qputenv("QSG_RHI_BACKEND", "opengl");
+
   QGuiApplication app(argc, argv);
   app.setApplicationName(QStringLiteral("DisplayWfsLayer - C++"));
 

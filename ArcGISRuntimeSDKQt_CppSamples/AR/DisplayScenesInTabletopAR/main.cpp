@@ -30,6 +30,9 @@
 
 int main(int argc, char *argv[])
 {
+  // Enable OpenGL
+  qputenv("QSG_RHI_BACKEND", "opengl");
+
   // There are some conflicts between the AR frameworks and Qt's rendering thread.
   // See Qt's documentation about non-threaded render loops for more information.
   // https://doc.qt.io/qt-5/qtquick-visualcanvas-scenegraph.html#non-threaded-render-loops-basic-and-windows

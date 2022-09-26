@@ -36,6 +36,9 @@ using namespace Esri::ArcGISRuntime;
 
 int main(int argc, char *argv[])
 {
+  // Enable OpenGL
+  qputenv("QSG_RHI_BACKEND", "opengl");
+
 #if defined(Q_OS_LINUX) && !defined(Q_OS_ANDROID)
   // Linux requires 3.2 OpenGL Context
   // in order to instance 3D symbols
