@@ -36,10 +36,10 @@ Item {
         id: model
         mapView: view
 
-        onUpdateUi: {
-            enabled => downloadUpdatesButton.enabled = enabled;
-            text => availabilityText.text = text;
-            detailedText => availabilityDetailsText.text = detailedText;
+        onUpdateUi: (enabled, text, detailedText) => {
+            downloadUpdatesButton.enabled = enabled;
+            availabilityText.text = text;
+            availabilityDetailsText.text = detailedText;
             busyIndicator.visible = false;
         }
     }
