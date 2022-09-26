@@ -25,7 +25,7 @@
 
 int main(int argc, char *argv[])
 {
-  // Enable OpenGL
+  // Enforce OpenGL
   qputenv("QSG_RHI_BACKEND", "opengl");
 
 #if defined(Q_OS_LINUX) && !defined(Q_OS_ANDROID)

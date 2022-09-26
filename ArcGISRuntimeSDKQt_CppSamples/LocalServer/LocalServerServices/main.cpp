@@ -31,7 +31,7 @@
 
 int main(int argc, char *argv[])
 {
-  // Enable OpenGL
+  // Enforce OpenGL
   qputenv("QSG_RHI_BACKEND", "opengl");
 
   QApplication app(argc, argv);
