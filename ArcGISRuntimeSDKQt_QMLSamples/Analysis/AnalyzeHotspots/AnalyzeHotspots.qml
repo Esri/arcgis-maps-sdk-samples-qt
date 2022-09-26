@@ -16,7 +16,7 @@
 
 import QtQuick
 import QtQuick.Controls
-import Qt.labs.calendar
+// import Qt.labs.calendar // Calendar is not supported in Qt 6.2
 import Qt5Compat.GraphicalEffects
 import Esri.ArcGISRuntime
 import QtQuick.Layouts
@@ -151,7 +151,7 @@ Rectangle {
 
         Text {
             anchors.horizontalCenter: parent.horizontalCenter
-            text: "Select date range for analysis"
+            text: "Select date range for analysis\n(d MMM yyyy)"
             font.pixelSize: 14
         }
 
@@ -163,28 +163,12 @@ Rectangle {
         TextField {
             id: fromDate
             width: parent.width
-            text: fromThisDate.toLocaleString(Qt.locale(), "d MMM yyyy")
-            selectByMouse: true
-
-            Image {
-                anchors {
-                    verticalCenter: parent.verticalCenter
-                    right: parent.right
-                    margins: 5
-                }
-                source: "qrc:/Samples/Analysis/AnalyzeHotspots/calendar.png"
-                width: 22
-                height: width
-
-                MouseArea {
-                    anchors.fill: parent
-                    onClicked: {
-                        calendar.selectedDate = new Date(fromThisDate);
-                        calendarOverlay.toOrFromDate = "from";
-                        calendarOverlay.visible = true;
-                    }
-                }
+            text: "1 Jan 1998"
+            onTextChanged: {
+                fromThisDate = Date.fromLocaleString(Qt.locale(), text, "d MMM yyyy")
+                validateDates();
             }
+            selectByMouse: true
         }
 
         Text {
@@ -195,28 +179,13 @@ Rectangle {
         TextField {
             id: toDate
             width: parent.width
-            text: toThisDate.toLocaleString(Qt.locale(), "d MMM yyyy")
-            selectByMouse: true
-
-            Image {
-                anchors {
-                    verticalCenter: parent.verticalCenter
-                    right: parent.right
-                    margins: 5
-                }
-                source: "qrc:/Samples/Analysis/AnalyzeHotspots/calendar.png"
-                width: 22
-                height: width
-
-                MouseArea {
-                    anchors.fill: parent
-                    onClicked: {
-                        calendar.selectedDate = new Date(fromThisDate);
-                        calendarOverlay.toOrFromDate = "to";
-                        calendarOverlay.visible = true;
-                    }
-                }
+            text: "31 Jan 1998"
+            onTextChanged: {
+                toThisDate = Date.fromLocaleString(Qt.locale(), text, "d MMM yyyy")
+                validateDates();
             }
+
+            selectByMouse: true
         }
 
         Button {
@@ -251,106 +220,6 @@ Rectangle {
         }
     }
 
-    // Calendar overlay for selecting the date ranges
-    Rectangle {
-        id: calendarOverlay
-        anchors.fill: parent
-        color: "transparent"
-        visible: false
-
-        property string toOrFromDate
-
-        RadialGradient {
-            anchors.fill: parent
-            opacity: 0.7
-            gradient: Gradient {
-                GradientStop { position: 0.0; color: "lightgrey" }
-                GradientStop { position: 0.7; color: "black" }
-            }
-        }
-
-        MouseArea {
-            anchors.fill: parent
-            onClicked: mouse.accepted = true
-            onWheel: wheel.accepted = true
-        }
-
-
-        GridLayout {
-            id: calendarGrid
-            anchors.centerIn: parent
-            columns: 3
-            Button {
-                text: "<"
-                onClicked: {
-                    calendar.month -= 1;
-                }
-                enabled: calendar.month > calendar.minDate.getMonth()
-                Layout.column: 0
-                Layout.row: 0
-            }
-
-            Text {
-                text: calendar.title
-                horizontalAlignment: Text.AlignHCenter
-                Layout.column: 1
-                Layout.row: 0
-                Layout.fillWidth: true
-            }
-
-            Button {
-                text: ">"
-                onClicked: {
-                    calendar.month += 1;
-                }
-                enabled: calendar.month < (calendar.maxDate.getMonth() - 1)
-                Layout.column: 2
-                Layout.row: 0
-            }
-
-            DayOfWeekRow {
-                locale: calendar.locale
-
-                Layout.column: 1
-                Layout.row: 1
-                Layout.fillWidth: true
-            }
-
-            MonthGrid {
-                id: calendar
-                month: Calendar.January
-                year: 1998
-                Layout.row: 2
-                Layout.column: 1
-                Layout.fillWidth: true
-                Layout.fillHeight: true
-
-                property date minDate: new Date(1998,0,1)
-                property date maxDate: new Date(1998,4,31)
-                property date selectedDate: new Date(1998,4,31)
-
-                delegate: Text {
-                    horizontalAlignment: Text.AlignHCenter
-                    verticalAlignment: Text.AlignVCenter
-                    opacity: model.month !== calendar.month ? 0 : 1
-                    text: model.day
-                    font.bold: calendar.selectedDate.getTime() === model.date.getTime()
-                }
-
-                onClicked: {
-                    if (date.getMonth() !== calendar.month)
-                        return;
-
-                    if (calendarOverlay.toOrFromDate === "from")
-                        fromThisDate = date;
-                    else if (calendarOverlay.toOrFromDate === "to")
-                        toThisDate = date;
-                    calendarOverlay.visible = false;
-                }
-            }
-        }
-    }
-
     Dialog {
         id: messageDialog
         modal: true
@@ -371,25 +240,15 @@ Rectangle {
     }
 
     // function to validate the date ranges provided
-    function validateDates(_fromDate, _toDate) {
-        // check if each date is within the period
-        if (_fromDate > calendar.maxDate || _toDate < calendar.minDate) {
-            return false;
-        }
-
-        if (_fromDate < calendar.minDate || _toDate > calendar.maxDate) {
-            return false;
-        }
-
+    function validateDates() {
         // check that the to date is after the from date
-        if (_fromDate > _toDate) {
+        if (fromThisDate > toThisDate) {
             return false;
         }
 
         // check that there is at least one day in between the from and to date
-
         const oneDay = 86400000;
-        if ((_toDate - _fromDate) < oneDay) {
+        if ((toThisDate - fromThisDate) < oneDay) {
             return false;
         }
 
