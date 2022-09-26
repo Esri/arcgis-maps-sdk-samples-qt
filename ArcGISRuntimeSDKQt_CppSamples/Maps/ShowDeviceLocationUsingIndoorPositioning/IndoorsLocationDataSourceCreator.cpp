@@ -18,6 +18,7 @@
 #include "Map.h"
 #include "Error.h"
 #include "MapTypes.h"
+#include "FeatureLayer.h"
 #include "FeatureTableListModel.h"
 #include "LayerListModel.h"
 

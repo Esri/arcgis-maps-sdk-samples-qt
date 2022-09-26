@@ -22,6 +22,7 @@ namespace Esri::ArcGISRuntime
     class Credential;
     class Portal;
     class PortalUser;
+    enum class LoadStatus;
 }
 
 #include <QQuickItem>
