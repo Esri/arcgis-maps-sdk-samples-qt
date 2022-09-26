@@ -41,6 +41,7 @@
 #include <QFile>
 #include <QtCore/qglobal.h>
 #include <QTimer>
+#include <QImage>
 
 #include <memory>
 

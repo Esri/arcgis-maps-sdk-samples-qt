@@ -25,6 +25,12 @@
 #include "BasemapListModel.h"
 #include "Portal.h"
 #include "ShowOrgBasemaps.h"
+#include "MapTypes.h"
+#include "CoreTypes.h"
+#include "Credential.h"
+#include "OAuthClientInfo.h"
+#include "Error.h"
+#include "PortalInfo.h"
 
 using namespace Esri::ArcGISRuntime;
 

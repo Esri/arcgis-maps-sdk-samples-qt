@@ -27,6 +27,10 @@
 #include "RasterLayer.h"
 #include "RasterFunction.h"
 #include "Envelope.h"
+#include "MapTypes.h"
+#include "Error.h"
+#include "LayerListModel.h"
+#include "RasterFunctionArguments.h"
 
 #include <QFileInfo>
 #include <QtCore/qglobal.h>

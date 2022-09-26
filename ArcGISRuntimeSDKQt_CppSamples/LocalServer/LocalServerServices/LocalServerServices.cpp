@@ -20,11 +20,11 @@
 
 #include "LocalServerServices.h"
 
-#include "Basemap.h"
 #include "LocalServer.h"
 #include "LocalMapService.h"
 #include "LocalFeatureService.h"
 #include "LocalGeoprocessingService.h"
+#include "LocalServerTypes.h"
 
 #include <QDesktopServices>
 #include <QDir>

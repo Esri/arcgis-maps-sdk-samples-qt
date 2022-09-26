@@ -41,6 +41,7 @@
 #include "GraphicListModel.h"
 #include "NetworkAnalystTypes.h"
 #include "LayerListModel.h"
+#include "ServiceAreaFacility.h"
 
 #include <QUuid>
 #include <QUrl>

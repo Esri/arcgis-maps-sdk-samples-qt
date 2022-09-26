@@ -25,6 +25,7 @@
 #include "CalloutData.h"
 #include "MapTypes.h"
 #include "MapViewTypes.h"
+#include <QImage>
 
 using namespace Esri::ArcGISRuntime;
 

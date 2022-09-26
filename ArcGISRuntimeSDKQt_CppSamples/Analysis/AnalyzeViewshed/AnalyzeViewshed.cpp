@@ -48,6 +48,7 @@
 #include "TaskTypes.h"
 #include "TaskWatcher.h"
 #include "FeatureIterator.h"
+#include "Field.h"
 
 #include <QUuid>
 #include <QMouseEvent>
