@@ -30,6 +30,9 @@ void setAPIKey(const QGuiApplication& app, QString apiKey);
 
 int main(int argc, char *argv[])
 {
+  // Enforce OpenGL
+  qputenv("QSG_RHI_BACKEND", "opengl");
+
   QGuiApplication app(argc, argv);
   app.setApplicationName(QString("QueryFeaturesWithArcadeExpression - C++"));
 
