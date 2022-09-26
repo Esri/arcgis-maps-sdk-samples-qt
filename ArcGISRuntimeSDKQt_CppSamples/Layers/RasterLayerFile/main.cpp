@@ -30,7 +30,10 @@
 
 int main(int argc, char *argv[])
 {
-  QGuiApplication app(argc, argv);
+  // Enforce OpenGL
+  qputenv("QSG_RHI_BACKEND", "opengl");
+
+  QApplication app(argc, argv);
   app.setApplicationName("RasterLayerFile - C++");
 
   // Use of Esri location services, including basemaps and geocoding,

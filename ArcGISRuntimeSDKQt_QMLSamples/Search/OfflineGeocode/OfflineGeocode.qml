@@ -135,7 +135,7 @@ Rectangle {
         }
 
         // When user press and holds, prepare for real-time reverse geocoding
-        onMousePressedAndHeld: {
+        onMousePressedAndHeld: mouse => {
             isPressAndHold = true;
             isReverseGeocode = true;
 
@@ -144,7 +144,7 @@ Rectangle {
         }
 
         // real-time reverse geocode if mouse being held down
-        onMousePositionChanged: {
+        onMousePositionChanged: mouse => {
             if (isPressAndHold && locatorTask.geocodeStatus !== Enums.TaskStatusInProgress)
                 locatorTask.reverseGeocodeWithParameters(mouse.mapPoint, reverseGeocodeParams);
         }

@@ -111,13 +111,13 @@ Rectangle {
         // handle mouse signals to update the analysis
 
         // When the mouse is pressed and held, start updating the distance analysis end point
-        onMousePressedAndHeld: {
+        onMousePressedAndHeld: mouse => {
             isPressAndHeld = true;
             sceneView.screenToLocation(mouse.x, mouse.y);
         }
 
         // When the mouse is released...
-        onMouseReleased: {
+        onMouseReleased: mouse => {
             // Check if the mouse was released from a pan gesture
             if (isNavigating) {
                 isNavigating = false;
@@ -142,7 +142,7 @@ Rectangle {
         }
 
         // Update the distance analysis when the mouse moves if it is a press and hold movement
-        onMousePositionChanged: {
+        onMousePositionChanged: mouse => {
             if (isPressAndHeld)
                 sceneView.screenToLocation(mouse.x, mouse.y);
         }
