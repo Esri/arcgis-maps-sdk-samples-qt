@@ -17,6 +17,8 @@
 #include "SetInitialMapLocation.h"
 #include "Map.h"
 #include "MapGraphicsView.h"
+#include "MapTypes.h"
+#include "Viewpoint.h"
 #include <QVBoxLayout>
 
 using namespace Esri::ArcGISRuntime;

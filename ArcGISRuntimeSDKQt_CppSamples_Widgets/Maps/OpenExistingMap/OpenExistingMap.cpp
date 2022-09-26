@@ -87,7 +87,7 @@ void OpenExistingMap::createUi()
 {
     QWidget* widget = new QWidget();
     QVBoxLayout* layout = new QVBoxLayout();
-    layout->setMargin(10);
+    layout->setContentsMargins(10, 10, 10, 10);
     layout->addWidget(m_button);
     widget->setPalette(QPalette(QPalette::Base));
     widget->setLayout(layout);
