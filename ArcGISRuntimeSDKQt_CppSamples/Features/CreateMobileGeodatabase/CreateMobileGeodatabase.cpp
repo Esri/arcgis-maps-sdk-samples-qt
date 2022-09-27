@@ -22,21 +22,26 @@
 
 #include "FeatureListModel.h"
 
+#include "FeatureIterator.h"
 #include "FeatureLayer.h"
+#include "FeatureQueryResult.h"
+#include "FieldDescription.h"
+#include "FieldDescriptionListModel.h"
 #include "Geodatabase.h"
 #include "GeodatabaseFeatureTable.h"
+#include "GeometryTypes.h"
+#include "LayerListModel.h"
 #include "Map.h"
 #include "MapQuickView.h"
-#include "TableDescription.h"
 #include "MapTypes.h"
-#include "TaskWatcher.h"
-#include "FieldDescription.h"
-#include "ServiceTypes.h"
-#include "LayerListModel.h"
-#include "FieldDescriptionListModel.h"
+#include "Point.h"
 #include "QueryParameters.h"
-#include "FeatureIterator.h"
-#include "FeatureQueryResult.h"
+#include "TableDescription.h"
+#include "TaskWatcher.h"
+#include "ServiceTypes.h"
+#include "SpatialReference.h"
+#include "Viewpoint.h"
+
 #include <QUuid>
 
 using namespace Esri::ArcGISRuntime;
