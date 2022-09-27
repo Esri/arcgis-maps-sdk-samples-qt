@@ -49,7 +49,7 @@ Rectangle {
             // Set the Scene's Surface
             Surface {
                 ArcGISTiledElevationSource {
-                    url: "https://scene.arcgis.com/arcgis/rest/services/BREST_DTM_1M/ImageServer"
+                    url: "https://elevation3d.arcgis.com/arcgis/rest/services/WorldElevation3D/Terrain3D/ImageServer"
                 }
             }
 
