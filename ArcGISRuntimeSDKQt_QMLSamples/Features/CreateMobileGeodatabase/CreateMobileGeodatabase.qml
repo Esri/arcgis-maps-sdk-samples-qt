@@ -54,6 +54,8 @@ Rectangle {
             if (!featureTable)
                 return;
 
+            const feature = featureTable.createFeatureWithAttributes({"collection_timestamp": new Date()}, mouse.mapPoint);
+
             const addFeatureToFeatureTable = () => {
                 if (featureTable.addFeatureStatus !== Enums.TaskStatusCompleted)
                     return;
@@ -64,7 +66,6 @@ Rectangle {
                 numberOfFeatures = featureTable.numberOfFeatures
             }
 
-            const feature = featureTable.createFeatureWithAttributes({"collection_timestamp": new Date()}, mouse.mapPoint);
             featureTable.addFeatureStatusChanged.connect(addFeatureToFeatureTable);
             featureTable.addFeature(feature);
         }
@@ -85,8 +86,8 @@ Rectangle {
         // Prevent mouse interaction from propagating to the MapView
         MouseArea {
             anchors.fill: parent
-            onPressed: mouse.accepted = true;
-            onWheel: wheel.accepted = true;
+            onPressed: mouse => mouse.accepted = true;
+            onWheel: wheel => wheel.accepted = true;
         }
 
         Column {
@@ -270,8 +271,10 @@ Rectangle {
 
         ListView {
             id: tableView
-            anchors.fill: parent
-            anchors.margins: 10
+            anchors {
+                fill: parent
+                margins: 10
+            }
             ScrollBar.vertical: ScrollBar {
                 active: true
             }
