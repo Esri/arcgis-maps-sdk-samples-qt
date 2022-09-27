@@ -23,7 +23,7 @@
 #include <QQmlApplicationEngine>
 
 #ifdef QT_WEBVIEW_WEBENGINE_BACKEND
-#include<QtWebEngineQuick>
+#include <QtWebEngineQuick>
 #endif // QT_WEBVIEW_WEBENGINE_BACKEND
 
 #include "Esri/ArcGISRuntime/Toolkit/register.h"
