@@ -17,6 +17,10 @@
 #include <QDir>
 #include <QQmlEngine>
 
+#ifdef QT_WEBVIEW_WEBENGINE_BACKEND
+#include <QtWebEngineQuick>
+#endif // QT_WEBVIEW_WEBENGINE_BACKEND
+
 #include "Esri/ArcGISRuntime/Toolkit/register.h"
 
 #ifdef Q_OS_WIN
@@ -35,6 +39,10 @@ int main(int argc, char *argv[])
 
   QGuiApplication app(argc, argv);
   app.setApplicationName("CreateAndSaveMap - C++");
+
+#ifdef QT_WEBVIEW_WEBENGINE_BACKEND
+  QtWebEngineQuick::initialize();
+#endif // QT_WEBVIEW_WEBENGINE_BACKEND
 
   // Initialize the sample
   CreateAndSaveMap::init();
