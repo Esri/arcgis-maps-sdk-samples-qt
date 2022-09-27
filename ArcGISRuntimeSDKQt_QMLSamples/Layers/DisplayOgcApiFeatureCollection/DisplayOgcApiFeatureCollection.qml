@@ -76,7 +76,7 @@ Rectangle {
         QueryParameters {
             id: queryParameters
             // Set the query area to what is currently visible in the map view
-            geometry: mapView.currentViewpointExtent.extent
+            geometry: mapView.currentViewpointExtent ? mapView.currentViewpointExtent.extent : null
             // Enums.SpatialRelationshipIntersects will return all features that are within and crossing the perimiter of the input geometry
             spatialRelationship: Enums.SpatialRelationshipIntersects
             // Some services have low default values for max features returned

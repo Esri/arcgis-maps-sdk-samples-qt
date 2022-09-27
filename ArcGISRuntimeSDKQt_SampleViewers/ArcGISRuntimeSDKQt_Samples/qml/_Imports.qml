@@ -19,7 +19,7 @@ import QtQuick.Layouts
 import QtQuick.Window
 import QtSensors
 import QtPositioning
-import QtQuick.XmlListModel
+import QtQml.XmlListModel
 import Esri.ArcGISExtras
 import Esri.ArcGISRuntime.Toolkit
 
