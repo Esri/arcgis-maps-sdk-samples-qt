@@ -31,8 +31,6 @@ StatisticalQueryGroupSortSample {
         // Initial page is the OptionsPage
         initialItem: OptionsPage {
             id: statisticOptionsPage
-            width: parent.width
-            height: parent.height
             onStatisticButtonClicked: {
                 // execute the query
                 queryStatistics();

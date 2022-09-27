@@ -30,7 +30,7 @@ Item {
         MouseArea {
             anchors.fill: parent
             visible: attributePrompt.visible
-            onClicked: mouse.accepted = !attributePrompt.visible
+            onClicked: mouse => mouse.accepted = !attributePrompt.visible
             onWheel:  wheel.accepted = !attributePrompt.visible
         }
 

@@ -12,7 +12,7 @@
 // limitations under the License.
 
 #include <QSettings>
-#include <QApplication>
+#include <QGuiApplication>
 #include <QQuickView>
 #include <QCommandLineParser>
 #include <QDir>

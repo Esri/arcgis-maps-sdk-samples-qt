@@ -77,7 +77,6 @@ Item {
                             radius: 3
                             x: headingHandleNub.x - width / 2 + headingHandleNub.width / 2
                             y: headingHandleNub.y - height
-                            color: opacitySlider.background.children[0].color
 
                             Text {
                                 id: headingValue

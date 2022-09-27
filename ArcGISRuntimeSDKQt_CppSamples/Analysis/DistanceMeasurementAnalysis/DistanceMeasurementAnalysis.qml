@@ -98,7 +98,7 @@ DistanceMeasurementAnalysisSample {
             ComboBox {
                 id: comboBox
                 property int modelWidth: 0
-                width: modelWidth + leftPadding + rightPadding + indicator.width
+                width: modelWidth + leftPadding + rightPadding
                 model: ["Metric", "Imperial"]
                 onCurrentTextChanged: setUnits(currentText);
                 Component.onCompleted : {

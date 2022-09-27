@@ -78,7 +78,6 @@ Item {
                 radius: 3
                 x: headingHandleNub.x - width / 2 + headingHandleNub.width / 2
                 y: headingHandleNub.y - height
-                color: cameraHeadingSlider.background.children[0].color
 
                 Text {
                     id: headingValue
@@ -154,7 +153,6 @@ Item {
                 radius: 3
                 x: pitchHandleNub.x - width
                 y: pitchHandleNub.y - height/2 + pitchHandleNub.height/2
-                color: planePitchSlider.background.children[0].color
 
                 Text {
                     id: pitchValue
