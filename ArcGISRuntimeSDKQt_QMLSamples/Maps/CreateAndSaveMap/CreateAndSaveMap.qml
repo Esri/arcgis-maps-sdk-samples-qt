@@ -63,7 +63,7 @@ Rectangle {
     Component {
         id: layerWindow
         LayerWindow {
-            onCreateMapSelected: {
+            onCreateMapSelected: (basemap, layerList) => {
                 stackView.push(mapView)
                 const map = createMap(basemap, layerList);
                 mapView.map = map;
