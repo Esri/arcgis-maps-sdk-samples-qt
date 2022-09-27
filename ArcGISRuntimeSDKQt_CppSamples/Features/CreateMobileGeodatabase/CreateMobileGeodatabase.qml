@@ -40,13 +40,16 @@ Item {
 
     Rectangle {
         id: buttonListRectangle
+        anchors {
+            top: parent.top
+            right: parent.right
+            topMargin: 10
+            rightMargin: 10
+        }
+
         width: 250
-        height: column1.height + 20
+        height: buttonColumn.height + 20
         color: "#ffffff"
-        anchors.right: parent.right
-        anchors.top: parent.top
-        anchors.topMargin: 10
-        anchors.rightMargin: 10
 
         // Prevent mouse interaction from propagating to the MapView
         MouseArea {
@@ -56,7 +59,7 @@ Item {
         }
 
         Column {
-            id: column1
+            id: buttonColumn
             anchors {
                 top: parent.top
                 left: parent.left
