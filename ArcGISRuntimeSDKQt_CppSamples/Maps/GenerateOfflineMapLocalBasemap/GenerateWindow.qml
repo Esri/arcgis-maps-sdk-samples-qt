@@ -36,7 +36,7 @@ Rectangle {
     MouseArea {
         anchors.fill: parent
         onClicked: mouse => mouse.accepted = true
-        onWheel: wheel.accepted = true
+        onWheel: wheel => wheel.accepted = true
     }
 
     Rectangle {

@@ -28,7 +28,7 @@ GenerateOfflineMapLocalBasemapSample {
 
     onUpdateStatus: status => generateWindow.statusText = status;
     onUpdateProgress: progress => generateWindow.progressText = progress;
-    onHideWindow: time => {
+    onHideWindow: (time, success) => {
         generateWindow.hideWindow(time);
 
         if (success) {
