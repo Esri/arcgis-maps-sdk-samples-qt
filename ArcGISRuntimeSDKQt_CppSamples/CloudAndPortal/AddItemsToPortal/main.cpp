@@ -17,7 +17,7 @@
 #include <QDir>
 #include <QQmlEngine>
 #ifdef QT_WEBVIEW_WEBENGINE_BACKEND
-#include <QtWebEngine>
+#include<QtWebEngineQuick>
 #endif // QT_WEBVIEW_WEBENGINE_BACKEND
 
 #include "Esri/ArcGISRuntime/Toolkit/register.h"
@@ -40,7 +40,7 @@ int main(int argc, char *argv[])
   app.setApplicationName("Add Items to Portal - C++");
 
 #ifdef QT_WEBVIEW_WEBENGINE_BACKEND
-  QtWebEngine::initialize();
+  QtWebEngineQuick::initialize();
 #endif // QT_WEBVIEW_WEBENGINE_BACKEND
 
   // Initialize the sample

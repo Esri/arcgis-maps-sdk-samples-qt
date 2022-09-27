@@ -28,7 +28,8 @@ ARCGIS_RUNTIME_VERSION = 200.0.0
 include($$PWD/arcgisruntime.pri)
 
 # path of the toolkit relative to the sample
-TOOLKIT_PRI_PATH = $$PWD/../../../arcgis-runtime-toolkit-qt
+#TOOLKIT_PRI_PATH = $$PWD/../../../arcgis-runtime-toolkit-qt
+TOOLKIT_PRI_PATH = $$absolute_path("", "D:\applications\qt\sdk\toolkit")
 
 exists($$TOOLKIT_PRI_PATH/uitools/toolkitqml.pri) {
     include($$TOOLKIT_PRI_PATH/uitools/toolkitcpp.pri)
@@ -36,8 +37,8 @@ exists($$TOOLKIT_PRI_PATH/uitools/toolkitqml.pri) {
     error(TOOLKIT_PRI_PATH is missing which is required to build this application.)
 }
 
-qtHaveModule(webengine) {
-  QT += webengine
+qtHaveModule(webenginequick) {
+  QT += webenginequick
   DEFINES += QT_WEBVIEW_WEBENGINE_BACKEND
 }
 
