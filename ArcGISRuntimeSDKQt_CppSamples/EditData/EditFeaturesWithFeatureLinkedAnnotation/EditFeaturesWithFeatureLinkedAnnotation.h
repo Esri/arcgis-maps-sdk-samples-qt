@@ -31,11 +31,13 @@ class MapQuickView;
 #include <QObject>
 #include <QDir>
 #include <QMouseEvent>
+#include <QUuid>
 
 #include "Point.h"
 #include "Error.h"
 
 Q_MOC_INCLUDE("MapQuickView.h")
+Q_MOC_INCLUDE("IdentifyLayerResult.h")
 
 class EditFeaturesWithFeatureLinkedAnnotation : public QObject
 {

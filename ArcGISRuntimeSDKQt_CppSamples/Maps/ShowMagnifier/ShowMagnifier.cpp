@@ -24,6 +24,7 @@
 #include "MapQuickView.h"
 #include "Basemap.h"
 #include "Viewpoint.h"
+#include "MapTypes.h"
 
 using namespace Esri::ArcGISRuntime;
 

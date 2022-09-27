@@ -21,13 +21,17 @@
 #include "DisplayLayerViewDrawState.h"
 
 #include "FeatureLayer.h"
-#include "ServiceFeatureTable.h"
 #include "Map.h"
 #include "MapQuickView.h"
 #include "PortalItem.h"
 #include "Viewpoint.h"
 #include "Point.h"
-
+#include "Error.h"
+#include "MapTypes.h"
+#include "TaskWatcher.h"
+#include "LayerListModel.h"
+#include "Portal.h"
+#include "LayerViewState.h"
 
 using namespace Esri::ArcGISRuntime;
 

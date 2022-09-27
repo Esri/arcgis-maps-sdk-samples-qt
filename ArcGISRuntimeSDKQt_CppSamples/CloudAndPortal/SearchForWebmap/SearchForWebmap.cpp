@@ -19,12 +19,16 @@
 #include "AuthenticationManager.h"
 #include "Map.h"
 #include "MapQuickView.h"
-#include "Basemap.h"
 #include "Portal.h"
 #include "PortalItem.h"
 #include "PortalItemListModel.h"
 #include "PortalQueryParametersForItems.h"
 #include "SearchForWebmap.h"
+#include "MapTypes.h"
+#include "PortalTypes.h"
+#include "Error.h"
+#include "PortalQueryResultSetForItems.h"
+#include "MapViewTypes.h"
 
 #include <QDate>
 #include <QDateTime>

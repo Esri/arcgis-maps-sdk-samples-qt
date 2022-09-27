@@ -38,7 +38,18 @@
 #include "Stop.h"
 #include "TextSymbol.h"
 #include "TileCache.h"
+#include "MapTypes.h"
+#include "SymbolTypes.h"
+#include "TaskWatcher.h"
+#include "Error.h"
+#include "GraphicsOverlayListModel.h"
+#include "GraphicListModel.h"
+#include "RouteTaskInfo.h"
+#include "TravelMode.h"
+#include "IdentifyGraphicsOverlayResult.h"
+#include "Route.h"
 
+#include <QUuid>
 #include <memory>
 #include <QScopedPointer>
 

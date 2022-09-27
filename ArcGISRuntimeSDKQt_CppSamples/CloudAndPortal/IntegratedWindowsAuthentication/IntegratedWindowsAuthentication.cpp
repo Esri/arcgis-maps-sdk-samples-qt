@@ -26,6 +26,10 @@
 #include "PortalItem.h"
 #include "PortalQueryResultSetForItems.h"
 #include "PortalItemListModel.h"
+#include "MapTypes.h"
+#include "PortalQueryParametersForItems.h"
+#include "PortalTypes.h"
+#include "Error.h"
 
 using namespace Esri::ArcGISRuntime;
 

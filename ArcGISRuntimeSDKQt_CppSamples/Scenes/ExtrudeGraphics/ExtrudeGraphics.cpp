@@ -25,11 +25,20 @@
 #include "Basemap.h"
 #include "ArcGISTiledElevationSource.h"
 #include "SimpleRenderer.h"
-#include "PointBuilder.h"
 #include "Point.h"
 #include "PolygonBuilder.h"
 #include "Polygon.h"
 #include "SimpleFillSymbol.h"
+#include "Camera.h"
+#include "MapTypes.h"
+#include "SymbolTypes.h"
+#include "GraphicsOverlayListModel.h"
+#include "GraphicListModel.h"
+#include "Surface.h"
+#include "ElevationSourceListModel.h"
+#include "RendererSceneProperties.h"
+#include "AttributeListModel.h"
+#include "SceneViewTypes.h"
 
 #include <cmath>
 #include <ctime>

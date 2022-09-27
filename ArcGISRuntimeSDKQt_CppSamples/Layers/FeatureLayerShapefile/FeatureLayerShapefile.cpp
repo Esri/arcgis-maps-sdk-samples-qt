@@ -25,6 +25,10 @@
 #include "Basemap.h"
 #include "ShapefileFeatureTable.h"
 #include "FeatureLayer.h"
+#include "Error.h"
+#include "MapTypes.h"
+#include "TaskWatcher.h"
+#include "LayerListModel.h"
 
 #include <QtCore/qglobal.h>
 

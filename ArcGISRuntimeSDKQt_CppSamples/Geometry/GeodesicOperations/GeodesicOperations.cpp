@@ -30,6 +30,11 @@
 #include "SpatialReference.h"
 #include "PolylineBuilder.h"
 #include "Point.h"
+#include "MapTypes.h"
+#include "GraphicsOverlayListModel.h"
+#include "GraphicListModel.h"
+#include "SymbolTypes.h"
+#include "LinearUnit.h"
 
 using namespace Esri::ArcGISRuntime;
 

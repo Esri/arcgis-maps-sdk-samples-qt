@@ -27,6 +27,18 @@
 #include "Scene.h"
 #include "SceneQuickView.h"
 #include "SimpleRenderer.h"
+#include "MapTypes.h"
+#include "TaskWatcher.h"
+#include "GraphicsOverlayListModel.h"
+#include "GraphicListModel.h"
+#include "Surface.h"
+#include "ElevationSourceListModel.h"
+#include "LayerSceneProperties.h"
+#include "RendererSceneProperties.h"
+#include "AttributeListModel.h"
+#include "SceneViewTypes.h"
+
+#include <QUuid>
 
 #ifdef Q_OS_ANDROID
 #elif defined Q_OS_IOS
@@ -271,7 +283,7 @@ float OrbitCameraAroundObject::planePitch() const
 
 void OrbitCameraAroundObject::setPlanePitch(float pitch)
 {
-  if(!m_planeGraphic->attributes()->containsAttribute("PITCH"))
+  if (!m_planeGraphic->attributes()->containsAttribute("PITCH"))
   {
      m_planeGraphic->attributes()->insertAttribute("PITCH", pitch);
   }

@@ -26,6 +26,17 @@
 #include "SceneQuickView.h"
 #include "SimpleMarkerSceneSymbol.h"
 #include "SimpleRenderer.h"
+#include "Camera.h"
+#include "MapTypes.h"
+#include "SymbolTypes.h"
+#include "GraphicsOverlayListModel.h"
+#include "GraphicListModel.h"
+#include "Surface.h"
+#include "ElevationSourceListModel.h"
+#include "LayerSceneProperties.h"
+#include "RendererSceneProperties.h"
+#include "AttributeListModel.h"
+#include "SceneViewTypes.h"
 
 using namespace Esri::ArcGISRuntime;
 

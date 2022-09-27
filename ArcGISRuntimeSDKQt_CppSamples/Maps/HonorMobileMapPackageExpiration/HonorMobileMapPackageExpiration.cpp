@@ -22,6 +22,9 @@
 
 #include "MobileMapPackage.h"
 #include "MapQuickView.h"
+#include "Error.h"
+#include "Expiration.h"
+#include "CoreTypes.h"
 
 #include <QtGlobal>
 

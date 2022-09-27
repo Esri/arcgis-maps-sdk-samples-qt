@@ -29,7 +29,16 @@
 #include "SimpleLineSymbol.h"
 #include "SimpleMarkerSymbol.h"
 #include "WfsService.h"
+#include "WfsServiceInfo.h"
 #include "WfsLayerInfo.h"
+#include "Error.h"
+#include "MapTypes.h"
+#include "SymbolTypes.h"
+#include "TaskWatcher.h"
+#include "LayerListModel.h"
+#include "GeodatabaseTypes.h"
+#include "CoreTypes.h"
+#include "FeatureQueryResult.h"
 
 using namespace Esri::ArcGISRuntime;
 
@@ -46,11 +55,11 @@ BrowseWfsLayers::BrowseWfsLayers(QObject* parent /* = nullptr */):
     if (!e.isEmpty())
       return;
 
-      m_wfsLayersInfoList = m_wfsService->serviceInfo().layerInfos();
-      for (const WfsLayerInfo& i : qAsConst(m_wfsLayersInfoList))
+    m_wfsLayersInfoList = m_wfsService->serviceInfo().layerInfos();
+    for (const WfsLayerInfo& i : qAsConst(m_wfsLayersInfoList))
         m_layerInfoTitleList.append(i.title());
 
-      emit layerInfoTitleListChanged();
+    emit layerInfoTitleListChanged();
   });
   m_wfsService->load();
 }
@@ -137,8 +146,8 @@ void BrowseWfsLayers::populateWfsFeatureTable()
   const QStringList outFields {"*"};
   connect(m_wfsFeatureTable, &WfsFeatureTable::populateFromServiceCompleted, this, [this]()
   {
-      addFeatureLayerToMap();
-      m_mapView->setViewpointGeometry(m_wfsFeatureTable->extent());
+    addFeatureLayerToMap();
+    m_mapView->setViewpointGeometry(m_wfsFeatureTable->extent());
   });
   m_wfsFeatureTable->populateFromService(params, clearCache, outFields);
 }

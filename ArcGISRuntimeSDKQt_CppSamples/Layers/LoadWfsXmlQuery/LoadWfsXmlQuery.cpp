@@ -24,6 +24,11 @@
 #include "MapQuickView.h"
 #include "FeatureLayer.h"
 #include "WfsFeatureTable.h"
+#include "Error.h"
+#include "MapTypes.h"
+#include "TaskWatcher.h"
+#include "LayerListModel.h"
+#include "GeodatabaseTypes.h"
 
 using namespace Esri::ArcGISRuntime;
 

@@ -22,15 +22,22 @@
 
 #include "Map.h"
 #include "MapQuickView.h"
-#include "Portal.h"
 #include "PortalItem.h"
 #include "OfflineMapTask.h"
 #include "GeometryEngine.h"
 #include "Envelope.h"
 #include "Point.h"
+#include "Error.h"
+#include "TaskWatcher.h"
+#include "GenerateOfflineMapJob.h"
+#include "TaskTypes.h"
+#include "GenerateOfflineMapResult.h"
+#include "Error.h"
+#include "GenerateOfflineMapParameters.h"
 
 #include <QTemporaryDir>
 #include <QtCore/qglobal.h>
+#include <QUuid>
 
 #ifdef Q_OS_ANDROID
 #elif defined Q_OS_IOS

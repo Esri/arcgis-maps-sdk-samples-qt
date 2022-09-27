@@ -28,6 +28,9 @@
 #include "Map.h"
 #include "MapQuickView.h"
 #include "DictionarySymbolStyle.h"
+#include "MapTypes.h"
+#include "LayerListModel.h"
+#include "TaskWatcher.h"
 
 #include <QtCore/qglobal.h>
 

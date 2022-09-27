@@ -29,6 +29,11 @@
 #include "PointCollection.h"
 #include "SimpleFillSymbol.h"
 #include "SimpleMarkerSymbol.h"
+#include "MapTypes.h"
+#include "SymbolTypes.h"
+#include "GraphicListModel.h"
+#include "Error.h"
+#include "GraphicsOverlayListModel.h"
 
 using namespace Esri::ArcGISRuntime;
 

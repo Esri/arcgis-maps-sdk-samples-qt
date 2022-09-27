@@ -26,8 +26,13 @@
 #include "MapQuickView.h"
 #include "Portal.h"
 #include "PortalItem.h"
+#include "Error.h"
+#include "MapTypes.h"
+#include "LayerListModel.h"
+#include "PortalTypes.h"
 
 using namespace Esri::ArcGISRuntime;
+
 namespace
 {
 const QString featureCollectionItemId("32798dfad17942858d5eef82ee802f0b");

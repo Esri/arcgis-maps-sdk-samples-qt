@@ -23,6 +23,11 @@
 #include "ArcGISTiledElevationSource.h"
 #include "Scene.h"
 #include "SceneQuickView.h"
+#include "MapTypes.h"
+#include "Surface.h"
+#include "Camera.h"
+#include "ElevationSourceListModel.h"
+#include "TaskWatcher.h"
 
 using namespace Esri::ArcGISRuntime;
 

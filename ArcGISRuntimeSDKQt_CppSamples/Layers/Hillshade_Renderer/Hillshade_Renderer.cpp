@@ -26,6 +26,10 @@
 #include "RasterLayer.h"
 #include "Basemap.h"
 #include "HillshadeRenderer.h"
+#include "MapTypes.h"
+#include "MapViewTypes.h"
+#include "TaskWatcher.h"
+#include "RasterTypes.h"
 
 #include <QUrl>
 #include <QtCore/qglobal.h>

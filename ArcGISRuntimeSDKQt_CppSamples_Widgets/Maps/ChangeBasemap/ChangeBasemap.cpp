@@ -17,6 +17,9 @@
 #include "ChangeBasemap.h"
 #include "Map.h"
 #include "MapGraphicsView.h"
+#include "MapTypes.h"
+#include "Basemap.h"
+
 #include <QComboBox>
 #include <QVBoxLayout>
 #include <QGraphicsProxyWidget>
@@ -61,7 +64,7 @@ ChangeBasemap::ChangeBasemap(QWidget* parent) :
     // Set up the UI
     QWidget* widget = new QWidget();
     QVBoxLayout* layout = new QVBoxLayout();
-    layout->setMargin(0);
+    layout->setContentsMargins(0, 0, 0, 0);
     layout->addWidget(m_basemapCombo);
     widget->setLayout(layout);
 

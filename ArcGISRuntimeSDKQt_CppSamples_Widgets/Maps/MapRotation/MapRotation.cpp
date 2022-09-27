@@ -17,6 +17,8 @@
 #include "MapRotation.h"
 #include "Map.h"
 #include "MapGraphicsView.h"
+#include "MapTypes.h"
+#include "TaskWatcher.h"
 #include <QSlider>
 #include <QLabel>
 #include <QVBoxLayout>

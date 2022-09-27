@@ -29,8 +29,18 @@
 #include "LocatorTask.h"
 #include "GeocodeParameters.h"
 #include "Graphic.h"
+#include "MapTypes.h"
+#include "TaskWatcher.h"
+#include "GraphicsOverlayListModel.h"
+#include "GraphicListModel.h"
+#include "AttributeListModel.h"
+#include "GeocodeResult.h"
+#include "CalloutData.h"
+#include "IdentifyGraphicsOverlayResult.h"
+
 #include <QUrl>
 #include <memory>
+#include <QUuid>
 
 using namespace Esri::ArcGISRuntime;
 

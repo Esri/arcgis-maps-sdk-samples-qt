@@ -30,16 +30,26 @@
 #include "SimpleLineSymbol.h"
 #include "UniqueValueRenderer.h"
 #include "UtilityAssociation.h"
-#include "UtilityElement.h"
 #include "UtilityNetwork.h"
 #include "UtilityNetworkDefinition.h"
 #include "UtilityNetworkListModel.h"
 #include "UtilityNetworkSource.h"
 #include "UtilityNetworkTypes.h"
+#include "MapTypes.h"
+#include "SymbolTypes.h"
+#include "TaskWatcher.h"
+#include "Error.h"
+#include "GraphicsOverlayListModel.h"
+#include "GraphicListModel.h"
+#include "AttributeListModel.h"
+#include "LayerListModel.h"
+#include "Credential.h"
+#include "UniqueValue.h"
 
 #include <QList>
 #include <QImage>
 #include <QQmlContext>
+#include <QUuid>
 
 using namespace Esri::ArcGISRuntime;
 
@@ -49,6 +59,7 @@ const QString featureServerUrl("https://sampleserver7.arcgisonline.com/server/re
 const int maxScale = 2000;
 constexpr int targetScale = 50;
 }
+
 DisplayUtilityAssociations::DisplayUtilityAssociations(QObject* parent /* = nullptr */):
   QObject(parent),
   m_map(new Map(BasemapStyle::ArcGISTopographic, this)),

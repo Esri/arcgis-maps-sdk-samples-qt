@@ -24,11 +24,21 @@
 #include "Scene.h"
 #include "SceneQuickView.h"
 #include "AnalysisOverlay.h"
+#include "AnalysisListModel.h"
+#include "AnalysisOverlayListModel.h"
 #include "LocationDistanceMeasurement.h"
 #include "Viewpoint.h"
 #include "Camera.h"
 #include "ArcGISSceneLayer.h"
 #include "Point.h"
+#include "MapTypes.h"
+#include "LayerListModel.h"
+#include "Surface.h"
+#include "ElevationSourceListModel.h"
+#include "CoreTypes.h"
+#include "Distance.h"
+#include "TaskWatcher.h"
+#include <QUuid>
 
 using namespace Esri::ArcGISRuntime;
 

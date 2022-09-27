@@ -24,6 +24,13 @@
 #include "Scene.h"
 #include "SceneQuickView.h"
 #include "ArcGISSceneLayer.h"
+#include "Camera.h"
+#include "MapTypes.h"
+#include "TaskWatcher.h"
+#include "Surface.h"
+#include "ElevationSourceListModel.h"
+#include "LayerListModel.h"
+#include "SceneViewTypes.h"
 
 #include <QUrl>
 #include <QDateTime>

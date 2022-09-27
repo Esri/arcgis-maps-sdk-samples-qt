@@ -34,6 +34,13 @@
 #include "GeoprocessingParameters.h"
 #include "GeoprocessingDouble.h"
 #include "ArcGISMapImageLayer.h"
+#include "MapViewTypes.h"
+#include "MapTypes.h"
+#include "LayerListModel.h"
+#include "LocalServerTypes.h"
+#include "TaskWatcher.h"
+#include "TaskTypes.h"
+#include "GeoprocessingTypes.h"
 
 #include <QDir>
 #include <QTemporaryDir>

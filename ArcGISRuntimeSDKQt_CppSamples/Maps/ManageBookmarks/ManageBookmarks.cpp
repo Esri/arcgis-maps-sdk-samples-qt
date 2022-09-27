@@ -27,6 +27,9 @@
 #include "Envelope.h"
 #include "Viewpoint.h"
 #include "Bookmark.h"
+#include "MapTypes.h"
+#include "TaskWatcher.h"
+#include "BookmarkListModel.h"
 
 using namespace Esri::ArcGISRuntime;
 

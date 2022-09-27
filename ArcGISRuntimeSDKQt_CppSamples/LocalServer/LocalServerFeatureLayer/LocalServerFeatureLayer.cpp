@@ -28,6 +28,11 @@
 #include "ServiceFeatureTable.h"
 #include "FeatureLayer.h"
 #include "Viewpoint.h"
+#include "MapViewTypes.h"
+#include "MapTypes.h"
+#include "LocalServerTypes.h"
+#include "TaskWatcher.h"
+#include "LayerListModel.h"
 
 #include <QDir>
 #include <QTemporaryDir>

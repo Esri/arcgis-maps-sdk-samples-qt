@@ -27,6 +27,9 @@
 #include "FeatureLayer.h"
 #include "Point.h"
 #include "Viewpoint.h"
+#include "MapTypes.h"
+#include "Error.h"
+#include "LayerListModel.h"
 
 #include <QUrl>
 #include <QtCore/qglobal.h>

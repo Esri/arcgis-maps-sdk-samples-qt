@@ -28,6 +28,12 @@
 #include "GeometryEngine.h"
 #include "Envelope.h"
 #include "Point.h"
+#include "Error.h"
+#include "TaskTypes.h"
+#include "TaskWatcher.h"
+#include "GenerateOfflineMapJob.h"
+#include "GenerateOfflineMapResult.h"
+#include <QUuid>
 
 using namespace Esri::ArcGISRuntime;
 

@@ -28,8 +28,19 @@
 #include "Map.h"
 #include "MapQuickView.h"
 #include "SimpleLineSymbol.h"
+#include "MapTypes.h"
+#include "GraphicsOverlayListModel.h"
+#include "GraphicListModel.h"
+#include "SymbolTypes.h"
+#include "TaskWatcher.h"
+#include "LayerListModel.h"
+#include "ServiceTypes.h"
+#include "ExportVectorTilesJob.h"
+#include "Error.h"
+#include "ExportVectorTilesResult.h"
 
 #include <QTemporaryDir>
+#include <QUuid>
 
 using namespace Esri::ArcGISRuntime;
 
@@ -145,7 +156,7 @@ void ExportVectorTiles::startExport(double xSW, double ySW, double xNE, double y
 
 void ExportVectorTiles::cancel()
 {
-  m_exportJob->cancel();
+  m_exportJob->cancelAsync();
   reset();
 }
 

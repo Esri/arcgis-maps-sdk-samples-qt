@@ -21,7 +21,6 @@
 #include "NavigateRoute.h"
 
 #include "DirectionManeuverListModel.h"
-#include "GeometryEngine.h"
 #include "GraphicsOverlay.h"
 #include "Location.h"
 #include "LocationDisplay.h"
@@ -41,7 +40,19 @@
 #include "TrackingProgress.h"
 #include "TrackingStatus.h"
 #include "VoiceGuidance.h"
+#include "MapTypes.h"
+#include "MapViewTypes.h"
+#include "SymbolTypes.h"
+#include "TaskWatcher.h"
+#include "Error.h"
+#include "GraphicsOverlayListModel.h"
+#include "GraphicListModel.h"
+#include "RouteTask.h"
+#include "LinearUnit.h"
+#include "RouteParameters.h"
+#include "DirectionManeuver.h"
 
+#include <QUuid>
 #include <memory>
 #include <QList>
 #include <QTime>

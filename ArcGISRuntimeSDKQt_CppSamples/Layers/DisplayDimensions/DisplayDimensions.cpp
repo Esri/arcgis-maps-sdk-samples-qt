@@ -24,6 +24,9 @@
 #include "Map.h"
 #include "MapQuickView.h"
 #include "MobileMapPackage.h"
+#include "Error.h"
+#include "MapTypes.h"
+#include "LayerListModel.h"
 
 #ifdef Q_OS_ANDROID
 #elif defined Q_OS_IOS

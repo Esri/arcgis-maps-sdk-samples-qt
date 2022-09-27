@@ -28,6 +28,10 @@
 #include "KmlIcon.h"
 #include "Envelope.h"
 #include "Camera.h"
+#include "MapTypes.h"
+#include "Error.h"
+#include "TaskWatcher.h"
+#include "LayerListModel.h"
 
 #include <QtCore/qglobal.h>
 

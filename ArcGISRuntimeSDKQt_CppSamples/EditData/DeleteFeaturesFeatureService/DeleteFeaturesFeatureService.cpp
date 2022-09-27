@@ -32,6 +32,16 @@
 #include "ArcGISFeature.h"
 #include "FeatureEditResult.h"
 #include "FeatureQueryResult.h"
+#include "MapViewTypes.h"
+#include "MapTypes.h"
+#include "LayerListModel.h"
+#include "TaskWatcher.h"
+#include "IdentifyLayerResult.h"
+#include "QueryParameters.h"
+#include "AttributeListModel.h"
+#include "FeatureIterator.h"
+#include "CalloutData.h"
+
 #include <QUrl>
 #include <QUuid>
 #include <QMouseEvent>

@@ -29,6 +29,11 @@
 #include "Viewpoint.h"
 #include "Point.h"
 #include "QueryParameters.h"
+#include "MapViewTypes.h"
+#include "MapTypes.h"
+#include "GeodatabaseTypes.h"
+#include "LayerListModel.h"
+#include "TaskWatcher.h"
 #include <QUrl>
 #include <QStringList>
 

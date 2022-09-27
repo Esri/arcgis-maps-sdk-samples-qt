@@ -30,6 +30,16 @@
 #include "Camera.h"
 #include "SpatialReference.h"
 #include "Viewpoint.h"
+#include "Camera.h"
+#include "MapTypes.h"
+#include "TaskWatcher.h"
+#include "Surface.h"
+#include "ElevationSourceListModel.h"
+#include "LayerListModel.h"
+#include "IdentifyLayerResult.h"
+#include "Feature.h"
+
+#include <QUuid>
 
 using namespace Esri::ArcGISRuntime;
 
@@ -99,8 +109,10 @@ void SceneLayerSelection::connectSignals()
 
     // select the Feature in the SceneLayer
     if (feature)
+    {
       feature->setParent(this);
       m_sceneLayer->selectFeature(feature);
+    }
   });
 
   // when the scene is clicked, identify the clicked feature and select it

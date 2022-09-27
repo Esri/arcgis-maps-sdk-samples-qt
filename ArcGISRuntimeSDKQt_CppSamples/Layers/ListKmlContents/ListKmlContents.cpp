@@ -29,8 +29,17 @@
 #include "KmlNodeListModel.h"
 #include "Scene.h"
 #include "SceneQuickView.h"
+#include "Error.h"
+#include "MapTypes.h"
+#include "TaskWatcher.h"
+#include "LayerListModel.h"
+#include "Surface.h"
+#include "ElevationSourceListModel.h"
+#include "KmlViewpoint.h"
+#include "Camera.h"
 
 #include <algorithm>
+#include <QUuid>
 
 #ifdef Q_OS_ANDROID
 #elif defined Q_OS_IOS

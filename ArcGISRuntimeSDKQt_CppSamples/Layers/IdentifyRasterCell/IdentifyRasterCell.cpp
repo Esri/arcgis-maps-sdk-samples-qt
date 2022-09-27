@@ -24,11 +24,18 @@
 #include "Map.h"
 #include "MapQuickView.h"
 #include "Raster.h"
-#include "RasterCell.h"
 #include "RasterLayer.h"
+#include "Error.h"
+#include "MapTypes.h"
+#include "TaskWatcher.h"
+#include "LayerListModel.h"
+#include "RasterCell.h"
+#include "IdentifyLayerResult.h"
+#include "AttributeListModel.h"
 
 #include <memory>
 #include <QString>
+#include <QUuid>
 
 #ifdef Q_OS_ANDROID
 #elif defined Q_OS_IOS

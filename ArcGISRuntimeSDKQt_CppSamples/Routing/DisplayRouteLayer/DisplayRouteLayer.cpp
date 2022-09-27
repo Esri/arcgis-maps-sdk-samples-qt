@@ -22,12 +22,24 @@
 
 #include "FeatureCollection.h"
 #include "FeatureCollectionLayer.h"
-#include "FeatureCollectionTable.h"
 #include "Map.h"
 #include "MapQuickView.h"
 #include "Portal.h"
 #include "PortalItem.h"
-#include "ServiceFeatureTable.h"
+#include "Error.h"
+#include "MapTypes.h"
+#include "TaskWatcher.h"
+#include "PortalTypes.h"
+#include "LayerListModel.h"
+#include "FeatureCollectionTableListModel.h"
+#include "FeatureTable.h"
+#include "FeatureQueryResult.h"
+#include "FeatureIterator.h"
+#include "QueryParameters.h"
+#include "Feature.h"
+#include "ArcGISFeature.h"
+#include "AttributeListModel.h"
+#include "FeatureCollectionTable.h"
 
 #include <QJsonValue>
 

@@ -27,7 +27,12 @@
 #include "Camera.h"
 #include "Point.h"
 #include "AnalysisOverlay.h"
-
+#include "MapTypes.h"
+#include "Surface.h"
+#include "ElevationSourceListModel.h"
+#include "AnalysisOverlayListModel.h"
+#include "TaskWatcher.h"
+#include "AnalysisListModel.h"
 
 using namespace Esri::ArcGISRuntime;
 

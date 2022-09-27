@@ -23,6 +23,11 @@
 #include "RasterElevationSource.h"
 #include "Scene.h"
 #include "SceneQuickView.h"
+#include "MapTypes.h"
+#include "Error.h"
+#include "Surface.h"
+#include "ElevationSourceListModel.h"
+#include "Camera.h"
 
 #include <QUrl>
 

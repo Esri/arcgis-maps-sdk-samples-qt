@@ -28,6 +28,7 @@
 #include "RasterLayer.h"
 #include "RGBRenderer.h"
 #include "StandardDeviationStretchParameters.h"
+#include "MapViewTypes.h"
 
 #include <QtCore/qglobal.h>
 

@@ -28,9 +28,17 @@
 #include "MapQuickView.h"
 #include "PictureMarkerSymbol.h"
 #include "SimpleRenderer.h"
+#include "MapTypes.h"
+#include "TaskWatcher.h"
+#include "GraphicsOverlayListModel.h"
+#include "GraphicListModel.h"
+#include "AttributeListModel.h"
+#include "ReverseGeocodeParameters.h"
+#include "GeocodeResult.h"
 
 #include <QDir>
 #include <QUrl>
+#include <QUuid>
 
 using namespace Esri::ArcGISRuntime;
 

@@ -24,6 +24,12 @@
 #include "Scene.h"
 #include "SceneQuickView.h"
 #include "PointCloudLayer.h"
+#include "MapTypes.h"
+#include "TaskWatcher.h"
+#include "Error.h"
+#include "Surface.h"
+#include "ElevationSourceListModel.h"
+#include "LayerListModel.h"
 
 #include <QtCore/qglobal.h>
 

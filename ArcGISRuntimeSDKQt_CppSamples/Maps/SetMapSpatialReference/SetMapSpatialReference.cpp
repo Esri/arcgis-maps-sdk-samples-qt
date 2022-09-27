@@ -25,6 +25,7 @@
 #include "Basemap.h"
 #include "SpatialReference.h"
 #include "ArcGISMapImageLayer.h"
+#include "MapViewTypes.h"
 #include <QUrl>
 
 using namespace Esri::ArcGISRuntime;

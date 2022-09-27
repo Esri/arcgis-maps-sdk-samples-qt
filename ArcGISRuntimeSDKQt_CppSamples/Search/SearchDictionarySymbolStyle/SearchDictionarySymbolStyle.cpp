@@ -20,6 +20,9 @@
 
 #include "SearchDictionarySymbolStyle.h"
 #include "DictionarySymbolStyle.h"
+#include "SymbolStyleSearchResultListModel.h"
+#include "SymbolStyleSearchParameters.h"
+#include "TaskWatcher.h"
 
 #include <QtCore/qglobal.h>
 

@@ -20,9 +20,11 @@
 
 #include "ViewContentBeneathTerrainSurface.h"
 
-#include "ArcGISTiledElevationSource.h"
 #include "Scene.h"
 #include "SceneQuickView.h"
+#include "Error.h"
+#include "Surface.h"
+#include "SceneViewTypes.h"
 
 using namespace Esri::ArcGISRuntime;
 

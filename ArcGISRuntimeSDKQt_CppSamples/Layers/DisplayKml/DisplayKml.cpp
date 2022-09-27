@@ -29,6 +29,11 @@
 #include "KmlLayer.h"
 #include "KmlDataset.h"
 #include "PortalItem.h"
+#include "MapTypes.h"
+#include "TaskWatcher.h"
+#include "LayerListModel.h"
+#include "Surface.h"
+#include "ElevationSourceListModel.h"
 
 #include <QtCore/qglobal.h>
 

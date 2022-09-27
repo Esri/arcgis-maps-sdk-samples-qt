@@ -20,11 +20,14 @@
 
 #include "DisplayKmlNetworkLinks.h"
 
-#include "ArcGISTiledElevationSource.h"
 #include "KmlDataset.h"
 #include "KmlLayer.h"
 #include "Scene.h"
 #include "SceneQuickView.h"
+#include "MapTypes.h"
+#include "TaskWatcher.h"
+#include "LayerListModel.h"
+#include "KmlNetworkLink.h"
 
 using namespace Esri::ArcGISRuntime;
 

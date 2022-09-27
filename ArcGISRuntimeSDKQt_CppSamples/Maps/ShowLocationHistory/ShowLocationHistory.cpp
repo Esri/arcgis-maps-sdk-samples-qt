@@ -20,10 +20,8 @@
 
 #include "ShowLocationHistory.h"
 
-#include "GeometryEngine.h"
 #include "Graphic.h"
 #include "GraphicsOverlay.h"
-#include "Location.h"
 #include "Map.h"
 #include "MapQuickView.h"
 #include "Polyline.h"
@@ -33,6 +31,14 @@
 #include "SimpleRenderer.h"
 #include "SimulatedLocationDataSource.h"
 #include "SimulationParameters.h"
+#include "MapTypes.h"
+#include "MapViewTypes.h"
+#include "TaskWatcher.h"
+#include "GraphicsOverlayListModel.h"
+#include "SymbolTypes.h"
+#include "GraphicListModel.h"
+#include "LocationDisplay.h"
+#include "Location.h"
 
 using namespace Esri::ArcGISRuntime;
 

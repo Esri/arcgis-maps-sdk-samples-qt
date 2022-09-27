@@ -27,6 +27,9 @@
 #include "SimpleRenderer.h"
 #include "SimpleFillSymbol.h"
 #include "SimpleLineSymbol.h"
+#include "MapTypes.h"
+#include "LayerListModel.h"
+#include "SymbolTypes.h"
 
 #include <QUrl>
 #include <QtCore/qglobal.h>

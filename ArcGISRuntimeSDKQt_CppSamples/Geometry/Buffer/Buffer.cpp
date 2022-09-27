@@ -22,7 +22,6 @@
 
 #include "Map.h"
 #include "MapQuickView.h"
-#include "Envelope.h"
 #include "GeometryEngine.h"
 #include "GraphicsOverlay.h"
 #include "Graphic.h"
@@ -31,6 +30,10 @@
 #include "SimpleLineSymbol.h"
 #include "SimpleMarkerSymbol.h"
 #include "SimpleRenderer.h"
+#include "MapTypes.h"
+#include "GraphicsOverlayListModel.h"
+#include "SymbolTypes.h"
+#include "GraphicListModel.h"
 #include <cmath>
 
 using namespace Esri::ArcGISRuntime;

@@ -29,6 +29,22 @@
 #include "PortalItem.h"
 #include "OfflineMapTask.h"
 #include "Point.h"
+#include "Error.h"
+#include "MapTypes.h"
+#include "TaskWatcher.h"
+#include "LayerListModel.h"
+#include "OfflineMapParametersKey.h"
+#include "OfflineMapTypes.h"
+#include "ExportTileCacheParameters.h"
+#include "GenerateOfflineMapParameterOverrides.h"
+#include "ArcGISFeatureLayerInfo.h"
+#include "GenerateLayerOption.h"
+#include "GenerateGeodatabaseParameters.h"
+#include "GenerateLayerOption.h"
+#include "TaskTypes.h"
+#include "GenerateOfflineMapJob.h"
+#include "GenerateOfflineMapResult.h"
+#include <QUuid>
 
 using namespace Esri::ArcGISRuntime;
 

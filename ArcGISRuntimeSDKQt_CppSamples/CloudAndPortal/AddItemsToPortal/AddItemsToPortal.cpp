@@ -20,6 +20,13 @@
 #include "Portal.h"
 #include "PortalItem.h"
 #include "AddItemsToPortal.h"
+#include "MapTypes.h"
+#include "PortalTypes.h"
+#include "CoreTypes.h"
+#include "Credential.h"
+#include "OAuthClientInfo.h"
+#include "PortalUser.h"
+#include "Error.h"
 
 using namespace Esri::ArcGISRuntime;
 

@@ -37,7 +37,15 @@
 #include "SimpleRenderer.h"
 #include "Stop.h"
 #include "TextSymbol.h"
+#include "MapTypes.h"
+#include "SymbolTypes.h"
+#include "TaskWatcher.h"
+#include "Error.h"
+#include "GraphicsOverlayListModel.h"
+#include "GraphicListModel.h"
+#include "DirectionManeuverListModel.h"
 
+#include <QUuid>
 #include <QDir>
 
 using namespace Esri::ArcGISRuntime;

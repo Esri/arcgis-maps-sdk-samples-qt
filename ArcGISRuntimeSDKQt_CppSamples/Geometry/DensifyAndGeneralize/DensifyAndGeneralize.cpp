@@ -31,6 +31,14 @@
 #include "PolylineBuilder.h"
 #include "GeometryEngine.h"
 #include "PointCollection.h"
+#include "MapTypes.h"
+#include "GraphicsOverlayListModel.h"
+#include "GraphicListModel.h"
+#include "SymbolTypes.h"
+#include "TaskWatcher.h"
+#include "ImmutablePartCollection.h"
+#include "ImmutablePart.h"
+#include "ImmutablePointCollection.h"
 
 using namespace Esri::ArcGISRuntime;
 

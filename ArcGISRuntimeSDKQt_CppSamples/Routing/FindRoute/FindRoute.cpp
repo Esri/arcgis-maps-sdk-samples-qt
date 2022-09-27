@@ -34,6 +34,16 @@
 #include "RouteTask.h"
 #include "RouteParameters.h"
 #include "Stop.h"
+#include "MapTypes.h"
+#include "SymbolTypes.h"
+#include "TaskWatcher.h"
+#include "GraphicsOverlayListModel.h"
+#include "GraphicListModel.h"
+#include "RouteResult.h"
+#include "Route.h"
+#include "DirectionManeuverListModel.h"
+
+#include <QUuid>
 
 using namespace Esri::ArcGISRuntime;
 

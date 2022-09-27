@@ -27,10 +27,16 @@
 #include "OfflineMapUpdatesInfo.h"
 #include "OfflineMapSyncParameters.h"
 #include "OfflineMapSyncJob.h"
+#include "Error.h"
+#include "TaskWatcher.h"
+#include "OfflineMapUpdatesInfo.h"
+#include "OfflineMapTypes.h"
+#include "OfflineMapSyncResult.h"
 
 #include <QFile>
 #include <QFileInfo>
 #include <QtCore/qglobal.h>
+#include <QUuid>
 
 #ifdef Q_OS_ANDROID
 #elif defined Q_OS_IOS

@@ -23,6 +23,9 @@
 #include "Map.h"
 #include "MapQuickView.h"
 #include "Basemap.h"
+#include "MapTypes.h"
+#include "MapViewTypes.h"
+#include "LocationDisplay.h"
 
 using namespace Esri::ArcGISRuntime;
 

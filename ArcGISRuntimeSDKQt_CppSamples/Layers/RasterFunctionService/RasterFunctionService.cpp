@@ -26,6 +26,13 @@
 #include "Basemap.h"
 #include "ImageServiceRaster.h"
 #include "RasterFunction.h"
+#include "Error.h"
+#include "MapTypes.h"
+#include "MapViewTypes.h"
+#include "TaskWatcher.h"
+#include "LayerListModel.h"
+#include "RasterFunctionArguments.h"
+#include "ArcGISImageServiceInfo.h"
 
 #include <QtCore/qglobal.h>
 

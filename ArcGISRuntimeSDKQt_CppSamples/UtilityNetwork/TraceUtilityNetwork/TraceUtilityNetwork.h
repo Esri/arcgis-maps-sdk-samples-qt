@@ -49,6 +49,7 @@ class UtilityTraceParameters;
 #include <QUuid>
 
 Q_MOC_INCLUDE("MapQuickView.h")
+Q_MOC_INCLUDE("IdentifyLayerResult.h")
 
 class TraceUtilityNetwork : public QObject
 {

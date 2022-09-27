@@ -29,6 +29,14 @@
 #include "SimpleMarkerSceneSymbol.h"
 #include "ModelSceneSymbol.h"
 #include "OrbitGeoElementCameraController.h"
+#include "MapTypes.h"
+#include "SymbolTypes.h"
+#include "GraphicsOverlayListModel.h"
+#include "GraphicListModel.h"
+#include "Surface.h"
+#include "ElevationSourceListModel.h"
+#include "SceneViewTypes.h"
+#include "LayerSceneProperties.h"
 
 #include <QtCore/qglobal.h>
 
@@ -151,4 +159,3 @@ void DistanceCompositeSymbol::componentComplete()
 
   mms->load();
 }
-

@@ -23,8 +23,10 @@
 #include "Map.h"
 #include "MapQuickView.h"
 #include "MobileMapPackage.h"
-#include "AnnotationLayer.h"
 #include "AnnotationSublayer.h"
+#include "Error.h"
+#include "LayerListModel.h"
+#include "MapTypes.h"
 
 #include <QtCore/qglobal.h>
 

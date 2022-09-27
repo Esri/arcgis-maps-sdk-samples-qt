@@ -30,7 +30,12 @@
 #include "FeatureLayer.h"
 #include "Feature.h"
 #include "FeatureEditResult.h"
-#include "GeoElement.h"
+#include "MapViewTypes.h"
+#include "MapTypes.h"
+#include "LayerListModel.h"
+#include "TaskWatcher.h"
+#include "IdentifyLayerResult.h"
+
 #include <QUrl>
 #include <QUuid>
 #include <QMouseEvent>

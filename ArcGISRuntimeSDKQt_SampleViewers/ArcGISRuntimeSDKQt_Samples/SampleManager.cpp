@@ -36,13 +36,11 @@
 #include "CategoryListModel.h"
 #include "DataItem.h"
 #include "DataItemListModel.h"
-#include "PermissionsHelper.h"
 #include "SampleCategory.h"
 #include "Sample.h"
 #include "SampleListModel.h"
 #include "SampleManager.h"
 #include "SampleManager_definitions.h"
-#include "SampleSearchFilterModel.h"
 #include "SourceCode.h"
 #include "SourceCodeListModel.h"
 

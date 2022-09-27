@@ -30,6 +30,11 @@
 #include "Envelope.h"
 #include "SimpleLineSymbol.h"
 #include "SimpleRenderer.h"
+#include "MapViewTypes.h"
+#include "MapTypes.h"
+#include "LayerListModel.h"
+#include "SymbolTypes.h"
+
 #include <QColor>
 #include <QUrl>
 

@@ -20,14 +20,16 @@
 
 #include "FeatureLayerRenderingModeMap.h"
 
-#include "ArcGISTiledElevationSource.h"
 #include "Map.h"
 #include "MapQuickView.h"
-#include "LoadSettings.h"
 #include "ServiceFeatureTable.h"
 #include "FeatureLayer.h"
 #include "Point.h"
 #include "SpatialReference.h"
+#include "MapTypes.h"
+#include "TaskWatcher.h"
+#include "LayerListModel.h"
+#include "LoadSettings.h"
 
 #include <QString>
 #include <QStringList>

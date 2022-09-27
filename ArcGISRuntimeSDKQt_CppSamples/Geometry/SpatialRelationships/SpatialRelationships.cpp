@@ -33,6 +33,14 @@
 #include "PolygonBuilder.h"
 #include "Polygon.h"
 #include "GeometryEngine.h"
+#include "MapTypes.h"
+#include "GraphicsOverlayListModel.h"
+#include "GraphicListModel.h"
+#include "SymbolTypes.h"
+#include "SelectionProperties.h"
+#include "TaskWatcher.h"
+#include "IdentifyGraphicsOverlayResult.h"
+#include <QUuid>
 #include <QStringList>
 #include <memory>
 

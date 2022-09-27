@@ -31,6 +31,11 @@
 #include "DatumTransformation.h"
 #include "GeographicTransformationStep.h"
 #include "GeographicTransformation.h"
+#include "Error.h"
+#include "MapTypes.h"
+#include "GraphicsOverlayListModel.h"
+#include "GraphicListModel.h"
+#include "SymbolTypes.h"
 
 #include <QDir>
 #include <QtCore/qglobal.h>

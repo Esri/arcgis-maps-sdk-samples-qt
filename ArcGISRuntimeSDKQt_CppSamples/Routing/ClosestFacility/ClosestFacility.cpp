@@ -28,6 +28,17 @@
 #include "PictureMarkerSymbol.h"
 #include "SimpleMarkerSymbol.h"
 #include "SimpleRenderer.h"
+#include "Error.h"
+#include "MapTypes.h"
+#include "MapViewTypes.h"
+#include "TaskWatcher.h"
+#include "GraphicsOverlayListModel.h"
+#include "SymbolTypes.h"
+#include "GraphicListModel.h"
+#include "ClosestFacilityResult.h"
+#include "ClosestFacilityRoute.h"
+#include "Incident.h"
+#include <QUuid>
 
 using namespace Esri::ArcGISRuntime;
 
@@ -50,7 +61,6 @@ void ClosestFacility::init()
   qmlRegisterType<MapQuickView>("Esri.Samples", 1, 0, "MapView");
   qmlRegisterType<ClosestFacility>("Esri.Samples", 1, 0, "ClosestFacilitySample");
 }
-
 
 void ClosestFacility::componentComplete()
 {

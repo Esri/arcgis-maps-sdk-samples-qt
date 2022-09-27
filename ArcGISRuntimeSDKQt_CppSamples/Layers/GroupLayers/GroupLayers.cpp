@@ -29,6 +29,12 @@
 #include "ServiceFeatureTable.h"
 #include "Viewpoint.h"
 #include "Envelope.h"
+#include "Error.h"
+#include "MapTypes.h"
+#include "TaskWatcher.h"
+#include "LayerListModel.h"
+#include "Surface.h"
+#include "ElevationSourceListModel.h"
 
 using namespace Esri::ArcGISRuntime;
 

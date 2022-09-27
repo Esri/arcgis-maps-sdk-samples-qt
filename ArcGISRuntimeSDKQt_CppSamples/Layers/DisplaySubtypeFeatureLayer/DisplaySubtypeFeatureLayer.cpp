@@ -26,12 +26,17 @@
 #include "MapQuickView.h"
 #include "ServiceFeatureTable.h"
 #include "SimpleLabelExpression.h"
-#include "SimpleMarkerSymbol.h"
 #include "SimpleRenderer.h"
 #include "SubtypeFeatureLayer.h"
 #include "SubtypeSublayer.h"
-#include "SubtypeSublayerListModel.h"
 #include "TextSymbol.h"
+#include "Error.h"
+#include "MapTypes.h"
+#include "SymbolTypes.h"
+#include "LayerListModel.h"
+#include "Credential.h"
+#include "LabelDefinitionListModel.h"
+#include "ServiceTypes.h"
 
 using namespace Esri::ArcGISRuntime;
 

@@ -28,9 +28,13 @@
 #include "FeatureLayer.h"
 #include "UniqueValueRenderer.h"
 #include "SimpleFillSymbol.h"
-#include "SimpleLineSymbol.h"
 #include "Viewpoint.h"
 #include "Envelope.h"
+#include "MapTypes.h"
+#include "LayerListModel.h"
+#include "SymbolTypes.h"
+#include "UniqueValue.h"
+#include "UniqueValueListModel.h"
 
 #include <QUrl>
 #include <QStringList>
