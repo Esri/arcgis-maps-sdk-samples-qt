@@ -34,7 +34,7 @@ Item {
     RealisticLightingAndShadowsSample {
         id: model
         sceneView: view
-        onSunTimeChanged: timeValue.text = "August 10, 2018, " + sunTimeText
+        onSunTimeChanged: sunTimeText => timeValue.text = "August 10, 2018, " + sunTimeText
 
     }
     Rectangle {

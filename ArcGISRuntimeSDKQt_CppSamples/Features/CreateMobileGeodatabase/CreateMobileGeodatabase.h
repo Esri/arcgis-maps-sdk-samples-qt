@@ -27,8 +27,8 @@ class MapQuickView;
 
 #include <FeatureListModel.h>
 
-#include <QObject>
 #include <QMouseEvent>
+#include <QObject>
 #include <QTemporaryDir>
 
 Q_MOC_INCLUDE("MapQuickView.h")

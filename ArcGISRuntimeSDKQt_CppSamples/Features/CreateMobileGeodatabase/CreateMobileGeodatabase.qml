@@ -40,29 +40,34 @@ Item {
 
     Rectangle {
         id: buttonListRectangle
+        anchors {
+            top: parent.top
+            right: parent.right
+            topMargin: 10
+            rightMargin: 10
+        }
+
         width: 250
-        height: column1.height + 20
+        height: buttonColumn.height + 20
         color: "#ffffff"
-        anchors.right: parent.right
-        anchors.top: parent.top
-        anchors.topMargin: 10
-        anchors.rightMargin: 10
 
         // Prevent mouse interaction from propagating to the MapView
         MouseArea {
             anchors.fill: parent
-            onPressed: mouse.accepted = true;
-            onWheel: wheel.accepted = true;
+            onPressed: mouse => mouse.accepted = true;
+            onWheel: wheel => wheel.accepted = true;
         }
 
         Column {
-            id: column1
-            anchors.left: parent.left
-            anchors.right: parent.right
-            anchors.top: parent.top
-            anchors.rightMargin: 10
-            anchors.leftMargin: 10
-            anchors.topMargin: 10
+            id: buttonColumn
+            anchors {
+                top: parent.top
+                left: parent.left
+                right: parent.right
+                topMargin: 10
+                leftMargin: 10
+                rightMargin: 10
+            }
             height: children.height
             spacing: 5
 
@@ -72,11 +77,13 @@ Item {
 
             Button {
                 id: createGdbButton
+                anchors {
+                    left: parent.left
+                    right: parent.right
+                    leftMargin: 0
+                    rightMargin: 0
+                }
                 text: qsTr("Create new .geodatabase")
-                anchors.left: parent.left
-                anchors.right: parent.right
-                anchors.rightMargin: 0
-                anchors.leftMargin: 0
                 enabled: !model.gdbOpen
                 onClicked: {
                     model.createGeodatabase();
@@ -85,11 +92,13 @@ Item {
 
             Button {
                 id: viewGdbTableButton
+                anchors {
+                    left: parent.left
+                    right: parent.right
+                    leftMargin: 0
+                    rightMargin: 0
+                }
                 text: qsTr("View feature table")
-                anchors.left: parent.left
-                anchors.right: parent.right
-                anchors.rightMargin: 0
-                anchors.leftMargin: 0
                 enabled: model.gdbOpen
                 onClicked: {
                     featureTableDisplay.visible = true;
@@ -98,11 +107,13 @@ Item {
             }
             Button {
                 id: clearFeaturesButton
+                anchors {
+                    left: parent.left
+                    right: parent.right
+                    leftMargin: 0
+                    rightMargin: 0
+                }
                 text: qsTr("Clear features")
-                anchors.left: parent.left
-                anchors.right: parent.right
-                anchors.rightMargin: 0
-                anchors.leftMargin: 0
                 enabled: model.gdbOpen
                 onClicked: {
                     model.clearFeatures();
@@ -112,11 +123,13 @@ Item {
 
             Button {
                 id: closeGdbButton
+                anchors {
+                    left: parent.left
+                    right: parent.right
+                    leftMargin: 0
+                    rightMargin: 0
+                }
                 text: qsTr("Close .geodatabase")
-                anchors.left: parent.left
-                anchors.right: parent.right
-                anchors.rightMargin: 0
-                anchors.leftMargin: 0
                 enabled: model.gdbOpen
                 onClicked: {
                     model.closeGdb();
@@ -127,25 +140,29 @@ Item {
 
             Text {
                 id: fileNameText
+                anchors {
+                    left: parent.left
+                    right: parent.right
+                    leftMargin: 0
+                    rightMargin: 0
+                }
                 text: model.gdbFilePath ? "Created new geodatabase:\n" + model.gdbFilePath.split("/").pop() : "Geodatabase path not found"
-                anchors.left: parent.left
-                anchors.right: parent.right
                 font.pixelSize: 12
                 wrapMode: Text.WrapAnywhere
-                anchors.rightMargin: 0
-                anchors.leftMargin: 0
                 visible: model.gdbOpen
             }
 
             Text {
                 id: featureCountText
+                anchors {
+                    left: parent.left
+                    right: parent.right
+                    leftMargin: 0
+                    rightMargin: 0
+                }
                 text: "Number of features: " + model.featureCount + (model.featureCount === 0 ? "\n(Click or tap on the map to add new features)" : "")
-                anchors.left: parent.left
-                anchors.right: parent.right
                 font.pixelSize: 12
                 wrapMode: Text.WordWrap
-                anchors.rightMargin: 0
-                anchors.leftMargin: 0
                 visible: model.gdbOpen
             }
         }
@@ -164,14 +181,16 @@ Item {
         // Prevent mouse interaction from propagating to the MapView
         MouseArea {
             anchors.fill: parent
-            onPressed: mouse.accepted = true;
-            onWheel: wheel.accepted = true;
+            onPressed: mouse => mouse.accepted = true;
+            onWheel: wheel => wheel.accepted = true;
         }
 
         Column {
             id: gdbInfoColumn
-            anchors.centerIn: parent
-            anchors.margins: 10
+            anchors {
+                centerIn: parent
+                margins: 10
+            }
             spacing: 10
             width: parent.width - 20
             height: children.height
@@ -223,8 +242,10 @@ Item {
 
         ListView {
             id: tableView
-            anchors.fill: parent
-            anchors.margins: 10
+            anchors {
+                fill: parent
+                margins: 10
+            }
             ScrollBar.vertical: ScrollBar {
                 active: true
             }
@@ -291,13 +312,15 @@ Item {
 
     Rectangle {
         id: closeTableButtonRectangle
+        anchors {
+            top: parent.top
+            right: parent.right
+            topMargin: 10
+            rightMargin: 10
+        }
         width: closeTableButton.width + 10
         height: closeTableButton.height + 10
         color: "#ffffff"
-        anchors.right: parent.right
-        anchors.top: parent.top
-        anchors.topMargin: 10
-        anchors.rightMargin: 10
         visible: featureTableDisplay.visible
 
         // Prevent mouse interaction from propagating to the MapView

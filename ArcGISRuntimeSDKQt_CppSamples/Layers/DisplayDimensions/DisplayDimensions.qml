@@ -18,7 +18,7 @@ import QtQuick
 import QtQuick.Controls
 import QtQuick.Layouts
 import Esri.Samples
-import QtQuick.Dialogs
+import Qt.labs.platform
 
 Item {
 
@@ -74,7 +74,6 @@ Item {
             id: errorMessageBox
             title: "Error message!"
             text: model.errorMessage
-            icon: StandardIcon.Warning
             visible: model.errorMessage === "" ? false : true
             onAccepted: model.errorMessage = "";
         }

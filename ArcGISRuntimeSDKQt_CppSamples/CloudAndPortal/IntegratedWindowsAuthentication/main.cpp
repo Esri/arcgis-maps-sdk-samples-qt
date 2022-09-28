@@ -23,7 +23,7 @@
 #include <QQmlApplicationEngine>
 #include <QQmlEngine>
 #ifdef QT_WEBVIEW_WEBENGINE_BACKEND
-#include <QtWebEngine>
+#include <QtWebEngineQuick>
 #endif // QT_WEBVIEW_WEBENGINE_BACKEND
 
 #define STRINGIZE(x) #x
@@ -58,7 +58,7 @@ int main(int argc, char *argv[])
   }
 
 #ifdef QT_WEBVIEW_WEBENGINE_BACKEND
-  QtWebEngine::initialize();
+  QtWebEngineQuick::initialize();
 #endif // QT_WEBVIEW_WEBENGINE_BACKEND
 
   // Initialize the sample
