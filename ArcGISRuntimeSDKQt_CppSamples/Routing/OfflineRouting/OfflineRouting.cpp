@@ -48,10 +48,14 @@
 #include "TravelMode.h"
 #include "IdentifyGraphicsOverlayResult.h"
 #include "Route.h"
+#include "Basemap.h"
+#include "Point.h"
+#include "SpatialReference.h"
 
 #include <QUuid>
 #include <memory>
 #include <QScopedPointer>
+#include <QFileInfo>
 
 #ifdef Q_OS_ANDROID
 #elif defined Q_OS_IOS

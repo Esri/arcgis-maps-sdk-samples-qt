@@ -34,6 +34,7 @@
 #include "GraphicListModel.h"
 #include "IdentifyGraphicsOverlayResult.h"
 #include "TaskWatcher.h"
+#include "Geometry.h"
 
 #include <QMouseEvent>
 #include <QList>

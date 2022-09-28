@@ -31,6 +31,7 @@
 #include "GraphicsOverlayListModel.h"
 #include "PointCollection.h"
 #include "TaskWatcher.h"
+#include "GraphicsOverlay.h"
 
 #include <QtCore/qglobal.h>
 

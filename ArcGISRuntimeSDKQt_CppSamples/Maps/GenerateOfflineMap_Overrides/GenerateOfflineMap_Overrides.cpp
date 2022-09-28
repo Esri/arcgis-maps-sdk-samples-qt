@@ -44,6 +44,11 @@
 #include "TaskTypes.h"
 #include "GenerateOfflineMapJob.h"
 #include "GenerateOfflineMapResult.h"
+#include "SpatialReference.h"
+#include "Basemap.h"
+#include "Polygon.h"
+#include "ServiceFeatureTable.h"
+
 #include <QUuid>
 
 using namespace Esri::ArcGISRuntime;

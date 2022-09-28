@@ -50,12 +50,12 @@
 #include <QFileInfoList>
 #include <QFile>
 #include <QtCore/qglobal.h>
+#include <QDir>
 
-#ifdef Q_OS_ANDROID
-#elif defined Q_OS_IOS
+#ifdef Q_OS_IOS
 #include <QStandardPaths>
 #else
-#include <QDir>
+
 #endif
 
 using namespace Esri::ArcGISRuntime;

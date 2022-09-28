@@ -18,6 +18,7 @@
 
 // C++ API headers
 #include "Point.h"
+#include "SpatialReference.h"
 
 // STL headers
 #include <cmath>

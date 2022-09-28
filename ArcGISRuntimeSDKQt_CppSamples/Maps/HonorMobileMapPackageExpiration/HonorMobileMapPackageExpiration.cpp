@@ -27,6 +27,7 @@
 #include "CoreTypes.h"
 
 #include <QtGlobal>
+#include <QDateTime>
 
 #ifdef Q_OS_ANDROID
 #elif defined Q_OS_IOS
