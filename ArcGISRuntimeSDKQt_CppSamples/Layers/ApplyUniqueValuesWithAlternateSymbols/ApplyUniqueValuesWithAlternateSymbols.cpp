@@ -35,6 +35,9 @@
 #include "TaskWatcher.h"
 #include "UniqueValueListModel.h"
 #include "UniqueValue.h"
+#include "SpatialReference.h"
+#include "Viewpoint.h"
+#include "Point.h"
 
 using namespace Esri::ArcGISRuntime;
 

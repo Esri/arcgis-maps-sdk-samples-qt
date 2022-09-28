@@ -37,9 +37,14 @@
 #include "AngularUnit.h"
 #include "LinearUnit.h"
 #include "GraphicListModel.h"
+#include "Graphic.h"
 #include "GraphicsOverlayListModel.h"
 #include "Part.h"
+#include "Point.h"
 #include "PartCollection.h"
+#include "SpatialReference.h"
+#include "Polygon.h"
+#include "GraphicsOverlay.h"
 
 using namespace Esri::ArcGISRuntime;
 

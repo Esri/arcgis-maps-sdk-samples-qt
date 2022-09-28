@@ -33,6 +33,7 @@
 #include "TaskTypes.h"
 #include "LayerListModel.h"
 #include "GeoprocessingResult.h"
+#include "Envelope.h"
 
 using namespace Esri::ArcGISRuntime;
 
