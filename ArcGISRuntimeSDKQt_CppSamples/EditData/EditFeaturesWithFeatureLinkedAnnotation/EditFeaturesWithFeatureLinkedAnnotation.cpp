@@ -51,9 +51,9 @@
 
 #include <memory>
 
-#ifdef Q_OS_IOS
+#if defined Q_OS_IOS || defined Q_OS_ANDROID
 #include <QStandardPaths>
-#endif // Q_OS_IOS
+#endif // Q_OS_IOS || Q_OS_ANDROID
 
 using namespace Esri::ArcGISRuntime;
 
@@ -65,7 +65,7 @@ QString defaultDataPath()
   QString dataPath;
 
 #ifdef Q_OS_ANDROID
-  dataPath = "/sdcard";
+  dataPath = QStandardPaths::writableLocation(QStandardPaths::AppLocalDataLocation);
 #elif defined Q_OS_IOS
   dataPath = QStandardPaths::writableLocation(QStandardPaths::DocumentsLocation);
 #else

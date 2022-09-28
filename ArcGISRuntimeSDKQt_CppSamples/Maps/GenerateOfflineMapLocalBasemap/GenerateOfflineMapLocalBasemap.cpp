@@ -39,8 +39,7 @@
 #include <QtCore/qglobal.h>
 #include <QUuid>
 
-#ifdef Q_OS_ANDROID
-#elif defined Q_OS_IOS
+#if defined Q_OS_ANDROID || defined Q_OS_IOS
 #include <QStandardPaths>
 #else
 #include <QDir>
@@ -56,7 +55,7 @@ QString defaultDataPath()
   QString dataPath;
 
 #ifdef Q_OS_ANDROID
-  dataPath = "/sdcard";
+  dataPath = QStandardPaths::writableLocation(QStandardPaths::AppLocalDataLocation);
 #elif defined Q_OS_IOS
   dataPath = QStandardPaths::writableLocation(QStandardPaths::DocumentsLocation);
 #else
