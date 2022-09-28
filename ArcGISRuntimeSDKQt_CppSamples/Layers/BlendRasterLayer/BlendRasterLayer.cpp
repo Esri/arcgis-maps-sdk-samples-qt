@@ -28,6 +28,8 @@
 #include "MapViewTypes.h"
 #include "RasterTypes.h"
 #include "ColorRamp.h"
+#include "Basemap.h"
+
 #include <QtCore/qglobal.h>
 
 #ifdef Q_OS_ANDROID

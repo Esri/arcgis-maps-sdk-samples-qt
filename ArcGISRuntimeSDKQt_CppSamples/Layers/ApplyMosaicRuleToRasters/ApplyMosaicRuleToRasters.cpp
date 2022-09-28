@@ -30,6 +30,8 @@
 #include "TaskWatcher.h"
 #include "LayerListModel.h"
 #include "RasterTypes.h"
+#include "Envelope.h"
+#include "Point.h"
 
 using namespace Esri::ArcGISRuntime;
 

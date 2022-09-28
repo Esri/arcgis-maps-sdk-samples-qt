@@ -38,6 +38,7 @@
 #include "GeometryTypes.h"
 #include "SimpleLineSymbol.h"
 #include "Point.h"
+#include "SpatialReference.h"
 
 using namespace Esri::ArcGISRuntime;
 

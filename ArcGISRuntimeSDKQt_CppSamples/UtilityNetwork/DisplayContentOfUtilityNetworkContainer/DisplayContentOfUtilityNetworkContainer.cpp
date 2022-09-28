@@ -53,6 +53,10 @@
 #include "ArcGISFeatureTable.h"
 #include "SpatialReference.h"
 #include "Renderer.h"
+#include "Point.h"
+#include "Polygon.h"
+#include "Symbol.h"
+#include "SimpleLineSymbol.h"
 
 #include <QImage>
 #include <QQmlContext>

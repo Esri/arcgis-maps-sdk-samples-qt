@@ -45,6 +45,15 @@
 #include "QueryParameters.h"
 #include "FeatureIterator.h"
 #include "FeatureQueryResult.h"
+#include "Point.h"
+#include "Basemap.h"
+#include "Viewpoint.h"
+#include "GraphicsOverlay.h"
+#include "SimpleLineSymbol.h"
+#include "SimpleFillSymbol.h"
+#include "Polygon.h"
+#include "Graphic.h"
+
 #include <QUuid>
 
 #ifdef Q_OS_ANDROID

@@ -27,6 +27,7 @@
 #include "Error.h"
 #include "MapTypes.h"
 #include "Portal.h"
+#include "PortalItem.h"
 
 using namespace Esri::ArcGISRuntime;
 
