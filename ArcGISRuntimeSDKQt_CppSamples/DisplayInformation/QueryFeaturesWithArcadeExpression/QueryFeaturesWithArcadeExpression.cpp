@@ -35,6 +35,7 @@
 #include "IdentifyLayerResult.h"
 #include "ArcGISFeature.h"
 #include "ExpressionTypes.h"
+#include "Layer.h"
 
 #include <QUuid>
 #include <QVariantMap>

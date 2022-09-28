@@ -25,6 +25,8 @@
 #include "Basemap.h"
 #include "Viewpoint.h"
 #include "MapTypes.h"
+#include "SpatialReference.h"
+#include "Point.h"
 
 using namespace Esri::ArcGISRuntime;
 

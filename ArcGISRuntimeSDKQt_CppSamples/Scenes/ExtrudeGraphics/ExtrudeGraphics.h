@@ -21,10 +21,12 @@ namespace Esri::ArcGISRuntime
 {
   class Scene;
   class SceneQuickView;
+  class Point;
+  class Polygon;
 }
 
-#include "Polygon.h"
 #include <QQuickItem>
+#include <QUrl>
 
 class ExtrudeGraphics : public QQuickItem
 {

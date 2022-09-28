@@ -27,6 +27,8 @@
 #include "LocationDisplay.h"
 #include "LayerListModel.h"
 #include "MapTypes.h"
+#include "PortalItem.h"
+#include "FeatureLayer.h"
 
 using namespace Esri::ArcGISRuntime;
 

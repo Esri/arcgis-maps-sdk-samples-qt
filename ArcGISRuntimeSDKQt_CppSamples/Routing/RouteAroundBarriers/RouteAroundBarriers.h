@@ -33,7 +33,10 @@ class SimpleFillSymbol;
 
 #include <QObject>
 
+class QAbstractListModel;
+
 Q_MOC_INCLUDE("MapQuickView.h")
+Q_MOC_INCLUDE("QAbstractListModel")
 
 class RouteAroundBarriers : public QObject
 {

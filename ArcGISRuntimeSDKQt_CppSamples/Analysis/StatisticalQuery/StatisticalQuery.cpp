@@ -36,6 +36,7 @@
 #include "CoreTypes.h"
 #include "StatisticsQueryResult.h"
 #include "TaskWatcher.h"
+#include "Geometry.h"
 
 #include <QUuid>
 #include <memory>

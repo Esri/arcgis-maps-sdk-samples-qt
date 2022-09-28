@@ -30,6 +30,8 @@
 #include "MapViewTypes.h"
 #include "TaskWatcher.h"
 #include "LayerListModel.h"
+#include "Envelope.h"
+#include "Point.h"
 
 #include <QUrl>
 #include <QtCore/qglobal.h>

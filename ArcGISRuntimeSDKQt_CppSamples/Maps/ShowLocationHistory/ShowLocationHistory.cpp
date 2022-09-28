@@ -39,6 +39,9 @@
 #include "GraphicListModel.h"
 #include "LocationDisplay.h"
 #include "Location.h"
+#include "SpatialReference.h"
+
+#include <QDateTime>
 
 using namespace Esri::ArcGISRuntime;
 

@@ -31,6 +31,7 @@ class Incident;
 class PictureMarkerSymbol;
 class SimpleLineSymbol;
 class QueryParameters;
+class Error;
 }
 
 #include <QObject>
@@ -39,6 +40,7 @@ class QueryParameters;
 #include "TaskWatcher.h"
 
 Q_MOC_INCLUDE("MapQuickView.h")
+Q_MOC_INCLUDE("Error.h")
 
 class FindClosestFacilityToMultipleIncidentsService : public QObject
 {

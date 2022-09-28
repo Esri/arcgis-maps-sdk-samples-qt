@@ -35,6 +35,7 @@
 #include "LayerListModel.h"
 #include "AnalysisOverlayListModel.h"
 #include "AnalysisListModel.h"
+#include "SpatialReference.h"
 
 using namespace Esri::ArcGISRuntime;
 

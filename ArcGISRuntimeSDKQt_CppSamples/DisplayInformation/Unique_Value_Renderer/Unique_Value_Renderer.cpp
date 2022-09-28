@@ -35,6 +35,8 @@
 #include "SymbolTypes.h"
 #include "UniqueValue.h"
 #include "UniqueValueListModel.h"
+#include "SimpleLineSymbol.h"
+#include "SpatialReference.h"
 
 #include <QUrl>
 #include <QStringList>

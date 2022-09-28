@@ -33,6 +33,10 @@
 #include "LayerListModel.h"
 #include "LabelDefinitionListModel.h"
 #include "SymbolTypes.h"
+#include "Envelope.h"
+#include "SpatialReference.h"
+#include "Point.h"
+#include "Viewpoint.h"
 
 using namespace Esri::ArcGISRuntime;
 

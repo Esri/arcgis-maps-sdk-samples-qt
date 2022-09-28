@@ -23,6 +23,7 @@
 #include "Map.h"
 #include "MapQuickView.h"
 #include "MapTypes.h"
+#include "Viewpoint.h"
 
 using namespace Esri::ArcGISRuntime;
 

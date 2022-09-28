@@ -24,6 +24,7 @@ namespace Esri::ArcGISRuntime
   class GeodatabaseSyncTask;
   class Geodatabase;
   class ArcGISFeature;
+  class Envelope;
 }
 
 #include "GenerateGeodatabaseParameters.h"
