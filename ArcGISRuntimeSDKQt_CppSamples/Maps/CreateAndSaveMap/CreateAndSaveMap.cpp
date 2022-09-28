@@ -28,6 +28,8 @@
 #include "MapTypes.h"
 #include "LayerListModel.h"
 #include "Error.h"
+#include "Item.h"
+
 #include <QUuid>
 
 using namespace Esri::ArcGISRuntime;

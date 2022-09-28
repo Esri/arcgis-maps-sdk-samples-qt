@@ -31,6 +31,7 @@
 #include "MapTypes.h"
 #include "LayerListModel.h"
 #include "TaskWatcher.h"
+#include "Envelope.h"
 
 #include <QtCore/qglobal.h>
 

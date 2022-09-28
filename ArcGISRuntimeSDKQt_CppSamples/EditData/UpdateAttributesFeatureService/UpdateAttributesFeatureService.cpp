@@ -41,6 +41,7 @@
 #include "AttributeListModel.h"
 #include "FeatureIterator.h"
 #include "CalloutData.h"
+#include "Envelope.h"
 
 #include <QUrl>
 #include <QUuid>

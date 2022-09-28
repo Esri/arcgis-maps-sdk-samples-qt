@@ -29,6 +29,7 @@
 #include "StretchRenderer.h"
 #include "StandardDeviationStretchParameters.h"
 #include "MapViewTypes.h"
+#include "Basemap.h"
 
 #include <QtCore/qglobal.h>
 

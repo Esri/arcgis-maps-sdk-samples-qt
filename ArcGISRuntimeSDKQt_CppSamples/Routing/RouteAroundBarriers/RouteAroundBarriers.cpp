@@ -44,6 +44,9 @@
 #include "GraphicsOverlayListModel.h"
 #include "GraphicListModel.h"
 #include "DirectionManeuverListModel.h"
+#include "Viewpoint.h"
+#include "Point.h"
+#include "Polyline.h"
 
 #include <QUuid>
 #include <QDir>

@@ -47,6 +47,9 @@
 #include "LinearUnit.h"
 #include "AngularUnit.h"
 #include "AttributeListModel.h"
+#include "Graphic.h"
+#include "GraphicsOverlay.h"
+#include "SpatialReference.h"
 
 #include <QTimer>
 #include <QString>

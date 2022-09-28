@@ -33,6 +33,9 @@
 #include "TaskWatcher.h"
 #include "GenerateOfflineMapJob.h"
 #include "GenerateOfflineMapResult.h"
+#include "SpatialReference.h"
+#include "Layer.h"
+
 #include <QUuid>
 
 using namespace Esri::ArcGISRuntime;

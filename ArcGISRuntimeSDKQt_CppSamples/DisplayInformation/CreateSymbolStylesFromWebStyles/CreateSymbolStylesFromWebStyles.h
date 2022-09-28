@@ -28,11 +28,14 @@ namespace Esri::ArcGISRuntime
   class SymbolStyle;
 }
 
+class QAbstractListModel;
+
 #include <QObject>
 #include <QMap>
 #include <QAbstractListModel>
 
 Q_MOC_INCLUDE("MapQuickView.h")
+Q_MOC_INCLUDE("QAbstractListModel")
 
 class CreateSymbolStylesFromWebStyles : public QObject
 {

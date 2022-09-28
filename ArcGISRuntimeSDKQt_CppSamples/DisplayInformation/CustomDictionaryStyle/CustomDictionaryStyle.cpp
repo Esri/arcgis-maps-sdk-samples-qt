@@ -30,6 +30,8 @@
 #include "PortalItem.h"
 #include "MapTypes.h"
 #include "LayerListModel.h"
+#include "SpatialReference.h"
+#include "Point.h"
 
 #include <QtCore/qglobal.h>
 

@@ -38,6 +38,14 @@
 #include "ClosestFacilityResult.h"
 #include "ClosestFacilityRoute.h"
 #include "Incident.h"
+#include "SpatialReference.h"
+#include "Point.h"
+#include "Viewpoint.h"
+#include "GraphicsOverlay.h"
+#include "Graphic.h"
+#include "SimpleLineSymbol.h"
+#include "Polyline.h"
+
 #include <QUuid>
 
 using namespace Esri::ArcGISRuntime;

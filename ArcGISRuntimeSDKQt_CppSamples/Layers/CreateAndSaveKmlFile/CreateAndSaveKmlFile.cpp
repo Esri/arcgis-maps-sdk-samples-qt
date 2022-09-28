@@ -39,6 +39,9 @@
 #include "TaskWatcher.h"
 #include "LayerListModel.h"
 #include "KmlGeometry.h"
+#include "SpatialReference.h"
+#include "Viewpoint.h"
+#include "Envelope.h"
 
 using namespace Esri::ArcGISRuntime;
 

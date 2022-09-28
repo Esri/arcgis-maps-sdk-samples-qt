@@ -27,6 +27,9 @@
 #include "ServiceFeatureTable.h"
 #include "MapTypes.h"
 #include "LayerListModel.h"
+#include "SpatialReference.h"
+#include "Point.h"
+#include "Viewpoint.h"
 
 using namespace Esri::ArcGISRuntime;
 

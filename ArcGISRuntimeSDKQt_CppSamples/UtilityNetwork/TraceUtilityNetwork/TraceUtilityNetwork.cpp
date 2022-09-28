@@ -47,7 +47,9 @@
 #include "TaskWatcher.h"
 #include "Error.h"
 #include "GraphicsOverlayListModel.h"
+#include "GraphicsOverlay.h"
 #include "GraphicListModel.h"
+#include "Graphic.h"
 #include "AttributeListModel.h"
 #include "LayerListModel.h"
 #include "Credential.h"
@@ -57,6 +59,11 @@
 #include "QueryParameters.h"
 #include "UniqueValue.h"
 #include "FeatureQueryResult.h"
+#include "SimpleLineSymbol.h"
+#include "SpatialReference.h"
+#include "Envelope.h"
+#include "Viewpoint.h"
+#include "Polyline.h"
 
 using namespace Esri::ArcGISRuntime;
 

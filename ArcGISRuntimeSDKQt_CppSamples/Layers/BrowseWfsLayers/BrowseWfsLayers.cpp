@@ -39,6 +39,8 @@
 #include "GeodatabaseTypes.h"
 #include "CoreTypes.h"
 #include "FeatureQueryResult.h"
+#include "Polygon.h"
+#include "Envelope.h"
 
 using namespace Esri::ArcGISRuntime;
 

@@ -38,6 +38,9 @@
 #include "TaskWatcher.h"
 #include "LayerListModel.h"
 #include "ProximityResult.h"
+#include "Basemap.h"
+#include "Envelope.h"
+#include "Point.h"
 
 using namespace Esri::ArcGISRuntime;
 

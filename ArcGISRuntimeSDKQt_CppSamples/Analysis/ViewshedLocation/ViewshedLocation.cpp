@@ -33,6 +33,7 @@
 #include "AnalysisOverlayListModel.h"
 #include "TaskWatcher.h"
 #include "AnalysisListModel.h"
+#include "SpatialReference.h"
 
 using namespace Esri::ArcGISRuntime;
 

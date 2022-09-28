@@ -39,6 +39,10 @@
 #include "ImmutablePartCollection.h"
 #include "ImmutablePart.h"
 #include "ImmutablePointCollection.h"
+#include "GraphicsOverlay.h"
+#include "Point.h"
+#include "Polyline.h"
+#include "Envelope.h"
 
 using namespace Esri::ArcGISRuntime;
 

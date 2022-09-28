@@ -51,6 +51,10 @@
 #include "LinearUnit.h"
 #include "RouteParameters.h"
 #include "DirectionManeuver.h"
+#include "SpatialReference.h"
+#include "Polyline.h"
+#include "Graphic.h"
+#include "SimpleLineSymbol.h"
 
 #include <QUuid>
 #include <memory>

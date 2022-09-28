@@ -42,6 +42,9 @@
 #include "AttributeListModel.h"
 #include "SuggestParameters.h"
 #include "Location.h"
+#include "Graphic.h"
+#include "Viewpoint.h"
+#include "SpatialReference.h"
 
 #include <QUrl>
 #include <QUuid>

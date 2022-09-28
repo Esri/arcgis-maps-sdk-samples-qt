@@ -35,6 +35,9 @@
 #include "AttributeListModel.h"
 #include "ReverseGeocodeParameters.h"
 #include "GeocodeResult.h"
+#include "Point.h"
+#include "SpatialReference.h"
+#include "Envelope.h"
 
 #include <QDir>
 #include <QUrl>

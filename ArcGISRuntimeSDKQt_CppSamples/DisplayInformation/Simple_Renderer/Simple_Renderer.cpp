@@ -34,6 +34,7 @@
 #include "TaskWatcher.h"
 #include "GraphicsOverlayListModel.h"
 #include "GraphicListModel.h"
+#include "Envelope.h"
 
 using namespace Esri::ArcGISRuntime;
 

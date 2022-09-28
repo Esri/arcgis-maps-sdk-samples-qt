@@ -32,6 +32,7 @@
 #include "Surface.h"
 #include "ElevationSourceListModel.h"
 #include "LayerListModel.h"
+#include "SpatialReference.h"
 
 using namespace Esri::ArcGISRuntime;
 

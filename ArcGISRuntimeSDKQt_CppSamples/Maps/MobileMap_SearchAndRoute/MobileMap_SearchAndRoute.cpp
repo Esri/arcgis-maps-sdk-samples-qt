@@ -45,17 +45,21 @@
 #include "AttributeListModel.h"
 #include "GraphicListModel.h"
 #include "Route.h"
+#include "SimpleRenderer.h"
+#include "SimpleLineSymbol.h"
+#include "Item.h"
+#include "Polyline.h"
 
 #include <QUuid>
 #include <QFileInfoList>
 #include <QFile>
 #include <QtCore/qglobal.h>
+#include <QDir>
 
-#ifdef Q_OS_ANDROID
-#elif defined Q_OS_IOS
+#ifdef Q_OS_IOS
 #include <QStandardPaths>
 #else
-#include <QDir>
+
 #endif
 
 using namespace Esri::ArcGISRuntime;

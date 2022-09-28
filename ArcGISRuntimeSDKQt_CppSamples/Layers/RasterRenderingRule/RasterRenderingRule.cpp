@@ -33,6 +33,8 @@
 #include "TaskWatcher.h"
 #include "LayerListModel.h"
 #include "ArcGISImageServiceInfo.h"
+#include "Envelope.h"
+#include "Viewpoint.h"
 
 #include <QJsonObject>
 #include <QJsonDocument>

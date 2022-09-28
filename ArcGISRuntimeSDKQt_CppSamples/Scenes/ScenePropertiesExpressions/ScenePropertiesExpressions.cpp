@@ -31,12 +31,16 @@
 #include "SymbolTypes.h"
 #include "GraphicsOverlayListModel.h"
 #include "GraphicListModel.h"
+#include "Graphic.h"
 #include "Surface.h"
 #include "ElevationSourceListModel.h"
 #include "LayerSceneProperties.h"
 #include "RendererSceneProperties.h"
 #include "AttributeListModel.h"
 #include "SceneViewTypes.h"
+#include "GraphicsOverlay.h"
+#include "SpatialReference.h"
+#include "Point.h"
 
 using namespace Esri::ArcGISRuntime;
 

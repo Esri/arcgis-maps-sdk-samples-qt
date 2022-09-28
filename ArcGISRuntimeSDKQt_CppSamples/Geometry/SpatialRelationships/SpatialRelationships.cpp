@@ -40,6 +40,7 @@
 #include "SelectionProperties.h"
 #include "TaskWatcher.h"
 #include "IdentifyGraphicsOverlayResult.h"
+#include "SpatialReference.h"
 #include <QUuid>
 #include <QStringList>
 #include <memory>

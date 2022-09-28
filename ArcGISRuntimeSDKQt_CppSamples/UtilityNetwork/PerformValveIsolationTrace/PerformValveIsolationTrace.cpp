@@ -62,6 +62,7 @@
 #include "Credential.h"
 #include "IdentifyLayerResult.h"
 #include "ArcGISFeature.h"
+#include "Polyline.h"
 
 #include <QUuid>
 

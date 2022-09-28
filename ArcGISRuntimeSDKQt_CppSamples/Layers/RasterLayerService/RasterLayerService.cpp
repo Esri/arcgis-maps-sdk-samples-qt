@@ -30,6 +30,9 @@
 #include "MapViewTypes.h"
 #include "TaskWatcher.h"
 #include "LayerListModel.h"
+#include "SpatialReference.h"
+#include "Viewpoint.h"
+#include "Point.h"
 
 using namespace Esri::ArcGISRuntime;
 

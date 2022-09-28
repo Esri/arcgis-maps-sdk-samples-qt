@@ -28,6 +28,9 @@
 #include "TaskWatcher.h"
 #include "LayerListModel.h"
 #include "KmlNetworkLink.h"
+#include "SpatialReference.h"
+#include "Point.h"
+#include "Viewpoint.h"
 
 using namespace Esri::ArcGISRuntime;
 

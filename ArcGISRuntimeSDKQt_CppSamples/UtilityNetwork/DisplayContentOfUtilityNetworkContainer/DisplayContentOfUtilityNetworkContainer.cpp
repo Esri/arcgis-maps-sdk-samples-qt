@@ -47,6 +47,16 @@
 #include "ArcGISFeatureTable.h"
 #include "ArcGISFeatureLayerInfo.h"
 #include "DrawingInfo.h"
+#include "GraphicsOverlay.h"
+#include "Graphic.h"
+#include "Envelope.h"
+#include "ArcGISFeatureTable.h"
+#include "SpatialReference.h"
+#include "Renderer.h"
+#include "Point.h"
+#include "Polygon.h"
+#include "Symbol.h"
+#include "SimpleLineSymbol.h"
 
 #include <QImage>
 #include <QQmlContext>

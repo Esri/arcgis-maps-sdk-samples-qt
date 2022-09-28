@@ -40,6 +40,10 @@
 #include "CalloutData.h"
 #include "LayerListModel.h"
 #include "ServiceTypes.h"
+#include "Point.h"
+#include "Envelope.h"
+#include "Viewpoint.h"
+#include "Polyline.h"
 
 using namespace Esri::ArcGISRuntime;
 

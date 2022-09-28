@@ -34,6 +34,9 @@
 #include "GraphicsOverlayListModel.h"
 #include "SymbolTypes.h"
 #include "GraphicListModel.h"
+#include "Polygon.h"
+#include "Point.h"
+
 #include <cmath>
 
 using namespace Esri::ArcGISRuntime;

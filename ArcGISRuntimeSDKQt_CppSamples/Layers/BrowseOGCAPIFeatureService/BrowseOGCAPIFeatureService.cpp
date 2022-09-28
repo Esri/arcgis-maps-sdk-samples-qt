@@ -33,7 +33,9 @@
 #include "LayerListModel.h"
 #include "QueryParameters.h"
 #include "GeodatabaseTypes.h"
-#include<QQmlEngine>
+#include "Envelope.h"
+
+#include <QQmlEngine>
 
 using namespace Esri::ArcGISRuntime;
 

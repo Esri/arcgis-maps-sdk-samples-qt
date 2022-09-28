@@ -43,6 +43,11 @@
 #include "FeatureQueryResult.h"
 #include "FeatureIterator.h"
 #include "Feature.h"
+#include "SpatialReference.h"
+#include "Viewpoint.h"
+#include "Point.h"
+#include "ServiceFeatureTable.h"
+#include "Envelope.h"
 
 #include <QUuid>
 

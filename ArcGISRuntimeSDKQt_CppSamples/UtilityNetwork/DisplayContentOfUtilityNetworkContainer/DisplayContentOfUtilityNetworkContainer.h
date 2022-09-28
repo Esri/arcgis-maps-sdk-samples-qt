@@ -19,16 +19,16 @@
 
 namespace Esri::ArcGISRuntime
 {
-class Credential;
-class GraphicsOverlay;
-class IdentifyLayerResult;
-class Map;
-class MapQuickView;
-class SubtypeFeatureLayer;
-class Symbol;
-class UtilityAssociation;
-class UtilityElement;
-class UtilityNetwork;
+  class Credential;
+  class GraphicsOverlay;
+  class IdentifyLayerResult;
+  class Map;
+  class MapQuickView;
+  class SubtypeFeatureLayer;
+  class Symbol;
+  class UtilityAssociation;
+  class UtilityElement;
+  class UtilityNetwork;
 }
 
 class SymbolImageProvider;
@@ -37,6 +37,7 @@ class SymbolImageProvider;
 #include <QMouseEvent>
 #include "TaskWatcher.h"
 #include "Viewpoint.h"
+#include "Geometry.h"
 
 Q_MOC_INCLUDE("MapQuickView.h")
 

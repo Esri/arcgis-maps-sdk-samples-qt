@@ -27,6 +27,8 @@
 #include "MapViewTypes.h"
 #include "TaskWatcher.h"
 #include "LocationDisplay.h"
+#include "SpatialReference.h"
+#include "Point.h"
 
 #include <QFile>
 #include <QTimer>

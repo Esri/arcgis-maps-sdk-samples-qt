@@ -36,6 +36,10 @@
 #include "GraphicsOverlayListModel.h"
 #include "GraphicListModel.h"
 #include "SymbolTypes.h"
+#include "SpatialReference.h"
+#include "Viewpoint.h"
+#include "Envelope.h"
+#include "Polygon.h"
 
 #include <QDir>
 #include <QtCore/qglobal.h>

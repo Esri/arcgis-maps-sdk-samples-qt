@@ -33,6 +33,9 @@
 #include "GeodatabaseTypes.h"
 #include "QueryParameters.h"
 #include "TimeExtent.h"
+#include "Viewpoint.h"
+
+#include <QDateTime>
 
 using namespace Esri::ArcGISRuntime;
 

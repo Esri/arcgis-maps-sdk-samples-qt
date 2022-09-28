@@ -31,8 +31,12 @@
 #include "MapTypes.h"
 #include "GraphicsOverlayListModel.h"
 #include "GraphicListModel.h"
+#include "Graphic.h"
 #include "SymbolTypes.h"
 #include "PartCollection.h"
+#include "GraphicsOverlay.h"
+#include "SpatialReference.h"
+#include "Viewpoint.h"
 
 using namespace Esri::ArcGISRuntime;
 

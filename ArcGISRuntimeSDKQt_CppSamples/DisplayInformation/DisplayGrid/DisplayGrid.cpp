@@ -34,6 +34,7 @@
 #include "MapViewTypes.h"
 #include "MapTypes.h"
 #include "SymbolTypes.h"
+#include "SpatialReference.h"
 
 using namespace Esri::ArcGISRuntime;
 
