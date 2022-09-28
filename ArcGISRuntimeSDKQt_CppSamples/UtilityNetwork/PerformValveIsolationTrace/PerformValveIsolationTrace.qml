@@ -18,7 +18,6 @@ import QtQuick
 import QtQuick.Controls
 import Esri.Samples
 import QtQuick.Layouts
-import QtQuick.Dialogs
 
 Item {
     // add a mapView component
@@ -122,10 +121,10 @@ Item {
         running: sampleModel.tasksRunning
     }
 
-    MessageDialog {
+    Dialog {
         id: messageDialog
         title: "Perform valve isolation trace"
-        text: "Isolation trace returned no elements."
+//        text: "Isolation trace returned no elements."
         visible: sampleModel.noResults
         onRejected: {
             visible = false;
