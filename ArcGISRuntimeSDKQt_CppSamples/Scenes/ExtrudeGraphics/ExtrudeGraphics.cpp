@@ -39,6 +39,9 @@
 #include "RendererSceneProperties.h"
 #include "SceneViewTypes.h"
 #include "GraphicsOverlay.h"
+#include "SpatialReference.h"
+#include "Graphic.h"
+#include "AttributeListModel.h"
 
 #include <cmath>
 #include <ctime>

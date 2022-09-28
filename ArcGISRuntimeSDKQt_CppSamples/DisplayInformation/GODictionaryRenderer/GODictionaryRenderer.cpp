@@ -32,8 +32,12 @@
 #include "PointCollection.h"
 #include "TaskWatcher.h"
 #include "GraphicsOverlay.h"
+#include "SpatialReference.h"
+#include "Point.h"
+#include "Graphic.h"
 
 #include <QtCore/qglobal.h>
+#include <QFile>
 
 #ifdef Q_OS_ANDROID
 #elif defined Q_OS_IOS

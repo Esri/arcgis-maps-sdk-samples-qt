@@ -33,6 +33,8 @@
 #include "LayerListModel.h"
 #include "CoreTypes.h"
 #include "GeodatabaseTypes.h"
+#include "Viewpoint.h"
+#include "Geometry.h"
 
 using namespace Esri::ArcGISRuntime;
 

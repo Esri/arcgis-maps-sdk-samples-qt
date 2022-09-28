@@ -36,6 +36,9 @@
 #include "LayerListModel.h"
 #include "ExportTileCacheJob.h"
 #include "TaskTypes.h"
+#include "Point.h"
+#include "Envelope.h"
+#include "Viewpoint.h"
 
 #include <QUrl>
 #include <QUuid>

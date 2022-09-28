@@ -43,6 +43,8 @@
 #include "TaskTypes.h"
 #include "Geodatabase.h"
 #include "TaskWatcher.h"
+#include "Viewpoint.h"
+#include "Point.h"
 
 #include <QtCore/qglobal.h>
 #include <QUrl>

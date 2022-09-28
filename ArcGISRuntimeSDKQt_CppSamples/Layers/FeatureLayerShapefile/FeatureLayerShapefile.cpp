@@ -29,6 +29,8 @@
 #include "MapTypes.h"
 #include "TaskWatcher.h"
 #include "LayerListModel.h"
+#include "Envelope.h"
+#include "Point.h"
 
 #include <QtCore/qglobal.h>
 

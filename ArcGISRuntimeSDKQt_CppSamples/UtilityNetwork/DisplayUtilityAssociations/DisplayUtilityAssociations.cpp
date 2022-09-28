@@ -45,6 +45,9 @@
 #include "LayerListModel.h"
 #include "Credential.h"
 #include "UniqueValue.h"
+#include "Viewpoint.h"
+#include "Envelope.h"
+#include "SpatialReference.h"
 
 #include <QList>
 #include <QImage>

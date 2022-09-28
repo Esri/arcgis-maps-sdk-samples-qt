@@ -44,6 +44,7 @@
 #include "CalloutData.h"
 #include "Error.h"
 #include "Attachment.h"
+#include "Envelope.h"
 
 #include <QUrl>
 #include <QUuid>

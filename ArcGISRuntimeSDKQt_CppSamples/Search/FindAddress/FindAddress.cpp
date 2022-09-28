@@ -37,6 +37,8 @@
 #include "GeocodeResult.h"
 #include "CalloutData.h"
 #include "IdentifyGraphicsOverlayResult.h"
+#include "Point.h"
+#include "Envelope.h"
 
 #include <QUrl>
 #include <memory>

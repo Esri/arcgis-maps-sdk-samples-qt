@@ -42,6 +42,8 @@
 #include "RouteResult.h"
 #include "Route.h"
 #include "DirectionManeuverListModel.h"
+#include "Graphic.h"
+#include "Polyline.h"
 
 #include <QUuid>
 

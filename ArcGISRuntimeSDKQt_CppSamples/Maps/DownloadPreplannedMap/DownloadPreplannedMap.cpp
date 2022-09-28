@@ -39,6 +39,8 @@
 #include "OfflineMapTypes.h"
 #include "TaskTypes.h"
 #include "MobileMapPackage.h"
+#include "GraphicsOverlay.h"
+#include "PortalItem.h"
 
 #include <QUuid>
 

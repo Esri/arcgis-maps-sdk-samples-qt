@@ -32,6 +32,8 @@
 #include "Error.h"
 #include "TaskWatcher.h"
 #include "LayerListModel.h"
+#include "SpatialReference.h"
+#include "Point.h"
 
 #include <QtCore/qglobal.h>
 

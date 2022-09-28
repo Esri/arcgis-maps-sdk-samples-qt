@@ -38,6 +38,12 @@
 #include "ExportVectorTilesJob.h"
 #include "Error.h"
 #include "ExportVectorTilesResult.h"
+#include "Viewpoint.h"
+#include "Graphic.h"
+#include "Envelope.h"
+#include "Point.h"
+#include "Basemap.h"
+#include "SpatialReference.h"
 
 #include <QTemporaryDir>
 #include <QUuid>

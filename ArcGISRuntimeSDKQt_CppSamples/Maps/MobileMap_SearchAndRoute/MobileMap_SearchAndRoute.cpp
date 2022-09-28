@@ -45,6 +45,10 @@
 #include "AttributeListModel.h"
 #include "GraphicListModel.h"
 #include "Route.h"
+#include "SimpleRenderer.h"
+#include "SimpleLineSymbol.h"
+#include "Item.h"
+#include "Polyline.h"
 
 #include <QUuid>
 #include <QFileInfoList>
