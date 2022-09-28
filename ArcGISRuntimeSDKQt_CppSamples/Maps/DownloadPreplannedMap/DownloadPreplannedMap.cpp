@@ -41,6 +41,7 @@
 #include "MobileMapPackage.h"
 #include "GraphicsOverlay.h"
 #include "PortalItem.h"
+#include "Geometry.h"
 
 #include <QUuid>
 
