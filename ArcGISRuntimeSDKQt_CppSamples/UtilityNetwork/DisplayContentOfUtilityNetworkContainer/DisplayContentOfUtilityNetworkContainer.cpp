@@ -52,6 +52,7 @@
 #include "Envelope.h"
 #include "ArcGISFeatureTable.h"
 #include "SpatialReference.h"
+#include "Renderer.h"
 
 #include <QImage>
 #include <QQmlContext>

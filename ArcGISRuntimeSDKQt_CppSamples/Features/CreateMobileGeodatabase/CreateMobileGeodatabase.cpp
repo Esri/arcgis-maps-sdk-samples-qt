@@ -37,6 +37,10 @@
 #include "QueryParameters.h"
 #include "FeatureIterator.h"
 #include "FeatureQueryResult.h"
+#include "Viewpoint.h"
+#include "SpatialReference.h"
+#include "Point.h"
+
 #include <QUuid>
 
 using namespace Esri::ArcGISRuntime;

@@ -30,6 +30,7 @@
 #include "Camera.h"
 
 #include <QUrl>
+#include <QFileInfo>
 
 #ifdef Q_OS_ANDROID
 #elif defined Q_OS_IOS

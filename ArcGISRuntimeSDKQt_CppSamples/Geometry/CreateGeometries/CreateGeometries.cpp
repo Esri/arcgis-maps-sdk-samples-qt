@@ -39,6 +39,8 @@
 #include "GraphicListModel.h"
 #include "PointCollection.h"
 #include "TaskWatcher.h"
+#include "SpatialReference.h"
+#include "Envelope.h"
 
 using namespace Esri::ArcGISRuntime;
 
