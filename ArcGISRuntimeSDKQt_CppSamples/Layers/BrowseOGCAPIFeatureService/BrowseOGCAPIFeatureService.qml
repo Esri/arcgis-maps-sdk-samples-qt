@@ -94,8 +94,8 @@ Item {
         // Pop-up error message box
         Dialog {
             id: errorMessageBox
-            visible: errorMessage === ""? false : true
-            title: errorMessage
+            visible: model.errorMessage === ""? false : true
+            title: model.errorMessage
             standardButtons: Dialog.Ok
             x: (parent.width - width) / 2
             y: (parent.height - height) / 2
