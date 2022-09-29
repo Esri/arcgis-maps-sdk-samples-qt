@@ -17,7 +17,6 @@
 import QtQuick
 import QtQuick.Controls
 import QtQuick.Dialogs
-import Qt.labs.platform
 import Esri.Samples
 
 Item {
