@@ -14,12 +14,10 @@
 // limitations under the License.
 // [Legal]
 
-import Qt.labs.platform
 import QtQuick
 import QtQuick.Controls
 import QtQuick.Layouts
 import Esri.ArcGISRuntime
-import QtQuick.Dialogs
 
 Rectangle {
     id: root
@@ -110,11 +108,13 @@ Rectangle {
         }
 
         // Pop-up error message box
-        MessageDialog {
+        Dialog {
             id: errorMessageBox
-            text: errorMessage
-            visible: errorMessage === "" ? false : true;
-            onAccepted: errorMessage = "";
+            visible: errorMessage === ""? false : true
+            title: errorMessage
+            standardButtons: Dialog.Ok
+            x: (parent.width - width) / 2
+            y: (parent.height - height) / 2
         }
 
         QueryParameters {

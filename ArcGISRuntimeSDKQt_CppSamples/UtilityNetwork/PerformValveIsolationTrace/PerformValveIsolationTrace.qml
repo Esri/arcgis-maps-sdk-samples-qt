@@ -123,12 +123,11 @@ Item {
 
     Dialog {
         id: messageDialog
-        title: "Perform valve isolation trace"
-//        text: "Isolation trace returned no elements."
-        visible: sampleModel.noResults
-        onRejected: {
-            visible = false;
-        }
+        visible: errorMessage === ""? false : true
+        title: "Isolation trace returned no elements."
+        standardButtons: Dialog.Ok
+        x: (parent.width - width) / 2
+        y: (parent.height - height) / 2
     }
 
     // Declare the C++ instance which creates the scene etc. and supply the view
