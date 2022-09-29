@@ -16,7 +16,7 @@
 
 import QtQuick
 import QtQuick.Controls
-import Qt.labs.platform
+import QtQuick.Dialogs
 import Esri.ArcGISRuntime
 import Esri.ArcGISExtras
 
@@ -71,7 +71,6 @@ Rectangle {
                 }
             }
         }
-
     }
 
     Button {
@@ -126,11 +125,12 @@ Rectangle {
         }
     }
 
-    MessageDialog {
+    Dialog {
         id: saveCompleteDialog
-        modality: Qt.WindowModal
-        buttons: MessageDialog.Ok
-        text: qsTr("Item saved.")
+        standardButtons: Dialog.Ok
+        title: "Item saved."
+        x: (parent.width - width) / 2
+        y: (parent.height - height) / 2
     }
 
     KmlStyle {
