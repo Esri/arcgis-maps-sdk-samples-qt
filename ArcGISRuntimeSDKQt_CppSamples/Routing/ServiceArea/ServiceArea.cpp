@@ -35,11 +35,18 @@
 #include "Error.h"
 #include "GraphicsOverlayListModel.h"
 #include "GraphicListModel.h"
+#include "Graphic.h"
 #include "ServiceAreaFacility.h"
 #include "PolylineBarrier.h"
 #include "NetworkAnalystTypes.h"
 #include "ServiceAreaResult.h"
 #include "ServiceAreaPolygon.h"
+#include "SpatialReference.h"
+#include "Point.h"
+#include "Viewpoint.h"
+#include "GraphicsOverlay.h"
+#include "Polyline.h"
+#include "Polygon.h"
 
 #include <QUuid>
 

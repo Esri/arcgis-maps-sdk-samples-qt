@@ -38,6 +38,8 @@
 #include "CoreTypes.h"
 #include "Distance.h"
 #include "TaskWatcher.h"
+#include "SpatialReference.h"
+
 #include <QUuid>
 
 using namespace Esri::ArcGISRuntime;

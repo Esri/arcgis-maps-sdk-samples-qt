@@ -42,6 +42,7 @@
 #include "SpatialReference.h"
 #include "CoreTypes.h"
 #include "MapTypes.h"
+#include "Point.h"
 
 #include <QUuid>
 #include <QList>

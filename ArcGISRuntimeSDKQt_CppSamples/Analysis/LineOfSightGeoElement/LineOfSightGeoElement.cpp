@@ -50,6 +50,10 @@
 #include "LinearUnit.h"
 #include "AngularUnit.h"
 #include "TaskWatcher.h"
+#include "SpatialReference.h"
+#include "Point.h"
+#include "Graphic.h"
+#include "SimpleMarkerSymbol.h"
 
 #include <array>
 #include <QtCore/qglobal.h>

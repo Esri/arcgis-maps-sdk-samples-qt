@@ -24,6 +24,8 @@
 #include "MapQuickView.h"
 #include "MapTypes.h"
 #include "TaskWatcher.h"
+#include "SpatialReference.h"
+#include "Point.h"
 
 using namespace Esri::ArcGISRuntime;
 

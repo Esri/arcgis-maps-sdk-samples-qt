@@ -34,6 +34,9 @@
 #include "MapTypes.h"
 #include "ElevationSourceListModel.h"
 #include "GraphicsOverlayListModel.h"
+#include "GraphicsOverlay.h"
+#include "Graphic.h"
+#include "Point.h"
 
 #include <QtCore/qglobal.h>
 

@@ -43,6 +43,8 @@
 #include "GraphicListModel.h"
 #include "LayerListModel.h"
 #include "QueryParameters.h"
+#include "Polyline.h"
+#include "Envelope.h"
 
 #include <QUuid>
 

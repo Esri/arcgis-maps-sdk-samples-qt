@@ -37,6 +37,9 @@
 #include "RendererSceneProperties.h"
 #include "AttributeListModel.h"
 #include "SceneViewTypes.h"
+#include "GraphicsOverlay.h"
+#include "SpatialReference.h"
+#include "Point.h"
 
 #include <QUuid>
 

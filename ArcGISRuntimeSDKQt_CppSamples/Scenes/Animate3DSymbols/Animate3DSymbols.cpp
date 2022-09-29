@@ -50,6 +50,9 @@
 #include "LayerSceneProperties.h"
 #include "RendererSceneProperties.h"
 #include "AttributeListModel.h"
+#include "Graphic.h"
+#include "Viewpoint.h"
+#include "SimpleLineSymbol.h"
 
 #include <QFileInfo>
 #include <QStringListModel>

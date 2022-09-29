@@ -29,6 +29,7 @@
 #include "TaskWatcher.h"
 #include "LayerListModel.h"
 #include "GeodatabaseTypes.h"
+#include "Envelope.h"
 
 using namespace Esri::ArcGISRuntime;
 

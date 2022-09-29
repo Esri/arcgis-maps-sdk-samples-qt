@@ -34,6 +34,10 @@
 #include "LayerListModel.h"
 #include "GeodatabaseTypes.h"
 #include "CoreTypes.h"
+#include "SpatialReference.h"
+#include "Envelope.h"
+#include "Viewpoint.h"
+#include "Polygon.h"
 
 using namespace Esri::ArcGISRuntime;
 

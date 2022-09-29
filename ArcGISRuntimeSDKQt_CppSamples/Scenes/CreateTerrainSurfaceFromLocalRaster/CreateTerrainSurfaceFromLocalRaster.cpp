@@ -30,6 +30,7 @@
 #include "Camera.h"
 
 #include <QUrl>
+#include <QFileInfo>
 
 #if defined Q_OS_ANDROID || defined Q_OS_IOS
 #include <QStandardPaths>

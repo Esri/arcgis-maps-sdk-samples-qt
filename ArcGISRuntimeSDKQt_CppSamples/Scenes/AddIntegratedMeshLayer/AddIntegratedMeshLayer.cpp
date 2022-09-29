@@ -26,6 +26,9 @@
 #include "Error.h"
 #include "LayerListModel.h"
 #include "Camera.h"
+#include "SpatialReference.h"
+#include "Point.h"
+#include "Viewpoint.h"
 
 #include <QUuid>
 

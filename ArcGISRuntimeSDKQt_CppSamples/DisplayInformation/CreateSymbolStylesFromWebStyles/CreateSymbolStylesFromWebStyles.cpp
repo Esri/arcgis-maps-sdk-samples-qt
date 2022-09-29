@@ -35,6 +35,9 @@
 #include "TaskWatcher.h"
 #include "UniqueValue.h"
 #include "UniqueValueListModel.h"
+#include "SpatialReference.h"
+#include "Point.h"
+#include "Symbol.h"
 
 #include <QUuid>
 

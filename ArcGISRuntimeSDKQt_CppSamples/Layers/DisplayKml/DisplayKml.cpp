@@ -34,6 +34,7 @@
 #include "LayerListModel.h"
 #include "Surface.h"
 #include "ElevationSourceListModel.h"
+#include "Point.h"
 
 #include <QtCore/qglobal.h>
 

@@ -46,6 +46,7 @@
 #include "GenerateGeodatabaseJob.h"
 #include "Error.h"
 #include "SyncGeodatabaseJob.h"
+#include "SpatialReference.h"
 
 #include <QUuid>
 #include <QUrl>

@@ -42,6 +42,9 @@
 #include "NetworkAnalystTypes.h"
 #include "LayerListModel.h"
 #include "ServiceAreaFacility.h"
+#include "Envelope.h"
+#include "Polygon.h"
+#include "Graphic.h"
 
 #include <QUuid>
 #include <QUrl>

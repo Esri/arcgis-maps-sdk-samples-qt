@@ -30,6 +30,9 @@ namespace Esri::ArcGISRuntime
 #include <QQuickItem>
 #include <QUrl>
 
+class QAbstractListModel;
+Q_MOC_INCLUDE("QAbstractListModel")
+
 class FindRoute : public QQuickItem
 {
   Q_OBJECT

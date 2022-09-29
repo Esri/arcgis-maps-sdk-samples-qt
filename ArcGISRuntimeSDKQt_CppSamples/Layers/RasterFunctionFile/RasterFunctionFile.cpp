@@ -31,6 +31,7 @@
 #include "Error.h"
 #include "LayerListModel.h"
 #include "RasterFunctionArguments.h"
+#include "Viewpoint.h"
 
 #include <QFileInfo>
 #include <QtCore/qglobal.h>

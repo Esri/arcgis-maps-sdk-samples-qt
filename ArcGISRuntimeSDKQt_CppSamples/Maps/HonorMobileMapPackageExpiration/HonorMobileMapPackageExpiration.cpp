@@ -27,6 +27,7 @@
 #include "CoreTypes.h"
 
 #include <QtGlobal>
+#include <QDateTime>
 
 #if defined Q_OS_ANDROID || defined Q_OS_IOS
 #include <QStandardPaths>

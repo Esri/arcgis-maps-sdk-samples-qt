@@ -31,6 +31,7 @@ class QAbstractItemModel;
 #include <QObject>
 
 Q_MOC_INCLUDE("MapQuickView.h")
+Q_MOC_INCLUDE("QAbstractItemModel")
 
 class ManageOperationalLayers : public QObject
 {

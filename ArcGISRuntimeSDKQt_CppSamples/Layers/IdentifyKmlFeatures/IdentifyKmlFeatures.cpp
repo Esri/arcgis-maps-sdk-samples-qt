@@ -30,6 +30,9 @@
 #include "LayerListModel.h"
 #include "IdentifyLayerResult.h"
 #include "KmlPlacemark.h"
+#include "SpatialReference.h"
+#include "Envelope.h"
+
 #include <QUuid>
 
 using namespace Esri::ArcGISRuntime;

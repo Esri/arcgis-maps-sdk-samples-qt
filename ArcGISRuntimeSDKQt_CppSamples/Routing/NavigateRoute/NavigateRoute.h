@@ -37,7 +37,10 @@ class SimulatedLocationDataSource;
 #include <QObject>
 #include <QString>
 
+class QAbstractListModel;
+
 Q_MOC_INCLUDE("MapQuickView.h")
+Q_MOC_INCLUDE("QAbstractListModel")
 
 class NavigateRoute : public QObject
 {

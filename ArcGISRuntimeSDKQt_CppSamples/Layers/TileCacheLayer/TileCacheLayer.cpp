@@ -19,11 +19,11 @@
 #endif // PCH_BUILD
 
 #include "TileCacheLayer.h"
-
-#include"ArcGISTiledLayer.h"
+#include "ArcGISTiledLayer.h"
 #include "Map.h"
 #include "MapQuickView.h"
 #include "TileCache.h"
+#include "Basemap.h"
 
 #if defined Q_OS_ANDROID || defined Q_OS_IOS
 #include <QStandardPaths>

@@ -51,6 +51,10 @@
 #include "Error.h"
 #include "GraphicsOverlayListModel.h"
 #include "GraphicListModel.h"
+#include "SpatialReference.h"
+#include "Graphic.h"
+#include "Polyline.h"
+#include "SimpleLineSymbol.h"
 
 #if defined Q_OS_IOS || defined Q_OS_ANDROID
 #include <QStandardPaths>
@@ -62,6 +66,7 @@
 #include <QList>
 #include <QTime>
 #include <QUrl>
+#include <QStandardPaths>
 
 // NOTE: As of Qt 6.2, QTextToSpeech is not supported. Instances of this class have been commented out for compatibility, but remain for reference
 // #include <QTextToSpeech>

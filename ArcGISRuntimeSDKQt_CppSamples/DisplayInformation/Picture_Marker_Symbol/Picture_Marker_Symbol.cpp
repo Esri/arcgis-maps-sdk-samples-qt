@@ -32,6 +32,7 @@
 #include "MapViewTypes.h"
 #include "GraphicsOverlayListModel.h"
 #include "GraphicListModel.h"
+#include "Envelope.h"
 
 #include <QUrl>
 #include <QString>

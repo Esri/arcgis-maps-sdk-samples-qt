@@ -31,8 +31,13 @@
 #include "GraphicsOverlayListModel.h"
 #include "PointCollection.h"
 #include "TaskWatcher.h"
+#include "GraphicsOverlay.h"
+#include "SpatialReference.h"
+#include "Point.h"
+#include "Graphic.h"
 
 #include <QtCore/qglobal.h>
+#include <QFile>
 
 #if defined Q_OS_ANDROID || defined Q_OS_IOS
 #include <QStandardPaths>

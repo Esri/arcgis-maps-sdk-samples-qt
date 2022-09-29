@@ -30,6 +30,8 @@
 #include "Surface.h"
 #include "ElevationSourceListModel.h"
 #include "LayerListModel.h"
+#include "Viewpoint.h"
+#include "Envelope.h"
 
 #include <QtCore/qglobal.h>
 

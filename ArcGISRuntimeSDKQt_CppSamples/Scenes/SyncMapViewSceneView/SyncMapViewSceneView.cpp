@@ -26,6 +26,7 @@
 #include "MapQuickView.h"
 #include "MapTypes.h"
 #include "TaskWatcher.h"
+#include "Viewpoint.h"
 
 using namespace Esri::ArcGISRuntime;
 

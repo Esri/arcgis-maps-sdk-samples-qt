@@ -36,6 +36,7 @@
 #include "GraphicsOverlayListModel.h"
 #include "SymbolTypes.h"
 #include "GraphicListModel.h"
+#include "Viewpoint.h"
 
 #include <QList>
 

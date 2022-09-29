@@ -35,6 +35,8 @@
 #include "LayerListModel.h"
 #include "ArcGISSublayerListModel.h"
 #include "ArcGISSublayer.h"
+#include "SpatialReference.h"
+
 #include <QUuid>
 
 using namespace Esri::ArcGISRuntime;

@@ -27,6 +27,7 @@
 #include "MapTypes.h"
 #include "TaskWatcher.h"
 #include "LayerListModel.h"
+#include "SpatialReference.h"
 
 #include <QUrl>
 #include <QStringList>

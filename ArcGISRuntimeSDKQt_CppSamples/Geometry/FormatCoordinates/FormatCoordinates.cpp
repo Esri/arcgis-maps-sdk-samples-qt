@@ -30,6 +30,8 @@
 #include "GraphicListModel.h"
 #include "SymbolTypes.h"
 #include "GraphicsOverlayListModel.h"
+#include "SpatialReference.h"
+#include "GraphicsOverlay.h"
 
 using namespace Esri::ArcGISRuntime;
 

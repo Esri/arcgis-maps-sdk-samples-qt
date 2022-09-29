@@ -33,6 +33,8 @@
 #include "SymbolTypes.h"
 #include "LayerListModel.h"
 #include "ArcGISSublayerListModel.h"
+#include "SpatialReference.h"
+#include "Envelope.h"
 
 using namespace Esri::ArcGISRuntime;
 

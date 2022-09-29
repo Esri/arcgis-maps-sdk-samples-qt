@@ -37,6 +37,10 @@
 #include "ElevationSourceListModel.h"
 #include "KmlViewpoint.h"
 #include "Camera.h"
+#include "Envelope.h"
+#include "Point.h"
+#include "SpatialReference.h"
+
 
 #include <algorithm>
 #include <QUuid>

@@ -32,6 +32,7 @@
 #include "RasterCell.h"
 #include "IdentifyLayerResult.h"
 #include "AttributeListModel.h"
+#include "Envelope.h"
 
 #include <memory>
 #include <QString>

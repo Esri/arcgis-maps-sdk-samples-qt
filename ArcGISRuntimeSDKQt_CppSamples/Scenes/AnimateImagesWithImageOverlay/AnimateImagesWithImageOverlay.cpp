@@ -35,6 +35,7 @@
 #include "Surface.h"
 #include "ElevationSourceListModel.h"
 #include "LayerListModel.h"
+#include "SpatialReference.h"
 
 // Qt headers
 #include <QString>

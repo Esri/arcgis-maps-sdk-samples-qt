@@ -30,6 +30,9 @@
 #include "MapTypes.h"
 #include "Error.h"
 #include "LayerListModel.h"
+#include "SpatialReference.h"
+#include "Point.h"
+#include "Viewpoint.h"
 
 #include <QUrl>
 #include <QtCore/qglobal.h>

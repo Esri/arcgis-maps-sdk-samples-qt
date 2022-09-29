@@ -26,6 +26,7 @@
 #include "WebTiledLayer.h"
 #include "Viewpoint.h"
 #include "Point.h"
+#include "SpatialReference.h"
 
 #include <QStringList>
 

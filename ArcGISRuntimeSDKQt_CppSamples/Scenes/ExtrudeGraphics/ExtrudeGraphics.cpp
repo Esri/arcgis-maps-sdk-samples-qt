@@ -37,8 +37,11 @@
 #include "Surface.h"
 #include "ElevationSourceListModel.h"
 #include "RendererSceneProperties.h"
-#include "AttributeListModel.h"
 #include "SceneViewTypes.h"
+#include "GraphicsOverlay.h"
+#include "SpatialReference.h"
+#include "Graphic.h"
+#include "AttributeListModel.h"
 
 #include <cmath>
 #include <ctime>

@@ -37,6 +37,10 @@
 #include "ElevationSourceListModel.h"
 #include "SceneViewTypes.h"
 #include "LayerSceneProperties.h"
+#include "SpatialReference.h"
+#include "GraphicsOverlay.h"
+#include "Point.h"
+#include "Graphic.h"
 
 #include <QtCore/qglobal.h>
 

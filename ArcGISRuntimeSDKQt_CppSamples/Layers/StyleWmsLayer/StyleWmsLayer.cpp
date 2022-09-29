@@ -29,6 +29,7 @@
 #include "Error.h"
 #include "TaskWatcher.h"
 #include "LayerListModel.h"
+#include "Envelope.h"
 
 using namespace Esri::ArcGISRuntime;
 

@@ -34,6 +34,8 @@
 #include "GenerateOfflineMapResult.h"
 #include "Error.h"
 #include "GenerateOfflineMapParameters.h"
+#include "SpatialReference.h"
+#include "Layer.h"
 
 #include <QTemporaryDir>
 #include <QtCore/qglobal.h>

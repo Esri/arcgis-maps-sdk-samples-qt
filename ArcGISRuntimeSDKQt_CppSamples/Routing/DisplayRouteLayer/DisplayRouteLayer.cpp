@@ -40,6 +40,8 @@
 #include "ArcGISFeature.h"
 #include "AttributeListModel.h"
 #include "FeatureCollectionTable.h"
+#include "SpatialReference.h"
+#include "Point.h"
 
 #include <QJsonValue>
 

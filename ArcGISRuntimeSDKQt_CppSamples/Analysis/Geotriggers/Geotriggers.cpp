@@ -42,7 +42,10 @@
 #include "AttributeListModel.h"
 #include "Attachment.h"
 #include "AttachmentListModel.h"
+#include "Polyline.h"
+
 #include <QUuid>
+#include <QDateTime>
 
 using namespace Esri::ArcGISRuntime;
 

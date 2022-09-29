@@ -33,8 +33,12 @@
 #include "LayerListModel.h"
 #include "RasterFunctionArguments.h"
 #include "ArcGISImageServiceInfo.h"
+#include "Envelope.h"
+#include "Point.h"
+#include "Viewpoint.h"
 
 #include <QtCore/qglobal.h>
+#include <QFile>
 
 #if defined Q_OS_ANDROID || defined Q_OS_IOS
 #include <QStandardPaths>

@@ -32,6 +32,9 @@
 #include "LayerListModel.h"
 #include "Portal.h"
 #include "LayerViewState.h"
+#include "SpatialReference.h"
+#include "Point.h"
+#include "Viewpoint.h"
 
 using namespace Esri::ArcGISRuntime;
 

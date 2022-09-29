@@ -34,6 +34,8 @@
 #include "GraphicListModel.h"
 #include "Surface.h"
 #include "ElevationSourceListModel.h"
+#include "Graphic.h"
+#include "Point.h"
 
 #include <QUuid>
 

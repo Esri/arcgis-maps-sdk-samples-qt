@@ -39,8 +39,14 @@
 #include "TableDescription.h"
 #include "TaskWatcher.h"
 #include "ServiceTypes.h"
-#include "SpatialReference.h"
+#include "LayerListModel.h"
+#include "FieldDescriptionListModel.h"
+#include "QueryParameters.h"
+#include "FeatureIterator.h"
+#include "FeatureQueryResult.h"
 #include "Viewpoint.h"
+#include "SpatialReference.h"
+#include "Point.h"
 
 #include <QUuid>
 

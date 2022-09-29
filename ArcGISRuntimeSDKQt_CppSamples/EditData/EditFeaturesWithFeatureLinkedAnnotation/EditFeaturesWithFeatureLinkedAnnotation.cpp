@@ -41,6 +41,9 @@
 #include "AttributeListModel.h"
 #include "ProximityResult.h"
 #include "Part.h"
+#include "Viewpoint.h"
+#include "Polyline.h"
+#include "SpatialReference.h"
 
 // Qt headers
 #include <QString>

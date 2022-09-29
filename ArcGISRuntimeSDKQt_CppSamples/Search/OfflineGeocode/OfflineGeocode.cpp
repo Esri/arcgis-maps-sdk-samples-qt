@@ -40,6 +40,9 @@
 #include "GraphicListModel.h"
 #include "LayerListModel.h"
 #include "TileCache.h"
+#include "Basemap.h"
+#include "SpatialReference.h"
+#include "Viewpoint.h"
 
 #include <QScopedPointer>
 #include <QtCore/qglobal.h>

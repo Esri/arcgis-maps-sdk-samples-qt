@@ -29,6 +29,7 @@
 #include "TaskWatcher.h"
 #include "Surface.h"
 #include "ElevationSourceListModel.h"
+#include "SpatialReference.h"
 
 using namespace Esri::ArcGISRuntime;
 

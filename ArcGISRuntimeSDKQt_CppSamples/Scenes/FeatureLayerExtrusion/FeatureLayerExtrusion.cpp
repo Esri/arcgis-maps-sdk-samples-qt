@@ -38,6 +38,8 @@
 #include "RendererSceneProperties.h"
 #include "LayerListModel.h"
 #include "SceneViewTypes.h"
+#include "SpatialReference.h"
+#include "Viewpoint.h"
 
 using namespace Esri::ArcGISRuntime;
 

@@ -37,6 +37,10 @@
 #include "Credential.h"
 #include "LabelDefinitionListModel.h"
 #include "ServiceTypes.h"
+#include "SimpleMarkerSymbol.h"
+#include "SpatialReference.h"
+#include "Viewpoint.h"
+#include "Envelope.h"
 
 using namespace Esri::ArcGISRuntime;
 

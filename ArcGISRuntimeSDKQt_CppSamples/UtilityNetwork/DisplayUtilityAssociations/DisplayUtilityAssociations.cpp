@@ -25,6 +25,7 @@
 #include "AttributeListModel.h"
 #include "FeatureLayer.h"
 #include "GraphicsOverlay.h"
+#include "Graphic.h"
 #include "Map.h"
 #include "MapQuickView.h"
 #include "SimpleLineSymbol.h"
@@ -45,6 +46,10 @@
 #include "LayerListModel.h"
 #include "Credential.h"
 #include "UniqueValue.h"
+#include "Viewpoint.h"
+#include "Envelope.h"
+#include "SpatialReference.h"
+#include "Point.h"
 
 #include <QList>
 #include <QImage>

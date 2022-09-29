@@ -27,6 +27,7 @@
 #include "Error.h"
 #include "LayerListModel.h"
 #include "MapTypes.h"
+#include "Layer.h"
 
 #include <QtCore/qglobal.h>
 

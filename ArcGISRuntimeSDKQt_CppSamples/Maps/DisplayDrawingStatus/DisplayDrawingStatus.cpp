@@ -27,6 +27,9 @@
 #include "MapTypes.h"
 #include "MapViewTypes.h"
 #include "LayerListModel.h"
+#include "SpatialReference.h"
+#include "Envelope.h"
+#include "Viewpoint.h"
 
 #include <QUrl>
 
