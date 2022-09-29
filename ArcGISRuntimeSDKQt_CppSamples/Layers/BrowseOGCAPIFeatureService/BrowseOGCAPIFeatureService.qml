@@ -18,7 +18,6 @@ import QtQuick
 import QtQuick.Controls
 import Esri.Samples
 import QtQuick.Layouts
-import QtQuick.Dialogs
 
 Item {
     // Declare the C++ instance which creates the map etc. and supply the view
@@ -93,13 +92,13 @@ Item {
         }
 
         // Pop-up error message box
-        MessageDialog {
+        Dialog {
             id: errorMessageBox
-            title: "Error message!"
-            text: model.errorMessage
-            icon: StandardIcon.Warning
-            visible: model.errorMessage === "" ? false : true
-            onAccepted: model.errorMessage = "";
+            visible: model.errorMessage === ""? false : true
+            title: model.errorMessage
+            standardButtons: Dialog.Ok
+            x: (parent.width - width) / 2
+            y: (parent.height - height) / 2
         }
     }
 }
