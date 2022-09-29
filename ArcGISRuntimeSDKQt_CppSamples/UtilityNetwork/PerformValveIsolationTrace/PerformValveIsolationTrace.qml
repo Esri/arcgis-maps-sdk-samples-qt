@@ -123,11 +123,10 @@ Item {
 
     Dialog {
         id: messageDialog
-        visible: errorMessage === ""? false : true
+        visible: sampleModel.errorMessage === ""? false : true
         title: "Isolation trace returned no elements."
         standardButtons: Dialog.Ok
-        x: (parent.width - width) / 2
-        y: (parent.height - height) / 2
+        anchors.centerIn: parent
     }
 
     // Declare the C++ instance which creates the scene etc. and supply the view
