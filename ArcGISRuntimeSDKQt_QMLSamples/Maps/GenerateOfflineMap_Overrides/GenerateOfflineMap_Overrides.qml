@@ -20,7 +20,6 @@ import QtQuick.Layouts
 import QtQuick.Window
 import Esri.ArcGISRuntime
 import Esri.ArcGISExtras
-import Esri.ArcGISRuntime.Toolkit
 
 Rectangle {
     id: rootRectangle

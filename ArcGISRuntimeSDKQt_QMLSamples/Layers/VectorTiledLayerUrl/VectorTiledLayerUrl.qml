@@ -57,7 +57,7 @@ Rectangle {
             margins: 15
         }
         property int modelWidth: 0
-        width: modelWidth + leftPadding + rightPadding + indicator.width
+        width: modelWidth + leftPadding + rightPadding
         model: ["Mid-Century","Colored Pencil","Newspaper","Nova", "World Street Map (Night)"]
         onCurrentTextChanged: {
             // Call this JavaScript function when the current selection changes

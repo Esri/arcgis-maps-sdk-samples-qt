@@ -156,7 +156,7 @@ Rectangle {
         }
 
         property int modelWidth: 0
-        width: modelWidth + rightPadding + leftPadding + indicator.width
+        width: modelWidth + rightPadding + leftPadding
         model: map.bookmarks
 
         Connections {
