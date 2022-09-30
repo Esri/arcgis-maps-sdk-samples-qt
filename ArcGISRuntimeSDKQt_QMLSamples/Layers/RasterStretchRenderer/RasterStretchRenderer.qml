@@ -115,7 +115,7 @@ Rectangle {
                 id: stretchTypeCombo
                 anchors.horizontalCenter: parent.horizontalCenter
                 property int modelWidth: 0
-                width: modelWidth + leftPadding + rightPadding + indicator.width
+                width: modelWidth + leftPadding + rightPadding
                 model: stretchTypes
                 Component.onCompleted : {
                     for (let i = 0; i < model.length; ++i) {
