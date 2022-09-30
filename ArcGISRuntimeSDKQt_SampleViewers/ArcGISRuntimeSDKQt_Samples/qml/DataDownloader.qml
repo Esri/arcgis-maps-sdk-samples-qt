@@ -35,32 +35,9 @@ Item {
         id: fileFolder
     }
 
-    PermissionsHelper {
-        id: permissionsHelper
-        onRequestFilesystemAccessCompleted: {
-            if (fileSystemAccessGranted) {
-                downloadDataItems();
-            } else {
-                const msg = "Insufficient filesystem permissions";
-                if (debug)
-                    console.log(msg);
-
-                failedToDownload = true;
-                SampleManager.downloadInProgress = false;
-                SampleManager.downloadText = msg;
-            }
-        }
-    }
-
     function downloadAllDataItems() {
         SampleManager.downloadInProgress = true;
         downloadQueue = [];
-
-        if (!permissionsHelper.fileSystemAccessGranted) {
-            permissionsHelper.requestFilesystemAccess();
-            failedToDownload = false;
-            return;
-        }
 
         for (let i = 0; i < SampleManager.samples.size; i++) {
             const sample = SampleManager.samples.get(i);
@@ -86,12 +63,6 @@ Item {
     function downloadDataItems() {
         SampleManager.downloadInProgress = true;
         downloadQueue = [];
-
-        if (!permissionsHelper.fileSystemAccessGranted) {
-            permissionsHelper.requestFilesystemAccess();
-            failedToDownload = false;
-            return;
-        }
 
         for (let i = 0; i < SampleManager.currentSample.dataItems.size; i++) {
             const dataItem = SampleManager.currentSample.dataItems.get(i);

@@ -23,7 +23,6 @@ class SampleListModel;
 class SourceCode;
 class SampleCategory;
 class Sample;
-class PermissionsHelper;
 
 #include <QDir>
 #include <QJsonDocument>
@@ -132,7 +131,6 @@ private:
   bool m_downloadInProgress = false;
   QString m_downloadText = QString("Downloading");
   double m_downloadProgress = 0.0;
-  PermissionsHelper* m_permissionsHelper = nullptr;
   std::unique_ptr<QTemporaryDir> m_tempDir;
 };
 

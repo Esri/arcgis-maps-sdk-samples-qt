@@ -281,11 +281,7 @@ ApplicationWindow {
                             return;
                         }
                     }
-
-                    if (permissionsHelper.fileSystemAccessGranted)
                         showSample();
-                    else
-                        permissionsHelper.requestFilesystemAccess();
                 }
                 // Else, download the data
                 else {
@@ -372,13 +368,6 @@ ApplicationWindow {
     Loader {
         id: qmlLoaderAuthView
         anchors.fill: parent
-    }
-
-    PermissionsHelper {
-        id: permissionsHelper
-        onRequestFilesystemAccessCompleted: {
-            showSample();
-        }
     }
 
     Component.onCompleted: {
