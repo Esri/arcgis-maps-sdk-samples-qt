@@ -108,8 +108,7 @@ HEADERS += \
     $$COMMONVIEWER/SearchFilterCriteria.h \
     $$COMMONVIEWER/SearchFilterSimpleKeywordCriteria.h \
     $$COMMONVIEWER/SourceCode.h \
-    $$COMMONVIEWER/SourceCodeListModel.h \
-    $$COMMONVIEWER/PermissionsHelper.h
+    $$COMMONVIEWER/SourceCodeListModel.h
 
 SOURCES += \
     QmlSampleManager.cpp \
@@ -129,8 +128,7 @@ SOURCES += \
     $$COMMONVIEWER/SearchFilterSimpleKeywordCriteria.cpp \
     $$COMMONVIEWER/SourceCode.cpp \
     $$COMMONVIEWER/SourceCodeListModel.cpp \
-    $$COMMONVIEWER/mainSample.cpp \
-    $$COMMONVIEWER/PermissionsHelper.cpp
+    $$COMMONVIEWER/mainSample.cpp
 
 RESOURCES += \
     imports.qrc \
@@ -171,8 +169,6 @@ mac {
 }
 
 android {
-    QT += androidextras
-
     CONFIG(build_from_setup) {
         for (ABI, ANDROID_ABIS): {
             ANDROID_SSL_DIR = $$dirname(QMAKE_QMAKE)/../lib/ssl/$${ABI}
