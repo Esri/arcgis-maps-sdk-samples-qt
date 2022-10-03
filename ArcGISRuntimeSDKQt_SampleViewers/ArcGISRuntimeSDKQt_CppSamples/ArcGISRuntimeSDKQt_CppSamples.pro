@@ -82,8 +82,8 @@ exists($$PWD/../../../../DevBuildCpp.pri) {
 DEFINES += GANALYTICS_API_KEY=$$(GANALYTICS_API_KEY)
 DEFINES += GANALYTICS_STREAM_ID=$$(GANALYTICS_STREAM_ID)
 
-qtHaveModule(webengine) {
-  QT += webengine
+qtHaveModule(webenginequick) {
+  QT += webenginequick
   DEFINES += QT_WEBVIEW_WEBENGINE_BACKEND
 }
 

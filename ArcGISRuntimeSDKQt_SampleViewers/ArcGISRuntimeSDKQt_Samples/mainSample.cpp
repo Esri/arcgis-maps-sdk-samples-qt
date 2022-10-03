@@ -29,7 +29,7 @@
 #include "GAnalytics.h"
 
 #ifdef QT_WEBVIEW_WEBENGINE_BACKEND
-#  include <QtWebEngine>
+#  include <QtWebEngineQuick>
 #endif // QT_WEBVIEW_WEBENGINE_BACKEND
 
 // Choose a manager based on the type of interface.
@@ -314,7 +314,7 @@ int main(int argc, char *argv[])
   qputenv("QSG_RHI_BACKEND", "opengl");
 
 #ifdef QT_WEBVIEW_WEBENGINE_BACKEND
-  QtWebEngine::initialize();
+  QtWebEngineQuick::initialize();
 #endif // QT_WEBVIEW_WEBENGINE_BACKEND
 
 #ifdef CPP_VIEWER

@@ -164,7 +164,7 @@ Rectangle {
             ComboBox {
                 id: slopeCombo
                 property int modelWidth: 0
-                Layout.minimumWidth: modelWidth + leftPadding + rightPadding + indicator.width
+                Layout.minimumWidth: modelWidth + leftPadding + rightPadding
                 Layout.fillWidth: true
                 textRole: "name"
                 model: slopeTypeModel
@@ -188,7 +188,7 @@ Rectangle {
             ComboBox {
                 id: colorCombo
                 property int modelWidth: 0
-                Layout.minimumWidth: modelWidth + leftPadding + rightPadding + indicator.width
+                Layout.minimumWidth: modelWidth + leftPadding + rightPadding
                 Layout.fillWidth: true
                 textRole: "name"
                 model: colorRampModel

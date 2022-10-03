@@ -14,12 +14,10 @@
 // limitations under the License.
 // [Legal]
 
-import Qt.labs.platform
 import QtQuick
 import QtQuick.Controls
 import Esri.ArcGISRuntime
 import QtQuick.Layouts
-import QtQuick.Dialogs
 
 Rectangle {
     id: rootRectangle
@@ -441,12 +439,12 @@ Rectangle {
         filterBarriers.push(createdElement);
     }
 
-    MessageDialog {
+    Dialog {
         id: messageDialog
-        text: "Isolation trace returned no elements."
-        visible: false
-        onRejected: {
-            visible = false;
-        }
+        visible: errorMessage === ""? false : true
+        title: "Isolation trace returned no elements."
+        standardButtons: Dialog.Ok
+        x: (parent.width - width) / 2
+        y: (parent.height - height) / 2
     }
 }
