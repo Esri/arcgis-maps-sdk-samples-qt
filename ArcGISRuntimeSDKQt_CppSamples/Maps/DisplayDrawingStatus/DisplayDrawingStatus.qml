@@ -71,7 +71,7 @@ DisplayDrawingStatusSample {
                 BusyIndicator {
                     anchors.horizontalCenter: parent.horizontalCenter
                     height: 60
-                    running: true
+                    running: displayDrawingStatusSample.mapDrawing
                 }
 
                 Text {
