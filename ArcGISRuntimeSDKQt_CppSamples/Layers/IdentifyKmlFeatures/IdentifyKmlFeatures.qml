@@ -34,8 +34,7 @@ Item {
         Callout {
             id: callout
             calloutData: view.calloutData
-            maxWidth: 150
-            autoAdjustWidth: false
+            implicitWidth: 150
             calloutContent: Text {
                 text: model.calloutText
                 wrapMode: Text.WordWrap
