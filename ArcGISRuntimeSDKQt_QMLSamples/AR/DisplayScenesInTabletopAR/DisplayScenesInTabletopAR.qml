@@ -27,7 +27,7 @@ Rectangle {
     width: 800
     height: 600
 
-    readonly property url dataPath: System.writableLocationPath(System.StandardPathsHomeLocation) + "/ArcGIS/Runtime/Data/mspk"
+    readonly property url dataPath: System.writableLocationPathUrl(System.StandardPathsHomeLocation) + "/ArcGIS/Runtime/Data/mspk"
     readonly property double sceneWidth: 800.0
     readonly property double tableTopWidth: 1.0
     property var philadelphiaScene: null

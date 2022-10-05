@@ -26,7 +26,7 @@ Rectangle {
     height: 600
     color: "#E0E0E0"
 
-    readonly property url dataPath: System.writableLocationPath(System.StandardPathsHomeLocation) + "/ArcGIS/Runtime/Data/mmpk/"
+    readonly property url dataPath: System.writableLocationPathUrl(System.StandardPathsHomeLocation) + "/ArcGIS/Runtime/Data/mmpk/"
     property LocatorTask currentLocatorTask: null
     property RouteTask currentRouteTask: null
     property Point clickedPoint: null

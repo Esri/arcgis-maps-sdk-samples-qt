@@ -26,7 +26,7 @@ Rectangle {
     width: 800
     height: 600
 
-    readonly property url dataPath: System.writableLocationPath(System.StandardPathsHomeLocation) + "/ArcGIS/Runtime/Data/raster/SA_EVI_8Day_03May20/"
+    readonly property url dataPath: System.writableLocationPathUrl(System.StandardPathsHomeLocation) + "/ArcGIS/Runtime/Data/raster/SA_EVI_8Day_03May20/"
     property Point clickedPoint: null
     property string calloutText: ""
     property bool pressedMouse: false

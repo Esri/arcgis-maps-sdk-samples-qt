@@ -26,7 +26,7 @@ Rectangle {
     width: 800
     height: 600
 
-    readonly property string dataPath: System.writableLocationPath(System.StandardPathsHomeLocation) + "/ArcGIS/Runtime/Data/raster"
+    readonly property string dataPath: System.writableLocationPathUrl(System.StandardPathsHomeLocation) + "/ArcGIS/Runtime/Data/raster"
     property bool editingRenderer: false
 
     SlopeTypeModel {

@@ -28,7 +28,7 @@ Rectangle {
     height: 600
 
     readonly property url outputMapPackage: System.temporaryFolder.url + "/OfflineMap_%1.mmpk".arg(new Date().getTime().toString())
-    readonly property url basemapDirectory: System.writableLocationPath(System.StandardPathsHomeLocation) + "/ArcGIS/Runtime/Data/tpkx"
+    readonly property url basemapDirectory: System.writableLocationPathUrl(System.StandardPathsHomeLocation) + "/ArcGIS/Runtime/Data/tpkx"
     readonly property string webMapId: "acc027394bc84c2fb04d1ed317aac674"
     property bool useLocalBasemap: false
 

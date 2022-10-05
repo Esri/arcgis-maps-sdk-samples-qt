@@ -27,7 +27,7 @@ Rectangle {
     width: 800
     height: 600
 
-    readonly property url dataPath: System.writableLocationPath(System.StandardPathsHomeLocation) + "/ArcGIS/Runtime/Data/tpkx/"
+    readonly property url dataPath: System.writableLocationPathUrl(System.StandardPathsHomeLocation) + "/ArcGIS/Runtime/Data/tpkx/"
     readonly property url pinUrl: "qrc:/Samples/Routing/OfflineRouting/orange_symbol.png"
     property var findRoute;
     property Graphic selectedGraphic: null;

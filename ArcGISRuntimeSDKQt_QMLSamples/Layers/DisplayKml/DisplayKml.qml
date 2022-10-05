@@ -139,7 +139,7 @@ Rectangle {
     function createFromFile() {
         // create the dataset from a local file
         const kmlDataset = ArcGISRuntimeEnvironment.createObject("KmlDataset", {
-                                                                     url: System.writableLocationPath(System.StandardPathsHomeLocation) + "/ArcGIS/Runtime/Data/kml/US_State_Capitals.kml"
+                                                                     url: System.writableLocationPathUrl(System.StandardPathsHomeLocation) + "/ArcGIS/Runtime/Data/kml/US_State_Capitals.kml"
                                                                  });
 
         // create the layer

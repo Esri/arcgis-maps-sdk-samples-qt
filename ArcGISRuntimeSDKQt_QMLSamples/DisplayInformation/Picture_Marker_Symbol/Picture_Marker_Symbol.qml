@@ -23,7 +23,7 @@ Rectangle {
     width: 800
     height: 600
 
-    readonly property url dataPath: System.writableLocationPath(System.StandardPathsHomeLocation) + "/ArcGIS/Runtime/Data"
+    readonly property url dataPath: System.writableLocationPathUrl(System.StandardPathsHomeLocation) + "/ArcGIS/Runtime/Data"
 
     ViewpointExtent {
         id: startingVP
