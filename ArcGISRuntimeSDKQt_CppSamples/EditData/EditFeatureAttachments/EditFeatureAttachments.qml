@@ -40,7 +40,7 @@ EditFeatureAttachmentsSample {
         Callout {
             id: callout
             borderColor: "lightgrey"
-            borderWidth: 1
+            background.border.width: 1
             calloutData: mapView.calloutData
             leaderPosition: Callout.LeaderPosition.Automatic
             onAccessoryButtonClicked: {

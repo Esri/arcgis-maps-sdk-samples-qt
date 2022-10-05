@@ -132,7 +132,7 @@ Rectangle {
         Callout {
             id: callout
             borderColor: "lightgrey"
-            borderWidth: 1
+            background.border.width: 1
             calloutData : parent.calloutData
             leaderPosition: Callout.LeaderPosition.Automatic
             onAccessoryButtonClicked: {

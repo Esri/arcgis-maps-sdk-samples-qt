@@ -158,7 +158,7 @@ Rectangle {
             accessoryButtonType: "Custom"
             customImageUrl: "qrc:/Samples/EditData/DeleteFeaturesFeatureService/ic_menu_trash_light.png"
             calloutData: parent.calloutData
-            borderWidth: 1
+            background.border.width: 1
             borderColor: "lightgrey"
             leaderPosition: Callout.LeaderPosition.Automatic
             onAccessoryButtonClicked: {

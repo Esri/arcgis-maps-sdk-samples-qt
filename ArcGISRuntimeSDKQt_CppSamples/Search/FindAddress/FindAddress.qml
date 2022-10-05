@@ -39,7 +39,7 @@ FindAddressSample {
         Callout {
             id: callout
             borderColor: "lightgrey"
-            borderWidth: 1
+            background.border.width: 1
             calloutData: mapView.calloutData
             maxWidth: findAddressSample.width * 0.75
             leaderPosition: Callout.LeaderPosition.Automatic
