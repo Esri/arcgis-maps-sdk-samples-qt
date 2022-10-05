@@ -25,7 +25,7 @@ Rectangle {
     height: 600
 
     property real scaleFactor: 1
-    property url dataPath: System.userHomePath + "/ArcGIS/Runtime/Data/raster"
+    property url dataPath: System.writableLocationPath(System.StandardPathsHomeLocation) + "/ArcGIS/Runtime/Data/raster"
     property url rasterPath: dataPath + "/Shasta_Elevation.tif"
 
     MapView {

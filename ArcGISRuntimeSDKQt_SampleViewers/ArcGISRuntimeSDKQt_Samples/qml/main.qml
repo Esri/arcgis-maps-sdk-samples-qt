@@ -283,7 +283,7 @@ ApplicationWindow {
                             return;
                         }
                     }
-                        showSample();
+                    showSample();
                 }
                 // Else, download the data
                 else {
@@ -351,7 +351,7 @@ ApplicationWindow {
     function checkDataItems() {
         for (let i = 0; i < SampleManager.currentSample.dataItems.size; i++) {
             const dataItem = SampleManager.currentSample.dataItems.get(i);
-            fileInfo.filePath = dataItem.path;
+            fileInfo.filePath = System.writableLocationPath(System.StandardPathsHomeLocation) + dataItem.path.substring(1);
             fileInfo.refresh();
             if (fileInfo.exists && (!fileInfo.isFolder))
                 continue;

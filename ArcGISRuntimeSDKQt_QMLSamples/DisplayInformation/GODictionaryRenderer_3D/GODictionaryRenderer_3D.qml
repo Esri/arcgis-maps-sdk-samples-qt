@@ -24,7 +24,7 @@ Rectangle {
     width: 800
     height: 600
 
-    readonly property url dataPath: System.userHomePath + "/ArcGIS/Runtime/Data"
+    readonly property url dataPath: System.writableLocationPath(System.StandardPathsHomeLocation) + "/ArcGIS/Runtime/Data"
 
     /**
      * Create SceneView that contains a Scene with the Imagery Basemap, as well as a GraphicsOverlay

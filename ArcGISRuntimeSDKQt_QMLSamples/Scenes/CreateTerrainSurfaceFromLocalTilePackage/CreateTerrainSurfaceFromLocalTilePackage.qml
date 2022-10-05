@@ -24,7 +24,7 @@ Rectangle {
     width: 800
     height: 600
 
-    readonly property string montereyTpkElevationPath: System.userHomePath + "/ArcGIS/Runtime/Data/tpkx/MontereyElevation.tpkx"
+    readonly property string montereyTpkElevationPath: System.writableLocationPath(System.StandardPathsHomeLocation) + "/ArcGIS/Runtime/Data/tpkx/MontereyElevation.tpkx"
 
     SceneView {
         id: sceneView

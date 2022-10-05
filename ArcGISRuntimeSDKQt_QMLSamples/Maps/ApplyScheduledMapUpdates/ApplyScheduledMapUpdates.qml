@@ -26,7 +26,7 @@ Rectangle {
     height: 600
 
     readonly property string tempDataPath: System.temporaryFolder.path + "/" + new Date().getTime()
-    readonly property string origMmpkPath: System.userHomePath + "/ArcGIS/Runtime/Data/mmpk/canyonlands/canyonlands.zip"
+    readonly property string origMmpkPath: System.writableLocationPath(System.StandardPathsHomeLocation) + "/ArcGIS/Runtime/Data/mmpk/canyonlands/canyonlands.zip"
     readonly property string destMmpkPath: tempDataPath + "/canyonlands.zip"
     property MobileMapPackage mmpk
 

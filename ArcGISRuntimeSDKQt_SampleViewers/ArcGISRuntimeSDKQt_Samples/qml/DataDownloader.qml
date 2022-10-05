@@ -86,7 +86,7 @@ Item {
             const count = downloadQueue.length;
             SampleManager.downloadText = "Remaining items in queue: %1".arg(count);
             currentItem = downloadQueue.pop();
-            SampleManager.downloadData(currentItem.itemId, System.resolvedPath(currentItem.path));
+            SampleManager.downloadData(currentItem.itemId, System.writableLocationPath(System.StandardPathsHomeLocation) + currentItem.path.substring(1));
         } else {
             SampleManager.downloadText = "Downloads complete";
             SampleManager.downloadInProgress = false;

@@ -27,7 +27,7 @@ Rectangle {
     width: 800
     height: 600
 
-    readonly property url dataPath: System.userHomePath + "/ArcGIS/Runtime/Data/tpkx/"
+    readonly property url dataPath: System.writableLocationPath(System.StandardPathsHomeLocation) + "/ArcGIS/Runtime/Data/tpkx/"
     property var directionListModel: null
     property Route route: null
     property bool navigatingInProgress: false

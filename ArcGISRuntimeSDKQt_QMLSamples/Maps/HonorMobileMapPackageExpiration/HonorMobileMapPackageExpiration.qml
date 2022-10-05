@@ -22,7 +22,7 @@ Rectangle {
     width: 800
     height: 600
 
-    property url dataPath: System.userHomePath + "/ArcGIS/Runtime/Data/mmpk/"
+    property url dataPath: System.writableLocationPath(System.StandardPathsHomeLocation) + "/ArcGIS/Runtime/Data/mmpk/"
     property string expirationDate
     property string expirationTime
     property string expirationMessage

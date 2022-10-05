@@ -28,7 +28,7 @@ Rectangle {
 
     readonly property var timerIntervals: [17,34,68]
     readonly property var imageFrameRefreshRate: ["Fast","Medium","Slow"]
-    readonly property url dataPath: System.userHomePath +  "/ArcGIS/Runtime/Data/3D/ImageOverlay/PacificSouthWest"
+    readonly property url dataPath: System.writableLocationPath(System.StandardPathsHomeLocation) +  "/ArcGIS/Runtime/Data/3D/ImageOverlay/PacificSouthWest"
     property int fileNamesLength: 0
     property var imageFrameList: []
 

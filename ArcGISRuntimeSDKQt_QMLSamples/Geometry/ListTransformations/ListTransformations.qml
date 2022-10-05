@@ -26,7 +26,7 @@ Rectangle {
     height: 600
 
     property bool peDataSet: true
-    readonly property string dataPath: System.userHomePath + "/ArcGIS/Runtime/Data/PEDataRuntime"
+    readonly property string dataPath: System.writableLocationPath(System.StandardPathsHomeLocation) + "/ArcGIS/Runtime/Data/PEDataRuntime"
 
     Component.onCompleted: TransformationCatalog.projectionEngineDirectory = dataPath
 
