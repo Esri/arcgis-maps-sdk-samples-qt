@@ -44,7 +44,7 @@ UpdateAttributesFeatureServiceSample {
             borderWidth: 1;
             borderColor: "lightgrey"
             calloutData: mapView.calloutData
-            leaderPosition: leaderPositionEnum.Automatic
+            leaderPosition: Callout.LeaderPosition.Automatic
             onAccessoryButtonClicked: {
                 updateWindow.visible = true;
             }

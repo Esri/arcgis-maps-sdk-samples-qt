@@ -67,7 +67,7 @@ Rectangle {
         Callout {
             id: callout
             calloutData: parent.calloutData
-            leaderPosition: leaderPositionEnum.Automatic
+            leaderPosition: Callout.LeaderPosition.Automatic
         }
         //! [show callout qml api snippet]
 

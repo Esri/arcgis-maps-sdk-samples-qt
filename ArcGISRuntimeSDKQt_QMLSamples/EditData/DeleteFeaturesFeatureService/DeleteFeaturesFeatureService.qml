@@ -160,7 +160,7 @@ Rectangle {
             calloutData: parent.calloutData
             borderWidth: 1
             borderColor: "lightgrey"
-            leaderPosition: leaderPositionEnum.Automatic
+            leaderPosition: Callout.LeaderPosition.Automatic
             onAccessoryButtonClicked: {
                 if (callout.calloutVisible)
                     callout.dismiss();

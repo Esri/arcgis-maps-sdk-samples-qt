@@ -98,7 +98,7 @@ Rectangle {
             borderColor: "lightgrey"
             accessoryButtonHidden: true
             maxWidth: root.width * 0.75
-            leaderPosition: leaderPositionEnum.Automatic
+            leaderPosition: Callout.LeaderPosition.Automatic
         }
     }
 

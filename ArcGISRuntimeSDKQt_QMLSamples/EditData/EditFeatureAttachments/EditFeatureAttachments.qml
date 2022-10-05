@@ -134,7 +134,7 @@ Rectangle {
             borderColor: "lightgrey"
             borderWidth: 1
             calloutData : parent.calloutData
-            leaderPosition: leaderPositionEnum.Automatic
+            leaderPosition: Callout.LeaderPosition.Automatic
             onAccessoryButtonClicked: {
                 attachmentWindow.visible = true;
             }

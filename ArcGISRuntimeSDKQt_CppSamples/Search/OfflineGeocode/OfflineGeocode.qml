@@ -39,7 +39,7 @@ OfflineGeocodeSample {
 
         Callout {
             id: callout
-            leaderPosition: leaderPositionEnum.Automatic
+            leaderPosition: Callout.LeaderPosition.Automatic
             calloutData: mapView.calloutData
             screenOffsetY: -19
             accessoryButtonHidden: true

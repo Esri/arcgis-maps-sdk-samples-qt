@@ -100,7 +100,7 @@ Rectangle {
             borderWidth: 1
             borderColor: "lightgrey"
             calloutData: parent.calloutData
-            leaderPosition: leaderPositionEnum.Automatic
+            leaderPosition: Callout.LeaderPosition.Automatic
             onAccessoryButtonClicked: {
                 for (let i=0; i < featAttributes.length; i++) {
                     if (currentTypeDamage === featAttributes[i]) {

@@ -41,7 +41,7 @@ Item {
             borderWidth: 1
             borderColor: "lightgrey"
             calloutData: model.mapView.calloutData
-            leaderPosition: leaderPositionEnum.Automatic
+            leaderPosition: Callout.LeaderPosition.Automatic
             onAccessoryButtonClicked: {
                 for (let i=0; i < featAttributes.length; i++) {
                     if (model.currentTypeDamage === featAttributes[i]) {

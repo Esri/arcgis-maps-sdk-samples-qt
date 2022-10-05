@@ -143,7 +143,7 @@ Rectangle {
             calloutData: parent.calloutData;
             borderColor: "lightgrey"
             borderWidth: 1
-            leaderPosition: leaderPositionEnum.Automatic
+            leaderPosition: Callout.LeaderPosition.Automatic
             onAccessoryButtonClicked: {
                 updateWindow.visible = true;
             }
