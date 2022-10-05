@@ -18,7 +18,6 @@ import QtQuick
 import QtQuick.Controls
 import QtQuick.Layouts
 import Esri.Samples
-import Esri.ArcGISRuntime.Toolkit
 
 GenerateOfflineMapLocalBasemapSample {
     id: offlineMapSample
