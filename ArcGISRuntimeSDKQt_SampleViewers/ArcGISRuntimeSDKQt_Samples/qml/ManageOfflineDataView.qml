@@ -72,7 +72,7 @@ Page {
             text: qsTr("Delete all offline data")
             Layout.alignment: Qt.AlignHCenter | Qt.AlignVCenter
             visible: !SampleManager.downloadInProgress
-            onClicked: messageDialog.visible = fileFolder.removeFolder(System.writableLocationPathUrl(System.StandardPathsHomeLocation) + "/ArcGIS/Runtime/Data", true);
+            onClicked: messageDialog.visible = fileFolder.removeFolder(System.writableLocationUrl(System.StandardPathsHomeLocation) + "/ArcGIS/Runtime/Data", true);
             clip: true
         }
 

@@ -24,7 +24,7 @@ Rectangle {
     width: 800
     height: 600
 
-    property url dataPath: System.writableLocationPathUrl(System.StandardPathsHomeLocation) + "/ArcGIS/Runtime/Data"
+    property url dataPath: System.writableLocationUrl(System.StandardPathsHomeLocation) + "/ArcGIS/Runtime/Data"
     property var loadedEncLayerCount: 0
 
     Component.onCompleted: {

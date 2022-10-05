@@ -29,7 +29,7 @@ Rectangle {
     readonly property double fontSize: 16
     readonly property var repeaterModel: ["Names", "Tags", "Symbol Classes", "Categories", "Keys"]
     readonly property var hintsModel: ["Fire", "Sustainment Points", "3", "Control Measure", "25212300_6"]
-    readonly property url dataPath: System.writableLocationPathUrl(System.StandardPathsHomeLocation) + "/ArcGIS/Runtime/Data/styles/arcade_style/mil2525d.stylx"
+    readonly property url dataPath: System.writableLocationUrl(System.StandardPathsHomeLocation) + "/ArcGIS/Runtime/Data/styles/arcade_style/mil2525d.stylx"
     property var searchParamList: [[],[],[],[],[]]
     property DictionarySymbolStyle dictionarySymbolStyle: Factory.DictionarySymbolStyle.createFromFile(dataPath);
 

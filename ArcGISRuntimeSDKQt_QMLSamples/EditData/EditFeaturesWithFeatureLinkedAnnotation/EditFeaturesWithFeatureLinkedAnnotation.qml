@@ -26,7 +26,7 @@ Rectangle {
     width: 800
     height: 600
 
-    readonly property url dataPath: System.writableLocationPathUrl(System.StandardPathsHomeLocation) + "/ArcGIS/Runtime/Data"
+    readonly property url dataPath: System.writableLocationUrl(System.StandardPathsHomeLocation) + "/ArcGIS/Runtime/Data"
     readonly property string pointsFeatureLayerName: "Loudoun_Address_Points_1"
     readonly property string pointsAnnoLayerName: "Loudoun_Address_PointsAnno_1"
     readonly property string linesFeatureLayerName: "ParcelLines_1"

@@ -25,7 +25,7 @@ Rectangle {
     width: 800
     height: 600
 
-    readonly property string dataPath: System.writableLocationPathUrl(System.StandardPathsHomeLocation) + "/ArcGIS/Runtime/Data/raster/"
+    readonly property string dataPath: System.writableLocationUrl(System.StandardPathsHomeLocation) + "/ArcGIS/Runtime/Data/raster/"
 
     MapView {
         id: mapView

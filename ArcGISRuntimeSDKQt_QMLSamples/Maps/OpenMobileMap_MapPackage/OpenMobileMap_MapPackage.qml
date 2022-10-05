@@ -23,7 +23,7 @@ Rectangle {
     height: 600
 
     //! [open mobile map package qml api snippet]
-    readonly property url dataPath: System.writableLocationPathUrl(System.StandardPathsHomeLocation) + "/ArcGIS/Runtime/Data/mmpk/"
+    readonly property url dataPath: System.writableLocationUrl(System.StandardPathsHomeLocation) + "/ArcGIS/Runtime/Data/mmpk/"
 
     // Create MapView
     MapView {

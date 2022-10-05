@@ -351,7 +351,7 @@ ApplicationWindow {
     function checkDataItems() {
         for (let i = 0; i < SampleManager.currentSample.dataItems.size; i++) {
             const dataItem = SampleManager.currentSample.dataItems.get(i);
-            fileInfo.filePath = System.writableLocationPathUrl(System.StandardPathsHomeLocation) + dataItem.path.substring(1);
+            fileInfo.filePath = System.writableLocationUrl(System.StandardPathsHomeLocation) + dataItem.path.substring(1);
             fileInfo.refresh();
             if (fileInfo.exists && (!fileInfo.isFolder))
                 continue;
