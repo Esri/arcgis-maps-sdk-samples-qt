@@ -21,6 +21,7 @@
 #include "LocalServerMapImageLayer.h"
 
 #include "Basemap.h"
+#include "Envelope.h"
 #include "MapQuickView.h"
 #include "Map.h"
 #include "LocalServer.h"
