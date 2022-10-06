@@ -98,7 +98,7 @@ Rectangle {
             id: callout
             calloutData: parent.calloutData
             screenOffsetY: (pictureMarker.height / 2) * -1
-            accessoryButtonHidden: true
+            accessoryButtonVisible: false
             leaderPosition: Callout.LeaderPosition.Automatic
         }
 

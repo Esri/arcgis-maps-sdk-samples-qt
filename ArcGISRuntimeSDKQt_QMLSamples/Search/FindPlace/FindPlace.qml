@@ -78,7 +78,7 @@ Rectangle {
         Callout {
             id: callout
             calloutData: parent.calloutData
-            accessoryButtonHidden: true
+            accessoryButtonVisible: false
             screenOffsetY: (pinSymbol.height / 2) * -1
             leaderPosition: Callout.LeaderPosition.Automatic
         }

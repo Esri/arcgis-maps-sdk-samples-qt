@@ -40,7 +40,7 @@ Rectangle {
         Callout {
             id: callout
             calloutData: parent.calloutData
-            accessoryButtonHidden: true
+            accessoryButtonVisible: false
             leaderPosition: Callout.LeaderPosition.Top
             padding: 5
         }
