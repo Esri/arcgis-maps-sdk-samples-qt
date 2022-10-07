@@ -29,7 +29,7 @@ CreateAndSaveMapSample {
         stackView.push(options);
     }
 
-    onSaveMapCompleted: {
+    onSaveMapCompleted: (itemId, success) => {
         if (stackView.currentItem === completionRect)
             return;
 
@@ -73,7 +73,7 @@ CreateAndSaveMapSample {
     Component {
         id: layerWindow
         LayerWindow {
-            onCreateMapSelected: {
+            onCreateMapSelected: (basemap, layerList) => {
                 stackView.push(mapView);
                 createMap(basemap, layerList);
             }
@@ -88,7 +88,7 @@ CreateAndSaveMapSample {
                 stackView.pop();
             }
 
-            onSaveMapClicked: {
+            onSaveMapClicked: (title, tags, description) => {
                 saveMap(title, tags, description);
             }
         }
