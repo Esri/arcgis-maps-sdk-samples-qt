@@ -38,7 +38,7 @@ FindAddressSample {
 
         Callout {
             id: callout
-            borderColor: "lightgrey"
+            background.border.color: "lightgrey"
             background.border.width: 1
             calloutData: mapView.calloutData
             maxWidth: findAddressSample.width * 0.75

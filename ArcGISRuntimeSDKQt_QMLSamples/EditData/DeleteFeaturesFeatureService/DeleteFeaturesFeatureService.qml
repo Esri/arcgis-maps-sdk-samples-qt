@@ -159,7 +159,7 @@ Rectangle {
             customImageUrl: "qrc:/Samples/EditData/DeleteFeaturesFeatureService/ic_menu_trash_light.png"
             calloutData: parent.calloutData
             background.border.width: 1
-            borderColor: "lightgrey"
+            background.border.color: "lightgrey"
             leaderPosition: Callout.LeaderPosition.Automatic
             onAccessoryButtonClicked: {
                 if (callout.calloutVisible)

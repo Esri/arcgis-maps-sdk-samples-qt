@@ -39,7 +39,7 @@ EditFeatureAttachmentsSample {
 
         Callout {
             id: callout
-            borderColor: "lightgrey"
+            background.border.color: "lightgrey"
             background.border.width: 1
             calloutData: mapView.calloutData
             leaderPosition: Callout.LeaderPosition.Automatic

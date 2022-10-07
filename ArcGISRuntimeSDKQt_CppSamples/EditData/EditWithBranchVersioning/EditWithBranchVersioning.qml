@@ -39,7 +39,7 @@ Item {
         Callout {
             id: callout
             background.border.width: 1
-            borderColor: "lightgrey"
+            background.border.color: "lightgrey"
             calloutData: model.mapView.calloutData
             leaderPosition: Callout.LeaderPosition.Automatic
             onAccessoryButtonClicked: {

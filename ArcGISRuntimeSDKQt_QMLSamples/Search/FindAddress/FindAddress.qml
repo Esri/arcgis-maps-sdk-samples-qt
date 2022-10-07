@@ -95,7 +95,7 @@ Rectangle {
             id: callout
             background.border.width: 1
             calloutData: parent.calloutData
-            borderColor: "lightgrey"
+            background.border.color: "lightgrey"
             accessoryButtonVisible: false
             maxWidth: root.width * 0.75
             leaderPosition: Callout.LeaderPosition.Automatic
