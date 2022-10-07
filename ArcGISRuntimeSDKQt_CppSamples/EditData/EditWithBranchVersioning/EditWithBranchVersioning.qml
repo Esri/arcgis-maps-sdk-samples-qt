@@ -38,8 +38,10 @@ Item {
 
         Callout {
             id: callout
-            background.border.width: 1
-            background.border.color: "lightgrey"
+            background: Rectangle {
+                border.color: "lightgrey"
+                border.width: 1    
+            }
             calloutData: model.mapView.calloutData
             leaderPosition: Callout.LeaderPosition.Automatic
             onAccessoryButtonClicked: {

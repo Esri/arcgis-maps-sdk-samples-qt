@@ -93,9 +93,11 @@ Rectangle {
         // map callout window
         Callout {
             id: callout
-            background.border.width: 1
+            background: Rectangle {
+                border.width: 1
+                border.color: "lightgrey"
+            }
             calloutData: parent.calloutData
-            background.border.color: "lightgrey"
             accessoryButtonVisible: false
             maxWidth: root.width * 0.75
             leaderPosition: Callout.LeaderPosition.Automatic

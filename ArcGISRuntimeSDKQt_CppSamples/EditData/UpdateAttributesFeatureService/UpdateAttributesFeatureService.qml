@@ -41,8 +41,10 @@ UpdateAttributesFeatureServiceSample {
 
         Callout {
             id: callout
-            background.border.width: 1;
-            background.border.color: "lightgrey"
+            background: Rectangle {
+                border.width: 1;
+                border.color: "lightgrey"
+            }
             calloutData: mapView.calloutData
             leaderPosition: Callout.LeaderPosition.Automatic
             onAccessoryButtonClicked: {
