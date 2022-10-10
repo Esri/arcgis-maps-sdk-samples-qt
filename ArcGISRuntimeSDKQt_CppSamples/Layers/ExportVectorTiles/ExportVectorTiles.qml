@@ -66,7 +66,6 @@ Item {
                 anchors.horizontalCenter: parent.horizontalCenter
                 text: "Job cancelled"
                 visible: !statusText.visible
-                onVisibleChanged: console.log(visible)
                 font.pixelSize: 16
             }
 
