@@ -38,17 +38,15 @@
 #include "SpatialReference.h"
 
 // Qt headers
-#include <QString>
-#include <QFile>
 #include <QtCore/qglobal.h>
-#include <QTimer>
+#include <QDir>
+#include <QFile>
 #include <QImage>
+#include <QStandardPaths>
+#include <QString>
+#include <QTimer>
 
 #include <memory>
-
-#if defined Q_OS_IOS || defined Q_OS_ANDROID
-#include <QStandardPaths>
-#endif // Q_OS_IOS || Q_OS_ANDROID
 
 using namespace Esri::ArcGISRuntime;
 
@@ -59,12 +57,10 @@ QString defaultDataPath()
 {
   QString dataPath;
 
-#ifdef Q_OS_ANDROID
-  dataPath = QStandardPaths::writableLocation(QStandardPaths::AppLocalDataLocation);
-#elif defined Q_OS_IOS
+#ifdef Q_OS_IOS
   dataPath = QStandardPaths::writableLocation(QStandardPaths::DocumentsLocation);
 #else
-  dataPath = QDir::homePath();
+  dataPath = QStandardPaths::writableLocation(QStandardPaths::HomeLocation)
 #endif
 
   return dataPath;

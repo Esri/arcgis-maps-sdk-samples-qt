@@ -56,13 +56,8 @@
 #include "Polyline.h"
 #include "SimpleLineSymbol.h"
 
-#if defined Q_OS_IOS || defined Q_OS_ANDROID
-#include <QStandardPaths>
-#endif // Q_OS_IOS || Q_OS_ANDROID
-
 #include <QUuid>
 #include <memory>
-#include <QDir>
 #include <QList>
 #include <QTime>
 #include <QUrl>
@@ -83,12 +78,10 @@ QString defaultDataPath()
 {
   QString dataPath;
 
-#ifdef Q_OS_ANDROID
-  dataPath = QStandardPaths::writableLocation(QStandardPaths::AppLocalDataLocation);
-#elif defined Q_OS_IOS
+#ifdef Q_OS_IOS
   dataPath = QStandardPaths::writableLocation(QStandardPaths::DocumentsLocation);
 #else
-  dataPath = QDir::homePath();
+  dataPath = QStandardPaths::writableLocation(QStandardPaths::HomeLocation)
 #endif
 
   return dataPath;

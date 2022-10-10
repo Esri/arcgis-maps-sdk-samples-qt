@@ -55,12 +55,7 @@
 #include "Graphic.h"
 
 #include <QUuid>
-
-#if defined Q_OS_ANDROID || defined Q_OS_IOS
 #include <QStandardPaths>
-#else
-#include <QDir>
-#endif
 
 using namespace Esri::ArcGISRuntime;
 
@@ -71,12 +66,10 @@ QString defaultDataPath()
 {
   QString dataPath;
 
-#ifdef Q_OS_ANDROID
-  dataPath = QStandardPaths::writableLocation(QStandardPaths::AppLocalDataLocation);
-#elif defined Q_OS_IOS
+#ifdef Q_OS_IOS
   dataPath = QStandardPaths::writableLocation(QStandardPaths::DocumentsLocation);
 #else
-  dataPath = QDir::homePath();
+  dataPath = QStandardPaths::writableLocation(QStandardPaths::HomeLocation)
 #endif
 
   return dataPath;
