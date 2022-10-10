@@ -76,7 +76,7 @@ Item {
             model: sample.layerListModel
             delegate: Component {
                 RowLayout {
-                    width: parent.width
+                    width: 200
                     height: 40
                     spacing: 5
 
