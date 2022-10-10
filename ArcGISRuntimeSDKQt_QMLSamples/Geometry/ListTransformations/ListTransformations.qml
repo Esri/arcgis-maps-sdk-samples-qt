@@ -26,7 +26,11 @@ Rectangle {
     height: 600
 
     property bool peDataSet: true
-    readonly property string dataPath: System.writableLocationUrl(System.StandardPathsHomeLocation) + "/ArcGIS/Runtime/Data/PEDataRuntime"
+    readonly property string dataPath: {
+        Qt.platform.os === "ios" ?
+                    System.writableLocation(System.StandardPathsDocumentsLocation) + "/ArcGIS/Runtime/Data/PEDataRuntime" :
+                    System.writableLocation(System.StandardPathsHomeLocation) + "/ArcGIS/Runtime/Data/PEDataRuntime"
+    }
 
     Component.onCompleted: TransformationCatalog.projectionEngineDirectory = dataPath
 

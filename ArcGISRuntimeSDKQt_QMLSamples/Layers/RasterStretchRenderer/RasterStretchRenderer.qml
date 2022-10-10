@@ -25,7 +25,11 @@ Rectangle {
     width: 800
     height: 600
 
-    readonly property string dataPath: System.writableLocationUrl(System.StandardPathsHomeLocation) + "/ArcGIS/Runtime/Data/raster"
+    readonly property string dataPath: {
+        Qt.platform.os === "ios" ?
+                    System.writableLocation(System.StandardPathsDocumentsLocation) + "/ArcGIS/Runtime/Data/raster" :
+                    System.writableLocation(System.StandardPathsHomeLocation) + "/ArcGIS/Runtime/Data/raster"
+    }
     readonly property string minMax: "Min Max"
     readonly property string percentClip: "Percent Clip"
     readonly property string stdDeviation: "Standard Deviation"

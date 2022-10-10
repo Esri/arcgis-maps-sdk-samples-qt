@@ -24,7 +24,11 @@ Rectangle {
     clip: true
     anchors.fill: parent
 
-    readonly property url dataPath: System.writableLocationUrl(System.StandardPathsHomeLocation) + "/ArcGIS/Runtime/Data/raster/"
+    readonly property url dataPath: {
+        Qt.platform.os === "ios" ?
+                    System.writableLocationUrl(System.StandardPathsDocumentsLocation) + "/ArcGIS/Runtime/Data/raster/" :
+                    System.writableLocationUrl(System.StandardPathsHomeLocation) + "/ArcGIS/Runtime/Data/raster/"
+    }
     readonly property var supportedFormats: ["img","I12","dt0","dt1","dt2","tc2","geotiff","tif", "tiff", "hr1","jpg","jpeg","jp2","ntf","png","i21","ovr"]
     property var rasterLayer: null
 

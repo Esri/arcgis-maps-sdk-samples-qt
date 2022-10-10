@@ -25,7 +25,11 @@ Rectangle {
     width: 800
     height: 600
 
-    readonly property url dataPath: System.writableLocationUrl(System.StandardPathsHomeLocation) +  "/ArcGIS/Runtime/Data/3D"
+    readonly property url dataPath: {
+        Qt.platform.os === "ios" ?
+                    System.writableLocationUrl(System.StandardPathsDocumentsLocation) + "/ArcGIS/Runtime/Data/3D" :
+                    System.writableLocationUrl(System.StandardPathsHomeLocation) + "/ArcGIS/Runtime/Data/3D"
+    }
     readonly property real longitude: -109.929589
     readonly property real latitude: 38.43500
     readonly property real distance: 5000

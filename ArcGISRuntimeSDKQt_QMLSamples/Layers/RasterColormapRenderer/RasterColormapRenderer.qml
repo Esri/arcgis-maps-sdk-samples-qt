@@ -26,7 +26,11 @@ Rectangle {
     height: 600
 
     //! [RasterColormapRenderer qml add raster basemap]
-    readonly property string dataPath: System.writableLocationUrl(System.StandardPathsHomeLocation) + "/ArcGIS/Runtime/Data/raster"
+    readonly property string dataPath: {
+        Qt.platform.os === "ios" ?
+                    System.writableLocation(System.StandardPathsDocumentsLocation) + "/ArcGIS/Runtime/Data/raster" :
+                    System.writableLocation(System.StandardPathsHomeLocation) + "/ArcGIS/Runtime/Data/raster"
+    }
 
     MapView {
         id: mapView

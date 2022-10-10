@@ -24,7 +24,11 @@ Rectangle {
     width: 800
     height: 600
 
-    readonly property url dataPath: System.writableLocationUrl(System.StandardPathsHomeLocation) + "/ArcGIS/Runtime/Data/mspk"
+    readonly property url dataPath: {
+        Qt.platform.os === "ios" ?
+                    System.writableLocationUrl(System.StandardPathsDocumentsLocation) + "/ArcGIS/Runtime/Data/mspk" :
+                    System.writableLocationUrl(System.StandardPathsHomeLocation) + "/ArcGIS/Runtime/Data/mspk"
+    }
 
     SceneView {
         id: sceneView
