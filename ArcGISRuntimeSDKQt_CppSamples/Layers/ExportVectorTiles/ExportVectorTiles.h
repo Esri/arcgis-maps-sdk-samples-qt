@@ -64,6 +64,7 @@ signals:
   void mapViewChanged();
   void exportProgressChanged();
   void jobStatusChanged();
+  void jobCancelDone(bool succeeded);
 
 private:
   Esri::ArcGISRuntime::MapQuickView* mapView() const;

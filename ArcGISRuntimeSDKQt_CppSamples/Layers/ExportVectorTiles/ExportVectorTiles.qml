@@ -62,6 +62,15 @@ Item {
             }
 
             Text {
+                id: statusTextCanceled
+                anchors.horizontalCenter: parent.horizontalCenter
+                text: "Job cancelled"
+                visible: !statusText.visible
+                onVisibleChanged: console.log(visible)
+                font.pixelSize: 16
+            }
+
+            Text {
                 id: progressText
                 anchors.horizontalCenter: parent.horizontalCenter
                 text: model.exportProgress + "% Completed"
@@ -161,5 +170,18 @@ Item {
                 break;
             }
         }
+
+        readonly property Timer timer: Timer {
+            id: jobCancelDoneTimer
+            interval: 2000
+            onTriggered: { exportProgressWindow.visible = false; statusText.visible = true }
+        }
+
+        onJobCancelDone: succeeded => {
+                             statusTextCanceled.text = "Job canceled " + (succeeded ? "successfully" : "not successfully")
+                             exportProgressWindow.visible = true;
+                             statusText.visible = false;
+                             jobCancelDoneTimer.start();
+                         }
     }
 }
