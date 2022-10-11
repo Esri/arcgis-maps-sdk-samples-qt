@@ -57,8 +57,6 @@
 #include <QDir>
 #include <QStandardPaths>
 
-#endif
-
 using namespace Esri::ArcGISRuntime;
 
 // helper method to get cross platform data path

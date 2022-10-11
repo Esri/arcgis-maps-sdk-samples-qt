@@ -57,6 +57,7 @@
 #include "SimpleLineSymbol.h"
 
 #include <QUuid>
+#include <QFileInfo>
 #include <memory>
 #include <QList>
 #include <QTime>
