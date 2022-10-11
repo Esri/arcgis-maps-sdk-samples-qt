@@ -24,7 +24,11 @@ Rectangle {
     width: 800
     height: 600
 
-    readonly property string montereyTpkElevationPath: System.writableLocationUrl(System.StandardPathsHomeLocation) + "/ArcGIS/Runtime/Data/tpkx/MontereyElevation.tpkx"
+    readonly property string montereyTpkElevationPath: {
+        Qt.platform.os === "ios" ?
+                    System.writableLocation(System.StandardPathsDocumentsLocation) + "/ArcGIS/Runtime/Data/tpkx/MontereyElevation.tpkx" :
+                    System.writableLocation(System.StandardPathsHomeLocation) + "/ArcGIS/Runtime/Data/tpkx/MontereyElevation.tpkx"
+    }
 
     SceneView {
         id: sceneView

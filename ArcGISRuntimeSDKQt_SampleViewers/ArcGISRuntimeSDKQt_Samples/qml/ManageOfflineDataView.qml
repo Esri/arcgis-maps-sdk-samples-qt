@@ -78,6 +78,7 @@ Page {
                     folderPath = System.writableLocation(System.StandardPathsDocumentsLocation) + "/ArcGIS/Runtime/Data";
                 else
                     folderPath = System.writableLocation(System.StandardPathsHomeLocation) + "/ArcGIS/Runtime/Data";
+                
                 messageDialog.visible = fileFolder.removeFolder(folderPath, true);
             }
             clip: true

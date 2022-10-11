@@ -27,7 +27,11 @@ Rectangle {
     height: 600
 
     /* Define the Scene. Load a plane model from disk, place it above a runway, and create an orbiting camera around it */
-    readonly property string planeModelPath: System.writableLocationUrl(System.StandardPathsHomeLocation) + "/ArcGIS/Runtime/Data/3D/Bristol/Collada/Bristol.dae"
+    readonly property string planeModelPath: {
+        Qt.platform.os === "ios" ?
+                    System.writableLocation(System.StandardPathsDocumentsLocation) + "/ArcGIS/Runtime/Data/3D/Bristol/Collada/Bristol.dae" :
+                    System.writableLocation(System.StandardPathsHomeLocation) + "/ArcGIS/Runtime/Data/3D/Bristol/Collada/Bristol.dae"
+    }
 
     SceneView {
         id: view
