@@ -35,32 +35,9 @@ Item {
         id: fileFolder
     }
 
-    PermissionsHelper {
-        id: permissionsHelper
-        onRequestFilesystemAccessCompleted: {
-            if (fileSystemAccessGranted) {
-                downloadDataItems();
-            } else {
-                const msg = "Insufficient filesystem permissions";
-                if (debug)
-                    console.log(msg);
-
-                failedToDownload = true;
-                SampleManager.downloadInProgress = false;
-                SampleManager.downloadText = msg;
-            }
-        }
-    }
-
     function downloadAllDataItems() {
         SampleManager.downloadInProgress = true;
         downloadQueue = [];
-
-        if (!permissionsHelper.fileSystemAccessGranted) {
-            permissionsHelper.requestFilesystemAccess();
-            failedToDownload = false;
-            return;
-        }
 
         for (let i = 0; i < SampleManager.samples.size; i++) {
             const sample = SampleManager.samples.get(i);
@@ -87,12 +64,6 @@ Item {
         SampleManager.downloadInProgress = true;
         downloadQueue = [];
 
-        if (!permissionsHelper.fileSystemAccessGranted) {
-            permissionsHelper.requestFilesystemAccess();
-            failedToDownload = false;
-            return;
-        }
-
         for (let i = 0; i < SampleManager.currentSample.dataItems.size; i++) {
             const dataItem = SampleManager.currentSample.dataItems.get(i);
             fileInfo.filePath = dataItem.path;
@@ -115,7 +86,10 @@ Item {
             const count = downloadQueue.length;
             SampleManager.downloadText = "Remaining items in queue: %1".arg(count);
             currentItem = downloadQueue.pop();
-            SampleManager.downloadData(currentItem.itemId, System.resolvedPath(currentItem.path));
+            if (Qt.platform.os === "ios")
+                SampleManager.downloadData(currentItem.itemId, System.writableLocation(System.StandardPathsDocumentsLocation) + currentItem.path.substring(1));
+            else
+                SampleManager.downloadData(currentItem.itemId, System.writableLocation(System.StandardPathsHomeLocation) + currentItem.path.substring(1));
         } else {
             SampleManager.downloadText = "Downloads complete";
             SampleManager.downloadInProgress = false;

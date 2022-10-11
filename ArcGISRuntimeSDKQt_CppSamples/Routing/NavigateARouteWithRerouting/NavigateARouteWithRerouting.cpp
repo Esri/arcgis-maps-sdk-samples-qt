@@ -57,8 +57,8 @@
 #include "SimpleLineSymbol.h"
 
 #include <QUuid>
+#include <QFileInfo>
 #include <memory>
-#include <QDir>
 #include <QList>
 #include <QTime>
 #include <QUrl>
@@ -79,12 +79,10 @@ QString defaultDataPath()
 {
   QString dataPath;
 
-#ifdef Q_OS_ANDROID
-  dataPath = "/sdcard";
-#elif defined Q_OS_IOS
+#ifdef Q_OS_IOS
   dataPath = QStandardPaths::writableLocation(QStandardPaths::DocumentsLocation);
 #else
-  dataPath = QDir::homePath();
+  dataPath = QStandardPaths::writableLocation(QStandardPaths::HomeLocation);
 #endif
 
   return dataPath;

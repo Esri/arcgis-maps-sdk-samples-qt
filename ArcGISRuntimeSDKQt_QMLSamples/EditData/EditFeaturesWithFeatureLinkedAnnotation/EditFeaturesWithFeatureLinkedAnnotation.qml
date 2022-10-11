@@ -26,7 +26,11 @@ Rectangle {
     width: 800
     height: 600
 
-    readonly property url dataPath: System.userHomePath + "/ArcGIS/Runtime/Data"
+    readonly property url dataPath: {
+        Qt.platform.os === "ios" ?
+                    System.writableLocationUrl(System.StandardPathsDocumentsLocation) + "/ArcGIS/Runtime/Data" :
+                    System.writableLocationUrl(System.StandardPathsHomeLocation) + "/ArcGIS/Runtime/Data"
+    }
     readonly property string pointsFeatureLayerName: "Loudoun_Address_Points_1"
     readonly property string pointsAnnoLayerName: "Loudoun_Address_PointsAnno_1"
     readonly property string linesFeatureLayerName: "ParcelLines_1"

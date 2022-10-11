@@ -26,7 +26,11 @@ Rectangle {
     height: 600
     color: "#E0E0E0"
 
-    readonly property url dataPath: System.userHomePath + "/ArcGIS/Runtime/Data/mmpk/"
+    readonly property url dataPath: {
+        Qt.platform.os === "ios" ?
+                    System.writableLocationUrl(System.StandardPathsDocumentsLocation) + "/ArcGIS/Runtime/Data/mmpk/" :
+                    System.writableLocationUrl(System.StandardPathsHomeLocation) + "/ArcGIS/Runtime/Data/mmpk/"
+    }
     property LocatorTask currentLocatorTask: null
     property RouteTask currentRouteTask: null
     property Point clickedPoint: null

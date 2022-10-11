@@ -24,7 +24,11 @@ Rectangle {
     width: 800
     height: 600
 
-    readonly property string montereyRasterElevationPath: System.userHomePath + "/ArcGIS/Runtime/Data/raster/MontereyElevation.dt2"
+    readonly property string montereyRasterElevationPath: {
+        Qt.platform.os === "ios" ?
+                    System.writableLocation(System.StandardPathsDocumentsLocation) + "/ArcGIS/Runtime/Data/raster/MontereyElevation.dt2" :
+                    System.writableLocation(System.StandardPathsHomeLocation) + "/ArcGIS/Runtime/Data/raster/MontereyElevation.dt2"
+    }
 
     SceneView {
         id: sceneView

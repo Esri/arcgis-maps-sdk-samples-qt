@@ -24,7 +24,11 @@ Rectangle {
     width: 800
     height: 600
 
-    readonly property string dataPath: System.userHomePath + "/ArcGIS/Runtime/Data"
+    readonly property string dataPath: {
+        Qt.platform.os === "ios" ?
+                    System.writableLocation(System.StandardPathsDocumentsLocation) + "/ArcGIS/Runtime/Data" :
+                    System.writableLocation(System.StandardPathsHomeLocation) + "/ArcGIS/Runtime/Data"
+    }
     readonly property string headingAttr: "HEADING"
     readonly property var linearUnit: Enums.LinearUnitIdMeters
     readonly property var angularUnit: Enums.AngularUnitIdDegrees

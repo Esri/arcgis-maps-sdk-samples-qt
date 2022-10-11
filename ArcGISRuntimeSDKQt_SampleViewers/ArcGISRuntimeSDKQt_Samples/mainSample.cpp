@@ -45,7 +45,6 @@
 #include "DataItem.h"
 #include "DataItemListModel.h"
 #include "Esri/ArcGISRuntime/Toolkit/register.h"
-#include "PermissionsHelper.h"
 #include "Sample.h"
 #include "SampleCategory.h"
 #include "SampleListModel.h"
@@ -609,8 +608,6 @@ void registerCppSampleClasses()
 
 void registerClasses()
 {
-  qmlRegisterType<PermissionsHelper>("Esri.ArcGISRuntimeSamples", 1, 0, "PermissionsHelper");
-
   qmlRegisterSingletonType<DownloadSampleManager>("Esri.ArcGISRuntimeSamples", 1, 0, "SampleManager",
                                                   &esriSampleManagerProvider);
   // Register the Google Analytics class

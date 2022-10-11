@@ -26,7 +26,11 @@ Rectangle {
     width: 800
     height: 600
 
-    readonly property url styleDataPath: System.userHomePath + "/ArcGIS/Runtime/Data/styles/emoji-mobile.stylx"
+    readonly property url styleDataPath: {
+        Qt.platform.os === "ios" ?
+            System.writableLocationUrl(System.StandardPathsDocumentsLocation) + "/ArcGIS/Runtime/Data/styles/emoji-mobile.stylx" :
+            System.writableLocationUrl(System.StandardPathsHomeLocation) + "/ArcGIS/Runtime/Data/styles/emoji-mobile.stylx"
+    }
     property var currentSymbol
     property var currentFace
     property var currentEyes

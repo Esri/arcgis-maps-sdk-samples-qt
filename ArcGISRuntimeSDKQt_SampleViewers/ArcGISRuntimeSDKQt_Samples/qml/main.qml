@@ -265,7 +265,9 @@ ApplicationWindow {
             }
 
             // If the sample requires online resources but there is no network connectivity
-            if (SampleManager.currentSample.dataItems.size === 0 && (System.reachability !== System.ReachabilityOnline)) {
+            if (SampleManager.currentSample.dataItems.size === 0
+                    && System.reachability !== System.ReachabilityOnline
+                    && System.reachability !== System.ReachabilityUnknown) {
                 SampleManager.currentMode = SampleManager.NetworkRequiredView;
                 return;
             // If the sample requires offline data
@@ -281,11 +283,7 @@ ApplicationWindow {
                             return;
                         }
                     }
-
-                    if (permissionsHelper.fileSystemAccessGranted)
-                        showSample();
-                    else
-                        permissionsHelper.requestFilesystemAccess();
+                    showSample();
                 }
                 // Else, download the data
                 else {
@@ -353,7 +351,10 @@ ApplicationWindow {
     function checkDataItems() {
         for (let i = 0; i < SampleManager.currentSample.dataItems.size; i++) {
             const dataItem = SampleManager.currentSample.dataItems.get(i);
-            fileInfo.filePath = dataItem.path;
+            if (Qt.platform.os === "ios")
+                fileInfo.filePath = System.writableLocation(System.StandardPathsDocumentsLocation) + dataItem.path.substring(1);
+            else
+                fileInfo.filePath = System.writableLocation(System.StandardPathsHomeLocation) + dataItem.path.substring(1);
             fileInfo.refresh();
             if (fileInfo.exists && (!fileInfo.isFolder))
                 continue;
@@ -372,13 +373,6 @@ ApplicationWindow {
     Loader {
         id: qmlLoaderAuthView
         anchors.fill: parent
-    }
-
-    PermissionsHelper {
-        id: permissionsHelper
-        onRequestFilesystemAccessCompleted: {
-            showSample();
-        }
     }
 
     Component.onCompleted: {

@@ -27,7 +27,11 @@ Rectangle {
     width: 800
     height: 600
 
-    readonly property url dataPath: System.userHomePath +  "/ArcGIS/Runtime/Data/3D"
+    readonly property url dataPath: {
+        Qt.platform.os === "ios" ?
+                    System.writableLocationUrl(System.StandardPathsDocumentsLocation) + "/ArcGIS/Runtime/Data/3D" :
+                    System.writableLocationUrl(System.StandardPathsHomeLocation) + "/ArcGIS/Runtime/Data/3D"
+    }
     readonly property string headingAtt: "heading";
     readonly property string pitchAtt: "pitch";
     readonly property string rollAtt: "roll";

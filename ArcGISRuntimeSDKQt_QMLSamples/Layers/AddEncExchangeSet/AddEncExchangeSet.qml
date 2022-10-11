@@ -24,7 +24,11 @@ Rectangle {
     width: 800
     height: 600
 
-    property url dataPath: System.userHomePath + "/ArcGIS/Runtime/Data"
+    property url dataPath: {
+        Qt.platform.os === "ios" ?
+                    System.writableLocationUrl(System.StandardPathsDocumentsLocation) + "/ArcGIS/Runtime/Data/" :
+                    System.writableLocationUrl(System.StandardPathsHomeLocation) + "/ArcGIS/Runtime/Data/"
+    }
     property var loadedEncLayerCount: 0
 
     Component.onCompleted: {

@@ -138,8 +138,13 @@ Rectangle {
 
     function createFromFile() {
         // create the dataset from a local file
+        let localDataDirPath;
+        if (Qt.platform.os === "ios")
+            localDataDirPath = System.writableLocation(System.StandardPathsDocumentsLocation);
+        else
+            localDataDirPath = System.writableLocation(System.StandardPathsHomeLocation);
         const kmlDataset = ArcGISRuntimeEnvironment.createObject("KmlDataset", {
-                                                                     url: System.userHomePath + "/ArcGIS/Runtime/Data/kml/US_State_Capitals.kml"
+                                                                     url: localDataDirPath + "/ArcGIS/Runtime/Data/kml/US_State_Capitals.kml"
                                                                  });
 
         // create the layer

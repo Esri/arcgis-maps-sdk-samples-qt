@@ -25,7 +25,11 @@ Rectangle {
     height: 600
 
     property real scaleFactor: 1
-    property url dataPath: System.userHomePath + "/ArcGIS/Runtime/Data/raster"
+    property url dataPath: {
+        Qt.platform.os === "ios" ?
+                    System.writableLocationUrl(System.StandardPathsDocumentsLocation) + "/ArcGIS/Runtime/Data/raster" :
+                    System.writableLocationUrl(System.StandardPathsHomeLocation) + "/ArcGIS/Runtime/Data/raster"
+    }
     property url rasterPath: dataPath + "/Shasta_Elevation.tif"
 
     MapView {
