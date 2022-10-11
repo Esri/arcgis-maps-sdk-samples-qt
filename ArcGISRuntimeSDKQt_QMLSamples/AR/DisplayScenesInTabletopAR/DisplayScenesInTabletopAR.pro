@@ -55,8 +55,6 @@ exists($$ARCGIS_TOOLKIT_PATH/augmentedreality/QmlApi/ArQmlApi.pri) {
 #-------------------------------------------------------------------------------
 
 android {
-    QT += androidextras
-
     ANDROID_ABIS = arm64-v8a
 
     contains(ANDROID_TARGET_ARCH,arm64-v8a) {

@@ -76,7 +76,6 @@ exists($$ARCGIS_TOOLKIT_PATH/augmentedreality/CppApi/ArCppApi.pri) {
 #-------------------------------------------------------------------------------
 
 android {
-    QT += androidextras
     INCLUDEPATH += $$PWD
     DEPENDPATH += $$PWD
 
