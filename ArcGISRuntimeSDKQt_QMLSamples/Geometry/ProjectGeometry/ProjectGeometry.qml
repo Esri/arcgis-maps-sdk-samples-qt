@@ -57,7 +57,7 @@ Rectangle {
             accessoryButtonVisible: false
             autoAdjustWidth: true
             maxWidth: 350
-            leaderPosition: leaderPositionEnum.Automatic
+            leaderPosition: Callout.LeaderPosition.Automatic
         }
 
         // create a graphics to show the input location

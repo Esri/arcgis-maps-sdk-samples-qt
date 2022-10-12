@@ -67,7 +67,7 @@ Rectangle {
         Callout {
             id: callout
             calloutData: parent.calloutData
-            leaderPosition: leaderPositionEnum.Automatic
+            leaderPosition: Callout.LeaderPosition.Automatic
         }
         //! [show callout qml api snippet]
 
@@ -80,7 +80,7 @@ Rectangle {
                 calloutLocation = mouse.mapPoint;
                 xCoor = mouse.mapPoint.x.toFixed(2);
                 yCoor = mouse.mapPoint.y.toFixed(2);
-                callout.accessoryButtonHidden = true;
+                callout.accessoryButtonVisible = false;
                 callout.showCallout();
             }
         }

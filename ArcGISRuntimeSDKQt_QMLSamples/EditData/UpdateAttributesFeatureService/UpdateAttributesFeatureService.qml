@@ -141,9 +141,11 @@ Rectangle {
         Callout {
             id: callout
             calloutData: parent.calloutData;
-            borderColor: "lightgrey"
-            borderWidth: 1
-            leaderPosition: leaderPositionEnum.Automatic
+            background: Rectangle {
+                border.color: "lightgrey"
+                border.width: 1
+            }
+            leaderPosition: Callout.LeaderPosition.Automatic
             onAccessoryButtonClicked: {
                 updateWindow.visible = true;
             }

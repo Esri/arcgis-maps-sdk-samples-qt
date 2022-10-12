@@ -35,7 +35,7 @@ Item {
             id: callout
             calloutData: view.calloutData
             accessoryButtonVisible: false
-            leaderPosition: leaderPositionEnum.Top
+            leaderPosition: Callout.LeaderPosition.Top
             padding: 5
         }
     }

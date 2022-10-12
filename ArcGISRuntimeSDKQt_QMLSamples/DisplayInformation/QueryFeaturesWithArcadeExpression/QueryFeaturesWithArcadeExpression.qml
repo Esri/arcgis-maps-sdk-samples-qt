@@ -84,7 +84,7 @@ Rectangle {
             id: callout
             calloutData: parent.calloutData
             accessoryButtonVisible: false
-            leaderPosition: leaderPositionEnum.Automatic
+            leaderPosition: Callout.LeaderPosition.Automatic
         }
     }
 
