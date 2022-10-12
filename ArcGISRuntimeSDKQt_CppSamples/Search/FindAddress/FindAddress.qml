@@ -43,7 +43,7 @@ FindAddressSample {
             calloutData: mapView.calloutData
             maxWidth: findAddressSample.width * 0.75
             leaderPosition: leaderPositionEnum.Automatic
-            accessoryButtonHidden: true
+            accessoryButtonVisible: false
         }
     }
 

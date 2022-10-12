@@ -96,7 +96,7 @@ Rectangle {
             borderWidth: 1
             calloutData: parent.calloutData
             borderColor: "lightgrey"
-            accessoryButtonHidden: true
+            accessoryButtonVisible: false
             maxWidth: root.width * 0.75
             leaderPosition: leaderPositionEnum.Automatic
         }

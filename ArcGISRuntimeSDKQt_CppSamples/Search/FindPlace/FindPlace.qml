@@ -50,7 +50,7 @@ FindPlaceSample {
             id: callout
             leaderPosition: leaderPositionEnum.Automatic
             calloutData: mapView.calloutData
-            accessoryButtonHidden: true
+            accessoryButtonVisible: false
             screenOffsetY: -19
         }
     }

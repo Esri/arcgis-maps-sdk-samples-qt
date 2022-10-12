@@ -40,7 +40,7 @@ ShowCalloutSample {
         Callout {
             id: callout
             calloutData: mapView.calloutData // bind to the property that is exposed
-            accessoryButtonHidden: true
+            accessoryButtonVisible: false
             leaderPosition: leaderPositionEnum.Automatic
         }
         //! [set callout data]

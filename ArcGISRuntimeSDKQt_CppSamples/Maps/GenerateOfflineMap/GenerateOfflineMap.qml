@@ -25,9 +25,9 @@ GenerateOfflineMapSample {
     width: 800
     height: 600
 
-    onUpdateStatus: generateWindow.statusText = status;
-    onUpdateProgress: generateWindow.progressText = progress;
-    onHideWindow: {
+    onUpdateStatus: status => generateWindow.statusText = status;
+    onUpdateProgress: progress => generateWindow.progressText = progress;
+    onHideWindow: (time, success) => {
         generateWindow.hideWindow(time);
 
         if (success) {

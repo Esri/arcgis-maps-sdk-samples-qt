@@ -150,8 +150,8 @@ Rectangle {
         // Catch mouse signals so they don't propagate to the map
         MouseArea {
             anchors.fill: parent
-            onClicked: mouse.accepted = true
-            onWheel: wheel.accepted = true
+            onClicked: mouse => mouse.accepted = true
+            onWheel: wheel => wheel.accepted = true
         }
 
         Column {

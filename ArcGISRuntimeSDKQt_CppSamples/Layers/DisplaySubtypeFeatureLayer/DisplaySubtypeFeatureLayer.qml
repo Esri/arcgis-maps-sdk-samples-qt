@@ -48,8 +48,8 @@ Item {
             // catch mouse signals from propagating to parent
             MouseArea {
                 anchors.fill: parent
-                onClicked: mouse.accepted = true
-                onWheel: wheel.accepted = true
+                onClicked: mouse => mouse.accepted = true
+                onWheel: wheel => wheel.accepted = true
             }
 
             ColumnLayout {

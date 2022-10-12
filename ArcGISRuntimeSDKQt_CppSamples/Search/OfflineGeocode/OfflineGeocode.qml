@@ -42,7 +42,7 @@ OfflineGeocodeSample {
             leaderPosition: leaderPositionEnum.Automatic
             calloutData: mapView.calloutData
             screenOffsetY: -19
-            accessoryButtonHidden: true
+            accessoryButtonVisible: false
         }
     }
 
