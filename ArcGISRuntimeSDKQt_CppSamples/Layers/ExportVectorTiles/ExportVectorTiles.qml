@@ -52,6 +52,7 @@ Item {
             BusyIndicator {
                 id: busyIndicator
                 anchors.horizontalCenter: parent.horizontalCenter
+                running: visible
             }
 
             Text {
@@ -177,7 +178,7 @@ Item {
         }
 
         onJobCancelDone: succeeded => {
-                             statusTextCanceled.text = "Job canceled " + (succeeded ? "successfully" : "not successfully")
+                             statusTextCanceled.text = (succeeded ? "Job canceled successfully" : "Job failed to cancel successfully");
                              exportProgressWindow.visible = true;
                              statusText.visible = false;
                              jobCancelDoneTimer.start();

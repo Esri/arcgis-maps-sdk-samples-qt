@@ -296,9 +296,9 @@ Rectangle {
             ignoreUnknownSignals: true
             function onCancelAsyncTaskStatusChanged() {
                 if(exportVectorTilesTask.exportVectorTilesJob.cancelAsyncTaskStatus === Enums.TaskStatusCompleted)
-                    statusTextCanceled.text = "Job canceled successfully"
+                    statusTextCanceled.text = "Job canceled successfully";
                 else if(exportVectorTilesTask.exportVectorTilesJob.cancelAsyncTaskStatus === Enums.TaskStatusCompleted)
-                    statusTextCanceled.text = "Job canceled not successfully"
+                    statusTextCanceled.text = "Job failed to cancel successfully";
                 else
                     return;
                 exportProgressWindow.visible = true;
