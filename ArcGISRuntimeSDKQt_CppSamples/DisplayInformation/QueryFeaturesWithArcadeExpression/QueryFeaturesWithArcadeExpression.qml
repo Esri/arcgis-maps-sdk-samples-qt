@@ -34,8 +34,8 @@ Item {
         Callout {
             id: callout
             calloutData: view.calloutData // bind to the property that is exposed
-            accessoryButtonHidden: true
-            leaderPosition: leaderPositionEnum.Automatic
+            accessoryButtonVisible: false
+            leaderPosition: Callout.LeaderPosition.Automatic
         }
     }
 

@@ -38,10 +38,12 @@ Item {
 
         Callout {
             id: callout
-            borderWidth: 1
-            borderColor: "lightgrey"
+            background: Rectangle {
+                border.color: "lightgrey"
+                border.width: 1    
+            }
             calloutData: model.mapView.calloutData
-            leaderPosition: leaderPositionEnum.Automatic
+            leaderPosition: Callout.LeaderPosition.Automatic
             onAccessoryButtonClicked: {
                 for (let i=0; i < featAttributes.length; i++) {
                     if (model.currentTypeDamage === featAttributes[i]) {

@@ -38,12 +38,14 @@ FindAddressSample {
 
         Callout {
             id: callout
-            borderColor: "lightgrey"
-            borderWidth: 1
+            background: Rectangle {
+                border.color: "lightgrey"
+                border.width: 1
+            }
             calloutData: mapView.calloutData
             maxWidth: findAddressSample.width * 0.75
-            leaderPosition: leaderPositionEnum.Automatic
-            accessoryButtonHidden: true
+            leaderPosition: Callout.LeaderPosition.Automatic
+            accessoryButtonVisible: false
         }
     }
 

@@ -42,7 +42,7 @@ Rectangle {
             id: callout
             calloutData: parent.calloutData
             implicitWidth: 150
-            calloutContent: Label {
+            contentItem: Label {
                 id: componentText
                 text: calloutText
                 wrapMode: Text.WordWrap

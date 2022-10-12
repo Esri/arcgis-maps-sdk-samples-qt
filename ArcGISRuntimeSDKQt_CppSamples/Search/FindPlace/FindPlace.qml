@@ -48,9 +48,9 @@ FindPlaceSample {
         // declare a Callout
         Callout {
             id: callout
-            leaderPosition: leaderPositionEnum.Automatic
+            leaderPosition: Callout.LeaderPosition.Automatic
             calloutData: mapView.calloutData
-            accessoryButtonHidden: true
+            accessoryButtonVisible: false
             screenOffsetY: -19
         }
     }

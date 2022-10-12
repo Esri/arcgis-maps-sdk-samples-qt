@@ -38,11 +38,13 @@ DeleteFeaturesFeatureServiceSample {
         Callout {
             id: callout
             calloutData: mapView.calloutData
-            borderColor: "lightgrey"
-            borderWidth : 1
+            background: Rectangle {
+                border.color: "lightgrey"
+                border.width : 1
+            }
             accessoryButtonType: "Custom"
             customImageUrl: "qrc:/Samples/EditData/DeleteFeaturesFeatureService/ic_menu_trash_light.png"
-            leaderPosition: leaderPositionEnum.Automatic
+            leaderPosition: Callout.LeaderPosition.Automatic
             onAccessoryButtonClicked: {
                 if (callout.visible)
                     callout.dismiss();

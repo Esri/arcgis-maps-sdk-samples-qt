@@ -40,8 +40,8 @@ Rectangle {
         Callout {
             id: callout
             calloutData: parent.calloutData
-            accessoryButtonHidden: true
-            leaderPosition: leaderPositionEnum.Top
+            accessoryButtonVisible: false
+            leaderPosition: Callout.LeaderPosition.Top
             padding: 5
         }
         onMouseClicked: mouse => {

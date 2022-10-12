@@ -93,12 +93,14 @@ Rectangle {
         // map callout window
         Callout {
             id: callout
-            borderWidth: 1
+            background: Rectangle {
+                border.width: 1
+                border.color: "lightgrey"
+            }
             calloutData: parent.calloutData
-            borderColor: "lightgrey"
-            accessoryButtonHidden: true
+            accessoryButtonVisible: false
             maxWidth: root.width * 0.75
-            leaderPosition: leaderPositionEnum.Automatic
+            leaderPosition: Callout.LeaderPosition.Automatic
         }
     }
 

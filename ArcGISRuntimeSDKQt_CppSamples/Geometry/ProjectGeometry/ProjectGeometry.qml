@@ -41,10 +41,10 @@ ProjectGeometrySample {
         Callout {
             id: callout
             calloutData: mapView.calloutData
-            accessoryButtonHidden: true
+            accessoryButtonVisible: false
             autoAdjustWidth: true
             maxWidth: 350
-            leaderPosition: leaderPositionEnum.Automatic
+            leaderPosition: Callout.LeaderPosition.Automatic
         }
     }
 }

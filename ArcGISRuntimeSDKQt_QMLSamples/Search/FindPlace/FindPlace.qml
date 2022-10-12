@@ -78,9 +78,9 @@ Rectangle {
         Callout {
             id: callout
             calloutData: parent.calloutData
-            accessoryButtonHidden: true
+            accessoryButtonVisible: false
             screenOffsetY: (pinSymbol.height / 2) * -1
-            leaderPosition: leaderPositionEnum.Automatic
+            leaderPosition: Callout.LeaderPosition.Automatic
         }
 
         // dismiss suggestions if a mouse press occurs in the mapview
