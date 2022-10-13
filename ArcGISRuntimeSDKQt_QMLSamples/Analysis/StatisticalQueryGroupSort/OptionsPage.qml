@@ -126,7 +126,7 @@ Rectangle {
                             id: fieldComboBox
                             anchors.verticalCenter: parent.verticalCenter
                             property int modelWidth: 0
-                            width: modelWidth + leftPadding + rightPadding + indicator.width
+                            width: modelWidth + leftPadding + rightPadding
                             model: fields
                             onModelChanged: {
                                 if (!fields)
@@ -152,7 +152,7 @@ Rectangle {
                             id: statisticComboBox
                             anchors.verticalCenter: parent.verticalCenter
                             property int modelWidth: 0
-                            width: modelWidth + leftPadding + rightPadding + indicator.width
+                            width: modelWidth + leftPadding + rightPadding
                             model: statisticTypes
                             Component.onCompleted : {
                                 for (let i = 0; i < model.length; ++i) {
@@ -207,7 +207,6 @@ Rectangle {
                             highlightMoveVelocity: 1000000
 
                             delegate: Item {
-                                width: parent.width
                                 height: 25
 
                                 Row {
@@ -376,7 +375,6 @@ Rectangle {
                             clip: true
                             model: orderByModel
                             delegate: Item {
-                                width: parent.width
                                 height: 25
 
                                 Row {
