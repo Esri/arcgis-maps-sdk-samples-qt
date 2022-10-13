@@ -27,7 +27,6 @@ EditAndSyncFeaturesSample {
 
     property string statusText: ""
     property string instructionText: ""
-    property alias isOffline: editAndSyncSample.isOffline
     property var selectedFeature: null
 
     // add a mapView component
@@ -41,7 +40,7 @@ EditAndSyncFeaturesSample {
         }
     }
 
-    onHideWindow: {
+    onHideWindow: (time, success) => {
         syncWindow.hideWindow(time);
 
         if (success) {
@@ -50,14 +49,14 @@ EditAndSyncFeaturesSample {
         }
     }
 
-    onUpdateInstruction: {
+    onUpdateInstruction: instruction => {
         instructions.visible = true;
         instructionText = instruction;
     }
 
     onShowButton: syncButton.visible = true;
 
-    onUpdateStatus: statusText = status;
+    onUpdateStatus: status => statusText = status;
 
     // create an extent rectangle for the output geodatabase
     Rectangle {
