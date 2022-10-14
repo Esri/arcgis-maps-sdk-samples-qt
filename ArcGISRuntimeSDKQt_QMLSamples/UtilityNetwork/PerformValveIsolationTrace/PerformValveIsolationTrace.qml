@@ -441,7 +441,7 @@ Rectangle {
 
     Dialog {
         id: messageDialog
-        visible: errorMessage === ""? false : true
+        visible: errorMessage !== ""
         title: "Isolation trace returned no elements."
         standardButtons: Dialog.Ok
         x: (parent.width - width) / 2

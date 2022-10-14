@@ -86,6 +86,8 @@ Rectangle {
                            case Enums.KmlTourStatusInitializing:
                            case Enums.KmlTourStatusNotInitialized:
                                break;
+                           default:
+                               break;
                            }
                        });
                        kmlTourController.tour = kmlTour;

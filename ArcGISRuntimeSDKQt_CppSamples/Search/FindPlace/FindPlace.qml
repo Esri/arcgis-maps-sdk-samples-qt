@@ -124,9 +124,9 @@ FindPlaceSample {
             id: suggestionView
             width: parent.width
             height: 20 * suggestionView.count
-            onSuggestionClicked: {
+            onSuggestionClicked: label => {
                 // change the text label
-                poiTextField.focus ? poiTextField.text = label : locationTextField.text = label;
+                poiTextField.focus ? (poiTextField.text = label) : (locationTextField.text = label);
 
                 // geocode
                 geocodePOIs(poiTextField.text, locationTextField.text);

@@ -235,7 +235,7 @@ Rectangle {
             id: suggestionView
             width: parent.width
             height: 20 * locatorTask.suggestions.count
-            onSuggestionClicked: {
+            onSuggestionClicked: label => {
                 if (locatorTask.geocodeStatus !== Enums.TaskStatusInProgress) {
                     // change the text label
                     poiTextField.focus ? poiTextField.text = label : locationTextField.text = label;

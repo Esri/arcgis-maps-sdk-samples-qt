@@ -83,7 +83,7 @@ Rectangle {
         onMouseClicked: mouse => {
             clickedPoint = screenToLocation(mouse.x, mouse.y);
             if (identifyLayerStatus !== Enums.TaskStatusInProgress) {
-                identifyLayer(rasterLayer, mouse.x, mouse.y, 10, false, 1);
+                identifyLayerWithMaxResults(rasterLayer, mouse.x, mouse.y, 10, false, 1);
             }
         }
 
@@ -91,7 +91,7 @@ Rectangle {
             pressedMouse = true;
             clickedPoint = screenToLocation(mouse.x, mouse.y);
             if (identifyLayerStatus !== Enums.TaskStatusInProgress) {
-                identifyLayer(rasterLayer, mouse.x, mouse.y, 10, false, 1);
+                identifyLayerWithMaxResults(rasterLayer, mouse.x, mouse.y, 10, false, 1);
             }
         }
         onMouseReleased: pressedMouse = false;
@@ -99,7 +99,7 @@ Rectangle {
             if (pressedMouse) {
                 clickedPoint = screenToLocation(mouse.x, mouse.y);
                 if (identifyLayerStatus !== Enums.TaskStatusInProgress) {
-                    identifyLayer(rasterLayer, mouse.x, mouse.y, 10, false, 1);
+                    identifyLayerWithMaxResults(rasterLayer, mouse.x, mouse.y, 10, false, 1);
                 }
             }
         }

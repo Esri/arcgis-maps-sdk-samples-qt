@@ -78,7 +78,7 @@ SearchDictionarySymbolStyleSample {
                             placeholderText: repeaterModel[index] +" (e.g. "+ hintsModel[index] +")"
                             selectByMouse: true
                             validator: RegularExpressionValidator{ regularExpression: /^\s*[\da-zA-Z_][\da-zA-Z\s_]*$/ }
-                            onAccepted: addCategoryButton.mouseArea.clicked();
+                            onAccepted: addCategoryButtonMouseArea.clicked(true);
                         }
 
                         Rectangle {
@@ -93,7 +93,7 @@ SearchDictionarySymbolStyleSample {
                             enabled: categoryEntry.text.length > 0
 
                             MouseArea {
-                                id: mouseArea
+                                id: addCategoryButtonMouseArea
                                 anchors.fill: parent
                                 onClicked: {
                                     if (categoryEntry.text.length === 0)
@@ -186,7 +186,6 @@ SearchDictionarySymbolStyleSample {
 
             Button {
                 text: "Clear"
-                enabled: resultView.count > 0
                 onClicked: {
                     //Set the results visibility to false
                     resultView.visible = false;

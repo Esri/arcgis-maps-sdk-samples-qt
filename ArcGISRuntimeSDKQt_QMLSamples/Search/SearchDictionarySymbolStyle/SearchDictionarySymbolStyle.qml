@@ -105,7 +105,7 @@ Rectangle {
                             placeholderText: repeaterModel[index] +" (e.g. "+ hintsModel[index] +")"
                             selectByMouse: true
                             validator: RegularExpressionValidator{ regularExpression: /^\s*[\da-zA-Z_][\da-zA-Z\s_]*$/ }
-                            onAccepted:  addCategoryButton.mouseArea.clicked();
+                            onAccepted:  addCategoryButtonMouseArea.clicked(true);
                         }
 
                         Rectangle {
@@ -120,7 +120,7 @@ Rectangle {
                             enabled: categoryEntry.text.length > 0
 
                             MouseArea {
-                                id: mouseArea
+                                id: addCategoryButtonMouseArea
                                 anchors.fill: parent
                                 onClicked: {
 

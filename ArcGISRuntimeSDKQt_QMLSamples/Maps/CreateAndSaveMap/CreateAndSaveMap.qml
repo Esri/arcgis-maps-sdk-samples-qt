@@ -79,7 +79,7 @@ Rectangle {
                 stackView.pop();
             }
 
-            onSaveMapClicked: {
+            onSaveMapClicked: (title, tags, description) => {
                 const thumbnail = null;
                 const folder = null;
                 const forceSave = true;
@@ -101,7 +101,7 @@ Rectangle {
 
                 textFormat: Text.RichText
                 horizontalAlignment: Text.AlignHCenter
-                onLinkActivated: Qt.openUrlExternally(link)
+                onLinkActivated: link => Qt.openUrlExternally(link)
             }
 
             Button {

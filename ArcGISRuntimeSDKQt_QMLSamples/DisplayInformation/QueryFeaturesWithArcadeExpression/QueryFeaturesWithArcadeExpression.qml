@@ -61,7 +61,7 @@ Rectangle {
             if (identifyLayerStatus !== Enums.TaskStatusInProgress) {
                 if (map.operationalLayers.get(0))
                 {
-                    identifyLayer(map.operationalLayers.get(0), mouse.x, mouse.y, 12, false, 1);
+                    identifyLayerWithMaxResults(map.operationalLayers.get(0), mouse.x, mouse.y, 12, false, 1);
                 }
             }
         }

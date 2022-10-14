@@ -28,7 +28,7 @@ Rectangle {
     property Envelope tileCacheExtent: null
     property string statusText: ""
     property ExportTileCacheParameters params
-    property var exportTileCacheProgress: 0
+    property int exportTileCacheProgress: 0
 
     // Create MapView that contains a Map
     MapView {

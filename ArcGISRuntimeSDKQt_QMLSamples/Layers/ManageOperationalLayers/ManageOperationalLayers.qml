@@ -120,7 +120,7 @@ Rectangle {
             model: drawOrderModel
             delegate: Component {
                 RowLayout {
-                    width: parent.width
+                    width: layersList.width
                     height: 40
                     spacing: 5
 

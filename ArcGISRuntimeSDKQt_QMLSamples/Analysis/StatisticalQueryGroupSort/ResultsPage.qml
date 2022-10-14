@@ -101,7 +101,7 @@ Rectangle {
                 }
 
                 delegate: Item {
-                    width: parent.width
+                    width: resultView.width
                     height: 25
 
                     Text {
