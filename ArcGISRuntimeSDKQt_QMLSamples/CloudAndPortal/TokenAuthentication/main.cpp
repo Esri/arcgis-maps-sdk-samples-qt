@@ -18,6 +18,10 @@
 #include <QDir>
 #include <QQmlEngine>
 
+#ifdef QT_WEBVIEW_WEBENGINE_BACKEND
+#include <QtWebEngineQuick>
+#endif // QT_WEBVIEW_WEBENGINE_BACKEND
+
 #include <Esri/ArcGISRuntime/Toolkit/register.h>
 
 #define STRINGIZE(x) #x
@@ -30,6 +34,10 @@ int main(int argc, char *argv[])
 
   QGuiApplication app(argc, argv);
   app.setApplicationName("TokenAuthentication - QML");
+
+#ifdef QT_WEBVIEW_WEBENGINE_BACKEND
+  QtWebEngineQuick::initialize();
+#endif // QT_WEBVIEW_WEBENGINE_BACKEND
 
   // Use of Esri location services, including basemaps and geocoding,
   // requires authentication using either an ArcGIS identity or an API Key.

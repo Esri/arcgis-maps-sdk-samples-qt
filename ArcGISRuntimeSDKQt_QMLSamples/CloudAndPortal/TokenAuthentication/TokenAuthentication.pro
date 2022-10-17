@@ -31,6 +31,11 @@ exists($$TOOLKIT_PRI_PATH/uitools/toolkitqml.pri) {
     error(TOOLKIT_PRI_PATH is missing which is required to build this application.)
 }
 
+qtHaveModule(webenginequick) {
+    QT += webenginequick
+    DEFINES += QT_WEBVIEW_WEBENGINE_BACKEND
+}
+
 CONFIG += c++17
 
 SOURCES += main.cpp
