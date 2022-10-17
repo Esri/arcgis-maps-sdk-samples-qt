@@ -57,8 +57,8 @@ Item {
             MouseArea {
                 width: controlLayout.childrenRect.width
                 height: controlLayout.childrenRect.height
-                onClicked: mouse.accepted = true;
-                onWheel: wheel.accepted = true;
+                onClicked: mouse => mouse.accepted = true;
+                onWheel: wheel => wheel.accepted = true;
             }
 
             ColumnLayout{

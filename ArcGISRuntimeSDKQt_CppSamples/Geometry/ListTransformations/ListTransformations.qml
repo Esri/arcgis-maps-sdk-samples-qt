@@ -79,7 +79,7 @@ ListTransformationsSample {
             delegate: Item {
                 id: itemDelegate
                 height: 45
-                width: parent.width
+                width: transformationListView.width
                 clip: true
 
                 // show the DatumTransformation name
@@ -181,7 +181,7 @@ ListTransformationsSample {
         }
     }
 
-    onShowStatusBar: {
+    onShowStatusBar: message => {
         statusText.text = message;
 
         if (statusBar.isExpanded)

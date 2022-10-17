@@ -207,7 +207,7 @@ Rectangle {
 
         MouseArea {
             anchors.fill: parent
-            onClicked: mouse.accepted = true;
+            onClicked: mouse => mouse.accepted = true;
         }
 
         GridLayout {

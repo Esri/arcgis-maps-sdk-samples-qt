@@ -53,8 +53,8 @@ Item {
         // Prevent mouse interaction from propagating to the MapView
         MouseArea {
             anchors.fill: parent
-            onPressed: mouse.accepted = true;
-            onWheel: wheel.accepted = true;
+            onPressed: mouse => mouse.accepted = true;
+            onWheel: wheel => wheel.accepted = true;
         }
 
         ColumnLayout {

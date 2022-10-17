@@ -20,6 +20,7 @@ import Esri.Samples
 import QtQuick.Layouts
 
 Item {
+    id: rootItem
     readonly property int checkBoxPadding: 20
 
     ButtonGroup {
@@ -198,7 +199,7 @@ Item {
         id: directionDelegate
         Rectangle {
             id: rect
-            width: parent.width
+            width: parent ? parent.width : 0
             height: 35
             color: directionWindow.color
 

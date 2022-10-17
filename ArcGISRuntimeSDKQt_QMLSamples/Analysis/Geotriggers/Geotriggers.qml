@@ -108,7 +108,7 @@ Rectangle {
             name: "sectionGeotrigger"
         }
 
-        onGeotriggerNotification: {
+        onGeotriggerNotification: (geotriggerNotificationInfo) => {
 
             // the message property contains the evaluated messageExpression of the FenceGeotrigger
             const sectionName = geotriggerNotificationInfo.message;
@@ -155,7 +155,7 @@ Rectangle {
             name: "poiGeotrigger"
         }
 
-        onGeotriggerNotification: {
+        onGeotriggerNotification: (geotriggerNotificationInfo) => {
             const poiName = geotriggerNotificationInfo.message;
             const index = poisInRange.indexOf(poiName);
 

@@ -53,8 +53,8 @@ Rectangle {
         MouseArea {
             anchors.fill: parent
             visible: attributePrompt.visible
-            onClicked: mouse.accepted = !attributePrompt.visible
-            onWheel:  wheel.accepted = !attributePrompt.visible
+            onClicked: mouse => mouse.accepted = !attributePrompt.visible
+            onWheel:  wheel => wheel.accepted = !attributePrompt.visible
         }
 
         Component.onCompleted: {

@@ -38,7 +38,7 @@ ExportTilesSample {
         }
     }
 
-    onHideWindow: {
+    onHideWindow: (time, success) => {
         exportWindow.hideWindow(time);
 
         if (success) {
@@ -47,7 +47,7 @@ ExportTilesSample {
         }
     }
 
-    onUpdateStatus: statusText = status;
+    onUpdateStatus: status => statusText = status;
 
     Rectangle {
         id: extentRectangle
@@ -127,8 +127,8 @@ ExportTilesSample {
 
         MouseArea {
             anchors.fill: parent
-            onClicked: mouse.accepted = true
-            onWheel: wheel.accepted = true
+            onClicked: mouse => mouse.accepted = true
+            onWheel: wheel => wheel.accepted = true
         }
 
         Rectangle {

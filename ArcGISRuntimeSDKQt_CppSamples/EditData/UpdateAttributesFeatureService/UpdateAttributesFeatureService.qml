@@ -80,8 +80,8 @@ UpdateAttributesFeatureServiceSample {
 
         MouseArea {
             anchors.fill: parent
-            onClicked: mouse.accepted = true;
-            onWheel: wheel.accepted = true;
+            onClicked: mouse => mouse.accepted = true;
+            onWheel: wheel => wheel.accepted = true;
         }
 
         GridLayout {
@@ -97,7 +97,7 @@ UpdateAttributesFeatureServiceSample {
 
             ComboBox {
                 property int modelWidth: 0
-                Layout.minimumWidth: modelWidth + leftPadding + rightPadding + indicator.width
+                Layout.minimumWidth: modelWidth + leftPadding + rightPadding
                 Layout.columnSpan: 2
                 Layout.margins: 5
                 Layout.fillWidth: true

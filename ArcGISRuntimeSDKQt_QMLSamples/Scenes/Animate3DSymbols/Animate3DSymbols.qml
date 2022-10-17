@@ -252,8 +252,8 @@ Rectangle {
 
                     MouseArea {
                         anchors.fill: parent
-                        onPressed: mouse.accepted
-                        onWheel: wheel.accepted
+                        onPressed: mouse => mouse.accepted = true
+                        onWheel: wheel => wheel.accepted = true
                     }
                 }
 

@@ -29,11 +29,11 @@ CreateAndSaveMapSample {
         stackView.push(options);
     }
 
-    onSaveMapCompleted: (itemId, success) => {
+    onSaveMapCompleted: (success, itemId) => {
         if (stackView.currentItem === completionRect)
             return;
 
-        const url =  "https://www.arcgis.com/home/item.html?id=%1".arg(itemId);
+        const url = "https://www.arcgis.com/home/item.html?id=%1".arg(itemId);
         stackView.push(completionRect,
                        { text: success ? 'Map saved successfully.<br>View in <a href="%1">ArcGIS Online</a>'.arg(url)
                                        : "An error occurred while saving the map. Details: %1".arg(error)
@@ -106,7 +106,7 @@ CreateAndSaveMapSample {
 
                 textFormat: Text.RichText
                 horizontalAlignment: Text.AlignHCenter
-                onLinkActivated: Qt.openUrlExternally(link)
+                onLinkActivated: link => Qt.openUrlExternally(link)
             }
 
             Button {

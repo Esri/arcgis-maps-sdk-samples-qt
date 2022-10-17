@@ -64,6 +64,6 @@ RasterLayerFileSample {
         anchors.fill: rootRectangle
         supportedExtensions: supportedFormats
 
-        onRasterFileChosen: createAndAddRasterLayer(url);
+        onRasterFileChosen: url => createAndAddRasterLayer(url);
     }
 }

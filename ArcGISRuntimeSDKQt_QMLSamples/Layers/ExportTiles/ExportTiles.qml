@@ -28,7 +28,7 @@ Rectangle {
     property Envelope tileCacheExtent: null
     property string statusText: ""
     property ExportTileCacheParameters params
-    property var exportTileCacheProgress: 0
+    property int exportTileCacheProgress: 0
 
     // Create MapView that contains a Map
     MapView {
@@ -255,8 +255,8 @@ Rectangle {
 
         MouseArea {
             anchors.fill: parent
-            onClicked: mouse.accepted = true
-            onWheel: wheel.accepted = true
+            onClicked: mouse => mouse.accepted = true
+            onWheel: wheel => wheel.accepted = true
         }
 
         Rectangle {

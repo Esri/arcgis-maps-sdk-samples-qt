@@ -72,7 +72,7 @@ void DisplayDrawingStatus::componentComplete()
 
   connect(m_mapView, &MapQuickView::drawStatusChanged, this, [this](DrawStatus drawStatus)
   {
-    drawStatus == DrawStatus::InProgress ? m_mapDrawing = true : m_mapDrawing = false;
+    m_mapDrawing = (drawStatus == DrawStatus::InProgress);
     emit mapDrawStatusChanged();
   });
 }

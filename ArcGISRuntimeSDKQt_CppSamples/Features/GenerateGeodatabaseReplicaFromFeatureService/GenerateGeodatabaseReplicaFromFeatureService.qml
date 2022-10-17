@@ -38,7 +38,7 @@ GenerateGeodatabaseReplicaFromFeatureServiceSample {
         }
     }
 
-    onHideWindow: {
+    onHideWindow: (time, success) => {
         generateWindow.hideWindow(time);
 
         if (success) {
@@ -47,7 +47,7 @@ GenerateGeodatabaseReplicaFromFeatureServiceSample {
         }
     }
 
-    onUpdateStatus: statusText = status;
+    onUpdateStatus: status => statusText = status;
 
     Rectangle {
         id: extentRectangle
@@ -127,8 +127,8 @@ GenerateGeodatabaseReplicaFromFeatureServiceSample {
 
         MouseArea {
             anchors.fill: parent
-            onClicked: mouse.accepted = true
-            onWheel: wheel.accepted = true
+            onClicked: mouse => mouse.accepted = true
+            onWheel: wheel => wheel.accepted = true
         }
 
         Rectangle {

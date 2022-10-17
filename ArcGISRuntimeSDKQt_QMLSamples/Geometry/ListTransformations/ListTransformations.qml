@@ -149,7 +149,7 @@ Rectangle {
             delegate: Item {
                 id: itemDelegate
                 height: 45
-                width: parent.width
+                width: transformationList.width
                 clip: true
 
                 // show the DatumTransformation name
