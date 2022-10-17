@@ -52,12 +52,21 @@ Item {
             BusyIndicator {
                 id: busyIndicator
                 anchors.horizontalCenter: parent.horizontalCenter
+                running: visible
             }
 
             Text {
                 id: statusText
                 anchors.horizontalCenter: parent.horizontalCenter
                 text: "Export job status: " + ["Not started", "Started", "Paused", "Succeeded", "Failed", "Cancelling"][model.jobStatus]
+                font.pixelSize: 16
+            }
+
+            Text {
+                id: statusTextCanceled
+                anchors.horizontalCenter: parent.horizontalCenter
+                text: "Job cancelled"
+                visible: !statusText.visible
                 font.pixelSize: 16
             }
 
@@ -161,5 +170,18 @@ Item {
                 break;
             }
         }
+
+        readonly property Timer timer: Timer {
+            id: jobCancelDoneTimer
+            interval: 2000
+            onTriggered: { exportProgressWindow.visible = false; statusText.visible = true }
+        }
+
+        onJobCancelDone: succeeded => {
+                             statusTextCanceled.text = (succeeded ? "Job canceled successfully" : "Job failed to cancel successfully");
+                             exportProgressWindow.visible = true;
+                             statusText.visible = false;
+                             jobCancelDoneTimer.start();
+                         }
     }
 }

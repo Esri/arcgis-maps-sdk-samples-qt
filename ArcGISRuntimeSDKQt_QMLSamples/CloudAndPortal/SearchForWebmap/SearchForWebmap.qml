@@ -84,7 +84,7 @@ Rectangle {
 
     //! [Portal findItems webmaps part 1]
     // webmaps authored prior to July 2nd, 2014 are not supported - so search only from that date to the current time
-    property string fromDate: "000000" + new Date('Wed, 02 Jul 2014 00:00:00 GMT').getTime()
+    property string fromDate: "000000" + new Date('2014-07-02T00:00:00Z').getTime()
     property string toDate: "000000" + new Date().getTime()
 
     PortalQueryParametersForItems {

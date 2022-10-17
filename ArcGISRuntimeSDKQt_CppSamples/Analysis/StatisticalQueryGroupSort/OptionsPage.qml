@@ -238,7 +238,6 @@ Rectangle {
                             clip: true
                             model: fields
                             delegate: Item {
-                                width: parent.width
                                 height: 25
 
                                 CheckBox {

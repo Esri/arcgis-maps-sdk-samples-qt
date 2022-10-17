@@ -10,7 +10,8 @@
 # See the Sample code usage restrictions document for further information.
 
 TEMPLATE = app
-QT += core gui xml network qml quick positioning sensors multimedia widgets quickcontrols2 opengl webview core5compat
+QT += core gui xml network qml quick positioning sensors multimedia
+QT += widgets quickcontrols2 opengl webview core5compat websockets
 TARGET = ArcGISQt_QMLSamples
 DEFINES += QML_VIEWER
 DEFINES += Qt_Version=\"$$QT_VERSION\"

@@ -86,8 +86,7 @@ Rectangle {
         // Initial page is the OptionsPage
         initialItem: OptionsPage {
             id: statisticOptionsPage
-            width: stackView.width
-            height: stackView.height
+            
             onStatisticButtonClicked: {
                 // create the parameter object
                 const params = ArcGISRuntimeEnvironment.createObject("StatisticsQueryParameters");
