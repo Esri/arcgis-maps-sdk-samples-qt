@@ -75,7 +75,7 @@ void DistanceMeasurementAnalysis::componentComplete()
   // Create and set the surface on the scene
   Surface* surface = new Surface(this);
   surface->elevationSources()->append(
-        new ArcGISTiledElevationSource(QUrl("https://scene.arcgis.com/arcgis/rest/services/BREST_DTM_1M/ImageServer"),this));
+        new ArcGISTiledElevationSource(QUrl("https://elevation3d.arcgis.com/arcgis/rest/services/WorldElevation3D/Terrain3D/ImageServer"),this));
   scene->setBaseSurface(surface);
 
   // Add Analysis Overlay
