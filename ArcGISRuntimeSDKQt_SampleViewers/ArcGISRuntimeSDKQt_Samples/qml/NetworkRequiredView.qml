@@ -48,7 +48,7 @@ Page {
             anchors.horizontalCenter: parent.horizontalCenter
             width: networkConnectionText.width + 20
             wrapMode: Text.WrapAtWordBoundaryOrAnywhere
-            text: qsTr("This sample requires network connnectivity but your system is not online. Please acquire a network connection or select an offline sample instead.")
+            text: qsTr("This sample requires network connectivity but your system is not online. Please acquire a network connection or select an offline sample instead.")
             renderType: Text.NativeRendering
             horizontalAlignment: Text.AlignHCenter
             font {
