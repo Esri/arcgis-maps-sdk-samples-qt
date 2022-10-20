@@ -26,10 +26,10 @@ Rectangle {
     height: 600
 
     readonly property string tempDataPath: System.temporaryFolder.path + "/" + new Date().getTime()
-    readonly property string origMmpkPath: {
+    readonly property url origMmpkPath: {
         Qt.platform.os === "ios" ?
-                    System.writableLocation(System.StandardPathsDocumentsLocation) +  "/ArcGIS/Runtime/Data/mmpk/canyonlands/canyonlands.zip" :
-                    System.writableLocation(System.StandardPathsHomeLocation) +  "/ArcGIS/Runtime/Data/mmpk/canyonlands/canyonlands.zip"
+                    System.writableLocationUrl(System.StandardPathsDocumentsLocation) +  "/ArcGIS/Runtime/Data/mmpk/canyonlands/canyonlands.zip" :
+                    System.writableLocationUrl(System.StandardPathsHomeLocation) +  "/ArcGIS/Runtime/Data/mmpk/canyonlands/canyonlands.zip"
     }
     readonly property string destMmpkPath: tempDataPath + "/canyonlands.zip"
     property MobileMapPackage mmpk

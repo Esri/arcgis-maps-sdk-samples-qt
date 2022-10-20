@@ -24,7 +24,7 @@ Rectangle {
     width: 800
     height: 600
 
-    property url dataPath: {
+    readonly property url dataPath: {
         Qt.platform.os === "ios" ?
                     System.writableLocationUrl(System.StandardPathsDocumentsLocation) + "/ArcGIS/Runtime/Data/" :
                     System.writableLocationUrl(System.StandardPathsHomeLocation) + "/ArcGIS/Runtime/Data/"
@@ -33,7 +33,7 @@ Rectangle {
 
     Component.onCompleted: {
         // set resource path
-        EncEnvironmentSettings.resourcePath = dataPath + "/ENC/hydrography";
+        EncEnvironmentSettings.resourcePath = dataPath + "ENC/hydrography";
 
         // load the EncExchangeSet
         encExchangeSet.load();
@@ -56,7 +56,7 @@ Rectangle {
 
             EncExchangeSet {
                 id: encExchangeSet
-                paths: [dataPath + "/ENC/ExchangeSetwithoutUpdates/ENC_ROOT/CATALOG.031"]
+                paths: [dataPath + "ENC/ExchangeSetwithoutUpdates/ENC_ROOT/CATALOG.031"]
 
                 property var layers: []
 
