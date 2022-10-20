@@ -25,7 +25,7 @@ Rectangle {
     height: 600
 
     property real scaleFactor: 1
-    property url dataPath: {
+    readonly property url dataPath: {
         Qt.platform.os === "ios" ?
                     System.writableLocationUrl(System.StandardPathsDocumentsLocation) + "/ArcGIS/Runtime/Data/raster" :
                     System.writableLocationUrl(System.StandardPathsHomeLocation) + "/ArcGIS/Runtime/Data/raster"

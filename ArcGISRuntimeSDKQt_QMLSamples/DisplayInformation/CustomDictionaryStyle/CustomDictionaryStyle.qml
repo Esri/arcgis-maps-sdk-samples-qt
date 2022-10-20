@@ -25,10 +25,10 @@ Rectangle {
     width: 800
     height: 600
 
-    readonly property string dataPath: {
+    readonly property url dataPath: {
         Qt.platform.os === "ios" ?
-                    System.writableLocation(System.StandardPathsDocumentsLocation) + "/ArcGIS/Runtime/Data" :
-                    System.writableLocation(System.StandardPathsHomeLocation) + "/ArcGIS/Runtime/Data"
+                    System.writableLocationUrl(System.StandardPathsDocumentsLocation) + "/ArcGIS/Runtime/Data" :
+                    System.writableLocationUrl(System.StandardPathsHomeLocation) + "/ArcGIS/Runtime/Data"
     }
 
     MapView {
