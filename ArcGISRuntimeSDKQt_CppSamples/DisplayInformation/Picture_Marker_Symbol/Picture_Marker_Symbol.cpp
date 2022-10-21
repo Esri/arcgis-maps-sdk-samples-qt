@@ -93,7 +93,7 @@ void Picture_Marker_Symbol::componentComplete()
   m_graphicsOverlay = new GraphicsOverlay(this);
 
   // create a campsite symbol from a URL
-  PictureMarkerSymbol* campSymbol = new PictureMarkerSymbol(QUrl("https://sampleserver6.arcgisonline.com/arcgis/rest/services/Recreation/FeatureServer/0/images/e82f744ebb069bb35b234b3fea46deae"), this);
+  PictureMarkerSymbol* campSymbol = new PictureMarkerSymbol(QUrl("https://static.arcgis.com/images/Symbols/OutdoorRecreation/Camping.png"), this);
   setWidthAndHeight(campSymbol, 38.0f);
   Point campPoint(-228835, 6550763, SpatialReference::webMercator());
   addGraphic(campPoint, campSymbol);
