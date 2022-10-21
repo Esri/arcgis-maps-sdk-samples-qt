@@ -247,5 +247,6 @@ SOURCES += \
 
 # Exclude Raster Function File from macOS
 !macx {
-  "$$SAMPLEPATHQML/Layers/RasterFunctionFile/RasterFunctionFile.qrc"
+  RESOURCES += \
+    "$$SAMPLEPATHQML/Layers/RasterFunctionFile/RasterFunctionFile.qrc"
 }
