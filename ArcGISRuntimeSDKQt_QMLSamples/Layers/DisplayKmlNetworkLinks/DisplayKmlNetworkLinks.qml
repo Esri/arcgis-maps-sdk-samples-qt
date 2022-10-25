@@ -59,7 +59,7 @@ Rectangle {
                 dataset:  KmlDataset {
                     url: "https://www.arcgis.com/sharing/rest/content/items/600748d4464442288f6db8a4ba27dc95/data"
 
-                    onKmlNetworkLinkMessageReceived: message => {
+                    onKmlNetworkLinkMessageReceived: (link, message) => {
                         currentKmlNetworkMessage = message;
                     }
                 }
