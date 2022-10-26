@@ -167,6 +167,7 @@ EditFeatureAttachmentsSample {
             // create the delegate to specify how the view is arranged
             delegate: Item {
                 height: 45
+                width: attachmentsList.width
                 clip: true
 
                 // show the attachment name
