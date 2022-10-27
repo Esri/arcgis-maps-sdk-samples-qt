@@ -123,7 +123,7 @@ Item {
 
     Dialog {
         id: messageDialog
-        visible: sampleModel.errorMessage === ""? false : true
+        visible: sampleModel.noResults
         title: "Isolation trace returned no elements."
         standardButtons: Dialog.Ok
         anchors.centerIn: parent
