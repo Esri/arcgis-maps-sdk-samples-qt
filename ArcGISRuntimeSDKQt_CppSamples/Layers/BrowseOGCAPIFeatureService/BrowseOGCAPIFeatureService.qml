@@ -83,7 +83,7 @@ Item {
                 Button {
                     id: loadLayerButton
                     text: "Load selected layer"
-                    enabled: !model.serviceOrFeatureLoading
+                    enabled: !model.serviceOrFeatureLoading && featureList.currentIndex >= 0
                     onClicked: model.loadFeatureCollection(featureList.currentIndex);
                     Layout.columnSpan: 2
                     Layout.fillWidth: true
