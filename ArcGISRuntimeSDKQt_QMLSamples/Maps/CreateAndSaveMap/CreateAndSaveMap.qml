@@ -80,7 +80,7 @@ Rectangle {
             }
 
             onSaveMapClicked: (title, tags, description) => {
-                const thumbnail = null;
+                const thumbnail = "";
                 const folder = null;
                 const forceSave = true;
                 const tagsList = tags.split(",");
