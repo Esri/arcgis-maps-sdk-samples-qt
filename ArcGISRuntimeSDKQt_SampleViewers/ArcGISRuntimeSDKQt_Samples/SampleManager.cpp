@@ -361,7 +361,7 @@ void SampleManager::setApiKey(bool isSupportsApiKey)
 #ifdef CPP_VIEWER
   ArcGISRuntimeEnvironment::setApiKey(sampleApiKey);
 #else
-  emit apiKeyRequired(apiKey);
+  emit apiKeyRequired(sampleApiKey);
 #endif
 }
 
