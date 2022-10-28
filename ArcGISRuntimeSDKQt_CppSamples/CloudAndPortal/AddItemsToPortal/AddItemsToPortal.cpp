@@ -19,6 +19,7 @@
 #include "AuthenticationManager.h"
 #include "Portal.h"
 #include "PortalItem.h"
+#include "PortalItemListModel.h"
 #include "AddItemsToPortal.h"
 #include "MapTypes.h"
 #include "PortalTypes.h"
@@ -168,6 +169,25 @@ void AddItemsToPortal::connectUserSignals()
   {
     m_busy = false;
     setStatusText( QString(error.message() + ": " + error.additionalMessage()));
+
+    if (static_cast<int>(error.errorType()) == 409) // HTTP 409 "Conflict" - item already exists
+    {
+      m_user->fetchContent();
+      m_busy = true;
+    }
+  });
+
+  connect(m_user, &PortalUser::fetchContentCompleted, this, [this](bool success)
+  {
+    m_busy = false;
+    if (!success)
+      return;
+
+    if (m_user->items()->size() > 0)
+    {
+      m_item->setItemId(m_user->items()->at(0)->itemId());
+      m_item->load();
+    }
   });
 
   //! [PortalUser addPortalItemCompleted]

@@ -70,6 +70,20 @@ Rectangle {
 
         onErrorChanged: {
             statusBar.text = error.message + ": " + error.additionalMessage;
+
+            if (error.errorType === 409) // HTTP 409 "Conflict" - item already exists
+                myUser.fetchContent();
+        }
+
+        onFetchContentStatusChanged: {
+            if (myUser.fetchContentStatus !== Enums.TaskStatusCompleted)
+                return;
+
+            if (myUser.items.count > 0)
+            {
+                itemToAdd.itemId = myUser.items.get(0).itemId;
+                itemToAdd.load();
+            }
         }
 
         //! [PortalUser addPortalItemCompleted]
