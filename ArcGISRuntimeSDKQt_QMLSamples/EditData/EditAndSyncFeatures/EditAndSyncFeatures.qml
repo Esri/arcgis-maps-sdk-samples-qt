@@ -88,7 +88,7 @@ Rectangle {
                 featureTable.updateFeatureStatusChanged.connect(()=> {
                     if (featureTable.updateFeatureStatus === Enums.TaskStatusCompleted) {
                         // clear selections
-                        featureTable.featureLayer.clearSelection();
+                        featureTable.layer.clearSelection();
                         selectedFeature = null;
                         instructionText = "Tap the sync button";
                         syncButton.visible = true;
