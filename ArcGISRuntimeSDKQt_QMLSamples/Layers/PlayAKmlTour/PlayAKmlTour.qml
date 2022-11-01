@@ -93,6 +93,10 @@ Rectangle {
                        kmlTourController.tour = kmlTour;
                    }
                }
+
+               Component.onDestruction: {
+                   kmlTourController.tour = null;
+               }
             }
 
             KmlTourController {
