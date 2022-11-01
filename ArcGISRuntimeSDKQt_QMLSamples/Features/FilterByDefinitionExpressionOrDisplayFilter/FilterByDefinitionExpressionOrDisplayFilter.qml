@@ -51,7 +51,8 @@ Rectangle {
 
                     // Initalize the feature count when the feature layer first loads
                     onLoadStatusChanged: {
-                        queryFeatureCountInCurrentExtent();
+                        if (loadStatus === Enums.LoadStatusLoaded)
+                            queryFeatureCountInCurrentExtent();
                     }
                 }
             }
