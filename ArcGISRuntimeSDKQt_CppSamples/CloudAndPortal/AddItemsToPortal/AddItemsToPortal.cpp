@@ -78,7 +78,10 @@ void AddItemsToPortal::componentComplete()
       emit portalItemIdChanged();
       emit portalItemTitleChanged();
       emit portalItemLoadedChanged();
-      setStatusText("Succesfully loaded item from portal." + m_item->itemId());
+      if (m_alreadyExisted)
+        setStatusText("Item already exists; using existing item instead. " + m_item->itemId());
+      else
+        setStatusText("Succesfully loaded item from portal. " + m_item->itemId());
     });
   }
 }
@@ -172,6 +175,7 @@ void AddItemsToPortal::connectUserSignals()
 
     if (static_cast<int>(error.errorType()) == 409) // HTTP 409 "Conflict" - item already exists
     {
+      m_alreadyExisted = true;
       m_user->fetchContent();
       m_busy = true;
     }

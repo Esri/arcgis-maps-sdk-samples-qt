@@ -77,6 +77,7 @@ private:
   bool m_itemDeleted = false;
   QString m_statusText;
   bool m_busy = false;
+  bool m_alreadyExisted = false;
 };
 
 #endif // ADDITEMSTOPORTAL_H
