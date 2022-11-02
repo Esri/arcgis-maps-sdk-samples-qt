@@ -26,6 +26,8 @@ Rectangle {
     width: 800
     height: 600
 
+    property bool alreadyExisted: false
+
     PortalItem {
         id: itemToAdd
         portal: portal
@@ -36,7 +38,10 @@ Rectangle {
             if (loadStatus !== Enums.LoadStatusLoaded)
                 return;
 
-            statusBar.text = "Succesfully loaded item from portal." + itemToAdd.itemId
+            if (alreadyExisted)
+                statusBar.text = "Item already exists; using existing item instead. " + itemToAdd.itemId
+            else
+                statusBar.text = "Succesfully loaded item from portal. " + itemToAdd.itemId
         }
 
         onItemIdChanged: {
@@ -72,7 +77,10 @@ Rectangle {
             statusBar.text = error.message + ": " + error.additionalMessage;
 
             if (error.errorType === 409) // HTTP 409 "Conflict" - item already exists
+            {
+                alreadyExisted = true;
                 myUser.fetchContent();
+            }
         }
 
         onFetchContentStatusChanged: {
