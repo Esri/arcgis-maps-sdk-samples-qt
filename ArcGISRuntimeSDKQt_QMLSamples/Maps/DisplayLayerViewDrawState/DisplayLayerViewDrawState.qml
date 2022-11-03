@@ -81,7 +81,7 @@ Rectangle {
             }
         }
 
-        onLayerViewStateChanged: layer => {
+        onLayerViewStateChanged: (layer, layerViewState) => {
             // only update list if the layer is the feature layer.
             if (layer.name !== featureLayer.name)
                 return;
