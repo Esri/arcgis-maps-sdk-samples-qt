@@ -44,12 +44,19 @@ Item {
             for (let j = 0; j < sample.dataItems.size; j++) {
                 if (sample.dataItems.size > 0) {
                     const dataItem = sample.dataItems.get(j);
-                    fileInfo.filePath = dataItem.path;
+
+                    // Convert the relative path to a writable path
+                    if (Qt.platform.os === "ios")
+                        fileInfo.filePath = System.writableLocation(System.StandardPathsDocumentsLocation) + dataItem.path.substring(1);
+                    else
+                        fileInfo.filePath = System.writableLocation(System.StandardPathsHomeLocation) + dataItem.path.substring(1);
+                    fileInfo.refresh();
+
                     if (fileInfo.exists && (!fileInfo.isFolder))
                         continue;
 
-                    fileFolder.path = dataItem.path;
-                    dataPackageFileInfo.filePath = dataItem.path + "/dataPackage.zip";
+                    fileFolder.path = fileInfo.filePath;
+                    dataPackageFileInfo.filePath = fileInfo.filePath + "/dataPackage.zip";
                     if (fileFolder.exists && dataPackageFileInfo.exists)
                         continue;
 
