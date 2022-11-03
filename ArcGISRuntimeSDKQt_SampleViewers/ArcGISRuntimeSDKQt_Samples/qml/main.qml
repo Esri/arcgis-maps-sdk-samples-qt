@@ -358,7 +358,7 @@ ApplicationWindow {
             fileInfo.refresh();
             if (fileInfo.exists && (!fileInfo.isFolder))
                 continue;
-            dataPackageFileInfo.filePath = dataItem.path + "/dataPackage.zip";
+            dataPackageFileInfo.filePath = fileInfo.filePath + "/dataPackage.zip";
             if (fileInfo.exists && dataPackageFileInfo.exists)
                 continue;
             return false;

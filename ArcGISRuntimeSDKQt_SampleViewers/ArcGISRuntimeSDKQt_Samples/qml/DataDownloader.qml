@@ -66,7 +66,11 @@ Item {
 
         for (let i = 0; i < SampleManager.currentSample.dataItems.size; i++) {
             const dataItem = SampleManager.currentSample.dataItems.get(i);
-            fileInfo.filePath = dataItem.path;
+            if (Qt.platform.os === "ios")
+                fileInfo.filePath = System.writableLocation(System.StandardPathsDocumentsLocation) + dataItem.path.substring(1);
+            else
+                fileInfo.filePath = System.writableLocation(System.StandardPathsHomeLocation) + dataItem.path.substring(1);
+            fileInfo.refresh();
             if (fileInfo.exists && (!fileInfo.isFolder))
                 continue;
 
