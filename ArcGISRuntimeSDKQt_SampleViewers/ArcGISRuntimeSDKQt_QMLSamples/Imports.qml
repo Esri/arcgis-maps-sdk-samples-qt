@@ -26,7 +26,6 @@ import QtQuick.Dialogs
 import QtSensors
 import QtPositioning
 import QtQuick.XmlListModel
-import Qt5Compat.GraphicalEffects
 import QtWebView
 import Esri.ArcGISExtras
 import Esri.ArcGISRuntime
