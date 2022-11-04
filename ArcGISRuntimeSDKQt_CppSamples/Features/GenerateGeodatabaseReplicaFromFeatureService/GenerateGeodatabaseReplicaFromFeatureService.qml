@@ -16,7 +16,6 @@
 
 import QtQuick
 import QtQuick.Controls
-import Qt5Compat.GraphicalEffects
 import Esri.Samples
 
 GenerateGeodatabaseReplicaFromFeatureServiceSample {
@@ -116,13 +115,9 @@ GenerateGeodatabaseReplicaFromFeatureServiceSample {
         visible: false
         clip: true
 
-        RadialGradient {
+        Rectangle {
             anchors.fill: parent
-            opacity: 0.7
-            gradient: Gradient {
-                GradientStop { position: 0.0; color: "lightgrey" }
-                GradientStop { position: 0.5; color: "black" }
-            }
+            color: "#80808080"
         }
 
         MouseArea {

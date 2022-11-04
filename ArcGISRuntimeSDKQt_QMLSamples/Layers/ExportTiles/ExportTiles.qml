@@ -16,7 +16,6 @@
 
 import QtQuick
 import QtQuick.Controls
-import Qt5Compat.GraphicalEffects
 import Esri.ArcGISRuntime
 import Esri.ArcGISExtras
 
@@ -244,13 +243,9 @@ Rectangle {
         visible: false
         clip: true
 
-        RadialGradient {
+        Rectangle {
             anchors.fill: parent
-            opacity: 0.7
-            gradient: Gradient {
-                GradientStop { position: 0.0; color: "lightgrey" }
-                GradientStop { position: 0.7; color: "black" }
-            }
+            color: "#80808080"
         }
 
         MouseArea {

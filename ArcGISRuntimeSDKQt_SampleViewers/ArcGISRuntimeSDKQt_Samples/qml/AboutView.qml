@@ -21,14 +21,10 @@ import Esri.ArcGISRuntimeSamples
 Item {
     visible: false
 
-    RadialGradient {
+    Rectangle {
         id: overlay
         anchors.fill: parent
-        opacity: 0.7
-        gradient: Gradient {
-            GradientStop { position: 0.0; color: "lightgrey" }
-            GradientStop { position: 0.7; color: "black" }
-        }
+        color: "#80808080"
 
         MouseArea {
             anchors.fill: parent

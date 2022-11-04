@@ -16,7 +16,6 @@
 
 import QtQuick
 import QtQuick.Controls
-import Qt5Compat.GraphicalEffects
 import Esri.ArcGISRuntime
 import Esri.ArcGISExtras
 
@@ -72,13 +71,9 @@ Rectangle {
         anchors.fill: parent
         color: "transparent"
 
-        RadialGradient {
+        Rectangle {
             anchors.fill: parent
-            opacity: 0.15
-            gradient: Gradient {
-                GradientStop { position: 0.0; color: "lightgrey" }
-                GradientStop { position: 0.7; color: "black" }
-            }
+            color: "#80808080"
         }
 
         // pop up to show if MapView is drawing
