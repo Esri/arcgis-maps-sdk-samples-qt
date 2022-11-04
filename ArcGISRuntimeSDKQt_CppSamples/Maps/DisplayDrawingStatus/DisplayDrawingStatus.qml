@@ -43,7 +43,7 @@ DisplayDrawingStatusSample {
 
         Rectangle {
             anchors.fill: parent
-            color: "#80808080"
+            color: "#60000000"
         }
 
         // pop up to show if MapView is drawing

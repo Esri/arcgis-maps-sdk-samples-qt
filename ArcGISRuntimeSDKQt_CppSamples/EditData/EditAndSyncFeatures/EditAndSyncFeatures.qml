@@ -154,7 +154,7 @@ EditAndSyncFeaturesSample {
 
         Rectangle {
             anchors.fill: parent
-            color: "#80808080"
+            color: "#60000000"
         }
 
         MouseArea {

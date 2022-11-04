@@ -18,7 +18,7 @@ import QtQuick.Layouts
 Rectangle {
     Rectangle {
         anchors.fill: parent
-        color: "#80808080"
+        color: "#60000000"
     }
 
     signal saveMapClicked(var title, var tags, var description)

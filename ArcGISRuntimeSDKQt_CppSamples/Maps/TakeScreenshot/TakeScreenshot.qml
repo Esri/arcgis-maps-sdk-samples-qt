@@ -58,13 +58,9 @@ TakeScreenshotSample {
         id: imageRect
         anchors.fill: parent
         visible: false
-        RadialGradient {
+        Rectangle {
             anchors.fill: parent
-            opacity: 0.7
-            gradient: Gradient {
-                GradientStop { position: 0.0; color: "white" }
-                GradientStop { position: 0.7; color: "black" }
-            }
+            color: "#60000000"
         }
 
         Image {
