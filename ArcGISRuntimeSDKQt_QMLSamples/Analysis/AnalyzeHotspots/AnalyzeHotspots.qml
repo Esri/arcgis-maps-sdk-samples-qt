@@ -17,7 +17,6 @@
 import QtQuick
 import QtQuick.Controls
 // import Qt.labs.calendar // Calendar is not supported in Qt 6.2
-import Qt5Compat.GraphicalEffects
 import Esri.ArcGISRuntime
 import QtQuick.Layouts
 

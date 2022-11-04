@@ -17,7 +17,6 @@
 import QtQuick
 import QtQuick.Controls
 import Qt.labs.platform
-import Qt5Compat.GraphicalEffects
 import Esri.Samples
 import Esri.ArcGISRuntime.Toolkit
 
