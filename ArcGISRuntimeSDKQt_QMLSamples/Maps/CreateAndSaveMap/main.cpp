@@ -17,6 +17,9 @@
 #include <QCommandLineParser>
 #include <QDir>
 #include <QQmlEngine>
+#ifdef QT_WEBVIEW_WEBENGINE_BACKEND
+#include <QtWebEngineQuick>
+#endif // QT_WEBVIEW_WEBENGINE_BACKEND
 
 #include <Esri/ArcGISRuntime/Toolkit/register.h>
 
@@ -30,6 +33,10 @@ int main(int argc, char *argv[])
 
   QGuiApplication app(argc, argv);
   app.setApplicationName("CreateAndSaveMap - QML");
+
+#ifdef QT_WEBVIEW_WEBENGINE_BACKEND
+  QtWebEngineQuick::initialize();
+#endif // QT_WEBVIEW_WEBENGINE_BACKEND
 
   // Initialize application view
   QQuickView view;
