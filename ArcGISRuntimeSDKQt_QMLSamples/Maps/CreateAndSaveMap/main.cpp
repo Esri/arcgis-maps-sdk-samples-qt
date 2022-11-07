@@ -49,10 +49,11 @@ int main(int argc, char *argv[])
   // Add the Runtime and Extras path
   view.engine()->addImportPath(arcGISRuntimeImportPath);
 
+  // Register the application view with the toolkit
+  Esri::ArcGISRuntime::Toolkit::registerComponents(*view.engine());
+
   // Set the source
   view.setSource(QUrl("qrc:/Samples/Maps/CreateAndSaveMap/CreateAndSaveMap.qml"));
-
-  Esri::ArcGISRuntime::Toolkit::registerComponents(*(view.engine()));
 
   view.show();
 
