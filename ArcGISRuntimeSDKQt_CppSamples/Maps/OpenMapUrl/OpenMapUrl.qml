@@ -16,7 +16,6 @@
 
 import QtQuick
 import QtQuick.Controls
-import Qt5Compat.GraphicalEffects
 import Esri.Samples
 
 OpenMapUrlSample {
@@ -86,13 +85,9 @@ OpenMapUrlSample {
        anchors.fill: parent
        color: "transparent"
 
-       RadialGradient {
+       Rectangle {
            anchors.fill: parent
-           opacity: 0.7
-           gradient: Gradient {
-               GradientStop { position: 0.0; color: "lightgrey" }
-               GradientStop { position: 0.7; color: "black" }
-           }
+           color: "#60000000"
        }
 
        MouseArea {

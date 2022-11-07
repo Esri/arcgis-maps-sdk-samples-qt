@@ -15,7 +15,6 @@
 
 import QtQuick
 import QtQuick.Controls
-import Qt5Compat.GraphicalEffects
 import Esri.ArcGISRuntimeSamples
 import Telemetry
 
@@ -55,7 +54,7 @@ Component {
                     width: 30
                     height: width
                     radius: 30
-                    color: "#333333"
+                    color: "#eeeeee"
 
                     Image {
                         id: thumbnailImage
@@ -65,12 +64,6 @@ Component {
                         source: thumbnailUrl
                         clip: true
                         visible: drawer.visible
-                    }
-
-                    ColorOverlay {
-                        anchors.fill: thumbnailImage
-                        source: thumbnailImage
-                        color: "white"
                     }
                 }
 

@@ -15,7 +15,6 @@
 
 import QtQuick
 import Telemetry
-import Qt5Compat.GraphicalEffects
 import QtQuick.Controls
 import QtQuick.Controls.Material
 import QtQuick.Layouts
@@ -28,14 +27,10 @@ Item {
         dialogComponent.visible = GAnalytics.isVisible;
     }
 
-    RadialGradient {
+    Rectangle {
         id: overlay
         anchors.fill: parent
-        opacity: 0.7
-        gradient: Gradient {
-            GradientStop { position: 0.0; color: "lightgrey" }
-            GradientStop { position: 0.7; color: "black" }
-        }
+        color: "#60000000"
 
         MouseArea {
             anchors.fill: parent

@@ -16,7 +16,6 @@
 
 import QtQuick
 import QtQuick.Controls
-import Qt5Compat.GraphicalEffects
 import Esri.Samples
 
 DisplayDrawingStatusSample {
@@ -42,13 +41,9 @@ DisplayDrawingStatusSample {
         color: "transparent"
         visible: displayDrawingStatusSample.mapDrawing
 
-        RadialGradient {
+        Rectangle {
             anchors.fill: parent
-            opacity: 0.15
-            gradient: Gradient {
-                GradientStop { position: 0.0; color: "lightgrey" }
-                GradientStop { position: 0.7; color: "black" }
-            }
+            color: "#60000000"
         }
 
         // pop up to show if MapView is drawing

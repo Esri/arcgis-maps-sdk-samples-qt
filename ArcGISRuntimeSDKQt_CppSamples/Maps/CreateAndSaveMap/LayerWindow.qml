@@ -14,16 +14,11 @@
 import QtQuick
 import QtQuick.Layouts
 import QtQuick.Controls
-import Qt5Compat.GraphicalEffects
 
 Rectangle {
-    RadialGradient {
+    Rectangle {
         anchors.fill: parent
-        opacity: 0.5
-        gradient: Gradient {
-            GradientStop { position: 0.0; color: "white" }
-            GradientStop { position: 0.7; color: "black" }
-        }
+        color: "#60000000"
     }
 
     signal createMapSelected(var basemap, var layerList)
