@@ -284,7 +284,8 @@ Rectangle {
                                     checked: text === "State"
                                     onCheckedChanged: {
                                         if (checked) {
-                                            groupingFields.push(text);
+                                            if (groupingFields.indexOf(text) === -1)
+                                                groupingFields.push(text);
                                         } else {
                                             // remove the item from the selected list
                                             const i = groupingFields.indexOf(text);
