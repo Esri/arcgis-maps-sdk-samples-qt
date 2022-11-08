@@ -48,8 +48,10 @@ Item {
         }
         text: qsTr("Save kmz file")
 
+        enabled: model.busy === false
+
         onClicked: {
-            fileDialog.visible = true;
+            model.saveKml();
         }
     }
 
@@ -58,26 +60,16 @@ Item {
         visible: model.busy
     }
 
-    FileDialog {
-        id: fileDialog
-        defaultSuffix: "kmz"
-        fileMode: FileDialog.SaveFile
-        nameFilters: ["Kml files (*.kmz *.kml)"]
-        onAccepted: {
-            // Write the KML document to the chosen path.
-            visible: false;
-            model.saveKml(currentFile);
-        }
-        onRejected: {
-            visible: false;
-        }
-    }
-
     Dialog {
         id: saveCompleteDialog
-        x: (parent.width - width) / 2
-        y: (parent.height - height) / 2
+        anchors.centerIn: parent
+        width: parent.width * .8
         standardButtons: Dialog.Ok
-        title: "Item saved."
+        title: "Item saved to temporary location:"
+        Label {
+            text: model.kmlFilePath
+            wrapMode: Text.Wrap
+            width: parent.width
+        }
     }
 }

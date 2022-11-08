@@ -26,6 +26,8 @@ Rectangle {
     width: 800
     height: 600
 
+    property url fileSavePath: ""
+
     MapView {
         id: mapView
         anchors.fill: parent
@@ -82,7 +84,8 @@ Rectangle {
         text: qsTr("Save kmz file")
 
         onClicked: {
-            fileDialog.open();
+            fileSavePath = System.temporaryFolder.url + "/KmlSampleFile_%1.kmz".arg((new Date().getTime() % 1000).toString());
+            kmlDocument.saveAs(fileSavePath);
         }
     }
 
@@ -109,28 +112,17 @@ Rectangle {
         visible: kmlDocument.saveStatus === Enums.TaskStatusInProgress
     }
 
-    FileDialog {
-        id: fileDialog
-        defaultSuffix: "kmz"
-        fileMode: FileDialog.SaveFile
-        nameFilters: ["Kml files (*.kmz *.kml)"]
-        onAccepted: {
-            // Write the KML document to the chosen path.
-            kmlDocument.saveAs(currentFile);
-            close();
-        }
-
-        onRejected: {
-            close();
-        }
-    }
-
     Dialog {
         id: saveCompleteDialog
+        anchors.centerIn: parent
+        width: parent.width * .8
         standardButtons: Dialog.Ok
-        title: "Item saved."
-        x: (parent.width - width) / 2
-        y: (parent.height - height) / 2
+        title: "Item saved to temporary location:"
+        Label {
+            text: fileSavePath
+            wrapMode: Text.Wrap
+            width: parent.width
+        }
     }
 
     KmlStyle {

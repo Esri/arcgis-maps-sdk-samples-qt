@@ -68,6 +68,19 @@ CreateAndSaveKmlFile::CreateAndSaveKmlFile(QObject* parent /* = nullptr */):
     m_kmlLayer = new KmlLayer(m_kmlDataset, this);
     addGraphics();
   });
+
+  connect(m_kmlDocument, &KmlDocument::saveAsCompleted, this, [this]()
+  {
+    m_busy = false;
+    emit busyChanged();
+    emit kmlSaveCompleted();
+  });
+
+  connect(m_kmlDocument, &KmlDocument::errorOccurred, this, [](Error e)
+  {
+    if (!e.isEmpty())
+      qDebug() << QString("Error: %1 - %2").arg(e.message(), e.additionalMessage());
+  });
 }
 
 CreateAndSaveKmlFile::~CreateAndSaveKmlFile() = default;
@@ -94,6 +107,11 @@ void CreateAndSaveKmlFile::setMapView(MapQuickView* mapView)
   m_mapView->setMap(m_map);
 
   emit mapViewChanged();
+}
+
+QString CreateAndSaveKmlFile::kmlFilePath() const
+{
+  return m_kmlFilePath;
 }
 
 Geometry CreateAndSaveKmlFile::createPoint() const
@@ -196,24 +214,14 @@ void CreateAndSaveKmlFile::addToKmlDocument(const Geometry& geometry, KmlStyle* 
   m_kmlDocument->childNodesListModel()->append(placemark);
 }
 
-void CreateAndSaveKmlFile::saveKml(const QUrl& url)
+void CreateAndSaveKmlFile::saveKml()
 {
+  m_kmlFilePath = QString{m_tempDir.path() + "/KmlSampleFile%1.kmz"}.arg(QDateTime::currentSecsSinceEpoch() % 1000);
+  emit kmlFilePathChanged();
+
   m_busy = true;
   emit busyChanged();
-  connect(m_kmlDocument, &KmlDocument::saveAsCompleted, this, [this]()
-  {
-    m_busy = false;
-    emit kmlSaveCompleted();
-    emit busyChanged();
-  });
 
-  connect(m_kmlDocument, &KmlDocument::errorOccurred, this, [](Error e)
-  {
-    if (!e.isEmpty())
-    {
-      qDebug() << QString("Error: %1 - %2").arg(e.message(), e.additionalMessage());
-    }
-  });
   // Write the KML document to the chosen path.
-  m_kmlDocument->saveAs(url.toLocalFile());
+  m_kmlDocument->saveAs(m_kmlFilePath);
 }

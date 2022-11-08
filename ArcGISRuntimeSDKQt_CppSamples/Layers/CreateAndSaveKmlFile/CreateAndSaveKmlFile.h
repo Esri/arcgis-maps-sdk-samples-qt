@@ -29,6 +29,7 @@ class KmlStyle;
 
 #include <QObject>
 #include <QUrl>
+#include <QTemporaryDir>
 
 #include "Geometry.h"
 #include "Point.h"
@@ -43,6 +44,7 @@ class CreateAndSaveKmlFile : public QObject
 
   Q_PROPERTY(Esri::ArcGISRuntime::MapQuickView* mapView READ mapView WRITE setMapView NOTIFY mapViewChanged)
   Q_PROPERTY(bool busy MEMBER m_busy NOTIFY busyChanged)
+  Q_PROPERTY(QString kmlFilePath READ kmlFilePath NOTIFY kmlFilePathChanged)
 
 public:
   explicit CreateAndSaveKmlFile(QObject* parent = nullptr);
@@ -50,16 +52,18 @@ public:
 
   static void init();
 
-  Q_INVOKABLE void saveKml(const QUrl& url);
+  Q_INVOKABLE void saveKml();
 
 signals:
   void mapViewChanged();
   void busyChanged();
   void kmlSaveCompleted();
+  void kmlFilePathChanged();
 
 private:
   Esri::ArcGISRuntime::MapQuickView* mapView() const;
   void setMapView(Esri::ArcGISRuntime::MapQuickView* mapView);
+  QString kmlFilePath() const;
 
   Esri::ArcGISRuntime::Map* m_map = nullptr;
   Esri::ArcGISRuntime::MapQuickView* m_mapView = nullptr;
@@ -82,6 +86,9 @@ private:
   Esri::ArcGISRuntime::KmlStyle* createKmlStyleWithPointStyle();
   Esri::ArcGISRuntime::KmlStyle* createKmlStyleWithLineStyle();
   Esri::ArcGISRuntime::KmlStyle* createKmlStyleWithPolygonStyle();
+
+  QTemporaryDir m_tempDir;
+  QString m_kmlFilePath;
 
   void addGraphics();
   void addToKmlDocument(const Esri::ArcGISRuntime::Geometry& geometry, Esri::ArcGISRuntime::KmlStyle* kmlStyle);
