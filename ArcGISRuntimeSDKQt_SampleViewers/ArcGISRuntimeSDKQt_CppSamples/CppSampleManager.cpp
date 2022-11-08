@@ -17,6 +17,7 @@
 
 #include "CppSampleManager.h"
 
+#include "ArcGISQt_global.h" // for LOCALSERVER_SUPPORTED
 #include "AuthenticationManager.h"
 #include "Portal.h"
 #include "PortalItem.h"
