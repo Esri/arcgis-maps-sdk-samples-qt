@@ -350,7 +350,7 @@ void SampleManager::setApiKey(bool isSupportsApiKey)
 #ifdef SAMPLE_VIEWER_API_KEY
   // If the API key identifier is defined in the respective .pro file it will be used here
   // Otherwise use the API key provided by the user at the top of this file
-//  apiKey = QUOTE(SAMPLE_VIEWER_API_KEY);
+  apiKey = QUOTE(SAMPLE_VIEWER_API_KEY);
 #endif
 
   if (isSupportsApiKey && apiKey == "")
