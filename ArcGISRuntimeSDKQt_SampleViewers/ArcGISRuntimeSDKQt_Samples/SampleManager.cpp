@@ -47,6 +47,7 @@
 #include <cstdlib>
 
 #ifdef CPP_VIEWER
+#include "ArcGISQt_global.h" // for LOCALSERVER_SUPPORTED
 #include "ArcGISRuntimeEnvironment.h"
 using namespace Esri::ArcGISRuntime;
 #endif
