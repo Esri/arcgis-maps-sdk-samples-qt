@@ -75,6 +75,7 @@
 #include "ApplyScheduledMapUpdates.h"
 #include "ApplyUniqueValuesWithAlternateSymbols.h"
 #include "ArcGISMapImageLayerUrl.h"
+#include "ArcGISQt_global.h" // for LOCALSERVER_SUPPORTED
 #include "ArcGISTiledLayerUrl.h"
 #include "BasicSceneView.h"
 #include "BlendRasterLayer.h"
