@@ -147,15 +147,15 @@ Link | Local Location
 ---------|-------|
 |[Los Angeles Vector Tile Package](https://www.arcgis.com/home/item.html?id=d9f8ce6f6ac84b90a665a861d71a5d0a)| `<userhome>`/ArcGIS/Runtime/Data/vtpk/LosAngeles.vtpk |
 
-In this case, you would download the VTPK from the ArcGIS Online Location, and place in specified location. `<userhome>` is used throughout to denote a generic location on the different platforms. The below table specifies where this is on all of the supported platforms:
+In this case, you would download the VTPK from the ArcGIS Online Location, and place it in a specified location. `<userhome>` is used throughout to denote a generic location on the different platforms. The below table specifies where this is on all of the supported platforms:
 
 Platform | Userhome Location  | Example Location
----------|--------------------|------------------|
-Windows  | `%userprofile%`    | `C:\Users\Bob\ArcGIS\Runtime\Data` |
-Linux    | `~`                | `/users/bob/ArcGIS/Runtime/Data`   |
-Mac OS X | `~`                | `/Users/Bob/ArcGIS/Runtime/Data`   |
-Android  | `/sdcard`          | `/sdcard/ArcGIS/Runtime/Data`      |
-iOS      | `<your app bundle>`| `<appbundle>/ArcGIS/Runtime/Data`  |
+|---------|--------------------|------------------|
+Windows  | `%userprofile%`    | `C:\Users\Bob\ArcGIS\Runtime\Data`      |
+Linux    | `~`                | `/users/bob/ArcGIS/Runtime/Data`        |
+Mac OS X | `~`                | `/Users/Bob/ArcGIS/Runtime/Data`        |
+Android  | `<APPROOT>/files`  | `<APPROOT>/files/ArcGIS/Runtime/Data`   |
+iOS      | `<your app bundle>`| `<appbundle>/ArcGIS/Runtime/Data`       |
 
 ## Resources
 
