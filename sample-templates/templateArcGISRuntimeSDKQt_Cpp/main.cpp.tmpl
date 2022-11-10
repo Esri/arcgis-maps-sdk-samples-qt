@@ -11,10 +11,6 @@
 // See the License for the specific language governing permissions and
 // limitations under the License.
 
-#ifdef Q_OS_WIN
-#include <Windows.h>
-#endif
-
 #include "%{SampleName}.h"
 
 @if %{UseAPIKey}
@@ -28,6 +24,10 @@
 @if %{ThreeDSample}
 #include <QSurfaceFormat>
 @endif
+
+#ifdef Q_OS_WIN
+#include <Windows.h>
+#endif
 
 @if %{UseAPIKey}
 void setAPIKey(const QGuiApplication& app, QString apiKey);

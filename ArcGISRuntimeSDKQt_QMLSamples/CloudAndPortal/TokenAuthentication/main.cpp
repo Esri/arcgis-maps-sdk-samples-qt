@@ -32,12 +32,12 @@ int main(int argc, char *argv[])
   // Enforce OpenGL
   qputenv("QSG_RHI_BACKEND", "opengl");
 
-  QGuiApplication app(argc, argv);
-  app.setApplicationName("TokenAuthentication - QML");
-
 #ifdef QT_WEBVIEW_WEBENGINE_BACKEND
   QtWebEngineQuick::initialize();
 #endif // QT_WEBVIEW_WEBENGINE_BACKEND
+
+  QGuiApplication app(argc, argv);
+  app.setApplicationName("TokenAuthentication - QML");
 
   // Use of Esri location services, including basemaps and geocoding,
   // requires authentication using either an ArcGIS identity or an API Key.

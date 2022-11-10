@@ -11,10 +11,6 @@
 // See the License for the specific language governing permissions and
 // limitations under the License.
 
-#ifdef Q_OS_WIN
-#include <Windows.h>
-#endif
-
 #include "RealisticLightingAndShadows.h"
 #include "ArcGISRuntimeEnvironment.h"
 
@@ -22,6 +18,10 @@
 #include <QGuiApplication>
 #include <QQmlApplicationEngine>
 #include <QSurfaceFormat>
+
+#ifdef Q_OS_WIN
+#include <Windows.h>
+#endif
 
 int main(int argc, char *argv[])
 {

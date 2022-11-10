@@ -36,12 +36,12 @@ int main(int argc, char *argv[])
   // Enforce OpenGL
   qputenv("QSG_RHI_BACKEND", "opengl");
 
-  QGuiApplication app(argc, argv);
-  app.setApplicationName("Add Items to Portal - C++");
-
 #ifdef QT_WEBVIEW_WEBENGINE_BACKEND
   QtWebEngineQuick::initialize();
 #endif // QT_WEBVIEW_WEBENGINE_BACKEND
+
+  QGuiApplication app(argc, argv);
+  app.setApplicationName("Add Items to Portal - C++");
 
   // Initialize the sample
   AddItemsToPortal::init();
