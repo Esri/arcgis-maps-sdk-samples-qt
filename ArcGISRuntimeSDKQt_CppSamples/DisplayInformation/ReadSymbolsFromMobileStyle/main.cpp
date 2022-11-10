@@ -11,16 +11,16 @@
 // See the License for the specific language governing permissions and
 // limitations under the License.
 
-#ifdef Q_OS_WIN
-#include <Windows.h>
-#endif
-
 #include "ReadSymbolsFromMobileStyle.h"
 #include "ArcGISRuntimeEnvironment.h"
 
 #include <QDir>
 #include <QGuiApplication>
 #include <QQmlApplicationEngine>
+
+#ifdef Q_OS_WIN
+#include <Windows.h>
+#endif
 
 #define STRINGIZE(x) #x
 #define QUOTE(x) STRINGIZE(x)

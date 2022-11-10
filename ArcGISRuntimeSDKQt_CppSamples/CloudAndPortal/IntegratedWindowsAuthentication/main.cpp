@@ -11,10 +11,6 @@
 // See the License for the specific language governing permissions and
 // limitations under the License.
 
-#ifdef Q_OS_WIN
-#include <Windows.h>
-#endif
-
 #include "IntegratedWindowsAuthentication.h"
 #include "ArcGISRuntimeEnvironment.h"
 
@@ -22,6 +18,11 @@
 #include <QGuiApplication>
 #include <QQmlApplicationEngine>
 #include <QQmlEngine>
+
+#ifdef Q_OS_WIN
+#include <Windows.h>
+#endif
+
 #ifdef QT_WEBVIEW_WEBENGINE_BACKEND
 #include <QtWebEngineQuick>
 #endif // QT_WEBVIEW_WEBENGINE_BACKEND
