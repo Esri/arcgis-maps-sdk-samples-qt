@@ -42,7 +42,7 @@ namespace
   {
     QString dataPath;
 
-    #if Q_OS_IOS
+    #ifdef Q_OS_IOS
       dataPath = QStandardPaths::writableLocation(QStandardPaths::DocumentsLocation);
     #else
       dataPath = QStandardPaths::writableLocation(QStandardPaths::HomeLocation);
