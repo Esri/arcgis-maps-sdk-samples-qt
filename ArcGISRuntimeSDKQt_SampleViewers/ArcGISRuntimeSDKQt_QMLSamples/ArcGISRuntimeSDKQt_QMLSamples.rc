@@ -24,9 +24,9 @@ BEGIN
     BEGIN
         BLOCK "040904B0"
         BEGIN
-            VALUE "Comments","ArcGIS Runtime SDK for Qt Samples - QML"
+            VALUE "Comments","ArcGIS Maps SDK for Qt Samples - QML"
             VALUE "CompanyName", COMPANY_NAME
-            VALUE "FileDescription", "ArcGIS Runtime SDK for Qt Samples - QML\0"
+            VALUE "FileDescription", "ArcGIS Maps SDK for Qt Samples - QML\0"
             VALUE "FileVersion", BUILD_NUM
             VALUE "InternalName", "ArcGISRuntimeSDKQt_QMLSamples\0"
             VALUE "LegalCopyright", COPY_RIGHT
