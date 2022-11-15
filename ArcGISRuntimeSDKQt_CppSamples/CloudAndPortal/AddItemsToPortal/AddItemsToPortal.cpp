@@ -28,6 +28,9 @@
 #include "OAuthClientInfo.h"
 #include "PortalUser.h"
 #include "Error.h"
+#include "ErrorInformationKeys.h"
+
+#include <QVariantMap>
 
 using namespace Esri::ArcGISRuntime;
 
@@ -168,12 +171,15 @@ void AddItemsToPortal::connectUserSignals()
   if (!m_user)
     return;
 
-  connect(m_user, &PortalUser::errorOccurred, this, [this](Esri::ArcGISRuntime::Error error)
+  connect(m_user, &PortalUser::errorOccurred, this, [this](const Error& error)
   {
     m_busy = false;
-    setStatusText( QString(error.message() + ": " + error.additionalMessage()));
+    setStatusText(QString(error.message() + ": " + error.additionalMessage()));
 
-    if (static_cast<int>(error.errorType()) == 409) // HTTP 409 "Conflict" - item already exists
+    // Check for service error 409 "Conflict" - item already exists
+    const QVariantMap additionalInfo = error.additionalInformation();
+    if (additionalInfo.contains(ErrorInformationKeys::serviceError()) &&
+        additionalInfo.value(ErrorInformationKeys::serviceError()).toInt() == 409)
     {
       m_alreadyExisted = true;
       m_user->fetchContent();

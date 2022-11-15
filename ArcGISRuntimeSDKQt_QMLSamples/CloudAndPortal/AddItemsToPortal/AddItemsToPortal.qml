@@ -76,7 +76,10 @@ Rectangle {
         onErrorChanged: {
             statusBar.text = error.message + ": " + error.additionalMessage;
 
-            if (error.errorType === 409) // HTTP 409 "Conflict" - item already exists
+            // Check for service error 409 "Conflict" - item already exists
+            const additionalInfo = error.additionalInformation;
+            if (ErrorInformationKeys.serviceError in additionalInfo &&
+                additionalInfo[ErrorInformationKeys.serviceError] === 409)
             {
                 alreadyExisted = true;
                 myUser.fetchContent();
