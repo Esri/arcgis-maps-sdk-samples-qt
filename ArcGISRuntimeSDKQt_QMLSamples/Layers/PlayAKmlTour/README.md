@@ -21,14 +21,14 @@ The sample will load the KMZ file automatically. When a tour is found, the _Play
 
 ## Relevant API
 
+* KmlTour
+* KmlTour.tourStatus
+* KmlTour.tourStatusChanged
 * KmlTourController
 * KmlTourController.pause()
 * KmlTourController.play()
 * KmlTourController.reset()
 * KmlTourController.tour
-* KmlTour
-* KmlTour.tourStatus
-* KmlTour.tourStatusChanged
 
 ## Offline data
 

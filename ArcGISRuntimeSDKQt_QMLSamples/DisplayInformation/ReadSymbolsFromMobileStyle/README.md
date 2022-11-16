@@ -51,4 +51,4 @@ While each of these symbols can be created from scratch, a more convenient workf
 
 ## Tags
 
-advanced symbology, multilayer, mobile style, stylx
+advanced symbology, mobile style, multilayer, stylx
