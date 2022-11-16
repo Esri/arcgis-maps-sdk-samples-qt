@@ -41,11 +41,11 @@ Some transformations aren't available until transformation data is provided.
 
 This sample can be used with or without provisioning projection engine data to your device. If you do not provision data, a limited number of transformations will be available.
 
-This sample uses a `GeographicTransformation`, which extends the `DatumTransformation` class. As of 100.9, ArcGIS Runtime also includes a `HorizontalVerticalTransformation`, which also extends `DatumTransformation`. The `HorizontalVerticalTransformation` class is used to transform coordinates of z-aware geometries between spatial references that have different geographic and/or vertical coordinate systems.
+This sample uses a `GeographicTransformation`, which extends the `DatumTransformation` class. As of 100.9, the ArcGIS Maps SDK for Qt also includes a `HorizontalVerticalTransformation`, which also extends `DatumTransformation`. The `HorizontalVerticalTransformation` class is used to transform coordinates of z-aware geometries between spatial references that have different geographic and/or vertical coordinate systems.
 
 To download projection engine data to your device:
 1. Log in to the [ArcGIS for Developers site](https://developers.arcgis.com/sign-in/) using your Developer account.
-2. In the Dashboard page, click '[Download APIs and SDKs](https://developers.arcgis.com/downloads/data)' and go to the `Supplemental ArcGIS Runtime Data` tab.
+2. In the Dashboard page, click '[Download APIs and SDKs](https://developers.arcgis.com/downloads/data)' and go to the `Supplemental ArcGIS Maps SDK Data` tab.
 3. Click the download button next to `Projection Engine Data` to download projection engine data to your computer.
 4. Unzip the downloaded data on your computer.
 5. Create an `~/ArcGIS/Runtime/Data/PEDataRuntime` directory on your device and copy the files to this directory.
