@@ -27,11 +27,11 @@ Select a symbol and a color from each of the category lists to create an emoji. 
 * Symbol.createSwatch
 * SymbolLayer
 * SymbolStyle
-* SymbolStyle.searchSymbols
 * SymbolStyle.fetchSymbolWithKeyList
-* SymbolStyleSearchResultListModel
-* SymbolStyleSearchResult
+* SymbolStyle.searchSymbols
 * SymbolStyleSearchParameters
+* SymbolStyleSearchResult
+* SymbolStyleSearchResultListModel
 
 ## Offline Data
 
