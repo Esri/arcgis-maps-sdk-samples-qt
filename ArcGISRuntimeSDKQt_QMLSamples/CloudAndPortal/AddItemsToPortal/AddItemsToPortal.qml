@@ -90,16 +90,13 @@ Rectangle {
             if (myUser.fetchContentStatus !== Enums.TaskStatusCompleted)
                 return;
 
-            if (myUser.items.count > 0)
-            {
-                myUser.items.forEach(item => {
-                    if (item.title === "Add Items Sample") {
-                        itemToAdd.itemId = item.itemId;
-                        itemToAdd.load();
-                        return;
-                    }
-                });
-            }
+            myUser.items.forEach(item => {
+                if (item.title === "Add Items Sample") {
+                    itemToAdd.itemId = item.itemId;
+                    itemToAdd.load();
+                    return;
+                }
+            });
         }
 
         //! [PortalUser addPortalItemCompleted]

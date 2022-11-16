@@ -193,16 +193,13 @@ void AddItemsToPortal::connectUserSignals()
     if (!success)
       return;
 
-    if (m_user->items()->size() > 0)
+    for (PortalItem* item : *m_user->items())
     {
-      for (PortalItem* item : *m_user->items())
+      if (item->title() == "Add Items Sample")
       {
-        if (item->title() == "Add Items Sample")
-        {
-          m_item->setItemId(item->itemId());
-          m_item->load();
-          return;
-        }
+        m_item->setItemId(item->itemId());
+        m_item->load();
+        return;
       }
     }
   });
