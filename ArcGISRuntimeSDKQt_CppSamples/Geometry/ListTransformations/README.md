@@ -34,18 +34,16 @@ The map starts out zoomed into the grounds of the Royal Observatory, Greenwich. 
 
 ## Additional information
 
-This sample uses a `GeographicTransformation`, which extends the `DatumTransformation` class. As of 100.9, ArcGIS Runtime also includes a `HorizontalVerticalTransformation`, which also extends `DatumTransformation`. The `HorizontalVerticalTransformation` class is used to transform coordinates of z-aware geometries between spatial references that have different geographic and/or vertical coordinate systems.
+This sample uses a `GeographicTransformation`, which extends the `DatumTransformation` class. As of 100.9, the Maps SDK also includes a `HorizontalVerticalTransformation`, which also extends `DatumTransformation`. The `HorizontalVerticalTransformation` class is used to transform coordinates of z-aware geometries between spatial references that have different geographic and/or vertical coordinate systems.
 
 Some transformations aren't available until transformation data is provided.
 
 This sample can be used with or without provisioning projection engine data to your device. If you do not provision data, a limited number of transformations will be available.
 
-This sample uses a `GeographicTransformation`, which extends the `DatumTransformation` class. As of 100.9, ArcGIS Runtime also includes a `HorizontalVerticalTransformation`, which also extends `DatumTransformation`. The `HorizontalVerticalTransformation` class is used to transform coordinates of z-aware geometries between spatial references that have different geographic and/or vertical coordinate systems.
-
 To download projection engine data to your device:
 1. Log in to the ArcGIS for Developers site using your Developer account.
 2. In the Dashboard page, click 'Download APIs and SDKs'.
-3. Click the download button next to `ArcGIS Runtime Coordinate System Data 100.x` to download projection engine data to your computer.
+3. Click the download button next to `ArcGIS Maps SDK for Native Apps Coordinate System Data 100.x` to download projection engine data to your computer.
 4. Unzip the downloaded data on your computer.
 5. Create an `~/ArcGIS/Runtime/Data/PEDataRuntime` directory on your device and copy the files to this directory.
 

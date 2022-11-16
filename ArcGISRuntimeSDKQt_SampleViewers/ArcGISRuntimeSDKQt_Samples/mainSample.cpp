@@ -318,9 +318,9 @@ int main(int argc, char *argv[])
 #endif // QT_WEBVIEW_WEBENGINE_BACKEND
 
 #ifdef CPP_VIEWER
-  QGuiApplication::setApplicationName("ArcGIS Runtime Qt Cpp Samples");
+  QGuiApplication::setApplicationName("ArcGIS Maps SDK Qt Cpp Samples");
 #else
-  QGuiApplication::setApplicationName("ArcGIS Runtime Qt Qml Samples");
+  QGuiApplication::setApplicationName("ArcGIS Maps SDK Qt Qml Samples");
 #endif
 
   QGuiApplication::setOrganizationName("Esri");

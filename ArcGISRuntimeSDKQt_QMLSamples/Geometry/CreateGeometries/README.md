@@ -14,7 +14,7 @@ Pan and zoom freely to see the different types of geometries placed onto the map
 
 ## How it works
 
-Geometries are immutable in the ArcGIS Runtime API, so `GeometryBuilder` objects must be used to build or modify a `Geometry`. In this case, a `MultipointBuilder`, `PolygonBuilder`, and `PolylineBuilder` are created by setting the spatial reference of the builder.
+Geometries are immutable in the API, so `GeometryBuilder` objects must be used to build or modify a `Geometry`. In this case, a `MultipointBuilder`, `PolygonBuilder`, and `PolylineBuilder` are created by setting the spatial reference of the builder.
 
 1. Use the constructors for the various simple `Geometry` types including `Point`, `Polyline`, `Multipoint`, `Polygon`, and `Envelope`.
 2. To display the geometry, create a `Graphic` passing in the geometry, and a `Symbol` appropriate for the geometry type.

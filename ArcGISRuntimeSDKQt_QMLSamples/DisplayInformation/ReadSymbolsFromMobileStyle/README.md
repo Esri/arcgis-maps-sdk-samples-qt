@@ -47,7 +47,7 @@ The mobile style file used in this sample was created using ArcGIS Pro, and is h
 
 ## Additional information
 
-While each of these symbols can be created from scratch, a more convenient workflow is to author them using ArcGIS Pro and store them in a mobile style file (.stylx). ArcGIS Runtime can read symbols from a mobile style, and you can modify and combine them as needed in your app.
+While each of these symbols can be created from scratch, a more convenient workflow is to author them using ArcGIS Pro and store them in a mobile style file (.stylx). The ArcGIS Maps SDK for Qt can read symbols from a mobile style, and you can modify and combine them as needed in your app.
 
 ## Tags
 

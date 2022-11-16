@@ -1,4 +1,4 @@
-# ArcGIS Maps SDK 200.0.0 for Qt sample applications
+# ArcGIS Maps SDK for Qt Samples
 
 ## Overview
 
@@ -22,7 +22,7 @@ The repo contains [Qt](http://qt.io) projects for each sample that can be run fr
 * Qt SDK 5.15.2 or higher (Open source or commercial)
 * Qt Creator
 * An [ArcGIS Developer API key](https://developers.arcgis.com/documentation/mapping-apis-and-services/security/api-keys/)
-* [ArcGIS Maps Toolkit - Qt](https://github.com/Esri/arcgis-runtime-toolkit-qt) is required as some samples utilize toolkit components.
+* [ArcGIS Maps SDK for Qt Toolkit](https://github.com/Esri/arcgis-runtime-toolkit-qt) is required as some samples utilize toolkit components.
 * For more information, please visit the [System Requirements](https://developers.arcgis.com/qt/reference/system-requirements/) page.
 
 ## Set up the ArcGIS Maps SDK for Qt samples repo locally
@@ -46,7 +46,7 @@ git clone https://github.com/YOUR_USERNAME/arcgis-runtime-samples-qt.git
 
 #### Clone the toolkit repo
 
-Change directory into your locally cloned samples repo and then use `git clone` to get a copy of the [ArcGIS Runtime Toolkit - Qt](https://github.com/Esri/arcgis-runtime-toolkit-qt.git).
+Change directory into your locally cloned samples repo and then use `git clone` to get a copy of the [ArcGIS Maps SDK for Qt Toolkit](https://github.com/Esri/arcgis-runtime-toolkit-qt.git).
 
 ```bash
 # Change directory to the clone of the samples repository
@@ -123,7 +123,7 @@ NOTE: the sample viewer project files search for the toolkit.pri at the [default
 
 ## Use a previous version
 
-The `main` branch contains samples for the current, most up-to-date version of ArcGIS Runtime. To access previous versions, you can checkout by a tag or commit, or alternativley you can download the source zip:
+The `main` branch contains samples for the current, most up-to-date version of ArcGIS Maps SDK. To access previous versions, you can checkout by a tag or commit, or alternativley you can download the source zip:
 
 * [100.0](https://github.com/Esri/arcgis-runtime-samples-qt/releases/tag/1529)
 * [100.1](https://github.com/Esri/arcgis-runtime-samples-qt/releases/tag/1744)
@@ -159,7 +159,7 @@ iOS      | `<your app bundle>`| `<appbundle>/ArcGIS/Runtime/Data`       |
 
 ## Resources
 
-* [ArcGIS Runtime QtSDK Resource Center](https://developers.arcgis.com/qt/latest/)
+* [ArcGIS Maps SDK for Qt Resource Center](https://developers.arcgis.com/qt/latest/)
 * [Qt and QML](http://www.qt.io/)
 * [ArcGIS Blog](http://blogs.esri.com/esri/arcgis/)
 * [twitter@esri](http://twitter.com/esri)

@@ -6,7 +6,7 @@ Start a local feature service and display its features in a map.
 
 ## Use case
 
-For executing offline geoprocessing tasks in your ArcGIS Runtime apps via an offline (local) server.
+For executing offline geoprocessing tasks in your apps via an offline (local) server.
 
 ## How to use the sample
 

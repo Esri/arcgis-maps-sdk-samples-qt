@@ -21,7 +21,7 @@ Use the play button to step through the data one day at a time. Use the previous
 2. Create a `ServiceFeatureTable` from a URL (the feature layer from the url in this sample includes time-enabled data).
 3. Create a feature layer from the service feature table.
 4. Add the feature layer that includes time-enabled data to the map's list of operational layers.
-5. Create a `TimeSlider` from the ArcGIS Runtime Toolkit to allow users to show data only from the given date range. This sets up all necessary calls to visualize and step through the temporal data.
+5. Create a `TimeSlider` from the Maps SDK Toolkit to allow users to show data only from the given date range. This sets up all necessary calls to visualize and step through the temporal data.
 
 ## Relevant API
 
