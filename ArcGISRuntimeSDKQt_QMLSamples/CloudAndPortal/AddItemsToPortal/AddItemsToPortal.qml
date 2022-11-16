@@ -92,8 +92,13 @@ Rectangle {
 
             if (myUser.items.count > 0)
             {
-                itemToAdd.itemId = myUser.items.get(0).itemId;
-                itemToAdd.load();
+                myUser.items.forEach(item => {
+                    if (item.title === "Add Items Sample") {
+                        itemToAdd.itemId = item.itemId;
+                        itemToAdd.load();
+                        return;
+                    }
+                });
             }
         }
 
