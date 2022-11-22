@@ -73,7 +73,7 @@ Item {
 
                     Text {
                         anchors.horizontalCenter: parent.horizontalCenter
-                        text: qsTr("ArcGIS Runtime SDK for Qt Samples")
+                        text: qsTr("ArcGIS Maps SDK for Qt Samples")
                         font {
                             family: fontFamily
                             pixelSize: 14
@@ -84,7 +84,7 @@ Item {
 
                     Text {
                         anchors.horizontalCenter: parent.horizontalCenter
-                        text: qsTr("Built with ArcGIS Runtime SDK for Qt")
+                        text: qsTr("Built with ArcGIS Maps SDK for Qt")
                         font {
                             family: fontFamily
                             pixelSize: 13

@@ -6,7 +6,7 @@ Create symbol styles from a style file hosted on a portal.
 
 ## Use case
 
-Style files hosted on an ArcGIS Online or Enterprise portal are known as web styles. They can be used to style symbols on a feature layer or graphic overlay. Since styles are published from ArcGIS Pro, you can author and design your own beautiful multilayer vector symbols. These vector symbols look good at any resolution and scale well. Runtime users can now access these styles from their native application, and make use of the vector symbols within them to enhance features and graphics in the map.
+Style files hosted on an ArcGIS Online or Enterprise portal are known as web styles. They can be used to style symbols on a feature layer or graphic overlay. Since styles are published from ArcGIS Pro, you can author and design your own beautiful multilayer vector symbols. These vector symbols look good at any resolution and scale well. Users can now access these styles from their native applications, and make use of the vector symbols within them to enhance features and graphics in the map.
 
 ## How to use the sample
 The sample displays a map with a set of symbols that represent the categories of the features within the dataset. Pan and zoom on the map and view the legend to explore the appearance and names of the different symbols from the selected symbol style.

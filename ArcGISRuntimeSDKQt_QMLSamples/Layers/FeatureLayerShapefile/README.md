@@ -6,7 +6,7 @@ Open a shapefile stored on the device and display it as a feature layer with def
 
 ## Use case
 
-Shapefiles store location, shape and attributes of geospatial vector data. Shapefiles can be loaded directly into ArcGIS Runtime.
+Shapefiles store location, shape and attributes of geospatial vector data. Shapefiles can be loaded directly into your app using the ArcGIS Maps SDK for Qt.
 
 ## How to use the sample
 

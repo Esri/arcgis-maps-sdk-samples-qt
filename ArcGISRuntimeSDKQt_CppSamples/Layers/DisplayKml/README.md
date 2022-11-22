@@ -6,7 +6,7 @@ Display KML from a URL, portal item, or local KML file.
 
 ## Use case
 
-Keyhole Markup Language (KML) is a data format used by Google Earth. KML is popular as a transmission format for consumer use and for sharing geographic data between apps. You can use Runtime to display KML files, with full support for a variety of features, including network links, 3D models, screen overlays, and tours.
+Keyhole Markup Language (KML) is a data format used by Google Earth. KML is popular as a transmission format for consumer use and for sharing geographic data between apps. You can use the ArcGIS Maps SDK for Native Apps to display KML files, with full support for a variety of features, including network links, 3D models, screen overlays, and tours.
 
 ## How to use the sample
 
