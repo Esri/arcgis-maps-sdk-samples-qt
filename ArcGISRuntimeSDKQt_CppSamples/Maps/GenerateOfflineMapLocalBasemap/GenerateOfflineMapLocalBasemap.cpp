@@ -101,8 +101,8 @@ void GenerateOfflineMapLocalBasemap::componentComplete()
   // Set map to map view
   m_mapView->setMap(m_map);
 
-  // Create the OfflineMapTask with the PortalItem
-  m_offlineMapTask = new OfflineMapTask(m_portalItem, this);
+  // Create the OfflineMapTask with the online map
+  m_offlineMapTask = new OfflineMapTask(m_map, this);
 
   // connect to the error signal
   connect(m_offlineMapTask, &OfflineMapTask::errorOccurred, this, [](Error e)
