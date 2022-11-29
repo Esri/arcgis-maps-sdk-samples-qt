@@ -71,7 +71,7 @@ Rectangle {
         }
 
         property int modelWidth: 0
-        width: modelWidth + leftPadding + rightPadding + indicator.width
+        width: modelWidth + leftPadding + rightPadding
 
         model: ["Center","Center and scale","Geometry","Geometry and padding","Rotation","Scale 1:5,000,000","Scale 1:10,000,000","Animation"]
         onCurrentTextChanged: {
@@ -126,8 +126,8 @@ Rectangle {
     }
 
     function screenRatio() {
-        const width = mv.mapWidth;
-        const height = mv.mapHeight;
+        const width = mv.widthInPixels;
+        const height = mv.heightInPixels;
         return height > width ? width / height : height / width;
     }
 }
