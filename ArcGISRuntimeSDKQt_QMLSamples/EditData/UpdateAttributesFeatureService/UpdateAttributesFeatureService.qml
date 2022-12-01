@@ -180,7 +180,7 @@ Rectangle {
 
             ComboBox {
                 property int modelWidth: 0
-                Layout.minimumWidth: modelWidth + leftPadding + rightPadding + indicator.width
+                Layout.minimumWidth: modelWidth + leftPadding + rightPadding
 
                 Layout.columnSpan: 2
                 Layout.margins: 5

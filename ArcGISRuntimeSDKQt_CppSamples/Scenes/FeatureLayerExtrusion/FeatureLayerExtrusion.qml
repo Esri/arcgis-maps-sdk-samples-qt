@@ -44,7 +44,7 @@ FeatureLayerExtrusionSample {
             }
 
             property int modelWidth: 0
-            width: modelWidth + leftPadding + rightPadding + indicator.width
+            width: modelWidth + leftPadding + rightPadding
 
             model: ["TOTAL POPULATION", "POPULATION DENSITY"]
 
