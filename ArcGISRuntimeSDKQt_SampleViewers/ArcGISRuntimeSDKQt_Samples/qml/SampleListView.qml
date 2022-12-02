@@ -53,7 +53,7 @@ Page {
                 pixelSize: 18
                 family: fontFamily
             }
-            color: "white"
+            Material.theme: Material.Dark
         }
     }
 

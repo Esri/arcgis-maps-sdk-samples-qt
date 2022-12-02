@@ -33,7 +33,7 @@ Page {
                     family: fontFamily
                     pixelSize: 18
                 }
-                color: "white"
+                Material.theme: Material.Dark
             }
             anchors.left: parent.left
             anchors.right: parent.right

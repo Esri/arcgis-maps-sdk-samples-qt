@@ -56,7 +56,7 @@ ApplicationWindow {
                 pixelSize: 24
                 family: fontFamily
             }
-            color: "white"
+            Material.theme: Material.Dark
         }
 
         Image {
