@@ -96,7 +96,7 @@ Rectangle {
                 ComboBox {
                     id: renderingRulesCombo
                     property int modelWidth: 0
-                    Layout.minimumWidth: modelWidth + leftPadding + rightPadding + indicator.width
+                    Layout.minimumWidth: modelWidth + leftPadding + rightPadding
                     model: renderingRuleNames
                     onModelChanged: {
                         for (let i = 0; i < model.length; ++i) {

@@ -59,7 +59,7 @@ LocalServerServicesSample {
             ComboBox {
                 id: servicesCombo
                 property int modelWidth: 0
-                width: modelWidth + leftPadding + rightPadding + indicator.width
+                width: modelWidth + leftPadding + rightPadding
 
                 enabled: isServerRunning
                 model: ["Map Service", "Feature Service", "Geoprocessing Service"]

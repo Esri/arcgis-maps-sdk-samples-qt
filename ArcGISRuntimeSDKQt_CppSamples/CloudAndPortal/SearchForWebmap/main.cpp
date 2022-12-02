@@ -37,6 +37,10 @@ int main(int argc, char *argv[])
   // Enforce OpenGL
   qputenv("QSG_RHI_BACKEND", "opengl");
 
+#ifdef QT_WEBVIEW_WEBENGINE_BACKEND
+  QtWebEngineQuick::initialize();
+#endif // QT_WEBVIEW_WEBENGINE_BACKEND
+
   QGuiApplication app(argc, argv);
   app.setApplicationName("Search for Webmap - C++");
 
@@ -57,10 +61,6 @@ int main(int argc, char *argv[])
   {
       Esri::ArcGISRuntime::ArcGISRuntimeEnvironment::setApiKey(apiKey);
   }
-
-#ifdef QT_WEBVIEW_WEBENGINE_BACKEND
-  QtWebEngineQuick::initialize();
-#endif // QT_WEBVIEW_WEBENGINE_BACKEND
 
   // Initialize the sample
   SearchForWebmap::init();

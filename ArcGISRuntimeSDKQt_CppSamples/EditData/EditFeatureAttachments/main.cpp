@@ -36,7 +36,7 @@ int main(int argc, char *argv[])
   // Enforce OpenGL
   qputenv("QSG_RHI_BACKEND", "opengl");
 
-  QApplication app(argc, argv);
+  QGuiApplication app(argc, argv);
   app.setApplicationName("Edit Feature Attachments - C++");
 
   // Use of Esri location services, including basemaps and geocoding,
