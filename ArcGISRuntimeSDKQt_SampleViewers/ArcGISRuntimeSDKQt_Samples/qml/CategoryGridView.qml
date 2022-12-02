@@ -33,7 +33,7 @@ Page {
                     family: fontFamily
                     pixelSize: 18
                 }
-                color: "white"
+                Material.theme: Material.Dark
             }
             anchors.left: parent.left
             anchors.right: parent.right
@@ -73,6 +73,7 @@ Page {
     }
 
     Rectangle {
+        visible: searchBar.text !== ""
         color: "transparent"
         anchors {
             fill: parent
@@ -87,7 +88,6 @@ Page {
                 sourceModel: SampleManager.samples
                 filterString: searchBar.text
             }
-            visible: searchBar.text !== ""
         }
     }
     // Ensure virtual keyboard is not persisted after this item has been
