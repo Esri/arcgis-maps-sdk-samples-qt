@@ -67,12 +67,12 @@ Component {
                     }
                 }
 
-                Label {
+                Text {
                     width: parent.width
                     antialiasing: true
                     text: displayName
                     visible: drawer.visible
-                    Material.theme: Material.Dark
+                    color: "white"
                     font {
                         capitalization: Font.AllUppercase
                         pixelSize: 11
