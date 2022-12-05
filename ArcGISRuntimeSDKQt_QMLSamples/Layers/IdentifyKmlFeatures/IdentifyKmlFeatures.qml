@@ -42,8 +42,9 @@ Rectangle {
             id: callout
             calloutData: parent.calloutData
             implicitWidth: 150
+            implicitHeight: contentText.implicitHeight + (contentText.implicitHeight * .05)
             contentItem: Label {
-                id: componentText
+                id: contentText
                 text: calloutText
                 wrapMode: Text.WordWrap
                 textFormat: Text.RichText
