@@ -64,7 +64,7 @@ Item {
                     family: fontFamily
                     pixelSize: 18
                 }
-                Material.theme: Material.Dark
+                color: "white"
             }
         }
 
