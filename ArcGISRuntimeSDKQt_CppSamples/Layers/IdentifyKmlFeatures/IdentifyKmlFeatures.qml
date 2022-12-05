@@ -35,7 +35,9 @@ Item {
             id: callout
             calloutData: view.calloutData
             implicitWidth: 150
-            contentItem: Text {
+            implicitHeight: contentText.implicitHeight + (contentText.implicitHeight * .05)
+            contentItem: Label {
+                id: contentText
                 text: model.calloutText
                 wrapMode: Text.WordWrap
                 textFormat: Text.RichText
