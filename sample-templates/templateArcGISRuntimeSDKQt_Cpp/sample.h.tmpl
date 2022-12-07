@@ -33,6 +33,12 @@ namespace Esri::ArcGISRuntime
 
 #include <QObject>
 
+@if %{ThreeDSample}
+  Q_MOC_INCLUDE("SceneQuickView.h");
+@else
+  Q_MOC_INCLUDE("MapQuickView.h");
+@endif
+
 class %{SampleName} : public QObject
 {
   Q_OBJECT
