@@ -1,6 +1,6 @@
 // [WriteFile Name=AddFeaturesFeatureService, Category=EditData]
 // [Legal]
-// Copyright 2016 Esri.
+// Copyright 2022 Esri.
 
 // Licensed under the Apache License, Version 2.0 (the "License");
 // you may not use this file except in compliance with the License.
@@ -20,26 +20,25 @@
 
 #include "AddFeaturesFeatureService.h"
 
-#include "Map.h"
-#include "MapQuickView.h"
 #include "Basemap.h"
-#include "Viewpoint.h"
-#include "Point.h"
-#include "SpatialReference.h"
-#include "ServiceFeatureTable.h"
-#include "FeatureLayer.h"
 #include "Feature.h"
 #include "FeatureEditResult.h"
-#include "MapViewTypes.h"
-#include "MapTypes.h"
+#include "FeatureLayer.h"
 #include "LayerListModel.h"
+#include "Map.h"
+#include "MapQuickView.h"
+#include "MapTypes.h"
+#include "Point.h"
+#include "ServiceFeatureTable.h"
+#include "SpatialReference.h"
 #include "TaskWatcher.h"
+#include "Viewpoint.h"
 
-#include <QUrl>
 #include <QMap>
+#include <QMouseEvent>
+#include <QUrl>
 #include <QUuid>
 #include <QVariant>
-#include <QMouseEvent>
 
 using namespace Esri::ArcGISRuntime;
 
@@ -54,40 +53,42 @@ namespace
   };
 }
 
-AddFeaturesFeatureService::AddFeaturesFeatureService(QQuickItem* parent) :
-  QQuickItem(parent)
+
+AddFeaturesFeatureService::AddFeaturesFeatureService(QObject* parent /* = nullptr */):
+  QObject(parent),
+  m_map(new Map(BasemapStyle::ArcGISStreets, this))
 {
+  m_map->setInitialViewpoint(Viewpoint(Point(-10800000, 4500000, SpatialReference(102100)), 3e7));
+
+  m_featureTable = new ServiceFeatureTable(QUrl("https://sampleserver6.arcgisonline.com/arcgis/rest/services/DamageAssessment/FeatureServer/0"), this);
+  m_featureLayer = new FeatureLayer(m_featureTable, this);
+  m_map->operationalLayers()->append(m_featureLayer);
 }
 
 AddFeaturesFeatureService::~AddFeaturesFeatureService() = default;
 
 void AddFeaturesFeatureService::init()
 {
+  // Register the map view for QML
   qmlRegisterType<MapQuickView>("Esri.Samples", 1, 0, "MapView");
   qmlRegisterType<AddFeaturesFeatureService>("Esri.Samples", 1, 0, "AddFeaturesFeatureServiceSample");
 }
 
-void AddFeaturesFeatureService::componentComplete()
+MapQuickView* AddFeaturesFeatureService::mapView() const
 {
-  QQuickItem::componentComplete();
+  return m_mapView;
+}
 
-  // find QML MapView component
-  m_mapView = findChild<MapQuickView*>("mapView");
-  m_mapView->setWrapAroundMode(WrapAroundMode::Disabled);
+// Set the view (created in QML)
+void AddFeaturesFeatureService::setMapView(MapQuickView* mapView)
+{
+  if (!mapView || mapView == m_mapView)
+    return;
 
-  // create a Map by passing in the Basemap
-  m_map = new Map(BasemapStyle::ArcGISStreets, this);
-  m_map->setInitialViewpoint(Viewpoint(Point(-10800000, 4500000, SpatialReference(102100)), 3e7));
-
-  // set map on the map view
+  m_mapView = mapView;
   m_mapView->setMap(m_map);
 
-  // create the ServiceFeatureTable
-  m_featureTable = new ServiceFeatureTable(QUrl("https://sampleserver6.arcgisonline.com/arcgis/rest/services/DamageAssessment/FeatureServer/0"), this);
-
-  // create the FeatureLayer with the ServiceFeatureTable and add it to the Map
-  m_featureLayer = new FeatureLayer(m_featureTable, this);
-  m_map->operationalLayers()->append(m_featureLayer);
+  emit mapViewChanged();
 
   connectSignals();
 }

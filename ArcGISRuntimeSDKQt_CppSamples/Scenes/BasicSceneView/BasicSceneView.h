@@ -1,6 +1,6 @@
 // [WriteFile Name=BasicSceneView, Category=Scenes]
 // [Legal]
-// Copyright 2016 Esri.
+// Copyright 2022 Esri.
 
 // Licensed under the Apache License, Version 2.0 (the "License");
 // you may not use this file except in compliance with the License.
@@ -14,32 +14,40 @@
 // limitations under the License.
 // [Legal]
 
-#ifndef BASIC_SCENEVIEW_H
-#define BASIC_SCENEVIEW_H
+#ifndef BASICSCENEVIEW_H
+#define BASICSCENEVIEW_H
 
 namespace Esri::ArcGISRuntime
 {
-  class Scene;
-  class SceneQuickView;
+class Scene;
+class SceneQuickView;
 }
 
-#include <QQuickItem>
+#include <QObject>
 
-class BasicSceneView : public QQuickItem
+Q_MOC_INCLUDE("SceneQuickView.h");
+
+class BasicSceneView : public QObject
 {
   Q_OBJECT
 
-public:
-  explicit BasicSceneView(QQuickItem* parent = nullptr);
-  ~BasicSceneView() override;
+  Q_PROPERTY(Esri::ArcGISRuntime::SceneQuickView* sceneView READ sceneView WRITE setSceneView NOTIFY sceneViewChanged)
 
-  void componentComplete() override;
+public:
+  explicit BasicSceneView(QObject* parent = nullptr);
+  ~BasicSceneView();
+
   static void init();
 
+signals:
+  void sceneViewChanged();
+
 private:
+  Esri::ArcGISRuntime::SceneQuickView* sceneView() const;
+  void setSceneView(Esri::ArcGISRuntime::SceneQuickView* sceneView);
+
   Esri::ArcGISRuntime::Scene* m_scene = nullptr;
   Esri::ArcGISRuntime::SceneQuickView* m_sceneView = nullptr;
 };
 
-#endif // BASIC_SCENEVIEW_H
-
+#endif // BASICSCENEVIEW_H

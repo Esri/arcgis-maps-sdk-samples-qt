@@ -1,5 +1,5 @@
 #-------------------------------------------------
-# Copyright 2015 Esri.
+# Copyright 2022 Esri.
 
 # Licensed under the Apache License, Version 2.0 (the "License");
 # you may not use this file except in compliance with the License.
@@ -22,13 +22,13 @@ mac {
 CONFIG += c++17
 
 # additional modules are pulled in via arcgisruntime.pri
-QT += opengl qml quick
-
-ARCGIS_RUNTIME_VERSION = 200.0.0
-include($$PWD/arcgisruntime.pri)
+QT += qml quick
 
 TEMPLATE = app
 TARGET = FeatureLayerSelection
+
+ARCGIS_RUNTIME_VERSION = 200.0.0
+include($$PWD/arcgisruntime.pri)
 
 #-------------------------------------------------------------------------------
 
@@ -62,5 +62,3 @@ android {
     INCLUDEPATH += $$PWD
     DEPENDPATH += $$PWD
 }
-
-

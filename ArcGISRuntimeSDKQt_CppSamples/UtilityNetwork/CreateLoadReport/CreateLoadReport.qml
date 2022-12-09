@@ -24,7 +24,6 @@ Item {
     property var selectedPhases: ({})
     property bool reportHasRun: false
 
-    // Declare the C++ instance which creates the scene etc. and supply the view
     CreateLoadReportSample {
         id: sampleModel
     }

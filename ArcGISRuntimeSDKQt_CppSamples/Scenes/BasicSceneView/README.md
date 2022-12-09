@@ -1,6 +1,6 @@
 # Display a scene
 
-Display a scene with a terrain surface and some imagery.
+Display a scene with a terrain surface and imagery.
 
 ![](screenshot.png)
 

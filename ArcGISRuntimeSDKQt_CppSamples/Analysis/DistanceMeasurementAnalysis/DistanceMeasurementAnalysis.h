@@ -1,6 +1,6 @@
 // [WriteFile Name=DistanceMeasurementAnalysis, Category=Analysis]
 // [Legal]
-// Copyright 2018 Esri.
+// Copyright 2022 Esri.
 
 // Licensed under the Apache License, Version 2.0 (the "License");
 // you may not use this file except in compliance with the License.
@@ -19,33 +19,42 @@
 
 namespace Esri::ArcGISRuntime
 {
-class SceneQuickView;
 class LocationDistanceMeasurement;
+class Scene;
+class SceneQuickView;
 }
 
-#include <QQuickItem>
+#include <QObject>
 
-class DistanceMeasurementAnalysis : public QQuickItem
+Q_MOC_INCLUDE("SceneQuickView.h");
+
+class DistanceMeasurementAnalysis : public QObject
 {
   Q_OBJECT
+
+  Q_PROPERTY(Esri::ArcGISRuntime::SceneQuickView* sceneView READ sceneView WRITE setSceneView NOTIFY sceneViewChanged)
   Q_PROPERTY(QString directDistance READ directDistance NOTIFY directDistanceChanged)
   Q_PROPERTY(QString horizontalDistance READ horizontalDistance NOTIFY horizontalDistanceChanged)
   Q_PROPERTY(QString verticalDistance READ verticalDistance NOTIFY verticalDistanceChanged)
 
 public:
-  explicit DistanceMeasurementAnalysis(QQuickItem* parent = nullptr);
-  ~DistanceMeasurementAnalysis() override = default;
+  explicit DistanceMeasurementAnalysis(QObject* parent = nullptr);
+  ~DistanceMeasurementAnalysis() override;
 
-  void componentComplete() override;
   static void init();
   Q_INVOKABLE void setUnits(const QString& unitName);
 
 signals:
+  void sceneViewChanged();
   void directDistanceChanged();
   void horizontalDistanceChanged();
   void verticalDistanceChanged();
 
 private:
+  Esri::ArcGISRuntime::SceneQuickView* sceneView() const;
+  void setSceneView(Esri::ArcGISRuntime::SceneQuickView* sceneView);
+
+  Esri::ArcGISRuntime::Scene* m_scene = nullptr;
   Esri::ArcGISRuntime::SceneQuickView* m_sceneView = nullptr;
   Esri::ArcGISRuntime::LocationDistanceMeasurement* m_distanceAnalysis = nullptr;
   QString m_directDistance;

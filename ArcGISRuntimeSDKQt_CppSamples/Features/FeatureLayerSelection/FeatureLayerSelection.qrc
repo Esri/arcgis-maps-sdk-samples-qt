@@ -5,6 +5,7 @@
         <file>FeatureLayerSelection.qml</file>
 		<file>FeatureLayerSelection.h</file>
 		<file>FeatureLayerSelection.cpp</file>
+        <file>main.qml</file>
         <file>README.md</file>
     </qresource>
 </RCC>

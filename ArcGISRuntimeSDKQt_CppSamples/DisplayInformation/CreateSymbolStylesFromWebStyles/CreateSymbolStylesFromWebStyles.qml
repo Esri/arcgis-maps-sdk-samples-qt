@@ -32,7 +32,7 @@ Item {
         }
     }
 
-    // Declare the C++ instance which creates the scene etc. and supply the view
+    // Declare the C++ instance which creates the map etc. and supply the view
     CreateSymbolStylesFromWebStylesSample {
         id: sample
         mapView: view

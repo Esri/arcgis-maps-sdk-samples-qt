@@ -4,6 +4,7 @@
         <file>Buffer.qml</file>
         <file>Buffer.h</file>
         <file>Buffer.cpp</file>
+        <file>main.qml</file>
         <file>screenshot.png</file>
         <file>README.md</file>
     </qresource>

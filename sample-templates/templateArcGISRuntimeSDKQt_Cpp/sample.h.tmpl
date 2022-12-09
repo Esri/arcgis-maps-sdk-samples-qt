@@ -51,7 +51,7 @@ class %{SampleName} : public QObject
 
 public:
   explicit %{SampleName}(QObject* parent = nullptr);
-  ~%{SampleName}();
+  ~%{SampleName}() override;
 
   static void init();
 

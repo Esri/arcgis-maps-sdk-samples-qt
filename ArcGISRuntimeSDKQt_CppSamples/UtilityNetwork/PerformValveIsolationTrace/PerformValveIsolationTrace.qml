@@ -129,7 +129,7 @@ Item {
         anchors.centerIn: parent
     }
 
-    // Declare the C++ instance which creates the scene etc. and supply the view
+    // Declare the C++ instance which creates the map etc. and supply the view
     PerformValveIsolationTraceSample {
         id: sampleModel
         mapView: view

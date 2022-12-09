@@ -1,6 +1,6 @@
 // [WriteFile Name=DistanceMeasurementAnalysis, Category=Analysis]
 // [Legal]
-// Copyright 2018 Esri.
+// Copyright 2022 Esri.
 
 // Licensed under the Apache License, Version 2.0 (the "License");
 // you may not use this file except in compliance with the License.
@@ -18,20 +18,22 @@ import QtQuick
 import QtQuick.Controls
 import Esri.Samples
 
-DistanceMeasurementAnalysisSample {
-    id: rootRectangle
-    clip: true
-    width: 800
-    height: 600
+Item {
 
     SceneView {
-        objectName: "sceneView"
+        id: view
         anchors.fill: parent
 
         Component.onCompleted: {
-            // Set the focus on SceneView to initially enable keyboard navigation
+            // Set and keep the focus on SceneView to enable keyboard navigation
             forceActiveFocus();
         }
+    }
+
+    // Declare the C++ instance which creates the scene etc. and supply the view
+    DistanceMeasurementAnalysisSample {
+        id: model
+        sceneView: view
     }
 
     Rectangle {
@@ -62,7 +64,7 @@ DistanceMeasurementAnalysisSample {
             Text {
                 id: directDistanceText
                 color: "white"
-                text: directDistance
+                text: model.directDistance
             }
         }
         Row {
@@ -74,7 +76,7 @@ DistanceMeasurementAnalysisSample {
             Text {
                 id: verticalDistanceText
                 color: "white"
-                text: verticalDistance
+                text: model.verticalDistance
             }
         }
         Row {
@@ -86,10 +88,11 @@ DistanceMeasurementAnalysisSample {
             Text {
                 id: horizontalDistanceText
                 color: "white"
-                text: horizontalDistance
+                text: model.horizontalDistance
             }
         }
         Row {
+            id: row
             spacing: 5
             Text {
                 text: "Unit System:"
@@ -97,21 +100,8 @@ DistanceMeasurementAnalysisSample {
             }
             ComboBox {
                 id: comboBox
-                property int modelWidth: 0
-                width: modelWidth + leftPadding + rightPadding
                 model: ["Metric", "Imperial"]
-                onCurrentTextChanged: setUnits(currentText);
-                Component.onCompleted : {
-                    for (let i = 0; i < model.length; ++i) {
-                        metrics.text = model[i];
-                        modelWidth = Math.max(modelWidth, metrics.width);
-                    }
-                }
-
-                TextMetrics {
-                    id: metrics
-                    font: comboBox.font
-                }
+                onCurrentTextChanged: model.setUnits(currentText);
             }
         }
     }

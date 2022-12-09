@@ -102,9 +102,9 @@ Rectangle {
                     spatialReference: SpatialReference { wkid: 4326 }
                 }
                 // connect to distance change signals
-                onDirectDistanceChanged: directDistanceText.text = directDistance.value.toFixed(2) + " %1".arg(unitSystem === Enums.UnitSystemMetric ? "m" : "ft")
-                onHorizontalDistanceChanged: horizontalDistanceText.text = horizontalDistance.value.toFixed(2) + " %1".arg(unitSystem === Enums.UnitSystemMetric ? "m" : "ft")
-                onVerticalDistanceChanged: verticalDistanceText.text = verticalDistance.value.toFixed(2) + " %1".arg(unitSystem === Enums.UnitSystemMetric ? "m" : "ft")
+                onDirectDistanceChanged: directDistanceText.text = directDistance.value.toFixed(2) + " %1".arg(directDistance.unit.abbreviation)
+                onHorizontalDistanceChanged: horizontalDistanceText.text = horizontalDistance.value.toFixed(2) + " %1".arg(horizontalDistance.unit.abbreviation)
+                onVerticalDistanceChanged: verticalDistanceText.text = verticalDistance.value.toFixed(2) + " %1".arg(verticalDistance.unit.abbreviation)
             }
         }
 
@@ -221,25 +221,12 @@ Rectangle {
             }
             ComboBox {
                 id: comboBox
-                property int modelWidth: 0
-                width: modelWidth + leftPadding + rightPadding
                 model: ["Metric", "Imperial"]
                 onCurrentTextChanged: {
                     if (currentText === "Metric")
                         locationDistanceMeasurement.unitSystem = Enums.UnitSystemMetric;
                     else
                         locationDistanceMeasurement.unitSystem = Enums.UnitSystemImperial;
-                }
-                Component.onCompleted : {
-                    for (let i = 0; i < model.length; ++i) {
-                        metrics.text = model[i];
-                        modelWidth = Math.max(modelWidth, metrics.width);
-                    }
-                }
-
-                TextMetrics {
-                    id: metrics
-                    font: comboBox.font
                 }
             }
         }
