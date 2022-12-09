@@ -18,8 +18,6 @@
 #include "pch.hpp"
 #endif // PCH_BUILD
 
-#include <QUuid>
-
 #include "FeatureLayerSelection.h"
 
 #include "Envelope.h"
@@ -35,6 +33,9 @@
 #include "TaskWatcher.h"
 #include "Viewpoint.h"
 
+#include <QUuid>
+#include <memory>
+
 using namespace Esri::ArcGISRuntime;
 
 FeatureLayerSelection::FeatureLayerSelection(QObject* parent /* = nullptr */):
@@ -44,7 +45,7 @@ FeatureLayerSelection::FeatureLayerSelection(QObject* parent /* = nullptr */):
   m_map->setInitialViewpoint(Viewpoint(Envelope(-6603299.491810, 1679677.742046, 9002253.947487, 8691318.054732, SpatialReference::webMercator())));
 
   m_featureTable = new ServiceFeatureTable(QUrl("https://services1.arcgis.com/4yjifSiIG17X0gW4/arcgis/rest/services/GDP_per_capita_1960_2016/FeatureServer/0"), this);
-  m_featureLayer = new FeatureLayer(m_featureTable);
+  m_featureLayer = new FeatureLayer(m_featureTable, this);
   m_map->operationalLayers()->append(m_featureLayer);
 }
 

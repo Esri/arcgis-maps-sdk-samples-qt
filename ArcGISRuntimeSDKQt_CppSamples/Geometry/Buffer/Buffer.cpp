@@ -37,6 +37,8 @@
 #include "SimpleRenderer.h"
 #include "SymbolTypes.h"
 
+#include <cmath>
+
 using namespace Esri::ArcGISRuntime;
 
 Buffer::Buffer(QObject* parent /* = nullptr */):
