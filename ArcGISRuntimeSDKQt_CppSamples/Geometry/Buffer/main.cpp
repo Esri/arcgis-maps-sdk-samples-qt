@@ -35,7 +35,7 @@ int main(int argc, char *argv[])
   app.setApplicationName(QString("Buffer - C++"));
 
   // Access to Esri location services requires an API key. This can be copied below or used as a command line argument.
-  const QString apiKey = QString("AAPK4f6b2b1d82e54f09b7462071964a2df9yVeNc6qmggJvnuViEN2mYBB0B0cg3clhnV0axP-MPub8RqhsLHAyob2Ll626YhTJ");
+  const QString apiKey = QString("");
   setAPIKey(app, apiKey);
 
   // Initialize the sample
