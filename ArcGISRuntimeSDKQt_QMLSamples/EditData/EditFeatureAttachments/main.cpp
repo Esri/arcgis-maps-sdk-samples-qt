@@ -14,7 +14,7 @@
 #include <QGuiApplication>
 #include <QQuickView>
 #include <QUrl>
-#include <QApplication>
+#include <QGuiApplication>
 #include <QDir>
 #include <QQmlEngine>
 #include <QQmlApplicationEngine>
@@ -26,8 +26,10 @@
 
 int main(int argc, char *argv[])
 {
-    QGuiApplication::setAttribute(Qt::AA_EnableHighDpiScaling);
-    QApplication app(argc, argv);
+  // Enforce OpenGL
+  qputenv("QSG_RHI_BACKEND", "opengl");
+
+    QGuiApplication app(argc, argv);
     app.setApplicationName("EditFeatureAttachments - QML");
 
   // Use of Esri location services, including basemaps and geocoding,

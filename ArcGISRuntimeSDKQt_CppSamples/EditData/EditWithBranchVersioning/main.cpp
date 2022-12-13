@@ -11,10 +11,6 @@
 // See the License for the specific language governing permissions and
 // limitations under the License.
 
-#ifdef Q_OS_WIN
-#include <Windows.h>
-#endif
-
 #include "EditWithBranchVersioning.h"
 #include "ArcGISRuntimeEnvironment.h"
 
@@ -22,13 +18,27 @@
 #include <QGuiApplication>
 #include <QQmlApplicationEngine>
 
+#ifdef Q_OS_WIN
+#include <Windows.h>
+#endif
+
+#ifdef QT_WEBVIEW_WEBENGINE_BACKEND
+#include <QtWebEngineQuick>
+#endif // QT_WEBVIEW_WEBENGINE_BACKEND
+
 #include "Esri/ArcGISRuntime/Toolkit/register.h"
 
 int main(int argc, char *argv[])
 {
-  QGuiApplication::setAttribute(Qt::AA_EnableHighDpiScaling);
+  // Enforce OpenGL
+  qputenv("QSG_RHI_BACKEND", "opengl");
+
   QGuiApplication app(argc, argv);
   app.setApplicationName(QStringLiteral("EditWithBranchVersioning - C++"));
+
+#ifdef QT_WEBVIEW_WEBENGINE_BACKEND
+  QtWebEngineQuick::initialize();
+#endif // QT_WEBVIEW_WEBENGINE_BACKEND
 
   // Use of Esri location services, including basemaps and geocoding,
   // requires authentication using either an ArcGIS identity or an API Key.
@@ -40,12 +50,12 @@ int main(int argc, char *argv[])
   const QString apiKey = QString("");
   if (apiKey.isEmpty())
   {
-      qWarning() << "Use of Esri location services, including basemaps, requires" <<
-                    "you to authenticate with an ArcGIS identity or set the API Key property.";
+    qWarning() << "Use of Esri location services, including basemaps, requires" <<
+                  "you to authenticate with an ArcGIS identity or set the API Key property.";
   }
   else
   {
-      Esri::ArcGISRuntime::ArcGISRuntimeEnvironment::setApiKey(apiKey);
+    Esri::ArcGISRuntime::ArcGISRuntimeEnvironment::setApiKey(apiKey);
   }
 
   // Initialize the sample

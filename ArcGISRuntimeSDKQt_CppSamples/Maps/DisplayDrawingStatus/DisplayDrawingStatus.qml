@@ -14,10 +14,9 @@
 // limitations under the License.
 // [Legal]
 
-import QtQuick 2.6
-import QtQuick.Controls 2.2
-import QtGraphicalEffects 1.0
-import Esri.Samples 1.0
+import QtQuick
+import QtQuick.Controls
+import Esri.Samples
 
 DisplayDrawingStatusSample {
     id: displayDrawingStatusSample
@@ -42,13 +41,9 @@ DisplayDrawingStatusSample {
         color: "transparent"
         visible: displayDrawingStatusSample.mapDrawing
 
-        RadialGradient {
+        Rectangle {
             anchors.fill: parent
-            opacity: 0.15
-            gradient: Gradient {
-                GradientStop { position: 0.0; color: "lightgrey" }
-                GradientStop { position: 0.7; color: "black" }
-            }
+            color: "#60000000"
         }
 
         // pop up to show if MapView is drawing
@@ -71,7 +66,7 @@ DisplayDrawingStatusSample {
                 BusyIndicator {
                     anchors.horizontalCenter: parent.horizontalCenter
                     height: 60
-                    running: true
+                    running: displayDrawingStatusSample.mapDrawing
                 }
 
                 Text {

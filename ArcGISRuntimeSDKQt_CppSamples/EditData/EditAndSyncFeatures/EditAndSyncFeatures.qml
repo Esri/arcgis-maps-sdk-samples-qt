@@ -14,10 +14,9 @@
 // limitations under the License.
 // [Legal]
 
-import QtQuick 2.6
-import QtQuick.Controls 2.2
-import QtGraphicalEffects 1.0
-import Esri.Samples 1.0
+import QtQuick
+import QtQuick.Controls
+import Esri.Samples
 
 EditAndSyncFeaturesSample {
     id: editAndSyncSample
@@ -27,7 +26,6 @@ EditAndSyncFeaturesSample {
 
     property string statusText: ""
     property string instructionText: ""
-    property alias isOffline: editAndSyncSample.isOffline
     property var selectedFeature: null
 
     // add a mapView component
@@ -41,7 +39,7 @@ EditAndSyncFeaturesSample {
         }
     }
 
-    onHideWindow: {
+    onHideWindow: (time, success) => {
         syncWindow.hideWindow(time);
 
         if (success) {
@@ -50,14 +48,14 @@ EditAndSyncFeaturesSample {
         }
     }
 
-    onUpdateInstruction: {
+    onUpdateInstruction: instruction => {
         instructions.visible = true;
         instructionText = instruction;
     }
 
     onShowButton: syncButton.visible = true;
 
-    onUpdateStatus: statusText = status;
+    onUpdateStatus: status => statusText = status;
 
     // create an extent rectangle for the output geodatabase
     Rectangle {
@@ -154,19 +152,15 @@ EditAndSyncFeaturesSample {
         clip: true
         visible: false
 
-        RadialGradient {
+        Rectangle {
             anchors.fill: parent
-            opacity: 0.7
-            gradient: Gradient {
-                GradientStop { position: 0.0; color: "lightgrey" }
-                GradientStop { position: 0.7; color: "black" }
-            }
+            color: "#60000000"
         }
 
         MouseArea {
             anchors.fill: parent
-            onClicked: mouse.accepted = true
-            onWheel: wheel.accepted = true
+            onClicked: mouse => mouse.accepted = true
+            onWheel: wheel => wheel.accepted = true
         }
 
         Rectangle {

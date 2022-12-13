@@ -19,9 +19,7 @@
 
 #include "TaskWatcher.h"
 
-namespace Esri
-{
-namespace ArcGISRuntime
+namespace Esri::ArcGISRuntime
 {
 class FeatureLayer;
 class GeoElement;
@@ -30,11 +28,14 @@ class Map;
 class MapQuickView;
 class PopupManager;
 }
-}
 
 #include <QObject>
 #include <QQmlListProperty>
 #include <QMouseEvent>
+#include <QUuid>
+
+Q_MOC_INCLUDE("MapQuickView.h")
+Q_MOC_INCLUDE("PopupManager.h")
 
 class ShowPopup : public QObject
 {

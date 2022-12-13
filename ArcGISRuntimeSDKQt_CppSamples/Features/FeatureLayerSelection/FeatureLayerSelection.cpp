@@ -1,6 +1,6 @@
 // [WriteFile Name=FeatureLayerSelection, Category=Features]
 // [Legal]
-// Copyright 2016 Esri.
+// Copyright 2022 Esri.
 
 // Licensed under the Apache License, Version 2.0 (the "License");
 // you may not use this file except in compliance with the License.
@@ -20,61 +20,66 @@
 
 #include "FeatureLayerSelection.h"
 
-#include "Map.h"
-#include "MapQuickView.h"
-#include "FeatureLayer.h"
-#include "Basemap.h"
-#include "SpatialReference.h"
-#include "ServiceFeatureTable.h"
-#include "Viewpoint.h"
 #include "Envelope.h"
 #include "Feature.h"
-#include "GeoElement.h"
-#include <QList>
-#include <QString>
-#include <QUrl>
-#include <QMouseEvent>
+#include "FeatureLayer.h"
+#include "IdentifyLayerResult.h"
+#include "LayerListModel.h"
+#include "Map.h"
+#include "MapQuickView.h"
+#include "MapTypes.h"
+#include "ServiceFeatureTable.h"
+#include "SpatialReference.h"
+#include "TaskWatcher.h"
+#include "Viewpoint.h"
+
+#include <QUuid>
 #include <memory>
 
 using namespace Esri::ArcGISRuntime;
 
-FeatureLayerSelection::FeatureLayerSelection(QQuickItem* parent) :
-  QQuickItem(parent)
+FeatureLayerSelection::FeatureLayerSelection(QObject* parent /* = nullptr */):
+  QObject(parent),
+  m_map(new Map(BasemapStyle::ArcGISLightGray, this))
 {
+  m_map->setInitialViewpoint(Viewpoint(Envelope(-6603299.491810, 1679677.742046, 9002253.947487, 8691318.054732, SpatialReference::webMercator())));
+
+  m_featureTable = new ServiceFeatureTable(QUrl("https://services1.arcgis.com/4yjifSiIG17X0gW4/arcgis/rest/services/GDP_per_capita_1960_2016/FeatureServer/0"), this);
+  m_featureLayer = new FeatureLayer(m_featureTable, this);
+  m_map->operationalLayers()->append(m_featureLayer);
 }
 
 FeatureLayerSelection::~FeatureLayerSelection() = default;
 
 void FeatureLayerSelection::init()
 {
+  // Register the map view for QML
   qmlRegisterType<MapQuickView>("Esri.Samples", 1, 0, "MapView");
   qmlRegisterType<FeatureLayerSelection>("Esri.Samples", 1, 0, "FeatureLayerSelectionSample");
 }
 
-void FeatureLayerSelection::componentComplete()
+MapQuickView* FeatureLayerSelection::mapView() const
 {
-  QQuickItem::componentComplete();
+  return m_mapView;
+}
 
-  // find QML MapView component
-  m_mapView = findChild<MapQuickView*>("mapView");
-  m_mapView->setWrapAroundMode(WrapAroundMode::Disabled);
+QString FeatureLayerSelection::selectedFeatureText() const
+{
+  return m_selectedFeatureText;
+}
 
-  // Create a map using the streets basemap
-  m_map = new Map(BasemapStyle::ArcGISLightGray, this);
-  m_map->setInitialViewpoint(Viewpoint(Envelope(-6603299.491810, 1679677.742046, 9002253.947487, 8691318.054732, SpatialReference::webMercator())));
+// Set the view (created in QML)
+void FeatureLayerSelection::setMapView(MapQuickView* mapView)
+{
+  if (!mapView || mapView == m_mapView)
+    return;
 
-  // Set map to map view
+  m_mapView = mapView;
   m_mapView->setMap(m_map);
 
-  // create the feature table
-  m_featureTable = new ServiceFeatureTable(QUrl("https://services1.arcgis.com/4yjifSiIG17X0gW4/arcgis/rest/services/GDP_per_capita_1960_2016/FeatureServer/0"), this);
-  // create the feature layer using the feature table
-  m_featureLayer = new FeatureLayer(m_featureTable, this);
-
-  // add the feature layer to the map
-  m_map->operationalLayers()->append(m_featureLayer);
-
   connectSignals();
+
+  emit mapViewChanged();
 }
 
 void FeatureLayerSelection::connectSignals()
@@ -86,8 +91,8 @@ void FeatureLayerSelection::connectSignals()
     constexpr double tolerance = 22.0;
     constexpr bool returnPopupsOnly = false;
     constexpr int maximumResults = 1000;
-    const double screenX = mouseEvent.x();
-    const double screenY = mouseEvent.y();
+    const double screenX = mouseEvent.pos().x();
+    const double screenY = mouseEvent.pos().y();
     m_mapView->identifyLayer(m_featureLayer, screenX, screenY, tolerance, returnPopupsOnly, maximumResults);
   });
 
@@ -124,9 +129,4 @@ void FeatureLayerSelection::connectSignals()
     emit selectedFeatureTextChanged();
   });
   //! [identify feature layer qml api snippet]
-}
-
-QString FeatureLayerSelection::selectedFeatureText() const
-{
-  return m_selectedFeatureText;
 }

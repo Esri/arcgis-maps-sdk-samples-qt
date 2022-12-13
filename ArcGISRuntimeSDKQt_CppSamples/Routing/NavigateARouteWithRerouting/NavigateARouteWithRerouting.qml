@@ -14,11 +14,10 @@
 // limitations under the License.
 // [Legal]
 
-import QtQuick 2.12
-import Esri.Samples 1.0
-import QtQuick 2.6
-import QtQuick.Controls 2.2
-import QtQuick.Layouts 1.11
+import QtQuick
+import Esri.Samples
+import QtQuick.Controls
+import QtQuick.Layouts
 
 Item {
 
@@ -28,7 +27,7 @@ Item {
         anchors.fill: parent
 
         Component.onCompleted: {
-            // Set and keep the focus on SceneView to enable keyboard navigation
+            // Set and keep the focus on MapView to enable keyboard navigation
             forceActiveFocus();
         }
         Rectangle {
@@ -84,7 +83,7 @@ Item {
         }
     }
 
-    // Declare the C++ instance which creates the scene etc. and supply the view
+    // Declare the C++ instance which creates the map etc. and supply the view
     NavigateARouteWithReroutingSample {
         id: model
         mapView: view

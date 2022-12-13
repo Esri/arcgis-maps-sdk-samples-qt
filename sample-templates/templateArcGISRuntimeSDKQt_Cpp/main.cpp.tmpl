@@ -11,10 +11,6 @@
 // See the License for the specific language governing permissions and
 // limitations under the License.
 
-#ifdef Q_OS_WIN
-#include <Windows.h>
-#endif
-
 #include "%{SampleName}.h"
 
 @if %{UseAPIKey}
@@ -29,12 +25,19 @@
 #include <QSurfaceFormat>
 @endif
 
+#ifdef Q_OS_WIN
+#include <Windows.h>
+#endif
+
 @if %{UseAPIKey}
 void setAPIKey(const QGuiApplication& app, QString apiKey);
 
 @endif
 int main(int argc, char *argv[])
 {
+  // Enforce OpenGL
+  qputenv("QSG_RHI_BACKEND", "opengl");
+
   @if %{ThreeDSample}
 #if defined(Q_OS_LINUX) && !defined(Q_OS_ANDROID)
   // Linux requires 3.2 OpenGL Context
@@ -45,7 +48,6 @@ int main(int argc, char *argv[])
 #endif
 
   @endif
-  QGuiApplication::setAttribute(Qt::AA_EnableHighDpiScaling);
   QGuiApplication app(argc, argv);
   app.setApplicationName(QString("%{SampleName} - C++"));
 

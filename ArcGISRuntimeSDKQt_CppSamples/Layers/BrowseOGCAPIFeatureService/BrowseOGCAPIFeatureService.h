@@ -17,9 +17,7 @@
 #ifndef BROWSEOGCAPIFEATURESERVICE_H
 #define BROWSEOGCAPIFEATURESERVICE_H
 
-namespace Esri
-{
-namespace ArcGISRuntime
+namespace Esri::ArcGISRuntime
 {
 class Error;
 class FeatureLayer;
@@ -30,10 +28,11 @@ class OgcFeatureCollectionInfo;
 class OgcFeatureService;
 class OgcFeatureServiceInfo;
 }
-}
 
 #include <QObject>
 #include <QUrl>
+
+Q_MOC_INCLUDE("MapQuickView.h")
 
 class BrowseOGCAPIFeatureService : public QObject
 {

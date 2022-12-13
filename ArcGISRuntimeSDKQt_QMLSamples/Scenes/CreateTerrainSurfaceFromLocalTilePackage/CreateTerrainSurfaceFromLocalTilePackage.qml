@@ -14,9 +14,9 @@
 // limitations under the License.
 // [Legal]
 
-import QtQuick 2.6
-import Esri.ArcGISRuntime 100.15
-import Esri.ArcGISExtras 1.1
+import QtQuick
+import Esri.ArcGISRuntime
+import Esri.ArcGISExtras
 
 Rectangle {
     id: rootRectangle
@@ -24,7 +24,11 @@ Rectangle {
     width: 800
     height: 600
 
-    readonly property string montereyTpkElevationPath: System.userHomePath + "/ArcGIS/Runtime/Data/tpkx/MontereyElevation.tpkx"
+    readonly property string montereyTpkElevationPath: {
+        Qt.platform.os === "ios" ?
+                    System.writableLocation(System.StandardPathsDocumentsLocation) + "/ArcGIS/Runtime/Data/tpkx/MontereyElevation.tpkx" :
+                    System.writableLocation(System.StandardPathsHomeLocation) + "/ArcGIS/Runtime/Data/tpkx/MontereyElevation.tpkx"
+    }
 
     SceneView {
         id: sceneView

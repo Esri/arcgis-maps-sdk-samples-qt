@@ -13,12 +13,11 @@
 // limitations under the License.
 // [Legal]
 
-import QtQuick 2.5
-import QtQuick.Controls 2.2
-import QtQuick.Controls.Material 2.1
-import Esri.ArcGISRuntimeSamples 1.0
-import Esri.ArcGISExtras 1.1
-import Telemetry 1.0
+import QtQuick
+import QtQuick.Controls
+import Esri.ArcGISRuntimeSamples
+import Esri.ArcGISExtras
+import Telemetry
 
 ApplicationWindow {
     id: window
@@ -266,7 +265,9 @@ ApplicationWindow {
             }
 
             // If the sample requires online resources but there is no network connectivity
-            if (SampleManager.currentSample.dataItems.size === 0 && !System.isOnline) {
+            if (SampleManager.currentSample.dataItems.size === 0
+                    && System.reachability !== System.ReachabilityOnline
+                    && System.reachability !== System.ReachabilityUnknown) {
                 SampleManager.currentMode = SampleManager.NetworkRequiredView;
                 return;
             // If the sample requires offline data
@@ -282,11 +283,7 @@ ApplicationWindow {
                             return;
                         }
                     }
-
-                    if (permissionsHelper.fileSystemAccessGranted)
-                        showSample();
-                    else
-                        permissionsHelper.requestFilesystemAccess();
+                    showSample();
                 }
                 // Else, download the data
                 else {
@@ -354,11 +351,14 @@ ApplicationWindow {
     function checkDataItems() {
         for (let i = 0; i < SampleManager.currentSample.dataItems.size; i++) {
             const dataItem = SampleManager.currentSample.dataItems.get(i);
-            fileInfo.filePath = dataItem.path;
+            if (Qt.platform.os === "ios")
+                fileInfo.filePath = System.writableLocation(System.StandardPathsDocumentsLocation) + dataItem.path.substring(1);
+            else
+                fileInfo.filePath = System.writableLocation(System.StandardPathsHomeLocation) + dataItem.path.substring(1);
             fileInfo.refresh();
             if (fileInfo.exists && (!fileInfo.isFolder))
                 continue;
-            dataPackageFileInfo.filePath = dataItem.path + "/dataPackage.zip";
+            dataPackageFileInfo.filePath = fileInfo.filePath + "/dataPackage.zip";
             if (fileInfo.exists && dataPackageFileInfo.exists)
                 continue;
             return false;
@@ -373,13 +373,6 @@ ApplicationWindow {
     Loader {
         id: qmlLoaderAuthView
         anchors.fill: parent
-    }
-
-    PermissionsHelper {
-        id: permissionsHelper
-        onRequestFilesystemAccessCompleted: {
-            showSample();
-        }
     }
 
     Component.onCompleted: {

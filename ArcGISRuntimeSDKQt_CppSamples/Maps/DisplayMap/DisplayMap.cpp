@@ -1,6 +1,6 @@
 // [WriteFile Name=DisplayMap, Category=Maps]
 // [Legal]
-// Copyright 2016 Esri.
+// Copyright 2022 Esri.
 
 // Licensed under the Apache License, Version 2.0 (the "License");
 // you may not use this file except in compliance with the License.
@@ -22,12 +22,13 @@
 
 #include "Map.h"
 #include "MapQuickView.h"
-#include "Basemap.h"
+#include "MapTypes.h"
 
 using namespace Esri::ArcGISRuntime;
 
-DisplayMap::DisplayMap(QQuickItem* parent) :
-  QQuickItem(parent)
+DisplayMap::DisplayMap(QObject* parent /* = nullptr */):
+  QObject(parent),
+  m_map(new Map(BasemapStyle::ArcGISImagery, this))
 {
 }
 
@@ -35,24 +36,24 @@ DisplayMap::~DisplayMap() = default;
 
 void DisplayMap::init()
 {
+  // Register the map view for QML
   qmlRegisterType<MapQuickView>("Esri.Samples", 1, 0, "MapView");
   qmlRegisterType<DisplayMap>("Esri.Samples", 1, 0, "DisplayMapSample");
 }
 
-void DisplayMap::componentComplete()
+MapQuickView* DisplayMap::mapView() const
 {
-  QQuickItem::componentComplete();
-
-  //! [MapQuickView API Snippet]
-  // find QML MapView component
-  m_mapView = findChild<MapQuickView*>("mapView");
-
-  // create a new basemap instance
-  Basemap* basemap = new Basemap(BasemapStyle::ArcGISImagery, this);
-  // create a new map instance
-  m_map = new Map(basemap, this);
-  // set map on the map view
-  m_mapView->setMap(m_map);
-  //! [MapQuickView API Snippet]
+  return m_mapView;
 }
 
+// Set the view (created in QML)
+void DisplayMap::setMapView(MapQuickView* mapView)
+{
+  if (!mapView || mapView == m_mapView)
+    return;
+
+  m_mapView = mapView;
+  m_mapView->setMap(m_map);
+
+  emit mapViewChanged();
+}

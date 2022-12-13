@@ -21,6 +21,9 @@
 
 int main(int argc, char *argv[])
 {
+  // Enforce OpenGL
+  qputenv("QSG_RHI_BACKEND", "opengl");
+
 #if defined(Q_OS_LINUX) && !defined(Q_OS_ANDROID)
     // Linux requires 3.2 OpenGL Context
     // in order to instance 3D symbols
@@ -29,9 +32,8 @@ int main(int argc, char *argv[])
     QSurfaceFormat::setDefaultFormat(fmt);
 #endif
 
-    QGuiApplication::setAttribute(Qt::AA_EnableHighDpiScaling);
-    QGuiApplication app(argc, argv);
-    app.setApplicationName(QStringLiteral("RealisticLightingAndShadows - QML"));
+  QGuiApplication app(argc, argv);
+  app.setApplicationName(QStringLiteral("RealisticLightingAndShadows - QML"));
 
   // Use of Esri location services, including basemaps and geocoding,
   // requires authentication using either an ArcGIS identity or an API Key.
@@ -67,7 +69,7 @@ int main(int argc, char *argv[])
 #endif
 
     // Set the source
-    view.setSource(QUrl("qrc:/Samples/Analysis/RealisticLightingAndShadows/RealisticLightingAndShadows.qml"));
+    view.setSource(QUrl("qrc:/Samples/Scenes/RealisticLightingAndShadows/RealisticLightingAndShadows.qml"));
 
     view.show();
 

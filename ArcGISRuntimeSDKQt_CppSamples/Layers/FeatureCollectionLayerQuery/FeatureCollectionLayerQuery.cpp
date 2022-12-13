@@ -26,8 +26,15 @@
 #include "Map.h"
 #include "MapQuickView.h"
 #include "ServiceFeatureTable.h"
+#include "MapTypes.h"
+#include "TaskWatcher.h"
+#include "LayerListModel.h"
+#include "QueryParameters.h"
+#include "FeatureCollectionTable.h"
+#include "FeatureQueryResult.h"
 
 #include <QString>
+#include <QUuid>
 
 using namespace Esri::ArcGISRuntime;
 

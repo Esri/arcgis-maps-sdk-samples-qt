@@ -27,17 +27,40 @@
 #include "GeometryEngine.h"
 #include "Map.h"
 #include "MapQuickView.h"
-#include "SimpleLineSymbol.h"
 #include "SubtypeFeatureLayer.h"
 #include "UtilityAssetType.h"
 #include "UtilityAssociation.h"
 #include "UtilityElement.h"
 #include "UtilityNetwork.h"
-#include "UtilityNetworkListModel.h"
 #include "UtilityNetworkTypes.h"
+#include "MapTypes.h"
+#include "SymbolTypes.h"
+#include "TaskWatcher.h"
+#include "Error.h"
+#include "GraphicsOverlayListModel.h"
+#include "GraphicListModel.h"
+#include "LayerListModel.h"
+#include "Credential.h"
+#include "AuthenticationChallenge.h"
+#include "IdentifyLayerResult.h"
+#include "ArcGISFeature.h"
+#include "ArcGISFeatureTable.h"
+#include "ArcGISFeatureLayerInfo.h"
+#include "DrawingInfo.h"
+#include "GraphicsOverlay.h"
+#include "Graphic.h"
+#include "Envelope.h"
+#include "ArcGISFeatureTable.h"
+#include "SpatialReference.h"
+#include "Renderer.h"
+#include "Point.h"
+#include "Polygon.h"
+#include "Symbol.h"
+#include "SimpleLineSymbol.h"
 
 #include <QImage>
 #include <QQmlContext>
+#include <QUuid>
 
 using namespace Esri::ArcGISRuntime;
 
@@ -131,7 +154,7 @@ void DisplayContentOfUtilityNetworkContainer::identifyFeaturesAtMouseClick(QMous
   constexpr double tolerance = 5;
   constexpr bool returnPopupsOnly = false;
 
-  m_mapView->identifyLayers(mouseEvent.x(), mouseEvent.y(), tolerance, returnPopupsOnly);
+  m_mapView->identifyLayers(mouseEvent.pos().x(), mouseEvent.pos().y(), tolerance, returnPopupsOnly);
 }
 
 void DisplayContentOfUtilityNetworkContainer::getUtilityAssociationsOfFeature(QUuid, QList<IdentifyLayerResult*> identifyResults)

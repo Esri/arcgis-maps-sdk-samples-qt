@@ -20,9 +20,7 @@
 // C++ API headers
 #include "GenerateOfflineMapParameters.h"
 
-namespace Esri
-{
-namespace ArcGISRuntime
+namespace Esri::ArcGISRuntime
 {
 class FeatureLayer;
 class GenerateOfflineMapParameterOverrides;
@@ -30,7 +28,6 @@ class Map;
 class MapQuickView;
 class OfflineMapTask;
 class PortalItem;
-}
 }
 
 #include <QQuickItem>

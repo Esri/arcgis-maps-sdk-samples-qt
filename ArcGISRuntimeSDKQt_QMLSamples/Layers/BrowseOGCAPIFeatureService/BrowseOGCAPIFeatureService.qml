@@ -14,11 +14,10 @@
 // limitations under the License.
 // [Legal]
 
-import QtQuick 2.12
-import QtQuick.Controls 2.2
-import QtQuick.Layouts 1.3
-import Esri.ArcGISRuntime 100.15
-import QtQuick.Dialogs 1.2
+import QtQuick
+import QtQuick.Controls
+import QtQuick.Layouts
+import Esri.ArcGISRuntime
 
 Rectangle {
     id: root
@@ -100,7 +99,7 @@ Rectangle {
                 Button {
                     id: loadLayerButton
                     text: "Load selected layer"
-                    enabled: featureLayer.loadStatus !== Enums.LoadStatusLoading
+                    enabled: featureCollectionListComboBox.model.length > 0
                     onClicked: loadFeatureCollection(featureCollectionListComboBox.currentIndex);
                     Layout.columnSpan: 2
                     Layout.fillWidth: true
@@ -109,13 +108,13 @@ Rectangle {
         }
 
         // Pop-up error message box
-        MessageDialog {
+        Dialog {
             id: errorMessageBox
-            title: "Error message!"
-            text: errorMessage
-            icon: StandardIcon.Warning
-            visible: errorMessage === "" ? false : true;
-            onAccepted: errorMessage = "";
+            visible: errorMessage === ""? false : true
+            title: errorMessage
+            standardButtons: Dialog.Ok
+            x: (parent.width - width) / 2
+            y: (parent.height - height) / 2
         }
 
         QueryParameters {

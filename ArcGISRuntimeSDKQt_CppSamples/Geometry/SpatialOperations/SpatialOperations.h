@@ -17,19 +17,19 @@
 #ifndef SpatialOperations_H
 #define SpatialOperations_H
 
-namespace Esri
+namespace Esri::ArcGISRuntime
 {
-  namespace ArcGISRuntime
-  {
-    class Map;
-    class MapQuickView;
-    class GraphicsOverlay;
-  }
+  class Map;
+  class MapQuickView;
+  class GraphicsOverlay;
 }
 
 #include <QQuickItem>
 #include <QStringList>
 #include "Geometry.h"
+
+Q_MOC_INCLUDE("MapQuickView.h")
+
 class SpatialOperations : public QQuickItem
 {
   Q_OBJECT

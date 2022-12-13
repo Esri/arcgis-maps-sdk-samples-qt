@@ -14,10 +14,10 @@
 // limitations under the License.
 // [Legal]
 
-import QtQuick 2.6
-import QtQuick.Controls 2.2
-import Esri.ArcGISRuntime 100.15
-import Esri.ArcGISExtras 1.1
+import QtQuick
+import QtQuick.Controls
+import Esri.ArcGISRuntime
+import Esri.ArcGISExtras
 
 Rectangle {
     id: rootRectangle
@@ -55,7 +55,7 @@ Rectangle {
             // Set the Surface
             Surface {
                 ArcGISTiledElevationSource {
-                    url: "https://scene.arcgis.com/arcgis/rest/services/BREST_DTM_1M/ImageServer"
+                    url: "https://elevation3d.arcgis.com/arcgis/rest/services/WorldElevation3D/Terrain3D/ImageServer"
                 }
             }
 
@@ -102,22 +102,22 @@ Rectangle {
                     spatialReference: SpatialReference { wkid: 4326 }
                 }
                 // connect to distance change signals
-                onDirectDistanceChanged: directDistanceText.text = directDistance.value.toFixed(2) + " %1".arg(unitSystem === Enums.UnitSystemMetric ? "m" : "ft")
-                onHorizontalDistanceChanged: horizontalDistanceText.text = horizontalDistance.value.toFixed(2) + " %1".arg(unitSystem === Enums.UnitSystemMetric ? "m" : "ft")
-                onVerticalDistanceChanged: verticalDistanceText.text = verticalDistance.value.toFixed(2) + " %1".arg(unitSystem === Enums.UnitSystemMetric ? "m" : "ft")
+                onDirectDistanceChanged: directDistanceText.text = directDistance.value.toFixed(2) + " %1".arg(directDistance.unit.abbreviation)
+                onHorizontalDistanceChanged: horizontalDistanceText.text = horizontalDistance.value.toFixed(2) + " %1".arg(horizontalDistance.unit.abbreviation)
+                onVerticalDistanceChanged: verticalDistanceText.text = verticalDistance.value.toFixed(2) + " %1".arg(verticalDistance.unit.abbreviation)
             }
         }
 
         // handle mouse signals to update the analysis
 
         // When the mouse is pressed and held, start updating the distance analysis end point
-        onMousePressedAndHeld: {
+        onMousePressedAndHeld: mouse => {
             isPressAndHeld = true;
             sceneView.screenToLocation(mouse.x, mouse.y);
         }
 
         // When the mouse is released...
-        onMouseReleased: {
+        onMouseReleased: mouse => {
             // Check if the mouse was released from a pan gesture
             if (isNavigating) {
                 isNavigating = false;
@@ -142,13 +142,13 @@ Rectangle {
         }
 
         // Update the distance analysis when the mouse moves if it is a press and hold movement
-        onMousePositionChanged: {
+        onMousePositionChanged: mouse => {
             if (isPressAndHeld)
                 sceneView.screenToLocation(mouse.x, mouse.y);
         }
 
         // When screenToLocation completes...
-        onScreenToLocationCompleted: {
+        onScreenToLocationCompleted: location => {
             if (isPressAndHeld)
                 locationDistanceMeasurement.endLocation = location;
             else
@@ -221,25 +221,12 @@ Rectangle {
             }
             ComboBox {
                 id: comboBox
-                property int modelWidth: 0
-                width: modelWidth + leftPadding + rightPadding + indicator.width
                 model: ["Metric", "Imperial"]
                 onCurrentTextChanged: {
                     if (currentText === "Metric")
                         locationDistanceMeasurement.unitSystem = Enums.UnitSystemMetric;
                     else
                         locationDistanceMeasurement.unitSystem = Enums.UnitSystemImperial;
-                }
-                Component.onCompleted : {
-                    for (let i = 0; i < model.length; ++i) {
-                        metrics.text = model[i];
-                        modelWidth = Math.max(modelWidth, metrics.width);
-                    }
-                }
-
-                TextMetrics {
-                    id: metrics
-                    font: comboBox.font
                 }
             }
         }

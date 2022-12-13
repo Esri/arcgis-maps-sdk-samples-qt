@@ -11,8 +11,8 @@
 // See the License for the specific language governing permissions and
 // limitations under the License.
 
-import QtQuick 2.6
-import QtQuick.Controls 2.2
+import QtQuick
+import QtQuick.Controls
 
 Rectangle {
     id: overridesPanel
@@ -210,7 +210,7 @@ Rectangle {
                     horizontalCenter: parent.horizontalCenter
                 }
                 property int modelWidth: 0
-                width: modelWidth + leftPadding + rightPadding + indicator.width
+                width: modelWidth + leftPadding + rightPadding
                 model: [ "No filter", "FLOW < 500", "FLOW < 300", "FLOW < 100" ]
 
                 onCurrentTextChanged: {

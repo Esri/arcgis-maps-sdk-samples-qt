@@ -14,9 +14,9 @@
 // limitations under the License.
 // [Legal]
 
-import QtQuick 2.6
-import QtQuick.Controls 2.2
-import Esri.Samples 1.0
+import QtQuick
+import QtQuick.Controls
+import Esri.Samples
 
 Item {
 
@@ -31,7 +31,7 @@ Item {
         }
     }
 
-    // Declare the C++ instance which creates the scene etc. and supply the view
+    // Declare the C++ instance which creates the map etc. and supply the view
     AddEncExchangeSetSample {
         id: model
         mapView: view

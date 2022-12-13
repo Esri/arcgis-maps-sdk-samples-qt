@@ -14,10 +14,10 @@
 // limitations under the License.
 // [Legal]
 
-import QtQuick 2.6
-import QtQuick.Controls 2.2
-import Esri.Samples 1.0
-import Esri.ArcGISRuntime.Toolkit 100.15
+import QtQuick
+import QtQuick.Controls
+import Esri.Samples
+import Esri.ArcGISRuntime.Toolkit
 
 CreateAndSaveMapSample {
     id: rootRectangle
@@ -29,11 +29,11 @@ CreateAndSaveMapSample {
         stackView.push(options);
     }
 
-    onSaveMapCompleted: {
+    onSaveMapCompleted: (success, itemId) => {
         if (stackView.currentItem === completionRect)
             return;
 
-        const url =  "https://www.arcgis.com/home/item.html?id=%1".arg(itemId);
+        const url = "https://www.arcgis.com/home/item.html?id=%1".arg(itemId);
         stackView.push(completionRect,
                        { text: success ? 'Map saved successfully.<br>View in <a href="%1">ArcGIS Online</a>'.arg(url)
                                        : "An error occurred while saving the map. Details: %1".arg(error)
@@ -73,7 +73,7 @@ CreateAndSaveMapSample {
     Component {
         id: layerWindow
         LayerWindow {
-            onCreateMapSelected: {
+            onCreateMapSelected: (basemap, layerList) => {
                 stackView.push(mapView);
                 createMap(basemap, layerList);
             }
@@ -88,7 +88,7 @@ CreateAndSaveMapSample {
                 stackView.pop();
             }
 
-            onSaveMapClicked: {
+            onSaveMapClicked: (title, tags, description) => {
                 saveMap(title, tags, description);
             }
         }
@@ -106,7 +106,7 @@ CreateAndSaveMapSample {
 
                 textFormat: Text.RichText
                 horizontalAlignment: Text.AlignHCenter
-                onLinkActivated: Qt.openUrlExternally(link)
+                onLinkActivated: link => Qt.openUrlExternally(link)
             }
 
             Button {

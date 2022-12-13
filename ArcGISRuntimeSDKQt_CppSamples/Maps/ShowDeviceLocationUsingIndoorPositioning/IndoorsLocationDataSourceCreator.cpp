@@ -14,9 +14,13 @@
 #include "IndoorsLocationDataSourceCreator.h"
 
 #include "ArcGISFeatureTable.h"
-#include "FeatureLayer.h"
 #include "IndoorsLocationDataSource.h"
 #include "Map.h"
+#include "Error.h"
+#include "MapTypes.h"
+#include "FeatureLayer.h"
+#include "FeatureTableListModel.h"
+#include "LayerListModel.h"
 
 using namespace Esri::ArcGISRuntime;
 

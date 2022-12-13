@@ -18,7 +18,7 @@
 #include <QDir>
 #include <QQmlEngine>
 #ifdef QT_WEBVIEW_WEBENGINE_BACKEND
-#include <QtWebEngine>
+#include <QtWebEngineQuick>
 #endif // QT_WEBVIEW_WEBENGINE_BACKEND
 
 #include <Esri/ArcGISRuntime/Toolkit/register.h>
@@ -28,13 +28,15 @@
 
 int main(int argc, char *argv[])
 {
-    QGuiApplication::setAttribute(Qt::AA_EnableHighDpiScaling);
-    QGuiApplication app(argc, argv);
-    app.setApplicationName("AddItemsToPortal - QML");
+  // Enforce OpenGL
+  qputenv("QSG_RHI_BACKEND", "opengl");
 
 #ifdef QT_WEBVIEW_WEBENGINE_BACKEND
-    QtWebEngine::initialize();
+    QtWebEngineQuick::initialize();
 #endif // QT_WEBVIEW_WEBENGINE_BACKEND
+
+  QGuiApplication app(argc, argv);
+  app.setApplicationName("AddItemsToPortal - QML");
 
     // Initialize application view
     QQuickView view;

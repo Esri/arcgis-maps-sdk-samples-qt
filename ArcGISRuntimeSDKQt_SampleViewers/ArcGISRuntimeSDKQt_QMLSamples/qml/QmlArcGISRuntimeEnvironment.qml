@@ -13,9 +13,9 @@
 // limitations under the License.
 // [Legal]
 
-import QtQuick 2.5
-import Esri.ArcGISRuntime 100.15
-import Esri.ArcGISRuntimeSamples 1.0
+import QtQuick
+import Esri.ArcGISRuntime
+import Esri.ArcGISRuntimeSamples
 
 Item {
     property string apiKey : "initial_invalid_key"

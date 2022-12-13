@@ -29,13 +29,14 @@
 #include "EncEnvironmentSettings.h"
 #include "Envelope.h"
 #include "GeometryEngine.h"
+#include "Error.h"
+#include "MapTypes.h"
+#include "TaskWatcher.h"
+#include "LayerListModel.h"
+#include "Viewpoint.h"
 
-#include <QDir>
 #include <QtCore/qglobal.h>
-
-#ifdef Q_OS_IOS
 #include <QStandardPaths>
-#endif // Q_OS_IOS
 
 using namespace Esri::ArcGISRuntime;
 
@@ -46,12 +47,10 @@ namespace
   {
     QString dataPath;
 
-  #ifdef Q_OS_ANDROID
-    dataPath = "/sdcard";
-  #elif defined Q_OS_IOS
+  #ifdef Q_OS_IOS
     dataPath = QStandardPaths::writableLocation(QStandardPaths::DocumentsLocation);
   #else
-    dataPath = QDir::homePath();
+    dataPath = QStandardPaths::writableLocation(QStandardPaths::HomeLocation);
   #endif
 
     return dataPath;
@@ -122,7 +121,7 @@ void AddEncExchangeSet::setMapView(MapQuickView* mapView)
 
         // combine the extents
         Envelope fullExtent = GeometryEngine::combineExtents(m_extents);
-        m_mapView->setViewpoint(fullExtent);
+        m_mapView->setViewpoint(Viewpoint{fullExtent});
       });
 
       // add the layer to the map

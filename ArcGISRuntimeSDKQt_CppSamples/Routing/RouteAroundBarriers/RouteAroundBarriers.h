@@ -21,9 +21,7 @@
 #include "RouteParameters.h"
 #include "Stop.h"
 
-namespace Esri
-{
-namespace ArcGISRuntime
+namespace Esri::ArcGISRuntime
 {
 class GraphicsOverlay;
 class Map;
@@ -32,9 +30,13 @@ class PictureMarkerSymbol;
 class RouteTask;
 class SimpleFillSymbol;
 }
-}
 
 #include <QObject>
+
+class QAbstractListModel;
+
+Q_MOC_INCLUDE("MapQuickView.h")
+Q_MOC_INCLUDE("QAbstractListModel")
 
 class RouteAroundBarriers : public QObject
 {

@@ -14,9 +14,9 @@
 // limitations under the License.
 // [Legal]
 
-import QtQuick 2.6
-import Esri.ArcGISRuntime 100.15
-import Esri.ArcGISExtras 1.1
+import QtQuick
+import Esri.ArcGISRuntime
+import Esri.ArcGISExtras
 
 Rectangle {
     id: rootRectangle
@@ -24,7 +24,11 @@ Rectangle {
     width: 800
     height: 600
 
-    readonly property url dataPath: System.userHomePath + "/ArcGIS/Runtime/Data/tpkx/"
+    readonly property url dataPath: {
+        Qt.platform.os === "ios" ?
+                    System.writableLocationUrl(System.StandardPathsDocumentsLocation) + "/ArcGIS/Runtime/Data/tpkx/" :
+                    System.writableLocationUrl(System.StandardPathsHomeLocation) + "/ArcGIS/Runtime/Data/tpkx/"
+    }
 
     MapView {
         id: mapView

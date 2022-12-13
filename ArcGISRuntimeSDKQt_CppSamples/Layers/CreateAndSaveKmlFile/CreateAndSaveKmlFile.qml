@@ -14,10 +14,10 @@
 // limitations under the License.
 // [Legal]
 
-import QtQuick 2.6
-import QtQuick.Controls 2.2
-import Qt.labs.platform 1.1 as Dialogs
-import Esri.Samples 1.0
+import QtQuick
+import QtQuick.Controls
+import QtQuick.Dialogs
+import Esri.Samples
 
 Item {
 
@@ -32,7 +32,7 @@ Item {
         }
     }
 
-    // Declare the C++ instance which creates the scene etc. and supply the view
+    // Declare the C++ instance which creates the map etc. and supply the view
     CreateAndSaveKmlFileSample {
         id: model
         mapView: view
@@ -48,8 +48,10 @@ Item {
         }
         text: qsTr("Save kmz file")
 
+        enabled: model.busy === false
+
         onClicked: {
-            fileDialog.visible = true;
+            model.saveKml();
         }
     }
 
@@ -58,29 +60,16 @@ Item {
         visible: model.busy
     }
 
-    Dialogs.FileDialog {
-        id: fileDialog
-        defaultSuffix: "kmz"
-        fileMode: Dialogs.FileDialog.SaveFile
-        nameFilters: ["Kml files (*.kmz *.kml)"]
-        onAccepted: {
-            visible: false;
-            model.saveKml(currentFile);
-        }
-        onRejected: {
-            visible: false;
-        }
-    }
-
     Dialog {
         id: saveCompleteDialog
         anchors.centerIn: parent
-        modal: true
+        width: parent.width * .8
         standardButtons: Dialog.Ok
-        Text {
-            id:textLabel
-            anchors.centerIn: parent
-            text: qsTr("Item saved.")
+        title: "Item saved to temporary location:"
+        Label {
+            text: model.kmlFilePath
+            wrapMode: Text.Wrap
+            width: parent.width
         }
     }
 }

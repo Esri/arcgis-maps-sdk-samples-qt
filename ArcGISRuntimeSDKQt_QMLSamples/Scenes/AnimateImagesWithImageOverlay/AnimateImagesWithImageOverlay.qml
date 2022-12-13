@@ -14,11 +14,11 @@
 // limitations under the License.
 // [Legal]
 
-import QtQuick 2.6
-import QtQuick.Layouts 1.12
-import QtQuick.Controls 2.12
-import Esri.ArcGISRuntime 100.15
-import Esri.ArcGISExtras 1.1
+import QtQuick
+import QtQuick.Layouts
+import QtQuick.Controls
+import Esri.ArcGISRuntime
+import Esri.ArcGISExtras
 
 Rectangle {
     id: rootRectangle
@@ -28,7 +28,11 @@ Rectangle {
 
     readonly property var timerIntervals: [17,34,68]
     readonly property var imageFrameRefreshRate: ["Fast","Medium","Slow"]
-    readonly property url dataPath: System.userHomePath +  "/ArcGIS/Runtime/Data/3D/ImageOverlay/PacificSouthWest"
+    readonly property url dataPath: {
+        Qt.platform.os === "ios" ?
+                    System.writableLocationUrl(System.StandardPathsDocumentsLocation) + "/ArcGIS/Runtime/Data/3D/ImageOverlay/PacificSouthWest" :
+                    System.writableLocationUrl(System.StandardPathsHomeLocation) + "/ArcGIS/Runtime/Data/3D/ImageOverlay/PacificSouthWest"
+    }
     property int fileNamesLength: 0
     property var imageFrameList: []
 

@@ -14,9 +14,9 @@
 // limitations under the License.
 // [Legal]
 
-import QtQuick 2.6
-import QtQuick.Controls 2.2
-import Esri.ArcGISRuntime 100.15
+import QtQuick
+import QtQuick.Controls
+import Esri.ArcGISRuntime
 
 Rectangle {
     id: rootRectangle
@@ -44,7 +44,7 @@ Rectangle {
         }
 
         // handle the mouse click - perform a buffer on click
-        onMouseClicked: bufferPoint(mouse.mapPoint);
+        onMouseClicked: mouse => bufferPoint(mouse.mapPoint);
 
         // create graphics overlay for geodesic buffer graphics
         GraphicsOverlay {

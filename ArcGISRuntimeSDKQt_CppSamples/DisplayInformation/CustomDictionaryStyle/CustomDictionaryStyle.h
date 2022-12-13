@@ -17,18 +17,17 @@
 #ifndef CUSTOMDICTIONARYSTYLE_H
 #define CUSTOMDICTIONARYSTYLE_H
 
-namespace Esri
-{
-namespace ArcGISRuntime
+namespace Esri::ArcGISRuntime
 {
 class DictionaryRenderer;
 class FeatureLayer;
 class Map;
 class MapQuickView;
 }
-}
 
 #include <QObject>
+
+Q_MOC_INCLUDE("MapQuickView.h")
 
 class CustomDictionaryStyle : public QObject
 {

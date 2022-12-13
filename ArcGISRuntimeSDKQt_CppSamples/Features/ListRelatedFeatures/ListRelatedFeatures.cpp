@@ -22,7 +22,6 @@
 
 #include "Map.h"
 #include "MapQuickView.h"
-#include "Basemap.h"
 #include "FeatureLayer.h"
 #include "ViewInsets.h"
 #include "Envelope.h"
@@ -31,10 +30,21 @@
 #include "ArcGISFeatureTable.h"
 #include "RelatedFeatureQueryResult.h"
 #include "FeatureQueryResult.h"
-
 #include "RelatedFeature.h"
 #include "RelatedFeatureListModel.h"
+#include "SelectionProperties.h"
+#include "Error.h"
+#include "LayerListModel.h"
+#include "FeatureIterator.h"
+#include "ArcGISFeatureLayerInfo.h"
+#include "AttributeListModel.h"
+#include "TaskWatcher.h"
+#include "SpatialReference.h"
+#include "CoreTypes.h"
+#include "MapTypes.h"
+#include "Point.h"
 
+#include <QUuid>
 #include <QList>
 #include <QUrl>
 #include <memory>
@@ -174,7 +184,7 @@ void ListRelatedFeatures::connectSignals()
     m_relatedFeaturesModel->clear();
 
     // create objects required to do a selection with a query
-    Point clickPoint = m_mapView->screenToLocation(mouseEvent.x(), mouseEvent.y());
+    Point clickPoint = m_mapView->screenToLocation(mouseEvent.pos().x(), mouseEvent.pos().y());
     double mapTolerance = 10 * m_mapView->unitsPerDIP();
     Envelope envelope = Envelope(clickPoint.x() - mapTolerance,
                                  clickPoint.y() - mapTolerance,

@@ -21,11 +21,15 @@
 #include "AnalyzeViewshed.h"
 
 #include "Map.h"
+#include "MapTypes.h"
 #include "MapQuickView.h"
+#include "MapViewTypes.h"
 #include "Point.h"
 #include "Viewpoint.h"
 #include "SpatialReference.h"
 #include "GraphicsOverlay.h"
+#include "GraphicsOverlayListModel.h"
+#include "GraphicListModel.h"
 #include "SimpleMarkerSymbol.h"
 #include "SimpleFillSymbol.h"
 #include "SimpleRenderer.h"
@@ -36,8 +40,17 @@
 #include "GeoprocessingParameter.h"
 #include "GeoprocessingParameters.h"
 #include "GeoprocessingResult.h"
+#include "GeoprocessingTypes.h"
 #include "FeatureCollectionTable.h"
 #include "Feature.h"
+#include "SymbolTypes.h"
+#include "Error.h"
+#include "TaskTypes.h"
+#include "TaskWatcher.h"
+#include "FeatureIterator.h"
+#include "Field.h"
+
+#include <QUuid>
 #include <QMouseEvent>
 
 using namespace Esri::ArcGISRuntime;
@@ -120,7 +133,7 @@ void AnalyzeViewshed::connectSignals()
     }
 
     // Create a marker graphic where the user clicked on the map and add it to the existing graphics overlay
-    Point mapPoint = m_mapView->screenToLocation(mouse.x(), mouse.y());
+    Point mapPoint = m_mapView->screenToLocation(mouse.pos().x(), mouse.pos().y());
     if (m_inputGraphic)
       m_inputGraphic->setGeometry(mapPoint);
 

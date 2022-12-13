@@ -14,10 +14,10 @@
 // limitations under the License.
 // [Legal]
 
-import QtQuick 2.6
-import QtQuick.Controls 2.2
-import Esri.ArcGISExtras 1.1
-import Esri.ArcGISRuntime 100.15
+import QtQuick
+import QtQuick.Controls
+import Esri.ArcGISExtras
+import Esri.ArcGISRuntime
 
 Rectangle {
     clip: true
@@ -86,10 +86,10 @@ Rectangle {
         }
 
         // Update the target location as you tap the map
-        onMouseClicked: locationLineOfSight.targetLocation = sceneView.screenToBaseSurface(mouse.x, mouse.y);
+        onMouseClicked: mouse => locationLineOfSight.targetLocation = sceneView.screenToBaseSurface(mouse.x, mouse.y);
         onMousePressedAndHeld: calculating = true;
         onMouseReleased: calculating = false;
-        onMousePositionChanged: {
+        onMousePositionChanged: mouse => {
             if (!calculating)
                 return;
 

@@ -17,13 +17,10 @@
 #ifndef SURFACE_PLACEMENT_H
 #define SURFACE_PLACEMENT_H
 
-namespace Esri
+namespace Esri::ArcGISRuntime
 {
-  namespace ArcGISRuntime
-  {
-    class SceneQuickView;
-    class GraphicsOverlay;
-  }
+  class SceneQuickView;
+  class GraphicsOverlay;
 }
 
 #include <QQuickItem>

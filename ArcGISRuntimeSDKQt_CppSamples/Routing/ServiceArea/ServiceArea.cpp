@@ -28,6 +28,27 @@
 #include "SimpleFillSymbol.h"
 #include "SimpleLineSymbol.h"
 #include "SimpleRenderer.h"
+#include "MapTypes.h"
+#include "MapViewTypes.h"
+#include "SymbolTypes.h"
+#include "TaskWatcher.h"
+#include "Error.h"
+#include "GraphicsOverlayListModel.h"
+#include "GraphicListModel.h"
+#include "Graphic.h"
+#include "ServiceAreaFacility.h"
+#include "PolylineBarrier.h"
+#include "NetworkAnalystTypes.h"
+#include "ServiceAreaResult.h"
+#include "ServiceAreaPolygon.h"
+#include "SpatialReference.h"
+#include "Point.h"
+#include "Viewpoint.h"
+#include "GraphicsOverlay.h"
+#include "Polyline.h"
+#include "Polygon.h"
+
+#include <QUuid>
 
 using namespace Esri::ArcGISRuntime;
 
@@ -115,7 +136,7 @@ void ServiceArea::solveServiceArea()
     if (!g)
       continue;
 
-    facilities.append(ServiceAreaFacility(g->geometry()));
+    facilities.append(ServiceAreaFacility(geometry_cast<Point>(g->geometry())));
   }
   m_parameters.setFacilities(facilities);
 
@@ -128,7 +149,7 @@ void ServiceArea::solveServiceArea()
     if (!g)
       continue;
 
-    barriers.append(PolylineBarrier(g->geometry()));
+    barriers.append(PolylineBarrier(geometry_cast<Polyline>(g->geometry())));
   }
 
   if (!barriers.isEmpty())
@@ -271,7 +292,7 @@ void ServiceArea::setupRouting()
 
     setBusy(true);
 
-    Point mapPoint = m_mapView->screenToLocation(mouseEvent.x(), mouseEvent.y());
+    Point mapPoint = m_mapView->screenToLocation(mouseEvent.pos().x(), mouseEvent.pos().y());
     Point projectedPoint(mapPoint.x(), mapPoint.y(), SpatialReference::webMercator());
 
     if (m_mode == SampleMode::Barrier)

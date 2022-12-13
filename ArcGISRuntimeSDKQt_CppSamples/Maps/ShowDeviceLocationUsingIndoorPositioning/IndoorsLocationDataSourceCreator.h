@@ -14,15 +14,12 @@
 #ifndef INDOORSLOCATIONDATASOURCECREATOR_H
 #define INDOORSLOCATIONDATASOURCECREATOR_H
 
-namespace Esri
-{
-namespace ArcGISRuntime
+namespace Esri::ArcGISRuntime
 {
 class ArcGISFeatureTable;
 class FeatureTable;
 class IndoorsLocationDataSource;
 class Map;
-}
 }
 
 #include <QObject>

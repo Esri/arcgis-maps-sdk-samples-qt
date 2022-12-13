@@ -22,7 +22,6 @@
 
 #include "ArcGISFeatureListModel.h"
 #include "FeatureLayer.h"
-#include "FeatureQueryResult.h"
 #include "Graphic.h"
 #include "GraphicsOverlay.h"
 #include "Map.h"
@@ -53,6 +52,17 @@
 #include "UtilityTraceFilter.h"
 #include "UtilityTraceParameters.h"
 #include "GeometryEngine.h"
+#include "MapTypes.h"
+#include "SymbolTypes.h"
+#include "TaskWatcher.h"
+#include "Error.h"
+#include "GraphicsOverlayListModel.h"
+#include "GraphicListModel.h"
+#include "LayerListModel.h"
+#include "Credential.h"
+#include "IdentifyLayerResult.h"
+#include "ArcGISFeature.h"
+#include "Polyline.h"
 
 #include <QUuid>
 
@@ -153,15 +163,15 @@ void PerformValveIsolationTrace::setMapView(MapQuickView* mapView)
   m_mapView = mapView;
   m_mapView->setMap(m_map);
 
-  connect(m_mapView, &MapQuickView::mouseClicked, this, [this](QMouseEvent mouseEvent)
+  connect(m_mapView, &MapQuickView::mouseClicked, this, [this](QMouseEvent& mouseEvent)
   {
     if (m_map->loadStatus() != LoadStatus::Loaded)
       return;
 
     constexpr double tolerance = 10.0;
     constexpr bool returnPopups = false;
-    m_clickPoint = m_mapView->screenToLocation(mouseEvent.x(), mouseEvent.y());
-    m_mapView->identifyLayers(mouseEvent.x(), mouseEvent.y(), tolerance, returnPopups);
+    m_clickPoint = m_mapView->screenToLocation(mouseEvent.pos().x(), mouseEvent.pos().y());
+    m_mapView->identifyLayers(mouseEvent.pos().x(), mouseEvent.pos().y(), tolerance, returnPopups);
   });
 
   // handle the identify resultss
@@ -381,7 +391,7 @@ void PerformValveIsolationTrace::connectSignals()
   {
     // display starting location
     ArcGISFeatureListModel* elementFeaturesList = m_utilityNetwork->featuresForElementsResult();
-    const Point startingLocationGeometry = elementFeaturesList->first()->geometry();
+    const Point startingLocationGeometry = geometry_cast<Point>(elementFeaturesList->first()->geometry());
     Graphic* graphic = new Graphic(startingLocationGeometry, m_graphicParent.get());
     m_startingLocationOverlay->graphics()->append(graphic);
 
@@ -436,7 +446,7 @@ void PerformValveIsolationTrace::onIdentifyLayersCompleted(QUuid, const QList<Id
   {
     if (feature->geometry().geometryType() == GeometryType::Polyline)
     {
-      const Polyline line = GeometryEngine::removeZ(feature->geometry());
+      const Polyline line = geometry_cast<Polyline>(GeometryEngine::removeZ(feature->geometry()));
       // Set how far the element is along the edge.
       const double fraction = GeometryEngine::fractionAlong(line, m_clickPoint, -1);
       m_element->setFractionAlongEdge(fraction);

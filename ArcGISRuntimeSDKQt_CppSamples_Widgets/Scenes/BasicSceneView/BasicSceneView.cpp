@@ -19,6 +19,10 @@
 #include "SceneGraphicsView.h"
 #include "ArcGISTiledElevationSource.h"
 #include "Camera.h"
+#include "MapTypes.h"
+#include "Surface.h"
+#include "ElevationSourceListModel.h"
+#include <QUrl>
 #include <QVBoxLayout>
 
 using namespace Esri::ArcGISRuntime;

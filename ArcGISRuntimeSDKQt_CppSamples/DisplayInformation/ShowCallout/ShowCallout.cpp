@@ -23,6 +23,12 @@
 #include "Map.h"
 #include "MapQuickView.h"
 #include "CalloutData.h"
+#include "MapTypes.h"
+#include "MapViewTypes.h"
+#include "SpatialReference.h"
+#include "Point.h"
+#include "Viewpoint.h"
+#include <QImage>
 
 using namespace Esri::ArcGISRuntime;
 
@@ -69,7 +75,7 @@ void ShowCallout::componentComplete()
     else
     {
       // set callout position
-      Point mapPoint(m_mapView->screenToLocation(mouseEvent.x(), mouseEvent.y()));
+      Point mapPoint(m_mapView->screenToLocation(mouseEvent.pos().x(), mouseEvent.pos().y()));
       m_mapView->calloutData()->setLocation(mapPoint);
 
       // set detail as coordinates formatted to decimal numbers with precision 2

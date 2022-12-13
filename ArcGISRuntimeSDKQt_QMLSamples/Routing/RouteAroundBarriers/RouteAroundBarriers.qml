@@ -14,11 +14,12 @@
 // limitations under the License.
 // [Legal]
 
-import QtQuick 2.6
-import QtQuick.Controls 2.2
-import Esri.ArcGISRuntime 100.15
-import QtQuick.Layouts 1.11
-import QtQuick.Dialogs 1.1
+import Qt.labs.platform
+import QtQuick
+import QtQuick.Controls
+import Esri.ArcGISRuntime
+import QtQuick.Layouts
+import QtQuick.Dialogs
 
 Rectangle {
     id: rootRectangle
@@ -43,7 +44,6 @@ Rectangle {
 
     MessageDialog {
         id: messageDialog
-        title: "Route around barriers"
         text: "No route found."
         visible: false
         onRejected: {
@@ -173,7 +173,7 @@ Rectangle {
             }
         }
 
-        onMouseClicked: {
+        onMouseClicked: mouse => {
             const clickedPoint = mapView.screenToLocation(mouse.x, mouse.y);
 
             if (addStops) {

@@ -1,6 +1,6 @@
 // [WriteFile Name=FeatureLayerSelection, Category=Features]
 // [Legal]
-// Copyright 2016 Esri.
+// Copyright 2022 Esri.
 
 // Licensed under the Apache License, Version 2.0 (the "License");
 // you may not use this file except in compliance with the License.
@@ -14,50 +14,51 @@
 // limitations under the License.
 // [Legal]
 
-#ifndef FEATURE_LAYER_SELECTION_H
-#define FEATURE_LAYER_SELECTION_H
+#ifndef FEATURELAYERSELECTION_H
+#define FEATURELAYERSELECTION_H
 
-namespace Esri
+namespace Esri::ArcGISRuntime
 {
-  namespace ArcGISRuntime
-  {
-    class Map;
-    class MapQuickView;
-    class FeatureLayer;
-    class ServiceFeatureTable;
-  }
+class FeatureLayer;
+class Map;
+class MapQuickView;
+class ServiceFeatureTable;
 }
 
-class QString;
+#include <QObject>
 
-#include <QQuickItem>
+Q_MOC_INCLUDE("MapQuickView.h");
 
-class FeatureLayerSelection : public QQuickItem
+class FeatureLayerSelection : public QObject
 {
   Q_OBJECT
 
+  Q_PROPERTY(Esri::ArcGISRuntime::MapQuickView* mapView READ mapView WRITE setMapView NOTIFY mapViewChanged)
   Q_PROPERTY(QString selectedFeatureText READ selectedFeatureText NOTIFY selectedFeatureTextChanged)
 
 public:
-  explicit FeatureLayerSelection(QQuickItem* parent = nullptr);
+  explicit FeatureLayerSelection(QObject* parent = nullptr);
   ~FeatureLayerSelection() override;
 
-  void componentComplete() override;
   static void init();
 
 signals:
   void selectedFeatureTextChanged();
+  void mapViewChanged();
 
 private:
-  void connectSignals();
+  Esri::ArcGISRuntime::MapQuickView* mapView() const;
   QString selectedFeatureText() const;
 
-private:
+  void setMapView(Esri::ArcGISRuntime::MapQuickView* mapView);
+  void connectSignals();
+
   Esri::ArcGISRuntime::Map* m_map = nullptr;
   Esri::ArcGISRuntime::MapQuickView* m_mapView = nullptr;
   Esri::ArcGISRuntime::FeatureLayer* m_featureLayer = nullptr;
   Esri::ArcGISRuntime::ServiceFeatureTable* m_featureTable = nullptr;
+
   QString m_selectedFeatureText = QStringLiteral("Click or tap to select features.");
 };
 
-#endif // FEATURE_LAYER_SELECTION_H
+#endif // FEATURELAYERSELECTION_H

@@ -21,7 +21,6 @@
 #include "NavigateRoute.h"
 
 #include "DirectionManeuverListModel.h"
-#include "GeometryEngine.h"
 #include "GraphicsOverlay.h"
 #include "Location.h"
 #include "LocationDisplay.h"
@@ -41,12 +40,30 @@
 #include "TrackingProgress.h"
 #include "TrackingStatus.h"
 #include "VoiceGuidance.h"
+#include "MapTypes.h"
+#include "MapViewTypes.h"
+#include "SymbolTypes.h"
+#include "TaskWatcher.h"
+#include "Error.h"
+#include "GraphicsOverlayListModel.h"
+#include "GraphicListModel.h"
+#include "RouteTask.h"
+#include "LinearUnit.h"
+#include "RouteParameters.h"
+#include "DirectionManeuver.h"
+#include "SpatialReference.h"
+#include "Polyline.h"
+#include "Graphic.h"
+#include "SimpleLineSymbol.h"
 
+#include <QUuid>
 #include <memory>
 #include <QList>
-#include <QTextToSpeech>
 #include <QTime>
 #include <QUrl>
+
+// NOTE: As of Qt 6.2, QTextToSpeech is not supported. Instances of this class have been commented out for compatibility, but remain for reference
+// #include <QTextToSpeech>
 
 using namespace Esri::ArcGISRuntime;
 
@@ -63,7 +80,8 @@ NavigateRoute::NavigateRoute(QObject* parent /* = nullptr */):
 {
   m_routeOverlay = new GraphicsOverlay(this);
   m_routeTask = new RouteTask(routeTaskUrl, this);
-  m_speaker = new QTextToSpeech(this);
+
+  // m_speaker = new QTextToSpeech(this);
 }
 
 NavigateRoute::~NavigateRoute() = default;
@@ -186,10 +204,10 @@ void NavigateRoute::startNavigation()
   connectRouteTrackerSignals();
 
   // enable the RouteTracker to know when the QTextToSpeech engine is ready
-  m_routeTracker->setSpeechEngineReadyFunction([speaker = m_speaker]() -> bool
-  {
-    return speaker->state() == QTextToSpeech::State::Ready;
-  });
+  //  m_routeTracker->setSpeechEngineReadyFunction([speaker = m_speaker]() -> bool
+  //  {
+  //    return speaker->state() == QTextToSpeech::State::Ready;
+  //  });
 
   // enable "recenter" button when location display is moved from nagivation mode
   connect(m_mapView->locationDisplay(), &LocationDisplay::autoPanModeChanged, this, [this](LocationDisplayAutoPanMode autoPanMode)
@@ -216,11 +234,11 @@ void NavigateRoute::startNavigation()
 
 void NavigateRoute::connectRouteTrackerSignals()
 {
-  connect(m_routeTracker, &RouteTracker::newVoiceGuidance, this, [this](VoiceGuidance* rawVoiceGuidance)
-  {
-    auto voiceGuidance = std::unique_ptr<VoiceGuidance>(rawVoiceGuidance);
-    m_speaker->say(voiceGuidance->text());
-  });
+  //  connect(m_routeTracker, &RouteTracker::newVoiceGuidance, this, [this](VoiceGuidance* rawVoiceGuidance)
+  //  {
+  //    auto voiceGuidance = std::unique_ptr<VoiceGuidance>(rawVoiceGuidance);
+  //    m_speaker->say(voiceGuidance->text());
+  //  });
 
   connect(m_routeTracker, &RouteTracker::trackingStatusChanged, this, [this](TrackingStatus* rawTrackingStatus)
   {

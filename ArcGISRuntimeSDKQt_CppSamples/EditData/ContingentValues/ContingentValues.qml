@@ -14,10 +14,10 @@
 // limitations under the License.
 // [Legal]
 
-import QtQuick 2.12
-import QtQuick.Controls 2.2
-import QtQuick.Layouts 1.3
-import Esri.Samples 1.0
+import QtQuick
+import QtQuick.Controls
+import QtQuick.Layouts
+import Esri.Samples
 
 Item {
     id: sampleWindow
@@ -30,7 +30,7 @@ Item {
         MouseArea {
             anchors.fill: parent
             visible: attributePrompt.visible
-            onClicked: mouse.accepted = !attributePrompt.visible
+            onClicked: mouse => mouse.accepted = !attributePrompt.visible
             onWheel:  wheel.accepted = !attributePrompt.visible
         }
 

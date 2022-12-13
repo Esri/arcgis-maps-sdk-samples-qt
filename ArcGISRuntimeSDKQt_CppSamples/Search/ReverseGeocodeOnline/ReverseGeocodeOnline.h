@@ -17,9 +17,7 @@
 #ifndef REVERSEGEOCODEONLINE_H
 #define REVERSEGEOCODEONLINE_H
 
-namespace Esri
-{
-namespace ArcGISRuntime
+namespace Esri::ArcGISRuntime
 {
 class CalloutData;
 class Graphic;
@@ -28,9 +26,11 @@ class LocatorTask;
 class Map;
 class MapQuickView;
 }
-}
 
 #include <QObject>
+
+Q_MOC_INCLUDE("MapQuickView.h")
+Q_MOC_INCLUDE("CalloutData.h")
 
 class ReverseGeocodeOnline : public QObject
 {

@@ -14,17 +14,20 @@
 // limitations under the License.
 // [Legal]
 
-import QtQuick 2.6
-import QtQuick.Controls 2.2
-import QtGraphicalEffects 1.0
-import Esri.ArcGISRuntime 100.15
-import Esri.ArcGISExtras 1.1
+import QtQuick
+import QtQuick.Controls
+import Esri.ArcGISRuntime
+import Esri.ArcGISExtras
 
 Rectangle {
     width: 800
     height: 600
 
-    readonly property url dataPath: System.userHomePath + "/ArcGIS/Runtime/Data/"
+    readonly property url dataPath: {
+        Qt.platform.os === "ios" ?
+                    System.writableLocationUrl(System.StandardPathsDocumentsLocation) + "/ArcGIS/Runtime/Data/" :
+                    System.writableLocationUrl(System.StandardPathsHomeLocation) + "/ArcGIS/Runtime/Data/"
+    }
     readonly property url outputGdb: System.temporaryFolder.url + "/WildfireQml_%1.geodatabase".arg(new Date().getTime().toString())
     readonly property string featureServiceUrl: "https://sampleserver6.arcgisonline.com/arcgis/rest/services/Sync/WildfireSync/FeatureServer"
     property Envelope generateExtent: null
@@ -73,7 +76,7 @@ Rectangle {
             }
         }
 
-        onMouseClicked: {
+        onMouseClicked: mouse => {
             if (isOffline && !selectedFeature) {
                 // identify to select a feature
                 mapView.identifyLayer(map.operationalLayers.get(0), mouse.x, mouse.y, 5, false);
@@ -84,7 +87,7 @@ Rectangle {
                 featureTable.updateFeatureStatusChanged.connect(()=> {
                     if (featureTable.updateFeatureStatus === Enums.TaskStatusCompleted) {
                         // clear selections
-                        featureTable.featureLayer.clearSelection();
+                        featureTable.layer.clearSelection();
                         selectedFeature = null;
                         instructionText = "Tap the sync button";
                         syncButton.visible = true;
@@ -387,19 +390,15 @@ Rectangle {
         clip: true
         visible: false
 
-        RadialGradient {
+        Rectangle {
             anchors.fill: parent
-            opacity: 0.7
-            gradient: Gradient {
-                GradientStop { position: 0.0; color: "lightgrey" }
-                GradientStop { position: 0.7; color: "black" }
-            }
+            color: "#60000000"
         }
 
         MouseArea {
             anchors.fill: parent
-            onClicked: mouse.accepted = true
-            onWheel: wheel.accepted = true
+            onClicked: mouse => mouse.accepted = true
+            onWheel: wheel => wheel.accepted = true
         }
 
         Rectangle {

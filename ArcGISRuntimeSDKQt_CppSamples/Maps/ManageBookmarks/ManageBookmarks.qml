@@ -14,10 +14,10 @@
 // limitations under the License.
 // [Legal]
 
-import QtQuick 2.6
-import QtQuick.Controls 2.2
-import QtQuick.Layouts 1.3
-import Esri.Samples 1.0
+import QtQuick
+import QtQuick.Controls
+import QtQuick.Layouts
+import Esri.Samples
 
 ManageBookmarksSample {
     id: manageBookmarksSample
@@ -82,7 +82,7 @@ ManageBookmarksSample {
             margins: 15
         }
         property int bestWidth: implicitWidth
-        width: bestWidth + indicator.width + leftPadding + rightPadding
+        width: bestWidth + leftPadding + rightPadding
         // Set the model to the BookmarkListModel
         model: manageBookmarksSample.bookmarks
 
@@ -130,7 +130,7 @@ ManageBookmarksSample {
 
         MouseArea {
             anchors.fill: parent
-            onClicked: mouse.accepted = true;
+            onClicked: mouse => mouse.accepted = true;
         }
 
         GridLayout {

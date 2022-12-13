@@ -17,13 +17,10 @@
 #ifndef BUILD_LEGEND_H
 #define BUILD_LEGEND_H
 
-namespace Esri
+namespace Esri::ArcGISRuntime
 {
-  namespace ArcGISRuntime
-  {
-    class Map;
-    class MapQuickView;
-  }
+  class Map;
+  class MapQuickView;
 }
 
 class QString;

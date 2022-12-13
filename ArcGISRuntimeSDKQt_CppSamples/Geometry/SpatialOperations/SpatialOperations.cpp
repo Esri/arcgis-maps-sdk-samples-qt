@@ -27,8 +27,16 @@
 #include "Part.h"
 #include "PolygonBuilder.h"
 #include "SimpleFillSymbol.h"
-#include "SimpleLineSymbol.h"
 #include "GeometryEngine.h"
+#include "MapTypes.h"
+#include "GraphicsOverlayListModel.h"
+#include "GraphicListModel.h"
+#include "Graphic.h"
+#include "SymbolTypes.h"
+#include "PartCollection.h"
+#include "GraphicsOverlay.h"
+#include "SpatialReference.h"
+#include "Viewpoint.h"
 
 using namespace Esri::ArcGISRuntime;
 
@@ -42,7 +50,6 @@ SpatialOperations::SpatialOperations(QQuickItem* parent /* = nullptr */):
                        , QStringLiteral("Difference"), QStringLiteral("Symmetric difference")
                        , QStringLiteral("Intersection") }
 {
-
 }
 
 void SpatialOperations::init()

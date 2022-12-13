@@ -17,18 +17,17 @@
 #ifndef OPENMOBILESCENEPACKAGE_H
 #define OPENMOBILESCENEPACKAGE_H
 
-namespace Esri
-{
-namespace ArcGISRuntime
+namespace Esri::ArcGISRuntime
 {
 class Error;
 class Scene;
 class SceneQuickView;
 class MobileScenePackage;
 }
-}
 
 #include <QObject>
+
+Q_MOC_INCLUDE("SceneQuickView.h")
 
 class OpenMobileScenePackage : public QObject
 {

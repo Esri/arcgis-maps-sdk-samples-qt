@@ -4,6 +4,7 @@
         <file>DistanceMeasurementAnalysis.qml</file>
         <file>DistanceMeasurementAnalysis.h</file>
         <file>DistanceMeasurementAnalysis.cpp</file>
+        <file>main.qml</file>
         <file>screenshot.png</file>
         <file>README.md</file>
     </qresource>

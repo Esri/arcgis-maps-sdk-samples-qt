@@ -17,18 +17,15 @@
 #ifndef CLOSESTFACILITY_H
 #define CLOSESTFACILITY_H
 
-namespace Esri
+namespace Esri::ArcGISRuntime
 {
-  namespace ArcGISRuntime
-  {
-    class ClosestFacilityTask;
-    class Facility;
-    class GraphicsOverlay;
-    class Graphic;
-    class Map;
-    class MapQuickView;
-    class Point;
-  }
+  class ClosestFacilityTask;
+  class Facility;
+  class GraphicsOverlay;
+  class Graphic;
+  class Map;
+  class MapQuickView;
+  class Point;
 }
 
 #include "ClosestFacilityParameters.h"

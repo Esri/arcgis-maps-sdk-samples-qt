@@ -17,14 +17,11 @@
 #ifndef SYMBOLIZESHAPEFILE_H
 #define SYMBOLIZESHAPEFILE_H
 
-namespace Esri
-{
-namespace ArcGISRuntime
+namespace Esri::ArcGISRuntime
 {
 class Map;
 class MapQuickView;
 class FeatureLayer;
-}
 }
 
 #include <QQuickItem>

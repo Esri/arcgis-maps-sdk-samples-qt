@@ -6,7 +6,7 @@ Start the Local Server and Local Map Service, create an ArcGIS Map Image Layer f
 
 ## Use case
 
-For executing offline geoprocessing tasks in your ArcGIS Runtime apps via an offline (local) server.
+For executing offline geoprocessing tasks in your apps via an offline (local) server.
 
 ## How to use the sample
 

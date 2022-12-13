@@ -14,11 +14,11 @@
 // limitations under the License.
 // [Legal]
 
-import QtQuick 2.6
-import QtQuick.Layouts 1.3
-import QtQuick.Controls 2.2
-import Esri.ArcGISRuntime 100.15
-import Esri.ArcGISExtras 1.1
+import QtQuick
+import QtQuick.Layouts
+import QtQuick.Controls
+import Esri.ArcGISRuntime
+import Esri.ArcGISExtras
 
 Rectangle {
     id: rootRectangle
@@ -26,7 +26,11 @@ Rectangle {
     width: 800
     height: 600
 
-    readonly property string dataPath: System.userHomePath + "/ArcGIS/Runtime/Data/raster"
+    readonly property url dataPath: {
+        Qt.platform.os === "ios" ?
+                    System.writableLocationUrl(System.StandardPathsDocumentsLocation) + "/ArcGIS/Runtime/Data/raster" :
+                    System.writableLocationUrl(System.StandardPathsHomeLocation) + "/ArcGIS/Runtime/Data/raster"
+    }
     readonly property string minMax: "Min Max"
     readonly property string percentClip: "Percent Clip"
     readonly property string stdDeviation: "Standard Deviation"
@@ -139,7 +143,7 @@ Rectangle {
 
             model: stretchTypes
             property int modelWidth: 0
-            Layout.minimumWidth: modelWidth + leftPadding + rightPadding + indicator.width
+            Layout.minimumWidth: modelWidth + leftPadding + rightPadding
             Component.onCompleted : {
                 for (let i = 0; i < model.length; ++i) {
                     metrics.text = model[i];

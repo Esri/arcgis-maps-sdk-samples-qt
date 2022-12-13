@@ -27,10 +27,10 @@
 #include "FeatureLayer.h"
 #include "LayerListModel.h"
 #include "MapQuickView.h"
-
+#include "Error.h"
+#include "TaskWatcher.h"
 
 using namespace Esri::ArcGISRuntime;
-
 
 MapReferenceScale::MapReferenceScale(QObject* parent /* = nullptr */):
   QObject(parent),

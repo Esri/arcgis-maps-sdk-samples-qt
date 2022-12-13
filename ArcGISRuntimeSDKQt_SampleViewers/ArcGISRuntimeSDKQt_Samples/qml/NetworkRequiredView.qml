@@ -13,10 +13,10 @@
 // limitations under the License.
 // [Legal]
 
-import QtQuick 2.5
-import QtQuick.Controls 2.2
-import Esri.ArcGISRuntimeSamples 1.0
-import Esri.ArcGISExtras 1.1
+import QtQuick
+import QtQuick.Controls
+import Esri.ArcGISRuntimeSamples
+import Esri.ArcGISExtras
 
 Page {
     visible: SampleManager.currentMode === SampleManager.NetworkRequiredView
@@ -48,7 +48,7 @@ Page {
             anchors.horizontalCenter: parent.horizontalCenter
             width: networkConnectionText.width + 20
             wrapMode: Text.WrapAtWordBoundaryOrAnywhere
-            text: qsTr("This sample requires network connnectivity but your system is not online. Please acquire acquire a network connection or select an offline sample instead.")
+            text: qsTr("This sample requires network connectivity but your system is not online. Please acquire a network connection or select an offline sample instead.")
             renderType: Text.NativeRendering
             horizontalAlignment: Text.AlignHCenter
             font {
@@ -63,7 +63,7 @@ Page {
             height: 48
             text: qsTr("Retry")
             onClicked: {
-                if (System.isOnline) {
+                if (System.reachability === System.ReachabilityOnline || System.reachability === System.ReachabilityUnknown) {
                     SampleManager.currentMode = SampleManager.LiveSampleView
                     showSample();
                 }

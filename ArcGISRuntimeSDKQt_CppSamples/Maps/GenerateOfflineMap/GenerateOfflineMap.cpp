@@ -28,6 +28,15 @@
 #include "GeometryEngine.h"
 #include "Envelope.h"
 #include "Point.h"
+#include "Error.h"
+#include "TaskTypes.h"
+#include "TaskWatcher.h"
+#include "GenerateOfflineMapJob.h"
+#include "GenerateOfflineMapResult.h"
+#include "SpatialReference.h"
+#include "Layer.h"
+
+#include <QUuid>
 
 using namespace Esri::ArcGISRuntime;
 
@@ -92,7 +101,7 @@ void GenerateOfflineMap::generateMapByExtent(double xCorner1, double yCorner1, d
   const Point corner1 = m_mapView->screenToLocation(xCorner1, yCorner1);
   const Point corner2 = m_mapView->screenToLocation(xCorner2, yCorner2);
   const Envelope extent = Envelope(corner1, corner2);
-  const Envelope mapExtent = GeometryEngine::project(extent, SpatialReference::webMercator());
+  const Envelope mapExtent = geometry_cast<Envelope>(GeometryEngine::project(extent, SpatialReference::webMercator()));
 
   // connect to the signal for when the default parameters are generated
   connect(m_offlineMapTask, &OfflineMapTask::createDefaultGenerateOfflineMapParametersCompleted,

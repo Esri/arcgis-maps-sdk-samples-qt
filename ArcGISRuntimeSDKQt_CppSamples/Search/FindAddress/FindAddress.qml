@@ -14,11 +14,11 @@
 // limitations under the License.
 // [Legal]
 
-import QtQuick 2.6
-import QtQuick.Controls 2.2
-import QtQuick.Layouts 1.3
-import Esri.Samples 1.0
-import Esri.ArcGISRuntime.Toolkit 100.15
+import QtQuick
+import QtQuick.Controls
+import QtQuick.Layouts
+import Esri.Samples
+import Esri.ArcGISRuntime.Toolkit
 
 FindAddressSample {
     id: findAddressSample
@@ -38,12 +38,14 @@ FindAddressSample {
 
         Callout {
             id: callout
-            borderColor: "lightgrey"
-            borderWidth: 1
+            background: Rectangle {
+                border.color: "lightgrey"
+                border.width: 1
+            }
             calloutData: mapView.calloutData
             maxWidth: findAddressSample.width * 0.75
-            leaderPosition: leaderPositionEnum.Automatic
-            accessoryButtonHidden: true
+            leaderPosition: Callout.LeaderPosition.Automatic
+            accessoryButtonVisible: false
         }
     }
 

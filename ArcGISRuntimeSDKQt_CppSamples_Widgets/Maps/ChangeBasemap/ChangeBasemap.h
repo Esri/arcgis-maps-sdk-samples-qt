@@ -17,11 +17,9 @@
 #ifndef CHANGE_BASEMAP_H
 #define CHANGE_BASEMAP_H
 
-namespace Esri {
-namespace ArcGISRuntime {
+namespace Esri::ArcGISRuntime {
   class Map;
   class MapGraphicsView;
-  }
 }
 
 class QComboBox;

@@ -14,9 +14,9 @@
 // limitations under the License.
 // [Legal]
 
-import QtQuick 2.6
-import QtQuick.Controls 2.2
-import Esri.ArcGISRuntime 100.15
+import QtQuick
+import QtQuick.Controls
+import Esri.ArcGISRuntime
 
 Rectangle {
     id: rootRectangle
@@ -76,7 +76,7 @@ Rectangle {
             margins: 10
         }
         property int modelWidth: 0
-        width: modelWidth + leftPadding + rightPadding + indicator.width
+        width: modelWidth + leftPadding + rightPadding
         model: geometryOperations
 
         onCurrentIndexChanged: applyGeometryOperation(currentIndex);

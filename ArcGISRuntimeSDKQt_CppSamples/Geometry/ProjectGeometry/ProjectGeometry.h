@@ -17,15 +17,12 @@
 #ifndef PROJECTGEOMETRY_H
 #define PROJECTGEOMETRY_H
 
-namespace Esri
-{
-namespace ArcGISRuntime
+namespace Esri::ArcGISRuntime
 {
 class Map;
 class MapQuickView;
 class Graphic;
 class CalloutData;
-}
 }
 
 #include <QQuickItem>

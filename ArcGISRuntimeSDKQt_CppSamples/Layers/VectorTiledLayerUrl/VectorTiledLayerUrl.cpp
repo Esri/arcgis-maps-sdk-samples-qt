@@ -28,6 +28,8 @@
 #include "ArcGISVectorTiledLayer.h"
 #include "Point.h"
 #include "Viewpoint.h"
+#include "MapTypes.h"
+#include "SpatialReference.h"
 
 using namespace Esri::ArcGISRuntime;
 

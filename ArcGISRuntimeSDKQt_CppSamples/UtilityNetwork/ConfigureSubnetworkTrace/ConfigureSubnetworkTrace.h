@@ -17,9 +17,7 @@
 #ifndef CONFIGURESUBNETWORKTRACE_H
 #define CONFIGURESUBNETWORKTRACE_H
 
-namespace Esri
-{
-namespace ArcGISRuntime
+namespace Esri::ArcGISRuntime
 {
 class Credential;
 class Error;
@@ -32,7 +30,6 @@ class UtilityTraceCondition;
 class UtilityTraceConditionalExpression;
 class UtilityTraceConfiguration;
 class UtilityTraceParameters;
-}
 }
 
 #include <QObject>

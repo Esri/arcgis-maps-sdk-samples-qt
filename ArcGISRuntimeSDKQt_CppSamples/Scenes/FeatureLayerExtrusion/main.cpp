@@ -30,6 +30,9 @@
 
 int main(int argc, char *argv[])
 {
+  // Enforce OpenGL
+  qputenv("QSG_RHI_BACKEND", "opengl");
+
 #if defined(Q_OS_LINUX) && !defined(Q_OS_ANDROID)
     // Linux requires 3.2 OpenGL Context
     // in order to instance 3D symbols
@@ -38,8 +41,7 @@ int main(int argc, char *argv[])
     QSurfaceFormat::setDefaultFormat(fmt);
 #endif
 
-  QGuiApplication::setAttribute(Qt::AA_EnableHighDpiScaling);
-    QGuiApplication app(argc, argv);
+  QGuiApplication app(argc, argv);
     app.setApplicationName("FeatureLayerExtrusion - C++");
 
   // Use of Esri location services, including basemaps and geocoding,

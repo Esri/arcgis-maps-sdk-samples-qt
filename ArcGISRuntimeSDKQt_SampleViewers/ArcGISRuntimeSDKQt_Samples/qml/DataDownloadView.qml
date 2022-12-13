@@ -13,11 +13,11 @@
 // limitations under the License.
 // [Legal]
 
-import QtQuick 2.5
-import QtQuick.Controls 2.2
-import Esri.ArcGISRuntimeSamples 1.0
-import Esri.ArcGISExtras 1.1
-import QtQuick.Layouts 1.12
+import QtQuick
+import QtQuick.Controls
+import Esri.ArcGISRuntimeSamples
+import Esri.ArcGISExtras
+import QtQuick.Layouts
 
 Page {
     id: page
@@ -65,7 +65,7 @@ Page {
             Layout.alignment: Qt.AlignHCenter | Qt.AlignVCenter
             visible: !SampleManager.downloadInProgress
             onClicked: {
-                if (System.isOnline) {
+                if (System.reachability === System.ReachabilityOnline || System.reachability === System.ReachabilityUnknown) {
                     dataDownloadLoader.item.downloadDataItems();
                     pageDownloadInProgress = true;
                 } else {

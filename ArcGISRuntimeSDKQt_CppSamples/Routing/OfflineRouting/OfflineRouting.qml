@@ -14,10 +14,10 @@
 // limitations under the License.
 // [Legal]
 
-import QtQuick 2.6
-import QtQuick.Controls 2.6
-import Esri.Samples 1.0
-import QtQuick.Layouts 1.11
+import QtQuick
+import QtQuick.Controls
+import Esri.Samples
+import QtQuick.Layouts
 
 Item {
     // add a mapView component
@@ -57,7 +57,7 @@ Item {
         }
     }
 
-    // Declare the C++ instance which creates the scene etc. and supply the view
+    // Declare the C++ instance which creates the map etc. and supply the view
     OfflineRoutingSample {
         id: routingModel
         mapView: view

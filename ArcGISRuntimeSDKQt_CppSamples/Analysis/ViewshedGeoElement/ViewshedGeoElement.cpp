@@ -23,27 +23,41 @@
 #include "ArcGISTiledElevationSource.h"
 #include "Scene.h"
 #include "SceneQuickView.h"
-#include "Camera.h"
 #include "Point.h"
-#include "Viewpoint.h"
 #include "ArcGISSceneLayer.h"
 #include "SimpleRenderer.h"
 #include "ModelSceneSymbol.h"
 #include "GeoElementViewshed.h"
 #include "GeometryEngine.h"
 #include "OrbitGeoElementCameraController.h"
+#include "MapTypes.h"
+#include "Surface.h"
+#include "ElevationSourceListModel.h"
+#include "LayerListModel.h"
+#include "AnalysisOverlay.h"
+#include "AnalysisOverlayListModel.h"
+#include "AnalysisListModel.h"
+#include "GraphicsOverlayListModel.h"
+#include "LayerSceneProperties.h"
+#include "SceneViewTypes.h"
+#include "RendererSceneProperties.h"
+#include "SymbolTypes.h"
+#include "GraphicListModel.h"
+#include "GeodeticDistanceResult.h"
+#include "LinearUnit.h"
+#include "AngularUnit.h"
+#include "AttributeListModel.h"
+#include "Graphic.h"
+#include "GraphicsOverlay.h"
+#include "SpatialReference.h"
 
 #include <QTimer>
 #include <QString>
 #include <QUrl>
 #include <QVariant>
 #include <QList>
-#include <QDir>
 #include <QtCore/qglobal.h>
-
-#ifdef Q_OS_IOS
 #include <QStandardPaths>
-#endif // Q_OS_IOS
 
 using namespace Esri::ArcGISRuntime;
 
@@ -54,12 +68,10 @@ namespace
   {
     QString dataPath;
 
-  #ifdef Q_OS_ANDROID
-    dataPath = "/sdcard";
-  #elif defined Q_OS_IOS
+  #ifdef Q_OS_IOS
     dataPath = QStandardPaths::writableLocation(QStandardPaths::DocumentsLocation);
   #else
-    dataPath = QDir::homePath();
+    dataPath = QStandardPaths::writableLocation(QStandardPaths::HomeLocation);
   #endif
 
     return dataPath;
@@ -139,7 +151,7 @@ void ViewshedGeoElement::componentComplete()
   // connect to the mouse clicked signal
   connect(m_sceneView, &SceneQuickView::mouseClicked, this, [this](QMouseEvent& event)
   {
-    m_waypoint = m_sceneView->screenToBaseSurface(event.x(), event.y());
+    m_waypoint = m_sceneView->screenToBaseSurface(event.pos().x(), event.pos().y());
     m_timer->start();
   });
 }
@@ -189,14 +201,17 @@ void ViewshedGeoElement::animate()
     return;
 
   // get current location and distance from waypoint
-  Point location = m_tank->geometry();
+  Point location = geometry_cast<Point>(m_tank->geometry());
   const GeodeticDistanceResult distance = GeometryEngine::distanceGeodetic(location, m_waypoint,
-                                                                           m_linearUnit, m_angularUnit,
+                                                                           LinearUnit(m_linearUnit),
+                                                                           AngularUnit(m_angularUnit),
                                                                            m_curveType);
 
   // move toward waypoint based on speed and update orientation
-  location = GeometryEngine::moveGeodetic(QList<Point>{location}, 1.0, m_linearUnit,
-                                          distance.azimuth1(), m_angularUnit,
+  location = GeometryEngine::moveGeodetic(QList<Point>{location}, 1.0,
+                                          LinearUnit(m_linearUnit),
+                                          distance.azimuth1(),
+                                          AngularUnit(m_angularUnit),
                                           m_curveType).at(0);
   m_tank->setGeometry(location);
 

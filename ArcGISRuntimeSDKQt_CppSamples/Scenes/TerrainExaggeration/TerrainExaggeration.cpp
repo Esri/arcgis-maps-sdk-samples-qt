@@ -25,6 +25,11 @@
 #include "Camera.h"
 #include "Point.h"
 #include "SceneQuickView.h"
+#include "MapTypes.h"
+#include "TaskWatcher.h"
+#include "Surface.h"
+#include "ElevationSourceListModel.h"
+#include "SpatialReference.h"
 
 using namespace Esri::ArcGISRuntime;
 

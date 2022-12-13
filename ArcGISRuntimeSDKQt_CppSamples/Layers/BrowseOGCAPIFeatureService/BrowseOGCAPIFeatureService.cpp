@@ -27,8 +27,15 @@
 #include "OgcFeatureCollectionTable.h"
 #include "OgcFeatureService.h"
 #include "OgcFeatureServiceInfo.h"
+#include "Error.h"
+#include "MapTypes.h"
+#include "TaskWatcher.h"
+#include "LayerListModel.h"
+#include "QueryParameters.h"
+#include "GeodatabaseTypes.h"
+#include "Envelope.h"
 
-#include<QQmlEngine>
+#include <QQmlEngine>
 
 using namespace Esri::ArcGISRuntime;
 

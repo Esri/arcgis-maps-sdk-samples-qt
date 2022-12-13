@@ -17,13 +17,10 @@
 #ifndef SYMBOLS_H
 #define SYMBOLS_H
 
-namespace Esri
+namespace Esri::ArcGISRuntime
 {
-  namespace ArcGISRuntime
-  {
-    class Scene;
-    class SceneQuickView;
-  }
+  class Scene;
+  class SceneQuickView;
 }
 
 #include <QQuickItem>

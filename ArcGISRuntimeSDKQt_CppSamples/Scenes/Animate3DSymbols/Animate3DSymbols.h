@@ -19,19 +19,16 @@
 
 class MissionData;
 
-namespace Esri
+namespace Esri::ArcGISRuntime
 {
-  namespace ArcGISRuntime
-  {
-    class GlobeCameraController;
-    class Graphic;
-    class GraphicsOverlay;
-    class MapQuickView;
-    class ModelSceneSymbol;
-    class OrbitGeoElementCameraController;
-    class SceneQuickView;
-    class SimpleMarkerSymbol;
-  }
+  class GlobeCameraController;
+  class Graphic;
+  class GraphicsOverlay;
+  class MapQuickView;
+  class ModelSceneSymbol;
+  class OrbitGeoElementCameraController;
+  class SceneQuickView;
+  class SimpleMarkerSymbol;
 }
 
 class QAbstractListModel;
@@ -39,8 +36,9 @@ class MissionData;
 
 #include <QQuickItem>
 #include <QString>
-
 #include <memory>
+
+Q_MOC_INCLUDE("QAbstractListModel")
 
 class Animate3DSymbols : public QQuickItem
 {

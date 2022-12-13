@@ -25,9 +25,11 @@
 
 int main(int argc, char *argv[])
 {
-    QGuiApplication::setAttribute(Qt::AA_EnableHighDpiScaling);
-    QGuiApplication app(argc, argv);
-    app.setApplicationName("FindAddress - QML");
+  // Enforce OpenGL
+  qputenv("QSG_RHI_BACKEND", "opengl");
+
+  QGuiApplication app(argc, argv);
+  app.setApplicationName("FindAddress - QML");
 
   // Use of Esri location services, including basemaps and geocoding,
   // requires authentication using either an ArcGIS identity or an API Key.
@@ -54,7 +56,7 @@ int main(int argc, char *argv[])
     // Add the import Path
     view.engine()->addImportPath(QDir(QCoreApplication::applicationDirPath()).filePath("qml"));
 
-    QString arcGISRuntimeImportPath = QUOTE(ARCGIS_RUNTIME_IMPORT_PATH);
+    QString arcGISRuntimeImportPath = STRINGIZE(ARCGIS_RUNTIME_IMPORT_PATH);
 
 #if defined(LINUX_PLATFORM_REPLACEMENT)
     // on some linux platforms the string 'linux' is replaced with 1

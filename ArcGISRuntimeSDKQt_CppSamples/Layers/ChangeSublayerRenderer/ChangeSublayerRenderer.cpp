@@ -28,6 +28,13 @@
 #include "ClassBreaksRenderer.h"
 #include "SimpleFillSymbol.h"
 #include "SimpleLineSymbol.h"
+#include "Error.h"
+#include "MapTypes.h"
+#include "SymbolTypes.h"
+#include "LayerListModel.h"
+#include "ArcGISSublayerListModel.h"
+#include "SpatialReference.h"
+#include "Envelope.h"
 
 using namespace Esri::ArcGISRuntime;
 

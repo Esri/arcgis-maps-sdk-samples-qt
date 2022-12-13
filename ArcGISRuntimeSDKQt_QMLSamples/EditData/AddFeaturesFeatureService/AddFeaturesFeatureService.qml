@@ -14,10 +14,9 @@
 // limitations under the License.
 // [Legal]
 
-import QtQuick 2.6
-import QtQuick.Controls 2.2
-import QtGraphicalEffects 1.0
-import Esri.ArcGISRuntime 100.15
+import QtQuick
+import QtQuick.Controls
+import Esri.ArcGISRuntime
 
 Rectangle {
     width: 800
@@ -79,7 +78,7 @@ Rectangle {
         }
 
         //! [AddFeaturesFeatureService new feature at mouse click]
-        onMouseClicked: {  // mouseClicked came from the MapView
+        onMouseClicked: mouse => {  // mouseClicked came from the MapView
             // create attributes json for the new feature
             const featureAttributes = {"typdamage" : "Minor", "primcause" : "Earthquake"};
 

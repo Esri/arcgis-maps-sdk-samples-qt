@@ -17,22 +17,21 @@
 #ifndef CREATEMOBILEGEODATABASE_H
 #define CREATEMOBILEGEODATABASE_H
 
-namespace Esri
-{
-namespace ArcGISRuntime
+namespace Esri::ArcGISRuntime
 {
 class FeatureTable;
 class Geodatabase;
 class Map;
 class MapQuickView;
 }
-}
 
 #include <FeatureListModel.h>
 
-#include <QObject>
 #include <QMouseEvent>
+#include <QObject>
 #include <QTemporaryDir>
+
+Q_MOC_INCLUDE("MapQuickView.h")
 
 class CreateMobileGeodatabase : public QObject
 {
@@ -69,7 +68,7 @@ private:
   bool gdbOpen() const;
   void setMapView(Esri::ArcGISRuntime::MapQuickView* mapView);
   void createTable();
-  void addFeature(QMouseEvent mouseEvent);
+  void addFeature(QMouseEvent& mouseEvent);
   void deleteFeatures();
   void createConnections();
 

@@ -42,7 +42,7 @@ Link | Local Location
 
 ## About the data
 
-This is an example KML file meant to demonstrate how Runtime supports several common features.
+This is an example KML file meant to demonstrate how the ArcGIS Maps SDK for Native Apps supports several common features.
 
 ## Tags
 

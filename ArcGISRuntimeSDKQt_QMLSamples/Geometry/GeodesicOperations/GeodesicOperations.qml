@@ -14,8 +14,8 @@
 // limitations under the License.
 // [Legal]
 
-import QtQuick 2.6
-import Esri.ArcGISRuntime 100.15
+import QtQuick
+import Esri.ArcGISRuntime
 
 Rectangle {
     id: rootRectangle
@@ -69,7 +69,7 @@ Rectangle {
         }
 
         // handle the mouse click
-        onMouseClicked: {
+        onMouseClicked: mouse => {
             // re-project the point to match the NYC graphic
             const destination = GeometryEngine.project(mouse.mapPoint, nycGraphic.geometry.spatialReference);
 

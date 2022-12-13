@@ -18,21 +18,22 @@
 #-------------------------------------------------
 
 TEMPLATE = app
-QT += core gui xml network qml quick positioning sensors multimedia widgets quickcontrols2 opengl webview texttospeech
+QT += core gui xml network qml quick positioning sensors multimedia
+QT += widgets quickcontrols2 opengl webview core5compat websockets
 TARGET = ArcGISQt_CppSamples
 DEFINES += CPP_VIEWER
 DEFINES += Qt_Version=\"$$QT_VERSION\"
 SAMPLEPATHCPP = $$PWD/../../ArcGISRuntimeSDKQt_CppSamples
 COMMONVIEWER = $$PWD/../ArcGISRuntimeSDKQt_Samples
 PCH_HEADER = $$COMMONVIEWER/pch.hpp
-ARCGIS_RUNTIME_VERSION = 100.15.0
+ARCGIS_RUNTIME_VERSION = 200.0.0
 DEFINES += ArcGIS_Runtime_Version=$$ARCGIS_RUNTIME_VERSION
 
 # This block determines whether to build against the installed SDK or the local dev build area
 exists($$PWD/../../../../DevBuildCpp.pri) {
   message("Building against the dev environment")
   DEFINES += ESRI_BUILD
-  DEFINES += SAMPLE_VIEWER_API_KEY=$$(SAMPLEVIEWERAPIKEY_RELEASE)
+  DEFINES += SAMPLE_VIEWER_API_KEY=$$(SAMPLEVIEWERAPIKEY_INTERNAL)
 
   # use the Esri dev build script
   include ($$PWD/../../../../DevBuildCpp.pri)
@@ -47,7 +48,7 @@ exists($$PWD/../../../../DevBuildCpp.pri) {
 } else {
   message("Building against the installed SDK")
   CONFIG += build_from_setup
-  CONFIG += c++14
+  CONFIG += c++17
 
   # include the toolkitcpp.pri, which contains all the toolkit resources
   !include($$PWD/../../arcgis-runtime-toolkit-qt/uitools/toolkitcpp.pri) {
@@ -82,8 +83,8 @@ exists($$PWD/../../../../DevBuildCpp.pri) {
 DEFINES += GANALYTICS_API_KEY=$$(GANALYTICS_API_KEY)
 DEFINES += GANALYTICS_STREAM_ID=$$(GANALYTICS_STREAM_ID)
 
-qtHaveModule(webengine) {
-  QT += webengine
+qtHaveModule(webenginequick) {
+  QT += webenginequick
   DEFINES += QT_WEBVIEW_WEBENGINE_BACKEND
 }
 
@@ -119,11 +120,9 @@ HEADERS += \
     $$COMMONVIEWER/SampleManager_definitions.h \
     $$COMMONVIEWER/SampleSearchFilterModel.h \
     $$COMMONVIEWER/SearchFilterCriteria.h \
-    $$COMMONVIEWER/SearchFilterKeywordCriteria.h \
     $$COMMONVIEWER/SearchFilterSimpleKeywordCriteria.h \
     $$COMMONVIEWER/SourceCode.h \
-    $$COMMONVIEWER/SourceCodeListModel.h \
-    $$COMMONVIEWER/PermissionsHelper.h
+    $$COMMONVIEWER/SourceCodeListModel.h
 
 SOURCES += \
     CppSampleManager.cpp \
@@ -140,12 +139,10 @@ SOURCES += \
     $$COMMONVIEWER/SampleManager.cpp \
     $$COMMONVIEWER/SampleSearchFilterModel.cpp \
     $$COMMONVIEWER/SearchFilterCriteria.cpp \
-    $$COMMONVIEWER/SearchFilterKeywordCriteria.cpp \
     $$COMMONVIEWER/SearchFilterSimpleKeywordCriteria.cpp \
     $$COMMONVIEWER/SourceCode.cpp \
     $$COMMONVIEWER/SourceCodeListModel.cpp \
-    $$COMMONVIEWER/mainSample.cpp \
-    $$COMMONVIEWER/PermissionsHelper.cpp
+    $$COMMONVIEWER/mainSample.cpp
 
 RESOURCES += \
     $$COMMONVIEWER/qml/qml.qrc \
@@ -184,8 +181,6 @@ mac {
 }
 
 android {
-    QT += androidextras
-
     CONFIG(build_from_setup) {
         for (ABI, ANDROID_ABIS): {
             ANDROID_SSL_DIR = $$dirname(QMAKE_QMAKE)/../lib/ssl/$${ABI}

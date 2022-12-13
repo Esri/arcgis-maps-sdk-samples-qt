@@ -22,20 +22,25 @@
 
 #include "Map.h"
 #include "MapQuickView.h"
-#include "Portal.h"
 #include "PortalItem.h"
 #include "OfflineMapTask.h"
 #include "GeometryEngine.h"
 #include "Envelope.h"
 #include "Point.h"
+#include "Error.h"
+#include "TaskWatcher.h"
+#include "GenerateOfflineMapJob.h"
+#include "TaskTypes.h"
+#include "GenerateOfflineMapResult.h"
+#include "Error.h"
+#include "GenerateOfflineMapParameters.h"
+#include "SpatialReference.h"
+#include "Layer.h"
 
-#include <QDir>
 #include <QTemporaryDir>
 #include <QtCore/qglobal.h>
-
-#ifdef Q_OS_IOS
+#include <QUuid>
 #include <QStandardPaths>
-#endif // Q_OS_IOS
 
 using namespace Esri::ArcGISRuntime;
 
@@ -46,12 +51,10 @@ QString defaultDataPath()
 {
   QString dataPath;
 
-#ifdef Q_OS_ANDROID
-  dataPath = "/sdcard";
-#elif defined Q_OS_IOS
+#ifdef Q_OS_IOS
   dataPath = QStandardPaths::writableLocation(QStandardPaths::DocumentsLocation);
 #else
-  dataPath = QDir::homePath();
+  dataPath = QStandardPaths::writableLocation(QStandardPaths::HomeLocation);
 #endif
 
   return dataPath;
@@ -117,7 +120,7 @@ void GenerateOfflineMapLocalBasemap::generateMapByExtent(double xCorner1, double
   const Point corner1 = m_mapView->screenToLocation(xCorner1, yCorner1);
   const Point corner2 = m_mapView->screenToLocation(xCorner2, yCorner2);
   const Envelope extent = Envelope(corner1, corner2);
-  const Envelope mapExtent = GeometryEngine::project(extent, SpatialReference::webMercator());
+  const Envelope mapExtent = geometry_cast<Envelope>(GeometryEngine::project(extent, SpatialReference::webMercator()));
   const QString tempPath = m_tempDir.path() + "/OfflineMap.mmpk";
   const QString dataPath = defaultDataPath() + "/ArcGIS/Runtime/Data/tpkx";
 

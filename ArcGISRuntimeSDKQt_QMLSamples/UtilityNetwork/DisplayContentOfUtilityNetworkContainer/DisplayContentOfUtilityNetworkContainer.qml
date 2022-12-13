@@ -14,10 +14,10 @@
 // limitations under the License.
 // [Legal]
 
-import QtQuick 2.12
-import QtQuick.Controls 2.12
-import QtQuick.Layouts 1.3
-import Esri.ArcGISRuntime 100.15
+import QtQuick
+import QtQuick.Controls
+import QtQuick.Layouts
+import Esri.ArcGISRuntime
 
 Rectangle {
     id: rootRectangle
@@ -73,9 +73,9 @@ Rectangle {
                         return;
 
                     if (!containerViewIsVisible)
-                        getContainmentAssociations(associationsResult);
+                        getContainmentAssociations(associationsResults);
                     else
-                        showAttachmentAndConnectivitySymbols(associationsResult);
+                        showAttachmentAndConnectivitySymbols(associationsResults);
                 }
 
                 onFeaturesForElementsStatusChanged: {
@@ -96,7 +96,7 @@ Rectangle {
 
         onErrorChanged: messageBoxText.text = ("MapView error: " + error.message + " " + error.additionalMessage);
 
-        onMouseClicked: identifyLayers(mouse.x, mouse.y, 5, false);
+        onMouseClicked: mouse => identifyLayers(mouse.x, mouse.y, 5, false);
 
         onIdentifyLayersStatusChanged: {
             if (mapView.identifyLayersStatus !== Enums.TaskStatusCompleted ||
@@ -310,7 +310,7 @@ Rectangle {
 
                     if (containerElement) {
                         // Queries for a list of all UtilityAssociation objects of containment association types present in the geodatabase for the containerElement.
-                        utilityNetwork.associations(containerElement, Enums.UtilityAssociationTypeContainment);
+                        utilityNetwork.associationsWithType(containerElement, Enums.UtilityAssociationTypeContainment);
                         return;
                     }
                 }

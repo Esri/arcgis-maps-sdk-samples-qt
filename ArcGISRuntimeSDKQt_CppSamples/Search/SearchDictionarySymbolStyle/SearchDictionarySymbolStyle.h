@@ -17,12 +17,9 @@
 #ifndef SEARCHDICTIONARYSYMBOLSTYLE_H
 #define SEARCHDICTIONARYSYMBOLSTYLE_H
 
-namespace Esri
+namespace Esri::ArcGISRuntime
 {
-  namespace ArcGISRuntime
-  {
     class DictionarySymbolStyle;
-  }
 }
 
 #include <QQuickItem>

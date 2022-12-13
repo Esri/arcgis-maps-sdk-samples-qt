@@ -14,11 +14,11 @@
 // limitations under the License.
 // [Legal]
 
-import QtQuick 2.12
-import QtQuick.Controls 2.2
-import QtQuick.Layouts 1.3
-import Esri.ArcGISRuntime 100.15
-import Esri.ArcGISExtras 1.1
+import QtQuick
+import QtQuick.Controls
+import QtQuick.Layouts
+import Esri.ArcGISRuntime
+import Esri.ArcGISExtras
 
 
 Rectangle {
@@ -27,7 +27,11 @@ Rectangle {
     width: 800
     height: 600
 
-    readonly property url dataPath: System.userHomePath + "/ArcGIS/Runtime/Data/"
+    readonly property url dataPath: {
+        Qt.platform.os === "ios" ?
+                    System.writableLocationUrl(System.StandardPathsDocumentsLocation) + "/ArcGIS/Runtime/Data/" :
+                    System.writableLocationUrl(System.StandardPathsHomeLocation) + "/ArcGIS/Runtime/Data/"
+    }
 
     // Feature to define attributes for with ContingentValues
     property var newFeature: null;
@@ -49,8 +53,8 @@ Rectangle {
         MouseArea {
             anchors.fill: parent
             visible: attributePrompt.visible
-            onClicked: mouse.accepted = !attributePrompt.visible
-            onWheel:  wheel.accepted = !attributePrompt.visible
+            onClicked: mouse => mouse.accepted = !attributePrompt.visible
+            onWheel:  wheel => wheel.accepted = !attributePrompt.visible
         }
 
         Component.onCompleted: {
@@ -117,7 +121,7 @@ Rectangle {
             }
         }
 
-        onMouseClicked: {
+        onMouseClicked: mouse => {
             // Open attribute prompt and create a new feature for editing
             attributePrompt.visible = true;
             newFeature = birdNestsTable.createFeatureWithAttributes({}, mouse.mapPoint);

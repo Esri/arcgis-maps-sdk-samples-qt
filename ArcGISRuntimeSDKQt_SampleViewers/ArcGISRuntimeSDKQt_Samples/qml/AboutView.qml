@@ -13,22 +13,17 @@
 // limitations under the License.
 // [Legal]
 
-import QtQuick 2.6
-import QtQuick.Controls 2.2
-import QtGraphicalEffects 1.0
-import Esri.ArcGISRuntimeSamples 1.0
+import QtQuick
+import QtQuick.Controls
+import Esri.ArcGISRuntimeSamples
 
 Item {
     visible: false
 
-    RadialGradient {
+    Rectangle {
         id: overlay
         anchors.fill: parent
-        opacity: 0.7
-        gradient: Gradient {
-            GradientStop { position: 0.0; color: "lightgrey" }
-            GradientStop { position: 0.7; color: "black" }
-        }
+        color: "#60000000"
 
         MouseArea {
             anchors.fill: parent
@@ -78,7 +73,7 @@ Item {
 
                     Text {
                         anchors.horizontalCenter: parent.horizontalCenter
-                        text: qsTr("ArcGIS Runtime SDK for Qt Samples")
+                        text: qsTr("ArcGIS Maps SDK for Qt Samples")
                         font {
                             family: fontFamily
                             pixelSize: 14
@@ -89,7 +84,7 @@ Item {
 
                     Text {
                         anchors.horizontalCenter: parent.horizontalCenter
-                        text: qsTr("Built with ArcGIS Runtime SDK for Qt")
+                        text: qsTr("Built with ArcGIS Maps SDK for Qt")
                         font {
                             family: fontFamily
                             pixelSize: 13

@@ -14,11 +14,10 @@
 // limitations under the License.
 // [Legal]
 
-import QtQuick 2.6
-import QtQuick.Controls 2.2
-import Esri.ArcGISRuntime 100.15
-import QtQuick.Layouts 1.11
-import QtQuick.Dialogs 1.1
+import QtQuick
+import QtQuick.Controls
+import Esri.ArcGISRuntime
+import QtQuick.Layouts
 
 Rectangle {
     id: rootRectangle
@@ -58,7 +57,7 @@ Rectangle {
             forceActiveFocus();
         }
 
-        onMouseClicked: {
+        onMouseClicked: mouse => {
             const screenX = mouse.x;
             const screenY = mouse.y;
             const tolerance = 10;
@@ -440,13 +439,12 @@ Rectangle {
         filterBarriers.push(createdElement);
     }
 
-    MessageDialog {
+    Dialog {
         id: messageDialog
-        title: "Perform valve isolation trace"
-        text: "Isolation trace returned no elements."
-        visible: false
-        onRejected: {
-            visible = false;
-        }
+        visible: errorMessage !== ""
+        title: "Isolation trace returned no elements."
+        standardButtons: Dialog.Ok
+        x: (parent.width - width) / 2
+        y: (parent.height - height) / 2
     }
 }

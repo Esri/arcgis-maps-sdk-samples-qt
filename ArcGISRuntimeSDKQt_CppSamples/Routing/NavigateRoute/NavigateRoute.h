@@ -20,9 +20,7 @@
 #include "Route.h"
 #include "RouteResult.h"
 
-namespace Esri
-{
-namespace ArcGISRuntime
+namespace Esri::ArcGISRuntime
 {
 class Graphic;
 class GraphicsOverlay;
@@ -32,11 +30,17 @@ class RouteTask;
 class RouteTracker;
 class SimulatedLocationDataSource;
 }
-}
+
+// NOTE: As of Qt 6.2, QTextToSpeech is not supported. Instances of this class have been commented out for compatibility, but remain for reference
+// class QTextToSpeech;
 
 #include <QObject>
 #include <QString>
-class QTextToSpeech;
+
+class QAbstractListModel;
+
+Q_MOC_INCLUDE("MapQuickView.h")
+Q_MOC_INCLUDE("QAbstractListModel")
 
 class NavigateRoute : public QObject
 {
@@ -85,7 +89,9 @@ private:
   bool m_navigationEnabled = false;
   bool m_recenterEnabled = false;
   QString m_textString = "";
-  QTextToSpeech* m_speaker = nullptr;
+
+  // As of Qt 6.2, QTextToSpeech is not supported
+  // QTextToSpeech* m_speaker = nullptr;
 };
 
 #endif // NAVIGATEROUTE_H

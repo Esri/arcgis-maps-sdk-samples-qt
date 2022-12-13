@@ -14,11 +14,11 @@
 // limitations under the License.
 // [Legal]
 
-import QtQuick 2.6
-import QtQuick.Controls 2.2
-import QtQuick.Layouts 1.3
-import Esri.ArcGISRuntime 100.15
-import Esri.ArcGISExtras 1.1
+import QtQuick
+import QtQuick.Controls
+import QtQuick.Layouts
+import Esri.ArcGISRuntime
+import Esri.ArcGISExtras
 
 Rectangle {
     id: rootRectangle
@@ -27,7 +27,11 @@ Rectangle {
     width: 800
     height: 600
 
-    readonly property url dataPath: System.userHomePath +  "/ArcGIS/Runtime/Data/3D"
+    readonly property url dataPath: {
+        Qt.platform.os === "ios" ?
+                    System.writableLocationUrl(System.StandardPathsDocumentsLocation) + "/ArcGIS/Runtime/Data/3D" :
+                    System.writableLocationUrl(System.StandardPathsHomeLocation) + "/ArcGIS/Runtime/Data/3D"
+    }
     readonly property string headingAtt: "heading";
     readonly property string pitchAtt: "pitch";
     readonly property string rollAtt: "roll";
@@ -130,7 +134,7 @@ Rectangle {
             ComboBox {
                 id: missionList
                 property real modelWidth: 0
-                Layout.minimumWidth: leftPadding + rightPadding + indicator.width + modelWidth
+                Layout.minimumWidth: leftPadding + rightPadding + modelWidth
                 enabled: !playButton.checked
                 model: missionsModel
                 textRole: "name"
@@ -248,8 +252,8 @@ Rectangle {
 
                     MouseArea {
                         anchors.fill: parent
-                        onPressed: mouse.accepted
-                        onWheel: wheel.accepted
+                        onPressed: mouse => mouse.accepted = true
+                        onWheel: wheel => wheel.accepted = true
                     }
                 }
 

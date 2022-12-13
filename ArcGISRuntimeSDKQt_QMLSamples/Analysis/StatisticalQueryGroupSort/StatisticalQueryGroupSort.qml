@@ -14,9 +14,9 @@
 // limitations under the License.
 // [Legal]
 
-import QtQuick 2.6
-import QtQuick.Controls 2.2
-import Esri.ArcGISRuntime 100.15
+import QtQuick
+import QtQuick.Controls
+import Esri.ArcGISRuntime
 
 Rectangle {
     id: rootRectangle
@@ -86,8 +86,7 @@ Rectangle {
         // Initial page is the OptionsPage
         initialItem: OptionsPage {
             id: statisticOptionsPage
-            width: parent.width
-            height: parent.height
+            
             onStatisticButtonClicked: {
                 // create the parameter object
                 const params = ArcGISRuntimeEnvironment.createObject("StatisticsQueryParameters");

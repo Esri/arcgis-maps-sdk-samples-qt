@@ -14,9 +14,9 @@
 // limitations under the License.
 // [Legal]
 
-import QtQuick 2.6
-import QtQuick.Controls 2.2
-import Esri.Samples 1.0
+import QtQuick
+import QtQuick.Controls
+import Esri.Samples
 
 CutGeometrySample {
     id: rootRectangle
@@ -36,7 +36,7 @@ CutGeometrySample {
     }
 
     Button {
-        id: cutButton
+        id: cutOrResetButton
         anchors {
             left: parent.left
             top: parent.top
@@ -45,8 +45,16 @@ CutGeometrySample {
 
         text: "Cut"
         onClicked: {
-            cutPolygon();
-            enabled = false;
+            if (cutOrResetButton.text === "Cut")
+            {
+                cutPolygon();
+                cutOrResetButton.text = "Reset";
+            }
+            else
+            {
+                cutOrResetButton.text = "Cut";
+                resetPolygon();
+            }
         }
     }
 }

@@ -17,15 +17,12 @@
 #ifndef GENERATEOFFLINEMAPLOCALBASEMAP_H
 #define GENERATEOFFLINEMAPLOCALBASEMAP_H
 
-namespace Esri
-{
-namespace ArcGISRuntime
+namespace Esri::ArcGISRuntime
 {
 class Map;
 class MapQuickView;
 class PortalItem;
 class OfflineMapTask;
-}
 }
 
 #include <QQuickItem>

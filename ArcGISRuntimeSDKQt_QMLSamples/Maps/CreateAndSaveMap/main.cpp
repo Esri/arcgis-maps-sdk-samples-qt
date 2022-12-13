@@ -17,6 +17,9 @@
 #include <QCommandLineParser>
 #include <QDir>
 #include <QQmlEngine>
+#ifdef QT_WEBVIEW_WEBENGINE_BACKEND
+#include <QtWebEngineQuick>
+#endif // QT_WEBVIEW_WEBENGINE_BACKEND
 
 #include <Esri/ArcGISRuntime/Toolkit/register.h>
 
@@ -25,7 +28,13 @@
 
 int main(int argc, char *argv[])
 {
-  QGuiApplication::setAttribute(Qt::AA_EnableHighDpiScaling);
+  // Enforce OpenGL
+  qputenv("QSG_RHI_BACKEND", "opengl");
+
+#ifdef QT_WEBVIEW_WEBENGINE_BACKEND
+  QtWebEngineQuick::initialize();
+#endif // QT_WEBVIEW_WEBENGINE_BACKEND
+
   QGuiApplication app(argc, argv);
   app.setApplicationName("CreateAndSaveMap - QML");
 
@@ -47,10 +56,11 @@ int main(int argc, char *argv[])
   // Add the Runtime and Extras path
   view.engine()->addImportPath(arcGISRuntimeImportPath);
 
+  // Register the application view with the toolkit
+  Esri::ArcGISRuntime::Toolkit::registerComponents(*view.engine());
+
   // Set the source
   view.setSource(QUrl("qrc:/Samples/Maps/CreateAndSaveMap/CreateAndSaveMap.qml"));
-
-  Esri::ArcGISRuntime::Toolkit::registerComponents(*(view.engine()));
 
   view.show();
 

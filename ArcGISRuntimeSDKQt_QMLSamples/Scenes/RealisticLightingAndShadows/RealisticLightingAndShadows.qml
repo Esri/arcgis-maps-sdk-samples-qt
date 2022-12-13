@@ -14,9 +14,9 @@
 // limitations under the License.
 // [Legal]
 
-import QtQuick 2.6
-import QtQuick.Controls 2.2
-import Esri.ArcGISRuntime 100.15
+import QtQuick
+import QtQuick.Controls
+import Esri.ArcGISRuntime
 
 Rectangle {
     width: 800
@@ -32,7 +32,7 @@ Rectangle {
         sunTime: "2018-08-10T08:30"
 
         Component.onCompleted: {
-            // Set the focus on MapView to initially enable keyboard navigation
+            // Set the focus on SceneView to initially enable keyboard navigation
             forceActiveFocus();
             setViewpointCameraAndSeconds(camera, 0);
         }

@@ -25,11 +25,23 @@
 #include "Basemap.h"
 #include "ArcGISTiledElevationSource.h"
 #include "SimpleRenderer.h"
-#include "PointBuilder.h"
 #include "Point.h"
 #include "PolygonBuilder.h"
 #include "Polygon.h"
 #include "SimpleFillSymbol.h"
+#include "Camera.h"
+#include "MapTypes.h"
+#include "SymbolTypes.h"
+#include "GraphicsOverlayListModel.h"
+#include "GraphicListModel.h"
+#include "Surface.h"
+#include "ElevationSourceListModel.h"
+#include "RendererSceneProperties.h"
+#include "SceneViewTypes.h"
+#include "GraphicsOverlay.h"
+#include "SpatialReference.h"
+#include "Graphic.h"
+#include "AttributeListModel.h"
 
 #include <cmath>
 #include <ctime>
@@ -130,9 +142,9 @@ void ExtrudeGraphics::componentComplete()
 }
 
 // helper to create polygon from points
-Esri::ArcGISRuntime::Polygon ExtrudeGraphics::createPolygonFromPoints(QList<Point> points)
+Polygon ExtrudeGraphics::createPolygonFromPoints(QList<Point> points)
 {
-  Esri::ArcGISRuntime::Polygon polygon;
+  Polygon polygon;
   if (points.length() == 0)
     return polygon;
 
@@ -143,6 +155,6 @@ Esri::ArcGISRuntime::Polygon ExtrudeGraphics::createPolygonFromPoints(QList<Poin
     // add each point to the builder object
     pb->addPoint(point);
   }
-  return polygon = pb->toGeometry();
+  return polygon = pb->toPolygon();
 }
 

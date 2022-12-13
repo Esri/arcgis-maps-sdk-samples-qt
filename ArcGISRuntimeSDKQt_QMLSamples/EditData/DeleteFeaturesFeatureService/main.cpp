@@ -25,9 +25,11 @@
 
 int main(int argc, char *argv[])
 {
-    QGuiApplication::setAttribute(Qt::AA_EnableHighDpiScaling);
-    QGuiApplication app(argc, argv);
-    app.setApplicationName("DeleteFeaturesFeatureService - QML");
+  // Enforce OpenGL
+  qputenv("QSG_RHI_BACKEND", "opengl");
+
+  QGuiApplication app(argc, argv);
+  app.setApplicationName("DeleteFeaturesFeatureService - QML");
 
   // Use of Esri location services, including basemaps and geocoding,
   // requires authentication using either an ArcGIS identity or an API Key.

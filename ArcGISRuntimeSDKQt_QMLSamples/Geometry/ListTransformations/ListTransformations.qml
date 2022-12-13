@@ -14,10 +14,10 @@
 // limitations under the License.
 // [Legal]
 
-import QtQuick 2.6
-import QtQuick.Controls 2.2
-import Esri.ArcGISRuntime 100.15
-import Esri.ArcGISExtras 1.1
+import QtQuick
+import QtQuick.Controls
+import Esri.ArcGISRuntime
+import Esri.ArcGISExtras
 
 Rectangle {
     id: rootRectangle
@@ -26,7 +26,11 @@ Rectangle {
     height: 600
 
     property bool peDataSet: true
-    readonly property string dataPath: System.userHomePath + "/ArcGIS/Runtime/Data/PEDataRuntime"
+    readonly property string dataPath: {
+        Qt.platform.os === "ios" ?
+                    System.writableLocation(System.StandardPathsDocumentsLocation) + "/ArcGIS/Runtime/Data/PEDataRuntime" :
+                    System.writableLocation(System.StandardPathsHomeLocation) + "/ArcGIS/Runtime/Data/PEDataRuntime"
+    }
 
     Component.onCompleted: TransformationCatalog.projectionEngineDirectory = dataPath
 
@@ -145,7 +149,7 @@ Rectangle {
             delegate: Item {
                 id: itemDelegate
                 height: 45
-                width: parent.width
+                width: transformationList.width
                 clip: true
 
                 // show the DatumTransformation name

@@ -15,8 +15,8 @@
 // [Legal]
 
 
-import QtQuick 2.6
-import QtQuick.Controls 2.2
+import QtQuick
+import QtQuick.Controls
 
 Pane {
     id: aboutFeaturePane
@@ -88,6 +88,7 @@ Pane {
             Button {
                 id: closeButton
                 anchors.horizontalCenter: parent.horizontalCenter
+                width: parent.width
                 Text {
                     anchors.centerIn: parent
                     verticalAlignment: Text.AlignVCenter

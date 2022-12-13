@@ -18,11 +18,21 @@
 #include <QDir>
 #include <QQmlEngine>
 
+#ifdef QT_WEBVIEW_WEBENGINE_BACKEND
+#include <QtWebEngineQuick>
+#endif // QT_WEBVIEW_WEBENGINE_BACKEND
+
 #include <Esri/ArcGISRuntime/Toolkit/register.h>
 
 int main(int argc, char *argv[])
 {
-  QGuiApplication::setAttribute(Qt::AA_EnableHighDpiScaling);
+  // Enforce OpenGL
+  qputenv("QSG_RHI_BACKEND", "opengl");
+
+#ifdef QT_WEBVIEW_WEBENGINE_BACKEND
+  QtWebEngineQuick::initialize();
+#endif // QT_WEBVIEW_WEBENGINE_BACKEND
+
   QGuiApplication app(argc, argv);
   app.setApplicationName(QStringLiteral("EditWithBranchVersioning - QML"));
 
@@ -36,12 +46,12 @@ int main(int argc, char *argv[])
   const QString apiKey = QString("");
   if (apiKey.isEmpty())
   {
-      qWarning() << "Use of Esri location services, including basemaps, requires" <<
-                    "you to authenticate with an ArcGIS identity or set the API Key property.";
+    qWarning() << "Use of Esri location services, including basemaps, requires" <<
+                  "you to authenticate with an ArcGIS identity or set the API Key property.";
   }
   else
   {
-      QCoreApplication::instance()->setProperty("Esri.ArcGISRuntime.apiKey", apiKey);
+    QCoreApplication::instance()->setProperty("Esri.ArcGISRuntime.apiKey", apiKey);
   }
 
   // Initialize application view

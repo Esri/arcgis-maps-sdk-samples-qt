@@ -29,13 +29,21 @@
 #include "SimpleMarkerSceneSymbol.h"
 #include "ModelSceneSymbol.h"
 #include "OrbitGeoElementCameraController.h"
+#include "MapTypes.h"
+#include "SymbolTypes.h"
+#include "GraphicsOverlayListModel.h"
+#include "GraphicListModel.h"
+#include "Surface.h"
+#include "ElevationSourceListModel.h"
+#include "SceneViewTypes.h"
+#include "LayerSceneProperties.h"
+#include "SpatialReference.h"
+#include "GraphicsOverlay.h"
+#include "Point.h"
+#include "Graphic.h"
 
 #include <QtCore/qglobal.h>
-#include <QDir>
-
-#ifdef Q_OS_IOS
 #include <QStandardPaths>
-#endif // Q_OS_IOS
 
 using namespace Esri::ArcGISRuntime;
 
@@ -46,12 +54,10 @@ namespace
   {
     QString dataPath;
 
-  #ifdef Q_OS_ANDROID
-    dataPath = "/sdcard";
-  #elif defined Q_OS_IOS
+  #ifdef Q_OS_IOS
     dataPath = QStandardPaths::writableLocation(QStandardPaths::DocumentsLocation);
   #else
-    dataPath = QDir::homePath();
+    dataPath = QStandardPaths::writableLocation(QStandardPaths::HomeLocation);
   #endif
 
     return dataPath;
@@ -149,4 +155,3 @@ void DistanceCompositeSymbol::componentComplete()
 
   mms->load();
 }
-

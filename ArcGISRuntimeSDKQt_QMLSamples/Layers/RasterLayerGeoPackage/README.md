@@ -6,7 +6,7 @@ Display a raster contained in a GeoPackage.
 
 ## Use case
 
-GeoPackages are designed to simplify file management and transfer. They can store raster files (as well as other types of data). An end-user wishing to transfer rasters from ArcGIS Pro or between runtime apps, might need to import raster files from GeoPackages into their map to view and analyze the data.
+GeoPackages are designed to simplify file management and transfer. They can store raster files (as well as other types of data). An end-user wishing to transfer rasters from ArcGIS Pro or between ArcGIS Maps SDK apps, might need to import raster files from GeoPackages into their map to view and analyze the data.
 
 ## How to use the sample
 

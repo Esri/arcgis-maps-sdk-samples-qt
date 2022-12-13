@@ -17,9 +17,7 @@
 #ifndef EDITFEATURESWITHFEATURELINKEDANNOTATION_H
 #define EDITFEATURESWITHFEATURELINKEDANNOTATION_H
 
-namespace Esri
-{
-namespace ArcGISRuntime
+namespace Esri::ArcGISRuntime
 {
 class AnnotationLayer;
 class Feature;
@@ -29,14 +27,17 @@ class IdentifyLayerResult;
 class Map;
 class MapQuickView;
 }
-}
 
 #include <QObject>
 #include <QDir>
 #include <QMouseEvent>
+#include <QUuid>
 
 #include "Point.h"
 #include "Error.h"
+
+Q_MOC_INCLUDE("MapQuickView.h")
+Q_MOC_INCLUDE("IdentifyLayerResult.h")
 
 class EditFeaturesWithFeatureLinkedAnnotation : public QObject
 {
@@ -57,7 +58,7 @@ public:
 
 private slots:
   void onIdentifyLayersCompleted(QUuid,const QList<Esri::ArcGISRuntime::IdentifyLayerResult*>& identifyResults);
-  void onMouseClicked(QMouseEvent mouseEvent);
+  void onMouseClicked(QMouseEvent& mouseEvent);
   void onGeodatabaseDoneLoading(Esri::ArcGISRuntime::Error error);
 
 signals:

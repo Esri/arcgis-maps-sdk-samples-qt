@@ -14,19 +14,23 @@
 // limitations under the License.
 // [Legal]
 
-import QtQuick 2.6
-import QtQuick.Controls 2.2
-import QtQuick.Layouts 1.3
-import Esri.ArcGISExtras 1.1
-import Esri.ArcGISRuntime 100.15
-import Esri.ArcGISRuntime.Toolkit 100.15
+import QtQuick
+import QtQuick.Controls
+import QtQuick.Layouts
+import Esri.ArcGISExtras
+import Esri.ArcGISRuntime
+import Esri.ArcGISRuntime.Toolkit
 
 Rectangle {
     clip: true
     width: 800
     height: 600
 
-    readonly property url dataPath: System.userHomePath + "/ArcGIS/Runtime/Data"
+    readonly property url dataPath: {
+        Qt.platform.os === "ios" ?
+                    System.writableLocationUrl(System.StandardPathsDocumentsLocation) + "/ArcGIS/Runtime/Data" :
+                    System.writableLocationUrl(System.StandardPathsHomeLocation) + "/ArcGIS/Runtime/Data"
+    }
     property Point pinLocation: null
     property Point clickedPoint: null
     property bool isReverseGeocode: false
@@ -98,8 +102,8 @@ Rectangle {
             id: callout
             calloutData: parent.calloutData
             screenOffsetY: (pictureMarker.height / 2) * -1
-            accessoryButtonHidden: true
-            leaderPosition: leaderPositionEnum.Automatic
+            accessoryButtonVisible: false
+            leaderPosition: Callout.LeaderPosition.Automatic
         }
 
         // dismiss suggestions and no results notification on mouse press
@@ -108,7 +112,7 @@ Rectangle {
             suggestionRect.visible = false;
         }
 
-        onMouseClicked: {
+        onMouseClicked: mouse => {
             clickedPoint = mouse.mapPoint;
             mapView.identifyGraphicsOverlayWithMaxResults(graphicsOverlay, mouse.x, mouse.y, 5, false, 1);
         }
@@ -135,7 +139,7 @@ Rectangle {
         }
 
         // When user press and holds, prepare for real-time reverse geocoding
-        onMousePressedAndHeld: {
+        onMousePressedAndHeld: mouse => {
             isPressAndHold = true;
             isReverseGeocode = true;
 
@@ -144,7 +148,7 @@ Rectangle {
         }
 
         // real-time reverse geocode if mouse being held down
-        onMousePositionChanged: {
+        onMousePositionChanged: mouse => {
             if (isPressAndHold && locatorTask.geocodeStatus !== Enums.TaskStatusInProgress)
                 locatorTask.reverseGeocodeWithParameters(mouse.mapPoint, reverseGeocodeParams);
         }

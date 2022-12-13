@@ -14,6 +14,7 @@
 // limitations under the License.
 // [Legal]
 
+#include "ArcGISFeature.h"
 #ifdef PCH_BUILD
 #include "pch.hpp"
 #endif // PCH_BUILD
@@ -28,12 +29,23 @@
 #include "GeotriggersTypes.h"
 #include "FeatureFenceParameters.h"
 #include "LocationGeotriggerFeed.h"
+#include "LocationDisplay.h"
 #include "Map.h"
 #include "MapQuickView.h"
+#include "MapViewTypes.h"
 #include "PortalItem.h"
 #include "ServiceFeatureTable.h"
 #include "SimulatedLocationDataSource.h"
 #include "SimulationParameters.h"
+#include "TaskWatcher.h"
+#include "ArcGISFeature.h"
+#include "AttributeListModel.h"
+#include "Attachment.h"
+#include "AttachmentListModel.h"
+#include "Polyline.h"
+
+#include <QUuid>
+#include <QDateTime>
 
 using namespace Esri::ArcGISRuntime;
 
@@ -120,7 +132,8 @@ void Geotriggers::initializeSimulatedLocationDisplay()
   SimulationParameters* simulationParameters = new SimulationParameters(QDateTime::currentDateTime(), 5.0, 0.0, 0.0, this);
 
   // Use the polyline as defined above or from this AGOL GeoJSON to define the path. retrieved from https://https://arcgisruntime.maps.arcgis.com/home/item.html?id=2a346cf1668d4564b8413382ae98a956
-  m_simulatedLocationDataSource->setLocationsWithPolyline(Polyline::fromJson(walkingTourPolyineJson), simulationParameters);
+  m_simulatedLocationDataSource->setLocationsWithPolyline(
+        geometry_cast<Polyline>(Polyline::fromJson(walkingTourPolyineJson)), simulationParameters);
 
   m_mapView->locationDisplay()->setDataSource(m_simulatedLocationDataSource);
   m_mapView->locationDisplay()->setAutoPanMode(LocationDisplayAutoPanMode::Recenter);

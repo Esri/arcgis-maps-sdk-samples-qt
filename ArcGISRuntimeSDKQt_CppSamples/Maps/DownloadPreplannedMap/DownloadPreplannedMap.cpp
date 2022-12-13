@@ -30,6 +30,20 @@
 #include "PreplannedMapAreaListModel.h"
 #include "SimpleLineSymbol.h"
 #include "SimpleRenderer.h"
+#include "Error.h"
+#include "MapTypes.h"
+#include "GraphicsOverlayListModel.h"
+#include "GraphicListModel.h"
+#include "SymbolTypes.h"
+#include "TaskWatcher.h"
+#include "OfflineMapTypes.h"
+#include "TaskTypes.h"
+#include "MobileMapPackage.h"
+#include "GraphicsOverlay.h"
+#include "PortalItem.h"
+#include "Geometry.h"
+
+#include <QUuid>
 
 using namespace Esri::ArcGISRuntime;
 
@@ -55,7 +69,7 @@ DownloadPreplannedMap::DownloadPreplannedMap(QObject* parent /* = nullptr */):
       m_offlineMapTask->preplannedMapAreas();
     });
 
-    connect(m_offlineMapTask, &OfflineMapTask::createDefaultDownloadPreplannedOfflineMapParametersCompleted, this, [this] (QUuid ,const DownloadPreplannedOfflineMapParameters& parameters)
+    connect(m_offlineMapTask, &OfflineMapTask::createDefaultDownloadPreplannedOfflineMapParametersCompleted, this, [this] (QUuid, const DownloadPreplannedOfflineMapParameters& parameters)
     {
 
       m_params = parameters;

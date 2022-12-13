@@ -42,6 +42,8 @@
 #include "UtilityTraceParameters.h"
 #include "UtilityTraceResultListModel.h"
 #include "UtilityTraversability.h"
+#include "Error.h"
+#include "Credential.h"
 
 #include <QQmlEngine>
 #include <algorithm>

@@ -14,11 +14,11 @@
 // limitations under the License.
 // [Legal]
 
-import QtQuick 2.6
-import QtQuick.Controls 2.2
-import QtQuick.Layouts 1.12
-import Esri.Samples 1.0
-import Esri.ArcGISRuntime.Toolkit 100.15
+import QtQuick
+import QtQuick.Controls
+import QtQuick.Layouts
+import Esri.Samples
+import Esri.ArcGISRuntime.Toolkit
 
 Item {
 
@@ -57,8 +57,8 @@ Item {
             MouseArea {
                 width: controlLayout.childrenRect.width
                 height: controlLayout.childrenRect.height
-                onClicked: mouse.accepted = true;
-                onWheel: wheel.accepted = true;
+                onClicked: mouse => mouse.accepted = true;
+                onWheel: wheel => wheel.accepted = true;
             }
 
             ColumnLayout{
@@ -116,7 +116,7 @@ Item {
         }
     }
 
-    // Declare the C++ instance which creates the scene etc. and supply the view
+    // Declare the C++ instance which creates the map etc. and supply the view
     DisplayLayerViewDrawStateSample {
         id: model
         mapView: view

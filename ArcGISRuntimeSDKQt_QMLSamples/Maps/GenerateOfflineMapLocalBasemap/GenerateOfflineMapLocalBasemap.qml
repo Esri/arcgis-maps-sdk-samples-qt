@@ -14,12 +14,11 @@
 // limitations under the License.
 // [Legal]
 
-import QtQuick 2.6
-import QtQuick.Controls 2.2
-import QtQuick.Layouts 1.3
-import Esri.ArcGISRuntime 100.15
-import Esri.ArcGISExtras 1.1
-import Esri.ArcGISRuntime.Toolkit 100.15
+import QtQuick
+import QtQuick.Controls
+import QtQuick.Layouts
+import Esri.ArcGISRuntime
+import Esri.ArcGISExtras
 
 Rectangle {
     id: rootRectangle
@@ -28,7 +27,11 @@ Rectangle {
     height: 600
 
     readonly property url outputMapPackage: System.temporaryFolder.url + "/OfflineMap_%1.mmpk".arg(new Date().getTime().toString())
-    readonly property url basemapDirectory: System.userHomePath + "/ArcGIS/Runtime/Data/tpkx"
+    readonly property url basemapDirectory: {
+        Qt.platform.os === "ios" ?
+                    System.writableLocationUrl(System.StandardPathsDocumentsLocation) + "/ArcGIS/Runtime/Data/tpkx" :
+                    System.writableLocationUrl(System.StandardPathsHomeLocation) + "/ArcGIS/Runtime/Data/tpkx"
+    }
     readonly property string webMapId: "acc027394bc84c2fb04d1ed317aac674"
     property bool useLocalBasemap: false
 

@@ -13,11 +13,11 @@
 // limitations under the License.
 // [Legal]
 
-import QtQuick 2.9
+import QtQuick
 
-import QtQuick.Controls 2.2
-import Esri.ArcGISRuntimeSamples 1.0
-import Telemetry 1.0
+import QtQuick.Controls
+import Esri.ArcGISRuntimeSamples
+import Telemetry
 
 ListView {
     spacing: 10
@@ -46,15 +46,15 @@ ListView {
                 color: "gray"
                 width: 1
             }
+        }
 
-            MouseArea {
-                anchors.fill: parent
-                onClicked: {
-                    drawer.close();
-                    // launch sample...
-                    SampleManager.currentSample = sample;
-                    GAnalytics.postEvent("sample_opened", {"sample_name": sample.name, "referrer": "search"});
-                }
+        MouseArea {
+            anchors.fill: parent
+            onClicked: {
+                drawer.close();
+                // launch sample...
+                SampleManager.currentSample = sample;
+                GAnalytics.postEvent("sample_opened", {"sample_name": sample.name, "referrer": "search"});
             }
         }
     }

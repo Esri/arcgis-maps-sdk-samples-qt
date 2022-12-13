@@ -30,6 +30,11 @@
 #include "SpatialReference.h"
 #include "PolylineBuilder.h"
 #include "Point.h"
+#include "MapTypes.h"
+#include "GraphicsOverlayListModel.h"
+#include "GraphicListModel.h"
+#include "SymbolTypes.h"
+#include "LinearUnit.h"
 
 using namespace Esri::ArcGISRuntime;
 
@@ -85,8 +90,8 @@ void GeodesicOperations::componentComplete()
   connect(m_mapView, &MapQuickView::mouseClicked, this, [this, nycPoint](QMouseEvent& mouseEvent)
   {
     // re-project the point to match the NYC graphic
-    const Point clickedPoint = m_mapView->screenToLocation(mouseEvent.x(), mouseEvent.y());
-    const Point destination = GeometryEngine::project(clickedPoint, m_nycGraphic->geometry().spatialReference());
+    const Point clickedPoint = m_mapView->screenToLocation(mouseEvent.pos().x(), mouseEvent.pos().y());
+    const Point destination = geometry_cast<Point>(GeometryEngine::project(clickedPoint, m_nycGraphic->geometry().spatialReference()));
 
     // update the destination graphic
     m_destinationGraphic->setGeometry(destination);

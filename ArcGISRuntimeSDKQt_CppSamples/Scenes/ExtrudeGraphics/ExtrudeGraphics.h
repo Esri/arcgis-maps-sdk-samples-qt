@@ -17,17 +17,16 @@
 #ifndef EXTRUDE_GRAPHICS_H
 #define EXTRUDE_GRAPHICS_H
 
-namespace Esri
+namespace Esri::ArcGISRuntime
 {
-  namespace ArcGISRuntime
-  {
-    class Scene;
-    class SceneQuickView;
-  }
+  class Scene;
+  class SceneQuickView;
+  class Point;
+  class Polygon;
 }
 
-#include "Polygon.h"
 #include <QQuickItem>
+#include <QUrl>
 
 class ExtrudeGraphics : public QQuickItem
 {

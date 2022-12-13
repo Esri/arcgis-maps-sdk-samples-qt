@@ -11,8 +11,8 @@
 // See the License for the specific language governing permissions and
 // limitations under the License.
 
-import QtQuick.Controls 2.2
-import Esri.Samples 1.0
+import QtQuick.Controls
+import Esri.Samples
 
 ApplicationWindow {
     id: appWindow

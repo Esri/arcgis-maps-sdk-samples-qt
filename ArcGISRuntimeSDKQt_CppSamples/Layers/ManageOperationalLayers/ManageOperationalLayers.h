@@ -17,21 +17,21 @@
 #ifndef MANAGEOPERATIONALLAYERS_H
 #define MANAGEOPERATIONALLAYERS_H
 
-namespace Esri
-{
-namespace ArcGISRuntime
+namespace Esri::ArcGISRuntime
 {
 class Map;
 class MapQuickView;
 class ArcGISMapImageLayer;
 class Layer;
 }
-}
 
 class DrawOrderLayerListModel;
 class QAbstractItemModel;
 
 #include <QObject>
+
+Q_MOC_INCLUDE("MapQuickView.h")
+Q_MOC_INCLUDE("QAbstractItemModel")
 
 class ManageOperationalLayers : public QObject
 {

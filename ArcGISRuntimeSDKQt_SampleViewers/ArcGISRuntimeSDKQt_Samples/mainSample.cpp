@@ -29,7 +29,7 @@
 #include "GAnalytics.h"
 
 #ifdef QT_WEBVIEW_WEBENGINE_BACKEND
-#  include <QtWebEngine>
+#  include <QtWebEngineQuick>
 #endif // QT_WEBVIEW_WEBENGINE_BACKEND
 
 // Choose a manager based on the type of interface.
@@ -45,13 +45,11 @@
 #include "DataItem.h"
 #include "DataItemListModel.h"
 #include "Esri/ArcGISRuntime/Toolkit/register.h"
-#include "PermissionsHelper.h"
 #include "Sample.h"
 #include "SampleCategory.h"
 #include "SampleListModel.h"
 #include "SampleSearchFilterModel.h"
 #include "SearchFilterCriteria.h"
-#include "SearchFilterKeywordCriteria.h"
 #include "SourceCode.h"
 #include "SourceCodeListModel.h"
 #include "SyntaxHighlighter/syntax_highlighter.h"
@@ -77,6 +75,7 @@
 #include "ApplyScheduledMapUpdates.h"
 #include "ApplyUniqueValuesWithAlternateSymbols.h"
 #include "ArcGISMapImageLayerUrl.h"
+#include "ArcGISQt_global.h" // for LOCALSERVER_SUPPORTED
 #include "ArcGISTiledLayerUrl.h"
 #include "BasicSceneView.h"
 #include "BlendRasterLayer.h"
@@ -126,6 +125,7 @@
 #include "DisplayMap.h"
 #include "DisplayOgcApiFeatureCollection.h"
 #include "DisplayOverviewMap.h"
+#include "DisplayRouteLayer.h"
 #include "DisplaySceneLayer.h"
 #include "DisplaySubtypeFeatureLayer.h"
 #include "DisplayUtilityAssociations.h"
@@ -309,18 +309,21 @@ void registerCppSampleClasses();
 
 int main(int argc, char *argv[])
 {
+  // add support for feature toggles on mobile, which is disabled by default
+  qputenv("QT_ENABLE_FEATURE_TOGGLE_MOBILE", "true");
+  qputenv("QSG_RHI_BACKEND", "opengl");
+
 #ifdef QT_WEBVIEW_WEBENGINE_BACKEND
-  QtWebEngine::initialize();
+  QtWebEngineQuick::initialize();
 #endif // QT_WEBVIEW_WEBENGINE_BACKEND
 
 #ifdef CPP_VIEWER
-  QGuiApplication::setApplicationName("ArcGIS Runtime Qt Cpp Samples");
+  QGuiApplication::setApplicationName("ArcGIS Maps SDK Qt Cpp Samples");
 #else
-  QGuiApplication::setApplicationName("ArcGIS Runtime Qt Qml Samples");
+  QGuiApplication::setApplicationName("ArcGIS Maps SDK Qt Qml Samples");
 #endif
 
   QGuiApplication::setOrganizationName("Esri");
-  QGuiApplication::setAttribute(Qt::AA_EnableHighDpiScaling);
   QApplication app(argc, argv);
 
   // register sample viewer classes
@@ -437,6 +440,7 @@ void registerCppSampleClasses()
   DisplayMap::init();
   DisplayOgcApiFeatureCollection::init();
   DisplayOverviewMap::init();
+  DisplayRouteLayer::init();
   DisplaySceneLayer::init();
   DisplaySubtypeFeatureLayer::init();
   DisplayUtilityAssociations::init();
@@ -605,8 +609,6 @@ void registerCppSampleClasses()
 
 void registerClasses()
 {
-  qmlRegisterType<PermissionsHelper>("Esri.ArcGISRuntimeSamples", 1, 0, "PermissionsHelper");
-
   qmlRegisterSingletonType<DownloadSampleManager>("Esri.ArcGISRuntimeSamples", 1, 0, "SampleManager",
                                                   &esriSampleManagerProvider);
   // Register the Google Analytics class
@@ -633,7 +635,6 @@ void registerClasses()
 
   qmlRegisterType<SampleSearchFilterModel>("Esri.ArcGISRuntimeSamples", 1, 0, "SampleSearchFilterModel");
   qmlRegisterUncreatableType<SearchFilterCriteria>("Esri.ArcGISRuntimeSamples", 1, 0, "SearchFilterCriteria", "Abstract base class");
-  qmlRegisterType<SearchFilterKeywordCriteria>("Esri.ArcGISRuntimeSamples", 1, 0, "SearchFilterKeywordCriteria");
 
 #ifndef CPP_VIEWER
   qmlRegisterType<NavigateRouteSpeaker>("Esri.samples", 1, 0, "NavigateRouteSpeaker");

@@ -22,14 +22,33 @@
 
 #include "FeatureListModel.h"
 
+#include "FeatureIterator.h"
 #include "FeatureLayer.h"
+#include "FeatureQueryResult.h"
 #include "FieldDescription.h"
 #include "FieldDescriptionListModel.h"
 #include "Geodatabase.h"
 #include "GeodatabaseFeatureTable.h"
+#include "GeometryTypes.h"
+#include "LayerListModel.h"
 #include "Map.h"
 #include "MapQuickView.h"
+#include "MapTypes.h"
+#include "Point.h"
+#include "QueryParameters.h"
 #include "TableDescription.h"
+#include "TaskWatcher.h"
+#include "ServiceTypes.h"
+#include "LayerListModel.h"
+#include "FieldDescriptionListModel.h"
+#include "QueryParameters.h"
+#include "FeatureIterator.h"
+#include "FeatureQueryResult.h"
+#include "Viewpoint.h"
+#include "SpatialReference.h"
+#include "Point.h"
+
+#include <QUuid>
 
 using namespace Esri::ArcGISRuntime;
 
@@ -139,12 +158,12 @@ void CreateMobileGeodatabase::closeGdb()
   emit featureCountChanged();
 }
 
-void CreateMobileGeodatabase::addFeature(QMouseEvent mouseEvent)
+void CreateMobileGeodatabase::addFeature(QMouseEvent& mouseEvent)
 {
   if (!m_featureTable)
     return;
 
-  const Point mousePoint = m_mapView->screenToLocation(mouseEvent.x(), mouseEvent.y());
+  const Point mousePoint = m_mapView->screenToLocation(mouseEvent.pos().x(), mouseEvent.pos().y());
   QVariantMap attributes = {};
   attributes.insert("collection_timestamp", QDateTime::currentDateTime());
   Feature* feature = m_featureTable->createFeature(attributes, mousePoint, this);

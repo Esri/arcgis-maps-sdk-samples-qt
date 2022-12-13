@@ -14,10 +14,10 @@
 // limitations under the License.
 // [Legal]
 
-import QtQuick 2.6
-import QtQuick.Layouts 1.12
-import QtQuick.Controls 2.12
-import Esri.ArcGISRuntime 100.15
+import QtQuick
+import QtQuick.Layouts
+import QtQuick.Controls
+import Esri.ArcGISRuntime
 
 Rectangle {
     id: rootRectangle
@@ -132,7 +132,7 @@ Rectangle {
             id: unGraphicsOverlay
         }
 
-        onMouseClicked: {
+        onMouseClicked: mouse => {
             const screenX = mouse.x;
             const screenY = mouse.y;
             const tolerance = 10;
@@ -344,8 +344,8 @@ Rectangle {
         // catch mouse signals from propagating to parent
         MouseArea {
             anchors.fill: parent
-            onClicked: mouse.accepted = true
-            onWheel: wheel.accepted = true
+            onClicked: mouse => mouse.accepted = true
+            onWheel: wheel => wheel.accepted = true
         }
 
         Column {

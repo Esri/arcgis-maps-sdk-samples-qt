@@ -24,6 +24,13 @@
 #include "Scene.h"
 #include "SceneQuickView.h"
 #include "ArcGISSceneLayer.h"
+#include "MapTypes.h"
+#include "Surface.h"
+#include "ElevationSourceListModel.h"
+#include "LayerListModel.h"
+#include "MapTypes.h"
+
+#include <QUuid>
 
 using namespace Esri::ArcGISRuntime;
 
@@ -44,7 +51,6 @@ AddAPointSceneLayer::AddAPointSceneLayer(QObject* parent /* = nullptr */):
 
   // add scene layer source to the scene to display points at world airport locations
   m_scene->operationalLayers()->append(pointSceneLayer);
-
 }
 
 AddAPointSceneLayer::~AddAPointSceneLayer() = default;
@@ -72,4 +78,3 @@ void AddAPointSceneLayer::setSceneView(SceneQuickView* sceneView)
 
   emit sceneViewChanged();
 }
-

@@ -17,17 +17,14 @@
 #ifndef ANALYZEVIEWSHED_H
 #define ANALYZEVIEWSHED_H
 
-namespace Esri
+namespace Esri::ArcGISRuntime
 {
-  namespace ArcGISRuntime
-  {
     class Map;
     class MapQuickView;
     class GraphicsOverlay;
     class GeoprocessingTask;
     class GeoprocessingResult;
     class Graphic;
-  }
 }
 
 #include <QQuickItem>

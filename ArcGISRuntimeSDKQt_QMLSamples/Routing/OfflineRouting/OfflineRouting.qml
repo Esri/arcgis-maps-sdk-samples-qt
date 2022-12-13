@@ -14,12 +14,12 @@
 // limitations under the License.
 // [Legal]
 
-import QtQuick 2.6
-import QtQuick.Controls 2.6
-import Esri.ArcGISRuntime 100.15
-import Esri.ArcGISExtras 1.1
-import QtQml 2.11
-import QtQuick.Layouts 1.11
+import QtQuick
+import QtQuick.Controls
+import Esri.ArcGISRuntime
+import Esri.ArcGISExtras
+import QtQml
+import QtQuick.Layouts
 
 Rectangle {
     id: rootRectangle
@@ -27,7 +27,11 @@ Rectangle {
     width: 800
     height: 600
 
-    readonly property url dataPath: System.userHomePath + "/ArcGIS/Runtime/Data/tpkx/"
+    readonly property url dataPath: {
+        Qt.platform.os === "ios" ?
+                    System.writableLocationUrl(System.StandardPathsDocumentsLocation) + "/ArcGIS/Runtime/Data/tpkx/" :
+                    System.writableLocationUrl(System.StandardPathsHomeLocation) + "/ArcGIS/Runtime/Data/tpkx/"
+    }
     readonly property url pinUrl: "qrc:/Samples/Routing/OfflineRouting/orange_symbol.png"
     property var findRoute;
     property Graphic selectedGraphic: null;
@@ -195,12 +199,12 @@ Rectangle {
         }
 
         // check whether mouse pressed over an existing stop
-        onMousePressed: {
+        onMousePressed: mouse => {
             mapView.identifyGraphicsOverlay(stopsOverlay, mouse.x, mouse.y, 10, false);
         }
 
         // get stops from clicked locations and find route
-        onMouseClicked: {
+        onMouseClicked: mouse => {
             if (!selectedGraphic) {
                 const clickedPoint = mapView.screenToLocation(mouse.x, mouse.y);
                 if (!GeometryEngine.within(clickedPoint, routableArea)) {
@@ -225,7 +229,7 @@ Rectangle {
 
         // if mouse is moved while pressing on a graphic, the click-and-pan effect of the MapView is prevented by mouse.accepted = true
         // and the mouse position is tracked and route is updated on-the-fly
-        onMousePositionChanged: {
+        onMousePositionChanged: mouse => {
             mouse.accepted = !!selectedGraphic; // whether to pass mouse event to MapView
             if (selectedGraphic) {
                 if (!GeometryEngine.within(mapView.screenToLocation(mouse.x, mouse.y), routableArea)) {
@@ -238,7 +242,7 @@ Rectangle {
         }
 
         // mouseMoved is processed before identifyGraphicsOverlayCompleted, so must clear graphic upon mouseReleased
-        onMouseReleased: {
+        onMouseReleased: mouse => {
             if (selectedGraphic) {
                 selectedGraphic = null;
                 mouse.accepted = true;

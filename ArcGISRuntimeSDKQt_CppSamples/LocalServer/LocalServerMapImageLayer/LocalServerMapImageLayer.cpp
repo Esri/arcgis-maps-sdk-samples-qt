@@ -21,12 +21,18 @@
 #include "LocalServerMapImageLayer.h"
 
 #include "Basemap.h"
+#include "Envelope.h"
 #include "MapQuickView.h"
 #include "Map.h"
 #include "LocalServer.h"
 #include "LocalMapService.h"
 #include "ArcGISMapImageLayer.h"
 #include "Viewpoint.h"
+#include "MapViewTypes.h"
+#include "MapTypes.h"
+#include "LayerListModel.h"
+#include "LocalServerTypes.h"
+#include "TaskWatcher.h"
 
 #include <QDir>
 #include <QTemporaryDir>

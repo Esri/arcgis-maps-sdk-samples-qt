@@ -25,6 +25,13 @@
 #include "MapQuickView.h"
 #include "MosaicRule.h"
 #include "RasterLayer.h"
+#include "Error.h"
+#include "MapTypes.h"
+#include "TaskWatcher.h"
+#include "LayerListModel.h"
+#include "RasterTypes.h"
+#include "Envelope.h"
+#include "Point.h"
 
 using namespace Esri::ArcGISRuntime;
 

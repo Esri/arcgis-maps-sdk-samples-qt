@@ -22,7 +22,7 @@ Click 'Navigate' to simulate travelling and to receive directions from a preset 
 6. Create a `RouteTracker` using the route result, and the index of the desired route to take.
 7. Use `trackLocation(Location)` to track the location of the device and update the route tracking status.
 8. Use the `trackingStatusChanged` signal to get the `TrackingStatus` and use it to display updated route information. Tracking status includes a variety of information on the route progress, such as the remaining distance, remaining geometry or traversed geometry (represented by a `Polyline`), or the remaining time, amongst others.
-9. Use the `newVoiceGuidance` signal to get the `VoiceGuidance` whenever new instructions are available. From the voice guidance, get the `string` representing the directions and use a text-to-speech engine to output the maneuver directions.
+9. Use the `newVoiceGuidance` signal to get the `VoiceGuidance` whenever new instructions are available. From the voice guidance, get the `string` representing the directions and use a text-to-speech engine to output the maneuver directions. (NOTE: As of Qt 6.2, QTextToSpeech is not supported).
 10. You can also query the tracking status for the current `DirectionManeuver` index, retrieve that maneuver from the `Route` and get its direction text to display in the GUI.
 11. To establish whether the destination has been reached, get the `DestinationStatus` from the tracking status. If the destination status is `Reached`, we have arrived at the destination and can stop routing. If there are several destinations in your route, and the remaining destination count is greater than 1, switch the route tracker to the next destination.
 

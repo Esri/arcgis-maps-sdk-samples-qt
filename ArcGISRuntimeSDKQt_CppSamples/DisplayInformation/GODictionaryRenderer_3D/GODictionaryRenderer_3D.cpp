@@ -31,13 +31,16 @@
 #include "SceneQuickView.h"
 #include "Surface.h"
 #include "DictionarySymbolStyle.h"
+#include "MapTypes.h"
+#include "ElevationSourceListModel.h"
+#include "GraphicsOverlayListModel.h"
+#include "GraphicsOverlay.h"
+#include "Graphic.h"
+#include "Point.h"
 
-#include <QDir>
 #include <QtCore/qglobal.h>
-
-#ifdef Q_OS_IOS
 #include <QStandardPaths>
-#endif // Q_OS_IOS
+
 
 using namespace Esri::ArcGISRuntime;
 
@@ -48,12 +51,10 @@ namespace
   {
     QString dataPath;
 
-  #ifdef Q_OS_ANDROID
-    dataPath = "/sdcard";
-  #elif defined Q_OS_IOS
+  #ifdef Q_OS_IOS
     dataPath = QStandardPaths::writableLocation(QStandardPaths::DocumentsLocation);
   #else
-    dataPath = QDir::homePath();
+    dataPath = QStandardPaths::writableLocation(QStandardPaths::HomeLocation);
   #endif
 
     return dataPath;
@@ -151,7 +152,7 @@ void GODictionaryRenderer_3D::parseXmlFile()
     m_xmlParser.readNext();
 
     // Is this the start or end of a message element?
-    if (m_xmlParser.name() == "message")
+    if (m_xmlParser.name() == QString("message"))
     {
       if (!readingMessage)
       {
@@ -185,7 +186,7 @@ void GODictionaryRenderer_3D::parseXmlFile()
         if (!currentElementName.isEmpty())
         {
           // Get the text and store it as the current element's value
-          QStringRef trimmedText = m_xmlParser.text().trimmed();
+          const QStringView trimmedText = m_xmlParser.text().trimmed();
           if (!trimmedText.isEmpty())
           {
             elementValues[currentElementName] = trimmedText.toString();

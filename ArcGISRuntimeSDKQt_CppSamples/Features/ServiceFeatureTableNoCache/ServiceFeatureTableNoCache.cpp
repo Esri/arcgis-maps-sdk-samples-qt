@@ -28,6 +28,10 @@
 #include "ServiceFeatureTable.h"
 #include "Viewpoint.h"
 #include "Envelope.h"
+#include "MapViewTypes.h"
+#include "MapTypes.h"
+#include "LayerListModel.h"
+#include "GeodatabaseTypes.h"
 #include <QUrl>
 
 using namespace Esri::ArcGISRuntime;

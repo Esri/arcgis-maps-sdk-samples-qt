@@ -14,8 +14,8 @@
 // limitations under the License.
 // [Legal]
 
-import QtQuick 2.6
-import Esri.ArcGISRuntime 100.15
+import QtQuick
+import Esri.ArcGISRuntime
 
 Rectangle {
     id: rootRectangle
@@ -113,7 +113,7 @@ Rectangle {
         }
 
         // connect to mouse click signal
-        onMouseClicked: {
+        onMouseClicked: mouse => {
             mapView.identifyGraphicsOverlay(graphicsOverlay, mouse.x, mouse.y, 1 /*tolerance*/, false /*returnPopupsOnly*/);
         }
 

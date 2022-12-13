@@ -17,9 +17,7 @@
 #ifndef CONVEXHULL_H
 #define CONVEXHULL_H
 
-namespace Esri
-{
-namespace ArcGISRuntime
+namespace Esri::ArcGISRuntime
 {
 class Graphic;
 class GraphicsOverlay;
@@ -30,10 +28,11 @@ class SimpleFillSymbol;
 class SimpleLineSymbol;
 class SimpleMarkerSymbol;
 }
-}
 
 #include <QObject>
 #include <QList>
+
+Q_MOC_INCLUDE("MapQuickView.h")
 
 class ConvexHull : public QObject
 {

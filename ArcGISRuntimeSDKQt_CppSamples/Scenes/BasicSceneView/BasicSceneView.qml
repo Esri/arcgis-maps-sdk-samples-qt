@@ -1,6 +1,6 @@
 // [WriteFile Name=BasicSceneView, Category=Scenes]
 // [Legal]
-// Copyright 2016 Esri.
+// Copyright 2022 Esri.
 
 // Licensed under the Apache License, Version 2.0 (the "License");
 // you may not use this file except in compliance with the License.
@@ -14,22 +14,25 @@
 // limitations under the License.
 // [Legal]
 
-import QtQuick 2.6
-import QtQuick.Controls 2.2
-import Esri.Samples 1.0
+import QtQuick
+import QtQuick.Controls
+import Esri.Samples
 
-BasicSceneSample {
-    width: 800
-    height: 600
+Item {
 
-    // add a mapView component
     SceneView {
+        id: view
         anchors.fill: parent
-        objectName: "sceneView"
 
         Component.onCompleted: {
-            // Set the focus on SceneView to initially enable keyboard navigation
+            // Set and keep the focus on MapView to enable keyboard navigation
             forceActiveFocus();
         }
+    }
+
+    // Declare the C++ instance which creates the scene etc. and supply the view
+    BasicSceneViewSample {
+        id: model
+        sceneView: view
     }
 }

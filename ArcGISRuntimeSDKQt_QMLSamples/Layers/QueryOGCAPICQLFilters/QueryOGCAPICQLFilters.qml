@@ -13,9 +13,9 @@
 // See the License for the specific language governing permissions and
 // limitations under the License.
 // [Legal]
-import QtQuick 2.12
-import QtQuick.Controls 2.2
-import Esri.ArcGISRuntime 100.15
+import QtQuick
+import QtQuick.Controls
+import Esri.ArcGISRuntime
 
 Rectangle {
     id: rootRectangle
@@ -150,8 +150,8 @@ Rectangle {
                     width: 200
                     text: ""
                     selectByMouse: true
-                    validator: RegExpValidator {
-                        regExp: /(0[1-9]|1[012])[/](0[1-9]|[12][0-9]|3[01])[/](19|20)\d\d/
+                    validator: RegularExpressionValidator {
+                        regularExpression: /(0[1-9]|1[012])[/](0[1-9]|[12][0-9]|3[01])[/](19|20)\d\d/
                     }
                     placeholderText: "MM/DD/YYYY"
                 }
@@ -172,8 +172,8 @@ Rectangle {
                     width: 200
                     text: ""
                     selectByMouse: true
-                    validator: RegExpValidator {
-                        regExp: /(0[1-9]|1[012])[/](0[1-9]|[12][0-9]|3[01])[/](19|20)\d\d/
+                    validator: RegularExpressionValidator {
+                        regularExpression: /(0[1-9]|1[012])[/](0[1-9]|[12][0-9]|3[01])[/](19|20)\d\d/
                     }
                     placeholderText: "MM/DD/YYYY"
                 }

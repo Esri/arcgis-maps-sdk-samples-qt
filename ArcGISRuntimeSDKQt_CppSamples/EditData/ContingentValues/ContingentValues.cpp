@@ -32,16 +32,30 @@
 #include "GeometryEngine.h"
 #include "Map.h"
 #include "MapQuickView.h"
-#include "SimpleFillSymbol.h"
-#include "SimpleLineSymbol.h"
-#include "SimpleMarkerSymbol.h"
 #include "SimpleRenderer.h"
+#include "TaskWatcher.h"
+#include "GraphicsOverlayListModel.h"
+#include "SymbolTypes.h"
+#include "LayerListModel.h"
+#include "ArcGISFeature.h"
+#include "MapTypes.h"
+#include "GeodatabaseTypes.h"
+#include "AttributeListModel.h"
+#include "GraphicListModel.h"
+#include "QueryParameters.h"
+#include "FeatureIterator.h"
+#include "FeatureQueryResult.h"
+#include "Point.h"
+#include "Basemap.h"
+#include "Viewpoint.h"
+#include "GraphicsOverlay.h"
+#include "SimpleLineSymbol.h"
+#include "SimpleFillSymbol.h"
+#include "Polygon.h"
+#include "Graphic.h"
 
-#include <QDir>
-
-#ifdef Q_OS_IOS
+#include <QUuid>
 #include <QStandardPaths>
-#endif // Q_OS_IOS
 
 using namespace Esri::ArcGISRuntime;
 
@@ -52,12 +66,10 @@ QString defaultDataPath()
 {
   QString dataPath;
 
-#ifdef Q_OS_ANDROID
-  dataPath = "/sdcard";
-#elif defined Q_OS_IOS
+#ifdef Q_OS_IOS
   dataPath = QStandardPaths::writableLocation(QStandardPaths::DocumentsLocation);
 #else
-  dataPath = QDir::homePath();
+  dataPath = QStandardPaths::writableLocation(QStandardPaths::HomeLocation);
 #endif
 
   return dataPath;
@@ -151,10 +163,10 @@ void ContingentValues::createConnections()
 }
 
 // When the user clicks or taps on the map, instantiate a new feature and show the attribute form interface
-void ContingentValues::createNewEmptyFeature(QMouseEvent mouseEvent)
+void ContingentValues::createNewEmptyFeature(QMouseEvent& mouseEvent)
 {
   // Create a new empty feature to define attributes for
-  m_newFeature = static_cast<ArcGISFeature*>(m_gdbFeatureTable->createFeature({}, m_mapView->screenToLocation(mouseEvent.x(), mouseEvent.y()), this));
+  m_newFeature = static_cast<ArcGISFeature*>(m_gdbFeatureTable->createFeature({}, m_mapView->screenToLocation(mouseEvent.pos().x(), mouseEvent.pos().y()), this));
   m_gdbFeatureTable->addFeature(m_newFeature);
 
   // Show the attribute form interface

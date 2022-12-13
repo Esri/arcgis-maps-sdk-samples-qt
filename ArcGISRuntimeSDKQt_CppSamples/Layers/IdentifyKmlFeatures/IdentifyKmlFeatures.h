@@ -19,19 +19,19 @@
 
 #include "Point.h"
 
-namespace Esri
-{
-namespace ArcGISRuntime
+namespace Esri::ArcGISRuntime
 {
 class CalloutData;
 class KmlLayer;
 class Map;
 class MapQuickView;
 }
-}
 
 #include <QObject>
 #include <QString>
+
+Q_MOC_INCLUDE("MapQuickView.h")
+Q_MOC_INCLUDE("CalloutData.h")
 
 class IdentifyKmlFeatures : public QObject
 {

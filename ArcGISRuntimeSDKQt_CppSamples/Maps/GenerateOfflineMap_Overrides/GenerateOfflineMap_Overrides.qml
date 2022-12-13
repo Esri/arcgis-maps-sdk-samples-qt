@@ -14,11 +14,10 @@
 // limitations under the License.
 // [Legal]
 
-import QtQuick 2.6
-import QtQuick.Controls 2.2
-import QtQuick.Layouts 1.3
-import Esri.Samples 1.0
-import Esri.ArcGISRuntime.Toolkit 100.15
+import QtQuick
+import QtQuick.Controls
+import QtQuick.Layouts
+import Esri.Samples
 
 GenerateOfflineMap_OverridesSample {
     id: offlineMapOverridesSample
@@ -26,9 +25,9 @@ GenerateOfflineMap_OverridesSample {
     width: 800
     height: 600
 
-    onUpdateStatus: generateWindow.statusText = status;
-    onUpdateProgress: generateWindow.progressText = progress;
-    onHideWindow: {
+    onUpdateStatus: status => generateWindow.statusText = status;
+    onUpdateProgress: progress => generateWindow.progressText = progress;
+    onHideWindow: (time, success) => {
         generateWindow.hideWindow(time);
 
         if (success) {
@@ -88,12 +87,12 @@ GenerateOfflineMap_OverridesSample {
         anchors.fill: parent
         visible: overridesReady
 
-        onBasemapLODSelected: setBasemapLOD(min, max);
-        onBasemapBufferChanged: setBasemapBuffer(buffer);
+        onBasemapLODSelected: (min, max) => setBasemapLOD(min, max);
+        onBasemapBufferChanged: (buffer) => setBasemapBuffer(buffer);
         onRemoveSystemValvesChanged: removeSystemValves();
         onRemoveServiceConnectionChanged: removeServiceConnection();
-        onHydrantWhereClauseChanged: setHydrantWhereClause(whereClause);
-        onClipWaterPipesAOIChanged: setClipWaterPipesAOI(clip);
+        onHydrantWhereClauseChanged: (whereClause) => setHydrantWhereClause(whereClause);
+        onClipWaterPipesAOIChanged: clip => setClipWaterPipesAOI(clip);
         onOverridesAccepted: {
             generateWindow.visible = true;
             takeMapOffline();

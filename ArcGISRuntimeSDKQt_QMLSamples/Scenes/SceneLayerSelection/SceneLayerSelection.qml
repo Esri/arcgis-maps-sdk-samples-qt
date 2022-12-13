@@ -14,8 +14,8 @@
 // limitations under the License.
 // [Legal]
 
-import QtQuick 2.6
-import Esri.ArcGISRuntime 100.15
+import QtQuick
+import Esri.ArcGISRuntime
 
 Rectangle {
     id: rootRectangle
@@ -89,7 +89,7 @@ Rectangle {
         }
 
         // when the scene is clicked, identify the clicked feature and select it
-        onMouseClicked: {
+        onMouseClicked: mouse => {
             // clear any previous selection
             sceneLayer.clearSelection();
 

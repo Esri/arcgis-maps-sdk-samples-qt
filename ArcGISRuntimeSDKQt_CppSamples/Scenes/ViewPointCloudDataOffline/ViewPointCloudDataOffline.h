@@ -17,16 +17,15 @@
 #ifndef VIEWPOINTCLOUDDATAOFFLINE_H
 #define VIEWPOINTCLOUDDATAOFFLINE_H
 
-namespace Esri
-{
-namespace ArcGISRuntime
+namespace Esri::ArcGISRuntime
 {
 class Scene;
 class SceneQuickView;
 }
-}
 
 #include <QObject>
+
+Q_MOC_INCLUDE("SceneQuickView.h")
 
 class ViewPointCloudDataOffline : public QObject
 {

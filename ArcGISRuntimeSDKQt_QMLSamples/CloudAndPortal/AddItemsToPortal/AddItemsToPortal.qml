@@ -14,10 +14,10 @@
 // limitations under the License.
 // [Legal]
 
-import QtQuick 2.6
-import QtQuick.Controls 2.2
-import Esri.ArcGISRuntime 100.15
-import Esri.ArcGISRuntime.Toolkit 100.15
+import QtQuick
+import QtQuick.Controls
+import Esri.ArcGISRuntime
+import Esri.ArcGISRuntime.Toolkit
 
 Rectangle {
     id: rootRectangle
@@ -25,6 +25,8 @@ Rectangle {
 
     width: 800
     height: 600
+
+    property bool alreadyExisted: false
 
     PortalItem {
         id: itemToAdd
@@ -36,7 +38,10 @@ Rectangle {
             if (loadStatus !== Enums.LoadStatusLoaded)
                 return;
 
-            statusBar.text = "Succesfully loaded item from portal." + itemToAdd.itemId
+            if (alreadyExisted)
+                statusBar.text = "Item already exists; using existing item instead. " + itemToAdd.itemId
+            else
+                statusBar.text = "Succesfully loaded item from portal. " + itemToAdd.itemId
         }
 
         onItemIdChanged: {
@@ -70,6 +75,28 @@ Rectangle {
 
         onErrorChanged: {
             statusBar.text = error.message + ": " + error.additionalMessage;
+
+            // Check for service error 409 "Conflict" - item already exists
+            const additionalInfo = error.additionalInformation;
+            if (ErrorInformationKeys.serviceError in additionalInfo &&
+                additionalInfo[ErrorInformationKeys.serviceError] === 409)
+            {
+                alreadyExisted = true;
+                myUser.fetchContent();
+            }
+        }
+
+        onFetchContentStatusChanged: {
+            if (myUser.fetchContentStatus !== Enums.TaskStatusCompleted)
+                return;
+
+            myUser.items.forEach(item => {
+                if (item.title === "Add Items Sample") {
+                    itemToAdd.itemId = item.itemId;
+                    itemToAdd.load();
+                    return;
+                }
+            });
         }
 
         //! [PortalUser addPortalItemCompleted]

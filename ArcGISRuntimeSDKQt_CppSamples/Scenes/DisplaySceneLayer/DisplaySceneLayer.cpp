@@ -28,6 +28,11 @@
 #include "Point.h"
 #include "Viewpoint.h"
 #include "Camera.h"
+#include "MapTypes.h"
+#include "Surface.h"
+#include "ElevationSourceListModel.h"
+#include "LayerListModel.h"
+#include "SpatialReference.h"
 
 using namespace Esri::ArcGISRuntime;
 

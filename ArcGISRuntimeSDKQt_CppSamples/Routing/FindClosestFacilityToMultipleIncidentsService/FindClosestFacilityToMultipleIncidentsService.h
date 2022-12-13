@@ -17,9 +17,7 @@
 #ifndef FINDCLOSESTFACILITYTOMULTIPLEINCIDENTSSERVICE_H
 #define FINDCLOSESTFACILITYTOMULTIPLEINCIDENTSSERVICE_H
 
-namespace Esri
-{
-namespace ArcGISRuntime
+namespace Esri::ArcGISRuntime
 {
 class Map;
 class MapQuickView;
@@ -33,12 +31,16 @@ class Incident;
 class PictureMarkerSymbol;
 class SimpleLineSymbol;
 class QueryParameters;
+class Error;
 }
-}
+
+#include <QObject>
 
 #include "ClosestFacilityParameters.h"
 #include "TaskWatcher.h"
-#include <QObject>
+
+Q_MOC_INCLUDE("MapQuickView.h")
+Q_MOC_INCLUDE("Error.h")
 
 class FindClosestFacilityToMultipleIncidentsService : public QObject
 {

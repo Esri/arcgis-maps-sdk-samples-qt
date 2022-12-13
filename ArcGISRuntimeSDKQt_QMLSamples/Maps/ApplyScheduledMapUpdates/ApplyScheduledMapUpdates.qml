@@ -14,10 +14,10 @@
 // limitations under the License.
 // [Legal]
 
-import QtQuick 2.6
-import QtQuick.Controls 2.4
-import Esri.ArcGISRuntime 100.15
-import Esri.ArcGISExtras 1.1
+import QtQuick
+import QtQuick.Controls
+import Esri.ArcGISRuntime
+import Esri.ArcGISExtras
 
 Rectangle {
     id: rootRectangle
@@ -26,7 +26,11 @@ Rectangle {
     height: 600
 
     readonly property string tempDataPath: System.temporaryFolder.path + "/" + new Date().getTime()
-    readonly property string origMmpkPath: System.userHomePath + "/ArcGIS/Runtime/Data/mmpk/canyonlands/canyonlands.zip"
+    readonly property url origMmpkPath: {
+        Qt.platform.os === "ios" ?
+                    System.writableLocationUrl(System.StandardPathsDocumentsLocation) +  "/ArcGIS/Runtime/Data/mmpk/canyonlands/canyonlands.zip" :
+                    System.writableLocationUrl(System.StandardPathsHomeLocation) +  "/ArcGIS/Runtime/Data/mmpk/canyonlands/canyonlands.zip"
+    }
     readonly property string destMmpkPath: tempDataPath + "/canyonlands.zip"
     property MobileMapPackage mmpk
 

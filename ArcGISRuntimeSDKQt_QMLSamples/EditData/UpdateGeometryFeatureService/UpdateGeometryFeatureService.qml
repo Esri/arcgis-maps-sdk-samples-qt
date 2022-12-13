@@ -14,10 +14,9 @@
 // limitations under the License.
 // [Legal]
 
-import QtQuick 2.6
-import QtQuick.Controls 2.2
-import QtGraphicalEffects 1.0
-import Esri.ArcGISRuntime 100.15
+import QtQuick
+import QtQuick.Controls
+import Esri.ArcGISRuntime
 
 Rectangle {
     width: 800
@@ -123,7 +122,7 @@ Rectangle {
             id: params
         }
 
-        onMouseClicked: {
+        onMouseClicked: mouse => {
             // if a feature is selected, move it to a new location
             if (featureSelected) {
                 // obtain the new point to move the feature to

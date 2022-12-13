@@ -14,11 +14,10 @@
 // limitations under the License.
 // [Legal]
 
-import QtQuick 2.6
-import QtQuick.Controls 2.2
-import Esri.Samples 1.0
-import QtQuick.Layouts 1.11
-import QtQuick.Dialogs 1.1
+import QtQuick
+import QtQuick.Controls
+import Esri.Samples
+import QtQuick.Layouts
 
 Item {
     // add a mapView component
@@ -122,17 +121,15 @@ Item {
         running: sampleModel.tasksRunning
     }
 
-    MessageDialog {
+    Dialog {
         id: messageDialog
-        title: "Perform valve isolation trace"
-        text: "Isolation trace returned no elements."
         visible: sampleModel.noResults
-        onRejected: {
-            visible = false;
-        }
+        title: "Isolation trace returned no elements."
+        standardButtons: Dialog.Ok
+        anchors.centerIn: parent
     }
 
-    // Declare the C++ instance which creates the scene etc. and supply the view
+    // Declare the C++ instance which creates the map etc. and supply the view
     PerformValveIsolationTraceSample {
         id: sampleModel
         mapView: view

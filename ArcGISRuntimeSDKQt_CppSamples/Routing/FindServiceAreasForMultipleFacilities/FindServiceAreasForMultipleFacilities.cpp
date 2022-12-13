@@ -33,8 +33,20 @@
 #include "ServiceFeatureTable.h"
 #include "SimpleFillSymbol.h"
 #include "SimpleRenderer.h"
+#include "MapTypes.h"
+#include "SymbolTypes.h"
+#include "Error.h"
 #include "TaskWatcher.h"
+#include "GraphicsOverlayListModel.h"
+#include "GraphicListModel.h"
+#include "NetworkAnalystTypes.h"
+#include "LayerListModel.h"
+#include "ServiceAreaFacility.h"
+#include "Envelope.h"
+#include "Polygon.h"
+#include "Graphic.h"
 
+#include <QUuid>
 #include <QUrl>
 
 using namespace Esri::ArcGISRuntime;

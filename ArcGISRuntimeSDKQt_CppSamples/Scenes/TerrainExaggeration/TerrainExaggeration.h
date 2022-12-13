@@ -17,13 +17,10 @@
 #ifndef TERRAINEXAGGERATION_H
 #define TERRAINEXAGGERATION_H
 
-namespace Esri
-{
-namespace ArcGISRuntime
+namespace Esri::ArcGISRuntime
 {
 class SceneQuickView;
 class Surface;
-}
 }
 
 #include <QQuickItem>

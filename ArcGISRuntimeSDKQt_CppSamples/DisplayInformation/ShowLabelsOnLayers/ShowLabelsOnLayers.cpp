@@ -27,6 +27,16 @@
 #include "MapQuickView.h"
 #include "ServiceFeatureTable.h"
 #include "TextSymbol.h"
+#include "MapTypes.h"
+#include "Error.h"
+#include "TaskWatcher.h"
+#include "LayerListModel.h"
+#include "LabelDefinitionListModel.h"
+#include "SymbolTypes.h"
+#include "Envelope.h"
+#include "SpatialReference.h"
+#include "Point.h"
+#include "Viewpoint.h"
 
 using namespace Esri::ArcGISRuntime;
 

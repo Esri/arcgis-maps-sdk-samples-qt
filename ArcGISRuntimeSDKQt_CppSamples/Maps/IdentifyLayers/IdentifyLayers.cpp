@@ -24,12 +24,20 @@
 #include "MapQuickView.h"
 #include "Basemap.h"
 #include "ArcGISMapImageLayer.h"
-#include "ArcGISMapImageSublayer.h"
 #include "FeatureLayer.h"
 #include "ServiceFeatureTable.h"
 #include "Viewpoint.h"
 #include "Point.h"
 #include "IdentifyLayerResult.h"
+#include "Error.h"
+#include "MapTypes.h"
+#include "TaskWatcher.h"
+#include "LayerListModel.h"
+#include "ArcGISSublayerListModel.h"
+#include "ArcGISSublayer.h"
+#include "SpatialReference.h"
+
+#include <QUuid>
 
 using namespace Esri::ArcGISRuntime;
 
@@ -102,7 +110,7 @@ void IdentifyLayers::connectSignals()
     const double tolerance = 12.0;
     const bool returnPopups = false;
     const int maxResults = 10;
-    m_mapView->identifyLayers(mouseEvent.x(), mouseEvent.y(), tolerance, returnPopups, maxResults);
+    m_mapView->identifyLayers(mouseEvent.pos().x(), mouseEvent.pos().y(), tolerance, returnPopups, maxResults);
   });
 
   // handle the identify results

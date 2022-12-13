@@ -14,11 +14,11 @@
 // limitations under the License.
 // [Legal]
 
-import QtQuick 2.6
-import QtQuick.Controls 2.2
-import QtPositioning 5.6
-import Esri.ArcGISRuntime 100.15
-import Esri.ArcGISRuntime.Toolkit 100.15
+import QtQuick
+import QtQuick.Controls
+import QtPositioning
+import Esri.ArcGISRuntime
+import Esri.ArcGISRuntime.Toolkit
 
 Rectangle {
     id: rootRectangle
@@ -78,9 +78,9 @@ Rectangle {
         Callout {
             id: callout
             calloutData: parent.calloutData
-            accessoryButtonHidden: true
+            accessoryButtonVisible: false
             screenOffsetY: (pinSymbol.height / 2) * -1
-            leaderPosition: leaderPositionEnum.Automatic
+            leaderPosition: Callout.LeaderPosition.Automatic
         }
 
         // dismiss suggestions if a mouse press occurs in the mapview
@@ -96,7 +96,7 @@ Rectangle {
         }
 
         // perform an identify on mouse clicked
-        onMouseClicked: {
+        onMouseClicked: mouse => {
             callout.dismiss();
             mapView.identifyGraphicsOverlayWithMaxResults(graphicsOverlay, mouse.x, mouse.y, 5, false, 1);
         }
@@ -235,7 +235,7 @@ Rectangle {
             id: suggestionView
             width: parent.width
             height: 20 * locatorTask.suggestions.count
-            onSuggestionClicked: {
+            onSuggestionClicked: label => {
                 if (locatorTask.geocodeStatus !== Enums.TaskStatusInProgress) {
                     // change the text label
                     poiTextField.focus ? poiTextField.text = label : locationTextField.text = label;

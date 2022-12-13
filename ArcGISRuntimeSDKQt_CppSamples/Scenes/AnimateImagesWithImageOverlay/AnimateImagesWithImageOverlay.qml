@@ -14,10 +14,10 @@
 // limitations under the License.
 // [Legal]
 
-import QtQuick 2.6
-import QtQuick.Controls 2.2
-import QtQuick.Layouts 1.12
-import Esri.Samples 1.0
+import QtQuick
+import QtQuick.Controls
+import QtQuick.Layouts
+import Esri.Samples
 
 Item {
     property var timerIntervals: [17,34,68]
@@ -77,7 +77,6 @@ Item {
                             radius: 3
                             x: headingHandleNub.x - width / 2 + headingHandleNub.width / 2
                             y: headingHandleNub.y - height
-                            color: opacitySlider.background.children[0].color
 
                             Text {
                                 id: headingValue

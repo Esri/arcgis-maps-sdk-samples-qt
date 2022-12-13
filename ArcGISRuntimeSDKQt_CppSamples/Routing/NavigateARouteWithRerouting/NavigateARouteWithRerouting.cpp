@@ -21,8 +21,8 @@
 #include "NavigateARouteWithRerouting.h"
 
 #include "DirectionManeuverListModel.h"
-#include "GeometryEngine.h"
 #include "GraphicsOverlay.h"
+#include "LinearUnit.h"
 #include "Location.h"
 #include "LocationDisplay.h"
 #include "Map.h"
@@ -44,14 +44,28 @@
 #include "TrackingProgress.h"
 #include "TrackingStatus.h"
 #include "VoiceGuidance.h"
+#include "MapTypes.h"
+#include "MapViewTypes.h"
+#include "SymbolTypes.h"
+#include "TaskWatcher.h"
+#include "Error.h"
+#include "GraphicsOverlayListModel.h"
+#include "GraphicListModel.h"
+#include "SpatialReference.h"
+#include "Graphic.h"
+#include "Polyline.h"
+#include "SimpleLineSymbol.h"
 
+#include <QUuid>
+#include <QFileInfo>
 #include <memory>
-#include <QDir>
 #include <QList>
-#include <QTextToSpeech>
 #include <QTime>
 #include <QUrl>
+#include <QStandardPaths>
 
+// NOTE: As of Qt 6.2, QTextToSpeech is not supported. Instances of this class have been commented out for compatibility, but remain for reference
+// #include <QTextToSpeech>
 
 using namespace Esri::ArcGISRuntime;
 
@@ -65,12 +79,10 @@ QString defaultDataPath()
 {
   QString dataPath;
 
-#ifdef Q_OS_ANDROID
-  dataPath = "/sdcard";
-#elif defined Q_OS_IOS
+#ifdef Q_OS_IOS
   dataPath = QStandardPaths::writableLocation(QStandardPaths::DocumentsLocation);
 #else
-  dataPath = QDir::homePath();
+  dataPath = QStandardPaths::writableLocation(QStandardPaths::HomeLocation);
 #endif
 
   return dataPath;
@@ -92,7 +104,7 @@ NavigateARouteWithRerouting::NavigateARouteWithRerouting(QObject* parent /* = nu
   }
   const QString geodatabaseLocation = folderLocation + QString("/sandiego.geodatabase");
   m_routeTask = new RouteTask(geodatabaseLocation, "Streets_ND", this);
-  m_speaker = new QTextToSpeech(this);
+  // m_speaker = new QTextToSpeech(this);
 }
 
 NavigateARouteWithRerouting::~NavigateARouteWithRerouting() = default;
@@ -215,10 +227,10 @@ void NavigateARouteWithRerouting::startNavigation()
   connectRouteTrackerSignals();
 
   // enable the RouteTracker to know when the QTextToSpeech engine is ready
-  m_routeTracker->setSpeechEngineReadyFunction([speaker = m_speaker]() -> bool
-  {
-    return speaker->state() == QTextToSpeech::State::Ready;
-  });
+  //  m_routeTracker->setSpeechEngineReadyFunction([speaker = m_speaker]() -> bool
+  //  {
+  //    return speaker->state() == QTextToSpeech::State::Ready;
+  //  });
 
   // enable "recenter" button when location display is moved from nagivation mode
   connect(m_mapView->locationDisplay(), &LocationDisplay::autoPanModeChanged, this, [this](LocationDisplayAutoPanMode autoPanMode)
@@ -250,18 +262,18 @@ void NavigateARouteWithRerouting::startNavigation()
   // add a data source for the location display
   SimulationParameters* simulationParameters = new SimulationParameters(QDateTime::currentDateTime(), velocity, horizontalAccuracy, verticalAccuracy, this);
   m_simulatedLocationDataSource = new SimulatedLocationDataSource(this);
-  m_simulatedLocationDataSource->setLocationsWithPolyline(Polyline::fromJson(tourPolyineJson), simulationParameters);
+  m_simulatedLocationDataSource->setLocationsWithPolyline(geometry_cast<Polyline>(Geometry::fromJson(tourPolyineJson)), simulationParameters);
   m_mapView->locationDisplay()->setDataSource(m_simulatedLocationDataSource);
   m_simulatedLocationDataSource->start();
 }
 
 void NavigateARouteWithRerouting::connectRouteTrackerSignals()
 {
-  connect(m_routeTracker, &RouteTracker::newVoiceGuidance, this, [this](VoiceGuidance* rawVoiceGuidance)
-  {
-    auto voiceGuidance = std::unique_ptr<VoiceGuidance>(rawVoiceGuidance);
-    m_speaker->say(voiceGuidance->text());
-  });
+  //  connect(m_routeTracker, &RouteTracker::newVoiceGuidance, this, [this](VoiceGuidance* rawVoiceGuidance)
+  //  {
+  //    auto voiceGuidance = std::unique_ptr<VoiceGuidance>(rawVoiceGuidance);
+  //    m_speaker->say(voiceGuidance->text());
+  //  });
 
   connect(m_routeTask, &RouteTask::solveRouteCompleted, this, [this](QUuid, RouteResult routeResult)
   {
@@ -330,7 +342,7 @@ void NavigateARouteWithRerouting::connectRouteTrackerSignals()
     m_routeTracker->generateVoiceGuidance();
   });
 
-  connect(m_routeTracker, &RouteTracker::rerouteCompleted, this, [this](TrackingStatus* rawTrackingStatus, Error error)
+  connect(m_routeTracker, &RouteTracker::rerouteCompleted, this, [this](TrackingStatus* rawTrackingStatus)
   {
     // When a reroute is completed, clear the previous graphics overlay and append the new ones for the new path
     m_routeOverlay->graphics()->clear();

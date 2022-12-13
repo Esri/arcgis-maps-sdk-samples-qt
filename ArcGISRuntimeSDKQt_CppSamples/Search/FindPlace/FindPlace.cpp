@@ -30,12 +30,24 @@
 #include "PictureMarkerSymbol.h"
 #include "IdentifyGraphicsOverlayResult.h"
 #include "Point.h"
-#include "Envelope.h"
 #include "SimpleRenderer.h"
 #include "LocatorTask.h"
 #include "LocationDisplay.h"
 #include "SuggestListModel.h"
+#include "MapTypes.h"
+#include "MapViewTypes.h"
+#include "TaskWatcher.h"
+#include "GraphicsOverlayListModel.h"
+#include "GraphicListModel.h"
+#include "AttributeListModel.h"
+#include "SuggestParameters.h"
+#include "Location.h"
+#include "Graphic.h"
+#include "Viewpoint.h"
+#include "SpatialReference.h"
+
 #include <QUrl>
+#include <QUuid>
 
 using namespace Esri::ArcGISRuntime;
 
@@ -113,7 +125,7 @@ void FindPlace::connectSignals()
   connect(m_mapView, &MapQuickView::mouseClicked, this, [this](QMouseEvent& e)
   {
     emit hideCallout();
-    m_mapView->identifyGraphicsOverlay(m_graphicsOverlay, e.x(), e.y(), 5, false, 1);
+    m_mapView->identifyGraphicsOverlay(m_graphicsOverlay, e.pos().x(), e.pos().y(), 5, false, 1);
   });
 
   // handle the result once identify completes

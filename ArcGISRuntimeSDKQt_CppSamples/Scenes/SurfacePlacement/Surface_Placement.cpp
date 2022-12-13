@@ -32,6 +32,15 @@
 #include "SpatialReference.h"
 #include "TextSymbol.h"
 #include "Viewpoint.h"
+#include "MapTypes.h"
+#include "SymbolTypes.h"
+#include "GraphicsOverlayListModel.h"
+#include "GraphicListModel.h"
+#include "Surface.h"
+#include "ElevationSourceListModel.h"
+#include "LayerSceneProperties.h"
+#include "LayerListModel.h"
+#include "SceneViewTypes.h"
 
 using namespace Esri::ArcGISRuntime;
 

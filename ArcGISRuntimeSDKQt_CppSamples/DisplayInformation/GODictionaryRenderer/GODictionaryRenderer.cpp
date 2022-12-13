@@ -24,17 +24,21 @@
 #include "GraphicListModel.h"
 #include "Map.h"
 #include "MapQuickView.h"
-#include "PolygonBuilder.h"
 #include "MultipointBuilder.h"
 #include "DictionarySymbolStyle.h"
 #include "DictionarySymbolStyleConfiguration.h"
+#include "MapTypes.h"
+#include "GraphicsOverlayListModel.h"
+#include "PointCollection.h"
+#include "TaskWatcher.h"
+#include "GraphicsOverlay.h"
+#include "SpatialReference.h"
+#include "Point.h"
+#include "Graphic.h"
 
-#include <QDir>
 #include <QtCore/qglobal.h>
-
-#ifdef Q_OS_IOS
+#include <QFile>
 #include <QStandardPaths>
-#endif // Q_OS_IOS
 
 using namespace Esri::ArcGISRuntime;
 
@@ -45,12 +49,10 @@ QString defaultDataPath()
 {
   QString dataPath;
 
-#ifdef Q_OS_ANDROID
-  dataPath = "/sdcard";
-#elif defined Q_OS_IOS
+#ifdef Q_OS_IOS
   dataPath = QStandardPaths::writableLocation(QStandardPaths::DocumentsLocation);
 #else
-  dataPath = QDir::homePath();
+  dataPath = QStandardPaths::writableLocation(QStandardPaths::HomeLocation);
 #endif
 
   return dataPath;
@@ -156,7 +158,7 @@ void GODictionaryRenderer::parseXmlFile()
     m_xmlParser.readNext();
 
     // Is this the start or end of a message element?
-    if (m_xmlParser.name() == "message")
+    if (m_xmlParser.name() == QString("message"))
     {
       if (!readingMessage)
       {
@@ -188,7 +190,7 @@ void GODictionaryRenderer::parseXmlFile()
         if (!currentElementName.isEmpty())
         {
           // Get the text and store it as the current element's value
-          QStringRef trimmedText = m_xmlParser.text().trimmed();
+          const QStringView trimmedText = m_xmlParser.text().trimmed();
           if (!trimmedText.isEmpty())
           {
             elementValues[currentElementName] = trimmedText.toString();

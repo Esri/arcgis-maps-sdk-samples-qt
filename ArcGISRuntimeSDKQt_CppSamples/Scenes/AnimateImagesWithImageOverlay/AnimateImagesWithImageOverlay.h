@@ -17,23 +17,22 @@
 #ifndef ANIMATEIMAGESWITHIMAGEOVERLAY_H
 #define ANIMATEIMAGESWITHIMAGEOVERLAY_H
 
-namespace Esri
-{
-namespace ArcGISRuntime
+namespace Esri::ArcGISRuntime
 {
 class Scene;
 class SceneQuickView;
 class ImageFrame;
 class ImageOverlay;
 }
-}
+
+class QTimer;
 
 #include <QDir>
 #include <QObject>
 
-class QTimer;
-
 #include "Envelope.h"
+
+Q_MOC_INCLUDE("SceneQuickView.h")
 
 class AnimateImagesWithImageOverlay : public QObject
 {

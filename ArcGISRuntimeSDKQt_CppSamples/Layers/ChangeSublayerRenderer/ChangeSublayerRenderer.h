@@ -17,9 +17,7 @@
 #ifndef CHANGESUBLAYERRENDERER_H
 #define CHANGESUBLAYERRENDERER_H
 
-namespace Esri
-{
-namespace ArcGISRuntime
+namespace Esri::ArcGISRuntime
 {
 class Map;
 class MapQuickView;
@@ -27,7 +25,6 @@ class Renderer;
 class ClassBreaksRenderer;
 class ArcGISMapImageSublayer;
 class ClassBreak;
-}
 }
 
 #include <QQuickItem>

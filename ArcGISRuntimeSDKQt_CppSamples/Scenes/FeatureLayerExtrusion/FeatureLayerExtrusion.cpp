@@ -30,6 +30,16 @@
 #include "SimpleFillSymbol.h"
 #include "SimpleRenderer.h"
 #include "RendererSceneProperties.h"
+#include "Camera.h"
+#include "MapTypes.h"
+#include "SymbolTypes.h"
+#include "Surface.h"
+#include "ElevationSourceListModel.h"
+#include "RendererSceneProperties.h"
+#include "LayerListModel.h"
+#include "SceneViewTypes.h"
+#include "SpatialReference.h"
+#include "Viewpoint.h"
 
 using namespace Esri::ArcGISRuntime;
 

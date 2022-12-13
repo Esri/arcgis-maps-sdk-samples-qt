@@ -14,9 +14,9 @@
 // limitations under the License.
 // [Legal]
 
-import Esri.Samples 1.0
-import QtQuick 2.6
-import QtQuick.Controls 2.2
+import Esri.Samples
+import QtQuick
+import QtQuick.Controls
 
 Item {
 

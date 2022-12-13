@@ -28,18 +28,23 @@
 #include "MultilayerSymbol.h"
 #include "Point.h"
 #include "MultilayerPointSymbol.h"
-
 #include "SymbolImageProvider.h"
+#include "SymbolStyleSearchResultListModel.h"
+#include "MapTypes.h"
+#include "Error.h"
+#include "SymbolStyleSearchParameters.h"
+#include "TaskWatcher.h"
+#include "SymbolLayerListModel.h"
+#include "SymbolLayer.h"
+#include "GraphicsOverlayListModel.h"
+#include "GraphicListModel.h"
+#include "SymbolStyleSearchResult.h"
 
-#include <QDir>
 #include <QObject>
 #include <QQmlContext>
 #include <QTemporaryDir>
 #include <QtCore/qglobal.h>
-
-#ifdef Q_OS_IOS
 #include <QStandardPaths>
-#endif // Q_OS_IOS
 
 using namespace Esri::ArcGISRuntime;
 
@@ -50,12 +55,10 @@ QString defaultDataPath()
 {
   QString dataPath;
 
-#ifdef Q_OS_ANDROID
-  dataPath = "/sdcard";
-#elif defined Q_OS_IOS
+#ifdef Q_OS_IOS
   dataPath = QStandardPaths::writableLocation(QStandardPaths::DocumentsLocation);
 #else
-  dataPath = QDir::homePath();
+  dataPath = QStandardPaths::writableLocation(QStandardPaths::HomeLocation);
 #endif
 
   return dataPath;
@@ -196,12 +199,12 @@ void ReadSymbolsFromMobileStyle::setMapView(MapQuickView* mapView)
   m_mapView->graphicsOverlays()->append(overlay);
 
   // connect to mouse clicked signal
-  connect(m_mapView, &MapQuickView::mouseClicked, this, [this, overlay](QMouseEvent mouseEvent)
+  connect(m_mapView, &MapQuickView::mouseClicked, this, [this, overlay](QMouseEvent& mouseEvent)
   {
     if (!m_currentSymbol)
       return;
 
-    const Point clickedPoint = m_mapView->screenToLocation(mouseEvent.x(), mouseEvent.y());
+    const Point clickedPoint = m_mapView->screenToLocation(mouseEvent.pos().x(), mouseEvent.pos().y());
     Graphic* graphic = new Graphic(clickedPoint, m_currentSymbol, m_graphicParent.get());
     overlay->graphics()->append(graphic);
   });

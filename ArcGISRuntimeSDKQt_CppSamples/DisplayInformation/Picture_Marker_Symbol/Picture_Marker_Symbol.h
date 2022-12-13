@@ -17,16 +17,13 @@
 #ifndef PICTURE_MARKER_SYMBOL_H
 #define PICTURE_MARKER_SYMBOL_H
 
-namespace Esri
+namespace Esri::ArcGISRuntime
 {
-  namespace ArcGISRuntime
-  {
-    class Map;
-    class MapQuickView;
-    class GraphicsOverlay;
-    class PictureMarkerSymbol;
-    class Point;
-  }
+  class Map;
+  class MapQuickView;
+  class GraphicsOverlay;
+  class PictureMarkerSymbol;
+  class Point;
 }
 
 #include <QString>

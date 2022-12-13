@@ -79,7 +79,7 @@ OpenExistingMap::~OpenExistingMap() = default;
 void OpenExistingMap::createPortalMaps()
 {
     m_portalIds.insert("Population Pressure", "392451c381ad4109bf04f7bd442bc038");
-    m_portalIds.insert("USA Tapestry Segmentation", "01f052c8995e4b9e889d73c3e210ebe3");
+    m_portalIds.insert("Terrestrial Ecosystems of the World", "5be0bc3ee36c4e058f7b3cebc21c74e6");
     m_portalIds.insert("Geology of United States", "92ad152b9da94dee89b9e387dfe21acd");
 }
 
@@ -87,7 +87,7 @@ void OpenExistingMap::createUi()
 {
     QWidget* widget = new QWidget();
     QVBoxLayout* layout = new QVBoxLayout();
-    layout->setMargin(10);
+    layout->setContentsMargins(10, 10, 10, 10);
     layout->addWidget(m_button);
     widget->setPalette(QPalette(QPalette::Base));
     widget->setLayout(layout);

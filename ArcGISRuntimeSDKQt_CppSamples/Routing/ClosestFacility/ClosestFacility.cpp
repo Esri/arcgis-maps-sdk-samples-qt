@@ -28,6 +28,25 @@
 #include "PictureMarkerSymbol.h"
 #include "SimpleMarkerSymbol.h"
 #include "SimpleRenderer.h"
+#include "Error.h"
+#include "MapTypes.h"
+#include "MapViewTypes.h"
+#include "TaskWatcher.h"
+#include "GraphicsOverlayListModel.h"
+#include "SymbolTypes.h"
+#include "GraphicListModel.h"
+#include "ClosestFacilityResult.h"
+#include "ClosestFacilityRoute.h"
+#include "Incident.h"
+#include "SpatialReference.h"
+#include "Point.h"
+#include "Viewpoint.h"
+#include "GraphicsOverlay.h"
+#include "Graphic.h"
+#include "SimpleLineSymbol.h"
+#include "Polyline.h"
+
+#include <QUuid>
 
 using namespace Esri::ArcGISRuntime;
 
@@ -50,7 +69,6 @@ void ClosestFacility::init()
   qmlRegisterType<MapQuickView>("Esri.Samples", 1, 0, "MapView");
   qmlRegisterType<ClosestFacility>("Esri.Samples", 1, 0, "ClosestFacilitySample");
 }
-
 
 void ClosestFacility::componentComplete()
 {
@@ -209,7 +227,7 @@ void ClosestFacility::setupRouting()
     if (busy())
       return;
 
-    Point mapPoint = m_mapView->screenToLocation(mouseEvent.x(), mouseEvent.y());
+    Point mapPoint = m_mapView->screenToLocation(mouseEvent.pos().x(), mouseEvent.pos().y());
     Point incidentPoint(mapPoint.x(), mapPoint.y(), SpatialReference::webMercator());
 
     m_incidentGraphic->setGeometry(incidentPoint);

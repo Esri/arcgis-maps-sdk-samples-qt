@@ -31,7 +31,9 @@
 
 int main(int argc, char *argv[])
 {
-  QGuiApplication::setAttribute(Qt::AA_EnableHighDpiScaling);
+  // Enforce OpenGL
+  qputenv("QSG_RHI_BACKEND", "opengl");
+
   QGuiApplication app(argc, argv);
   app.setApplicationName("ProjectGeometry - C++");
 
@@ -74,7 +76,7 @@ int main(int argc, char *argv[])
   // Add the Runtime and Extras path
   view.engine()->addImportPath(arcGISRuntimeImportPath);
 
-  Esri::ArcGISRuntime::Toolkit::registerComponents(engine);
+  Esri::ArcGISRuntime::Toolkit::registerComponents(*(view.engine()));
 
   // Set the source
   view.setSource(QUrl("qrc:/Samples/Geometry/ProjectGeometry/ProjectGeometry.qml"));

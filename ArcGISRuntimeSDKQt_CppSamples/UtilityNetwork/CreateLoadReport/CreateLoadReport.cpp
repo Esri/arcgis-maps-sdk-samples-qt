@@ -46,6 +46,10 @@
 #include "UtilityTraceParameters.h"
 #include "UtilityTraceResultListModel.h"
 #include "UtilityTraversability.h"
+#include "Credential.h"
+#include "MapTypes.h"
+#include "UtilityTraceFunction.h"
+#include "TaskWatcher.h"
 
 using namespace Esri::ArcGISRuntime;
 

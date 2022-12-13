@@ -17,15 +17,12 @@
 #ifndef SPATIALRELATIONSHIPS_H
 #define SPATIALRELATIONSHIPS_H
 
-namespace Esri
-{
-namespace ArcGISRuntime
+namespace Esri::ArcGISRuntime
 {
 class Map;
 class MapQuickView;
 class Graphic;
 class GraphicsOverlay;
-}
 }
 
 #include "Geometry.h"

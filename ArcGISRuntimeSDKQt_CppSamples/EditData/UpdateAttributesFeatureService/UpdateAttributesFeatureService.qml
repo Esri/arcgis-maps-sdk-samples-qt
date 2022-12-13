@@ -14,12 +14,11 @@
 // limitations under the License.
 // [Legal]
 
-import QtQuick 2.6
-import QtQuick.Controls 2.2
-import QtQuick.Layouts 1.3
-import QtGraphicalEffects 1.0
-import Esri.Samples 1.0
-import Esri.ArcGISRuntime.Toolkit 100.15
+import QtQuick
+import QtQuick.Controls
+import QtQuick.Layouts
+import Esri.Samples
+import Esri.ArcGISRuntime.Toolkit
 
 UpdateAttributesFeatureServiceSample {
     id: updateFeaturesSample
@@ -41,10 +40,12 @@ UpdateAttributesFeatureServiceSample {
 
         Callout {
             id: callout
-            borderWidth: 1;
-            borderColor: "lightgrey"
+            background: Rectangle {
+                border.width: 1;
+                border.color: "lightgrey"
+            }
             calloutData: mapView.calloutData
-            leaderPosition: leaderPositionEnum.Automatic
+            leaderPosition: Callout.LeaderPosition.Automatic
             onAccessoryButtonClicked: {
                 updateWindow.visible = true;
             }
@@ -76,17 +77,10 @@ UpdateAttributesFeatureServiceSample {
         radius: 10
         visible: false
 
-        GaussianBlur {
-            anchors.fill: updateWindow
-            source: mapView
-            radius: 40
-            samples: 20
-        }
-
         MouseArea {
             anchors.fill: parent
-            onClicked: mouse.accepted = true;
-            onWheel: wheel.accepted = true;
+            onClicked: mouse => mouse.accepted = true;
+            onWheel: wheel => wheel.accepted = true;
         }
 
         GridLayout {
@@ -102,7 +96,7 @@ UpdateAttributesFeatureServiceSample {
 
             ComboBox {
                 property int modelWidth: 0
-                Layout.minimumWidth: modelWidth + leftPadding + rightPadding + indicator.width
+                Layout.minimumWidth: modelWidth + leftPadding + rightPadding
                 Layout.columnSpan: 2
                 Layout.margins: 5
                 Layout.fillWidth: true

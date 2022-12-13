@@ -14,11 +14,11 @@
 // limitations under the License.
 // [Legal]
 
-import QtQuick 2.6
-import QtQuick.Controls 2.2
-import QtQuick.Window 2.3
-import Esri.ArcGISRuntime 100.15
-import Esri.ArcGISExtras 1.1
+import QtQuick
+import QtQuick.Controls
+import QtQuick.Window
+import Esri.ArcGISRuntime
+import Esri.ArcGISExtras
 
 Rectangle {
     id: rootRectangle
@@ -81,7 +81,7 @@ Rectangle {
         }
 
         property int modelWidth: 0
-        width: modelWidth + leftPadding + rightPadding + indicator.width
+        width: modelWidth + leftPadding + rightPadding
 
         model: ["URL", "Local file", "Portal Item"]
 
@@ -138,8 +138,13 @@ Rectangle {
 
     function createFromFile() {
         // create the dataset from a local file
+        let localDataDirPath;
+        if (Qt.platform.os === "ios")
+            localDataDirPath = System.writableLocation(System.StandardPathsDocumentsLocation);
+        else
+            localDataDirPath = System.writableLocation(System.StandardPathsHomeLocation);
         const kmlDataset = ArcGISRuntimeEnvironment.createObject("KmlDataset", {
-                                                                     url: System.userHomePath + "/ArcGIS/Runtime/Data/kml/US_State_Capitals.kml"
+                                                                     url: localDataDirPath + "/ArcGIS/Runtime/Data/kml/US_State_Capitals.kml"
                                                                  });
 
         // create the layer

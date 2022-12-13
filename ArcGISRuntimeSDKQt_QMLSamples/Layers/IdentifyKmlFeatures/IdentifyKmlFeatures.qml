@@ -14,10 +14,10 @@
 // limitations under the License.
 // [Legal]
 
-import QtQuick 2.15
-import QtQuick.Controls 2.15
-import Esri.ArcGISRuntime 100.15
-import Esri.ArcGISRuntime.Toolkit 100.15
+import QtQuick
+import QtQuick.Controls
+import Esri.ArcGISRuntime
+import Esri.ArcGISRuntime.Toolkit
 
 Rectangle {
     id: rootRectangle
@@ -42,8 +42,9 @@ Rectangle {
             id: callout
             calloutData: parent.calloutData
             implicitWidth: 150
-            calloutContent: Label {
-                id: componentText
+            implicitHeight: contentText.implicitHeight + (contentText.implicitHeight * .05)
+            contentItem: Label {
+                id: contentText
                 text: calloutText
                 wrapMode: Text.WordWrap
                 textFormat: Text.RichText
@@ -78,10 +79,10 @@ Rectangle {
             }
         }
 
-        onMouseClicked: {
+        onMouseClicked: mouse => {
             clickedPoint = screenToLocation(mouse.x, mouse.y);
             if (identifyLayerStatus !== Enums.TaskStatusInProgress) {
-                identifyLayer(forecastLayer, mouse.x, mouse.y, 15, false, 1);
+                identifyLayerWithMaxResults(forecastLayer, mouse.x, mouse.y, 15, false, 1);
             }
         }
 

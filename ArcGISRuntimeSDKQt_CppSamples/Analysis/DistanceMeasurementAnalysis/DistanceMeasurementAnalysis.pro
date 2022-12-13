@@ -1,5 +1,5 @@
 #-------------------------------------------------
-# Copyright 2018 Esri.
+# Copyright 2022 Esri.
 
 # Licensed under the Apache License, Version 2.0 (the "License");
 # you may not use this file except in compliance with the License.
@@ -19,7 +19,7 @@ mac {
 
 #-------------------------------------------------------------------------------
 
-CONFIG += c++14
+CONFIG += c++17
 
 # additional modules are pulled in via arcgisruntime.pri
 QT += opengl qml quick
@@ -27,7 +27,7 @@ QT += opengl qml quick
 TEMPLATE = app
 TARGET = DistanceMeasurementAnalysis
 
-ARCGIS_RUNTIME_VERSION = 100.15.0
+ARCGIS_RUNTIME_VERSION = 200.0.0
 include($$PWD/arcgisruntime.pri)
 
 #-------------------------------------------------------------------------------

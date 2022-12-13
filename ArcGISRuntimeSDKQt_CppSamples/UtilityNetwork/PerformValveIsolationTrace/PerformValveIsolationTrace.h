@@ -17,9 +17,7 @@
 #ifndef PERFORMVALVEISOLATIONTRACE_H
 #define PERFORMVALVEISOLATIONTRACE_H
 
-namespace Esri
-{
-namespace ArcGISRuntime
+namespace Esri::ArcGISRuntime
 {
 class ArcGISFeature;
 class Credential;
@@ -35,10 +33,13 @@ class UtilityTraceParameters;
 class IdentifyLayerResult;
 class ServiceGeodatabase;
 }
-}
 
 #include <QObject>
+#include <QUuid>
 #include <Point.h>
+
+Q_MOC_INCLUDE("MapQuickView.h")
+Q_MOC_INCLUDE("IdentifyLayerResult.h")
 
 class PerformValveIsolationTrace : public QObject
 {

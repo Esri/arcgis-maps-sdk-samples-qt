@@ -1,6 +1,6 @@
 // [WriteFile Name=DisplayMap, Category=Maps]
 // [Legal]
-// Copyright 2016 Esri.
+// Copyright 2022 Esri.
 
 // Licensed under the Apache License, Version 2.0 (the "License");
 // you may not use this file except in compliance with the License.
@@ -14,35 +14,40 @@
 // limitations under the License.
 // [Legal]
 
-#ifndef DISPLAY_MAP_H
-#define DISPLAY_MAP_H
+#ifndef DISPLAYMAP_H
+#define DISPLAYMAP_H
 
-namespace Esri
+namespace Esri::ArcGISRuntime
 {
-  namespace ArcGISRuntime
-  {
-    class Map;
-    class MapQuickView;
-  }
+class Map;
+class MapQuickView;
 }
 
-#include <QQuickItem>
+#include <QObject>
 
-class DisplayMap : public QQuickItem
+Q_MOC_INCLUDE("MapQuickView.h");
+
+class DisplayMap : public QObject
 {
   Q_OBJECT
 
-public:
-  explicit DisplayMap(QQuickItem* parent = nullptr);
-  ~DisplayMap() override;
+  Q_PROPERTY(Esri::ArcGISRuntime::MapQuickView* mapView READ mapView WRITE setMapView NOTIFY mapViewChanged)
 
-  void componentComplete() override;
+public:
+  explicit DisplayMap(QObject* parent = nullptr);
+  ~DisplayMap();
+
   static void init();
 
+signals:
+  void mapViewChanged();
+
 private:
+  Esri::ArcGISRuntime::MapQuickView* mapView() const;
+  void setMapView(Esri::ArcGISRuntime::MapQuickView* mapView);
+
   Esri::ArcGISRuntime::Map* m_map = nullptr;
   Esri::ArcGISRuntime::MapQuickView* m_mapView = nullptr;
 };
 
-#endif // DISPLAY_MAP_H
-
+#endif // DISPLAYMAP_H

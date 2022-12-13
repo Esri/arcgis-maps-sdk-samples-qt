@@ -14,9 +14,9 @@
 // limitations under the License.
 // [Legal]
 
-import QtQuick 2.6
-import QtQuick.Controls 2.2
-import Esri.Samples 1.0
+import QtQuick
+import QtQuick.Controls
+import Esri.Samples
 
 Item {
 
@@ -36,7 +36,7 @@ Item {
         id: model
         mapView: view
 
-        onUpdateUi: {
+        onUpdateUi: (enabled, text, detailedText) => {
             downloadUpdatesButton.enabled = enabled;
             availabilityText.text = text;
             availabilityDetailsText.text = detailedText;
@@ -62,11 +62,12 @@ Item {
         Button {
             id: downloadUpdatesButton
             text: "Apply Scheduled Updates"
-            enabled: false
+            enabled: true
 
             onClicked: {
                 busyIndicator.visible = true;
                 model.updateMap();
+                downloadUpdatesButton.enabled = false;
             }
         }
 

@@ -17,18 +17,17 @@
 #ifndef CHANGEATMOSPHEREEFFECT_H
 #define CHANGEATMOSPHEREEFFECT_H
 
-namespace Esri
-{
-namespace ArcGISRuntime
+#include "SceneViewTypes.h"
+
+namespace Esri::ArcGISRuntime
 {
 class Scene;
 class SceneQuickView;
 }
-}
 
 #include <QObject>
 
-#include "SceneViewTypes.h"
+Q_MOC_INCLUDE("SceneQuickView.h")
 
 class ChangeAtmosphereEffect : public QObject
 {

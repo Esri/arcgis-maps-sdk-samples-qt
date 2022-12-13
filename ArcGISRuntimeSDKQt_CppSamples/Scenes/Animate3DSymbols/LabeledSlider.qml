@@ -1,5 +1,5 @@
-import QtQuick.Controls 2.2
-import QtQuick 2.6
+import QtQuick.Controls
+import QtQuick
 
 Slider {
     id: slider

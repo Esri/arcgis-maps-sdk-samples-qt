@@ -17,6 +17,14 @@
 #include "ChangeViewpoint.h"
 #include "Map.h"
 #include "MapGraphicsView.h"
+#include "MapTypes.h"
+#include "SpatialReference.h"
+#include "Envelope.h"
+#include "Point.h"
+#include "TaskWatcher.h"
+#include "Viewpoint.h"
+#include "MapViewTypes.h"
+
 #include <QComboBox>
 #include <QVBoxLayout>
 #include <QGraphicsProxyWidget>
@@ -55,7 +63,7 @@ ChangeViewpoint::ChangeViewpoint(QWidget* parent) :
     // Set up the UI
     QWidget* widget = new QWidget();
     QVBoxLayout* layout = new QVBoxLayout();
-    layout->setMargin(0);
+    layout->setContentsMargins(0, 0, 0, 0);
     layout->addWidget(m_viewpointCombo);
     widget->setLayout(layout);
 
@@ -112,7 +120,7 @@ void ChangeViewpoint::changeToNewViewpoint(int index)
 
 double ChangeViewpoint::screenRatio() const
 {
-    const double width = static_cast<double>(m_mapView->mapWidth());
-    const double height = static_cast<double>(m_mapView->mapHeight());
+    const double width = static_cast<double>(m_mapView->width());
+    const double height = static_cast<double>(m_mapView->height());
     return height > width ? width / height : height / width;
 }

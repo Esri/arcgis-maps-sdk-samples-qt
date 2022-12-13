@@ -14,9 +14,9 @@
 // limitations under the License.
 // [Legal]
 
-import QtQuick 2.6
-import QtQuick.Controls 2.2
-import Esri.Samples 1.0
+import QtQuick
+import QtQuick.Controls
+import Esri.Samples
 
 ClipGeometrySample {
     id: rootRectangle
@@ -36,7 +36,7 @@ ClipGeometrySample {
     }
 
     Button {
-        id: clipButton
+        id: clipOrResetButton
         anchors {
             horizontalCenter: parent.horizontalCenter
             bottom: parent.bottom
@@ -44,9 +44,16 @@ ClipGeometrySample {
         }
         text: "Clip"
         onClicked: {
-            // Only allow clipAreas(); to be called once
-            clipButton.enabled = false;
-            clipAreas();
+            if (clipOrResetButton.text === "Clip")
+            {
+                clipAreas();
+                clipOrResetButton.text = "Reset"
+            }
+            else
+            {
+                resetAreas();
+                clipOrResetButton.text = "Clip"
+            }
         }
     }
 }

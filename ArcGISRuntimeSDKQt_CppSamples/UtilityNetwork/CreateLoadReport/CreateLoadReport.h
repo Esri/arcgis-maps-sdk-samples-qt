@@ -17,9 +17,7 @@
 #ifndef CREATELOADREPORT_H
 #define CREATELOADREPORT_H
 
-namespace Esri
-{
-namespace ArcGISRuntime
+namespace Esri::ArcGISRuntime
 {
 class Credential;
 class CodedValue;
@@ -32,7 +30,6 @@ class UtilityTier;
 class UtilityTraceConditionalExpression;
 class UtilityTraceConfiguration;
 class UtilityTraceParameters;
-}
 }
 
 #include <QObject>

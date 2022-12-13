@@ -17,17 +17,16 @@
 #ifndef DISPLAYWFSLAYER_H
 #define DISPLAYWFSLAYER_H
 
-namespace Esri
-{
-namespace ArcGISRuntime
+namespace Esri::ArcGISRuntime
 {
 class Map;
 class MapQuickView;
 class WfsFeatureTable;
 }
-}
 
 #include <QObject>
+
+Q_MOC_INCLUDE("MapQuickView.h")
 
 class DisplayWfsLayer : public QObject
 {

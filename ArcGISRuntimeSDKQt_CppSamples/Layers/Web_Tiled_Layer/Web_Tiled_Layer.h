@@ -17,13 +17,10 @@
 #ifndef WEB_TILED_LAYER_H
 #define WEB_TILED_LAYER_H
 
-namespace Esri
+namespace Esri::ArcGISRuntime
 {
-  namespace ArcGISRuntime
-  {
-    class Map;
-    class MapQuickView;
-  }
+  class Map;
+  class MapQuickView;
 }
 
 #include <QQuickItem>

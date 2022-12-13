@@ -23,12 +23,18 @@
 #include "Map.h"
 #include "MapQuickView.h"
 #include "Point.h"
-#include "Viewpoint.h"
 #include "GraphicsOverlay.h"
 #include "Graphic.h"
 #include "SimpleMarkerSymbol.h"
 #include "SimpleRenderer.h"
 #include "SpatialReference.h"
+#include "MapViewTypes.h"
+#include "MapTypes.h"
+#include "SymbolTypes.h"
+#include "TaskWatcher.h"
+#include "GraphicsOverlayListModel.h"
+#include "GraphicListModel.h"
+#include "Envelope.h"
 
 using namespace Esri::ArcGISRuntime;
 

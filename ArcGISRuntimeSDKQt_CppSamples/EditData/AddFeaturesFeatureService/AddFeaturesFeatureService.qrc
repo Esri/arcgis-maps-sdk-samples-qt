@@ -5,6 +5,7 @@
         <file>AddFeaturesFeatureService.qml</file>
         <file>AddFeaturesFeatureService.h</file>
         <file>AddFeaturesFeatureService.cpp</file>
+        <file>main.qml</file>
         <file>README.md</file>
     </qresource>
 </RCC>

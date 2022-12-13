@@ -14,10 +14,10 @@
 // limitations under the License.
 // [Legal]
 
-import QtQuick 2.6
-import Esri.ArcGISExtras 1.1
-import Esri.ArcGISRuntime 100.15
-import Esri.ArcGISRuntime.Toolkit 100.15
+import QtQuick
+import Esri.ArcGISExtras
+import Esri.ArcGISRuntime
+import Esri.ArcGISRuntime.Toolkit
 
 Rectangle {
     clip: true
@@ -67,12 +67,12 @@ Rectangle {
         Callout {
             id: callout
             calloutData: parent.calloutData
-            leaderPosition: leaderPositionEnum.Automatic
+            leaderPosition: Callout.LeaderPosition.Automatic
         }
         //! [show callout qml api snippet]
 
         // display callout on mouseClicked
-        onMouseClicked: {
+        onMouseClicked: mouse => {
             if (callout.calloutVisible)
                 callout.dismiss()
             else
@@ -80,7 +80,7 @@ Rectangle {
                 calloutLocation = mouse.mapPoint;
                 xCoor = mouse.mapPoint.x.toFixed(2);
                 yCoor = mouse.mapPoint.y.toFixed(2);
-                callout.accessoryButtonHidden = true;
+                callout.accessoryButtonVisible = false;
                 callout.showCallout();
             }
         }

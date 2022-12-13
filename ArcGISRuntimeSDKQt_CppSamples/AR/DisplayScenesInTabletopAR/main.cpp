@@ -11,10 +11,8 @@
 // See the License for the specific language governing permissions and
 // limitations under the License.
 
-#ifdef Q_OS_WIN
-#include <Windows.h>
-#endif
 
+#include "ArcGISArView.h"
 #include "DisplayScenesInTabletopAR.h"
 #include "ArcGISRuntimeEnvironment.h"
 
@@ -23,13 +21,18 @@
 #include <QQmlApplicationEngine>
 #include <QSurfaceFormat>
 
-#include "ArcGISArView.h"
+#ifdef Q_OS_WIN
+#include <Windows.h>
+#endif
 
 #define STRINGIZE(x) #x
 #define QUOTE(x) STRINGIZE(x)
 
 int main(int argc, char *argv[])
 {
+  // Enforce OpenGL
+  qputenv("QSG_RHI_BACKEND", "opengl");
+
   // There are some conflicts between the AR frameworks and Qt's rendering thread.
   // See Qt's documentation about non-threaded render loops for more information.
   // https://doc.qt.io/qt-5/qtquick-visualcanvas-scenegraph.html#non-threaded-render-loops-basic-and-windows
@@ -45,7 +48,6 @@ int main(int argc, char *argv[])
   QSurfaceFormat::setDefaultFormat(fmt);
 #endif
 
-  QGuiApplication::setAttribute(Qt::AA_EnableHighDpiScaling);
   QGuiApplication app(argc, argv);
   app.setApplicationName(QStringLiteral("DisplayScenesInTabletopAR - C++"));
 

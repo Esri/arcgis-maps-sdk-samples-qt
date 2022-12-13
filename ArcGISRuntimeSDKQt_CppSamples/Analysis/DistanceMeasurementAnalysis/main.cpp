@@ -1,4 +1,4 @@
-// Copyright 2018 Esri.
+// Copyright 2022 Esri.
 
 // Licensed under the Apache License, Version 2.0 (the "License");
 // you may not use this file except in compliance with the License.
@@ -11,26 +11,26 @@
 // See the License for the specific language governing permissions and
 // limitations under the License.
 
-#include <QGuiApplication>
-#include <QQuickView>
-#include <QCommandLineParser>
+#include "DistanceMeasurementAnalysis.h"
+
 #include "ArcGISRuntimeEnvironment.h"
 
+#include <QCommandLineParser>
 #include <QDir>
-#include <QQmlEngine>
+#include <QGuiApplication>
+#include <QQmlApplicationEngine>
 #include <QSurfaceFormat>
 
 #ifdef Q_OS_WIN
 #include <Windows.h>
 #endif
 
-#include "DistanceMeasurementAnalysis.h"
-
-#define STRINGIZE(x) #x
-#define QUOTE(x) STRINGIZE(x)
+void setAPIKey(const QGuiApplication& app, QString apiKey);
 
 int main(int argc, char *argv[])
 {
+  // Enforce OpenGL
+  qputenv("QSG_RHI_BACKEND", "opengl");
 
 #if defined(Q_OS_LINUX) && !defined(Q_OS_ANDROID)
   // Linux requires 3.2 OpenGL Context
@@ -39,53 +39,61 @@ int main(int argc, char *argv[])
   fmt.setVersion(3, 2);
   QSurfaceFormat::setDefaultFormat(fmt);
 #endif
-  QGuiApplication::setAttribute(Qt::AA_EnableHighDpiScaling);
-  QGuiApplication app(argc, argv);
-  app.setApplicationName("Distance Measurement Analysis - C++");
 
-  // Use of Esri location services, including basemaps and geocoding,
-  // requires authentication using either an ArcGIS identity or an API Key.
-  // 1. ArcGIS identity: An ArcGIS named user account that is a member of an
-  //    organization in ArcGIS Online or ArcGIS Enterprise.
-  // 2. API key: A permanent key that gives your application access to Esri
-  //    location services. Visit your ArcGIS Developers Dashboard create a new
-  //    API keys or access an existing API key.
+  QGuiApplication app(argc, argv);
+  app.setApplicationName(QString("DistanceMeasurementAnalysis - C++"));
+
+  // Access to Esri location services requires an API key. This can be copied below or used as a command line argument.
   const QString apiKey = QString("");
-  if (apiKey.isEmpty())
-  {
-      qWarning() << "Use of Esri location services, including basemaps, requires" <<
-                    "you to authenticate with an ArcGIS identity or set the API Key property.";
-  }
-  else
-  {
-      Esri::ArcGISRuntime::ArcGISRuntimeEnvironment::setApiKey(apiKey);
-  }
+  setAPIKey(app, apiKey);
 
   // Initialize the sample
   DistanceMeasurementAnalysis::init();
 
   // Initialize application view
-  QQuickView view;
-  view.setResizeMode(QQuickView::SizeRootObjectToView);
+  QQmlApplicationEngine engine;
+  // Add the import Path
+  engine.addImportPath(QDir(QCoreApplication::applicationDirPath()).filePath("qml"));
 
-  QString arcGISRuntimeImportPath = QUOTE(ARCGIS_RUNTIME_IMPORT_PATH);
-
-#if defined(LINUX_PLATFORM_REPLACEMENT)
-  // on some linux platforms the string 'linux' is replaced with 1
-  // fix the replacement paths which were created
-  QString replaceString = QUOTE(LINUX_PLATFORM_REPLACEMENT);
-  arcGISRuntimeImportPath = arcGISRuntimeImportPath.replace(replaceString, "linux", Qt::CaseSensitive);
+#ifdef ARCGIS_RUNTIME_IMPORT_PATH_2
+  engine.addImportPath(ARCGIS_RUNTIME_IMPORT_PATH_2);
 #endif
 
-  // Add the import Path
-  view.engine()->addImportPath(QDir(QCoreApplication::applicationDirPath()).filePath("qml"));
-  // Add the Runtime and Extras path
-  view.engine()->addImportPath(arcGISRuntimeImportPath);
-
   // Set the source
-  view.setSource(QUrl("qrc:/Samples/Analysis/DistanceMeasurementAnalysis/DistanceMeasurementAnalysis.qml"));
-
-  view.show();
+  engine.load(QUrl("qrc:/Samples/Analysis/DistanceMeasurementAnalysis/main.qml"));
 
   return app.exec();
 }
+
+// Use of Esri location services, including basemaps and geocoding,
+// requires authentication using either an ArcGIS identity or an API Key.
+// 1. ArcGIS identity: An ArcGIS named user account that is a member of an
+//    organization in ArcGIS Online or ArcGIS Enterprise.
+// 2. API key: API key: a permanent key that grants access to
+//    location services and premium content in your applications.
+//    Visit your ArcGIS Developers Dashboard to create a new
+//    API key or access an existing API key.
+
+void setAPIKey(const QGuiApplication& app, QString apiKey)
+{
+  if (apiKey.isEmpty())
+  {
+    // Try parsing API key from command line argument, which uses the following syntax "-k <apiKey>".
+    QCommandLineParser cmdParser;
+    QCommandLineOption apiKeyArgument(QStringList{"k", "api"}, "The API Key property used to access Esri location services", "apiKeyInput");
+    cmdParser.addOption(apiKeyArgument);
+    cmdParser.process(app);
+
+    apiKey = cmdParser.value(apiKeyArgument);
+
+    if (apiKey.isEmpty())
+    {
+      qWarning() << "Use of Esri location services, including basemaps, requires" <<
+                    "you to authenticate with an ArcGIS identity or set the API Key property.";
+      return;
+    }
+  }
+
+  Esri::ArcGISRuntime::ArcGISRuntimeEnvironment::setApiKey(apiKey);
+}
+

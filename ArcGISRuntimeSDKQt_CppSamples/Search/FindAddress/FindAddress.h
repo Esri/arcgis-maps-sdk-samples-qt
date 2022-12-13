@@ -17,16 +17,13 @@
 #ifndef FIND_ADDRESS_H
 #define FIND_ADDRESS_H
 
-namespace Esri
+namespace Esri::ArcGISRuntime
 {
-  namespace ArcGISRuntime
-  {
-    class Map;
-    class MapQuickView;
-    class GraphicsOverlay;
-    class Graphic;
-    class LocatorTask;
-  }
+  class Map;
+  class MapQuickView;
+  class GraphicsOverlay;
+  class Graphic;
+  class LocatorTask;
 }
 
 #include "GeocodeParameters.h"

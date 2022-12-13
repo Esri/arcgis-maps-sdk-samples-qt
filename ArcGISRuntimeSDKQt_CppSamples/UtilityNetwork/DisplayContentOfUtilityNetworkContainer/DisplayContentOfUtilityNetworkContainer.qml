@@ -14,15 +14,15 @@
 // limitations under the License.
 // [Legal]
 
-import QtQuick 2.12
-import QtQuick.Controls 2.12
-import QtQuick.Layouts 1.3
-import Esri.Samples 1.0
+import QtQuick
+import QtQuick.Controls
+import QtQuick.Layouts
+import Esri.Samples
 
 Item {
     id: item1
 
-    // Declare the C++ instance which creates the scene etc. and supply the view
+    // Declare the C++ instance which creates the map etc. and supply the view
     DisplayContentOfUtilityNetworkContainerSample {
         id: model
         mapView: view
@@ -35,7 +35,7 @@ Item {
         focus: true
 
         Component.onCompleted: {
-            // Set and keep the focus on SceneView to enable keyboard navigation
+            // Set and keep the focus on MapView to enable keyboard navigation
             forceActiveFocus();
         }
     }

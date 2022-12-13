@@ -26,11 +26,15 @@
 @endif
 @if %{ThreeDSample}
 #include "ArcGISTiledElevationSource.h"
+#include "ElevationSourceListModel.h"
+#include "MapTypes.h"
 #include "Scene.h"
 #include "SceneQuickView.h"
+#include "Surface.h"
 @else
 #include "Map.h"
 #include "MapQuickView.h"
+#include "MapTypes.h"
 @endif
 
 using namespace Esri::ArcGISRuntime;

@@ -17,9 +17,7 @@
 #ifndef APPLYMOSAICRULETORASTERS_H
 #define APPLYMOSAICRULETORASTERS_H
 
-namespace Esri
-{
-namespace ArcGISRuntime
+namespace Esri::ArcGISRuntime
 {
 class ImageServiceRaster;
 class Map;
@@ -27,9 +25,10 @@ class MapQuickView;
 class MosaicRule;
 class RasterLayer;
 }
-}
 
 #include <QObject>
+
+Q_MOC_INCLUDE("MapQuickView.h")
 
 class ApplyMosaicRuleToRasters : public QObject
 {

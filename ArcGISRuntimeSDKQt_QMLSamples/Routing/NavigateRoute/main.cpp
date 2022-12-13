@@ -18,11 +18,13 @@
 #include <QDir>
 #include <QQmlEngine>
 
-#include "NavigateRouteSpeaker.h"
+// #include "NavigateRouteSpeaker.h"
 
 int main(int argc, char *argv[])
 {
-  QGuiApplication::setAttribute(Qt::AA_EnableHighDpiScaling);
+  // Enforce OpenGL
+  qputenv("QSG_RHI_BACKEND", "opengl");
+
   QGuiApplication app(argc, argv);
   app.setApplicationName(QStringLiteral("NavigateRoute - QML"));
 
@@ -49,7 +51,7 @@ int main(int argc, char *argv[])
   view.setResizeMode(QQuickView::SizeRootObjectToView);
 
   // Register the C++ NavigateRouteSpeaker class
-  qmlRegisterType<NavigateRouteSpeaker>("Esri.samples", 1, 0, "NavigateRouteSpeaker");
+  // qmlRegisterType<NavigateRouteSpeaker>("Esri.samples", 1, 0, "NavigateRouteSpeaker");
 
   // Add the import Path
   view.engine()->addImportPath(QDir(QCoreApplication::applicationDirPath()).filePath("qml"));

@@ -19,17 +19,13 @@
 #endif // PCH_BUILD
 
 #include "TileCacheLayer.h"
-
-#include"ArcGISTiledLayer.h"
+#include "ArcGISTiledLayer.h"
 #include "Map.h"
 #include "MapQuickView.h"
 #include "TileCache.h"
+#include "Basemap.h"
 
-#include <QDir>
-
-#ifdef Q_OS_IOS
 #include <QStandardPaths>
-#endif // Q_OS_IOS
 
 using namespace Esri::ArcGISRuntime;
 
@@ -40,12 +36,10 @@ namespace
   {
     QString dataPath;
 
-  #ifdef Q_OS_ANDROID
-    dataPath = "/sdcard";
-  #elif defined Q_OS_IOS
+  #ifdef Q_OS_IOS
     dataPath = QStandardPaths::writableLocation(QStandardPaths::DocumentsLocation);
   #else
-    dataPath = QDir::homePath();
+    dataPath = QStandardPaths::writableLocation(QStandardPaths::HomeLocation);
   #endif
 
     return dataPath;

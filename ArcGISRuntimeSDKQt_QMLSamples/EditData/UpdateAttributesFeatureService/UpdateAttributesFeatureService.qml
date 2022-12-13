@@ -14,12 +14,11 @@
 // limitations under the License.
 // [Legal]
 
-import QtQuick 2.6
-import QtQuick.Controls 2.2
-import QtQuick.Layouts 1.3
-import QtGraphicalEffects 1.0
-import Esri.ArcGISRuntime 100.15
-import Esri.ArcGISRuntime.Toolkit 100.15
+import QtQuick
+import QtQuick.Controls
+import QtQuick.Layouts
+import Esri.ArcGISRuntime
+import Esri.ArcGISRuntime.Toolkit
 
 Rectangle {
     width: 800
@@ -112,7 +111,7 @@ Rectangle {
             updateWindow.visible = false;
         }
 
-        onMouseClicked: {
+        onMouseClicked: mouse => {
             // reset the map callout and update window
             featureLayer.clearSelection();
             if (callout.visible)
@@ -142,9 +141,11 @@ Rectangle {
         Callout {
             id: callout
             calloutData: parent.calloutData;
-            borderColor: "lightgrey"
-            borderWidth: 1
-            leaderPosition: leaderPositionEnum.Automatic
+            background: Rectangle {
+                border.color: "lightgrey"
+                border.width: 1
+            }
+            leaderPosition: Callout.LeaderPosition.Automatic
             onAccessoryButtonClicked: {
                 updateWindow.visible = true;
             }
@@ -160,17 +161,10 @@ Rectangle {
         radius: 10
         visible: false
 
-        GaussianBlur {
-            anchors.fill: updateWindow
-            source: mapView
-            radius: 40
-            samples: 20
-        }
-
         MouseArea {
             anchors.fill: parent
-            onClicked: mouse.accepted = true;
-            onWheel: wheel.accepted = true;
+            onClicked: mouse => mouse.accepted = true;
+            onWheel: wheel => wheel.accepted = true;
         }
 
         GridLayout {
@@ -186,7 +180,7 @@ Rectangle {
 
             ComboBox {
                 property int modelWidth: 0
-                Layout.minimumWidth: modelWidth + leftPadding + rightPadding + indicator.width
+                Layout.minimumWidth: modelWidth + leftPadding + rightPadding
 
                 Layout.columnSpan: 2
                 Layout.margins: 5

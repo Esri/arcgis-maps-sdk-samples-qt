@@ -1,6 +1,6 @@
 // [WriteFile Name=AddFeaturesFeatureService, Category=EditData]
 // [Legal]
-// Copyright 2016 Esri.
+// Copyright 2022 Esri.
 
 // Licensed under the Apache License, Version 2.0 (the "License");
 // you may not use this file except in compliance with the License.
@@ -14,24 +14,26 @@
 // limitations under the License.
 // [Legal]
 
-import QtQuick 2.6
-import QtQuick.Controls 2.2
-import Esri.Samples 1.0
+import QtQuick
+import QtQuick.Controls
+import Esri.Samples
 
-AddFeaturesFeatureServiceSample {
-    width: 800
-    height: 600
+Item {
 
     // add a mapView component
     MapView {
+        id: view
         anchors.fill: parent
-        objectName: "mapView"
 
         Component.onCompleted: {
             // Set the focus on MapView to initially enable keyboard navigation
             forceActiveFocus();
         }
     }
+
+    // Declare the C++ instance which creates the map etc. and supply the view
+    AddFeaturesFeatureServiceSample {
+        id: model
+        mapView: view
+    }
 }
-
-

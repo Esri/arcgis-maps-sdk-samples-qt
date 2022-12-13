@@ -14,9 +14,9 @@
 // limitations under the License.
 // [Legal]
 
-import QtQuick 2.6
-import Esri.ArcGISRuntime 100.15
-import Esri.ArcGISRuntime.Toolkit 100.15
+import QtQuick
+import Esri.ArcGISRuntime
+import Esri.ArcGISRuntime.Toolkit
 
 Rectangle {
     id: rootRectangle
@@ -54,10 +54,10 @@ Rectangle {
         Callout {
             id: callout
             calloutData: parent.calloutData
-            accessoryButtonHidden: true
+            accessoryButtonVisible: false
             autoAdjustWidth: true
             maxWidth: 350
-            leaderPosition: leaderPositionEnum.Automatic
+            leaderPosition: Callout.LeaderPosition.Automatic
         }
 
         // create a graphics to show the input location
@@ -76,7 +76,7 @@ Rectangle {
         }
 
         // handle mouseClicked signal
-        onMouseClicked: {
+        onMouseClicked: mouse => {
             // get the mouse click as a point
             const originalPoint = mouse.mapPoint;
 

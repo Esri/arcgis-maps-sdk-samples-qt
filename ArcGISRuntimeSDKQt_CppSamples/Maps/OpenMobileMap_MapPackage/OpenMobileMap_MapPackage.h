@@ -17,15 +17,12 @@
 #ifndef OPEN_MOBILE_MAP_MAP_PACKAGE_H
 #define OPEN_MOBILE_MAP_MAP_PACKAGE_H
 
-namespace Esri
+namespace Esri::ArcGISRuntime
 {
-  namespace ArcGISRuntime
-  {
-    class Error;
-    class Map;
-    class MapQuickView;
-    class MobileMapPackage;
-  }
+  class Error;
+  class Map;
+  class MapQuickView;
+  class MobileMapPackage;
 }
 
 #include <QQuickItem>

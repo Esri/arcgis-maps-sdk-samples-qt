@@ -17,9 +17,7 @@
 #ifndef MAPREFERENCESCALE_H
 #define MAPREFERENCESCALE_H
 
-namespace Esri
-{
-namespace ArcGISRuntime
+namespace Esri::ArcGISRuntime
 {
 class Map;
 class MapQuickView;
@@ -27,10 +25,11 @@ class Portal;
 class PortalItem;
 class LayerListModel;
 }
-}
 
 #include <QAbstractListModel>
 #include <QObject>
+
+Q_MOC_INCLUDE("MapQuickView.h")
 
 class MapReferenceScale : public QObject
 {

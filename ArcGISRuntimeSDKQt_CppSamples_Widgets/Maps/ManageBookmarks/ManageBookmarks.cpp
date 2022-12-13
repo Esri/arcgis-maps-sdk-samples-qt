@@ -19,7 +19,12 @@
 #include "MapGraphicsView.h"
 #include "Viewpoint.h"
 #include "Bookmark.h"
+#include "MapTypes.h"
+#include "Envelope.h"
+#include "TaskWatcher.h"
 #include "SpatialReference.h"
+#include "BookmarkListModel.h"
+
 #include <QVBoxLayout>
 #include <QComboBox>
 #include <QPushButton>
@@ -121,7 +126,7 @@ void ManageBookmarks::createUi()
 {
     QWidget* widget = new QWidget();
     QVBoxLayout* layout = new QVBoxLayout();
-    layout->setMargin(10);
+    layout->setContentsMargins(10, 10, 10, 10);
     layout->addWidget(m_bookmarkCombo);
     layout->addWidget(m_button);
     widget->setPalette(QPalette(QPalette::Base));

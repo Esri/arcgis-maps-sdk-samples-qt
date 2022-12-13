@@ -13,16 +13,15 @@
 // limitations under the License.
 // [Legal]
 
-import QtQuick 2.5
-import QtQuick.Controls 2.2
-import QtQuick.Controls.Material 2.1
-import QtQuick.Layouts 1.1
-import QtQuick.Window 2.0
-import QtSensors 5.3
-import QtPositioning 5.3
-import QtQuick.XmlListModel 2.0
-import Esri.ArcGISExtras 1.1
-import Esri.ArcGISRuntime.Toolkit 100.15
+import QtQuick
+import QtQuick.Controls
+import QtQuick.Layouts
+import QtQuick.Window
+import QtSensors
+import QtPositioning
+import QtQml.XmlListModel
+import Esri.ArcGISExtras
+import Esri.ArcGISRuntime.Toolkit
 
 Item {
 

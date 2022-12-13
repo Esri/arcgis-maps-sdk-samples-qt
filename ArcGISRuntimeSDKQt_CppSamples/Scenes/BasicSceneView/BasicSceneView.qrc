@@ -5,6 +5,7 @@
         <file>BasicSceneView.qml</file>
         <file>BasicSceneView.h</file>
         <file>BasicSceneView.cpp</file>
+        <file>main.qml</file>
         <file>README.md</file>
     </qresource>
 </RCC>

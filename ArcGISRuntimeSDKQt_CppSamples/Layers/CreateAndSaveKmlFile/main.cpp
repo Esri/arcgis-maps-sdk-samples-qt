@@ -11,10 +11,6 @@
 // See the License for the specific language governing permissions and
 // limitations under the License.
 
-#ifdef Q_OS_WIN
-#include <Windows.h>
-#endif
-
 #include "CreateAndSaveKmlFile.h"
 #include "ArcGISRuntimeEnvironment.h"
 
@@ -22,12 +18,18 @@
 #include <QGuiApplication>
 #include <QQmlApplicationEngine>
 
+#ifdef Q_OS_WIN
+#include <Windows.h>
+#endif
+
 #define STRINGIZE(x) #x
 #define QUOTE(x) STRINGIZE(x)
 
 int main(int argc, char *argv[])
 {
-  QGuiApplication::setAttribute(Qt::AA_EnableHighDpiScaling);
+  // Enforce OpenGL
+  qputenv("QSG_RHI_BACKEND", "opengl");
+
   QGuiApplication app(argc, argv);
   app.setApplicationName(QStringLiteral("CreateAndSaveKmlFile - C++"));
 

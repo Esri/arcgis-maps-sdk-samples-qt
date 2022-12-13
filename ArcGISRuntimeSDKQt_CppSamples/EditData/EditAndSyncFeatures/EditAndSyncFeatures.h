@@ -17,16 +17,14 @@
 #ifndef EDITANDSYNCFEATURES_H
 #define EDITANDSYNCFEATURES_H
 
-namespace Esri
+namespace Esri::ArcGISRuntime
 {
-  namespace ArcGISRuntime
-  {
-    class Map;
-    class MapQuickView;
-    class GeodatabaseSyncTask;
-    class Geodatabase;
-    class ArcGISFeature;
-  }
+  class Map;
+  class MapQuickView;
+  class GeodatabaseSyncTask;
+  class Geodatabase;
+  class ArcGISFeature;
+  class Envelope;
 }
 
 #include "GenerateGeodatabaseParameters.h"

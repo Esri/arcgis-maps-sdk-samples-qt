@@ -19,9 +19,7 @@
 
 #include "Viewpoint.h"
 
-namespace Esri
-{
-namespace ArcGISRuntime
+namespace Esri::ArcGISRuntime
 {
 class KmlDataset;
 class KmlNode;
@@ -29,11 +27,12 @@ class KmlNodeListModel;
 class Scene;
 class SceneQuickView;
 }
-}
 
 #include <QObject>
 #include <QList>
 #include <QStringList>
+
+Q_MOC_INCLUDE("SceneQuickView.h")
 
 class ListKmlContents : public QObject
 {

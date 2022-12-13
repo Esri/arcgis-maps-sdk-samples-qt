@@ -19,28 +19,27 @@ mac {
 
 #-------------------------------------------------------------------------------
 
-CONFIG += c++14
+CONFIG += c++17
 
 # additional modules are pulled in via arcgisruntime.pri
-QT += qml quick
 QT += opengl qml quick
 
-ARCGIS_RUNTIME_VERSION = 100.15.0
-include($$PWD/arcgisruntime.pri)
-
 TEMPLATE = app
-TARGET = SetMaxExtent
+TARGET = DisplayRouteLayer
+
+ARCGIS_RUNTIME_VERSION = 200.0.0
+include($$PWD/arcgisruntime.pri)
 
 #-------------------------------------------------------------------------------
 
 HEADERS += \
-    SetMaxExtent.h
+    DisplayRouteLayer.h
 
 SOURCES += \
     main.cpp \
-    SetMaxExtent.cpp
+    DisplayRouteLayer.cpp
 
-RESOURCES += SetMaxExtent.qrc
+RESOURCES += DisplayRouteLayer.qrc
 
 #-------------------------------------------------------------------------------
 

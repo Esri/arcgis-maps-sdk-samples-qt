@@ -29,6 +29,13 @@
 #include "GraphicsOverlay.h"
 #include "SimpleLineSymbol.h"
 #include "SimpleFillSymbol.h"
+#include "MapTypes.h"
+#include "GraphicsOverlayListModel.h"
+#include "SymbolTypes.h"
+#include "GraphicListModel.h"
+#include "SpatialReference.h"
+#include "Point.h"
+
 
 using namespace Esri::ArcGISRuntime;
 
@@ -131,4 +138,10 @@ void ClipGeometry::clipAreas()
       m_clippedAreasOverlay->graphics()->append(clippedGraphic);
     }
   }
+}
+
+void ClipGeometry::resetAreas()
+{
+  m_clippedAreasOverlay->graphics()->clear();
+  m_coloradoGraphic->setVisible(true);
 }

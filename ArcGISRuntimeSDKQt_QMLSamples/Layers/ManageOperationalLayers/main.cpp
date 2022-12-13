@@ -25,10 +25,11 @@
 
 int main(int argc, char *argv[])
 {
+  // Enforce OpenGL
+  qputenv("QSG_RHI_BACKEND", "opengl");
+
   // register the draw order model
   qmlRegisterType<DrawOrderLayerListModel>("Esri.Samples", 1, 0, "DrawOrderListModel");
-
-  QGuiApplication::setAttribute(Qt::AA_EnableHighDpiScaling);
   QGuiApplication app(argc, argv);
   app.setApplicationName(QStringLiteral("ManageOperationalLayers - QML"));
 

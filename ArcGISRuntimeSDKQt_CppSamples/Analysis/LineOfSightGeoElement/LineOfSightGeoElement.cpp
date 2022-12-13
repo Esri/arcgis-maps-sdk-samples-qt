@@ -25,21 +25,39 @@
 #include "GeoElementLineOfSight.h"
 #include "GeometryEngine.h"
 #include "GraphicsOverlay.h"
+#include "GraphicsOverlayListModel.h"
 #include "ModelSceneSymbol.h"
 #include "PointBuilder.h"
 #include "Scene.h"
 #include "SceneQuickView.h"
-#include "SimpleMarkerSymbol.h"
+#include "SceneViewTypes.h"
 #include "SimpleRenderer.h"
+#include "MapTypes.h"
+#include "Surface.h"
+#include "ElevationSourceListModel.h"
+#include "LayerListModel.h"
+#include "LayerSceneProperties.h"
+#include "RendererSceneProperties.h"
+#include "SymbolTypes.h"
+#include "GraphicListModel.h"
+#include "Error.h"
+#include "AttributeListModel.h"
+#include "AnalysisOverlay.h"
+#include "AnalysisOverlayListModel.h"
+#include "AnalysisListModel.h"
+#include "Camera.h"
+#include "GeodeticDistanceResult.h"
+#include "LinearUnit.h"
+#include "AngularUnit.h"
+#include "TaskWatcher.h"
+#include "SpatialReference.h"
+#include "Point.h"
+#include "Graphic.h"
+#include "SimpleMarkerSymbol.h"
 
 #include <array>
-
-#include <QDir>
 #include <QtCore/qglobal.h>
-
-#ifdef Q_OS_IOS
 #include <QStandardPaths>
-#endif // Q_OS_IOS
 
 using namespace Esri::ArcGISRuntime;
 
@@ -50,12 +68,10 @@ namespace
   {
     QString dataPath;
 
-  #ifdef Q_OS_ANDROID
-    dataPath = "/sdcard";
-  #elif defined Q_OS_IOS
+  #ifdef Q_OS_IOS
     dataPath = QStandardPaths::writableLocation(QStandardPaths::DocumentsLocation);
   #else
-    dataPath = QDir::homePath();
+    dataPath = QStandardPaths::writableLocation(QStandardPaths::HomeLocation);
   #endif
 
     return dataPath;

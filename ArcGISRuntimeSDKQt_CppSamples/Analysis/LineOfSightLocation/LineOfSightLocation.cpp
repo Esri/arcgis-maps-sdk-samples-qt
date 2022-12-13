@@ -26,6 +26,14 @@
 #include "LocationLineOfSight.h"
 #include "AnalysisOverlay.h"
 #include "Camera.h"
+#include "MapTypes.h"
+#include "Surface.h"
+#include "ElevationSourceListModel.h"
+#include "AnalysisOverlayListModel.h"
+#include "AnalysisListModel.h"
+#include "TaskWatcher.h"
+#include "SpatialReference.h"
+#include "Point.h"
 
 using namespace Esri::ArcGISRuntime;
 
@@ -103,7 +111,7 @@ void LineOfSightLocation::connectSignals()
   // on mouse click perform the location viewshed
   connect(m_sceneView, &SceneQuickView::mouseClicked, this, [this](QMouseEvent& event)
   {
-    const Point pt = m_sceneView->screenToBaseSurface(event.x(), event.y());
+    const Point pt = m_sceneView->screenToBaseSurface(event.pos().x(), event.pos().y());
     m_lineOfSight->setTargetLocation(pt);
   });
 
@@ -116,7 +124,7 @@ void LineOfSightLocation::connectSignals()
   {
     if (m_calculating)
     {
-      const Point pt = m_sceneView->screenToBaseSurface(event.x(), event.y());
+      const Point pt = m_sceneView->screenToBaseSurface(event.pos().x(), event.pos().y());
       m_lineOfSight->setTargetLocation(pt);
     }
   });

@@ -14,11 +14,11 @@
 // limitations under the License.
 // [Legal]
 
-import QtQuick 2.6
-import Esri.Samples 1.0
-import QtQuick.Controls 2.2
-import QtQuick.Layouts 1.3
-import Esri.ArcGISRuntime.Toolkit 100.15
+import QtQuick
+import Esri.Samples
+import QtQuick.Controls
+import QtQuick.Layouts
+import Esri.ArcGISRuntime.Toolkit
 
 OfflineGeocodeSample {
     id: offlineGeocodeSample
@@ -39,10 +39,10 @@ OfflineGeocodeSample {
 
         Callout {
             id: callout
-            leaderPosition: leaderPositionEnum.Automatic
+            leaderPosition: Callout.LeaderPosition.Automatic
             calloutData: mapView.calloutData
             screenOffsetY: -19
-            accessoryButtonHidden: true
+            accessoryButtonVisible: false
         }
     }
 

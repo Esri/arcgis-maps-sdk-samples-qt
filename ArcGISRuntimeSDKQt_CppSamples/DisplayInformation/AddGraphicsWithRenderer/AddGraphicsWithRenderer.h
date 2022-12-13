@@ -1,6 +1,6 @@
 // [WriteFile Name=AddGraphicsWithRenderer, Category=DisplayInformation]
 // [Legal]
-// Copyright 2016 Esri.
+// Copyright 2022 Esri.
 
 // Licensed under the Apache License, Version 2.0 (the "License");
 // you may not use this file except in compliance with the License.
@@ -14,12 +14,10 @@
 // limitations under the License.
 // [Legal]
 
-#ifndef GO_RENDERERS_H
-#define GO_RENDERERS_H
+#ifndef ADDGRAPHICSWITHRENDERER_H
+#define ADDGRAPHICSWITHRENDERER_H
 
-namespace Esri
-{
-namespace ArcGISRuntime
+namespace Esri::ArcGISRuntime
 {
 class Geometry;
 class Graphic;
@@ -27,35 +25,41 @@ class Map;
 class MapQuickView;
 class Symbol;
 }
-}
 
-#include <QQuickItem>
+#include <QObject>
 
-class AddGraphicsWithRenderer : public QQuickItem
+Q_MOC_INCLUDE("MapQuickView.h");
+
+class AddGraphicsWithRenderer : public QObject
 {
   Q_OBJECT
 
+  Q_PROPERTY(Esri::ArcGISRuntime::MapQuickView* mapView READ mapView WRITE setMapView NOTIFY mapViewChanged)
+
 public:
-  explicit AddGraphicsWithRenderer(QQuickItem* parent = nullptr);
+  explicit AddGraphicsWithRenderer(QObject* parent = nullptr);
   ~AddGraphicsWithRenderer() override;
 
-  void componentComplete() override;
   static void init();
 
+signals:
+  void mapViewChanged();
+
 private:
-  void addGraphicsOverlays();
-  void addPointGraphic();
-  void addLineGraphic();
-  void addPolygonGraphic();
+  Esri::ArcGISRuntime::MapQuickView* mapView() const;
+  void setMapView(Esri::ArcGISRuntime::MapQuickView* mapView);
+
   void addCurveGraphic();
   void addEllipseGraphic();
+  void addGraphicsOverlays();
+  void addLineGraphic();
+  void addPointGraphic();
+  void addPolygonGraphic();
   void createGraphicsOverlayWithGraphicAndSymbol(Esri::ArcGISRuntime::Graphic* graphic, Esri::ArcGISRuntime::Symbol* symbol);
   Esri::ArcGISRuntime::Geometry createHeart();
 
-private:
   Esri::ArcGISRuntime::Map* m_map = nullptr;
   Esri::ArcGISRuntime::MapQuickView* m_mapView = nullptr;
 };
 
-#endif // GO_RENDERERS_H
-
+#endif // ADDGRAPHICSWITHRENDERER_H
