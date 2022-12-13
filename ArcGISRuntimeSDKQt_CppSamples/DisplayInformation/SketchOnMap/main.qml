@@ -19,7 +19,7 @@ ApplicationWindow {
     width: 800
     height: 600
 
-    SketchOnMap {
+    GeometryEditorOnMap {
         anchors.fill: parent
     }
 }

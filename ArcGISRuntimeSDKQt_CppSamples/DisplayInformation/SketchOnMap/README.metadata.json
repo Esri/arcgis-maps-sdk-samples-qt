@@ -27,8 +27,8 @@
         "SketchEditor"
     ],
     "snippets": [
-        "SketchOnMap.cpp",
-        "SketchOnMap.h",
+        "GeometryEditorOnMap.cpp",
+        "GeometryEditorOnMap.h",
         "SketchEditorButton.qml",
         "SketchOnMap.qml"
     ],

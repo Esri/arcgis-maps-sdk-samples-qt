@@ -11,7 +11,7 @@
 // See the License for the specific language governing permissions and
 // limitations under the License.
 
-#include "SketchOnMap.h"
+#include "GeometryEditorOnMap.h"
 #include "ArcGISRuntimeEnvironment.h"
 
 #include <QDir>
@@ -28,7 +28,7 @@ int main(int argc, char *argv[])
   qputenv("QSG_RHI_BACKEND", "opengl");
 
   QGuiApplication app(argc, argv);
-  app.setApplicationName(QStringLiteral("SketchOnMap - C++"));
+  app.setApplicationName(QStringLiteral("GeometryEditor Sample - C++"));
 
   // Use of Esri location services, including basemaps and geocoding,
   // requires authentication using either an ArcGIS identity or an API Key.
@@ -37,7 +37,7 @@ int main(int argc, char *argv[])
   // 2. API key: A permanent key that gives your application access to Esri
   //    location services. Visit your ArcGIS Developers Dashboard create a new
   //    API keys or access an existing API key.
-  const QString apiKey = QString("");
+  const QString apiKey = QString("AAPKc56d587fc6774b2fb4d866c50b227bdeHgve6W4_2bXsjC6IkMHLmB0P5uyhjnrPmA42Ce3qm2IQbqWz2aLlaFFUAvwcxpjt");
   if (apiKey.isEmpty())
   {
       qWarning() << "Use of Esri location services, including basemaps, requires" <<
@@ -49,7 +49,7 @@ int main(int argc, char *argv[])
   }
 
   // Initialize the sample
-  SketchOnMap::init();
+  GeometryEditorOnMap::init();
 
   // Initialize application view
   QQmlApplicationEngine engine;

@@ -25,21 +25,21 @@ CONFIG += c++17
 QT += opengl qml quick
 
 TEMPLATE = app
-TARGET = SketchOnMap
+TARGET = GeometryEditorOnMap
 
-ARCGIS_RUNTIME_VERSION = 200.1.0
+ARCGIS_RUNTIME_VERSION = 200.0.0
 include($$PWD/arcgisruntime.pri)
 
 #-------------------------------------------------------------------------------
 
 HEADERS += \
-    SketchOnMap.h
+  GeometryEditorOnMap.h
 
 SOURCES += \
-    main.cpp \
-    SketchOnMap.cpp
+    GeometryEditorOnMap.cpp \
+    main.cpp
 
-RESOURCES += SketchOnMap.qrc
+RESOURCES += GeometryEditorOnMap.qrc
 
 #-------------------------------------------------------------------------------
 
