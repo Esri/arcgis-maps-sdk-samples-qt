@@ -30,7 +30,7 @@ include($$PWD/arcgisruntime.pri)
 TEMPLATE = app
 TARGET = AddFeaturesFeatureService
 
-ARCGIS_RUNTIME_VERSION = 200.1.0
+ARCGIS_RUNTIME_VERSION = 200.0.0
 include($$PWD/arcgisruntime.pri)
 
 #-------------------------------------------------------------------------------
