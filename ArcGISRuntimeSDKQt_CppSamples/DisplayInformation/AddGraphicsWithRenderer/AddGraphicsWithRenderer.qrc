@@ -5,6 +5,7 @@
         <file>AddGraphicsWithRenderer.qml</file>
         <file>AddGraphicsWithRenderer.cpp</file>
         <file>AddGraphicsWithRenderer.h</file>
+        <file>main.qml</file>
         <file>README.md</file>
     </qresource>
 </RCC>

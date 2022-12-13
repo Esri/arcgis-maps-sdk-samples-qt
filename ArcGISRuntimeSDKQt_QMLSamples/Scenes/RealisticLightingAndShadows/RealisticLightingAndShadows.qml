@@ -32,7 +32,7 @@ Rectangle {
         sunTime: "2018-08-10T08:30"
 
         Component.onCompleted: {
-            // Set the focus on MapView to initially enable keyboard navigation
+            // Set the focus on SceneView to initially enable keyboard navigation
             forceActiveFocus();
             setViewpointCameraAndSeconds(camera, 0);
         }

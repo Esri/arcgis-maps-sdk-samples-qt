@@ -203,7 +203,6 @@ Item {
         visible: model.busy
     }
 
-    // Declare the C++ instance which creates the scene etc. and supply the view
     ConfigureSubnetworkTraceSample {
         id: model
 

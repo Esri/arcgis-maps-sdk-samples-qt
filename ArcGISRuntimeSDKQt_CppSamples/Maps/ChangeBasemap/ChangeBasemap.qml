@@ -49,7 +49,7 @@ Item {
         onMapChanged: basemapGallery.setGeoModelFromGeoView(view);
     }
 
-    // Declare the C++ instance which creates the scene etc. and supply the view
+    // Declare the C++ instance which creates the map etc. and supply the view
     ChangeBasemapSample {
         id: model
         mapView: view

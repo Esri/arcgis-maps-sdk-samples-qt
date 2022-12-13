@@ -1,6 +1,6 @@
 // [WriteFile Name=BasicSceneView, Category=Scenes]
 // [Legal]
-// Copyright 2016 Esri.
+// Copyright 2022 Esri.
 
 // Licensed under the Apache License, Version 2.0 (the "License");
 // you may not use this file except in compliance with the License.
@@ -20,51 +20,53 @@
 
 #include "BasicSceneView.h"
 
+#include "ArcGISTiledElevationSource.h"
+#include "Camera.h"
+#include "ElevationSourceListModel.h"
+#include "MapTypes.h"
 #include "Scene.h"
 #include "SceneQuickView.h"
-#include "Basemap.h"
-#include "ArcGISTiledElevationSource.h"
-#include "MapTypes.h"
 #include "Surface.h"
-#include "ElevationSourceListModel.h"
-#include "Camera.h"
 
 using namespace Esri::ArcGISRuntime;
 
-BasicSceneView::BasicSceneView(QQuickItem* parent) :
-  QQuickItem(parent)
+BasicSceneView::BasicSceneView(QObject* parent /* = nullptr */):
+  QObject(parent),
+  m_scene(new Scene(BasemapStyle::ArcGISImagery, this))
 {
+  //! [create a new elevation source]
+  // create a new elevation source from Terrain3D REST service
+  ArcGISTiledElevationSource* elevationSource = new ArcGISTiledElevationSource(
+        QUrl("https://elevation3d.arcgis.com/arcgis/rest/services/WorldElevation3D/Terrain3D/ImageServer"), this);
+
+  // add the elevation source to the scene to display elevation
+  m_scene->baseSurface()->elevationSources()->append(elevationSource);
+  //! [create a new elevation source]
+
 }
 
 BasicSceneView::~BasicSceneView() = default;
 
 void BasicSceneView::init()
 {
+  // Register classes for QML
   qmlRegisterType<SceneQuickView>("Esri.Samples", 1, 0, "SceneView");
-  qmlRegisterType<BasicSceneView>("Esri.Samples", 1, 0, "BasicSceneSample");
+  qmlRegisterType<BasicSceneView>("Esri.Samples", 1, 0, "BasicSceneViewSample");
 }
 
-void BasicSceneView::componentComplete()
+SceneQuickView* BasicSceneView::sceneView() const
 {
-  QQuickItem::componentComplete();
+  return m_sceneView;
+}
 
-  // find QML SceneView component
-  m_sceneView = findChild<SceneQuickView*>("sceneView");
+// Set the view (created in QML)
+void BasicSceneView::setSceneView(SceneQuickView* sceneView)
+{
+  if (!sceneView || sceneView == m_sceneView)
+    return;
 
-  // Create a new basemap instance
-  Basemap* basemap = new Basemap(BasemapStyle::ArcGISImagery, this);
-
-  // Create a new scene instance
-  m_scene = new Scene(basemap, this);
-
-  // set scene on the scene view
+  m_sceneView = sceneView;
   m_sceneView->setArcGISScene(m_scene);
-
-  //! [create a new elevation source]
-  ArcGISTiledElevationSource* elevationSource = new ArcGISTiledElevationSource(QUrl("https://elevation3d.arcgis.com/arcgis/rest/services/WorldElevation3D/Terrain3D/ImageServer"), this);
-  // add the elevation source to the scene to display elevation
-  m_scene->baseSurface()->elevationSources()->append(elevationSource);
-  //! [create a new elevation source]
 
   //! [create a camera]
   // create a camera
@@ -79,5 +81,7 @@ void BasicSceneView::componentComplete()
   // set the viewpoint
   m_sceneView->setViewpointCameraAndWait(camera);
   //! [create a camera]
+
+  emit sceneViewChanged();
 }
 

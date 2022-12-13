@@ -27,7 +27,7 @@ Item {
         anchors.fill: parent
 
         Component.onCompleted: {
-            // Set and keep the focus on SceneView to enable keyboard navigation
+            // Set and keep the focus on MapView to enable keyboard navigation
             forceActiveFocus();
         }
 
@@ -62,7 +62,7 @@ Item {
         }
     }
 
-    // Declare the C++ instance which creates the scene etc. and supply the view
+    // Declare the C++ instance which creates the map etc. and supply the view
     DisplayRouteLayerSample {
         id: model
         mapView: view

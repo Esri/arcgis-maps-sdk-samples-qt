@@ -22,7 +22,7 @@ mac {
 CONFIG += c++17
 
 # additional modules are pulled in via arcgisruntime.pri
-QT += qml quick
+QT += opengl qml quick
 
 # NOTE: As of Qt 6.2, QTextToSpeech is not supported. Instances of this class have been commented out for compatibility, but remain for reference
 # QT += texttospeech

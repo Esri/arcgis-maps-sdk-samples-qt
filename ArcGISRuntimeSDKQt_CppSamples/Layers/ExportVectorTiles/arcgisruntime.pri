@@ -14,7 +14,7 @@
 #-------------------------------------------------
 
 contains(QMAKE_HOST.os, Windows):{
-  iniPath = $$(ALLUSERSPROFILE)\EsriRuntimeQt\ArcGIS Runtime SDK for Qt $${ARCGIS_RUNTIME_VERSION}.ini
+  iniPath = $$(ALLUSERSPROFILE)\\EsriRuntimeQt\\ArcGIS Runtime SDK for Qt $${ARCGIS_RUNTIME_VERSION}.ini
 }
 else {
   userHome = $$system(echo $HOME)

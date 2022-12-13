@@ -1,6 +1,6 @@
 // [WriteFile Name=AddGraphicsWithRenderer, Category=DisplayInformation]
 // [Legal]
-// Copyright 2016 Esri.
+// Copyright 2022 Esri.
 
 // Licensed under the Apache License, Version 2.0 (the "License");
 // you may not use this file except in compliance with the License.
@@ -20,36 +20,37 @@
 
 #include "AddGraphicsWithRenderer.h"
 
+#include "AngularUnit.h"
 #include "CubicBezierSegment.h"
 #include "EllipticArcSegment.h"
 #include "GeodesicEllipseParameters.h"
 #include "GeometryEngine.h"
+#include "Graphic.h"
+#include "GraphicListModel.h"
+#include "GraphicsOverlay.h"
+#include "GraphicsOverlayListModel.h"
+#include "LinearUnit.h"
 #include "Map.h"
 #include "MapQuickView.h"
+#include "MapTypes.h"
+#include "Part.h"
+#include "PartCollection.h"
+#include "Point.h"
+#include "Polygon.h"
 #include "PolygonBuilder.h"
 #include "SimpleFillSymbol.h"
 #include "SimpleLineSymbol.h"
 #include "SimpleMarkerSymbol.h"
-#include "SimpleRenderer.h"
-#include "MapTypes.h"
 #include "SimpleMarkerSymbol.h"
-#include "SymbolTypes.h"
-#include "AngularUnit.h"
-#include "LinearUnit.h"
-#include "GraphicListModel.h"
-#include "Graphic.h"
-#include "GraphicsOverlayListModel.h"
-#include "Part.h"
-#include "Point.h"
-#include "PartCollection.h"
+#include "SimpleRenderer.h"
 #include "SpatialReference.h"
-#include "Polygon.h"
-#include "GraphicsOverlay.h"
+#include "SymbolTypes.h"
 
 using namespace Esri::ArcGISRuntime;
 
-AddGraphicsWithRenderer::AddGraphicsWithRenderer(QQuickItem* parent) :
-  QQuickItem(parent)
+AddGraphicsWithRenderer::AddGraphicsWithRenderer(QObject* parent /* = nullptr */):
+  QObject(parent),
+  m_map(new Map(BasemapStyle::ArcGISTopographic, this))
 {
 }
 
@@ -57,21 +58,26 @@ AddGraphicsWithRenderer::~AddGraphicsWithRenderer() = default;
 
 void AddGraphicsWithRenderer::init()
 {
+  // Register the map view for QML
   qmlRegisterType<MapQuickView>("Esri.Samples", 1, 0, "MapView");
   qmlRegisterType<AddGraphicsWithRenderer>("Esri.Samples", 1, 0, "AddGraphicsWithRendererSample");
 }
 
-void AddGraphicsWithRenderer::componentComplete()
+MapQuickView* AddGraphicsWithRenderer::mapView() const
 {
-  QQuickItem::componentComplete();
+  return m_mapView;
+}
 
-  // find QML MapView component
-  m_mapView = findChild<MapQuickView*>("mapView");
+// Set the view (created in QML)
+void AddGraphicsWithRenderer::setMapView(MapQuickView* mapView)
+{
+  if (!mapView || mapView == m_mapView)
+    return;
 
-  // Create a map using the topo basemap
-  m_map = new Map(BasemapStyle::ArcGISTopographic, this);
-  // set map on the map view
+  m_mapView = mapView;
   m_mapView->setMap(m_map);
+
+  emit mapViewChanged();
 
   addGraphicsOverlays();
 }
@@ -79,14 +85,21 @@ void AddGraphicsWithRenderer::componentComplete()
 void AddGraphicsWithRenderer::addGraphicsOverlays()
 {
   addPointGraphic();
-
   addLineGraphic();
-
   addPolygonGraphic();
-
   addCurveGraphic();
-
   addEllipseGraphic();
+}
+
+void AddGraphicsWithRenderer::createGraphicsOverlayWithGraphicAndSymbol(Esri::ArcGISRuntime::Graphic* graphic, Esri::ArcGISRuntime::Symbol* symbol)
+{
+  GraphicsOverlay* graphicOverlay = new GraphicsOverlay(this);
+  // set the renderer of the overlay to be the symbol
+  graphicOverlay->setRenderer(new SimpleRenderer(symbol, this));
+  // add the graphic to the overlay
+  graphicOverlay->graphics()->append(graphic);
+  // add the overlay to the mapview
+  m_mapView->graphicsOverlays()->append(graphicOverlay);
 }
 
 void AddGraphicsWithRenderer::addPointGraphic()
@@ -158,17 +171,6 @@ void AddGraphicsWithRenderer::addEllipseGraphic()
   SimpleFillSymbol* ellipseSymbol = new SimpleFillSymbol(SimpleFillSymbolStyle::Solid, QColor(125, 0, 125), this);
 
   createGraphicsOverlayWithGraphicAndSymbol(new Graphic(ellipsePolygon, this), ellipseSymbol);
-}
-
-void AddGraphicsWithRenderer::createGraphicsOverlayWithGraphicAndSymbol(Graphic* graphic, Symbol* symbol)
-{
-  GraphicsOverlay* graphicOverlay = new GraphicsOverlay(this);
-  // set the renderer of the overlay to be the symbol
-  graphicOverlay->setRenderer(new SimpleRenderer(symbol, this));
-  // add the graphic to the overlay
-  graphicOverlay->graphics()->append(graphic);
-  // add the overlay to the mapview
-  m_mapView->graphicsOverlays()->append(graphicOverlay);
 }
 
 Geometry AddGraphicsWithRenderer::createHeart()

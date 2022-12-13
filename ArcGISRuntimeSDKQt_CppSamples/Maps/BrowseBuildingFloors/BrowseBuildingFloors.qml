@@ -26,7 +26,7 @@ Item {
         anchors.fill: parent
     }
 
-    // Declare the C++ instance which creates the scene etc. and supply the view
+    // Declare the C++ instance which creates the map etc. and supply the view
     BrowseBuildingFloorsSample {
         id: model
         mapView: view
