@@ -154,9 +154,7 @@ void GeometryEditorOnMap::stopGeometryEditor(bool saveGeometry)
     return;
   }
 
-  // To save the sketch, create a graphic with the sketch's geometry before stopping the sketchEditor
-  // TODO could use the geometry returned from stop
-  Geometry editedGeometry = m_geometryEditor->geometry();
+  // save the geometry
   Symbol* geometrySymbol = nullptr;
 
   switch (m_geometryEditor->creationMode())
@@ -181,10 +179,10 @@ void GeometryEditorOnMap::stopGeometryEditor(bool saveGeometry)
     return;
   }
 
-  Graphic* sketchGraphic = new Graphic(editedGeometry, geometrySymbol, this);
-  m_graphicsOverlay->graphics()->append(sketchGraphic);
+  Geometry editedGeometry = m_geometryEditor->stop();
+  Graphic* graphic = new Graphic(editedGeometry, geometrySymbol, this);
+  m_graphicsOverlay->graphics()->append(graphic);
 
-  m_geometryEditor->stop();
   emit geometryEditorStartedChanged();
 }
 
@@ -216,9 +214,6 @@ bool GeometryEditorOnMap::canDeleteSelection() const
 {
   if (m_geometryEditor && m_geometryEditor->selection())
     return m_geometryEditor->selection()->canDelete();
-
-  if (m_configuration && m_configuration->interactionMode() == GeometryEditorInteractionMode::InteractionEdit)
-    return true;
 
   return false;
 }

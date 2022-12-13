@@ -55,8 +55,7 @@ Item {
         anchors.fill: parent
         acceptedButtons: Qt.RightButton
 
-        enabled: model.canDeleteSelection
-
+        enabled: model.canDeleteSelection || model.canUndo || model.canRedo
         onClicked: {
             contextMenu.popup()
         }
@@ -65,9 +64,24 @@ Item {
             id: contextMenu
             width: actionComponent.width
             Action {
-                id: actionComponent
+                enabled: model.canDeleteSelection
+                id: deleteAction
                 text: "Delete selection"
                 onTriggered: model.deleteSelection();
+            }
+
+            Action {
+                enabled: model.canUndo
+                id: undoAction
+                text: "Undo"
+                onTriggered: model.undo();
+            }
+
+            Action {
+                enabled: model.canRedo
+                id: redoAction
+                text: "Redo"
+                onTriggered: model.redo();
             }
         }
     }
