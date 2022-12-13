@@ -15,7 +15,7 @@
 
 TEMPLATE = app
 
-QT += qml quick positioning sensors
+QT += opengl qml quick positioning sensors
 
 CONFIG += c++17
 
