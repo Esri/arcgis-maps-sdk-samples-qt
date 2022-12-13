@@ -2,11 +2,11 @@
     "category": "Features",
     "dataItems": [
         {
-            "itemId": "d9f8ce6f6ac84b90a665a861d71a5d0a",
+            "itemId": "6c0a9459c43046d49abfb2eb89474038",
             "path": "~/ArcGIS/Runtime/Data/vtpk/LosAngeles.vtpk"
         },
         {
-            "itemId": "2b0f9e17105847809dfeb04e3cad69e0",
+            "itemId": "cb1b20748a9f4d128dad8a87244e3e37",
             "path": "~/ArcGIS/Runtime/Data/geodatabase/LA_Trails.geodatabase"
         }
     ],

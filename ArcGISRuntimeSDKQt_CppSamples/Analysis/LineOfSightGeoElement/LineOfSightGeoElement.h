@@ -17,18 +17,17 @@
 #ifndef LineOfSightGeoElement_H
 #define LineOfSightGeoElement_H
 
-namespace Esri
-{
-namespace ArcGISRuntime
+namespace Esri::ArcGISRuntime
 {
 class Scene;
 class SceneQuickView;
 class Graphic;
 }
-}
 
 #include <QObject>
 #include <QTimer>
+
+Q_MOC_INCLUDE("SceneQuickView.h")
 
 class LineOfSightGeoElement : public QObject
 {

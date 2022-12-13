@@ -28,9 +28,20 @@
 #include "MapQuickView.h"
 #include "PictureMarkerSymbol.h"
 #include "SimpleRenderer.h"
+#include "MapTypes.h"
+#include "TaskWatcher.h"
+#include "GraphicsOverlayListModel.h"
+#include "GraphicListModel.h"
+#include "AttributeListModel.h"
+#include "ReverseGeocodeParameters.h"
+#include "GeocodeResult.h"
+#include "Point.h"
+#include "SpatialReference.h"
+#include "Envelope.h"
 
 #include <QDir>
 #include <QUrl>
+#include <QUuid>
 
 using namespace Esri::ArcGISRuntime;
 
@@ -69,7 +80,7 @@ void ReverseGeocodeOnline::getAddress()
   connect(m_mapView, &MapQuickView::mouseClicked, this, [this](QMouseEvent& e)
   {
     e.accept();
-    const Point clickedLocation = m_mapView->screenToLocation(e.x(), e.y());
+    const Point clickedLocation = m_mapView->screenToLocation(e.pos().x(), e.pos().y());
     ReverseGeocodeParameters reverseGeocodeParameters;
     reverseGeocodeParameters.setOutputSpatialReference(m_mapView->spatialReference());
     m_locatorTask->reverseGeocodeWithParameters(clickedLocation, reverseGeocodeParameters);

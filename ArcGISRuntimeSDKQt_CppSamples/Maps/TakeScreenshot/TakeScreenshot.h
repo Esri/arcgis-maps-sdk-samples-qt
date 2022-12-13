@@ -17,13 +17,10 @@
 #ifndef TAKESCREENSHOT_H
 #define TAKESCREENSHOT_H
 
-namespace Esri
-{
-namespace ArcGISRuntime
+namespace Esri::ArcGISRuntime
 {
 class Map;
 class MapQuickView;
-}
 }
 
 class MapImageProvider;

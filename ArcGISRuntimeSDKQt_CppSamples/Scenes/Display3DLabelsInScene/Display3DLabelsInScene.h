@@ -17,17 +17,16 @@
 #ifndef DISPLAY3DLABELSINSCENE_H
 #define DISPLAY3DLABELSINSCENE_H
 
-namespace Esri
-{
-namespace ArcGISRuntime
+namespace Esri::ArcGISRuntime
 {
 class Scene;
 class SceneQuickView;
 class FeatureLayer;
 }
-}
 
 #include <QObject>
+
+Q_MOC_INCLUDE("SceneQuickView.h")
 
 class Display3DLabelsInScene : public QObject
 {

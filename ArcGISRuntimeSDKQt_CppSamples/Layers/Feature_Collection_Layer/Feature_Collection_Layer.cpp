@@ -31,15 +31,20 @@
 #include "FeatureCollectionTable.h"
 #include "Field.h"
 #include "Point.h"
-#include "Polygon.h"
 #include "PolygonBuilder.h"
-#include "Polyline.h"
 #include "PolylineBuilder.h"
 #include "SpatialReference.h"
 #include "SimpleRenderer.h"
 #include "SimpleMarkerSymbol.h"
 #include "SimpleFillSymbol.h"
 #include "SimpleLineSymbol.h"
+#include "MapTypes.h"
+#include "MapViewTypes.h"
+#include "SymbolTypes.h"
+#include "TaskWatcher.h"
+#include "LayerListModel.h"
+#include "FeatureCollectionTableListModel.h"
+#include "AttributeListModel.h"
 
 using namespace Esri::ArcGISRuntime;
 

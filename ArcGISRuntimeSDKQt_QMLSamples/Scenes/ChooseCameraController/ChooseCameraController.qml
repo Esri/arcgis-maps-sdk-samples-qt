@@ -14,18 +14,22 @@
 // limitations under the License.
 // [Legal]
 
-import QtQuick 2.6
-import Esri.ArcGISRuntime 100.15
-import Esri.ArcGISExtras 1.1
-import QtQuick.Controls 2.2
-import QtQuick.Layouts 1.1
+import QtQuick
+import Esri.ArcGISRuntime
+import Esri.ArcGISExtras
+import QtQuick.Controls
+import QtQuick.Layouts
 
 Rectangle {
     clip: true
     width: 800
     height: 600
 
-    readonly property url dataPath: System.userHomePath +  "/ArcGIS/Runtime/Data/3D"
+    readonly property url dataPath: {
+        Qt.platform.os === "ios" ?
+                    System.writableLocationUrl(System.StandardPathsDocumentsLocation) + "/ArcGIS/Runtime/Data/3D" :
+                    System.writableLocationUrl(System.StandardPathsHomeLocation) + "/ArcGIS/Runtime/Data/3D"
+    }
     readonly property real longitude: -109.929589
     readonly property real latitude: 38.43500
     readonly property real distance: 5000

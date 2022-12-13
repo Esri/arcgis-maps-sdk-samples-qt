@@ -30,18 +30,30 @@
 #include "GeometryEngine.h"
 #include "PolylineBuilder.h"
 #include "PartCollection.h"
+#include "MapTypes.h"
+#include "LayerListModel.h"
+#include "TaskWatcher.h"
+#include "IdentifyLayerResult.h"
+#include "GeoElement.h"
+#include "Feature.h"
+#include "ImmutablePartCollection.h"
+#include "ImmutablePart.h"
+#include "AttributeListModel.h"
+#include "ProximityResult.h"
+#include "Part.h"
+#include "Viewpoint.h"
+#include "Polyline.h"
+#include "SpatialReference.h"
 
 // Qt headers
 #include <QString>
 #include <QFile>
 #include <QtCore/qglobal.h>
 #include <QTimer>
+#include <QUuid>
 
 #include <memory>
-
-#ifdef Q_OS_IOS
 #include <QStandardPaths>
-#endif // Q_OS_IOS
 
 using namespace Esri::ArcGISRuntime;
 
@@ -52,12 +64,10 @@ QString defaultDataPath()
 {
   QString dataPath;
 
-#ifdef Q_OS_ANDROID
-  dataPath = "/sdcard";
-#elif defined Q_OS_IOS
+#ifdef Q_OS_IOS
   dataPath = QStandardPaths::writableLocation(QStandardPaths::DocumentsLocation);
 #else
-  dataPath = QDir::homePath();
+  dataPath = QStandardPaths::writableLocation(QStandardPaths::HomeLocation);
 #endif
 
   return dataPath;
@@ -153,20 +163,20 @@ void EditFeaturesWithFeatureLinkedAnnotation::onGeodatabaseDoneLoading(Error err
   m_map->operationalLayers()->append(m_parcelLinesAnnotationLayer);
 }
 
-void EditFeaturesWithFeatureLinkedAnnotation::onMouseClicked(QMouseEvent mouseEvent)
+void EditFeaturesWithFeatureLinkedAnnotation::onMouseClicked(QMouseEvent& mouseEvent)
 {
   clearSelection();
 
   if (m_selectedFeature)
   {
     // move feature to clicked locaiton if already selected
-    const Point clickedPoint = m_mapView->screenToLocation(mouseEvent.x(), mouseEvent.y());
+    const Point clickedPoint = m_mapView->screenToLocation(mouseEvent.pos().x(), mouseEvent.pos().y());
     moveFeature(clickedPoint);
   }
   else
   {
     // identify and select feature
-    m_mapView->identifyLayers(mouseEvent.x(), mouseEvent.y(), 10, false);
+    m_mapView->identifyLayers(mouseEvent.pos().x(), mouseEvent.pos().y(), 10, false);
   }
 }
 
@@ -194,7 +204,7 @@ void EditFeaturesWithFeatureLinkedAnnotation::onIdentifyLayersCompleted(QUuid, c
 
         if (selectedFeatureGeomType == GeometryType::Polyline)
         {
-          const Geometry geom = m_selectedFeature->geometry();
+          const Polyline geom = geometry_cast<Polyline>(m_selectedFeature->geometry());
           const PolylineBuilder polylineBuilder(geom);
 
           // if the selected feature is a polyline with any part containing more than one segment
@@ -246,7 +256,7 @@ void EditFeaturesWithFeatureLinkedAnnotation::moveFeature(Point mapPoint)
   {
     // get nearest vertex to the map point on the selected polyline
     const ProximityResult nearestVertex = GeometryEngine::nearestVertex(geom, projectedMapPoint);
-    const PolylineBuilder polylineBuilder(geom);
+    const PolylineBuilder polylineBuilder(geometry_cast<Polyline>(geom));
 
     // get part of polyline nearest to map point
     Part* part = polylineBuilder.parts()->part(nearestVertex.partIndex());

@@ -19,16 +19,18 @@ mac {
 
 #-------------------------------------------------------------------------------
 
-CONFIG += c++14
+CONFIG += c++17
 
 # additional modules are pulled in via arcgisruntime.pri
-QT += qml quick
-QT += texttospeech
+QT += opengl qml quick
+
+# NOTE: As of Qt 6.2, QTextToSpeech is not supported. Instances of this class have been commented out for compatibility, but remain for reference
+# QT += texttospeech
 
 TEMPLATE = app
 TARGET = NavigateARouteWithRerouting
 
-ARCGIS_RUNTIME_VERSION = 100.15.0
+ARCGIS_RUNTIME_VERSION = 200.1.0
 include($$PWD/arcgisruntime.pri)
 
 #-------------------------------------------------------------------------------

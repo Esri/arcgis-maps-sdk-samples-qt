@@ -27,6 +27,17 @@
 #include "QueryParameters.h"
 #include "SimpleRenderer.h"
 #include "SimpleLineSymbol.h"
+#include "Error.h"
+#include "MapTypes.h"
+#include "SymbolTypes.h"
+#include "TaskWatcher.h"
+#include "LayerListModel.h"
+#include "GeodatabaseTypes.h"
+#include "CoreTypes.h"
+#include "SpatialReference.h"
+#include "Envelope.h"
+#include "Viewpoint.h"
+#include "Polygon.h"
 
 using namespace Esri::ArcGISRuntime;
 

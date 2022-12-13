@@ -1,6 +1,6 @@
 // [WriteFile Name=Buffer, Category=Geometry]
 // [Legal]
-// Copyright 2018 Esri.
+// Copyright 2022 Esri.
 
 // Licensed under the Apache License, Version 2.0 (the "License");
 // you may not use this file except in compliance with the License.
@@ -14,25 +14,27 @@
 // limitations under the License.
 // [Legal]
 
-import QtQuick 2.6
-import QtQuick.Controls 2.2
-import Esri.Samples 1.0
+import QtQuick
+import QtQuick.Controls
+import Esri.Samples
 
-BufferSample {
-    id: rootRectangle
-    clip: true
-    width: 800
-    height: 600
+Item {
 
     // add a mapView component
     MapView {
+        id: view
         anchors.fill: parent
-        objectName: "mapView"
 
         Component.onCompleted: {
-            // Set the focus on MapView to initially enable keyboard navigation
+            // Set and keep the focus on MapView to enable keyboard navigation
             forceActiveFocus();
         }
+    }
+
+    // Declare the C++ instance which creates the map etc. and supply the view
+    BufferSample {
+        id: model
+        mapView: view
     }
 
     // display a control pane to change size
@@ -67,7 +69,7 @@ BufferSample {
             validator: IntValidator { bottom: 1; top: 10000 }
             text: "1000"
             selectByMouse: true
-            onTextChanged: bufferSize = Number(text);
+            onTextChanged: model.bufferSize = Number(text);
         }
 
         Row {
@@ -106,7 +108,7 @@ BufferSample {
             anchors.horizontalCenter: parent.horizontalCenter
             text: "Clear"
             onClicked: {
-                clear();
+                model.clear();
             }
         }
     }

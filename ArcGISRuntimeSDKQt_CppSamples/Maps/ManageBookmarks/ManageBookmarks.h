@@ -17,17 +17,13 @@
 #ifndef MANAGE_BOOKMARKS_H
 #define MANAGE_BOOKMARKS_H
 
-namespace Esri
+namespace Esri::ArcGISRuntime
 {
-  namespace ArcGISRuntime
-  {
-    class Map;
-    class MapQuickView;
-    class Viewpoint;
-  }
+  class Map;
+  class MapQuickView;
+  class Viewpoint;
 }
 
-class QStringList;
 class QString;
 
 #include <QAbstractListModel>

@@ -17,11 +17,10 @@
 #ifndef GORENDERERS_H
 #define GORENDERERS_H
 
-namespace Esri {
-namespace ArcGISRuntime {
+namespace Esri::ArcGISRuntime 
+{
     class Map;
     class MapGraphicsView;
-  }
 }
 
 #include <QWidget>

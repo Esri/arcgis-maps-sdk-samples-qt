@@ -16,7 +16,7 @@ Pan or zoom across the map view to browse through the tourist attractions featur
 
 1. Declare a `MapView` containing a `Map` with the `ArcGISTopographic` basemap style.
 2. Add a `FeatureLayer` to the `Map` using a `ServiceFeatureTable`.
-3. Declare a `Rectangle` to use as a border and add an `OverviewMap` component from the ArcGIS Runtime Toolkit.
+3. Declare a `Rectangle` to use as a border and add an `OverviewMap` component from the ArcGIS Maps SDK for Qt Toolkit.
 4. Assign the `MapView` to the `geoView` property of the `OverviewMap` to connect the `MapView` with the `OverviewMap`.
 
 ## Relevant API

@@ -17,9 +17,7 @@
 #ifndef LOCAL_SERVER_GEOPROCESSING_H
 #define LOCAL_SERVER_GEOPROCESSING_H
 
-namespace Esri
-{
-namespace ArcGISRuntime
+namespace Esri::ArcGISRuntime
 {
 class Map;
 class MapQuickView;
@@ -27,7 +25,6 @@ class LocalServer;
 class LocalGeoprocessingService;
 class ArcGISTiledLayer;
 class GeoprocessingTask;
-}
 }
 
 class QTemporaryDir;

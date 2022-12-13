@@ -17,9 +17,7 @@
 #ifndef DISPLAYSUBTYPEFEATURELAYER_H
 #define DISPLAYSUBTYPEFEATURELAYER_H
 
-namespace Esri
-{
-namespace ArcGISRuntime
+namespace Esri::ArcGISRuntime
 {
 class FeatureLayer;
 class Credential;
@@ -31,10 +29,12 @@ class SimpleRenderer;
 class SubtypeFeatureLayer;
 class SubtypeSublayer;
 }
-}
 
 #include <QObject>
+
 #include "SubtypeSublayer.h"
+
+Q_MOC_INCLUDE("MapQuickView.h")
 
 class DisplaySubtypeFeatureLayer : public QObject
 {

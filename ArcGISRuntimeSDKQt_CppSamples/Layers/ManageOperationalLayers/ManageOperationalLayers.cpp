@@ -24,6 +24,8 @@
 #include "MapQuickView.h"
 #include "ArcGISMapImageLayer.h"
 #include "DrawOrderLayerListModel.h"
+#include "MapTypes.h"
+#include "LayerListModel.h"
 
 using namespace Esri::ArcGISRuntime;
 

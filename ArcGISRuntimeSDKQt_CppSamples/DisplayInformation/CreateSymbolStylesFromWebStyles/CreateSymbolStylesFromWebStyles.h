@@ -17,23 +17,25 @@
 #ifndef CREATESYMBOLSTYLESFROMWEBSTYLES_H
 #define CREATESYMBOLSTYLESFROMWEBSTYLES_H
 
-namespace Esri
+namespace Esri::ArcGISRuntime
 {
-namespace ArcGISRuntime
-{
-class FeatureLayer;
-class Map;
-class MapQuickView;
-class UniqueValue;
-class UniqueValueRenderer;
-class LegendInfo;
-class SymbolStyle;
+  class FeatureLayer;
+  class Map;
+  class MapQuickView;
+  class UniqueValue;
+  class UniqueValueRenderer;
+  class LegendInfo;
+  class SymbolStyle;
 }
-}
+
+class QAbstractListModel;
 
 #include <QObject>
 #include <QMap>
 #include <QAbstractListModel>
+
+Q_MOC_INCLUDE("MapQuickView.h")
+Q_MOC_INCLUDE("QAbstractListModel")
 
 class CreateSymbolStylesFromWebStyles : public QObject
 {

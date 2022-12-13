@@ -17,21 +17,20 @@
 #ifndef SHOWDEVICELOCATIONUSINGINDOORPOSITIONING_H
 #define SHOWDEVICELOCATIONUSINGINDOORPOSITIONING_H
 
-namespace Esri
-{
-namespace ArcGISRuntime
+namespace Esri::ArcGISRuntime
 {
 class ArcGISFeatureTable;
 class FeatureTable;
 class Map;
 class MapQuickView;
 }
-}
 
 #include "Location.h"
 
 #include <QObject>
 #include <QMap>
+
+Q_MOC_INCLUDE("MapQuickView.h")
 
 class ShowDeviceLocationUsingIndoorPositioning : public QObject
 {

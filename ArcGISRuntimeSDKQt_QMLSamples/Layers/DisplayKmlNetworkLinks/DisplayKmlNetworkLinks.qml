@@ -14,11 +14,11 @@
 // limitations under the License.
 // [Legal]
 
-import QtQuick 2.6
-import QtQuick.Controls 2.2
-import QtQuick.Layouts 1.3
-import QtQuick.Window 2.3
-import Esri.ArcGISRuntime 100.15
+import QtQuick
+import QtQuick.Controls
+import QtQuick.Layouts
+import QtQuick.Window
+import Esri.ArcGISRuntime
 
 Rectangle {
     id: rootRectangle
@@ -59,7 +59,7 @@ Rectangle {
                 dataset:  KmlDataset {
                     url: "https://www.arcgis.com/sharing/rest/content/items/600748d4464442288f6db8a4ba27dc95/data"
 
-                    onKmlNetworkLinkMessageReceived: {
+                    onKmlNetworkLinkMessageReceived: (link, message) => {
                         currentKmlNetworkMessage = message;
                     }
                 }

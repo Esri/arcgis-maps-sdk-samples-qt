@@ -17,15 +17,12 @@
 #ifndef LISTTRANSFORMATIONS_H
 #define LISTTRANSFORMATIONS_H
 
-namespace Esri
-{
-namespace ArcGISRuntime
+namespace Esri::ArcGISRuntime
 {
 class Map;
 class MapQuickView;
 class Graphic;
 class DatumTransformation;
-}
 }
 
 #include "Point.h"

@@ -3,12 +3,9 @@
 
 #include <QAbstractListModel>
 
-namespace Esri
-{
-namespace ArcGISRuntime
+namespace Esri::ArcGISRuntime
 {
 class Feature;
-}
 }
 
 class FeatureListModel : public QAbstractListModel

@@ -11,19 +11,14 @@
 // See the License for the specific language governing permissions and
 // limitations under the License.
 
-import QtQuick 2.6
-import QtQuick.Controls 2.2
-import QtQuick.Layouts 1.3
-import QtGraphicalEffects 1.0
+import QtQuick
+import QtQuick.Controls
+import QtQuick.Layouts
 
 Rectangle {
-    RadialGradient {
+    Rectangle {
         anchors.fill: parent
-        opacity: 0.5
-        gradient: Gradient {
-            GradientStop { position: 0.0; color: "white" }
-            GradientStop { position: 0.7; color: "black" }
-        }
+        color: "#60000000"
     }
 
     signal saveMapClicked(var title, var tags, var description)

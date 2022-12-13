@@ -14,10 +14,10 @@
 // limitations under the License.
 // [Legal]
 
-import QtQuick 2.6
-import QtQuick.Controls 2.2
-import QtQuick.Layouts 1.3
-import Esri.ArcGISRuntime 100.15
+import QtQuick
+import QtQuick.Controls
+import QtQuick.Layouts
+import Esri.ArcGISRuntime
 
 Rectangle {
     id: rootRectangle
@@ -108,7 +108,7 @@ Rectangle {
             name: "sectionGeotrigger"
         }
 
-        onGeotriggerNotification: {
+        onGeotriggerNotification: (geotriggerNotificationInfo) => {
 
             // the message property contains the evaluated messageExpression of the FenceGeotrigger
             const sectionName = geotriggerNotificationInfo.message;
@@ -155,7 +155,7 @@ Rectangle {
             name: "poiGeotrigger"
         }
 
-        onGeotriggerNotification: {
+        onGeotriggerNotification: (geotriggerNotificationInfo) => {
             const poiName = geotriggerNotificationInfo.message;
             const index = poisInRange.indexOf(poiName);
 

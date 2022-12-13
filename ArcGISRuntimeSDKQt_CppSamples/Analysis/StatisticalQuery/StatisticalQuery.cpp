@@ -21,8 +21,8 @@
 #include "StatisticalQuery.h"
 
 #include "Map.h"
+#include "MapTypes.h"
 #include "MapQuickView.h"
-#include "ArcGISVectorTiledLayer.h"
 #include "FeatureLayer.h"
 #include "ServiceFeatureTable.h"
 #include "StatisticalQuery.h"
@@ -31,7 +31,14 @@
 #include "StatisticRecord.h"
 #include "StatisticRecordIterator.h"
 #include "Viewpoint.h"
+#include "Error.h"
+#include "LayerListModel.h"
+#include "CoreTypes.h"
+#include "StatisticsQueryResult.h"
+#include "TaskWatcher.h"
+#include "Geometry.h"
 
+#include <QUuid>
 #include <memory>
 #include <QUrl>
 

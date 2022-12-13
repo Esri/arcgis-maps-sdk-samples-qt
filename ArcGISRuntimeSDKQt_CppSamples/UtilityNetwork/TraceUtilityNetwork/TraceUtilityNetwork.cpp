@@ -20,7 +20,6 @@
 
 #include "TraceUtilityNetwork.h"
 
-#include "ArcGISFeatureListModel.h"
 #include "FeatureLayer.h"
 #include "GeometryEngine.h"
 #include "Map.h"
@@ -28,7 +27,6 @@
 #include "ServiceFeatureTable.h"
 #include "ServiceGeodatabase.h"
 #include "SimpleMarkerSymbol.h"
-#include "SimpleRenderer.h"
 #include "UniqueValueRenderer.h"
 #include "UtilityAssetGroup.h"
 #include "UtilityAssetType.h"
@@ -44,6 +42,28 @@
 #include "UtilityTier.h"
 #include "UtilityTraceParameters.h"
 #include "UtilityTraceResultListModel.h"
+#include "MapTypes.h"
+#include "SymbolTypes.h"
+#include "TaskWatcher.h"
+#include "Error.h"
+#include "GraphicsOverlayListModel.h"
+#include "GraphicsOverlay.h"
+#include "GraphicListModel.h"
+#include "Graphic.h"
+#include "AttributeListModel.h"
+#include "LayerListModel.h"
+#include "Credential.h"
+#include "UniqueValueListModel.h"
+#include "IdentifyLayerResult.h"
+#include "ArcGISFeature.h"
+#include "QueryParameters.h"
+#include "UniqueValue.h"
+#include "FeatureQueryResult.h"
+#include "SimpleLineSymbol.h"
+#include "SpatialReference.h"
+#include "Envelope.h"
+#include "Viewpoint.h"
+#include "Polyline.h"
 
 using namespace Esri::ArcGISRuntime;
 
@@ -161,8 +181,8 @@ void TraceUtilityNetwork::connectSignals()
 
     constexpr double tolerance = 10.0;
     constexpr bool returnPopups = false;
-    m_clickPoint = m_mapView->screenToLocation(mouseEvent.x(), mouseEvent.y());
-    m_mapView->identifyLayers(mouseEvent.x(), mouseEvent.y(), tolerance, returnPopups);
+    m_clickPoint = m_mapView->screenToLocation(mouseEvent.pos().x(), mouseEvent.pos().y());
+    m_mapView->identifyLayers(mouseEvent.pos().x(), mouseEvent.pos().y(), tolerance, returnPopups);
   });
 
   // handle the identify results
@@ -360,7 +380,7 @@ void TraceUtilityNetwork::onIdentifyLayersCompleted(QUuid, const QList<IdentifyL
     // Compute how far tapped location is along the edge feature.
     if (m_feature->geometry().geometryType() == GeometryType::Polyline)
     {
-      const Polyline line = GeometryEngine::removeZ(m_feature->geometry());
+      const Polyline line = geometry_cast<Polyline>(GeometryEngine::removeZ(m_feature->geometry()));
       // Set how far the element is along the edge.
       element->setFractionAlongEdge(GeometryEngine::fractionAlong(line, m_clickPoint, -1));
       m_fractionAlongEdge = element->fractionAlongEdge();

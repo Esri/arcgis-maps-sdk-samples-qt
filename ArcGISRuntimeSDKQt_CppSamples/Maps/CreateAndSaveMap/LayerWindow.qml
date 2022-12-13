@@ -11,19 +11,14 @@
 // See the License for the specific language governing permissions and
 // limitations under the License.
 
-import QtQuick 2.6
-import QtQuick.Layouts 1.3
-import QtQuick.Controls 2.2
-import QtGraphicalEffects 1.0
+import QtQuick
+import QtQuick.Layouts
+import QtQuick.Controls
 
 Rectangle {
-    RadialGradient {
+    Rectangle {
         anchors.fill: parent
-        opacity: 0.5
-        gradient: Gradient {
-            GradientStop { position: 0.0; color: "white" }
-            GradientStop { position: 0.7; color: "black" }
-        }
+        color: "#60000000"
     }
 
     signal createMapSelected(var basemap, var layerList)
@@ -63,7 +58,7 @@ Rectangle {
             ComboBox {
                 id: basemapComboBox
                 property int modelWidth: 0
-                Layout.minimumWidth: modelWidth + leftPadding + rightPadding + indicator.width
+                Layout.minimumWidth: modelWidth + leftPadding + rightPadding
                 Layout.margins: 5
                 Layout.fillWidth: true
                 model: ["Streets", "Imagery", "Topographic", "Oceans"]

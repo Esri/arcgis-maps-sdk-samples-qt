@@ -14,10 +14,10 @@
 // limitations under the License.
 // [Legal]
 
-import QtQuick 2.6
-import QtQuick.Controls 2.2
-import QtQuick.Layouts 1.3
-import Esri.ArcGISRuntime 100.15
+import QtQuick
+import QtQuick.Controls
+import QtQuick.Layouts
+import Esri.ArcGISRuntime
 
 Rectangle {
     id: rootRectangle
@@ -156,7 +156,7 @@ Rectangle {
         }
 
         property int modelWidth: 0
-        width: modelWidth + rightPadding + leftPadding + indicator.width
+        width: modelWidth + rightPadding + leftPadding
         model: map.bookmarks
 
         Connections {
@@ -207,7 +207,7 @@ Rectangle {
 
         MouseArea {
             anchors.fill: parent
-            onClicked: mouse.accepted = true;
+            onClicked: mouse => mouse.accepted = true;
         }
 
         GridLayout {

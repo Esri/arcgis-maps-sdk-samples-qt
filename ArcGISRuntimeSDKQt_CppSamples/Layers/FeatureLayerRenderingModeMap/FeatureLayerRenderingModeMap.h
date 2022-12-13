@@ -17,13 +17,10 @@
 #ifndef FEATURELAYERRENDERINGMODEMAP_H
 #define FEATURELAYERRENDERINGMODEMAP_H
 
-namespace Esri
-{
-namespace ArcGISRuntime
+namespace Esri::ArcGISRuntime
 {
 class MapQuickView;
 class Map;
-}
 }
 
 class QTimer;

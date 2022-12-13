@@ -20,18 +20,17 @@
 #include "Envelope.h"
 #include "TaskWatcher.h"
 
-namespace Esri
-{
-namespace ArcGISRuntime
+namespace Esri::ArcGISRuntime
 {
 class FeatureLayer;
 class Map;
 class MapQuickView;
 class OgcFeatureCollectionTable;
 }
-}
 
 #include <QObject>
+
+Q_MOC_INCLUDE("MapQuickView.h")
 
 class QueryOGCAPICQLFilters : public QObject
 {

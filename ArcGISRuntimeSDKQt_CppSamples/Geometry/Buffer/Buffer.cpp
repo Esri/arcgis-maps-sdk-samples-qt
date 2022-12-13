@@ -1,6 +1,6 @@
 // [WriteFile Name=Buffer, Category=Geometry]
 // [Legal]
-// Copyright 2018 Esri.
+// Copyright 2022 Esri.
 
 // Licensed under the Apache License, Version 2.0 (the "License");
 // you may not use this file except in compliance with the License.
@@ -20,24 +20,34 @@
 
 #include "Buffer.h"
 
+#include "GeometryEngine.h"
+#include "Graphic.h"
+#include "GraphicListModel.h"
+#include "GraphicsOverlay.h"
+#include "GraphicsOverlayListModel.h"
+#include "LinearUnit.h"
 #include "Map.h"
 #include "MapQuickView.h"
-#include "Envelope.h"
-#include "GeometryEngine.h"
-#include "GraphicsOverlay.h"
-#include "Graphic.h"
+#include "MapTypes.h"
+#include "Point.h"
+#include "Polygon.h"
 #include "SimpleFillSymbol.h"
 #include "SimpleLineSymbol.h"
 #include "SimpleMarkerSymbol.h"
 #include "SimpleRenderer.h"
+#include "SymbolTypes.h"
+
 #include <cmath>
 
 using namespace Esri::ArcGISRuntime;
 
-Buffer::Buffer(QQuickItem* parent /* = nullptr */):
-  QQuickItem(parent)
+Buffer::Buffer(QObject* parent /* = nullptr */):
+  QObject(parent),
+  m_map(new Map(BasemapStyle::ArcGISTopographic, this))
 {
 }
+
+Buffer::~Buffer() = default;
 
 void Buffer::init()
 {
@@ -46,15 +56,19 @@ void Buffer::init()
   qmlRegisterType<Buffer>("Esri.Samples", 1, 0, "BufferSample");
 }
 
-void Buffer::componentComplete()
+MapQuickView* Buffer::mapView() const
 {
-  QQuickItem::componentComplete();
+  return m_mapView;
+}
 
-  // find QML MapView component
-  m_mapView = findChild<MapQuickView*>("mapView");
+// Set the view (created in QML)
+void Buffer::setMapView(MapQuickView* mapView)
+{
+  if (!mapView || mapView == m_mapView)
+    return;
 
-  // Create a map using the topographic basemap
-  m_map = new Map(BasemapStyle::ArcGISTopographic, this);
+  m_mapView = mapView;
+  m_mapView->setMap(m_map);
 
   // add a graphics overlay for the geodesic buffer
   m_graphicsOverlayGeodesic = new GraphicsOverlay(this);
@@ -67,9 +81,6 @@ void Buffer::componentComplete()
   // add a graphics overlay for the mouse click
   m_graphicsOverlayPoints = new GraphicsOverlay(this);
   m_mapView->graphicsOverlays()->append(m_graphicsOverlayPoints);
-
-  // Set map to map view
-  m_mapView->setMap(m_map);
 
   // create symbol for the geodesic buffer result
   SimpleLineSymbol* outlineGeodesic = new SimpleLineSymbol(SimpleLineSymbolStyle::Solid, QColor("red"), 2.0f /*width*/, this);
@@ -87,13 +98,15 @@ void Buffer::componentComplete()
 
   // connect to mouse clicked signal
   connect(m_mapView, &MapQuickView::mouseClicked, this, &Buffer::onMouseClicked);
+
+  emit mapViewChanged();
 }
 
 // handle the mouse click - perform a buffer on click
 void Buffer::onMouseClicked(QMouseEvent& mouse)
 {
   // get the map point from the mouse click
-  const Point point = m_mapView->screenToLocation(mouse.x(), mouse.y());
+  const Point point = m_mapView->screenToLocation(mouse.pos().x(), mouse.pos().y());
 
   // Create a variable to be the buffer size in meters. There are 1609.34 meters in one mile.
   const int bufferInMeters = bufferSize() * 1609.34;
@@ -106,7 +119,7 @@ void Buffer::onMouseClicked(QMouseEvent& mouse)
   m_graphicsOverlayPlanar->graphics()->append(resultGraphicPlanar);
 
   // Create a geodesic buffer graphic around the input location at the specified distance.
-  const Geometry bufferGeodesic = GeometryEngine::bufferGeodetic(point, bufferInMeters, LinearUnitId::Meters, NAN, GeodeticCurveType::Geodesic);
+  const Geometry bufferGeodesic = GeometryEngine::bufferGeodetic(point, bufferInMeters, LinearUnit(LinearUnitId::Meters), NAN, GeodeticCurveType::Geodesic);
 
   // Add the result geodesic buffer as a graphic
   Graphic* resultGraphicGeodesic = new Graphic(bufferGeodesic, this);

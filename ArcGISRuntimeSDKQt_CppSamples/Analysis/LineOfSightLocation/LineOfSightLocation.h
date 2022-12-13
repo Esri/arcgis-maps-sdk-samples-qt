@@ -17,14 +17,11 @@
 #ifndef LINEOFSIGHTLOCATION_H
 #define LINEOFSIGHTLOCATION_H
 
-namespace Esri
-{
-namespace ArcGISRuntime
+namespace Esri::ArcGISRuntime
 {
 class SceneQuickView;
 class AnalysisOverlay;
 class LocationLineOfSight;
-}
 }
 
 #include <QQuickItem>

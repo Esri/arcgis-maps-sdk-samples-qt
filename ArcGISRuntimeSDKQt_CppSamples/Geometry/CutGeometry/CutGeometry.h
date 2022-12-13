@@ -17,15 +17,12 @@
 #ifndef CUTGEOMETRY_H
 #define CUTGEOMETRY_H
 
-namespace Esri
-{
-namespace ArcGISRuntime
+namespace Esri::ArcGISRuntime
 {
 class Map;
 class MapQuickView;
 class Graphic;
 class GraphicsOverlay;
-}
 }
 
 #include <QQuickItem>
@@ -43,6 +40,7 @@ public:
   void componentComplete() override;
   static void init();
   Q_INVOKABLE void cutPolygon();
+  Q_INVOKABLE void resetPolygon();
 
 private:
   Esri::ArcGISRuntime::Map* m_map = nullptr;

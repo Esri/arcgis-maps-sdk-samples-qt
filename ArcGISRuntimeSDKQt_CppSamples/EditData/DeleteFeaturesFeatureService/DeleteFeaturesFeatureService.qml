@@ -14,10 +14,10 @@
 // limitations under the License.
 // [Legal]
 
-import QtQuick 2.6
-import QtQuick.Controls 2.2
-import Esri.Samples 1.0
-import Esri.ArcGISRuntime.Toolkit 100.15
+import QtQuick
+import QtQuick.Controls
+import Esri.Samples
+import Esri.ArcGISRuntime.Toolkit
 
 DeleteFeaturesFeatureServiceSample {
     id: deleteFeaturesSample
@@ -38,11 +38,13 @@ DeleteFeaturesFeatureServiceSample {
         Callout {
             id: callout
             calloutData: mapView.calloutData
-            borderColor: "lightgrey"
-            borderWidth : 1
+            background: Rectangle {
+                border.color: "lightgrey"
+                border.width : 1
+            }
             accessoryButtonType: "Custom"
             customImageUrl: "qrc:/Samples/EditData/DeleteFeaturesFeatureService/ic_menu_trash_light.png"
-            leaderPosition: leaderPositionEnum.Automatic
+            leaderPosition: Callout.LeaderPosition.Automatic
             onAccessoryButtonClicked: {
                 if (callout.visible)
                     callout.dismiss();

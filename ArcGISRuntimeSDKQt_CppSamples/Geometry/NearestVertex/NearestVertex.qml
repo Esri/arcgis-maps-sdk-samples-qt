@@ -14,9 +14,9 @@
 // limitations under the License.
 // [Legal]
 
-import QtQuick 2.6
-import QtQuick.Controls 2.2
-import Esri.Samples 1.0
+import QtQuick
+import QtQuick.Controls
+import Esri.Samples
 
 Item {
 
@@ -31,7 +31,7 @@ Item {
         }
     }
 
-    // Declare the C++ instance which creates the scene etc. and supply the view
+    // Declare the C++ instance which creates the map etc. and supply the view
     NearestVertexSample {
         id: model
         mapView: view
@@ -47,7 +47,7 @@ Item {
         border.width: 2
         Label {
             id: distancesLabel
-            text: "Vertex distance: " + model.vertexDistance + " km\nCoordinate distance: " + model.coordinateDistance + " km";
+            text: "Vertex distance: " + model.vertexDistance + " mi\nCoordinate distance: " + model.coordinateDistance + " mi";
             font.pointSize: 14
             padding: 5
         }

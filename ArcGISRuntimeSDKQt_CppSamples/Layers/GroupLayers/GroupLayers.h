@@ -17,19 +17,19 @@
 #ifndef GROUPLAYERS_H
 #define GROUPLAYERS_H
 
-namespace Esri
-{
-namespace ArcGISRuntime
+namespace Esri::ArcGISRuntime
 {
 class Scene;
 class SceneQuickView;
 class LayerListModel;
 }
-}
 
 class QAbstractListModel;
 
 #include <QObject>
+
+Q_MOC_INCLUDE("SceneQuickView.h")
+Q_MOC_INCLUDE("LayerListModel.h")
 
 class GroupLayers : public QObject
 {

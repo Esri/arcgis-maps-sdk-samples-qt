@@ -17,24 +17,27 @@
 #ifndef %{IncludeGuard}
 #define %{IncludeGuard}
 
-namespace Esri
+namespace Esri::ArcGISRuntime
 {
-  namespace ArcGISRuntime
-  {
-    @if %{UseFeatureLayer}
-    class FeatureLayer;
-    @endif
-    @if %{ThreeDSample}
-    class Scene;
-    class SceneQuickView;
-    @else
-    class Map;
-    class MapQuickView;
-    @endif
-  }
+@if %{UseFeatureLayer}
+  class FeatureLayer;
+@endif
+@if %{ThreeDSample}
+  class Scene;
+  class SceneQuickView;
+@else
+  class Map;
+  class MapQuickView;
+@endif
 }
 
 #include <QObject>
+
+@if %{ThreeDSample}
+  Q_MOC_INCLUDE("SceneQuickView.h");
+@else
+  Q_MOC_INCLUDE("MapQuickView.h");
+@endif
 
 class %{SampleName} : public QObject
 {
@@ -48,7 +51,7 @@ class %{SampleName} : public QObject
 
 public:
   explicit %{SampleName}(QObject* parent = nullptr);
-  ~%{SampleName}();
+  ~%{SampleName}() override;
 
   static void init();
 

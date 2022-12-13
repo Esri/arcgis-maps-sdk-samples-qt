@@ -17,12 +17,9 @@
 #ifndef DISPLAYKMLNETWORKLINKS_H
 #define DISPLAYKMLNETWORKLINKS_H
 
-namespace Esri
-{
-namespace ArcGISRuntime
+namespace Esri::ArcGISRuntime
 {
 class SceneQuickView;
-}
 }
 
 #include <QQuickItem>

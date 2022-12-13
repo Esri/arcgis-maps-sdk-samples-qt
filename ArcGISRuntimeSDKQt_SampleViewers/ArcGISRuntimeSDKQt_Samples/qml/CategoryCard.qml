@@ -13,11 +13,10 @@
 // limitations under the License.
 // [Legal]
 
-import QtQuick 2.5
-import QtQuick.Controls 2.2
-import QtGraphicalEffects 1.0
-import Esri.ArcGISRuntimeSamples 1.0
-import Telemetry 1.0
+import QtQuick
+import QtQuick.Controls
+import Esri.ArcGISRuntimeSamples
+import Telemetry
 
 Component {
     id: categoryDelegate
@@ -55,7 +54,7 @@ Component {
                     width: 30
                     height: width
                     radius: 30
-                    color: "#333333"
+                    color: "#eeeeee"
 
                     Image {
                         id: thumbnailImage
@@ -65,12 +64,6 @@ Component {
                         source: thumbnailUrl
                         clip: true
                         visible: drawer.visible
-                    }
-
-                    ColorOverlay {
-                        anchors.fill: thumbnailImage
-                        source: thumbnailImage
-                        color: "white"
                     }
                 }
 

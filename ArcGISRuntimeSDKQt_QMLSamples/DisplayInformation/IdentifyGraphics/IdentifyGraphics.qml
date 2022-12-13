@@ -14,9 +14,9 @@
 // limitations under the License.
 // [Legal]
 
-import QtQuick 2.6
-import QtQuick.Controls 2.2
-import Esri.ArcGISRuntime 100.15
+import QtQuick
+import QtQuick.Controls
+import Esri.ArcGISRuntime
 
 Rectangle {
     width: 800
@@ -55,7 +55,7 @@ Rectangle {
 
         //! [identify graphics api snippet]
         // Signal handler for mouse click event on the map view
-        onMouseClicked: {
+        onMouseClicked: mouse => {
             const tolerance = 22;
             const returnPopupsOnly = false;
             const maximumResults = 1000;

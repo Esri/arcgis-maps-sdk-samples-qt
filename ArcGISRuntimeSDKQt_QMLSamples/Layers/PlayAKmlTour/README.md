@@ -6,7 +6,7 @@ Play tours in KML files.
 
 ## Use case
 
-KML, the file format used by Google Earth, supports creating tours, which can control the viewpoint of the scene, hide and show content, and play audio. Tours allow you to easily share tours of geographic locations, which can be augmented with rich multimedia. Runtime allows you to consume these tours using a simple API.
+KML, the file format used by Google Earth, supports creating tours, which can control the viewpoint of the scene, hide and show content, and play audio. Tours allow you to easily share tours of geographic locations, which can be augmented with rich multimedia. The ArcGIS Maps SDK for Qt allows you to consume these tours using a simple API.
 
 ## How to use the sample
 
@@ -21,14 +21,14 @@ The sample will load the KMZ file automatically. When a tour is found, the _Play
 
 ## Relevant API
 
-* KmlTourController
-* KmlTourController.tour
-* KmlTourController.play()
-* KmlTourController.pause()
-* KmlTourController.reset()
 * KmlTour
 * KmlTour.tourStatus
 * KmlTour.tourStatusChanged
+* KmlTourController
+* KmlTourController.pause()
+* KmlTourController.play()
+* KmlTourController.reset()
+* KmlTourController.tour
 
 ## Offline data
 
@@ -40,7 +40,7 @@ Link | Local Location
 
 ## About the data
 
-This sample uses a custom tour created by a member of the ArcGIS Runtime SDK samples team. When you play the tour, you'll see a narrated journey through some of Esri's offices.
+This sample uses a custom tour created by a member of the ArcGIS Maps SDK for Native Apps samples team. When you play the tour, you'll see a narrated journey through some of Esri's offices.
 
 ## Additional information
 

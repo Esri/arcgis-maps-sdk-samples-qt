@@ -14,10 +14,10 @@
 // limitations under the License.
 // [Legal]
 
-import QtQuick 2.6
-import QtQuick.Controls 2.2
-import Esri.ArcGISRuntime 100.15
-import Esri.ArcGISRuntime.Toolkit 100.15
+import QtQuick
+import QtQuick.Controls
+import Esri.ArcGISRuntime
+import Esri.ArcGISRuntime.Toolkit
 
 Rectangle {
     id: rootRectangle
@@ -42,7 +42,7 @@ Rectangle {
         }
 
         // identify layers on mouse click
-        onMouseClicked: {
+        onMouseClicked: mouse => {
             const screenX = mouse.x;
             const screenY = mouse.y;
             const tolerance = 12;

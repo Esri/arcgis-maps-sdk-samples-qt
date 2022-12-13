@@ -17,14 +17,11 @@
 #ifndef SHOWLABELSONLAYERS_H
 #define SHOWLABELSONLAYERS_H
 
-namespace Esri
-{
-namespace ArcGISRuntime
+namespace Esri::ArcGISRuntime
 {
 class Map;
 class MapQuickView;
 class LabelDefinition;
-}
 }
 
 #include <QQuickItem>

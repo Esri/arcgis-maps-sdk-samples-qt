@@ -19,6 +19,8 @@
 #include "MapGraphicsView.h"
 #include "Basemap.h"
 #include "Envelope.h"
+#include "MapTypes.h"
+#include "Viewpoint.h"
 #include "SpatialReference.h"
 #include <QVBoxLayout>
 

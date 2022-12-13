@@ -19,9 +19,7 @@
 
 #include "Point.h"
 
-namespace Esri
-{
-namespace ArcGISRuntime
+namespace Esri::ArcGISRuntime
 {
 class ArcGISFeature;
 class CalloutData;
@@ -29,9 +27,10 @@ class Feature;
 class Map;
 class MapQuickView;
 }
-}
 
 #include <QObject>
+
+Q_MOC_INCLUDE("MapQuickView.h")
 
 class QueryFeaturesWithArcadeExpression : public QObject
 {

@@ -30,6 +30,11 @@
 #include "PolygonBuilder.h"
 #include "SimpleLineSymbol.h"
 #include "SimpleFillSymbol.h"
+#include "MapTypes.h"
+#include "GraphicsOverlayListModel.h"
+#include "TaskWatcher.h"
+#include "SymbolTypes.h"
+#include "GraphicListModel.h"
 
 using namespace Esri::ArcGISRuntime;
 
@@ -73,7 +78,8 @@ void CutGeometry::componentComplete()
 void CutGeometry::cutPolygon()
 {
   // perform the cut
-  QList<Geometry> geoms = GeometryEngine::cut(m_lakeSuperiorGraphic->geometry(), m_borderGraphic->geometry());
+  QList<Geometry> geoms = GeometryEngine::cut(m_lakeSuperiorGraphic->geometry(),
+                                              geometry_cast<Polyline>(m_borderGraphic->geometry()));
 
   // create graphics for the U.S. side
   SimpleLineSymbol* outline = new SimpleLineSymbol(SimpleLineSymbolStyle::Solid, QColor("blue"), 1.0f, this);
@@ -87,6 +93,14 @@ void CutGeometry::cutPolygon()
   // add graphics
   m_overlay->graphics()->append(canadaSide);
   m_overlay->graphics()->append(usSide);
+}
+
+void CutGeometry::resetPolygon()
+{
+  m_overlay->graphics()->clear();
+
+  m_overlay->graphics()->append(m_lakeSuperiorGraphic);
+  m_overlay->graphics()->append(m_borderGraphic);
 }
 
 // Create the two baseline graphics
@@ -139,7 +153,7 @@ Polygon CutGeometry::createLakeSuperiorPolygon()
   polygonBuilder->addPoint(-10111283.079633, 5933406.315128);
   polygonBuilder->addPoint(-10214761.742852, 5888134.399970);
   polygonBuilder->addPoint(-10254374.668616, 5901877.659929);
-  return polygonBuilder->toGeometry();
+  return polygonBuilder->toPolygon();
 }
 
 // Create the U.S./Canada Border Polyline
@@ -153,5 +167,5 @@ Polyline CutGeometry::createBorderPolyline()
   polylineBuilder->addPoint(-9446115.050097, 5927209.572793);
   polylineBuilder->addPoint(-9430885.393759, 5876081.440801);
   polylineBuilder->addPoint(-9415655.737420, 5860851.784463);
-  return polylineBuilder->toGeometry();
+  return polylineBuilder->toPolyline();
 }

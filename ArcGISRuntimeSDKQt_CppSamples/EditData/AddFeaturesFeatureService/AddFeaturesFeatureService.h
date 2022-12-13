@@ -1,6 +1,6 @@
 // [WriteFile Name=AddFeaturesFeatureService, Category=EditData]
 // [Legal]
-// Copyright 2016 Esri.
+// Copyright 2022 Esri.
 
 // Licensed under the Apache License, Version 2.0 (the "License");
 // you may not use this file except in compliance with the License.
@@ -14,42 +14,45 @@
 // limitations under the License.
 // [Legal]
 
-#ifndef ADD_FEATURES_FEATURE_SERVICE_H
-#define ADD_FEATURES_FEATURE_SERVICE_H
+#ifndef ADDFEATURESFEATURESERVICE_H
+#define ADDFEATURESFEATURESERVICE_H
 
-namespace Esri
+namespace Esri::ArcGISRuntime
 {
-  namespace ArcGISRuntime
-  {
-    class Map;
-    class MapQuickView;
-    class FeatureLayer;
-    class ServiceFeatureTable;
-  }
+class FeatureLayer;
+class Map;
+class MapQuickView;
+class ServiceFeatureTable;
 }
 
-#include <QQuickItem>
+#include <QObject>
 
-class AddFeaturesFeatureService : public QQuickItem
+Q_MOC_INCLUDE("MapQuickView.h");
+
+class AddFeaturesFeatureService : public QObject
 {
   Q_OBJECT
 
+  Q_PROPERTY(Esri::ArcGISRuntime::MapQuickView* mapView READ mapView WRITE setMapView NOTIFY mapViewChanged)
+
 public:
-  explicit AddFeaturesFeatureService(QQuickItem* parent = nullptr);
+  explicit AddFeaturesFeatureService(QObject* parent = nullptr);
   ~AddFeaturesFeatureService() override;
 
-  void componentComplete() override;
   static void init();
 
-private:
-  void connectSignals();
+signals:
+  void mapViewChanged();
 
 private:
+  Esri::ArcGISRuntime::MapQuickView* mapView() const;
+  void setMapView(Esri::ArcGISRuntime::MapQuickView* mapView);
+  void connectSignals();
+
   Esri::ArcGISRuntime::Map* m_map = nullptr;
   Esri::ArcGISRuntime::MapQuickView* m_mapView = nullptr;
   Esri::ArcGISRuntime::FeatureLayer* m_featureLayer = nullptr;
   Esri::ArcGISRuntime::ServiceFeatureTable* m_featureTable = nullptr;
 };
 
-#endif // ADD_FEATURES_FEATURE_SERVICE_H
-
+#endif // ADDFEATURESFEATURESERVICE_H

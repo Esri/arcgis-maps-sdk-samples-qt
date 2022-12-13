@@ -14,13 +14,12 @@
 // limitations under the License.
 // [Legal]
 
-import QtQuick 2.6
-import QtQuick.Controls 2.2
-import Qt.labs.platform 1.0
-import QtGraphicalEffects 1.0
-import Esri.ArcGISExtras 1.1
-import Esri.ArcGISRuntime 100.15
-import Esri.ArcGISRuntime.Toolkit 100.15
+import QtQuick
+import QtQuick.Controls
+import Qt.labs.platform
+import Esri.ArcGISExtras
+import Esri.ArcGISRuntime
+import Esri.ArcGISRuntime.Toolkit
 
 Rectangle {
 
@@ -100,7 +99,7 @@ Rectangle {
             attachmentWindow.visible = false;
         }
 
-        onMouseClicked: {
+        onMouseClicked: mouse => {
             // reset to defaults
             featureLayer.clearSelection();
             if (callout.visible)
@@ -131,10 +130,12 @@ Rectangle {
 
         Callout {
             id: callout
-            borderColor: "lightgrey"
-            borderWidth: 1
+            background: Rectangle {
+                border.color: "lightgrey"
+                border.width: 1
+            }
             calloutData : parent.calloutData
-            leaderPosition: leaderPositionEnum.Automatic
+            leaderPosition: Callout.LeaderPosition.Automatic
             onAccessoryButtonClicked: {
                 attachmentWindow.visible = true;
             }
@@ -158,8 +159,8 @@ Rectangle {
         // accept mouse events so they do not propogate down to the map
         MouseArea {
             anchors.fill: parent
-            onClicked: mouse.accepted = true
-            onWheel: wheel.accepted = true
+            onClicked: mouse => mouse.accepted = true
+            onWheel: wheel => wheel.accepted = true
         }
 
         Rectangle {

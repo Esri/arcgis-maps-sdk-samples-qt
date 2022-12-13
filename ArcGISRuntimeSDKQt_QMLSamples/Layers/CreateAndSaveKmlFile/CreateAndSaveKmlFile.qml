@@ -14,17 +14,19 @@
 // limitations under the License.
 // [Legal]
 
-import QtQuick 2.6
-import QtQuick.Controls 2.12
-import Qt.labs.platform 1.1 as Dialogs
-import Esri.ArcGISRuntime 100.15
-import Esri.ArcGISExtras 1.1
+import QtQuick
+import QtQuick.Controls
+import QtQuick.Dialogs
+import Esri.ArcGISRuntime
+import Esri.ArcGISExtras
 
 Rectangle {
     id: rootRectangle
     clip: true
     width: 800
     height: 600
+
+    property url fileSavePath: ""
 
     MapView {
         id: mapView
@@ -71,7 +73,6 @@ Rectangle {
                 }
             }
         }
-
     }
 
     Button {
@@ -83,7 +84,8 @@ Rectangle {
         text: qsTr("Save kmz file")
 
         onClicked: {
-            fileDialog.open();
+            fileSavePath = System.temporaryFolder.url + "/KmlSampleFile_%1.kmz".arg((new Date().getTime() % 1000).toString());
+            kmlDocument.saveAs(fileSavePath);
         }
     }
 
@@ -110,31 +112,16 @@ Rectangle {
         visible: kmlDocument.saveStatus === Enums.TaskStatusInProgress
     }
 
-    Dialogs.FileDialog {
-        id: fileDialog
-        defaultSuffix: "kmz"
-        fileMode: Dialogs.FileDialog.SaveFile
-        nameFilters: ["Kml files (*.kmz *.kml)"]
-        onAccepted: {
-            // Write the KML document to the chosen path.
-            kmlDocument.saveAs(currentFile);
-            close();
-        }
-
-        onRejected: {
-            close();
-        }
-    }
-
     Dialog {
         id: saveCompleteDialog
         anchors.centerIn: parent
-        modal: true
+        width: parent.width * .8
         standardButtons: Dialog.Ok
-        Text {
-            id:textLabel
-            anchors.centerIn: parent
-            text: qsTr("Item saved.")
+        title: "Item saved to temporary location:"
+        Label {
+            text: fileSavePath
+            wrapMode: Text.Wrap
+            width: parent.width
         }
     }
 

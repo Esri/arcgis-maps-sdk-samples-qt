@@ -22,7 +22,6 @@
 
 #include "Map.h"
 #include "MapQuickView.h"
-#include "Basemap.h"
 #include "Viewpoint.h"
 #include "Envelope.h"
 #include "GeometryEngine.h"
@@ -31,6 +30,11 @@
 #include "Graphic.h"
 #include "GraphicsOverlay.h"
 #include "CalloutData.h"
+#include "MapTypes.h"
+#include "GraphicsOverlayListModel.h"
+#include "GraphicListModel.h"
+#include "SymbolTypes.h"
+#include "SpatialReference.h"
 
 using namespace Esri::ArcGISRuntime;
 
@@ -85,7 +89,7 @@ void ProjectGeometry::componentComplete()
 void ProjectGeometry::onMouseClicked(QMouseEvent& event)
 {
   // get the mouse click as a point
-  const Point originalPoint = m_mapView->screenToLocation(event.x(), event.y());
+  const Point originalPoint = m_mapView->screenToLocation(event.pos().x(), event.pos().y());
 
   // show the clicked location on the map with a graphic
   m_inputGraphic->setGeometry(originalPoint);
@@ -94,7 +98,7 @@ void ProjectGeometry::onMouseClicked(QMouseEvent& event)
   const SpatialReference spatialReference(4326);
 
   // project the web mercator point to WGS84
-  const Point projectedPoint = GeometryEngine::project(originalPoint, spatialReference);
+  const Point projectedPoint = geometry_cast<Point>(GeometryEngine::project(originalPoint, spatialReference));
 
   // update callout data
   m_calloutData->setLocation(originalPoint);

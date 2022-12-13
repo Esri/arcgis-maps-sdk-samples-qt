@@ -14,12 +14,12 @@
 // limitations under the License.
 // [Legal]
 
-import QtQuick 2.6
-import QtQuick.Controls 2.12
-import Esri.ArcGISRuntime 100.15
-import Esri.ArcGISExtras 1.1
-import Esri.ArcGISArToolkit 1.0
-import Esri.Samples 1.0
+import QtQuick
+import QtQuick.Controls
+import Esri.ArcGISRuntime
+import Esri.ArcGISExtras
+import Esri.ArcGISArToolkit
+import Esri.Samples
 
 Rectangle {
     id: rootRectangle
@@ -27,7 +27,11 @@ Rectangle {
     width: 800
     height: 600
 
-    readonly property url dataPath: System.userHomePath + "/ArcGIS/Runtime/Data/mspk"
+    readonly property url dataPath: {
+        Qt.platform.os === "ios" ?
+                    System.writableLocationUrl(System.StandardPathsDocumentsLocation) + "/ArcGIS/Runtime/Data/mspk" :
+                    System.writableLocationUrl(System.StandardPathsHomeLocation) + "/ArcGIS/Runtime/Data/mspk"
+    }
     readonly property double sceneWidth: 800.0
     readonly property double tableTopWidth: 1.0
     property var philadelphiaScene: null
@@ -53,7 +57,7 @@ Rectangle {
             forceActiveFocus();
         }
 
-        onMouseClicked: {
+        onMouseClicked: mouse => {
             if (mspk.loadStatus !== Enums.LoadStatusLoaded || !arcGISArView.tracking || !philadelphiaScene)
                 return;
 

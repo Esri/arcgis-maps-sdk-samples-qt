@@ -17,15 +17,12 @@
 #ifndef SHOWORGBASEMAPS_H
 #define SHOWORGBASEMAPS_H
 
-namespace Esri
+namespace Esri::ArcGISRuntime
 {
-  namespace ArcGISRuntime
-  {
-    class BasemapListModel;
-    class Map;
-    class MapQuickView;
-    class Portal;
-  }
+  class BasemapListModel;
+  class Map;
+  class MapQuickView;
+  class Portal;
 }
 
 #include <QAbstractListModel>

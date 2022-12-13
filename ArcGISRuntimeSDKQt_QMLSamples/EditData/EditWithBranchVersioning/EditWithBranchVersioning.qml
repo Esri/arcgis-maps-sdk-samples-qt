@@ -14,13 +14,12 @@
 // limitations under the License.
 // [Legal]
 
-import QtQuick 2.6
-import Esri.ArcGISRuntime 100.15
+import QtQuick
+import Esri.ArcGISRuntime
 
-import QtQuick.Controls 2.12
-import QtQuick.Layouts 1.12
-import QtGraphicalEffects 1.0
-import Esri.ArcGISRuntime.Toolkit 100.15
+import QtQuick.Controls
+import QtQuick.Layouts
+import Esri.ArcGISRuntime.Toolkit
 
 Rectangle {
     id: rootRectangle
@@ -53,7 +52,7 @@ Rectangle {
             callout.dismiss();
         }
 
-        onMouseClicked: {
+        onMouseClicked: mouse => {
             busyIndicator.visible = true;
             featureLayer.clearSelection();
 
@@ -97,10 +96,12 @@ Rectangle {
 
         Callout {
             id: callout
-            borderWidth: 1
-            borderColor: "lightgrey"
+            background: Rectangle {
+                border.width: 1
+                border.color: "lightgrey"
+            }
             calloutData: parent.calloutData
-            leaderPosition: leaderPositionEnum.Automatic
+            leaderPosition: Callout.LeaderPosition.Automatic
             onAccessoryButtonClicked: {
                 for (let i=0; i < featAttributes.length; i++) {
                     if (currentTypeDamage === featAttributes[i]) {
@@ -270,17 +271,10 @@ Rectangle {
         radius: 10
         visible: false
 
-        GaussianBlur {
-            anchors.fill: createVersionWindow
-            source: mapView
-            radius: 40
-            samples: 20
-        }
-
         MouseArea {
             anchors.fill: parent
-            onClicked: mouse.accepted = true;
-            onWheel: wheel.accepted = true;
+            onClicked: mouse => mouse.accepted = true;
+            onWheel: wheel => wheel.accepted = true;
         }
 
         ColumnLayout {
@@ -291,7 +285,7 @@ Rectangle {
                 placeholderText: qsTr("Name must be unique")
                 Layout.alignment: Qt.AlignHCenter
                 Layout.margins: 5
-                validator: RegExpValidator { regExp: /\w{0,50}/ }
+                validator: RegularExpressionValidator { regularExpression: /\w{0,50}/ }
             }
 
             ComboBox {
@@ -347,17 +341,10 @@ Rectangle {
         radius: 10
         visible: false
 
-        GaussianBlur {
-            anchors.fill: updateWindow
-            source: mapView
-            radius: 40
-            samples: 20
-        }
-
         MouseArea {
             anchors.fill: parent
-            onClicked: mouse.accepted = true;
-            onWheel: wheel.accepted = true;
+            onClicked: mouse => mouse.accepted = true;
+            onWheel: wheel => wheel.accepted = true;
         }
 
         GridLayout {
@@ -380,7 +367,7 @@ Rectangle {
             ComboBox {
                 id: typeDmgCombo
                 property int modelWidth: 0
-                Layout.minimumWidth: modelWidth + leftPadding + rightPadding + indicator.width
+                Layout.minimumWidth: modelWidth + leftPadding + rightPadding
                 Layout.margins: 5
                 Layout.fillWidth: true
                 model: featAttributes

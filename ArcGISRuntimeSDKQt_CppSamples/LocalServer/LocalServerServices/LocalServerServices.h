@@ -17,16 +17,13 @@
 #ifndef LOCAL_SERVER_SERVICES_H
 #define LOCAL_SERVER_SERVICES_H
 
-namespace Esri
+namespace Esri::ArcGISRuntime
 {
-  namespace ArcGISRuntime
-  {
-    class LocalServer;
-    class LocalMapService;
-    class LocalFeatureService;
-    class LocalGeoprocessingService;
-    class LocalService;
-  }
+  class LocalServer;
+  class LocalMapService;
+  class LocalFeatureService;
+  class LocalGeoprocessingService;
+  class LocalService;
 }
 
 class QTemporaryDir;

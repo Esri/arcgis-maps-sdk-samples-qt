@@ -13,11 +13,10 @@
 // limitations under the License.
 // [Legal]
 
-import QtGraphicalEffects 1.0
-import QtQuick 2.5
-import QtQuick.Controls 2.2
-import QtQuick.Controls.Material 2.3
-import Esri.ArcGISRuntimeSamples 1.0
+import QtQuick
+import QtQuick.Controls
+import QtQuick.Controls.Material
+import Esri.ArcGISRuntimeSamples
 
 Item {
     id: dialogComponent
@@ -28,14 +27,12 @@ Item {
     property string user: userName.text
     property string pw: password.text
 
-    RadialGradient {
+
+
+    Rectangle {
         id: overlay
         anchors.fill: parent
-        opacity: 0.7
-        gradient: Gradient {
-            GradientStop { position: 0.0; color: "lightgrey" }
-            GradientStop { position: 0.7; color: "black" }
-        }
+        color: "#60000000"
 
         MouseArea {
             anchors.fill: parent

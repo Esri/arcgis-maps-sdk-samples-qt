@@ -23,8 +23,11 @@
 #include "Map.h"
 #include "MapQuickView.h"
 #include "MapImageProvider.h"
+#include "MapTypes.h"
+#include "TaskWatcher.h"
 
 #include <QQmlContext>
+#include <QUuid>
 
 using namespace Esri::ArcGISRuntime;
 

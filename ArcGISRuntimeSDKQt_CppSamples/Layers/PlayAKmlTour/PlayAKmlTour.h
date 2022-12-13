@@ -17,9 +17,7 @@
 #ifndef PLAYAKMLTOUR_H
 #define PLAYAKMLTOUR_H
 
-namespace Esri
-{
-namespace ArcGISRuntime
+namespace Esri::ArcGISRuntime
 {
 class Scene;
 class SceneQuickView;
@@ -30,9 +28,10 @@ class KmlDataset;
 class KmlNode;
 class KmlNodeListModel;
 }
-}
 
 #include <QObject>
+
+Q_MOC_INCLUDE("SceneQuickView.h")
 
 class PlayAKmlTour : public QObject
 {

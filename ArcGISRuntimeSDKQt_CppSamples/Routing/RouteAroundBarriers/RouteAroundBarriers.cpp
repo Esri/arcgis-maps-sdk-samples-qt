@@ -37,7 +37,18 @@
 #include "SimpleRenderer.h"
 #include "Stop.h"
 #include "TextSymbol.h"
+#include "MapTypes.h"
+#include "SymbolTypes.h"
+#include "TaskWatcher.h"
+#include "Error.h"
+#include "GraphicsOverlayListModel.h"
+#include "GraphicListModel.h"
+#include "DirectionManeuverListModel.h"
+#include "Viewpoint.h"
+#include "Point.h"
+#include "Polyline.h"
 
+#include <QUuid>
 #include <QDir>
 
 using namespace Esri::ArcGISRuntime;
@@ -131,7 +142,7 @@ void RouteAroundBarriers::connectRouteSignals()
 
   connect(m_mapView, &MapQuickView::mouseClicked, this, [this](QMouseEvent& e)
   {
-    const Point clickedPoint = m_mapView->screenToLocation(e.x(), e.y());
+    const Point clickedPoint = m_mapView->screenToLocation(e.pos().x(), e.pos().y());
     if (m_addStops)
     {
       // add stop to list of stops

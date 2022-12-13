@@ -17,13 +17,10 @@
 #ifndef FEATURELAYERSHAPEFILE_H
 #define FEATURELAYERSHAPEFILE_H
 
-namespace Esri
-{
-namespace ArcGISRuntime
+namespace Esri::ArcGISRuntime
 {
 class Map;
 class MapQuickView;
-}
 }
 
 #include <QQuickItem>

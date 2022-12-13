@@ -17,16 +17,13 @@
 #ifndef READSYMBOLSFROMMOBILESTYLE_H
 #define READSYMBOLSFROMMOBILESTYLE_H
 
-namespace Esri
-{
-namespace ArcGISRuntime
+namespace Esri::ArcGISRuntime
 {
 class Map;
 class MapQuickView;
 class MultilayerPointSymbol;
 class SymbolStyle;
 class SymbolStyleSearchResultListModel;
-}
 }
 
 class SymbolImageProvider;
@@ -38,6 +35,9 @@ class QAbstractListModel;
 #include <QUrl>
 #include <QList>
 #include <QScopedPointer>
+
+Q_MOC_INCLUDE("MapQuickView.h")
+Q_MOC_INCLUDE("SymbolStyleSearchResultListModel.h")
 
 class ReadSymbolsFromMobileStyle : public QObject
 {

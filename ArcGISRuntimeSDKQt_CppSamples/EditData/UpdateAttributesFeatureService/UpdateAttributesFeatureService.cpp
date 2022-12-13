@@ -32,6 +32,17 @@
 #include "ArcGISFeature.h"
 #include "FeatureEditResult.h"
 #include "FeatureQueryResult.h"
+#include "MapViewTypes.h"
+#include "MapTypes.h"
+#include "LayerListModel.h"
+#include "TaskWatcher.h"
+#include "IdentifyLayerResult.h"
+#include "QueryParameters.h"
+#include "AttributeListModel.h"
+#include "FeatureIterator.h"
+#include "CalloutData.h"
+#include "Envelope.h"
+
 #include <QUrl>
 #include <QUuid>
 #include <QMouseEvent>
@@ -100,7 +111,7 @@ void UpdateAttributesFeatureService::connectSignals()
     emit hideWindow();
 
     // call identify on the map view
-    m_mapView->identifyLayer(m_featureLayer, mouseEvent.x(), mouseEvent.y(), 5, false, 1);
+    m_mapView->identifyLayer(m_featureLayer, mouseEvent.pos().x(), mouseEvent.pos().y(), 5, false, 1);
   });
 
   // connect to the viewpoint changed signal on the MapQuickView

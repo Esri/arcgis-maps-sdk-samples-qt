@@ -23,13 +23,19 @@
 #include "ArcGISTiledElevationSource.h"
 #include "Scene.h"
 #include "SceneQuickView.h"
-#include "ArcGISSceneLayer.h"
 #include "AnalysisOverlay.h"
 #include "Point.h"
 #include "Camera.h"
 #include "Viewpoint.h"
 #include "LocationViewshed.h"
 #include "IntegratedMeshLayer.h"
+#include "MapTypes.h"
+#include "Surface.h"
+#include "ElevationSourceListModel.h"
+#include "LayerListModel.h"
+#include "AnalysisOverlayListModel.h"
+#include "AnalysisListModel.h"
+#include "SpatialReference.h"
 
 using namespace Esri::ArcGISRuntime;
 

@@ -5,6 +5,7 @@
         <file>DisplayMap.qml</file>
 		<file>DisplayMap.h</file>
 		<file>DisplayMap.cpp</file>
+        <file>main.qml</file>
         <file>README.md</file>
     </qresource>
 </RCC>

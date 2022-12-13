@@ -14,9 +14,9 @@
 // limitations under the License.
 // [Legal]
 
-import Esri.ArcGISRuntime 100.15
-import QtQuick 2.6
-import QtQuick.Controls 2.2
+import Esri.ArcGISRuntime
+import QtQuick
+import QtQuick.Controls
 
 Rectangle {
     id: rootRectangle
@@ -71,7 +71,7 @@ Rectangle {
         }
 
         // When the mouse is clicked, convert mouse screen-position to position on surface, then invoke a query for the elevation of that position.
-        onMouseClicked: {
+        onMouseClicked: mouse => {
             lastQueriedSurfacePos = sceneView.screenToBaseSurface(mouse.x, mouse.y)
             elevationSurface.locationToElevation(lastQueriedSurfacePos)
         }

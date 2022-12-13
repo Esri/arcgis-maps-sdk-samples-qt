@@ -18,9 +18,9 @@ TEMPLATE = app
 # additional modules are pulled in via arcgisruntime.pri
 QT += opengl qml quick
 
-CONFIG += c++14
+CONFIG += c++17
 
-ARCGIS_RUNTIME_VERSION = 100.15.0
+ARCGIS_RUNTIME_VERSION = 200.1.0
 include($$PWD/arcgisruntime.pri)
 
 # path of the toolkit relative to the sample
@@ -30,6 +30,11 @@ exists($$TOOLKIT_PRI_PATH/uitools/toolkitqml.pri) {
     include($$TOOLKIT_PRI_PATH/uitools/toolkitqml.pri)
 } else {
     error(TOOLKIT_PRI_PATH is missing which is required to build this application.)
+}
+
+qtHaveModule(webenginequick) {
+  QT += webenginequick
+  DEFINES += QT_WEBVIEW_WEBENGINE_BACKEND
 }
 
 SOURCES += \

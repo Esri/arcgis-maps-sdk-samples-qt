@@ -20,8 +20,6 @@
 
 #include "EditWithBranchVersioning.h"
 
-#include "ArcGISFeatureServiceInfo.h"
-#include "AttributeListModel.h"
 #include "AuthenticationManager.h"
 #include "FeatureEditResult.h"
 #include "FeatureLayer.h"
@@ -33,6 +31,19 @@
 #include "ServiceGeodatabase.h"
 #include "ServiceVersionInfo.h"
 #include "ServiceVersionParameters.h"
+#include "MapTypes.h"
+#include "Credential.h"
+#include "TaskWatcher.h"
+#include "IdentifyLayerResult.h"
+#include "ArcGISFeature.h"
+#include "AttributeListModel.h"
+#include "CalloutData.h"
+#include "LayerListModel.h"
+#include "ServiceTypes.h"
+#include "Point.h"
+#include "Envelope.h"
+#include "Viewpoint.h"
+#include "Polyline.h"
 
 using namespace Esri::ArcGISRuntime;
 
@@ -119,13 +130,13 @@ void EditWithBranchVersioning::onMapDoneLoading(const Error& error)
         emit busyChanged();
         return;
       }
-      const Point clickedPoint = m_mapView->screenToLocation(mouseEvent.x(), mouseEvent.y());
+      const Point clickedPoint = m_mapView->screenToLocation(mouseEvent.pos().x(), mouseEvent.pos().y());
       moveFeature(clickedPoint);
     }
     else
     {
       // call identify on the map view
-      m_mapView->identifyLayer(m_featureLayer, mouseEvent.x(), mouseEvent.y(), 5, false, 1);
+      m_mapView->identifyLayer(m_featureLayer, mouseEvent.pos().x(), mouseEvent.pos().y(), 5, false, 1);
     }
   });
 
@@ -349,7 +360,7 @@ void EditWithBranchVersioning::moveFeature(const Point& mapPoint)
     clearSelectedFeature();
     return;
   }
-  const Polyline geom = m_selectedFeature->geometry();
+  const Polyline geom = geometry_cast<Polyline>(m_selectedFeature->geometry());
   m_selectedFeature->setGeometry(mapPoint);
 
   // update the selected feature with the new geometry

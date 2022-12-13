@@ -32,6 +32,24 @@
 #include "Graphic.h"
 #include "GraphicsOverlay.h"
 #include "GraphicListModel.h"
+#include "Error.h"
+#include "MapTypes.h"
+#include "GraphicsOverlayListModel.h"
+#include "GraphicListModel.h"
+#include "SymbolTypes.h"
+#include "TaskWatcher.h"
+#include "LayerListModel.h"
+#include "ArcGISSublayerListModel.h"
+#include "FeatureQueryResult.h"
+#include "FeatureIterator.h"
+#include "Feature.h"
+#include "SpatialReference.h"
+#include "Viewpoint.h"
+#include "Point.h"
+#include "ServiceFeatureTable.h"
+#include "Envelope.h"
+
+#include <QUuid>
 
 using namespace Esri::ArcGISRuntime;
 

@@ -6,7 +6,7 @@ Display a layer from a WFS service, requesting only features for the current ext
 
 ## Use case
 
-WFS is an open standard with functionality similar to ArcGIS feature services. Runtime support for WFS allows you to interoperate with open systems, which are often used in inter-agency efforts, like those for disaster relief.
+WFS is an open standard with functionality similar to ArcGIS feature services. The ArcGIS Maps SDK for Qt support for WFS allows you to interoperate with open systems, which are often used in inter-agency efforts, like those for disaster relief.
 
 ## How to use the sample
 

@@ -23,13 +23,15 @@
 #include "RasterElevationSource.h"
 #include "Scene.h"
 #include "SceneQuickView.h"
+#include "MapTypes.h"
+#include "Error.h"
+#include "Surface.h"
+#include "ElevationSourceListModel.h"
+#include "Camera.h"
 
-#include <QDir>
 #include <QUrl>
-
-#ifdef Q_OS_IOS
+#include <QFileInfo>
 #include <QStandardPaths>
-#endif // Q_OS_IOS
 
 using namespace Esri::ArcGISRuntime;
 
@@ -40,12 +42,10 @@ namespace
   {
     QString dataPath;
 
-    #ifdef Q_OS_ANDROID
-      dataPath = "/sdcard";
-    #elif defined Q_OS_IOS
+    #ifdef Q_OS_IOS
       dataPath = QStandardPaths::writableLocation(QStandardPaths::DocumentsLocation);
     #else
-      dataPath = QDir::homePath();
+      dataPath = QStandardPaths::writableLocation(QStandardPaths::HomeLocation);
     #endif
 
     return dataPath;

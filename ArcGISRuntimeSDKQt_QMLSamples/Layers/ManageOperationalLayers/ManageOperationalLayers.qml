@@ -14,11 +14,11 @@
 // limitations under the License.
 // [Legal]
 
-import QtQuick 2.6
-import QtQuick.Controls 2.5
-import QtQuick.Layouts 1.3
-import Esri.ArcGISRuntime 100.15
-import Esri.Samples 1.0
+import QtQuick
+import QtQuick.Controls
+import QtQuick.Layouts
+import Esri.ArcGISRuntime
+import Esri.Samples
 
 Rectangle {
     id: rootRectangle
@@ -120,7 +120,7 @@ Rectangle {
             model: drawOrderModel
             delegate: Component {
                 RowLayout {
-                    width: parent.width
+                    width: layersList.width
                     height: 40
                     spacing: 5
 

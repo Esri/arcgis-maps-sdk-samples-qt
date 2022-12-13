@@ -14,11 +14,10 @@
 // limitations under the License.
 // [Legal]
 
-import QtQuick 2.6
-import QtQuick.Controls 2.2
-import QtGraphicalEffects 1.0
-import Esri.ArcGISRuntime 100.15
-import Esri.ArcGISExtras 1.1
+import QtQuick
+import QtQuick.Controls
+import Esri.ArcGISRuntime
+import Esri.ArcGISExtras
 
 Rectangle {
     width: 800
@@ -28,7 +27,7 @@ Rectangle {
     property Envelope tileCacheExtent: null
     property string statusText: ""
     property ExportTileCacheParameters params
-    property var exportTileCacheProgress: 0
+    property int exportTileCacheProgress: 0
 
     // Create MapView that contains a Map
     MapView {
@@ -244,19 +243,15 @@ Rectangle {
         visible: false
         clip: true
 
-        RadialGradient {
+        Rectangle {
             anchors.fill: parent
-            opacity: 0.7
-            gradient: Gradient {
-                GradientStop { position: 0.0; color: "lightgrey" }
-                GradientStop { position: 0.7; color: "black" }
-            }
+            color: "#60000000"
         }
 
         MouseArea {
             anchors.fill: parent
-            onClicked: mouse.accepted = true
-            onWheel: wheel.accepted = true
+            onClicked: mouse => mouse.accepted = true
+            onWheel: wheel => wheel.accepted = true
         }
 
         Rectangle {

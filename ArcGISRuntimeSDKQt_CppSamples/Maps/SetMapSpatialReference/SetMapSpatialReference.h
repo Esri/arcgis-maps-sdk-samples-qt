@@ -17,15 +17,12 @@
 #ifndef SET_MAP_SPATIAL_REFERENCE_H
 #define SET_MAP_SPATIAL_REFERENCE_H
 
-namespace Esri
+namespace Esri::ArcGISRuntime
 {
-  namespace ArcGISRuntime
-  {
-    class Map;
-    class MapQuickView;
-    class Basemap;
-    class ArcGISMapImageLayer;
-  }
+  class Map;
+  class MapQuickView;
+  class Basemap;
+  class ArcGISMapImageLayer;
 }
 
 #include <QQuickItem>

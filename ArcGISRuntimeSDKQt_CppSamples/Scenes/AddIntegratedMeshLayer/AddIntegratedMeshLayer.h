@@ -17,18 +17,17 @@
 #ifndef ADDINTEGRATEDMESHLAYER_H
 #define ADDINTEGRATEDMESHLAYER_H
 
-namespace Esri
-{
-namespace ArcGISRuntime
+namespace Esri::ArcGISRuntime
 {
 class Error;
 class IntegratedMeshLayer;
 class Scene;
 class SceneQuickView;
 }
-}
 
 #include <QObject>
+
+Q_MOC_INCLUDE("SceneQuickView.h")
 
 class AddIntegratedMeshLayer : public QObject
 {

@@ -17,14 +17,11 @@
 #ifndef SIMPLE_MARKER_SYMBOL_H
 #define SIMPLE_MARKER_SYMBOL_H
 
-namespace Esri
+namespace Esri::ArcGISRuntime
 {
-  namespace ArcGISRuntime
-  {
     class Map;
     class MapQuickView;
     class GraphicsOverlay;
-  }
 }
 
 #include <QQuickItem>

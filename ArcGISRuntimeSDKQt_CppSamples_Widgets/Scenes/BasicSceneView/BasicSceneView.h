@@ -17,11 +17,10 @@
 #ifndef BASIC_SCENEVIEW_H
 #define BASIC_SCENEVIEW_H
 
-namespace Esri {
-namespace ArcGISRuntime {
+namespace Esri::ArcGISRuntime
+{
   class Scene;
   class SceneGraphicsView;
-  }
 }
 
 #include <QWidget>

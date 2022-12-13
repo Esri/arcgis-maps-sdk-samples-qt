@@ -20,6 +20,9 @@
 
 int main(int argc, char *argv[])
 {
+  // Enforce OpenGL
+  qputenv("QSG_RHI_BACKEND", "opengl");
+
 #if defined(Q_OS_LINUX) && !defined(Q_OS_ANDROID)
   // Linux requires 3.2 OpenGL Context
   // in order to instance 3D symbols
@@ -45,7 +48,6 @@ int main(int argc, char *argv[])
       Esri::ArcGISRuntime::ArcGISRuntimeEnvironment::setApiKey(apiKey);
   }
 
-  QGuiApplication::setAttribute(Qt::AA_EnableHighDpiScaling);
   QApplication application(argc, argv);
 
   BasicSceneView applicationWindow;

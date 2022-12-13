@@ -14,13 +14,12 @@
 // limitations under the License.
 // [Legal]
 
-import QtQuick 2.6
-import QtQuick.Controls 2.2
-import Esri.ArcGISRuntime 100.15
-import QtQuick.Layouts 1.11
-import QtPositioning 5.2
-import Esri.ArcGISExtras 1.1
-import Esri.samples 1.0
+import QtQuick
+import QtQuick.Controls
+import Esri.ArcGISRuntime
+import QtQuick.Layouts
+import QtPositioning
+import Esri.ArcGISExtras
 
 Rectangle {
     id: rootRectangle
@@ -28,7 +27,11 @@ Rectangle {
     width: 800
     height: 600
 
-    readonly property url dataPath: System.userHomePath + "/ArcGIS/Runtime/Data/tpkx/"
+    readonly property url dataPath: {
+        Qt.platform.os === "ios" ?
+                    System.writableLocationUrl(System.StandardPathsDocumentsLocation) + "/ArcGIS/Runtime/Data/tpkx/" :
+                    System.writableLocationUrl(System.StandardPathsHomeLocation) + "/ArcGIS/Runtime/Data/tpkx/"
+    }
     property var directionListModel: null
     property Route route: null
     property bool navigatingInProgress: false
@@ -240,19 +243,20 @@ Rectangle {
         }
 
         // Output new voice guidance
-        onNewVoiceGuidanceResultChanged: {
-            speaker.textToSpeech(newVoiceGuidanceResult.text);
-        }
+        //        onNewVoiceGuidanceResultChanged: {
+        //            speaker.textToSpeech(newVoiceGuidanceResult.text);
+        //        }
 
         // Set a callback to indicate if the speech engine is ready to speak
-        speechEngineReadyCallback: function() {
-            return speaker.textToSpeechEngineReady();
-        }
+        //        speechEngineReadyCallback: function() {
+        //            return speaker.textToSpeechEngineReady();
+        //        }
     }
 
-    NavigateRouteSpeaker {
-        id: speaker
-    }
+    // NOTE: As of Qt 6.2, QTextToSpeech is not supported. Instances of this class have been commented out for compatibility, but remain for reference
+    //    NavigateRouteSpeaker {
+    //        id: speaker
+    //    }
 
     function startNavigation() {
         // Solve the route with the default parameters
@@ -284,8 +288,8 @@ Rectangle {
         // Prevent mouse interaction from propagating to the MapView
         MouseArea {
             anchors.fill: parent
-            onPressed: mouse.accepted = true;
-            onWheel: wheel.accepted = true;
+            onPressed: mouse => mouse.accepted = true;
+            onWheel: wheel => wheel.accepted = true;
         }
 
         Column {

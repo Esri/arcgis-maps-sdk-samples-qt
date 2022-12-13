@@ -35,14 +35,23 @@
 #include "GeometryEngine.h"
 #include "Geodatabase.h"
 #include "Point.h"
+#include "TaskWatcher.h"
+#include "MapViewTypes.h"
+#include "LayerListModel.h"
+#include "ArcGISFeature.h"
+#include "IdentifyLayerResult.h"
+#include "GenerateLayerOption.h"
+#include "SyncLayerOption.h"
+#include "TaskTypes.h"
+#include "GenerateGeodatabaseJob.h"
+#include "Error.h"
+#include "SyncGeodatabaseJob.h"
+#include "SpatialReference.h"
 
+#include <QUuid>
 #include <QUrl>
-#include <QDir>
 #include <QtCore/qglobal.h>
-
-#ifdef Q_OS_IOS
 #include <QStandardPaths>
-#endif // Q_OS_IOS
 
 using namespace Esri::ArcGISRuntime;
 
@@ -53,12 +62,10 @@ namespace
   {
     QString dataPath;
 
-  #ifdef Q_OS_ANDROID
-    dataPath = "/sdcard";
-  #elif defined Q_OS_IOS
+  #ifdef Q_OS_IOS
     dataPath = QStandardPaths::writableLocation(QStandardPaths::DocumentsLocation);
   #else
-    dataPath = QDir::homePath();
+    dataPath = QStandardPaths::writableLocation(QStandardPaths::HomeLocation);
   #endif
 
     return dataPath;
@@ -125,7 +132,7 @@ void EditAndSyncFeatures::connectSignals()
     {
       if (!m_selectedFeature)
       {
-        m_mapView->identifyLayer(m_map->operationalLayers()->first(), mouseEvent.x(), mouseEvent.y(), 5, false, 1);
+        m_mapView->identifyLayer(m_map->operationalLayers()->first(), mouseEvent.pos().x(), mouseEvent.pos().y(), 5, false, 1);
       }
       else
       {
@@ -143,7 +150,7 @@ void EditAndSyncFeatures::connectSignals()
         });
 
         // get the point from the mouse point
-        Point mapPoint = m_mapView->screenToLocation(mouseEvent.x(), mouseEvent.y());
+        Point mapPoint = m_mapView->screenToLocation(mouseEvent.pos().x(), mouseEvent.pos().y());
         m_selectedFeature->setGeometry(mapPoint);
         featureLayer->featureTable()->updateFeature(m_selectedFeature);
       }
@@ -214,7 +221,7 @@ void EditAndSyncFeatures::generateGeodatabaseFromCorners(double xCorner1, double
   const Point corner1 = m_mapView->screenToLocation(xCorner1, yCorner1);
   const Point corner2 = m_mapView->screenToLocation(xCorner2, yCorner2);
   const Envelope extent(corner1, corner2);
-  const Geometry geodatabaseExtent = GeometryEngine::project(extent, SpatialReference::webMercator());
+  const Envelope geodatabaseExtent = geometry_cast<Envelope>(GeometryEngine::project(extent, SpatialReference::webMercator()));
 
   // get the updated parameters
   GenerateGeodatabaseParameters params = getGenerateParameters(geodatabaseExtent);

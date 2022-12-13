@@ -23,18 +23,17 @@
 // Qt headers
 #include <QObject>
 
-namespace Esri
+namespace Esri::ArcGISRuntime
 {
-  namespace ArcGISRuntime
-  {
-    class Graphic;
-    class GraphicsOverlay;
-    class Scene;
-    class SceneQuickView;
-  }
+  class Graphic;
+  class GraphicsOverlay;
+  class Scene;
+  class SceneQuickView;
 }
 
 class QMouseEvent;
+
+Q_MOC_INCLUDE("SceneQuickView.h")
 
 class GetElevationAtPoint : public QObject
 {

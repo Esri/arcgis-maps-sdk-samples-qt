@@ -14,13 +14,12 @@
 // limitations under the License.
 // [Legal]
 
-import QtQuick 2.6
-import QtQuick.Controls 2.2
-import QtQuick.Layouts 1.3
-import QtQuick.Window 2.2
-import Esri.ArcGISRuntime 100.15
-import Esri.ArcGISExtras 1.1
-import Esri.ArcGISRuntime.Toolkit 100.15
+import QtQuick
+import QtQuick.Controls
+import QtQuick.Layouts
+import QtQuick.Window
+import Esri.ArcGISRuntime
+import Esri.ArcGISExtras
 
 Rectangle {
     id: rootRectangle
@@ -109,11 +108,6 @@ Rectangle {
             // these.
             createGenerateOfflineMapParameterOverrides(createDefaultGenerateOfflineMapParametersResult);
         }
-
-        onCreateGenerateOfflineMapParameterOverridesStatusChanged: {
-            console.log("onCreateGenerateOfflineMapParameterOverridesStatusChanged", createGenerateOfflineMapParameterOverridesStatus);
-        }
-
 
         Component.onDestruction: {
             if (generateJob) {
@@ -410,12 +404,12 @@ Rectangle {
         anchors.fill: parent
         visible: offlineMapTask.createGenerateOfflineMapParameterOverridesStatus === Enums.TaskStatusCompleted
 
-        onBasemapLODSelected: setBasemapLOD(min, max);
-        onBasemapBufferChanged: setBasemapBuffer(buffer);
+        onBasemapLODSelected: (min, max) => setBasemapLOD(min, max);
+        onBasemapBufferChanged: buffer => setBasemapBuffer(buffer);
         onRemoveSystemValvesChanged: removeSystemValves();
         onRemoveServiceConnectionChanged: removeServiceConnection();
-        onHydrantWhereClauseChanged: setHydrantWhereClause(whereClause);
-        onClipWaterPipesAOIChanged: setClipWaterPipesAOI(clip);
+        onHydrantWhereClauseChanged: whereClause => setHydrantWhereClause(whereClause);
+        onClipWaterPipesAOIChanged: clip => setClipWaterPipesAOI(clip);
 
         onOverridesAccepted:  takeMapOffline();
     }

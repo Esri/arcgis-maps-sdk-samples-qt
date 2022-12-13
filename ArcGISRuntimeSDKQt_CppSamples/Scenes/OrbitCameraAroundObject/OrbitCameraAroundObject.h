@@ -17,20 +17,19 @@
 #ifndef ORBITCAMERAAROUNDOBJECT_H
 #define ORBITCAMERAAROUNDOBJECT_H
 
-namespace Esri
+namespace Esri::ArcGISRuntime
 {
-  namespace ArcGISRuntime
-  {
-    class Graphic;
-    class ModelSceneSymbol;
-    class OrbitGeoElementCameraController;
-    class Scene;
-    class SceneQuickView;
-  }
+  class Graphic;
+  class ModelSceneSymbol;
+  class OrbitGeoElementCameraController;
+  class Scene;
+  class SceneQuickView;
 }
 
 #include <QObject>
 #include <QPointF>
+
+Q_MOC_INCLUDE("SceneQuickView.h")
 
 class OrbitCameraAroundObject : public QObject
 {

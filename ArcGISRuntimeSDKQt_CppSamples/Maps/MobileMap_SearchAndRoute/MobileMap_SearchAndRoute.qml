@@ -14,10 +14,10 @@
 // limitations under the License.
 // [Legal]
 
-import QtQuick 2.6
-import QtQuick.Controls 2.2
-import Esri.Samples 1.0
-import Esri.ArcGISRuntime.Toolkit 100.15
+import QtQuick
+import QtQuick.Controls
+import Esri.Samples
+import Esri.ArcGISRuntime.Toolkit
 
 MobileMap_SearchAndRouteSample {
     id: mobileMapSearchRoute
@@ -46,8 +46,8 @@ MobileMap_SearchAndRouteSample {
             Callout {
                 calloutData: mapView.calloutData
                 screenOffsetY: -19
-                accessoryButtonHidden: true
-                leaderPosition: leaderPositionEnum.Automatic
+                accessoryButtonVisible: false
+                leaderPosition: Callout.LeaderPosition.Automatic
             }
 
             Rectangle {

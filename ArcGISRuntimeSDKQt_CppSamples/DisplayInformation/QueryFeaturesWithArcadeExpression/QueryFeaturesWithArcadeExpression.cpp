@@ -23,13 +23,21 @@
 #include "ArcadeEvaluator.h"
 #include "ArcadeEvaluationResult.h"
 #include "ArcadeExpression.h"
-#include "ArcGISFeatureTable.h"
 #include "CalloutData.h"
 #include "Map.h"
 #include "MapQuickView.h"
 #include "Point.h"
 #include "PortalItem.h"
+#include "MapTypes.h"
+#include "Portal.h"
+#include "LayerListModel.h"
+#include "TaskWatcher.h"
+#include "IdentifyLayerResult.h"
+#include "ArcGISFeature.h"
+#include "ExpressionTypes.h"
+#include "Layer.h"
 
+#include <QUuid>
 #include <QVariantMap>
 
 using namespace Esri::ArcGISRuntime;
@@ -87,9 +95,9 @@ void QueryFeaturesWithArcadeExpression::setMapView(MapQuickView* mapView)
       m_mapView->calloutData()->setVisible(false);
     m_mapView->calloutData()->setDetail("");
     // Set callout position
-    const Point mapPoint(m_mapView->screenToLocation(mouseEvent.x(), mouseEvent.y()));
+    const Point mapPoint(m_mapView->screenToLocation(mouseEvent.pos().x(), mouseEvent.pos().y()));
     m_mapView->calloutData()->setLocation(mapPoint);
-    m_mapView->identifyLayers(mouseEvent.x(), mouseEvent.y(), 12, false);
+    m_mapView->identifyLayers(mouseEvent.pos().x(), mouseEvent.pos().y(), 12, false);
 
   });
 

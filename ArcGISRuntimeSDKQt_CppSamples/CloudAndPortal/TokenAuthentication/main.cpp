@@ -17,6 +17,10 @@
 #include <QDir>
 #include <QQmlEngine>
 
+#ifdef QT_WEBVIEW_WEBENGINE_BACKEND
+#include <QtWebEngineQuick>
+#endif // QT_WEBVIEW_WEBENGINE_BACKEND
+
 #ifdef Q_OS_WIN
 #include <Windows.h>
 #endif
@@ -31,7 +35,13 @@
 
 int main(int argc, char *argv[])
 {
-  QGuiApplication::setAttribute(Qt::AA_EnableHighDpiScaling);
+  // Enforce OpenGL
+  qputenv("QSG_RHI_BACKEND", "opengl");
+
+#ifdef QT_WEBVIEW_WEBENGINE_BACKEND
+  QtWebEngineQuick::initialize();
+#endif // QT_WEBVIEW_WEBENGINE_BACKEND
+
   QGuiApplication app(argc, argv);
   app.setApplicationName("Token Authentication - C++");
 

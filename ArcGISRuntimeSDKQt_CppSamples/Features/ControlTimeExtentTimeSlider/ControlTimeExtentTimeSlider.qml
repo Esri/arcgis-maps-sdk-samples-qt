@@ -14,10 +14,10 @@
 // limitations under the License.
 // [Legal]
 
-import QtQuick 2.12
-import QtQuick.Controls 2.12
-import Esri.ArcGISRuntime.Toolkit 100.15
-import Esri.Samples 1.0
+import QtQuick
+import QtQuick.Controls
+import Esri.ArcGISRuntime.Toolkit
+import Esri.Samples
 
 Item {
 
@@ -39,7 +39,7 @@ Item {
         }
     }
 
-    // Declare the C++ instance which creates the scene etc. and supply the view
+    // Declare the C++ instance which creates the map etc. and supply the view
     ControlTimeExtentTimeSliderSample {
         id: model
         mapView: view

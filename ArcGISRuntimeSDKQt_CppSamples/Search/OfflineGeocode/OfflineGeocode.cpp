@@ -33,15 +33,22 @@
 #include "GeocodeParameters.h"
 #include "PictureMarkerSymbol.h"
 #include "IdentifyGraphicsOverlayResult.h"
+#include "MapViewTypes.h"
+#include "TaskWatcher.h"
+#include "Error.h"
+#include "GraphicsOverlayListModel.h"
+#include "GraphicListModel.h"
+#include "LayerListModel.h"
+#include "TileCache.h"
+#include "Basemap.h"
+#include "SpatialReference.h"
+#include "Viewpoint.h"
 
 #include <QScopedPointer>
-#include <QDir>
 #include <QtCore/qglobal.h>
 #include <memory>
-
-#ifdef Q_OS_IOS
+#include <QUuid>
 #include <QStandardPaths>
-#endif // Q_OS_IOS
 
 using namespace Esri::ArcGISRuntime;
 
@@ -52,12 +59,10 @@ namespace
   {
     QString dataPath;
 
-  #ifdef Q_OS_ANDROID
-    dataPath = "/sdcard";
-  #elif defined Q_OS_IOS
+  #ifdef Q_OS_IOS
     dataPath = QStandardPaths::writableLocation(QStandardPaths::DocumentsLocation);
   #else
-    dataPath = QDir::homePath();
+    dataPath = QStandardPaths::writableLocation(QStandardPaths::HomeLocation);
   #endif
 
     return dataPath;
@@ -186,8 +191,8 @@ void OfflineGeocode::connectSignals()
   connect(m_mapView, &MapQuickView::errorOccurred, this, &OfflineGeocode::logError);
   connect(m_mapView, &MapQuickView::mouseClicked, this, [this](QMouseEvent& mouseEvent)
   {
-    m_clickedPoint = m_mapView->screenToLocation(mouseEvent.x(), mouseEvent.y());
-    m_mapView->identifyGraphicsOverlay(m_graphicsOverlay, mouseEvent.x(), mouseEvent.y(), 5, false, 1);
+    m_clickedPoint = m_mapView->screenToLocation(mouseEvent.pos().x(), mouseEvent.pos().y());
+    m_mapView->identifyGraphicsOverlay(m_graphicsOverlay, mouseEvent.pos().x(), mouseEvent.pos().y(), 5, false, 1);
   });
 
   connect(m_mapView, &MapQuickView::mousePressedAndHeld, this, [this](QMouseEvent& mouseEvent)
@@ -196,7 +201,7 @@ void OfflineGeocode::connectSignals()
     m_isReverseGeocode = true;
 
     // reverse geocode
-    m_locatorTask->reverseGeocodeWithParameters(Point(m_mapView->screenToLocation(mouseEvent.x(), mouseEvent.y())), m_reverseGeocodeParameters);
+    m_locatorTask->reverseGeocodeWithParameters(Point(m_mapView->screenToLocation(mouseEvent.pos().x(), mouseEvent.pos().y())), m_reverseGeocodeParameters);
 
     // make busy indicator visible
     m_geocodeInProgress = true;
@@ -208,7 +213,7 @@ void OfflineGeocode::connectSignals()
     // if user is dragging mouse hold, realtime reverse geocode
     if (m_isPressAndHold)
     {
-      m_locatorTask->reverseGeocodeWithParameters(Point(m_mapView->screenToLocation(mouseEvent.x(), mouseEvent.y())), m_reverseGeocodeParameters);
+      m_locatorTask->reverseGeocodeWithParameters(Point(m_mapView->screenToLocation(mouseEvent.pos().x(), mouseEvent.pos().y())), m_reverseGeocodeParameters);
 
       m_geocodeInProgress = true;
       emit geocodeInProgressChanged();

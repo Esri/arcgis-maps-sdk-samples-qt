@@ -32,18 +32,21 @@
 #include "Point.h"
 #include "Camera.h"
 #include "Viewpoint.h"
+#include "Surface.h"
+#include "ElevationSourceListModel.h"
+#include "LayerListModel.h"
+#include "SpatialReference.h"
 
 // Qt headers
-#include <QString>
-#include <QFile>
 #include <QtCore/qglobal.h>
+#include <QDir>
+#include <QFile>
+#include <QImage>
+#include <QStandardPaths>
+#include <QString>
 #include <QTimer>
 
 #include <memory>
-
-#ifdef Q_OS_IOS
-#include <QStandardPaths>
-#endif // Q_OS_IOS
 
 using namespace Esri::ArcGISRuntime;
 
@@ -54,12 +57,10 @@ QString defaultDataPath()
 {
   QString dataPath;
 
-#ifdef Q_OS_ANDROID
-  dataPath = "/sdcard";
-#elif defined Q_OS_IOS
+#ifdef Q_OS_IOS
   dataPath = QStandardPaths::writableLocation(QStandardPaths::DocumentsLocation);
 #else
-  dataPath = QDir::homePath();
+  dataPath = QStandardPaths::writableLocation(QStandardPaths::HomeLocation);
 #endif
 
   return dataPath;

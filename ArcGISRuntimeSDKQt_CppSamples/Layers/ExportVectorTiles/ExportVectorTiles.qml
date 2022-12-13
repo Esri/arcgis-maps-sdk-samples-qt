@@ -14,9 +14,9 @@
 // limitations under the License.
 // [Legal]
 
-import QtQuick 2.12
-import QtQuick.Controls 2.12
-import Esri.Samples 1.0
+import QtQuick
+import QtQuick.Controls
+import Esri.Samples
 
 Item {
     id: item
@@ -27,7 +27,7 @@ Item {
         anchors.fill: parent
 
         Component.onCompleted: {
-            // Set and keep the focus on SceneView to enable keyboard navigation
+            // Set and keep the focus on MapView to enable keyboard navigation
             forceActiveFocus();
         }
     }
@@ -52,12 +52,21 @@ Item {
             BusyIndicator {
                 id: busyIndicator
                 anchors.horizontalCenter: parent.horizontalCenter
+                running: visible
             }
 
             Text {
                 id: statusText
                 anchors.horizontalCenter: parent.horizontalCenter
                 text: "Export job status: " + ["Not started", "Started", "Paused", "Succeeded", "Failed", "Cancelling"][model.jobStatus]
+                font.pixelSize: 16
+            }
+
+            Text {
+                id: statusTextCanceled
+                anchors.horizontalCenter: parent.horizontalCenter
+                text: "Job cancelled"
+                visible: !statusText.visible
                 font.pixelSize: 16
             }
 
@@ -131,7 +140,7 @@ Item {
         }
     }
 
-    // Declare the C++ instance which creates the scene etc. and supply the view
+    // Declare the C++ instance which creates the map etc. and supply the view
     ExportVectorTilesSample {
         id: model
         mapView: view
@@ -161,5 +170,18 @@ Item {
                 break;
             }
         }
+
+        readonly property Timer timer: Timer {
+            id: jobCancelDoneTimer
+            interval: 2000
+            onTriggered: { exportProgressWindow.visible = false; statusText.visible = true }
+        }
+
+        onJobCancelDone: succeeded => {
+                             statusTextCanceled.text = (succeeded ? "Job canceled successfully" : "Job failed to cancel successfully");
+                             exportProgressWindow.visible = true;
+                             statusText.visible = false;
+                             jobCancelDoneTimer.start();
+                         }
     }
 }

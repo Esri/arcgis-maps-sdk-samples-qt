@@ -20,8 +20,10 @@
 #include "Route.h"
 #include "RouteResult.h"
 #include "RouteParameters.h"
+#include "DirectionManeuver.h"
 
-class QTextToSpeech;
+// NOTE: As of Qt 6.2, QTextToSpeech is not supported. Instances of this class have been commented out for compatibility, but remain for reference
+// class QTextToSpeech;
 
 namespace Esri
 {
@@ -39,6 +41,8 @@ class SimulatedLocationDataSource;
 }
 
 #include <QObject>
+
+Q_MOC_INCLUDE("MapQuickView.h")
 
 class NavigateARouteWithRerouting : public QObject
 {
@@ -86,10 +90,9 @@ private:
   bool m_navigationEnabled = false;
   bool m_recenterEnabled = false;
   QString m_textString = "";
-  QTextToSpeech* m_speaker = nullptr;
   Esri::ArcGISRuntime::RouteParameters m_routeParameters;
   QList<Esri::ArcGISRuntime::DirectionManeuver> m_directionManeuvers;
-
+  // QTextToSpeech* m_speaker = nullptr;
 };
 
 #endif // NAVIGATEAROUTEWITHREROUTING_H

@@ -14,12 +14,11 @@
 // limitations under the License.
 // [Legal]
 
-import QtQuick 2.6
-import QtQuick.Controls 2.12
-import QtQuick.Layouts 1.12
-import QtGraphicalEffects 1.0
-import Esri.Samples 1.0
-import Esri.ArcGISRuntime.Toolkit 100.15
+import QtQuick
+import QtQuick.Controls
+import QtQuick.Layouts
+import Esri.Samples
+import Esri.ArcGISRuntime.Toolkit
 
 Item {
 
@@ -38,10 +37,12 @@ Item {
 
         Callout {
             id: callout
-            borderWidth: 1
-            borderColor: "lightgrey"
+            background: Rectangle {
+                border.color: "lightgrey"
+                border.width: 1    
+            }
             calloutData: model.mapView.calloutData
-            leaderPosition: leaderPositionEnum.Automatic
+            leaderPosition: Callout.LeaderPosition.Automatic
             onAccessoryButtonClicked: {
                 for (let i=0; i < featAttributes.length; i++) {
                     if (model.currentTypeDamage === featAttributes[i]) {
@@ -120,17 +121,10 @@ Item {
         radius: 10
         visible: false
 
-        GaussianBlur {
-            anchors.fill: createVersionWindow
-            source: view
-            radius: 40
-            samples: 20
-        }
-
         MouseArea {
             anchors.fill: parent
-            onClicked: mouse.accepted = true;
-            onWheel: wheel.accepted = true;
+            onClicked: mouse => mouse.accepted = true;
+            onWheel: wheel => wheel.accepted = true;
         }
 
         ColumnLayout {
@@ -141,7 +135,7 @@ Item {
                 placeholderText: qsTr("Name must be unique")
                 Layout.alignment: Qt.AlignHCenter
                 Layout.margins: 5
-                validator: RegExpValidator { regExp: /\w{0,50}/ }
+                validator: RegularExpressionValidator { regularExpression: /\w{0,50}/ }
             }
 
             ComboBox {
@@ -196,17 +190,10 @@ Item {
         radius: 10
         visible: false
 
-        GaussianBlur {
-            anchors.fill: updateWindow
-            source: view
-            radius: 40
-            samples: 20
-        }
-
         MouseArea {
             anchors.fill: parent
-            onClicked: mouse.accepted = true;
-            onWheel: wheel.accepted = true;
+            onClicked: mouse => mouse.accepted = true;
+            onWheel: wheel => wheel.accepted = true;
         }
 
         GridLayout {
@@ -229,7 +216,7 @@ Item {
             ComboBox {
                 id: typeDmgCombo
                 property int modelWidth: 0
-                Layout.minimumWidth: modelWidth + leftPadding + rightPadding + indicator.width
+                Layout.minimumWidth: modelWidth + leftPadding + rightPadding
                 Layout.margins: 5
                 Layout.fillWidth: true
                 enabled: !model.sgdbVersionIsDefault
@@ -282,7 +269,7 @@ Item {
     AuthenticationView {
     }
 
-    // Declare the C++ instance which creates the scene etc. and supply the view
+    // Declare the C++ instance which creates the map etc. and supply the view
     EditWithBranchVersioningSample {
         id: model
         mapView: view

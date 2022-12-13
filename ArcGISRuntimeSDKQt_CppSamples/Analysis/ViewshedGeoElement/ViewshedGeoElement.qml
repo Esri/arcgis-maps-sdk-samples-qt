@@ -14,8 +14,8 @@
 // limitations under the License.
 // [Legal]
 
-import QtQuick 2.6
-import Esri.Samples 1.0
+import QtQuick
+import Esri.Samples
 
 ViewshedGeoElementSample {
     id: rootRectangle

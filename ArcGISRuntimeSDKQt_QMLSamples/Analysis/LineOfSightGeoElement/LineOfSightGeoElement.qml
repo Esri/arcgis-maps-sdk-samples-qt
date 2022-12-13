@@ -14,11 +14,11 @@
 // limitations under the License.
 // [Legal]
 
-import QtQuick 2.6
-import QtQuick.Controls 2.2
-import Esri.ArcGISRuntime 100.15
-import Esri.ArcGISExtras 1.1
-import Qt.labs.platform 1.0
+import QtQuick
+import QtQuick.Controls
+import Esri.ArcGISRuntime
+import Esri.ArcGISExtras
+import Qt.labs.platform
 
 Rectangle {
     id: rootRectangle
@@ -26,7 +26,11 @@ Rectangle {
     width: 800
     height: 600
 
-    readonly property url dataPath: System.userHomePath + "/ArcGIS/Runtime/Data/3D/dolmus_3ds/dolmus.3ds";
+    readonly property url dataPath: {
+        Qt.platform.os === "ios" ?
+                    System.writableLocationUrl(System.StandardPathsDocumentsLocation) + "/ArcGIS/Runtime/Data/3D/dolmus_3ds/dolmus.3ds" :
+                    System.writableLocationUrl(System.StandardPathsHomeLocation) + "/ArcGIS/Runtime/Data/3D/dolmus_3ds/dolmus.3ds"
+    }
     property int waypointIndex: 0
 
     // Mutable point of where observer is going to be.

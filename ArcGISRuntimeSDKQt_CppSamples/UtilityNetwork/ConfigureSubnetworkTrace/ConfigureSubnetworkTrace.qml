@@ -14,11 +14,11 @@
 // limitations under the License.
 // [Legal]
 
-import QtQuick 2.6
-import QtQuick.Controls 2.12
-import QtQuick.Layouts 1.12
-import QtQuick.Shapes 1.12
-import Esri.Samples 1.0
+import QtQuick
+import QtQuick.Controls
+import QtQuick.Layouts
+import QtQuick.Shapes
+import Esri.Samples
 
 Item {
     readonly property var comparisonOperatorModel: ["Equal","NotEqual","GreaterThan","GreaterThanEqual","LessThan","LessThanEqual","IncludesTheValues","DoesNotIncludeTheValues","IncludesAny","DoesNotIncludeAny"]
@@ -203,7 +203,6 @@ Item {
         visible: model.busy
     }
 
-    // Declare the C++ instance which creates the scene etc. and supply the view
     ConfigureSubnetworkTraceSample {
         id: model
 

@@ -20,17 +20,19 @@
 #include "Viewpoint.h"
 #include "SpatialReference.h"
 #include "Point.h"
-#include "PolylineBuilder.h"
 #include "Polyline.h"
 #include "PolygonBuilder.h"
-#include "Polygon.h"
 #include "Graphic.h"
 #include "GraphicsOverlay.h"
 #include "SimpleMarkerSymbol.h"
 #include "SimpleLineSymbol.h"
 #include "SimpleFillSymbol.h"
 #include "TextSymbol.h"
-#include "SimpleRenderer.h"
+#include "MapTypes.h"
+#include "SymbolTypes.h"
+#include "GraphicListModel.h"
+#include "GraphicsOverlayListModel.h"
+
 #include <QVBoxLayout>
 #include <QList>
 
@@ -76,7 +78,7 @@ GOSymbols::~GOSymbols() = default;
 void GOSymbols::createUi()
 {
   QVBoxLayout* layout = new QVBoxLayout();
-  layout->setMargin(10);
+  layout->setContentsMargins(10, 10, 10, 10);
 
   QVBoxLayout* vBoxLayout = new QVBoxLayout();
   vBoxLayout->addWidget(m_mapView);
@@ -169,7 +171,7 @@ void GOSymbols::addBoatTrip(GraphicsOverlay* graphicsOverlay)
                          "\"spatialReference\":{\"wkid\":4326}}";
 
   // create a polyline from the json
-  Polyline polyline = Polyline::fromJson(polylineJson);
+  Polyline polyline = geometry_cast<Polyline>(Polyline::fromJson(polylineJson));
   // create a new graphic using the polyline geometry
   Graphic* graphic = new Graphic(polyline, this);
   // set the symbology for the graphic

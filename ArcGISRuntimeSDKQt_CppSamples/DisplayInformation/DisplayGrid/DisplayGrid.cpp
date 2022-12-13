@@ -31,6 +31,10 @@
 #include "TextSymbol.h"
 #include "Viewpoint.h"
 #include "Point.h"
+#include "MapViewTypes.h"
+#include "MapTypes.h"
+#include "SymbolTypes.h"
+#include "SpatialReference.h"
 
 using namespace Esri::ArcGISRuntime;
 

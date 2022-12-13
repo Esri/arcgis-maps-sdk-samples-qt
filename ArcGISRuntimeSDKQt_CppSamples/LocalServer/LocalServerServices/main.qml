@@ -1,5 +1,5 @@
-import QtQuick.Controls 2.2
-import Esri.Samples 1.0
+import QtQuick.Controls
+import Esri.Samples
 
 ApplicationWindow {
     visible: true

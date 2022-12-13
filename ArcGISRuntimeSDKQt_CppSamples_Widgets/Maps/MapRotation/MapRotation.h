@@ -18,11 +18,9 @@
 #define MAP_ROTATION_H
 
 
-namespace Esri {
-namespace ArcGISRuntime {
+namespace Esri::ArcGISRuntime {
   class Map;
   class MapGraphicsView;
-  }
 }
 
 class QLabel;

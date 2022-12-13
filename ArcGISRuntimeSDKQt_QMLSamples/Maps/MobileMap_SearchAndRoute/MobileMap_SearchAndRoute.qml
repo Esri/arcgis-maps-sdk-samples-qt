@@ -14,11 +14,11 @@
 // limitations under the License.
 // [Legal]
 
-import QtQuick 2.6
-import QtQuick.Controls 2.2
-import Esri.ArcGISExtras 1.1
-import Esri.ArcGISRuntime 100.15
-import Esri.ArcGISRuntime.Toolkit 100.15
+import QtQuick
+import QtQuick.Controls
+import Esri.ArcGISExtras
+import Esri.ArcGISRuntime
+import Esri.ArcGISRuntime.Toolkit
 
 Rectangle {
     clip: true
@@ -26,7 +26,11 @@ Rectangle {
     height: 600
     color: "#E0E0E0"
 
-    readonly property url dataPath: System.userHomePath + "/ArcGIS/Runtime/Data/mmpk/"
+    readonly property url dataPath: {
+        Qt.platform.os === "ios" ?
+                    System.writableLocationUrl(System.StandardPathsDocumentsLocation) + "/ArcGIS/Runtime/Data/mmpk/" :
+                    System.writableLocationUrl(System.StandardPathsHomeLocation) + "/ArcGIS/Runtime/Data/mmpk/"
+    }
     property LocatorTask currentLocatorTask: null
     property RouteTask currentRouteTask: null
     property Point clickedPoint: null
@@ -57,8 +61,8 @@ Rectangle {
             id: callout
             calloutData: parent.calloutData
             screenOffsetY: -19
-            accessoryButtonHidden: true
-            leaderPosition: leaderPositionEnum.Automatic
+            accessoryButtonVisible: false
+            leaderPosition: Callout.LeaderPosition.Automatic
         }
 
         // runs when app is geocoding
@@ -211,7 +215,7 @@ Rectangle {
             }
         }
 
-        onMouseClicked: {
+        onMouseClicked: mouse => {
             if (currentLocatorTask !== null) {
                 clickedPoint = mouse.mapPoint;
                 identifyGraphicsOverlayWithMaxResults(stopsGraphicsOverlay, mouse.x, mouse.y, 5, false, 2);

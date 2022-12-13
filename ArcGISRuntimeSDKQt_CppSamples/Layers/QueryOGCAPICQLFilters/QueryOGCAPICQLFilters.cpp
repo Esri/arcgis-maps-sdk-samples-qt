@@ -26,6 +26,16 @@
 #include "OgcFeatureCollectionTable.h"
 #include "SimpleLineSymbol.h"
 #include "SimpleRenderer.h"
+#include "MapTypes.h"
+#include "SymbolTypes.h"
+#include "TaskWatcher.h"
+#include "LayerListModel.h"
+#include "GeodatabaseTypes.h"
+#include "QueryParameters.h"
+#include "TimeExtent.h"
+#include "Viewpoint.h"
+
+#include <QDateTime>
 
 using namespace Esri::ArcGISRuntime;
 

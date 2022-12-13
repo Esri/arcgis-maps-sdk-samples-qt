@@ -14,10 +14,10 @@
 // limitations under the License.
 // [Legal]
 
-import QtQuick 2.6
-import QtQuick.Controls 2.2
-import Esri.ArcGISExtras 1.1
-import Esri.ArcGISRuntime 100.15
+import QtQuick
+import QtQuick.Controls
+import Esri.ArcGISExtras
+import Esri.ArcGISRuntime
 
 Rectangle {
     id: viewshedSample
@@ -87,10 +87,10 @@ Rectangle {
             }
         }
 
-        onMouseClicked: locationViewshed.location = sceneView.screenToBaseSurface(mouse.x, mouse.y);
+        onMouseClicked: mouse => locationViewshed.location = sceneView.screenToBaseSurface(mouse.x, mouse.y);
         onMousePressedAndHeld: calculating = true;
         onMouseReleased: calculating = false;
-        onMousePositionChanged: locationViewshed.location = sceneView.screenToBaseSurface(mouse.x, mouse.y);
+        onMousePositionChanged: mouse => locationViewshed.location = sceneView.screenToBaseSurface(mouse.x, mouse.y);
 
         Rectangle {
             anchors {

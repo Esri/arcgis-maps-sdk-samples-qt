@@ -24,10 +24,22 @@
 #include "Map.h"
 #include "MapQuickView.h"
 #include "ServiceFeatureTable.h"
-#include "SimpleMarkerSymbol.h"
 #include "SymbolStyle.h"
 #include "SymbolStyleSearchResultSymbolFetcher.h"
 #include "UniqueValueRenderer.h"
+#include "MapTypes.h"
+#include "LayerListModel.h"
+#include "SymbolStyleSearchParameters.h"
+#include "SymbolStyleSearchResultListModel.h"
+#include "SymbolStyleSearchResult.h"
+#include "TaskWatcher.h"
+#include "UniqueValue.h"
+#include "UniqueValueListModel.h"
+#include "SpatialReference.h"
+#include "Point.h"
+#include "Symbol.h"
+
+#include <QUuid>
 
 using namespace Esri::ArcGISRuntime;
 

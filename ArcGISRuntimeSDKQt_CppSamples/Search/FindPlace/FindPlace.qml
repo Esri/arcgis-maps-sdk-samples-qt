@@ -14,11 +14,11 @@
 // limitations under the License.
 // [Legal]
 
-import QtQuick 2.6
-import QtQuick.Controls 2.2
-import QtPositioning 5.6
-import Esri.ArcGISRuntime.Toolkit 100.15
-import Esri.Samples 1.0
+import QtQuick
+import QtQuick.Controls
+import QtPositioning
+import Esri.ArcGISRuntime.Toolkit
+import Esri.Samples
 
 FindPlaceSample {
     id: findPlaceSample
@@ -48,9 +48,9 @@ FindPlaceSample {
         // declare a Callout
         Callout {
             id: callout
-            leaderPosition: leaderPositionEnum.Automatic
+            leaderPosition: Callout.LeaderPosition.Automatic
             calloutData: mapView.calloutData
-            accessoryButtonHidden: true
+            accessoryButtonVisible: false
             screenOffsetY: -19
         }
     }
@@ -124,9 +124,9 @@ FindPlaceSample {
             id: suggestionView
             width: parent.width
             height: 20 * suggestionView.count
-            onSuggestionClicked: {
+            onSuggestionClicked: label => {
                 // change the text label
-                poiTextField.focus ? poiTextField.text = label : locationTextField.text = label;
+                poiTextField.focus ? (poiTextField.text = label) : (locationTextField.text = label);
 
                 // geocode
                 geocodePOIs(poiTextField.text, locationTextField.text);

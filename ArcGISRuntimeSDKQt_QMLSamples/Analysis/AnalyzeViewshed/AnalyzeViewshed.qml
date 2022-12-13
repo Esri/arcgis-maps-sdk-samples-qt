@@ -14,10 +14,10 @@
 // limitations under the License.
 // [Legal]
 
-import QtQuick 2.6
-import QtQuick.Controls 2.2
-import QtQuick.Layouts 1.3
-import Esri.ArcGISRuntime 100.15
+import QtQuick
+import QtQuick.Controls
+import QtQuick.Layouts
+import Esri.ArcGISRuntime
 
 Rectangle {
     id: rootRectangle
@@ -81,7 +81,7 @@ Rectangle {
         }
 
         // Set up signal handler for the mouse clicked signal
-        onMouseClicked: {
+        onMouseClicked: mouse => {
             // The geoprocessing task is still executing, don't do anything else (i.e. respond to
             // more user taps) until the processing is complete.
             if (viewshedInProgress)

@@ -14,10 +14,10 @@
 // limitations under the License.
 // [Legal]
 
-import QtQuick 2.6
-import QtQuick.Layouts 1.3
-import QtQuick.Controls 2.2
-import Esri.Samples 1.0
+import QtQuick
+import QtQuick.Layouts
+import QtQuick.Controls
+import Esri.Samples
 
 RasterRgbRendererSample {
     id: rootRectangle
@@ -115,7 +115,7 @@ RasterRgbRendererSample {
 
             model: stretchTypes
             property int modelWidth: 0
-            Layout.minimumWidth: modelWidth + leftPadding + rightPadding + indicator.width
+            Layout.minimumWidth: modelWidth + leftPadding + rightPadding
             Component.onCompleted : {
                 for (let i = 0; i < model.length; ++i) {
                     metrics.text = model[i];

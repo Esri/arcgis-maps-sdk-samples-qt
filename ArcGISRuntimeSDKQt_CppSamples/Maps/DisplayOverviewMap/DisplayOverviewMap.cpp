@@ -25,6 +25,10 @@
 #include "MapQuickView.h"
 #include "ServiceFeatureTable.h"
 #include "Viewpoint.h"
+#include "MapTypes.h"
+#include "LayerListModel.h"
+#include "GeodatabaseTypes.h"
+#include "Basemap.h"
 
 using namespace Esri::ArcGISRuntime;
 

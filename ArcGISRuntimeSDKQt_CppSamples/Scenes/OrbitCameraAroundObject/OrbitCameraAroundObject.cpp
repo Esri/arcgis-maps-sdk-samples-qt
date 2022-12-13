@@ -27,12 +27,22 @@
 #include "Scene.h"
 #include "SceneQuickView.h"
 #include "SimpleRenderer.h"
+#include "MapTypes.h"
+#include "TaskWatcher.h"
+#include "GraphicsOverlayListModel.h"
+#include "GraphicListModel.h"
+#include "Surface.h"
+#include "ElevationSourceListModel.h"
+#include "LayerSceneProperties.h"
+#include "RendererSceneProperties.h"
+#include "AttributeListModel.h"
+#include "SceneViewTypes.h"
+#include "GraphicsOverlay.h"
+#include "SpatialReference.h"
+#include "Point.h"
 
-#include <QDir>
-
-#ifdef Q_OS_IOS
+#include <QUuid>
 #include <QStandardPaths>
-#endif // Q_OS_IOS
 
 using namespace Esri::ArcGISRuntime;
 
@@ -43,12 +53,10 @@ namespace
   {
     QString dataPath;
 
-    #ifdef Q_OS_ANDROID
-      dataPath = "/sdcard";
-    #elif defined Q_OS_IOS
+    #ifdef Q_OS_IOS
       dataPath = QStandardPaths::writableLocation(QStandardPaths::DocumentsLocation);
     #else
-      dataPath = QDir::homePath();
+      dataPath = QStandardPaths::writableLocation(QStandardPaths::HomeLocation);
     #endif
 
     return dataPath;
@@ -270,7 +278,7 @@ float OrbitCameraAroundObject::planePitch() const
 
 void OrbitCameraAroundObject::setPlanePitch(float pitch)
 {
-  if(!m_planeGraphic->attributes()->containsAttribute("PITCH"))
+  if (!m_planeGraphic->attributes()->containsAttribute("PITCH"))
   {
      m_planeGraphic->attributes()->insertAttribute("PITCH", pitch);
   }

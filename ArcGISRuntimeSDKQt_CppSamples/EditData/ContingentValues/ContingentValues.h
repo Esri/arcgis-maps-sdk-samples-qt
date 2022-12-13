@@ -17,9 +17,7 @@
 #ifndef CONTINGENTVALUES_H
 #define CONTINGENTVALUES_H
 
-namespace Esri
-{
-namespace ArcGISRuntime
+namespace Esri::ArcGISRuntime
 {
 class ArcGISFeature;
 class FeatureQueryResult;
@@ -29,10 +27,11 @@ class GraphicsOverlay;
 class Map;
 class MapQuickView;
 }
-}
 
 #include <QObject>
 #include <QMouseEvent>
+
+Q_MOC_INCLUDE("MapQuickView.h")
 
 class ContingentValues : public QObject
 {
@@ -65,7 +64,7 @@ private:
   void queryAndBufferFeatures();
   void bufferFeaturesFromQueryResults(QUuid, Esri::ArcGISRuntime::FeatureQueryResult* results);
   void createConnections();
-  void createNewEmptyFeature(QMouseEvent mouseEvent);
+  void createNewEmptyFeature(QMouseEvent& mouseEvent);
   bool featureAttributesPaneVisibe() const;
   QVariantMap statusValues() const;
   void setFeatureAttributesPaneVisibe(bool showFeatureAttributesPane);

@@ -33,6 +33,15 @@
 #include "PolygonBuilder.h"
 #include "Polygon.h"
 #include "GeometryEngine.h"
+#include "MapTypes.h"
+#include "GraphicsOverlayListModel.h"
+#include "GraphicListModel.h"
+#include "SymbolTypes.h"
+#include "SelectionProperties.h"
+#include "TaskWatcher.h"
+#include "IdentifyGraphicsOverlayResult.h"
+#include "SpatialReference.h"
+#include <QUuid>
 #include <QStringList>
 #include <memory>
 
@@ -72,7 +81,7 @@ void SpatialRelationships::componentComplete()
   addGraphics();
 
   // Set viewpoint
-  m_mapView->setViewpointCenter(m_pointGraphic->geometry(), 200000000);
+  m_mapView->setViewpointCenter(geometry_cast<Point>(m_pointGraphic->geometry()), 200000000);
 
   // connect signals
   connectSignals();
@@ -142,7 +151,7 @@ void SpatialRelationships::connectSignals()
   connect(m_mapView, &MapQuickView::mouseClicked, this, [this](QMouseEvent& mouseEvent)
   {
     // identify graphics
-    m_mapView->identifyGraphicsOverlay(m_graphicsOverlay, mouseEvent.x(), mouseEvent.y(), 1.0 /*tolerance*/, false /*returnPopupsOnly*/);
+    m_mapView->identifyGraphicsOverlay(m_graphicsOverlay, mouseEvent.pos().x(), mouseEvent.pos().y(), 1.0 /*tolerance*/, false /*returnPopupsOnly*/);
   });
 
   connect(m_mapView, &MapQuickView::identifyGraphicsOverlayCompleted, this, [this](QUuid, IdentifyGraphicsOverlayResult* rawResult)

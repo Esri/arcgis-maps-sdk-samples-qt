@@ -14,9 +14,9 @@
 // limitations under the License.
 // [Legal]
 
-import QtQuick 2.6
-import Esri.Samples 1.0
-import Esri.ArcGISRuntime.Toolkit 100.15
+import QtQuick
+import Esri.Samples
+import Esri.ArcGISRuntime.Toolkit
 
 ShowCalloutSample {
     id: showCalloutSample
@@ -40,8 +40,8 @@ ShowCalloutSample {
         Callout {
             id: callout
             calloutData: mapView.calloutData // bind to the property that is exposed
-            accessoryButtonHidden: true
-            leaderPosition: leaderPositionEnum.Automatic
+            accessoryButtonVisible: false
+            leaderPosition: Callout.LeaderPosition.Automatic
         }
         //! [set callout data]
     }

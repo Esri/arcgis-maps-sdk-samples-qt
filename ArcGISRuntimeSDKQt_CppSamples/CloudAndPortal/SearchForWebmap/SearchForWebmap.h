@@ -15,17 +15,14 @@
 #ifndef SEARCHFORWEBMAP_H
 #define SEARCHFORWEBMAP_H
 
-namespace Esri
+namespace Esri::ArcGISRuntime
 {
-  namespace ArcGISRuntime
-  {
-    class Map;
-    class MapQuickView;
-    class Portal;
-    class PortalItem;
-    class PortalItemListModel;
-    class PortalQueryResultSetForItems;
-  }
+  class Map;
+  class MapQuickView;
+  class Portal;
+  class PortalItem;
+  class PortalItemListModel;
+  class PortalQueryResultSetForItems;
 }
 
 #include <QAbstractListModel>

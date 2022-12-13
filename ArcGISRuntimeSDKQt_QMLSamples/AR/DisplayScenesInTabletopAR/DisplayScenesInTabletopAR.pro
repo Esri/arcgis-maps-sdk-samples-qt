@@ -18,9 +18,9 @@ TEMPLATE = app
 # additional modules are pulled in via arcgisruntime.pri
 QT += opengl qml quick
 
-CONFIG += c++14
+CONFIG += c++17
 
-ARCGIS_RUNTIME_VERSION = 100.15.0
+ARCGIS_RUNTIME_VERSION = 200.1.0
 include($$PWD/arcgisruntime.pri)
 
 HEADERS += \
@@ -55,8 +55,6 @@ exists($$ARCGIS_TOOLKIT_PATH/augmentedreality/QmlApi/ArQmlApi.pri) {
 #-------------------------------------------------------------------------------
 
 android {
-    QT += androidextras
-
     ANDROID_ABIS = arm64-v8a
 
     contains(ANDROID_TARGET_ARCH,arm64-v8a) {

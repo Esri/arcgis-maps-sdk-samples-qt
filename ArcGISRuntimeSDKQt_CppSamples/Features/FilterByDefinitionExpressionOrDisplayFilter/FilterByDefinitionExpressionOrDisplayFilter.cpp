@@ -32,7 +32,13 @@
 #include "SpatialReference.h"
 #include "ServiceFeatureTable.h"
 #include "Viewpoint.h"
+#include "MapViewTypes.h"
+#include "MapTypes.h"
+#include "LayerListModel.h"
+#include "QueryParameters.h"
+#include "TaskWatcher.h"
 
+#include <QUuid>
 #include <QUrl>
 
 using namespace Esri::ArcGISRuntime;

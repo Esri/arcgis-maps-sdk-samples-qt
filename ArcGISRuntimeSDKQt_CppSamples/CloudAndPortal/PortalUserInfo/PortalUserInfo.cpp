@@ -22,9 +22,16 @@
 
 #include "AuthenticationManager.h"
 #include "Credential.h"
-#include "CredentialCache.h"
 #include "Portal.h"
 #include "PortalUser.h"
+#include "MapTypes.h"
+#include "PortalTypes.h"
+#include "CoreTypes.h"
+#include "Credential.h"
+#include "OAuthClientInfo.h"
+#include "PortalUser.h"
+#include "Error.h"
+#include "PortalInfo.h"
 #include <QUrl>
 
 using namespace Esri::ArcGISRuntime;

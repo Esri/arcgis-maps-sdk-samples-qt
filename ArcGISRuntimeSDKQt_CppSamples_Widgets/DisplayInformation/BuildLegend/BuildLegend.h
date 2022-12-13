@@ -22,13 +22,10 @@ namespace Ui
   class BuildLegend;
 }
 
-namespace Esri
-{
-namespace ArcGISRuntime
+namespace Esri::ArcGISRuntime
 {
 class Map;
 class MapGraphicsView;
-}
 }
 
 #include <QWidget>

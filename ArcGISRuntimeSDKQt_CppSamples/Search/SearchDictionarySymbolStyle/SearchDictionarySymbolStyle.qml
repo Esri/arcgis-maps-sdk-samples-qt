@@ -14,11 +14,10 @@
 // limitations under the License.
 // [Legal]
 
-import QtQuick 2.6
-import QtQuick.Controls 2.2
-import QtGraphicalEffects 1.0
-import QtQuick.Layouts 1.3
-import Esri.Samples 1.0
+import QtQuick
+import QtQuick.Controls
+import QtQuick.Layouts
+import Esri.Samples
 
 SearchDictionarySymbolStyleSample {
     id: searchDictionarySymbolStyleSample
@@ -77,8 +76,8 @@ SearchDictionarySymbolStyleSample {
                             Layout.fillWidth: true
                             placeholderText: repeaterModel[index] +" (e.g. "+ hintsModel[index] +")"
                             selectByMouse: true
-                            validator: RegExpValidator{ regExp: /^\s*[\da-zA-Z_][\da-zA-Z\s_]*$/ }
-                            onAccepted: addCategoryButton.mouseArea.clicked();
+                            validator: RegularExpressionValidator{ regularExpression: /^\s*[\da-zA-Z_][\da-zA-Z\s_]*$/ }
+                            onAccepted: addCategoryButtonMouseArea.clicked(true);
                         }
 
                         Rectangle {
@@ -93,7 +92,7 @@ SearchDictionarySymbolStyleSample {
                             enabled: categoryEntry.text.length > 0
 
                             MouseArea {
-                                id: mouseArea
+                                id: addCategoryButtonMouseArea
                                 anchors.fill: parent
                                 onClicked: {
                                     if (categoryEntry.text.length === 0)
@@ -186,7 +185,6 @@ SearchDictionarySymbolStyleSample {
 
             Button {
                 text: "Clear"
-                enabled: resultView.count > 0
                 onClicked: {
                     //Set the results visibility to false
                     resultView.visible = false;
@@ -295,7 +293,7 @@ SearchDictionarySymbolStyleSample {
     }
 
     //Search completed
-    onSearchCompleted: {
+    onSearchCompleted: count => {
         seachBtn.enabled = true;
         resultView.visible = true;
 

@@ -20,13 +20,18 @@
 
 #include "FormatCoordinates.h"
 
-#include "Basemap.h"
 #include "CoordinateFormatter.h"
 #include "Graphic.h"
 #include "Map.h"
 #include "MapQuickView.h"
 #include "Point.h"
 #include "SimpleMarkerSymbol.h"
+#include "MapTypes.h"
+#include "GraphicListModel.h"
+#include "SymbolTypes.h"
+#include "GraphicsOverlayListModel.h"
+#include "SpatialReference.h"
+#include "GraphicsOverlay.h"
 
 using namespace Esri::ArcGISRuntime;
 
@@ -175,7 +180,7 @@ void FormatCoordinates::setMapView(MapQuickView* mapView)
   connect(m_mapView, &MapQuickView::mouseClicked, this, [this](QMouseEvent& mouseEvent)
   {
     // get the point from the mouse point
-    Point mapPoint = m_mapView->screenToLocation(mouseEvent.x(), mouseEvent.y());
+    Point mapPoint = m_mapView->screenToLocation(mouseEvent.pos().x(), mouseEvent.pos().y());
 
     // using the point, refresh the graphic and the text
     handleLocationUpdate(std::move(mapPoint));

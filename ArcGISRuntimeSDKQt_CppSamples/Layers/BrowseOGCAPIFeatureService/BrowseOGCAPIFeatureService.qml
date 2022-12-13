@@ -14,11 +14,10 @@
 // limitations under the License.
 // [Legal]
 
-import QtQuick 2.12
-import QtQuick.Controls 2.12
-import Esri.Samples 1.0
-import QtQuick.Layouts 1.12
-import QtQuick.Dialogs 1.2
+import QtQuick
+import QtQuick.Controls
+import Esri.Samples
+import QtQuick.Layouts
 
 Item {
     // Declare the C++ instance which creates the map etc. and supply the view
@@ -84,7 +83,7 @@ Item {
                 Button {
                     id: loadLayerButton
                     text: "Load selected layer"
-                    enabled: !model.serviceOrFeatureLoading
+                    enabled: !model.serviceOrFeatureLoading && featureList.currentIndex >= 0
                     onClicked: model.loadFeatureCollection(featureList.currentIndex);
                     Layout.columnSpan: 2
                     Layout.fillWidth: true
@@ -93,13 +92,13 @@ Item {
         }
 
         // Pop-up error message box
-        MessageDialog {
+        Dialog {
             id: errorMessageBox
-            title: "Error message!"
-            text: model.errorMessage
-            icon: StandardIcon.Warning
-            visible: model.errorMessage === "" ? false : true
-            onAccepted: model.errorMessage = "";
+            visible: model.errorMessage === ""? false : true
+            title: model.errorMessage
+            standardButtons: Dialog.Ok
+            x: (parent.width - width) / 2
+            y: (parent.height - height) / 2
         }
     }
 }

@@ -19,18 +19,28 @@
 #include "AuthenticationManager.h"
 #include "Portal.h"
 #include "PortalItem.h"
+#include "PortalItemListModel.h"
 #include "AddItemsToPortal.h"
+#include "MapTypes.h"
+#include "PortalTypes.h"
+#include "CoreTypes.h"
+#include "Credential.h"
+#include "OAuthClientInfo.h"
+#include "PortalUser.h"
+#include "Error.h"
+#include "ErrorInformationKeys.h"
+
+#include <QVariantMap>
 
 using namespace Esri::ArcGISRuntime;
 
 AddItemsToPortal::AddItemsToPortal(QQuickItem* parent /* = nullptr */):
   QQuickItem(parent),
-  m_portal(new Portal(new Credential(OAuthClientInfo("iLkGIj0nX8A4EJda", OAuthMode::User), this), this)),
-  m_item(new PortalItem(m_portal, this))
+  m_portal(new Portal(new Credential(OAuthClientInfo("iLkGIj0nX8A4EJda", OAuthMode::User), this), this))
 {
   AuthenticationManager::instance()->setCredentialCacheEnabled(false);
+  m_item = new PortalItem(m_portal, PortalItemType::CSV, this);
   m_item->setTitle("Add Items Sample");
-  m_item->setType(PortalItemType::CSV);
 }
 
 AddItemsToPortal::~AddItemsToPortal() = default;
@@ -71,7 +81,10 @@ void AddItemsToPortal::componentComplete()
       emit portalItemIdChanged();
       emit portalItemTitleChanged();
       emit portalItemLoadedChanged();
-      setStatusText("Succesfully loaded item from portal." + m_item->itemId());
+      if (m_alreadyExisted)
+        setStatusText("Item already exists; using existing item instead. " + m_item->itemId());
+      else
+        setStatusText("Succesfully loaded item from portal. " + m_item->itemId());
     });
   }
 }
@@ -158,10 +171,37 @@ void AddItemsToPortal::connectUserSignals()
   if (!m_user)
     return;
 
-  connect(m_user, &PortalUser::errorOccurred, this, [this](Esri::ArcGISRuntime::Error error)
+  connect(m_user, &PortalUser::errorOccurred, this, [this](const Error& error)
   {
     m_busy = false;
-    setStatusText( QString(error.message() + ": " + error.additionalMessage()));
+    setStatusText(QString(error.message() + ": " + error.additionalMessage()));
+
+    // Check for service error 409 "Conflict" - item already exists
+    const QVariantMap additionalInfo = error.additionalInformation();
+    if (additionalInfo.contains(ErrorInformationKeys::serviceError()) &&
+        additionalInfo.value(ErrorInformationKeys::serviceError()).toInt() == 409)
+    {
+      m_alreadyExisted = true;
+      m_user->fetchContent();
+      m_busy = true;
+    }
+  });
+
+  connect(m_user, &PortalUser::fetchContentCompleted, this, [this](bool success)
+  {
+    m_busy = false;
+    if (!success)
+      return;
+
+    for (PortalItem* item : *m_user->items())
+    {
+      if (item->title() == "Add Items Sample")
+      {
+        m_item->setItemId(item->itemId());
+        m_item->load();
+        return;
+      }
+    }
   });
 
   //! [PortalUser addPortalItemCompleted]

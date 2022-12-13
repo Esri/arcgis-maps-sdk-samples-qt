@@ -14,12 +14,12 @@
 // limitations under the License.
 // [Legal]
 
-import QtQuick 2.6
-import QtQuick.Controls 2.2
-import Esri.ArcGISRuntime 100.15
-import QtQuick.Layouts 1.11
-import QtPositioning 5.2
-import Esri.samples 1.0
+import QtQuick
+import QtQuick.Controls
+import Esri.ArcGISRuntime
+import QtQuick.Layouts
+import QtPositioning
+import Esri.Samples
 
 Rectangle {
     id: rootRectangle
@@ -137,7 +137,7 @@ Rectangle {
                 createDefaultParametersResult.outputSpatialReference = Factory.SpatialReference.createWgs84();
                 createDefaultParametersResult.setStops([stop1, stop2, stop3]);
 
-                //solve the route with these parameters
+                // solve the route with these parameters
                 routeTask.solveRoute(createDefaultParametersResult);
             }
             onSolveRouteStatusChanged: {
@@ -262,21 +262,22 @@ Rectangle {
                 }
             }
 
-            // output new voice guidance
-            onNewVoiceGuidanceResultChanged: {
-                speaker.textToSpeech(newVoiceGuidanceResult.text);
-            }
+// output new voice guidance
+//            onNewVoiceGuidanceResultChanged: {
+//                speaker.textToSpeech(newVoiceGuidanceResult.text);
+//            }
 
-            // set a callback to indicate if the speech engine is ready to speak
-            speechEngineReadyCallback: function() {
-                return speaker.textToSpeechEngineReady();
-            }
+// set a callback to indicate if the speech engine is ready to speak
+//            speechEngineReadyCallback: function() {
+//                return speaker.textToSpeechEngineReady();
+//            }
         }
     }
 
-    NavigateRouteSpeaker {
-        id: speaker
-    }
+// NOTE: As of Qt 6.2, QTextToSpeech is not supported. Uses of this class have been commented out for compatibility, but remain for reference
+//    NavigateRouteSpeaker {
+//        id: speaker
+//    }
 
     function startNavigation() {
         // get the directions for the route

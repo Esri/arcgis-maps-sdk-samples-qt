@@ -24,16 +24,20 @@
 #include "Map.h"
 #include "MapQuickView.h"
 #include "Raster.h"
-#include "RasterCell.h"
 #include "RasterLayer.h"
+#include "Error.h"
+#include "MapTypes.h"
+#include "TaskWatcher.h"
+#include "LayerListModel.h"
+#include "RasterCell.h"
+#include "IdentifyLayerResult.h"
+#include "AttributeListModel.h"
+#include "Envelope.h"
 
 #include <memory>
-#include <QDir>
 #include <QString>
-
-#ifdef Q_OS_IOS
+#include <QUuid>
 #include <QStandardPaths>
-#endif // Q_OS_IOS
 
 using namespace Esri::ArcGISRuntime;
 
@@ -44,12 +48,10 @@ QString defaultDataPath()
 {
   QString dataPath;
 
-#ifdef Q_OS_ANDROID
-  dataPath = "/sdcard";
-#elif defined Q_OS_IOS
+#ifdef Q_OS_IOS
   dataPath = QStandardPaths::writableLocation(QStandardPaths::DocumentsLocation);
 #else
-  dataPath = QDir::homePath();
+  dataPath = QStandardPaths::writableLocation(QStandardPaths::HomeLocation);
 #endif
 
   return dataPath;
@@ -143,18 +145,18 @@ void IdentifyRasterCell::connectSignals()
 
   connect(m_mapView, &MapQuickView::mouseClicked, this, [this](const QMouseEvent& e)
   {
-    m_mapView->identifyLayer(m_rasterLayer, e.x(), e.y(), 10, false, 1);
-    m_clickedPoint = m_mapView->screenToLocation(e.x(), e.y());
+    m_mapView->identifyLayer(m_rasterLayer, e.pos().x(), e.pos().y(), 10, false, 1);
+    m_clickedPoint = m_mapView->screenToLocation(e.pos().x(), e.pos().y());
   });
 
   connect(m_mapView, &MapQuickView::mousePressedAndHeld, this, [this](const QMouseEvent& e)
   {
-    m_mapView->identifyLayer(m_rasterLayer, e.x(), e.y(), 10, false, 1);
-    m_clickedPoint = m_mapView->screenToLocation(e.x(), e.y());
+    m_mapView->identifyLayer(m_rasterLayer, e.pos().x(), e.pos().y(), 10, false, 1);
+    m_clickedPoint = m_mapView->screenToLocation(e.pos().x(), e.pos().y());
     m_mousePressed = true;
   });
 
-  connect(m_mapView, &MapQuickView::mouseReleased, this, [this](QMouseEvent)
+  connect(m_mapView, &MapQuickView::mouseReleased, this, [this](QMouseEvent&)
   {
     m_mousePressed = false;
   });
@@ -164,8 +166,8 @@ void IdentifyRasterCell::connectSignals()
   {
     if (m_mousePressed)
     {
-      m_mapView->identifyLayer(m_rasterLayer, e.x(), e.y(), 10, false, 1);
-      m_clickedPoint = m_mapView->screenToLocation(e.x(), e.y());
+      m_mapView->identifyLayer(m_rasterLayer, e.pos().x(), e.pos().y(), 10, false, 1);
+      m_clickedPoint = m_mapView->screenToLocation(e.pos().x(), e.pos().y());
     }
   });
 }

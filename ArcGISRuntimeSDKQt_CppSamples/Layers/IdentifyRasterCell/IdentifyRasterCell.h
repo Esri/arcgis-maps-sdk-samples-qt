@@ -21,16 +21,16 @@
 
 #include <QObject>
 
-namespace Esri
-{
-namespace ArcGISRuntime
+namespace Esri::ArcGISRuntime
 {
 class CalloutData;
 class Map;
 class MapQuickView;
 class RasterLayer;
 }
-}
+
+Q_MOC_INCLUDE("MapQuickView.h")
+Q_MOC_INCLUDE("CalloutData.h")
 
 class IdentifyRasterCell : public QObject
 {

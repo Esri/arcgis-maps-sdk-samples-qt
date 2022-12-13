@@ -17,16 +17,15 @@
 #ifndef CHANGE_VIEWPOINT_H
 #define CHANGE_VIEWPOINT_H
 
-namespace Esri
+namespace Esri::ArcGISRuntime
 {
-  namespace ArcGISRuntime
-  {
-    class Map;
-    class MapQuickView;
-  }
+  class Map;
+  class MapQuickView;
 }
 
 #include <QQuickItem>
+
+Q_MOC_INCLUDE("MapQuickView.h")
 
 class ChangeViewpoint : public QQuickItem
 {
@@ -35,7 +34,7 @@ class ChangeViewpoint : public QQuickItem
 
 public:
   explicit ChangeViewpoint(QQuickItem* parent = nullptr);
-  ~ChangeViewpoint() override = 0;
+  ~ChangeViewpoint() override;
 
   void componentComplete() override;
   static void init();
@@ -56,4 +55,3 @@ private:
 };
 
 #endif // CHANGE_VIEWPOINT_H
-

@@ -36,19 +36,18 @@
 #include "CategoryListModel.h"
 #include "DataItem.h"
 #include "DataItemListModel.h"
-#include "PermissionsHelper.h"
 #include "SampleCategory.h"
 #include "Sample.h"
 #include "SampleListModel.h"
 #include "SampleManager.h"
 #include "SampleManager_definitions.h"
-#include "SampleSearchFilterModel.h"
 #include "SourceCode.h"
 #include "SourceCodeListModel.h"
 
 #include <cstdlib>
 
 #ifdef CPP_VIEWER
+#include "ArcGISQt_global.h" // for LOCALSERVER_SUPPORTED
 #include "ArcGISRuntimeEnvironment.h"
 using namespace Esri::ArcGISRuntime;
 #endif
@@ -349,7 +348,7 @@ void SampleManager::setDownloadText(const QString& downloadText)
 void SampleManager::setApiKey(bool isSupportsApiKey)
 {
 #ifdef SAMPLE_VIEWER_API_KEY
-  // If the API key environment variable exists at compile time it will be used here
+  // If the API key identifier is defined in the respective .pro file it will be used here
   // Otherwise use the API key provided by the user at the top of this file
   apiKey = QUOTE(SAMPLE_VIEWER_API_KEY);
 #endif
@@ -363,7 +362,7 @@ void SampleManager::setApiKey(bool isSupportsApiKey)
 #ifdef CPP_VIEWER
   ArcGISRuntimeEnvironment::setApiKey(sampleApiKey);
 #else
-  emit apiKeyRequired(apiKey);
+  emit apiKeyRequired(sampleApiKey);
 #endif
 }
 

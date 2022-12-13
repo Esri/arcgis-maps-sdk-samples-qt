@@ -17,16 +17,13 @@
 #ifndef DELETE_FEATURES_FEATURE_SERVICE_H
 #define DELETE_FEATURES_FEATURE_SERVICE_H
 
-namespace Esri
+namespace Esri::ArcGISRuntime
 {
-  namespace ArcGISRuntime
-  {
-    class Map;
-    class MapQuickView;
-    class FeatureLayer;
-    class ServiceFeatureTable;
-    class Feature;
-  }
+  class Map;
+  class MapQuickView;
+  class FeatureLayer;
+  class ServiceFeatureTable;
+  class Feature;
 }
 
 class QString;

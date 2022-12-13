@@ -25,6 +25,19 @@
 #include "Basemap.h"
 #include "ArcGISTiledElevationSource.h"
 #include "SimpleMarkerSceneSymbol.h"
+#include "Camera.h"
+#include "MapTypes.h"
+#include "SymbolTypes.h"
+#include "GraphicsOverlayListModel.h"
+#include "GraphicsOverlay.h"
+#include "GraphicListModel.h"
+#include "Graphic.h"
+#include "Point.h"
+#include "Surface.h"
+#include "ElevationSourceListModel.h"
+#include "LayerSceneProperties.h"
+#include "SceneViewTypes.h"
+#include "SpatialReference.h"
 
 using namespace Esri::ArcGISRuntime;
 

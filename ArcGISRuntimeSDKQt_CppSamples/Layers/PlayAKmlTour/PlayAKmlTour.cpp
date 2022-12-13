@@ -28,13 +28,15 @@
 #include "KmlLayer.h"
 #include "KmlContainer.h"
 #include "KmlNodeListModel.h"
+#include "Error.h"
+#include "MapTypes.h"
+#include "LayerListModel.h"
+#include "Surface.h"
+#include "ElevationSourceListModel.h"
+#include "KmlDataset.h"
 
-#include <QDir>
 #include <QtCore/qglobal.h>
-
-#ifdef Q_OS_IOS
 #include <QStandardPaths>
-#endif // Q_OS_IOS
 
 using namespace Esri::ArcGISRuntime;
 
@@ -45,12 +47,10 @@ namespace
   {
     QString dataPath;
 
-  #ifdef Q_OS_ANDROID
-    dataPath = "/sdcard";
-  #elif defined Q_OS_IOS
+  #ifdef Q_OS_IOS
     dataPath = QStandardPaths::writableLocation(QStandardPaths::DocumentsLocation);
   #else
-    dataPath = QDir::homePath();
+    dataPath = QStandardPaths::writableLocation(QStandardPaths::HomeLocation);
   #endif
 
     return dataPath;

@@ -14,16 +14,20 @@
 // limitations under the License.
 // [Legal]
 
-import QtQuick 2.6
-import Esri.ArcGISExtras 1.1
-import Esri.ArcGISRuntime 100.15
+import QtQuick
+import Esri.ArcGISExtras
+import Esri.ArcGISRuntime
 
 Rectangle {
     clip: true
     width: 800
     height: 600
 
-    readonly property url dataPath: System.userHomePath + "/ArcGIS/Runtime/Data"
+    readonly property url dataPath: {
+        Qt.platform.os === "ios" ?
+                    System.writableLocationUrl(System.StandardPathsDocumentsLocation) + "/ArcGIS/Runtime/Data" :
+                    System.writableLocationUrl(System.StandardPathsHomeLocation) + "/ArcGIS/Runtime/Data"
+    }
 
     ViewpointExtent {
         id: startingVP
@@ -67,7 +71,7 @@ Rectangle {
                 }
 
                 PictureMarkerSymbol {
-                    url: "https://sampleserver6.arcgisonline.com/arcgis/rest/services/Recreation/FeatureServer/0/images/e82f744ebb069bb35b234b3fea46deae"
+                    url: "https://static.arcgis.com/images/Symbols/OutdoorRecreation/Camping.png"
                     width: 38.0
                     height: 38.0
                 }

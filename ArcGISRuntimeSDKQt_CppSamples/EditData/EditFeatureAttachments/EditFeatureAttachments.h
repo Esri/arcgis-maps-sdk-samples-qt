@@ -17,17 +17,14 @@
 #ifndef EDIT_FEATURE_ATTACHMENTS_H
 #define EDIT_FEATURE_ATTACHMENTS_H
 
-namespace Esri
+namespace Esri::ArcGISRuntime
 {
-  namespace ArcGISRuntime
-  {
-    class CalloutData;
-    class Map;
-    class MapQuickView;
-    class FeatureLayer;
-    class ServiceFeatureTable;
-    class ArcGISFeature;
-  }
+  class CalloutData;
+  class Map;
+  class MapQuickView;
+  class FeatureLayer;
+  class ServiceFeatureTable;
+  class ArcGISFeature;
 }
 
 class QString;

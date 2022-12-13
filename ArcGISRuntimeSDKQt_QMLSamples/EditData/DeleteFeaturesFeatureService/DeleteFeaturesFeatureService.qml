@@ -14,11 +14,10 @@
 // limitations under the License.
 // [Legal]
 
-import QtQuick 2.6
-import QtQuick.Controls 2.2
-import QtGraphicalEffects 1.0
-import Esri.ArcGISRuntime 100.15
-import Esri.ArcGISRuntime.Toolkit 100.15
+import QtQuick
+import QtQuick.Controls
+import Esri.ArcGISRuntime
+import Esri.ArcGISRuntime.Toolkit
 
 Rectangle {
     width: 800
@@ -121,7 +120,7 @@ Rectangle {
                 callout.dismiss();
         }
 
-        onMouseClicked: {
+        onMouseClicked: mouse => {
             // reset the map callout and update window
             featureLayer.clearSelection();
             if (callout.calloutVisible)
@@ -158,9 +157,11 @@ Rectangle {
             accessoryButtonType: "Custom"
             customImageUrl: "qrc:/Samples/EditData/DeleteFeaturesFeatureService/ic_menu_trash_light.png"
             calloutData: parent.calloutData
-            borderWidth: 1
-            borderColor: "lightgrey"
-            leaderPosition: leaderPositionEnum.Automatic
+            background: Rectangle {
+                border.width: 1
+                border.color: "lightgrey"
+            }
+            leaderPosition: Callout.LeaderPosition.Automatic
             onAccessoryButtonClicked: {
                 if (callout.calloutVisible)
                     callout.dismiss();

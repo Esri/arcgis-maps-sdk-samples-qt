@@ -17,9 +17,7 @@
 #ifndef CLIPGEOMETRY_H
 #define CLIPGEOMETRY_H
 
-namespace Esri
-{
-namespace ArcGISRuntime
+namespace Esri::ArcGISRuntime
 {
 class Map;
 class MapQuickView;
@@ -27,7 +25,6 @@ class Graphic;
 class GraphicsOverlay;
 class SimpleLineSymbol;
 class SimpleFillSymbol;
-}
 }
 
 #include <QQuickItem>
@@ -44,6 +41,7 @@ public:
   void componentComplete() override;
   static void init();
   Q_INVOKABLE void clipAreas();
+  Q_INVOKABLE void resetAreas();
 
 private:
   void createGraphics();

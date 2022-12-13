@@ -14,9 +14,9 @@
 // limitations under the License.
 // [Legal]
 
-import QtQuick 2.6
-import QtQuick.Controls 2.2
-import Esri.Samples 1.0
+import QtQuick
+import QtQuick.Controls
+import Esri.Samples
 
 VectorTiledLayerUrlSample {
     id: vectorTiledLayerUrlSample
@@ -43,7 +43,7 @@ VectorTiledLayerUrlSample {
             margins: 15
         }
         property int modelWidth: 0
-        width: modelWidth + leftPadding + rightPadding + indicator.width
+        width: modelWidth + leftPadding + rightPadding
         model: ["Mid-Century","Colored Pencil","Newspaper","Nova","World Street Map (Night)"]
         onCurrentTextChanged: {
             // Call C++ invokable function to switch the basemaps

@@ -6,7 +6,7 @@ Load a WFS feature table using an XML query.
 
 ## Use case
 
-Runtime `QueryParameters` objects can't represent all possible queries that can be made against a WFS feature service. For example, Runtime query parameters don't support wildcard searches. You can provide queries as raw XML strings, allowing you to access query functionality not available with `QueryParameters`.
+`QueryParameters` objects can't represent all possible queries that can be made against a WFS feature service. For example, query parameters don't support wildcard searches. You can provide queries as raw XML strings, allowing you to access query functionality not available with `QueryParameters`.
 
 ## How to use the sample
 

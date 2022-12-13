@@ -17,16 +17,13 @@
 #ifndef DISPLAYSCENESINTABLETOPAR_H
 #define DISPLAYSCENESINTABLETOPAR_H
 
-namespace Esri
-{
-namespace ArcGISRuntime
+namespace Esri::ArcGISRuntime
 {
 class ArcGISSceneLayer;
 class Error;
 class MobileScenePackage;
 class Scene;
 class SceneQuickView;
-}
 }
 
 #include <QObject>

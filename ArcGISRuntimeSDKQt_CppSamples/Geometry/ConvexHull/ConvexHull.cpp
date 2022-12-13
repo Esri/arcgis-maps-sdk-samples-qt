@@ -29,6 +29,16 @@
 #include "PointCollection.h"
 #include "SimpleFillSymbol.h"
 #include "SimpleMarkerSymbol.h"
+#include "MapTypes.h"
+#include "SymbolTypes.h"
+#include "GraphicListModel.h"
+#include "Error.h"
+#include "GraphicsOverlayListModel.h"
+#include "Geometry.h"
+#include "GeometryTypes.h"
+#include "SimpleLineSymbol.h"
+#include "Point.h"
+#include "SpatialReference.h"
 
 using namespace Esri::ArcGISRuntime;
 
@@ -120,7 +130,7 @@ void ConvexHull::getInputs()
   {
     e.accept();
 
-    const Point clickedPoint = m_mapView->screenToLocation(e.x(), e.y());
+    const Point clickedPoint = m_mapView->screenToLocation(e.pos().x(), e.pos().y());
     m_multipointBuilder->points()->addPoint(clickedPoint);
     m_inputsGraphic->setGeometry(m_multipointBuilder->toGeometry());
   });

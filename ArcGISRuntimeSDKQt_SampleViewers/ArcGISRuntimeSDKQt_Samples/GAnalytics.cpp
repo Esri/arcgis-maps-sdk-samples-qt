@@ -51,7 +51,7 @@ void GAnalytics::init()
   // If this is an Esri daily build or a local user build, disable analytics
   if (m_apiSecret.isEmpty() || m_measurementId.isEmpty())
   {
-    qDebug() << "No analytics API key or mesurement ID was provided, disabling telemetry";
+    qDebug() << "No analytics API key or measurement ID was provided, disabling telemetry";
     m_telemetryEnabled = false;
     return;
   }

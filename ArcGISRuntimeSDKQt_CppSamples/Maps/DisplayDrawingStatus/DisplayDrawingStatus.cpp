@@ -24,6 +24,12 @@
 #include "MapQuickView.h"
 #include "FeatureLayer.h"
 #include "ServiceFeatureTable.h"
+#include "MapTypes.h"
+#include "MapViewTypes.h"
+#include "LayerListModel.h"
+#include "SpatialReference.h"
+#include "Envelope.h"
+#include "Viewpoint.h"
 
 #include <QUrl>
 
@@ -66,7 +72,7 @@ void DisplayDrawingStatus::componentComplete()
 
   connect(m_mapView, &MapQuickView::drawStatusChanged, this, [this](DrawStatus drawStatus)
   {
-    drawStatus == DrawStatus::InProgress ? m_mapDrawing = true : m_mapDrawing = false;
+    m_mapDrawing = (drawStatus == DrawStatus::InProgress);
     emit mapDrawStatusChanged();
   });
 }

@@ -29,22 +29,33 @@
 #include "RouteResult.h"
 #include "MapQuickView.h"
 #include "GeocodeResult.h"
-#include "SimpleRenderer.h"
 #include "GraphicsOverlay.h"
 #include "RouteParameters.h"
-#include "SimpleLineSymbol.h"
 #include "MobileMapPackage.h"
 #include "PictureMarkerSymbol.h"
 #include "ReverseGeocodeParameters.h"
+#include "Error.h"
+#include "MapTypes.h"
+#include "MapViewTypes.h"
+#include "TaskWatcher.h"
+#include "CalloutData.h"
+#include "GraphicsOverlayListModel.h"
+#include "IdentifyGraphicsOverlayResult.h"
+#include "SymbolTypes.h"
+#include "AttributeListModel.h"
+#include "GraphicListModel.h"
+#include "Route.h"
+#include "SimpleRenderer.h"
+#include "SimpleLineSymbol.h"
+#include "Item.h"
+#include "Polyline.h"
 
-#include <QDir>
+#include <QUuid>
 #include <QFileInfoList>
 #include <QFile>
 #include <QtCore/qglobal.h>
-
-#ifdef Q_OS_IOS
+#include <QDir>
 #include <QStandardPaths>
-#endif // Q_OS_IOS
 
 using namespace Esri::ArcGISRuntime;
 
@@ -55,12 +66,10 @@ QString defaultDataPath()
 {
   QString dataPath;
 
-#ifdef Q_OS_ANDROID
-  dataPath = "/sdcard";
-#elif defined Q_OS_IOS
+#ifdef Q_OS_IOS
   dataPath = QStandardPaths::writableLocation(QStandardPaths::DocumentsLocation);
 #else
-  dataPath = QDir::homePath();
+  dataPath = QStandardPaths::writableLocation(QStandardPaths::HomeLocation);
 #endif
 
   return dataPath;
@@ -161,10 +170,10 @@ void MobileMap_SearchAndRoute::connectSignals()
   {
     if (m_currentLocatorTask)
     {
-      m_clickedPoint = Point(m_mapView->screenToLocation(mouseEvent.x(), mouseEvent.y()));
+      m_clickedPoint = Point(m_mapView->screenToLocation(mouseEvent.pos().x(), mouseEvent.pos().y()));
 
       // determine if user clicked on a graphic
-      m_mapView->identifyGraphicsOverlay(m_stopsGraphicsOverlay, mouseEvent.x(), mouseEvent.y(), 5, false, 2);
+      m_mapView->identifyGraphicsOverlay(m_stopsGraphicsOverlay, mouseEvent.pos().x(), mouseEvent.pos().y(), 5, false, 2);
     }
   });
 
@@ -289,7 +298,7 @@ void MobileMap_SearchAndRoute::selectMap(int index)
         if (m_currentRouteTask)
         {
           // create a stop based on added graphic
-          m_stops << Stop(bluePinGraphic->geometry());
+          m_stops << Stop(geometry_cast<Point>(bluePinGraphic->geometry()));
 
           // create a Text Symbol to display stop number
           TextSymbol* textSymbol = new TextSymbol(m_stopGraphicParent);

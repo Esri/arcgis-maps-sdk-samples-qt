@@ -14,11 +14,11 @@
 // limitations under the License.
 // [Legal]
 
-import QtQuick 2.11
-import QtQuick.Controls 2.5
-import QtQuick.Layouts 1.3
-import Esri.ArcGISRuntime 100.15
-import Esri.ArcGISExtras 1.1
+import QtQuick
+import QtQuick.Controls
+import QtQuick.Layouts
+import Esri.ArcGISRuntime
+import Esri.ArcGISExtras
 
 Rectangle {
     id: rootRectangle
@@ -26,7 +26,11 @@ Rectangle {
     width: 800
     height: 600
 
-    readonly property url styleDataPath: System.userHomePath + "/ArcGIS/Runtime/Data/styles/emoji-mobile.stylx"
+    readonly property url styleDataPath: {
+        Qt.platform.os === "ios" ?
+            System.writableLocationUrl(System.StandardPathsDocumentsLocation) + "/ArcGIS/Runtime/Data/styles/emoji-mobile.stylx" :
+            System.writableLocationUrl(System.StandardPathsHomeLocation) + "/ArcGIS/Runtime/Data/styles/emoji-mobile.stylx"
+    }
     property var currentSymbol
     property var currentFace
     property var currentEyes
@@ -52,7 +56,7 @@ Rectangle {
             id: graphicsOverlay
         }
 
-        onMouseClicked: {
+        onMouseClicked: mouse => {
             const graphic = ArcGISRuntimeEnvironment.createObject("Graphic");
             graphic.geometry = mouse.mapPoint;
             graphic.symbol = currentSymbol;

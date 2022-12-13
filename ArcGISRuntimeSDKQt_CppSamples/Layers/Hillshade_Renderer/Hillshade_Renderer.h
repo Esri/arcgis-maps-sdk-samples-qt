@@ -17,13 +17,10 @@
 #ifndef HILLSHADE_RENDERER_H
 #define HILLSHADE_RENDERER_H
 
-namespace Esri
+namespace Esri::ArcGISRuntime
 {
-  namespace ArcGISRuntime
-  {
-    class MapQuickView;
-    class RasterLayer;
-  }
+  class MapQuickView;
+  class RasterLayer;
 }
 
 #include <QQuickItem>

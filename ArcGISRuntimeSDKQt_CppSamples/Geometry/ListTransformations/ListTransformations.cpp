@@ -31,15 +31,20 @@
 #include "DatumTransformation.h"
 #include "GeographicTransformationStep.h"
 #include "GeographicTransformation.h"
+#include "Error.h"
+#include "MapTypes.h"
+#include "GraphicsOverlayListModel.h"
+#include "GraphicListModel.h"
+#include "SymbolTypes.h"
+#include "SpatialReference.h"
+#include "Viewpoint.h"
+#include "Envelope.h"
+#include "Polygon.h"
 
-#include <QDir>
 #include <QtCore/qglobal.h>
 #include <QUrl>
-#include <QVariantMap>
-
-#ifdef Q_OS_IOS
 #include <QStandardPaths>
-#endif // Q_OS_IOS
+#include <QVariantMap>
 
 using namespace Esri::ArcGISRuntime;
 
@@ -50,12 +55,10 @@ namespace
   {
     QString dataPath;
 
-  #ifdef Q_OS_ANDROID
-    dataPath = "/sdcard";
-  #elif defined Q_OS_IOS
+  #ifdef Q_OS_IOS
     dataPath = QStandardPaths::writableLocation(QStandardPaths::DocumentsLocation);
   #else
-    dataPath = QDir::homePath();
+    dataPath = QStandardPaths::writableLocation(QStandardPaths::HomeLocation);
   #endif
 
     return dataPath;

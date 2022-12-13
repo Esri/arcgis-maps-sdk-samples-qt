@@ -14,11 +14,11 @@
 // limitations under the License.
 // [Legal]
 
-import QtQuick 2.6
-import QtQuick.Controls 2.2
-import QtQuick.Layouts 1.3
-import Esri.ArcGISRuntime 100.15
-import Esri.ArcGISRuntime.Toolkit 100.15
+import QtQuick
+import QtQuick.Controls
+import QtQuick.Layouts
+import Esri.ArcGISRuntime
+import Esri.ArcGISRuntime.Toolkit
 
 Rectangle {
     id: rootRectangle
@@ -84,7 +84,7 @@ Rectangle {
 
     //! [Portal findItems webmaps part 1]
     // webmaps authored prior to July 2nd, 2014 are not supported - so search only from that date to the current time
-    property string fromDate: "000000" + new Date('Wed, 02 Jul 2014 00:00:00 GMT').getTime()
+    property string fromDate: "000000" + new Date('2014-07-02T00:00:00Z').getTime()
     property string toDate: "000000" + new Date().getTime()
 
     PortalQueryParametersForItems {

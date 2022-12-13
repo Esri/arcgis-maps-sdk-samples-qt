@@ -21,14 +21,16 @@
 #include "Display3DLabelsInScene.h"
 
 #include "ArcadeLabelExpression.h"
-#include "ArcGISTiledElevationSource.h"
 #include "FeatureLayer.h"
-#include "GroupLayer.h"
 #include "LabelDefinition.h"
-#include "Layer.h"
 #include "Scene.h"
 #include "SceneQuickView.h"
 #include "TextSymbol.h"
+#include "Error.h"
+#include "LayerListModel.h"
+#include "GroupLayer.h"
+#include "ServiceTypes.h"
+#include "LabelDefinitionListModel.h"
 
 using namespace Esri::ArcGISRuntime;
 

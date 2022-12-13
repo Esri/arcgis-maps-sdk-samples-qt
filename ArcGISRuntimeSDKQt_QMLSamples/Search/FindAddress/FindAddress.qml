@@ -14,11 +14,11 @@
 // limitations under the License.
 // [Legal]
 
-import QtQuick 2.6
-import QtQuick.Controls 2.2
-import QtQuick.Layouts 1.3
-import Esri.ArcGISRuntime 100.15
-import Esri.ArcGISRuntime.Toolkit 100.15
+import QtQuick
+import QtQuick.Controls
+import QtQuick.Layouts
+import Esri.ArcGISRuntime
+import Esri.ArcGISRuntime.Toolkit
 
 Rectangle {
     id: root
@@ -72,7 +72,7 @@ Rectangle {
         }
 
         // perform identify operation on mapview
-        onMouseClicked: {
+        onMouseClicked: mouse => {
             if (callout.visible)
                 callout.dismiss();
             calloutLocation = mouse.mapPoint;
@@ -93,12 +93,14 @@ Rectangle {
         // map callout window
         Callout {
             id: callout
-            borderWidth: 1
+            background: Rectangle {
+                border.width: 1
+                border.color: "lightgrey"
+            }
             calloutData: parent.calloutData
-            borderColor: "lightgrey"
-            accessoryButtonHidden: true
+            accessoryButtonVisible: false
             maxWidth: root.width * 0.75
-            leaderPosition: leaderPositionEnum.Automatic
+            leaderPosition: Callout.LeaderPosition.Automatic
         }
     }
 

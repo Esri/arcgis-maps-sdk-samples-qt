@@ -13,9 +13,9 @@
 // limitations under the License.
 // [Legal]
 
-import QtQuick 2.5
-import Esri.ArcGISExtras 1.1
-import Esri.ArcGISRuntimeSamples 1.0
+import QtQuick
+import Esri.ArcGISExtras
+import Esri.ArcGISRuntimeSamples
 
 Item {
     property var currentItem
@@ -35,44 +35,28 @@ Item {
         id: fileFolder
     }
 
-    PermissionsHelper {
-        id: permissionsHelper
-        onRequestFilesystemAccessCompleted: {
-            if (fileSystemAccessGranted) {
-                downloadDataItems();
-            } else {
-                const msg = "Insufficient filesystem permissions";
-                if (debug)
-                    console.log(msg);
-
-                failedToDownload = true;
-                SampleManager.downloadInProgress = false;
-                SampleManager.downloadText = msg;
-            }
-        }
-    }
-
     function downloadAllDataItems() {
         SampleManager.downloadInProgress = true;
         downloadQueue = [];
-
-        if (!permissionsHelper.fileSystemAccessGranted) {
-            permissionsHelper.requestFilesystemAccess();
-            failedToDownload = false;
-            return;
-        }
 
         for (let i = 0; i < SampleManager.samples.size; i++) {
             const sample = SampleManager.samples.get(i);
             for (let j = 0; j < sample.dataItems.size; j++) {
                 if (sample.dataItems.size > 0) {
                     const dataItem = sample.dataItems.get(j);
-                    fileInfo.filePath = dataItem.path;
+
+                    // Convert the relative path to a writable path
+                    if (Qt.platform.os === "ios")
+                        fileInfo.filePath = System.writableLocation(System.StandardPathsDocumentsLocation) + dataItem.path.substring(1);
+                    else
+                        fileInfo.filePath = System.writableLocation(System.StandardPathsHomeLocation) + dataItem.path.substring(1);
+                    fileInfo.refresh();
+
                     if (fileInfo.exists && (!fileInfo.isFolder))
                         continue;
 
-                    fileFolder.path = dataItem.path;
-                    dataPackageFileInfo.filePath = dataItem.path + "/dataPackage.zip";
+                    fileFolder.path = fileInfo.filePath;
+                    dataPackageFileInfo.filePath = fileInfo.filePath + "/dataPackage.zip";
                     if (fileFolder.exists && dataPackageFileInfo.exists)
                         continue;
 
@@ -87,15 +71,13 @@ Item {
         SampleManager.downloadInProgress = true;
         downloadQueue = [];
 
-        if (!permissionsHelper.fileSystemAccessGranted) {
-            permissionsHelper.requestFilesystemAccess();
-            failedToDownload = false;
-            return;
-        }
-
         for (let i = 0; i < SampleManager.currentSample.dataItems.size; i++) {
             const dataItem = SampleManager.currentSample.dataItems.get(i);
-            fileInfo.filePath = dataItem.path;
+            if (Qt.platform.os === "ios")
+                fileInfo.filePath = System.writableLocation(System.StandardPathsDocumentsLocation) + dataItem.path.substring(1);
+            else
+                fileInfo.filePath = System.writableLocation(System.StandardPathsHomeLocation) + dataItem.path.substring(1);
+            fileInfo.refresh();
             if (fileInfo.exists && (!fileInfo.isFolder))
                 continue;
 
@@ -115,7 +97,10 @@ Item {
             const count = downloadQueue.length;
             SampleManager.downloadText = "Remaining items in queue: %1".arg(count);
             currentItem = downloadQueue.pop();
-            SampleManager.downloadData(currentItem.itemId, System.resolvedPath(currentItem.path));
+            if (Qt.platform.os === "ios")
+                SampleManager.downloadData(currentItem.itemId, System.writableLocation(System.StandardPathsDocumentsLocation) + currentItem.path.substring(1));
+            else
+                SampleManager.downloadData(currentItem.itemId, System.writableLocation(System.StandardPathsHomeLocation) + currentItem.path.substring(1));
         } else {
             SampleManager.downloadText = "Downloads complete";
             SampleManager.downloadInProgress = false;

@@ -1,6 +1,6 @@
 // [WriteFile Name=Buffer, Category=Geometry]
 // [Legal]
-// Copyright 2018 Esri.
+// Copyright 2022 Esri.
 
 // Licensed under the Apache License, Version 2.0 (the "License");
 // you may not use this file except in compliance with the License.
@@ -17,52 +17,52 @@
 #ifndef BUFFER_H
 #define BUFFER_H
 
-namespace Esri
+namespace Esri::ArcGISRuntime
 {
-namespace ArcGISRuntime
-{
+class GraphicsOverlay;
 class Map;
 class MapQuickView;
-class GraphicsOverlay;
 class SimpleMarkerSymbol;
 class SimpleFillSymbol;
 }
-}
 
+#include <QObject>
 #include <QMouseEvent>
-#include <QQuickItem>
 
-class Buffer : public QQuickItem
+Q_MOC_INCLUDE("MapQuickView.h");
+
+class Buffer : public QObject
 {
   Q_OBJECT
 
-public:
-  explicit Buffer(QQuickItem* parent = nullptr);
-  ~Buffer() override = default;
-
+  Q_PROPERTY(Esri::ArcGISRuntime::MapQuickView* mapView READ mapView WRITE setMapView NOTIFY mapViewChanged)
   Q_PROPERTY(int bufferSize READ bufferSize WRITE setBufferSize NOTIFY bufferSizeChanged)
 
-  void componentComplete() override;
+public:
+  explicit Buffer(QObject* parent = nullptr);
+  ~Buffer() override;
+
   static void init();
+
   Q_INVOKABLE void clear();
 
 signals:
+  void mapViewChanged();
   void bufferSizeChanged();
 
 private:
+  Esri::ArcGISRuntime::MapQuickView* mapView() const;
+  void setMapView(Esri::ArcGISRuntime::MapQuickView* mapView);
+  int bufferSize() const;
+  void setBufferSize(int size);
+  void onMouseClicked(QMouseEvent& mouse);
+
   Esri::ArcGISRuntime::Map* m_map = nullptr;
   Esri::ArcGISRuntime::MapQuickView* m_mapView = nullptr;
   Esri::ArcGISRuntime::GraphicsOverlay* m_graphicsOverlayPlanar = nullptr;
   Esri::ArcGISRuntime::GraphicsOverlay* m_graphicsOverlayGeodesic = nullptr;
   Esri::ArcGISRuntime::GraphicsOverlay* m_graphicsOverlayPoints = nullptr;
   int m_bufferSize = 1000;
-
-private:
-  int bufferSize() const;
-  void setBufferSize(int size);
-
-private slots:
-  void onMouseClicked(QMouseEvent& mouse);
 };
 
 #endif // BUFFER_H

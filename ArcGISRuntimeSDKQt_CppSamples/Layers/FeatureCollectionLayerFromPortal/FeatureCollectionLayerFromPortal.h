@@ -17,17 +17,16 @@
 #ifndef FEATURECOLLECTIONLAYERFROMPORTAL_H
 #define FEATURECOLLECTIONLAYERFROMPORTAL_H
 
-namespace Esri
-{
-namespace ArcGISRuntime
+namespace Esri::ArcGISRuntime
 {
 class Map;
 class MapQuickView;
 class PortalItem;
 }
-}
 
 #include <QObject>
+
+Q_MOC_INCLUDE("MapQuickView.h")
 
 class FeatureCollectionLayerFromPortal : public QObject
 {

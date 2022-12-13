@@ -14,10 +14,10 @@
 // limitations under the License.
 // [Legal]
 
-import QtQuick 2.12
-import Esri.ArcGISRuntime 100.15
-import Esri.ArcGISExtras 1.1
-import QtQuick.Controls 2.12
+import QtQuick
+import Esri.ArcGISRuntime
+import Esri.ArcGISExtras
+import QtQuick.Controls
 
 Rectangle {
     id: rootRectangle
@@ -49,10 +49,12 @@ Rectangle {
             }
         }
 
-        onMouseClicked: {
+        onMouseClicked: mouse => {
             // Add a feature to the current feature table at the given mouse click or screen tap
             if (!featureTable)
                 return;
+
+            const feature = featureTable.createFeatureWithAttributes({"collection_timestamp": new Date()}, mouse.mapPoint);
 
             const addFeatureToFeatureTable = () => {
                 if (featureTable.addFeatureStatus !== Enums.TaskStatusCompleted)
@@ -64,7 +66,6 @@ Rectangle {
                 numberOfFeatures = featureTable.numberOfFeatures
             }
 
-            const feature = featureTable.createFeatureWithAttributes({"collection_timestamp": new Date()}, mouse.mapPoint);
             featureTable.addFeatureStatusChanged.connect(addFeatureToFeatureTable);
             featureTable.addFeature(feature);
         }
@@ -72,29 +73,33 @@ Rectangle {
 
     Rectangle {
         id: buttonListRectangle
+        anchors {
+            top: parent.top
+            right: parent.right
+            topMargin: 10
+            rightMargin: 10
+        }
         width: 250
         height: buttonColumn.height + 20
         color: "#ffffff"
-        anchors.right: parent.right
-        anchors.top: parent.top
-        anchors.topMargin: 10
-        anchors.rightMargin: 10
 
         // Prevent mouse interaction from propagating to the MapView
         MouseArea {
             anchors.fill: parent
-            onPressed: mouse.accepted = true;
-            onWheel: wheel.accepted = true;
+            onPressed: mouse => mouse.accepted = true;
+            onWheel: wheel => wheel.accepted = true;
         }
 
         Column {
             id: buttonColumn
-            anchors.left: parent.left
-            anchors.right: parent.right
-            anchors.top: parent.top
-            anchors.rightMargin: 10
-            anchors.leftMargin: 10
-            anchors.topMargin: 10
+            anchors {
+                top: parent.top
+                left: parent.left
+                right: parent.right
+                topMargin: 10
+                leftMargin: 10
+                rightMargin: 10
+            }
             height: children.height
             spacing: 5
 
@@ -104,11 +109,13 @@ Rectangle {
 
             Button {
                 id: createGdbButton
+                anchors {
+                    left: parent.left
+                    right: parent.right
+                    leftMargin: 0
+                    rightMargin: 0
+                }
                 text: qsTr("Create new .geodatabase")
-                anchors.left: parent.left
-                anchors.right: parent.right
-                anchors.rightMargin: 0
-                anchors.leftMargin: 0
                 enabled: !gdbOpen
                 onClicked: {
                     createGeodatabase();
@@ -117,11 +124,13 @@ Rectangle {
 
             Button {
                 id: viewGdbTableButton
+                anchors {
+                    left: parent.left
+                    right: parent.right
+                    leftMargin: 0
+                    rightMargin: 0
+                }
                 text: qsTr("View feature table")
-                anchors.left: parent.left
-                anchors.right: parent.right
-                anchors.rightMargin: 0
-                anchors.leftMargin: 0
                 enabled: gdbOpen
                 onClicked: {
                     featureTableDisplay.visible = true;
@@ -130,11 +139,13 @@ Rectangle {
             }
             Button {
                 id: clearFeaturesButton
+                anchors {
+                    left: parent.left
+                    right: parent.right
+                    leftMargin: 0
+                    rightMargin: 0
+                }
                 text: qsTr("Clear features")
-                anchors.left: parent.left
-                anchors.right: parent.right
-                anchors.rightMargin: 0
-                anchors.leftMargin: 0
                 enabled: gdbOpen
                 onClicked: {
                     clearTable();
@@ -143,11 +154,13 @@ Rectangle {
 
             Button {
                 id: closeGdbButton
+                anchors {
+                    left: parent.left
+                    right: parent.right
+                    leftMargin: 0
+                    rightMargin: 0
+                }
                 text: qsTr("Close .geodatabase")
-                anchors.left: parent.left
-                anchors.right: parent.right
-                anchors.rightMargin: 0
-                anchors.leftMargin: 0
                 enabled: gdbOpen
                 onClicked: {
                     closeGeodatabase();
@@ -157,24 +170,28 @@ Rectangle {
             }
 
             Text {
+                anchors {
+                    left: parent.left
+                    right: parent.right
+                    leftMargin: 0
+                    rightMargin: 0
+                }
                 text: mobileGeodatabase ? "Created new geodatabase:\n" + mobileGeodatabase.path.toString().split("/").pop() : "Geodatabase path not found"
-                anchors.left: parent.left
-                anchors.right: parent.right
                 font.pixelSize: 12
                 wrapMode: Text.WrapAnywhere
-                anchors.rightMargin: 0
-                anchors.leftMargin: 0
                 visible: gdbOpen
             }
 
             Text {
+                anchors {
+                    left: parent.left
+                    right: parent.right
+                    leftMargin: 0
+                    rightMargin: 0
+                }
                 text: "Number of features: " + numberOfFeatures + (numberOfFeatures === 0 ? "\n(Click or tap the map to add new features)" : "")
-                anchors.left: parent.left
-                anchors.right: parent.right
                 font.pixelSize: 12
                 wrapMode: Text.WordWrap
-                anchors.rightMargin: 0
-                anchors.leftMargin: 0
                 visible: gdbOpen
             }
         }
@@ -193,14 +210,16 @@ Rectangle {
         // Prevent mouse interaction from propagating to the MapView
         MouseArea {
             anchors.fill: parent
-            onPressed: mouse.accepted = true;
-            onWheel: wheel.accepted = true;
+            onPressed: mouse => mouse.accepted = true;
+            onWheel: wheel => wheel.accepted = true;
         }
 
         Column {
             id: gdbInfoColumn
-            anchors.centerIn: parent
-            anchors.margins: 10
+            anchors {
+                centerIn: parent
+                margins: 10
+            }
             spacing: 10
             width: parent.width - 20
             height: children.height
@@ -231,7 +250,7 @@ Rectangle {
         }
     }
 
-    // Declare the C++ instance which creates the scene etc. and supply the view
+    // Declare the C++ instance which creates the map etc. and supply the view
     Rectangle {
         id: featureTableDisplay
         anchors {
@@ -246,14 +265,16 @@ Rectangle {
         // Prevent mouse interaction from propagating to the MapView
         MouseArea {
             anchors.fill: parent
-            onPressed: mouse.accepted = true;
-            onWheel: wheel.accepted = true;
+            onPressed: mouse => mouse.accepted = true;
+            onWheel: wheel => wheel.accepted = true;
         }
 
         ListView {
             id: tableView
-            anchors.fill: parent
-            anchors.margins: 10
+            anchors {
+                fill: parent
+                margins: 10
+            }
             ScrollBar.vertical: ScrollBar {
                 active: true
             }
@@ -322,21 +343,23 @@ Rectangle {
     }
 
     Rectangle {
-        id: buttonRectangle
+        id: closeTableButtonRectangle
+        anchors {
+            top: parent.top
+            right: parent.right
+            topMargin: 10
+            rightMargin: 10
+        }
         width: closeTableButton.width + 10
         height: closeTableButton.height + 10
         color: "#ffffff"
-        anchors.right: parent.right
-        anchors.top: parent.top
-        anchors.topMargin: 10
-        anchors.rightMargin: 10
         visible: featureTableDisplay.visible
 
         // Prevent mouse interaction from propagating to the MapView
         MouseArea {
             anchors.fill: parent
-            onPressed: mouse.accepted = true;
-            onWheel: wheel.accepted = true;
+            onPressed: mouse => mouse.accepted = true;
+            onWheel: wheel => wheel.accepted = true;
         }
 
         Button {

@@ -24,12 +24,11 @@
 #include "Map.h"
 #include "MapQuickView.h"
 #include "MobileMapPackage.h"
+#include "Error.h"
+#include "MapTypes.h"
+#include "LayerListModel.h"
 
-#include <QDir>
-
-#ifdef Q_OS_IOS
 #include <QStandardPaths>
-#endif // Q_OS_IOS
 
 using namespace Esri::ArcGISRuntime;
 
@@ -40,12 +39,10 @@ namespace
   {
     QString dataPath;
 
-    #ifdef Q_OS_ANDROID
-      dataPath = "/sdcard";
-    #elif defined Q_OS_IOS
+    #ifdef Q_OS_IOS
       dataPath = QStandardPaths::writableLocation(QStandardPaths::DocumentsLocation);
     #else
-      dataPath = QDir::homePath();
+      dataPath = QStandardPaths::writableLocation(QStandardPaths::HomeLocation);
     #endif
 
     return dataPath;

@@ -17,16 +17,13 @@
 #ifndef DISPLAYKML_H
 #define DISPLAYKML_H
 
-namespace Esri
-{
-namespace ArcGISRuntime
+namespace Esri::ArcGISRuntime
 {
 class SceneQuickView;
 class Scene;
 class KmlLayer;
 class KmlDataset;
 class PortalItem;
-}
 }
 
 #include "Viewpoint.h"

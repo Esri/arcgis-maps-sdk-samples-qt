@@ -27,14 +27,15 @@
 #include "RasterLayer.h"
 #include "RasterFunction.h"
 #include "Envelope.h"
+#include "MapTypes.h"
+#include "Error.h"
+#include "LayerListModel.h"
+#include "RasterFunctionArguments.h"
+#include "Viewpoint.h"
 
-#include <QDir>
 #include <QFileInfo>
 #include <QtCore/qglobal.h>
-
-#ifdef Q_OS_IOS
 #include <QStandardPaths>
-#endif // Q_OS_IOS
 
 using namespace Esri::ArcGISRuntime;
 
@@ -45,12 +46,10 @@ QString defaultDataPath()
 {
   QString dataPath;
 
-#ifdef Q_OS_ANDROID
-  dataPath = "/sdcard";
-#elif defined Q_OS_IOS
+#ifdef Q_OS_IOS
   dataPath = QStandardPaths::writableLocation(QStandardPaths::DocumentsLocation);
 #else
-  dataPath = QDir::homePath();
+  dataPath = QStandardPaths::writableLocation(QStandardPaths::HomeLocation);
 #endif
 
   return dataPath;
@@ -93,7 +92,7 @@ void RasterFunctionFile::componentComplete()
   m_map->operationalLayers()->append(rasterLayer);
 
   // Set initial Extent
-  Envelope env = Envelope::fromJson("{\"spatialReference\": {\"latestWkid\": 3857, \"wkid\": 102100 },\"xmax\": -13591503.517810356,\"xmin\": -13606233.44023646,\"ymax\": 4982810.138527592,\"ymin\": 4971762.696708013}");
+  Envelope env = geometry_cast<Envelope>(Envelope::fromJson("{\"spatialReference\": {\"latestWkid\": 3857, \"wkid\": 102100 },\"xmax\": -13591503.517810356,\"xmin\": -13606233.44023646,\"ymax\": 4982810.138527592,\"ymin\": 4971762.696708013}"));
   m_map->setInitialViewpoint(Viewpoint(env));
 
   // Set map to map view

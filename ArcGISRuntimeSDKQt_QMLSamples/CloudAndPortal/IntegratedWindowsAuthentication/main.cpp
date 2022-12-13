@@ -18,7 +18,7 @@
 #include <QDir>
 #include <QQmlEngine>
 #ifdef QT_WEBVIEW_WEBENGINE_BACKEND
-#include <QtWebEngine>
+#include <QtWebEngineQuick>
 #endif // QT_WEBVIEW_WEBENGINE_BACKEND
 
 #include <Esri/ArcGISRuntime/Toolkit/register.h>
@@ -28,7 +28,13 @@
 
 int main(int argc, char *argv[])
 {
-  QGuiApplication::setAttribute(Qt::AA_EnableHighDpiScaling);
+  // Enforce OpenGL
+  qputenv("QSG_RHI_BACKEND", "opengl");
+
+#ifdef QT_WEBVIEW_WEBENGINE_BACKEND
+  QtWebEngineQuick::initialize();
+#endif // QT_WEBVIEW_WEBENGINE_BACKEND
+
   QGuiApplication app(argc, argv);
   app.setApplicationName(QStringLiteral("IntegratedWindowsAuthentication - QML"));
 
@@ -49,10 +55,6 @@ int main(int argc, char *argv[])
   {
       QCoreApplication::instance()->setProperty("Esri.ArcGISRuntime.apiKey", apiKey);
   }
-
-#ifdef QT_WEBVIEW_WEBENGINE_BACKEND
-  QtWebEngine::initialize();
-#endif // QT_WEBVIEW_WEBENGINE_BACKEND
 
   // Initialize application view
   QQuickView view;

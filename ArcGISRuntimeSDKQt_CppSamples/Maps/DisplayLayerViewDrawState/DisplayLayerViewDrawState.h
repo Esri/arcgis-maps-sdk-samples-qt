@@ -17,9 +17,7 @@
 #ifndef DISPLAYLAYERVIEWDRAWSTATE_H
 #define DISPLAYLAYERVIEWDRAWSTATE_H
 
-namespace Esri
-{
-namespace ArcGISRuntime
+namespace Esri::ArcGISRuntime
 {
 class FeatureLayer;
 class Map;
@@ -28,9 +26,10 @@ class PortalItem;
 class Layer;
 class LayerViewState;
 }
-}
 
 #include <QObject>
+
+Q_MOC_INCLUDE("MapQuickView.h")
 
 class DisplayLayerViewDrawState : public QObject
 {

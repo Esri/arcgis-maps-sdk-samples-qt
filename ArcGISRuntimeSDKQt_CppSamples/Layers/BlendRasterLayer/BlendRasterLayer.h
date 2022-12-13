@@ -17,16 +17,13 @@
 #ifndef BLENDRASTERLAYER_H
 #define BLENDRASTERLAYER_H
 
-namespace Esri
+namespace Esri::ArcGISRuntime
 {
-  namespace ArcGISRuntime
-  {
-    class Basemap;
-    class Map;
-    class MapQuickView;
-    class Raster;
-    class RasterLayer;
-  }
+  class Basemap;
+  class Map;
+  class MapQuickView;
+  class Raster;
+  class RasterLayer;
 }
 
 #include <QQuickItem>

@@ -17,16 +17,13 @@
 #ifndef ANALYZEHOTSPOTS_H
 #define ANALYZEHOTSPOTS_H
 
-namespace Esri
+namespace Esri::ArcGISRuntime
 {
-  namespace ArcGISRuntime
-  {
     class Map;
     class MapQuickView;
     class GeoprocessingTask;
     class GeoprocessingResult;
     class ArcGISMapImageLayer;
-  }
 }
 
 #include "GeoprocessingParameters.h"

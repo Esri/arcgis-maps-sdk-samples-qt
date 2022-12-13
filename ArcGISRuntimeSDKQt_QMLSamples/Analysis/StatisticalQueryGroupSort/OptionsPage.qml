@@ -11,8 +11,8 @@
 // limitations under the License.
 // [Legal]
 
-import QtQuick 2.6
-import QtQuick.Controls 2.2
+import QtQuick
+import QtQuick.Controls
 
 Rectangle {
     id: rootOptionsPage
@@ -126,7 +126,7 @@ Rectangle {
                             id: fieldComboBox
                             anchors.verticalCenter: parent.verticalCenter
                             property int modelWidth: 0
-                            width: modelWidth + leftPadding + rightPadding + indicator.width
+                            width: modelWidth + leftPadding + rightPadding
                             model: fields
                             onModelChanged: {
                                 if (!fields)
@@ -152,7 +152,7 @@ Rectangle {
                             id: statisticComboBox
                             anchors.verticalCenter: parent.verticalCenter
                             property int modelWidth: 0
-                            width: modelWidth + leftPadding + rightPadding + indicator.width
+                            width: modelWidth + leftPadding + rightPadding
                             model: statisticTypes
                             Component.onCompleted : {
                                 for (let i = 0; i < model.length; ++i) {
@@ -207,7 +207,6 @@ Rectangle {
                             highlightMoveVelocity: 1000000
 
                             delegate: Item {
-                                width: parent.width
                                 height: 25
 
                                 Row {
@@ -277,7 +276,6 @@ Rectangle {
                             clip: true
                             model: fields
                             delegate: Item {
-                                width: parent.width
                                 height: 25
 
                                 CheckBox {
@@ -286,7 +284,8 @@ Rectangle {
                                     checked: text === "State"
                                     onCheckedChanged: {
                                         if (checked) {
-                                            groupingFields.push(text);
+                                            if (groupingFields.indexOf(text) === -1)
+                                                groupingFields.push(text);
                                         } else {
                                             // remove the item from the selected list
                                             const i = groupingFields.indexOf(text);
@@ -376,7 +375,6 @@ Rectangle {
                             clip: true
                             model: orderByModel
                             delegate: Item {
-                                width: parent.width
                                 height: 25
 
                                 Row {

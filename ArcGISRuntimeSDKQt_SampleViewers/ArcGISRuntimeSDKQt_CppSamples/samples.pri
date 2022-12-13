@@ -180,6 +180,7 @@ INCLUDEPATH += \
     "$$SAMPLEPATHCPP/Maps/ShowMagnifier" \
     "$$SAMPLEPATHCPP/Maps/TakeScreenshot" \
     "$$SAMPLEPATHCPP/Routing/ClosestFacility" \
+    "$$SAMPLEPATHCPP/Routing/DisplayRouteLayer" \
     "$$SAMPLEPATHCPP/Routing/FindClosestFacilityToMultipleIncidentsService" \
     "$$SAMPLEPATHCPP/Routing/FindRoute" \
     "$$SAMPLEPATHCPP/Routing/FindServiceAreasForMultipleFacilities" \
@@ -394,6 +395,7 @@ HEADERS += \
     "$$SAMPLEPATHCPP/Maps/TakeScreenshot/MapImageProvider.h" \
     "$$SAMPLEPATHCPP/Maps/TakeScreenshot/TakeScreenshot.h" \
     "$$SAMPLEPATHCPP/Routing/ClosestFacility/ClosestFacility.h" \
+    "$$SAMPLEPATHCPP/Routing/DisplayRouteLayer/DisplayRouteLayer.h" \
     "$$SAMPLEPATHCPP/Routing/FindClosestFacilityToMultipleIncidentsService/FindClosestFacilityToMultipleIncidentsService.h" \
     "$$SAMPLEPATHCPP/Routing/FindRoute/FindRoute.h" \
     "$$SAMPLEPATHCPP/Routing/FindServiceAreasForMultipleFacilities/FindServiceAreasForMultipleFacilities.h" \
@@ -609,6 +611,7 @@ SOURCES += \
     "$$SAMPLEPATHCPP/Maps/TakeScreenshot/MapImageProvider.cpp" \
     "$$SAMPLEPATHCPP/Maps/TakeScreenshot/TakeScreenshot.cpp" \
     "$$SAMPLEPATHCPP/Routing/ClosestFacility/ClosestFacility.cpp" \
+    "$$SAMPLEPATHCPP/Routing/DisplayRouteLayer/DisplayRouteLayer.cpp" \
     "$$SAMPLEPATHCPP/Routing/FindClosestFacilityToMultipleIncidentsService/FindClosestFacilityToMultipleIncidentsService.cpp" \
     "$$SAMPLEPATHCPP/Routing/FindRoute/FindRoute.cpp" \
     "$$SAMPLEPATHCPP/Routing/FindServiceAreasForMultipleFacilities/FindServiceAreasForMultipleFacilities.cpp" \
@@ -817,6 +820,7 @@ RESOURCES += \
     "$$SAMPLEPATHCPP/Maps/ShowMagnifier/ShowMagnifier.qrc" \
     "$$SAMPLEPATHCPP/Maps/TakeScreenshot/TakeScreenshot.qrc" \
     "$$SAMPLEPATHCPP/Routing/ClosestFacility/ClosestFacility.qrc" \
+    "$$SAMPLEPATHCPP/Routing/DisplayRouteLayer/DisplayRouteLayer.qrc" \
     "$$SAMPLEPATHCPP/Routing/FindClosestFacilityToMultipleIncidentsService/FindClosestFacilityToMultipleIncidentsService.qrc" \
     "$$SAMPLEPATHCPP/Routing/FindRoute/FindRoute.qrc" \
     "$$SAMPLEPATHCPP/Routing/FindServiceAreasForMultipleFacilities/FindServiceAreasForMultipleFacilities.qrc" \

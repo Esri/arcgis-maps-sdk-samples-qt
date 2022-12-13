@@ -23,6 +23,12 @@
 #include "ArcGISMapImageLayer.h"
 #include "FeatureLayer.h"
 #include "ServiceFeatureTable.h"
+#include "LegendInfoListModel.h"
+#include "MapTypes.h"
+#include "SpatialReference.h"
+#include "Point.h"
+#include "Viewpoint.h"
+#include "LayerListModel.h"
 
 #include <QUrl>
 #include <QIdentityProxyModel>

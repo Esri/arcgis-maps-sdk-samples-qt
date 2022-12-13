@@ -26,6 +26,18 @@
 #include "SceneQuickView.h"
 #include "SimpleMarkerSymbol.h"
 #include "Surface.h"
+#include "Camera.h"
+#include "MapTypes.h"
+#include "SymbolTypes.h"
+#include "TaskWatcher.h"
+#include "GraphicsOverlayListModel.h"
+#include "GraphicListModel.h"
+#include "Surface.h"
+#include "ElevationSourceListModel.h"
+#include "Graphic.h"
+#include "Point.h"
+
+#include <QUuid>
 
 using namespace Esri::ArcGISRuntime;
 
@@ -98,7 +110,7 @@ void GetElevationAtPoint::setSceneView(SceneQuickView* sceneView)
 void GetElevationAtPoint::displayElevationOnClick(QMouseEvent& mouseEvent)
 {
   // Convert clicked screen position to position on the map surface.
-  const Point baseSurfacePos = m_sceneView->screenToBaseSurface(mouseEvent.x(), mouseEvent.y());
+  const Point baseSurfacePos = m_sceneView->screenToBaseSurface(mouseEvent.pos().x(), mouseEvent.pos().y());
 
   // Connect to callback for elevation query, which places marker and sets elevation
   connect(m_scene->baseSurface(), &Surface::locationToElevationCompleted,

@@ -14,9 +14,9 @@
 // limitations under the License.
 // [Legal]
 
-import QtQuick 2.6
-import QtQuick.Controls 2.2
-import Esri.ArcGISRuntime 100.15
+import QtQuick
+import QtQuick.Controls
+import Esri.ArcGISRuntime
 
 Rectangle {
     width: 800
@@ -101,7 +101,7 @@ Rectangle {
                 placeholderText: "Enter a state name to select"
                 inputMethodHints: Qt.ImhNoPredictiveText
                 selectByMouse: true
-                validator: RegExpValidator{ regExp: /^[a-zA-Z ]*$/ }
+                validator: RegularExpressionValidator{ regularExpression: /^[a-zA-Z ]*$/ }
                 Keys.onReturnPressed: {
                     btn.clicked();
                 }

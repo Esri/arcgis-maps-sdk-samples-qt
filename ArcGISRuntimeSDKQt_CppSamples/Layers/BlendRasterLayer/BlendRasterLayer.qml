@@ -14,10 +14,10 @@
 // limitations under the License.
 // [Legal]
 
-import QtQuick 2.6
-import QtQuick.Controls 2.2
-import QtQuick.Layouts 1.3
-import Esri.Samples 1.0
+import QtQuick
+import QtQuick.Controls
+import QtQuick.Layouts
+import Esri.Samples
 
 BlendRasterLayerSample {
     id: rootRectangle
@@ -132,7 +132,7 @@ BlendRasterLayerSample {
             ComboBox {
                 id: slopeCombo
                 property int modelWidth: 0
-                Layout.minimumWidth: modelWidth + leftPadding + rightPadding + indicator.width
+                Layout.minimumWidth: modelWidth + leftPadding + rightPadding
                 Layout.fillWidth: true
                 textRole: "name"
                 model: slopeTypeModel
@@ -155,7 +155,7 @@ BlendRasterLayerSample {
             ComboBox {
                 id: colorCombo
                 property int modelWidth: 0
-                Layout.minimumWidth: modelWidth + leftPadding + rightPadding + indicator.width
+                Layout.minimumWidth: modelWidth + leftPadding + rightPadding
                 Layout.fillWidth: true
                 textRole: "name"
                 model: colorRampModel

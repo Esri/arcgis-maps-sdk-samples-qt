@@ -11,10 +11,6 @@
 // See the License for the specific language governing permissions and
 // limitations under the License.
 
-#ifdef Q_OS_WIN
-#include <Windows.h>
-#endif
-
 #include "IntegratedWindowsAuthentication.h"
 #include "ArcGISRuntimeEnvironment.h"
 
@@ -22,8 +18,13 @@
 #include <QGuiApplication>
 #include <QQmlApplicationEngine>
 #include <QQmlEngine>
+
+#ifdef Q_OS_WIN
+#include <Windows.h>
+#endif
+
 #ifdef QT_WEBVIEW_WEBENGINE_BACKEND
-#include <QtWebEngine>
+#include <QtWebEngineQuick>
 #endif // QT_WEBVIEW_WEBENGINE_BACKEND
 
 #define STRINGIZE(x) #x
@@ -33,7 +34,13 @@
 
 int main(int argc, char *argv[])
 {
-  QGuiApplication::setAttribute(Qt::AA_EnableHighDpiScaling);
+  // Enforce OpenGL
+  qputenv("QSG_RHI_BACKEND", "opengl");
+
+#ifdef QT_WEBVIEW_WEBENGINE_BACKEND
+  QtWebEngineQuick::initialize();
+#endif // QT_WEBVIEW_WEBENGINE_BACKEND
+
   QGuiApplication app(argc, argv);
   app.setApplicationName(QStringLiteral("IntegratedWindowsAuthentication - C++"));
 
@@ -54,10 +61,6 @@ int main(int argc, char *argv[])
   {
       Esri::ArcGISRuntime::ArcGISRuntimeEnvironment::setApiKey(apiKey);
   }
-
-#ifdef QT_WEBVIEW_WEBENGINE_BACKEND
-  QtWebEngine::initialize();
-#endif // QT_WEBVIEW_WEBENGINE_BACKEND
 
   // Initialize the sample
   IntegratedWindowsAuthentication::init();

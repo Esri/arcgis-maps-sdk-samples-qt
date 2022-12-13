@@ -17,14 +17,11 @@
 #ifndef CREATEGEOMETRIES_H
 #define CREATEGEOMETRIES_H
 
-namespace Esri
-{
-namespace ArcGISRuntime
+namespace Esri::ArcGISRuntime
 {
 class Map;
 class MapQuickView;
 class GraphicsOverlay;
-}
 }
 
 #include "Geometry.h"

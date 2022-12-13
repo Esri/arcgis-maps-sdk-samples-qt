@@ -15,14 +15,11 @@
 #ifndef ADDITEMSTOPORTAL_H
 #define ADDITEMSTOPORTAL_H
 
-namespace Esri
+namespace Esri::ArcGISRuntime
 {
-  namespace ArcGISRuntime
-  {
     class Portal;
     class PortalItem;
     class PortalUser;
-  }
 }
 
 #include <QQuickItem>
@@ -80,6 +77,7 @@ private:
   bool m_itemDeleted = false;
   QString m_statusText;
   bool m_busy = false;
+  bool m_alreadyExisted = false;
 };
 
 #endif // ADDITEMSTOPORTAL_H

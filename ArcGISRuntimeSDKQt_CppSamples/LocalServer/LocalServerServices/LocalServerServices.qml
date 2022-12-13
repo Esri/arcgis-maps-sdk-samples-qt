@@ -14,10 +14,10 @@
 // limitations under the License.
 // [Legal]
 
-import QtQuick 2.6
-import QtQuick.Controls 2.2
-import Qt.labs.platform 1.0
-import Esri.Samples 1.0
+import QtQuick
+import QtQuick.Controls
+import Qt.labs.platform
+import Esri.Samples
 
 LocalServerServicesSample {
     id: localServerServicesSample
@@ -59,7 +59,7 @@ LocalServerServicesSample {
             ComboBox {
                 id: servicesCombo
                 property int modelWidth: 0
-                width: modelWidth + leftPadding + rightPadding + indicator.width
+                width: modelWidth + leftPadding + rightPadding
 
                 enabled: isServerRunning
                 model: ["Map Service", "Feature Service", "Geoprocessing Service"]

@@ -14,11 +14,11 @@
 // limitations under the License.
 // [Legal]
 
-import QtQuick 2.6
-import QtQuick.Controls 2.2
-import QtQuick.Layouts 1.1
-import Esri.ArcGISRuntime 100.15
-import Esri.ArcGISExtras 1.1
+import QtQuick
+import QtQuick.Controls
+import QtQuick.Layouts
+import Esri.ArcGISRuntime
+import Esri.ArcGISExtras
 
 Rectangle {
     id: rootRectangle
@@ -228,7 +228,7 @@ Rectangle {
 
         MouseArea {
             anchors.fill: parent
-            onClicked: mouse.accepted = true;
+            onClicked: mouse => mouse.accepted = true;
         }
     }
 
@@ -268,7 +268,7 @@ Rectangle {
             ComboBox {
                 id: gridTypeComboBox
                 property int modelWidth: 0
-                Layout.minimumWidth: modelWidth + leftPadding + rightPadding + indicator.width
+                Layout.minimumWidth: modelWidth + leftPadding + rightPadding
                 Layout.rightMargin: 10
                 Layout.fillWidth: true
                 model: [latlonGrid, mgrsGrid, utmGrid, usngGrid]
@@ -362,7 +362,7 @@ Rectangle {
             ComboBox {
                 id: colorCombo
                 property int modelWidth: 0
-                Layout.minimumWidth: modelWidth + leftPadding + rightPadding + indicator.width
+                Layout.minimumWidth: modelWidth + leftPadding + rightPadding
 
                 Layout.rightMargin: 10
                 Layout.fillWidth: true
@@ -393,7 +393,7 @@ Rectangle {
             ComboBox {
                 id: colorCombo2
                 property int modelWidth: 0
-                Layout.minimumWidth: modelWidth + leftPadding + rightPadding + indicator.width
+                Layout.minimumWidth: modelWidth + leftPadding + rightPadding
                 Layout.rightMargin: 10
                 Layout.fillWidth: true
                 model: ["red", "black", "blue"]
@@ -423,7 +423,7 @@ Rectangle {
             ComboBox {
                 id: positionCombo
                 property int modelWidth: 0
-                Layout.minimumWidth: modelWidth + leftPadding + rightPadding + indicator.width
+                Layout.minimumWidth: modelWidth + leftPadding + rightPadding
                 Layout.rightMargin: 10
                 Layout.fillWidth: true
                 model: [geographic, bottomLeft, bottomRight, topLeft, topRight, center, allSides]
@@ -455,7 +455,7 @@ Rectangle {
             ComboBox {
                 id: formatCombo
                 property int modelWidth: 0
-                Layout.minimumWidth: modelWidth + leftPadding + rightPadding + indicator.width
+                Layout.minimumWidth: modelWidth + leftPadding + rightPadding
                 Layout.rightMargin: 10
                 Layout.fillWidth: true
                 model: [dd, dms]

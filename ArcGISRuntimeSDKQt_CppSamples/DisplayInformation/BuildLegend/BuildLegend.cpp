@@ -26,6 +26,12 @@
 #include "ArcGISMapImageLayer.h"
 #include "FeatureLayer.h"
 #include "ServiceFeatureTable.h"
+#include "MapTypes.h"
+#include "LegendInfoListModel.h"
+#include "LayerListModel.h"
+#include "SpatialReference.h"
+#include "Point.h"
+#include "Viewpoint.h"
 
 #include <QUrl>
 

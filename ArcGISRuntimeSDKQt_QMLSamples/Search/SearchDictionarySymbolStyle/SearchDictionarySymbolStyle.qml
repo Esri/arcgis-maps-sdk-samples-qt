@@ -14,11 +14,11 @@
 // limitations under the License.
 // [Legal]
 
-import QtQuick 2.6
-import QtQuick.Controls 2.2
-import QtQuick.Layouts 1.3
-import Esri.ArcGISRuntime 100.15
-import Esri.ArcGISExtras 1.1
+import QtQuick
+import QtQuick.Controls
+import QtQuick.Layouts
+import Esri.ArcGISRuntime
+import Esri.ArcGISExtras
 
 Rectangle {
     id: rootRectangle
@@ -29,7 +29,11 @@ Rectangle {
     readonly property double fontSize: 16
     readonly property var repeaterModel: ["Names", "Tags", "Symbol Classes", "Categories", "Keys"]
     readonly property var hintsModel: ["Fire", "Sustainment Points", "3", "Control Measure", "25212300_6"]
-    readonly property url dataPath: System.userHomePath + "/ArcGIS/Runtime/Data/styles/arcade_style/mil2525d.stylx"
+    readonly property url dataPath: {
+        Qt.platform.os === "ios" ?
+                    System.writableLocationUrl(System.StandardPathsDocumentsLocation) + "/ArcGIS/Runtime/Data/styles/arcade_style/mil2525d.stylx" :
+                    System.writableLocationUrl(System.StandardPathsHomeLocation) + "/ArcGIS/Runtime/Data/styles/arcade_style/mil2525d.stylx"
+    }
     property var searchParamList: [[],[],[],[],[]]
     property DictionarySymbolStyle dictionarySymbolStyle: Factory.DictionarySymbolStyle.createFromFile(dataPath);
 
@@ -100,8 +104,8 @@ Rectangle {
                             Layout.fillWidth: true
                             placeholderText: repeaterModel[index] +" (e.g. "+ hintsModel[index] +")"
                             selectByMouse: true
-                            validator: RegExpValidator{ regExp: /^\s*[\da-zA-Z_][\da-zA-Z\s_]*$/ }
-                            onAccepted:  addCategoryButton.mouseArea.clicked();
+                            validator: RegularExpressionValidator{ regularExpression: /^\s*[\da-zA-Z_][\da-zA-Z\s_]*$/ }
+                            onAccepted:  addCategoryButtonMouseArea.clicked(true);
                         }
 
                         Rectangle {
@@ -116,7 +120,7 @@ Rectangle {
                             enabled: categoryEntry.text.length > 0
 
                             MouseArea {
-                                id: mouseArea
+                                id: addCategoryButtonMouseArea
                                 anchors.fill: parent
                                 onClicked: {
 

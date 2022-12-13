@@ -14,10 +14,10 @@
 // limitations under the License.
 // [Legal]
 
-import QtQuick 2.6
-import QtQuick.Controls 2.2
-import QtQuick.Layouts 1.3
-import Esri.ArcGISRuntime 100.15
+import QtQuick
+import QtQuick.Controls
+import QtQuick.Layouts
+import Esri.ArcGISRuntime
 
 Rectangle {
     id: rootRectangle
@@ -58,6 +58,7 @@ Rectangle {
 
                 Label {
                     text: "Utility association types"
+                    color: "#000000"
                     Layout.alignment: Qt.AlignHCenter
                     Layout.fillWidth: true
                     Layout.columnSpan: 2
@@ -70,6 +71,7 @@ Rectangle {
                 Label {
                     id: attachmentLabel
                     text: "Attachment symbol"
+                    color: "#000000"
                 }
 
                 Image {
@@ -78,6 +80,7 @@ Rectangle {
                 Label {
                     id: connectivityLabel
                     text: "Connectivity symbol"
+                    color: "#000000"
                 }
             }
         }
@@ -159,8 +162,8 @@ Rectangle {
                         return true;
                     }
 
-                    for (let i = 0; i < associationsResult.length; i++) {
-                        const association = associationsResult[i];
+                    for (let i = 0; i < associationsResults.length; i++) {
+                        const association = associationsResults[i];
 
                         if (isGraphicUnique(associationsOverlay.graphics, association.globalId)) {
                             const graphic = ArcGISRuntimeEnvironment.createObject("Graphic", {geometry: association.geometry});
@@ -236,7 +239,7 @@ Rectangle {
             utilityNetwork.associationsWithEnvelope(currentExtent);
         }
 
-        onSetViewpointCompleted: {
+        onSetViewpointCompleted: succeeded => {
             if (!succeeded)
                 return;
 

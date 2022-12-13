@@ -26,9 +26,13 @@
 #include "StatisticsQueryParameters.h"
 #include "StatisticsQueryResult.h"
 #include "Field.h"
-
 #include "StatisticResultListModel.h"
+#include "Error.h"
+#include "OrderBy.h"
+#include "TaskWatcher.h"
+#include "CoreTypes.h"
 
+#include <QUuid>
 #include <QStringList>
 #include <QVariantList>
 #include <QList>

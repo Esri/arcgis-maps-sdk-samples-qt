@@ -17,11 +17,17 @@
 
 #include "CppSampleManager.h"
 
-#include "ArcGISQt_global.h"
+#include "ArcGISQt_global.h" // for LOCALSERVER_SUPPORTED
 #include "AuthenticationManager.h"
 #include "Portal.h"
 #include "PortalItem.h"
 #include "SampleManager_definitions.h"
+#include "MapTypes.h"
+#include "Error.h"
+#include "CredentialCache.h"
+#include "PortalTypes.h"
+#include "NetworkRequestProgress.h"
+
 using namespace Esri::ArcGISRuntime;
 
 #ifdef LOCALSERVER_SUPPORTED

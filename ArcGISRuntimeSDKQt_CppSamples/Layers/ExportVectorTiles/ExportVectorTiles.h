@@ -17,9 +17,7 @@
 #ifndef EXPORTVECTORTILES_H
 #define EXPORTVECTORTILES_H
 
-namespace Esri
-{
-namespace ArcGISRuntime
+namespace Esri::ArcGISRuntime
 {
 class ExportVectorTilesJob;
 class Graphic;
@@ -27,10 +25,11 @@ class GraphicsOverlay;
 class Map;
 class MapQuickView;
 }
-}
 
 #include <QObject>
 #include <QTemporaryDir>
+
+Q_MOC_INCLUDE("MapQuickView.h")
 
 class ExportVectorTiles : public QObject
 {
@@ -65,6 +64,7 @@ signals:
   void mapViewChanged();
   void exportProgressChanged();
   void jobStatusChanged();
+  void jobCancelDone(bool succeeded);
 
 private:
   Esri::ArcGISRuntime::MapQuickView* mapView() const;

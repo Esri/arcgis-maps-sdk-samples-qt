@@ -21,6 +21,8 @@ class SampleListModel;
 #include <QObject>
 #include <QString>
 
+Q_MOC_INCLUDE("SampleListModel.h")
+
 class SampleCategory : public QObject
 {
   Q_OBJECT

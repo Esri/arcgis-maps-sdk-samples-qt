@@ -39,8 +39,8 @@ RESOURCES += \
     "$$SAMPLEPATHQML/DisplayInformation/CreateSymbolStylesFromWebStyles/CreateSymbolStylesFromWebStyles.qrc" \
     "$$SAMPLEPATHQML/DisplayInformation/CustomDictionaryStyle/CustomDictionaryStyle.qrc" \
     "$$SAMPLEPATHQML/DisplayInformation/DisplayGrid/DisplayGrid.qrc" \
-    "$$SAMPLEPATHQML/DisplayInformation/GODictionaryRenderer_3D/GODictionaryRenderer_3D.qrc" \
-    "$$SAMPLEPATHQML/DisplayInformation/GODictionaryRenderer/GODictionaryRenderer.qrc" \
+    # "$$SAMPLEPATHQML/DisplayInformation/GODictionaryRenderer_3D/GODictionaryRenderer_3D.qrc" \ # Qt 6.2 does not support getting entries from an xml list
+    # "$$SAMPLEPATHQML/DisplayInformation/GODictionaryRenderer/GODictionaryRenderer.qrc" \ # Qt 6.2 does not support getting entries from an xml list
     "$$SAMPLEPATHQML/DisplayInformation/GOSymbols/GOSymbols.qrc" \
     "$$SAMPLEPATHQML/DisplayInformation/IdentifyGraphics/IdentifyGraphics.qrc" \
     "$$SAMPLEPATHQML/DisplayInformation/Picture_Marker_Symbol/Picture_Marker_Symbol.qrc" \
@@ -178,6 +178,7 @@ RESOURCES += \
     "$$SAMPLEPATHQML/Maps/ShowMagnifier/ShowMagnifier.qrc" \
     "$$SAMPLEPATHQML/Maps/TakeScreenshot/TakeScreenshot.qrc" \
     "$$SAMPLEPATHQML/Routing/ClosestFacility/ClosestFacility.qrc" \
+    "$$SAMPLEPATHQML/Routing/DisplayRouteLayer/DisplayRouteLayer.qrc" \
     "$$SAMPLEPATHQML/Routing/FindClosestFacilityToMultipleIncidentsService/FindClosestFacilityToMultipleIncidentsService.qrc" \
     "$$SAMPLEPATHQML/Routing/FindRoute/FindRoute.qrc" \
     "$$SAMPLEPATHQML/Routing/FindServiceAreasForMultipleFacilities/FindServiceAreasForMultipleFacilities.qrc" \
@@ -246,5 +247,6 @@ SOURCES += \
 
 # Exclude Raster Function File from macOS
 !macx {
-  "$$SAMPLEPATHQML/Layers/RasterFunctionFile/RasterFunctionFile.qrc"
+  RESOURCES += \
+    "$$SAMPLEPATHQML/Layers/RasterFunctionFile/RasterFunctionFile.qrc"
 }

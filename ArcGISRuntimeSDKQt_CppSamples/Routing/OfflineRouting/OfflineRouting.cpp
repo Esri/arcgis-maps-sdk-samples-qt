@@ -38,14 +38,25 @@
 #include "Stop.h"
 #include "TextSymbol.h"
 #include "TileCache.h"
+#include "MapTypes.h"
+#include "SymbolTypes.h"
+#include "TaskWatcher.h"
+#include "Error.h"
+#include "GraphicsOverlayListModel.h"
+#include "GraphicListModel.h"
+#include "RouteTaskInfo.h"
+#include "TravelMode.h"
+#include "IdentifyGraphicsOverlayResult.h"
+#include "Route.h"
+#include "Basemap.h"
+#include "Point.h"
+#include "SpatialReference.h"
 
+#include <QUuid>
 #include <memory>
-#include <QDir>
 #include <QScopedPointer>
-
-#ifdef Q_OS_IOS
+#include <QFileInfo>
 #include <QStandardPaths>
-#endif // Q_OS_IOS
 
 using namespace Esri::ArcGISRuntime;
 
@@ -56,12 +67,10 @@ QString defaultDataPath()
 {
   QString dataPath;
 
-#ifdef Q_OS_ANDROID
-  dataPath = "/sdcard";
-#elif defined Q_OS_IOS
+#ifdef Q_OS_IOS
   dataPath = QStandardPaths::writableLocation(QStandardPaths::DocumentsLocation);
 #else
-  dataPath = QDir::homePath();
+  dataPath = QStandardPaths::writableLocation(QStandardPaths::HomeLocation);
 #endif
 
   return dataPath;
@@ -186,7 +195,7 @@ void OfflineRouting::connectSignals()
 
   // check whether mouse pressed over an existing stop
   connect(m_mapView, &MapQuickView::mousePressed, this, [this](QMouseEvent& e){
-    m_mapView->identifyGraphicsOverlay(m_stopsOverlay, e.x(), e.y(), 10, false);
+    m_mapView->identifyGraphicsOverlay(m_stopsOverlay, e.pos().x(), e.pos().y(), 10, false);
   });
 
   // get stops from clicked locations
@@ -194,7 +203,7 @@ void OfflineRouting::connectSignals()
     if (!m_selectedGraphic)
     {
       // return if point is outside of bounds
-      if (!GeometryEngine::within(m_mapView->screenToLocation(e.x(), e.y()), m_routableArea))
+      if (!GeometryEngine::within(m_mapView->screenToLocation(e.pos().x(), e.pos().y()), m_routableArea))
       {
         qWarning() << "Outside of routable area.";
         return;
@@ -202,7 +211,7 @@ void OfflineRouting::connectSignals()
       TextSymbol* textSymbol = new TextSymbol(QString::number(m_stopsOverlay->graphics()->size() + 1), Qt::white, 20, HorizontalAlignment::Center, VerticalAlignment::Bottom, this);
       textSymbol->setOffsetY(m_pinSymbol->height() / 2);
       CompositeSymbol* stopLabel = new CompositeSymbol(QList<Symbol*>{m_pinSymbol, textSymbol}, this);
-      Graphic* stopGraphic = new Graphic(m_mapView->screenToLocation(e.x(), e.y()), stopLabel, this);
+      Graphic* stopGraphic = new Graphic(m_mapView->screenToLocation(e.pos().x(), e.pos().y()), stopLabel, this);
       m_stopsOverlay->graphics()->append(stopGraphic);
       findRoute();
     }
@@ -225,12 +234,12 @@ void OfflineRouting::connectSignals()
       e.accept();
 
       // return if point is outside of bounds
-      if (!GeometryEngine::within(m_mapView->screenToLocation(e.x(), e.y()), m_routableArea))
+      if (!GeometryEngine::within(m_mapView->screenToLocation(e.pos().x(), e.pos().y()), m_routableArea))
       {
         qWarning() << "Outside of routable area.";
         return;
       }
-      m_selectedGraphic->setGeometry(m_mapView->screenToLocation(e.x(), e.y()));
+      m_selectedGraphic->setGeometry(m_mapView->screenToLocation(e.pos().x(), e.pos().y()));
       findRoute();
     }
   });
@@ -258,7 +267,7 @@ void OfflineRouting::findRoute()
     QList<Stop> stops;
     for (const Graphic* graphic : *m_stopsOverlay->graphics())
     {
-      stops << Stop(graphic->geometry());
+      stops << Stop(geometry_cast<Point>(graphic->geometry()));
     }
 
     // configure stops and travel mode

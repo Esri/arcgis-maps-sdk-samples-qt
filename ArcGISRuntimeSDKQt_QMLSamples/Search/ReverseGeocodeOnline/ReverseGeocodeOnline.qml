@@ -14,11 +14,11 @@
 // limitations under the License.
 // [Legal]
 
-import QtQuick 2.6
-import QtQuick.Controls 2.6
-import Esri.ArcGISExtras 1.1
-import Esri.ArcGISRuntime 100.15
-import Esri.ArcGISRuntime.Toolkit 100.15
+import QtQuick
+import QtQuick.Controls
+import Esri.ArcGISExtras
+import Esri.ArcGISRuntime
+import Esri.ArcGISRuntime.Toolkit
 
 Rectangle {
     id: rootRectangle
@@ -40,11 +40,11 @@ Rectangle {
         Callout {
             id: callout
             calloutData: parent.calloutData
-            accessoryButtonHidden: true
-            leaderPosition: leaderPositionEnum.Top
+            accessoryButtonVisible: false
+            leaderPosition: Callout.LeaderPosition.Top
             padding: 5
         }
-        onMouseClicked: {
+        onMouseClicked: mouse => {
             clickedPoint = mapView.screenToLocation(mouse.x, mouse.y);
             mapView.identifyGraphicsOverlayWithMaxResults(graphicsOverlay, mouse.x, mouse.y, 5, false, 1);
         }

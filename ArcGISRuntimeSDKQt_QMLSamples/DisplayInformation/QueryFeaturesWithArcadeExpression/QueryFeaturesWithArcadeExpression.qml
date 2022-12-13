@@ -14,10 +14,10 @@
 // limitations under the License.
 // [Legal]
 
-import QtQuick 2.12
-import Esri.ArcGISRuntime 100.15
-import Esri.ArcGISExtras 1.1
-import Esri.ArcGISRuntime.Toolkit 100.15
+import QtQuick
+import Esri.ArcGISRuntime
+import Esri.ArcGISExtras
+import Esri.ArcGISRuntime.Toolkit
 
 Rectangle {
     id: rootRectangle
@@ -56,12 +56,12 @@ Rectangle {
                 }
             }
         }
-        onMouseClicked: {
+        onMouseClicked: mouse => {
             mapPoint = screenToLocation(mouse.x, mouse.y);
             if (identifyLayerStatus !== Enums.TaskStatusInProgress) {
                 if (map.operationalLayers.get(0))
                 {
-                    identifyLayer(map.operationalLayers.get(0), mouse.x, mouse.y, 12, false, 1);
+                    identifyLayerWithMaxResults(map.operationalLayers.get(0), mouse.x, mouse.y, 12, false, 1);
                 }
             }
         }
@@ -83,8 +83,8 @@ Rectangle {
         Callout {
             id: callout
             calloutData: parent.calloutData
-            accessoryButtonHidden: true
-            leaderPosition: leaderPositionEnum.Automatic
+            accessoryButtonVisible: false
+            leaderPosition: Callout.LeaderPosition.Automatic
         }
     }
 

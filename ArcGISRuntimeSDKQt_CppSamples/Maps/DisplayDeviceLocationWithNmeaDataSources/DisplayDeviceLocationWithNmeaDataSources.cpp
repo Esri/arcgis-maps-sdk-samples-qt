@@ -23,6 +23,12 @@
 #include "Map.h"
 #include "MapQuickView.h"
 #include "NmeaLocationDataSource.h"
+#include "MapTypes.h"
+#include "MapViewTypes.h"
+#include "TaskWatcher.h"
+#include "LocationDisplay.h"
+#include "SpatialReference.h"
+#include "Point.h"
 
 #include <QFile>
 #include <QTimer>

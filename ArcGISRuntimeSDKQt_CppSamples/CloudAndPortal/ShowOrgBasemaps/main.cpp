@@ -18,7 +18,7 @@
 #include <QQmlEngine>
 #include <QAbstractListModel>
 #ifdef QT_WEBVIEW_WEBENGINE_BACKEND
-#include <QtWebEngine>
+#include <QtWebEngineQuick>
 #endif // QT_WEBVIEW_WEBENGINE_BACKEND
 
 #ifdef Q_OS_WIN
@@ -35,7 +35,9 @@
 
 int main(int argc, char *argv[])
 {
-  QGuiApplication::setAttribute(Qt::AA_EnableHighDpiScaling);
+  // Enforce OpenGL
+  qputenv("QSG_RHI_BACKEND", "opengl");
+
   QGuiApplication app(argc, argv);
   app.setApplicationName("Show Org Basemaps - C++");
 
@@ -58,7 +60,7 @@ int main(int argc, char *argv[])
   }
 
 #ifdef QT_WEBVIEW_WEBENGINE_BACKEND
-  QtWebEngine::initialize();
+  QtWebEngineQuick::initialize();
 #endif // QT_WEBVIEW_WEBENGINE_BACKEND
 
   // Initialize the sample

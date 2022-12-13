@@ -23,12 +23,19 @@
 #include "Map.h"
 #include "MapQuickView.h"
 #include "SpatialReference.h"
-#include "Basemap.h"
 #include "GraphicsOverlay.h"
 #include "SimpleFillSymbol.h"
 #include "SimpleRenderer.h"
 #include "PolygonBuilder.h"
 #include "Graphic.h"
+#include "MapTypes.h"
+#include "SymbolTypes.h"
+#include "GraphicsOverlayListModel.h"
+#include "GraphicListModel.h"
+#include "IdentifyGraphicsOverlayResult.h"
+#include "TaskWatcher.h"
+#include "Geometry.h"
+
 #include <QMouseEvent>
 #include <QList>
 #include <QUuid>
@@ -105,7 +112,7 @@ void IdentifyGraphics::connectSignals()
     constexpr bool returnPopupsOnly = false;
     constexpr int maximumResults = 1;
 
-    m_mapView->identifyGraphicsOverlay(m_graphicsOverlay, mouseEvent.x(), mouseEvent.y(), tolerance, returnPopupsOnly, maximumResults);
+    m_mapView->identifyGraphicsOverlay(m_graphicsOverlay, mouseEvent.pos().x(), mouseEvent.pos().y(), tolerance, returnPopupsOnly, maximumResults);
   });
 
   // connect to the identifyLayerCompleted signal on the map view

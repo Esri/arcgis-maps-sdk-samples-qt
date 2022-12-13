@@ -14,11 +14,11 @@
 // limitations under the License.
 // [Legal]
 
-import QtQuick 2.12
-import QtQuick.Controls 2.12
-import QtQuick.Layouts 1.12
-import Esri.Samples 1.0
-import QtQuick.Dialogs 1.2
+import QtQuick
+import QtQuick.Controls
+import QtQuick.Layouts
+import Esri.Samples
+import Qt.labs.platform
 
 Item {
 
@@ -28,7 +28,7 @@ Item {
         anchors.fill: parent
 
         Component.onCompleted: {
-            // Set and keep the focus on SceneView to enable keyboard navigation
+            // Set and keep the focus on MapView to enable keyboard navigation
             forceActiveFocus();
         }
 
@@ -74,13 +74,12 @@ Item {
             id: errorMessageBox
             title: "Error message!"
             text: model.errorMessage
-            icon: StandardIcon.Warning
             visible: model.errorMessage === "" ? false : true
             onAccepted: model.errorMessage = "";
         }
     }
 
-    // Declare the C++ instance which creates the scene etc. and supply the view
+    // Declare the C++ instance which creates the map etc. and supply the view
     DisplayDimensionsSample {
         id: model
         mapView: view

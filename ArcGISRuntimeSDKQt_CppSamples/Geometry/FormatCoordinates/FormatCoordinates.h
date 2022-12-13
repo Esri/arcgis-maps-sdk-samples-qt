@@ -17,17 +17,18 @@
 #ifndef FORMATCOORDINATES_H
 #define FORMATCOORDINATES_H
 
-namespace Esri
-{
-namespace ArcGISRuntime
+namespace Esri::ArcGISRuntime
 {
 class Map;
 class MapQuickView;
 class GraphicsOverlay;
 }
-}
+
+#include <QObject>
 
 #include "Point.h"
+
+Q_MOC_INCLUDE("MapQuickView.h")
 
 class FormatCoordinates : public QObject
 {

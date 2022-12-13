@@ -14,12 +14,13 @@
 // limitations under the License.
 // [Legal]
 
-import QtQuick 2.6
-import QtQuick.Controls 2.2
-import Esri.Samples 1.0
-import QtQuick.Layouts 1.11
+import QtQuick
+import QtQuick.Controls
+import Esri.Samples
+import QtQuick.Layouts
 
 Item {
+    id: rootItem
     readonly property int checkBoxPadding: 20
 
     ButtonGroup {
@@ -198,7 +199,7 @@ Item {
         id: directionDelegate
         Rectangle {
             id: rect
-            width: parent.width
+            width: parent ? parent.width : 0
             height: 35
             color: directionWindow.color
 
@@ -227,7 +228,7 @@ Item {
         }
     }
 
-    // Declare the C++ instance which creates the scene etc. and supply the view
+    // Declare the C++ instance which creates the map etc. and supply the view
     RouteAroundBarriersSample {
         id: sampleModel
         mapView: view

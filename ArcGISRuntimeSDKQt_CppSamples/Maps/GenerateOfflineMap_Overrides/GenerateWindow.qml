@@ -11,9 +11,8 @@
 // See the License for the specific language governing permissions and
 // limitations under the License.
 
-import QtQuick 2.6
-import QtQuick.Controls 2.2
-import QtGraphicalEffects 1.0
+import QtQuick
+import QtQuick.Controls
 
 Rectangle {
     id: exportWindow
@@ -24,19 +23,15 @@ Rectangle {
     property string statusText: "Starting"
     property string progressText: "0"
 
-    RadialGradient {
+    Rectangle {
         anchors.fill: parent
-        opacity: 0.7
-        gradient: Gradient {
-            GradientStop { position: 0.0; color: "lightgrey" }
-            GradientStop { position: 0.7; color: "black" }
-        }
+        color: "#60000000"
     }
 
     MouseArea {
         anchors.fill: parent
-        onClicked: mouse.accepted = true
-        onWheel: wheel.accepted = true
+        onClicked: mouse => mouse.accepted = true
+        onWheel: wheel => wheel.accepted = true
     }
 
     Rectangle {

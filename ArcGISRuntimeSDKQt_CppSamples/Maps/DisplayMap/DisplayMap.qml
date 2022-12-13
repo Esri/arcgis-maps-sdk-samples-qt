@@ -1,6 +1,6 @@
 // [WriteFile Name=DisplayMap, Category=Maps]
 // [Legal]
-// Copyright 2016 Esri.
+// Copyright 2022 Esri.
 
 // Licensed under the Apache License, Version 2.0 (the "License");
 // you may not use this file except in compliance with the License.
@@ -14,22 +14,26 @@
 // limitations under the License.
 // [Legal]
 
-import QtQuick 2.6
-import Esri.Samples 1.0
+import QtQuick
+import QtQuick.Controls
+import Esri.Samples
 
-DisplayMapSample {
-    width: 800
-    height: 600
+Item {
 
-    //! [add a mapView component]
+    // add a mapView component
     MapView {
+        id: view
         anchors.fill: parent
-        objectName: "mapView"
 
         Component.onCompleted: {
-            // Set the focus on MapView to initially enable keyboard navigation
+            // Set and keep the focus on MapView to enable keyboard navigation
             forceActiveFocus();
         }
     }
-    //! [add a mapView component]
+
+    // Declare the C++ instance which creates the map etc. and supply the view
+    DisplayMapSample {
+        id: model
+        mapView: view
+    }
 }

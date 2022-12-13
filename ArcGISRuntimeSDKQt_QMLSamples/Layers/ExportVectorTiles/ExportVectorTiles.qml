@@ -14,10 +14,10 @@
 // limitations under the License.
 // [Legal]
 
-import QtQuick 2.12
-import Esri.ArcGISRuntime 100.15
-import QtQuick.Controls 2.12
-import Esri.ArcGISExtras 1.1
+import QtQuick
+import Esri.ArcGISRuntime
+import QtQuick.Controls
+import Esri.ArcGISExtras
 
 Rectangle {
     id: rootRectangle
@@ -97,12 +97,21 @@ Rectangle {
             BusyIndicator {
                 id: busyIndicator
                 anchors.horizontalCenter: parent.horizontalCenter
+                running: visible
             }
 
             Text {
                 id: statusText
                 anchors.horizontalCenter: parent.horizontalCenter
                 text: "Export job status: " + ["Not started", "Started", "Paused", "Succeeded", "Failed", "Cancelling"][exportJobStatus]
+                font.pixelSize: 16
+            }
+
+            Text {
+                id: statusTextCanceled
+                anchors.horizontalCenter: parent.horizontalCenter
+                text: "Job cancelled"
+                visible: !statusText.visible
                 font.pixelSize: 16
             }
 
@@ -223,6 +232,7 @@ Rectangle {
             const itemResourcePath = System.temporaryFolder.url + "/itemResources_%1".arg(new Date().getTime().toString());
 
             exportVectorTilesJob = exportVectorTilesWithStyleResources(defaultExportVectorTilesParameters, vectorTileCachePath, itemResourcePath);
+            exportVectorTilesJobConnections.target = exportVectorTilesJob;
 
             exportVectorTilesJob.resultChanged.connect(() => {
                 if (exportVectorTilesJob.result) {
@@ -273,6 +283,28 @@ Rectangle {
 
             // Start the export job once export parameters have been created
             exportVectorTilesJob.start();
+        }
+
+        readonly property Timer timer: Timer {
+            id: jobCancelDoneTimer
+            interval: 2000
+            onTriggered: { exportProgressWindow.visible = false; statusText.visible = true }
+        }
+
+        Connections {
+            id: exportVectorTilesJobConnections
+            ignoreUnknownSignals: true
+            function onCancelAsyncTaskStatusChanged() {
+                if(exportVectorTilesTask.exportVectorTilesJob.cancelAsyncTaskStatus === Enums.TaskStatusCompleted)
+                    statusTextCanceled.text = "Job canceled successfully";
+                else if(exportVectorTilesTask.exportVectorTilesJob.cancelAsyncTaskStatus === Enums.TaskStatusCompleted)
+                    statusTextCanceled.text = "Job failed to cancel successfully";
+                else
+                    return;
+                exportProgressWindow.visible = true;
+                statusText.visible = false;
+                jobCancelDoneTimer.start();
+            }
         }
     }
 

@@ -13,9 +13,9 @@
 // See the License for the specific language governing permissions and
 // limitations under the License.
 // [Legal]
-import QtQuick 2.12
-import QtQuick.Controls 2.12
-import Esri.Samples 1.0
+import QtQuick
+import QtQuick.Controls
+import Esri.Samples
 
 Item {
 
@@ -25,7 +25,7 @@ Item {
         anchors.fill: parent
     }
 
-    // Declare the C++ instance which creates the scene etc. and supply the view
+    // Declare the C++ instance which creates the map etc. and supply the view
     QueryOGCAPICQLFiltersSample {
         id: model
         mapView: view
@@ -101,8 +101,8 @@ Item {
                 width: 200
                 text: ""
                 selectByMouse: true
-                validator: RegExpValidator {
-                    regExp: /(0[1-9]|1[012])[/](0[1-9]|[12][0-9]|3[01])[/](19|20)\d\d/
+                validator: RegularExpressionValidator {
+                    regularExpression: /(0[1-9]|1[012])[/](0[1-9]|[12][0-9]|3[01])[/](19|20)\d\d/
                 }
                 placeholderText: "MM/DD/YYYY"
             }
@@ -123,8 +123,8 @@ Item {
                 width: 200
                 text: ""
                 selectByMouse: true
-                validator: RegExpValidator {
-                    regExp: /(0[1-9]|1[012])[/](0[1-9]|[12][0-9]|3[01])[/](19|20)\d\d/
+                validator: RegularExpressionValidator {
+                    regularExpression: /(0[1-9]|1[012])[/](0[1-9]|[12][0-9]|3[01])[/](19|20)\d\d/
                 }
                 placeholderText: "MM/DD/YYYY"
             }

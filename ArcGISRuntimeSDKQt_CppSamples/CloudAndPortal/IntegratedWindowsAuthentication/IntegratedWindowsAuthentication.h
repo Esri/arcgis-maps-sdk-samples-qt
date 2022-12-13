@@ -17,9 +17,7 @@
 #ifndef INTEGRATEDWINDOWSAUTHENTICATION_H
 #define INTEGRATEDWINDOWSAUTHENTICATION_H
 
-namespace Esri
-{
-namespace ArcGISRuntime
+namespace Esri::ArcGISRuntime
 {
 class Map;
 class MapQuickView;
@@ -31,10 +29,11 @@ class PortalQueryParametersForItems;
 class PortalQueryResultSetForItems;
 class Error;
 }
-}
 
 #include <QObject>
 #include <QAbstractListModel>
+
+Q_MOC_INCLUDE("MapQuickView.h")
 
 class IntegratedWindowsAuthentication : public QObject
 {

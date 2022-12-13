@@ -14,10 +14,10 @@
 // limitations under the License.
 // [Legal]
 
-import QtQuick 2.6
-import QtQuick.Controls 2.2
-import Esri.ArcGISRuntime 100.15
-import Esri.ArcGISRuntime.Toolkit 100.15
+import QtQuick
+import QtQuick.Controls
+import Esri.ArcGISRuntime
+import Esri.ArcGISRuntime.Toolkit
 
 Rectangle {
     id: rootRectangle
@@ -63,7 +63,7 @@ Rectangle {
     Component {
         id: layerWindow
         LayerWindow {
-            onCreateMapSelected: {
+            onCreateMapSelected: (basemap, layerList) => {
                 stackView.push(mapView)
                 const map = createMap(basemap, layerList);
                 mapView.map = map;
@@ -79,8 +79,8 @@ Rectangle {
                 stackView.pop();
             }
 
-            onSaveMapClicked: {
-                const thumbnail = null;
+            onSaveMapClicked: (title, tags, description) => {
+                const thumbnail = "";
                 const folder = null;
                 const forceSave = true;
                 const tagsList = tags.split(",");
@@ -101,7 +101,7 @@ Rectangle {
 
                 textFormat: Text.RichText
                 horizontalAlignment: Text.AlignHCenter
-                onLinkActivated: Qt.openUrlExternally(link)
+                onLinkActivated: link => Qt.openUrlExternally(link)
             }
 
             Button {

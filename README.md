@@ -1,4 +1,4 @@
-# ArcGIS Runtime SDK 100.15.0 for Qt sample applications
+# ArcGIS Maps SDK for Qt Samples
 
 ## Overview
 
@@ -7,9 +7,9 @@ The repo contains [Qt](http://qt.io) projects for each sample that can be run fr
 ## Table of Contents
 
 1. [Prerequisites](#prerequisites)
-2. [Set up the ArcGIS Runtime SDK for Qt samples repo locally](#set-up-the-arcgis-runtime-sdk-for-qt-samples-repo-locally)
+2. [Set up the ArcGIS Maps SDK for Qt samples repo locally](#set-up-the-arcgis-maps-sdk-for-qt-samples-repo-locally)
 3. [Open a sample project file in Qt Creator](#open-a-sample-project-file-in-qt-creator)
-4. [Build and run the Qt Runtime Samples Viewer locally](#build-and-run-the-qt-runtime-samples-viewer-locally)
+4. [Build and run the ArcGIS Maps SDK for Qt Sample Viewers locally](#build-and-run-the-qt-maps-sdk-samples-viewer-locally)
 5. [Use a previous version](#use-a-previous-version)
 6. [Use offline data in the samples](#use-offline-data-in-the-samples)
 7. [Resources](#resources)
@@ -22,10 +22,10 @@ The repo contains [Qt](http://qt.io) projects for each sample that can be run fr
 * Qt SDK 5.15.2 or higher (Open source or commercial)
 * Qt Creator
 * An [ArcGIS Developer API key](https://developers.arcgis.com/documentation/mapping-apis-and-services/security/api-keys/)
-* [ArcGIS Runtime Toolkit - Qt](https://github.com/Esri/arcgis-runtime-toolkit-qt) is required as some samples utilize toolkit components.
+* [ArcGIS Maps SDK for Qt Toolkit](https://github.com/Esri/arcgis-runtime-toolkit-qt) is required as some samples utilize toolkit components.
 * For more information, please visit the [System Requirements](https://developers.arcgis.com/qt/reference/system-requirements/) page.
 
-## Set up the ArcGIS Runtime SDK for Qt samples repo locally
+## Set up the ArcGIS Maps SDK for Qt samples repo locally
 
 ### Fork the repo
 
@@ -46,7 +46,7 @@ git clone https://github.com/YOUR_USERNAME/arcgis-runtime-samples-qt.git
 
 #### Clone the toolkit repo
 
-Change directory into your locally cloned samples repo and then use `git clone` to get a copy of the [ArcGIS Runtime Toolkit - Qt](https://github.com/Esri/arcgis-runtime-toolkit-qt.git).
+Change directory into your locally cloned samples repo and then use `git clone` to get a copy of the [ArcGIS Maps SDK for Qt Toolkit](https://github.com/Esri/arcgis-runtime-toolkit-qt.git).
 
 ```bash
 # Change directory to the clone of the samples repository
@@ -115,7 +115,7 @@ git merge upstream/main
 
 Start Qt Creator. When the IDE opens to the Welcome screen, click on the **Open Project** button and browse to a project file (.pro) within your forked repo location. Configure the project, [set your ArcGIS Developer API key](https://developers.arcgis.com/documentation/mapping-apis-and-services/security/tutorials/create-and-manage-an-api-key/#set-your-api-key) in `main.cpp`, and run the sample.
 
-## Build and run the Qt Runtime Samples Viewer locally
+## Build and run the ArcGIS Maps SDK for Qt Sample Viewers locally
 
 Start Qt Creator. When the IDE opens to the Welcome screen, click on the **Open Project** button and browse to either sample viewer's project file (.pro) within your forked repo location. The sample viewer project files are located at `arcgis-runtime-samples-qt\ArcGISRuntimeSDKQt_SampleViewers\`, in either `ArcGISRuntimeSDKQt_CppSamples` or `ArcGISRuntimeSDKQt_QMLSamples`. Configure the project, [set your ArcGIS Developer API key](https://developers.arcgis.com/documentation/mapping-apis-and-services/security/tutorials/create-and-manage-an-api-key/#set-your-api-key) in `ArcGISRuntimeSDKQt_Samples\SampleManager.cpp`, and run the sample.
 
@@ -123,7 +123,7 @@ NOTE: the sample viewer project files search for the toolkit.pri at the [default
 
 ## Use a previous version
 
-The `main` branch contains samples for the current, most up-to-date version of ArcGIS Runtime. To access previous versions, you can checkout by a tag or commit, or alternativley you can download the source zip:
+The `main` branch contains samples for the current, most up-to-date version of ArcGIS Maps SDK. To access previous versions, you can checkout by a tag or commit, or alternativley you can download the source zip:
 
 * [100.0](https://github.com/Esri/arcgis-runtime-samples-qt/releases/tag/1529)
 * [100.1](https://github.com/Esri/arcgis-runtime-samples-qt/releases/tag/1744)
@@ -147,19 +147,19 @@ Link | Local Location
 ---------|-------|
 |[Los Angeles Vector Tile Package](https://www.arcgis.com/home/item.html?id=d9f8ce6f6ac84b90a665a861d71a5d0a)| `<userhome>`/ArcGIS/Runtime/Data/vtpk/LosAngeles.vtpk |
 
-In this case, you would download the VTPK from the ArcGIS Online Location, and place in specified location. `<userhome>` is used throughout to denote a generic location on the different platforms. The below table specifies where this is on all of the supported platforms:
+In this case, you would download the VTPK from the ArcGIS Online Location, and place it in a specified location. This location is the path returned by `QStandardPaths::writableLocation(QStandardPaths::HomeLocation)` from the Qt [QStandardPaths](https://doc.qt.io/qt-6.2/qstandardpaths.html) class. `<userhome>` is used throughout to denote a generic location on the different platforms. The below table specifies where this is on all of the supported platforms:
 
 Platform | Userhome Location  | Example Location
----------|--------------------|------------------|
-Windows  | `%userprofile%`    | `C:\Users\Bob\ArcGIS\Runtime\Data` |
-Linux    | `~`                | `/users/bob/ArcGIS/Runtime/Data`   |
-Mac OS X | `~`                | `/Users/Bob/ArcGIS/Runtime/Data`   |
-Android  | `/sdcard`          | `/sdcard/ArcGIS/Runtime/Data`      |
-iOS      | `<your app bundle>`| `<appbundle>/ArcGIS/Runtime/Data`  |
+|---------|--------------------|------------------|
+Windows  | `%userprofile%`    | `C:\Users\Bob\ArcGIS\Runtime\Data`      |
+Linux    | `~`                | `/users/bob/ArcGIS/Runtime/Data`        |
+Mac OS X | `~`                | `/Users/Bob/ArcGIS/Runtime/Data`        |
+Android  | `<APPROOT>/files`  | `<APPROOT>/files/ArcGIS/Runtime/Data`   |
+iOS      | `<your app bundle>`| `<appbundle>/ArcGIS/Runtime/Data`       |
 
 ## Resources
 
-* [ArcGIS Runtime QtSDK Resource Center](https://developers.arcgis.com/qt/latest/)
+* [ArcGIS Maps SDK for Qt Resource Center](https://developers.arcgis.com/qt/latest/)
 * [Qt and QML](http://www.qt.io/)
 * [ArcGIS Blog](http://blogs.esri.com/esri/arcgis/)
 * [twitter@esri](http://twitter.com/esri)

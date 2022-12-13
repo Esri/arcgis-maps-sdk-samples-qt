@@ -34,14 +34,21 @@
 #include "GeometryEngine.h"
 #include "GenerateLayerOption.h"
 #include "GeodatabaseFeatureTable.h"
+#include "MapViewTypes.h"
+#include "TileCache.h"
+#include "Error.h"
+#include "IdInfo.h"
+#include "LayerListModel.h"
+#include "GenerateGeodatabaseJob.h"
+#include "TaskTypes.h"
+#include "Geodatabase.h"
+#include "TaskWatcher.h"
+#include "Viewpoint.h"
+#include "Point.h"
 
-#include <QDir>
 #include <QtCore/qglobal.h>
 #include <QUrl>
-
-#ifdef Q_OS_IOS
 #include <QStandardPaths>
-#endif // Q_OS_IOS
 
 using namespace Esri::ArcGISRuntime;
 
@@ -52,12 +59,10 @@ namespace
   {
     QString dataPath;
 
-  #ifdef Q_OS_ANDROID
-    dataPath = "/sdcard";
-  #elif defined Q_OS_IOS
+  #ifdef Q_OS_IOS
     dataPath = QStandardPaths::writableLocation(QStandardPaths::DocumentsLocation);
   #else
-    dataPath = QDir::homePath();
+    dataPath = QStandardPaths::writableLocation(QStandardPaths::HomeLocation);
   #endif
 
     return dataPath;
@@ -184,7 +189,7 @@ void GenerateGeodatabaseReplicaFromFeatureService::generateGeodatabaseFromCorner
   const Point corner1 = m_mapView->screenToLocation(xCorner1, yCorner1);
   const Point corner2 = m_mapView->screenToLocation(xCorner2, yCorner2);
   const Envelope extent(corner1, corner2);
-  const Geometry geodatabaseExtent = GeometryEngine::project(extent, SpatialReference::webMercator());
+  const Envelope geodatabaseExtent = geometry_cast<Envelope>(GeometryEngine::project(extent, SpatialReference::webMercator()));
 
   // get the updated parameters
   GenerateGeodatabaseParameters params = getUpdatedParameters(geodatabaseExtent);

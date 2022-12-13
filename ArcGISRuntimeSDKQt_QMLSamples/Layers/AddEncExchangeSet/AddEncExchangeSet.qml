@@ -14,9 +14,9 @@
 // limitations under the License.
 // [Legal]
 
-import QtQuick 2.6
-import Esri.ArcGISRuntime 100.15
-import Esri.ArcGISExtras 1.1
+import QtQuick
+import Esri.ArcGISRuntime
+import Esri.ArcGISExtras
 
 Rectangle {
     id: rootRectangle
@@ -24,12 +24,16 @@ Rectangle {
     width: 800
     height: 600
 
-    property url dataPath: System.userHomePath + "/ArcGIS/Runtime/Data"
+    readonly property url dataPath: {
+        Qt.platform.os === "ios" ?
+                    System.writableLocationUrl(System.StandardPathsDocumentsLocation) + "/ArcGIS/Runtime/Data/" :
+                    System.writableLocationUrl(System.StandardPathsHomeLocation) + "/ArcGIS/Runtime/Data/"
+    }
     property var loadedEncLayerCount: 0
 
     Component.onCompleted: {
         // set resource path
-        EncEnvironmentSettings.resourcePath = dataPath + "/ENC/hydrography";
+        EncEnvironmentSettings.resourcePath = dataPath + "ENC/hydrography";
 
         // load the EncExchangeSet
         encExchangeSet.load();
@@ -52,7 +56,7 @@ Rectangle {
 
             EncExchangeSet {
                 id: encExchangeSet
-                paths: [dataPath + "/ENC/ExchangeSetwithoutUpdates/ENC_ROOT/CATALOG.031"]
+                paths: [dataPath + "ENC/ExchangeSetwithoutUpdates/ENC_ROOT/CATALOG.031"]
 
                 property var layers: []
 

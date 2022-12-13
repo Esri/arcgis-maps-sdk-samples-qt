@@ -35,7 +35,7 @@ When the vector tiled layer loads, zoom in to the extent you want to export. The
 
 **NOTE:** Downloading tiles for offline use requires authentication with the web map's server. To use this sample, you will require an [ArcGIS Online](https://www.arcgis.com/) account.
 
-Vector tiles have high drawing performance and smaller file size compared to regular tiled layers due to consisting solely of points, lines, and polygons. However, in ArcGIS Runtime SDK they cannot be displayed in scenes. Visit [Layer types](https://developers.arcgis.com/qt/layers/layer-types/) on the ArcGIS Online Developer's portal to learn more.
+Vector tiles have high drawing performance and smaller file size compared to regular tiled layers due to consisting solely of points, lines, and polygons. Visit [Layer types](https://developers.arcgis.com/qt/layers/layer-types/) on the ArcGIS Online Developer's portal to learn more.
 
 ## Tags
 

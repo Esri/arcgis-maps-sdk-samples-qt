@@ -14,11 +14,11 @@
 // limitations under the License.
 // [Legal]
 
-import Esri.ArcGISExtras 1.1
-import Esri.ArcGISRuntime 100.15
-import QtQuick 2.6
-import QtQuick.Controls 2.2
-import QtQuick.Layouts 1.12
+import Esri.ArcGISExtras
+import Esri.ArcGISRuntime
+import QtQuick
+import QtQuick.Controls
+import QtQuick.Layouts
 
 Rectangle {
     id: rootRectangle
@@ -27,7 +27,11 @@ Rectangle {
     height: 600
 
     /* Define the Scene. Load a plane model from disk, place it above a runway, and create an orbiting camera around it */
-    readonly property string planeModelPath: System.userHomePath + "/ArcGIS/Runtime/Data/3D/Bristol/Collada/Bristol.dae"
+    readonly property string planeModelPath: {
+        Qt.platform.os === "ios" ?
+                    System.writableLocation(System.StandardPathsDocumentsLocation) + "/ArcGIS/Runtime/Data/3D/Bristol/Collada/Bristol.dae" :
+                    System.writableLocation(System.StandardPathsHomeLocation) + "/ArcGIS/Runtime/Data/3D/Bristol/Collada/Bristol.dae"
+    }
 
     SceneView {
         id: view

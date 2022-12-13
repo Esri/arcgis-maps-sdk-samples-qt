@@ -14,9 +14,9 @@
 // limitations under the License.
 // [Legal]
 
-import QtQuick 2.6
-import QtQuick.Controls 2.2
-import Esri.Samples 1.0
+import QtQuick
+import QtQuick.Controls
+import Esri.Samples
 
 ListTransformationsSample {
     id: rootRectangle
@@ -79,7 +79,7 @@ ListTransformationsSample {
             delegate: Item {
                 id: itemDelegate
                 height: 45
-                width: parent.width
+                width: transformationListView.width
                 clip: true
 
                 // show the DatumTransformation name
@@ -181,7 +181,7 @@ ListTransformationsSample {
         }
     }
 
-    onShowStatusBar: {
+    onShowStatusBar: message => {
         statusText.text = message;
 
         if (statusBar.isExpanded)

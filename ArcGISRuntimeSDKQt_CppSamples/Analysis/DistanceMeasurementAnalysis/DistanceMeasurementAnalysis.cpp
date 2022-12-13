@@ -1,6 +1,6 @@
 // [WriteFile Name=DistanceMeasurementAnalysis, Category=Analysis]
 // [Legal]
-// Copyright 2018 Esri.
+// Copyright 2022 Esri.
 
 // Licensed under the Apache License, Version 2.0 (the "License");
 // you may not use this file except in compliance with the License.
@@ -20,22 +20,50 @@
 
 #include "DistanceMeasurementAnalysis.h"
 
+#include "AnalysisListModel.h"
+#include "AnalysisOverlay.h"
+#include "AnalysisOverlayListModel.h"
+#include "ArcGISSceneLayer.h"
 #include "ArcGISTiledElevationSource.h"
+#include "Camera.h"
+#include "CoreTypes.h"
+#include "Distance.h"
+#include "ElevationSourceListModel.h"
+#include "LayerListModel.h"
+#include "LinearUnit.h"
+#include "LocationDistanceMeasurement.h"
+#include "MapTypes.h"
+#include "Point.h"
 #include "Scene.h"
 #include "SceneQuickView.h"
-#include "AnalysisOverlay.h"
-#include "LocationDistanceMeasurement.h"
+#include "SpatialReference.h"
+#include "Surface.h"
+#include "TaskWatcher.h"
 #include "Viewpoint.h"
-#include "Camera.h"
-#include "ArcGISSceneLayer.h"
-#include "Point.h"
+
+#include <QUuid>
 
 using namespace Esri::ArcGISRuntime;
 
-DistanceMeasurementAnalysis::DistanceMeasurementAnalysis(QQuickItem* parent /* = nullptr */):
-  QQuickItem(parent)
+DistanceMeasurementAnalysis::DistanceMeasurementAnalysis(QObject* parent /* = nullptr */):
+  QObject(parent),
+  m_scene(new Scene(BasemapStyle::ArcGISTopographic, this))
 {
+  // create a new elevation source from Terrain3D REST service
+  ArcGISTiledElevationSource* elevationSource = new ArcGISTiledElevationSource(
+        QUrl("https://elevation3d.arcgis.com/arcgis/rest/services/WorldElevation3D/Terrain3D/ImageServer"), this);
+
+  // add the elevation source to the scene to display elevation
+  m_scene->baseSurface()->elevationSources()->append(elevationSource);
+
+  // Add a Scene Layer
+  ArcGISSceneLayer* sceneLayer = new ArcGISSceneLayer(QUrl("https://tiles.arcgis.com/tiles/P3ePLMYs2RVChkJx/arcgis/rest/services/Buildings_Brest/SceneServer/layers/0"), this);
+  sceneLayer->setAltitudeOffset(1); // The elevation source is a very fine resolution so we raise the scene layer slightly so it does not clip the surface
+
+  m_scene->operationalLayers()->append(sceneLayer);
 }
+
+DistanceMeasurementAnalysis::~DistanceMeasurementAnalysis() = default;
 
 void DistanceMeasurementAnalysis::init()
 {
@@ -44,27 +72,20 @@ void DistanceMeasurementAnalysis::init()
   qmlRegisterType<DistanceMeasurementAnalysis>("Esri.Samples", 1, 0, "DistanceMeasurementAnalysisSample");
 }
 
-void DistanceMeasurementAnalysis::componentComplete()
+SceneQuickView* DistanceMeasurementAnalysis::sceneView() const
 {
-  QQuickItem::componentComplete();
+  return m_sceneView;
+}
 
-  // Get the Scene View
-  m_sceneView = findChild<SceneQuickView*>("sceneView");
+// Set the view (created in QML)
+void DistanceMeasurementAnalysis::setSceneView(SceneQuickView* sceneView)
+{
+  if (!sceneView || sceneView == m_sceneView)
+    return;
 
-  // Create a Scene with the topographic basemap
-  Scene* scene = new Scene(BasemapStyle::ArcGISTopographic, this);
-
-  // Add a Scene Layer
-  ArcGISSceneLayer* sceneLayer = new ArcGISSceneLayer(QUrl("https://tiles.arcgis.com/tiles/P3ePLMYs2RVChkJx/arcgis/rest/services/Buildings_Brest/SceneServer/layers/0"), this);
-  sceneLayer->setAltitudeOffset(1); // The elevation source is a very fine resolution so we raise the scene layer slightly so it does not clip the surface
-
-  scene->operationalLayers()->append(sceneLayer);
-
-  // Create and set the surface on the scene
-  Surface* surface = new Surface(this);
-  surface->elevationSources()->append(
-        new ArcGISTiledElevationSource(QUrl("https://scene.arcgis.com/arcgis/rest/services/BREST_DTM_1M/ImageServer"),this));
-  scene->setBaseSurface(surface);
+  m_sceneView = sceneView;
+  m_sceneView->setArcGISScene(m_scene);
+  emit sceneViewChanged();
 
   // Add Analysis Overlay
   AnalysisOverlay* analysisOverlay = new AnalysisOverlay(this);
@@ -84,10 +105,7 @@ void DistanceMeasurementAnalysis::componentComplete()
   constexpr double roll = 0.0;
   const Camera initCamera(startLocation, distance, heading, pitch, roll);
   const Viewpoint initViewpoint(startLocation, distance, initCamera);
-  scene->setInitialViewpoint(initViewpoint);
-
-  // Set the scene on the scene view
-  m_sceneView->setArcGISScene(scene);
+  m_scene->setInitialViewpoint(initViewpoint);
 
   connectSignals();
 }
@@ -99,10 +117,9 @@ void DistanceMeasurementAnalysis::connectSignals()
                                                                                              const Distance& horizontalDistance,
                                                                                              const Distance& verticalDistance)
   {
-    const QString unitLabel = m_distanceAnalysis->unitSystem() == UnitSystem::Metric ? "m" : "ft";
-    m_directDistance = QString::number(directDistance.value(), 'f', 2) + QString(" %1").arg(unitLabel);
-    m_horizontalDistance = QString::number(horizontalDistance.value(), 'f', 2) + QString(" %1").arg(unitLabel);
-    m_verticalDistance = QString::number(verticalDistance.value(), 'f', 2) + QString(" %1").arg(unitLabel);
+    m_directDistance = QString::number(directDistance.value(), 'f', 2) + QString(" %1").arg(directDistance.unit().abbreviation());
+    m_horizontalDistance = QString::number(horizontalDistance.value(), 'f', 2) + QString(" %1").arg(horizontalDistance.unit().abbreviation());
+    m_verticalDistance = QString::number(verticalDistance.value(), 'f', 2) + QString(" %1").arg(verticalDistance.unit().abbreviation());
     emit directDistanceChanged();
     emit horizontalDistanceChanged();
     emit verticalDistanceChanged();
@@ -114,7 +131,7 @@ void DistanceMeasurementAnalysis::connectSignals()
   connect(m_sceneView, &SceneQuickView::mousePressedAndHeld, this, [this](QMouseEvent& mouseEvent)
   {
     m_isPressAndHold = true;
-    m_sceneView->screenToLocation(mouseEvent.x(), mouseEvent.y());
+    m_sceneView->screenToLocation(mouseEvent.pos().x(), mouseEvent.pos().y());
   });
 
   // When the mouse is released...
@@ -136,14 +153,14 @@ void DistanceMeasurementAnalysis::connectSignals()
       m_isPressAndHold = false;
     // Else get the location from the screen coordinates
     else
-      m_sceneView->screenToLocation(mouseEvent.x(), mouseEvent.y());
+      m_sceneView->screenToLocation(mouseEvent.pos().x(), mouseEvent.pos().y());
   });
 
   // Update the distance analysis when the mouse moves if it is a press and hold movement
   connect(m_sceneView, &SceneQuickView::mouseMoved, this, [this](QMouseEvent& mouseEvent)
   {
     if (m_isPressAndHold)
-      m_sceneView->screenToLocation(mouseEvent.x(), mouseEvent.y());
+      m_sceneView->screenToLocation(mouseEvent.pos().x(), mouseEvent.pos().y());
   });
 
   // Set a flag when mousePressed signal emits

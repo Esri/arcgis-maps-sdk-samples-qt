@@ -13,9 +13,9 @@
 // limitations under the License.
 // [Legal]
 
-import QtQuick 2.5
-import Esri.ArcGISRuntimeSamples 1.0
-import Esri.ArcGISRuntime.Toolkit 100.15
+import QtQuick
+import Esri.ArcGISRuntimeSamples
+import Esri.ArcGISRuntime.Toolkit
 
 Item {
     AuthenticationView {

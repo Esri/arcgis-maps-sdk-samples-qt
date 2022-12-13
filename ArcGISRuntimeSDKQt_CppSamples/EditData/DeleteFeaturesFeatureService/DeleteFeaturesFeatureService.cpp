@@ -32,6 +32,17 @@
 #include "ArcGISFeature.h"
 #include "FeatureEditResult.h"
 #include "FeatureQueryResult.h"
+#include "MapViewTypes.h"
+#include "MapTypes.h"
+#include "LayerListModel.h"
+#include "TaskWatcher.h"
+#include "IdentifyLayerResult.h"
+#include "QueryParameters.h"
+#include "AttributeListModel.h"
+#include "FeatureIterator.h"
+#include "CalloutData.h"
+#include "Envelope.h"
+
 #include <QUrl>
 #include <QUuid>
 #include <QMouseEvent>
@@ -94,8 +105,8 @@ void DeleteFeaturesFeatureService::connectSignals()
     // call identify on the map view
     constexpr double tolerance = 5.0;
     constexpr int maxResults = 1;
-    const double screenX = mouseEvent.x();
-    const double screenY = mouseEvent.y();
+    const double screenX = mouseEvent.pos().x();
+    const double screenY = mouseEvent.pos().y();
     constexpr bool returnPopupsOnly = false;
     m_mapView->identifyLayer(m_featureLayer, screenX, screenY, tolerance, returnPopupsOnly, maxResults);
     //! [DeleteFeaturesFeatureService identify feature]

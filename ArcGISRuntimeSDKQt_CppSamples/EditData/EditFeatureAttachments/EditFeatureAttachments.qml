@@ -14,12 +14,11 @@
 // limitations under the License.
 // [Legal]
 
-import QtQuick 2.6
-import QtQuick.Controls 2.2
-import Qt.labs.platform 1.0
-import QtGraphicalEffects 1.0
-import Esri.Samples 1.0
-import Esri.ArcGISRuntime.Toolkit 100.15
+import QtQuick
+import QtQuick.Controls
+import Qt.labs.platform
+import Esri.Samples
+import Esri.ArcGISRuntime.Toolkit
 
 EditFeatureAttachmentsSample {
     id: editAttachmentsSample
@@ -39,10 +38,12 @@ EditFeatureAttachmentsSample {
 
         Callout {
             id: callout
-            borderColor: "lightgrey"
-            borderWidth: 1
+            background: Rectangle {
+                border.color: "lightgrey"
+                border.width: 1
+            }
             calloutData: mapView.calloutData
-            leaderPosition: leaderPositionEnum.Automatic
+            leaderPosition: Callout.LeaderPosition.Automatic
             onAccessoryButtonClicked: {
                 attachmentWindow.visible = true;
             }
@@ -77,8 +78,8 @@ EditFeatureAttachmentsSample {
         // accept mouse events so they do not propogate down to the map
         MouseArea {
             anchors.fill: parent
-            onClicked: mouse.accepted = true
-            onWheel: wheel.accepted = true
+            onClicked: mouse => mouse.accepted = true
+            onWheel: wheel => wheel.accepted = true
         }
 
         Rectangle {
@@ -165,7 +166,7 @@ EditFeatureAttachmentsSample {
             // create the delegate to specify how the view is arranged
             delegate: Item {
                 height: 45
-                width: parent.width
+                width: attachmentsList.width
                 clip: true
 
                 // show the attachment name
@@ -216,10 +217,7 @@ EditFeatureAttachmentsSample {
     // file dialog for selecting a file to add as an attachment
     FileDialog {
         id: fileDialog
-        folder: {
-            const locs = StandardPaths.standardLocations(StandardPaths.PicturesLocation)
-            return locs.length > 0 ? locs.last() : "";
-        }
+        folder: StandardPaths.standardLocations(StandardPaths.PicturesLocation)[0] ?? ""
         onAccepted: {
             // Call invokable C++ method to add an attachment to the model
             editAttachmentsSample.addAttachment(fileDialog.file, "application/octet-stream");

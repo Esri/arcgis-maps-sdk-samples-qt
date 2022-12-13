@@ -14,10 +14,10 @@
 // limitations under the License.
 // [Legal]
 
-import QtQuick 2.6
-import QtQuick.Layouts 1.3
-import QtQuick.Controls 2.2
-import Esri.Samples 1.0
+import QtQuick
+import QtQuick.Layouts
+import QtQuick.Controls
+import Esri.Samples
 
 SpatialOperationsSample {
     id: rootRectangle
@@ -46,7 +46,7 @@ SpatialOperationsSample {
             margins: 10
         }
         property int modelWidth: 0
-        width: modelWidth + leftPadding + rightPadding + indicator.width
+        width: modelWidth + leftPadding + rightPadding
         model: geometryOperations
         onCurrentIndexChanged: applyGeometryOperation(currentIndex);
         Component.onCompleted : {

@@ -19,9 +19,7 @@
 
 #include "TaskWatcher.h"
 
-namespace Esri
-{
-namespace ArcGISRuntime
+namespace Esri::ArcGISRuntime
 {
 class FeatureLayer;
 class GraphicsOverlay;
@@ -31,9 +29,10 @@ class ServiceAreaTask;
 class ServiceFeatureTable;
 class SimpleFillSymbol;
 }
-}
 
 #include <QObject>
+
+Q_MOC_INCLUDE("MapQuickView.h")
 
 class FindServiceAreasForMultipleFacilities : public QObject
 {

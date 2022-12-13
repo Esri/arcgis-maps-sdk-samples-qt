@@ -19,6 +19,9 @@
 
 int main(int argc, char *argv[])
 {
+  // Enforce OpenGL
+  qputenv("QSG_RHI_BACKEND", "opengl");
+
   // Use of Esri location services, including basemaps and geocoding,
   // requires authentication using either an ArcGIS identity or an API Key.
   // 1. ArcGIS identity: An ArcGIS named user account that is a member of an
@@ -37,7 +40,6 @@ int main(int argc, char *argv[])
       Esri::ArcGISRuntime::ArcGISRuntimeEnvironment::setApiKey(apiKey);
   }
 
-  QGuiApplication::setAttribute(Qt::AA_EnableHighDpiScaling);
   QApplication application(argc, argv);
 
   GORenderers applicationWindow;

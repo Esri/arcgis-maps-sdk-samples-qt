@@ -23,21 +23,21 @@
 #include "Map.h"
 #include "Point.h"
 #include "Graphic.h"
-#include "Basemap.h"
 #include "Viewpoint.h"
 #include "MapQuickView.h"
 #include "GraphicsOverlay.h"
 #include "SpatialReference.h"
 #include "PictureMarkerSymbol.h"
+#include "MapTypes.h"
+#include "MapViewTypes.h"
+#include "GraphicsOverlayListModel.h"
+#include "GraphicListModel.h"
+#include "Envelope.h"
 
 #include <QUrl>
 #include <QString>
-#include <QDir>
 #include <QtCore/qglobal.h>
-
-#ifdef Q_OS_IOS
 #include <QStandardPaths>
-#endif // Q_OS_IOS
 
 using namespace Esri::ArcGISRuntime;
 
@@ -48,12 +48,10 @@ namespace
   {
     QString dataPath;
 
-  #ifdef Q_OS_ANDROID
-    dataPath = "/sdcard";
-  #elif defined Q_OS_IOS
+  #ifdef Q_OS_IOS
     dataPath = QStandardPaths::writableLocation(QStandardPaths::DocumentsLocation);
   #else
-    dataPath = QDir::homePath();
+    dataPath = QStandardPaths::writableLocation(QStandardPaths::HomeLocation);
   #endif
 
     return dataPath;
@@ -95,7 +93,7 @@ void Picture_Marker_Symbol::componentComplete()
   m_graphicsOverlay = new GraphicsOverlay(this);
 
   // create a campsite symbol from a URL
-  PictureMarkerSymbol* campSymbol = new PictureMarkerSymbol(QUrl("https://sampleserver6.arcgisonline.com/arcgis/rest/services/Recreation/FeatureServer/0/images/e82f744ebb069bb35b234b3fea46deae"), this);
+  PictureMarkerSymbol* campSymbol = new PictureMarkerSymbol(QUrl("https://static.arcgis.com/images/Symbols/OutdoorRecreation/Camping.png"), this);
   setWidthAndHeight(campSymbol, 38.0f);
   Point campPoint(-228835, 6550763, SpatialReference::webMercator());
   addGraphic(campPoint, campSymbol);

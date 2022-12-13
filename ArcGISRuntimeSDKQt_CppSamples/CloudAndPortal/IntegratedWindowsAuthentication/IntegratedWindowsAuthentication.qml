@@ -14,14 +14,14 @@
 // limitations under the License.
 // [Legal]
 
-import QtQuick 2.6
-import QtQuick.Controls 2.12
-import QtQuick.Layouts 1.12
-import Esri.Samples 1.0
-import Esri.ArcGISRuntime.Toolkit 100.15
+import QtQuick
+import QtQuick.Controls
+import QtQuick.Layouts
+import Esri.Samples
+import Esri.ArcGISRuntime.Toolkit
 
 Item {
-    // Declare the C++ instance which creates the scene etc. and supply the view
+    // Declare the C++ instance which creates the map etc. and supply the view
     IntegratedWindowsAuthenticationSample {
         id: integratedWindowsAuthenticationSampleModel
         mapView: view
@@ -53,8 +53,8 @@ Item {
         // Prevent mouse interaction from propagating to the MapView
         MouseArea {
             anchors.fill: parent
-            onPressed: mouse.accepted = true;
-            onWheel: wheel.accepted = true;
+            onPressed: mouse => mouse.accepted = true;
+            onWheel: wheel => wheel.accepted = true;
         }
 
         ColumnLayout {

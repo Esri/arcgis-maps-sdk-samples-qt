@@ -34,6 +34,14 @@
 #include "QueryParameters.h"
 #include "FeatureQueryResult.h"
 #include "Feature.h"
+#include "MapViewTypes.h"
+#include "MapTypes.h"
+#include "SymbolTypes.h"
+#include "LayerListModel.h"
+#include "FeatureIterator.h"
+#include "TaskWatcher.h"
+
+#include <QUuid>
 #include <QUrl>
 #include <QColor>
 #include <QList>

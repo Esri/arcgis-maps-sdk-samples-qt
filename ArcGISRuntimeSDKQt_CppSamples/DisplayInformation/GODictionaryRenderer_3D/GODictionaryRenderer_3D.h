@@ -26,13 +26,10 @@
 #include <QQuickItem>
 #include <QXmlStreamReader>
 
-namespace Esri
+namespace Esri::ArcGISRuntime
 {
-  namespace ArcGISRuntime
-  {
-    class GraphicsOverlay;
-    class SceneQuickView;
-  }
+  class GraphicsOverlay;
+  class SceneQuickView;
 }
 
 class GODictionaryRenderer_3D : public QQuickItem

@@ -14,8 +14,8 @@
 // limitations under the License.
 // [Legal]
 
-import QtQuick 2.6
-import Esri.ArcGISRuntime 100.15
+import QtQuick
+import Esri.ArcGISRuntime
 
 Rectangle {
     id: rootRectangle
@@ -76,7 +76,7 @@ Rectangle {
         QueryParameters {
             id: queryParameters
             // Set the query area to what is currently visible in the map view
-            geometry: mapView.currentViewpointExtent.extent
+            geometry: mapView.currentViewpointExtent ? mapView.currentViewpointExtent.extent : null
             // Enums.SpatialRelationshipIntersects will return all features that are within and crossing the perimiter of the input geometry
             spatialRelationship: Enums.SpatialRelationshipIntersects
             // Some services have low default values for max features returned

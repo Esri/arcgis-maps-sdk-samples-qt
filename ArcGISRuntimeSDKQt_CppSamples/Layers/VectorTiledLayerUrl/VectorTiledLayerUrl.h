@@ -17,13 +17,10 @@
 #ifndef VECTOR_TILED_LAYER_URL
 #define VECTOR_TILED_LAYER_URL
 
-namespace Esri
+namespace Esri::ArcGISRuntime
 {
-  namespace ArcGISRuntime
-  {
-    class Map;
-    class MapQuickView;
-  }
+  class Map;
+  class MapQuickView;
 }
 
 #include <QQuickItem>

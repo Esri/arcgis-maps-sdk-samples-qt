@@ -17,14 +17,11 @@
 #ifndef STATISTICALQUERY_H
 #define STATISTICALQUERY_H
 
-namespace Esri
-{
-namespace ArcGISRuntime
+namespace Esri::ArcGISRuntime
 {
 class Map;
 class MapQuickView;
 class ServiceFeatureTable;
-}
 }
 
 #include <QQuickItem>

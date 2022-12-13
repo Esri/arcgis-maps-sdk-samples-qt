@@ -17,9 +17,7 @@
 #ifndef EDITWITHBRANCHVERSIONING_H
 #define EDITWITHBRANCHVERSIONING_H
 
-namespace Esri
-{
-namespace ArcGISRuntime
+namespace Esri::ArcGISRuntime
 {
 class AuthenticationManager;
 class ServiceVersionParameters;
@@ -33,13 +31,15 @@ class ArcGISFeature;
 class Credential;
 class Point;
 }
-}
 
 #include "Error.h"
 
 #include <QUuid>
 #include <QObject>
 #include <QUrl>
+
+Q_MOC_INCLUDE("AuthenticationManager.h")
+Q_MOC_INCLUDE("MapQuickView.h")
 
 class EditWithBranchVersioning : public QObject
 {

@@ -20,9 +20,7 @@
 // Qt headers
 #include <QObject>
 
-namespace Esri
-{
-namespace ArcGISRuntime
+namespace Esri::ArcGISRuntime
 {
 class GlobeCameraController;
 class GraphicsOverlay;
@@ -31,7 +29,10 @@ class OrbitLocationCameraController;
 class Scene;
 class SceneQuickView;
 }
-}
+
+#include <QObject>
+
+Q_MOC_INCLUDE("SceneQuickView.h")
 
 class ChooseCameraController : public QObject
 {

@@ -11,8 +11,8 @@
 // limitations under the License.
 // [Legal]
 
-import QtQuick 2.6
-import QtQuick.Controls 2.2
+import QtQuick
+import QtQuick.Controls
 
 Rectangle {
     color: "#F4F4F4"
@@ -101,7 +101,6 @@ Rectangle {
                 }
 
                 delegate: Item {
-                    width: parent.width
                     height: 25
 
                     Text {

@@ -11,8 +11,8 @@
 // limitations under the License.
 // [Legal]
 
-import QtQuick 2.6
-import QtQuick.Controls 2.2
+import QtQuick
+import QtQuick.Controls
 
 Rectangle {
     id: rootOptionsPage
@@ -98,7 +98,7 @@ Rectangle {
                             id: fieldComboBox
                             anchors.verticalCenter: parent.verticalCenter
                             property int modelWidth: 0
-                            width: modelWidth + leftPadding + rightPadding + indicator.width
+                            width: modelWidth + leftPadding + rightPadding
                             model: fields
                             onModelChanged: {
                                 for (let i = 0; i < model.length; ++i) {
@@ -123,7 +123,7 @@ Rectangle {
                             anchors.verticalCenter: parent.verticalCenter
                             model: statisticTypes
                             property int modelWidth: 0
-                            width: modelWidth + leftPadding + rightPadding + indicator.width
+                            width: modelWidth + leftPadding + rightPadding
                             Component.onCompleted : {
                                 for (let i = 0; i < model.length; ++i) {
                                     metricsStatisticComboBox.text = model[i];
@@ -238,7 +238,6 @@ Rectangle {
                             clip: true
                             model: fields
                             delegate: Item {
-                                width: parent.width
                                 height: 25
 
                                 CheckBox {

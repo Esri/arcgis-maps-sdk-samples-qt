@@ -14,10 +14,10 @@
 // limitations under the License.
 // [Legal]
 
-import QtQuick 2.6
-import QtQuick.Controls 2.2
-import Esri.Samples 1.0
-import QtQuick.Layouts 1.12
+import QtQuick
+import QtQuick.Controls
+import Esri.Samples
+import QtQuick.Layouts
 
 SurfacePlacementSample {
     width: 800
@@ -49,8 +49,8 @@ SurfacePlacementSample {
 
         MouseArea {
             anchors.fill: parent
-            onClicked: mouse.accepted = true
-            onWheel: wheel.accepted = true
+            onClicked: mouse => mouse.accepted = true
+            onWheel: wheel => wheel.accepted = true
         }
 
         ColumnLayout {
@@ -85,8 +85,8 @@ SurfacePlacementSample {
 
         MouseArea {
             anchors.fill: parent
-            onClicked: mouse.accepted = true
-            onWheel: wheel.accepted = true
+            onClicked: mouse => mouse.accepted = true
+            onWheel: wheel => wheel.accepted = true
         }
 
         ColumnLayout {
@@ -128,7 +128,6 @@ SurfacePlacementSample {
                         radius: 3
                         x: headingHandleNub.x - width
                         y: headingHandleNub.y - height / 2 + headingHandleNub.height / 2
-                        color: zValueSlider.background.children[0].color
 
                         Text {
                             id: headingValue
