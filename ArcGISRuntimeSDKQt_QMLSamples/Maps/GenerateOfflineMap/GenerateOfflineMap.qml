@@ -93,7 +93,7 @@ Rectangle {
     // Create Offline Map Task
     OfflineMapTask {
         id: offlineMapTask
-        portalItem: mapPortalItem
+        onlineMap: map
         property var generateJob
 
         onErrorChanged: console.log("error:", error.message, error.additionalMessage);

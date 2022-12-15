@@ -1,6 +1,18 @@
-// [WriteFile Name=GenerateOfflineMap, Category=Maps]
-// [Legal]
-// Copyright 2017 Esri.
+
+// TRADE SECRETS: ESRI PROPRIETARY AND CONFIDENTIAL
+// Unpublished material - all rights reserved under the
+// Copyright Laws of the United States and applicable international
+// laws, treaties, and conventions.
+//
+// For additional information, contact:
+// Environmental Systems Research Institute, Inc.
+// Attn: Contracts and Legal Services Department
+// 380 New York Street
+// Redlands, California, 92373
+// USA
+//
+// email: contracts@esri.com
+/// \file GenerateOfflineMap.cpp
 
 // Licensed under the Apache License, Version 2.0 (the "License");
 // you may not use this file except in compliance with the License.
@@ -64,10 +76,10 @@ void GenerateOfflineMap::componentComplete()
   // Create a Portal Item for use by the Map and OfflineMapTask
   bool loginRequired = false;
   Portal* portal = new Portal(loginRequired, this);
-  m_portalItem = new PortalItem(portal, webMapId(), this);
+  PortalItem* portalItem = new PortalItem(portal, webMapId(), this);
 
   // Create a map from the Portal Item
-  m_map = new Map(m_portalItem, this);
+  m_map = new Map(portalItem, this);
 
   // Update property once map is done loading
   connect(m_map, &Map::doneLoading, this, [this](Error e)
@@ -82,8 +94,8 @@ void GenerateOfflineMap::componentComplete()
   // Set map to map view
   m_mapView->setMap(m_map);
 
-  // Create the OfflineMapTask with the PortalItem
-  m_offlineMapTask = new OfflineMapTask(m_portalItem, this);
+  // Create the OfflineMapTask with the online map
+  m_offlineMapTask = new OfflineMapTask(m_map, this);
 
   // connect to the error signal
   connect(m_offlineMapTask, &OfflineMapTask::errorOccurred, this, [](Error e)
@@ -182,4 +194,3 @@ void GenerateOfflineMap::generateMapByExtent(double xCorner1, double yCorner1, d
   // generate parameters
   m_offlineMapTask->createDefaultGenerateOfflineMapParameters(mapExtent);
 }
-

@@ -96,7 +96,7 @@ Rectangle {
     // Create Offline Map Task
     OfflineMapTask {
         id: offlineMapTask
-        portalItem: mapPortalItem
+        onlineMap: map
 
         onErrorChanged: console.log("error:", error.message, error.additionalMessage);
 
