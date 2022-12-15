@@ -16,6 +16,7 @@
 
 import QtQuick
 import QtQuick.Controls
+import QtQuick.Layouts
 import Esri.Samples
 
 Item {
@@ -35,5 +36,28 @@ Item {
     DisplayFeatureLayersSample {
         id: model
         mapView: view
+    }
+
+    Rectangle {
+        id: layerSelectRectangle
+        anchors {
+            top: parent.top
+            left: parent.left
+            margins: 5
+        }
+        width: 150
+        height: 100
+        ColumnLayout {
+            anchors.centerIn: parent
+            Text {
+                text: "Feature Layer Mode"
+            }
+            ComboBox {
+                model: ["Geodatabase", "Geopackage", "Portal Item", "Service Feature Table", "Shapefile"]
+                onCurrentIndexChanged: {
+                    model.setLayerMode(currentIndex);
+                }
+            }
+        }
     }
 }

@@ -29,6 +29,21 @@
 // email: contracts@esri.com
 /// \file DisplayFeatureLayers.h
 
+// TRADE SECRETS: ESRI PROPRIETARY AND CONFIDENTIAL
+// Unpublished material - all rights reserved under the
+// Copyright Laws of the United States and applicable international
+// laws, treaties, and conventions.
+//
+// For additional information, contact:
+// Environmental Systems Research Institute, Inc.
+// Attn: Contracts and Legal Services Department
+// 380 New York Street
+// Redlands, California, 92373
+// USA
+//
+// email: contracts@esri.com
+/// \file DisplayFeatureLayers.h
+
 // Licensed under the Apache License, Version 2.0 (the "License");
 // you may not use this file except in compliance with the License.
 // You may obtain a copy of the License at
@@ -46,6 +61,7 @@
 
 namespace Esri::ArcGISRuntime
 {
+class FeatureLayer;
 class Map;
 class MapQuickView;
 }
@@ -64,17 +80,36 @@ public:
   explicit DisplayFeatureLayers(QObject* parent = nullptr);
   ~DisplayFeatureLayers() override;
 
+  enum class FeatureLayerMode {
+    Geodatabase,
+    Geopackage,
+    PortalItem,
+    ServiceFeatureTable,
+    Shapefile
+  };
+
+  Q_ENUM(FeatureLayerMode)
+
   static void init();
+
+  Q_INVOKABLE void setLayerMode(DisplayFeatureLayers::FeatureLayerMode featureLayerMode);
 
 signals:
   void mapViewChanged();
 
 private:
-  Esri::ArcGISRuntime::MapQuickView* mapView() const;
+  [[nodiscard]] Esri::ArcGISRuntime::MapQuickView* mapView() const;
   void setMapView(Esri::ArcGISRuntime::MapQuickView* mapView);
+
+  void setGeodatabaseLayer();
+  void setGeopackageLayer();
+  void setPortalItemLayer();
+  void setServiceFeatureTableLayer();
+  void setShapefileLayer();
 
   Esri::ArcGISRuntime::Map* m_map = nullptr;
   Esri::ArcGISRuntime::MapQuickView* m_mapView = nullptr;
+  Esri::ArcGISRuntime::FeatureLayer* m_featureLayer = nullptr;
 };
 
 #endif // DISPLAYFEATURELAYERS_H
