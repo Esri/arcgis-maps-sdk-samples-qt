@@ -33,7 +33,7 @@ DEFINES += ArcGIS_Runtime_Version=$$ARCGIS_RUNTIME_VERSION
 exists($$PWD/../../../../DevBuildCpp.pri) {
   message("Building against the dev environment")
   DEFINES += ESRI_BUILD
-  DEFINES += SAMPLE_VIEWER_API_KEY=$$(SAMPLEVIEWERAPIKEY_INTERNAL)
+  DEFINES += SAMPLE_VIEWER_API_KEY=$$(SAMPLEVIEWERAPIKEY_RELEASE)
 
   # use the Esri dev build script
   include ($$PWD/../../../../DevBuildCpp.pri)
