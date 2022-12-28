@@ -11,18 +11,12 @@
 // See the License for the specific language governing permissions and
 // limitations under the License.
 
-#include "DisplayFeatureLayers.h"
-
-#include "ArcGISRuntimeEnvironment.h"
-
+#include <QSettings>
+#include <QGuiApplication>
+#include <QQuickView>
 #include <QCommandLineParser>
 #include <QDir>
-#include <QGuiApplication>
-#include <QQmlApplicationEngine>
-
-#ifdef Q_OS_WIN
-#include <Windows.h>
-#endif
+#include <QQmlEngine>
 
 void setAPIKey(const QGuiApplication& app, QString apiKey);
 
@@ -32,26 +26,27 @@ int main(int argc, char *argv[])
   qputenv("QSG_RHI_BACKEND", "opengl");
 
   QGuiApplication app(argc, argv);
-  app.setApplicationName(QString("DisplayFeatureLayers - C++"));
+  app.setApplicationName(QString("DisplayFeatureLayers - QML"));
 
   // Access to Esri location services requires an API key. This can be copied below or used as a command line argument.
   const QString apiKey = QString("");
   setAPIKey(app, apiKey);
 
-  // Initialize the sample
-  DisplayFeatureLayers::init();
-
   // Initialize application view
-  QQmlApplicationEngine engine;
+  QQuickView view;
+  view.setResizeMode(QQuickView::SizeRootObjectToView);
+
   // Add the import Path
-  engine.addImportPath(QDir(QCoreApplication::applicationDirPath()).filePath("qml"));
+  view.engine()->addImportPath(QDir(QCoreApplication::applicationDirPath()).filePath("qml"));
 
 #ifdef ARCGIS_RUNTIME_IMPORT_PATH_2
-  engine.addImportPath(ARCGIS_RUNTIME_IMPORT_PATH_2);
+  view.engine()->addImportPath(ARCGIS_RUNTIME_IMPORT_PATH_2);
 #endif
 
   // Set the source
-  engine.load(QUrl("qrc:/Samples/Layers/DisplayFeatureLayers/main.qml"));
+  view.setSource(QUrl("qrc:/Samples/Features/DisplayFeatureLayers/DisplayFeatureLayers.qml"));
+
+  view.show();
 
   return app.exec();
 }
@@ -85,5 +80,5 @@ void setAPIKey(const QGuiApplication& app, QString apiKey)
     }
   }
 
-  Esri::ArcGISRuntime::ArcGISRuntimeEnvironment::setApiKey(apiKey);
+  QCoreApplication::instance()->setProperty("Esri.ArcGISRuntime.apiKey", apiKey);
 }

@@ -1,48 +1,6 @@
-
-// TRADE SECRETS: ESRI PROPRIETARY AND CONFIDENTIAL
-// Unpublished material - all rights reserved under the
-// Copyright Laws of the United States and applicable international
-// laws, treaties, and conventions.
-//
-// For additional information, contact:
-// Environmental Systems Research Institute, Inc.
-// Attn: Contracts and Legal Services Department
-// 380 New York Street
-// Redlands, California, 92373
-// USA
-//
-// email: contracts@esri.com
-/// \file DisplayFeatureLayers.cpp
-
-// TRADE SECRETS: ESRI PROPRIETARY AND CONFIDENTIAL
-// Unpublished material - all rights reserved under the
-// Copyright Laws of the United States and applicable international
-// laws, treaties, and conventions.
-//
-// For additional information, contact:
-// Environmental Systems Research Institute, Inc.
-// Attn: Contracts and Legal Services Department
-// 380 New York Street
-// Redlands, California, 92373
-// USA
-//
-// email: contracts@esri.com
-/// \file DisplayFeatureLayers.cpp
-
-// TRADE SECRETS: ESRI PROPRIETARY AND CONFIDENTIAL
-// Unpublished material - all rights reserved under the
-// Copyright Laws of the United States and applicable international
-// laws, treaties, and conventions.
-//
-// For additional information, contact:
-// Environmental Systems Research Institute, Inc.
-// Attn: Contracts and Legal Services Department
-// 380 New York Street
-// Redlands, California, 92373
-// USA
-//
-// email: contracts@esri.com
-/// \file DisplayFeatureLayers.cpp
+// [WriteFile Name=DisplayFeatureLayers, Category=Layers]
+// [Legal]
+// Copyright 2022 Esri.
 
 // Licensed under the Apache License, Version 2.0 (the "License");
 // you may not use this file except in compliance with the License.
@@ -141,6 +99,8 @@ void DisplayFeatureLayers::setLayerMode(FeatureLayerMode featureLayerMode)
 
   m_map->operationalLayers()->clear();
 
+  m_currentLayerMode = featureLayerMode;
+
   switch (featureLayerMode) {
     case FeatureLayerMode::Geodatabase:
       setGeodatabaseLayer();
@@ -167,6 +127,10 @@ void DisplayFeatureLayers::setGeodatabaseLayer()
   Geodatabase* gdb = new Geodatabase(defaultDataPath() + "geodatabase/LA_Trails.geodatabase", this);
   connect(gdb, &Geodatabase::doneLoading, this, [gdb, this](Error e)
   {
+    // If the current layer mode has changed while loading, abort this process
+    if (m_currentLayerMode != FeatureLayerMode::Geodatabase)
+      return;
+
     if (!e.isEmpty())
     {
       qDebug() << e.message() << e.additionalMessage();
@@ -188,6 +152,10 @@ void DisplayFeatureLayers::setGeopackageLayer()
 
   connect(gpkg, &GeoPackage::doneLoading, this, [this, gpkg](Error e)
   {
+    // If the current layer mode has changed while loading, abort this process
+    if (m_currentLayerMode != FeatureLayerMode::Geopackage)
+      return;
+
     if (!e.isEmpty())
     {
       qDebug() << e.message() << e.additionalMessage();
@@ -205,6 +173,10 @@ void DisplayFeatureLayers::setGeopackageLayer()
 
     connect(m_featureLayer, &FeatureLayer::doneLoading, this, [this](Error e)
     {
+      // If the current layer mode has changed while loading, abort this process
+      if (m_currentLayerMode != FeatureLayerMode::Geopackage)
+        return;
+
       if (!e.isEmpty())
       {
         qDebug() << e.message() << e.additionalMessage();

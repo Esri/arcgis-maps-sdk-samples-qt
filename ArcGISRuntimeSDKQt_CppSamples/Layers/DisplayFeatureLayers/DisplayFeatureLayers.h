@@ -1,48 +1,6 @@
-
-// TRADE SECRETS: ESRI PROPRIETARY AND CONFIDENTIAL
-// Unpublished material - all rights reserved under the
-// Copyright Laws of the United States and applicable international
-// laws, treaties, and conventions.
-//
-// For additional information, contact:
-// Environmental Systems Research Institute, Inc.
-// Attn: Contracts and Legal Services Department
-// 380 New York Street
-// Redlands, California, 92373
-// USA
-//
-// email: contracts@esri.com
-/// \file DisplayFeatureLayers.h
-
-// TRADE SECRETS: ESRI PROPRIETARY AND CONFIDENTIAL
-// Unpublished material - all rights reserved under the
-// Copyright Laws of the United States and applicable international
-// laws, treaties, and conventions.
-//
-// For additional information, contact:
-// Environmental Systems Research Institute, Inc.
-// Attn: Contracts and Legal Services Department
-// 380 New York Street
-// Redlands, California, 92373
-// USA
-//
-// email: contracts@esri.com
-/// \file DisplayFeatureLayers.h
-
-// TRADE SECRETS: ESRI PROPRIETARY AND CONFIDENTIAL
-// Unpublished material - all rights reserved under the
-// Copyright Laws of the United States and applicable international
-// laws, treaties, and conventions.
-//
-// For additional information, contact:
-// Environmental Systems Research Institute, Inc.
-// Attn: Contracts and Legal Services Department
-// 380 New York Street
-// Redlands, California, 92373
-// USA
-//
-// email: contracts@esri.com
-/// \file DisplayFeatureLayers.h
+// [WriteFile Name=DisplayFeatureLayers, Category=Layers]
+// [Legal]
+// Copyright 2022 Esri.
 
 // Licensed under the Apache License, Version 2.0 (the "License");
 // you may not use this file except in compliance with the License.
@@ -110,6 +68,7 @@ private:
   Esri::ArcGISRuntime::Map* m_map = nullptr;
   Esri::ArcGISRuntime::MapQuickView* m_mapView = nullptr;
   Esri::ArcGISRuntime::FeatureLayer* m_featureLayer = nullptr;
+  DisplayFeatureLayers::FeatureLayerMode m_currentLayerMode;
 };
 
 #endif // DISPLAYFEATURELAYERS_H

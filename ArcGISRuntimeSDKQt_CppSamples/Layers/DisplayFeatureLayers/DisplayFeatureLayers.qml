@@ -46,13 +46,16 @@ Item {
             margins: 5
         }
         width: 150
-        height: 100
+        height: column.height + 10
+        border.color: "black"
         ColumnLayout {
+            id: column
             anchors.centerIn: parent
             Text {
                 text: "Feature Layer Mode"
             }
             ComboBox {
+                implicitWidth: layerSelectRectangle.width - 10
                 model: ["Geodatabase", "Geopackage", "Portal Item", "Service Feature Table", "Shapefile"]
                 onCurrentIndexChanged: {
                     model.setLayerMode(currentIndex);
