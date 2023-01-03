@@ -1,0 +1,49 @@
+{
+    "category": "Layers",
+    "dataItems": [
+        {
+            "itemId": "cb1b20748a9f4d128dad8a87244e3e37",
+            "path": "~/ArcGIS/Runtime/Data/geodatabase/LA_Trails.geodatabase"
+        },
+        {
+            "itemId": "68ec42517cdd439e81b036210483e8e7",
+            "path": "~/ArcGIS/Runtime/Data/gpkg/AuroraCO.gpkg"
+        },
+        {
+            "itemId": "15a7cbd3af1e47cfa5d2c6b93dc44fc2",
+            "path": "~/ArcGIS/Runtime/Data/shp/ScottishWildlifeTrust_reserves.zip"
+        }
+    ],
+    "description": "Display feature layers from various data sources.",
+    "ignore": false,
+    "images": [
+        "screenshot.png"
+    ],
+    "keywords": [
+        "feature",
+        "geodatabase",
+        "geopackage",
+        "layers",
+        "service",
+        "shapefile",
+        "table"
+    ],
+    "redirect_from": [
+        "qt/qml/sample-code/feature-layer-geodatabase",
+        "qt/qml/sample-code/feature-layer-geopackage",
+        "qt/qml/sample-code/feature-layer-feature-service",
+        "qt/qml/sample-code/feature-layer-shapefile"
+    ],
+    "relevant_apis": [
+        "FeatureLayer",
+        "Geodatabase",
+        "GeoPackage",
+        "PortalItem",
+        "ServiceFeatureTable",
+        "ShapefileFeatureTable"
+    ],
+    "snippets": [
+        "DisplayFeatureLayers.qml"
+    ],
+    "title": "Display feature layers"
+}

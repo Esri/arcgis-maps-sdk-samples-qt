@@ -1,0 +1,8 @@
+<RCC>
+    <qresource prefix="/Samples/Layers/DisplayFeatureLayers">
+        <file alias="sample.json">README.metadata.json</file>
+        <file>DisplayFeatureLayers.qml</file>
+        <file>screenshot.png</file>
+        <file>README.md</file>
+    </qresource>
+</RCC>
