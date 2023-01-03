@@ -1,6 +1,18 @@
-// [WriteFile Name=DisplayFeatureLayers, Category=Layers]
-// [Legal]
-// Copyright 2022 Esri.
+
+// TRADE SECRETS: ESRI PROPRIETARY AND CONFIDENTIAL
+// Unpublished material - all rights reserved under the
+// Copyright Laws of the United States and applicable international
+// laws, treaties, and conventions.
+//
+// For additional information, contact:
+// Environmental Systems Research Institute, Inc.
+// Attn: Contracts and Legal Services Department
+// 380 New York Street
+// Redlands, California, 92373
+// USA
+//
+// email: contracts@esri.com
+/// \file DisplayFeatureLayers.cpp
 
 // Licensed under the Apache License, Version 2.0 (the "License");
 // you may not use this file except in compliance with the License.
@@ -188,6 +200,7 @@ void DisplayFeatureLayers::setGeopackageLayer()
   });
 
   gpkg->load();
+  // Note you must call close() on GeoPackage to allow other processes to access it
 }
 
 void DisplayFeatureLayers::setPortalItemLayer()
@@ -211,9 +224,9 @@ void DisplayFeatureLayers::setServiceFeatureTableLayer()
 
 void DisplayFeatureLayers::setShapefileLayer()
 {
-  ShapefileFeatureTable* shpFeatureTable = new ShapefileFeatureTable(defaultDataPath() + "shp/Public_Art.shp", this);
+  ShapefileFeatureTable* shpFeatureTable = new ShapefileFeatureTable(defaultDataPath() + "shp/ScottishWildlifeTrust_ReserveBoundaries_20201102.shp", this);
   m_featureLayer = new FeatureLayer(shpFeatureTable, this);
   m_map->operationalLayers()->append(m_featureLayer);
 
-  m_mapView->setViewpointAndWait(Viewpoint(Point(-104.8319, 39.7294, SpatialReference(4326)), 200'000));
+  m_mapView->setViewpointAndWait(Viewpoint(Point(-3.8891, 56.641, SpatialReference(4326)), 577'790));
 }

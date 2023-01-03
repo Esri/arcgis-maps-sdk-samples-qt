@@ -45,7 +45,7 @@ Item {
             left: parent.left
             margins: 5
         }
-        width: 150
+        width: 225
         height: column.height + 10
         border.color: "black"
         ColumnLayout {
@@ -60,6 +60,7 @@ Item {
                 onCurrentIndexChanged: {
                     model.setLayerMode(currentIndex);
                 }
+                Component.onCompleted: currentIndex = 3;
             }
         }
     }
