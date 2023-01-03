@@ -39,12 +39,12 @@ Use the drop down to display different feature layers on the map. Pan and zoom t
 
 ## Relevant API
 
-- FeatureLayer
-- Geodatabase
-- GeoPackage
-- PortalItem
-- ServiceFeatureTable
-- ShapefileFeatureTable
+* FeatureLayer
+* Geodatabase
+* GeoPackage
+* PortalItem
+* ServiceFeatureTable
+* ShapefileFeatureTable
 
 ## Offline data
 
