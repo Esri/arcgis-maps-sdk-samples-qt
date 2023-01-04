@@ -31,7 +31,7 @@ ARCGIS_RUNTIME_VERSION = 200.0.0
 include($$PWD/arcgisruntime.pri)
 
 # path of the toolkit relative to the sample
-TOOLKIT_PRI_PATH = $$PWD/../../../arcgis-maps-toolkit-qt
+TOOLKIT_PRI_PATH = $$PWD/../../../arcgis-maps-sdk-toolkit-qt
 
 exists($$TOOLKIT_PRI_PATH/uitools/toolkitqml.pri) {
     include($$TOOLKIT_PRI_PATH/uitools/toolkitcpp.pri)

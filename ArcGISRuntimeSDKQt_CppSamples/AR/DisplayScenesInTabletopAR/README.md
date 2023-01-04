@@ -46,20 +46,20 @@ This sample uses the [Philadelphia Mobile Scene Package](https://www.arcgis.com/
 
 #### Clone the toolkit repo - Required for AR samples
 
-Change directory into your locally cloned samples repo and then use `git clone` to get a copy of the [ArcGIS Maps SDK for Qt Toolkit](https://github.com/Esri/arcgis-runtime-toolkit-qt.git).
+Change directory into your locally cloned samples repo and then use `git clone` to get a copy of the [ArcGIS Maps SDK for Qt Toolkit](https://github.com/Esri/arcgis-maps-sdk-toolkit-qt.git).
 
 ```
 # Change directory to the clone of the samples repository
 # Clone the toolkit repository into the current directory in terminal
-$ cd /arcgis-runtime-samples-qt
-$ git clone https://github.com/Esri/arcgis-runtime-toolkit-qt.git
+$ cd /arcgis-maps-sdk-samples-qt
+$ git clone https://github.com/Esri/arcgis-maps-sdk-toolkit-qt.git
 ```
 
 Cloning the toolkit in this location will allow for the samples to automatically pick it up. If you wish to place the toolkit in another location, you will need to update the samples project file accordingly to locate the necessary .pri file.
 
 Note: Filesystem permissions is required for this sample.
 
-For more information on the Augmented Reality (AR) toolkit, including the steps required to deploy to Android and iOS, see [the AR README on GitHub](https://github.com/Esri/arcgis-runtime-toolkit-qt/blob/main/augmentedreality/README.md).
+For more information on the Augmented Reality (AR) toolkit, including the steps required to deploy to Android and iOS, see [the AR README on GitHub](https://github.com/Esri/arcgis-maps-sdk-toolkit-qt/blob/main/augmentedreality/README.md).
 
 ## Tags
 
