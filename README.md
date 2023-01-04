@@ -22,14 +22,14 @@ The repo contains [Qt](http://qt.io) projects for each sample that can be run fr
 * Qt SDK 5.15.2 or higher (Open source or commercial)
 * Qt Creator
 * An [ArcGIS Developer API key](https://developers.arcgis.com/documentation/mapping-apis-and-services/security/api-keys/)
-* [ArcGIS Maps SDK for Qt Toolkit](https://github.com/Esri/arcgis-runtime-toolkit-qt) is required as some samples utilize toolkit components.
+* [ArcGIS Maps SDK for Qt Toolkit](https://github.com/Esri/arcgis-maps-toolkit-qt) is required as some samples utilize toolkit components.
 * For more information, please visit the [System Requirements](https://developers.arcgis.com/qt/reference/system-requirements/) page.
 
 ## Set up the ArcGIS Maps SDK for Qt samples repo locally
 
 ### Fork the repo
 
-If you haven't already, fork [the repo](https://github.com/Esri/arcgis-runtime-samples-qt/fork).
+If you haven't already, fork [the repo](https://github.com/Esri/arcgis-maps-samples-qt/fork).
 
 ### Clone the repo
 
@@ -41,18 +41,18 @@ Open your terminal, navigate to your working directory, use ```git clone``` to g
 
 ```bash
 # Clone your fork of the repository into the current directory in terminal
-git clone https://github.com/YOUR_USERNAME/arcgis-runtime-samples-qt.git
+git clone https://github.com/YOUR_USERNAME/arcgis-maps-samples-qt.git
 ```
 
 #### Clone the toolkit repo
 
-Change directory into your locally cloned samples repo and then use `git clone` to get a copy of the [ArcGIS Maps SDK for Qt Toolkit](https://github.com/Esri/arcgis-runtime-toolkit-qt.git).
+Change directory into your locally cloned samples repo and then use `git clone` to get a copy of the [ArcGIS Maps SDK for Qt Toolkit](https://github.com/Esri/arcgis-maps-toolkit-qt.git).
 
 ```bash
 # Change directory to the clone of the samples repository
 # Clone the toolkit repository into the current directory in terminal
-cd /arcgis-runtime-samples-qt
-git clone https://github.com/Esri/arcgis-runtime-toolkit-qt.git
+cd /arcgis-maps-samples-qt
+git clone https://github.com/Esri/arcgis-maps-toolkit-qt.git
 ```
 
 Cloning the toolkit in this location will allow for the samples to automatically pick it up. If you wish to place the toolkit in another location, you will need to update the samples project file accordingly to locate the necessary .pri file.
@@ -66,14 +66,14 @@ To sync changes you make in a fork with this repository, you must configure a re
 
 ```bash
 $ git remote -v
-origin https://github.com/YOUR_USERNAME/arcgis-runtime-samples-qt.git (fetch)
-origin https://github.com/YOUR_USERNAME/arcgis-runtime-samples-qt.git (push)
+origin https://github.com/YOUR_USERNAME/arcgis-maps-samples-qt.git (fetch)
+origin https://github.com/YOUR_USERNAME/arcgis-maps-samples-qt.git (push)
 ```
 
 * Specify a new remote upstream repository
 
 ```bash
-git remote add upstream https://github.com/Esri/arcgis-runtime-samples-qt.git
+git remote add upstream https://github.com/Esri/arcgis-maps-samples-qt.git
 ```
 
 * Verify the new upstream repository
@@ -81,10 +81,10 @@ git remote add upstream https://github.com/Esri/arcgis-runtime-samples-qt.git
 ```bash
 $ git remote -v
 
-origin https://github.com/YOUR_USERNAME/arcgis-runtime-samples-qt.git (fetch)
-origin https://github.com/YOUR_USERNAME/arcgis-runtime-samples-qt.git (push)
-upstream https://github.com/Esri/arcgis-runtime-samples-qt.git (fetch)
-upstream https://github.com/Esri/arcgis-runtime-samples-qt.git (push)
+origin https://github.com/YOUR_USERNAME/arcgis-maps-samples-qt.git (fetch)
+origin https://github.com/YOUR_USERNAME/arcgis-maps-samples-qt.git (push)
+upstream https://github.com/Esri/arcgis-maps-samples-qt.git (fetch)
+upstream https://github.com/Esri/arcgis-maps-samples-qt.git (push)
 ```
 
 ### Sync your fork
@@ -117,27 +117,13 @@ Start Qt Creator. When the IDE opens to the Welcome screen, click on the **Open 
 
 ## Build and run the ArcGIS Maps SDK for Qt Sample Viewers locally
 
-Start Qt Creator. When the IDE opens to the Welcome screen, click on the **Open Project** button and browse to either sample viewer's project file (.pro) within your forked repo location. The sample viewer project files are located at `arcgis-runtime-samples-qt\ArcGISRuntimeSDKQt_SampleViewers\`, in either `ArcGISRuntimeSDKQt_CppSamples` or `ArcGISRuntimeSDKQt_QMLSamples`. Configure the project, [set your ArcGIS Developer API key](https://developers.arcgis.com/documentation/mapping-apis-and-services/security/tutorials/create-and-manage-an-api-key/#set-your-api-key) in `ArcGISRuntimeSDKQt_Samples\SampleManager.cpp`, and run the sample.
+Start Qt Creator. When the IDE opens to the Welcome screen, click on the **Open Project** button and browse to either sample viewer's project file (.pro) within your forked repo location. The sample viewer project files are located at `arcgis-maps-samples-qt\ArcGISRuntimeSDKQt_SampleViewers\`, in either `ArcGISRuntimeSDKQt_CppSamples` or `ArcGISRuntimeSDKQt_QMLSamples`. Configure the project, [set your ArcGIS Developer API key](https://developers.arcgis.com/documentation/mapping-apis-and-services/security/tutorials/create-and-manage-an-api-key/#set-your-api-key) in `ArcGISRuntimeSDKQt_Samples\SampleManager.cpp`, and run the sample.
 
 NOTE: the sample viewer project files search for the toolkit.pri at the [default location specified above](#clone-the-toolkit-repo). If you cloned the toolkit repo to a different location, you will need to update the path in the respective sample viewer's project file.
 
 ## Use a previous version
 
-The `main` branch contains samples for the current, most up-to-date version of ArcGIS Maps SDK. To access previous versions, you can checkout by a tag or commit, or alternativley you can download the source zip:
-
-* [100.0](https://github.com/Esri/arcgis-runtime-samples-qt/releases/tag/1529)
-* [100.1](https://github.com/Esri/arcgis-runtime-samples-qt/releases/tag/1744)
-* [100.2.1](https://github.com/Esri/arcgis-runtime-samples-qt/releases/tag/100.2.1)
-* [100.3](https://github.com/Esri/arcgis-runtime-samples-qt/releases/tag/2102)
-* [100.4](https://github.com/Esri/arcgis-runtime-samples-qt/releases/tag/100.4.0.2207)
-* [100.5](https://github.com/Esri/arcgis-runtime-samples-qt/releases/tag/100.5.0.final)
-* [100.6](https://github.com/Esri/arcgis-runtime-samples-qt/releases/tag/100.6.0.final)
-* [100.7](https://github.com/Esri/arcgis-runtime-samples-qt/releases/tag/100.7.0.final)
-* [100.8](https://github.com/Esri/arcgis-runtime-samples-qt/releases/tag/100.8.0.final)
-* [100.9](https://github.com/Esri/arcgis-runtime-samples-qt/releases/tag/100.9.0.final)
-* [100.10](https://github.com/Esri/arcgis-runtime-samples-qt/releases/tag/100.10.0.final)
-* [100.11](https://github.com/Esri/arcgis-runtime-samples-qt/releases/tag/100.11.0.final)
-* [100.12](https://github.com/Esri/arcgis-runtime-samples-qt/releases/tag/100.12.0.3244.final)
+The `main` branch contains samples for the current, most up-to-date version of ArcGIS Maps SDK. To access previous versions, you can checkout by a tag or commit, or alternativley you can download the source zip: https://github.com/Esri/arcgis-maps-samples-qt/releases.
 
 ## Use offline data in the samples
 
@@ -188,4 +174,4 @@ WITHOUT WARRANTIES OR CONDITIONS OF ANY KIND, either express or implied.
 See the License for the specific language governing permissions and
 limitations under the License.
 
-A copy of the license is available in the repository's [license.txt]( https://github.com/Esri/arcgis-runtime-samples-qt/blob/main/license.txt) file
+A copy of the license is available in the repository's [license.txt]( https://github.com/Esri/arcgis-maps-samples-qt/blob/main/license.txt) file
