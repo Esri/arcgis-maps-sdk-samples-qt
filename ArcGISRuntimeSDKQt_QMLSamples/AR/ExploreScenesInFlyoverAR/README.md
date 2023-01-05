@@ -37,13 +37,13 @@ The [world elevation service](https://elevation3d.arcgis.com/arcgis/rest/service
 
 #### Clone the toolkit repo - Required for AR samples
 
-Change directory into your locally cloned samples repo and then use `git clone` to get a copy of the [ArcGIS Maps SDK for Qt Toolkit](https://github.com/Esri/arcgis-maps-toolkit-qt.git).
+Change directory into your locally cloned samples repo and then use `git clone` to get a copy of the [ArcGIS Maps SDK for Qt Toolkit](https://github.com/Esri/arcgis-maps-sdk-toolkit-qt.git).
 
 ```
 # Change directory to the clone of the samples repository
 # Clone the toolkit repository into the current directory in terminal
-$ cd /arcgis-maps-samples-qt
-$ git clone https://github.com/Esri/arcgis-maps-toolkit-qt.git
+$ cd /arcgis-maps-sdk-samples-qt
+$ git clone https://github.com/Esri/arcgis-maps-sdk-toolkit-qt.git
 ```
 
 Cloning the toolkit in this location will allow for the samples to automatically pick it up. If you wish to place the toolkit in another location, you will need to update the samples project file accordingly to locate the necessary .pri file.
