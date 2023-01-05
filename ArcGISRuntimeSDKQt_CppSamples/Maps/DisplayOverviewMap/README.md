@@ -30,7 +30,7 @@ The data used in this sample is the [OpenStreetMap Tourist Attractions for North
 
 ## Additional information
 
- This sample uses the overview map toolkit component, which requires the [toolkit](https://github.com/Esri/arcgis-runtime-toolkit-qt) to be cloned and set up locally. For information about setting up the toolkit, visit the repository's [UI Tools page](https://github.com/Esri/arcgis-runtime-toolkit-qt/blob/main/uitools).
+ This sample uses the overview map toolkit component, which requires the [toolkit](https://github.com/Esri/arcgis-maps-sdk-toolkit-qt) to be cloned and set up locally. For information about setting up the toolkit, visit the repository's [UI Tools page](https://github.com/Esri/arcgis-runtime-toolkit-qt/blob/main/uitools).
 
 ## Tags
 

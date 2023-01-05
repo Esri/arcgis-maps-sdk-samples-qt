@@ -29,7 +29,7 @@ A basemap can be changed by setting the basemap property of a map object to a ne
 
 ## Additional information
 
-This sample uses the `BasemapGallery` toolkit component and requires the [toolkit](https://github.com/Esri/arcgis-runtime-toolkit-qt) to be cloned and set-up locally. For information about setting up the toolkit, see the repository's root [README file](https://github.com/Esri/arcgis-runtime-toolkit-qt/blob/main/uitools/README.md).
+This sample uses the `BasemapGallery` toolkit component and requires the [toolkit](https://github.com/Esri/arcgis-maps-sdk-toolkit-qt) to be cloned and set-up locally. For information about setting up the toolkit, see the repository's root [README file](https://github.com/Esri/arcgis-runtime-toolkit-qt/blob/main/uitools/README.md).
 
 ## Tags
 
