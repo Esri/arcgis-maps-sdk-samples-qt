@@ -36,8 +36,8 @@ exists($$PWD/../../../../DevBuildQml.pri) {
   CONFIG += c++17
 
   # include the toolkitqml.pri, which contains all the toolkit resources
-  !include($$PWD/../../arcgis-runtime-toolkit-qt/uitools/toolkitqml.pri) {
-    message("ERROR: Cannot find toolkitqml.pri at path:" $$PWD/../../arcgis-runtime-toolkit-qt/uitools/toolkitqml.pri)
+  !include($$PWD/../../arcgis-maps-sdk-toolkit-qt/uitools/toolkitqml.pri) {
+    message("ERROR: Cannot find toolkitqml.pri at path:" $$PWD/../../arcgis-maps-sdk-toolkit-qt/uitools/toolkitqml.pri)
     message("Please ensure the Qt Toolkit repository is cloned and the path above is correct.")
   }
 

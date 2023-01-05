@@ -30,7 +30,7 @@ TARGET = EditWithBranchVersioning
 ARCGIS_RUNTIME_VERSION = 200.1.0
 include($$PWD/arcgisruntime.pri)
 
-TOOLKIT_PRI_PATH = $$PWD/../../../arcgis-runtime-toolkit-qt
+TOOLKIT_PRI_PATH = $$PWD/../../../arcgis-maps-sdk-toolkit-qt
 
 exists($$TOOLKIT_PRI_PATH/uitools/toolkitcpp.pri) {
     include($$TOOLKIT_PRI_PATH/uitools/toolkitcpp.pri)
