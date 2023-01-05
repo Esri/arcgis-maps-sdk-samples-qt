@@ -62,10 +62,10 @@ ios {
 # AR configuration
 
 # The path to the ArcGIS runtime toolkit for Qt sources, corresponding to the files downloaded
-# from the GitHub repo: https://github.com/Esri/arcgis-runtime-toolkit-qt
+# from the GitHub repo: https://github.com/Esri/arcgis-maps-sdk-toolkit-qt
 
 # path of the toolkit relative to the sample
-ARCGIS_TOOLKIT_PATH = $$PWD/../../../arcgis-runtime-toolkit-qt
+ARCGIS_TOOLKIT_PATH = $$PWD/../../../arcgis-maps-sdk-toolkit-qt
 
 exists($$ARCGIS_TOOLKIT_PATH/augmentedreality/CppApi/ArCppApi.pri) {
     include($$ARCGIS_TOOLKIT_PATH/augmentedreality/CppApi/ArCppApi.pri)
