@@ -59,7 +59,7 @@ Item {
                 model: ["Geodatabase", "Geopackage", "Portal Item", "Service Feature Table", "Shapefile"]
                 currentIndex: 3
                 onCurrentTextChanged: {
-                    model.setLayerMode(currentIndex);
+                    model.setLayerVisibility(currentIndex);
                 }
             }
         }

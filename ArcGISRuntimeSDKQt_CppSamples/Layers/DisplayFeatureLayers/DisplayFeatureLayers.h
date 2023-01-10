@@ -1,6 +1,18 @@
-// [WriteFile Name=DisplayFeatureLayers, Category=Layers]
-// [Legal]
-// Copyright 2022 Esri.
+
+// TRADE SECRETS: ESRI PROPRIETARY AND CONFIDENTIAL
+// Unpublished material - all rights reserved under the
+// Copyright Laws of the United States and applicable international
+// laws, treaties, and conventions.
+//
+// For additional information, contact:
+// Environmental Systems Research Institute, Inc.
+// Attn: Contracts and Legal Services Department
+// 380 New York Street
+// Redlands, California, 92373
+// USA
+//
+// email: contracts@esri.com
+/// \file DisplayFeatureLayers.h
 
 // Licensed under the Apache License, Version 2.0 (the "License");
 // you may not use this file except in compliance with the License.
@@ -38,7 +50,7 @@ public:
   explicit DisplayFeatureLayers(QObject* parent = nullptr);
   ~DisplayFeatureLayers() override;
 
-  enum class FeatureLayerMode {
+  enum class FeatureLayerType {
     Geodatabase,
     Geopackage,
     PortalItem,
@@ -46,11 +58,11 @@ public:
     Shapefile
   };
 
-  Q_ENUM(FeatureLayerMode)
+  Q_ENUM(FeatureLayerType)
 
   static void init();
 
-  Q_INVOKABLE void setLayerMode(DisplayFeatureLayers::FeatureLayerMode featureLayerMode);
+  Q_INVOKABLE void setLayerVisibility(DisplayFeatureLayers::FeatureLayerType featureLayerType);
 
 signals:
   void mapViewChanged();
@@ -59,18 +71,20 @@ private:
   [[nodiscard]] Esri::ArcGISRuntime::MapQuickView* mapView() const;
   void setMapView(Esri::ArcGISRuntime::MapQuickView* mapView);
 
-  void setGeodatabaseLayer();
-  void setGeopackageLayer();
-  void setPortalItemLayer();
-  void setServiceFeatureTableLayer();
-  void setShapefileLayer();
+  void addGeodatabaseLayer();
+  void addGeopackageLayer();
+  void addPortalItemLayer();
+  void addServiceFeatureTableLayer();
+  void addShapefileLayer();
 
   Esri::ArcGISRuntime::Map* m_map = nullptr;
   Esri::ArcGISRuntime::MapQuickView* m_mapView = nullptr;
-  Esri::ArcGISRuntime::FeatureLayer* m_featureLayer = nullptr;
-  DisplayFeatureLayers::FeatureLayerMode m_currentLayerMode;
 
-  QScopedPointer<QObject> m_layerParent;
+  Esri::ArcGISRuntime::FeatureLayer* m_gdbFeatureLayer = nullptr;
+  Esri::ArcGISRuntime::FeatureLayer* m_gpkgFeatureLayer = nullptr;
+  Esri::ArcGISRuntime::FeatureLayer* m_portalItemFeatureLayer = nullptr;
+  Esri::ArcGISRuntime::FeatureLayer* m_serviceFeatureTableFeatureLayer = nullptr;
+  Esri::ArcGISRuntime::FeatureLayer* m_shpFeatureLayer = nullptr;
 };
 
 #endif // DISPLAYFEATURELAYERS_H

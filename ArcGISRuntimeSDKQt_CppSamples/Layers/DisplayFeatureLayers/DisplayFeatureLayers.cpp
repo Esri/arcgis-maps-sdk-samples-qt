@@ -1,6 +1,18 @@
-// [WriteFile Name=DisplayFeatureLayers, Category=Layers]
-// [Legal]
-// Copyright 2022 Esri.
+
+// TRADE SECRETS: ESRI PROPRIETARY AND CONFIDENTIAL
+// Unpublished material - all rights reserved under the
+// Copyright Laws of the United States and applicable international
+// laws, treaties, and conventions.
+//
+// For additional information, contact:
+// Environmental Systems Research Institute, Inc.
+// Attn: Contracts and Legal Services Department
+// 380 New York Street
+// Redlands, California, 92373
+// USA
+//
+// email: contracts@esri.com
+/// \file DisplayFeatureLayers.cpp
 
 // Licensed under the Apache License, Version 2.0 (the "License");
 // you may not use this file except in compliance with the License.
@@ -34,6 +46,7 @@
 #include "Point.h"
 #include "Portal.h"
 #include "PortalItem.h"
+#include "TaskWatcher.h"
 #include "ServiceFeatureTable.h"
 #include "ShapefileFeatureTable.h"
 #include "SpatialReference.h"
@@ -62,9 +75,14 @@ QString defaultDataPath()
 
 DisplayFeatureLayers::DisplayFeatureLayers(QObject* parent /* = nullptr */):
   QObject(parent),
-  m_map(new Map(BasemapStyle::ArcGISTopographic, this)),
-  m_layerParent(new QObject)
+  m_map(new Map(BasemapStyle::ArcGISTopographic, this))
 {
+  // Each of these methods creates and adds a feature layer of the specified type to the map's operationalLayers LayerListModel
+  addGeodatabaseLayer();
+  addGeopackageLayer();
+  addPortalItemLayer();
+  addServiceFeatureTableLayer();
+  addShapefileLayer();
 }
 
 DisplayFeatureLayers::~DisplayFeatureLayers() = default;
@@ -93,52 +111,51 @@ void DisplayFeatureLayers::setMapView(MapQuickView* mapView)
   emit mapViewChanged();
 }
 
-void DisplayFeatureLayers::setLayerMode(FeatureLayerMode featureLayerMode)
+void DisplayFeatureLayers::setLayerVisibility(FeatureLayerType featureLayerType)
 {
-  if (!m_map)
+  if (!m_map || !m_mapView)
     return;
 
-  if (!m_map->operationalLayers()->isEmpty())
+  // Hide all other layers
+  for (Layer* layer : *m_map->operationalLayers())
   {
-    m_map->operationalLayers()->clear();
-
-    // Clearing the layer list model does not delete the objects referenced within,
-    // so we reset the feature layers' parent to release all objects associated with it and avoid memory leaks
-    m_layerParent.reset(new QObject);
+    layer->setVisible(false);
   }
 
-  m_currentLayerMode = featureLayerMode;
-
-  switch (featureLayerMode) {
-    case FeatureLayerMode::Geodatabase:
-      setGeodatabaseLayer();
+  // Make the selected feature layer visible and set the viewpoint to show the layer
+  switch (featureLayerType) {
+    case FeatureLayerType::Geodatabase:
+      m_gdbFeatureLayer->setVisible(true);
+      m_mapView->setViewpointGeometry(m_gdbFeatureLayer->fullExtent());
       break;
-    case FeatureLayerMode::Geopackage:
-      setGeopackageLayer();
+    case FeatureLayerType::Geopackage:
+      m_gpkgFeatureLayer->setVisible(true);
+      m_mapView->setViewpointGeometry(m_gpkgFeatureLayer->fullExtent());
       break;
-    case FeatureLayerMode::PortalItem:
-      setPortalItemLayer();
+    case FeatureLayerType::PortalItem:
+      m_portalItemFeatureLayer->setVisible(true);
+      // We can set padding on the viewpoint geometry. A negative value will zoom in.
+      m_mapView->setViewpointGeometry(m_portalItemFeatureLayer->fullExtent(), -10'000);
       break;
-    case FeatureLayerMode::ServiceFeatureTable:
-      setServiceFeatureTableLayer();
+    case FeatureLayerType::ServiceFeatureTable:
+      m_serviceFeatureTableFeatureLayer->setVisible(true);
+      // The extent of this layer is very large so we can set the viewpoint to a specific point
+      m_mapView->setViewpointAndWait(Viewpoint(Point(-13176752, 4090404, SpatialReference(102100)), 300'000));
       break;
-    case FeatureLayerMode::Shapefile:
-      setShapefileLayer();
+    case FeatureLayerType::Shapefile:
+      m_shpFeatureLayer->setVisible(true);
+      m_mapView->setViewpointGeometry(m_shpFeatureLayer->fullExtent());
       break;
     default:
       break;
   }
 }
 
-void DisplayFeatureLayers::setGeodatabaseLayer()
+void DisplayFeatureLayers::addGeodatabaseLayer()
 {
-  Geodatabase* gdb = new Geodatabase(defaultDataPath() + "geodatabase/LA_Trails.geodatabase", m_layerParent.get());
+  Geodatabase* gdb = new Geodatabase(defaultDataPath() + "geodatabase/LA_Trails.geodatabase", this);
   connect(gdb, &Geodatabase::doneLoading, this, [gdb, this](const Error& e)
   {
-    // If the current layer mode has changed while loading, abort this process
-    if (m_currentLayerMode != FeatureLayerMode::Geodatabase)
-      return;
-
     if (!e.isEmpty())
     {
       qDebug() << e.message() << e.additionalMessage();
@@ -146,28 +163,22 @@ void DisplayFeatureLayers::setGeodatabaseLayer()
     }
 
     GeodatabaseFeatureTable* gdbFeatureTable = gdb->geodatabaseFeatureTable("Trailheads");
-    m_featureLayer = new FeatureLayer(gdbFeatureTable, m_layerParent.get());
-    m_map->operationalLayers()->append(m_featureLayer);
+    m_gdbFeatureLayer = new FeatureLayer(gdbFeatureTable, this);
+    m_map->operationalLayers()->append(m_gdbFeatureLayer);
 
-    connect(m_featureLayer, &FeatureLayer::doneLoading, this, [this]()
-    {
-      // We can use the feature layer's extent to set the viewpoint once it is loaded
-      m_mapView->setViewpointAndWait(Viewpoint(m_featureLayer->fullExtent()));
-    });
+    // Because this feature layer is added asynchronously, we may need to set its visibility even after the initial setLayerVisibility() method is called
+    m_gdbFeatureLayer->setVisible(false);
   });
+
   gdb->load();
 }
 
-void DisplayFeatureLayers::setGeopackageLayer()
+void DisplayFeatureLayers::addGeopackageLayer()
 {
-  GeoPackage* gpkg = new GeoPackage(defaultDataPath() + "gpkg/AuroraCO.gpkg", m_layerParent.get());
+  GeoPackage* gpkg = new GeoPackage(defaultDataPath() + "gpkg/AuroraCO.gpkg", this);
 
   connect(gpkg, &GeoPackage::doneLoading, this, [this, gpkg](const Error& e)
   {
-    // If the current layer mode has changed while loading, abort this process
-    if (m_currentLayerMode != FeatureLayerMode::Geopackage)
-      return;
-
     if (!e.isEmpty())
     {
       qDebug() << e.message() << e.additionalMessage();
@@ -178,48 +189,41 @@ void DisplayFeatureLayers::setGeopackageLayer()
       return;
 
     GeoPackageFeatureTable* gpkgFeatureTable = gpkg->geoPackageFeatureTables().at(0);
-    m_featureLayer = new FeatureLayer(gpkgFeatureTable, m_layerParent.get());
-    m_map->operationalLayers()->append(m_featureLayer);
+    m_gpkgFeatureLayer = new FeatureLayer(gpkgFeatureTable, this);
+    m_map->operationalLayers()->append(m_gpkgFeatureLayer);
 
-    connect(m_featureLayer, &FeatureLayer::doneLoading, this, [this]()
-    {
-      // We can use the feature layer's extent to set the viewpoint once it is loaded
-      m_mapView->setViewpointAndWait(Viewpoint(m_featureLayer->fullExtent()));
-    });
+    // Because this feature layer is added asynchronously, we may need to set its visibility even after the initial setLayerVisibility() method is called
+    m_gpkgFeatureLayer->setVisible(false);
   });
 
   gpkg->load();
   // Note that you must call close() on GeoPackage to allow other processes to access it
 }
 
-void DisplayFeatureLayers::setPortalItemLayer()
+void DisplayFeatureLayers::addPortalItemLayer()
 {
   Portal* portal = new Portal(this);
-  PortalItem* portalItem = new PortalItem(portal, "1759fd3e8a324358a0c58d9a687a8578", m_layerParent.get());
+  PortalItem* portalItem = new PortalItem(portal, "1759fd3e8a324358a0c58d9a687a8578", this);
 
-  m_featureLayer = new FeatureLayer(portalItem, 0, m_layerParent.get());
-  m_map->operationalLayers()->append(m_featureLayer);
+  // A portal item can be many things from files to web maps.
+  // We can check its type to ensure we're instantiating a feature layer with the
+  // correct portal item type, but the portal item must first be loaded explicitly.
+  // Here, the portal item is automatically loaded when it is used to instantiate a feature layer.
 
-  // This layer takes a moment to load so rather than waiting to use its extent once loaded, we can set the viewpoint ourselves
-  m_mapView->setViewpointAndWait(Viewpoint(45.5266, -122.6219, 6000));
+  m_portalItemFeatureLayer = new FeatureLayer(portalItem, 0, this);
+  m_map->operationalLayers()->append(m_portalItemFeatureLayer);
 }
 
-void DisplayFeatureLayers::setServiceFeatureTableLayer()
+void DisplayFeatureLayers::addServiceFeatureTableLayer()
 {
-  ServiceFeatureTable* serviceFeatureTable = new ServiceFeatureTable(QUrl("https://sampleserver6.arcgisonline.com/arcgis/rest/services/Energy/Geology/FeatureServer/9"), m_layerParent.get());
-  m_featureLayer = new FeatureLayer(serviceFeatureTable, m_layerParent.get());
-  m_map->operationalLayers()->append(m_featureLayer);
-
-  // The extent of this layer is very large so we can set the viewpoint to a specific point
-  m_mapView->setViewpointAndWait(Viewpoint(Point(-13176752, 4090404, SpatialReference(102100)), 300'000));
+  ServiceFeatureTable* serviceFeatureTable = new ServiceFeatureTable(QUrl("https://sampleserver6.arcgisonline.com/arcgis/rest/services/Energy/Geology/FeatureServer/9"), this);
+  m_serviceFeatureTableFeatureLayer = new FeatureLayer(serviceFeatureTable, this);
+  m_map->operationalLayers()->append(m_serviceFeatureTableFeatureLayer);
 }
 
-void DisplayFeatureLayers::setShapefileLayer()
+void DisplayFeatureLayers::addShapefileLayer()
 {
-  ShapefileFeatureTable* shpFeatureTable = new ShapefileFeatureTable(defaultDataPath() + "shp/ScottishWildlifeTrust_ReserveBoundaries_20201102.shp", m_layerParent.get());
-  m_featureLayer = new FeatureLayer(shpFeatureTable, m_layerParent.get());
-  m_map->operationalLayers()->append(m_featureLayer);
-
-  // The extent of this layer is very large so we can set the viewpoint to a specific point
-  m_mapView->setViewpointAndWait(Viewpoint(Point(-3.8891, 56.641, SpatialReference(4326)), 577'790));
+  ShapefileFeatureTable* shpFeatureTable = new ShapefileFeatureTable(defaultDataPath() + "shp/ScottishWildlifeTrust_ReserveBoundaries_20201102.shp", this);
+  m_shpFeatureLayer = new FeatureLayer(shpFeatureTable, this);
+  m_map->operationalLayers()->append(m_shpFeatureLayer);
 }
