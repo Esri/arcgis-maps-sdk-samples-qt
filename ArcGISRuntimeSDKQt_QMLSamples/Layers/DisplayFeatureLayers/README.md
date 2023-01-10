@@ -30,7 +30,7 @@ Use the drop down to display different feature layers on the map. Pan and zoom t
     - Add a `PortalItem` component and provide the itemID property
 5. Create a feature layer with a `ServiceFeatureTable`
     - Create a `FeatureLayer` component
-    - Set the featureTable property to a `ServiceFeatureTable` component with a url
+    - Set the featureTable property to a `ServiceFeatureTable` component with a URL
 6. Create a feature layer with a shapefile
     - Create a `FeatureLayer` component
     - Set the featureTable property to a `ShapefileFeatureTable` component with the path to the .shp
