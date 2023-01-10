@@ -61,7 +61,6 @@ Item {
                 onCurrentTextChanged: {
                     model.setLayerMode(currentIndex);
                 }
-                //Component.onCompleted: currentIndex = 3;
             }
         }
     }
