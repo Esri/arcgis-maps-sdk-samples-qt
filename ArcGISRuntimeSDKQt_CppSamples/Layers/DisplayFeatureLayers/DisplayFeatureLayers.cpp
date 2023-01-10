@@ -44,6 +44,21 @@
 // email: contracts@esri.com
 /// \file DisplayFeatureLayers.cpp
 
+// TRADE SECRETS: ESRI PROPRIETARY AND CONFIDENTIAL
+// Unpublished material - all rights reserved under the
+// Copyright Laws of the United States and applicable international
+// laws, treaties, and conventions.
+//
+// For additional information, contact:
+// Environmental Systems Research Institute, Inc.
+// Attn: Contracts and Legal Services Department
+// 380 New York Street
+// Redlands, California, 92373
+// USA
+//
+// email: contracts@esri.com
+/// \file DisplayFeatureLayers.cpp
+
 // Licensed under the Apache License, Version 2.0 (the "License");
 // you may not use this file except in compliance with the License.
 // You may obtain a copy of the License at
@@ -253,7 +268,7 @@ void DisplayFeatureLayers::setServiceFeatureTableLayer()
   m_map->operationalLayers()->append(m_featureLayer);
 
   // The extent of this layer is very large so we can set the viewpoint to a specific point
-  m_mapView->setViewpointAndWait(Viewpoint(Point(-13176752, 4090404, SpatialReference(102100)), 300000));
+  m_mapView->setViewpointAndWait(Viewpoint(Point(-13176752, 4090404, SpatialReference(102100)), 300'000));
 }
 
 void DisplayFeatureLayers::setShapefileLayer()

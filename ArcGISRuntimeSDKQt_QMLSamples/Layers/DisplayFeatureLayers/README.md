@@ -34,8 +34,7 @@ Use the drop down to display different feature layers on the map. Pan and zoom t
 6. Create a feature layer with a shapefile
     - Create a `FeatureLayer` component
     - Set the featureTable property to a `ShapefileFeatureTable` component with the path to the .shp
-7. Add the created feature layer to the `Map`'s `operationalLayers`
-    
+7. Declaratively add the feature layer to the `Map` as a child component or add it dynamically by appending it to the map's `operationalLayers`
 
 ## Relevant API
 

@@ -45,6 +45,81 @@ Rectangle {
         Map {
             id: map
             initBasemapStyle: Enums.BasemapStyleArcGISTopographic
+
+            // This sample initializes with the service feature table feature layer visible
+            initialViewpoint: ViewpointCenter {
+                id: serviceFeatureTableViewpoint
+                center: Point {
+                    x: -13176752
+                    y: 4090404
+                    spatialReference: SpatialReference { wkid: 102100 }
+                }
+                targetScale: 300000
+            }
+
+
+            // Display a feature layer with a portal item
+            FeatureLayer {
+                id: portalItemFeatureLayer
+                visible: false
+                item: PortalItem {
+                    itemId: "1759fd3e8a324358a0c58d9a687a8578"
+                }
+            }
+
+            // Display a feature layer with a Geodatabase
+            FeatureLayer {
+                id: gdbFeatureLayer
+                visible: false
+
+                featureTable: geodatabase.geodatabaseFeatureTablesByTableName["Trailheads"] ?? null
+                Geodatabase {
+                    id: geodatabase
+                    path: dataPath + "geodatabase/LA_Trails.geodatabase"
+                }
+            }
+
+            // Display a GeoPackage feature layer
+            FeatureLayer {
+                id: gpkgFeatureLayer
+                visible: false
+
+                GeoPackage {
+                    id: gpkg
+                    path: dataPath + "gpkg/AuroraCO.gpkg"
+
+                    // Wait for the GeoPackage to load successfully
+                    onLoadStatusChanged: {
+                        if (loadStatus !== Enums.LoadStatusLoaded || // the GeoPackage hasn't yet loaded
+                                gpkg.geoPackageFeatureTables.length === 0) // the GeoPackage has no feature tables to use
+                            return;
+
+                        gpkgFeatureLayer.featureTable = gpkg.geoPackageFeatureTables[0];
+                    }
+
+                    Component.onCompleted: {
+                        load();
+                    }
+                    // Note you must call close() on GeoPackage to allow other processes to access it
+                }
+            }
+
+            // Display a service feature table feature layer
+            FeatureLayer {
+                id: serviceFeatureTableFeatureLayer
+                featureTable: ServiceFeatureTable {
+                    url: "https://sampleserver6.arcgisonline.com/arcgis/rest/services/Energy/Geology/FeatureServer/9"
+                }
+            }
+
+            // Display a shapefile feature layer
+            FeatureLayer {
+                id: shapefileFeatureLayer
+                visible: false
+                featureTable: ShapefileFeatureTable {
+                    path: dataPath + "shp/ScottishWildlifeTrust_ReserveBoundaries_20201102.shp"
+                }
+            }
         }
     }
 
@@ -69,147 +144,39 @@ Rectangle {
                 id: featureLayerComboBox
                 implicitWidth: layerSelectRectangle.width - 10
                 model: ["Geodatabase", "GeoPackage", "Portal Item", "Service Feature Table", "Shapefile"]
+                currentIndex: 3
                 onCurrentTextChanged: {
-                    map.operationalLayers.clear();
+                    map.operationalLayers.forEach(layer => {layer.visible = false;});
 
                     switch (currentText) {
                     case "Geodatabase":
-                        setGeodatabaseLayer();
+                        gdbFeatureLayer.visible = true;
+                        mapView.setViewpointGeometry(gdbFeatureLayer.fullExtent);
                         break;
                     case "GeoPackage":
-                        setGeoPackageLayer();
+                        gpkgFeatureLayer.visible = true;
+                        mapView.setViewpointGeometry(gpkgFeatureLayer.fullExtent);
                         break;
                     case "Portal Item":
-                        setPortalItemLayer();
+                        portalItemFeatureLayer.visible = true;
+                        mapView.setViewpointGeometryAndPadding(portalItemFeatureLayer.fullExtent, -1e4);
                         break;
                     case "Service Feature Table":
-                        setServiceFeatureTableLayer();
+                        serviceFeatureTableFeatureLayer.visible = true;
+                        mapView.setViewpoint(serviceFeatureTableViewpoint);
                         break;
                     case "Shapefile":
-                        setShapefileLayer();
+                        shapefileFeatureLayer.visible = true;
+                        mapView.setViewpointGeometry(shapefileFeatureLayer.fullExtent);
                         break;
                     default:
                         break;
                     }
-                }
 
-                Component.onCompleted: currentIndex = 3;
+                    // Return focus to the MapView for keyboard navigation
+                    mapView.forceActiveFocus();
+                }
             }
         }
-    }
-
-    // Display a feature layer with a Geodatabase
-    FeatureLayer {
-        id: gdbFeatureLayer
-        featureTable: geodatabase.geodatabaseFeatureTablesByTableName["Trailheads"] ?? null
-        Geodatabase {
-            id: geodatabase
-            path: dataPath + "geodatabase/LA_Trails.geodatabase"
-        }
-    }
-
-    function setGeodatabaseLayer() {
-        map.operationalLayers.append(gdbFeatureLayer);
-
-        // Set the viewpoint to the layer
-        const viewpointCenterPoint = ArcGISRuntimeEnvironment.createObject("Point", {x: -13214155, y: 4040194, spatialReference: Factory.SpatialReference.createWebMercator()});
-        mapView.setViewpointCenterAndScale(viewpointCenterPoint, 35e4);
-    }
-
-    // Display a GeoPackage feature layer
-    FeatureLayer {
-        id: gpkgFeatureLayer
-    }
-
-    GeoPackage {
-        id: gpkg
-        path: dataPath + "gpkg/AuroraCO.gpkg"
-
-        // Wait for the GeoPackage to load successfully
-        onLoadStatusChanged: {
-            if (loadStatus !== Enums.LoadStatusLoaded || // the GeoPackage hasn't yet loaded
-                    featureLayerComboBox.currentText !== "GeoPackage" || // the user selected a different option while loading and this process should be aborted
-                    gpkg.geoPackageFeatureTables.length === 0) // the GeoPackage has no feature tables to use
-                return;
-
-            setGeoPackageLayer();
-        }
-
-        onErrorChanged: {
-            console.log(error.message, error.additionalMessage);
-        }
-    }
-
-    function setGeoPackageLayer() {
-        if (gpkg.loadStatus !== Enums.LoadStatusLoaded) {
-            // The GeoPackage must be explicitly loaded before its feature tables can be accessed
-            gpkg.load();
-            return;
-        }
-
-        // A GeoPackageFeatureTable can only be accessed by one feature layer at a time
-        if (!gpkgFeatureLayer.featureTable) {
-            // Get the first feature table
-            const gpkgFeatureTable = gpkg.geoPackageFeatureTables[0];
-            // Create a FeatureLayer with the table
-            gpkgFeatureLayer.featureTable = gpkgFeatureTable;
-        }
-
-        // Append the layer to the map
-        map.operationalLayers.append(gpkgFeatureLayer);
-
-        // Set the viewpoint to the layer
-        const viewpointCenterPoint = ArcGISRuntimeEnvironment.createObject("Point", {x: -104.8319, y: 39.7294, spatialReference: Factory.SpatialReference.createWgs84()});
-        mapView.setViewpointCenterAndScale(viewpointCenterPoint, 2e5);
-
-        // Note you must call close() on GeoPackage to allow other processes to access it
-    }
-
-    // Display a feature layer with a portal item
-    FeatureLayer {
-        id: portalItemFeatureLayer
-        item: PortalItem {
-            itemId: "1759fd3e8a324358a0c58d9a687a8578"
-        }
-    }
-
-    function setPortalItemLayer() {
-        map.operationalLayers.append(portalItemFeatureLayer);
-
-        // Set the viewpoint to the layer
-        const viewpointCenterPoint = ArcGISRuntimeEnvironment.createObject("Point", {x: -122.6219, y: 45.5266, spatialReference: Factory.SpatialReference.createWgs84()});
-        mapView.setViewpointCenterAndScale(viewpointCenterPoint, 6000);
-    }
-
-    // Display a service feature table feature layer
-    FeatureLayer {
-        id: serviceFeatureTableFeatureLayer
-        featureTable: ServiceFeatureTable {
-            url: "https://sampleserver6.arcgisonline.com/arcgis/rest/services/Energy/Geology/FeatureServer/9"
-        }
-    }
-
-    function setServiceFeatureTableLayer() {
-        map.operationalLayers.append(serviceFeatureTableFeatureLayer);
-
-        // Set the viewpoint to the layer
-        const viewpointCenterPoint = ArcGISRuntimeEnvironment.createObject("Point", {x: -13176752, y: 4090404, spatialReference: Factory.SpatialReference.createWebMercator()});
-        mapView.setViewpointCenterAndScale(viewpointCenterPoint, 300000);
-    }
-
-    // Display a shapefile feature layer
-    FeatureLayer {
-        id: shapefileFeatureLayer
-        featureTable: ShapefileFeatureTable {
-            path: dataPath + "shp/ScottishWildlifeTrust_ReserveBoundaries_20201102.shp"
-        }
-    }
-
-    function setShapefileLayer() {
-        map.operationalLayers.append(shapefileFeatureLayer);
-
-        // Set the viewpoint to the layer
-        const viewpointCenterPoint = ArcGISRuntimeEnvironment.createObject("Point", {x: -3.8891, y: 56.6413, spatialReference: Factory.SpatialReference.createWgs84()});
-        mapView.setViewpointCenterAndScale(viewpointCenterPoint, 577790);
     }
 }
