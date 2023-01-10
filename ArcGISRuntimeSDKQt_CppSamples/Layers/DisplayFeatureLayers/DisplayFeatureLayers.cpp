@@ -29,6 +29,21 @@
 // email: contracts@esri.com
 /// \file DisplayFeatureLayers.cpp
 
+// TRADE SECRETS: ESRI PROPRIETARY AND CONFIDENTIAL
+// Unpublished material - all rights reserved under the
+// Copyright Laws of the United States and applicable international
+// laws, treaties, and conventions.
+//
+// For additional information, contact:
+// Environmental Systems Research Institute, Inc.
+// Attn: Contracts and Legal Services Department
+// 380 New York Street
+// Redlands, California, 92373
+// USA
+//
+// email: contracts@esri.com
+/// \file DisplayFeatureLayers.cpp
+
 // Licensed under the Apache License, Version 2.0 (the "License");
 // you may not use this file except in compliance with the License.
 // You may obtain a copy of the License at
@@ -160,7 +175,7 @@ void DisplayFeatureLayers::setLayerMode(FeatureLayerMode featureLayerMode)
 void DisplayFeatureLayers::setGeodatabaseLayer()
 {
   Geodatabase* gdb = new Geodatabase(defaultDataPath() + "geodatabase/LA_Trails.geodatabase", m_layerParent.get());
-  connect(gdb, &Geodatabase::doneLoading, this, [gdb, this](const Error e)
+  connect(gdb, &Geodatabase::doneLoading, this, [gdb, this](const Error& e)
   {
     // If the current layer mode has changed while loading, abort this process
     if (m_currentLayerMode != FeatureLayerMode::Geodatabase)
@@ -178,7 +193,7 @@ void DisplayFeatureLayers::setGeodatabaseLayer()
 
     connect(m_featureLayer, &FeatureLayer::doneLoading, this, [this]()
     {
-      // We can use the feature layer's geometry to set the viewpoint once it is loaded
+      // We can use the feature layer's extent to set the viewpoint once it is loaded
       m_mapView->setViewpointAndWait(Viewpoint(m_featureLayer->fullExtent()));
     });
   });
@@ -189,7 +204,7 @@ void DisplayFeatureLayers::setGeopackageLayer()
 {
   GeoPackage* gpkg = new GeoPackage(defaultDataPath() + "gpkg/AuroraCO.gpkg", m_layerParent.get());
 
-  connect(gpkg, &GeoPackage::doneLoading, this, [this, gpkg](Error e)
+  connect(gpkg, &GeoPackage::doneLoading, this, [this, gpkg](const Error& e)
   {
     // If the current layer mode has changed while loading, abort this process
     if (m_currentLayerMode != FeatureLayerMode::Geopackage)
@@ -210,21 +225,24 @@ void DisplayFeatureLayers::setGeopackageLayer()
 
     connect(m_featureLayer, &FeatureLayer::doneLoading, this, [this]()
     {
+      // We can use the feature layer's extent to set the viewpoint once it is loaded
       m_mapView->setViewpointAndWait(Viewpoint(m_featureLayer->fullExtent()));
     });
   });
 
   gpkg->load();
-  // Note you must call close() on GeoPackage to allow other processes to access it
+  // Note that you must call close() on GeoPackage to allow other processes to access it
 }
 
 void DisplayFeatureLayers::setPortalItemLayer()
 {
   Portal* portal = new Portal(this);
   PortalItem* portalItem = new PortalItem(portal, "1759fd3e8a324358a0c58d9a687a8578", m_layerParent.get());
+
   m_featureLayer = new FeatureLayer(portalItem, 0, m_layerParent.get());
   m_map->operationalLayers()->append(m_featureLayer);
 
+  // This layer takes a moment to load so rather than waiting to use its extent once loaded, we can set the viewpoint ourselves
   m_mapView->setViewpointAndWait(Viewpoint(45.5266, -122.6219, 6000));
 }
 
@@ -234,6 +252,7 @@ void DisplayFeatureLayers::setServiceFeatureTableLayer()
   m_featureLayer = new FeatureLayer(serviceFeatureTable, m_layerParent.get());
   m_map->operationalLayers()->append(m_featureLayer);
 
+  // The extent of this layer is very large so we can set the viewpoint to a specific point
   m_mapView->setViewpointAndWait(Viewpoint(Point(-13176752, 4090404, SpatialReference(102100)), 300000));
 }
 
@@ -243,5 +262,6 @@ void DisplayFeatureLayers::setShapefileLayer()
   m_featureLayer = new FeatureLayer(shpFeatureTable, m_layerParent.get());
   m_map->operationalLayers()->append(m_featureLayer);
 
+  // The extent of this layer is very large so we can set the viewpoint to a specific point
   m_mapView->setViewpointAndWait(Viewpoint(Point(-3.8891, 56.641, SpatialReference(4326)), 577'790));
 }
