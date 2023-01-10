@@ -20,7 +20,6 @@ import QtQuick.Layouts
 import Esri.ArcGISRuntime
 import Esri.ArcGISExtras
 
-
 Rectangle {
     id: rootRectangle
     clip: true
@@ -57,16 +56,6 @@ Rectangle {
                 targetScale: 300000
             }
 
-
-            // Display a feature layer with a portal item
-            FeatureLayer {
-                id: portalItemFeatureLayer
-                visible: false
-                item: PortalItem {
-                    itemId: "1759fd3e8a324358a0c58d9a687a8578"
-                }
-            }
-
             // Display a feature layer with a Geodatabase
             FeatureLayer {
                 id: gdbFeatureLayer
@@ -101,6 +90,15 @@ Rectangle {
                         load();
                     }
                     // Note you must call close() on GeoPackage to allow other processes to access it
+                }
+            }
+
+            // Display a feature layer with a portal item
+            FeatureLayer {
+                id: portalItemFeatureLayer
+                visible: false
+                item: PortalItem {
+                    itemId: "1759fd3e8a324358a0c58d9a687a8578"
                 }
             }
 
