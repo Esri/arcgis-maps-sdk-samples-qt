@@ -29,7 +29,7 @@ Use the drop down to display different feature layers on the map. Pan and zoom t
     - Instantiate a `PortalItem` with a `Portal` and an item ID
     - Create a `FeatureLayer` with the portal item and layer ID
 5. Create a feature layer with a `ServiceFeatureTable`
-    - Create a `ServiceFeatureTable` with a url
+    - Create a `ServiceFeatureTable` with a URL
     - Create a `FeatureLayer` with the feature table
 6. Create a feature layer with a shapefile
     - Create a `ShapefileFeatureTable` using the shapefile name

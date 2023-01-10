@@ -57,10 +57,11 @@ Item {
             ComboBox {
                 implicitWidth: layerSelectRectangle.width - 10
                 model: ["Geodatabase", "Geopackage", "Portal Item", "Service Feature Table", "Shapefile"]
-                onCurrentIndexChanged: {
+                currentIndex: 3
+                onCurrentTextChanged: {
                     model.setLayerMode(currentIndex);
                 }
-                Component.onCompleted: currentIndex = 3;
+                //Component.onCompleted: currentIndex = 3;
             }
         }
     }

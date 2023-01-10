@@ -14,6 +14,21 @@
 // email: contracts@esri.com
 /// \file DisplayFeatureLayers.cpp
 
+// TRADE SECRETS: ESRI PROPRIETARY AND CONFIDENTIAL
+// Unpublished material - all rights reserved under the
+// Copyright Laws of the United States and applicable international
+// laws, treaties, and conventions.
+//
+// For additional information, contact:
+// Environmental Systems Research Institute, Inc.
+// Attn: Contracts and Legal Services Department
+// 380 New York Street
+// Redlands, California, 92373
+// USA
+//
+// email: contracts@esri.com
+/// \file DisplayFeatureLayers.cpp
+
 // Licensed under the Apache License, Version 2.0 (the "License");
 // you may not use this file except in compliance with the License.
 // You may obtain a copy of the License at
@@ -74,7 +89,8 @@ QString defaultDataPath()
 
 DisplayFeatureLayers::DisplayFeatureLayers(QObject* parent /* = nullptr */):
   QObject(parent),
-  m_map(new Map(BasemapStyle::ArcGISTopographic, this))
+  m_map(new Map(BasemapStyle::ArcGISTopographic, this)),
+  m_layerParent(new QObject)
 {
 }
 
@@ -109,7 +125,14 @@ void DisplayFeatureLayers::setLayerMode(FeatureLayerMode featureLayerMode)
   if (!m_map)
     return;
 
-  m_map->operationalLayers()->clear();
+  if (!m_map->operationalLayers()->isEmpty())
+  {
+    m_map->operationalLayers()->clear();
+
+    // Clearing the layer list model does not delete the objects referenced within,
+    // so we reset the feature layers' parent to release all objects associated with it and avoid memory leaks
+    m_layerParent.reset(new QObject);
+  }
 
   m_currentLayerMode = featureLayerMode;
 
@@ -136,8 +159,8 @@ void DisplayFeatureLayers::setLayerMode(FeatureLayerMode featureLayerMode)
 
 void DisplayFeatureLayers::setGeodatabaseLayer()
 {
-  Geodatabase* gdb = new Geodatabase(defaultDataPath() + "geodatabase/LA_Trails.geodatabase", this);
-  connect(gdb, &Geodatabase::doneLoading, this, [gdb, this](Error e)
+  Geodatabase* gdb = new Geodatabase(defaultDataPath() + "geodatabase/LA_Trails.geodatabase", m_layerParent.get());
+  connect(gdb, &Geodatabase::doneLoading, this, [gdb, this](const Error e)
   {
     // If the current layer mode has changed while loading, abort this process
     if (m_currentLayerMode != FeatureLayerMode::Geodatabase)
@@ -150,17 +173,21 @@ void DisplayFeatureLayers::setGeodatabaseLayer()
     }
 
     GeodatabaseFeatureTable* gdbFeatureTable = gdb->geodatabaseFeatureTable("Trailheads");
-    m_featureLayer = new FeatureLayer(gdbFeatureTable, this);
+    m_featureLayer = new FeatureLayer(gdbFeatureTable, m_layerParent.get());
     m_map->operationalLayers()->append(m_featureLayer);
 
-    m_mapView->setViewpointAndWait(Viewpoint(Point(-13214155, 4040194, SpatialReference(3857)), 35e4));
+    connect(m_featureLayer, &FeatureLayer::doneLoading, this, [this]()
+    {
+      // We can use the feature layer's geometry to set the viewpoint once it is loaded
+      m_mapView->setViewpointAndWait(Viewpoint(m_featureLayer->fullExtent()));
+    });
   });
   gdb->load();
 }
 
 void DisplayFeatureLayers::setGeopackageLayer()
 {
-  GeoPackage* gpkg = new GeoPackage(defaultDataPath() + "gpkg/AuroraCO.gpkg", this);
+  GeoPackage* gpkg = new GeoPackage(defaultDataPath() + "gpkg/AuroraCO.gpkg", m_layerParent.get());
 
   connect(gpkg, &GeoPackage::doneLoading, this, [this, gpkg](Error e)
   {
@@ -178,23 +205,11 @@ void DisplayFeatureLayers::setGeopackageLayer()
       return;
 
     GeoPackageFeatureTable* gpkgFeatureTable = gpkg->geoPackageFeatureTables().at(0);
-    m_featureLayer = new FeatureLayer(gpkgFeatureTable, this);
+    m_featureLayer = new FeatureLayer(gpkgFeatureTable, m_layerParent.get());
     m_map->operationalLayers()->append(m_featureLayer);
 
-    m_mapView->setViewpointAndWait(Viewpoint(Point(-104.8319, 39.7294, SpatialReference(4326)), 200'000));
-
-    connect(m_featureLayer, &FeatureLayer::doneLoading, this, [this](Error e)
+    connect(m_featureLayer, &FeatureLayer::doneLoading, this, [this]()
     {
-      // If the current layer mode has changed while loading, abort this process
-      if (m_currentLayerMode != FeatureLayerMode::Geopackage)
-        return;
-
-      if (!e.isEmpty())
-      {
-        qDebug() << e.message() << e.additionalMessage();
-        return;
-      }
-
       m_mapView->setViewpointAndWait(Viewpoint(m_featureLayer->fullExtent()));
     });
   });
@@ -206,8 +221,8 @@ void DisplayFeatureLayers::setGeopackageLayer()
 void DisplayFeatureLayers::setPortalItemLayer()
 {
   Portal* portal = new Portal(this);
-  PortalItem* portalItem = new PortalItem(portal, "1759fd3e8a324358a0c58d9a687a8578", this);
-  m_featureLayer = new FeatureLayer(portalItem, 0, this);
+  PortalItem* portalItem = new PortalItem(portal, "1759fd3e8a324358a0c58d9a687a8578", m_layerParent.get());
+  m_featureLayer = new FeatureLayer(portalItem, 0, m_layerParent.get());
   m_map->operationalLayers()->append(m_featureLayer);
 
   m_mapView->setViewpointAndWait(Viewpoint(45.5266, -122.6219, 6000));
@@ -215,8 +230,8 @@ void DisplayFeatureLayers::setPortalItemLayer()
 
 void DisplayFeatureLayers::setServiceFeatureTableLayer()
 {
-  ServiceFeatureTable* serviceFeatureTable = new ServiceFeatureTable(QUrl("https://sampleserver6.arcgisonline.com/arcgis/rest/services/Energy/Geology/FeatureServer/9"), this);
-  m_featureLayer = new FeatureLayer(serviceFeatureTable, this);
+  ServiceFeatureTable* serviceFeatureTable = new ServiceFeatureTable(QUrl("https://sampleserver6.arcgisonline.com/arcgis/rest/services/Energy/Geology/FeatureServer/9"), m_layerParent.get());
+  m_featureLayer = new FeatureLayer(serviceFeatureTable, m_layerParent.get());
   m_map->operationalLayers()->append(m_featureLayer);
 
   m_mapView->setViewpointAndWait(Viewpoint(Point(-13176752, 4090404, SpatialReference(102100)), 300000));
@@ -224,8 +239,8 @@ void DisplayFeatureLayers::setServiceFeatureTableLayer()
 
 void DisplayFeatureLayers::setShapefileLayer()
 {
-  ShapefileFeatureTable* shpFeatureTable = new ShapefileFeatureTable(defaultDataPath() + "shp/ScottishWildlifeTrust_ReserveBoundaries_20201102.shp", this);
-  m_featureLayer = new FeatureLayer(shpFeatureTable, this);
+  ShapefileFeatureTable* shpFeatureTable = new ShapefileFeatureTable(defaultDataPath() + "shp/ScottishWildlifeTrust_ReserveBoundaries_20201102.shp", m_layerParent.get());
+  m_featureLayer = new FeatureLayer(shpFeatureTable, m_layerParent.get());
   m_map->operationalLayers()->append(m_featureLayer);
 
   m_mapView->setViewpointAndWait(Viewpoint(Point(-3.8891, 56.641, SpatialReference(4326)), 577'790));
