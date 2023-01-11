@@ -70,9 +70,6 @@ INCLUDEPATH += \
     "$$SAMPLEPATHCPP/Features/CreateMobileGeodatabase" \
     "$$SAMPLEPATHCPP/Features/FeatureLayerChangeRenderer" \
     "$$SAMPLEPATHCPP/Features/FeatureLayerDictionaryRenderer" \
-    "$$SAMPLEPATHCPP/Features/FeatureLayerFeatureService" \
-    "$$SAMPLEPATHCPP/Features/FeatureLayerGeodatabase" \
-    "$$SAMPLEPATHCPP/Features/FeatureLayerGeoPackage" \
     "$$SAMPLEPATHCPP/Features/FeatureLayerQuery" \
     "$$SAMPLEPATHCPP/Features/FeatureLayerSelection" \
     "$$SAMPLEPATHCPP/Features/FilterByDefinitionExpressionOrDisplayFilter" \
@@ -107,6 +104,7 @@ INCLUDEPATH += \
     "$$SAMPLEPATHCPP/Layers/CreateAndSaveKmlFile" \
     "$$SAMPLEPATHCPP/Layers/DisplayAnnotation" \
     "$$SAMPLEPATHCPP/Layers/DisplayDimensions" \
+    "$$SAMPLEPATHCPP/Layers/DisplayFeatureLayers" \
     "$$SAMPLEPATHCPP/Layers/DisplayKml" \
     "$$SAMPLEPATHCPP/Layers/DisplayKmlNetworkLinks" \
     "$$SAMPLEPATHCPP/Layers/DisplayOgcApiFeatureCollection" \
@@ -119,7 +117,6 @@ INCLUDEPATH += \
     "$$SAMPLEPATHCPP/Layers/FeatureCollectionLayerQuery" \
     "$$SAMPLEPATHCPP/Layers/FeatureLayerRenderingModeMap" \
     "$$SAMPLEPATHCPP/Layers/FeatureLayerRenderingModeScene" \
-    "$$SAMPLEPATHCPP/Layers/FeatureLayerShapefile" \
     "$$SAMPLEPATHCPP/Layers/GroupLayers" \
     "$$SAMPLEPATHCPP/Layers/Hillshade_Renderer" \
     "$$SAMPLEPATHCPP/Layers/IdentifyKmlFeatures" \
@@ -280,9 +277,6 @@ HEADERS += \
     "$$SAMPLEPATHCPP/Features/CreateMobileGeodatabase/FeatureListModel.h" \
     "$$SAMPLEPATHCPP/Features/FeatureLayerChangeRenderer/FeatureLayerChangeRenderer.h" \
     "$$SAMPLEPATHCPP/Features/FeatureLayerDictionaryRenderer/FeatureLayerDictionaryRenderer.h" \
-    "$$SAMPLEPATHCPP/Features/FeatureLayerFeatureService/FeatureLayerFeatureService.h" \
-    "$$SAMPLEPATHCPP/Features/FeatureLayerGeodatabase/FeatureLayerGeodatabase.h" \
-    "$$SAMPLEPATHCPP/Features/FeatureLayerGeoPackage/FeatureLayer_GeoPackage.h" \
     "$$SAMPLEPATHCPP/Features/FeatureLayerQuery/FeatureLayerQuery.h" \
     "$$SAMPLEPATHCPP/Features/FeatureLayerSelection/FeatureLayerSelection.h" \
     "$$SAMPLEPATHCPP/Features/FilterByDefinitionExpressionOrDisplayFilter/FilterByDefinitionExpressionOrDisplayFilter.h" \
@@ -319,6 +313,7 @@ HEADERS += \
     "$$SAMPLEPATHCPP/Layers/CreateAndSaveKmlFile/CreateAndSaveKmlFile.h" \
     "$$SAMPLEPATHCPP/Layers/DisplayAnnotation/DisplayAnnotation.h" \
     "$$SAMPLEPATHCPP/Layers/DisplayDimensions/DisplayDimensions.h" \
+    "$$SAMPLEPATHCPP/Layers/DisplayFeatureLayers/DisplayFeatureLayers.h" \
     "$$SAMPLEPATHCPP/Layers/DisplayKml/DisplayKml.h" \
     "$$SAMPLEPATHCPP/Layers/DisplayKmlNetworkLinks/DisplayKmlNetworkLinks.h" \
     "$$SAMPLEPATHCPP/Layers/DisplayOgcApiFeatureCollection/DisplayOgcApiFeatureCollection.h" \
@@ -331,7 +326,6 @@ HEADERS += \
     "$$SAMPLEPATHCPP/Layers/FeatureCollectionLayerQuery/FeatureCollectionLayerQuery.h" \
     "$$SAMPLEPATHCPP/Layers/FeatureLayerRenderingModeMap/FeatureLayerRenderingModeMap.h" \
     "$$SAMPLEPATHCPP/Layers/FeatureLayerRenderingModeScene/FeatureLayerRenderingModeScene.h" \
-    "$$SAMPLEPATHCPP/Layers/FeatureLayerShapefile/FeatureLayerShapefile.h" \
     "$$SAMPLEPATHCPP/Layers/GroupLayers/GroupLayers.h" \
     "$$SAMPLEPATHCPP/Layers/Hillshade_Renderer/Hillshade_Renderer.h" \
     "$$SAMPLEPATHCPP/Layers/IdentifyKmlFeatures/IdentifyKmlFeatures.h" \
@@ -496,9 +490,6 @@ SOURCES += \
     "$$SAMPLEPATHCPP/Features/CreateMobileGeodatabase/FeatureListModel.cpp" \
     "$$SAMPLEPATHCPP/Features/FeatureLayerChangeRenderer/FeatureLayerChangeRenderer.cpp" \
     "$$SAMPLEPATHCPP/Features/FeatureLayerDictionaryRenderer/FeatureLayerDictionaryRenderer.cpp" \
-    "$$SAMPLEPATHCPP/Features/FeatureLayerFeatureService/FeatureLayerFeatureService.cpp" \
-    "$$SAMPLEPATHCPP/Features/FeatureLayerGeodatabase/FeatureLayerGeodatabase.cpp" \
-    "$$SAMPLEPATHCPP/Features/FeatureLayerGeoPackage/FeatureLayer_GeoPackage.cpp" \
     "$$SAMPLEPATHCPP/Features/FeatureLayerQuery/FeatureLayerQuery.cpp" \
     "$$SAMPLEPATHCPP/Features/FeatureLayerSelection/FeatureLayerSelection.cpp" \
     "$$SAMPLEPATHCPP/Features/FilterByDefinitionExpressionOrDisplayFilter/FilterByDefinitionExpressionOrDisplayFilter.cpp" \
@@ -535,6 +526,7 @@ SOURCES += \
     "$$SAMPLEPATHCPP/Layers/CreateAndSaveKmlFile/CreateAndSaveKmlFile.cpp" \
     "$$SAMPLEPATHCPP/Layers/DisplayAnnotation/DisplayAnnotation.cpp" \
     "$$SAMPLEPATHCPP/Layers/DisplayDimensions/DisplayDimensions.cpp" \
+    "$$SAMPLEPATHCPP/Layers/DisplayFeatureLayers/DisplayFeatureLayers.cpp" \
     "$$SAMPLEPATHCPP/Layers/DisplayKml/DisplayKml.cpp" \
     "$$SAMPLEPATHCPP/Layers/DisplayKmlNetworkLinks/DisplayKmlNetworkLinks.cpp" \
     "$$SAMPLEPATHCPP/Layers/DisplayOgcApiFeatureCollection/DisplayOgcApiFeatureCollection.cpp" \
@@ -547,7 +539,6 @@ SOURCES += \
     "$$SAMPLEPATHCPP/Layers/FeatureCollectionLayerQuery/FeatureCollectionLayerQuery.cpp" \
     "$$SAMPLEPATHCPP/Layers/FeatureLayerRenderingModeMap/FeatureLayerRenderingModeMap.cpp" \
     "$$SAMPLEPATHCPP/Layers/FeatureLayerRenderingModeScene/FeatureLayerRenderingModeScene.cpp" \
-    "$$SAMPLEPATHCPP/Layers/FeatureLayerShapefile/FeatureLayerShapefile.cpp" \
     "$$SAMPLEPATHCPP/Layers/GroupLayers/GroupLayers.cpp" \
     "$$SAMPLEPATHCPP/Layers/Hillshade_Renderer/Hillshade_Renderer.cpp" \
     "$$SAMPLEPATHCPP/Layers/IdentifyKmlFeatures/IdentifyKmlFeatures.cpp" \
@@ -710,9 +701,6 @@ RESOURCES += \
     "$$SAMPLEPATHCPP/Features/CreateMobileGeodatabase/CreateMobileGeodatabase.qrc" \
     "$$SAMPLEPATHCPP/Features/FeatureLayerChangeRenderer/FeatureLayerChangeRenderer.qrc" \
     "$$SAMPLEPATHCPP/Features/FeatureLayerDictionaryRenderer/FeatureLayerDictionaryRenderer.qrc" \
-    "$$SAMPLEPATHCPP/Features/FeatureLayerFeatureService/FeatureLayerFeatureService.qrc" \
-    "$$SAMPLEPATHCPP/Features/FeatureLayerGeodatabase/FeatureLayerGeodatabase.qrc" \
-    "$$SAMPLEPATHCPP/Features/FeatureLayerGeoPackage/FeatureLayer_GeoPackage.qrc" \
     "$$SAMPLEPATHCPP/Features/FeatureLayerQuery/FeatureLayerQuery.qrc" \
     "$$SAMPLEPATHCPP/Features/FeatureLayerSelection/FeatureLayerSelection.qrc" \
     "$$SAMPLEPATHCPP/Features/FilterByDefinitionExpressionOrDisplayFilter/FilterByDefinitionExpressionOrDisplayFilter.qrc" \
@@ -747,6 +735,7 @@ RESOURCES += \
     "$$SAMPLEPATHCPP/Layers/CreateAndSaveKmlFile/CreateAndSaveKmlFile.qrc" \
     "$$SAMPLEPATHCPP/Layers/DisplayAnnotation/DisplayAnnotation.qrc" \
     "$$SAMPLEPATHCPP/Layers/DisplayDimensions/DisplayDimensions.qrc" \
+    "$$SAMPLEPATHCPP/Layers/DisplayFeatureLayers/DisplayFeatureLayers.qrc" \
     "$$SAMPLEPATHCPP/Layers/DisplayKml/DisplayKml.qrc" \
     "$$SAMPLEPATHCPP/Layers/DisplayKmlNetworkLinks/DisplayKmlNetworkLinks.qrc" \
     "$$SAMPLEPATHCPP/Layers/DisplayOgcApiFeatureCollection/DisplayOgcApiFeatureCollection.qrc" \
@@ -759,7 +748,6 @@ RESOURCES += \
     "$$SAMPLEPATHCPP/Layers/FeatureCollectionLayerQuery/FeatureCollectionLayerQuery.qrc" \
     "$$SAMPLEPATHCPP/Layers/FeatureLayerRenderingModeMap/FeatureLayerRenderingModeMap.qrc" \
     "$$SAMPLEPATHCPP/Layers/FeatureLayerRenderingModeScene/FeatureLayerRenderingModeScene.qrc" \
-    "$$SAMPLEPATHCPP/Layers/FeatureLayerShapefile/FeatureLayerShapefile.qrc" \
     "$$SAMPLEPATHCPP/Layers/GroupLayers/GroupLayers.qrc" \
     "$$SAMPLEPATHCPP/Layers/Hillshade_Renderer/Hillshade_Renderer.qrc" \
     "$$SAMPLEPATHCPP/Layers/IdentifyKmlFeatures/IdentifyKmlFeatures.qrc" \
