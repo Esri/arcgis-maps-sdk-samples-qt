@@ -1,18 +1,6 @@
-
-// TRADE SECRETS: ESRI PROPRIETARY AND CONFIDENTIAL
-// Unpublished material - all rights reserved under the
-// Copyright Laws of the United States and applicable international
-// laws, treaties, and conventions.
-//
-// For additional information, contact:
-// Environmental Systems Research Institute, Inc.
-// Attn: Contracts and Legal Services Department
-// 380 New York Street
-// Redlands, California, 92373
-// USA
-//
-// email: contracts@esri.com
-/// \file ViewshedGeoElement.cpp
+// [WriteFile Name=ViewshedGeoElement, Category=Analysis]
+// [Legal]
+// Copyright 2017 Esri.
 
 // Licensed under the Apache License, Version 2.0 (the "License");
 // you may not use this file except in compliance with the License.
@@ -163,7 +151,7 @@ void ViewshedGeoElement::componentComplete()
   // connect to the mouse clicked signal
   connect(m_sceneView, &SceneQuickView::mouseClicked, this, [this](QMouseEvent& event)
   {
-    m_waypoint = m_sceneView->screenToBaseSurface(event.position().x(), event.position().y());
+    m_waypoint = m_sceneView->screenToBaseSurface(event.pos().x(), event.pos().y());
     m_timer->start();
   });
 }

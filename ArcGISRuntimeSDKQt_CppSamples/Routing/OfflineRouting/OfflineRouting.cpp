@@ -1,18 +1,6 @@
-
-// TRADE SECRETS: ESRI PROPRIETARY AND CONFIDENTIAL
-// Unpublished material - all rights reserved under the
-// Copyright Laws of the United States and applicable international
-// laws, treaties, and conventions.
-//
-// For additional information, contact:
-// Environmental Systems Research Institute, Inc.
-// Attn: Contracts and Legal Services Department
-// 380 New York Street
-// Redlands, California, 92373
-// USA
-//
-// email: contracts@esri.com
-/// \file OfflineRouting.cpp
+// [WriteFile Name=OfflineRouting, Category=Routing]
+// [Legal]
+// Copyright 2020 Esri.
 
 // Licensed under the Apache License, Version 2.0 (the "License");
 // you may not use this file except in compliance with the License.
@@ -207,7 +195,7 @@ void OfflineRouting::connectSignals()
 
   // check whether mouse pressed over an existing stop
   connect(m_mapView, &MapQuickView::mousePressed, this, [this](QMouseEvent& e){
-    m_mapView->identifyGraphicsOverlay(m_stopsOverlay, e.position().x(), e.position().y(), 10, false);
+    m_mapView->identifyGraphicsOverlay(m_stopsOverlay, e.pos().x(), e.pos().y(), 10, false);
   });
 
   // get stops from clicked locations
@@ -215,7 +203,7 @@ void OfflineRouting::connectSignals()
     if (!m_selectedGraphic)
     {
       // return if point is outside of bounds
-      if (!GeometryEngine::within(m_mapView->screenToLocation(e.position().x(), e.position().y()), m_routableArea))
+      if (!GeometryEngine::within(m_mapView->screenToLocation(e.pos().x(), e.pos().y()), m_routableArea))
       {
         qWarning() << "Outside of routable area.";
         return;
@@ -223,7 +211,7 @@ void OfflineRouting::connectSignals()
       TextSymbol* textSymbol = new TextSymbol(QString::number(m_stopsOverlay->graphics()->size() + 1), Qt::white, 20, HorizontalAlignment::Center, VerticalAlignment::Bottom, this);
       textSymbol->setOffsetY(m_pinSymbol->height() / 2);
       CompositeSymbol* stopLabel = new CompositeSymbol(QList<Symbol*>{m_pinSymbol, textSymbol}, this);
-      Graphic* stopGraphic = new Graphic(m_mapView->screenToLocation(e.position().x(), e.position().y()), stopLabel, this);
+      Graphic* stopGraphic = new Graphic(m_mapView->screenToLocation(e.pos().x(), e.pos().y()), stopLabel, this);
       m_stopsOverlay->graphics()->append(stopGraphic);
       findRoute();
     }
@@ -246,12 +234,12 @@ void OfflineRouting::connectSignals()
       e.accept();
 
       // return if point is outside of bounds
-      if (!GeometryEngine::within(m_mapView->screenToLocation(e.position().x(), e.position().y()), m_routableArea))
+      if (!GeometryEngine::within(m_mapView->screenToLocation(e.pos().x(), e.pos().y()), m_routableArea))
       {
         qWarning() << "Outside of routable area.";
         return;
       }
-      m_selectedGraphic->setGeometry(m_mapView->screenToLocation(e.position().x(), e.position().y()));
+      m_selectedGraphic->setGeometry(m_mapView->screenToLocation(e.pos().x(), e.pos().y()));
       findRoute();
     }
   });

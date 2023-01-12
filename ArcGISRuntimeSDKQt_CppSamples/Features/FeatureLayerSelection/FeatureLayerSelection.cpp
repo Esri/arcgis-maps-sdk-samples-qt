@@ -1,18 +1,6 @@
-
-// TRADE SECRETS: ESRI PROPRIETARY AND CONFIDENTIAL
-// Unpublished material - all rights reserved under the
-// Copyright Laws of the United States and applicable international
-// laws, treaties, and conventions.
-//
-// For additional information, contact:
-// Environmental Systems Research Institute, Inc.
-// Attn: Contracts and Legal Services Department
-// 380 New York Street
-// Redlands, California, 92373
-// USA
-//
-// email: contracts@esri.com
-/// \file FeatureLayerSelection.cpp
+// [WriteFile Name=FeatureLayerSelection, Category=Features]
+// [Legal]
+// Copyright 2022 Esri.
 
 // Licensed under the Apache License, Version 2.0 (the "License");
 // you may not use this file except in compliance with the License.
@@ -103,8 +91,8 @@ void FeatureLayerSelection::connectSignals()
     constexpr double tolerance = 22.0;
     constexpr bool returnPopupsOnly = false;
     constexpr int maximumResults = 1000;
-    const double screenX = mouseEvent.position().x();
-    const double screenY = mouseEvent.position().y();
+    const double screenX = mouseEvent.pos().x();
+    const double screenY = mouseEvent.pos().y();
     m_mapView->identifyLayer(m_featureLayer, screenX, screenY, tolerance, returnPopupsOnly, maximumResults);
   });
 

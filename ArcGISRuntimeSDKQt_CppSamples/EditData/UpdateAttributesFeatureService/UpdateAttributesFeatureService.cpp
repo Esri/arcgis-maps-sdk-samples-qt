@@ -1,18 +1,6 @@
-
-// TRADE SECRETS: ESRI PROPRIETARY AND CONFIDENTIAL
-// Unpublished material - all rights reserved under the
-// Copyright Laws of the United States and applicable international
-// laws, treaties, and conventions.
-//
-// For additional information, contact:
-// Environmental Systems Research Institute, Inc.
-// Attn: Contracts and Legal Services Department
-// 380 New York Street
-// Redlands, California, 92373
-// USA
-//
-// email: contracts@esri.com
-/// \file UpdateAttributesFeatureService.cpp
+// [WriteFile Name=UpdateAttributesFeatureService, Category=EditData]
+// [Legal]
+// Copyright 2016 Esri.
 
 // Licensed under the Apache License, Version 2.0 (the "License");
 // you may not use this file except in compliance with the License.
@@ -123,7 +111,7 @@ void UpdateAttributesFeatureService::connectSignals()
     emit hideWindow();
 
     // call identify on the map view
-    m_mapView->identifyLayer(m_featureLayer, mouseEvent.position().x(), mouseEvent.position().y(), 5, false, 1);
+    m_mapView->identifyLayer(m_featureLayer, mouseEvent.pos().x(), mouseEvent.pos().y(), 5, false, 1);
   });
 
   // connect to the viewpoint changed signal on the MapQuickView

@@ -1,18 +1,6 @@
-
-// TRADE SECRETS: ESRI PROPRIETARY AND CONFIDENTIAL
-// Unpublished material - all rights reserved under the
-// Copyright Laws of the United States and applicable international
-// laws, treaties, and conventions.
-//
-// For additional information, contact:
-// Environmental Systems Research Institute, Inc.
-// Attn: Contracts and Legal Services Department
-// 380 New York Street
-// Redlands, California, 92373
-// USA
-//
-// email: contracts@esri.com
-/// \file IdentifyLayers.cpp
+// [WriteFile Name=IdentifyLayers, Category=Maps]
+// [Legal]
+// Copyright 2017 Esri.
 
 // Licensed under the Apache License, Version 2.0 (the "License");
 // you may not use this file except in compliance with the License.
@@ -122,7 +110,7 @@ void IdentifyLayers::connectSignals()
     const double tolerance = 12.0;
     const bool returnPopups = false;
     const int maxResults = 10;
-    m_mapView->identifyLayers(mouseEvent.position().x(), mouseEvent.position().y(), tolerance, returnPopups, maxResults);
+    m_mapView->identifyLayers(mouseEvent.pos().x(), mouseEvent.pos().y(), tolerance, returnPopups, maxResults);
   });
 
   // handle the identify results

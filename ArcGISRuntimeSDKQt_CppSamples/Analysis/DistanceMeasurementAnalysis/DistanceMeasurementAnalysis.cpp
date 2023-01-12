@@ -1,18 +1,6 @@
-
-// TRADE SECRETS: ESRI PROPRIETARY AND CONFIDENTIAL
-// Unpublished material - all rights reserved under the
-// Copyright Laws of the United States and applicable international
-// laws, treaties, and conventions.
-//
-// For additional information, contact:
-// Environmental Systems Research Institute, Inc.
-// Attn: Contracts and Legal Services Department
-// 380 New York Street
-// Redlands, California, 92373
-// USA
-//
-// email: contracts@esri.com
-/// \file DistanceMeasurementAnalysis.cpp
+// [WriteFile Name=DistanceMeasurementAnalysis, Category=Analysis]
+// [Legal]
+// Copyright 2022 Esri.
 
 // Licensed under the Apache License, Version 2.0 (the "License");
 // you may not use this file except in compliance with the License.
@@ -143,7 +131,7 @@ void DistanceMeasurementAnalysis::connectSignals()
   connect(m_sceneView, &SceneQuickView::mousePressedAndHeld, this, [this](QMouseEvent& mouseEvent)
   {
     m_isPressAndHold = true;
-    m_sceneView->screenToLocation(mouseEvent.position().x(), mouseEvent.position().y());
+    m_sceneView->screenToLocation(mouseEvent.pos().x(), mouseEvent.pos().y());
   });
 
   // When the mouse is released...
@@ -165,14 +153,14 @@ void DistanceMeasurementAnalysis::connectSignals()
       m_isPressAndHold = false;
     // Else get the location from the screen coordinates
     else
-      m_sceneView->screenToLocation(mouseEvent.position().x(), mouseEvent.position().y());
+      m_sceneView->screenToLocation(mouseEvent.pos().x(), mouseEvent.pos().y());
   });
 
   // Update the distance analysis when the mouse moves if it is a press and hold movement
   connect(m_sceneView, &SceneQuickView::mouseMoved, this, [this](QMouseEvent& mouseEvent)
   {
     if (m_isPressAndHold)
-      m_sceneView->screenToLocation(mouseEvent.position().x(), mouseEvent.position().y());
+      m_sceneView->screenToLocation(mouseEvent.pos().x(), mouseEvent.pos().y());
   });
 
   // Set a flag when mousePressed signal emits

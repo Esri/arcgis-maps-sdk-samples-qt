@@ -1,18 +1,6 @@
-
-// TRADE SECRETS: ESRI PROPRIETARY AND CONFIDENTIAL
-// Unpublished material - all rights reserved under the
-// Copyright Laws of the United States and applicable international
-// laws, treaties, and conventions.
-//
-// For additional information, contact:
-// Environmental Systems Research Institute, Inc.
-// Attn: Contracts and Legal Services Department
-// 380 New York Street
-// Redlands, California, 92373
-// USA
-//
-// email: contracts@esri.com
-/// \file EditFeaturesWithFeatureLinkedAnnotation.cpp
+// [WriteFile Name=EditFeaturesWithFeatureLinkedAnnotation, Category=EditData]
+// [Legal]
+// Copyright 2020 Esri.
 
 // Licensed under the Apache License, Version 2.0 (the "License");
 // you may not use this file except in compliance with the License.
@@ -182,13 +170,13 @@ void EditFeaturesWithFeatureLinkedAnnotation::onMouseClicked(QMouseEvent& mouseE
   if (m_selectedFeature)
   {
     // move feature to clicked locaiton if already selected
-    const Point clickedPoint = m_mapView->screenToLocation(mouseEvent.position().x(), mouseEvent.position().y());
+    const Point clickedPoint = m_mapView->screenToLocation(mouseEvent.pos().x(), mouseEvent.pos().y());
     moveFeature(clickedPoint);
   }
   else
   {
     // identify and select feature
-    m_mapView->identifyLayers(mouseEvent.position().x(), mouseEvent.position().y(), 10, false);
+    m_mapView->identifyLayers(mouseEvent.pos().x(), mouseEvent.pos().y(), 10, false);
   }
 }
 

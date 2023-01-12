@@ -1,18 +1,6 @@
-
-// TRADE SECRETS: ESRI PROPRIETARY AND CONFIDENTIAL
-// Unpublished material - all rights reserved under the
-// Copyright Laws of the United States and applicable international
-// laws, treaties, and conventions.
-//
-// For additional information, contact:
-// Environmental Systems Research Institute, Inc.
-// Attn: Contracts and Legal Services Department
-// 380 New York Street
-// Redlands, California, 92373
-// USA
-//
-// email: contracts@esri.com
-/// \file LineOfSightLocation.cpp
+// [WriteFile Name=LineOfSightLocation, Category=Analysis]
+// [Legal]
+// Copyright 2017 Esri.
 
 // Licensed under the Apache License, Version 2.0 (the "License");
 // you may not use this file except in compliance with the License.
@@ -123,7 +111,7 @@ void LineOfSightLocation::connectSignals()
   // on mouse click perform the location viewshed
   connect(m_sceneView, &SceneQuickView::mouseClicked, this, [this](QMouseEvent& event)
   {
-    const Point pt = m_sceneView->screenToBaseSurface(event.position().x(), event.position().y());
+    const Point pt = m_sceneView->screenToBaseSurface(event.pos().x(), event.pos().y());
     m_lineOfSight->setTargetLocation(pt);
   });
 
@@ -136,7 +124,7 @@ void LineOfSightLocation::connectSignals()
   {
     if (m_calculating)
     {
-      const Point pt = m_sceneView->screenToBaseSurface(event.position().x(), event.position().y());
+      const Point pt = m_sceneView->screenToBaseSurface(event.pos().x(), event.pos().y());
       m_lineOfSight->setTargetLocation(pt);
     }
   });

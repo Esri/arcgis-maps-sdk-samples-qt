@@ -1,18 +1,6 @@
-
-// TRADE SECRETS: ESRI PROPRIETARY AND CONFIDENTIAL
-// Unpublished material - all rights reserved under the
-// Copyright Laws of the United States and applicable international
-// laws, treaties, and conventions.
-//
-// For additional information, contact:
-// Environmental Systems Research Institute, Inc.
-// Attn: Contracts and Legal Services Department
-// 380 New York Street
-// Redlands, California, 92373
-// USA
-//
-// email: contracts@esri.com
-/// \file UpdateGeometryFeatureService.cpp
+// [WriteFile Name=UpdateGeometryFeatureService, Category=EditData]
+// [Legal]
+// Copyright 2016 Esri.
 
 // Licensed under the Apache License, Version 2.0 (the "License");
 // you may not use this file except in compliance with the License.
@@ -109,7 +97,7 @@ void UpdateGeometryFeatureService::connectSignals()
   connect(m_mapView, &MapQuickView::mouseClicked, this, [this](QMouseEvent& mouseEvent)
   {
     // get the point from the mouse point
-    Point mapPoint = m_mapView->screenToLocation(mouseEvent.position().x(), mouseEvent.position().y());
+    Point mapPoint = m_mapView->screenToLocation(mouseEvent.pos().x(), mouseEvent.pos().y());
 
     // if a feature is already selected, move the selected feature to the new geometry
     if (m_featureSelected)
@@ -132,7 +120,7 @@ void UpdateGeometryFeatureService::connectSignals()
       m_featureLayer->clearSelection();
 
       // call identify on the map view
-      m_mapView->identifyLayer(m_featureLayer, mouseEvent.position().x(), mouseEvent.position().y(), 5, false, 1);
+      m_mapView->identifyLayer(m_featureLayer, mouseEvent.pos().x(), mouseEvent.pos().y(), 5, false, 1);
     }
   });
 
