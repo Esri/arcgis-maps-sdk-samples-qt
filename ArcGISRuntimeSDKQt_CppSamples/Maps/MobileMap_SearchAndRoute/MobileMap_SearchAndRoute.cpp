@@ -1,6 +1,18 @@
-// [WriteFile Name=MobileMap_SearchAndRoute, Category=Maps]
-// [Legal]
-// Copyright 2016 Esri.
+
+// TRADE SECRETS: ESRI PROPRIETARY AND CONFIDENTIAL
+// Unpublished material - all rights reserved under the
+// Copyright Laws of the United States and applicable international
+// laws, treaties, and conventions.
+//
+// For additional information, contact:
+// Environmental Systems Research Institute, Inc.
+// Attn: Contracts and Legal Services Department
+// 380 New York Street
+// Redlands, California, 92373
+// USA
+//
+// email: contracts@esri.com
+/// \file MobileMap_SearchAndRoute.cpp
 
 // Licensed under the Apache License, Version 2.0 (the "License");
 // you may not use this file except in compliance with the License.
@@ -170,10 +182,10 @@ void MobileMap_SearchAndRoute::connectSignals()
   {
     if (m_currentLocatorTask)
     {
-      m_clickedPoint = Point(m_mapView->screenToLocation(mouseEvent.pos().x(), mouseEvent.pos().y()));
+      m_clickedPoint = Point(m_mapView->screenToLocation(mouseEvent.position().x(), mouseEvent.position().y()));
 
       // determine if user clicked on a graphic
-      m_mapView->identifyGraphicsOverlay(m_stopsGraphicsOverlay, mouseEvent.pos().x(), mouseEvent.pos().y(), 5, false, 2);
+      m_mapView->identifyGraphicsOverlay(m_stopsGraphicsOverlay, mouseEvent.position().x(), mouseEvent.position().y(), 5, false, 2);
     }
   });
 

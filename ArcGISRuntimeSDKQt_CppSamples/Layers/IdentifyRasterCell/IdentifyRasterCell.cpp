@@ -1,6 +1,18 @@
-// [WriteFile Name=IdentifyRasterCell, Category=Layers]
-// [Legal]
-// Copyright 2020 Esri.
+
+// TRADE SECRETS: ESRI PROPRIETARY AND CONFIDENTIAL
+// Unpublished material - all rights reserved under the
+// Copyright Laws of the United States and applicable international
+// laws, treaties, and conventions.
+//
+// For additional information, contact:
+// Environmental Systems Research Institute, Inc.
+// Attn: Contracts and Legal Services Department
+// 380 New York Street
+// Redlands, California, 92373
+// USA
+//
+// email: contracts@esri.com
+/// \file IdentifyRasterCell.cpp
 
 // Licensed under the Apache License, Version 2.0 (the "License");
 // you may not use this file except in compliance with the License.
@@ -145,14 +157,14 @@ void IdentifyRasterCell::connectSignals()
 
   connect(m_mapView, &MapQuickView::mouseClicked, this, [this](const QMouseEvent& e)
   {
-    m_mapView->identifyLayer(m_rasterLayer, e.pos().x(), e.pos().y(), 10, false, 1);
-    m_clickedPoint = m_mapView->screenToLocation(e.pos().x(), e.pos().y());
+    m_mapView->identifyLayer(m_rasterLayer, e.position().x(), e.position().y(), 10, false, 1);
+    m_clickedPoint = m_mapView->screenToLocation(e.position().x(), e.position().y());
   });
 
   connect(m_mapView, &MapQuickView::mousePressedAndHeld, this, [this](const QMouseEvent& e)
   {
-    m_mapView->identifyLayer(m_rasterLayer, e.pos().x(), e.pos().y(), 10, false, 1);
-    m_clickedPoint = m_mapView->screenToLocation(e.pos().x(), e.pos().y());
+    m_mapView->identifyLayer(m_rasterLayer, e.position().x(), e.position().y(), 10, false, 1);
+    m_clickedPoint = m_mapView->screenToLocation(e.position().x(), e.position().y());
     m_mousePressed = true;
   });
 
@@ -166,8 +178,8 @@ void IdentifyRasterCell::connectSignals()
   {
     if (m_mousePressed)
     {
-      m_mapView->identifyLayer(m_rasterLayer, e.pos().x(), e.pos().y(), 10, false, 1);
-      m_clickedPoint = m_mapView->screenToLocation(e.pos().x(), e.pos().y());
+      m_mapView->identifyLayer(m_rasterLayer, e.position().x(), e.position().y(), 10, false, 1);
+      m_clickedPoint = m_mapView->screenToLocation(e.position().x(), e.position().y());
     }
   });
 }

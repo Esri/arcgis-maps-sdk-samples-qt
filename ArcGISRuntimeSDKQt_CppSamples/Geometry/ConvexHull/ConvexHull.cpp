@@ -1,6 +1,18 @@
-// [WriteFile Name=ConvexHull, Category=Geometry]
-// [Legal]
-// Copyright 2020 Esri.
+
+// TRADE SECRETS: ESRI PROPRIETARY AND CONFIDENTIAL
+// Unpublished material - all rights reserved under the
+// Copyright Laws of the United States and applicable international
+// laws, treaties, and conventions.
+//
+// For additional information, contact:
+// Environmental Systems Research Institute, Inc.
+// Attn: Contracts and Legal Services Department
+// 380 New York Street
+// Redlands, California, 92373
+// USA
+//
+// email: contracts@esri.com
+/// \file ConvexHull.cpp
 
 // Licensed under the Apache License, Version 2.0 (the "License");
 // you may not use this file except in compliance with the License.
@@ -130,7 +142,7 @@ void ConvexHull::getInputs()
   {
     e.accept();
 
-    const Point clickedPoint = m_mapView->screenToLocation(e.pos().x(), e.pos().y());
+    const Point clickedPoint = m_mapView->screenToLocation(e.position().x(), e.position().y());
     m_multipointBuilder->points()->addPoint(clickedPoint);
     m_inputsGraphic->setGeometry(m_multipointBuilder->toGeometry());
   });

@@ -1,6 +1,18 @@
-// [WriteFile Name=SpatialRelationships, Category=Geometry]
-// [Legal]
-// Copyright 2018 Esri.
+
+// TRADE SECRETS: ESRI PROPRIETARY AND CONFIDENTIAL
+// Unpublished material - all rights reserved under the
+// Copyright Laws of the United States and applicable international
+// laws, treaties, and conventions.
+//
+// For additional information, contact:
+// Environmental Systems Research Institute, Inc.
+// Attn: Contracts and Legal Services Department
+// 380 New York Street
+// Redlands, California, 92373
+// USA
+//
+// email: contracts@esri.com
+/// \file SpatialRelationships.cpp
 
 // Licensed under the Apache License, Version 2.0 (the "License");
 // you may not use this file except in compliance with the License.
@@ -145,13 +157,12 @@ void SpatialRelationships::addPointGraphic()
   m_graphicsOverlay->graphics()->append(m_pointGraphic);
 }
 
-
 void SpatialRelationships::connectSignals()
 {
   connect(m_mapView, &MapQuickView::mouseClicked, this, [this](QMouseEvent& mouseEvent)
   {
     // identify graphics
-    m_mapView->identifyGraphicsOverlay(m_graphicsOverlay, mouseEvent.pos().x(), mouseEvent.pos().y(), 1.0 /*tolerance*/, false /*returnPopupsOnly*/);
+    m_mapView->identifyGraphicsOverlay(m_graphicsOverlay, mouseEvent.position().x(), mouseEvent.position().y(), 1.0 /*tolerance*/, false /*returnPopupsOnly*/);
   });
 
   connect(m_mapView, &MapQuickView::identifyGraphicsOverlayCompleted, this, [this](QUuid, IdentifyGraphicsOverlayResult* rawResult)

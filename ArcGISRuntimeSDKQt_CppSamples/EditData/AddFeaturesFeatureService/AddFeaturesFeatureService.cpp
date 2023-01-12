@@ -1,6 +1,18 @@
-// [WriteFile Name=AddFeaturesFeatureService, Category=EditData]
-// [Legal]
-// Copyright 2022 Esri.
+
+// TRADE SECRETS: ESRI PROPRIETARY AND CONFIDENTIAL
+// Unpublished material - all rights reserved under the
+// Copyright Laws of the United States and applicable international
+// laws, treaties, and conventions.
+//
+// For additional information, contact:
+// Environmental Systems Research Institute, Inc.
+// Attn: Contracts and Legal Services Department
+// 380 New York Street
+// Redlands, California, 92373
+// USA
+//
+// email: contracts@esri.com
+/// \file AddFeaturesFeatureService.cpp
 
 // Licensed under the Apache License, Version 2.0 (the "License");
 // you may not use this file except in compliance with the License.
@@ -53,7 +65,6 @@ namespace
   };
 }
 
-
 AddFeaturesFeatureService::AddFeaturesFeatureService(QObject* parent /* = nullptr */):
   QObject(parent),
   m_map(new Map(BasemapStyle::ArcGISStreets, this))
@@ -100,8 +111,8 @@ void AddFeaturesFeatureService::connectSignals()
   connect(m_mapView, &MapQuickView::mouseClicked, this, [this](QMouseEvent& mouseEvent)
   {
     // obtain the map point
-    const double screenX = mouseEvent.pos().x();
-    const double screenY = mouseEvent.pos().y();
+    const double screenX = mouseEvent.position().x();
+    const double screenY = mouseEvent.position().y();
     Point newPoint = m_mapView->screenToLocation(screenX, screenY);
 
     // create the feature attributes
