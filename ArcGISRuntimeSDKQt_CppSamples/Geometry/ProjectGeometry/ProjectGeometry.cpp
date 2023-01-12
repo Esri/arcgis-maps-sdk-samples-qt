@@ -89,7 +89,7 @@ void ProjectGeometry::componentComplete()
 void ProjectGeometry::onMouseClicked(QMouseEvent& event)
 {
   // get the mouse click as a point
-  const Point originalPoint = m_mapView->screenToLocation(event.pos().x(), event.pos().y());
+  const Point originalPoint = m_mapView->screenToLocation(event.position().x(), event.position().y());
 
   // show the clicked location on the map with a graphic
   m_inputGraphic->setGeometry(originalPoint);

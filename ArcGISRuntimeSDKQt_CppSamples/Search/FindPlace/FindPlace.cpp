@@ -125,7 +125,7 @@ void FindPlace::connectSignals()
   connect(m_mapView, &MapQuickView::mouseClicked, this, [this](QMouseEvent& e)
   {
     emit hideCallout();
-    m_mapView->identifyGraphicsOverlay(m_graphicsOverlay, e.pos().x(), e.pos().y(), 5, false, 1);
+    m_mapView->identifyGraphicsOverlay(m_graphicsOverlay, e.position().x(), e.position().y(), 5, false, 1);
   });
 
   // handle the result once identify completes

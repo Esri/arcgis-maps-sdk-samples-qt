@@ -154,7 +154,7 @@ void DisplayContentOfUtilityNetworkContainer::identifyFeaturesAtMouseClick(QMous
   constexpr double tolerance = 5;
   constexpr bool returnPopupsOnly = false;
 
-  m_mapView->identifyLayers(mouseEvent.pos().x(), mouseEvent.pos().y(), tolerance, returnPopupsOnly);
+  m_mapView->identifyLayers(mouseEvent.position().x(), mouseEvent.position().y(), tolerance, returnPopupsOnly);
 }
 
 void DisplayContentOfUtilityNetworkContainer::getUtilityAssociationsOfFeature(QUuid, QList<IdentifyLayerResult*> identifyResults)

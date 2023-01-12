@@ -292,7 +292,7 @@ void ServiceArea::setupRouting()
 
     setBusy(true);
 
-    Point mapPoint = m_mapView->screenToLocation(mouseEvent.pos().x(), mouseEvent.pos().y());
+    Point mapPoint = m_mapView->screenToLocation(mouseEvent.position().x(), mouseEvent.position().y());
     Point projectedPoint(mapPoint.x(), mapPoint.y(), SpatialReference::webMercator());
 
     if (m_mode == SampleMode::Barrier)

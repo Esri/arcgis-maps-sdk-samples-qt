@@ -110,7 +110,7 @@ void GetElevationAtPoint::setSceneView(SceneQuickView* sceneView)
 void GetElevationAtPoint::displayElevationOnClick(QMouseEvent& mouseEvent)
 {
   // Convert clicked screen position to position on the map surface.
-  const Point baseSurfacePos = m_sceneView->screenToBaseSurface(mouseEvent.pos().x(), mouseEvent.pos().y());
+  const Point baseSurfacePos = m_sceneView->screenToBaseSurface(mouseEvent.position().x(), mouseEvent.position().y());
 
   // Connect to callback for elevation query, which places marker and sets elevation
   connect(m_scene->baseSurface(), &Surface::locationToElevationCompleted,

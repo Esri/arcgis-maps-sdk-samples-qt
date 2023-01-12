@@ -75,7 +75,7 @@ void ShowCallout::componentComplete()
     else
     {
       // set callout position
-      Point mapPoint(m_mapView->screenToLocation(mouseEvent.pos().x(), mouseEvent.pos().y()));
+      Point mapPoint(m_mapView->screenToLocation(mouseEvent.position().x(), mouseEvent.position().y()));
       m_mapView->calloutData()->setLocation(mapPoint);
 
       // set detail as coordinates formatted to decimal numbers with precision 2

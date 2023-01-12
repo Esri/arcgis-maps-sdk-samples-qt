@@ -90,7 +90,7 @@ void GeodesicOperations::componentComplete()
   connect(m_mapView, &MapQuickView::mouseClicked, this, [this, nycPoint](QMouseEvent& mouseEvent)
   {
     // re-project the point to match the NYC graphic
-    const Point clickedPoint = m_mapView->screenToLocation(mouseEvent.pos().x(), mouseEvent.pos().y());
+    const Point clickedPoint = m_mapView->screenToLocation(mouseEvent.position().x(), mouseEvent.position().y());
     const Point destination = geometry_cast<Point>(GeometryEngine::project(clickedPoint, m_nycGraphic->geometry().spatialReference()));
 
     // update the destination graphic

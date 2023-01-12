@@ -170,10 +170,10 @@ void MobileMap_SearchAndRoute::connectSignals()
   {
     if (m_currentLocatorTask)
     {
-      m_clickedPoint = Point(m_mapView->screenToLocation(mouseEvent.pos().x(), mouseEvent.pos().y()));
+      m_clickedPoint = Point(m_mapView->screenToLocation(mouseEvent.position().x(), mouseEvent.position().y()));
 
       // determine if user clicked on a graphic
-      m_mapView->identifyGraphicsOverlay(m_stopsGraphicsOverlay, mouseEvent.pos().x(), mouseEvent.pos().y(), 5, false, 2);
+      m_mapView->identifyGraphicsOverlay(m_stopsGraphicsOverlay, mouseEvent.position().x(), mouseEvent.position().y(), 5, false, 2);
     }
   });
 

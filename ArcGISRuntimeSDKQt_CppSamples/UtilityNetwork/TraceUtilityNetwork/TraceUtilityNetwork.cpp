@@ -181,8 +181,8 @@ void TraceUtilityNetwork::connectSignals()
 
     constexpr double tolerance = 10.0;
     constexpr bool returnPopups = false;
-    m_clickPoint = m_mapView->screenToLocation(mouseEvent.pos().x(), mouseEvent.pos().y());
-    m_mapView->identifyLayers(mouseEvent.pos().x(), mouseEvent.pos().y(), tolerance, returnPopups);
+    m_clickPoint = m_mapView->screenToLocation(mouseEvent.position().x(), mouseEvent.position().y());
+    m_mapView->identifyLayers(mouseEvent.position().x(), mouseEvent.position().y(), tolerance, returnPopups);
   });
 
   // handle the identify results

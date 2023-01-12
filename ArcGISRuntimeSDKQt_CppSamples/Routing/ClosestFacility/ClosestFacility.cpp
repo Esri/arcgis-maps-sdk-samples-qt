@@ -227,7 +227,7 @@ void ClosestFacility::setupRouting()
     if (busy())
       return;
 
-    Point mapPoint = m_mapView->screenToLocation(mouseEvent.pos().x(), mouseEvent.pos().y());
+    Point mapPoint = m_mapView->screenToLocation(mouseEvent.position().x(), mouseEvent.position().y());
     Point incidentPoint(mapPoint.x(), mapPoint.y(), SpatialReference::webMercator());
 
     m_incidentGraphic->setGeometry(incidentPoint);

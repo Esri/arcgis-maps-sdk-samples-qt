@@ -97,7 +97,7 @@ void UpdateGeometryFeatureService::connectSignals()
   connect(m_mapView, &MapQuickView::mouseClicked, this, [this](QMouseEvent& mouseEvent)
   {
     // get the point from the mouse point
-    Point mapPoint = m_mapView->screenToLocation(mouseEvent.pos().x(), mouseEvent.pos().y());
+    Point mapPoint = m_mapView->screenToLocation(mouseEvent.position().x(), mouseEvent.position().y());
 
     // if a feature is already selected, move the selected feature to the new geometry
     if (m_featureSelected)
@@ -120,7 +120,7 @@ void UpdateGeometryFeatureService::connectSignals()
       m_featureLayer->clearSelection();
 
       // call identify on the map view
-      m_mapView->identifyLayer(m_featureLayer, mouseEvent.pos().x(), mouseEvent.pos().y(), 5, false, 1);
+      m_mapView->identifyLayer(m_featureLayer, mouseEvent.position().x(), mouseEvent.position().y(), 5, false, 1);
     }
   });
 
