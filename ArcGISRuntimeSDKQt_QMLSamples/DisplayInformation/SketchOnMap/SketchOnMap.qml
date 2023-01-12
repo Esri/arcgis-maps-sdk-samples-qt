@@ -121,7 +121,7 @@ Rectangle {
         style: Enums.SimpleFillSymbolStyleSolid
         color: "#7743A6C6"
         outline: SimpleLineSymbol {
-            style: "SimpleLineSymbolStyleSolid"
+            style: Enums.SimpleLineSymbolStyleSolid
             width: 3
             color: "#43A6C6"
         }
