@@ -80,7 +80,7 @@ void ReverseGeocodeOnline::getAddress()
   connect(m_mapView, &MapQuickView::mouseClicked, this, [this](QMouseEvent& e)
   {
     e.accept();
-    const Point clickedLocation = m_mapView->screenToLocation(e.pos().x(), e.pos().y());
+    const Point clickedLocation = m_mapView->screenToLocation(e.position().x(), e.position().y());
     ReverseGeocodeParameters reverseGeocodeParameters;
     reverseGeocodeParameters.setOutputSpatialReference(m_mapView->spatialReference());
     m_locatorTask->reverseGeocodeWithParameters(clickedLocation, reverseGeocodeParameters);

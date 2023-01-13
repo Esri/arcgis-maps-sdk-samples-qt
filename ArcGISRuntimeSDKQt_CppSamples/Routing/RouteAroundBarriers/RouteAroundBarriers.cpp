@@ -142,7 +142,7 @@ void RouteAroundBarriers::connectRouteSignals()
 
   connect(m_mapView, &MapQuickView::mouseClicked, this, [this](QMouseEvent& e)
   {
-    const Point clickedPoint = m_mapView->screenToLocation(e.pos().x(), e.pos().y());
+    const Point clickedPoint = m_mapView->screenToLocation(e.position().x(), e.position().y());
     if (m_addStops)
     {
       // add stop to list of stops

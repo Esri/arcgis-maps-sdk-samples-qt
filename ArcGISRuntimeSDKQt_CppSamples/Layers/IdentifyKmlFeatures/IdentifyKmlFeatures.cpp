@@ -114,8 +114,8 @@ void IdentifyKmlFeatures::setMapView(MapQuickView* mapView)
   // identify clicked features
   connect(m_mapView, &MapQuickView::mouseClicked, this, [this](QMouseEvent& e)
   {
-    m_clickedPoint = m_mapView->screenToLocation(e.pos().x(), e.pos().y());
-    m_mapView->identifyLayer(m_forecastLayer, e.pos().x(), e.pos().y(), 15, false);
+    m_clickedPoint = m_mapView->screenToLocation(e.position().x(), e.position().y());
+    m_mapView->identifyLayer(m_forecastLayer, e.position().x(), e.position().y(), 15, false);
   });
 
   emit mapViewChanged();

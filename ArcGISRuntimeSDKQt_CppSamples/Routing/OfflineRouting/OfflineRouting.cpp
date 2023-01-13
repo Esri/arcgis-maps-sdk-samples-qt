@@ -195,7 +195,7 @@ void OfflineRouting::connectSignals()
 
   // check whether mouse pressed over an existing stop
   connect(m_mapView, &MapQuickView::mousePressed, this, [this](QMouseEvent& e){
-    m_mapView->identifyGraphicsOverlay(m_stopsOverlay, e.pos().x(), e.pos().y(), 10, false);
+    m_mapView->identifyGraphicsOverlay(m_stopsOverlay, e.position().x(), e.position().y(), 10, false);
   });
 
   // get stops from clicked locations
@@ -203,7 +203,7 @@ void OfflineRouting::connectSignals()
     if (!m_selectedGraphic)
     {
       // return if point is outside of bounds
-      if (!GeometryEngine::within(m_mapView->screenToLocation(e.pos().x(), e.pos().y()), m_routableArea))
+      if (!GeometryEngine::within(m_mapView->screenToLocation(e.position().x(), e.position().y()), m_routableArea))
       {
         qWarning() << "Outside of routable area.";
         return;
@@ -211,7 +211,7 @@ void OfflineRouting::connectSignals()
       TextSymbol* textSymbol = new TextSymbol(QString::number(m_stopsOverlay->graphics()->size() + 1), Qt::white, 20, HorizontalAlignment::Center, VerticalAlignment::Bottom, this);
       textSymbol->setOffsetY(m_pinSymbol->height() / 2);
       CompositeSymbol* stopLabel = new CompositeSymbol(QList<Symbol*>{m_pinSymbol, textSymbol}, this);
-      Graphic* stopGraphic = new Graphic(m_mapView->screenToLocation(e.pos().x(), e.pos().y()), stopLabel, this);
+      Graphic* stopGraphic = new Graphic(m_mapView->screenToLocation(e.position().x(), e.position().y()), stopLabel, this);
       m_stopsOverlay->graphics()->append(stopGraphic);
       findRoute();
     }
@@ -234,12 +234,12 @@ void OfflineRouting::connectSignals()
       e.accept();
 
       // return if point is outside of bounds
-      if (!GeometryEngine::within(m_mapView->screenToLocation(e.pos().x(), e.pos().y()), m_routableArea))
+      if (!GeometryEngine::within(m_mapView->screenToLocation(e.position().x(), e.position().y()), m_routableArea))
       {
         qWarning() << "Outside of routable area.";
         return;
       }
-      m_selectedGraphic->setGeometry(m_mapView->screenToLocation(e.pos().x(), e.pos().y()));
+      m_selectedGraphic->setGeometry(m_mapView->screenToLocation(e.position().x(), e.position().y()));
       findRoute();
     }
   });

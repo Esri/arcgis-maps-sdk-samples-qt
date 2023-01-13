@@ -130,7 +130,7 @@ void ConvexHull::getInputs()
   {
     e.accept();
 
-    const Point clickedPoint = m_mapView->screenToLocation(e.pos().x(), e.pos().y());
+    const Point clickedPoint = m_mapView->screenToLocation(e.position().x(), e.position().y());
     m_multipointBuilder->points()->addPoint(clickedPoint);
     m_inputsGraphic->setGeometry(m_multipointBuilder->toGeometry());
   });

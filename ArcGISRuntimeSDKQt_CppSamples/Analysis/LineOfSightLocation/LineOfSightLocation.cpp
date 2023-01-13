@@ -111,7 +111,7 @@ void LineOfSightLocation::connectSignals()
   // on mouse click perform the location viewshed
   connect(m_sceneView, &SceneQuickView::mouseClicked, this, [this](QMouseEvent& event)
   {
-    const Point pt = m_sceneView->screenToBaseSurface(event.pos().x(), event.pos().y());
+    const Point pt = m_sceneView->screenToBaseSurface(event.position().x(), event.position().y());
     m_lineOfSight->setTargetLocation(pt);
   });
 
@@ -124,7 +124,7 @@ void LineOfSightLocation::connectSignals()
   {
     if (m_calculating)
     {
-      const Point pt = m_sceneView->screenToBaseSurface(event.pos().x(), event.pos().y());
+      const Point pt = m_sceneView->screenToBaseSurface(event.position().x(), event.position().y());
       m_lineOfSight->setTargetLocation(pt);
     }
   });

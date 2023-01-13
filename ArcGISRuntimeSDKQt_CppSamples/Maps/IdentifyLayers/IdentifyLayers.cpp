@@ -110,7 +110,7 @@ void IdentifyLayers::connectSignals()
     const double tolerance = 12.0;
     const bool returnPopups = false;
     const int maxResults = 10;
-    m_mapView->identifyLayers(mouseEvent.pos().x(), mouseEvent.pos().y(), tolerance, returnPopups, maxResults);
+    m_mapView->identifyLayers(mouseEvent.position().x(), mouseEvent.position().y(), tolerance, returnPopups, maxResults);
   });
 
   // handle the identify results

@@ -137,7 +137,7 @@ void ShowPopup::onMouseClicked(QMouseEvent& mouseEvent)
   constexpr bool returnPopupsOnly = false;
   constexpr int maximumResults = 10;
 
-  m_taskWatcher = m_mapView->identifyLayer(m_featureLayer, mouseEvent.pos().x(), mouseEvent.pos().y(), tolerance, returnPopupsOnly, maximumResults);
+  m_taskWatcher = m_mapView->identifyLayer(m_featureLayer, mouseEvent.position().x(), mouseEvent.position().y(), tolerance, returnPopupsOnly, maximumResults);
 
   if (!m_taskWatcher.isValid())
     qWarning() << "Task not valid.";
