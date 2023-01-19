@@ -51,6 +51,7 @@ int main(int argc, char *argv[])
   view.setResizeMode(QQuickView::SizeRootObjectToView);
 
   // Register the C++ NavigateRouteSpeaker class
+  // -- QTextToSpeech is not supported by Qt 6.2, so this is commented out --
   // qmlRegisterType<NavigateRouteSpeaker>("Esri.samples", 1, 0, "NavigateRouteSpeaker");
 
   // Add the import Path
