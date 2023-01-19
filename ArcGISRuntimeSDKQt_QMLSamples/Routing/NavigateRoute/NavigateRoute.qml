@@ -16,10 +16,12 @@
 
 import QtQuick
 import QtQuick.Controls
-import Esri.ArcGISRuntime
 import QtQuick.Layouts
 import QtPositioning
-import Esri.Samples
+import Esri.ArcGISRuntime
+
+// QTextToSpeech is not supported by Qt 6.2 so this is commented out
+// import Esri.samples
 
 Rectangle {
     id: rootRectangle
