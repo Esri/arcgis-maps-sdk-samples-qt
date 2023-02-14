@@ -79,11 +79,13 @@ QString defaultDataPath()
 ContingentValues::ContingentValues(QObject* parent /* = nullptr */):
   QObject(parent)
 {
+  //! [map with basemap from vtpk]
   // Load the basemap from a vector tile package
   const QString vtpkDataPath = defaultDataPath() + "/ArcGIS/Runtime/Data/vtpk/FillmoreTopographicMap.vtpk";
   ArcGISVectorTiledLayer* fillmoreVTPK = new ArcGISVectorTiledLayer(QUrl::fromLocalFile(vtpkDataPath), this);
   Basemap* fillmoreBasemap = new Basemap(fillmoreVTPK, this);
   m_map = new Map(fillmoreBasemap, this);
+  //! [map with basemap from vtpk]
 
   // Load the geodatabase from a mobile geodatabase
   const QString gdbDataPath = defaultDataPath() + "/ArcGIS/Runtime/Data/geodatabase/ContingentValuesBirdNests.geodatabase";

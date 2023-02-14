@@ -21,6 +21,7 @@ import Esri.Samples
 Item {
 
     // add a mapView component
+    //! [add a mapView component]
     MapView {
         id: view
         anchors.fill: parent
@@ -30,6 +31,7 @@ Item {
             forceActiveFocus();
         }
     }
+    //! [add a mapView component]
 
     // Declare the C++ instance which creates the map etc. and supply the view
     DisplayMapSample {
