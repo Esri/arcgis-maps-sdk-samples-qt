@@ -56,6 +56,7 @@ Rectangle {
                 targetScale: 300000
             }
 
+            //! [FeatureLayer Geodatabase create]
             // Display a feature layer with a Geodatabase
             FeatureLayer {
                 id: gdbFeatureLayer
@@ -67,6 +68,7 @@ Rectangle {
                     path: dataPath + "geodatabase/LA_Trails.geodatabase"
                 }
             }
+            //! [FeatureLayer Geodatabase create]
 
             // Display a GeoPackage feature layer
             FeatureLayer {
