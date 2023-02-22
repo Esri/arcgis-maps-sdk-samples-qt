@@ -20,12 +20,12 @@
 
 #include "DisplayScenesInTabletopAR.h"
 
-#include "ArcGISSceneLayer.h"
-#include "ArcGISTiledElevationSource.h"
 #include "Error.h"
 #include "MobileScenePackage.h"
 #include "Scene.h"
 #include "SceneQuickView.h"
+#include "SceneViewTypes.h"
+#include "Surface.h"
 
 #include <QtCore/qglobal.h>
 #include <QStandardPaths>
@@ -69,8 +69,7 @@ void DisplayScenesInTabletopAR::setArcGISArView(ArcGISArView* arcGISArView)
 
 DisplayScenesInTabletopAR::DisplayScenesInTabletopAR(QObject* parent /* = nullptr */):
   QObject(parent),
-  m_scene(new Scene(SceneViewTilingScheme::Geographic, this)),
-  m_permissionsHelper(new PermissionsHelper(this))
+  m_scene(new Scene(SceneViewTilingScheme::Geographic, this))
 {
 
   const QString dataPath = defaultDataPath() + "/ArcGIS/Runtime/Data/mspk/philadelphia.mspk";
@@ -141,16 +140,7 @@ void DisplayScenesInTabletopAR::createScenePackage(const QString& path)
 {
   m_scenePackage = new MobileScenePackage(path, this);
   connect(m_scenePackage, &MobileScenePackage::doneLoading, this, &DisplayScenesInTabletopAR::packageLoaded);
-
-  connect(m_permissionsHelper, &PermissionsHelper::requestFilesystemAccessCompleted, this, [this]()
-  {
-    m_scenePackage->load();
-  });
-
-  if (!m_permissionsHelper->fileSystemAccessGranted())
-    m_permissionsHelper->requestFilesystemAccess();
-  else
-    m_scenePackage->load();
+  m_scenePackage->load();
 }
 
 void DisplayScenesInTabletopAR::onMouseClicked(QMouseEvent& event)
@@ -178,7 +168,7 @@ void DisplayScenesInTabletopAR::onMouseClicked(QMouseEvent& event)
   m_sceneView->arcGISScene()->baseSurface()->setNavigationConstraint(NavigationConstraint::None);
 
   // Set the initial transformation using the point clicked on the screen
-  const QPoint screenPoint = event.localPos().toPoint();
+  const QPoint screenPoint = event.position().toPoint();
   m_arcGISArView->setInitialTransformation(screenPoint);
 
   // Set the origin camera.
@@ -190,4 +180,3 @@ void DisplayScenesInTabletopAR::onMouseClicked(QMouseEvent& event)
   emit sceneViewChanged();
   emit arcGISArViewChanged();
 }
-
