@@ -33,13 +33,11 @@ include($$PWD/arcgisruntime.pri)
 #-------------------------------------------------------------------------------
 
 HEADERS += \
-    DisplayScenesInTabletopAR.h \
-    PermissionsHelper.h
+    DisplayScenesInTabletopAR.h
 
 SOURCES += \
     main.cpp \
-    DisplayScenesInTabletopAR.cpp \
-    PermissionsHelper.cpp
+    DisplayScenesInTabletopAR.cpp
 
 RESOURCES += DisplayScenesInTabletopAR.qrc
 
