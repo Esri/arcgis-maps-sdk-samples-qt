@@ -1,5 +1,18 @@
-// [Legal]
-// Copyright 2022 Esri.
+// COPYRIGHT 2023 ESRI
+// TRADE SECRETS: ESRI PROPRIETARY AND CONFIDENTIAL
+// Unpublished material - all rights reserved under the
+// Copyright Laws of the United States and applicable international
+// laws, treaties, and conventions.
+//
+// For additional information, contact:
+// Environmental Systems Research Institute, Inc.
+// Attn: Contracts and Legal Services Department
+// 380 New York Street
+// Redlands, California, 92373
+// USA
+//
+// email: contracts@esri.com
+/// \file SearchFilterSimpleKeywordCriteria.cpp
 
 // Licensed under the Apache License, Version 2.0 (the "License");
 // you may not use this file except in compliance with the License.
@@ -17,6 +30,7 @@
 
 #include "SearchFilterSimpleKeywordCriteria.h"
 
+#include <QRegularExpression>
 #include <QStringBuilder>
 #include <QStringView>
 
@@ -33,6 +47,8 @@ constexpr qint64 DEFAULT_CHAR_MATCH     = 5;
 constexpr qint64 DEFAULT_CASE_MATCH     = 7;
 // Modify the score by how close the score was to the start of the string.
 constexpr qint64 DEFAULT_START_MODIFIER = 2;
+
+const QRegularExpression nonAlphaNumericCharsRegEx("[^a-zA-Z\\d\\s]");
 
 /*!
  * \brief stringCompare
@@ -158,7 +174,6 @@ qint64 SearchFilterSimpleKeywordCriteria::descriptionModifier() const
   return m_detailModifier;
 }
 
-
 SearchResult SearchFilterSimpleKeywordCriteria::scoreValue(
     const QModelIndex& index,
     const QString& searchString) const
@@ -181,7 +196,9 @@ QPair<qint64, int> SearchFilterSimpleKeywordCriteria::scoreIndex(
     int role,
     qint64 modifier) const
 {
-  const auto simpleSearchString = searchString.simplified();
+  const auto simpleSearchString = searchString
+      .simplified()
+      .remove(nonAlphaNumericCharsRegEx); // We need to remove parentheses for automation
   QPair<qint64, int> bestResult { 0, -1 };
 
   if (index.isValid())
@@ -189,7 +206,7 @@ QPair<qint64, int> SearchFilterSimpleKeywordCriteria::scoreIndex(
     auto roleData = index.data(role);
     if (roleData.isValid())
     {
-      const auto str = roleData.toString();
+      const auto str = roleData.toString().remove(nonAlphaNumericCharsRegEx);
       auto r = subStringCompare(str, simpleSearchString);
       r.first *= modifier;
       bestResult = r;
