@@ -19,7 +19,6 @@ import QtQuick.Controls
 TextField {
     id: searchBar
     rightPadding: height
-    inputMethodHints: Qt.ImhNoPredictiveText
     selectByMouse: true
 
     Image {
