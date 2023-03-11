@@ -1,6 +1,18 @@
-// [WriteFile Name=EditFeaturesWithFeatureLinkedAnnotation, Category=EditData]
-// [Legal]
-// Copyright 2020 Esri.
+// COPYRIGHT 2023 ESRI
+// TRADE SECRETS: ESRI PROPRIETARY AND CONFIDENTIAL
+// Unpublished material - all rights reserved under the
+// Copyright Laws of the United States and applicable international
+// laws, treaties, and conventions.
+//
+// For additional information, contact:
+// Environmental Systems Research Institute, Inc.
+// Attn: Contracts and Legal Services Department
+// 380 New York Street
+// Redlands, California, 92373
+// USA
+//
+// email: contracts@esri.com
+/// \file EditFeaturesWithFeatureLinkedAnnotation.h
 
 // Licensed under the Apache License, Version 2.0 (the "License");
 // you may not use this file except in compliance with the License.
@@ -59,7 +71,7 @@ public:
 private slots:
   void onIdentifyLayersCompleted(QUuid,const QList<Esri::ArcGISRuntime::IdentifyLayerResult*>& identifyResults);
   void onMouseClicked(QMouseEvent& mouseEvent);
-  void onGeodatabaseDoneLoading(Esri::ArcGISRuntime::Error error);
+  void onGeodatabaseDoneLoading(const Esri::ArcGISRuntime::Error& error);
 
 signals:
   void mapViewChanged();

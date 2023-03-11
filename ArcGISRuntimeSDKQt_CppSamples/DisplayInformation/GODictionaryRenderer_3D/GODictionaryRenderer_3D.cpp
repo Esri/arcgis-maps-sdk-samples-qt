@@ -1,6 +1,18 @@
-// [WriteFile Name=GODictionaryRenderer_3D, Category=DisplayInformation]
-// [Legal]
-// Copyright 2016 Esri.
+// COPYRIGHT 2023 ESRI
+// TRADE SECRETS: ESRI PROPRIETARY AND CONFIDENTIAL
+// Unpublished material - all rights reserved under the
+// Copyright Laws of the United States and applicable international
+// laws, treaties, and conventions.
+//
+// For additional information, contact:
+// Environmental Systems Research Institute, Inc.
+// Attn: Contracts and Legal Services Department
+// 380 New York Street
+// Redlands, California, 92373
+// USA
+//
+// email: contracts@esri.com
+/// \file GODictionaryRenderer_3D.cpp
 
 // Licensed under the Apache License, Version 2.0 (the "License");
 // you may not use this file except in compliance with the License.
@@ -41,7 +53,6 @@
 #include <QtCore/qglobal.h>
 #include <QStandardPaths>
 
-
 using namespace Esri::ArcGISRuntime;
 
 // helper method to get cross platform data path
@@ -81,7 +92,7 @@ void GODictionaryRenderer_3D::init()
   qmlRegisterType<GODictionaryRenderer_3D>("Esri.Samples", 1, 0, "GODictionaryRenderer_3DSample");
 }
 
-void GODictionaryRenderer_3D::logError(Error error)
+void GODictionaryRenderer_3D::logError(const Error& error)
 {
   setErrorMessage(QString("%1: %2").arg(error.message(), error.additionalMessage()));
 }
