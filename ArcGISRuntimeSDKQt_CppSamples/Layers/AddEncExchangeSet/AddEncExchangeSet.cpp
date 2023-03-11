@@ -1,6 +1,18 @@
-// [WriteFile Name=AddEncExchangeSet, Category=Layers]
-// [Legal]
-// Copyright 2019 Esri.
+// COPYRIGHT 2023 ESRI
+// TRADE SECRETS: ESRI PROPRIETARY AND CONFIDENTIAL
+// Unpublished material - all rights reserved under the
+// Copyright Laws of the United States and applicable international
+// laws, treaties, and conventions.
+//
+// For additional information, contact:
+// Environmental Systems Research Institute, Inc.
+// Attn: Contracts and Legal Services Department
+// 380 New York Street
+// Redlands, California, 92373
+// USA
+//
+// email: contracts@esri.com
+/// \file AddEncExchangeSet.cpp
 
 // Licensed under the Apache License, Version 2.0 (the "License");
 // you may not use this file except in compliance with the License.
@@ -93,7 +105,7 @@ void AddEncExchangeSet::setMapView(MapQuickView* mapView)
   m_mapView->setMap(m_map);
 
   // connect to doneLoading signal of EncExchangeSet
-  connect(m_encExchangeSet, &EncExchangeSet::doneLoading, this, [this](Error e)
+  connect(m_encExchangeSet, &EncExchangeSet::doneLoading, this, [this](const Error& e)
   {
     if (!e.isEmpty())
       return;
@@ -109,7 +121,7 @@ void AddEncExchangeSet::setMapView(MapQuickView* mapView)
       EncLayer* encLayer = new EncLayer(cell, this);
 
       // connect to the doneLoading signal of the layer
-      connect(encLayer, &EncLayer::doneLoading, this, [this, encLayer](Error e)
+      connect(encLayer, &EncLayer::doneLoading, this, [this, encLayer](const Error& e)
       {
         if (!e.isEmpty())
           return;

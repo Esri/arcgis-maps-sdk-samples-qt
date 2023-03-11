@@ -1,6 +1,18 @@
-// [WriteFile Name=ReadSymbolsFromMobileStyle, Category=DisplayInformation]
-// [Legal]
-// Copyright 2019 Esri.
+// COPYRIGHT 2023 ESRI
+// TRADE SECRETS: ESRI PROPRIETARY AND CONFIDENTIAL
+// Unpublished material - all rights reserved under the
+// Copyright Laws of the United States and applicable international
+// laws, treaties, and conventions.
+//
+// For additional information, contact:
+// Environmental Systems Research Institute, Inc.
+// Attn: Contracts and Legal Services Department
+// 380 New York Street
+// Redlands, California, 92373
+// USA
+//
+// email: contracts@esri.com
+/// \file ReadSymbolsFromMobileStyle.cpp
 
 // Licensed under the Apache License, Version 2.0 (the "License");
 // you may not use this file except in compliance with the License.
@@ -83,7 +95,7 @@ ReadSymbolsFromMobileStyle::ReadSymbolsFromMobileStyle(QObject* parent /* = null
   });
 
   // Load the style
-  connect(m_symbolStyle, &SymbolStyle::doneLoading, this, [this](Error e)
+  connect(m_symbolStyle, &SymbolStyle::doneLoading, this, [this](const Error& e)
   {
     if (!e.isEmpty())
       return;

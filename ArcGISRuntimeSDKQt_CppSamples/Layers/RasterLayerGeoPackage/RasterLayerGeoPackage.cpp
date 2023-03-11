@@ -1,6 +1,18 @@
-// [WriteFile Name=RasterLayerGeoPackage, Category=Layers]
-// [Legal]
-// Copyright 2017 Esri.
+// COPYRIGHT 2023 ESRI
+// TRADE SECRETS: ESRI PROPRIETARY AND CONFIDENTIAL
+// Unpublished material - all rights reserved under the
+// Copyright Laws of the United States and applicable international
+// laws, treaties, and conventions.
+//
+// For additional information, contact:
+// Environmental Systems Research Institute, Inc.
+// Attn: Contracts and Legal Services Department
+// 380 New York Street
+// Redlands, California, 92373
+// USA
+//
+// email: contracts@esri.com
+/// \file RasterLayerGeoPackage.cpp
 
 // Licensed under the Apache License, Version 2.0 (the "License");
 // you may not use this file except in compliance with the License.
@@ -87,7 +99,7 @@ void RasterLayerGeoPackage::componentComplete()
   GeoPackage* gpkg = new GeoPackage(dataPath + "AuroraCO.gpkg", this);
 
   // Connect to GeoPackage::doneLoading
-  connect(gpkg, &GeoPackage::doneLoading, this, [this, gpkg](const Error e)
+  connect(gpkg, &GeoPackage::doneLoading, this, [this, gpkg](const Error& e)
   {
     if (!e.isEmpty())
       return;
@@ -101,7 +113,7 @@ void RasterLayerGeoPackage::componentComplete()
   });
 
   // Connect to Map::doneLoading
-  connect(m_map, &Map::doneLoading, this, [gpkg](const Error e)
+  connect(m_map, &Map::doneLoading, this, [gpkg](const Error& e)
   {
     if (!e.isEmpty())
       return;

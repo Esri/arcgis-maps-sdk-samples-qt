@@ -1,6 +1,18 @@
-// [WriteFile Name=EditAndSyncFeatures, Category=EditData]
-// [Legal]
-// Copyright 2016 Esri.
+// COPYRIGHT 2023 ESRI
+// TRADE SECRETS: ESRI PROPRIETARY AND CONFIDENTIAL
+// Unpublished material - all rights reserved under the
+// Copyright Laws of the United States and applicable international
+// laws, treaties, and conventions.
+//
+// For additional information, contact:
+// Environmental Systems Research Institute, Inc.
+// Attn: Contracts and Legal Services Department
+// 380 New York Street
+// Redlands, California, 92373
+// USA
+//
+// email: contracts@esri.com
+/// \file EditAndSyncFeatures.cpp
 
 // Licensed under the Apache License, Version 2.0 (the "License");
 // you may not use this file except in compliance with the License.
@@ -126,7 +138,7 @@ void EditAndSyncFeatures::componentComplete()
 void EditAndSyncFeatures::connectSignals()
 {
   // lambda expression for the mouse clicked signal on the mapview
-  connect(m_mapView, &MapQuickView::mouseClicked, this, [this](QMouseEvent& mouseEvent)
+  connect(m_mapView, &MapQuickView::mouseClicked, this, [this](const QMouseEvent& mouseEvent)
   {
     if (m_isOffline)
     {
@@ -281,7 +293,7 @@ void EditAndSyncFeatures::addOfflineData()
   m_map->operationalLayers()->clear();
 
   // load the geodatabase
-  connect(m_offlineGdb, &Geodatabase::doneLoading, this, [this](Error)
+  connect(m_offlineGdb, &Geodatabase::doneLoading, this, [this](const Error&)
   {
     // create a feature layer from each feature table, and add to the map
     const auto tables = m_offlineGdb->geodatabaseFeatureTables();
@@ -350,4 +362,3 @@ void EditAndSyncFeatures::executeSync()
     emit hideWindow(5000, false);
   }
 }
-

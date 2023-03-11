@@ -1,6 +1,18 @@
-// [WriteFile Name=AnalyzeHotspots, Category=Analysis]
-// [Legal]
-// Copyright 2017 Esri.
+// COPYRIGHT 2023 ESRI
+// TRADE SECRETS: ESRI PROPRIETARY AND CONFIDENTIAL
+// Unpublished material - all rights reserved under the
+// Copyright Laws of the United States and applicable international
+// laws, treaties, and conventions.
+//
+// For additional information, contact:
+// Environmental Systems Research Institute, Inc.
+// Attn: Contracts and Legal Services Department
+// 380 New York Street
+// Redlands, California, 92373
+// USA
+//
+// email: contracts@esri.com
+/// \file AnalyzeHotspots.cpp
 
 // Licensed under the Apache License, Version 2.0 (the "License");
 // you may not use this file except in compliance with the License.
@@ -67,12 +79,11 @@ void AnalyzeHotspots::componentComplete()
   m_hotspotTask = new GeoprocessingTask(QUrl("https://sampleserver6.arcgisonline.com/arcgis/rest/services/911CallsHotspot/GPServer/911%20Calls%20Hotspot"), this);
 
   // Connect to the GP Task's errorOccurred signal
-  connect(m_hotspotTask, &GeoprocessingTask::errorOccurred, this, [this](Error error)
+  connect(m_hotspotTask, &GeoprocessingTask::errorOccurred, this, [this](const Error& error)
   {
     emit displayErrorDialog("Geoprocessing Task failed", error.message());
   });
 }
-
 
 void AnalyzeHotspots::executeTaskWithDates(const QString& fromDate, const QString& toDate)
 {
@@ -146,7 +157,7 @@ void AnalyzeHotspots::processResults(GeoprocessingResult* result)
 
   // Extract the layer from the result and add to the map
   m_layer = result->mapImageLayer();
-  connect(m_layer, &ArcGISMapImageLayer::doneLoading, this, [this](Error error)
+  connect(m_layer, &ArcGISMapImageLayer::doneLoading, this, [this](const Error& error)
   {
     if (error.isEmpty())
         m_mapView->setViewpointGeometry(m_layer->fullExtent());

@@ -1,6 +1,18 @@
-// [WriteFile Name=EditKmlGroundOverlay, Category=EditData]
-// [Legal]
-// Copyright 2019 Esri.
+// COPYRIGHT 2023 ESRI
+// TRADE SECRETS: ESRI PROPRIETARY AND CONFIDENTIAL
+// Unpublished material - all rights reserved under the
+// Copyright Laws of the United States and applicable international
+// laws, treaties, and conventions.
+//
+// For additional information, contact:
+// Environmental Systems Research Institute, Inc.
+// Attn: Contracts and Legal Services Department
+// 380 New York Street
+// Redlands, California, 92373
+// USA
+//
+// email: contracts@esri.com
+/// \file EditKmlGroundOverlay.cpp
 
 // Licensed under the Apache License, Version 2.0 (the "License");
 // you may not use this file except in compliance with the License.
@@ -80,7 +92,7 @@ EditKmlGroundOverlay::EditKmlGroundOverlay(QObject* parent /* = nullptr */):
   KmlLayer* kmlLayer = new KmlLayer(kmlDataset, this);
 
   // Connect to know when the layer loads
-  connect(kmlLayer, &KmlLayer::doneLoading, this, [this, env](Error e)
+  connect(kmlLayer, &KmlLayer::doneLoading, this, [this, env](const Error& e)
   {
     if (!e.isEmpty() || !m_sceneView)
       return;
@@ -124,4 +136,3 @@ void EditKmlGroundOverlay::setSceneView(SceneQuickView* sceneView)
 
   emit sceneViewChanged();
 }
-

@@ -1,6 +1,18 @@
-// [WriteFile Name=ListKmlContents, Category=Layers]
-// [Legal]
-// Copyright 2020 Esri.
+// COPYRIGHT 2023 ESRI
+// TRADE SECRETS: ESRI PROPRIETARY AND CONFIDENTIAL
+// Unpublished material - all rights reserved under the
+// Copyright Laws of the United States and applicable international
+// laws, treaties, and conventions.
+//
+// For additional information, contact:
+// Environmental Systems Research Institute, Inc.
+// Attn: Contracts and Legal Services Department
+// 380 New York Street
+// Redlands, California, 92373
+// USA
+//
+// email: contracts@esri.com
+/// \file ListKmlContents.cpp
 
 // Licensed under the Apache License, Version 2.0 (the "License");
 // you may not use this file except in compliance with the License.
@@ -40,7 +52,6 @@
 #include "Envelope.h"
 #include "Point.h"
 #include "SpatialReference.h"
-
 
 #include <algorithm>
 #include <QUuid>
@@ -83,7 +94,7 @@ ListKmlContents::ListKmlContents(QObject* parent /* = nullptr */):
   KmlLayer* kmlLayer = new KmlLayer(m_kmlDataset, this);
   m_scene->operationalLayers()->append(kmlLayer);
 
-  connect(m_kmlDataset, &KmlDataset::doneLoading, this, [this](Error loadError)
+  connect(m_kmlDataset, &KmlDataset::doneLoading, this, [this](const Error& loadError)
   {
     if (!loadError.isEmpty())
     {

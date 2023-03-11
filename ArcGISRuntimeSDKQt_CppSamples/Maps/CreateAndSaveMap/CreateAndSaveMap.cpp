@@ -1,6 +1,18 @@
-// [WriteFile Name=CreateAndSaveMap, Category=Maps]
-// [Legal]
-// Copyright 2018 Esri.
+// COPYRIGHT 2023 ESRI
+// TRADE SECRETS: ESRI PROPRIETARY AND CONFIDENTIAL
+// Unpublished material - all rights reserved under the
+// Copyright Laws of the United States and applicable international
+// laws, treaties, and conventions.
+//
+// For additional information, contact:
+// Environmental Systems Research Institute, Inc.
+// Attn: Contracts and Legal Services Department
+// 380 New York Street
+// Redlands, California, 92373
+// USA
+//
+// email: contracts@esri.com
+/// \file CreateAndSaveMap.cpp
 
 // Licensed under the Apache License, Version 2.0 (the "License");
 // you may not use this file except in compliance with the License.
@@ -56,7 +68,7 @@ void CreateAndSaveMap::componentComplete()
   // create the Portal object
   constexpr bool loginRequired = true;
   m_portal = new Portal(QUrl("https://www.arcgis.com"), loginRequired, this);
-  connect(m_portal, &Portal::doneLoading, this, [this](Error e)
+  connect(m_portal, &Portal::doneLoading, this, [this](const Error& e)
   {
     if (!e.isEmpty())
       return;
@@ -107,7 +119,7 @@ void CreateAndSaveMap::createMap(const QString& basemap, const QStringList& oper
   });
 
   // Handle Map error signal
-  connect(m_map, &Map::errorOccurred, this, [this](Error e)
+  connect(m_map, &Map::errorOccurred, this, [this](const Error& e)
   {
     if (e.isEmpty())
       return;

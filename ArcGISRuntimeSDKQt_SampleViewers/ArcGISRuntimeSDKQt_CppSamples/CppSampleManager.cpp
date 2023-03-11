@@ -1,5 +1,18 @@
-// [Legal]
-// Copyright 2022 Esri.
+// COPYRIGHT 2023 ESRI
+// TRADE SECRETS: ESRI PROPRIETARY AND CONFIDENTIAL
+// Unpublished material - all rights reserved under the
+// Copyright Laws of the United States and applicable international
+// laws, treaties, and conventions.
+//
+// For additional information, contact:
+// Environmental Systems Research Institute, Inc.
+// Attn: Contracts and Legal Services Department
+// 380 New York Street
+// Redlands, California, 92373
+// USA
+//
+// email: contracts@esri.com
+/// \file CppSampleManager.cpp
 
 // Licensed under the Apache License, Version 2.0 (the "License");
 // you may not use this file except in compliance with the License.
@@ -40,7 +53,7 @@ CppSampleManager::CppSampleManager(QObject* parent):
   DownloadSampleManager(parent),
   m_portal(new Portal(QUrl("https://arcgis.com"), this))
 {
-  connect(m_portal, &Portal::doneLoading, this, [this](Error error)
+  connect(m_portal, &Portal::doneLoading, this, [this](const Error& error)
   {
     emit portalDoneLoading(error.isEmpty());
   });
@@ -96,7 +109,7 @@ void CppSampleManager::createPortalItem(const QString& itemId)
   m_portalItem = new PortalItem(m_portal, itemId, this);
 
   connect(m_portalItem, &PortalItem::doneLoading, this,
-          [this](Error error)
+          [this](const Error& error)
   {
     bool success = error.isEmpty();
 

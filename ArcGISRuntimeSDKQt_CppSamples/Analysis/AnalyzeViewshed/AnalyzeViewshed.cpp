@@ -1,6 +1,18 @@
-// [WriteFile Name=AnalyzeViewshed, Category=Analysis]
-// [Legal]
-// Copyright 2016 Esri.
+// COPYRIGHT 2023 ESRI
+// TRADE SECRETS: ESRI PROPRIETARY AND CONFIDENTIAL
+// Unpublished material - all rights reserved under the
+// Copyright Laws of the United States and applicable international
+// laws, treaties, and conventions.
+//
+// For additional information, contact:
+// Environmental Systems Research Institute, Inc.
+// Attn: Contracts and Legal Services Department
+// 380 New York Street
+// Redlands, California, 92373
+// USA
+//
+// email: contracts@esri.com
+/// \file AnalyzeViewshed.cpp
 
 // Licensed under the Apache License, Version 2.0 (the "License");
 // you may not use this file except in compliance with the License.
@@ -142,7 +154,7 @@ void AnalyzeViewshed::connectSignals()
   });
 
   // Connect to the GP Task's errorOccurred signal
-  connect(m_viewshedTask, &GeoprocessingTask::errorOccurred, this, [this](Error error)
+  connect(m_viewshedTask, &GeoprocessingTask::errorOccurred, this, [this](const Error& error)
   {
     emit displayErrorDialog("Geoprocessing Task failed", error.message());
   });
