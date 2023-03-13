@@ -218,7 +218,7 @@ void ApplyScheduledMapUpdates::connectSyncSignals()
   });
 
   // connect to createDefaultOfflineMapSyncParametersCompleted signal
-  connect(m_offlineSyncTask, &OfflineMapSyncTask::createDefaultOfflineMapSyncParametersCompleted, this, [this](QUuid, OfflineMapSyncParameters parameters)
+  connect(m_offlineSyncTask, &OfflineMapSyncTask::createDefaultOfflineMapSyncParametersCompleted, this, [this](QUuid, const OfflineMapSyncParameters& parameters)
   {
     // set the parameters to download all updates for the mobile map packages
     parameters.setPreplannedScheduledUpdatesOption(PreplannedScheduledUpdatesOption::DownloadAllUpdates);
