@@ -1,18 +1,6 @@
-// COPYRIGHT 2023 ESRI
-// TRADE SECRETS: ESRI PROPRIETARY AND CONFIDENTIAL
-// Unpublished material - all rights reserved under the
-// Copyright Laws of the United States and applicable international
-// laws, treaties, and conventions.
-//
-// For additional information, contact:
-// Environmental Systems Research Institute, Inc.
-// Attn: Contracts and Legal Services Department
-// 380 New York Street
-// Redlands, California, 92373
-// USA
-//
-// email: contracts@esri.com
-/// \file GenerateGeodatabaseReplicaFromFeatureService.cpp
+// [WriteFile Name=GenerateGeodatabaseReplicaFromFeatureService, Category=Features]
+// [Legal]
+// Copyright 2016 Esri.
 
 // Licensed under the Apache License, Version 2.0 (the "License");
 // you may not use this file except in compliance with the License.
@@ -124,7 +112,7 @@ void GenerateGeodatabaseReplicaFromFeatureService::componentComplete()
   //! [Features GenerateGeodatabase Part 1]
 
   // connect to sync task doneLoading signal
-  connect(m_syncTask, &GeodatabaseSyncTask::doneLoading, this, [this](const Error& error)
+  connect(m_syncTask, &GeodatabaseSyncTask::doneLoading, this, [this](Error error)
   {
     if (!error.isEmpty())
     {
@@ -154,7 +142,7 @@ void GenerateGeodatabaseReplicaFromFeatureService::componentComplete()
   });
 
   // connect to map doneLoading signal
-  connect(m_map, &Map::doneLoading, this, [this](const Error& error)
+  connect(m_map, &Map::doneLoading, this, [this](Error error)
   {
     if (error.isEmpty())
     {
@@ -257,7 +245,7 @@ void GenerateGeodatabaseReplicaFromFeatureService::addOfflineData(Geodatabase* g
   m_map->operationalLayers()->clear();
 
   // load the geodatabase
-  connect(gdb, &Geodatabase::doneLoading, this, [this, gdb](const Error&)
+  connect(gdb, &Geodatabase::doneLoading, this, [this, gdb](Error)
   {
     // create a feature layer from each feature table, and add to the map
     const auto tables = gdb->geodatabaseFeatureTables();

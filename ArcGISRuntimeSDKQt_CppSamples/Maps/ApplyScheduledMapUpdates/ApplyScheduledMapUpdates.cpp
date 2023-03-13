@@ -1,18 +1,6 @@
-// COPYRIGHT 2023 ESRI
-// TRADE SECRETS: ESRI PROPRIETARY AND CONFIDENTIAL
-// Unpublished material - all rights reserved under the
-// Copyright Laws of the United States and applicable international
-// laws, treaties, and conventions.
-//
-// For additional information, contact:
-// Environmental Systems Research Institute, Inc.
-// Attn: Contracts and Legal Services Department
-// 380 New York Street
-// Redlands, California, 92373
-// USA
-//
-// email: contracts@esri.com
-/// \file ApplyScheduledMapUpdates.cpp
+// [WriteFile Name=ApplyScheduledMapUpdates, Category=Maps]
+// [Legal]
+// Copyright 2019 Esri.
 
 // Licensed under the Apache License, Version 2.0 (the "License");
 // you may not use this file except in compliance with the License.
@@ -160,7 +148,7 @@ void ApplyScheduledMapUpdates::setMapToMapView()
   m_mapView->setMap(m_map);
 }
 
-void ApplyScheduledMapUpdates::onMmpkDoneLoading(const Error& e)
+void ApplyScheduledMapUpdates::onMmpkDoneLoading(Error e)
 {
   // check if successful
   if (!e.isEmpty())
@@ -218,7 +206,7 @@ void ApplyScheduledMapUpdates::connectSyncSignals()
   });
 
   // connect to createDefaultOfflineMapSyncParametersCompleted signal
-  connect(m_offlineSyncTask, &OfflineMapSyncTask::createDefaultOfflineMapSyncParametersCompleted, this, [this](QUuid, const OfflineMapSyncParameters& parameters)
+  connect(m_offlineSyncTask, &OfflineMapSyncTask::createDefaultOfflineMapSyncParametersCompleted, this, [this](QUuid, OfflineMapSyncParameters parameters)
   {
     // set the parameters to download all updates for the mobile map packages
     parameters.setPreplannedScheduledUpdatesOption(PreplannedScheduledUpdatesOption::DownloadAllUpdates);

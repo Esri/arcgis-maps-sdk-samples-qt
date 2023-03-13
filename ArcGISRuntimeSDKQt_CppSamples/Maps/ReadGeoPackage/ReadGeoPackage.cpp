@@ -1,18 +1,6 @@
-// COPYRIGHT 2023 ESRI
-// TRADE SECRETS: ESRI PROPRIETARY AND CONFIDENTIAL
-// Unpublished material - all rights reserved under the
-// Copyright Laws of the United States and applicable international
-// laws, treaties, and conventions.
-//
-// For additional information, contact:
-// Environmental Systems Research Institute, Inc.
-// Attn: Contracts and Legal Services Department
-// 380 New York Street
-// Redlands, California, 92373
-// USA
-//
-// email: contracts@esri.com
-/// \file ReadGeoPackage.cpp
+// [WriteFile Name=ReadGeoPackage, Category=Maps]
+// [Legal]
+// Copyright 2018 Esri.
 
 // Licensed under the Apache License, Version 2.0 (the "License");
 // you may not use this file except in compliance with the License.
@@ -109,7 +97,7 @@ void ReadGeoPackage::readGeoPackage()
   GeoPackage* auroraGpkg = new GeoPackage(m_dataPath + "/gpkg/AuroraCO.gpkg", this);
 
   // Make sure there are no errors in loading the GeoPackage before interacting with it
-  connect(auroraGpkg, &GeoPackage::doneLoading, this, [auroraGpkg, this](const Error& error)
+  connect(auroraGpkg, &GeoPackage::doneLoading, this, [auroraGpkg, this](Error error)
   {
     if (error.isEmpty())
     {

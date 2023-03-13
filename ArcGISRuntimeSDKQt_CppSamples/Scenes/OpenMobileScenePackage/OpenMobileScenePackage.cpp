@@ -1,18 +1,6 @@
-// COPYRIGHT 2023 ESRI
-// TRADE SECRETS: ESRI PROPRIETARY AND CONFIDENTIAL
-// Unpublished material - all rights reserved under the
-// Copyright Laws of the United States and applicable international
-// laws, treaties, and conventions.
-//
-// For additional information, contact:
-// Environmental Systems Research Institute, Inc.
-// Attn: Contracts and Legal Services Department
-// 380 New York Street
-// Redlands, California, 92373
-// USA
-//
-// email: contracts@esri.com
-/// \file OpenMobileScenePackage.cpp
+// [WriteFile Name=OpenMobileScenePackage, Category=Scenes]
+// [Legal]
+// Copyright 2019 Esri.
 
 // Licensed under the Apache License, Version 2.0 (the "License");
 // you may not use this file except in compliance with the License.
@@ -69,7 +57,7 @@ OpenMobileScenePackage::OpenMobileScenePackage(QObject* parent /* = nullptr */):
 
   // connect to the Mobile Scene Package instance to know when errors occur
   connect(MobileScenePackage::instance(), &MobileScenePackage::errorOccurred,
-          [](const Error& e)
+          [](Error e)
   {
     if (e.isEmpty())
       return;

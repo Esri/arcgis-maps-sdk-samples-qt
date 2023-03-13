@@ -1,18 +1,6 @@
-// COPYRIGHT 2023 ESRI
-// TRADE SECRETS: ESRI PROPRIETARY AND CONFIDENTIAL
-// Unpublished material - all rights reserved under the
-// Copyright Laws of the United States and applicable international
-// laws, treaties, and conventions.
-//
-// For additional information, contact:
-// Environmental Systems Research Institute, Inc.
-// Attn: Contracts and Legal Services Department
-// 380 New York Street
-// Redlands, California, 92373
-// USA
-//
-// email: contracts@esri.com
-/// \file FindServiceAreasForMultipleFacilities.cpp
+// [WriteFile Name=FindServiceAreasForMultipleFacilities, Category=Routing]
+// [Legal]
+// Copyright 2020 Esri.
 
 // Licensed under the Apache License, Version 2.0 (the "License");
 // you may not use this file except in compliance with the License.
@@ -119,7 +107,7 @@ void FindServiceAreasForMultipleFacilities::setMapView(MapQuickView* mapView)
 
   m_mapView = mapView;
 
-  connect(m_facilitiesFeatureLayer, &FeatureLayer::doneLoading, this, [this](const Error& loadError)
+  connect(m_facilitiesFeatureLayer, &FeatureLayer::doneLoading, this, [this](Error loadError)
   {
     if (!loadError.isEmpty())
     {
@@ -137,13 +125,15 @@ void FindServiceAreasForMultipleFacilities::setMapView(MapQuickView* mapView)
 
   m_mapView->graphicsOverlays()->append(m_serviceAreasOverlay);
 
+
+
   emit mapViewChanged();
 }
 
 void FindServiceAreasForMultipleFacilities::connectServiceAreaTaskSignals()
 {
   // once service area task is done loading, create default parameters
-  connect(m_serviceAreaTask, &ServiceAreaTask::doneLoading, this, [this](const Error& loadError)
+  connect(m_serviceAreaTask, &ServiceAreaTask::doneLoading, this, [this](Error loadError)
   {
     if (!loadError.isEmpty())
     {
@@ -178,7 +168,7 @@ void FindServiceAreasForMultipleFacilities::connectServiceAreaTaskSignals()
     emit taskRunningChanged();
   });
 
-  connect(m_serviceAreaTask, &ServiceAreaTask::solveServiceAreaCompleted, this, [this](QUuid, const ServiceAreaResult& serviceAreaResult)
+  connect(m_serviceAreaTask, &ServiceAreaTask::solveServiceAreaCompleted, this, [this](QUuid, ServiceAreaResult serviceAreaResult)
   {
     emit taskRunningChanged();
 

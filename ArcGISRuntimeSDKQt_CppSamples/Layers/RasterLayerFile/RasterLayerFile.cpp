@@ -1,18 +1,6 @@
-// COPYRIGHT 2023 ESRI
-// TRADE SECRETS: ESRI PROPRIETARY AND CONFIDENTIAL
-// Unpublished material - all rights reserved under the
-// Copyright Laws of the United States and applicable international
-// laws, treaties, and conventions.
-//
-// For additional information, contact:
-// Environmental Systems Research Institute, Inc.
-// Attn: Contracts and Legal Services Department
-// 380 New York Street
-// Redlands, California, 92373
-// USA
-//
-// email: contracts@esri.com
-/// \file RasterLayerFile.cpp
+// [WriteFile Name=RasterLayerFile, Category=Analysis]
+// [Legal]
+// Copyright 2016 Esri.
 
 // Licensed under the Apache License, Version 2.0 (the "License");
 // you may not use this file except in compliance with the License.
@@ -110,7 +98,7 @@ void RasterLayerFile::createAndAddRasterLayer(QString dataPath)
   RasterLayer* rasterLayer = new RasterLayer(raster, this);
   //! [RasterLayerFile cpp new raster layer]
 
-  connect(rasterLayer, &RasterLayer::doneLoading, this, [this, rasterLayer](const Error& loadError)
+  connect(rasterLayer, &RasterLayer::doneLoading, this, [this, rasterLayer](Error loadError)
   {
     if (!loadError.isEmpty())
       return;

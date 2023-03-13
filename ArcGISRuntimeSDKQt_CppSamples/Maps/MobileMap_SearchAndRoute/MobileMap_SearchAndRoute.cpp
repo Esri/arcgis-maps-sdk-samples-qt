@@ -1,18 +1,6 @@
-// COPYRIGHT 2023 ESRI
-// TRADE SECRETS: ESRI PROPRIETARY AND CONFIDENTIAL
-// Unpublished material - all rights reserved under the
-// Copyright Laws of the United States and applicable international
-// laws, treaties, and conventions.
-//
-// For additional information, contact:
-// Environmental Systems Research Institute, Inc.
-// Attn: Contracts and Legal Services Department
-// 380 New York Street
-// Redlands, California, 92373
-// USA
-//
-// email: contracts@esri.com
-/// \file MobileMap_SearchAndRoute.cpp
+// [WriteFile Name=MobileMap_SearchAndRoute, Category=Maps]
+// [Legal]
+// Copyright 2016 Esri.
 
 // Licensed under the Apache License, Version 2.0 (the "License");
 // you may not use this file except in compliance with the License.
@@ -153,7 +141,7 @@ void MobileMap_SearchAndRoute::createMobileMapPackages(int index)
       MobileMapPackage* mobileMapPackage = new MobileMapPackage(m_fileInfoList[index].absoluteFilePath(), this);
 
       // once MMPK is finished loading, add it and its information to lists
-      connect(mobileMapPackage, &MobileMapPackage::doneLoading, this, [mobileMapPackage, this](const Error& error)
+      connect(mobileMapPackage, &MobileMapPackage::doneLoading, this, [mobileMapPackage, this](Error error)
       {
         if (error.isEmpty())
         {
@@ -348,7 +336,7 @@ void MobileMap_SearchAndRoute::selectMap(int index)
     });
 
     // store the created route parameters
-    connect(m_currentRouteTask, &RouteTask::createDefaultParametersCompleted, this, [this](QUuid, const RouteParameters& routeParameters)
+    connect(m_currentRouteTask, &RouteTask::createDefaultParametersCompleted, this, [this](QUuid, RouteParameters routeParameters)
     {
       m_currentRouteParameters = routeParameters;
     });

@@ -1,18 +1,6 @@
-// COPYRIGHT 2023 ESRI
-// TRADE SECRETS: ESRI PROPRIETARY AND CONFIDENTIAL
-// Unpublished material - all rights reserved under the
-// Copyright Laws of the United States and applicable international
-// laws, treaties, and conventions.
-//
-// For additional information, contact:
-// Environmental Systems Research Institute, Inc.
-// Attn: Contracts and Legal Services Department
-// 380 New York Street
-// Redlands, California, 92373
-// USA
-//
-// email: contracts@esri.com
-/// \file DownloadPreplannedMap.cpp
+// [WriteFile Name=DownloadPreplannedMap, Category=Maps]
+// [Legal]
+// Copyright 2019 Esri.
 
 // Licensed under the Apache License, Version 2.0 (the "License");
 // you may not use this file except in compliance with the License.
@@ -230,7 +218,7 @@ void DownloadPreplannedMap::loadPreplannedMapAreas()
 
   for (PreplannedMapArea* mapArea : *m_preplannedList)
   {
-    connect(mapArea, &PreplannedMapArea::doneLoading, this, [this, mapArea] (const Error& e)
+    connect(mapArea, &PreplannedMapArea::doneLoading, this, [this, mapArea] (Error e)
     {
       if (!e.isEmpty())
       {
@@ -256,7 +244,7 @@ void DownloadPreplannedMap::loadExistingPreplannedMap()
 
   m_mmpk = new MobileMapPackage(m_path, this);
 
-  connect(m_mmpk, &MobileMapPackage::doneLoading, this, [this] (const Error& e)
+  connect(m_mmpk, &MobileMapPackage::doneLoading, this, [this] (Error e)
   {
     if (!e.isEmpty())
       qDebug() << e.message() << " - " << e.additionalMessage();

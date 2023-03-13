@@ -1,18 +1,6 @@
-// COPYRIGHT 2023 ESRI
-// TRADE SECRETS: ESRI PROPRIETARY AND CONFIDENTIAL
-// Unpublished material - all rights reserved under the
-// Copyright Laws of the United States and applicable international
-// laws, treaties, and conventions.
-//
-// For additional information, contact:
-// Environmental Systems Research Institute, Inc.
-// Attn: Contracts and Legal Services Department
-// 380 New York Street
-// Redlands, California, 92373
-// USA
-//
-// email: contracts@esri.com
-/// \file ChangeSublayerRenderer.cpp
+// [WriteFile Name=ChangeSublayerRenderer, Category=Layers]
+// [Legal]
+// Copyright 2018 Esri.
 
 // Licensed under the Apache License, Version 2.0 (the "License");
 // you may not use this file except in compliance with the License.
@@ -76,7 +64,7 @@ void ChangeSublayerRenderer::componentComplete()
   ArcGISMapImageLayer* mapImageLayer = new ArcGISMapImageLayer(QUrl("https://sampleserver6.arcgisonline.com/arcgis/rest/services/Census/MapServer"), this);
 
   // Get the sublayer
-  connect(mapImageLayer, &ArcGISMapImageLayer::doneLoading, this, [this, mapImageLayer](const Error& e)
+  connect(mapImageLayer, &ArcGISMapImageLayer::doneLoading, this, [this, mapImageLayer](Error e)
   {
     if (!e.isEmpty())
       return;
@@ -87,7 +75,7 @@ void ChangeSublayerRenderer::componentComplete()
     m_sublayer = dynamic_cast<ArcGISMapImageSublayer*>(mapImageLayer->mapImageSublayers()->at(2));
 
     // get the sublayer's original renderer
-    connect(m_sublayer, &ArcGISMapImageSublayer::doneLoading, this, [this](const Error& e)
+    connect(m_sublayer, &ArcGISMapImageSublayer::doneLoading, this, [this](Error e)
     {
       if (!e.isEmpty())
         return;
