@@ -97,7 +97,7 @@ void ReadGeoPackage::readGeoPackage()
   GeoPackage* auroraGpkg = new GeoPackage(m_dataPath + "/gpkg/AuroraCO.gpkg", this);
 
   // Make sure there are no errors in loading the GeoPackage before interacting with it
-  connect(auroraGpkg, &GeoPackage::doneLoading, this, [auroraGpkg, this](Error error)
+  connect(auroraGpkg, &GeoPackage::doneLoading, this, [auroraGpkg, this](const Error& error)
   {
     if (error.isEmpty())
     {

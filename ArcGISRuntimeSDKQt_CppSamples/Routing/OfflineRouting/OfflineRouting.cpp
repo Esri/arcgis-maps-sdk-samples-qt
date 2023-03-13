@@ -164,7 +164,7 @@ void OfflineRouting::connectSignals()
     m_routeParameters = defaultParameters;
   });
 
-  connect(m_routeTask, &RouteTask::doneLoading, this, [this](Error loadError)
+  connect(m_routeTask, &RouteTask::doneLoading, this, [this](const Error& loadError)
   {
     if (loadError.isEmpty())
     {

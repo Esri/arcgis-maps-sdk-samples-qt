@@ -148,7 +148,7 @@ void ApplyScheduledMapUpdates::setMapToMapView()
   m_mapView->setMap(m_map);
 }
 
-void ApplyScheduledMapUpdates::onMmpkDoneLoading(Error e)
+void ApplyScheduledMapUpdates::onMmpkDoneLoading(const Error& e)
 {
   // check if successful
   if (!e.isEmpty())

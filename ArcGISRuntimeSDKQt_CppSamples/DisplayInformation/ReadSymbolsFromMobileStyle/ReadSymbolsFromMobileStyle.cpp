@@ -83,7 +83,7 @@ ReadSymbolsFromMobileStyle::ReadSymbolsFromMobileStyle(QObject* parent /* = null
   });
 
   // Load the style
-  connect(m_symbolStyle, &SymbolStyle::doneLoading, this, [this](Error e)
+  connect(m_symbolStyle, &SymbolStyle::doneLoading, this, [this](const Error& e)
   {
     if (!e.isEmpty())
       return;
@@ -143,7 +143,7 @@ ReadSymbolsFromMobileStyle::ReadSymbolsFromMobileStyle(QObject* parent /* = null
     m_currentSymbol->setColor(m_currentColor);
 
     // request symbol swatch
-    connect(m_currentSymbol, &MultilayerPointSymbol::createSwatchCompleted, m_currentSymbol, [this](QUuid id, QImage img)
+    connect(m_currentSymbol, &MultilayerPointSymbol::createSwatchCompleted, m_currentSymbol, [this](QUuid id, const QImage& img)
     {
       if (!m_symbolImageProvider)
         return;

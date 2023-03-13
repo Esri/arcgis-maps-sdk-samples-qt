@@ -107,7 +107,7 @@ void FindServiceAreasForMultipleFacilities::setMapView(MapQuickView* mapView)
 
   m_mapView = mapView;
 
-  connect(m_facilitiesFeatureLayer, &FeatureLayer::doneLoading, this, [this](Error loadError)
+  connect(m_facilitiesFeatureLayer, &FeatureLayer::doneLoading, this, [this](const Error& loadError)
   {
     if (!loadError.isEmpty())
     {
@@ -133,7 +133,7 @@ void FindServiceAreasForMultipleFacilities::setMapView(MapQuickView* mapView)
 void FindServiceAreasForMultipleFacilities::connectServiceAreaTaskSignals()
 {
   // once service area task is done loading, create default parameters
-  connect(m_serviceAreaTask, &ServiceAreaTask::doneLoading, this, [this](Error loadError)
+  connect(m_serviceAreaTask, &ServiceAreaTask::doneLoading, this, [this](const Error& loadError)
   {
     if (!loadError.isEmpty())
     {

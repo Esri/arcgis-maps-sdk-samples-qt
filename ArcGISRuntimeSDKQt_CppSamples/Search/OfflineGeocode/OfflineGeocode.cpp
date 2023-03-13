@@ -160,7 +160,7 @@ void OfflineGeocode::setSuggestionsText(const QString& searchText)
   m_suggestListModel->setSearchText(searchText);
 }
 
-void OfflineGeocode::logError(const Error error)
+void OfflineGeocode::logError(const Error& error)
 {
   setErrorMessage( QString("%1: %2").arg(error.message(), error.additionalMessage()));
 }

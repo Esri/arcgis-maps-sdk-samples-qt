@@ -72,7 +72,7 @@ void StatisticalQueryGroupSort::componentComplete()
 
 void StatisticalQueryGroupSort::connectSignals()
 {
-  connect(m_featureTable, &ServiceFeatureTable::doneLoading, this, [this](Error error)
+  connect(m_featureTable, &ServiceFeatureTable::doneLoading, this, [this](const Error& error)
   {
     if (!error.isEmpty())
       return;
@@ -85,7 +85,7 @@ void StatisticalQueryGroupSort::connectSignals()
     emit fieldsChanged();
   });
 
-  connect(m_featureTable, &ServiceFeatureTable::errorOccurred, this, [this](Error error)
+  connect(m_featureTable, &ServiceFeatureTable::errorOccurred, this, [this](const Error& error)
   {
     if (error.isEmpty())
       return;

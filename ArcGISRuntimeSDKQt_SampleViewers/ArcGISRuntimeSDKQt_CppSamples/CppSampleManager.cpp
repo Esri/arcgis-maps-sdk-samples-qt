@@ -40,7 +40,7 @@ CppSampleManager::CppSampleManager(QObject* parent):
   DownloadSampleManager(parent),
   m_portal(new Portal(QUrl("https://arcgis.com"), this))
 {
-  connect(m_portal, &Portal::doneLoading, this, [this](Error error)
+  connect(m_portal, &Portal::doneLoading, this, [this](const Error& error)
   {
     emit portalDoneLoading(error.isEmpty());
   });
@@ -96,7 +96,7 @@ void CppSampleManager::createPortalItem(const QString& itemId)
   m_portalItem = new PortalItem(m_portal, itemId, this);
 
   connect(m_portalItem, &PortalItem::doneLoading, this,
-          [this](Error error)
+          [this](const Error& error)
   {
     bool success = error.isEmpty();
 

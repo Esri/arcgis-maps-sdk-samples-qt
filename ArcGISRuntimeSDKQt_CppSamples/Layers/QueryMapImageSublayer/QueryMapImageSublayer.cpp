@@ -132,7 +132,7 @@ void QueryMapImageSublayer::connectSignals()
     });
   });
 
-  connect(m_usaImageLayer, &ArcGISMapImageLayer::doneLoading, this, [this](Error e)
+  connect(m_usaImageLayer, &ArcGISMapImageLayer::doneLoading, this, [this](const Error& e)
   {
     if (!e.isEmpty())
       return;

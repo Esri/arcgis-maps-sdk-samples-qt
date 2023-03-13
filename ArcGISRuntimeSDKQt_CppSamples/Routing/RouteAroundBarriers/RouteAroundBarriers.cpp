@@ -128,7 +128,7 @@ void RouteAroundBarriers::connectRouteSignals()
     m_routeParameters.setReturnDirections(true);
   });
 
-  connect(m_routeTask, &RouteTask::doneLoading, this, [this](Error loadError)
+  connect(m_routeTask, &RouteTask::doneLoading, this, [this](const Error& loadError)
   {
     if (loadError.isEmpty())
     {

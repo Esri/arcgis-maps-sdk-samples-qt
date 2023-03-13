@@ -76,7 +76,7 @@ void StatisticalQuery::componentComplete()
   // Set map to map view
   m_mapView->setMap(m_map);
 
-  connect(m_featureTable, &ServiceFeatureTable::errorOccurred, this, [this](Error e)
+  connect(m_featureTable, &ServiceFeatureTable::errorOccurred, this, [this](const Error& e)
   {
     if (e.isEmpty())
       return;

@@ -59,7 +59,7 @@ public:
 private slots:
   void onIdentifyLayersCompleted(QUuid,const QList<Esri::ArcGISRuntime::IdentifyLayerResult*>& identifyResults);
   void onMouseClicked(QMouseEvent& mouseEvent);
-  void onGeodatabaseDoneLoading(Esri::ArcGISRuntime::Error error);
+  void onGeodatabaseDoneLoading(const Esri::ArcGISRuntime::Error& error);
 
 signals:
   void mapViewChanged();

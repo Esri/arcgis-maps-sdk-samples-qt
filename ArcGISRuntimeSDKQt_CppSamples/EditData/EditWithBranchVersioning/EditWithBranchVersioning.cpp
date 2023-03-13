@@ -212,7 +212,7 @@ void EditWithBranchVersioning::connectSgdbSignals()
     switchVersion();
   });
 
-  connect(m_serviceGeodatabase, &ServiceGeodatabase::errorOccurred, this, [this](Error error)
+  connect(m_serviceGeodatabase, &ServiceGeodatabase::errorOccurred, this, [this](const Error& error)
   {
     m_errorMessage = error.message() + " - " + error.additionalMessage();
     emit errorMessageChanged();
@@ -243,7 +243,7 @@ void EditWithBranchVersioning::onSgdbDoneLoadingCompleted(const Error& error)
   // created service feature table from the table contained in the service geodatabase
   m_featureTable = m_serviceGeodatabase->table(0);
 
-  connect(m_featureTable, &ServiceFeatureTable::doneLoading, this, [this](Error error)
+  connect(m_featureTable, &ServiceFeatureTable::doneLoading, this, [this](const Error& error)
   {
     if (!error.isEmpty())
       return;

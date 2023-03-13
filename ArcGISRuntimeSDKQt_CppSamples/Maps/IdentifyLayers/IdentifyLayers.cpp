@@ -69,7 +69,7 @@ void IdentifyLayers::componentComplete()
   m_map->operationalLayers()->append(imageLayer);
 
   // hide 2 of the sublayers in the map image layer
-  connect(imageLayer, &ArcGISMapImageLayer::doneLoading, this, [imageLayer](Error e)
+  connect(imageLayer, &ArcGISMapImageLayer::doneLoading, this, [imageLayer](const Error& e)
   {
     if (!e.isEmpty())
     {

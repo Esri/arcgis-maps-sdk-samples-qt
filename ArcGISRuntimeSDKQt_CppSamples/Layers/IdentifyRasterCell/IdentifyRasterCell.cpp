@@ -100,7 +100,7 @@ void IdentifyRasterCell::setMapView(MapQuickView* mapView)
 
 void IdentifyRasterCell::connectSignals()
 {
-  connect(m_rasterLayer, &Layer::doneLoading, this, [this](Error error)
+  connect(m_rasterLayer, &Layer::doneLoading, this, [this](const Error& error)
   {
     if (!error.isEmpty())
     {

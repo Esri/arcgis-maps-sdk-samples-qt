@@ -63,7 +63,7 @@ FindClosestFacilityToMultipleIncidentsService::FindClosestFacilityToMultipleInci
 
   createFeatureLayers();
 
-  connect(m_task, &ClosestFacilityTask::doneLoading, this, [this](Error e)
+  connect(m_task, &ClosestFacilityTask::doneLoading, this, [this](const Error& e)
   {
     if (!e.isEmpty())
     {

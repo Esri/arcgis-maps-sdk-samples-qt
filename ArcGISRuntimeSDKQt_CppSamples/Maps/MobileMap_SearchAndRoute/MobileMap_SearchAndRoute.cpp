@@ -141,7 +141,7 @@ void MobileMap_SearchAndRoute::createMobileMapPackages(int index)
       MobileMapPackage* mobileMapPackage = new MobileMapPackage(m_fileInfoList[index].absoluteFilePath(), this);
 
       // once MMPK is finished loading, add it and its information to lists
-      connect(mobileMapPackage, &MobileMapPackage::doneLoading, this, [mobileMapPackage, this](Error error)
+      connect(mobileMapPackage, &MobileMapPackage::doneLoading, this, [mobileMapPackage, this](const Error& error)
       {
         if (error.isEmpty())
         {

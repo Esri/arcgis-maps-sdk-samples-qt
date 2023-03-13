@@ -135,7 +135,7 @@ void EditFeaturesWithFeatureLinkedAnnotation::setMapView(MapQuickView* mapView)
   emit mapViewChanged();
 }
 
-void EditFeaturesWithFeatureLinkedAnnotation::onGeodatabaseDoneLoading(Error error)
+void EditFeaturesWithFeatureLinkedAnnotation::onGeodatabaseDoneLoading(const Error& error)
 {
   if (!error.isEmpty())
     return;

@@ -82,7 +82,7 @@ void ServiceArea::componentComplete()
   // Set map to map view
   m_mapView->setMap(m_map);
 
-  connect(m_task, &ServiceAreaTask::doneLoading, this, [this](Esri::ArcGISRuntime::Error loadError)
+  connect(m_task, &ServiceAreaTask::doneLoading, this, [this](const Error& loadError)
   {
     if (!loadError.isEmpty())
       return;

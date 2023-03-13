@@ -64,7 +64,7 @@ LoadWfsXmlQuery::LoadWfsXmlQuery(QObject* parent /* = nullptr */):
   wfsFeatureTable->setFeatureRequestMode(FeatureRequestMode::ManualCache);
 
   // connect to feature table doneLoading signal
-  connect(wfsFeatureTable, &WfsFeatureTable::doneLoading, this, [wfsFeatureTable, this](Error e)
+  connect(wfsFeatureTable, &WfsFeatureTable::doneLoading, this, [wfsFeatureTable, this](const Error& e)
   {
     if (!e.isEmpty())
       return;

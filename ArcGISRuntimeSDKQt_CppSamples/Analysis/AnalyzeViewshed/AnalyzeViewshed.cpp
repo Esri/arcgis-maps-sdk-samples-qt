@@ -142,7 +142,7 @@ void AnalyzeViewshed::connectSignals()
   });
 
   // Connect to the GP Task's errorOccurred signal
-  connect(m_viewshedTask, &GeoprocessingTask::errorOccurred, this, [this](Error error)
+  connect(m_viewshedTask, &GeoprocessingTask::errorOccurred, this, [this](const Error& error)
   {
     emit displayErrorDialog("Geoprocessing Task failed", error.message());
   });

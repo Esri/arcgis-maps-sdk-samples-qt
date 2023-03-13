@@ -34,7 +34,7 @@ ViewContentBeneathTerrainSurface::ViewContentBeneathTerrainSurface(QObject* pare
   const auto url = QUrl("https://www.arcgis.com/home/item.html?id=91a4fafd747a47c7bab7797066cb9272");
   m_scene = new Scene(url, this);
 
-  connect(m_scene, &Scene::doneLoading, this, [this](Error loadError)
+  connect(m_scene, &Scene::doneLoading, this, [this](const Error& loadError)
   {
     if (!loadError.isEmpty())
       return;

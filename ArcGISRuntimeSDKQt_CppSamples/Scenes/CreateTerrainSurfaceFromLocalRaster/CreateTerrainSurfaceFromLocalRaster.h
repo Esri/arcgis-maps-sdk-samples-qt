@@ -45,7 +45,7 @@ signals:
   void sceneViewChanged();
 
 private slots:
-  void elevationSrcFinishedLoading(Esri::ArcGISRuntime::Error loadError);
+  void elevationSrcFinishedLoading(const Esri::ArcGISRuntime::Error& loadError);
 
 private:
   Esri::ArcGISRuntime::SceneQuickView* sceneView() const;

@@ -61,7 +61,7 @@ void TakeScreenshot::componentComplete()
   m_imageProvider = dynamic_cast<MapImageProvider*>(engine->imageProvider(MapImageProvider::imageProviderId()));
 
   // Connect to the exportImageCompleted signal
-  connect(m_mapView, &MapQuickView::exportImageCompleted, this, [this](QUuid id, QImage img)
+  connect(m_mapView, &MapQuickView::exportImageCompleted, this, [this](QUuid id, const QImage& img)
   {
     // convert the QUuid into a QString
     const QString imageId = id.toString().remove("{").remove("}");

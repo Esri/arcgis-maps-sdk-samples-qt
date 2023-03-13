@@ -83,7 +83,7 @@ ListKmlContents::ListKmlContents(QObject* parent /* = nullptr */):
   KmlLayer* kmlLayer = new KmlLayer(m_kmlDataset, this);
   m_scene->operationalLayers()->append(kmlLayer);
 
-  connect(m_kmlDataset, &KmlDataset::doneLoading, this, [this](Error loadError)
+  connect(m_kmlDataset, &KmlDataset::doneLoading, this, [this](const Error& loadError)
   {
     if (!loadError.isEmpty())
     {

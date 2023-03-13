@@ -56,7 +56,7 @@ OpenMobileMap_MapPackage::OpenMobileMap_MapPackage(QQuickItem* parent) :
 {
   // connect to the Mobile Map Package instance to know when errors occur
   connect(MobileMapPackage::instance(), &MobileMapPackage::errorOccurred,
-          [](Error e)
+          [](const Error& e)
   {
     if (e.isEmpty())
     {
@@ -99,7 +99,7 @@ void OpenMobileMap_MapPackage::createMapPackage(const QString& path)
   m_mobileMapPackage = new MobileMapPackage(path, this);
 
   // wait for the mobile map package to load
-  connect(m_mobileMapPackage, &MobileMapPackage::doneLoading, this, [this](Error error)
+  connect(m_mobileMapPackage, &MobileMapPackage::doneLoading, this, [this](const Error& error)
   {
     if (!error.isEmpty())
     {

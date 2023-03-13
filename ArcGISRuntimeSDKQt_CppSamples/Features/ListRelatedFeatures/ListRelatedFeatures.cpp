@@ -102,7 +102,7 @@ void ListRelatedFeatures::componentComplete()
 void ListRelatedFeatures::connectSignals()
 {
   // connect to doneLoading signal
-  connect(m_map, &Map::doneLoading, this, [this](Error loadError)
+  connect(m_map, &Map::doneLoading, this, [this](const Error& loadError)
   {
     if (!loadError.isEmpty())
       return;

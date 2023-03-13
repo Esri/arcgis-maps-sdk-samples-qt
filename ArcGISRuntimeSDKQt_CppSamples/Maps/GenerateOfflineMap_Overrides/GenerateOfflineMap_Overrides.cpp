@@ -88,7 +88,7 @@ void GenerateOfflineMap_Overrides::componentComplete()
   m_map = new Map(m_portalItem, this);
 
   // Update property once map is done loading
-  connect(m_map, &Map::doneLoading, this, [this](Error e)
+  connect(m_map, &Map::doneLoading, this, [this](const Error& e)
   {
     if (!e.isEmpty())
       return;
@@ -104,7 +104,7 @@ void GenerateOfflineMap_Overrides::componentComplete()
   m_offlineMapTask = new OfflineMapTask(m_map, this);
 
   // connect to the error signal
-  connect(m_offlineMapTask, &OfflineMapTask::errorOccurred, this, [](Error e)
+  connect(m_offlineMapTask, &OfflineMapTask::errorOccurred, this, [](const Error& e)
   {
     if (e.isEmpty())
       return;
@@ -390,7 +390,7 @@ void GenerateOfflineMap_Overrides::takeMapOffline()
   });
 
   // connect to the error signal
-  connect(generateJob, &GenerateOfflineMapJob::errorOccurred, this, [](Error e)
+  connect(generateJob, &GenerateOfflineMapJob::errorOccurred, this, [](const Error& e)
   {
     if (e.isEmpty())
       return;

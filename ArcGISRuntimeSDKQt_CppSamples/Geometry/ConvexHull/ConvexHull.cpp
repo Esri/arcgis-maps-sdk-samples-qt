@@ -146,7 +146,7 @@ void ConvexHull::setMapView(MapQuickView* mapView)
   m_mapView->setMap(m_map);
 
   // wait for map to load before creating multipoint builder
-  connect(m_map, &Map::doneLoading, this, [this](Error e){
+  connect(m_map, &Map::doneLoading, this, [this](const Error& e){
     if (!e.isEmpty())
     {
       qDebug() << e.message() << e.additionalMessage();

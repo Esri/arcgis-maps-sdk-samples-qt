@@ -90,7 +90,7 @@ void ClosestFacility::componentComplete()
   createFacilities();
   createGraphics();
 
-  connect(m_task, &ClosestFacilityTask::doneLoading, this, [this] (Error loadError)
+  connect(m_task, &ClosestFacilityTask::doneLoading, this, [this] (const Error& loadError)
   {
     if (!loadError.isEmpty())
       return;

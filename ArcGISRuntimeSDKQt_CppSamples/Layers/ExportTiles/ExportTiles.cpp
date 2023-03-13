@@ -93,7 +93,7 @@ void ExportTiles::createExportTileCacheTask()
   // create the task with the url and load it
   m_exportTileCacheTask = new ExportTileCacheTask(tiledLayer->url(), this);
 
-  connect(m_exportTileCacheTask, &ExportTileCacheTask::doneLoading, this, [this](Error error)
+  connect(m_exportTileCacheTask, &ExportTileCacheTask::doneLoading, this, [this](const Error& error)
   {
     if (!error.isEmpty())
     {
