@@ -153,7 +153,7 @@ void ExportVectorTiles::startExport(double xSW, double ySW, double xNE, double y
       emit jobStatusChanged();
     });
 
-    connect(m_exportJob, &Job::cancelAsyncCompleted, this, [this](QUuid taskId, bool succeeded)
+    connect(m_exportJob, &Job::cancelAsyncCompleted, this, [this](QUuid, bool succeeded)
     {
       emit jobCancelDone(succeeded);
     });

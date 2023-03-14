@@ -226,7 +226,7 @@ void DisplayUtilityAssociations::connectSignals()
     }
   });
 
-  connect(m_attachmentSymbol, &Symbol::createSwatchCompleted, this, [this](QUuid id, const QImage& image)
+  connect(m_attachmentSymbol, &Symbol::createSwatchCompleted, this, [this](const QUuid& id, const QImage& image)
   {
     if (!m_symbolImageProvider)
       return;
@@ -244,7 +244,7 @@ void DisplayUtilityAssociations::connectSignals()
     emit attachmentSymbolUrlChanged();
   });
 
-  connect(m_connectivitySymbol, &Symbol::createSwatchCompleted, this, [this](QUuid id, const QImage& image)
+  connect(m_connectivitySymbol, &Symbol::createSwatchCompleted, this, [this](const QUuid& id, const QImage& image)
   {
     if (!m_symbolImageProvider)
       return;

@@ -309,7 +309,7 @@ void DisplayContentOfUtilityNetworkContainer::createLegend()
   m_connectivitySymbol = new SimpleLineSymbol(SimpleLineSymbolStyle::Dot, Qt::red, 3, this);
   m_boundingBoxSymbol = new SimpleLineSymbol(SimpleLineSymbolStyle::Dot, Qt::yellow, 3, this);
 
-  connect(m_attachmentSymbol, &Symbol::createSwatchCompleted, this, [this](QUuid id, const QImage& image)
+  connect(m_attachmentSymbol, &Symbol::createSwatchCompleted, this, [this](const QUuid& id, const QImage& image)
   {
     if (!m_symbolImageProvider)
       return;
@@ -327,7 +327,7 @@ void DisplayContentOfUtilityNetworkContainer::createLegend()
     emit attachmentSymbolUrlChanged();
   });
 
-  connect(m_connectivitySymbol, &Symbol::createSwatchCompleted, this, [this](QUuid id, const QImage& image)
+  connect(m_connectivitySymbol, &Symbol::createSwatchCompleted, this, [this](const QUuid& id, const QImage& image)
   {
     if (!m_symbolImageProvider)
       return;
@@ -345,7 +345,7 @@ void DisplayContentOfUtilityNetworkContainer::createLegend()
     emit connectivitySymbolUrlChanged();
   });
 
-  connect(m_boundingBoxSymbol, &Symbol::createSwatchCompleted, this, [this](QUuid id, const QImage& image)
+  connect(m_boundingBoxSymbol, &Symbol::createSwatchCompleted, this, [this](const QUuid& id, const QImage& image)
   {
     if (!m_symbolImageProvider)
       return;
