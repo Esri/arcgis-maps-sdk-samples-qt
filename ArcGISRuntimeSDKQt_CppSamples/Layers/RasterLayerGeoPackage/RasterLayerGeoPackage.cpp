@@ -87,7 +87,7 @@ void RasterLayerGeoPackage::componentComplete()
   GeoPackage* gpkg = new GeoPackage(dataPath + "AuroraCO.gpkg", this);
 
   // Connect to GeoPackage::doneLoading
-  connect(gpkg, &GeoPackage::doneLoading, this, [this, gpkg](const Error e)
+  connect(gpkg, &GeoPackage::doneLoading, this, [this, gpkg](const Error& e)
   {
     if (!e.isEmpty())
       return;
@@ -101,7 +101,7 @@ void RasterLayerGeoPackage::componentComplete()
   });
 
   // Connect to Map::doneLoading
-  connect(m_map, &Map::doneLoading, this, [gpkg](const Error e)
+  connect(m_map, &Map::doneLoading, this, [gpkg](const Error& e)
   {
     if (!e.isEmpty())
       return;

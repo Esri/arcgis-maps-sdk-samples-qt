@@ -84,7 +84,7 @@ signals:
   void sgdbVersionIsDefaultChanged();
 
 private slots:
-  void onCreateVersionCompleted(QUuid, Esri::ArcGISRuntime::ServiceVersionInfo* serviceVersionInfo);
+  void onCreateVersionCompleted(const QUuid&, Esri::ArcGISRuntime::ServiceVersionInfo* serviceVersionInfo);
   void onMapDoneLoading(const Esri::ArcGISRuntime::Error& error);
   void onSgdbDoneLoadingCompleted(const Esri::ArcGISRuntime::Error& error);
 

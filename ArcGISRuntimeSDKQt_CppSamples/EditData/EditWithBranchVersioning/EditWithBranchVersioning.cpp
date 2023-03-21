@@ -151,7 +151,7 @@ void EditWithBranchVersioning::onMapDoneLoading(const Error& error)
   });
 
   // connect to the identifyLayerCompleted signal on the map view
-  connect(m_mapView, &MapQuickView::identifyLayerCompleted, this, [this](QUuid, IdentifyLayerResult* identifyResult)
+  connect(m_mapView, &MapQuickView::identifyLayerCompleted, this, [this](const QUuid&, IdentifyLayerResult* identifyResult)
   {
     if (!identifyResult)
     {
@@ -188,7 +188,7 @@ void EditWithBranchVersioning::connectSgdbSignals()
 
   connect(m_serviceGeodatabase, &ServiceGeodatabase::createVersionCompleted, this, &EditWithBranchVersioning::onCreateVersionCompleted);
 
-  connect(m_serviceGeodatabase, &ServiceGeodatabase::applyEditsCompleted, this, [this](QUuid,const QList<FeatureTableEditResult*>& featureTableEditResults)
+  connect(m_serviceGeodatabase, &ServiceGeodatabase::applyEditsCompleted, this, [this](const QUuid&,const QList<FeatureTableEditResult*>& featureTableEditResults)
   {
     // A convenience wrapper that deletes the contents of featureEditResults when we leave scope.
     FeatureTableEditResultsScopedCleanup featureTableEditResultsCleanup(featureTableEditResults);
@@ -212,7 +212,7 @@ void EditWithBranchVersioning::connectSgdbSignals()
     switchVersion();
   });
 
-  connect(m_serviceGeodatabase, &ServiceGeodatabase::errorOccurred, this, [this](Error error)
+  connect(m_serviceGeodatabase, &ServiceGeodatabase::errorOccurred, this, [this](const Error& error)
   {
     m_errorMessage = error.message() + " - " + error.additionalMessage();
     emit errorMessageChanged();
@@ -220,7 +220,7 @@ void EditWithBranchVersioning::connectSgdbSignals()
     emit busyChanged();
   });
 
-  connect(m_serviceGeodatabase, &ServiceGeodatabase::switchVersionCompleted, this, [this] (QUuid)
+  connect(m_serviceGeodatabase, &ServiceGeodatabase::switchVersionCompleted, this, [this](const QUuid&)
   {
     m_busy = false;
     emit busyChanged();
@@ -243,7 +243,7 @@ void EditWithBranchVersioning::onSgdbDoneLoadingCompleted(const Error& error)
   // created service feature table from the table contained in the service geodatabase
   m_featureTable = m_serviceGeodatabase->table(0);
 
-  connect(m_featureTable, &ServiceFeatureTable::doneLoading, this, [this](Error error)
+  connect(m_featureTable, &ServiceFeatureTable::doneLoading, this, [this](const Error& error)
   {
     if (!error.isEmpty())
       return;
@@ -255,7 +255,7 @@ void EditWithBranchVersioning::onSgdbDoneLoadingCompleted(const Error& error)
     emit busyChanged();
   });
 
-  connect(m_featureTable, &ServiceFeatureTable::updateFeatureCompleted, this, [this] (QUuid, bool)
+  connect(m_featureTable, &ServiceFeatureTable::updateFeatureCompleted, this, [this](const QUuid&, bool)
   {
     m_busy = false;
     emit busyChanged();
@@ -272,7 +272,7 @@ void EditWithBranchVersioning::onSgdbDoneLoadingCompleted(const Error& error)
   emit sgdbCurrentVersionChanged();
 }
 
-void EditWithBranchVersioning::onCreateVersionCompleted(QUuid, Esri::ArcGISRuntime::ServiceVersionInfo* serviceVersionInfo)
+void EditWithBranchVersioning::onCreateVersionCompleted(const QUuid&, Esri::ArcGISRuntime::ServiceVersionInfo* serviceVersionInfo)
 {
   // check for local edits before switching versions
   if (m_serviceGeodatabase->hasLocalEdits())

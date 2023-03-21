@@ -138,7 +138,7 @@ void EditAndSyncFeatures::connectSignals()
       {
         // connect to feature table signal
         FeatureLayer* featureLayer = static_cast<FeatureLayer*>(m_map->operationalLayers()->at(0));
-        connect(featureLayer->featureTable(), &GeodatabaseFeatureTable::updateFeatureCompleted, this, [this, featureLayer](QUuid, bool success)
+        connect(featureLayer->featureTable(), &GeodatabaseFeatureTable::updateFeatureCompleted, this, [this, featureLayer](const QUuid&, bool success)
         {
           if (success)
           {
@@ -158,7 +158,7 @@ void EditAndSyncFeatures::connectSignals()
   });
 
   // once the identify is done
-  connect(m_mapView, &MapQuickView::identifyLayerCompleted, this, [this](QUuid, Esri::ArcGISRuntime::IdentifyLayerResult* identifyResult)
+  connect(m_mapView, &MapQuickView::identifyLayerCompleted, this, [this](const QUuid&, IdentifyLayerResult* identifyResult)
   {
     if (!identifyResult)
       return;
@@ -350,4 +350,3 @@ void EditAndSyncFeatures::executeSync()
     emit hideWindow(5000, false);
   }
 }
-

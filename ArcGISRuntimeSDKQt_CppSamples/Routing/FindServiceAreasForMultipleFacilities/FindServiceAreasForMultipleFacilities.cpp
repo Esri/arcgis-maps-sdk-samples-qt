@@ -107,7 +107,7 @@ void FindServiceAreasForMultipleFacilities::setMapView(MapQuickView* mapView)
 
   m_mapView = mapView;
 
-  connect(m_facilitiesFeatureLayer, &FeatureLayer::doneLoading, this, [this](Error loadError)
+  connect(m_facilitiesFeatureLayer, &FeatureLayer::doneLoading, this, [this](const Error& loadError)
   {
     if (!loadError.isEmpty())
     {
@@ -125,15 +125,13 @@ void FindServiceAreasForMultipleFacilities::setMapView(MapQuickView* mapView)
 
   m_mapView->graphicsOverlays()->append(m_serviceAreasOverlay);
 
-
-
   emit mapViewChanged();
 }
 
 void FindServiceAreasForMultipleFacilities::connectServiceAreaTaskSignals()
 {
   // once service area task is done loading, create default parameters
-  connect(m_serviceAreaTask, &ServiceAreaTask::doneLoading, this, [this](Error loadError)
+  connect(m_serviceAreaTask, &ServiceAreaTask::doneLoading, this, [this](const Error& loadError)
   {
     if (!loadError.isEmpty())
     {
@@ -144,7 +142,7 @@ void FindServiceAreasForMultipleFacilities::connectServiceAreaTaskSignals()
   });
 
   // once default parameters created, set parameters and solve
-  connect(m_serviceAreaTask, &ServiceAreaTask::createDefaultParametersCompleted, this, [this](QUuid, ServiceAreaParameters serviceAreaParameters)
+  connect(m_serviceAreaTask, &ServiceAreaTask::createDefaultParametersCompleted, this, [this](const QUuid&, ServiceAreaParameters serviceAreaParameters)
   {
     serviceAreaParameters.setPolygonDetail(ServiceAreaPolygonDetail::High);
     serviceAreaParameters.setReturnPolygons(true);
@@ -168,7 +166,7 @@ void FindServiceAreasForMultipleFacilities::connectServiceAreaTaskSignals()
     emit taskRunningChanged();
   });
 
-  connect(m_serviceAreaTask, &ServiceAreaTask::solveServiceAreaCompleted, this, [this](QUuid, ServiceAreaResult serviceAreaResult)
+  connect(m_serviceAreaTask, &ServiceAreaTask::solveServiceAreaCompleted, this, [this](const QUuid&, const ServiceAreaResult& serviceAreaResult)
   {
     emit taskRunningChanged();
 

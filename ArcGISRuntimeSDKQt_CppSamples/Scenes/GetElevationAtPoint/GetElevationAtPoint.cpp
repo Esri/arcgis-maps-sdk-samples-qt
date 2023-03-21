@@ -114,7 +114,7 @@ void GetElevationAtPoint::displayElevationOnClick(QMouseEvent& mouseEvent)
 
   // Connect to callback for elevation query, which places marker and sets elevation
   connect(m_scene->baseSurface(), &Surface::locationToElevationCompleted,
-          this, [baseSurfacePos, this](QUuid /*taskId*/, double elevation)
+          this, [baseSurfacePos, this](const QUuid& /*taskId*/, double elevation)
   {
     // Place the elevation marker circle at the clicked position
     m_elevationMarker->setGeometry(baseSurfacePos);

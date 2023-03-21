@@ -101,7 +101,7 @@ void QueryFeaturesWithArcadeExpression::setMapView(MapQuickView* mapView)
 
   });
 
-  connect(m_mapView, &MapQuickView::identifyLayersCompleted, this, [this](QUuid, const QList<IdentifyLayerResult*>& results)
+  connect(m_mapView, &MapQuickView::identifyLayersCompleted, this, [this](const QUuid&, const QList<IdentifyLayerResult*>& results)
   {
     if (results.empty())
       return;
@@ -133,7 +133,7 @@ void QueryFeaturesWithArcadeExpression::showEvaluatedArcadeInCallout(Feature* fe
   ArcadeExpression expression {expressionValue};
   ArcadeEvaluator* evaluator = new ArcadeEvaluator(&expression, ArcadeProfile::FormCalculation, this);
 
-  connect(evaluator, &ArcadeEvaluator::evaluateCompleted, this, [this](QUuid, ArcadeEvaluationResult* arcadeEvaluationResult)
+  connect(evaluator, &ArcadeEvaluator::evaluateCompleted, this, [this](const QUuid&, ArcadeEvaluationResult* arcadeEvaluationResult)
   {
     if (!arcadeEvaluationResult)
       return;

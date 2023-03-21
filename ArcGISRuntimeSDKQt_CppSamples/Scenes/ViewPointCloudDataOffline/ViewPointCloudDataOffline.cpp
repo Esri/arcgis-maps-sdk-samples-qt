@@ -96,7 +96,7 @@ void ViewPointCloudDataOffline::setSceneView(SceneQuickView* sceneView)
   PointCloudLayer* pointCloudLyr = new PointCloudLayer(pointCloudLyrUrl, this);
 
   // zoom to layer once loaded
-  connect(pointCloudLyr, &PointCloudLayer::doneLoading, this, [this, pointCloudLyr](Error e)
+  connect(pointCloudLyr, &PointCloudLayer::doneLoading, this, [this, pointCloudLyr](const Error& e)
   {
     if (!e.isEmpty())
       return;

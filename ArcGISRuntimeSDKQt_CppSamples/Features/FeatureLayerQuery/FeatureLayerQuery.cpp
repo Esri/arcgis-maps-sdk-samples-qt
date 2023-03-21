@@ -102,7 +102,7 @@ void FeatureLayerQuery::componentComplete()
 void FeatureLayerQuery::connectSignals()
 {
   // iterate over the query results once the query is done
-  connect(m_featureTable, &ServiceFeatureTable::queryFeaturesCompleted, this, [this](QUuid, FeatureQueryResult* rawQueryResult)
+  connect(m_featureTable, &ServiceFeatureTable::queryFeaturesCompleted, this, [this](const QUuid&, FeatureQueryResult* rawQueryResult)
   {
     auto queryResult = std::unique_ptr<FeatureQueryResult>(rawQueryResult);
 

@@ -75,7 +75,7 @@ DisplayScenesInTabletopAR::DisplayScenesInTabletopAR(QObject* parent /* = nullpt
   const QString dataPath = defaultDataPath() + "/ArcGIS/Runtime/Data/mspk/philadelphia.mspk";
 
   // Connect to the Mobile Scene Package instance to know when errors occur
-  connect(MobileScenePackage::instance(), &MobileScenePackage::errorOccurred, [](Error e)
+  connect(MobileScenePackage::instance(), &MobileScenePackage::errorOccurred, [](const Error& e)
   {
     if (e.isEmpty())
       return;

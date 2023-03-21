@@ -93,7 +93,7 @@ void AddEncExchangeSet::setMapView(MapQuickView* mapView)
   m_mapView->setMap(m_map);
 
   // connect to doneLoading signal of EncExchangeSet
-  connect(m_encExchangeSet, &EncExchangeSet::doneLoading, this, [this](Error e)
+  connect(m_encExchangeSet, &EncExchangeSet::doneLoading, this, [this](const Error& e)
   {
     if (!e.isEmpty())
       return;
@@ -109,7 +109,7 @@ void AddEncExchangeSet::setMapView(MapQuickView* mapView)
       EncLayer* encLayer = new EncLayer(cell, this);
 
       // connect to the doneLoading signal of the layer
-      connect(encLayer, &EncLayer::doneLoading, this, [this, encLayer](Error e)
+      connect(encLayer, &EncLayer::doneLoading, this, [this, encLayer](const Error& e)
       {
         if (!e.isEmpty())
           return;

@@ -80,7 +80,7 @@ EditKmlGroundOverlay::EditKmlGroundOverlay(QObject* parent /* = nullptr */):
   KmlLayer* kmlLayer = new KmlLayer(kmlDataset, this);
 
   // Connect to know when the layer loads
-  connect(kmlLayer, &KmlLayer::doneLoading, this, [this, env](Error e)
+  connect(kmlLayer, &KmlLayer::doneLoading, this, [this, env](const Error& e)
   {
     if (!e.isEmpty() || !m_sceneView)
       return;

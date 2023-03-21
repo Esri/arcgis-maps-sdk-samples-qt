@@ -85,7 +85,7 @@ void ListTransformations::componentComplete()
   const QUrl dataPath = QUrl(defaultDataPath() + "/ArcGIS/Runtime/Data/PEDataRuntime");
 
   // connect to TransformationCatalog error signal
-  connect(TransformationCatalog::instance(), &TransformationCatalog::errorOccurred, this, [this](Error e)
+  connect(TransformationCatalog::instance(), &TransformationCatalog::errorOccurred, this, [this](const Error& e)
   {
     if (e.isEmpty())
       return;

@@ -81,7 +81,7 @@ CreateTerrainSurfaceFromLocalRaster::CreateTerrainSurfaceFromLocalRaster(QObject
   }
 }
 
-void CreateTerrainSurfaceFromLocalRaster::elevationSrcFinishedLoading(Esri::ArcGISRuntime::Error loadError)
+void CreateTerrainSurfaceFromLocalRaster::elevationSrcFinishedLoading(const Error& loadError)
 {
   if(loadError.isEmpty())
   {

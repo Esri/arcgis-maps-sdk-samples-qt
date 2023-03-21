@@ -142,7 +142,7 @@ void AnalyzeViewshed::connectSignals()
   });
 
   // Connect to the GP Task's errorOccurred signal
-  connect(m_viewshedTask, &GeoprocessingTask::errorOccurred, this, [this](Error error)
+  connect(m_viewshedTask, &GeoprocessingTask::errorOccurred, this, [this](const Error& error)
   {
     emit displayErrorDialog("Geoprocessing Task failed", error.message());
   });
@@ -163,7 +163,7 @@ void AnalyzeViewshed::calculateViewshed()
   inputFeature->setGeometry(m_inputOverlay->graphics()->at(0)->geometry());
 
   // connect to addFeature status changed signal
-  connect(inputFeatures, &FeatureCollectionTable::addFeatureCompleted, this, [this, inputFeatures](QUuid, bool success)
+  connect(inputFeatures, &FeatureCollectionTable::addFeatureCompleted, this, [this, inputFeatures](const QUuid&, bool success)
   {
     if (!success)
       return;

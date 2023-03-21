@@ -76,7 +76,7 @@ void ApplyMosaicRuleToRasters::setMapView(MapQuickView* mapView)
   m_rasterLayer = new RasterLayer(m_imageServiceRaster, this);
 
   // Once loaded change the viewpoint the the center of the raster layers full extent
-  connect(m_rasterLayer, &RasterLayer::doneLoading, this, [this](Error e)
+  connect(m_rasterLayer, &RasterLayer::doneLoading, this, [this](const Error& e)
   {
     if (e.isEmpty())
     {

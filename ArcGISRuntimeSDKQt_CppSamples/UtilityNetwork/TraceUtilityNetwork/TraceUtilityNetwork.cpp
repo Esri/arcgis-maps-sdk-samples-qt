@@ -299,7 +299,7 @@ void TraceUtilityNetwork::reset()
   }
 }
 
-void TraceUtilityNetwork::onIdentifyLayersCompleted(QUuid, const QList<IdentifyLayerResult*>& results)
+void TraceUtilityNetwork::onIdentifyLayersCompleted(const QUuid&, const QList<IdentifyLayerResult*>& results)
 {
   if (results.isEmpty())
   {

@@ -81,7 +81,7 @@ void GODictionaryRenderer_3D::init()
   qmlRegisterType<GODictionaryRenderer_3D>("Esri.Samples", 1, 0, "GODictionaryRenderer_3DSample");
 }
 
-void GODictionaryRenderer_3D::logError(Error error)
+void GODictionaryRenderer_3D::logError(const Error& error)
 {
   setErrorMessage(QString("%1: %2").arg(error.message(), error.additionalMessage()));
 }

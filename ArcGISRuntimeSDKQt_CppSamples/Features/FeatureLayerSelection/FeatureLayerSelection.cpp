@@ -97,7 +97,7 @@ void FeatureLayerSelection::connectSignals()
   });
 
   // once the identify is done
-  connect(m_mapView, &MapQuickView::identifyLayerCompleted, this, [this](QUuid, Esri::ArcGISRuntime::IdentifyLayerResult* rawIdentifyResult)
+  connect(m_mapView, &MapQuickView::identifyLayerCompleted, this, [this](const QUuid&, IdentifyLayerResult* rawIdentifyResult)
   {
     auto identifyResult = std::unique_ptr<IdentifyLayerResult>(rawIdentifyResult);
 

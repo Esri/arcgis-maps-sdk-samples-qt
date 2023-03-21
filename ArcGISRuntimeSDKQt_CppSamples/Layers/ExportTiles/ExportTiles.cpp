@@ -93,7 +93,7 @@ void ExportTiles::createExportTileCacheTask()
   // create the task with the url and load it
   m_exportTileCacheTask = new ExportTileCacheTask(tiledLayer->url(), this);
 
-  connect(m_exportTileCacheTask, &ExportTileCacheTask::doneLoading, this, [this](Error error)
+  connect(m_exportTileCacheTask, &ExportTileCacheTask::doneLoading, this, [this](const Error& error)
   {
     if (!error.isEmpty())
     {
@@ -114,7 +114,7 @@ void ExportTiles::exportTileCacheFromCorners(double xCorner1, double yCorner1, d
   const Geometry tileCacheExtent = GeometryEngine::project(extent, SpatialReference::webMercator());
 
   // connect to sync task doneLoading signal
-  connect(m_exportTileCacheTask, &ExportTileCacheTask::defaultExportTileCacheParametersCompleted, this, [this](QUuid, ExportTileCacheParameters parameters)
+  connect(m_exportTileCacheTask, &ExportTileCacheTask::defaultExportTileCacheParametersCompleted, this, [this](const QUuid&, const ExportTileCacheParameters& parameters)
   {
     //! [ExportTiles start job]
     // execute the task and obtain the job

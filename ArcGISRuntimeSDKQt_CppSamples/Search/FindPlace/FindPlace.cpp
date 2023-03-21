@@ -129,7 +129,7 @@ void FindPlace::connectSignals()
   });
 
   // handle the result once identify completes
-  connect(m_mapView, &MapQuickView::identifyGraphicsOverlayCompleted, this, [this](QUuid, IdentifyGraphicsOverlayResult* result)
+  connect(m_mapView, &MapQuickView::identifyGraphicsOverlayCompleted, this, [this](const QUuid&, IdentifyGraphicsOverlayResult* result)
   {
     if (result->graphics().length() == 0)
       return;
@@ -169,7 +169,7 @@ void FindPlace::createLocator()
   emit suggestionsChanged();
 
   // connect to the signal for when the geocode completes
-  connect(m_locatorTask, &LocatorTask::geocodeCompleted, this, [this](QUuid, const QList<GeocodeResult>& results)
+  connect(m_locatorTask, &LocatorTask::geocodeCompleted, this, [this](const QUuid&, const QList<GeocodeResult>& results)
   {
     // if we are converting the location string to a Point, re-geocode with that information,
     // and don't add any graphics to the map

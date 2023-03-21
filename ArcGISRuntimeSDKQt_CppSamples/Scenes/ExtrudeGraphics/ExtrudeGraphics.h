@@ -40,7 +40,7 @@ public:
   static void init();
 
 private:
-  Esri::ArcGISRuntime::Polygon createPolygonFromPoints(QList<Esri::ArcGISRuntime::Point>);
+  Esri::ArcGISRuntime::Polygon createPolygonFromPoints(const QList<Esri::ArcGISRuntime::Point>&);
 
   Esri::ArcGISRuntime::Scene* m_scene = nullptr;
   Esri::ArcGISRuntime::SceneQuickView* m_sceneView = nullptr;
@@ -50,4 +50,3 @@ private:
 };
 
 #endif // EXTRUDE_GRAPHICS_H
-

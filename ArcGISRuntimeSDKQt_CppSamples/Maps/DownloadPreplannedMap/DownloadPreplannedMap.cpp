@@ -69,7 +69,7 @@ DownloadPreplannedMap::DownloadPreplannedMap(QObject* parent /* = nullptr */):
       m_offlineMapTask->preplannedMapAreas();
     });
 
-    connect(m_offlineMapTask, &OfflineMapTask::createDefaultDownloadPreplannedOfflineMapParametersCompleted, this, [this] (QUuid, const DownloadPreplannedOfflineMapParameters& parameters)
+    connect(m_offlineMapTask, &OfflineMapTask::createDefaultDownloadPreplannedOfflineMapParametersCompleted, this, [this] (const QUuid&, const DownloadPreplannedOfflineMapParameters& parameters)
     {
 
       m_params = parameters;
@@ -218,7 +218,7 @@ void DownloadPreplannedMap::loadPreplannedMapAreas()
 
   for (PreplannedMapArea* mapArea : *m_preplannedList)
   {
-    connect(mapArea, &PreplannedMapArea::doneLoading, this, [this, mapArea] (Error e)
+    connect(mapArea, &PreplannedMapArea::doneLoading, this, [this, mapArea] (const Error& e)
     {
       if (!e.isEmpty())
       {
@@ -244,7 +244,7 @@ void DownloadPreplannedMap::loadExistingPreplannedMap()
 
   m_mmpk = new MobileMapPackage(m_path, this);
 
-  connect(m_mmpk, &MobileMapPackage::doneLoading, this, [this] (Error e)
+  connect(m_mmpk, &MobileMapPackage::doneLoading, this, [this] (const Error& e)
   {
     if (!e.isEmpty())
       qDebug() << e.message() << " - " << e.additionalMessage();

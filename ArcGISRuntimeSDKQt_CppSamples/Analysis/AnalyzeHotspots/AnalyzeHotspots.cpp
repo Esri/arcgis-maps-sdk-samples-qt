@@ -67,7 +67,7 @@ void AnalyzeHotspots::componentComplete()
   m_hotspotTask = new GeoprocessingTask(QUrl("https://sampleserver6.arcgisonline.com/arcgis/rest/services/911CallsHotspot/GPServer/911%20Calls%20Hotspot"), this);
 
   // Connect to the GP Task's errorOccurred signal
-  connect(m_hotspotTask, &GeoprocessingTask::errorOccurred, this, [this](Error error)
+  connect(m_hotspotTask, &GeoprocessingTask::errorOccurred, this, [this](const Error& error)
   {
     emit displayErrorDialog("Geoprocessing Task failed", error.message());
   });
@@ -146,7 +146,7 @@ void AnalyzeHotspots::processResults(GeoprocessingResult* result)
 
   // Extract the layer from the result and add to the map
   m_layer = result->mapImageLayer();
-  connect(m_layer, &ArcGISMapImageLayer::doneLoading, this, [this](Error error)
+  connect(m_layer, &ArcGISMapImageLayer::doneLoading, this, [this](const Error& error)
   {
     if (error.isEmpty())
         m_mapView->setViewpointGeometry(m_layer->fullExtent());
