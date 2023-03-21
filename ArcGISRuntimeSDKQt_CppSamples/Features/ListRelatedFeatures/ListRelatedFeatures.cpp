@@ -119,7 +119,7 @@ void ListRelatedFeatures::connectSignals()
 
         // connect to queryRelatedFeaturesCompleted signal
         connect(m_alaskaFeatureTable, &ArcGISFeatureTable::queryRelatedFeaturesCompleted,
-                this, [this](QUuid, QList<RelatedFeatureQueryResult*> rawRelatedResults)
+                this, [this](const QUuid&, QList<RelatedFeatureQueryResult*> rawRelatedResults)
         {
           FeatureQueryListResultLock lock(rawRelatedResults);
           for (const RelatedFeatureQueryResult* relatedResult : lock.results)
@@ -152,7 +152,7 @@ void ListRelatedFeatures::connectSignals()
         });
 
         // connect to selectFeaturesCompleted signal
-        connect(m_alaskaNationalParks, &FeatureLayer::selectFeaturesCompleted, this, [this](QUuid, FeatureQueryResult* rawResult)
+        connect(m_alaskaNationalParks, &FeatureLayer::selectFeaturesCompleted, this, [this](const QUuid&, FeatureQueryResult* rawResult)
         {
           auto result = std::unique_ptr<FeatureQueryResult>(rawResult);
           // The result could contain more than 1 feature, but we assume that
@@ -172,7 +172,6 @@ void ListRelatedFeatures::connectSignals()
       }
     }
   });
-
 
   // connect to the mouseClicked signal
   connect(m_mapView, &MapQuickView::mouseClicked, this, [this](QMouseEvent& mouseEvent)

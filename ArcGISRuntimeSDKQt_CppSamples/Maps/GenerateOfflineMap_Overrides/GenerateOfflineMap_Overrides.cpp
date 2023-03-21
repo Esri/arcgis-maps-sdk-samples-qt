@@ -114,7 +114,7 @@ void GenerateOfflineMap_Overrides::componentComplete()
 
   // connect to the signal for when the default parameters are generated
   connect(m_offlineMapTask, &OfflineMapTask::createDefaultGenerateOfflineMapParametersCompleted,
-          this, [this](QUuid, const GenerateOfflineMapParameters& params)
+          this, [this](const QUuid&, const GenerateOfflineMapParameters& params)
   {
     // Use the parameters to create a set of overrides.
     m_parameters = params;
@@ -122,7 +122,7 @@ void GenerateOfflineMap_Overrides::componentComplete()
   });
 
   connect(m_offlineMapTask, &OfflineMapTask::createGenerateOfflineMapParameterOverridesCompleted,
-          this, [this](QUuid /*id*/, GenerateOfflineMapParameterOverrides* parameterOverrides)
+          this, [this](const QUuid& /*id*/, GenerateOfflineMapParameterOverrides* parameterOverrides)
   {
     m_parameterOverrides = parameterOverrides;
     emit overridesReadyChanged();
@@ -411,7 +411,6 @@ bool GenerateOfflineMap_Overrides::overridesReady() const
 {
   return m_parameterOverrides;
 }
-
 
 void GenerateOfflineMap_Overrides::removeFeatureLayer(const QString& layerName)
 {

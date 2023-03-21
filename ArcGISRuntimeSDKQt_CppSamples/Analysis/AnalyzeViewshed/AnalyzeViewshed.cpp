@@ -163,7 +163,7 @@ void AnalyzeViewshed::calculateViewshed()
   inputFeature->setGeometry(m_inputOverlay->graphics()->at(0)->geometry());
 
   // connect to addFeature status changed signal
-  connect(inputFeatures, &FeatureCollectionTable::addFeatureCompleted, this, [this, inputFeatures](QUuid, bool success)
+  connect(inputFeatures, &FeatureCollectionTable::addFeatureCompleted, this, [this, inputFeatures](const QUuid&, bool success)
   {
     if (!success)
       return;

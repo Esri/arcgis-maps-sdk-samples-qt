@@ -94,7 +94,7 @@ void StatisticalQueryGroupSort::connectSignals()
     addResultToModel("", QString("Error. %1").arg(error.message()));
   });
 
-  connect(m_featureTable, &ServiceFeatureTable::queryStatisticsCompleted, this, [this](QUuid, StatisticsQueryResult* rawResult)
+  connect(m_featureTable, &ServiceFeatureTable::queryStatisticsCompleted, this, [this](const QUuid&, StatisticsQueryResult* rawResult)
   {
     // Delete rawResult when we leave local scope.
     auto result = std::unique_ptr<StatisticsQueryResult>(rawResult);

@@ -180,7 +180,7 @@ void EditFeaturesWithFeatureLinkedAnnotation::onMouseClicked(QMouseEvent& mouseE
   }
 }
 
-void EditFeaturesWithFeatureLinkedAnnotation::onIdentifyLayersCompleted(QUuid, const QList<IdentifyLayerResult*>& identifyResults)
+void EditFeaturesWithFeatureLinkedAnnotation::onIdentifyLayersCompleted(const QUuid&, const QList<IdentifyLayerResult*>& identifyResults)
 {
   // A convenience wrapper that deletes the contents of identifyResults when we leave scope.
   IdentifyLayerResultsScopedCleanup identifyResultsScopedCleanup(identifyResults);

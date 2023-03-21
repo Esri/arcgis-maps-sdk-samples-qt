@@ -199,7 +199,7 @@ void DisplayUtilityAssociations::connectSignals()
     m_connectivitySymbol->createSwatch();
   });
 
-  connect(m_utilityNetwork, &UtilityNetwork::associationsCompleted, this, [this](QUuid, const QList<UtilityAssociation*>& associations)
+  connect(m_utilityNetwork, &UtilityNetwork::associationsCompleted, this, [this](const QUuid&, const QList<UtilityAssociation*>& associations)
   {
     const GraphicListModel* graphics = m_associationsOverlay->graphics();
 

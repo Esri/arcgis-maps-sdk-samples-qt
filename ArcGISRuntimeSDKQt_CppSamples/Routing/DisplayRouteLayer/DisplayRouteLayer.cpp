@@ -132,7 +132,7 @@ void DisplayRouteLayer::getDirections()
     {
       if (table->tableName() == "DirectionPoints")
       {
-        connect(table, &FeatureTable::queryFeaturesCompleted, this, [this](QUuid, FeatureQueryResult* featureQueryResult)
+        connect(table, &FeatureTable::queryFeaturesCompleted, this, [this](const QUuid&, FeatureQueryResult* featureQueryResult)
         {
           if (!featureQueryResult)
             return;
@@ -154,7 +154,6 @@ void DisplayRouteLayer::getDirections()
     }
   }
 }
-
 
 QString DisplayRouteLayer::directions() const
 {

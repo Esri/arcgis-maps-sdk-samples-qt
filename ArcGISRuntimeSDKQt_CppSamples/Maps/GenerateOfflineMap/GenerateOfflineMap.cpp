@@ -105,7 +105,7 @@ void GenerateOfflineMap::generateMapByExtent(double xCorner1, double yCorner1, d
 
   // connect to the signal for when the default parameters are generated
   connect(m_offlineMapTask, &OfflineMapTask::createDefaultGenerateOfflineMapParametersCompleted,
-          this, [this](QUuid, const GenerateOfflineMapParameters& params)
+          this, [this](const QUuid&, const GenerateOfflineMapParameters& params)
   {
     // Take the map offline once the parameters are generated
     GenerateOfflineMapJob* generateJob = m_offlineMapTask->generateOfflineMap(params, m_tempPath.path() + "/offlinemap");

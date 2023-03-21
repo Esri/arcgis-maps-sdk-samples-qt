@@ -99,7 +99,7 @@ void QueryMapImageSublayer::componentComplete()
 
 void QueryMapImageSublayer::connectSignals()
 {
-  connect(m_usaImageLayer, &ArcGISMapImageLayer::loadTablesAndLayersCompleted, this, [this](QUuid)
+  connect(m_usaImageLayer, &ArcGISMapImageLayer::loadTablesAndLayersCompleted, this, [this](const QUuid&)
   {
     ArcGISSublayerListModel* sublayers = m_usaImageLayer->mapImageSublayers();
     if (sublayers->size() < 4)
@@ -111,21 +111,21 @@ void QueryMapImageSublayer::connectSignals()
     m_countiesTable = dynamic_cast<ArcGISMapImageSublayer*>(sublayers->at(3))->table();
 
     // connect to city sublayer query signal
-    connect(m_citiesTable, &ServiceFeatureTable::queryFeaturesCompleted, this, [this](QUuid, FeatureQueryResult* result)
+    connect(m_citiesTable, &ServiceFeatureTable::queryFeaturesCompleted, this, [this](const QUuid&, FeatureQueryResult* result)
     {
       addResultsAsGraphics(result, m_citySymbol);
       delete result;
     });
 
     // connect to county sublayer query signal
-    connect(m_countiesTable, &ServiceFeatureTable::queryFeaturesCompleted, this, [this](QUuid, FeatureQueryResult* result)
+    connect(m_countiesTable, &ServiceFeatureTable::queryFeaturesCompleted, this, [this](const QUuid&, FeatureQueryResult* result)
     {
       addResultsAsGraphics(result, m_countySymbol);
       delete result;
     });
 
     // connect to states sublayer query signal
-    connect(m_statesTable, &ServiceFeatureTable::queryFeaturesCompleted, this, [this](QUuid, FeatureQueryResult* result)
+    connect(m_statesTable, &ServiceFeatureTable::queryFeaturesCompleted, this, [this](const QUuid&, FeatureQueryResult* result)
     {
       addResultsAsGraphics(result, m_stateSymbol);
       delete result;

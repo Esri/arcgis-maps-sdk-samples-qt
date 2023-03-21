@@ -111,7 +111,7 @@ void IdentifyRasterCell::connectSignals()
     m_mapView->setViewpointGeometry(m_rasterLayer->fullExtent());
   });
 
-  connect(m_mapView, &MapQuickView::identifyLayerCompleted, this, [this](QUuid, IdentifyLayerResult* rawIdentifyResult)
+  connect(m_mapView, &MapQuickView::identifyLayerCompleted, this, [this](const QUuid&, IdentifyLayerResult* rawIdentifyResult)
   {
     const auto identifyResult = std::unique_ptr<IdentifyLayerResult>(rawIdentifyResult);
     const auto elements = identifyResult->geoElements();

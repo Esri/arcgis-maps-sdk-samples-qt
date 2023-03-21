@@ -120,7 +120,7 @@ void DisplayContentOfUtilityNetworkContainer::createConnections()
   connect(m_mapView, &MapQuickView::identifyLayersCompleted, this, &DisplayContentOfUtilityNetworkContainer::getUtilityAssociationsOfFeature);
   connect(m_utilityNetwork, &UtilityNetwork::featuresForElementsCompleted, this, &DisplayContentOfUtilityNetworkContainer::displayFeaturesAndGetAssociations);
 
-  connect(m_utilityNetwork, &UtilityNetwork::associationsCompleted, this, [this](QUuid, QList<UtilityAssociation*> containmentAssociations)
+  connect(m_utilityNetwork, &UtilityNetwork::associationsCompleted, this, [this](const QUuid&, const QList<UtilityAssociation*>& containmentAssociations)
   {
     if (!m_showContainerView)
       getFeaturesForElementsOfUtilityAssociations(containmentAssociations);
@@ -157,7 +157,7 @@ void DisplayContentOfUtilityNetworkContainer::identifyFeaturesAtMouseClick(QMous
   m_mapView->identifyLayers(mouseEvent.position().x(), mouseEvent.position().y(), tolerance, returnPopupsOnly);
 }
 
-void DisplayContentOfUtilityNetworkContainer::getUtilityAssociationsOfFeature(QUuid, QList<IdentifyLayerResult*> identifyResults)
+void DisplayContentOfUtilityNetworkContainer::getUtilityAssociationsOfFeature(const QUuid&, const QList<IdentifyLayerResult*>& identifyResults)
 {
   if (identifyResults.isEmpty())
     return;
@@ -195,7 +195,7 @@ void DisplayContentOfUtilityNetworkContainer::getUtilityAssociationsOfFeature(QU
   }
 }
 
-void DisplayContentOfUtilityNetworkContainer::getFeaturesForElementsOfUtilityAssociations(QList<UtilityAssociation*> containmentAssociations)
+void DisplayContentOfUtilityNetworkContainer::getFeaturesForElementsOfUtilityAssociations(const QList<UtilityAssociation*>& containmentAssociations)
 {
   // Create a list of elements representing the participants in the containment associations
   QList<UtilityElement*> contentElements;
@@ -215,7 +215,7 @@ void DisplayContentOfUtilityNetworkContainer::getFeaturesForElementsOfUtilityAss
   }
 }
 
-void DisplayContentOfUtilityNetworkContainer::displayFeaturesAndGetAssociations(QUuid)
+void DisplayContentOfUtilityNetworkContainer::displayFeaturesAndGetAssociations(const QUuid&)
 {
   // Display the features on the graphics overlay
   const QList<Feature*> contentFeatures = m_utilityNetwork->featuresForElementsResult()->features();
@@ -229,7 +229,7 @@ void DisplayContentOfUtilityNetworkContainer::displayFeaturesAndGetAssociations(
   m_taskWatcher = m_utilityNetwork->associations(m_containerGraphicsOverlay->extent());
 }
 
-void DisplayContentOfUtilityNetworkContainer::showAttachmentAndConnectivitySymbols(QList<UtilityAssociation*> containmentAssociations)
+void DisplayContentOfUtilityNetworkContainer::showAttachmentAndConnectivitySymbols(const QList<UtilityAssociation*>& containmentAssociations)
 {
   // Display the association lines on the graphics overlay
   for (UtilityAssociation* association : containmentAssociations)

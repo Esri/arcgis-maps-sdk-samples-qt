@@ -116,7 +116,7 @@ ReadSymbolsFromMobileStyle::ReadSymbolsFromMobileStyle(QObject* parent /* = null
   m_symbolStyle->load();
 
   // Connect to fetchSymbol completed signal
-  connect(m_symbolStyle, &SymbolStyle::fetchSymbolCompleted, this, [this](QUuid, Symbol* symbol)
+  connect(m_symbolStyle, &SymbolStyle::fetchSymbolCompleted, this, [this](const QUuid&, Symbol* symbol)
   {
     if (m_currentSymbol)
       delete m_currentSymbol;

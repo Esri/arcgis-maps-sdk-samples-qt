@@ -328,7 +328,7 @@ void PerformValveIsolationTrace::connectSignals()
     emit categoriesListChanged();
   });
 
-  connect(m_utilityNetwork, &UtilityNetwork::traceCompleted, this, [this](QUuid)
+  connect(m_utilityNetwork, &UtilityNetwork::traceCompleted, this, [this](const QUuid&)
   {
     // local paret to clean up UtilityElementTraceResult when we leave scope.
     QObject localParent;
@@ -387,7 +387,7 @@ void PerformValveIsolationTrace::connectSignals()
     }
   });
 
-  connect(m_utilityNetwork, &UtilityNetwork::featuresForElementsCompleted, this, [this](QUuid)
+  connect(m_utilityNetwork, &UtilityNetwork::featuresForElementsCompleted, this, [this](const QUuid&)
   {
     // display starting location
     ArcGISFeatureListModel* elementFeaturesList = m_utilityNetwork->featuresForElementsResult();
@@ -412,7 +412,7 @@ bool PerformValveIsolationTrace::tasksRunning() const
   return m_tasksRunning;
 }
 
-void PerformValveIsolationTrace::onIdentifyLayersCompleted(QUuid, const QList<IdentifyLayerResult*>& results)
+void PerformValveIsolationTrace::onIdentifyLayersCompleted(const QUuid&, const QList<IdentifyLayerResult*>& results)
 {
   // A convenience wrapper that deletes the contents of results when we leave scope.
   ScopedCleanup<IdentifyLayerResult> resultsScopedCleanup(results);

@@ -191,7 +191,7 @@ void ApplyScheduledMapUpdates::setMapView(MapQuickView* mapView)
 void ApplyScheduledMapUpdates::connectSyncSignals()
 {
   // connect to checkForUpdatesCompleted signal and update the UI accordingly
-  connect(m_offlineSyncTask, &OfflineMapSyncTask::checkForUpdatesCompleted, this, [this](QUuid, OfflineMapUpdatesInfo* info)
+  connect(m_offlineSyncTask, &OfflineMapSyncTask::checkForUpdatesCompleted, this, [this](const QUuid&, OfflineMapUpdatesInfo* info)
   {
     if (info->downloadAvailability() == OfflineUpdateAvailability::Available)
     {
@@ -206,7 +206,7 @@ void ApplyScheduledMapUpdates::connectSyncSignals()
   });
 
   // connect to createDefaultOfflineMapSyncParametersCompleted signal
-  connect(m_offlineSyncTask, &OfflineMapSyncTask::createDefaultOfflineMapSyncParametersCompleted, this, [this](QUuid, OfflineMapSyncParameters parameters)
+  connect(m_offlineSyncTask, &OfflineMapSyncTask::createDefaultOfflineMapSyncParametersCompleted, this, [this](const QUuid&, OfflineMapSyncParameters parameters)
   {
     // set the parameters to download all updates for the mobile map packages
     parameters.setPreplannedScheduledUpdatesOption(PreplannedScheduledUpdatesOption::DownloadAllUpdates);

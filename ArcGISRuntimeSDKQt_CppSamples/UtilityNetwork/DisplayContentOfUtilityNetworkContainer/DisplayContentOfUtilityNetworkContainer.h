@@ -71,10 +71,10 @@ private:
   void createConnections();
   bool showContainerView() const;
   void identifyFeaturesAtMouseClick(QMouseEvent& mouseEvent);
-  void getUtilityAssociationsOfFeature(QUuid, QList<Esri::ArcGISRuntime::IdentifyLayerResult*> identifyResult);
-  void displayFeaturesAndGetAssociations(QUuid);
-  void getFeaturesForElementsOfUtilityAssociations(QList<Esri::ArcGISRuntime::UtilityAssociation*> containmentAssociations);
-  void showAttachmentAndConnectivitySymbols(QList<Esri::ArcGISRuntime::UtilityAssociation*> containmentAssociations);
+  void getUtilityAssociationsOfFeature(const QUuid&, const QList<Esri::ArcGISRuntime::IdentifyLayerResult*>& identifyResult);
+  void displayFeaturesAndGetAssociations(const QUuid&);
+  void getFeaturesForElementsOfUtilityAssociations(const QList<Esri::ArcGISRuntime::UtilityAssociation*>& containmentAssociations);
+  void showAttachmentAndConnectivitySymbols(const QList<Esri::ArcGISRuntime::UtilityAssociation*>& containmentAssociations);
   void setMapView(Esri::ArcGISRuntime::MapQuickView* mapView);
   void setShowContainerView(bool showContainerView);
   void setMessageBoxText(const QString& message);

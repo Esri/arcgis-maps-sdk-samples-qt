@@ -17,6 +17,7 @@
 #ifndef SHOWPOPUP_H
 #define SHOWPOPUP_H
 
+// C++ API headers
 #include "TaskWatcher.h"
 
 namespace Esri::ArcGISRuntime
@@ -60,7 +61,7 @@ signals:
 
 private slots:
   void onMouseClicked(QMouseEvent& mouseEvent);
-  void onIdentifyLayerCompleted(QUuid, Esri::ArcGISRuntime::IdentifyLayerResult* rawIdentifyResult);
+  void onIdentifyLayerCompleted(const QUuid&, Esri::ArcGISRuntime::IdentifyLayerResult* rawIdentifyResult);
 
 private:
   bool taskRunning() const;

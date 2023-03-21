@@ -134,7 +134,7 @@ void FindClosestFacilityToMultipleIncidentsService::createFeatureLayers()
 
 void FindClosestFacilityToMultipleIncidentsService::setupRouting()
 {
-  connect(m_task, &ClosestFacilityTask::createDefaultParametersCompleted, this, [this](QUuid, const ClosestFacilityParameters& defaultParameters)
+  connect(m_task, &ClosestFacilityTask::createDefaultParametersCompleted, this, [this](const QUuid&, const ClosestFacilityParameters& defaultParameters)
   {
     QueryParameters params;
     params.setWhereClause("1=1");
@@ -148,7 +148,7 @@ void FindClosestFacilityToMultipleIncidentsService::setupRouting()
     emit solveButtonChanged();
   });
 
-  connect(m_task, &ClosestFacilityTask::solveClosestFacilityCompleted, this, [this](QUuid, const ClosestFacilityResult& closestFacilityResult)
+  connect(m_task, &ClosestFacilityTask::solveClosestFacilityCompleted, this, [this](const QUuid&, const ClosestFacilityResult& closestFacilityResult)
   {
     if (closestFacilityResult.isEmpty())
     {

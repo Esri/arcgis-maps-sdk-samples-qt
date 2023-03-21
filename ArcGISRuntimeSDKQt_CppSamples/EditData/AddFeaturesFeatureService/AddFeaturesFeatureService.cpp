@@ -53,7 +53,6 @@ namespace
   };
 }
 
-
 AddFeaturesFeatureService::AddFeaturesFeatureService(QObject* parent /* = nullptr */):
   QObject(parent),
   m_map(new Map(BasemapStyle::ArcGISStreets, this))
@@ -116,7 +115,7 @@ void AddFeaturesFeatureService::connectSignals()
   //! [AddFeaturesFeatureService add at mouse click]
 
   // connect to the addFeatureCompleted signal from the ServiceFeatureTable
-  connect(m_featureTable, &ServiceFeatureTable::addFeatureCompleted, this, [this](QUuid, bool success)
+  connect(m_featureTable, &ServiceFeatureTable::addFeatureCompleted, this, [this](const QUuid&, bool success)
   {
     // if add feature was successful, call apply edits
     if (success)
@@ -124,7 +123,7 @@ void AddFeaturesFeatureService::connectSignals()
   });
 
   // connect to the applyEditsCompleted signal from the ServiceFeatureTable
-  connect(m_featureTable, &ServiceFeatureTable::applyEditsCompleted, this, [](QUuid, const QList<FeatureEditResult*>& featureEditResults)
+  connect(m_featureTable, &ServiceFeatureTable::applyEditsCompleted, this, [](const QUuid&, const QList<FeatureEditResult*>& featureEditResults)
   {
     // Lock is a convenience wrapper that deletes the contents of the list once we leave scope.
     FeatureListResultLock lock(featureEditResults);

@@ -95,7 +95,7 @@ void GODictionaryRenderer::componentComplete()
   DictionarySymbolStyle* dictionarySymbolStyle = DictionarySymbolStyle::createFromFile(styleLocation, this);
 
   // The style will be loaded automatically
-  connect(dictionarySymbolStyle, &DictionarySymbolStyle::loadStatusChanged, this, [dictionarySymbolStyle]
+  connect(dictionarySymbolStyle, &DictionarySymbolStyle::loadStatusChanged, this, [dictionarySymbolStyle]()
   {
     if (dictionarySymbolStyle->loadStatus() == LoadStatus::Loaded)
     {

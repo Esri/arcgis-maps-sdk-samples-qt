@@ -94,7 +94,7 @@ void CreateMobileGeodatabase::createConnections()
   connect(m_mapView, &MapQuickView::mouseClicked, this, &CreateMobileGeodatabase::addFeature);
 
   // Use the Geodatabase::instance() singleton to connect to createCompleted
-  connect(Geodatabase::instance(), &Geodatabase::createCompleted, this, [this](QUuid, Geodatabase* geodatabase)
+  connect(Geodatabase::instance(), &Geodatabase::createCompleted, this, [this](const QUuid&, Geodatabase* geodatabase)
   {
     m_gdb = geodatabase;
     createTable();
@@ -129,7 +129,7 @@ void CreateMobileGeodatabase::createTable()
   tableDescription->fieldDescriptions()->append(new FieldDescription("oid", FieldType::OID));
   tableDescription->fieldDescriptions()->append(new FieldDescription("collection_timestamp", FieldType::Date));
 
-  connect(m_gdb, &Geodatabase::createTableCompleted, this, [this](QUuid, GeodatabaseFeatureTable* gdbFeatureTableResult)
+  connect(m_gdb, &Geodatabase::createTableCompleted, this, [this](const QUuid&, GeodatabaseFeatureTable* gdbFeatureTableResult)
   {
     m_featureTable = gdbFeatureTableResult;
 
@@ -168,7 +168,7 @@ void CreateMobileGeodatabase::addFeature(QMouseEvent& mouseEvent)
   attributes.insert("collection_timestamp", QDateTime::currentDateTime());
   Feature* feature = m_featureTable->createFeature(attributes, mousePoint, this);
 
-  connect(m_featureTable, &FeatureTable::addFeatureCompleted, this, [feature, this](QUuid, bool success)
+  connect(m_featureTable, &FeatureTable::addFeatureCompleted, this, [feature, this](const QUuid&, bool success)
   {
     if (!success)
       return;
@@ -189,7 +189,7 @@ void CreateMobileGeodatabase::deleteFeatures()
 {
   QueryParameters params;
   params.setWhereClause("1=1");
-  connect(m_featureTable, &FeatureTable::queryFeaturesCompleted, this, [this](QUuid, FeatureQueryResult* rawQueryResult)
+  connect(m_featureTable, &FeatureTable::queryFeaturesCompleted, this, [this](const QUuid&, FeatureQueryResult* rawQueryResult)
   {
     // Cast the FeatureQueryResult to a unique pointer to delete it when it goes out of scope
     auto queryResults = std::unique_ptr<FeatureQueryResult>(rawQueryResult);

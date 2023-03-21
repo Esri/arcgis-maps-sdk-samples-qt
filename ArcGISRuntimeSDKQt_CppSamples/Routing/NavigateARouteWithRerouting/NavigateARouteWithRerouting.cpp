@@ -145,7 +145,7 @@ void NavigateARouteWithRerouting::setMapView(MapQuickView* mapView)
 
 void NavigateARouteWithRerouting::connectRouteTaskSignals()
 {
-  connect(m_routeTask, &RouteTask::solveRouteCompleted, this, [this](QUuid, RouteResult routeResult)
+  connect(m_routeTask, &RouteTask::solveRouteCompleted, this, [this](const QUuid&, const RouteResult& routeResult)
   {
     if (routeResult.isEmpty())
       return;
@@ -171,7 +171,7 @@ void NavigateARouteWithRerouting::connectRouteTaskSignals()
     emit navigationEnabledChanged();
   });
 
-  connect(m_routeTask, &RouteTask::createDefaultParametersCompleted, this, [this](QUuid, RouteParameters defaultParameters)
+  connect(m_routeTask, &RouteTask::createDefaultParametersCompleted, this, [this](const QUuid&, RouteParameters defaultParameters)
   {
     // set values for parameters
     defaultParameters.setReturnStops(true);
@@ -275,7 +275,7 @@ void NavigateARouteWithRerouting::connectRouteTrackerSignals()
   //    m_speaker->say(voiceGuidance->text());
   //  });
 
-  connect(m_routeTask, &RouteTask::solveRouteCompleted, this, [this](QUuid, RouteResult routeResult)
+  connect(m_routeTask, &RouteTask::solveRouteCompleted, this, [this](const QUuid&, const RouteResult& routeResult)
   {
     if (routeResult.isEmpty())
       return;
@@ -337,7 +337,7 @@ void NavigateARouteWithRerouting::connectRouteTrackerSignals()
     emit textStringChanged();
   });
 
-  connect(m_routeTracker, &RouteTracker::trackLocationCompleted, this, [this](QUuid)
+  connect(m_routeTracker, &RouteTracker::trackLocationCompleted, this, [this](const QUuid&)
   {
     m_routeTracker->generateVoiceGuidance();
   });

@@ -69,7 +69,7 @@ DownloadPreplannedMap::DownloadPreplannedMap(QObject* parent /* = nullptr */):
       m_offlineMapTask->preplannedMapAreas();
     });
 
-    connect(m_offlineMapTask, &OfflineMapTask::createDefaultDownloadPreplannedOfflineMapParametersCompleted, this, [this] (QUuid, const DownloadPreplannedOfflineMapParameters& parameters)
+    connect(m_offlineMapTask, &OfflineMapTask::createDefaultDownloadPreplannedOfflineMapParametersCompleted, this, [this] (const QUuid&, const DownloadPreplannedOfflineMapParameters& parameters)
     {
 
       m_params = parameters;

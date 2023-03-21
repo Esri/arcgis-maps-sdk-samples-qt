@@ -231,7 +231,7 @@ void Geotriggers::getFeatureInformation(const QString& sectionName)
   AttachmentListModel* featureAttachments = feature->attachments();
 
   // Fetch attachments will automatically trigger upon instantiation of the AttachmentListModel
-  connect(featureAttachments, &AttachmentListModel::fetchAttachmentsCompleted, this, [this, sectionName](QUuid, const QList<Attachment*> attachments)
+  connect(featureAttachments, &AttachmentListModel::fetchAttachmentsCompleted, this, [this, sectionName](const QUuid&, const QList<Attachment*>& attachments)
   {
     if (attachments.isEmpty())
       return;

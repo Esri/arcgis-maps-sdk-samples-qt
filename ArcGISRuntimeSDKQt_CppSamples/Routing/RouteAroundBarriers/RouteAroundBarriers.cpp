@@ -119,7 +119,7 @@ void RouteAroundBarriers::setMapView(MapQuickView* mapView)
 
 void RouteAroundBarriers::connectRouteSignals()
 {
-  connect(m_routeTask, &RouteTask::createDefaultParametersCompleted, this, [this](QUuid, const RouteParameters& defaultParameters)
+  connect(m_routeTask, &RouteTask::createDefaultParametersCompleted, this, [this](const QUuid&, const RouteParameters& defaultParameters)
   {
     m_routeParameters = defaultParameters;
 
@@ -174,7 +174,7 @@ void RouteAroundBarriers::connectRouteSignals()
     }
   });
 
-  connect (m_routeTask, &RouteTask::solveRouteCompleted, this, [this](QUuid, const RouteResult& routeResult)
+  connect (m_routeTask, &RouteTask::solveRouteCompleted, this, [this](const QUuid&, const RouteResult& routeResult)
   {
     if (routeResult.isEmpty())
       return;

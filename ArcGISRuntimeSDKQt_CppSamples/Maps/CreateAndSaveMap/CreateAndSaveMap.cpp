@@ -97,7 +97,7 @@ void CreateAndSaveMap::createMap(const QString& basemap, const QStringList& oper
   }
 
   // Handle Map save complete signal
-  connect(m_map, &Map::saveAsCompleted, this, [this](QUuid, bool success)
+  connect(m_map, &Map::saveAsCompleted, this, [this](const QUuid&, bool success)
   {
     if (!success)
       return;

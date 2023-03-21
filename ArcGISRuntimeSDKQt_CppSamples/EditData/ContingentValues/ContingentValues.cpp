@@ -273,7 +273,7 @@ void ContingentValues::queryAndBufferFeatures()
 }
 
 // Buffers all features from the preceeding feature query using the BufferSize field value, create graphics with the results, and adds them to the graphics overlay
-void ContingentValues::bufferFeaturesFromQueryResults(QUuid, FeatureQueryResult* results)
+void ContingentValues::bufferFeaturesFromQueryResults(const QUuid&, FeatureQueryResult* results)
 {
   FeatureIterator iterator = results->iterator();
 

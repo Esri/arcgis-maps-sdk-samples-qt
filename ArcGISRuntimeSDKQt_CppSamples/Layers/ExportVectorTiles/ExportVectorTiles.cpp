@@ -112,7 +112,7 @@ void ExportVectorTiles::startExport(double xSW, double ySW, double xNE, double y
 
   // Create an async connection for when the default export parameters are created
   connect(exportTask, &ExportVectorTilesTask::createDefaultExportVectorTilesParametersCompleted, this,
-          [exportTask, this](QUuid, ExportVectorTilesParameters exportParameters)
+          [exportTask, this](const QUuid&, ExportVectorTilesParameters exportParameters)
   {
     // Using the reduced fonts service will reduce the download size of a vtpk by around 80 Mb
     // It is useful for taking the basemap offline but not recommended if you plan to later upload the vtpk
@@ -153,7 +153,7 @@ void ExportVectorTiles::startExport(double xSW, double ySW, double xNE, double y
       emit jobStatusChanged();
     });
 
-    connect(m_exportJob, &Job::cancelAsyncCompleted, this, [this](QUuid, bool succeeded)
+    connect(m_exportJob, &Job::cancelAsyncCompleted, this, [this](const QUuid&, bool succeeded)
     {
       emit jobCancelDone(succeeded);
     });

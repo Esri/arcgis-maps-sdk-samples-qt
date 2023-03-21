@@ -125,7 +125,7 @@ void UpdateGeometryFeatureService::connectSignals()
   });
 
   // connect to the identifyLayerCompleted signal on the map view
-  connect(m_mapView, &MapQuickView::identifyLayerCompleted, this, [this](QUuid, IdentifyLayerResult* identifyResult)
+  connect(m_mapView, &MapQuickView::identifyLayerCompleted, this, [this](const QUuid&, IdentifyLayerResult* identifyResult)
   {
     if(!identifyResult)
       return;
@@ -147,7 +147,7 @@ void UpdateGeometryFeatureService::connectSignals()
   });
 
   // connect to the updateFeatureCompleted signal to determine if the update was successful
-  connect(m_featureTable, &ServiceFeatureTable::updateFeatureCompleted, this, [this](QUuid, bool success)
+  connect(m_featureTable, &ServiceFeatureTable::updateFeatureCompleted, this, [this](const QUuid&, bool success)
   {
     // if the update was successful, call apply edits to apply to the service
     if (success)
@@ -155,7 +155,7 @@ void UpdateGeometryFeatureService::connectSignals()
   });
 
   // connect to the applyEditsCompleted signal from the ServiceFeatureTable
-  connect(m_featureTable, &ServiceFeatureTable::applyEditsCompleted, this, [](QUuid, const QList<FeatureEditResult*>& featureEditResults)
+  connect(m_featureTable, &ServiceFeatureTable::applyEditsCompleted, this, [](const QUuid&, const QList<FeatureEditResult*>& featureEditResults)
   {
     // Lock is a convenience wrapper that deletes the contents of featureEditResults when we leave scope.
     FeatureEditListResultLock lock(featureEditResults);

@@ -126,7 +126,7 @@ void GenerateOfflineMapLocalBasemap::generateMapByExtent(double xCorner1, double
 
   // connect to the signal for when the default parameters are generated
   connect(m_offlineMapTask, &OfflineMapTask::createDefaultGenerateOfflineMapParametersCompleted,
-          this, [this, dataPath, tempPath](QUuid, GenerateOfflineMapParameters params)
+          this, [this, dataPath, tempPath](const QUuid&, GenerateOfflineMapParameters params)
   {
     // update default parameters to specify use of local basemap
     // this will prevent new tiles from being generated on the server

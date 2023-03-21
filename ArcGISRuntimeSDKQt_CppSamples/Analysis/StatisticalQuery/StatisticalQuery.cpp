@@ -85,7 +85,7 @@ void StatisticalQuery::componentComplete()
   });
 
   // connect to queryStatisticsCompleted
-  connect(m_featureTable, &ServiceFeatureTable::queryStatisticsCompleted, this, [this](QUuid, StatisticsQueryResult* rawResult)
+  connect(m_featureTable, &ServiceFeatureTable::queryStatisticsCompleted, this, [this](const QUuid&, StatisticsQueryResult* rawResult)
   {
     if (!rawResult)
       return;

@@ -103,7 +103,7 @@ void FindAddress::connectSignals()
 {
   // connect to geocode complete signal on the LocatorTask
   //! [FindAddress geocodeCompleted handler]
-  connect(m_locatorTask, &LocatorTask::geocodeCompleted, this, [this](QUuid, const QList<GeocodeResult>& geocodeResults)
+  connect(m_locatorTask, &LocatorTask::geocodeCompleted, this, [this](const QUuid&, const QList<GeocodeResult>& geocodeResults)
   {
     if (geocodeResults.length() > 0)
     {
@@ -127,7 +127,7 @@ void FindAddress::connectSignals()
   });
 
   // connect to the identifyGraphicsOverlayCompleted signal on the map view
-  connect(m_mapView, &MapQuickView::identifyGraphicsOverlayCompleted, this, [this](QUuid, IdentifyGraphicsOverlayResult* rawIdentifyResult)
+  connect(m_mapView, &MapQuickView::identifyGraphicsOverlayCompleted, this, [this](const QUuid&, IdentifyGraphicsOverlayResult* rawIdentifyResult)
   {
     // Delete rawIdentifyResult on leaving scope.
     auto identifyResult = std::unique_ptr<IdentifyGraphicsOverlayResult>(rawIdentifyResult);
