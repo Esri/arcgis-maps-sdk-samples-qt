@@ -36,12 +36,17 @@
 #include "Point.h"
 #include "RealTimeTypes.h"
 #include "SimpleLineSymbol.h"
+#include "SimpleMarkerSymbol.h"
 #include "SimpleRenderer.h"
 #include "SpatialReference.h"
 #include "SymbolTypes.h"
 #include "TaskWatcher.h"
 #include "TrackDisplayProperties.h"
+#include "UniqueValue.h"
+#include "UniqueValueListModel.h"
+#include "UniqueValueRenderer.h"
 #include "Viewpoint.h"
+
 
 using namespace Esri::ArcGISRuntime;
 
@@ -68,23 +73,41 @@ AddDynamicEntityLayer::AddDynamicEntityLayer(QObject* parent /* = nullptr */):
   streamServiceFilter->setWhereClause("speed > 0");
 
   m_dynamicEntityDataSource->setFilter(streamServiceFilter);
-  m_dynamicEntityDataSource->purgeOptions()->setMaximumDuration(0.0);
-  m_dynamicEntityDataSource->purgeOptions()->setMaximumObservations(0);
-  m_dynamicEntityDataSource->purgeOptions()->setMaximumObservationsPerTrack(0);
+  m_dynamicEntityDataSource->purgeOptions()->setMaximumDuration(300.0 /*seconds*/);
+
+  // Handle signals emitted when connection status changes
+  connect(m_dynamicEntityDataSource, &ArcGISStreamService::connectionStatusChanged, this, &AddDynamicEntityLayer::connectionStatusChanged);
 
   // Create a dynamic entity layer to display on the map and set the properties
   m_dynamicEntityLayer = new DynamicEntityLayer(m_dynamicEntityDataSource, this);
 
   m_dynamicEntityLayer->trackDisplayProperties()->setShowTrackLine(true);
   m_dynamicEntityLayer->trackDisplayProperties()->setShowPreviousObservations(true);
-  m_dynamicEntityLayer->trackDisplayProperties()->setMaximumObservations(5);
-  m_dynamicEntityLayer->trackDisplayProperties()->setMaximumDuration(300 /*seconds*/);
 
-  m_dynamicEntityLayer->trackDisplayProperties()->setTrackLineRenderer(new SimpleRenderer(new SimpleLineSymbol(SimpleLineSymbolStyle::Solid, Qt::red, 2, this)));
+  // Create renderers for observations and their tracklines
+
+  // Create a unique value renderer for the latest observations
+  QList<UniqueValue*> entityValues;
+
+  entityValues.append(new UniqueValue("","", {3}, new SimpleMarkerSymbol(SimpleMarkerSymbolStyle::Circle, Qt::magenta, 8, this), this));
+  entityValues.append(new UniqueValue("","", {4}, new SimpleMarkerSymbol(SimpleMarkerSymbolStyle::Circle, Qt::green, 8, this), this));
+
+  UniqueValueRenderer* entityRenderer = new UniqueValueRenderer("", new SimpleMarkerSymbol(SimpleMarkerSymbolStyle::Circle, Qt::blue, 8, this), {"agency"}, entityValues, this);
+  m_dynamicEntityLayer->setRenderer(entityRenderer);
+
+  // Create a unique value renderer for the latest observations
+  QList<UniqueValue*> trackValues;
+
+  trackValues.append(new UniqueValue("","", {3}, new SimpleMarkerSymbol(SimpleMarkerSymbolStyle::Circle, Qt::magenta, 3, this), this));
+  trackValues.append(new UniqueValue("","", {4}, new SimpleMarkerSymbol(SimpleMarkerSymbolStyle::Circle, Qt::green, 3, this), this));
+
+  UniqueValueRenderer* trackRenderer = new UniqueValueRenderer("", new SimpleMarkerSymbol(SimpleMarkerSymbolStyle::Circle, Qt::blue, 3, this), {"agency"}, trackValues, this);
+
+  m_dynamicEntityLayer->trackDisplayProperties()->setPreviousObservationRenderer(trackRenderer);
+
+  m_dynamicEntityLayer->trackDisplayProperties()->setTrackLineRenderer(new SimpleRenderer(new SimpleLineSymbol(SimpleLineSymbolStyle::Solid, Qt::lightGray, 2, this)));
 
   m_map->operationalLayers()->append(m_dynamicEntityLayer);
-
-  connect(m_dynamicEntityDataSource, &ArcGISStreamService::connectionStatusChanged, this, &AddDynamicEntityLayer::connectionStatusChanged);
 }
 
 AddDynamicEntityLayer::~AddDynamicEntityLayer() = default;

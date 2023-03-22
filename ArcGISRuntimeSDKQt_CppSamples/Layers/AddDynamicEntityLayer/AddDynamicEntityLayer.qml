@@ -19,8 +19,6 @@ import QtQuick.Controls
 import Esri.Samples
 
 Item {
-    id: item1
-
     // add a mapView component
     MapView {
         id: view
@@ -44,31 +42,35 @@ Item {
 
     Rectangle {
         id: dynamicEntityLayerOptions
-        x: 330
-        width: 300
-        height: 147
+        width: (300 < parent.width - (anchors.margins * 2)) ? 300 : parent.width - (anchors.margins * 2)
+        height: column.height + (column.anchors.margins * 2)
+        border.width: 1
         anchors.right: parent.right
         anchors.top: parent.top
         anchors.margins: 10
 
         Column {
             id: column
-            height: 400
-            anchors.verticalCenter: parent.verticalCenter
-            anchors.left: parent.left
-            anchors.right: parent.right
-            anchors.top: parent.top
-            anchors.margins: 10
+            anchors {
+                top: parent.top
+                left: parent.left
+                right: parent.right
+                margins: 10
+            }
 
             Text {
                 id: statusText
                 text: "Status: " + model.connectionStatus
-                font.pixelSize: 12
+                font.pixelSize: 18
+                horizontalAlignment: Text.AlignHCenter
+                font.bold: true
+                anchors.horizontalCenter: parent.horizontalCenter
             }
 
             Switch {
                 id: statusSwitch
-                checked: true
+                anchors.horizontalCenter: parent.horizontalCenter
+                checked: model.connectionStatus !== "Disconnected"
                 onCheckedChanged: {
                     model.enableDisableConnection();
                 }
@@ -111,9 +113,14 @@ Item {
                 }
             }
 
-
-
-
+            Button {
+                id: purgeButton
+                text: "Purge all observations"
+                anchors.horizontalCenter: parent.horizontalCenter
+                onClicked: {
+                    model.purgeAllObservations();
+                }
+            }
         }
     }
 }

@@ -1,4 +1,3 @@
-
 // [WriteFile Name=AddDynamicEntityLayer, Category=Layers]
 // [Legal]
 // Copyright 2023 Esri.
