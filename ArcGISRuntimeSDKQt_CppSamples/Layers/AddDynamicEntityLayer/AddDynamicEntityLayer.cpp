@@ -1,18 +1,6 @@
-// COPYRIGHT 2023 ESRI
-// TRADE SECRETS: ESRI PROPRIETARY AND CONFIDENTIAL
-// Unpublished material - all rights reserved under the
-// Copyright Laws of the United States and applicable international
-// laws, treaties, and conventions.
-//
-// For additional information, contact:
-// Environmental Systems Research Institute, Inc.
-// Attn: Contracts and Legal Services Department
-// 380 New York Street
-// Redlands, California, 92373
-// USA
-//
-// email: contracts@esri.com
-/// \file AddDynamicEntityLayer.cpp
+// [WriteFile Name=AddDynamicEntityLayer, Category=Layers]
+// [Legal]
+// Copyright 2023 Esri.
 
 // Licensed under the Apache License, Version 2.0 (the "License");
 // you may not use this file except in compliance with the License.
@@ -46,9 +34,12 @@
 #include "MapQuickView.h"
 #include "MapTypes.h"
 #include "Point.h"
+#include "RealTimeTypes.h"
 #include "SimpleLineSymbol.h"
+#include "SimpleRenderer.h"
 #include "SpatialReference.h"
 #include "SymbolTypes.h"
+#include "TaskWatcher.h"
 #include "TrackDisplayProperties.h"
 #include "Viewpoint.h"
 
@@ -68,28 +59,32 @@ AddDynamicEntityLayer::AddDynamicEntityLayer(QObject* parent /* = nullptr */):
   m_map(new Map(BasemapStyle::ArcGISDarkGray, this))
 {
   QUrl streamServiceUrl("https://realtimegis2016.esri.com:6443/arcgis/rest/services/SandyVehicles/StreamServer");
-  auto dynamicEntityDataSource = new ArcGISStreamService(streamServiceUrl, this);
+
+  // Create a dynamic entity data source and set the properties
+  m_dynamicEntityDataSource = new ArcGISStreamService(streamServiceUrl, this);
+
   auto streamServiceFilter = new ArcGISStreamServiceFilter(this);
   streamServiceFilter->setGeometry(utahSandyEnvelope);
   streamServiceFilter->setWhereClause("speed > 0");
-  dynamicEntityDataSource->setFilter(streamServiceFilter);
-  dynamicEntityDataSource->purgeOptions()->setMaximumDuration(0.0);
-  dynamicEntityDataSource->purgeOptions()->setMaximumObservations(0);
-  dynamicEntityDataSource->purgeOptions()->setMaximumObservationsPerTrack(0);
 
-  auto dynamicEntityLayer = new DynamicEntityLayer(dynamicEntityDataSource, this);
+  m_dynamicEntityDataSource->setFilter(streamServiceFilter);
+  m_dynamicEntityDataSource->purgeOptions()->setMaximumDuration(0.0);
+  m_dynamicEntityDataSource->purgeOptions()->setMaximumObservations(0);
+  m_dynamicEntityDataSource->purgeOptions()->setMaximumObservationsPerTrack(0);
 
-  auto trackDisplayProperties = dynamicEntityLayer->trackDisplayProperties();
+  // Create a dynamic entity layer to display on the map and set the properties
+  m_dynamicEntityLayer = new DynamicEntityLayer(m_dynamicEntityDataSource, this);
 
-  trackDisplayProperties->setShowTrackLine(true);
+  m_dynamicEntityLayer->trackDisplayProperties()->setShowTrackLine(true);
+  m_dynamicEntityLayer->trackDisplayProperties()->setShowPreviousObservations(true);
+  m_dynamicEntityLayer->trackDisplayProperties()->setMaximumObservations(5);
+  m_dynamicEntityLayer->trackDisplayProperties()->setMaximumDuration(300 /*seconds*/);
 
-  dynamicEntityLayer->trackDisplayProperties()->setShowTrackLine(true);
-  dynamicEntityLayer->trackDisplayProperties()->setShowPreviousObservations(true);
-  dynamicEntityLayer->trackDisplayProperties()->setMaximumObservations(100);
-  dynamicEntityLayer->trackDisplayProperties()->setMaximumDuration(0);
+  m_dynamicEntityLayer->trackDisplayProperties()->setTrackLineRenderer(new SimpleRenderer(new SimpleLineSymbol(SimpleLineSymbolStyle::Solid, Qt::red, 2, this)));
 
-  m_map->operationalLayers()->append(dynamicEntityLayer);
+  m_map->operationalLayers()->append(m_dynamicEntityLayer);
 
+  connect(m_dynamicEntityDataSource, &ArcGISStreamService::connectionStatusChanged, this, &AddDynamicEntityLayer::connectionStatusChanged);
 }
 
 AddDynamicEntityLayer::~AddDynamicEntityLayer() = default;
@@ -126,4 +121,62 @@ void AddDynamicEntityLayer::setMapView(MapQuickView* mapView)
   m_mapView->setViewpointAndWait(Viewpoint(utahSandyEnvelope));
 
   emit mapViewChanged();
+}
+
+QString AddDynamicEntityLayer::connectionStatus() const
+{
+  switch (m_dynamicEntityDataSource->connectionStatus())
+  {
+    case ConnectionStatus::Disconnected:
+      return "Disconnected";
+    case ConnectionStatus::Connecting:
+      return "Connecting";
+    case ConnectionStatus::Connected:
+      return "Connected";
+    case ConnectionStatus::Failed:
+      return "Failed";
+    default:
+      return "Unknown";
+  }
+}
+
+void AddDynamicEntityLayer::setObservationsPerTrack(int observationsPerTrack)
+{
+  m_dynamicEntityLayer->trackDisplayProperties()->setMaximumObservations(observationsPerTrack);
+}
+
+void AddDynamicEntityLayer::purgeAllObservations()
+{
+  m_dynamicEntityDataSource->purgeAll();
+}
+
+void AddDynamicEntityLayer::showTrackLines(bool showTrackLines)
+{
+  m_dynamicEntityLayer->trackDisplayProperties()->setShowTrackLine(showTrackLines);
+}
+
+void AddDynamicEntityLayer::showPreviousObservations(bool showPreviousObservations)
+{
+  m_dynamicEntityLayer->trackDisplayProperties()->setShowPreviousObservations(showPreviousObservations);
+}
+
+void AddDynamicEntityLayer::enableDisableConnection()
+{
+  switch (m_dynamicEntityDataSource->connectionStatus())
+  {
+    case ConnectionStatus::Disconnected:
+      m_dynamicEntityDataSource->connectDataSource();
+      break;
+    case ConnectionStatus::Connecting:
+      // Do nothing and allow data source to finish connecting
+      break;
+    case ConnectionStatus::Connected:
+      m_dynamicEntityDataSource->disconnectDataSource();
+      break;
+    case ConnectionStatus::Failed:
+      qWarning() << "Unable to connect to dynamic entity data source";
+      break;
+    default:
+      break;
+  }
 }

@@ -19,6 +19,7 @@ import QtQuick.Controls
 import Esri.Samples
 
 Item {
+    id: item1
 
     // add a mapView component
     MapView {
@@ -35,5 +36,84 @@ Item {
     AddDynamicEntityLayerSample {
         id: model
         mapView: view
+        onConnectionStatusChanged: {
+            // Enable switch if data stream is successfully disconnected or connected
+            statusSwitch.enabled = (["Disconnected", "Connected"].indexOf(model.connectionStatus) !== -1)
+        }
+    }
+
+    Rectangle {
+        id: dynamicEntityLayerOptions
+        x: 330
+        width: 300
+        height: 147
+        anchors.right: parent.right
+        anchors.top: parent.top
+        anchors.margins: 10
+
+        Column {
+            id: column
+            height: 400
+            anchors.verticalCenter: parent.verticalCenter
+            anchors.left: parent.left
+            anchors.right: parent.right
+            anchors.top: parent.top
+            anchors.margins: 10
+
+            Text {
+                id: statusText
+                text: "Status: " + model.connectionStatus
+                font.pixelSize: 12
+            }
+
+            Switch {
+                id: statusSwitch
+                checked: true
+                onCheckedChanged: {
+                    model.enableDisableConnection();
+                }
+            }
+
+            CheckBox {
+                id: trackLinesBox
+                text: "Track lines"
+                checked: true
+                onCheckedChanged: {
+                    model.showTrackLines(checked);
+                }
+            }
+
+
+            CheckBox {
+                id: previousObservationsBox
+                text: "Previous observations"
+                checked: true
+                onCheckedChanged: {
+                    model.showPreviousObservations(checked);
+                }
+            }
+
+            Text {
+                id: observationsSliderText
+                text: "Observations per track (" + observationsSlider.value + ")"
+            }
+
+            Slider {
+                id: observationsSlider
+                anchors.left: parent.left
+                anchors.right: parent.right
+                value: 5
+                stepSize: 1
+                from: 1
+                to: 16
+                onValueChanged: {
+                    model.setObservationsPerTrack(value)
+                }
+            }
+
+
+
+
+        }
     }
 }
