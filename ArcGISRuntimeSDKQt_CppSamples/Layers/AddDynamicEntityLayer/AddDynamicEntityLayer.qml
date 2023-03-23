@@ -97,6 +97,7 @@ Item {
 
             Text {
                 id: observationsSliderText
+                topPadding: 10
                 text: "Observations per track (" + observationsSlider.value + ")"
             }
 

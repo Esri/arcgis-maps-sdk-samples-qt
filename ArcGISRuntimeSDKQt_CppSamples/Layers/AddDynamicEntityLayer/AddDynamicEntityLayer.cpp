@@ -43,7 +43,6 @@
 #include "TaskWatcher.h"
 #include "TrackDisplayProperties.h"
 #include "UniqueValue.h"
-#include "UniqueValueListModel.h"
 #include "UniqueValueRenderer.h"
 #include "Viewpoint.h"
 
