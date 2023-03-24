@@ -73,7 +73,7 @@ ReadSymbolsFromMobileStyle::ReadSymbolsFromMobileStyle(QObject* parent /* = null
   m_symbolStyle = new SymbolStyle(defaultDataPath() + "/ArcGIS/Runtime/Data/styles/emoji-mobile.stylx", this);
 
   // Connect to the search completed signal of the style
-  connect(m_symbolStyle, &SymbolStyle::searchSymbolsCompleted, this, [this](QUuid id, SymbolStyleSearchResultListModel* results)
+  connect(m_symbolStyle, &SymbolStyle::searchSymbolsCompleted, this, [this](const QUuid& id, SymbolStyleSearchResultListModel* results)
   {
     const int index = m_taskIds.indexOf(id);
     m_models[index] = results;
@@ -83,7 +83,7 @@ ReadSymbolsFromMobileStyle::ReadSymbolsFromMobileStyle(QObject* parent /* = null
   });
 
   // Load the style
-  connect(m_symbolStyle, &SymbolStyle::doneLoading, this, [this](Error e)
+  connect(m_symbolStyle, &SymbolStyle::doneLoading, this, [this](const Error& e)
   {
     if (!e.isEmpty())
       return;
@@ -116,7 +116,7 @@ ReadSymbolsFromMobileStyle::ReadSymbolsFromMobileStyle(QObject* parent /* = null
   m_symbolStyle->load();
 
   // Connect to fetchSymbol completed signal
-  connect(m_symbolStyle, &SymbolStyle::fetchSymbolCompleted, this, [this](QUuid, Symbol* symbol)
+  connect(m_symbolStyle, &SymbolStyle::fetchSymbolCompleted, this, [this](const QUuid&, Symbol* symbol)
   {
     if (m_currentSymbol)
       delete m_currentSymbol;
@@ -143,7 +143,7 @@ ReadSymbolsFromMobileStyle::ReadSymbolsFromMobileStyle(QObject* parent /* = null
     m_currentSymbol->setColor(m_currentColor);
 
     // request symbol swatch
-    connect(m_currentSymbol, &MultilayerPointSymbol::createSwatchCompleted, m_currentSymbol, [this](QUuid id, QImage img)
+    connect(m_currentSymbol, &MultilayerPointSymbol::createSwatchCompleted, m_currentSymbol, [this](const QUuid& id, const QImage& img)
     {
       if (!m_symbolImageProvider)
         return;

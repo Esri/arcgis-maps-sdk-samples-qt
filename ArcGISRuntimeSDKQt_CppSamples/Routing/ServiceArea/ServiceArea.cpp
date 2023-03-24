@@ -82,7 +82,7 @@ void ServiceArea::componentComplete()
   // Set map to map view
   m_mapView->setMap(m_map);
 
-  connect(m_task, &ServiceAreaTask::doneLoading, this, [this](Esri::ArcGISRuntime::Error loadError)
+  connect(m_task, &ServiceAreaTask::doneLoading, this, [this](const Error& loadError)
   {
     if (!loadError.isEmpty())
       return;
@@ -247,7 +247,7 @@ void ServiceArea::setupGraphics()
 void ServiceArea::setupRouting()
 {
   connect(m_task, &ServiceAreaTask::createDefaultParametersCompleted, this, [this]
-          (QUuid, Esri::ArcGISRuntime::ServiceAreaParameters defaultParameters)
+          (const QUuid&, const ServiceAreaParameters& defaultParameters)
   {
     m_parameters = defaultParameters;
     m_parameters.setOutputSpatialReference(SpatialReference::webMercator());
@@ -257,7 +257,7 @@ void ServiceArea::setupRouting()
   });
 
   connect(m_task, &ServiceAreaTask::solveServiceAreaCompleted, this, [this]
-          (QUuid, Esri::ArcGISRuntime::ServiceAreaResult serviceAreaResult)
+          (const QUuid&, const ServiceAreaResult& serviceAreaResult)
   {
     setBusy(false);
     if (serviceAreaResult.isEmpty())

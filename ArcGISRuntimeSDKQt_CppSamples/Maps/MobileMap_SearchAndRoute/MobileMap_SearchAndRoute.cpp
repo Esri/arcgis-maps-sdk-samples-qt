@@ -141,7 +141,7 @@ void MobileMap_SearchAndRoute::createMobileMapPackages(int index)
       MobileMapPackage* mobileMapPackage = new MobileMapPackage(m_fileInfoList[index].absoluteFilePath(), this);
 
       // once MMPK is finished loading, add it and its information to lists
-      connect(mobileMapPackage, &MobileMapPackage::doneLoading, this, [mobileMapPackage, this](Error error)
+      connect(mobileMapPackage, &MobileMapPackage::doneLoading, this, [mobileMapPackage, this](const Error& error)
       {
         if (error.isEmpty())
         {
@@ -177,7 +177,7 @@ void MobileMap_SearchAndRoute::connectSignals()
     }
   });
 
-  connect(m_mapView, &MapQuickView::identifyGraphicsOverlayCompleted, this, [this](QUuid, IdentifyGraphicsOverlayResult* identifyResult)
+  connect(m_mapView, &MapQuickView::identifyGraphicsOverlayCompleted, this, [this](const QUuid&, IdentifyGraphicsOverlayResult* identifyResult)
   {
     if (!identifyResult)
       return;
@@ -272,7 +272,7 @@ void MobileMap_SearchAndRoute::selectMap(int index)
     // prevent connecting same signal to multiple slots
     m_currentLocatorTask->disconnect();
 
-    connect(m_currentLocatorTask, &LocatorTask::geocodeCompleted, this, [this](QUuid, const QList<GeocodeResult>& geocodeResults)
+    connect(m_currentLocatorTask, &LocatorTask::geocodeCompleted, this, [this](const QUuid&, const QList<GeocodeResult>& geocodeResults)
     {
       // make busy indicator invisible
       m_isGeocodeInProgress = false;
@@ -336,13 +336,13 @@ void MobileMap_SearchAndRoute::selectMap(int index)
     });
 
     // store the created route parameters
-    connect(m_currentRouteTask, &RouteTask::createDefaultParametersCompleted, this, [this](QUuid, RouteParameters routeParameters)
+    connect(m_currentRouteTask, &RouteTask::createDefaultParametersCompleted, this, [this](const QUuid&, const RouteParameters& routeParameters)
     {
       m_currentRouteParameters = routeParameters;
     });
 
     // create a graphic using the routeResult
-    connect(m_currentRouteTask, &RouteTask::solveRouteCompleted, this, [this](QUuid, RouteResult routeResult)
+    connect(m_currentRouteTask, &RouteTask::solveRouteCompleted, this, [this](const QUuid&, const RouteResult& routeResult)
     {
       if (!m_routeGraphicParent)
         m_routeGraphicParent = new QObject(this);

@@ -83,7 +83,7 @@ CreateTerrainSurfaceFromLocalTilePackage::CreateTerrainSurfaceFromLocalTilePacka
   }
 }
 
-void CreateTerrainSurfaceFromLocalTilePackage::elevationSrcFinishedLoading(Esri::ArcGISRuntime::Error loadError)
+void CreateTerrainSurfaceFromLocalTilePackage::elevationSrcFinishedLoading(const Error& loadError)
 {
   if(loadError.isEmpty())
   {

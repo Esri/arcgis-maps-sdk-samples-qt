@@ -86,7 +86,7 @@ void FeatureCollectionLayerQuery::componentComplete()
   // 1=1 will give all the features from the table
   queryParams.setWhereClause("1=1");
 
-  connect(m_featureTable, &ServiceFeatureTable::queryFeaturesCompleted, this, [this](QUuid, FeatureQueryResult* featureQueryResult)
+  connect(m_featureTable, &ServiceFeatureTable::queryFeaturesCompleted, this, [this](const QUuid&, FeatureQueryResult* featureQueryResult)
   {
     setBusy(false);
 

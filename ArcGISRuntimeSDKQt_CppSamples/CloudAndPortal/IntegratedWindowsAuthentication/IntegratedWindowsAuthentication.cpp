@@ -127,7 +127,7 @@ void IntegratedWindowsAuthentication::securePortalDoneLoading(const Error& loadE
   m_iwaSecurePortal->findItems(*query);
 }
 
-void IntegratedWindowsAuthentication::searchItemsCompleted(const PortalQueryResultSetForItems* result)
+void IntegratedWindowsAuthentication::searchItemsCompleted(PortalQueryResultSetForItems* result)
 {
   if(!result)
     return;

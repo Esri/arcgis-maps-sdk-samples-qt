@@ -52,7 +52,7 @@ BrowseWfsLayers::BrowseWfsLayers(QObject* parent /* = nullptr */):
   m_wfsService = new WfsService(QUrl("https://dservices2.arcgis.com/ZQgQTuoyBrtmoGdP/arcgis/services/Seattle_Downtown_Features/WFSServer?service=wfs&request=getcapabilities"),this);
 
   // once WFS Service is loaded, populate QStringList with layer names for ComboBox
-  connect(m_wfsService, &WfsService::doneLoading, this, [this](Error e)
+  connect(m_wfsService, &WfsService::doneLoading, this, [this](const Error& e)
   {
     if (!e.isEmpty())
       return;
@@ -123,7 +123,7 @@ void BrowseWfsLayers::createWfsFeatureTable(int index, bool swap)
     m_wfsFeatureTable->setAxisOrder(OgcAxisOrder::NoSwap);
 
   // once WFS Feature Table is loaded, populate the table and add the layer to the map
-  connect(m_wfsFeatureTable, &WfsFeatureTable::doneLoading, this, [this](Error e)
+  connect(m_wfsFeatureTable, &WfsFeatureTable::doneLoading, this, [this](const Error& e)
   {
     if(!e.isEmpty())
       return;

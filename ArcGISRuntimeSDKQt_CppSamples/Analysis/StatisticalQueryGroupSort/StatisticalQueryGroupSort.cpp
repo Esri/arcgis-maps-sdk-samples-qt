@@ -72,7 +72,7 @@ void StatisticalQueryGroupSort::componentComplete()
 
 void StatisticalQueryGroupSort::connectSignals()
 {
-  connect(m_featureTable, &ServiceFeatureTable::doneLoading, this, [this](Error error)
+  connect(m_featureTable, &ServiceFeatureTable::doneLoading, this, [this](const Error& error)
   {
     if (!error.isEmpty())
       return;
@@ -85,7 +85,7 @@ void StatisticalQueryGroupSort::connectSignals()
     emit fieldsChanged();
   });
 
-  connect(m_featureTable, &ServiceFeatureTable::errorOccurred, this, [this](Error error)
+  connect(m_featureTable, &ServiceFeatureTable::errorOccurred, this, [this](const Error& error)
   {
     if (error.isEmpty())
       return;
@@ -94,7 +94,7 @@ void StatisticalQueryGroupSort::connectSignals()
     addResultToModel("", QString("Error. %1").arg(error.message()));
   });
 
-  connect(m_featureTable, &ServiceFeatureTable::queryStatisticsCompleted, this, [this](QUuid, StatisticsQueryResult* rawResult)
+  connect(m_featureTable, &ServiceFeatureTable::queryStatisticsCompleted, this, [this](const QUuid&, StatisticsQueryResult* rawResult)
   {
     // Delete rawResult when we leave local scope.
     auto result = std::unique_ptr<StatisticsQueryResult>(rawResult);

@@ -62,7 +62,7 @@ private:
   void setMapView(Esri::ArcGISRuntime::MapQuickView* mapView);
 
   void queryAndBufferFeatures();
-  void bufferFeaturesFromQueryResults(QUuid, Esri::ArcGISRuntime::FeatureQueryResult* results);
+  void bufferFeaturesFromQueryResults(const QUuid&, Esri::ArcGISRuntime::FeatureQueryResult* results);
   void createConnections();
   void createNewEmptyFeature(QMouseEvent& mouseEvent);
   bool featureAttributesPaneVisibe() const;

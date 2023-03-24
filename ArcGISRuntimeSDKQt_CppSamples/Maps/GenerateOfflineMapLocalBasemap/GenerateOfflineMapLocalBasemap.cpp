@@ -89,7 +89,7 @@ void GenerateOfflineMapLocalBasemap::componentComplete()
   m_map = new Map(m_portalItem, this);
 
   // Update property once map is done loading
-  connect(m_map, &Map::doneLoading, this, [this](Error e)
+  connect(m_map, &Map::doneLoading, this, [this](const Error& e)
   {
     if (!e.isEmpty())
       return;
@@ -105,7 +105,7 @@ void GenerateOfflineMapLocalBasemap::componentComplete()
   m_offlineMapTask = new OfflineMapTask(m_map, this);
 
   // connect to the error signal
-  connect(m_offlineMapTask, &OfflineMapTask::errorOccurred, this, [](Error e)
+  connect(m_offlineMapTask, &OfflineMapTask::errorOccurred, this, [](const Error& e)
   {
     if (e.isEmpty())
       return;
@@ -126,7 +126,7 @@ void GenerateOfflineMapLocalBasemap::generateMapByExtent(double xCorner1, double
 
   // connect to the signal for when the default parameters are generated
   connect(m_offlineMapTask, &OfflineMapTask::createDefaultGenerateOfflineMapParametersCompleted,
-          this, [this, dataPath, tempPath](QUuid, GenerateOfflineMapParameters params)
+          this, [this, dataPath, tempPath](const QUuid&, GenerateOfflineMapParameters params)
   {
     // update default parameters to specify use of local basemap
     // this will prevent new tiles from being generated on the server
@@ -192,7 +192,7 @@ void GenerateOfflineMapLocalBasemap::generateMapByExtent(double xCorner1, double
       });
 
       // connect to the error signal
-      connect(generateJob, &GenerateOfflineMapJob::errorOccurred, this, [](Error e)
+      connect(generateJob, &GenerateOfflineMapJob::errorOccurred, this, [](const Error& e)
       {
         if (e.isEmpty())
           return;

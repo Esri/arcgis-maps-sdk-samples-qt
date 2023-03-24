@@ -159,12 +159,12 @@ int OfflineRouting::travelModeIndex() const
 
 void OfflineRouting::connectSignals()
 {
-  connect(m_routeTask, &RouteTask::createDefaultParametersCompleted, this, [this](QUuid, const RouteParameters& defaultParameters)
+  connect(m_routeTask, &RouteTask::createDefaultParametersCompleted, this, [this](const QUuid&, const RouteParameters& defaultParameters)
   {
     m_routeParameters = defaultParameters;
   });
 
-  connect(m_routeTask, &RouteTask::doneLoading, this, [this](Error loadError)
+  connect(m_routeTask, &RouteTask::doneLoading, this, [this](const Error& loadError)
   {
     if (loadError.isEmpty())
     {
@@ -177,7 +177,7 @@ void OfflineRouting::connectSignals()
     }
   });
 
-  connect(m_mapView, &MapQuickView::identifyGraphicsOverlayCompleted, this, [this](QUuid, IdentifyGraphicsOverlayResult* rawIdentifyResult)
+  connect(m_mapView, &MapQuickView::identifyGraphicsOverlayCompleted, this, [this](const QUuid&, IdentifyGraphicsOverlayResult* rawIdentifyResult)
   {
     auto result = std::unique_ptr<IdentifyGraphicsOverlayResult>(rawIdentifyResult);
     if (!result->error().isEmpty())
@@ -244,7 +244,7 @@ void OfflineRouting::connectSignals()
     }
   });
 
-  connect(m_routeTask, &RouteTask::solveRouteCompleted, this, [this](QUuid, const RouteResult routeResult){
+  connect(m_routeTask, &RouteTask::solveRouteCompleted, this, [this](const QUuid&, const RouteResult& routeResult){
     if (routeResult.isEmpty())
       return;
 

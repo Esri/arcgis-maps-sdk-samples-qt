@@ -202,7 +202,7 @@ void LineOfSightGeoElement::initialize()
   taxiSymbol->setAnchorPosition(SceneSymbolAnchorPosition::Bottom);
 
   connect(taxiSymbol, &ModelSceneSymbol::doneLoading, this,
-          [this, graphicsOverlay, taxiSymbol](Error error)
+          [this, graphicsOverlay, taxiSymbol](const Error& error)
   {
     if (!error.isEmpty())
     {

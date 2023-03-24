@@ -60,7 +60,7 @@ void WMTS_Layer::createWmtsLayer()
   m_service = new WmtsService(m_wmtsServiceUrl, this);
 
   // connect to the doneLoading signal of the service
-  connect(m_service, &WmtsService::doneLoading, this, [this](Error loadError)
+  connect(m_service, &WmtsService::doneLoading, this, [this](const Error& loadError)
   {
     if (!loadError.isEmpty())
     {
