@@ -156,6 +156,13 @@ Rectangle {
         anchors.top: parent.top
         anchors.margins: 10
 
+        // Catch mouse signals so they don't propagate to the map
+        MouseArea {
+            anchors.fill: parent
+            onClicked: mouse => mouse.accepted = true
+            onWheel: wheel => wheel.accepted = true
+        }
+
         Column {
             id: column
             anchors {
@@ -168,6 +175,7 @@ Rectangle {
             Text {
                 id: statusText
                 anchors.horizontalCenter: parent.horizontalCenter
+                // dynamicEntityDataSource.connectionStatus returns a ConnectionStatus enum
                 text: "Status: " + ["Disconnected","Connecting","Connected"][dynamicEntityDataSource.connectionStatus]
                 font.pixelSize: 18
                 horizontalAlignment: Text.AlignHCenter
@@ -178,6 +186,7 @@ Rectangle {
                 id: statusSwitch
                 anchors.horizontalCenter: parent.horizontalCenter
                 checked: dynamicEntityDataSource.connectionStatus !== Enums.ConnectionStatusDisconnected
+                enabled: dynamicEntityDataSource.connectionStatus !== Enums.ConnectionStatusConnecting
                 onCheckedChanged: {
                     checked ? dynamicEntityDataSource.connectDataSource() : dynamicEntityDataSource.disconnectDataSource();
                 }

@@ -49,6 +49,13 @@ Item {
         anchors.top: parent.top
         anchors.margins: 10
 
+        // Catch mouse signals so they don't propagate to the map
+        MouseArea {
+            anchors.fill: parent
+            onClicked: mouse => mouse.accepted = true
+            onWheel: wheel => wheel.accepted = true
+        }
+
         Column {
             id: column
             anchors {
