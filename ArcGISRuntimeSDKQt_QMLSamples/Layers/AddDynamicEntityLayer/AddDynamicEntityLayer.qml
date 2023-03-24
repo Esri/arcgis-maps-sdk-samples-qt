@@ -37,9 +37,10 @@ Rectangle {
             initBasemapStyle: Enums.BasemapStyleArcGISDarkGray
 
             initialViewpoint: ViewpointExtent {
-                extent: sandyEnvelope
+                extent: sandyUtahEnvelope
             }
 
+            // A layer that displays dynamic entities from real time services
             DynamicEntityLayer {
                 id: dynamicEntityLayer
 
@@ -47,13 +48,16 @@ Rectangle {
                     id: dynamicEntityDataSource
                     url: "https://realtimegis2016.esri.com:6443/arcgis/rest/services/SandyVehicles/StreamServer"
                     filter: ArcGISStreamServiceFilter {
+                        // This filters what information is received from the server
                         whereClause: "speed > 0"
-                        geometry: sandyEnvelope
+                        geometry: sandyUtahEnvelope
                     }
 
+                    // Set the time in seconds after which observations will be removed from the cache
                     purgeOptions.maximumDuration: 300
                 }
 
+                // Set the renderer for the most recent observations
                 renderer: UniqueValueRenderer {
                     fieldNames: ["agency"]
 
@@ -81,6 +85,7 @@ Rectangle {
                     }
                 }
 
+                // Set the display properties for previous observations and the trackline
                 trackDisplayProperties {
                     showTrackLine: true
                     showPreviousObservations: true
@@ -126,7 +131,7 @@ Rectangle {
             Graphic {
                 id: sandyBorderGraphic
                 geometry: Envelope {
-                    id: sandyEnvelope
+                    id: sandyUtahEnvelope
                     xMin: -112.110052
                     xMax: -111.814782
                     yMin: 40.535247
@@ -183,6 +188,7 @@ Rectangle {
                 text: "Track lines"
                 checked: true
                 onCheckedChanged: {
+                    // Show or hide the lines that connect previous observations
                     dynamicEntityLayer.trackDisplayProperties.showTrackLine = checked;
                 }
             }
@@ -193,6 +199,7 @@ Rectangle {
                 text: "Previous observations"
                 checked: true
                 onCheckedChanged: {
+                    // Show or hide previous observations (if maximum observations is greater than 1)
                     dynamicEntityLayer.trackDisplayProperties.showPreviousObservations = checked;
                 }
             }
@@ -214,6 +221,7 @@ Rectangle {
                 from: 1
                 to: 16
                 onValueChanged: {
+                    // Update the number of entity observations displayed using the value from the Slider
                     dynamicEntityLayer.trackDisplayProperties.maximumObservations = value;
                 }
             }
@@ -223,6 +231,7 @@ Rectangle {
                 anchors.horizontalCenter: parent.horizontalCenter
                 text: "Purge all observations"
                 onClicked: {
+                    // Remove all current observations from the cache
                     dynamicEntityDataSource.purgeAll();
                 }
             }

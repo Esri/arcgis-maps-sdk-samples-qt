@@ -1,6 +1,18 @@
-// [WriteFile Name=AddDynamicEntityLayer, Category=Layers]
-// [Legal]
-// Copyright 2023 Esri.
+// COPYRIGHT 2023 ESRI
+// TRADE SECRETS: ESRI PROPRIETARY AND CONFIDENTIAL
+// Unpublished material - all rights reserved under the
+// Copyright Laws of the United States and applicable international
+// laws, treaties, and conventions.
+//
+// For additional information, contact:
+// Environmental Systems Research Institute, Inc.
+// Attn: Contracts and Legal Services Department
+// 380 New York Street
+// Redlands, California, 92373
+// USA
+//
+// email: contracts@esri.com
+/// \file AddDynamicEntityLayer.cpp
 
 // Licensed under the Apache License, Version 2.0 (the "License");
 // you may not use this file except in compliance with the License.
@@ -46,7 +58,6 @@
 #include "UniqueValueRenderer.h"
 #include "Viewpoint.h"
 
-
 using namespace Esri::ArcGISRuntime;
 
 namespace
@@ -62,48 +73,49 @@ AddDynamicEntityLayer::AddDynamicEntityLayer(QObject* parent /* = nullptr */):
   QObject(parent),
   m_map(new Map(BasemapStyle::ArcGISDarkGray, this))
 {
+  // Create a dynamic entity data source from a given URL
   QUrl streamServiceUrl("https://realtimegis2016.esri.com:6443/arcgis/rest/services/SandyVehicles/StreamServer");
-
-  // Create a dynamic entity data source and set the properties
   m_dynamicEntityDataSource = new ArcGISStreamService(streamServiceUrl, this);
 
+  // Create and set an ArcGISStreamServiceFilter to filter what data is received from the server
   auto streamServiceFilter = new ArcGISStreamServiceFilter(this);
   streamServiceFilter->setGeometry(utahSandyEnvelope);
   streamServiceFilter->setWhereClause("speed > 0");
-
   m_dynamicEntityDataSource->setFilter(streamServiceFilter);
+
+  // Set purge options to manage when entities are removed from the cache
   m_dynamicEntityDataSource->purgeOptions()->setMaximumDuration(300.0 /*seconds*/);
 
-  // Handle signals emitted when connection status changes
+  // Handle signals emitted when connection status changes to update the UI
   connect(m_dynamicEntityDataSource, &ArcGISStreamService::connectionStatusChanged, this, &AddDynamicEntityLayer::connectionStatusChanged);
 
   // Create a dynamic entity layer to display on the map and set the properties
   m_dynamicEntityLayer = new DynamicEntityLayer(m_dynamicEntityDataSource, this);
 
+  // Set the track display properties to change what is displayed to the user
   m_dynamicEntityLayer->trackDisplayProperties()->setShowTrackLine(true);
   m_dynamicEntityLayer->trackDisplayProperties()->setShowPreviousObservations(true);
 
-  // Create renderers for observations and their tracklines
+  // Create renderers for observations and their tracklines to change how they are styled
 
   // Create a unique value renderer for the latest observations
   QList<UniqueValue*> entityValues;
-
   entityValues.append(new UniqueValue("","", {3}, new SimpleMarkerSymbol(SimpleMarkerSymbolStyle::Circle, Qt::magenta, 8, this), this));
   entityValues.append(new UniqueValue("","", {4}, new SimpleMarkerSymbol(SimpleMarkerSymbolStyle::Circle, Qt::green, 8, this), this));
 
   UniqueValueRenderer* entityRenderer = new UniqueValueRenderer("", new SimpleMarkerSymbol(SimpleMarkerSymbolStyle::Circle, Qt::blue, 8, this), {"agency"}, entityValues, this);
   m_dynamicEntityLayer->setRenderer(entityRenderer);
 
-  // Create a unique value renderer for the latest observations
-  QList<UniqueValue*> trackValues;
+  // Create a unique value renderer for the previous observations
+  QList<UniqueValue*> previousObservationValues;
 
-  trackValues.append(new UniqueValue("","", {3}, new SimpleMarkerSymbol(SimpleMarkerSymbolStyle::Circle, Qt::magenta, 3, this), this));
-  trackValues.append(new UniqueValue("","", {4}, new SimpleMarkerSymbol(SimpleMarkerSymbolStyle::Circle, Qt::green, 3, this), this));
+  previousObservationValues.append(new UniqueValue("","", {3}, new SimpleMarkerSymbol(SimpleMarkerSymbolStyle::Circle, Qt::magenta, 3, this), this));
+  previousObservationValues.append(new UniqueValue("","", {4}, new SimpleMarkerSymbol(SimpleMarkerSymbolStyle::Circle, Qt::green, 3, this), this));
 
-  UniqueValueRenderer* trackRenderer = new UniqueValueRenderer("", new SimpleMarkerSymbol(SimpleMarkerSymbolStyle::Circle, Qt::blue, 3, this), {"agency"}, trackValues, this);
-
+  UniqueValueRenderer* trackRenderer = new UniqueValueRenderer("", new SimpleMarkerSymbol(SimpleMarkerSymbolStyle::Circle, Qt::blue, 3, this), {"agency"}, previousObservationValues);
   m_dynamicEntityLayer->trackDisplayProperties()->setPreviousObservationRenderer(trackRenderer);
 
+  // Use a simple renderer to change the style of the trackline
   m_dynamicEntityLayer->trackDisplayProperties()->setTrackLineRenderer(new SimpleRenderer(new SimpleLineSymbol(SimpleLineSymbolStyle::Solid, Qt::lightGray, 2, this)));
 
   m_map->operationalLayers()->append(m_dynamicEntityLayer);
@@ -132,21 +144,38 @@ void AddDynamicEntityLayer::setMapView(MapQuickView* mapView)
   m_mapView = mapView;
   m_mapView->setMap(m_map);
 
-  auto m_borderOverlay = new GraphicsOverlay(this);
+  // Create and show a dashed line around the filter area
+  GraphicsOverlay* borderOverlay = new GraphicsOverlay(this);
+  borderOverlay->graphics()->append(new Graphic(utahSandyEnvelope, new SimpleLineSymbol(SimpleLineSymbolStyle::Dash, Qt::red, 2, this), this));
+  m_mapView->graphicsOverlays()->append(borderOverlay);
 
-  auto borderGraphic = new Graphic(utahSandyEnvelope, new SimpleLineSymbol(SimpleLineSymbolStyle::Dash, Qt::red, 2, this), this);
-
-  m_borderOverlay->graphics()->append(borderGraphic);
-
-  m_mapView->graphicsOverlays()->append(m_borderOverlay);
-
+  // Set the initial viewpoint to this area
   m_mapView->setViewpointAndWait(Viewpoint(utahSandyEnvelope));
 
   emit mapViewChanged();
 }
 
+void AddDynamicEntityLayer::setObservationsPerTrack(int observationsPerTrack)
+{
+  // Update the number of entity observations displayed using the value from the UI slider
+  m_dynamicEntityLayer->trackDisplayProperties()->setMaximumObservations(observationsPerTrack);
+}
+
+void AddDynamicEntityLayer::showTrackLines(bool showTrackLines)
+{
+  // Show or hide the lines that connect previous observations
+  m_dynamicEntityLayer->trackDisplayProperties()->setShowTrackLine(showTrackLines);
+}
+
+void AddDynamicEntityLayer::showPreviousObservations(bool showPreviousObservations)
+{
+  // Show or hide previous observations (if maximum observations is greater than 1)
+  m_dynamicEntityLayer->trackDisplayProperties()->setShowPreviousObservations(showPreviousObservations);
+}
+
 QString AddDynamicEntityLayer::connectionStatus() const
 {
+  // Return the current dynamic entity data source connection status as a string to display in the UI
   switch (m_dynamicEntityDataSource->connectionStatus())
   {
     case ConnectionStatus::Disconnected:
@@ -162,28 +191,9 @@ QString AddDynamicEntityLayer::connectionStatus() const
   }
 }
 
-void AddDynamicEntityLayer::setObservationsPerTrack(int observationsPerTrack)
-{
-  m_dynamicEntityLayer->trackDisplayProperties()->setMaximumObservations(observationsPerTrack);
-}
-
-void AddDynamicEntityLayer::purgeAllObservations()
-{
-  m_dynamicEntityDataSource->purgeAll();
-}
-
-void AddDynamicEntityLayer::showTrackLines(bool showTrackLines)
-{
-  m_dynamicEntityLayer->trackDisplayProperties()->setShowTrackLine(showTrackLines);
-}
-
-void AddDynamicEntityLayer::showPreviousObservations(bool showPreviousObservations)
-{
-  m_dynamicEntityLayer->trackDisplayProperties()->setShowPreviousObservations(showPreviousObservations);
-}
-
 void AddDynamicEntityLayer::enableDisableConnection()
 {
+  // Handle the UI connection switch and disable or enable connection
   switch (m_dynamicEntityDataSource->connectionStatus())
   {
     case ConnectionStatus::Disconnected:
@@ -201,4 +211,10 @@ void AddDynamicEntityLayer::enableDisableConnection()
     default:
       break;
   }
+}
+
+void AddDynamicEntityLayer::purgeAllObservations()
+{
+  // Remove all current observations from the cache
+  m_dynamicEntityDataSource->purgeAll();
 }

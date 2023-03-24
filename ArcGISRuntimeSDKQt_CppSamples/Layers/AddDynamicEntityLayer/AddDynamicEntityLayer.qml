@@ -73,6 +73,9 @@ Item {
                 checked: model.connectionStatus !== "Disconnected"
                 onCheckedChanged: {
                     model.enableDisableConnection();
+                    // Calls either of the following depending on the state
+                    // m_dynamicEntityDataSource->connectDataSource();
+                    // m_dynamicEntityDataSource->disconnectDataSource();
                 }
             }
 
@@ -82,6 +85,7 @@ Item {
                 checked: true
                 onCheckedChanged: {
                     model.showTrackLines(checked);
+                    // Calls m_dynamicEntityLayer->trackDisplayProperties()->setShowTrackLine(showTrackLines);
                 }
             }
 
@@ -92,6 +96,7 @@ Item {
                 checked: true
                 onCheckedChanged: {
                     model.showPreviousObservations(checked);
+                    // Calls m_dynamicEntityLayer->trackDisplayProperties()->setShowPreviousObservations(showPreviousObservations);
                 }
             }
 
@@ -111,6 +116,7 @@ Item {
                 to: 16
                 onValueChanged: {
                     model.setObservationsPerTrack(value)
+                    // Calls m_dynamicEntityLayer->trackDisplayProperties()->setMaximumObservations(observationsPerTrack);
                 }
             }
 
@@ -120,6 +126,7 @@ Item {
                 anchors.horizontalCenter: parent.horizontalCenter
                 onClicked: {
                     model.purgeAllObservations();
+                    // Calls m_dynamicEntityDataSource->purgeAll();
                 }
             }
         }
