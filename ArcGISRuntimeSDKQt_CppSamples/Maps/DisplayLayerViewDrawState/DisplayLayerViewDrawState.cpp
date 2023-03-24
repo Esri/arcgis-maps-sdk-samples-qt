@@ -86,7 +86,7 @@ void DisplayLayerViewDrawState::loadLayer()
   });
 
   // load feature layer and set the viewpoint
-  connect(m_featureLayer, &FeatureLayer::doneLoading, this, [this](Error e)
+  connect(m_featureLayer, &FeatureLayer::doneLoading, this, [this](const Error& e)
   {
     if (!e.isEmpty())
       return;

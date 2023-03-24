@@ -56,7 +56,7 @@ void CreateAndSaveMap::componentComplete()
   // create the Portal object
   constexpr bool loginRequired = true;
   m_portal = new Portal(QUrl("https://www.arcgis.com"), loginRequired, this);
-  connect(m_portal, &Portal::doneLoading, this, [this](Error e)
+  connect(m_portal, &Portal::doneLoading, this, [this](const Error& e)
   {
     if (!e.isEmpty())
       return;
@@ -97,7 +97,7 @@ void CreateAndSaveMap::createMap(const QString& basemap, const QStringList& oper
   }
 
   // Handle Map save complete signal
-  connect(m_map, &Map::saveAsCompleted, this, [this](QUuid, bool success)
+  connect(m_map, &Map::saveAsCompleted, this, [this](const QUuid&, bool success)
   {
     if (!success)
       return;
@@ -107,7 +107,7 @@ void CreateAndSaveMap::createMap(const QString& basemap, const QStringList& oper
   });
 
   // Handle Map error signal
-  connect(m_map, &Map::errorOccurred, this, [this](Error e)
+  connect(m_map, &Map::errorOccurred, this, [this](const Error& e)
   {
     if (e.isEmpty())
       return;

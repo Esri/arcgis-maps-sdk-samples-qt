@@ -86,7 +86,7 @@ void ReverseGeocodeOnline::getAddress()
     m_locatorTask->reverseGeocodeWithParameters(clickedLocation, reverseGeocodeParameters);
   });
 
-  connect(m_locatorTask, &LocatorTask::geocodeCompleted, this, [this](QUuid, const QList<GeocodeResult>& geocodeResults)
+  connect(m_locatorTask, &LocatorTask::geocodeCompleted, this, [this](const QUuid&, const QList<GeocodeResult>& geocodeResults)
   {
     if (geocodeResults.empty())
       return;

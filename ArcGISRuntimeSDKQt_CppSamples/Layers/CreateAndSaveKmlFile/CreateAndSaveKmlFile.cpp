@@ -59,7 +59,7 @@ CreateAndSaveKmlFile::CreateAndSaveKmlFile(QObject* parent /* = nullptr */):
   // set initial viewpoint
   m_map->setInitialViewpoint(Viewpoint(createEnvelope()));
 
-  connect(m_map, &Map::doneLoading, this, [this](Error e)
+  connect(m_map, &Map::doneLoading, this, [this](const Error& e)
   {
     if (!e.isEmpty())
       return;
@@ -76,7 +76,7 @@ CreateAndSaveKmlFile::CreateAndSaveKmlFile(QObject* parent /* = nullptr */):
     emit kmlSaveCompleted();
   });
 
-  connect(m_kmlDocument, &KmlDocument::errorOccurred, this, [](Error e)
+  connect(m_kmlDocument, &KmlDocument::errorOccurred, this, [](const Error& e)
   {
     if (!e.isEmpty())
       qDebug() << QString("Error: %1 - %2").arg(e.message(), e.additionalMessage());

@@ -72,7 +72,7 @@ PlayAKmlTour::PlayAKmlTour(QObject* parent /* = nullptr */):
   m_kmlDataset = new KmlDataset(QUrl::fromLocalFile(m_dataPath + "/kml/Esri_tour.kmz"), this);
   m_kmlLayer = new KmlLayer(m_kmlDataset, this);
 
-  connect(m_kmlLayer, &KmlLayer::doneLoading, this, [this](Error e)
+  connect(m_kmlLayer, &KmlLayer::doneLoading, this, [this](const Error& e)
   {
     if (!e.isEmpty())
     {

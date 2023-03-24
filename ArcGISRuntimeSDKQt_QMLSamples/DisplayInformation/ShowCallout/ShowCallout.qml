@@ -73,10 +73,9 @@ Rectangle {
 
         // display callout on mouseClicked
         onMouseClicked: mouse => {
-            if (callout.calloutVisible)
-                callout.dismiss()
-            else
-            {
+            if (callout.visible) {
+                callout.dismiss();
+            } else {
                 calloutLocation = mouse.mapPoint;
                 xCoor = mouse.mapPoint.x.toFixed(2);
                 yCoor = mouse.mapPoint.y.toFixed(2);

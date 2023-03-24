@@ -81,7 +81,7 @@ void RasterColormapRenderer::componentComplete()
   Raster* raster = new Raster(m_dataPath + "/ShastaBW.tif", this);
   m_rasterLayer = new RasterLayer(raster, this);
 
-  connect(m_rasterLayer, &RasterLayer::doneLoading, this, [this](Error error)
+  connect(m_rasterLayer, &RasterLayer::doneLoading, this, [this](const Error& error)
   {
     if (!error.isEmpty())
     {

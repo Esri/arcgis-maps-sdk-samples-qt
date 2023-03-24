@@ -90,7 +90,7 @@ void ClosestFacility::componentComplete()
   createFacilities();
   createGraphics();
 
-  connect(m_task, &ClosestFacilityTask::doneLoading, this, [this] (Error loadError)
+  connect(m_task, &ClosestFacilityTask::doneLoading, this, [this] (const Error& loadError)
   {
     if (!loadError.isEmpty())
       return;
@@ -194,7 +194,7 @@ void ClosestFacility::createGraphics()
 void ClosestFacility::setupRouting()
 {
   connect(m_task, &ClosestFacilityTask::createDefaultParametersCompleted, this, [this](
-          QUuid, Esri::ArcGISRuntime::ClosestFacilityParameters defaultParameters)
+          const QUuid&, const ClosestFacilityParameters& defaultParameters)
   {
     setBusy(false);
 
@@ -203,7 +203,7 @@ void ClosestFacility::setupRouting()
   });
 
   connect(m_task, &ClosestFacilityTask::solveClosestFacilityCompleted, this, [this]
-          (QUuid, ClosestFacilityResult closestFacilityResult)
+          (const QUuid&, ClosestFacilityResult closestFacilityResult)
   {
     setBusy(false);
 

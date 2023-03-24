@@ -57,7 +57,7 @@ OpenMobileScenePackage::OpenMobileScenePackage(QObject* parent /* = nullptr */):
 
   // connect to the Mobile Scene Package instance to know when errors occur
   connect(MobileScenePackage::instance(), &MobileScenePackage::errorOccurred,
-          [](Error e)
+          [](const Error& e)
   {
     if (e.isEmpty())
       return;

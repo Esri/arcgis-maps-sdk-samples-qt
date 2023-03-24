@@ -40,7 +40,7 @@ MapReferenceScale::MapReferenceScale(QObject* parent /* = nullptr */):
   m_map = new Map(m_portalItem, this);
 
   // Once map is loaded set FeatureLayer list model
-  connect(m_map, &Map::doneLoading, this, [this](Error loadError)
+  connect(m_map, &Map::doneLoading, this, [this](const Error& loadError)
   {
     if (!loadError.isEmpty())
       return;

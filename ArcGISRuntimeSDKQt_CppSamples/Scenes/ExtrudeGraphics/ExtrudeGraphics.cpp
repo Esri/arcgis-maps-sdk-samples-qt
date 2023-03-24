@@ -142,7 +142,7 @@ void ExtrudeGraphics::componentComplete()
 }
 
 // helper to create polygon from points
-Polygon ExtrudeGraphics::createPolygonFromPoints(QList<Point> points)
+Polygon ExtrudeGraphics::createPolygonFromPoints(const QList<Point>& points)
 {
   Polygon polygon;
   if (points.length() == 0)
@@ -157,4 +157,3 @@ Polygon ExtrudeGraphics::createPolygonFromPoints(QList<Point> points)
   }
   return polygon = pb->toPolygon();
 }
-

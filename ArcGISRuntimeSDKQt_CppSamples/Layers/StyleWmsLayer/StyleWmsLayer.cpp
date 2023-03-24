@@ -61,7 +61,7 @@ void StyleWmsLayer::componentComplete()
   m_map->operationalLayers()->append(wmsLayer);
 
   // connect to the doneLoading signal of the WMS Layer
-  connect(wmsLayer, &WmsLayer::doneLoading, this, [this, wmsLayer](Error e)
+  connect(wmsLayer, &WmsLayer::doneLoading, this, [this, wmsLayer](const Error& e)
   {
     if (!e.isEmpty())
       return;

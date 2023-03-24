@@ -170,7 +170,7 @@ void DistanceMeasurementAnalysis::connectSignals()
   });
 
   // When screenToLocation completes...
-  connect(m_sceneView, &SceneQuickView::screenToLocationCompleted, this, [this](QUuid, Point pt)
+  connect(m_sceneView, &SceneQuickView::screenToLocationCompleted, this, [this](const QUuid&, const Point& pt)
   {
     // If it was from a press and hold, update the end location
     if (m_isPressAndHold)
