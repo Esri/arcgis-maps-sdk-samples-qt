@@ -24,13 +24,13 @@ Use the controls to connect to or disconnect from the stream service, modify dis
 
 ## Relevant API
 
-- ArcGISStreamService
-- ArcGISStreamServiceFilter
-- ConnectionStatus
-- DynamicEntity
-- DynamicEntityLayer
-- DynamicEntityPurgeOptions
-- TrackDisplayProperties
+* ArcGISStreamService
+* ArcGISStreamServiceFilter
+* ConnectionStatus
+* DynamicEntity
+* DynamicEntityLayer
+* DynamicEntityPurgeOptions
+* TrackDisplayProperties
 
 ## About the data
 
