@@ -51,10 +51,10 @@ using namespace Esri::ArcGISRuntime;
 namespace
 {
 // This envelope is a limited region around Sandy, Utah. It will be the extent used by the `DynamicEntityFilter`.
-Envelope utahSandyEnvelope = Envelope(
-      Point(-112.110052, 40.718083, SpatialReference::wgs84()),
-      Point(-111.814782, 40.535247, SpatialReference::wgs84())
-      );
+const Envelope utahSandyEnvelope(
+    Point(-112.110052, 40.718083, SpatialReference::wgs84()),
+    Point(-111.814782, 40.535247, SpatialReference::wgs84())
+    );
 }
 
 AddDynamicEntityLayer::AddDynamicEntityLayer(QObject* parent /* = nullptr */):
@@ -62,7 +62,7 @@ AddDynamicEntityLayer::AddDynamicEntityLayer(QObject* parent /* = nullptr */):
   m_map(new Map(BasemapStyle::ArcGISDarkGray, this))
 {
   // Create a dynamic entity data source from a given URL
-  QUrl streamServiceUrl("https://realtimegis2016.esri.com:6443/arcgis/rest/services/SandyVehicles/StreamServer");
+  const QUrl streamServiceUrl("https://realtimegis2016.esri.com:6443/arcgis/rest/services/SandyVehicles/StreamServer");
   m_dynamicEntityDataSource = new ArcGISStreamService(streamServiceUrl, this);
 
   // Create and set an ArcGISStreamServiceFilter to filter what data is received from the server
