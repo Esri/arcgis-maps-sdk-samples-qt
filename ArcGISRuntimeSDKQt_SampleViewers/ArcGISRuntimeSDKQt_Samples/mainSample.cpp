@@ -1,3 +1,18 @@
+// COPYRIGHT 2023 ESRI
+// TRADE SECRETS: ESRI PROPRIETARY AND CONFIDENTIAL
+// Unpublished material - all rights reserved under the
+// Copyright Laws of the United States and applicable international
+// laws, treaties, and conventions.
+//
+// For additional information, contact:
+// Environmental Systems Research Institute, Inc.
+// Attn: Contracts and Legal Services Department
+// 380 New York Street
+// Redlands, California, 92373
+// USA
+//
+// email: contracts@esri.com
+/// \file mainSample.cpp
 
 // TRADE SECRETS: ESRI PROPRIETARY AND CONFIDENTIAL
 // Unpublished material - all rights reserved under the
@@ -75,6 +90,7 @@
 // All CPP Samples
 #ifdef CPP_VIEWER
 #include "AddAPointSceneLayer.h"
+#include "AddDynamicEntityLayer.h"
 #include "AddEncExchangeSet.h"
 #include "AddFeaturesFeatureService.h"
 #include "AddGraphicsWithRenderer.h"
@@ -391,6 +407,7 @@ void registerCppSampleClasses()
 #ifdef CPP_VIEWER
   // Register the C++ Samples under the Esri.Samples namespace
   AddAPointSceneLayer::init();
+  AddDynamicEntityLayer::init();
   AddEncExchangeSet::init();
   AddFeaturesFeatureService::init();
   AddGraphicsWithRenderer::init();

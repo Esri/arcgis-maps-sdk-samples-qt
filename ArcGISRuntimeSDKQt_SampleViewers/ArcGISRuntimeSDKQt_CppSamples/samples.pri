@@ -91,6 +91,7 @@ INCLUDEPATH += \
     "$$SAMPLEPATHCPP/Geometry/ProjectGeometry" \
     "$$SAMPLEPATHCPP/Geometry/SpatialOperations" \
     "$$SAMPLEPATHCPP/Geometry/SpatialRelationships" \
+    "$$SAMPLEPATHCPP/Layers/AddDynamicEntityLayer" \
     "$$SAMPLEPATHCPP/Layers/AddEncExchangeSet" \
     "$$SAMPLEPATHCPP/Layers/ApplyMosaicRuleToRasters" \
     "$$SAMPLEPATHCPP/Layers/ApplyUniqueValuesWithAlternateSymbols" \
@@ -300,6 +301,7 @@ HEADERS += \
     "$$SAMPLEPATHCPP/Geometry/ProjectGeometry/ProjectGeometry.h" \
     "$$SAMPLEPATHCPP/Geometry/SpatialOperations/SpatialOperations.h" \
     "$$SAMPLEPATHCPP/Geometry/SpatialRelationships/SpatialRelationships.h" \
+    "$$SAMPLEPATHCPP/Layers/AddDynamicEntityLayer/AddDynamicEntityLayer.h" \
     "$$SAMPLEPATHCPP/Layers/AddEncExchangeSet/AddEncExchangeSet.h" \
     "$$SAMPLEPATHCPP/Layers/ApplyMosaicRuleToRasters/ApplyMosaicRuleToRasters.h" \
     "$$SAMPLEPATHCPP/Layers/ApplyUniqueValuesWithAlternateSymbols/ApplyUniqueValuesWithAlternateSymbols.h" \
@@ -436,7 +438,7 @@ HEADERS += \
     "$$SAMPLEPATHCPP/UtilityNetwork/DisplayContentOfUtilityNetworkContainer/DisplayContentOfUtilityNetworkContainer.h" \
     "$$SAMPLEPATHCPP/UtilityNetwork/DisplayUtilityAssociations/DisplayUtilityAssociations.h" \
     "$$SAMPLEPATHCPP/UtilityNetwork/PerformValveIsolationTrace/PerformValveIsolationTrace.h" \
-    "$$SAMPLEPATHCPP/UtilityNetwork/TraceUtilityNetwork/TraceUtilityNetwork.h" \
+    "$$SAMPLEPATHCPP/UtilityNetwork/TraceUtilityNetwork/TraceUtilityNetwork.h"
 
 SOURCES += \
     "$$SAMPLEPATHCPP/Analysis/AnalyzeHotspots/AnalyzeHotspots.cpp" \
@@ -513,6 +515,7 @@ SOURCES += \
     "$$SAMPLEPATHCPP/Geometry/ProjectGeometry/ProjectGeometry.cpp" \
     "$$SAMPLEPATHCPP/Geometry/SpatialOperations/SpatialOperations.cpp" \
     "$$SAMPLEPATHCPP/Geometry/SpatialRelationships/SpatialRelationships.cpp" \
+    "$$SAMPLEPATHCPP/Layers/AddDynamicEntityLayer/AddDynamicEntityLayer.cpp" \
     "$$SAMPLEPATHCPP/Layers/AddEncExchangeSet/AddEncExchangeSet.cpp" \
     "$$SAMPLEPATHCPP/Layers/ApplyMosaicRuleToRasters/ApplyMosaicRuleToRasters.cpp" \
     "$$SAMPLEPATHCPP/Layers/ApplyUniqueValuesWithAlternateSymbols/ApplyUniqueValuesWithAlternateSymbols.cpp" \
@@ -651,7 +654,6 @@ SOURCES += \
     "$$SAMPLEPATHCPP/UtilityNetwork/PerformValveIsolationTrace/PerformValveIsolationTrace.cpp" \
     "$$SAMPLEPATHCPP/UtilityNetwork/TraceUtilityNetwork/TraceUtilityNetwork.cpp"
 
-
 RESOURCES += \
     "$$SAMPLEPATHCPP/Analysis/AnalyzeHotspots/AnalyzeHotspots.qrc" \
     "$$SAMPLEPATHCPP/Analysis/AnalyzeViewshed/AnalyzeViewshed.qrc" \
@@ -722,6 +724,7 @@ RESOURCES += \
     "$$SAMPLEPATHCPP/Geometry/ProjectGeometry/ProjectGeometry.qrc" \
     "$$SAMPLEPATHCPP/Geometry/SpatialOperations/SpatialOperations.qrc" \
     "$$SAMPLEPATHCPP/Geometry/SpatialRelationships/SpatialRelationships.qrc" \
+    "$$SAMPLEPATHCPP/Layers/AddDynamicEntityLayer/AddDynamicEntityLayer.qrc" \
     "$$SAMPLEPATHCPP/Layers/AddEncExchangeSet/AddEncExchangeSet.qrc" \
     "$$SAMPLEPATHCPP/Layers/ApplyMosaicRuleToRasters/ApplyMosaicRuleToRasters.qrc" \
     "$$SAMPLEPATHCPP/Layers/ApplyUniqueValuesWithAlternateSymbols/ApplyUniqueValuesWithAlternateSymbols.qrc" \
