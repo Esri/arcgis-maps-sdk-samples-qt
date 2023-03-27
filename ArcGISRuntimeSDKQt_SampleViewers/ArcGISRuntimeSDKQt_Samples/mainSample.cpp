@@ -62,6 +62,7 @@
 // All CPP Samples
 #ifdef CPP_VIEWER
 #include "AddAPointSceneLayer.h"
+#include "AddDynamicEntityLayer.h"
 #include "AddEncExchangeSet.h"
 #include "AddFeaturesFeatureService.h"
 #include "AddGraphicsWithRenderer.h"
@@ -378,6 +379,7 @@ void registerCppSampleClasses()
 #ifdef CPP_VIEWER
   // Register the C++ Samples under the Esri.Samples namespace
   AddAPointSceneLayer::init();
+  AddDynamicEntityLayer::init();
   AddEncExchangeSet::init();
   AddFeaturesFeatureService::init();
   AddGraphicsWithRenderer::init();

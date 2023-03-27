@@ -89,6 +89,7 @@ RESOURCES += \
     "$$SAMPLEPATHQML/Geometry/ProjectGeometry/ProjectGeometry.qrc" \
     "$$SAMPLEPATHQML/Geometry/SpatialOperations/SpatialOperations.qrc" \
     "$$SAMPLEPATHQML/Geometry/SpatialRelationships/SpatialRelationships.qrc" \
+    "$$SAMPLEPATHQML/Layers/AddDynamicEntityLayer/AddDynamicEntityLayer.qrc" \
     "$$SAMPLEPATHQML/Layers/AddEncExchangeSet/AddEncExchangeSet.qrc" \
     "$$SAMPLEPATHQML/Layers/ApplyMosaicRuleToRasters/ApplyMosaicRuleToRasters.qrc" \
     "$$SAMPLEPATHQML/Layers/ApplyUniqueValuesWithAlternateSymbols/ApplyUniqueValuesWithAlternateSymbols.qrc" \
