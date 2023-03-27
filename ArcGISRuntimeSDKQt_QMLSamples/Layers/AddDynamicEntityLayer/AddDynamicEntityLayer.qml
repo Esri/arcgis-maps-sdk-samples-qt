@@ -149,12 +149,14 @@ Rectangle {
 
     Rectangle {
         id: dynamicEntityLayerOptions
-        width: (300 < parent.width - (anchors.margins * 2)) ? 300 : parent.width - (anchors.margins * 2)
-        height: column.height + (column.anchors.margins * 2)
+        anchors {
+            top: parent.top
+            right: parent.right
+            margins: 10
+        }
+        width: (300 < parent.width - 20) ? 300 : parent.width - 20
+        height: column.height + 20
         border.width: 1
-        anchors.right: parent.right
-        anchors.top: parent.top
-        anchors.margins: 10
 
         // Catch mouse signals so they don't propagate to the map
         MouseArea {

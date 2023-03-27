@@ -53,8 +53,7 @@ namespace
 // This envelope is a limited region around Sandy, Utah. It will be the extent used by the `DynamicEntityFilter`.
 const Envelope utahSandyEnvelope(
     Point(-112.110052, 40.718083, SpatialReference::wgs84()),
-    Point(-111.814782, 40.535247, SpatialReference::wgs84())
-    );
+    Point(-111.814782, 40.535247, SpatialReference::wgs84()));
 }
 
 AddDynamicEntityLayer::AddDynamicEntityLayer(QObject* parent /* = nullptr */):

@@ -42,12 +42,14 @@ Item {
 
     Rectangle {
         id: dynamicEntityLayerOptions
-        width: (300 < parent.width - (anchors.margins * 2)) ? 300 : parent.width - (anchors.margins * 2)
-        height: column.height + (column.anchors.margins * 2)
+        anchors {
+            top: parent.top
+            right: parent.right
+            margins: 10
+        }
+        width: (300 < parent.width - 20) ? 300 : parent.width - 20
+        height: column.height + 20
         border.width: 1
-        anchors.right: parent.right
-        anchors.top: parent.top
-        anchors.margins: 10
 
         // Catch mouse signals so they don't propagate to the map
         MouseArea {
@@ -67,11 +69,11 @@ Item {
 
             Text {
                 id: statusText
+                anchors.horizontalCenter: parent.horizontalCenter
                 text: "Status: " + model.connectionStatus
                 font.pixelSize: 18
                 horizontalAlignment: Text.AlignHCenter
                 font.bold: true
-                anchors.horizontalCenter: parent.horizontalCenter
             }
 
             Switch {
@@ -115,8 +117,10 @@ Item {
 
             Slider {
                 id: observationsSlider
-                anchors.left: parent.left
-                anchors.right: parent.right
+                anchors {
+                    left: parent.left
+                    right: parent.right
+                }
                 value: 5
                 stepSize: 1
                 from: 1
@@ -129,8 +133,8 @@ Item {
 
             Button {
                 id: purgeButton
-                text: "Purge all observations"
                 anchors.horizontalCenter: parent.horizontalCenter
+                text: "Purge all observations"
                 onClicked: {
                     model.purgeAllObservations();
                     // Calls m_dynamicEntityDataSource->purgeAll();
