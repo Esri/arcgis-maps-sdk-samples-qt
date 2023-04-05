@@ -74,7 +74,7 @@ Rectangle {
             id: warningDialog
             anchors.centerIn: parent
             standardButtons: Dialog.Ok
-            visible: warningMessage !== "" ? true : false
+            visible: warningMessage !== ""
             Text {
                 id: warningText
                 text: warningMessage;
@@ -106,7 +106,7 @@ Rectangle {
             }
             if (layerViewState.statusFlags & Enums.LayerViewStatusWarning) {
                 statusStringList.push("Warning");
-                warningMessage = qsTr("Warning message: %1".arg(layerViewState.loadError.message));
+                warningMessage = qsTr("Warning message: %1".arg(layerViewState.error.message));
             }
 
             layerViewStatusRepeater.model = statusStringList;
