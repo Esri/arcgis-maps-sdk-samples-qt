@@ -25,6 +25,11 @@ Page {
     visible: SampleManager.currentMode === SampleManager.ManageOfflineDataView
     property bool manageOfflineDataViewDownloadInProgress: false
 
+    onVisibleChanged: {
+        if (!manageOfflineDataViewPage.visible && SampleManager.downloadInProgress)
+            SampleManager.cancelDownload = true;
+    }
+
     FileFolder {
         id: fileFolder
     }
@@ -50,14 +55,15 @@ Page {
             }
             Layout.fillWidth: true
             clip: true
-            visible: SampleManager.downloadInProgress && SampleManager.currentMode
+            visible: SampleManager.downloadInProgress
         }
 
         Button {
-            text: qsTr("Download all offline data")
+            text: SampleManager.downloadFailed ?  "Retry download all offline data" : "Download all offline data"
             Layout.alignment: Qt.AlignHCenter | Qt.AlignVCenter
             visible: !SampleManager.downloadInProgress
             onClicked: {
+                SampleManager.downloadFailed = false;
                 if (System.reachability === System.ReachabilityOnline || System.reachability === System.ReachabilityUnknown) {
                     allDataDownloadLoader.item.downloadAllDataItems();
                     manageOfflineDataViewDownloadInProgress = true;
@@ -89,7 +95,7 @@ Page {
             Layout.alignment: Qt.AlignHCenter | Qt.AlignVCenter
             Layout.fillWidth: true
             horizontalAlignment: Label.AlignHCenter
-            visible: SampleManager.downloadInProgress || (allDataDownloadLoader.item && allDataDownloadLoader.item.failedToDownload)
+            visible: SampleManager.downloadInProgress || SampleManager.downloadFailed
             font {
                 family: fontFamily
             }
@@ -116,6 +122,18 @@ Page {
             to: 100
             value: SampleManager.downloadProgress
             visible: SampleManager.downloadInProgress
+            clip: true
+        }
+
+        Button {
+            // PortalItem::fetchData does not have a cancel method so we can only clear the remaining items from the download queue
+            text: SampleManager.cancelDownload ? "Cancelling remaining downloads..." : "Cancel remaining downloads"
+            Layout.alignment: Qt.AlignHCenter | Qt.AlignVCenter
+            visible: SampleManager.downloadInProgress
+            enabled: !SampleManager.cancelDownload
+            onClicked: {
+                SampleManager.cancelDownload = true;
+            }
             clip: true
         }
     }
