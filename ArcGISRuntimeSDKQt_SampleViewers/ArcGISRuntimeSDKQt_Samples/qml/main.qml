@@ -298,8 +298,6 @@ ApplicationWindow {
         }
 
         function onCurrentModeChanged() {
-            console.log("current mode changed:",
-                        ["LiveSampleView","SourceCodeView","DescriptionView","ManageOfflineDataView","NetworkRequiredView","DownloadDataView"][SampleManager.currentMode])
             if (SampleManager.currentMode === SampleManager.LiveSampleView)
                 showSample();
         }

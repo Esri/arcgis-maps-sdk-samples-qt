@@ -48,13 +48,7 @@ Page {
         }
 
         Label {
-            text: {
-                if (SampleManager.downloadFailed) {
-                    SampleManager.downloadText;
-                } else {
-                    "This sample uses offline data that is not detected on your system. Press the 'Download' button to download the data to your device.";
-                }
-            }
+            text:  SampleManager.downloadFailed ? SampleManager.downloadText : "This sample uses offline data that is not detected on your system. Press the 'Download' button to download the data to your device."
             Layout.preferredWidth: parent.width
             Layout.alignment: Qt.AlignHCenter | Qt.AlignVCenter
             wrapMode: Text.WrapAtWordBoundaryOrAnywhere

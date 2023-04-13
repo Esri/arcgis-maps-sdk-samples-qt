@@ -132,7 +132,6 @@ Page {
             visible: SampleManager.downloadInProgress
             enabled: !SampleManager.cancelDownload
             onClicked: {
-                console.log("attempting to cancel download");
                 SampleManager.cancelDownload = true;
             }
             clip: true
