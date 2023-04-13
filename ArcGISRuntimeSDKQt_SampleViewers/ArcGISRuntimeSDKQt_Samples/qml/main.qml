@@ -308,12 +308,12 @@ ApplicationWindow {
     // set the Loader's source and set the description text to the converted markdown
     function showSample() {
         if (SampleManager.currentSample) {
+            descriptionView.descriptionText = SampleManager.currentSample.description;
             if (checkDataItems()) {
                 if (SampleManager.currentMode === SampleManager.ManageOfflineDataView || SampleManager.currentMode === SampleManager.DownloadDataView)
                     SampleManager.currentMode = SampleManager.LiveSampleView;
 
                 liveSample.source = SampleManager.currentSample.source;
-                descriptionView.descriptionText = SampleManager.currentSample.description;
             } else {
                 if (SampleManager.downloadInProgress)
                     SampleManager.currentMode = SampleManager.ManageOfflineDataView;
