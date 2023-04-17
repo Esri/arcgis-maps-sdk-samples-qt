@@ -42,7 +42,7 @@ Rectangle {
                 center: Point {
                     x: -9.5920
                     y: 53.08230
-                    spatialReference: Factory.SpatialReference.createWgs84()
+                    spatialReference: SpatialReference { wkid: 4326 }
                 }
                 targetScale: 5000
             }
@@ -65,7 +65,7 @@ Rectangle {
                             if (geometryEditor.started)
                                 return;
 
-                            const tolerance = 22;
+                            const tolerance = 5;
                             const returnPopupsOnly = false;
                             mapView.identifyGraphicsOverlay(geometriesOverlay, mouse.x, mouse.y, tolerance, returnPopupsOnly);
                         }
@@ -77,7 +77,7 @@ Rectangle {
             if (mapView.identifyGraphicsOverlayResult.graphics.length === 0)
                 return; // No graphic at location of tap.
             else if (mapView.identifyGraphicsOverlayResult.graphics.length > 1) {
-                console.log(qsTr("Multiple graphics identifed - cannot identify the intended graphic."));
+                console.log(qsTr("Multiple graphics identified - cannot identify the intended graphic."));
                 return;
             }
 
@@ -322,7 +322,7 @@ Rectangle {
                     buttonName: qsTr("Delete selected element")
                     iconPath: "qrc:/Samples/DisplayInformation/CreateAndEditGeometries/iconAssets/erase-32.png"
                     Layout.columnSpan: 2
-                    enabled: geometryEditor.started && geometryEditor.selectedElement
+                    enabled: geometryEditor.started && geometryEditor.selectedElement && geometryEditor.selectedElement.canDelete
                     onClicked: geometryEditor.deleteSelectedElement();
                 }
 
@@ -375,8 +375,8 @@ Rectangle {
     }
 
     function createInitialGraphics() {
-        let houseCoord = [-9.59309629, 53.0830063];
-        let outbuildingCoords = [
+        const houseCoord = [-9.59309629, 53.0830063];
+        const outbuildingCoords = [
                 [-9.59386587, 53.08289651],
                 [-9.59370896, 53.08234917],
                 [-9.59330546, 53.082564],
@@ -388,7 +388,7 @@ Rectangle {
                 [-9.59286835, 53.08311506],
                 [-9.59307943, 53.08234731]
             ];
-        let road1Coords = [
+        const road1Coords = [
                 [-9.59486423, 53.08169453],
                 [-9.5947812, 53.08175431],
                 [-9.59475464, 53.08189379],
@@ -402,7 +402,7 @@ Rectangle {
                 [-9.59264252, 53.08370038],
                 [-9.59250636, 53.08383986]
             ];
-        let road2Coords = [
+        const road2Coords = [
                 [-9.59400079, 53.08136244],
                 [-9.59395761, 53.08149528],
                 [-9.59368862, 53.0817045],
@@ -414,7 +414,7 @@ Rectangle {
                 [-9.59301447, 53.08363728],
                 [-9.59293809, 53.08387307]
             ];
-        let boundaryCoords = [
+        const boundaryCoords = [
                 [-9.59350122, 53.08320723],
                 [-9.59345177, 53.08333534],
                 [-9.59309789, 53.08327198],
