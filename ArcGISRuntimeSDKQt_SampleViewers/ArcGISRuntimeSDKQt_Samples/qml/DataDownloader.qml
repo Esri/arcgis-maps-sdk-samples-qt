@@ -92,11 +92,6 @@ Item {
     }
 
     function downloadNextItem() {
-        if (SampleManager.cancelDownload) {
-            downloadQueue = [];
-            SampleManager.cancelDownload = false;
-        }
-
         if (downloadQueue.length > 0) {
             SampleManager.downloadInProgress = true;
             const count = downloadQueue.length;
@@ -123,8 +118,6 @@ Item {
 
         function onDownloadDataFailed(itemId) {
             SampleManager.downloadText = "Download failed for item " + itemId;
-            SampleManager.downloadFailed = true;
-            SampleManager.downloadInProgress = false;
         }
 
         function onUnzipFile(filePath, extractPath) {
