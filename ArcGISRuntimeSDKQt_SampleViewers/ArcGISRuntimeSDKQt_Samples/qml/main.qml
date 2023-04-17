@@ -271,7 +271,31 @@ ApplicationWindow {
                 SampleManager.currentMode = SampleManager.NetworkRequiredView;
                 return;
             // If the sample requires offline data
+            } else if (SampleManager.currentSample.dataItems.size > 0) {
+                // If the data already exists, show the sample
+                if (checkDataItems()) {
+                    if (SampleManager.downloadInProgress) {
+                        if (dataDownloadView.pageDownloadInProgress) {
+                            SampleManager.currentMode = SampleManager.DownloadDataView;
+                            return;
+                        } else {
+                            showSample();
+                            return;
+                        }
+                    }
+                    showSample();
+                }
+                // Else, download the data
+                else {
+                    if (SampleManager.downloadInProgress && manageOfflineDataView.manageOfflineDataViewDownloadInProgress)
+                        SampleManager.currentMode = SampleManager.ManageOfflineDataView;
+                    else
+                        SampleManager.currentMode = SampleManager.DownloadDataView;
+                }
+                return;
             } else {
+                if (SampleManager.currentMode ===  SampleManager.DownloadDataView || SampleManager.currentMode === SampleManager.ManageOfflineDataView)
+                    SampleManager.currentMode = SampleManager.LiveSampleView;
                 showSample();
             }
         }
@@ -294,24 +318,18 @@ ApplicationWindow {
         }
 
         function onDoneDownloadingChanged() {
+            SampleManager.currentMode = SampleManager.LiveSampleView;
             showSample();
-        }
-
-        function onCurrentModeChanged() {
-            if (SampleManager.currentMode === SampleManager.LiveSampleView)
-                showSample();
         }
     }
 
     // set the Loader's source and set the description text to the converted markdown
     function showSample() {
         if (SampleManager.currentSample) {
-            descriptionView.descriptionText = SampleManager.currentSample.description;
             if (checkDataItems()) {
-                if (SampleManager.currentMode === SampleManager.ManageOfflineDataView || SampleManager.currentMode === SampleManager.DownloadDataView)
-                    SampleManager.currentMode = SampleManager.LiveSampleView;
-
                 liveSample.source = SampleManager.currentSample.source;
+                descriptionView.descriptionText = SampleManager.currentSample.description;
+                SampleManager.currentMode = SampleManager.LiveSampleView;
             } else {
                 if (SampleManager.downloadInProgress)
                     SampleManager.currentMode = SampleManager.ManageOfflineDataView;

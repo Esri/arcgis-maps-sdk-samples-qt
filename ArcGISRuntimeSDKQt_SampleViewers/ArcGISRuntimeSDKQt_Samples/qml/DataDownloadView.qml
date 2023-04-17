@@ -48,7 +48,7 @@ Page {
         }
 
         Label {
-            text:  SampleManager.downloadFailed ? SampleManager.downloadText : "This sample uses offline data that is not detected on your system. Press the 'Download' button to download the data to your device."
+            text: qsTr("This sample uses offline data that is not detected on your system. Press the 'Download' button to download the data to your device.")
             Layout.preferredWidth: parent.width
             Layout.alignment: Qt.AlignHCenter | Qt.AlignVCenter
             wrapMode: Text.WrapAtWordBoundaryOrAnywhere
@@ -61,7 +61,7 @@ Page {
         }
 
         Button {
-            text: (SampleManager.downloadFailed) ? qsTr("Retry") : qsTr("Download")
+            text: (dataDownloadLoader.item && dataDownloadLoader.item.failedToDownload) ? qsTr("Retry") : qsTr("Download")
             Layout.alignment: Qt.AlignHCenter | Qt.AlignVCenter
             visible: !SampleManager.downloadInProgress
             onClicked: {

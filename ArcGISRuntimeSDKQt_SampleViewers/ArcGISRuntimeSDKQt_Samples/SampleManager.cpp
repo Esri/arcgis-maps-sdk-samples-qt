@@ -106,17 +106,6 @@ void SampleManager::createAndSetTempDirForLocalServer()
 #endif
 }
 
-void SampleManager::setCancelDownload(bool cancel)
-{
-  m_cancelDownload = cancel;
-  emit cancelDownloadChanged();
-}
-
-void SampleManager::setDownloadFailed(bool didFail)
-{
-  m_downloadFailed = didFail;
-  emit downloadFailedChanged();
-}
 // Build the Categories List
 void SampleManager::buildCategoriesList()
 {
