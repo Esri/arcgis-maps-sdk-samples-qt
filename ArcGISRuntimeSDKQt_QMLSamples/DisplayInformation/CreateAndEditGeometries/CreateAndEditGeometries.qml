@@ -374,109 +374,79 @@ Rectangle {
         }
     }
 
+    Point {
+        id: house
+        json: {"x": -9.59309629,
+               "y": 53.0830063,
+               "spatialReference":{"wkid":4326}
+        }
+    }
+
+    Multipoint {
+        id: outbuildings
+        json: { "points":[[-9.59386587, 53.08289651], [-9.59370896, 53.08234917],
+                          [-9.59330546, 53.082564], [-9.59341755, 53.08286662],
+                          [-9.59326997, 53.08304595], [-9.59246485, 53.08294507],
+                          [-9.59250034, 53.08286101], [-9.59241815, 53.08284607],
+                          [-9.59286835, 53.08311506], [-9.59307943, 53.08234731]],
+            "spatialReference":{"wkid":4326}
+        }
+    }
+
+    Polyline {
+        id: road1
+        json: {"paths":[[[-9.59486423, 53.08169453], [-9.5947812, 53.08175431],
+                         [-9.59475464, 53.08189379], [-9.59494393, 53.08213622],
+                         [-9.59464173, 53.08240521], [-9.59413694, 53.08260115],
+                         [-9.59357903, 53.0829266], [-9.59335984, 53.08311589],
+                         [-9.59318051, 53.08316903], [-9.59301779, 53.08322216],
+                         [-9.59264252, 53.08370038], [-9.59250636, 53.08383986]]],
+            "spatialReference":{"wkid":4326}}
+    }
+
+    Polyline {
+        id: road2
+        json: {"paths":[[[-9.59400079, 53.08136244], [-9.59395761, 53.08149528],
+                         [-9.59368862, 53.0817045], [-9.59358235, 53.08219267],
+                         [-9.59331667, 53.08290335], [-9.59314398, 53.08314246],
+                         [-9.5930676, 53.08330519], [-9.59303439, 53.08351109],
+                         [-9.59301447, 53.08363728], [-9.59293809, 53.08387307]]],
+            "spatialReference":{"wkid":4326}}
+    }
+
+    Polygon {
+        id: boundary
+        json: { "rings": [[[-9.59350122, 53.08320723], [-9.59345177, 53.08333534],
+                           [-9.59309789, 53.08327198], [-9.59300344, 53.08317992],
+                           [-9.59221827, 53.08304034], [-9.59220706, 53.08287782],
+                           [-9.59229486, 53.08280871], [-9.59236398, 53.08268915],
+                           [-9.59255263, 53.08256769], [-9.59265165, 53.08237906],
+                           [-9.59287552, 53.08241478], [-9.59292812, 53.0823012],
+                           [-9.5932294, 53.08235022], [-9.59342188, 53.08260009],
+                           [-9.59354382, 53.08238728], [-9.59365852, 53.08203535],
+                           [-9.59408443, 53.08210446], [-9.59448232, 53.08224456],
+                           [-9.5943609, 53.08243697], [-9.59458319, 53.08245939],
+                           [-9.59439639, 53.08264619], [-9.59433288, 53.0827975],
+                           [-9.59404707, 53.08323649], [-9.59350122, 53.08320723]]],
+            "spatialReference":{"wkid":4326}}
+    }
+
     function createInitialGraphics() {
-        const houseCoord = [-9.59309629, 53.0830063];
-        const outbuildingCoords = [
-                [-9.59386587, 53.08289651],
-                [-9.59370896, 53.08234917],
-                [-9.59330546, 53.082564],
-                [-9.59341755, 53.08286662],
-                [-9.59326997, 53.08304595],
-                [-9.59246485, 53.08294507],
-                [-9.59250034, 53.08286101],
-                [-9.59241815, 53.08284607],
-                [-9.59286835, 53.08311506],
-                [-9.59307943, 53.08234731]
-            ];
-        const road1Coords = [
-                [-9.59486423, 53.08169453],
-                [-9.5947812, 53.08175431],
-                [-9.59475464, 53.08189379],
-                [-9.59494393, 53.08213622],
-                [-9.59464173, 53.08240521],
-                [-9.59413694, 53.08260115],
-                [-9.59357903, 53.0829266],
-                [-9.59335984, 53.08311589],
-                [-9.59318051, 53.08316903],
-                [-9.59301779, 53.08322216],
-                [-9.59264252, 53.08370038],
-                [-9.59250636, 53.08383986]
-            ];
-        const road2Coords = [
-                [-9.59400079, 53.08136244],
-                [-9.59395761, 53.08149528],
-                [-9.59368862, 53.0817045],
-                [-9.59358235, 53.08219267],
-                [-9.59331667, 53.08290335],
-                [-9.59314398, 53.08314246],
-                [-9.5930676, 53.08330519],
-                [-9.59303439, 53.08351109],
-                [-9.59301447, 53.08363728],
-                [-9.59293809, 53.08387307]
-            ];
-        const boundaryCoords = [
-                [-9.59350122, 53.08320723],
-                [-9.59345177, 53.08333534],
-                [-9.59309789, 53.08327198],
-                [-9.59300344, 53.08317992],
-                [-9.59221827, 53.08304034],
-                [-9.59220706, 53.08287782],
-                [-9.59229486, 53.08280871],
-                [-9.59236398, 53.08268915],
-                [-9.59255263, 53.08256769],
-                [-9.59265165, 53.08237906],
-                [-9.59287552, 53.08241478],
-                [-9.59292812, 53.0823012],
-                [-9.5932294, 53.08235022],
-                [-9.59342188, 53.08260009],
-                [-9.59354382, 53.08238728],
-                [-9.59365852, 53.08203535],
-                [-9.59408443, 53.08210446],
-                [-9.59448232, 53.08224456],
-                [-9.5943609, 53.08243697],
-                [-9.59458319, 53.08245939],
-                [-9.59439639, 53.08264619],
-                [-9.59433288, 53.0827975],
-                [-9.59404707, 53.08323649],
-                [-9.59350122, 53.08320723]
-            ];
 
-        createPolygonAndAddToGraphics(boundaryCoords);
-        createLineAndAddToGraphics(road1Coords);
-        createLineAndAddToGraphics(road2Coords);
-        createMultipointAndAddToGraphics(outbuildingCoords);
-        createPointAndAddToGraphics(houseCoord);
-    }
+        const boundaryGraphic = ArcGISRuntimeEnvironment.createObject("Graphic", {geometry: boundary, symbol: polygonSymbol});
+        geometriesOverlay.graphics.append(boundaryGraphic);
 
-    function createPointAndAddToGraphics(pointCoord) {
-        let pointBuilder = ArcGISRuntimeEnvironment.createObject("PointBuilder", {x: pointCoord[0], y: pointCoord[1], spatialReference: Factory.SpatialReference.createWgs84()});
-        const pointGeometry = pointBuilder.geometry;
-        const pointGraphic = ArcGISRuntimeEnvironment.createObject("Graphic", {geometry: pointGeometry, symbol: pointSymbol});
-        geometriesOverlay.graphics.append(pointGraphic);
-    }
+        const road1Graphic = ArcGISRuntimeEnvironment.createObject("Graphic", {geometry: road1, symbol: polylineSymbol});
+        geometriesOverlay.graphics.append(road1Graphic);
 
-    function createMultipointAndAddToGraphics(multipointCoords) {
-        let multipointBuilder = ArcGISRuntimeEnvironment.createObject("MultipointBuilder", {spatialReference: Factory.SpatialReference.createWgs84()});
-        multipointCoords.forEach( (coordinate) => {multipointBuilder.points.addPointXY(coordinate[0], coordinate[1])});
-        const multipointGeometry = multipointBuilder.geometry;
-        const multipointGraphic = ArcGISRuntimeEnvironment.createObject("Graphic", {geometry: multipointGeometry, symbol: multiPointSymbol});
-        geometriesOverlay.graphics.append(multipointGraphic);
-    }
+        const road2Graphic = ArcGISRuntimeEnvironment.createObject("Graphic", {geometry: road2, symbol: polylineSymbol});
+        geometriesOverlay.graphics.append(road2Graphic);
 
-    function createLineAndAddToGraphics(lineCoords) {
-        let polylineBuilder = ArcGISRuntimeEnvironment.createObject("PolylineBuilder", {spatialReference: Factory.SpatialReference.createWgs84()});
-        lineCoords.forEach( (coordinate) => {polylineBuilder.addPointXY(coordinate[0], coordinate[1])});
-        const polylineGeometry = polylineBuilder.geometry;
-        const polylineGraphic = ArcGISRuntimeEnvironment.createObject("Graphic", {geometry: polylineGeometry, symbol: polylineSymbol});
-        geometriesOverlay.graphics.append(polylineGraphic);
-    }
+        const outbuildingsGraphic = ArcGISRuntimeEnvironment.createObject("Graphic", {geometry: outbuildings, symbol: multiPointSymbol});
+        geometriesOverlay.graphics.append(outbuildingsGraphic);
 
-    function createPolygonAndAddToGraphics(polygonCoords) {
-        let polygonBuilder = ArcGISRuntimeEnvironment.createObject("PolygonBuilder", {spatialReference: Factory.SpatialReference.createWgs84()});
-        polygonCoords.forEach( (coordinate) => {polygonBuilder.addPointXY(coordinate[0], coordinate[1])});
-        const polygonGeometry = polygonBuilder.geometry;
-        const polygonGraphic = ArcGISRuntimeEnvironment.createObject("Graphic", {geometry: polygonGeometry, symbol: polygonSymbol});
-        geometriesOverlay.graphics.append(polygonGraphic);
+        const houseGraphic = ArcGISRuntimeEnvironment.createObject("Graphic", {geometry: house, symbol: pointSymbol});
+        geometriesOverlay.graphics.append(houseGraphic);
     }
 
     function updateSelectedGraphic() {
