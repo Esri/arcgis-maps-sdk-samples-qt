@@ -90,7 +90,7 @@ void ClosestFacility::componentComplete()
   createFacilities();
   createGraphics();
 
-  connect(m_task, &ClosestFacilityTask::doneLoading, this, [this] (Error loadError)
+  connect(m_task, &ClosestFacilityTask::doneLoading, this, [this] (const Error& loadError)
   {
     if (!loadError.isEmpty())
       return;
@@ -194,7 +194,7 @@ void ClosestFacility::createGraphics()
 void ClosestFacility::setupRouting()
 {
   connect(m_task, &ClosestFacilityTask::createDefaultParametersCompleted, this, [this](
-          QUuid, Esri::ArcGISRuntime::ClosestFacilityParameters defaultParameters)
+          const QUuid&, const ClosestFacilityParameters& defaultParameters)
   {
     setBusy(false);
 
@@ -203,7 +203,7 @@ void ClosestFacility::setupRouting()
   });
 
   connect(m_task, &ClosestFacilityTask::solveClosestFacilityCompleted, this, [this]
-          (QUuid, ClosestFacilityResult closestFacilityResult)
+          (const QUuid&, ClosestFacilityResult closestFacilityResult)
   {
     setBusy(false);
 
@@ -227,7 +227,7 @@ void ClosestFacility::setupRouting()
     if (busy())
       return;
 
-    Point mapPoint = m_mapView->screenToLocation(mouseEvent.pos().x(), mouseEvent.pos().y());
+    Point mapPoint = m_mapView->screenToLocation(mouseEvent.position().x(), mouseEvent.position().y());
     Point incidentPoint(mapPoint.x(), mapPoint.y(), SpatialReference::webMercator());
 
     m_incidentGraphic->setGeometry(incidentPoint);

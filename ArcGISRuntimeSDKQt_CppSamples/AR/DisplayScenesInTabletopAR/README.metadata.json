@@ -27,8 +27,6 @@
     "snippets": [
         "DisplayScenesInTabletopAR.cpp",
         "DisplayScenesInTabletopAR.h",
-        "PermissionsHelper.cpp",
-        "PermissionsHelper.h",
         "DisplayScenesInTabletopAR.qml"
     ],
     "title": "Display scenes in tabletop AR"

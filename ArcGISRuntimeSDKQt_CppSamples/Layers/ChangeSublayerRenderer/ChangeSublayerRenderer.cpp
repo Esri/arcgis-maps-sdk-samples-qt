@@ -64,7 +64,7 @@ void ChangeSublayerRenderer::componentComplete()
   ArcGISMapImageLayer* mapImageLayer = new ArcGISMapImageLayer(QUrl("https://sampleserver6.arcgisonline.com/arcgis/rest/services/Census/MapServer"), this);
 
   // Get the sublayer
-  connect(mapImageLayer, &ArcGISMapImageLayer::doneLoading, this, [this, mapImageLayer](Error e)
+  connect(mapImageLayer, &ArcGISMapImageLayer::doneLoading, this, [this, mapImageLayer](const Error& e)
   {
     if (!e.isEmpty())
       return;
@@ -75,7 +75,7 @@ void ChangeSublayerRenderer::componentComplete()
     m_sublayer = dynamic_cast<ArcGISMapImageSublayer*>(mapImageLayer->mapImageSublayers()->at(2));
 
     // get the sublayer's original renderer
-    connect(m_sublayer, &ArcGISMapImageSublayer::doneLoading, this, [this](Error e)
+    connect(m_sublayer, &ArcGISMapImageSublayer::doneLoading, this, [this](const Error& e)
     {
       if (!e.isEmpty())
         return;

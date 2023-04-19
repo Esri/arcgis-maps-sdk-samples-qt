@@ -19,7 +19,6 @@ import QtQuick.Controls
 import Esri.ArcGISRuntime
 import Esri.ArcGISExtras
 import Esri.ArcGISArToolkit
-import Esri.Samples
 
 Rectangle {
     id: rootRectangle
@@ -35,11 +34,6 @@ Rectangle {
     readonly property double sceneWidth: 800.0
     readonly property double tableTopWidth: 1.0
     property var philadelphiaScene: null
-
-    PermissionsHelper {
-        id: permissionsHelper
-        onRequestFilesystemAccessCompleted: mspk.load();
-    }
 
     ArcGISArView {
         id: arcGISArView
@@ -108,10 +102,7 @@ Rectangle {
     }
 
     Component.onCompleted: {
-        if (!permissionsHelper.fileSystemAccessGranted)
-            permissionsHelper.requestFilesystemAccess();
-        else
-            mspk.load();
+        mspk.load();
     }
 
     MobileScenePackage {

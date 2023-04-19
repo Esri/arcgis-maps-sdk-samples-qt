@@ -68,9 +68,6 @@ RESOURCES += \
     "$$SAMPLEPATHQML/Features/CreateMobileGeodatabase/CreateMobileGeodatabase.qrc" \
     "$$SAMPLEPATHQML/Features/FeatureLayer_ChangeRenderer/FeatureLayer_ChangeRenderer.qrc" \
     "$$SAMPLEPATHQML/Features/FeatureLayer_DictionaryRenderer/FeatureLayer_DictionaryRenderer.qrc" \
-    "$$SAMPLEPATHQML/Features/FeatureLayer_FeatureService/FeatureLayer_FeatureService.qrc" \
-    "$$SAMPLEPATHQML/Features/FeatureLayer_Geodatabase/FeatureLayer_Geodatabase.qrc" \
-    "$$SAMPLEPATHQML/Features/FeatureLayer_Geopackage/FeatureLayer_GeoPackage.qrc" \
     "$$SAMPLEPATHQML/Features/FeatureLayer_Query/FeatureLayer_Query.qrc" \
     "$$SAMPLEPATHQML/Features/FeatureLayer_Selection/FeatureLayer_Selection.qrc" \
     "$$SAMPLEPATHQML/Features/FilterByDefinitionExpressionOrDisplayFilter/FilterByDefinitionExpressionOrDisplayFilter.qrc" \
@@ -92,6 +89,7 @@ RESOURCES += \
     "$$SAMPLEPATHQML/Geometry/ProjectGeometry/ProjectGeometry.qrc" \
     "$$SAMPLEPATHQML/Geometry/SpatialOperations/SpatialOperations.qrc" \
     "$$SAMPLEPATHQML/Geometry/SpatialRelationships/SpatialRelationships.qrc" \
+    "$$SAMPLEPATHQML/Layers/AddDynamicEntityLayer/AddDynamicEntityLayer.qrc" \
     "$$SAMPLEPATHQML/Layers/AddEncExchangeSet/AddEncExchangeSet.qrc" \
     "$$SAMPLEPATHQML/Layers/ApplyMosaicRuleToRasters/ApplyMosaicRuleToRasters.qrc" \
     "$$SAMPLEPATHQML/Layers/ApplyUniqueValuesWithAlternateSymbols/ApplyUniqueValuesWithAlternateSymbols.qrc" \
@@ -105,6 +103,7 @@ RESOURCES += \
     "$$SAMPLEPATHQML/Layers/CreateAndSaveKmlFile/CreateAndSaveKmlFile.qrc" \
     "$$SAMPLEPATHQML/Layers/DisplayAnnotation/DisplayAnnotation.qrc" \
     "$$SAMPLEPATHQML/Layers/DisplayDimensions/DisplayDimensions.qrc" \
+    "$$SAMPLEPATHQML/Layers/DisplayFeatureLayers/DisplayFeatureLayers.qrc" \
     "$$SAMPLEPATHQML/Layers/DisplayKml/DisplayKml.qrc" \
     "$$SAMPLEPATHQML/Layers/DisplayKmlNetworkLinks/DisplayKmlNetworkLinks.qrc" \
     "$$SAMPLEPATHQML/Layers/DisplayOgcApiFeatureCollection/DisplayOgcApiFeatureCollection.qrc" \
@@ -117,7 +116,6 @@ RESOURCES += \
     "$$SAMPLEPATHQML/Layers/FeatureCollectionLayerQuery/FeatureCollectionLayerQuery.qrc" \
     "$$SAMPLEPATHQML/Layers/FeatureLayerRenderingModeMap/FeatureLayerRenderingModeMap.qrc" \
     "$$SAMPLEPATHQML/Layers/FeatureLayerRenderingModeScene/FeatureLayerRenderingModeScene.qrc" \
-    "$$SAMPLEPATHQML/Layers/FeatureLayerShapefile/FeatureLayerShapefile.qrc" \
     "$$SAMPLEPATHQML/Layers/GroupLayers/GroupLayers.qrc" \
     "$$SAMPLEPATHQML/Layers/Hillshade_Renderer/Hillshade_Renderer.qrc" \
     "$$SAMPLEPATHQML/Layers/IdentifyKmlFeatures/IdentifyKmlFeatures.qrc" \

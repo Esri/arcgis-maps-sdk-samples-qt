@@ -132,13 +132,13 @@ void EditAndSyncFeatures::connectSignals()
     {
       if (!m_selectedFeature)
       {
-        m_mapView->identifyLayer(m_map->operationalLayers()->first(), mouseEvent.pos().x(), mouseEvent.pos().y(), 5, false, 1);
+        m_mapView->identifyLayer(m_map->operationalLayers()->first(), mouseEvent.position().x(), mouseEvent.position().y(), 5, false, 1);
       }
       else
       {
         // connect to feature table signal
         FeatureLayer* featureLayer = static_cast<FeatureLayer*>(m_map->operationalLayers()->at(0));
-        connect(featureLayer->featureTable(), &GeodatabaseFeatureTable::updateFeatureCompleted, this, [this, featureLayer](QUuid, bool success)
+        connect(featureLayer->featureTable(), &GeodatabaseFeatureTable::updateFeatureCompleted, this, [this, featureLayer](const QUuid&, bool success)
         {
           if (success)
           {
@@ -150,7 +150,7 @@ void EditAndSyncFeatures::connectSignals()
         });
 
         // get the point from the mouse point
-        Point mapPoint = m_mapView->screenToLocation(mouseEvent.pos().x(), mouseEvent.pos().y());
+        Point mapPoint = m_mapView->screenToLocation(mouseEvent.position().x(), mouseEvent.position().y());
         m_selectedFeature->setGeometry(mapPoint);
         featureLayer->featureTable()->updateFeature(m_selectedFeature);
       }
@@ -158,7 +158,7 @@ void EditAndSyncFeatures::connectSignals()
   });
 
   // once the identify is done
-  connect(m_mapView, &MapQuickView::identifyLayerCompleted, this, [this](QUuid, Esri::ArcGISRuntime::IdentifyLayerResult* identifyResult)
+  connect(m_mapView, &MapQuickView::identifyLayerCompleted, this, [this](const QUuid&, IdentifyLayerResult* identifyResult)
   {
     if (!identifyResult)
       return;
@@ -350,4 +350,3 @@ void EditAndSyncFeatures::executeSync()
     emit hideWindow(5000, false);
   }
 }
-

@@ -112,11 +112,11 @@ void IdentifyGraphics::connectSignals()
     constexpr bool returnPopupsOnly = false;
     constexpr int maximumResults = 1;
 
-    m_mapView->identifyGraphicsOverlay(m_graphicsOverlay, mouseEvent.pos().x(), mouseEvent.pos().y(), tolerance, returnPopupsOnly, maximumResults);
+    m_mapView->identifyGraphicsOverlay(m_graphicsOverlay, mouseEvent.position().x(), mouseEvent.position().y(), tolerance, returnPopupsOnly, maximumResults);
   });
 
   // connect to the identifyLayerCompleted signal on the map view
-  connect(m_mapView, &MapQuickView::identifyGraphicsOverlayCompleted, this, [this](QUuid, IdentifyGraphicsOverlayResult* rawIdentifyResult)
+  connect(m_mapView, &MapQuickView::identifyGraphicsOverlayCompleted, this, [this](const QUuid&, IdentifyGraphicsOverlayResult* rawIdentifyResult)
   {
     // Delete rawIdentifyResult on leaving scope.
     auto identifyResult = std::unique_ptr<IdentifyGraphicsOverlayResult>(rawIdentifyResult);

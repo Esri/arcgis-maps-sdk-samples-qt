@@ -117,7 +117,7 @@ void EditFeatureAttachments::connectSignals()
     emit hideWindow();
 
     // call identify on the map view
-    m_mapView->identifyLayer(m_featureLayer, mouseEvent.pos().x(), mouseEvent.pos().y(), 5, false, 1);
+    m_mapView->identifyLayer(m_featureLayer, mouseEvent.position().x(), mouseEvent.position().y(), 5, false, 1);
   });
 
   // connect to the viewpoint changed signal on the MapQuickView
@@ -129,7 +129,7 @@ void EditFeatureAttachments::connectSignals()
 
   // connect to the identifyLayerCompleted signal on the map view
   connect(m_mapView, &MapQuickView::identifyLayerCompleted,
-          this, [this](QUuid, IdentifyLayerResult* identifyResult)
+          this, [this](const QUuid&, IdentifyLayerResult* identifyResult)
   {
     if(!identifyResult)
       return;
@@ -149,7 +149,7 @@ void EditFeatureAttachments::connectSignals()
 
   // connect to the queryFeaturesCompleted signal on the feature table
   connect(m_featureTable, &FeatureTable::queryFeaturesCompleted,
-          this, [this](QUuid, FeatureQueryResult* featureQueryResult)
+          this, [this](const QUuid&, FeatureQueryResult* featureQueryResult)
   {
     if (featureQueryResult && featureQueryResult->iterator().hasNext())
     {
@@ -171,7 +171,7 @@ void EditFeatureAttachments::connectSignals()
 
       // get the number of attachments
       connect(m_selectedFeature->attachments(), &AttachmentListModel::fetchAttachmentsCompleted,
-              this, [this](QUuid, const QList<Attachment*>& attachments)
+              this, [this](const QUuid&, const QList<Attachment*>& attachments)
       {
         m_mapView->calloutData()->setDetail(QString("Number of attachments: %1").arg(attachments.size()));
         m_mapView->calloutData()->setVisible(true); // Resizes the calloutData after details has been set.
@@ -181,7 +181,7 @@ void EditFeatureAttachments::connectSignals()
 
   // connect to the applyEditsCompleted signal from the ServiceFeatureTable
   connect(m_featureTable, &ServiceFeatureTable::applyEditsCompleted,
-          this, [this](QUuid, const QList<FeatureEditResult*>& featureEditResults)
+          this, [this](const QUuid&, const QList<FeatureEditResult*>& featureEditResults)
   {
     // Lock is a convenience wrapper that deletes the contents of featureEditResults when we leave scope.
     FeatureEditListResultLock lock(featureEditResults);

@@ -91,13 +91,13 @@ void FeatureLayerSelection::connectSignals()
     constexpr double tolerance = 22.0;
     constexpr bool returnPopupsOnly = false;
     constexpr int maximumResults = 1000;
-    const double screenX = mouseEvent.pos().x();
-    const double screenY = mouseEvent.pos().y();
+    const double screenX = mouseEvent.position().x();
+    const double screenY = mouseEvent.position().y();
     m_mapView->identifyLayer(m_featureLayer, screenX, screenY, tolerance, returnPopupsOnly, maximumResults);
   });
 
   // once the identify is done
-  connect(m_mapView, &MapQuickView::identifyLayerCompleted, this, [this](QUuid, Esri::ArcGISRuntime::IdentifyLayerResult* rawIdentifyResult)
+  connect(m_mapView, &MapQuickView::identifyLayerCompleted, this, [this](const QUuid&, IdentifyLayerResult* rawIdentifyResult)
   {
     auto identifyResult = std::unique_ptr<IdentifyLayerResult>(rawIdentifyResult);
 

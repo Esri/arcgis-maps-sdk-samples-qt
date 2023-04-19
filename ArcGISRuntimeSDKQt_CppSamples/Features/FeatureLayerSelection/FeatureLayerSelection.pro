@@ -24,13 +24,10 @@ CONFIG += c++17
 # additional modules are pulled in via arcgisruntime.pri
 QT += opengl qml quick
 
-ARCGIS_RUNTIME_VERSION = 200.0.0
-include($$PWD/arcgisruntime.pri)
-
 TEMPLATE = app
 TARGET = FeatureLayerSelection
 
-ARCGIS_RUNTIME_VERSION = 200.0.0
+ARCGIS_RUNTIME_VERSION = 200.1.0
 include($$PWD/arcgisruntime.pri)
 
 #-------------------------------------------------------------------------------

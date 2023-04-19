@@ -74,7 +74,7 @@ void CreateSymbolStylesFromWebStyles::createSymbolStyles()
   SymbolStyleSearchParameters searchParams;
   searchParams.setKeysStrictlyMatch(true);
 
-  connect(symbolStyle, &SymbolStyle::searchSymbolsCompleted, this, [this, symbolStyle, categoriesMap](QUuid /* taskId */, SymbolStyleSearchResultListModel* searchResults)
+  connect(symbolStyle, &SymbolStyle::searchSymbolsCompleted, this, [this, symbolStyle, categoriesMap](const QUuid& /* taskId */, SymbolStyleSearchResultListModel* searchResults)
   {
     m_legendInfoListModel = searchResults;
     emit legendInfoListModelChanged();
@@ -87,7 +87,7 @@ void CreateSymbolStylesFromWebStyles::createSymbolStyles()
       // We pass symbolStyle as the QObject parent for fetchSymbol() because we don't need access to the resulting class outside the lifetime of this SymbolStyle
       SymbolStyleSearchResultSymbolFetcher* symbolFetcher = symbolStyleSearchResult.fetchSymbol(symbolStyle);
 
-      connect(symbolFetcher, &SymbolStyleSearchResultSymbolFetcher::fetchSymbolCompleted, this, [this, symbolLabel, categoriesMap](QUuid /* taskId */, Symbol* symbol)
+      connect(symbolFetcher, &SymbolStyleSearchResultSymbolFetcher::fetchSymbolCompleted, this, [this, symbolLabel, categoriesMap](const QUuid& /* taskId */, Symbol* symbol)
       {
         // If multiple field names are set, we can pass multiple values from each field,
         // However, even though we are using the same symbol, we must create a UniqueValue for each value from the same field

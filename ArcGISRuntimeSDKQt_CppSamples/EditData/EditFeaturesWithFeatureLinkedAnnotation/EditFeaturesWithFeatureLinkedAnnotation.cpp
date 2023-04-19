@@ -135,7 +135,7 @@ void EditFeaturesWithFeatureLinkedAnnotation::setMapView(MapQuickView* mapView)
   emit mapViewChanged();
 }
 
-void EditFeaturesWithFeatureLinkedAnnotation::onGeodatabaseDoneLoading(Error error)
+void EditFeaturesWithFeatureLinkedAnnotation::onGeodatabaseDoneLoading(const Error& error)
 {
   if (!error.isEmpty())
     return;
@@ -170,17 +170,17 @@ void EditFeaturesWithFeatureLinkedAnnotation::onMouseClicked(QMouseEvent& mouseE
   if (m_selectedFeature)
   {
     // move feature to clicked locaiton if already selected
-    const Point clickedPoint = m_mapView->screenToLocation(mouseEvent.pos().x(), mouseEvent.pos().y());
+    const Point clickedPoint = m_mapView->screenToLocation(mouseEvent.position().x(), mouseEvent.position().y());
     moveFeature(clickedPoint);
   }
   else
   {
     // identify and select feature
-    m_mapView->identifyLayers(mouseEvent.pos().x(), mouseEvent.pos().y(), 10, false);
+    m_mapView->identifyLayers(mouseEvent.position().x(), mouseEvent.position().y(), 10, false);
   }
 }
 
-void EditFeaturesWithFeatureLinkedAnnotation::onIdentifyLayersCompleted(QUuid, const QList<IdentifyLayerResult*>& identifyResults)
+void EditFeaturesWithFeatureLinkedAnnotation::onIdentifyLayersCompleted(const QUuid&, const QList<IdentifyLayerResult*>& identifyResults)
 {
   // A convenience wrapper that deletes the contents of identifyResults when we leave scope.
   IdentifyLayerResultsScopedCleanup identifyResultsScopedCleanup(identifyResults);

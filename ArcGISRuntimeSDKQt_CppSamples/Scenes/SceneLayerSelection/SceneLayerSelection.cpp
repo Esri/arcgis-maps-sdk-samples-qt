@@ -92,7 +92,7 @@ void SceneLayerSelection::componentComplete()
 void SceneLayerSelection::connectSignals()
 {
   // handle the identifyLayerCompleted signal
-  connect(m_sceneView, &SceneQuickView::identifyLayerCompleted, this, [this](QUuid, IdentifyLayerResult* result)
+  connect(m_sceneView, &SceneQuickView::identifyLayerCompleted, this, [this](const QUuid&, IdentifyLayerResult* result)
   {
     // get the results
     QList<GeoElement*> geoElements = result->geoElements();
@@ -122,7 +122,6 @@ void SceneLayerSelection::connectSignals()
     m_sceneLayer->clearSelection();
 
     // identify from the click
-    m_sceneView->identifyLayer(m_sceneLayer, mouseEvent.pos().x(), mouseEvent.pos().y(), 10, false);
+    m_sceneView->identifyLayer(m_sceneLayer, mouseEvent.position().x(), mouseEvent.position().y(), 10, false);
   });
 }
-

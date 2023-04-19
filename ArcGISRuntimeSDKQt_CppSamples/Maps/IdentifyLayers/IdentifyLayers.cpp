@@ -69,7 +69,7 @@ void IdentifyLayers::componentComplete()
   m_map->operationalLayers()->append(imageLayer);
 
   // hide 2 of the sublayers in the map image layer
-  connect(imageLayer, &ArcGISMapImageLayer::doneLoading, this, [imageLayer](Error e)
+  connect(imageLayer, &ArcGISMapImageLayer::doneLoading, this, [imageLayer](const Error& e)
   {
     if (!e.isEmpty())
     {
@@ -110,11 +110,11 @@ void IdentifyLayers::connectSignals()
     const double tolerance = 12.0;
     const bool returnPopups = false;
     const int maxResults = 10;
-    m_mapView->identifyLayers(mouseEvent.pos().x(), mouseEvent.pos().y(), tolerance, returnPopups, maxResults);
+    m_mapView->identifyLayers(mouseEvent.position().x(), mouseEvent.position().y(), tolerance, returnPopups, maxResults);
   });
 
   // handle the identify results
-  connect(m_mapView, &MapQuickView::identifyLayersCompleted, this, [this](QUuid, const QList<IdentifyLayerResult*>& results)
+  connect(m_mapView, &MapQuickView::identifyLayersCompleted, this, [this](const QUuid&, const QList<IdentifyLayerResult*>& results)
   {
     // reset the message text
     m_message = QString();

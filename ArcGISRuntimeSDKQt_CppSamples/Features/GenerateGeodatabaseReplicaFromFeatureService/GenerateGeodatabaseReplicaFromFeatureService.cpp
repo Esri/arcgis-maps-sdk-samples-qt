@@ -112,7 +112,7 @@ void GenerateGeodatabaseReplicaFromFeatureService::componentComplete()
   //! [Features GenerateGeodatabase Part 1]
 
   // connect to sync task doneLoading signal
-  connect(m_syncTask, &GeodatabaseSyncTask::doneLoading, this, [this](Error error)
+  connect(m_syncTask, &GeodatabaseSyncTask::doneLoading, this, [this](const Error& error)
   {
     if (!error.isEmpty())
     {
@@ -142,7 +142,7 @@ void GenerateGeodatabaseReplicaFromFeatureService::componentComplete()
   });
 
   // connect to map doneLoading signal
-  connect(m_map, &Map::doneLoading, this, [this](Error error)
+  connect(m_map, &Map::doneLoading, this, [this](const Error& error)
   {
     if (error.isEmpty())
     {

@@ -88,6 +88,10 @@ Rectangle {
         }
 
         onIdentifyLayerStatusChanged: {
+            // When MapView.identifyLayerWithMaxResults completes,
+            // it will populate the MapView.identifyLayerResult property
+            // with an IdentifyLayerResult object that we can utilize
+
             if (identifyLayerStatus === Enums.TaskStatusCompleted) {
                 // clear any previous selections
                 featureLayer.clearSelection();

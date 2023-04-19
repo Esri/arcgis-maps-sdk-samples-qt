@@ -86,7 +86,7 @@ signals:
 
 private slots:
   void onTraceCompleted();
-  void onIdentifyLayersCompleted(QUuid, const QList<Esri::ArcGISRuntime::IdentifyLayerResult*>& results);
+  void onIdentifyLayersCompleted(const QUuid&, const QList<Esri::ArcGISRuntime::IdentifyLayerResult*>& results);
 
 private:
   Esri::ArcGISRuntime::MapQuickView* mapView() const;

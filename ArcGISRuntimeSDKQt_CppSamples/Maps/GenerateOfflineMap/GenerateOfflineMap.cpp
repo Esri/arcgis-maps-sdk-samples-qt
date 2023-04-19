@@ -64,13 +64,13 @@ void GenerateOfflineMap::componentComplete()
   // Create a Portal Item for use by the Map and OfflineMapTask
   bool loginRequired = false;
   Portal* portal = new Portal(loginRequired, this);
-  m_portalItem = new PortalItem(portal, webMapId(), this);
+  PortalItem* portalItem = new PortalItem(portal, webMapId(), this);
 
   // Create a map from the Portal Item
-  m_map = new Map(m_portalItem, this);
+  m_map = new Map(portalItem, this);
 
   // Update property once map is done loading
-  connect(m_map, &Map::doneLoading, this, [this](Error e)
+  connect(m_map, &Map::doneLoading, this, [this](const Error& e)
   {
     if (!e.isEmpty())
       return;
@@ -82,11 +82,11 @@ void GenerateOfflineMap::componentComplete()
   // Set map to map view
   m_mapView->setMap(m_map);
 
-  // Create the OfflineMapTask with the PortalItem
-  m_offlineMapTask = new OfflineMapTask(m_portalItem, this);
+  // Create the OfflineMapTask with the online map
+  m_offlineMapTask = new OfflineMapTask(m_map, this);
 
   // connect to the error signal
-  connect(m_offlineMapTask, &OfflineMapTask::errorOccurred, this, [](Error e)
+  connect(m_offlineMapTask, &OfflineMapTask::errorOccurred, this, [](const Error& e)
   {
     if (e.isEmpty())
       return;
@@ -105,7 +105,7 @@ void GenerateOfflineMap::generateMapByExtent(double xCorner1, double yCorner1, d
 
   // connect to the signal for when the default parameters are generated
   connect(m_offlineMapTask, &OfflineMapTask::createDefaultGenerateOfflineMapParametersCompleted,
-          this, [this](QUuid, const GenerateOfflineMapParameters& params)
+          this, [this](const QUuid&, const GenerateOfflineMapParameters& params)
   {
     // Take the map offline once the parameters are generated
     GenerateOfflineMapJob* generateJob = m_offlineMapTask->generateOfflineMap(params, m_tempPath.path() + "/offlinemap");
@@ -161,7 +161,7 @@ void GenerateOfflineMap::generateMapByExtent(double xCorner1, double yCorner1, d
       });
 
       // connect to the error signal
-      connect(generateJob, &GenerateOfflineMapJob::errorOccurred, this, [](Error e)
+      connect(generateJob, &GenerateOfflineMapJob::errorOccurred, this, [](const Error& e)
       {
         if (e.isEmpty())
           return;
@@ -182,4 +182,3 @@ void GenerateOfflineMap::generateMapByExtent(double xCorner1, double yCorner1, d
   // generate parameters
   m_offlineMapTask->createDefaultGenerateOfflineMapParameters(mapExtent);
 }
-

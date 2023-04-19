@@ -117,7 +117,6 @@ void OrbitCameraAroundObject::setSceneView(SceneQuickView* sceneView)
   }
   sceneOverlay->setRenderer(renderer3D);
 
-
   /* Plane model Setup */
   //Create a plane model.
   QUrl planeFileURl = QUrl(defaultDataPath() + "/ArcGIS/Runtime/Data/3D/Bristol/Collada/Bristol.dae");
@@ -133,7 +132,6 @@ void OrbitCameraAroundObject::setSceneView(SceneQuickView* sceneView)
 
   //Add the plane graphic to the scene.
   m_sceneView->graphicsOverlays()->at(0)->graphics()->append(m_planeGraphic);
-
 
   /* Orbiting Camera setup */
   // create the camera controller to follow the plane
@@ -192,7 +190,7 @@ void OrbitCameraAroundObject::cockpitView()
 
   //Camera move-to-cockpit callback.
   connect(m_orbitCam, &OrbitGeoElementCameraController::moveCameraCompleted, this,
-          [this](QUuid, bool succeeded)
+          [this](const QUuid&, bool succeeded)
   {
     if (succeeded)
     {

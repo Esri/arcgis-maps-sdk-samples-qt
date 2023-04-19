@@ -342,7 +342,7 @@ class READMEFile:
             self.title = header[0][2:]
             self.description, self.screenshot = header[1].split("\n![]") # This doesn't work if screenshot is formatted improperly.
         except Exception as e:
-            return f"Title, description, or screenshot.png formatted incorrectly. README check cannot proceed.\nFatal error: {e}"
+            raise Exception(f"Title, description, or screenshot.png formatted incorrectly. README check cannot proceed.\nFatal error: {e}")
 
         # If all goes well, the only sections remaining in the text begin with h2's (## )
         for section in text:

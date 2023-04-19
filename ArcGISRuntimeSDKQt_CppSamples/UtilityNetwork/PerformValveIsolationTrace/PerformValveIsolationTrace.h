@@ -63,7 +63,7 @@ public:
   Q_INVOKABLE void selectedTerminal(int index);
 
 private slots:
-  void onIdentifyLayersCompleted(QUuid, const QList<Esri::ArcGISRuntime::IdentifyLayerResult*>& results);
+  void onIdentifyLayersCompleted(const QUuid&, const QList<Esri::ArcGISRuntime::IdentifyLayerResult*>& results);
 
 signals:
   void mapViewChanged();

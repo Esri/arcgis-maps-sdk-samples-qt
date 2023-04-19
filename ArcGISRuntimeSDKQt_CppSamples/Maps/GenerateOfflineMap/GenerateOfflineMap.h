@@ -21,7 +21,6 @@ namespace Esri::ArcGISRuntime
 {
 class Map;
 class MapQuickView;
-class PortalItem;
 class OfflineMapTask;
 }
 
@@ -57,7 +56,6 @@ private:
 private:
   Esri::ArcGISRuntime::Map* m_map = nullptr;
   Esri::ArcGISRuntime::MapQuickView* m_mapView = nullptr;
-  Esri::ArcGISRuntime::PortalItem* m_portalItem = nullptr;
   Esri::ArcGISRuntime::OfflineMapTask* m_offlineMapTask = nullptr;
   static const QString s_webMapId;
   bool m_mapLoaded = false;

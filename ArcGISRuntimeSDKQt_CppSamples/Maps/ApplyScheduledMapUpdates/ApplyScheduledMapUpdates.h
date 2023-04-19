@@ -65,7 +65,7 @@ private:
   QTemporaryDir m_TempDir;
 
 private slots:
-  void onMmpkDoneLoading(Esri::ArcGISRuntime::Error e);
+  void onMmpkDoneLoading(const Esri::ArcGISRuntime::Error& e);
 };
 
 #endif // APPLYSCHEDULEDMAPUPDATES_H

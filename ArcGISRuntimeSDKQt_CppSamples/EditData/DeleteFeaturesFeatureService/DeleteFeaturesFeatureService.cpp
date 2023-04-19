@@ -105,8 +105,8 @@ void DeleteFeaturesFeatureService::connectSignals()
     // call identify on the map view
     constexpr double tolerance = 5.0;
     constexpr int maxResults = 1;
-    const double screenX = mouseEvent.pos().x();
-    const double screenY = mouseEvent.pos().y();
+    const double screenX = mouseEvent.position().x();
+    const double screenY = mouseEvent.position().y();
     constexpr bool returnPopupsOnly = false;
     m_mapView->identifyLayer(m_featureLayer, screenX, screenY, tolerance, returnPopupsOnly, maxResults);
     //! [DeleteFeaturesFeatureService identify feature]
@@ -120,7 +120,7 @@ void DeleteFeaturesFeatureService::connectSignals()
   });
 
   // connect to the identifyLayerCompleted signal on the map view
-  connect(m_mapView, &MapQuickView::identifyLayerCompleted, this, [this](QUuid, IdentifyLayerResult* rawIdentifyResult)
+  connect(m_mapView, &MapQuickView::identifyLayerCompleted, this, [this](const QUuid&, IdentifyLayerResult* rawIdentifyResult)
   {
     // Deletes rawIdentifyResult instance when we leave scope.
     auto identifyResult = std::unique_ptr<IdentifyLayerResult>(rawIdentifyResult);
@@ -160,7 +160,7 @@ void DeleteFeaturesFeatureService::connectSignals()
   });
 
   // connect to the selectedFeatures signal on the feature layer
-  connect(m_featureLayer, &FeatureLayer::selectFeaturesCompleted, this, [this](QUuid, FeatureQueryResult* rawFeatureQueryResult)
+  connect(m_featureLayer, &FeatureLayer::selectFeaturesCompleted, this, [this](const QUuid&, FeatureQueryResult* rawFeatureQueryResult)
   {
     // Delete rawFeatureQueryResult pointer when we leave scope.
     auto featureQueryResult = std::unique_ptr<FeatureQueryResult>(rawFeatureQueryResult);
@@ -179,7 +179,7 @@ void DeleteFeaturesFeatureService::connectSignals()
   });
 
   // connect to the deleteFeatureCompleted signal from the ServiceFeatureTable
-  connect(m_featureTable, &ServiceFeatureTable::deleteFeatureCompleted, this, [this](QUuid, bool success)
+  connect(m_featureTable, &ServiceFeatureTable::deleteFeatureCompleted, this, [this](const QUuid&, bool success)
   {
     // if delete feature was successful, call apply edits
     if (success)
@@ -187,7 +187,7 @@ void DeleteFeaturesFeatureService::connectSignals()
   });
 
   // connect to the applyEditsCompleted signal from the ServiceFeatureTable
-  connect(m_featureTable, &ServiceFeatureTable::applyEditsCompleted, this, [](QUuid, const QList<FeatureEditResult*>& featureEditResults)
+  connect(m_featureTable, &ServiceFeatureTable::applyEditsCompleted, this, [](const QUuid&, const QList<FeatureEditResult*>& featureEditResults)
   {
     // obtain the first item in the list
     FeatureEditResult* featureEditResult = featureEditResults.isEmpty() ? nullptr : featureEditResults.first();
