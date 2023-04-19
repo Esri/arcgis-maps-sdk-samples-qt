@@ -62,12 +62,15 @@ Rectangle {
             forceActiveFocus();
         }
 
+        //! [map with basemap from vtpk]
         Map {
             Basemap {
                 ArcGISVectorTiledLayer {
                     url: dataPath + "vtpk/FillmoreTopographicMap.vtpk"
                 }
             }
+        //... other map properties
+        //! [map with basemap from vtpk]
 
             ViewpointCenter {
                 Point {

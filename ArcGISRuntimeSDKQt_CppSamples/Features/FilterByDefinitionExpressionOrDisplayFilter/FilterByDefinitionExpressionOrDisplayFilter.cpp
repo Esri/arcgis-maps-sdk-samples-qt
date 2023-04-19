@@ -131,7 +131,7 @@ void FilterByDefinitionExpressionOrDisplayFilter::queryFeatureCountInCurrentExte
   parameters.setGeometry(m_mapView->currentViewpoint(ViewpointType::BoundingGeometry).targetGeometry());
 
   connect(m_featureTable, &GeodatabaseFeatureTable::queryFeatureCountCompleted,
-          this, [this](QUuid, int countResult)
+          this, [this](const QUuid&, int countResult)
   {
     m_currentFeatureCount = countResult;
     emit currentFeatureCountChanged();

@@ -98,7 +98,7 @@ void RasterLayerFile::createAndAddRasterLayer(QString dataPath)
   RasterLayer* rasterLayer = new RasterLayer(raster, this);
   //! [RasterLayerFile cpp new raster layer]
 
-  connect(rasterLayer, &RasterLayer::doneLoading, this, [this, rasterLayer](Error loadError)
+  connect(rasterLayer, &RasterLayer::doneLoading, this, [this, rasterLayer](const Error& loadError)
   {
     if (!loadError.isEmpty())
       return;

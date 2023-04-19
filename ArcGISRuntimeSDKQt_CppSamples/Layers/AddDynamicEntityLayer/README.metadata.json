@@ -1,0 +1,42 @@
+{
+    "category": "Layers",
+    "description": "Display data from an ArcGIS stream service using a dynamic entity layer.",
+    "ignore": false,
+    "images": [
+        "screenshot.png"
+    ],
+    "keywords": [
+        "data",
+        "dynamic",
+        "entity",
+        "live",
+        "purge",
+        "real-time",
+        "service",
+        "stream",
+        "track",
+        "ArcGISStreamService",
+        "ArcGISStreamServiceFilter",
+        "ConnectionStatus",
+        "DynamicEntity",
+        "DynamicEntityLayer",
+        "DynamicEntityPurgeOptions",
+        "TrackDisplayProperties"
+    ],
+    "redirect_from": "",
+    "relevant_apis": [
+        "ArcGISStreamService",
+        "ArcGISStreamServiceFilter",
+        "ConnectionStatus",
+        "DynamicEntity",
+        "DynamicEntityLayer",
+        "DynamicEntityPurgeOptions",
+        "TrackDisplayProperties"
+    ],
+    "snippets": [
+        "AddDynamicEntityLayer.cpp",
+        "AddDynamicEntityLayer.h",
+        "AddDynamicEntityLayer.qml"
+    ],
+    "title": "Add dynamic entity layer"
+}

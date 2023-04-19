@@ -72,7 +72,7 @@ Rectangle {
                             color: "red"
 
                             SimpleLineSymbol {
-                                style: "SimpleLineSymbolStyleSolid"
+                                style: Enums.SimpleLineSymbolStyleSolid
                                 color: "red"
                                 width: 2
                             }
@@ -91,7 +91,7 @@ Rectangle {
                             color: "green"
 
                             SimpleLineSymbol {
-                                style: "SimpleLineSymbolStyleSolid"
+                                style: Enums.SimpleLineSymbolStyleSolid
                                 color: "green"
                                 width: 2
                             }
@@ -110,7 +110,7 @@ Rectangle {
                             color: "blue"
 
                             SimpleLineSymbol {
-                                style: "SimpleLineSymbolStyleSolid"
+                                style: Enums.SimpleLineSymbolStyleSolid
                                 color: "blue"
                                 width: 2
                             }

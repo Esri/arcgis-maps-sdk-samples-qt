@@ -119,7 +119,7 @@ void RouteAroundBarriers::setMapView(MapQuickView* mapView)
 
 void RouteAroundBarriers::connectRouteSignals()
 {
-  connect(m_routeTask, &RouteTask::createDefaultParametersCompleted, this, [this](QUuid, const RouteParameters& defaultParameters)
+  connect(m_routeTask, &RouteTask::createDefaultParametersCompleted, this, [this](const QUuid&, const RouteParameters& defaultParameters)
   {
     m_routeParameters = defaultParameters;
 
@@ -128,7 +128,7 @@ void RouteAroundBarriers::connectRouteSignals()
     m_routeParameters.setReturnDirections(true);
   });
 
-  connect(m_routeTask, &RouteTask::doneLoading, this, [this](Error loadError)
+  connect(m_routeTask, &RouteTask::doneLoading, this, [this](const Error& loadError)
   {
     if (loadError.isEmpty())
     {
@@ -142,7 +142,7 @@ void RouteAroundBarriers::connectRouteSignals()
 
   connect(m_mapView, &MapQuickView::mouseClicked, this, [this](QMouseEvent& e)
   {
-    const Point clickedPoint = m_mapView->screenToLocation(e.pos().x(), e.pos().y());
+    const Point clickedPoint = m_mapView->screenToLocation(e.position().x(), e.position().y());
     if (m_addStops)
     {
       // add stop to list of stops
@@ -174,7 +174,7 @@ void RouteAroundBarriers::connectRouteSignals()
     }
   });
 
-  connect (m_routeTask, &RouteTask::solveRouteCompleted, this, [this](QUuid, const RouteResult& routeResult)
+  connect (m_routeTask, &RouteTask::solveRouteCompleted, this, [this](const QUuid&, const RouteResult& routeResult)
   {
     if (routeResult.isEmpty())
       return;

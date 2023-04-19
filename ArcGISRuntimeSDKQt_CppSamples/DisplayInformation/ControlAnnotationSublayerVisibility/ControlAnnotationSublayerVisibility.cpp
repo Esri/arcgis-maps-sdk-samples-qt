@@ -62,7 +62,7 @@ ControlAnnotationSublayerVisibility::ControlAnnotationSublayerVisibility(QObject
 
   // connect to the Mobile Map Package instance to know when errors occur
   connect(MobileMapPackage::instance(), &MobileMapPackage::errorOccurred,
-          [](Error error)
+          [](const Error& error)
   {
     if (error.isEmpty())
       return;
@@ -120,7 +120,7 @@ void ControlAnnotationSublayerVisibility::createMapPackage(const QString& path)
   m_mobileMapPackage = new MobileMapPackage(path, this);
 
   // wait for the mobile map package to load
-  connect(m_mobileMapPackage, &MobileMapPackage::doneLoading, this, [this](Error error)
+  connect(m_mobileMapPackage, &MobileMapPackage::doneLoading, this, [this](const Error& error)
   {
     if (!error.isEmpty())
     {
@@ -142,7 +142,7 @@ void ControlAnnotationSublayerVisibility::createMapPackage(const QString& path)
       if (layer->layerType() == LayerType::AnnotationLayer)
       {
         m_annoLayer = layer;
-        connect(m_annoLayer, &Layer::doneLoading, this, [this](Error error)
+        connect(m_annoLayer, &Layer::doneLoading, this, [this](const Error& error)
         {
           if (!error.isEmpty())
           {

@@ -20,15 +20,11 @@ QT += opengl qml quick
 
 CONFIG += c++17
 
-ARCGIS_RUNTIME_VERSION = 200.0.0
+ARCGIS_RUNTIME_VERSION = 200.1.0
 include($$PWD/arcgisruntime.pri)
 
-HEADERS += \
-    PermissionsHelper.h
-
 SOURCES += \
-    main.cpp \
-    PermissionsHelper.cpp
+    main.cpp
 
 RESOURCES += \
     DisplayScenesInTabletopAR.qrc
@@ -44,7 +40,7 @@ ios {
 # from the GitHub repo: https://github.com/Esri/arcgis-runtime-toolkit-qt
 
 # path of the toolkit relative to the sample
-ARCGIS_TOOLKIT_PATH = $$PWD/../../../arcgis-runtime-toolkit-qt
+ARCGIS_TOOLKIT_PATH = $$PWD/../../../arcgis-maps-sdk-toolkit-qt
 
 exists($$ARCGIS_TOOLKIT_PATH/augmentedreality/QmlApi/ArQmlApi.pri) {
     include($$ARCGIS_TOOLKIT_PATH/augmentedreality/QmlApi/ArQmlApi.pri)

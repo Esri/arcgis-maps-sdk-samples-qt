@@ -37,7 +37,9 @@ DisplayMap::~DisplayMap() = default;
 void DisplayMap::init()
 {
   // Register the map view for QML
+  //! [Register the map view for QML]
   qmlRegisterType<MapQuickView>("Esri.Samples", 1, 0, "MapView");
+  //! [Register the map view for QML]
   qmlRegisterType<DisplayMap>("Esri.Samples", 1, 0, "DisplayMapSample");
 }
 
@@ -46,6 +48,7 @@ MapQuickView* DisplayMap::mapView() const
   return m_mapView;
 }
 
+//! [MapQuickView API Snippet]
 // Set the view (created in QML)
 void DisplayMap::setMapView(MapQuickView* mapView)
 {
@@ -57,3 +60,4 @@ void DisplayMap::setMapView(MapQuickView* mapView)
 
   emit mapViewChanged();
 }
+ //! [MapQuickView API Snippet]

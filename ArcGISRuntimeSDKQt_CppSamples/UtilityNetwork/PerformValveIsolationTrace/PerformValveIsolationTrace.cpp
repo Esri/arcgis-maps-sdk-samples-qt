@@ -105,7 +105,7 @@ PerformValveIsolationTrace::PerformValveIsolationTrace(QObject* parent /* = null
   // disable UI while loading service geodatabase and utility network
   m_tasksRunning = true;
 
-  connect(m_serviceGeodatabase, &ServiceGeodatabase::doneLoading, this, [this](Error error)
+  connect(m_serviceGeodatabase, &ServiceGeodatabase::doneLoading, this, [this](const Error& error)
   {
     if (m_utilityNetwork->loadStatus() == LoadStatus::Loaded)
     {
@@ -170,8 +170,8 @@ void PerformValveIsolationTrace::setMapView(MapQuickView* mapView)
 
     constexpr double tolerance = 10.0;
     constexpr bool returnPopups = false;
-    m_clickPoint = m_mapView->screenToLocation(mouseEvent.pos().x(), mouseEvent.pos().y());
-    m_mapView->identifyLayers(mouseEvent.pos().x(), mouseEvent.pos().y(), tolerance, returnPopups);
+    m_clickPoint = m_mapView->screenToLocation(mouseEvent.position().x(), mouseEvent.position().y());
+    m_mapView->identifyLayers(mouseEvent.position().x(), mouseEvent.position().y(), tolerance, returnPopups);
   });
 
   // handle the identify resultss
@@ -328,7 +328,7 @@ void PerformValveIsolationTrace::connectSignals()
     emit categoriesListChanged();
   });
 
-  connect(m_utilityNetwork, &UtilityNetwork::traceCompleted, this, [this](QUuid)
+  connect(m_utilityNetwork, &UtilityNetwork::traceCompleted, this, [this](const QUuid&)
   {
     // local paret to clean up UtilityElementTraceResult when we leave scope.
     QObject localParent;
@@ -387,7 +387,7 @@ void PerformValveIsolationTrace::connectSignals()
     }
   });
 
-  connect(m_utilityNetwork, &UtilityNetwork::featuresForElementsCompleted, this, [this](QUuid)
+  connect(m_utilityNetwork, &UtilityNetwork::featuresForElementsCompleted, this, [this](const QUuid&)
   {
     // display starting location
     ArcGISFeatureListModel* elementFeaturesList = m_utilityNetwork->featuresForElementsResult();
@@ -412,7 +412,7 @@ bool PerformValveIsolationTrace::tasksRunning() const
   return m_tasksRunning;
 }
 
-void PerformValveIsolationTrace::onIdentifyLayersCompleted(QUuid, const QList<IdentifyLayerResult*>& results)
+void PerformValveIsolationTrace::onIdentifyLayersCompleted(const QUuid&, const QList<IdentifyLayerResult*>& results)
 {
   // A convenience wrapper that deletes the contents of results when we leave scope.
   ScopedCleanup<IdentifyLayerResult> resultsScopedCleanup(results);

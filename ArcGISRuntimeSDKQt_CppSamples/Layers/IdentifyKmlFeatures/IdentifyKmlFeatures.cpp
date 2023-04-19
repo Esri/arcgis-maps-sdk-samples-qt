@@ -78,7 +78,7 @@ void IdentifyKmlFeatures::setMapView(MapQuickView* mapView)
   // start zoomed in over the US
   m_mapView->setViewpointGeometry(Envelope(-19195297.778679, 512343.939994, -3620418.579987, 8658913.035426, SpatialReference::webMercator()));
 
-  connect(m_mapView, &MapQuickView::identifyLayerCompleted, this, [this](QUuid, Esri::ArcGISRuntime::IdentifyLayerResult* rawResult)
+  connect(m_mapView, &MapQuickView::identifyLayerCompleted, this, [this](const QUuid&, IdentifyLayerResult* rawResult)
   {
     auto result = std::unique_ptr<IdentifyLayerResult>(rawResult);
 
@@ -114,8 +114,8 @@ void IdentifyKmlFeatures::setMapView(MapQuickView* mapView)
   // identify clicked features
   connect(m_mapView, &MapQuickView::mouseClicked, this, [this](QMouseEvent& e)
   {
-    m_clickedPoint = m_mapView->screenToLocation(e.pos().x(), e.pos().y());
-    m_mapView->identifyLayer(m_forecastLayer, e.pos().x(), e.pos().y(), 15, false);
+    m_clickedPoint = m_mapView->screenToLocation(e.position().x(), e.position().y());
+    m_mapView->identifyLayer(m_forecastLayer, e.position().x(), e.position().y(), 15, false);
   });
 
   emit mapViewChanged();

@@ -79,11 +79,13 @@ QString defaultDataPath()
 ContingentValues::ContingentValues(QObject* parent /* = nullptr */):
   QObject(parent)
 {
+  //! [map with basemap from vtpk]
   // Load the basemap from a vector tile package
   const QString vtpkDataPath = defaultDataPath() + "/ArcGIS/Runtime/Data/vtpk/FillmoreTopographicMap.vtpk";
   ArcGISVectorTiledLayer* fillmoreVTPK = new ArcGISVectorTiledLayer(QUrl::fromLocalFile(vtpkDataPath), this);
   Basemap* fillmoreBasemap = new Basemap(fillmoreVTPK, this);
   m_map = new Map(fillmoreBasemap, this);
+  //! [map with basemap from vtpk]
 
   // Load the geodatabase from a mobile geodatabase
   const QString gdbDataPath = defaultDataPath() + "/ArcGIS/Runtime/Data/geodatabase/ContingentValuesBirdNests.geodatabase";
@@ -166,7 +168,7 @@ void ContingentValues::createConnections()
 void ContingentValues::createNewEmptyFeature(QMouseEvent& mouseEvent)
 {
   // Create a new empty feature to define attributes for
-  m_newFeature = static_cast<ArcGISFeature*>(m_gdbFeatureTable->createFeature({}, m_mapView->screenToLocation(mouseEvent.pos().x(), mouseEvent.pos().y()), this));
+  m_newFeature = static_cast<ArcGISFeature*>(m_gdbFeatureTable->createFeature({}, m_mapView->screenToLocation(mouseEvent.position().x(), mouseEvent.position().y()), this));
   m_gdbFeatureTable->addFeature(m_newFeature);
 
   // Show the attribute form interface
@@ -271,7 +273,7 @@ void ContingentValues::queryAndBufferFeatures()
 }
 
 // Buffers all features from the preceeding feature query using the BufferSize field value, create graphics with the results, and adds them to the graphics overlay
-void ContingentValues::bufferFeaturesFromQueryResults(QUuid, FeatureQueryResult* results)
+void ContingentValues::bufferFeaturesFromQueryResults(const QUuid&, FeatureQueryResult* results)
 {
   FeatureIterator iterator = results->iterator();
 

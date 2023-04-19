@@ -143,7 +143,7 @@ void NearestVertex::setupGraphics()
           [nearestVertexGraphic, nearestCoordinateGraphic, polygonBuilder, clickedLocationGraphic, this]
           (QMouseEvent& e)
   {
-    const Point clickedLocation = m_mapView->screenToLocation(e.pos().x(), e.pos().y());
+    const Point clickedLocation = m_mapView->screenToLocation(e.position().x(), e.position().y());
     // normalizing the geometry before performing geometric operations
     const Point normalizedPoint = geometry_cast<Point>(GeometryEngine::normalizeCentralMeridian(clickedLocation));
 

@@ -50,7 +50,7 @@ signals:
   void errorMessageChanged();
 
 private slots:
-  void logError(Esri::ArcGISRuntime::Error error);
+  void logError(const Esri::ArcGISRuntime::Error& error);
 
 private:
   static const QString FIELD_CONTROL_POINTS;

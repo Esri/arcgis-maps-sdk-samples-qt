@@ -68,7 +68,7 @@ signals:
   void errorMessageChanged();
 
 private slots:
-  void logError(const Esri::ArcGISRuntime::Error error);
+  void logError(const Esri::ArcGISRuntime::Error& error);
 
 private:
   Esri::ArcGISRuntime::SuggestListModel* suggestions() const;

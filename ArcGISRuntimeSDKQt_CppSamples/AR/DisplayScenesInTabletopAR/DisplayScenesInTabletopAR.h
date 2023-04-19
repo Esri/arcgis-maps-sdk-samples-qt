@@ -28,7 +28,6 @@ class SceneQuickView;
 
 #include <QObject>
 #include "ArcGISArView.h"
-#include "PermissionsHelper.h"
 
 class DisplayScenesInTabletopAR : public QObject
 {
@@ -62,7 +61,6 @@ private:
   Esri::ArcGISRuntime::SceneQuickView* m_sceneView = nullptr;
   Esri::ArcGISRuntime::MobileScenePackage* m_scenePackage = nullptr;
   Esri::ArcGISRuntime::Camera m_originCamera;
-  PermissionsHelper* m_permissionsHelper = nullptr;
 
   Esri::ArcGISRuntime::Toolkit::ArcGISArView* arcGISArView() const;
   void setArcGISArView(Esri::ArcGISRuntime::Toolkit::ArcGISArView* arcGISArView);

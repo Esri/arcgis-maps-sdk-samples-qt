@@ -27,19 +27,17 @@ QT += opengl qml quick
 TEMPLATE = app
 TARGET = DisplayScenesInTabletopAR
 
-ARCGIS_RUNTIME_VERSION = 200.0.0
+ARCGIS_RUNTIME_VERSION = 200.1.0
 include($$PWD/arcgisruntime.pri)
 
 #-------------------------------------------------------------------------------
 
 HEADERS += \
-    DisplayScenesInTabletopAR.h \
-    PermissionsHelper.h
+    DisplayScenesInTabletopAR.h
 
 SOURCES += \
     main.cpp \
-    DisplayScenesInTabletopAR.cpp \
-    PermissionsHelper.cpp
+    DisplayScenesInTabletopAR.cpp
 
 RESOURCES += DisplayScenesInTabletopAR.qrc
 

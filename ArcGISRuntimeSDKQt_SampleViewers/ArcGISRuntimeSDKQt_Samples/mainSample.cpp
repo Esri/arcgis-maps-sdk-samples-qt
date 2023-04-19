@@ -62,6 +62,7 @@
 // All CPP Samples
 #ifdef CPP_VIEWER
 #include "AddAPointSceneLayer.h"
+#include "AddDynamicEntityLayer.h"
 #include "AddEncExchangeSet.h"
 #include "AddFeaturesFeatureService.h"
 #include "AddGraphicsWithRenderer.h"
@@ -113,11 +114,12 @@
 #include "DensifyAndGeneralize.h"
 #include "Display3DLabelsInScene.h"
 #include "DisplayAnnotation.h"
-#include "DisplayDimensions.h"
 #include "DisplayContentOfUtilityNetworkContainer.h"
+#include "DisplayDimensions.h"
 #include "DisplayDeviceLocation.h"
 #include "DisplayDeviceLocationWithNmeaDataSources.h"
 #include "DisplayDrawingStatus.h"
+#include "DisplayFeatureLayers.h"
 #include "DisplayGrid.h"
 #include "DisplayKml.h"
 #include "DisplayKmlNetworkLinks.h"
@@ -144,17 +146,13 @@
 #include "Feature_Collection_Layer.h"
 #include "FeatureCollectionLayerFromPortal.h"
 #include "FeatureCollectionLayerQuery.h"
-#include "FeatureLayer_GeoPackage.h"
 #include "FeatureLayerChangeRenderer.h"
 #include "FeatureLayerDictionaryRenderer.h"
 #include "FeatureLayerExtrusion.h"
-#include "FeatureLayerFeatureService.h"
-#include "FeatureLayerGeodatabase.h"
 #include "FeatureLayerQuery.h"
 #include "FeatureLayerRenderingModeMap.h"
 #include "FeatureLayerRenderingModeScene.h"
 #include "FeatureLayerSelection.h"
-#include "FeatureLayerShapefile.h"
 #include "FilterByDefinitionExpressionOrDisplayFilter.h"
 #include "FindAddress.h"
 #include "FindClosestFacilityToMultipleIncidentsService.h"
@@ -381,6 +379,7 @@ void registerCppSampleClasses()
 #ifdef CPP_VIEWER
   // Register the C++ Samples under the Esri.Samples namespace
   AddAPointSceneLayer::init();
+  AddDynamicEntityLayer::init();
   AddEncExchangeSet::init();
   AddFeaturesFeatureService::init();
   AddGraphicsWithRenderer::init();
@@ -433,6 +432,7 @@ void registerCppSampleClasses()
   DisplayDeviceLocation::init();
   DisplayDeviceLocationWithNmeaDataSources::init();
   DisplayDrawingStatus::init();
+  DisplayFeatureLayers::init();
   DisplayGrid::init();
   DisplayKml::init();
   DisplayKmlNetworkLinks::init();
@@ -459,17 +459,13 @@ void registerCppSampleClasses()
   Feature_Collection_Layer::init();
   FeatureCollectionLayerFromPortal::init();
   FeatureCollectionLayerQuery::init();
-  FeatureLayer_GeoPackage::init();
   FeatureLayerChangeRenderer::init();
   FeatureLayerDictionaryRenderer::init();
   FeatureLayerExtrusion::init();
-  FeatureLayerFeatureService::init();
-  FeatureLayerGeodatabase::init();
   FeatureLayerQuery::init();
   FeatureLayerRenderingModeMap::init();
   FeatureLayerRenderingModeScene::init();
   FeatureLayerSelection::init();
-  FeatureLayerShapefile::init();
   FilterByDefinitionExpressionOrDisplayFilter::init();
   FindAddress::init();
   FindClosestFacilityToMultipleIncidentsService::init();

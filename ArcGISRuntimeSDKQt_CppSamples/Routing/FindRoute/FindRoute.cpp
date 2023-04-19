@@ -150,14 +150,14 @@ void FindRoute::setupRouteTask()
 
   //! [FindRoute connect RouteTask signals]
   // connect to createDefaultParametersCompleted signal
-  connect(m_routeTask, &RouteTask::createDefaultParametersCompleted, this, [this](QUuid, RouteParameters routeParameters)
+  connect(m_routeTask, &RouteTask::createDefaultParametersCompleted, this, [this](const QUuid&, const RouteParameters& routeParameters)
   {
     // Store the resulting route parameters
     m_routeParameters = routeParameters;
   });
 
   // connect to solveRouteCompleted signal
-  connect(m_routeTask, &RouteTask::solveRouteCompleted, this, [this](QUuid, RouteResult routeResult)
+  connect(m_routeTask, &RouteTask::solveRouteCompleted, this, [this](const QUuid&, const RouteResult& routeResult)
   {
     // Add the route graphic once the solve completes
     Route generatedRoute = routeResult.routes().at(0);

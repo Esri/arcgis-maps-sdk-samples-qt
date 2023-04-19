@@ -69,7 +69,7 @@ GroupLayers::GroupLayers(QObject* parent /* = nullptr */):
   m_scene->operationalLayers()->append(layer4);
   m_scene->operationalLayers()->append(layer5);
 
-  connect(m_scene, &Scene::doneLoading, this, [this](Error e)
+  connect(m_scene, &Scene::doneLoading, this, [this](const Error& e)
   {
     if (!e.isEmpty())
       return;

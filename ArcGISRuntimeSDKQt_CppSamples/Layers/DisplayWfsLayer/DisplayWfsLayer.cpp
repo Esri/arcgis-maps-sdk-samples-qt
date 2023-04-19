@@ -55,7 +55,7 @@ DisplayWfsLayer::DisplayWfsLayer(QObject* parent /* = nullptr */):
   m_wfsFeatureTable->setFeatureRequestMode(FeatureRequestMode::ManualCache);
 
   // populate the feature table once loaded
-  connect(m_wfsFeatureTable, &WfsFeatureTable::doneLoading, this, [this](Error e)
+  connect(m_wfsFeatureTable, &WfsFeatureTable::doneLoading, this, [this](const Error& e)
   {
     if (e.isEmpty())
       populateWfsFeatureTable();

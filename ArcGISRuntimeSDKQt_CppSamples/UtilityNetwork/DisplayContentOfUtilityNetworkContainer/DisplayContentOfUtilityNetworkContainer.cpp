@@ -120,7 +120,7 @@ void DisplayContentOfUtilityNetworkContainer::createConnections()
   connect(m_mapView, &MapQuickView::identifyLayersCompleted, this, &DisplayContentOfUtilityNetworkContainer::getUtilityAssociationsOfFeature);
   connect(m_utilityNetwork, &UtilityNetwork::featuresForElementsCompleted, this, &DisplayContentOfUtilityNetworkContainer::displayFeaturesAndGetAssociations);
 
-  connect(m_utilityNetwork, &UtilityNetwork::associationsCompleted, this, [this](QUuid, QList<UtilityAssociation*> containmentAssociations)
+  connect(m_utilityNetwork, &UtilityNetwork::associationsCompleted, this, [this](const QUuid&, const QList<UtilityAssociation*>& containmentAssociations)
   {
     if (!m_showContainerView)
       getFeaturesForElementsOfUtilityAssociations(containmentAssociations);
@@ -130,17 +130,17 @@ void DisplayContentOfUtilityNetworkContainer::createConnections()
   });
 
   // Connect error signals to message box
-  connect(m_map, &Map::errorOccurred, this, [this](Error e)
+  connect(m_map, &Map::errorOccurred, this, [this](const Error& e)
   {
     setMessageBoxText("Map error: " + e.message() + " " + e.additionalMessage());
   });
 
-  connect(m_mapView, &MapQuickView::errorOccurred, this, [this](Error e)
+  connect(m_mapView, &MapQuickView::errorOccurred, this, [this](const Error& e)
   {
     setMessageBoxText("MapView error: " + e.message() + " " + e.additionalMessage());
   });
 
-  connect(m_utilityNetwork, &UtilityNetwork::errorOccurred, this, [this](Error e)
+  connect(m_utilityNetwork, &UtilityNetwork::errorOccurred, this, [this](const Error& e)
   {
     setMessageBoxText("Utility Network error occured: " + e.message() + " " + e.additionalMessage());
   });
@@ -154,10 +154,10 @@ void DisplayContentOfUtilityNetworkContainer::identifyFeaturesAtMouseClick(QMous
   constexpr double tolerance = 5;
   constexpr bool returnPopupsOnly = false;
 
-  m_mapView->identifyLayers(mouseEvent.pos().x(), mouseEvent.pos().y(), tolerance, returnPopupsOnly);
+  m_mapView->identifyLayers(mouseEvent.position().x(), mouseEvent.position().y(), tolerance, returnPopupsOnly);
 }
 
-void DisplayContentOfUtilityNetworkContainer::getUtilityAssociationsOfFeature(QUuid, QList<IdentifyLayerResult*> identifyResults)
+void DisplayContentOfUtilityNetworkContainer::getUtilityAssociationsOfFeature(const QUuid&, const QList<IdentifyLayerResult*>& identifyResults)
 {
   if (identifyResults.isEmpty())
     return;
@@ -195,7 +195,7 @@ void DisplayContentOfUtilityNetworkContainer::getUtilityAssociationsOfFeature(QU
   }
 }
 
-void DisplayContentOfUtilityNetworkContainer::getFeaturesForElementsOfUtilityAssociations(QList<UtilityAssociation*> containmentAssociations)
+void DisplayContentOfUtilityNetworkContainer::getFeaturesForElementsOfUtilityAssociations(const QList<UtilityAssociation*>& containmentAssociations)
 {
   // Create a list of elements representing the participants in the containment associations
   QList<UtilityElement*> contentElements;
@@ -215,7 +215,7 @@ void DisplayContentOfUtilityNetworkContainer::getFeaturesForElementsOfUtilityAss
   }
 }
 
-void DisplayContentOfUtilityNetworkContainer::displayFeaturesAndGetAssociations(QUuid)
+void DisplayContentOfUtilityNetworkContainer::displayFeaturesAndGetAssociations(const QUuid&)
 {
   // Display the features on the graphics overlay
   const QList<Feature*> contentFeatures = m_utilityNetwork->featuresForElementsResult()->features();
@@ -229,7 +229,7 @@ void DisplayContentOfUtilityNetworkContainer::displayFeaturesAndGetAssociations(
   m_taskWatcher = m_utilityNetwork->associations(m_containerGraphicsOverlay->extent());
 }
 
-void DisplayContentOfUtilityNetworkContainer::showAttachmentAndConnectivitySymbols(QList<UtilityAssociation*> containmentAssociations)
+void DisplayContentOfUtilityNetworkContainer::showAttachmentAndConnectivitySymbols(const QList<UtilityAssociation*>& containmentAssociations)
 {
   // Display the association lines on the graphics overlay
   for (UtilityAssociation* association : containmentAssociations)
@@ -309,7 +309,7 @@ void DisplayContentOfUtilityNetworkContainer::createLegend()
   m_connectivitySymbol = new SimpleLineSymbol(SimpleLineSymbolStyle::Dot, Qt::red, 3, this);
   m_boundingBoxSymbol = new SimpleLineSymbol(SimpleLineSymbolStyle::Dot, Qt::yellow, 3, this);
 
-  connect(m_attachmentSymbol, &Symbol::createSwatchCompleted, this, [this](QUuid id, QImage image)
+  connect(m_attachmentSymbol, &Symbol::createSwatchCompleted, this, [this](const QUuid& id, const QImage& image)
   {
     if (!m_symbolImageProvider)
       return;
@@ -327,7 +327,7 @@ void DisplayContentOfUtilityNetworkContainer::createLegend()
     emit attachmentSymbolUrlChanged();
   });
 
-  connect(m_connectivitySymbol, &Symbol::createSwatchCompleted, this, [this](QUuid id, QImage image)
+  connect(m_connectivitySymbol, &Symbol::createSwatchCompleted, this, [this](const QUuid& id, const QImage& image)
   {
     if (!m_symbolImageProvider)
       return;
@@ -345,7 +345,7 @@ void DisplayContentOfUtilityNetworkContainer::createLegend()
     emit connectivitySymbolUrlChanged();
   });
 
-  connect(m_boundingBoxSymbol, &Symbol::createSwatchCompleted, this, [this](QUuid id, QImage image)
+  connect(m_boundingBoxSymbol, &Symbol::createSwatchCompleted, this, [this](const QUuid& id, const QImage& image)
   {
     if (!m_symbolImageProvider)
       return;

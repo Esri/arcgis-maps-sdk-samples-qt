@@ -21,9 +21,17 @@
 #include "ExploreScenesInFlyoverAR.h"
 
 #include "ArcGISTiledElevationSource.h"
+#include "ElevationSourceListModel.h"
+#include "Envelope.h"
+#include "Error.h"
+#include "IntegratedMeshLayer.h"
+#include "LayerListModel.h"
+#include "MapTypes.h"
+#include "Point.h"
 #include "Scene.h"
 #include "SceneQuickView.h"
-#include "IntegratedMeshLayer.h"
+#include "SceneViewTypes.h"
+#include "Surface.h"
 
 using namespace Esri::ArcGISRuntime;
 namespace toolkit = Esri::ArcGISRuntime::Toolkit;
@@ -47,11 +55,11 @@ ExploreScenesInFlyoverAR::ExploreScenesInFlyoverAR(QObject* parent /* = nullptr 
   // add the layer to the scene
   m_scene->operationalLayers()->append(m_integratedMeshLayer);
 
-  connect(m_integratedMeshLayer, &IntegratedMeshLayer::doneLoading, this, [this](Error e)
+  connect(m_integratedMeshLayer, &IntegratedMeshLayer::doneLoading, this, [this](const Error& e)
   {
     if (!e.isEmpty())
     {
-      qDebug() << e.code() << e.message() << " - " << e.additionalMessage();
+      qDebug() << e.errorType() << ":" << e.message() << "-" << e.additionalMessage();
       return;
     }
 
@@ -118,4 +126,3 @@ void ExploreScenesInFlyoverAR::setArcGISArView(toolkit::ArcGISArView* arcGISArVi
 
   emit arcGISArViewChanged();
 }
-

@@ -254,7 +254,7 @@ void CreateLoadReport::setUtilityTraceOrconditionWithCodedValue(CodedValue coded
 
 void CreateLoadReport::createTraceCompletedConnection()
 {
-  connect(m_utilityNetwork, &UtilityNetwork::traceCompleted, this, [this](QUuid taskId)
+  connect(m_utilityNetwork, &UtilityNetwork::traceCompleted, this, [this](const QUuid& taskId)
   {
     const QString codedValueName = m_tasks.take(taskId);
 

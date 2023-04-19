@@ -145,16 +145,15 @@ void SpatialRelationships::addPointGraphic()
   m_graphicsOverlay->graphics()->append(m_pointGraphic);
 }
 
-
 void SpatialRelationships::connectSignals()
 {
   connect(m_mapView, &MapQuickView::mouseClicked, this, [this](QMouseEvent& mouseEvent)
   {
     // identify graphics
-    m_mapView->identifyGraphicsOverlay(m_graphicsOverlay, mouseEvent.pos().x(), mouseEvent.pos().y(), 1.0 /*tolerance*/, false /*returnPopupsOnly*/);
+    m_mapView->identifyGraphicsOverlay(m_graphicsOverlay, mouseEvent.position().x(), mouseEvent.position().y(), 1.0 /*tolerance*/, false /*returnPopupsOnly*/);
   });
 
-  connect(m_mapView, &MapQuickView::identifyGraphicsOverlayCompleted, this, [this](QUuid, IdentifyGraphicsOverlayResult* rawResult)
+  connect(m_mapView, &MapQuickView::identifyGraphicsOverlayCompleted, this, [this](const QUuid&, IdentifyGraphicsOverlayResult* rawResult)
   {
     // Delete rawReslt when we leave scope.
     auto result = std::unique_ptr<IdentifyGraphicsOverlayResult>(rawResult);

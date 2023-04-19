@@ -70,9 +70,6 @@ INCLUDEPATH += \
     "$$SAMPLEPATHCPP/Features/CreateMobileGeodatabase" \
     "$$SAMPLEPATHCPP/Features/FeatureLayerChangeRenderer" \
     "$$SAMPLEPATHCPP/Features/FeatureLayerDictionaryRenderer" \
-    "$$SAMPLEPATHCPP/Features/FeatureLayerFeatureService" \
-    "$$SAMPLEPATHCPP/Features/FeatureLayerGeodatabase" \
-    "$$SAMPLEPATHCPP/Features/FeatureLayerGeoPackage" \
     "$$SAMPLEPATHCPP/Features/FeatureLayerQuery" \
     "$$SAMPLEPATHCPP/Features/FeatureLayerSelection" \
     "$$SAMPLEPATHCPP/Features/FilterByDefinitionExpressionOrDisplayFilter" \
@@ -94,6 +91,7 @@ INCLUDEPATH += \
     "$$SAMPLEPATHCPP/Geometry/ProjectGeometry" \
     "$$SAMPLEPATHCPP/Geometry/SpatialOperations" \
     "$$SAMPLEPATHCPP/Geometry/SpatialRelationships" \
+    "$$SAMPLEPATHCPP/Layers/AddDynamicEntityLayer" \
     "$$SAMPLEPATHCPP/Layers/AddEncExchangeSet" \
     "$$SAMPLEPATHCPP/Layers/ApplyMosaicRuleToRasters" \
     "$$SAMPLEPATHCPP/Layers/ApplyUniqueValuesWithAlternateSymbols" \
@@ -107,6 +105,7 @@ INCLUDEPATH += \
     "$$SAMPLEPATHCPP/Layers/CreateAndSaveKmlFile" \
     "$$SAMPLEPATHCPP/Layers/DisplayAnnotation" \
     "$$SAMPLEPATHCPP/Layers/DisplayDimensions" \
+    "$$SAMPLEPATHCPP/Layers/DisplayFeatureLayers" \
     "$$SAMPLEPATHCPP/Layers/DisplayKml" \
     "$$SAMPLEPATHCPP/Layers/DisplayKmlNetworkLinks" \
     "$$SAMPLEPATHCPP/Layers/DisplayOgcApiFeatureCollection" \
@@ -119,7 +118,6 @@ INCLUDEPATH += \
     "$$SAMPLEPATHCPP/Layers/FeatureCollectionLayerQuery" \
     "$$SAMPLEPATHCPP/Layers/FeatureLayerRenderingModeMap" \
     "$$SAMPLEPATHCPP/Layers/FeatureLayerRenderingModeScene" \
-    "$$SAMPLEPATHCPP/Layers/FeatureLayerShapefile" \
     "$$SAMPLEPATHCPP/Layers/GroupLayers" \
     "$$SAMPLEPATHCPP/Layers/Hillshade_Renderer" \
     "$$SAMPLEPATHCPP/Layers/IdentifyKmlFeatures" \
@@ -280,9 +278,6 @@ HEADERS += \
     "$$SAMPLEPATHCPP/Features/CreateMobileGeodatabase/FeatureListModel.h" \
     "$$SAMPLEPATHCPP/Features/FeatureLayerChangeRenderer/FeatureLayerChangeRenderer.h" \
     "$$SAMPLEPATHCPP/Features/FeatureLayerDictionaryRenderer/FeatureLayerDictionaryRenderer.h" \
-    "$$SAMPLEPATHCPP/Features/FeatureLayerFeatureService/FeatureLayerFeatureService.h" \
-    "$$SAMPLEPATHCPP/Features/FeatureLayerGeodatabase/FeatureLayerGeodatabase.h" \
-    "$$SAMPLEPATHCPP/Features/FeatureLayerGeoPackage/FeatureLayer_GeoPackage.h" \
     "$$SAMPLEPATHCPP/Features/FeatureLayerQuery/FeatureLayerQuery.h" \
     "$$SAMPLEPATHCPP/Features/FeatureLayerSelection/FeatureLayerSelection.h" \
     "$$SAMPLEPATHCPP/Features/FilterByDefinitionExpressionOrDisplayFilter/FilterByDefinitionExpressionOrDisplayFilter.h" \
@@ -306,6 +301,7 @@ HEADERS += \
     "$$SAMPLEPATHCPP/Geometry/ProjectGeometry/ProjectGeometry.h" \
     "$$SAMPLEPATHCPP/Geometry/SpatialOperations/SpatialOperations.h" \
     "$$SAMPLEPATHCPP/Geometry/SpatialRelationships/SpatialRelationships.h" \
+    "$$SAMPLEPATHCPP/Layers/AddDynamicEntityLayer/AddDynamicEntityLayer.h" \
     "$$SAMPLEPATHCPP/Layers/AddEncExchangeSet/AddEncExchangeSet.h" \
     "$$SAMPLEPATHCPP/Layers/ApplyMosaicRuleToRasters/ApplyMosaicRuleToRasters.h" \
     "$$SAMPLEPATHCPP/Layers/ApplyUniqueValuesWithAlternateSymbols/ApplyUniqueValuesWithAlternateSymbols.h" \
@@ -319,6 +315,7 @@ HEADERS += \
     "$$SAMPLEPATHCPP/Layers/CreateAndSaveKmlFile/CreateAndSaveKmlFile.h" \
     "$$SAMPLEPATHCPP/Layers/DisplayAnnotation/DisplayAnnotation.h" \
     "$$SAMPLEPATHCPP/Layers/DisplayDimensions/DisplayDimensions.h" \
+    "$$SAMPLEPATHCPP/Layers/DisplayFeatureLayers/DisplayFeatureLayers.h" \
     "$$SAMPLEPATHCPP/Layers/DisplayKml/DisplayKml.h" \
     "$$SAMPLEPATHCPP/Layers/DisplayKmlNetworkLinks/DisplayKmlNetworkLinks.h" \
     "$$SAMPLEPATHCPP/Layers/DisplayOgcApiFeatureCollection/DisplayOgcApiFeatureCollection.h" \
@@ -331,7 +328,6 @@ HEADERS += \
     "$$SAMPLEPATHCPP/Layers/FeatureCollectionLayerQuery/FeatureCollectionLayerQuery.h" \
     "$$SAMPLEPATHCPP/Layers/FeatureLayerRenderingModeMap/FeatureLayerRenderingModeMap.h" \
     "$$SAMPLEPATHCPP/Layers/FeatureLayerRenderingModeScene/FeatureLayerRenderingModeScene.h" \
-    "$$SAMPLEPATHCPP/Layers/FeatureLayerShapefile/FeatureLayerShapefile.h" \
     "$$SAMPLEPATHCPP/Layers/GroupLayers/GroupLayers.h" \
     "$$SAMPLEPATHCPP/Layers/Hillshade_Renderer/Hillshade_Renderer.h" \
     "$$SAMPLEPATHCPP/Layers/IdentifyKmlFeatures/IdentifyKmlFeatures.h" \
@@ -442,7 +438,7 @@ HEADERS += \
     "$$SAMPLEPATHCPP/UtilityNetwork/DisplayContentOfUtilityNetworkContainer/DisplayContentOfUtilityNetworkContainer.h" \
     "$$SAMPLEPATHCPP/UtilityNetwork/DisplayUtilityAssociations/DisplayUtilityAssociations.h" \
     "$$SAMPLEPATHCPP/UtilityNetwork/PerformValveIsolationTrace/PerformValveIsolationTrace.h" \
-    "$$SAMPLEPATHCPP/UtilityNetwork/TraceUtilityNetwork/TraceUtilityNetwork.h" \
+    "$$SAMPLEPATHCPP/UtilityNetwork/TraceUtilityNetwork/TraceUtilityNetwork.h"
 
 SOURCES += \
     "$$SAMPLEPATHCPP/Analysis/AnalyzeHotspots/AnalyzeHotspots.cpp" \
@@ -496,9 +492,6 @@ SOURCES += \
     "$$SAMPLEPATHCPP/Features/CreateMobileGeodatabase/FeatureListModel.cpp" \
     "$$SAMPLEPATHCPP/Features/FeatureLayerChangeRenderer/FeatureLayerChangeRenderer.cpp" \
     "$$SAMPLEPATHCPP/Features/FeatureLayerDictionaryRenderer/FeatureLayerDictionaryRenderer.cpp" \
-    "$$SAMPLEPATHCPP/Features/FeatureLayerFeatureService/FeatureLayerFeatureService.cpp" \
-    "$$SAMPLEPATHCPP/Features/FeatureLayerGeodatabase/FeatureLayerGeodatabase.cpp" \
-    "$$SAMPLEPATHCPP/Features/FeatureLayerGeoPackage/FeatureLayer_GeoPackage.cpp" \
     "$$SAMPLEPATHCPP/Features/FeatureLayerQuery/FeatureLayerQuery.cpp" \
     "$$SAMPLEPATHCPP/Features/FeatureLayerSelection/FeatureLayerSelection.cpp" \
     "$$SAMPLEPATHCPP/Features/FilterByDefinitionExpressionOrDisplayFilter/FilterByDefinitionExpressionOrDisplayFilter.cpp" \
@@ -522,6 +515,7 @@ SOURCES += \
     "$$SAMPLEPATHCPP/Geometry/ProjectGeometry/ProjectGeometry.cpp" \
     "$$SAMPLEPATHCPP/Geometry/SpatialOperations/SpatialOperations.cpp" \
     "$$SAMPLEPATHCPP/Geometry/SpatialRelationships/SpatialRelationships.cpp" \
+    "$$SAMPLEPATHCPP/Layers/AddDynamicEntityLayer/AddDynamicEntityLayer.cpp" \
     "$$SAMPLEPATHCPP/Layers/AddEncExchangeSet/AddEncExchangeSet.cpp" \
     "$$SAMPLEPATHCPP/Layers/ApplyMosaicRuleToRasters/ApplyMosaicRuleToRasters.cpp" \
     "$$SAMPLEPATHCPP/Layers/ApplyUniqueValuesWithAlternateSymbols/ApplyUniqueValuesWithAlternateSymbols.cpp" \
@@ -535,6 +529,7 @@ SOURCES += \
     "$$SAMPLEPATHCPP/Layers/CreateAndSaveKmlFile/CreateAndSaveKmlFile.cpp" \
     "$$SAMPLEPATHCPP/Layers/DisplayAnnotation/DisplayAnnotation.cpp" \
     "$$SAMPLEPATHCPP/Layers/DisplayDimensions/DisplayDimensions.cpp" \
+    "$$SAMPLEPATHCPP/Layers/DisplayFeatureLayers/DisplayFeatureLayers.cpp" \
     "$$SAMPLEPATHCPP/Layers/DisplayKml/DisplayKml.cpp" \
     "$$SAMPLEPATHCPP/Layers/DisplayKmlNetworkLinks/DisplayKmlNetworkLinks.cpp" \
     "$$SAMPLEPATHCPP/Layers/DisplayOgcApiFeatureCollection/DisplayOgcApiFeatureCollection.cpp" \
@@ -547,7 +542,6 @@ SOURCES += \
     "$$SAMPLEPATHCPP/Layers/FeatureCollectionLayerQuery/FeatureCollectionLayerQuery.cpp" \
     "$$SAMPLEPATHCPP/Layers/FeatureLayerRenderingModeMap/FeatureLayerRenderingModeMap.cpp" \
     "$$SAMPLEPATHCPP/Layers/FeatureLayerRenderingModeScene/FeatureLayerRenderingModeScene.cpp" \
-    "$$SAMPLEPATHCPP/Layers/FeatureLayerShapefile/FeatureLayerShapefile.cpp" \
     "$$SAMPLEPATHCPP/Layers/GroupLayers/GroupLayers.cpp" \
     "$$SAMPLEPATHCPP/Layers/Hillshade_Renderer/Hillshade_Renderer.cpp" \
     "$$SAMPLEPATHCPP/Layers/IdentifyKmlFeatures/IdentifyKmlFeatures.cpp" \
@@ -660,7 +654,6 @@ SOURCES += \
     "$$SAMPLEPATHCPP/UtilityNetwork/PerformValveIsolationTrace/PerformValveIsolationTrace.cpp" \
     "$$SAMPLEPATHCPP/UtilityNetwork/TraceUtilityNetwork/TraceUtilityNetwork.cpp"
 
-
 RESOURCES += \
     "$$SAMPLEPATHCPP/Analysis/AnalyzeHotspots/AnalyzeHotspots.qrc" \
     "$$SAMPLEPATHCPP/Analysis/AnalyzeViewshed/AnalyzeViewshed.qrc" \
@@ -710,9 +703,6 @@ RESOURCES += \
     "$$SAMPLEPATHCPP/Features/CreateMobileGeodatabase/CreateMobileGeodatabase.qrc" \
     "$$SAMPLEPATHCPP/Features/FeatureLayerChangeRenderer/FeatureLayerChangeRenderer.qrc" \
     "$$SAMPLEPATHCPP/Features/FeatureLayerDictionaryRenderer/FeatureLayerDictionaryRenderer.qrc" \
-    "$$SAMPLEPATHCPP/Features/FeatureLayerFeatureService/FeatureLayerFeatureService.qrc" \
-    "$$SAMPLEPATHCPP/Features/FeatureLayerGeodatabase/FeatureLayerGeodatabase.qrc" \
-    "$$SAMPLEPATHCPP/Features/FeatureLayerGeoPackage/FeatureLayer_GeoPackage.qrc" \
     "$$SAMPLEPATHCPP/Features/FeatureLayerQuery/FeatureLayerQuery.qrc" \
     "$$SAMPLEPATHCPP/Features/FeatureLayerSelection/FeatureLayerSelection.qrc" \
     "$$SAMPLEPATHCPP/Features/FilterByDefinitionExpressionOrDisplayFilter/FilterByDefinitionExpressionOrDisplayFilter.qrc" \
@@ -734,6 +724,7 @@ RESOURCES += \
     "$$SAMPLEPATHCPP/Geometry/ProjectGeometry/ProjectGeometry.qrc" \
     "$$SAMPLEPATHCPP/Geometry/SpatialOperations/SpatialOperations.qrc" \
     "$$SAMPLEPATHCPP/Geometry/SpatialRelationships/SpatialRelationships.qrc" \
+    "$$SAMPLEPATHCPP/Layers/AddDynamicEntityLayer/AddDynamicEntityLayer.qrc" \
     "$$SAMPLEPATHCPP/Layers/AddEncExchangeSet/AddEncExchangeSet.qrc" \
     "$$SAMPLEPATHCPP/Layers/ApplyMosaicRuleToRasters/ApplyMosaicRuleToRasters.qrc" \
     "$$SAMPLEPATHCPP/Layers/ApplyUniqueValuesWithAlternateSymbols/ApplyUniqueValuesWithAlternateSymbols.qrc" \
@@ -747,6 +738,7 @@ RESOURCES += \
     "$$SAMPLEPATHCPP/Layers/CreateAndSaveKmlFile/CreateAndSaveKmlFile.qrc" \
     "$$SAMPLEPATHCPP/Layers/DisplayAnnotation/DisplayAnnotation.qrc" \
     "$$SAMPLEPATHCPP/Layers/DisplayDimensions/DisplayDimensions.qrc" \
+    "$$SAMPLEPATHCPP/Layers/DisplayFeatureLayers/DisplayFeatureLayers.qrc" \
     "$$SAMPLEPATHCPP/Layers/DisplayKml/DisplayKml.qrc" \
     "$$SAMPLEPATHCPP/Layers/DisplayKmlNetworkLinks/DisplayKmlNetworkLinks.qrc" \
     "$$SAMPLEPATHCPP/Layers/DisplayOgcApiFeatureCollection/DisplayOgcApiFeatureCollection.qrc" \
@@ -759,7 +751,6 @@ RESOURCES += \
     "$$SAMPLEPATHCPP/Layers/FeatureCollectionLayerQuery/FeatureCollectionLayerQuery.qrc" \
     "$$SAMPLEPATHCPP/Layers/FeatureLayerRenderingModeMap/FeatureLayerRenderingModeMap.qrc" \
     "$$SAMPLEPATHCPP/Layers/FeatureLayerRenderingModeScene/FeatureLayerRenderingModeScene.qrc" \
-    "$$SAMPLEPATHCPP/Layers/FeatureLayerShapefile/FeatureLayerShapefile.qrc" \
     "$$SAMPLEPATHCPP/Layers/GroupLayers/GroupLayers.qrc" \
     "$$SAMPLEPATHCPP/Layers/Hillshade_Renderer/Hillshade_Renderer.qrc" \
     "$$SAMPLEPATHCPP/Layers/IdentifyKmlFeatures/IdentifyKmlFeatures.qrc" \

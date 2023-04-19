@@ -72,7 +72,7 @@ void SearchDictionarySymbolStyle::componentComplete()
   m_dictionarySymbolStyle = DictionarySymbolStyle::createFromFile(datapath, this);
 
   //Connect to the search completed signal of the dictionary
-  connect(m_dictionarySymbolStyle, &DictionarySymbolStyle::searchSymbolsCompleted, this, [this](QUuid, SymbolStyleSearchResultListModel* results)
+  connect(m_dictionarySymbolStyle, &DictionarySymbolStyle::searchSymbolsCompleted, this, [this](const QUuid&, SymbolStyleSearchResultListModel* results)
   {
     m_searchResults = results;
     emit searchResultsListModelChanged();

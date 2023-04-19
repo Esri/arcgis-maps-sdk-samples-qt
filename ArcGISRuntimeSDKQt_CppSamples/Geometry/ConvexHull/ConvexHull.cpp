@@ -130,7 +130,7 @@ void ConvexHull::getInputs()
   {
     e.accept();
 
-    const Point clickedPoint = m_mapView->screenToLocation(e.pos().x(), e.pos().y());
+    const Point clickedPoint = m_mapView->screenToLocation(e.position().x(), e.position().y());
     m_multipointBuilder->points()->addPoint(clickedPoint);
     m_inputsGraphic->setGeometry(m_multipointBuilder->toGeometry());
   });
@@ -146,7 +146,7 @@ void ConvexHull::setMapView(MapQuickView* mapView)
   m_mapView->setMap(m_map);
 
   // wait for map to load before creating multipoint builder
-  connect(m_map, &Map::doneLoading, this, [this](Error e){
+  connect(m_map, &Map::doneLoading, this, [this](const Error& e){
     if (!e.isEmpty())
     {
       qDebug() << e.message() << e.additionalMessage();

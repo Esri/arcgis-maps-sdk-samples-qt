@@ -102,7 +102,7 @@ void ListRelatedFeatures::componentComplete()
 void ListRelatedFeatures::connectSignals()
 {
   // connect to doneLoading signal
-  connect(m_map, &Map::doneLoading, this, [this](Error loadError)
+  connect(m_map, &Map::doneLoading, this, [this](const Error& loadError)
   {
     if (!loadError.isEmpty())
       return;
@@ -119,7 +119,7 @@ void ListRelatedFeatures::connectSignals()
 
         // connect to queryRelatedFeaturesCompleted signal
         connect(m_alaskaFeatureTable, &ArcGISFeatureTable::queryRelatedFeaturesCompleted,
-                this, [this](QUuid, QList<RelatedFeatureQueryResult*> rawRelatedResults)
+                this, [this](const QUuid&, QList<RelatedFeatureQueryResult*> rawRelatedResults)
         {
           FeatureQueryListResultLock lock(rawRelatedResults);
           for (const RelatedFeatureQueryResult* relatedResult : lock.results)
@@ -152,7 +152,7 @@ void ListRelatedFeatures::connectSignals()
         });
 
         // connect to selectFeaturesCompleted signal
-        connect(m_alaskaNationalParks, &FeatureLayer::selectFeaturesCompleted, this, [this](QUuid, FeatureQueryResult* rawResult)
+        connect(m_alaskaNationalParks, &FeatureLayer::selectFeaturesCompleted, this, [this](const QUuid&, FeatureQueryResult* rawResult)
         {
           auto result = std::unique_ptr<FeatureQueryResult>(rawResult);
           // The result could contain more than 1 feature, but we assume that
@@ -173,7 +173,6 @@ void ListRelatedFeatures::connectSignals()
     }
   });
 
-
   // connect to the mouseClicked signal
   connect(m_mapView, &MapQuickView::mouseClicked, this, [this](QMouseEvent& mouseEvent)
   {
@@ -184,7 +183,7 @@ void ListRelatedFeatures::connectSignals()
     m_relatedFeaturesModel->clear();
 
     // create objects required to do a selection with a query
-    Point clickPoint = m_mapView->screenToLocation(mouseEvent.pos().x(), mouseEvent.pos().y());
+    Point clickPoint = m_mapView->screenToLocation(mouseEvent.position().x(), mouseEvent.position().y());
     double mapTolerance = 10 * m_mapView->unitsPerDIP();
     Envelope envelope = Envelope(clickPoint.x() - mapTolerance,
                                  clickPoint.y() - mapTolerance,

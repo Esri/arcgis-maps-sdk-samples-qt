@@ -17,14 +17,14 @@ DEFINES += QML_VIEWER
 DEFINES += Qt_Version=\"$$QT_VERSION\"
 SAMPLEPATHQML = $$PWD/../../ArcGISRuntimeSDKQt_QMLSamples
 COMMONVIEWER = $$PWD/../ArcGISRuntimeSDKQt_Samples
-ARCGIS_RUNTIME_VERSION = 200.0.0
+ARCGIS_RUNTIME_VERSION = 200.1.0
 DEFINES += ArcGIS_Runtime_Version=$$ARCGIS_RUNTIME_VERSION
 
 # This block determines whether to build against the SDK dev build area or the installed SDK
 exists($$PWD/../../../../DevBuildQml.pri) {
   message("Building against the dev environment")
   DEFINES += ESRI_BUILD
-  DEFINES += SAMPLE_VIEWER_API_KEY=$$(SAMPLEVIEWERAPIKEY_RELEASE)
+  DEFINES += SAMPLE_VIEWER_API_KEY=$$(SAMPLEVIEWERAPIKEY_INTERNAL)
 
   # use the Esri dev build script
   include ($$PWD/../../../../DevBuildQml.pri)

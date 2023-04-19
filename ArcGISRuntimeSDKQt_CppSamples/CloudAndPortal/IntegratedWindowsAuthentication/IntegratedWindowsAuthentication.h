@@ -63,7 +63,7 @@ signals:
 
 private slots:
   void securePortalDoneLoading(const Esri::ArcGISRuntime::Error& loadError);
-  void searchItemsCompleted(const Esri::ArcGISRuntime::PortalQueryResultSetForItems* result);
+  void searchItemsCompleted(Esri::ArcGISRuntime::PortalQueryResultSetForItems* result);
 
 private:
   Esri::ArcGISRuntime::MapQuickView* mapView() const;

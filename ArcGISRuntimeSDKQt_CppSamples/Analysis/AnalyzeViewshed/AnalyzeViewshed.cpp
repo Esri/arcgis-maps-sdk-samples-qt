@@ -133,7 +133,7 @@ void AnalyzeViewshed::connectSignals()
     }
 
     // Create a marker graphic where the user clicked on the map and add it to the existing graphics overlay
-    Point mapPoint = m_mapView->screenToLocation(mouse.pos().x(), mouse.pos().y());
+    Point mapPoint = m_mapView->screenToLocation(mouse.position().x(), mouse.position().y());
     if (m_inputGraphic)
       m_inputGraphic->setGeometry(mapPoint);
 
@@ -142,7 +142,7 @@ void AnalyzeViewshed::connectSignals()
   });
 
   // Connect to the GP Task's errorOccurred signal
-  connect(m_viewshedTask, &GeoprocessingTask::errorOccurred, this, [this](Error error)
+  connect(m_viewshedTask, &GeoprocessingTask::errorOccurred, this, [this](const Error& error)
   {
     emit displayErrorDialog("Geoprocessing Task failed", error.message());
   });
@@ -163,7 +163,7 @@ void AnalyzeViewshed::calculateViewshed()
   inputFeature->setGeometry(m_inputOverlay->graphics()->at(0)->geometry());
 
   // connect to addFeature status changed signal
-  connect(inputFeatures, &FeatureCollectionTable::addFeatureCompleted, this, [this, inputFeatures](QUuid, bool success)
+  connect(inputFeatures, &FeatureCollectionTable::addFeatureCompleted, this, [this, inputFeatures](const QUuid&, bool success)
   {
     if (!success)
       return;

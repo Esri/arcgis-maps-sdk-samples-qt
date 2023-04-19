@@ -72,7 +72,7 @@ DisplayRouteLayer::DisplayRouteLayer(QObject* parent /* = nullptr */):
       m_featureCollection = new FeatureCollection(m_portalItem, this);
       m_featureCollectionLayer = new FeatureCollectionLayer(m_featureCollection, this);
 
-      connect(m_featureCollectionLayer, &FeatureCollectionLayer::doneLoading, this, [this](Error e)
+      connect(m_featureCollectionLayer, &FeatureCollectionLayer::doneLoading, this, [this](const Error& e)
       {
         if (!e.isEmpty())
           return;
@@ -132,7 +132,7 @@ void DisplayRouteLayer::getDirections()
     {
       if (table->tableName() == "DirectionPoints")
       {
-        connect(table, &FeatureTable::queryFeaturesCompleted, this, [this](QUuid, FeatureQueryResult* featureQueryResult)
+        connect(table, &FeatureTable::queryFeaturesCompleted, this, [this](const QUuid&, FeatureQueryResult* featureQueryResult)
         {
           if (!featureQueryResult)
             return;
@@ -154,7 +154,6 @@ void DisplayRouteLayer::getDirections()
     }
   }
 }
-
 
 QString DisplayRouteLayer::directions() const
 {

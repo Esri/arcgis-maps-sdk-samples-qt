@@ -41,7 +41,6 @@
 #include "Point.h"
 #include "SpatialReference.h"
 
-
 #include <algorithm>
 #include <QUuid>
 #include <QStandardPaths>
@@ -83,7 +82,7 @@ ListKmlContents::ListKmlContents(QObject* parent /* = nullptr */):
   KmlLayer* kmlLayer = new KmlLayer(m_kmlDataset, this);
   m_scene->operationalLayers()->append(kmlLayer);
 
-  connect(m_kmlDataset, &KmlDataset::doneLoading, this, [this](Error loadError)
+  connect(m_kmlDataset, &KmlDataset::doneLoading, this, [this](const Error& loadError)
   {
     if (!loadError.isEmpty())
     {
@@ -363,7 +362,7 @@ void ListKmlContents::setSceneView(SceneQuickView* sceneView)
   m_sceneView = sceneView;
   m_sceneView->setArcGISScene(m_scene);
 
-  connect(m_scene->baseSurface(), &Surface::locationToElevationCompleted, this, [this](QUuid, double elevation)
+  connect(m_scene->baseSurface(), &Surface::locationToElevationCompleted, this, [this](const QUuid&, double elevation)
   {
     // assume altitude mode is clamp-to-ground if not specified
     KmlAltitudeMode altMode = KmlAltitudeMode::ClampToGround;
