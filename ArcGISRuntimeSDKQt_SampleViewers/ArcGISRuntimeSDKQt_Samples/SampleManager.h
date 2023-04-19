@@ -73,7 +73,8 @@ public:
     DescriptionView,
     ManageOfflineDataView,
     NetworkRequiredView,
-    DownloadDataView
+    DownloadDataView,
+    HomepageView
   };
   Q_ENUM(CurrentMode)
 
