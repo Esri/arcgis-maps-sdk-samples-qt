@@ -52,6 +52,8 @@ class SampleManager : public QObject
   Q_PROPERTY(bool downloadInProgress READ downloadInProgress WRITE setDownloadInProgress NOTIFY downloadInProgressChanged)
   Q_PROPERTY(QString downloadText READ downloadText WRITE setDownloadText NOTIFY downloadTextChanged)
   Q_PROPERTY(double downloadProgress READ downloadProgress WRITE setDownloadProgress NOTIFY downloadProgressChanged)
+  Q_PROPERTY(bool cancelDownload READ cancelDownload WRITE setCancelDownload NOTIFY cancelDownloadChanged)
+  Q_PROPERTY(bool downloadFailed READ downloadFailed WRITE setDownloadFailed NOTIFY downloadFailedChanged)
 
 public:
   explicit SampleManager(QObject* parent = nullptr);
@@ -77,11 +79,13 @@ public:
 
 signals:
   void sampleInitComplete();
+  void cancelDownloadChanged();
   void currentModeChanged();
   void currentSampleChanged();
   void currentCategoryChanged();
   void currentSourceCodeChanged();
   void doneDownloadingChanged();
+  void downloadFailedChanged();
   void downloadInProgressChanged();
   void downloadTextChanged();
   void downloadProgressChanged();
@@ -117,6 +121,10 @@ private:
   void setDownloadText(const QString& downloadText);
   double downloadProgress() const { return m_downloadProgress; }
   void createAndSetTempDirForLocalServer();
+  bool cancelDownload() const { return m_cancelDownload; }
+  void setCancelDownload(bool cancel);
+  bool downloadFailed() const { return m_downloadFailed; }
+  void setDownloadFailed(bool didFail);
 
 private:
   CategoryListModel* m_categories = nullptr;
@@ -132,6 +140,8 @@ private:
   QString m_downloadText = QString("Downloading");
   double m_downloadProgress = 0.0;
   std::unique_ptr<QTemporaryDir> m_tempDir;
+  bool m_cancelDownload = false;
+  bool m_downloadFailed = false;
 };
 
 #endif // SAMPLEMANAGER_H
