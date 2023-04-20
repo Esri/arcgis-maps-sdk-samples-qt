@@ -7,6 +7,7 @@
         }
     ],
     "description": "Edit feature attributes which are linked to annotation through an expression.",
+    "featured": false,
     "ignore": false,
     "images": [
         "screenshot.png"

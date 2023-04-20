@@ -7,6 +7,7 @@
         }
     ],
     "description": "Find symbols within the mil2525d specification that match a keyword.",
+    "featured": false,
     "ignore": false,
     "images": [
         "screenshot.png"

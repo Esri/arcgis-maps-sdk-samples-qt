@@ -7,6 +7,7 @@
         }
     ],
     "description": "Display local 3D point cloud data.",
+    "featured": false,
     "ignore": false,
     "images": [
         "screenshot.png"

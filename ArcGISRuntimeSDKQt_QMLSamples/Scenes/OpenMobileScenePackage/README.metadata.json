@@ -7,6 +7,7 @@
         }
     ],
     "description": "Opens and displays a scene from a Mobile Scene Package (.mspk).",
+    "featured": false,
     "ignore": false,
     "images": [
         "screenshot.png"

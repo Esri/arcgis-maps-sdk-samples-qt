@@ -1,6 +1,7 @@
 {
     "category": "Maps",
     "description": "Display a web map.",
+    "featured": false,
     "ignore": false,
     "images": [
         "screenshot.png"

@@ -1,6 +1,7 @@
 {
     "category": "Display information",
     "description": "Display custom labels on a feature layer.",
+    "featured": false,
     "ignore": false,
     "images": [
         "screenshot.png"

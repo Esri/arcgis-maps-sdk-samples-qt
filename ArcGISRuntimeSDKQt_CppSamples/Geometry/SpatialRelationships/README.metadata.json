@@ -1,6 +1,7 @@
 {
     "category": "Geometry",
     "description": "Determine spatial relationships between two geometries.",
+    "featured": false,
     "ignore": false,
     "images": [
         "screenshot.png"

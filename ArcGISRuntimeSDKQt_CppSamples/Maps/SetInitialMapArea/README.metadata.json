@@ -1,6 +1,7 @@
 {
     "category": "Maps",
     "description": "Display a map with a predefined initial extent.",
+    "featured": false,
     "ignore": false,
     "images": [
         "screenshot.png"

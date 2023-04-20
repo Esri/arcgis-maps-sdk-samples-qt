@@ -1,6 +1,7 @@
 {
     "category": "Maps",
     "description": "Tap and hold on a map to show a magnifier.",
+    "featured": false,
     "ignore": false,
     "images": [
         "screenshot.png"

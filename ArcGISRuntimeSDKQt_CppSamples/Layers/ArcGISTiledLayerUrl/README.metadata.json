@@ -1,6 +1,7 @@
 {
     "category": "Layers",
     "description": "Load an ArcGIS tiled layer from a URL.",
+    "featured": false,
     "ignore": false,
     "images": [
         "screenshot.png"

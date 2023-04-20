@@ -1,6 +1,7 @@
 {
     "category": "Layers",
     "description": "Display a layer from a Web Map Tile Service.",
+    "featured": false,
     "ignore": false,
     "images": [
         "screenshot.png"

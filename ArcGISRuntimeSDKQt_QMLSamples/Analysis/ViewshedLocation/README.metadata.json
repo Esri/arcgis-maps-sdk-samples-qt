@@ -1,6 +1,7 @@
 {
     "category": "Analysis",
     "description": "This sample demonstrates how to calculate a viewshed from a Point location.",
+    "featured": false,
     "ignore": false,
     "images": [
         "screenshot.png"

@@ -1,6 +1,7 @@
 {
     "category": "Geometry",
     "description": "Find the union, intersection, or difference of two geometries.",
+    "featured": false,
     "ignore": false,
     "images": [
         "screenshot.png"

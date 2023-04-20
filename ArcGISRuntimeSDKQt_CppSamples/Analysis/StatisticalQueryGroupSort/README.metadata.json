@@ -1,6 +1,7 @@
 {
     "category": "Analysis",
     "description": "Query a feature table for statistics, grouping and sorting by different fields.",
+    "featured": false,
     "ignore": false,
     "images": [
         "screenshot.png"

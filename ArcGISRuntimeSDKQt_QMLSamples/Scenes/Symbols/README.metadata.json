@@ -1,6 +1,7 @@
 {
     "category": "Scenes",
     "description": "Show various kinds of 3D symbols in a scene.",
+    "featured": false,
     "ignore": false,
     "images": [
         "screenshot.png"

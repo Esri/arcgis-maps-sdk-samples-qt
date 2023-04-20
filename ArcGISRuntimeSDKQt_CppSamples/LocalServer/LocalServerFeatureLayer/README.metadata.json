@@ -7,6 +7,7 @@
         }
     ],
     "description": "Start a local feature service and display its features in a map.",
+    "featured": false,
     "ignore": false,
     "images": [
         "screenshot.png"

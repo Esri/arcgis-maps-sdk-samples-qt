@@ -7,6 +7,7 @@
         }
     ],
     "description": "This sample demonstrates how to solve a route on-the-fly using offline data.",
+    "featured": false,
     "ignore": false,
     "images": [
         "screenshot.png"

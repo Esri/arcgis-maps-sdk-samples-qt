@@ -1,6 +1,7 @@
 {
     "category": "Maps",
     "description": "Set the map view to a new viewpoint.",
+    "featured": false,
     "ignore": false,
     "images": [
         "screenshot.png"

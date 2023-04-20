@@ -1,6 +1,7 @@
 {
     "category": "Maps",
     "description": "Determine if a layer is currently being viewed.",
+    "featured": false,
     "ignore": false,
     "images": [
         "screenshot.png"

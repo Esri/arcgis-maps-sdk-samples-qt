@@ -1,6 +1,7 @@
 {
     "category": "Routing",
     "description": "Display a route layer and its directions using a feature collection.",
+    "featured": false,
     "ignore": false,
     "images": [
         "screenshot.png"

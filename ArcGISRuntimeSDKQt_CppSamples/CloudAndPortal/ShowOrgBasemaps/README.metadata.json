@@ -1,6 +1,7 @@
 {
     "category": "Cloud and portal",
     "description": "Connect to Portal to give users access to their organization's basemaps.",
+    "featured": false,
     "ignore": false,
     "images": [
         "screenshot.png"

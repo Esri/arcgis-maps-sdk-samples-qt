@@ -11,6 +11,7 @@
         }
     ],
     "description": "Geocode addresses to locations and reverse geocode locations to addresses offline.",
+    "featured": false,
     "ignore": false,
     "images": [
         "screenshot.png"

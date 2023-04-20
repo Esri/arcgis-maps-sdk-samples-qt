@@ -1,6 +1,7 @@
 {
     "category": "Routing",
     "description": "Find the service area within a network from a given point.",
+    "featured": false,
     "ignore": false,
     "images": [
         "screenshot.png"

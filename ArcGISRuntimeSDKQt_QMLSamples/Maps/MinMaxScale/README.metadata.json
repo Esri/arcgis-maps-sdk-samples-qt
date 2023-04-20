@@ -1,6 +1,7 @@
 {
     "category": "Maps",
     "description": "Restrict zooming between specific scale ranges.",
+    "featured": false,
     "ignore": false,
     "images": [
         "screenshot.png"

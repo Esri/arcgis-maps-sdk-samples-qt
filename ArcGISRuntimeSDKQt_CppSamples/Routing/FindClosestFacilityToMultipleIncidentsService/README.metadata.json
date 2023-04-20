@@ -1,6 +1,7 @@
 {
     "category": "Routing",
     "description": "Find routes from several locations to the respective closest facility.",
+    "featured": false,
     "ignore": false,
     "images": [
         "screenshot.png"

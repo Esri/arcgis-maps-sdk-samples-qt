@@ -7,6 +7,7 @@
         }
     ],
     "description": "Create and use a raster layer made from a local raster file.",
+    "featured": false,
     "ignore": false,
     "images": [
         "screenshot.png"

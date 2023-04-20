@@ -23,6 +23,7 @@
         }
     ],
     "description": "Demonstrates how to animate a graphic's position and rotation and follow it using a `OrbitGeoElementCameraController`.",
+    "featured": false,
     "ignore": false,
     "images": [
         "screenshot.png"

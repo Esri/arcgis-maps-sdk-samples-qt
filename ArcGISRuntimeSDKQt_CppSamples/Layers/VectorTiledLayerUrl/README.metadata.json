@@ -1,6 +1,7 @@
 {
     "category": "Layers",
     "description": "Load an ArcGIS Vector Tiled Layer from a URL.",
+    "featured": false,
     "ignore": false,
     "images": [
         "screenshot.png"

@@ -1,6 +1,7 @@
 {
     "category": "Layers",
     "description": "Create a raster layer from a raster image service.",
+    "featured": false,
     "ignore": false,
     "images": [
         "screenshot.png"

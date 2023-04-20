@@ -1,6 +1,7 @@
 {
     "category": "Layers",
     "description": "Create a unique value with alternate symbols.",
+    "featured": false,
     "ignore": false,
     "images": [
         "screenshot.png"

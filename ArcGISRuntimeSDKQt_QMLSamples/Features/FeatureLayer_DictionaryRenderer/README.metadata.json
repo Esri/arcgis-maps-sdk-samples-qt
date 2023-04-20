@@ -11,6 +11,7 @@
         }
     ],
     "description": "Convert features into graphics to show them with mil2525d symbols.",
+    "featured": false,
     "ignore": false,
     "images": [
         "screenshot.png"

@@ -15,6 +15,7 @@
         }
     ],
     "description": "Display feature layers from various data sources.",
+    "featured": false,
     "ignore": false,
     "images": [
         "screenshot.png"

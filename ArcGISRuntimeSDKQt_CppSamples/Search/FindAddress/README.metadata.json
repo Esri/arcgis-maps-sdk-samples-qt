@@ -1,6 +1,7 @@
 {
     "category": "Search",
     "description": "Find the location for an address.",
+    "featured": false,
     "ignore": false,
     "images": [
         "screenshot.png"

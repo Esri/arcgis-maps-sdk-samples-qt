@@ -1,6 +1,7 @@
 {
     "category": "Geometry",
     "description": "Find the closest vertex and coordinate of a geometry to a point.",
+    "featured": false,
     "ignore": false,
     "images": [
         "screenshot.png"

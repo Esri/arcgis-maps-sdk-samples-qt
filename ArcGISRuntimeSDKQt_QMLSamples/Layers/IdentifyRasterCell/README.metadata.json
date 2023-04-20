@@ -7,6 +7,7 @@
         }
     ],
     "description": "Get the cell value of a local raster at the tapped location and display the result in a callout.",
+    "featured": false,
     "ignore": false,
     "images": [
         "screenshot.png"

@@ -1,6 +1,7 @@
 {
     "category": "Layers",
     "description": "Find features in a sublayer based on attributes and location.",
+    "featured": false,
     "ignore": false,
     "images": [
         "screenshot.png"

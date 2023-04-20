@@ -1,6 +1,7 @@
 {
     "category": "Geometry",
     "description": "Clip a geometry with another geometry.",
+    "featured": false,
     "ignore": false,
     "images": [
         "screenshot.png"

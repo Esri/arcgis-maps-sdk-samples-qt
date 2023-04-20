@@ -1,6 +1,7 @@
 {
     "category": "Features",
     "description": "Display a feature layer from a service using the **on interaction cache** feature request mode.",
+    "featured": false,
     "ignore": false,
     "images": [
         "screenshot.png"

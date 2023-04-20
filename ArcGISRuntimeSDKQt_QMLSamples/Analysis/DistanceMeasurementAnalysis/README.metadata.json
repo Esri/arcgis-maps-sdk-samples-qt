@@ -1,6 +1,7 @@
 {
     "category": "Analysis",
     "description": "This sample demonstrates measuring 3D distances between two points in a scene.",
+    "featured": false,
     "ignore": false,
     "images": [
         "screenshot.png"

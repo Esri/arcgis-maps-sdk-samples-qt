@@ -1,6 +1,7 @@
 {
     "category": "Geometry",
     "description": "Project a point from one spatial reference to another.",
+    "featured": false,
     "ignore": false,
     "images": [
         "screenshot.png"

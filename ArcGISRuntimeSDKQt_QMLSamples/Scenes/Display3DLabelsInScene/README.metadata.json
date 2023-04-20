@@ -1,6 +1,7 @@
 {
     "category": "Scenes",
     "description": "This sample demonstrates how to display custom labels in a 3D scene.",
+    "featured": false,
     "ignore": false,
     "images": [
         "screenshot.png"

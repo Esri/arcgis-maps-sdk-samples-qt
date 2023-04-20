@@ -1,6 +1,7 @@
 {
     "category": "Scenes",
     "description": "Changes the appearance of the atmosphere in a scene.",
+    "featured": false,
     "ignore": false,
     "images": [
         "screenshot.png"

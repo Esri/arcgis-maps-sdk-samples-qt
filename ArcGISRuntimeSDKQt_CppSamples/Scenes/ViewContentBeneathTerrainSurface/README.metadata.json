@@ -1,6 +1,7 @@
 {
     "category": "Scenes",
     "description": "See through terrain in a scene and move the camera underground.",
+    "featured": false,
     "ignore": false,
     "images": [
         "screenshot.png"

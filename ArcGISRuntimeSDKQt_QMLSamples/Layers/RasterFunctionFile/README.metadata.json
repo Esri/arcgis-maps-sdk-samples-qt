@@ -11,6 +11,7 @@
         }
     ],
     "description": "Apply a raster function to a local raster file and display the output with a raster layer.",
+    "featured": false,
     "ignore": false,
     "images": [
         "screenshot.png"

@@ -1,6 +1,7 @@
 {
     "category": "Maps",
     "description": "Rotate a map.",
+    "featured": false,
     "ignore": false,
     "images": [
         "screenshot.png"
