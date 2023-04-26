@@ -22,13 +22,20 @@ Rectangle {
     visible: SampleManager.currentMode === SampleManager.HomepageView
 
     Flickable {
-        id: flickable
         anchors {
-            margins: 15
             fill: parent
+            margins: 15
         }
 
+        contentHeight: {
+            titleText.height + descText.height + hrLine.height + featuredSamplesText.height + featuredSamplesGrid.height + 40
+        }
+
+        clip: true
+
         ScrollIndicator.vertical: ScrollIndicator {}
+
+        interactive: true
 
         Text {
             id: titleText
@@ -67,7 +74,7 @@ You can browse all the samples by navigating through the different categories.
             id: hrLine
             anchors {
                 top: descText.bottom
-                margins: 5
+                margins: 10
             }
 
             width: parent.width
@@ -79,7 +86,7 @@ You can browse all the samples by navigating through the different categories.
             id: featuredSamplesText
             anchors {
                 top: hrLine.bottom
-                topMargin: 5
+                topMargin: 10
                 left: parent.left
                 right: parent.right
             }
@@ -90,15 +97,20 @@ You can browse all the samples by navigating through the different categories.
 
         GridView {
             id: featuredSamplesGrid
-            property int cellsPerRow: 3
-            property int delegateItemWidth: 175
+            property int cellsPerRow: 3 // This initial value is almost immediately overwritten when the window width is determined
+            property int rowCount: 1
+            property int delegateItemSize: 175 // The width (and height) of the item container within the grid
+
             anchors {
                 top: featuredSamplesText.bottom
                 topMargin: 10
                 left: parent.left
                 right: parent.right
-                bottom: parent.bottom
             }
+
+            height: rowCount * delegateItemSize
+
+            interactive: false
 
             onWidthChanged: {
                 updateCellsPerRow();
@@ -109,60 +121,76 @@ You can browse all the samples by navigating through the different categories.
             }
 
             function updateCellsPerRow() {
-                if (SampleManager.featuredSamples)
-                    cellsPerRow = Math.min(Math.floor(featuredSamplesGrid.width/delegateItemWidth), SampleManager.featuredSamples.size);
+                if (SampleManager.featuredSamples) {
+                    cellsPerRow = Math.min(Math.floor(featuredSamplesGrid.width/delegateItemSize), SampleManager.featuredSamples.size);
+                    rowCount = Math.ceil(featuredSamplesGrid.count / cellsPerRow);
+                }
             }
 
-            cellWidth: (featuredSamplesGrid.width/cellsPerRow)
-            cellHeight: delegateItemWidth
+            cellWidth: featuredSamplesGrid.width/cellsPerRow
+            cellHeight: delegateItemSize
             clip: true
             model: SampleManager.featuredSamples
             delegate: Item {
                 id: cell
-                width: featuredSamplesGrid.delegateItemWidth
-                height: featuredSamplesGrid.cellHeight
+                width: featuredSamplesGrid.delegateItemSize
+                height: featuredSamplesGrid.delegateItemSize
 
                 Rectangle {
+                    // This transparent rectangle is included to ensure items are spread out evenly and are repositioned as the window resizes
                     id: paddingRect
                     anchors {
                         top: parent.top
                         left: parent.left
                     }
-                    width: (featuredSamplesGrid.cellWidth - featuredSamplesGrid.delegateItemWidth)/2
+                    width: (featuredSamplesGrid.cellWidth - featuredSamplesGrid.delegateItemSize)/2
                     height: 1
                     color: "#00000000"
                 }
 
-                Image {
-                    id: img
+                Rectangle {
+                    // This rectangle acts as a border around each grid item
                     anchors {
                         top: parent.top
-                        topMargin: cell.height * .05
                         left: paddingRect.right
                     }
-
-                    height: cell.height * .60
+                    height: cell.height * .90
                     width: cell.width * .90
-                    source: thumbnailUrl
-                    fillMode: Image.PreserveAspectCrop
-                }
+                    color: "black"
 
-                Text {
-                    id: txt
-                    anchors {
-                        top: img.bottom
-                        topMargin: cell.height * .05
-                        left: img.left
-                        right: img.right
+                    Image {
+                        id: img
+
+                        anchors.fill: parent
+                        anchors.margins: 1
+                        source: thumbnailUrl
+                        fillMode: Image.PreserveAspectCrop
                     }
 
-                    height: cell.height * .30
+                    Rectangle {
+                        id: txtBackground
+                        anchors {
+                            bottom: img.bottom
+                            topMargin: cell.height * .05
+                            left: img.left
+                            right: img.right
+                        }
+                        height: txt.height
+                        color: "#80000000"
 
-                    horizontalAlignment: Text.AlignHCenter
-                    text: name
-                    wrapMode: Text.WordWrap
-                    font.bold: true
-                    clip: true
+                        Text {
+                            id: txt
+                            padding: 5
+                            width: txtBackground.width - (padding * 2)
+                            text: name
+                            wrapMode: Text.WordWrap
+                            font.bold: true
+                            clip: true
+
+                            color: "white"
+
+                        }
+                    }
                 }
 
                 MouseArea {
