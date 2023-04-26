@@ -1,7 +1,7 @@
 {
     "category": "Geometry",
     "description": "Create a buffer around a map point and display the results as a Graphic.",
-    "featured": false,
+    "featured": true,
     "ignore": false,
     "images": [
         "screenshot.png"

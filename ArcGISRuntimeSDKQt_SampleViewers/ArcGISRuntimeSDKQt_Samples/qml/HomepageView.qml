@@ -28,7 +28,6 @@ Rectangle {
             fill: parent
         }
 
-        //contentHeight: textEdit.height
         ScrollIndicator.vertical: ScrollIndicator {}
 
         Text {
@@ -39,11 +38,24 @@ Rectangle {
                 margins: 0
             }
 
-            text: "
-# ArcGIS Maps SDK for Qt Sample Viewer
+            text: "# ArcGIS Maps SDK for Qt Sample Viewer"
+            wrapMode: Text.WordWrap
+            textFormat: Text.MarkdownText
+            color: "#7938b6"
 
-The ArcGIS Maps SDK for Qt Sample Viewer – C++ presents an overview of what you can achieve using the ArcGIS Maps SDK for Qt in your Qt applications.
-This application contains several samples that demonstrate the power and ease-of-use of the ArcGIS Maps SDK for Qt product, and more samples are coming.
+        }
+        Text {
+            id: descText
+            anchors {
+                top: titleText.bottom
+                topMargin: 10
+                left: parent.left
+                right: parent.right
+            }
+
+            text: "
+The ArcGIS Maps SDK for Qt Sample Viewer presents an overview of what you can achieve using the ArcGIS Maps SDK for Qt in your Qt applications.
+This application contains several samples that demonstrate the power and ease-of-use of the ArcGIS Maps SDK for Qt product, and more samples are added with each release.
 You can browse all the samples by navigating through the different categories.
 "
             wrapMode: Text.WordWrap
@@ -51,14 +63,25 @@ You can browse all the samples by navigating through the different categories.
 
         }
 
+        Rectangle {
+            id: hrLine
+            anchors {
+                top: descText.bottom
+                margins: 5
+            }
+
+            width: parent.width
+            height: 1
+            color: "#000000"
+        }
+
         Text {
             id: featuredSamplesText
             anchors {
-                top: titleText.bottom
-                topMargin: 10
+                top: hrLine.bottom
+                topMargin: 5
                 left: parent.left
                 right: parent.right
-                margins: 0
             }
             text: "### Featured Samples"
             wrapMode: Text.WordWrap
@@ -67,6 +90,8 @@ You can browse all the samples by navigating through the different categories.
 
         GridView {
             id: featuredSamplesGrid
+            property int cellsPerRow: 3
+            property int delegateItemWidth: 175
             anchors {
                 top: featuredSamplesText.bottom
                 topMargin: 10
@@ -75,30 +100,67 @@ You can browse all the samples by navigating through the different categories.
                 bottom: parent.bottom
             }
 
-            cellWidth: 150
-            cellHeight: 150
+            onWidthChanged: {
+                updateCellsPerRow();
+            }
+
+            onCountChanged: {
+                updateCellsPerRow();
+            }
+
+            function updateCellsPerRow() {
+                if (SampleManager.featuredSamples)
+                    cellsPerRow = Math.min(Math.floor(featuredSamplesGrid.width/delegateItemWidth), SampleManager.featuredSamples.size);
+            }
+
+            cellWidth: (featuredSamplesGrid.width/cellsPerRow)
+            cellHeight: delegateItemWidth
             clip: true
-            model: SampleManager.currentCategory.samples
+            model: SampleManager.featuredSamples
             delegate: Item {
-                height: 150
-                width: 150
-                clip: true
+                id: cell
+                width: featuredSamplesGrid.delegateItemWidth
+                height: featuredSamplesGrid.cellHeight
+
+                Rectangle {
+                    id: paddingRect
+                    anchors {
+                        top: parent.top
+                        left: parent.left
+                    }
+                    width: (featuredSamplesGrid.cellWidth - featuredSamplesGrid.delegateItemWidth)/2
+                    height: 1
+                    color: "#00000000"
+                }
 
                 Image {
-                    height: featuredSamplesGrid.cellWidth
-                    width: featuredSamplesGrid.cellWidth
-                    anchors.horizontalCenter: parent.horizontalCenter
+                    id: img
+                    anchors {
+                        top: parent.top
+                        topMargin: cell.height * .05
+                        left: paddingRect.right
+                    }
+
+                    height: cell.height * .60
+                    width: cell.width * .90
                     source: thumbnailUrl
+                    fillMode: Image.PreserveAspectCrop
                 }
 
                 Text {
-                    anchors.fill: parent
+                    id: txt
+                    anchors {
+                        top: img.bottom
+                        topMargin: cell.height * .05
+                        left: img.left
+                        right: img.right
+                    }
+
+                    height: cell.height * .30
+
                     horizontalAlignment: Text.AlignHCenter
-                    verticalAlignment: Text.AlignVCenter
                     text: name
                     wrapMode: Text.WordWrap
-                    styleColor: "#ffffff"
-                    style: Text.Outline
                     font.bold: true
                     clip: true
                 }

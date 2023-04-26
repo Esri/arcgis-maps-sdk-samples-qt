@@ -326,7 +326,9 @@ ApplicationWindow {
         if (SampleManager.currentSample) {
             descriptionView.descriptionText = SampleManager.currentSample.description;
             if (checkDataItems()) {
-                if (SampleManager.currentMode === SampleManager.ManageOfflineDataView || SampleManager.currentMode === SampleManager.DownloadDataView)
+                if (SampleManager.currentMode === SampleManager.ManageOfflineDataView
+                        || SampleManager.currentMode === SampleManager.DownloadDataView
+                        || SampleManager.currentMode === SampleManager.HomepageView)
                     SampleManager.currentMode = SampleManager.LiveSampleView;
 
                 liveSample.source = SampleManager.currentSample.source;
