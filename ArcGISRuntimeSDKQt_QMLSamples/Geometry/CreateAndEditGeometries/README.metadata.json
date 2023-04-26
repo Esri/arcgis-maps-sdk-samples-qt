@@ -1,0 +1,36 @@
+{
+    "category": "Geometry",
+    "description": "Use the Geometry Editor to create new point, multipoint, polyline, or polygon geometries or to edit existing geometries by interacting with a map view.",
+    "ignore": false,
+    "images": [
+        "screenshot.png"
+    ],
+    "keywords": [
+        "draw",
+        "edit",
+        "freehand",
+        "geometry editor",
+        "sketch",
+        "vertex",
+        "Geometry",
+        "GeometryEditor",
+        "Graphic",
+        "GraphicsOverlay",
+        "MapView"
+    ],
+    "redirect_from": [
+        ""
+    ],
+    "relevant_apis": [
+        "Geometry",
+        "GeometryEditor",
+        "Graphic",
+        "GraphicsOverlay",
+        "MapView"
+    ],
+    "snippets": [
+        "CreateAndEditGeometries.qml",
+        "GeometryEditorButton.qml"
+    ],
+    "title": "Create and edit geometries"
+}
