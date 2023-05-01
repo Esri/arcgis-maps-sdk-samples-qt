@@ -173,6 +173,8 @@ class MetadataFile:
             return self.check_data_items(self.metadata["dataItems"])
         elif key == "description":
             return self.check_description(self.metadata["description"])
+        elif key == "featured":
+            return self.check_description(self.metadata["featured"])
         elif key == "ignore":
             return self.check_ignore(self.metadata["ignore"])
         elif key == "images":
@@ -503,6 +505,7 @@ possible_metadata_keys = [
     'category',
     'dataItems',
     'description',
+    'featured',
     'ignore',
     'images',
     'keywords',
