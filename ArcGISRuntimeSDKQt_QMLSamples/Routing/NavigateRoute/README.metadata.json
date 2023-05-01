@@ -1,7 +1,7 @@
 {
     "category": "Routing",
     "description": "Use a routing service to navigate between points.",
-    "featured": false,
+    "featured": true,
     "ignore": false,
     "images": [
         "screenshot.png"

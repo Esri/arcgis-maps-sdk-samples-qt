@@ -1,7 +1,7 @@
 {
     "category": "Maps",
     "description": "Display and browse through building floors from a floor-aware web map.",
-    "featured": false,
+    "featured": true,
     "ignore": false,
     "images": [
         "screenshot.png"

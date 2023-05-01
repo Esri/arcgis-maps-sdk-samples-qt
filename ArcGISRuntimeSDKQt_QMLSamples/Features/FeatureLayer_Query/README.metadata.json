@@ -1,7 +1,7 @@
 {
     "category": "Features",
     "description": "Find features in a feature table which match an SQL query.",
-    "featured": false,
+    "featured": true,
     "ignore": false,
     "images": [
         "screenshot.png"
