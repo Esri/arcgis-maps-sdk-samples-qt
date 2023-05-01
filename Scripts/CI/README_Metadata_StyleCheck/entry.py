@@ -174,7 +174,7 @@ class MetadataFile:
         elif key == "description":
             return self.check_description(self.metadata["description"])
         elif key == "featured":
-            return self.check_description(self.metadata["featured"])
+            return self.featured(self.metadata["featured"])
         elif key == "ignore":
             return self.check_ignore(self.metadata["ignore"])
         elif key == "images":
@@ -211,6 +211,12 @@ class MetadataFile:
                 errors.append(f"dataItem {i} needs an itemId")
             if not data_items[i].get('path', None):
                 errors.append(f"dataItem {i} needs a path")
+        return errors
+
+    def check_featured(self, featured) -> list:
+        if type(featured) != bool:
+            return ["featured metadata category is not a bool"]
+        errors = []
         return errors
 
     def check_description(self, description: str) -> list:
