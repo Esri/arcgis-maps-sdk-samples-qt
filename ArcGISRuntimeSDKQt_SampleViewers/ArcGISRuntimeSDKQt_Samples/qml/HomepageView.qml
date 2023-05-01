@@ -15,11 +15,18 @@
 
 import QtQuick
 import QtQuick.Controls
+import QtQuick.Shapes
 import Esri.ArcGISRuntimeSamples
 import Telemetry
 
 Rectangle {
     visible: SampleManager.currentMode === SampleManager.HomepageView
+
+    gradient: Gradient {
+        GradientStop { position: 0; color: "lightgrey" }
+        GradientStop { position: .5; color: "white" }
+        GradientStop { position: 1; color: "lightgrey" }
+    }
 
     Flickable {
         anchors {
@@ -28,7 +35,7 @@ Rectangle {
         }
 
         contentHeight: {
-            titleText.height + descText.height + hrLine.height + featuredSamplesText.height + featuredSamplesGrid.height + 40
+            featuredSamplesText.height + featuredSamplesGrid.height + 20
         }
 
         clip: true
@@ -38,61 +45,16 @@ Rectangle {
         interactive: true
 
         Text {
-            id: titleText
-            anchors {
-                left: parent.left
-                right: parent.right
-                margins: 0
-            }
-
-            text: "# ArcGIS Maps SDK for Qt Sample Viewer"
-            wrapMode: Text.WordWrap
-            textFormat: Text.MarkdownText
-            color: "#7938b6"
-
-        }
-        Text {
-            id: descText
-            anchors {
-                top: titleText.bottom
-                topMargin: 10
-                left: parent.left
-                right: parent.right
-            }
-
-            text: "
-The ArcGIS Maps SDK for Qt Sample Viewer presents an overview of what you can achieve using the ArcGIS Maps SDK for Qt in your Qt applications.
-This application contains several samples that demonstrate the power and ease-of-use of the ArcGIS Maps SDK for Qt product, and more samples are added with each release.
-You can browse all the samples by navigating through the different categories.
-"
-            wrapMode: Text.WordWrap
-            textFormat: Text.MarkdownText
-
-        }
-
-        Rectangle {
-            id: hrLine
-            anchors {
-                top: descText.bottom
-                margins: 10
-            }
-
-            width: parent.width
-            height: 1
-            color: "#000000"
-        }
-
-        Text {
             id: featuredSamplesText
             anchors {
-                top: hrLine.bottom
-                topMargin: 10
                 left: parent.left
                 right: parent.right
             }
-            text: "### Featured Samples"
+            text: "# Featured Samples"
             wrapMode: Text.WordWrap
             textFormat: Text.MarkdownText
+            color: "white"//"#7938b6"
+            style: Text.Outline
         }
 
         GridView {
