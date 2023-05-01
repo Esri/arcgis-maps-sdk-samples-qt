@@ -308,7 +308,6 @@ ApplicationWindow {
             SampleManager.currentCategory = SampleManager.categories.get(0);
             SampleManager.currentSample = SampleManager.currentCategory.samples.get(2);
             SampleManager.currentMode = SampleManager.HomepageView;
-            console.log("onSampleInitComplete")
         }
 
         function onDoneDownloadingChanged() {
