@@ -22,11 +22,7 @@ import Telemetry
 Rectangle {
     visible: SampleManager.currentMode === SampleManager.HomepageView
 
-    gradient: Gradient {
-        GradientStop { position: 0; color: "lightgrey" }
-        GradientStop { position: .5; color: "white" }
-        GradientStop { position: 1; color: "lightgrey" }
-    }
+    color: "white"
 
     Flickable {
         anchors {
@@ -53,7 +49,7 @@ Rectangle {
             text: "# Featured Samples"
             wrapMode: Text.WordWrap
             textFormat: Text.MarkdownText
-            color: "white"//"#7938b6"
+            color: "white"
             style: Text.Outline
         }
 
@@ -111,6 +107,7 @@ Rectangle {
                 }
 
                 Rectangle {
+                    id: backgroundRectangle
                     // This rectangle acts as a border around each grid item
                     anchors {
                         top: parent.top
@@ -150,19 +147,29 @@ Rectangle {
                             clip: true
 
                             color: "white"
-
                         }
                     }
-                }
 
-                MouseArea {
-                    anchors.fill: parent
-                    onClicked: {
-                        drawer.close();
-                        // launch sample...
-                        SampleManager.currentSample = sample;
-                        GAnalytics.postEvent("sample_opened", {"sample_name": sample.name, "referrer": "featured list"});
-                        SampleManager.currentMode = SampleManager.LiveSampleView
+                    MouseArea {
+                        anchors.fill: parent
+                        hoverEnabled: true
+                        onClicked: {
+                            drawer.close();
+                            // launch sample...
+                            SampleManager.currentSample = sample;
+                            GAnalytics.postEvent("sample_opened", {"sample_name": sample.name, "referrer": "featured list"});
+                            SampleManager.currentMode = SampleManager.LiveSampleView
+                        }
+                        onContainsMouseChanged: {
+                            if (containsMouse) {
+                                backgroundRectangle.color = "#7938b6"
+                                img.anchors.margins = 3
+
+                            } else {
+                                backgroundRectangle.color = "black"
+                                img.anchors.margins = 1
+                            }
+                        }
                     }
                 }
             }
