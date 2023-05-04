@@ -46,18 +46,20 @@ Rectangle {
                 left: parent.left
                 right: parent.right
             }
+            horizontalAlignment: Text.AlignHCenter
             text: "# Featured Samples"
             wrapMode: Text.WordWrap
             textFormat: Text.MarkdownText
-            color: "white"
-            style: Text.Outline
+            color: "#7938b6"
         }
 
         GridView {
             id: featuredSamplesGrid
             property int cellsPerRow: 3 // This initial value is almost immediately overwritten when the window width is determined
             property int rowCount: 1
+            property int minColumnCount: 2
             property int delegateItemSize: 175 // The width (and height) of the item container within the grid
+            property int originalItemSize: 175
 
             anchors {
                 top: featuredSamplesText.bottom
@@ -80,6 +82,7 @@ Rectangle {
 
             function updateCellsPerRow() {
                 if (SampleManager.featuredSamples) {
+                    delegateItemSize = Math.min(originalItemSize, (parent.width/minColumnCount));
                     cellsPerRow = Math.min(Math.floor(featuredSamplesGrid.width/delegateItemSize), SampleManager.featuredSamples.size);
                     rowCount = Math.ceil(featuredSamplesGrid.count / cellsPerRow);
                 }
