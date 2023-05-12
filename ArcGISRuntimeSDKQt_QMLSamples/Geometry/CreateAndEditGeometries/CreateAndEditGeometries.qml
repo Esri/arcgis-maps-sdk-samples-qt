@@ -202,7 +202,7 @@ Rectangle {
                 GeometryEditorButton {
                     id: pointButton
                     buttonName: qsTr("Point")
-                    iconPath: "qrc:/Samples/DisplayInformation/CreateAndEditGeometries/iconAssets/point-32.png"
+                    iconPath: "qrc:/Samples/Geometry/CreateAndEditGeometries/iconAssets/point-32.png"
                     checkable: true
                     enabled: !geometryEditor.started
                     onClicked: {
@@ -215,7 +215,7 @@ Rectangle {
                 GeometryEditorButton {
                     id: multiPointButton
                     buttonName: qsTr("Multipoint")
-                    iconPath: "qrc:/Samples/DisplayInformation/CreateAndEditGeometries/iconAssets/multipoint-32.png"
+                    iconPath: "qrc:/Samples/Geometry/CreateAndEditGeometries/iconAssets/multipoint-32.png"
                     checkable: true
                     enabled: !geometryEditor.started
                     onClicked: {
@@ -235,7 +235,7 @@ Rectangle {
                 GeometryEditorButton {
                     id: lineButton
                     buttonName: qsTr("Line")
-                    iconPath: "qrc:/Samples/DisplayInformation/CreateAndEditGeometries/iconAssets/line-32.png"
+                    iconPath: "qrc:/Samples/Geometry/CreateAndEditGeometries/iconAssets/line-32.png"
                     checkable: true
                     enabled: !geometryEditor.started
                     onClicked: geometryEditor.startWithGeometryType(Enums.GeometryTypePolyline);
@@ -244,7 +244,7 @@ Rectangle {
                 GeometryEditorButton {
                     id: polygonButton
                     buttonName: qsTr("Polygon")
-                    iconPath: "qrc:/Samples/DisplayInformation/CreateAndEditGeometries/iconAssets/polygon-32.png"
+                    iconPath: "qrc:/Samples/Geometry/CreateAndEditGeometries/iconAssets/polygon-32.png"
                     checkable: true
                     enabled: !geometryEditor.started
                     onClicked: geometryEditor.startWithGeometryType(Enums.GeometryTypePolygon);
@@ -304,7 +304,7 @@ Rectangle {
                 GeometryEditorButton {
                     id: undoButton
                     buttonName: qsTr("Undo")
-                    iconPath: "qrc:/Samples/DisplayInformation/CreateAndEditGeometries/iconAssets/undo-32.png"
+                    iconPath: "qrc:/Samples/Geometry/CreateAndEditGeometries/iconAssets/undo-32.png"
                     enabled: geometryEditor.started && geometryEditor.canUndo
                     onClicked: geometryEditor.undo();
                 }
@@ -312,7 +312,7 @@ Rectangle {
                 GeometryEditorButton {
                     id: redoButton
                     buttonName: qsTr("Redo")
-                    iconPath: "qrc:/Samples/DisplayInformation/CreateAndEditGeometries/iconAssets/redo-32.png"
+                    iconPath: "qrc:/Samples/Geometry/CreateAndEditGeometries/iconAssets/redo-32.png"
                     enabled: geometryEditor.started && geometryEditor.canRedo
                     onClicked: geometryEditor.redo();
                 }
@@ -320,7 +320,7 @@ Rectangle {
                 GeometryEditorButton {
                     id: deleteVertexButton
                     buttonName: qsTr("Delete selected element")
-                    iconPath: "qrc:/Samples/DisplayInformation/CreateAndEditGeometries/iconAssets/erase-32.png"
+                    iconPath: "qrc:/Samples/Geometry/CreateAndEditGeometries/iconAssets/erase-32.png"
                     Layout.columnSpan: 2
                     enabled: geometryEditor.started && geometryEditor.selectedElement && geometryEditor.selectedElement.canDelete
                     onClicked: geometryEditor.deleteSelectedElement();
@@ -329,7 +329,7 @@ Rectangle {
                 GeometryEditorButton {
                     id: saveEditsButton
                     buttonName: qsTr("Stop and save edits")
-                    iconPath: "qrc:/Samples/DisplayInformation/CreateAndEditGeometries/iconAssets/check-circle-32.png"
+                    iconPath: "qrc:/Samples/Geometry/CreateAndEditGeometries/iconAssets/check-circle-32.png"
                     Layout.columnSpan: 2
                     enabled: geometryEditor.started && geometryEditor.canUndo
                     onClicked: {
@@ -348,7 +348,7 @@ Rectangle {
                 GeometryEditorButton {
                     id: discardEditsButton
                     buttonName: qsTr("Stop (discards edits)")
-                    iconPath: "qrc:/Samples/DisplayInformation/CreateAndEditGeometries/iconAssets/circle-disallowed-32.png"
+                    iconPath: "qrc:/Samples/Geometry/CreateAndEditGeometries/iconAssets/circle-disallowed-32.png"
                     Layout.columnSpan: 2
                     enabled: geometryEditor.started
                     onClicked: {
@@ -365,7 +365,7 @@ Rectangle {
                 GeometryEditorButton {
                     id: clearGraphicsButton
                     buttonName: qsTr("Delete all geometries")
-                    iconPath: "qrc:/Samples/DisplayInformation/CreateAndEditGeometries/iconAssets/trash-32.png"
+                    iconPath: "qrc:/Samples/Geometry/CreateAndEditGeometries/iconAssets/trash-32.png"
                     Layout.columnSpan: 2
                     enabled: !geometryEditor.started && geometriesOverlay.graphics.count > 0;
                     onClicked: geometriesOverlay.graphics.clear();
