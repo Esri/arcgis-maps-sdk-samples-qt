@@ -79,6 +79,7 @@ RESOURCES += \
     "$$SAMPLEPATHQML/Geometry/Buffer/Buffer.qrc" \
     "$$SAMPLEPATHQML/Geometry/ClipGeometry/ClipGeometry.qrc" \
     "$$SAMPLEPATHQML/Geometry/ConvexHull/ConvexHull.qrc" \
+    "$$SAMPLEPATHQML/Geometry/CreateAndEditGeometries/CreateAndEditGeometries.qrc" \
     "$$SAMPLEPATHQML/Geometry/CreateGeometries/CreateGeometries.qrc" \
     "$$SAMPLEPATHQML/Geometry/CutGeometry/CutGeometry.qrc" \
     "$$SAMPLEPATHQML/Geometry/DensifyAndGeneralize/DensifyAndGeneralize.qrc" \

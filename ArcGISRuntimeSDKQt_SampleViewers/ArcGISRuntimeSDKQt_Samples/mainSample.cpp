@@ -101,6 +101,7 @@
 #include "ConvexHull.h"
 #include "CreateAndSaveKmlFile.h"
 #include "CreateAndSaveMap.h"
+#include "CreateAndEditGeometries.h"
 #include "CreateGeometries.h"
 #include "CreateLoadReport.h"
 #include "CreateMobileGeodatabase.h"
@@ -415,6 +416,7 @@ void registerCppSampleClasses()
   ConvexHull::init();
   CreateAndSaveKmlFile::init();
   CreateAndSaveMap::init();
+  CreateAndEditGeometries::init();
   CreateGeometries::init();
   CreateLoadReport::init();
   CreateMobileGeodatabase::init();

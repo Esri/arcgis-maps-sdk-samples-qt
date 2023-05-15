@@ -30,8 +30,10 @@
         "MapView"
     ],
     "snippets": [
-        "CreateAndEditGeometries.qml",
-        "GeometryEditorButton.qml"
+        "CreateAndEditGeometries.cpp",
+        "CreateAndEditGeometries.h",
+        "GeometryEditorButton.qml",
+        "CreateAndEditGeometries.qml"
     ],
     "title": "Create and edit geometries"
 }

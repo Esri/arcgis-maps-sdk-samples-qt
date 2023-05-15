@@ -2,6 +2,9 @@
     <qresource prefix="/Samples/Geometry/CreateAndEditGeometries">
         <file alias="sample.json">README.metadata.json</file>
         <file>CreateAndEditGeometries.qml</file>
+        <file>CreateAndEditGeometries.h</file>
+        <file>CreateAndEditGeometries.cpp</file>
+        <file>main.qml</file>
         <file>screenshot.png</file>
         <file>README.md</file>
         <file>GeometryEditorButton.qml</file>
