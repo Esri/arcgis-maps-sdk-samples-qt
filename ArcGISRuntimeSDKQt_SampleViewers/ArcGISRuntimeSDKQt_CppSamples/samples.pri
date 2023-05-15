@@ -81,6 +81,7 @@ INCLUDEPATH += \
     "$$SAMPLEPATHCPP/Geometry/Buffer" \
     "$$SAMPLEPATHCPP/Geometry/ClipGeometry" \
     "$$SAMPLEPATHCPP/Geometry/ConvexHull" \
+    "$$SAMPLEPATHCPP/Geometry/CreateAndEditGeometries" \
     "$$SAMPLEPATHCPP/Geometry/CreateGeometries" \
     "$$SAMPLEPATHCPP/Geometry/CutGeometry" \
     "$$SAMPLEPATHCPP/Geometry/DensifyAndGeneralize" \
@@ -291,6 +292,7 @@ HEADERS += \
     "$$SAMPLEPATHCPP/Geometry/Buffer/Buffer.h" \
     "$$SAMPLEPATHCPP/Geometry/ClipGeometry/ClipGeometry.h" \
     "$$SAMPLEPATHCPP/Geometry/ConvexHull/ConvexHull.h" \
+    "$$SAMPLEPATHCPP/Geometry/CreateAndEditGeometries/CreateAndEditGeometries.h" \
     "$$SAMPLEPATHCPP/Geometry/CreateGeometries/CreateGeometries.h" \
     "$$SAMPLEPATHCPP/Geometry/CutGeometry/CutGeometry.h" \
     "$$SAMPLEPATHCPP/Geometry/DensifyAndGeneralize/DensifyAndGeneralize.h" \
@@ -505,6 +507,7 @@ SOURCES += \
     "$$SAMPLEPATHCPP/Geometry/Buffer/Buffer.cpp" \
     "$$SAMPLEPATHCPP/Geometry/ClipGeometry/ClipGeometry.cpp" \
     "$$SAMPLEPATHCPP/Geometry/ConvexHull/ConvexHull.cpp" \
+    "$$SAMPLEPATHCPP/Geometry/CreateAndEditGeometries/CreateAndEditGeometries.cpp" \
     "$$SAMPLEPATHCPP/Geometry/CreateGeometries/CreateGeometries.cpp" \
     "$$SAMPLEPATHCPP/Geometry/CutGeometry/CutGeometry.cpp" \
     "$$SAMPLEPATHCPP/Geometry/DensifyAndGeneralize/DensifyAndGeneralize.cpp" \
@@ -714,6 +717,7 @@ RESOURCES += \
     "$$SAMPLEPATHCPP/Geometry/Buffer/Buffer.qrc" \
     "$$SAMPLEPATHCPP/Geometry/ClipGeometry/ClipGeometry.qrc" \
     "$$SAMPLEPATHCPP/Geometry/ConvexHull/ConvexHull.qrc" \
+    "$$SAMPLEPATHCPP/Geometry/CreateAndEditGeometries/CreateAndEditGeometries.qrc" \
     "$$SAMPLEPATHCPP/Geometry/CreateGeometries/CreateGeometries.qrc" \
     "$$SAMPLEPATHCPP/Geometry/CutGeometry/CutGeometry.qrc" \
     "$$SAMPLEPATHCPP/Geometry/DensifyAndGeneralize/DensifyAndGeneralize.qrc" \
