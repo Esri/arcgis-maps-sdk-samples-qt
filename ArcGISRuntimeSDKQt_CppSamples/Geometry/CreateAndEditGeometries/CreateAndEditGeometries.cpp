@@ -294,11 +294,11 @@ bool CreateAndEditGeometries::elementIsSelected()
 // Create symbols used by all graphics
 void CreateAndEditGeometries::createInitialSymbols()
 {
-  m_pointSymbol = new SimpleMarkerSymbol(SimpleMarkerSymbolStyle::Square, QColor(255, 0, 0), 10, this);
-  m_multiPointSymbol = new SimpleMarkerSymbol(SimpleMarkerSymbolStyle::Square, QColor(0, 0, 255), 10, this);
-  m_lineSymbol = new SimpleLineSymbol(SimpleLineSymbolStyle::Solid, QColor(144, 238, 144), 3, this);
-  m_polygonSymbol = new SimpleFillSymbol(SimpleFillSymbolStyle::Solid, QColor(67, 166, 198, 119),
-                                         new SimpleLineSymbol(SimpleLineSymbolStyle::Solid, QColor(67, 166, 198), 2.0, this), this);
+  m_pointSymbol = new SimpleMarkerSymbol(SimpleMarkerSymbolStyle::Square, QColor(255, 45, 0), 10, this);
+  m_multiPointSymbol = new SimpleMarkerSymbol(SimpleMarkerSymbolStyle::Circle, QColor(255, 255, 0), 5, this);
+  m_lineSymbol = new SimpleLineSymbol(SimpleLineSymbolStyle::Solid, QColor(0, 0, 255), 2, this);
+  m_polygonSymbol = new SimpleFillSymbol(SimpleFillSymbolStyle::Solid, QColor(255, 0, 0, 75),
+                                         new SimpleLineSymbol(SimpleLineSymbolStyle::Dash, QColor(0, 0, 0), 1.0, this), this);
 }
 
 // Create graphics that are present upon sample instantiation
@@ -377,10 +377,10 @@ void CreateAndEditGeometries::createInitialGraphics()
   // Create graphics with the geometries
   m_graphicsOverlay->graphics()->append(
       {
-          new Graphic(house, m_pointSymbol, m_tempGraphicsParent),
-          new Graphic(outbuildings, m_multiPointSymbol, m_tempGraphicsParent),
-          new Graphic(road1, m_lineSymbol, m_tempGraphicsParent),
+          new Graphic(boundary, m_polygonSymbol, m_tempGraphicsParent),
           new Graphic(road2, m_lineSymbol, m_tempGraphicsParent),
-          new Graphic(boundary, m_polygonSymbol, m_tempGraphicsParent)
+          new Graphic(road1, m_lineSymbol, m_tempGraphicsParent),
+          new Graphic(outbuildings, m_multiPointSymbol, m_tempGraphicsParent),
+          new Graphic(house, m_pointSymbol, m_tempGraphicsParent)
       });
 }

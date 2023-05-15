@@ -1,4 +1,4 @@
-// [WriteFile Name=CreateAndEditGeometries, Category=DisplayInformation]
+// [WriteFile Name=CreateAndEditGeometries, Category=Geometry]
 // [Legal]
 // Copyright 2023 Esri.
 
@@ -163,6 +163,13 @@ Rectangle {
             width: 1
             color: "black"
         }
+    }
+
+    // Prevent mouse interaction from propagating to the MapView
+    MouseArea {
+        anchors.fill: control
+        onPressed: mouse => mouse.accepted = true;
+        onWheel: wheel => wheel.accepted = true;
     }
 
     Control {
@@ -347,7 +354,7 @@ Rectangle {
 
                 GeometryEditorButton {
                     id: discardEditsButton
-                    buttonName: qsTr("Stop (discards edits)")
+                    buttonName: qsTr("Stop and discard edits")
                     iconPath: "qrc:/Samples/Geometry/CreateAndEditGeometries/iconAssets/circle-disallowed-32.png"
                     Layout.columnSpan: 2
                     enabled: geometryEditor.started

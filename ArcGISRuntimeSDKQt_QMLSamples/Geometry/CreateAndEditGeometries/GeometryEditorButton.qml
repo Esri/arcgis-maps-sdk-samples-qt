@@ -1,4 +1,4 @@
-// [WriteFile Name=CreateAndEditGeometries, Category=DisplayInformation]
+// [WriteFile Name=CreateAndEditGeometries, Category=Geometry]
 // [Legal]
 // Copyright 2023 Esri.
 

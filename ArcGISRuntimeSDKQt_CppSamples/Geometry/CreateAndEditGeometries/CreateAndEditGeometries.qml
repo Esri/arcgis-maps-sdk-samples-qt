@@ -48,6 +48,13 @@ Item {
         }
     }
 
+    // Prevent mouse interaction from propagating to the MapView
+    MouseArea {
+        anchors.fill: control
+        onPressed: mouse => mouse.accepted = true;
+        onWheel: wheel => wheel.accepted = true;
+    }
+
     Control {
         id: control
         anchors.right: parent.right
