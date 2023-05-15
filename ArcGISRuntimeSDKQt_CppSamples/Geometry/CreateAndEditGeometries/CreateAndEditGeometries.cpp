@@ -187,7 +187,7 @@ void CreateAndEditGeometries::setTool(GeometryEditorToolType toolType)
 {
   if (toolType == GeometryEditorToolType::Freehand)
     m_geometryEditor->setTool(new FreehandTool(this));
-  else // toolType == GeometryEditorToolType::Freehand
+  else // toolType == GeometryEditorToolType::Vertex
     m_geometryEditor->setTool(new VertexTool(this));
 }
 
@@ -227,7 +227,6 @@ MapQuickView* CreateAndEditGeometries::mapView() const
 }
 
 // Create slots for asynchronous signals
-
 void CreateAndEditGeometries::createConnections()
 {
   // Allow user to edit existing graphics by clicking on them
