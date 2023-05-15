@@ -112,7 +112,6 @@ void CreateAndEditGeometries::startGeometryEditorWithGeometryType(GeometryEditor
     m_geometryEditor->start(GeometryType::Polygon);
     break;
   default:
-    qDebug() << "something went wrong";
     break;
   }
 
