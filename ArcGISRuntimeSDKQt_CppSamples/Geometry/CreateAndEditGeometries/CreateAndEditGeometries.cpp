@@ -120,6 +120,10 @@ void CreateAndEditGeometries::startGeometryEditorWithGeometryType(GeometryEditor
 
 void CreateAndEditGeometries::stopEditing(bool saveGeometry)
 {
+  // Calling stop on the geometry editor returns the currently drawn geometry
+  const Geometry geometry = m_geometryEditor->stop();
+  emit geometryEditorStartedChanged();
+
   // If the user wants to discard edits
   if (!saveGeometry)
   {
@@ -129,16 +133,10 @@ void CreateAndEditGeometries::stopEditing(bool saveGeometry)
       m_editingGraphic->setVisible(true);
       m_editingGraphic = nullptr;
     }
-    m_geometryEditor->stop();
-    emit geometryEditorStartedChanged();
     return;
   }
 
   // If the user wants to stop editing and save the geometry
-
-  // Calling stop on the geometry editor returns the currently drawn geometry
-  Geometry geometry = m_geometryEditor->stop();
-
   // If the user was editing an existing graphic, update its geometry
   if (m_editingGraphic)
   {
@@ -151,9 +149,8 @@ void CreateAndEditGeometries::stopEditing(bool saveGeometry)
     return;
   }
 
-  // Otherwise this is a new geometry
-
-  // Apply symbology to the geometry
+  // If the user was not editing an existing graphic, create a new graphic with the geometry and a symbol
+  // Determine what symbology to use for the graphic
   Symbol* geometrySymbol = nullptr;
   switch (geometry.geometryType())
   {
@@ -179,8 +176,6 @@ void CreateAndEditGeometries::stopEditing(bool saveGeometry)
 
   // Append the new graphic to the graphics overlay
   m_graphicsOverlay->graphics()->append(new Graphic(geometry, geometrySymbol, m_tempGraphicsParent));
-  emit geometryEditorStartedChanged();
-  emit canUndoOrRedoChanged();
 }
 
 void CreateAndEditGeometries::setTool(GeometryEditorToolType toolType)
