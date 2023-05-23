@@ -115,11 +115,11 @@ RasterRgbRendererSample {
 
             model: stretchTypes
             property int modelWidth: 0
-            Layout.minimumWidth: modelWidth + leftPadding + rightPadding
+            Layout.minimumWidth: modelWidth + leftPadding + rightPadding + indicator.width
             Component.onCompleted : {
                 for (let i = 0; i < model.length; ++i) {
                     metrics.text = model[i];
-                    modelWidth = Math.max(modelWidth, metrics.width + 20);
+                    modelWidth = Math.max(modelWidth, metrics.width);
                 }
             }
             TextMetrics {

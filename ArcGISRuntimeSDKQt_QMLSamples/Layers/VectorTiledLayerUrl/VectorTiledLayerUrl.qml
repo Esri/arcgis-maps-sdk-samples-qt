@@ -64,7 +64,7 @@ Rectangle {
         }
 
         property int modelWidth: 0
-        width: modelWidth + leftPadding + rightPadding
+        width: modelWidth + leftPadding + rightPadding + indicator.width
         model: ["Mid-Century","Colored Pencil","Newspaper","Nova", "World Street Map (Night)"]
         onCurrentTextChanged: {
             // Call this JavaScript function when the current selection changes
@@ -75,7 +75,7 @@ Rectangle {
         Component.onCompleted : {
             for (let i = 0; i < model.length; ++i) {
                 metrics.text = model[i];
-                modelWidth = Math.max(modelWidth, metrics.width + 20);
+                modelWidth = Math.max(modelWidth, metrics.width);
             }
         }
 

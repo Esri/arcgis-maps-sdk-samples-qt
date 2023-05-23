@@ -126,14 +126,14 @@ Rectangle {
                             id: fieldComboBox
                             anchors.verticalCenter: parent.verticalCenter
                             property int modelWidth: 0
-                            width: modelWidth + leftPadding + rightPadding
+                            width: modelWidth + leftPadding + rightPadding + indicator.width
                             model: fields
                             onModelChanged: {
                                 if (!fields)
                                     return;
                                 for (let i = 0; i < model.length; ++i) {
                                     metricsFieldComboBox.text = model[i];
-                                    modelWidth = Math.max(modelWidth, metricsFieldComboBox.width + 20);
+                                    modelWidth = Math.max(modelWidth, metricsFieldComboBox.width);
                                 }
                             }
                             TextMetrics {
@@ -152,12 +152,12 @@ Rectangle {
                             id: statisticComboBox
                             anchors.verticalCenter: parent.verticalCenter
                             property int modelWidth: 0
-                            width: modelWidth + leftPadding + rightPadding
+                            width: modelWidth + leftPadding + rightPadding + indicator.width
                             model: statisticTypes
                             Component.onCompleted : {
                                 for (let i = 0; i < model.length; ++i) {
                                     metricsStatisticComboBox.text = model[i];
-                                    modelWidth = Math.max(modelWidth, metricsStatisticComboBox.width + 20);
+                                    modelWidth = Math.max(modelWidth, metricsStatisticComboBox.width);
                                 }
                             }
                             TextMetrics {

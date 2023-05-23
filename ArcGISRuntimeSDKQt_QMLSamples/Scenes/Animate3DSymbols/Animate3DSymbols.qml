@@ -134,7 +134,7 @@ Rectangle {
             ComboBox {
                 id: missionList
                 property real modelWidth: 0
-                Layout.minimumWidth: leftPadding + rightPadding + modelWidth
+                Layout.minimumWidth: leftPadding + rightPadding + modelWidth + indicator.width
                 enabled: !playButton.checked
                 model: missionsModel
                 textRole: "name"
@@ -148,7 +148,7 @@ Rectangle {
                 onModelChanged: {
                     for (let i = 0; i < missionsModel.count; ++i) {
                         textMetrics.text = missionsModel.get(i).name;
-                        modelWidth = Math.max(modelWidth, textMetrics.width + 20);
+                        modelWidth = Math.max(modelWidth, textMetrics.width);
                     }
                 }
 

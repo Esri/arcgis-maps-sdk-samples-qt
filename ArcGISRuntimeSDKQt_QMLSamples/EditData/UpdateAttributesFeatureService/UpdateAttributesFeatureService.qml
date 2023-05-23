@@ -180,7 +180,7 @@ Rectangle {
 
             ComboBox {
                 property int modelWidth: 0
-                Layout.minimumWidth: modelWidth + leftPadding + rightPadding
+                Layout.minimumWidth: modelWidth + leftPadding + rightPadding + indicator.width
 
                 Layout.columnSpan: 2
                 Layout.margins: 5
@@ -191,7 +191,7 @@ Rectangle {
                 Component.onCompleted : {
                     for (let i = 0; i < model.length; ++i) {
                         metrics.text = model[i];
-                        modelWidth = Math.max(modelWidth, metrics.width + 20);
+                        modelWidth = Math.max(modelWidth, metrics.width);
                     }
                 }
                 TextMetrics {

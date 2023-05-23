@@ -162,7 +162,7 @@ Rectangle {
         }
 
         property int modelWidth: 0
-        width: modelWidth + rightPadding + leftPadding
+        width: modelWidth + rightPadding + leftPadding + indicator.width
         model: map.bookmarks
 
         Connections {
@@ -173,7 +173,7 @@ Rectangle {
                     for (let i = 0; i < model.count; ++i) {
                         metrics.text = model.get(i).name;
                         bookmarks.modelWidth = Math.max(bookmarks.modelWidth,
-                                                        metrics.width + 20);
+                                                        metrics.width);
                     }
                 }
             }

@@ -82,7 +82,7 @@ ManageBookmarksSample {
             margins: 15
         }
         property int bestWidth: implicitWidth
-        width: bestWidth + leftPadding + rightPadding
+        width: bestWidth + leftPadding + rightPadding + indicator.width
         // Set the model to the BookmarkListModel
         model: manageBookmarksSample.bookmarks
 
@@ -93,7 +93,7 @@ ManageBookmarksSample {
                 let w = bestWidth;
                 for (let i = 0; i < model.rowCount(); ++i) {
                     metrics.text = manageBookmarksSample.bookmarkNameForIndex(i);
-                    w = Math.max(w, metrics.width + 20);
+                    w = Math.max(w, metrics.width);
                 }
                 bestWidth = w;
             }

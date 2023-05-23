@@ -90,7 +90,7 @@ Rectangle {
             ComboBox {
                 id: slopeBox
                 property int modelWidth: 0
-                Layout.minimumWidth: modelWidth + leftPadding + rightPadding
+                Layout.minimumWidth: modelWidth + leftPadding + rightPadding + indicator.width
                 Layout.margins: 5
                 Layout.fillWidth: true
                 model: HillshadeSlopeTypeModel{}
@@ -100,7 +100,7 @@ Rectangle {
                 Component.onCompleted : {
                     for (let i = 0; i < model.count; ++i) {
                         metrics.text = model.get(i).name;
-                        modelWidth = Math.max(modelWidth, metrics.width + 20);
+                        modelWidth = Math.max(modelWidth, metrics.width);
                     }
                 }
                 TextMetrics {

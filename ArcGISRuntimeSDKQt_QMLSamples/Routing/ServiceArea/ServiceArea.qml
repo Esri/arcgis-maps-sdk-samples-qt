@@ -221,7 +221,7 @@ Rectangle {
         ComboBox {
             id: modeComboBox
             property int modelWidth: 0
-            width: modelWidth + leftPadding + rightPadding
+            width: modelWidth + leftPadding + rightPadding + indicator.width
             model: ["Facility", "Barrier"]
 
             // Add background to the ComboBox
@@ -241,7 +241,7 @@ Rectangle {
             Component.onCompleted : {
                 for (let i = 0; i < model.length; ++i) {
                     metrics.text = model[i];
-                    modelWidth = Math.max(modelWidth, metrics.width + 20);
+                    modelWidth = Math.max(modelWidth, metrics.width);
                 }
             }
             TextMetrics {
