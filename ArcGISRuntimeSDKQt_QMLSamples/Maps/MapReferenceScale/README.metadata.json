@@ -1,6 +1,7 @@
 {
     "category": "Maps",
     "description": "Set the map's reference scale and which feature layers should honor the reference scale.",
+    "featured": false,
     "ignore": false,
     "images": [
         "screenshot.png"

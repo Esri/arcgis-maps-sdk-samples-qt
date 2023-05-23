@@ -1,6 +1,7 @@
 {
     "category": "Scenes",
     "description": "Update the orientation of a graphic using expressions based on its attributes.",
+    "featured": false,
     "ignore": false,
     "images": [
         "screenshot.png"

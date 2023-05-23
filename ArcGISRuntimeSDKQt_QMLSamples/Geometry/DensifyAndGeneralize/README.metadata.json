@@ -1,6 +1,7 @@
 {
     "category": "Geometry",
     "description": "A multipart geometry can be densified by adding interpolated points at regular intervals. Generalizing a multipart geometry simplifies it while preserving its general shape. Densifying a multipart geometry adds more vertices at regular intervals.",
+    "featured": false,
     "ignore": false,
     "images": [
         "screenshot.png"

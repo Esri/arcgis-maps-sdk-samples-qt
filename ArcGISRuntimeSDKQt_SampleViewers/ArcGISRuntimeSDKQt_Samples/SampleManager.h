@@ -41,6 +41,7 @@ class SampleManager : public QObject
   Q_OBJECT
 
   Q_PROPERTY(SampleListModel* samples READ samples NOTIFY sampleInitComplete)
+  Q_PROPERTY(SampleListModel* featuredSamples READ featuredSamples NOTIFY featuredSamplesChanged)
   Q_PROPERTY(CategoryListModel* categories READ categories NOTIFY sampleInitComplete)
   Q_PROPERTY(CurrentMode currentMode READ currentMode WRITE setCurrentMode NOTIFY currentModeChanged)
   Q_PROPERTY(Sample* currentSample READ currentSample WRITE setCurrentSample NOTIFY currentSampleChanged)
@@ -73,12 +74,14 @@ public:
     DescriptionView,
     ManageOfflineDataView,
     NetworkRequiredView,
-    DownloadDataView
+    DownloadDataView,
+    HomepageView
   };
   Q_ENUM(CurrentMode)
 
 signals:
   void sampleInitComplete();
+  void featuredSamplesChanged();
   void cancelDownloadChanged();
   void currentModeChanged();
   void currentSampleChanged();
@@ -103,6 +106,7 @@ private:
   QVariant fileUrl(const QString& scheme, const QString& path);
   QString readTextFile(const QString& filePath);
   SampleListModel* samples() { return m_allSamples; }
+  SampleListModel* featuredSamples() const { return m_featuredSamples; }
   CategoryListModel* categories() { return m_categories; }
   CurrentMode currentMode() { return m_currentMode; }
   void setCurrentMode(const CurrentMode& mode);
@@ -129,6 +133,7 @@ private:
 private:
   CategoryListModel* m_categories = nullptr;
   SampleListModel* m_allSamples = nullptr;
+  SampleListModel* m_featuredSamples = nullptr;
   CurrentMode m_currentMode = CurrentMode::LiveSampleView;
   Sample* m_currentSample = nullptr;
   SampleCategory* m_currentCategory = nullptr;

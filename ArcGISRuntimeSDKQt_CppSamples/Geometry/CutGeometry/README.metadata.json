@@ -1,6 +1,7 @@
 {
     "category": "Geometry",
     "description": "Cut a geometry along a polyline.",
+    "featured": false,
     "ignore": false,
     "images": [
         "screenshot.png"

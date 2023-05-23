@@ -1,6 +1,7 @@
 {
     "category": "Search",
     "description": "Use an online service to find the address for a tapped point.",
+    "featured": false,
     "ignore": false,
     "images": [
         "screenshot.png"

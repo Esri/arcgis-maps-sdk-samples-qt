@@ -1,6 +1,7 @@
 {
     "category": "Edit data",
     "description": "Add, delete, and download attachments for features from a service.",
+    "featured": false,
     "ignore": false,
     "images": [
         "screenshot.png"

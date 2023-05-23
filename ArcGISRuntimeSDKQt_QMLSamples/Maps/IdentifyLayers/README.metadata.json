@@ -1,6 +1,7 @@
 {
     "category": "Maps",
     "description": "Identify features in all layers in a map.",
+    "featured": false,
     "ignore": false,
     "images": [
         "screenshot.png"

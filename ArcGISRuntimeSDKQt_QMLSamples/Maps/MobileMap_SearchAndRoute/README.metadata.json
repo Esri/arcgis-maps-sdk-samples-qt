@@ -11,6 +11,7 @@
         }
     ],
     "description": "Display maps and use locators to enable search and routing offline using a Mobile Map Package.",
+    "featured": false,
     "ignore": false,
     "images": [
         "screenshot.png"

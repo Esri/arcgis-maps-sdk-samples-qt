@@ -1,6 +1,7 @@
 {
     "category": "Scenes",
     "description": "Get the elevation for a given point on a surface.",
+    "featured": false,
     "ignore": false,
     "images": [
         "screenshot.png"

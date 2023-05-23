@@ -1,6 +1,7 @@
 {
     "category": "Maps",
     "description": "Take a map offline using a preplanned map area.",
+    "featured": false,
     "ignore": false,
     "images": [
         "screenshot.png"

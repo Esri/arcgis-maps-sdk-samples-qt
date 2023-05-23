@@ -7,6 +7,7 @@
         }
     ],
     "description": "Animate a series of images with an image overlay.",
+    "featured": false,
     "ignore": false,
     "images": [
         "screenshot.png"

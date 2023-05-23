@@ -1,6 +1,7 @@
 {
     "category": "Scenes",
     "description": "Show realistic lighting and shadows for the specific date and time of day.",
+    "featured": false,
     "ignore": false,
     "images": [
         "screenshot.png"

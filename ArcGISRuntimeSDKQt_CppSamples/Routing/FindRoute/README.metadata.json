@@ -1,6 +1,7 @@
 {
     "category": "Routing",
     "description": "Display directions for a route between two points.",
+    "featured": false,
     "ignore": false,
     "images": [
         "screenshot.png"

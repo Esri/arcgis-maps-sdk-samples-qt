@@ -1,6 +1,7 @@
 {
     "category": "Maps",
     "description": "Display your location history on the map.",
+    "featured": false,
     "ignore": false,
     "images": [
         "screenshot.png"

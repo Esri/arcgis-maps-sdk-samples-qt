@@ -1,6 +1,7 @@
 {
     "category": "Maps",
     "description": "Limit the view of a map to a particular area.",
+    "featured": false,
     "ignore": false,
     "images": [
         "screenshot.png"

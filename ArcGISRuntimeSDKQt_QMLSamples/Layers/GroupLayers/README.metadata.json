@@ -1,6 +1,7 @@
 {
     "category": "Layers",
     "description": "Group a collection of layers together and toggle their visibility as a group.",
+    "featured": false,
     "ignore": false,
     "images": [
         "screenshot.png"

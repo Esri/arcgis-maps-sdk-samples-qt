@@ -1,6 +1,7 @@
 {
     "category": "Layers",
     "description": "This sample demonstrates how to display an OGC API feature collection and query features while navigating the map view.",
+    "featured": false,
     "ignore": false,
     "images": [
         "screenshot.png"

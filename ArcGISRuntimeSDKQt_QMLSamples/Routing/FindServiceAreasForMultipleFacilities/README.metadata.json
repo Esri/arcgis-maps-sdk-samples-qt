@@ -1,6 +1,7 @@
 {
     "category": "Routing",
     "description": "Find the service areas of several facilities from a feature service.",
+    "featured": false,
     "ignore": false,
     "images": [
         "screenshot.png"

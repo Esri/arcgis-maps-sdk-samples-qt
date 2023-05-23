@@ -1,6 +1,7 @@
 {
     "category": "Routing",
     "description": "Find a route that reaches all stops without crossing any barriers.",
+    "featured": false,
     "ignore": false,
     "images": [
         "screenshot.png"

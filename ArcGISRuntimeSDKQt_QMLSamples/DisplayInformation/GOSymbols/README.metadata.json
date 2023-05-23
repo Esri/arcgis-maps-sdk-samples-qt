@@ -1,6 +1,7 @@
 {
     "category": "Display information",
     "description": "Use a symbol style to display a graphic on a graphics overlay.",
+    "featured": false,
     "ignore": false,
     "images": [
         "screenshot.png"

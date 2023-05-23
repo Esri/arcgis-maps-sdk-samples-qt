@@ -1,6 +1,7 @@
 {
     "category": "Routing",
     "description": "Find a route to the closest facility from a location.",
+    "featured": false,
     "ignore": false,
     "images": [
         "screenshot.png"

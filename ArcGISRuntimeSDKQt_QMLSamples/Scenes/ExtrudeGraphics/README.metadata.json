@@ -1,6 +1,7 @@
 {
     "category": "Scenes",
     "description": "Extrude graphics based on an attribute value.",
+    "featured": false,
     "ignore": false,
     "images": [
         "screenshot.png"

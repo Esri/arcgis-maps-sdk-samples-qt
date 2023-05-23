@@ -1,6 +1,7 @@
 {
     "category": "Layers",
     "description": "Change the style of a Web Map Service (WMS) layer.",
+    "featured": false,
     "ignore": false,
     "images": [
         "screenshot.png"

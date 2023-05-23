@@ -1,6 +1,7 @@
 {
     "category": "Display information",
     "description": "Display an alert message when a graphic is clicked.",
+    "featured": false,
     "ignore": false,
     "images": [
         "screenshot.png"

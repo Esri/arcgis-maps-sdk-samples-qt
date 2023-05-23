@@ -1,6 +1,7 @@
 {
     "category": "Geometry",
     "description": "Format coordinates in a variety of common notations.",
+    "featured": false,
     "ignore": false,
     "images": [
         "screenshot.png"

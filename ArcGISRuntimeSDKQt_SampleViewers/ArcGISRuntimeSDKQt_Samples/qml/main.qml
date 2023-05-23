@@ -85,6 +85,17 @@ ApplicationWindow {
                     MenuItem {
                         width: parent.width
                         height: 48
+                        text: qsTr("Home")
+                        onTriggered: {
+                            aboutView.visible = false;
+                            gAnalyticsView.visible = false;
+                            proxySetupView.visible = false;
+                            SampleManager.currentMode = SampleManager.HomepageView
+                        }
+                    }
+                    MenuItem {
+                        width: parent.width
+                        height: 48
                         text: qsTr("Live Sample")
                         onTriggered: {
                             aboutView.visible = false;
@@ -201,6 +212,11 @@ ApplicationWindow {
         anchors.fill: parent
     }
 
+    HomepageView {
+        id: homepageView
+        anchors.fill: parent
+    }
+
     LiveSampleView {
         id: liveSample
         anchors.fill: parent
@@ -291,6 +307,7 @@ ApplicationWindow {
             // set the initial sample to the "Change Basemap" sample
             SampleManager.currentCategory = SampleManager.categories.get(0);
             SampleManager.currentSample = SampleManager.currentCategory.samples.get(2);
+            SampleManager.currentMode = SampleManager.HomepageView;
         }
 
         function onDoneDownloadingChanged() {
@@ -308,7 +325,9 @@ ApplicationWindow {
         if (SampleManager.currentSample) {
             descriptionView.descriptionText = SampleManager.currentSample.description;
             if (checkDataItems()) {
-                if (SampleManager.currentMode === SampleManager.ManageOfflineDataView || SampleManager.currentMode === SampleManager.DownloadDataView)
+                if (SampleManager.currentMode === SampleManager.ManageOfflineDataView
+                        || SampleManager.currentMode === SampleManager.DownloadDataView
+                        || SampleManager.currentMode === SampleManager.HomepageView)
                     SampleManager.currentMode = SampleManager.LiveSampleView;
 
                 liveSample.source = SampleManager.currentSample.source;

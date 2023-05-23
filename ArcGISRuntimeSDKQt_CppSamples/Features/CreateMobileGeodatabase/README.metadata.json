@@ -1,6 +1,7 @@
 {
     "category": "Features",
     "description": "Create and share a mobile geodatabase.",
+    "featured": true,
     "ignore": false,
     "images": [
         "screenshot.png"
