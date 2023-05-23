@@ -84,6 +84,12 @@ Item {
                 model: model.preplannedList
                 textRole: "itemTitle"
                 onActivated: model.checkIfMapExists(preplannedCombo.currentIndex);
+
+                // Add background to the ComboBox
+                Rectangle {
+                    anchors.fill: parent
+                    radius: 10
+                }
             }
 
             Button {

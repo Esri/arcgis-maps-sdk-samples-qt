@@ -45,6 +45,12 @@ Item {
                 routingModel.travelModeIndex = currentIndex;
                 routingModel.findRoute();
             }
+
+            // Add background to the ComboBox
+            Rectangle {
+                anchors.fill: parent
+                radius: 10
+            }
         }
 
         Button {

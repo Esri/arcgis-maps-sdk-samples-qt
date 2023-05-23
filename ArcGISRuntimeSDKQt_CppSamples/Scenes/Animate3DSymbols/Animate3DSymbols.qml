@@ -86,6 +86,12 @@ Animate3DSymbolsSample {
                 }
 
                 Component.onCompleted: missionList.currentTextChanged()
+
+                // Add background to the ComboBox
+                Rectangle {
+                    anchors.fill: parent
+                    radius: 10
+                }
             }
 
             LabeledSlider {

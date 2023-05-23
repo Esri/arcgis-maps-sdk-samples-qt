@@ -99,6 +99,13 @@ RasterStretchRendererSample {
                         modelWidth = Math.max(modelWidth, metrics.width);
                     }
                 }
+
+                // Add background to the ComboBox
+                Rectangle {
+                    anchors.fill: parent
+                    radius: 10
+                }
+
                 TextMetrics {
                     id: metrics
                     font: stretchTypeCombo.font

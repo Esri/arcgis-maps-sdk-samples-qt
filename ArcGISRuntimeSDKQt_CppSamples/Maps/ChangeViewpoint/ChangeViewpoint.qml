@@ -43,6 +43,12 @@ ChangeViewpointSample {
             margins: 15
         }
 
+        // Add background to the ComboBox
+        Rectangle {
+            anchors.fill: parent
+            radius: 10
+        }
+
         property int bestWidth: implicitWidth
 
         width: bestWidth + rightPadding + leftPadding

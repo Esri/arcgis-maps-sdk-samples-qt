@@ -104,6 +104,12 @@ ManageBookmarksSample {
             manageBookmarksSample.goToBookmark(bookmarkComboBox.currentIndex);
         }
 
+        // Add background to the ComboBox
+        Rectangle {
+            anchors.fill: parent
+            radius: 10
+        }
+
         TextMetrics {
             id: metrics
             font: bookmarkComboBox.font

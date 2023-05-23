@@ -66,6 +66,12 @@ Item {
                 Layout.fillWidth: true
                 Layout.margins: 3
                 Layout.alignment: Qt.AlignHCenter
+
+                // Add background to the ComboBox
+                Rectangle {
+                    anchors.fill: parent
+                    radius: 10
+                }
             }
 
             Button {

@@ -46,6 +46,12 @@ FeatureLayerExtrusionSample {
             property int modelWidth: 0
             width: modelWidth + leftPadding + rightPadding
 
+            // Add a background to the ComboBox
+            Rectangle {
+                anchors.fill: parent
+                radius: 10
+            }
+
             model: ["TOTAL POPULATION", "POPULATION DENSITY"]
 
             onCurrentTextChanged: {

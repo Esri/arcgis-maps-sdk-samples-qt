@@ -42,6 +42,12 @@ DisplayKmlSample {
             margins: 5
         }
 
+        // Add background to the ComboBox
+        Rectangle {
+            anchors.fill: parent
+            radius: 10
+        }
+
         property int modelWidth: 0
         width: modelWidth + leftPadding + rightPadding
 

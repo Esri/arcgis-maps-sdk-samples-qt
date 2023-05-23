@@ -100,6 +100,12 @@ ServiceAreaSample {
             property int modelWidth: 0
             width: modelWidth + leftPadding + rightPadding
 
+            // Add background to the ComboBox
+            Rectangle {
+                anchors.fill: parent
+                radius: 10
+            }
+
             onCurrentTextChanged: {
                 if (currentText === "Facility")
                     setFacilityMode();
