@@ -197,11 +197,6 @@ Rectangle {
                 color: "#474747"
             }
 
-            Rectangle {
-                anchors.fill: filterComboBox
-                color: "white"
-            }
-
             ComboBox {
                 id: filterComboBox
                 anchors {

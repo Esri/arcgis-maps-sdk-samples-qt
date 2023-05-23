@@ -44,6 +44,13 @@ VectorTiledLayerUrlSample {
         }
         property int modelWidth: 0
         width: modelWidth + leftPadding + rightPadding
+
+        // Add background to the ComboBox
+        Rectangle {
+            anchors.fill: parent
+            radius: 10
+        }
+
         model: ["Mid-Century","Colored Pencil","Newspaper","Nova","World Street Map (Night)"]
         onCurrentTextChanged: {
             // Call C++ invokable function to switch the basemaps
