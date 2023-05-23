@@ -83,10 +83,14 @@ Rectangle {
                     Layout.margins: 3
                     Layout.alignment: Qt.AlignHCenter
 
-                    // Add background to the ComboBox
+                    // Add a background to the ComboBox
                     Rectangle {
                         anchors.fill: parent
                         radius: 10
+                        // Make the rectangle visible if a dropdown indicator exists
+                        // An indicator only exists if a theme is set
+                        visible: parent.indicator
+                        border.width: 1
                     }
                 }
 

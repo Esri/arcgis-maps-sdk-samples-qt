@@ -65,7 +65,7 @@ Animate3DSymbolsSample {
                 model: missionsModel
                 textRole: "display"
                 property real modelWidth: 0
-                Layout.minimumWidth: leftPadding + rightPadding + modelWidth + indicator.width
+                Layout.minimumWidth: leftPadding + rightPadding + modelWidth + (indicator ? indicator.width : 10)
 
                 onModelChanged: {
                     for (let i = 0; i < missionsModel.rowCount(); ++i) {
@@ -87,10 +87,14 @@ Animate3DSymbolsSample {
 
                 Component.onCompleted: missionList.currentTextChanged()
 
-                // Add background to the ComboBox
+                // Add a background to the ComboBox
                 Rectangle {
                     anchors.fill: parent
                     radius: 10
+                    // Make the rectangle visible if a dropdown indicator exists
+                    // An indicator only exists if a theme is set
+                    visible: parent.indicator
+                    border.width: 1
                 }
             }
 

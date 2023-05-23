@@ -57,14 +57,18 @@ Rectangle {
             margins: 15
         }
 
-        // Add background to the ComboBox
+        // Add a background to the ComboBox
         Rectangle {
             anchors.fill: parent
             radius: 10
+            // Make the rectangle visible if a dropdown indicator exists
+            // An indicator only exists if a theme is set
+            visible: parent.indicator
+            border.width: 1
         }
 
         property int modelWidth: 0
-        width: modelWidth + leftPadding + rightPadding + indicator.width
+        width: modelWidth + leftPadding + rightPadding + (indicator ? indicator.width : 10)
         model: ["Mid-Century","Colored Pencil","Newspaper","Nova", "World Street Map (Night)"]
         onCurrentTextChanged: {
             // Call this JavaScript function when the current selection changes

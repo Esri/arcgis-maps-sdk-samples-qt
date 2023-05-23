@@ -206,7 +206,7 @@ Rectangle {
                     horizontalCenter: parent.horizontalCenter
                 }
                 property int modelWidth: 0
-                width: modelWidth + leftPadding + rightPadding + indicator.width
+                width: modelWidth + leftPadding + rightPadding + (indicator ? indicator.width : 10)
                 model: [ "No filter", "FLOW < 500", "FLOW < 300", "FLOW < 100" ]
 
                 onCurrentTextChanged: {

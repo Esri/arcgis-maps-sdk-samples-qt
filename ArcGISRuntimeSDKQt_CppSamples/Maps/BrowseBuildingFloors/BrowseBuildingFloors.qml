@@ -36,6 +36,7 @@ Item {
     Rectangle {
         anchors.fill: col
         radius: 10
+        border.width: 1
     }
 
     Column {

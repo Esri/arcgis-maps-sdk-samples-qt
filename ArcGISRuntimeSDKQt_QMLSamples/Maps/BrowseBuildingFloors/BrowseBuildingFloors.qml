@@ -48,10 +48,11 @@ Rectangle {
             }
         }
 
-        // Add background to the ComboBox
+        // Add a background to the Column
         Rectangle {
             anchors.fill: col
             radius: 10
+            border.width: 1
         }
 
         Column {

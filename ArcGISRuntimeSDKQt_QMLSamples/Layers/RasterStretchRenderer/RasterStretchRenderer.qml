@@ -119,13 +119,17 @@ Rectangle {
                 id: stretchTypeCombo
                 anchors.horizontalCenter: parent.horizontalCenter
                 property int modelWidth: 0
-                width: modelWidth + leftPadding + rightPadding + indicator.width
+                width: modelWidth + leftPadding + rightPadding + (indicator ? indicator.width : 10)
                 model: stretchTypes
 
-                // Add background to the ComboBox
+                // Add a background to the ComboBox
                 Rectangle {
                     anchors.fill: parent
                     radius: 10
+                    // Make the rectangle visible if a dropdown indicator exists
+                    // An indicator only exists if a theme is set
+                    visible: parent.indicator
+                    border.width: 1
                 }
 
                 Component.onCompleted : {

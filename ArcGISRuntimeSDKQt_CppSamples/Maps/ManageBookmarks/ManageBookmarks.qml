@@ -82,7 +82,7 @@ ManageBookmarksSample {
             margins: 15
         }
         property int bestWidth: implicitWidth
-        width: bestWidth + leftPadding + rightPadding + indicator.width
+        width: bestWidth + leftPadding + rightPadding + (indicator ? indicator.width : 10)
         // Set the model to the BookmarkListModel
         model: manageBookmarksSample.bookmarks
 
@@ -104,10 +104,14 @@ ManageBookmarksSample {
             manageBookmarksSample.goToBookmark(bookmarkComboBox.currentIndex);
         }
 
-        // Add background to the ComboBox
+        // Add a background to the ComboBox
         Rectangle {
             anchors.fill: parent
             radius: 10
+            // Make the rectangle visible if a dropdown indicator exists
+            // An indicator only exists if a theme is set
+            visible: parent.indicator
+            border.width: 1
         }
 
         TextMetrics {

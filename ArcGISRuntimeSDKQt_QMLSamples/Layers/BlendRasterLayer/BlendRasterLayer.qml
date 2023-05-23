@@ -168,7 +168,7 @@ Rectangle {
             ComboBox {
                 id: slopeCombo
                 property int modelWidth: 0
-                Layout.minimumWidth: modelWidth + leftPadding + rightPadding + indicator.width
+                Layout.minimumWidth: modelWidth + leftPadding + rightPadding + (indicator ? indicator.width : 10)
                 Layout.fillWidth: true
                 textRole: "name"
                 model: slopeTypeModel
