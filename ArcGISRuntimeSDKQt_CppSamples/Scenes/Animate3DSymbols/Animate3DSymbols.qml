@@ -71,7 +71,7 @@ Animate3DSymbolsSample {
                     for (let i = 0; i < missionsModel.rowCount(); ++i) {
                         const index = missionsModel.index(i, 0);
                         textMetrics.text = missionsModel.data(index);
-                        modelWidth = Math.max(modelWidth, textMetrics.width);
+                        modelWidth = Math.max(modelWidth, textMetrics.width + 20);
                     }
                 }
 

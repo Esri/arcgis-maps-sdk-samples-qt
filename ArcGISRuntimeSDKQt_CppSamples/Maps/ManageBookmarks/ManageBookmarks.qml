@@ -93,7 +93,7 @@ ManageBookmarksSample {
                 let w = bestWidth;
                 for (let i = 0; i < model.rowCount(); ++i) {
                     metrics.text = manageBookmarksSample.bookmarkNameForIndex(i);
-                    w = Math.max(w, metrics.width);
+                    w = Math.max(w, metrics.width + 20);
                 }
                 bestWidth = w;
             }

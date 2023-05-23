@@ -139,7 +139,7 @@ BlendRasterLayerSample {
                 Component.onCompleted : {
                     for (let i = 0; i < model.count; ++i) {
                         metrics.text = model.get(i).name;
-                        modelWidth = Math.max(modelWidth, metrics.width);
+                        modelWidth = Math.max(modelWidth, metrics.width + 20);
                     }
                 }
                 TextMetrics {
@@ -162,7 +162,7 @@ BlendRasterLayerSample {
                 Component.onCompleted : {
                     for (let i = 0; i < model.count; ++i) {
                         metrics2.text = model.get(i).name;
-                        modelWidth = Math.max(modelWidth, metrics2.width);
+                        modelWidth = Math.max(modelWidth, metrics2.width + 20);
                     }
                 }
                 TextMetrics {
