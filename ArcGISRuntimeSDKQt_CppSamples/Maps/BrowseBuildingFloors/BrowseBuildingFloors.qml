@@ -34,9 +34,7 @@ Item {
 
     // Add a background to the column
     Rectangle {
-        anchors {
-            fill: col
-        }
+        anchors.fill: col
         radius: 10
     }
 

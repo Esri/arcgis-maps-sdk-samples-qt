@@ -233,6 +233,12 @@ Rectangle {
                 model: null
                 textRole: "itemTitle"
 
+                // Add background to the ComboBox
+                Rectangle {
+                    anchors.fill: parent
+                    radius: 10
+                }
+
                 onActivated: {
                     if (offlineMapTask.preplannedMapAreaList.count <= 0)
                         return;

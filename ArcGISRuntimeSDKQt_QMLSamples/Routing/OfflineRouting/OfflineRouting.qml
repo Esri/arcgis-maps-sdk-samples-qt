@@ -56,6 +56,12 @@ Rectangle {
                 onCurrentIndexChanged: {
                     routeTask.findRoute();
                 }
+
+                // Add background to the ComboBox
+                Rectangle {
+                    anchors.fill: parent
+                    radius: 10
+                }
             }
             Button {
                 text: "Reset"

@@ -80,6 +80,12 @@ Rectangle {
             margins: 5
         }
 
+        // Add background to the ComboBox
+        Rectangle {
+            anchors.fill: parent
+            radius: 10
+        }
+
         property int modelWidth: 0
         width: modelWidth + leftPadding + rightPadding
 
@@ -110,7 +116,7 @@ Rectangle {
         Component.onCompleted : {
             for (let i = 0; i < model.length; ++i) {
                 metrics.text = model[i];
-                modelWidth = Math.max(modelWidth, metrics.width);
+                modelWidth = Math.max(modelWidth, metrics.width + 20);
             }
             currentIndexChanged();
         }

@@ -139,10 +139,16 @@ Rectangle {
                 model: missionsModel
                 textRole: "name"
 
+                // Add background to the ComboBox
+                Rectangle {
+                    anchors.fill: parent
+                    radius: 10
+                }
+
                 onModelChanged: {
                     for (let i = 0; i < missionsModel.count; ++i) {
                         textMetrics.text = missionsModel.get(i).name;
-                        modelWidth = Math.max(modelWidth, textMetrics.width);
+                        modelWidth = Math.max(modelWidth, textMetrics.width + 20);
                     }
                 }
 

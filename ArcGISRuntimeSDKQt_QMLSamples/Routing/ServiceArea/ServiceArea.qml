@@ -224,6 +224,12 @@ Rectangle {
             width: modelWidth + leftPadding + rightPadding
             model: ["Facility", "Barrier"]
 
+            // Add background to the ComboBox
+            Rectangle {
+                anchors.fill: parent
+                radius: 10
+            }
+
             onCurrentTextChanged: {
                 if (currentText !== "Barrier")
                     return;
@@ -235,7 +241,7 @@ Rectangle {
             Component.onCompleted : {
                 for (let i = 0; i < model.length; ++i) {
                     metrics.text = model[i];
-                    modelWidth = Math.max(modelWidth, metrics.width);
+                    modelWidth = Math.max(modelWidth, metrics.width + 20);
                 }
             }
             TextMetrics {

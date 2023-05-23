@@ -105,6 +105,12 @@ Rectangle {
                 model: ["1:500000","1:250000","1:100000","1:50000"]
                 Component.onCompleted: applyReferenceScaleToMap();
                 onActivated: applyReferenceScaleToMap();
+
+                // Add background to the ComboBox
+                Rectangle {
+                    anchors.fill: parent
+                    radius: 10
+                }
             }
 
             Button {

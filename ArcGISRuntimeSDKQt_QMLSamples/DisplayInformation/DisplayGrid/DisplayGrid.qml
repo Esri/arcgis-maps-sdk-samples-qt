@@ -301,7 +301,7 @@ Rectangle {
                 Component.onCompleted : {
                     for (let i = 0; i < model.length; ++i) {
                         metricsGridTypeComboBox.text = model[i];
-                        modelWidth = Math.max(modelWidth, metricsGridTypeComboBox.width);
+                        modelWidth = Math.max(modelWidth, metricsGridTypeComboBox.width + 20);
                     }
                 }
                 TextMetrics {
@@ -376,7 +376,7 @@ Rectangle {
                 Component.onCompleted : {
                     for (let i = 0; i < model.length; ++i) {
                         colorComboMetrics.text = model[i];
-                        modelWidth = Math.max(modelWidth, colorComboMetrics.width);
+                        modelWidth = Math.max(modelWidth, colorComboMetrics.width + 20);
                     }
                 }
                 TextMetrics {
@@ -405,7 +405,7 @@ Rectangle {
                 Component.onCompleted : {
                     for (let i = 0; i < model.length; ++i) {
                         colorCombo2Metrics.text = model[i];
-                        modelWidth = Math.max(modelWidth, colorCombo2Metrics.width);
+                        modelWidth = Math.max(modelWidth, colorCombo2Metrics.width + 20);
                     }
                 }
                 TextMetrics {
@@ -436,7 +436,7 @@ Rectangle {
                 Component.onCompleted : {
                     for (let i = 0; i < model.length; ++i) {
                         positionComboMetrics.text = model[i];
-                        modelWidth = Math.max(modelWidth, positionComboMetrics.width);
+                        modelWidth = Math.max(modelWidth, positionComboMetrics.width + 20);
                     }
                 }
                 TextMetrics {
@@ -468,7 +468,7 @@ Rectangle {
                 Component.onCompleted : {
                     for (let i = 0; i < model.length; ++i) {
                         formatComboMetrics.text = model[i];
-                        modelWidth = Math.max(modelWidth, formatComboMetrics.width);
+                        modelWidth = Math.max(modelWidth, formatComboMetrics.width + 20);
                     }
                 }
                 TextMetrics {

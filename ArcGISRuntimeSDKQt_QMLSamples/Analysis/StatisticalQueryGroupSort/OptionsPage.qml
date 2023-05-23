@@ -133,7 +133,7 @@ Rectangle {
                                     return;
                                 for (let i = 0; i < model.length; ++i) {
                                     metricsFieldComboBox.text = model[i];
-                                    modelWidth = Math.max(modelWidth, metricsFieldComboBox.width);
+                                    modelWidth = Math.max(modelWidth, metricsFieldComboBox.width + 20);
                                 }
                             }
                             TextMetrics {
@@ -157,7 +157,7 @@ Rectangle {
                             Component.onCompleted : {
                                 for (let i = 0; i < model.length; ++i) {
                                     metricsStatisticComboBox.text = model[i];
-                                    modelWidth = Math.max(modelWidth, metricsStatisticComboBox.width);
+                                    modelWidth = Math.max(modelWidth, metricsStatisticComboBox.width + 20);
                                 }
                             }
                             TextMetrics {

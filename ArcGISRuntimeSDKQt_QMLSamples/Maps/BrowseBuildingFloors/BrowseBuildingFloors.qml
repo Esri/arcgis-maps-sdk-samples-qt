@@ -48,7 +48,14 @@ Rectangle {
             }
         }
 
+        // Add background to the ComboBox
+        Rectangle {
+            anchors.fill: col
+            radius: 10
+        }
+
         Column {
+            id: col
             spacing: 15
             padding: 10
 

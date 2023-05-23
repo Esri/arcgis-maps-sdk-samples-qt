@@ -155,6 +155,12 @@ Rectangle {
             margins: 5
         }
 
+        // Add background to the ComboBox
+        Rectangle {
+            anchors.fill: parent
+            radius: 10
+        }
+
         property int modelWidth: 0
         width: modelWidth + rightPadding + leftPadding
         model: map.bookmarks
@@ -167,7 +173,7 @@ Rectangle {
                     for (let i = 0; i < model.count; ++i) {
                         metrics.text = model.get(i).name;
                         bookmarks.modelWidth = Math.max(bookmarks.modelWidth,
-                                                        metrics.width);
+                                                        metrics.width + 20);
                     }
                 }
             }
