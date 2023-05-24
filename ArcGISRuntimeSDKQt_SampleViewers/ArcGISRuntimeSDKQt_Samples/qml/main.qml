@@ -97,6 +97,7 @@ ApplicationWindow {
                         width: parent.width
                         height: 48
                         text: qsTr("Live Sample")
+                        enabled: SampleManager.currentSample
                         onTriggered: {
                             aboutView.visible = false;
                             gAnalyticsView.visible = false;
@@ -111,6 +112,7 @@ ApplicationWindow {
                         width: parent.width
                         height: 48
                         text: qsTr("Source Code")
+                        enabled: SampleManager.currentSample
                         onTriggered: {
                             aboutView.visible = false;
                             gAnalyticsView.visible = false;
@@ -123,6 +125,7 @@ ApplicationWindow {
                         width: parent.width
                         height: 48
                         text: qsTr("Description")
+                        enabled: SampleManager.currentSample
                         onTriggered: {
                             aboutView.visible = false;
                             gAnalyticsView.visible = false;
@@ -304,9 +307,6 @@ ApplicationWindow {
                 qmlLoaderAuthView.setSource("qrc:/qml/CppAuthenticationView.qml");
             }
 
-            // set the initial sample to the "Change Basemap" sample
-            SampleManager.currentCategory = SampleManager.categories.get(0);
-            SampleManager.currentSample = SampleManager.currentCategory.samples.get(2);
             SampleManager.currentMode = SampleManager.HomepageView;
         }
 

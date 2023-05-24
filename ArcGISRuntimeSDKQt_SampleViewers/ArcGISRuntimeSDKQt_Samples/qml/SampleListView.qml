@@ -68,7 +68,7 @@ Page {
         ListView {
             anchors.fill: parent
             clip: true
-            model: SampleManager.currentCategory.samples
+            model: SampleManager.currentCategory ? SampleManager.currentCategory.samples : []
             spacing: 10
             delegate: ItemDelegate {
                 id: itemDelegate
