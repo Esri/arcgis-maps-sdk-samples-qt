@@ -95,9 +95,9 @@ ApplicationWindow {
                     }
                     MenuItem {
                         width: parent.width
-                        height: 48
+                        height: SampleManager.currentSample ? 48 : 0
                         text: qsTr("Live Sample")
-                        enabled: SampleManager.currentSample
+                        visible: SampleManager.currentSample
                         onTriggered: {
                             aboutView.visible = false;
                             gAnalyticsView.visible = false;
@@ -110,9 +110,9 @@ ApplicationWindow {
                     }
                     MenuItem {
                         width: parent.width
-                        height: 48
+                        height: SampleManager.currentSample ? 48 : 0
                         text: qsTr("Source Code")
-                        enabled: SampleManager.currentSample
+                        visible: SampleManager.currentSample
                         onTriggered: {
                             aboutView.visible = false;
                             gAnalyticsView.visible = false;
@@ -123,9 +123,9 @@ ApplicationWindow {
                     }
                     MenuItem {
                         width: parent.width
-                        height: 48
+                        height: SampleManager.currentSample ? 48 : 0
                         text: qsTr("Description")
-                        enabled: SampleManager.currentSample
+                        visible: SampleManager.currentSample
                         onTriggered: {
                             aboutView.visible = false;
                             gAnalyticsView.visible = false;
@@ -142,7 +142,7 @@ ApplicationWindow {
                             aboutView.visible = false;
                             gAnalyticsView.visible = false;
                             proxySetupView.visible = false;
-                            if (SampleManager.currentMode != SampleManager.DownloadDataView || !SampleManager.downloadInProgress)
+                            if (SampleManager.currentMode !== SampleManager.DownloadDataView || !SampleManager.downloadInProgress)
                                 SampleManager.currentMode = SampleManager.ManageOfflineDataView
                         }
                     }
