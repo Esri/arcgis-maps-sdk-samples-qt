@@ -59,7 +59,7 @@ Item {
         id: control
         anchors.right: parent.right
         padding: 5
-        width: 110
+        width: 130
 
         background: Rectangle {
             color: "black"
@@ -72,7 +72,6 @@ Item {
                 verticalCenter: parent.verticalCenter
                 horizontalCenter: parent.horizontalCenter
             }
-            spacing: 20
 
             GridLayout {
                 id: geometryColumn
@@ -115,13 +114,6 @@ Item {
                     }
                 }
 
-                Rectangle { // Used to create a space between the point/multipoint and polyline/polygon buttons.
-                    id: spacer
-                    height: 10
-                    opacity: 0
-                    Layout.columnSpan: 2
-                }
-
                 GeometryEditorButton {
                     id: lineButton
                     buttonName: qsTr("Line")
@@ -147,6 +139,15 @@ Item {
                     model: [qsTr("VertexTool"), qsTr("FreehandTool")]
                     Layout.columnSpan: 2
                     Layout.fillWidth: true
+
+                    Rectangle {
+                        anchors.fill: parent
+                        radius: 10
+                        // Make the rectangle visible if a dropdown indicator exists
+                        // An indicator only exists if a theme is set
+                        visible: parent.indicator
+                        border.width: 1
+                    }
 
                     onCurrentIndexChanged: {
                         switch (currentIndex) {
