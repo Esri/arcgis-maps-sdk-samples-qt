@@ -95,7 +95,7 @@ ApplicationWindow {
                     }
                     MenuItem {
                         width: parent.width
-                        height: SampleManager.currentSample ? 48 : 0
+                        height: visible ? 48 : 0
                         text: qsTr("Live Sample")
                         visible: SampleManager.currentSample
                         onTriggered: {
@@ -110,7 +110,7 @@ ApplicationWindow {
                     }
                     MenuItem {
                         width: parent.width
-                        height: SampleManager.currentSample ? 48 : 0
+                        height: visible ? 48 : 0
                         text: qsTr("Source Code")
                         visible: SampleManager.currentSample
                         onTriggered: {
@@ -123,7 +123,7 @@ ApplicationWindow {
                     }
                     MenuItem {
                         width: parent.width
-                        height: SampleManager.currentSample ? 48 : 0
+                        height: visible ? 48 : 0
                         text: qsTr("Description")
                         visible: SampleManager.currentSample
                         onTriggered: {
