@@ -92,13 +92,24 @@ RasterStretchRendererSample {
                 anchors.horizontalCenter: parent.horizontalCenter
                 model: stretchTypes
                 property int modelWidth: 0
-                width: modelWidth + leftPadding + rightPadding
+                width: modelWidth + leftPadding + rightPadding + (indicator ? indicator.width : 10)
                 Component.onCompleted : {
                     for (let i = 0; i < model.length; ++i) {
                         metrics.text = model[i];
                         modelWidth = Math.max(modelWidth, metrics.width);
                     }
                 }
+
+                // Add a background to the ComboBox
+                Rectangle {
+                    anchors.fill: parent
+                    radius: 10
+                    // Make the rectangle visible if a dropdown indicator exists
+                    // An indicator only exists if a theme is set
+                    visible: parent.indicator
+                    border.width: 1
+                }
+
                 TextMetrics {
                     id: metrics
                     font: stretchTypeCombo.font

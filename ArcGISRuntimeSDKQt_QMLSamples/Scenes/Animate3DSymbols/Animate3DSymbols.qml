@@ -134,10 +134,20 @@ Rectangle {
             ComboBox {
                 id: missionList
                 property real modelWidth: 0
-                Layout.minimumWidth: leftPadding + rightPadding + modelWidth
+                Layout.minimumWidth: leftPadding + rightPadding + modelWidth + (indicator ? indicator.width : 10)
                 enabled: !playButton.checked
                 model: missionsModel
                 textRole: "name"
+
+                // Add a background to the ComboBox
+                Rectangle {
+                    anchors.fill: parent
+                    radius: 10
+                    // Make the rectangle visible if a dropdown indicator exists
+                    // An indicator only exists if a theme is set
+                    visible: parent.indicator
+                    border.width: 1
+                }
 
                 onModelChanged: {
                     for (let i = 0; i < missionsModel.count; ++i) {

@@ -44,7 +44,7 @@ int main(int argc, char *argv[])
 #endif
 
   // Set the source
-  view.setSource(QUrl("qrc:/Samples/DisplayInformation/CreateAndEditGeometries/CreateAndEditGeometries.qml"));
+  view.setSource(QUrl("qrc:/Samples/Geometry/CreateAndEditGeometries/CreateAndEditGeometries.qml"));
 
   view.show();
 

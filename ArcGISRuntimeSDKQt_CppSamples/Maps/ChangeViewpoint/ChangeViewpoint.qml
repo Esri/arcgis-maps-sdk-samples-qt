@@ -43,9 +43,19 @@ ChangeViewpointSample {
             margins: 15
         }
 
+        // Add a background to the ComboBox
+        Rectangle {
+            anchors.fill: parent
+            radius: 10
+            // Make the rectangle visible if a dropdown indicator exists
+            // An indicator only exists if a theme is set
+            visible: parent.indicator
+            border.width: 1
+        }
+
         property int bestWidth: implicitWidth
 
-        width: bestWidth + rightPadding + leftPadding
+        width: bestWidth + rightPadding + leftPadding + 20
 
         model: [ "Center",
                  "Center and scale",

@@ -27,45 +27,38 @@ RoundButton {
     property string iconPath: ""
 
     Layout.fillWidth: true
-    padding: 0
-
-    background: Rectangle {
-        radius: 5
-        opacity: enabled || checked ? 1 : 0.3
-        color: geometryEditorButton.down ? "#d0d0d0" : "#e0e0e0"
-    }
 
     // Set the focus policy so that the buttons do not take focus from the MapView
     focusPolicy: Qt.NoFocus
 
-    contentItem: Item {
-        Component.onCompleted: {
-            // Calculate content item width & height once component has been instantiated using the image and text.
-            implicitWidth = imgComponent.implicitWidth + textComponent.implicitWidth;
-            implicitHeight = imgComponent.implicitHeight + textComponent.implicitHeight;
-        }
+    radius: 5
 
-        Image {
-            id: imgComponent
-            anchors {
-                horizontalCenter: parent.horizontalCenter
-                verticalCenter: parent.verticalCenter
-                verticalCenterOffset: -textComponent.height/2
-            }
-            source: iconPath
-            width: 20
-            fillMode: Image.PreserveAspectFit
-        }
+    Rectangle {
+        anchors.fill: parent
+        radius: parent.radius
+        opacity: parent.enabled || parent.checked ? 1 : 0.3
+        color: geometryEditorButton.down ? "#d0d0d0" : "#e0e0e0"
+    }
 
-        Text {
-            id: textComponent
-            anchors {
-                top: imgComponent.bottom;
-                horizontalCenter: parent.horizontalCenter
-            }
-            text: buttonName
-            font.pixelSize: 8
+    Image {
+        id: imgComponent
+        anchors {
+            horizontalCenter: parent.horizontalCenter
+            verticalCenter: parent.verticalCenter
+            verticalCenterOffset: -textComponent.height/2
         }
+        source: iconPath
+        width: 20
+        fillMode: Image.PreserveAspectFit
+    }
+
+    Text {
+        id: textComponent
+        anchors {
+            top: imgComponent.bottom
+            horizontalCenter: parent.horizontalCenter
+        }
+        text: buttonName
+        font.pixelSize: 8
     }
 }
-

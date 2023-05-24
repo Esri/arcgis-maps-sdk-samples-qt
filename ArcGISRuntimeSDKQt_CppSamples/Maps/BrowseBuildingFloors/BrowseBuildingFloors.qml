@@ -32,7 +32,15 @@ Item {
         mapView: view
     }
 
+    // Add a background to the column
+    Rectangle {
+        anchors.fill: col
+        radius: 10
+        border.width: 1
+    }
+
     Column {
+        id: col
         spacing: 15
         padding: 10
 
