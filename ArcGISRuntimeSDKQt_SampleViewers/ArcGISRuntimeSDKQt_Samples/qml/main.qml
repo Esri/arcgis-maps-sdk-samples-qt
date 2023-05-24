@@ -95,8 +95,9 @@ ApplicationWindow {
                     }
                     MenuItem {
                         width: parent.width
-                        height: 48
+                        height: visible ? 48 : 0
                         text: qsTr("Live Sample")
+                        visible: SampleManager.currentSample
                         onTriggered: {
                             aboutView.visible = false;
                             gAnalyticsView.visible = false;
@@ -109,8 +110,9 @@ ApplicationWindow {
                     }
                     MenuItem {
                         width: parent.width
-                        height: 48
+                        height: visible ? 48 : 0
                         text: qsTr("Source Code")
+                        visible: SampleManager.currentSample
                         onTriggered: {
                             aboutView.visible = false;
                             gAnalyticsView.visible = false;
@@ -121,8 +123,9 @@ ApplicationWindow {
                     }
                     MenuItem {
                         width: parent.width
-                        height: 48
+                        height: visible ? 48 : 0
                         text: qsTr("Description")
+                        visible: SampleManager.currentSample
                         onTriggered: {
                             aboutView.visible = false;
                             gAnalyticsView.visible = false;
@@ -139,7 +142,7 @@ ApplicationWindow {
                             aboutView.visible = false;
                             gAnalyticsView.visible = false;
                             proxySetupView.visible = false;
-                            if (SampleManager.currentMode != SampleManager.DownloadDataView || !SampleManager.downloadInProgress)
+                            if (SampleManager.currentMode !== SampleManager.DownloadDataView || !SampleManager.downloadInProgress)
                                 SampleManager.currentMode = SampleManager.ManageOfflineDataView
                         }
                     }
@@ -304,9 +307,6 @@ ApplicationWindow {
                 qmlLoaderAuthView.setSource("qrc:/qml/CppAuthenticationView.qml");
             }
 
-            // set the initial sample to the "Change Basemap" sample
-            SampleManager.currentCategory = SampleManager.categories.get(0);
-            SampleManager.currentSample = SampleManager.currentCategory.samples.get(2);
             SampleManager.currentMode = SampleManager.HomepageView;
         }
 

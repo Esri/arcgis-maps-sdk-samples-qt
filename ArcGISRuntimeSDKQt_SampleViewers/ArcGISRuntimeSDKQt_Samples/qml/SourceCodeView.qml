@@ -84,7 +84,7 @@ Rectangle {
             topMargin: 10
         }
         width: 200
-        model: SampleManager.currentSample.codeFiles
+        model: SampleManager.currentSample ? SampleManager.currentSample.codeFiles : []
         textRole: "name"
 
         delegate: ItemDelegate {
@@ -106,7 +106,7 @@ Rectangle {
             horizontalAlignment: Text.AlignHCenter
         }
 
-        visible: SampleManager.currentSample.codeFiles.size > 1
+        visible: SampleManager.currentSample ? SampleManager.currentSample.codeFiles.size > 1 : false
         onCurrentTextChanged: SampleManager.setSourceCodeIndex(currentIndex)
 
         onModelChanged: {
