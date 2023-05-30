@@ -57,8 +57,8 @@ void WmsLayerUrl::componentComplete()
   m_map = new Map(BasemapStyle::ArcGISLightGray, this);
 
   // Add a WMS Layer by specifying the URL and layer name
-  const QUrl wmsServiceUrl("https://nowcoast.noaa.gov/arcgis/services/nowcoast/radar_meteo_imagery_nexrad_time/MapServer/WMSServer?request=GetCapabilities&service=WMS");
-  const QStringList layerNames{"1"};
+  const QUrl wmsServiceUrl("https://nowcoast.noaa.gov/geoserver/observations/weather_radar/wms");
+  const QStringList layerNames{"conus_base_reflectivity_mosaic"};
   WmsLayer* wmsLayer = new WmsLayer(wmsServiceUrl, layerNames, this);
   m_map->operationalLayers()->append(wmsLayer);
 
