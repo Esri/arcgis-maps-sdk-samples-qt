@@ -30,4 +30,4 @@ This sample uses the WMS service behind the [U.S. National Weather Service radar
 
 ## Tags
 
-OGC, web map service, WmsLayer
+OGC, web map service
