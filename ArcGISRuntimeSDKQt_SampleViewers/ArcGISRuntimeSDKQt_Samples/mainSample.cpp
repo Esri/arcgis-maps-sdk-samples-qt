@@ -308,9 +308,7 @@ void registerCppSampleClasses();
 
 int main(int argc, char *argv[])
 {
-  // add support for feature toggles on mobile, which is disabled by default
-  qputenv("QT_ENABLE_FEATURE_TOGGLE_MOBILE", "true");
-  qputenv("QSG_RHI_BACKEND", "opengl");
+  QQuickWindow::setGraphicsApi(QSGRendererInterface::GraphicsApi::OpenGL);
 
 #ifdef QT_WEBVIEW_WEBENGINE_BACKEND
   QtWebEngineQuick::initialize();
