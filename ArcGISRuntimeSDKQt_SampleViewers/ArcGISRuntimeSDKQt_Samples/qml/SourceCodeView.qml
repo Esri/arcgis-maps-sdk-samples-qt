@@ -34,7 +34,7 @@ Rectangle {
             id: textEdit
             anchors.margins: 15
             readOnly: true
-            focus: true
+            activeFocusOnPress: false
             textFormat: Text.PlainText
             selectByMouse: os === "ios" || os === "android" ? false : true
             Component.onCompleted: {
