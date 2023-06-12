@@ -120,7 +120,8 @@ Rectangle {
         graphicsOverlayPlanar.graphics.append(resultGraphic);
 
         // Create a geodesic buffer graphic using the same location and distance.
-        const bufferGeodesic = GeometryEngine.bufferGeodetic(point, bufferInMeters, Enums.LinearUnitIdMeters, NaN, Enums.geodesicCurveTypeGeodesic);
+        const bufferGeodesic = GeometryEngine.bufferGeodetic(point, bufferInMeters, Factory.Unit.createFromWkid(9001) /*meters*/,
+                                                             NaN, Enums.GeodeticCurveTypeGeodesic);
 
         // Add the result planar buffer as a graphic
         const resultGraphicGeodesic = ArcGISRuntimeEnvironment.createObject("Graphic", {
