@@ -69,14 +69,15 @@ Rectangle {
                  * Create a camera directly above the center of the features, and then rotate that
                  * camera around the center to tip it.
                  */
+
+                const initialLocation = ArcGISRuntimeEnvironment.createObject("Point", {x: -2.0344707, y: 51.29712})
                 let camera = ArcGISRuntimeEnvironment.createObject("Camera", {
-                                                                       location: graphicsOverlay.extent.center,
+                                                                       location: initialLocation,
                                                                        heading: 0,
-                                                                       pitch: 0,
+                                                                       pitch: 70,
                                                                        roll: 0,
                                                                        distance: 15000
                                                                    });
-                camera = camera.rotateAround(graphicsOverlay.extent.center, 0, 70, 0);
                 sceneView.setViewpointCameraAndWait(camera);
             }
         }
