@@ -11,13 +11,16 @@
 #  See the Sample code usage restrictions document for further information.
 #-------------------------------------------------
 HEADERS += \
-    "$$SAMPLEPATHQML/Routing/NavigateRoute/NavigateRouteSpeaker.h"
+    "$$SAMPLEPATHQML/Routing/NavigateRoute/NavigateRouteSpeaker.h" \
+    "$$SAMPLEPATHQML/DisplayInformation/GODictionaryRenderer/XmlParser.h"
 
 INCLUDEPATH += \
-    "$$SAMPLEPATHQML/Routing/NavigateRoute"
+    "$$SAMPLEPATHQML/Routing/NavigateRoute" \
+    "$$SAMPLEPATHQML/DisplayInformation/GODictionaryRenderer"
 
 SOURCES += \
-    "$$SAMPLEPATHQML/Routing/NavigateRoute/NavigateRouteSpeaker.cpp"
+    "$$SAMPLEPATHQML/Routing/NavigateRoute/NavigateRouteSpeaker.cpp" \
+    "$$SAMPLEPATHQML/DisplayInformation/GODictionaryRenderer/XmlParser.cpp"
 
 RESOURCES += \
     "$$SAMPLEPATHQML/Analysis/AnalyzeHotspots/AnalyzeHotspots.qrc" \
@@ -39,8 +42,8 @@ RESOURCES += \
     "$$SAMPLEPATHQML/DisplayInformation/CreateSymbolStylesFromWebStyles/CreateSymbolStylesFromWebStyles.qrc" \
     "$$SAMPLEPATHQML/DisplayInformation/CustomDictionaryStyle/CustomDictionaryStyle.qrc" \
     "$$SAMPLEPATHQML/DisplayInformation/DisplayGrid/DisplayGrid.qrc" \
-    # "$$SAMPLEPATHQML/DisplayInformation/GODictionaryRenderer_3D/GODictionaryRenderer_3D.qrc" \ # Qt 6.2 does not support getting entries from an xml list
-    # "$$SAMPLEPATHQML/DisplayInformation/GODictionaryRenderer/GODictionaryRenderer.qrc" \ # Qt 6.2 does not support getting entries from an xml list
+    "$$SAMPLEPATHQML/DisplayInformation/GODictionaryRenderer_3D/GODictionaryRenderer_3D.qrc" \
+    "$$SAMPLEPATHQML/DisplayInformation/GODictionaryRenderer/GODictionaryRenderer.qrc" \
     "$$SAMPLEPATHQML/DisplayInformation/GOSymbols/GOSymbols.qrc" \
     "$$SAMPLEPATHQML/DisplayInformation/IdentifyGraphics/IdentifyGraphics.qrc" \
     "$$SAMPLEPATHQML/DisplayInformation/Picture_Marker_Symbol/Picture_Marker_Symbol.qrc" \

@@ -16,6 +16,8 @@
 #include <QDir>
 #include <QQmlEngine>
 
+#include "XmlParser.h"
+
 #define STRINGIZE(x) #x
 #define QUOTE(x) STRINGIZE(x)
 
@@ -48,6 +50,9 @@ int main(int argc, char *argv[])
   // Initialize application view
   QQuickView view;
   view.setResizeMode(QQuickView::SizeRootObjectToView);
+
+  // Register the C++ XmlParser class
+  qmlRegisterType<XmlParser>("Esri.samples", 1, 0, "XmlParser");
 
   // Add the import Path
   view.engine()->addImportPath(QDir(QCoreApplication::applicationDirPath()).filePath("qml"));
