@@ -1,3 +1,18 @@
+// [Legal]
+// Copyright 2023 Esri.
+
+// Licensed under the Apache License, Version 2.0 (the "License");
+// you may not use this file except in compliance with the License.
+// You may obtain a copy of the License at
+// http://www.apache.org/licenses/LICENSE-2.0
+
+// Unless required by applicable law or agreed to in writing, software
+// distributed under the License is distributed on an "AS IS" BASIS,
+// WITHOUT WARRANTIES OR CONDITIONS OF ANY KIND, either express or implied.
+// See the License for the specific language governing permissions and
+// limitations under the License.
+// [Legal]
+
 #include "XmlParser.h"
 
 #include <QFile>
@@ -5,13 +20,19 @@
 #include <QVariantList>
 #include <QXmlStreamReader>
 #include <QUrl>
+#include <QtConcurrent/QtConcurrent>
 
 XmlParser::XmlParser(QObject *parent)
   : QObject{parent}
 {
 }
 
-QVariantList XmlParser::parseXmlFile(QString filePath)
+void XmlParser::parseXmlFileAsync(const QString& filePath)
+{
+  m_synchronizer.addFuture(QtConcurrent::run(&XmlParser::parseXmlFileInternal, this, filePath));
+}
+
+void XmlParser::parseXmlFileInternal(const QString& filePath)
 {
   QXmlStreamReader xmlParser;
   QVariantList parsedJsonList;
@@ -28,7 +49,7 @@ QVariantList XmlParser::parseXmlFile(QString filePath)
   if (!QFile::exists(pathToLocalFile))
   {
     qDebug() << xmlFile.fileName() << "does not exist";
-    return parsedJsonList;
+    emit xmlParseComplete(parsedJsonList);
   }
 
   // Open the file for reading
@@ -88,5 +109,5 @@ QVariantList XmlParser::parseXmlFile(QString filePath)
       }
     }
   }
-  return parsedJsonList;
+  emit xmlParseComplete(parsedJsonList);
 }

@@ -31,12 +31,6 @@ Rectangle {
     }
     property bool graphicsLoaded: false
 
-    Map {
-        id: map
-        Basemap {
-            initStyle: Enums.BasemapStyleArcGISTopographic
-        }
-    }
 
     // Create MapView that a GraphicsOverlay
     // for the military symbols.
@@ -44,16 +38,19 @@ Rectangle {
         id: mapView
         anchors.fill: parent
 
+        Map {
+            id: map
+            Basemap {
+                initStyle: Enums.BasemapStyleArcGISTopographic
+            }
+        }
+
         Component.onCompleted: {
             // Set the focus on MapView to initially enable keyboard navigation
             forceActiveFocus();
 
             // Read the XML file and create a graphic from each entry
-            const parsedXml = xmlParser.parseXmlFile(dataPath + "/xml/arcade_style/Mil2525DMessages.xml");
-            parsedXml.forEach(element => {createGraphicFromElement(element)});
-
-            graphicsLoaded = true;
-            mapView.map = map;
+            xmlParser.parseXmlFileAsync(dataPath + "/xml/arcade_style/Mil2525DMessages.xml");
         }
 
         // The GraphicsOverlay does not have a valid extent until it has been added
@@ -100,6 +97,11 @@ Rectangle {
 
     XmlParser {
         id: xmlParser
+
+        onXmlParseComplete: (parsedXml) => {
+                                parsedXml.forEach(element => {createGraphicFromElement(element)});
+                                graphicsLoaded = true;
+                            }
     }
 
     function createGraphicFromElement(element) {

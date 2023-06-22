@@ -30,7 +30,7 @@ Rectangle {
                     System.writableLocationUrl(System.StandardPathsHomeLocation) + "/ArcGIS/Runtime/Data"
     }
 
-    /**
+    /*
      * Create SceneView that contains a Scene with the Imagery Basemap, as well as a GraphicsOverlay
      * for the military symbols.
      */
@@ -59,10 +59,7 @@ Rectangle {
                     return;
 
                 // Read the XML file and create a graphic from each entry
-                const parsedXml = xmlParser.parseXmlFile(dataPath + "/xml/arcade_style/Mil2525DMessages.xml");
-                parsedXml.forEach(element => {createGraphicFromElement(element)});
-
-                progressBar_loading.visible = false;
+                const parsedXml = xmlParser.parseXmlFileAsync(dataPath + "/xml/arcade_style/Mil2525DMessages.xml");
 
                 // Zoom to graphics
                 /*
@@ -103,6 +100,11 @@ Rectangle {
 
     XmlParser {
         id: xmlParser
+
+        onXmlParseComplete: (parsedXml) => {
+                                parsedXml.forEach(element => {createGraphicFromElement(element)});
+                                progressBar_loading.visible = false;
+                            }
     }
 
     function createGraphicFromElement(element) {
