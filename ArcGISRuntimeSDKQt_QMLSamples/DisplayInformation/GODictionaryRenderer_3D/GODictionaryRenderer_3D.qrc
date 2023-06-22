@@ -4,5 +4,7 @@
         <file>GODictionaryRenderer_3D.qml</file>
         <file>screenshot.png</file>
         <file>README.md</file>
+        <file>XmlParser.cpp</file>
+        <file>XmlParser.h</file>
     </qresource>
 </RCC>

@@ -293,9 +293,10 @@
 #include "RasterFunctionFile.h"
 #endif // SHOW_RASTER_FUNCTION_SAMPLE
 
-#else
+#else // QML_VIEWER
 #include "NavigateRouteSpeaker.h"
-#endif // CPP_VIEWER
+#include "XmlParser.h"
+#endif
 
 #define STRINGIZE(x) #x
 #define QUOTE(x) STRINGIZE(x)
@@ -632,8 +633,10 @@ void registerClasses()
   qmlRegisterType<SampleSearchFilterModel>("Esri.ArcGISRuntimeSamples", 1, 0, "SampleSearchFilterModel");
   qmlRegisterUncreatableType<SearchFilterCriteria>("Esri.ArcGISRuntimeSamples", 1, 0, "SearchFilterCriteria", "Abstract base class");
 
+
 #ifndef CPP_VIEWER
   qmlRegisterType<NavigateRouteSpeaker>("Esri.samples", 1, 0, "NavigateRouteSpeaker");
+  qmlRegisterType<XmlParser>("Esri.samples", 1, 0, "XmlParser");
 #endif
 
   // register the C++ Sample Classes if building for C++ API

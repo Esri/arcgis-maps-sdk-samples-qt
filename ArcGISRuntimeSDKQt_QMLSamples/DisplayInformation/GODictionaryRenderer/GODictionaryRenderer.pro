@@ -24,7 +24,8 @@ include($$PWD/arcgisruntime.pri)
 
 CONFIG += c++17
 
-SOURCES += main.cpp
+SOURCES += main.cpp \
+    XmlParser.cpp
 
 RESOURCES += GODictionaryRenderer.qrc
 
@@ -34,3 +35,6 @@ ios {
 
 # Default rules for deployment.
 include(deployment.pri)
+
+HEADERS += \
+    XmlParser.h

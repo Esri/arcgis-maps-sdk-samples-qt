@@ -35,7 +35,9 @@
         "GraphicsOverlay"
     ],
     "snippets": [
-        "GODictionaryRenderer.qml"
+        "GODictionaryRenderer.qml",
+        "XmlParser.cpp",
+        "XmlParser.h"
     ],
     "title": "Graphics overlay (dictionary renderer)"
 }
