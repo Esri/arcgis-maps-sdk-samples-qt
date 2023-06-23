@@ -288,7 +288,7 @@ void NavigateARouteWithRerouting::connectRouteTrackerSignals()
       if (trackingStatus->isOnRoute())
       {
         textString += "Distance remaining: " + trackingStatus->routeProgress()->remainingDistance()->displayText() + " " +
-                      trackingStatus->routeProgress()->remainingDistance()->displayTextUnits().pluralDisplayName() + "\n";
+            trackingStatus->routeProgress()->remainingDistance()->displayTextUnits().pluralDisplayName() + "\n";
         QTime time = QTime::fromMSecsSinceStartOfDay(trackingStatus->routeProgress()->remainingTime() * 60 * 1000); // convert time to milliseconds
         textString += "Time remaining: " + time.toString("hh:mm:ss") + "\n";
 
