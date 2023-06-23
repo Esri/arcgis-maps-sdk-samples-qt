@@ -57,14 +57,14 @@
 #include "SymbolTypes.h"
 #include "VoiceGuidance.h"
 
-#include <QUuid>
-#include <QFileInfo>
 #include <memory>
+#include <QFileInfo>
+#include <QFuture>
 #include <QList>
+#include <QStandardPaths>
 #include <QTime>
 #include <QUrl>
-#include <QStandardPaths>
-#include <QFuture>
+#include <QUuid>
 
 // NOTE: As of Qt 6.2, QTextToSpeech is not supported. Instances of this class have been commented out for compatibility, but remain for reference
 // #include <QTextToSpeech>
