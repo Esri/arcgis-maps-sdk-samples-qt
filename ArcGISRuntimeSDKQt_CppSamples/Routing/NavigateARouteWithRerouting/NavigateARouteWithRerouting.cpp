@@ -151,6 +151,7 @@ void NavigateARouteWithRerouting::setMapView(MapQuickView* mapView)
 
 void NavigateARouteWithRerouting::initializeRoute()
 {
+  // Asynchronously create default parameters then solve the initial route using methods that utililze QFuture
   m_routeTask->createDefaultParametersAsync()
       .then(this, [this](RouteParameters defaultParameters)
             {
@@ -191,11 +192,13 @@ void NavigateARouteWithRerouting::initializeRoute()
                           m_navigationEnabled = true;
                           emit navigationEnabledChanged();
                         })
+                  // Handle any errors that arise from solving the route
                   .onFailed(this, [](const ErrorException& e)
                             {
                               qWarning() << "Solve route failed" << e.error().message() << e.error().additionalMessage();
                             });
             })
+      // Handle any errors that arise from creating default parameters
       .onFailed(this, [](const ErrorException& e)
                 {
                   qWarning() << "Create default parameters failed" << e.error().message() << e.error().additionalMessage();
