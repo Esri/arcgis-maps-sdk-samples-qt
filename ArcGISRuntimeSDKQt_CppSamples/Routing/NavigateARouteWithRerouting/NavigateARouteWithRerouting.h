@@ -73,7 +73,7 @@ private:
   bool navigationEnabled() const;
   bool recenterEnabled() const;
   QString textString() const;
-  void connectRouteTaskSignals();
+  void initializeRoute();
   void connectRouteTrackerSignals();
 
   Esri::ArcGISRuntime::Graphic* m_routeAheadGraphic = nullptr;

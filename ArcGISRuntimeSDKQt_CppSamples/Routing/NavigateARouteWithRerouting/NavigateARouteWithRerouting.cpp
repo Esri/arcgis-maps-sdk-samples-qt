@@ -130,8 +130,14 @@ void NavigateARouteWithRerouting::setMapView(MapQuickView* mapView)
   m_mapView->setMap(m_map);
 
   m_mapView->graphicsOverlays()->append(m_routeOverlay);
-  connectRouteTaskSignals();
 
+  connect(m_routeTask, &RouteTask::doneLoading, this, [this](const Error& error)
+  {
+    if (error.isEmpty())
+      initializeRoute();
+    else
+      qDebug() << error.message() << error.additionalMessage();
+  });
   m_routeTask->load();
 
   // add graphics for the predefined stops
@@ -142,64 +148,45 @@ void NavigateARouteWithRerouting::setMapView(MapQuickView* mapView)
   emit mapViewChanged();
 }
 
-void NavigateARouteWithRerouting::connectRouteTaskSignals()
+void NavigateARouteWithRerouting::initializeRoute()
 {
-  connect(m_routeTask, &RouteTask::solveRouteCompleted, this, [this](const QUuid&, const RouteResult& routeResult)
-  {
-    if (routeResult.isEmpty())
-      return;
+  RouteParameters defaultParameters = m_routeTask->createDefaultParametersAsync().result();
 
-    if (routeResult.routes().empty())
-      return;
+  // set values for parameters
+  defaultParameters.setReturnStops(true);
+  defaultParameters.setReturnDirections(true);
+  defaultParameters.setReturnRoutes(true);
+  defaultParameters.setOutputSpatialReference(SpatialReference::wgs84());
 
-    m_routeResult = routeResult;
-    m_route = qAsConst(m_routeResult).routes()[0];
+  Stop stop1(conventionCenterPoint);
+  Stop stop2(aerospaceMuseumPoint);
 
-    m_directionManeuvers = m_route.directionManeuvers(this)->directionManeuvers();
+  QList<Stop> stopsList = {stop1, stop2};
+  defaultParameters.setStops(stopsList);
 
-    // adjust viewpoint to enclose the route with a 100 DPI padding
-    m_mapView->setViewpointGeometry(m_route.routeGeometry(), 100);
+  m_routeParameters = defaultParameters;
 
-    // create graphics to show the route traversed and route ahead
-    m_routeAheadGraphic = new Graphic(m_route.routeGeometry(), new SimpleLineSymbol(SimpleLineSymbolStyle::Solid, Qt::blue, 5, this), this);
-    m_routeTraveledGraphic = new Graphic(Geometry(), new SimpleLineSymbol(SimpleLineSymbolStyle::Solid, Qt::cyan, 3, this), this);
-    m_routeOverlay->graphics()->append(m_routeAheadGraphic);
-    m_routeOverlay->graphics()->append(m_routeTraveledGraphic);
+  const RouteResult& routeResult = m_routeTask->solveRouteAsync(defaultParameters).result();
 
-    m_navigationEnabled = true;
-    emit navigationEnabledChanged();
-  });
+  if (routeResult.isEmpty() || routeResult.routes().empty())
+    return;
 
-  connect(m_routeTask, &RouteTask::createDefaultParametersCompleted, this, [this](const QUuid&, RouteParameters defaultParameters)
-  {
-    // set values for parameters
-    defaultParameters.setReturnStops(true);
-    defaultParameters.setReturnDirections(true);
-    defaultParameters.setReturnRoutes(true);
-    defaultParameters.setOutputSpatialReference(SpatialReference::wgs84());
+  m_routeResult = routeResult;
+  m_route = qAsConst(m_routeResult).routes()[0];
 
-    Stop stop1(conventionCenterPoint);
-    Stop stop2(aerospaceMuseumPoint);
+  m_directionManeuvers = m_route.directionManeuvers(this)->directionManeuvers();
 
-    QList<Stop> stopsList = {stop1, stop2};
-    defaultParameters.setStops(stopsList);
+  // adjust viewpoint to enclose the route with a 100 DPI padding
+  m_mapView->setViewpointGeometry(m_route.routeGeometry(), 100);
 
-    m_routeParameters = defaultParameters;
+  // create graphics to show the route traversed and route ahead
+  m_routeAheadGraphic = new Graphic(m_route.routeGeometry(), new SimpleLineSymbol(SimpleLineSymbolStyle::Solid, Qt::blue, 5, this), this);
+  m_routeTraveledGraphic = new Graphic(Geometry(), new SimpleLineSymbol(SimpleLineSymbolStyle::Solid, Qt::cyan, 3, this), this);
+  m_routeOverlay->graphics()->append(m_routeAheadGraphic);
+  m_routeOverlay->graphics()->append(m_routeTraveledGraphic);
 
-    m_routeTask->solveRoute(defaultParameters);
-  });
-
-  connect(m_routeTask, &RouteTask::doneLoading, this, [this](const Error& error)
-  {
-    if (error.isEmpty())
-    {
-      m_routeTask->createDefaultParameters();
-    }
-    else
-    {
-      qDebug() << error.message() << error.additionalMessage();
-    }
-  });
+  m_navigationEnabled = true;
+  emit navigationEnabledChanged();
 }
 
 bool NavigateARouteWithRerouting::navigationEnabled() const
@@ -269,22 +256,10 @@ void NavigateARouteWithRerouting::startNavigation()
 void NavigateARouteWithRerouting::connectRouteTrackerSignals()
 {
   connect(m_routeTracker, &RouteTracker::newVoiceGuidance, this, [this](VoiceGuidance* rawVoiceGuidance)
-          {
-            auto voiceGuidance = std::unique_ptr<VoiceGuidance>(rawVoiceGuidance);
-            m_speaker->say(voiceGuidance->text());
-          });
-
-  connect(m_routeTask, &RouteTask::solveRouteCompleted, this, [this](const QUuid&, const RouteResult& routeResult)
   {
-    if (routeResult.isEmpty())
-      return;
-
-    if (routeResult.routes().empty())
-      return;
-
-    m_routeResult = routeResult;
-    m_route = qAsConst(m_routeResult).routes()[0];
-    m_directionManeuvers = m_route.directionManeuvers(this)->directionManeuvers();
+    auto voiceGuidance = std::unique_ptr<VoiceGuidance>(rawVoiceGuidance);
+    qDebug() << voiceGuidance->text();
+    //m_speaker->say(voiceGuidance->text());
   });
 
   connect(m_routeTracker, &RouteTracker::trackingStatusChanged, this, [this](TrackingStatus* rawTrackingStatus)
@@ -296,7 +271,7 @@ void NavigateARouteWithRerouting::connectRouteTrackerSignals()
       if (trackingStatus->isOnRoute())
       {
         textString += "Distance remaining: " + trackingStatus->routeProgress()->remainingDistance()->displayText() + " " +
-            trackingStatus->routeProgress()->remainingDistance()->displayTextUnits().pluralDisplayName() + "\n";
+                      trackingStatus->routeProgress()->remainingDistance()->displayTextUnits().pluralDisplayName() + "\n";
         QTime time = QTime::fromMSecsSinceStartOfDay(trackingStatus->routeProgress()->remainingTime() * 60 * 1000); // convert time to milliseconds
         textString += "Time remaining: " + time.toString("hh:mm:ss") + "\n";
 
@@ -334,11 +309,6 @@ void NavigateARouteWithRerouting::connectRouteTrackerSignals()
     }
     m_textString = textString;
     emit textStringChanged();
-  });
-
-  connect(m_routeTracker, &RouteTracker::trackLocationCompleted, this, [this](const QUuid&)
-  {
-    m_routeTracker->generateVoiceGuidance();
   });
 
   connect(m_routeTracker, &RouteTracker::rerouteCompleted, this, [this](TrackingStatus* rawTrackingStatus)
