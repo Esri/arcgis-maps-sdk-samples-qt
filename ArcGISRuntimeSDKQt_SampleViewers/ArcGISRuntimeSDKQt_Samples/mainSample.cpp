@@ -309,8 +309,6 @@ void registerCppSampleClasses();
 
 int main(int argc, char *argv[])
 {
-  QQuickWindow::setGraphicsApi(QSGRendererInterface::GraphicsApi::OpenGL);
-
 #ifdef QT_WEBVIEW_WEBENGINE_BACKEND
   QtWebEngineQuick::initialize();
 #endif // QT_WEBVIEW_WEBENGINE_BACKEND
