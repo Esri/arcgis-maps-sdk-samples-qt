@@ -88,7 +88,7 @@ ApplicationWindow {
                         text: qsTr("Home")
                         onTriggered: {
                             aboutView.visible = false;
-                            gAnalyticsView.visible = false;
+                            telemetryView.visible = false;
                             proxySetupView.visible = false;
                             SampleManager.currentMode = SampleManager.HomepageView
                         }
@@ -100,7 +100,7 @@ ApplicationWindow {
                         visible: SampleManager.currentSample
                         onTriggered: {
                             aboutView.visible = false;
-                            gAnalyticsView.visible = false;
+                            telemetryView.visible = false;
                             proxySetupView.visible = false;
                             SampleManager.currentMode = SampleManager.LiveSampleView
                             // postEvent handled in
@@ -115,10 +115,10 @@ ApplicationWindow {
                         visible: SampleManager.currentSample
                         onTriggered: {
                             aboutView.visible = false;
-                            gAnalyticsView.visible = false;
+                            telemetryView.visible = false;
                             proxySetupView.visible = false;
                             SampleManager.currentMode = SampleManager.SourceCodeView
-                            GAnalytics.postEvent("sourcecode_view", {"sample_name": SampleManager.currentSample.name})
+                            Telemetry.postEvent("sourcecode_view", {"sample_name": SampleManager.currentSample.name})
                         }
                     }
                     MenuItem {
@@ -128,10 +128,10 @@ ApplicationWindow {
                         visible: SampleManager.currentSample
                         onTriggered: {
                             aboutView.visible = false;
-                            gAnalyticsView.visible = false;
+                            telemetryView.visible = false;
                             proxySetupView.visible = false;
                             SampleManager.currentMode = SampleManager.DescriptionView
-                            GAnalytics.postEvent("description_view", {"sample_name": SampleManager.currentSample.name})
+                            Telemetry.postEvent("description_view", {"sample_name": SampleManager.currentSample.name})
                         }
                     }
                     MenuItem {
@@ -140,7 +140,7 @@ ApplicationWindow {
                         text: qsTr("Manage offline data")
                         onTriggered: {
                             aboutView.visible = false;
-                            gAnalyticsView.visible = false;
+                            telemetryView.visible = false;
                             proxySetupView.visible = false;
                             if (SampleManager.currentMode !== SampleManager.DownloadDataView || !SampleManager.downloadInProgress)
                                 SampleManager.currentMode = SampleManager.ManageOfflineDataView
@@ -152,18 +152,19 @@ ApplicationWindow {
                         text: qsTr("API Reference")
                         onTriggered: {
                             aboutView.visible = false;
-                            gAnalyticsView.visible = false;
+                            telemetryView.visible = false;
                             proxySetupView.visible = false;
                             Qt.openUrlExternally(SampleManager.apiReferenceUrl)
                         }
                     }
                     MenuItem {
                         width: parent.width
-                        height: 48
+                        height: 0//48
                         text: qsTr("Telemetry Settings")
+                        visible: false
                         onTriggered: {
                             aboutView.visible = false;
-                            gAnalyticsView.visible = true;
+                            telemetryView.visible = true;
                             proxySetupView.visible = false;
                         }
                     }
@@ -174,7 +175,7 @@ ApplicationWindow {
                         text: qsTr("Proxy Settings")
                         onTriggered: {
                             aboutView.visible = false;
-                            gAnalyticsView.visible = false;
+                            telemetryView.visible = false;
                             proxySetupView.visible = true;
                         }
                     }
@@ -185,7 +186,7 @@ ApplicationWindow {
                         text: qsTr("About")
                         onTriggered: {
                             aboutView.visible = true;
-                            gAnalyticsView.visible = false;
+                            telemetryView.visible = false;
                             proxySetupView.visible = false;
                         }
                     }
@@ -235,8 +236,8 @@ ApplicationWindow {
         anchors.fill: parent
     }
 
-    GAnalyticsView {
-        id: gAnalyticsView
+    TelemetryView {
+        id: telemetryView
         anchors.fill: parent
     }
 
@@ -380,7 +381,7 @@ ApplicationWindow {
         // initialize the SampleManager singleton
         SampleManager.init();
 
-        // initialize the Google Analytics singleton
-        GAnalytics.init();
+        // initialize the Telemetry singleton
+        Telemetry.init();
     }
 }

@@ -103,7 +103,7 @@ Page {
                         drawer.close();
                         // launch sample...
                         SampleManager.currentSample = sample;
-                        GAnalytics.postEvent("sample_opened", {"sample_name": sample.name, "referrer": "category list"});
+                        Telemetry.postEvent("sample_opened", {"sample_name": sample.name, "referrer": "category list"});
                     }
                 }
             }

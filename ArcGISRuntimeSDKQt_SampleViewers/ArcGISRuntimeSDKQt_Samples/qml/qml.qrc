@@ -19,7 +19,7 @@
         <file>SearchView.qml</file>
         <file>SearchBar.qml</file>
         <file>ManageOfflineDataView.qml</file>
-        <file>GAnalyticsView.qml</file>
+        <file>TelemetryView.qml</file>
         <file>HomepageView.qml</file>
     </qresource>
 </RCC>

@@ -13,8 +13,8 @@
 // limitations under the License.
 // [Legal]
 
-#ifndef GANALYTICS_H
-#define GANALYTICS_H
+#ifndef TELEMETRY_H
+#define TELEMETRY_H
 
 #include <QDateTime>
 #include <QNetworkAccessManager>
@@ -24,7 +24,7 @@
 #include <QUrl>
 #include <QNetworkRequest>
 
-class GAnalytics : public QObject
+class Telemetry : public QObject
 {
   Q_OBJECT
 
@@ -32,9 +32,9 @@ class GAnalytics : public QObject
   Q_PROPERTY(bool isVisible READ isVisible WRITE setIsVisible NOTIFY isVisibleChanged)
 
 public:
-  explicit GAnalytics(QObject* parent = nullptr);
+  explicit Telemetry(QObject* parent = nullptr);
 
-  ~GAnalytics() override;
+  ~Telemetry() override;
 
   Q_INVOKABLE virtual void init();
   Q_INVOKABLE void postEvent(const QString& eventName, QVariantMap parameters);
@@ -62,8 +62,8 @@ private:
   QNetworkAccessManager* m_networkAccessManager = nullptr;
   QSettings m_settings;
   QVariantMap m_defaultParameters;
-  QUrl m_googleAnalyticsUrl;
+  QUrl m_AnalyticsUrl;
   QNetworkRequest m_networkRequest;
 };
 
-#endif // GANALYTICS_H
+#endif // TELEMETRY_H

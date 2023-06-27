@@ -21,10 +21,10 @@ import QtQuick.Layouts
 
 Item {
     id: dialogComponent
-    visible: GAnalytics.isVisible
+    visible: Telemetry.isVisible
 
     Component.onCompleted: {
-        dialogComponent.visible = GAnalytics.isVisible;
+        dialogComponent.visible = Telemetry.isVisible;
     }
 
     Rectangle {
@@ -85,10 +85,10 @@ Item {
                 id: analyticsEnabledCheckBox
                 text: "Enable analytics"
                 onCheckedChanged: {
-                    GAnalytics.telemetryEnabled = analyticsEnabledCheckBox.checked;
+                    Telemetry.telemetryEnabled = analyticsEnabledCheckBox.checked;
                 }
                 Component.onCompleted: {
-                    checked = GAnalytics.telemetryEnabled;
+                    checked = Telemetry.telemetryEnabled;
                 }
             }
 

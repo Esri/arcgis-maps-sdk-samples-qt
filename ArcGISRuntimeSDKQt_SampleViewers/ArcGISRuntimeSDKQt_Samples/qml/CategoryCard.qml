@@ -89,7 +89,7 @@ Component {
             sampleListView.currentCategory = displayName;
             SampleManager.currentCategory = SampleManager.categories.get(index);
             stackView.push(sampleListView);
-            GAnalytics.postEvent("category_selected", {"category_name": displayName});
+            Telemetry.postEvent("category_selected", {"category_name": displayName});
         }
     }
 }

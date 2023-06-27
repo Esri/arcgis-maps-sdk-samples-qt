@@ -51,7 +51,7 @@ Page {
             padding: 10
 
             onTextChanged: {
-                if (GAnalytics.telemetryEnabled)
+                if (Telemetry.telemetryEnabled)
                     searchQueryEventTimer.start();
             }
         }
@@ -100,8 +100,8 @@ Page {
         running: false
         repeat: false
         onTriggered: {
-            if (GAnalytics.telemetryEnabled && searchBar.text !== "")
-                GAnalytics.postEvent("search_query", {"search_text": searchBar.text});
+            if (Telemetry.telemetryEnabled && searchBar.text !== "")
+                Telemetry.postEvent("search_query", {"search_text": searchBar.text});
         }
     }
 }
