@@ -26,8 +26,6 @@
 #include <QQuickWindow>
 #include <QtGlobal>
 
-#include "GAnalytics.h"
-
 #ifdef QT_WEBVIEW_WEBENGINE_BACKEND
 #  include <QtWebEngineQuick>
 #endif // QT_WEBVIEW_WEBENGINE_BACKEND
@@ -302,7 +300,6 @@
 #define QUOTE(x) STRINGIZE(x)
 
 QObject* esriSampleManagerProvider(QQmlEngine* engine, QJSEngine* scriptEngine);
-QObject* gAnalyticsProvider(QQmlEngine* engine, QJSEngine* scriptEngine);
 QObject* syntaxHighlighterProvider(QQmlEngine* engine, QJSEngine* scriptEngine);
 void registerClasses();
 void registerCppSampleClasses();
@@ -606,8 +603,6 @@ void registerClasses()
 {
   qmlRegisterSingletonType<DownloadSampleManager>("Esri.ArcGISRuntimeSamples", 1, 0, "SampleManager",
                                                   &esriSampleManagerProvider);
-  // Register the Google Analytics class
-  qmlRegisterSingletonType<GAnalytics>("Telemetry", 1, 0, "GAnalytics", &gAnalyticsProvider);
 
   qmlRegisterSingletonType<SyntaxHighlighter>("Esri.ArcGISRuntimeSamples", 1, 0, "SyntaxHighlighter",
                                               &syntaxHighlighterProvider);
@@ -649,12 +644,6 @@ QObject* esriSampleManagerProvider(QQmlEngine* engine, QJSEngine*)
   static QObject* sampleManager = new QmlSampleManager(engine, engine);
 #endif
   return sampleManager;
-}
-
-QObject* gAnalyticsProvider(QQmlEngine* engine, QJSEngine*)
-{
-  static QObject* gAnalytics = new GAnalytics(engine);
-  return gAnalytics;
 }
 
 QObject* syntaxHighlighterProvider(QQmlEngine* engine, QJSEngine*)

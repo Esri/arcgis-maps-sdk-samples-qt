@@ -59,10 +59,6 @@ exists($$PWD/../../../../DevBuildQml.pri) {
   DEFINES += BUILD_FROM_SETUP
 }
 
-# Set analytics API key and stream id, these will be empty strings if not provided in the command line arguments
-DEFINES += GANALYTICS_API_KEY=$$(GANALYTICS_API_KEY)
-DEFINES += GANALYTICS_STREAM_ID=$$(GANALYTICS_STREAM_ID)
-
 qtHaveModule(webenginequick) {
   QT += webenginequick
   DEFINES += QT_WEBVIEW_WEBENGINE_BACKEND
@@ -99,7 +95,6 @@ HEADERS += \
     $$COMMONVIEWER/DataItem.h \
     $$COMMONVIEWER/DataItemListModel.h \
     $$COMMONVIEWER/DownloadSampleManager.h \
-    $$COMMONVIEWER/GAnalytics.h \
     $$COMMONVIEWER/Sample.h \
     $$COMMONVIEWER/SampleCategory.h \
     $$COMMONVIEWER/SampleListModel.h \
@@ -119,7 +114,6 @@ SOURCES += \
     $$COMMONVIEWER/DataItem.cpp \
     $$COMMONVIEWER/DataItemListModel.cpp \
     $$COMMONVIEWER/DownloadSampleManager.cpp \
-    $$COMMONVIEWER/GAnalytics.cpp \
     $$COMMONVIEWER/Sample.cpp \
     $$COMMONVIEWER/SampleCategory.cpp \
     $$COMMONVIEWER/SampleListModel.cpp \
