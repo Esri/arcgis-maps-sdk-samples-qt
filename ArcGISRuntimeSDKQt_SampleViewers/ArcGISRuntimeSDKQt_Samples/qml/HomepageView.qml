@@ -17,7 +17,6 @@ import QtQuick
 import QtQuick.Controls
 import QtQuick.Shapes
 import Esri.ArcGISRuntimeSamples
-import Telemetry
 
 Rectangle {
     visible: SampleManager.currentMode === SampleManager.HomepageView
@@ -160,7 +159,6 @@ Rectangle {
                             drawer.close();
                             // launch sample...
                             SampleManager.currentSample = sample;
-                            Telemetry.postEvent("sample_opened", {"sample_name": sample.name, "referrer": "featured list"});
                             SampleManager.currentMode = SampleManager.LiveSampleView
                         }
                         onContainsMouseChanged: {

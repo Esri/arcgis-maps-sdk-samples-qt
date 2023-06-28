@@ -16,7 +16,6 @@
 import QtQuick
 import QtQuick.Controls
 import Esri.ArcGISRuntimeSamples
-import Telemetry
 
 Component {
     id: categoryDelegate
@@ -89,7 +88,6 @@ Component {
             sampleListView.currentCategory = displayName;
             SampleManager.currentCategory = SampleManager.categories.get(index);
             stackView.push(sampleListView);
-            Telemetry.postEvent("category_selected", {"category_name": displayName});
         }
     }
 }

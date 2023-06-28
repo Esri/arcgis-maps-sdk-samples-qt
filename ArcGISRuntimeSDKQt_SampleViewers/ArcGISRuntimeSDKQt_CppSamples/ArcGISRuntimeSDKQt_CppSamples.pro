@@ -108,7 +108,6 @@ HEADERS += \
     $$COMMONVIEWER/DataItem.h \
     $$COMMONVIEWER/DataItemListModel.h \
     $$COMMONVIEWER/DownloadSampleManager.h \
-    $$COMMONVIEWER/Telemetry.h \
     $$COMMONVIEWER/Sample.h \
     $$COMMONVIEWER/SampleCategory.h \
     $$COMMONVIEWER/SampleListModel.h \
@@ -128,7 +127,6 @@ SOURCES += \
     $$COMMONVIEWER/DataItem.cpp \
     $$COMMONVIEWER/DataItemListModel.cpp \
     $$COMMONVIEWER/DownloadSampleManager.cpp \
-    $$COMMONVIEWER/Telemetry.cpp \
     $$COMMONVIEWER/Sample.cpp \
     $$COMMONVIEWER/SampleCategory.cpp \
     $$COMMONVIEWER/SampleListModel.cpp \

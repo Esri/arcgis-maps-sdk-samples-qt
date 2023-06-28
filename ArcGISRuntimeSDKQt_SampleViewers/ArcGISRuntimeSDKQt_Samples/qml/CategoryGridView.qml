@@ -16,7 +16,6 @@
 import QtQuick
 import QtQuick.Controls
 import Esri.ArcGISRuntimeSamples
-import Telemetry
 
 Page {
     id: categoryView
@@ -49,11 +48,6 @@ Page {
             font.pixelSize: 14
             placeholderText: qsTr("Find a sample...")
             padding: 10
-
-            onTextChanged: {
-                if (Telemetry.telemetryEnabled)
-                    searchQueryEventTimer.start();
-            }
         }
     }
 
@@ -93,15 +87,4 @@ Page {
     // Ensure virtual keyboard is not persisted after this item has been
     // hidden. This is an issue on iOS and Android devices.
     onVisibleChanged:  searchBar.focus = false;
-
-    Timer {
-        id: searchQueryEventTimer
-        interval: 2500 // milliseconds
-        running: false
-        repeat: false
-        onTriggered: {
-            if (Telemetry.telemetryEnabled && searchBar.text !== "")
-                Telemetry.postEvent("search_query", {"search_text": searchBar.text});
-        }
-    }
 }
