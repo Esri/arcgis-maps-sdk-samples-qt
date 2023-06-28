@@ -40,7 +40,7 @@ Link | Local Location
 
 ## About the data
 
-This sample shows a [Johannesburg, South Africa Scene](https://www.arcgis.com/home/item.html?id=eb4dab9e61b24fe2919a0e6f7905321e) from ArcGIS Online. The sample uses a [Tank model scene symbol](http://www.arcgis.com/home/item.html?id=07d62a792ab6496d9b772a24efea45d0) hosted as an item on ArcGIS Online.
+This sample shows a [Buildings in Brest, France Scene](https://www.arcgis.com/home/item.html?id=b343e14455fe45b98a2c20ebbceec0b0) from ArcGIS Online. The sample uses a [Tank model scene symbol](http://www.arcgis.com/home/item.html?id=07d62a792ab6496d9b772a24efea45d0) hosted as an item on ArcGIS Online.
 
 ## Tags
 
