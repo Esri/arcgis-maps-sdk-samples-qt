@@ -56,12 +56,12 @@
 #include "Graphic.h"
 #include "SimpleLineSymbol.h"
 
-#include <QUuid>
 #include <memory>
 #include <QList>
 #include <QTime>
-#include <QUrl>
 #include <QtTextToSpeech/QTextToSpeech>
+#include <QUrl>
+#include <QUuid>
 
 using namespace Esri::ArcGISRuntime;
 
