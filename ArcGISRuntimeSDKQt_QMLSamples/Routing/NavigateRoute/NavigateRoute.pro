@@ -17,7 +17,7 @@ TEMPLATE = app
 
 # additional modules are pulled in via arcgisruntime.pri
 QT += opengl qml quick
-# QT += texttospeech
+QT += texttospeech
 
 CONFIG += c++17
 

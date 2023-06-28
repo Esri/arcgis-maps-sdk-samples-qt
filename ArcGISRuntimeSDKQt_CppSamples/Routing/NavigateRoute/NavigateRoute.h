@@ -31,8 +31,7 @@ class RouteTracker;
 class SimulatedLocationDataSource;
 }
 
-// NOTE: As of Qt 6.2, QTextToSpeech is not supported. Instances of this class have been commented out for compatibility, but remain for reference
-// class QTextToSpeech;
+class QTextToSpeech;
 
 #include <QObject>
 #include <QString>
@@ -89,9 +88,7 @@ private:
   bool m_navigationEnabled = false;
   bool m_recenterEnabled = false;
   QString m_textString = "";
-
-  // As of Qt 6.2, QTextToSpeech is not supported
-  // QTextToSpeech* m_speaker = nullptr;
+  QTextToSpeech* m_speaker = nullptr;
 };
 
 #endif // NAVIGATEROUTE_H

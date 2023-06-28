@@ -20,6 +20,7 @@ import Esri.ArcGISRuntime
 import QtQuick.Layouts
 import QtPositioning
 import Esri.ArcGISExtras
+import Esri.samples
 
 Rectangle {
     id: rootRectangle
@@ -243,20 +244,19 @@ Rectangle {
         }
 
         // Output new voice guidance
-        //        onNewVoiceGuidanceResultChanged: {
-        //            speaker.textToSpeech(newVoiceGuidanceResult.text);
-        //        }
+        onNewVoiceGuidanceResultChanged: {
+            speaker.textToSpeech(newVoiceGuidanceResult.text);
+        }
 
         // Set a callback to indicate if the speech engine is ready to speak
-        //        speechEngineReadyCallback: function() {
-        //            return speaker.textToSpeechEngineReady();
-        //        }
+        speechEngineReadyCallback: function() {
+            return speaker.textToSpeechEngineReady();
+        }
     }
 
-    // NOTE: As of Qt 6.2, QTextToSpeech is not supported. Instances of this class have been commented out for compatibility, but remain for reference
-    //    NavigateRouteSpeaker {
-    //        id: speaker
-    //    }
+    NavigateRouteSpeaker {
+        id: speaker
+    }
 
     function startNavigation() {
         // Solve the route with the default parameters
@@ -288,8 +288,8 @@ Rectangle {
         // Prevent mouse interaction from propagating to the MapView
         MouseArea {
             anchors.fill: parent
-            onPressed: mouse => mouse.accepted = true;
-            onWheel: wheel => wheel.accepted = true;
+            onPressed: mouse.accepted = true;
+            onWheel: wheel.accepted = true;
         }
 
         Column {
