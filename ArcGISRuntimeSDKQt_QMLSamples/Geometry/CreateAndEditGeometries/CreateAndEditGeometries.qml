@@ -319,7 +319,20 @@ Rectangle {
                 Layout.alignment: Qt.AlignHCenter | Qt.AlignVCenter
                 Layout.columnSpan: 2
                 text: "<font color=\"white\">Uniform scale</font>"
-                enabled: geometryEditor.tool
+                enabled: {
+                    if (!geometryEditor.started)
+                        false;
+                    else {
+                        switch (geometryEditor.geometry.geometryType) {
+                        case Enums.GeometryTypePoint:
+                            false;
+                            break;
+                        case Enums.GeometryTypeMultipoint:
+                        case Enums.GeometryTypePolyline:
+                        case Enums.GeometryTypePolygon:
+                            true;
+                        }
+                    }
                 checked: geometryEditor.tool.configuration.scaleMode === Enums.GeometryEditorScaleModeUniform;
                 onCheckStateChanged:
                 {
