@@ -320,8 +320,9 @@ Rectangle {
                 Layout.columnSpan: 2
                 text: "<font color=\"white\">Uniform scale</font>"
                 enabled: {
-                    if (!geometryEditor.started)
+                    if (!geometryEditor.started) {
                         false;
+                    }
                     else {
                         switch (geometryEditor.geometry.geometryType) {
                         case Enums.GeometryTypePoint:
@@ -333,6 +334,7 @@ Rectangle {
                             true;
                         }
                     }
+                }
                 checked: geometryEditor.tool.configuration.scaleMode === Enums.GeometryEditorScaleModeUniform;
                 onCheckStateChanged:
                 {
