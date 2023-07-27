@@ -1,0 +1,21 @@
+{
+    "category": "Display information",
+    "description": "Display a webmap with a point feature layer that supports clustering.",
+    "ignore": false,
+    "images": [
+        "screenshot.png"
+    ],
+    "keywords": [
+        "TODO"
+    ],
+    "redirect_from": "",
+    "relevant_apis": [
+        "TODO"
+    ],
+    "snippets": [
+        "ClusterFeatures.cpp",
+        "ClusterFeatures.h",
+        "ClusterFeatures.qml"
+    ],
+    "title": "Cluster Features"
+}
