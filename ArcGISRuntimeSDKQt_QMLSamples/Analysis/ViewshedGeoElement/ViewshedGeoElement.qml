@@ -30,8 +30,14 @@ Rectangle {
                     System.writableLocation(System.StandardPathsHomeLocation) + "/ArcGIS/Runtime/Data"
     }
     readonly property string headingAttr: "HEADING"
-    readonly property var linearUnit: Enums.LinearUnitIdMeters
-    readonly property var angularUnit: Enums.AngularUnitIdDegrees
+
+    readonly property LinearUnit linearUnit: LinearUnit {
+        linearUnitId: Enums.LinearUnitIdMeters
+    }
+    readonly property AngularUnit angularUnit: AngularUnit {
+        angularUnitId: Enums.AngularUnitIdDegrees
+    }
+
     readonly property var geodeticCurveType: Enums.GeodeticCurveTypeGeodesic
     property Point waypoint: null
 
