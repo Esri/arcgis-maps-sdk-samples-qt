@@ -36,6 +36,9 @@
 #include "MapTypes.h"
 #include "Point.h"
 #include "Popup.h"
+#include "PopupAttachmentManager.h"
+#include "PopupAttributeListModel.h"
+#include "PopupManager.h"
 #include "PortalItem.h"
 
 #include <QFuture>
@@ -66,6 +69,12 @@ void ClusterFeatures::init()
   // Register the map view for QML
   qmlRegisterType<MapQuickView>("Esri.Samples", 1, 0, "MapView");
   qmlRegisterType<ClusterFeatures>("Esri.Samples", 1, 0, "ClusterFeaturesSample");
+
+
+  // Required to use the PopupManager with a QML UI.
+  qmlRegisterUncreatableType<PopupManager>("Esri.Samples", 1, 0, "PopupManager", "PopupManager is uncreateable");
+  qmlRegisterUncreatableType<PopupAttachmentManager>("Esri.Samples", 1, 0, "PopupAttachmentManager", "PopupAttachmentManager is uncreateable");
+  qmlRegisterUncreatableType<PopupAttributeListModel>("Esri.Samples", 1, 0, "PopupAttributeListModel", "PopupAttributeListModel is uncreateable");
 }
 
 MapQuickView* ClusterFeatures::mapView() const
@@ -116,31 +125,13 @@ void ClusterFeatures::setMapView(MapQuickView* mapView)
                         if (identifyResult->geoElements().isEmpty())
                           return;
 
+                        m_popupManagers.clear();
+                        Popup* popup = identifyResult->popups().first();
 
-                        GeoElement* geoElement = identifyResult->geoElements().first();
-                        if (AggregateGeoElement* aggregateGeoElement = dynamic_cast<AggregateGeoElement*>(geoElement))
-                        {
-                          const auto aggregateAttributes = aggregateGeoElement->attributes()->attributesMap();
-                          qDebug() << aggregateAttributes;
-
-                          m_mapView->calloutData()->setTitle("Cluster summary");
-                          m_mapView->calloutData()->setDetail(
-                              "This cluster represents " + aggregateAttributes.value("cluster_count").toString() + " features.\n" +
-                              "The predominant fuel type for generating power within this cluster is: " + aggregateAttributes.value("fuel1").toString());
-                        }
-                        else
-                        {
-                          Feature* feature = static_cast<Feature*>(geoElement);
-
-                          const auto attributes = feature->attributes()->attributesMap();
-                          qDebug() << attributes;
-
-                          m_mapView->calloutData()->setTitle(attributes.value("name").toString());
-                          m_mapView->calloutData()->setDetail("This is an individual power plant with fuel type: "+ attributes.value("fuel1").toString());
-                        }
-
-                        m_mapView->calloutData()->setLocation(Point(geoElement->geometry()));
-                        m_mapView->calloutData()->setVisible(true);
+                        PopupManager* popupManager = new PopupManager(popup, this);
+                        qDebug() << popupManager->customHtmlDescription();
+                        m_popupManagers.append(popupManager);
+                        emit popupManagersChanged();
                       });
           });
 
@@ -158,6 +149,11 @@ bool ClusterFeatures::toggleClustering()
   m_powerPlantsLayer->featureReduction()->setEnabled(!m_powerPlantsLayer->featureReduction()->isEnabled());
 
   return true;
+}
+
+QQmlListProperty<PopupManager> ClusterFeatures::popupManagers()
+{
+  return QQmlListProperty<PopupManager>(this, &m_popupManagers);
 }
 
 bool ClusterFeatures::taskRunning() const

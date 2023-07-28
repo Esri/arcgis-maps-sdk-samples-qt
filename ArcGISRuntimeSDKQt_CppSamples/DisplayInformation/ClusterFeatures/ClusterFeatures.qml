@@ -37,13 +37,8 @@ Item {
     ClusterFeaturesSample {
         id: model
         mapView: view
-    }
 
-    Callout {
-        id: callout
-        calloutData: view.calloutData
-        accessoryButtonVisible: false
-        leaderPosition: Callout.LeaderPosition.Automatic
+        onPopupManagersChanged: popupStackView.visible = true
     }
 
     Button {
@@ -53,15 +48,41 @@ Item {
         text: qsTr("Toggle feature clustering")
         anchors {
             top: parent.top
-            topMargin: 15
             right: parent.right
-            rightMargin: 15
+            margins: 15
         }
         enabled: !model.taskRunning
         onClicked:
         {
             model.toggleClustering();
             callout.visible = false;
+        }
+    }
+
+    PopupStackView {
+        id: popupStackView
+        anchors {
+            top: parent.top
+            left: parent.left
+            margins: 20
+        }
+        popupManagers: model.popupManagers
+        visible: false
+    }
+
+    Rectangle {
+        id: aggregateTextRect
+        anchors {
+            top: parent.top
+            left: parent.left
+            margins: 20
+        }
+        background.color: "white"
+        Text {
+            id: aggregateText
+            anchors.fill: parent
+            anchors.margins: 15
+            text: "\n            This cluster represents <b>3</b> power plants with an average capacity of <b>219.50 megawatts</b>.\n             The power plants in this cluster produce a total of <b>658.5 megawatts</b> of power."
         }
     }
 

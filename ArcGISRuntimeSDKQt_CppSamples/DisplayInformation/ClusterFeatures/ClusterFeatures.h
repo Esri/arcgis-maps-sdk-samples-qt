@@ -22,9 +22,11 @@ namespace Esri::ArcGISRuntime
   class FeatureLayer;
   class Map;
   class MapQuickView;
+  class PopupManager;
 }
 
 #include <QObject>
+#include <QQmlListProperty>
 #include <QMouseEvent>
 
 Q_MOC_INCLUDE("MapQuickView.h");
@@ -34,6 +36,7 @@ class ClusterFeatures : public QObject
   Q_OBJECT
 
   Q_PROPERTY(Esri::ArcGISRuntime::MapQuickView* mapView READ mapView WRITE setMapView NOTIFY mapViewChanged)
+  Q_PROPERTY(QQmlListProperty<Esri::ArcGISRuntime::PopupManager> popupManagers READ popupManagers NOTIFY popupManagersChanged)
   Q_PROPERTY(bool taskRunning READ taskRunning NOTIFY taskRunningChanged)
 
 public:
@@ -46,16 +49,23 @@ public:
 
 signals:
   void mapViewChanged();
+  void popupManagersChanged();
   void taskRunningChanged();
 
 private:
   Esri::ArcGISRuntime::MapQuickView* mapView() const;
   void setMapView(Esri::ArcGISRuntime::MapQuickView* mapView);
+  QQmlListProperty<Esri::ArcGISRuntime::PopupManager> popupManagers();
 
   Esri::ArcGISRuntime::Map* m_map = nullptr;
   Esri::ArcGISRuntime::MapQuickView* m_mapView = nullptr;
 
   Esri::ArcGISRuntime::FeatureLayer* m_powerPlantsLayer = nullptr;
+
+  Esri::ArcGISRuntime::PopupManager* m_popupManager = nullptr;
+  QList<Esri::ArcGISRuntime::PopupManager*> m_popupManagers;
+
+
 
   bool taskRunning() const;
   bool m_taskRunning = true;
