@@ -79,7 +79,6 @@ Rectangle {
 
                 Column {
                     id: upperRectColumn
-
                     anchors {
                         fill: parent
                         margins: 10
