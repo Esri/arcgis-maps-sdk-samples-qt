@@ -249,6 +249,9 @@ void StatisticalQueryGroupSort::removeOrderBy(int index)
 
 void StatisticalQueryGroupSort::updateOrder(int index)
 {
+  if(m_orderBys.empty())
+    return;
+
   // get the existing values
   QVariantMap orderByMap;
   orderByMap["field"] = m_orderBys.at(index).toMap()["field"].toString();

@@ -405,6 +405,8 @@ Rectangle {
                         anchors.horizontalCenter: parent.horizontalCenter
                         text: "Change Sort Order"
                         onClicked: {
+                            if (!orderByModel.count)
+                                return;
                             const i = groupingView.currentIndex;
                             if (orderByModel.get(i).order === "Ascending")
                                 orderByModel.get(i).order = "Descending";
