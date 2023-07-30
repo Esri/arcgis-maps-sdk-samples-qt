@@ -240,8 +240,11 @@ void StatisticalQueryGroupSort::removeOrderBy(const QString& field)
 void StatisticalQueryGroupSort::removeOrderBy(int index)
 {
   // remove the order by at a given index
-  m_orderBys.removeAt(index);
-  emit orderBysChanged();
+  if(m_orderBys.length() > 0)
+  {
+    m_orderBys.removeAt(index);
+    emit orderBysChanged();
+  }
 }
 
 void StatisticalQueryGroupSort::updateOrder(int index)

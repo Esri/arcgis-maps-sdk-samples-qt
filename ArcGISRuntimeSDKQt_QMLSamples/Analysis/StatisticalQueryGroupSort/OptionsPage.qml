@@ -126,7 +126,7 @@ Rectangle {
                             id: fieldComboBox
                             anchors.verticalCenter: parent.verticalCenter
                             property int modelWidth: 0
-                            width: modelWidth + leftPadding + rightPadding + (indicator ? indicator.width : 10)
+                            width: modelWidth + leftPadding + rightPadding
                             model: fields
                             onModelChanged: {
                                 if (!fields)
@@ -152,7 +152,7 @@ Rectangle {
                             id: statisticComboBox
                             anchors.verticalCenter: parent.verticalCenter
                             property int modelWidth: 0
-                            width: modelWidth + leftPadding + rightPadding + (indicator ? indicator.width : 10)
+                            width: modelWidth + leftPadding + rightPadding
                             model: statisticTypes
                             Component.onCompleted : {
                                 for (let i = 0; i < model.length; ++i) {
@@ -338,7 +338,10 @@ Rectangle {
                         width: 30
                         height: width
                         text: "<"
-                        onClicked: orderByModel.remove(groupingView.currentIndex, 1);
+                        onClicked: {
+                            if(orderByModel.count > 0)
+                                orderByModel.remove(groupingView.currentIndex, 1);
+                        }
                     }
                 }
 
