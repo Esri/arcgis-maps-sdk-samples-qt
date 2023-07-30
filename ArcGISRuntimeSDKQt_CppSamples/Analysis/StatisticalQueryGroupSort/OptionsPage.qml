@@ -69,7 +69,7 @@ Rectangle {
 
             Rectangle {
                 width: pageWidth
-                height: 225
+                height: upperRectColumn.childrenRect.height + 10
                 color: "transparent"
                 clip: true
                 border {
@@ -78,6 +78,8 @@ Rectangle {
                 }
 
                 Column {
+                    id: upperRectColumn
+
                     anchors {
                         fill: parent
                         margins: 10
@@ -98,7 +100,7 @@ Rectangle {
                             id: fieldComboBox
                             anchors.verticalCenter: parent.verticalCenter
                             property int modelWidth: 0
-                            width: modelWidth + leftPadding + rightPadding
+                            width: modelWidth + leftPadding + rightPadding + (indicator ? indicator.width : 10)
                             model: fields
                             onModelChanged: {
                                 for (let i = 0; i < model.length; ++i) {
@@ -123,7 +125,7 @@ Rectangle {
                             anchors.verticalCenter: parent.verticalCenter
                             model: statisticTypes
                             property int modelWidth: 0
-                            width: modelWidth + leftPadding + rightPadding
+                            width: modelWidth + leftPadding + rightPadding + (indicator ? indicator.width : 10)
                             Component.onCompleted : {
                                 for (let i = 0; i < model.length; ++i) {
                                     metricsStatisticComboBox.text = model[i];
@@ -138,8 +140,6 @@ Rectangle {
 
                         Button {
                             text: "+"
-                            width: 30
-                            height: width
                             onClicked: rootRectangle.addStatisticDefinition(fieldComboBox.currentText, statisticComboBox.currentText);
                         }
                     }
@@ -266,8 +266,6 @@ Rectangle {
 
                     Button {
                         anchors.horizontalCenter: parent.horizontalCenter
-                        width: 30
-                        height: width
                         text: ">"
                         onClicked: {
                             // return if the field is not selected
@@ -281,8 +279,6 @@ Rectangle {
 
                     Button {
                         anchors.horizontalCenter: parent.horizontalCenter
-                        width: 30
-                        height: width
                         text: "<"
                         onClicked: rootRectangle.removeOrderBy(groupingView.currentIndex);
                     }

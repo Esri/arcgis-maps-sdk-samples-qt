@@ -97,7 +97,7 @@ Rectangle {
 
             Rectangle {
                 width: pageWidth
-                height: 225
+                height: upperRectColumn.childrenRect.height + 10
                 color: "transparent"
                 clip: true
                 border {
@@ -106,6 +106,8 @@ Rectangle {
                 }
 
                 Column {
+                    id: upperRectColumn
+
                     anchors {
                         fill: parent
                         margins: 10
@@ -168,8 +170,6 @@ Rectangle {
 
                         Button {
                             text: "+"
-                            width: 30
-                            height: width
                             onClicked: {
                                 for (let i = 0; i < statisticsModel.count; i++) {
                                     if (statisticsModel.get(i).field === fieldComboBox.currentText) {
@@ -314,8 +314,6 @@ Rectangle {
 
                     Button {
                         anchors.horizontalCenter: parent.horizontalCenter
-                        width: 30
-                        height: width
                         text: ">"
                         onClicked: {
                             // return if the field is not selected
@@ -335,8 +333,6 @@ Rectangle {
 
                     Button {
                         anchors.horizontalCenter: parent.horizontalCenter
-                        width: 30
-                        height: width
                         text: "<"
                         onClicked: orderByModel.remove(groupingView.currentIndex, 1);
                     }
