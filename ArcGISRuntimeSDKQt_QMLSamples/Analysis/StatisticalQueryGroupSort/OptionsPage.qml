@@ -234,7 +234,7 @@ Rectangle {
                         anchors.horizontalCenter: parent.horizontalCenter
                         text: "Remove Statistic"
                         onClicked: {
-                            if (statisticsModel.count)
+                            if (statisticsModel.count > 0)
                                 statisticsModel.remove(statisticView.currentIndex, 1);
                         }
                     }
