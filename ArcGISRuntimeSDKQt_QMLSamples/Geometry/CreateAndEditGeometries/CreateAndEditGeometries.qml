@@ -63,7 +63,7 @@ Rectangle {
 
         onMouseClicked: mouse => {
                             if (geometryEditor.started)
-                            return;
+                                return;
 
                             const tolerance = 5;
                             const returnPopupsOnly = false;
@@ -440,8 +440,8 @@ Rectangle {
     Point {
         id: house
         json: {"x": -9.59309629,
-            "y": 53.0830063,
-            "spatialReference":{"wkid":4326}
+               "y": 53.0830063,
+               "spatialReference":{"wkid":4326}
         }
     }
 
