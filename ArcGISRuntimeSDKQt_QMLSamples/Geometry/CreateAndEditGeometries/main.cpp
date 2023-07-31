@@ -22,30 +22,31 @@ void setAPIKey(const QGuiApplication& app, QString apiKey);
 
 int main(int argc, char *argv[])
 {
-  QGuiApplication app(argc, argv);
-  app.setApplicationName(QString("CreateAndEditGeometries - QML"));
+    QGuiApplication app(argc, argv);
+    app.setApplicationName(QString("CreateAndEditGeometries - QML"));
 
-  // Access to Esri location services requires an API key. This can be copied below or used as a command line argument.
-  const QString apiKey = QString("");
-  setAPIKey(app, apiKey);
+    // Access to Esri location services requires an API key. This can be copied below or used as a command line argument.
+    const QString apiKey = QString("");
 
-  // Initialize application view
-  QQuickView view;
-  view.setResizeMode(QQuickView::SizeRootObjectToView);
+    setAPIKey(app, apiKey);
 
-  // Add the import Path
-  view.engine()->addImportPath(QDir(QCoreApplication::applicationDirPath()).filePath("qml"));
+    // Initialize application view
+    QQuickView view;
+    view.setResizeMode(QQuickView::SizeRootObjectToView);
+
+    // Add the import Path
+    view.engine()->addImportPath(QDir(QCoreApplication::applicationDirPath()).filePath("qml"));
 
 #ifdef ARCGIS_RUNTIME_IMPORT_PATH_2
-  view.engine()->addImportPath(ARCGIS_RUNTIME_IMPORT_PATH_2);
+    view.engine()->addImportPath(ARCGIS_RUNTIME_IMPORT_PATH_2);
 #endif
 
-  // Set the source
-  view.setSource(QUrl("qrc:/Samples/Geometry/CreateAndEditGeometries/CreateAndEditGeometries.qml"));
+    // Set the source
+    view.setSource(QUrl("qrc:/Samples/Geometry/CreateAndEditGeometries/CreateAndEditGeometries.qml"));
 
-  view.show();
+    view.show();
 
-  return app.exec();
+    return app.exec();
 }
 
 // Use of Esri location services, including basemaps and geocoding,
@@ -59,23 +60,23 @@ int main(int argc, char *argv[])
 
 void setAPIKey(const QGuiApplication& app, QString apiKey)
 {
-  if (apiKey.isEmpty())
-  {
-    // Try parsing API key from command line argument, which uses the following syntax "-k <apiKey>".
-    QCommandLineParser cmdParser;
-    QCommandLineOption apiKeyArgument(QStringList{"k", "api"}, "The API Key property used to access Esri location services", "apiKeyInput");
-    cmdParser.addOption(apiKeyArgument);
-    cmdParser.process(app);
-
-    apiKey = cmdParser.value(apiKeyArgument);
-
     if (apiKey.isEmpty())
     {
-      qWarning() << "Use of Esri location services, including basemaps, requires" <<
-                    "you to authenticate with an ArcGIS identity or set the API Key property.";
-      return;
-    }
-  }
+        // Try parsing API key from command line argument, which uses the following syntax "-k <apiKey>".
+        QCommandLineParser cmdParser;
+        QCommandLineOption apiKeyArgument(QStringList{"k", "api"}, "The API Key property used to access Esri location services", "apiKeyInput");
+        cmdParser.addOption(apiKeyArgument);
+        cmdParser.process(app);
 
-  QCoreApplication::instance()->setProperty("Esri.ArcGISRuntime.apiKey", apiKey);
+        apiKey = cmdParser.value(apiKeyArgument);
+
+        if (apiKey.isEmpty())
+        {
+            qWarning() << "Use of Esri location services, including basemaps, requires" <<
+                "you to authenticate with an ArcGIS identity or set the API Key property.";
+            return;
+        }
+    }
+
+    QCoreApplication::instance()->setProperty("Esri.ArcGISRuntime.apiKey", apiKey);
 }

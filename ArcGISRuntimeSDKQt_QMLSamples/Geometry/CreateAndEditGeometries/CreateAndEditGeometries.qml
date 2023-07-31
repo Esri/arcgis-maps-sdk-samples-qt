@@ -133,6 +133,14 @@ Rectangle {
         id: freehandTool
     }
 
+    property ShapeTool arrowTool: Factory.ShapeTool.create(Enums.ShapeToolTypeArrow);
+
+    property ShapeTool ellipseTool: Factory.ShapeTool.create(Enums.ShapeToolTypeEllipse);
+
+    property ShapeTool rectangleTool: Factory.ShapeTool.create(Enums.ShapeToolTypeRectangle);
+
+    property ShapeTool triangleTool: Factory.ShapeTool.create(Enums.ShapeToolTypeTriangle);
+
     SimpleMarkerSymbol {
         id: pointSymbol
         style: Enums.SimpleMarkerSymbolStyleSquare
@@ -251,7 +259,7 @@ Rectangle {
 
                 ComboBox {
                     id: toolCombo
-                    model: [qsTr("VertexTool"), qsTr("FreehandTool")]
+                    model: [qsTr("VertexTool"), qsTr("FreehandTool"), qsTr("Arrow ShapeTool"), qsTr("Ellipse ShapeTool"), qsTr("Rectangle ShapeTool"), qsTr("Triangle ShapeTool")]
                     Layout.columnSpan: 2
                     Layout.fillWidth: true
 
@@ -287,11 +295,57 @@ Rectangle {
                         case 1: // Freehand Tool
                             geometryEditor.tool = freehandTool;
                             break;
+                        case 2: // ShapeTool with arrow shape type
+                            geometryEditor.tool = arrowTool;
+                            break;
+                        case 3: // ShapeTool with ellipse shape type
+                            geometryEditor.tool = ellipseTool;
+                            break;
+                        case 4: // ShapeTool with rectangle shape type
+                            geometryEditor.tool = rectangleTool;
+                            break;
+                        case 5: // ShapeTool with triangle shape type
+                            geometryEditor.tool = triangleTool;
+                            break;
                         default:
                             geometryEditor.tool = vertexTool;
                         }
                     }
                 }
+            }
+
+            CheckBox {
+                id: uniformScaleCheckBox
+                Layout.alignment: Qt.AlignHCenter | Qt.AlignVCenter
+                Layout.columnSpan: 2
+                text: "<font color=\"white\">Uniform scale</font>"
+                enabled: {
+                    if (!geometryEditor.started) {
+                        false;
+                    }
+                    else {
+                        switch (geometryEditor.geometry.geometryType) {
+                        case Enums.GeometryTypePoint:
+                            false;
+                            break;
+                        case Enums.GeometryTypeMultipoint:
+                        case Enums.GeometryTypePolyline:
+                        case Enums.GeometryTypePolygon:
+                            true;
+                        }
+                    }
+                }
+                checked: geometryEditor.tool.configuration.scaleMode === Enums.GeometryEditorScaleModeUniform;
+                onCheckStateChanged:
+                {
+                    vertexTool.configuration.scaleMode = (checked ? Enums.GeometryEditorScaleModeUniform : Enums.GeometryEditorScaleModeStretch)
+                    freehandTool.configuration.scaleMode = (checked ? Enums.GeometryEditorScaleModeUniform : Enums.GeometryEditorScaleModeStretch)
+                    arrowTool.configuration.scaleMode = (checked ? Enums.GeometryEditorScaleModeUniform : Enums.GeometryEditorScaleModeStretch)
+                    ellipseTool.configuration.scaleMode = (checked ? Enums.GeometryEditorScaleModeUniform : Enums.GeometryEditorScaleModeStretch)
+                    rectangleTool.configuration.scaleMode = (checked ? Enums.GeometryEditorScaleModeUniform : Enums.GeometryEditorScaleModeStretch)
+                    triangleTool.configuration.scaleMode = (checked ? Enums.GeometryEditorScaleModeUniform : Enums.GeometryEditorScaleModeStretch)
+                }
+
             }
 
             GridLayout {
