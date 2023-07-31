@@ -342,7 +342,7 @@ Rectangle {
                         height: width
                         text: "<"
                         onClicked: {
-                            if(orderByModel.count > 0)
+                            if (orderByModel.count > 0)
                                 orderByModel.remove(groupingView.currentIndex, 1);
                         }
                     }

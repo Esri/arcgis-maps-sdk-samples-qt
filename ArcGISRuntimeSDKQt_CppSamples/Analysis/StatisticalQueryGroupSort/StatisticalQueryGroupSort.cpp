@@ -194,7 +194,7 @@ void StatisticalQueryGroupSort::addStatisticDefinition(const QString& field, con
 
 void StatisticalQueryGroupSort::removeStatisticDefinition(int index)
 {
-  if(!m_statisticDefinitions.empty())
+  if (!m_statisticDefinitions.empty())
   {
     m_statisticDefinitions.removeAt(index);
     emit statisticDefinitionsChanged();
@@ -243,7 +243,7 @@ void StatisticalQueryGroupSort::removeOrderBy(const QString& field)
 void StatisticalQueryGroupSort::removeOrderBy(int index)
 {
   // remove the order by at a given index
-  if(!m_orderBys.empty())
+  if (!m_orderBys.empty())
   {
     m_orderBys.removeAt(index);
     emit orderBysChanged();
@@ -252,7 +252,7 @@ void StatisticalQueryGroupSort::removeOrderBy(int index)
 
 void StatisticalQueryGroupSort::updateOrder(int index)
 {
-  if(m_orderBys.empty())
+  if (m_orderBys.empty())
     return;
 
   // get the existing values
