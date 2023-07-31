@@ -97,6 +97,7 @@ Item {
                     onClicked: {
                         toolCombo.currentIndex = 0;
                         toolCombo.enabled = false;
+                        uniformScaleCheckBox.enabled = false;
                         model.startGeometryEditorWithGeometryType(CreateAndEditGeometriesSample.PointMode);
                     }
                 }
@@ -110,6 +111,7 @@ Item {
                     onClicked: {
                         toolCombo.currentIndex = 0;
                         toolCombo.enabled = false;
+                        uniformScaleCheckBox.enabled = true;
                         model.startGeometryEditorWithGeometryType(CreateAndEditGeometriesSample.MultipointMode);
                     }
                 }
@@ -121,6 +123,7 @@ Item {
                     checkable: true
                     enabled: !model.geometryEditorStarted
                     onClicked: {
+                        uniformScaleCheckBox.enabled = true;
                         model.startGeometryEditorWithGeometryType(CreateAndEditGeometriesSample.PolylineMode);
                     }
                 }
@@ -131,12 +134,15 @@ Item {
                     iconPath: "qrc:/Samples/Geometry/CreateAndEditGeometries/iconAssets/polygon-32.png"
                     checkable: true
                     enabled: !model.geometryEditorStarted
-                    onClicked: model.startGeometryEditorWithGeometryType(CreateAndEditGeometriesSample.PolygonMode);
+                    onClicked: {
+                        uniformScaleCheckBox.enabled = true;
+                        model.startGeometryEditorWithGeometryType(CreateAndEditGeometriesSample.PolygonMode);
+                    }
                 }
 
                 ComboBox {
                     id: toolCombo
-                    model: [qsTr("VertexTool"), qsTr("FreehandTool")]
+                    model: [qsTr("VertexTool"), qsTr("FreehandTool"), qsTr("Arrow ShapeTool"), qsTr("Ellipse ShapeTool"), qsTr("Rectangle ShapeTool"), qsTr("Triangle ShapeTool")]
                     Layout.columnSpan: 2
                     Layout.fillWidth: true
 
@@ -157,11 +163,33 @@ Item {
                         case 1: // Freehand Tool
                             model.setTool(CreateAndEditGeometriesSample.Freehand);
                             break;
+                        case 2: // ShapeTool with arrow shape type
+                            model.setTool(CreateAndEditGeometriesSample.Arrow);
+                            break;
+                        case 3: // ShapeTool with ellipse shape type
+                            model.setTool(CreateAndEditGeometriesSample.Ellipse);
+                            break;
+                        case 4: // ShapeTool with rectangle shape type
+                            model.setTool(CreateAndEditGeometriesSample.Rectangle);
+                            break;
+                        case 5: // ShapeTool with triangle shape type
+                            model.setTool(CreateAndEditGeometriesSample.Triangle);
+                            break;
                         default:
                             model.setTool(CreateAndEditGeometriesSample.Vertex);
                         }
                     }
                 }
+            }
+
+            CheckBox {
+                id: uniformScaleCheckBox
+                Layout.alignment: Qt.AlignHCenter | Qt.AlignVCenter
+                Layout.columnSpan: 2
+                text: "<font color=\"white\">Uniform scale</font>"
+                enabled: false
+                onCheckStateChanged: model.setUniformScaleMode(checked)
+
             }
 
             GridLayout {
@@ -213,6 +241,7 @@ Item {
                     enabled: model.geometryEditorStarted
                     onClicked: {
                         toolCombo.enabled = true;
+                        uniformScaleCheckBox.enabled = false;
                         model.stopEditing(true);
                     }
                 }
@@ -225,6 +254,7 @@ Item {
                     enabled: model.geometryEditorStarted
                     onClicked: {
                         toolCombo.enabled = true;
+                        uniformScaleCheckBox.enabled = false;
                         model.stopEditing(false);
                     }
                 }

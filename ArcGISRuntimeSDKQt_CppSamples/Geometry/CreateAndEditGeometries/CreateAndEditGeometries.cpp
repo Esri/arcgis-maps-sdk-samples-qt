@@ -23,12 +23,14 @@
 #include "FreehandTool.h"
 #include "GeometryEditor.h"
 #include "GeometryEditorElement.h"
+#include "GeometryEditorTypes.h"
 #include "GeometryTypes.h"
 #include "Graphic.h"
 #include "GraphicListModel.h"
 #include "GraphicsOverlay.h"
 #include "GraphicsOverlayListModel.h"
 #include "IdentifyGraphicsOverlayResult.h"
+#include "InteractionConfiguration.h"
 #include "Map.h"
 #include "MapQuickView.h"
 #include "MapTypes.h"
@@ -214,6 +216,24 @@ void CreateAndEditGeometries::deleteSelectedElement()
 {
   m_geometryEditor->deleteSelectedElement();
   emit canUndoOrRedoChanged();
+}
+
+void CreateAndEditGeometries::setUniformScaleMode(bool isUniformScale)
+{
+  InteractionConfiguration* config = new InteractionConfiguration(this);
+  config->setAllowScalingSelectedElement(isUniformScale);
+  qDebug() << config->scaleMode();
+  if (auto a = dynamic_cast<VertexTool*>(m_geometryEditor->tool()))
+  {
+    qDebug() << a->configuration()->scaleMode();
+
+  }
+  if (auto a = dynamic_cast<FreehandTool*>(m_geometryEditor->tool()))
+  {
+    qDebug() << a->configuration()->scaleMode();
+    a->configuration()->setAllowScalingSelectedElement(isUniformScale);
+    qDebug() << a->configuration()->scaleMode();
+  }
 }
 
 MapQuickView* CreateAndEditGeometries::mapView() const
