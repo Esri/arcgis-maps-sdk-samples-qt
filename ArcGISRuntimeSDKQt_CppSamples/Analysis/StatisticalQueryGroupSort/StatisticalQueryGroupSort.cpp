@@ -194,8 +194,11 @@ void StatisticalQueryGroupSort::addStatisticDefinition(const QString& field, con
 
 void StatisticalQueryGroupSort::removeStatisticDefinition(int index)
 {
-  m_statisticDefinitions.removeAt(index);
-  emit statisticDefinitionsChanged();
+  if (!m_statisticDefinitions.empty())
+  {
+    m_statisticDefinitions.removeAt(index);
+    emit statisticDefinitionsChanged();
+  }
 }
 
 void StatisticalQueryGroupSort::addOrderBy(const QString& field, const QString& order)
@@ -240,12 +243,18 @@ void StatisticalQueryGroupSort::removeOrderBy(const QString& field)
 void StatisticalQueryGroupSort::removeOrderBy(int index)
 {
   // remove the order by at a given index
-  m_orderBys.removeAt(index);
-  emit orderBysChanged();
+  if (!m_orderBys.empty())
+  {
+    m_orderBys.removeAt(index);
+    emit orderBysChanged();
+  }
 }
 
 void StatisticalQueryGroupSort::updateOrder(int index)
 {
+  if (m_orderBys.empty())
+    return;
+
   // get the existing values
   QVariantMap orderByMap;
   orderByMap["field"] = m_orderBys.at(index).toMap()["field"].toString();

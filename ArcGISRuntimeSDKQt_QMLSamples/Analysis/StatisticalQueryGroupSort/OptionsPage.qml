@@ -232,7 +232,10 @@ Rectangle {
                     Button {
                         anchors.horizontalCenter: parent.horizontalCenter
                         text: "Remove Statistic"
-                        onClicked: statisticsModel.remove(statisticView.currentIndex, 1);
+                        onClicked: {
+                            if (statisticsModel.count > 0)
+                                statisticsModel.remove(statisticView.currentIndex, 1);
+                        }
                     }
                 }
             }
@@ -333,7 +336,10 @@ Rectangle {
                     Button {
                         anchors.horizontalCenter: parent.horizontalCenter
                         text: "<"
-                        onClicked: orderByModel.remove(groupingView.currentIndex, 1);
+                        onClicked: {
+                            if (orderByModel.count > 0)
+                                orderByModel.remove(groupingView.currentIndex, 1);
+                        }
                     }
                 }
 
@@ -397,6 +403,9 @@ Rectangle {
                         anchors.horizontalCenter: parent.horizontalCenter
                         text: "Change Sort Order"
                         onClicked: {
+                            if (orderByModel.count <= 0)
+                                return;
+
                             const i = groupingView.currentIndex;
                             if (orderByModel.get(i).order === "Ascending")
                                 orderByModel.get(i).order = "Descending";
