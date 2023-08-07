@@ -48,7 +48,9 @@ ShowDeviceLocationUsingIndoorPositioning::ShowDeviceLocationUsingIndoorPositioni
   m_map = new Map(new PortalItem(itemId, this), this);
 }
 
-ShowDeviceLocationUsingIndoorPositioning::~ShowDeviceLocationUsingIndoorPositioning()
+ShowDeviceLocationUsingIndoorPositioning::~ShowDeviceLocationUsingIndoorPositioning() = default;
+
+void ShowDeviceLocationUsingIndoorPositioning::stopLocationDisplay()
 {
   m_mapView->locationDisplay()->stop();
 }

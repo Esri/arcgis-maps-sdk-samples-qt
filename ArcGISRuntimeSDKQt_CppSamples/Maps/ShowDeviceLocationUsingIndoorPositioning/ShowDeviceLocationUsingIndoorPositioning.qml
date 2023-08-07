@@ -30,6 +30,10 @@ Item {
             // Set and keep the focus on MapView to enable keyboard navigation
             forceActiveFocus();
         }
+
+        Component.onDestruction: {
+            model.stopLocationDisplay();
+        }
     }
 
     Rectangle {
