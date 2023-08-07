@@ -1,0 +1,11 @@
+<RCC>
+    <qresource prefix="/Samples/Scenes/FilterFeaturesInSceneView">
+        <file alias="sample.json">README.metadata.json</file>
+        <file>FilterFeaturesInSceneView.qml</file>
+        <file>FilterFeaturesInSceneView.h</file>
+        <file>FilterFeaturesInSceneView.cpp</file>
+        <file>main.qml</file>
+        <file>screenshot.png</file>
+        <file>README.md</file>
+    </qresource>
+</RCC>
