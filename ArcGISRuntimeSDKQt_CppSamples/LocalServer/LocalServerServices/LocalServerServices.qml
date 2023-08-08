@@ -91,7 +91,6 @@ LocalServerServicesSample {
             Button {
                 id: fileDialogButton
                 text: "..."
-                width: 30
                 enabled: isServerRunning
 
                 onClicked: {
