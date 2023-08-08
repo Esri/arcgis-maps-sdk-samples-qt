@@ -33,11 +33,13 @@ include($$PWD/arcgisruntime.pri)
 #-------------------------------------------------------------------------------
 
 HEADERS += \
-    AddCustomDynamicEntityDataSource.h
+    AddCustomDynamicEntityDataSource.h \
+    CustomDataSource.h
 
 SOURCES += \
     main.cpp \
-    AddCustomDynamicEntityDataSource.cpp
+    AddCustomDynamicEntityDataSource.cpp \
+    CustomDataSource.cpp
 
 RESOURCES += AddCustomDynamicEntityDataSource.qrc
 

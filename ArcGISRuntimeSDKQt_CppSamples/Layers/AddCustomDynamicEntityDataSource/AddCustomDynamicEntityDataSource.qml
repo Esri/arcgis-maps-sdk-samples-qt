@@ -36,4 +36,11 @@ Item {
         id: model
         mapView: view
     }
+
+    Button {
+        text: "connect"
+        onClicked: {
+
+        }
+    }
 }

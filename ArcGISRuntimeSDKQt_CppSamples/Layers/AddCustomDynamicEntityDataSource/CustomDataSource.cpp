@@ -2,8 +2,10 @@
 #include "DynamicEntityDataSourceInfo.h"
 #include "Field.h"
 #include "ServiceTypes.h"
-#include "SimulatedDataSource.h"
+#include "CustomDataSource.h"
 #include "DynamicEntityDataSource.h"
+#include "SpatialReference.h"
+#include "Point.h"
 
 #include <QtConcurrent/QtConcurrent>
 #include <QFile>
@@ -12,77 +14,40 @@
 
 using namespace Esri::ArcGISRuntime;
 
-SimulatedDataSource::SimulatedDataSource(QObject* parent) :
-  DynamicEntityDataSource(parent)
+CustomDataSource::CustomDataSource(QObject* parent) : DynamicEntityDataSource(parent)
 {
 
 }
 
-Esri::ArcGISRuntime::SimulatedDataSource::SimulatedDataSource(const QString& fileName, const QString& entityIdField, const int msDelay, QObject* parent) :
+CustomDataSource::CustomDataSource(const QString& fileName, const QString& entityIdField, const int msDelay, QObject* parent) :
   DynamicEntityDataSource(parent), m_fileName(fileName), m_entityIdField(entityIdField), m_msDelay(msDelay)
 {
-  // Open the file for processing.
-  QFile file(m_fileName);
-  if (file.open(QIODevice::ReadOnly | QIODevice::Text))
-    QTextStream m_stream(&file);
 }
 
-Esri::ArcGISRuntime::SimulatedDataSource::~SimulatedDataSource()
-{
-
-}
-
-QFuture<Esri::ArcGISRuntime::DynamicEntityDataSourceInfo*> Esri::ArcGISRuntime::SimulatedDataSource::onLoadAsync()
+QFuture<DynamicEntityDataSourceInfo*> CustomDataSource::onLoadAsync()
 {
   m_fields = getSchema();
   m_watcher.setFuture(QtConcurrent::run([this](){observationProcessLoopAsync();}));
-  return QtFuture::makeReadyFuture<DynamicEntityDataSourceInfo*>(new DynamicEntityDataSourceInfo(m_entityIdField, m_fields, this));
+  //return QtFuture::makeReadyFuture<DynamicEntityDataSourceInfo*>(new DynamicEntityDataSourceInfo("m_entityIdField", m_fields, this));
+
+  DynamicEntityDataSourceInfo* dynamicEntityDataSourceInfo = new DynamicEntityDataSourceInfo("m_entityIdField", m_fields, this);
+  dynamicEntityDataSourceInfo->setSpatialReference(SpatialReference::wgs84());
+  return QtFuture::makeReadyFuture(dynamicEntityDataSourceInfo);
 }
 
-
-QFuture<void> Esri::ArcGISRuntime::SimulatedDataSource::onConnectAsync()
+QFuture<void> CustomDataSource::onConnectAsync()
 {
-  if (m_watcher.isRunning())
-    m_isConnected = true;
-
+  m_isConnected = true;
   return QtFuture::makeReadyFuture();
 }
 
-QFuture<void> Esri::ArcGISRuntime::SimulatedDataSource::onDisconnectAsync()
+QFuture<void> CustomDataSource::onDisconnectAsync()
 {
-  if (m_watcher.isRunning())
-    m_isConnected = false;
-
+  m_isConnected = false;
   return QtFuture::makeReadyFuture();
 }
 
-void SimulatedDataSource::addObservation(const Geometry& geometry, const QVariantMap& attributes)
-{
-
-}
-
-QFuture<void> SimulatedDataSource::deleteEntityAsync(const QString& entityId)
-{
-return QtFuture::makeReadyFuture();
-}
-
-void SimulatedDataSource::setConnectionFailed(const QString& userDefinedError, bool reconnect)
-{
-
-}
-
-void SimulatedDataSource::setConnectionStatusAndError(ConnectionStatus status, const QString& userDefinedError, bool reconnect)
-{
-
-}
-
-void SimulatedDataSource::setLoadInfoAndError(DynamicEntityDataSourceInfo* dynamicEntityDataSourceInfo, const QString& userDefinedError)
-{
-
-}
-
-
-void Esri::ArcGISRuntime::SimulatedDataSource::observationProcessLoopAsync()
+void CustomDataSource::observationProcessLoopAsync()
 {
   // Open the file for processing.
   QFile file(m_fileName);
@@ -95,7 +60,20 @@ void Esri::ArcGISRuntime::SimulatedDataSource::observationProcessLoopAsync()
       QString line = stream.readLine();
 
       if (m_isConnected)
-        qDebug() << line;
+      {
+        QJsonDocument json = QJsonDocument::fromJson(line.toUtf8());
+        auto jsonObject = json.object();
+        auto geometryObject = jsonObject.value("geometry").toObject();
+
+        const Point point(geometryObject.value("x").toDouble(),
+                          geometryObject.value("y").toDouble(),
+                          SpatialReference::wgs84());
+
+        auto attributesObject = jsonObject.value("attributes").toObject();
+        QVariantMap attributes = convertJsonObjectToVariantMap(attributesObject);
+
+        addObservation(point, attributes);
+      }
 
       QThread::msleep(m_msDelay);
     }
@@ -105,7 +83,21 @@ void Esri::ArcGISRuntime::SimulatedDataSource::observationProcessLoopAsync()
   }
 }
 
-QList<Field> Esri::ArcGISRuntime::SimulatedDataSource::getSchema()
+QVariantMap CustomDataSource::convertJsonObjectToVariantMap(const QJsonObject& jsonObject)
+{
+  QVariantMap variantMap;
+
+  for (auto it = jsonObject.begin(); it != jsonObject.end(); ++it) {
+    const QString key = it.key();
+    const QJsonValue value = it.value();
+
+    variantMap[key] = value.toVariant();
+  }
+
+  return variantMap;
+}
+
+QList<Field> CustomDataSource::getSchema()
 {
   return QList<Field>
   {

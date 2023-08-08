@@ -7,8 +7,8 @@
         <file>main.qml</file>
         <file>screenshot.png</file>
         <file>README.md</file>
-        <file>SimulatedDataSource.h</file>
-        <file>SimulatedDataSource.cpp</file>
+        <file>CustomDataSource.h</file>
+        <file>CustomDataSource.cpp</file>
         <file>AIS_MarineCadastre_SelectedVessels_CustomDataSource.json</file>
     </qresource>
 </RCC>

@@ -14,21 +14,30 @@
 // limitations under the License.
 // [Legal]
 
+#include "Geometry.h"
 #ifdef PCH_BUILD
 #include "pch.hpp"
 #endif // PCH_BUILD
 
 #include "AddCustomDynamicEntityDataSource.h"
 
+#include "CustomDataSource.h"
+#include "Domain.h"
+#include "ServiceTypes.h"
 #include "ArcGISStreamService.h"
 #include "DynamicEntityDataSource.h"
 #include "DynamicEntityLayer.h"
 #include "Map.h"
 #include "MapQuickView.h"
 #include "MapTypes.h"
-#include "SimulatedDataSource.h"
 #include "TaskWatcher.h"
 #include "Viewpoint.h"
+#include "LayerListModel.h"
+#include "Basemap.h"
+#include "ArcGISMapImageLayer.h"
+
+#include <QFuture>
+#include <QtConcurrent/QtConcurrent>
 
 using namespace Esri::ArcGISRuntime;
 
@@ -36,7 +45,6 @@ AddCustomDynamicEntityDataSource::AddCustomDynamicEntityDataSource(QObject* pare
   QObject(parent),
   m_map(new Map(BasemapStyle::ArcGISOceans, this))
 {
-
 }
 
 AddCustomDynamicEntityDataSource::~AddCustomDynamicEntityDataSource() = default;
@@ -64,10 +72,13 @@ void AddCustomDynamicEntityDataSource::setMapView(MapQuickView* mapView)
 
   m_mapView->setViewpoint(Viewpoint(47.984, -123.657, 3e6));
 
-  auto dataSource = new SimulatedDataSource("AddCustomDynamicEntityDataSource.qrc/AIS_MarineCadastre_SelectedVessels_CustomDataSource.json", "MMSI", 100, this);
+  auto dataSource = new CustomDataSource(":/Samples/Layers/AddCustomDynamicEntityDataSource/AIS_MarineCadastre_SelectedVessels_CustomDataSource.json", "MMSI", 10, this);
+
   auto dynamicEntityLayer = new DynamicEntityLayer(dataSource, this);
-  dynamicEntityLayer->dataSource()->load();
-  QFuture q = dynamicEntityLayer->dataSource()->connectDataSourceAsync();
+
+  //dynamicEntityLayer->dataSource()->load();
+  //QFuture q = dynamicEntityLayer->dataSource()->connectDataSourceAsync();
+  m_map->operationalLayers()->append(dynamicEntityLayer);
 
   emit mapViewChanged();
 }
