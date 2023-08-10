@@ -35,6 +35,19 @@
 #include "LayerListModel.h"
 #include "Basemap.h"
 #include "ArcGISMapImageLayer.h"
+#include "TrackDisplayProperties.h"
+#include "SimpleLabelExpression.h"
+#include "TextSymbol.h"
+#include "LabelDefinition.h"
+#include "ServiceTypes.h"
+#include "LabelDefinitionListModel.h"
+#include "CalloutData.h"
+#include "IdentifyLayerResult.h"
+#include "DynamicEntityObservation.h"
+#include "DynamicEntity.h"
+#include "AttributeListModel.h"
+#include "DynamicEntityChangedInfo.h"
+#include "DynamicEntityDataSourcePurgeOptions.h"
 
 #include <QFuture>
 #include <QtConcurrent/QtConcurrent>
@@ -45,6 +58,28 @@ AddCustomDynamicEntityDataSource::AddCustomDynamicEntityDataSource(QObject* pare
   QObject(parent),
   m_map(new Map(BasemapStyle::ArcGISOceans, this))
 {
+  CustomDataSource* dataSource = new CustomDataSource(":/Samples/Layers/AddCustomDynamicEntityDataSource/AIS_MarineCadastre_SelectedVessels_CustomDataSource.json", "MMSI", 1, this);
+  m_dynamicEntityLayer = new DynamicEntityLayer(dataSource, this);
+
+  m_map->operationalLayers()->append(m_dynamicEntityLayer);
+
+  m_dynamicEntityLayer->trackDisplayProperties()->setShowPreviousObservations(true);
+  m_dynamicEntityLayer->trackDisplayProperties()->setShowTrackLine(true);
+  m_dynamicEntityLayer->trackDisplayProperties()->setMaximumObservations(20);
+  m_dynamicEntityLayer->dataSource()->purgeOptions()->setMaximumObservationsPerTrack(20);
+
+  SimpleLabelExpression* simpleLabelExpression = new SimpleLabelExpression("[VesselName]", this);
+
+  TextSymbol* labelSymbol = new TextSymbol(this);
+  labelSymbol->setColor(Qt::red);
+  labelSymbol->setSize(12);
+
+  LabelDefinition* labelDef = new LabelDefinition(simpleLabelExpression, labelSymbol, this);
+
+  labelDef->setPlacement(LabelingPlacement::PointAboveCenter);
+
+  m_dynamicEntityLayer->labelDefinitions()->append(labelDef);
+  m_dynamicEntityLayer->setLabelsEnabled(true);
 }
 
 AddCustomDynamicEntityDataSource::~AddCustomDynamicEntityDataSource() = default;
@@ -54,6 +89,12 @@ void AddCustomDynamicEntityDataSource::init()
   // Register the map view for QML
   qmlRegisterType<MapQuickView>("Esri.Samples", 1, 0, "MapView");
   qmlRegisterType<AddCustomDynamicEntityDataSource>("Esri.Samples", 1, 0, "AddCustomDynamicEntityDataSourceSample");
+}
+
+void AddCustomDynamicEntityDataSource::purgeAllObservations()
+{
+  qDebug() << "purging observations";
+  m_dynamicEntityLayer->dataSource()->purgeAll();
 }
 
 MapQuickView* AddCustomDynamicEntityDataSource::mapView() const
@@ -72,13 +113,59 @@ void AddCustomDynamicEntityDataSource::setMapView(MapQuickView* mapView)
 
   m_mapView->setViewpoint(Viewpoint(47.984, -123.657, 3e6));
 
-  auto dataSource = new CustomDataSource(":/Samples/Layers/AddCustomDynamicEntityDataSource/AIS_MarineCadastre_SelectedVessels_CustomDataSource.json", "MMSI", 10, this);
+  connect(m_mapView, &MapQuickView::mouseClicked, this, [this](const QMouseEvent &e)
+  {
+    auto layer = m_map->operationalLayers()->first();
 
-  auto dynamicEntityLayer = new DynamicEntityLayer(dataSource, this);
+    m_mapView->calloutData()->setVisible(false);
 
-  //dynamicEntityLayer->dataSource()->load();
-  //QFuture q = dynamicEntityLayer->dataSource()->connectDataSourceAsync();
-  m_map->operationalLayers()->append(dynamicEntityLayer);
+    if (m_dynamicEntity)
+    {
+      delete m_dynamicEntity;
+      m_dynamicEntity = nullptr;
+    }
+
+    m_mapView->identifyLayerAsync(layer, e.position(), 10, false, this).then(this, [this](IdentifyLayerResult* result)
+    {
+      if (!result || result->geoElements().empty())
+        return;
+
+      if (DynamicEntityObservation* observation = dynamic_cast<DynamicEntityObservation*>(result->geoElements().constFirst()))
+      {
+        m_dynamicEntity = observation->dynamicEntity();
+
+        if (!m_dynamicEntity)
+          return;
+
+        //        QString calloutText =
+        //        {
+        //          "Vessel Name: " + m_dynamicEntity->attributes()->attributeValue("VesselName").toString() + "\n" +
+        //          "Call Sign: " + m_dynamicEntity->attributes()->attributeValue("CallSign").toString() + "\n" +
+        //          "Course over Ground: " + m_dynamicEntity->attributes()->attributeValue("COG").toString() + "º\n" +
+        //          "Speed over Ground: " + m_dynamicEntity->attributes()->attributeValue("SOG").toString() + " knots"
+        //        };
+        //        m_mapView->calloutData()->setDetail(calloutText);
+        //        m_mapView->calloutData()->setGeoElement(m_dynamicEntity);
+        //        m_mapView->calloutData()->setVisible(true);
+
+        connect(m_dynamicEntity, &DynamicEntity::dynamicEntityChanged, this, [this](DynamicEntityChangedInfo* changedInfo)
+        {
+          auto changedInfoPtr = std::unique_ptr<DynamicEntityChangedInfo>(changedInfo);
+          DynamicEntityObservation* currentObservation = changedInfo->receivedObservation();
+          QString calloutText =
+          {
+            "Vessel Name: " + currentObservation->attributes()->attributeValue("VesselName").toString() + "\n" +
+            "Call Sign: " + currentObservation->attributes()->attributeValue("CallSign").toString() + "\n" +
+            "Course over Ground: " + currentObservation->attributes()->attributeValue("COG").toString() + "º\n" +
+            "Speed over Ground: " + currentObservation->attributes()->attributeValue("SOG").toString() + " knots"
+          };
+          m_mapView->calloutData()->setDetail(calloutText);
+          m_mapView->calloutData()->setGeoElement(currentObservation);
+          m_mapView->calloutData()->setVisible(true);
+        });
+      }
+    });
+  });
 
   emit mapViewChanged();
 }

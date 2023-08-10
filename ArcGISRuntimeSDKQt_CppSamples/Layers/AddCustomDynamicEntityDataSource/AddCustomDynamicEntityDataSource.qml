@@ -17,6 +17,7 @@
 import QtQuick
 import QtQuick.Controls
 import Esri.Samples
+import Esri.ArcGISRuntime.Toolkit
 
 Item {
 
@@ -38,9 +39,16 @@ Item {
     }
 
     Button {
-        text: "connect"
+        text: "purge"
         onClicked: {
-
+            model.purgeAllObservations();
         }
+    }
+
+    Callout {
+        id: callout
+        height: 120
+        calloutData: view.calloutData
+        accessoryButtonVisible: false
     }
 }

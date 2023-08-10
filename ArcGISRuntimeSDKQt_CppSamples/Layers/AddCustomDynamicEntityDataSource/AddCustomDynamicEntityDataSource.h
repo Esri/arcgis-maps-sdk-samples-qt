@@ -19,6 +19,8 @@
 
 namespace Esri::ArcGISRuntime
 {
+class DynamicEntity;
+class DynamicEntityLayer;
 class Map;
 class MapQuickView;
 }
@@ -39,6 +41,8 @@ public:
 
   static void init();
 
+  Q_INVOKABLE void purgeAllObservations();
+
 signals:
   void mapViewChanged();
 
@@ -48,6 +52,10 @@ private:
 
   Esri::ArcGISRuntime::Map* m_map = nullptr;
   Esri::ArcGISRuntime::MapQuickView* m_mapView = nullptr;
+
+  Esri::ArcGISRuntime::DynamicEntity* m_dynamicEntity = nullptr;
+  Esri::ArcGISRuntime::DynamicEntityLayer* m_dynamicEntityLayer = nullptr;
+
 };
 
 #endif // ADDCUSTOMDYNAMICENTITYDATASOURCE_H
