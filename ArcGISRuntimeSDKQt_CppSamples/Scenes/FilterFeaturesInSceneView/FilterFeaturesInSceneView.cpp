@@ -53,19 +53,20 @@ using namespace Esri::ArcGISRuntime;
 FilterFeaturesInSceneView::FilterFeaturesInSceneView(QObject* parent /* = nullptr */):
   QObject(parent)
 {
+  // Construct and set the basemap
   ArcGISVectorTiledLayer* vectorTileLayer = new ArcGISVectorTiledLayer(new PortalItem("1e7d1784d1ef4b79ba6764d0bd6c3150", this), this);
   m_osmBuildings = new ArcGISSceneLayer(new PortalItem("ca0470dbbddb4db28bad74ed39949e25", this), this);
   Basemap* basemap = new Basemap(this);
   basemap->baseLayers()->append(vectorTileLayer);
   basemap->baseLayers()->append(m_osmBuildings);
-
   m_scene = new Scene(basemap, this);
 
+  // Construct and set the scene topography
   Surface* surface = new Surface(this);
   surface->elevationSources()->append(new ArcGISTiledElevationSource(QUrl("https://elevation3d.arcgis.com/arcgis/rest/services/WorldElevation3D/Terrain3D/ImageServer"), this));
-
   m_scene->setBaseSurface(surface);
 
+  // Construct the detailed buildings scene layer
   m_sceneLayer = new ArcGISSceneLayer(QUrl("https://tiles.arcgis.com/tiles/z2tnIkrLQ2BRzr6P/arcgis/rest/services/SanFrancisco_Bldgs/SceneServer"), this);
 
   connect(m_sceneLayer, &ArcGISSceneLayer::doneLoading, this, [this](const Error error)
@@ -76,6 +77,7 @@ FilterFeaturesInSceneView::FilterFeaturesInSceneView(QObject* parent /* = nullpt
       return;
     }
 
+    // Construct a red polygon that shows the extent of the detailed buildings scene layer
     Envelope sfExtent = m_sceneLayer->fullExtent();
 
     PolygonBuilder* builder = new PolygonBuilder(m_sceneView->spatialReference(), this);
@@ -104,18 +106,21 @@ void FilterFeaturesInSceneView::init()
 
 void FilterFeaturesInSceneView::loadScene()
 {
+  // Show the detailed buildings scene layer and the extent graphic
   m_scene->operationalLayers()->append(m_sceneLayer);
   m_sceneView->graphicsOverlays()->first()->graphics()->append(m_sanFransiscoExtentGraphic);
 }
 
 void FilterFeaturesInSceneView::filterScene()
 {
+  // Hide buildings within the detailed building extent so they don't clip
   m_osmBuildings->setPolygonFilter(
         new SceneLayerPolygonFilter(QList<Polygon>{m_sceneLayerExtentPolygon}, SceneLayerPolygonFilterSpatialRelationship::Disjoint, this));
 }
 
 void FilterFeaturesInSceneView::reset()
 {
+  // Reset the scene filters and hide the detailed buildings and extent graphic
   m_scene->operationalLayers()->clear();
 
   if (m_osmBuildings->polygonFilter())
