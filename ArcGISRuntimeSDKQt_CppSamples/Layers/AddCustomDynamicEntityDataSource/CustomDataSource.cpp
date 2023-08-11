@@ -24,10 +24,22 @@ CustomDataSource::CustomDataSource(const QString& fileName, const QString& entit
 {
 }
 
+CustomDataSource::~CustomDataSource()
+{
+  m_watcher.cancel();
+  m_watcher.waitForFinished();
+}
+
 QFuture<DynamicEntityDataSourceInfo*> CustomDataSource::onLoadAsync()
 {
   m_fields = getSchema();
-  m_watcher.setFuture(QtConcurrent::run([this](){observationProcessLoopAsync();}));
+
+  m_file.setFileName(m_fileName);
+
+  if (m_file.open(QIODevice::ReadOnly | QIODevice::Text))
+  {
+    m_textStream.setDevice(&m_file);
+  }
 
   DynamicEntityDataSourceInfo* dynamicEntityDataSourceInfo = new DynamicEntityDataSourceInfo(m_entityIdField, m_fields, this);
   dynamicEntityDataSourceInfo->setSpatialReference(SpatialReference::wgs84());
@@ -36,52 +48,39 @@ QFuture<DynamicEntityDataSourceInfo*> CustomDataSource::onLoadAsync()
 
 QFuture<void> CustomDataSource::onConnectAsync()
 {
-  m_isConnected = true;
+  m_watcher.setFuture(QtConcurrent::run([this](){observationProcessLoopAsync();}));
   return QtFuture::makeReadyFuture();
 }
 
 QFuture<void> CustomDataSource::onDisconnectAsync()
 {
-  m_isConnected = false;
+  m_watcher.cancel();
   return QtFuture::makeReadyFuture();
 }
 
 void CustomDataSource::observationProcessLoopAsync()
 {
-  // Open the file for processing.
-  QFile file(m_fileName);
-  if (file.open(QIODevice::ReadOnly | QIODevice::Text))
+  while (!m_textStream.atEnd() && !m_watcher.isCanceled())
   {
-    QTextStream stream(&file);
+    const QString line = m_textStream.readLine();
+    const QJsonObject jsonObject = QJsonDocument::fromJson(line.toUtf8()).object();
 
-    while (!stream.atEnd() && !m_watcher.isCanceled())
-    {
-      const QString line = stream.readLine();
+    // Get the observation geometry from the line
+    const QJsonObject geometryObject = jsonObject.value("geometry").toObject();
+    const Point point(geometryObject.value("x").toDouble(),
+                      geometryObject.value("y").toDouble(),
+                      SpatialReference::wgs84());
 
-      if (m_isConnected)
-      {
-        const QJsonDocument json = QJsonDocument::fromJson(line.toUtf8());
-        const auto jsonObject = json.object();
-        const auto geometryObject = jsonObject.value("geometry").toObject();
+    // Get the observation attributes from the line
+    const QJsonObject attributesObject = jsonObject.value("attributes").toObject();
+    const QVariantMap attributes = convertJsonObjectToVariantMap(attributesObject);
 
-        const Point point(geometryObject.value("x").toDouble(),
-                          geometryObject.value("y").toDouble(),
-                          SpatialReference::wgs84());
+    addObservation(point, attributes);
 
-        const auto attributesObject = jsonObject.value("attributes").toObject();
-        const QVariantMap attributes = convertJsonObjectToVariantMap(attributesObject);
+    QThread::msleep(m_msDelay);
 
-        addObservation(point, attributes);
-      }
-
-      QThread::msleep(m_msDelay);
-    }
-
-    if (!m_watcher.isCanceled())
-    {
-      file.close();
-      observationProcessLoopAsync();
-    }
+    if (m_textStream.atEnd())
+      m_textStream.seek(0);
   }
 }
 
@@ -104,20 +103,20 @@ QList<Field> CustomDataSource::getSchema()
   return QList<Field>
   {
     Field(FieldType::Text, "MMSI", "", 256, Domain(), false, false),
-    Field(FieldType::Float64, "BaseDateTime", "", 8, Domain(), false, false),
-    Field(FieldType::Float64, "LAT", "", 8, Domain(), false, false),
-    Field(FieldType::Float64, "LONG", "", 8, Domain(), false, false),
-    Field(FieldType::Float64, "SOG", "", 8, Domain(), false, false),
-    Field(FieldType::Float64, "COG", "", 8, Domain(), false, false),
-    Field(FieldType::Float64, "Heading", "", 8, Domain(), false, false),
-    Field(FieldType::Text, "VesselName", "", 256, Domain(), false, false),
-    Field(FieldType::Text, "IMO", "", 256, Domain(), false, false),
-    Field(FieldType::Text, "CallSign", "", 256, Domain(), false, false),
-    Field(FieldType::Text, "VesselType", "", 256, Domain(), false, false),
-    Field(FieldType::Text, "Status", "", 256, Domain(), false, false),
-    Field(FieldType::Float64, "Length", "", 8, Domain(), false, false),
-    Field(FieldType::Float64, "Width", "", 8, Domain(), false, false),
-    Field(FieldType::Text, "Cargo", "", 256, Domain(), false, false),
-    Field(FieldType::Text, "globalid", "", 256, Domain(), false, false)
+        Field(FieldType::Float64, "BaseDateTime", "", 8, Domain(), false, false),
+        Field(FieldType::Float64, "LAT", "", 8, Domain(), false, false),
+        Field(FieldType::Float64, "LONG", "", 8, Domain(), false, false),
+        Field(FieldType::Float64, "SOG", "", 8, Domain(), false, false),
+        Field(FieldType::Float64, "COG", "", 8, Domain(), false, false),
+        Field(FieldType::Float64, "Heading", "", 8, Domain(), false, false),
+        Field(FieldType::Text, "VesselName", "", 256, Domain(), false, false),
+        Field(FieldType::Text, "IMO", "", 256, Domain(), false, false),
+        Field(FieldType::Text, "CallSign", "", 256, Domain(), false, false),
+        Field(FieldType::Text, "VesselType", "", 256, Domain(), false, false),
+        Field(FieldType::Text, "Status", "", 256, Domain(), false, false),
+        Field(FieldType::Float64, "Length", "", 8, Domain(), false, false),
+        Field(FieldType::Float64, "Width", "", 8, Domain(), false, false),
+        Field(FieldType::Text, "Cargo", "", 256, Domain(), false, false),
+        Field(FieldType::Text, "globalid", "", 256, Domain(), false, false)
   };
 }

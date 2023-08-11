@@ -58,7 +58,7 @@ AddCustomDynamicEntityDataSource::AddCustomDynamicEntityDataSource(QObject* pare
   QObject(parent),
   m_map(new Map(BasemapStyle::ArcGISOceans, this))
 {
-  CustomDataSource* dataSource = new CustomDataSource(":/Samples/Layers/AddCustomDynamicEntityDataSource/AIS_MarineCadastre_SelectedVessels_CustomDataSource.json", "MMSI", 1, this);
+  CustomDataSource* dataSource = new CustomDataSource(":/Samples/Layers/AddCustomDynamicEntityDataSource/AIS_MarineCadastre_SelectedVessels_CustomDataSource.json", "MMSI", 10, this);
   m_dynamicEntityLayer = new DynamicEntityLayer(dataSource, this);
 
   m_map->operationalLayers()->append(m_dynamicEntityLayer);
@@ -136,17 +136,6 @@ void AddCustomDynamicEntityDataSource::setMapView(MapQuickView* mapView)
 
         if (!m_dynamicEntity)
           return;
-
-        //        QString calloutText =
-        //        {
-        //          "Vessel Name: " + m_dynamicEntity->attributes()->attributeValue("VesselName").toString() + "\n" +
-        //          "Call Sign: " + m_dynamicEntity->attributes()->attributeValue("CallSign").toString() + "\n" +
-        //          "Course over Ground: " + m_dynamicEntity->attributes()->attributeValue("COG").toString() + "º\n" +
-        //          "Speed over Ground: " + m_dynamicEntity->attributes()->attributeValue("SOG").toString() + " knots"
-        //        };
-        //        m_mapView->calloutData()->setDetail(calloutText);
-        //        m_mapView->calloutData()->setGeoElement(m_dynamicEntity);
-        //        m_mapView->calloutData()->setVisible(true);
 
         connect(m_dynamicEntity, &DynamicEntity::dynamicEntityChanged, this, [this](DynamicEntityChangedInfo* changedInfo)
         {
