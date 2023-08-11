@@ -49,10 +49,7 @@ Item {
             margins: 15
         }
         enabled: !model.taskRunning
-        onClicked:
-        {
-            model.toggleClustering();
-        }
+        onClicked: model.toggleClustering()
     }
 
     Callout {

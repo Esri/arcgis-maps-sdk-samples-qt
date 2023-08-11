@@ -82,64 +82,75 @@ void DisplayPointsUsingClusteringFeatureReduction::setMapView(MapQuickView* mapV
   m_mapView = mapView;
   m_mapView->setMap(m_map);
 
-  connect(m_mapView, &MapQuickView::mouseClicked, this, [this](const QMouseEvent& mouseClick)
-  {
-    if (m_taskRunning)
-      return;
-
-    m_taskRunning = true;
-    emit taskRunningChanged();
-
-    m_mapView->calloutData()->setVisible(false);
-
-    m_mapView->identifyLayerAsync(m_powerPlantsLayer, mouseClick.position(), 3, false)
-        .then(this, [this](IdentifyLayerResult* rawIdentifyResult)
-    {
-      m_taskRunning = false;
-      emit taskRunningChanged();
-
-      auto identifyResult = std::unique_ptr<IdentifyLayerResult>(rawIdentifyResult);
-
-      // Invalid identify result
-      if (!identifyResult)
-        return;
-
-      if (!identifyResult->error().isEmpty())
-      {
-        qDebug() << "Identify error occurred: " << identifyResult->error().message() << identifyResult->error().additionalMessage();
-        return;
-      }
-
-      if (identifyResult->popups().isEmpty())
-        return;
-
-      Popup* popup = identifyResult->popups().first();
-      PopupManager* popupManager = new PopupManager(popup, this);
-
-      // Use the custom HTML description in the PopupManager to popuplate a Callout and display it.
-      m_mapView->calloutData()->setVisible(true);
-      m_mapView->calloutData()->setLocation(Point(popup->geoElement()->geometry()));
-      m_calloutText = popupManager->customHtmlDescription();
-      emit calloutTextChanged();
-    });
-  });
+  connect(m_mapView, &MapQuickView::mouseClicked, this, &DisplayPointsUsingClusteringFeatureReduction::onMouseClicked);
 
   emit mapViewChanged();
 }
 
-bool DisplayPointsUsingClusteringFeatureReduction::toggleClustering()
+void DisplayPointsUsingClusteringFeatureReduction::onMouseClicked(const QMouseEvent &mouseClick)
+{
+  if (m_taskRunning)
+    return;
+
+  m_taskRunning = true;
+  emit taskRunningChanged();
+
+  m_mapView->calloutData()->setVisible(false);
+
+  // Clean up any children objects associated with this parent
+  m_resultParent.reset(new QObject(this));
+
+  m_mapView->identifyLayerAsync(m_powerPlantsLayer, mouseClick.position(), 3, false, m_resultParent.get())
+      .then(this, [this](IdentifyLayerResult* identifyResult)
+  {
+    m_taskRunning = false;
+    emit taskRunningChanged();
+
+    // Invalid identify result
+    if (!identifyResult)
+      return;
+
+    if (!identifyResult->error().isEmpty())
+    {
+      qDebug() << "Identify error occurred:" << identifyResult->error().message() << identifyResult->error().additionalMessage();
+      return;
+    }
+
+    if (identifyResult->popups().isEmpty())
+      return;
+
+
+    Popup* popup = identifyResult->popups().constFirst();
+
+    // Create a PopupManager with the IdentifyLayerResult's parent so it will get cleaned up as well.
+    PopupManager* popupManager = new PopupManager(popup, identifyResult->parent());
+
+    // Use the custom HTML description in the PopupManager to popuplate a Callout and display it.
+    m_calloutText = popupManager->customHtmlDescription();
+    m_mapView->calloutData()->setLocation(Point(popup->geoElement()->geometry()));
+    m_mapView->calloutData()->setVisible(true);
+
+    emit calloutTextChanged();
+  });
+}
+
+void DisplayPointsUsingClusteringFeatureReduction::toggleClustering()
 {
   if (m_map->loadStatus() != LoadStatus::Loaded)
-    return false;
+    return;
 
   if (!m_powerPlantsLayer)
+  {
     m_powerPlantsLayer = static_cast<FeatureLayer*>(m_map->operationalLayers()->first());
+
+    // Check if the cast was successful
+    if (!m_powerPlantsLayer)
+      return;
+  }
 
   m_powerPlantsLayer->featureReduction()->setEnabled(!m_powerPlantsLayer->featureReduction()->isEnabled());
 
   m_mapView->calloutData()->setVisible(false);
-
-  return true;
 }
 
 QString DisplayPointsUsingClusteringFeatureReduction::calloutText() const

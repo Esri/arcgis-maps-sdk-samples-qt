@@ -25,6 +25,7 @@ class MapQuickView;
 }
 
 #include <QObject>
+#include <QMouseEvent>
 
 Q_MOC_INCLUDE("MapQuickView.h");
 
@@ -40,7 +41,7 @@ public:
   explicit DisplayPointsUsingClusteringFeatureReduction(QObject* parent = nullptr);
   ~DisplayPointsUsingClusteringFeatureReduction() override;
 
-  Q_INVOKABLE bool toggleClustering();
+  Q_INVOKABLE void toggleClustering();
 
   static void init();
 
@@ -54,6 +55,8 @@ private:
   void setMapView(Esri::ArcGISRuntime::MapQuickView* mapView);
   QString calloutText() const;
 
+  void onMouseClicked(const QMouseEvent &mouseEvent);
+
   Esri::ArcGISRuntime::Map* m_map = nullptr;
   Esri::ArcGISRuntime::MapQuickView* m_mapView = nullptr;
 
@@ -62,6 +65,8 @@ private:
   bool taskRunning() const;
   bool m_taskRunning = true;
   QString m_calloutText = "";
+
+  QScopedPointer<QObject> m_resultParent;
 };
 
 #endif // DISPLAYPOINTSUSINGCLUSTERINGFEATUREREDUCTION_H
