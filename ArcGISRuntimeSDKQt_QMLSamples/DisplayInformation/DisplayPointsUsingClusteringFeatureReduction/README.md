@@ -23,11 +23,11 @@ Pan and zoom the map to view how clustering is dynamically updated. Toggle clust
 
 ## Relevant API
 
-- AggregateGeoElement
-- FeatureLayer
-- FeatureReduction
-- GeoElement
-- IdentifyLayerResult
+* AggregateGeoElement
+* FeatureLayer
+* FeatureReduction
+* GeoElement
+* IdentifyLayerResult
 
 ## About the data
 
@@ -35,4 +35,4 @@ This sample uses a [web map](https://www.arcgis.com/home/item.html?id=8916d50c44
 
 ## Tags
 
-aggregate, cluster, group, merge, normalize, summarize, bin, reduce
+aggregate, bin, cluster, group, merge, normalize, reduce, summarize
