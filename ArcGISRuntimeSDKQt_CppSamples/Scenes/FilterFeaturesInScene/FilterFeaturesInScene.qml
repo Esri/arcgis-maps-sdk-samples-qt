@@ -37,53 +37,39 @@ Item {
     }
 
     Button {
-        id: loadSceneButton
         anchors {
             top: parent.top
             right: parent.right
             margins: 15
         }
-        visible: true
 
-        text: "Load detailed buildings"
+        property int step: 0
+
+        text: ["Load detailed buildings","Filter OSM buildings in extent","Reset scene"][step]
         onClicked: {
-            model.loadScene();
-            loadSceneButton.visible = false;
-            filterSceneButton.visible = true;
-        }
-    }
+            switch (step) {
+            case 0:
+                // Show the detailed buildings scene layer and extent graphic
+                model.loadScene();
+                step++;
+                break;
 
-    Button {
-        id: filterSceneButton
-        anchors {
-            top: parent.top
-            right: parent.right
-            margins: 15
-        }
-        visible: false
+            case 1:
+                // Hide buildings within the detailed building extent so they don't clip
+                model.filterScene();
+                step++;
+                break;
 
-        text: "Filter OSM buildings in extent"
-        onClicked: {
-            model.filterScene();
-            filterSceneButton.visible = false;
-            resetButton.visible = true;
-        }
-    }
+            case 2:
+                // Reset the scene to its original state
+                model.reset();
+                step = 0;
+                break;
 
-    Button {
-        id: resetButton
-        anchors {
-            top: parent.top
-            right: parent.right
-            margins: 15
-        }
-        visible: false
-
-        text: "Reset scene"
-        onClicked: {
-            model.reset();
-            resetButton.visible = false;
-            loadSceneButton.visible = true;
+            default:
+                step = 0;
+                break;
+            }
         }
     }
 }
