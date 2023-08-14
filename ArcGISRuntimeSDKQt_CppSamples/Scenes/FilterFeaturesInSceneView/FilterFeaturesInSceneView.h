@@ -22,6 +22,7 @@ namespace Esri::ArcGISRuntime
 class ArcGISSceneLayer;
 class Graphic;
 class Scene;
+class SceneLayerPolygonFilter;
 class SceneQuickView;
 }
 
@@ -57,9 +58,10 @@ private:
   Esri::ArcGISRuntime::Scene* m_scene = nullptr;
   Esri::ArcGISRuntime::SceneQuickView* m_sceneView = nullptr;
   Esri::ArcGISRuntime::ArcGISSceneLayer* m_osmBuildings = nullptr;
-  Esri::ArcGISRuntime::ArcGISSceneLayer* m_sceneLayer = nullptr;
+  Esri::ArcGISRuntime::ArcGISSceneLayer* m_detailedBuildingsSceneLayer = nullptr;
   Esri::ArcGISRuntime::Polygon m_sceneLayerExtentPolygon;
   Esri::ArcGISRuntime::Graphic* m_sanFransiscoExtentGraphic = nullptr;
+  Esri::ArcGISRuntime::SceneLayerPolygonFilter* m_sceneLayerPolygonFilter = nullptr;
 };
 
 #endif // FILTERFEATURESINSCENEVIEW_H

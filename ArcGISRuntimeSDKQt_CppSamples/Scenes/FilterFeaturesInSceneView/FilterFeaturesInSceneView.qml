@@ -19,7 +19,6 @@ import QtQuick.Controls
 import Esri.Samples
 
 Item {
-
     // add a SceneView component
     SceneView {
         id: view
@@ -44,38 +43,47 @@ Item {
             right: parent.right
             margins: 15
         }
+        visible: true
 
-        text: "Load scene"
+        text: "Load detailed buildings"
         onClicked: {
             model.loadScene();
+            loadSceneButton.visible = false;
+            filterSceneButton.visible = true;
         }
     }
 
     Button {
         id: filterSceneButton
         anchors {
-            top: loadSceneButton.bottom
+            top: parent.top
             right: parent.right
             margins: 15
         }
+        visible: false
 
-        text: "Filter scene"
+        text: "Filter OSM buildings in extent"
         onClicked: {
             model.filterScene();
+            filterSceneButton.visible = false;
+            resetButton.visible = true;
         }
     }
 
     Button {
         id: resetButton
         anchors {
-            top: filterSceneButton.bottom
+            top: parent.top
             right: parent.right
             margins: 15
         }
+        visible: false
 
         text: "Reset scene"
         onClicked: {
             model.reset();
+            resetButton.visible = false;
+            loadSceneButton.visible = true;
         }
     }
 }

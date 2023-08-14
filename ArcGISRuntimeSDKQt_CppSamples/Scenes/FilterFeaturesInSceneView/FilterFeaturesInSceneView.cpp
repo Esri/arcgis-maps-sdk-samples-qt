@@ -67,9 +67,9 @@ FilterFeaturesInSceneView::FilterFeaturesInSceneView(QObject* parent /* = nullpt
   m_scene->setBaseSurface(surface);
 
   // Construct the detailed buildings scene layer
-  m_sceneLayer = new ArcGISSceneLayer(QUrl("https://tiles.arcgis.com/tiles/z2tnIkrLQ2BRzr6P/arcgis/rest/services/SanFrancisco_Bldgs/SceneServer"), this);
+  m_detailedBuildingsSceneLayer = new ArcGISSceneLayer(QUrl("https://tiles.arcgis.com/tiles/z2tnIkrLQ2BRzr6P/arcgis/rest/services/SanFrancisco_Bldgs/SceneServer"), this);
 
-  connect(m_sceneLayer, &ArcGISSceneLayer::doneLoading, this, [this](const Error error)
+  connect(m_detailedBuildingsSceneLayer, &ArcGISSceneLayer::doneLoading, this, [this](const Error error)
   {
     if (!error.isEmpty())
     {
@@ -78,7 +78,7 @@ FilterFeaturesInSceneView::FilterFeaturesInSceneView(QObject* parent /* = nullpt
     }
 
     // Construct a red polygon that shows the extent of the detailed buildings scene layer
-    Envelope sfExtent = m_sceneLayer->fullExtent();
+    Envelope sfExtent = m_detailedBuildingsSceneLayer->fullExtent();
 
     PolygonBuilder* builder = new PolygonBuilder(m_sceneView->spatialReference(), this);
     builder->addPoint(sfExtent.xMin(), sfExtent.yMin());
@@ -88,11 +88,20 @@ FilterFeaturesInSceneView::FilterFeaturesInSceneView(QObject* parent /* = nullpt
 
     m_sceneLayerExtentPolygon = builder->toPolygon();
 
+    // Create the SceneLayerPolygonFilter to later apply to the OSM buildings layer
+    m_sceneLayerPolygonFilter = new SceneLayerPolygonFilter(
+          QList<Polygon>{m_sceneLayerExtentPolygon}, // polygons to filter by
+          SceneLayerPolygonFilterSpatialRelationship::Disjoint, // hide all features within the polygons
+          this);
+
+    qDebug() << m_osmBuildings->polygonFilter();
+
+    // Create the extent graphic so we can add it later with the detailed buildings scene layer
     SimpleFillSymbol* sfs = new SimpleFillSymbol(SimpleFillSymbolStyle::Solid, QColor(Qt::transparent), new SimpleLineSymbol(SimpleLineSymbolStyle::Solid, QColor(Qt::red), 5.0f, this), this);
     m_sanFransiscoExtentGraphic = new Graphic(m_sceneLayerExtentPolygon, sfs, this);
   });
 
-  m_sceneLayer->load();
+  m_detailedBuildingsSceneLayer->load();
 }
 
 FilterFeaturesInSceneView::~FilterFeaturesInSceneView() = default;
@@ -107,25 +116,33 @@ void FilterFeaturesInSceneView::init()
 void FilterFeaturesInSceneView::loadScene()
 {
   // Show the detailed buildings scene layer and the extent graphic
-  m_scene->operationalLayers()->append(m_sceneLayer);
+  m_scene->operationalLayers()->append(m_detailedBuildingsSceneLayer);
   m_sceneView->graphicsOverlays()->first()->graphics()->append(m_sanFransiscoExtentGraphic);
 }
 
 void FilterFeaturesInSceneView::filterScene()
 {
   // Hide buildings within the detailed building extent so they don't clip
-  m_osmBuildings->setPolygonFilter(
-        new SceneLayerPolygonFilter(QList<Polygon>{m_sceneLayerExtentPolygon}, SceneLayerPolygonFilterSpatialRelationship::Disjoint, this));
+
+  // Initially, the building layer does not have a polygon filter, set it
+  if (!m_osmBuildings->polygonFilter())
+    m_osmBuildings->setPolygonFilter(m_sceneLayerPolygonFilter);
+
+  // After the scene is reset, the layer will have a polygon filter, but that filter will not have polygons set
+  // Add the polygon back to the polygon filter
+  else
+    m_sceneLayerPolygonFilter->setPolygons({m_sceneLayerExtentPolygon});
 }
 
 void FilterFeaturesInSceneView::reset()
 {
-  // Reset the scene filters and hide the detailed buildings and extent graphic
+  // Remove the detailed buildings layer from the scene
   m_scene->operationalLayers()->clear();
 
-  if (m_osmBuildings->polygonFilter())
-    m_osmBuildings->polygonFilter()->setPolygons(QList<Polygon>{});
+  // Set the OSM buildings polygon filter to an empty list of polygons to clear the filter
+  m_osmBuildings->polygonFilter()->setPolygons(QList<Polygon>{});
 
+  // Clear the graphics list in the graphics overlay to remove the red extent boundary graphic
   m_sceneView->graphicsOverlays()->first()->graphics()->clear();
 }
 
@@ -143,8 +160,10 @@ void FilterFeaturesInSceneView::setSceneView(SceneQuickView* sceneView)
   m_sceneView = sceneView;
   m_sceneView->setArcGISScene(m_scene);
 
+  // Set the viewpoint to San Fransisco
   m_sceneView->setViewpointCamera(Camera(Point(-122.421, 37.7041, 207), 60, 70, 0));
 
+  // Add a graphics overlay to display the extent graphic
   m_sceneView->graphicsOverlays()->append(new GraphicsOverlay(this));
 
   emit sceneViewChanged();

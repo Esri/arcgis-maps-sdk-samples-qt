@@ -1,41 +1,36 @@
 # Filter features in scene view
 
-This sample demonstrates how to XXXXX.
-This sample demonstrates ...
-This is **why** you would do it this way ...
+Filter 3D scene features out of a given geometry with a polygon filter.
 
 ![](screenshot.png)
 
 ## Use case
 
-Show or hide stuff, idk.
+You can selectively show or hide features within a scene view using `setFeaturesVisible` to filter specific features or set a `SceneLayerPolygonFilter` to filter features given a polygon. Through these methods, you can directly control what users see within a specific scene view to give a more focused or cleaner user experience.
 
 ## How to use the sample
 
-e.g. Use the input controls to define a ... Click the "Go" button to ...
+The sample initializes showing the 3D buildings OpenStreetMap layer. Click the "Load detailed buildings" button to load an additional scene layer that contains more detailed buildings. Notice how the two scene layers overlap and clip into each other. Click the "Filter OSM buildings in extent" button, to set a `SceneLayerPolygonFilter` and filter out the OpenStreetMap buildings within the extent of the detailed buildings scene. Notice how the OSM buildings within and intersecting the extent of the detailed buildings layer are hidden. Click the "Reset scene" button to hide the detailed buildings scene layer and clear the OSM buildings filter.
 
 ## How it works
 
-e.g. In the `GeoView.Tapped` event, features in the `Scene` are selected using an `Envelope` defined by the user's tap location ...
+1. Construct a basemap for the scene using an OpenStreetMap Topographic vector tile layer and the OpenStreetMap 3D Buildings layer as baselayers.
+2. Create a surface for the scene and set the World Elevation 3D as an elevation source.
+3. Add the 3D San Fransisco Buildings Scene Layer to the scene's operational layers.
+4. Construct a `SceneLayerPolygonFilter` with the extent of the San Fransisco Buildings Scene Layer and a `Disjoint` `SceneLayerPolygonFilterSpatialRelationship` to hide all features within the extent.
+5. Set the `SceneLayerPolygonFilter` on the OSM Buildings layer to hide all OSM buildings within the extent of the San Fransisco Buildings layer.
 
 ## Relevant API
 
- - ClassName1
- - MethodName
+* ArcGISSceneLayer
+* SceneLayerPolygonFilter
+* SceneLayerPolygonFilterSpatialRelationship
 
-## Offline data
+## About the data
 
-Read more about how to set up the sample's offline data [here](http://links.esri.com/ArcGISRuntimeQtSamples).
+This sample uses the [OpenStreetMap 3D Buildings](https://www.arcgis.com/home/item.html?id=ca0470dbbddb4db28bad74ed39949e25) which provides generic 3D outlines of buildings throughout the world. It is based on the OSM Daylight map distribution and is hosted by Esri. It uses the [San Fransisco 3D Buildings](https://www.arcgis.com/home/item.html?id=d3344ba99c3f4efaa909ccfbcc052ed5) scene layer which provides detailed 3D models of buildings in San Fransisco, California, USA.
 
-Link | Local Location
----------|-------|
-|[San Francisco Streets TPK](https://www.arcgis.com/home/item.html?id=3f1bbf0ec70b409a975f5c91f363fe7d)| `<userhome>`/ArcGIS/Runtime/Data/tpk/SanFrancisco.tpk |
-
-## Additional information
-
-A standard level license is required to ...
 
 ## Tags
 
-routing, network analysis, geocode
-
+3D, buildings, disjoint, exclude, extent, filter, hide, OSM, polygon
