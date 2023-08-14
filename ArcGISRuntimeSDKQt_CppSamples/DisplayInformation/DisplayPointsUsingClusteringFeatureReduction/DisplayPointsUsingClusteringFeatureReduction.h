@@ -55,7 +55,7 @@ private:
   void setMapView(Esri::ArcGISRuntime::MapQuickView* mapView);
   QString calloutText() const;
 
-  void onMouseClicked(const QMouseEvent &mouseEvent);
+  void onMouseClicked(const QMouseEvent& mouseEvent);
 
   Esri::ArcGISRuntime::Map* m_map = nullptr;
   Esri::ArcGISRuntime::MapQuickView* m_mapView = nullptr;
