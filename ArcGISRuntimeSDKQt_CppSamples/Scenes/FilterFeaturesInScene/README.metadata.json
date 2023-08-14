@@ -27,9 +27,9 @@
         "SceneLayerPolygonFilterSpatialRelationship"
     ],
     "snippets": [
-        "FilterFeaturesInSceneView.cpp",
-        "FilterFeaturesInSceneView.h",
-        "FilterFeaturesInSceneView.qml"
+        "FilterFeaturesInScene.cpp",
+        "FilterFeaturesInScene.h",
+        "FilterFeaturesInScene.qml"
     ],
-    "title": "Filter features in scene view"
+    "title": "Filter features in scene"
 }

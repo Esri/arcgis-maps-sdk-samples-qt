@@ -1,4 +1,4 @@
-// [WriteFile Name=FilterFeaturesInSceneView, Category=Scenes]
+// [WriteFile Name=FilterFeaturesInScene, Category=Scenes]
 // [Legal]
 // Copyright 2023 Esri.
 
@@ -14,8 +14,8 @@
 // limitations under the License.
 // [Legal]
 
-#ifndef FILTERFEATURESINSCENEVIEW_H
-#define FILTERFEATURESINSCENEVIEW_H
+#ifndef FILTERFEATURESINSCENE_H
+#define FILTERFEATURESINSCENE_H
 
 namespace Esri::ArcGISRuntime
 {
@@ -32,15 +32,15 @@ class SceneQuickView;
 
 Q_MOC_INCLUDE("SceneQuickView.h");
 
-class FilterFeaturesInSceneView : public QObject
+class FilterFeaturesInScene : public QObject
 {
   Q_OBJECT
 
   Q_PROPERTY(Esri::ArcGISRuntime::SceneQuickView* sceneView READ sceneView WRITE setSceneView NOTIFY sceneViewChanged)
 
 public:
-  explicit FilterFeaturesInSceneView(QObject* parent = nullptr);
-  ~FilterFeaturesInSceneView() override;
+  explicit FilterFeaturesInScene(QObject* parent = nullptr);
+  ~FilterFeaturesInScene() override;
 
   static void init();
 
@@ -64,4 +64,4 @@ private:
   Esri::ArcGISRuntime::SceneLayerPolygonFilter* m_sceneLayerPolygonFilter = nullptr;
 };
 
-#endif // FILTERFEATURESINSCENEVIEW_H
+#endif // FILTERFEATURESINSCENE_H

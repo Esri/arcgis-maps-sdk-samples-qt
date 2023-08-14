@@ -1,4 +1,4 @@
-// [WriteFile Name=FilterFeaturesInSceneView, Category=Scenes]
+// [WriteFile Name=FilterFeaturesInScene, Category=Scenes]
 // [Legal]
 // Copyright 2023 Esri.
 
@@ -31,7 +31,7 @@ Item {
     }
 
     // Declare the C++ instance which creates the scene etc. and supply the view
-    FilterFeaturesInSceneViewSample {
+    FilterFeaturesInSceneSample {
         id: model
         sceneView: view
     }

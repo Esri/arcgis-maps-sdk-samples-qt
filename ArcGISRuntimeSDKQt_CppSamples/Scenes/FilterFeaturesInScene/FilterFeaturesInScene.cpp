@@ -1,4 +1,4 @@
-// [WriteFile Name=FilterFeaturesInSceneView, Category=Scenes]
+// [WriteFile Name=FilterFeaturesInScene, Category=Scenes]
 // [Legal]
 // Copyright 2023 Esri.
 
@@ -18,7 +18,7 @@
 #include "pch.hpp"
 #endif // PCH_BUILD
 
-#include "FilterFeaturesInSceneView.h"
+#include "FilterFeaturesInScene.h"
 
 #include "ArcGISSceneLayer.h"
 #include "ArcGISTiledElevationSource.h"
@@ -50,7 +50,7 @@
 
 using namespace Esri::ArcGISRuntime;
 
-FilterFeaturesInSceneView::FilterFeaturesInSceneView(QObject* parent /* = nullptr */):
+FilterFeaturesInScene::FilterFeaturesInScene(QObject* parent /* = nullptr */):
   QObject(parent)
 {
   // Construct and set the basemap
@@ -94,8 +94,6 @@ FilterFeaturesInSceneView::FilterFeaturesInSceneView(QObject* parent /* = nullpt
           SceneLayerPolygonFilterSpatialRelationship::Disjoint, // hide all features within the polygons
           this);
 
-    qDebug() << m_osmBuildings->polygonFilter();
-
     // Create the extent graphic so we can add it later with the detailed buildings scene layer
     SimpleFillSymbol* sfs = new SimpleFillSymbol(SimpleFillSymbolStyle::Solid, QColor(Qt::transparent), new SimpleLineSymbol(SimpleLineSymbolStyle::Solid, QColor(Qt::red), 5.0f, this), this);
     m_sanFransiscoExtentGraphic = new Graphic(m_sceneLayerExtentPolygon, sfs, this);
@@ -104,23 +102,23 @@ FilterFeaturesInSceneView::FilterFeaturesInSceneView(QObject* parent /* = nullpt
   m_detailedBuildingsSceneLayer->load();
 }
 
-FilterFeaturesInSceneView::~FilterFeaturesInSceneView() = default;
+FilterFeaturesInScene::~FilterFeaturesInScene() = default;
 
-void FilterFeaturesInSceneView::init()
+void FilterFeaturesInScene::init()
 {
   // Register the scene view for QML
   qmlRegisterType<SceneQuickView>("Esri.Samples", 1, 0, "SceneView");
-  qmlRegisterType<FilterFeaturesInSceneView>("Esri.Samples", 1, 0, "FilterFeaturesInSceneViewSample");
+  qmlRegisterType<FilterFeaturesInScene>("Esri.Samples", 1, 0, "FilterFeaturesInSceneSample");
 }
 
-void FilterFeaturesInSceneView::loadScene()
+void FilterFeaturesInScene::loadScene()
 {
   // Show the detailed buildings scene layer and the extent graphic
   m_scene->operationalLayers()->append(m_detailedBuildingsSceneLayer);
   m_sceneView->graphicsOverlays()->first()->graphics()->append(m_sanFransiscoExtentGraphic);
 }
 
-void FilterFeaturesInSceneView::filterScene()
+void FilterFeaturesInScene::filterScene()
 {
   // Hide buildings within the detailed building extent so they don't clip
 
@@ -134,7 +132,7 @@ void FilterFeaturesInSceneView::filterScene()
     m_sceneLayerPolygonFilter->setPolygons({m_sceneLayerExtentPolygon});
 }
 
-void FilterFeaturesInSceneView::reset()
+void FilterFeaturesInScene::reset()
 {
   // Remove the detailed buildings layer from the scene
   m_scene->operationalLayers()->clear();
@@ -146,13 +144,13 @@ void FilterFeaturesInSceneView::reset()
   m_sceneView->graphicsOverlays()->first()->graphics()->clear();
 }
 
-SceneQuickView* FilterFeaturesInSceneView::sceneView() const
+SceneQuickView* FilterFeaturesInScene::sceneView() const
 {
   return m_sceneView;
 }
 
 // Set the view (created in QML)
-void FilterFeaturesInSceneView::setSceneView(SceneQuickView* sceneView)
+void FilterFeaturesInScene::setSceneView(SceneQuickView* sceneView)
 {
   if (!sceneView || sceneView == m_sceneView)
     return;

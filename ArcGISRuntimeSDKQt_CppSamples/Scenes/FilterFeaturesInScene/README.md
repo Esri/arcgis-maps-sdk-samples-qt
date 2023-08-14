@@ -1,4 +1,4 @@
-# Filter features in scene view
+# Filter features in scene
 
 Filter 3D scene features out of a given geometry with a polygon filter.
 
