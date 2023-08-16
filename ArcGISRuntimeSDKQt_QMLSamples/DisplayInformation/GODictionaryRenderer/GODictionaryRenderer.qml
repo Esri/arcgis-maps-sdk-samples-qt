@@ -16,40 +16,18 @@
 
 import QtQuick
 import QtQuick.Controls
-<<<<<<< HEAD
 import Esri.ArcGISRuntime
 import Esri.ArcGISExtras
 import Esri.samples
-=======
-import QtQuick.XmlListModel
-import Esri.ArcGISRuntime
-import Esri.ArcGISExtras
->>>>>>> 859758696bdde217ee54ce2bb721268439b882dd
 
 Rectangle {
     width: 800
     height: 600
-<<<<<<< HEAD
 
     readonly property url dataPath: {
         Qt.platform.os === "ios" ?
                     System.writableLocationUrl(System.StandardPathsDocumentsLocation) + "/ArcGIS/Runtime/Data" :
                     System.writableLocationUrl(System.StandardPathsHomeLocation) + "/ArcGIS/Runtime/Data"
-=======
-
-    readonly property url dataPath: {
-        Qt.platform.os === "ios" ?
-                    System.writableLocationUrl(System.StandardPathsDocumentsLocation) + "/ArcGIS/Runtime/Data" :
-                    System.writableLocationUrl(System.StandardPathsHomeLocation) + "/ArcGIS/Runtime/Data"
-    }
-    property bool graphicsLoaded: false
-
-    Map {
-        id: map
-        Basemap {
-            initStyle: Enums.BasemapStyleArcGISTopographic
-        }
->>>>>>> 859758696bdde217ee54ce2bb721268439b882dd
     }
     property bool graphicsLoaded: false
 
@@ -60,7 +38,6 @@ Rectangle {
         id: mapView
         anchors.fill: parent
 
-<<<<<<< HEAD
         Map {
             id: map
             Basemap {
@@ -74,11 +51,6 @@ Rectangle {
 
             // Read the XML file and create a graphic from each entry
             xmlParser.parseXmlFileAsync(dataPath + "/xml/arcade_style/Mil2525DMessages.xml");
-=======
-        Component.onCompleted: {
-            // Set the focus on MapView to initially enable keyboard navigation
-            forceActiveFocus();
->>>>>>> 859758696bdde217ee54ce2bb721268439b882dd
         }
 
         // The GraphicsOverlay does not have a valid extent until it has been added

@@ -48,7 +48,6 @@ Rectangle {
             }
         }
 
-<<<<<<< HEAD
         // Add a background to the Column
         Rectangle {
             anchors.fill: col
@@ -58,9 +57,6 @@ Rectangle {
 
         Column {
             id: col
-=======
-        Column {
->>>>>>> 859758696bdde217ee54ce2bb721268439b882dd
             spacing: 15
             padding: 10
 

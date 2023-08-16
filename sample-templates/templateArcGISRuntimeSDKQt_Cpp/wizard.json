@@ -2,17 +2,10 @@
     "version": 1,
     "kind": "project",
     "supportedProjectTypes": [ "Qt4ProjectManager.Qt4Project" ],
-<<<<<<< HEAD
     "id": "A.Sample_ArcGISQt_CPP_200_2_0",
     "category": "B.CustomProjects",
     "trDescription": "Creates a Sample ArcGIS Maps 200.2.0 Qt Quick C++ application.",
     "trDisplayName": "Sample ArcGIS Maps 200.2.0 C++ Qt Quick App",
-=======
-    "id": "A.Sample_ArcGISQt_CPP_200_1_0",
-    "category": "B.CustomProjects",
-    "trDescription": "Creates a Sample ArcGIS Maps 200.1.0 Qt Quick C++ application.",
-    "trDisplayName": "Sample ArcGIS Maps 200.1.0 C++ Qt Quick App",
->>>>>>> 859758696bdde217ee54ce2bb721268439b882dd
     "trDisplayCategory": "ArcGIS",
     "icon": "wizard.png",
     "featuresRequired": [ "QtSupport.Wizards.FeatureQt" ],

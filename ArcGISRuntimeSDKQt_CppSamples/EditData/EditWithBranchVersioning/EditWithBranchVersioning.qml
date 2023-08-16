@@ -216,11 +216,7 @@ Item {
             ComboBox {
                 id: typeDmgCombo
                 property int modelWidth: 0
-<<<<<<< HEAD
                 Layout.minimumWidth: modelWidth + leftPadding + rightPadding + 20
-=======
-                Layout.minimumWidth: modelWidth + leftPadding + rightPadding
->>>>>>> 859758696bdde217ee54ce2bb721268439b882dd
                 Layout.margins: 5
                 Layout.fillWidth: true
                 enabled: !model.sgdbVersionIsDefault

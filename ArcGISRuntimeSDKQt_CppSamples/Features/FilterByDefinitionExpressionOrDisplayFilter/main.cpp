@@ -30,12 +30,6 @@
 
 int main(int argc, char *argv[])
 {
-<<<<<<< HEAD:ArcGISRuntimeSDKQt_CppSamples/Features/FilterByDefinitionExpressionOrDisplayFilter/main.cpp
-=======
-  // Enforce OpenGL
-  qputenv("QSG_RHI_BACKEND", "opengl");
-
->>>>>>> 859758696bdde217ee54ce2bb721268439b882dd:ArcGISRuntimeSDKQt_CppSamples/Features/FeatureLayerDefinitionExpression/main.cpp
   QGuiApplication app(argc, argv);
   app.setApplicationName("FilterByDefinitionExpressionOrDisplayFilter- C++");
 

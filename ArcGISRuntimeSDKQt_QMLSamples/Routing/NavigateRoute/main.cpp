@@ -18,16 +18,10 @@
 #include <QDir>
 #include <QQmlEngine>
 
-// #include "NavigateRouteSpeaker.h"
+#include "NavigateRouteSpeaker.h"
 
 int main(int argc, char *argv[])
 {
-<<<<<<< HEAD
-=======
-  // Enforce OpenGL
-  qputenv("QSG_RHI_BACKEND", "opengl");
-
->>>>>>> 859758696bdde217ee54ce2bb721268439b882dd
   QGuiApplication app(argc, argv);
   app.setApplicationName(QStringLiteral("NavigateRoute - QML"));
 
@@ -54,12 +48,7 @@ int main(int argc, char *argv[])
   view.setResizeMode(QQuickView::SizeRootObjectToView);
 
   // Register the C++ NavigateRouteSpeaker class
-<<<<<<< HEAD
   qmlRegisterType<NavigateRouteSpeaker>("Esri.samples", 1, 0, "NavigateRouteSpeaker");
-=======
-  // -- QTextToSpeech is not supported by Qt 6.2, so this is commented out --
-  // qmlRegisterType<NavigateRouteSpeaker>("Esri.samples", 1, 0, "NavigateRouteSpeaker");
->>>>>>> 859758696bdde217ee54ce2bb721268439b882dd
 
   // Add the import Path
   view.engine()->addImportPath(QDir(QCoreApplication::applicationDirPath()).filePath("qml"));

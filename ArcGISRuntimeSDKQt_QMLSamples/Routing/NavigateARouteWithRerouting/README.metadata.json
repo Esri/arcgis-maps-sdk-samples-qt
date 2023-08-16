@@ -7,10 +7,7 @@
         }
     ],
     "description": "Navigate between two points and dynamically recalculate an alternate route when the original route is unavailable.",
-<<<<<<< HEAD
     "featured": false,
-=======
->>>>>>> 859758696bdde217ee54ce2bb721268439b882dd
     "ignore": false,
     "images": [
         "screenshot.png"

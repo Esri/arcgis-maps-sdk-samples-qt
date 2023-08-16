@@ -180,11 +180,7 @@ Rectangle {
 
             ComboBox {
                 property int modelWidth: 0
-<<<<<<< HEAD
                 Layout.minimumWidth: modelWidth + leftPadding + rightPadding + (indicator ? indicator.width : 10)
-=======
-                Layout.minimumWidth: modelWidth + leftPadding + rightPadding
->>>>>>> 859758696bdde217ee54ce2bb721268439b882dd
 
                 Layout.columnSpan: 2
                 Layout.margins: 5

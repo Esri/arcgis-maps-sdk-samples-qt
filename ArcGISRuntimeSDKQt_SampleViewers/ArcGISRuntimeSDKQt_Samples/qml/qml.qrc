@@ -19,10 +19,6 @@
         <file>SearchView.qml</file>
         <file>SearchBar.qml</file>
         <file>ManageOfflineDataView.qml</file>
-<<<<<<< HEAD
         <file>HomepageView.qml</file>
-=======
-        <file>GAnalyticsView.qml</file>
->>>>>>> 859758696bdde217ee54ce2bb721268439b882dd
     </qresource>
 </RCC>

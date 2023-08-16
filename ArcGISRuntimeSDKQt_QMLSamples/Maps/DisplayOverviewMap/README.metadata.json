@@ -1,10 +1,7 @@
 {
     "category": "Maps",
     "description": "Include an overview or inset map as an additional map view to show the wider context of the primary view.",
-<<<<<<< HEAD
     "featured": false,
-=======
->>>>>>> 859758696bdde217ee54ce2bb721268439b882dd
     "ignore": false,
     "images": [
         "screenshot.png"

@@ -1,10 +1,7 @@
 {
     "category": "Maps",
     "description": "Limit the view of a map to a particular area.",
-<<<<<<< HEAD
     "featured": false,
-=======
->>>>>>> 859758696bdde217ee54ce2bb721268439b882dd
     "ignore": false,
     "images": [
         "screenshot.png"

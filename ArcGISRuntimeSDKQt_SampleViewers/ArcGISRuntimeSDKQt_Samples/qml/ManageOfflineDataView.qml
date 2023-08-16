@@ -25,14 +25,11 @@ Page {
     visible: SampleManager.currentMode === SampleManager.ManageOfflineDataView
     property bool manageOfflineDataViewDownloadInProgress: false
 
-<<<<<<< HEAD
     onVisibleChanged: {
         if (!manageOfflineDataViewPage.visible && SampleManager.downloadInProgress)
             SampleManager.cancelDownload = true;
     }
 
-=======
->>>>>>> 859758696bdde217ee54ce2bb721268439b882dd
     FileFolder {
         id: fileFolder
     }
@@ -58,7 +55,6 @@ Page {
             }
             Layout.fillWidth: true
             clip: true
-<<<<<<< HEAD
             visible: SampleManager.downloadInProgress
         }
 
@@ -68,16 +64,6 @@ Page {
             visible: !SampleManager.downloadInProgress
             onClicked: {
                 SampleManager.downloadFailed = false;
-=======
-            visible: SampleManager.downloadInProgress && SampleManager.currentMode
-        }
-
-        Button {
-            text: qsTr("Download all offline data")
-            Layout.alignment: Qt.AlignHCenter | Qt.AlignVCenter
-            visible: !SampleManager.downloadInProgress
-            onClicked: {
->>>>>>> 859758696bdde217ee54ce2bb721268439b882dd
                 if (System.reachability === System.ReachabilityOnline || System.reachability === System.ReachabilityUnknown) {
                     allDataDownloadLoader.item.downloadAllDataItems();
                     manageOfflineDataViewDownloadInProgress = true;
@@ -109,11 +95,7 @@ Page {
             Layout.alignment: Qt.AlignHCenter | Qt.AlignVCenter
             Layout.fillWidth: true
             horizontalAlignment: Label.AlignHCenter
-<<<<<<< HEAD
             visible: SampleManager.downloadInProgress || SampleManager.downloadFailed
-=======
-            visible: SampleManager.downloadInProgress || (allDataDownloadLoader.item && allDataDownloadLoader.item.failedToDownload)
->>>>>>> 859758696bdde217ee54ce2bb721268439b882dd
             font {
                 family: fontFamily
             }
@@ -142,7 +124,6 @@ Page {
             visible: SampleManager.downloadInProgress
             clip: true
         }
-<<<<<<< HEAD
 
         Button {
             // PortalItem::fetchData does not have a cancel method so we can only clear the remaining items from the download queue
@@ -155,8 +136,6 @@ Page {
             }
             clip: true
         }
-=======
->>>>>>> 859758696bdde217ee54ce2bb721268439b882dd
     }
 
     MessageDialog {

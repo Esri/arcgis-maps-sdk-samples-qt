@@ -32,7 +32,6 @@ Item {
         mapView: view
     }
 
-<<<<<<< HEAD
     // Add a background to the column
     Rectangle {
         anchors.fill: col
@@ -42,9 +41,6 @@ Item {
 
     Column {
         id: col
-=======
-    Column {
->>>>>>> 859758696bdde217ee54ce2bb721268439b882dd
         spacing: 15
         padding: 10
 

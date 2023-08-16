@@ -1,10 +1,7 @@
 {
     "category": "Layers",
     "description": "Export tiles from an online vector tile service.",
-<<<<<<< HEAD
     "featured": true,
-=======
->>>>>>> 859758696bdde217ee54ce2bb721268439b882dd
     "ignore": false,
     "images": [
         "screenshot.png"

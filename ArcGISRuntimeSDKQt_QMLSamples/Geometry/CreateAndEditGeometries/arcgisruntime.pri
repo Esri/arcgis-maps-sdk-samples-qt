@@ -1,9 +1,5 @@
 #-------------------------------------------------
-<<<<<<< HEAD:ArcGISRuntimeSDKQt_QMLSamples/Geometry/CreateAndEditGeometries/arcgisruntime.pri
 # Copyright 2023 Esri.
-=======
-# Copyright 2022 Esri.
->>>>>>> 859758696bdde217ee54ce2bb721268439b882dd:ArcGISRuntimeSDKQt_QMLSamples/Layers/DisplayFeatureLayers/arcgisruntime.pri
 #
 # Licensed under the Apache License, Version 2.0 (the "License");
 # you may not use this file except in compliance with the License.

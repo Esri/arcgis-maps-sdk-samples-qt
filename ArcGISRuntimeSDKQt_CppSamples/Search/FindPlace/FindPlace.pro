@@ -28,7 +28,6 @@ TEMPLATE = app
 TARGET = FindPlace
 
 ARCGIS_RUNTIME_VERSION = 200.2.0
-ARCGIS_RUNTIME_VERSION = 200.1.0
 include($$PWD/arcgisruntime.pri)
 
 # path of the toolkit relative to the sample

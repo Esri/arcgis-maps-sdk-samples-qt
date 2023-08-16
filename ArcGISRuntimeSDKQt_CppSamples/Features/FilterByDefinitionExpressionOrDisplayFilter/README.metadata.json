@@ -1,10 +1,7 @@
 {
     "category": "Features",
     "description": "Filter features displayed on a map using a definition expression or a display filter.",
-<<<<<<< HEAD:ArcGISRuntimeSDKQt_CppSamples/Features/FilterByDefinitionExpressionOrDisplayFilter/README.metadata.json
     "featured": false,
-=======
->>>>>>> 859758696bdde217ee54ce2bb721268439b882dd:ArcGISRuntimeSDKQt_CppSamples/Features/FeatureLayerDefinitionExpression/README.metadata.json
     "ignore": false,
     "images": [
         "screenshot.png"

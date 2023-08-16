@@ -30,13 +30,8 @@
 
 int main(int argc, char *argv[])
 {
-<<<<<<< HEAD
   // At this time AR with the ArcGIS Maps SDK for Qt only supports OpenGL
   QQuickWindow::setGraphicsApi(QSGRendererInterface::GraphicsApi::OpenGL);
-=======
-  // Enforce OpenGL
-  qputenv("QSG_RHI_BACKEND", "opengl");
->>>>>>> 859758696bdde217ee54ce2bb721268439b882dd
 
   // There are some conflicts between the AR frameworks and Qt's rendering thread.
   // See Qt's documentation about non-threaded render loops for more information.

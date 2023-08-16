@@ -217,14 +217,10 @@ EditFeatureAttachmentsSample {
     // file dialog for selecting a file to add as an attachment
     FileDialog {
         id: fileDialog
-<<<<<<< HEAD
         folder: {
             const locs = StandardPaths.standardLocations(StandardPaths.PicturesLocation)
             return locs.length > 0 ? locs[locs.length - 1] : "";
         }
-=======
-        folder: StandardPaths.standardLocations(StandardPaths.PicturesLocation)[0] ?? ""
->>>>>>> 859758696bdde217ee54ce2bb721268439b882dd
         onAccepted: {
             // Call invokable C++ method to add an attachment to the model
             editAttachmentsSample.addAttachment(fileDialog.file, "application/octet-stream");

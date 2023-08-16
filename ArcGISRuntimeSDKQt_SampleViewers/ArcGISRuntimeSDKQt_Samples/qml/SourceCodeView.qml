@@ -34,11 +34,7 @@ Rectangle {
             id: textEdit
             anchors.margins: 15
             readOnly: true
-<<<<<<< HEAD
             activeFocusOnPress: false
-=======
-            focus: true
->>>>>>> 859758696bdde217ee54ce2bb721268439b882dd
             textFormat: Text.PlainText
             selectByMouse: os === "ios" || os === "android" ? false : true
             Component.onCompleted: {
@@ -88,11 +84,7 @@ Rectangle {
             topMargin: 10
         }
         width: 200
-<<<<<<< HEAD
         model: SampleManager.currentSample ? SampleManager.currentSample.codeFiles : []
-=======
-        model: SampleManager.currentSample.codeFiles
->>>>>>> 859758696bdde217ee54ce2bb721268439b882dd
         textRole: "name"
 
         delegate: ItemDelegate {
@@ -114,11 +106,7 @@ Rectangle {
             horizontalAlignment: Text.AlignHCenter
         }
 
-<<<<<<< HEAD
         visible: SampleManager.currentSample ? SampleManager.currentSample.codeFiles.size > 1 : false
-=======
-        visible: SampleManager.currentSample.codeFiles.size > 1
->>>>>>> 859758696bdde217ee54ce2bb721268439b882dd
         onCurrentTextChanged: SampleManager.setSourceCodeIndex(currentIndex)
 
         onModelChanged: {

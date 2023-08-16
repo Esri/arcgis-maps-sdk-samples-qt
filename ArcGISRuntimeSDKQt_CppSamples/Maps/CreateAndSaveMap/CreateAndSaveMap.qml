@@ -29,11 +29,7 @@ CreateAndSaveMapSample {
         stackView.push(options);
     }
 
-<<<<<<< HEAD
     onSaveMapCompleted: (success, itemId, error) => {
-=======
-    onSaveMapCompleted: (success, itemId) => {
->>>>>>> 859758696bdde217ee54ce2bb721268439b882dd
         if (stackView.currentItem === completionRect)
             return;
 
