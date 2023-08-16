@@ -1,4 +1,4 @@
-// [WriteFile Name=Surface_Placement, Category=Scenes]
+// [WriteFile Name=SetSurfacePlacementMode, Category=Scenes]
 // [Legal]
 // Copyright 2016 Esri.
 

@@ -11,19 +11,13 @@
 // See the License for the specific language governing permissions and
 // limitations under the License.
 
+#include <QSettings>
 #include <QGuiApplication>
 #include <QQuickView>
 #include <QCommandLineParser>
 #include <QDir>
 #include <QQmlEngine>
 #include <QSurfaceFormat>
-
-#ifdef Q_OS_WIN
-#include <Windows.h>
-#endif
-
-#include "Surface_Placement.h"
-#include "ArcGISRuntimeEnvironment.h"
 
 #define STRINGIZE(x) #x
 #define QUOTE(x) STRINGIZE(x)
@@ -39,7 +33,7 @@ int main(int argc, char *argv[])
 #endif
 
   QGuiApplication app(argc, argv);
-  app.setApplicationName("SurfacePlacement - C++");
+  app.setApplicationName("SurfacePlacement - QML");
 
   // Use of Esri location services, including basemaps and geocoding,
   // requires authentication using either an ArcGIS identity or an API Key.
@@ -56,17 +50,8 @@ int main(int argc, char *argv[])
   }
   else
   {
-      Esri::ArcGISRuntime::ArcGISRuntimeEnvironment::setApiKey(apiKey);
+      QCoreApplication::instance()->setProperty("Esri.ArcGISRuntime.apiKey", apiKey);
   }
-
-  // Initialize the sample
-  Surface_Placement::init();
-
-  /* Leaving here for purpose of snippet
-  //! [Register the scene view for QML]
-  qmlRegisterType<SceneQuickView>("Esri.Samples", 1, 0, "SceneView");
-  //! [Register the scene view for QML]
-  */
 
   // Initialize application view
   QQuickView view;
@@ -75,20 +60,20 @@ int main(int argc, char *argv[])
   // Add the import Path
   view.engine()->addImportPath(QDir(QCoreApplication::applicationDirPath()).filePath("qml"));
 
-  QString arcGISRuntimeImportPath = QUOTE(ARCGIS_RUNTIME_IMPORT_PATH);
+    QString arcGISRuntimeImportPath = QUOTE(ARCGIS_RUNTIME_IMPORT_PATH);
 
- #if defined(LINUX_PLATFORM_REPLACEMENT)
-  // on some linux platforms the string 'linux' is replaced with 1
-  // fix the replacement paths which were created
-  QString replaceString = QUOTE(LINUX_PLATFORM_REPLACEMENT);
-  arcGISRuntimeImportPath = arcGISRuntimeImportPath.replace(replaceString, "linux", Qt::CaseSensitive);
- #endif
+#if defined(LINUX_PLATFORM_REPLACEMENT)
+    // on some linux platforms the string 'linux' is replaced with 1
+    // fix the replacement paths which were created
+    QString replaceString = QUOTE(LINUX_PLATFORM_REPLACEMENT);
+    arcGISRuntimeImportPath = arcGISRuntimeImportPath.replace(replaceString, "linux", Qt::CaseSensitive);
+#endif
 
-  // Add the Runtime and Extras path
-  view.engine()->addImportPath(arcGISRuntimeImportPath);
+    // Add the Runtime and Extras path
+    view.engine()->addImportPath(arcGISRuntimeImportPath);
 
   // Set the source
-  view.setSource(QUrl("qrc:/Samples/Scenes/Surface_Placement/Surface_Placement.qml"));
+  view.setSource(QUrl("qrc:/Samples/Scenes/SetSurfacePlacementMode/SetSurfacePlacementMode.qml"));
 
   view.show();
 

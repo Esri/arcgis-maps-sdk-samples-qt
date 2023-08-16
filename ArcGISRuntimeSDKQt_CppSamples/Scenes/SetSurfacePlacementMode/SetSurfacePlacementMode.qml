@@ -1,4 +1,4 @@
-// [WriteFile Name=Surface_Placement, Category=Scenes]
+// [WriteFile Name=SetSurfacePlacementMode, Category=Scenes]
 // [Legal]
 // Copyright 2016 Esri.
 
@@ -19,7 +19,7 @@ import QtQuick.Controls
 import Esri.Samples
 import QtQuick.Layouts
 
-SurfacePlacementSample {
+SetSurfacePlacementModeSample {
     width: 800
     height: 600
 

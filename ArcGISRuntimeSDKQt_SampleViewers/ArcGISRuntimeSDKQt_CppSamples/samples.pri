@@ -210,7 +210,7 @@ INCLUDEPATH += \
     "$$SAMPLEPATHCPP/Scenes/RealisticLightingAndShadows" \
     "$$SAMPLEPATHCPP/Scenes/SceneLayerSelection" \
     "$$SAMPLEPATHCPP/Scenes/ScenePropertiesExpressions" \
-    "$$SAMPLEPATHCPP/Scenes/SurfacePlacement" \
+    "$$SAMPLEPATHCPP/Scenes/SetSurfacePlacementMode" \
     "$$SAMPLEPATHCPP/Scenes/Symbols" \
     "$$SAMPLEPATHCPP/Scenes/SyncMapViewSceneView" \
     "$$SAMPLEPATHCPP/Scenes/TerrainExaggeration" \
@@ -426,7 +426,7 @@ HEADERS += \
     "$$SAMPLEPATHCPP/Scenes/RealisticLightingAndShadows/RealisticLightingAndShadows.h" \
     "$$SAMPLEPATHCPP/Scenes/SceneLayerSelection/SceneLayerSelection.h" \
     "$$SAMPLEPATHCPP/Scenes/ScenePropertiesExpressions/ScenePropertiesExpressions.h" \
-    "$$SAMPLEPATHCPP/Scenes/SurfacePlacement/Surface_Placement.h" \
+    "$$SAMPLEPATHCPP/Scenes/SetSurfacePlacementMode/SetSurfacePlacementMode.h" \
     "$$SAMPLEPATHCPP/Scenes/Symbols/Symbols.h" \
     "$$SAMPLEPATHCPP/Scenes/SyncMapViewSceneView/SyncMapViewSceneView.h" \
     "$$SAMPLEPATHCPP/Scenes/TerrainExaggeration/TerrainExaggeration.h" \
@@ -642,7 +642,7 @@ SOURCES += \
     "$$SAMPLEPATHCPP/Scenes/RealisticLightingAndShadows/RealisticLightingAndShadows.cpp" \
     "$$SAMPLEPATHCPP/Scenes/SceneLayerSelection/SceneLayerSelection.cpp" \
     "$$SAMPLEPATHCPP/Scenes/ScenePropertiesExpressions/ScenePropertiesExpressions.cpp" \
-    "$$SAMPLEPATHCPP/Scenes/SurfacePlacement/Surface_Placement.cpp" \
+    "$$SAMPLEPATHCPP/Scenes/SetSurfacePlacementMode/SetSurfacePlacementMode.cpp" \
     "$$SAMPLEPATHCPP/Scenes/Symbols/Symbols.cpp" \
     "$$SAMPLEPATHCPP/Scenes/SyncMapViewSceneView/SyncMapViewSceneView.cpp" \
     "$$SAMPLEPATHCPP/Scenes/TerrainExaggeration/TerrainExaggeration.cpp" \
@@ -849,7 +849,7 @@ RESOURCES += \
     "$$SAMPLEPATHCPP/Scenes/RealisticLightingAndShadows/RealisticLightingAndShadows.qrc" \
     "$$SAMPLEPATHCPP/Scenes/SceneLayerSelection/SceneLayerSelection.qrc" \
     "$$SAMPLEPATHCPP/Scenes/ScenePropertiesExpressions/ScenePropertiesExpressions.qrc" \
-    "$$SAMPLEPATHCPP/Scenes/SurfacePlacement/Surface_Placement.qrc" \
+    "$$SAMPLEPATHCPP/Scenes/SetSurfacePlacementMode/SetSurfacePlacementMode.qrc" \
     "$$SAMPLEPATHCPP/Scenes/Symbols/Symbols.qrc" \
     "$$SAMPLEPATHCPP/Scenes/SyncMapViewSceneView/SyncMapViewSceneView.qrc" \
     "$$SAMPLEPATHCPP/Scenes/TerrainExaggeration/TerrainExaggeration.qrc" \

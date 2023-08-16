@@ -1,4 +1,4 @@
-// [WriteFile Name=Surface_Placement, Category=Scenes]
+// [WriteFile Name=SetSurfacePlacementMode, Category=Scenes]
 // [Legal]
 // Copyright 2016 Esri.
 
@@ -18,7 +18,7 @@
 #include "pch.hpp"
 #endif // PCH_BUILD
 
-#include "Surface_Placement.h"
+#include "SetSurfacePlacementMode.h"
 
 #include "ArcGISSceneLayer.h"
 #include "ArcGISTiledElevationSource.h"
@@ -44,20 +44,20 @@
 
 using namespace Esri::ArcGISRuntime;
 
-Surface_Placement::Surface_Placement(QQuickItem* parent /* = nullptr */):
+SetSurfacePlacementMode::SetSurfacePlacementMode(QQuickItem* parent /* = nullptr */):
   QQuickItem(parent)
 {
 }
 
-Surface_Placement::~Surface_Placement() = default;
+SetSurfacePlacementMode::~SetSurfacePlacementMode() = default;
 
-void Surface_Placement::init()
+void SetSurfacePlacementMode::init()
 {
   qmlRegisterType<SceneQuickView>("Esri.Samples", 1, 0, "SceneView");
-  qmlRegisterType<Surface_Placement>("Esri.Samples", 1, 0, "SurfacePlacementSample");
+  qmlRegisterType<SetSurfacePlacementMode>("Esri.Samples", 1, 0, "SetSurfacePlacementModeSample");
 }
 
-void Surface_Placement::componentComplete()
+void SetSurfacePlacementMode::componentComplete()
 {
   QQuickItem::componentComplete();
 
@@ -90,7 +90,7 @@ void Surface_Placement::componentComplete()
   addGraphics();
 }
 
-void Surface_Placement::addGraphicsOverlays()
+void SetSurfacePlacementMode::addGraphicsOverlays()
 {
   // Graphics overlay with draped billboarded surface placement
   m_drapedBillboardedOverlay = new GraphicsOverlay(this);
@@ -119,7 +119,7 @@ void Surface_Placement::addGraphicsOverlays()
   m_sceneView->graphicsOverlays()->append(m_absoluteOverlay);
 }
 
-void Surface_Placement::addGraphics()
+void SetSurfacePlacementMode::addGraphics()
 {
   // create point for the scene related graphic with a z value of 70
   const Point sceneRelatedPoint(-4.4610562, 48.3902727, 70, SpatialReference::wgs84());
@@ -164,13 +164,13 @@ void Surface_Placement::addGraphics()
   m_absoluteOverlay->graphics()->append(new Graphic(surfaceRelatedPoint, absoluteText));
 }
 
-void Surface_Placement::changeDrapedVisibility()
+void SetSurfacePlacementMode::changeDrapedVisibility()
 {
   m_drapedFlatOverlay->setVisible(!m_drapedFlatOverlay->isVisible());
   m_drapedBillboardedOverlay->setVisible(!m_drapedBillboardedOverlay->isVisible());
 }
 
-void Surface_Placement::changeZValue(double zValue)
+void SetSurfacePlacementMode::changeZValue(double zValue)
 {
   for (GraphicsOverlay* overlay : *m_sceneView->graphicsOverlays())
   {

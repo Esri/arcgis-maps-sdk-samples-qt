@@ -1,7 +1,7 @@
 <RCC>
-    <qresource prefix="/Samples/Scenes/Surface_Placement">
+    <qresource prefix="/Samples/Scenes/SetSurfacePlacementMode">
         <file alias="sample.json">README.metadata.json</file>
-        <file>Surface_Placement.qml</file>
+        <file>SetSurfacePlacementMode.qml</file>
         <file>screenshot.png</file>
         <file>README.md</file>
     </qresource>

@@ -13,8 +13,13 @@
 # limitations under the License.
 #-------------------------------------------------
 
+mac {
+    cache()
+}
 
-TEMPLATE = app
+#-------------------------------------------------------------------------------
+
+CONFIG += c++17
 
 # additional modules are pulled in via arcgisruntime.pri
 QT += opengl qml quick
@@ -22,15 +27,35 @@ QT += opengl qml quick
 ARCGIS_RUNTIME_VERSION = 200.2.0
 include($$PWD/arcgisruntime.pri)
 
-CONFIG += c++17
+TEMPLATE = app
+TARGET = SurfacePlacement
 
-SOURCES += main.cpp
+#-------------------------------------------------------------------------------
 
-RESOURCES += Surface_Placement.qrc
+HEADERS += SetSurfacePlacementMode.h
+
+SOURCES += main.cpp \
+           SetSurfacePlacementMode.cpp
+
+RESOURCES += SetSurfacePlacementMode.qrc
+
+#-------------------------------------------------------------------------------
+
+win32 {
+    LIBS += Ole32.lib
+}
 
 ios {
+    INCLUDEPATH += $$PWD
+    DEPENDPATH += $$PWD
+
+    OTHER_FILES += $$PWD/Info.plist
+
     QMAKE_INFO_PLIST = $$PWD/Info.plist
 }
 
-# Default rules for deployment.
-include(deployment.pri)
+android {
+    INCLUDEPATH += $$PWD
+    DEPENDPATH += $$PWD
+}
+

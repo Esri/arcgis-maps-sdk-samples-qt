@@ -1,0 +1,10 @@
+<RCC>
+    <qresource prefix="/Samples/Scenes/SetSurfacePlacementMode">
+        <file alias="sample.json">README.metadata.json</file>
+        <file>screenshot.png</file>
+        <file>SetSurfacePlacementMode.qml</file>
+		<file>SetSurfacePlacementMode.h</file>
+		<file>SetSurfacePlacementMode.cpp</file>
+        <file>README.md</file>
+    </qresource>
+</RCC>
