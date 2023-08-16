@@ -1,4 +1,4 @@
-// [WriteFile Name=Surface_Placement, Category=Scenes]
+// [WriteFile Name=SetSurfacePlacementMode, Category=Scenes]
 // [Legal]
 // Copyright 2016 Esri.
 
@@ -14,8 +14,8 @@
 // limitations under the License.
 // [Legal]
 
-#ifndef SURFACE_PLACEMENT_H
-#define SURFACE_PLACEMENT_H
+#ifndef SETSURFACEPLACEMENTMODE_H
+#define SETSURFACEPLACEMENTMODE_H
 
 namespace Esri::ArcGISRuntime
 {
@@ -25,13 +25,13 @@ namespace Esri::ArcGISRuntime
 
 #include <QQuickItem>
 
-class Surface_Placement : public QQuickItem
+class SetSurfacePlacementMode : public QQuickItem
 {
   Q_OBJECT
 
 public:
-  explicit Surface_Placement(QQuickItem* parent = nullptr);
-  ~Surface_Placement() override;
+  explicit SetSurfacePlacementMode(QQuickItem* parent = nullptr);
+  ~SetSurfacePlacementMode() override;
 
   void componentComplete() override;
   static void init();
@@ -51,4 +51,4 @@ private:
   Esri::ArcGISRuntime::GraphicsOverlay* m_absoluteOverlay = nullptr;
 };
 
-#endif // SURFACE_PLACEMENT_H
+#endif // SETSURFACEPLACEMENTMODE_H

@@ -211,7 +211,7 @@ RESOURCES += \
     "$$SAMPLEPATHQML/Scenes/RealisticLightingAndShadows/RealisticLightingAndShadows.qrc" \
     "$$SAMPLEPATHQML/Scenes/SceneLayerSelection/SceneLayerSelection.qrc" \
     "$$SAMPLEPATHQML/Scenes/ScenePropertiesExpressions/ScenePropertiesExpressions.qrc" \
-    "$$SAMPLEPATHQML/Scenes/SurfacePlacement/Surface_Placement.qrc" \
+    "$$SAMPLEPATHQML/Scenes/SetSurfacePlacementMode/SetSurfacePlacementMode.qrc" \
     "$$SAMPLEPATHQML/Scenes/Symbols/Symbols.qrc" \
     "$$SAMPLEPATHQML/Scenes/SyncMapViewSceneView/SyncMapViewSceneView.qrc" \
     "$$SAMPLEPATHQML/Scenes/TerrainExaggeration/TerrainExaggeration.qrc" \

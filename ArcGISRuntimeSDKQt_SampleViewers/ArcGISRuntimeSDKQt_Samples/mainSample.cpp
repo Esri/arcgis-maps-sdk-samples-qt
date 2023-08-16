@@ -252,7 +252,7 @@
 #include "StatisticalQueryGroupSort.h"
 #include "StyleWmsLayer.h"
 #include "SuggestListModel.h"
-#include "Surface_Placement.h"
+#include "SetSurfacePlacementMode.h"
 #include "SymbolizeShapefile.h"
 #include "Symbols.h"
 #include "SyncMapViewSceneView.h"
@@ -558,7 +558,7 @@ void registerCppSampleClasses()
   StatisticalQuery::init();
   StatisticalQueryGroupSort::init();
   StyleWmsLayer::init();
-  Surface_Placement::init();
+  SetSurfacePlacementMode::init();
   SymbolizeShapefile::init();
   Symbols::init();
   SyncMapViewSceneView::init();
