@@ -7,6 +7,7 @@
         }
     ],
     "description": "Load a raster from a service, then apply a function to it.",
+    "featured": false,
     "ignore": false,
     "images": [
         "screenshot.png"

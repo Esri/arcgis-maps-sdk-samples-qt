@@ -1,6 +1,7 @@
 {
     "category": "Scenes",
     "description": "Keep the viewpoints of two views (e.g. MapView and SceneView) synchronized with each other.",
+    "featured": false,
     "ignore": false,
     "images": [
         "screenshot.png"

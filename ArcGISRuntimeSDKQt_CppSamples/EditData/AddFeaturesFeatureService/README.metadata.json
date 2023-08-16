@@ -1,6 +1,7 @@
 {
     "category": "Edit data",
     "description": "Add features to a feature layer.",
+    "featured": true,
     "ignore": false,
     "images": [
         "screenshot.png"

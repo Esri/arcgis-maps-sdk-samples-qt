@@ -39,8 +39,8 @@ Rectangle {
 
             // Add a WMS Layer by specifying the URL and layer name
             WmsLayer {
-                url: "https://nowcoast.noaa.gov/arcgis/services/nowcoast/radar_meteo_imagery_nexrad_time/MapServer/WMSServer?request=GetCapabilities&service=WMS"
-                layerNames: ["1"]
+                url: "https://nowcoast.noaa.gov/geoserver/observations/weather_radar/wms"
+                layerNames: ["conus_base_reflectivity_mosaic"]
             }
 
             // start zoomed in over the US

@@ -27,5 +27,9 @@
 #define PROPERTYSOURCE                 "snippets"
 #define PROPERTYSOURCETEXT             "sourceText"
 #define PROPERTYDATAITEMS              "dataItems"
+<<<<<<< HEAD
+=======
+#define PROPERTYFEATURED               "featured"
+>>>>>>> v.next
 
 #endif // SAMPLEMANAGER_DEFINITIONS_H

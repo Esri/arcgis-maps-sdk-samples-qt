@@ -20,11 +20,13 @@ TEMPLATE = app
 QT += opengl qml quick
 
 ARCGIS_RUNTIME_VERSION = 200.1.0
+ARCGIS_RUNTIME_VERSION = 200.2.0
 include($$PWD/arcgisruntime.pri)
 
 CONFIG += c++17
 
-SOURCES += main.cpp
+SOURCES += main.cpp \
+    XmlParser.cpp
 
 RESOURCES += GODictionaryRenderer_3D.qrc
 
@@ -34,3 +36,5 @@ ios {
 
 # Default rules for deployment.
 include(deployment.pri)
+
+HEADERS += XmlParser.h

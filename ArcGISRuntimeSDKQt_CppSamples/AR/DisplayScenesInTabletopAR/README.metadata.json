@@ -1,6 +1,7 @@
 {
     "category": "AR",
     "description": "Use augmented reality (AR) to pin a scene to a table or desk for easy exploration.",
+    "featured": false,
     "ignore": false,
     "images": [
         "screenshot.png"

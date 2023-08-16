@@ -17,7 +17,10 @@ import QtQuick
 import QtQuick.Controls
 import Esri.ArcGISRuntimeSamples
 import Esri.ArcGISExtras
+<<<<<<< HEAD
 import Telemetry
+=======
+>>>>>>> v.next
 
 ApplicationWindow {
     id: window
@@ -85,10 +88,27 @@ ApplicationWindow {
                     MenuItem {
                         width: parent.width
                         height: 48
+<<<<<<< HEAD
                         text: qsTr("Live Sample")
                         onTriggered: {
                             aboutView.visible = false;
                             gAnalyticsView.visible = false;
+=======
+                        text: qsTr("Home")
+                        onTriggered: {
+                            aboutView.visible = false;
+                            proxySetupView.visible = false;
+                            SampleManager.currentMode = SampleManager.HomepageView
+                        }
+                    }
+                    MenuItem {
+                        width: parent.width
+                        height: visible ? 48 : 0
+                        text: qsTr("Live Sample")
+                        visible: SampleManager.currentSample
+                        onTriggered: {
+                            aboutView.visible = false;
+>>>>>>> v.next
                             proxySetupView.visible = false;
                             SampleManager.currentMode = SampleManager.LiveSampleView
                             // postEvent handled in
@@ -98,6 +118,7 @@ ApplicationWindow {
                     }
                     MenuItem {
                         width: parent.width
+<<<<<<< HEAD
                         height: 48
                         text: qsTr("Source Code")
                         onTriggered: {
@@ -106,10 +127,20 @@ ApplicationWindow {
                             proxySetupView.visible = false;
                             SampleManager.currentMode = SampleManager.SourceCodeView
                             GAnalytics.postEvent("sourcecode_view", {"sample_name": SampleManager.currentSample.name})
+=======
+                        height: visible ? 48 : 0
+                        text: qsTr("Source Code")
+                        visible: SampleManager.currentSample
+                        onTriggered: {
+                            aboutView.visible = false;
+                            proxySetupView.visible = false;
+                            SampleManager.currentMode = SampleManager.SourceCodeView
+>>>>>>> v.next
                         }
                     }
                     MenuItem {
                         width: parent.width
+<<<<<<< HEAD
                         height: 48
                         text: qsTr("Description")
                         onTriggered: {
@@ -118,6 +149,15 @@ ApplicationWindow {
                             proxySetupView.visible = false;
                             SampleManager.currentMode = SampleManager.DescriptionView
                             GAnalytics.postEvent("description_view", {"sample_name": SampleManager.currentSample.name})
+=======
+                        height: visible ? 48 : 0
+                        text: qsTr("Description")
+                        visible: SampleManager.currentSample
+                        onTriggered: {
+                            aboutView.visible = false;
+                            proxySetupView.visible = false;
+                            SampleManager.currentMode = SampleManager.DescriptionView
+>>>>>>> v.next
                         }
                     }
                     MenuItem {
@@ -126,9 +166,14 @@ ApplicationWindow {
                         text: qsTr("Manage offline data")
                         onTriggered: {
                             aboutView.visible = false;
+<<<<<<< HEAD
                             gAnalyticsView.visible = false;
                             proxySetupView.visible = false;
                             if (SampleManager.currentMode != SampleManager.DownloadDataView || !SampleManager.downloadInProgress)
+=======
+                            proxySetupView.visible = false;
+                            if (SampleManager.currentMode !== SampleManager.DownloadDataView || !SampleManager.downloadInProgress)
+>>>>>>> v.next
                                 SampleManager.currentMode = SampleManager.ManageOfflineDataView
                         }
                     }
@@ -138,11 +183,15 @@ ApplicationWindow {
                         text: qsTr("API Reference")
                         onTriggered: {
                             aboutView.visible = false;
+<<<<<<< HEAD
                             gAnalyticsView.visible = false;
+=======
+>>>>>>> v.next
                             proxySetupView.visible = false;
                             Qt.openUrlExternally(SampleManager.apiReferenceUrl)
                         }
                     }
+<<<<<<< HEAD
                     MenuItem {
                         width: parent.width
                         height: 48
@@ -153,6 +202,8 @@ ApplicationWindow {
                             proxySetupView.visible = false;
                         }
                     }
+=======
+>>>>>>> v.next
 
                     MenuItem {
                         width: parent.width
@@ -160,7 +211,10 @@ ApplicationWindow {
                         text: qsTr("Proxy Settings")
                         onTriggered: {
                             aboutView.visible = false;
+<<<<<<< HEAD
                             gAnalyticsView.visible = false;
+=======
+>>>>>>> v.next
                             proxySetupView.visible = true;
                         }
                     }
@@ -171,7 +225,10 @@ ApplicationWindow {
                         text: qsTr("About")
                         onTriggered: {
                             aboutView.visible = true;
+<<<<<<< HEAD
                             gAnalyticsView.visible = false;
+=======
+>>>>>>> v.next
                             proxySetupView.visible = false;
                         }
                     }
@@ -201,6 +258,14 @@ ApplicationWindow {
         anchors.fill: parent
     }
 
+<<<<<<< HEAD
+=======
+    HomepageView {
+        id: homepageView
+        anchors.fill: parent
+    }
+
+>>>>>>> v.next
     LiveSampleView {
         id: liveSample
         anchors.fill: parent
@@ -216,11 +281,14 @@ ApplicationWindow {
         anchors.fill: parent
     }
 
+<<<<<<< HEAD
     GAnalyticsView {
         id: gAnalyticsView
         anchors.fill: parent
     }
 
+=======
+>>>>>>> v.next
     ProxySetupView {
         id: proxySetupView
         anchors.fill: parent
@@ -271,6 +339,7 @@ ApplicationWindow {
                 SampleManager.currentMode = SampleManager.NetworkRequiredView;
                 return;
             // If the sample requires offline data
+<<<<<<< HEAD
             } else if (SampleManager.currentSample.dataItems.size > 0) {
                 // If the data already exists, show the sample
                 if (checkDataItems()) {
@@ -296,6 +365,9 @@ ApplicationWindow {
             } else {
                 if (SampleManager.currentMode ===  SampleManager.DownloadDataView || SampleManager.currentMode === SampleManager.ManageOfflineDataView)
                     SampleManager.currentMode = SampleManager.LiveSampleView;
+=======
+            } else {
+>>>>>>> v.next
                 showSample();
             }
         }
@@ -312,6 +384,7 @@ ApplicationWindow {
                 qmlLoaderAuthView.setSource("qrc:/qml/CppAuthenticationView.qml");
             }
 
+<<<<<<< HEAD
             // set the initial sample to the "Change Basemap" sample
             SampleManager.currentCategory = SampleManager.categories.get(0);
             SampleManager.currentSample = SampleManager.currentCategory.samples.get(2);
@@ -321,15 +394,39 @@ ApplicationWindow {
             SampleManager.currentMode = SampleManager.LiveSampleView;
             showSample();
         }
+=======
+            SampleManager.currentMode = SampleManager.HomepageView;
+        }
+
+        function onDoneDownloadingChanged() {
+            showSample();
+        }
+
+        function onCurrentModeChanged() {
+            if (SampleManager.currentMode === SampleManager.LiveSampleView)
+                showSample();
+        }
+>>>>>>> v.next
     }
 
     // set the Loader's source and set the description text to the converted markdown
     function showSample() {
         if (SampleManager.currentSample) {
+<<<<<<< HEAD
             if (checkDataItems()) {
                 liveSample.source = SampleManager.currentSample.source;
                 descriptionView.descriptionText = SampleManager.currentSample.description;
                 SampleManager.currentMode = SampleManager.LiveSampleView;
+=======
+            descriptionView.descriptionText = SampleManager.currentSample.description;
+            if (checkDataItems()) {
+                if (SampleManager.currentMode === SampleManager.ManageOfflineDataView
+                        || SampleManager.currentMode === SampleManager.DownloadDataView
+                        || SampleManager.currentMode === SampleManager.HomepageView)
+                    SampleManager.currentMode = SampleManager.LiveSampleView;
+
+                liveSample.source = SampleManager.currentSample.source;
+>>>>>>> v.next
             } else {
                 if (SampleManager.downloadInProgress)
                     SampleManager.currentMode = SampleManager.ManageOfflineDataView;
@@ -378,8 +475,11 @@ ApplicationWindow {
     Component.onCompleted: {
         // initialize the SampleManager singleton
         SampleManager.init();
+<<<<<<< HEAD
 
         // initialize the Google Analytics singleton
         GAnalytics.init();
+=======
+>>>>>>> v.next
     }
 }

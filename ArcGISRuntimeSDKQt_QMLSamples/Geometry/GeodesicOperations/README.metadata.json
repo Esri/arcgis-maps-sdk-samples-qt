@@ -1,6 +1,7 @@
 {
     "category": "Geometry",
     "description": "Calculate a geodesic path between two points and measure its distance.",
+    "featured": false,
     "ignore": false,
     "images": [
         "screenshot.png"

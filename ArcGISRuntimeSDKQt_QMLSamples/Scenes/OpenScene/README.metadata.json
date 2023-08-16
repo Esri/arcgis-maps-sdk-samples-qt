@@ -1,6 +1,7 @@
 {
     "category": "Scenes",
     "description": "Open a web scene from a portal item.",
+    "featured": false,
     "ignore": false,
     "images": [
         "screenshot.png"

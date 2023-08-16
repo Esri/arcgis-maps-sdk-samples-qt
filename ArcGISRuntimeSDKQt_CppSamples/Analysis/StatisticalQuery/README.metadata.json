@@ -1,6 +1,7 @@
 {
     "category": "Analysis",
     "description": "Query a table to get aggregated statistics back for a specific field.",
+    "featured": false,
     "ignore": false,
     "images": [
         "screenshot.png"

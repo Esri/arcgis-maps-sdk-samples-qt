@@ -1,6 +1,7 @@
 {
     "category": "Analysis",
     "description": "Perform a line of sight analysis between two points in real time.",
+    "featured": false,
     "ignore": false,
     "images": [
         "screenshot.png"

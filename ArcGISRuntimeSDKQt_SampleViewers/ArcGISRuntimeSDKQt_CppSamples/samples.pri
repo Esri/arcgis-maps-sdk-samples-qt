@@ -41,6 +41,10 @@ INCLUDEPATH += \
     "$$SAMPLEPATHCPP/DisplayInformation/CreateSymbolStylesFromWebStyles" \
     "$$SAMPLEPATHCPP/DisplayInformation/CustomDictionaryStyle" \
     "$$SAMPLEPATHCPP/DisplayInformation/DisplayGrid" \
+<<<<<<< HEAD
+=======
+    "$$SAMPLEPATHCPP/DisplayInformation/DisplayPointsUsingClusteringFeatureReduction" \
+>>>>>>> v.next
     "$$SAMPLEPATHCPP/DisplayInformation/GODictionaryRenderer_3D" \
     "$$SAMPLEPATHCPP/DisplayInformation/GODictionaryRenderer" \
     "$$SAMPLEPATHCPP/DisplayInformation/GOSymbols" \
@@ -81,6 +85,10 @@ INCLUDEPATH += \
     "$$SAMPLEPATHCPP/Geometry/Buffer" \
     "$$SAMPLEPATHCPP/Geometry/ClipGeometry" \
     "$$SAMPLEPATHCPP/Geometry/ConvexHull" \
+<<<<<<< HEAD
+=======
+    "$$SAMPLEPATHCPP/Geometry/CreateAndEditGeometries" \
+>>>>>>> v.next
     "$$SAMPLEPATHCPP/Geometry/CreateGeometries" \
     "$$SAMPLEPATHCPP/Geometry/CutGeometry" \
     "$$SAMPLEPATHCPP/Geometry/DensifyAndGeneralize" \
@@ -247,6 +255,10 @@ HEADERS += \
     "$$SAMPLEPATHCPP/DisplayInformation/CreateSymbolStylesFromWebStyles/CreateSymbolStylesFromWebStyles.h" \
     "$$SAMPLEPATHCPP/DisplayInformation/CustomDictionaryStyle/CustomDictionaryStyle.h" \
     "$$SAMPLEPATHCPP/DisplayInformation/DisplayGrid/DisplayGrid.h" \
+<<<<<<< HEAD
+=======
+    "$$SAMPLEPATHCPP/DisplayInformation/DisplayPointsUsingClusteringFeatureReduction/DisplayPointsUsingClusteringFeatureReduction.h" \
+>>>>>>> v.next
     "$$SAMPLEPATHCPP/DisplayInformation/GODictionaryRenderer_3D/GODictionaryRenderer_3D.h" \
     "$$SAMPLEPATHCPP/DisplayInformation/GODictionaryRenderer/GODictionaryRenderer.h" \
     "$$SAMPLEPATHCPP/DisplayInformation/GOSymbols/GOSymbols.h" \
@@ -291,6 +303,10 @@ HEADERS += \
     "$$SAMPLEPATHCPP/Geometry/Buffer/Buffer.h" \
     "$$SAMPLEPATHCPP/Geometry/ClipGeometry/ClipGeometry.h" \
     "$$SAMPLEPATHCPP/Geometry/ConvexHull/ConvexHull.h" \
+<<<<<<< HEAD
+=======
+    "$$SAMPLEPATHCPP/Geometry/CreateAndEditGeometries/CreateAndEditGeometries.h" \
+>>>>>>> v.next
     "$$SAMPLEPATHCPP/Geometry/CreateGeometries/CreateGeometries.h" \
     "$$SAMPLEPATHCPP/Geometry/CutGeometry/CutGeometry.h" \
     "$$SAMPLEPATHCPP/Geometry/DensifyAndGeneralize/DensifyAndGeneralize.h" \
@@ -461,6 +477,10 @@ SOURCES += \
     "$$SAMPLEPATHCPP/DisplayInformation/CreateSymbolStylesFromWebStyles/CreateSymbolStylesFromWebStyles.cpp" \
     "$$SAMPLEPATHCPP/DisplayInformation/CustomDictionaryStyle/CustomDictionaryStyle.cpp" \
     "$$SAMPLEPATHCPP/DisplayInformation/DisplayGrid/DisplayGrid.cpp" \
+<<<<<<< HEAD
+=======
+    "$$SAMPLEPATHCPP/DisplayInformation/DisplayPointsUsingClusteringFeatureReduction/DisplayPointsUsingClusteringFeatureReduction.cpp" \
+>>>>>>> v.next
     "$$SAMPLEPATHCPP/DisplayInformation/GODictionaryRenderer_3D/GODictionaryRenderer_3D.cpp" \
     "$$SAMPLEPATHCPP/DisplayInformation/GODictionaryRenderer/GODictionaryRenderer.cpp" \
     "$$SAMPLEPATHCPP/DisplayInformation/GOSymbols/GOSymbols.cpp" \
@@ -505,6 +525,10 @@ SOURCES += \
     "$$SAMPLEPATHCPP/Geometry/Buffer/Buffer.cpp" \
     "$$SAMPLEPATHCPP/Geometry/ClipGeometry/ClipGeometry.cpp" \
     "$$SAMPLEPATHCPP/Geometry/ConvexHull/ConvexHull.cpp" \
+<<<<<<< HEAD
+=======
+    "$$SAMPLEPATHCPP/Geometry/CreateAndEditGeometries/CreateAndEditGeometries.cpp" \
+>>>>>>> v.next
     "$$SAMPLEPATHCPP/Geometry/CreateGeometries/CreateGeometries.cpp" \
     "$$SAMPLEPATHCPP/Geometry/CutGeometry/CutGeometry.cpp" \
     "$$SAMPLEPATHCPP/Geometry/DensifyAndGeneralize/DensifyAndGeneralize.cpp" \
@@ -674,6 +698,10 @@ RESOURCES += \
     "$$SAMPLEPATHCPP/DisplayInformation/CreateSymbolStylesFromWebStyles/CreateSymbolStylesFromWebStyles.qrc" \
     "$$SAMPLEPATHCPP/DisplayInformation/CustomDictionaryStyle/CustomDictionaryStyle.qrc" \
     "$$SAMPLEPATHCPP/DisplayInformation/DisplayGrid/DisplayGrid.qrc" \
+<<<<<<< HEAD
+=======
+    "$$SAMPLEPATHCPP/DisplayInformation/DisplayPointsUsingClusteringFeatureReduction/DisplayPointsUsingClusteringFeatureReduction.qrc" \
+>>>>>>> v.next
     "$$SAMPLEPATHCPP/DisplayInformation/GODictionaryRenderer_3D/GODictionaryRenderer_3D.qrc" \
     "$$SAMPLEPATHCPP/DisplayInformation/GODictionaryRenderer/GODictionaryRenderer.qrc" \
     "$$SAMPLEPATHCPP/DisplayInformation/GOSymbols/GOSymbols.qrc" \
@@ -714,6 +742,10 @@ RESOURCES += \
     "$$SAMPLEPATHCPP/Geometry/Buffer/Buffer.qrc" \
     "$$SAMPLEPATHCPP/Geometry/ClipGeometry/ClipGeometry.qrc" \
     "$$SAMPLEPATHCPP/Geometry/ConvexHull/ConvexHull.qrc" \
+<<<<<<< HEAD
+=======
+    "$$SAMPLEPATHCPP/Geometry/CreateAndEditGeometries/CreateAndEditGeometries.qrc" \
+>>>>>>> v.next
     "$$SAMPLEPATHCPP/Geometry/CreateGeometries/CreateGeometries.qrc" \
     "$$SAMPLEPATHCPP/Geometry/CutGeometry/CutGeometry.qrc" \
     "$$SAMPLEPATHCPP/Geometry/DensifyAndGeneralize/DensifyAndGeneralize.qrc" \

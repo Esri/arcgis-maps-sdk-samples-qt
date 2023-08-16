@@ -1,6 +1,7 @@
 {
     "category": "Maps",
     "description": "Display a basemap centered at an initial location and scale.",
+    "featured": false,
     "ignore": false,
     "images": [
         "screenshot.png"

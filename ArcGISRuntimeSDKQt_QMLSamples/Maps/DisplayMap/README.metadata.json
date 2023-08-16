@@ -1,6 +1,7 @@
 {
     "category": "Maps",
     "description": "Display a map with an imagery basemap.",
+    "featured": true,
     "ignore": false,
     "images": [
         "screenshot.png"

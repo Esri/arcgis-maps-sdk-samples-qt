@@ -43,7 +43,7 @@ ChangeSublayerVisibilitySample {
             top: parent.top
         }
         height: 150
-        width: 150
+        width: 170
         color: "transparent"
 
         MouseArea {

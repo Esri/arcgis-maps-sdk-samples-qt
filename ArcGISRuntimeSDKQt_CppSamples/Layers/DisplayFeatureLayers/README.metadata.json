@@ -15,6 +15,10 @@
         }
     ],
     "description": "Display feature layers from various data sources.",
+<<<<<<< HEAD
+=======
+    "featured": true,
+>>>>>>> v.next
     "ignore": false,
     "images": [
         "screenshot.png"

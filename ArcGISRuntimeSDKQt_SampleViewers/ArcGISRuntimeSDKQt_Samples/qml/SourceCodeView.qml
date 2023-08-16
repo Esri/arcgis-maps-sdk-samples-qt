@@ -34,7 +34,11 @@ Rectangle {
             id: textEdit
             anchors.margins: 15
             readOnly: true
+<<<<<<< HEAD
             focus: true
+=======
+            activeFocusOnPress: false
+>>>>>>> v.next
             textFormat: Text.PlainText
             selectByMouse: os === "ios" || os === "android" ? false : true
             Component.onCompleted: {
@@ -84,7 +88,11 @@ Rectangle {
             topMargin: 10
         }
         width: 200
+<<<<<<< HEAD
         model: SampleManager.currentSample.codeFiles
+=======
+        model: SampleManager.currentSample ? SampleManager.currentSample.codeFiles : []
+>>>>>>> v.next
         textRole: "name"
 
         delegate: ItemDelegate {
@@ -106,7 +114,11 @@ Rectangle {
             horizontalAlignment: Text.AlignHCenter
         }
 
+<<<<<<< HEAD
         visible: SampleManager.currentSample.codeFiles.size > 1
+=======
+        visible: SampleManager.currentSample ? SampleManager.currentSample.codeFiles.size > 1 : false
+>>>>>>> v.next
         onCurrentTextChanged: SampleManager.setSourceCodeIndex(currentIndex)
 
         onModelChanged: {

@@ -1,6 +1,7 @@
 {
     "category": "Scenes",
     "description": "View a point scene layer from a scene service.",
+    "featured": false,
     "ignore": false,
     "images": [
         "screenshot.png"

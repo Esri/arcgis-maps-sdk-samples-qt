@@ -22,9 +22,12 @@
 
 int main(int argc, char *argv[])
 {
+<<<<<<< HEAD
   // Enforce OpenGL
   qputenv("QSG_RHI_BACKEND", "opengl");
 
+=======
+>>>>>>> v.next
   QGuiApplication app(argc, argv);
   app.setApplicationName(QStringLiteral("NavigateARouteWithRerouting - QML"));
 

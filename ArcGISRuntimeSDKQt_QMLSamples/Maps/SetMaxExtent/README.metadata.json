@@ -1,6 +1,10 @@
 {
     "category": "Maps",
     "description": "Limit the view of a map to a particular area.",
+<<<<<<< HEAD
+=======
+    "featured": false,
+>>>>>>> v.next
     "ignore": false,
     "images": [
         "screenshot.png"

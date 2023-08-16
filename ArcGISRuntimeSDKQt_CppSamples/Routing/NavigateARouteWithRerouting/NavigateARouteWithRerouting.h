@@ -22,8 +22,12 @@
 #include "RouteParameters.h"
 #include "DirectionManeuver.h"
 
+<<<<<<< HEAD
 // NOTE: As of Qt 6.2, QTextToSpeech is not supported. Instances of this class have been commented out for compatibility, but remain for reference
 // class QTextToSpeech;
+=======
+class QTextToSpeech;
+>>>>>>> v.next
 
 namespace Esri
 {
@@ -74,7 +78,11 @@ private:
   bool navigationEnabled() const;
   bool recenterEnabled() const;
   QString textString() const;
+<<<<<<< HEAD
   void connectRouteTaskSignals();
+=======
+  void initializeRoute();
+>>>>>>> v.next
   void connectRouteTrackerSignals();
 
   Esri::ArcGISRuntime::Graphic* m_routeAheadGraphic = nullptr;
@@ -92,7 +100,11 @@ private:
   QString m_textString = "";
   Esri::ArcGISRuntime::RouteParameters m_routeParameters;
   QList<Esri::ArcGISRuntime::DirectionManeuver> m_directionManeuvers;
+<<<<<<< HEAD
   // QTextToSpeech* m_speaker = nullptr;
+=======
+  QTextToSpeech* m_speaker = nullptr;
+>>>>>>> v.next
 };
 
 #endif // NAVIGATEAROUTEWITHREROUTING_H

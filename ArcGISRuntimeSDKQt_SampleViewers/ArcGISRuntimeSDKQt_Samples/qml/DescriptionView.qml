@@ -36,7 +36,11 @@ Rectangle {
             width: descriptionView.width - (40)
             wrapMode: Text.WrapAtWordBoundaryOrAnywhere
             readOnly: true
+<<<<<<< HEAD
             focus: true
+=======
+            activeFocusOnPress: false
+>>>>>>> v.next
             textFormat: Text.MarkdownText
             text: descriptionText
             onLinkActivated: Qt.openUrlExternally(link)

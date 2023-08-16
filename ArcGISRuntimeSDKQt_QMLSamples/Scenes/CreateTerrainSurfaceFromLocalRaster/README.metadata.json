@@ -7,6 +7,7 @@
         }
     ],
     "description": "Set the terrain surface with elevation described by a raster file.",
+    "featured": false,
     "ignore": false,
     "images": [
         "screenshot.png"

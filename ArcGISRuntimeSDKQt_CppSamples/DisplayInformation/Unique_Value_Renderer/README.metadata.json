@@ -1,6 +1,7 @@
 {
     "category": "Display information",
     "description": "Render features in a layer using a distinct symbol for each unique attribute value.",
+    "featured": true,
     "ignore": false,
     "images": [
         "screenshot.png"

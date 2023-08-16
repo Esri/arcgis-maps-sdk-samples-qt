@@ -1,6 +1,7 @@
 {
     "category": "Cloud and portal",
     "description": "This sample demonstrates how to retrieve a user's details via a Portal.",
+    "featured": false,
     "ignore": false,
     "images": [
         "screenshot.png"

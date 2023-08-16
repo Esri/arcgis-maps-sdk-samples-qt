@@ -1,6 +1,7 @@
 {
     "category": "Maps",
     "description": "Access and create bookmarks on a map.",
+    "featured": false,
     "ignore": false,
     "images": [
         "screenshot.png"

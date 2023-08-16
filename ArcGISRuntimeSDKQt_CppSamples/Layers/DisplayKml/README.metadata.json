@@ -7,6 +7,7 @@
         }
     ],
     "description": "Display KML from a URL, portal item, or local KML file.",
+    "featured": false,
     "ignore": false,
     "images": [
         "screenshot.png"

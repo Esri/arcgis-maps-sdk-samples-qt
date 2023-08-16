@@ -1,6 +1,10 @@
 {
     "category": "Display information",
     "description": "Query features on a map using an Arcade expression.",
+<<<<<<< HEAD
+=======
+    "featured": false,
+>>>>>>> v.next
     "ignore": false,
     "images": [
         "screenshot.png"

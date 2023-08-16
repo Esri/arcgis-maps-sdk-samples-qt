@@ -1,6 +1,10 @@
 {
     "category": "Routing",
     "description": "Display a route layer and its directions using a feature collection.",
+<<<<<<< HEAD
+=======
+    "featured": false,
+>>>>>>> v.next
     "ignore": false,
     "images": [
         "screenshot.png"

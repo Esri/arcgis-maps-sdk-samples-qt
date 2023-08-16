@@ -1,6 +1,7 @@
 {
     "category": "Layers",
     "description": "Display a WMS layer using a WMS service URL.",
+    "featured": false,
     "ignore": false,
     "images": [
         "screenshot.png"

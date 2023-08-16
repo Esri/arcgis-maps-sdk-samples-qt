@@ -43,7 +43,22 @@ VectorTiledLayerUrlSample {
             margins: 15
         }
         property int modelWidth: 0
+<<<<<<< HEAD
         width: modelWidth + leftPadding + rightPadding
+=======
+        width: modelWidth + leftPadding + rightPadding + (indicator ? indicator.width : 10)
+
+        // Add a background to the ComboBox
+        Rectangle {
+            anchors.fill: parent
+            radius: 10
+            // Make the rectangle visible if a dropdown indicator exists
+            // An indicator only exists if a theme is set
+            visible: parent.indicator
+            border.width: 1
+        }
+
+>>>>>>> v.next
         model: ["Mid-Century","Colored Pencil","Newspaper","Nova","World Street Map (Night)"]
         onCurrentTextChanged: {
             // Call C++ invokable function to switch the basemaps

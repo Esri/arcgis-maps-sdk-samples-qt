@@ -25,6 +25,14 @@ Page {
     visible: SampleManager.currentMode === SampleManager.ManageOfflineDataView
     property bool manageOfflineDataViewDownloadInProgress: false
 
+<<<<<<< HEAD
+=======
+    onVisibleChanged: {
+        if (!manageOfflineDataViewPage.visible && SampleManager.downloadInProgress)
+            SampleManager.cancelDownload = true;
+    }
+
+>>>>>>> v.next
     FileFolder {
         id: fileFolder
     }
@@ -50,6 +58,7 @@ Page {
             }
             Layout.fillWidth: true
             clip: true
+<<<<<<< HEAD
             visible: SampleManager.downloadInProgress && SampleManager.currentMode
         }
 
@@ -58,6 +67,17 @@ Page {
             Layout.alignment: Qt.AlignHCenter | Qt.AlignVCenter
             visible: !SampleManager.downloadInProgress
             onClicked: {
+=======
+            visible: SampleManager.downloadInProgress
+        }
+
+        Button {
+            text: SampleManager.downloadFailed ?  "Retry download all offline data" : "Download all offline data"
+            Layout.alignment: Qt.AlignHCenter | Qt.AlignVCenter
+            visible: !SampleManager.downloadInProgress
+            onClicked: {
+                SampleManager.downloadFailed = false;
+>>>>>>> v.next
                 if (System.reachability === System.ReachabilityOnline || System.reachability === System.ReachabilityUnknown) {
                     allDataDownloadLoader.item.downloadAllDataItems();
                     manageOfflineDataViewDownloadInProgress = true;
@@ -89,7 +109,11 @@ Page {
             Layout.alignment: Qt.AlignHCenter | Qt.AlignVCenter
             Layout.fillWidth: true
             horizontalAlignment: Label.AlignHCenter
+<<<<<<< HEAD
             visible: SampleManager.downloadInProgress || (allDataDownloadLoader.item && allDataDownloadLoader.item.failedToDownload)
+=======
+            visible: SampleManager.downloadInProgress || SampleManager.downloadFailed
+>>>>>>> v.next
             font {
                 family: fontFamily
             }
@@ -118,6 +142,21 @@ Page {
             visible: SampleManager.downloadInProgress
             clip: true
         }
+<<<<<<< HEAD
+=======
+
+        Button {
+            // PortalItem::fetchData does not have a cancel method so we can only clear the remaining items from the download queue
+            text: SampleManager.cancelDownload ? "Cancelling remaining downloads..." : "Cancel remaining downloads"
+            Layout.alignment: Qt.AlignHCenter | Qt.AlignVCenter
+            visible: SampleManager.downloadInProgress
+            enabled: !SampleManager.cancelDownload
+            onClicked: {
+                SampleManager.cancelDownload = true;
+            }
+            clip: true
+        }
+>>>>>>> v.next
     }
 
     MessageDialog {

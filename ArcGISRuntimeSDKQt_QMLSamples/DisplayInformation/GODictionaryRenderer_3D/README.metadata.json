@@ -11,6 +11,7 @@
         }
     ],
     "description": "This sample demonstrates applying a dictionary renderer to a graphics overlay in a 3D scene to display military symbology.",
+    "featured": false,
     "ignore": false,
     "images": [
         "screenshot.png"
@@ -34,7 +35,10 @@
         "GraphicsOverlay"
     ],
     "snippets": [
-        "GODictionaryRenderer_3D.qml"
+        "GODictionaryRenderer_3D.qml",
+        "XmlParser.cpp",
+        "XmlParser.h"
+
     ],
     "title": "Graphics overlay (dictionary renderer) 3D"
 }

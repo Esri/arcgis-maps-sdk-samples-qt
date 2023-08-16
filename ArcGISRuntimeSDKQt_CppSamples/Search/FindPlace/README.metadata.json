@@ -1,6 +1,7 @@
 {
     "category": "Search",
     "description": "Find places of interest near a location or within a specific area.",
+    "featured": false,
     "ignore": false,
     "images": [
         "screenshot.png"

@@ -31,8 +31,12 @@ class RouteTracker;
 class SimulatedLocationDataSource;
 }
 
+<<<<<<< HEAD
 // NOTE: As of Qt 6.2, QTextToSpeech is not supported. Instances of this class have been commented out for compatibility, but remain for reference
 // class QTextToSpeech;
+=======
+class QTextToSpeech;
+>>>>>>> v.next
 
 #include <QObject>
 #include <QString>

@@ -1,6 +1,10 @@
 {
     "category": "Layers",
     "description": "Query data from an OGC API feature service using CQL filters.",
+<<<<<<< HEAD
+=======
+    "featured": false,
+>>>>>>> v.next
     "ignore": false,
     "images": [
         "screenshot.png"

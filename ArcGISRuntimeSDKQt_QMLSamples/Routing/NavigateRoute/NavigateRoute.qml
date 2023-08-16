@@ -19,9 +19,13 @@ import QtQuick.Controls
 import QtQuick.Layouts
 import QtPositioning
 import Esri.ArcGISRuntime
+<<<<<<< HEAD
 
 // QTextToSpeech is not supported by Qt 6.2 so this is commented out
 // import Esri.samples
+=======
+import Esri.samples
+>>>>>>> v.next
 
 Rectangle {
     id: rootRectangle
@@ -264,6 +268,7 @@ Rectangle {
                 }
             }
 
+<<<<<<< HEAD
 // output new voice guidance
 //            onNewVoiceGuidanceResultChanged: {
 //                speaker.textToSpeech(newVoiceGuidanceResult.text);
@@ -280,6 +285,23 @@ Rectangle {
 //    NavigateRouteSpeaker {
 //        id: speaker
 //    }
+=======
+            // output new voice guidance
+            onNewVoiceGuidanceResultChanged: {
+                speaker.textToSpeech(newVoiceGuidanceResult.text);
+            }
+
+            // set a callback to indicate if the speech engine is ready to speak
+            speechEngineReadyCallback: function() {
+                return speaker.textToSpeechEngineReady();
+            }
+        }
+    }
+
+    NavigateRouteSpeaker {
+        id: speaker
+    }
+>>>>>>> v.next
 
     function startNavigation() {
         // get the directions for the route

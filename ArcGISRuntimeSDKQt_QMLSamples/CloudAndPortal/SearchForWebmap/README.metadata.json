@@ -1,6 +1,7 @@
 {
     "category": "Cloud and portal",
     "description": "Find portal items by using a keyword, and limit the results to items of a certain type - in this case, web maps.",
+    "featured": false,
     "ignore": false,
     "images": [
         "screenshot.png"

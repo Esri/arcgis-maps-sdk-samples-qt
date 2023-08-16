@@ -1,6 +1,7 @@
 {
     "category": "Features",
     "description": "Change the appearance of a feature layer with a renderer.",
+    "featured": false,
     "ignore": false,
     "images": [
         "screenshot.png"

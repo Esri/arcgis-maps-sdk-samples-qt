@@ -20,6 +20,10 @@ import Esri.ArcGISRuntime
 import QtQuick.Layouts
 import QtPositioning
 import Esri.ArcGISExtras
+<<<<<<< HEAD
+=======
+import Esri.samples
+>>>>>>> v.next
 
 Rectangle {
     id: rootRectangle
@@ -243,6 +247,7 @@ Rectangle {
         }
 
         // Output new voice guidance
+<<<<<<< HEAD
         //        onNewVoiceGuidanceResultChanged: {
         //            speaker.textToSpeech(newVoiceGuidanceResult.text);
         //        }
@@ -257,6 +262,21 @@ Rectangle {
     //    NavigateRouteSpeaker {
     //        id: speaker
     //    }
+=======
+        onNewVoiceGuidanceResultChanged: {
+            speaker.textToSpeech(newVoiceGuidanceResult.text);
+        }
+
+        // Set a callback to indicate if the speech engine is ready to speak
+        speechEngineReadyCallback: function() {
+            return speaker.textToSpeechEngineReady();
+        }
+    }
+
+    NavigateRouteSpeaker {
+        id: speaker
+    }
+>>>>>>> v.next
 
     function startNavigation() {
         // Solve the route with the default parameters

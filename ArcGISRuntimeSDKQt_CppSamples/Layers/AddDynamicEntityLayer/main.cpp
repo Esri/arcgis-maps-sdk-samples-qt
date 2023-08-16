@@ -28,9 +28,12 @@ void setAPIKey(const QGuiApplication& app, QString apiKey);
 
 int main(int argc, char *argv[])
 {
+<<<<<<< HEAD
   // Enforce OpenGL
   qputenv("QSG_RHI_BACKEND", "opengl");
 
+=======
+>>>>>>> v.next
   QGuiApplication app(argc, argv);
   app.setApplicationName(QString("AddDynamicEntityLayer - C++"));
 

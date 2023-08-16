@@ -1,6 +1,10 @@
 {
     "category": "Display information",
     "description": "Create symbol styles from a style file hosted on a portal.",
+<<<<<<< HEAD
+=======
+    "featured": false,
+>>>>>>> v.next
     "ignore": false,
     "images": [
         "screenshot.png"

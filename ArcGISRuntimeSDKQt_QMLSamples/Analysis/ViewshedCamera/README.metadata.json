@@ -1,6 +1,7 @@
 {
     "category": "Analysis",
     "description": "This sample demonstrates how to calculate a Viewshed from a SceneView's current Camera Viewpoint.",
+    "featured": false,
     "ignore": false,
     "images": [
         "screenshot.png"

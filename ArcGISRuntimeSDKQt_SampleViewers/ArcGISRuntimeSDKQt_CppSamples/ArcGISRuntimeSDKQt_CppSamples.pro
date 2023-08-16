@@ -20,6 +20,7 @@
 TEMPLATE = app
 QT += core gui xml network qml quick positioning sensors multimedia
 QT += widgets quickcontrols2 opengl webview core5compat websockets
+QT += widgets quickcontrols2 opengl webview core5compat websockets texttospeech
 TARGET = ArcGISQt_CppSamples
 DEFINES += CPP_VIEWER
 DEFINES += Qt_Version=\"$$QT_VERSION\"
@@ -27,6 +28,7 @@ SAMPLEPATHCPP = $$PWD/../../ArcGISRuntimeSDKQt_CppSamples
 COMMONVIEWER = $$PWD/../ArcGISRuntimeSDKQt_Samples
 PCH_HEADER = $$COMMONVIEWER/pch.hpp
 ARCGIS_RUNTIME_VERSION = 200.1.0
+ARCGIS_RUNTIME_VERSION = 200.2.0
 DEFINES += ArcGIS_Runtime_Version=$$ARCGIS_RUNTIME_VERSION
 
 # This block determines whether to build against the installed SDK or the local dev build area

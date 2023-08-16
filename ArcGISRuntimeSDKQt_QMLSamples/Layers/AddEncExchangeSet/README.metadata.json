@@ -11,6 +11,7 @@
         }
     ],
     "description": "Display nautical charts per the ENC specification.",
+    "featured": false,
     "ignore": false,
     "images": [
         "screenshot.png"

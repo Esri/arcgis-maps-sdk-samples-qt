@@ -7,6 +7,7 @@
         }
     ],
     "description": "Generate a local geodatabase from an online feature service.",
+    "featured": false,
     "ignore": false,
     "images": [
         "screenshot.png"

@@ -60,7 +60,11 @@ RasterRenderingRuleSample {
                 ComboBox {
                     id: renderingRulesCombo
                     property int modelWidth: 0
+<<<<<<< HEAD
                     Layout.minimumWidth: modelWidth + leftPadding + rightPadding
+=======
+                    Layout.minimumWidth: modelWidth + leftPadding + rightPadding + (indicator ? indicator.width : 10)
+>>>>>>> v.next
                     Layout.margins: 10
                     model: renderingRuleNames
 

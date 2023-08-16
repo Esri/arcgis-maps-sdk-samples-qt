@@ -26,8 +26,11 @@
 #include <QQuickWindow>
 #include <QtGlobal>
 
+<<<<<<< HEAD
 #include "GAnalytics.h"
 
+=======
+>>>>>>> v.next
 #ifdef QT_WEBVIEW_WEBENGINE_BACKEND
 #  include <QtWebEngineQuick>
 #endif // QT_WEBVIEW_WEBENGINE_BACKEND
@@ -101,6 +104,10 @@
 #include "ConvexHull.h"
 #include "CreateAndSaveKmlFile.h"
 #include "CreateAndSaveMap.h"
+<<<<<<< HEAD
+=======
+#include "CreateAndEditGeometries.h"
+>>>>>>> v.next
 #include "CreateGeometries.h"
 #include "CreateLoadReport.h"
 #include "CreateMobileGeodatabase.h"
@@ -127,6 +134,10 @@
 #include "DisplayMap.h"
 #include "DisplayOgcApiFeatureCollection.h"
 #include "DisplayOverviewMap.h"
+<<<<<<< HEAD
+=======
+#include "DisplayPointsUsingClusteringFeatureReduction.h"
+>>>>>>> v.next
 #include "DisplayRouteLayer.h"
 #include "DisplaySceneLayer.h"
 #include "DisplaySubtypeFeatureLayer.h"
@@ -292,25 +303,38 @@
 #include "RasterFunctionFile.h"
 #endif // SHOW_RASTER_FUNCTION_SAMPLE
 
+<<<<<<< HEAD
 #else
 #include "NavigateRouteSpeaker.h"
 #endif // CPP_VIEWER
+=======
+#else // QML_VIEWER
+#include "NavigateRouteSpeaker.h"
+#include "XmlParser.h"
+#endif
+>>>>>>> v.next
 
 #define STRINGIZE(x) #x
 #define QUOTE(x) STRINGIZE(x)
 
 QObject* esriSampleManagerProvider(QQmlEngine* engine, QJSEngine* scriptEngine);
+<<<<<<< HEAD
 QObject* gAnalyticsProvider(QQmlEngine* engine, QJSEngine* scriptEngine);
+=======
+>>>>>>> v.next
 QObject* syntaxHighlighterProvider(QQmlEngine* engine, QJSEngine* scriptEngine);
 void registerClasses();
 void registerCppSampleClasses();
 
 int main(int argc, char *argv[])
 {
+<<<<<<< HEAD
   // add support for feature toggles on mobile, which is disabled by default
   qputenv("QT_ENABLE_FEATURE_TOGGLE_MOBILE", "true");
   qputenv("QSG_RHI_BACKEND", "opengl");
 
+=======
+>>>>>>> v.next
 #ifdef QT_WEBVIEW_WEBENGINE_BACKEND
   QtWebEngineQuick::initialize();
 #endif // QT_WEBVIEW_WEBENGINE_BACKEND
@@ -415,6 +439,10 @@ void registerCppSampleClasses()
   ConvexHull::init();
   CreateAndSaveKmlFile::init();
   CreateAndSaveMap::init();
+<<<<<<< HEAD
+=======
+  CreateAndEditGeometries::init();
+>>>>>>> v.next
   CreateGeometries::init();
   CreateLoadReport::init();
   CreateMobileGeodatabase::init();
@@ -440,6 +468,10 @@ void registerCppSampleClasses()
   DisplayMap::init();
   DisplayOgcApiFeatureCollection::init();
   DisplayOverviewMap::init();
+<<<<<<< HEAD
+=======
+  DisplayPointsUsingClusteringFeatureReduction::init();
+>>>>>>> v.next
   DisplayRouteLayer::init();
   DisplaySceneLayer::init();
   DisplaySubtypeFeatureLayer::init();
@@ -607,8 +639,11 @@ void registerClasses()
 {
   qmlRegisterSingletonType<DownloadSampleManager>("Esri.ArcGISRuntimeSamples", 1, 0, "SampleManager",
                                                   &esriSampleManagerProvider);
+<<<<<<< HEAD
   // Register the Google Analytics class
   qmlRegisterSingletonType<GAnalytics>("Telemetry", 1, 0, "GAnalytics", &gAnalyticsProvider);
+=======
+>>>>>>> v.next
 
   qmlRegisterSingletonType<SyntaxHighlighter>("Esri.ArcGISRuntimeSamples", 1, 0, "SyntaxHighlighter",
                                               &syntaxHighlighterProvider);
@@ -632,8 +667,15 @@ void registerClasses()
   qmlRegisterType<SampleSearchFilterModel>("Esri.ArcGISRuntimeSamples", 1, 0, "SampleSearchFilterModel");
   qmlRegisterUncreatableType<SearchFilterCriteria>("Esri.ArcGISRuntimeSamples", 1, 0, "SearchFilterCriteria", "Abstract base class");
 
+<<<<<<< HEAD
 #ifndef CPP_VIEWER
   qmlRegisterType<NavigateRouteSpeaker>("Esri.samples", 1, 0, "NavigateRouteSpeaker");
+=======
+
+#ifndef CPP_VIEWER
+  qmlRegisterType<NavigateRouteSpeaker>("Esri.samples", 1, 0, "NavigateRouteSpeaker");
+  qmlRegisterType<XmlParser>("Esri.samples", 1, 0, "XmlParser");
+>>>>>>> v.next
 #endif
 
   // register the C++ Sample Classes if building for C++ API
@@ -650,12 +692,15 @@ QObject* esriSampleManagerProvider(QQmlEngine* engine, QJSEngine*)
   return sampleManager;
 }
 
+<<<<<<< HEAD
 QObject* gAnalyticsProvider(QQmlEngine* engine, QJSEngine*)
 {
   static QObject* gAnalytics = new GAnalytics(engine);
   return gAnalytics;
 }
 
+=======
+>>>>>>> v.next
 QObject* syntaxHighlighterProvider(QQmlEngine* engine, QJSEngine*)
 {
   static SyntaxHighlighter* syntaxHighlighter = new SyntaxHighlighter(engine);

@@ -1,6 +1,7 @@
 {
     "category": "Layers",
     "description": "Construct a KML document and save it as a KMZ file.",
+    "featured": false,
     "ignore": false,
     "images": [
         "screenshot.png"

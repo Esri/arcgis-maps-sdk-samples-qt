@@ -11,6 +11,10 @@
         }
     ],
     "description": "This sample demonstrates applying a dictionary renderer to graphics, in order to display military symbology without the need for a feature table.",
+<<<<<<< HEAD
+=======
+    "featured": false,
+>>>>>>> v.next
     "ignore": false,
     "images": [
         "screenshot.png"
@@ -34,7 +38,9 @@
         "GraphicsOverlay"
     ],
     "snippets": [
-        "GODictionaryRenderer.qml"
+        "GODictionaryRenderer.qml",
+        "XmlParser.cpp",
+        "XmlParser.h"
     ],
     "title": "Graphics overlay (dictionary renderer)"
 }

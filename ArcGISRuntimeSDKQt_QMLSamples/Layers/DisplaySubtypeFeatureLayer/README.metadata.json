@@ -1,6 +1,7 @@
 {
     "category": "Layers",
     "description": "Displays a composite layer of all the subtype values in a feature class.",
+    "featured": false,
     "ignore": false,
     "images": [
         "screenshot.png"

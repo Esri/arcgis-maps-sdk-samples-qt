@@ -198,11 +198,6 @@ Rectangle {
                 color: "#474747"
             }
 
-            Rectangle {
-                anchors.fill: filterComboBox
-                color: "white"
-            }
-
             ComboBox {
                 id: filterComboBox
                 anchors {
@@ -211,7 +206,11 @@ Rectangle {
                     horizontalCenter: parent.horizontalCenter
                 }
                 property int modelWidth: 0
+<<<<<<< HEAD
                 width: modelWidth + leftPadding + rightPadding
+=======
+                width: modelWidth + leftPadding + rightPadding + (indicator ? indicator.width : 10)
+>>>>>>> v.next
                 model: [ "No filter", "FLOW < 500", "FLOW < 300", "FLOW < 100" ]
 
                 onCurrentTextChanged: {

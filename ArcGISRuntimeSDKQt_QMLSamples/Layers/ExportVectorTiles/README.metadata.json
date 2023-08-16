@@ -1,6 +1,10 @@
 {
     "category": "Layers",
     "description": "Export tiles from an online vector tile service.",
+<<<<<<< HEAD
+=======
+    "featured": true,
+>>>>>>> v.next
     "ignore": false,
     "images": [
         "screenshot.png"

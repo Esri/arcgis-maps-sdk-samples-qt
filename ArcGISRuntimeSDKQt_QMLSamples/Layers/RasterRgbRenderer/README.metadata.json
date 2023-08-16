@@ -7,6 +7,7 @@
         }
     ],
     "description": "Apply an RGB renderer to a raster layer to enhance feature visibility.",
+    "featured": false,
     "ignore": false,
     "images": [
         "screenshot.png"

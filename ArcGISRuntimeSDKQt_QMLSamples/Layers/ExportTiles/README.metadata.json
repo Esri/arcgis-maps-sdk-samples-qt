@@ -1,6 +1,7 @@
 {
     "category": "Layers",
     "description": "Download tiles to a local tile cache file stored on the device.",
+    "featured": false,
     "ignore": false,
     "images": [
         "screenshot.png"

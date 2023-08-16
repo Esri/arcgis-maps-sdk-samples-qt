@@ -1,0 +1,33 @@
+{
+    "category": "Display information",
+    "description": "Display a web map with a point feature layer that has feature reduction enabled to aggregate points into clusters.",
+    "featured": true,
+    "ignore": false,
+    "images": [
+        "screenshot.png"
+    ],
+    "keywords": [
+        "aggregate",
+        "bin",
+        "cluster",
+        "group",
+        "merge",
+        "normalize",
+        "reduce",
+        "summarize"
+    ],
+    "redirect_from": "",
+    "relevant_apis": [
+        "AggregateGeoElement",
+        "FeatureLayer",
+        "FeatureReduction",
+        "GeoElement",
+        "IdentifyLayerResult"
+    ],
+    "snippets": [
+        "DisplayPointsUsingClusteringFeatureReduction.cpp",
+        "DisplayPointsUsingClusteringFeatureReduction.h",
+        "DisplayPointsUsingClusteringFeatureReduction.qml"
+    ],
+    "title": "Display layer with feature reduction"
+}

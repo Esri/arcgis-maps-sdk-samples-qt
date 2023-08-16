@@ -82,7 +82,11 @@ ManageBookmarksSample {
             margins: 15
         }
         property int bestWidth: implicitWidth
+<<<<<<< HEAD
         width: bestWidth + leftPadding + rightPadding
+=======
+        width: bestWidth + leftPadding + rightPadding + (indicator ? indicator.width : 10)
+>>>>>>> v.next
         // Set the model to the BookmarkListModel
         model: manageBookmarksSample.bookmarks
 
@@ -102,6 +106,16 @@ ManageBookmarksSample {
         onCurrentTextChanged: {
             // Call C++ invokable function to to go to the bookmark
             manageBookmarksSample.goToBookmark(bookmarkComboBox.currentIndex);
+        }
+
+        // Add a background to the ComboBox
+        Rectangle {
+            anchors.fill: parent
+            radius: 10
+            // Make the rectangle visible if a dropdown indicator exists
+            // An indicator only exists if a theme is set
+            visible: parent.indicator
+            border.width: 1
         }
 
         TextMetrics {

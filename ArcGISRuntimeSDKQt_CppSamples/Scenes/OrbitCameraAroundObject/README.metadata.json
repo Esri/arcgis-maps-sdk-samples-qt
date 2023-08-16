@@ -7,6 +7,7 @@
         }
     ],
     "description": "Fix the camera to point at and rotate around a target object.",
+    "featured": false,
     "ignore": false,
     "images": [
         "screenshot.png"

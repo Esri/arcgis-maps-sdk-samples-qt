@@ -1,6 +1,10 @@
 {
     "category": "Edit data",
     "description": "Create, query and edit a specific server version using service geodatabase.",
+<<<<<<< HEAD
+=======
+    "featured": false,
+>>>>>>> v.next
     "ignore": false,
     "images": [
         "screenshot.png"
