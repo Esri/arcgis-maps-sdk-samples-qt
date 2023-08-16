@@ -1,6 +1,5 @@
 #-------------------------------------------------
 # Copyright 2020 Esri.
-# Copyright 2023 Esri.
 
 # Licensed under the Apache License, Version 2.0 (the "License");
 # you may not use this file except in compliance with the License.
@@ -28,9 +27,6 @@ QT += opengl qml quick
 TEMPLATE = app
 TARGET = ApplyMosaicRuleToRasters
 
-ARCGIS_RUNTIME_VERSION = 200.1.0
-TARGET = CreateAndEditGeometries
-
 ARCGIS_RUNTIME_VERSION = 200.2.0
 include($$PWD/arcgisruntime.pri)
 
@@ -44,13 +40,6 @@ SOURCES += \
     ApplyMosaicRuleToRasters.cpp
 
 RESOURCES += ApplyMosaicRuleToRasters.qrc
-    CreateAndEditGeometries.h
-
-SOURCES += \
-    main.cpp \
-    CreateAndEditGeometries.cpp
-
-RESOURCES += CreateAndEditGeometries.qrc
 
 #-------------------------------------------------------------------------------
 

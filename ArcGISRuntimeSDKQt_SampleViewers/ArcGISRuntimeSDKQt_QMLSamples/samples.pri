@@ -11,15 +11,6 @@
 #  See the Sample code usage restrictions document for further information.
 #-------------------------------------------------
 HEADERS += \
-<<<<<<< HEAD
-    "$$SAMPLEPATHQML/Routing/NavigateRoute/NavigateRouteSpeaker.h"
-
-INCLUDEPATH += \
-    "$$SAMPLEPATHQML/Routing/NavigateRoute"
-
-SOURCES += \
-    "$$SAMPLEPATHQML/Routing/NavigateRoute/NavigateRouteSpeaker.cpp"
-=======
     "$$SAMPLEPATHQML/Routing/NavigateRoute/NavigateRouteSpeaker.h" \
     "$$SAMPLEPATHQML/DisplayInformation/GODictionaryRenderer/XmlParser.h"
 
@@ -30,7 +21,6 @@ INCLUDEPATH += \
 SOURCES += \
     "$$SAMPLEPATHQML/Routing/NavigateRoute/NavigateRouteSpeaker.cpp" \
     "$$SAMPLEPATHQML/DisplayInformation/GODictionaryRenderer/XmlParser.cpp"
->>>>>>> v.next
 
 RESOURCES += \
     "$$SAMPLEPATHQML/Analysis/AnalyzeHotspots/AnalyzeHotspots.qrc" \
@@ -52,14 +42,9 @@ RESOURCES += \
     "$$SAMPLEPATHQML/DisplayInformation/CreateSymbolStylesFromWebStyles/CreateSymbolStylesFromWebStyles.qrc" \
     "$$SAMPLEPATHQML/DisplayInformation/CustomDictionaryStyle/CustomDictionaryStyle.qrc" \
     "$$SAMPLEPATHQML/DisplayInformation/DisplayGrid/DisplayGrid.qrc" \
-<<<<<<< HEAD
-    # "$$SAMPLEPATHQML/DisplayInformation/GODictionaryRenderer_3D/GODictionaryRenderer_3D.qrc" \ # Qt 6.2 does not support getting entries from an xml list
-    # "$$SAMPLEPATHQML/DisplayInformation/GODictionaryRenderer/GODictionaryRenderer.qrc" \ # Qt 6.2 does not support getting entries from an xml list
-=======
     "$$SAMPLEPATHQML/DisplayInformation/DisplayPointsUsingClusteringFeatureReduction/DisplayPointsUsingClusteringFeatureReduction.qrc" \
     "$$SAMPLEPATHQML/DisplayInformation/GODictionaryRenderer_3D/GODictionaryRenderer_3D.qrc" \
     "$$SAMPLEPATHQML/DisplayInformation/GODictionaryRenderer/GODictionaryRenderer.qrc" \
->>>>>>> v.next
     "$$SAMPLEPATHQML/DisplayInformation/GOSymbols/GOSymbols.qrc" \
     "$$SAMPLEPATHQML/DisplayInformation/IdentifyGraphics/IdentifyGraphics.qrc" \
     "$$SAMPLEPATHQML/DisplayInformation/Picture_Marker_Symbol/Picture_Marker_Symbol.qrc" \
@@ -98,10 +83,7 @@ RESOURCES += \
     "$$SAMPLEPATHQML/Geometry/Buffer/Buffer.qrc" \
     "$$SAMPLEPATHQML/Geometry/ClipGeometry/ClipGeometry.qrc" \
     "$$SAMPLEPATHQML/Geometry/ConvexHull/ConvexHull.qrc" \
-<<<<<<< HEAD
-=======
     "$$SAMPLEPATHQML/Geometry/CreateAndEditGeometries/CreateAndEditGeometries.qrc" \
->>>>>>> v.next
     "$$SAMPLEPATHQML/Geometry/CreateGeometries/CreateGeometries.qrc" \
     "$$SAMPLEPATHQML/Geometry/CutGeometry/CutGeometry.qrc" \
     "$$SAMPLEPATHQML/Geometry/DensifyAndGeneralize/DensifyAndGeneralize.qrc" \

@@ -28,39 +28,9 @@
 
 int main(int argc, char *argv[])
 {
-<<<<<<< HEAD
-  // Enforce OpenGL
-  qputenv("QSG_RHI_BACKEND", "opengl");
-
 #ifdef QT_WEBVIEW_WEBENGINE_BACKEND
   QtWebEngineQuick::initialize();
 #endif // QT_WEBVIEW_WEBENGINE_BACKEND
-=======
-#ifdef QT_WEBVIEW_WEBENGINE_BACKEND
-  QtWebEngineQuick::initialize();
-#endif // QT_WEBVIEW_WEBENGINE_BACKEND
-
-  QGuiApplication app(argc, argv);
-  app.setApplicationName("PortalUserInfo - QML");
-
-  // Use of Esri location services, including basemaps and geocoding,
-  // requires authentication using either an ArcGIS identity or an API Key.
-  // 1. ArcGIS identity: An ArcGIS named user account that is a member of an
-  //    organization in ArcGIS Online or ArcGIS Enterprise.
-  // 2. API key: A permanent key that gives your application access to Esri
-  //    location services. Visit your ArcGIS Developers Dashboard create a new
-  //    API keys or access an existing API key.
-  const QString apiKey = QString("");
-  if (apiKey.isEmpty())
-  {
-      qWarning() << "Use of Esri location services, including basemaps, requires" <<
-                    "you to authenticate with an ArcGIS identity or set the API Key property.";
-  }
-  else
-  {
-      QCoreApplication::instance()->setProperty("Esri.ArcGISRuntime.apiKey", apiKey);
-  }
->>>>>>> v.next
 
   QGuiApplication app(argc, argv);
   app.setApplicationName("PortalUserInfo - QML");

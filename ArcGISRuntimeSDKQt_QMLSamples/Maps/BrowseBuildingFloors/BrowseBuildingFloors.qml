@@ -48,9 +48,6 @@ Rectangle {
             }
         }
 
-<<<<<<< HEAD
-        Column {
-=======
         // Add a background to the Column
         Rectangle {
             anchors.fill: col
@@ -60,7 +57,6 @@ Rectangle {
 
         Column {
             id: col
->>>>>>> v.next
             spacing: 15
             padding: 10
 

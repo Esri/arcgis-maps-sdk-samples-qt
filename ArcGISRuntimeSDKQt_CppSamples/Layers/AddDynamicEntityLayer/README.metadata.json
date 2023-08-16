@@ -1,10 +1,7 @@
 {
     "category": "Layers",
     "description": "Display data from an ArcGIS stream service using a dynamic entity layer.",
-<<<<<<< HEAD
-=======
     "featured": false,
->>>>>>> v.next
     "ignore": false,
     "images": [
         "screenshot.png"

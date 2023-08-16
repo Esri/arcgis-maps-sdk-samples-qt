@@ -119,11 +119,7 @@ Rectangle {
                 id: stretchTypeCombo
                 anchors.horizontalCenter: parent.horizontalCenter
                 property int modelWidth: 0
-<<<<<<< HEAD
-                width: modelWidth + leftPadding + rightPadding
-=======
                 width: modelWidth + leftPadding + rightPadding + (indicator ? indicator.width : 10)
->>>>>>> v.next
                 model: stretchTypes
 
                 // Add a background to the ComboBox

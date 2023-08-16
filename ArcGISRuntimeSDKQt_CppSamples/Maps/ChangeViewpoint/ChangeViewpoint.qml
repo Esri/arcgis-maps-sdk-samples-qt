@@ -55,11 +55,7 @@ ChangeViewpointSample {
 
         property int bestWidth: implicitWidth
 
-<<<<<<< HEAD
-        width: bestWidth + rightPadding + leftPadding
-=======
         width: bestWidth + rightPadding + leftPadding + 20
->>>>>>> v.next
 
         model: [ "Center",
                  "Center and scale",

@@ -166,11 +166,7 @@ Rectangle {
         }
 
         property int modelWidth: 0
-<<<<<<< HEAD
-        width: modelWidth + rightPadding + leftPadding
-=======
         width: modelWidth + rightPadding + leftPadding + (indicator ? indicator.width : 10)
->>>>>>> v.next
         model: map.bookmarks
 
         Connections {

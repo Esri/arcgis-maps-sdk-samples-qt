@@ -23,12 +23,6 @@
 
 int main(int argc, char *argv[])
 {
-<<<<<<< HEAD:ArcGISRuntimeSDKQt_QMLSamples/Features/GenerateGeodatabaseReplicaFromFeatureService/main.cpp
-  // Enforce OpenGL
-  qputenv("QSG_RHI_BACKEND", "opengl");
-
-=======
->>>>>>> v.next:ArcGISRuntimeSDKQt_QMLSamples/Features/GenerateGeodatabase/main.cpp
   QGuiApplication app(argc, argv);
   app.setApplicationName("GenerateGeodatabaseReplicaFromFeatureService - QML");
 

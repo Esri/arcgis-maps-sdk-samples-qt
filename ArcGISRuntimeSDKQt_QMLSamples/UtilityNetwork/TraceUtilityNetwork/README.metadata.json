@@ -1,10 +1,7 @@
 {
     "category": "Utility network",
     "description": "Discover connected features in a utility network using connected, subnetwork, upstream, and downstream traces.",
-<<<<<<< HEAD
-=======
     "featured": true,
->>>>>>> v.next
     "ignore": false,
     "images": [
         "screenshot.png"

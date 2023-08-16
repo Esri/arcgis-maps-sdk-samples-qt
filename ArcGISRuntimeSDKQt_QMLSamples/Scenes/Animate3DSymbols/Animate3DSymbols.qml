@@ -134,11 +134,7 @@ Rectangle {
             ComboBox {
                 id: missionList
                 property real modelWidth: 0
-<<<<<<< HEAD
-                Layout.minimumWidth: leftPadding + rightPadding + modelWidth
-=======
                 Layout.minimumWidth: leftPadding + rightPadding + modelWidth + (indicator ? indicator.width : 10)
->>>>>>> v.next
                 enabled: !playButton.checked
                 model: missionsModel
                 textRole: "name"

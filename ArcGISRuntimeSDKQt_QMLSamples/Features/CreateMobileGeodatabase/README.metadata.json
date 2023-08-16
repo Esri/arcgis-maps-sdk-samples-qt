@@ -1,10 +1,7 @@
 {
     "category": "Features",
     "description": "Create and share a mobile geodatabase.",
-<<<<<<< HEAD
-=======
     "featured": true,
->>>>>>> v.next
     "ignore": false,
     "images": [
         "screenshot.png"

@@ -45,11 +45,8 @@ public:
 
   static void init();
 
-<<<<<<< HEAD
-=======
   Q_INVOKABLE void stopLocationDisplay();
 
->>>>>>> v.next
 signals:
   void mapViewChanged();
   void locationPropertiesChanged();

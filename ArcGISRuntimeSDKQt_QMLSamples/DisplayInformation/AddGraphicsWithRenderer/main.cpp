@@ -23,12 +23,6 @@
 
 int main(int argc, char *argv[])
 {
-<<<<<<< HEAD:ArcGISRuntimeSDKQt_QMLSamples/DisplayInformation/AddGraphicsWithRenderer/main.cpp
-  // Enforce OpenGL
-  qputenv("QSG_RHI_BACKEND", "opengl");
-
-=======
->>>>>>> v.next:ArcGISRuntimeSDKQt_QMLSamples/DisplayInformation/GORenderers/main.cpp
   QGuiApplication app(argc, argv);
   app.setApplicationName("AddGraphicsWithRenderer - QML");
 

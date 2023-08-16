@@ -37,10 +37,6 @@ Item {
         MouseArea {
             anchors.fill: parent
             onClicked: {
-<<<<<<< HEAD
-                console.log(hostName.height, okButton.height)
-=======
->>>>>>> v.next
                 dialogComponent.visible = false
             }
         }

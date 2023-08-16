@@ -22,12 +22,6 @@ void setAPIKey(const QGuiApplication& app, QString apiKey);
 
 int main(int argc, char *argv[])
 {
-<<<<<<< HEAD:ArcGISRuntimeSDKQt_QMLSamples/Maps/ShowDeviceLocationUsingIndoorPositioning/main.cpp
-  // Enforce OpenGL
-  qputenv("QSG_RHI_BACKEND", "opengl");
-
-=======
->>>>>>> v.next:ArcGISRuntimeSDKQt_QMLSamples/Features/FeatureLayer_Geopackage/main.cpp
   QGuiApplication app(argc, argv);
   app.setApplicationName(QString("ShowDeviceLocationUsingIndoorPositioning - QML"));
 

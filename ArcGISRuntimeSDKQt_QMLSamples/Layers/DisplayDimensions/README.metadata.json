@@ -7,10 +7,7 @@
         }
     ],
     "description": "Display dimension features from a mobile map package.",
-<<<<<<< HEAD
-=======
     "featured": false,
->>>>>>> v.next
     "ignore": false,
     "images": [
         "screenshot.png"

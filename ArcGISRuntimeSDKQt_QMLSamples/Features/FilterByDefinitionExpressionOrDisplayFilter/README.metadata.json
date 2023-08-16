@@ -1,10 +1,7 @@
 {
     "category": "Features",
     "description": "Filter features displayed on a map using a definition expression or a display filter.",
-<<<<<<< HEAD:ArcGISRuntimeSDKQt_QMLSamples/Features/FilterByDefinitionExpressionOrDisplayFilter/README.metadata.json
-=======
     "featured": false,
->>>>>>> v.next:ArcGISRuntimeSDKQt_QMLSamples/Features/FeatureLayer_DefinitionExpression/README.metadata.json
     "ignore": false,
     "images": [
         "screenshot.png"

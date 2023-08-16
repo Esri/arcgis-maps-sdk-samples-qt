@@ -87,11 +87,7 @@ Rectangle {
         }
 
         property int modelWidth: 0
-<<<<<<< HEAD
-        width: modelWidth + leftPadding + rightPadding
-=======
         width: modelWidth + leftPadding + rightPadding + (indicator ? indicator.width : 10)
->>>>>>> v.next
         model: geometryOperations
 
         onCurrentIndexChanged: applyGeometryOperation(currentIndex);

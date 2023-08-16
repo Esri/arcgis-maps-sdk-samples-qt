@@ -1,10 +1,7 @@
 {
     "category": "Maps",
     "description": "This sample demonstrates how to parse NMEA sentences and use the results to show device location on the map.",
-<<<<<<< HEAD
-=======
     "featured": false,
->>>>>>> v.next
     "ignore": false,
     "images": [
         "screenshot.png"

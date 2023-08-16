@@ -78,10 +78,7 @@ SampleManager::~SampleManager() = default;
 
 void SampleManager::init()
 {
-<<<<<<< HEAD
-=======
   m_featuredSamples = new SampleListModel(this);
->>>>>>> v.next
   buildCategoriesList();
   emit sampleInitComplete();
 }
@@ -110,8 +107,6 @@ void SampleManager::createAndSetTempDirForLocalServer()
 #endif
 }
 
-<<<<<<< HEAD
-=======
 void SampleManager::setCancelDownload(bool cancel)
 {
   m_cancelDownload = cancel;
@@ -123,7 +118,6 @@ void SampleManager::setDownloadFailed(bool didFail)
   m_downloadFailed = didFail;
   emit downloadFailedChanged();
 }
->>>>>>> v.next
 // Build the Categories List
 void SampleManager::buildCategoriesList()
 {
@@ -263,8 +257,6 @@ SampleListModel* SampleManager::buildSamplesList(const QDir& dir, const QString&
     // Create the sample
     Sample* newSample = new Sample(sampleName, samplePath, sampleSource, sampleDescription, codeFiles, sampleThumbnailUrl, dataItems, this);
     samples->addSample(newSample);
-<<<<<<< HEAD
-=======
 
     // Add to featured samples list if necessary
     if (sampleConfig.contains(PROPERTYFEATURED) && sampleConfig.value(PROPERTYFEATURED).toBool())
@@ -272,7 +264,6 @@ SampleListModel* SampleManager::buildSamplesList(const QDir& dir, const QString&
       m_featuredSamples->addSample(newSample);
       emit featuredSamplesChanged();
     }
->>>>>>> v.next
   }
 
   return samples;

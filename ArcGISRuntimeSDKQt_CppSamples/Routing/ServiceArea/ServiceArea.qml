@@ -98,9 +98,6 @@ ServiceAreaSample {
             model: ["Facility", "Barrier"]
 
             property int modelWidth: 0
-<<<<<<< HEAD
-            width: modelWidth + leftPadding + rightPadding
-=======
             width: modelWidth + leftPadding + rightPadding + (indicator ? indicator.width : 10)
 
             // Add a background to the ComboBox
@@ -112,7 +109,6 @@ ServiceAreaSample {
                 visible: parent.indicator
                 border.width: 1
             }
->>>>>>> v.next
 
             onCurrentTextChanged: {
                 if (currentText === "Facility")

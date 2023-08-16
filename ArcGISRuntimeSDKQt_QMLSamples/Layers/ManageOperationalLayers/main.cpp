@@ -25,12 +25,6 @@
 
 int main(int argc, char *argv[])
 {
-<<<<<<< HEAD
-  // Enforce OpenGL
-  qputenv("QSG_RHI_BACKEND", "opengl");
-
-=======
->>>>>>> v.next
   // register the draw order model
   qmlRegisterType<DrawOrderLayerListModel>("Esri.Samples", 1, 0, "DrawOrderListModel");
   QGuiApplication app(argc, argv);

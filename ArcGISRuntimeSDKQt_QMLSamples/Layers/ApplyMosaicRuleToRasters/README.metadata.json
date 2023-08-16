@@ -1,10 +1,7 @@
 {
     "category": "Layers",
     "description": "Apply mosaic rule to a mosaic dataset of rasters.",
-<<<<<<< HEAD
-=======
     "featured": false,
->>>>>>> v.next
     "ignore": false,
     "images": [
         "screenshot.png"

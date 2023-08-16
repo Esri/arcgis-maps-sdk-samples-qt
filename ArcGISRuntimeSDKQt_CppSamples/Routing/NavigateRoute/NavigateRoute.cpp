@@ -56,19 +56,12 @@
 #include "Graphic.h"
 #include "SimpleLineSymbol.h"
 
-<<<<<<< HEAD
-#include <QUuid>
-=======
->>>>>>> v.next
 #include <memory>
 #include <QList>
 #include <QTime>
 #include <QtTextToSpeech/QTextToSpeech>
 #include <QUrl>
 #include <QUuid>
-
-// NOTE: As of Qt 6.2, QTextToSpeech is not supported. Instances of this class have been commented out for compatibility, but remain for reference
-// #include <QTextToSpeech>
 
 using namespace Esri::ArcGISRuntime;
 
@@ -85,8 +78,7 @@ NavigateRoute::NavigateRoute(QObject* parent /* = nullptr */):
 {
   m_routeOverlay = new GraphicsOverlay(this);
   m_routeTask = new RouteTask(routeTaskUrl, this);
-
-  // m_speaker = new QTextToSpeech(this);
+  m_speaker = new QTextToSpeech(this);
 }
 
 NavigateRoute::~NavigateRoute() = default;
@@ -209,17 +201,10 @@ void NavigateRoute::startNavigation()
   connectRouteTrackerSignals();
 
   // enable the RouteTracker to know when the QTextToSpeech engine is ready
-<<<<<<< HEAD
-  //  m_routeTracker->setSpeechEngineReadyFunction([speaker = m_speaker]() -> bool
-  //  {
-  //    return speaker->state() == QTextToSpeech::State::Ready;
-  //  });
-=======
   m_routeTracker->setSpeechEngineReadyFunction([speaker = m_speaker]() -> bool
   {
     return speaker->state() == QTextToSpeech::State::Ready;
   });
->>>>>>> v.next
 
   // enable "recenter" button when location display is moved from nagivation mode
   connect(m_mapView->locationDisplay(), &LocationDisplay::autoPanModeChanged, this, [this](LocationDisplayAutoPanMode autoPanMode)
@@ -246,11 +231,11 @@ void NavigateRoute::startNavigation()
 
 void NavigateRoute::connectRouteTrackerSignals()
 {
-  //  connect(m_routeTracker, &RouteTracker::newVoiceGuidance, this, [this](VoiceGuidance* rawVoiceGuidance)
-  //  {
-  //    auto voiceGuidance = std::unique_ptr<VoiceGuidance>(rawVoiceGuidance);
-  //    m_speaker->say(voiceGuidance->text());
-  //  });
+  connect(m_routeTracker, &RouteTracker::newVoiceGuidance, this, [this](VoiceGuidance* rawVoiceGuidance)
+  {
+    auto voiceGuidance = std::unique_ptr<VoiceGuidance>(rawVoiceGuidance);
+    m_speaker->say(voiceGuidance->text());
+  });
 
   connect(m_routeTracker, &RouteTracker::trackingStatusChanged, this, [this](TrackingStatus* rawTrackingStatus)
   {

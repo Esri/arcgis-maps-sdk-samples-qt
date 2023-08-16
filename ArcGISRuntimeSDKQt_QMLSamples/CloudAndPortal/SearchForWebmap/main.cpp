@@ -28,10 +28,6 @@
 
 int main(int argc, char *argv[])
 {
-<<<<<<< HEAD
-  // Enforce OpenGL
-  qputenv("QSG_RHI_BACKEND", "opengl");
-
 #ifdef QT_WEBVIEW_WEBENGINE_BACKEND
     QtWebEngineQuick::initialize();
 #endif // QT_WEBVIEW_WEBENGINE_BACKEND
@@ -39,15 +35,6 @@ int main(int argc, char *argv[])
   QGuiApplication app(argc, argv);
   app.setApplicationName("SearchForWebmap - QML");
 
-=======
-#ifdef QT_WEBVIEW_WEBENGINE_BACKEND
-    QtWebEngineQuick::initialize();
-#endif // QT_WEBVIEW_WEBENGINE_BACKEND
-  
-  QGuiApplication app(argc, argv);
-  app.setApplicationName("SearchForWebmap - QML");
-
->>>>>>> v.next
   // Use of Esri location services, including basemaps and geocoding,
   // requires authentication using either an ArcGIS identity or an API Key.
   // 1. ArcGIS identity: An ArcGIS named user account that is a member of an

@@ -132,11 +132,7 @@ BlendRasterLayerSample {
             ComboBox {
                 id: slopeCombo
                 property int modelWidth: 0
-<<<<<<< HEAD
-                Layout.minimumWidth: modelWidth + leftPadding + rightPadding
-=======
                 Layout.minimumWidth: modelWidth + leftPadding + rightPadding + (indicator ? indicator.width : 10)
->>>>>>> v.next
                 Layout.fillWidth: true
                 textRole: "name"
                 model: slopeTypeModel
@@ -159,11 +155,7 @@ BlendRasterLayerSample {
             ComboBox {
                 id: colorCombo
                 property int modelWidth: 0
-<<<<<<< HEAD
-                Layout.minimumWidth: modelWidth + leftPadding + rightPadding
-=======
                 Layout.minimumWidth: modelWidth + leftPadding + rightPadding + (indicator ? indicator.width : 10)
->>>>>>> v.next
                 Layout.fillWidth: true
                 textRole: "name"
                 model: colorRampModel

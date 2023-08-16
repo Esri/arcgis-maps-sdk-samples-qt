@@ -65,11 +65,7 @@ Animate3DSymbolsSample {
                 model: missionsModel
                 textRole: "display"
                 property real modelWidth: 0
-<<<<<<< HEAD
-                Layout.minimumWidth: leftPadding + rightPadding + modelWidth
-=======
                 Layout.minimumWidth: leftPadding + rightPadding + modelWidth + (indicator ? indicator.width : 10)
->>>>>>> v.next
 
                 onModelChanged: {
                     for (let i = 0; i < missionsModel.rowCount(); ++i) {

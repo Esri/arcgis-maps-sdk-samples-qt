@@ -221,11 +221,7 @@ Rectangle {
         ComboBox {
             id: modeComboBox
             property int modelWidth: 0
-<<<<<<< HEAD
-            width: modelWidth + leftPadding + rightPadding
-=======
             width: modelWidth + leftPadding + rightPadding + (indicator ? indicator.width : 10)
->>>>>>> v.next
             model: ["Facility", "Barrier"]
 
             // Add a background to the ComboBox
