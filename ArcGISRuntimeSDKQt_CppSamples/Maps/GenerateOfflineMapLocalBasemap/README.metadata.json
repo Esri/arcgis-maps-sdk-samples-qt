@@ -7,6 +7,7 @@
         }
     ],
     "description": "Use the `OfflineMapTask` to take a web map offline, but instead of downloading an online basemap, use one which is already on the device.",
+    "featured": false,
     "ignore": false,
     "images": [
         "screenshot.png"

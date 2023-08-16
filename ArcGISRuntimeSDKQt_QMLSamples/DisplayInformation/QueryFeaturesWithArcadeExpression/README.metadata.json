@@ -1,6 +1,7 @@
 {
     "category": "Display information",
     "description": "Query features on a map using an Arcade expression.",
+    "featured": false,
     "ignore": false,
     "images": [
         "screenshot.png"

@@ -205,6 +205,7 @@ Item {
                 id: gdbPathText
                 width: parent.width
                 readOnly: true
+                activeFocusOnPress: false
                 selectByMouse: true
                 text: model.gdbFilePath
                 wrapMode: Text.WrapAnywhere

@@ -1,6 +1,7 @@
 {
     "category": "Features",
     "description": "Select features in a feature layer.",
+    "featured": false,
     "ignore": false,
     "images": [
         "screenshot.png"

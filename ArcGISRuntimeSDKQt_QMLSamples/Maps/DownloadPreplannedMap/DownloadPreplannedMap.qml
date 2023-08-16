@@ -233,6 +233,16 @@ Rectangle {
                 model: null
                 textRole: "itemTitle"
 
+                // Add a background to the ComboBox
+                Rectangle {
+                    anchors.fill: parent
+                    radius: 10
+                    // Make the rectangle visible if a dropdown indicator exists
+                    // An indicator only exists if a theme is set
+                    visible: parent.indicator
+                    border.width: 1
+                }
+
                 onActivated: {
                     if (offlineMapTask.preplannedMapAreaList.count <= 0)
                         return;

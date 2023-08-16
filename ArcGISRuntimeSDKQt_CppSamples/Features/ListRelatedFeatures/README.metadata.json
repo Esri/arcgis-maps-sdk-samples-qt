@@ -1,6 +1,7 @@
 {
     "category": "Features",
     "description": "List features related to a selected feature.",
+    "featured": false,
     "ignore": false,
     "images": [
         "screenshot.png"

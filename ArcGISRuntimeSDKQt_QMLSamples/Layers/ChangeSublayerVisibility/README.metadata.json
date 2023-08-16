@@ -1,6 +1,7 @@
 {
     "category": "Layers",
     "description": "Change the visibility of sublayers.",
+    "featured": false,
     "ignore": false,
     "images": [
         "screenshot.png"

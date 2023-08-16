@@ -1,0 +1,43 @@
+{
+    "category": "Scenes",
+    "description": "Position graphics relative to a surface using different surface placement modes.",
+    "featured": false,
+    "ignore": false,
+    "images": [
+        "screenshot.png"
+    ],
+    "keywords": [
+        "3D",
+        "absolute",
+        "altitude",
+        "draped",
+        "elevation",
+        "floating",
+        "relative",
+        "scenes",
+        "sea level",
+        "surface placement",
+        "Graphic",
+        "GraphicsOverlay",
+        "LayerSceneProperties::SurfacePlacement",
+        "SceneProperties",
+        "Surface"
+    ],
+    "redirect_from": [
+        "/qt/latest/cpp/sample-code/sample-qt-surfaceplacement.htm",
+        "/qt/latest/cpp/sample-code/sample-qt-surface-placement.htm"
+    ],
+    "relevant_apis": [
+        "Graphic",
+        "GraphicsOverlay",
+        "LayerSceneProperties::surfacePlacement",
+        "SceneProperties",
+        "Surface"
+    ],
+    "snippets": [
+        "SetSurfacePlacementMode.cpp",
+        "SetSurfacePlacementMode.h",
+        "SetSurfacePlacementMode.qml"
+    ],
+    "title": "Set surface placement mode"
+}

@@ -1,6 +1,7 @@
 {
     "category": "Cloud and portal",
     "description": "Find webmap portal items by using a search term.",
+    "featured": false,
     "ignore": false,
     "images": [
         "screenshot.png"

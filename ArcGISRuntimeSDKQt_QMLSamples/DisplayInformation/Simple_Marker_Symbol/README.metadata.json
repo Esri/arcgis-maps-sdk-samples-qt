@@ -1,6 +1,7 @@
 {
     "category": "Display information",
     "description": "Show a simple marker symbol on a map.",
+    "featured": false,
     "ignore": false,
     "images": [
         "screenshot.png"

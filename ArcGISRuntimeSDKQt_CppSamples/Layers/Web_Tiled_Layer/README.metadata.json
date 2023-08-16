@@ -1,6 +1,7 @@
 {
     "category": "Layers",
     "description": "Display a tiled web layer.",
+    "featured": false,
     "ignore": false,
     "images": [
         "screenshot.png"

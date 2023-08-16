@@ -30,9 +30,6 @@
 
 int main(int argc, char *argv[])
 {
-  // Enforce OpenGL
-  qputenv("QSG_RHI_BACKEND", "opengl");
-
   QGuiApplication app(argc, argv);
   app.setApplicationName("GenerateOfflineMapLocalBasemap - C++");
 

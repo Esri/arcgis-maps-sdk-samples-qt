@@ -48,7 +48,15 @@ Rectangle {
             }
         }
 
+        // Add a background to the Column
+        Rectangle {
+            anchors.fill: col
+            radius: 10
+            border.width: 1
+        }
+
         Column {
+            id: col
             spacing: 15
             padding: 10
 

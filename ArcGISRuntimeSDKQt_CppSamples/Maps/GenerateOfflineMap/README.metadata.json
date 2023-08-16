@@ -1,6 +1,7 @@
 {
     "category": "Maps",
     "description": "Take a web map offline.",
+    "featured": true,
     "ignore": false,
     "images": [
         "screenshot.png"

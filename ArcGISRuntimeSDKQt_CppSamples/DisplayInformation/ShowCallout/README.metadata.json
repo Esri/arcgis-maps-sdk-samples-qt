@@ -1,6 +1,7 @@
 {
     "category": "Display information",
     "description": "Show a callout with the latitude and longitude of user-tapped points.",
+    "featured": false,
     "ignore": false,
     "images": [
         "screenshot.png"

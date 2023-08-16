@@ -1,6 +1,7 @@
 {
     "category": "Layers",
     "description": "Show a callout with formatted content for a KML feature.",
+    "featured": false,
     "ignore": false,
     "images": [
         "screenshot.png"

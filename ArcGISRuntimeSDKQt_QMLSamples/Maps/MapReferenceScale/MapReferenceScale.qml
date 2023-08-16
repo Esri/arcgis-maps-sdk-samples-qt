@@ -105,6 +105,16 @@ Rectangle {
                 model: ["1:500000","1:250000","1:100000","1:50000"]
                 Component.onCompleted: applyReferenceScaleToMap();
                 onActivated: applyReferenceScaleToMap();
+
+                // Add a background to the ComboBox
+                Rectangle {
+                    anchors.fill: parent
+                    radius: 10
+                    // Make the rectangle visible if a dropdown indicator exists
+                    // An indicator only exists if a theme is set
+                    visible: parent.indicator
+                    border.width: 1
+                }
             }
 
             Button {

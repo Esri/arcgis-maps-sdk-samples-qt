@@ -1,0 +1,23 @@
+<RCC>
+    <qresource prefix="/Samples/Geometry/CreateAndEditGeometries">
+        <file alias="sample.json">README.metadata.json</file>
+        <file>CreateAndEditGeometries.qml</file>
+        <file>CreateAndEditGeometries.h</file>
+        <file>CreateAndEditGeometries.cpp</file>
+        <file>main.qml</file>
+        <file>screenshot.png</file>
+        <file>README.md</file>
+        <file>GeometryEditorButton.qml</file>
+        <file>iconAssets/check-circle-32.png</file>
+        <file>iconAssets/circle-disallowed-32.png</file>
+        <file>iconAssets/erase-32.png</file>
+        <file>iconAssets/line-32.png</file>
+        <file>iconAssets/multipoint-32.png</file>
+        <file>iconAssets/point-32.png</file>
+        <file>iconAssets/polygon-32.png</file>
+        <file>iconAssets/redo-32.png</file>
+        <file>iconAssets/save-32.png</file>
+        <file>iconAssets/trash-32.png</file>
+        <file>iconAssets/undo-32.png</file>
+    </qresource>
+</RCC>

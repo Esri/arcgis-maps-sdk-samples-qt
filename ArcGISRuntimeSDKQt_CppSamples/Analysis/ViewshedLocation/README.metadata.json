@@ -1,6 +1,7 @@
 {
     "category": "Analysis",
     "description": "Perform a viewshed analysis from a defined vantage point.",
+    "featured": false,
     "ignore": false,
     "images": [
         "screenshot.png"

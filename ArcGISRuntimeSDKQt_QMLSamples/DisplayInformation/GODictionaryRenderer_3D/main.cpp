@@ -17,14 +17,13 @@
 #include <QQmlEngine>
 #include <QSurfaceFormat>
 
+#include "XmlParser.h"
+
 #define STRINGIZE(x) #x
 #define QUOTE(x) STRINGIZE(x)
 
 int main(int argc, char *argv[])
 {
-  // Enforce OpenGL
-  qputenv("QSG_RHI_BACKEND", "opengl");
-
 #if defined(Q_OS_LINUX) && !defined(Q_OS_ANDROID)
     // Linux requires 3.2 OpenGL Context
     // in order to instance 3D symbols
@@ -57,6 +56,9 @@ int main(int argc, char *argv[])
   // Initialize application view
   QQuickView view;
   view.setResizeMode(QQuickView::SizeRootObjectToView);
+
+  // Register the C++ XmlParser class
+  qmlRegisterType<XmlParser>("Esri.samples", 1, 0, "XmlParser");
 
   // Add the import Path
   view.engine()->addImportPath(QDir(QCoreApplication::applicationDirPath()).filePath("qml"));

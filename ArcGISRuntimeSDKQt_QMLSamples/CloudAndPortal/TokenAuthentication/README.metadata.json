@@ -1,6 +1,7 @@
 {
     "category": "Cloud and portal",
     "description": "Access a web map that is secured with ArcGIS token-based authentication.",
+    "featured": false,
     "ignore": false,
     "images": [
         "screenshot.png"

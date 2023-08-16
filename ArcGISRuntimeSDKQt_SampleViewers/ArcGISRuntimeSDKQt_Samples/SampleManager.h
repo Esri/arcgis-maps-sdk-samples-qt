@@ -41,6 +41,7 @@ class SampleManager : public QObject
   Q_OBJECT
 
   Q_PROPERTY(SampleListModel* samples READ samples NOTIFY sampleInitComplete)
+  Q_PROPERTY(SampleListModel* featuredSamples READ featuredSamples NOTIFY featuredSamplesChanged)
   Q_PROPERTY(CategoryListModel* categories READ categories NOTIFY sampleInitComplete)
   Q_PROPERTY(CurrentMode currentMode READ currentMode WRITE setCurrentMode NOTIFY currentModeChanged)
   Q_PROPERTY(Sample* currentSample READ currentSample WRITE setCurrentSample NOTIFY currentSampleChanged)
@@ -52,6 +53,8 @@ class SampleManager : public QObject
   Q_PROPERTY(bool downloadInProgress READ downloadInProgress WRITE setDownloadInProgress NOTIFY downloadInProgressChanged)
   Q_PROPERTY(QString downloadText READ downloadText WRITE setDownloadText NOTIFY downloadTextChanged)
   Q_PROPERTY(double downloadProgress READ downloadProgress WRITE setDownloadProgress NOTIFY downloadProgressChanged)
+  Q_PROPERTY(bool cancelDownload READ cancelDownload WRITE setCancelDownload NOTIFY cancelDownloadChanged)
+  Q_PROPERTY(bool downloadFailed READ downloadFailed WRITE setDownloadFailed NOTIFY downloadFailedChanged)
 
 public:
   explicit SampleManager(QObject* parent = nullptr);
@@ -71,17 +74,21 @@ public:
     DescriptionView,
     ManageOfflineDataView,
     NetworkRequiredView,
-    DownloadDataView
+    DownloadDataView,
+    HomepageView
   };
   Q_ENUM(CurrentMode)
 
 signals:
   void sampleInitComplete();
+  void featuredSamplesChanged();
+  void cancelDownloadChanged();
   void currentModeChanged();
   void currentSampleChanged();
   void currentCategoryChanged();
   void currentSourceCodeChanged();
   void doneDownloadingChanged();
+  void downloadFailedChanged();
   void downloadInProgressChanged();
   void downloadTextChanged();
   void downloadProgressChanged();
@@ -99,6 +106,7 @@ private:
   QVariant fileUrl(const QString& scheme, const QString& path);
   QString readTextFile(const QString& filePath);
   SampleListModel* samples() { return m_allSamples; }
+  SampleListModel* featuredSamples() const { return m_featuredSamples; }
   CategoryListModel* categories() { return m_categories; }
   CurrentMode currentMode() { return m_currentMode; }
   void setCurrentMode(const CurrentMode& mode);
@@ -117,10 +125,15 @@ private:
   void setDownloadText(const QString& downloadText);
   double downloadProgress() const { return m_downloadProgress; }
   void createAndSetTempDirForLocalServer();
+  bool cancelDownload() const { return m_cancelDownload; }
+  void setCancelDownload(bool cancel);
+  bool downloadFailed() const { return m_downloadFailed; }
+  void setDownloadFailed(bool didFail);
 
 private:
   CategoryListModel* m_categories = nullptr;
   SampleListModel* m_allSamples = nullptr;
+  SampleListModel* m_featuredSamples = nullptr;
   CurrentMode m_currentMode = CurrentMode::LiveSampleView;
   Sample* m_currentSample = nullptr;
   SampleCategory* m_currentCategory = nullptr;
@@ -132,6 +145,8 @@ private:
   QString m_downloadText = QString("Downloading");
   double m_downloadProgress = 0.0;
   std::unique_ptr<QTemporaryDir> m_tempDir;
+  bool m_cancelDownload = false;
+  bool m_downloadFailed = false;
 };
 
 #endif // SAMPLEMANAGER_H

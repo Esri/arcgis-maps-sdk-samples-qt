@@ -7,6 +7,7 @@
         }
     ],
     "description": "List the contents of a KML file.",
+    "featured": false,
     "ignore": false,
     "images": [
         "screenshot.png"

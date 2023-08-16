@@ -45,6 +45,8 @@ public:
 
   static void init();
 
+  Q_INVOKABLE void stopLocationDisplay();
+
 signals:
   void mapViewChanged();
   void locationPropertiesChanged();

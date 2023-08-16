@@ -1,6 +1,7 @@
 {
     "category": "Scenes",
     "description": "Identify features in a scene to select.",
+    "featured": false,
     "ignore": false,
     "images": [
         "screenshot.png"

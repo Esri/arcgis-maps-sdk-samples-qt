@@ -7,6 +7,7 @@
         }
     ],
     "description": "Add rasters and feature tables from a GeoPackage to a map.",
+    "featured": false,
     "ignore": false,
     "images": [
         "screenshot.png"

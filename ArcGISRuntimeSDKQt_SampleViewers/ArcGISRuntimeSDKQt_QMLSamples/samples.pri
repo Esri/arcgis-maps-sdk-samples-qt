@@ -11,13 +11,16 @@
 #  See the Sample code usage restrictions document for further information.
 #-------------------------------------------------
 HEADERS += \
-    "$$SAMPLEPATHQML/Routing/NavigateRoute/NavigateRouteSpeaker.h"
+    "$$SAMPLEPATHQML/Routing/NavigateRoute/NavigateRouteSpeaker.h" \
+    "$$SAMPLEPATHQML/DisplayInformation/GODictionaryRenderer/XmlParser.h"
 
 INCLUDEPATH += \
-    "$$SAMPLEPATHQML/Routing/NavigateRoute"
+    "$$SAMPLEPATHQML/Routing/NavigateRoute" \
+    "$$SAMPLEPATHQML/DisplayInformation/GODictionaryRenderer"
 
 SOURCES += \
-    "$$SAMPLEPATHQML/Routing/NavigateRoute/NavigateRouteSpeaker.cpp"
+    "$$SAMPLEPATHQML/Routing/NavigateRoute/NavigateRouteSpeaker.cpp" \
+    "$$SAMPLEPATHQML/DisplayInformation/GODictionaryRenderer/XmlParser.cpp"
 
 RESOURCES += \
     "$$SAMPLEPATHQML/Analysis/AnalyzeHotspots/AnalyzeHotspots.qrc" \
@@ -39,8 +42,9 @@ RESOURCES += \
     "$$SAMPLEPATHQML/DisplayInformation/CreateSymbolStylesFromWebStyles/CreateSymbolStylesFromWebStyles.qrc" \
     "$$SAMPLEPATHQML/DisplayInformation/CustomDictionaryStyle/CustomDictionaryStyle.qrc" \
     "$$SAMPLEPATHQML/DisplayInformation/DisplayGrid/DisplayGrid.qrc" \
-    # "$$SAMPLEPATHQML/DisplayInformation/GODictionaryRenderer_3D/GODictionaryRenderer_3D.qrc" \ # Qt 6.2 does not support getting entries from an xml list
-    # "$$SAMPLEPATHQML/DisplayInformation/GODictionaryRenderer/GODictionaryRenderer.qrc" \ # Qt 6.2 does not support getting entries from an xml list
+    "$$SAMPLEPATHQML/DisplayInformation/DisplayPointsUsingClusteringFeatureReduction/DisplayPointsUsingClusteringFeatureReduction.qrc" \
+    "$$SAMPLEPATHQML/DisplayInformation/GODictionaryRenderer_3D/GODictionaryRenderer_3D.qrc" \
+    "$$SAMPLEPATHQML/DisplayInformation/GODictionaryRenderer/GODictionaryRenderer.qrc" \
     "$$SAMPLEPATHQML/DisplayInformation/GOSymbols/GOSymbols.qrc" \
     "$$SAMPLEPATHQML/DisplayInformation/IdentifyGraphics/IdentifyGraphics.qrc" \
     "$$SAMPLEPATHQML/DisplayInformation/Picture_Marker_Symbol/Picture_Marker_Symbol.qrc" \
@@ -79,6 +83,7 @@ RESOURCES += \
     "$$SAMPLEPATHQML/Geometry/Buffer/Buffer.qrc" \
     "$$SAMPLEPATHQML/Geometry/ClipGeometry/ClipGeometry.qrc" \
     "$$SAMPLEPATHQML/Geometry/ConvexHull/ConvexHull.qrc" \
+    "$$SAMPLEPATHQML/Geometry/CreateAndEditGeometries/CreateAndEditGeometries.qrc" \
     "$$SAMPLEPATHQML/Geometry/CreateGeometries/CreateGeometries.qrc" \
     "$$SAMPLEPATHQML/Geometry/CutGeometry/CutGeometry.qrc" \
     "$$SAMPLEPATHQML/Geometry/DensifyAndGeneralize/DensifyAndGeneralize.qrc" \
@@ -206,7 +211,7 @@ RESOURCES += \
     "$$SAMPLEPATHQML/Scenes/RealisticLightingAndShadows/RealisticLightingAndShadows.qrc" \
     "$$SAMPLEPATHQML/Scenes/SceneLayerSelection/SceneLayerSelection.qrc" \
     "$$SAMPLEPATHQML/Scenes/ScenePropertiesExpressions/ScenePropertiesExpressions.qrc" \
-    "$$SAMPLEPATHQML/Scenes/SurfacePlacement/Surface_Placement.qrc" \
+    "$$SAMPLEPATHQML/Scenes/SetSurfacePlacementMode/SetSurfacePlacementMode.qrc" \
     "$$SAMPLEPATHQML/Scenes/Symbols/Symbols.qrc" \
     "$$SAMPLEPATHQML/Scenes/SyncMapViewSceneView/SyncMapViewSceneView.qrc" \
     "$$SAMPLEPATHQML/Scenes/TerrainExaggeration/TerrainExaggeration.qrc" \

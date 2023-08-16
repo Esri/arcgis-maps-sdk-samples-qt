@@ -1,6 +1,7 @@
 {
     "category": "Maps",
     "description": "Create and save a map as an ArcGIS `PortalItem` (i.e. web map).",
+    "featured": false,
     "ignore": false,
     "images": [
         "screenshot.png"

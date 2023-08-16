@@ -1,6 +1,7 @@
 {
     "category": "Scenes",
     "description": "Extrude features based on their attributes.",
+    "featured": false,
     "ignore": false,
     "images": [
         "screenshot.png"

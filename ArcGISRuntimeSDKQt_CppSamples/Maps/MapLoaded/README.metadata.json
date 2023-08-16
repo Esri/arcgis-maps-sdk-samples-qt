@@ -1,6 +1,7 @@
 {
     "category": "Maps",
     "description": "Determine the map's load status which can be: `NotLoaded`, `FailedToLoad`, `Loading`, `Loaded`, `Unknown`.",
+    "featured": false,
     "ignore": false,
     "images": [
         "screenshot.png"

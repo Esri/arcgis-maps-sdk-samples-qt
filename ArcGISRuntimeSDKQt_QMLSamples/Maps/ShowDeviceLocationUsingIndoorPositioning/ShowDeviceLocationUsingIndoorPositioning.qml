@@ -43,6 +43,10 @@ Rectangle {
             forceActiveFocus();
         }
 
+        Component.onDestruction: {
+            mapView.locationDisplay.stop();
+        }
+
         Map {
             id: map
             PortalItem {

@@ -1,6 +1,7 @@
 {
     "category": "Edit data",
     "description": "Update feature attributes in an online feature service.",
+    "featured": false,
     "ignore": false,
     "images": [
         "screenshot.png"

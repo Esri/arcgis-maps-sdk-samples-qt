@@ -41,6 +41,7 @@ INCLUDEPATH += \
     "$$SAMPLEPATHCPP/DisplayInformation/CreateSymbolStylesFromWebStyles" \
     "$$SAMPLEPATHCPP/DisplayInformation/CustomDictionaryStyle" \
     "$$SAMPLEPATHCPP/DisplayInformation/DisplayGrid" \
+    "$$SAMPLEPATHCPP/DisplayInformation/DisplayPointsUsingClusteringFeatureReduction" \
     "$$SAMPLEPATHCPP/DisplayInformation/GODictionaryRenderer_3D" \
     "$$SAMPLEPATHCPP/DisplayInformation/GODictionaryRenderer" \
     "$$SAMPLEPATHCPP/DisplayInformation/GOSymbols" \
@@ -81,6 +82,7 @@ INCLUDEPATH += \
     "$$SAMPLEPATHCPP/Geometry/Buffer" \
     "$$SAMPLEPATHCPP/Geometry/ClipGeometry" \
     "$$SAMPLEPATHCPP/Geometry/ConvexHull" \
+    "$$SAMPLEPATHCPP/Geometry/CreateAndEditGeometries" \
     "$$SAMPLEPATHCPP/Geometry/CreateGeometries" \
     "$$SAMPLEPATHCPP/Geometry/CutGeometry" \
     "$$SAMPLEPATHCPP/Geometry/DensifyAndGeneralize" \
@@ -208,7 +210,7 @@ INCLUDEPATH += \
     "$$SAMPLEPATHCPP/Scenes/RealisticLightingAndShadows" \
     "$$SAMPLEPATHCPP/Scenes/SceneLayerSelection" \
     "$$SAMPLEPATHCPP/Scenes/ScenePropertiesExpressions" \
-    "$$SAMPLEPATHCPP/Scenes/SurfacePlacement" \
+    "$$SAMPLEPATHCPP/Scenes/SetSurfacePlacementMode" \
     "$$SAMPLEPATHCPP/Scenes/Symbols" \
     "$$SAMPLEPATHCPP/Scenes/SyncMapViewSceneView" \
     "$$SAMPLEPATHCPP/Scenes/TerrainExaggeration" \
@@ -247,6 +249,7 @@ HEADERS += \
     "$$SAMPLEPATHCPP/DisplayInformation/CreateSymbolStylesFromWebStyles/CreateSymbolStylesFromWebStyles.h" \
     "$$SAMPLEPATHCPP/DisplayInformation/CustomDictionaryStyle/CustomDictionaryStyle.h" \
     "$$SAMPLEPATHCPP/DisplayInformation/DisplayGrid/DisplayGrid.h" \
+    "$$SAMPLEPATHCPP/DisplayInformation/DisplayPointsUsingClusteringFeatureReduction/DisplayPointsUsingClusteringFeatureReduction.h" \
     "$$SAMPLEPATHCPP/DisplayInformation/GODictionaryRenderer_3D/GODictionaryRenderer_3D.h" \
     "$$SAMPLEPATHCPP/DisplayInformation/GODictionaryRenderer/GODictionaryRenderer.h" \
     "$$SAMPLEPATHCPP/DisplayInformation/GOSymbols/GOSymbols.h" \
@@ -291,6 +294,7 @@ HEADERS += \
     "$$SAMPLEPATHCPP/Geometry/Buffer/Buffer.h" \
     "$$SAMPLEPATHCPP/Geometry/ClipGeometry/ClipGeometry.h" \
     "$$SAMPLEPATHCPP/Geometry/ConvexHull/ConvexHull.h" \
+    "$$SAMPLEPATHCPP/Geometry/CreateAndEditGeometries/CreateAndEditGeometries.h" \
     "$$SAMPLEPATHCPP/Geometry/CreateGeometries/CreateGeometries.h" \
     "$$SAMPLEPATHCPP/Geometry/CutGeometry/CutGeometry.h" \
     "$$SAMPLEPATHCPP/Geometry/DensifyAndGeneralize/DensifyAndGeneralize.h" \
@@ -422,7 +426,7 @@ HEADERS += \
     "$$SAMPLEPATHCPP/Scenes/RealisticLightingAndShadows/RealisticLightingAndShadows.h" \
     "$$SAMPLEPATHCPP/Scenes/SceneLayerSelection/SceneLayerSelection.h" \
     "$$SAMPLEPATHCPP/Scenes/ScenePropertiesExpressions/ScenePropertiesExpressions.h" \
-    "$$SAMPLEPATHCPP/Scenes/SurfacePlacement/Surface_Placement.h" \
+    "$$SAMPLEPATHCPP/Scenes/SetSurfacePlacementMode/SetSurfacePlacementMode.h" \
     "$$SAMPLEPATHCPP/Scenes/Symbols/Symbols.h" \
     "$$SAMPLEPATHCPP/Scenes/SyncMapViewSceneView/SyncMapViewSceneView.h" \
     "$$SAMPLEPATHCPP/Scenes/TerrainExaggeration/TerrainExaggeration.h" \
@@ -461,6 +465,7 @@ SOURCES += \
     "$$SAMPLEPATHCPP/DisplayInformation/CreateSymbolStylesFromWebStyles/CreateSymbolStylesFromWebStyles.cpp" \
     "$$SAMPLEPATHCPP/DisplayInformation/CustomDictionaryStyle/CustomDictionaryStyle.cpp" \
     "$$SAMPLEPATHCPP/DisplayInformation/DisplayGrid/DisplayGrid.cpp" \
+    "$$SAMPLEPATHCPP/DisplayInformation/DisplayPointsUsingClusteringFeatureReduction/DisplayPointsUsingClusteringFeatureReduction.cpp" \
     "$$SAMPLEPATHCPP/DisplayInformation/GODictionaryRenderer_3D/GODictionaryRenderer_3D.cpp" \
     "$$SAMPLEPATHCPP/DisplayInformation/GODictionaryRenderer/GODictionaryRenderer.cpp" \
     "$$SAMPLEPATHCPP/DisplayInformation/GOSymbols/GOSymbols.cpp" \
@@ -505,6 +510,7 @@ SOURCES += \
     "$$SAMPLEPATHCPP/Geometry/Buffer/Buffer.cpp" \
     "$$SAMPLEPATHCPP/Geometry/ClipGeometry/ClipGeometry.cpp" \
     "$$SAMPLEPATHCPP/Geometry/ConvexHull/ConvexHull.cpp" \
+    "$$SAMPLEPATHCPP/Geometry/CreateAndEditGeometries/CreateAndEditGeometries.cpp" \
     "$$SAMPLEPATHCPP/Geometry/CreateGeometries/CreateGeometries.cpp" \
     "$$SAMPLEPATHCPP/Geometry/CutGeometry/CutGeometry.cpp" \
     "$$SAMPLEPATHCPP/Geometry/DensifyAndGeneralize/DensifyAndGeneralize.cpp" \
@@ -636,7 +642,7 @@ SOURCES += \
     "$$SAMPLEPATHCPP/Scenes/RealisticLightingAndShadows/RealisticLightingAndShadows.cpp" \
     "$$SAMPLEPATHCPP/Scenes/SceneLayerSelection/SceneLayerSelection.cpp" \
     "$$SAMPLEPATHCPP/Scenes/ScenePropertiesExpressions/ScenePropertiesExpressions.cpp" \
-    "$$SAMPLEPATHCPP/Scenes/SurfacePlacement/Surface_Placement.cpp" \
+    "$$SAMPLEPATHCPP/Scenes/SetSurfacePlacementMode/SetSurfacePlacementMode.cpp" \
     "$$SAMPLEPATHCPP/Scenes/Symbols/Symbols.cpp" \
     "$$SAMPLEPATHCPP/Scenes/SyncMapViewSceneView/SyncMapViewSceneView.cpp" \
     "$$SAMPLEPATHCPP/Scenes/TerrainExaggeration/TerrainExaggeration.cpp" \
@@ -674,6 +680,7 @@ RESOURCES += \
     "$$SAMPLEPATHCPP/DisplayInformation/CreateSymbolStylesFromWebStyles/CreateSymbolStylesFromWebStyles.qrc" \
     "$$SAMPLEPATHCPP/DisplayInformation/CustomDictionaryStyle/CustomDictionaryStyle.qrc" \
     "$$SAMPLEPATHCPP/DisplayInformation/DisplayGrid/DisplayGrid.qrc" \
+    "$$SAMPLEPATHCPP/DisplayInformation/DisplayPointsUsingClusteringFeatureReduction/DisplayPointsUsingClusteringFeatureReduction.qrc" \
     "$$SAMPLEPATHCPP/DisplayInformation/GODictionaryRenderer_3D/GODictionaryRenderer_3D.qrc" \
     "$$SAMPLEPATHCPP/DisplayInformation/GODictionaryRenderer/GODictionaryRenderer.qrc" \
     "$$SAMPLEPATHCPP/DisplayInformation/GOSymbols/GOSymbols.qrc" \
@@ -714,6 +721,7 @@ RESOURCES += \
     "$$SAMPLEPATHCPP/Geometry/Buffer/Buffer.qrc" \
     "$$SAMPLEPATHCPP/Geometry/ClipGeometry/ClipGeometry.qrc" \
     "$$SAMPLEPATHCPP/Geometry/ConvexHull/ConvexHull.qrc" \
+    "$$SAMPLEPATHCPP/Geometry/CreateAndEditGeometries/CreateAndEditGeometries.qrc" \
     "$$SAMPLEPATHCPP/Geometry/CreateGeometries/CreateGeometries.qrc" \
     "$$SAMPLEPATHCPP/Geometry/CutGeometry/CutGeometry.qrc" \
     "$$SAMPLEPATHCPP/Geometry/DensifyAndGeneralize/DensifyAndGeneralize.qrc" \
@@ -841,7 +849,7 @@ RESOURCES += \
     "$$SAMPLEPATHCPP/Scenes/RealisticLightingAndShadows/RealisticLightingAndShadows.qrc" \
     "$$SAMPLEPATHCPP/Scenes/SceneLayerSelection/SceneLayerSelection.qrc" \
     "$$SAMPLEPATHCPP/Scenes/ScenePropertiesExpressions/ScenePropertiesExpressions.qrc" \
-    "$$SAMPLEPATHCPP/Scenes/SurfacePlacement/Surface_Placement.qrc" \
+    "$$SAMPLEPATHCPP/Scenes/SetSurfacePlacementMode/SetSurfacePlacementMode.qrc" \
     "$$SAMPLEPATHCPP/Scenes/Symbols/Symbols.qrc" \
     "$$SAMPLEPATHCPP/Scenes/SyncMapViewSceneView/SyncMapViewSceneView.qrc" \
     "$$SAMPLEPATHCPP/Scenes/TerrainExaggeration/TerrainExaggeration.qrc" \

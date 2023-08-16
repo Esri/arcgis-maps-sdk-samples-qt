@@ -1,6 +1,7 @@
 {
     "category": "Features",
     "description": "Filter features displayed on a map using a definition expression or a display filter.",
+    "featured": false,
     "ignore": false,
     "images": [
         "screenshot.png"
