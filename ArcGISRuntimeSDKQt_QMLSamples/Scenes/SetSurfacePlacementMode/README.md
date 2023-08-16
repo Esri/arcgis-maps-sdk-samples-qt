@@ -1,4 +1,4 @@
-# Surface placement
+# Set surface placement mode
 
 Position graphics relative to a surface using different surface placement modes.
 
@@ -14,20 +14,20 @@ The application loads a scene showing four points that use individual surface pl
 
 ## How it works
 
-1. Create a `GraphicsOverlay` for each placement mode, setting `LayerSceneProperties::surfacePlacement`:
+1. Create a `GraphicsOverlay` for each placement mode, setting `LayerSceneProperties.surfacePlacement`:
     * `Absolute`, position graphic using only its Z value.
     * `Relative`, position graphic using its Z value plus the elevation of the surface.
     * `DrapedBillboarded`, position graphic upright on the surface and always facing the camera, not using its z value.
     * `DrapedFlat`, position graphic flat on the surface, not using its z value.
     * `RelativeToScene`, position graphic using its Z value plus the altitude values of the scene.
-2. Add graphics to the graphics overlay, `GraphicsOverlay::graphics()::append(Graphic)`.
-3. Add each graphics overlay to the scene view by calling `SceneView::graphicsOverlays()::append(overlay)`.
+2. Add graphics to the graphics overlay, `GraphicsOverlay.graphics.append(Graphic)`.
+3. Add each graphics overlay to the scene view by calling `SceneView.graphicsOverlays.append(overlay)`.
 
 ## Relevant API
 
 * Graphic
 * GraphicsOverlay
-* LayerSceneProperties::surfacePlacement
+* LayerSceneProperties.surfacePlacement
 * SceneProperties
 * Surface
 
