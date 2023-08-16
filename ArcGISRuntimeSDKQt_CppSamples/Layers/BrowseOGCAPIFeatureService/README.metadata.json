@@ -1,7 +1,10 @@
 {
     "category": "Layers",
     "description": "Browse an OGC API feature service for layers and add them to the map.",
+<<<<<<< HEAD
     "featured": false,
+=======
+>>>>>>> 859758696bdde217ee54ce2bb721268439b882dd
     "ignore": false,
     "images": [
         "screenshot.png"

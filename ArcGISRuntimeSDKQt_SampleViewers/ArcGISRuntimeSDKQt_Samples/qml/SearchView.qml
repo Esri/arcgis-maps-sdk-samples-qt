@@ -17,6 +17,10 @@ import QtQuick
 
 import QtQuick.Controls
 import Esri.ArcGISRuntimeSamples
+<<<<<<< HEAD
+=======
+import Telemetry
+>>>>>>> 859758696bdde217ee54ce2bb721268439b882dd
 
 ListView {
     spacing: 10
@@ -53,6 +57,10 @@ ListView {
                 drawer.close();
                 // launch sample...
                 SampleManager.currentSample = sample;
+<<<<<<< HEAD
+=======
+                GAnalytics.postEvent("sample_opened", {"sample_name": sample.name, "referrer": "search"});
+>>>>>>> 859758696bdde217ee54ce2bb721268439b882dd
             }
         }
     }

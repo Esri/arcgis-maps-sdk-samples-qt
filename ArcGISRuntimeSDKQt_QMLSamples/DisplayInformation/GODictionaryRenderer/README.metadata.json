@@ -11,7 +11,10 @@
         }
     ],
     "description": "This sample demonstrates applying a dictionary renderer to graphics, in order to display military symbology without the need for a feature table.",
+<<<<<<< HEAD
     "featured": false,
+=======
+>>>>>>> 859758696bdde217ee54ce2bb721268439b882dd
     "ignore": false,
     "images": [
         "screenshot.png"

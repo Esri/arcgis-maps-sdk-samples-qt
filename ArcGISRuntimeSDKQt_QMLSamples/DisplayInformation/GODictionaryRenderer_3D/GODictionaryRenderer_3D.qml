@@ -16,13 +16,28 @@
 
 import QtQuick
 import QtQuick.Controls
+<<<<<<< HEAD
 import Esri.ArcGISRuntime
 import Esri.ArcGISExtras
 import Esri.samples
+=======
+import QtQuick.XmlListModel
+import Esri.ArcGISRuntime
+import Esri.ArcGISExtras
+>>>>>>> 859758696bdde217ee54ce2bb721268439b882dd
 
 Rectangle {
     width: 800
     height: 600
+<<<<<<< HEAD
+=======
+
+    readonly property url dataPath: {
+        Qt.platform.os === "ios" ?
+                    System.writableLocationUrl(System.StandardPathsDocumentsLocation) + "/ArcGIS/Runtime/Data" :
+                    System.writableLocationUrl(System.StandardPathsHomeLocation) + "/ArcGIS/Runtime/Data"
+    }
+>>>>>>> 859758696bdde217ee54ce2bb721268439b882dd
 
     readonly property url dataPath: {
         Qt.platform.os === "ios" ?

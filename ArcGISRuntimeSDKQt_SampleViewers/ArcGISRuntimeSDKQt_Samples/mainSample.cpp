@@ -26,6 +26,11 @@
 #include <QQuickWindow>
 #include <QtGlobal>
 
+<<<<<<< HEAD
+=======
+#include "GAnalytics.h"
+
+>>>>>>> 859758696bdde217ee54ce2bb721268439b882dd
 #ifdef QT_WEBVIEW_WEBENGINE_BACKEND
 #  include <QtWebEngineQuick>
 #endif // QT_WEBVIEW_WEBENGINE_BACKEND
@@ -99,7 +104,10 @@
 #include "ConvexHull.h"
 #include "CreateAndSaveKmlFile.h"
 #include "CreateAndSaveMap.h"
+<<<<<<< HEAD
 #include "CreateAndEditGeometries.h"
+=======
+>>>>>>> 859758696bdde217ee54ce2bb721268439b882dd
 #include "CreateGeometries.h"
 #include "CreateLoadReport.h"
 #include "CreateMobileGeodatabase.h"
@@ -126,7 +134,10 @@
 #include "DisplayMap.h"
 #include "DisplayOgcApiFeatureCollection.h"
 #include "DisplayOverviewMap.h"
+<<<<<<< HEAD
 #include "DisplayPointsUsingClusteringFeatureReduction.h"
+=======
+>>>>>>> 859758696bdde217ee54ce2bb721268439b882dd
 #include "DisplayRouteLayer.h"
 #include "DisplaySceneLayer.h"
 #include "DisplaySubtypeFeatureLayer.h"
@@ -292,21 +303,38 @@
 #include "RasterFunctionFile.h"
 #endif // SHOW_RASTER_FUNCTION_SAMPLE
 
+<<<<<<< HEAD
 #else // QML_VIEWER
 #include "NavigateRouteSpeaker.h"
 #include "XmlParser.h"
 #endif
+=======
+#else
+#include "NavigateRouteSpeaker.h"
+#endif // CPP_VIEWER
+>>>>>>> 859758696bdde217ee54ce2bb721268439b882dd
 
 #define STRINGIZE(x) #x
 #define QUOTE(x) STRINGIZE(x)
 
 QObject* esriSampleManagerProvider(QQmlEngine* engine, QJSEngine* scriptEngine);
+<<<<<<< HEAD
+=======
+QObject* gAnalyticsProvider(QQmlEngine* engine, QJSEngine* scriptEngine);
+>>>>>>> 859758696bdde217ee54ce2bb721268439b882dd
 QObject* syntaxHighlighterProvider(QQmlEngine* engine, QJSEngine* scriptEngine);
 void registerClasses();
 void registerCppSampleClasses();
 
 int main(int argc, char *argv[])
 {
+<<<<<<< HEAD
+=======
+  // add support for feature toggles on mobile, which is disabled by default
+  qputenv("QT_ENABLE_FEATURE_TOGGLE_MOBILE", "true");
+  qputenv("QSG_RHI_BACKEND", "opengl");
+
+>>>>>>> 859758696bdde217ee54ce2bb721268439b882dd
 #ifdef QT_WEBVIEW_WEBENGINE_BACKEND
   QtWebEngineQuick::initialize();
 #endif // QT_WEBVIEW_WEBENGINE_BACKEND
@@ -411,7 +439,10 @@ void registerCppSampleClasses()
   ConvexHull::init();
   CreateAndSaveKmlFile::init();
   CreateAndSaveMap::init();
+<<<<<<< HEAD
   CreateAndEditGeometries::init();
+=======
+>>>>>>> 859758696bdde217ee54ce2bb721268439b882dd
   CreateGeometries::init();
   CreateLoadReport::init();
   CreateMobileGeodatabase::init();
@@ -437,7 +468,10 @@ void registerCppSampleClasses()
   DisplayMap::init();
   DisplayOgcApiFeatureCollection::init();
   DisplayOverviewMap::init();
+<<<<<<< HEAD
   DisplayPointsUsingClusteringFeatureReduction::init();
+=======
+>>>>>>> 859758696bdde217ee54ce2bb721268439b882dd
   DisplayRouteLayer::init();
   DisplaySceneLayer::init();
   DisplaySubtypeFeatureLayer::init();
@@ -605,6 +639,11 @@ void registerClasses()
 {
   qmlRegisterSingletonType<DownloadSampleManager>("Esri.ArcGISRuntimeSamples", 1, 0, "SampleManager",
                                                   &esriSampleManagerProvider);
+<<<<<<< HEAD
+=======
+  // Register the Google Analytics class
+  qmlRegisterSingletonType<GAnalytics>("Telemetry", 1, 0, "GAnalytics", &gAnalyticsProvider);
+>>>>>>> 859758696bdde217ee54ce2bb721268439b882dd
 
   qmlRegisterSingletonType<SyntaxHighlighter>("Esri.ArcGISRuntimeSamples", 1, 0, "SyntaxHighlighter",
                                               &syntaxHighlighterProvider);
@@ -628,10 +667,15 @@ void registerClasses()
   qmlRegisterType<SampleSearchFilterModel>("Esri.ArcGISRuntimeSamples", 1, 0, "SampleSearchFilterModel");
   qmlRegisterUncreatableType<SearchFilterCriteria>("Esri.ArcGISRuntimeSamples", 1, 0, "SearchFilterCriteria", "Abstract base class");
 
+<<<<<<< HEAD
 
 #ifndef CPP_VIEWER
   qmlRegisterType<NavigateRouteSpeaker>("Esri.samples", 1, 0, "NavigateRouteSpeaker");
   qmlRegisterType<XmlParser>("Esri.samples", 1, 0, "XmlParser");
+=======
+#ifndef CPP_VIEWER
+  qmlRegisterType<NavigateRouteSpeaker>("Esri.samples", 1, 0, "NavigateRouteSpeaker");
+>>>>>>> 859758696bdde217ee54ce2bb721268439b882dd
 #endif
 
   // register the C++ Sample Classes if building for C++ API
@@ -648,6 +692,15 @@ QObject* esriSampleManagerProvider(QQmlEngine* engine, QJSEngine*)
   return sampleManager;
 }
 
+<<<<<<< HEAD
+=======
+QObject* gAnalyticsProvider(QQmlEngine* engine, QJSEngine*)
+{
+  static QObject* gAnalytics = new GAnalytics(engine);
+  return gAnalytics;
+}
+
+>>>>>>> 859758696bdde217ee54ce2bb721268439b882dd
 QObject* syntaxHighlighterProvider(QQmlEngine* engine, QJSEngine*)
 {
   static SyntaxHighlighter* syntaxHighlighter = new SyntaxHighlighter(engine);

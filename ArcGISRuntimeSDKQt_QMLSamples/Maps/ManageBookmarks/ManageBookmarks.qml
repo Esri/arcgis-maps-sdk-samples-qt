@@ -166,7 +166,11 @@ Rectangle {
         }
 
         property int modelWidth: 0
+<<<<<<< HEAD
         width: modelWidth + rightPadding + leftPadding + (indicator ? indicator.width : 10)
+=======
+        width: modelWidth + rightPadding + leftPadding
+>>>>>>> 859758696bdde217ee54ce2bb721268439b882dd
         model: map.bookmarks
 
         Connections {

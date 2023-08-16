@@ -20,6 +20,7 @@
 TEMPLATE = app
 QT += core gui xml network qml quick positioning sensors multimedia
 QT += widgets quickcontrols2 opengl webview core5compat websockets texttospeech
+QT += widgets quickcontrols2 opengl webview core5compat websockets
 TARGET = ArcGISQt_CppSamples
 DEFINES += CPP_VIEWER
 DEFINES += Qt_Version=\"$$QT_VERSION\"
@@ -27,6 +28,7 @@ SAMPLEPATHCPP = $$PWD/../../ArcGISRuntimeSDKQt_CppSamples
 COMMONVIEWER = $$PWD/../ArcGISRuntimeSDKQt_Samples
 PCH_HEADER = $$COMMONVIEWER/pch.hpp
 ARCGIS_RUNTIME_VERSION = 200.2.0
+ARCGIS_RUNTIME_VERSION = 200.1.0
 DEFINES += ArcGIS_Runtime_Version=$$ARCGIS_RUNTIME_VERSION
 
 # This block determines whether to build against the installed SDK or the local dev build area
@@ -79,6 +81,10 @@ exists($$PWD/../../../../DevBuildCpp.pri) {
   DEFINES += BUILD_FROM_SETUP
 }
 
+# Set analytics API key and stream id, these will be empty strings if not provided in the command line arguments
+DEFINES += GANALYTICS_API_KEY=$$(GANALYTICS_API_KEY)
+DEFINES += GANALYTICS_STREAM_ID=$$(GANALYTICS_STREAM_ID)
+
 qtHaveModule(webenginequick) {
   QT += webenginequick
   DEFINES += QT_WEBVIEW_WEBENGINE_BACKEND
@@ -108,6 +114,7 @@ HEADERS += \
     $$COMMONVIEWER/DataItem.h \
     $$COMMONVIEWER/DataItemListModel.h \
     $$COMMONVIEWER/DownloadSampleManager.h \
+    $$COMMONVIEWER/GAnalytics.h \
     $$COMMONVIEWER/Sample.h \
     $$COMMONVIEWER/SampleCategory.h \
     $$COMMONVIEWER/SampleListModel.h \
@@ -127,6 +134,7 @@ SOURCES += \
     $$COMMONVIEWER/DataItem.cpp \
     $$COMMONVIEWER/DataItemListModel.cpp \
     $$COMMONVIEWER/DownloadSampleManager.cpp \
+    $$COMMONVIEWER/GAnalytics.cpp \
     $$COMMONVIEWER/Sample.cpp \
     $$COMMONVIEWER/SampleCategory.cpp \
     $$COMMONVIEWER/SampleListModel.cpp \

@@ -92,11 +92,14 @@ Item {
     }
 
     function downloadNextItem() {
+<<<<<<< HEAD
         if (SampleManager.cancelDownload) {
             downloadQueue = [];
             SampleManager.cancelDownload = false;
         }
 
+=======
+>>>>>>> 859758696bdde217ee54ce2bb721268439b882dd
         if (downloadQueue.length > 0) {
             SampleManager.downloadInProgress = true;
             const count = downloadQueue.length;
@@ -123,8 +126,11 @@ Item {
 
         function onDownloadDataFailed(itemId) {
             SampleManager.downloadText = "Download failed for item " + itemId;
+<<<<<<< HEAD
             SampleManager.downloadFailed = true;
             SampleManager.downloadInProgress = false;
+=======
+>>>>>>> 859758696bdde217ee54ce2bb721268439b882dd
         }
 
         function onUnzipFile(filePath, extractPath) {

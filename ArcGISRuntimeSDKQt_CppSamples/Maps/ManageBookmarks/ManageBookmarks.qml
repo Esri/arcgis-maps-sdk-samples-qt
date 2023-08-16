@@ -82,7 +82,11 @@ ManageBookmarksSample {
             margins: 15
         }
         property int bestWidth: implicitWidth
+<<<<<<< HEAD
         width: bestWidth + leftPadding + rightPadding + (indicator ? indicator.width : 10)
+=======
+        width: bestWidth + leftPadding + rightPadding
+>>>>>>> 859758696bdde217ee54ce2bb721268439b882dd
         // Set the model to the BookmarkListModel
         model: manageBookmarksSample.bookmarks
 

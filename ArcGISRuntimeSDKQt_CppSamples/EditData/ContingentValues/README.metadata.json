@@ -11,7 +11,10 @@
         }
     ],
     "description": "Create and add features whose attribute values satisfy a predefined set of contingencies.",
+<<<<<<< HEAD
     "featured": false,
+=======
+>>>>>>> 859758696bdde217ee54ce2bb721268439b882dd
     "ignore": false,
     "images": [
         "screenshot.png"

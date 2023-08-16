@@ -68,7 +68,11 @@ Rectangle {
         }
 
         property int modelWidth: 0
+<<<<<<< HEAD
         width: modelWidth + leftPadding + rightPadding + (indicator ? indicator.width : 10)
+=======
+        width: modelWidth + leftPadding + rightPadding
+>>>>>>> 859758696bdde217ee54ce2bb721268439b882dd
         model: ["Mid-Century","Colored Pencil","Newspaper","Nova", "World Street Map (Night)"]
         onCurrentTextChanged: {
             // Call this JavaScript function when the current selection changes

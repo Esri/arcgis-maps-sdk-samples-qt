@@ -173,8 +173,11 @@ class MetadataFile:
             return self.check_data_items(self.metadata["dataItems"])
         elif key == "description":
             return self.check_description(self.metadata["description"])
+<<<<<<< HEAD
         elif key == "featured":
             return self.check_featured(self.metadata["featured"])
+=======
+>>>>>>> 859758696bdde217ee54ce2bb721268439b882dd
         elif key == "ignore":
             return self.check_ignore(self.metadata["ignore"])
         elif key == "images":
@@ -213,12 +216,15 @@ class MetadataFile:
                 errors.append(f"dataItem {i} needs a path")
         return errors
 
+<<<<<<< HEAD
     def check_featured(self, featured) -> list:
         if type(featured) != bool:
             return ["Featured metadata category value is not a bool"]
         errors = []
         return errors
 
+=======
+>>>>>>> 859758696bdde217ee54ce2bb721268439b882dd
     def check_description(self, description: str) -> list:
         if not description:
             return ["No description written"]
@@ -511,7 +517,10 @@ possible_metadata_keys = [
     'category',
     'dataItems',
     'description',
+<<<<<<< HEAD
     'featured',
+=======
+>>>>>>> 859758696bdde217ee54ce2bb721268439b882dd
     'ignore',
     'images',
     'keywords',

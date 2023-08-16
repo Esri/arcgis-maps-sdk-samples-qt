@@ -29,6 +29,12 @@ void setAPIKey(const QGuiApplication& app, QString apiKey);
 
 int main(int argc, char *argv[])
 {
+<<<<<<< HEAD
+=======
+  // Enforce OpenGL
+  qputenv("QSG_RHI_BACKEND", "opengl");
+
+>>>>>>> 859758696bdde217ee54ce2bb721268439b882dd
 #if defined(Q_OS_LINUX) && !defined(Q_OS_ANDROID)
   // Linux requires 3.2 OpenGL Context
   // in order to instance 3D symbols

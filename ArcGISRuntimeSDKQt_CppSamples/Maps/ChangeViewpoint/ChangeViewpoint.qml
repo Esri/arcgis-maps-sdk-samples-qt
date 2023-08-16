@@ -55,7 +55,11 @@ ChangeViewpointSample {
 
         property int bestWidth: implicitWidth
 
+<<<<<<< HEAD
         width: bestWidth + rightPadding + leftPadding + 20
+=======
+        width: bestWidth + rightPadding + leftPadding
+>>>>>>> 859758696bdde217ee54ce2bb721268439b882dd
 
         model: [ "Center",
                  "Center and scale",

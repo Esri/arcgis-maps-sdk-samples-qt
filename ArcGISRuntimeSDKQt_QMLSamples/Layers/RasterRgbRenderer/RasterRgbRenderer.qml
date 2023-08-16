@@ -143,7 +143,11 @@ Rectangle {
 
             model: stretchTypes
             property int modelWidth: 0
+<<<<<<< HEAD
             Layout.minimumWidth: modelWidth + leftPadding + rightPadding + (indicator ? indicator.width : 10)
+=======
+            Layout.minimumWidth: modelWidth + leftPadding + rightPadding
+>>>>>>> 859758696bdde217ee54ce2bb721268439b882dd
             Component.onCompleted : {
                 for (let i = 0; i < model.length; ++i) {
                     metrics.text = model[i];

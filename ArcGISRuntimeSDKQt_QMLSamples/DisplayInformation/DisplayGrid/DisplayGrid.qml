@@ -268,7 +268,11 @@ Rectangle {
             ComboBox {
                 id: gridTypeComboBox
                 property int modelWidth: 0
+<<<<<<< HEAD
                 Layout.minimumWidth: modelWidth + leftPadding + rightPadding + (indicator ? indicator.width : 10)
+=======
+                Layout.minimumWidth: modelWidth + leftPadding + rightPadding
+>>>>>>> 859758696bdde217ee54ce2bb721268439b882dd
                 Layout.rightMargin: 10
                 Layout.fillWidth: true
                 model: [latlonGrid, mgrsGrid, utmGrid, usngGrid]
@@ -362,7 +366,11 @@ Rectangle {
             ComboBox {
                 id: colorCombo
                 property int modelWidth: 0
+<<<<<<< HEAD
                 Layout.minimumWidth: modelWidth + leftPadding + rightPadding + (indicator ? indicator.width : 10)
+=======
+                Layout.minimumWidth: modelWidth + leftPadding + rightPadding
+>>>>>>> 859758696bdde217ee54ce2bb721268439b882dd
 
                 Layout.rightMargin: 10
                 Layout.fillWidth: true
@@ -393,7 +401,11 @@ Rectangle {
             ComboBox {
                 id: colorCombo2
                 property int modelWidth: 0
+<<<<<<< HEAD
                 Layout.minimumWidth: modelWidth + leftPadding + rightPadding + (indicator ? indicator.width : 10)
+=======
+                Layout.minimumWidth: modelWidth + leftPadding + rightPadding
+>>>>>>> 859758696bdde217ee54ce2bb721268439b882dd
                 Layout.rightMargin: 10
                 Layout.fillWidth: true
                 model: ["red", "black", "blue"]
@@ -423,7 +435,11 @@ Rectangle {
             ComboBox {
                 id: positionCombo
                 property int modelWidth: 0
+<<<<<<< HEAD
                 Layout.minimumWidth: modelWidth + leftPadding + rightPadding + (indicator ? indicator.width : 10)
+=======
+                Layout.minimumWidth: modelWidth + leftPadding + rightPadding
+>>>>>>> 859758696bdde217ee54ce2bb721268439b882dd
                 Layout.rightMargin: 10
                 Layout.fillWidth: true
                 model: [geographic, bottomLeft, bottomRight, topLeft, topRight, center, allSides]
@@ -455,7 +471,11 @@ Rectangle {
             ComboBox {
                 id: formatCombo
                 property int modelWidth: 0
+<<<<<<< HEAD
                 Layout.minimumWidth: modelWidth + leftPadding + rightPadding + (indicator ? indicator.width : 10)
+=======
+                Layout.minimumWidth: modelWidth + leftPadding + rightPadding
+>>>>>>> 859758696bdde217ee54ce2bb721268439b882dd
                 Layout.rightMargin: 10
                 Layout.fillWidth: true
                 model: [dd, dms]

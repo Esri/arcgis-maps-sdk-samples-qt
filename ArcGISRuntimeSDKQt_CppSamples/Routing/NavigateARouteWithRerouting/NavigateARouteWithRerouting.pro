@@ -25,10 +25,14 @@ CONFIG += c++17
 QT += opengl qml quick
 QT += texttospeech
 
+# NOTE: As of Qt 6.2, QTextToSpeech is not supported. Instances of this class have been commented out for compatibility, but remain for reference
+# QT += texttospeech
+
 TEMPLATE = app
 TARGET = NavigateARouteWithRerouting
 
 ARCGIS_RUNTIME_VERSION = 200.2.0
+ARCGIS_RUNTIME_VERSION = 200.1.0
 include($$PWD/arcgisruntime.pri)
 
 #-------------------------------------------------------------------------------

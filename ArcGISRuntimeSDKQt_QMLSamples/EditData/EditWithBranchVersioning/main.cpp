@@ -26,6 +26,12 @@
 
 int main(int argc, char *argv[])
 {
+<<<<<<< HEAD
+=======
+  // Enforce OpenGL
+  qputenv("QSG_RHI_BACKEND", "opengl");
+
+>>>>>>> 859758696bdde217ee54ce2bb721268439b882dd
 #ifdef QT_WEBVIEW_WEBENGINE_BACKEND
   QtWebEngineQuick::initialize();
 #endif // QT_WEBVIEW_WEBENGINE_BACKEND

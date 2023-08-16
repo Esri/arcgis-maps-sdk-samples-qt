@@ -50,11 +50,14 @@ ShowDeviceLocationUsingIndoorPositioning::ShowDeviceLocationUsingIndoorPositioni
 
 ShowDeviceLocationUsingIndoorPositioning::~ShowDeviceLocationUsingIndoorPositioning() = default;
 
+<<<<<<< HEAD
 void ShowDeviceLocationUsingIndoorPositioning::stopLocationDisplay()
 {
   m_mapView->locationDisplay()->stop();
 }
 
+=======
+>>>>>>> 859758696bdde217ee54ce2bb721268439b882dd
 void ShowDeviceLocationUsingIndoorPositioning::init()
 {
   // Register the map view for QML

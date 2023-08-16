@@ -7,7 +7,10 @@
         }
     ],
     "description": "Use a custom dictionary created from a web style or style file (.stylx) to symbolize features using a variety of attribute values.",
+<<<<<<< HEAD
     "featured": false,
+=======
+>>>>>>> 859758696bdde217ee54ce2bb721268439b882dd
     "ignore": false,
     "images": [
         "screenshot.png"

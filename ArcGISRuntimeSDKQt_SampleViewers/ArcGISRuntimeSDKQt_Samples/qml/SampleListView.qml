@@ -16,6 +16,10 @@
 import QtQuick
 import QtQuick.Controls
 import Esri.ArcGISRuntimeSamples
+<<<<<<< HEAD
+=======
+import Telemetry
+>>>>>>> 859758696bdde217ee54ce2bb721268439b882dd
 
 Page {
     id: sampleListView
@@ -67,7 +71,11 @@ Page {
         ListView {
             anchors.fill: parent
             clip: true
+<<<<<<< HEAD
             model: SampleManager.currentCategory ? SampleManager.currentCategory.samples : []
+=======
+            model: SampleManager.currentCategory.samples
+>>>>>>> 859758696bdde217ee54ce2bb721268439b882dd
             spacing: 10
             delegate: ItemDelegate {
                 id: itemDelegate
@@ -102,6 +110,10 @@ Page {
                         drawer.close();
                         // launch sample...
                         SampleManager.currentSample = sample;
+<<<<<<< HEAD
+=======
+                        GAnalytics.postEvent("sample_opened", {"sample_name": sample.name, "referrer": "category list"});
+>>>>>>> 859758696bdde217ee54ce2bb721268439b882dd
                     }
                 }
             }
