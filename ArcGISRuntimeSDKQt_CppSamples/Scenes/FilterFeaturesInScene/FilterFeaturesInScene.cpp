@@ -69,7 +69,7 @@ FilterFeaturesInScene::FilterFeaturesInScene(QObject* parent /* = nullptr */):
   // Construct the detailed buildings scene layer
   m_detailedBuildingsSceneLayer = new ArcGISSceneLayer(QUrl("https://tiles.arcgis.com/tiles/z2tnIkrLQ2BRzr6P/arcgis/rest/services/SanFrancisco_Bldgs/SceneServer"), this);
 
-  connect(m_detailedBuildingsSceneLayer, &ArcGISSceneLayer::doneLoading, this, [this](const Error error)
+  connect(m_detailedBuildingsSceneLayer, &ArcGISSceneLayer::doneLoading, this, [this](const Error& error)
   {
     if (!error.isEmpty())
     {
@@ -78,7 +78,7 @@ FilterFeaturesInScene::FilterFeaturesInScene(QObject* parent /* = nullptr */):
     }
 
     // Construct a red polygon that shows the extent of the detailed buildings scene layer
-    Envelope sfExtent = m_detailedBuildingsSceneLayer->fullExtent();
+    const Envelope sfExtent = m_detailedBuildingsSceneLayer->fullExtent();
 
     PolygonBuilder* builder = new PolygonBuilder(m_sceneView->spatialReference(), this);
     builder->addPoint(sfExtent.xMin(), sfExtent.yMin());

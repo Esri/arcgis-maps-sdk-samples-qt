@@ -14,7 +14,7 @@ The sample initializes showing the 3D buildings OpenStreetMap layer. Click the "
 
 ## How it works
 
-1. Construct a `Basemap` for the scene using a topographic `VectorTileLayer` and the OpenStreetMap 3D Buildings`ArcGISSceneLayer` as baselayers.
+1. Construct a `Basemap` for the scene using a topographic `ArcGISVectorTileLayer` and the OpenStreetMap 3D Buildings`ArcGISSceneLayer` as baselayers.
 2. Create a `Surface` for the scene and set the World Elevation 3D as an elevation source.
 3. Add the 3D San Fransisco Buildings `ArcGISSceneLayer` to the scene's operational layers.
 4. Construct a `SceneLayerPolygonFilter` with the extent of the San Fransisco Buildings Scene Layer and the `SceneLayerPolygonFilterSpatialRelationship::Disjoint` enum to hide all features within the extent.

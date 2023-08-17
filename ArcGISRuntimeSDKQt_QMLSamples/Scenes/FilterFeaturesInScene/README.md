@@ -14,7 +14,7 @@ The sample initializes showing the 3D buildings OpenStreetMap layer. Click the "
 
 ## How it works
 
-1. Construct a `Basemap` for the scene using an OpenStreetMap Topographic `VectorTileLayer` and the OpenStreetMap 3D Buildings `ArcGISSceneLayer` as baselayers.
+1. Construct a `Basemap` for the scene using an OpenStreetMap Topographic `ArcGISVectorTileLayer` and the OpenStreetMap 3D Buildings `ArcGISSceneLayer` as baselayers.
 2. Set the OSM buildings layer's `polygonFilter` property to a `SceneLayerPolygonFilter` with an empty list of polygons and a `SceneLayerPolygonFilterSpatialRelationshipDisjoint` enum to hide all features within the extent.
 3. Create a `Surface` for the scene and set the World Elevation 3D as an elevation source.
 4. Add the 3D San Fransisco Buildings `ArcGISSceneLayer` to the scene's operational layers.
@@ -34,7 +34,7 @@ This sample uses the [OpenStreetMap 3D Buildings](https://www.arcgis.com/home/it
 
 This sample uses `SceneLayerPolygonFilterSpatialRelationship::Disjoint` to hide all features within the extent of the given geometry. You can alternatively use `SceneLayerPolygonFilterSpatialRelationship::Contains` to only show features within the extent of the geometry. 
 
-You can also show or hide features in a scene layer using `ArcGISSceneLayer::setFeatureVisible` or `setFeaturesVisible` and pass in a feature or list of features and a boolean value to set their visibility.
+You can also show or hide features in a scene layer using `ArcGISSceneLayer.setFeatureVisible` or `setFeaturesVisible` and pass in a feature or list of features and a boolean value to set their visibility.
 
 ## Tags
 
