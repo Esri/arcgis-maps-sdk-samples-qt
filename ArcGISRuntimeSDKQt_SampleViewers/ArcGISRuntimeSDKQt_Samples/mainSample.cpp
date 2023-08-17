@@ -148,6 +148,7 @@
 #include "FeatureLayerChangeRenderer.h"
 #include "FeatureLayerDictionaryRenderer.h"
 #include "FeatureLayerExtrusion.h"
+#include "FilterFeaturesInScene.h"
 #include "FeatureLayerQuery.h"
 #include "FeatureLayerRenderingModeMap.h"
 #include "FeatureLayerRenderingModeScene.h"
@@ -458,6 +459,7 @@ void registerCppSampleClasses()
   FeatureLayerChangeRenderer::init();
   FeatureLayerDictionaryRenderer::init();
   FeatureLayerExtrusion::init();
+  FilterFeaturesInScene::init();
   FeatureLayerQuery::init();
   FeatureLayerRenderingModeMap::init();
   FeatureLayerRenderingModeScene::init();

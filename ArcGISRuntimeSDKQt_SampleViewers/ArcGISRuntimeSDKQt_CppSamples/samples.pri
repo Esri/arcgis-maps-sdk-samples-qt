@@ -202,6 +202,7 @@ INCLUDEPATH += \
     "$$SAMPLEPATHCPP/Scenes/DistanceCompositeSymbol" \
     "$$SAMPLEPATHCPP/Scenes/ExtrudeGraphics" \
     "$$SAMPLEPATHCPP/Scenes/FeatureLayerExtrusion" \
+    "$$SAMPLEPATHCPP/Scenes/FilterFeaturesInScene" \
     "$$SAMPLEPATHCPP/Scenes/GetElevationAtPoint" \
     "$$SAMPLEPATHCPP/Scenes/OpenMobileScenePackage" \
     "$$SAMPLEPATHCPP/Scenes/OpenScene" \
@@ -417,6 +418,7 @@ HEADERS += \
     "$$SAMPLEPATHCPP/Scenes/DistanceCompositeSymbol/DistanceCompositeSymbol.h" \
     "$$SAMPLEPATHCPP/Scenes/ExtrudeGraphics/ExtrudeGraphics.h" \
     "$$SAMPLEPATHCPP/Scenes/FeatureLayerExtrusion/FeatureLayerExtrusion.h" \
+    "$$SAMPLEPATHCPP/Scenes/FilterFeaturesInScene/FilterFeaturesInScene.h" \
     "$$SAMPLEPATHCPP/Scenes/GetElevationAtPoint/GetElevationAtPoint.h" \
     "$$SAMPLEPATHCPP/Scenes/OpenMobileScenePackage/OpenMobileScenePackage.h" \
     "$$SAMPLEPATHCPP/Scenes/OpenScene/OpenScene.h" \
@@ -632,6 +634,7 @@ SOURCES += \
     "$$SAMPLEPATHCPP/Scenes/DistanceCompositeSymbol/DistanceCompositeSymbol.cpp" \
     "$$SAMPLEPATHCPP/Scenes/ExtrudeGraphics/ExtrudeGraphics.cpp" \
     "$$SAMPLEPATHCPP/Scenes/FeatureLayerExtrusion/FeatureLayerExtrusion.cpp" \
+    "$$SAMPLEPATHCPP/Scenes/FilterFeaturesInScene/FilterFeaturesInScene.cpp" \
     "$$SAMPLEPATHCPP/Scenes/GetElevationAtPoint/GetElevationAtPoint.cpp" \
     "$$SAMPLEPATHCPP/Scenes/OpenMobileScenePackage/OpenMobileScenePackage.cpp" \
     "$$SAMPLEPATHCPP/Scenes/OpenScene/OpenScene.cpp" \
@@ -838,6 +841,7 @@ RESOURCES += \
     "$$SAMPLEPATHCPP/Scenes/DistanceCompositeSymbol/DistanceCompositeSymbol.qrc" \
     "$$SAMPLEPATHCPP/Scenes/ExtrudeGraphics/ExtrudeGraphics.qrc" \
     "$$SAMPLEPATHCPP/Scenes/FeatureLayerExtrusion/FeatureLayerExtrusion.qrc" \
+    "$$SAMPLEPATHCPP/Scenes/FilterFeaturesInScene/FilterFeaturesInScene.qrc" \
     "$$SAMPLEPATHCPP/Scenes/GetElevationAtPoint/GetElevationAtPoint.qrc" \
     "$$SAMPLEPATHCPP/Scenes/OpenMobileScenePackage/OpenMobileScenePackage.qrc" \
     "$$SAMPLEPATHCPP/Scenes/OpenScene/OpenScene.qrc" \

@@ -42,14 +42,10 @@ Rectangle {
                     id: osmBuildingsSceneLayer
                     item: PortalItem {itemId: "ca0470dbbddb4db28bad74ed39949e25"}
 
-                    polygonFilter: osmSceneLayerPolygonFilter {
-                        id: osmsceneLayerPolygonFilter
+                    polygonFilter: SceneLayerPolygonFilter {
+                        id: osmSceneLayerPolygonFilter
                         polygons: []
-                        spatialRelationship: Enums.osmSceneLayerPolygonFilterSpatialRelationshipDisjoint
-
-                        onPolygonsChanged: {
-                            console.log("polygons changed", polygons);
-                        }
+                        spatialRelationship: Enums.SceneLayerPolygonFilterSpatialRelationshipDisjoint
                     }
                 }
             }
@@ -162,7 +158,7 @@ Rectangle {
             case 1:
                 // Set the osmSceneLayerPolygonFilter's polygons to the extent of the detailed buildings layer
                 // to hide all OSM buildings within that area
-                osmsceneLayerPolygonFilter.polygons = [detailedBuildingsSceneLayer.extentPolygon];
+                osmSceneLayerPolygonFilter.polygons = [detailedBuildingsSceneLayer.extentPolygon];
                 step++;
                 break;
 
@@ -170,7 +166,7 @@ Rectangle {
                 // Reset the scene to its original state
                 detailedBuildingsSceneLayer.visible = false;
                 graphicsOverlay.visible = false;
-                osmsceneLayerPolygonFilter.polygons = [];
+                osmSceneLayerPolygonFilter.polygons = [];
                 step = 0;
                 break;
 

@@ -203,6 +203,7 @@ RESOURCES += \
     "$$SAMPLEPATHQML/Scenes/DistanceCompositeSymbol/DistanceCompositeSymbol.qrc" \
     "$$SAMPLEPATHQML/Scenes/ExtrudeGraphics/ExtrudeGraphics.qrc" \
     "$$SAMPLEPATHQML/Scenes/FeatureLayerExtrusion/FeatureLayerExtrusion.qrc" \
+    "$$SAMPLEPATHQML/Scenes/FilterFeaturesInScene/FilterFeaturesInScene.qrc" \
     "$$SAMPLEPATHQML/Scenes/GetElevationAtPoint/GetElevationAtPoint.qrc" \
     "$$SAMPLEPATHQML/Scenes/OpenMobileScenePackage/OpenMobileScenePackage.qrc" \
     "$$SAMPLEPATHQML/Scenes/OpenScene/OpenScene.qrc" \
