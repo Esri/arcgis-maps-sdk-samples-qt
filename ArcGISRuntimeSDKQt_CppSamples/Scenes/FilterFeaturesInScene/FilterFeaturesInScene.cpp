@@ -73,7 +73,7 @@ FilterFeaturesInScene::FilterFeaturesInScene(QObject* parent /* = nullptr */):
   {
     if (!error.isEmpty())
     {
-      qWarning() << "San Fransisco Buildings Layer failed to load." << error.message() << error.additionalMessage();
+      qWarning() << "San Francisco Buildings Layer failed to load." << error.message() << error.additionalMessage();
       return;
     }
 
@@ -96,7 +96,7 @@ FilterFeaturesInScene::FilterFeaturesInScene(QObject* parent /* = nullptr */):
 
     // Create the extent graphic so we can add it later with the detailed buildings scene layer
     SimpleFillSymbol* sfs = new SimpleFillSymbol(SimpleFillSymbolStyle::Solid, QColor(Qt::transparent), new SimpleLineSymbol(SimpleLineSymbolStyle::Solid, QColor(Qt::red), 5.0f, this), this);
-    m_sanFransiscoExtentGraphic = new Graphic(m_sceneLayerExtentPolygon, sfs, this);
+    m_sanFranciscoExtentGraphic = new Graphic(m_sceneLayerExtentPolygon, sfs, this);
   });
 
   m_detailedBuildingsSceneLayer->load();
@@ -115,7 +115,7 @@ void FilterFeaturesInScene::loadScene()
 {
   // Show the detailed buildings scene layer and the extent graphic
   m_scene->operationalLayers()->append(m_detailedBuildingsSceneLayer);
-  m_sceneView->graphicsOverlays()->first()->graphics()->append(m_sanFransiscoExtentGraphic);
+  m_sceneView->graphicsOverlays()->first()->graphics()->append(m_sanFranciscoExtentGraphic);
 }
 
 void FilterFeaturesInScene::filterScene()
@@ -158,7 +158,7 @@ void FilterFeaturesInScene::setSceneView(SceneQuickView* sceneView)
   m_sceneView = sceneView;
   m_sceneView->setArcGISScene(m_scene);
 
-  // Set the viewpoint to San Fransisco
+  // Set the viewpoint to San Francisco
   m_sceneView->setViewpointCamera(Camera(Point(-122.421, 37.7041, 207), 60, 70, 0));
 
   // Add a graphics overlay to display the extent graphic
