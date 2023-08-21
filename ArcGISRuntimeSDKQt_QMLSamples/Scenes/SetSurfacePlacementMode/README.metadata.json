@@ -19,24 +19,23 @@
         "surface placement",
         "Graphic",
         "GraphicsOverlay",
-        "LayerSceneProperties::SurfacePlacement",
+        "LayerSceneProperties.surfacePlacement",
         "SceneProperties",
         "Surface"
     ],
     "redirect_from": [
-        "/qt/latest/cpp/sample-code/sample-qt-surfaceplacement.htm"
+        "/qt/latest/qml/sample-code/sample-qt-surfaceplacement.htm",
+        "/qt/latest/qml/sample-code/sample-qt-surface-placement.htm"
     ],
     "relevant_apis": [
         "Graphic",
         "GraphicsOverlay",
-        "LayerSceneProperties::surfacePlacement",
+        "LayerSceneProperties.surfacePlacement",
         "SceneProperties",
         "Surface"
     ],
     "snippets": [
-        "Surface_Placement.cpp",
-        "Surface_Placement.h",
-        "Surface_Placement.qml"
+        "SetSurfacePlacementMode.qml"
     ],
-    "title": "Surface placement"
+    "title": "Set surface placement mode"
 }

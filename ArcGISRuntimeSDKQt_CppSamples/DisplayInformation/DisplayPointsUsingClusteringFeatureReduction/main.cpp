@@ -1,4 +1,4 @@
-// Copyright 2015 Esri.
+// Copyright 2020 Esri.
 
 // Licensed under the Apache License, Version 2.0 (the "License");
 // you may not use this file except in compliance with the License.
@@ -11,29 +11,23 @@
 // See the License for the specific language governing permissions and
 // limitations under the License.
 
-#include <QSettings>
-#include <QGuiApplication>
-#include <QQuickView>
-#include <QCommandLineParser>
-#include <QDir>
-#include <QQmlEngine>
-#include <QSurfaceFormat>
+#include "DisplayPointsUsingClusteringFeatureReduction.h"
+#include "ArcGISRuntimeEnvironment.h"
 
-#define STRINGIZE(x) #x
-#define QUOTE(x) STRINGIZE(x)
+#include <QDir>
+#include <QGuiApplication>
+#include <QQmlApplicationEngine>
+
+#ifdef Q_OS_WIN
+#include <Windows.h>
+#endif
+
+#include "Esri/ArcGISRuntime/Toolkit/register.h"
 
 int main(int argc, char *argv[])
 {
-#if defined(Q_OS_LINUX) && !defined(Q_OS_ANDROID)
-  // Linux requires 3.2 OpenGL Context
-  // in order to instance 3D symbols
-  QSurfaceFormat fmt = QSurfaceFormat::defaultFormat();
-  fmt.setVersion(3, 2);
-  QSurfaceFormat::setDefaultFormat(fmt);
-#endif
-
   QGuiApplication app(argc, argv);
-  app.setApplicationName("SurfacePlacement - QML");
+  app.setApplicationName(QStringLiteral("DisplayPointsUsingClusteringFeatureReduction - C++"));
 
   // Use of Esri location services, including basemaps and geocoding,
   // requires authentication using either an ArcGIS identity or an API Key.
@@ -50,32 +44,25 @@ int main(int argc, char *argv[])
   }
   else
   {
-      QCoreApplication::instance()->setProperty("Esri.ArcGISRuntime.apiKey", apiKey);
+      Esri::ArcGISRuntime::ArcGISRuntimeEnvironment::setApiKey(apiKey);
   }
 
+  // Initialize the sample
+  DisplayPointsUsingClusteringFeatureReduction::init();
+
   // Initialize application view
-  QQuickView view;
-  view.setResizeMode(QQuickView::SizeRootObjectToView);
-
+  QQmlApplicationEngine engine;
   // Add the import Path
-  view.engine()->addImportPath(QDir(QCoreApplication::applicationDirPath()).filePath("qml"));
+  engine.addImportPath(QDir(QCoreApplication::applicationDirPath()).filePath("qml"));
 
-    QString arcGISRuntimeImportPath = QUOTE(ARCGIS_RUNTIME_IMPORT_PATH);
-
-#if defined(LINUX_PLATFORM_REPLACEMENT)
-    // on some linux platforms the string 'linux' is replaced with 1
-    // fix the replacement paths which were created
-    QString replaceString = QUOTE(LINUX_PLATFORM_REPLACEMENT);
-    arcGISRuntimeImportPath = arcGISRuntimeImportPath.replace(replaceString, "linux", Qt::CaseSensitive);
+#ifdef ARCGIS_RUNTIME_IMPORT_PATH_2
+  engine.addImportPath(ARCGIS_RUNTIME_IMPORT_PATH_2);
 #endif
 
-    // Add the Runtime and Extras path
-    view.engine()->addImportPath(arcGISRuntimeImportPath);
+  Esri::ArcGISRuntime::Toolkit::registerComponents(engine);
 
   // Set the source
-  view.setSource(QUrl("qrc:/Samples/Scenes/Surface_Placement/Surface_Placement.qml"));
-
-  view.show();
+  engine.load(QUrl("qrc:/Samples/DisplayInformation/DisplayPointsUsingClusteringFeatureReduction/main.qml"));
 
   return app.exec();
 }
