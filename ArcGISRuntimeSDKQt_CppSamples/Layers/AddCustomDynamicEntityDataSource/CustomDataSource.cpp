@@ -72,8 +72,7 @@ void CustomDataSource::observationProcessLoopAsync()
                       SpatialReference::wgs84());
 
     // Get the observation attributes from the line
-    const QJsonObject attributesObject = jsonObject.value("attributes").toObject();
-    const QVariantMap attributes = convertJsonObjectToVariantMap(attributesObject);
+    const QVariantMap attributes = jsonObject.value("attributes").toObject().toVariantMap();
 
     addObservation(point, attributes);
 
@@ -82,20 +81,6 @@ void CustomDataSource::observationProcessLoopAsync()
     if (m_textStream.atEnd())
       m_textStream.seek(0);
   }
-}
-
-QVariantMap CustomDataSource::convertJsonObjectToVariantMap(const QJsonObject& jsonObject)
-{
-  QVariantMap variantMap;
-
-  for (auto it = jsonObject.begin(); it != jsonObject.end(); ++it) {
-    const QString key = it.key();
-    const QJsonValue value = it.value();
-
-    variantMap[key] = value.toVariant();
-  }
-
-  return variantMap;
 }
 
 QList<Field> CustomDataSource::getSchema()

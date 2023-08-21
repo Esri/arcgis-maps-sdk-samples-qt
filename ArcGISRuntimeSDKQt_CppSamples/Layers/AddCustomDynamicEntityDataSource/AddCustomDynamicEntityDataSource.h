@@ -41,8 +41,6 @@ public:
 
   static void init();
 
-  Q_INVOKABLE void purgeAllObservations();
-
 signals:
   void mapViewChanged();
 

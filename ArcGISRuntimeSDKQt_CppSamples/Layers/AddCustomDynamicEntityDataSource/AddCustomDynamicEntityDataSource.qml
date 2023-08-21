@@ -38,13 +38,6 @@ Item {
         mapView: view
     }
 
-    Button {
-        text: "purge"
-        onClicked: {
-            model.purgeAllObservations();
-        }
-    }
-
     Callout {
         id: callout
         height: 120

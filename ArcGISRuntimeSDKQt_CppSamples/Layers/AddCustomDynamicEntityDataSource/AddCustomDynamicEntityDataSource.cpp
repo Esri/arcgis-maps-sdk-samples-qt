@@ -91,12 +91,6 @@ void AddCustomDynamicEntityDataSource::init()
   qmlRegisterType<AddCustomDynamicEntityDataSource>("Esri.Samples", 1, 0, "AddCustomDynamicEntityDataSourceSample");
 }
 
-void AddCustomDynamicEntityDataSource::purgeAllObservations()
-{
-  qDebug() << "purging observations";
-  m_dynamicEntityLayer->dataSource()->purgeAll();
-}
-
 MapQuickView* AddCustomDynamicEntityDataSource::mapView() const
 {
   return m_mapView;
