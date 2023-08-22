@@ -14,7 +14,6 @@
 // limitations under the License.
 // [Legal]
 
-#include "Geometry.h"
 #ifdef PCH_BUILD
 #include "pch.hpp"
 #endif // PCH_BUILD
@@ -22,9 +21,7 @@
 #include "AddCustomDynamicEntityDataSource.h"
 
 #include "CustomDataSource.h"
-#include "Domain.h"
 #include "ServiceTypes.h"
-#include "ArcGISStreamService.h"
 #include "DynamicEntityDataSource.h"
 #include "DynamicEntityLayer.h"
 #include "Map.h"
@@ -58,26 +55,27 @@ AddCustomDynamicEntityDataSource::AddCustomDynamicEntityDataSource(QObject* pare
   QObject(parent),
   m_map(new Map(BasemapStyle::ArcGISOceans, this))
 {
+  // This is a custom class that inherits from DynamicEntityDataSource. It was written specifically for this sample.
   CustomDataSource* dataSource = new CustomDataSource(":/Samples/Layers/AddCustomDynamicEntityDataSource/AIS_MarineCadastre_SelectedVessels_CustomDataSource.json", "MMSI", 10, this);
   m_dynamicEntityLayer = new DynamicEntityLayer(dataSource, this);
 
   m_map->operationalLayers()->append(m_dynamicEntityLayer);
 
+  // Set previous observation properties
   m_dynamicEntityLayer->trackDisplayProperties()->setShowPreviousObservations(true);
   m_dynamicEntityLayer->trackDisplayProperties()->setShowTrackLine(true);
   m_dynamicEntityLayer->trackDisplayProperties()->setMaximumObservations(20);
+
+  // Even when not displayed, previous observations are stored until purged
   m_dynamicEntityLayer->dataSource()->purgeOptions()->setMaximumObservationsPerTrack(20);
 
+  // Show the vessel names as labels above the observation points
   SimpleLabelExpression* simpleLabelExpression = new SimpleLabelExpression("[VesselName]", this);
-
   TextSymbol* labelSymbol = new TextSymbol(this);
   labelSymbol->setColor(Qt::red);
   labelSymbol->setSize(12);
-
   LabelDefinition* labelDef = new LabelDefinition(simpleLabelExpression, labelSymbol, this);
-
   labelDef->setPlacement(LabelingPlacement::PointAboveCenter);
-
   m_dynamicEntityLayer->labelDefinitions()->append(labelDef);
   m_dynamicEntityLayer->setLabelsEnabled(true);
 }
@@ -107,48 +105,54 @@ void AddCustomDynamicEntityDataSource::setMapView(MapQuickView* mapView)
 
   m_mapView->setViewpoint(Viewpoint(47.984, -123.657, 3e6));
 
-  connect(m_mapView, &MapQuickView::mouseClicked, this, [this](const QMouseEvent &e)
-  {
-    auto layer = m_map->operationalLayers()->first();
-
-    m_mapView->calloutData()->setVisible(false);
-
-    if (m_dynamicEntity)
-    {
-      delete m_dynamicEntity;
-      m_dynamicEntity = nullptr;
-    }
-
-    m_mapView->identifyLayerAsync(layer, e.position(), 10, false, this).then(this, [this](IdentifyLayerResult* result)
-    {
-      if (!result || result->geoElements().empty())
-        return;
-
-      if (DynamicEntityObservation* observation = dynamic_cast<DynamicEntityObservation*>(result->geoElements().constFirst()))
-      {
-        m_dynamicEntity = observation->dynamicEntity();
-
-        if (!m_dynamicEntity)
-          return;
-
-        connect(m_dynamicEntity, &DynamicEntity::dynamicEntityChanged, this, [this](DynamicEntityChangedInfo* changedInfo)
-        {
-          auto changedInfoPtr = std::unique_ptr<DynamicEntityChangedInfo>(changedInfo);
-          DynamicEntityObservation* currentObservation = changedInfo->receivedObservation();
-          QString calloutText =
-          {
-            "Vessel Name: " + currentObservation->attributes()->attributeValue("VesselName").toString() + "\n" +
-            "Call Sign: " + currentObservation->attributes()->attributeValue("CallSign").toString() + "\n" +
-            "Course over Ground: " + currentObservation->attributes()->attributeValue("COG").toString() + "º\n" +
-            "Speed over Ground: " + currentObservation->attributes()->attributeValue("SOG").toString() + " knots"
-          };
-          m_mapView->calloutData()->setDetail(calloutText);
-          m_mapView->calloutData()->setGeoElement(currentObservation);
-          m_mapView->calloutData()->setVisible(true);
-        });
-      }
-    });
-  });
+  // Create a slot to listen for mouse clicks
+  connect(m_mapView, &MapQuickView::mouseClicked, this, &AddCustomDynamicEntityDataSource::identifyLayerAtMouseClick);
 
   emit mapViewChanged();
+}
+
+void AddCustomDynamicEntityDataSource::identifyLayerAtMouseClick(const QMouseEvent &e)
+{
+  // Hide the callout (if it is already hidden this will do nothing)
+  m_mapView->calloutData()->setVisible(false);
+
+  // Reseting m_tempParent gives it a new parent and cleans up any previously owned children like IdentifyLayerResult and DynamicEntity objects
+  m_tempParent.reset(new QObject(this));
+
+  m_mapView->identifyLayerAsync(m_map->operationalLayers()->first(), e.position(), 10, false, m_tempParent.get())
+      .then(this, [this](IdentifyLayerResult* result)
+  {
+    if (!result || result->geoElements().empty())
+      return;
+
+    if (DynamicEntityObservation* observation = dynamic_cast<DynamicEntityObservation*>(result->geoElements().constFirst()))
+    {
+      DynamicEntity* dynamicEntity = observation->dynamicEntity();
+
+      if (!dynamicEntity)
+        return;
+
+      // Get updated info about the dynamic entity every time it updates
+      connect(dynamicEntity, &DynamicEntity::dynamicEntityChanged, this, [this](DynamicEntityChangedInfo* changedInfo)
+      {
+        // changedInfo will be cleaned up when m_tempParent is reset, but they will persist until then
+        // a new DynamicEntityChangedInfo object will be created every time the dynamic entity updates
+        // we can call deleteLater() to delete the object sooner when we leave this event loop
+        changedInfo->deleteLater();
+
+        // Get the current/most recent observation and populate a popup with its information
+        DynamicEntityObservation* currentObservation = changedInfo->receivedObservation();
+        QString calloutText =
+        {
+          "Vessel Name: " + currentObservation->attributes()->attributeValue("VesselName").toString() + "\n" +
+          "Call Sign: " + currentObservation->attributes()->attributeValue("CallSign").toString() + "\n" +
+          "Course over Ground: " + currentObservation->attributes()->attributeValue("COG").toString() + "º\n" +
+          "Speed over Ground: " + currentObservation->attributes()->attributeValue("SOG").toString() + " knots"
+        };
+        m_mapView->calloutData()->setDetail(calloutText);
+        m_mapView->calloutData()->setGeoElement(currentObservation);
+        m_mapView->calloutData()->setVisible(true);
+      });
+    }
+  });
 }

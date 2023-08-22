@@ -11,6 +11,8 @@
 // See the License for the specific language governing permissions and
 // limitations under the License.
 
+#include "Esri/ArcGISRuntime/Toolkit/register.h"
+
 #include <QSettings>
 #include <QGuiApplication>
 #include <QQuickView>
@@ -35,6 +37,9 @@ int main(int argc, char *argv[])
 
   // Add the import Path
   view.engine()->addImportPath(QDir(QCoreApplication::applicationDirPath()).filePath("qml"));
+
+  // Add the toolkit
+  Esri::ArcGISRuntime::Toolkit::registerComponents(*view.engine());
 
 #ifdef ARCGIS_RUNTIME_IMPORT_PATH_2
   view.engine()->addImportPath(ARCGIS_RUNTIME_IMPORT_PATH_2);

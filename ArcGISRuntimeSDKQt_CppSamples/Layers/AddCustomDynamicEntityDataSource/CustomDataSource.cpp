@@ -16,7 +16,6 @@ using namespace Esri::ArcGISRuntime;
 
 CustomDataSource::CustomDataSource(QObject* parent) : DynamicEntityDataSource(parent)
 {
-
 }
 
 CustomDataSource::CustomDataSource(const QString& fileName, const QString& entityIdField, const int msDelay, QObject* parent) :
@@ -26,10 +25,12 @@ CustomDataSource::CustomDataSource(const QString& fileName, const QString& entit
 
 CustomDataSource::~CustomDataSource()
 {
+  // The app will crash upon destruction if the asynchronous method is still running upon destruction
   m_watcher.cancel();
   m_watcher.waitForFinished();
 }
 
+// Override the virtual onLoadAsync method to define what the DynamicEntityDataSource will do upon load
 QFuture<DynamicEntityDataSourceInfo*> CustomDataSource::onLoadAsync()
 {
   m_fields = getSchema();
@@ -37,31 +38,38 @@ QFuture<DynamicEntityDataSourceInfo*> CustomDataSource::onLoadAsync()
   m_file.setFileName(m_fileName);
 
   if (m_file.open(QIODevice::ReadOnly | QIODevice::Text))
-  {
     m_textStream.setDevice(&m_file);
-  }
 
+  // Create a DynamicEntityDataSourceInfo object to return
   DynamicEntityDataSourceInfo* dynamicEntityDataSourceInfo = new DynamicEntityDataSourceInfo(m_entityIdField, m_fields, this);
+
+  // Your data may not display correctly if you do not have a spatial reference set
   dynamicEntityDataSourceInfo->setSpatialReference(SpatialReference::wgs84());
+
+  // Return the QFuture<DynamicEntityDataSourceInfo*>
   return QtFuture::makeReadyFuture(dynamicEntityDataSourceInfo);
 }
 
+// Override the virtual onConnectAsync method to define what the DynamicEntityDataSource will do when the data source is connected
 QFuture<void> CustomDataSource::onConnectAsync()
 {
   m_watcher.setFuture(QtConcurrent::run([this](){observationProcessLoopAsync();}));
   return QtFuture::makeReadyFuture();
 }
 
+// Override the virtual onDisconnectAsync method to define what the DynamicEntityDataSource will do when the data source is disconnected
 QFuture<void> CustomDataSource::onDisconnectAsync()
 {
   m_watcher.cancel();
+  m_watcher.waitForFinished();
   return QtFuture::makeReadyFuture();
 }
 
+// This method runs asynchronously to step through the accompanying .json file and call addObservation(geometry, attributes) with each line
 void CustomDataSource::observationProcessLoopAsync()
 {
   while (!m_textStream.atEnd() && !m_watcher.isCanceled())
-  {
+  {   
     const QString line = m_textStream.readLine();
     const QJsonObject jsonObject = QJsonDocument::fromJson(line.toUtf8()).object();
 
@@ -83,6 +91,7 @@ void CustomDataSource::observationProcessLoopAsync()
   }
 }
 
+// Schema fields that are hardcoded to match the accompanying .json data
 QList<Field> CustomDataSource::getSchema()
 {
   return QList<Field>

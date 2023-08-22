@@ -25,6 +25,7 @@ class Map;
 class MapQuickView;
 }
 
+#include <QMouseEvent>
 #include <QObject>
 
 Q_MOC_INCLUDE("MapQuickView.h");
@@ -48,10 +49,11 @@ private:
   Esri::ArcGISRuntime::MapQuickView* mapView() const;
   void setMapView(Esri::ArcGISRuntime::MapQuickView* mapView);
 
+  void identifyLayerAtMouseClick(const QMouseEvent& e);
+
   Esri::ArcGISRuntime::Map* m_map = nullptr;
   Esri::ArcGISRuntime::MapQuickView* m_mapView = nullptr;
 
-  Esri::ArcGISRuntime::DynamicEntity* m_dynamicEntity = nullptr;
   Esri::ArcGISRuntime::DynamicEntityLayer* m_dynamicEntityLayer = nullptr;
 
 };

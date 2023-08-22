@@ -1,17 +1,34 @@
 {
-    "category": "TODO",
-    "description": "TODO",
-    "featured": false,
+    "category": "Layer",
+    "description": "Create a custom dynamic entity data source and display it using a dynamic entity layer.",
+    "featured": true,
     "ignore": false,
     "images": [
         "screenshot.png"
     ],
     "keywords": [
-        "TODO"
+        "data",
+        "dynamic",
+        "entity",
+        "label",
+        "labeling",
+        "live",
+        "real-time",
+        "stream",
+        "track",
+        "DynamicEntity",
+        "DynamicEntityDataSource",
+        "DynamicEntityLayer",
+        "LabelDefinition",
+        "TrackDisplayProperties"
     ],
     "redirect_from": "",
     "relevant_apis": [
-        "TODO"
+        "DynamicEntity",
+        "DynamicEntityDataSource",
+        "DynamicEntityLayer",
+        "LabelDefinition",
+        "TrackDisplayProperties"
     ],
     "snippets": [
         "AddCustomDynamicEntityDataSource.cpp",
