@@ -55,7 +55,7 @@ private:
   Esri::ArcGISRuntime::MapQuickView* m_mapView = nullptr;
 
   Esri::ArcGISRuntime::DynamicEntityLayer* m_dynamicEntityLayer = nullptr;
-
+  QScopedPointer<QObject> m_tempParent;
 };
 
 #endif // ADDCUSTOMDYNAMICENTITYDATASOURCE_H
