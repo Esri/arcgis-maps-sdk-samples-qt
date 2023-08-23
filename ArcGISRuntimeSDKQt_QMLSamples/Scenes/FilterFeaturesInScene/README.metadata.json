@@ -1,0 +1,33 @@
+{
+    "category": "Scenes",
+    "description": "Filter 3D scene features out of a given geometry with a polygon filter.",
+    "featured": true,
+    "ignore": false,
+    "images": [
+        "screenshot.png"
+    ],
+    "keywords": [
+        "3D",
+        "buildings",
+        "disjoint",
+        "exclude",
+        "extent",
+        "filter",
+        "hide",
+        "OSM",
+        "polygon",
+        "ArcGISSceneLayer",
+        "SceneLayerPolygonFilter",
+        "SceneLayerPolygonFilterSpatialRelationship"
+    ],
+    "redirect_from": "",
+    "relevant_apis": [
+        "ArcGISSceneLayer",
+        "SceneLayerPolygonFilter",
+        "SceneLayerPolygonFilterSpatialRelationship"
+    ],
+    "snippets": [
+        "FilterFeaturesInScene.qml"
+    ],
+    "title": "Filter features in scene"
+}

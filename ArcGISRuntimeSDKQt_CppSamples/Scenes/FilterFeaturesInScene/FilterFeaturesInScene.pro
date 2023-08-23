@@ -1,5 +1,5 @@
 #-------------------------------------------------
-# Copyright %{CurrentYear} Esri.
+# Copyright 2023 Esri.
 
 # Licensed under the Apache License, Version 2.0 (the "License");
 # you may not use this file except in compliance with the License.
@@ -13,25 +13,52 @@
 # limitations under the License.
 #-------------------------------------------------
 
-TEMPLATE = app
+mac {
+    cache()
+}
+
+#-------------------------------------------------------------------------------
+
+CONFIG += c++17
 
 # additional modules are pulled in via arcgisruntime.pri
 QT += opengl qml quick
 
-CONFIG += c++17
+TEMPLATE = app
+TARGET = FilterFeaturesInScene
 
 ARCGIS_RUNTIME_VERSION = 200.3.0
 include($$PWD/arcgisruntime.pri)
 
-SOURCES += \\
-    %{MainCppFileName}
+#-------------------------------------------------------------------------------
 
-RESOURCES += \\
-    %{SampleName}.qrc
+HEADERS += \
+    FilterFeaturesInScene.h
+
+SOURCES += \
+    main.cpp \
+    FilterFeaturesInScene.cpp
+
+RESOURCES += FilterFeaturesInScene.qrc
+
+#-------------------------------------------------------------------------------
+
+win32 {
+    LIBS += \
+        Ole32.lib
+}
 
 ios {
+    INCLUDEPATH += $$PWD
+    DEPENDPATH += $$PWD
+
+    OTHER_FILES += \
+        $$PWD/Info.plist
+
     QMAKE_INFO_PLIST = $$PWD/Info.plist
 }
 
-# Default rules for deployment.
-include(deployment.pri)
+android {
+    INCLUDEPATH += $$PWD
+    DEPENDPATH += $$PWD
+}

@@ -1,5 +1,5 @@
 #-------------------------------------------------
-# Copyright %{CurrentYear} Esri.
+# Copyright 2023 Esri.
 
 # Licensed under the Apache License, Version 2.0 (the "License");
 # you may not use this file except in compliance with the License.
@@ -23,11 +23,11 @@ CONFIG += c++17
 ARCGIS_RUNTIME_VERSION = 200.3.0
 include($$PWD/arcgisruntime.pri)
 
-SOURCES += \\
-    %{MainCppFileName}
+SOURCES += \
+    main.cpp
 
-RESOURCES += \\
-    %{SampleName}.qrc
+RESOURCES += \
+    FilterFeaturesInScene.qrc
 
 ios {
     QMAKE_INFO_PLIST = $$PWD/Info.plist
