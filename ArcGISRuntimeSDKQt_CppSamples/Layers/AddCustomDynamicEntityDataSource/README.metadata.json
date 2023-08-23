@@ -33,6 +33,8 @@
     "snippets": [
         "AddCustomDynamicEntityDataSource.cpp",
         "AddCustomDynamicEntityDataSource.h",
+        "CustomDataSource.cpp",
+        "CustomDataSource.h",
         "AddCustomDynamicEntityDataSource.qml"
     ],
     "title": "Add custom dynamic entity data source"

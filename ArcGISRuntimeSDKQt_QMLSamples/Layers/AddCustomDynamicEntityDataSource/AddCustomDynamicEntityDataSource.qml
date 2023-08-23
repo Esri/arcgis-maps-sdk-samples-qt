@@ -25,7 +25,6 @@ Rectangle {
     width: 800
     height: 600
 
-    property list<string> observations: []
     property DynamicEntity dynamicEntity: null
 
     MapView {
@@ -72,37 +71,16 @@ Rectangle {
 
                 labelsEnabled: true
 
+                // Create a CustomDynamicEntityDataSource which inherits from DynamicEntityDataSource
                 dataSource: CustomDynamicEntityDataSource {
                     id: customDynamicEntityDataSource
 
                     purgeOptions.maximumObservationsPerTrack: 20
 
-                    onConnectAsync: {
-                        timer.start();
-                        connectAsyncCompleted();
-                    }
-
-                    onDisconnectAsync: {
-                        disconnectAsyncCompleted();
-                    }
-
+                    // onLoadAsync must be defined
+                    // This loads the data source and returns a DynamicEntityDataSourceInfo
                     onLoadAsync: {
-                        const fieldList = [ArcGISRuntimeEnvironment.createObject("Field", {fieldType: Enums.FieldTypeText, name: "MMSI", length: 256}),
-                                           ArcGISRuntimeEnvironment.createObject("Field", {fieldType: Enums.FieldTypeFloat64, name: "BaseDateTime", length: 8}),
-                                           ArcGISRuntimeEnvironment.createObject("Field", {fieldType: Enums.FieldTypeFloat64, name: "LAT", length: 8}),
-                                           ArcGISRuntimeEnvironment.createObject("Field", {fieldType: Enums.FieldTypeFloat64, name: "LONG", length: 8}),
-                                           ArcGISRuntimeEnvironment.createObject("Field", {fieldType: Enums.FieldTypeFloat64, name: "SOG", length: 8}),
-                                           ArcGISRuntimeEnvironment.createObject("Field", {fieldType: Enums.FieldTypeFloat64, name: "COG", length: 8}),
-                                           ArcGISRuntimeEnvironment.createObject("Field", {fieldType: Enums.FieldTypeFloat64, name: "Heading", length: 8}),
-                                           ArcGISRuntimeEnvironment.createObject("Field", {fieldType: Enums.FieldTypeText, name: "VesselName", length: 256}),
-                                           ArcGISRuntimeEnvironment.createObject("Field", {fieldType: Enums.FieldTypeText, name: "IMO", length: 256}),
-                                           ArcGISRuntimeEnvironment.createObject("Field", {fieldType: Enums.FieldTypeText, name: "CallSign", length: 256}),
-                                           ArcGISRuntimeEnvironment.createObject("Field", {fieldType: Enums.FieldTypeText, name: "VesselType", length: 256}),
-                                           ArcGISRuntimeEnvironment.createObject("Field", {fieldType: Enums.FieldTypeText, name: "Status", length: 256}),
-                                           ArcGISRuntimeEnvironment.createObject("Field", {fieldType: Enums.FieldTypeFloat64, name: "Length", length: 8}),
-                                           ArcGISRuntimeEnvironment.createObject("Field", {fieldType: Enums.FieldTypeFloat64, name: "Width", length: 8}),
-                                           ArcGISRuntimeEnvironment.createObject("Field", {fieldType: Enums.FieldTypeText, name: "Cargo", length: 256}),
-                                           ArcGISRuntimeEnvironment.createObject("Field", {fieldType: Enums.FieldTypeText, name: "globalid", length: 256})];
+                        const fieldList = createFieldList();
 
                         const dynamicEntityDataSourceInfo = ArcGISRuntimeEnvironment
                         .createObject("DynamicEntityDataSourceInfo",
@@ -112,17 +90,34 @@ Rectangle {
                                           spatialReference: Factory.SpatialReference.createWgs84()
                                       });
 
+                        // loadAsyncCompleted() must be called
                         loadAsyncCompleted(dynamicEntityDataSourceInfo);
+                    }
+
+                    // onConnectAsync must be defined
+                    onConnectAsync: {
+                        // Start the timer to begin the asynchronous task
+                        timer.start();
+                        // This method must be called
+                        connectAsyncCompleted();
+                    }
+
+                    // onDisconnectAsync must be defined
+                    onDisconnectAsync: {
+                        // This method must be called
+                        disconnectAsyncCompleted();
                     }
                 }
             }
         }
 
         onMouseClicked: (mouseClick) => {
+                            // Clear any previous information if necessary
                             mapView.calloutData.visible = false;
                             dynamicEntity = null;
+
+                            // Identify a potential feature at the mouse click location
                             mapView.identifyLayer(dynamicEntityLayer, mouseClick.x, mouseClick.y, 10, false);
-                            mapView.calloutData.location = mouseClick.mapPoint
                         }
 
         onIdentifyLayerStatusChanged: {
@@ -133,10 +128,13 @@ Rectangle {
                 return;
 
             dynamicEntity = identifyLayerResult.geoElements[0].dynamicEntity();
+
+            // Update the Callout every time the dynamic entity observation updates
             dynamicEntity.onDynamicEntityChanged.connect(updateCallout);
         }
     }
 
+    // Update the callout with a new location and attribute information
     function updateCallout() {
         if (!dynamicEntity)
             return;
@@ -161,6 +159,7 @@ Rectangle {
         accessoryButtonVisible: false
     }
 
+    // The .json file holding all observation information, specific to this sample
     FileFolder {
         id: jsonFile
         url: "qrc:/Samples/Layers/AddCustomDynamicEntityDataSource/"
@@ -172,6 +171,7 @@ Rectangle {
         }
     }
 
+    // A timer to read each line of the file at a given interval of 10ms and call addObservation with the information
     Timer {
         id: timer
         interval: 10
@@ -189,5 +189,25 @@ Rectangle {
             if (i >= jsonFile.observationList.length)
                 i = 0;
         }
+    }
+
+    // This field list is specifically written for the sample's fields
+    function createFieldList() {
+        return [ArcGISRuntimeEnvironment.createObject("Field", {fieldType: Enums.FieldTypeText, name: "MMSI", length: 256}),
+                ArcGISRuntimeEnvironment.createObject("Field", {fieldType: Enums.FieldTypeFloat64, name: "BaseDateTime", length: 8}),
+                ArcGISRuntimeEnvironment.createObject("Field", {fieldType: Enums.FieldTypeFloat64, name: "LAT", length: 8}),
+                ArcGISRuntimeEnvironment.createObject("Field", {fieldType: Enums.FieldTypeFloat64, name: "LONG", length: 8}),
+                ArcGISRuntimeEnvironment.createObject("Field", {fieldType: Enums.FieldTypeFloat64, name: "SOG", length: 8}),
+                ArcGISRuntimeEnvironment.createObject("Field", {fieldType: Enums.FieldTypeFloat64, name: "COG", length: 8}),
+                ArcGISRuntimeEnvironment.createObject("Field", {fieldType: Enums.FieldTypeFloat64, name: "Heading", length: 8}),
+                ArcGISRuntimeEnvironment.createObject("Field", {fieldType: Enums.FieldTypeText, name: "VesselName", length: 256}),
+                ArcGISRuntimeEnvironment.createObject("Field", {fieldType: Enums.FieldTypeText, name: "IMO", length: 256}),
+                ArcGISRuntimeEnvironment.createObject("Field", {fieldType: Enums.FieldTypeText, name: "CallSign", length: 256}),
+                ArcGISRuntimeEnvironment.createObject("Field", {fieldType: Enums.FieldTypeText, name: "VesselType", length: 256}),
+                ArcGISRuntimeEnvironment.createObject("Field", {fieldType: Enums.FieldTypeText, name: "Status", length: 256}),
+                ArcGISRuntimeEnvironment.createObject("Field", {fieldType: Enums.FieldTypeFloat64, name: "Length", length: 8}),
+                ArcGISRuntimeEnvironment.createObject("Field", {fieldType: Enums.FieldTypeFloat64, name: "Width", length: 8}),
+                ArcGISRuntimeEnvironment.createObject("Field", {fieldType: Enums.FieldTypeText, name: "Cargo", length: 256}),
+                ArcGISRuntimeEnvironment.createObject("Field", {fieldType: Enums.FieldTypeText, name: "globalid", length: 256})];
     }
 }

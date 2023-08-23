@@ -27,7 +27,7 @@ Configure the map view:
 1. Create a `DynamicEntityLayer` using the custom data source implementation.
 2. Update values in the layer's `TrackDisplayProperties` to customize the layer's appearance.
 3. Set up the layer's `LabelDefinitions` to display labels for each dynamic entity.
-4. Use `MapView::identifyLayerAsync` to select a dynamic entity and display the entity's attributes in a callout.
+4. Use `MapView::identifyLayerAsync` to select a dynamic entity and display the entity's attributes in a `Callout`.
 
 ## Relevant API
 
@@ -43,7 +43,7 @@ This sample uses a [.json file containing observations of marine vessels in the 
 
 ## Additional information
 
-In this sample, we iterate through features in a GeoJSON file to mimic messages coming from a real-time feed. You can create a custom dyamic entity data source to process any data that contains observations which can be translated into `MapPoint` objects with associated `Dictionary<string, object>` attributes.
+In this sample, we iterate through features in a GeoJSON file to mimic messages coming from a real-time feed. You can create a custom dyamic entity data source to process any data that contains observations which can be translated into `Point` objects with associated QVariantMap attributes.
 
 ## Tags
 
