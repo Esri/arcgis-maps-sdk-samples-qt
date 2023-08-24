@@ -42,6 +42,7 @@
 #include "PolygonBuilder.h"
 #include "Polyline.h"
 #include "PolylineBuilder.h"
+#include "ShapeTool.h"
 #include "SimpleFillSymbol.h"
 #include "SimpleLineSymbol.h"
 #include "SimpleMarkerSymbol.h"
@@ -61,6 +62,14 @@ CreateAndEditGeometries::CreateAndEditGeometries(QObject* parent /* = nullptr */
   m_geometryEditor = new GeometryEditor(this);
   m_graphicsOverlay = new GraphicsOverlay(this);
   m_tempGraphicsParent = new QObject(this);
+
+  // Create the tools to toggle between
+  m_vertexTool = new VertexTool(this);
+  m_freehandTool = new FreehandTool(this);
+  m_arrowTool = ShapeTool::create(ShapeToolType::Arrow, this);
+  m_ellipseTool = ShapeTool::create(ShapeToolType::Ellipse, this);
+  m_rectangleTool = ShapeTool::create(ShapeToolType::Rectangle, this);
+  m_triangleTool = ShapeTool::create(ShapeToolType::Triangle, this);
 }
 
 CreateAndEditGeometries::~CreateAndEditGeometries() = default;
@@ -101,20 +110,24 @@ void CreateAndEditGeometries::startGeometryEditorWithGeometryType(GeometryEditor
 {
   switch (geometryEditorMode)
   {
-  case GeometryEditorMode::PointMode:
-    m_geometryEditor->start(GeometryType::Point);
-    break;
-  case GeometryEditorMode::MultipointMode:
-    m_geometryEditor->start(GeometryType::Multipoint);
-    break;
-  case GeometryEditorMode::PolylineMode:
-    m_geometryEditor->start(GeometryType::Polyline);
-    break;
-  case GeometryEditorMode::PolygonMode:
-    m_geometryEditor->start(GeometryType::Polygon);
-    break;
-  default:
-    break;
+    case GeometryEditorMode::PointMode:
+      m_geometryEditor->start(GeometryType::Point);
+      break;
+
+    case GeometryEditorMode::MultipointMode:
+      m_geometryEditor->start(GeometryType::Multipoint);
+      break;
+
+    case GeometryEditorMode::PolylineMode:
+      m_geometryEditor->start(GeometryType::Polyline);
+      break;
+
+    case GeometryEditorMode::PolygonMode:
+      m_geometryEditor->start(GeometryType::Polygon);
+      break;
+
+    default:
+      break;
   }
 
   emit geometryEditorStartedChanged();
@@ -156,24 +169,24 @@ void CreateAndEditGeometries::stopEditing(bool saveGeometry)
   Symbol* geometrySymbol = nullptr;
   switch (geometry.geometryType())
   {
-  case GeometryType::Point:
-    geometrySymbol = m_pointSymbol;
-    break;
+    case GeometryType::Point:
+      geometrySymbol = m_pointSymbol;
+      break;
 
-  case GeometryType::Multipoint:
-    geometrySymbol = m_multiPointSymbol;
-    break;
+    case GeometryType::Multipoint:
+      geometrySymbol = m_multiPointSymbol;
+      break;
 
-  case GeometryType::Polyline:
-    geometrySymbol = m_lineSymbol;
-    break;
+    case GeometryType::Polyline:
+      geometrySymbol = m_lineSymbol;
+      break;
 
-  case GeometryType::Polygon:
-    geometrySymbol = m_polygonSymbol;
-    break;
+    case GeometryType::Polygon:
+      geometrySymbol = m_polygonSymbol;
+      break;
 
-  default:
-    return;
+    default:
+      return;
   }
 
   // Append the new graphic to the graphics overlay
@@ -182,10 +195,35 @@ void CreateAndEditGeometries::stopEditing(bool saveGeometry)
 
 void CreateAndEditGeometries::setTool(GeometryEditorToolType toolType)
 {
-  if (toolType == GeometryEditorToolType::Freehand)
-    m_geometryEditor->setTool(new FreehandTool(this));
-  else // toolType == GeometryEditorToolType::Vertex
-    m_geometryEditor->setTool(new VertexTool(this));
+  switch (toolType)
+  {
+    case GeometryEditorToolType::Vertex:
+      m_geometryEditor->setTool(m_vertexTool);
+      break;
+
+    case GeometryEditorToolType::Freehand:
+      m_geometryEditor->setTool(m_freehandTool);
+      break;
+
+    case GeometryEditorToolType::Arrow:
+      m_geometryEditor->setTool(m_arrowTool);
+      break;
+
+    case GeometryEditorToolType::Ellipse:
+      m_geometryEditor->setTool(m_ellipseTool);
+      break;
+
+    case GeometryEditorToolType::Rectangle:
+      m_geometryEditor->setTool(m_rectangleTool);
+      break;
+
+    case GeometryEditorToolType::Triangle:
+      m_geometryEditor->setTool(m_triangleTool);
+      break;
+
+    default:
+      break;
+  }
 }
 
 void CreateAndEditGeometries::clearGraphics()
@@ -220,20 +258,13 @@ void CreateAndEditGeometries::deleteSelectedElement()
 
 void CreateAndEditGeometries::setUniformScaleMode(bool isUniformScale)
 {
-  InteractionConfiguration* config = new InteractionConfiguration(this);
-  config->setAllowScalingSelectedElement(isUniformScale);
-  qDebug() << config->scaleMode();
-  if (auto a = dynamic_cast<VertexTool*>(m_geometryEditor->tool()))
-  {
-    qDebug() << a->configuration()->scaleMode();
-
-  }
-  if (auto a = dynamic_cast<FreehandTool*>(m_geometryEditor->tool()))
-  {
-    qDebug() << a->configuration()->scaleMode();
-    a->configuration()->setAllowScalingSelectedElement(isUniformScale);
-    qDebug() << a->configuration()->scaleMode();
-  }
+  // Set the scale mode on all available tools
+  m_vertexTool->configuration()->setScaleMode(isUniformScale ? GeometryEditorScaleMode::Uniform : GeometryEditorScaleMode::Stretch);
+  m_freehandTool->configuration()->setScaleMode(isUniformScale ? GeometryEditorScaleMode::Uniform : GeometryEditorScaleMode::Stretch);
+  m_arrowTool->configuration()->setScaleMode(isUniformScale ? GeometryEditorScaleMode::Uniform : GeometryEditorScaleMode::Stretch);
+  m_ellipseTool->configuration()->setScaleMode(isUniformScale ? GeometryEditorScaleMode::Uniform : GeometryEditorScaleMode::Stretch);
+  m_rectangleTool->configuration()->setScaleMode(isUniformScale ? GeometryEditorScaleMode::Uniform : GeometryEditorScaleMode::Stretch);
+  m_triangleTool->configuration()->setScaleMode(isUniformScale ? GeometryEditorScaleMode::Uniform : GeometryEditorScaleMode::Stretch);
 }
 
 MapQuickView* CreateAndEditGeometries::mapView() const
@@ -246,41 +277,41 @@ void CreateAndEditGeometries::createConnections()
 {
   // Allow user to edit existing graphics by clicking on them
   connect(m_mapView, &MapQuickView::mouseClicked, this, [this](const QMouseEvent& mouseEvent)
-          {
-            if (!m_geometryEditor->isStarted())
-            {
-              m_mapView->identifyGraphicsOverlay(m_graphicsOverlay, mouseEvent.position().x(), mouseEvent.position().y(), 5 ,false);
-            }
-            emit canUndoOrRedoChanged();
-            emit elementIsSelectedChanged();
-          });
+  {
+    if (!m_geometryEditor->isStarted())
+    {
+      m_mapView->identifyGraphicsOverlay(m_graphicsOverlay, mouseEvent.position().x(), mouseEvent.position().y(), 5 ,false);
+    }
+    emit canUndoOrRedoChanged();
+    emit elementIsSelectedChanged();
+  });
 
   // Enable or disable buttons when mouse is released (ie after a drag operation)
   connect(m_mapView, &MapQuickView::mouseReleased, this, [this](const QMouseEvent&)
-          {
-            emit canUndoOrRedoChanged();
-            emit elementIsSelectedChanged();
-          });
+  {
+    emit canUndoOrRedoChanged();
+    emit elementIsSelectedChanged();
+  });
 
   // Handle editing selected graphics, if any
   connect(m_mapView, &MapQuickView::identifyGraphicsOverlayCompleted, this, [this](QUuid, IdentifyGraphicsOverlayResult* rawResult)
-          {
-            auto identifyResult = std::unique_ptr<IdentifyGraphicsOverlayResult>(rawResult);
+  {
+    auto identifyResult = std::unique_ptr<IdentifyGraphicsOverlayResult>(rawResult);
 
-            // Return if no graphics were identified
-            if (identifyResult->graphics().isEmpty())
-              return;
+    // Return if no graphics were identified
+    if (identifyResult->graphics().isEmpty())
+      return;
 
-            m_editingGraphic = identifyResult->graphics().first();
+    m_editingGraphic = identifyResult->graphics().first();
 
-            // Hide the graphic currently being edited
-            m_editingGraphic->setVisible(false);
+    // Hide the graphic currently being edited
+    m_editingGraphic->setVisible(false);
 
-            // Start the geometry editor with the graphic's geometry. This does not directly affect the graphic.
-            m_geometryEditor->start(m_editingGraphic->geometry());
+    // Start the geometry editor with the graphic's geometry. This does not directly affect the graphic.
+    m_geometryEditor->start(m_editingGraphic->geometry());
 
-            emit geometryEditorStartedChanged();
-          });
+    emit geometryEditorStartedChanged();
+  });
 }
 
 // State checks to control when buttons are enabled
@@ -327,47 +358,47 @@ void CreateAndEditGeometries::createInitialGraphics()
   MultipointBuilder* multipointBuilder = new MultipointBuilder(SpatialReference::wgs84(), tempParent);
   PointCollection* pointCollection = new PointCollection(SpatialReference::wgs84(), tempParent);
   pointCollection->addPoints(
-      {
+        {
           Point(-9.59386587, 53.08289651), Point(-9.59330546, 53.08256400),
           Point(-9.59326997, 53.08304595), Point(-9.59250034, 53.08286101),
           Point(-9.59286835, 53.08311506), Point(-9.59370896, 53.08234917),
           Point(-9.59341755, 53.08286662), Point(-9.59246485, 53.08294507),
           Point(-9.59241815, 53.08284607), Point(-9.59307943, 53.08234731)
-      });
+        });
   multipointBuilder->setPoints(pointCollection);
   const Multipoint outbuildings(multipointBuilder->toMultipoint());
 
   // Create polyline geometries
   PolylineBuilder* polylineBuilder = new PolylineBuilder(SpatialReference::wgs84(), tempParent);
   polylineBuilder->addPoints(
-      {
+        {
           Point(-9.59486423, 53.08169453), Point(-9.5947812, 53.081754310),
           Point(-9.59475464, 53.08189379), Point(-9.59494393, 53.08213622),
           Point(-9.59464173, 53.08240521), Point(-9.59413694, 53.08260115),
           Point(-9.59357903, 53.08292660), Point(-9.59335984, 53.08311589),
           Point(-9.59318051, 53.08316903), Point(-9.59301779, 53.08322216),
           Point(-9.59264252, 53.08370038), Point(-9.59250636, 53.08383986)
-      });
+        });
 
   const Polyline road1(polylineBuilder->toPolyline());
   delete polylineBuilder;
 
   polylineBuilder = new PolylineBuilder(SpatialReference::wgs84(), tempParent);
   polylineBuilder->addPoints(
-      {
+        {
           Point(-9.59400079, 53.08136244), Point(-9.59395761, 53.08149528),
           Point(-9.59368862, 53.08170450), Point(-9.59358235, 53.08219267),
           Point(-9.59331667, 53.08290335), Point(-9.59314398, 53.08314246),
           Point(-9.59306760, 53.08330519), Point(-9.59303439, 53.08351109),
           Point(-9.59301447, 53.08363728), Point(-9.59293809, 53.08387307)
-      });
+        });
 
   const Polyline road2(polylineBuilder->toPolyline());
 
   // Create polygon geometry
   PolygonBuilder* polygonBuilder = new PolygonBuilder(SpatialReference::wgs84(), tempParent);
   polygonBuilder->addPoints(
-      {
+        {
           Point(-9.59350122, 53.08320723), Point(-9.59345177, 53.08333534),
           Point(-9.59309789, 53.08327198), Point(-9.59300344, 53.08317992),
           Point(-9.59221827, 53.08304034), Point(-9.59220706, 53.08287782),
@@ -380,7 +411,7 @@ void CreateAndEditGeometries::createInitialGraphics()
           Point(-9.59436090, 53.08243697), Point(-9.59458319, 53.08245939),
           Point(-9.59439639, 53.08264619), Point(-9.59433288, 53.08279750),
           Point(-9.59404707, 53.08323649), Point(-9.59350122, 53.08320723)
-      });
+        });
 
   const Polygon boundary(polygonBuilder->toPolygon());
 
@@ -389,11 +420,11 @@ void CreateAndEditGeometries::createInitialGraphics()
 
   // Create graphics with the geometries
   m_graphicsOverlay->graphics()->append(
-      {
+        {
           new Graphic(boundary, m_polygonSymbol, m_tempGraphicsParent),
           new Graphic(road2, m_lineSymbol, m_tempGraphicsParent),
           new Graphic(road1, m_lineSymbol, m_tempGraphicsParent),
           new Graphic(outbuildings, m_multiPointSymbol, m_tempGraphicsParent),
           new Graphic(house, m_pointSymbol, m_tempGraphicsParent)
-      });
+        });
 }

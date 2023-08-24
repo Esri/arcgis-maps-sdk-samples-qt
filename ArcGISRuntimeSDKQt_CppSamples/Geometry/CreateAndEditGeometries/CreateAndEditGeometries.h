@@ -22,11 +22,14 @@ namespace Esri::ArcGISRuntime
   class GeometryEditor;
   class Graphic;
   class GraphicsOverlay;
+  class FreehandTool;
   class Map;
   class MapQuickView;
+  class ShapeTool;
   class SimpleMarkerSymbol;
   class SimpleLineSymbol;
   class SimpleFillSymbol;
+  class VertexTool;
 }
 
 #include <QObject>
@@ -58,7 +61,11 @@ public:
 
   enum class GeometryEditorToolType {
     Freehand,
-    Vertex
+    Vertex,
+    Arrow,
+    Ellipse,
+    Rectangle,
+    Triangle
   };
 
   Q_ENUM(GeometryEditorToolType)
@@ -104,6 +111,14 @@ private:
   Esri::ArcGISRuntime::SimpleFillSymbol* m_polygonSymbol = nullptr;
 
   Esri::ArcGISRuntime::GeometryEditor* m_geometryEditor = nullptr;
+
+  // Tools
+  Esri::ArcGISRuntime::VertexTool* m_vertexTool = nullptr;
+  Esri::ArcGISRuntime::FreehandTool* m_freehandTool = nullptr;
+  Esri::ArcGISRuntime::ShapeTool* m_arrowTool = nullptr;
+  Esri::ArcGISRuntime::ShapeTool* m_ellipseTool = nullptr;
+  Esri::ArcGISRuntime::ShapeTool* m_rectangleTool = nullptr;
+  Esri::ArcGISRuntime::ShapeTool* m_triangleTool = nullptr;
 
   QObject* m_tempGraphicsParent = nullptr;
 };

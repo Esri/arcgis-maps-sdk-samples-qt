@@ -59,7 +59,7 @@ Item {
         id: control
         anchors.right: parent.right
         padding: 5
-        width: 130
+        width: 140
 
         background: Rectangle {
             color: "black"
@@ -97,7 +97,6 @@ Item {
                     onClicked: {
                         toolCombo.currentIndex = 0;
                         toolCombo.enabled = false;
-                        uniformScaleCheckBox.enabled = false;
                         model.startGeometryEditorWithGeometryType(CreateAndEditGeometriesSample.PointMode);
                     }
                 }
@@ -111,7 +110,6 @@ Item {
                     onClicked: {
                         toolCombo.currentIndex = 0;
                         toolCombo.enabled = false;
-                        uniformScaleCheckBox.enabled = true;
                         model.startGeometryEditorWithGeometryType(CreateAndEditGeometriesSample.MultipointMode);
                     }
                 }
@@ -123,7 +121,6 @@ Item {
                     checkable: true
                     enabled: !model.geometryEditorStarted
                     onClicked: {
-                        uniformScaleCheckBox.enabled = true;
                         model.startGeometryEditorWithGeometryType(CreateAndEditGeometriesSample.PolylineMode);
                     }
                 }
@@ -135,7 +132,6 @@ Item {
                     checkable: true
                     enabled: !model.geometryEditorStarted
                     onClicked: {
-                        uniformScaleCheckBox.enabled = true;
                         model.startGeometryEditorWithGeometryType(CreateAndEditGeometriesSample.PolygonMode);
                     }
                 }
@@ -187,7 +183,7 @@ Item {
                 Layout.alignment: Qt.AlignHCenter | Qt.AlignVCenter
                 Layout.columnSpan: 2
                 text: "<font color=\"white\">Uniform scale</font>"
-                enabled: false
+                enabled: true
                 onCheckStateChanged: model.setUniformScaleMode(checked)
 
             }
