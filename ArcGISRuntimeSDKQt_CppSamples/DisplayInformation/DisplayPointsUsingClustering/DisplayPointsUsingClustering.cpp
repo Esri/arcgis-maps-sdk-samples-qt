@@ -1,4 +1,4 @@
-// [WriteFile Name=DisplayPointsUsingClusteringFeatureReduction, Category=DisplayInformation]
+// [WriteFile Name=DisplayPointsUsingClustering, Category=DisplayInformation]
 // [Legal]
 // Copyright 2023 Esri.
 
@@ -18,7 +18,7 @@
 #include "pch.hpp"
 #endif // PCH_BUILD
 
-#include "DisplayPointsUsingClusteringFeatureReduction.h"
+#include "DisplayPointsUsingClustering.h"
 
 #include "CalloutData.h"
 #include "Error.h"
@@ -40,7 +40,7 @@
 
 using namespace Esri::ArcGISRuntime;
 
-DisplayPointsUsingClusteringFeatureReduction::DisplayPointsUsingClusteringFeatureReduction(QObject* parent /* = nullptr */):
+DisplayPointsUsingClustering::DisplayPointsUsingClustering(QObject* parent /* = nullptr */):
   QObject(parent),
   m_map(new Map(new PortalItem("8916d50c44c746c1aafae001552bad23", this), this))
 {
@@ -59,22 +59,22 @@ DisplayPointsUsingClusteringFeatureReduction::DisplayPointsUsingClusteringFeatur
   });
 }
 
-DisplayPointsUsingClusteringFeatureReduction::~DisplayPointsUsingClusteringFeatureReduction() = default;
+DisplayPointsUsingClustering::~DisplayPointsUsingClustering() = default;
 
-void DisplayPointsUsingClusteringFeatureReduction::init()
+void DisplayPointsUsingClustering::init()
 {
   // Register the map view for QML
   qmlRegisterType<MapQuickView>("Esri.Samples", 1, 0, "MapView");
-  qmlRegisterType<DisplayPointsUsingClusteringFeatureReduction>("Esri.Samples", 1, 0, "DisplayPointsUsingClusteringFeatureReductionSample");
+  qmlRegisterType<DisplayPointsUsingClustering>("Esri.Samples", 1, 0, "DisplayPointsUsingClusteringSample");
 }
 
-MapQuickView* DisplayPointsUsingClusteringFeatureReduction::mapView() const
+MapQuickView* DisplayPointsUsingClustering::mapView() const
 {
   return m_mapView;
 }
 
 // Set the view (created in QML)
-void DisplayPointsUsingClusteringFeatureReduction::setMapView(MapQuickView* mapView)
+void DisplayPointsUsingClustering::setMapView(MapQuickView* mapView)
 {
   if (!mapView || mapView == m_mapView)
     return;
@@ -82,12 +82,12 @@ void DisplayPointsUsingClusteringFeatureReduction::setMapView(MapQuickView* mapV
   m_mapView = mapView;
   m_mapView->setMap(m_map);
 
-  connect(m_mapView, &MapQuickView::mouseClicked, this, &DisplayPointsUsingClusteringFeatureReduction::onMouseClicked);
+  connect(m_mapView, &MapQuickView::mouseClicked, this, &DisplayPointsUsingClustering::onMouseClicked);
 
   emit mapViewChanged();
 }
 
-void DisplayPointsUsingClusteringFeatureReduction::onMouseClicked(const QMouseEvent &mouseClick)
+void DisplayPointsUsingClustering::onMouseClicked(const QMouseEvent &mouseClick)
 {
   if (m_taskRunning)
     return;
@@ -134,7 +134,7 @@ void DisplayPointsUsingClusteringFeatureReduction::onMouseClicked(const QMouseEv
   });
 }
 
-void DisplayPointsUsingClusteringFeatureReduction::toggleClustering()
+void DisplayPointsUsingClustering::toggleClustering()
 {
   if (m_map->loadStatus() != LoadStatus::Loaded)
     return;
@@ -153,12 +153,12 @@ void DisplayPointsUsingClusteringFeatureReduction::toggleClustering()
   m_mapView->calloutData()->setVisible(false);
 }
 
-QString DisplayPointsUsingClusteringFeatureReduction::calloutText() const
+QString DisplayPointsUsingClustering::calloutText() const
 {
   return m_calloutText;
 }
 
-bool DisplayPointsUsingClusteringFeatureReduction::taskRunning() const
+bool DisplayPointsUsingClustering::taskRunning() const
 {
   return m_taskRunning;
 }
