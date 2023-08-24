@@ -42,6 +42,7 @@ RESOURCES += \
     "$$SAMPLEPATHQML/DisplayInformation/CreateSymbolStylesFromWebStyles/CreateSymbolStylesFromWebStyles.qrc" \
     "$$SAMPLEPATHQML/DisplayInformation/CustomDictionaryStyle/CustomDictionaryStyle.qrc" \
     "$$SAMPLEPATHQML/DisplayInformation/DisplayGrid/DisplayGrid.qrc" \
+    "$$SAMPLEPATHQML/DisplayInformation/DisplayPointsUsingClusteringFeatureReduction/DisplayPointsUsingClusteringFeatureReduction.qrc" \
     "$$SAMPLEPATHQML/DisplayInformation/GODictionaryRenderer_3D/GODictionaryRenderer_3D.qrc" \
     "$$SAMPLEPATHQML/DisplayInformation/GODictionaryRenderer/GODictionaryRenderer.qrc" \
     "$$SAMPLEPATHQML/DisplayInformation/GOSymbols/GOSymbols.qrc" \
@@ -203,6 +204,7 @@ RESOURCES += \
     "$$SAMPLEPATHQML/Scenes/DistanceCompositeSymbol/DistanceCompositeSymbol.qrc" \
     "$$SAMPLEPATHQML/Scenes/ExtrudeGraphics/ExtrudeGraphics.qrc" \
     "$$SAMPLEPATHQML/Scenes/FeatureLayerExtrusion/FeatureLayerExtrusion.qrc" \
+    "$$SAMPLEPATHQML/Scenes/FilterFeaturesInScene/FilterFeaturesInScene.qrc" \
     "$$SAMPLEPATHQML/Scenes/GetElevationAtPoint/GetElevationAtPoint.qrc" \
     "$$SAMPLEPATHQML/Scenes/OpenMobileScenePackage/OpenMobileScenePackage.qrc" \
     "$$SAMPLEPATHQML/Scenes/OpenScene/OpenScene.qrc" \
@@ -210,7 +212,7 @@ RESOURCES += \
     "$$SAMPLEPATHQML/Scenes/RealisticLightingAndShadows/RealisticLightingAndShadows.qrc" \
     "$$SAMPLEPATHQML/Scenes/SceneLayerSelection/SceneLayerSelection.qrc" \
     "$$SAMPLEPATHQML/Scenes/ScenePropertiesExpressions/ScenePropertiesExpressions.qrc" \
-    "$$SAMPLEPATHQML/Scenes/SurfacePlacement/Surface_Placement.qrc" \
+    "$$SAMPLEPATHQML/Scenes/SetSurfacePlacementMode/SetSurfacePlacementMode.qrc" \
     "$$SAMPLEPATHQML/Scenes/Symbols/Symbols.qrc" \
     "$$SAMPLEPATHQML/Scenes/SyncMapViewSceneView/SyncMapViewSceneView.qrc" \
     "$$SAMPLEPATHQML/Scenes/TerrainExaggeration/TerrainExaggeration.qrc" \

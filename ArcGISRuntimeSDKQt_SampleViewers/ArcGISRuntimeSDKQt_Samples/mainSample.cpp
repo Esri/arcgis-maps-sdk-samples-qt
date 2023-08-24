@@ -126,6 +126,7 @@
 #include "DisplayMap.h"
 #include "DisplayOgcApiFeatureCollection.h"
 #include "DisplayOverviewMap.h"
+#include "DisplayPointsUsingClusteringFeatureReduction.h"
 #include "DisplayRouteLayer.h"
 #include "DisplaySceneLayer.h"
 #include "DisplaySubtypeFeatureLayer.h"
@@ -148,6 +149,7 @@
 #include "FeatureLayerChangeRenderer.h"
 #include "FeatureLayerDictionaryRenderer.h"
 #include "FeatureLayerExtrusion.h"
+#include "FilterFeaturesInScene.h"
 #include "FeatureLayerQuery.h"
 #include "FeatureLayerRenderingModeMap.h"
 #include "FeatureLayerRenderingModeScene.h"
@@ -251,7 +253,7 @@
 #include "StatisticalQueryGroupSort.h"
 #include "StyleWmsLayer.h"
 #include "SuggestListModel.h"
-#include "Surface_Placement.h"
+#include "SetSurfacePlacementMode.h"
 #include "SymbolizeShapefile.h"
 #include "Symbols.h"
 #include "SyncMapViewSceneView.h"
@@ -436,6 +438,7 @@ void registerCppSampleClasses()
   DisplayMap::init();
   DisplayOgcApiFeatureCollection::init();
   DisplayOverviewMap::init();
+  DisplayPointsUsingClusteringFeatureReduction::init();
   DisplayRouteLayer::init();
   DisplaySceneLayer::init();
   DisplaySubtypeFeatureLayer::init();
@@ -458,6 +461,7 @@ void registerCppSampleClasses()
   FeatureLayerChangeRenderer::init();
   FeatureLayerDictionaryRenderer::init();
   FeatureLayerExtrusion::init();
+  FilterFeaturesInScene::init();
   FeatureLayerQuery::init();
   FeatureLayerRenderingModeMap::init();
   FeatureLayerRenderingModeScene::init();
@@ -556,7 +560,7 @@ void registerCppSampleClasses()
   StatisticalQuery::init();
   StatisticalQueryGroupSort::init();
   StyleWmsLayer::init();
-  Surface_Placement::init();
+  SetSurfacePlacementMode::init();
   SymbolizeShapefile::init();
   Symbols::init();
   SyncMapViewSceneView::init();

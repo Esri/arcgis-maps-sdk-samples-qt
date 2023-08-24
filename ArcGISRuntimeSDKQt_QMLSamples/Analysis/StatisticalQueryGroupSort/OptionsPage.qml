@@ -97,7 +97,7 @@ Rectangle {
 
             Rectangle {
                 width: pageWidth
-                height: 225
+                height: upperRectColumn.childrenRect.height + 10
                 color: "transparent"
                 clip: true
                 border {
@@ -106,6 +106,7 @@ Rectangle {
                 }
 
                 Column {
+                    id: upperRectColumn
                     anchors {
                         fill: parent
                         margins: 10
@@ -168,8 +169,6 @@ Rectangle {
 
                         Button {
                             text: "+"
-                            width: 30
-                            height: width
                             onClicked: {
                                 for (let i = 0; i < statisticsModel.count; i++) {
                                     if (statisticsModel.get(i).field === fieldComboBox.currentText) {
@@ -233,7 +232,10 @@ Rectangle {
                     Button {
                         anchors.horizontalCenter: parent.horizontalCenter
                         text: "Remove Statistic"
-                        onClicked: statisticsModel.remove(statisticView.currentIndex, 1);
+                        onClicked: {
+                            if (statisticsModel.count > 0)
+                                statisticsModel.remove(statisticView.currentIndex, 1);
+                        }
                     }
                 }
             }
@@ -314,8 +316,6 @@ Rectangle {
 
                     Button {
                         anchors.horizontalCenter: parent.horizontalCenter
-                        width: 30
-                        height: width
                         text: ">"
                         onClicked: {
                             // return if the field is not selected
@@ -335,10 +335,11 @@ Rectangle {
 
                     Button {
                         anchors.horizontalCenter: parent.horizontalCenter
-                        width: 30
-                        height: width
                         text: "<"
-                        onClicked: orderByModel.remove(groupingView.currentIndex, 1);
+                        onClicked: {
+                            if (orderByModel.count > 0)
+                                orderByModel.remove(groupingView.currentIndex, 1);
+                        }
                     }
                 }
 
@@ -402,6 +403,9 @@ Rectangle {
                         anchors.horizontalCenter: parent.horizontalCenter
                         text: "Change Sort Order"
                         onClicked: {
+                            if (orderByModel.count <= 0)
+                                return;
+
                             const i = groupingView.currentIndex;
                             if (orderByModel.get(i).order === "Ascending")
                                 orderByModel.get(i).order = "Descending";
