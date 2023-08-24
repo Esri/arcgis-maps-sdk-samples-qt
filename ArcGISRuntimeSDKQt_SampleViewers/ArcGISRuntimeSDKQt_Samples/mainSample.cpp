@@ -126,7 +126,7 @@
 #include "DisplayMap.h"
 #include "DisplayOgcApiFeatureCollection.h"
 #include "DisplayOverviewMap.h"
-#include "DisplayPointsUsingClusteringFeatureReduction.h"
+#include "DisplayPointsUsingClustering.h"
 #include "DisplayRouteLayer.h"
 #include "DisplaySceneLayer.h"
 #include "DisplaySubtypeFeatureLayer.h"
@@ -438,7 +438,7 @@ void registerCppSampleClasses()
   DisplayMap::init();
   DisplayOgcApiFeatureCollection::init();
   DisplayOverviewMap::init();
-  DisplayPointsUsingClusteringFeatureReduction::init();
+  DisplayPointsUsingClustering::init();
   DisplayRouteLayer::init();
   DisplaySceneLayer::init();
   DisplaySubtypeFeatureLayer::init();

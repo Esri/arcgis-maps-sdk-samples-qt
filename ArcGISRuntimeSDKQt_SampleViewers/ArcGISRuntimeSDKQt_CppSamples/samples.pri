@@ -41,7 +41,7 @@ INCLUDEPATH += \
     "$$SAMPLEPATHCPP/DisplayInformation/CreateSymbolStylesFromWebStyles" \
     "$$SAMPLEPATHCPP/DisplayInformation/CustomDictionaryStyle" \
     "$$SAMPLEPATHCPP/DisplayInformation/DisplayGrid" \
-    "$$SAMPLEPATHCPP/DisplayInformation/DisplayPointsUsingClusteringFeatureReduction" \
+    "$$SAMPLEPATHCPP/DisplayInformation/DisplayPointsUsingClustering" \
     "$$SAMPLEPATHCPP/DisplayInformation/GODictionaryRenderer_3D" \
     "$$SAMPLEPATHCPP/DisplayInformation/GODictionaryRenderer" \
     "$$SAMPLEPATHCPP/DisplayInformation/GOSymbols" \
@@ -250,7 +250,7 @@ HEADERS += \
     "$$SAMPLEPATHCPP/DisplayInformation/CreateSymbolStylesFromWebStyles/CreateSymbolStylesFromWebStyles.h" \
     "$$SAMPLEPATHCPP/DisplayInformation/CustomDictionaryStyle/CustomDictionaryStyle.h" \
     "$$SAMPLEPATHCPP/DisplayInformation/DisplayGrid/DisplayGrid.h" \
-    "$$SAMPLEPATHCPP/DisplayInformation/DisplayPointsUsingClusteringFeatureReduction/DisplayPointsUsingClusteringFeatureReduction.h" \
+    "$$SAMPLEPATHCPP/DisplayInformation/DisplayPointsUsingClustering/DisplayPointsUsingClustering.h" \
     "$$SAMPLEPATHCPP/DisplayInformation/GODictionaryRenderer_3D/GODictionaryRenderer_3D.h" \
     "$$SAMPLEPATHCPP/DisplayInformation/GODictionaryRenderer/GODictionaryRenderer.h" \
     "$$SAMPLEPATHCPP/DisplayInformation/GOSymbols/GOSymbols.h" \
@@ -467,7 +467,7 @@ SOURCES += \
     "$$SAMPLEPATHCPP/DisplayInformation/CreateSymbolStylesFromWebStyles/CreateSymbolStylesFromWebStyles.cpp" \
     "$$SAMPLEPATHCPP/DisplayInformation/CustomDictionaryStyle/CustomDictionaryStyle.cpp" \
     "$$SAMPLEPATHCPP/DisplayInformation/DisplayGrid/DisplayGrid.cpp" \
-    "$$SAMPLEPATHCPP/DisplayInformation/DisplayPointsUsingClusteringFeatureReduction/DisplayPointsUsingClusteringFeatureReduction.cpp" \
+    "$$SAMPLEPATHCPP/DisplayInformation/DisplayPointsUsingClustering/DisplayPointsUsingClustering.cpp" \
     "$$SAMPLEPATHCPP/DisplayInformation/GODictionaryRenderer_3D/GODictionaryRenderer_3D.cpp" \
     "$$SAMPLEPATHCPP/DisplayInformation/GODictionaryRenderer/GODictionaryRenderer.cpp" \
     "$$SAMPLEPATHCPP/DisplayInformation/GOSymbols/GOSymbols.cpp" \
@@ -683,7 +683,7 @@ RESOURCES += \
     "$$SAMPLEPATHCPP/DisplayInformation/CreateSymbolStylesFromWebStyles/CreateSymbolStylesFromWebStyles.qrc" \
     "$$SAMPLEPATHCPP/DisplayInformation/CustomDictionaryStyle/CustomDictionaryStyle.qrc" \
     "$$SAMPLEPATHCPP/DisplayInformation/DisplayGrid/DisplayGrid.qrc" \
-    "$$SAMPLEPATHCPP/DisplayInformation/DisplayPointsUsingClusteringFeatureReduction/DisplayPointsUsingClusteringFeatureReduction.qrc" \
+    "$$SAMPLEPATHCPP/DisplayInformation/DisplayPointsUsingClustering/DisplayPointsUsingClustering.qrc" \
     "$$SAMPLEPATHCPP/DisplayInformation/GODictionaryRenderer_3D/GODictionaryRenderer_3D.qrc" \
     "$$SAMPLEPATHCPP/DisplayInformation/GODictionaryRenderer/GODictionaryRenderer.qrc" \
     "$$SAMPLEPATHCPP/DisplayInformation/GOSymbols/GOSymbols.qrc" \

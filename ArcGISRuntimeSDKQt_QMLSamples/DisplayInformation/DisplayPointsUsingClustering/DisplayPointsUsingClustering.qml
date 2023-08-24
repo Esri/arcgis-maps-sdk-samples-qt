@@ -1,4 +1,4 @@
-// [WriteFile Name=DisplayPointsUsingClusteringFeatureReduction, Category=DisplayInformation]
+// [WriteFile Name=DisplayPointsUsingClustering, Category=DisplayInformation]
 // [Legal]
 // Copyright 2023 Esri.
 

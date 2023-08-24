@@ -42,7 +42,7 @@ RESOURCES += \
     "$$SAMPLEPATHQML/DisplayInformation/CreateSymbolStylesFromWebStyles/CreateSymbolStylesFromWebStyles.qrc" \
     "$$SAMPLEPATHQML/DisplayInformation/CustomDictionaryStyle/CustomDictionaryStyle.qrc" \
     "$$SAMPLEPATHQML/DisplayInformation/DisplayGrid/DisplayGrid.qrc" \
-    "$$SAMPLEPATHQML/DisplayInformation/DisplayPointsUsingClusteringFeatureReduction/DisplayPointsUsingClusteringFeatureReduction.qrc" \
+    "$$SAMPLEPATHQML/DisplayInformation/DisplayPointsUsingClustering/DisplayPointsUsingClustering.qrc" \
     "$$SAMPLEPATHQML/DisplayInformation/GODictionaryRenderer_3D/GODictionaryRenderer_3D.qrc" \
     "$$SAMPLEPATHQML/DisplayInformation/GODictionaryRenderer/GODictionaryRenderer.qrc" \
     "$$SAMPLEPATHQML/DisplayInformation/GOSymbols/GOSymbols.qrc" \
