@@ -237,7 +237,6 @@ Item {
                     enabled: model.geometryEditorStarted
                     onClicked: {
                         toolCombo.enabled = true;
-                        uniformScaleCheckBox.enabled = false;
                         model.stopEditing(true);
                     }
                 }
@@ -250,7 +249,6 @@ Item {
                     enabled: model.geometryEditorStarted
                     onClicked: {
                         toolCombo.enabled = true;
-                        uniformScaleCheckBox.enabled = false;
                         model.stopEditing(false);
                     }
                 }
