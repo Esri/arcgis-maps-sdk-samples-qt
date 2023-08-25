@@ -59,6 +59,13 @@ public:
 
   Q_ENUM(GeometryEditorMode)
 
+  enum class ScaleMode {
+    StretchScaleMode,
+    UniformScaleMode
+  };
+
+  Q_ENUM(ScaleMode)
+
   enum class GeometryEditorToolType {
     Freehand,
     Vertex,
@@ -79,7 +86,7 @@ public:
   Q_INVOKABLE void undo();
   Q_INVOKABLE void redo();
   Q_INVOKABLE void deleteSelectedElement();
-  Q_INVOKABLE void setUniformScaleMode(bool isUniformScale);
+  Q_INVOKABLE void setScaleMode(ScaleMode scaleMode);
 
 signals:
   void mapViewChanged();

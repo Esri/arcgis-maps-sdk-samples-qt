@@ -256,15 +256,17 @@ void CreateAndEditGeometries::deleteSelectedElement()
   emit canUndoOrRedoChanged();
 }
 
-void CreateAndEditGeometries::setUniformScaleMode(bool isUniformScale)
+void CreateAndEditGeometries::setScaleMode(ScaleMode scaleMode)
 {
+  GeometryEditorScaleMode toolScaleMode = (scaleMode == ScaleMode::UniformScaleMode) ? GeometryEditorScaleMode::Uniform : GeometryEditorScaleMode::Stretch;
+
   // Set the scale mode on all available tools
-  m_vertexTool->configuration()->setScaleMode(isUniformScale ? GeometryEditorScaleMode::Uniform : GeometryEditorScaleMode::Stretch);
-  m_freehandTool->configuration()->setScaleMode(isUniformScale ? GeometryEditorScaleMode::Uniform : GeometryEditorScaleMode::Stretch);
-  m_arrowTool->configuration()->setScaleMode(isUniformScale ? GeometryEditorScaleMode::Uniform : GeometryEditorScaleMode::Stretch);
-  m_ellipseTool->configuration()->setScaleMode(isUniformScale ? GeometryEditorScaleMode::Uniform : GeometryEditorScaleMode::Stretch);
-  m_rectangleTool->configuration()->setScaleMode(isUniformScale ? GeometryEditorScaleMode::Uniform : GeometryEditorScaleMode::Stretch);
-  m_triangleTool->configuration()->setScaleMode(isUniformScale ? GeometryEditorScaleMode::Uniform : GeometryEditorScaleMode::Stretch);
+  m_vertexTool->configuration()->setScaleMode(toolScaleMode);
+  m_freehandTool->configuration()->setScaleMode(toolScaleMode);
+  m_arrowTool->configuration()->setScaleMode(toolScaleMode);
+  m_ellipseTool->configuration()->setScaleMode(toolScaleMode);
+  m_rectangleTool->configuration()->setScaleMode(toolScaleMode);
+  m_triangleTool->configuration()->setScaleMode(toolScaleMode);
 }
 
 MapQuickView* CreateAndEditGeometries::mapView() const

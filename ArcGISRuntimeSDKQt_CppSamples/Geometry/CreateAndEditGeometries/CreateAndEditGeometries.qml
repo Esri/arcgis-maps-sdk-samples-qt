@@ -138,7 +138,7 @@ Item {
 
                 ComboBox {
                     id: toolCombo
-                    model: [qsTr("VertexTool"), qsTr("FreehandTool"), qsTr("Arrow ShapeTool"), qsTr("Ellipse ShapeTool"), qsTr("Rectangle ShapeTool"), qsTr("Triangle ShapeTool")]
+                    model: [qsTr("Vertex Tool"), qsTr("Freehand Tool"), qsTr("Arrow Shape Tool"), qsTr("Ellipse Shape Tool"), qsTr("Rectangle Shape Tool"), qsTr("Triangle Shape Tool")]
                     Layout.columnSpan: 2
                     Layout.fillWidth: true
 
@@ -178,13 +178,34 @@ Item {
                 }
             }
 
-            CheckBox {
-                id: uniformScaleCheckBox
-                Layout.alignment: Qt.AlignHCenter | Qt.AlignVCenter
+            ComboBox {
+                id: scaleModeDropdown
                 Layout.columnSpan: 2
-                text: "<font color=\"white\">Uniform scale</font>"
+                Layout.fillWidth: true
+
+                Rectangle {
+                    anchors.fill: parent
+                    radius: 10
+                    // Make the rectangle visible if a dropdown indicator exists
+                    // An indicator only exists if a theme is set
+                    visible: parent.indicator
+                    border.width: 1
+                }
+
+                model: ["Stretch Scale", "Uniform Scale"]
                 enabled: true
-                onCheckStateChanged: model.setUniformScaleMode(checked)
+                onCurrentIndexChanged: {
+                    switch (currentIndex) {
+                    case 0:
+                        model.setScaleMode(CreateAndEditGeometriesSample.StretchScaleMode);
+                        break;
+                    case 1:
+                        model.setScaleMode(CreateAndEditGeometriesSample.UniformScaleMode);
+                        break;
+                    default:
+                        break;
+                    }
+                }
 
             }
 
