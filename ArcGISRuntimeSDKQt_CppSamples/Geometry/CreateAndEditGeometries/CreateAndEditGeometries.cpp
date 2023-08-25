@@ -258,7 +258,7 @@ void CreateAndEditGeometries::deleteSelectedElement()
 
 void CreateAndEditGeometries::setScaleMode(ScaleMode scaleMode)
 {
-  GeometryEditorScaleMode toolScaleMode = (scaleMode == ScaleMode::UniformScaleMode) ? GeometryEditorScaleMode::Uniform : GeometryEditorScaleMode::Stretch;
+  const GeometryEditorScaleMode toolScaleMode = (scaleMode == ScaleMode::UniformScaleMode) ? GeometryEditorScaleMode::Uniform : GeometryEditorScaleMode::Stretch;
 
   // Set the scale mode on all available tools
   m_vertexTool->configuration()->setScaleMode(toolScaleMode);
