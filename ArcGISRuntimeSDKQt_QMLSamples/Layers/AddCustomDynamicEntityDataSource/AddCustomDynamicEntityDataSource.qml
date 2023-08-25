@@ -145,8 +145,8 @@ Rectangle {
         mapView.calloutData.geoElement = observation;
         const calloutText = "Vessel Name: " + attributes.attributeValue("VesselName") + "\n" +
                           "Call Sign: " + attributes.attributeValue("CallSign") + "\n" +
-                          "Course over Ground: " + attributes.attributeValue("COG") + "\n" +
-                          "Speed over Ground: " + attributes.attributeValue("SOG") + "\n"
+                          "Course over Ground: " + attributes.attributeValue("COG") + "º\n" +
+                          "Speed over Ground: " + attributes.attributeValue("SOG") + " knots"
         mapView.calloutData.detail = calloutText;
         mapView.calloutData.location = observation.geometry;
         mapView.calloutData.visible = true;

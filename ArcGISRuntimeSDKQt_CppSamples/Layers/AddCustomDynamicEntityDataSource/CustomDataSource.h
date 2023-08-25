@@ -35,8 +35,6 @@ public:
   QFuture<void> onConnectAsync() override;
   QFuture<void> onDisconnectAsync() override;
 
-  QVariantMap convertJsonObjectToVariantMap(const QJsonObject& jsonObject);
-
 private:
   void observationProcessLoopAsync();
   QList<Field> getSchema();

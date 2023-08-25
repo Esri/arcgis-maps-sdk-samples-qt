@@ -97,20 +97,20 @@ QList<Field> CustomDataSource::getSchema()
   return QList<Field>
   {
     Field(FieldType::Text, "MMSI", "", 256, Domain(), false, false),
-        Field(FieldType::Float64, "BaseDateTime", "", 8, Domain(), false, false),
-        Field(FieldType::Float64, "LAT", "", 8, Domain(), false, false),
-        Field(FieldType::Float64, "LONG", "", 8, Domain(), false, false),
-        Field(FieldType::Float64, "SOG", "", 8, Domain(), false, false),
-        Field(FieldType::Float64, "COG", "", 8, Domain(), false, false),
-        Field(FieldType::Float64, "Heading", "", 8, Domain(), false, false),
-        Field(FieldType::Text, "VesselName", "", 256, Domain(), false, false),
-        Field(FieldType::Text, "IMO", "", 256, Domain(), false, false),
-        Field(FieldType::Text, "CallSign", "", 256, Domain(), false, false),
-        Field(FieldType::Text, "VesselType", "", 256, Domain(), false, false),
-        Field(FieldType::Text, "Status", "", 256, Domain(), false, false),
-        Field(FieldType::Float64, "Length", "", 8, Domain(), false, false),
-        Field(FieldType::Float64, "Width", "", 8, Domain(), false, false),
-        Field(FieldType::Text, "Cargo", "", 256, Domain(), false, false),
-        Field(FieldType::Text, "globalid", "", 256, Domain(), false, false)
+    Field(FieldType::Float64, "BaseDateTime", "", 8, Domain(), false, false),
+    Field(FieldType::Float64, "LAT", "", 8, Domain(), false, false),
+    Field(FieldType::Float64, "LONG", "", 8, Domain(), false, false),
+    Field(FieldType::Float64, "SOG", "", 8, Domain(), false, false),
+    Field(FieldType::Float64, "COG", "", 8, Domain(), false, false),
+    Field(FieldType::Float64, "Heading", "", 8, Domain(), false, false),
+    Field(FieldType::Text, "VesselName", "", 256, Domain(), false, false),
+    Field(FieldType::Text, "IMO", "", 256, Domain(), false, false),
+    Field(FieldType::Text, "CallSign", "", 256, Domain(), false, false),
+    Field(FieldType::Text, "VesselType", "", 256, Domain(), false, false),
+    Field(FieldType::Text, "Status", "", 256, Domain(), false, false),
+    Field(FieldType::Float64, "Length", "", 8, Domain(), false, false),
+    Field(FieldType::Float64, "Width", "", 8, Domain(), false, false),
+    Field(FieldType::Text, "Cargo", "", 256, Domain(), false, false),
+    Field(FieldType::Text, "globalid", "", 256, Domain(), false, false)
   };
 }
