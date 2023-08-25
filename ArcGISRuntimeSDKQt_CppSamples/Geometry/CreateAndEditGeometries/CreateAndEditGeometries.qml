@@ -59,7 +59,7 @@ Item {
         id: control
         anchors.right: parent.right
         padding: 5
-        width: 130
+        width: 140
 
         background: Rectangle {
             color: "black"
@@ -131,12 +131,14 @@ Item {
                     iconPath: "qrc:/Samples/Geometry/CreateAndEditGeometries/iconAssets/polygon-32.png"
                     checkable: true
                     enabled: !model.geometryEditorStarted
-                    onClicked: model.startGeometryEditorWithGeometryType(CreateAndEditGeometriesSample.PolygonMode);
+                    onClicked: {
+                        model.startGeometryEditorWithGeometryType(CreateAndEditGeometriesSample.PolygonMode);
+                    }
                 }
 
                 ComboBox {
                     id: toolCombo
-                    model: [qsTr("VertexTool"), qsTr("FreehandTool")]
+                    model: [qsTr("Vertex Tool"), qsTr("Freehand Tool"), qsTr("Arrow Shape Tool"), qsTr("Ellipse Shape Tool"), qsTr("Rectangle Shape Tool"), qsTr("Triangle Shape Tool")]
                     Layout.columnSpan: 2
                     Layout.fillWidth: true
 
@@ -157,11 +159,54 @@ Item {
                         case 1: // Freehand Tool
                             model.setTool(CreateAndEditGeometriesSample.Freehand);
                             break;
+                        case 2: // ShapeTool with arrow shape type
+                            model.setTool(CreateAndEditGeometriesSample.Arrow);
+                            break;
+                        case 3: // ShapeTool with ellipse shape type
+                            model.setTool(CreateAndEditGeometriesSample.Ellipse);
+                            break;
+                        case 4: // ShapeTool with rectangle shape type
+                            model.setTool(CreateAndEditGeometriesSample.Rectangle);
+                            break;
+                        case 5: // ShapeTool with triangle shape type
+                            model.setTool(CreateAndEditGeometriesSample.Triangle);
+                            break;
                         default:
                             model.setTool(CreateAndEditGeometriesSample.Vertex);
                         }
                     }
                 }
+            }
+
+            ComboBox {
+                id: scaleModeDropdown
+                Layout.columnSpan: 2
+                Layout.fillWidth: true
+
+                Rectangle {
+                    anchors.fill: parent
+                    radius: 10
+                    // Make the rectangle visible if a dropdown indicator exists
+                    // An indicator only exists if a theme is set
+                    visible: parent.indicator
+                    border.width: 1
+                }
+
+                model: ["Stretch Scale", "Uniform Scale"]
+                enabled: true
+                onCurrentIndexChanged: {
+                    switch (currentIndex) {
+                    case 0:
+                        model.setScaleMode(CreateAndEditGeometriesSample.StretchScaleMode);
+                        break;
+                    case 1:
+                        model.setScaleMode(CreateAndEditGeometriesSample.UniformScaleMode);
+                        break;
+                    default:
+                        break;
+                    }
+                }
+
             }
 
             GridLayout {
