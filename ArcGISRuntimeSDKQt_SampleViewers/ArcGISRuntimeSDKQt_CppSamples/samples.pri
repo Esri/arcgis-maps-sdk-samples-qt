@@ -93,6 +93,7 @@ INCLUDEPATH += \
     "$$SAMPLEPATHCPP/Geometry/ProjectGeometry" \
     "$$SAMPLEPATHCPP/Geometry/SpatialOperations" \
     "$$SAMPLEPATHCPP/Geometry/SpatialRelationships" \
+    "$$SAMPLEPATHCPP/Layers/AddCustomDynamicEntityDataSource" \
     "$$SAMPLEPATHCPP/Layers/AddDynamicEntityLayer" \
     "$$SAMPLEPATHCPP/Layers/AddEncExchangeSet" \
     "$$SAMPLEPATHCPP/Layers/ApplyMosaicRuleToRasters" \
@@ -306,6 +307,8 @@ HEADERS += \
     "$$SAMPLEPATHCPP/Geometry/ProjectGeometry/ProjectGeometry.h" \
     "$$SAMPLEPATHCPP/Geometry/SpatialOperations/SpatialOperations.h" \
     "$$SAMPLEPATHCPP/Geometry/SpatialRelationships/SpatialRelationships.h" \
+    "$$SAMPLEPATHCPP/Layers/AddCustomDynamicEntityDataSource/AddCustomDynamicEntityDataSource.h" \
+    "$$SAMPLEPATHCPP/Layers/AddCustomDynamicEntityDataSource/CustomDataSource.h" \
     "$$SAMPLEPATHCPP/Layers/AddDynamicEntityLayer/AddDynamicEntityLayer.h" \
     "$$SAMPLEPATHCPP/Layers/AddEncExchangeSet/AddEncExchangeSet.h" \
     "$$SAMPLEPATHCPP/Layers/ApplyMosaicRuleToRasters/ApplyMosaicRuleToRasters.h" \
@@ -523,6 +526,8 @@ SOURCES += \
     "$$SAMPLEPATHCPP/Geometry/ProjectGeometry/ProjectGeometry.cpp" \
     "$$SAMPLEPATHCPP/Geometry/SpatialOperations/SpatialOperations.cpp" \
     "$$SAMPLEPATHCPP/Geometry/SpatialRelationships/SpatialRelationships.cpp" \
+    "$$SAMPLEPATHCPP/Layers/AddCustomDynamicEntityDataSource/AddCustomDynamicEntityDataSource.cpp" \
+    "$$SAMPLEPATHCPP/Layers/AddCustomDynamicEntityDataSource/CustomDataSource.cpp" \
     "$$SAMPLEPATHCPP/Layers/AddDynamicEntityLayer/AddDynamicEntityLayer.cpp" \
     "$$SAMPLEPATHCPP/Layers/AddEncExchangeSet/AddEncExchangeSet.cpp" \
     "$$SAMPLEPATHCPP/Layers/ApplyMosaicRuleToRasters/ApplyMosaicRuleToRasters.cpp" \
@@ -735,6 +740,7 @@ RESOURCES += \
     "$$SAMPLEPATHCPP/Geometry/ProjectGeometry/ProjectGeometry.qrc" \
     "$$SAMPLEPATHCPP/Geometry/SpatialOperations/SpatialOperations.qrc" \
     "$$SAMPLEPATHCPP/Geometry/SpatialRelationships/SpatialRelationships.qrc" \
+    "$$SAMPLEPATHCPP/Layers/AddCustomDynamicEntityDataSource/AddCustomDynamicEntityDataSource.qrc" \
     "$$SAMPLEPATHCPP/Layers/AddDynamicEntityLayer/AddDynamicEntityLayer.qrc" \
     "$$SAMPLEPATHCPP/Layers/AddEncExchangeSet/AddEncExchangeSet.qrc" \
     "$$SAMPLEPATHCPP/Layers/ApplyMosaicRuleToRasters/ApplyMosaicRuleToRasters.qrc" \

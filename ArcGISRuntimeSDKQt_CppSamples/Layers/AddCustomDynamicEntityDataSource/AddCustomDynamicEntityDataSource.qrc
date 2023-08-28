@@ -1,0 +1,14 @@
+<RCC>
+    <qresource prefix="/Samples/Layers/AddCustomDynamicEntityDataSource">
+        <file alias="sample.json">README.metadata.json</file>
+        <file>AddCustomDynamicEntityDataSource.qml</file>
+        <file>AddCustomDynamicEntityDataSource.h</file>
+        <file>AddCustomDynamicEntityDataSource.cpp</file>
+        <file>main.qml</file>
+        <file>screenshot.png</file>
+        <file>README.md</file>
+        <file>CustomDataSource.h</file>
+        <file>CustomDataSource.cpp</file>
+        <file>AIS_MarineCadastre_SelectedVessels_CustomDataSource.json</file>
+    </qresource>
+</RCC>
