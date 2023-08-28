@@ -25,9 +25,9 @@
         "IdentifyLayerResult"
     ],
     "snippets": [
-        "DisplayPointsUsingClusteringFeatureReduction.cpp",
-        "DisplayPointsUsingClusteringFeatureReduction.h",
-        "DisplayPointsUsingClusteringFeatureReduction.qml"
+        "DisplayPointsUsingClustering.cpp",
+        "DisplayPointsUsingClustering.h",
+        "DisplayPointsUsingClustering.qml"
     ],
-    "title": "Display layer with feature reduction"
+    "title": "Display points using clustering feature reduction"
 }

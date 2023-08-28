@@ -42,7 +42,7 @@ RESOURCES += \
     "$$SAMPLEPATHQML/DisplayInformation/CreateSymbolStylesFromWebStyles/CreateSymbolStylesFromWebStyles.qrc" \
     "$$SAMPLEPATHQML/DisplayInformation/CustomDictionaryStyle/CustomDictionaryStyle.qrc" \
     "$$SAMPLEPATHQML/DisplayInformation/DisplayGrid/DisplayGrid.qrc" \
-    "$$SAMPLEPATHQML/DisplayInformation/DisplayPointsUsingClusteringFeatureReduction/DisplayPointsUsingClusteringFeatureReduction.qrc" \
+    "$$SAMPLEPATHQML/DisplayInformation/DisplayPointsUsingClustering/DisplayPointsUsingClustering.qrc" \
     "$$SAMPLEPATHQML/DisplayInformation/GODictionaryRenderer_3D/GODictionaryRenderer_3D.qrc" \
     "$$SAMPLEPATHQML/DisplayInformation/GODictionaryRenderer/GODictionaryRenderer.qrc" \
     "$$SAMPLEPATHQML/DisplayInformation/GOSymbols/GOSymbols.qrc" \
@@ -94,6 +94,7 @@ RESOURCES += \
     "$$SAMPLEPATHQML/Geometry/ProjectGeometry/ProjectGeometry.qrc" \
     "$$SAMPLEPATHQML/Geometry/SpatialOperations/SpatialOperations.qrc" \
     "$$SAMPLEPATHQML/Geometry/SpatialRelationships/SpatialRelationships.qrc" \
+    "$$SAMPLEPATHQML/Layers/AddCustomDynamicEntityDataSource/AddCustomDynamicEntityDataSource.qrc" \
     "$$SAMPLEPATHQML/Layers/AddDynamicEntityLayer/AddDynamicEntityLayer.qrc" \
     "$$SAMPLEPATHQML/Layers/AddEncExchangeSet/AddEncExchangeSet.qrc" \
     "$$SAMPLEPATHQML/Layers/ApplyMosaicRuleToRasters/ApplyMosaicRuleToRasters.qrc" \
@@ -204,6 +205,7 @@ RESOURCES += \
     "$$SAMPLEPATHQML/Scenes/DistanceCompositeSymbol/DistanceCompositeSymbol.qrc" \
     "$$SAMPLEPATHQML/Scenes/ExtrudeGraphics/ExtrudeGraphics.qrc" \
     "$$SAMPLEPATHQML/Scenes/FeatureLayerExtrusion/FeatureLayerExtrusion.qrc" \
+    "$$SAMPLEPATHQML/Scenes/FilterFeaturesInScene/FilterFeaturesInScene.qrc" \
     "$$SAMPLEPATHQML/Scenes/GetElevationAtPoint/GetElevationAtPoint.qrc" \
     "$$SAMPLEPATHQML/Scenes/OpenMobileScenePackage/OpenMobileScenePackage.qrc" \
     "$$SAMPLEPATHQML/Scenes/OpenScene/OpenScene.qrc" \

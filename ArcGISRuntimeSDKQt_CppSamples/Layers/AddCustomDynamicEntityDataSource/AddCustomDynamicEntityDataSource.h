@@ -1,4 +1,4 @@
-// [WriteFile Name=DisplayPointsUsingClusteringFeatureReduction, Category=DisplayInformation]
+// [WriteFile Name=AddCustomDynamicEntityDataSource, Category=Layers]
 // [Legal]
 // Copyright 2023 Esri.
 
@@ -14,59 +14,48 @@
 // limitations under the License.
 // [Legal]
 
-#ifndef DISPLAYPOINTSUSINGCLUSTERINGFEATUREREDUCTION_H
-#define DISPLAYPOINTSUSINGCLUSTERINGFEATUREREDUCTION_H
+#ifndef ADDCUSTOMDYNAMICENTITYDATASOURCE_H
+#define ADDCUSTOMDYNAMICENTITYDATASOURCE_H
 
 namespace Esri::ArcGISRuntime
 {
-class FeatureLayer;
+class DynamicEntity;
+class DynamicEntityLayer;
 class Map;
 class MapQuickView;
 }
 
-#include <QObject>
 #include <QMouseEvent>
+#include <QObject>
 
 Q_MOC_INCLUDE("MapQuickView.h");
 
-class DisplayPointsUsingClusteringFeatureReduction : public QObject
+class AddCustomDynamicEntityDataSource : public QObject
 {
   Q_OBJECT
 
   Q_PROPERTY(Esri::ArcGISRuntime::MapQuickView* mapView READ mapView WRITE setMapView NOTIFY mapViewChanged)
-  Q_PROPERTY(bool taskRunning READ taskRunning NOTIFY taskRunningChanged)
-  Q_PROPERTY(QString calloutText READ calloutText NOTIFY calloutTextChanged)
 
 public:
-  explicit DisplayPointsUsingClusteringFeatureReduction(QObject* parent = nullptr);
-  ~DisplayPointsUsingClusteringFeatureReduction() override;
-
-  Q_INVOKABLE void toggleClustering();
+  explicit AddCustomDynamicEntityDataSource(QObject* parent = nullptr);
+  ~AddCustomDynamicEntityDataSource() override;
 
   static void init();
 
 signals:
   void mapViewChanged();
-  void taskRunningChanged();
-  void calloutTextChanged();
 
 private:
   Esri::ArcGISRuntime::MapQuickView* mapView() const;
   void setMapView(Esri::ArcGISRuntime::MapQuickView* mapView);
-  QString calloutText() const;
 
-  void onMouseClicked(const QMouseEvent& mouseEvent);
+  void identifyLayerAtMouseClick(const QMouseEvent& e);
 
   Esri::ArcGISRuntime::Map* m_map = nullptr;
   Esri::ArcGISRuntime::MapQuickView* m_mapView = nullptr;
 
-  Esri::ArcGISRuntime::FeatureLayer* m_powerPlantsLayer = nullptr;
-
-  bool taskRunning() const;
-  bool m_taskRunning = true;
-  QString m_calloutText = "";
-
-  QScopedPointer<QObject> m_resultParent;
+  Esri::ArcGISRuntime::DynamicEntityLayer* m_dynamicEntityLayer = nullptr;
+  QScopedPointer<QObject> m_tempParent;
 };
 
-#endif // DISPLAYPOINTSUSINGCLUSTERINGFEATUREREDUCTION_H
+#endif // ADDCUSTOMDYNAMICENTITYDATASOURCE_H

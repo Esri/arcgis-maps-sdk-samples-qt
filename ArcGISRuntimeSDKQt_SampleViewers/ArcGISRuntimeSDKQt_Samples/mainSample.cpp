@@ -60,6 +60,7 @@
 // All CPP Samples
 #ifdef CPP_VIEWER
 #include "AddAPointSceneLayer.h"
+#include "AddCustomDynamicEntityDataSource.h"
 #include "AddDynamicEntityLayer.h"
 #include "AddEncExchangeSet.h"
 #include "AddFeaturesFeatureService.h"
@@ -126,7 +127,7 @@
 #include "DisplayMap.h"
 #include "DisplayOgcApiFeatureCollection.h"
 #include "DisplayOverviewMap.h"
-#include "DisplayPointsUsingClusteringFeatureReduction.h"
+#include "DisplayPointsUsingClustering.h"
 #include "DisplayRouteLayer.h"
 #include "DisplaySceneLayer.h"
 #include "DisplaySubtypeFeatureLayer.h"
@@ -149,6 +150,7 @@
 #include "FeatureLayerChangeRenderer.h"
 #include "FeatureLayerDictionaryRenderer.h"
 #include "FeatureLayerExtrusion.h"
+#include "FilterFeaturesInScene.h"
 #include "FeatureLayerQuery.h"
 #include "FeatureLayerRenderingModeMap.h"
 #include "FeatureLayerRenderingModeScene.h"
@@ -375,6 +377,7 @@ void registerCppSampleClasses()
 #ifdef CPP_VIEWER
   // Register the C++ Samples under the Esri.Samples namespace
   AddAPointSceneLayer::init();
+  AddCustomDynamicEntityDataSource::init();
   AddDynamicEntityLayer::init();
   AddEncExchangeSet::init();
   AddFeaturesFeatureService::init();
@@ -437,7 +440,7 @@ void registerCppSampleClasses()
   DisplayMap::init();
   DisplayOgcApiFeatureCollection::init();
   DisplayOverviewMap::init();
-  DisplayPointsUsingClusteringFeatureReduction::init();
+  DisplayPointsUsingClustering::init();
   DisplayRouteLayer::init();
   DisplaySceneLayer::init();
   DisplaySubtypeFeatureLayer::init();
@@ -460,6 +463,7 @@ void registerCppSampleClasses()
   FeatureLayerChangeRenderer::init();
   FeatureLayerDictionaryRenderer::init();
   FeatureLayerExtrusion::init();
+  FilterFeaturesInScene::init();
   FeatureLayerQuery::init();
   FeatureLayerRenderingModeMap::init();
   FeatureLayerRenderingModeScene::init();

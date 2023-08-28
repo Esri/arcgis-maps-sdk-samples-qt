@@ -41,7 +41,7 @@ INCLUDEPATH += \
     "$$SAMPLEPATHCPP/DisplayInformation/CreateSymbolStylesFromWebStyles" \
     "$$SAMPLEPATHCPP/DisplayInformation/CustomDictionaryStyle" \
     "$$SAMPLEPATHCPP/DisplayInformation/DisplayGrid" \
-    "$$SAMPLEPATHCPP/DisplayInformation/DisplayPointsUsingClusteringFeatureReduction" \
+    "$$SAMPLEPATHCPP/DisplayInformation/DisplayPointsUsingClustering" \
     "$$SAMPLEPATHCPP/DisplayInformation/GODictionaryRenderer_3D" \
     "$$SAMPLEPATHCPP/DisplayInformation/GODictionaryRenderer" \
     "$$SAMPLEPATHCPP/DisplayInformation/GOSymbols" \
@@ -93,6 +93,7 @@ INCLUDEPATH += \
     "$$SAMPLEPATHCPP/Geometry/ProjectGeometry" \
     "$$SAMPLEPATHCPP/Geometry/SpatialOperations" \
     "$$SAMPLEPATHCPP/Geometry/SpatialRelationships" \
+    "$$SAMPLEPATHCPP/Layers/AddCustomDynamicEntityDataSource" \
     "$$SAMPLEPATHCPP/Layers/AddDynamicEntityLayer" \
     "$$SAMPLEPATHCPP/Layers/AddEncExchangeSet" \
     "$$SAMPLEPATHCPP/Layers/ApplyMosaicRuleToRasters" \
@@ -203,6 +204,7 @@ INCLUDEPATH += \
     "$$SAMPLEPATHCPP/Scenes/DistanceCompositeSymbol" \
     "$$SAMPLEPATHCPP/Scenes/ExtrudeGraphics" \
     "$$SAMPLEPATHCPP/Scenes/FeatureLayerExtrusion" \
+    "$$SAMPLEPATHCPP/Scenes/FilterFeaturesInScene" \
     "$$SAMPLEPATHCPP/Scenes/GetElevationAtPoint" \
     "$$SAMPLEPATHCPP/Scenes/OpenMobileScenePackage" \
     "$$SAMPLEPATHCPP/Scenes/OpenScene" \
@@ -249,7 +251,7 @@ HEADERS += \
     "$$SAMPLEPATHCPP/DisplayInformation/CreateSymbolStylesFromWebStyles/CreateSymbolStylesFromWebStyles.h" \
     "$$SAMPLEPATHCPP/DisplayInformation/CustomDictionaryStyle/CustomDictionaryStyle.h" \
     "$$SAMPLEPATHCPP/DisplayInformation/DisplayGrid/DisplayGrid.h" \
-    "$$SAMPLEPATHCPP/DisplayInformation/DisplayPointsUsingClusteringFeatureReduction/DisplayPointsUsingClusteringFeatureReduction.h" \
+    "$$SAMPLEPATHCPP/DisplayInformation/DisplayPointsUsingClustering/DisplayPointsUsingClustering.h" \
     "$$SAMPLEPATHCPP/DisplayInformation/GODictionaryRenderer_3D/GODictionaryRenderer_3D.h" \
     "$$SAMPLEPATHCPP/DisplayInformation/GODictionaryRenderer/GODictionaryRenderer.h" \
     "$$SAMPLEPATHCPP/DisplayInformation/GOSymbols/GOSymbols.h" \
@@ -305,6 +307,8 @@ HEADERS += \
     "$$SAMPLEPATHCPP/Geometry/ProjectGeometry/ProjectGeometry.h" \
     "$$SAMPLEPATHCPP/Geometry/SpatialOperations/SpatialOperations.h" \
     "$$SAMPLEPATHCPP/Geometry/SpatialRelationships/SpatialRelationships.h" \
+    "$$SAMPLEPATHCPP/Layers/AddCustomDynamicEntityDataSource/AddCustomDynamicEntityDataSource.h" \
+    "$$SAMPLEPATHCPP/Layers/AddCustomDynamicEntityDataSource/CustomDataSource.h" \
     "$$SAMPLEPATHCPP/Layers/AddDynamicEntityLayer/AddDynamicEntityLayer.h" \
     "$$SAMPLEPATHCPP/Layers/AddEncExchangeSet/AddEncExchangeSet.h" \
     "$$SAMPLEPATHCPP/Layers/ApplyMosaicRuleToRasters/ApplyMosaicRuleToRasters.h" \
@@ -419,6 +423,7 @@ HEADERS += \
     "$$SAMPLEPATHCPP/Scenes/DistanceCompositeSymbol/DistanceCompositeSymbol.h" \
     "$$SAMPLEPATHCPP/Scenes/ExtrudeGraphics/ExtrudeGraphics.h" \
     "$$SAMPLEPATHCPP/Scenes/FeatureLayerExtrusion/FeatureLayerExtrusion.h" \
+    "$$SAMPLEPATHCPP/Scenes/FilterFeaturesInScene/FilterFeaturesInScene.h" \
     "$$SAMPLEPATHCPP/Scenes/GetElevationAtPoint/GetElevationAtPoint.h" \
     "$$SAMPLEPATHCPP/Scenes/OpenMobileScenePackage/OpenMobileScenePackage.h" \
     "$$SAMPLEPATHCPP/Scenes/OpenScene/OpenScene.h" \
@@ -465,7 +470,7 @@ SOURCES += \
     "$$SAMPLEPATHCPP/DisplayInformation/CreateSymbolStylesFromWebStyles/CreateSymbolStylesFromWebStyles.cpp" \
     "$$SAMPLEPATHCPP/DisplayInformation/CustomDictionaryStyle/CustomDictionaryStyle.cpp" \
     "$$SAMPLEPATHCPP/DisplayInformation/DisplayGrid/DisplayGrid.cpp" \
-    "$$SAMPLEPATHCPP/DisplayInformation/DisplayPointsUsingClusteringFeatureReduction/DisplayPointsUsingClusteringFeatureReduction.cpp" \
+    "$$SAMPLEPATHCPP/DisplayInformation/DisplayPointsUsingClustering/DisplayPointsUsingClustering.cpp" \
     "$$SAMPLEPATHCPP/DisplayInformation/GODictionaryRenderer_3D/GODictionaryRenderer_3D.cpp" \
     "$$SAMPLEPATHCPP/DisplayInformation/GODictionaryRenderer/GODictionaryRenderer.cpp" \
     "$$SAMPLEPATHCPP/DisplayInformation/GOSymbols/GOSymbols.cpp" \
@@ -521,6 +526,8 @@ SOURCES += \
     "$$SAMPLEPATHCPP/Geometry/ProjectGeometry/ProjectGeometry.cpp" \
     "$$SAMPLEPATHCPP/Geometry/SpatialOperations/SpatialOperations.cpp" \
     "$$SAMPLEPATHCPP/Geometry/SpatialRelationships/SpatialRelationships.cpp" \
+    "$$SAMPLEPATHCPP/Layers/AddCustomDynamicEntityDataSource/AddCustomDynamicEntityDataSource.cpp" \
+    "$$SAMPLEPATHCPP/Layers/AddCustomDynamicEntityDataSource/CustomDataSource.cpp" \
     "$$SAMPLEPATHCPP/Layers/AddDynamicEntityLayer/AddDynamicEntityLayer.cpp" \
     "$$SAMPLEPATHCPP/Layers/AddEncExchangeSet/AddEncExchangeSet.cpp" \
     "$$SAMPLEPATHCPP/Layers/ApplyMosaicRuleToRasters/ApplyMosaicRuleToRasters.cpp" \
@@ -635,6 +642,7 @@ SOURCES += \
     "$$SAMPLEPATHCPP/Scenes/DistanceCompositeSymbol/DistanceCompositeSymbol.cpp" \
     "$$SAMPLEPATHCPP/Scenes/ExtrudeGraphics/ExtrudeGraphics.cpp" \
     "$$SAMPLEPATHCPP/Scenes/FeatureLayerExtrusion/FeatureLayerExtrusion.cpp" \
+    "$$SAMPLEPATHCPP/Scenes/FilterFeaturesInScene/FilterFeaturesInScene.cpp" \
     "$$SAMPLEPATHCPP/Scenes/GetElevationAtPoint/GetElevationAtPoint.cpp" \
     "$$SAMPLEPATHCPP/Scenes/OpenMobileScenePackage/OpenMobileScenePackage.cpp" \
     "$$SAMPLEPATHCPP/Scenes/OpenScene/OpenScene.cpp" \
@@ -680,7 +688,7 @@ RESOURCES += \
     "$$SAMPLEPATHCPP/DisplayInformation/CreateSymbolStylesFromWebStyles/CreateSymbolStylesFromWebStyles.qrc" \
     "$$SAMPLEPATHCPP/DisplayInformation/CustomDictionaryStyle/CustomDictionaryStyle.qrc" \
     "$$SAMPLEPATHCPP/DisplayInformation/DisplayGrid/DisplayGrid.qrc" \
-    "$$SAMPLEPATHCPP/DisplayInformation/DisplayPointsUsingClusteringFeatureReduction/DisplayPointsUsingClusteringFeatureReduction.qrc" \
+    "$$SAMPLEPATHCPP/DisplayInformation/DisplayPointsUsingClustering/DisplayPointsUsingClustering.qrc" \
     "$$SAMPLEPATHCPP/DisplayInformation/GODictionaryRenderer_3D/GODictionaryRenderer_3D.qrc" \
     "$$SAMPLEPATHCPP/DisplayInformation/GODictionaryRenderer/GODictionaryRenderer.qrc" \
     "$$SAMPLEPATHCPP/DisplayInformation/GOSymbols/GOSymbols.qrc" \
@@ -732,6 +740,7 @@ RESOURCES += \
     "$$SAMPLEPATHCPP/Geometry/ProjectGeometry/ProjectGeometry.qrc" \
     "$$SAMPLEPATHCPP/Geometry/SpatialOperations/SpatialOperations.qrc" \
     "$$SAMPLEPATHCPP/Geometry/SpatialRelationships/SpatialRelationships.qrc" \
+    "$$SAMPLEPATHCPP/Layers/AddCustomDynamicEntityDataSource/AddCustomDynamicEntityDataSource.qrc" \
     "$$SAMPLEPATHCPP/Layers/AddDynamicEntityLayer/AddDynamicEntityLayer.qrc" \
     "$$SAMPLEPATHCPP/Layers/AddEncExchangeSet/AddEncExchangeSet.qrc" \
     "$$SAMPLEPATHCPP/Layers/ApplyMosaicRuleToRasters/ApplyMosaicRuleToRasters.qrc" \
@@ -842,6 +851,7 @@ RESOURCES += \
     "$$SAMPLEPATHCPP/Scenes/DistanceCompositeSymbol/DistanceCompositeSymbol.qrc" \
     "$$SAMPLEPATHCPP/Scenes/ExtrudeGraphics/ExtrudeGraphics.qrc" \
     "$$SAMPLEPATHCPP/Scenes/FeatureLayerExtrusion/FeatureLayerExtrusion.qrc" \
+    "$$SAMPLEPATHCPP/Scenes/FilterFeaturesInScene/FilterFeaturesInScene.qrc" \
     "$$SAMPLEPATHCPP/Scenes/GetElevationAtPoint/GetElevationAtPoint.qrc" \
     "$$SAMPLEPATHCPP/Scenes/OpenMobileScenePackage/OpenMobileScenePackage.qrc" \
     "$$SAMPLEPATHCPP/Scenes/OpenScene/OpenScene.qrc" \
