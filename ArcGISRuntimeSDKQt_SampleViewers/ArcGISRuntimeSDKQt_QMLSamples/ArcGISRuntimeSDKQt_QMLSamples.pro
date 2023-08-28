@@ -1,4 +1,4 @@
-SAMPLEVIEWERAPIKEY_RELEASE# Copyright 2017 ESRI
+# Copyright 2017 ESRI
 #
 # All rights reserved under the copyright laws of the United States
 # and applicable international laws, treaties, and conventions.
@@ -24,7 +24,7 @@ DEFINES += ArcGIS_Runtime_Version=$$ARCGIS_RUNTIME_VERSION
 exists($$PWD/../../../../DevBuildQml.pri) {
   message("Building against the dev environment")
   DEFINES += ESRI_BUILD
-  DEFINES += SAMPLE_VIEWER_API_KEY=$$(SAMPLEVIEWERAPIKEY_INTERNAL)
+  DEFINES += SAMPLE_VIEWER_API_KEY=$$(SAMPLEVIEWERAPIKEY_RELEASE)
 
   # use the Esri dev build script
   include ($$PWD/../../../../DevBuildQml.pri)
