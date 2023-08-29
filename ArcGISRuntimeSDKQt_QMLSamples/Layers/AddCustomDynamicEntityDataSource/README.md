@@ -2,7 +2,7 @@
 
 Create a custom dynamic entity data source and display it using a dynamic entity layer.
 
-![](AddCustomDynamicEntityDataSource.jpg)
+![](screenshot.png)
 
 ## Use case
 
