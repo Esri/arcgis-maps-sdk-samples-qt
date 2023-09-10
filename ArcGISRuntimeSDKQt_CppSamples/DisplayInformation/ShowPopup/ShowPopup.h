@@ -17,9 +17,6 @@
 #ifndef SHOWPOPUP_H
 #define SHOWPOPUP_H
 
-// C++ API headers
-#include "TaskWatcher.h"
-
 namespace Esri::ArcGISRuntime
 {
 class FeatureLayer;
@@ -30,10 +27,13 @@ class MapQuickView;
 class PopupManager;
 }
 
+
 #include <QObject>
 #include <QQmlListProperty>
 #include <QMouseEvent>
+#include <QFuture>
 #include <QUuid>
+
 
 Q_MOC_INCLUDE("MapQuickView.h")
 Q_MOC_INCLUDE("PopupManager.h")
@@ -75,7 +75,7 @@ private:
   QList<Esri::ArcGISRuntime::PopupManager*> m_popupManagers;
   Esri::ArcGISRuntime::FeatureLayer* m_featureLayer = nullptr;
 
-  Esri::ArcGISRuntime::TaskWatcher m_taskWatcher;
+  QFuture<Esri::ArcGISRuntime::IdentifyLayerResult*> m_future;
 };
 
 #endif // SHOWPOPUP_H
