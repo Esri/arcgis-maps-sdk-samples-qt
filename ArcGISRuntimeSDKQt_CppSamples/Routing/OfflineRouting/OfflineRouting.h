@@ -19,7 +19,7 @@
 
 #include "Envelope.h"
 #include "RouteParameters.h"
-#include "TaskWatcher.h"
+#include "RouteResult.h"
 
 namespace Esri::ArcGISRuntime
 {
@@ -31,6 +31,7 @@ class PictureMarkerSymbol;
 class RouteTask;
 }
 
+#include <QFuture>
 #include <QObject>
 
 Q_MOC_INCLUDE("MapQuickView.h")
@@ -76,7 +77,7 @@ private:
   Esri::ArcGISRuntime::GraphicsOverlay* m_routeOverlay = nullptr;
   Esri::ArcGISRuntime::RouteTask* m_routeTask = nullptr;
   Esri::ArcGISRuntime::RouteParameters m_routeParameters;
-  Esri::ArcGISRuntime::TaskWatcher m_taskWatcher;
+  QFuture<Esri::ArcGISRuntime::RouteResult> m_future;
   int m_travelModeIndex = -1;
   Esri::ArcGISRuntime::Envelope m_routableArea;
 };
