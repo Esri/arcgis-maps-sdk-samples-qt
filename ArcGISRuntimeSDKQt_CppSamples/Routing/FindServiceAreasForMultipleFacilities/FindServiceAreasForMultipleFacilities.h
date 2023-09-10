@@ -17,7 +17,7 @@
 #ifndef FINDSERVICEAREASFORMULTIPLEFACILITIES_H
 #define FINDSERVICEAREASFORMULTIPLEFACILITIES_H
 
-#include "TaskWatcher.h"
+#include "ServiceAreaResult.h"
 
 namespace Esri::ArcGISRuntime
 {
@@ -25,11 +25,13 @@ class FeatureLayer;
 class GraphicsOverlay;
 class Map;
 class MapQuickView;
+class ServiceAreaResult;
 class ServiceAreaTask;
 class ServiceFeatureTable;
 class SimpleFillSymbol;
 }
 
+#include <QFuture>
 #include <QObject>
 
 Q_MOC_INCLUDE("MapQuickView.h")
@@ -67,7 +69,8 @@ private:
   Esri::ArcGISRuntime::ServiceFeatureTable* m_facilitiesTable = nullptr;
   QList<Esri::ArcGISRuntime::SimpleFillSymbol*> m_fillSymbols;
   bool m_taskRunning = false;
-  Esri::ArcGISRuntime::TaskWatcher m_taskWatcher;
+
+  QFuture<Esri::ArcGISRuntime::ServiceAreaResult> m_future;
 };
 
 #endif // FINDSERVICEAREASFORMULTIPLEFACILITIES_H
