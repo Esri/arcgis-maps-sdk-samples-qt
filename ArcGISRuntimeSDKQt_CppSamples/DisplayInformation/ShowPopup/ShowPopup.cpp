@@ -138,7 +138,6 @@ void ShowPopup::onMouseClicked(QMouseEvent& mouseEvent)
   m_future = m_mapView->identifyLayerAsync(m_featureLayer, mouseEvent.position(), tolerance, returnPopupsOnly, maximumResults);
   m_future.then(this, [this](IdentifyLayerResult* result)
   {
-    //TODOB: Do i need to check any conditions on the future before calling this? Probably applies to all QFuture replacements
     onIdentifyLayerCompleted(QUuid(),result);
   });
 
