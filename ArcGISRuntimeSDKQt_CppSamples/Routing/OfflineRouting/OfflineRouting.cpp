@@ -243,8 +243,26 @@ void OfflineRouting::connectSignals()
       findRoute();
     }
   });
+}
 
-  connect(m_routeTask, &RouteTask::solveRouteCompleted, this, [this](const QUuid&, const RouteResult& routeResult){
+void OfflineRouting::findRoute()
+{
+  if(!m_future.isFinished() || m_stopsOverlay->graphics()->size() <= 1)
+    return;
+
+  QList<Stop> stops;
+  for (const Graphic* graphic : *m_stopsOverlay->graphics())
+  {
+    stops << Stop(geometry_cast<Point>(graphic->geometry()));
+  }
+
+  // configure stops and travel mode
+  m_routeParameters.setStops(stops);
+  m_routeParameters.setTravelMode(m_routeTask->routeTaskInfo().travelModes().at(m_travelModeIndex));
+
+  m_future = m_routeTask->solveRouteAsync(m_routeParameters);
+  m_future.then(this, [this](const RouteResult& routeResult)
+  {
     if (routeResult.isEmpty())
       return;
 
@@ -255,27 +273,6 @@ void OfflineRouting::connectSignals()
 
     m_routeOverlay->graphics()->append(routeGraphic);
   });
-}
-
-void OfflineRouting::findRoute()
-{
-  if(!m_taskWatcher.isDone())
-    return;
-
-  if (m_stopsOverlay->graphics()->size() > 1)
-  {
-    QList<Stop> stops;
-    for (const Graphic* graphic : *m_stopsOverlay->graphics())
-    {
-      stops << Stop(geometry_cast<Point>(graphic->geometry()));
-    }
-
-    // configure stops and travel mode
-    m_routeParameters.setStops(stops);
-    m_routeParameters.setTravelMode(m_routeTask->routeTaskInfo().travelModes().at(m_travelModeIndex));
-
-    m_taskWatcher = m_routeTask->solveRoute(m_routeParameters);
-  }
 }
 
 // Set the view (created in QML)

@@ -96,7 +96,7 @@ MapQuickView* FindServiceAreasForMultipleFacilities::mapView() const
 
 bool FindServiceAreasForMultipleFacilities::taskRunning() const
 {
-  return !m_taskWatcher.isDone();
+  return m_future.isRunning();
 }
 
 // Set the view (created in QML)
@@ -159,27 +159,27 @@ void FindServiceAreasForMultipleFacilities::connectServiceAreaTaskSignals()
     // add all facilities to the service area parameters
     serviceAreaParameters.setFacilitiesWithFeatureTable(m_facilitiesTable, queryParameters);
 
-    m_taskWatcher = m_serviceAreaTask->solveServiceArea(serviceAreaParameters);
-    if (!m_taskWatcher.isValid())
+    m_future = m_serviceAreaTask->solveServiceAreaAsync(serviceAreaParameters);
+    m_future.then(this, [this](const ServiceAreaResult& serviceAreaResult)
+    {
+      emit taskRunningChanged();
+
+      // iterate through the facilities to get the service area polygons
+      for (int i = 0; i < serviceAreaResult.facilities().size(); ++i)
+      {
+        QList<ServiceAreaPolygon> serviceAreaPolygonList = serviceAreaResult.resultPolygons(i);
+        // create a graphic for each available polygon
+        for (int j = 0; j < serviceAreaPolygonList.size(); ++j)
+        {
+          m_serviceAreasOverlay->graphics()->append(new Graphic(serviceAreaPolygonList[j].geometry(), m_fillSymbols[j], this));
+        }
+      }
+    });
+
+    if (!m_future.isValid())
       qWarning() << "Task not valid.";
 
     emit taskRunningChanged();
-  });
-
-  connect(m_serviceAreaTask, &ServiceAreaTask::solveServiceAreaCompleted, this, [this](const QUuid&, const ServiceAreaResult& serviceAreaResult)
-  {
-    emit taskRunningChanged();
-
-    // iterate through the facilities to get the service area polygons
-    for (int i = 0; i < serviceAreaResult.facilities().size(); ++i)
-    {
-      QList<ServiceAreaPolygon> serviceAreaPolygonList = serviceAreaResult.resultPolygons(i);
-      // create a graphic for each available polygon
-      for (int j = 0; j < serviceAreaPolygonList.size(); ++j)
-      {
-        m_serviceAreasOverlay->graphics()->append(new Graphic(serviceAreaPolygonList[j].geometry(), m_fillSymbols[j], this));
-      }
-    }
   });
 }
 
