@@ -96,7 +96,7 @@ MapQuickView* FindServiceAreasForMultipleFacilities::mapView() const
 
 bool FindServiceAreasForMultipleFacilities::taskRunning() const
 {
-  return !m_future.isFinished();
+  return m_future.isRunning();
 }
 
 // Set the view (created in QML)
