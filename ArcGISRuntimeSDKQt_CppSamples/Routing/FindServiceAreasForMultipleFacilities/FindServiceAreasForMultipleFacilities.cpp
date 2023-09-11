@@ -160,7 +160,6 @@ void FindServiceAreasForMultipleFacilities::connectServiceAreaTaskSignals()
     serviceAreaParameters.setFacilitiesWithFeatureTable(m_facilitiesTable, queryParameters);
 
     m_future = m_serviceAreaTask->solveServiceAreaAsync(serviceAreaParameters);
-
     m_future.then(this, [this](const ServiceAreaResult& serviceAreaResult)
     {
       emit taskRunningChanged();

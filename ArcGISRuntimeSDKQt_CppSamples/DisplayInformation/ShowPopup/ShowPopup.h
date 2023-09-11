@@ -27,13 +27,11 @@ class MapQuickView;
 class PopupManager;
 }
 
-
 #include <QObject>
 #include <QQmlListProperty>
 #include <QMouseEvent>
 #include <QFuture>
 #include <QUuid>
-
 
 Q_MOC_INCLUDE("MapQuickView.h")
 Q_MOC_INCLUDE("PopupManager.h")

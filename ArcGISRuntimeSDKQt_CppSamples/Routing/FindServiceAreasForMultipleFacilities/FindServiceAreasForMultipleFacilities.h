@@ -69,7 +69,6 @@ private:
   Esri::ArcGISRuntime::ServiceFeatureTable* m_facilitiesTable = nullptr;
   QList<Esri::ArcGISRuntime::SimpleFillSymbol*> m_fillSymbols;
   bool m_taskRunning = false;
-
   QFuture<Esri::ArcGISRuntime::ServiceAreaResult> m_future;
 };
 
