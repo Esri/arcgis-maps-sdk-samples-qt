@@ -149,7 +149,7 @@ void ShowPopup::onMouseClicked(QMouseEvent& mouseEvent)
 
 bool ShowPopup::taskRunning() const
 {
-  return !m_future.isFinished();
+  return m_future.isRunning();
 }
 
 QQmlListProperty<PopupManager> ShowPopup::popupManagers()
