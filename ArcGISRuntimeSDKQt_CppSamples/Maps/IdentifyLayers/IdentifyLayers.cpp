@@ -31,7 +31,6 @@
 #include "IdentifyLayerResult.h"
 #include "Error.h"
 #include "MapTypes.h"
-//#include "TaskWatcher.h"
 #include "LayerListModel.h"
 #include "ArcGISSublayerListModel.h"
 #include "ArcGISSublayer.h"
