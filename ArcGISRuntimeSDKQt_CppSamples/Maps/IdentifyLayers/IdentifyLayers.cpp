@@ -117,20 +117,19 @@ void IdentifyLayers::connectSignals()
     [this](QList<IdentifyLayerResult*> results){
       // reset the message text
       m_message = QString();
-      int i = 0;
 
       for (IdentifyLayerResult* result : results)
       {
-        ++i;
-
         const int count = countChildren(result);
         QString layerName = result->layerContent()->name();
         qDebug() << layerName;
+        qDebug() << count;
         m_message += QString("%1 : %2").arg(layerName).arg(count);
-        // add new line character if not the final element inthe array
-        if (i != results.length())
-          m_message += "\n";
+        m_message += "\n";
       }
+      //remove last newline character
+      if (!m_message.isEmpty())
+        m_message.chop(1);
 
       emit messageChanged();
       emit showMessage();
