@@ -28,8 +28,9 @@
 #include "Viewpoint.h"
 #include "Bookmark.h"
 #include "MapTypes.h"
-#include "TaskWatcher.h"
 #include "BookmarkListModel.h"
+
+#include <QFuture>
 
 using namespace Esri::ArcGISRuntime;
 
@@ -120,7 +121,7 @@ void ManageBookmarks::goToBookmark(int bookmarkIndex)
   if (!bookmarks)
     return;
 
-  m_mapView->setViewpoint(bookmarks->at(bookmarkIndex)->viewpoint());
+  m_mapView->setViewpointAsync(bookmarks->at(bookmarkIndex)->viewpoint());
 }
 
 QAbstractListModel* ManageBookmarks::bookmarks() const

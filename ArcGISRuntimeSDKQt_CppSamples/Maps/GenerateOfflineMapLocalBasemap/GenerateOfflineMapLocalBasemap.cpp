@@ -28,7 +28,6 @@
 #include "Envelope.h"
 #include "Point.h"
 #include "Error.h"
-#include "TaskWatcher.h"
 #include "GenerateOfflineMapJob.h"
 #include "TaskTypes.h"
 #include "GenerateOfflineMapResult.h"
@@ -37,6 +36,7 @@
 #include "SpatialReference.h"
 #include "Layer.h"
 
+#include <QFuture>
 #include <QTemporaryDir>
 #include <QtCore/qglobal.h>
 #include <QUuid>
@@ -124,9 +124,8 @@ void GenerateOfflineMapLocalBasemap::generateMapByExtent(double xCorner1, double
   const QString tempPath = m_tempDir.path() + "/OfflineMap.mmpk";
   const QString dataPath = defaultDataPath() + "/ArcGIS/Runtime/Data/tpkx";
 
-  // connect to the signal for when the default parameters are generated
-  connect(m_offlineMapTask, &OfflineMapTask::createDefaultGenerateOfflineMapParametersCompleted,
-          this, [this, dataPath, tempPath](const QUuid&, GenerateOfflineMapParameters params)
+  // generate parameters
+  m_offlineMapTask->createDefaultGenerateOfflineMapParametersAsync(mapExtent).then(this, [this, tempPath, dataPath](GenerateOfflineMapParameters params)
   {
     // update default parameters to specify use of local basemap
     // this will prevent new tiles from being generated on the server
@@ -209,7 +208,4 @@ void GenerateOfflineMapLocalBasemap::generateMapByExtent(double xCorner1, double
       emit hideWindow(5000, false);
     }
   });
-
-  // generate parameters
-  m_offlineMapTask->createDefaultGenerateOfflineMapParameters(mapExtent);
 }

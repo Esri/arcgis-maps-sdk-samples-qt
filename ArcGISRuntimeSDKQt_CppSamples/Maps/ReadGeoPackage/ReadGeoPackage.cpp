@@ -31,9 +31,9 @@
 #include "GeoPackageFeatureTable.h"
 #include "Error.h"
 #include "MapTypes.h"
-#include "TaskWatcher.h"
 #include "LayerListModel.h"
 
+#include <QFuture>
 #include <QtCore/qglobal.h>
 #include <QStandardPaths>
 
@@ -84,7 +84,7 @@ void ReadGeoPackage::componentComplete()
 
   // Create the initial view area
   const Viewpoint initialViewpoint(39.7294, -104.8319, 500000);
-  m_mapView->setViewpoint(initialViewpoint);
+  m_mapView->setViewpointAsync(initialViewpoint);
 
   // Initialize the read operation
   readGeoPackage();

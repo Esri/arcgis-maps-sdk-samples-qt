@@ -23,9 +23,10 @@
 #include "Map.h"
 #include "MapQuickView.h"
 #include "MapTypes.h"
-#include "TaskWatcher.h"
 #include "SpatialReference.h"
 #include "Point.h"
+
+#include <QFuture>
 
 using namespace Esri::ArcGISRuntime;
 
@@ -59,5 +60,5 @@ void MinMaxScale::componentComplete()
   m_mapView->setMap(m_map);
 
   Point edinburgh(-3.1927,55.9515, SpatialReference(4326));
-  m_mapView->setViewpointCenter(edinburgh);
+  m_mapView->setViewpointCenterAsync(edinburgh);
 }

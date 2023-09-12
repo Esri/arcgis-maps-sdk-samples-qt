@@ -24,8 +24,8 @@
 #include "MapQuickView.h"
 #include "MapImageProvider.h"
 #include "MapTypes.h"
-#include "TaskWatcher.h"
 
+#include <QFuture>
 #include <QQmlContext>
 #include <QUuid>
 
@@ -59,12 +59,15 @@ void TakeScreenshot::componentComplete()
   // Get the image provider from the QML Engine
   QQmlEngine* engine = QQmlEngine::contextForObject(this)->engine();
   m_imageProvider = dynamic_cast<MapImageProvider*>(engine->imageProvider(MapImageProvider::imageProviderId()));
+}
 
-  // Connect to the exportImageCompleted signal
-  connect(m_mapView, &MapQuickView::exportImageCompleted, this, [this](const QUuid& id, const QImage& img)
+// Q_INVOKABLE function to kick off the export image asynchronous task
+void TakeScreenshot::captureScreenshot()
+{
+  m_mapView->exportImageAsync().then(this, [this](QImage img)
   {
     // convert the QUuid into a QString
-    const QString imageId = id.toString().remove("{").remove("}");
+    const QString imageId = QUuid().createUuid().toString().remove("{").remove("}");
     // add the image to the provider
     m_imageProvider->addImage(imageId, img);
     // update the URL with the unique id
@@ -72,12 +75,6 @@ void TakeScreenshot::componentComplete()
     // emit the signal to trigger the QML Image to update
     emit mapImageUrlChanged();
   });
-}
-
-// Q_INVOKABLE function to kick off the export image asynchronous task
-void TakeScreenshot::captureScreenshot()
-{
-  m_mapView->exportImage();
 }
 
 QUrl TakeScreenshot::mapImageUrl() const

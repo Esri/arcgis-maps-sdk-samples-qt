@@ -33,7 +33,6 @@
 #include "SimulationParameters.h"
 #include "MapTypes.h"
 #include "MapViewTypes.h"
-#include "TaskWatcher.h"
 #include "GraphicsOverlayListModel.h"
 #include "SymbolTypes.h"
 #include "GraphicListModel.h"
@@ -42,6 +41,7 @@
 #include "SpatialReference.h"
 
 #include <QDateTime>
+#include <QFuture>
 
 using namespace Esri::ArcGISRuntime;
 
@@ -180,7 +180,7 @@ void ShowLocationHistory::setMapView(MapQuickView* mapView)
   m_mapView->setMap(m_map);
 
   // set initial viewpoint near UCLA, Los Angeles
-  m_mapView->setViewpointCenter(initialCenter, initialZoomScale);
+  m_mapView->setViewpointCenterAsync(initialCenter, initialZoomScale);
 
   m_mapView->graphicsOverlays()->append(m_locationHistoryLineOverlay);
   m_mapView->graphicsOverlays()->append(m_locationHistoryOverlay);
