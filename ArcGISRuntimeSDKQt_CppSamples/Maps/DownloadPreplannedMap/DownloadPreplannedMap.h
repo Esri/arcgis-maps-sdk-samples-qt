@@ -44,6 +44,7 @@ class DownloadPreplannedMap : public QObject
   Q_OBJECT
 
   Q_PROPERTY(Esri::ArcGISRuntime::MapQuickView* mapView READ mapView WRITE setMapView NOTIFY mapViewChanged)
+  Q_PROPERTY(Esri::ArcGISRuntime::PreplannedMapAreaListModel* preplannedList MEMBER m_preplannedList NOTIFY preplannedListChanged)
   Q_PROPERTY(bool busy MEMBER m_busy NOTIFY busyChanged)
   Q_PROPERTY(bool preplannedMapExists MEMBER m_preplannedMapExists NOTIFY preplannedMapExistsChanged)
   Q_PROPERTY(bool viewingOnlineMaps MEMBER m_viewingOnlineMaps NOTIFY viewingOnlineMapsChanged())
@@ -68,7 +69,7 @@ signals:
 
 private slots:
   void onDownloadPreplannedMapJobCompleted();
-  void loadPreplannedMapAreas(QList<Esri::ArcGISRuntime::PreplannedMapArea*>& preplannedList);
+  void loadPreplannedMapAreas();
 
 private:
   Esri::ArcGISRuntime::MapQuickView* mapView() const;
@@ -85,6 +86,7 @@ private:
   Esri::ArcGISRuntime::DownloadPreplannedOfflineMapJob* m_preplannedMapJob = nullptr;
   Esri::ArcGISRuntime::MobileMapPackage* m_mmpk = nullptr;
   Esri::ArcGISRuntime::SimpleLineSymbol* m_lineSymbol = nullptr;
+  Esri::ArcGISRuntime::PreplannedMapAreaListModel* m_preplannedList = nullptr;
   Esri::ArcGISRuntime::DownloadPreplannedOfflineMapParameters m_params;
   bool m_busy = false;
   bool m_mapExists = false;

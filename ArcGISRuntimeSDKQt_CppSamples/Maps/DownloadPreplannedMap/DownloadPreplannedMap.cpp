@@ -64,8 +64,8 @@ DownloadPreplannedMap::DownloadPreplannedMap(QObject* parent /* = nullptr */):
     connect(m_offlineMapTask, &OfflineMapTask::doneLoading, this, [this] ()
     {
       // fetch preplanned map areas from the portal item
-      m_offlineMapTask->preplannedMapAreasAsync().then(this, [this](QList<PreplannedMapArea*> preplannedList){
-        loadPreplannedMapAreas(preplannedList);
+      m_offlineMapTask->preplannedMapAreasAsync().then(this, [this](QList<PreplannedMapArea*>){
+        loadPreplannedMapAreas();
       });
     });
 
@@ -207,13 +207,13 @@ void DownloadPreplannedMap::onDownloadPreplannedMapJobCompleted()
   emit viewingOnlineMapsChanged();
 }
 
-void DownloadPreplannedMap::loadPreplannedMapAreas(QList<PreplannedMapArea*>& preplannedList)
+void DownloadPreplannedMap::loadPreplannedMapAreas()
 {
+  m_preplannedList = m_offlineMapTask->preplannedMapAreaList();
   m_busy = false;
   emit preplannedListChanged();
   emit busyChanged();
-
-  for (PreplannedMapArea* mapArea : preplannedList)
+  for (PreplannedMapArea* mapArea : *m_preplannedList)
   {
     connect(mapArea, &PreplannedMapArea::doneLoading, this, [this, mapArea] (const Error& e)
     {
