@@ -27,7 +27,8 @@
 #include "Point.h"
 #include "SpatialReference.h"
 #include "MapTypes.h"
-#include "TaskWatcher.h"
+
+#include <QFuture>
 
 using namespace Esri::ArcGISRuntime;
 
@@ -63,5 +64,5 @@ void MapRotation::componentComplete()
 
 void MapRotation::setMapViewRotation(double degrees)
 {
-    m_mapView->setViewpointRotation(degrees);
+    m_mapView->setViewpointRotationAsync(degrees);
 }

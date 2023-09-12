@@ -31,13 +31,15 @@
 #include "IdentifyLayerResult.h"
 #include "Error.h"
 #include "MapTypes.h"
-#include "TaskWatcher.h"
+//#include "TaskWatcher.h"
 #include "LayerListModel.h"
 #include "ArcGISSublayerListModel.h"
 #include "ArcGISSublayer.h"
 #include "SpatialReference.h"
 
+#include <QFuture>
 #include <QUuid>
+#include <QQueue>
 
 using namespace Esri::ArcGISRuntime;
 
@@ -110,61 +112,56 @@ void IdentifyLayers::connectSignals()
     const double tolerance = 12.0;
     const bool returnPopups = false;
     const int maxResults = 10;
-    m_mapView->identifyLayers(mouseEvent.position().x(), mouseEvent.position().y(), tolerance, returnPopups, maxResults);
-  });
 
-  // handle the identify results
-  connect(m_mapView, &MapQuickView::identifyLayersCompleted, this, [this](const QUuid&, const QList<IdentifyLayerResult*>& results)
-  {
-    // reset the message text
-    m_message = QString();
-    int i = 0;
+    m_mapView->identifyLayersAsync(mouseEvent.position(), tolerance, returnPopups, maxResults).then(this,
+    [this](QList<IdentifyLayerResult*> results){
+      // reset the message text
+      m_message = QString();
+      int i = 0;
 
-    for (IdentifyLayerResult* result : results)
-    {
-      ++i;
-      // lambda for calculating result count
-      auto geoElementsCountFromResult = [] (IdentifyLayerResult* result) -> int
+      for (IdentifyLayerResult* result : results)
       {
-        // create temp list
-        QList<IdentifyLayerResult*> tempResults{result};
+        ++i;
 
-        // use Depth First Search approach to handle recursion
-        int count = 0;
-        int index = 0;
+        const int count = countChildren(result);
+        QString layerName = result->layerContent()->name();
+        qDebug() << layerName;
+        m_message += QString("%1 : %2").arg(layerName).arg(count);
+        // add new line character if not the final element inthe array
+        if (i != results.length())
+          m_message += "\n";
+      }
 
-        while (index < tempResults.length())
-        {
-          //get the result object from the array
-          IdentifyLayerResult* identifyResult = tempResults[index];
+      emit messageChanged();
+      emit showMessage();
+      qDeleteAll(results);
+    });
 
-          // update count with geoElements from the result
-          count += identifyResult->geoElements().length();
-
-          // check if the result has any sublayer results
-          // if yes then add those result objects in the tempResults
-          // array after the current result
-          if (identifyResult->sublayerResults().length() > 0)
-          {
-            tempResults.append(identifyResult->sublayerResults().at(index));
-          }
-
-          // update the count and repeat
-          index += 1;
-        }
-        return count;
-      };
-
-      const int count = geoElementsCountFromResult(result);
-      QString layerName = result->layerContent()->name();
-      m_message += QString("%1 : %2").arg(layerName).arg(count);
-      // add new line character if not the final element inthe array
-      if (i != results.length())
-        m_message += "\n";
-    }
-
-    emit messageChanged();
-    emit showMessage();
-    qDeleteAll(results);
   });
+}
+
+int IdentifyLayers::countChildren(IdentifyLayerResult*& result)
+{
+  if (!result) {
+    return 0;
+  }
+
+  int totalCount = 0;
+  QQueue<const IdentifyLayerResult*> queue;
+  queue.enqueue(result);
+
+  while (!queue.isEmpty())
+  {
+    const IdentifyLayerResult* current = queue.dequeue();
+    QList<IdentifyLayerResult*> children = current->sublayerResults();
+
+    totalCount += result->geoElements().length();
+
+    for (IdentifyLayerResult* child : children)
+    {
+      queue.enqueue(child);
+    }
+  }
+
+  return totalCount;
 }

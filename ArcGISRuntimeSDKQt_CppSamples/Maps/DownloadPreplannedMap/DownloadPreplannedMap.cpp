@@ -35,7 +35,6 @@
 #include "GraphicsOverlayListModel.h"
 #include "GraphicListModel.h"
 #include "SymbolTypes.h"
-#include "TaskWatcher.h"
 #include "OfflineMapTypes.h"
 #include "TaskTypes.h"
 #include "MobileMapPackage.h"
@@ -43,6 +42,7 @@
 #include "PortalItem.h"
 #include "Geometry.h"
 
+#include <QFuture>
 #include <QUuid>
 
 using namespace Esri::ArcGISRuntime;
@@ -63,37 +63,10 @@ DownloadPreplannedMap::DownloadPreplannedMap(QObject* parent /* = nullptr */):
 
     connect(m_offlineMapTask, &OfflineMapTask::doneLoading, this, [this] ()
     {
-      connect(m_offlineMapTask, &OfflineMapTask::preplannedMapAreasCompleted, this, &DownloadPreplannedMap::loadPreplannedMapAreas);
-
       // fetch preplanned map areas from the portal item
-      m_offlineMapTask->preplannedMapAreas();
-    });
-
-    connect(m_offlineMapTask, &OfflineMapTask::createDefaultDownloadPreplannedOfflineMapParametersCompleted, this, [this] (const QUuid&, const DownloadPreplannedOfflineMapParameters& parameters)
-    {
-
-      m_params = parameters;
-
-      /* Set the update mode to not receive updates.
-       * Other options:
-       * SyncWithFeatureServices - changes will be synced directly with the
-       * underlying feature services.
-       * DownloadScheduledUpdates - schedulded, read-only updates will be
-       * downloaded and applied to the local geodatabase. */
-      m_params.setUpdateMode(PreplannedUpdateMode::NoUpdates);
-
-      m_preplannedMapJob = m_offlineMapTask->downloadPreplannedOfflineMap(m_params, m_path);
-      connect(m_preplannedMapJob, &DownloadPreplannedOfflineMapJob::progressChanged, this, [this] ()
-      {
-        m_percentDownloaded = .01 * m_preplannedMapJob->progress();
-        emit percentDownloadedChanged();
+      m_offlineMapTask->preplannedMapAreasAsync().then(this, [this](QList<PreplannedMapArea*> preplannedList){
+        loadPreplannedMapAreas(preplannedList);
       });
-      connect(m_preplannedMapJob, &DownloadPreplannedOfflineMapJob::jobDone, this, &DownloadPreplannedMap::onDownloadPreplannedMapJobCompleted);
-
-      // Start job to take preplanned map area offline.
-      m_preplannedMapJob->start();
-      m_busy = false;
-      emit busyChanged();
     });
 
     // Load offline map task.
@@ -161,7 +134,32 @@ void DownloadPreplannedMap::loadSelectedMap(int index)
   if (m_preplannedMapExists)
     loadExistingPreplannedMap();
   else
-    m_offlineMapTask->createDefaultDownloadPreplannedOfflineMapParameters(m_offlineMapTask->preplannedMapAreaList()->at(index));
+    m_offlineMapTask->createDefaultDownloadPreplannedOfflineMapParametersAsync(m_offlineMapTask->preplannedMapAreaList()->at(index)).then(this,
+    [this](DownloadPreplannedOfflineMapParameters parameters)
+    {
+      m_params = parameters;
+
+      /* Set the update mode to not receive updates.
+       * Other options:
+       * SyncWithFeatureServices - changes will be synced directly with the
+       * underlying feature services.
+       * DownloadScheduledUpdates - schedulded, read-only updates will be
+       * downloaded and applied to the local geodatabase. */
+      m_params.setUpdateMode(PreplannedUpdateMode::NoUpdates);
+
+      m_preplannedMapJob = m_offlineMapTask->downloadPreplannedOfflineMap(m_params, m_path);
+      connect(m_preplannedMapJob, &DownloadPreplannedOfflineMapJob::progressChanged, this, [this] ()
+      {
+        m_percentDownloaded = .01 * m_preplannedMapJob->progress();
+        emit percentDownloadedChanged();
+      });
+      connect(m_preplannedMapJob, &DownloadPreplannedOfflineMapJob::jobDone, this, &DownloadPreplannedMap::onDownloadPreplannedMapJobCompleted);
+
+      // Start job to take preplanned map area offline.
+      m_preplannedMapJob->start();
+      m_busy = false;
+      emit busyChanged();
+    });
 }
 
 void DownloadPreplannedMap::checkIfMapExists(int index)
@@ -184,7 +182,7 @@ void DownloadPreplannedMap::checkIfMapExists(int index)
   emit preplannedMapExistsChanged();
 
   if (m_viewingOnlineMaps)
-    m_mapView->setViewpointGeometry(mapArea->areaOfInterest());
+    m_mapView->setViewpointGeometryAsync(mapArea->areaOfInterest());
 }
 
 void DownloadPreplannedMap::showOnlineMap(int index)
@@ -193,7 +191,7 @@ void DownloadPreplannedMap::showOnlineMap(int index)
   emit viewingOnlineMapsChanged();
   m_mapView->setMap(m_map);
   const Geometry areaOfInterest = m_offlineMapTask->preplannedMapAreaList()->at(index)->areaOfInterest();
-  m_mapView->setViewpointGeometry(areaOfInterest);
+  m_mapView->setViewpointGeometryAsync(areaOfInterest);
   m_graphicsOverlay->setVisible(true);
 }
 
@@ -209,14 +207,13 @@ void DownloadPreplannedMap::onDownloadPreplannedMapJobCompleted()
   emit viewingOnlineMapsChanged();
 }
 
-void DownloadPreplannedMap::loadPreplannedMapAreas()
+void DownloadPreplannedMap::loadPreplannedMapAreas(QList<PreplannedMapArea*>& preplannedList)
 {
-  m_preplannedList = m_offlineMapTask->preplannedMapAreaList();
   m_busy = false;
   emit preplannedListChanged();
   emit busyChanged();
 
-  for (PreplannedMapArea* mapArea : *m_preplannedList)
+  for (PreplannedMapArea* mapArea : preplannedList)
   {
     connect(mapArea, &PreplannedMapArea::doneLoading, this, [this, mapArea] (const Error& e)
     {

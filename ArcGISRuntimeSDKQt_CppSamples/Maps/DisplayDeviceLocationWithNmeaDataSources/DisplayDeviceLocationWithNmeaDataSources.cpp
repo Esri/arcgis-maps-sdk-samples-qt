@@ -25,12 +25,12 @@
 #include "NmeaLocationDataSource.h"
 #include "MapTypes.h"
 #include "MapViewTypes.h"
-#include "TaskWatcher.h"
 #include "LocationDisplay.h"
 #include "SpatialReference.h"
 #include "Point.h"
 
 #include <QFile>
+#include <QFuture>
 #include <QTimer>
 
 using namespace Esri::ArcGISRuntime;
@@ -65,7 +65,7 @@ void DisplayDeviceLocationWithNmeaDataSources::setMapView(MapQuickView* mapView)
   m_mapView = mapView;
   m_mapView->setMap(m_map);
 
-  m_mapView->setViewpointCenter(Point(-117.191, 34.0306, SpatialReference::wgs84()), 100'000);
+  m_mapView->setViewpointCenterAsync(Point(-117.191, 34.0306, SpatialReference::wgs84()), 100'000);
 
   // Create a new NMEA location data source
   m_nmeaLocationDataSource = new NmeaLocationDataSource(SpatialReference::wgs84(), this);
