@@ -43,7 +43,7 @@ signals:
   void showMessage();
 
 private:
-  int countChildren(Esri::ArcGISRuntime::IdentifyLayerResult*& result);
+  int countsublayerResults(Esri::ArcGISRuntime::IdentifyLayerResult*& result);
   void connectSignals();
 
 private:
