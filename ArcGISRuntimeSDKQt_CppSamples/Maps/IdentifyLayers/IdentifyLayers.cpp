@@ -138,9 +138,8 @@ void IdentifyLayers::connectSignals()
 
 int IdentifyLayers::countsublayerResults(IdentifyLayerResult*& result)
 {
-  if (!result) {
+  if (!result)
     return 0;
-  }
 
   int totalCount = 0;
   QQueue<const IdentifyLayerResult*> queue;
@@ -154,9 +153,7 @@ int IdentifyLayers::countsublayerResults(IdentifyLayerResult*& result)
     totalCount += result->geoElements().length();
 
     for (IdentifyLayerResult* result : sublayerResults)
-    {
       queue.enqueue(result);
-    }
   }
 
   return totalCount;
