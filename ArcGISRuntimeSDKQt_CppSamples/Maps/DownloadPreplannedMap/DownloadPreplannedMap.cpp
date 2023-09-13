@@ -64,7 +64,9 @@ DownloadPreplannedMap::DownloadPreplannedMap(QObject* parent /* = nullptr */):
     connect(m_offlineMapTask, &OfflineMapTask::doneLoading, this, [this] ()
     {
       // fetch preplanned map areas from the portal item
-      m_offlineMapTask->preplannedMapAreasAsync().then(this, [this](QList<PreplannedMapArea*>){
+      m_offlineMapTask->preplannedMapAreasAsync().then(this,
+      [this](const QList<PreplannedMapArea*>&)
+      {
         loadPreplannedMapAreas();
       });
     });
@@ -135,7 +137,7 @@ void DownloadPreplannedMap::loadSelectedMap(int index)
     loadExistingPreplannedMap();
   else
     m_offlineMapTask->createDefaultDownloadPreplannedOfflineMapParametersAsync(m_offlineMapTask->preplannedMapAreaList()->at(index)).then(this,
-    [this](DownloadPreplannedOfflineMapParameters parameters)
+    [this](const DownloadPreplannedOfflineMapParameters& parameters)
     {
       m_params = parameters;
 

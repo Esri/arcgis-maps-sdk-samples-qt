@@ -175,7 +175,7 @@ void MobileMap_SearchAndRoute::connectSignals()
 
     // determine if user clicked on a graphic
     m_mapView->identifyGraphicsOverlayAsync(m_stopsGraphicsOverlay, mouseEvent.position(), 5, false, 2).then(this,
-    [this](IdentifyGraphicsOverlayResult* identifyResult)
+    [this](const IdentifyGraphicsOverlayResult* identifyResult)
     {
       if (!identifyResult)
         return;
@@ -197,7 +197,7 @@ void MobileMap_SearchAndRoute::connectSignals()
       else
       {
         m_currentLocatorTask->reverseGeocodeWithParametersAsync(m_clickedPoint, m_reverseGeocodeParameters).then(this,
-        [this](QList<GeocodeResult> geocodeResults)
+        [this](const QList<GeocodeResult>& geocodeResults)
         {
           // make busy indicator invisible
           m_isGeocodeInProgress = false;
@@ -325,7 +325,7 @@ void MobileMap_SearchAndRoute::selectMap(int index)
     connect(m_currentRouteTask, &RouteTask::loadStatusChanged, this, [this](LoadStatus loadStatus)
     {
       if (loadStatus == LoadStatus::Loaded)
-        m_currentRouteTask->createDefaultParametersAsync().then(this, [this](RouteParameters routeParameters)
+        m_currentRouteTask->createDefaultParametersAsync().then(this, [this](const RouteParameters& routeParameters)
         {
           m_currentRouteParameters = routeParameters;
         });
@@ -348,7 +348,8 @@ void MobileMap_SearchAndRoute::solveRoute()
   // set stops and solve route
   m_currentRouteParameters.setStops(m_stops);
   // create a graphic using the RouteResult
-  m_currentRouteTask->solveRouteAsync(m_currentRouteParameters).then(this, [this](RouteResult routeResult)
+  m_currentRouteTask->solveRouteAsync(m_currentRouteParameters).then(this,
+  [this](const RouteResult& routeResult)
   {
     if (!m_routeGraphicParent)
       m_routeGraphicParent = new QObject(this);

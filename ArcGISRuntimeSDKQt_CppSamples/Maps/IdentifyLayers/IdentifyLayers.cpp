@@ -113,13 +113,48 @@ void IdentifyLayers::connectSignals()
     const int maxResults = 10;
 
     m_mapView->identifyLayersAsync(mouseEvent.position(), tolerance, returnPopups, maxResults).then(this,
-    [this](QList<IdentifyLayerResult*> results){
+    [this](const QList<IdentifyLayerResult*>& results)
+    {
       // reset the message text
       m_message = QString();
+      int i = 0;
 
       for (IdentifyLayerResult* result : results)
       {
-        const int count = countsublayerResults(result);
+        ++i;
+        // lambda for calculating result count
+        auto geoElementsCountFromResult = [] (IdentifyLayerResult* result) -> int
+        {
+          // create temp list
+          QList<IdentifyLayerResult*> tempResults{result};
+
+          // use Depth First Search approach to handle recursion
+          int count = 0;
+          int index = 0;
+
+          while (index < tempResults.length())
+          {
+            //get the result object from the array
+            IdentifyLayerResult* identifyResult = tempResults[index];
+
+            // update count with geoElements from the result
+            count += identifyResult->geoElements().length();
+
+            // check if the result has any sublayer results
+            // if yes then add those result objects in the tempResults
+            // array after the current result
+            if (identifyResult->sublayerResults().length() > 0)
+            {
+              tempResults.append(identifyResult->sublayerResults().at(index));
+            }
+
+            // update the count and repeat
+            index += 1;
+          }
+          return count;
+        };
+
+        const int count = geoElementsCountFromResult(result);
         QString layerName = result->layerContent()->name();
         m_message += QString("%1 : %2").arg(layerName).arg(count);
         m_message += "\n";
@@ -134,27 +169,4 @@ void IdentifyLayers::connectSignals()
     });
 
   });
-}
-
-int IdentifyLayers::countsublayerResults(IdentifyLayerResult*& result)
-{
-  if (!result)
-    return 0;
-
-  int totalCount = 0;
-  QQueue<const IdentifyLayerResult*> queue;
-  queue.enqueue(result);
-
-  while (!queue.isEmpty())
-  {
-    const IdentifyLayerResult* current = queue.dequeue();
-    QList<IdentifyLayerResult*> sublayerResults = current->sublayerResults();
-
-    totalCount += result->geoElements().length();
-
-    for (IdentifyLayerResult* result : sublayerResults)
-      queue.enqueue(result);
-  }
-
-  return totalCount;
 }

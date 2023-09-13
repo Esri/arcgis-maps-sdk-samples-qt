@@ -125,7 +125,8 @@ void GenerateOfflineMapLocalBasemap::generateMapByExtent(double xCorner1, double
   const QString dataPath = defaultDataPath() + "/ArcGIS/Runtime/Data/tpkx";
 
   // generate parameters
-  m_offlineMapTask->createDefaultGenerateOfflineMapParametersAsync(mapExtent).then(this, [this, tempPath, dataPath](GenerateOfflineMapParameters params)
+  m_offlineMapTask->createDefaultGenerateOfflineMapParametersAsync(mapExtent).then(this,
+  [this, tempPath, dataPath](GenerateOfflineMapParameters params)
   {
     // update default parameters to specify use of local basemap
     // this will prevent new tiles from being generated on the server

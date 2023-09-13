@@ -105,7 +105,8 @@ void GenerateOfflineMap::generateMapByExtent(double xCorner1, double yCorner1, d
   const Envelope mapExtent = geometry_cast<Envelope>(GeometryEngine::project(extent, SpatialReference::webMercator()));
 
   // generate parameters
-  m_offlineMapTask->createDefaultGenerateOfflineMapParametersAsync(mapExtent).then(this, [this](GenerateOfflineMapParameters params)
+  m_offlineMapTask->createDefaultGenerateOfflineMapParametersAsync(mapExtent).then(this,
+  [this](const GenerateOfflineMapParameters& params)
   {
     // Take the map offline once the parameters are generated
     GenerateOfflineMapJob* generateJob = m_offlineMapTask->generateOfflineMap(params, m_tempPath.path() + "/offlinemap");

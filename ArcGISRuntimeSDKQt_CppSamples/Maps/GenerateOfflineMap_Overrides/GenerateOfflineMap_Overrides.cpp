@@ -31,7 +31,6 @@
 #include "Point.h"
 #include "Error.h"
 #include "MapTypes.h"
-//#include "TaskWatcher.h"
 #include "LayerListModel.h"
 #include "OfflineMapParametersKey.h"
 #include "OfflineMapTypes.h"
@@ -123,9 +122,13 @@ void GenerateOfflineMap_Overrides::setAreaOfInterest(double xCorner1, double yCo
   const Envelope mapExtent = geometry_cast<Envelope>(GeometryEngine::project(extent, SpatialReference::webMercator()));
 
   // generate parameters
-  m_offlineMapTask->createDefaultGenerateOfflineMapParametersAsync(mapExtent).then(this, [this](GenerateOfflineMapParameters params){
+  m_offlineMapTask->createDefaultGenerateOfflineMapParametersAsync(mapExtent).then(this,
+  [this](const GenerateOfflineMapParameters& params)
+  {
     m_parameters = params;
-    m_offlineMapTask->createGenerateOfflineMapParameterOverridesAsync(params).then(this, [this](GenerateOfflineMapParameterOverrides* parameterOverrides){
+    m_offlineMapTask->createGenerateOfflineMapParameterOverridesAsync(params).then(this,
+    [this](GenerateOfflineMapParameterOverrides* parameterOverrides)
+    {
       m_parameterOverrides = parameterOverrides;
       emit overridesReadyChanged();
       setBusy(false);

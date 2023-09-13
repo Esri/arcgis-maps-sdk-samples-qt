@@ -164,7 +164,8 @@ void ApplyScheduledMapUpdates::updateMap()
       }
 
       // re-check if updates are available
-      m_offlineSyncTask->checkForUpdatesAsync().then(this, [this](OfflineMapUpdatesInfo* info)
+      m_offlineSyncTask->checkForUpdatesAsync().then(this,
+      [this](const OfflineMapUpdatesInfo* info)
       {
         if (info->downloadAvailability() == OfflineUpdateAvailability::Available)
         {
@@ -218,7 +219,8 @@ void ApplyScheduledMapUpdates::onMmpkDoneLoading(const Error& e)
   m_offlineSyncTask = new OfflineMapSyncTask(m_map, this);
 
   // check for updates
-  m_offlineSyncTask->checkForUpdatesAsync().then(this, [this](OfflineMapUpdatesInfo* info)
+  m_offlineSyncTask->checkForUpdatesAsync().then(this,
+  [this](OfflineMapUpdatesInfo* info)
   {
     if (info->downloadAvailability() == OfflineUpdateAvailability::Available)
     {

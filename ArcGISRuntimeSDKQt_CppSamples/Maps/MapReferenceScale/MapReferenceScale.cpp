@@ -50,6 +50,11 @@ MapReferenceScale::MapReferenceScale(QObject* parent /* = nullptr */):
     emit layerInfoListModelChanged();
     emit currentMapScaleChanged();
   });
+
+  connect(m_mapView, &MapQuickView::mapScaleChanged, this, [this]()
+  {
+    emit currentMapScaleChanged();
+  });
 }
 
 MapReferenceScale::~MapReferenceScale() = default;
@@ -82,9 +87,7 @@ void MapReferenceScale::setCurrentMapScale(double scale)
 void MapReferenceScale::setMapScaleToReferenceScale(double scale)
 {
   if(m_mapView)
-    m_mapView->setViewpointScaleAsync(scale).then(this, [this](bool){
-      emit currentMapScaleChanged();
-    });
+    m_mapView->setViewpointScaleAsync(scale);
 }
 
 void MapReferenceScale::featureLayerScaleSymbols(const QString& layerName, bool checkedStatus)

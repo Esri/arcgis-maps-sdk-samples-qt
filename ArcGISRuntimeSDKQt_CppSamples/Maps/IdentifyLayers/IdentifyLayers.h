@@ -19,7 +19,6 @@
 
 namespace Esri::ArcGISRuntime
 {
-class IdentifyLayerResult;
 class Map;
 class MapQuickView;
 }
@@ -43,7 +42,6 @@ signals:
   void showMessage();
 
 private:
-  int countsublayerResults(Esri::ArcGISRuntime::IdentifyLayerResult*& result);
   void connectSignals();
 
 private:

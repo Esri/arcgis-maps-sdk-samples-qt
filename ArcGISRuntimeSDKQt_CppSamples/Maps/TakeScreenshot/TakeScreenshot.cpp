@@ -67,7 +67,7 @@ void TakeScreenshot::captureScreenshot()
   m_mapView->exportImageAsync().then(this, [this](QImage img)
   {
     // convert the QUuid into a QString
-    const QString imageId = QUuid().createUuid().toString().remove("{").remove("}");
+    const QString imageId = QUuid().createUuid().toString(QUuid::WithoutBraces);
     // add the image to the provider
     m_imageProvider->addImage(imageId, img);
     // update the URL with the unique id
