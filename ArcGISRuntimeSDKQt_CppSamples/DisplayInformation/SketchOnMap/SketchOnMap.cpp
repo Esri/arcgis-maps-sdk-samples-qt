@@ -26,7 +26,6 @@
 #include "SimpleMarkerSymbol.h"
 #include "SketchEditor.h"
 #include "MapTypes.h"
-#include "TaskWatcher.h"
 #include "GraphicsOverlayListModel.h"
 #include "MapViewTypes.h"
 #include "GraphicListModel.h"
@@ -37,6 +36,8 @@
 #include "SimpleLineSymbol.h"
 #include "Envelope.h"
 #include "Graphic.h"
+
+#include <QFuture>
 
 using namespace Esri::ArcGISRuntime;
 
@@ -71,7 +72,7 @@ void SketchOnMap::setMapView(MapQuickView* mapView)
 
   m_mapView = mapView;
   m_mapView->setMap(m_map);
-  m_mapView->setViewpointCenter(Point(-15.5314, 64.3286, SpatialReference::wgs84()), 100'000);
+  m_mapView->setViewpointCenterAsync(Point(-15.5314, 64.3286, SpatialReference::wgs84()), 100'000);
 
   m_mapView->graphicsOverlays()->append(m_sketchOverlay);
 

@@ -29,7 +29,6 @@
 #include "TextSymbol.h"
 #include "MapTypes.h"
 #include "Error.h"
-#include "TaskWatcher.h"
 #include "LayerListModel.h"
 #include "LabelDefinitionListModel.h"
 #include "SymbolTypes.h"
@@ -37,6 +36,8 @@
 #include "SpatialReference.h"
 #include "Point.h"
 #include "Viewpoint.h"
+
+#include <QFuture>
 
 using namespace Esri::ArcGISRuntime;
 
@@ -70,7 +71,7 @@ void ShowLabelsOnLayers::componentComplete()
     if (!e.isEmpty())
       return;
 
-    m_mapView->setViewpoint(Viewpoint(featureLayer->fullExtent().center(), 56759600));
+    m_mapView->setViewpointAsync(Viewpoint(featureLayer->fullExtent().center(), 56759600));
   });
   m_map->operationalLayers()->append(featureLayer);
 
@@ -82,7 +83,6 @@ void ShowLabelsOnLayers::componentComplete()
   featureLayer->setLabelsEnabled(true);
 
   // Set map to map view
-  m_mapView->setViewpointCenter(Point(-10846309.950860, 4683272.219411, SpatialReference::webMercator()), 20000000);
   m_mapView->setMap(m_map);
 }
 
