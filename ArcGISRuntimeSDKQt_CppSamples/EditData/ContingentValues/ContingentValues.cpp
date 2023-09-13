@@ -33,7 +33,6 @@
 #include "Map.h"
 #include "MapQuickView.h"
 #include "SimpleRenderer.h"
-#include "TaskWatcher.h"
 #include "GraphicsOverlayListModel.h"
 #include "SymbolTypes.h"
 #include "LayerListModel.h"
@@ -54,6 +53,7 @@
 #include "Polygon.h"
 #include "Graphic.h"
 
+#include <QFuture>
 #include <QUuid>
 #include <QStandardPaths>
 
@@ -119,7 +119,7 @@ void ContingentValues::setMapView(MapQuickView* mapView)
   m_mapView = mapView;
 
   m_mapView->setMap(m_map);
-  m_mapView->setViewpoint(Viewpoint(Point(-13236000, 4081200), 8822));
+  m_mapView->setViewpointAsync(Viewpoint(Point(-13236000, 4081200), 8822));
 
   // Create the graphics overlay with which to display the nest buffer exclusion areas
   m_graphicsOverlay = new GraphicsOverlay(this);
@@ -156,8 +156,6 @@ void ContingentValues::createConnections()
       queryAndBufferFeatures();
     });
 
-    connect(m_gdbFeatureTable, &GeodatabaseFeatureTable::queryFeaturesCompleted, this, &ContingentValues::bufferFeaturesFromQueryResults);
-
     m_gdbFeatureTable->load();
   });
 
@@ -169,14 +167,15 @@ void ContingentValues::createNewEmptyFeature(QMouseEvent& mouseEvent)
 {
   // Create a new empty feature to define attributes for
   m_newFeature = static_cast<ArcGISFeature*>(m_gdbFeatureTable->createFeature({}, m_mapView->screenToLocation(mouseEvent.position().x(), mouseEvent.position().y()), this));
-  m_gdbFeatureTable->addFeature(m_newFeature);
+  auto f = m_gdbFeatureTable->addFeatureAsync(m_newFeature);
+  Q_UNUSED(f)
 
   // Show the attribute form interface
   setFeatureAttributesPaneVisibe(true);
 }
 
 // Get a list of a feature's valid contingent values for field within a participating contingent value field group
-QVariantList ContingentValues::getContingentValues(QString field, QString fieldGroupName)
+QVariantList ContingentValues::getContingentValues(const QString& field, const QString& fieldGroupName)
 {
   if (m_gdbFeatureTable->contingentValuesDefinition()->loadStatus() != LoadStatus::Loaded)
     return {};
@@ -233,18 +232,20 @@ bool ContingentValues::validateContingentValues()
 void ContingentValues::createNewNest()
 {
   // Once the attribute map is filled and validated, save the feature to the geodatabase feature table
-  m_gdbFeatureTable->updateFeature(m_newFeature);
+  auto f = m_gdbFeatureTable->updateFeatureAsync(m_newFeature);
+  Q_UNUSED(f)
 
   queryAndBufferFeatures();
 }
 
 void ContingentValues::discardFeature()
 {
-  m_gdbFeatureTable->deleteFeature(m_newFeature);
+  auto f = m_gdbFeatureTable->deleteFeatureAsync(m_newFeature);
+  Q_UNUSED(f)
 }
 
 // Update a specific field with a new value in the new feature's attribute map
-void ContingentValues::updateField(QString field, QVariant value)
+void ContingentValues::updateField(const QString& field, const QVariant& value)
 {
   if (field == "Status")
     m_newFeature->attributes()->replaceAttribute(field, m_statusValues.value(value.toString()));
@@ -269,11 +270,14 @@ void ContingentValues::queryAndBufferFeatures()
 
   QueryParameters params;
   params.setWhereClause("BufferSize > 0");
-  m_gdbFeatureTable->queryFeatures(params);
+  m_gdbFeatureTable->queryFeaturesAsync(params).then(this, [this](FeatureQueryResult* result)
+  {
+    bufferFeaturesFromQueryResults(result);
+  });
 }
 
 // Buffers all features from the preceeding feature query using the BufferSize field value, create graphics with the results, and adds them to the graphics overlay
-void ContingentValues::bufferFeaturesFromQueryResults(const QUuid&, FeatureQueryResult* results)
+void ContingentValues::bufferFeaturesFromQueryResults(FeatureQueryResult* results)
 {
   FeatureIterator iterator = results->iterator();
 

@@ -35,7 +35,6 @@
 #include "MapViewTypes.h"
 #include "MapTypes.h"
 #include "LayerListModel.h"
-#include "TaskWatcher.h"
 #include "IdentifyLayerResult.h"
 #include "QueryParameters.h"
 #include "AttributeListModel.h"
@@ -43,6 +42,7 @@
 #include "CalloutData.h"
 #include "Envelope.h"
 
+#include <QFuture>
 #include <QUrl>
 #include <QUuid>
 #include <QMouseEvent>
@@ -105,103 +105,98 @@ void DeleteFeaturesFeatureService::connectSignals()
     // call identify on the map view
     constexpr double tolerance = 5.0;
     constexpr int maxResults = 1;
-    const double screenX = mouseEvent.position().x();
-    const double screenY = mouseEvent.position().y();
     constexpr bool returnPopupsOnly = false;
-    m_mapView->identifyLayer(m_featureLayer, screenX, screenY, tolerance, returnPopupsOnly, maxResults);
+    m_mapView->identifyLayerAsync(m_featureLayer, mouseEvent.position(), tolerance, returnPopupsOnly, maxResults).then(this, [this](IdentifyLayerResult* rawIdentifyResult)
+    {
+      onIdentifyLayerCompleted_(rawIdentifyResult);
+    });
     //! [DeleteFeaturesFeatureService identify feature]
-  });
 
-  // connect to the viewpoint changed signal on the MapQuickView
-  connect(m_mapView, &MapQuickView::viewpointChanged, this, [this]()
-  {
-    m_featureLayer->clearSelection();
-    emit hideWindow();
-  });
-
-  // connect to the identifyLayerCompleted signal on the map view
-  connect(m_mapView, &MapQuickView::identifyLayerCompleted, this, [this](const QUuid&, IdentifyLayerResult* rawIdentifyResult)
-  {
-    // Deletes rawIdentifyResult instance when we leave scope.
-    auto identifyResult = std::unique_ptr<IdentifyLayerResult>(rawIdentifyResult);
-
-    if(!identifyResult)
+    // connect to the viewpoint changed signal on the MapQuickView
+    connect(m_mapView, &MapQuickView::viewpointChanged, this, [this]()
     {
-      return;
-    }
-
-    if (identifyResult->geoElements().isEmpty())
-    {
-      return;
-    }
-
-    // delete selected feature member if not nullptr
-    if (m_selectedFeature)
-    {
-      delete m_selectedFeature;
-      m_selectedFeature = nullptr;
-    }
-
-    GeoElement* element = identifyResult->geoElements().at(0);
-    if (!element)
-    {
-      return;
-    }
-
-    // select the item in the result
-    QueryParameters query;
-    query.setObjectIds(QList<qint64> { element->attributes()->attributeValue(QStringLiteral("objectid")).toLongLong() });
-    m_featureLayer->selectFeatures(query, SelectionMode::New);
-
-    // set selected feature member
-    m_selectedFeature = static_cast<ArcGISFeature*>(element);
-    // Don't delete the selected feature when the IdentityResult is deleted.
-    m_selectedFeature->setParent(this);
-  });
-
-  // connect to the selectedFeatures signal on the feature layer
-  connect(m_featureLayer, &FeatureLayer::selectFeaturesCompleted, this, [this](const QUuid&, FeatureQueryResult* rawFeatureQueryResult)
-  {
-    // Delete rawFeatureQueryResult pointer when we leave scope.
-    auto featureQueryResult = std::unique_ptr<FeatureQueryResult>(rawFeatureQueryResult);
-
-    FeatureIterator iter = featureQueryResult->iterator();
-    if (iter.hasNext())
-    {
-      Feature* feat = iter.next();
-      // emit signal for QML
-      const QString featureType = feat->attributes()->attributeValue(QStringLiteral("typdamage")).toString();
-      // Html tags used to bold and increase pt size of callout title.
-      m_mapView->calloutData()->setTitle(QString("<br><b><font size=\"+2\">%1</font></b>").arg(featureType));
-      m_mapView->calloutData()->setLocation(feat->geometry().extent().center());
-      emit featureSelected();
-    }
-  });
-
-  // connect to the deleteFeatureCompleted signal from the ServiceFeatureTable
-  connect(m_featureTable, &ServiceFeatureTable::deleteFeatureCompleted, this, [this](const QUuid&, bool success)
-  {
-    // if delete feature was successful, call apply edits
-    if (success)
-      m_featureTable->applyEdits();
-  });
-
-  // connect to the applyEditsCompleted signal from the ServiceFeatureTable
-  connect(m_featureTable, &ServiceFeatureTable::applyEditsCompleted, this, [](const QUuid&, const QList<FeatureEditResult*>& featureEditResults)
-  {
-    // obtain the first item in the list
-    FeatureEditResult* featureEditResult = featureEditResults.isEmpty() ? nullptr : featureEditResults.first();
-    // check if there were errors, and if not, log the new object ID
-    if (featureEditResult && !featureEditResult->isCompletedWithErrors())
-      qDebug() << "Successfully deleted Object ID:" << featureEditResult->objectId();
-    else
-      qDebug() << "Apply edits error.";
-
-    qDeleteAll(featureEditResults);
+      m_featureLayer->clearSelection();
+      emit hideWindow();
+    });
   });
 }
 
 void DeleteFeaturesFeatureService::deleteSelectedFeature()
 {
-  m_featureTable->deleteFeature(m_selectedFeature);
+  m_featureTable->deleteFeatureAsync(m_selectedFeature).then(this, [this]()
+  {
+    // handle the completion of applyEditsAsync from the ServiceFeatureTable
+    m_featureTable->applyEditsAsync().then(this, [](const QList<FeatureEditResult*>& featureEditResults)
+    {
+      // obtain the first item in the list
+      FeatureEditResult* featureEditResult = featureEditResults.isEmpty() ? nullptr : featureEditResults.first();
+      // check if there were errors, and if not, log the new object ID
+      if (featureEditResult && !featureEditResult->isCompletedWithErrors())
+        qDebug() << "Successfully deleted Object ID:" << featureEditResult->objectId();
+      else
+        qDebug() << "Apply edits error.";
+
+      qDeleteAll(featureEditResults);
+    });
+  });
+}
+
+void DeleteFeaturesFeatureService::onIdentifyLayerCompleted_(IdentifyLayerResult* rawIdentifyResult)
+{
+  // Deletes rawIdentifyResult instance when we leave scope.
+  auto identifyResult = std::unique_ptr<IdentifyLayerResult>(rawIdentifyResult);
+
+  if(!identifyResult)
+  {
+    return;
+  }
+
+  if (identifyResult->geoElements().isEmpty())
+  {
+    return;
+  }
+
+  // delete selected feature member if not nullptr
+  if (m_selectedFeature)
+  {
+    delete m_selectedFeature;
+    m_selectedFeature = nullptr;
+  }
+
+  GeoElement* element = identifyResult->geoElements().at(0);
+  if (!element)
+  {
+    return;
+  }
+
+  // select the item in the result
+  QueryParameters query;
+  query.setObjectIds(QList<qint64> { element->attributes()->attributeValue(QStringLiteral("objectid")).toLongLong() });
+  m_featureLayer->selectFeaturesAsync(query, SelectionMode::New).then(this, [this](FeatureQueryResult* rawFeatureQueryResult)
+  {
+    onSelectFeaturesCompleted_(rawFeatureQueryResult);
+  });
+
+  // set selected feature member
+  m_selectedFeature = static_cast<ArcGISFeature*>(element);
+  // Don't delete the selected feature when the IdentityResult is deleted.
+  m_selectedFeature->setParent(this);
+}
+
+void DeleteFeaturesFeatureService::onSelectFeaturesCompleted_(FeatureQueryResult* rawFeatureQueryResult)
+{
+  // Delete rawFeatureQueryResult pointer when we leave scope.
+  auto featureQueryResult = std::unique_ptr<FeatureQueryResult>(rawFeatureQueryResult);
+
+  FeatureIterator iter = featureQueryResult->iterator();
+  if (iter.hasNext())
+  {
+    Feature* feat = iter.next();
+    // emit signal for QML
+    const QString featureType = feat->attributes()->attributeValue(QStringLiteral("typdamage")).toString();
+    // Html tags used to bold and increase pt size of callout title.
+    m_mapView->calloutData()->setTitle(QString("<br><b><font size=\"+2\">%1</font></b>").arg(featureType));
+    m_mapView->calloutData()->setLocation(feat->geometry().extent().center());
+    emit featureSelected();
+  }
 }

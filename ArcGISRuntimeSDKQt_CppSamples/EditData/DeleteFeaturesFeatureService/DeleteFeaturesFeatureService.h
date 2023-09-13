@@ -24,6 +24,8 @@ namespace Esri::ArcGISRuntime
   class FeatureLayer;
   class ServiceFeatureTable;
   class Feature;
+  class IdentifyLayerResult;
+  class FeatureQueryResult;
 }
 
 class QString;
@@ -48,6 +50,8 @@ signals:
 
 private:
   void connectSignals();
+  void onIdentifyLayerCompleted_(Esri::ArcGISRuntime::IdentifyLayerResult* rawIdentifyResult);
+  void onSelectFeaturesCompleted_(Esri::ArcGISRuntime::FeatureQueryResult* rawFeatureQueryResult);
 
 private:
   Esri::ArcGISRuntime::Map* m_map = nullptr;
