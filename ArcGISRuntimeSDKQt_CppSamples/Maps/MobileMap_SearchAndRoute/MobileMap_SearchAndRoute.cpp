@@ -220,29 +220,31 @@ void MobileMap_SearchAndRoute::connectSignals()
           m_canClear = true;
           emit canClearChanged();
 
-          // if routing is enabled in map, set up the Stops
-          if (m_currentRouteTask)
+          // if routing is not enabled in map, return
+          if (!m_currentRouteTask)
+            return;
+
+          //Set up the Stops
+
+          // create a stop based on added graphic
+          m_stops << Stop(geometry_cast<Point>(bluePinGraphic->geometry()));
+
+          // create a Text Symbol to display stop number
+          TextSymbol* textSymbol = new TextSymbol(m_stopGraphicParent);
+          textSymbol->setText(QString::number(m_stops.count()));
+          textSymbol->setColor(QColor("white"));
+          textSymbol->setSize(18);
+          textSymbol->setOffsetY(m_bluePinSymbol->height() / 2);
+
+          // create a Graphic using the textSymbol
+          Graphic* stopNumberGraphic = new Graphic(bluePinGraphic->geometry(), textSymbol, m_stopGraphicParent);
+          stopNumberGraphic->setZIndex(bluePinGraphic->zIndex() + 1);
+          m_stopsGraphicsOverlay->graphics()->append(stopNumberGraphic);
+
+          if (m_stops.count() > 1)
           {
-            // create a stop based on added graphic
-            m_stops << Stop(geometry_cast<Point>(bluePinGraphic->geometry()));
-
-            // create a Text Symbol to display stop number
-            TextSymbol* textSymbol = new TextSymbol(m_stopGraphicParent);
-            textSymbol->setText(QString::number(m_stops.count()));
-            textSymbol->setColor(QColor("white"));
-            textSymbol->setSize(18);
-            textSymbol->setOffsetY(m_bluePinSymbol->height() / 2);
-
-            // create a Graphic using the textSymbol
-            Graphic* stopNumberGraphic = new Graphic(bluePinGraphic->geometry(), textSymbol, m_stopGraphicParent);
-            stopNumberGraphic->setZIndex(bluePinGraphic->zIndex() + 1);
-            m_stopsGraphicsOverlay->graphics()->append(stopNumberGraphic);
-
-            if (m_stops.count() > 1)
-            {
-              m_canRoute = true;
-              emit canRouteChanged();
-            }
+            m_canRoute = true;
+            emit canRouteChanged();
           }
         });
         m_isGeocodeInProgress = true;

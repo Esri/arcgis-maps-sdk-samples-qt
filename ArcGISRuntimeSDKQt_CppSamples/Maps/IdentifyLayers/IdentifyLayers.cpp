@@ -119,10 +119,8 @@ void IdentifyLayers::connectSignals()
 
       for (IdentifyLayerResult* result : results)
       {
-        const int count = countChildren(result);
+        const int count = countsublayerResults(result);
         QString layerName = result->layerContent()->name();
-        qDebug() << layerName;
-        qDebug() << count;
         m_message += QString("%1 : %2").arg(layerName).arg(count);
         m_message += "\n";
       }
@@ -138,7 +136,7 @@ void IdentifyLayers::connectSignals()
   });
 }
 
-int IdentifyLayers::countChildren(IdentifyLayerResult*& result)
+int IdentifyLayers::countsublayerResults(IdentifyLayerResult*& result)
 {
   if (!result) {
     return 0;
@@ -151,13 +149,13 @@ int IdentifyLayers::countChildren(IdentifyLayerResult*& result)
   while (!queue.isEmpty())
   {
     const IdentifyLayerResult* current = queue.dequeue();
-    QList<IdentifyLayerResult*> children = current->sublayerResults();
+    QList<IdentifyLayerResult*> sublayerResults = current->sublayerResults();
 
     totalCount += result->geoElements().length();
 
-    for (IdentifyLayerResult* child : children)
+    for (IdentifyLayerResult* result : sublayerResults)
     {
-      queue.enqueue(child);
+      queue.enqueue(result);
     }
   }
 
