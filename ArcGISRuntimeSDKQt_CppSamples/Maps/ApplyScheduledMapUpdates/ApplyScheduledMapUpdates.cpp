@@ -133,7 +133,8 @@ void ApplyScheduledMapUpdates::updateMap()
   if (!m_offlineSyncTask)
     return;
 
-  m_offlineSyncTask->createDefaultOfflineMapSyncParametersAsync().then(this, [this](OfflineMapSyncParameters parameters)
+  m_offlineSyncTask->createDefaultOfflineMapSyncParametersAsync().then(this,
+  [this](OfflineMapSyncParameters parameters)
   {
     // set the parameters to download all updates for the mobile map packages
     parameters.setPreplannedScheduledUpdatesOption(PreplannedScheduledUpdatesOption::DownloadAllUpdates);
