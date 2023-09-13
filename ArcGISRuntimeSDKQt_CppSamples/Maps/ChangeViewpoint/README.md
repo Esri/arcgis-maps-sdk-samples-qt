@@ -16,15 +16,17 @@ The map view has several methods for setting its current viewpoint. Select a vie
 
 1. Create a new `Map` object and set it to the `MapView` object.
 2. Change the map's `Viewpoint` using one of the available methods:
-  * Use `MapView::setViewpointAnimated(viewPoint, duration, AnimationCurve)` to pan to a viewpoint over the specified length of time.
-  * Use `MapView::setViewpointCenter()` to center the viewpoint on a `Point` and set a distance from the ground using a scale.
-  * Use `MapView::setViewpointGeometry()` to set the viewpoint to a given `Geometry`.
+  * Use `MapView::setViewpointAsync(viewPoint, duration, AnimationCurve)` to pan to a viewpoint over the specified length of time.
+  * Use `MapView::setViewpointCenterAsync()` to center the viewpoint on a `Point` and set a distance from the ground using a scale.
+  * Use `MapView::setViewpointGeometryAsync()` to set the viewpoint to a given `Geometry` 
+  * Use `MapView::setViewpointRotationAsync()` to set the viewpoint to a given degree.
+  * Use `MapView::setViewpointScaleAsync()` to set the viewpoint to a given scale.
 
 ## Relevant API
 
 * AnimationCurve
-* Map
 * Geometry
+* Map
 * MapView
 * Point
 * Viewpoint
@@ -33,11 +35,7 @@ The map view has several methods for setting its current viewpoint. Select a vie
 
 Below are some other ways to set a viewpoint:
 
-* setViewpoint
-* setViewpointCenter
-* setViewpointGeometry
-* setViewpointRotation
-* setViewpointScale
+* GeoView::setViewpointAsync
 
 ## Tags
 

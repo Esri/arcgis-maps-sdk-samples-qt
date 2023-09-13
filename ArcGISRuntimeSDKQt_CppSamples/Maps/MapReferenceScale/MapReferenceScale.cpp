@@ -28,7 +28,8 @@
 #include "LayerListModel.h"
 #include "MapQuickView.h"
 #include "Error.h"
-#include "TaskWatcher.h"
+
+#include <QFuture>
 
 using namespace Esri::ArcGISRuntime;
 
@@ -48,11 +49,11 @@ MapReferenceScale::MapReferenceScale(QObject* parent /* = nullptr */):
     m_layerInfoListModel = m_map->operationalLayers();
     emit layerInfoListModelChanged();
     emit currentMapScaleChanged();
+  });
 
-    connect(m_mapView, &MapQuickView::mapScaleChanged, this, [this]()
-    {
-      emit currentMapScaleChanged();
-    });
+  connect(m_mapView, &MapQuickView::mapScaleChanged, this, [this]()
+  {
+    emit currentMapScaleChanged();
   });
 }
 
@@ -86,7 +87,7 @@ void MapReferenceScale::setCurrentMapScale(double scale)
 void MapReferenceScale::setMapScaleToReferenceScale(double scale)
 {
   if(m_mapView)
-    m_mapView->setViewpointScale(scale);
+    m_mapView->setViewpointScaleAsync(scale);
 }
 
 void MapReferenceScale::featureLayerScaleSymbols(const QString& layerName, bool checkedStatus)

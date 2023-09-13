@@ -26,12 +26,13 @@
 #include "MapQuickView.h"
 #include "SimpleLineSymbol.h"
 #include "MapTypes.h"
-#include "TaskWatcher.h"
 #include "GraphicsOverlayListModel.h"
 #include "SymbolTypes.h"
 #include "GraphicListModel.h"
 #include "SpatialReference.h"
 #include "Envelope.h"
+
+#include <QFuture>
 
 using namespace Esri::ArcGISRuntime;
 
@@ -90,6 +91,6 @@ void SetMaxExtent::toggleMaxExtent()
   }
   else {
     m_map->setMaxExtent(m_coloradoEnvelope);
-    m_mapView->setViewpointGeometry(m_coloradoEnvelope, 50);
+    m_mapView->setViewpointGeometryAsync(m_coloradoEnvelope, 50);
   }
 }

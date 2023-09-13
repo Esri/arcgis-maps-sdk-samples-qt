@@ -31,7 +31,6 @@
 #include "Point.h"
 #include "Error.h"
 #include "MapTypes.h"
-#include "TaskWatcher.h"
 #include "LayerListModel.h"
 #include "OfflineMapParametersKey.h"
 #include "OfflineMapTypes.h"
@@ -49,6 +48,7 @@
 #include "Polygon.h"
 #include "ServiceFeatureTable.h"
 
+#include <QFuture>
 #include <QUuid>
 
 using namespace Esri::ArcGISRuntime;
@@ -111,24 +111,6 @@ void GenerateOfflineMap_Overrides::componentComplete()
 
     qDebug() << e.message() << e.additionalMessage();
   });
-
-  // connect to the signal for when the default parameters are generated
-  connect(m_offlineMapTask, &OfflineMapTask::createDefaultGenerateOfflineMapParametersCompleted,
-          this, [this](const QUuid&, const GenerateOfflineMapParameters& params)
-  {
-    // Use the parameters to create a set of overrides.
-    m_parameters = params;
-    m_offlineMapTask->createGenerateOfflineMapParameterOverrides(params);
-  });
-
-  connect(m_offlineMapTask, &OfflineMapTask::createGenerateOfflineMapParameterOverridesCompleted,
-          this, [this](const QUuid& /*id*/, GenerateOfflineMapParameterOverrides* parameterOverrides)
-  {
-    m_parameterOverrides = parameterOverrides;
-    emit overridesReadyChanged();
-    setBusy(false);
-    emit taskBusyChanged();
-  });
 }
 
 void GenerateOfflineMap_Overrides::setAreaOfInterest(double xCorner1, double yCorner1, double xCorner2, double yCorner2)
@@ -140,7 +122,20 @@ void GenerateOfflineMap_Overrides::setAreaOfInterest(double xCorner1, double yCo
   const Envelope mapExtent = geometry_cast<Envelope>(GeometryEngine::project(extent, SpatialReference::webMercator()));
 
   // generate parameters
-  m_offlineMapTask->createDefaultGenerateOfflineMapParameters(mapExtent);
+  m_offlineMapTask->createDefaultGenerateOfflineMapParametersAsync(mapExtent).then(this,
+  [this](const GenerateOfflineMapParameters& params)
+  {
+    m_parameters = params;
+    m_offlineMapTask->createGenerateOfflineMapParameterOverridesAsync(params).then(this,
+    [this](GenerateOfflineMapParameterOverrides* parameterOverrides)
+    {
+      m_parameterOverrides = parameterOverrides;
+      emit overridesReadyChanged();
+      setBusy(false);
+      emit taskBusyChanged();
+    });
+  });
+
   setBusy(true);
   emit taskBusyChanged();
 }

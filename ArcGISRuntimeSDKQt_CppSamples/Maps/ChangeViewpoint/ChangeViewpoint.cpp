@@ -29,7 +29,8 @@
 #include "Viewpoint.h"
 #include "MapTypes.h"
 #include "MapViewTypes.h"
-#include "TaskWatcher.h"
+
+#include <QFuture>
 
 using namespace Esri::ArcGISRuntime;
 
@@ -63,35 +64,35 @@ void ChangeViewpoint::changeViewpoint(QString viewpoint)
   if (viewpoint == "Center")
   {
     Point ptEsriHeadquarters(-117.195681,34.056218, SpatialReference(4326));
-    m_mapView->setViewpointCenter(ptEsriHeadquarters);
+    m_mapView->setViewpointCenterAsync(ptEsriHeadquarters);
   }
   else if (viewpoint == "Center and scale")
   {
     Point ptHawaii(-157.564, 20.677, SpatialReference(4236));
-    m_mapView->setViewpointCenter(ptHawaii, 4000000.0);
+    m_mapView->setViewpointCenterAsync(ptHawaii, 4000000.0);
   }
   else if (viewpoint == "Geometry")
   {
     Envelope envBeijing(116.380, 39.920, 116.400, 39.940, SpatialReference(4236));
-    m_mapView->setViewpointGeometry(envBeijing);
+    m_mapView->setViewpointGeometryAsync(envBeijing);
   }
   else if (viewpoint == "Geometry and padding")
   {
     Envelope envBeijing(116.380, 39.920, 116.400, 39.940, SpatialReference(4236));
-    m_mapView->setViewpointGeometry(envBeijing, 200 * screenRatio());
+    m_mapView->setViewpointGeometryAsync(envBeijing, 200 * screenRatio());
   }
   else if (viewpoint == "Rotation")
   {
     m_rotationValue = (m_rotationValue + 45) % 360;
-    m_mapView->setViewpointRotation(m_rotationValue);
+    m_mapView->setViewpointRotationAsync(m_rotationValue);
   }
   else if (viewpoint == "Scale 1:5,000,000")
   {
-    m_mapView->setViewpointScale(5000000.0);
+    m_mapView->setViewpointScaleAsync(5000000.0);
   }
   else if (viewpoint == "Scale 1:10,000,000")
   {
-    m_mapView->setViewpointScale(10000000.0);
+    m_mapView->setViewpointScaleAsync(10000000.0);
   }
   else if (viewpoint == "Animation")
   {
@@ -103,7 +104,7 @@ void ChangeViewpoint::changeViewpoint(QString viewpoint)
     constexpr int wkid = 102100;
     Viewpoint vpSpring(Envelope(xMin, yMin, xMax, yMax, SpatialReference(wkid)));
     constexpr float duration = 4.0f;
-    m_mapView->setViewpointAnimated(vpSpring, duration, AnimationCurve::EaseInOutCubic);
+    m_mapView->setViewpointAsync(vpSpring, duration, AnimationCurve::EaseInOutCubic);
     //! [set viewpoint api snippet]
   }
 }

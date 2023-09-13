@@ -30,12 +30,13 @@
 #include "Point.h"
 #include "Error.h"
 #include "TaskTypes.h"
-#include "TaskWatcher.h"
 #include "GenerateOfflineMapJob.h"
+#include "GenerateOfflineMapParameters.h"
 #include "GenerateOfflineMapResult.h"
 #include "SpatialReference.h"
 #include "Layer.h"
 
+#include <QFuture>
 #include <QUuid>
 
 using namespace Esri::ArcGISRuntime;
@@ -103,9 +104,9 @@ void GenerateOfflineMap::generateMapByExtent(double xCorner1, double yCorner1, d
   const Envelope extent = Envelope(corner1, corner2);
   const Envelope mapExtent = geometry_cast<Envelope>(GeometryEngine::project(extent, SpatialReference::webMercator()));
 
-  // connect to the signal for when the default parameters are generated
-  connect(m_offlineMapTask, &OfflineMapTask::createDefaultGenerateOfflineMapParametersCompleted,
-          this, [this](const QUuid&, const GenerateOfflineMapParameters& params)
+  // generate parameters
+  m_offlineMapTask->createDefaultGenerateOfflineMapParametersAsync(mapExtent).then(this,
+  [this](const GenerateOfflineMapParameters& params)
   {
     // Take the map offline once the parameters are generated
     GenerateOfflineMapJob* generateJob = m_offlineMapTask->generateOfflineMap(params, m_tempPath.path() + "/offlinemap");
@@ -178,7 +179,4 @@ void GenerateOfflineMap::generateMapByExtent(double xCorner1, double yCorner1, d
       emit hideWindow(5000, false);
     }
   });
-
-  // generate parameters
-  m_offlineMapTask->createDefaultGenerateOfflineMapParameters(mapExtent);
 }
