@@ -25,8 +25,8 @@ The map view has several methods for setting its current viewpoint. Select a vie
 ## Relevant API
 
 * AnimationCurve
-* Map
 * Geometry
+* Map
 * MapView
 * Point
 * Viewpoint
