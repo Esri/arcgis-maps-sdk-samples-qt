@@ -14,27 +14,27 @@
         "TXT",
         "image",
         "picture",
-        "ApplyEdits",
+        "ApplyEditsAsync",
         "AttachmentListModel",
-        "DeleteAttachment",
+        "DeleteAttachmentAsync",
         "FeatureLayer",
-        "FetchAttachments",
-        "FetchData",
+        "FetchAttachmentsAsync",
+        "FetchDataAsync",
         "ServiceFeatureTable",
-        "UpdateFeature"
+        "UpdateFeatureAsync"
     ],
     "redirect_from": [
         "/qt/latest/cpp/sample-code/sample-qt-editfeatureattachments.htm"
     ],
     "relevant_apis": [
-        "ApplyEdits",
+        "ApplyEditsAsync",
         "AttachmentListModel",
-        "DeleteAttachment",
+        "DeleteAttachmentAsync",
         "FeatureLayer",
-        "FetchAttachments",
-        "FetchData",
+        "FetchAttachmentsAsync",
+        "FetchDataAsync",
         "ServiceFeatureTable",
-        "UpdateFeature"
+        "UpdateFeatureAsync"
     ],
     "snippets": [
         "EditFeatureAttachments.cpp",

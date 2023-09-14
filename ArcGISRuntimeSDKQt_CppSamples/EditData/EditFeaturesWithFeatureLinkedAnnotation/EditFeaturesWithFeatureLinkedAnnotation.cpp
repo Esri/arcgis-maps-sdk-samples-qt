@@ -32,7 +32,6 @@
 #include "PartCollection.h"
 #include "MapTypes.h"
 #include "LayerListModel.h"
-#include "TaskWatcher.h"
 #include "IdentifyLayerResult.h"
 #include "GeoElement.h"
 #include "Feature.h"
@@ -46,6 +45,7 @@
 #include "SpatialReference.h"
 
 // Qt headers
+#include <QFuture>
 #include <QString>
 #include <QFile>
 #include <QtCore/qglobal.h>
@@ -130,7 +130,6 @@ void EditFeaturesWithFeatureLinkedAnnotation::setMapView(MapQuickView* mapView)
   m_mapView->setMap(m_map);
 
   connect(m_mapView, &MapQuickView::mouseClicked, this, &EditFeaturesWithFeatureLinkedAnnotation::onMouseClicked);
-  connect(m_mapView, &MapQuickView::identifyLayersCompleted, this, &EditFeaturesWithFeatureLinkedAnnotation::onIdentifyLayersCompleted);
 
   emit mapViewChanged();
 }
@@ -176,11 +175,14 @@ void EditFeaturesWithFeatureLinkedAnnotation::onMouseClicked(QMouseEvent& mouseE
   else
   {
     // identify and select feature
-    m_mapView->identifyLayers(mouseEvent.position().x(), mouseEvent.position().y(), 10, false);
+    m_mapView->identifyLayersAsync(mouseEvent.position(), 10, false).then(this, [this](const QList<IdentifyLayerResult*>& identifyResults)
+    {
+      onIdentifyLayersCompleted(identifyResults);
+    });
   }
 }
 
-void EditFeaturesWithFeatureLinkedAnnotation::onIdentifyLayersCompleted(const QUuid&, const QList<IdentifyLayerResult*>& identifyResults)
+void EditFeaturesWithFeatureLinkedAnnotation::onIdentifyLayersCompleted(const QList<IdentifyLayerResult*>& identifyResults)
 {
   // A convenience wrapper that deletes the contents of identifyResults when we leave scope.
   IdentifyLayerResultsScopedCleanup identifyResultsScopedCleanup(identifyResults);
@@ -277,7 +279,8 @@ void EditFeaturesWithFeatureLinkedAnnotation::moveFeature(Point mapPoint)
   }
 
   // update the selected feature with the new geometry
-  m_selectedFeature->featureTable()->updateFeature(m_selectedFeature);
+  auto future = m_selectedFeature->featureTable()->updateFeatureAsync(m_selectedFeature);
+  Q_UNUSED(future)
   clearSelection();
   delete m_selectedFeature;
   m_selectedFeature = nullptr;
@@ -291,5 +294,6 @@ void EditFeaturesWithFeatureLinkedAnnotation::updateSelectedFeature(const QStrin
   // update the two attributes with the inputted text.
   m_selectedFeature->attributes()->replaceAttribute(s_ad_address, address);
   m_selectedFeature->attributes()->replaceAttribute(s_st_str_nam, streetName);
-  m_selectedFeature->featureTable()->updateFeature(m_selectedFeature);
+  auto future = m_selectedFeature->featureTable()->updateFeatureAsync(m_selectedFeature);
+  Q_UNUSED(future)
 }
