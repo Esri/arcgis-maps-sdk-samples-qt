@@ -30,6 +30,9 @@ class ServiceVersionInfo;
 class ArcGISFeature;
 class Credential;
 class Point;
+class IdentifyLayerResult;
+class ErrorException;
+class FeatureTableEditResult;
 }
 
 #include "Error.h"
@@ -66,7 +69,7 @@ public:
   Q_INVOKABLE void applyEdits();
   Q_INVOKABLE void clearSelectedFeature();
   Q_INVOKABLE void createVersion(const QString& versionName, const QString& versionAccess, const QString& description);
-  Q_INVOKABLE void switchVersion() const;
+  Q_INVOKABLE void switchVersion();
   Q_INVOKABLE void updateAttribute(const QString& attributeValue);
 
 signals:
@@ -83,12 +86,15 @@ signals:
   void sgdbCurrentVersionChanged();
   void sgdbVersionIsDefaultChanged();
 
-private slots:
-  void onCreateVersionCompleted(const QUuid&, Esri::ArcGISRuntime::ServiceVersionInfo* serviceVersionInfo);
-  void onMapDoneLoading(const Esri::ArcGISRuntime::Error& error);
-  void onSgdbDoneLoadingCompleted(const Esri::ArcGISRuntime::Error& error);
-
 private:
+  void onCreateVersionCompleted_(Esri::ArcGISRuntime::ServiceVersionInfo* serviceVersionInfo);
+  void onMapDoneLoading_(const Esri::ArcGISRuntime::Error& error);
+  void onSgdbDoneLoadingCompleted_(const Esri::ArcGISRuntime::Error& error);
+  void onIdentifyLayerCompleted_(Esri::ArcGISRuntime::IdentifyLayerResult* identifyResult);
+  void onSwitchVersionCompleted_();
+  void onApplyEditsCompleted_(const QList<Esri::ArcGISRuntime::FeatureTableEditResult*>& featureTableEditResults);
+  void onTaskFailed_(const Esri::ArcGISRuntime::ErrorException& taskException);
+
   Esri::ArcGISRuntime::MapQuickView* mapView() const;
   void setMapView(Esri::ArcGISRuntime::MapQuickView* mapView);
   void connectSgdbSignals();
