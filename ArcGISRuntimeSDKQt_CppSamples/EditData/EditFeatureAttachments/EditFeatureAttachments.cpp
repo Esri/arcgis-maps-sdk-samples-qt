@@ -236,9 +236,9 @@ void EditFeatureAttachments::onQueryFeaturesCompleted_(FeatureQueryResult* featu
     emit featureSelected();
     emit attachmentModelChanged();
 
-    m_selectedFeature->attachments()->setAutoFetchAttachments(false);
     // get the number of attachments
-    m_selectedFeature->attachments()->fetchAttachmentsAsync().then(this, [this](const QList<Attachment*>& attachments)
+    connect(m_selectedFeature->attachments(), &AttachmentListModel::fetchAttachmentsCompleted,
+            this, [this](const QUuid&, const QList<Attachment*>& attachments)
     {
       m_mapView->calloutData()->setDetail(QString("Number of attachments: %1").arg(attachments.size()));
       m_mapView->calloutData()->setVisible(true); // Resizes the calloutData after details has been set.
