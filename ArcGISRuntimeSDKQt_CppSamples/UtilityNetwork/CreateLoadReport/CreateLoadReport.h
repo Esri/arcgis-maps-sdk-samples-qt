@@ -74,7 +74,7 @@ private:
   Esri::ArcGISRuntime::UtilityElement* createStartingLocation();
   Esri::ArcGISRuntime::UtilityTraceConfiguration* createDefaultTraceConfiguration();
   QList<Esri::ArcGISRuntime::CodedValue> createPhaseList();
-  void createTraceCompletedConnection();
+  void createTraceCompletedConnection(const QString& codeValueName);
   void setUtilityTraceOrconditionWithCodedValue(Esri::ArcGISRuntime::CodedValue);
 
   Esri::ArcGISRuntime::Credential* m_cred = nullptr;

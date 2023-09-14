@@ -49,7 +49,6 @@
 #include "SimulatedLocationDataSource.h"
 #include "SimulationParameters.h"
 #include "Stop.h"
-#include "TaskWatcher.h"
 #include "TrackingDistance.h"
 #include "TrackingProgress.h"
 #include "TrackingStatus.h"
@@ -181,8 +180,7 @@ void NavigateARouteWithRerouting::initializeRoute()
                           m_directionManeuvers = m_route.directionManeuvers(this)->directionManeuvers();
 
                           // adjust viewpoint to enclose the route with a 100 DPI padding
-                          m_mapView->setViewpointGeometry(m_route.routeGeometry(), 100);
-
+                          m_mapView->setViewpointGeometryAsync(m_route.routeGeometry(), 100);
                           // create graphics to show the route traversed and route ahead
                           m_routeAheadGraphic = new Graphic(m_route.routeGeometry(), new SimpleLineSymbol(SimpleLineSymbolStyle::Solid, Qt::blue, 5, this), this);
                           m_routeTraveledGraphic = new Graphic(Geometry(), new SimpleLineSymbol(SimpleLineSymbolStyle::Solid, Qt::cyan, 3, this), this);
@@ -243,7 +241,8 @@ void NavigateARouteWithRerouting::startNavigation()
 
   connect(m_mapView->locationDisplay(), &LocationDisplay::locationChanged, this, [this](const Location& location)
   {
-    m_routeTracker->trackLocation(location);
+    auto future = m_routeTracker->trackLocationAsync(location);
+    Q_UNUSED(future);
   });
 
   // turn on map view's navigation mode
@@ -255,7 +254,8 @@ void NavigateARouteWithRerouting::startNavigation()
   rerouteParameters->setStrategy(ReroutingStrategy::ToNextWaypoint);
   rerouteParameters->setVisitFirstStopOnStart(false);
 
-  m_routeTracker->enableRerouting(rerouteParameters);
+  auto future = m_routeTracker->enableReroutingAsync(rerouteParameters);
+  Q_UNUSED(future);
 
   double velocity = 40.0;
   double horizontalAccuracy = 0.0;
@@ -313,7 +313,8 @@ void NavigateARouteWithRerouting::connectRouteTrackerSignals()
       // navigate to next stop, if available
       if (trackingStatus->remainingDestinationCount() > 1)
       {
-        m_routeTracker->switchToNextDestination();
+        auto future = m_routeTracker->switchToNextDestinationAsync();
+        Q_UNUSED(future);
       }
       else
       {

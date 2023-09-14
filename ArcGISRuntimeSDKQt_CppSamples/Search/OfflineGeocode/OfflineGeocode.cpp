@@ -34,7 +34,6 @@
 #include "PictureMarkerSymbol.h"
 #include "IdentifyGraphicsOverlayResult.h"
 #include "MapViewTypes.h"
-#include "TaskWatcher.h"
 #include "Error.h"
 #include "GraphicsOverlayListModel.h"
 #include "GraphicListModel.h"
@@ -49,6 +48,7 @@
 #include <memory>
 #include <QUuid>
 #include <QStandardPaths>
+#include <QFuture>
 
 using namespace Esri::ArcGISRuntime;
 
@@ -147,12 +147,19 @@ void OfflineGeocode::componentComplete()
 
 void OfflineGeocode::geocodeWithText(const QString& address)
 {
-  m_locatorTask->geocodeWithParameters(address, m_geocodeParameters);
+  m_locatorTask->geocodeWithParametersAsync(address, m_geocodeParameters).then(this, [this](const QList<GeocodeResult>& geocodeResults)
+  {
+    geocodeCompleteHandler(geocodeResults);
+  });
 }
 
 void OfflineGeocode::geocodeWithSuggestion(int index)
 {
-  m_locatorTask->geocodeWithSuggestResultAndParameters(m_suggestListModel->suggestResults().at(index), m_geocodeParameters);
+  m_locatorTask->geocodeWithSuggestResultAndParametersAsync(m_suggestListModel->suggestResults().at(index), m_geocodeParameters)
+      .then(this, [this](const QList<GeocodeResult>& geocodeResults)
+  {
+    geocodeCompleteHandler(geocodeResults);
+  });
 }
 
 void OfflineGeocode::setSuggestionsText(const QString& searchText)
@@ -192,7 +199,34 @@ void OfflineGeocode::connectSignals()
   connect(m_mapView, &MapQuickView::mouseClicked, this, [this](QMouseEvent& mouseEvent)
   {
     m_clickedPoint = m_mapView->screenToLocation(mouseEvent.position().x(), mouseEvent.position().y());
-    m_mapView->identifyGraphicsOverlay(m_graphicsOverlay, mouseEvent.position().x(), mouseEvent.position().y(), 5, false, 1);
+    m_mapView->identifyGraphicsOverlayAsync(m_graphicsOverlay, mouseEvent.position(), 5, false, 1)
+        .then(this, [this](IdentifyGraphicsOverlayResult* rawIdentifyResult)
+    {
+      // Delete rawIdentifyResult when we leave scope.
+      auto identifyResult = std::unique_ptr<IdentifyGraphicsOverlayResult>(rawIdentifyResult);
+
+      if (!identifyResult)
+        return;
+
+      // if user clicked on pin, display callout
+      const QList<Graphic*> graphics = identifyResult->graphics();
+      if (graphics.count() > 0)
+        m_calloutData->setVisible(true);
+
+      // otherwise, reverse geocode at that point
+      else
+      {
+        m_isReverseGeocode = true;
+        m_locatorTask->reverseGeocodeWithParametersAsync(m_clickedPoint, m_reverseGeocodeParameters)
+            .then(this, [this](const QList<GeocodeResult>& geocodeResults)
+        {
+          geocodeCompleteHandler(geocodeResults);
+        });
+
+        m_geocodeInProgress = true;
+        emit geocodeInProgressChanged();
+      }
+    });
   });
 
   connect(m_mapView, &MapQuickView::mousePressedAndHeld, this, [this](QMouseEvent& mouseEvent)
@@ -201,7 +235,11 @@ void OfflineGeocode::connectSignals()
     m_isReverseGeocode = true;
 
     // reverse geocode
-    m_locatorTask->reverseGeocodeWithParameters(Point(m_mapView->screenToLocation(mouseEvent.position().x(), mouseEvent.position().y())), m_reverseGeocodeParameters);
+    m_locatorTask->reverseGeocodeWithParametersAsync(Point(m_mapView->screenToLocation(mouseEvent.position().x(), mouseEvent.position().y())), m_reverseGeocodeParameters)
+        .then(this, [this](const QList<GeocodeResult>& geocodeResults)
+    {
+      geocodeCompleteHandler(geocodeResults);
+    });
 
     // make busy indicator visible
     m_geocodeInProgress = true;
@@ -213,7 +251,11 @@ void OfflineGeocode::connectSignals()
     // if user is dragging mouse hold, realtime reverse geocode
     if (m_isPressAndHold)
     {
-      m_locatorTask->reverseGeocodeWithParameters(Point(m_mapView->screenToLocation(mouseEvent.position().x(), mouseEvent.position().y())), m_reverseGeocodeParameters);
+      m_locatorTask->reverseGeocodeWithParametersAsync(Point(m_mapView->screenToLocation(mouseEvent.position().x(), mouseEvent.position().y())), m_reverseGeocodeParameters)
+          .then(this, [this](const QList<GeocodeResult>& geocodeResults)
+      {
+        geocodeCompleteHandler(geocodeResults);
+      });
 
       m_geocodeInProgress = true;
       emit geocodeInProgressChanged();
@@ -242,73 +284,50 @@ void OfflineGeocode::connectSignals()
     emit suggestInProgressChanged();
   });
 
-  // if clicked pin graphic, show callout. otherwise, reverse geocode
-  connect(m_mapView, &MapQuickView::identifyGraphicsOverlayCompleted, this, [this](const QUuid&, IdentifyGraphicsOverlayResult* rawIdentifyResult)
+  connect(m_locatorTask, &LocatorTask::errorOccurred, this, &OfflineGeocode::logError);
+}
+
+void OfflineGeocode::geocodeCompleteHandler(const QList<GeocodeResult>& geocodeResults)
+{
+  // dismiss busy indicator
+  m_geocodeInProgress = false;
+  emit geocodeInProgressChanged();
+
+  if (geocodeResults.length() > 0)
   {
-    // Delete rawIdentifyResult when we leave scope.
-    auto identifyResult = std::unique_ptr<IdentifyGraphicsOverlayResult>(rawIdentifyResult);
+    // dismiss no results notification
+    m_noResults = false;
+    emit noResultsChanged();
 
-    if (!identifyResult)
-      return;
+    // dismiss callouts
+    m_calloutData->setVisible(false);
 
-    // if user clicked on pin, display callout
-    const QList<Graphic*> graphics = identifyResult->graphics();
-    if (graphics.count() > 0)
+    // zoom to result's extent
+    m_mapView->setViewpointCenterAsync(geocodeResults.at(0).displayLocation());
+
+    // set pin graphic's location
+    m_pinGraphic->setGeometry(geocodeResults.at(0).displayLocation());
+    m_pinGraphic->setVisible(true);
+
+    // set callout location and detail
+    m_calloutData->setDetail(geocodeResults.at(0).label());
+    m_calloutData->setGeoElement(m_pinGraphic);
+
+    if (m_isReverseGeocode)
       m_calloutData->setVisible(true);
 
-    // otherwise, reverse geocode at that point
-    else
-    {
-      m_isReverseGeocode = true;
-      m_locatorTask->reverseGeocodeWithParameters(m_clickedPoint, m_reverseGeocodeParameters);
+    // continue reverse geocoding if user is pressing and holding
+    if (!m_isPressAndHold)
+      m_isReverseGeocode = false;
+  }
 
-      m_geocodeInProgress = true;
-      emit geocodeInProgressChanged();
-    }
-  });
-
-  connect(m_locatorTask, &LocatorTask::errorOccurred, this, &OfflineGeocode::logError);
-  connect(m_locatorTask, &LocatorTask::geocodeCompleted, this, [this](const QUuid&, const QList<GeocodeResult>& geocodeResults)
+  // if there are no matching results, notify user
+  else
   {
-    // dismiss busy indicator
-    m_geocodeInProgress = false;
-    emit geocodeInProgressChanged();
+    m_noResults = true;
+    emit noResultsChanged();
+  }
 
-    if (geocodeResults.length() > 0)
-    {
-      // dismiss no results notification
-      m_noResults = false;
-      emit noResultsChanged();
-
-      // dismiss callouts
-      m_calloutData->setVisible(false);
-
-      // zoom to result's extent
-      m_mapView->setViewpointCenter(geocodeResults.at(0).displayLocation());
-
-      // set pin graphic's location
-      m_pinGraphic->setGeometry(geocodeResults.at(0).displayLocation());
-      m_pinGraphic->setVisible(true);
-
-      // set callout location and detail
-      m_calloutData->setDetail(geocodeResults.at(0).label());
-      m_calloutData->setGeoElement(m_pinGraphic);
-
-      if (m_isReverseGeocode)
-        m_calloutData->setVisible(true);
-
-      // continue reverse geocoding if user is pressing and holding
-      if (!m_isPressAndHold)
-        m_isReverseGeocode = false;
-    }
-
-    // if there are no matching results, notify user
-    else
-    {
-      m_noResults = true;
-      emit noResultsChanged();
-    }
-  });
 }
 
 QString OfflineGeocode::errorMessage() const

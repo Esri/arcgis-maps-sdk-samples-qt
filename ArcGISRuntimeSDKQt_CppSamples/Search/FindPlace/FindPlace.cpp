@@ -36,7 +36,6 @@
 #include "SuggestListModel.h"
 #include "MapTypes.h"
 #include "MapViewTypes.h"
-#include "TaskWatcher.h"
 #include "GraphicsOverlayListModel.h"
 #include "GraphicListModel.h"
 #include "AttributeListModel.h"
@@ -48,6 +47,7 @@
 
 #include <QUrl>
 #include <QUuid>
+#include <QFuture>
 
 using namespace Esri::ArcGISRuntime;
 
@@ -125,21 +125,18 @@ void FindPlace::connectSignals()
   connect(m_mapView, &MapQuickView::mouseClicked, this, [this](QMouseEvent& e)
   {
     emit hideCallout();
-    m_mapView->identifyGraphicsOverlay(m_graphicsOverlay, e.position().x(), e.position().y(), 5, false, 1);
-  });
+    m_mapView->identifyGraphicsOverlayAsync(m_graphicsOverlay, e.position(), 5, false, 1).then(this, [this] (IdentifyGraphicsOverlayResult* result)
+    {
+      if (result->graphics().length() == 0)
+        return;
 
-  // handle the result once identify completes
-  connect(m_mapView, &MapQuickView::identifyGraphicsOverlayCompleted, this, [this](const QUuid&, IdentifyGraphicsOverlayResult* result)
-  {
-    if (result->graphics().length() == 0)
-      return;
-
-    // display the callout with the identify result
-    Graphic* graphic = result->graphics().at(0);
-    m_calloutData->setGeoElement(graphic);
-    m_calloutData->setTitle(graphic->attributes()->attributeValue("ShortLabel").toString());
-    m_calloutData->setDetail(graphic->attributes()->attributeValue("Place_addr").toString());
-    emit showCallout();
+      // display the callout with the identify result
+      Graphic* graphic = result->graphics().at(0);
+      m_calloutData->setGeoElement(graphic);
+      m_calloutData->setTitle(graphic->attributes()->attributeValue("ShortLabel").toString());
+      m_calloutData->setDetail(graphic->attributes()->attributeValue("Place_addr").toString());
+      emit showCallout();
+    });
   });
 }
 
@@ -167,51 +164,50 @@ void FindPlace::createLocator()
   // set the suggestions Q_PROPERTY
   m_suggestListModel = m_locatorTask->suggestions();
   emit suggestionsChanged();
+}
 
-  // connect to the signal for when the geocode completes
-  connect(m_locatorTask, &LocatorTask::geocodeCompleted, this, [this](const QUuid&, const QList<GeocodeResult>& results)
+void FindPlace::geocodeCompleteHandler(const QList<GeocodeResult>& results)
+{
+  // if we are converting the location string to a Point, re-geocode with that information,
+  // and don't add any graphics to the map
+  if (m_isSearchingLocation)
   {
-    // if we are converting the location string to a Point, re-geocode with that information,
-    // and don't add any graphics to the map
-    if (m_isSearchingLocation)
-    {
-      m_isSearchingLocation = false;
-      if (results.length() == 0)
-        return;
-
-      GeocodeResult topLocation = results.at(0);
-      geocodePOIs(m_poiSearchText, topLocation.displayLocation());
-      return;
-    }
-
-    // create graphics for each geocode result
+    m_isSearchingLocation = false;
     if (results.length() == 0)
       return;
 
-    m_graphicsOverlay->graphics()->clear();
+    GeocodeResult topLocation = results.at(0);
+    geocodePOIs(m_poiSearchText, topLocation.displayLocation());
+    return;
+  }
 
-    // delete parent if it exists
-    if (m_graphicParent)
-    {
-      delete m_graphicParent;
-      m_graphicParent = nullptr;
-    }
-    m_graphicParent = new QObject(this);
+  // create graphics for each geocode result
+  if (results.length() == 0)
+    return;
 
-    Geometry bbox;
-    for (const GeocodeResult& result : results)
-    {
-      Graphic* graphic = new Graphic(result.displayLocation(), result.attributes(), m_graphicParent);
-      m_graphicsOverlay->graphics()->append(graphic);
-      // create bounding box so we can set the viewpoint at the end
-      if (bbox.isEmpty())
-        bbox = graphic->geometry();
-      else
-        bbox = GeometryEngine::unionOf(bbox, graphic->geometry());
-    }
-    // zoom to the bounding box
-    m_mapView->setViewpointGeometry(bbox, 40);
-  });
+  m_graphicsOverlay->graphics()->clear();
+
+  // delete parent if it exists
+  if (m_graphicParent)
+  {
+    delete m_graphicParent;
+    m_graphicParent = nullptr;
+  }
+  m_graphicParent = new QObject(this);
+
+  Geometry bbox;
+  for (const GeocodeResult& result : results)
+  {
+    Graphic* graphic = new Graphic(result.displayLocation(), result.attributes(), m_graphicParent);
+    m_graphicsOverlay->graphics()->append(graphic);
+    // create bounding box so we can set the viewpoint at the end
+    if (bbox.isEmpty())
+      bbox = graphic->geometry();
+    else
+      bbox = GeometryEngine::unionOf(bbox, graphic->geometry());
+  }
+  // zoom to the bounding box
+  m_mapView->setViewpointGeometryAsync(bbox, 40);
 }
 
 void FindPlace::setPoiTextHasFocus(bool hasFocus)
@@ -252,7 +248,10 @@ void FindPlace::geocodePOIs(const QString& poi)
 {
   m_poiSearchText = poi;
   GeocodeParameters params = createParameters();
-  m_locatorTask->geocodeWithParameters(poi, params);
+  m_locatorTask->geocodeWithParametersAsync(poi, params).then(this, [this](const QList<GeocodeResult>& results)
+  {
+    geocodeCompleteHandler(results);
+  });
 }
 
 // use extent to filter the geocode results
@@ -268,7 +267,10 @@ void FindPlace::geocodePOIs(const QString& poi, SearchMode mode)
     params.setPreferredSearchLocation(m_mapView->locationDisplay()->location().position());
     params.setOutputSpatialReference(m_mapView->locationDisplay()->location().position().spatialReference());
 
-    m_locatorTask->geocodeWithParameters(m_poiSearchText, params);
+    m_locatorTask->geocodeWithParametersAsync(m_poiSearchText, params).then(this, [this](const QList<GeocodeResult>& results)
+    {
+      geocodeCompleteHandler(results);
+    });
   }
   // If the Mode is BoundingGeometry, use the MapView's current viewpoint as the search area
   else
@@ -278,7 +280,10 @@ void FindPlace::geocodePOIs(const QString& poi, SearchMode mode)
     params.setSearchArea(extent);
     params.setOutputSpatialReference(extent.spatialReference());
 
-    m_locatorTask->geocodeWithParameters(m_poiSearchText, params);
+    m_locatorTask->geocodeWithParametersAsync(m_poiSearchText, params).then(this, [this](const QList<GeocodeResult>& results)
+    {
+      geocodeCompleteHandler(results);
+    });
   }
 }
 
@@ -291,7 +296,10 @@ void FindPlace::geocodePOIs(const QString& poi, const Point& location)
   params.setPreferredSearchLocation(location);
   params.setOutputSpatialReference(location.spatialReference());
 
-  m_locatorTask->geocodeWithParameters(m_poiSearchText, params);
+  m_locatorTask->geocodeWithParametersAsync(m_poiSearchText, params).then(this, [this](const QList<GeocodeResult>& results)
+  {
+    geocodeCompleteHandler(results);
+  });
 }
 
 // use a location string as a preferred search location for the geocode results
@@ -306,7 +314,10 @@ void FindPlace::geocodePOIs(const QString& poi, const QString& location)
   GeocodeParameters params = createParameters();
 
   m_isSearchingLocation = true;
-  m_locatorTask->geocodeWithParameters(location, params);
+  m_locatorTask->geocodeWithParametersAsync(location, params).then(this, [this](const QList<GeocodeResult>& results)
+  {
+    geocodeCompleteHandler(results);
+  });
 }
 
 // create base geocode parameters

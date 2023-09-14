@@ -29,7 +29,6 @@
 #include "PictureMarkerSymbol.h"
 #include "SimpleRenderer.h"
 #include "MapTypes.h"
-#include "TaskWatcher.h"
 #include "GraphicsOverlayListModel.h"
 #include "GraphicListModel.h"
 #include "AttributeListModel.h"
@@ -42,6 +41,7 @@
 #include <QDir>
 #include <QUrl>
 #include <QUuid>
+#include <QFuture>
 
 using namespace Esri::ArcGISRuntime;
 
@@ -83,31 +83,29 @@ void ReverseGeocodeOnline::getAddress()
     const Point clickedLocation = m_mapView->screenToLocation(e.position().x(), e.position().y());
     ReverseGeocodeParameters reverseGeocodeParameters;
     reverseGeocodeParameters.setOutputSpatialReference(m_mapView->spatialReference());
-    m_locatorTask->reverseGeocodeWithParameters(clickedLocation, reverseGeocodeParameters);
-  });
+    m_locatorTask->reverseGeocodeWithParametersAsync(clickedLocation, reverseGeocodeParameters).then(this, [this](const QList<GeocodeResult>& geocodeResults)
+    {
+      if (geocodeResults.empty())
+        return;
 
-  connect(m_locatorTask, &LocatorTask::geocodeCompleted, this, [this](const QUuid&, const QList<GeocodeResult>& geocodeResults)
-  {
-    if (geocodeResults.empty())
-      return;
+      GeocodeResult geocode = geocodeResults.at(0);
+      const Point location = geocode.displayLocation();
+      m_mapView->setViewpointCenterAsync(location);
 
-    GeocodeResult geocode = geocodeResults.at(0);
-    const Point location = geocode.displayLocation();
-    m_mapView->setViewpointCenter(location);
+      const QString address = geocode.label();
+      const int splitIndex = address.indexOf(",");
 
-    const QString address = geocode.label();
-    const int splitIndex = address.indexOf(",");
+      m_mapView->calloutData()->setTitle(address.left(splitIndex).trimmed());
+      m_mapView->calloutData()->setDetail(address.mid(splitIndex + 1).trimmed());
+      m_mapView->calloutData()->setLocation(location);
+      m_mapView->calloutData()->setVisible(true);
 
-    m_mapView->calloutData()->setTitle(address.left(splitIndex).trimmed());
-    m_mapView->calloutData()->setDetail(address.mid(splitIndex + 1).trimmed());
-    m_mapView->calloutData()->setLocation(location);
-    m_mapView->calloutData()->setVisible(true);
-
-    m_graphic->setGeometry(geocode.displayLocation());
-    m_graphic->attributes()->setAttributesMap(geocode.attributes());
-    constexpr double scale = 8000.0;
-    m_mapView->setViewpointCenter(geocode.extent().center(), scale);
-    m_graphic->setVisible(true);
+      m_graphic->setGeometry(geocode.displayLocation());
+      m_graphic->attributes()->setAttributesMap(geocode.attributes());
+      constexpr double scale = 8000.0;
+      m_mapView->setViewpointCenterAsync(geocode.extent().center(), scale);
+      m_graphic->setVisible(true);
+    });
   });
 }
 
@@ -140,7 +138,7 @@ void ReverseGeocodeOnline::setMapView(MapQuickView* mapView)
 
   // center map in San Diego
   const Point center(-13042254.715252, 3857970.236806, SpatialReference(3857));
-  m_mapView->setViewpointCenter(center, 30000);
+  m_mapView->setViewpointCenterAsync(center, 30000);
 
   configureGraphic();
   m_mapView->graphicsOverlays()->append(m_graphicsOverlay);

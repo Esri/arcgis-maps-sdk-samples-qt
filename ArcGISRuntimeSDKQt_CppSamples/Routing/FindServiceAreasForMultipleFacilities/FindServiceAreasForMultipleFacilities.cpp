@@ -36,7 +36,6 @@
 #include "MapTypes.h"
 #include "SymbolTypes.h"
 #include "Error.h"
-#include "TaskWatcher.h"
 #include "GraphicsOverlayListModel.h"
 #include "GraphicListModel.h"
 #include "NetworkAnalystTypes.h"
@@ -45,6 +44,7 @@
 #include "Envelope.h"
 #include "Polygon.h"
 #include "Graphic.h"
+#include "ErrorException.h"
 
 #include <QUuid>
 #include <QUrl>
@@ -117,7 +117,7 @@ void FindServiceAreasForMultipleFacilities::setMapView(MapQuickView* mapView)
 
     // zoom to the full extent of the feature layer
     int buffer = 100;
-    m_mapView->setViewpointGeometry(m_facilitiesFeatureLayer->fullExtent(), buffer);
+    m_mapView->setViewpointGeometryAsync(m_facilitiesFeatureLayer->fullExtent(), buffer);
 
   });
 
@@ -138,46 +138,44 @@ void FindServiceAreasForMultipleFacilities::connectServiceAreaTaskSignals()
       qDebug() << loadError.message() << loadError.additionalMessage();
       return;
     }
-    m_serviceAreaTask->createDefaultParameters();
-  });
-
-  // once default parameters created, set parameters and solve
-  connect(m_serviceAreaTask, &ServiceAreaTask::createDefaultParametersCompleted, this, [this](const QUuid&, ServiceAreaParameters serviceAreaParameters)
-  {
-    serviceAreaParameters.setPolygonDetail(ServiceAreaPolygonDetail::High);
-    serviceAreaParameters.setReturnPolygons(true);
-
-    QList<double> travelTimes = {1.0, 3.0};
-
-    // add service areas of 1 minute and 3 minutes travel time by car
-    serviceAreaParameters.setDefaultImpedanceCutoffs(travelTimes);
-
-    // create query parameters used to select all facilities from the feature table
-    QueryParameters queryParameters;
-    queryParameters.setWhereClause("1=1");
-
-    // add all facilities to the service area parameters
-    serviceAreaParameters.setFacilitiesWithFeatureTable(m_facilitiesTable, queryParameters);
-
-    m_future = m_serviceAreaTask->solveServiceAreaAsync(serviceAreaParameters);
-    m_future.then(this, [this](const ServiceAreaResult& serviceAreaResult)
+    m_serviceAreaTask->createDefaultParametersAsync().then(this, [this](ServiceAreaParameters serviceAreaParameters)
     {
-      emit taskRunningChanged();
+      // once default parameters created, set parameters and solve
+      serviceAreaParameters.setPolygonDetail(ServiceAreaPolygonDetail::High);
+      serviceAreaParameters.setReturnPolygons(true);
 
-      // iterate through the facilities to get the service area polygons
-      for (int i = 0; i < serviceAreaResult.facilities().size(); ++i)
+      QList<double> travelTimes = {1.0, 3.0};
+
+      // add service areas of 1 minute and 3 minutes travel time by car
+      serviceAreaParameters.setDefaultImpedanceCutoffs(travelTimes);
+
+      // create query parameters used to select all facilities from the feature table
+      QueryParameters queryParameters;
+      queryParameters.setWhereClause("1=1");
+
+      // add all facilities to the service area parameters
+      serviceAreaParameters.setFacilitiesWithFeatureTable(m_facilitiesTable, queryParameters);
+
+      m_future = m_serviceAreaTask->solveServiceAreaAsync(serviceAreaParameters);
+      m_future.then(this, [this](const ServiceAreaResult& serviceAreaResult)
       {
-        QList<ServiceAreaPolygon> serviceAreaPolygonList = serviceAreaResult.resultPolygons(i);
-        // create a graphic for each available polygon
-        for (int j = 0; j < serviceAreaPolygonList.size(); ++j)
-        {
-          m_serviceAreasOverlay->graphics()->append(new Graphic(serviceAreaPolygonList[j].geometry(), m_fillSymbols[j], this));
-        }
-      }
-    });
+        emit taskRunningChanged();
 
-    if (!m_future.isValid())
-      qWarning() << "Task not valid.";
+        // iterate through the facilities to get the service area polygons
+        for (int i = 0; i < serviceAreaResult.facilities().size(); ++i)
+        {
+          QList<ServiceAreaPolygon> serviceAreaPolygonList = serviceAreaResult.resultPolygons(i);
+          // create a graphic for each available polygon
+          for (int j = 0; j < serviceAreaPolygonList.size(); ++j)
+          {
+            m_serviceAreasOverlay->graphics()->append(new Graphic(serviceAreaPolygonList[j].geometry(), m_fillSymbols[j], this));
+          }
+        }
+      }).onFailed([](const ErrorException& e)
+      {
+        qWarning() << e.error().message();
+      });
+    });
 
     emit taskRunningChanged();
   });

@@ -84,10 +84,6 @@ signals:
   void junctionSelectedChanged();
   void busyChanged();
 
-private slots:
-  void onTraceCompleted();
-  void onIdentifyLayersCompleted(const QUuid&, const QList<Esri::ArcGISRuntime::IdentifyLayerResult*>& results);
-
 private:
   Esri::ArcGISRuntime::MapQuickView* mapView() const;
   void setMapView(Esri::ArcGISRuntime::MapQuickView* mapView);
@@ -100,7 +96,8 @@ private:
   bool hasErrorOccurred(const Esri::ArcGISRuntime::Error& error);
   void addUtilityNetworkToMap(const Esri::ArcGISRuntime::Error& error);
   void setBusyIndicator(bool status);
-
+  void onIdentifyLayersCompleted(const QList<Esri::ArcGISRuntime::IdentifyLayerResult*>& results);
+  void onTraceCompleted();
   const QUrl m_serviceUrl = QUrl("https://sampleserver7.arcgisonline.com/server/rest/services/UtilityNetwork/NapervilleElectric/FeatureServer");
 
   Esri::ArcGISRuntime::Map* m_map = nullptr;

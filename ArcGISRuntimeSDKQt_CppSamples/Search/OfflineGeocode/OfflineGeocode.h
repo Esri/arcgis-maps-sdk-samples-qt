@@ -34,6 +34,7 @@ namespace Esri::ArcGISRuntime
 #include "SuggestResult.h"
 #include "GeocodeParameters.h"
 #include "ReverseGeocodeParameters.h"
+#include "GeocodeResult.h"
 
 #include <QQuickItem>
 
@@ -78,6 +79,7 @@ private:
   void connectSignals();
   QString errorMessage() const;
   void setErrorMessage(const QString& msg);
+  void geocodeCompleteHandler(const QList<Esri::ArcGISRuntime::GeocodeResult>& results);
 
   bool m_isReverseGeocode = false;
   bool m_geocodeInProgress = false;

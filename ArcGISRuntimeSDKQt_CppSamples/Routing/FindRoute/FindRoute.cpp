@@ -36,7 +36,6 @@
 #include "Stop.h"
 #include "MapTypes.h"
 #include "SymbolTypes.h"
-#include "TaskWatcher.h"
 #include "GraphicsOverlayListModel.h"
 #include "GraphicListModel.h"
 #include "RouteResult.h"
@@ -46,6 +45,7 @@
 #include "Polyline.h"
 
 #include <QUuid>
+#include <QFuture>
 
 using namespace Esri::ArcGISRuntime;
 
@@ -143,35 +143,13 @@ void FindRoute::setupRouteTask()
     if (loadStatus == LoadStatus::Loaded)
     {
       // Request default parameters once the task is loaded
-      m_routeTask->createDefaultParameters();
+      m_routeTask->createDefaultParametersAsync().then(this, [this](const RouteParameters& routeParameters)
+      {
+        // Store the resulting route parameters
+        m_routeParameters = routeParameters;
+      });
     }
   });
-  //! [FindRoute new RouteTask]
-
-  //! [FindRoute connect RouteTask signals]
-  // connect to createDefaultParametersCompleted signal
-  connect(m_routeTask, &RouteTask::createDefaultParametersCompleted, this, [this](const QUuid&, const RouteParameters& routeParameters)
-  {
-    // Store the resulting route parameters
-    m_routeParameters = routeParameters;
-  });
-
-  // connect to solveRouteCompleted signal
-  connect(m_routeTask, &RouteTask::solveRouteCompleted, this, [this](const QUuid&, const RouteResult& routeResult)
-  {
-    // Add the route graphic once the solve completes
-    Route generatedRoute = routeResult.routes().at(0);
-    Graphic* routeGraphic = new Graphic(generatedRoute.routeGeometry(), this);
-    m_routeGraphicsOverlay->graphics()->append(routeGraphic);
-
-    // set the direction maneuver list model
-    m_directions = generatedRoute.directionManeuvers(this);
-    emit directionsChanged();
-
-    // emit that the route has solved successfully
-    emit solveRouteComplete();
-  });
-  //! [FindRoute connect RouteTask signals]
 
   // load the route task
   m_routeTask->load();
@@ -203,7 +181,20 @@ void FindRoute::solveRoute()
       m_routeParameters.setStops(QList<Stop> { stop1, stop2 });
 
       // solve the route with the parameters
-      m_routeTask->solveRoute(m_routeParameters);
+      m_routeTask->solveRouteAsync(m_routeParameters).then(this, [this](const RouteResult& routeResult)
+      {
+        // Add the route graphic once the solve completes
+        Route generatedRoute = routeResult.routes().at(0);
+        Graphic* routeGraphic = new Graphic(generatedRoute.routeGeometry(), this);
+        m_routeGraphicsOverlay->graphics()->append(routeGraphic);
+
+        // set the direction maneuver list model
+        m_directions = generatedRoute.directionManeuvers(this);
+        emit directionsChanged();
+
+        // emit that the route has solved successfully
+        emit solveRouteComplete();
+      });
     }
   }
 }

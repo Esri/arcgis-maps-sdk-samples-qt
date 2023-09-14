@@ -77,7 +77,7 @@ private:
   Esri::ArcGISRuntime::GraphicsOverlay* m_routeOverlay = nullptr;
   Esri::ArcGISRuntime::RouteTask* m_routeTask = nullptr;
   Esri::ArcGISRuntime::RouteParameters m_routeParameters;
-  QFuture<Esri::ArcGISRuntime::RouteResult> m_future;
+  QFuture<Esri::ArcGISRuntime::RouteResult> m_routeTaskFuture;
   int m_travelModeIndex = -1;
   Esri::ArcGISRuntime::Envelope m_routableArea;
 };

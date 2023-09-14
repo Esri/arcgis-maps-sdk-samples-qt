@@ -40,7 +40,6 @@
 #include "TileCache.h"
 #include "MapTypes.h"
 #include "SymbolTypes.h"
-#include "TaskWatcher.h"
 #include "Error.h"
 #include "GraphicsOverlayListModel.h"
 #include "GraphicListModel.h"
@@ -159,16 +158,14 @@ int OfflineRouting::travelModeIndex() const
 
 void OfflineRouting::connectSignals()
 {
-  connect(m_routeTask, &RouteTask::createDefaultParametersCompleted, this, [this](const QUuid&, const RouteParameters& defaultParameters)
-  {
-    m_routeParameters = defaultParameters;
-  });
-
   connect(m_routeTask, &RouteTask::doneLoading, this, [this](const Error& loadError)
   {
     if (loadError.isEmpty())
     {
-      m_routeTask->createDefaultParameters();
+      m_routeTask->createDefaultParametersAsync().then(this, [this](const RouteParameters& defaultParameters)
+      {
+        m_routeParameters = defaultParameters;
+      });
       emit travelModeNamesChanged();
     }
     else
@@ -177,25 +174,22 @@ void OfflineRouting::connectSignals()
     }
   });
 
-  connect(m_mapView, &MapQuickView::identifyGraphicsOverlayCompleted, this, [this](const QUuid&, IdentifyGraphicsOverlayResult* rawIdentifyResult)
-  {
-    auto result = std::unique_ptr<IdentifyGraphicsOverlayResult>(rawIdentifyResult);
-    if (!result->error().isEmpty())
-      qDebug() << result->error().message() << result->error().additionalMessage();
-
-    m_selectedGraphic = nullptr;
-    if (!result->graphics().isEmpty())
-    {
-      // identify selected graphic in m_stopsOverlay
-      int index = m_stopsOverlay->graphics()->indexOf(result->graphics().at(0));
-      m_selectedGraphic = m_stopsOverlay->graphics()->at(index);
-    }
-
-  });
-
   // check whether mouse pressed over an existing stop
   connect(m_mapView, &MapQuickView::mousePressed, this, [this](QMouseEvent& e){
-    m_mapView->identifyGraphicsOverlay(m_stopsOverlay, e.position().x(), e.position().y(), 10, false);
+    m_mapView->identifyGraphicsOverlayAsync(m_stopsOverlay, e.position(), 10, false).then(this, [this](IdentifyGraphicsOverlayResult* rawIdentifyResult)
+    {
+      auto result = std::unique_ptr<IdentifyGraphicsOverlayResult>(rawIdentifyResult);
+      if (!result->error().isEmpty())
+        qDebug() << result->error().message() << result->error().additionalMessage();
+
+      m_selectedGraphic = nullptr;
+      if (!result->graphics().isEmpty())
+      {
+        // identify selected graphic in m_stopsOverlay
+        int index = m_stopsOverlay->graphics()->indexOf(result->graphics().at(0));
+        m_selectedGraphic = m_stopsOverlay->graphics()->at(index);
+      }
+    });
   });
 
   // get stops from clicked locations
@@ -247,32 +241,35 @@ void OfflineRouting::connectSignals()
 
 void OfflineRouting::findRoute()
 {
-  if(!m_future.isFinished() || m_stopsOverlay->graphics()->size() <= 1)
+  if (!m_routeTaskFuture.isFinished())
     return;
 
-  QList<Stop> stops;
-  for (const Graphic* graphic : *m_stopsOverlay->graphics())
+  if (m_stopsOverlay->graphics()->size() > 1)
   {
-    stops << Stop(geometry_cast<Point>(graphic->geometry()));
+    QList<Stop> stops;
+    for (const Graphic* graphic : *m_stopsOverlay->graphics())
+    {
+      stops << Stop(geometry_cast<Point>(graphic->geometry()));
+    }
+
+    // configure stops and travel mode
+    m_routeParameters.setStops(stops);
+    m_routeParameters.setTravelMode(m_routeTask->routeTaskInfo().travelModes().at(m_travelModeIndex));
+
+    m_routeTaskFuture = m_routeTask->solveRouteAsync(m_routeParameters);
+    m_routeTaskFuture.then(this, [this](const RouteResult& routeResult)
+    {
+      if (routeResult.isEmpty())
+        return;
+
+      // clear old route
+      m_routeOverlay->graphics()->clear();
+      Polyline routeGeometry = qAsConst(routeResult).routes().first().routeGeometry();
+      Graphic* routeGraphic = new Graphic(routeGeometry, this);
+
+      m_routeOverlay->graphics()->append(routeGraphic);
+    });
   }
-
-  // configure stops and travel mode
-  m_routeParameters.setStops(stops);
-  m_routeParameters.setTravelMode(m_routeTask->routeTaskInfo().travelModes().at(m_travelModeIndex));
-
-  m_future = m_routeTask->solveRouteAsync(m_routeParameters);
-  m_future.then(this, [this](const RouteResult& routeResult)
-  {
-    if (routeResult.isEmpty())
-      return;
-
-    // clear old route
-    m_routeOverlay->graphics()->clear();
-    Polyline routeGeometry = qAsConst(routeResult).routes().first().routeGeometry();
-    Graphic* routeGraphic = new Graphic(routeGeometry, this);
-
-    m_routeOverlay->graphics()->append(routeGraphic);
-  });
 }
 
 // Set the view (created in QML)

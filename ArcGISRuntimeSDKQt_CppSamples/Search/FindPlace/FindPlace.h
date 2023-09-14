@@ -29,6 +29,7 @@ namespace Esri::ArcGISRuntime
 #include "Point.h"
 #include "Envelope.h"
 #include "GeocodeParameters.h"
+#include "GeocodeResult.h"
 
 #include <QAbstractListModel>
 #include <QQuickItem>
@@ -74,6 +75,7 @@ private:
   bool poiTextHasFocus() const { return m_poiTextHasFocus; }
   void setPoiTextHasFocus(bool hasFocus);
   Esri::ArcGISRuntime::GeocodeParameters createParameters();
+  void geocodeCompleteHandler(const QList<Esri::ArcGISRuntime::GeocodeResult>& results);
 
 private:
   Esri::ArcGISRuntime::Map* m_map = nullptr;
