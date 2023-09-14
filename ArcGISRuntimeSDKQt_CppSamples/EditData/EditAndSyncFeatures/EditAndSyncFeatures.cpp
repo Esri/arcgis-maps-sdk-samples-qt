@@ -35,7 +35,6 @@
 #include "GeometryEngine.h"
 #include "Geodatabase.h"
 #include "Point.h"
-#include "TaskWatcher.h"
 #include "MapViewTypes.h"
 #include "LayerListModel.h"
 #include "ArcGISFeature.h"
@@ -48,6 +47,7 @@
 #include "SyncGeodatabaseJob.h"
 #include "SpatialReference.h"
 
+#include <QFuture>
 #include <QUuid>
 #include <QUrl>
 #include <QtCore/qglobal.h>
@@ -81,7 +81,8 @@ EditAndSyncFeatures::EditAndSyncFeatures(QQuickItem* parent /* = nullptr */):
 EditAndSyncFeatures::~EditAndSyncFeatures()
 {
   // unregister geodatabase
-  m_syncTask->unregisterGeodatabase(m_offlineGdb);
+  auto f = m_syncTask->unregisterGeodatabaseAsync(m_offlineGdb);
+  Q_UNUSED(f)
 }
 
 void EditAndSyncFeatures::init()
@@ -132,48 +133,42 @@ void EditAndSyncFeatures::connectSignals()
     {
       if (!m_selectedFeature)
       {
-        m_mapView->identifyLayer(m_map->operationalLayers()->first(), mouseEvent.position().x(), mouseEvent.position().y(), 5, false, 1);
+        m_mapView->identifyLayerAsync(m_map->operationalLayers()->first(), mouseEvent.position(), 5, false, 1).then(this, [this](IdentifyLayerResult* identifyResult)
+        {
+          // once the identify is done
+          if (!identifyResult)
+            return;
+
+          // clear any existing selection
+          FeatureLayer* featureLayer = static_cast<FeatureLayer*>(m_map->operationalLayers()->first());
+          featureLayer->clearSelection();
+          m_selectedFeature = nullptr;
+
+          if (identifyResult->geoElements().length() > 0)
+          {
+            GeoElement* geoElement = identifyResult->geoElements().at(0);
+            m_selectedFeature = static_cast<ArcGISFeature*>(geoElement);
+            featureLayer->selectFeature(m_selectedFeature);
+            emit updateInstruction("Tap on map to move feature");
+          }
+        });
       }
       else
       {
         // connect to feature table signal
         FeatureLayer* featureLayer = static_cast<FeatureLayer*>(m_map->operationalLayers()->at(0));
-        connect(featureLayer->featureTable(), &GeodatabaseFeatureTable::updateFeatureCompleted, this, [this, featureLayer](const QUuid&, bool success)
-        {
-          if (success)
-          {
-            featureLayer->clearSelection();
-            m_selectedFeature = nullptr;
-            emit updateInstruction("Tap the sync button");
-            emit showButton();
-          }
-        });
 
         // get the point from the mouse point
-        Point mapPoint = m_mapView->screenToLocation(mouseEvent.position().x(), mouseEvent.position().y());
+        const Point mapPoint = m_mapView->screenToLocation(mouseEvent.position().x(), mouseEvent.position().y());
         m_selectedFeature->setGeometry(mapPoint);
-        featureLayer->featureTable()->updateFeature(m_selectedFeature);
+        featureLayer->featureTable()->updateFeatureAsync(m_selectedFeature).then(this, [this, featureLayer]()
+        {
+          featureLayer->clearSelection();
+          m_selectedFeature = nullptr;
+          emit updateInstruction("Tap the sync button");
+          emit showButton();
+        });
       }
-    }
-  });
-
-  // once the identify is done
-  connect(m_mapView, &MapQuickView::identifyLayerCompleted, this, [this](const QUuid&, IdentifyLayerResult* identifyResult)
-  {
-    if (!identifyResult)
-      return;
-
-    // clear any existing selection
-    FeatureLayer* featureLayer = static_cast<FeatureLayer*>(m_map->operationalLayers()->first());
-    featureLayer->clearSelection();
-    m_selectedFeature = nullptr;
-
-    if (identifyResult->geoElements().length() > 0)
-    {
-      GeoElement* geoElement = identifyResult->geoElements().at(0);
-      m_selectedFeature = static_cast<ArcGISFeature*>(geoElement);
-      featureLayer->selectFeature(m_selectedFeature);
-      emit updateInstruction("Tap on map to move feature");
     }
   });
 }
