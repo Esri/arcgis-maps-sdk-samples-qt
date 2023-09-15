@@ -27,7 +27,7 @@
         "GeocodeParameters",
         "GeocodeResult",
         "LocatorTask",
-        "ReverseGeocodeParameters"
+        "ReverseGeocodeParametersAsync"
     ],
     "redirect_from": [
         "/qt/latest/cpp/sample-code/sample-qt-offlinegeocode.htm"
@@ -36,7 +36,7 @@
         "GeocodeParameters",
         "GeocodeResult",
         "LocatorTask",
-        "ReverseGeocodeParameters"
+        "ReverseGeocodeParametersAsync"
     ],
     "snippets": [
         "OfflineGeocode.cpp",

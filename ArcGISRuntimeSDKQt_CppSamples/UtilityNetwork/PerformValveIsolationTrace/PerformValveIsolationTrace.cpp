@@ -54,7 +54,6 @@
 #include "GeometryEngine.h"
 #include "MapTypes.h"
 #include "SymbolTypes.h"
-#include "TaskWatcher.h"
 #include "Error.h"
 #include "GraphicsOverlayListModel.h"
 #include "GraphicListModel.h"
@@ -386,25 +385,23 @@ void PerformValveIsolationTrace::connectSignals()
       return;
 
     // display starting location
-    m_utilityNetwork->featuresForElements(QList<UtilityElement*> {m_startingLocation});
+    m_utilityNetwork->featuresForElementsAsync(QList<UtilityElement*> {m_startingLocation}).then(this, [this](QList<ArcGISFeature*>)
+    {
+      // display starting location
+      ArcGISFeatureListModel* elementFeaturesList = m_utilityNetwork->featuresForElementsResult();
+      const Point startingLocationGeometry = geometry_cast<Point>(elementFeaturesList->first()->geometry());
+      Graphic* graphic = new Graphic(startingLocationGeometry, m_graphicParent.get());
+      m_startingLocationOverlay->graphics()->append(graphic);
+
+      constexpr double scale = 3000.0;
+      m_mapView->setViewpointCenterAsync(startingLocationGeometry, scale);
+      m_tasksRunning = false;
+      emit tasksRunningChanged();
+    });
 
     // populate the combo box choices
     m_categoriesList = categoriesList();
     emit categoriesListChanged();
-  });
-
-  connect(m_utilityNetwork, &UtilityNetwork::featuresForElementsCompleted, this, [this](const QUuid&)
-  {
-    // display starting location
-    ArcGISFeatureListModel* elementFeaturesList = m_utilityNetwork->featuresForElementsResult();
-    const Point startingLocationGeometry = geometry_cast<Point>(elementFeaturesList->first()->geometry());
-    Graphic* graphic = new Graphic(startingLocationGeometry, m_graphicParent.get());
-    m_startingLocationOverlay->graphics()->append(graphic);
-
-    constexpr double scale = 3000.0;
-    m_mapView->setViewpointCenterAsync(startingLocationGeometry, scale);
-    m_tasksRunning = false;
-    emit tasksRunningChanged();
   });
 }
 

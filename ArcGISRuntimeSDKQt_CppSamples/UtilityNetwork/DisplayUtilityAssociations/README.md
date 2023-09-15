@@ -20,7 +20,7 @@ Pan and zoom around the map. Observe graphics that show utility associations bet
 4. Add connection for the `ViewpointChanged` signal of the `MapView`.
 5. When the sample starts and every time the viewpoint changes, do the following steps.
 6. Get the geometry of the mapview's extent using `currentViewpoint(ViewpointType::BoundingGeometry).targetGeometry.extent`.
-7. Get the associations that are within the current extent using `associations(extent)`.
+7. Get the associations that are within the current extent using `associationsAsync(extent)`.
 8. Get the `UtilityAssociationType` for each association.
 9. Create a `Graphic` using the `Geometry` property of the association and a preferred symbol.
 10. Add the graphic to the graphics overlay.

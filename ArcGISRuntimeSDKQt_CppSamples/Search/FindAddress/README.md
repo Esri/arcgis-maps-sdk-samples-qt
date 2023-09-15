@@ -16,7 +16,7 @@ For simplicity, the sample comes loaded with a set of suggested addresses. Choos
 
 1. Create a `LocatorTask` using the URL to a locator service.
 2. Set the `GeocodeParameters` for the locator task and specify the geocode's attributes.
-3. Get the matching results from the `GeocodeResult` using `locatorTask::geocodeWithParameters(addressString, geocodeParameters)`.
+3. Get the matching results from the `GeocodeResult` using `locatorTask::geocodeWithParametersAsync(addressString, geocodeParameters)`.
 4. Create a `Graphic` with the geocode result's location and store the geocode result's attributes in the graphic's attributes.
 5. Show the graphic in a `GraphicsOverlay`.
 

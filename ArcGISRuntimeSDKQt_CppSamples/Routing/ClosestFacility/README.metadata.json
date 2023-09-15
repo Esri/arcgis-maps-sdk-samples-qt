@@ -11,7 +11,7 @@
         "network analysis",
         "route",
         "search",
-        "ClosestFacilityParameters",
+        "ClosestFacilityParametersAsync",
         "ClosestFacilityResult",
         "ClosestFacilityRoute",
         "ClosestFacilityTask",
@@ -25,7 +25,7 @@
         "/qt/latest/cpp/sample-code/sample-qt-closestfacility.htm"
     ],
     "relevant_apis": [
-        "ClosestFacilityParameters",
+        "ClosestFacilityParametersAsync",
         "ClosestFacilityResult",
         "ClosestFacilityRoute",
         "ClosestFacilityTask",

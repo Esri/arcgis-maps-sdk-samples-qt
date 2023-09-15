@@ -42,6 +42,7 @@
 #include "Basemap.h"
 #include "SpatialReference.h"
 #include "Viewpoint.h"
+#include "ErrorException.h"
 
 #include <QScopedPointer>
 #include <QtCore/qglobal.h>
@@ -150,6 +151,9 @@ void OfflineGeocode::geocodeWithText(const QString& address)
   m_locatorTask->geocodeWithParametersAsync(address, m_geocodeParameters).then(this, [this](const QList<GeocodeResult>& geocodeResults)
   {
     geocodeCompleteHandler(geocodeResults);
+  }).onFailed(this, [this](const ErrorException& e)
+  {
+    logError(e.error());
   });
 }
 
@@ -159,6 +163,9 @@ void OfflineGeocode::geocodeWithSuggestion(int index)
       .then(this, [this](const QList<GeocodeResult>& geocodeResults)
   {
     geocodeCompleteHandler(geocodeResults);
+  }).onFailed(this, [this](const ErrorException& e)
+  {
+    logError(e.error());
   });
 }
 
@@ -195,7 +202,6 @@ bool OfflineGeocode::suggestInProgress() const
 void OfflineGeocode::connectSignals()
 {
   connect(m_map, &Map::errorOccurred, this, &OfflineGeocode::logError);
-  connect(m_mapView, &MapQuickView::errorOccurred, this, &OfflineGeocode::logError);
   connect(m_mapView, &MapQuickView::mouseClicked, this, [this](QMouseEvent& mouseEvent)
   {
     m_clickedPoint = m_mapView->screenToLocation(mouseEvent.position().x(), mouseEvent.position().y());
@@ -221,11 +227,17 @@ void OfflineGeocode::connectSignals()
             .then(this, [this](const QList<GeocodeResult>& geocodeResults)
         {
           geocodeCompleteHandler(geocodeResults);
+        }).onFailed(this, [this](const ErrorException& e)
+        {
+          logError(e.error());
         });
 
         m_geocodeInProgress = true;
         emit geocodeInProgressChanged();
       }
+    }).onFailed(this, [this](const ErrorException& e)
+    {
+          logError(e.error());
     });
   });
 
@@ -239,6 +251,9 @@ void OfflineGeocode::connectSignals()
         .then(this, [this](const QList<GeocodeResult>& geocodeResults)
     {
       geocodeCompleteHandler(geocodeResults);
+    }).onFailed(this, [this](const ErrorException& e)
+    {
+      logError(e.error());
     });
 
     // make busy indicator visible
@@ -255,6 +270,9 @@ void OfflineGeocode::connectSignals()
           .then(this, [this](const QList<GeocodeResult>& geocodeResults)
       {
         geocodeCompleteHandler(geocodeResults);
+      }).onFailed(this, [this](const ErrorException& e)
+      {
+        logError(e.error());
       });
 
       m_geocodeInProgress = true;
@@ -283,8 +301,6 @@ void OfflineGeocode::connectSignals()
     m_suggestInProgress = m_suggestListModel->suggestInProgress();
     emit suggestInProgressChanged();
   });
-
-  connect(m_locatorTask, &LocatorTask::errorOccurred, this, &OfflineGeocode::logError);
 }
 
 void OfflineGeocode::geocodeCompleteHandler(const QList<GeocodeResult>& geocodeResults)

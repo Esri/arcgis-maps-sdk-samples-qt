@@ -18,12 +18,12 @@ Select a container feature to show all features inside the container. The contai
 2. Create and load a UtilityNetwork with the same feature service URL as the layers in the Map.
 3. Add a `GraphicsOverlay` for displaying a container view.
 4. Create a connection to `MapQuickView::mouseClicked`.
-5. Identify a feature with `MapView::identifyLayers` and create a `UtilityElement` from it.
-6. Get the associations for this element using `UtilityNetwork::associations(UtilityElement *element, UtilityAssociationType::Containment)`.
+5. Identify a feature with `MapView::identifyLayersAsync` and create a `UtilityElement` from it.
+6. Get the associations for this element using `UtilityNetwork::associationsAsync(UtilityElement *element, UtilityAssociationType::Containment)`.
 7. Turn-off the visibility of all `OperationalLayers`.
-8. Get the features for the `UtilityElement`(s) from the associations using `UtilityNetwork::featuresForElements(const QList<UtilityElement *> &elements)`
+8. Get the features for the `UtilityElement`(s) from the associations using `UtilityNetwork::featuresForElementsAsync(const QList<UtilityElement *> &elements)`
 9. Add a `Graphic` with the geometry and symbol of each feature to the `GraphicsOverlay`.
-10. Get associations for the extent of the `GraphicsOverlay` using `UtilityNetwork::associations(const Envelope &extent)`
+10. Get associations for the extent of the `GraphicsOverlay` using `UtilityNetwork::associationsAsync(const Envelope &extent)`
 11. Add a `Graphic` to represent the association geometry between container features using a symbol that distinguishes between `Attachment` and `Connectivity` association type.
 12. Add another `Graphic` that represents this extent and zoom to this extent with some buffer.
 

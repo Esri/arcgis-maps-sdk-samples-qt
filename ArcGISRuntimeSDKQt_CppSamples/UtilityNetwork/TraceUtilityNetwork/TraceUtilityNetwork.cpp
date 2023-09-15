@@ -63,6 +63,7 @@
 #include "Envelope.h"
 #include "Viewpoint.h"
 #include "Polyline.h"
+#include "ErrorException.h"
 
 #include <QFuture>
 
@@ -270,6 +271,9 @@ void TraceUtilityNetwork::trace(int index)
   m_utilityNetwork->traceAsync(m_traceParams).then(this, [this](QList<UtilityTraceResult*>)
   {
     onTraceCompleted();
+  }).onFailed([this](const ErrorException& e)
+  {
+        hasErrorOccurred(e.error());
   });
 }
 

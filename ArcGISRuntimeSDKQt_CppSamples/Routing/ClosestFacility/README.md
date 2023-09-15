@@ -15,10 +15,10 @@ Click near any of the hospitals and a route will be displayed from that clicked 
 ## How it works
 
 1. Create a `ClosestFacilityTask` using an Url from an online service.
-2. Get a `ClosestFacilityParameters` from this task, using `createDefaultParameters`.
+2. Get a `ClosestFacilityParameters` from this task, using `createDefaultParametersAsync`.
 3. Add a list of facilities to the task parameters, using `ClosestFacilityParameters::setFacilities(const QList<Facility>& facilities);`.
 4. Add an incident to the parameters, using `ClosestFacilityParameters::setIncidents(const QList<Incident>& incidents);`.
-5. Get the `ClosestFacilityResult` from solving the task with parameters: , `ClosestFacilityTask::solveClosestFacility(const ClosestFacilityParameters& closestFacilityParameters);`.
+5. Get the `ClosestFacilityResult` from solving the task with parameters: , `ClosestFacilityTask::solveClosestFacilityAsync(const ClosestFacilityParameters& closestFacilityParameters);`.
 6. Get the ranked list of the indices of the closest facilities to the incident, `ClosestFacilityResult::rankedFacilities(int incidentIndex) const;`.
 7. Get the index of the closest facility (e.g. the first index in the ranked list).
 8. Find the closest facility route, `ClosestFacilityResult::route(int facilityIndex, int incidentIndex) const;`.
@@ -28,7 +28,7 @@ Click near any of the hospitals and a route will be displayed from that clicked 
 
 ## Relevant API
 
-* ClosestFacilityParameters
+* ClosestFacilityParametersAsync
 * ClosestFacilityResult
 * ClosestFacilityRoute
 * ClosestFacilityTask

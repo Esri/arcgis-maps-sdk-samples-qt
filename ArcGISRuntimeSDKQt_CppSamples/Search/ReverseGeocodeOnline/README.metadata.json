@@ -14,7 +14,7 @@
         "search",
         "GeocodeParameters",
         "LocatorTask",
-        "ReverseGeocodeParameters"
+        "ReverseGeocodeParametersAsync"
     ],
     "redirect_from": [
         ""
@@ -22,7 +22,7 @@
     "relevant_apis": [
         "GeocodeParameters",
         "LocatorTask",
-        "ReverseGeocodeParameters"
+        "ReverseGeocodeParametersAsync"
     ],
     "snippets": [
         "ReverseGeocodeOnline.cpp",

@@ -23,7 +23,7 @@ Click 'Add stop' to add stops to the route. Click 'Add barrier' to add areas tha
 5. If the user will accept routes with the stops in any order, set `findBestSequence` to `true` to find the most optimal route.
 6. If the user has a definite start point, set `preserveFirstStop` to `true`.
 7. If the user has a definite final destination, set `preserveLastStop` to `true`.
-8. Call `routeTask.solveRoute(routeParameters)` to get a `RouteResult`.
+8. Call `routeTask.solveRouteAsync(routeParameters)` to get a `RouteResult`.
 9. Get the first returned route by calling `routeResult.routes()[0]`.
 10. Get the geometry from the route to display the route to the map.
 
@@ -32,7 +32,7 @@ Click 'Add stop' to add stops to the route. Click 'Add barrier' to add areas tha
 
 * DirectionManeuverListModel
 * PolygonBarrier
-* Route
+* RouteAsync
 * RouteParameters
 * RouteResult
 * RouteTask

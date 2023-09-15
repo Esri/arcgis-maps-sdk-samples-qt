@@ -22,7 +22,7 @@ Type the address in the Search menu option or select from the list to `Geocode` 
 * GeocodeParameters
 * GeocodeResult
 * LocatorTask
-* ReverseGeocodeParameters
+* ReverseGeocodeParametersAsync
 
 ## Offline Data
 

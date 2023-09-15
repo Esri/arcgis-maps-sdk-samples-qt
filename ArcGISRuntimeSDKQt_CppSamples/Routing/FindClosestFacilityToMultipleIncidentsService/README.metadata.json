@@ -11,7 +11,7 @@
         "network analysis",
         "route",
         "search",
-        "ClosestFacilityParameters",
+        "ClosestFacilityParametersAsync",
         "ClosestFacilityResult",
         "ClosestFacilityRoute",
         "ClosestFacilityTask",
@@ -24,7 +24,7 @@
         ""
     ],
     "relevant_apis": [
-        "ClosestFacilityParameters",
+        "ClosestFacilityParametersAsync",
         "ClosestFacilityResult",
         "ClosestFacilityRoute",
         "ClosestFacilityTask",

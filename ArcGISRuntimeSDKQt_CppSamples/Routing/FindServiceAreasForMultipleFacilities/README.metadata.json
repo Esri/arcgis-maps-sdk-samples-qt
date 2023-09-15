@@ -13,7 +13,7 @@
         "network analysis",
         "service area",
         "travel time",
-        "ServiceAreaParameters",
+        "ServiceAreaParametersAsync",
         "ServiceAreaPolygon",
         "ServiceAreaResult",
         "ServiceAreaTask"
@@ -22,7 +22,7 @@
         ""
     ],
     "relevant_apis": [
-        "ServiceAreaParameters",
+        "ServiceAreaParametersAsync",
         "ServiceAreaPolygon",
         "ServiceAreaResult",
         "ServiceAreaTask"

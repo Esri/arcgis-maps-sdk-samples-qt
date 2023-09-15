@@ -56,6 +56,7 @@
 #include "Polygon.h"
 #include "Symbol.h"
 #include "SimpleLineSymbol.h"
+#include "ErrorException.h"
 
 #include <QImage>
 #include <QQmlContext>
@@ -127,11 +128,11 @@ void DisplayContentOfUtilityNetworkContainer::createConnections()
   {
     setMessageBoxText("MapView error: " + e.message() + " " + e.additionalMessage());
   });
+}
 
-  connect(m_utilityNetwork, &UtilityNetwork::errorOccurred, this, [this](const Error& e)
-  {
-    setMessageBoxText("Utility Network error occured: " + e.message() + " " + e.additionalMessage());
-  });
+void DisplayContentOfUtilityNetworkContainer::onTaskFailed(const QString& errorMsg, const ErrorException& taskException)
+{
+  setMessageBoxText(errorMsg + taskException.error().message() + " " + taskException.error().additionalMessage());
 }
 
 void DisplayContentOfUtilityNetworkContainer::identifyFeaturesAtMouseClick(QMouseEvent& mouseEvent)
@@ -145,6 +146,9 @@ void DisplayContentOfUtilityNetworkContainer::identifyFeaturesAtMouseClick(QMous
   m_mapView->identifyLayersAsync(mouseEvent.position(), tolerance, returnPopupsOnly).then(this, [this](const QList<IdentifyLayerResult*>& identifyResults)
   {
     getUtilityAssociationsOfFeature(identifyResults);
+  }).onFailed(this, [this](const ErrorException& e)
+  {
+     onTaskFailed("MapView error: ", e);
   });
 }
 
@@ -180,6 +184,9 @@ void DisplayContentOfUtilityNetworkContainer::getUtilityAssociationsOfFeature(co
               m_utilityAssociationFuture.then(this, [this](const QList<UtilityAssociation*>& containmentAssociations)
               {
                 onAssociationsCompleted(containmentAssociations);
+              }).onFailed(this, [this](const ErrorException& e)
+              {
+                onTaskFailed("Utility Network error occured: ", e);
               });
               return;
             }
@@ -219,6 +226,9 @@ void DisplayContentOfUtilityNetworkContainer::getFeaturesForElementsOfUtilityAss
     m_featuresFuture.then(this, [this](QList<ArcGISFeature*>)
     {
       displayFeaturesAndGetAssociations();
+    }).onFailed(this, [this](const ErrorException& e)
+    {
+      onTaskFailed("Utility Network error occured: ", e);
     });
   }
 }
@@ -238,6 +248,9 @@ void DisplayContentOfUtilityNetworkContainer::displayFeaturesAndGetAssociations(
   m_utilityAssociationFuture.then(this, [this](const QList<UtilityAssociation*>& containmentAssociations)
   {
     onAssociationsCompleted(containmentAssociations);
+  }).onFailed(this, [this](const ErrorException& e)
+  {
+    onTaskFailed("Utility Network error occured: ", e);
   });
 }
 

@@ -22,10 +22,10 @@
 #include "DictionarySymbolStyle.h"
 #include "SymbolStyleSearchResultListModel.h"
 #include "SymbolStyleSearchParameters.h"
-#include "TaskWatcher.h"
 
 #include <QtCore/qglobal.h>
 #include <QStandardPaths>
+#include <QFuture>
 
 using namespace Esri::ArcGISRuntime;
 
@@ -70,14 +70,6 @@ void SearchDictionarySymbolStyle::componentComplete()
 
   //Create the dictionary from datapath (added since 100.6)
   m_dictionarySymbolStyle = DictionarySymbolStyle::createFromFile(datapath, this);
-
-  //Connect to the search completed signal of the dictionary
-  connect(m_dictionarySymbolStyle, &DictionarySymbolStyle::searchSymbolsCompleted, this, [this](const QUuid&, SymbolStyleSearchResultListModel* results)
-  {
-    m_searchResults = results;
-    emit searchResultsListModelChanged();
-    emit searchCompleted(results->size());
-  });
 }
 
 QAbstractListModel* SearchDictionarySymbolStyle::searchResultsListModel() const
@@ -96,5 +88,10 @@ void SearchDictionarySymbolStyle::search(const QStringList& namesSearchParam, co
   searchParameters.setNames(namesSearchParam);
   searchParameters.setSymbolClasses(classesSearchParam);
   searchParameters.setTags(tagsSearchParam);
-  m_dictionarySymbolStyle->searchSymbols(searchParameters);
+  m_dictionarySymbolStyle->searchSymbolsAsync(searchParameters).then(this, [this](SymbolStyleSearchResultListModel* results)
+  {
+    m_searchResults = results;
+    emit searchResultsListModelChanged();
+    emit searchCompleted(results->size());
+  });
 }

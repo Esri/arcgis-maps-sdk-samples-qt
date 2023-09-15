@@ -16,7 +16,7 @@
         "point of interest",
         "search",
         "suggestions",
-        "GeocodeParameters",
+        "GeocodeParametersAsync",
         "GeocodeResult",
         "LocatorTask",
         "SuggestParameters",
@@ -26,7 +26,7 @@
         "/qt/latest/cpp/sample-code/sample-qt-findplace.htm"
     ],
     "relevant_apis": [
-        "GeocodeParameters",
+        "GeocodeParametersAsync",
         "GeocodeResult",
         "LocatorTask",
         "SuggestParameters",
