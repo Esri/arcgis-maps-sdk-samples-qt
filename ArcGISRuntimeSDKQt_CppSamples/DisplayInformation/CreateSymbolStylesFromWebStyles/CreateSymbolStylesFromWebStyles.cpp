@@ -32,13 +32,13 @@
 #include "SymbolStyleSearchParameters.h"
 #include "SymbolStyleSearchResultListModel.h"
 #include "SymbolStyleSearchResult.h"
-#include "TaskWatcher.h"
 #include "UniqueValue.h"
 #include "UniqueValueListModel.h"
 #include "SpatialReference.h"
 #include "Point.h"
 #include "Symbol.h"
 
+#include <QFuture>
 #include <QUuid>
 
 using namespace Esri::ArcGISRuntime;
@@ -64,44 +64,42 @@ CreateSymbolStylesFromWebStyles::CreateSymbolStylesFromWebStyles(QObject* parent
   // Set the scale at which feature symbols and text will appear at their default size
   m_map->setReferenceScale(100'000);
 
-  createSymbolStyles();
+  createCategoriesMap();
+  performSymbolSearch();
 }
 
-void CreateSymbolStylesFromWebStyles::createSymbolStyles()
+void CreateSymbolStylesFromWebStyles::performSymbolSearch()
 {
-  QMap<QString,QStringList> categoriesMap = createCategoriesMap();
-  SymbolStyle* symbolStyle = new SymbolStyle("Esri2DPointSymbolsStyle", {}, this);
   SymbolStyleSearchParameters searchParams;
   searchParams.setKeysStrictlyMatch(true);
+  searchParams.setKeys(m_categoriesMap.keys());
 
-  connect(symbolStyle, &SymbolStyle::searchSymbolsCompleted, this, [this, symbolStyle, categoriesMap](const QUuid& /* taskId */, SymbolStyleSearchResultListModel* searchResults)
+  SymbolStyle* symbolStyle = new SymbolStyle("Esri2DPointSymbolsStyle", {}, this);
+  symbolStyle->searchSymbolsAsync(searchParams).then(this,
+  [this, symbolStyle](SymbolStyleSearchResultListModel* searchResults)
   {
     m_legendInfoListModel = searchResults;
     emit legendInfoListModelChanged();
 
-    const auto results = searchResults->searchResults();
-    for (const SymbolStyleSearchResult& symbolStyleSearchResult : results)
+    auto results = searchResults->searchResults();
+    for (SymbolStyleSearchResult& symbolStyleSearchResult : results)
     {
-      const QString symbolLabel = symbolStyleSearchResult.key();
-
       // We pass symbolStyle as the QObject parent for fetchSymbol() because we don't need access to the resulting class outside the lifetime of this SymbolStyle
-      SymbolStyleSearchResultSymbolFetcher* symbolFetcher = symbolStyleSearchResult.fetchSymbol(symbolStyle);
-
-      connect(symbolFetcher, &SymbolStyleSearchResultSymbolFetcher::fetchSymbolCompleted, this, [this, symbolLabel, categoriesMap](const QUuid& /* taskId */, Symbol* symbol)
+      symbolStyleSearchResult.fetchSymbolAsync(symbolStyle).then(this,
+      [this, symbolStyleSearchResult](Symbol* symbol)
       {
+        const QString symbolLabel = symbolStyleSearchResult.key();
         // If multiple field names are set, we can pass multiple values from each field,
         // However, even though we are using the same symbol, we must create a UniqueValue for each value from the same field
         // When the FeatureLayer is rendered, all features with a matching value in the specified FieldNames will appear with the defined UniqueValue
-        for (const QString &category : categoriesMap[symbolLabel])
+        for (const QString &category : m_categoriesMap[symbolLabel])
         {
           m_uniqueValueRenderer->uniqueValues()->append(new UniqueValue(symbolLabel, "", {category}, symbol, this));
         }
       });
     }
-  });
 
-  searchParams.setKeys(categoriesMap.keys());
-  symbolStyle->searchSymbols(searchParams);
+  });
 }
 
 CreateSymbolStylesFromWebStyles::~CreateSymbolStylesFromWebStyles() = default;
@@ -132,7 +130,7 @@ void CreateSymbolStylesFromWebStyles::setMapView(MapQuickView* mapView)
   constexpr double scale = 7000;
   const Point centerPt(x_longitude, y_latitude, SpatialReference::wgs84());
 
-  m_mapView->setViewpointCenter(centerPt, scale);
+  m_mapView->setViewpointCenterAsync(centerPt, scale);
 
   connect(m_mapView, &MapQuickView::mapScaleChanged, this, [this]()
   {
@@ -143,20 +141,20 @@ void CreateSymbolStylesFromWebStyles::setMapView(MapQuickView* mapView)
   emit mapViewChanged();
 }
 
-QMap<QString,QStringList> CreateSymbolStylesFromWebStyles::createCategoriesMap()
+void CreateSymbolStylesFromWebStyles::createCategoriesMap()
 {
-  QMap<QString,QStringList> categories;
-  categories["atm"] << "Banking and Finance";
-  categories["beach"] << "Beaches and Marinas";
-  categories["campground"] << "Campgrounds";
-  categories["city-hall"] << "City Halls" << "Government Offices";
-  categories["hospital"] << "Hospitals and Medical Centers" << "Health Screening and Testing" << "Health Centers" << "Mental Health Centers";
-  categories["library"] << "Libraries";
-  categories["park"] << "Parks and Gardens";
-  categories["place-of-worship"] << "Churches";
-  categories["police-station"] << "Sheriff and Police Stations";
-  categories["post-office"] << "DHL Locations" << "Federal Express Locations";
-  categories["school"] << "Public High Schools" << "Public Elementary Schools" << "Private and Charter Schools";
-  categories["trail"] << "Trails";
-  return categories;
+  m_categoriesMap = {
+    {"atm", {"Banking and Finance"}},
+    {"beach", {"Beaches and Marinas"}},
+    {"campground", {"Campgrounds"}},
+    {"city-hall", {"City Halls", "Government Offices"}},
+    {"hospital", {"Hospitals and Medical Centers", "Health Screening and Testing", "Health Centers", "Mental Health Centers"}},
+    {"library", {"Libraries"}},
+    {"park", {"Parks and Gardens"}},
+    {"place-of-worship", {"Churches"}},
+    {"police-station", {"Sheriff and Police Stations"}},
+    {"post-office", {"DHL Locations", "Federal Express Locations"}},
+    {"school", {"Public High Schools", "Public Elementary Schools", "Private and Charter Schools"}},
+    {"trail", {"Trails"}}
+  };
 }

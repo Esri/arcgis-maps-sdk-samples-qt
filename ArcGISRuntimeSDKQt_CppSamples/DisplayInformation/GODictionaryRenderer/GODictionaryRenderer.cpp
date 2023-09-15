@@ -30,13 +30,13 @@
 #include "MapTypes.h"
 #include "GraphicsOverlayListModel.h"
 #include "PointCollection.h"
-#include "TaskWatcher.h"
 #include "GraphicsOverlay.h"
 #include "SpatialReference.h"
 #include "Point.h"
 #include "Graphic.h"
 
 #include <QtCore/qglobal.h>
+#include <QFuture>
 #include <QFile>
 #include <QStandardPaths>
 
@@ -246,5 +246,5 @@ void GODictionaryRenderer::createGraphic(QVariantMap rawAttributes)
 void GODictionaryRenderer::zoomToGraphics()
 {
   if (m_graphicsOverlay)
-    m_mapView->setViewpointGeometry(m_graphicsOverlay->extent(), 20);
+    m_mapView->setViewpointGeometryAsync(m_graphicsOverlay->extent(), 20);
 }

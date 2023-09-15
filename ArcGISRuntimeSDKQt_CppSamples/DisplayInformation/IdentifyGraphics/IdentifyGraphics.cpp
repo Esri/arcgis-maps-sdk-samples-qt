@@ -33,9 +33,9 @@
 #include "GraphicsOverlayListModel.h"
 #include "GraphicListModel.h"
 #include "IdentifyGraphicsOverlayResult.h"
-#include "TaskWatcher.h"
 #include "Geometry.h"
 
+#include <QFuture>
 #include <QMouseEvent>
 #include <QList>
 #include <QUuid>
@@ -112,20 +112,19 @@ void IdentifyGraphics::connectSignals()
     constexpr bool returnPopupsOnly = false;
     constexpr int maximumResults = 1;
 
-    m_mapView->identifyGraphicsOverlay(m_graphicsOverlay, mouseEvent.position().x(), mouseEvent.position().y(), tolerance, returnPopupsOnly, maximumResults);
-  });
-
-  // connect to the identifyLayerCompleted signal on the map view
-  connect(m_mapView, &MapQuickView::identifyGraphicsOverlayCompleted, this, [this](const QUuid&, IdentifyGraphicsOverlayResult* rawIdentifyResult)
-  {
-    // Delete rawIdentifyResult on leaving scope.
-    auto identifyResult = std::unique_ptr<IdentifyGraphicsOverlayResult>(rawIdentifyResult);
-
-    if (identifyResult)
+    m_mapView->identifyGraphicsOverlayAsync(m_graphicsOverlay, mouseEvent.position(), tolerance, returnPopupsOnly, maximumResults).then(this,
+    [this](IdentifyGraphicsOverlayResult* rawIdentifyResult)
     {
-      m_identifiedGraphicsCount = identifyResult->graphics().size();
-      emit identifiedGraphicsCountChanged();
-    }
+      // Delete rawIdentifyResult on leaving scope.
+      auto identifyResult = std::unique_ptr<IdentifyGraphicsOverlayResult>(rawIdentifyResult);
+
+      if (identifyResult)
+      {
+        m_identifiedGraphicsCount = identifyResult->graphics().size();
+        emit identifiedGraphicsCountChanged();
+      }
+    });
+
   });
   //! [identify graphics api snippet]
 }
