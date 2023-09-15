@@ -217,7 +217,7 @@ void ClosestFacility::setupRouting()
 
 }
 
-void ClosestFacility::solveRoute(const Esri::ArcGISRuntime::Point& incidentPoint)
+void ClosestFacility::solveRoute(const Point& incidentPoint)
 {
   m_facilityParams.clearIncidents();
   m_facilityParams.setIncidents(QList<Incident> {Incident(incidentPoint)});
