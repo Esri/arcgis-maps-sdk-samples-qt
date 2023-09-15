@@ -35,7 +35,6 @@
 #include "MapViewTypes.h"
 #include "MapTypes.h"
 #include "LayerListModel.h"
-#include "TaskWatcher.h"
 #include "IdentifyLayerResult.h"
 #include "QueryParameters.h"
 #include "AttributeListModel.h"
@@ -43,6 +42,7 @@
 #include "CalloutData.h"
 #include "Envelope.h"
 
+#include <QFuture>
 #include <QUrl>
 #include <QUuid>
 #include <QMouseEvent>
@@ -111,7 +111,10 @@ void UpdateAttributesFeatureService::connectSignals()
     emit hideWindow();
 
     // call identify on the map view
-    m_mapView->identifyLayer(m_featureLayer, mouseEvent.position().x(), mouseEvent.position().y(), 5, false, 1);
+    m_mapView->identifyLayerAsync(m_featureLayer, mouseEvent.position(), 5, false, 1).then(this, [this](IdentifyLayerResult* identifyResult)
+    {
+      onIdentifyLayerCompleted_(identifyResult);
+    });
   });
 
   // connect to the viewpoint changed signal on the MapQuickView
@@ -119,74 +122,6 @@ void UpdateAttributesFeatureService::connectSignals()
   {
     m_featureLayer->clearSelection();
     emit hideWindow();
-  });
-
-  // connect to the identifyLayerCompleted signal on the map view
-  connect(m_mapView, &MapQuickView::identifyLayerCompleted, this, [this](const QUuid&, IdentifyLayerResult* identifyResult)
-  {
-    if(!identifyResult)
-      return;
-    if (!identifyResult->geoElements().empty())
-    {
-      // select the item in the result
-      m_featureLayer->selectFeature(static_cast<Feature*>(identifyResult->geoElements().at(0)));
-      // Update the parent so the featureLayer is not deleted when the identifyResult is deleted.
-      m_featureLayer->setParent(this);
-
-      // obtain the selected feature with attributes
-      QueryParameters queryParams;
-      QString whereClause = "objectid=" + identifyResult->geoElements().at(0)->attributes()->attributeValue("objectid").toString();
-      queryParams.setWhereClause(whereClause);
-      m_featureTable->queryFeatures(queryParams);
-    }
-  });
-
-  // connect to the queryFeaturesCompleted signal on the feature table
-  connect(m_featureTable, &FeatureTable::queryFeaturesCompleted, this, [this](const QUuid&, FeatureQueryResult* featureQueryResult)
-  {
-    if (featureQueryResult && featureQueryResult->iterator().hasNext())
-    {
-      // first delete if not nullptr
-      if (m_selectedFeature)
-        delete m_selectedFeature;
-
-      // set selected feature member
-      m_selectedFeature = static_cast<ArcGISFeature*>(featureQueryResult->iterator().next(this));
-      m_selectedFeature->setParent(this);
-      m_featureType = m_selectedFeature->attributes()->attributeValue("typdamage").toString();
-      m_mapView->calloutData()->setTitle(QString("<br><font size=\"+2\"><b>%1</b></font>").arg(m_featureType));
-      m_mapView->calloutData()->setLocation(m_selectedFeature->geometry().extent().center());
-      emit featureTypeChanged();
-      emit featureSelected();
-    }
-  });
-
-  // connect to the updateFeatureCompleted signal to determine if the update was successful
-  connect(m_featureTable, &ServiceFeatureTable::updateFeatureCompleted, this, [this](const QUuid&, bool success)
-  {
-    // if the update was successful, call apply edits to apply to the service
-    if (success)
-      m_featureTable->applyEdits();
-  });
-
-  // connect to the applyEditsCompleted signal from the ServiceFeatureTable
-  connect(m_featureTable, &ServiceFeatureTable::applyEditsCompleted, this, [this](const QUuid&, const QList<FeatureEditResult*>& featureEditResults)
-  {
-    // Lock is a convenience wrapper that deletes the contents of featureEditResults when we leave scope.
-    FeatureEditListResultLock lock(featureEditResults);
-
-    // check if result list is not empty
-    if (!lock.results.isEmpty())
-    {
-      // obtain the first item in the list
-      FeatureEditResult* featureEditResult = lock.results.first();
-      // check if there were errors, and if not, log the new object ID
-      if (!featureEditResult->isCompletedWithErrors())
-        qDebug() << "Successfully updated attribute for Object ID:" << featureEditResult->objectId();
-      else
-        qDebug() << "Apply edits error.";
-    }
-    m_featureLayer->clearSelection();
   });
 }
 
@@ -200,7 +135,7 @@ void UpdateAttributesFeatureService::updateSelectedFeature(QString fieldVal)
   m_featureLoadStatusChangedConnection =
       connect(
           m_selectedFeature, &ArcGISFeature::loadStatusChanged,
-          this, [this, fieldVal](Esri::ArcGISRuntime::LoadStatus)
+          this, [this, fieldVal](LoadStatus)
                 {
                   if (m_selectedFeature->loadStatus() == LoadStatus::Loaded)
                   {
@@ -211,7 +146,13 @@ void UpdateAttributesFeatureService::updateSelectedFeature(QString fieldVal)
                     m_selectedFeature->attributes()->replaceAttribute("typdamage", fieldVal);
 
                     // update the feature in the feature table
-                    m_featureTable->updateFeature(m_selectedFeature);
+                    m_featureTable->updateFeatureAsync(m_selectedFeature).then(this, [this]()
+                    {
+                      m_featureTable->applyEditsAsync().then(this, [this](const QList<FeatureEditResult*>& featureEditResults)
+                      {
+                        onApplyEditsCompleted_(featureEditResults);
+                      });
+                    });
                   }
                 }
   );
@@ -223,4 +164,65 @@ void UpdateAttributesFeatureService::updateSelectedFeature(QString fieldVal)
 QString UpdateAttributesFeatureService::featureType() const
 {
   return m_featureType;
+}
+
+void UpdateAttributesFeatureService::onIdentifyLayerCompleted_(IdentifyLayerResult* identifyResult)
+{
+  if (!identifyResult)
+    return;
+
+  if (!identifyResult->geoElements().empty())
+  {
+    // select the item in the result
+    m_featureLayer->selectFeature(static_cast<Feature*>(identifyResult->geoElements().at(0)));
+    // Update the parent so the featureLayer is not deleted when the identifyResult is deleted.
+    m_featureLayer->setParent(this);
+
+    // obtain the selected feature with attributes
+    QueryParameters queryParams;
+    QString whereClause = "objectid=" + identifyResult->geoElements().at(0)->attributes()->attributeValue("objectid").toString();
+    queryParams.setWhereClause(whereClause);
+    m_featureTable->queryFeaturesAsync(queryParams).then(this, [this](FeatureQueryResult* featureQueryResult)
+    {
+      onQueryFeaturesCompleted_(featureQueryResult);
+    });
+  }
+}
+
+void UpdateAttributesFeatureService::onQueryFeaturesCompleted_(FeatureQueryResult* featureQueryResult)
+{
+  if (featureQueryResult && featureQueryResult->iterator().hasNext())
+  {
+    // first delete if not nullptr
+    if (m_selectedFeature)
+      delete m_selectedFeature;
+
+    // set selected feature member
+    m_selectedFeature = static_cast<ArcGISFeature*>(featureQueryResult->iterator().next(this));
+    m_selectedFeature->setParent(this);
+    m_featureType = m_selectedFeature->attributes()->attributeValue("typdamage").toString();
+    m_mapView->calloutData()->setTitle(QString("<br><font size=\"+2\"><b>%1</b></font>").arg(m_featureType));
+    m_mapView->calloutData()->setLocation(m_selectedFeature->geometry().extent().center());
+    emit featureTypeChanged();
+    emit featureSelected();
+  }
+}
+
+void UpdateAttributesFeatureService::onApplyEditsCompleted_(const QList<FeatureEditResult*>& featureEditResults)
+{
+  // Lock is a convenience wrapper that deletes the contents of featureEditResults when we leave scope.
+  FeatureEditListResultLock lock(featureEditResults);
+
+  // check if result list is not empty
+  if (!lock.results.isEmpty())
+  {
+    // obtain the first item in the list
+    FeatureEditResult* featureEditResult = lock.results.first();
+    // check if there were errors, and if not, log the new object ID
+    if (!featureEditResult->isCompletedWithErrors())
+      qDebug() << "Successfully updated attribute for Object ID:" << featureEditResult->objectId();
+    else
+      qDebug() << "Apply edits error.";
+  }
+  m_featureLayer->clearSelection();
 }
