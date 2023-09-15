@@ -25,7 +25,6 @@
 #include "MapQuickView.h"
 #include "ServiceFeatureTable.h"
 #include "SymbolStyle.h"
-#include "SymbolStyleSearchResultSymbolFetcher.h"
 #include "UniqueValueRenderer.h"
 #include "MapTypes.h"
 #include "LayerListModel.h"
@@ -64,19 +63,19 @@ CreateSymbolStylesFromWebStyles::CreateSymbolStylesFromWebStyles(QObject* parent
   // Set the scale at which feature symbols and text will appear at their default size
   m_map->setReferenceScale(100'000);
 
-  createCategoriesMap();
   performSymbolSearch();
 }
 
 void CreateSymbolStylesFromWebStyles::performSymbolSearch()
 {
+  QMap<QString,QStringList> categoriesMap = createCategoriesMap();
   SymbolStyleSearchParameters searchParams;
+  searchParams.setKeys(categoriesMap.keys());
   searchParams.setKeysStrictlyMatch(true);
-  searchParams.setKeys(m_categoriesMap.keys());
 
   SymbolStyle* symbolStyle = new SymbolStyle("Esri2DPointSymbolsStyle", {}, this);
   symbolStyle->searchSymbolsAsync(searchParams).then(this,
-  [this, symbolStyle](SymbolStyleSearchResultListModel* searchResults)
+  [this, symbolStyle, categoriesMap](SymbolStyleSearchResultListModel* searchResults)
   {
     m_legendInfoListModel = searchResults;
     emit legendInfoListModelChanged();
@@ -86,13 +85,13 @@ void CreateSymbolStylesFromWebStyles::performSymbolSearch()
     {
       // We pass symbolStyle as the QObject parent for fetchSymbol() because we don't need access to the resulting class outside the lifetime of this SymbolStyle
       symbolStyleSearchResult.fetchSymbolAsync(symbolStyle).then(this,
-      [this, symbolStyleSearchResult](Symbol* symbol)
+      [this, symbolStyleSearchResult, categoriesMap](Symbol* symbol)
       {
         const QString symbolLabel = symbolStyleSearchResult.key();
         // If multiple field names are set, we can pass multiple values from each field,
         // However, even though we are using the same symbol, we must create a UniqueValue for each value from the same field
         // When the FeatureLayer is rendered, all features with a matching value in the specified FieldNames will appear with the defined UniqueValue
-        for (const QString &category : m_categoriesMap[symbolLabel])
+        for (const QString &category : categoriesMap[symbolLabel])
         {
           m_uniqueValueRenderer->uniqueValues()->append(new UniqueValue(symbolLabel, "", {category}, symbol, this));
         }
@@ -141,9 +140,10 @@ void CreateSymbolStylesFromWebStyles::setMapView(MapQuickView* mapView)
   emit mapViewChanged();
 }
 
-void CreateSymbolStylesFromWebStyles::createCategoriesMap()
+QMap<QString,QStringList> CreateSymbolStylesFromWebStyles::createCategoriesMap()
 {
-  m_categoriesMap = {
+  QMap<QString,QStringList> categories =
+  {
     {"atm", {"Banking and Finance"}},
     {"beach", {"Beaches and Marinas"}},
     {"campground", {"Campgrounds"}},
@@ -157,4 +157,6 @@ void CreateSymbolStylesFromWebStyles::createCategoriesMap()
     {"school", {"Public High Schools", "Public Elementary Schools", "Private and Charter Schools"}},
     {"trail", {"Trails"}}
   };
+
+  return categories;
 }

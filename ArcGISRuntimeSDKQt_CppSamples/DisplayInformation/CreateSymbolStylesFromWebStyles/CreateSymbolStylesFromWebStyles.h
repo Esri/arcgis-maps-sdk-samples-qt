@@ -58,7 +58,7 @@ private:
   Esri::ArcGISRuntime::MapQuickView* mapView() const;
   void setMapView(Esri::ArcGISRuntime::MapQuickView* mapView);
   QMap<QString,QStringList> createCategoriesMap();
-  void createSymbolStyles();
+  void performSymbolSearch();
 
   Esri::ArcGISRuntime::FeatureLayer* m_webStyleLayer = nullptr;
   Esri::ArcGISRuntime::Map* m_map = nullptr;
