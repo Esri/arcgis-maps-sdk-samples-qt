@@ -224,7 +224,7 @@ void ClosestFacility::solveRoute(const Point& incidentPoint)
 
   setBusy(true);
   // find the closest facility to the incident
-  m_task->solveClosestFacilityAsync(m_facilityParams).then(this, [this](ClosestFacilityResult closestFacilityResult)
+  m_task->solveClosestFacilityAsync(m_facilityParams).then(this, [this](const ClosestFacilityResult& closestFacilityResult)
   {
     setBusy(false);
 
