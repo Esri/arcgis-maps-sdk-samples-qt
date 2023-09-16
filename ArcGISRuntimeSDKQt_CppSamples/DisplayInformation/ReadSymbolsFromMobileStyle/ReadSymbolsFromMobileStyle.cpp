@@ -33,13 +33,13 @@
 #include "MapTypes.h"
 #include "Error.h"
 #include "SymbolStyleSearchParameters.h"
-#include "TaskWatcher.h"
 #include "SymbolLayerListModel.h"
 #include "SymbolLayer.h"
 #include "GraphicsOverlayListModel.h"
 #include "GraphicListModel.h"
 #include "SymbolStyleSearchResult.h"
 
+#include <QFuture>
 #include <QObject>
 #include <QQmlContext>
 #include <QTemporaryDir>
@@ -47,6 +47,11 @@
 #include <QStandardPaths>
 
 using namespace Esri::ArcGISRuntime;
+
+constexpr int hatIndex = 0;
+constexpr int mouthIndex = 1;
+constexpr int eyeIndex = 2;
+constexpr int faceIndex = 3;
 
 // helper method to get cross platform data path
 namespace
@@ -91,78 +96,45 @@ ReadSymbolsFromMobileStyle::ReadSymbolsFromMobileStyle(QObject* parent /* = null
     // search for hat symbol layers
     SymbolStyleSearchParameters hatParams;
     hatParams.setCategories({"Hat"});
-    TaskWatcher hatWatcher = m_symbolStyle->searchSymbols(hatParams);
-    m_taskIds.append(hatWatcher.taskId());
+    m_symbolStyle->searchSymbolsAsync(hatParams).then(this,
+    [this](SymbolStyleSearchResultListModel* results)
+    {
+      m_models[hatIndex] = results;
+      emit symbolResultsChanged();
+    });
 
     // search for mouth symbol layers
     SymbolStyleSearchParameters mouthParams;
     mouthParams.setCategories({"Mouth"});
-    TaskWatcher mouthWatcher = m_symbolStyle->searchSymbols(mouthParams);
-    m_taskIds.append(mouthWatcher.taskId());
+    m_symbolStyle->searchSymbolsAsync(mouthParams).then(this,
+    [this](SymbolStyleSearchResultListModel* results)
+    {
+      m_models[mouthIndex] = results;
+      emit symbolResultsChanged();
+    });
 
     // search for eyes symbol layers
     SymbolStyleSearchParameters eyeParams;
     eyeParams.setCategories({"Eyes"});
-    TaskWatcher eyeWatcher = m_symbolStyle->searchSymbols(eyeParams);
-    m_taskIds.append(eyeWatcher.taskId());
+    m_symbolStyle->searchSymbolsAsync(eyeParams).then(this,
+    [this](SymbolStyleSearchResultListModel* results)
+    {
+      m_models[eyeIndex] = results;
+      emit symbolResultsChanged();
+    });
 
     // search for face symbol layers
     SymbolStyleSearchParameters faceParams;
     faceParams.setCategories({"Face"});
-    TaskWatcher faceWatcher = m_symbolStyle->searchSymbols(faceParams);
-    m_taskIds.append(faceWatcher.taskId());
+    m_symbolStyle->searchSymbolsAsync(faceParams).then(this,
+    [this](SymbolStyleSearchResultListModel* results)
+    {
+      m_models[faceIndex] = results;
+      emit symbolResultsChanged();
+    });
   });
 
   m_symbolStyle->load();
-
-  // Connect to fetchSymbol completed signal
-  connect(m_symbolStyle, &SymbolStyle::fetchSymbolCompleted, this, [this](const QUuid&, Symbol* symbol)
-  {
-    if (m_currentSymbol)
-      delete m_currentSymbol;
-
-    // store the resulting symbol
-    m_currentSymbol = static_cast<MultilayerPointSymbol*>(symbol);
-
-    // ensure cast was successful
-    if (!m_currentSymbol)
-      return;
-
-    // set the size
-    m_currentSymbol->setSize(m_symbolSize);
-
-    // set the color preferences per layer
-    for (SymbolLayer* lyr : *(m_currentSymbol->symbolLayers()))
-    {
-      lyr->setColorLocked(true);
-    }
-
-    m_currentSymbol->symbolLayers()->at(0)->setColorLocked(false);
-
-    // set the color
-    m_currentSymbol->setColor(m_currentColor);
-
-    // request symbol swatch
-    connect(m_currentSymbol, &MultilayerPointSymbol::createSwatchCompleted, m_currentSymbol, [this](const QUuid& id, const QImage& img)
-    {
-      if (!m_symbolImageProvider)
-        return;
-
-      // convert the QUuid into a QString
-      const QString imageId = id.toString().remove("{").remove("}");
-
-      // add the image to the provider
-      m_symbolImageProvider->addImage(imageId, img);
-
-      // update the URL with the unique id
-      m_symbolImageUrl = QString("image://%1/%2").arg(SymbolImageProvider::imageProviderId(), imageId);
-
-      // emit the signal to trigger the QML Image to update
-      emit symbolImageUrlChanged();
-    });
-
-    m_currentSymbol->createSwatch();
-  });
 }
 
 ReadSymbolsFromMobileStyle::~ReadSymbolsFromMobileStyle() = default;
@@ -244,25 +216,70 @@ void ReadSymbolsFromMobileStyle::updateSymbol(int hatIndex, int mouthIndex, int 
   keys.append(eyeResults()->searchResults().at(eyeIndex).key());
   keys.append(mouthResults()->searchResults().at(mouthIndex).key());
   keys.append(hatResults()->searchResults().at(hatIndex).key());
-  m_symbolStyle->fetchSymbol(keys);
+  m_symbolStyle->fetchSymbolAsync(keys).then(this,
+  [this](Symbol* symbol)
+  {
+    if (m_currentSymbol)
+      delete m_currentSymbol;
+
+    // store the resulting symbol
+    m_currentSymbol = static_cast<MultilayerPointSymbol*>(symbol);
+
+    // ensure cast was successful
+    if (!m_currentSymbol)
+      return;
+
+    // set the size
+    m_currentSymbol->setSize(m_symbolSize);
+
+    // set the color preferences per layer
+    for (SymbolLayer* lyr : *(m_currentSymbol->symbolLayers()))
+      lyr->setColorLocked(true);
+
+    m_currentSymbol->symbolLayers()->at(0)->setColorLocked(false);
+
+    // set the color
+    m_currentSymbol->setColor(m_currentColor);
+
+    // request symbol swatch
+    m_currentSymbol->createSwatchAsync().then(this,
+    [this](const QImage& img)
+    {
+      if (!m_symbolImageProvider)
+        return;
+
+      // convert the QUuid into a QString
+      const QString imageId = QUuid().createUuid().toString(QUuid::StringFormat::WithoutBraces);
+
+      // add the image to the provider
+      m_symbolImageProvider->addImage(imageId, img);
+
+      // update the URL with the unique id
+      m_symbolImageUrl = QString("image://%1/%2").arg(SymbolImageProvider::imageProviderId(), imageId);
+
+      // emit the signal to trigger the QML Image to update
+      emit symbolImageUrlChanged();
+    });
+
+  });
 }
 
 SymbolStyleSearchResultListModel* ReadSymbolsFromMobileStyle::hatResults() const
 {
-  return m_models[0];
+  return m_models[hatIndex];
 }
 
 SymbolStyleSearchResultListModel* ReadSymbolsFromMobileStyle::mouthResults() const
 {
-  return m_models[1];
+  return m_models[mouthIndex];
 }
 
 SymbolStyleSearchResultListModel* ReadSymbolsFromMobileStyle::eyeResults() const
 {
-  return m_models[2];
+  return m_models[eyeIndex];
 }
 
 SymbolStyleSearchResultListModel* ReadSymbolsFromMobileStyle::faceResults() const
 {
-  return m_models[3];
+  return m_models[faceIndex];
 }
