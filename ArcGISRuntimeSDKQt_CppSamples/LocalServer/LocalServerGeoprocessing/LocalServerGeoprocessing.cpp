@@ -39,11 +39,11 @@
 #include "MapTypes.h"
 #include "LayerListModel.h"
 #include "LocalServerTypes.h"
-#include "TaskWatcher.h"
 #include "TaskTypes.h"
 #include "GeoprocessingTypes.h"
 
 #include <QDir>
+#include <QFuture>
 #include <QTemporaryDir>
 
 using namespace Esri::ArcGISRuntime;
@@ -116,7 +116,7 @@ void LocalServerGeoprocessing::connectSignals()
   {
     if (status == LoadStatus::Loaded)
     {
-      m_mapView->setViewpoint(Viewpoint(m_tiledLayer->fullExtent()));
+      m_mapView->setViewpointAsync(Viewpoint(m_tiledLayer->fullExtent()));
     }
   });
 
