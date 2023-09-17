@@ -48,9 +48,9 @@
 #include "SimpleMarkerSymbol.h"
 #include "SpatialReference.h"
 #include "SymbolTypes.h"
-#include "TaskWatcher.h"
 #include "VertexTool.h"
 
+#include <QFuture>
 #include <QUuid>
 
 using namespace Esri::ArcGISRuntime;
@@ -90,7 +90,7 @@ void CreateAndEditGeometries::setMapView(MapQuickView* mapView)
   m_mapView = mapView;
   m_mapView->setMap(m_map);
 
-  m_mapView->setViewpointCenter(Point(-9.5920, 53.08230, SpatialReference::wgs84()), 5000);
+  m_mapView->setViewpointCenterAsync(Point(-9.5920, 53.08230, SpatialReference::wgs84()), 5000);
 
   m_mapView->graphicsOverlays()->append(m_graphicsOverlay);
 
@@ -282,7 +282,27 @@ void CreateAndEditGeometries::createConnections()
   {
     if (!m_geometryEditor->isStarted())
     {
-      m_mapView->identifyGraphicsOverlay(m_graphicsOverlay, mouseEvent.position().x(), mouseEvent.position().y(), 5 ,false);
+
+      m_mapView->identifyGraphicsOverlayAsync(m_graphicsOverlay, mouseEvent.position(), 5 ,false).then(this,
+      [this](IdentifyGraphicsOverlayResult* rawResult){
+        // Handle editing selected graphics, if any
+
+        auto identifyResult = std::unique_ptr<IdentifyGraphicsOverlayResult>(rawResult);
+
+        // Return if no graphics were identified
+        if (identifyResult->graphics().isEmpty())
+          return;
+
+        m_editingGraphic = identifyResult->graphics().first();
+
+        // Hide the graphic currently being edited
+        m_editingGraphic->setVisible(false);
+
+        // Start the geometry editor with the graphic's geometry. This does not directly affect the graphic.
+        m_geometryEditor->start(m_editingGraphic->geometry());
+
+        emit geometryEditorStartedChanged();
+      });
     }
     emit canUndoOrRedoChanged();
     emit elementIsSelectedChanged();
@@ -293,26 +313,6 @@ void CreateAndEditGeometries::createConnections()
   {
     emit canUndoOrRedoChanged();
     emit elementIsSelectedChanged();
-  });
-
-  // Handle editing selected graphics, if any
-  connect(m_mapView, &MapQuickView::identifyGraphicsOverlayCompleted, this, [this](QUuid, IdentifyGraphicsOverlayResult* rawResult)
-  {
-    auto identifyResult = std::unique_ptr<IdentifyGraphicsOverlayResult>(rawResult);
-
-    // Return if no graphics were identified
-    if (identifyResult->graphics().isEmpty())
-      return;
-
-    m_editingGraphic = identifyResult->graphics().first();
-
-    // Hide the graphic currently being edited
-    m_editingGraphic->setVisible(false);
-
-    // Start the geometry editor with the graphic's geometry. This does not directly affect the graphic.
-    m_geometryEditor->start(m_editingGraphic->geometry());
-
-    emit geometryEditorStartedChanged();
   });
 }
 

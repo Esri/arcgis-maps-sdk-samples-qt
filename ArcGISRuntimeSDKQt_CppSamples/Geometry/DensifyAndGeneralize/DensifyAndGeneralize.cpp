@@ -35,7 +35,6 @@
 #include "GraphicsOverlayListModel.h"
 #include "GraphicListModel.h"
 #include "SymbolTypes.h"
-#include "TaskWatcher.h"
 #include "ImmutablePartCollection.h"
 #include "ImmutablePart.h"
 #include "ImmutablePointCollection.h"
@@ -43,6 +42,8 @@
 #include "Point.h"
 #include "Polyline.h"
 #include "Envelope.h"
+
+#include <QFuture>
 
 using namespace Esri::ArcGISRuntime;
 
@@ -113,7 +114,7 @@ void DensifyAndGeneralize::componentComplete()
   m_mapView->setMap(m_map);
 
   // set viewpoint
-  m_mapView->setViewpointGeometry(m_originalMultipointGraphic->geometry().extent(), 100);
+  m_mapView->setViewpointGeometryAsync(m_originalMultipointGraphic->geometry().extent(), 100);
 }
 
 void DensifyAndGeneralize::updateGeometry(bool densify, double maxSegmentLength, bool generalize, double maxDeviation)
