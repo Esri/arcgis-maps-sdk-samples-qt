@@ -77,61 +77,15 @@ ReadSymbolsFromMobileStyle::ReadSymbolsFromMobileStyle(QObject* parent /* = null
 {
   m_symbolStyle = new SymbolStyle(defaultDataPath() + "/ArcGIS/Runtime/Data/styles/emoji-mobile.stylx", this);
 
-  // Connect to the search completed signal of the style
-  connect(m_symbolStyle, &SymbolStyle::searchSymbolsCompleted, this, [this](const QUuid& id, SymbolStyleSearchResultListModel* results)
-  {
-    const int index = m_taskIds.indexOf(id);
-    m_models[index] = results;
-
-    emit symbolResultsChanged();
-    updateSymbol(0, 0, 0, QColor(Qt::yellow), 40);
-  });
-
   // Load the style
   connect(m_symbolStyle, &SymbolStyle::doneLoading, this, [this](const Error& e)
   {
     if (!e.isEmpty())
       return;
-
-    // search for hat symbol layers
-    SymbolStyleSearchParameters hatParams;
-    hatParams.setCategories({"Hat"});
-    m_symbolStyle->searchSymbolsAsync(hatParams).then(this,
-    [this](SymbolStyleSearchResultListModel* results)
-    {
-      m_models[hatIndex] = results;
-      emit symbolResultsChanged();
-    });
-
-    // search for mouth symbol layers
-    SymbolStyleSearchParameters mouthParams;
-    mouthParams.setCategories({"Mouth"});
-    m_symbolStyle->searchSymbolsAsync(mouthParams).then(this,
-    [this](SymbolStyleSearchResultListModel* results)
-    {
-      m_models[mouthIndex] = results;
-      emit symbolResultsChanged();
-    });
-
-    // search for eyes symbol layers
-    SymbolStyleSearchParameters eyeParams;
-    eyeParams.setCategories({"Eyes"});
-    m_symbolStyle->searchSymbolsAsync(eyeParams).then(this,
-    [this](SymbolStyleSearchResultListModel* results)
-    {
-      m_models[eyeIndex] = results;
-      emit symbolResultsChanged();
-    });
-
-    // search for face symbol layers
-    SymbolStyleSearchParameters faceParams;
-    faceParams.setCategories({"Face"});
-    m_symbolStyle->searchSymbolsAsync(faceParams).then(this,
-    [this](SymbolStyleSearchResultListModel* results)
-    {
-      m_models[faceIndex] = results;
-      emit symbolResultsChanged();
-    });
+    searchSymbolLayer("Hat", hatIndex);
+    searchSymbolLayer("Mouth", mouthIndex);
+    searchSymbolLayer("Eyes", eyeIndex);
+    searchSymbolLayer("Face", faceIndex);
   });
 
   m_symbolStyle->load();
@@ -201,7 +155,7 @@ void ReadSymbolsFromMobileStyle::clearGraphics()
   m_graphicParent.reset(new QObject());
 }
 
-void ReadSymbolsFromMobileStyle::updateSymbol(int hatIndex, int mouthIndex, int eyeIndex, QColor color, int size)
+void ReadSymbolsFromMobileStyle::updateSymbol(int requestHatIndex, int requestMouthIndex, int requestEyeIndex, QColor color, int size)
 {
   if (!m_symbolStyle || !hatResults() || !mouthResults() || !eyeResults() || !faceResults())
     return;
@@ -213,9 +167,9 @@ void ReadSymbolsFromMobileStyle::updateSymbol(int hatIndex, int mouthIndex, int 
   // fetch the new symbol based on keys
   QStringList keys;
   keys.append(faceResults()->searchResults().at(0).key());
-  keys.append(eyeResults()->searchResults().at(eyeIndex).key());
-  keys.append(mouthResults()->searchResults().at(mouthIndex).key());
-  keys.append(hatResults()->searchResults().at(hatIndex).key());
+  keys.append(eyeResults()->searchResults().at(requestEyeIndex).key());
+  keys.append(mouthResults()->searchResults().at(requestMouthIndex).key());
+  keys.append(hatResults()->searchResults().at(requestHatIndex).key());
   m_symbolStyle->fetchSymbolAsync(keys).then(this,
   [this](Symbol* symbol)
   {
@@ -282,4 +236,16 @@ SymbolStyleSearchResultListModel* ReadSymbolsFromMobileStyle::eyeResults() const
 SymbolStyleSearchResultListModel* ReadSymbolsFromMobileStyle::faceResults() const
 {
   return m_models[faceIndex];
+}
+
+void ReadSymbolsFromMobileStyle::searchSymbolLayer(const QString& category, int index)
+{
+  SymbolStyleSearchParameters params;
+  params.setCategories({category});
+  m_symbolStyle->searchSymbolsAsync(params).then(this,
+  [this, index](SymbolStyleSearchResultListModel* results)
+  {
+    m_models[index] = results;
+    emit symbolResultsChanged();
+  });
 }
