@@ -73,7 +73,7 @@ void CreateSymbolStylesFromWebStyles::performSymbolSearch()
   searchParams.setKeys(categoriesMap.keys());
   searchParams.setKeysStrictlyMatch(true);
 
-  SymbolStyle* symbolStyle = new SymbolStyle("Esri2DPointSymbolsStyle", {}, this);
+  SymbolStyle* symbolStyle = new SymbolStyle("Esri2DPointSymbolsStyle", nullptr, this);
   symbolStyle->searchSymbolsAsync(searchParams).then(this,
   [this, symbolStyle, categoriesMap](SymbolStyleSearchResultListModel* searchResults)
   {

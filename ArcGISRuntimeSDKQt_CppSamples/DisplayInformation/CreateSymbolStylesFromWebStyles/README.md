@@ -17,9 +17,9 @@ The sample displays a map with a set of symbols that represent the categories of
 3. Create a `SymbolStyle` from a portal by passing in the web style name and portal URL.
        * Note: passing `null` as the portal will default to ArcGIS.com.
 4. Create a `SymbolStylesSearchParameters` class and set its `keys` parameter to the names of the symbols in the web style that you want to use.
-5. Call `searchSymbols(SymbolStylesSearchParameters)` to create a `SymbolStyleSearchResultListModel`.
-6. For each `SymbolStyleSearchResult` in the returned list model, create a `SymbolStyleSearchResultSymbolFetcher` by calling `fetchSymbol()`.
-7. When `fetchSymbol` has completed, create `UniqueValue` objects using the returned `Symbol` and the values of the features to apply it to.
+5. Call `searchSymbolsAsync(SymbolStylesSearchParameters)` to create a `SymbolStyleSearchResultListModel`.
+6. For each `SymbolStyleSearchResult` in the returned list model, fetch the symbol using `fetchSymbolAsync(SymbolStyle)` 
+7. When `fetchSymbolAsync` has completed, create `UniqueValue` objects using the returned `Symbol` and the values of the features to apply it to.
 8. Add each `UniqueValue` to the `UniqueValueRenderer`.
 
 ## Relevant API
