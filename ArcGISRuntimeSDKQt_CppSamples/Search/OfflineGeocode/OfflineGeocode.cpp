@@ -237,7 +237,7 @@ void OfflineGeocode::connectSignals()
       }
     }).onFailed(this, [this](const ErrorException& e)
     {
-          logError(e.error());
+      logError(e.error());
     });
   });
 
