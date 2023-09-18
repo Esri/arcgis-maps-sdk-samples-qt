@@ -143,7 +143,6 @@ void FindAddress::geocodeAddress(const QString& address)
     m_graphic->attributes()->setAttributesMap(geocodeResults.at(0).attributes());
     constexpr double scale = 8000.0;
     m_mapView->setViewpointCenterAsync(geocodeResults.at(0).extent().center(), scale);
-
   });
   //! [FindAddress geocodeWithParameters]
 }
