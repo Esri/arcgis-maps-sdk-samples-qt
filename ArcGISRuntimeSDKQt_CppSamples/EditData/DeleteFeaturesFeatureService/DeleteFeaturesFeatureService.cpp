@@ -146,7 +146,7 @@ void DeleteFeaturesFeatureService::onIdentifyLayerCompleted_(IdentifyLayerResult
   // Deletes rawIdentifyResult instance when we leave scope.
   auto identifyResult = std::unique_ptr<IdentifyLayerResult>(rawIdentifyResult);
 
-  if(!identifyResult)
+  if (!identifyResult)
   {
     return;
   }

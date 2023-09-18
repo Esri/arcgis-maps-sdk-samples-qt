@@ -101,7 +101,7 @@ EditFeaturesWithFeatureLinkedAnnotation::EditFeaturesWithFeatureLinkedAnnotation
   const QString dataPath = defaultDataPath() + "/ArcGIS/Runtime/Data/geodatabase/loudoun_anno.geodatabase";
 
   m_geodatabase = new Geodatabase(dataPath, this);
-  connect(m_geodatabase, &Geodatabase::doneLoading, this, &EditFeaturesWithFeatureLinkedAnnotation::onGeodatabaseDoneLoading);
+  connect(m_geodatabase, &Geodatabase::doneLoading, this, &EditFeaturesWithFeatureLinkedAnnotation::onGeodatabaseDoneLoading_);
 
   m_geodatabase->load();
 }
@@ -129,12 +129,12 @@ void EditFeaturesWithFeatureLinkedAnnotation::setMapView(MapQuickView* mapView)
   m_mapView = mapView;
   m_mapView->setMap(m_map);
 
-  connect(m_mapView, &MapQuickView::mouseClicked, this, &EditFeaturesWithFeatureLinkedAnnotation::onMouseClicked);
+  connect(m_mapView, &MapQuickView::mouseClicked, this, &EditFeaturesWithFeatureLinkedAnnotation::onMouseClicked_);
 
   emit mapViewChanged();
 }
 
-void EditFeaturesWithFeatureLinkedAnnotation::onGeodatabaseDoneLoading(const Error& error)
+void EditFeaturesWithFeatureLinkedAnnotation::onGeodatabaseDoneLoading_(const Error& error)
 {
   if (!error.isEmpty())
     return;
@@ -162,7 +162,7 @@ void EditFeaturesWithFeatureLinkedAnnotation::onGeodatabaseDoneLoading(const Err
   m_map->operationalLayers()->append(m_parcelLinesAnnotationLayer);
 }
 
-void EditFeaturesWithFeatureLinkedAnnotation::onMouseClicked(QMouseEvent& mouseEvent)
+void EditFeaturesWithFeatureLinkedAnnotation::onMouseClicked_(QMouseEvent& mouseEvent)
 {
   clearSelection();
 
@@ -177,12 +177,12 @@ void EditFeaturesWithFeatureLinkedAnnotation::onMouseClicked(QMouseEvent& mouseE
     // identify and select feature
     m_mapView->identifyLayersAsync(mouseEvent.position(), 10, false).then(this, [this](const QList<IdentifyLayerResult*>& identifyResults)
     {
-      onIdentifyLayersCompleted(identifyResults);
+      onIdentifyLayersCompleted_(identifyResults);
     });
   }
 }
 
-void EditFeaturesWithFeatureLinkedAnnotation::onIdentifyLayersCompleted(const QList<IdentifyLayerResult*>& identifyResults)
+void EditFeaturesWithFeatureLinkedAnnotation::onIdentifyLayersCompleted_(const QList<IdentifyLayerResult*>& identifyResults)
 {
   // A convenience wrapper that deletes the contents of identifyResults when we leave scope.
   IdentifyLayerResultsScopedCleanup identifyResultsScopedCleanup(identifyResults);

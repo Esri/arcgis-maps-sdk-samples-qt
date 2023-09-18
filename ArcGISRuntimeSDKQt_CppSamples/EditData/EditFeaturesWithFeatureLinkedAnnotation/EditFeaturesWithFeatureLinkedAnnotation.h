@@ -61,9 +61,9 @@ signals:
   void addressAndStreetTextChanged();
 
 private:
-  void onIdentifyLayersCompleted(const QList<Esri::ArcGISRuntime::IdentifyLayerResult*>& identifyResults);
-  void onMouseClicked(QMouseEvent& mouseEvent);
-  void onGeodatabaseDoneLoading(const Esri::ArcGISRuntime::Error& error);
+  void onIdentifyLayersCompleted_(const QList<Esri::ArcGISRuntime::IdentifyLayerResult*>& identifyResults);
+  void onMouseClicked_(QMouseEvent& mouseEvent);
+  void onGeodatabaseDoneLoading_(const Esri::ArcGISRuntime::Error& error);
 
   Esri::ArcGISRuntime::MapQuickView* mapView() const;
   void setMapView(Esri::ArcGISRuntime::MapQuickView* mapView);
