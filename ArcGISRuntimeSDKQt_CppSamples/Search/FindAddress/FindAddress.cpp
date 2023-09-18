@@ -120,7 +120,7 @@ void FindAddress::connectSignals()
         return;
 
       const QList<Graphic*> graphics = identifyResult->graphics();
-      if (graphics.length() <= 0)
+      if (graphics.isEmpty())
         return;
 
       const AttributeListModel* attributes = graphics.at(0)->attributes();
