@@ -31,11 +31,11 @@ Click 'Navigate' to simulate traveling and to receive directions from a preset s
 
 * DestinationStatus
 * DirectionManeuver
-* LocationAsync
+* Location
 * LocationDataSource
 * ReroutingStrategy
-* RouteAsync
-* RouteParametersAsync
+* Route
+* RouteParameters
 * RouteTask
 * RouteTracker
 * Stop

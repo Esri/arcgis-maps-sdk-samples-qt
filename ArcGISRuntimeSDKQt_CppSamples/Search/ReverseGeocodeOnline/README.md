@@ -24,7 +24,7 @@ Tap the map to see the nearest address displayed in a callout.
 
 * GeocodeParameters
 * LocatorTask
-* ReverseGeocodeParametersAsync
+* ReverseGeocodeParameters
 
 ## Offline data
 

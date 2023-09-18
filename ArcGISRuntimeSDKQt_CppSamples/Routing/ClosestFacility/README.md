@@ -28,7 +28,7 @@ Click near any of the hospitals and a route will be displayed from that clicked 
 
 ## Relevant API
 
-* ClosestFacilityParametersAsync
+* ClosestFacilityParameters
 * ClosestFacilityResult
 * ClosestFacilityRoute
 * ClosestFacilityTask

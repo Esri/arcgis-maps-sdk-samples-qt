@@ -30,8 +30,8 @@ Click 'Navigate' to simulate travelling and to receive directions from a preset 
 
 * DestinationStatus
 * DirectionManeuver
-* LocationAsync
-* RouteAsync
+* Location
+* Route
 * RouteParameters
 * RouteTask
 * RouteTracker

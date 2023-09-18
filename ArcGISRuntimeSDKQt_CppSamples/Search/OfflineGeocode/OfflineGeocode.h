@@ -79,7 +79,7 @@ private:
   void connectSignals();
   QString errorMessage() const;
   void setErrorMessage(const QString& msg);
-  void geocodeCompleteHandler(const QList<Esri::ArcGISRuntime::GeocodeResult>& results);
+  void onGeocodingCompleted_(const QList<Esri::ArcGISRuntime::GeocodeResult>& results);
 
   bool m_isReverseGeocode = false;
   bool m_geocodeInProgress = false;

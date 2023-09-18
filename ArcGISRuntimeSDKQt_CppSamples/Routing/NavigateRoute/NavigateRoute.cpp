@@ -163,8 +163,7 @@ void NavigateRoute::onSolveRouteCompleted_(const RouteResult& routeResult)
   m_route = qAsConst(m_routeResult).routes()[0];
 
   // adjust viewpoint to enclose the route with a 100 DPI padding
-  auto future = m_mapView->setViewpointGeometryAsync(m_route.routeGeometry(), 100);
-  Q_UNUSED(future);
+  m_mapView->setViewpointGeometryAsync(m_route.routeGeometry(), 100);
 
   // create a graphic to show the route
   m_routeAheadGraphic = new Graphic(m_route.routeGeometry(), new SimpleLineSymbol(SimpleLineSymbolStyle::Dash, Qt::blue, 5, this), this);

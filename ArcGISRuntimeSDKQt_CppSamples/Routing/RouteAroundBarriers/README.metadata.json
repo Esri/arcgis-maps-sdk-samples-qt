@@ -18,7 +18,7 @@
         "stops",
         "DirectionManeuverListModel",
         "PolygonBarrier",
-        "RouteAsync",
+        "Route",
         "RouteParameters",
         "RouteResult",
         "RouteTask",
@@ -30,7 +30,7 @@
     "relevant_apis": [
         "DirectionManeuverListModel",
         "PolygonBarrier",
-        "RouteAsync",
+        "Route",
         "RouteParameters",
         "RouteResult",
         "RouteTask",

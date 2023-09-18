@@ -120,13 +120,13 @@ void FindAddress::connectSignals()
         return;
 
       const QList<Graphic*> graphics = identifyResult->graphics();
-      if (graphics.length() > 0)
-      {
-        const AttributeListModel* attributes = graphics.at(0)->attributes();
-        const QString calloutText = attributes->attributeValue("Match_addr").toString();
-        m_mapView->calloutData()->setTitle(calloutText);
-        emit showCallout();
-      }
+      if (graphics.length() <= 0)
+        return;
+
+      const AttributeListModel* attributes = graphics.at(0)->attributes();
+      const QString calloutText = attributes->attributeValue("Match_addr").toString();
+      m_mapView->calloutData()->setTitle(calloutText);
+      emit showCallout();
     });
   });
 }

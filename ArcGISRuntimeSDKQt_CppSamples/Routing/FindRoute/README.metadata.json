@@ -29,7 +29,7 @@
     "relevant_apis": [
         "DirectionManeuver",
         "Route",
-        "RouteParametersAsync",
+        "RouteParameters",
         "RouteResult",
         "RouteTask",
         "Stop"

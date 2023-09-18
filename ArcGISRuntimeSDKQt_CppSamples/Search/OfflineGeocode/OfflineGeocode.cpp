@@ -150,7 +150,7 @@ void OfflineGeocode::geocodeWithText(const QString& address)
 {
   m_locatorTask->geocodeWithParametersAsync(address, m_geocodeParameters).then(this, [this](const QList<GeocodeResult>& geocodeResults)
   {
-    geocodeCompleteHandler(geocodeResults);
+    onGeocodingCompleted_(geocodeResults);
   }).onFailed(this, [this](const ErrorException& e)
   {
     logError(e.error());
@@ -162,7 +162,7 @@ void OfflineGeocode::geocodeWithSuggestion(int index)
   m_locatorTask->geocodeWithSuggestResultAndParametersAsync(m_suggestListModel->suggestResults().at(index), m_geocodeParameters)
       .then(this, [this](const QList<GeocodeResult>& geocodeResults)
   {
-    geocodeCompleteHandler(geocodeResults);
+    onGeocodingCompleted_(geocodeResults);
   }).onFailed(this, [this](const ErrorException& e)
   {
     logError(e.error());
@@ -226,7 +226,7 @@ void OfflineGeocode::connectSignals()
         m_locatorTask->reverseGeocodeWithParametersAsync(m_clickedPoint, m_reverseGeocodeParameters)
             .then(this, [this](const QList<GeocodeResult>& geocodeResults)
         {
-          geocodeCompleteHandler(geocodeResults);
+          onGeocodingCompleted_(geocodeResults);
         }).onFailed(this, [this](const ErrorException& e)
         {
           logError(e.error());
@@ -250,7 +250,7 @@ void OfflineGeocode::connectSignals()
     m_locatorTask->reverseGeocodeWithParametersAsync(Point(m_mapView->screenToLocation(mouseEvent.position().x(), mouseEvent.position().y())), m_reverseGeocodeParameters)
         .then(this, [this](const QList<GeocodeResult>& geocodeResults)
     {
-      geocodeCompleteHandler(geocodeResults);
+      onGeocodingCompleted_(geocodeResults);
     }).onFailed(this, [this](const ErrorException& e)
     {
       logError(e.error());
@@ -269,7 +269,7 @@ void OfflineGeocode::connectSignals()
       m_locatorTask->reverseGeocodeWithParametersAsync(Point(m_mapView->screenToLocation(mouseEvent.position().x(), mouseEvent.position().y())), m_reverseGeocodeParameters)
           .then(this, [this](const QList<GeocodeResult>& geocodeResults)
       {
-        geocodeCompleteHandler(geocodeResults);
+        onGeocodingCompleted_(geocodeResults);
       }).onFailed(this, [this](const ErrorException& e)
       {
         logError(e.error());
@@ -303,7 +303,7 @@ void OfflineGeocode::connectSignals()
   });
 }
 
-void OfflineGeocode::geocodeCompleteHandler(const QList<GeocodeResult>& geocodeResults)
+void OfflineGeocode::onGeocodingCompleted_(const QList<GeocodeResult>& geocodeResults)
 {
   // dismiss busy indicator
   m_geocodeInProgress = false;

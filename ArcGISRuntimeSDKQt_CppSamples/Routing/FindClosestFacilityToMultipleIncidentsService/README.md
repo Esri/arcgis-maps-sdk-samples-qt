@@ -25,7 +25,7 @@ Click 'Solve Routes' to solve and display the route from each incident (fire) to
 
 ## Relevant API
 
-* ClosestFacilityParametersAsync
+* ClosestFacilityParameters
 * ClosestFacilityResult
 * ClosestFacilityRoute
 * ClosestFacilityTask

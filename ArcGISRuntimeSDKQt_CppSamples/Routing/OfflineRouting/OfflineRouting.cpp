@@ -241,35 +241,32 @@ void OfflineRouting::connectSignals()
 
 void OfflineRouting::findRoute()
 {
-  if (!m_routeTaskFuture.isFinished())
+  if (!m_routeTaskFuture.isFinished() || m_stopsOverlay->graphics()->size() <= 1)
     return;
 
-  if (m_stopsOverlay->graphics()->size() > 1)
+  QList<Stop> stops;
+  for (const Graphic* graphic : *m_stopsOverlay->graphics())
   {
-    QList<Stop> stops;
-    for (const Graphic* graphic : *m_stopsOverlay->graphics())
-    {
-      stops << Stop(geometry_cast<Point>(graphic->geometry()));
-    }
-
-    // configure stops and travel mode
-    m_routeParameters.setStops(stops);
-    m_routeParameters.setTravelMode(m_routeTask->routeTaskInfo().travelModes().at(m_travelModeIndex));
-
-    m_routeTaskFuture = m_routeTask->solveRouteAsync(m_routeParameters);
-    m_routeTaskFuture.then(this, [this](const RouteResult& routeResult)
-    {
-      if (routeResult.isEmpty())
-        return;
-
-      // clear old route
-      m_routeOverlay->graphics()->clear();
-      Polyline routeGeometry = qAsConst(routeResult).routes().first().routeGeometry();
-      Graphic* routeGraphic = new Graphic(routeGeometry, this);
-
-      m_routeOverlay->graphics()->append(routeGraphic);
-    });
+    stops << Stop(geometry_cast<Point>(graphic->geometry()));
   }
+
+  // configure stops and travel mode
+  m_routeParameters.setStops(stops);
+  m_routeParameters.setTravelMode(m_routeTask->routeTaskInfo().travelModes().at(m_travelModeIndex));
+
+  m_routeTaskFuture = m_routeTask->solveRouteAsync(m_routeParameters);
+  m_routeTaskFuture.then(this, [this](const RouteResult& routeResult)
+  {
+    if (routeResult.isEmpty())
+      return;
+
+    // clear old route
+    m_routeOverlay->graphics()->clear();
+    Polyline routeGeometry = qAsConst(routeResult).routes().first().routeGeometry();
+    Graphic* routeGraphic = new Graphic(routeGeometry, this);
+
+    m_routeOverlay->graphics()->append(routeGraphic);
+  });
 }
 
 // Set the view (created in QML)

@@ -32,7 +32,7 @@ Click 'Add stop' to add stops to the route. Click 'Add barrier' to add areas tha
 
 * DirectionManeuverListModel
 * PolygonBarrier
-* RouteAsync
+* Route
 * RouteParameters
 * RouteResult
 * RouteTask

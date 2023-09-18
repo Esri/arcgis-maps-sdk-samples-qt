@@ -25,7 +25,7 @@ To display a `Route` using a `RouteTask` with offline data:
 
 ## Relevant API
 
-* RouteParametersAsync
+* RouteParameters
 * RouteResult
 * RouteTask
 * Stop
