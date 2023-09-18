@@ -50,7 +50,7 @@
 #include "MapTypes.h"
 #include "UtilityTraceFunction.h"
 
-#include<QFuture>
+#include <QFuture>
 
 using namespace Esri::ArcGISRuntime;
 
