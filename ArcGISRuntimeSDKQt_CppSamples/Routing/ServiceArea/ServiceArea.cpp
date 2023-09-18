@@ -162,6 +162,7 @@ void ServiceArea::solveServiceArea()
     {
       m_message = "No Serice Areas calculated!";
       emit messageChanged();
+      return;
     }
 
     int numFacilities = m_facilitiesOverlay->graphics()->size();

@@ -137,6 +137,7 @@ void FindRoute::setupRouteTask()
   // create the route task pointing to an online service
   m_routeTask = new RouteTask(QUrl("https://sampleserver6.arcgisonline.com/arcgis/rest/services/NetworkAnalysis/SanDiego/NAServer/Route"), this);
 
+  //! [FindRoute connect RouteTask signals]
   // connect to loadStatusChanged signal
   connect(m_routeTask, &RouteTask::loadStatusChanged, this, [this](LoadStatus loadStatus)
   {
@@ -165,37 +166,37 @@ void FindRoute::solveRoute()
 {
   if (m_routeTask->loadStatus() == LoadStatus::Loaded)
   {
-    if (!m_routeParameters.isEmpty())
+    if (m_routeParameters.isEmpty())
+      return;
+    // set parameters to return directions
+    m_routeParameters.setReturnDirections(true);
+
+    // clear previous stops from the parameters
+    m_routeParameters.clearStops();
+
+    // set the stops to the parameters
+    Stop stop1(geometry_cast<Point>(m_stopsGraphicsOverlay->graphics()->at(0)->geometry()));
+    stop1.setName("Origin");
+    Stop stop2(geometry_cast<Point>(m_stopsGraphicsOverlay->graphics()->at(1)->geometry()));
+    stop2.setName("Destination");
+    m_routeParameters.setStops(QList<Stop> { stop1, stop2 });
+    //! [FindRoute new RouteTask]
+    // solve the route with the parameters
+    m_routeTask->solveRouteAsync(m_routeParameters).then(this, [this](const RouteResult& routeResult)
     {
-      // set parameters to return directions
-      m_routeParameters.setReturnDirections(true);
+      // Add the route graphic once the solve completes
+      Route generatedRoute = routeResult.routes().at(0);
+      Graphic* routeGraphic = new Graphic(generatedRoute.routeGeometry(), this);
+      m_routeGraphicsOverlay->graphics()->append(routeGraphic);
 
-      // clear previous stops from the parameters
-      m_routeParameters.clearStops();
+      // set the direction maneuver list model
+      m_directions = generatedRoute.directionManeuvers(this);
+      emit directionsChanged();
 
-      // set the stops to the parameters
-      Stop stop1(geometry_cast<Point>(m_stopsGraphicsOverlay->graphics()->at(0)->geometry()));
-      stop1.setName("Origin");
-      Stop stop2(geometry_cast<Point>(m_stopsGraphicsOverlay->graphics()->at(1)->geometry()));
-      stop2.setName("Destination");
-      m_routeParameters.setStops(QList<Stop> { stop1, stop2 });
-
-      // solve the route with the parameters
-      m_routeTask->solveRouteAsync(m_routeParameters).then(this, [this](const RouteResult& routeResult)
-      {
-        // Add the route graphic once the solve completes
-        Route generatedRoute = routeResult.routes().at(0);
-        Graphic* routeGraphic = new Graphic(generatedRoute.routeGeometry(), this);
-        m_routeGraphicsOverlay->graphics()->append(routeGraphic);
-
-        // set the direction maneuver list model
-        m_directions = generatedRoute.directionManeuvers(this);
-        emit directionsChanged();
-
-        // emit that the route has solved successfully
-        emit solveRouteComplete();
-      });
-    }
+      // emit that the route has solved successfully
+      emit solveRouteComplete();
+    });
+    //! [FindRoute connect RouteTask signals]
   }
 }
 //! [FindRoute solveRoute]

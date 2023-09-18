@@ -86,7 +86,7 @@ private:
   QString attachmentSymbolUrl() const;
   QString connectivitySymbolUrl() const;
   QString boundingBoxSymbolUrl() const;
-  void onAssociationsCompleted(const QList<Esri::ArcGISRuntime::UtilityAssociation*>& containmentAssociations);
+  void onAssociationsCompleted_(const QList<Esri::ArcGISRuntime::UtilityAssociation*>& containmentAssociations);
   void onTaskFailed(const QString& errorMsg, const Esri::ArcGISRuntime::ErrorException& taskException);
 
   Esri::ArcGISRuntime::Credential* m_cred = nullptr;

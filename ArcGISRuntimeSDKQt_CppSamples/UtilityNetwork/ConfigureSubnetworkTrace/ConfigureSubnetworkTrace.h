@@ -79,7 +79,7 @@ private slots:
 
 private:
 
-  void onTraceCompleted();
+  void onTraceCompleted_();
 
   static QString comparisonOperatorToString(const Esri::ArcGISRuntime::UtilityAttributeComparisonOperator& comparisonOperator);
   static QString expressionToString(Esri::ArcGISRuntime::UtilityTraceConditionalExpression* expression);

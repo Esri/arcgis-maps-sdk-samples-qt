@@ -145,36 +145,32 @@ void NavigateRoute::connectRouteTaskSignals()
 
       m_routeTask->solveRouteAsync(defaultParameters).then(this, [this](const RouteResult& routeResult)
       {
-        onSolveRouteCompleted_(routeResult);
+        if (routeResult.isEmpty())
+          return;
+
+        if (routeResult.routes().empty())
+          return;
+
+        m_routeResult = routeResult;
+        m_route = qAsConst(m_routeResult).routes()[0];
+
+        // adjust viewpoint to enclose the route with a 100 DPI padding
+        auto future = m_mapView->setViewpointGeometryAsync(m_route.routeGeometry(), 100);
+        Q_UNUSED(future);
+
+        // create a graphic to show the route
+        m_routeAheadGraphic = new Graphic(m_route.routeGeometry(), new SimpleLineSymbol(SimpleLineSymbolStyle::Dash, Qt::blue, 5, this), this);
+
+        // create a graphic to represent the route that's been traveled (initially empty).
+        m_routeTraveledGraphic = new Graphic(Geometry(), new SimpleLineSymbol(SimpleLineSymbolStyle::Solid, Qt::cyan, 3, this), this);
+        m_routeOverlay->graphics()->append(m_routeAheadGraphic);
+        m_routeOverlay->graphics()->append(m_routeTraveledGraphic);
+
+        m_navigationEnabled = true;
+        emit navigationEnabledChanged();
       });
     });
   });
-}
-
-void NavigateRoute::onSolveRouteCompleted_(const RouteResult& routeResult)
-{
-  if (routeResult.isEmpty())
-    return;
-
-  if (routeResult.routes().empty())
-    return;
-
-  m_routeResult = routeResult;
-  m_route = qAsConst(m_routeResult).routes()[0];
-
-  // adjust viewpoint to enclose the route with a 100 DPI padding
-  m_mapView->setViewpointGeometryAsync(m_route.routeGeometry(), 100);
-
-  // create a graphic to show the route
-  m_routeAheadGraphic = new Graphic(m_route.routeGeometry(), new SimpleLineSymbol(SimpleLineSymbolStyle::Dash, Qt::blue, 5, this), this);
-
-  // create a graphic to represent the route that's been traveled (initially empty).
-  m_routeTraveledGraphic = new Graphic(Geometry(), new SimpleLineSymbol(SimpleLineSymbolStyle::Solid, Qt::cyan, 3, this), this);
-  m_routeOverlay->graphics()->append(m_routeAheadGraphic);
-  m_routeOverlay->graphics()->append(m_routeTraveledGraphic);
-
-  m_navigationEnabled = true;
-  emit navigationEnabledChanged();
 }
 
 bool NavigateRoute::navigationEnabled() const

@@ -174,7 +174,7 @@ void PerformValveIsolationTrace::setMapView(MapQuickView* mapView)
     m_mapView->identifyLayersAsync(mouseEvent.position(), tolerance, returnPopups).then(this, [this](const QList<IdentifyLayerResult*>& results)
     {
       // handle the identify results
-      onIdentifyLayersCompleted(results);
+      onIdentifyLayersCompleted_(results);
     });
   });
 
@@ -251,12 +251,12 @@ void PerformValveIsolationTrace::performTrace()
     }
     m_utilityNetwork->traceAsync(traceParameters).then(this, [this](QList<UtilityTraceResult*>)
     {
-      onTraceCompleted();
+      onTraceCompleted_();
     });
   }
 }
 
-void PerformValveIsolationTrace::onTraceCompleted()
+void PerformValveIsolationTrace::onTraceCompleted_()
 {
   // local paret to clean up UtilityElementTraceResult when we leave scope.
   QObject localParent;
@@ -415,7 +415,7 @@ bool PerformValveIsolationTrace::tasksRunning() const
   return m_tasksRunning;
 }
 
-void PerformValveIsolationTrace::onIdentifyLayersCompleted(const QList<IdentifyLayerResult*>& results)
+void PerformValveIsolationTrace::onIdentifyLayersCompleted_(const QList<IdentifyLayerResult*>& results)
 {
   // A convenience wrapper that deletes the contents of results when we leave scope.
   ScopedCleanup<IdentifyLayerResult> resultsScopedCleanup(results);

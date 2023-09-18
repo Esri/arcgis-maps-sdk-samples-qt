@@ -268,11 +268,11 @@ void ConfigureSubnetworkTrace::trace()
   // trace the network
   m_utilityNetwork->traceAsync(m_traceParams).then(this, [this](QList<UtilityTraceResult*>)
   {
-    onTraceCompleted();
+    onTraceCompleted_();
   });
 }
 
-void ConfigureSubnetworkTrace::onTraceCompleted()
+void ConfigureSubnetworkTrace::onTraceCompleted_()
 {
   if (m_utilityNetwork->traceResult()->isEmpty())
   {

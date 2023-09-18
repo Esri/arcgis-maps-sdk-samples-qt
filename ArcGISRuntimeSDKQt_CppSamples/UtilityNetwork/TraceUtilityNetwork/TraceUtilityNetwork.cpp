@@ -179,7 +179,7 @@ void TraceUtilityNetwork::connectSignals()
     m_clickPoint = m_mapView->screenToLocation(mouseEvent.position().x(), mouseEvent.position().y());
     m_mapView->identifyLayersAsync(mouseEvent.position(), tolerance, returnPopups).then(this, [this](const QList<IdentifyLayerResult*>& results)
     {
-      onIdentifyLayersCompleted(results);
+      onIdentifyLayersCompleted_(results);
     });
   });
 }
@@ -270,7 +270,7 @@ void TraceUtilityNetwork::trace(int index)
   // Perform a connected trace on the utility network
   m_utilityNetwork->traceAsync(m_traceParams).then(this, [this](QList<UtilityTraceResult*>)
   {
-    onTraceCompleted();
+    onTraceCompleted_();
   }).onFailed([this](const ErrorException& e)
   {
         hasErrorOccurred(e.error());
@@ -300,7 +300,7 @@ void TraceUtilityNetwork::reset()
   }
 }
 
-void TraceUtilityNetwork::onIdentifyLayersCompleted(const QList<IdentifyLayerResult*>& results)
+void TraceUtilityNetwork::onIdentifyLayersCompleted_(const QList<IdentifyLayerResult*>& results)
 {
   if (results.isEmpty())
   {
@@ -394,7 +394,7 @@ void TraceUtilityNetwork::onIdentifyLayersCompleted(const QList<IdentifyLayerRes
   updateTraceParams(element);
 }
 
-void TraceUtilityNetwork::onTraceCompleted()
+void TraceUtilityNetwork::onTraceCompleted_()
 {
   m_dialogVisible = true;
   emit dialogVisibleChanged();

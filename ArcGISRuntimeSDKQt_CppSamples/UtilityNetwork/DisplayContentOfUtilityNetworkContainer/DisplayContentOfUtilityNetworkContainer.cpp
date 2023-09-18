@@ -177,19 +177,19 @@ void DisplayContentOfUtilityNetworkContainer::getUtilityAssociationsOfFeature(co
           if (ArcGISFeature* feature = dynamic_cast<ArcGISFeature*>(geoElement))
           {
             m_containerElement = m_utilityNetwork->createElementWithArcGISFeature(feature);
-            if (m_containerElement)
-            {
-              // Queries for a list of all UtilityAssociation objects of containment association types present in the geodatabase for the m_containerElement.
-              m_utilityAssociationFuture = m_utilityNetwork->associationsAsync(m_containerElement, UtilityAssociationType::Containment);
-              m_utilityAssociationFuture.then(this, [this](const QList<UtilityAssociation*>& containmentAssociations)
-              {
-                onAssociationsCompleted(containmentAssociations);
-              }).onFailed(this, [this](const ErrorException& e)
-              {
-                onTaskFailed("Utility Network error occured: ", e);
-              });
+            if (!m_containerElement)
               return;
-            }
+
+            // Queries for a list of all UtilityAssociation objects of containment association types present in the geodatabase for the m_containerElement.
+            m_utilityAssociationFuture = m_utilityNetwork->associationsAsync(m_containerElement, UtilityAssociationType::Containment);
+            m_utilityAssociationFuture.then(this, [this](const QList<UtilityAssociation*>& containmentAssociations)
+            {
+              onAssociationsCompleted_(containmentAssociations);
+            }).onFailed(this, [this](const ErrorException& e)
+            {
+              onTaskFailed("Utility Network error occured: ", e);
+            });
+            return;
           }
         }
       }
@@ -197,7 +197,7 @@ void DisplayContentOfUtilityNetworkContainer::getUtilityAssociationsOfFeature(co
   }
 }
 
-void DisplayContentOfUtilityNetworkContainer::onAssociationsCompleted(const QList<UtilityAssociation*>& containmentAssociations)
+void DisplayContentOfUtilityNetworkContainer::onAssociationsCompleted_(const QList<UtilityAssociation*>& containmentAssociations)
 {
   if (!m_showContainerView)
     getFeaturesForElementsOfUtilityAssociations(containmentAssociations);
@@ -247,7 +247,7 @@ void DisplayContentOfUtilityNetworkContainer::displayFeaturesAndGetAssociations(
   m_utilityAssociationFuture = m_utilityNetwork->associationsAsync(m_containerGraphicsOverlay->extent());
   m_utilityAssociationFuture.then(this, [this](const QList<UtilityAssociation*>& containmentAssociations)
   {
-    onAssociationsCompleted(containmentAssociations);
+    onAssociationsCompleted_(containmentAssociations);
   }).onFailed(this, [this](const ErrorException& e)
   {
     onTaskFailed("Utility Network error occured: ", e);

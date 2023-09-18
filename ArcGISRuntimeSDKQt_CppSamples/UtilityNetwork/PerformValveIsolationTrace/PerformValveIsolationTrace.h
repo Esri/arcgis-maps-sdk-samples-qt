@@ -78,8 +78,8 @@ private:
   bool tasksRunning() const;
   bool noResults() const;
   void connectSignals();
-  void onIdentifyLayersCompleted(const QList<Esri::ArcGISRuntime::IdentifyLayerResult*>& results);
-  void onTraceCompleted();
+  void onIdentifyLayersCompleted_(const QList<Esri::ArcGISRuntime::IdentifyLayerResult*>& results);
+  void onTraceCompleted_();
 
   Esri::ArcGISRuntime::Map* m_map = nullptr;
   Esri::ArcGISRuntime::Credential* m_cred = nullptr;
