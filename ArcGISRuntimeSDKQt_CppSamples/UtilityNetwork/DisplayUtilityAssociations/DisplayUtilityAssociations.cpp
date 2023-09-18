@@ -100,7 +100,6 @@ void DisplayUtilityAssociations::addAssociations()
 
     for (UtilityAssociation* association : associations)
     {
-
       // check if the graphics overlay already contains the association
       const bool uniqueGraphic = std::none_of(graphics->begin(), graphics->end(), [association](const Graphic* graphic)
                                               {
