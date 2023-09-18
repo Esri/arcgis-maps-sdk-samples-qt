@@ -201,7 +201,6 @@ void DisplayContentOfUtilityNetworkContainer::onAssociationsCompleted_(const QLi
 {
   if (!m_showContainerView)
     getFeaturesForElementsOfUtilityAssociations(containmentAssociations);
-
   else
     showAttachmentAndConnectivitySymbols(containmentAssociations);
 };
