@@ -44,6 +44,7 @@
 #include "Graphic.h"
 #include "Viewpoint.h"
 #include "SpatialReference.h"
+#include "GeocodeResult.h"
 
 #include <QUrl>
 #include <QUuid>
@@ -166,7 +167,7 @@ void FindPlace::createLocator()
   emit suggestionsChanged();
 }
 
-void FindPlace::geocodeCompleteHandler(const QList<GeocodeResult>& results)
+void FindPlace::onGeocodingCompleted_(const QList<GeocodeResult>& results)
 {
   // if we are converting the location string to a Point, re-geocode with that information,
   // and don't add any graphics to the map
@@ -250,7 +251,7 @@ void FindPlace::geocodePOIs(const QString& poi)
   GeocodeParameters params = createParameters();
   m_locatorTask->geocodeWithParametersAsync(poi, params).then(this, [this](const QList<GeocodeResult>& results)
   {
-    geocodeCompleteHandler(results);
+    onGeocodingCompleted_(results);
   });
 }
 
@@ -269,7 +270,7 @@ void FindPlace::geocodePOIs(const QString& poi, SearchMode mode)
 
     m_locatorTask->geocodeWithParametersAsync(m_poiSearchText, params).then(this, [this](const QList<GeocodeResult>& results)
     {
-      geocodeCompleteHandler(results);
+      onGeocodingCompleted_(results);
     });
   }
   // If the Mode is BoundingGeometry, use the MapView's current viewpoint as the search area
@@ -282,7 +283,7 @@ void FindPlace::geocodePOIs(const QString& poi, SearchMode mode)
 
     m_locatorTask->geocodeWithParametersAsync(m_poiSearchText, params).then(this, [this](const QList<GeocodeResult>& results)
     {
-      geocodeCompleteHandler(results);
+      onGeocodingCompleted_(results);
     });
   }
 }
@@ -298,7 +299,7 @@ void FindPlace::geocodePOIs(const QString& poi, const Point& location)
 
   m_locatorTask->geocodeWithParametersAsync(m_poiSearchText, params).then(this, [this](const QList<GeocodeResult>& results)
   {
-    geocodeCompleteHandler(results);
+    onGeocodingCompleted_(results);
   });
 }
 
@@ -316,7 +317,7 @@ void FindPlace::geocodePOIs(const QString& poi, const QString& location)
   m_isSearchingLocation = true;
   m_locatorTask->geocodeWithParametersAsync(location, params).then(this, [this](const QList<GeocodeResult>& results)
   {
-    geocodeCompleteHandler(results);
+    onGeocodingCompleted_(results);
   });
 }
 

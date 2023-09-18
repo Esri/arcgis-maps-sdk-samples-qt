@@ -34,8 +34,8 @@ namespace Esri::ArcGISRuntime
 
 class SymbolImageProvider;
 
-#include <QObject>
 #include <QFuture>
+#include <QObject>
 #include <QMouseEvent>
 
 #include "Viewpoint.h"

@@ -73,6 +73,7 @@ private:
   QString textString() const;
   void connectRouteTaskSignals();
   void connectRouteTrackerSignals();
+  void onSolveRouteCompleted_(const Esri::ArcGISRuntime::RouteResult& routeResult);
 
   Esri::ArcGISRuntime::Graphic* m_routeAheadGraphic = nullptr;
   Esri::ArcGISRuntime::Graphic* m_routeTraveledGraphic = nullptr;

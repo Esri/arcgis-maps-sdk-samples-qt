@@ -136,13 +136,14 @@ void FindAddress::geocodeAddress(const QString& address)
   //! [FindAddress geocodeWithParameters]
   m_locatorTask->geocodeWithParametersAsync(address, m_geocodeParameters).then(this, [this](const QList<GeocodeResult>& geocodeResults)
   {
-    if (geocodeResults.length() > 0)
-    {
-      m_graphic->setGeometry(geocodeResults.at(0).displayLocation());
-      m_graphic->attributes()->setAttributesMap(geocodeResults.at(0).attributes());
-      constexpr double scale = 8000.0;
-      m_mapView->setViewpointCenterAsync(geocodeResults.at(0).extent().center(), scale);
-    }
+    if (geocodeResults.isEmpty())
+      return;
+
+    m_graphic->setGeometry(geocodeResults.at(0).displayLocation());
+    m_graphic->attributes()->setAttributesMap(geocodeResults.at(0).attributes());
+    constexpr double scale = 8000.0;
+    m_mapView->setViewpointCenterAsync(geocodeResults.at(0).extent().center(), scale);
+
   });
   //! [FindAddress geocodeWithParameters]
 }

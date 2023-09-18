@@ -50,11 +50,11 @@
 #include "SpatialReference.h"
 #include "Point.h"
 
+#include <QFuture>
 #include <QList>
 #include <QImage>
 #include <QQmlContext>
 #include <QUuid>
-#include <QFuture>
 
 using namespace Esri::ArcGISRuntime;
 

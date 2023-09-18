@@ -121,21 +121,18 @@ void RouteAroundBarriers::connectRouteSignals()
 {
   connect(m_routeTask, &RouteTask::doneLoading, this, [this](const Error& loadError)
   {
-    if (loadError.isEmpty())
-    {
-      m_routeTask->createDefaultParametersAsync().then(this, [this](const RouteParameters& defaultParameters)
-      {
-        m_routeParameters = defaultParameters;
-
-        // set flags to return stops and directions
-        m_routeParameters.setReturnStops(true);
-        m_routeParameters.setReturnDirections(true);
-      });
-    }
-    else
+    if (!loadError.isEmpty())
     {
       qDebug() << loadError.message() << loadError.additionalMessage();
     }
+    m_routeTask->createDefaultParametersAsync().then(this, [this](const RouteParameters& defaultParameters)
+    {
+      m_routeParameters = defaultParameters;
+
+      // set flags to return stops and directions
+      m_routeParameters.setReturnStops(true);
+      m_routeParameters.setReturnDirections(true);
+    });
   });
 
   connect(m_mapView, &MapQuickView::mouseClicked, this, [this](QMouseEvent& e)

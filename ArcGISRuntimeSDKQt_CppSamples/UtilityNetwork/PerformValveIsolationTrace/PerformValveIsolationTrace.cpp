@@ -63,8 +63,8 @@
 #include "ArcGISFeature.h"
 #include "Polyline.h"
 
-#include <QUuid>
 #include <QFuture>
+#include <QUuid>
 
 using namespace Esri::ArcGISRuntime;
 

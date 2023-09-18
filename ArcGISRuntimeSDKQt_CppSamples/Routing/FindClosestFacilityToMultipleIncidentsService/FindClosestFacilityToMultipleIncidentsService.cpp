@@ -160,7 +160,7 @@ void FindClosestFacilityToMultipleIncidentsService::setViewpointGeometry(const E
   if ((m_facilitiesFeatureTable->loadStatus() != LoadStatus::Loaded) || (m_incidentsFeatureTable->loadStatus() != LoadStatus::Loaded))
     return;
 
-  // return if set viewpoint task watcher has already been created
+  // return if set viewpoint future has already been created
   if (m_setViewpointFuture.isValid())
     return;
 

@@ -175,6 +175,10 @@ void FindServiceAreasForMultipleFacilities::connectServiceAreaTaskSignals()
       {
         qWarning() << e.error().message();
       });
+
+      if (!m_future.isValid())
+        qWarning() << "Furure not valid.";
+
     });
 
     emit taskRunningChanged();
