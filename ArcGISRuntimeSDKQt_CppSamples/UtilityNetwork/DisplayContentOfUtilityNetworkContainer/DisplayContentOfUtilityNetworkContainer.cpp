@@ -148,7 +148,7 @@ void DisplayContentOfUtilityNetworkContainer::identifyFeaturesAtMouseClick(QMous
     getUtilityAssociationsOfFeature(identifyResults);
   }).onFailed(this, [this](const ErrorException& e)
   {
-     onTaskFailed("MapView error: ", e);
+    onTaskFailed("MapView error: ", e);
   });
 }
 
