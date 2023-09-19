@@ -126,7 +126,6 @@ void QueryFeaturesWithArcadeExpression::showEvaluatedArcadeInCallout(Feature* fe
   profileVariables["$feature"] = QVariant::fromValue(feature);
   profileVariables["$map"] = QVariant::fromValue(m_map);
 
-
   const QString expressionValue =
       "var crimes = FeatureSetByName($map, 'Crime in the last 60 days');\n"
       "return Count(Intersects($feature, crimes));";
