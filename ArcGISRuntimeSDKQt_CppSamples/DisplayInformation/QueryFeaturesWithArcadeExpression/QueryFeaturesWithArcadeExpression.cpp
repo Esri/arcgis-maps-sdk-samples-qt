@@ -31,12 +31,12 @@
 #include "MapTypes.h"
 #include "Portal.h"
 #include "LayerListModel.h"
-#include "TaskWatcher.h"
 #include "IdentifyLayerResult.h"
 #include "ArcGISFeature.h"
 #include "ExpressionTypes.h"
 #include "Layer.h"
 
+#include <QFuture>
 #include <QUuid>
 #include <QVariantMap>
 
@@ -97,24 +97,24 @@ void QueryFeaturesWithArcadeExpression::setMapView(MapQuickView* mapView)
     // Set callout position
     const Point mapPoint(m_mapView->screenToLocation(mouseEvent.position().x(), mouseEvent.position().y()));
     m_mapView->calloutData()->setLocation(mapPoint);
-    m_mapView->identifyLayers(mouseEvent.position().x(), mouseEvent.position().y(), 12, false);
 
-  });
+    m_mapView->identifyLayersAsync(mouseEvent.position(), 12, false).then(this,
+    [this](const QList<IdentifyLayerResult*>& results)
+    {
+      if (results.empty())
+        return;
 
-  connect(m_mapView, &MapQuickView::identifyLayersCompleted, this, [this](const QUuid&, const QList<IdentifyLayerResult*>& results)
-  {
-    if (results.empty())
-      return;
+      QList<GeoElement*> element_list = results.first()->geoElements();
+      if (element_list.empty())
+        return;
 
-    QList<GeoElement*> element_list = results.first()->geoElements();
-    if (element_list.empty())
-      return;
+      GeoElement* element = element_list.at(0);
+      ArcGISFeature* identifiedFeature = dynamic_cast<ArcGISFeature*>(element);
+      m_mapView->calloutData()->setVisible(true);
 
-    GeoElement* element = element_list.at(0);
-    ArcGISFeature* identifiedFeature = dynamic_cast<ArcGISFeature*>(element);
-    m_mapView->calloutData()->setVisible(true);
+      showEvaluatedArcadeInCallout(identifiedFeature);
+    });
 
-    showEvaluatedArcadeInCallout(identifiedFeature);
   });
 
   emit mapViewChanged();
@@ -133,7 +133,8 @@ void QueryFeaturesWithArcadeExpression::showEvaluatedArcadeInCallout(Feature* fe
   ArcadeExpression expression {expressionValue};
   ArcadeEvaluator* evaluator = new ArcadeEvaluator(&expression, ArcadeProfile::FormCalculation, this);
 
-  connect(evaluator, &ArcadeEvaluator::evaluateCompleted, this, [this](const QUuid&, ArcadeEvaluationResult* arcadeEvaluationResult)
+  evaluator->evaluateAsync(profileVariables).then(this,
+  [this](ArcadeEvaluationResult* arcadeEvaluationResult)
   {
     if (!arcadeEvaluationResult)
       return;
@@ -142,5 +143,4 @@ void QueryFeaturesWithArcadeExpression::showEvaluatedArcadeInCallout(Feature* fe
     const int crimeCount = evalResult.toInt();
     m_mapView->calloutData()->setDetail("Crimes in the last 60 days: " + QString::number(crimeCount));
   });
-  evaluator->evaluate(profileVariables);
 }

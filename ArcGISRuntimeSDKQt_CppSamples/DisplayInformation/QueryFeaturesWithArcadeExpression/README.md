@@ -25,12 +25,12 @@ Click on any neighborhood to see the number of crimes in the last 60 days in a c
     "return Count(Intersects($feature, crimes));"
 
 7. Create an `ArcadeEvaluator` using the Arcade expression and `ArcadeProfile.FORM_CALCULATION`.
-8. Create a map of profile variables with the following key-value pairs. This will be passed to `ArcadeEvaluator::evaluate()` in the next step.
+8. Create a map of profile variables with the following key-value pairs. This will be passed to `ArcadeEvaluator::evaluateAsync()` in the next step.
 
          `{"$feature", identifiedFeature}`
          `{"$map", map}`
 
-9. Call `ArcadeEvaluator::evaluate()` on the Arcade evaluator object and pass the profile variables map.
+9. Call `ArcadeEvaluator::evaluateAsync()` on the Arcade evaluator object and pass the profile variables map.
 10. Call `ArcadeEvaluationResult::result()` to get the result from `ArcadeEvaluator::ArcadeEvaluationResult`.
 11. Convert the result to a numerical value (integer) and populate the callout with the crime count.
 

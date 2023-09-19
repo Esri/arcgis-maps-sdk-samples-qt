@@ -31,10 +31,11 @@
 #include "MapViewTypes.h"
 #include "MapTypes.h"
 #include "SymbolTypes.h"
-#include "TaskWatcher.h"
 #include "GraphicsOverlayListModel.h"
 #include "GraphicListModel.h"
 #include "Envelope.h"
+
+#include <QFuture>
 
 using namespace Esri::ArcGISRuntime;
 
@@ -87,7 +88,7 @@ void Simple_Renderer::componentComplete()
   m_mapView->setMap(m_map);
 
   // set viewpoint using the two farthest points as an envelope with padding
-  m_mapView->setViewpointGeometry(Envelope(oldFaithfulPoint, plumeGeyserPoint), 50);
+  m_mapView->setViewpointGeometryAsync(Envelope(oldFaithfulPoint, plumeGeyserPoint), 50);
 
   // add GraphicsOverlay to MapView
   m_mapView->graphicsOverlays()->append(m_graphicsOverlay);
