@@ -120,7 +120,7 @@ void CreateMobileGeodatabase::createTable()
   tableDescription->fieldDescriptions()->append(new FieldDescription("oid", FieldType::OID));
   tableDescription->fieldDescriptions()->append(new FieldDescription("collection_timestamp", FieldType::Date));
 
-  m_gdb->createTableAsync(tableDescription).then(this, [this](GeodatabaseFeatureTable* gdbFeatureTableResult)
+  m_gdb->createTableAsync(tableDescription, this).then(this, [this](GeodatabaseFeatureTable* gdbFeatureTableResult)
   {
     m_featureTable = gdbFeatureTableResult;
 
