@@ -25,7 +25,7 @@ Pan and zoom around the map. Observe the displayed military symbology on the map
 8. Wait for each layer to load using `FeatureLayer::loadStatusChanged`.
 9. After the last layer has loaded, then create a new `Envelope` from a union of the extents of all layers.
    * Set the envelope to be the `Viewpoint` of the map view using `MapView::setViewpointGeometryAsync(Envelope)`.
-10. Add the feature layer to map using `Map::operationalLayers()::append(FeatureLayer)`.
+10. Add the feature layer to map using `Map::operationalLayers()->append(FeatureLayer)`.
 11. Create `DictionaryRenderer(DictionarySymbolStyle)` and attach to the feature layer using `FeatureLayer::setRenderer(DictionaryRenderer)`.
 
 ## Relevant API
