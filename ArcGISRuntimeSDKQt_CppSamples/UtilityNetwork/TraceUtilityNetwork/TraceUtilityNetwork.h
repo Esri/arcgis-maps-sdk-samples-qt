@@ -99,7 +99,7 @@ private:
   void setBusyIndicator(bool status);
   void onIdentifyLayersCompleted_(const QList<Esri::ArcGISRuntime::IdentifyLayerResult*>& results);
   void onTraceCompleted_();
-  void onTaskFailed(const Esri::ArcGISRuntime::ErrorException& exception);
+  void onTaskFailed_(const Esri::ArcGISRuntime::ErrorException& exception);
   const QUrl m_serviceUrl = QUrl("https://sampleserver7.arcgisonline.com/server/rest/services/UtilityNetwork/NapervilleElectric/FeatureServer");
 
   Esri::ArcGISRuntime::Map* m_map = nullptr;
