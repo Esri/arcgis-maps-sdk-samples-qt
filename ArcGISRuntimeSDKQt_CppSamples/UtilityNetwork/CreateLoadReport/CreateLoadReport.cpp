@@ -224,7 +224,7 @@ void CreateLoadReport::runReport(const QStringList& selectedPhaseNames)
     setUtilityTraceOrconditionWithCodedValue(codedValue);
     m_utilityNetwork->traceAsync(m_traceParameters).then(this, [this, codedValue](QList<UtilityTraceResult*>)
     {
-      createTraceCompletedConnection(codedValue.name());
+      onTraceCompleted_(codedValue.name());
     });
   }
 
@@ -252,7 +252,7 @@ void CreateLoadReport::setUtilityTraceOrconditionWithCodedValue(CodedValue coded
   m_traceParameters->traceConfiguration()->traversability()->setBarriers(utilityTraceOrCondition);
 }
 
-void CreateLoadReport::createTraceCompletedConnection(const QString& codedValueName)
+void CreateLoadReport::onTraceCompleted_(const QString& codedValueName)
 {
   UtilityTraceResultListModel* results = m_utilityNetwork->traceResult();
 
@@ -266,15 +266,7 @@ void CreateLoadReport::createTraceCompletedConnection(const QString& codedValueN
     else if (UtilityFunctionTraceResult* functionResult = dynamic_cast<UtilityFunctionTraceResult*>(result))
       m_phaseLoad[codedValueName] = qAsConst(functionResult)->functionOutputs().first()->result().toInt();
   }
-
   emit loadReportUpdated();
-
-  // If the tasks queue is empty, all trace tasks have completed
-  if (m_tasks.isEmpty())
-  {
-    m_sampleStatus = CreateLoadReport::SampleReady;
-    emit sampleStatusChanged();
-  }
 }
 
 CreateLoadReport::~CreateLoadReport() = default;

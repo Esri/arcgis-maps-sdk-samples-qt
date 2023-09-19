@@ -21,6 +21,7 @@ namespace Esri::ArcGISRuntime
 {
   class ErrorException;
   class Map;
+  class GeocodeResult;
   class Graphic;
   class LocatorTask;
   class CalloutData;
@@ -35,7 +36,6 @@ namespace Esri::ArcGISRuntime
 #include "SuggestResult.h"
 #include "GeocodeParameters.h"
 #include "ReverseGeocodeParameters.h"
-#include "GeocodeResult.h"
 
 #include <QQuickItem>
 

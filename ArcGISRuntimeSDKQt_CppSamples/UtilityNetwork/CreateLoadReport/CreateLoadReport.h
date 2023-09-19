@@ -74,7 +74,7 @@ private:
   Esri::ArcGISRuntime::UtilityElement* createStartingLocation();
   Esri::ArcGISRuntime::UtilityTraceConfiguration* createDefaultTraceConfiguration();
   QList<Esri::ArcGISRuntime::CodedValue> createPhaseList();
-  void createTraceCompletedConnection(const QString& codeValueName);
+  void onTraceCompleted_(const QString& codeValueName);
   void setUtilityTraceOrconditionWithCodedValue(Esri::ArcGISRuntime::CodedValue);
 
   Esri::ArcGISRuntime::Credential* m_cred = nullptr;
@@ -87,7 +87,6 @@ private:
   Esri::ArcGISRuntime::UtilityTraceConfiguration* m_traceConfiguration = nullptr;
   Esri::ArcGISRuntime::UtilityTraceParameters* m_traceParameters = nullptr;
   QList<Esri::ArcGISRuntime::CodedValue> m_phaseList;
-  QMap<QUuid, QString> m_tasks;
   QStringList m_activePhases;
   QVariantMap m_phaseCust;
   QVariantMap m_phaseLoad;
