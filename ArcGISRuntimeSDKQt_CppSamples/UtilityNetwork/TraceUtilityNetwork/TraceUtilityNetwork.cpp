@@ -278,9 +278,9 @@ void TraceUtilityNetwork::trace(int index)
   m_utilityNetwork->traceAsync(m_traceParams).then(this, [this](QList<UtilityTraceResult*>)
   {
     onTraceCompleted_();
-  }).onFailed([this](const ErrorException& e)
+  }).onFailed([this](const ErrorException& exception)
   {
-    onTaskFailed(e);
+    onTaskFailed(exception);
   });
 }
 

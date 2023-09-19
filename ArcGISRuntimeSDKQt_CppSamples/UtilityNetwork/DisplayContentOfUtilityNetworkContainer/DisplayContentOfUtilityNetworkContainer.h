@@ -21,6 +21,7 @@ namespace Esri::ArcGISRuntime
 {
   class ArcGISFeature;
   class Credential;
+  class ErrorException;
   class GraphicsOverlay;
   class IdentifyLayerResult;
   class Map;
@@ -30,7 +31,6 @@ namespace Esri::ArcGISRuntime
   class UtilityAssociation;
   class UtilityElement;
   class UtilityNetwork;
-  class ErrorException;
 }
 
 class SymbolImageProvider;

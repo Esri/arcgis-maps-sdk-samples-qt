@@ -314,41 +314,36 @@ void OfflineGeocode::onGeocodingCompleted_(const QList<GeocodeResult>& geocodeRe
   m_geocodeInProgress = false;
   emit geocodeInProgressChanged();
 
-  if (geocodeResults.length() > 0)
-  {
-    // dismiss no results notification
-    m_noResults = false;
-    emit noResultsChanged();
-
-    // dismiss callouts
-    m_calloutData->setVisible(false);
-
-    // zoom to result's extent
-    m_mapView->setViewpointCenterAsync(geocodeResults.at(0).displayLocation());
-
-    // set pin graphic's location
-    m_pinGraphic->setGeometry(geocodeResults.at(0).displayLocation());
-    m_pinGraphic->setVisible(true);
-
-    // set callout location and detail
-    m_calloutData->setDetail(geocodeResults.at(0).label());
-    m_calloutData->setGeoElement(m_pinGraphic);
-
-    if (m_isReverseGeocode)
-      m_calloutData->setVisible(true);
-
-    // continue reverse geocoding if user is pressing and holding
-    if (!m_isPressAndHold)
-      m_isReverseGeocode = false;
-  }
-
   // if there are no matching results, notify user
-  else
+  if (geocodeResults.empty())
   {
     m_noResults = true;
     emit noResultsChanged();
   }
+  // dismiss no results notification
+  m_noResults = false;
+  emit noResultsChanged();
 
+  // dismiss callouts
+  m_calloutData->setVisible(false);
+
+  // zoom to result's extent
+  m_mapView->setViewpointCenterAsync(geocodeResults.at(0).displayLocation());
+
+  // set pin graphic's location
+  m_pinGraphic->setGeometry(geocodeResults.at(0).displayLocation());
+  m_pinGraphic->setVisible(true);
+
+  // set callout location and detail
+  m_calloutData->setDetail(geocodeResults.at(0).label());
+  m_calloutData->setGeoElement(m_pinGraphic);
+
+  if (m_isReverseGeocode)
+    m_calloutData->setVisible(true);
+
+  // continue reverse geocoding if user is pressing and holding
+  if (!m_isPressAndHold)
+    m_isReverseGeocode = false;
 }
 
 QString OfflineGeocode::errorMessage() const

@@ -48,6 +48,7 @@
 #include "DrawingInfo.h"
 #include "GraphicsOverlay.h"
 #include "Graphic.h"
+#include "ErrorException.h"
 #include "Envelope.h"
 #include "ArcGISFeatureTable.h"
 #include "SpatialReference.h"
@@ -56,7 +57,6 @@
 #include "Polygon.h"
 #include "Symbol.h"
 #include "SimpleLineSymbol.h"
-#include "ErrorException.h"
 
 #include <QImage>
 #include <QQmlContext>
