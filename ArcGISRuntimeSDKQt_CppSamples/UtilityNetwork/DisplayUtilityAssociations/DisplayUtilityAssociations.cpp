@@ -38,7 +38,6 @@
 #include "UtilityNetworkTypes.h"
 #include "MapTypes.h"
 #include "SymbolTypes.h"
-#include "TaskWatcher.h"
 #include "Error.h"
 #include "GraphicsOverlayListModel.h"
 #include "GraphicListModel.h"
@@ -51,6 +50,7 @@
 #include "SpatialReference.h"
 #include "Point.h"
 
+#include <QFuture>
 #include <QList>
 #include <QImage>
 #include <QQmlContext>
@@ -94,7 +94,31 @@ void DisplayUtilityAssociations::addAssociations()
   }
 
   // get all the associations in the extent of the viewpoint
-  m_utilityNetwork->associations(extent);
+  m_utilityNetwork->associationsAsync(extent).then(this, [this](const QList<UtilityAssociation*>& associations)
+  {
+    const GraphicListModel* graphics = m_associationsOverlay->graphics();
+
+    for (UtilityAssociation* association : associations)
+    {
+      // check if the graphics overlay already contains the association
+      const bool uniqueGraphic = std::none_of(graphics->begin(), graphics->end(), [association](const Graphic* graphic)
+                                              {
+                                                const AttributeListModel* attributes = graphic->attributes();
+                                                return attributes->containsAttribute("GlobalId") && qvariant_cast<QUuid>((*graphic->attributes())["GlobalId"]) == association->globalId();
+                                              });
+
+      if (uniqueGraphic)
+      {
+        // add a graphic for the association
+        QVariantMap graphicAttributes;
+        graphicAttributes["GlobalId"] = association->globalId();
+        graphicAttributes["AssociationType"] = static_cast<int>(association->associationType());
+        Graphic* graphic = new Graphic(association->geometry(), graphicAttributes, this);
+
+        m_associationsOverlay->graphics()->append(graphic);
+      }
+    }
+  });
 }
 
 DisplayUtilityAssociations::~DisplayUtilityAssociations() = default;
@@ -127,14 +151,6 @@ void DisplayUtilityAssociations::setMapView(MapQuickView* mapView)
   m_symbolImageProvider = new SymbolImageProvider();
   engine->addImageProvider(SymbolImageProvider::imageProviderId(), m_symbolImageProvider);
 
-  connect(m_mapView, &MapQuickView::setViewpointCompleted, this, [this](bool succeeded)
-  {
-    if (!succeeded)
-      return;
-
-    addAssociations();
-  });
-
   connect(m_mapView, &MapQuickView::navigatingChanged, this, [this]()
   {
     if (!m_mapView->isNavigating())
@@ -156,7 +172,13 @@ void DisplayUtilityAssociations::connectSignals()
       return;
     }
 
-    m_mapView->setViewpoint(Viewpoint(Point(-9812698.37297436, 5131928.33743317, SpatialReference::webMercator()), targetScale));
+    m_mapView->setViewpointAsync(Viewpoint(Point(-9812698.37297436, 5131928.33743317, SpatialReference::webMercator()), targetScale)).then(this, [this](bool succeeded)
+    {
+      if (!succeeded)
+        return;
+
+      addAssociations();
+    });
 
     // get all the edges and junctions in the network
     QList<UtilityNetworkSource*> edges;
@@ -195,71 +217,39 @@ void DisplayUtilityAssociations::connectSignals()
     m_associationsOverlay->setRenderer(uniqueValueRenderer);
 
     // populate the legend
-    m_attachmentSymbol->createSwatch();
-    m_connectivitySymbol->createSwatch();
-  });
-
-  connect(m_utilityNetwork, &UtilityNetwork::associationsCompleted, this, [this](const QUuid&, const QList<UtilityAssociation*>& associations)
-  {
-    const GraphicListModel* graphics = m_associationsOverlay->graphics();
-
-    for (UtilityAssociation* association : associations)
+    m_attachmentSymbol->createSwatchAsync().then(this, [this](const QImage& image)
     {
+      if (!m_symbolImageProvider)
+        return;
 
-      // check if the graphics overlay already contains the association
-      const bool uniqueGraphic = std::none_of(graphics->begin(), graphics->end(), [association](const Graphic* graphic)
-      {
-        const AttributeListModel* attributes = graphic->attributes();
-        return attributes->containsAttribute("GlobalId") && qvariant_cast<QUuid>((*graphic->attributes())["GlobalId"]) == association->globalId();
-      });
+      const QString imageId = QUuid().createUuid().toString(QUuid::WithoutBraces);
 
-      if (uniqueGraphic)
-      {
-        // add a graphic for the association
-        QVariantMap graphicAttributes;
-        graphicAttributes["GlobalId"] = association->globalId();
-        graphicAttributes["AssociationType"] = static_cast<int>(association->associationType());
-        Graphic* graphic = new Graphic(association->geometry(), graphicAttributes, this);
+      // add the image to the provider
+      m_symbolImageProvider->addImage(imageId, image);
 
-        m_associationsOverlay->graphics()->append(graphic);
-      }
-    }
-  });
+      // update the URL with the unique id
+      m_attachmentSymbolUrl = QString("image://%1/%2").arg(SymbolImageProvider::imageProviderId(), imageId);
 
-  connect(m_attachmentSymbol, &Symbol::createSwatchCompleted, this, [this](const QUuid& id, const QImage& image)
-  {
-    if (!m_symbolImageProvider)
-      return;
+      // emit the signal to trigger the QML Image to update
+      emit attachmentSymbolUrlChanged();
+    });
 
-    // convert the QUuid into a QString
-    const QString imageId = id.toString().remove("{").remove("}");
+    m_connectivitySymbol->createSwatchAsync().then(this, [this](const QImage& image)
+    {
+      if (!m_symbolImageProvider)
+        return;
 
-    // add the image to the provider
-    m_symbolImageProvider->addImage(imageId, image);
+      const QString imageId = QUuid().createUuid().toString(QUuid::WithoutBraces);
 
-    // update the URL with the unique id
-    m_attachmentSymbolUrl = QString("image://%1/%2").arg(SymbolImageProvider::imageProviderId(), imageId);
+      // add the image to the provider
+      m_symbolImageProvider->addImage(imageId, image);
 
-    // emit the signal to trigger the QML Image to update
-    emit attachmentSymbolUrlChanged();
-  });
+      // update the URL with the unique id
+      m_connectivitySymbolUrl = QString("image://%1/%2").arg(SymbolImageProvider::imageProviderId(), imageId);
 
-  connect(m_connectivitySymbol, &Symbol::createSwatchCompleted, this, [this](const QUuid& id, const QImage& image)
-  {
-    if (!m_symbolImageProvider)
-      return;
-
-    // convert the QUuid into a QString
-    const QString imageId = id.toString().remove("{").remove("}");
-
-    // add the image to the provider
-    m_symbolImageProvider->addImage(imageId, image);
-
-    // update the URL with the unique id
-    m_connectivitySymbolUrl = QString("image://%1/%2").arg(SymbolImageProvider::imageProviderId(), imageId);
-
-    // emit the signal to trigger the QML Image to update
-    emit connectivitySymbolUrlChanged();
+      // emit the signal to trigger the QML Image to update
+      emit connectivitySymbolUrlChanged();
+    });
   });
 }
 

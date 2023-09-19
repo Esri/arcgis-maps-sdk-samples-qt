@@ -15,11 +15,11 @@ Click 'Solve Routes' to solve and display the route from each incident (fire) to
 ## How it works
 
 1. Create a `ClosestFacilityTask` using a URL from an online service.
-2. Get the default set of `ClosestFacilityParameters` from the task: `closestFacilityTask.createDefaultParameters()`.
+2. Get the default set of `ClosestFacilityParameters` from the task: `closestFacilityTask.createDefaultParametersAsync()`.
 3. Create `ServiceFeatureTable`s for both facilities incidents.
 4. Add all facilities to the task parameters: `closestFacilityParameters.setFacilitiesWithFeatureTable(facilitiesFeatureTable, parameters)`.
 5. Add all incidents to the task parameters: `closestFacilityParameters.setIncidentsWithFeatureTable(incidentsFeatureTable, parameters)`.
-6. Get `ClosestFacilityResult` by solving the task with the provided parameters: `closestFacilityTask.solveClosestFacility(closestFacilityParameters)`.
+6. Get `ClosestFacilityResult` by solving the task with the provided parameters: `closestFacilityTask.solveClosestFacilityAsync(closestFacilityParameters)`.
 7. Find the closest facility for each incident by iterating over the list of `Incident`s.
 8. Display the route as a `Graphic` using the `closestFacilityRoute.routeGeometry()`.
 

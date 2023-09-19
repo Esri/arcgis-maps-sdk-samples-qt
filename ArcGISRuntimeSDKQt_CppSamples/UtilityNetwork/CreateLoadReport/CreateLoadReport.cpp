@@ -49,7 +49,8 @@
 #include "Credential.h"
 #include "MapTypes.h"
 #include "UtilityTraceFunction.h"
-#include "TaskWatcher.h"
+
+#include <QFuture>
 
 using namespace Esri::ArcGISRuntime;
 
@@ -103,9 +104,6 @@ CreateLoadReport::CreateLoadReport(QObject* parent /* = nullptr */):
 
       // Create a list of possible phases from a given network attribute
       m_phaseList = createPhaseList();
-
-      // Create a connection that is triggered when the utility network trace completes
-      createTraceCompletedConnection();
 
       m_sampleStatus = CreateLoadReport::SampleReady;
       emit sampleStatusChanged();
@@ -220,12 +218,14 @@ void CreateLoadReport::runReport(const QStringList& selectedPhaseNames)
 
     emit loadReportUpdated();
   }
-
+  m_traceRequestCount = activeValues.size();
   for (const CodedValue& codedValue : activeValues)
   {
     setUtilityTraceOrconditionWithCodedValue(codedValue);
-    TaskWatcher task = m_utilityNetwork->trace(m_traceParameters);
-    m_tasks[task.taskId()] = codedValue.name();
+    m_utilityNetwork->traceAsync(m_traceParameters).then(this, [this, codedValue](QList<UtilityTraceResult*>)
+    {
+      onTraceCompleted_(codedValue.name());
+    });
   }
 
   // If no phases were selected then the sample was reset and can be marked ready
@@ -252,34 +252,28 @@ void CreateLoadReport::setUtilityTraceOrconditionWithCodedValue(CodedValue coded
   m_traceParameters->traceConfiguration()->traversability()->setBarriers(utilityTraceOrCondition);
 }
 
-void CreateLoadReport::createTraceCompletedConnection()
+void CreateLoadReport::onTraceCompleted_(const QString& codedValueName)
 {
-  connect(m_utilityNetwork, &UtilityNetwork::traceCompleted, this, [this](const QUuid& taskId)
+  UtilityTraceResultListModel* results = m_utilityNetwork->traceResult();
+
+  for (UtilityTraceResult* result : *results)
   {
-    const QString codedValueName = m_tasks.take(taskId);
+    // Get the total customers from the UtilityElementTraceResult
+    if (UtilityElementTraceResult* elementResult = dynamic_cast<UtilityElementTraceResult*>(result))
+      m_phaseCust[codedValueName] = elementResult->elements(this).size();
 
-    UtilityTraceResultListModel* results = m_utilityNetwork->traceResult();
+    // Get the total load from the UtilityFunctionTraceResult
+    else if (UtilityFunctionTraceResult* functionResult = dynamic_cast<UtilityFunctionTraceResult*>(result))
+      m_phaseLoad[codedValueName] = qAsConst(functionResult)->functionOutputs().first()->result().toInt();
+  }
 
-    for (UtilityTraceResult* result : *results)
-    {
-      // Get the total customers from the UtilityElementTraceResult
-      if (UtilityElementTraceResult* elementResult = dynamic_cast<UtilityElementTraceResult*>(result))
-        m_phaseCust[codedValueName] = elementResult->elements(this).size();
-
-      // Get the total load from the UtilityFunctionTraceResult
-      else if (UtilityFunctionTraceResult* functionResult = dynamic_cast<UtilityFunctionTraceResult*>(result))
-        m_phaseLoad[codedValueName] = qAsConst(functionResult)->functionOutputs().first()->result().toInt();
-    }
-
-    emit loadReportUpdated();
-
-    // If the tasks queue is empty, all trace tasks have completed
-    if (m_tasks.isEmpty())
-    {
-      m_sampleStatus = CreateLoadReport::SampleReady;
-      emit sampleStatusChanged();
-    }
-  });
+  emit loadReportUpdated();
+  // If the trace request count is zero, all trace tasks have completed
+  if ((--m_traceRequestCount) == 0)
+  {
+    m_sampleStatus = CreateLoadReport::SampleReady;
+    emit sampleStatusChanged();
+  }
 }
 
 CreateLoadReport::~CreateLoadReport() = default;

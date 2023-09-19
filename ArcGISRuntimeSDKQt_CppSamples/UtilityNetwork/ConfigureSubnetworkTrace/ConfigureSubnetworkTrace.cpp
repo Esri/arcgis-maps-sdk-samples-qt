@@ -21,7 +21,6 @@
 #include "ConfigureSubnetworkTrace.h"
 
 #include "CodedValueDomain.h"
-#include "TaskWatcher.h"
 #include "UtilityAssetGroup.h"
 #include "UtilityAssetType.h"
 #include "UtilityCategory.h"
@@ -45,6 +44,7 @@
 #include "Error.h"
 #include "Credential.h"
 
+#include <QFuture>
 #include <QQmlEngine>
 #include <algorithm>
 
@@ -57,8 +57,6 @@ ConfigureSubnetworkTrace::ConfigureSubnetworkTrace(QObject* parent /* = nullptr 
   m_utilityNetwork = new UtilityNetwork(m_featureLayerUrl, m_cred, this);
 
   connect(m_utilityNetwork, &UtilityNetwork::doneLoading, this, &ConfigureSubnetworkTrace::onUtilityNetworkLoaded);
-
-  connect(m_utilityNetwork, &UtilityNetwork::traceCompleted, this, &ConfigureSubnetworkTrace::onTraceCompleted);
 
   m_utilityNetwork->load();
 }
@@ -268,10 +266,13 @@ void ConfigureSubnetworkTrace::trace()
   m_traceParams->setTraceConfiguration(m_traceConfiguration);
 
   // trace the network
-  m_utilityNetwork->trace(m_traceParams);
+  m_utilityNetwork->traceAsync(m_traceParams).then(this, [this](QList<UtilityTraceResult*>)
+  {
+    onTraceCompleted_();
+  });
 }
 
-void ConfigureSubnetworkTrace::onTraceCompleted()
+void ConfigureSubnetworkTrace::onTraceCompleted_()
 {
   if (m_utilityNetwork->traceResult()->isEmpty())
   {

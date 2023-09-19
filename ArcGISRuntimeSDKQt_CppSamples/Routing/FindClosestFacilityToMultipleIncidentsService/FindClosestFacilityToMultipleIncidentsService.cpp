@@ -29,7 +29,6 @@
 #include "FeatureLayer.h"
 #include "GraphicsOverlay.h"
 #include "Graphic.h"
-#include "TaskWatcher.h"
 #include "GeometryEngine.h"
 #include "ClosestFacilityTask.h"
 #include "ClosestFacilityParameters.h"
@@ -37,7 +36,6 @@
 #include "ClosestFacilityRoute.h"
 #include "MapTypes.h"
 #include "SymbolTypes.h"
-#include "TaskWatcher.h"
 #include "Error.h"
 #include "GraphicsOverlayListModel.h"
 #include "GraphicListModel.h"
@@ -46,6 +44,7 @@
 #include "Polyline.h"
 #include "Envelope.h"
 
+#include <QFuture>
 #include <QUuid>
 
 using namespace Esri::ArcGISRuntime;
@@ -134,7 +133,7 @@ void FindClosestFacilityToMultipleIncidentsService::createFeatureLayers()
 
 void FindClosestFacilityToMultipleIncidentsService::setupRouting()
 {
-  connect(m_task, &ClosestFacilityTask::createDefaultParametersCompleted, this, [this](const QUuid&, const ClosestFacilityParameters& defaultParameters)
+  m_task->createDefaultParametersAsync().then(this, [this](const ClosestFacilityParameters& defaultParameters)
   {
     QueryParameters params;
     params.setWhereClause("1=1");
@@ -147,8 +146,38 @@ void FindClosestFacilityToMultipleIncidentsService::setupRouting()
     emit busyChanged();
     emit solveButtonChanged();
   });
+}
 
-  connect(m_task, &ClosestFacilityTask::solveClosestFacilityCompleted, this, [this](const QUuid&, const ClosestFacilityResult& closestFacilityResult)
+void FindClosestFacilityToMultipleIncidentsService::setViewpointGeometry(const Error& e)
+{
+  if (!e.isEmpty())
+  {
+    qDebug() << e.message();
+    return;
+  }
+
+  // proceed only if both layers have been loaded
+  if ((m_facilitiesFeatureTable->loadStatus() != LoadStatus::Loaded) || (m_incidentsFeatureTable->loadStatus() != LoadStatus::Loaded))
+    return;
+
+  // return if set viewpoint future has already been created
+  if (m_setViewpointFuture.isValid())
+    return;
+
+  m_mapView->map()->operationalLayers()->append(m_facilitiesFeatureLayer);
+  m_mapView->map()->operationalLayers()->append(m_incidentsFeatureLayer);
+
+  m_setViewpointFuture = m_mapView->setViewpointGeometryAsync(GeometryEngine::unionOf(m_facilitiesFeatureLayer->fullExtent(), m_incidentsFeatureLayer->fullExtent()), 20);
+}
+
+void FindClosestFacilityToMultipleIncidentsService::solveRoute()
+{
+  m_busy = true;
+  m_solveButtonEnabled = false;
+  emit busyChanged();
+  emit solveButtonChanged();
+
+  m_task->solveClosestFacilityAsync(m_facilityParams).then(this, [this]( const ClosestFacilityResult& closestFacilityResult)
   {
     if (closestFacilityResult.isEmpty())
     {
@@ -173,40 +202,6 @@ void FindClosestFacilityToMultipleIncidentsService::setupRouting()
     m_busy = false;
     emit busyChanged();
   });
-
-  m_task->createDefaultParameters();
-}
-
-void FindClosestFacilityToMultipleIncidentsService::setViewpointGeometry(const Error& e)
-{
-  if (!e.isEmpty())
-  {
-    qDebug() << e.message();
-    return;
-  }
-
-  // proceed only if both layers have been loaded
-  if ((m_facilitiesFeatureTable->loadStatus() != LoadStatus::Loaded) || (m_incidentsFeatureTable->loadStatus() != LoadStatus::Loaded))
-    return;
-
-  // return if set viewpoint task watcher has already been created
-  if (setViewpointTaskWatcher.isValid())
-    return;
-
-  m_mapView->map()->operationalLayers()->append(m_facilitiesFeatureLayer);
-  m_mapView->map()->operationalLayers()->append(m_incidentsFeatureLayer);
-
-  setViewpointTaskWatcher = m_mapView->setViewpointGeometry(GeometryEngine::unionOf(m_facilitiesFeatureLayer->fullExtent(), m_incidentsFeatureLayer->fullExtent()), 20);
-}
-
-void FindClosestFacilityToMultipleIncidentsService::solveRoute()
-{
-  m_busy = true;
-  m_solveButtonEnabled = false;
-  emit busyChanged();
-  emit solveButtonChanged();
-
-  m_task->solveClosestFacility(m_facilityParams);
 }
 
 void FindClosestFacilityToMultipleIncidentsService::resetGO()

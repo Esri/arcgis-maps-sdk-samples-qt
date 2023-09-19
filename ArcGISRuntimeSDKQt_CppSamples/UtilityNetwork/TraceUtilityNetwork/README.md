@@ -27,7 +27,7 @@ Tap on one or more features while 'Add starting locations' or 'Add barriers' is 
 11. Add this `UtilityElement` to a collection of starting locations or barriers.
 12. Create `UtilityTraceParameters` with the selected trace type along with the collected starting locations and barriers (if applicable).
 13. Set the `UtilityTraceParameters::traceConfiguration` with the utility tier's `traceConfiguration` property.
-14. Run a `UtilityNetwork::trace` with the specified parameters.
+14. Run a `UtilityNetwork::traceAsync` with the specified parameters.
 15. For every `FeatureLayer` in the map, select the features using the `UtilityElement::objectId` from the filtered list of `UtilityElementTraceResult::elements`.
 
 ## Relevant API

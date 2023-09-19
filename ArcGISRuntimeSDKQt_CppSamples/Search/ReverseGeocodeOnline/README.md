@@ -17,7 +17,7 @@ Tap the map to see the nearest address displayed in a callout.
 1. Create the `Map` with a `Basemap`.
 2. Create a `LocatorTask` using a URL.
 3. Set the `ReverseGeocodeParameters` for the `LocatorTask` and specify the geocode's attributes.
-4. Get the matching results from the `GeocodeResult` using `ReverseGeocodeWithParameters`
+4. Get the matching results from the `GeocodeResult` using `ReverseGeocodeWithParametersAsync`
 5. Change the attributes of the `MapView`'s `CalloutData` and display the location using a `Callout`
 
 ## Relevant API

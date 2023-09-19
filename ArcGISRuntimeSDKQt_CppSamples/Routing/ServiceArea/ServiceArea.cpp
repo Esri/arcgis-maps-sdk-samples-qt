@@ -31,7 +31,6 @@
 #include "MapTypes.h"
 #include "MapViewTypes.h"
 #include "SymbolTypes.h"
-#include "TaskWatcher.h"
 #include "Error.h"
 #include "GraphicsOverlayListModel.h"
 #include "GraphicListModel.h"
@@ -48,6 +47,7 @@
 #include "Polyline.h"
 #include "Polygon.h"
 
+#include <QFuture>
 #include <QUuid>
 
 using namespace Esri::ArcGISRuntime;
@@ -155,7 +155,26 @@ void ServiceArea::solveServiceArea()
   if (!barriers.isEmpty())
     m_parameters.setPolylineBarriers(barriers);
 
-  m_task->solveServiceArea(m_parameters);
+  m_task->solveServiceAreaAsync(m_parameters).then(this, [this](const ServiceAreaResult& serviceAreaResult)
+  {
+    setBusy(false);
+    if (serviceAreaResult.isEmpty())
+    {
+      m_message = "No Serice Areas calculated!";
+      emit messageChanged();
+      return;
+    }
+
+    int numFacilities = m_facilitiesOverlay->graphics()->size();
+    for (int i = 0; i < numFacilities; ++i)
+    {
+      const QList<ServiceAreaPolygon> results = serviceAreaResult.resultPolygons(i);
+      if (!m_graphicParent)
+        m_graphicParent = new QObject(this);
+      for (const ServiceAreaPolygon& poly : results)
+        m_areasOverlay->graphics()->append(new Graphic(poly.geometry(), m_graphicParent));
+    }
+  });
 }
 
 void ServiceArea::reset()
@@ -246,37 +265,6 @@ void ServiceArea::setupGraphics()
 
 void ServiceArea::setupRouting()
 {
-  connect(m_task, &ServiceAreaTask::createDefaultParametersCompleted, this, [this]
-          (const QUuid&, const ServiceAreaParameters& defaultParameters)
-  {
-    m_parameters = defaultParameters;
-    m_parameters.setOutputSpatialReference(SpatialReference::webMercator());
-    m_parameters.setReturnPolygons(true);
-    m_parameters.setPolygonDetail(ServiceAreaPolygonDetail::High);
-    setBusy(false);
-  });
-
-  connect(m_task, &ServiceAreaTask::solveServiceAreaCompleted, this, [this]
-          (const QUuid&, const ServiceAreaResult& serviceAreaResult)
-  {
-    setBusy(false);
-    if (serviceAreaResult.isEmpty())
-    {
-      m_message = "No Serice Areas calculated!";
-      emit messageChanged();
-    }
-
-    int numFacilities = m_facilitiesOverlay->graphics()->size();
-    for (int i = 0; i < numFacilities; ++i)
-    {
-      const QList<ServiceAreaPolygon> results = serviceAreaResult.resultPolygons(i);
-      if (!m_graphicParent)
-        m_graphicParent = new QObject(this);
-      for (const ServiceAreaPolygon& poly : results)
-        m_areasOverlay->graphics()->append(new Graphic(poly.geometry(), m_graphicParent));
-    }
-  });
-
   connect(m_mapView, &MapQuickView::mouseClicked, this, [this](QMouseEvent& mouseEvent)
   {
     if (busy())
@@ -303,7 +291,14 @@ void ServiceArea::setupRouting()
     setBusy(false);
   });
 
-  m_task->createDefaultParameters();
+  m_task->createDefaultParametersAsync().then(this, [this](const ServiceAreaParameters& defaultParameters)
+  {
+    m_parameters = defaultParameters;
+    m_parameters.setOutputSpatialReference(SpatialReference::webMercator());
+    m_parameters.setReturnPolygons(true);
+    m_parameters.setPolygonDetail(ServiceAreaPolygonDetail::High);
+    setBusy(false);
+  });
 }
 
 void ServiceArea::handleFacilityPoint(const Point &p)

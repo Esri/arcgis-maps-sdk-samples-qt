@@ -15,7 +15,7 @@ Click 'Navigate' to simulate traveling and to receive directions from a preset s
 ## How it works
 
 1. Create a `RouteTask` using a local geodatabase.
-2. Generate default `RouteParameters` using `createDefaultParameters`.
+2. Generate default `RouteParameters` using `createDefaultParametersAsync`.
 3. Set `returnStops` and `returnDirections` on the parameters to true.
 4. Add `Stop`s to the parameters `stops` collection for each destination.
 5. Solve the route using to get a `RouteResult`.

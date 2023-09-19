@@ -31,7 +31,6 @@
 #include "Error.h"
 #include "MapTypes.h"
 #include "MapViewTypes.h"
-#include "TaskWatcher.h"
 #include "GraphicsOverlayListModel.h"
 #include "SymbolTypes.h"
 #include "GraphicListModel.h"
@@ -46,6 +45,7 @@
 #include "SimpleLineSymbol.h"
 #include "Polyline.h"
 
+#include <QFuture>
 #include <QUuid>
 
 using namespace Esri::ArcGISRuntime;
@@ -193,8 +193,21 @@ void ClosestFacility::createGraphics()
 
 void ClosestFacility::setupRouting()
 {
-  connect(m_task, &ClosestFacilityTask::createDefaultParametersCompleted, this, [this](
-          const QUuid&, const ClosestFacilityParameters& defaultParameters)
+  connect(m_mapView, &MapQuickView::mouseClicked, this, [this](QMouseEvent& mouseEvent)
+  {
+    if (busy())
+      return;
+
+    Point mapPoint = m_mapView->screenToLocation(mouseEvent.position().x(), mouseEvent.position().y());
+    Point incidentPoint(mapPoint.x(), mapPoint.y(), SpatialReference::webMercator());
+
+    m_incidentGraphic->setGeometry(incidentPoint);
+
+    solveRoute(incidentPoint);
+  });
+
+  setBusy(true);
+  m_task->createDefaultParametersAsync().then(this, [this](const ClosestFacilityParameters& defaultParameters)
   {
     setBusy(false);
 
@@ -202,8 +215,16 @@ void ClosestFacility::setupRouting()
     m_facilityParams.setFacilities(m_facilities);
   });
 
-  connect(m_task, &ClosestFacilityTask::solveClosestFacilityCompleted, this, [this]
-          (const QUuid&, ClosestFacilityResult closestFacilityResult)
+}
+
+void ClosestFacility::solveRoute(const Point& incidentPoint)
+{
+  m_facilityParams.clearIncidents();
+  m_facilityParams.setIncidents(QList<Incident> {Incident(incidentPoint)});
+
+  setBusy(true);
+  // find the closest facility to the incident
+  m_task->solveClosestFacilityAsync(m_facilityParams).then(this, [this](const ClosestFacilityResult& closestFacilityResult)
   {
     setBusy(false);
 
@@ -221,30 +242,4 @@ void ClosestFacility::setupRouting()
 
     m_routeGraphic->setGeometry(route.routeGeometry());
   });
-
-  connect(m_mapView, &MapQuickView::mouseClicked, this, [this](QMouseEvent& mouseEvent)
-  {
-    if (busy())
-      return;
-
-    Point mapPoint = m_mapView->screenToLocation(mouseEvent.position().x(), mouseEvent.position().y());
-    Point incidentPoint(mapPoint.x(), mapPoint.y(), SpatialReference::webMercator());
-
-    m_incidentGraphic->setGeometry(incidentPoint);
-
-    solveRoute(incidentPoint);
-  });
-
-  setBusy(true);
-  m_task->createDefaultParameters();
-}
-
-void ClosestFacility::solveRoute(const Esri::ArcGISRuntime::Point& incidentPoint)
-{
-  m_facilityParams.clearIncidents();
-  m_facilityParams.setIncidents(QList<Incident> {Incident(incidentPoint)});
-
-  setBusy(true);
-  // find the closest facility to the incident
-  m_task->solveClosestFacility(m_facilityParams);
 }

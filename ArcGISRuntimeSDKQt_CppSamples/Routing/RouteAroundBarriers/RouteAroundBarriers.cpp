@@ -39,7 +39,6 @@
 #include "TextSymbol.h"
 #include "MapTypes.h"
 #include "SymbolTypes.h"
-#include "TaskWatcher.h"
 #include "Error.h"
 #include "GraphicsOverlayListModel.h"
 #include "GraphicListModel.h"
@@ -48,6 +47,7 @@
 #include "Point.h"
 #include "Polyline.h"
 
+#include <QFuture>
 #include <QUuid>
 #include <QDir>
 
@@ -105,7 +105,7 @@ void RouteAroundBarriers::setMapView(MapQuickView* mapView)
   m_mapView = mapView;
   m_mapView->setMap(m_map);
 
-  m_mapView->setViewpoint(Viewpoint(32.727, -117.1750, 40000));
+  m_mapView->setViewpointAsync(Viewpoint(32.727, -117.1750, 40000));
 
   // add the graphics overlays to the MapView
   m_mapView->graphicsOverlays()->append(m_routeOverlay);
@@ -119,25 +119,20 @@ void RouteAroundBarriers::setMapView(MapQuickView* mapView)
 
 void RouteAroundBarriers::connectRouteSignals()
 {
-  connect(m_routeTask, &RouteTask::createDefaultParametersCompleted, this, [this](const QUuid&, const RouteParameters& defaultParameters)
-  {
-    m_routeParameters = defaultParameters;
-
-    // set flags to return stops and directions
-    m_routeParameters.setReturnStops(true);
-    m_routeParameters.setReturnDirections(true);
-  });
-
   connect(m_routeTask, &RouteTask::doneLoading, this, [this](const Error& loadError)
   {
-    if (loadError.isEmpty())
-    {
-      m_routeTask->createDefaultParameters();
-    }
-    else
+    if (!loadError.isEmpty())
     {
       qDebug() << loadError.message() << loadError.additionalMessage();
     }
+    m_routeTask->createDefaultParametersAsync().then(this, [this](const RouteParameters& defaultParameters)
+    {
+      m_routeParameters = defaultParameters;
+
+      // set flags to return stops and directions
+      m_routeParameters.setReturnStops(true);
+      m_routeParameters.setReturnDirections(true);
+    });
   });
 
   connect(m_mapView, &MapQuickView::mouseClicked, this, [this](QMouseEvent& e)
@@ -173,20 +168,6 @@ void RouteAroundBarriers::connectRouteSignals()
       createAndDisplayRoute();
     }
   });
-
-  connect (m_routeTask, &RouteTask::solveRouteCompleted, this, [this](const QUuid&, const RouteResult& routeResult)
-  {
-    if (routeResult.isEmpty())
-      return;
-
-    const Route route = qAsConst(routeResult).routes()[0];
-    const Geometry routeGeometry = route.routeGeometry();
-    Graphic* routeGraphic = new Graphic(routeGeometry, this);
-    m_routeOverlay->graphics()->append(routeGraphic);
-
-    m_directions = route.directionManeuvers(this);
-    emit directionsChanged();
-  });
 }
 
 void RouteAroundBarriers::createAndDisplayRoute()
@@ -210,7 +191,19 @@ void RouteAroundBarriers::createAndDisplayRoute()
     m_routeParameters.setPreserveFirstStop(m_preserveFirstStop);
     m_routeParameters.setPreserveLastStop(m_preserveLastStop);
 
-    m_routeTask->solveRoute(m_routeParameters);
+    m_routeTask->solveRouteAsync(m_routeParameters).then(this, [this](const RouteResult& routeResult)
+    {
+      if (routeResult.isEmpty())
+        return;
+
+      const Route route = qAsConst(routeResult).routes()[0];
+      const Geometry routeGeometry = route.routeGeometry();
+      Graphic* routeGraphic = new Graphic(routeGeometry, this);
+      m_routeOverlay->graphics()->append(routeGraphic);
+
+      m_directions = route.directionManeuvers(this);
+      emit directionsChanged();
+    });
   }
 }
 

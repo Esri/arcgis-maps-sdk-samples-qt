@@ -30,7 +30,6 @@
 #include "GeocodeParameters.h"
 #include "Graphic.h"
 #include "MapTypes.h"
-#include "TaskWatcher.h"
 #include "GraphicsOverlayListModel.h"
 #include "GraphicListModel.h"
 #include "AttributeListModel.h"
@@ -40,6 +39,7 @@
 #include "Point.h"
 #include "Envelope.h"
 
+#include <QFuture>
 #include <QUrl>
 #include <memory>
 #include <QUuid>
@@ -101,18 +101,6 @@ void FindAddress::componentComplete()
 
 void FindAddress::connectSignals()
 {
-  // connect to geocode complete signal on the LocatorTask
-  //! [FindAddress geocodeCompleted handler]
-  connect(m_locatorTask, &LocatorTask::geocodeCompleted, this, [this](const QUuid&, const QList<GeocodeResult>& geocodeResults)
-  {
-    if (geocodeResults.length() > 0)
-    {
-      m_graphic->setGeometry(geocodeResults.at(0).displayLocation());
-      m_graphic->attributes()->setAttributesMap(geocodeResults.at(0).attributes());
-      constexpr double scale = 8000.0;
-      m_mapView->setViewpointCenter(geocodeResults.at(0).extent().center(), scale);
-    }
-  });
   //! [FindAddress geocodeCompleted handler]
 
   // connect to the mouse click signal on the MapQuickView
@@ -123,33 +111,39 @@ void FindAddress::connectSignals()
     emit hideCallout();
 
     // call identify on the map view
-    m_mapView->identifyGraphicsOverlay(m_graphicsOverlay, mouseEvent.position().x(), mouseEvent.position().y(), 5, false, 1);
-  });
-
-  // connect to the identifyGraphicsOverlayCompleted signal on the map view
-  connect(m_mapView, &MapQuickView::identifyGraphicsOverlayCompleted, this, [this](const QUuid&, IdentifyGraphicsOverlayResult* rawIdentifyResult)
-  {
-    // Delete rawIdentifyResult on leaving scope.
-    auto identifyResult = std::unique_ptr<IdentifyGraphicsOverlayResult>(rawIdentifyResult);
-
-    if (!identifyResult)
-      return;
-
-    const QList<Graphic*> graphics = identifyResult->graphics();
-    if (graphics.length() > 0)
+    m_mapView->identifyGraphicsOverlayAsync(m_graphicsOverlay, mouseEvent.position(), 5, false, 1).then(this, [this](IdentifyGraphicsOverlayResult* rawIdentifyResult)
     {
+      // Delete rawIdentifyResult on leaving scope.
+      auto identifyResult = std::unique_ptr<IdentifyGraphicsOverlayResult>(rawIdentifyResult);
+
+      if (!identifyResult)
+        return;
+
+      const QList<Graphic*> graphics = identifyResult->graphics();
+      if (graphics.isEmpty())
+        return;
+
       const AttributeListModel* attributes = graphics.at(0)->attributes();
       const QString calloutText = attributes->attributeValue("Match_addr").toString();
       m_mapView->calloutData()->setTitle(calloutText);
       emit showCallout();
-    }
+    });
   });
 }
 
 void FindAddress::geocodeAddress(const QString& address)
 {
   //! [FindAddress geocodeWithParameters]
-  m_locatorTask->geocodeWithParameters(address, m_geocodeParameters);
+  m_locatorTask->geocodeWithParametersAsync(address, m_geocodeParameters).then(this, [this](const QList<GeocodeResult>& geocodeResults)
+  {
+    if (geocodeResults.isEmpty())
+      return;
+
+    m_graphic->setGeometry(geocodeResults.at(0).displayLocation());
+    m_graphic->attributes()->setAttributesMap(geocodeResults.at(0).attributes());
+    constexpr double scale = 8000.0;
+    m_mapView->setViewpointCenterAsync(geocodeResults.at(0).extent().center(), scale);
+  });
   //! [FindAddress geocodeWithParameters]
 }
 

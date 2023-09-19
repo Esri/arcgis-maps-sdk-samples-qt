@@ -75,10 +75,10 @@ signals:
   void valueSelectionListModelChanged();
 
 private slots:
-  void onTraceCompleted();
   void onUtilityNetworkLoaded(const Esri::ArcGISRuntime::Error& e);
 
 private:
+  void onTraceCompleted_();
 
   static QString comparisonOperatorToString(const Esri::ArcGISRuntime::UtilityAttributeComparisonOperator& comparisonOperator);
   static QString expressionToString(Esri::ArcGISRuntime::UtilityTraceConditionalExpression* expression);

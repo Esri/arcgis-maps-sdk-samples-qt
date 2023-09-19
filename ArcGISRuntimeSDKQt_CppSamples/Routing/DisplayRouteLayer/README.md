@@ -19,7 +19,7 @@ Pan and zoom to view the route displayed by the feature collection layer. Press 
 1. Create a `PortalItem` with the item ID.
 2. Create and load a `FeatureCollection` with the item.
 3. After loading, get the specified `FeatureCollectionTable` by name.
-4. Get all of the `ArcGISFeature`s using `FeatureTable::queryFeatures`.
+4. Get all of the `ArcGISFeature`s using `FeatureTable::queryFeaturesAsync`.
 5. Get the direction text from the attributes of each feature.
 6. Create a `FeatureCollectionLayer` with the feature collection and set it to the map's `operationalLayers`.
 

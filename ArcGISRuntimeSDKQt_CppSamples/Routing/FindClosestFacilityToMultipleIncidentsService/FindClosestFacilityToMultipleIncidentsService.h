@@ -37,7 +37,7 @@ class Error;
 #include <QObject>
 
 #include "ClosestFacilityParameters.h"
-#include "TaskWatcher.h"
+#include <QFuture>
 
 Q_MOC_INCLUDE("MapQuickView.h")
 Q_MOC_INCLUDE("Error.h")
@@ -86,7 +86,7 @@ private:
   Esri::ArcGISRuntime::SimpleLineSymbol* m_routeSymbol = nullptr;
   Esri::ArcGISRuntime::ClosestFacilityTask* m_task = nullptr;
   Esri::ArcGISRuntime::GraphicsOverlay* m_resultsOverlay = nullptr;
-  Esri::ArcGISRuntime::TaskWatcher setViewpointTaskWatcher;
+  QFuture<bool> m_setViewpointFuture;
   Esri::ArcGISRuntime::ClosestFacilityParameters m_facilityParams;
 
   bool m_busy = false;

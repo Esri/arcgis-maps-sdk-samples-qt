@@ -28,7 +28,6 @@
 #include "PortalItem.h"
 #include "Error.h"
 #include "MapTypes.h"
-#include "TaskWatcher.h"
 #include "PortalTypes.h"
 #include "LayerListModel.h"
 #include "FeatureCollectionTableListModel.h"
@@ -43,6 +42,7 @@
 #include "SpatialReference.h"
 #include "Point.h"
 
+#include <QFuture>
 #include <QJsonValue>
 
 using namespace Esri::ArcGISRuntime;
@@ -115,7 +115,7 @@ void DisplayRouteLayer::setMapView(MapQuickView* mapView)
   m_mapView = mapView;
   m_mapView->setMap(m_map);
   const Point vpCenter(-122.8309, 45.2281, SpatialReference(4326));
-  m_mapView->setViewpointCenter(vpCenter, 800000);
+  m_mapView->setViewpointCenterAsync(vpCenter, 800000);
 
   emit mapViewChanged();
 }
@@ -132,7 +132,9 @@ void DisplayRouteLayer::getDirections()
     {
       if (table->tableName() == "DirectionPoints")
       {
-        connect(table, &FeatureTable::queryFeaturesCompleted, this, [this](const QUuid&, FeatureQueryResult* featureQueryResult)
+        QueryParameters queryParams;
+        queryParams.setWhereClause("1=1");
+        table->queryFeaturesAsync(queryParams).then(this, [this](const FeatureQueryResult* featureQueryResult)
         {
           if (!featureQueryResult)
             return;
@@ -146,10 +148,6 @@ void DisplayRouteLayer::getDirections()
             emit directionsChanged();
           }
         });
-
-        QueryParameters queryParams;
-        queryParams.setWhereClause("1=1");
-        table->queryFeatures(queryParams);
       }
     }
   }
