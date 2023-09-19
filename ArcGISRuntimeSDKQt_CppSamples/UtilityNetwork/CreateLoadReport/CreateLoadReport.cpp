@@ -269,7 +269,7 @@ void CreateLoadReport::onTraceCompleted_(const QString& codedValueName)
 
   emit loadReportUpdated();
   // If the trace request count is zero, all trace tasks have completed
-  if (!--m_traceRequestCount)
+  if ((--m_traceRequestCount) == 0)
   {
     m_sampleStatus = CreateLoadReport::SampleReady;
     emit sampleStatusChanged();
