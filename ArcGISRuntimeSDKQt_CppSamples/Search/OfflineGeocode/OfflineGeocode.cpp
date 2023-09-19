@@ -44,12 +44,12 @@
 #include "Viewpoint.h"
 #include "ErrorException.h"
 
+#include <QFuture>
 #include <QScopedPointer>
 #include <QtCore/qglobal.h>
 #include <memory>
 #include <QUuid>
 #include <QStandardPaths>
-#include <QFuture>
 
 using namespace Esri::ArcGISRuntime;
 
@@ -153,7 +153,7 @@ void OfflineGeocode::geocodeWithText(const QString& address)
     onGeocodingCompleted_(geocodeResults);
   }).onFailed(this, [this](const ErrorException& e)
   {
-    logError(e.error());
+    logException(e);
   });
 }
 
@@ -165,7 +165,7 @@ void OfflineGeocode::geocodeWithSuggestion(int index)
     onGeocodingCompleted_(geocodeResults);
   }).onFailed(this, [this](const ErrorException& e)
   {
-    logError(e.error());
+    logException(e);
   });
 }
 
@@ -177,6 +177,11 @@ void OfflineGeocode::setSuggestionsText(const QString& searchText)
 void OfflineGeocode::logError(const Error& error)
 {
   setErrorMessage( QString("%1: %2").arg(error.message(), error.additionalMessage()));
+}
+
+void OfflineGeocode::logException(const ErrorException& exception)
+{
+  logError(exception.error());
 }
 
 SuggestListModel* OfflineGeocode::suggestions() const
@@ -229,7 +234,7 @@ void OfflineGeocode::connectSignals()
           onGeocodingCompleted_(geocodeResults);
         }).onFailed(this, [this](const ErrorException& e)
         {
-          logError(e.error());
+          logException(e);
         });
 
         m_geocodeInProgress = true;
@@ -237,7 +242,7 @@ void OfflineGeocode::connectSignals()
       }
     }).onFailed(this, [this](const ErrorException& e)
     {
-      logError(e.error());
+      logException(e);
     });
   });
 
@@ -253,7 +258,7 @@ void OfflineGeocode::connectSignals()
       onGeocodingCompleted_(geocodeResults);
     }).onFailed(this, [this](const ErrorException& e)
     {
-      logError(e.error());
+      logException(e);
     });
 
     // make busy indicator visible
@@ -272,7 +277,7 @@ void OfflineGeocode::connectSignals()
         onGeocodingCompleted_(geocodeResults);
       }).onFailed(this, [this](const ErrorException& e)
       {
-        logError(e.error());
+        logException(e);
       });
 
       m_geocodeInProgress = true;

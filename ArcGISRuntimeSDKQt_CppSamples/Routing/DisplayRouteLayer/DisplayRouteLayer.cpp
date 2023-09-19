@@ -42,8 +42,8 @@
 #include "SpatialReference.h"
 #include "Point.h"
 
-#include <QJsonValue>
 #include <QFuture>
+#include <QJsonValue>
 
 using namespace Esri::ArcGISRuntime;
 namespace

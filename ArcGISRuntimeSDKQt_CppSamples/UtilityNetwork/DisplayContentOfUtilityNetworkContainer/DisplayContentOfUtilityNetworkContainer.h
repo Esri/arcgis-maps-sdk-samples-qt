@@ -19,6 +19,7 @@
 
 namespace Esri::ArcGISRuntime
 {
+  class ArcGISFeature;
   class Credential;
   class GraphicsOverlay;
   class IdentifyLayerResult;
@@ -40,7 +41,6 @@ class SymbolImageProvider;
 
 #include "Viewpoint.h"
 #include "Geometry.h"
-#include "ArcGISFeature.h"
 
 Q_MOC_INCLUDE("MapQuickView.h")
 

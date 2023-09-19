@@ -56,12 +56,12 @@
 #include "SimpleLineSymbol.h"
 
 #include <memory>
+#include <QFuture>
 #include <QList>
 #include <QTime>
 #include <QtTextToSpeech/QTextToSpeech>
 #include <QUrl>
 #include <QUuid>
-#include <QFuture>
 
 using namespace Esri::ArcGISRuntime;
 
@@ -127,7 +127,6 @@ void NavigateRoute::connectRouteTaskSignals()
       qDebug() << error.message() << error.additionalMessage();
       return;
     }
-
     m_routeTask->createDefaultParametersAsync().then(this, [this](RouteParameters defaultParameters)
     {
       // set values for parameters
@@ -155,8 +154,7 @@ void NavigateRoute::connectRouteTaskSignals()
         m_route = qAsConst(m_routeResult).routes()[0];
 
         // adjust viewpoint to enclose the route with a 100 DPI padding
-        auto future = m_mapView->setViewpointGeometryAsync(m_route.routeGeometry(), 100);
-        Q_UNUSED(future);
+        m_mapView->setViewpointGeometryAsync(m_route.routeGeometry(), 100);
 
         // create a graphic to show the route
         m_routeAheadGraphic = new Graphic(m_route.routeGeometry(), new SimpleLineSymbol(SimpleLineSymbolStyle::Dash, Qt::blue, 5, this), this);
@@ -211,8 +209,10 @@ void NavigateRoute::startNavigation()
 
   connect(m_mapView->locationDisplay(), &LocationDisplay::locationChanged, this, [this](const Location& location)
   {
-    auto future = m_routeTracker->trackLocationAsync(location);
-    Q_UNUSED(future);
+    m_routeTracker->trackLocationAsync(location).then(this, [this]()
+    {
+      m_routeTracker->generateVoiceGuidance();
+    });
   });
 
   // turn on map view's navigation mode
@@ -267,10 +267,8 @@ void NavigateRoute::connectRouteTrackerSignals()
       // navigate to next stop, if available
       if (trackingStatus->remainingDestinationCount() > 1)
       {
-        m_routeTracker->switchToNextDestinationAsync().then(this, [this]()
-        {
-          m_routeTracker->generateVoiceGuidance();
-        });
+        auto future = m_routeTracker->switchToNextDestinationAsync();
+        Q_UNUSED(future);
       }
       else
       {

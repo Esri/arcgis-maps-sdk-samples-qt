@@ -47,9 +47,9 @@
 #include "Point.h"
 #include "Polyline.h"
 
+#include <QFuture>
 #include <QUuid>
 #include <QDir>
-#include <QFuture>
 
 using namespace Esri::ArcGISRuntime;
 

@@ -39,10 +39,10 @@
 #include "Point.h"
 #include "Envelope.h"
 
+#include <QFuture>
 #include <QUrl>
 #include <memory>
 #include <QUuid>
-#include <QFuture>
 
 using namespace Esri::ArcGISRuntime;
 

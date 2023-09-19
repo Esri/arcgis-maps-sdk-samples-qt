@@ -44,8 +44,8 @@
 #include "Polyline.h"
 #include "Envelope.h"
 
-#include <QUuid>
 #include <QFuture>
+#include <QUuid>
 
 using namespace Esri::ArcGISRuntime;
 

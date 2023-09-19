@@ -23,9 +23,9 @@
 #include "SymbolStyleSearchResultListModel.h"
 #include "SymbolStyleSearchParameters.h"
 
+#include <QFuture>
 #include <QtCore/qglobal.h>
 #include <QStandardPaths>
-#include <QFuture>
 
 using namespace Esri::ArcGISRuntime;
 

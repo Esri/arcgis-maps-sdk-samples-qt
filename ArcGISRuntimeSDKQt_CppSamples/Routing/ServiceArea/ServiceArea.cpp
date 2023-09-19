@@ -47,8 +47,8 @@
 #include "Polyline.h"
 #include "Polygon.h"
 
-#include <QUuid>
 #include <QFuture>
+#include <QUuid>
 
 using namespace Esri::ArcGISRuntime;
 

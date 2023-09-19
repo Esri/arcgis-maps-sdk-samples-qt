@@ -46,9 +46,9 @@
 #include "SpatialReference.h"
 #include "GeocodeResult.h"
 
+#include <QFuture>
 #include <QUrl>
 #include <QUuid>
-#include <QFuture>
 
 using namespace Esri::ArcGISRuntime;
 

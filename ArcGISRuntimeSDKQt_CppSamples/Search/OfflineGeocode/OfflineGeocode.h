@@ -19,6 +19,7 @@
 
 namespace Esri::ArcGISRuntime
 {
+  class ErrorException;
   class Map;
   class Graphic;
   class LocatorTask;
@@ -80,6 +81,7 @@ private:
   QString errorMessage() const;
   void setErrorMessage(const QString& msg);
   void onGeocodingCompleted_(const QList<Esri::ArcGISRuntime::GeocodeResult>& results);
+  void logException(const Esri::ArcGISRuntime::ErrorException& exception);
 
   bool m_isReverseGeocode = false;
   bool m_geocodeInProgress = false;

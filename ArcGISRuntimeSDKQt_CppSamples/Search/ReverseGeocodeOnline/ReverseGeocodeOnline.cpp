@@ -38,10 +38,10 @@
 #include "SpatialReference.h"
 #include "Envelope.h"
 
+#include <QFuture>
 #include <QDir>
 #include <QUrl>
 #include <QUuid>
-#include <QFuture>
 
 using namespace Esri::ArcGISRuntime;
 

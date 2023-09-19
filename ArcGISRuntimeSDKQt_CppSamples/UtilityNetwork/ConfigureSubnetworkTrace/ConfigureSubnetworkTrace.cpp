@@ -44,8 +44,8 @@
 #include "Error.h"
 #include "Credential.h"
 
-#include <QQmlEngine>
 #include <QFuture>
+#include <QQmlEngine>
 #include <algorithm>
 
 using namespace Esri::ArcGISRuntime;

@@ -20,6 +20,7 @@
 
 #include "TraceUtilityNetwork.h"
 
+#include "ErrorException.h"
 #include "FeatureLayer.h"
 #include "GeometryEngine.h"
 #include "Map.h"
@@ -154,6 +155,12 @@ bool TraceUtilityNetwork::hasErrorOccurred(const Error& error)
   return true;
 }
 
+void TraceUtilityNetwork::onTaskFailed(const Esri::ArcGISRuntime::ErrorException& exception)
+{
+  m_dialogText = QString(exception.error().message() + " - " + exception.error().additionalMessage());
+  emit dialogVisibleChanged();
+}
+
 void TraceUtilityNetwork::addUtilityNetworkToMap(const Error& error)
 {
   setBusyIndicator(false);
@@ -273,7 +280,7 @@ void TraceUtilityNetwork::trace(int index)
     onTraceCompleted_();
   }).onFailed([this](const ErrorException& e)
   {
-        hasErrorOccurred(e.error());
+    onTaskFailed(e);
   });
 }
 
