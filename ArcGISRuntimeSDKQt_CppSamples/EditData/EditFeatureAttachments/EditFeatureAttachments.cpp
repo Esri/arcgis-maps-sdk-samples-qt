@@ -36,7 +36,6 @@
 #include "MapViewTypes.h"
 #include "MapTypes.h"
 #include "LayerListModel.h"
-#include "TaskWatcher.h"
 #include "IdentifyLayerResult.h"
 #include "QueryParameters.h"
 #include "AttributeListModel.h"
@@ -117,7 +116,10 @@ void EditFeatureAttachments::connectSignals()
     emit hideWindow();
 
     // call identify on the map view
-    m_mapView->identifyLayer(m_featureLayer, mouseEvent.position().x(), mouseEvent.position().y(), 5, false, 1);
+    m_mapView->identifyLayerAsync(m_featureLayer, mouseEvent.position(), 5, false, 1).then(this, [this](IdentifyLayerResult* identifyResult)
+    {
+      onIdentifyLayerCompleted_(identifyResult);
+    });
   });
 
   // connect to the viewpoint changed signal on the MapQuickView
@@ -125,86 +127,6 @@ void EditFeatureAttachments::connectSignals()
   {
     m_featureLayer->clearSelection();
     emit hideWindow();
-  });
-
-  // connect to the identifyLayerCompleted signal on the map view
-  connect(m_mapView, &MapQuickView::identifyLayerCompleted,
-          this, [this](const QUuid&, IdentifyLayerResult* identifyResult)
-  {
-    if(!identifyResult)
-      return;
-
-    if (!identifyResult->geoElements().empty())
-    {
-      // select the item in the result
-      m_featureLayer->selectFeature(static_cast<Feature*>(identifyResult->geoElements().at(0)));
-
-      // obtain the selected feature with attributes
-      QueryParameters queryParams;
-      m_whereClause = "objectid=" + identifyResult->geoElements().at(0)->attributes()->attributeValue("objectid").toString();
-      queryParams.setWhereClause(m_whereClause);
-      m_featureTable->queryFeatures(queryParams);
-    }
-  });
-
-  // connect to the queryFeaturesCompleted signal on the feature table
-  connect(m_featureTable, &FeatureTable::queryFeaturesCompleted,
-          this, [this](const QUuid&, FeatureQueryResult* featureQueryResult)
-  {
-    if (featureQueryResult && featureQueryResult->iterator().hasNext())
-    {
-      // first delete if not nullptr
-      if (m_selectedFeature)
-        delete m_selectedFeature;
-
-      // set selected feature and attachment model members
-      m_selectedFeature = static_cast<ArcGISFeature*>(featureQueryResult->iterator().next(this));
-      // Don't delete selected feature when parent featureQueryResult is deleted.
-      m_selectedFeature->setParent(this);
-
-      const QString featureType = m_selectedFeature->attributes()->attributeValue(QStringLiteral("typdamage")).toString();
-      m_mapView->calloutData()->setLocation(m_selectedFeature->geometry().extent().center());
-      m_mapView->calloutData()->setTitle(QString("<b>%1</b>").arg(featureType));
-
-      emit featureSelected();
-      emit attachmentModelChanged();
-
-      // get the number of attachments
-      connect(m_selectedFeature->attachments(), &AttachmentListModel::fetchAttachmentsCompleted,
-              this, [this](const QUuid&, const QList<Attachment*>& attachments)
-      {
-        m_mapView->calloutData()->setDetail(QString("Number of attachments: %1").arg(attachments.size()));
-        m_mapView->calloutData()->setVisible(true); // Resizes the calloutData after details has been set.
-      });
-    }
-  });
-
-  // connect to the applyEditsCompleted signal from the ServiceFeatureTable
-  connect(m_featureTable, &ServiceFeatureTable::applyEditsCompleted,
-          this, [this](const QUuid&, const QList<FeatureEditResult*>& featureEditResults)
-  {
-    // Lock is a convenience wrapper that deletes the contents of featureEditResults when we leave scope.
-    FeatureEditListResultLock lock(featureEditResults);
-
-    if (lock.results.length() > 0)
-    {
-      // obtain the first item in the list
-      FeatureEditResult* featureEditResult = lock.results.first();
-      // check if there were errors
-      if (!featureEditResult->isCompletedWithErrors())
-      {
-        qDebug() << "Successfully edited feature attachments";
-
-        // update the selected feature with attributes
-        QueryParameters queryParams;
-        queryParams.setWhereClause(m_whereClause);
-        m_featureTable->queryFeatures(queryParams);
-      }
-      else
-      {
-        qDebug() << "Apply edits error:" << featureEditResult->error().message();
-      }
-    }
   });
 }
 
@@ -225,7 +147,8 @@ void EditFeatureAttachments::addAttachment(const QUrl& fileUrl, const QString& c
     if (m_selectedFeature->loadStatus() == LoadStatus::Loaded)
     {
       QFile file(fileUrl.toLocalFile());
-      m_selectedFeature->attachments()->addAttachment(&file, contentType, fileName);
+      auto future = m_selectedFeature->attachments()->addAttachmentAsync(file, contentType, fileName);
+      Q_UNUSED(future)
     }
     else
     {
@@ -236,7 +159,8 @@ void EditFeatureAttachments::addAttachment(const QUrl& fileUrl, const QString& c
         {
           QFile file(fileUrl.toLocalFile());
           disconnect(m_attachmentConnection);
-          m_selectedFeature->attachments()->addAttachment(&file, contentType, fileName);
+          auto future = m_selectedFeature->attachments()->addAttachmentAsync(file, contentType, fileName);
+          Q_UNUSED(future)
         }
       });
       m_selectedFeature->load();
@@ -251,7 +175,8 @@ void EditFeatureAttachments::deleteAttachment(int index)
   if (m_selectedFeature->loadStatus() == LoadStatus::Loaded)
   {
     qDebug() << "Attachments size: " << m_selectedFeature->attachments()->rowCount();
-    m_selectedFeature->attachments()->deleteAttachment(index);
+    auto future = m_selectedFeature->attachments()->deleteAttachmentAsync(index);
+    Q_UNUSED(future)
   }
   else
   {
@@ -261,9 +186,92 @@ void EditFeatureAttachments::deleteAttachment(int index)
       if (m_selectedFeature->loadStatus() == LoadStatus::Loaded)
       {
         disconnect(m_attachmentConnection);
-        m_selectedFeature->attachments()->deleteAttachment(index);
+        auto future = m_selectedFeature->attachments()->deleteAttachmentAsync(index);
+        Q_UNUSED(future)
       }
     });
     m_selectedFeature->load();
+  }
+}
+
+// process identifyLayerAsync completion on the map view
+void EditFeatureAttachments::onIdentifyLayerCompleted_(IdentifyLayerResult* identifyResult)
+{
+  if (!identifyResult)
+    return;
+
+  if (!identifyResult->geoElements().empty())
+  {
+    // select the item in the result
+    m_featureLayer->selectFeature(static_cast<Feature*>(identifyResult->geoElements().at(0)));
+
+    // obtain the selected feature with attributes
+    QueryParameters queryParams;
+    m_whereClause = "objectid=" + identifyResult->geoElements().at(0)->attributes()->attributeValue("objectid").toString();
+    queryParams.setWhereClause(m_whereClause);
+    m_featureTable->queryFeaturesAsync(queryParams).then(this, [this](FeatureQueryResult* featureQueryResult)
+    {
+      onQueryFeaturesCompleted_(featureQueryResult);
+    });
+  }
+}
+
+void EditFeatureAttachments::onQueryFeaturesCompleted_(FeatureQueryResult* featureQueryResult)
+{
+  if (featureQueryResult && featureQueryResult->iterator().hasNext())
+  {
+    // first delete if not nullptr
+    if (m_selectedFeature)
+      delete m_selectedFeature;
+
+    // set selected feature and attachment model members
+    m_selectedFeature = static_cast<ArcGISFeature*>(featureQueryResult->iterator().next(this));
+    // Don't delete selected feature when parent featureQueryResult is deleted.
+    m_selectedFeature->setParent(this);
+
+    const QString featureType = m_selectedFeature->attributes()->attributeValue(QStringLiteral("typdamage")).toString();
+    m_mapView->calloutData()->setLocation(m_selectedFeature->geometry().extent().center());
+    m_mapView->calloutData()->setTitle(QString("<b>%1</b>").arg(featureType));
+
+    emit featureSelected();
+    emit attachmentModelChanged();
+
+    // get the number of attachments
+    connect(m_selectedFeature->attachments(), &AttachmentListModel::fetchAttachmentsCompleted,
+            this, [this](const QUuid&, const QList<Attachment*>& attachments)
+    {
+      m_mapView->calloutData()->setDetail(QString("Number of attachments: %1").arg(attachments.size()));
+      m_mapView->calloutData()->setVisible(true); // Resizes the calloutData after details has been set.
+    });
+  }
+}
+
+// process completion of applyEditsAsync from the ServiceFeatureTable
+void EditFeatureAttachments::onApplyEditsCompleted_(const QList<FeatureEditResult*>& featureEditResults)
+{
+  // Lock is a convenience wrapper that deletes the contents of featureEditResults when we leave scope.
+  FeatureEditListResultLock lock(featureEditResults);
+
+  if (lock.results.length() > 0)
+  {
+    // obtain the first item in the list
+    FeatureEditResult* featureEditResult = lock.results.first();
+    // check if there were errors
+    if (!featureEditResult->isCompletedWithErrors())
+    {
+      qDebug() << "Successfully edited feature attachments";
+
+      // update the selected feature with attributes
+      QueryParameters queryParams;
+      queryParams.setWhereClause(m_whereClause);
+      m_featureTable->queryFeaturesAsync(queryParams).then(this, [this](FeatureQueryResult* featureQueryResult)
+      {
+        onQueryFeaturesCompleted_(featureQueryResult);
+      });
+    }
+    else
+    {
+      qDebug() << "Apply edits error:" << featureEditResult->error().message();
+    }
   }
 }

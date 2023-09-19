@@ -19,8 +19,8 @@ To change the feature's damage property, tap the feature to select it, and updat
 2. Create a `FeatureLayer` object from the `ServiceFeatureTable`.
 3. Select features from the `FeatureLayer`.
 4. To update the feature's attribute, first load it, then use the `attributeValue`.
-5. Update the table with `updateFeature`.
-6. After a change, apply the changes on the server using `applyEdits`.
+5. Update the table with `updateFeatureAsync`.
+6. After a change, apply the changes on the server using `applyEditsAsync`.
 
 ## Relevant API
 

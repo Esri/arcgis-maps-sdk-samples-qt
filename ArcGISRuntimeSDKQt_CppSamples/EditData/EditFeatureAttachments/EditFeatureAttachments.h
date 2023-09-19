@@ -25,12 +25,16 @@ namespace Esri::ArcGISRuntime
   class FeatureLayer;
   class ServiceFeatureTable;
   class ArcGISFeature;
+  class IdentifyLayerResult;
+  class FeatureQueryResult;
+  class FeatureEditResult;
 }
 
 class QString;
 
 #include <QAbstractListModel>
 #include <QQuickItem>
+#include <QtContainerFwd>
 
 class EditFeatureAttachments : public QQuickItem
 {
@@ -56,7 +60,10 @@ private:
   void connectSignals();
   QAbstractListModel* attachmentModel() const;
 
-private:
+  void onIdentifyLayerCompleted_(Esri::ArcGISRuntime::IdentifyLayerResult* identifyResult);
+  void onQueryFeaturesCompleted_(Esri::ArcGISRuntime::FeatureQueryResult* featureQueryResult);
+  void onApplyEditsCompleted_(const QList<Esri::ArcGISRuntime::FeatureEditResult*>& featureEditResults);
+
   Esri::ArcGISRuntime::Map* m_map = nullptr;
   Esri::ArcGISRuntime::MapQuickView* m_mapView = nullptr;
   Esri::ArcGISRuntime::FeatureLayer* m_featureLayer = nullptr;

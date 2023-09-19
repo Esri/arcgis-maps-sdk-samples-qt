@@ -47,6 +47,7 @@
 #include <QAbstractListModel>
 #include <QByteArray>
 #include <QDir>
+#include <QFuture>
 #include <QGuiApplication>
 #include <QHash>
 #include <QList>

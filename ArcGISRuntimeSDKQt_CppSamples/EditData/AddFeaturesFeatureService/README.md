@@ -18,9 +18,9 @@ A `Feature` is added to a `ServiceFeatureTable` which then pushes that new featu
 
 1. Create a `ServiceFeatureTable` from a URL.
 2. Create a `FeatureLayer` from the service feature table.
-3. Create a `Feature` with attributes and a location using `createFeature()`.
+3. Create a `Feature` with attributes and a location using `createFeatureAsync()`.
 4. Add the feature to the table.
-5. Update the table on the server using `applyEdits()`.
+5. Update the table on the server using `applyEditsAsync()`.
 
 ## Relevant API
 
