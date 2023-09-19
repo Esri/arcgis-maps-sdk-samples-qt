@@ -38,12 +38,12 @@
 #include "FeatureIterator.h"
 #include "ArcGISFeatureLayerInfo.h"
 #include "AttributeListModel.h"
-#include "TaskWatcher.h"
 #include "SpatialReference.h"
 #include "CoreTypes.h"
 #include "MapTypes.h"
 #include "Point.h"
 
+#include <QFuture>
 #include <QUuid>
 #include <QList>
 #include <QUrl>
@@ -116,10 +116,50 @@ void ListRelatedFeatures::connectSignals()
         foundLayer = true;
         m_alaskaNationalParks = static_cast<FeatureLayer*>(m_map->operationalLayers()->at(i));
         m_alaskaFeatureTable = static_cast<ArcGISFeatureTable*>(m_alaskaNationalParks->featureTable());
+      }
+    }
+  });
 
-        // connect to queryRelatedFeaturesCompleted signal
-        connect(m_alaskaFeatureTable, &ArcGISFeatureTable::queryRelatedFeaturesCompleted,
-                this, [this](const QUuid&, QList<RelatedFeatureQueryResult*> rawRelatedResults)
+  // connect to the mouseClicked signal
+  connect(m_mapView, &MapQuickView::mouseClicked, this, [this](QMouseEvent& mouseEvent)
+  {
+    // hide the attribute view
+    emit hideAttributeTable();
+
+    // clear the list model
+    m_relatedFeaturesModel->clear();
+
+    // create objects required to do a selection with a query
+    Point clickPoint = m_mapView->screenToLocation(mouseEvent.position().x(), mouseEvent.position().y());
+    double mapTolerance = 10 * m_mapView->unitsPerDIP();
+    Envelope envelope = Envelope(clickPoint.x() - mapTolerance,
+                                 clickPoint.y() - mapTolerance,
+                                 clickPoint.x() + mapTolerance,
+                                 clickPoint.y() + mapTolerance,
+                                 m_map->spatialReference());
+    QueryParameters queryParams;
+    queryParams.setGeometry(envelope);
+    queryParams.setSpatialRelationship(SpatialRelationship::Intersects);
+
+    // clear any selections
+    m_alaskaNationalParks->clearSelection();
+
+    // select features
+    m_alaskaNationalParks->selectFeaturesAsync(queryParams, SelectionMode::New).then(this, [this](FeatureQueryResult* rawResult)
+    {
+      auto result = std::unique_ptr<FeatureQueryResult>(rawResult);
+      // The result could contain more than 1 feature, but we assume that
+      // there is only ever 1. If more are given they are ignored. We
+      // are only interested in the first (and only) feature.
+      if (result->iterator().hasNext())
+      {
+        m_selectedFeature = static_cast<ArcGISFeature*>(result->iterator().next(this));
+
+        // zoom to the selected feature
+        m_mapView->setViewpointGeometryAsync(m_selectedFeature->geometry().extent(), 100);
+
+        // query related features
+        m_alaskaFeatureTable->queryRelatedFeaturesAsync(m_selectedFeature).then(this, [this](QList<RelatedFeatureQueryResult*> rawRelatedResults)
         {
           FeatureQueryListResultLock lock(rawRelatedResults);
           for (const RelatedFeatureQueryResult* relatedResult : lock.results)
@@ -150,54 +190,7 @@ void ListRelatedFeatures::connectSignals()
 
           emit showAttributeTable();
         });
-
-        // connect to selectFeaturesCompleted signal
-        connect(m_alaskaNationalParks, &FeatureLayer::selectFeaturesCompleted, this, [this](const QUuid&, FeatureQueryResult* rawResult)
-        {
-          auto result = std::unique_ptr<FeatureQueryResult>(rawResult);
-          // The result could contain more than 1 feature, but we assume that
-          // there is only ever 1. If more are given they are ignored. We
-          // are only interested in the first (and only) feature.
-          if (result->iterator().hasNext())
-          {
-            m_selectedFeature = static_cast<ArcGISFeature*>(result->iterator().next(this));
-
-            // zoom to the selected feature
-            m_mapView->setViewpointGeometry(m_selectedFeature->geometry().extent(), 100);
-
-            // query related features
-            m_alaskaFeatureTable->queryRelatedFeatures(m_selectedFeature);
-          }
-        });
       }
-    }
-  });
-
-  // connect to the mouseClicked signal
-  connect(m_mapView, &MapQuickView::mouseClicked, this, [this](QMouseEvent& mouseEvent)
-  {
-    // hide the attribute view
-    emit hideAttributeTable();
-
-    // clear the list model
-    m_relatedFeaturesModel->clear();
-
-    // create objects required to do a selection with a query
-    Point clickPoint = m_mapView->screenToLocation(mouseEvent.position().x(), mouseEvent.position().y());
-    double mapTolerance = 10 * m_mapView->unitsPerDIP();
-    Envelope envelope = Envelope(clickPoint.x() - mapTolerance,
-                                 clickPoint.y() - mapTolerance,
-                                 clickPoint.x() + mapTolerance,
-                                 clickPoint.y() + mapTolerance,
-                                 m_map->spatialReference());
-    QueryParameters queryParams;
-    queryParams.setGeometry(envelope);
-    queryParams.setSpatialRelationship(SpatialRelationship::Intersects);
-
-    // clear any selections
-    m_alaskaNationalParks->clearSelection();
-
-    // select features
-    m_alaskaNationalParks->selectFeatures(queryParams, SelectionMode::New);
+    });
   });
 }
