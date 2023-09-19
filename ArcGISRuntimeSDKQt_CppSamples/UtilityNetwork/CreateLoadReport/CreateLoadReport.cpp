@@ -218,7 +218,7 @@ void CreateLoadReport::runReport(const QStringList& selectedPhaseNames)
 
     emit loadReportUpdated();
   }
-
+  m_traceRequestCount = activeValues.size();
   for (const CodedValue& codedValue : activeValues)
   {
     setUtilityTraceOrconditionWithCodedValue(codedValue);
@@ -266,7 +266,14 @@ void CreateLoadReport::onTraceCompleted_(const QString& codedValueName)
     else if (UtilityFunctionTraceResult* functionResult = dynamic_cast<UtilityFunctionTraceResult*>(result))
       m_phaseLoad[codedValueName] = qAsConst(functionResult)->functionOutputs().first()->result().toInt();
   }
+
   emit loadReportUpdated();
+  // If the trace request count is zero, all trace tasks have completed
+  if (!--m_traceRequestCount)
+  {
+    m_sampleStatus = CreateLoadReport::SampleReady;
+    emit sampleStatusChanged();
+  }
 }
 
 CreateLoadReport::~CreateLoadReport() = default;

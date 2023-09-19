@@ -155,7 +155,7 @@ bool TraceUtilityNetwork::hasErrorOccurred(const Error& error)
   return true;
 }
 
-void TraceUtilityNetwork::onTaskFailed(const Esri::ArcGISRuntime::ErrorException& exception)
+void TraceUtilityNetwork::onTaskFailed_(const Esri::ArcGISRuntime::ErrorException& exception)
 {
   m_dialogText = QString(exception.error().message() + " - " + exception.error().additionalMessage());
   emit dialogVisibleChanged();
@@ -280,7 +280,7 @@ void TraceUtilityNetwork::trace(int index)
     onTraceCompleted_();
   }).onFailed([this](const ErrorException& exception)
   {
-    onTaskFailed(exception);
+    onTaskFailed_(exception);
   });
 }
 

@@ -102,6 +102,7 @@ private:
   QString m_serviceCategoryName;
   QString m_terminalName;
   QString m_tierName;
+  int m_traceRequestCount;
 };
 
 #endif // CREATELOADREPORT_H
