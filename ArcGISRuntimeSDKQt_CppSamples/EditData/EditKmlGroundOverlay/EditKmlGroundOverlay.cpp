@@ -30,11 +30,11 @@
 #include "Camera.h"
 #include "MapTypes.h"
 #include "Error.h"
-#include "TaskWatcher.h"
 #include "LayerListModel.h"
 #include "SpatialReference.h"
 #include "Point.h"
 
+#include <QFuture>
 #include <QtCore/qglobal.h>
 #include <QStandardPaths>
 
@@ -86,7 +86,7 @@ EditKmlGroundOverlay::EditKmlGroundOverlay(QObject* parent /* = nullptr */):
       return;
 
     const Camera camera(env.center(), 1250, 45, 60, 0);
-    m_sceneView->setViewpointCamera(camera);
+    m_sceneView->setViewpointCameraAsync(camera);
   });
   m_scene->operationalLayers()->append(kmlLayer);
 }

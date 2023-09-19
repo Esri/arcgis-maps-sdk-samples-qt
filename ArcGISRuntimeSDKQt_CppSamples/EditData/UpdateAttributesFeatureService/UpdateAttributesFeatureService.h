@@ -24,6 +24,9 @@ namespace Esri::ArcGISRuntime
   class FeatureLayer;
   class ServiceFeatureTable;
   class ArcGISFeature;
+  class IdentifyLayerResult;
+  class FeatureQueryResult;
+  class FeatureEditResult;
 }
 
 class QString;
@@ -50,10 +53,12 @@ signals:
   void hideWindow();
 
 private:
+  void onIdentifyLayerCompleted_(Esri::ArcGISRuntime::IdentifyLayerResult* identifyResult);
+  void onQueryFeaturesCompleted_(Esri::ArcGISRuntime::FeatureQueryResult* featureQueryResult);
+  void onApplyEditsCompleted_(const QList<Esri::ArcGISRuntime::FeatureEditResult*>& featureEditResults);
   void connectSignals();
   QString featureType() const;
 
-private:
   Esri::ArcGISRuntime::Map* m_map = nullptr;
   Esri::ArcGISRuntime::MapQuickView* m_mapView = nullptr;
   Esri::ArcGISRuntime::FeatureLayer* m_featureLayer = nullptr;

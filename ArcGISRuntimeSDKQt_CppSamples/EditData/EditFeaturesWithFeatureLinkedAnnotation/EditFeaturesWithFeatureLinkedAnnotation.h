@@ -56,16 +56,15 @@ public:
   void moveFeature(Esri::ArcGISRuntime::Point mapPoint);
   Q_INVOKABLE void updateSelectedFeature(const QString& address, const QString& streetName);
 
-private slots:
-  void onIdentifyLayersCompleted(const QUuid&, const QList<Esri::ArcGISRuntime::IdentifyLayerResult*>& identifyResults);
-  void onMouseClicked(QMouseEvent& mouseEvent);
-  void onGeodatabaseDoneLoading(const Esri::ArcGISRuntime::Error& error);
-
 signals:
   void mapViewChanged();
   void addressAndStreetTextChanged();
 
 private:
+  void onIdentifyLayersCompleted_(const QList<Esri::ArcGISRuntime::IdentifyLayerResult*>& identifyResults);
+  void onMouseClicked_(QMouseEvent& mouseEvent);
+  void onGeodatabaseDoneLoading_(const Esri::ArcGISRuntime::Error& error);
+
   Esri::ArcGISRuntime::MapQuickView* mapView() const;
   void setMapView(Esri::ArcGISRuntime::MapQuickView* mapView);
 

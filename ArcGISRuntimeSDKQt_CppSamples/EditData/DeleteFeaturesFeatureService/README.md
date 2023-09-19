@@ -17,9 +17,9 @@ Sometimes users may want to delete features from an online feature service.
 
 1. Create a `ServiceFeatureTable` object from a URL.
 2. Create a `FeatureLayer` from the service feature table.
-3. Select features from the feature layer via `selectFeatures()`.
-4. Remove the selected features from the table using `deleteFeatures()`.
-5. Update the table on the server using `applyEdits()`.
+3. Select features from the feature layer via `selectFeaturesAsync()`.
+4. Remove the selected features from the table using `deleteFeaturesAsync()`.
+5. Update the table on the server using `applyEditsAsync()`.
 
 ## Relevant API
 

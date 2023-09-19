@@ -20,7 +20,7 @@ Tap on the map to add a feature symbolizing a bird's nest. Then choose values de
 2. Load the "BirdNests" `GeodatabaseFeatureTable`.
 3. Load the `ContingentValuesDefinition` from the feature table.
 4. Create a new `FeatureLayer` from the feature table and add it to the map.
-5. Create a new `Feature` from the feature table using `FeatureTable::createFeature`
+5. Create a new `Feature` from the feature table using `FeatureTable::createFeatureAsync`
 6. Supply the initial list of selections. This can also be retrieved from the `FeatureTable`'s `Field`'s `CodedValueDomain`
 7. After making the initial selection, retrieve the valid contingent values for each field as you select the values for the attributes.
   i. Create a `ContingentValuesResult` from `FeatureTable::contingentValues` and pass in the current feature and the target field by name.

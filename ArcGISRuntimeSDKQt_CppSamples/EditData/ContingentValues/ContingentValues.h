@@ -49,8 +49,8 @@ public:
 
   Q_INVOKABLE void createNewNest();
   Q_INVOKABLE void discardFeature();
-  Q_INVOKABLE QVariantList getContingentValues(QString field, QString fieldGroupName);
-  Q_INVOKABLE void updateField(QString field, QVariant value);
+  Q_INVOKABLE QVariantList getContingentValues(const QString& field, const QString& fieldGroupName);
+  Q_INVOKABLE void updateField(const QString& field, const QVariant& value);
   Q_INVOKABLE bool validateContingentValues();
 
 signals:
@@ -62,7 +62,7 @@ private:
   void setMapView(Esri::ArcGISRuntime::MapQuickView* mapView);
 
   void queryAndBufferFeatures();
-  void bufferFeaturesFromQueryResults(const QUuid&, Esri::ArcGISRuntime::FeatureQueryResult* results);
+  void bufferFeaturesFromQueryResults(Esri::ArcGISRuntime::FeatureQueryResult* results);
   void createConnections();
   void createNewEmptyFeature(QMouseEvent& mouseEvent);
   bool featureAttributesPaneVisibe() const;

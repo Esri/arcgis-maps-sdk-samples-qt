@@ -39,7 +39,7 @@ Item {
             id: callout
             background: Rectangle {
                 border.color: "lightgrey"
-                border.width: 1    
+                border.width: 1
             }
             calloutData: model.mapView.calloutData
             leaderPosition: Callout.LeaderPosition.Automatic
@@ -236,7 +236,7 @@ Item {
                     enabled: !model.sgdbVersionIsDefault
                     // once the update button is clicked, hide the windows, and fetch the currently selected features
                     onClicked: {
-                        print("Update Attriubte " + typeDmgCombo.currentValue);
+                        print("Update Attribute " + typeDmgCombo.currentValue);
                         model.updateAttribute(typeDmgCombo.currentValue);
                         updateWindow.visible = false;
                         callout.dismiss();
