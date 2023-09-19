@@ -282,7 +282,6 @@ void CreateAndEditGeometries::createConnections()
   {
     if (!m_geometryEditor->isStarted())
     {
-
       m_mapView->identifyGraphicsOverlayAsync(m_graphicsOverlay, mouseEvent.position(), 5 ,false).then(this,
       [this](IdentifyGraphicsOverlayResult* rawResult){
         // Handle editing selected graphics, if any
