@@ -24,7 +24,6 @@
 #include "DisplayFilter.h"
 #include "DisplayFilterDefinition.h"
 #include "FeatureLayer.h"
-#include "GeodatabaseFeatureTable.h"
 #include "ManualDisplayFilterDefinition.h"
 #include "Map.h"
 #include "MapQuickView.h"
@@ -36,8 +35,8 @@
 #include "MapTypes.h"
 #include "LayerListModel.h"
 #include "QueryParameters.h"
-#include "TaskWatcher.h"
 
+#include <QFuture>
 #include <QUuid>
 #include <QUrl>
 
@@ -126,18 +125,15 @@ void FilterByDefinitionExpressionOrDisplayFilter::setDisplayFilter(const QString
 }
 
 void FilterByDefinitionExpressionOrDisplayFilter::queryFeatureCountInCurrentExtent()
-{  
+{
   QueryParameters parameters;
   parameters.setGeometry(m_mapView->currentViewpoint(ViewpointType::BoundingGeometry).targetGeometry());
 
-  connect(m_featureTable, &GeodatabaseFeatureTable::queryFeatureCountCompleted,
-          this, [this](const QUuid&, int countResult)
+  m_featureTable->queryFeatureCountAsync(parameters).then(this, [this](int countResult)
   {
     m_currentFeatureCount = countResult;
     emit currentFeatureCountChanged();
   });
-
-  m_featureTable->queryFeatureCount(parameters);
 }
 
 void FilterByDefinitionExpressionOrDisplayFilter::resetDisplayFilterParams()
@@ -166,7 +162,7 @@ void FilterByDefinitionExpressionOrDisplayFilter::resetDefExpressionParams()
     {
       m_mapDrawing = true;
     }
-    
+
     emit mapDrawStatusChanged();
   });
 }
