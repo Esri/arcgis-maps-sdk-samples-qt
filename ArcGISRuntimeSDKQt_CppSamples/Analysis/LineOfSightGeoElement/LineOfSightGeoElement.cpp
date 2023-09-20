@@ -229,7 +229,8 @@ void LineOfSightGeoElement::initialize()
     });
 
     Camera camera(observationPoint, 700, -30, 45, 0);
-    m_sceneView->setViewpointCameraAsync(camera, 0);
+    auto future = m_sceneView->setViewpointCameraAsync(camera, 0);
+    Q_UNUSED(future);
 
     m_animation.start();
   });

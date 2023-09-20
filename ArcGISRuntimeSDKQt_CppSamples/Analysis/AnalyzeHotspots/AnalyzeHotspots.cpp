@@ -150,7 +150,10 @@ void AnalyzeHotspots::processResults(GeoprocessingResult* result)
   connect(m_layer, &ArcGISMapImageLayer::doneLoading, this, [this](const Error& error)
   {
     if (error.isEmpty())
-      m_mapView->setViewpointGeometryAsync(m_layer->fullExtent());
+    {
+      auto future = m_mapView->setViewpointGeometryAsync(m_layer->fullExtent());
+      Q_UNUSED(future);
+    }
   });
   m_mapView->map()->operationalLayers()->append(m_layer);
 }
