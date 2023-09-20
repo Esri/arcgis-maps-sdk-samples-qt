@@ -151,8 +151,7 @@ void AnalyzeHotspots::processResults(GeoprocessingResult* result)
   {
     if (error.isEmpty())
     {
-      auto future = m_mapView->setViewpointGeometryAsync(m_layer->fullExtent());
-      Q_UNUSED(future);
+      m_mapView->setViewpointGeometryAsync(m_layer->fullExtent());
     }
   });
   m_mapView->map()->operationalLayers()->append(m_layer);

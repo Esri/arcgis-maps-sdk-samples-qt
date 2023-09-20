@@ -104,8 +104,7 @@ void LineOfSightLocation::setInitialViewpoint()
   const double pitch = 62;
   const double roll = 0;
   Camera camera(point, heading, pitch, roll);
-  auto future = m_sceneView->setViewpointCameraAsync(camera);
-  Q_UNUSED(future);
+  m_sceneView->setViewpointCameraAsync(camera);
 }
 
 void LineOfSightLocation::connectSignals()
