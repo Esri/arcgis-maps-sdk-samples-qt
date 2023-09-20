@@ -19,9 +19,11 @@
 
 namespace Esri::ArcGISRuntime
 {
-    class ServiceFeatureTable;
-    enum class SortOrder;
-    enum class StatisticType;
+  class ServiceFeatureTable;
+  class StatisticsQueryResult;
+
+  enum class SortOrder;
+  enum class StatisticType;
 }
 
 class StatisticResultListModel;
@@ -73,6 +75,7 @@ private:
   Esri::ArcGISRuntime::StatisticType statisticStringToEnum(const QString& statistic) const;
   Esri::ArcGISRuntime::SortOrder orderStringToEnum(const QString& order) const;
   void addResultToModel(const QString& section, const QString& resultString);
+  void onQueryStatisticsCompleted_(Esri::ArcGISRuntime::StatisticsQueryResult* rawResult);
 
   Esri::ArcGISRuntime::ServiceFeatureTable* m_featureTable = nullptr;
   QStringList m_fields;

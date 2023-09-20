@@ -31,9 +31,10 @@
 #include "ElevationSourceListModel.h"
 #include "AnalysisOverlayListModel.h"
 #include "AnalysisListModel.h"
-#include "TaskWatcher.h"
 #include "SpatialReference.h"
 #include "Point.h"
+
+#include <QFuture>
 
 using namespace Esri::ArcGISRuntime;
 
@@ -103,7 +104,7 @@ void LineOfSightLocation::setInitialViewpoint()
   const double pitch = 62;
   const double roll = 0;
   Camera camera(point, heading, pitch, roll);
-  m_sceneView->setViewpointCamera(camera);
+  m_sceneView->setViewpointCameraAsync(camera);
 }
 
 void LineOfSightLocation::connectSignals()

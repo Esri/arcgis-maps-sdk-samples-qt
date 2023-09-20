@@ -46,10 +46,10 @@
 #include "SymbolTypes.h"
 #include "Error.h"
 #include "TaskTypes.h"
-#include "TaskWatcher.h"
 #include "FeatureIterator.h"
 #include "Field.h"
 
+#include <QFuture>
 #include <QUuid>
 #include <QMouseEvent>
 
@@ -162,65 +162,64 @@ void AnalyzeViewshed::calculateViewshed()
   // Assign a physical location to the new point feature based upon where the user clicked on the map view
   inputFeature->setGeometry(m_inputOverlay->graphics()->at(0)->geometry());
 
-  // connect to addFeature status changed signal
-  connect(inputFeatures, &FeatureCollectionTable::addFeatureCompleted, this, [this, inputFeatures](const QUuid&, bool success)
+  // Add the new feature with (x,y) location to the feature collection table
+  inputFeatures->addFeatureAsync(inputFeature).then(this, [this, inputFeatures]()
   {
-    if (!success)
-      return;
+    onAddFeatureCompleted_(inputFeatures);
+  });
+}
 
-    // Create the parameters that are passed to the used geoprocessing task
-    GeoprocessingParameters viewshedParameters = GeoprocessingParameters(GeoprocessingExecutionType::SynchronousExecute);
+void AnalyzeViewshed::onAddFeatureCompleted_(FeatureCollectionTable* inputFeatures)
+{
+  // Create the parameters that are passed to the used geoprocessing task
+  GeoprocessingParameters viewshedParameters = GeoprocessingParameters(GeoprocessingExecutionType::SynchronousExecute);
 
-    // Request the output features to use the same SpatialReference as the map view
-    viewshedParameters.setOutputSpatialReference(SpatialReference::webMercator());
+  // Request the output features to use the same SpatialReference as the map view
+  viewshedParameters.setOutputSpatialReference(SpatialReference::webMercator());
 
-    // Add an input location to the geoprocessing parameters
-    QMap<QString, GeoprocessingParameter*> inputs;
-    inputs["Input_Observation_Point"] = new GeoprocessingFeatures(inputFeatures, this);
-    viewshedParameters.setInputs(inputs);
+  // Add an input location to the geoprocessing parameters
+  QMap<QString, GeoprocessingParameter*> inputs;
+  inputs["Input_Observation_Point"] = new GeoprocessingFeatures(inputFeatures, this);
+  viewshedParameters.setInputs(inputs);
 
-    // Create the job that handles the communication between the application and the geoprocessing task
-    GeoprocessingJob* viewshedJob = m_viewshedTask->createJob(viewshedParameters);
+  // Create the job that handles the communication between the application and the geoprocessing task
+  GeoprocessingJob* viewshedJob = m_viewshedTask->createJob(viewshedParameters);
 
-    // Create signal handler for the job
-    connect(viewshedJob, &GeoprocessingJob::statusChanged, this, [this, viewshedJob](JobStatus jobStatus)
+  // Create signal handler for the job
+  connect(viewshedJob, &GeoprocessingJob::statusChanged, this, [this, viewshedJob](JobStatus jobStatus)
+  {
+    switch (jobStatus)
     {
-      switch (jobStatus)
-      {
-      case JobStatus::Failed:
-        emit displayErrorDialog("Geoprocessing Task failed", !viewshedJob->error().isEmpty() ? viewshedJob->error().message() : "Unknown error.");
-        m_viewshedInProgress = false;
-        m_jobStatus = "Job failed";
-        break;
-      case JobStatus::Started:
-        m_viewshedInProgress = true;
-        m_jobStatus = "Job in progress...";
-        break;
-      case JobStatus::Paused:
-        m_viewshedInProgress = false;
-        m_jobStatus = "Job paused...";
-        break;
-      case JobStatus::Succeeded:
-        m_viewshedInProgress = false;
-        m_jobStatus = "Job succeeded";
-        // handle the results
-        processResults(viewshedJob->result());
-        break;
-      default:
-        break;
-      }
+    case JobStatus::Failed:
+      emit displayErrorDialog("Geoprocessing Task failed", !viewshedJob->error().isEmpty() ? viewshedJob->error().message() : "Unknown error.");
+      m_viewshedInProgress = false;
+      m_jobStatus = "Job failed";
+      break;
+    case JobStatus::Started:
+      m_viewshedInProgress = true;
+      m_jobStatus = "Job in progress...";
+      break;
+    case JobStatus::Paused:
+      m_viewshedInProgress = false;
+      m_jobStatus = "Job paused...";
+      break;
+    case JobStatus::Succeeded:
+      m_viewshedInProgress = false;
+      m_jobStatus = "Job succeeded";
+      // handle the results
+      processResults(viewshedJob->result());
+      break;
+    default:
+      break;
+    }
 
-      // emit signals
-      emit viewshedInProgressChanged();
-      emit statusChanged();
-    });
-
-    // start the job
-    viewshedJob->start();
+    // emit signals
+    emit viewshedInProgressChanged();
+    emit statusChanged();
   });
 
-  // Add the new feature with (x,y) location to the feature collection table
-  inputFeatures->addFeature(inputFeature);
+  // start the job
+  viewshedJob->start();
 }
 
 void AnalyzeViewshed::processResults(GeoprocessingResult *results)

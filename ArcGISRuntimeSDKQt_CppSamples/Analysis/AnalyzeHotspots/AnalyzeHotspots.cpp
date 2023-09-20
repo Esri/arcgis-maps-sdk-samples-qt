@@ -29,11 +29,12 @@
 #include "GeoprocessingTypes.h"
 #include "ArcGISMapImageLayer.h"
 #include "Error.h"
-#include "TaskWatcher.h"
 #include "TaskTypes.h"
 #include "LayerListModel.h"
 #include "GeoprocessingResult.h"
 #include "Envelope.h"
+
+#include <QFuture>
 
 using namespace Esri::ArcGISRuntime;
 
@@ -149,7 +150,7 @@ void AnalyzeHotspots::processResults(GeoprocessingResult* result)
   connect(m_layer, &ArcGISMapImageLayer::doneLoading, this, [this](const Error& error)
   {
     if (error.isEmpty())
-        m_mapView->setViewpointGeometry(m_layer->fullExtent());
+      m_mapView->setViewpointGeometryAsync(m_layer->fullExtent());
   });
   m_mapView->map()->operationalLayers()->append(m_layer);
 }

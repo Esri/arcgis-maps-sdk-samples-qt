@@ -31,9 +31,10 @@
 #include "Surface.h"
 #include "ElevationSourceListModel.h"
 #include "AnalysisOverlayListModel.h"
-#include "TaskWatcher.h"
 #include "AnalysisListModel.h"
 #include "SpatialReference.h"
+
+#include <QFuture>
 
 using namespace Esri::ArcGISRuntime;
 
@@ -87,7 +88,7 @@ void ViewshedLocation::setInitialViewpoint()
   double pitch = 70;
   double roll = 0;
   Camera camera(point, heading, pitch, roll);
-  m_sceneView->setViewpointCamera(camera);
+  m_sceneView->setViewpointCameraAsync(camera);
 }
 
 void ViewshedLocation::connectSignals()
