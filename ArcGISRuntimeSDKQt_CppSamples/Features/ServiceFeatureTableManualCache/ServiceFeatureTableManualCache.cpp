@@ -33,9 +33,10 @@
 #include "MapTypes.h"
 #include "GeodatabaseTypes.h"
 #include "LayerListModel.h"
-#include "TaskWatcher.h"
-#include <QUrl>
+
+#include <QFuture>
 #include <QStringList>
+#include <QUrl>
 
 using namespace Esri::ArcGISRuntime;
 
@@ -83,5 +84,6 @@ void ServiceFeatureTableManualCache::populate()
   QueryParameters params;
   params.setWhereClause("req_Type = \'Tree Maintenance or Damage\'");
 
-  m_featureTable->populateFromService(params, true, QStringList { "*" });
+  auto future = m_featureTable->populateFromServiceAsync(params, true, QStringList { "*" });
+  Q_UNUSED(future)
 }

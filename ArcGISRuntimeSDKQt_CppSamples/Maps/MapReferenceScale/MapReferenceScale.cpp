@@ -49,11 +49,11 @@ MapReferenceScale::MapReferenceScale(QObject* parent /* = nullptr */):
     m_layerInfoListModel = m_map->operationalLayers();
     emit layerInfoListModelChanged();
     emit currentMapScaleChanged();
-  });
 
-  connect(m_mapView, &MapQuickView::mapScaleChanged, this, [this]()
-  {
-    emit currentMapScaleChanged();
+    connect(m_mapView, &MapQuickView::mapScaleChanged, this, [this]()
+    {
+      emit currentMapScaleChanged();
+    });
   });
 }
 

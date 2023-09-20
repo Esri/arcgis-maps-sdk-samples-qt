@@ -13,7 +13,7 @@
         "FeatureLayer",
         "FeatureRequestMode::ManualCache",
         "ServiceFeatureTable",
-        "ServiceFeatureTable::populateFromService",
+        "ServiceFeatureTable::populateFromServiceAsync",
         "ServiceFeatureTable::setFeatureRequestMode"
     ],
     "redirect_from": [
@@ -23,7 +23,7 @@
         "FeatureLayer",
         "FeatureRequestMode::ManualCache",
         "ServiceFeatureTable",
-        "ServiceFeatureTable::populateFromService",
+        "ServiceFeatureTable::populateFromServiceAsync",
         "ServiceFeatureTable::setFeatureRequestMode"
     ],
     "snippets": [

@@ -18,7 +18,7 @@ Zoom to any extent. Then click 'Generate Geodatabse' to generate a geodatabase o
 2. Create `GenerateGeodatabaseParameters` specifying the extent and whether to include attachments.
 3. Create a `GenerateGeodatabaseJob` with `geodatabaseSyncTask::generateGeodatabase(parameters, downloadPath)`. Start the job with `job::start()`.
 4. When the job is done, `job::result()` will return the geodatabase. Inside the geodatabase are feature tables which can be used to add feature layers to the map.
-5. Call `syncTask::unregisterGeodatabase(geodatabase)` after generation when you're not planning on syncing changes to the service.
+5. Call `syncTask::unregisterGeodatabaseAsync(geodatabase)` after generation when you're not planning on syncing changes to the service.
 
 ## Relevant API
 

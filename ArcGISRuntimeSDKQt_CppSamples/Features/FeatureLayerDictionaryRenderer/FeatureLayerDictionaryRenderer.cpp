@@ -30,9 +30,9 @@
 #include "DictionarySymbolStyle.h"
 #include "MapTypes.h"
 #include "LayerListModel.h"
-#include "TaskWatcher.h"
 #include "Envelope.h"
 
+#include <QFuture>
 #include <QtCore/qglobal.h>
 #include <QStandardPaths>
 
@@ -136,9 +136,9 @@ void FeatureLayerDictionaryRenderer::componentComplete()
             if (m_loadedLayerCount == m_geodatabase->geodatabaseFeatureTables().length())
             {
               /**
-                             * If we get here, all the layers loaded. Union the extents and set
-                             * the viewpoint.
-                             */
+               * If we get here, all the layers loaded. Union the extents and set
+               * the viewpoint.
+               */
               LayerListModel* layers = m_mapView->map()->operationalLayers();
               if (layers->size() > 0)
               {
@@ -147,7 +147,7 @@ void FeatureLayerDictionaryRenderer::componentComplete()
                 {
                   bbox = GeometryEngine::unionOf(bbox, layers->at(j)->fullExtent());
                 }
-                m_mapView->setViewpointGeometry(bbox, 100);
+                m_mapView->setViewpointGeometryAsync(bbox, 100);
               }
 
               emit allLayersLoaded();

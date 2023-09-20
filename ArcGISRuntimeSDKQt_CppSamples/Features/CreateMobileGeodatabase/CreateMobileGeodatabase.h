@@ -70,7 +70,6 @@ private:
   void createTable();
   void addFeature(QMouseEvent& mouseEvent);
   void deleteFeatures();
-  void createConnections();
 
   Esri::ArcGISRuntime::Map* m_map = nullptr;
   Esri::ArcGISRuntime::MapQuickView* m_mapView = nullptr;

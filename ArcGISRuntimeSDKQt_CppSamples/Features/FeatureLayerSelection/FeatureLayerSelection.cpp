@@ -30,9 +30,9 @@
 #include "MapTypes.h"
 #include "ServiceFeatureTable.h"
 #include "SpatialReference.h"
-#include "TaskWatcher.h"
 #include "Viewpoint.h"
 
+#include <QFuture>
 #include <QUuid>
 #include <memory>
 
@@ -82,51 +82,52 @@ void FeatureLayerSelection::setMapView(MapQuickView* mapView)
   emit mapViewChanged();
 }
 
+//! [identify feature layer qml api snippet]
 void FeatureLayerSelection::connectSignals()
 {
-  //! [identify feature layer qml api snippet]
   // lambda expression for the mouse press event on the mapview... do an identify operation
   connect(m_mapView, &MapQuickView::mouseClicked, this, [this](QMouseEvent& mouseEvent)
   {
     constexpr double tolerance = 22.0;
     constexpr bool returnPopupsOnly = false;
     constexpr int maximumResults = 1000;
-    const double screenX = mouseEvent.position().x();
-    const double screenY = mouseEvent.position().y();
-    m_mapView->identifyLayer(m_featureLayer, screenX, screenY, tolerance, returnPopupsOnly, maximumResults);
-  });
-
-  // once the identify is done
-  connect(m_mapView, &MapQuickView::identifyLayerCompleted, this, [this](const QUuid&, IdentifyLayerResult* rawIdentifyResult)
-  {
-    auto identifyResult = std::unique_ptr<IdentifyLayerResult>(rawIdentifyResult);
-
-    if (!identifyResult)
-      return;
-
-    // clear any existing selection
-    m_featureLayer->clearSelection();
-
-    // create a list to store the identified elements
-    QList<Feature*> identifiedFeatures;
-    for (int i = 0; i < identifyResult->geoElements().size(); i++)
+    m_mapView->identifyLayerAsync(m_featureLayer, mouseEvent.position(), tolerance, returnPopupsOnly, maximumResults).then(this,
+    [this](IdentifyLayerResult* result)
     {
-      GeoElement* element = identifyResult->geoElements().at(i);
-      if (nullptr != element)
-      {
-        // add the element to the list and take ownership of it.
-        Feature* feature = static_cast<Feature*>(element);
-        feature->setParent(this);
-        identifiedFeatures.append(feature);
-      }
-    }
-
-    // select the identified features
-    m_featureLayer->selectFeatures(identifiedFeatures);
-    // update the member with the number of selected features
-    int count = identifiedFeatures.length();
-    m_selectedFeatureText = count > 1 ? QString::number(count) + " features selected." : QString::number(count) + " feature selected.";
-    emit selectedFeatureTextChanged();
+      onIdentifyLayerCompleted_(result);
+    });
   });
-  //! [identify feature layer qml api snippet]
 }
+
+void FeatureLayerSelection::onIdentifyLayerCompleted_(IdentifyLayerResult* result)
+{
+  auto identifyResult = std::unique_ptr<IdentifyLayerResult>(result);
+
+  if (!identifyResult)
+    return;
+
+  // clear any existing selection
+  m_featureLayer->clearSelection();
+
+  // create a list to store the identified elements
+  QList<Feature*> identifiedFeatures;
+  for (int i = 0; i < identifyResult->geoElements().size(); i++)
+  {
+    GeoElement* element = identifyResult->geoElements().at(i);
+    if (nullptr != element)
+    {
+      // add the element to the list and take ownership of it.
+      Feature* feature = static_cast<Feature*>(element);
+      feature->setParent(this);
+      identifiedFeatures.append(feature);
+    }
+  }
+
+  // select the identified features
+  m_featureLayer->selectFeatures(identifiedFeatures);
+  // update the member with the number of selected features
+  const qsizetype count = identifiedFeatures.length();
+  m_selectedFeatureText = count > 1 ? QString::number(count) + " features selected." : QString::number(count) + " feature selected.";
+  emit selectedFeatureTextChanged();
+}
+//! [identify feature layer qml api snippet]

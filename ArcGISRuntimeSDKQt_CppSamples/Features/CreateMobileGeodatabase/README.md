@@ -16,11 +16,11 @@ Select "Create new .geodatabase" to create a new mobile geodatabase in a tempora
 
 ## How it works
 
-1. Create a new `Geodatabase` at a given path that does not already exist with the `Geodatabase::instance()` singleton.
+1. Create a new `Geodatabase` at a given path that does not already exist with the `Geodatabase::createAsync()` static method.
 2. Create a `TableDescription` and add a list of `FieldDescription`s to the table description.
-3. Create a `GeodatabaseFeatureTable` from the geodatabase with the `TableDescription` using `Geodatabase::createTable(TableDescription *tableDescription)`.
-4. Create an `ArcGISFeature` on a selected map point using `FeatureTable::createFeature(const QVariantMap &attributes, const Geometry &geometry, QObject *parent = nullptr)`.
-5. Add the feature to the table using `FeatureTable::addFeature(Feature *feature)`
+3. Create a `GeodatabaseFeatureTable` from the geodatabase with the `TableDescription` using `Geodatabase::createTableAsync(TableDescription* tableDescription)`.
+4. Create an `ArcGISFeature` on a selected map point using `FeatureTable::createFeature(const QVariantMap &attributes, const Geometry& geometry, QObject* parent = nullptr)`.
+5. Add the feature to the table using `FeatureTable::addFeatureAsync(Feature* feature)`
 6. Each feature added to the feature table is committed to the mobile geodatabase file.
 7. Close the mobile geodatabase to safely share the ".geodatabase" file using `Geodatabase::close()`
 

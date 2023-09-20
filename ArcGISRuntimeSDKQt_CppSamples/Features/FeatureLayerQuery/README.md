@@ -16,7 +16,7 @@ Input the name of a U.S. state into the text field. When you click "search", a q
 
 1. Create a `ServiceFeatureTable` using the URL of a feature service.
 2. Create a `QueryParameters` with a where clause specified using `setWhereClause()`.
-3. Perform the query using `queryFeatures(query)` on the service feature table.
+3. Perform the query using `queryFeaturesAsync(query)` on the service feature table.
 4. When complete, the query will return a `FeatureQueryResult` which can be iterated over to get the matching features.
 
 ## About the data

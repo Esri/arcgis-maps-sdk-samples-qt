@@ -14,7 +14,7 @@ Click on a feature to select it. The related features will be displayed in a lis
 
 ## How it works
 
-1. With a `Feature`, call `queryRelatedFeatures` on the feature's feature table.
+1. With a `Feature`, call `queryRelatedFeaturesAsync` on the feature's feature table.
 2. Iterate over the result's collection of `RelatedFeatureQueryResult` objects to get the related features and add them to a list.
 
 ## Relevant API
@@ -22,7 +22,7 @@ Click on a feature to select it. The related features will be displayed in a lis
 * ArcGISFeature
 * ArcGISFeatureTable
 * FeatureQueryResult
-* ArcGISFeatureTable::queryRelatedFeatures
+* ArcGISFeatureTable::queryRelatedFeaturesAsync
 * RelatedFeatureQueryResult
 
 ## Tags
