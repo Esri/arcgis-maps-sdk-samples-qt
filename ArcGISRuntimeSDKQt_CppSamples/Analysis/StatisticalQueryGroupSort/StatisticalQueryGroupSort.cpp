@@ -118,7 +118,7 @@ void StatisticalQueryGroupSort::onQueryStatisticsCompleted_(StatisticsQueryResul
     const QVariantMap& groupsMap = record->group();
     for (auto it = groupsMap.cbegin(); it != groupsMap.cend(); ++it)
     {
-        sectionStrings << QString("\"%1\":\"%2\"").arg(it.key(), it.value().toString());
+      sectionStrings << QString("\"%1\":\"%2\"").arg(it.key(), it.value().toString());
     }
     const QString sectionString = sectionStrings.join(',');
 
