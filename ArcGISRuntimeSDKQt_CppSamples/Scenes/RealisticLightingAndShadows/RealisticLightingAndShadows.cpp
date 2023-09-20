@@ -26,17 +26,17 @@
 #include "ArcGISSceneLayer.h"
 #include "Camera.h"
 #include "MapTypes.h"
-#include "TaskWatcher.h"
 #include "Surface.h"
 #include "ElevationSourceListModel.h"
 #include "LayerListModel.h"
 #include "SceneViewTypes.h"
 
-#include <QUrl>
 #include <QDateTime>
 #include <QDate>
+#include <QFuture>
 #include <QTime>
 #include <QTimeZone>
+#include <QUrl>
 
 #include <cmath>
 
@@ -85,7 +85,7 @@ void RealisticLightingAndShadows::setSceneView(SceneQuickView* sceneView)
 
   // add camera and set scene viewpoint
   const Camera camera(45.54605153789073, -122.69033380511073, 941.0002111233771, 162.58544227544266, 60.0,0.0);
-  m_sceneView->setViewpointCamera(camera, 0);
+  m_sceneView->setViewpointCameraAsync(camera, 0);
 
   // set atmosphere effect to realistic
   m_sceneView->setAtmosphereEffect(AtmosphereEffect::Realistic);
