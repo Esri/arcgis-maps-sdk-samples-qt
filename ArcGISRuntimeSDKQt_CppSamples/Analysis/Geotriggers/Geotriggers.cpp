@@ -159,7 +159,7 @@ void Geotriggers::createGeotriggerMonitor(ServiceFeatureTable* serviceFeatureTab
 
   // startAsync must be explicitly called. It is called after the signal connection is defined to avoid a race condition in Qt.
   auto future = geotriggerMonitor->startAsync();
-  Q_UNUSED(future);
+  Q_UNUSED(future)
 }
 
 void Geotriggers::handleGeotriggerNotification(GeotriggerNotificationInfo* geotriggerNotificationInfo)
