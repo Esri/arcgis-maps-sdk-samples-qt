@@ -29,9 +29,9 @@
 #include "StatisticResultListModel.h"
 #include "Error.h"
 #include "OrderBy.h"
-#include "TaskWatcher.h"
 #include "CoreTypes.h"
 
+#include <QFuture>
 #include <QUuid>
 #include <QStringList>
 #include <QVariantList>
@@ -93,43 +93,43 @@ void StatisticalQueryGroupSort::connectSignals()
     m_resultsModel->clear();
     addResultToModel("", QString("Error. %1").arg(error.message()));
   });
+}
 
-  connect(m_featureTable, &ServiceFeatureTable::queryStatisticsCompleted, this, [this](const QUuid&, StatisticsQueryResult* rawResult)
+void StatisticalQueryGroupSort::onQueryStatisticsCompleted_(StatisticsQueryResult* rawResult)
+{
+  // Delete rawResult when we leave local scope.
+  auto result = std::unique_ptr<StatisticsQueryResult>(rawResult);
+
+  if (!result)
+    return;
+
+  // clear previous results
+  m_resultsModel->clear();
+
+  // iterate the results and add to a model
+  StatisticRecordIterator iter = result->iterator();
+  while (iter.hasNext())
   {
-    // Delete rawResult when we leave local scope.
-    auto result = std::unique_ptr<StatisticsQueryResult>(rawResult);
+    // get the statistic record
+    StatisticRecord* record = iter.next();
 
-    if (!result)
-      return;
-
-    // clear previous results
-    m_resultsModel->clear();
-
-    // iterate the results and add to a model
-    StatisticRecordIterator iter = result->iterator();
-    while (iter.hasNext())
+    // get the group string
+    QStringList sectionStrings;
+    const QVariantMap& groupsMap = record->group();
+    for (auto it = groupsMap.cbegin(); it != groupsMap.cend(); ++it)
     {
-      // get the statistic record
-      StatisticRecord* record = iter.next();
-
-      // get the group string
-      QStringList sectionStrings;
-      const QVariantMap& groupsMap = record->group();
-      for (auto it = groupsMap.cbegin(); it != groupsMap.cend(); ++it)
-      {
-          sectionStrings << QString("\"%1\":\"%2\"").arg(it.key(), it.value().toString());
-      }
-      const QString sectionString = sectionStrings.join(',');
-
-      // obtain the statistics
-      const QVariantMap& statsMap = record->statistics();
-      for (auto it = statsMap.cbegin(); it != statsMap.cend(); ++it)
-      {
-        const QString statString = QString("%1: %2").arg(it.key(), it.value().toString());
-        addResultToModel(sectionString, statString);
-      }
+      sectionStrings << QString("\"%1\":\"%2\"").arg(it.key(), it.value().toString());
     }
-  });
+    const QString sectionString = sectionStrings.join(',');
+
+    // obtain the statistics
+    const QVariantMap& statsMap = record->statistics();
+    for (auto it = statsMap.cbegin(); it != statsMap.cend(); ++it)
+    {
+      const QString statString = QString("%1: %2").arg(it.key(), it.value().toString());
+      addResultToModel(sectionString, statString);
+    }
+  }
 }
 
 void StatisticalQueryGroupSort::queryStatistics()
@@ -168,7 +168,10 @@ void StatisticalQueryGroupSort::queryStatistics()
   params.setWhereClause("\"State\" IS NOT NULL");
 
   // execute the query
-  m_featureTable->queryStatistics(params);
+  m_featureTable->queryStatisticsAsync(params).then(this, [this](StatisticsQueryResult* rawResult)
+  {
+    onQueryStatisticsCompleted_(rawResult);
+  });
 }
 
 void StatisticalQueryGroupSort::addStatisticDefinition(const QString& field, const QString& statistic)

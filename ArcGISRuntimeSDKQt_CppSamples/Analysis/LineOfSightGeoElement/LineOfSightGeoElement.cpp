@@ -49,13 +49,13 @@
 #include "GeodeticDistanceResult.h"
 #include "LinearUnit.h"
 #include "AngularUnit.h"
-#include "TaskWatcher.h"
 #include "SpatialReference.h"
 #include "Point.h"
 #include "Graphic.h"
 #include "SimpleMarkerSymbol.h"
 
 #include <array>
+#include <QFuture>
 #include <QtCore/qglobal.h>
 #include <QStandardPaths>
 
@@ -229,7 +229,7 @@ void LineOfSightGeoElement::initialize()
     });
 
     Camera camera(observationPoint, 700, -30, 45, 0);
-    m_sceneView->setViewpointCamera(camera, 0);
+    m_sceneView->setViewpointCameraAsync(camera, 0);
 
     m_animation.start();
   });

@@ -19,12 +19,13 @@
 
 namespace Esri::ArcGISRuntime
 {
-    class Map;
-    class MapQuickView;
+    class FeatureCollectionTable;
     class GraphicsOverlay;
     class GeoprocessingTask;
     class GeoprocessingResult;
     class Graphic;
+    class Map;
+    class MapQuickView;
 }
 
 #include <QQuickItem>
@@ -49,6 +50,8 @@ signals:
   void statusChanged();
 
 private:
+  void onAddFeatureCompleted_(Esri::ArcGISRuntime::FeatureCollectionTable* inputFeatures);
+
   Esri::ArcGISRuntime::Map* m_map = nullptr;
   Esri::ArcGISRuntime::MapQuickView* m_mapView = nullptr;
   Esri::ArcGISRuntime::GraphicsOverlay* m_inputOverlay = nullptr;

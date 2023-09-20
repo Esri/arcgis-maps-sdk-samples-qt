@@ -20,6 +20,7 @@
 namespace Esri::ArcGISRuntime
 {
 class LocationDistanceMeasurement;
+class Point;
 class Scene;
 class SceneQuickView;
 }
@@ -53,6 +54,7 @@ signals:
 private:
   Esri::ArcGISRuntime::SceneQuickView* sceneView() const;
   void setSceneView(Esri::ArcGISRuntime::SceneQuickView* sceneView);
+  void onScreenToLocationCompleted_(const Esri::ArcGISRuntime::Point& pt);
 
   Esri::ArcGISRuntime::Scene* m_scene = nullptr;
   Esri::ArcGISRuntime::SceneQuickView* m_sceneView = nullptr;

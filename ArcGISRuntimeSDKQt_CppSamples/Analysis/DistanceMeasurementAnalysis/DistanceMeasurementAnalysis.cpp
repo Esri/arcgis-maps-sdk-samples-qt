@@ -38,9 +38,9 @@
 #include "SceneQuickView.h"
 #include "SpatialReference.h"
 #include "Surface.h"
-#include "TaskWatcher.h"
 #include "Viewpoint.h"
 
+#include <QFuture>
 #include <QUuid>
 
 using namespace Esri::ArcGISRuntime;
@@ -131,7 +131,10 @@ void DistanceMeasurementAnalysis::connectSignals()
   connect(m_sceneView, &SceneQuickView::mousePressedAndHeld, this, [this](QMouseEvent& mouseEvent)
   {
     m_isPressAndHold = true;
-    m_sceneView->screenToLocation(mouseEvent.position().x(), mouseEvent.position().y());
+    m_sceneView->screenToLocationAsync(mouseEvent.position().x(), mouseEvent.position().y()).then(this, [this](const Point& pt)
+    {
+      onScreenToLocationCompleted_(pt);
+    });
   });
 
   // When the mouse is released...
@@ -153,14 +156,20 @@ void DistanceMeasurementAnalysis::connectSignals()
       m_isPressAndHold = false;
     // Else get the location from the screen coordinates
     else
-      m_sceneView->screenToLocation(mouseEvent.position().x(), mouseEvent.position().y());
+      m_sceneView->screenToLocationAsync(mouseEvent.position().x(), mouseEvent.position().y()).then(this, [this](const Point& pt)
+      {
+        onScreenToLocationCompleted_(pt);
+      });
   });
 
   // Update the distance analysis when the mouse moves if it is a press and hold movement
   connect(m_sceneView, &SceneQuickView::mouseMoved, this, [this](QMouseEvent& mouseEvent)
   {
     if (m_isPressAndHold)
-      m_sceneView->screenToLocation(mouseEvent.position().x(), mouseEvent.position().y());
+      m_sceneView->screenToLocationAsync(mouseEvent.position().x(), mouseEvent.position().y()).then(this, [this](const Point& pt)
+      {
+        onScreenToLocationCompleted_(pt);
+      });
   });
 
   // Set a flag when mousePressed signal emits
@@ -169,22 +178,22 @@ void DistanceMeasurementAnalysis::connectSignals()
     m_isNavigating = false;
   });
 
-  // When screenToLocation completes...
-  connect(m_sceneView, &SceneQuickView::screenToLocationCompleted, this, [this](const QUuid&, const Point& pt)
-  {
-    // If it was from a press and hold, update the end location
-    if (m_isPressAndHold)
-      m_distanceAnalysis->setEndLocation(pt);
-    // Else if it was a normal mouse click (press and release), update the start location
-    else
-      m_distanceAnalysis->setStartLocation(pt);
-  });
 
   // Set a flag when viewpointChanged signal emits
   connect(m_sceneView, &SceneQuickView::viewpointChanged, this, [this]
   {
     m_isNavigating = true;
   });
+}
+
+void DistanceMeasurementAnalysis::onScreenToLocationCompleted_(const Point& pt)
+{
+  // If it was from a press and hold, update the end location
+  if (m_isPressAndHold)
+    m_distanceAnalysis->setEndLocation(pt);
+  // Else if it was a normal mouse click (press and release), update the start location
+  else
+    m_distanceAnalysis->setStartLocation(pt);
 }
 
 void DistanceMeasurementAnalysis::setUnits(const QString& unitName)
