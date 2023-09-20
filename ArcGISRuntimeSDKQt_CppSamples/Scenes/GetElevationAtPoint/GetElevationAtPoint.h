@@ -73,7 +73,7 @@ private:
   bool elevationQueryRunning() const;
 
   double m_elevation = 0.0;
-  Esri::ArcGISRuntime::TaskWatcher m_elevationQueryTaskWatcher;
+  bool m_elevationQueryRunning = false;
 };
 
 #endif // GETELEVATIONATPOINT_H

@@ -28,7 +28,6 @@
 #include "SceneQuickView.h"
 #include "SimpleRenderer.h"
 #include "MapTypes.h"
-#include "TaskWatcher.h"
 #include "GraphicsOverlayListModel.h"
 #include "GraphicListModel.h"
 #include "Surface.h"
@@ -41,6 +40,7 @@
 #include "SpatialReference.h"
 #include "Point.h"
 
+#include <QFuture>
 #include <QUuid>
 #include <QStandardPaths>
 
@@ -182,32 +182,28 @@ void OrbitCameraAroundObject::cockpitView()
   m_orbitCam->setMinCameraDistance(0);
 
   // animate the camera target to the cockpit instead of the center of the plane
-  m_orbitCam->setTargetOffsets(0, -2, 1.1, 1);
+  m_orbitCam->setTargetOffsetsAsync(0, -2, 1.1, 1);
 
   //The animation may rotate us over the set camera bounds based on the plane pitch, so unlock them.
   m_orbitCam->setMinCameraPitchOffset(-180.0);
   m_orbitCam->setMaxCameraPitchOffset(180.0);
 
-  //Camera move-to-cockpit callback.
-  connect(m_orbitCam, &OrbitGeoElementCameraController::moveCameraCompleted, this,
-          [this](const QUuid&, bool succeeded)
-  {
-    if (succeeded)
-    {
-      //once the camera is in the cockpit, only allow the camera's heading to change
-      m_orbitCam->setMinCameraPitchOffset(90);
-      m_orbitCam->setMaxCameraPitchOffset(90);
-
-      // pitch the camera when the plane pitches
-      m_orbitCam->setAutoPitchEnabled(true);
-    }
-  });
-
   //Start the camera move into the cockpit
   //If the camera is already tracking object pitch, don't want to animate the pitch any further, we're exactly where we should be.
-  m_orbitCam->moveCamera(0 - m_orbitCam->cameraDistance(),
-                         0 - m_orbitCam->cameraHeadingOffset(),
-                         m_orbitCam->isAutoPitchEnabled() ? 0.0 : (90 - m_orbitCam->cameraPitchOffset()) + planePitch(), 1.0);
+  m_orbitCam->moveCameraAsync(-m_orbitCam->cameraDistance(),
+                         -m_orbitCam->cameraHeadingOffset(),
+                         m_orbitCam->isAutoPitchEnabled() ? 0.0 : (90 - m_orbitCam->cameraPitchOffset()) + planePitch(), 1.0).then(this,
+  [this](bool succeeded){
+    if (!succeeded)
+      return;
+
+    //once the camera is in the cockpit, only allow the camera's heading to change
+    m_orbitCam->setMinCameraPitchOffset(90);
+    m_orbitCam->setMaxCameraPitchOffset(90);
+
+    // pitch the camera when the plane pitches
+    m_orbitCam->setAutoPitchEnabled(true);
+  });
 
 }
 

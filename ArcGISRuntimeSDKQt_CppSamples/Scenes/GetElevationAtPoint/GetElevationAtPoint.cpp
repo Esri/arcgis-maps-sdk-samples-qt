@@ -37,6 +37,7 @@
 #include "Graphic.h"
 #include "Point.h"
 
+#include <QFuture>
 #include <QUuid>
 
 using namespace Esri::ArcGISRuntime;
@@ -112,25 +113,23 @@ void GetElevationAtPoint::displayElevationOnClick(QMouseEvent& mouseEvent)
   // Convert clicked screen position to position on the map surface.
   const Point baseSurfacePos = m_sceneView->screenToBaseSurface(mouseEvent.position().x(), mouseEvent.position().y());
 
-  // Connect to callback for elevation query, which places marker and sets elevation
-  connect(m_scene->baseSurface(), &Surface::locationToElevationCompleted,
-          this, [baseSurfacePos, this](const QUuid& /*taskId*/, double elevation)
-  {
-    // Place the elevation marker circle at the clicked position
-    m_elevationMarker->setGeometry(baseSurfacePos);
-    m_elevationMarker->setVisible(true);
-
-    // Assign the elevation value. UI is bound to this value, so it updates to display new elevation.
-    m_elevation = elevation;
-
-    // Notify of property changes
-    emit elevationChanged(elevation);
-    emit elevationQueryRunningChanged();
-  });
-
-  //Invoke get elevation query
-  m_elevationQueryTaskWatcher = m_scene->baseSurface()->locationToElevation(baseSurfacePos);
+  m_elevationQueryRunning = true;
   emit elevationQueryRunningChanged();
+  m_scene->baseSurface()->elevationAsync(baseSurfacePos).then(this,
+  [this, baseSurfacePos](double elevation)
+  {
+        // Place the elevation marker circle at the clicked position
+        m_elevationMarker->setGeometry(baseSurfacePos);
+        m_elevationMarker->setVisible(true);
+
+        // Assign the elevation value. UI is bound to this value, so it updates to display new elevation.
+        m_elevation = elevation;
+
+        // Notify of property changes
+        emit elevationChanged(elevation);
+        m_elevationQueryRunning = false;
+        emit elevationQueryRunningChanged();
+  });
 }
 
 double GetElevationAtPoint::elevation() const
@@ -140,5 +139,5 @@ double GetElevationAtPoint::elevation() const
 
 bool GetElevationAtPoint::elevationQueryRunning() const
 {
-  return !(m_elevationQueryTaskWatcher.isDone() || m_elevationQueryTaskWatcher.isCanceled());
+  return m_elevationQueryRunning;
 }
