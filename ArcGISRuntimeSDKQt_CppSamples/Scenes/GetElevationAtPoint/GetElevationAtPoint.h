@@ -18,6 +18,7 @@
 #define GETELEVATIONATPOINT_H
 
 // Qt headers
+#include <QFuture>
 #include <QObject>
 
 namespace Esri::ArcGISRuntime
@@ -70,7 +71,7 @@ private:
   bool elevationQueryRunning() const;
 
   double m_elevation = 0.0;
-  bool m_elevationQueryRunning = false;
+  QFuture<double> m_elevationQueryFuture;
 };
 
 #endif // GETELEVATIONATPOINT_H
