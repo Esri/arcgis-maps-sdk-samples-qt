@@ -32,9 +32,10 @@
 #include "SimpleFillSymbol.h"
 #include "MapTypes.h"
 #include "GraphicsOverlayListModel.h"
-#include "TaskWatcher.h"
 #include "SymbolTypes.h"
 #include "GraphicListModel.h"
+
+#include <QFuture>
 
 using namespace Esri::ArcGISRuntime;
 
@@ -71,7 +72,7 @@ void CutGeometry::componentComplete()
   createGraphics();
 
   // Set Viewpoint
-  m_mapView->setViewpointGeometry(m_lakeSuperiorGraphic->geometry());
+  m_mapView->setViewpointGeometryAsync(m_lakeSuperiorGraphic->geometry());
 }
 
 // Cuts the Lake Superior polygon into two and symbolizes each output graphic

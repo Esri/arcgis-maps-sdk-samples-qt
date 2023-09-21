@@ -38,12 +38,13 @@
 #include "GraphicListModel.h"
 #include "SymbolTypes.h"
 #include "SelectionProperties.h"
-#include "TaskWatcher.h"
 #include "IdentifyGraphicsOverlayResult.h"
 #include "SpatialReference.h"
 #include <QUuid>
 #include <QStringList>
 #include <memory>
+
+#include <QFuture>
 
 using namespace Esri::ArcGISRuntime;
 
@@ -81,7 +82,7 @@ void SpatialRelationships::componentComplete()
   addGraphics();
 
   // Set viewpoint
-  m_mapView->setViewpointCenter(geometry_cast<Point>(m_pointGraphic->geometry()), 200000000);
+  m_mapView->setViewpointCenterAsync(geometry_cast<Point>(m_pointGraphic->geometry()), 200000000);
 
   // connect signals
   connectSignals();
@@ -150,53 +151,53 @@ void SpatialRelationships::connectSignals()
   connect(m_mapView, &MapQuickView::mouseClicked, this, [this](QMouseEvent& mouseEvent)
   {
     // identify graphics
-    m_mapView->identifyGraphicsOverlay(m_graphicsOverlay, mouseEvent.position().x(), mouseEvent.position().y(), 1.0 /*tolerance*/, false /*returnPopupsOnly*/);
-  });
-
-  connect(m_mapView, &MapQuickView::identifyGraphicsOverlayCompleted, this, [this](const QUuid&, IdentifyGraphicsOverlayResult* rawResult)
-  {
-    // Delete rawReslt when we leave scope.
-    auto result = std::unique_ptr<IdentifyGraphicsOverlayResult>(rawResult);
-
-    const QList<Graphic*> identifiedGraphics = result->graphics();
-    if (identifiedGraphics.isEmpty())
-      return;
-
-    // get the first identified graphic
-    Graphic* graphic = identifiedGraphics.at(0);
-
-    // select the graphic
-    m_graphicsOverlay->clearSelection();
-    graphic->setSelected(true);
-
-    // get the geometry
-    const Geometry selectedGeometry = graphic->geometry();
-    const GeometryType selectedGeometryType = selectedGeometry.geometryType();
-
-    // reset the output text
-    m_pointRelationships = "";
-    m_polylineRelationships = "";
-    m_polygonRelationships = "";
-
-    // populate the view with the spatial relationships the selected graphic has to the other graphics
-    // ignore testing relationships between the geometry and itself
-    if (selectedGeometryType != GeometryType::Point)
+    m_mapView->identifyGraphicsOverlayAsync(m_graphicsOverlay, mouseEvent.position(), 1.0 /*tolerance*/, false /*returnPopupsOnly*/).then(this,
+    [this](IdentifyGraphicsOverlayResult* rawResult)
     {
-      const QString pointRelationships = getSpatialRelationships(selectedGeometry, m_pointGraphic->geometry()).join(",");
-      m_pointRelationships = QString("Point: %1").arg(pointRelationships);
-    }
-    if (selectedGeometryType != GeometryType::Polyline)
-    {
-      const QString polylineRelationships = getSpatialRelationships(selectedGeometry, m_polylineGraphic->geometry()).join(",");
-      m_polylineRelationships = QString("Polyline: %1").arg(polylineRelationships);
-    }
-    if (selectedGeometryType != GeometryType::Polygon)
-    {
-      const QString polygonRelationships = getSpatialRelationships(selectedGeometry, m_polygonGraphic->geometry()).join(",");
-      m_polygonRelationships = QString("Polygon: %1").arg(polygonRelationships);
-    }
+      // Delete rawReslt when we leave scope.
+      auto result = std::unique_ptr<IdentifyGraphicsOverlayResult>(rawResult);
 
-    emit relationshipsChanged();
+      const QList<Graphic*> identifiedGraphics = result->graphics();
+      if (identifiedGraphics.isEmpty())
+        return;
+
+      // get the first identified graphic
+      Graphic* graphic = identifiedGraphics.at(0);
+
+      // select the graphic
+      m_graphicsOverlay->clearSelection();
+      graphic->setSelected(true);
+
+      // get the geometry
+      const Geometry selectedGeometry = graphic->geometry();
+      const GeometryType selectedGeometryType = selectedGeometry.geometryType();
+
+      // reset the output text
+      m_pointRelationships = "";
+      m_polylineRelationships = "";
+      m_polygonRelationships = "";
+
+      // populate the view with the spatial relationships the selected graphic has to the other graphics
+      // ignore testing relationships between the geometry and itself
+      if (selectedGeometryType != GeometryType::Point)
+      {
+        const QString pointRelationships = getSpatialRelationships(selectedGeometry, m_pointGraphic->geometry()).join(",");
+        m_pointRelationships = QString("Point: %1").arg(pointRelationships);
+      }
+      if (selectedGeometryType != GeometryType::Polyline)
+      {
+        const QString polylineRelationships = getSpatialRelationships(selectedGeometry, m_polylineGraphic->geometry()).join(",");
+        m_polylineRelationships = QString("Polyline: %1").arg(polylineRelationships);
+      }
+      if (selectedGeometryType != GeometryType::Polygon)
+      {
+        const QString polygonRelationships = getSpatialRelationships(selectedGeometry, m_polygonGraphic->geometry()).join(",");
+        m_polygonRelationships = QString("Polygon: %1").arg(polygonRelationships);
+      }
+
+      emit relationshipsChanged();
+    });
+
   });
 }
 

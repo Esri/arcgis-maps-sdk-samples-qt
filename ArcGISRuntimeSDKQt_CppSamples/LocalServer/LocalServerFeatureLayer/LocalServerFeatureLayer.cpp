@@ -32,10 +32,10 @@
 #include "MapViewTypes.h"
 #include "MapTypes.h"
 #include "LocalServerTypes.h"
-#include "TaskWatcher.h"
 #include "LayerListModel.h"
 
 #include <QDir>
+#include <QFuture>
 #include <QTemporaryDir>
 #include <QFile>
 
@@ -145,7 +145,7 @@ void LocalServerFeatureLayer::connectSignals()
       {
         if (status == LoadStatus::Loaded)
         {
-          m_mapView->setViewpoint(Viewpoint(featureLayer->fullExtent()));
+          m_mapView->setViewpointAsync(Viewpoint(featureLayer->fullExtent()));
         }
       });
       m_map->operationalLayers()->append(featureLayer);

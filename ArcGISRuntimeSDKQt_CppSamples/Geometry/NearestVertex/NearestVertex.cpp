@@ -35,12 +35,13 @@
 #include "GraphicsOverlayListModel.h"
 #include "GraphicListModel.h"
 #include "SymbolTypes.h"
-#include "TaskWatcher.h"
 #include "LayerListModel.h"
 #include "ProximityResult.h"
 #include "Basemap.h"
 #include "Envelope.h"
 #include "Point.h"
+
+#include <QFuture>
 
 using namespace Esri::ArcGISRuntime;
 
@@ -95,7 +96,7 @@ void NearestVertex::setMapView(MapQuickView* mapView)
   setupGraphics();
 
   // Set viewpoint to the polygon graphic
-  m_mapView->setViewpointCenter(m_mapView->graphicsOverlays()->first()->graphics()->first()->geometry().extent().center(), 8e6);
+  m_mapView->setViewpointCenterAsync(m_mapView->graphicsOverlays()->first()->graphics()->first()->geometry().extent().center(), 8e6);
 
   emit mapViewChanged();
 }
