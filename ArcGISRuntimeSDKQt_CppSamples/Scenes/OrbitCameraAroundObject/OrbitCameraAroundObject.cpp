@@ -193,7 +193,8 @@ void OrbitCameraAroundObject::cockpitView()
   m_orbitCam->moveCameraAsync(-m_orbitCam->cameraDistance(),
                          -m_orbitCam->cameraHeadingOffset(),
                          m_orbitCam->isAutoPitchEnabled() ? 0.0 : (90 - m_orbitCam->cameraPitchOffset()) + planePitch(), 1.0).then(this,
-  [this](bool succeeded){
+  [this](bool succeeded)
+  {
     if (!succeeded)
       return;
 
