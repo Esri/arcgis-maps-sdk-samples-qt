@@ -16,7 +16,7 @@
         "KmlIcon",
         "KmlIconStyle",
         "KmlLineStyle",
-        "KmlNode::saveAs",
+        "KmlNode::saveAsAsync",
         "KmlPlacemark",
         "KmlPolygonStyle",
         "KmlStyle"
@@ -30,7 +30,7 @@
         "KmlIcon",
         "KmlIconStyle",
         "KmlLineStyle",
-        "KmlNode::saveAs",
+        "KmlNode::saveAsAsync",
         "KmlPlacemark",
         "KmlPolygonStyle",
         "KmlStyle"

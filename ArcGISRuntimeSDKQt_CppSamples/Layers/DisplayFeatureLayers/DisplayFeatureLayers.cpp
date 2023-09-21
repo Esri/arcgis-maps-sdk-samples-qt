@@ -34,12 +34,12 @@
 #include "Point.h"
 #include "Portal.h"
 #include "PortalItem.h"
-#include "TaskWatcher.h"
 #include "ServiceFeatureTable.h"
 #include "ShapefileFeatureTable.h"
 #include "SpatialReference.h"
 #include "Viewpoint.h"
 
+#include <QFuture>
 #include <QStandardPaths>
 
 using namespace Esri::ArcGISRuntime;
@@ -114,16 +114,16 @@ void DisplayFeatureLayers::setLayerVisibility(FeatureLayerType featureLayerType)
   switch (featureLayerType) {
     case FeatureLayerType::Geodatabase:
       m_gdbFeatureLayer->setVisible(true);
-      m_mapView->setViewpointGeometry(m_gdbFeatureLayer->fullExtent());
+      m_mapView->setViewpointGeometryAsync(m_gdbFeatureLayer->fullExtent());
       break;
     case FeatureLayerType::Geopackage:
       m_gpkgFeatureLayer->setVisible(true);
-      m_mapView->setViewpointGeometry(m_gpkgFeatureLayer->fullExtent());
+      m_mapView->setViewpointGeometryAsync(m_gpkgFeatureLayer->fullExtent());
       break;
     case FeatureLayerType::PortalItem:
       m_portalItemFeatureLayer->setVisible(true);
       // We can set padding on the viewpoint geometry. A negative value will zoom in.
-      m_mapView->setViewpointGeometry(m_portalItemFeatureLayer->fullExtent(), -10'000);
+      m_mapView->setViewpointGeometryAsync(m_portalItemFeatureLayer->fullExtent(), -10'000);
       break;
     case FeatureLayerType::ServiceFeatureTable:
       m_serviceFeatureTableFeatureLayer->setVisible(true);
@@ -132,7 +132,7 @@ void DisplayFeatureLayers::setLayerVisibility(FeatureLayerType featureLayerType)
       break;
     case FeatureLayerType::Shapefile:
       m_shpFeatureLayer->setVisible(true);
-      m_mapView->setViewpointGeometry(m_shpFeatureLayer->fullExtent());
+      m_mapView->setViewpointGeometryAsync(m_shpFeatureLayer->fullExtent());
       break;
     default:
       break;

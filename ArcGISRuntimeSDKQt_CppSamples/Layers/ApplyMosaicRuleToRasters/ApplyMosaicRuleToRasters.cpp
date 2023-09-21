@@ -27,11 +27,12 @@
 #include "RasterLayer.h"
 #include "Error.h"
 #include "MapTypes.h"
-#include "TaskWatcher.h"
 #include "LayerListModel.h"
 #include "RasterTypes.h"
 #include "Envelope.h"
 #include "Point.h"
+
+#include <QFuture>
 
 using namespace Esri::ArcGISRuntime;
 
@@ -82,7 +83,7 @@ void ApplyMosaicRuleToRasters::setMapView(MapQuickView* mapView)
     {
       m_rasterLoaded = true;
       emit rasterLoadedChanged();
-      m_mapView->setViewpointCenter(m_rasterLayer->fullExtent().center(), 25000.0);
+      m_mapView->setViewpointCenterAsync(m_rasterLayer->fullExtent().center(), 25000.0);
     }
   });
 

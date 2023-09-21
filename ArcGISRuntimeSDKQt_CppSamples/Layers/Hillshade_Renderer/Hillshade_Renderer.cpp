@@ -28,9 +28,9 @@
 #include "HillshadeRenderer.h"
 #include "MapTypes.h"
 #include "MapViewTypes.h"
-#include "TaskWatcher.h"
 #include "RasterTypes.h"
 
+#include <QFuture>
 #include <QUrl>
 #include <QtCore/qglobal.h>
 #include <QStandardPaths>
@@ -89,7 +89,7 @@ void Hillshade_Renderer::componentComplete()
   {
     if (loadStatus == LoadStatus::Loaded)
     {
-      m_mapView->setViewpointScale(754479);
+      m_mapView->setViewpointScaleAsync(754479);
     }
   });
   m_mapView->setMap(map);

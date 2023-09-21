@@ -70,6 +70,7 @@ private:
   bool noGrandchildren(Esri::ArcGISRuntime::KmlNode* node) const;
   void getViewpointFromKmlViewpoint(Esri::ArcGISRuntime::KmlNode* node);
   void getAltitudeAdjustedViewpoint(Esri::ArcGISRuntime::KmlNode* node);
+  void onLocationToElevationCompleted_(double elevation);
 
   Esri::ArcGISRuntime::Scene* m_scene = nullptr;
   Esri::ArcGISRuntime::SceneQuickView* m_sceneView = nullptr;

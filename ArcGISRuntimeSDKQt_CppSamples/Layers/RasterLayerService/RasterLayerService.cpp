@@ -28,11 +28,12 @@
 #include "ImageServiceRaster.h"
 #include "Error.h"
 #include "MapViewTypes.h"
-#include "TaskWatcher.h"
 #include "LayerListModel.h"
 #include "SpatialReference.h"
 #include "Viewpoint.h"
 #include "Point.h"
+
+#include <QFuture>
 
 using namespace Esri::ArcGISRuntime;
 
@@ -73,7 +74,7 @@ void RasterLayerService::componentComplete()
   {
     constexpr double scale = 200000.;
     Viewpoint vpCenter = Viewpoint(Point(-13643095.660131, 4550009.846004, SpatialReference::webMercator()), scale);
-    m_mapView->setViewpoint(vpCenter);
+    m_mapView->setViewpointAsync(vpCenter);
   });
 
   // create a raster layer using the image service raster

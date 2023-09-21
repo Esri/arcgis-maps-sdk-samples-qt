@@ -25,10 +25,10 @@
 #include "MapQuickView.h"
 #include "WmsLayer.h"
 #include "MapTypes.h"
-#include "TaskWatcher.h"
 #include "LayerListModel.h"
 #include "SpatialReference.h"
 
+#include <QFuture>
 #include <QUrl>
 #include <QStringList>
 
@@ -66,5 +66,5 @@ void WmsLayerUrl::componentComplete()
   m_mapView->setMap(m_map);
 
   // start zoomed in over the US
-  m_mapView->setViewpointGeometry(Envelope(-19195297.778679, 512343.939994, -3620418.579987, 8658913.035426, SpatialReference::webMercator()));
+  m_mapView->setViewpointGeometryAsync(Envelope(-19195297.778679, 512343.939994, -3620418.579987, 8658913.035426, SpatialReference::webMercator()));
 }

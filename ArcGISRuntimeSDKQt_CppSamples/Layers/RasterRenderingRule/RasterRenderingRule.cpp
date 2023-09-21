@@ -30,12 +30,12 @@
 #include "Error.h"
 #include "MapTypes.h"
 #include "MapViewTypes.h"
-#include "TaskWatcher.h"
 #include "LayerListModel.h"
 #include "ArcGISImageServiceInfo.h"
 #include "Envelope.h"
 #include "Viewpoint.h"
 
+#include <QFuture>
 #include <QJsonObject>
 #include <QJsonDocument>
 
@@ -75,7 +75,7 @@ void RasterRenderingRule::componentComplete()
   connect(m_imageServiceRaster, &ImageServiceRaster::doneLoading, this, [this]()
   {
     // set the extent of the mapview to the extent defined in the image service raster's service info
-    m_mapView->setViewpoint(Viewpoint(m_imageServiceRaster->serviceInfo().fullExtent()));
+    m_mapView->setViewpointAsync(Viewpoint(m_imageServiceRaster->serviceInfo().fullExtent()));
 
     // get the rendering rule infos
     const QList<RenderingRuleInfo> renderingRuleInfos = m_imageServiceRaster->serviceInfo().renderingRuleInfos();

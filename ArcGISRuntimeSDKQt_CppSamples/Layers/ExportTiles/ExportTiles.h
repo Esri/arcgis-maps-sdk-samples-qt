@@ -17,11 +17,9 @@
 #ifndef EXPORT_TILES
 #define EXPORT_TILES
 
-// C++ API headers
-#include "ExportTileCacheParameters.h"
-
 namespace Esri::ArcGISRuntime
 {
+  class ExportTileCacheParameters;
   class ExportTileCacheTask;
   class Map;
   class MapQuickView;
@@ -53,6 +51,7 @@ private:
   void createExportTileCacheTask();
   void displayOutputTileCache(Esri::ArcGISRuntime::TileCache* tileCache);
   inline int exportTilesProgress() { return m_exportTilesProgress; }
+  void onDefaultExportTileCacheParametersCompleted_(const Esri::ArcGISRuntime::ExportTileCacheParameters& parameters);
 
   Esri::ArcGISRuntime::ExportTileCacheTask* m_exportTileCacheTask = nullptr;
   Esri::ArcGISRuntime::Map* m_map = nullptr;

@@ -27,10 +27,10 @@
 #include "Point.h"
 #include "SpatialReference.h"
 #include "MapTypes.h"
-#include "TaskWatcher.h"
 #include "LayerListModel.h"
 #include "LoadSettings.h"
 
+#include <QFuture>
 #include <QString>
 #include <QStringList>
 #include <QTimer>
@@ -113,8 +113,8 @@ void FeatureLayerRenderingModeMap::animate()
   else
     viewpoint = Viewpoint(m_zoomOutViewpoint);
 
-  m_bottomMapView->setViewpoint(viewpoint, 5.0f);
-  m_topMapView->setViewpoint(viewpoint, 5.0f);
+  m_bottomMapView->setViewpointAsync(viewpoint, 5.0f);
+  m_topMapView->setViewpointAsync(viewpoint, 5.0f);
   m_isZoomedOut = !m_isZoomedOut;
 }
 

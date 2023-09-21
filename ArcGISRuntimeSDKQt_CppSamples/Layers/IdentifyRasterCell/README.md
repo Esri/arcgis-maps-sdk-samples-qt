@@ -16,14 +16,14 @@ Tap on the raster or press on the raster, hold, and move around the raster to id
 
 1. Connect to signals emmited by a `mouseClicked`, `mousePressedAndHeld`, and `mouseMoved` on the `MapView`.
 2. On tapped or pressed, held, and dragged:
-   * Call `identifyLayer(...)` passing in the raster layer, screen point, tolerance, whether to return popups only, and maximum number of results per layer.
+   * Call `identifyLayerAsync(...)` passing in the raster layer, screen point, tolerance, whether to return popups only, and maximum number of results per layer.
    * Connect to the `identifyLayerCompleted` to get the result of the identify and then get the `GeoElement` from the layer result and get any `RasterCell`s from them.
    * Create a callout at the calculated map point and populate the callout content with text from the `RasterCell` attributes.
    * Show the callout.
 
 ## Relevant API
 
-* GeoView::identifyLayer(...)
+* GeoView::identifyLayerAsync(...)
 * IdentifyLayerResult
 * RasterCell
 * RasterCell::attributes

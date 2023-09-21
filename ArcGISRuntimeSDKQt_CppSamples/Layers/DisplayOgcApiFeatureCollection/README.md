@@ -27,7 +27,7 @@ Pan the map and observe how new features are loaded from the OGC API feature ser
 
     iv. Set the `MaxFeatures` property to 5000 (some services have a low default value for maximum features).
 
-    v. Call `OgcFeatureCollectionTable::PopulateFromService()` using the query parameters from the previous steps.
+    v. Call `OgcFeatureCollectionTable::PopulateFromServiceAsync()` using the query parameters from the previous steps.
 
 ## Relevant API
 * OgcFeatureCollectionTable

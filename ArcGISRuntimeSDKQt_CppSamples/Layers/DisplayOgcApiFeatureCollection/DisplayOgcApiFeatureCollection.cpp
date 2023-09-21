@@ -29,12 +29,13 @@
 #include "SimpleRenderer.h"
 #include "MapTypes.h"
 #include "SymbolTypes.h"
-#include "TaskWatcher.h"
 #include "LayerListModel.h"
 #include "CoreTypes.h"
 #include "GeodatabaseTypes.h"
 #include "Viewpoint.h"
 #include "Geometry.h"
+
+#include <QFuture>
 
 using namespace Esri::ArcGISRuntime;
 
@@ -78,7 +79,7 @@ void DisplayOgcApiFeatureCollection::setMapView(MapQuickView* mapView)
 
   m_mapView = mapView;
   m_mapView->setMap(m_map);
-  m_mapView->setViewpoint(Viewpoint(32.62, 36.10, 20'000));
+  m_mapView->setViewpointAsync(Viewpoint(32.62, 36.10, 20'000));
 
   createQueryConnection();
 
@@ -101,6 +102,7 @@ void DisplayOgcApiFeatureCollection::createQueryConnection()
     queryParameters.setMaxFeatures(5000);
 
     // Populate the feature collection table with features that match the parameters, cache them locally, and store all table fields
-    m_ogcFeatureCollectionTable->populateFromService(queryParameters, false, {});
+    auto future = m_ogcFeatureCollectionTable->populateFromServiceAsync(queryParameters, false, {});
+    Q_UNUSED(future)
   });
 }

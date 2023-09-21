@@ -30,7 +30,6 @@
 #include "Error.h"
 #include "MapTypes.h"
 #include "SymbolTypes.h"
-#include "TaskWatcher.h"
 #include "LayerListModel.h"
 #include "GeodatabaseTypes.h"
 #include "CoreTypes.h"
@@ -38,6 +37,8 @@
 #include "Envelope.h"
 #include "Viewpoint.h"
 #include "Polygon.h"
+
+#include <QFuture>
 
 using namespace Esri::ArcGISRuntime;
 
@@ -126,5 +127,6 @@ void DisplayWfsLayer::populateWfsFeatureTable()
   // query the service
   constexpr bool clearCache = false;
   const QStringList outFields = {"*"};
-  m_wfsFeatureTable->populateFromService(params, clearCache, outFields);
+  auto future = m_wfsFeatureTable->populateFromServiceAsync(params, clearCache, outFields);
+  Q_UNUSED(future)
 }

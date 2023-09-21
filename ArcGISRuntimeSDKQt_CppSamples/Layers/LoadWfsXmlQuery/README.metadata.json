@@ -17,7 +17,7 @@
         "FeatureLayer",
         "WfsFeatureTable",
         "WfsFeatureTable::axisOrder",
-        "WfsFeatureTable::populateFromService"
+        "WfsFeatureTable::populateFromServiceAsync"
     ],
     "redirect_from": [
         ""
@@ -26,7 +26,7 @@
         "FeatureLayer",
         "WfsFeatureTable",
         "WfsFeatureTable::axisOrder",
-        "WfsFeatureTable::populateFromService"
+        "WfsFeatureTable::populateFromServiceAsync"
     ],
     "snippets": [
         "LoadWfsXmlQuery.cpp",

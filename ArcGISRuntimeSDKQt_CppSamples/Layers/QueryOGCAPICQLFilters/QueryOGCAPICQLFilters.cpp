@@ -28,7 +28,6 @@
 #include "SimpleRenderer.h"
 #include "MapTypes.h"
 #include "SymbolTypes.h"
-#include "TaskWatcher.h"
 #include "LayerListModel.h"
 #include "GeodatabaseTypes.h"
 #include "QueryParameters.h"
@@ -36,6 +35,7 @@
 #include "Viewpoint.h"
 
 #include <QDateTime>
+#include <QFuture>
 
 using namespace Esri::ArcGISRuntime;
 
@@ -82,7 +82,7 @@ void QueryOGCAPICQLFilters::setMapView(MapQuickView* mapView)
 
   m_mapView = mapView;
   m_mapView->setMap(m_map);
-  m_mapView->setViewpoint(Viewpoint(32.62, 36.10, 200'000));
+  m_mapView->setViewpointAsync(Viewpoint(32.62, 36.10, 200'000));
 
   QueryParameters queryParams;
 
@@ -93,7 +93,8 @@ void QueryOGCAPICQLFilters::setMapView(MapQuickView* mapView)
   queryParams.setMaxFeatures(1000);
 
   // Populate the feature collection table with features that match the parameters, clear the cache, and store all table fields
-  m_ogcFeatureCollectionTable->populateFromService(queryParams, true, {});
+  auto future = m_ogcFeatureCollectionTable->populateFromServiceAsync(queryParams, true, {});
+  Q_UNUSED(future)
 
   emit mapViewChanged();
 }
@@ -120,5 +121,6 @@ void QueryOGCAPICQLFilters::query(const QString& whereClause, const QString& max
   
   // Populate the feature collection table with features that match the parameters,
   // clear the cache to prepare for the new query results, and store all table fields
-  m_ogcFeatureCollectionTable->populateFromService(queryParams, true, {});
+  auto future = m_ogcFeatureCollectionTable->populateFromServiceAsync(queryParams, true, {});
+  Q_UNUSED(future)
 }

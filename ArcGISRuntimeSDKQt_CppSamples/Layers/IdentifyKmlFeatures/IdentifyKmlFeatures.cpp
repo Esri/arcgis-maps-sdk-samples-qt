@@ -26,13 +26,13 @@
 #include "Map.h"
 #include "MapQuickView.h"
 #include "MapTypes.h"
-#include "TaskWatcher.h"
 #include "LayerListModel.h"
 #include "IdentifyLayerResult.h"
 #include "KmlPlacemark.h"
 #include "SpatialReference.h"
 #include "Envelope.h"
 
+#include <QFuture>
 #include <QUuid>
 
 using namespace Esri::ArcGISRuntime;
@@ -76,46 +76,45 @@ void IdentifyKmlFeatures::setMapView(MapQuickView* mapView)
   m_mapView->setMap(m_map);
 
   // start zoomed in over the US
-  m_mapView->setViewpointGeometry(Envelope(-19195297.778679, 512343.939994, -3620418.579987, 8658913.035426, SpatialReference::webMercator()));
-
-  connect(m_mapView, &MapQuickView::identifyLayerCompleted, this, [this](const QUuid&, IdentifyLayerResult* rawResult)
-  {
-    auto result = std::unique_ptr<IdentifyLayerResult>(rawResult);
-
-    // if not clicked on KML feature then close callout
-    if (result->geoElements().length() < 1)
-    {
-      m_mapView->calloutData()->setVisible(false);
-      return;
-    }
-
-    // find the first geoElement that is a KML placemark
-    const auto elements = result->geoElements();
-    for (GeoElement* geoElement : elements)
-    {
-      if (KmlPlacemark* placemark = dynamic_cast<KmlPlacemark*>(geoElement))
-      {
-        // Google Earth only displays the placemarks with description or extended data. To
-        // match its behavior, add a description placeholder if the data source is empty
-        if (placemark->description().isEmpty())
-          placemark->setDescription("Weather condition");
-
-        m_calloutText = placemark->balloonContent();
-        m_mapView->calloutData()->setLocation(m_clickedPoint);
-        m_mapView->calloutData()->setVisible(true);
-
-        emit calloutDataChanged();
-        emit calloutTextChanged();
-        return;
-      }
-    }
-  });
+  m_mapView->setViewpointGeometryAsync(Envelope(-19195297.778679, 512343.939994, -3620418.579987, 8658913.035426, SpatialReference::webMercator()));
 
   // identify clicked features
   connect(m_mapView, &MapQuickView::mouseClicked, this, [this](QMouseEvent& e)
   {
     m_clickedPoint = m_mapView->screenToLocation(e.position().x(), e.position().y());
-    m_mapView->identifyLayer(m_forecastLayer, e.position().x(), e.position().y(), 15, false);
+    m_mapView->identifyLayerAsync(m_forecastLayer, e.position(), 15, false)
+        .then(this, [this](IdentifyLayerResult* rawResult)
+    {
+      auto result = std::unique_ptr<IdentifyLayerResult>(rawResult);
+
+      // if not clicked on KML feature then close callout
+      if (result->geoElements().length() < 1)
+      {
+        m_mapView->calloutData()->setVisible(false);
+        return;
+      }
+
+      // find the first geoElement that is a KML placemark
+      const auto elements = result->geoElements();
+      for (GeoElement* geoElement : elements)
+      {
+        if (KmlPlacemark* placemark = dynamic_cast<KmlPlacemark*>(geoElement))
+        {
+          // Google Earth only displays the placemarks with description or extended data. To
+          // match its behavior, add a description placeholder if the data source is empty
+          if (placemark->description().isEmpty())
+            placemark->setDescription("Weather condition");
+
+          m_calloutText = placemark->balloonContent();
+          m_mapView->calloutData()->setLocation(m_clickedPoint);
+          m_mapView->calloutData()->setVisible(true);
+
+          emit calloutDataChanged();
+          emit calloutTextChanged();
+          return;
+        }
+      }
+    });
   });
 
   emit mapViewChanged();

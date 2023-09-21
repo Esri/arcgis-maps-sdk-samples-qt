@@ -27,7 +27,6 @@
 #include "RasterLayer.h"
 #include "Error.h"
 #include "MapTypes.h"
-#include "TaskWatcher.h"
 #include "LayerListModel.h"
 #include "RasterCell.h"
 #include "IdentifyLayerResult.h"
@@ -35,6 +34,7 @@
 #include "Envelope.h"
 
 #include <memory>
+#include <QFuture>
 #include <QString>
 #include <QUuid>
 #include <QStandardPaths>
@@ -108,50 +108,24 @@ void IdentifyRasterCell::connectSignals()
       return;
     }
 
-    m_mapView->setViewpointGeometry(m_rasterLayer->fullExtent());
-  });
-
-  connect(m_mapView, &MapQuickView::identifyLayerCompleted, this, [this](const QUuid&, IdentifyLayerResult* rawIdentifyResult)
-  {
-    const auto identifyResult = std::unique_ptr<IdentifyLayerResult>(rawIdentifyResult);
-    const auto elements = identifyResult->geoElements();
-    for (GeoElement* geoElement : elements)
-    {
-      if (RasterCell* rasterCell = dynamic_cast<RasterCell*>(geoElement))
-      {
-        QString calloutString;
-        const AttributeListModel* attributes = rasterCell->attributes();
-        const QStringList attributeNames = rasterCell->attributes()->attributeNames();
-
-        for (int i = 0; i < attributeNames.size(); ++i)
-        {
-          const QString value = QVariant((*attributes)[attributeNames[i]]).toString();
-          calloutString.append(attributeNames[i] + ": " + value + "\n");
-        }
-
-        const double xPoint = rasterCell->geometry().extent().xMin();
-        const double yPoint = rasterCell->geometry().extent().yMin();
-
-        calloutString.append("X: " + QString::number(xPoint, 'f', 2) + " Y: " + QString::number(yPoint, 'f', 2));
-
-        m_mapView->calloutData()->setLocation(m_clickedPoint);
-        m_mapView->calloutData()->setDetail(calloutString);
-        m_mapView->calloutData()->setVisible(true);
-        m_calloutData = m_mapView->calloutData();
-        emit calloutDataChanged();
-      }
-    }
+    m_mapView->setViewpointGeometryAsync(m_rasterLayer->fullExtent());
   });
 
   connect(m_mapView, &MapQuickView::mouseClicked, this, [this](const QMouseEvent& e)
   {
-    m_mapView->identifyLayer(m_rasterLayer, e.position().x(), e.position().y(), 10, false, 1);
+    m_mapView->identifyLayerAsync(m_rasterLayer, e.position(), 10, false, 1).then(this, [this](IdentifyLayerResult* rawIdentifyResult)
+    {
+      onIdentifyLayerCompleted_(rawIdentifyResult);
+    });
     m_clickedPoint = m_mapView->screenToLocation(e.position().x(), e.position().y());
   });
 
   connect(m_mapView, &MapQuickView::mousePressedAndHeld, this, [this](const QMouseEvent& e)
   {
-    m_mapView->identifyLayer(m_rasterLayer, e.position().x(), e.position().y(), 10, false, 1);
+    m_mapView->identifyLayerAsync(m_rasterLayer, e.position(), 10, false, 1).then(this, [this](IdentifyLayerResult* rawIdentifyResult)
+    {
+      onIdentifyLayerCompleted_(rawIdentifyResult);
+    });
     m_clickedPoint = m_mapView->screenToLocation(e.position().x(), e.position().y());
     m_mousePressed = true;
   });
@@ -166,10 +140,45 @@ void IdentifyRasterCell::connectSignals()
   {
     if (m_mousePressed)
     {
-      m_mapView->identifyLayer(m_rasterLayer, e.position().x(), e.position().y(), 10, false, 1);
+      m_mapView->identifyLayerAsync(m_rasterLayer, e.position(), 10, false, 1).then(this, [this](IdentifyLayerResult* rawIdentifyResult)
+      {
+        onIdentifyLayerCompleted_(rawIdentifyResult);
+      });
       m_clickedPoint = m_mapView->screenToLocation(e.position().x(), e.position().y());
     }
   });
+}
+
+void IdentifyRasterCell::onIdentifyLayerCompleted_(IdentifyLayerResult* rawIdentifyResult)
+{
+  const auto identifyResult = std::unique_ptr<IdentifyLayerResult>(rawIdentifyResult);
+  const auto elements = identifyResult->geoElements();
+  for (GeoElement* geoElement : elements)
+  {
+    if (RasterCell* rasterCell = dynamic_cast<RasterCell*>(geoElement))
+    {
+      QString calloutString;
+      const AttributeListModel* attributes = rasterCell->attributes();
+      const QStringList attributeNames = rasterCell->attributes()->attributeNames();
+
+      for (int i = 0; i < attributeNames.size(); ++i)
+      {
+        const QString value = QVariant((*attributes)[attributeNames[i]]).toString();
+        calloutString.append(attributeNames[i] + ": " + value + "\n");
+      }
+
+      const double xPoint = rasterCell->geometry().extent().xMin();
+      const double yPoint = rasterCell->geometry().extent().yMin();
+
+      calloutString.append("X: " + QString::number(xPoint, 'f', 2) + " Y: " + QString::number(yPoint, 'f', 2));
+
+      m_mapView->calloutData()->setLocation(m_clickedPoint);
+      m_mapView->calloutData()->setDetail(calloutString);
+      m_mapView->calloutData()->setVisible(true);
+      m_calloutData = m_mapView->calloutData();
+      emit calloutDataChanged();
+    }
+  }
 }
 
 CalloutData* IdentifyRasterCell::calloutData() const

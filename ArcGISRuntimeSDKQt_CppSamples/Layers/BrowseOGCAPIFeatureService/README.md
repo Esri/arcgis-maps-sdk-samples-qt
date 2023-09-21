@@ -16,7 +16,7 @@ Select a layer to display from the drop-down list of layers available from the O
 2. Obtain the `OgcFeatureServiceInfo` from `OgcFeatureService.ServiceInfo`.
 3. Create a list of feature collections from the `OgcFeatureServiceInfo.FeatureCollectionInfos`.
 4. When a feature collection is selected, create an `OgcFeatureCollectionTable` from the `OgcFeatureCollectionInfo`.
-5. Populate the `OgcFeatureCollectionTable` using `PopulateFromService` with `QueryParameters` that contain a `MaxFeatures` property.
+5. Populate the `OgcFeatureCollectionTable` using `PopulateFromServiceAsync` with `QueryParameters` that contain a `MaxFeatures` property.
 6. Create a feature layer from the feature table.
 7. Add the feature layer to the map.
 

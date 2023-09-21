@@ -32,12 +32,13 @@
 #include "MapTypes.h"
 #include "SymbolTypes.h"
 #include "LayerListModel.h"
-#include "TaskWatcher.h"
 #include "UniqueValueListModel.h"
 #include "UniqueValue.h"
 #include "SpatialReference.h"
 #include "Viewpoint.h"
 #include "Point.h"
+
+#include <QFuture>
 
 using namespace Esri::ArcGISRuntime;
 
@@ -85,7 +86,7 @@ void ApplyUniqueValuesWithAlternateSymbols::setMapView(MapQuickView* mapView)
 
   // Set the initial view point upon opening the sample to focus on an area with a lot of features
   Viewpoint vpCenter = Viewpoint(Point(-13631205.660131, 4546829.846004, SpatialReference::webMercator()), 25000);
-  m_mapView->setViewpoint(vpCenter);
+  m_mapView->setViewpointAsync(vpCenter);
 
   queryCurrentScale();
   emit mapViewChanged();
@@ -141,7 +142,7 @@ void ApplyUniqueValuesWithAlternateSymbols::resetViewpoint()
   if(m_mapView)
   {
     Viewpoint vpCenter = Viewpoint(Point(-13631205.660131, 4546829.846004, SpatialReference::webMercator()), 25000);
-    m_mapView->setViewpoint(vpCenter, 5);
+    m_mapView->setViewpointAsync(vpCenter, 5);
   }
 }
 

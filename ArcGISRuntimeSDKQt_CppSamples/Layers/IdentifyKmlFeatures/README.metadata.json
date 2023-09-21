@@ -14,7 +14,7 @@
         "NWS",
         "OGC",
         "weather",
-        "GeoView::identifyLayer(...)",
+        "GeoView::identifyLayerAsync(...)",
         "IdentifyLayerResult",
         "KmlLayer",
         "KmlPlacemark",
@@ -24,7 +24,7 @@
         ""
     ],
     "relevant_apis": [
-        "GeoView::identifyLayer(...)",
+        "GeoView::identifyLayerAsync(...)",
         "IdentifyLayerResult",
         "KmlLayer",
         "KmlPlacemark",

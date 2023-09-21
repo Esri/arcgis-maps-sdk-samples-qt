@@ -18,7 +18,8 @@
 #include "pch.hpp"
 #endif // PCH_BUILD
 
-#include "ExportTiles.h"
+// C++ API headers
+#include "ExportTileCacheParameters.h"
 
 #include "Map.h"
 #include "MapQuickView.h"
@@ -32,7 +33,6 @@
 #include "TileCache.h"
 #include "Error.h"
 #include "MapTypes.h"
-#include "TaskWatcher.h"
 #include "LayerListModel.h"
 #include "ExportTileCacheJob.h"
 #include "TaskTypes.h"
@@ -40,6 +40,7 @@
 #include "Envelope.h"
 #include "Viewpoint.h"
 
+#include <QFuture>
 #include <QUrl>
 #include <QUuid>
 
@@ -113,63 +114,66 @@ void ExportTiles::exportTileCacheFromCorners(double xCorner1, double yCorner1, d
   const Envelope extent(corner1, corner2);
   const Geometry tileCacheExtent = GeometryEngine::project(extent, SpatialReference::webMercator());
 
-  // connect to sync task doneLoading signal
-  connect(m_exportTileCacheTask, &ExportTileCacheTask::defaultExportTileCacheParametersCompleted, this, [this](const QUuid&, const ExportTileCacheParameters& parameters)
-  {
-    //! [ExportTiles start job]
-    // execute the task and obtain the job
-    ExportTileCacheJob* exportJob = m_exportTileCacheTask->exportTileCache(parameters, m_tempPath.path() + "/offlinemap.tpkx");
-
-    // check if there is a valid job
-    if (exportJob)
-    {
-      connect(exportJob, &ExportTileCacheJob::progressChanged, this, [this, exportJob]()
-      {
-        m_exportTilesProgress = exportJob->progress();
-        emit exportTilesProgressChanged();
-      });
-
-      // connect to the job's status changed signal
-      connect(exportJob, &ExportTileCacheJob::statusChanged, this, [this, exportJob](JobStatus jobStatus)
-      {
-        // connect to the job's status changed signal to know once it is done
-        switch (jobStatus) {
-          case JobStatus::Failed:
-            emit updateStatus("Export failed");
-            emit hideWindow(5000, false);
-            break;
-          case JobStatus::NotStarted:
-            emit updateStatus("Job not started");
-            break;
-          case JobStatus::Paused:
-            emit updateStatus("Job paused");
-            break;
-          case JobStatus::Started:
-            emit updateStatus("In progress...");
-            break;
-          case JobStatus::Succeeded:
-            emit updateStatus("Adding TPKX...");
-            emit hideWindow(1500, true);
-            displayOutputTileCache(exportJob->result());
-            break;
-          default:
-            break;
-        }
-      });
-
-      // start the export job
-      exportJob->start();
-    }
-    //! [ExportTiles start job]
-    else
-    {
-      emit updateStatus("Export failed");
-      emit hideWindow(5000, false);
-    }
-  });
-
   // generate parameters
-  m_exportTileCacheTask->createDefaultExportTileCacheParameters(tileCacheExtent, m_mapView->mapScale(), m_mapView->mapScale() * 0.1);
+  m_exportTileCacheTask->createDefaultExportTileCacheParametersAsync(tileCacheExtent, m_mapView->mapScale(), m_mapView->mapScale() * 0.1)
+      .then(this, [this](const ExportTileCacheParameters& parameters)
+      {
+        onDefaultExportTileCacheParametersCompleted_(parameters);
+      });
+}
+
+void ExportTiles::onDefaultExportTileCacheParametersCompleted_(const ExportTileCacheParameters& parameters)
+{
+  //! [ExportTiles start job]
+  // execute the task and obtain the job
+  ExportTileCacheJob* exportJob = m_exportTileCacheTask->exportTileCache(parameters, m_tempPath.path() + "/offlinemap.tpkx");
+
+  // check if there is a valid job
+  if (exportJob)
+  {
+    connect(exportJob, &ExportTileCacheJob::progressChanged, this, [this, exportJob]()
+    {
+      m_exportTilesProgress = exportJob->progress();
+      emit exportTilesProgressChanged();
+    });
+
+    // connect to the job's status changed signal
+    connect(exportJob, &ExportTileCacheJob::statusChanged, this, [this, exportJob](JobStatus jobStatus)
+    {
+      // connect to the job's status changed signal to know once it is done
+      switch (jobStatus) {
+        case JobStatus::Failed:
+          emit updateStatus("Export failed");
+          emit hideWindow(5000, false);
+          break;
+        case JobStatus::NotStarted:
+          emit updateStatus("Job not started");
+          break;
+        case JobStatus::Paused:
+          emit updateStatus("Job paused");
+          break;
+        case JobStatus::Started:
+          emit updateStatus("In progress...");
+          break;
+        case JobStatus::Succeeded:
+          emit updateStatus("Adding TPKX...");
+          emit hideWindow(1500, true);
+          displayOutputTileCache(exportJob->result());
+          break;
+        default:
+          break;
+      }
+    });
+
+    // start the export job
+    exportJob->start();
+  }
+  //! [ExportTiles start job]
+  else
+  {
+    emit updateStatus("Export failed");
+    emit hideWindow(5000, false);
+  }
 }
 
 // display the tile cache once the task is complete
@@ -192,7 +196,7 @@ void ExportTiles::displayOutputTileCache(TileCache* tileCache)
       const double prevMapScale = m_mapView->mapScale();
       m_map->setMinScale(prevMapScale);
       m_map->setMaxScale(prevMapScale * 0.1);
-      m_mapView->setViewpointScale(prevMapScale * 0.5);
+      m_mapView->setViewpointScaleAsync(prevMapScale * 0.5);
     }
   });
 }
