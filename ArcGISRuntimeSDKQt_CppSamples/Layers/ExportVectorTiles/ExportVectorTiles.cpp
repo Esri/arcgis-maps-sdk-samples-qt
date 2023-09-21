@@ -149,7 +149,7 @@ void ExportVectorTiles::startExport(double xSW, double ySW, double xNE, double y
 
     connect(m_exportJob, &Job::statusChanged, this, [this](JobStatus s)
     {
-      m_jobStatus = (int)s;
+      m_jobStatus = static_cast<int>(s);
       emit jobStatusChanged();
     });
     m_exportJob->start();
