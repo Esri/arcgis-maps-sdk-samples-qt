@@ -17,9 +17,6 @@
 #ifndef GETELEVATIONATPOINT_H
 #define GETELEVATIONATPOINT_H
 
-// C++ API headers
-#include "TaskWatcher.h"
-
 // Qt headers
 #include <QObject>
 
