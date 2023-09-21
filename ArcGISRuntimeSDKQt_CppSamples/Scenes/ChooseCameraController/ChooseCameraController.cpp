@@ -28,7 +28,6 @@
 #include "Scene.h"
 #include "SceneQuickView.h"
 #include "MapTypes.h"
-#include "TaskWatcher.h"
 #include "GraphicsOverlayListModel.h"
 #include "GraphicListModel.h"
 #include "Camera.h"
@@ -41,6 +40,7 @@
 #include "Point.h"
 #include "Graphic.h"
 
+#include <QFuture>
 #include <QtCore/qglobal.h>
 #include <QStandardPaths>
 
@@ -141,7 +141,7 @@ void ChooseCameraController::setSceneView(SceneQuickView* sceneView)
   }
 
   m_sceneView = sceneView;
-  m_sceneView->setViewpointCamera(Camera(latitude, longitude, distance, 0.0, 0.0, 0.0));
+  m_sceneView->setViewpointCameraAsync(Camera(latitude, longitude, distance, 0.0, 0.0, 0.0));
   m_sceneView->setArcGISScene(m_scene);
   m_sceneView->graphicsOverlays()->append(m_overlay);
 

@@ -42,7 +42,6 @@
 #include "MissionData.h"
 #include "MapTypes.h"
 #include "SymbolTypes.h"
-#include "TaskWatcher.h"
 #include "GraphicsOverlayListModel.h"
 #include "GraphicListModel.h"
 #include "Surface.h"
@@ -55,6 +54,7 @@
 #include "SimpleLineSymbol.h"
 
 #include <QFileInfo>
+#include <QFuture>
 #include <QStringListModel>
 #include <QtCore/qglobal.h>
 #include <QStandardPaths>
@@ -325,22 +325,20 @@ void Animate3DSymbols::setFollowing(bool following)
 
 void Animate3DSymbols::zoomMapIn()
 {
-  if (!m_mapView ||
-      !m_routeGraphic)
+  if (!m_mapView || !m_routeGraphic)
     return;
 
-  // zoom the map view in, focusing on the position of the 2d graphic for the helicopter
-  m_mapView->setViewpoint(Viewpoint((Point)m_routeGraphic->geometry(), m_mapView->mapScale() / m_mapZoomFactor));
+  // zoom the map view in, focusing on the position of the 2d graphic for the airplane
+  m_mapView->setViewpointAsync(Viewpoint((Point)m_routeGraphic->geometry(), m_mapView->mapScale() / m_mapZoomFactor));
 }
 
 void Animate3DSymbols::zoomMapOut()
 {
-  if (!m_mapView ||
-      !m_routeGraphic)
+  if (!m_mapView || !m_routeGraphic)
     return;
 
-  // zoom the map view out, focusing on the position of the 2d graphic for the helicopter
-  m_mapView->setViewpoint(Viewpoint((Point)m_routeGraphic->geometry(), m_mapView->mapScale() * m_mapZoomFactor));
+  // zoom the map view out, focusing on the position of the 2d graphic for the airplane
+  m_mapView->setViewpointAsync(Viewpoint((Point)m_routeGraphic->geometry(), m_mapView->mapScale() * m_mapZoomFactor));
 }
 
 void Animate3DSymbols::viewWidthChanged(bool sceneViewIsWider)

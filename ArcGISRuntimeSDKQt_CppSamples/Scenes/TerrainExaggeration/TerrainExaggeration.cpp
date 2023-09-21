@@ -26,10 +26,11 @@
 #include "Point.h"
 #include "SceneQuickView.h"
 #include "MapTypes.h"
-#include "TaskWatcher.h"
 #include "Surface.h"
 #include "ElevationSourceListModel.h"
 #include "SpatialReference.h"
+
+#include <QFuture>
 
 using namespace Esri::ArcGISRuntime;
 
@@ -63,7 +64,7 @@ void TerrainExaggeration::componentComplete()
   const Camera initialViewpointCamera(initialPoint, 0, 7, 70, 0);
 
   // Set the initial ViewpointCamera for the scene
-  m_sceneView->setViewpointCamera(initialViewpointCamera);
+  m_sceneView->setViewpointCameraAsync(initialViewpointCamera);
 
   // Initialize the sceneview by applying the surface
   scene->setBaseSurface(m_surface);
