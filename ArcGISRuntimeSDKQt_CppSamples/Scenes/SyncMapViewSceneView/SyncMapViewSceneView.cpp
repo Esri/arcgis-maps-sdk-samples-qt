@@ -68,7 +68,6 @@ void SyncMapViewSceneView::setSceneView(SceneQuickView* sceneView)
   {
     if (m_mapView && m_sceneView->isNavigating())
       m_mapView->setViewpoint(m_sceneView->currentViewpoint(ViewpointType::CenterAndScale), 0);
-
   });
 
   emit sceneViewChanged();
@@ -96,9 +95,7 @@ void SyncMapViewSceneView::setMapView(MapQuickView* mapView)
   {
     if (m_sceneView && m_mapView->isNavigating())
       m_sceneView->setViewpoint(m_mapView->currentViewpoint(ViewpointType::CenterAndScale), 0);
-
-  },
-  Qt::UniqueConnection); // lambda-unique-connection: Finds usages of Qt::UniqueConnection when the slot is a functor, lambda or non-member function. That connect() overload does not support Qt::UniqueConnection.
+  }); // lambda-unique-connection: Finds usages of Qt::UniqueConnection when the slot is a functor, lambda or non-member function. That connect() overload does not support Qt::UniqueConnection.
 
   emit mapViewChanged();
 }
