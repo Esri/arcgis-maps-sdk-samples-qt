@@ -31,10 +31,11 @@
 #include "Envelope.h"
 #include "Error.h"
 #include "MapTypes.h"
-#include "TaskWatcher.h"
 #include "LayerListModel.h"
 #include "Surface.h"
 #include "ElevationSourceListModel.h"
+
+#include <QFuture>
 
 using namespace Esri::ArcGISRuntime;
 
@@ -115,7 +116,7 @@ void GroupLayers::setSceneView(SceneQuickView* sceneView)
                                     "ymin":45.531539857343745
                                     })");
   // zoom to viewpoint
-  m_sceneView->setViewpoint(Viewpoint(env.extent()));
+  m_sceneView->setViewpointAsync(Viewpoint(env.extent()));
 
   emit sceneViewChanged();
 }

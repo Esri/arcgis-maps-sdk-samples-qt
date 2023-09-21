@@ -36,12 +36,13 @@
 #include "KmlStyle.h"
 #include "Error.h"
 #include "MapTypes.h"
-#include "TaskWatcher.h"
 #include "LayerListModel.h"
 #include "KmlGeometry.h"
 #include "SpatialReference.h"
 #include "Viewpoint.h"
 #include "Envelope.h"
+
+#include <QFuture>
 
 using namespace Esri::ArcGISRuntime;
 
@@ -67,13 +68,6 @@ CreateAndSaveKmlFile::CreateAndSaveKmlFile(QObject* parent /* = nullptr */):
     m_kmlDataset = new KmlDataset(m_kmlDocument, this);
     m_kmlLayer = new KmlLayer(m_kmlDataset, this);
     addGraphics();
-  });
-
-  connect(m_kmlDocument, &KmlDocument::saveAsCompleted, this, [this]()
-  {
-    m_busy = false;
-    emit busyChanged();
-    emit kmlSaveCompleted();
   });
 
   connect(m_kmlDocument, &KmlDocument::errorOccurred, this, [](const Error& e)
@@ -223,5 +217,10 @@ void CreateAndSaveKmlFile::saveKml()
   emit busyChanged();
 
   // Write the KML document to the chosen path.
-  m_kmlDocument->saveAs(m_kmlFilePath);
+  m_kmlDocument->saveAsAsync(m_kmlFilePath).then(this, [this]()
+  {
+    m_busy = false;
+    emit busyChanged();
+    emit kmlSaveCompleted();
+  });
 }

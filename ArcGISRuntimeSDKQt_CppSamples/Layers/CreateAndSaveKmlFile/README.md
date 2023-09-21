@@ -20,13 +20,13 @@ Application opens to a view of the Southwestern United States. Click on the "Sav
 4. Create a `KmlPlacemark` for each kml geometry.
 5. Set a `KmlStyle` for each placemark.
 6. Add all three kml placemarks to the `KmlDocument`.
-7. Save the kml document to a file using the `saveAs` function.
+7. Save the kml document to a file using the `saveAsAsync` function.
 
 ## Relevant API
 
 * KmlDocument
 * KmlGeometry
-* KmlNode::saveAs
+* KmlNode::saveAsAsync
 * KmlPlacemark
 * KmlStyle
 * KmlIconStyle

@@ -31,11 +31,11 @@
 #include "GeometryEngine.h"
 #include "Error.h"
 #include "MapTypes.h"
-#include "TaskWatcher.h"
 #include "LayerListModel.h"
 #include "Viewpoint.h"
 
 #include <QtCore/qglobal.h>
+#include <QFuture>
 #include <QStandardPaths>
 
 using namespace Esri::ArcGISRuntime;
@@ -121,7 +121,7 @@ void AddEncExchangeSet::setMapView(MapQuickView* mapView)
 
         // combine the extents
         Envelope fullExtent = GeometryEngine::combineExtents(m_extents);
-        m_mapView->setViewpoint(Viewpoint{fullExtent});
+        m_mapView->setViewpointAsync(Viewpoint{fullExtent});
       });
 
       // add the layer to the map

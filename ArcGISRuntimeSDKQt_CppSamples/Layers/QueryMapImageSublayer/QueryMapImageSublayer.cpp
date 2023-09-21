@@ -37,7 +37,6 @@
 #include "GraphicsOverlayListModel.h"
 #include "GraphicListModel.h"
 #include "SymbolTypes.h"
-#include "TaskWatcher.h"
 #include "LayerListModel.h"
 #include "ArcGISSublayerListModel.h"
 #include "FeatureQueryResult.h"
@@ -49,6 +48,7 @@
 #include "ServiceFeatureTable.h"
 #include "Envelope.h"
 
+#include <QFuture>
 #include <QUuid>
 
 using namespace Esri::ArcGISRuntime;
@@ -99,46 +99,23 @@ void QueryMapImageSublayer::componentComplete()
 
 void QueryMapImageSublayer::connectSignals()
 {
-  connect(m_usaImageLayer, &ArcGISMapImageLayer::loadTablesAndLayersCompleted, this, [this](const QUuid&)
-  {
-    ArcGISSublayerListModel* sublayers = m_usaImageLayer->mapImageSublayers();
-    if (sublayers->size() < 4)
-      return;
-
-    // get the sublayer's tables
-    m_citiesTable = dynamic_cast<ArcGISMapImageSublayer*>(sublayers->at(0))->table();
-    m_statesTable = dynamic_cast<ArcGISMapImageSublayer*>(sublayers->at(2))->table();
-    m_countiesTable = dynamic_cast<ArcGISMapImageSublayer*>(sublayers->at(3))->table();
-
-    // connect to city sublayer query signal
-    connect(m_citiesTable, &ServiceFeatureTable::queryFeaturesCompleted, this, [this](const QUuid&, FeatureQueryResult* result)
-    {
-      addResultsAsGraphics(result, m_citySymbol);
-      delete result;
-    });
-
-    // connect to county sublayer query signal
-    connect(m_countiesTable, &ServiceFeatureTable::queryFeaturesCompleted, this, [this](const QUuid&, FeatureQueryResult* result)
-    {
-      addResultsAsGraphics(result, m_countySymbol);
-      delete result;
-    });
-
-    // connect to states sublayer query signal
-    connect(m_statesTable, &ServiceFeatureTable::queryFeaturesCompleted, this, [this](const QUuid&, FeatureQueryResult* result)
-    {
-      addResultsAsGraphics(result, m_stateSymbol);
-      delete result;
-    });
-  });
-
   connect(m_usaImageLayer, &ArcGISMapImageLayer::doneLoading, this, [this](const Error& e)
   {
     if (!e.isEmpty())
       return;
 
     // load the sublayers and tables of the map image layer
-    m_usaImageLayer->loadTablesAndLayers();
+    m_usaImageLayer->loadTablesAndLayersAsync().then(this, [this]()
+    {
+      ArcGISSublayerListModel* sublayers = m_usaImageLayer->mapImageSublayers();
+      if (sublayers->size() < 4)
+        return;
+
+      // get the sublayer's tables
+      m_citiesTable = dynamic_cast<ArcGISMapImageSublayer*>(sublayers->at(0))->table();
+      m_statesTable = dynamic_cast<ArcGISMapImageSublayer*>(sublayers->at(2))->table();
+      m_countiesTable = dynamic_cast<ArcGISMapImageSublayer*>(sublayers->at(3))->table();
+    });
   });
 }
 
@@ -193,7 +170,19 @@ void QueryMapImageSublayer::query(const QString& whereClause)
   queryParams.setWhereClause(whereClause);
 
   // query the feature tables
-  m_citiesTable->queryFeatures(queryParams);
-  m_countiesTable->queryFeatures(queryParams);
-  m_statesTable->queryFeatures(queryParams);
+  m_citiesTable->queryFeaturesAsync(queryParams).then(this, [this](FeatureQueryResult* result)
+  {
+    addResultsAsGraphics(result, m_citySymbol);
+    delete result;
+  });
+  m_countiesTable->queryFeaturesAsync(queryParams).then(this, [this](FeatureQueryResult* result)
+  {
+    addResultsAsGraphics(result, m_countySymbol);
+    delete result;
+  });
+  m_statesTable->queryFeaturesAsync(queryParams).then(this, [this](FeatureQueryResult* result)
+  {
+    addResultsAsGraphics(result, m_stateSymbol);
+    delete result;
+  });
 }

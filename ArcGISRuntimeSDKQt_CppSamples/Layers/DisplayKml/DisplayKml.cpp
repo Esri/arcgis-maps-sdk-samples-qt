@@ -30,12 +30,12 @@
 #include "KmlDataset.h"
 #include "PortalItem.h"
 #include "MapTypes.h"
-#include "TaskWatcher.h"
 #include "LayerListModel.h"
 #include "Surface.h"
 #include "ElevationSourceListModel.h"
 #include "Point.h"
 
+#include <QFuture>
 #include <QtCore/qglobal.h>
 #include <QStandardPaths>
 
@@ -147,7 +147,7 @@ void DisplayKml::addLayerToScene(KmlLayer* layer)
   if (m_viewpoint.isEmpty())
     return;
 
-  m_sceneView->setViewpoint(m_viewpoint);
+  m_sceneView->setViewpointAsync(m_viewpoint);
 }
 
 void DisplayKml::clearLayers()

@@ -28,11 +28,11 @@
 #include "Error.h"
 #include "MapTypes.h"
 #include "MapViewTypes.h"
-#include "TaskWatcher.h"
 #include "LayerListModel.h"
 #include "Envelope.h"
 #include "Point.h"
 
+#include <QFuture>
 #include <QUrl>
 #include <QtCore/qglobal.h>
 #include <QStandardPaths>
@@ -103,7 +103,7 @@ void RasterLayerFile::createAndAddRasterLayer(QString dataPath)
     if (!loadError.isEmpty())
       return;
 
-    m_mapView->setViewpointCenter(rasterLayer->fullExtent().center(), 80000);
+    m_mapView->setViewpointCenterAsync(rasterLayer->fullExtent().center(), 80000);
   });
 
   m_map->operationalLayers()->clear();

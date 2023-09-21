@@ -34,13 +34,14 @@
 #include "Error.h"
 #include "MapTypes.h"
 #include "SymbolTypes.h"
-#include "TaskWatcher.h"
 #include "LayerListModel.h"
 #include "GeodatabaseTypes.h"
 #include "CoreTypes.h"
 #include "FeatureQueryResult.h"
 #include "Polygon.h"
 #include "Envelope.h"
+
+#include <QFuture>
 
 using namespace Esri::ArcGISRuntime;
 
@@ -146,12 +147,11 @@ void BrowseWfsLayers::populateWfsFeatureTable()
   // query the service
   constexpr bool clearCache = false;
   const QStringList outFields {"*"};
-  connect(m_wfsFeatureTable, &WfsFeatureTable::populateFromServiceCompleted, this, [this]()
+  m_wfsFeatureTable->populateFromServiceAsync(params, clearCache, outFields).then(this, [this](const FeatureQueryResult*)
   {
     addFeatureLayerToMap();
-    m_mapView->setViewpointGeometry(m_wfsFeatureTable->extent());
+    m_mapView->setViewpointGeometryAsync(m_wfsFeatureTable->extent());
   });
-  m_wfsFeatureTable->populateFromService(params, clearCache, outFields);
 }
 
 void BrowseWfsLayers::addFeatureLayerToMap()

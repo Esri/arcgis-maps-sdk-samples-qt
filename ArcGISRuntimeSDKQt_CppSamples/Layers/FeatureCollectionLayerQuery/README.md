@@ -14,7 +14,7 @@ When launched, this sample displays a map with point features as a feature colle
 
 ## How it works
 
-1. Perform a query using the `queryFeatures()` method on a `ServiceFeatureTable`.
+1. Perform a query using the `queryFeaturesAsync()` method on a `ServiceFeatureTable`.
 2. Instantiate a `FeatureCollectionTable` with the result of the query.
 3. Create a `FeatureCollection` and add the feature collection table to it.
 4. Create a `FeatureCollectionLayer` from the feature collection.

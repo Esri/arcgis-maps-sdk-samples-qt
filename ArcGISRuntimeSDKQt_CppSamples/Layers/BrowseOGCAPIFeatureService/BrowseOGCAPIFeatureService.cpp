@@ -29,12 +29,12 @@
 #include "OgcFeatureServiceInfo.h"
 #include "Error.h"
 #include "MapTypes.h"
-#include "TaskWatcher.h"
 #include "LayerListModel.h"
 #include "QueryParameters.h"
 #include "GeodatabaseTypes.h"
 #include "Envelope.h"
 
+#include <QFuture>
 #include <QQmlEngine>
 
 using namespace Esri::ArcGISRuntime;
@@ -191,7 +191,8 @@ void BrowseOGCAPIFeatureService::loadFeatureCollection(int selectedFeature)
   // Populate the OGC feature collection table
   QueryParameters queryParameters;
   queryParameters.setMaxFeatures(1000);
-  m_featureCollectionTable->populateFromService(queryParameters, false, QStringList{ /* empty */ });
+  auto future = m_featureCollectionTable->populateFromServiceAsync(queryParameters, false, QStringList{ /* empty */ });
+  Q_UNUSED(future)
 
   // Create new Feature Layer from selected collection
   m_featureLayer = new FeatureLayer(m_featureCollectionTable, this);
@@ -226,7 +227,7 @@ void BrowseOGCAPIFeatureService::clearExistingFeatureLayer()
 void BrowseOGCAPIFeatureService::addFeatureLayerToMap()
 {
   // Adjust the viewpoint to match the extent of the layer
-  m_mapView->setViewpointGeometry(m_featureLayer->fullExtent());
+  m_mapView->setViewpointGeometryAsync(m_featureLayer->fullExtent());
 
   // Clear any existing layers and add current layer to map
   m_map->operationalLayers()->clear();

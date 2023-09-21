@@ -19,7 +19,7 @@
         "FeatureLayer",
         "MapView::navigatingChanged",
         "WfsFeatureTable",
-        "WfsFeatureTable::populateFromService"
+        "WfsFeatureTable::populateFromServiceAsync"
     ],
     "redirect_from": [
         ""
@@ -28,7 +28,7 @@
         "FeatureLayer",
         "MapView::navigatingChanged",
         "WfsFeatureTable",
-        "WfsFeatureTable::populateFromService"
+        "WfsFeatureTable::populateFromServiceAsync"
     ],
     "snippets": [
         "DisplayWfsLayer.cpp",

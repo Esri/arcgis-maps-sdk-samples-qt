@@ -25,12 +25,13 @@
 #include "Scene.h"
 #include "SceneQuickView.h"
 #include "MapTypes.h"
-#include "TaskWatcher.h"
 #include "LayerListModel.h"
 #include "KmlNetworkLink.h"
 #include "SpatialReference.h"
 #include "Point.h"
 #include "Viewpoint.h"
+
+#include <QFuture>
 
 using namespace Esri::ArcGISRuntime;
 
@@ -81,7 +82,7 @@ void DisplayKmlNetworkLinks::componentComplete()
   scene->operationalLayers()->append(fileLayer);
 
   // Take a look at continental Europe, where we'll see most of the data.
-  m_sceneView->setViewpoint(Viewpoint { Point { 8.150526, 50.472421, SpatialReference::wgs84() }, 20000000 } );
+  m_sceneView->setViewpointAsync(Viewpoint { Point { 8.150526, 50.472421, SpatialReference::wgs84() }, 20000000 } );
   m_sceneView->setArcGISScene(scene);
 }
 

@@ -29,9 +29,9 @@
 #include "SpatialReference.h"
 #include "Camera.h"
 #include "MapTypes.h"
-#include "TaskWatcher.h"
 #include "LayerListModel.h"
 
+#include <QFuture>
 #include <QString>
 #include <QStringList>
 #include <QTimer>
@@ -119,8 +119,8 @@ void FeatureLayerRenderingModeScene::animate()
   else
     camera = Camera(m_zoomOutCamera);
 
-  m_bottomSceneView->setViewpointCamera(camera, 5.0f);
-  m_topSceneView->setViewpointCamera(camera, 5.0f);
+  m_bottomSceneView->setViewpointCameraAsync(camera, 5.0f);
+  m_topSceneView->setViewpointCameraAsync(camera, 5.0f);
   m_isZoomedOut = !m_isZoomedOut;
 }
 

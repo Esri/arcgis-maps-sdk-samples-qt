@@ -40,11 +40,12 @@
 #include "SimpleRenderer.h"
 #include "SpatialReference.h"
 #include "SymbolTypes.h"
-#include "TaskWatcher.h"
 #include "TrackDisplayProperties.h"
 #include "UniqueValue.h"
 #include "UniqueValueRenderer.h"
 #include "Viewpoint.h"
+
+#include <QFuture>
 
 using namespace Esri::ArcGISRuntime;
 
@@ -184,14 +185,20 @@ void AddDynamicEntityLayer::enableDisableConnection()
   switch (m_dynamicEntityDataSource->connectionStatus())
   {
     case ConnectionStatus::Disconnected:
-      m_dynamicEntityDataSource->connectDataSource();
+    {
+      auto future = m_dynamicEntityDataSource->connectDataSourceAsync();
+      Q_UNUSED(future)
       break;
+    }
     case ConnectionStatus::Connecting:
       // Do nothing and allow data source to finish connecting
       break;
     case ConnectionStatus::Connected:
-      m_dynamicEntityDataSource->disconnectDataSource();
+    {
+      auto future = m_dynamicEntityDataSource->disconnectDataSourceAsync();
+      Q_UNUSED(future)
       break;
+    }
     case ConnectionStatus::Failed:
       qWarning() << "Unable to connect to dynamic entity data source";
       break;
@@ -203,5 +210,6 @@ void AddDynamicEntityLayer::enableDisableConnection()
 void AddDynamicEntityLayer::purgeAllObservations()
 {
   // Remove all current observations from the cache
-  m_dynamicEntityDataSource->purgeAll();
+  auto future = m_dynamicEntityDataSource->purgeAllAsync();
+  Q_UNUSED(future)
 }
