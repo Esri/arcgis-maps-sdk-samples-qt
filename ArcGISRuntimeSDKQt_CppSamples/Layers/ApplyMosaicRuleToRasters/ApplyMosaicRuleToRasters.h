@@ -58,7 +58,7 @@ private:
   Esri::ArcGISRuntime::MapQuickView* m_mapView = nullptr;
   Esri::ArcGISRuntime::ImageServiceRaster* m_imageServiceRaster = nullptr;
   Esri::ArcGISRuntime::RasterLayer* m_rasterLayer = nullptr;
-  Esri::ArcGISRuntime::MosaicRule* m_mosaicRule = nullptr;
+  std::unique_ptr<Esri::ArcGISRuntime::MosaicRule> m_mosaicRule;
   bool m_rasterLoaded = false;
 
 };
