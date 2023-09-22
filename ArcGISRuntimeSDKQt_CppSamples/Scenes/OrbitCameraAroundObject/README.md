@@ -46,7 +46,7 @@ Use the "Cockpit view" button to offset and fix the camera into the cockpit of t
  * `orbitCameraController::setTargetOffsetZ(double)`
 6. Set the vertical screen factor to determine where the plane appears in the scene:
  * `orbitCameraController::setTargetVerticalScreenFactor(float)`
-7. Animate the camera to the cockpit using `orbitCameraController::setTargetOffsets(x, y, z, duration)`
+7. Animate the camera to the cockpit using `orbitCameraController::setTargetOffsetsAsync(x, y, z, duration)`
 8. Set if the camera distance will adjust when zooming or panning using mouse or keyboard (default is true):
  * `orbitCameraController::setCameraDistanceInteractive(boolean)`
 9. Set if the camera will follow the pitch of the plane (default is true):

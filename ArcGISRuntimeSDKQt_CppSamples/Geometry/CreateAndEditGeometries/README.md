@@ -25,7 +25,7 @@ Use the control panel to undo or redo changes made to the geometry, delete a sel
 1. Create a `GeometryEditor` and set it to the MapView using `MapView::setGeometryEditor(GeometryEditor)`.
 2. Start the `GeometryEditor` using `GeometryEditor::start(GeometryType)` to create a new geometry or `GeometryEditor::start(Geometry)` to edit an existing geometry.
     - If using the Geometry Editor to edit an existing geometry, the geometry must be retrieved from the graphics overlay being used to visualize the geometry prior to calling the start method. To do this:
-        - Use `MapView::identifyGraphicsOverlay(...)` to identify graphics at the location of a tap.
+        - Use `MapView::identifyGraphicsOverlayAsync(...)` to identify graphics at the location of a tap.
         - Get the `IdentifyGraphicsOverlayResult` via the `MapQuickView::IdentifyGraphicsOverLayCompleted` slot
         - Find the desired graphic in the `IdentifyGraphicsOverlayResult::graphics()` list.
         - Access the geometry associated with the `Graphic` using `Graphic::geometry()` - this will be used in the `GeometryEditor::start(Geometry)` method.
