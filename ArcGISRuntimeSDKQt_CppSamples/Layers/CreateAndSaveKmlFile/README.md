@@ -26,13 +26,13 @@ Application opens to a view of the Southwestern United States. Click on the "Sav
 
 * KmlDocument
 * KmlGeometry
-* KmlNode::saveAsAsync
-* KmlPlacemark
-* KmlStyle
+* KmlIcon
 * KmlIconStyle
 * KmlLineStyle
+* KmlNode::saveAsAsync
+* KmlPlacemark
 * KmlPolygonStyle
-* KmlIcon
+* KmlStyle
 
 ## Tags
 
