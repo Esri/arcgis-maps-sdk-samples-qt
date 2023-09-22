@@ -82,14 +82,9 @@ BuildLegend::BuildLegend(QWidget* parent /* = nullptr */):
 
   m_ui->mapView->setMap(m_map);
 
-  connect(m_map->legendInfos(), &LegendInfoListModel::fetchLegendInfosCompleted,
-          this, [this]()
-  {
-    // set the legend info list model
-    RoleProxyModel* roleModel = new RoleProxyModel(this);
-    roleModel->setSourceModel(m_map->legendInfos());
-    m_ui->legendView->setModel(roleModel);
-  });
+  RoleProxyModel* roleModel = new RoleProxyModel(this);
+  roleModel->setSourceModel(m_map->legendInfos());
+  m_ui->legendView->setModel(roleModel);
 
   addLayers();
 }

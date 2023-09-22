@@ -71,12 +71,9 @@ void BuildLegend::componentComplete()
 
   addLayers();
 
-  connect(m_map->legendInfos(), &LegendInfoListModel::fetchLegendInfosCompleted, this, [this]()
-  {
-    // set the legend info list model
-    m_legendInfoListModel = m_map->legendInfos();
-    emit legendInfoListModelChanged();
-  });
+  // set the legend info list model
+  m_legendInfoListModel = m_map->legendInfos();
+  emit legendInfoListModelChanged();
 }
 
 void BuildLegend::addLayers()
