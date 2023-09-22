@@ -111,16 +111,16 @@ void BrowseOGCAPIFeatureService::loadFeatureService(const QUrl& url)
   clearExistingFeatureService();
 
   // Instantiate new OGCFeatureService object using url
-  m_featureService = std::make_unique<OgcFeatureService>(url, this);
+  m_featureService = new OgcFeatureService(url, this);
 
   // Retrieve collection info when feature service has loaded
-  connect(m_featureService.get(), &OgcFeatureService::doneLoading, this, &BrowseOGCAPIFeatureService::retrieveCollectionInfos);
+  connect(m_featureService, &OgcFeatureService::doneLoading, this, &BrowseOGCAPIFeatureService::retrieveCollectionInfos);
 
   // Connect errorOccurred to handleError()
-  connect(m_featureService.get(), &OgcFeatureService::errorOccurred, this, &BrowseOGCAPIFeatureService::handleError);
+  connect(m_featureService, &OgcFeatureService::errorOccurred, this, &BrowseOGCAPIFeatureService::handleError);
 
   // Connect to loadingChanged() to enable and disable UI buttons
-  connect(m_featureService.get(), &OgcFeatureService::loadStatusChanged, this, &BrowseOGCAPIFeatureService::serviceOrFeatureLoadingChanged);
+  connect(m_featureService, &OgcFeatureService::loadStatusChanged, this, &BrowseOGCAPIFeatureService::serviceOrFeatureLoadingChanged);
 
   m_featureService->load();
 }
@@ -130,11 +130,13 @@ void BrowseOGCAPIFeatureService::clearExistingFeatureService()
   m_collectionInfo.clear();
   if (m_serviceInfo != nullptr)
   {
-    m_serviceInfo.release();
+    delete m_serviceInfo;
+    m_serviceInfo = nullptr;
   }
   if (m_featureService != nullptr)
   {
-    m_featureService.release();
+    delete m_featureService;
+    m_featureService = nullptr;
   }
 
   m_featureCollectionList.clear();
@@ -144,7 +146,7 @@ void BrowseOGCAPIFeatureService::clearExistingFeatureService()
 void BrowseOGCAPIFeatureService::retrieveCollectionInfos()
 {
   // Assign OGC service metadata to m_serviceInfo property
-  m_serviceInfo = std::unique_ptr<OgcFeatureServiceInfo>(m_featureService->serviceInfo());
+  m_serviceInfo = m_featureService->serviceInfo();
 
   // Assign information from each feature collection to the m_collectionInfo property
   m_collectionInfo = m_serviceInfo->featureCollectionInfos();
@@ -180,7 +182,7 @@ void BrowseOGCAPIFeatureService::loadFeatureCollection(int selectedFeature)
   OgcFeatureCollectionInfo* info = m_collectionInfo[selectedFeature];
 
   // Assign the CollectedInfo to the m_featureCollectionTable property
-  m_featureCollectionTable = std::make_unique<OgcFeatureCollectionTable>(info, this);
+  m_featureCollectionTable = new OgcFeatureCollectionTable(info, this);
 
   // Set the feature request mode to manual (only manual is currently supported)
   // In this mode you must manually populate the table - panning and zooming won't request features automatically
@@ -193,16 +195,16 @@ void BrowseOGCAPIFeatureService::loadFeatureCollection(int selectedFeature)
   Q_UNUSED(future)
 
   // Create new Feature Layer from selected collection
-  m_featureLayer = std::make_unique<FeatureLayer>(m_featureCollectionTable.get(), this);
+  m_featureLayer = new FeatureLayer(m_featureCollectionTable, this);
 
   // Add feature layer to operational layers when it has finished loading
-  connect(m_featureLayer.get(), &FeatureLayer::doneLoading, this, &BrowseOGCAPIFeatureService::addFeatureLayerToMap);
+  connect(m_featureLayer, &FeatureLayer::doneLoading, this, &BrowseOGCAPIFeatureService::addFeatureLayerToMap);
 
   // Connect errorOccurred to handleError()
-  connect(m_featureLayer.get(), &FeatureLayer::errorOccurred, this, &BrowseOGCAPIFeatureService::handleError);
+  connect(m_featureLayer, &FeatureLayer::errorOccurred, this, &BrowseOGCAPIFeatureService::handleError);
 
   // Connect to loadingChanged() to enable and disable UI buttons
-  connect(m_featureLayer.get(), &FeatureLayer::loadStatusChanged, this, &BrowseOGCAPIFeatureService::serviceOrFeatureLoadingChanged);
+  connect(m_featureLayer, &FeatureLayer::loadStatusChanged, this, &BrowseOGCAPIFeatureService::serviceOrFeatureLoadingChanged);
 
   m_featureLayer->load();
 }
@@ -211,12 +213,14 @@ void BrowseOGCAPIFeatureService::clearExistingFeatureLayer()
 {
   if (m_featureCollectionTable != nullptr)
   {
-    m_featureCollectionTable.release();
+    delete m_featureCollectionTable;
+    m_featureCollectionTable = nullptr;
   }
 
   if (m_featureLayer != nullptr)
   {
-    m_featureLayer.release();
+    delete m_featureLayer;
+    m_featureLayer = nullptr;
   }
 }
 
@@ -227,7 +231,7 @@ void BrowseOGCAPIFeatureService::addFeatureLayerToMap()
 
   // Clear any existing layers and add current layer to map
   m_map->operationalLayers()->clear();
-  m_map->operationalLayers()->append(m_featureLayer.get());
+  m_map->operationalLayers()->append(m_featureLayer);
 }
 
 bool BrowseOGCAPIFeatureService::serviceOrFeatureLoading() const

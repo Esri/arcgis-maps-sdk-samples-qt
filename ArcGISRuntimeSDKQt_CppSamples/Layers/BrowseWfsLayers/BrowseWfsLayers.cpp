@@ -147,10 +147,8 @@ void BrowseWfsLayers::populateWfsFeatureTable()
   // query the service
   constexpr bool clearCache = false;
   const QStringList outFields {"*"};
-  m_wfsFeatureTable->populateFromServiceAsync(params, clearCache, outFields).then(this, [this](FeatureQueryResult* queryResult)
+  m_wfsFeatureTable->populateFromServiceAsync(params, clearCache, outFields).then(this, [this](const FeatureQueryResult*)
   {
-    // Delete result when finished.
-    auto result = std::unique_ptr<FeatureQueryResult>(queryResult);
     addFeatureLayerToMap();
     m_mapView->setViewpointGeometryAsync(m_wfsFeatureTable->extent());
   });
