@@ -29,7 +29,6 @@
 #include "Error.h"
 #include "MapTypes.h"
 #include "MapViewTypes.h"
-#include "TaskWatcher.h"
 #include "LayerListModel.h"
 #include "RasterFunctionArguments.h"
 #include "ArcGISImageServiceInfo.h"
@@ -39,6 +38,7 @@
 
 #include <QtCore/qglobal.h>
 #include <QFile>
+#include <QFuture>
 #include <QStandardPaths>
 
 using namespace Esri::ArcGISRuntime;
@@ -93,7 +93,7 @@ void RasterFunctionService::componentComplete()
   {
     constexpr double scale = 50000000.;
     Viewpoint vpCenter = Viewpoint(m_imageServiceRaster->serviceInfo().fullExtent().center(), scale);
-    m_mapView->setViewpoint(vpCenter);
+    m_mapView->setViewpointAsync(vpCenter);
   });
 
   // create a raster layer using the image service raster

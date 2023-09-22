@@ -18,7 +18,6 @@
 #define QUERYOGCAPICQLFILTERS_H
 
 #include "Envelope.h"
-#include "TaskWatcher.h"
 
 namespace Esri::ArcGISRuntime
 {

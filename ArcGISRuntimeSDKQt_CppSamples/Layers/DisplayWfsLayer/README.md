@@ -17,14 +17,14 @@ Pan and zoom to see features within the current map extent.
 1. Create a `WfsFeatureTable` with a URL and table name.
 2. Create a `FeatureLayer` from the feature table and add it to the map.
 3. Listen for the `MapView::navigatingChanged` signal to detect when the user has stopped navigating the map.
-4. When the user is finished navigating, use `populateFromService` to load the table with data for the current visible extent.
+4. When the user is finished navigating, use `populateFromServiceAsync` to load the table with data for the current visible extent.
 
 ## Relevant API
 
 * FeatureLayer
 * MapView::navigatingChanged
 * WfsFeatureTable
-* WfsFeatureTable::populateFromService
+* WfsFeatureTable::populateFromServiceAsync
 
 ## About the data
 

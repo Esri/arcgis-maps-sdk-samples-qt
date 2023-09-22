@@ -27,12 +27,12 @@
 #include "MapQuickView.h"
 #include "ServiceFeatureTable.h"
 #include "MapTypes.h"
-#include "TaskWatcher.h"
 #include "LayerListModel.h"
 #include "QueryParameters.h"
 #include "FeatureCollectionTable.h"
 #include "FeatureQueryResult.h"
 
+#include <QFuture>
 #include <QString>
 #include <QUuid>
 
@@ -86,7 +86,7 @@ void FeatureCollectionLayerQuery::componentComplete()
   // 1=1 will give all the features from the table
   queryParams.setWhereClause("1=1");
 
-  connect(m_featureTable, &ServiceFeatureTable::queryFeaturesCompleted, this, [this](const QUuid&, FeatureQueryResult* featureQueryResult)
+  m_featureTable->queryFeaturesAsync(queryParams).then(this, [this](FeatureQueryResult* featureQueryResult)
   {
     setBusy(false);
 
@@ -105,7 +105,5 @@ void FeatureCollectionLayerQuery::componentComplete()
     //add the layer to the operational layers array
     m_map->operationalLayers()->append(featureCollectionLayer);
   });
-
-  m_featureTable->queryFeatures(queryParams);
   setBusy(true);
 }

@@ -27,9 +27,10 @@
 #include "WmsSublayer.h"
 #include "WmsLayerInfo.h"
 #include "Error.h"
-#include "TaskWatcher.h"
 #include "LayerListModel.h"
 #include "Envelope.h"
+
+#include <QFuture>
 
 using namespace Esri::ArcGISRuntime;
 
@@ -67,7 +68,7 @@ void StyleWmsLayer::componentComplete()
       return;
 
     // zoom to the layer
-    m_mapView->setViewpointGeometry(wmsLayer->fullExtent());
+    m_mapView->setViewpointGeometryAsync(wmsLayer->fullExtent());
 
     // get the subLayer
     if (!wmsLayer->sublayers().empty())

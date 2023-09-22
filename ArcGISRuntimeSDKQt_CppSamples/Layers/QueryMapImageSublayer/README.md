@@ -18,15 +18,15 @@ Specify a minimum population in the input field (values under 1810000 will produ
 2. After loading the layer, get the sublayer you want to query with `(ArcGISMapImageSublayer) layer::subLayers()::at(index)`.
 3. Load the sublayer, and then get its `ServiceFeatureTable` with `sublayer::table()`.
 4. Create `QueryParameters`. You can use `queryParameters::setWhereClause(sqlQueryString)` to query against a table attribute and/or set `queryParameters::setGeometry(extent)` to limit the results to an area of the map.
-5. Call `sublayerTable::queryFeatures(queryParameters)` to get a `FeatureQueryResult` with features matching the query. The result is an iterable of features.
+5. Call `sublayerTable::queryFeaturesAsync(queryParameters)` to get a `FeatureQueryResult` with features matching the query. The result is an iterable of features.
 ## Relevant API
 
-- ServiceFeatureTable
-- ArcGISMapImageLayer
-- ArcGISMapImageLayer::loadTablesAndLayers
-- ArcGISMapImageSublayer
-- ArcGISMapImageSublayer::table
-- QueryParameters
+* ArcGISMapImageLayer
+* ArcGISMapImageLayer::loadTablesAndLayersAsync
+* ArcGISMapImageSublayer
+* ArcGISMapImageSublayer::table
+* QueryParameters
+* ServiceFeatureTable
 
 ## About the data
 
@@ -35,7 +35,7 @@ Since the `cities`, `counties`, and `states` tables all have a `POP2000` field, 
 
 ## Additional information
 
-An `ArcGISMapImageSublayer` must be loaded before accessing its metadata or table. Use `ArcGISMapImageLayer::loadTablesAndLayers` to recursively load all sublayers and tables associated with a map image layer. Some sublayers do not have an associated table (group layers, for example) and some may not support specific types of queries. Consult the map service metadata for details.
+An `ArcGISMapImageSublayer` must be loaded before accessing its metadata or table. Use `ArcGISMapImageLayer::loadTablesAndLayersAsync` to recursively load all sublayers and tables associated with a map image layer. Some sublayers do not have an associated table (group layers, for example) and some may not support specific types of queries. Consult the map service metadata for details.
 
 ## Tags
-Query, Sublayer, MapServer, Table
+MapServer, Query, Sublayer, Table

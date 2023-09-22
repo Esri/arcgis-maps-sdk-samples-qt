@@ -24,6 +24,7 @@
 namespace Esri::ArcGISRuntime
 {
 class CalloutData;
+class IdentifyLayerResult;
 class Map;
 class MapQuickView;
 class RasterLayer;
@@ -54,6 +55,7 @@ private:
   void setMapView(Esri::ArcGISRuntime::MapQuickView* mapView);
   Esri::ArcGISRuntime::CalloutData* calloutData() const;
   void connectSignals();
+  void onIdentifyLayerCompleted_(Esri::ArcGISRuntime::IdentifyLayerResult* rawIdentifyResult);
 
   Esri::ArcGISRuntime::Map* m_map = nullptr;
   Esri::ArcGISRuntime::MapQuickView* m_mapView = nullptr;
