@@ -21,12 +21,12 @@ Specify a minimum population in the input field (values under 1810000 will produ
 5. Call `sublayerTable::queryFeaturesAsync(queryParameters)` to get a `FeatureQueryResult` with features matching the query. The result is an iterable of features.
 ## Relevant API
 
-- ServiceFeatureTable
-- ArcGISMapImageLayer
-- ArcGISMapImageLayer::loadTablesAndLayersAsync
-- ArcGISMapImageSublayer
-- ArcGISMapImageSublayer::table
-- QueryParameters
+* ServiceFeatureTable
+* ArcGISMapImageLayer
+* ArcGISMapImageLayer::loadTablesAndLayersAsync
+* ArcGISMapImageSublayer
+* ArcGISMapImageSublayer::table
+* QueryParameters
 
 ## About the data
 
