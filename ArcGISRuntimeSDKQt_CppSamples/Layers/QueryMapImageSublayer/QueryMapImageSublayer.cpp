@@ -156,11 +156,12 @@ void QueryMapImageSublayer::query(const QString& whereClause)
     return;
 
   // clear & delete previous graphics
-  GraphicListModel* graphics = m_selectionOverlay->graphics();
+  auto graphics(std::unique_ptr<GraphicListModel>(m_selectionOverlay->graphics()));
   const int graphicSize = graphics->size();
   for (int i = 0; i < graphicSize; i++)
   {
-    delete graphics->at(i);
+    // Delete graphicsPtr when out of scope.
+    auto graphicsPtr(std::make_unique<Graphic>(graphics->at(i)));
   }
   graphics->clear();
 
@@ -172,17 +173,20 @@ void QueryMapImageSublayer::query(const QString& whereClause)
   // query the feature tables
   m_citiesTable->queryFeaturesAsync(queryParams).then(this, [this](FeatureQueryResult* result)
   {
-    addResultsAsGraphics(result, m_citySymbol);
-    delete result;
+    // Delete queryPtr when finished.
+    auto queryPtr = std::unique_ptr<FeatureQueryResult>(result);
+    addResultsAsGraphics(queryPtr.get(), m_citySymbol);
   });
   m_countiesTable->queryFeaturesAsync(queryParams).then(this, [this](FeatureQueryResult* result)
   {
-    addResultsAsGraphics(result, m_countySymbol);
-    delete result;
+    // Delete queryPtr when finished.
+    auto queryPtr = std::unique_ptr<FeatureQueryResult>(result);
+    addResultsAsGraphics(queryPtr.get(), m_countySymbol);
   });
   m_statesTable->queryFeaturesAsync(queryParams).then(this, [this](FeatureQueryResult* result)
   {
-    addResultsAsGraphics(result, m_stateSymbol);
-    delete result;
+    // Delete queryPtr when finished.
+    auto queryPtr = std::unique_ptr<FeatureQueryResult>(result);
+    addResultsAsGraphics(queryPtr.get(), m_stateSymbol);
   });
 }

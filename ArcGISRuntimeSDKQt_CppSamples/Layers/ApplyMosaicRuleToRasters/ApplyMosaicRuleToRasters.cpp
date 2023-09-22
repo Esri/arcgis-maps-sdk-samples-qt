@@ -71,7 +71,7 @@ void ApplyMosaicRuleToRasters::setMapView(MapQuickView* mapView)
 
   // Set Mosaic Rule if none exists on the image service raster
   if (!m_imageServiceRaster->mosaicRule())
-    m_imageServiceRaster->setMosaicRule(m_mosaicRule);
+    m_imageServiceRaster->setMosaicRule(m_mosaicRule.get());
 
   // Create a raster layer form the image service raster
   m_rasterLayer = new RasterLayer(m_imageServiceRaster, this);
@@ -121,12 +121,13 @@ void ApplyMosaicRuleToRasters::applyRasterRule(const QString& ruleString)
     m_mosaicRule->setMosaicMethod(MosaicMethod::LockRaster);
     m_mosaicRule->setLockRasterIds(QList<qint64>{1,7,12});
   }
-  m_imageServiceRaster->setMosaicRule(m_mosaicRule);
+  m_imageServiceRaster->setMosaicRule(m_mosaicRule.get());
 }
 
 // Helper function to reset the mosaic rule
 void ApplyMosaicRuleToRasters::resetMosaicRule()
 {
-  delete m_mosaicRule;
-  m_mosaicRule = new MosaicRule(this);
+  if (m_mosaicRule)
+    m_mosaicRule.release();
+  m_mosaicRule = std::make_unique<MosaicRule>(this);
 }

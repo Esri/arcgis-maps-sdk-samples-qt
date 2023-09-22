@@ -99,10 +99,10 @@ void DisplayKml::createFromUrl()
   clearLayers();
 
   // Create the Dataset from an Online URL
-  m_kmlDataset = new KmlDataset(QUrl("https://www.wpc.ncep.noaa.gov/kml/noaa_chart/WPC_Day1_SigWx.kml"), this);
+  m_kmlDataset = std::make_unique<KmlDataset>(QUrl("https://www.wpc.ncep.noaa.gov/kml/noaa_chart/WPC_Day1_SigWx.kml"), this);
 
   // Create the Layer
-  m_kmlLayer = new KmlLayer(m_kmlDataset, this);
+  m_kmlLayer = std::make_unique<KmlLayer>(m_kmlDataset.get(), this);
 
   // Add the layer to the scene
   addLayerToScene(m_kmlLayer);
@@ -114,10 +114,10 @@ void DisplayKml::createFromFile()
 
   // Create the Dataset from a local file
   const QString dataPath = defaultDataPath() + "/ArcGIS/Runtime/Data/kml/";
-  m_kmlDataset = new KmlDataset(QUrl(dataPath + "US_State_Capitals.kml"), this);
+  m_kmlDataset = std::make_unique<KmlDataset>(QUrl(dataPath + "US_State_Capitals.kml"), this);
 
   // Create the Layer
-  m_kmlLayer = new KmlLayer(m_kmlDataset, this);
+  m_kmlLayer = std::make_unique<KmlLayer>(m_kmlDataset.get(), this);
 
   // Add the layer to the scene
   addLayerToScene(m_kmlLayer);
@@ -128,21 +128,21 @@ void DisplayKml::createFromPortalItem()
   clearLayers();
 
   // Create the PortalItem
-  m_portalItem = new PortalItem(QStringLiteral("9fe0b1bfdcd64c83bd77ea0452c76253"), this);
+  m_portalItem = std::make_unique<PortalItem>(QStringLiteral("9fe0b1bfdcd64c83bd77ea0452c76253"), this);
 
   // Create the Layer
-  m_kmlLayer = new KmlLayer(m_portalItem, this);
+  m_kmlLayer = std::make_unique<KmlLayer>(m_portalItem.get(), this);
 
   // Add the layer to the scene
   addLayerToScene(m_kmlLayer);
 }
 
-void DisplayKml::addLayerToScene(KmlLayer* layer)
+void DisplayKml::addLayerToScene(std::unique_ptr<KmlLayer>& layer)
 {
   if (!m_scene)
     return;
 
-  m_scene->operationalLayers()->append(layer);
+  m_scene->operationalLayers()->append(layer.get());
 
   if (m_viewpoint.isEmpty())
     return;
@@ -161,21 +161,18 @@ void DisplayKml::clearLayers()
   // clean up the kml datasets
   if (m_kmlDataset)
   {
-    delete m_kmlDataset;
-    m_kmlDataset = nullptr;
+    m_kmlDataset.release();
   }
 
   // clean up the portal items
   if (m_portalItem)
   {
-    delete m_portalItem;
-    m_portalItem = nullptr;
+    m_portalItem.release();
   }
 
   // clean up the kml layers
   if (m_kmlLayer)
   {
-    delete m_kmlLayer;
-    m_kmlLayer = nullptr;
+    m_kmlLayer.release();
   }
 }
