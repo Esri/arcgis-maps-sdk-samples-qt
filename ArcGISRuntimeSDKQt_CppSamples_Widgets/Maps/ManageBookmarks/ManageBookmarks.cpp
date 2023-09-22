@@ -21,12 +21,12 @@
 #include "Bookmark.h"
 #include "MapTypes.h"
 #include "Envelope.h"
-#include "TaskWatcher.h"
 #include "SpatialReference.h"
 #include "BookmarkListModel.h"
 
 #include <QVBoxLayout>
 #include <QComboBox>
+#include <QFuture>
 #include <QPushButton>
 #include <QInputDialog>
 #include <QGraphicsProxyWidget>
@@ -65,7 +65,7 @@ ManageBookmarks::ManageBookmarks(QWidget* parent) :
     // Connect the combo box signal to lambda for switching between bookmarks
     connect(m_bookmarkCombo, QOverload<const QString&>::of(&QComboBox::currentTextChanged), [this](const QString& name) {
         // Use the map of bookmarks created to obtain the viewpoint of a given name
-        m_mapView->setViewpoint(m_bookmarks.value(name));
+        m_mapView->setViewpointAsync(m_bookmarks.value(name));
     });
 
     // Connect the button clicked signal to lambda for showing input dialog
