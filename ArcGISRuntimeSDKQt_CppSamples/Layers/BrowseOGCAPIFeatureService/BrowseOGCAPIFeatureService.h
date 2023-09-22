@@ -80,12 +80,12 @@ private:
   Esri::ArcGISRuntime::MapQuickView* m_mapView = nullptr;
   QString m_errorMessage = "";
   QUrl m_featureServiceUrl;
-  std::unique_ptr<Esri::ArcGISRuntime::OgcFeatureService> m_featureService;
-  std::unique_ptr<Esri::ArcGISRuntime::OgcFeatureServiceInfo> m_serviceInfo;
+  Esri::ArcGISRuntime::OgcFeatureService* m_featureService = nullptr;
+  Esri::ArcGISRuntime::OgcFeatureServiceInfo* m_serviceInfo = nullptr;
   QList<Esri::ArcGISRuntime::OgcFeatureCollectionInfo*> m_collectionInfo;
   QStringList m_featureCollectionList;
-  std::unique_ptr<Esri::ArcGISRuntime::OgcFeatureCollectionTable> m_featureCollectionTable;
-  std::unique_ptr<Esri::ArcGISRuntime::FeatureLayer> m_featureLayer;
+  Esri::ArcGISRuntime::OgcFeatureCollectionTable* m_featureCollectionTable = nullptr;
+  Esri::ArcGISRuntime::FeatureLayer* m_featureLayer = nullptr;
 };
 
 #endif // BROWSEOGCAPIFEATURESERVICE_H

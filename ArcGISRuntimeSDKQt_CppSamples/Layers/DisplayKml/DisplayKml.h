@@ -48,11 +48,11 @@ private:
   Esri::ArcGISRuntime::SceneQuickView* m_sceneView = nullptr;
   Esri::ArcGISRuntime::Scene* m_scene = nullptr;
   Esri::ArcGISRuntime::Viewpoint m_viewpoint;
-  std::unique_ptr<Esri::ArcGISRuntime::KmlDataset> m_kmlDataset;
-  std::unique_ptr<Esri::ArcGISRuntime::KmlLayer> m_kmlLayer;
-  std::unique_ptr<Esri::ArcGISRuntime::PortalItem> m_portalItem;
+  Esri::ArcGISRuntime::KmlDataset* m_kmlDataset = nullptr;
+  Esri::ArcGISRuntime::KmlLayer* m_kmlLayer = nullptr;
+  Esri::ArcGISRuntime::PortalItem* m_portalItem = nullptr;
 
-  void addLayerToScene(std::unique_ptr<Esri::ArcGISRuntime::KmlLayer>& layer);
+  void addLayerToScene(Esri::ArcGISRuntime::KmlLayer* layer);
   void clearLayers();
 };
 
