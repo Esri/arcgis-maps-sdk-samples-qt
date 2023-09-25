@@ -16,7 +16,7 @@ Click on a building in the scene layer to select it. Deselect buildings by click
 
 1. Create an `ArcGISSceneLayer` passing in the URL to a scene layer service.
 2. Use `SceneView::mouseClicked` signal to get the screen tap location `screenPoint`.
-3. Call `SceneView::identifyLayer` to identify features in the scene that intersect the tapped screen point.
+3. Call `SceneView::identifyLayerAsync` to identify features in the scene that intersect the tapped screen point.
 4. From the resulting `IdentifyLayerResult`, a list of identified `GeoElements` are obtained.
 5. Get the first element in the list, checking that it is a feature, and call `ArcGISSceneLayer::selectFeature(feature)` to select it.
 
