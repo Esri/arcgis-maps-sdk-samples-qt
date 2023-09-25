@@ -21,11 +21,11 @@
 #include "SpatialReference.h"
 #include "Envelope.h"
 #include "Point.h"
-#include "TaskWatcher.h"
 #include "Viewpoint.h"
 #include "MapViewTypes.h"
 
 #include <QComboBox>
+#include <QFuture>
 #include <QVBoxLayout>
 #include <QGraphicsProxyWidget>
 
@@ -91,29 +91,29 @@ void ChangeViewpoint::changeToNewViewpoint(int index)
     {
     // Call setViewpoint and pass in the appropriate viewpoint
     case 0: // "Center"
-        m_mapView->setViewpointCenter(ptEsriHeadquarters);
+        m_mapView->setViewpointCenterAsync(ptEsriHeadquarters);
         break;
     case 1: // "Center and scale"
-        m_mapView->setViewpointCenter(ptHawaii, 4000000.0);
+        m_mapView->setViewpointCenterAsync(ptHawaii, 4000000.0);
         break;
     case 2: // "Geometry"
-        m_mapView->setViewpointGeometry(envBeijing);
+        m_mapView->setViewpointGeometryAsync(envBeijing);
         break;
     case 3: // "Geometry and padding"
-        m_mapView->setViewpointGeometry(envBeijing, 200 * screenRatio());
+        m_mapView->setViewpointGeometryAsync(envBeijing, 200 * screenRatio());
         break;
     case 4: // "Rotation"
         m_rotationValue = (m_rotationValue + 45) % 360;
-        m_mapView->setViewpointRotation(m_rotationValue);
+        m_mapView->setViewpointRotationAsync(m_rotationValue);
         break;
     case 5: // "Scale: 1:5,000,000"
-        m_mapView->setViewpointScale(5000000.0);
+        m_mapView->setViewpointScaleAsync(5000000.0);
         break;
     case 6: // "Scale: 1:10,000,000"
-        m_mapView->setViewpointScale(10000000.0);
+        m_mapView->setViewpointScaleAsync(10000000.0);
         break;
     case 7: // "Scale: 1:5,000,000"
-        m_mapView->setViewpointAnimated(vpSpring, 4.0, AnimationCurve::EaseInOutCubic);
+        m_mapView->setViewpointAsync(vpSpring, 4.0, AnimationCurve::EaseInOutCubic);
         break;
     }
 }

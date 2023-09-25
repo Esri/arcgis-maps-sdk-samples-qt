@@ -18,7 +18,8 @@
 #include "Map.h"
 #include "MapGraphicsView.h"
 #include "MapTypes.h"
-#include "TaskWatcher.h"
+
+#include <QFuture>
 #include <QSlider>
 #include <QLabel>
 #include <QVBoxLayout>
@@ -46,7 +47,7 @@ MapRotation::MapRotation(QWidget* parent) :
     m_degrees = new QLabel("  0", this);
     connect(m_slider, &QSlider::valueChanged, [this](int value){
               m_degrees->setText(QString::number(value));
-              m_mapView->setViewpointRotation(value);
+              m_mapView->setViewpointRotationAsync(value);
             });
 
     // Set up the UI
