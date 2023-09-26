@@ -20,6 +20,7 @@
 
 #include "CreateAndSaveMap.h"
 
+#include "ErrorException.h"
 #include "Map.h"
 #include "MapQuickView.h"
 #include "Basemap.h"
@@ -30,6 +31,7 @@
 #include "Error.h"
 #include "Item.h"
 
+#include <QFuture>
 #include <QUuid>
 
 using namespace Esri::ArcGISRuntime;
@@ -96,25 +98,6 @@ void CreateAndSaveMap::createMap(const QString& basemap, const QStringList& oper
     }
   }
 
-  // Handle Map save complete signal
-  connect(m_map, &Map::saveAsCompleted, this, [this](const QUuid&, bool success)
-  {
-    if (!success)
-      return;
-
-    const QString itemId = m_map->item()->itemId();
-    emit saveMapCompleted(success, itemId);
-  });
-
-  // Handle Map error signal
-  connect(m_map, &Map::errorOccurred, this, [this](const Error& e)
-  {
-    if (e.isEmpty())
-      return;
-
-    emit saveMapCompleted(false, "", QString("%1 %2").arg(e.message(), e.additionalMessage()));
-  });
-
   // Set the Map on the MapView
   m_mapView->setMap(m_map);
 }
@@ -143,5 +126,12 @@ void CreateAndSaveMap::saveMap(const QString& title, const QString& tags, const 
   const QByteArray thumbnail;
 
   // save the map
-  m_map->saveAs(m_portal, title, tagsList, forceSave, folder, description, thumbnail);
+  m_map->saveAsAsync(m_portal, title, tagsList, forceSave, folder, description, thumbnail)
+  .then([this]() {
+    const QString itemId = m_map->item()->itemId();
+    emit saveMapCompleted(true, itemId);
+  })
+  .onFailed([this](ErrorException e) {
+    emit saveMapCompleted(false, "", QString("%1 %2").arg(e.error().message(), e.error().additionalMessage()));
+  });
 }
