@@ -126,12 +126,15 @@ void CreateAndSaveMap::saveMap(const QString& title, const QString& tags, const 
   const QByteArray thumbnail;
 
   // save the map
-  m_map->saveAsAsync(m_portal, title, tagsList, forceSave, folder, description, thumbnail)
-  .then([this]() {
+  m_map->saveAsAsync(m_portal, title, tagsList, forceSave, folder, description, thumbnail).then(
+  [this]()
+  {
     const QString itemId = m_map->item()->itemId();
     emit saveMapCompleted(true, itemId);
   })
-  .onFailed([this](ErrorException e) {
+  .onFailed(
+  [this](ErrorException e)
+  {
     emit saveMapCompleted(false, "", QString("%1 %2").arg(e.error().message(), e.error().additionalMessage()));
   });
 }
