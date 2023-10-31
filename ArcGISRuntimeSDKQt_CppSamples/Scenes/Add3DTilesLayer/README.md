@@ -28,7 +28,6 @@ Update the target location with `LineOfSight::setTargetLocation(scenePoint)`.
 
 ## Relevant API
 
-* Ogc3dTilesLayer
 * AnalysisOverlay
 * LocationLineOfSight
 * SceneView
@@ -43,5 +42,5 @@ Link | Local Location
 
 ## Tags
 
-3D Tiles, Ogc3dTilesLayer, scnene, line of sight analysis
+3D Tiles, line of sight analysis, Ogc3dTilesLayer, scnene
 
