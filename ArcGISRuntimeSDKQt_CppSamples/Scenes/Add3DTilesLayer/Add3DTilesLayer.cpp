@@ -118,12 +118,12 @@ void Add3DTilesLayer::setSceneView(SceneQuickView* sceneView)
 
 void Add3DTilesLayer::initialize() {
 
-  // Add an Analysis Overlay
+  // add an Analysis Overlay
   m_analysisOverlay = new AnalysisOverlay(this);
   m_sceneView->analysisOverlays()->append(m_analysisOverlay);
   // set initial viewpoint
   setInitialViewpoint();
-  //  // create LocationLineOfSight
+  // create LocationLineOfSight
   createLineOfSight();
   // connect signals
   connectSignals();
