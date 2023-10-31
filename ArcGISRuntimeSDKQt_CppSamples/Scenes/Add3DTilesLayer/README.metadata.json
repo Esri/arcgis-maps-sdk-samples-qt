@@ -1,0 +1,36 @@
+{
+    "category": "Scenes",
+    "dataItems": [
+        {
+            "itemId": "",
+            "path": "~/ArcGIS/Runtime/Data/3D/Stuttgart.3tz"
+        }
+    ],
+    "description": "Add a layer to visualize 3D tiles data that conforms to the OGC 3D Tiles specification.",
+    "featured": false,
+    "ignore": false,
+    "images": [
+        "screenshot.png"
+    ],
+    "keywords": [
+        "3D Tiles",
+        "Ogc3dTilesLayer",
+        "scnene",
+        "line of sight analysis"
+    ],
+    "redirect_from": [
+        ""
+    ],
+    "relevant_apis": [
+        "Ogc3dTilesLayer",
+        "AnalysisOverlay",
+        "LocationLineOfSight",
+        "SceneView"
+    ],
+    "snippets": [
+        "Add3DTilesLayer.cpp",
+        "Add3DTilesLayer.h",
+        "Add3DTilesLayer.qml"
+    ],
+    "title": "Display a 3D Tiles Layer"
+}
