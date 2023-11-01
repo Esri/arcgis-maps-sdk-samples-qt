@@ -42,5 +42,5 @@ Link | Local Location
 
 ## Tags
 
-3D Tiles, line of sight analysis, Ogc3dTilesLayer, scnene
+3D Tiles, line of sight analysis, Ogc3dTilesLayer, scene
 

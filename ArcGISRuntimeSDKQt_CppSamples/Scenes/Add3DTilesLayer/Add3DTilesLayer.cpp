@@ -39,7 +39,6 @@
 #include "Camera.h"
 #include "TransformationCatalog.h"
 
-
 #include <MapView.h>
 #include <QString>
 #include <QFuture>
@@ -76,15 +75,15 @@ Add3DTilesLayer::Add3DTilesLayer(QObject* parent /* = nullptr */):
   ArcGISTiledElevationSource* elevationSource = new ArcGISTiledElevationSource(
         QUrl("https://elevation3d.arcgis.com/arcgis/rest/services/WorldElevation3D/Terrain3D/ImageServer"), this);
   // add projection
-  TransformationCatalog::setProjectionEngineDirectory(DATAPATH+"pedata");
+  TransformationCatalog::setProjectionEngineDirectory(DATAPATH + "pedata");
   if (TransformationCatalog::projectionEngineDirectory().isEmpty())
-    logErrorText("Projection Engine Directory not found at: "+DATAPATH+"pedata");
+    logErrorText("Projection Engine Directory not found at: " + DATAPATH + "pedata");
 
   // add the elevation source to the scene to display elevation
   m_scene->baseSurface()->elevationSources()->append(elevationSource);
+
   // add 3d layers
   add3DTilesLayer();
-
 }
 
 Add3DTilesLayer::~Add3DTilesLayer() = default;
@@ -127,12 +126,11 @@ void Add3DTilesLayer::initialize() {
   createLineOfSight();
   // connect signals
   connectSignals();
-
 }
 
 void Add3DTilesLayer::logErrorText(const QString &errorMessage)
 {
-  const QString errorNumber = QVariant(m_errorTextList.size()+1).toString();
+  const QString errorNumber = QVariant(m_errorTextList.size() + 1).toString();
   m_errorTextList.push_front(errorNumber + ": " + errorMessage);
   emit errorTextListChanged();
 }
@@ -144,7 +142,6 @@ void Add3DTilesLayer::add3DTilesLayer() {
 
   m_ogc3dTilesLayer = new Ogc3dTilesLayer(modelPath, this);
   m_scene->operationalLayers()->append(m_ogc3dTilesLayer);
-
 }
 
 void Add3DTilesLayer::createLineOfSight() {
@@ -161,8 +158,6 @@ void Add3DTilesLayer::createLineOfSight() {
   LineOfSight::setVisibleColor(QColor("cyan"));
   LineOfSight::setObstructedColor(QColor("red"));
   LineOfSight::setLineWidth(2.0f);
-
-
 }
 
 void Add3DTilesLayer::setInitialViewpoint()
@@ -177,9 +172,6 @@ void Add3DTilesLayer::setInitialViewpoint()
   constexpr double roll = 0.0;
   const Camera sceneCamera(latitude, longitude, altitude, heading, pitch, roll);
   m_sceneView->setViewpointCameraAndWait(sceneCamera);
-
-
-
 }
 
 void Add3DTilesLayer::connectSignals()
