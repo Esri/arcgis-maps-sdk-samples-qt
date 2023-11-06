@@ -27,7 +27,7 @@
 #include "MapTypes.h"
 #include "Viewpoint.h"
 
-#include "QFuture"
+#include <QFuture>
 
 using namespace Esri::ArcGISRuntime;
 
