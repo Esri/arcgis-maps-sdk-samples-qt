@@ -25,8 +25,9 @@
 #include "Map.h"
 #include "MapQuickView.h"
 #include "MapTypes.h"
-#include "TaskWatcher.h"
 #include "Viewpoint.h"
+
+#include <QFuture>
 
 using namespace Esri::ArcGISRuntime;
 
@@ -67,7 +68,7 @@ void SyncMapViewSceneView::setSceneView(SceneQuickView* sceneView)
           [this]
   {
     if (m_mapView && m_sceneView->isNavigating())
-      m_mapView->setViewpoint(m_sceneView->currentViewpoint(ViewpointType::CenterAndScale), 0);
+      m_mapView->setViewpointAsync(m_sceneView->currentViewpoint(ViewpointType::CenterAndScale), 0);
   });
 
   emit sceneViewChanged();
@@ -94,7 +95,7 @@ void SyncMapViewSceneView::setMapView(MapQuickView* mapView)
           [this]
   {
     if (m_sceneView && m_mapView->isNavigating())
-      m_sceneView->setViewpoint(m_mapView->currentViewpoint(ViewpointType::CenterAndScale), 0);
+      m_sceneView->setViewpointAsync(m_mapView->currentViewpoint(ViewpointType::CenterAndScale), 0);
   });
 
   emit mapViewChanged();
