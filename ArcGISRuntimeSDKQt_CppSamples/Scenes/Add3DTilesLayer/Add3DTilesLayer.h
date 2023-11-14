@@ -44,8 +44,6 @@ public:
 
 signals:
   void sceneViewChanged();
-  void errorTextListChanged();
-
 
 private:
   Esri::ArcGISRuntime::SceneQuickView* sceneView() const;
@@ -55,10 +53,8 @@ private:
   Esri::ArcGISRuntime::SceneQuickView* m_sceneView = nullptr;
 
   // add 3D tiles layer
-  QStringList m_errorTextList;
   Esri::ArcGISRuntime::Ogc3dTilesLayer* m_ogc3dTilesLayer = nullptr;
   void add3DTilesLayer();
-  void logErrorText(const QString &errorMessage);
 
   // add lineofsight analysis
   Esri::ArcGISRuntime::LocationLineOfSight* m_lineOfSight = nullptr;

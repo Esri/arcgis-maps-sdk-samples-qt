@@ -75,14 +75,13 @@ Add3DTilesLayer::Add3DTilesLayer(QObject* parent /* = nullptr */):
   ArcGISTiledElevationSource* elevationSource = new ArcGISTiledElevationSource(
         QUrl("https://elevation3d.arcgis.com/arcgis/rest/services/WorldElevation3D/Terrain3D/ImageServer"), this);
   // add projection
-  TransformationCatalog::setProjectionEngineDirectory(DATAPATH + "pedata");
+  TransformationCatalog::setProjectionEngineDirectory(DATAPATH + "/pedata");
   if (TransformationCatalog::projectionEngineDirectory().isEmpty())
-    logErrorText("Projection Engine Directory not found at: " + DATAPATH + "pedata");
+    qWarning() << ("Projection Engine Directory not found at: " + DATAPATH + "/pedata");
 
   // add the elevation source to the scene to display elevation
   m_scene->baseSurface()->elevationSources()->append(elevationSource);
 
-  // add 3d layers
   add3DTilesLayer();
 }
 
@@ -126,13 +125,6 @@ void Add3DTilesLayer::initialize() {
   createLineOfSight();
   // connect signals
   connectSignals();
-}
-
-void Add3DTilesLayer::logErrorText(const QString &errorMessage)
-{
-  const QString errorNumber = QVariant(m_errorTextList.size() + 1).toString();
-  m_errorTextList.push_front(errorNumber + ": " + errorMessage);
-  emit errorTextListChanged();
 }
 
 void Add3DTilesLayer::add3DTilesLayer() {
@@ -181,11 +173,9 @@ void Add3DTilesLayer::connectSignals()
   {
     m_sceneView->screenToLocationAsync(event.pos().x(), event.pos().y()).then(this, [this](Point p)
     {
-      qDebug() << p.toJson();
       m_lineOfSight->setTargetLocation(p);
     });
   });
-
 
   connect(m_sceneView, &SceneQuickView::mousePressedAndHeld, this, [this]
   {
