@@ -20,32 +20,32 @@
 
 #include "Add3DTilesLayer.h"
 
-#include "ArcGISTiledElevationSource.h"
-#include "ElevationSourceListModel.h"
-#include "MapTypes.h"
-#include "Scene.h"
-#include "SceneQuickView.h"
-#include "Surface.h"
-#include "Basemap.h"
-#include "Ogc3dTilesLayer.h"
-#include "LayerListModel.h"
-#include "Layer.h"
-#include "SpatialReference.h"
-#include "Point.h"
-#include "LocationLineOfSight.h"
+#include "AnalysisListModel.h"
 #include "AnalysisOverlay.h"
 #include "AnalysisOverlayListModel.h"
-#include "AnalysisListModel.h"
+#include "ArcGISTiledElevationSource.h"
+#include "Basemap.h"
 #include "Camera.h"
+#include "ElevationSourceListModel.h"
+#include "Layer.h"
+#include "LayerListModel.h"
+#include "LocationLineOfSight.h"
+#include "MapTypes.h"
+#include "Ogc3dTilesLayer.h"
+#include "Point.h"
+#include "Scene.h"
+#include "SceneQuickView.h"
+#include "SpatialReference.h"
+#include "Surface.h"
 #include "TransformationCatalog.h"
 
 #include <MapView.h>
-#include <QString>
-#include <QFuture>
 #include <QDebug>
+#include <QFuture>
 #include <QStandardPaths>
-#include <QVariantMap>
+#include <QString>
 #include <QUrl>
+#include <QVariantMap>
 
 using namespace Esri::ArcGISRuntime;
 namespace
