@@ -66,7 +66,6 @@ QString defaultDataPath()
 
 const QString DATAPATH = QStandardPaths::writableLocation(QStandardPaths::HomeLocation)+ "/ArcGIS/Runtime/Data/";
 
-
 Add3DTilesLayer::Add3DTilesLayer(QObject* parent /* = nullptr */):
   QObject(parent),
   m_scene(new Scene(BasemapStyle::ArcGISImagery, this))
@@ -114,8 +113,8 @@ void Add3DTilesLayer::setSceneView(SceneQuickView* sceneView)
     initialize();
 }
 
-void Add3DTilesLayer::initialize() {
-
+void Add3DTilesLayer::initialize()
+{
   // add an Analysis Overlay
   m_analysisOverlay = new AnalysisOverlay(this);
   m_sceneView->analysisOverlays()->append(m_analysisOverlay);
@@ -127,8 +126,8 @@ void Add3DTilesLayer::initialize() {
   connectSignals();
 }
 
-void Add3DTilesLayer::add3DTilesLayer() {
-
+void Add3DTilesLayer::add3DTilesLayer()
+{
   // edit the url to the path of your data, default path should be the home folder
   const QUrl modelPath = defaultDataPath() + "/ArcGIS/Runtime/Data/Stuttgart.3tz";
 
@@ -136,8 +135,8 @@ void Add3DTilesLayer::add3DTilesLayer() {
   m_scene->operationalLayers()->append(m_ogc3dTilesLayer);
 }
 
-void Add3DTilesLayer::createLineOfSight() {
-
+void Add3DTilesLayer::createLineOfSight()
+{
   // add a observe point (static) and a target point (moving with mouse clicks)
   const Point observerPt( 9.16257, 48.84661, 313, SpatialReference::wgs84());
   const Point targetPt(9.16239, 48.84632, 300, SpatialReference::wgs84());
@@ -154,7 +153,6 @@ void Add3DTilesLayer::createLineOfSight() {
 
 void Add3DTilesLayer::setInitialViewpoint()
 {
-
   // add a camera
   constexpr double latitude = 48.84553;
   constexpr double longitude = 9.16275;
@@ -176,12 +174,10 @@ void Add3DTilesLayer::connectSignals()
       m_lineOfSight->setTargetLocation(p);
     });
   });
-
   connect(m_sceneView, &SceneQuickView::mousePressedAndHeld, this, [this]
   {
     m_calculating = true;
   });
-
   connect(m_sceneView, &SceneQuickView::mouseMoved, this, [this](QMouseEvent& event)
   {
     if (m_calculating)
@@ -190,12 +186,8 @@ void Add3DTilesLayer::connectSignals()
       m_lineOfSight->setTargetLocation(pt);
     }
   });
-
   connect(m_sceneView, &SceneQuickView::mouseReleased, this, [this]
   {
     m_calculating = false;
   });
 }
-
-
-

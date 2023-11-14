@@ -39,7 +39,6 @@ class Add3DTilesLayer : public QObject
 public:
   explicit Add3DTilesLayer(QObject* parent = nullptr);
   ~Add3DTilesLayer() override;
-
   static void init();
 
 signals:
