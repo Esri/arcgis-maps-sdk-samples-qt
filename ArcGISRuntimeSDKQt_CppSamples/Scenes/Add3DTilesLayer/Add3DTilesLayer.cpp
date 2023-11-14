@@ -109,8 +109,7 @@ void Add3DTilesLayer::setSceneView(SceneQuickView* sceneView)
 
   emit sceneViewChanged();
 
-  if (!defaultDataPath().isEmpty() && m_sceneView)
-    initialize();
+  initialize();
 }
 
 void Add3DTilesLayer::initialize()
