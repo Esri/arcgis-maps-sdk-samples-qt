@@ -134,7 +134,7 @@ exists($$PWD/../../../../DevBuildCpp.pri) {
   # Add plugin paths to QMLPATHS
   QMLPATHS += $${ARCGIS_RUNTIME_IMPORT_PATH}
 
-  # Set ArcGIS Runtime QML API Path
+  # Set ArcGIS Runtime QML import path for ArcGISExtras
   DEFINES += ARCGIS_RUNTIME_IMPORT_PATH=\"$$ARCGIS_RUNTIME_IMPORT_PATH\"
   DEFINES += BUILD_FROM_SETUP
 }
