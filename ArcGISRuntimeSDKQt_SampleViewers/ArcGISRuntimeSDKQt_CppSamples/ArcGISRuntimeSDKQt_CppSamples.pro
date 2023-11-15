@@ -96,9 +96,6 @@ exists($$PWD/../../../../DevBuildCpp.pri) {
     contains(QT_ARCH, x86_64):{
       PLATFORM = "windows/x64"
     }
-    else {
-      PLATFORM = "windows/x86"
-    }
     ARCGIS_RUNTIME_IMPORT_PATH = $${priLocation}/sdk/$${PLATFORM}/qml
   }
 
