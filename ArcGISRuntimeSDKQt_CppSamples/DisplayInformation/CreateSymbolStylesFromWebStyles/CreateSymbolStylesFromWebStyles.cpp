@@ -86,7 +86,6 @@ void CreateSymbolStylesFromWebStyles::createSymbolStyles()
 
       // We pass symbolStyle as the QObject parent for fetchSymbol() because we don't need access to the resulting class outside the lifetime of this SymbolStyle
       SymbolStyleSearchResultSymbolFetcher* symbolFetcher = symbolStyleSearchResult.fetchSymbol(symbolStyle);
-
       connect(symbolFetcher, &SymbolStyleSearchResultSymbolFetcher::fetchSymbolCompleted, this, [this, symbolLabel, categoriesMap](const QUuid& /* taskId */, Symbol* symbol)
       {
         // If multiple field names are set, we can pass multiple values from each field,
@@ -97,6 +96,7 @@ void CreateSymbolStylesFromWebStyles::createSymbolStyles()
           m_uniqueValueRenderer->uniqueValues()->append(new UniqueValue(symbolLabel, "", {category}, symbol, this));
         }
       });
+      symbolFetcher->fetchSymbol();
     }
   });
 
