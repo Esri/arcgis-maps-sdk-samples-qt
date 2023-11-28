@@ -314,18 +314,21 @@ void OfflineGeocode::onGeocodingCompleted_(const QList<GeocodeResult>& geocodeRe
   m_geocodeInProgress = false;
   emit geocodeInProgressChanged();
 
-  // if there are no matching results, notify user
-  if (geocodeResults.empty())
+  // dismiss callouts
+  m_calloutData->setVisible(false);
+  m_pinGraphic->setVisible(false);
+
+  // if there are no matching results, notify user and stop processing
+  if (geocodeResults.isEmpty())
   {
     m_noResults = true;
     emit noResultsChanged();
+    return;
   }
+
   // dismiss no results notification
   m_noResults = false;
   emit noResultsChanged();
-
-  // dismiss callouts
-  m_calloutData->setVisible(false);
 
   // zoom to result's extent
   m_mapView->setViewpointCenterAsync(geocodeResults.at(0).displayLocation());
