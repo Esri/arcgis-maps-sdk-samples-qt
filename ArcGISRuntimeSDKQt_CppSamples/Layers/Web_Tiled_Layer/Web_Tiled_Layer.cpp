@@ -53,15 +53,13 @@ void Web_Tiled_Layer::componentComplete()
   m_mapView = findChild<MapQuickView*>("mapView");
 
   // Set up the tiled layer parameters
-  const QString templateUrl = "https://stamen-tiles-{subDomain}.a.ssl.fastly.net/terrain/{level}/{col}/{row}.png";
-  const QStringList subDomains { "a", "b", "c", "d" };
-  const QString attributionText = "Map tiles by <a href=\"https://stamen.com\">Stamen Design</a>, "
-                                  "under <a href=\"https://creativecommons.org/licenses/by/3.0\">CC BY 3.0</a>. "
-                                  "Data by <a href=\"https://openstreetmap.org\">OpenStreetMap</a>, "
-                                  "under <a href=\"https://www.openstreetmap.org/copyright\">ODbL</a>.";
+  const QString templateUrl = "https://server.arcgisonline.com/arcgis/rest/services/Ocean/World_Ocean_Base/MapServer/tile/{level}/{row}/{col}.jpg";
+  const QString attributionText = "Map tiles by <a href=\"https://livingatlas.arcgis.com\">ArcGIS Living Atlas of the World</a>, "
+                                  "under <a href=\"https://www.esri.com/en-us/legal/terms/full-master-agreement\">Esri Master License "
+                                  "Agreement</a>. Data by Esri, Garmin, GEBCO, NOAA NGDC, and other contributors.";
 
-  // Create the WebTiledLayer with a template URL, sub domains, and copyright information
-  WebTiledLayer* webTiledLayer = new WebTiledLayer(templateUrl, subDomains, this);
+  // Create the WebTiledLayer with a template URL
+  WebTiledLayer* webTiledLayer = new WebTiledLayer(templateUrl, this);
   webTiledLayer->setAttribution(attributionText);
 
   // Create a basemap from the WebTiledLayer
@@ -69,11 +67,6 @@ void Web_Tiled_Layer::componentComplete()
 
   // Create a map using the WebTiledLayer basemap
   m_map = new Map(basemap, this);
-
-  // Set an initial viewpoint
-  Point pt(-13167861.0, 4382202.0, SpatialReference::webMercator());
-  Viewpoint vp(pt, 50000.0);
-  m_map->setInitialViewpoint(vp);
 
   // Set map to map view
   m_mapView->setMap(m_map);

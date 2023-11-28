@@ -18,7 +18,7 @@ Web tiled services use a uniform addressing scheme with pre-rendered tiles. Imag
 * Subdomain is optional and allows the ArcGIS Maps SDK for Native Apps to balance requests among multiple servers for enhanced performance.
 * Level, row, and column select the tiles to load based on the visible extent of the map.
 
-1. Create a `WebTiledLayer` from a URL and a list of subdomains.
+1. Create a `WebTiledLayer` from a URL.
 2. Create a new `Basemap` from the layer.
 3. Update the attribution on the layer. Note: this is a necessary step because web tiled services don't have associated service metadata.
 4. Display the basemap.
@@ -34,8 +34,8 @@ For more information about web tiled layers, see the following resources:
 
 ## About the data
 
-The basemap in this sample is provided by [Stamen Design](maps.stamen.com). Stamen publishes tiled services based on OpenStreetMap data with several unique styles applied.
+The basemap in this sample is provided by [ArcGIS Living Atlas of the World](https://www.arcgis.com/home/item.html?id=1e126e7520f9466c9ca28b8f28b5e500). ArcGIS Living Atlas of the World provides tiled services with several unique styles.
 
 ## Tags
 
-layer, OGC, Open Street Map, OpenStreetMap, stamen.com, tiled, tiles
+layer, OGC, tiled, tiles
