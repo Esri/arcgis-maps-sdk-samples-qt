@@ -319,7 +319,7 @@ void OfflineGeocode::onGeocodingCompleted_(const QList<GeocodeResult>& geocodeRe
   m_pinGraphic->setVisible(false);
 
   // if there are no matching results, notify user and stop processing
-  if (geocodeResults.empty())
+  if (geocodeResults.isEmpty())
   {
     m_noResults = true;
     emit noResultsChanged();
