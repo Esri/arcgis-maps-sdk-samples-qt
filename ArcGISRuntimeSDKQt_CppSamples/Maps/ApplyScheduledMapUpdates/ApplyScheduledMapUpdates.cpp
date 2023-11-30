@@ -213,10 +213,6 @@ void ApplyScheduledMapUpdates::onMmpkDoneLoading(const Error& e)
   m_map = m_mobileMapPackage->maps().at(0);
   setMapToMapView();
 
-  // setup sync task
-  if (m_offlineSyncTask)
-    delete m_offlineSyncTask;
-
   m_offlineSyncTask = new OfflineMapSyncTask(m_map, this);
 
   // check for updates
