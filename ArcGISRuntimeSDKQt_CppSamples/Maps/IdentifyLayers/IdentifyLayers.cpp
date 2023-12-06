@@ -117,11 +117,9 @@ void IdentifyLayers::connectSignals()
     {
       // reset the message text
       m_message = QString();
-      int i = 0;
 
       for (IdentifyLayerResult* result : results)
       {
-        ++i;
         // lambda for calculating result count
         auto geoElementsCountFromResult = [] (IdentifyLayerResult* result) -> int
         {
