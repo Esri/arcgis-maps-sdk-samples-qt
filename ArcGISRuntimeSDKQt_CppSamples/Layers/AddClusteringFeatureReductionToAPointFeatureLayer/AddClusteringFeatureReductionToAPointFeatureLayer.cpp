@@ -15,13 +15,12 @@
 // [Legal]
 
 #ifdef PCH_BUILD
-#include "pch.hpp"
+#include "pch.hpp" // IWYU pragma: keep
 #endif // PCH_BUILD
 
 #include "AddClusteringFeatureReductionToAPointFeatureLayer.h"
 
 #include "ClassBreaksRenderer.h"
-#include "MapTypes.h"
 #include "SimpleMarkerSymbol.h"
 #include "SymbolTypes.h"
 #include "ClusteringFeatureReduction.h"
@@ -37,7 +36,9 @@
 #include "LabelDefinitionListModel.h"
 #include "LabelDefinition.h"
 #include "ServiceTypes.h"
-#include "FeatureReduction.h"
+#include "IdentifyLayerResult.h"
+#include "Popup.h"
+#include "PopupManager.h"
 
 #include <QColor>
 
@@ -48,6 +49,18 @@ AddClusteringFeatureReductionToAPointFeatureLayer::AddClusteringFeatureReduction
 {
   // Create a map from a web map PortalItem.
   m_map = new Map(new PortalItem("aa44e79a4836413c89908e1afdace2ea", this), this);
+
+  // Get the Zurich buildings feature layer once the map has finished loading.
+  connect(m_map, &Map::doneLoading, this, [this](const Error& error)
+          {
+            if (!error.isEmpty())
+            {
+              qDebug() << "Map loading error:" << error.message() << error.additionalMessage();
+              return;
+            }
+
+            m_layer = static_cast<FeatureLayer*>(m_map->operationalLayers()->first());
+          });
 }
 
 AddClusteringFeatureReductionToAPointFeatureLayer::~AddClusteringFeatureReductionToAPointFeatureLayer() = default;
@@ -73,21 +86,10 @@ void AddClusteringFeatureReductionToAPointFeatureLayer::setMapView(MapQuickView*
   m_mapView = mapView;
   m_mapView->setMap(m_map);
   connect(m_mapView, &MapQuickView::mapScaleChanged, this, &AddClusteringFeatureReductionToAPointFeatureLayer::mapScaleChanged);
+  connect(m_mapView, &MapQuickView::mouseClicked, this, &AddClusteringFeatureReductionToAPointFeatureLayer::mouseClicked);
 
   // Set the initial viewpoint to Zurich, Switzerland.
   m_mapView->setViewpointAsync(Viewpoint(47.38, 8.53, 8e4));
-
-  // Get the Zurich buildings feature layer once the map has finished loading.
-  connect(m_map, &Map::doneLoading, this, [this](const Error& error)
-          {
-            if (!error.isEmpty())
-            {
-              qDebug() << "Map loading error:" << error.message() << error.additionalMessage();
-              return;
-            }
-
-            m_layer = static_cast<FeatureLayer*>(m_map->operationalLayers()->first());
-          });
 
   emit mapViewChanged();
 }
@@ -185,15 +187,6 @@ void AddClusteringFeatureReductionToAPointFeatureLayer::drawClusters()
 
   // Create a new clustering feature reduction.
   createCustomFeatureReduction();
-
-  // Show the feature reduction's clustering options.
-  // AddClusteringFeatureReductionToAPointFeatureLayerOptions.Visibility = Visibility.Visible;
-
-  // Add an event handler for tap events on the map view.
-  // MyMapView.GeoViewTapped += MyMapView_GeoViewTapped;
-
-  // Hide the draw clusters button.
-  // DrawClustersButton.Visibility = Visibility.Collapsed;
 }
 
 void AddClusteringFeatureReductionToAPointFeatureLayer::displayLabels(bool checked)
@@ -217,4 +210,39 @@ void AddClusteringFeatureReductionToAPointFeatureLayer::displayLabels(bool check
   {
     m_clusteringFeatureReduction->labelDefinitions()->clear();
   }
+}
+
+void AddClusteringFeatureReductionToAPointFeatureLayer::mouseClicked(QMouseEvent& mouseEvent)
+{
+  if (!m_layer)
+    return;
+
+  // Identify the tapped observation.
+  m_mapView->identifyLayerAsync(m_layer, mouseEvent.position(), 3.0, true)
+      .then(this, [this](IdentifyLayerResult* result)
+            {
+              // Return if no observations were found.
+              if (result->popups().empty())
+                return;
+
+              // clear the list of PopupManagers
+              m_popupManagers.clear();
+
+              for (Popup* popup: result->popups())
+              {
+                // create a popup manager
+                PopupManager* popupManager = new PopupManager(popup, this);
+
+                // append popup manager to list
+                m_popupManagers.append(popupManager);
+              }
+
+              // notify QML that m_popupManagers has changed and to display the popup(s).
+              emit popupManagersChanged();
+            });
+}
+
+QQmlListProperty<PopupManager> AddClusteringFeatureReductionToAPointFeatureLayer::popupManagers()
+{
+  return QQmlListProperty<PopupManager>(this, &m_popupManagers);
 }

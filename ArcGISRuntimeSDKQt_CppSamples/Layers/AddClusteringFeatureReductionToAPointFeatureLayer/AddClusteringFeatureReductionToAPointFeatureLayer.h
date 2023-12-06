@@ -23,6 +23,7 @@ namespace Esri::ArcGISRuntime
   class FeatureLayer;
   class Map;
   class MapQuickView;
+  class PopupManager;
 }
 
 #include <QObject>
@@ -35,20 +36,23 @@ class AddClusteringFeatureReductionToAPointFeatureLayer : public QObject
 
   Q_PROPERTY(Esri::ArcGISRuntime::MapQuickView* mapView READ mapView WRITE setMapView NOTIFY mapViewChanged)
   Q_PROPERTY(qreal mapScale READ mapScale NOTIFY mapScaleChanged)
+  Q_PROPERTY(QQmlListProperty<Esri::ArcGISRuntime::PopupManager> popupManagers READ popupManagers NOTIFY popupManagersChanged)
 
 public:
   explicit AddClusteringFeatureReductionToAPointFeatureLayer(QObject* parent = nullptr);
   ~AddClusteringFeatureReductionToAPointFeatureLayer() override;
 
   static void init();
-  Q_INVOKABLE void drawClusters();
+
   Q_INVOKABLE void displayLabels(bool checked);
+  Q_INVOKABLE void drawClusters();
   Q_INVOKABLE void setClusterRadius(qreal clusterRadius);
   Q_INVOKABLE void setMaxScale(qreal maxScale);
 
 signals:
   void mapViewChanged();
   void mapScaleChanged();
+  void popupManagersChanged();
 
 private:
   Esri::ArcGISRuntime::MapQuickView* mapView() const;
@@ -58,10 +62,15 @@ private:
 
   void createCustomFeatureReduction();
 
+  void mouseClicked(QMouseEvent& mouseEvent);
+
+  QQmlListProperty<Esri::ArcGISRuntime::PopupManager> popupManagers();
+
   Esri::ArcGISRuntime::Map* m_map = nullptr;
   Esri::ArcGISRuntime::MapQuickView* m_mapView = nullptr;
   Esri::ArcGISRuntime::FeatureLayer* m_layer = nullptr;
   Esri::ArcGISRuntime::ClusteringFeatureReduction* m_clusteringFeatureReduction = nullptr;
+  QList<Esri::ArcGISRuntime::PopupManager*> m_popupManagers;
 };
 
 #endif // AddClusteringFeatureReductionToAPointFeatureLayer_H

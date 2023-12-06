@@ -38,6 +38,17 @@ Item {
         mapView: view
     }
 
+    PopupStackView {
+        id: popupStackView
+        anchors {
+            top: parent.top
+            bottom: parent.bottom
+            right: parent.right
+        }
+        visible: sample.popupManagers.length > 0
+        popupManagers: sample.popupManagers
+    }
+
     // Add a background to the column
     Rectangle {
         anchors.fill: col
