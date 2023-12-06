@@ -94,18 +94,18 @@ void AddClusteringFeatureReductionToAPointFeatureLayer::setMapView(MapQuickView*
 
 void AddClusteringFeatureReductionToAPointFeatureLayer::setClusterRadius(qreal clusterRadius)
 {
-  if (!m_layer)
+  if (!m_clusteringFeatureReduction)
     return;
 
-  static_cast<ClusteringFeatureReduction*>(m_layer->featureReduction())->setRadius(clusterRadius);
+  m_clusteringFeatureReduction->setRadius(clusterRadius);
 }
 
 void AddClusteringFeatureReductionToAPointFeatureLayer::setMaxScale(qreal maxScale)
 {
-  if (!m_layer)
+  if (!m_clusteringFeatureReduction)
     return;
 
-  static_cast<ClusteringFeatureReduction*>(m_layer->featureReduction())->setMaxScale(maxScale);
+  m_clusteringFeatureReduction->setMaxScale(maxScale);
 }
 
 qreal AddClusteringFeatureReductionToAPointFeatureLayer::mapScale() const
@@ -170,11 +170,11 @@ void AddClusteringFeatureReductionToAPointFeatureLayer::createCustomFeatureReduc
   // Set initial slider values.
   // Note that the default value for cluster radius is 60.
   // Increasing the cluster radius increases the number of features that are grouped together into a cluster.
-  // ClusterRadiusSlider.Value = m_clusteringFeatureReduction.Radius;
+  m_clusteringFeatureReduction->setRadius(60.0);
 
   // Note that the default value for max scale is 0.
   // The max scale value is the maximum scale at which clustering is applied.
-  // MaxScaleSlider.Value = m_clusteringFeatureReduction.MaxScale;
+  m_clusteringFeatureReduction->setMaxScale(0.0);
 }
 
 void AddClusteringFeatureReductionToAPointFeatureLayer::drawClusters()

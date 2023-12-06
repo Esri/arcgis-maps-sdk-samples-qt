@@ -86,6 +86,7 @@ Item {
             visible: button.checked
             from: 30
             to: 85
+            value: 60
             onValueChanged: sample.setClusterRadius(value);
         }
 
@@ -101,6 +102,7 @@ Item {
             visible: button.checked
             from: 0
             to: 150000
+            value: 0
             onValueChanged: sample.setMaxScale(value);
         }
 
