@@ -182,7 +182,8 @@ void OrbitCameraAroundObject::cockpitView()
   m_orbitCam->setMinCameraDistance(0);
 
   // animate the camera target to the cockpit instead of the center of the plane
-  m_orbitCam->setTargetOffsetsAsync(0, -2, 1.1, 1);
+  auto future = m_orbitCam->setTargetOffsetsAsync(0, -2, 1.1, 1);
+  Q_UNUSED(future)
 
   //The animation may rotate us over the set camera bounds based on the plane pitch, so unlock them.
   m_orbitCam->setMinCameraPitchOffset(-180.0);
