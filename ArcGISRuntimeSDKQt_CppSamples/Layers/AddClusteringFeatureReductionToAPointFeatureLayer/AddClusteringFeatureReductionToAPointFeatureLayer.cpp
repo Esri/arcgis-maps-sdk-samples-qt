@@ -221,10 +221,6 @@ void AddClusteringFeatureReductionToAPointFeatureLayer::mouseClicked(QMouseEvent
   m_mapView->identifyLayerAsync(m_layer, mouseEvent.position(), 3.0, true)
       .then(this, [this](IdentifyLayerResult* result)
             {
-              // Return if no observations were found.
-              if (result->popups().empty())
-                return;
-
               // clear the list of PopupManagers
               m_popupManagers.clear();
 

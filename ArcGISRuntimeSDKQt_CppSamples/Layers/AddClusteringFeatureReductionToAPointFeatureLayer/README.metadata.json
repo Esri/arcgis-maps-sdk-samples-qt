@@ -31,8 +31,6 @@
     "snippets": [
         "AddClusteringFeatureReductionToAPointFeatureLayer.cpp",
         "AddClusteringFeatureReductionToAPointFeatureLayer.h",
-        "CustomDataSource.cpp",
-        "CustomDataSource.h",
         "AddClusteringFeatureReductionToAPointFeatureLayer.qml"
     ],
     "title": "Add clustering feature reduction to a point feature layer"
