@@ -1,0 +1,11 @@
+<RCC>
+    <qresource prefix="/Samples/Layers/AddClusteringFeatureReductionToAPointFeatureLayer">
+        <file alias="sample.json">README.metadata.json</file>
+        <file>AddClusteringFeatureReductionToAPointFeatureLayer.qml</file>
+        <file>AddClusteringFeatureReductionToAPointFeatureLayer.h</file>
+        <file>AddClusteringFeatureReductionToAPointFeatureLayer.cpp</file>
+        <file>main.qml</file>
+        <file>screenshot.png</file>
+        <file>README.md</file>
+    </qresource>
+</RCC>
