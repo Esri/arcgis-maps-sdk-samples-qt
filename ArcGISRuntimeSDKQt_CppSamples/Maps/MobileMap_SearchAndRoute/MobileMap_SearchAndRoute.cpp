@@ -37,7 +37,6 @@
 #include "Error.h"
 #include "MapTypes.h"
 #include "MapViewTypes.h"
-#include "TaskWatcher.h"
 #include "CalloutData.h"
 #include "GraphicsOverlayListModel.h"
 #include "IdentifyGraphicsOverlayResult.h"
@@ -53,6 +52,7 @@
 #include <QUuid>
 #include <QFileInfoList>
 #include <QFile>
+#include <QFuture>
 #include <QtCore/qglobal.h>
 #include <QDir>
 #include <QStandardPaths>
@@ -168,41 +168,89 @@ void MobileMap_SearchAndRoute::connectSignals()
 {
   connect(m_mapView, &MapQuickView::mouseClicked, this, [this](QMouseEvent& mouseEvent)
   {
-    if (m_currentLocatorTask)
-    {
-      m_clickedPoint = Point(m_mapView->screenToLocation(mouseEvent.position().x(), mouseEvent.position().y()));
-
-      // determine if user clicked on a graphic
-      m_mapView->identifyGraphicsOverlay(m_stopsGraphicsOverlay, mouseEvent.position().x(), mouseEvent.position().y(), 5, false, 2);
-    }
-  });
-
-  connect(m_mapView, &MapQuickView::identifyGraphicsOverlayCompleted, this, [this](const QUuid&, IdentifyGraphicsOverlayResult* identifyResult)
-  {
-    if (!identifyResult)
+    if (!m_currentLocatorTask)
       return;
+\
+    m_clickedPoint = Point(m_mapView->screenToLocation(mouseEvent.position().x(), mouseEvent.position().y()));
 
-    // get graphics list
-    QList<Graphic*> graphics = identifyResult->graphics();
-    if (graphics.count() > 0)
+    // determine if user clicked on a graphic
+    m_mapView->identifyGraphicsOverlayAsync(m_stopsGraphicsOverlay, mouseEvent.position(), 5, false, 2).then(this,
+    [this](const IdentifyGraphicsOverlayResult* identifyResult)
     {
-      // use the blue pin graphic instead of text graphic to as calloutData's geoElement
-      Graphic* graphic = graphics[0];
-      if (graphic->symbol()->symbolType() != SymbolType::PictureMarkerSymbol && graphics.count() > 1)
-        graphic = graphics[1];
+      if (!identifyResult)
+        return;
 
-      m_mapView->calloutData()->setGeoElement(graphic);
-      m_mapView->calloutData()->setDetail(graphic->attributes()->attributeValue("AddressLabel").toString());
-      m_mapView->calloutData()->setVisible(true);
-    }
+      // get graphics list
+      QList<Graphic*> graphics = identifyResult->graphics();
+      if (!graphics.isEmpty())
+      {
+        // use the blue pin graphic instead of text graphic to as calloutData's geoElement
+        Graphic* graphic = graphics[0];
+        if (graphic->symbol()->symbolType() != SymbolType::PictureMarkerSymbol && graphics.count() > 1)
+          graphic = graphics[1];
 
-    // if clicked a point with no graphic on it, reverse geocode
-    else
-    {
-      m_currentLocatorTask->reverseGeocodeWithParameters(m_clickedPoint, m_reverseGeocodeParameters);
-      m_isGeocodeInProgress = true;
-      emit isGeocodeInProgressChanged();
-    }
+        m_mapView->calloutData()->setGeoElement(graphic);
+        m_mapView->calloutData()->setDetail(graphic->attributes()->attributeValue("AddressLabel").toString());
+        m_mapView->calloutData()->setVisible(true);
+      }
+      // if clicked a point with no graphic on it, reverse geocode
+      else
+      {
+        m_currentLocatorTask->reverseGeocodeWithParametersAsync(m_clickedPoint, m_reverseGeocodeParameters).then(this,
+        [this](const QList<GeocodeResult>& geocodeResults)
+        {
+          // make busy indicator invisible
+          m_isGeocodeInProgress = false;
+          emit isGeocodeInProgressChanged();
+
+          if (geocodeResults.isEmpty())
+            return;
+
+          // create parent for the graphic
+          if (!m_stopGraphicParent)
+            m_stopGraphicParent = new QObject(this);
+
+          // create a blue pin graphic to display location
+          Graphic* bluePinGraphic = new Graphic(geocodeResults[0].displayLocation(), m_bluePinSymbol, m_stopGraphicParent);
+          bluePinGraphic->attributes()->insertAttribute("AddressLabel", geocodeResults[0].label());
+
+          m_stopsGraphicsOverlay->graphics()->append(bluePinGraphic);
+
+          // make clear graphics overlay button visible
+          m_canClear = true;
+          emit canClearChanged();
+
+          // if routing is not enabled in map, return
+          if (!m_currentRouteTask)
+            return;
+
+          //Set up the Stops
+
+          // create a stop based on added graphic
+          m_stops << Stop(geometry_cast<Point>(bluePinGraphic->geometry()));
+
+          // create a Text Symbol to display stop number
+          TextSymbol* textSymbol = new TextSymbol(m_stopGraphicParent);
+          textSymbol->setText(QString::number(m_stops.count()));
+          textSymbol->setColor(QColor("white"));
+          textSymbol->setSize(18);
+          textSymbol->setOffsetY(m_bluePinSymbol->height() / 2);
+
+          // create a Graphic using the textSymbol
+          Graphic* stopNumberGraphic = new Graphic(bluePinGraphic->geometry(), textSymbol, m_stopGraphicParent);
+          stopNumberGraphic->setZIndex(bluePinGraphic->zIndex() + 1);
+          m_stopsGraphicsOverlay->graphics()->append(stopNumberGraphic);
+
+          if (m_stops.count() > 1)
+          {
+            m_canRoute = true;
+            emit canRouteChanged();
+          }
+        });
+        m_isGeocodeInProgress = true;
+        emit isGeocodeInProgressChanged();
+      }
+    });
   });
 }
 
@@ -267,61 +315,6 @@ void MobileMap_SearchAndRoute::selectMap(int index)
   // set the MapView
   m_mapView->setMap(m_mobileMapPackages[m_selectedMmpkIndex]->maps().at(index));
 
-  if (m_currentLocatorTask)
-  {
-    // prevent connecting same signal to multiple slots
-    m_currentLocatorTask->disconnect();
-
-    connect(m_currentLocatorTask, &LocatorTask::geocodeCompleted, this, [this](const QUuid&, const QList<GeocodeResult>& geocodeResults)
-    {
-      // make busy indicator invisible
-      m_isGeocodeInProgress = false;
-      emit isGeocodeInProgressChanged();
-
-      if (geocodeResults.count() > 0)
-      {
-        // create parent for the graphic
-        if (!m_stopGraphicParent)
-          m_stopGraphicParent = new QObject(this);
-
-        // create a blue pin graphic to display location
-        Graphic* bluePinGraphic = new Graphic(geocodeResults[0].displayLocation(), m_bluePinSymbol, m_stopGraphicParent);
-        bluePinGraphic->attributes()->insertAttribute("AddressLabel", geocodeResults[0].label());
-
-        m_stopsGraphicsOverlay->graphics()->append(bluePinGraphic);
-
-        // make clear graphics overlay button visible
-        m_canClear = true;
-        emit canClearChanged();
-
-        // if routing is enabled in map, set up the Stops
-        if (m_currentRouteTask)
-        {
-          // create a stop based on added graphic
-          m_stops << Stop(geometry_cast<Point>(bluePinGraphic->geometry()));
-
-          // create a Text Symbol to display stop number
-          TextSymbol* textSymbol = new TextSymbol(m_stopGraphicParent);
-          textSymbol->setText(QString::number(m_stops.count()));
-          textSymbol->setColor(QColor("white"));
-          textSymbol->setSize(18);
-          textSymbol->setOffsetY(m_bluePinSymbol->height() / 2);
-
-          // create a Graphic using the textSymbol
-          Graphic* stopNumberGraphic = new Graphic(bluePinGraphic->geometry(), textSymbol, m_stopGraphicParent);
-          stopNumberGraphic->setZIndex(bluePinGraphic->zIndex() + 1);
-          m_stopsGraphicsOverlay->graphics()->append(stopNumberGraphic);
-
-          if (m_stops.count() > 1)
-          {
-            m_canRoute = true;
-            emit canRouteChanged();
-          }
-        }
-      }
-    });
-  }
-
   // create a RouteTask with selected map's transportation network if available
   if (m_mobileMapPackages[m_selectedMmpkIndex]->maps().at(index)->transportationNetworks().count() > 0)
   {
@@ -332,27 +325,10 @@ void MobileMap_SearchAndRoute::selectMap(int index)
     connect(m_currentRouteTask, &RouteTask::loadStatusChanged, this, [this](LoadStatus loadStatus)
     {
       if (loadStatus == LoadStatus::Loaded)
-        m_currentRouteTask->createDefaultParameters();
-    });
-
-    // store the created route parameters
-    connect(m_currentRouteTask, &RouteTask::createDefaultParametersCompleted, this, [this](const QUuid&, const RouteParameters& routeParameters)
-    {
-      m_currentRouteParameters = routeParameters;
-    });
-
-    // create a graphic using the routeResult
-    connect(m_currentRouteTask, &RouteTask::solveRouteCompleted, this, [this](const QUuid&, const RouteResult& routeResult)
-    {
-      if (!m_routeGraphicParent)
-        m_routeGraphicParent = new QObject(this);
-
-      if (!routeResult.isEmpty())
-      {
-        const auto routes = routeResult.routes();
-        Graphic* routeGraphic = new Graphic(routes[0].routeGeometry(), m_routeGraphicParent);
-        m_routeGraphicsOverlay->graphics()->append(routeGraphic);
-      }
+        m_currentRouteTask->createDefaultParametersAsync().then(this, [this](const RouteParameters& routeParameters)
+        {
+          m_currentRouteParameters = routeParameters;
+        });
     });
   }
   else
@@ -371,7 +347,20 @@ void MobileMap_SearchAndRoute::solveRoute()
 
   // set stops and solve route
   m_currentRouteParameters.setStops(m_stops);
-  m_currentRouteTask->solveRoute(m_currentRouteParameters);
+  // create a graphic using the RouteResult
+  m_currentRouteTask->solveRouteAsync(m_currentRouteParameters).then(this,
+  [this](const RouteResult& routeResult)
+  {
+    if (!m_routeGraphicParent)
+      m_routeGraphicParent = new QObject(this);
+
+    if (!routeResult.isEmpty())
+    {
+      const auto routes = routeResult.routes();
+      Graphic* routeGraphic = new Graphic(routes[0].routeGeometry(), m_routeGraphicParent);
+      m_routeGraphicsOverlay->graphics()->append(routeGraphic);
+    }
+  });
 }
 
 QStringList MobileMap_SearchAndRoute::mmpkList() const

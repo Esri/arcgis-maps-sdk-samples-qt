@@ -47,7 +47,6 @@ signals:
   void queryResultsCountChanged();
 
 private:
-  void connectSignals();
   bool layerInitialized() const;
   int queryResultsCount() const;
 

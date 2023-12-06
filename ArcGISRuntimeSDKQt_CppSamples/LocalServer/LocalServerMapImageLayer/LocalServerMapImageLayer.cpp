@@ -32,9 +32,9 @@
 #include "MapTypes.h"
 #include "LayerListModel.h"
 #include "LocalServerTypes.h"
-#include "TaskWatcher.h"
 
 #include <QDir>
+#include <QFuture>
 #include <QTemporaryDir>
 
 using namespace Esri::ArcGISRuntime;
@@ -117,7 +117,7 @@ void LocalServerMapImageLayer::connectSignals()
       {
         if (status == LoadStatus::Loaded)
         {
-          m_mapView->setViewpoint(Viewpoint(mapImageLayer->fullExtent()));
+          m_mapView->setViewpointAsync(Viewpoint(mapImageLayer->fullExtent()));
         }
       });
       m_map->operationalLayers()->append(mapImageLayer);

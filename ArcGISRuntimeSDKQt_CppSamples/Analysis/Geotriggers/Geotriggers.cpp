@@ -37,13 +37,13 @@
 #include "ServiceFeatureTable.h"
 #include "SimulatedLocationDataSource.h"
 #include "SimulationParameters.h"
-#include "TaskWatcher.h"
 #include "ArcGISFeature.h"
 #include "AttributeListModel.h"
 #include "Attachment.h"
 #include "AttachmentListModel.h"
 #include "Polyline.h"
 
+#include <QFuture>
 #include <QUuid>
 #include <QDateTime>
 
@@ -157,8 +157,9 @@ void Geotriggers::createGeotriggerMonitor(ServiceFeatureTable* serviceFeatureTab
 
   connect(geotriggerMonitor, &GeotriggerMonitor::geotriggerNotification, this, &Geotriggers::handleGeotriggerNotification);
 
-  // Start must be explicitly called. It is called after the signal connection is defined to avoid a race condition in Qt.
-  geotriggerMonitor->start();
+  // startAsync must be explicitly called. It is called after the signal connection is defined to avoid a race condition in Qt.
+  auto future = geotriggerMonitor->startAsync();
+  Q_UNUSED(future)
 }
 
 void Geotriggers::handleGeotriggerNotification(GeotriggerNotificationInfo* geotriggerNotificationInfo)
@@ -239,13 +240,11 @@ void Geotriggers::getFeatureInformation(const QString& sectionName)
     // Get the first (and only) attachment for the feature
     Attachment* sectionImageAttachment = attachments.first();
 
-    connect(sectionImageAttachment, &Attachment::fetchDataCompleted, this, [this, sectionImageAttachment, sectionName]()
+    sectionImageAttachment->fetchDataAsync().then(this, [this, sectionImageAttachment, sectionName](const QByteArray&)
     {
       m_featureAttachmentImageUrls[sectionName] = sectionImageAttachment->attachmentUrl();
       m_currentFeatureImageUrl = m_featureAttachmentImageUrls[sectionName];
       emit displayInfoChanged();
     });
-
-    sectionImageAttachment->fetchData();
   });
 }

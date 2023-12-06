@@ -35,9 +35,9 @@
 #include "LayerListModel.h"
 #include "CoreTypes.h"
 #include "StatisticsQueryResult.h"
-#include "TaskWatcher.h"
 #include "Geometry.h"
 
+#include <QFuture>
 #include <QUuid>
 #include <memory>
 #include <QUrl>
@@ -84,32 +84,32 @@ void StatisticalQuery::componentComplete()
     emit showStatistics(e.message());
   });
 
-  // connect to queryStatisticsCompleted
-  connect(m_featureTable, &ServiceFeatureTable::queryStatisticsCompleted, this, [this](const QUuid&, StatisticsQueryResult* rawResult)
+}
+
+void StatisticalQuery::onQueryStatisticsCompleted_(StatisticsQueryResult* rawResult)
+{
+  if (!rawResult)
+    return;
+
+  // Delete rawResult when we leave local scope.
+  auto result = std::unique_ptr<StatisticsQueryResult>(rawResult);
+
+  // Iterate through the results
+  QObject parent;
+  QString resultText;
+  StatisticRecordIterator iter = result->iterator();
+  while (iter.hasNext())
   {
-    if (!rawResult)
-      return;
-
-    // Delete rawResult when we leave local scope.
-    auto result = std::unique_ptr<StatisticsQueryResult>(rawResult);
-
-    // Iterate through the results
-    QObject parent;
-    QString resultText;
-    StatisticRecordIterator iter = result->iterator();
-    while (iter.hasNext())
+    StatisticRecord* record = iter.next(&parent);
+    const QVariantMap& statsMap = record->statistics();
+    for (auto it = statsMap.cbegin(); it != statsMap.cend(); ++it)
     {
-      StatisticRecord* record = iter.next(&parent);
-      const QVariantMap& statsMap = record->statistics();
-      for (auto it = statsMap.cbegin(); it != statsMap.cend(); ++it)
-      {
-        resultText += QString("%1: %2\n").arg(it.key(), it.value().toString());
-      }
+      resultText += QString("%1: %2\n").arg(it.key(), it.value().toString());
     }
+  }
 
-    // Display the Results
-    emit showStatistics(resultText);
-  });
+  // Display the Results
+  emit showStatistics(resultText);
 }
 
 void StatisticalQuery::queryStatistics(bool extentOnly, bool bigCitiesOnly)
@@ -145,5 +145,8 @@ void StatisticalQuery::queryStatistics(bool extentOnly, bool bigCitiesOnly)
     queryParameters.setWhereClause("POP_RANK = 1");
 
   // Execute the statistical query with these parameters
-  m_featureTable->queryStatistics(queryParameters);
+  m_featureTable->queryStatisticsAsync(queryParameters).then(this, [this](StatisticsQueryResult* rawResult)
+  {
+    onQueryStatisticsCompleted_(rawResult);
+  });
 }

@@ -28,7 +28,7 @@ public:
   explicit QmlSampleManager(QQmlEngine* engine, QObject* parent = nullptr);
   ~QmlSampleManager() override;
 
-  Q_INVOKABLE void clearCredentialCache() override;
+  void clearCredentialCache() override;
 
 protected:
   QString api() const override;

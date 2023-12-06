@@ -17,10 +17,8 @@
 #ifndef GETELEVATIONATPOINT_H
 #define GETELEVATIONATPOINT_H
 
-// C++ API headers
-#include "TaskWatcher.h"
-
 // Qt headers
+#include <QFuture>
 #include <QObject>
 
 namespace Esri::ArcGISRuntime
@@ -73,7 +71,7 @@ private:
   bool elevationQueryRunning() const;
 
   double m_elevation = 0.0;
-  Esri::ArcGISRuntime::TaskWatcher m_elevationQueryTaskWatcher;
+  QFuture<double> m_elevationQueryFuture;
 };
 
 #endif // GETELEVATIONATPOINT_H

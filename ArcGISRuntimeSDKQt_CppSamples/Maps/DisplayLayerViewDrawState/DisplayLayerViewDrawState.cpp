@@ -28,13 +28,14 @@
 #include "Point.h"
 #include "Error.h"
 #include "MapTypes.h"
-#include "TaskWatcher.h"
 #include "LayerListModel.h"
 #include "Portal.h"
 #include "LayerViewState.h"
 #include "SpatialReference.h"
 #include "Point.h"
 #include "Viewpoint.h"
+
+#include <QFuture>
 
 using namespace Esri::ArcGISRuntime;
 
@@ -93,7 +94,7 @@ void DisplayLayerViewDrawState::loadLayer()
 
     const Point point{-11000000, 4500000, SpatialReference::webMercator()};
     const Viewpoint vp{point, 40000000.0};
-    m_mapView->setViewpoint(vp);
+    m_mapView->setViewpointAsync(vp);
   });
 
   // set min/max scale to demonstrate different view states.

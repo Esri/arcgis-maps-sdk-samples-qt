@@ -28,10 +28,10 @@
 #include "Error.h"
 #include "MapTypes.h"
 #include "MapViewTypes.h"
-#include "TaskWatcher.h"
 #include "LayerListModel.h"
 #include "Envelope.h"
 
+#include <QFuture>
 #include <QtCore/qglobal.h>
 #include <QStandardPaths>
 
@@ -89,7 +89,7 @@ void RasterColormapRenderer::componentComplete()
       return;
     }
 
-    m_mapView->setViewpointGeometry(m_rasterLayer->fullExtent(), 50);
+    m_mapView->setViewpointGeometryAsync(m_rasterLayer->fullExtent(), 50);
   });
 
   ColormapRenderer* colormapRenderer = createRenderer();

@@ -53,7 +53,6 @@ signals:
 private:
   Esri::ArcGISRuntime::MapQuickView* mapView() const;
   void setMapView(Esri::ArcGISRuntime::MapQuickView* mapView);
-  void connectSyncSignals();
   void setMapToMapView();
 
   Esri::ArcGISRuntime::Map* m_map = nullptr;

@@ -21,7 +21,7 @@ QT += texttospeech
 
 CONFIG += c++17
 
-ARCGIS_RUNTIME_VERSION = 200.2.0
+ARCGIS_RUNTIME_VERSION = 200.3.0
 include($$PWD/arcgisruntime.pri)
 
 SOURCES += \

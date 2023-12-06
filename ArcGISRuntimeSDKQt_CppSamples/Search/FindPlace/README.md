@@ -18,7 +18,7 @@ Choose a place of interest to enter in the first field and an area to search wit
 2. Find the location for an address (or city name) to build an envelope to search within:
     * Create `GeocodeParameters`.
     * Add return fields to the parameters' `resultAttributeNames` collection. Only add a single "\*" option to return all fields.
-    * Call `locatorTask::geocodeWithParameters(locationQueryString, geocodeParameters)` to get a list of `GeocodeResult`s.
+    * Call `locatorTask::geocodeWithParametersAsync(locationQueryString, geocodeParameters)` to get a list of `GeocodeResult`s.
     * Use the `displayLocation` from one of the results to build an `Envelope` to search within.
 3. Get place of interest (POI) suggestions based on a place name query:
     * Create `SuggestParameters`.
@@ -28,7 +28,7 @@ Choose a place of interest to enter in the first field and an area to search wit
 4. Use one of the suggestions or a user-written query to find the locations of POIs:
     * Create `GeocodeParameters`.
     * Set the parameters' `searchArea` to the envelope.
-    * Call `locatorTask::geocodeWithParameters(suggestionLabelOrPlaceQueryString, geocodeParameters)` to get a list of `GeocodeResult`s.
+    * Call `locatorTask::geocodeWithParametersAsync(suggestionLabelOrPlaceQueryString, geocodeParameters)` to get a list of `GeocodeResult`s.
     * Display the places of interest using the results' `displayLocation`s.
 
 ## Relevant API

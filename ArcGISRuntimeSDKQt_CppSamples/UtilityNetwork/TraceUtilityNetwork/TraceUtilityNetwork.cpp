@@ -20,6 +20,7 @@
 
 #include "TraceUtilityNetwork.h"
 
+#include "ErrorException.h"
 #include "FeatureLayer.h"
 #include "GeometryEngine.h"
 #include "Map.h"
@@ -44,7 +45,6 @@
 #include "UtilityTraceResultListModel.h"
 #include "MapTypes.h"
 #include "SymbolTypes.h"
-#include "TaskWatcher.h"
 #include "Error.h"
 #include "GraphicsOverlayListModel.h"
 #include "GraphicsOverlay.h"
@@ -64,6 +64,9 @@
 #include "Envelope.h"
 #include "Viewpoint.h"
 #include "Polyline.h"
+#include "ErrorException.h"
+
+#include <QFuture>
 
 using namespace Esri::ArcGISRuntime;
 
@@ -95,11 +98,6 @@ void TraceUtilityNetwork::createFeatureLayers(const Error& error)
   // Create feature table from the 1st table (index = 0) in the serviceGeodatabase
   m_deviceFeatureTable = m_serviceGeodatabase->table(0);
   m_deviceLayer = new FeatureLayer(m_deviceFeatureTable, this);
-
-  connect(m_deviceLayer, &FeatureLayer::selectFeaturesCompleted, this, [this]()
-  {
-    setBusyIndicator(false);
-  });
 
   // Create feature table from the 4th table (index = 3) in the serviceGeodatabase
   m_lineFeatureTable = m_serviceGeodatabase->table(3);
@@ -140,8 +138,6 @@ void TraceUtilityNetwork::loadUtilityNetwork(const Error& error)
 
   connect(m_utilityNetwork, &UtilityNetwork::errorOccurred, this, &TraceUtilityNetwork::hasErrorOccurred);
 
-  connect(m_utilityNetwork, &UtilityNetwork::traceCompleted, this, &TraceUtilityNetwork::onTraceCompleted);
-
   connect(m_utilityNetwork, &UtilityNetwork::doneLoading, this, &TraceUtilityNetwork::addUtilityNetworkToMap);
 
   m_utilityNetwork->load();
@@ -157,6 +153,12 @@ bool TraceUtilityNetwork::hasErrorOccurred(const Error& error)
   m_dialogText = QString(error.message() + " - " + error.additionalMessage());
   emit dialogVisibleChanged();
   return true;
+}
+
+void TraceUtilityNetwork::onTaskFailed_(const Esri::ArcGISRuntime::ErrorException& exception)
+{
+  m_dialogText = QString(exception.error().message() + " - " + exception.error().additionalMessage());
+  emit dialogVisibleChanged();
 }
 
 void TraceUtilityNetwork::addUtilityNetworkToMap(const Error& error)
@@ -182,11 +184,11 @@ void TraceUtilityNetwork::connectSignals()
     constexpr double tolerance = 10.0;
     constexpr bool returnPopups = false;
     m_clickPoint = m_mapView->screenToLocation(mouseEvent.position().x(), mouseEvent.position().y());
-    m_mapView->identifyLayers(mouseEvent.position().x(), mouseEvent.position().y(), tolerance, returnPopups);
+    m_mapView->identifyLayersAsync(mouseEvent.position(), tolerance, returnPopups).then(this, [this](const QList<IdentifyLayerResult*>& results)
+    {
+      onIdentifyLayersCompleted_(results);
+    });
   });
-
-  // handle the identify results
-  connect(m_mapView, &MapQuickView::identifyLayersCompleted, this, &TraceUtilityNetwork::onIdentifyLayersCompleted);
 }
 
 TraceUtilityNetwork::~TraceUtilityNetwork() = default;
@@ -273,7 +275,13 @@ void TraceUtilityNetwork::trace(int index)
   m_traceParams->setStartingLocations(m_startingLocations);
   m_traceParams->setBarriers(m_barriers);
   // Perform a connected trace on the utility network
-  m_utilityNetwork->trace(m_traceParams);
+  m_utilityNetwork->traceAsync(m_traceParams).then(this, [this](QList<UtilityTraceResult*>)
+  {
+    onTraceCompleted_();
+  }).onFailed([this](const ErrorException& exception)
+  {
+    onTaskFailed_(exception);
+  });
 }
 
 void TraceUtilityNetwork::reset()
@@ -299,7 +307,7 @@ void TraceUtilityNetwork::reset()
   }
 }
 
-void TraceUtilityNetwork::onIdentifyLayersCompleted(const QUuid&, const QList<IdentifyLayerResult*>& results)
+void TraceUtilityNetwork::onIdentifyLayersCompleted_(const QList<IdentifyLayerResult*>& results)
 {
   if (results.isEmpty())
   {
@@ -393,7 +401,7 @@ void TraceUtilityNetwork::onIdentifyLayersCompleted(const QUuid&, const QList<Id
   updateTraceParams(element);
 }
 
-void TraceUtilityNetwork::onTraceCompleted()
+void TraceUtilityNetwork::onTraceCompleted_()
 {
   m_dialogVisible = true;
   emit dialogVisibleChanged();
@@ -427,8 +435,15 @@ void TraceUtilityNetwork::onTraceCompleted()
   deviceParams.setObjectIds(deviceObjIds);
   lineParams.setObjectIds(lineObjIds);
 
-  m_deviceLayer->selectFeatures(deviceParams, SelectionMode::Add);
-  m_lineLayer->selectFeatures(lineParams, SelectionMode::Add);
+  m_deviceLayer->selectFeaturesAsync(deviceParams, SelectionMode::Add).then(this, [this](FeatureQueryResult*)
+  {
+    setBusyIndicator(false);
+  });
+
+  m_lineLayer->selectFeaturesAsync(lineParams, SelectionMode::Add).then(this, [this](FeatureQueryResult*)
+  {
+    setBusyIndicator(false);
+  });
 }
 
 UniqueValue* TraceUtilityNetwork::createUniqueValue(const QString& label, Esri::ArcGISRuntime::Symbol* fillSymbol, int value)

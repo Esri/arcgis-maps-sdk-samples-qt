@@ -54,7 +54,6 @@
 #include "GeometryEngine.h"
 #include "MapTypes.h"
 #include "SymbolTypes.h"
-#include "TaskWatcher.h"
 #include "Error.h"
 #include "GraphicsOverlayListModel.h"
 #include "GraphicListModel.h"
@@ -64,6 +63,7 @@
 #include "ArcGISFeature.h"
 #include "Polyline.h"
 
+#include <QFuture>
 #include <QUuid>
 
 using namespace Esri::ArcGISRuntime;
@@ -171,11 +171,12 @@ void PerformValveIsolationTrace::setMapView(MapQuickView* mapView)
     constexpr double tolerance = 10.0;
     constexpr bool returnPopups = false;
     m_clickPoint = m_mapView->screenToLocation(mouseEvent.position().x(), mouseEvent.position().y());
-    m_mapView->identifyLayers(mouseEvent.position().x(), mouseEvent.position().y(), tolerance, returnPopups);
+    m_mapView->identifyLayersAsync(mouseEvent.position(), tolerance, returnPopups).then(this, [this](const QList<IdentifyLayerResult*>& results)
+    {
+      // handle the identify results
+      onIdentifyLayersCompleted_(results);
+    });
   });
-
-  // handle the identify resultss
-  connect(m_mapView, &MapQuickView::identifyLayersCompleted, this, &PerformValveIsolationTrace::onIdentifyLayersCompleted);
 
   // apply renderers
   SimpleMarkerSymbol* startingPointSymbol = new SimpleMarkerSymbol(SimpleMarkerSymbolStyle::Cross, Qt::green, 25, this);
@@ -248,7 +249,70 @@ void PerformValveIsolationTrace::performTrace()
       UtilityCategoryComparison* categoryComparison = new UtilityCategoryComparison(selectedCategory, UtilityCategoryComparisonOperator::Exists, this);
       traceParameters->traceConfiguration()->filter()->setBarriers(categoryComparison);
     }
-    m_utilityNetwork->trace(traceParameters);
+    m_utilityNetwork->traceAsync(traceParameters).then(this, [this](QList<UtilityTraceResult*>)
+    {
+      onTraceCompleted_();
+    });
+  }
+}
+
+void PerformValveIsolationTrace::onTraceCompleted_()
+{
+  // local paret to clean up UtilityElementTraceResult when we leave scope.
+  QObject localParent;
+
+  m_tasksRunning = false;
+  emit tasksRunningChanged();
+
+  UtilityTraceResultListModel* utilityTraceResultList = m_utilityNetwork->traceResult();
+
+  if (utilityTraceResultList->isEmpty())
+  {
+    m_noResults = true;
+    emit noResultsChanged();
+    return;
+  }
+
+  UtilityElementTraceResult* utilityElementTraceResult = dynamic_cast<UtilityElementTraceResult*>(utilityTraceResultList->at(0));
+  if (utilityElementTraceResult)
+  {
+    // given local parent to clean up once we leave scope
+    utilityElementTraceResult->setParent(&localParent);
+
+    const QList<UtilityElement*> utilityElementList = utilityElementTraceResult->elements(this);
+
+    // A convenience wrapper that deletes the contents of utilityElementList when we leave scope.
+    ScopedCleanup<UtilityElement> utilityElementListCleanUp(utilityElementList);
+
+    if (utilityElementList.empty())
+    {
+      m_noResults = true;
+      emit noResultsChanged();
+      return;
+    }
+
+    // iterate through the map's features
+    for (Layer* layer : *m_map->operationalLayers())
+    {
+      FeatureLayer* featureLayer = dynamic_cast<FeatureLayer*>(layer);
+      if (featureLayer)
+      {
+        // create query parameters to find features whose network source names match layer's feature table name
+        QueryParameters queryParameters;
+        QList<qint64> objectIds = {};
+
+        for (UtilityElement* utilityElement : utilityElementList)
+        {
+          const QString networkSourceName = utilityElement->networkSource()->name();
+          const QString featureTableName = featureLayer->featureTable()->tableName();
+          if (networkSourceName == featureTableName)
+            objectIds.append(utilityElement->objectId());
+        }
+        queryParameters.setObjectIds(objectIds);
+        auto future = featureLayer->selectFeaturesAsync(queryParameters, SelectionMode::New);
+        Q_UNUSED(future)
+      }
+    }
   }
 }
 
@@ -321,84 +385,23 @@ void PerformValveIsolationTrace::connectSignals()
       return;
 
     // display starting location
-    m_utilityNetwork->featuresForElements(QList<UtilityElement*> {m_startingLocation});
+    m_utilityNetwork->featuresForElementsAsync(QList<UtilityElement*> {m_startingLocation}).then(this, [this](QList<ArcGISFeature*>)
+    {
+      // display starting location
+      ArcGISFeatureListModel* elementFeaturesList = m_utilityNetwork->featuresForElementsResult();
+      const Point startingLocationGeometry = geometry_cast<Point>(elementFeaturesList->first()->geometry());
+      Graphic* graphic = new Graphic(startingLocationGeometry, m_graphicParent.get());
+      m_startingLocationOverlay->graphics()->append(graphic);
+
+      constexpr double scale = 3000.0;
+      m_mapView->setViewpointCenterAsync(startingLocationGeometry, scale);
+      m_tasksRunning = false;
+      emit tasksRunningChanged();
+    });
 
     // populate the combo box choices
     m_categoriesList = categoriesList();
     emit categoriesListChanged();
-  });
-
-  connect(m_utilityNetwork, &UtilityNetwork::traceCompleted, this, [this](const QUuid&)
-  {
-    // local paret to clean up UtilityElementTraceResult when we leave scope.
-    QObject localParent;
-
-    m_tasksRunning = false;
-    emit tasksRunningChanged();
-
-    UtilityTraceResultListModel* utilityTraceResultList = m_utilityNetwork->traceResult();
-
-    if (utilityTraceResultList->isEmpty())
-    {
-      m_noResults = true;
-      emit noResultsChanged();
-      return;
-    }
-
-    UtilityElementTraceResult* utilityElementTraceResult = dynamic_cast<UtilityElementTraceResult*>(utilityTraceResultList->at(0));
-    if (utilityElementTraceResult)
-    {
-      // given local parent to clean up once we leave scope
-      utilityElementTraceResult->setParent(&localParent);
-
-      const QList<UtilityElement*> utilityElementList = utilityElementTraceResult->elements(this);
-
-      // A convenience wrapper that deletes the contents of utilityElementList when we leave scope.
-      ScopedCleanup<UtilityElement> utilityElementListCleanUp(utilityElementList);
-
-      if (utilityElementList.empty())
-      {
-        m_noResults = true;
-        emit noResultsChanged();
-        return;
-      }
-
-      // iterate through the map's features
-      for (Layer* layer : *m_map->operationalLayers())
-      {
-        FeatureLayer* featureLayer = dynamic_cast<FeatureLayer*>(layer);
-        if (featureLayer)
-        {
-          // create query parameters to find features whose network source names match layer's feature table name
-          QueryParameters queryParameters;
-          QList<qint64> objectIds = {};
-
-          for (UtilityElement* utilityElement : utilityElementList)
-          {
-            const QString networkSourceName = utilityElement->networkSource()->name();
-            const QString featureTableName = featureLayer->featureTable()->tableName();
-            if (networkSourceName == featureTableName)
-              objectIds.append(utilityElement->objectId());
-          }
-          queryParameters.setObjectIds(objectIds);
-          featureLayer->selectFeatures(queryParameters, SelectionMode::New);
-        }
-      }
-    }
-  });
-
-  connect(m_utilityNetwork, &UtilityNetwork::featuresForElementsCompleted, this, [this](const QUuid&)
-  {
-    // display starting location
-    ArcGISFeatureListModel* elementFeaturesList = m_utilityNetwork->featuresForElementsResult();
-    const Point startingLocationGeometry = geometry_cast<Point>(elementFeaturesList->first()->geometry());
-    Graphic* graphic = new Graphic(startingLocationGeometry, m_graphicParent.get());
-    m_startingLocationOverlay->graphics()->append(graphic);
-
-    constexpr double scale = 3000.0;
-    m_mapView->setViewpointCenter(startingLocationGeometry, scale);
-    m_tasksRunning = false;
-    emit tasksRunningChanged();
   });
 }
 
@@ -412,7 +415,7 @@ bool PerformValveIsolationTrace::tasksRunning() const
   return m_tasksRunning;
 }
 
-void PerformValveIsolationTrace::onIdentifyLayersCompleted(const QUuid&, const QList<IdentifyLayerResult*>& results)
+void PerformValveIsolationTrace::onIdentifyLayersCompleted_(const QList<IdentifyLayerResult*>& results)
 {
   // A convenience wrapper that deletes the contents of results when we leave scope.
   ScopedCleanup<IdentifyLayerResult> resultsScopedCleanup(results);

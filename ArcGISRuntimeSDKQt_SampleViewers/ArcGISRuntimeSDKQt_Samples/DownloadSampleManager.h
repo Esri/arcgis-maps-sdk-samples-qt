@@ -111,7 +111,7 @@ protected:
    * Clears any cached named user credentials so apps that use named user
    * workflows will prompt a challenge each time they are opened.
    */
-  virtual void clearCredentialCache() = 0;
+  Q_INVOKABLE virtual void clearCredentialCache() = 0;
 
   /*!
    * \brief Calls the load function on the internal portal.

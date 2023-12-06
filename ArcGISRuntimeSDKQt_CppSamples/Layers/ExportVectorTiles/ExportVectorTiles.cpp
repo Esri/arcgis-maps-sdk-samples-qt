@@ -32,7 +32,6 @@
 #include "GraphicsOverlayListModel.h"
 #include "GraphicListModel.h"
 #include "SymbolTypes.h"
-#include "TaskWatcher.h"
 #include "LayerListModel.h"
 #include "ServiceTypes.h"
 #include "ExportVectorTilesJob.h"
@@ -45,6 +44,7 @@
 #include "Basemap.h"
 #include "SpatialReference.h"
 
+#include <QFuture>
 #include <QTemporaryDir>
 #include <QUuid>
 
@@ -78,7 +78,7 @@ void ExportVectorTiles::setMapView(MapQuickView* mapView)
 
   m_mapView = mapView;
   m_mapView->setMap(m_map);
-  m_mapView->setViewpoint(Viewpoint(34.049, -117.181, 1e4));
+  m_mapView->setViewpointAsync(Viewpoint(34.049, -117.181, 1e4));
 
   m_graphicsOverlay = new GraphicsOverlay(this);
   m_mapView->graphicsOverlays()->append(m_graphicsOverlay);
@@ -110,9 +110,9 @@ void ExportVectorTiles::startExport(double xSW, double ySW, double xNE, double y
 
   m_exportAreaGraphic->setGeometry(exportArea);
 
-  // Create an async connection for when the default export parameters are created
-  connect(exportTask, &ExportVectorTilesTask::createDefaultExportVectorTilesParametersCompleted, this,
-          [exportTask, this](const QUuid&, ExportVectorTilesParameters exportParameters)
+  // Instantiate export parameters to create the export job with
+  exportTask->createDefaultExportVectorTilesParametersAsync(exportArea, m_mapView->mapScale() * 0.1)
+      .then(this, [this, exportTask](ExportVectorTilesParameters exportParameters)
   {
     // Using the reduced fonts service will reduce the download size of a vtpk by around 80 Mb
     // It is useful for taking the basemap offline but not recommended if you plan to later upload the vtpk
@@ -149,24 +149,19 @@ void ExportVectorTiles::startExport(double xSW, double ySW, double xNE, double y
 
     connect(m_exportJob, &Job::statusChanged, this, [this](JobStatus s)
     {
-      m_jobStatus = (int)s;
+      m_jobStatus = static_cast<int>(s);
       emit jobStatusChanged();
-    });
-
-    connect(m_exportJob, &Job::cancelAsyncCompleted, this, [this](const QUuid&, bool succeeded)
-    {
-      emit jobCancelDone(succeeded);
     });
     m_exportJob->start();
   });
-
-  // Instantiate export parameters to create the export job with
-  exportTask->createDefaultExportVectorTilesParameters(exportArea, m_mapView->mapScale() * 0.1);
 }
 
 void ExportVectorTiles::cancel()
 {
-  m_exportJob->cancelAsync();
+  m_exportJob->cancelJobAsync().then(this, [this](bool succeeded)
+  {
+    emit jobCancelDone(succeeded);;
+  });
   reset();
 }
 

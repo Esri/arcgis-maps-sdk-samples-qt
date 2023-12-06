@@ -26,7 +26,7 @@ DEFINES += Qt_Version=\"$$QT_VERSION\"
 SAMPLEPATHCPP = $$PWD/../../ArcGISRuntimeSDKQt_CppSamples
 COMMONVIEWER = $$PWD/../ArcGISRuntimeSDKQt_Samples
 PCH_HEADER = $$COMMONVIEWER/pch.hpp
-ARCGIS_RUNTIME_VERSION = 200.2.0
+ARCGIS_RUNTIME_VERSION = 200.3.0
 DEFINES += ArcGIS_Runtime_Version=$$ARCGIS_RUNTIME_VERSION
 
 # This block determines whether to build against the installed SDK or the local dev build area
@@ -76,6 +76,63 @@ exists($$PWD/../../../../DevBuildCpp.pri) {
       $$priLocation/sdk/include \
       $$priLocation/sdk/include/LocalServer
 
+  PLATFORM = ""
+  unix:!macx:!android:!ios {
+    contains(QMAKE_TARGET.arch, x86):{
+      PLATFORM = "linux/x86"
+    }
+    else {
+      PLATFORM = "linux/x64"
+    }
+    ARCGIS_RUNTIME_IMPORT_PATH = $${priLocation}/sdk/$${PLATFORM}/qml
+  }
+
+  macx:{
+    PLATFORM = "macOS"
+    ARCGIS_RUNTIME_IMPORT_PATH = $${priLocation}/sdk/$${PLATFORM}/universal/qml
+  }
+
+  win32:{
+    contains(QT_ARCH, x86_64):{
+      PLATFORM = "windows/x64"
+    }
+    ARCGIS_RUNTIME_IMPORT_PATH = $${priLocation}/sdk/$${PLATFORM}/qml
+  }
+
+  android {
+    PLATFORM = "android"
+
+    equals(QT_ARCH, "arm64-v8a") {
+        ANDROID_ARCH_FOLDER="android_arm64_v8a"
+    }
+    else:equals(QT_ARCH, "armeabi-v7a") {
+        ANDROID_ARCH_FOLDER="android_armv7"
+    }
+    else:equals(QT_ARCH, "x86") {
+        ANDROID_ARCH_FOLDER="android_x86"
+    }
+    contains(QMAKE_HOST.os, Windows):{
+      ANDROIDDIR = $$clean_path($$(ALLUSERSPROFILE)\\EsriRuntimeQt)
+      ARCGIS_RUNTIME_IMPORT_PATH = $${ANDROIDDIR}/Qt$${ARCGIS_RUNTIME_VERSION}/$${PLATFORM}/$${ANDROID_ARCH_FOLDER}/qml
+    }
+    else {
+      ARCGIS_RUNTIME_IMPORT_PATH = $${priLocation}/sdk/$${PLATFORM}/$${ANDROID_ARCH_FOLDER}/qml
+    }
+  }
+
+  ios {
+    PLATFORM = "iOS"
+    ARCGIS_RUNTIME_IMPORT_PATH = $${priLocation}/sdk/$${PLATFORM}/universal/qml
+  }
+
+  # Add plugin paths to QML_IMPORT_PATH
+  QML_IMPORT_PATH += $${ARCGIS_RUNTIME_IMPORT_PATH}
+
+  # Add plugin paths to QMLPATHS
+  QMLPATHS += $${ARCGIS_RUNTIME_IMPORT_PATH}
+
+  # Set ArcGIS Runtime QML import path for ArcGISExtras
+  DEFINES += ARCGIS_RUNTIME_IMPORT_PATH=\"$$ARCGIS_RUNTIME_IMPORT_PATH\"
   DEFINES += BUILD_FROM_SETUP
 }
 

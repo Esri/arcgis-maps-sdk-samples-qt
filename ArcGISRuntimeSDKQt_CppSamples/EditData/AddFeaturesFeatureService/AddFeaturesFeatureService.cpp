@@ -31,9 +31,9 @@
 #include "Point.h"
 #include "ServiceFeatureTable.h"
 #include "SpatialReference.h"
-#include "TaskWatcher.h"
 #include "Viewpoint.h"
 
+#include <QFuture>
 #include <QMap>
 #include <QMouseEvent>
 #include <QUrl>
@@ -110,33 +110,26 @@ void AddFeaturesFeatureService::connectSignals()
 
     // create a new feature and add it to the feature table
     Feature* feature = m_featureTable->createFeature(featureAttributes, newPoint, this);
-    m_featureTable->addFeature(feature);
+    m_featureTable->addFeatureAsync(feature).then(this, [this]()
+    {
+      // if add feature was successful, call apply edits
+       m_featureTable->applyEditsAsync().then(this, [](const QList<FeatureEditResult*>& featureEditResults)
+       {
+         // Lock is a convenience wrapper that deletes the contents of the list once we leave scope.
+         FeatureListResultLock lock(featureEditResults);
+
+         if (lock.results.isEmpty())
+           return;
+
+         // obtain the first item in the list
+         FeatureEditResult* featureEditResult = lock.results.first();
+         // check if there were errors, and if not, log the new object ID
+         if (!featureEditResult->isCompletedWithErrors())
+           qDebug() << "New Object ID is:" << featureEditResult->objectId();
+         else
+           qDebug() << "Apply edits error.";
+       });
+    });
   });
   //! [AddFeaturesFeatureService add at mouse click]
-
-  // connect to the addFeatureCompleted signal from the ServiceFeatureTable
-  connect(m_featureTable, &ServiceFeatureTable::addFeatureCompleted, this, [this](const QUuid&, bool success)
-  {
-    // if add feature was successful, call apply edits
-    if (success)
-      m_featureTable->applyEdits();
-  });
-
-  // connect to the applyEditsCompleted signal from the ServiceFeatureTable
-  connect(m_featureTable, &ServiceFeatureTable::applyEditsCompleted, this, [](const QUuid&, const QList<FeatureEditResult*>& featureEditResults)
-  {
-    // Lock is a convenience wrapper that deletes the contents of the list once we leave scope.
-    FeatureListResultLock lock(featureEditResults);
-
-    if (lock.results.isEmpty())
-      return;
-
-    // obtain the first item in the list
-    FeatureEditResult* featureEditResult = lock.results.first();
-    // check if there were errors, and if not, log the new object ID
-    if (!featureEditResult->isCompletedWithErrors())
-      qDebug() << "New Object ID is:" << featureEditResult->objectId();
-    else
-      qDebug() << "Apply edits error.";
-  });
 }

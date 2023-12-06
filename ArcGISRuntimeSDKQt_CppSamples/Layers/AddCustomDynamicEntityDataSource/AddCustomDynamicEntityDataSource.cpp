@@ -27,7 +27,6 @@
 #include "Map.h"
 #include "MapQuickView.h"
 #include "MapTypes.h"
-#include "TaskWatcher.h"
 #include "Viewpoint.h"
 #include "LayerListModel.h"
 #include "Basemap.h"
@@ -103,7 +102,7 @@ void AddCustomDynamicEntityDataSource::setMapView(MapQuickView* mapView)
   m_mapView = mapView;
   m_mapView->setMap(m_map);
 
-  m_mapView->setViewpoint(Viewpoint(47.984, -123.657, 3e6));
+  m_mapView->setViewpointAsync(Viewpoint(47.984, -123.657, 3e6));
 
   // Create a slot to listen for mouse clicks
   connect(m_mapView, &MapQuickView::mouseClicked, this, &AddCustomDynamicEntityDataSource::identifyLayerAtMouseClick);

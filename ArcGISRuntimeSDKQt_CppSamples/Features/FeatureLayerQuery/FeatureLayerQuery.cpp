@@ -39,12 +39,13 @@
 #include "SymbolTypes.h"
 #include "LayerListModel.h"
 #include "FeatureIterator.h"
-#include "TaskWatcher.h"
 
+#include <QColor>
+#include <QFuture>
+#include <QList>
 #include <QUuid>
 #include <QUrl>
-#include <QColor>
-#include <QList>
+
 #include <memory>
 
 using namespace Esri::ArcGISRuntime;
@@ -95,45 +96,6 @@ void FeatureLayerQuery::componentComplete()
   // add the feature layer to the map
   m_map->operationalLayers()->append(m_featureLayer);
 
-  // connect signals
-  connectSignals();
-}
-
-void FeatureLayerQuery::connectSignals()
-{
-  // iterate over the query results once the query is done
-  connect(m_featureTable, &ServiceFeatureTable::queryFeaturesCompleted, this, [this](const QUuid&, FeatureQueryResult* rawQueryResult)
-  {
-    auto queryResult = std::unique_ptr<FeatureQueryResult>(rawQueryResult);
-
-    if (queryResult && !queryResult->iterator().hasNext())
-    {
-      m_queryResultsCount = 0;
-      emit queryResultsCountChanged();
-      return;
-    }
-
-    // clear any existing selection
-    m_featureLayer->clearSelection();
-    QList<Feature*> features;
-
-    // iterate over the result object
-    while(queryResult->iterator().hasNext())
-    {
-      Feature* feature = queryResult->iterator().next(this);
-      // add each feature to the list
-      features.append(feature);
-    }
-
-    // select the feature
-    m_featureLayer->selectFeatures(features);
-    // zoom to the first feature
-    m_mapView->setViewpointGeometry(features.at(0)->geometry(), 30);
-    // set the count for QML property
-    m_queryResultsCount = features.count();
-    emit queryResultsCountChanged();
-  });
-
   connect(m_featureTable, &ServiceFeatureTable::loadStatusChanged, this, [this](LoadStatus loadStatus)
   {
     loadStatus == LoadStatus::Loaded ? m_initialized = true : m_initialized = false;
@@ -151,7 +113,37 @@ void FeatureLayerQuery::runQuery(const QString& stateName)
   // create a query parameter object and set the where clause
   QueryParameters queryParams;
   queryParams.setWhereClause(QString("STATE_NAME LIKE '" + formatStateNameForQuery(stateName) + "%'"));
-  m_featureTable->queryFeatures(queryParams);
+  m_featureTable->queryFeaturesAsync(queryParams).then(this, [this](FeatureQueryResult* rawQueryResult)
+  {
+    auto queryResult = std::unique_ptr<FeatureQueryResult>(rawQueryResult);
+
+    if (queryResult && !queryResult->iterator().hasNext())
+    {
+      m_queryResultsCount = 0;
+      emit queryResultsCountChanged();
+      return;
+    }
+
+    // clear any existing selection
+    m_featureLayer->clearSelection();
+    QList<Feature*> features;
+
+    // iterate over the result object
+    while (queryResult->iterator().hasNext())
+    {
+      Feature* feature = queryResult->iterator().next(this);
+      // add each feature to the list
+      features.append(feature);
+    }
+
+    // select the feature
+    m_featureLayer->selectFeatures(features);
+    // zoom to the first feature
+    m_mapView->setViewpointGeometryAsync(features.at(0)->geometry(), 30);
+    // set the count for QML property
+    m_queryResultsCount = static_cast<int>(features.count());
+    emit queryResultsCountChanged();
+  });
 }
 
 QString FeatureLayerQuery::formatStateNameForQuery(const QString& stateName) const

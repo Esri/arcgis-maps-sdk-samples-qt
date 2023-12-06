@@ -37,7 +37,6 @@
 #include "Point.h"
 #include "QueryParameters.h"
 #include "TableDescription.h"
-#include "TaskWatcher.h"
 #include "ServiceTypes.h"
 #include "LayerListModel.h"
 #include "FieldDescriptionListModel.h"
@@ -48,7 +47,7 @@
 #include "SpatialReference.h"
 #include "Point.h"
 
-#include <QUuid>
+#include <QFuture>
 
 using namespace Esri::ArcGISRuntime;
 
@@ -82,26 +81,14 @@ void CreateMobileGeodatabase::setMapView(MapQuickView* mapView)
 
   m_mapView = mapView;
   m_mapView->setMap(m_map);
-  m_mapView->setViewpoint(Viewpoint(39.3238, -77.7332, 10'000));
+  m_mapView->setViewpointAsync(Viewpoint(39.3238, -77.7332, 10'000));
 
-  createConnections();
+  connect(m_mapView, &MapQuickView::mouseClicked, this, &CreateMobileGeodatabase::addFeature);
 
   emit mapViewChanged();
 }
 
-void CreateMobileGeodatabase::createConnections()
-{
-  connect(m_mapView, &MapQuickView::mouseClicked, this, &CreateMobileGeodatabase::addFeature);
-
-  // Use the Geodatabase::instance() singleton to connect to createCompleted
-  connect(Geodatabase::instance(), &Geodatabase::createCompleted, this, [this](const QUuid&, Geodatabase* geodatabase)
-  {
-    m_gdb = geodatabase;
-    createTable();
-  });
-}
-
-// Create a Geodatabase in an empty directory with the Geodatabase::instance() singleton
+// Create a Geodatabase in an empty directory
 void CreateMobileGeodatabase::createGeodatabase()
 {
   m_gdbFilePath = QString{m_tempDir.path() + "/LocationHistory_%1.geodatabase"}.arg(QDateTime::currentSecsSinceEpoch() % 1000);
@@ -111,8 +98,12 @@ void CreateMobileGeodatabase::createGeodatabase()
   if (QFile::exists(m_gdbFilePath))
     return;
 
-  // Use the Geodatabase::instance() singleton to call create() with an empty file path
-  Geodatabase::create(m_gdbFilePath);
+  // Use static Geodatabase::createAsync with an empty file path
+  Geodatabase::createAsync(m_gdbFilePath, this).then(this, [this](Geodatabase* geodatabase)
+  {
+    m_gdb = geodatabase;
+    createTable();
+  });
 }
 
 // Create a GeodatabaseFeatureTable from the new Geodatabase with a TableDescription
@@ -129,15 +120,13 @@ void CreateMobileGeodatabase::createTable()
   tableDescription->fieldDescriptions()->append(new FieldDescription("oid", FieldType::OID));
   tableDescription->fieldDescriptions()->append(new FieldDescription("collection_timestamp", FieldType::Date));
 
-  connect(m_gdb, &Geodatabase::createTableCompleted, this, [this](const QUuid&, GeodatabaseFeatureTable* gdbFeatureTableResult)
+  m_gdb->createTableAsync(tableDescription, this).then(this, [this](GeodatabaseFeatureTable* gdbFeatureTableResult)
   {
     m_featureTable = gdbFeatureTableResult;
 
     FeatureLayer* featureLayer = new FeatureLayer(m_featureTable, this);
     m_map->operationalLayers()->append(featureLayer);
   });
-
-  m_gdb->createTable(tableDescription);
 }
 
 // Close the Geodatabase so that it can be safely shared
@@ -168,40 +157,32 @@ void CreateMobileGeodatabase::addFeature(QMouseEvent& mouseEvent)
   attributes.insert("collection_timestamp", QDateTime::currentDateTime());
   Feature* feature = m_featureTable->createFeature(attributes, mousePoint, this);
 
-  connect(m_featureTable, &FeatureTable::addFeatureCompleted, this, [feature, this](const QUuid&, bool success)
+  m_featureTable->addFeatureAsync(feature).then(this, [this, feature]()
   {
-    if (!success)
-      return;
-
     m_featureListModel->addFeature(feature);
     emit featureListModelChanged();
 
-    m_featureCount = m_featureTable->numberOfFeatures();
+    m_featureCount = static_cast<int>(m_featureTable->numberOfFeatures());
     emit featureCountChanged();
-
-    m_featureTable->disconnect();
   });
-
-  m_featureTable->addFeature(feature);
 }
 
 void CreateMobileGeodatabase::deleteFeatures()
 {
   QueryParameters params;
   params.setWhereClause("1=1");
-  connect(m_featureTable, &FeatureTable::queryFeaturesCompleted, this, [this](const QUuid&, FeatureQueryResult* rawQueryResult)
+
+  m_featureTable->queryFeaturesAsync(params).then(this, [this](FeatureQueryResult* rawQueryResult)
   {
     // Cast the FeatureQueryResult to a unique pointer to delete it when it goes out of scope
     auto queryResults = std::unique_ptr<FeatureQueryResult>(rawQueryResult);
     FeatureIterator resultIterator = queryResults->iterator();
 
-    m_featureTable->deleteFeatures(resultIterator.features());
+    auto deleteFeaturesFuture = m_featureTable->deleteFeaturesAsync(resultIterator.features());
+    Q_UNUSED(deleteFeaturesFuture)
     m_featureCount = 0;
     emit featureCountChanged();
-
-    m_featureTable->disconnect();
   });
-  m_featureTable->queryFeatures(params);
 }
 
 void CreateMobileGeodatabase::clearFeatures()

@@ -40,7 +40,6 @@
 #include "TileCache.h"
 #include "MapTypes.h"
 #include "SymbolTypes.h"
-#include "TaskWatcher.h"
 #include "Error.h"
 #include "GraphicsOverlayListModel.h"
 #include "GraphicListModel.h"
@@ -159,16 +158,14 @@ int OfflineRouting::travelModeIndex() const
 
 void OfflineRouting::connectSignals()
 {
-  connect(m_routeTask, &RouteTask::createDefaultParametersCompleted, this, [this](const QUuid&, const RouteParameters& defaultParameters)
-  {
-    m_routeParameters = defaultParameters;
-  });
-
   connect(m_routeTask, &RouteTask::doneLoading, this, [this](const Error& loadError)
   {
     if (loadError.isEmpty())
     {
-      m_routeTask->createDefaultParameters();
+      m_routeTask->createDefaultParametersAsync().then(this, [this](const RouteParameters& defaultParameters)
+      {
+        m_routeParameters = defaultParameters;
+      });
       emit travelModeNamesChanged();
     }
     else
@@ -177,25 +174,22 @@ void OfflineRouting::connectSignals()
     }
   });
 
-  connect(m_mapView, &MapQuickView::identifyGraphicsOverlayCompleted, this, [this](const QUuid&, IdentifyGraphicsOverlayResult* rawIdentifyResult)
-  {
-    auto result = std::unique_ptr<IdentifyGraphicsOverlayResult>(rawIdentifyResult);
-    if (!result->error().isEmpty())
-      qDebug() << result->error().message() << result->error().additionalMessage();
-
-    m_selectedGraphic = nullptr;
-    if (!result->graphics().isEmpty())
-    {
-      // identify selected graphic in m_stopsOverlay
-      int index = m_stopsOverlay->graphics()->indexOf(result->graphics().at(0));
-      m_selectedGraphic = m_stopsOverlay->graphics()->at(index);
-    }
-
-  });
-
   // check whether mouse pressed over an existing stop
   connect(m_mapView, &MapQuickView::mousePressed, this, [this](QMouseEvent& e){
-    m_mapView->identifyGraphicsOverlay(m_stopsOverlay, e.position().x(), e.position().y(), 10, false);
+    m_mapView->identifyGraphicsOverlayAsync(m_stopsOverlay, e.position(), 10, false).then(this, [this](IdentifyGraphicsOverlayResult* rawIdentifyResult)
+    {
+      auto result = std::unique_ptr<IdentifyGraphicsOverlayResult>(rawIdentifyResult);
+      if (!result->error().isEmpty())
+        qDebug() << result->error().message() << result->error().additionalMessage();
+
+      m_selectedGraphic = nullptr;
+      if (!result->graphics().isEmpty())
+      {
+        // identify selected graphic in m_stopsOverlay
+        int index = m_stopsOverlay->graphics()->indexOf(result->graphics().at(0));
+        m_selectedGraphic = m_stopsOverlay->graphics()->at(index);
+      }
+    });
   });
 
   // get stops from clicked locations
@@ -243,8 +237,26 @@ void OfflineRouting::connectSignals()
       findRoute();
     }
   });
+}
 
-  connect(m_routeTask, &RouteTask::solveRouteCompleted, this, [this](const QUuid&, const RouteResult& routeResult){
+void OfflineRouting::findRoute()
+{
+  if (!m_routeTaskFuture.isFinished() || m_stopsOverlay->graphics()->size() <= 1)
+    return;
+
+  QList<Stop> stops;
+  for (const Graphic* graphic : *m_stopsOverlay->graphics())
+  {
+    stops << Stop(geometry_cast<Point>(graphic->geometry()));
+  }
+
+  // configure stops and travel mode
+  m_routeParameters.setStops(stops);
+  m_routeParameters.setTravelMode(m_routeTask->routeTaskInfo().travelModes().at(m_travelModeIndex));
+
+  m_routeTaskFuture = m_routeTask->solveRouteAsync(m_routeParameters);
+  m_routeTaskFuture.then(this, [this](const RouteResult& routeResult)
+  {
     if (routeResult.isEmpty())
       return;
 
@@ -255,27 +267,6 @@ void OfflineRouting::connectSignals()
 
     m_routeOverlay->graphics()->append(routeGraphic);
   });
-}
-
-void OfflineRouting::findRoute()
-{
-  if(!m_taskWatcher.isDone())
-    return;
-
-  if (m_stopsOverlay->graphics()->size() > 1)
-  {
-    QList<Stop> stops;
-    for (const Graphic* graphic : *m_stopsOverlay->graphics())
-    {
-      stops << Stop(geometry_cast<Point>(graphic->geometry()));
-    }
-
-    // configure stops and travel mode
-    m_routeParameters.setStops(stops);
-    m_routeParameters.setTravelMode(m_routeTask->routeTaskInfo().travelModes().at(m_travelModeIndex));
-
-    m_taskWatcher = m_routeTask->solveRoute(m_routeParameters);
-  }
 }
 
 // Set the view (created in QML)

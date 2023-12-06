@@ -23,6 +23,7 @@ class FeatureLayer;
 class Map;
 class MapQuickView;
 class ServiceFeatureTable;
+class IdentifyLayerResult;
 }
 
 #include <QObject>
@@ -47,6 +48,7 @@ signals:
   void mapViewChanged();
 
 private:
+  void onIdentifyLayerCompleted_(Esri::ArcGISRuntime::IdentifyLayerResult* result);
   Esri::ArcGISRuntime::MapQuickView* mapView() const;
   QString selectedFeatureText() const;
 

@@ -38,9 +38,10 @@
 #include "SymbolTypes.h"
 #include "GraphicListModel.h"
 #include "PointCollection.h"
-#include "TaskWatcher.h"
 #include "SpatialReference.h"
 #include "Envelope.h"
+
+#include <QFuture>
 
 using namespace Esri::ArcGISRuntime;
 
@@ -111,7 +112,7 @@ void CreateGeometries::addGraphics()
   m_graphicsOverlay->graphics()->append(new Graphic(createMultipoint(), simpleMarkerSymbol, this));
 
   // Zoom to the extent of an envelope with some padding (10 device-independent pixels).
-  m_mapView->setViewpointGeometry(createEnvelope(), 10);
+  m_mapView->setViewpointGeometryAsync(createEnvelope(), 10);
 }
 
 // Return an envelope that covers the extent of the western United States.

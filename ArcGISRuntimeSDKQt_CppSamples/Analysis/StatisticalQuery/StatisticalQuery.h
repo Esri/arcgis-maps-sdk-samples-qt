@@ -22,6 +22,7 @@ namespace Esri::ArcGISRuntime
 class Map;
 class MapQuickView;
 class ServiceFeatureTable;
+class StatisticsQueryResult;
 }
 
 #include <QQuickItem>
@@ -43,6 +44,7 @@ signals:
   void showStatistics(const QString& results);
 
 private:
+  void onQueryStatisticsCompleted_(Esri::ArcGISRuntime::StatisticsQueryResult* rawResult);
   Esri::ArcGISRuntime::Map* m_map = nullptr;
   Esri::ArcGISRuntime::MapQuickView* m_mapView = nullptr;
   Esri::ArcGISRuntime::ServiceFeatureTable* m_featureTable = nullptr;

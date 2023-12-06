@@ -62,9 +62,6 @@ public:
   Q_INVOKABLE void performReset();
   Q_INVOKABLE void selectedTerminal(int index);
 
-private slots:
-  void onIdentifyLayersCompleted(const QUuid&, const QList<Esri::ArcGISRuntime::IdentifyLayerResult*>& results);
-
 signals:
   void mapViewChanged();
   void categoriesListChanged();
@@ -81,6 +78,8 @@ private:
   bool tasksRunning() const;
   bool noResults() const;
   void connectSignals();
+  void onIdentifyLayersCompleted_(const QList<Esri::ArcGISRuntime::IdentifyLayerResult*>& results);
+  void onTraceCompleted_();
 
   Esri::ArcGISRuntime::Map* m_map = nullptr;
   Esri::ArcGISRuntime::Credential* m_cred = nullptr;

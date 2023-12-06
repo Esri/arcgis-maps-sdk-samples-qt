@@ -25,7 +25,6 @@
 #include "SceneQuickView.h"
 #include "PointCloudLayer.h"
 #include "MapTypes.h"
-#include "TaskWatcher.h"
 #include "Error.h"
 #include "Surface.h"
 #include "ElevationSourceListModel.h"
@@ -33,6 +32,7 @@
 #include "Viewpoint.h"
 #include "Envelope.h"
 
+#include <QFuture>
 #include <QtCore/qglobal.h>
 #include <QStandardPaths>
 
@@ -101,7 +101,7 @@ void ViewPointCloudDataOffline::setSceneView(SceneQuickView* sceneView)
     if (!e.isEmpty())
       return;
 
-    m_sceneView->setViewpoint(Viewpoint(pointCloudLyr->fullExtent()));
+    m_sceneView->setViewpointAsync(Viewpoint(pointCloudLyr->fullExtent()));
   });
 
   // add the layer to the scene

@@ -28,13 +28,13 @@
 #include "OfflineMapSyncParameters.h"
 #include "OfflineMapSyncJob.h"
 #include "Error.h"
-#include "TaskWatcher.h"
 #include "OfflineMapUpdatesInfo.h"
 #include "OfflineMapTypes.h"
 #include "OfflineMapSyncResult.h"
 
 #include <QFile>
 #include <QFileInfo>
+#include <QFuture>
 #include <QtCore/qglobal.h>
 #include <QUuid>
 #include <QStandardPaths>
@@ -102,6 +102,7 @@ ApplyScheduledMapUpdates::ApplyScheduledMapUpdates(QObject* parent /* = nullptr 
   // For the purposes of demonstrating the sample,
   // create a temporary copy of the local offline map files,
   // so that updating does not overwrite them permanently
+
   copyDir(defaultDataPath() + "/" + sampleMmpk, m_TempDir.path() + "/" + sampleMmpk);
 
   // create MMPK
@@ -132,81 +133,8 @@ void ApplyScheduledMapUpdates::updateMap()
   if (!m_offlineSyncTask)
     return;
 
-  m_offlineSyncTask->createDefaultOfflineMapSyncParameters();
-}
-
-MapQuickView* ApplyScheduledMapUpdates::mapView() const
-{
-  return m_mapView;
-}
-
-void ApplyScheduledMapUpdates::setMapToMapView()
-{
-  if (!m_map || !m_mapView)
-    return;
-
-  m_mapView->setMap(m_map);
-}
-
-void ApplyScheduledMapUpdates::onMmpkDoneLoading(const Error& e)
-{
-  // check if successful
-  if (!e.isEmpty())
-    return;
-
-  // make sure there are valid maps
-  if (m_mobileMapPackage->maps().isEmpty())
-    return;
-
-  // set the map on the map view
-  m_map = m_mobileMapPackage->maps().at(0);
-  setMapToMapView();
-
-  // setup sync task
-  if (m_offlineSyncTask)
-    delete m_offlineSyncTask;
-
-  m_offlineSyncTask = new OfflineMapSyncTask(m_map, this);
-
-  // connect sync task signals
-  connectSyncSignals();
-
-  // check for updates
-  m_offlineSyncTask->checkForUpdates();
-}
-
-// Set the view (created in QML)
-void ApplyScheduledMapUpdates::setMapView(MapQuickView* mapView)
-{
-  if (!mapView || mapView == m_mapView)
-    return;
-
-  m_mapView = mapView;
-
-  setMapToMapView();
-
-  emit mapViewChanged();
-}
-
-void ApplyScheduledMapUpdates::connectSyncSignals()
-{
-  // connect to checkForUpdatesCompleted signal and update the UI accordingly
-  connect(m_offlineSyncTask, &OfflineMapSyncTask::checkForUpdatesCompleted, this, [this](const QUuid&, OfflineMapUpdatesInfo* info)
-  {
-    if (info->downloadAvailability() == OfflineUpdateAvailability::Available)
-    {
-      emit updateUi(true, "Updates Available", QString("Updates size: %1 bytes").arg(info->scheduledUpdatesDownloadSize()));
-    }
-    else
-    {
-      emit updateUi(false, "No updates available", "The preplanned map area is up to date");
-    }
-
-    delete info;
-  });
-
-  // connect to createDefaultOfflineMapSyncParametersCompleted signal
-  connect(m_offlineSyncTask, &OfflineMapSyncTask::createDefaultOfflineMapSyncParametersCompleted, this, [this](const QUuid&, OfflineMapSyncParameters parameters)
+  m_offlineSyncTask->createDefaultOfflineMapSyncParametersAsync().then(this,
+  [this](OfflineMapSyncParameters parameters)
   {
     // set the parameters to download all updates for the mobile map packages
     parameters.setPreplannedScheduledUpdatesOption(PreplannedScheduledUpdatesOption::DownloadAllUpdates);
@@ -237,10 +165,82 @@ void ApplyScheduledMapUpdates::connectSyncSignals()
       }
 
       // re-check if updates are available
-      m_offlineSyncTask->checkForUpdates();
+      m_offlineSyncTask->checkForUpdatesAsync().then(this,
+      [this](const OfflineMapUpdatesInfo* info)
+      {
+        if (info->downloadAvailability() == OfflineUpdateAvailability::Available)
+        {
+          emit updateUi(true, "Updates Available", QString("Updates size: %1 bytes").arg(info->scheduledUpdatesDownloadSize()));
+        }
+        else
+        {
+          emit updateUi(false, "No updates available", "The preplanned map area is up to date");
+        }
+
+        delete info;
+      });
     });
 
     // start the job
     m_syncJob->start();
   });
+}
+
+MapQuickView* ApplyScheduledMapUpdates::mapView() const
+{
+  return m_mapView;
+}
+
+void ApplyScheduledMapUpdates::setMapToMapView()
+{
+  if (!m_map || !m_mapView)
+    return;
+
+  m_mapView->setMap(m_map);
+}
+
+void ApplyScheduledMapUpdates::onMmpkDoneLoading(const Error& e)
+{
+  // check if successful
+  if (!e.isEmpty())
+    return;
+
+  // make sure there are valid maps
+  if (m_mobileMapPackage->maps().isEmpty())
+    return;
+
+  // set the map on the map view
+  m_map = m_mobileMapPackage->maps().at(0);
+  setMapToMapView();
+
+  m_offlineSyncTask = new OfflineMapSyncTask(m_map, this);
+
+  // check for updates
+  m_offlineSyncTask->checkForUpdatesAsync().then(this,
+  [this](OfflineMapUpdatesInfo* info)
+  {
+    if (info->downloadAvailability() == OfflineUpdateAvailability::Available)
+    {
+      emit updateUi(true, "Updates Available", QString("Updates size: %1 bytes").arg(info->scheduledUpdatesDownloadSize()));
+    }
+    else
+    {
+      emit updateUi(false, "No updates available", "The preplanned map area is up to date");
+    }
+
+    delete info;
+  });
+}
+
+// Set the view (created in QML)
+void ApplyScheduledMapUpdates::setMapView(MapQuickView* mapView)
+{
+  if (!mapView || mapView == m_mapView)
+    return;
+
+  m_mapView = mapView;
+
+  setMapToMapView();
+
+  emit mapViewChanged();
 }

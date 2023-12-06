@@ -19,7 +19,9 @@
 
 namespace Esri::ArcGISRuntime
 {
+  class ArcGISFeature;
   class Credential;
+  class ErrorException;
   class GraphicsOverlay;
   class IdentifyLayerResult;
   class Map;
@@ -33,9 +35,10 @@ namespace Esri::ArcGISRuntime
 
 class SymbolImageProvider;
 
+#include <QFuture>
 #include <QObject>
 #include <QMouseEvent>
-#include "TaskWatcher.h"
+
 #include "Viewpoint.h"
 #include "Geometry.h"
 
@@ -71,8 +74,8 @@ private:
   void createConnections();
   bool showContainerView() const;
   void identifyFeaturesAtMouseClick(QMouseEvent& mouseEvent);
-  void getUtilityAssociationsOfFeature(const QUuid&, const QList<Esri::ArcGISRuntime::IdentifyLayerResult*>& identifyResult);
-  void displayFeaturesAndGetAssociations(const QUuid&);
+  void getUtilityAssociationsOfFeature(const QList<Esri::ArcGISRuntime::IdentifyLayerResult*>& identifyResult);
+  void displayFeaturesAndGetAssociations();
   void getFeaturesForElementsOfUtilityAssociations(const QList<Esri::ArcGISRuntime::UtilityAssociation*>& containmentAssociations);
   void showAttachmentAndConnectivitySymbols(const QList<Esri::ArcGISRuntime::UtilityAssociation*>& containmentAssociations);
   void setMapView(Esri::ArcGISRuntime::MapQuickView* mapView);
@@ -83,13 +86,16 @@ private:
   QString attachmentSymbolUrl() const;
   QString connectivitySymbolUrl() const;
   QString boundingBoxSymbolUrl() const;
+  void onAssociationsCompleted_(const QList<Esri::ArcGISRuntime::UtilityAssociation*>& containmentAssociations);
+  void onTaskFailed(const QString& errorMsg, const Esri::ArcGISRuntime::ErrorException& taskException);
 
   Esri::ArcGISRuntime::Credential* m_cred = nullptr;
   Esri::ArcGISRuntime::Geometry m_boundingBox;
   Esri::ArcGISRuntime::GraphicsOverlay* m_containerGraphicsOverlay = nullptr;
   Esri::ArcGISRuntime::Map* m_map = nullptr;
   Esri::ArcGISRuntime::MapQuickView* m_mapView = nullptr;
-  Esri::ArcGISRuntime::TaskWatcher m_taskWatcher;
+  QFuture<QList<Esri::ArcGISRuntime::ArcGISFeature*>> m_featuresFuture;
+  QFuture<QList<Esri::ArcGISRuntime::UtilityAssociation*>> m_utilityAssociationFuture;
   Esri::ArcGISRuntime::UtilityElement* m_containerElement = nullptr;
   Esri::ArcGISRuntime::UtilityNetwork* m_utilityNetwork = nullptr;
   Esri::ArcGISRuntime::Viewpoint m_previousViewpoint;

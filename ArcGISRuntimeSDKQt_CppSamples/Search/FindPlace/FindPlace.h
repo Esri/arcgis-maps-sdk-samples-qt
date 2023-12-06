@@ -24,6 +24,7 @@ namespace Esri::ArcGISRuntime
     class MapQuickView;
     class GraphicsOverlay;
     class LocatorTask;
+    class GeocodeResult;
 }
 
 #include "Point.h"
@@ -74,6 +75,7 @@ private:
   bool poiTextHasFocus() const { return m_poiTextHasFocus; }
   void setPoiTextHasFocus(bool hasFocus);
   Esri::ArcGISRuntime::GeocodeParameters createParameters();
+  void onGeocodingCompleted_(const QList<Esri::ArcGISRuntime::GeocodeResult>& results);
 
 private:
   Esri::ArcGISRuntime::Map* m_map = nullptr;

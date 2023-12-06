@@ -26,10 +26,11 @@
 #include "WfsFeatureTable.h"
 #include "Error.h"
 #include "MapTypes.h"
-#include "TaskWatcher.h"
 #include "LayerListModel.h"
 #include "GeodatabaseTypes.h"
 #include "Envelope.h"
+
+#include <QFuture>
 
 using namespace Esri::ArcGISRuntime;
 
@@ -70,10 +71,10 @@ LoadWfsXmlQuery::LoadWfsXmlQuery(QObject* parent /* = nullptr */):
       return;
 
     // populate the table with XML Query
-    wfsFeatureTable->populateFromService(xmlQueryString, true);
+    wfsFeatureTable->populateFromServiceAsync(xmlQueryString, true);
 
     // set the viewpoint to the center of the extent
-    m_mapView->setViewpointGeometry(wfsFeatureTable->extent(), 50);
+    m_mapView->setViewpointGeometryAsync(wfsFeatureTable->extent(), 50);
   });
 
   // create Feature Layer

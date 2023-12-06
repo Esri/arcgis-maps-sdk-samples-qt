@@ -17,7 +17,7 @@ DEFINES += QML_VIEWER
 DEFINES += Qt_Version=\"$$QT_VERSION\"
 SAMPLEPATHQML = $$PWD/../../ArcGISRuntimeSDKQt_QMLSamples
 COMMONVIEWER = $$PWD/../ArcGISRuntimeSDKQt_Samples
-ARCGIS_RUNTIME_VERSION = 200.2.0
+ARCGIS_RUNTIME_VERSION = 200.3.0
 DEFINES += ArcGIS_Runtime_Version=$$ARCGIS_RUNTIME_VERSION
 
 # This block determines whether to build against the SDK dev build area or the installed SDK

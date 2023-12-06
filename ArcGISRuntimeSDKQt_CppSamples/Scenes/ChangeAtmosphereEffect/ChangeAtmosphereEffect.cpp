@@ -27,7 +27,8 @@
 #include "Surface.h"
 #include "Camera.h"
 #include "ElevationSourceListModel.h"
-#include "TaskWatcher.h"
+
+#include <QFuture>
 
 using namespace Esri::ArcGISRuntime;
 
@@ -69,7 +70,7 @@ void ChangeAtmosphereEffect::setSceneView(SceneQuickView* sceneView)
   m_sceneView->setArcGISScene(m_scene);
 
   Camera camera(64.416919, -14.483728, 100, 318, 105, 0);
-  sceneView->setViewpointCamera(camera, 0);
+  sceneView->setViewpointCameraAsync(camera, 0);
 
   emit sceneViewChanged();
 }

@@ -41,10 +41,11 @@
 #include "MapTypes.h"
 #include "MapViewTypes.h"
 #include "SymbolTypes.h"
-#include "TaskWatcher.h"
 #include "LayerListModel.h"
 #include "FeatureCollectionTableListModel.h"
 #include "AttributeListModel.h"
+
+#include <QFuture>
 
 using namespace Esri::ArcGISRuntime;
 
@@ -172,7 +173,8 @@ void Feature_Collection_Layer::addPointToTable(QString attrName, QString attrVal
   feature->setGeometry(point);
 
   // Add the feature to the table
-  table->addFeature(feature);
+  auto future = table->addFeatureAsync(feature);
+  Q_UNUSED(future)
 }
 
 void Feature_Collection_Layer::addPolylineToTable(QString attrName, QString attrValue, QList<Point> points, FeatureCollectionTable* table)
@@ -188,7 +190,8 @@ void Feature_Collection_Layer::addPolylineToTable(QString attrName, QString attr
   feature->setGeometry(builder->toGeometry());
 
   // Add the feature to the table
-  table->addFeature(feature);
+  auto future = table->addFeatureAsync(feature);
+  Q_UNUSED(future)
 }
 
 void Feature_Collection_Layer::addPolygonToTable(QString attrName, QString attrValue, QList<Point> points, FeatureCollectionTable* table)
@@ -204,5 +207,6 @@ void Feature_Collection_Layer::addPolygonToTable(QString attrName, QString attrV
   feature->setGeometry(builder->toGeometry());
 
   // Add the feature to the table
-  table->addFeature(feature);
+  auto future = table->addFeatureAsync(feature);
+  Q_UNUSED(future)
 }

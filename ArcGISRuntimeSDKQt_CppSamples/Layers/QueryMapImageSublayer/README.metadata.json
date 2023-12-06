@@ -12,7 +12,7 @@
         "Sublayer",
         "Table",
         "ArcGISMapImageLayer",
-        "ArcGISMapImageLayer::loadTablesAndLayers",
+        "ArcGISMapImageLayer::loadTablesAndLayersAsync",
         "ArcGISMapImageSublayer",
         "ArcGISMapImageSublayer::table",
         "QueryParameters",
@@ -23,7 +23,7 @@
     ],
     "relevant_apis": [
         "ArcGISMapImageLayer",
-        "ArcGISMapImageLayer::loadTablesAndLayers",
+        "ArcGISMapImageLayer::loadTablesAndLayersAsync",
         "ArcGISMapImageSublayer",
         "ArcGISMapImageSublayer::table",
         "QueryParameters",

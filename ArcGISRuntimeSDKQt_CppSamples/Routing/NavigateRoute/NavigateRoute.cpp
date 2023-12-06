@@ -43,7 +43,6 @@
 #include "MapTypes.h"
 #include "MapViewTypes.h"
 #include "SymbolTypes.h"
-#include "TaskWatcher.h"
 #include "Error.h"
 #include "GraphicsOverlayListModel.h"
 #include "GraphicListModel.h"
@@ -57,6 +56,7 @@
 #include "SimpleLineSymbol.h"
 
 #include <memory>
+#include <QFuture>
 #include <QList>
 #include <QTime>
 #include <QtTextToSpeech/QTextToSpeech>
@@ -120,60 +120,54 @@ void NavigateRoute::setMapView(MapQuickView* mapView)
 
 void NavigateRoute::connectRouteTaskSignals()
 {
-  connect(m_routeTask, &RouteTask::solveRouteCompleted, this, [this](const QUuid&, const RouteResult& routeResult)
-  {
-    if (routeResult.isEmpty())
-      return;
-
-    if (routeResult.routes().empty())
-      return;
-
-    m_routeResult = routeResult;
-    m_route = qAsConst(m_routeResult).routes()[0];
-
-    // adjust viewpoint to enclose the route with a 100 DPI padding
-    m_mapView->setViewpointGeometry(m_route.routeGeometry(), 100);
-
-    // create a graphic to show the route
-    m_routeAheadGraphic = new Graphic(m_route.routeGeometry(), new SimpleLineSymbol(SimpleLineSymbolStyle::Dash, Qt::blue, 5, this), this);
-
-    // create a graphic to represent the route that's been traveled (initially empty).
-    m_routeTraveledGraphic = new Graphic(Geometry(), new SimpleLineSymbol(SimpleLineSymbolStyle::Solid, Qt::cyan, 3, this), this);
-    m_routeOverlay->graphics()->append(m_routeAheadGraphic);
-    m_routeOverlay->graphics()->append(m_routeTraveledGraphic);
-
-    m_navigationEnabled = true;
-    emit navigationEnabledChanged();
-  });
-
-  connect(m_routeTask, &RouteTask::createDefaultParametersCompleted, this, [this](const QUuid&, RouteParameters defaultParameters)
-  {
-    // set values for parameters
-    defaultParameters.setReturnStops(true);
-    defaultParameters.setReturnDirections(true);
-    defaultParameters.setReturnRoutes(true);
-    defaultParameters.setOutputSpatialReference(SpatialReference::wgs84());
-
-    Stop stop1(conventionCenterPoint);
-    Stop stop2(memorialPoint);
-    Stop stop3(aerospaceMuseumPoint);
-
-    QList<Stop> stopsList = {stop1, stop2, stop3};
-    defaultParameters.setStops(stopsList);
-
-    m_routeTask->solveRoute(defaultParameters);
-  });
-
   connect(m_routeTask, &RouteTask::doneLoading, this, [this](const Error& error)
   {
-    if (error.isEmpty())
-    {
-      m_routeTask->createDefaultParameters();
-    }
-    else
+    if (!error.isEmpty())
     {
       qDebug() << error.message() << error.additionalMessage();
+      return;
     }
+    m_routeTask->createDefaultParametersAsync().then(this, [this](RouteParameters defaultParameters)
+    {
+      // set values for parameters
+      defaultParameters.setReturnStops(true);
+      defaultParameters.setReturnDirections(true);
+      defaultParameters.setReturnRoutes(true);
+      defaultParameters.setOutputSpatialReference(SpatialReference::wgs84());
+
+      Stop stop1(conventionCenterPoint);
+      Stop stop2(memorialPoint);
+      Stop stop3(aerospaceMuseumPoint);
+
+      QList<Stop> stopsList = {stop1, stop2, stop3};
+      defaultParameters.setStops(stopsList);
+
+      m_routeTask->solveRouteAsync(defaultParameters).then(this, [this](const RouteResult& routeResult)
+      {
+        if (routeResult.isEmpty())
+          return;
+
+        if (routeResult.routes().empty())
+          return;
+
+        m_routeResult = routeResult;
+        m_route = qAsConst(m_routeResult).routes()[0];
+
+        // adjust viewpoint to enclose the route with a 100 DPI padding
+        m_mapView->setViewpointGeometryAsync(m_route.routeGeometry(), 100);
+
+        // create a graphic to show the route
+        m_routeAheadGraphic = new Graphic(m_route.routeGeometry(), new SimpleLineSymbol(SimpleLineSymbolStyle::Dash, Qt::blue, 5, this), this);
+
+        // create a graphic to represent the route that's been traveled (initially empty).
+        m_routeTraveledGraphic = new Graphic(Geometry(), new SimpleLineSymbol(SimpleLineSymbolStyle::Solid, Qt::cyan, 3, this), this);
+        m_routeOverlay->graphics()->append(m_routeAheadGraphic);
+        m_routeOverlay->graphics()->append(m_routeTraveledGraphic);
+
+        m_navigationEnabled = true;
+        emit navigationEnabledChanged();
+      });
+    });
   });
 }
 
@@ -215,7 +209,10 @@ void NavigateRoute::startNavigation()
 
   connect(m_mapView->locationDisplay(), &LocationDisplay::locationChanged, this, [this](const Location& location)
   {
-    m_routeTracker->trackLocation(location);
+    m_routeTracker->trackLocationAsync(location).then(this, [this]()
+    {
+      m_routeTracker->generateVoiceGuidance();
+    });
   });
 
   // turn on map view's navigation mode
@@ -270,7 +267,8 @@ void NavigateRoute::connectRouteTrackerSignals()
       // navigate to next stop, if available
       if (trackingStatus->remainingDestinationCount() > 1)
       {
-        m_routeTracker->switchToNextDestination();
+        auto future = m_routeTracker->switchToNextDestinationAsync();
+        Q_UNUSED(future);
       }
       else
       {
@@ -279,11 +277,6 @@ void NavigateRoute::connectRouteTrackerSignals()
     }
     m_textString = textString;
     emit textStringChanged();
-  });
-
-  connect(m_routeTracker, &RouteTracker::trackLocationCompleted, this, [this](const QUuid&)
-  {
-    m_routeTracker->generateVoiceGuidance();
   });
 }
 

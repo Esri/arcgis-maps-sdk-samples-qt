@@ -71,6 +71,7 @@ private:
   Esri::ArcGISRuntime::SymbolStyleSearchResultListModel* mouthResults() const;
   Esri::ArcGISRuntime::SymbolStyleSearchResultListModel* eyeResults() const;
   Esri::ArcGISRuntime::SymbolStyleSearchResultListModel* faceResults() const;
+  void searchSymbolLayer(const QString& category, int index);
 
   Esri::ArcGISRuntime::Map* m_map = nullptr;
   Esri::ArcGISRuntime::MapQuickView* m_mapView = nullptr;

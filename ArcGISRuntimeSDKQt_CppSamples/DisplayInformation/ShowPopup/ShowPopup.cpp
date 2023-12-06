@@ -77,8 +77,6 @@ void ShowPopup::setMapView(MapQuickView* mapView)
   // once map is set, connect to MapQuickView mouse clicked signal
   connect(m_mapView, &MapQuickView::mouseClicked, this, &ShowPopup::onMouseClicked);
 
-  // connect to MapQuickView::identifyLayerCompleted signal
-  connect(m_mapView, &MapQuickView::identifyLayerCompleted, this, &ShowPopup::onIdentifyLayerCompleted);
   emit mapViewChanged();
 }
 
@@ -137,17 +135,21 @@ void ShowPopup::onMouseClicked(QMouseEvent& mouseEvent)
   constexpr bool returnPopupsOnly = false;
   constexpr int maximumResults = 10;
 
-  m_taskWatcher = m_mapView->identifyLayer(m_featureLayer, mouseEvent.position().x(), mouseEvent.position().y(), tolerance, returnPopupsOnly, maximumResults);
+  m_future = m_mapView->identifyLayerAsync(m_featureLayer, mouseEvent.position(), tolerance, returnPopupsOnly, maximumResults);
+  m_future.then(this, [this](IdentifyLayerResult* result)
+  {
+    onIdentifyLayerCompleted(QUuid(),result);
+  });
 
-  if (!m_taskWatcher.isValid())
-    qWarning() << "Task not valid.";
+  if (!m_future.isValid())
+    qWarning() << "Future not valid.";
 
   emit taskRunningChanged();
 }
 
 bool ShowPopup::taskRunning() const
 {
-  return !m_taskWatcher.isDone();
+  return m_future.isRunning();
 }
 
 QQmlListProperty<PopupManager> ShowPopup::popupManagers()

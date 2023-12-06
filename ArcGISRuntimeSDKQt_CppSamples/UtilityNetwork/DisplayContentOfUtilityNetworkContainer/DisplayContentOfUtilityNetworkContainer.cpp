@@ -35,7 +35,6 @@
 #include "UtilityNetworkTypes.h"
 #include "MapTypes.h"
 #include "SymbolTypes.h"
-#include "TaskWatcher.h"
 #include "Error.h"
 #include "GraphicsOverlayListModel.h"
 #include "GraphicListModel.h"
@@ -49,6 +48,7 @@
 #include "DrawingInfo.h"
 #include "GraphicsOverlay.h"
 #include "Graphic.h"
+#include "ErrorException.h"
 #include "Envelope.h"
 #include "ArcGISFeatureTable.h"
 #include "SpatialReference.h"
@@ -117,17 +117,6 @@ void DisplayContentOfUtilityNetworkContainer::setMapView(MapQuickView* mapView)
 void DisplayContentOfUtilityNetworkContainer::createConnections()
 {
   connect(m_mapView, &MapQuickView::mouseClicked, this, &DisplayContentOfUtilityNetworkContainer::identifyFeaturesAtMouseClick);
-  connect(m_mapView, &MapQuickView::identifyLayersCompleted, this, &DisplayContentOfUtilityNetworkContainer::getUtilityAssociationsOfFeature);
-  connect(m_utilityNetwork, &UtilityNetwork::featuresForElementsCompleted, this, &DisplayContentOfUtilityNetworkContainer::displayFeaturesAndGetAssociations);
-
-  connect(m_utilityNetwork, &UtilityNetwork::associationsCompleted, this, [this](const QUuid&, const QList<UtilityAssociation*>& containmentAssociations)
-  {
-    if (!m_showContainerView)
-      getFeaturesForElementsOfUtilityAssociations(containmentAssociations);
-
-    else
-      showAttachmentAndConnectivitySymbols(containmentAssociations);
-  });
 
   // Connect error signals to message box
   connect(m_map, &Map::errorOccurred, this, [this](const Error& e)
@@ -139,25 +128,31 @@ void DisplayContentOfUtilityNetworkContainer::createConnections()
   {
     setMessageBoxText("MapView error: " + e.message() + " " + e.additionalMessage());
   });
+}
 
-  connect(m_utilityNetwork, &UtilityNetwork::errorOccurred, this, [this](const Error& e)
-  {
-    setMessageBoxText("Utility Network error occured: " + e.message() + " " + e.additionalMessage());
-  });
+void DisplayContentOfUtilityNetworkContainer::onTaskFailed(const QString& errorMsg, const ErrorException& taskException)
+{
+  setMessageBoxText(errorMsg + taskException.error().message() + " " + taskException.error().additionalMessage());
 }
 
 void DisplayContentOfUtilityNetworkContainer::identifyFeaturesAtMouseClick(QMouseEvent& mouseEvent)
 {
-  if (m_map->loadStatus() != LoadStatus::Loaded || m_utilityNetwork->loadStatus() != LoadStatus::Loaded || !m_taskWatcher.isDone())
+  if (m_map->loadStatus() != LoadStatus::Loaded || m_utilityNetwork->loadStatus() != LoadStatus::Loaded || !m_featuresFuture.isFinished())
     return;
 
   constexpr double tolerance = 5;
   constexpr bool returnPopupsOnly = false;
 
-  m_mapView->identifyLayers(mouseEvent.position().x(), mouseEvent.position().y(), tolerance, returnPopupsOnly);
+  m_mapView->identifyLayersAsync(mouseEvent.position(), tolerance, returnPopupsOnly).then(this, [this](const QList<IdentifyLayerResult*>& identifyResults)
+  {
+    getUtilityAssociationsOfFeature(identifyResults);
+  }).onFailed(this, [this](const ErrorException& e)
+  {
+    onTaskFailed("MapView error: ", e);
+  });
 }
 
-void DisplayContentOfUtilityNetworkContainer::getUtilityAssociationsOfFeature(const QUuid&, const QList<IdentifyLayerResult*>& identifyResults)
+void DisplayContentOfUtilityNetworkContainer::getUtilityAssociationsOfFeature(const QList<IdentifyLayerResult*>& identifyResults)
 {
   if (identifyResults.isEmpty())
     return;
@@ -182,18 +177,33 @@ void DisplayContentOfUtilityNetworkContainer::getUtilityAssociationsOfFeature(co
           if (ArcGISFeature* feature = dynamic_cast<ArcGISFeature*>(geoElement))
           {
             m_containerElement = m_utilityNetwork->createElementWithArcGISFeature(feature);
-            if (m_containerElement)
-            {
-              // Queries for a list of all UtilityAssociation objects of containment association types present in the geodatabase for the m_containerElement.
-              m_taskWatcher = m_utilityNetwork->associations(m_containerElement, UtilityAssociationType::Containment);
+            if (!m_containerElement)
               return;
-            }
+
+            // Queries for a list of all UtilityAssociation objects of containment association types present in the geodatabase for the m_containerElement.
+            m_utilityAssociationFuture = m_utilityNetwork->associationsAsync(m_containerElement, UtilityAssociationType::Containment);
+            m_utilityAssociationFuture.then(this, [this](const QList<UtilityAssociation*>& containmentAssociations)
+            {
+              onAssociationsCompleted_(containmentAssociations);
+            }).onFailed(this, [this](const ErrorException& e)
+            {
+              onTaskFailed("Utility Network error occured: ", e);
+            });
+            return;
           }
         }
       }
     }
   }
 }
+
+void DisplayContentOfUtilityNetworkContainer::onAssociationsCompleted_(const QList<UtilityAssociation*>& containmentAssociations)
+{
+  if (!m_showContainerView)
+    getFeaturesForElementsOfUtilityAssociations(containmentAssociations);
+  else
+    showAttachmentAndConnectivitySymbols(containmentAssociations);
+};
 
 void DisplayContentOfUtilityNetworkContainer::getFeaturesForElementsOfUtilityAssociations(const QList<UtilityAssociation*>& containmentAssociations)
 {
@@ -211,11 +221,18 @@ void DisplayContentOfUtilityNetworkContainer::getFeaturesForElementsOfUtilityAss
     setShowContainerView(true);
 
     // Get the features for the UtilityElements
-    m_taskWatcher = m_utilityNetwork->featuresForElements(contentElements);
+    m_featuresFuture = m_utilityNetwork->featuresForElementsAsync(contentElements);
+    m_featuresFuture.then(this, [this](QList<ArcGISFeature*>)
+    {
+      displayFeaturesAndGetAssociations();
+    }).onFailed(this, [this](const ErrorException& e)
+    {
+      onTaskFailed("Utility Network error occured: ", e);
+    });
   }
 }
 
-void DisplayContentOfUtilityNetworkContainer::displayFeaturesAndGetAssociations(const QUuid&)
+void DisplayContentOfUtilityNetworkContainer::displayFeaturesAndGetAssociations()
 {
   // Display the features on the graphics overlay
   const QList<Feature*> contentFeatures = m_utilityNetwork->featuresForElementsResult()->features();
@@ -226,7 +243,14 @@ void DisplayContentOfUtilityNetworkContainer::displayFeaturesAndGetAssociations(
   }
 
   // Get the associations for each feature within the graphics overlay extent
-  m_taskWatcher = m_utilityNetwork->associations(m_containerGraphicsOverlay->extent());
+  m_utilityAssociationFuture = m_utilityNetwork->associationsAsync(m_containerGraphicsOverlay->extent());
+  m_utilityAssociationFuture.then(this, [this](const QList<UtilityAssociation*>& containmentAssociations)
+  {
+    onAssociationsCompleted_(containmentAssociations);
+  }).onFailed(this, [this](const ErrorException& e)
+  {
+    onTaskFailed("Utility Network error occured: ", e);
+  });
 }
 
 void DisplayContentOfUtilityNetworkContainer::showAttachmentAndConnectivitySymbols(const QList<UtilityAssociation*>& containmentAssociations)
@@ -253,7 +277,7 @@ void DisplayContentOfUtilityNetworkContainer::showAttachmentAndConnectivitySymbo
   }
 
   m_containerGraphicsOverlay->graphics()->append(new Graphic(m_boundingBox, m_boundingBoxSymbol, this));
-  m_taskWatcher = m_mapView->setViewpointGeometry(m_containerGraphicsOverlay->extent(), 100);
+  m_mapView->setViewpointGeometryAsync(m_containerGraphicsOverlay->extent(), 100);
 }
 
 bool DisplayContentOfUtilityNetworkContainer::showContainerView() const
@@ -275,7 +299,7 @@ void DisplayContentOfUtilityNetworkContainer::setShowContainerView(bool showCont
   }
   else
   {
-    m_mapView->setViewpoint(m_previousViewpoint, 0.5);
+    m_mapView->setViewpointAsync(m_previousViewpoint, 0.5);
     m_containerGraphicsOverlay->graphics()->clear();
 
     for (Layer* layer : *m_mapView->map()->operationalLayers())
@@ -309,13 +333,13 @@ void DisplayContentOfUtilityNetworkContainer::createLegend()
   m_connectivitySymbol = new SimpleLineSymbol(SimpleLineSymbolStyle::Dot, Qt::red, 3, this);
   m_boundingBoxSymbol = new SimpleLineSymbol(SimpleLineSymbolStyle::Dot, Qt::yellow, 3, this);
 
-  connect(m_attachmentSymbol, &Symbol::createSwatchCompleted, this, [this](const QUuid& id, const QImage& image)
+  m_attachmentSymbol->createSwatchAsync().then(this, [this](const QImage& image)
   {
     if (!m_symbolImageProvider)
       return;
 
     // convert the QUuid into a QString
-    const QString imageId = id.toString().remove("{").remove("}");
+    const QString imageId = QUuid().createUuid().toString(QUuid::WithoutBraces);
 
     // add the image to the provider
     m_symbolImageProvider->addImage(imageId, image);
@@ -327,13 +351,13 @@ void DisplayContentOfUtilityNetworkContainer::createLegend()
     emit attachmentSymbolUrlChanged();
   });
 
-  connect(m_connectivitySymbol, &Symbol::createSwatchCompleted, this, [this](const QUuid& id, const QImage& image)
+  m_connectivitySymbol->createSwatchAsync().then(this, [this](const QImage& image)
   {
     if (!m_symbolImageProvider)
       return;
 
     // convert the QUuid into a QString
-    const QString imageId = id.toString().remove("{").remove("}");
+    const QString imageId = QUuid().createUuid().toString(QUuid::WithoutBraces);
 
     // add the image to the provider
     m_symbolImageProvider->addImage(imageId, image);
@@ -345,13 +369,13 @@ void DisplayContentOfUtilityNetworkContainer::createLegend()
     emit connectivitySymbolUrlChanged();
   });
 
-  connect(m_boundingBoxSymbol, &Symbol::createSwatchCompleted, this, [this](const QUuid& id, const QImage& image)
+  m_boundingBoxSymbol->createSwatchAsync().then(this, [this](const QImage& image)
   {
     if (!m_symbolImageProvider)
       return;
 
     // convert the QUuid into a QString
-    const QString imageId = id.toString().remove("{").remove("}");
+    const QString imageId = QUuid().createUuid().toString(QUuid::WithoutBraces);
 
     // add the image to the provider
     m_symbolImageProvider->addImage(imageId, image);
@@ -362,10 +386,6 @@ void DisplayContentOfUtilityNetworkContainer::createLegend()
     // emit the signal to trigger the QML Image to update
     emit boundingBoxSymbolUrlChanged();
   });
-
-  m_attachmentSymbol->createSwatch();
-  m_connectivitySymbol->createSwatch();
-  m_boundingBoxSymbol->createSwatch();
 }
 
 QString DisplayContentOfUtilityNetworkContainer::attachmentSymbolUrl() const

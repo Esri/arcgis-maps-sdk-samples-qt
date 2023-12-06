@@ -16,14 +16,14 @@ Run the sample and pan and zoom around the map. No features will be requested an
 
 1. Set the `ServiceFeatureTable::setFeatureRequestMode` property of the service feature table to `FeatureRequestMode::ManualCache` before the table is loaded.
 2. Load the table.
-3. Call `populateFromService` on the table to request features.
+3. Call `populateFromServiceAsync` on the table to request features.
 
 ## Relevant API
 
 * FeatureLayer
 * FeatureRequestMode::ManualCache
 * ServiceFeatureTable
-* ServiceFeatureTable::populateFromService
+* ServiceFeatureTable::populateFromServiceAsync
 * ServiceFeatureTable::setFeatureRequestMode
 
 ## About the data

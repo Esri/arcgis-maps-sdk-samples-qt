@@ -15,10 +15,10 @@ Select a symbol and a color from each of the category lists to create an emoji. 
 ## How it works
 
 1. Create a new `SymbolStyle` from a stylx file, and load it.
-2. Get a list of symbols in the style by calling `SymbolStyle::searchSymbols`.
+2. Get a list of symbols in the style by calling `SymbolStyle::searchSymbolsAsync` within `ReadSymbolsFromMobileStyle::searchSymbolLayer`.
 3. Display the resulting `SymbolStyleSearchResultListModel` inside a series of ComboBoxes.
-4. When symbol selections change, create a new multilayer symbol by passing the keys for the selected symbols into `SymbolStyle::fetchSymbol`.
-5. Iterate through the symbol layers and color lock all symbol layers except the base layer and update the current symbol preview image by calling `Symbol::createSwatch`.
+4. When symbol selections change, create a new multilayer symbol by passing the keys for the selected symbols into `SymbolStyle::fetchSymbolAsync`.
+5. Iterate through the symbol layers and color lock all symbol layers except the base layer and update the current symbol preview image by calling `Symbol::createSwatchAsync`.
 6. Create graphics symbolized with the current symbol when the user taps the map view.
 
 ## Relevant API
@@ -27,8 +27,8 @@ Select a symbol and a color from each of the category lists to create an emoji. 
 * Symbol::createSwatch
 * SymbolLayer
 * SymbolStyle
-* SymbolStyle::fetchSymbol
-* SymbolStyle::searchSymbols
+* SymbolStyle::fetchSymbolAsync
+* SymbolStyle::searchSymbolsAsync
 * SymbolStyleSearchParameters
 * SymbolStyleSearchResult
 * SymbolStyleSearchResultListModel

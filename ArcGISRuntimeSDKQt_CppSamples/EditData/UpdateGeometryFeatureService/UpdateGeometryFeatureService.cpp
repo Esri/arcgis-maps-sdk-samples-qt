@@ -33,11 +33,10 @@
 #include "MapViewTypes.h"
 #include "MapTypes.h"
 #include "LayerListModel.h"
-#include "TaskWatcher.h"
 #include "IdentifyLayerResult.h"
 
+#include <QFuture>
 #include <QUrl>
-#include <QUuid>
 #include <QMouseEvent>
 #include <QList>
 
@@ -106,7 +105,23 @@ void UpdateGeometryFeatureService::connectSignals()
       m_selectedFeature->setGeometry(mapPoint);
 
       // update the feature table with the new feature
-      m_featureTable->updateFeature(m_selectedFeature);
+      m_featureTable->updateFeatureAsync(m_selectedFeature).then(this, [this]()
+      {
+        // once updateFeatureAsync is done, call applyEditsAsync
+        m_featureTable->applyEditsAsync().then(this, [](const QList<FeatureEditResult*>& featureEditResults)
+        {
+          // Lock is a convenience wrapper that deletes the contents of featureEditResults when we leave scope.
+          FeatureEditListResultLock lock(featureEditResults);
+
+          // obtain the first item in the list
+          FeatureEditResult* featureEditResult = lock.results.isEmpty() ? nullptr : lock.results.first();
+          // check if there were errors, and if not, log the new object ID
+          if (featureEditResult && !featureEditResult->isCompletedWithErrors())
+            qDebug() << "Successfully updated geometry for Object ID:" << featureEditResult->objectId();
+          else
+            qDebug() << "Apply edits error.";
+        });
+      });
 
       // reset the feature layer
       m_featureLayer->clearSelection();
@@ -120,52 +135,27 @@ void UpdateGeometryFeatureService::connectSignals()
       m_featureLayer->clearSelection();
 
       // call identify on the map view
-      m_mapView->identifyLayer(m_featureLayer, mouseEvent.position().x(), mouseEvent.position().y(), 5, false, 1);
+      m_mapView->identifyLayerAsync(m_featureLayer, mouseEvent.position(), 5, false, 1).then(this, [this](IdentifyLayerResult* identifyResult)
+      {
+        // process the identifyLayerAsync result from the future
+        if (!identifyResult)
+          return;
+
+        if (identifyResult->geoElements().size() > 0)
+        {
+          // first delete if not nullptr
+          if (m_selectedFeature)
+            delete m_selectedFeature;
+
+          m_selectedFeature = static_cast<Feature*>(identifyResult->geoElements().at(0));
+          // Prevent the feature from being deleted along with the identifyResult.
+          m_selectedFeature->setParent(this);
+
+          // select the item in the result
+          m_featureLayer->selectFeature(m_selectedFeature);
+          m_featureSelected = true;
+        }
+      });
     }
-  });
-
-  // connect to the identifyLayerCompleted signal on the map view
-  connect(m_mapView, &MapQuickView::identifyLayerCompleted, this, [this](const QUuid&, IdentifyLayerResult* identifyResult)
-  {
-    if(!identifyResult)
-      return;
-
-    if (identifyResult->geoElements().size() > 0)
-    {
-      // first delete if not nullptr
-      if (m_selectedFeature)
-        delete m_selectedFeature;
-
-      m_selectedFeature = static_cast<Feature*>(identifyResult->geoElements().at(0));
-      // Prevent the feature from being deleted along with the identifyResult.
-      m_selectedFeature->setParent(this);
-
-      // select the item in the result
-      m_featureLayer->selectFeature(m_selectedFeature);
-      m_featureSelected = true;
-    }
-  });
-
-  // connect to the updateFeatureCompleted signal to determine if the update was successful
-  connect(m_featureTable, &ServiceFeatureTable::updateFeatureCompleted, this, [this](const QUuid&, bool success)
-  {
-    // if the update was successful, call apply edits to apply to the service
-    if (success)
-      m_featureTable->applyEdits();
-  });
-
-  // connect to the applyEditsCompleted signal from the ServiceFeatureTable
-  connect(m_featureTable, &ServiceFeatureTable::applyEditsCompleted, this, [](const QUuid&, const QList<FeatureEditResult*>& featureEditResults)
-  {
-    // Lock is a convenience wrapper that deletes the contents of featureEditResults when we leave scope.
-    FeatureEditListResultLock lock(featureEditResults);
-
-    // obtain the first item in the list
-    FeatureEditResult* featureEditResult = lock.results.isEmpty() ? nullptr : lock.results.first();
-    // check if there were errors, and if not, log the new object ID
-    if (featureEditResult && !featureEditResult->isCompletedWithErrors())
-      qDebug() << "Successfully updated geometry for Object ID:" << featureEditResult->objectId();
-    else
-      qDebug() << "Apply edits error.";
   });
 }

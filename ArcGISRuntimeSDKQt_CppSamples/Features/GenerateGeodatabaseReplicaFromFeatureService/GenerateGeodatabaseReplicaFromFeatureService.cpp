@@ -42,10 +42,10 @@
 #include "GenerateGeodatabaseJob.h"
 #include "TaskTypes.h"
 #include "Geodatabase.h"
-#include "TaskWatcher.h"
 #include "Viewpoint.h"
 #include "Point.h"
 
+#include <QFuture>
 #include <QtCore/qglobal.h>
 #include <QUrl>
 #include <QStandardPaths>
@@ -256,7 +256,8 @@ void GenerateGeodatabaseReplicaFromFeatureService::addOfflineData(Geodatabase* g
     }
 
     // unregister geodatabase since there will be no edits uploaded
-    m_syncTask->unregisterGeodatabase(gdb);
+    auto unregisterFuture = m_syncTask->unregisterGeodatabaseAsync(gdb);
+    Q_UNUSED(unregisterFuture)
   });
   gdb->load();
 }

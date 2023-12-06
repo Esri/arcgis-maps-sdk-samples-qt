@@ -32,13 +32,13 @@
 #include "Viewpoint.h"
 #include "Camera.h"
 #include "MapTypes.h"
-#include "TaskWatcher.h"
 #include "Surface.h"
 #include "ElevationSourceListModel.h"
 #include "LayerListModel.h"
 #include "IdentifyLayerResult.h"
 #include "Feature.h"
 
+#include <QFuture>
 #include <QUuid>
 
 using namespace Esri::ArcGISRuntime;
@@ -91,30 +91,6 @@ void SceneLayerSelection::componentComplete()
 
 void SceneLayerSelection::connectSignals()
 {
-  // handle the identifyLayerCompleted signal
-  connect(m_sceneView, &SceneQuickView::identifyLayerCompleted, this, [this](const QUuid&, IdentifyLayerResult* result)
-  {
-    // get the results
-    QList<GeoElement*> geoElements = result->geoElements();
-
-    // make sure we have at least 1 GeoElement
-    if (geoElements.isEmpty())
-      return;
-
-    // get the first GeoElement
-    GeoElement* geoElement = geoElements.at(0);
-
-    // cast the GeoElement to a Feature
-    Feature* feature = static_cast<Feature*>(geoElement);
-
-    // select the Feature in the SceneLayer
-    if (feature)
-    {
-      feature->setParent(this);
-      m_sceneLayer->selectFeature(feature);
-    }
-  });
-
   // when the scene is clicked, identify the clicked feature and select it
   connect(m_sceneView, &SceneQuickView::mouseClicked, this, [this](QMouseEvent& mouseEvent)
   {
@@ -122,6 +98,28 @@ void SceneLayerSelection::connectSignals()
     m_sceneLayer->clearSelection();
 
     // identify from the click
-    m_sceneView->identifyLayer(m_sceneLayer, mouseEvent.position().x(), mouseEvent.position().y(), 10, false);
+    m_sceneView->identifyLayerAsync(m_sceneLayer, mouseEvent.position(), 10, false).then(this,
+    [this](IdentifyLayerResult* result)
+    {
+      // get the results
+      QList<GeoElement*> geoElements = result->geoElements();
+
+      // make sure we have at least 1 GeoElement
+      if (geoElements.isEmpty())
+        return;
+
+      // get the first GeoElement
+      GeoElement* geoElement = geoElements.first();
+
+      // cast the GeoElement to a Feature
+      Feature* feature = static_cast<Feature*>(geoElement);
+
+      // select the Feature in the SceneLayer
+      if (feature)
+      {
+        feature->setParent(this);
+        m_sceneLayer->selectFeature(feature);
+      }
+    });
   });
 }

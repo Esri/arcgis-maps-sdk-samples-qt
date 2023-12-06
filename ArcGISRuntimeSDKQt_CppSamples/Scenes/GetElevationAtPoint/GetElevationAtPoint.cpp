@@ -29,7 +29,6 @@
 #include "Camera.h"
 #include "MapTypes.h"
 #include "SymbolTypes.h"
-#include "TaskWatcher.h"
 #include "GraphicsOverlayListModel.h"
 #include "GraphicListModel.h"
 #include "Surface.h"
@@ -37,6 +36,7 @@
 #include "Graphic.h"
 #include "Point.h"
 
+#include <QFuture>
 #include <QUuid>
 
 using namespace Esri::ArcGISRuntime;
@@ -112,9 +112,9 @@ void GetElevationAtPoint::displayElevationOnClick(QMouseEvent& mouseEvent)
   // Convert clicked screen position to position on the map surface.
   const Point baseSurfacePos = m_sceneView->screenToBaseSurface(mouseEvent.position().x(), mouseEvent.position().y());
 
-  // Connect to callback for elevation query, which places marker and sets elevation
-  connect(m_scene->baseSurface(), &Surface::locationToElevationCompleted,
-          this, [baseSurfacePos, this](const QUuid& /*taskId*/, double elevation)
+  m_elevationQueryFuture = m_scene->baseSurface()->elevationAsync(baseSurfacePos);
+  m_elevationQueryFuture.then(this,
+  [this, baseSurfacePos](double elevation)
   {
     // Place the elevation marker circle at the clicked position
     m_elevationMarker->setGeometry(baseSurfacePos);
@@ -128,8 +128,7 @@ void GetElevationAtPoint::displayElevationOnClick(QMouseEvent& mouseEvent)
     emit elevationQueryRunningChanged();
   });
 
-  //Invoke get elevation query
-  m_elevationQueryTaskWatcher = m_scene->baseSurface()->locationToElevation(baseSurfacePos);
+  //Signal the start of the query
   emit elevationQueryRunningChanged();
 }
 
@@ -140,5 +139,5 @@ double GetElevationAtPoint::elevation() const
 
 bool GetElevationAtPoint::elevationQueryRunning() const
 {
-  return !(m_elevationQueryTaskWatcher.isDone() || m_elevationQueryTaskWatcher.isCanceled());
+  return m_elevationQueryFuture.isRunning();
 }

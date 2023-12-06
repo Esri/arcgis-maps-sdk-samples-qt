@@ -46,7 +46,8 @@
 #include "SpatialReference.h"
 #include "Surface.h"
 #include "SymbolTypes.h"
-#include "TaskWatcher.h"
+
+#include <QFuture>
 
 using namespace Esri::ArcGISRuntime;
 
@@ -159,7 +160,7 @@ void FilterFeaturesInScene::setSceneView(SceneQuickView* sceneView)
   m_sceneView->setArcGISScene(m_scene);
 
   // Set the viewpoint to San Francisco
-  m_sceneView->setViewpointCamera(Camera(Point(-122.421, 37.7041, 207), 60, 70, 0));
+  m_sceneView->setViewpointCameraAsync(Camera(Point(-122.421, 37.7041, 207), 60, 70, 0));
 
   // Add a graphics overlay to display the extent graphic
   m_sceneView->graphicsOverlays()->append(new GraphicsOverlay(this));

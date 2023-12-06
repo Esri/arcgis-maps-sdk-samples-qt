@@ -39,7 +39,7 @@ public:
   ~CppSampleManager() override;
 
   void init() override;
-  Q_INVOKABLE void clearCredentialCache() override;
+  void clearCredentialCache() override;
 
 protected:
   QString api() const override;

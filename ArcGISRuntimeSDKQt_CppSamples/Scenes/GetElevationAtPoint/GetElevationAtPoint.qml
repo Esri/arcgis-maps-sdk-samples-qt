@@ -67,7 +67,7 @@ Item {
 
     // Display an indictor when the elevation query is running, since it might take a couple of seconds
     BusyIndicator {
-        running: model.elevationQueryRunning === true
+        running: model.elevationQueryRunning
         anchors.centerIn: parent
         width: Math.min(parent.width, parent.height) / 6.0
         height: width
