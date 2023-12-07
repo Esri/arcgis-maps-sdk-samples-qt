@@ -71,7 +71,8 @@ LoadWfsXmlQuery::LoadWfsXmlQuery(QObject* parent /* = nullptr */):
       return;
 
     // populate the table with XML Query
-    wfsFeatureTable->populateFromServiceAsync(xmlQueryString, true);
+    auto future = wfsFeatureTable->populateFromServiceAsync(xmlQueryString, true);
+    Q_UNUSED(future)
 
     // set the viewpoint to the center of the extent
     m_mapView->setViewpointGeometryAsync(wfsFeatureTable->extent(), 50);
