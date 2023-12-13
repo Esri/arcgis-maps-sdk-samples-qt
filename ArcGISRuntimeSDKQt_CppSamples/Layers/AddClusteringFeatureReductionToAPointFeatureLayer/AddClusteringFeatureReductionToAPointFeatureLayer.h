@@ -23,7 +23,6 @@ namespace Esri::ArcGISRuntime
   class FeatureLayer;
   class Map;
   class MapQuickView;
-  class PopupManager;
 }
 
 #include <QObject>
