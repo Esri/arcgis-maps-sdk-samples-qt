@@ -223,7 +223,7 @@ void AddClusteringFeatureReductionToAPointFeatureLayer::mouseClicked(QMouseEvent
   // Identify the tapped observation.
   m_mapView->identifyLayerAsync(m_layer, mouseEvent.position(), 3.0, true).then(this, [this](IdentifyLayerResult* result)
   {
-    // clear the list of PopupManagers
+    // clear the list of popup content
     m_popupContent.clear();
 
     for (Popup* popup: result->popups())
@@ -235,7 +235,7 @@ void AddClusteringFeatureReductionToAPointFeatureLayer::mouseClicked(QMouseEvent
       }
     }
 
-    // notify QML that m_popupManagers has changed and to display the popup(s).
+    // notify QML that popup content has changed and to display the popup(s).
     emit popupContentChanged();
   });
 }
