@@ -38,26 +38,32 @@ Item {
         mapView: view
     }
 
-    PopupStackView {
-        id: popupStackView
-        anchors {
-            top: parent.top
-            bottom: parent.bottom
-            right: parent.right
-        }
-        visible: sample.popupManagers.length > 0
-        popupManagers: sample.popupManagers
+    // Add a background to the column
+    Rectangle {
+        anchors.fill: popupContent
+        visible: sample.popupContent !== ""
+        radius: 10
+        border.width: 1
+    }
+
+    Label {
+        id: popupContent
+        anchors.right: parent.right
+        visible: sample.popupContent !== ""
+        text: sample.popupContent
+        font.pointSize: 14
+        padding: 5
     }
 
     // Add a background to the column
     Rectangle {
-        anchors.fill: col
+        anchors.fill: dialog
         radius: 10
         border.width: 1
     }
 
     Column {
-        id: col
+        id: dialog
         spacing: 15
         padding: 10
 

@@ -22,6 +22,7 @@
 
 #include "AggregateField.h"
 #include "AggregateFieldListModel.h"
+#include "AttributeListModel.h"
 #include "ClassBreaksRenderer.h"
 #include "ClusteringFeatureReduction.h"
 #include "Error.h"
@@ -32,7 +33,6 @@
 #include "LayerListModel.h"
 #include "Popup.h"
 #include "PopupDefinition.h"
-#include "PopupManager.h"
 #include "ReductionTypes.h"
 #include "ServiceTypes.h"
 #include "SimpleLabelExpression.h"
@@ -59,7 +59,11 @@ AddClusteringFeatureReductionToAPointFeatureLayer::AddClusteringFeatureReduction
       return;
     }
 
-    m_layer = static_cast<FeatureLayer*>(m_map->operationalLayers()->first());
+    const LayerListModel* operationalLayers = m_map->operationalLayers();
+    if (operationalLayers->isEmpty())
+      return;
+
+    m_layer = qobject_cast<FeatureLayer*>(operationalLayers->first());
   });
 }
 
@@ -94,7 +98,7 @@ void AddClusteringFeatureReductionToAPointFeatureLayer::setMapView(MapQuickView*
   emit mapViewChanged();
 }
 
-void AddClusteringFeatureReductionToAPointFeatureLayer::setClusterRadius(qreal clusterRadius)
+void AddClusteringFeatureReductionToAPointFeatureLayer::setClusterRadius(double clusterRadius)
 {
   if (!m_clusteringFeatureReduction)
     return;
@@ -102,7 +106,7 @@ void AddClusteringFeatureReductionToAPointFeatureLayer::setClusterRadius(qreal c
   m_clusteringFeatureReduction->setRadius(clusterRadius);
 }
 
-void AddClusteringFeatureReductionToAPointFeatureLayer::setMaxScale(qreal maxScale)
+void AddClusteringFeatureReductionToAPointFeatureLayer::setMaxScale(double maxScale)
 {
   if (!m_clusteringFeatureReduction)
     return;
@@ -110,7 +114,7 @@ void AddClusteringFeatureReductionToAPointFeatureLayer::setMaxScale(qreal maxSca
   m_clusteringFeatureReduction->setMaxScale(maxScale);
 }
 
-qreal AddClusteringFeatureReductionToAPointFeatureLayer::mapScale() const
+double AddClusteringFeatureReductionToAPointFeatureLayer::mapScale() const
 {
   if (!m_mapView)
     return 0.0;
@@ -124,16 +128,16 @@ void AddClusteringFeatureReductionToAPointFeatureLayer::createCustomFeatureReduc
   // In this case, the average building height ranges from 0 to 8 stories.
   // For each cluster of features with a given average building height, a symbol is defined with a specified color.
   const QList<ClassBreak*> classBreaks =
-      {
-          new ClassBreak("0", "0", 0.0, 1.0, new SimpleMarkerSymbol(SimpleMarkerSymbolStyle::Circle, QColor(4, 251, 255), 8.0, this), this),
-          new ClassBreak("1", "1", 1.0, 2.0, new SimpleMarkerSymbol(SimpleMarkerSymbolStyle::Circle, QColor(44, 211, 255), 8.0, this), this),
-          new ClassBreak("2", "2", 2.0, 3.0, new SimpleMarkerSymbol(SimpleMarkerSymbolStyle::Circle, QColor(74, 181, 255), 8.0, this), this),
-          new ClassBreak("3", "3", 3.0, 4.0, new SimpleMarkerSymbol(SimpleMarkerSymbolStyle::Circle, QColor(120, 135, 255), 8.0, this), this),
-          new ClassBreak("4", "4", 4.0, 5.0, new SimpleMarkerSymbol(SimpleMarkerSymbolStyle::Circle, QColor(165, 90, 255), 8.0, this), this),
-          new ClassBreak("5", "5", 5.0, 6.0, new SimpleMarkerSymbol(SimpleMarkerSymbolStyle::Circle, QColor(194, 61, 255), 8.0, this), this),
-          new ClassBreak("6", "6", 6.0, 7.0, new SimpleMarkerSymbol(SimpleMarkerSymbolStyle::Circle, QColor(224, 31, 255), 8.0, this), this),
-          new ClassBreak("7", "7", 7.0, 8.0, new SimpleMarkerSymbol(SimpleMarkerSymbolStyle::Circle, QColor(254, 1, 255), 8.0, this), this)
-      };
+  {
+    new ClassBreak("0", "0", 0.0, 1.0, new SimpleMarkerSymbol(SimpleMarkerSymbolStyle::Circle, QColor(4, 251, 255), 8.0, this), this),
+    new ClassBreak("1", "1", 1.0, 2.0, new SimpleMarkerSymbol(SimpleMarkerSymbolStyle::Circle, QColor(44, 211, 255), 8.0, this), this),
+    new ClassBreak("2", "2", 2.0, 3.0, new SimpleMarkerSymbol(SimpleMarkerSymbolStyle::Circle, QColor(74, 181, 255), 8.0, this), this),
+    new ClassBreak("3", "3", 3.0, 4.0, new SimpleMarkerSymbol(SimpleMarkerSymbolStyle::Circle, QColor(120, 135, 255), 8.0, this), this),
+    new ClassBreak("4", "4", 4.0, 5.0, new SimpleMarkerSymbol(SimpleMarkerSymbolStyle::Circle, QColor(165, 90, 255), 8.0, this), this),
+    new ClassBreak("5", "5", 5.0, 6.0, new SimpleMarkerSymbol(SimpleMarkerSymbolStyle::Circle, QColor(194, 61, 255), 8.0, this), this),
+    new ClassBreak("6", "6", 6.0, 7.0, new SimpleMarkerSymbol(SimpleMarkerSymbolStyle::Circle, QColor(224, 31, 255), 8.0, this), this),
+    new ClassBreak("7", "7", 7.0, 8.0, new SimpleMarkerSymbol(SimpleMarkerSymbolStyle::Circle, QColor(254, 1, 255), 8.0, this), this)
+  };
 
   // Create a class breaks renderer to apply to the custom feature reduction.
   // Define the field to use for the class breaks renderer.
@@ -158,7 +162,7 @@ void AddClusteringFeatureReductionToAPointFeatureLayer::createCustomFeatureReduc
   m_clusteringFeatureReduction->setEnabled(true);
 
   // Set the popup definition for the custom feature reduction.
-  m_clusteringFeatureReduction->setPopupDefinition(new PopupDefinition(m_clusteringFeatureReduction, this)); // use the constructor with popup source
+  m_clusteringFeatureReduction->setPopupDefinition(new PopupDefinition(m_clusteringFeatureReduction, this));
 
   // Set values for the feature reduction's cluster minimum and maximum symbol sizes.
   // Note that the default values for Max and Min symbol size are 70 and 12 respectively.
@@ -166,7 +170,6 @@ void AddClusteringFeatureReductionToAPointFeatureLayer::createCustomFeatureReduc
   m_clusteringFeatureReduction->setMaxSymbolSize(90.0);
 
   // Set the feature reduction for the layer.
-  Q_ASSERT(m_layer);
   m_layer->setFeatureReduction(m_clusteringFeatureReduction);
 
   // Set initial slider values.
@@ -218,27 +221,26 @@ void AddClusteringFeatureReductionToAPointFeatureLayer::mouseClicked(QMouseEvent
     return;
 
   // Identify the tapped observation.
-  m_mapView->identifyLayerAsync(m_layer, mouseEvent.position(), 3.0, true)
-      .then(this, [this](IdentifyLayerResult* result)
-            {
-              // clear the list of PopupManagers
-              m_popupManagers.clear();
+  m_mapView->identifyLayerAsync(m_layer, mouseEvent.position(), 3.0, true).then(this, [this](IdentifyLayerResult* result)
+  {
+    // clear the list of PopupManagers
+    m_popupContent.clear();
 
-              for (Popup* popup: result->popups())
-              {
-                // create a popup manager
-                PopupManager* popupManager = new PopupManager(popup, this);
+    for (Popup* popup: result->popups())
+    {
+      const auto attributes = popup->geoElement()->attributes();
+      for (const QString& name: attributes->attributeNames())
+      {
+        m_popupContent += name + ": " + attributes->attributeValue(name).toString() + "\n";
+      }
+    }
 
-                // append popup manager to list
-                m_popupManagers.append(popupManager);
-              }
-
-              // notify QML that m_popupManagers has changed and to display the popup(s).
-              emit popupManagersChanged();
-            });
+    // notify QML that m_popupManagers has changed and to display the popup(s).
+    emit popupContentChanged();
+  });
 }
 
-QQmlListProperty<PopupManager> AddClusteringFeatureReductionToAPointFeatureLayer::popupManagers()
+QString AddClusteringFeatureReductionToAPointFeatureLayer::popupContent() const
 {
-  return QQmlListProperty<PopupManager>(this, &m_popupManagers);
+  return m_popupContent;
 }
