@@ -25,6 +25,8 @@ namespace Esri::ArcGISRuntime
   class MapQuickView;
 }
 
+class QMouseEvent;
+
 #include <QObject>
 
 Q_MOC_INCLUDE("MapQuickView.h");

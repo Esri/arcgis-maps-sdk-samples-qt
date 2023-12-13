@@ -14,7 +14,6 @@
 #include "AddClusteringFeatureReductionToAPointFeatureLayer.h"
 
 #include "ArcGISRuntimeEnvironment.h"
-#include "Esri/ArcGISRuntime/Toolkit/register.h"
 
 #include <QCommandLineParser>
 #include <QDir>
@@ -41,7 +40,6 @@ int main(int argc, char *argv[])
 
   // Initialize application view
   QQmlApplicationEngine engine;
-  Esri::ArcGISRuntime::Toolkit::registerComponents(engine);
 
   // Add the import Path
   engine.addImportPath(QDir(QCoreApplication::applicationDirPath()).filePath("qml"));

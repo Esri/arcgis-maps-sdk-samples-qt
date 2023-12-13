@@ -27,20 +27,26 @@
 #include "ClusteringFeatureReduction.h"
 #include "Error.h"
 #include "FeatureLayer.h"
+#include "GeoElement.h"
 #include "IdentifyLayerResult.h"
 #include "LabelDefinition.h"
 #include "LabelDefinitionListModel.h"
 #include "LayerListModel.h"
+#include "Map.h"
+#include "MapQuickView.h"
 #include "Popup.h"
 #include "PopupDefinition.h"
+#include "PortalItem.h"
 #include "ReductionTypes.h"
 #include "ServiceTypes.h"
 #include "SimpleLabelExpression.h"
 #include "SimpleMarkerSymbol.h"
 #include "SymbolTypes.h"
 #include "TextSymbol.h"
+#include "Viewpoint.h"
 
 #include <QColor>
+#include <QFuture>
 
 using namespace Esri::ArcGISRuntime;
 
