@@ -1,0 +1,42 @@
+{
+    "category": "Layers",
+    "description": "Add client side feature reduction on a point feature layer that is not pre-configured with clustering.",
+    "featured": true,
+    "ignore": false,
+    "images": [
+        "screenshot.png"
+    ],
+    "keywords": [
+        "aggregate",
+        "bin",
+        "cluster",
+        "group",
+        "merge",
+        "normalize",
+        "popup",
+        "reduce",
+        "renderer",
+        "summarize",
+        "AggregateGeoElement",
+        "ClassBreaksRenderer",
+        "FeatureLayer",
+        "FeatureReduction",
+        "GeoElement",
+        "IdentifyLayerResult"
+    ],
+    "redirect_from": "",
+    "relevant_apis": [
+        "AggregateGeoElement",
+        "ClassBreaksRenderer",
+        "FeatureLayer",
+        "FeatureReduction",
+        "GeoElement",
+        "IdentifyLayerResult"
+    ],
+    "snippets": [
+        "AddClusteringFeatureReductionToAPointFeatureLayer.cpp",
+        "AddClusteringFeatureReductionToAPointFeatureLayer.h",
+        "AddClusteringFeatureReductionToAPointFeatureLayer.qml"
+    ],
+    "title": "Add clustering feature reduction to a point feature layer"
+}
