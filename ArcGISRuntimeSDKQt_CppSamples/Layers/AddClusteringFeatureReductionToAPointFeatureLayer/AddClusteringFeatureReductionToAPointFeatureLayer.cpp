@@ -20,25 +20,25 @@
 
 #include "AddClusteringFeatureReductionToAPointFeatureLayer.h"
 
-#include "ClassBreaksRenderer.h"
-#include "SimpleMarkerSymbol.h"
-#include "SymbolTypes.h"
-#include "ClusteringFeatureReduction.h"
 #include "AggregateField.h"
 #include "AggregateFieldListModel.h"
-#include "ReductionTypes.h"
-#include "FeatureLayer.h"
-#include "PopupDefinition.h"
+#include "ClassBreaksRenderer.h"
+#include "ClusteringFeatureReduction.h"
 #include "Error.h"
-#include "LayerListModel.h"
-#include "SimpleLabelExpression.h"
-#include "TextSymbol.h"
-#include "LabelDefinitionListModel.h"
-#include "LabelDefinition.h"
-#include "ServiceTypes.h"
+#include "FeatureLayer.h"
 #include "IdentifyLayerResult.h"
+#include "LabelDefinition.h"
+#include "LabelDefinitionListModel.h"
+#include "LayerListModel.h"
 #include "Popup.h"
+#include "PopupDefinition.h"
 #include "PopupManager.h"
+#include "ReductionTypes.h"
+#include "ServiceTypes.h"
+#include "SimpleLabelExpression.h"
+#include "SimpleMarkerSymbol.h"
+#include "SymbolTypes.h"
+#include "TextSymbol.h"
 
 #include <QColor>
 
@@ -52,15 +52,15 @@ AddClusteringFeatureReductionToAPointFeatureLayer::AddClusteringFeatureReduction
 
   // Get the Zurich buildings feature layer once the map has finished loading.
   connect(m_map, &Map::doneLoading, this, [this](const Error& error)
-          {
-            if (!error.isEmpty())
-            {
-              qDebug() << "Map loading error:" << error.message() << error.additionalMessage();
-              return;
-            }
+  {
+    if (!error.isEmpty())
+    {
+      qDebug() << "Map loading error:" << error.message() << error.additionalMessage();
+      return;
+    }
 
-            m_layer = static_cast<FeatureLayer*>(m_map->operationalLayers()->first());
-          });
+    m_layer = static_cast<FeatureLayer*>(m_map->operationalLayers()->first());
+  });
 }
 
 AddClusteringFeatureReductionToAPointFeatureLayer::~AddClusteringFeatureReductionToAPointFeatureLayer() = default;
@@ -121,7 +121,7 @@ qreal AddClusteringFeatureReductionToAPointFeatureLayer::mapScale() const
 void AddClusteringFeatureReductionToAPointFeatureLayer::createCustomFeatureReduction()
 {
   // Add a class break for each intended value range and define a symbol to display for features in that range.
-  // In this case, the average building height ranges from 0 to 8 storeys.
+  // In this case, the average building height ranges from 0 to 8 stories.
   // For each cluster of features with a given average building height, a symbol is defined with a specified color.
   const QList<ClassBreak*> classBreaks =
       {
@@ -200,7 +200,7 @@ void AddClusteringFeatureReductionToAPointFeatureLayer::displayLabels(bool check
     SimpleLabelExpression* simpleLabelExpression = new SimpleLabelExpression("[cluster_count]", this);
     TextSymbol* textSymbol = new TextSymbol("", QColorConstants::Svg::black, 15.0, HorizontalAlignment::Center, VerticalAlignment::Middle, this);
     textSymbol->setFontWeight(FontWeight::Bold);
-    LabelDefinition* labelDefinition = new LabelDefinition(simpleLabelExpression, textSymbol);
+    LabelDefinition* labelDefinition = new LabelDefinition(simpleLabelExpression, textSymbol, this);
     labelDefinition->setPlacement(LabelingPlacement::PointCenterCenter);
 
     // Add the label definition to the feature reduction.

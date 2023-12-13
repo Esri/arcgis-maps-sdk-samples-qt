@@ -16,7 +16,14 @@
         "popup",
         "reduce",
         "renderer",
-        "summarize"
+        "summarize",
+        "AggregateGeoElement",
+        "ClassBreaksRenderer",
+        "FeatureLayer",
+        "FeatureReduction",
+        "GeoElement",
+        "IdentifyLayerResult",
+        "PopupViewer"
     ],
     "redirect_from": "",
     "relevant_apis": [
