@@ -17,7 +17,6 @@
 import QtQuick
 import QtQuick.Controls
 import Esri.Samples
-import Esri.ArcGISRuntime.Toolkit
 import QtQuick.Layouts
 
 Item {

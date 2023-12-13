@@ -22,8 +22,7 @@
         "FeatureLayer",
         "FeatureReduction",
         "GeoElement",
-        "IdentifyLayerResult",
-        "PopupViewer"
+        "IdentifyLayerResult"
     ],
     "redirect_from": "",
     "relevant_apis": [
@@ -32,8 +31,7 @@
         "FeatureLayer",
         "FeatureReduction",
         "GeoElement",
-        "IdentifyLayerResult",
-        "PopupViewer"
+        "IdentifyLayerResult"
     ],
     "snippets": [
         "AddClusteringFeatureReductionToAPointFeatureLayer.cpp",
