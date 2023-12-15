@@ -1,4 +1,4 @@
-// [WriteFile Name=AddClusteringFeatureReductionToAPointFeatureLayer, Category=Layers]
+// [WriteFile Name=AddClustering, Category=Layers]
 // [Legal]
 // Copyright 2023 Esri.
 
@@ -32,7 +32,7 @@ Item {
     }
 
     // Declare the C++ instance which creates the map etc. and supply the view
-    AddClusteringFeatureReductionToAPointFeatureLayerSample {
+    AddClusteringSample {
         id: sample
         mapView: view
     }

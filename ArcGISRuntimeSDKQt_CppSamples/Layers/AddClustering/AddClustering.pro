@@ -25,7 +25,7 @@ CONFIG += c++17
 QT += opengl qml quick gui
 
 TEMPLATE = app
-TARGET = AddClusteringFeatureReductionToAPointFeatureLayer
+TARGET = AddClustering
 
 ARCGIS_RUNTIME_VERSION = 200.4.0
 include($$PWD/arcgisruntime.pri)
@@ -33,13 +33,13 @@ include($$PWD/arcgisruntime.pri)
 #-------------------------------------------------------------------------------
 
 HEADERS += \
-    AddClusteringFeatureReductionToAPointFeatureLayer.h
+    AddClustering.h
 
 SOURCES += \
     main.cpp \
-    AddClusteringFeatureReductionToAPointFeatureLayer.cpp
+    AddClustering.cpp
 
-RESOURCES += AddClusteringFeatureReductionToAPointFeatureLayer.qrc
+RESOURCES += AddClustering.qrc
 
 #-------------------------------------------------------------------------------
 

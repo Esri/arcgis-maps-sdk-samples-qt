@@ -60,7 +60,7 @@
 // All CPP Samples
 #ifdef CPP_VIEWER
 #include "AddAPointSceneLayer.h"
-#include "AddClusteringFeatureReductionToAPointFeatureLayer.h"
+#include "AddClustering.h"
 #include "AddCustomDynamicEntityDataSource.h"
 #include "AddDynamicEntityLayer.h"
 #include "AddEncExchangeSet.h"
@@ -378,7 +378,7 @@ void registerCppSampleClasses()
 #ifdef CPP_VIEWER
   // Register the C++ Samples under the Esri.Samples namespace
   AddAPointSceneLayer::init();
-  AddClusteringFeatureReductionToAPointFeatureLayer::init();
+  AddClustering::init();
   AddCustomDynamicEntityDataSource::init();
   AddDynamicEntityLayer::init();
   AddEncExchangeSet::init();
