@@ -1,4 +1,4 @@
-// [WriteFile Name=AddClusteringFeatureReductionToAPointFeatureLayer, Category=Layers]
+// [WriteFile Name=AddClustering, Category=Layers]
 // [Legal]
 // Copyright 2023 Esri.
 
@@ -14,8 +14,8 @@
 // limitations under the License.
 // [Legal]
 
-#ifndef AddClusteringFeatureReductionToAPointFeatureLayer_H
-#define AddClusteringFeatureReductionToAPointFeatureLayer_H
+#ifndef AddClustering_H
+#define AddClustering_H
 
 namespace Esri::ArcGISRuntime
 {
@@ -31,7 +31,7 @@ class QMouseEvent;
 
 Q_MOC_INCLUDE("MapQuickView.h");
 
-class AddClusteringFeatureReductionToAPointFeatureLayer : public QObject
+class AddClustering : public QObject
 {
   Q_OBJECT
 
@@ -40,8 +40,8 @@ class AddClusteringFeatureReductionToAPointFeatureLayer : public QObject
   Q_PROPERTY(QString popupContent READ popupContent NOTIFY popupContentChanged)
 
 public:
-  explicit AddClusteringFeatureReductionToAPointFeatureLayer(QObject* parent = nullptr);
-  ~AddClusteringFeatureReductionToAPointFeatureLayer() override;
+  explicit AddClustering(QObject* parent = nullptr);
+  ~AddClustering() override;
 
   static void init();
 
@@ -74,4 +74,4 @@ private:
   QString m_popupContent;
 };
 
-#endif // AddClusteringFeatureReductionToAPointFeatureLayer_H
+#endif // AddClustering_H

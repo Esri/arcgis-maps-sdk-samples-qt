@@ -1,4 +1,4 @@
-// [WriteFile Name=AddClusteringFeatureReductionToAPointFeatureLayer, Category=Layers]
+// [WriteFile Name=AddClustering, Category=Layers]
 // [Legal]
 // Copyright 2023 Esri.
 
@@ -18,7 +18,7 @@
 #include "pch.hpp" // IWYU pragma: keep
 #endif // PCH_BUILD
 
-#include "AddClusteringFeatureReductionToAPointFeatureLayer.h"
+#include "AddClustering.h"
 
 #include "AggregateField.h"
 #include "AggregateFieldListModel.h"
@@ -50,7 +50,7 @@
 
 using namespace Esri::ArcGISRuntime;
 
-AddClusteringFeatureReductionToAPointFeatureLayer::AddClusteringFeatureReductionToAPointFeatureLayer(QObject* parent /* = nullptr */):
+AddClustering::AddClustering(QObject* parent /* = nullptr */):
   QObject(parent)
 {
   // Create a map from a web map PortalItem.
@@ -73,30 +73,30 @@ AddClusteringFeatureReductionToAPointFeatureLayer::AddClusteringFeatureReduction
   });
 }
 
-AddClusteringFeatureReductionToAPointFeatureLayer::~AddClusteringFeatureReductionToAPointFeatureLayer() = default;
+AddClustering::~AddClustering() = default;
 
-void AddClusteringFeatureReductionToAPointFeatureLayer::init()
+void AddClustering::init()
 {
   // Register the map view for QML
   qmlRegisterType<MapQuickView>("Esri.Samples", 1, 0, "MapView");
-  qmlRegisterType<AddClusteringFeatureReductionToAPointFeatureLayer>("Esri.Samples", 1, 0, "AddClusteringFeatureReductionToAPointFeatureLayerSample");
+  qmlRegisterType<AddClustering>("Esri.Samples", 1, 0, "AddClusteringSample");
 }
 
-MapQuickView* AddClusteringFeatureReductionToAPointFeatureLayer::mapView() const
+MapQuickView* AddClustering::mapView() const
 {
   return m_mapView;
 }
 
 // Set the view (created in QML)
-void AddClusteringFeatureReductionToAPointFeatureLayer::setMapView(MapQuickView* mapView)
+void AddClustering::setMapView(MapQuickView* mapView)
 {
   if (!mapView || mapView == m_mapView)
     return;
 
   m_mapView = mapView;
   m_mapView->setMap(m_map);
-  connect(m_mapView, &MapQuickView::mapScaleChanged, this, &AddClusteringFeatureReductionToAPointFeatureLayer::mapScaleChanged);
-  connect(m_mapView, &MapQuickView::mouseClicked, this, &AddClusteringFeatureReductionToAPointFeatureLayer::mouseClicked);
+  connect(m_mapView, &MapQuickView::mapScaleChanged, this, &AddClustering::mapScaleChanged);
+  connect(m_mapView, &MapQuickView::mouseClicked, this, &AddClustering::mouseClicked);
 
   // Set the initial viewpoint to Zurich, Switzerland.
   m_mapView->setViewpointAsync(Viewpoint(47.38, 8.53, 8e4));
@@ -104,7 +104,7 @@ void AddClusteringFeatureReductionToAPointFeatureLayer::setMapView(MapQuickView*
   emit mapViewChanged();
 }
 
-void AddClusteringFeatureReductionToAPointFeatureLayer::setClusterRadius(double clusterRadius)
+void AddClustering::setClusterRadius(double clusterRadius)
 {
   if (!m_clusteringFeatureReduction)
     return;
@@ -112,7 +112,7 @@ void AddClusteringFeatureReductionToAPointFeatureLayer::setClusterRadius(double 
   m_clusteringFeatureReduction->setRadius(clusterRadius);
 }
 
-void AddClusteringFeatureReductionToAPointFeatureLayer::setMaxScale(double maxScale)
+void AddClustering::setMaxScale(double maxScale)
 {
   if (!m_clusteringFeatureReduction)
     return;
@@ -120,7 +120,7 @@ void AddClusteringFeatureReductionToAPointFeatureLayer::setMaxScale(double maxSc
   m_clusteringFeatureReduction->setMaxScale(maxScale);
 }
 
-double AddClusteringFeatureReductionToAPointFeatureLayer::mapScale() const
+double AddClustering::mapScale() const
 {
   if (!m_mapView)
     return 0.0;
@@ -128,7 +128,7 @@ double AddClusteringFeatureReductionToAPointFeatureLayer::mapScale() const
   return m_mapView->mapScale();
 }
 
-void AddClusteringFeatureReductionToAPointFeatureLayer::createCustomFeatureReduction()
+void AddClustering::createCustomFeatureReduction()
 {
   // Add a class break for each intended value range and define a symbol to display for features in that range.
   // In this case, the average building height ranges from 0 to 8 stories.
@@ -188,7 +188,7 @@ void AddClusteringFeatureReductionToAPointFeatureLayer::createCustomFeatureReduc
   m_clusteringFeatureReduction->setMaxScale(0.0);
 }
 
-void AddClusteringFeatureReductionToAPointFeatureLayer::drawClusters()
+void AddClustering::drawClusters()
 {
   // If the layer is not yet loaded, do nothing.
   if (!m_layer)
@@ -198,7 +198,7 @@ void AddClusteringFeatureReductionToAPointFeatureLayer::drawClusters()
   createCustomFeatureReduction();
 }
 
-void AddClusteringFeatureReductionToAPointFeatureLayer::displayLabels(bool checked)
+void AddClustering::displayLabels(bool checked)
 {
   if (!m_clusteringFeatureReduction)
     return;
@@ -221,7 +221,7 @@ void AddClusteringFeatureReductionToAPointFeatureLayer::displayLabels(bool check
   }
 }
 
-void AddClusteringFeatureReductionToAPointFeatureLayer::mouseClicked(QMouseEvent& mouseEvent)
+void AddClustering::mouseClicked(QMouseEvent& mouseEvent)
 {
   if (!m_layer)
     return;
@@ -246,7 +246,7 @@ void AddClusteringFeatureReductionToAPointFeatureLayer::mouseClicked(QMouseEvent
   });
 }
 
-QString AddClusteringFeatureReductionToAPointFeatureLayer::popupContent() const
+QString AddClustering::popupContent() const
 {
   return m_popupContent;
 }

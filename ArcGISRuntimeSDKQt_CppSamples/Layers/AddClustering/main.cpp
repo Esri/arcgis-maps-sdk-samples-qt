@@ -11,7 +11,7 @@
 // See the License for the specific language governing permissions and
 // limitations under the License.
 
-#include "AddClusteringFeatureReductionToAPointFeatureLayer.h"
+#include "AddClustering.h"
 
 #include "ArcGISRuntimeEnvironment.h"
 
@@ -29,14 +29,14 @@ void setAPIKey(const QGuiApplication& app, QString apiKey);
 int main(int argc, char *argv[])
 {
   QGuiApplication app(argc, argv);
-  app.setApplicationName(QString("AddClusteringFeatureReductionToAPointFeatureLayer - C++"));
+  app.setApplicationName(QString("AddClustering - C++"));
 
   // Access to Esri location services requires an API key. This can be copied below or used as a command line argument.
   const QString apiKey = QString("");
   setAPIKey(app, apiKey);
 
   // Initialize the sample
-  AddClusteringFeatureReductionToAPointFeatureLayer::init();
+  AddClustering::init();
 
   // Initialize application view
   QQmlApplicationEngine engine;
@@ -49,7 +49,7 @@ int main(int argc, char *argv[])
 #endif
 
   // Set the source
-  engine.load(QUrl("qrc:/Samples/Layers/AddClusteringFeatureReductionToAPointFeatureLayer/main.qml"));
+  engine.load(QUrl("qrc:/Samples/Layers/AddClustering/main.qml"));
 
   return app.exec();
 }
