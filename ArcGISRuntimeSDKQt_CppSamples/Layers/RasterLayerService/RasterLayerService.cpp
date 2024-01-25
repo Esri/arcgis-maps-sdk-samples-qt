@@ -32,6 +32,7 @@
 #include "SpatialReference.h"
 #include "Viewpoint.h"
 #include "Point.h"
+#include "MapTypes.h"
 
 #include <QFuture>
 
@@ -59,10 +60,8 @@ void RasterLayerService::componentComplete()
   m_mapView = findChild<MapQuickView*>("mapView");
   m_mapView->setWrapAroundMode(WrapAroundMode::Disabled);
 
-  // create a new tiled layer to add a basemap
-  ArcGISTiledLayer* tiledLayer = new ArcGISTiledLayer(
-        QUrl(QStringLiteral("https://services.arcgisonline.com/arcgis/rest/services/Canvas/World_Dark_Gray_Base/MapServer")), this);
-  m_map = new Map(new Basemap(tiledLayer, this));
+  // Create a map using the dark gray basemap
+  m_map = new Map(BasemapStyle::ArcGISDarkGray, this);
   m_mapView->setMap(m_map);
 
   //! [ImageServiceRaster Create a new image service raster]

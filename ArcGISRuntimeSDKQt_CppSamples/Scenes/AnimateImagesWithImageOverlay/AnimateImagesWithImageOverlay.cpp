@@ -36,6 +36,7 @@
 #include "ElevationSourceListModel.h"
 #include "LayerListModel.h"
 #include "SpatialReference.h"
+#include "MapTypes.h"
 
 // Qt headers
 #include <QtCore/qglobal.h>
@@ -71,7 +72,8 @@ using namespace Esri::ArcGISRuntime;
 
 AnimateImagesWithImageOverlay::AnimateImagesWithImageOverlay(QObject* parent /* = nullptr */):
   QObject(parent),
-  m_scene(new Scene(this)),
+  // Create a scene using the dark gray basemap
+  m_scene(new Scene(BasemapStyle::ArcGISDarkGray, this)),
   m_dataPath(defaultDataPath() + "/ArcGIS/Runtime/Data/3D/ImageOverlay/PacificSouthWest"),
   m_dir(m_dataPath),
   m_images(m_dir.entryList(QStringList() << "*.png", QDir::Files)),
@@ -81,14 +83,10 @@ AnimateImagesWithImageOverlay::AnimateImagesWithImageOverlay(QObject* parent /* 
   ArcGISTiledElevationSource* elevationSource = new ArcGISTiledElevationSource(
         QUrl("https://elevation3d.arcgis.com/arcgis/rest/services/WorldElevation3D/Terrain3D/ImageServer"), this);
 
-  // create a new tiled layer from World_Dark_Gray_Base REST service
-  ArcGISTiledLayer* worldDarkGrayBasemap = new ArcGISTiledLayer(QUrl("https://services.arcgisonline.com/arcgis/rest/services/Canvas/World_Dark_Gray_Base/MapServer"), this);
 
   // add the elevation source to the scene to display elevation
   m_scene->baseSurface()->elevationSources()->append(elevationSource);
 
-  // add the tiled layer to the operational layers to display the basemap
-  m_scene->operationalLayers()->append(worldDarkGrayBasemap);
 }
 
 AnimateImagesWithImageOverlay::~AnimateImagesWithImageOverlay() = default;
