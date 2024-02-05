@@ -90,7 +90,7 @@ bool FeatureLayerChangeRenderer::layerInitialized() const
 
 void FeatureLayerChangeRenderer::changeRenderer()
 {
-  if(m_stateChanged)
+  if (m_stateChanged)
   {
     m_featureLayer->resetRenderer();
     m_stateChanged = false;
