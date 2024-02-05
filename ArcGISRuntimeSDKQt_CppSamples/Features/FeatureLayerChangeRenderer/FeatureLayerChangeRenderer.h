@@ -51,6 +51,7 @@ private:
   Esri::ArcGISRuntime::MapQuickView* m_mapView = nullptr;
   Esri::ArcGISRuntime::FeatureLayer* m_featureLayer = nullptr;
   bool m_initialized = false;
+  bool m_stateChanged = false;
 };
 
 #endif // FEATURE_LAYER_CHANGE_RENDERER_H
