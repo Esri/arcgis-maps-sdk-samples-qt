@@ -97,12 +97,12 @@ void FeatureLayerChangeRenderer::changeRenderer()
   }
   else
   {
-  // create a line symbol
-  SimpleLineSymbol* sls = new SimpleLineSymbol(SimpleLineSymbolStyle::Solid, QColor(0, 0, 255, 204), 2.0f, this);
-  // create a renderer with the symbol above
-  SimpleRenderer* simpleRenderer = new SimpleRenderer(sls, this);
-  // change the renderer with the renderer created above
-  m_featureLayer->setRenderer(simpleRenderer);
-  m_stateChanged = true;
+    // create a line symbol
+    SimpleLineSymbol* sls = new SimpleLineSymbol(SimpleLineSymbolStyle::Solid, QColor(0, 0, 255, 204), 2.0f, this);
+    // create a renderer with the symbol above
+    SimpleRenderer* simpleRenderer = new SimpleRenderer(sls, this);
+    // change the renderer with the renderer created above
+    m_featureLayer->setRenderer(simpleRenderer);
+    m_stateChanged = true;
   }
 }
