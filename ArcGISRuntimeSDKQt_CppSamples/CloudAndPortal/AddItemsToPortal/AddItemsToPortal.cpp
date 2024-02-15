@@ -172,9 +172,13 @@ void AddItemsToPortal::addItem()
         additionalInfo.value(ErrorInformationKeys::serviceError()).toInt() == 409)
     {
       m_alreadyExisted = true;
+      setStatusText("Item already exists; fetching existing item instead. " + m_item->itemId());
       fetchItem();
     }
-    setStatusText(e.error().message());
+    else
+    {
+      setStatusText(e.error().message());
+    }
   });
 }
 
@@ -241,7 +245,6 @@ void AddItemsToPortal::connectUserSignals()
     setStatusText(QString(error.message() + ": " + error.additionalMessage()));
   });
 }
-
 
 void AddItemsToPortal::setStatusText(const QString &statusText)
 {
