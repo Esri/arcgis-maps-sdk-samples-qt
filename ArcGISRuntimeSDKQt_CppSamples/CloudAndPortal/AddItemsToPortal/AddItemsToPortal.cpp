@@ -12,7 +12,6 @@
 // See the Sample code usage restrictions document for further information.
 // [Legal]
 
-#include "ErrorException.h"
 #ifdef PCH_BUILD
 #include "pch.hpp"
 #endif // PCH_BUILD
@@ -29,6 +28,7 @@
 #include "OAuthClientInfo.h"
 #include "PortalUser.h"
 #include "Error.h"
+#include "ErrorException.h"
 #include "ErrorInformationKeys.h"
 
 #include <QFuture>
