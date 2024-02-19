@@ -32,6 +32,7 @@
 
 #include <QDate>
 #include <QDateTime>
+#include <QFuture>
 
 using namespace Esri::ArcGISRuntime;
 
@@ -61,16 +62,6 @@ void SearchForWebmap::componentComplete()
       m_portalLoaded = m_portal->loadStatus() == LoadStatus::Loaded;
       emit portalLoadedChanged();
     });
-
-    //! [SearchForWebmap CPP Portal find items completed]
-    connect(m_portal, &Portal::findItemsCompleted, this, [this](PortalQueryResultSetForItems *webmapResults)
-    {
-      m_webmapResults = webmapResults;
-      m_webmaps = m_webmapResults->itemResults();
-      emit webmapsChanged();
-      emit hasMoreResultsChanged();
-    });
-    //! [SearchForWebmap CPP Portal find items completed]
 
     m_portal->load();
   }
@@ -117,7 +108,11 @@ void SearchForWebmap::search(const QString& keyword)
                         .arg(keyword, fromDate, toDate));
   query.setTypes(QList<PortalItemType>() << PortalItemType::WebMap);
 
-  m_portal->findItems(query);
+  m_portal->findItemsAsync(query).then(
+  [this](PortalQueryResultSetForItems* webmapResults)
+  {
+    onFindItemsCompleted(webmapResults);
+  });
   //! [SearchForWebmap CPP Portal find items]
 
   if(m_mapView)
@@ -132,8 +127,14 @@ void SearchForWebmap::searchNext()
   //! [Portal find with nextQueryParameters]
   PortalQueryParametersForItems nextQuery = m_webmapResults->nextQueryParameters();
   // check whether the startIndex of the new query is valid
-  if (nextQuery.startIndex() != -1)
-    m_portal->findItems(nextQuery);
+  if (!nextQuery.isEmpty())
+  {
+    m_portal->findItemsAsync(nextQuery).then(
+    [this](PortalQueryResultSetForItems* webmapResults)
+    {
+      onFindItemsCompleted(webmapResults);
+    });
+  }
   //! [Portal find with nextQueryParameters]
 }
 
@@ -163,4 +164,12 @@ void SearchForWebmap::errorAccepted()
 {
   m_mapLoadeError.clear();
   emit mapLoadErrorChanged();
+}
+
+void SearchForWebmap::onFindItemsCompleted(PortalQueryResultSetForItems* webmapResults)
+{
+  m_webmapResults = webmapResults;
+  m_webmaps = m_webmapResults->itemResults();
+  emit webmapsChanged();
+  emit hasMoreResultsChanged();
 }

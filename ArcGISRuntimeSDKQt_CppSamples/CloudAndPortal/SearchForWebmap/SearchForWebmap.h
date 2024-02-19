@@ -61,6 +61,8 @@ signals:
   void mapLoadErrorChanged();
 
 private:
+  void onFindItemsCompleted(Esri::ArcGISRuntime::PortalQueryResultSetForItems* webmapResults);
+
   Esri::ArcGISRuntime::Map* m_map = nullptr;
   Esri::ArcGISRuntime::MapQuickView* m_mapView = nullptr;
   Esri::ArcGISRuntime::Portal* m_portal = nullptr;
