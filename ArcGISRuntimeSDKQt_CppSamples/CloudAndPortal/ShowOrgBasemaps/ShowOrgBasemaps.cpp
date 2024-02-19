@@ -32,6 +32,8 @@
 #include "Error.h"
 #include "PortalInfo.h"
 
+#include <QFuture>
+
 using namespace Esri::ArcGISRuntime;
 
 ShowOrgBasemaps::ShowOrgBasemaps(QQuickItem* parent /* = nullptr */):
@@ -65,12 +67,13 @@ void ShowOrgBasemaps::componentComplete()
       emit orgNameChanged();
 
       if (m_portalLoaded)
-        m_portal->fetchBasemaps();
-    });
-
-    connect(m_portal, &Portal::basemapsChanged, this, [this]()
-    {
-      emit basemapsChanged();
+      {
+        m_portal->fetchBasemapsAsync().then(
+        [this]()
+        {
+          emit basemapsChanged();
+        });
+      }
     });
   }
 
