@@ -18,12 +18,12 @@ You'll be prompted to load a portal anonymously or with a log-in. After you sign
 2. A `Portal` is then loaded - if the user chose to log-in in step 1, this uses a `Credential` of type OAuth.
 3. When the app starts, the portal is loaded and if required, the `AuthenticationManager` issues a challenge for the supplied credential type.
 4. The user is presented with an `AuthenticationView` which allows them to log-in.
-5. After a successful load, get the list of basemaps: `portal::fetchBasemaps()`
+5. After a successful load, get the list of basemaps: `portal::fetchBasemapsAsync()`
 
 ## Relevant API
 
 * Portal
-* Portal::fetchBasemaps
+* Portal::fetchBasemapsAsync
 
 ## Additional information
 

@@ -16,8 +16,8 @@ Enter search terms into the search bar. Once the search is complete, a list is p
 
 1. Create a new `Portal` and load it.
 2. Create new `PortalQueryParametersForItems`. Set the type to `PortalItemType::WebMap` and add the text you want to search for.
-3. Use `portal::findItems(params)` to get the first set of matching items (10 by default).
-4. Get more results with `portal::findItems(PortalQueryResultSetForItems.nextQueryParameters())`.
+3. Use `portal::findItemsAsync(params)` to get the first set of matching items (10 by default).
+4. Get more results with `portal::findItemsAsync(PortalQueryResultSetForItems.nextQueryParameters())`.
 
 ## Relevant API
 
