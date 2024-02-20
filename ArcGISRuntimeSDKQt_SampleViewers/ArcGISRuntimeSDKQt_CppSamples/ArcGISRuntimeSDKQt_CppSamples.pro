@@ -112,7 +112,7 @@ exists($$PWD/../../../../DevBuildCpp.pri) {
         ANDROID_ARCH_FOLDER="android_x86"
     }
     else:equals(QT_ARCH, "x64") {
-        ANDROID_ARCH_FOLDER="android_x64"
+        ANDROID_ARCH_FOLDER="android_x86_64"
     }
     contains(QMAKE_HOST.os, Windows):{
       ANDROIDDIR = $$clean_path($$(ALLUSERSPROFILE)\\EsriRuntimeQt)
