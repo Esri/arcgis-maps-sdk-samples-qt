@@ -97,7 +97,7 @@ void SearchForWebmap::search(const QString& keyword)
   if (!m_portal)
     return;
 
-  //! [SearchForWebmap CPP Portal find items]
+  //! [SearchForWebmap CPP Portal find items async]
   // webmaps authored prior to July 2nd, 2014 are not supported
   // so search only from that date to the current time (in milliseconds)
   QString fromDate = QString("000000%1").arg(QDateTime::fromString(QDate(2014, 7, 2).toString()).toMSecsSinceEpoch());
@@ -113,7 +113,7 @@ void SearchForWebmap::search(const QString& keyword)
   {
     onFindItemsCompleted(webmapResults);
   });
-  //! [SearchForWebmap CPP Portal find items]
+  //! [SearchForWebmap CPP Portal find items async]
 
   if(m_mapView)
     m_mapView->setVisible(false);
