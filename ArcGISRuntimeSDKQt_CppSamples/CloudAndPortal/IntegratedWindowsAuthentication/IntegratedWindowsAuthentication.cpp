@@ -31,6 +31,8 @@
 #include "PortalTypes.h"
 #include "Error.h"
 
+#include <QFuture>
+
 using namespace Esri::ArcGISRuntime;
 
 IntegratedWindowsAuthentication::IntegratedWindowsAuthentication(QObject* parent /* = nullptr */):
@@ -76,7 +78,6 @@ void IntegratedWindowsAuthentication::searchIwaSecurePortal(const QString& url)
   m_iwaSecurePortal = new Portal(url, true, this);
 
   connect(m_iwaSecurePortal, &Portal::doneLoading, this, &IntegratedWindowsAuthentication::securePortalDoneLoading);
-  connect(m_iwaSecurePortal, &Portal::findItemsCompleted, this, &IntegratedWindowsAuthentication::searchItemsCompleted);
 
   m_loadingIndicator = true;
   emit isLoadingChanged();
@@ -124,7 +125,11 @@ void IntegratedWindowsAuthentication::securePortalDoneLoading(const Error& loadE
     return;
   }
 
-  m_iwaSecurePortal->findItems(*query);
+  m_iwaSecurePortal->findItemsAsync(*query).then(
+  [this](PortalQueryResultSetForItems* result)
+  {
+    searchItemsCompleted(result);
+  });
 }
 
 void IntegratedWindowsAuthentication::searchItemsCompleted(PortalQueryResultSetForItems* result)
