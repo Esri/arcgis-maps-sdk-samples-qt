@@ -47,7 +47,6 @@ public:
   Q_INVOKABLE void authenticatePortal();
   Q_INVOKABLE void addItem();
   Q_INVOKABLE void deleteItem();
-  void fetchItem();
 
 signals:
   void portalLoadedChanged();
@@ -60,6 +59,7 @@ signals:
   void busyChanged();
 
 private:
+  void fetchItem();
   bool portalLoaded() const;
   bool portalItemLoaded() const;
   QString portalItemId() const;

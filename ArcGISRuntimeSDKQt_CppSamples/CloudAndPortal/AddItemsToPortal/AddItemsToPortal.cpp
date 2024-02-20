@@ -153,6 +153,7 @@ void AddItemsToPortal::addItem()
 
   m_busy = true;
 
+  //! [PortalUser addItemWithUrlAsync]
   QUrl localCSV("qrc:/Samples/CloudAndPortal/AddItemsToPortal/add_item_sample.csv");
   m_user->addPortalItemWithUrlAsync(m_item, localCSV, "add_item_sample.csv" ).then(
   [this]()
@@ -161,7 +162,9 @@ void AddItemsToPortal::addItem()
 
     setStatusText("Successfully added item. " + m_item->itemId());
     m_item->load();
-  }).onFailed(
+  })
+  //! [PortalUser addItemWithUrlAsync]
+  .onFailed(
   [this](const ErrorException& e)
   {
     m_busy = false;
