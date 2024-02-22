@@ -87,6 +87,14 @@ bool PortalUserInfo::loaded()
   return false;
 }
 
+bool PortalUserInfo::closed()
+{
+    if (m_portal->loadError().message() == "Code unauthorized.")
+      return true;
+
+    return false;
+}
+
 QString PortalUserInfo::fullName() const
 {
   if (m_user)
@@ -207,7 +215,9 @@ void PortalUserInfo::onPortalLoadStatusChanged(LoadStatus loadStatus)
     case LoadStatus::Loading:
         break;
     case LoadStatus::FailedToLoad:
-        if (m_portal)
+        if (m_portal->loadError().message() == "Code unauthorized.")
+            break;
+        else if (m_portal)
             m_portal->retryLoad();
         break;
     case LoadStatus::NotLoaded:
@@ -219,4 +229,5 @@ void PortalUserInfo::onPortalLoadStatusChanged(LoadStatus loadStatus)
   }
 
   emit loadedChanged();
+  emit portalClosed();
 }

@@ -7,5 +7,6 @@
         <file>PortalUserInfo.cpp</file>
         <file>README.md</file>
         <file>placeholder_img.png</file>
+        <file>ic_menu_account_dark.png</file>
     </qresource>
 </RCC>
