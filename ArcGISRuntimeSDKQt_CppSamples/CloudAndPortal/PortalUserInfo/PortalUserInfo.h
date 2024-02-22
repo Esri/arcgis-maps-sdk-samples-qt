@@ -45,6 +45,7 @@ class PortalUserInfo : public QQuickItem
   Q_PROPERTY(QUrl canSearchPublic READ canSearchPublic NOTIFY loadedChanged)
   Q_PROPERTY(QUrl canSharePublic READ canSharePublic NOTIFY loadedChanged)
   Q_PROPERTY(QString loadErrorMessage READ loadErrorMessage NOTIFY loadedChanged)
+  Q_PROPERTY(bool loginDismissed READ loginDismissed NOTIFY isLoginDismissed)
 
 public:
   explicit PortalUserInfo(QQuickItem* parent = nullptr);
@@ -52,6 +53,7 @@ public:
 
   void componentComplete() override;
   static void init();
+  Q_INVOKABLE void load();
 
 signals:
   void loadedChanged();
@@ -62,6 +64,7 @@ signals:
   void accessChanged();
   void thumbnailUrlChanged();
   void loadErrorMessageChanged();
+  void isLoginDismissed();
 
 private slots:
   void onPortalLoadStatusChanged(Esri::ArcGISRuntime::LoadStatus loadStatus);
@@ -80,7 +83,7 @@ private:
   QString canSearchPublic() const;
   QString canSharePublic() const;
   QString loadErrorMessage() const;
-  void load();
+  bool loginDismissed();
 
   static const QString UNKNOWN;
 
