@@ -34,9 +34,9 @@
         "IdentifyLayerResult"
     ],
     "snippets": [
-        "AddClustering.cpp",
-        "AddClustering.h",
-        "AddClustering.qml"
+        "ConfigureClusters.cpp",
+        "ConfigureClusters.h",
+        "ConfigureClusters.qml"
     ],
-    "title": "Add clustering feature reduction to a point feature layer"
+    "title": "Configure clusters"
 }

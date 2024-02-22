@@ -1,4 +1,4 @@
-# Display points using clustering feature reduction
+# Display clusters
 
 Display a web map with a point feature layer that has feature reduction enabled to aggregate points into clusters.
 

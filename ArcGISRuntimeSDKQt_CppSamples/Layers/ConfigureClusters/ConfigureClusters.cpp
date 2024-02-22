@@ -1,4 +1,4 @@
-// [WriteFile Name=AddClustering, Category=Layers]
+// [WriteFile Name=ConfigureClusters, Category=Layers]
 // [Legal]
 // Copyright 2023 Esri.
 
@@ -18,7 +18,7 @@
 #include "pch.hpp" // IWYU pragma: keep
 #endif // PCH_BUILD
 
-#include "AddClustering.h"
+#include "ConfigureClusters.h"
 
 #include "AggregateField.h"
 #include "AggregateFieldListModel.h"
@@ -50,7 +50,7 @@
 
 using namespace Esri::ArcGISRuntime;
 
-AddClustering::AddClustering(QObject* parent /* = nullptr */):
+ConfigureClusters::ConfigureClusters(QObject* parent /* = nullptr */):
   QObject(parent)
 {
   // Create a map from a web map PortalItem.
@@ -73,30 +73,30 @@ AddClustering::AddClustering(QObject* parent /* = nullptr */):
   });
 }
 
-AddClustering::~AddClustering() = default;
+ConfigureClusters::~ConfigureClusters() = default;
 
-void AddClustering::init()
+void ConfigureClusters::init()
 {
   // Register the map view for QML
   qmlRegisterType<MapQuickView>("Esri.Samples", 1, 0, "MapView");
-  qmlRegisterType<AddClustering>("Esri.Samples", 1, 0, "AddClusteringSample");
+  qmlRegisterType<ConfigureClusters>("Esri.Samples", 1, 0, "ConfigureClustersSample");
 }
 
-MapQuickView* AddClustering::mapView() const
+MapQuickView* ConfigureClusters::mapView() const
 {
   return m_mapView;
 }
 
 // Set the view (created in QML)
-void AddClustering::setMapView(MapQuickView* mapView)
+void ConfigureClusters::setMapView(MapQuickView* mapView)
 {
   if (!mapView || mapView == m_mapView)
     return;
 
   m_mapView = mapView;
   m_mapView->setMap(m_map);
-  connect(m_mapView, &MapQuickView::mapScaleChanged, this, &AddClustering::mapScaleChanged);
-  connect(m_mapView, &MapQuickView::mouseClicked, this, &AddClustering::mouseClicked);
+  connect(m_mapView, &MapQuickView::mapScaleChanged, this, &ConfigureClusters::mapScaleChanged);
+  connect(m_mapView, &MapQuickView::mouseClicked, this, &ConfigureClusters::mouseClicked);
 
   // Set the initial viewpoint to Zurich, Switzerland.
   m_mapView->setViewpointAsync(Viewpoint(47.38, 8.53, 8e4));
@@ -104,7 +104,7 @@ void AddClustering::setMapView(MapQuickView* mapView)
   emit mapViewChanged();
 }
 
-void AddClustering::setClusterRadius(double clusterRadius)
+void ConfigureClusters::setClusterRadius(double clusterRadius)
 {
   if (!m_clusteringFeatureReduction)
     return;
@@ -112,7 +112,7 @@ void AddClustering::setClusterRadius(double clusterRadius)
   m_clusteringFeatureReduction->setRadius(clusterRadius);
 }
 
-void AddClustering::setMaxScale(double maxScale)
+void ConfigureClusters::setMaxScale(double maxScale)
 {
   if (!m_clusteringFeatureReduction)
     return;
@@ -120,7 +120,7 @@ void AddClustering::setMaxScale(double maxScale)
   m_clusteringFeatureReduction->setMaxScale(maxScale);
 }
 
-double AddClustering::mapScale() const
+double ConfigureClusters::mapScale() const
 {
   if (!m_mapView)
     return 0.0;
@@ -128,7 +128,7 @@ double AddClustering::mapScale() const
   return m_mapView->mapScale();
 }
 
-void AddClustering::createCustomFeatureReduction()
+void ConfigureClusters::createCustomFeatureReduction()
 {
   // Add a class break for each intended value range and define a symbol to display for features in that range.
   // In this case, the average building height ranges from 0 to 8 stories.
@@ -188,7 +188,7 @@ void AddClustering::createCustomFeatureReduction()
   m_clusteringFeatureReduction->setMaxScale(0.0);
 }
 
-void AddClustering::drawClusters()
+void ConfigureClusters::drawClusters()
 {
   // If the layer is not yet loaded, do nothing.
   if (!m_layer)
@@ -198,7 +198,7 @@ void AddClustering::drawClusters()
   createCustomFeatureReduction();
 }
 
-void AddClustering::displayLabels(bool checked)
+void ConfigureClusters::displayLabels(bool checked)
 {
   if (!m_clusteringFeatureReduction)
     return;
@@ -221,7 +221,7 @@ void AddClustering::displayLabels(bool checked)
   }
 }
 
-void AddClustering::mouseClicked(QMouseEvent& mouseEvent)
+void ConfigureClusters::mouseClicked(QMouseEvent& mouseEvent)
 {
   if (!m_layer)
     return;
@@ -246,7 +246,7 @@ void AddClustering::mouseClicked(QMouseEvent& mouseEvent)
   });
 }
 
-QString AddClustering::popupContent() const
+QString ConfigureClusters::popupContent() const
 {
   return m_popupContent;
 }

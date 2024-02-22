@@ -60,7 +60,6 @@
 // All CPP Samples
 #ifdef CPP_VIEWER
 #include "AddAPointSceneLayer.h"
-#include "AddClustering.h"
 #include "AddCustomDynamicEntityDataSource.h"
 #include "AddDynamicEntityLayer.h"
 #include "AddEncExchangeSet.h"
@@ -94,6 +93,7 @@
 #include "ChooseCameraController.h"
 #include "ClipGeometry.h"
 #include "ClosestFacility.h"
+#include "ConfigureClusters.h"
 #include "ConfigureSubnetworkTrace.h"
 #include "ContingentValues.h"
 #include "ControlAnnotationSublayerVisibility.h"
@@ -128,7 +128,7 @@
 #include "DisplayMap.h"
 #include "DisplayOgcApiFeatureCollection.h"
 #include "DisplayOverviewMap.h"
-#include "DisplayPointsUsingClustering.h"
+#include "DisplayClusters.h"
 #include "DisplayRouteLayer.h"
 #include "DisplaySceneLayer.h"
 #include "DisplaySubtypeFeatureLayer.h"
@@ -378,7 +378,6 @@ void registerCppSampleClasses()
 #ifdef CPP_VIEWER
   // Register the C++ Samples under the Esri.Samples namespace
   AddAPointSceneLayer::init();
-  AddClustering::init();
   AddCustomDynamicEntityDataSource::init();
   AddDynamicEntityLayer::init();
   AddEncExchangeSet::init();
@@ -409,6 +408,7 @@ void registerCppSampleClasses()
   ChooseCameraController::init();
   ClipGeometry::init();
   ClosestFacility::init();
+  ConfigureClusters::init();
   ConfigureSubnetworkTrace::init();
   ContingentValues::init();
   ControlAnnotationSublayerVisibility::init();
@@ -442,7 +442,7 @@ void registerCppSampleClasses()
   DisplayMap::init();
   DisplayOgcApiFeatureCollection::init();
   DisplayOverviewMap::init();
-  DisplayPointsUsingClustering::init();
+  DisplayClusters::init();
   DisplayRouteLayer::init();
   DisplaySceneLayer::init();
   DisplaySubtypeFeatureLayer::init();
