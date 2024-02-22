@@ -33,7 +33,7 @@ PortalUserInfoSample {
     BusyIndicator {
         id: loadingIndicator
         anchors.centerIn: parent
-        running: !loaded && !closed
+        running: !loaded && !loginDismissed
     }
 
     Column {
@@ -161,7 +161,7 @@ PortalUserInfoSample {
         text: "Authenticate Portal"
         icon.source: "qrc:/Samples/CloudAndPortal/PortalUserInfo/ic_menu_account_dark.png"
 
-        visible: closed
+        visible: loginDismissed
         onClicked: {
             load();
         }
