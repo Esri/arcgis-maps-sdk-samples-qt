@@ -16,7 +16,9 @@
         "reduce",
         "summarize"
     ],
-    "redirect_from": "",
+    "redirect_from": [
+        "qt/cpp/sample-code/display-points-using-clustering-feature-reduction"
+    ],
     "relevant_apis": [
         "AggregateGeoElement",
         "FeatureLayer",

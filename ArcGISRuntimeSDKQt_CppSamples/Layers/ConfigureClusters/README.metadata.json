@@ -24,7 +24,9 @@
         "GeoElement",
         "IdentifyLayerResult"
     ],
-    "redirect_from": "",
+    "redirect_from": [
+        "qt/cpp/sample-code/add-clustering-feature-reduction-to-a-point-feature-layer"
+    ],
     "relevant_apis": [
         "AggregateGeoElement",
         "ClassBreaksRenderer",
