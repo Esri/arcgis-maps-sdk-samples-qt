@@ -1,0 +1,11 @@
+<RCC>
+    <qresource prefix="/Samples/DisplayInformation/DisplayClusters">
+        <file alias="sample.json">README.metadata.json</file>
+        <file>DisplayClusters.qml</file>
+        <file>DisplayClusters.h</file>
+        <file>DisplayClusters.cpp</file>
+        <file>main.qml</file>
+        <file>screenshot.png</file>
+        <file>README.md</file>
+    </qresource>
+</RCC>

@@ -1,4 +1,4 @@
-// [WriteFile Name=AddClustering, Category=Layers]
+// [WriteFile Name=ConfigureClusters, Category=Layers]
 // [Legal]
 // Copyright 2023 Esri.
 
@@ -32,7 +32,7 @@ Item {
     }
 
     // Declare the C++ instance which creates the map etc. and supply the view
-    AddClusteringSample {
+    ConfigureClustersSample {
         id: sample
         mapView: view
     }

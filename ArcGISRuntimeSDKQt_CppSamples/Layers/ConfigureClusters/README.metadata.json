@@ -24,7 +24,9 @@
         "GeoElement",
         "IdentifyLayerResult"
     ],
-    "redirect_from": "",
+    "redirect_from": [
+        "qt/cpp/sample-code/add-clustering-feature-reduction-to-a-point-feature-layer"
+    ],
     "relevant_apis": [
         "AggregateGeoElement",
         "ClassBreaksRenderer",
@@ -34,9 +36,9 @@
         "IdentifyLayerResult"
     ],
     "snippets": [
-        "AddClustering.cpp",
-        "AddClustering.h",
-        "AddClustering.qml"
+        "ConfigureClusters.cpp",
+        "ConfigureClusters.h",
+        "ConfigureClusters.qml"
     ],
-    "title": "Add clustering feature reduction to a point feature layer"
+    "title": "Configure clusters"
 }

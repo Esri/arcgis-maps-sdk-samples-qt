@@ -3,9 +3,9 @@
 <plist version="1.0">
 <dict>
         <key>CFBundleDisplayName</key>
-        <string>AddClustering</string>
+        <string>ConfigureClusters</string>
         <key>CFBundleExecutable</key>
-        <string>AddClustering</string>
+        <string>ConfigureClusters</string>
         <key>CFBundleGetInfoString</key>
         <string>ArcGIS</string>
         <key>CFBundleIcons~ipad</key>

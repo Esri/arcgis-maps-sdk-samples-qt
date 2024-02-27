@@ -1,4 +1,4 @@
-// [WriteFile Name=AddClustering, Category=Layers]
+// [WriteFile Name=ConfigureClusters, Category=Layers]
 // [Legal]
 // Copyright 2023 Esri.
 
@@ -14,8 +14,8 @@
 // limitations under the License.
 // [Legal]
 
-#ifndef AddClustering_H
-#define AddClustering_H
+#ifndef ConfigureClusters_H
+#define ConfigureClusters_H
 
 namespace Esri::ArcGISRuntime
 {
@@ -31,7 +31,7 @@ class QMouseEvent;
 
 Q_MOC_INCLUDE("MapQuickView.h");
 
-class AddClustering : public QObject
+class ConfigureClusters : public QObject
 {
   Q_OBJECT
 
@@ -40,8 +40,8 @@ class AddClustering : public QObject
   Q_PROPERTY(QString popupContent READ popupContent NOTIFY popupContentChanged)
 
 public:
-  explicit AddClustering(QObject* parent = nullptr);
-  ~AddClustering() override;
+  explicit ConfigureClusters(QObject* parent = nullptr);
+  ~ConfigureClusters() override;
 
   static void init();
 
@@ -74,4 +74,4 @@ private:
   QString m_popupContent;
 };
 
-#endif // AddClustering_H
+#endif // ConfigureClusters_H

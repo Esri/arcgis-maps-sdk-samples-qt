@@ -1,4 +1,4 @@
-// [WriteFile Name=DisplayPointsUsingClustering, Category=DisplayInformation]
+// [WriteFile Name=DisplayClusters, Category=DisplayInformation]
 // [Legal]
 // Copyright 2023 Esri.
 
@@ -33,7 +33,7 @@ Item {
     }
 
     // Declare the C++ instance which creates the map etc. and supply the view
-    DisplayPointsUsingClusteringSample {
+    DisplayClustersSample {
         id: model
         mapView: view
     }
@@ -72,4 +72,4 @@ Item {
         running: model.taskRunning
     }
 }
-//"DisplayPointsUsingClustering - C++"
+//"DisplayClusters - C++"

@@ -1,4 +1,4 @@
-// [WriteFile Name=DisplayPointsUsingClustering, Category=DisplayInformation]
+// [WriteFile Name=DisplayClusters, Category=DisplayInformation]
 // [Legal]
 // Copyright 2023 Esri.
 
@@ -14,8 +14,8 @@
 // limitations under the License.
 // [Legal]
 
-#ifndef DISPLAYPOINTSUSINGCLUSTERING_H
-#define DISPLAYPOINTSUSINGCLUSTERING_H
+#ifndef DISPLAYCLUSTERS_H
+#define DISPLAYCLUSTERS_H
 
 namespace Esri::ArcGISRuntime
 {
@@ -29,7 +29,7 @@ class MapQuickView;
 
 Q_MOC_INCLUDE("MapQuickView.h");
 
-class DisplayPointsUsingClustering : public QObject
+class DisplayClusters : public QObject
 {
   Q_OBJECT
 
@@ -38,8 +38,8 @@ class DisplayPointsUsingClustering : public QObject
   Q_PROPERTY(QString calloutText READ calloutText NOTIFY calloutTextChanged)
 
 public:
-  explicit DisplayPointsUsingClustering(QObject* parent = nullptr);
-  ~DisplayPointsUsingClustering() override;
+  explicit DisplayClusters(QObject* parent = nullptr);
+  ~DisplayClusters() override;
 
   Q_INVOKABLE void toggleClustering();
 
@@ -69,4 +69,4 @@ private:
   QScopedPointer<QObject> m_resultParent;
 };
 
-#endif // DISPLAYPOINTSUSINGCLUSTERING_H
+#endif // DISPLAYCLUSTERS_H

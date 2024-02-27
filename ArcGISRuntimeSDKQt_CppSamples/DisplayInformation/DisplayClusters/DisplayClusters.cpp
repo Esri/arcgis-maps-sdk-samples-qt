@@ -1,4 +1,4 @@
-// [WriteFile Name=DisplayPointsUsingClustering, Category=DisplayInformation]
+// [WriteFile Name=DisplayClusters, Category=DisplayInformation]
 // [Legal]
 // Copyright 2023 Esri.
 
@@ -18,7 +18,7 @@
 #include "pch.hpp"
 #endif // PCH_BUILD
 
-#include "DisplayPointsUsingClustering.h"
+#include "DisplayClusters.h"
 
 #include "CalloutData.h"
 #include "Error.h"
@@ -40,7 +40,7 @@
 
 using namespace Esri::ArcGISRuntime;
 
-DisplayPointsUsingClustering::DisplayPointsUsingClustering(QObject* parent /* = nullptr */):
+DisplayClusters::DisplayClusters(QObject* parent /* = nullptr */):
   QObject(parent),
   m_map(new Map(new PortalItem("8916d50c44c746c1aafae001552bad23", this), this))
 {
@@ -59,22 +59,22 @@ DisplayPointsUsingClustering::DisplayPointsUsingClustering(QObject* parent /* = 
   });
 }
 
-DisplayPointsUsingClustering::~DisplayPointsUsingClustering() = default;
+DisplayClusters::~DisplayClusters() = default;
 
-void DisplayPointsUsingClustering::init()
+void DisplayClusters::init()
 {
   // Register the map view for QML
   qmlRegisterType<MapQuickView>("Esri.Samples", 1, 0, "MapView");
-  qmlRegisterType<DisplayPointsUsingClustering>("Esri.Samples", 1, 0, "DisplayPointsUsingClusteringSample");
+  qmlRegisterType<DisplayClusters>("Esri.Samples", 1, 0, "DisplayClustersSample");
 }
 
-MapQuickView* DisplayPointsUsingClustering::mapView() const
+MapQuickView* DisplayClusters::mapView() const
 {
   return m_mapView;
 }
 
 // Set the view (created in QML)
-void DisplayPointsUsingClustering::setMapView(MapQuickView* mapView)
+void DisplayClusters::setMapView(MapQuickView* mapView)
 {
   if (!mapView || mapView == m_mapView)
     return;
@@ -82,12 +82,12 @@ void DisplayPointsUsingClustering::setMapView(MapQuickView* mapView)
   m_mapView = mapView;
   m_mapView->setMap(m_map);
 
-  connect(m_mapView, &MapQuickView::mouseClicked, this, &DisplayPointsUsingClustering::onMouseClicked);
+  connect(m_mapView, &MapQuickView::mouseClicked, this, &DisplayClusters::onMouseClicked);
 
   emit mapViewChanged();
 }
 
-void DisplayPointsUsingClustering::onMouseClicked(const QMouseEvent &mouseClick)
+void DisplayClusters::onMouseClicked(const QMouseEvent &mouseClick)
 {
   if (m_taskRunning)
     return;
@@ -134,7 +134,7 @@ void DisplayPointsUsingClustering::onMouseClicked(const QMouseEvent &mouseClick)
   });
 }
 
-void DisplayPointsUsingClustering::toggleClustering()
+void DisplayClusters::toggleClustering()
 {
   if (m_map->loadStatus() != LoadStatus::Loaded)
     return;
@@ -153,12 +153,12 @@ void DisplayPointsUsingClustering::toggleClustering()
   m_mapView->calloutData()->setVisible(false);
 }
 
-QString DisplayPointsUsingClustering::calloutText() const
+QString DisplayClusters::calloutText() const
 {
   return m_calloutText;
 }
 
-bool DisplayPointsUsingClustering::taskRunning() const
+bool DisplayClusters::taskRunning() const
 {
   return m_taskRunning;
 }
