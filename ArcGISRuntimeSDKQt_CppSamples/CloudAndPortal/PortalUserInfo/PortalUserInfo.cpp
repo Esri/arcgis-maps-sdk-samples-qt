@@ -90,7 +90,7 @@ bool PortalUserInfo::loaded()
 bool PortalUserInfo::loginDismissed()
 {
   if (m_portal)
-    return m_portal->loadError().message() == "Code unauthorized.";
+    return m_portal->loadError().message() == "Code unauthorized." || m_portal->loadError().message() == "User canceled error.";
 
   return false;
 }
