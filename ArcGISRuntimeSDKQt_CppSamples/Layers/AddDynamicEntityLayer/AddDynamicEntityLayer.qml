@@ -17,6 +17,7 @@
 import QtQuick
 import QtQuick.Controls
 import Esri.Samples
+import Esri.ArcGISRuntime.Toolkit
 
 Item {
     // add a mapView component
@@ -38,6 +39,13 @@ Item {
             // Enable switch if data stream is successfully disconnected or connected
             statusSwitch.enabled = (["Disconnected", "Connected"].indexOf(model.connectionStatus) !== -1)
         }
+    }
+
+    Callout {
+        id: callout
+        height: 120
+        calloutData: view.calloutData
+        accessoryButtonVisible: false
     }
 
     Rectangle {
@@ -136,6 +144,7 @@ Item {
                 anchors.horizontalCenter: parent.horizontalCenter
                 text: "Purge all observations"
                 onClicked: {
+                    callout.visible = false;
                     model.purgeAllObservations();
                     // Calls m_dynamicEntityDataSource->purgeAll();
                 }

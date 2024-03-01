@@ -14,6 +14,11 @@
 // limitations under the License.
 // [Legal]
 
+#include "CalloutData.h"
+#include "DynamicEntity.h"
+#include "DynamicEntityChangedInfo.h"
+#include "DynamicEntityObservation.h"
+#include "IdentifyLayerResult.h"
 #ifdef PCH_BUILD
 #include "pch.hpp"
 #endif // PCH_BUILD
@@ -140,6 +145,9 @@ void AddDynamicEntityLayer::setMapView(MapQuickView* mapView)
   // Set the initial viewpoint to this area
   m_mapView->setViewpointAndWait(Viewpoint(utahSandyEnvelope));
 
+  // Create a slot to listen for mouse clicks
+  connect(m_mapView, &MapQuickView::mouseClicked, this, &AddDynamicEntityLayer::identifyLayerAtMouseClick);
+
   emit mapViewChanged();
 }
 
@@ -212,4 +220,35 @@ void AddDynamicEntityLayer::purgeAllObservations()
   // Remove all current observations from the cache
   auto future = m_dynamicEntityDataSource->purgeAllAsync();
   Q_UNUSED(future)
+}
+
+void AddDynamicEntityLayer::identifyLayerAtMouseClick(const QMouseEvent &e)
+{
+  // Hide the callout (if it is already hidden this will do nothing)
+  m_mapView->calloutData()->setVisible(false);
+  // Reseting m_tempParent gives it a new parent and cleans up any previously owned children like IdentifyLayerResult and DynamicEntity objects
+  m_tempParent.reset(new QObject(this));
+  const Point position(e.position().x(), e.position().y());
+  m_mapView->identifyLayerAsync(m_dynamicEntityLayer, e.position(), 5, false, m_tempParent.get())
+      .then(this, [position, this](IdentifyLayerResult* result)
+  {
+    if (!result || result->geoElements().empty())
+      return;
+
+    if (DynamicEntityObservation* observation = dynamic_cast<DynamicEntityObservation*>(result->geoElements().constFirst()); observation)
+    {
+      DynamicEntity* dynamicEntity = observation->dynamicEntity();
+      if (!dynamicEntity)
+        return;
+
+      const QString titleExpression = "concatenate($feature.vehiclename, \": \", $feature.speed, \" mph\")";
+      m_mapView->calloutData()->setTitleExpression(titleExpression);
+
+      const QString detailExpression = "concatenate(Round($feature.point_x,6), \",\",Round($feature.point_y,6),\" Heading: \",$feature.heading,\"°\")";
+      m_mapView->calloutData()->setDetailExpression(detailExpression);
+
+      m_mapView->calloutData()->showCalloutForGeoElement(dynamicEntity, position, true);
+      m_mapView->calloutData()->setVisible(true);
+    }
+  });
 }
