@@ -151,6 +151,7 @@ INCLUDEPATH += \
     "$$SAMPLEPATHCPP/Maps/BrowseBuildingFloors" \
     "$$SAMPLEPATHCPP/Maps/ChangeBasemap" \
     "$$SAMPLEPATHCPP/Maps/ChangeViewpoint" \
+    "$$SAMPLEPATHCPP/Maps/ConfigureBasemapStyleLanguage" \
     "$$SAMPLEPATHCPP/Maps/CreateAndSaveMap" \
     "$$SAMPLEPATHCPP/Maps/DisplayDeviceLocation" \
     "$$SAMPLEPATHCPP/Maps/DisplayDeviceLocationWithNmeaDataSources" \
@@ -368,6 +369,7 @@ HEADERS += \
     "$$SAMPLEPATHCPP/Maps/BrowseBuildingFloors/BrowseBuildingFloors.h" \
     "$$SAMPLEPATHCPP/Maps/ChangeBasemap/ChangeBasemap.h" \
     "$$SAMPLEPATHCPP/Maps/ChangeViewpoint/ChangeViewpoint.h" \
+    "$$SAMPLEPATHCPP/Maps/ConfigureBasemapStyleLanguage/ConfigureBasemapStyleLanguage.h" \
     "$$SAMPLEPATHCPP/Maps/CreateAndSaveMap/CreateAndSaveMap.h" \
     "$$SAMPLEPATHCPP/Maps/DisplayDeviceLocation/DisplayDeviceLocation.h" \
     "$$SAMPLEPATHCPP/Maps/DisplayDeviceLocationWithNmeaDataSources/DisplayDeviceLocationWithNmeaDataSources.h" \
@@ -588,6 +590,7 @@ SOURCES += \
     "$$SAMPLEPATHCPP/Maps/BrowseBuildingFloors/BrowseBuildingFloors.cpp" \
     "$$SAMPLEPATHCPP/Maps/ChangeBasemap/ChangeBasemap.cpp" \
     "$$SAMPLEPATHCPP/Maps/ChangeViewpoint/ChangeViewpoint.cpp" \
+    "$$SAMPLEPATHCPP/Maps/ConfigureBasemapStyleLanguage/ConfigureBasemapStyleLanguage.cpp" \
     "$$SAMPLEPATHCPP/Maps/CreateAndSaveMap/CreateAndSaveMap.cpp" \
     "$$SAMPLEPATHCPP/Maps/DisplayDeviceLocation/DisplayDeviceLocation.cpp" \
     "$$SAMPLEPATHCPP/Maps/DisplayDeviceLocationWithNmeaDataSources/DisplayDeviceLocationWithNmeaDataSources.cpp" \
@@ -801,6 +804,7 @@ RESOURCES += \
     "$$SAMPLEPATHCPP/Maps/BrowseBuildingFloors/BrowseBuildingFloors.qrc" \
     "$$SAMPLEPATHCPP/Maps/ChangeBasemap/ChangeBasemap.qrc" \
     "$$SAMPLEPATHCPP/Maps/ChangeViewpoint/ChangeViewpoint.qrc" \
+    "$$SAMPLEPATHCPP/Maps/ConfigureBasemapStyleLanguage/ConfigureBasemapStyleLanguage.qrc" \
     "$$SAMPLEPATHCPP/Maps/CreateAndSaveMap/CreateAndSaveMap.qrc" \
     "$$SAMPLEPATHCPP/Maps/DisplayDeviceLocation/DisplayDeviceLocation.qrc" \
     "$$SAMPLEPATHCPP/Maps/DisplayDeviceLocationWithNmeaDataSources/DisplayDeviceLocationWithNmeaDataSources.qrc" \
