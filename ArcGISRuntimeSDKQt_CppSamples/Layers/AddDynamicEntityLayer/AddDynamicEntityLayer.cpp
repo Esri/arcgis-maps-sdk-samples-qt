@@ -225,23 +225,30 @@ void AddDynamicEntityLayer::identifyLayerAtMouseClick(const QMouseEvent& e)
 {
   // Hide the callout (if it is already hidden this will do nothing)
   m_mapView->calloutData()->setVisible(false);
-  // Reseting m_tempParent gives it a new parent and cleans up any previously owned children like IdentifyLayerResult and DynamicEntity objects
+
+  // Create position to show the dynamic entity at the mouse click location
   const Point position(e.position().x(), e.position().y());
+
   m_mapView->identifyLayerAsync(m_dynamicEntityLayer, e.position(), 5, false, this)
       .then(this, [position, this](IdentifyLayerResult* result)
   {
     if (!result || result->geoElements().empty())
+    {
       return;
+    }
 
     if (DynamicEntityObservation* observation = dynamic_cast<DynamicEntityObservation*>(result->geoElements().constFirst()); observation)
     {
       DynamicEntity* dynamicEntity = observation->dynamicEntity();
       if (!dynamicEntity)
+      {
         return;
-
+      }
+      // Create a arcade expression for title to display the dynamic entity's attributes in the callout.
       const QString titleExpression = "concatenate($feature.vehiclename, \": \", $feature.speed, \" mph\")";
       m_mapView->calloutData()->setTitleExpression(titleExpression);
 
+      // Create a arcade expression for detail to display the dynamic entity's attributes in the callout.
       const QString detailExpression = "concatenate(Round($feature.point_x,6), \",\",Round($feature.point_y,6),\" Heading: \",$feature.heading,\"°\")";
       m_mapView->calloutData()->setDetailExpression(detailExpression);
 
