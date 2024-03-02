@@ -50,7 +50,7 @@ private:
 
   Esri::ArcGISRuntime::Map* m_map = nullptr;
   Esri::ArcGISRuntime::MapQuickView* m_mapView = nullptr;
-  Esri::ArcGISRuntime::BasemapStyleParameters* basemapStyleParameters;
+  Esri::ArcGISRuntime::BasemapStyleParameters* basemapStyleParameters = nullptr;
   Esri::ArcGISRuntime::Basemap* basemap = nullptr;
 };
 
