@@ -222,7 +222,7 @@ void AddDynamicEntityLayer::purgeAllObservations()
   Q_UNUSED(future)
 }
 
-void AddDynamicEntityLayer::identifyLayerAtMouseClick(const QMouseEvent &e)
+void AddDynamicEntityLayer::identifyLayerAtMouseClick(const QMouseEvent& e)
 {
   // Hide the callout (if it is already hidden this will do nothing)
   m_mapView->calloutData()->setVisible(false);
