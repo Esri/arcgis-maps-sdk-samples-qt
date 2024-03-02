@@ -14,26 +14,25 @@
 // limitations under the License.
 // [Legal]
 
-#include "CalloutData.h"
-#include "DynamicEntity.h"
-#include "DynamicEntityChangedInfo.h"
-#include "DynamicEntityObservation.h"
-#include "IdentifyLayerResult.h"
 #ifdef PCH_BUILD
 #include "pch.hpp"
 #endif // PCH_BUILD
 
 #include "AddDynamicEntityLayer.h"
-
 #include "ArcGISStreamService.h"
 #include "ArcGISStreamServiceFilter.h"
+#include "CalloutData.h"
+#include "DynamicEntity.h"
+#include "DynamicEntityChangedInfo.h"
 #include "DynamicEntityDataSourcePurgeOptions.h"
 #include "DynamicEntityLayer.h"
+#include "DynamicEntityObservation.h"
 #include "Envelope.h"
 #include "Graphic.h"
 #include "GraphicListModel.h"
 #include "GraphicsOverlay.h"
 #include "GraphicsOverlayListModel.h"
+#include "IdentifyLayerResult.h"
 #include "LayerListModel.h"
 #include "Map.h"
 #include "MapQuickView.h"
@@ -227,9 +226,8 @@ void AddDynamicEntityLayer::identifyLayerAtMouseClick(const QMouseEvent& e)
   // Hide the callout (if it is already hidden this will do nothing)
   m_mapView->calloutData()->setVisible(false);
   // Reseting m_tempParent gives it a new parent and cleans up any previously owned children like IdentifyLayerResult and DynamicEntity objects
-  m_tempParent.reset(new QObject(this));
   const Point position(e.position().x(), e.position().y());
-  m_mapView->identifyLayerAsync(m_dynamicEntityLayer, e.position(), 5, false, m_tempParent.get())
+  m_mapView->identifyLayerAsync(m_dynamicEntityLayer, e.position(), 5, false, this)
       .then(this, [position, this](IdentifyLayerResult* result)
   {
     if (!result || result->geoElements().empty())

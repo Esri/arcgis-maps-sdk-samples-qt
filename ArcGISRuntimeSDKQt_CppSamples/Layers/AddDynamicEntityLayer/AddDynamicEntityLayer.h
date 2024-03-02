@@ -17,7 +17,6 @@
 #ifndef ADDDYNAMICENTITYLAYER_H
 #define ADDDYNAMICENTITYLAYER_H
 
-#include "QtGui/qevent.h"
 namespace Esri::ArcGISRuntime
 {
 class ArcGISStreamService;
@@ -25,6 +24,8 @@ class DynamicEntityLayer;
 class Map;
 class MapQuickView;
 }
+
+class QMouseEvent;
 
 #include <QObject>
 
@@ -66,7 +67,6 @@ private:
 
   Esri::ArcGISRuntime::ArcGISStreamService* m_dynamicEntityDataSource = nullptr;
   Esri::ArcGISRuntime::DynamicEntityLayer* m_dynamicEntityLayer = nullptr;
-  QScopedPointer<QObject> m_tempParent;
 };
 
 #endif // ADDDYNAMICENTITYLAYER_H
