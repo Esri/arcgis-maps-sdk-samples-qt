@@ -36,6 +36,9 @@ class AllRoadsLeadToRome : public QObject
   Q_PROPERTY(Esri::ArcGISRuntime::MapQuickView* mapView READ mapView WRITE setMapView NOTIFY mapViewChanged)
   Q_PROPERTY(Esri::ArcGISRuntime::DirectionManeuverListModel* directions MEMBER m_directions NOTIFY directionsChanged)
   Q_PROPERTY(bool busy MEMBER m_busy NOTIFY busyChanged)
+  Q_PROPERTY(QString destinationName MEMBER m_destName NOTIFY directionsChanged)
+  Q_PROPERTY(double routeTime MEMBER m_routeTime NOTIFY directionsChanged)
+  Q_PROPERTY(double routeLength MEMBER m_routeLength NOTIFY directionsChanged)
 
 public:
   explicit AllRoadsLeadToRome(QObject* parent = nullptr);
@@ -61,6 +64,9 @@ private:
   Esri::ArcGISRuntime::RouteTask* m_routeTask = nullptr;
   Esri::ArcGISRuntime::DirectionManeuverListModel* m_directions = nullptr;
   bool m_busy = false;
+  QString m_destName = "";
+  double m_routeTime = -1;
+  double m_routeLength = -1;
 };
 
 #endif // ALLROADSLEADTOROME_H

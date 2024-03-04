@@ -120,6 +120,7 @@ void AllRoadsLeadToRome::setMapView(MapQuickView* mapView)
         }
       }
       qDebug() << closestResult.label();
+      m_destName = closestResult.label();
       m_romeGraphic->setGeometry(closestResult.displayLocation());
 
       m_routeTask->createDefaultParametersAsync()
@@ -135,16 +136,24 @@ void AllRoadsLeadToRome::setMapView(MapQuickView* mapView)
             qDebug() << "No routes found!";
             return;
           }
-          qDebug() << m_routeLine;
-          m_routeLine->setGeometry(routeResult.routes().at(0).routeGeometry());
-          // Output all direction maneuvers
-          m_directions = routeResult.routes().at(0).directionManeuvers();
+
+          const Route bestRoute = routeResult.routes().first();
+
+          m_routeLine->setGeometry(bestRoute.routeGeometry());
+
+          m_routeTime = bestRoute.totalTime();
+          m_routeLength = bestRoute.totalLength();
+          m_directions = bestRoute.directionManeuvers();
           emit directionsChanged();
           m_busy = false;
           emit busyChanged();
-        }).onCanceled(this, [this]{m_busy = false; emit busyChanged();}).onFailed(this, [this]{m_busy = false; emit busyChanged();});
+        })
+        .onCanceled(this, [this]{m_busy = false; emit busyChanged();})
+            .onFailed(this, [this]{m_busy = false; emit busyChanged();});
       });
-    }).onCanceled(this, [this]{m_busy = false; emit busyChanged();}).onFailed(this, [this]{m_busy = false; emit busyChanged();});
+    })
+        .onCanceled(this, [this]{m_busy = false; emit busyChanged();})
+        .onFailed(this, [this]{m_busy = false; emit busyChanged();});
   });
 
   emit mapViewChanged();

@@ -16,6 +16,8 @@ import Esri.AllRoadsLeadToRome
 
 Item {
 
+    property bool showDirections: false
+
     // Create MapQuickView here, and create its Map etc. in C++ code
     MapView {
         id: view
@@ -24,7 +26,7 @@ Item {
             left: parent.left
             bottom: parent.bottom
         }
-        width: parent.width *.75
+        width: showDirections ? parent.width *.75 : parent.width
         // set focus to enable keyboard navigation
         focus: true
     }
@@ -42,25 +44,76 @@ Item {
         running: model.busy
     }
 
-    Rectangle {
+    Button {
+        id: showDirsBtn
         anchors {
             top: parent.top
             right: parent.right
+        }
+
+        text: showDirections ? "Hide directions" : "Show directions"
+
+        onClicked: showDirections = !showDirections
+    }
+
+    Rectangle {
+        id: dirRect
+        anchors {
+            top: showDirsBtn.bottom
+            right: parent.right
             bottom: parent.bottom
         }
+        anchors.leftMargin: showDirections ? 0 : parent.width / 4
         width: parent.width / 4
-        visible: true//model.directions.length > 0
+        visible: showDirections
         color: "white"
+
+        Text {
+            id: headerText
+            anchors {
+                top: parent.top
+                left: parent.left
+                right: parent.right
+                margins: 10
+            }
+
+            text: "Destination: " + model.destinationName +
+                  "\nTotal time: " + Math.floor(model.routeTime/60) + " hours " + (Math.floor(model.routeTime % 60)) + " mins" +
+                  "\nTotal distance: " + Math.floor(model.routeLength/1000,1) + " km"
+        }
+
+        Rectangle {
+            anchors {
+                top: headerText.bottom
+                left: parent.left
+                right: parent.right
+                margins: 5
+            }
+
+            height: 1
+
+            color: "black"
+        }
+
         ListView {
-            anchors.fill: parent
+            anchors {
+                top: headerText.bottom
+                left: parent.left
+                right: parent.right
+                bottom: parent.bottom
+                margins: 10
+            }
+            clip: true
+
             spacing: 10
 
             model: model.directions
 
             delegate: Text {
                 text: directionText
+                wrapMode: Text.Wrap
+                width: dirRect.width-20
             }
         }
     }
-
 }
