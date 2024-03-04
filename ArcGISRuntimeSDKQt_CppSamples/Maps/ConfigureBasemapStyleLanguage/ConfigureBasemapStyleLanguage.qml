@@ -73,7 +73,7 @@ Item {
                     RadioButton {
                         id: globalButton
                         onCheckedChanged: {
-                            setNewBasemap();
+                            model.setNewBasemapLanguage(globalButton.checked, comboBox.currentText);
                             localButton.checked = !globalButton.checked
                         }
                         enabled: comboBox.currentText == "none"
@@ -93,7 +93,7 @@ Item {
                         id: localButton
                         checked: true
                         onCheckedChanged: {
-                            setNewBasemap();
+                            model.setNewBasemapLanguage(globalButton.checked, comboBox.currentText);
                             globalButton.checked = !localButton.checked
                         }
                         enabled: comboBox.currentText == "none"
@@ -121,13 +121,9 @@ Item {
                 ComboBox {
                     id: comboBox
                     model: ["none" , "Bulgarian", "Greek", "Turkish"]
-                    onCurrentTextChanged: setNewBasemap()
+                    onCurrentTextChanged: model.setNewBasemapLanguage(globalButton.checked, comboBox.currentText);
                 }
             }
         }
-    }
-
-    function setNewBasemap() {
-        model.setNewBasemap(globalButton.checked, comboBox.currentText);
     }
 }

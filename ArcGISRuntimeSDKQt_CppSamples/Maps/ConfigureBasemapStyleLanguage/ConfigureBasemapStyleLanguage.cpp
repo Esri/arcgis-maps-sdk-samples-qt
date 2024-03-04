@@ -81,8 +81,8 @@ void ConfigureBasemapStyleLanguage::setMapView(MapQuickView* mapView)
   emit mapViewChanged();
 }
 
-//Set new basemap based on the parameters selected
-void ConfigureBasemapStyleLanguage::setNewBasemap(bool global, QString language)
+//Set new basemap language based on the parameters selected
+void ConfigureBasemapStyleLanguage::setNewBasemapLanguage(bool global, const QString& language)
 {
   if (!basemapStyleParameters) 
   {
@@ -92,13 +92,17 @@ void ConfigureBasemapStyleLanguage::setNewBasemap(bool global, QString language)
   basemapStyleParameters->setLanguageStrategy(global ? BasemapStyleLanguageStrategy::Global : BasemapStyleLanguageStrategy::Local);
 
   // A SpecificLanguage setting overrides the LanguageStrategy settings
-  if (language == "none") {
+  if (language == "none")
+  {
     basemapStyleParameters->setSpecificLanguage("");
-  } else if (language == "Bulgarian") {
+  } else if (language == "Bulgarian")
+  {
     basemapStyleParameters->setSpecificLanguage("bg");
-  } else if (language == "Greek") {
+  } else if (language == "Greek")
+  {
     basemapStyleParameters->setSpecificLanguage("el");
-  } else if (language == "Turkish") {
+  } else if (language == "Turkish")
+  {
     basemapStyleParameters->setSpecificLanguage("tr");
   }
 
