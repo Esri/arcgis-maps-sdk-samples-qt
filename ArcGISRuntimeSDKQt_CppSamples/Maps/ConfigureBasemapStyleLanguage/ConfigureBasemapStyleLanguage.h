@@ -39,7 +39,7 @@ public:
   ~ConfigureBasemapStyleLanguage() override;
 
   static void init();
-  Q_INVOKABLE void setNewBasemap(bool global , QString language);
+  Q_INVOKABLE void setNewBasemapLanguage(bool global, const QString& language);
 
 signals:
   void mapViewChanged();
