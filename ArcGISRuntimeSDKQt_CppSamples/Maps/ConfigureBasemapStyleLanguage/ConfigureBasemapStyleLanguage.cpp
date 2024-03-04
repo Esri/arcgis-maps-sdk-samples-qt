@@ -89,7 +89,7 @@ void ConfigureBasemapStyleLanguage::setNewBasemap(bool global, QString language)
     basemapStyleParameters = new BasemapStyleParameters(this);
   }
 
-  basemapStyleParameters->setLanguageStrategy(global? BasemapStyleLanguageStrategy::Global : BasemapStyleLanguageStrategy::Local);
+  basemapStyleParameters->setLanguageStrategy(global ? BasemapStyleLanguageStrategy::Global : BasemapStyleLanguageStrategy::Local);
 
   // A SpecificLanguage setting overrides the LanguageStrategy settings
   if (language == "none") {
