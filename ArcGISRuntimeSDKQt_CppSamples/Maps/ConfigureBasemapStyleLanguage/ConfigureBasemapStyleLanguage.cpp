@@ -84,8 +84,9 @@ void ConfigureBasemapStyleLanguage::setMapView(MapQuickView* mapView)
 //Set new basemap based on the parameters selected
 void ConfigureBasemapStyleLanguage::setNewBasemap(bool global, QString language)
 {
-  if (basemapStyleParameters == nullptr) {
-    basemapStyleParameters = new BasemapStyleParameters();
+  if (!basemapStyleParameters) 
+  {
+    basemapStyleParameters = new BasemapStyleParameters(this);
   }
 
   basemapStyleParameters->setLanguageStrategy(global? BasemapStyleLanguageStrategy::Global : BasemapStyleLanguageStrategy::Local);
