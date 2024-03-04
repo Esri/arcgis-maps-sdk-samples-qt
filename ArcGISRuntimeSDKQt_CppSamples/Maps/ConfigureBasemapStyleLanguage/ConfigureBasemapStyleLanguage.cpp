@@ -91,7 +91,7 @@ void ConfigureBasemapStyleLanguage::setNewBasemap(bool global, QString language)
 
   basemapStyleParameters->setLanguageStrategy(global? BasemapStyleLanguageStrategy::Global : BasemapStyleLanguageStrategy::Local);
 
-  //A SpecificLanguage setting overrides the LanguageStrategy settings
+  // A SpecificLanguage setting overrides the LanguageStrategy settings
   if (language == "none") {
     basemapStyleParameters->setSpecificLanguage("");
   } else if (language == "Bulgarian") {
