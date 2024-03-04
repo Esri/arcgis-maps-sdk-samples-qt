@@ -102,6 +102,6 @@ void ConfigureBasemapStyleLanguage::setNewBasemap(bool global, QString language)
     basemapStyleParameters->setSpecificLanguage("tr");
   }
 
-  basemap = new Basemap(BasemapStyle::OsmLightGray, basemapStyleParameters);
+  basemap = new Basemap(BasemapStyle::OsmLightGray, basemapStyleParameters, this);
   m_map->setBasemap(basemap);
 }
