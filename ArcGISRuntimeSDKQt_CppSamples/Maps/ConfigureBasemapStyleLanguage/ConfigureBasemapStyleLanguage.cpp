@@ -71,7 +71,7 @@ void ConfigureBasemapStyleLanguage::setMapView(MapQuickView* mapView)
   m_mapView = mapView;
   m_mapView->setMap(m_map);
 
-  Point point(3144804, 4904598);
+  const Point point(3144804, 4904598);
 
   // Create a Viewpoint object with the created Point and a scale of 10000000
   Viewpoint viewpoint(point, 10000000);
