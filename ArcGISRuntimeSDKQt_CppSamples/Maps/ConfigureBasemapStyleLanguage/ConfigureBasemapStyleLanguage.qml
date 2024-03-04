@@ -128,6 +128,6 @@ Item {
     }
 
     function setNewBasemap() {
-        model.setNewBasemap(globalButton.checked , comboBox.currentText);
+        model.setNewBasemap(globalButton.checked, comboBox.currentText);
     }
 }
