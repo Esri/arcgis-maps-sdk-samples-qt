@@ -43,7 +43,7 @@ Item {
 
     Callout {
         id: callout
-        height: 120
+        height: 60
         calloutData: view.calloutData
         accessoryButtonVisible: false
     }
