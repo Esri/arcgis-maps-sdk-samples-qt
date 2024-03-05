@@ -34,7 +34,7 @@ using namespace Esri::ArcGISRuntime;
 
 ConfigureBasemapStyleLanguage::ConfigureBasemapStyleLanguage(QObject* parent /* = nullptr */) :
   QObject(parent),
-  m_map(new Map(SpatialReference::webMercator())),
+  m_map(new Map(SpatialReference::webMercator(), this)),
   m_basemapStyleParameters(new BasemapStyleParameters(this))
 {
 }
@@ -56,8 +56,6 @@ MapQuickView* ConfigureBasemapStyleLanguage::mapView() const
 // Set the view (created in QML)
 void ConfigureBasemapStyleLanguage::setMapView(MapQuickView* mapView)
 {
-  m_map = new Map(SpatialReference::webMercator());
-
   if (!mapView || mapView == m_mapView)
     return;
 
@@ -99,7 +97,7 @@ void ConfigureBasemapStyleLanguage::setNewBasemapLanguage(bool global, const QSt
   }
 
   if (m_basemap)
-    delete m_basemap;
+    m_basemap->deleteLater();
     
   m_basemap = new Basemap(BasemapStyle::OsmLightGray, m_basemapStyleParameters, this);
   m_map->setBasemap(m_basemap);
