@@ -95,13 +95,16 @@ void ConfigureBasemapStyleLanguage::setNewBasemapLanguage(bool global, const QSt
   if (language == "none")
   {
     basemapStyleParameters->setSpecificLanguage("");
-  } else if (language == "Bulgarian")
+  } 
+  else if (language == "Bulgarian")
   {
     basemapStyleParameters->setSpecificLanguage("bg");
-  } else if (language == "Greek")
+  } 
+  else if (language == "Greek")
   {
     basemapStyleParameters->setSpecificLanguage("el");
-  } else if (language == "Turkish")
+  } 
+  else if (language == "Turkish")
   {
     basemapStyleParameters->setSpecificLanguage("tr");
   }
