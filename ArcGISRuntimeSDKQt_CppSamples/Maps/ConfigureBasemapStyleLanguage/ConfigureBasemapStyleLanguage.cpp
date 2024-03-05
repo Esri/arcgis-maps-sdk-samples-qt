@@ -106,6 +106,9 @@ void ConfigureBasemapStyleLanguage::setNewBasemapLanguage(bool global, const QSt
     basemapStyleParameters->setSpecificLanguage("tr");
   }
 
+  if (basemap)
+    delete basemap;
+    
   basemap = new Basemap(BasemapStyle::OsmLightGray, basemapStyleParameters, this);
   m_map->setBasemap(basemap);
 }
