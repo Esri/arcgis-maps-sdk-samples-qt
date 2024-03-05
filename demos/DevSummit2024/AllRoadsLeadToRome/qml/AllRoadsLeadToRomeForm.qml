@@ -52,7 +52,8 @@ Item {
         }
 
         text: showDirections ? "Hide directions" : "Show directions"
-
+        visible: !model.busy && model.routeTime > 0
+        onVisibleChanged: if (!visible) showDirections = false
         onClicked: showDirections = !showDirections
     }
 
@@ -77,9 +78,11 @@ Item {
                 margins: 10
             }
 
+            font.bold: true
+
             text: "Destination: " + model.destinationName +
                   "\nTotal time: " + Math.floor(model.routeTime/60) + " hours " + (Math.floor(model.routeTime % 60)) + " mins" +
-                  "\nTotal distance: " + Math.floor(model.routeLength/1000,1) + " km"
+                  "\nTotal distance: " + (model.routeLength/1000).toFixed(1) + " km"
         }
 
         Rectangle {
@@ -110,7 +113,7 @@ Item {
             model: model.directions
 
             delegate: Text {
-                text: directionText
+                text: length > 0 ? directionText + "\n" + (length/1000).toFixed(2) + " km, " + Math.floor(duration) + " mins" : directionText
                 wrapMode: Text.Wrap
                 width: dirRect.width-20
             }

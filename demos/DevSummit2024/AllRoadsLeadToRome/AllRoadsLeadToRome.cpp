@@ -86,6 +86,8 @@ void AllRoadsLeadToRome::setMapView(MapQuickView* mapView)
       return;
     }
 
+    const Point clickPoint = Point(GeometryEngine::project(m_mapView->screenToLocation(click.pos().x(), click.pos().y()), SpatialReference::wgs84()));
+
     m_busy = true;
     emit busyChanged();
 
@@ -93,7 +95,6 @@ void AllRoadsLeadToRome::setMapView(MapQuickView* mapView)
     {
       graphic->setGeometry({});
     }
-    const Point clickPoint = Point(GeometryEngine::project(m_mapView->screenToLocation(click.pos().x(), click.pos().y()), SpatialReference::wgs84()));
     m_startGraphic->setGeometry(clickPoint);
     GeocodeParameters parameters;
     parameters.setPreferredSearchLocation(clickPoint);
