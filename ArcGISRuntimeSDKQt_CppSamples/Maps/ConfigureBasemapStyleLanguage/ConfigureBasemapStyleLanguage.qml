@@ -121,6 +121,7 @@ Item {
                 ComboBox {
                     id: comboBox
                     model: ["none" , "Bulgarian", "Greek", "Turkish"]
+                    // onCurrentTextChanged executes when the text is changed and also initially on loading the sample
                     onCurrentTextChanged: model.setNewBasemapLanguage(globalButton.checked, comboBox.currentText);
                 }
             }
