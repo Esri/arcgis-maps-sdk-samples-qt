@@ -36,6 +36,7 @@ using namespace Esri::ArcGISRuntime;
 ConfigureBasemapStyleLanguage::ConfigureBasemapStyleLanguage(QObject* parent /* = nullptr */) :
   QObject(parent)
 {
+  basemapStyleParameters = new BasemapStyleParameters(this);
 }
 
 ConfigureBasemapStyleLanguage::~ConfigureBasemapStyleLanguage() = default;
@@ -78,17 +79,13 @@ void ConfigureBasemapStyleLanguage::setMapView(MapQuickView* mapView)
 
   // Set the viewpoint for the mapView
   mapView->setViewpointAsync(viewpoint);
+
   emit mapViewChanged();
 }
 
 // Set new basemap language based on the parameters selected
 void ConfigureBasemapStyleLanguage::setNewBasemapLanguage(bool global, const QString& language)
 {
-  if (!basemapStyleParameters) 
-  {
-    basemapStyleParameters = new BasemapStyleParameters(this);
-  }
-
   basemapStyleParameters->setLanguageStrategy(global ? BasemapStyleLanguageStrategy::Global : BasemapStyleLanguageStrategy::Local);
 
   // A SpecificLanguage setting overrides the LanguageStrategy settings
