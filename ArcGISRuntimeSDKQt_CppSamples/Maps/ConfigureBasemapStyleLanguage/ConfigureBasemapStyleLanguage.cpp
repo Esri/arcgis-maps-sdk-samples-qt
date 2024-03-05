@@ -21,7 +21,6 @@
 #include "Basemap.h"
 #include "BasemapStyleParameters.h"
 #include "ConfigureBasemapStyleLanguage.h"
-#include "Error.h"
 #include "Map.h"
 #include "MapQuickView.h"
 #include "MapTypes.h"
@@ -35,7 +34,7 @@ using namespace Esri::ArcGISRuntime;
 
 ConfigureBasemapStyleLanguage::ConfigureBasemapStyleLanguage(QObject* parent /* = nullptr */) :
   QObject(parent),
-  m_map(new Map(SpatialReference::webMercator()),
+  m_map(new Map(SpatialReference::webMercator())),
   m_basemapStyleParameters(new BasemapStyleParameters(this))
 {
 }
@@ -58,14 +57,6 @@ MapQuickView* ConfigureBasemapStyleLanguage::mapView() const
 void ConfigureBasemapStyleLanguage::setMapView(MapQuickView* mapView)
 {
   m_map = new Map(SpatialReference::webMercator());
-  connect(m_map, &Map::doneLoading, this, [](const Error& e)
-          {
-            if (!e.isEmpty())
-            {
-              qWarning() << e.message() << e.additionalMessage();
-              return;
-            }
-          });
 
   if (!mapView || mapView == m_mapView)
     return;
@@ -87,29 +78,29 @@ void ConfigureBasemapStyleLanguage::setMapView(MapQuickView* mapView)
 // Set new basemap language based on the parameters selected
 void ConfigureBasemapStyleLanguage::setNewBasemapLanguage(bool global, const QString& language)
 {
-  basemapStyleParameters->setLanguageStrategy(global ? BasemapStyleLanguageStrategy::Global : BasemapStyleLanguageStrategy::Local);
+  m_basemapStyleParameters->setLanguageStrategy(global ? BasemapStyleLanguageStrategy::Global : BasemapStyleLanguageStrategy::Local);
 
   // A SpecificLanguage setting overrides the LanguageStrategy settings
   if (language == "none")
   {
-    basemapStyleParameters->setSpecificLanguage("");
+    m_basemapStyleParameters->setSpecificLanguage("");
   } 
   else if (language == "Bulgarian")
   {
-    basemapStyleParameters->setSpecificLanguage("bg");
+    m_basemapStyleParameters->setSpecificLanguage("bg");
   } 
   else if (language == "Greek")
   {
-    basemapStyleParameters->setSpecificLanguage("el");
+    m_basemapStyleParameters->setSpecificLanguage("el");
   } 
   else if (language == "Turkish")
   {
-    basemapStyleParameters->setSpecificLanguage("tr");
+    m_basemapStyleParameters->setSpecificLanguage("tr");
   }
 
-  if (basemap)
-    delete basemap;
+  if (m_basemap)
+    delete m_basemap;
     
-  basemap = new Basemap(BasemapStyle::OsmLightGray, basemapStyleParameters, this);
-  m_map->setBasemap(basemap);
+  m_basemap = new Basemap(BasemapStyle::OsmLightGray, m_basemapStyleParameters, this);
+  m_map->setBasemap(m_basemap);
 }
