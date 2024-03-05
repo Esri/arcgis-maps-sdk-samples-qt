@@ -56,7 +56,7 @@ MapQuickView* ConfigureBasemapStyleLanguage::mapView() const
 // Set the view (created in QML)
 void ConfigureBasemapStyleLanguage::setMapView(MapQuickView* mapView)
 {
-  m_map = new Map(this);
+  m_map = new Map(SpatialReference::webMercator());
   connect(m_map, &Map::doneLoading, this, [](const Error& e)
           {
             if (!e.isEmpty())
