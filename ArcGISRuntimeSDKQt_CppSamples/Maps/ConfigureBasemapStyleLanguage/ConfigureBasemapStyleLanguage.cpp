@@ -34,9 +34,10 @@
 using namespace Esri::ArcGISRuntime;
 
 ConfigureBasemapStyleLanguage::ConfigureBasemapStyleLanguage(QObject* parent /* = nullptr */) :
-  QObject(parent)
+  QObject(parent),
+  m_map(new Map(SpatialReference::webMercator()),
+  m_basemapStyleParameters(new BasemapStyleParameters(this))
 {
-  basemapStyleParameters = new BasemapStyleParameters(this);
 }
 
 ConfigureBasemapStyleLanguage::~ConfigureBasemapStyleLanguage() = default;
