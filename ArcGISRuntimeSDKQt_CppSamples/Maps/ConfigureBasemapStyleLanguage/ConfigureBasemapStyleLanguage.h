@@ -50,8 +50,8 @@ private:
 
   Esri::ArcGISRuntime::Map* m_map = nullptr;
   Esri::ArcGISRuntime::MapQuickView* m_mapView = nullptr;
-  Esri::ArcGISRuntime::BasemapStyleParameters* basemapStyleParameters = nullptr;
-  Esri::ArcGISRuntime::Basemap* basemap = nullptr;
+  Esri::ArcGISRuntime::BasemapStyleParameters* m_basemapStyleParameters = nullptr;
+  Esri::ArcGISRuntime::Basemap* m_basemap = nullptr;
 };
 
 #endif // CONFIGUREBASEMAPSTYLELANGUAGE_H
