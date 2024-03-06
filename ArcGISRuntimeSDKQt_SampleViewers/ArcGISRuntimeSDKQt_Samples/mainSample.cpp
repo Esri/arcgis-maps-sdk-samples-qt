@@ -93,6 +93,7 @@
 #include "ChooseCameraController.h"
 #include "ClipGeometry.h"
 #include "ClosestFacility.h"
+#include "ConfigureBasemapStyleLanguage.h"
 #include "ConfigureClusters.h"
 #include "ConfigureSubnetworkTrace.h"
 #include "ContingentValues.h"
@@ -408,6 +409,7 @@ void registerCppSampleClasses()
   ChooseCameraController::init();
   ClipGeometry::init();
   ClosestFacility::init();
+  ConfigureBasemapStyleLanguage::init();
   ConfigureClusters::init();
   ConfigureSubnetworkTrace::init();
   ContingentValues::init();

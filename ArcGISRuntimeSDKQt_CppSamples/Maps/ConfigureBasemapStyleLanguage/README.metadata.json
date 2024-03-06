@@ -1,0 +1,31 @@
+{
+    "category": "Maps",
+    "description": "Apply basemap style parameters customization for a basemap, such as displaying all labels in a specific language or displaying every label in their corresponding local language.",
+    "featured": false,
+    "ignore": false,
+    "images": [
+        "screenshot.png"
+    ],
+    "keywords": [
+        "basemap style",
+        "language",
+        "language strategy",
+        "map",
+        "point",
+        "viewpoint"
+    ],
+    "redirect_from": "",
+    "relevant_apis": [
+        "Basemap",
+        "BasemapStyleLanguageStrategy",
+        "BasemapStyleParameters",
+        "Map",
+        "MapView"
+    ],
+    "snippets": [
+        "ConfigureBasemapStyleLanguage.cpp",
+        "ConfigureBasemapStyleLanguage.h",
+        "ConfigureBasemapStyleLanguage.qml"
+    ],
+    "title": "Configure basemap style language"
+}
