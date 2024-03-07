@@ -226,11 +226,8 @@ void AddDynamicEntityLayer::identifyLayerAtMouseClick(const QMouseEvent& e)
   // Hide the callout (if it is already hidden this will do nothing)
   m_mapView->calloutData()->setVisible(false);
 
-  // Create position to show the dynamic entity at the mouse click location.
-  const Point position(e.position().x(), e.position().y());
-
   m_mapView->identifyLayerAsync(m_dynamicEntityLayer, e.position(), 5, false, this)
-      .then(this, [position, this](IdentifyLayerResult* result)
+      .then(this, [this](IdentifyLayerResult* result)
   {
     if (!result || result->geoElements().empty())
     {
@@ -253,7 +250,11 @@ void AddDynamicEntityLayer::identifyLayerAtMouseClick(const QMouseEvent& e)
       const QString detailExpression = "concatenate(Round($feature.point_x,6), \",\", Round($feature.point_y,6),\" Heading: \",$feature.heading,\"°\")";
       m_mapView->calloutData()->setDetailExpression(detailExpression);
 
-      m_mapView->calloutData()->setVisible(true);
+      // Show the callout when the title is available.
+      connect(m_mapView->calloutData(), &CalloutData::titleChanged, this, [this]()
+      {
+        m_mapView->calloutData()->setVisible(true);
+      }, Qt::SingleShotConnection);
     }
   });
 }
