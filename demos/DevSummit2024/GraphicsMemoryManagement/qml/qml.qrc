@@ -1,0 +1,6 @@
+<RCC>
+    <qresource prefix="/qml">
+        <file>main.qml</file>
+        <file>GraphicsMemoryManagementForm.qml</file>
+    </qresource>
+</RCC>

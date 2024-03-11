@@ -18,7 +18,7 @@ CONFIG += c++17
 # additional modules are pulled in via arcgisruntime.pri
 QT += qml quick
 
-TARGET = AllRoadsLeadToRome
+TARGET = AllRoadsLeadToRome-Async
 
 lessThan(QT_MAJOR_VERSION, 6) {
     error("$$TARGET requires Qt 6.5.1")
