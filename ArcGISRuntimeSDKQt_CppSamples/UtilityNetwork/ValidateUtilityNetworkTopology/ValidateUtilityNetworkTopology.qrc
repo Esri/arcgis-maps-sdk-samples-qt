@@ -1,0 +1,11 @@
+<RCC>
+    <qresource prefix="/Samples/UtilityNetwork/ValidateUtilityNetworkTopology">
+        <file alias="sample.json">README.metadata.json</file>
+        <file>ValidateUtilityNetworkTopology.qml</file>
+        <file>ValidateUtilityNetworkTopology.h</file>
+        <file>ValidateUtilityNetworkTopology.cpp</file>
+        <file>main.qml</file>
+        <file>screenshot.png</file>
+        <file>README.md</file>
+    </qresource>
+</RCC>

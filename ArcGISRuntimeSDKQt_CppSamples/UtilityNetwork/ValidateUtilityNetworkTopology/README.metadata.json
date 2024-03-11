@@ -1,0 +1,37 @@
+{
+    "category": "Utility network",
+    "description": "Demonstrates the workflow of getting the network state and validating the topology of a utility network.",
+    "featured": false,
+    "ignore": false,
+    "images": [
+        "screenshot.png"
+    ],
+    "keywords": [
+        "dirty areas",
+        "edit",
+        "network topology",
+        "online",
+        "state",
+        "trace",
+        "utility network",
+        "validate"
+    ],
+    "redirect_from": "",
+    "relevant_apis": [
+        "UtilityElement",
+        "UtilityElementTraceResult",
+        "UtilityNetwork",
+        "UtilityNetworkCapabilities",
+        "UtilityNetworkState",
+        "UtilityNetworkValidationJob",
+        "UtilityTraceConfiguration",
+        "UtilityTraceParameters",
+        "UtilityTraceResult"
+    ],
+    "snippets": [
+        "ValidateUtilityNetworkTopology.cpp",
+        "ValidateUtilityNetworkTopology.h",
+        "ValidateUtilityNetworkTopology.qml"
+    ],
+    "title": "Validate Utility Network Topology"
+}
