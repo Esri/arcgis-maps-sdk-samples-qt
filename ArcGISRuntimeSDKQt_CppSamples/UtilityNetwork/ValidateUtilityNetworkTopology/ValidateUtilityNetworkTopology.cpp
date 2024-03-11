@@ -23,7 +23,6 @@
 #include "ArcGISFeatureTable.h"
 #include "AttributeListModel.h"
 #include "AuthenticationChallenge.h"
-#include "AuthenticationManager.h"
 #include "CodedValueDomain.h"
 #include "Credential.h"
 #include "Envelope.h"
@@ -48,6 +47,8 @@
 #include "MapTypes.h"
 #include "PictureMarkerSymbol.h"
 #include "Point.h"
+#include "Portal.h"
+#include "PortalItem.h"
 #include "QueryParameters.h"
 #include "ServiceFeatureTable.h"
 #include "ServiceGeodatabase.h"
@@ -84,7 +85,6 @@
 #include "ValidateUtilityNetworkTopology.h"
 #include "Viewpoint.h"
 
-
 #include <QUuid>
 #include <QFuture>
 
@@ -95,14 +95,15 @@ ValidateUtilityNetworkTopology::ValidateUtilityNetworkTopology(QObject* parent /
   QObject(parent),
   m_cred(new Credential("editor01", "S7#i2LWmYH75", this))
 {
-  connect(AuthenticationManager::instance(), &AuthenticationManager::authenticationChallenge, this, [this](AuthenticationChallenge* challenge)
-          {
-            challenge->continueWithCredential(m_cred);
-          });
+  m_portal = new Portal(QUrl("https://sampleserver7.arcgisonline.com/portal/sharing/rest"), m_cred, this);
 
-  m_map = new Map(QUrl("https://sampleserver7.arcgisonline.com/portal/home/item.html?id=6e3fc6db3d0b4e6589eb4097eb3e5b9b"), this);
+  m_portalItem = new PortalItem(m_portal, "6e3fc6db3d0b4e6589eb4097eb3e5b9b", this);
+
+  m_map = new Map(m_portalItem, this);
+
   connect(m_map, &Map::doneLoading, this, [this]()
   {
+    // Load and switch utility network version
     m_message = QString("Loading the utility network...");
     emit messageChanged();
 
@@ -112,6 +113,7 @@ ValidateUtilityNetworkTopology::ValidateUtilityNetworkTopology(QObject* parent /
     m_serviceGeodatabase = m_utilityNetwork->serviceGeodatabase();
     const QString uuid = QUuid().createUuid().toString(QUuid::WithoutBraces);
 
+    // Restrict editing and tracing on a random branch
     ServiceVersionParameters* params = new ServiceVersionParameters(this);
     params->setName("ValidateNetworkTopology_"+uuid);
     params->setAccess(VersionAccess::Private);
@@ -126,6 +128,8 @@ ValidateUtilityNetworkTopology::ValidateUtilityNetworkTopology(QObject* parent /
           m_serviceGeodatabase->switchVersionAsync(serviceVersionInfo->name()).then(this, [this]()
           {
             getLabelDefinitions();
+
+            // Visualize dirty area by adding to the map
             m_dirtyAreaTable = m_utilityNetwork->dirtyAreaTable();
             m_map->operationalLayers()->append(new FeatureLayer(dynamic_cast<FeatureTable*>(m_dirtyAreaTable)));
             });
@@ -166,6 +170,7 @@ void ValidateUtilityNetworkTopology::setMapView(MapQuickView* mapView)
 {
   if (!mapView || mapView == m_mapView)
     return;
+
   m_busy = true;
   emit isBusy();
   m_message = QString("Loading a webmap...");
@@ -216,6 +221,8 @@ void ValidateUtilityNetworkTopology::connectSignals()
       return;
 
     m_clickPoint = m_mapView->screenToLocation(mouseEvent.position().x(), mouseEvent.position().y());
+
+    // Perform an identify to determine if a user tapped on a feature.
     m_mapView->identifyLayersAsync(mouseEvent.position(), 5.0, false).then(this, [this](const QList<IdentifyLayerResult*>& results)
     { if(!results.isEmpty())
       {
@@ -251,6 +258,7 @@ void ValidateUtilityNetworkTopology::connectSignals()
         m_feature->load();
 
       m_featureToEdit = m_feature;
+
       // Select the feature.
       if (m_updateFieldName == m_nominalVoltageField)
         m_lineFeatureLayer->selectFeature(m_featureToEdit);
@@ -332,10 +340,16 @@ void ValidateUtilityNetworkTopology::onApplyEdits(QString choice)
           }
         }
       }
+
+      m_busy = false;
+      emit isBusy();
     }).onFailed(this, [this]()
     {
       m_message = QString("Apply edits failed.");
       emit messageChanged();
+
+      m_busy = false;
+      emit isBusy();
     });
   });
 
@@ -344,9 +358,6 @@ void ValidateUtilityNetworkTopology::onApplyEdits(QString choice)
 
   m_isUpdateVisible = false;
   emit isUpdateVisible();
-
-  m_busy = false;
-  emit isBusy();
 
   m_validateBtn = true;
   emit validateBtn();
@@ -357,6 +368,7 @@ void ValidateUtilityNetworkTopology::onApplyEdits(QString choice)
 
 void ValidateUtilityNetworkTopology::onClear()
 {
+  // Clear the selection.
   m_deviceFeatureLayer->clearSelection();
   m_lineFeatureLayer->clearSelection();
 
@@ -388,8 +400,11 @@ void ValidateUtilityNetworkTopology::onGetState()
     {
       m_getstate = state.result();
 
+      // Validate if dirty areas or errors exist
       m_validateBtn = m_getstate->hasDirtyAreas();
       emit validateBtn();
+
+      // Trace if network topology is enabled
       m_traceBtn = m_getstate->isNetworkTopologyEnabled();
       emit traceBtn();
 
@@ -417,6 +432,7 @@ void ValidateUtilityNetworkTopology::onGetState()
 void ValidateUtilityNetworkTopology::onValidate()
 {
   m_utilityNetwork = m_mapView->map()->utilityNetworks()->first();
+
   // Validate using the current extent
   const Envelope m_extent = m_mapView->currentViewpoint(ViewpointType::BoundingGeometry).targetGeometry().extent();
 
@@ -425,6 +441,8 @@ void ValidateUtilityNetworkTopology::onValidate()
 
   m_message = QString("Validating utility network topology...");
   emit messageChanged();
+
+  // Get the validation result
   UtilityNetworkValidationJob* job = m_utilityNetwork->validateNetworkTopology(m_extent);
   job->start();
 
@@ -444,33 +462,42 @@ void ValidateUtilityNetworkTopology::onValidate()
 
       m_validateBtn = result->hasDirtyAreas();
       emit validateBtn();
+
+      m_busy = false;
+      emit isBusy();
     }
     else
     {
       m_message = QString("Validate network topology failed.");
       emit messageChanged();
+
+      m_busy = false;
+      emit isBusy();
     }
   });
-
-  m_busy = false;
-  emit isBusy();
 }
 
 void ValidateUtilityNetworkTopology::onTrace()
 {
   m_utilityNetwork = m_mapView->map()->utilityNetworks()->first();
 
-  m_busy = true;
-  emit isBusy();
-
   m_message = QString("Running a downstream trace...");
   emit messageChanged();
 
+  m_busy = true;
+  emit isBusy();
+
+  // Clear previous selection from the layers.
   m_deviceFeatureLayer->clearSelection();
   m_lineFeatureLayer->clearSelection();
 
+  //  Get the trace result from the utility network.
   m_utilityNetwork->traceAsync(m_traceParameters).then(this, [this](QList<UtilityTraceResult*>)
   {
+
+    m_busy = false;
+    emit isBusy();
+
     UtilityTraceResult* result = m_utilityNetwork->traceResult()->at(0);
 
     const QList<UtilityElement*> elements = static_cast<UtilityElementTraceResult*>(result)->elements(this);
@@ -505,17 +532,18 @@ void ValidateUtilityNetworkTopology::onTrace()
     m_message = QString("Trace failed.\n"
         "Click 'Get State' to check the updated network state.");
     emit messageChanged();
+
+    m_busy = false;
+    emit isBusy();
   });
 
   m_clearBtn = true;
   emit clearBtn();
-  m_busy = false;
-  emit isBusy();
 }
-
 
 void ValidateUtilityNetworkTopology::getLabelDefinitions()
 {
+  // Visualize attribute editing using labels
   m_deviceLabelDefinition = createDeviceLabelDefinition();
   m_lineLabelDefinition = createLineLabelDefinition();
   LayerListModel* layers = m_mapView->map()->operationalLayers();
@@ -544,6 +572,7 @@ void ValidateUtilityNetworkTopology::getLabelDefinitions()
 
 void ValidateUtilityNetworkTopology::setupTraceParameters()
 {
+  // Trace with a subnetwork controller as default starting location
   m_utilityAssetType = m_utilityNetwork
                            ->definition()
                            ->networkSource("Electric Distribution Device")
@@ -567,9 +596,9 @@ void ValidateUtilityNetworkTopology::setupTraceParameters()
 
   m_startingLocation = m_utilityNetwork->createElementWithAssetType(m_utilityAssetType, QUuid("{1CAF7740-0BF4-4113-8DB2-654E18800028}"), loadTerminal, this);
 
+  // Display starting location as graphic
   m_utilityNetwork->featuresForElementsAsync(QList<UtilityElement*> {m_startingLocation}).then(this, [this](QList<ArcGISFeature*>)
   {
-    // display starting location
     ArcGISFeatureListModel* elementFeaturesList = m_utilityNetwork->featuresForElementsResult();
     const Point startingLocationGeometry = geometry_cast<Point>(elementFeaturesList->first()->geometry());
 

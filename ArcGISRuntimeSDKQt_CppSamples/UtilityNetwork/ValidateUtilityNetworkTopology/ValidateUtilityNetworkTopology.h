@@ -19,22 +19,20 @@
 
 #include "CodedValueDomain.h"
 #include "Field.h"
-#include "GraphicsOverlay.h"
 #include "Point.h"
-#include "UtilityNetworkState.h"
-#include <QFutureWatcher>
 
 namespace Esri::ArcGISRuntime {
   class ArcGISFeature;
   class ArcGISFeatureTable;
   class Credential;
-  class CodedValue;
-  class CodedValueDomain;
   class FeatureLayer;
+  class GraphicsOverlay;
   class LabelDefinition;
   class Layer;
   class Map;
   class MapQuickView;
+  class Portal;
+  class PortalItem;
   class ServiceGeodatabase;
   class SubtypeFeatureLayer;
   class SubtypeSublayer;
@@ -105,6 +103,8 @@ private:
   Esri::ArcGISRuntime::Map* m_map = nullptr;
   Esri::ArcGISRuntime::MapQuickView* m_mapView = nullptr;
   Esri::ArcGISRuntime::Credential* m_cred = nullptr;
+  Esri::ArcGISRuntime::Portal* m_portal;
+  Esri::ArcGISRuntime::PortalItem* m_portalItem;
   Esri::ArcGISRuntime::UtilityNetwork* m_utilityNetwork = nullptr;
   Esri::ArcGISRuntime::UtilityAssetType* m_utilityAssetType = nullptr;
   Esri::ArcGISRuntime::UtilityElement* m_startingLocation = nullptr;
