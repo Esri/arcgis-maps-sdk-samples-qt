@@ -15,7 +15,6 @@ import QtQuick.Controls
 import Esri.AllRoadsLeadToRome
 
 Item {
-
     property bool showDirections: false
 
     // Create MapQuickView here, and create its Map etc. in C++ code
@@ -26,14 +25,14 @@ Item {
             left: parent.left
             bottom: parent.bottom
         }
-        width: showDirections ? parent.width *.75 : parent.width
+        width: showDirections ? parent.width * (2/3) : parent.width
         // set focus to enable keyboard navigation
         focus: true
     }
 
     // Declare the C++ instance which creates the map etc. and supply the view
     AllRoadsLeadToRome {
-        id: model
+        id: appBackend
         mapView: view
     }
 
@@ -41,7 +40,7 @@ Item {
     BusyIndicator {
         id: busyIndicator
         anchors.centerIn: parent
-        running: model.busy
+        running: appBackend.busy
     }
 
     Button {
@@ -51,8 +50,8 @@ Item {
             right: parent.right
         }
 
+        visible: !appBackend.busy && appBackend.routeTime > 0
         text: showDirections ? "Hide directions" : "Show directions"
-        visible: !model.busy && model.routeTime > 0
         onVisibleChanged: if (!visible) showDirections = false
         onClicked: showDirections = !showDirections
     }
@@ -64,9 +63,8 @@ Item {
             right: parent.right
             bottom: parent.bottom
         }
-        anchors.leftMargin: showDirections ? 0 : parent.width / 4
-        width: parent.width / 4
-        visible: showDirections
+        width: parent.width / 3
+        visible: showDirections && !appBackend.busy
         color: "white"
 
         Text {
@@ -79,10 +77,11 @@ Item {
             }
 
             font.bold: true
+            wrapMode: Text.WordWrap
 
-            text: "Destination: " + model.destinationName +
-                  "\nTotal time: " + Math.floor(model.routeTime/60) + " hours " + (Math.floor(model.routeTime % 60)) + " mins" +
-                  "\nTotal distance: " + (model.routeLength/1000).toFixed(1) + " km"
+            text: "Destination: " + appBackend.destinationName +
+                  "\nTotal time: " + Math.floor(appBackend.routeTime/60) + " hours " + (Math.floor(appBackend.routeTime % 60)) + " mins" +
+                  "\nTotal distance: " + (appBackend.routeLength/1000).toFixed(1) + " km"
         }
 
         Rectangle {
@@ -98,7 +97,8 @@ Item {
             color: "black"
         }
 
-        ListView {
+        ScrollView {
+            id: scrollView
             anchors {
                 top: headerText.bottom
                 left: parent.left
@@ -108,14 +108,26 @@ Item {
             }
             clip: true
 
-            spacing: 10
+            Column {
+                spacing: 10
 
-            model: model.directions
+                Repeater {
+                    model: appBackend.directions
 
-            delegate: Text {
-                text: length > 0 ? directionText + "\n" + (length/1000).toFixed(2) + " km, " + Math.floor(duration) + " mins" : directionText
-                wrapMode: Text.Wrap
-                width: dirRect.width-20
+                    delegate: Text {
+                        property var geometry: model.geometry
+                        text: model.length > 0 ? model.directionText + "\n" + (model.length/1000).toFixed(2) + " km, " + Math.floor(model.duration) + " mins" : model.directionText
+                        wrapMode: Text.Wrap
+                        width: scrollView.width-20
+
+                        MouseArea {
+                            anchors.fill: parent
+                            onClicked: {
+                                appBackend.goToDirection(geometry);
+                            }
+                        }
+                    }
+                }
             }
         }
     }

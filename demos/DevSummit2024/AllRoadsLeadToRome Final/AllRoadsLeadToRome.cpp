@@ -14,6 +14,7 @@
 #include "AllRoadsLeadToRome.h"
 
 #include "DirectionManeuver.h"
+#include "DirectionManeuverListModel.h"
 #include "GeocodeParameters.h"
 #include "GeocodeResult.h"
 #include "GeometryEngine.h"
@@ -53,19 +54,28 @@ AllRoadsLeadToRome::AllRoadsLeadToRome(QObject* parent /* = nullptr */):
   m_romeGraphic = new Graphic(this);
   m_startGraphic = new Graphic(this);
   m_routeLine = new Graphic(this);
+  m_stepLine = new Graphic(this);
 
   // Set symbols for graphics and add them to the graphics overlay
   m_romeGraphic->setSymbol(new SimpleMarkerSymbol(SimpleMarkerSymbolStyle::Circle, QColor("red"), 10.0, this));
   m_startGraphic->setSymbol(new SimpleMarkerSymbol(SimpleMarkerSymbolStyle::Circle, QColor("green"), 10.0, this));
   m_routeLine->setSymbol(new SimpleLineSymbol(SimpleLineSymbolStyle::Solid, QColor("blue"), 3.0, this));
+  m_stepLine->setSymbol(new SimpleLineSymbol(SimpleLineSymbolStyle::Solid, QColor("yellow"), 2.0, this));
 
   // Create the graphics overlay and add the graphics to it
   m_graphicsOverlay = new GraphicsOverlay(this);
-  m_graphicsOverlay->graphics()->append({m_romeGraphic, m_startGraphic, m_routeLine});
+  m_graphicsOverlay->graphics()->append({m_romeGraphic, m_startGraphic, m_routeLine, m_stepLine});
 }
 
 AllRoadsLeadToRome::~AllRoadsLeadToRome()
 {
+}
+
+void AllRoadsLeadToRome::goToDirection(const Geometry step)
+{
+  // Set the map view to the step geometry
+  m_mapView->setViewpointGeometryAsync(step, 100);
+  m_stepLine->setGeometry(step);
 }
 
 MapQuickView* AllRoadsLeadToRome::mapView() const

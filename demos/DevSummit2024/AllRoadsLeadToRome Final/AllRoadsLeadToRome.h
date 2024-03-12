@@ -24,6 +24,8 @@ class SimpleMarkerSymbol;
 class RouteTask;
 } // namespace Esri::ArcGISRuntime
 
+#include "Geometry.h"
+
 #include <QObject>
 
 Q_MOC_INCLUDE("MapQuickView.h")
@@ -44,6 +46,8 @@ public:
   explicit AllRoadsLeadToRome(QObject* parent = nullptr);
   ~AllRoadsLeadToRome() override;
 
+  Q_INVOKABLE void goToDirection(const Esri::ArcGISRuntime::Geometry step);
+
 signals:
   void mapViewChanged();
   void directionsChanged();
@@ -56,6 +60,7 @@ private:
   Esri::ArcGISRuntime::Graphic* m_romeGraphic = nullptr;
   Esri::ArcGISRuntime::Graphic* m_startGraphic = nullptr;
   Esri::ArcGISRuntime::Graphic* m_routeLine = nullptr;
+  Esri::ArcGISRuntime::Graphic* m_stepLine = nullptr;
   Esri::ArcGISRuntime::GraphicsOverlay* m_graphicsOverlay = nullptr;
   Esri::ArcGISRuntime::LocatorTask* m_locatorTask = nullptr;
   Esri::ArcGISRuntime::Map* m_map = nullptr;

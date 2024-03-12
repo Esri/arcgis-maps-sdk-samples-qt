@@ -27,7 +27,6 @@ class RouteTask;
 #include <QObject>
 
 Q_MOC_INCLUDE("MapQuickView.h")
-Q_MOC_INCLUDE("DirectionManeuverListModel.h")
 
 class AllRoadsLeadToRome : public QObject
 {
@@ -46,15 +45,17 @@ private:
   Esri::ArcGISRuntime::MapQuickView* mapView() const;
   void setMapView(Esri::ArcGISRuntime::MapQuickView* mapView);
 
+  Esri::ArcGISRuntime::LocatorTask* m_locatorTask = nullptr;
+  Esri::ArcGISRuntime::RouteTask* m_routeTask = nullptr;
+
+  Esri::ArcGISRuntime::GraphicsOverlay* m_graphicsOverlay = nullptr;
   Esri::ArcGISRuntime::Graphic* m_romeGraphic = nullptr;
   Esri::ArcGISRuntime::Graphic* m_startGraphic = nullptr;
   Esri::ArcGISRuntime::Graphic* m_routeLine = nullptr;
-  Esri::ArcGISRuntime::GraphicsOverlay* m_graphicsOverlay = nullptr;
-  Esri::ArcGISRuntime::LocatorTask* m_locatorTask = nullptr;
+
   Esri::ArcGISRuntime::Map* m_map = nullptr;
   Esri::ArcGISRuntime::MapQuickView* m_mapView = nullptr;
   Esri::ArcGISRuntime::SimpleMarkerSymbol* m_markerSymbol = nullptr;
-  Esri::ArcGISRuntime::RouteTask* m_routeTask = nullptr;
 };
 
 #endif // ALLROADSLEADTOROME_H
