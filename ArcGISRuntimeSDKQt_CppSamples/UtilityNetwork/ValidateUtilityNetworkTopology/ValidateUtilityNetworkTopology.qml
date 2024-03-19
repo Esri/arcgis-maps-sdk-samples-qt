@@ -77,7 +77,7 @@ Item {
                         Layout.fillWidth: true
                         onClicked: model.onGetState()
                         Layout.preferredWidth: clearBtn.width
-                        enabled: model.stateBtn
+                        enabled: model.isStateBtnEnabled
                     }
                     Button {
                         id: validateBtn
@@ -85,7 +85,7 @@ Item {
                         Layout.row: 0
                         Layout.column: 1
                         Layout.fillWidth: true
-                        enabled: model.validateBtn
+                        enabled: model.isValidateBtnEnabled
                         onClicked: model.onValidate()
                         Layout.preferredWidth: clearBtn.width
                     }
@@ -95,7 +95,7 @@ Item {
                         Layout.row: 1
                         Layout.column: 0
                         Layout.fillWidth: true
-                        enabled: model.traceBtn
+                        enabled: model.isTraceBtnEnabled
                         onClicked: model.onTrace()
                         Layout.preferredWidth: clearBtn.width
                     }
@@ -106,7 +106,7 @@ Item {
                         Layout.column: 1
                         Layout.fillWidth: true
                         onClicked: model.onClear()
-                        enabled: model.clearBtn
+                        enabled: model.isClearBtnEnabled
                     }
                     Text {
                         id: status
@@ -117,9 +117,9 @@ Item {
                     }
                     ProgressBar {
                         id: isBusy
+                        visible: model.busy
                         Layout.row: 3
                         Layout.columnSpan: 2
-                        visible: model.busy
                         Layout.fillWidth: true
                         indeterminate: true
                     }
@@ -129,7 +129,7 @@ Item {
     }
     Rectangle {
         id: updateWindow
-        visible: model.isUpdateVisible
+        visible: model.isUpdateWindowVisible
         enabled: visible
         anchors.centerIn: parent
         width: childrenRect.width
