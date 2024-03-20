@@ -129,9 +129,9 @@ Item {
     }
     Rectangle {
         id: updateWindow
+        anchors.centerIn: parent
         visible: model.isUpdateWindowVisible
         enabled: visible
-        anchors.centerIn: parent
         width: childrenRect.width
         height: childrenRect.height
         color: "white"

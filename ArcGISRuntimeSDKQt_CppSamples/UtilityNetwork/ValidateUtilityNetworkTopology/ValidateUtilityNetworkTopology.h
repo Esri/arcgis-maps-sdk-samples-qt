@@ -59,7 +59,7 @@ public:
   ~ValidateUtilityNetworkTopology() override;
 
   static void init();
-  Q_INVOKABLE void onApplyEdits(QString choice);
+  Q_INVOKABLE void onApplyEdits(const QString& choice);
   Q_INVOKABLE void onClear();
   Q_INVOKABLE void onGetState();
   Q_INVOKABLE void onValidate();

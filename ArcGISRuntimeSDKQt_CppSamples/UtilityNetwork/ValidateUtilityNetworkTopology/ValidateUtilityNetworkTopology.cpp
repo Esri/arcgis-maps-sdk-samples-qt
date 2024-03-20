@@ -85,13 +85,13 @@ using namespace Esri::ArcGISRuntime;
 ValidateUtilityNetworkTopology::ValidateUtilityNetworkTopology(QObject* parent /* = nullptr */) :
   QObject(parent)
 {
-  Credential* m_cred = new Credential("editor01", "S7#i2LWmYH75", this);
+  Credential* cred = new Credential("editor01", "S7#i2LWmYH75", this);
 
-  Portal* m_portal = new Portal(QUrl("https://sampleserver7.arcgisonline.com/portal/sharing/rest"), m_cred, this);
+  Portal* portal = new Portal(QUrl("https://sampleserver7.arcgisonline.com/portal/sharing/rest"), cred, this);
 
-  PortalItem* m_portalItem = new PortalItem(m_portal, "6e3fc6db3d0b4e6589eb4097eb3e5b9b", this);
+  PortalItem* portalItem = new PortalItem(portal, "6e3fc6db3d0b4e6589eb4097eb3e5b9b", this);
 
-  m_map = new Map(m_portalItem, this);
+  m_map = new Map(portalItem, this);
 
   connect(m_map, &Map::doneLoading, this, [this]()
   {
@@ -142,8 +142,8 @@ void ValidateUtilityNetworkTopology::setMapView(MapQuickView* mapView)
   m_mapView = mapView;
   m_mapView->setMap(m_map);
 
-  GraphicsOverlay* m_overlay = new GraphicsOverlay(this);
-  m_mapView->graphicsOverlays()->append(m_overlay);
+  GraphicsOverlay* overlay = new GraphicsOverlay(this);
+  m_mapView->graphicsOverlays()->append(overlay);
 
   emit mapViewChanged();
 
@@ -156,9 +156,7 @@ void ValidateUtilityNetworkTopology::onMapLoaded()
   updateMessage("Loading the utility network...");
 
   m_utilityNetwork = m_map->utilityNetworks()->first();
-  m_utilityNetwork->load();
 
-  m_serviceGeodatabase = m_utilityNetwork->serviceGeodatabase();
   const QString randomVersionUuid = QUuid().createUuid().toString(QUuid::WithoutBraces);
 
   // Restrict editing and tracing on a random branch
@@ -167,15 +165,20 @@ void ValidateUtilityNetworkTopology::onMapLoaded()
   params->setAccess(VersionAccess::Private);
   params->setDescription("Validate network topology with ArcGIS Runtime");
 
-  connect(m_serviceGeodatabase, &ServiceGeodatabase::doneLoading, this, [this, params](const Esri::ArcGISRuntime::Error &loadError)
-          {
-            onServiceGeodatabaseLoaded(params, loadError);
-          });
-
   connect(m_utilityNetwork, &UtilityNetwork::doneLoading, this, [this]()
-          {
-            setupTraceParameters();
-          });
+  {
+    setupTraceParameters();
+  });
+
+  m_utilityNetwork->load();
+  m_serviceGeodatabase = m_utilityNetwork->serviceGeodatabase();
+
+  connect(m_serviceGeodatabase, &ServiceGeodatabase::doneLoading, this, [this, params](const Esri::ArcGISRuntime::Error &loadError)
+  {
+    onServiceGeodatabaseLoaded(params, loadError);
+  });
+
+  m_serviceGeodatabase->load();
 }
 
 void ValidateUtilityNetworkTopology::onServiceGeodatabaseLoaded(ServiceVersionParameters* params, const Error& loadError)
@@ -190,9 +193,10 @@ void ValidateUtilityNetworkTopology::onServiceGeodatabaseLoaded(ServiceVersionPa
       displayLabelDefinitions();
 
       // Visualize dirty area by adding to the map
-      ArcGISFeatureTable* m_dirtyAreaTable = m_utilityNetwork->dirtyAreaTable();
-      m_map->operationalLayers()->append(new FeatureLayer(dynamic_cast<FeatureTable*>(m_dirtyAreaTable), this));
+      ArcGISFeatureTable* dirtyAreaTable = m_utilityNetwork->dirtyAreaTable();
+      m_map->operationalLayers()->append(new FeatureLayer(dynamic_cast<FeatureTable*>(dirtyAreaTable), this));
     });
+    serviceVersionInfo->deleteLater();
   });
 }
 
@@ -200,25 +204,26 @@ void ValidateUtilityNetworkTopology::connectSignals()
 {
   connect(m_mapView, &MapQuickView::mouseClicked, this, [this](QMouseEvent& mouseEvent)
   {
-    // first clear the selection
-    m_deviceFeatureLayer->clearSelection();
-    m_lineFeatureLayer->clearSelection();
-
-    m_busy = true;
-    emit isBusy();
-
-    updateMessage("Identifying feature to edit...");
-
-    if (m_map->loadStatus() != LoadStatus::Loaded)
-      return;
-
-    Point m_clickPoint = m_mapView->screenToLocation(mouseEvent.position().x(), mouseEvent.position().y());
-
-    // Perform an identify to determine if a user tapped on a feature.
-    m_mapView->identifyLayersAsync(mouseEvent.position(), 5.0, false).then(this, [this](const QList<IdentifyLayerResult*>& results)
+    if (m_deviceFeatureLayer && m_lineFeatureLayer)
     {
-      onIdentifyLayersAsyncCompleted(results);
-    });
+      // first clear the selection
+      m_deviceFeatureLayer->clearSelection();
+      m_lineFeatureLayer->clearSelection();
+
+      m_busy = true;
+      emit isBusy();
+
+      updateMessage("Identifying feature to edit...");
+
+      if (m_map->loadStatus() != LoadStatus::Loaded)
+        return;
+
+      // Perform an identify to determine if a user tapped on a feature.
+      m_mapView->identifyLayersAsync(mouseEvent.position(), 5.0, false).then(this, [this](const QList<IdentifyLayerResult*>& results)
+      {
+        onIdentifyLayersAsyncCompleted(results);
+      });
+    }
   });
 }
 
@@ -245,10 +250,10 @@ void ValidateUtilityNetworkTopology::onIdentifyLayersAsyncCompleted(const QList<
     return;
   }
   m_updateFieldName = m_feature->featureTable()->tableName() == "Electric Distribution Device" ? "devicestatus" : "nominalvoltage";
-  Field m_field = m_feature->featureTable()->field(m_updateFieldName);
-  CodedValueDomain m_codedValueDomain = static_cast<CodedValueDomain>(m_field.domain());
-  m_codedValues = m_codedValueDomain.codedValues();
-  if (m_field.isEmpty() || m_codedValues.empty())
+  Field field = m_feature->featureTable()->field(m_updateFieldName);
+  CodedValueDomain codedValueDomain = static_cast<CodedValueDomain>(field.domain());
+  m_codedValues = codedValueDomain.codedValues();
+  if (field.isEmpty() || m_codedValues.empty())
   {
     return;
   }
@@ -290,9 +295,9 @@ void ValidateUtilityNetworkTopology::onIdentifyLayersAsyncCompleted(const QList<
   emit updateFieldName();
 }
 
-void ValidateUtilityNetworkTopology::onApplyEdits(QString choice)
+void ValidateUtilityNetworkTopology::onApplyEdits(const QString& choice)
 {
-  CodedValue m_choiceCodeValue;
+  CodedValue choiceCodeValue;
 
   m_serviceGeodatabase = static_cast<ServiceFeatureTable*>(m_featureToEdit->featureTable())->serviceGeodatabase();
 
@@ -301,11 +306,11 @@ void ValidateUtilityNetworkTopology::onApplyEdits(QString choice)
 
   for (const CodedValue &codedValue : m_codedValues)
   {
-    if(codedValue.name() == choice)
-      m_choiceCodeValue = codedValue;
+    if (codedValue.name() == choice)
+      choiceCodeValue = codedValue;
   }
 
-  m_featureToEdit->attributes()->replaceAttribute(m_updateFieldName, m_choiceCodeValue.code());
+  m_featureToEdit->attributes()->replaceAttribute(m_updateFieldName, choiceCodeValue.code());
 
   updateMessage("Updating feature...");
 
@@ -411,6 +416,8 @@ void ValidateUtilityNetworkTopology::onGetState()
       }
 
       updateMessage(m_message);
+
+      m_utilityNetworkstate->deleteLater();
     });
   }
 
@@ -425,7 +432,7 @@ void ValidateUtilityNetworkTopology::onValidate()
   if (m_utilityNetwork)
   {
     // Validate using the current extent
-    const Envelope m_extent = m_mapView->currentViewpoint(ViewpointType::BoundingGeometry).targetGeometry().extent();
+    const Envelope extent = m_mapView->currentViewpoint(ViewpointType::BoundingGeometry).targetGeometry().extent();
 
     m_busy = true;
     emit isBusy();
@@ -433,10 +440,9 @@ void ValidateUtilityNetworkTopology::onValidate()
     updateMessage("Validating utility network topology...");
 
     // Get the validation result
-    UtilityNetworkValidationJob* job = m_utilityNetwork->validateNetworkTopology(m_extent);
-    job->start();
+    UtilityNetworkValidationJob* job = m_utilityNetwork->validateNetworkTopology(extent);
 
-    QObject::connect(job, &UtilityNetworkValidationJob::statusChanged, this, [this, job](JobStatus status)
+    connect(job, &UtilityNetworkValidationJob::statusChanged, this, [this, job](JobStatus status)
     {
       if (status == JobStatus::Succeeded)
       {
@@ -463,6 +469,7 @@ void ValidateUtilityNetworkTopology::onValidate()
         emit isBusy();
       }
     });
+    job->start();
   }
 }
 
@@ -519,6 +526,7 @@ void ValidateUtilityNetworkTopology::onTrace()
         m_isClearBtnEnabled = true;
         emit isClearBtnEnabled();
       });
+      result->deleteLater();
     }).onFailed(this, [this]()
     {
       updateMessage("Trace failed.\n"
@@ -538,7 +546,7 @@ void ValidateUtilityNetworkTopology::updateMessage(QString message)
 
 void ValidateUtilityNetworkTopology::displayLabelDefinitions()
 {
-  FeatureLayer* m_featureLayer;
+  FeatureLayer* featureLayer;
   // Visualize attribute editing using labels
   LabelDefinition* m_deviceLabelDefinition = createDeviceLabelDefinition();
   LabelDefinition* m_lineLabelDefinition = createLineLabelDefinition();
@@ -548,17 +556,17 @@ void ValidateUtilityNetworkTopology::displayLabelDefinitions()
   {
     if (layer->layerType() == LayerType::FeatureLayer)
     {
-      m_featureLayer = qobject_cast<FeatureLayer*>(layer);
+      featureLayer = qobject_cast<FeatureLayer*>(layer);
 
-      if (m_featureLayer->name() == "Electric Distribution Device")
+      if (featureLayer->name() == "Electric Distribution Device")
       {
-        m_deviceFeatureLayer = m_featureLayer;
+        m_deviceFeatureLayer = featureLayer;
         m_deviceFeatureLayer->labelDefinitions()->append(m_deviceLabelDefinition);
         m_deviceFeatureLayer->setLabelsEnabled(true);
       }
-      else if (m_featureLayer->name() == "Electric Distribution Line")
+      else if (featureLayer->name() == "Electric Distribution Line")
       {
-        m_lineFeatureLayer = m_featureLayer;
+        m_lineFeatureLayer = featureLayer;
         m_lineFeatureLayer->labelDefinitions()->append(m_lineLabelDefinition);
         m_lineFeatureLayer->setLabelsEnabled(true);
       }
@@ -640,30 +648,30 @@ void ValidateUtilityNetworkTopology::setupTraceParameters()
 
 LabelDefinition* ValidateUtilityNetworkTopology::createDeviceLabelDefinition() const
 {
-  SimpleLabelExpression* labelExpression = new SimpleLabelExpression("[devicestatus]");
+  SimpleLabelExpression* labelExpression = new SimpleLabelExpression("[devicestatus]", new QObject());
 
-  TextSymbol* textSymbol = new TextSymbol();
+  TextSymbol* textSymbol = new TextSymbol(new QObject());
   textSymbol->setSize(12);
   textSymbol->setColor(Qt::blue);
   textSymbol->setHaloColor(Qt::white);
   textSymbol->setHaloWidth(2);
 
-  LabelDefinition* deviceLabelDefinition = new LabelDefinition(labelExpression, textSymbol);
+  LabelDefinition* deviceLabelDefinition = new LabelDefinition(labelExpression, textSymbol, new QObject());
   deviceLabelDefinition->setUseCodedValues(true);
   return deviceLabelDefinition;
 }
 
 LabelDefinition* ValidateUtilityNetworkTopology::createLineLabelDefinition() const
 {
-  SimpleLabelExpression* labelExpression = new SimpleLabelExpression("[nominalvoltage]");
+  SimpleLabelExpression* labelExpression = new SimpleLabelExpression("[nominalvoltage]", new QObject());
 
-  TextSymbol* textSymbol = new TextSymbol();
+  TextSymbol* textSymbol = new TextSymbol(new QObject());
   textSymbol->setSize(12);
   textSymbol->setColor(Qt::red);
   textSymbol->setHaloColor(Qt::white);
   textSymbol->setHaloWidth(2);
 
-  LabelDefinition* lineLabelDefinition = new LabelDefinition(labelExpression, textSymbol);
+  LabelDefinition* lineLabelDefinition = new LabelDefinition(labelExpression, textSymbol, new QObject());
   lineLabelDefinition->setUseCodedValues(true);
   return lineLabelDefinition;
 }
