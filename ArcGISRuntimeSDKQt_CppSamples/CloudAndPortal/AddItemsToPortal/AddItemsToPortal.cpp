@@ -144,10 +144,10 @@ void AddItemsToPortal::authenticatePortal()
 {
   if (!m_portal)
     return;
-  if (m_portal->loadStatus() == LoadStatus::NotLoaded)
-    m_portal->load();
-  else if (m_portal->loadStatus() == LoadStatus::FailedToLoad)
+  if (m_portal->loadStatus() == LoadStatus::FailedToLoad)
     m_portal->retryLoad();
+  else
+    m_portal->load();
 }
 
 void AddItemsToPortal::addItem()
