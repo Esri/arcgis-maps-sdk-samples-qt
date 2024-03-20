@@ -142,8 +142,12 @@ bool AddItemsToPortal::busy() const
 
 void AddItemsToPortal::authenticatePortal()
 {
-  if (m_portal)
+  if (!m_portal)
+    return;
+  if (m_portal->loadStatus() == LoadStatus::NotLoaded)
     m_portal->load();
+  else if (m_portal->loadStatus() == LoadStatus::FailedToLoad)
+    m_portal->retryLoad();
 }
 
 void AddItemsToPortal::addItem()
