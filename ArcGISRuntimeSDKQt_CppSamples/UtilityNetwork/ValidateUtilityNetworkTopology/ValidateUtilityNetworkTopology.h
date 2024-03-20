@@ -80,8 +80,8 @@ signals:
 private:
   Esri::ArcGISRuntime::MapQuickView* mapView() const;
   void setMapView(Esri::ArcGISRuntime::MapQuickView* mapView);
-  Esri::ArcGISRuntime::LabelDefinition* createDeviceLabelDefinition() const;
-  Esri::ArcGISRuntime::LabelDefinition* createLineLabelDefinition() const;
+  Esri::ArcGISRuntime::LabelDefinition* createDeviceLabelDefinition();
+  Esri::ArcGISRuntime::LabelDefinition* createLineLabelDefinition();
   void displayLabelDefinitions();
   void setupTraceParameters();
   void connectSignals();

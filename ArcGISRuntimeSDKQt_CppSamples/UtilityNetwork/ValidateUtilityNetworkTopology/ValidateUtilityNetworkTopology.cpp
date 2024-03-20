@@ -646,32 +646,32 @@ void ValidateUtilityNetworkTopology::setupTraceParameters()
   emit isBusy();
 }
 
-LabelDefinition* ValidateUtilityNetworkTopology::createDeviceLabelDefinition() const
+LabelDefinition* ValidateUtilityNetworkTopology::createDeviceLabelDefinition()
 {
-  SimpleLabelExpression* labelExpression = new SimpleLabelExpression("[devicestatus]", new QObject());
+  SimpleLabelExpression* labelExpression = new SimpleLabelExpression("[devicestatus]", this);
 
-  TextSymbol* textSymbol = new TextSymbol(new QObject());
+  TextSymbol* textSymbol = new TextSymbol(this);
   textSymbol->setSize(12);
   textSymbol->setColor(Qt::blue);
   textSymbol->setHaloColor(Qt::white);
   textSymbol->setHaloWidth(2);
 
-  LabelDefinition* deviceLabelDefinition = new LabelDefinition(labelExpression, textSymbol, new QObject());
+  LabelDefinition* deviceLabelDefinition = new LabelDefinition(labelExpression, textSymbol, this);
   deviceLabelDefinition->setUseCodedValues(true);
   return deviceLabelDefinition;
 }
 
-LabelDefinition* ValidateUtilityNetworkTopology::createLineLabelDefinition() const
+LabelDefinition* ValidateUtilityNetworkTopology::createLineLabelDefinition()
 {
-  SimpleLabelExpression* labelExpression = new SimpleLabelExpression("[nominalvoltage]", new QObject());
+  SimpleLabelExpression* labelExpression = new SimpleLabelExpression("[nominalvoltage]", this);
 
-  TextSymbol* textSymbol = new TextSymbol(new QObject());
+  TextSymbol* textSymbol = new TextSymbol(this);
   textSymbol->setSize(12);
   textSymbol->setColor(Qt::red);
   textSymbol->setHaloColor(Qt::white);
   textSymbol->setHaloWidth(2);
 
-  LabelDefinition* lineLabelDefinition = new LabelDefinition(labelExpression, textSymbol, new QObject());
+  LabelDefinition* lineLabelDefinition = new LabelDefinition(labelExpression, textSymbol, this);
   lineLabelDefinition->setUseCodedValues(true);
   return lineLabelDefinition;
 }
