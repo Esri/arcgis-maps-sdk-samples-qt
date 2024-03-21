@@ -33,6 +33,7 @@
 #include "MapTypes.h"
 #include "Ogc3dTilesLayer.h"
 #include "Point.h"
+#include <PortalItem.h>
 #include "Scene.h"
 #include "SceneQuickView.h"
 #include "SpatialReference.h"
@@ -46,29 +47,15 @@
 #include <QString>
 #include <QUrl>
 #include <QVariantMap>
+#include <QMap>
 
 using namespace Esri::ArcGISRuntime;
-namespace
-{
-QString defaultDataPath()
-{
-  QString dataPath;
-
-#ifdef Q_OS_IOS
-  dataPath = QStandardPaths::writableLocation(QStandardPaths::DocumentsLocation);
-#else
-  dataPath = QStandardPaths::writableLocation(QStandardPaths::HomeLocation);
-#endif
-
-  return dataPath;
-}
-}
 
 const QString DATAPATH = QStandardPaths::writableLocation(QStandardPaths::HomeLocation)+ "/ArcGIS/Runtime/Data/";
 
 Add3DTilesLayer::Add3DTilesLayer(QObject* parent /* = nullptr */):
   QObject(parent),
-  m_scene(new Scene(BasemapStyle::ArcGISImagery, this))
+  m_scene(new Scene(BasemapStyle::ArcGISDarkGray, this))
 {
   // create a new elevation source from Terrain3D REST service
   ArcGISTiledElevationSource* elevationSource = new ArcGISTiledElevationSource(
@@ -127,9 +114,7 @@ void Add3DTilesLayer::initialize()
 
 void Add3DTilesLayer::add3DTilesLayer()
 {
-  // edit the url to the path of your data, default path should be the home folder
-  const QUrl modelPath = defaultDataPath() + "/ArcGIS/Runtime/Data/Stuttgart.3tz";
-
+  const QUrl modelPath = QUrl("https://tiles.arcgis.com/tiles/N82JbI5EYtAkuUKU/arcgis/rest/services/Stuttgart/3DTilesServer/tileset.json");
   m_ogc3dTilesLayer = new Ogc3dTilesLayer(modelPath, this);
   m_scene->operationalLayers()->append(m_ogc3dTilesLayer);
 }
