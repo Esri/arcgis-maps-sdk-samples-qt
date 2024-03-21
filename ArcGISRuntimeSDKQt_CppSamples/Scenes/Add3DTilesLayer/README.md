@@ -6,7 +6,7 @@ Add a layer to visualize 3D tiles data that conforms to the OGC 3D Tiles specifi
 
 ## Use case
 
-The [3D Tiles Open Geospatial Consortium (OGC) specification](https://www.ogc.org/standard/3DTiles) defines a spatial data structure and a set of tile formats designed for streaming and rendering massive heterogeneous 3D geospatial content. A 3D tiles layer (`Ogc3dTilesLayer`) displays data from a tileset (`.json`) or from a 3D tiles archive format (`.3tz`).
+The [3D Tiles Open Geospatial Consortium (OGC) specification](https://www.ogc.org/standard/3DTiles) defines a spatial data structure and a set of tile formats designed for streaming and rendering massive heterogeneous 3D geospatial content. A 3D tiles layer (`Ogc3dTilesLayer`) displays data from a public service, a tileset (`.json`), or a 3D tiles archive format (`.3tz`).
 
 The 3D tiles layer added to a scene can assist in performing visual analysis. The sample demonstrates how to present the results of a line of sight analysis (location) using the added 3D tiles layer.
 
@@ -17,7 +17,7 @@ When loaded, the sample will display a scene with an `Ogc3dTilesLayer`, along wi
 ## How it works
 
 1. Create a scene.
-2. Create an `Ogc3dTilesLayer` using the path to the local `.3tz`
+2. Create an `Ogc3dTilesLayer` with the URL to a 3D tiles layer service.
 3. Add the layer to the scene's operational layers collection.
 4. Create an `AnalysisOverlay` and add it to the scene view.
 5. Create a `LocationLineOfSight` with initial observer and target locations and add it to the analysis overlay.
@@ -31,13 +31,6 @@ When loaded, the sample will display a scene with an `Ogc3dTilesLayer`, along wi
 * LocationLineOfSight
 * SceneView
 
-## Offline data
-
-Link | Local Location
----------|-------|
-|[Stuttgart 3D Tiles]()|`<userhome>/ArcGIS/Runtime/Data/Stuttgart.3tz`|
-
 ## Tags
 
 3D Tiles, line of sight analysis, Ogc3dTilesLayer, scene
-

@@ -1,11 +1,5 @@
 {
     "category": "Scenes",
-    "dataItems": [
-        {
-            "itemId": "00000000000000000000000000000000",
-            "path": "~/ArcGIS/Runtime/Data/3D/somedata.3tz"
-        }
-    ],
     "description": "Add a layer to visualize 3D tiles data that conforms to the OGC 3D Tiles specification.",
     "featured": false,
     "ignore": false,
