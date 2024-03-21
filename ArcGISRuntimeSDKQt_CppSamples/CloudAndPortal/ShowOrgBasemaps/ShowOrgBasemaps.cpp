@@ -62,8 +62,10 @@ void ShowOrgBasemaps::componentComplete()
     connect(m_portal, &Portal::loadStatusChanged, this, [this]()
     {
       m_portalLoaded = m_portal->loadStatus() == LoadStatus::Loaded;
+      m_portalLoading = m_portal->loadStatus() == LoadStatus::Loading;
 
       emit portalLoadedChanged();
+      emit portalLoadingChanged();
       emit orgNameChanged();
 
       if (m_portalLoaded)
@@ -84,6 +86,11 @@ void ShowOrgBasemaps::componentComplete()
 bool ShowOrgBasemaps::portalLoaded() const
 {
   return m_portalLoaded;
+}
+
+bool ShowOrgBasemaps::portalLoading() const
+{
+  return m_portalLoading;
 }
 
 QString ShowOrgBasemaps::orgName() const
@@ -110,12 +117,20 @@ void ShowOrgBasemaps::load(bool anonymous)
     return;
 
   if (anonymous)
-    m_portal->load();
+    load();
   else {
     Credential* cred = new Credential(OAuthClientInfo("iLkGIj0nX8A4EJda", OAuthMode::User), this);
     m_portal->setCredential(cred);
-    m_portal->load();
+    load();
   }
+}
+
+void ShowOrgBasemaps::load()
+{
+  if (m_portal->loadStatus() == LoadStatus::FailedToLoad)
+    m_portal->retryLoad();
+  else
+    m_portal->load();
 }
 
 void ShowOrgBasemaps::loadSelectedBasemap(int index)

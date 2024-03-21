@@ -28,7 +28,7 @@ ShowOrgBasemapsSample {
 
     BusyIndicator {
         anchors.centerIn: parent
-        running: !mapView.visible && !portalLoaded & !anonymousLogIn.visible
+        running: portalLoading
     }
 
     Text {
@@ -199,11 +199,10 @@ ShowOrgBasemapsSample {
         }
         text: "Anonymous"
         icon.source: "qrc:/Samples/CloudAndPortal/ShowOrgBasemaps/ic_menu_help_dark.png"
+        visible: !portalLoaded
 
         onClicked: {
             load(true);
-            anonymousLogIn.visible = false;
-            userLogIn.visible = false;
         }
     }
 
@@ -217,11 +216,11 @@ ShowOrgBasemapsSample {
         width: anonymousLogIn.width
         text: "Sign-in"
         icon.source: "qrc:/Samples/CloudAndPortal/ShowOrgBasemaps/ic_menu_account_dark.png"
+        visible: !portalLoaded
 
         onClicked: {
             load(false);
-            anonymousLogIn.visible = false;
-            userLogIn.visible = false;
+            anonymousLogIn.enabled = false;
         }
     }
 
