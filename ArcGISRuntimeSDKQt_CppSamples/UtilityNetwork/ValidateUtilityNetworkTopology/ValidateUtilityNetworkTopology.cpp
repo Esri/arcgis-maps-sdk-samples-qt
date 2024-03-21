@@ -461,7 +461,7 @@ void ValidateUtilityNetworkTopology::onValidate()
         m_busy = false;
         emit isBusy();
       }
-      else
+      else if(status == JobStatus::Failed)
       {
         updateMessage("Validate network topology failed.");
 
