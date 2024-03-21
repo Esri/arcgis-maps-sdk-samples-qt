@@ -220,7 +220,6 @@ ShowOrgBasemapsSample {
 
         onClicked: {
             load(false);
-            // Once user Sign-in credentails provided or failed, then click on anonymousLogIn will prompt for signin. so disable it.
             anonymousLogIn.enabled = false;
         }
     }
