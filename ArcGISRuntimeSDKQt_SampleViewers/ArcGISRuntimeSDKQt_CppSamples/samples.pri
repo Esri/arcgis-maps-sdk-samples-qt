@@ -230,7 +230,8 @@ INCLUDEPATH += \
     "$$SAMPLEPATHCPP/UtilityNetwork/DisplayContentOfUtilityNetworkContainer" \
     "$$SAMPLEPATHCPP/UtilityNetwork/DisplayUtilityAssociations" \
     "$$SAMPLEPATHCPP/UtilityNetwork/PerformValveIsolationTrace" \
-    "$$SAMPLEPATHCPP/UtilityNetwork/TraceUtilityNetwork"
+    "$$SAMPLEPATHCPP/UtilityNetwork/TraceUtilityNetwork" \
+    "$$SAMPLEPATHCPP/UtilityNetwork/ValidateUtilityNetworkTopology"
 
 HEADERS += \
     "$$SAMPLEPATHCPP/Analysis/AnalyzeHotspots/AnalyzeHotspots.h" \
@@ -451,7 +452,8 @@ HEADERS += \
     "$$SAMPLEPATHCPP/UtilityNetwork/DisplayContentOfUtilityNetworkContainer/DisplayContentOfUtilityNetworkContainer.h" \
     "$$SAMPLEPATHCPP/UtilityNetwork/DisplayUtilityAssociations/DisplayUtilityAssociations.h" \
     "$$SAMPLEPATHCPP/UtilityNetwork/PerformValveIsolationTrace/PerformValveIsolationTrace.h" \
-    "$$SAMPLEPATHCPP/UtilityNetwork/TraceUtilityNetwork/TraceUtilityNetwork.h"
+    "$$SAMPLEPATHCPP/UtilityNetwork/TraceUtilityNetwork/TraceUtilityNetwork.h" \
+    "$$SAMPLEPATHCPP/UtilityNetwork/ValidateUtilityNetworkTopology/ValidateUtilityNetworkTopology.h"
 
 SOURCES += \
     "$$SAMPLEPATHCPP/Analysis/AnalyzeHotspots/AnalyzeHotspots.cpp" \
@@ -672,7 +674,8 @@ SOURCES += \
     "$$SAMPLEPATHCPP/UtilityNetwork/DisplayContentOfUtilityNetworkContainer/DisplayContentOfUtilityNetworkContainer.cpp" \
     "$$SAMPLEPATHCPP/UtilityNetwork/DisplayUtilityAssociations/DisplayUtilityAssociations.cpp" \
     "$$SAMPLEPATHCPP/UtilityNetwork/PerformValveIsolationTrace/PerformValveIsolationTrace.cpp" \
-    "$$SAMPLEPATHCPP/UtilityNetwork/TraceUtilityNetwork/TraceUtilityNetwork.cpp"
+    "$$SAMPLEPATHCPP/UtilityNetwork/TraceUtilityNetwork/TraceUtilityNetwork.cpp" \
+    "$$SAMPLEPATHCPP/UtilityNetwork/ValidateUtilityNetworkTopology/ValidateUtilityNetworkTopology.cpp"
 
 RESOURCES += \
     "$$SAMPLEPATHCPP/Analysis/AnalyzeHotspots/AnalyzeHotspots.qrc" \
@@ -883,7 +886,8 @@ RESOURCES += \
     "$$SAMPLEPATHCPP/UtilityNetwork/DisplayContentOfUtilityNetworkContainer/DisplayContentOfUtilityNetworkContainer.qrc" \
     "$$SAMPLEPATHCPP/UtilityNetwork/DisplayUtilityAssociations/DisplayUtilityAssociations.qrc" \
     "$$SAMPLEPATHCPP/UtilityNetwork/PerformValveIsolationTrace/PerformValveIsolationTrace.qrc" \
-    "$$SAMPLEPATHCPP/UtilityNetwork/TraceUtilityNetwork/TraceUtilityNetwork.qrc"
+    "$$SAMPLEPATHCPP/UtilityNetwork/TraceUtilityNetwork/TraceUtilityNetwork.qrc" \
+    "$$SAMPLEPATHCPP/UtilityNetwork/ValidateUtilityNetworkTopology/ValidateUtilityNetworkTopology.qrc"
 
 # Local Server Only (Linux and Windows)
 !android:!ios:!macx {

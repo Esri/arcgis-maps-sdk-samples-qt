@@ -268,6 +268,7 @@
 #include "Unique_Value_Renderer.h"
 #include "UpdateAttributesFeatureService.h"
 #include "UpdateGeometryFeatureService.h"
+#include "ValidateUtilityNetworkTopology.h"
 #include "VectorTiledLayerUrl.h"
 #include "ViewContentBeneathTerrainSurface.h"
 #include "ViewPointCloudDataOffline.h"
@@ -578,6 +579,7 @@ void registerCppSampleClasses()
   Unique_Value_Renderer::init();
   UpdateAttributesFeatureService::init();
   UpdateGeometryFeatureService::init();
+  ValidateUtilityNetworkTopology::init();
   VectorTiledLayerUrl::init();
   ViewContentBeneathTerrainSurface::init();
   ViewPointCloudDataOffline::init();
