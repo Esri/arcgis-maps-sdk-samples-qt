@@ -418,11 +418,11 @@ void ValidateUtilityNetworkTopology::onGetState()
       updateMessage(m_message);
 
       m_utilityNetworkstate->deleteLater();
+
+      m_busy = false;
+      emit isBusy();
     });
   }
-
-  m_busy = false;
-  emit isBusy();
 }
 
 void ValidateUtilityNetworkTopology::onValidate()
@@ -460,13 +460,26 @@ void ValidateUtilityNetworkTopology::onValidate()
 
         m_busy = false;
         emit isBusy();
+
+        job->deleteLater();
       }
-      else if(status == JobStatus::Failed)
+      else if (status == JobStatus::Failed)
       {
         updateMessage("Validate network topology failed.");
 
         m_busy = false;
         emit isBusy();
+
+        job->deleteLater();
+      }
+      else if (status == JobStatus::Canceling)
+      {
+        updateMessage("Validate network topology cancelled.");
+
+        m_busy = false;
+        emit isBusy();
+
+        job->deleteLater();
       }
     });
     job->start();
