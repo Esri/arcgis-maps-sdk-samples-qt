@@ -46,13 +46,13 @@ class ValidateUtilityNetworkTopology : public QObject
   Q_PROPERTY(Esri::ArcGISRuntime::MapQuickView* mapView READ mapView WRITE setMapView NOTIFY mapViewChanged)
   Q_PROPERTY(QString message MEMBER m_message NOTIFY messageChanged)
   Q_PROPERTY(QList<QString> choices MEMBER m_choices NOTIFY choicesChanged)
-  Q_PROPERTY(bool isUpdateWindowVisible MEMBER m_isUpdateWindowVisible NOTIFY isUpdateWindowVisible)
-  Q_PROPERTY(QString updateFieldName MEMBER m_updateFieldName NOTIFY updateFieldName)
-  Q_PROPERTY(bool isValidateBtnEnabled MEMBER m_isValidateBtnEnabled NOTIFY isValidateBtnEnabled)
-  Q_PROPERTY(bool isTraceBtnEnabled MEMBER m_isTraceBtnEnabled NOTIFY isTraceBtnEnabled)
-  Q_PROPERTY(bool isClearBtnEnabled MEMBER m_isClearBtnEnabled NOTIFY isClearBtnEnabled)
-  Q_PROPERTY(bool busy MEMBER m_busy NOTIFY isBusy)
-  Q_PROPERTY(bool isStateBtnEnabled MEMBER m_isStateBtnEnabled NOTIFY isStateBtnEnabled)
+  Q_PROPERTY(bool isUpdateWindowVisible MEMBER m_isUpdateWindowVisible NOTIFY updateWindowVisibilityChanged)
+  Q_PROPERTY(QString updateFieldName MEMBER m_updateFieldName NOTIFY fieldNameChanged)
+  Q_PROPERTY(bool isValidateBtnEnabled MEMBER m_isValidateBtnEnabled NOTIFY validateBtnStateChanged)
+  Q_PROPERTY(bool isTraceBtnEnabled MEMBER m_isTraceBtnEnabled NOTIFY traceBtnStateChanged)
+  Q_PROPERTY(bool isClearBtnEnabled MEMBER m_isClearBtnEnabled NOTIFY clearBtnStateChanged)
+  Q_PROPERTY(bool busy MEMBER m_busy NOTIFY busyStateChanged)
+  Q_PROPERTY(bool isStateBtnEnabled MEMBER m_isStateBtnEnabled NOTIFY stateBtnStateChanged)
 
 public:
   explicit ValidateUtilityNetworkTopology(QObject* parent = nullptr);
@@ -69,13 +69,13 @@ signals:
   void mapViewChanged();
   void messageChanged();
   void choicesChanged();
-  void isUpdateWindowVisible();
-  void updateFieldName();
-  void isValidateBtnEnabled();
-  void isTraceBtnEnabled();
-  void isBusy();
-  void isClearBtnEnabled();
-  void isStateBtnEnabled();
+  void updateWindowVisibilityChanged();
+  void fieldNameChanged();
+  void validateBtnStateChanged();
+  void traceBtnStateChanged();
+  void busyStateChanged();
+  void clearBtnStateChanged();
+  void stateBtnStateChanged();
 
 private:
   Esri::ArcGISRuntime::MapQuickView* mapView() const;
