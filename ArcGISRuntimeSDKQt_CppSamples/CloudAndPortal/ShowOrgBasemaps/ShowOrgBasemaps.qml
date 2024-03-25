@@ -220,7 +220,6 @@ ShowOrgBasemapsSample {
 
         onClicked: {
             load(false);
-            anonymousLogIn.enabled = false;
         }
     }
 

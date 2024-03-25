@@ -42,7 +42,6 @@ public:
   explicit ShowOrgBasemaps(QQuickItem* parent = nullptr);
   ~ShowOrgBasemaps() override;
 
-  void componentComplete() override;
   static void init();
 
   bool portalLoaded() const;
@@ -64,10 +63,11 @@ signals:
 
 private:
   void load();
+  void connectLoadStatusSignal();
 
   Esri::ArcGISRuntime::Map* m_map = nullptr;
   Esri::ArcGISRuntime::MapQuickView* m_mapView = nullptr;
-  Esri::ArcGISRuntime::Portal* m_portal = nullptr;
+  std::shared_ptr<Esri::ArcGISRuntime::Portal> m_portal = nullptr;
   bool m_portalLoaded = false;
   bool m_portalLoading = false;
   QString m_mapLoadError;

@@ -37,8 +37,7 @@
 using namespace Esri::ArcGISRuntime;
 
 ShowOrgBasemaps::ShowOrgBasemaps(QQuickItem* parent /* = nullptr */):
-  QQuickItem(parent),
-  m_portal(new Portal(this))
+  QQuickItem(parent)
 {
   AuthenticationManager::instance()->setCredentialCacheEnabled(false);
 }
@@ -53,13 +52,11 @@ void ShowOrgBasemaps::init()
 }
 
 
-void ShowOrgBasemaps::componentComplete()
+void ShowOrgBasemaps::connectLoadStatusSignal()
 {
-  QQuickItem::componentComplete();
-
   if (m_portal)
   {
-    connect(m_portal, &Portal::loadStatusChanged, this, [this]()
+    connect(m_portal.get(), &Portal::loadStatusChanged, this, [this]()
     {
       m_portalLoaded = m_portal->loadStatus() == LoadStatus::Loaded;
       m_portalLoading = m_portal->loadStatus() == LoadStatus::Loading;
@@ -113,20 +110,21 @@ QString ShowOrgBasemaps::mapLoadError() const
 
 void ShowOrgBasemaps::load(bool anonymous)
 {
-  if (!m_portal)
-    return;
+  m_portal.reset(new Portal(this));
+  connectLoadStatusSignal();
 
-  if (anonymous)
-    load();
-  else {
+  if (!anonymous && m_portal) {
     Credential* cred = new Credential(OAuthClientInfo("iLkGIj0nX8A4EJda", OAuthMode::User), this);
     m_portal->setCredential(cred);
-    load();
   }
+  load();
 }
 
 void ShowOrgBasemaps::load()
 {
+  if (!m_portal)
+    return;
+
   if (m_portal->loadStatus() == LoadStatus::FailedToLoad)
     m_portal->retryLoad();
   else
