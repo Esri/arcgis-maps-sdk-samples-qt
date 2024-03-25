@@ -1,0 +1,11 @@
+<RCC>
+    <qresource prefix="/Samples/Scenes/Add3DTilesLayer">
+        <file alias="sample.json">README.metadata.json</file>
+        <file>Add3DTilesLayer.qml</file>
+        <file>Add3DTilesLayer.h</file>
+        <file>Add3DTilesLayer.cpp</file>
+        <file>main.qml</file>
+        <file>screenshot.png</file>
+        <file>README.md</file>
+    </qresource>
+</RCC>
