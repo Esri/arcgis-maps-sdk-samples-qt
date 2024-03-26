@@ -77,7 +77,7 @@ Item {
                         Layout.fillWidth: true
                         onClicked: model.onGetState()
                         Layout.preferredWidth: clearBtn.width
-                        enabled: model.isStateBtnEnabled
+                        enabled: model.stateButtonAvailability
                     }
                     Button {
                         id: validateBtn
@@ -85,7 +85,7 @@ Item {
                         Layout.row: 0
                         Layout.column: 1
                         Layout.fillWidth: true
-                        enabled: model.isValidateBtnEnabled
+                        enabled: model.validateButtonAvailability
                         onClicked: model.onValidate()
                         Layout.preferredWidth: clearBtn.width
                     }
@@ -95,7 +95,7 @@ Item {
                         Layout.row: 1
                         Layout.column: 0
                         Layout.fillWidth: true
-                        enabled: model.isTraceBtnEnabled
+                        enabled: model.traceButtonAvailability
                         onClicked: model.onTrace()
                         Layout.preferredWidth: clearBtn.width
                     }
@@ -106,7 +106,7 @@ Item {
                         Layout.column: 1
                         Layout.fillWidth: true
                         onClicked: model.onClear()
-                        enabled: model.isClearBtnEnabled
+                        enabled: model.clearButtonAvailability
                     }
                     Text {
                         id: status
@@ -117,7 +117,7 @@ Item {
                     }
                     ProgressBar {
                         id: isBusy
-                        visible: model.busy
+                        visible: model.progressBarVisibility
                         Layout.row: 3
                         Layout.columnSpan: 2
                         Layout.fillWidth: true
@@ -130,7 +130,7 @@ Item {
     Rectangle {
         id: updateWindow
         anchors.centerIn: parent
-        visible: model.isUpdateWindowVisible
+        visible: model.updateWindowVisibility
         enabled: visible
         width: childrenRect.width
         height: childrenRect.height
@@ -148,7 +148,7 @@ Item {
                 columns: 2
                 rows: 2
                 Text {
-                    text: model.updateFieldName
+                    text: model.fieldName
                     Layout.alignment: Qt.AlignRight
                     rightPadding: 20
                 }

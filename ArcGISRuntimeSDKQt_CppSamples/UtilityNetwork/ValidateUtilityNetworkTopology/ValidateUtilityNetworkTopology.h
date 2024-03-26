@@ -46,13 +46,13 @@ class ValidateUtilityNetworkTopology : public QObject
   Q_PROPERTY(Esri::ArcGISRuntime::MapQuickView* mapView READ mapView WRITE setMapView NOTIFY mapViewChanged)
   Q_PROPERTY(QString message MEMBER m_message NOTIFY messageChanged)
   Q_PROPERTY(QList<QString> choices MEMBER m_choices NOTIFY choicesChanged)
-  Q_PROPERTY(bool isUpdateWindowVisible MEMBER m_isUpdateWindowVisible NOTIFY isUpdateWindowVisible)
-  Q_PROPERTY(QString updateFieldName MEMBER m_updateFieldName NOTIFY updateFieldName)
-  Q_PROPERTY(bool isValidateBtnEnabled MEMBER m_isValidateBtnEnabled NOTIFY isValidateBtnEnabled)
-  Q_PROPERTY(bool isTraceBtnEnabled MEMBER m_isTraceBtnEnabled NOTIFY isTraceBtnEnabled)
-  Q_PROPERTY(bool isClearBtnEnabled MEMBER m_isClearBtnEnabled NOTIFY isClearBtnEnabled)
-  Q_PROPERTY(bool busy MEMBER m_busy NOTIFY isBusy)
-  Q_PROPERTY(bool isStateBtnEnabled MEMBER m_isStateBtnEnabled NOTIFY isStateBtnEnabled)
+  Q_PROPERTY(bool updateWindowVisibility MEMBER m_updateWindowVisibility NOTIFY updateWindowVisibilityChanged)
+  Q_PROPERTY(QString fieldName MEMBER m_fieldName NOTIFY fieldNameChanged)
+  Q_PROPERTY(bool validateButtonAvailability MEMBER m_validateButtonAvailability NOTIFY validateButtonAvailabilityChanged)
+  Q_PROPERTY(bool traceButtonAvailability MEMBER m_traceButtonAvailability NOTIFY traceButtonAvailabilityChanged)
+  Q_PROPERTY(bool clearButtonAvailability MEMBER m_clearButtonAvailability NOTIFY clearButtonAvailabilityChanged)
+  Q_PROPERTY(bool progressBarVisibility MEMBER m_progressBarVisibility NOTIFY progressBarVisibilityChanged)
+  Q_PROPERTY(bool stateButtonAvailability MEMBER m_stateButtonAvailability NOTIFY stateButtonAvailabilityChanged)
 
 public:
   explicit ValidateUtilityNetworkTopology(QObject* parent = nullptr);
@@ -69,13 +69,13 @@ signals:
   void mapViewChanged();
   void messageChanged();
   void choicesChanged();
-  void isUpdateWindowVisible();
-  void updateFieldName();
-  void isValidateBtnEnabled();
-  void isTraceBtnEnabled();
-  void isBusy();
-  void isClearBtnEnabled();
-  void isStateBtnEnabled();
+  void updateWindowVisibilityChanged();
+  void fieldNameChanged();
+  void validateButtonAvailabilityChanged();
+  void traceButtonAvailabilityChanged();
+  void progressBarVisibilityChanged();
+  void clearButtonAvailabilityChanged();
+  void stateButtonAvailabilityChanged();
 
 private:
   Esri::ArcGISRuntime::MapQuickView* mapView() const;
@@ -104,14 +104,14 @@ private:
   Esri::ArcGISRuntime::FeatureLayer* m_lineFeatureLayer = nullptr;
   Esri::ArcGISRuntime::ServiceGeodatabase* m_serviceGeodatabase = nullptr;
   QString m_message;
-  QString m_updateFieldName;
+  QString m_fieldName;
   QList<QString> m_choices;
-  bool m_isUpdateWindowVisible = false;
-  bool m_isValidateBtnEnabled = false;;
-  bool m_isTraceBtnEnabled = false;
-  bool m_busy = false;
-  bool m_isClearBtnEnabled = false;
-  bool m_isStateBtnEnabled = false;
+  bool m_updateWindowVisibility = false;
+  bool m_validateButtonAvailability = false;
+  bool m_traceButtonAvailability = false;
+  bool m_progressBarVisibility = false;
+  bool m_clearButtonAvailability = false;
+  bool m_stateButtonAvailability = false;
 };
 
 #endif // VALIDATEUTILITYNETWORKTOPOLOGY_H
