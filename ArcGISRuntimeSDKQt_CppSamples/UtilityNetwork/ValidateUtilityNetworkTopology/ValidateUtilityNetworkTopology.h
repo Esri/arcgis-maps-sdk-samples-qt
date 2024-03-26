@@ -107,7 +107,7 @@ private:
   QString m_fieldName;
   QList<QString> m_choices;
   bool m_updateWindowVisibility = false;
-  bool m_validateButtonAvailability = false;;
+  bool m_validateButtonAvailability = false;
   bool m_traceButtonAvailability = false;
   bool m_progressBarVisibility = false;
   bool m_clearButtonAvailability = false;
