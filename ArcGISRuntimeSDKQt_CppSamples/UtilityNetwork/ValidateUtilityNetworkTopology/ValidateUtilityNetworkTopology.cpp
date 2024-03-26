@@ -119,8 +119,8 @@ void ValidateUtilityNetworkTopology::setMapView(MapQuickView* mapView)
   if (!mapView || mapView == m_mapView)
     return;
 
-  m_busy = true;
-  emit busyStateChanged();
+  m_progressBarVisibility = true;
+  emit progressBarVisibilityChanged();
   updateMessage("Loading a webmap...");
 
   const Envelope envelope(
@@ -210,8 +210,8 @@ void ValidateUtilityNetworkTopology::connectSignals()
       m_deviceFeatureLayer->clearSelection();
       m_lineFeatureLayer->clearSelection();
 
-      m_busy = true;
-      emit busyStateChanged();
+      m_progressBarVisibility = true;
+      emit progressBarVisibilityChanged();
 
       updateMessage("Identifying feature to edit...");
 
@@ -244,13 +244,13 @@ void ValidateUtilityNetworkTopology::onIdentifyLayersAsyncCompleted(const QList<
   {
     updateMessage("No feature identified. Tap on a feature to edit.");
 
-    m_busy = false;
-    emit busyStateChanged();
+    m_progressBarVisibility = false;
+    emit progressBarVisibilityChanged();
 
     return;
   }
-  m_updateFieldName = m_feature->featureTable()->tableName() == "Electric Distribution Device" ? "devicestatus" : "nominalvoltage";
-  Field field = m_feature->featureTable()->field(m_updateFieldName);
+  m_fieldName = m_feature->featureTable()->tableName() == "Electric Distribution Device" ? "devicestatus" : "nominalvoltage";
+  Field field = m_feature->featureTable()->field(m_fieldName);
   CodedValueDomain codedValueDomain = static_cast<CodedValueDomain>(field.domain());
   m_codedValues = codedValueDomain.codedValues();
   if (field.isEmpty() || m_codedValues.empty())
@@ -264,9 +264,9 @@ void ValidateUtilityNetworkTopology::onIdentifyLayersAsyncCompleted(const QList<
   m_featureToEdit = m_feature;
 
   // Select the feature.
-  if (m_updateFieldName == "nominalvoltage")
+  if (m_fieldName == "nominalvoltage")
     m_lineFeatureLayer->selectFeature(m_featureToEdit);
-  else if (m_updateFieldName == "devicestatus")
+  else if (m_fieldName == "devicestatus")
     m_deviceFeatureLayer->selectFeature(m_featureToEdit);
 
   m_choices.clear();
@@ -274,23 +274,23 @@ void ValidateUtilityNetworkTopology::onIdentifyLayersAsyncCompleted(const QList<
   m_choices.append("");
   for (const CodedValue& codedValue : m_codedValues)
   {
-    if (codedValue.code() == m_featureToEdit->attributes()->attributeValue(m_updateFieldName))
+    if (codedValue.code() == m_featureToEdit->attributes()->attributeValue(m_fieldName))
       m_choices.replace(0, codedValue.name());
     else
       m_choices.append(codedValue.name());
   }
   emit choicesChanged();
 
-  updateMessage("Select a new " + m_updateFieldName);
+  updateMessage("Select a new " + m_fieldName);
 
-  m_isClearBtnEnabled = true;
-  emit clearBtnStateChanged();
+  m_clearButtonAvailability = true;
+  emit clearButtonAvailabilityChanged();
 
-  m_isUpdateWindowVisible = true;
+  m_updateWindowVisibility = true;
   emit updateWindowVisibilityChanged();
 
-  m_busy = false;
-  emit busyStateChanged();
+  m_progressBarVisibility = false;
+  emit progressBarVisibilityChanged();
 
   emit fieldNameChanged();
 }
@@ -301,8 +301,8 @@ void ValidateUtilityNetworkTopology::onApplyEdits(const QString& choice)
 
   m_serviceGeodatabase = static_cast<ServiceFeatureTable*>(m_featureToEdit->featureTable())->serviceGeodatabase();
 
-  m_busy = true;
-  emit busyStateChanged();
+  m_progressBarVisibility = true;
+  emit progressBarVisibilityChanged();
 
   for (const CodedValue &codedValue : m_codedValues)
   {
@@ -310,7 +310,7 @@ void ValidateUtilityNetworkTopology::onApplyEdits(const QString& choice)
       choiceCodeValue = codedValue;
   }
 
-  m_featureToEdit->attributes()->replaceAttribute(m_updateFieldName, choiceCodeValue.code());
+  m_featureToEdit->attributes()->replaceAttribute(m_fieldName, choiceCodeValue.code());
 
   updateMessage("Updating feature...");
 
@@ -337,28 +337,28 @@ void ValidateUtilityNetworkTopology::onApplyEdits(const QString& choice)
         }
       }
 
-      m_busy = false;
-      emit busyStateChanged();
+      m_progressBarVisibility = false;
+      emit progressBarVisibilityChanged();
     }).onFailed(this, [this]()
     {
       updateMessage("Apply edits failed.");
 
-      m_busy = false;
-      emit busyStateChanged();
+      m_progressBarVisibility = false;
+      emit progressBarVisibilityChanged();
     });
   });
 
   m_deviceFeatureLayer->clearSelection();
   m_lineFeatureLayer->clearSelection();
 
-  m_isUpdateWindowVisible = false;
+  m_updateWindowVisibility = false;
   emit updateWindowVisibilityChanged();
 
-  m_isValidateBtnEnabled = true;
-  emit validateBtnStateChanged();
+  m_validateButtonAvailability = true;
+  emit validateButtonAvailabilityChanged();
 
-  m_isClearBtnEnabled = false;
-  emit clearBtnStateChanged();
+  m_clearButtonAvailability = false;
+  emit clearButtonAvailabilityChanged();
 }
 
 void ValidateUtilityNetworkTopology::onClear()
@@ -367,15 +367,15 @@ void ValidateUtilityNetworkTopology::onClear()
   m_deviceFeatureLayer->clearSelection();
   m_lineFeatureLayer->clearSelection();
 
-  m_isUpdateWindowVisible = false;
+  m_updateWindowVisibility = false;
   emit updateWindowVisibilityChanged();
 
   m_featureToEdit = nullptr;
 
   updateMessage("Selection cleared.");
 
-  m_isClearBtnEnabled = false;
-  emit clearBtnStateChanged();
+  m_clearButtonAvailability = false;
+  emit clearButtonAvailabilityChanged();
 }
 
 void ValidateUtilityNetworkTopology::onGetState()
@@ -384,8 +384,8 @@ void ValidateUtilityNetworkTopology::onGetState()
 
   if (m_utilityNetwork && m_utilityNetwork->definition()->capabilities()->isSupportsNetworkState())
   {
-    m_busy = true;
-    emit busyStateChanged();
+    m_progressBarVisibility = true;
+    emit progressBarVisibilityChanged();
 
     updateMessage("Getting utility network state...");
 
@@ -394,12 +394,12 @@ void ValidateUtilityNetworkTopology::onGetState()
       m_utilityNetworkstate = state.result();
 
       // Validate if dirty areas or errors exist
-      m_isValidateBtnEnabled = m_utilityNetworkstate->hasDirtyAreas();
-      emit validateBtnStateChanged();
+      m_validateButtonAvailability = m_utilityNetworkstate->hasDirtyAreas();
+      emit validateButtonAvailabilityChanged();
 
       // Trace if network topology is enabled
-      m_isTraceBtnEnabled = m_utilityNetworkstate->isNetworkTopologyEnabled();
-      emit traceBtnStateChanged();
+      m_traceButtonAvailability = m_utilityNetworkstate->isNetworkTopologyEnabled();
+      emit traceButtonAvailabilityChanged();
 
       m_message = QString("Utility Network State:\n"
           "    Has Dirty Areas: " + QString(m_utilityNetworkstate && m_utilityNetworkstate->hasDirtyAreas() ? "true" : "false") + "\n"
@@ -419,8 +419,8 @@ void ValidateUtilityNetworkTopology::onGetState()
 
       m_utilityNetworkstate->deleteLater();
 
-      m_busy = false;
-      emit busyStateChanged();
+      m_progressBarVisibility = false;
+      emit progressBarVisibilityChanged();
     });
   }
 }
@@ -434,8 +434,8 @@ void ValidateUtilityNetworkTopology::onValidate()
     // Validate using the current extent
     const Envelope extent = m_mapView->currentViewpoint(ViewpointType::BoundingGeometry).targetGeometry().extent();
 
-    m_busy = true;
-    emit busyStateChanged();
+    m_progressBarVisibility = true;
+    emit progressBarVisibilityChanged();
 
     updateMessage("Validating utility network topology...");
 
@@ -455,11 +455,11 @@ void ValidateUtilityNetworkTopology::onValidate()
             "    Has Errors: " + QString(result->hasErrors() ? "true" : "false") + "\n"
             "    Click 'Get State' to check the updated network state.");
 
-        m_isValidateBtnEnabled = result->hasDirtyAreas();
-        emit validateBtnStateChanged();
+        m_validateButtonAvailability = result->hasDirtyAreas();
+        emit validateButtonAvailabilityChanged();
 
-        m_busy = false;
-        emit busyStateChanged();
+        m_progressBarVisibility = false;
+        emit progressBarVisibilityChanged();
 
         job->deleteLater();
       }
@@ -467,8 +467,8 @@ void ValidateUtilityNetworkTopology::onValidate()
       {
         updateMessage("Validate network topology failed.");
 
-        m_busy = false;
-        emit busyStateChanged();
+        m_progressBarVisibility = false;
+        emit progressBarVisibilityChanged();
 
         job->deleteLater();
       }
@@ -476,8 +476,8 @@ void ValidateUtilityNetworkTopology::onValidate()
       {
         updateMessage("Validate network topology cancelled.");
 
-        m_busy = false;
-        emit busyStateChanged();
+        m_progressBarVisibility = false;
+        emit progressBarVisibilityChanged();
 
         job->deleteLater();
       }
@@ -494,8 +494,8 @@ void ValidateUtilityNetworkTopology::onTrace()
   {
     updateMessage("Running a downstream trace...");
 
-    m_busy = true;
-    emit busyStateChanged();
+    m_progressBarVisibility = true;
+    emit progressBarVisibilityChanged();
 
     // Clear previous selection from the layers.
     m_deviceFeatureLayer->clearSelection();
@@ -504,8 +504,8 @@ void ValidateUtilityNetworkTopology::onTrace()
     //  Get the trace result from the utility network.
     m_utilityNetwork->traceAsync(m_traceParameters).then(this, [this](QList<UtilityTraceResult*>)
     {
-      m_busy = false;
-      emit busyStateChanged();
+      m_progressBarVisibility = false;
+      emit progressBarVisibilityChanged();
 
       UtilityTraceResult* result = m_utilityNetwork->traceResult()->at(0);
 
@@ -536,8 +536,8 @@ void ValidateUtilityNetworkTopology::onTrace()
       {
         std::unique_ptr<FeatureQueryResult> {rawResult};
 
-        m_isClearBtnEnabled = true;
-        emit clearBtnStateChanged();
+        m_clearButtonAvailability = true;
+        emit clearButtonAvailabilityChanged();
       });
       result->deleteLater();
     }).onFailed(this, [this]()
@@ -545,8 +545,8 @@ void ValidateUtilityNetworkTopology::onTrace()
       updateMessage("Trace failed.\n"
           "Click 'Get State' to check the updated network state.");
 
-      m_busy = false;
-      emit busyStateChanged();
+      m_progressBarVisibility = false;
+      emit progressBarVisibilityChanged();
     });
   }
 }
@@ -640,14 +640,14 @@ void ValidateUtilityNetworkTopology::setupTraceParameters()
 
   m_traceParameters->setTraceConfiguration(m_traceConfiguration);
 
-  m_isValidateBtnEnabled = m_utilityNetwork->definition()->capabilities()->isSupportsValidateNetworkTopology();
-  emit validateBtnStateChanged();
-  m_isTraceBtnEnabled = m_utilityNetwork->definition()->capabilities()->isSupportsTrace();
-  emit traceBtnStateChanged();
-  m_isStateBtnEnabled = m_utilityNetwork->definition()->capabilities()->isSupportsNetworkState();
-  emit stateBtnStateChanged();
-  m_isClearBtnEnabled = false;
-  emit clearBtnStateChanged();
+  m_validateButtonAvailability = m_utilityNetwork->definition()->capabilities()->isSupportsValidateNetworkTopology();
+  emit validateButtonAvailabilityChanged();
+  m_traceButtonAvailability = m_utilityNetwork->definition()->capabilities()->isSupportsTrace();
+  emit traceButtonAvailabilityChanged();
+  m_stateButtonAvailability = m_utilityNetwork->definition()->capabilities()->isSupportsNetworkState();
+  emit stateButtonAvailabilityChanged();
+  m_clearButtonAvailability = false;
+  emit clearButtonAvailabilityChanged();
 
   updateMessage("Utility Network Loaded\n"
       "Tap on a feature to edit.\n"
@@ -655,8 +655,8 @@ void ValidateUtilityNetworkTopology::setupTraceParameters()
       "necessary or if tracing is available.\n"
       "Click 'Trace' to run a trace.");
 
-  m_busy = false;
-  emit busyStateChanged();
+  m_progressBarVisibility = false;
+  emit progressBarVisibilityChanged();
 }
 
 LabelDefinition* ValidateUtilityNetworkTopology::createDeviceLabelDefinition()
