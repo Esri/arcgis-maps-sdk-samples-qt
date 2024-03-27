@@ -19,6 +19,7 @@
 
 namespace Esri::ArcGISRuntime
 {
+class AggregateGeoElement;
 class FeatureLayer;
 class Map;
 class MapQuickView;
@@ -67,6 +68,7 @@ private:
   QString m_calloutText = "";
 
   QScopedPointer<QObject> m_resultParent;
+  Esri::ArcGISRuntime::AggregateGeoElement* m_aggregateGeoElement = nullptr;
 };
 
 #endif // DISPLAYCLUSTERS_H
