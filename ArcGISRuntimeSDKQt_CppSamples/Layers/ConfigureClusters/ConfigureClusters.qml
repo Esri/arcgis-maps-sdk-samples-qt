@@ -73,7 +73,10 @@ Item {
             anchors.horizontalCenter: parent.horizontalCenter
             text: "Draw clusters"
             checkable: true
-            onClicked: sample.drawClusters();
+            onClicked: {
+                sample.drawClusters();
+                sample.displayLabels(true);
+            }
         }
 
         Label {
@@ -86,7 +89,7 @@ Item {
         CheckBox {
             visible: button.checked
             text: "Display Labels"
-            checked: false
+            checked: true
             onCheckedChanged: sample.displayLabels(checked);
         }
 
