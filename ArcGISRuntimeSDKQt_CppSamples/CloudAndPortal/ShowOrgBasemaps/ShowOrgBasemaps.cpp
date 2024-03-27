@@ -56,7 +56,7 @@ void ShowOrgBasemaps::connectLoadStatusSignal()
 {
   if (m_portal)
   {
-    connect(m_portal.get(), &Portal::loadStatusChanged, this, [this]()
+    connect(m_portal, &Portal::loadStatusChanged, this, [this]()
     {
       m_portalLoaded = m_portal->loadStatus() == LoadStatus::Loaded;
       m_portalLoading = m_portal->loadStatus() == LoadStatus::Loading;
@@ -110,10 +110,14 @@ QString ShowOrgBasemaps::mapLoadError() const
 
 void ShowOrgBasemaps::load(bool anonymous)
 {
-  m_portal.reset(new Portal(this));
+  if (m_portal)
+    delete m_portal;
+
+  m_portal = new Portal(this);
   connectLoadStatusSignal();
 
-  if (!anonymous && m_portal) {
+  if (!anonymous && m_portal)
+  {
     Credential* cred = new Credential(OAuthClientInfo("iLkGIj0nX8A4EJda", OAuthMode::User), this);
     m_portal->setCredential(cred);
   }
