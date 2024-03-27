@@ -111,7 +111,10 @@ QString ShowOrgBasemaps::mapLoadError() const
 void ShowOrgBasemaps::load(bool anonymous)
 {
   if (m_portal)
+  {
     delete m_portal;
+    m_portal = nullptr;
+  }
 
   m_portal = new Portal(this);
   connectLoadStatusSignal();
