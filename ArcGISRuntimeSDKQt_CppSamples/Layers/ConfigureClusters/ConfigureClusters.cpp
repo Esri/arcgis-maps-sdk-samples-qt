@@ -233,7 +233,7 @@ void ConfigureClusters::mouseClicked(QMouseEvent& mouseEvent)
     // clear the list of popup content
     m_popupContent.clear();
 
-    // clear geoelement selection
+    // clear cluster selection
     if (m_aggregateGeoElement.get())
       m_aggregateGeoElement->setSelected(false);
 

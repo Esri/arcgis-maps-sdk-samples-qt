@@ -98,7 +98,7 @@ void DisplayClusters::onMouseClicked(const QMouseEvent &mouseClick)
 
   m_mapView->calloutData()->setVisible(false);
 
-  // clear geoelement selection
+  // clear cluster selection
   if (m_aggregateGeoElement)
     m_aggregateGeoElement->setSelected(false);
 
