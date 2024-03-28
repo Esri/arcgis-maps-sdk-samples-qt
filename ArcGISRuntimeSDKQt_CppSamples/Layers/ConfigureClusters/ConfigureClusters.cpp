@@ -20,6 +20,7 @@
 
 #include "ConfigureClusters.h"
 
+#include "AggregateGeoElement.h"
 #include "AggregateField.h"
 #include "AggregateFieldListModel.h"
 #include "AttributeListModel.h"
@@ -232,8 +233,17 @@ void ConfigureClusters::mouseClicked(QMouseEvent& mouseEvent)
     // clear the list of popup content
     m_popupContent.clear();
 
+    // clear cluster selection
+    if (m_aggregateGeoElement.get())
+      m_aggregateGeoElement->setSelected(false);
+
     for (Popup* popup: result->popups())
     {
+      // if the identified object is a cluster, select it
+      m_aggregateGeoElement.reset(dynamic_cast<AggregateGeoElement*>(popup->geoElement()));
+      if (m_aggregateGeoElement.get())
+        m_aggregateGeoElement->setSelected(true);
+
       const auto attributes = popup->geoElement()->attributes();
       for (const QString& name: attributes->attributeNames())
       {

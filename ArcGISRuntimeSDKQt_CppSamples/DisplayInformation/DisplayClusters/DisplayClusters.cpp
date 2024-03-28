@@ -20,6 +20,7 @@
 
 #include "DisplayClusters.h"
 
+#include "AggregateGeoElement.h"
 #include "CalloutData.h"
 #include "Error.h"
 #include "FeatureLayer.h"
@@ -97,8 +98,13 @@ void DisplayClusters::onMouseClicked(const QMouseEvent &mouseClick)
 
   m_mapView->calloutData()->setVisible(false);
 
+  // clear cluster selection
+  if (m_aggregateGeoElement)
+    m_aggregateGeoElement->setSelected(false);
+
   // Clean up any children objects associated with this parent
   m_resultParent.reset(new QObject(this));
+  m_aggregateGeoElement = nullptr;
 
   m_mapView->identifyLayerAsync(m_powerPlantsLayer, mouseClick.position(), 3, false, m_resultParent.get())
       .then(this, [this](IdentifyLayerResult* identifyResult)
@@ -121,6 +127,11 @@ void DisplayClusters::onMouseClicked(const QMouseEvent &mouseClick)
 
 
     Popup* popup = identifyResult->popups().constFirst();
+
+    // if the identified object is a cluster, select it
+    m_aggregateGeoElement = dynamic_cast<AggregateGeoElement*>(popup->geoElement());
+    if (m_aggregateGeoElement)
+      m_aggregateGeoElement->setSelected(true);
 
     // Create a PopupManager with the IdentifyLayerResult's parent so it will get cleaned up as well.
     PopupManager* popupManager = new PopupManager(popup, identifyResult->parent());
