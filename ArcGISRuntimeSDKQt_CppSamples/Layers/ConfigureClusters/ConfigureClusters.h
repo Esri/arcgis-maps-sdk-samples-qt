@@ -72,8 +72,10 @@ private:
   Esri::ArcGISRuntime::MapQuickView* m_mapView = nullptr;
   Esri::ArcGISRuntime::FeatureLayer* m_layer = nullptr;
   Esri::ArcGISRuntime::ClusteringFeatureReduction* m_clusteringFeatureReduction = nullptr;
-  QScopedPointer<Esri::ArcGISRuntime::AggregateGeoElement> m_aggregateGeoElement;
   QString m_popupContent;
+
+  QScopedPointer<QObject> m_resultParent;
+  Esri::ArcGISRuntime::AggregateGeoElement* m_aggregateGeoElement = nullptr;
 };
 
 #endif // ConfigureClusters_H
