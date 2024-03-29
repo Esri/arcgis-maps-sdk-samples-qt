@@ -240,9 +240,6 @@ void ConfigureClusters::mouseClicked(QMouseEvent& mouseEvent)
   // Identify the tapped observation.
   m_mapView->identifyLayerAsync(m_layer, mouseEvent.position(), 3.0, true, m_resultParent.get()).then(this, [this](IdentifyLayerResult* result)
   {
-    // clear the list of popup content
-    m_popupContent.clear();
-
     // clear cluster selection
     if (m_aggregateGeoElement)
       m_aggregateGeoElement->setSelected(false);
