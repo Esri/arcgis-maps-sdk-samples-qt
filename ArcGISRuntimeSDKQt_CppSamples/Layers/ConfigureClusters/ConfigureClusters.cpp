@@ -227,6 +227,7 @@ void ConfigureClusters::mouseClicked(QMouseEvent& mouseEvent)
   if (!m_layer)
     return;
 
+  // clear the list of popup content
   m_popupContent.clear();
 
   // clear cluster selection
