@@ -227,21 +227,31 @@ void ConfigureClusters::mouseClicked(QMouseEvent& mouseEvent)
   if (!m_layer)
     return;
 
+  m_popupContent.clear();
+
+  // clear cluster selection
+  if (m_aggregateGeoElement)
+    m_aggregateGeoElement->setSelected(false);
+
+  // Clean up any children objects associated with this parent
+  m_resultParent.reset(new QObject(this));
+  m_aggregateGeoElement = nullptr;
+
   // Identify the tapped observation.
-  m_mapView->identifyLayerAsync(m_layer, mouseEvent.position(), 3.0, true).then(this, [this](IdentifyLayerResult* result)
+  m_mapView->identifyLayerAsync(m_layer, mouseEvent.position(), 3.0, true, m_resultParent.get()).then(this, [this](IdentifyLayerResult* result)
   {
     // clear the list of popup content
     m_popupContent.clear();
 
     // clear cluster selection
-    if (m_aggregateGeoElement.get())
+    if (m_aggregateGeoElement)
       m_aggregateGeoElement->setSelected(false);
 
     for (Popup* popup: result->popups())
     {
       // if the identified object is a cluster, select it
-      m_aggregateGeoElement.reset(dynamic_cast<AggregateGeoElement*>(popup->geoElement()));
-      if (m_aggregateGeoElement.get())
+      m_aggregateGeoElement = dynamic_cast<AggregateGeoElement*>(popup->geoElement());
+      if (m_aggregateGeoElement)
         m_aggregateGeoElement->setSelected(true);
 
       const auto attributes = popup->geoElement()->attributes();
