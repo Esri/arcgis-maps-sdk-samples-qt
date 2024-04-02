@@ -108,8 +108,6 @@ void Add3DTilesLayer::initialize()
   setInitialViewpoint();
   // create LocationLineOfSight
   createLineOfSight();
-  // connect signals
-  connectSignals();
 }
 
 void Add3DTilesLayer::add3DTilesLayer()
@@ -146,32 +144,4 @@ void Add3DTilesLayer::setInitialViewpoint()
   constexpr double roll = 0.0;
   const Camera sceneCamera(latitude, longitude, altitude, heading, pitch, roll);
   m_sceneView->setViewpointCameraAndWait(sceneCamera);
-}
-
-void Add3DTilesLayer::connectSignals()
-{
-  // on mouse click perform the location viewshed
-  connect(m_sceneView, &SceneQuickView::mouseClicked, this, [this](QMouseEvent& event)
-  {
-    m_sceneView->screenToLocationAsync(event.pos().x(), event.pos().y()).then(this, [this](Point p)
-    {
-      m_lineOfSight->setTargetLocation(p);
-    });
-  });
-  connect(m_sceneView, &SceneQuickView::mousePressedAndHeld, this, [this]
-  {
-    m_calculating = true;
-  });
-  connect(m_sceneView, &SceneQuickView::mouseMoved, this, [this](QMouseEvent& event)
-  {
-    if (m_calculating)
-    {
-      const Point pt = m_sceneView->screenToBaseSurface(event.position().x(), event.position().y());
-      m_lineOfSight->setTargetLocation(pt);
-    }
-  });
-  connect(m_sceneView, &SceneQuickView::mouseReleased, this, [this]
-  {
-    m_calculating = false;
-  });
 }
