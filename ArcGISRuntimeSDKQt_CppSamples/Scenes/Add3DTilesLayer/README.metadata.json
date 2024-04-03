@@ -7,18 +7,18 @@
         "screenshot.png"
     ],
     "keywords": [
-        "3D Tiles",
-        "Ogc3dTilesLayer",
-        "scnene",
-        "line of sight analysis"
+        "3D tiles",
+        "layers",
+        "OGC",
+        "OGC API",
+        "scene",
+        "service"
     ],
     "redirect_from": [
         ""
     ],
     "relevant_apis": [
         "Ogc3dTilesLayer",
-        "AnalysisOverlay",
-        "LocationLineOfSight",
         "SceneView"
     ],
     "snippets": [
@@ -26,5 +26,5 @@
         "Add3DTilesLayer.h",
         "Add3DTilesLayer.qml"
     ],
-    "title": "Display a 3D Tiles Layer"
+    "title": "Add a 3D Tiles Layer"
 }
