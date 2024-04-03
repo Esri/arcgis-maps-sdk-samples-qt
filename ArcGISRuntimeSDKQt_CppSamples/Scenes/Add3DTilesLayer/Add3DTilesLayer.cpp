@@ -32,15 +32,6 @@
 #include "SceneQuickView.h"
 #include "Surface.h"
 
-#include <MapView.h>
-#include <QDebug>
-#include <QFuture>
-#include <QStandardPaths>
-#include <QString>
-#include <QUrl>
-#include <QVariantMap>
-#include <QMap>
-
 using namespace Esri::ArcGISRuntime;
 
 Add3DTilesLayer::Add3DTilesLayer(QObject* parent /* = nullptr */):
@@ -82,12 +73,6 @@ void Add3DTilesLayer::setSceneView(SceneQuickView* sceneView)
 
   emit sceneViewChanged();
 
-  initialize();
-}
-
-void Add3DTilesLayer::initialize()
-{
-  // set initial viewpoint
   setInitialViewpoint();
 }
 

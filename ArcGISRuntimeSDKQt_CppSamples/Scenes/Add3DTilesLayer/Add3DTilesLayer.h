@@ -53,7 +53,6 @@ private:
   Esri::ArcGISRuntime::Ogc3dTilesLayer* m_ogc3dTilesLayer = nullptr;
   void add3DTilesLayer();
 
-  void initialize();
   void setInitialViewpoint();
 };
 
