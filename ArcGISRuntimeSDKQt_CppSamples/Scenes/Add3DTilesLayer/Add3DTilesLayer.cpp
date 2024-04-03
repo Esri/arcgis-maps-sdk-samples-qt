@@ -106,8 +106,6 @@ void Add3DTilesLayer::initialize()
   m_sceneView->analysisOverlays()->append(m_analysisOverlay);
   // set initial viewpoint
   setInitialViewpoint();
-  // create LocationLineOfSight
-  createLineOfSight();
 }
 
 void Add3DTilesLayer::add3DTilesLayer()
@@ -115,22 +113,6 @@ void Add3DTilesLayer::add3DTilesLayer()
   const QUrl modelPath = QUrl("https://tiles.arcgis.com/tiles/N82JbI5EYtAkuUKU/arcgis/rest/services/Stuttgart/3DTilesServer/tileset.json");
   m_ogc3dTilesLayer = new Ogc3dTilesLayer(modelPath, this);
   m_scene->operationalLayers()->append(m_ogc3dTilesLayer);
-}
-
-void Add3DTilesLayer::createLineOfSight()
-{
-  // add a observe point (static) and a target point (moving with mouse clicks)
-  const Point observerPt( 9.16257, 48.84661, 313, SpatialReference::wgs84());
-  const Point targetPt(9.16239, 48.84632, 300, SpatialReference::wgs84());
-
-  // create the line of sight
-  m_lineOfSight = new LocationLineOfSight(observerPt, targetPt, this);
-  m_analysisOverlay->analyses()->append(m_lineOfSight);
-
-  // configure the LoS color and width
-  LineOfSight::setVisibleColor(QColor("cyan"));
-  LineOfSight::setObstructedColor(QColor("red"));
-  LineOfSight::setLineWidth(2.0f);
 }
 
 void Add3DTilesLayer::setInitialViewpoint()
