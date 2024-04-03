@@ -22,8 +22,6 @@ namespace Esri::ArcGISRuntime
 class Scene;
 class SceneQuickView;
 class Ogc3dTilesLayer;
-class LocationLineOfSight;
-class AnalysisOverlay;
 }
 
 #include <QObject>
@@ -55,14 +53,8 @@ private:
   Esri::ArcGISRuntime::Ogc3dTilesLayer* m_ogc3dTilesLayer = nullptr;
   void add3DTilesLayer();
 
-  // add lineofsight analysis
-  Esri::ArcGISRuntime::LocationLineOfSight* m_lineOfSight = nullptr;
-  Esri::ArcGISRuntime::AnalysisOverlay* m_analysisOverlay = nullptr;
-  bool m_calculating = false;
-  void createLineOfSight();
   void initialize();
   void setInitialViewpoint();
-  void connectSignals();
 };
 
 #endif // ADD3DTILESLAYER_H

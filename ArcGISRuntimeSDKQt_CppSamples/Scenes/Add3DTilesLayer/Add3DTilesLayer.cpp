@@ -20,25 +20,17 @@
 
 #include "Add3DTilesLayer.h"
 
-#include "AnalysisListModel.h"
-#include "AnalysisOverlay.h"
-#include "AnalysisOverlayListModel.h"
 #include "ArcGISTiledElevationSource.h"
 #include "Basemap.h"
 #include "Camera.h"
 #include "ElevationSourceListModel.h"
 #include "Layer.h"
 #include "LayerListModel.h"
-#include "LocationLineOfSight.h"
 #include "MapTypes.h"
 #include "Ogc3dTilesLayer.h"
-#include "Point.h"
-#include <PortalItem.h>
 #include "Scene.h"
 #include "SceneQuickView.h"
-#include "SpatialReference.h"
 #include "Surface.h"
-#include "TransformationCatalog.h"
 
 #include <MapView.h>
 #include <QDebug>
@@ -51,8 +43,6 @@
 
 using namespace Esri::ArcGISRuntime;
 
-const QString DATAPATH = QStandardPaths::writableLocation(QStandardPaths::HomeLocation)+ "/ArcGIS/Runtime/Data/";
-
 Add3DTilesLayer::Add3DTilesLayer(QObject* parent /* = nullptr */):
   QObject(parent),
   m_scene(new Scene(BasemapStyle::ArcGISDarkGray, this))
@@ -60,10 +50,6 @@ Add3DTilesLayer::Add3DTilesLayer(QObject* parent /* = nullptr */):
   // create a new elevation source from Terrain3D REST service
   ArcGISTiledElevationSource* elevationSource = new ArcGISTiledElevationSource(
         QUrl("https://elevation3d.arcgis.com/arcgis/rest/services/WorldElevation3D/Terrain3D/ImageServer"), this);
-  // add projection
-  TransformationCatalog::setProjectionEngineDirectory(DATAPATH + "/pedata");
-  if (TransformationCatalog::projectionEngineDirectory().isEmpty())
-    qWarning() << ("Projection Engine Directory not found at: " + DATAPATH + "/pedata");
 
   // add the elevation source to the scene to display elevation
   m_scene->baseSurface()->elevationSources()->append(elevationSource);
@@ -101,9 +87,6 @@ void Add3DTilesLayer::setSceneView(SceneQuickView* sceneView)
 
 void Add3DTilesLayer::initialize()
 {
-  // add an Analysis Overlay
-  m_analysisOverlay = new AnalysisOverlay(this);
-  m_sceneView->analysisOverlays()->append(m_analysisOverlay);
   // set initial viewpoint
   setInitialViewpoint();
 }
