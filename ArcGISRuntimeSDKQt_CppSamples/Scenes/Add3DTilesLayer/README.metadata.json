@@ -1,7 +1,7 @@
 {
     "category": "Scenes",
     "description": "Add a layer to visualize 3D tiles data that conforms to the OGC 3D Tiles specification.",
-    "featured": false,
+    "featured": true,
     "ignore": false,
     "images": [
         "screenshot.png"
