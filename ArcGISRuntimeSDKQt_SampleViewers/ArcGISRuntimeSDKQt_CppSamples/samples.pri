@@ -190,6 +190,7 @@ INCLUDEPATH += \
     "$$SAMPLEPATHCPP/Routing/OfflineRouting" \
     "$$SAMPLEPATHCPP/Routing/RouteAroundBarriers" \
     "$$SAMPLEPATHCPP/Routing/ServiceArea" \
+    "$$SAMPLEPATHCPP/Scenes/Add3DTilesLayer" \
     "$$SAMPLEPATHCPP/Scenes/AddAPointSceneLayer" \
     "$$SAMPLEPATHCPP/Scenes/AddIntegratedMeshLayer" \
     "$$SAMPLEPATHCPP/Scenes/Animate3DSymbols" \
@@ -408,6 +409,7 @@ HEADERS += \
     "$$SAMPLEPATHCPP/Routing/OfflineRouting/OfflineRouting.h" \
     "$$SAMPLEPATHCPP/Routing/RouteAroundBarriers/RouteAroundBarriers.h" \
     "$$SAMPLEPATHCPP/Routing/ServiceArea/ServiceArea.h" \
+    "$$SAMPLEPATHCPP/Scenes/Add3DTilesLayer/Add3DTilesLayer.h" \
     "$$SAMPLEPATHCPP/Scenes/AddAPointSceneLayer/AddAPointSceneLayer.h" \
     "$$SAMPLEPATHCPP/Scenes/AddIntegratedMeshLayer/AddIntegratedMeshLayer.h" \
     "$$SAMPLEPATHCPP/Scenes/Animate3DSymbols/Animate3DSymbols.h" \
@@ -627,6 +629,7 @@ SOURCES += \
     "$$SAMPLEPATHCPP/Routing/OfflineRouting/OfflineRouting.cpp" \
     "$$SAMPLEPATHCPP/Routing/RouteAroundBarriers/RouteAroundBarriers.cpp" \
     "$$SAMPLEPATHCPP/Routing/ServiceArea/ServiceArea.cpp" \
+    "$$SAMPLEPATHCPP/Scenes/Add3DTilesLayer/Add3DTilesLayer.cpp" \
     "$$SAMPLEPATHCPP/Scenes/AddAPointSceneLayer/AddAPointSceneLayer.cpp" \
     "$$SAMPLEPATHCPP/Scenes/AddIntegratedMeshLayer/AddIntegratedMeshLayer.cpp" \
     "$$SAMPLEPATHCPP/Scenes/Animate3DSymbols/Animate3DSymbols.cpp" \
@@ -837,6 +840,7 @@ RESOURCES += \
     "$$SAMPLEPATHCPP/Routing/OfflineRouting/OfflineRouting.qrc" \
     "$$SAMPLEPATHCPP/Routing/RouteAroundBarriers/RouteAroundBarriers.qrc" \
     "$$SAMPLEPATHCPP/Routing/ServiceArea/ServiceArea.qrc" \
+    "$$SAMPLEPATHCPP/Scenes/Add3DTilesLayer/Add3DTilesLayer.qrc" \
     "$$SAMPLEPATHCPP/Scenes/AddAPointSceneLayer/AddAPointSceneLayer.qrc" \
     "$$SAMPLEPATHCPP/Scenes/AddIntegratedMeshLayer/AddIntegratedMeshLayer.qrc" \
     "$$SAMPLEPATHCPP/Scenes/Animate3DSymbols/Animate3DSymbols.qrc" \
