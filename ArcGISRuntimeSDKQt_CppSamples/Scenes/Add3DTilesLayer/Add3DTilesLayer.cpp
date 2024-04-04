@@ -88,7 +88,7 @@ void Add3DTilesLayer::setInitialViewpoint()
   // add a camera
   constexpr double latitude = 48.8418;
   constexpr double longitude = 9.1536;
-  constexpr double altitude = 1325.2276;
+  constexpr double altitude = 1325.0;
   constexpr double heading = 48.3497;
   constexpr double pitch = 57.8414;
   constexpr double roll = 0.0;
