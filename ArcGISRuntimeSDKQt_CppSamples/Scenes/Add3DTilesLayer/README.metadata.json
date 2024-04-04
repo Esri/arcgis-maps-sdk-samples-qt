@@ -1,0 +1,30 @@
+{
+    "category": "Scenes",
+    "description": "Add a layer to visualize 3D tiles data that conforms to the OGC 3D Tiles specification.",
+    "featured": true,
+    "ignore": false,
+    "images": [
+        "screenshot.png"
+    ],
+    "keywords": [
+        "3D tiles",
+        "layers",
+        "OGC",
+        "OGC API",
+        "scene",
+        "service"
+    ],
+    "redirect_from": [
+        ""
+    ],
+    "relevant_apis": [
+        "Ogc3dTilesLayer",
+        "SceneView"
+    ],
+    "snippets": [
+        "Add3DTilesLayer.cpp",
+        "Add3DTilesLayer.h",
+        "Add3DTilesLayer.qml"
+    ],
+    "title": "Add a 3D Tiles Layer"
+}

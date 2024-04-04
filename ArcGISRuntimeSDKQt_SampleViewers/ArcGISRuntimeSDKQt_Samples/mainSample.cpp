@@ -59,6 +59,7 @@
 
 // All CPP Samples
 #ifdef CPP_VIEWER
+#include "Add3DTilesLayer.h"
 #include "AddAPointSceneLayer.h"
 #include "AddCustomDynamicEntityDataSource.h"
 #include "AddDynamicEntityLayer.h"
@@ -379,6 +380,7 @@ void registerCppSampleClasses()
 
 #ifdef CPP_VIEWER
   // Register the C++ Samples under the Esri.Samples namespace
+  Add3DTilesLayer::init();
   AddAPointSceneLayer::init();
   AddCustomDynamicEntityDataSource::init();
   AddDynamicEntityLayer::init();
