@@ -2,7 +2,7 @@
     "version": 1,
     "kind": "project",
     "supportedProjectTypes": [ "Qt4ProjectManager.Qt4Project" ],
-    "id": "A.Sample_ArcGISQt_Qml_200_4_0",
+    "id": "A.Sample_ArcGISQt_Qml_200_5_0",
     "category": "B.CustomProjects",
     "trDescription": "Creates a Sample ArcGIS Maps 200.5.0 QML application.",
     "trDisplayName": "Sample ArcGIS Maps 200.5.0 QML Qt Quick App",
