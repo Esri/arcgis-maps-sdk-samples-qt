@@ -25,6 +25,8 @@ class Map;
 class MapQuickView;
 }
 
+class QMouseEvent;
+
 #include <QObject>
 
 Q_MOC_INCLUDE("MapQuickView.h");
@@ -57,6 +59,8 @@ private:
   void setMapView(Esri::ArcGISRuntime::MapQuickView* mapView);
 
   QString connectionStatus() const;
+
+  void identifyLayerAtMouseClick(const QMouseEvent& e);
 
   Esri::ArcGISRuntime::Map* m_map = nullptr;
   Esri::ArcGISRuntime::MapQuickView* m_mapView = nullptr;

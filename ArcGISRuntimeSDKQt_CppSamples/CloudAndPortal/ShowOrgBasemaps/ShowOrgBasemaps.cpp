@@ -32,11 +32,12 @@
 #include "Error.h"
 #include "PortalInfo.h"
 
+#include <QFuture>
+
 using namespace Esri::ArcGISRuntime;
 
 ShowOrgBasemaps::ShowOrgBasemaps(QQuickItem* parent /* = nullptr */):
-  QQuickItem(parent),
-  m_portal(new Portal(this))
+  QQuickItem(parent)
 {
   AuthenticationManager::instance()->setCredentialCacheEnabled(false);
 }
@@ -51,26 +52,27 @@ void ShowOrgBasemaps::init()
 }
 
 
-void ShowOrgBasemaps::componentComplete()
+void ShowOrgBasemaps::connectLoadStatusSignal()
 {
-  QQuickItem::componentComplete();
-
   if (m_portal)
   {
     connect(m_portal, &Portal::loadStatusChanged, this, [this]()
     {
       m_portalLoaded = m_portal->loadStatus() == LoadStatus::Loaded;
+      m_portalLoading = m_portal->loadStatus() == LoadStatus::Loading;
 
       emit portalLoadedChanged();
+      emit portalLoadingChanged();
       emit orgNameChanged();
 
       if (m_portalLoaded)
-        m_portal->fetchBasemaps();
-    });
-
-    connect(m_portal, &Portal::basemapsChanged, this, [this]()
-    {
-      emit basemapsChanged();
+      {
+        m_portal->fetchBasemapsAsync().then(
+        [this]()
+        {
+          emit basemapsChanged();
+        });
+      }
     });
   }
 
@@ -81,6 +83,11 @@ void ShowOrgBasemaps::componentComplete()
 bool ShowOrgBasemaps::portalLoaded() const
 {
   return m_portalLoaded;
+}
+
+bool ShowOrgBasemaps::portalLoading() const
+{
+  return m_portalLoading;
 }
 
 QString ShowOrgBasemaps::orgName() const
@@ -103,16 +110,32 @@ QString ShowOrgBasemaps::mapLoadError() const
 
 void ShowOrgBasemaps::load(bool anonymous)
 {
+  if (m_portal)
+  {
+    delete m_portal;
+    m_portal = nullptr;
+  }
+
+  m_portal = new Portal(this);
+  connectLoadStatusSignal();
+
+  if (!anonymous && m_portal)
+  {
+    Credential* cred = new Credential(OAuthClientInfo("iLkGIj0nX8A4EJda", OAuthMode::User), this);
+    m_portal->setCredential(cred);
+  }
+  load();
+}
+
+void ShowOrgBasemaps::load()
+{
   if (!m_portal)
     return;
 
-  if (anonymous)
+  if (m_portal->loadStatus() == LoadStatus::FailedToLoad)
+    m_portal->retryLoad();
+  else
     m_portal->load();
-  else {
-    Credential* cred = new Credential(OAuthClientInfo("iLkGIj0nX8A4EJda", OAuthMode::User), this);
-    m_portal->setCredential(cred);
-    m_portal->load();
-  }
 }
 
 void ShowOrgBasemaps::loadSelectedBasemap(int index)

@@ -59,6 +59,7 @@ signals:
   void busyChanged();
 
 private:
+  void fetchItem();
   bool portalLoaded() const;
   bool portalItemLoaded() const;
   QString portalItemId() const;

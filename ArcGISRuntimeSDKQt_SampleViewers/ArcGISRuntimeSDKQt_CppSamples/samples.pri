@@ -41,7 +41,7 @@ INCLUDEPATH += \
     "$$SAMPLEPATHCPP/DisplayInformation/CreateSymbolStylesFromWebStyles" \
     "$$SAMPLEPATHCPP/DisplayInformation/CustomDictionaryStyle" \
     "$$SAMPLEPATHCPP/DisplayInformation/DisplayGrid" \
-    "$$SAMPLEPATHCPP/DisplayInformation/DisplayPointsUsingClustering" \
+    "$$SAMPLEPATHCPP/DisplayInformation/DisplayClusters" \
     "$$SAMPLEPATHCPP/DisplayInformation/GODictionaryRenderer_3D" \
     "$$SAMPLEPATHCPP/DisplayInformation/GODictionaryRenderer" \
     "$$SAMPLEPATHCPP/DisplayInformation/GOSymbols" \
@@ -93,6 +93,7 @@ INCLUDEPATH += \
     "$$SAMPLEPATHCPP/Geometry/ProjectGeometry" \
     "$$SAMPLEPATHCPP/Geometry/SpatialOperations" \
     "$$SAMPLEPATHCPP/Geometry/SpatialRelationships" \
+    "$$SAMPLEPATHCPP/Layers/ConfigureClusters" \
     "$$SAMPLEPATHCPP/Layers/AddCustomDynamicEntityDataSource" \
     "$$SAMPLEPATHCPP/Layers/AddDynamicEntityLayer" \
     "$$SAMPLEPATHCPP/Layers/AddEncExchangeSet" \
@@ -150,6 +151,7 @@ INCLUDEPATH += \
     "$$SAMPLEPATHCPP/Maps/BrowseBuildingFloors" \
     "$$SAMPLEPATHCPP/Maps/ChangeBasemap" \
     "$$SAMPLEPATHCPP/Maps/ChangeViewpoint" \
+    "$$SAMPLEPATHCPP/Maps/ConfigureBasemapStyleLanguage" \
     "$$SAMPLEPATHCPP/Maps/CreateAndSaveMap" \
     "$$SAMPLEPATHCPP/Maps/DisplayDeviceLocation" \
     "$$SAMPLEPATHCPP/Maps/DisplayDeviceLocationWithNmeaDataSources" \
@@ -190,6 +192,7 @@ INCLUDEPATH += \
     "$$SAMPLEPATHCPP/Routing/OfflineRouting" \
     "$$SAMPLEPATHCPP/Routing/RouteAroundBarriers" \
     "$$SAMPLEPATHCPP/Routing/ServiceArea" \
+    "$$SAMPLEPATHCPP/Scenes/Add3DTilesLayer" \
     "$$SAMPLEPATHCPP/Scenes/AddAPointSceneLayer" \
     "$$SAMPLEPATHCPP/Scenes/AddIntegratedMeshLayer" \
     "$$SAMPLEPATHCPP/Scenes/Animate3DSymbols" \
@@ -228,7 +231,8 @@ INCLUDEPATH += \
     "$$SAMPLEPATHCPP/UtilityNetwork/DisplayContentOfUtilityNetworkContainer" \
     "$$SAMPLEPATHCPP/UtilityNetwork/DisplayUtilityAssociations" \
     "$$SAMPLEPATHCPP/UtilityNetwork/PerformValveIsolationTrace" \
-    "$$SAMPLEPATHCPP/UtilityNetwork/TraceUtilityNetwork"
+    "$$SAMPLEPATHCPP/UtilityNetwork/TraceUtilityNetwork" \
+    "$$SAMPLEPATHCPP/UtilityNetwork/ValidateUtilityNetworkTopology"
 
 HEADERS += \
     "$$SAMPLEPATHCPP/Analysis/AnalyzeHotspots/AnalyzeHotspots.h" \
@@ -251,7 +255,7 @@ HEADERS += \
     "$$SAMPLEPATHCPP/DisplayInformation/CreateSymbolStylesFromWebStyles/CreateSymbolStylesFromWebStyles.h" \
     "$$SAMPLEPATHCPP/DisplayInformation/CustomDictionaryStyle/CustomDictionaryStyle.h" \
     "$$SAMPLEPATHCPP/DisplayInformation/DisplayGrid/DisplayGrid.h" \
-    "$$SAMPLEPATHCPP/DisplayInformation/DisplayPointsUsingClustering/DisplayPointsUsingClustering.h" \
+    "$$SAMPLEPATHCPP/DisplayInformation/DisplayClusters/DisplayClusters.h" \
     "$$SAMPLEPATHCPP/DisplayInformation/GODictionaryRenderer_3D/GODictionaryRenderer_3D.h" \
     "$$SAMPLEPATHCPP/DisplayInformation/GODictionaryRenderer/GODictionaryRenderer.h" \
     "$$SAMPLEPATHCPP/DisplayInformation/GOSymbols/GOSymbols.h" \
@@ -307,6 +311,7 @@ HEADERS += \
     "$$SAMPLEPATHCPP/Geometry/ProjectGeometry/ProjectGeometry.h" \
     "$$SAMPLEPATHCPP/Geometry/SpatialOperations/SpatialOperations.h" \
     "$$SAMPLEPATHCPP/Geometry/SpatialRelationships/SpatialRelationships.h" \
+    "$$SAMPLEPATHCPP/Layers/ConfigureClusters/ConfigureClusters.h" \
     "$$SAMPLEPATHCPP/Layers/AddCustomDynamicEntityDataSource/AddCustomDynamicEntityDataSource.h" \
     "$$SAMPLEPATHCPP/Layers/AddCustomDynamicEntityDataSource/CustomDataSource.h" \
     "$$SAMPLEPATHCPP/Layers/AddDynamicEntityLayer/AddDynamicEntityLayer.h" \
@@ -366,6 +371,7 @@ HEADERS += \
     "$$SAMPLEPATHCPP/Maps/BrowseBuildingFloors/BrowseBuildingFloors.h" \
     "$$SAMPLEPATHCPP/Maps/ChangeBasemap/ChangeBasemap.h" \
     "$$SAMPLEPATHCPP/Maps/ChangeViewpoint/ChangeViewpoint.h" \
+    "$$SAMPLEPATHCPP/Maps/ConfigureBasemapStyleLanguage/ConfigureBasemapStyleLanguage.h" \
     "$$SAMPLEPATHCPP/Maps/CreateAndSaveMap/CreateAndSaveMap.h" \
     "$$SAMPLEPATHCPP/Maps/DisplayDeviceLocation/DisplayDeviceLocation.h" \
     "$$SAMPLEPATHCPP/Maps/DisplayDeviceLocationWithNmeaDataSources/DisplayDeviceLocationWithNmeaDataSources.h" \
@@ -408,6 +414,7 @@ HEADERS += \
     "$$SAMPLEPATHCPP/Routing/OfflineRouting/OfflineRouting.h" \
     "$$SAMPLEPATHCPP/Routing/RouteAroundBarriers/RouteAroundBarriers.h" \
     "$$SAMPLEPATHCPP/Routing/ServiceArea/ServiceArea.h" \
+    "$$SAMPLEPATHCPP/Scenes/Add3DTilesLayer/Add3DTilesLayer.h" \
     "$$SAMPLEPATHCPP/Scenes/AddAPointSceneLayer/AddAPointSceneLayer.h" \
     "$$SAMPLEPATHCPP/Scenes/AddIntegratedMeshLayer/AddIntegratedMeshLayer.h" \
     "$$SAMPLEPATHCPP/Scenes/Animate3DSymbols/Animate3DSymbols.h" \
@@ -447,7 +454,8 @@ HEADERS += \
     "$$SAMPLEPATHCPP/UtilityNetwork/DisplayContentOfUtilityNetworkContainer/DisplayContentOfUtilityNetworkContainer.h" \
     "$$SAMPLEPATHCPP/UtilityNetwork/DisplayUtilityAssociations/DisplayUtilityAssociations.h" \
     "$$SAMPLEPATHCPP/UtilityNetwork/PerformValveIsolationTrace/PerformValveIsolationTrace.h" \
-    "$$SAMPLEPATHCPP/UtilityNetwork/TraceUtilityNetwork/TraceUtilityNetwork.h"
+    "$$SAMPLEPATHCPP/UtilityNetwork/TraceUtilityNetwork/TraceUtilityNetwork.h" \
+    "$$SAMPLEPATHCPP/UtilityNetwork/ValidateUtilityNetworkTopology/ValidateUtilityNetworkTopology.h"
 
 SOURCES += \
     "$$SAMPLEPATHCPP/Analysis/AnalyzeHotspots/AnalyzeHotspots.cpp" \
@@ -470,7 +478,7 @@ SOURCES += \
     "$$SAMPLEPATHCPP/DisplayInformation/CreateSymbolStylesFromWebStyles/CreateSymbolStylesFromWebStyles.cpp" \
     "$$SAMPLEPATHCPP/DisplayInformation/CustomDictionaryStyle/CustomDictionaryStyle.cpp" \
     "$$SAMPLEPATHCPP/DisplayInformation/DisplayGrid/DisplayGrid.cpp" \
-    "$$SAMPLEPATHCPP/DisplayInformation/DisplayPointsUsingClustering/DisplayPointsUsingClustering.cpp" \
+    "$$SAMPLEPATHCPP/DisplayInformation/DisplayClusters/DisplayClusters.cpp" \
     "$$SAMPLEPATHCPP/DisplayInformation/GODictionaryRenderer_3D/GODictionaryRenderer_3D.cpp" \
     "$$SAMPLEPATHCPP/DisplayInformation/GODictionaryRenderer/GODictionaryRenderer.cpp" \
     "$$SAMPLEPATHCPP/DisplayInformation/GOSymbols/GOSymbols.cpp" \
@@ -526,6 +534,7 @@ SOURCES += \
     "$$SAMPLEPATHCPP/Geometry/ProjectGeometry/ProjectGeometry.cpp" \
     "$$SAMPLEPATHCPP/Geometry/SpatialOperations/SpatialOperations.cpp" \
     "$$SAMPLEPATHCPP/Geometry/SpatialRelationships/SpatialRelationships.cpp" \
+    "$$SAMPLEPATHCPP/Layers/ConfigureClusters/ConfigureClusters.cpp" \
     "$$SAMPLEPATHCPP/Layers/AddCustomDynamicEntityDataSource/AddCustomDynamicEntityDataSource.cpp" \
     "$$SAMPLEPATHCPP/Layers/AddCustomDynamicEntityDataSource/CustomDataSource.cpp" \
     "$$SAMPLEPATHCPP/Layers/AddDynamicEntityLayer/AddDynamicEntityLayer.cpp" \
@@ -585,6 +594,7 @@ SOURCES += \
     "$$SAMPLEPATHCPP/Maps/BrowseBuildingFloors/BrowseBuildingFloors.cpp" \
     "$$SAMPLEPATHCPP/Maps/ChangeBasemap/ChangeBasemap.cpp" \
     "$$SAMPLEPATHCPP/Maps/ChangeViewpoint/ChangeViewpoint.cpp" \
+    "$$SAMPLEPATHCPP/Maps/ConfigureBasemapStyleLanguage/ConfigureBasemapStyleLanguage.cpp" \
     "$$SAMPLEPATHCPP/Maps/CreateAndSaveMap/CreateAndSaveMap.cpp" \
     "$$SAMPLEPATHCPP/Maps/DisplayDeviceLocation/DisplayDeviceLocation.cpp" \
     "$$SAMPLEPATHCPP/Maps/DisplayDeviceLocationWithNmeaDataSources/DisplayDeviceLocationWithNmeaDataSources.cpp" \
@@ -627,6 +637,7 @@ SOURCES += \
     "$$SAMPLEPATHCPP/Routing/OfflineRouting/OfflineRouting.cpp" \
     "$$SAMPLEPATHCPP/Routing/RouteAroundBarriers/RouteAroundBarriers.cpp" \
     "$$SAMPLEPATHCPP/Routing/ServiceArea/ServiceArea.cpp" \
+    "$$SAMPLEPATHCPP/Scenes/Add3DTilesLayer/Add3DTilesLayer.cpp" \
     "$$SAMPLEPATHCPP/Scenes/AddAPointSceneLayer/AddAPointSceneLayer.cpp" \
     "$$SAMPLEPATHCPP/Scenes/AddIntegratedMeshLayer/AddIntegratedMeshLayer.cpp" \
     "$$SAMPLEPATHCPP/Scenes/Animate3DSymbols/Animate3DSymbols.cpp" \
@@ -666,7 +677,8 @@ SOURCES += \
     "$$SAMPLEPATHCPP/UtilityNetwork/DisplayContentOfUtilityNetworkContainer/DisplayContentOfUtilityNetworkContainer.cpp" \
     "$$SAMPLEPATHCPP/UtilityNetwork/DisplayUtilityAssociations/DisplayUtilityAssociations.cpp" \
     "$$SAMPLEPATHCPP/UtilityNetwork/PerformValveIsolationTrace/PerformValveIsolationTrace.cpp" \
-    "$$SAMPLEPATHCPP/UtilityNetwork/TraceUtilityNetwork/TraceUtilityNetwork.cpp"
+    "$$SAMPLEPATHCPP/UtilityNetwork/TraceUtilityNetwork/TraceUtilityNetwork.cpp" \
+    "$$SAMPLEPATHCPP/UtilityNetwork/ValidateUtilityNetworkTopology/ValidateUtilityNetworkTopology.cpp"
 
 RESOURCES += \
     "$$SAMPLEPATHCPP/Analysis/AnalyzeHotspots/AnalyzeHotspots.qrc" \
@@ -688,7 +700,7 @@ RESOURCES += \
     "$$SAMPLEPATHCPP/DisplayInformation/CreateSymbolStylesFromWebStyles/CreateSymbolStylesFromWebStyles.qrc" \
     "$$SAMPLEPATHCPP/DisplayInformation/CustomDictionaryStyle/CustomDictionaryStyle.qrc" \
     "$$SAMPLEPATHCPP/DisplayInformation/DisplayGrid/DisplayGrid.qrc" \
-    "$$SAMPLEPATHCPP/DisplayInformation/DisplayPointsUsingClustering/DisplayPointsUsingClustering.qrc" \
+    "$$SAMPLEPATHCPP/DisplayInformation/DisplayClusters/DisplayClusters.qrc" \
     "$$SAMPLEPATHCPP/DisplayInformation/GODictionaryRenderer_3D/GODictionaryRenderer_3D.qrc" \
     "$$SAMPLEPATHCPP/DisplayInformation/GODictionaryRenderer/GODictionaryRenderer.qrc" \
     "$$SAMPLEPATHCPP/DisplayInformation/GOSymbols/GOSymbols.qrc" \
@@ -740,6 +752,7 @@ RESOURCES += \
     "$$SAMPLEPATHCPP/Geometry/ProjectGeometry/ProjectGeometry.qrc" \
     "$$SAMPLEPATHCPP/Geometry/SpatialOperations/SpatialOperations.qrc" \
     "$$SAMPLEPATHCPP/Geometry/SpatialRelationships/SpatialRelationships.qrc" \
+    "$$SAMPLEPATHCPP/Layers/ConfigureClusters/ConfigureClusters.qrc" \
     "$$SAMPLEPATHCPP/Layers/AddCustomDynamicEntityDataSource/AddCustomDynamicEntityDataSource.qrc" \
     "$$SAMPLEPATHCPP/Layers/AddDynamicEntityLayer/AddDynamicEntityLayer.qrc" \
     "$$SAMPLEPATHCPP/Layers/AddEncExchangeSet/AddEncExchangeSet.qrc" \
@@ -797,6 +810,7 @@ RESOURCES += \
     "$$SAMPLEPATHCPP/Maps/BrowseBuildingFloors/BrowseBuildingFloors.qrc" \
     "$$SAMPLEPATHCPP/Maps/ChangeBasemap/ChangeBasemap.qrc" \
     "$$SAMPLEPATHCPP/Maps/ChangeViewpoint/ChangeViewpoint.qrc" \
+    "$$SAMPLEPATHCPP/Maps/ConfigureBasemapStyleLanguage/ConfigureBasemapStyleLanguage.qrc" \
     "$$SAMPLEPATHCPP/Maps/CreateAndSaveMap/CreateAndSaveMap.qrc" \
     "$$SAMPLEPATHCPP/Maps/DisplayDeviceLocation/DisplayDeviceLocation.qrc" \
     "$$SAMPLEPATHCPP/Maps/DisplayDeviceLocationWithNmeaDataSources/DisplayDeviceLocationWithNmeaDataSources.qrc" \
@@ -837,6 +851,7 @@ RESOURCES += \
     "$$SAMPLEPATHCPP/Routing/OfflineRouting/OfflineRouting.qrc" \
     "$$SAMPLEPATHCPP/Routing/RouteAroundBarriers/RouteAroundBarriers.qrc" \
     "$$SAMPLEPATHCPP/Routing/ServiceArea/ServiceArea.qrc" \
+    "$$SAMPLEPATHCPP/Scenes/Add3DTilesLayer/Add3DTilesLayer.qrc" \
     "$$SAMPLEPATHCPP/Scenes/AddAPointSceneLayer/AddAPointSceneLayer.qrc" \
     "$$SAMPLEPATHCPP/Scenes/AddIntegratedMeshLayer/AddIntegratedMeshLayer.qrc" \
     "$$SAMPLEPATHCPP/Scenes/Animate3DSymbols/Animate3DSymbols.qrc" \
@@ -875,7 +890,8 @@ RESOURCES += \
     "$$SAMPLEPATHCPP/UtilityNetwork/DisplayContentOfUtilityNetworkContainer/DisplayContentOfUtilityNetworkContainer.qrc" \
     "$$SAMPLEPATHCPP/UtilityNetwork/DisplayUtilityAssociations/DisplayUtilityAssociations.qrc" \
     "$$SAMPLEPATHCPP/UtilityNetwork/PerformValveIsolationTrace/PerformValveIsolationTrace.qrc" \
-    "$$SAMPLEPATHCPP/UtilityNetwork/TraceUtilityNetwork/TraceUtilityNetwork.qrc"
+    "$$SAMPLEPATHCPP/UtilityNetwork/TraceUtilityNetwork/TraceUtilityNetwork.qrc" \
+    "$$SAMPLEPATHCPP/UtilityNetwork/ValidateUtilityNetworkTopology/ValidateUtilityNetworkTopology.qrc"
 
 # Local Server Only (Linux and Windows)
 !android:!ios:!macx {

@@ -1,0 +1,11 @@
+<RCC>
+    <qresource prefix="/Samples/Layers/ConfigureClusters">
+        <file alias="sample.json">README.metadata.json</file>
+        <file>ConfigureClusters.qml</file>
+        <file>ConfigureClusters.h</file>
+        <file>ConfigureClusters.cpp</file>
+        <file>main.qml</file>
+        <file>screenshot.png</file>
+        <file>README.md</file>
+    </qresource>
+</RCC>

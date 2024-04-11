@@ -19,16 +19,20 @@
 #endif // PCH_BUILD
 
 #include "AddDynamicEntityLayer.h"
-
 #include "ArcGISStreamService.h"
 #include "ArcGISStreamServiceFilter.h"
+#include "CalloutData.h"
+#include "DynamicEntity.h"
+#include "DynamicEntityChangedInfo.h"
 #include "DynamicEntityDataSourcePurgeOptions.h"
 #include "DynamicEntityLayer.h"
+#include "DynamicEntityObservation.h"
 #include "Envelope.h"
 #include "Graphic.h"
 #include "GraphicListModel.h"
 #include "GraphicsOverlay.h"
 #include "GraphicsOverlayListModel.h"
+#include "IdentifyLayerResult.h"
 #include "LayerListModel.h"
 #include "Map.h"
 #include "MapQuickView.h"
@@ -140,6 +144,9 @@ void AddDynamicEntityLayer::setMapView(MapQuickView* mapView)
   // Set the initial viewpoint to this area
   m_mapView->setViewpointAndWait(Viewpoint(utahSandyEnvelope));
 
+  // Create a slot to listen for mouse clicks
+  connect(m_mapView, &MapQuickView::mouseClicked, this, &AddDynamicEntityLayer::identifyLayerAtMouseClick);
+
   emit mapViewChanged();
 }
 
@@ -212,4 +219,42 @@ void AddDynamicEntityLayer::purgeAllObservations()
   // Remove all current observations from the cache
   auto future = m_dynamicEntityDataSource->purgeAllAsync();
   Q_UNUSED(future)
+}
+
+void AddDynamicEntityLayer::identifyLayerAtMouseClick(const QMouseEvent& e)
+{
+  // Hide the callout (if it is already hidden this will do nothing)
+  m_mapView->calloutData()->setVisible(false);
+
+  m_mapView->identifyLayerAsync(m_dynamicEntityLayer, e.position(), 5, false, this)
+      .then(this, [this](IdentifyLayerResult* result)
+  {
+    if (!result || result->geoElements().empty())
+    {
+      return;
+    }
+
+    if (DynamicEntityObservation* observation = dynamic_cast<DynamicEntityObservation*>(result->geoElements().constFirst()); observation)
+    {
+      DynamicEntity* dynamicEntity = observation->dynamicEntity();
+      if (!dynamicEntity)
+      {
+        return;
+      }
+      m_mapView->calloutData()->setGeoElement(dynamicEntity);
+      // Create a arcade expression for title to display the dynamic entity's attributes in the callout.
+      const QString titleExpression = "concatenate($feature.vehiclename, \": \", $feature.speed, \" mph\")";
+      m_mapView->calloutData()->setTitleExpression(titleExpression);
+
+      // Create a arcade expression for detail to display the dynamic entity's attributes in the callout.
+      const QString detailExpression = "concatenate(Round($feature.point_x,6), \",\", Round($feature.point_y,6),\" Heading: \",$feature.heading,\"°\")";
+      m_mapView->calloutData()->setDetailExpression(detailExpression);
+
+      // Show the callout when the title is available.
+      connect(m_mapView->calloutData(), &CalloutData::titleChanged, this, [this]()
+      {
+        m_mapView->calloutData()->setVisible(true);
+      }, Qt::SingleShotConnection);
+    }
+  });
 }

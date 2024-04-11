@@ -33,6 +33,7 @@ class ShowOrgBasemaps : public QQuickItem
   Q_OBJECT
 
   Q_PROPERTY(bool portalLoaded READ portalLoaded NOTIFY portalLoadedChanged)
+  Q_PROPERTY(bool portalLoading READ portalLoading NOTIFY portalLoadingChanged)
   Q_PROPERTY(QString orgName READ orgName NOTIFY orgNameChanged)
   Q_PROPERTY(QAbstractListModel* basemaps READ basemaps NOTIFY basemapsChanged)
   Q_PROPERTY(QString mapLoadError READ mapLoadError NOTIFY mapLoadErrorChanged)
@@ -41,10 +42,10 @@ public:
   explicit ShowOrgBasemaps(QQuickItem* parent = nullptr);
   ~ShowOrgBasemaps() override;
 
-  void componentComplete() override;
   static void init();
 
   bool portalLoaded() const;
+  bool portalLoading() const;
   QString orgName() const;
   QAbstractListModel* basemaps() const;
   QString mapLoadError() const;
@@ -55,15 +56,20 @@ public:
 
 signals:
   void portalLoadedChanged();
+  void portalLoadingChanged();
   void orgNameChanged();
   void basemapsChanged();
   void mapLoadErrorChanged();
 
 private:
+  void load();
+  void connectLoadStatusSignal();
+
   Esri::ArcGISRuntime::Map* m_map = nullptr;
   Esri::ArcGISRuntime::MapQuickView* m_mapView = nullptr;
   Esri::ArcGISRuntime::Portal* m_portal = nullptr;
   bool m_portalLoaded = false;
+  bool m_portalLoading = false;
   QString m_mapLoadError;
 };
 

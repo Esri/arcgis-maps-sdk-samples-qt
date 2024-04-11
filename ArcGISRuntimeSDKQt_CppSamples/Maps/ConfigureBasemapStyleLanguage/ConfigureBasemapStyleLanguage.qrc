@@ -1,0 +1,11 @@
+<RCC>
+    <qresource prefix="/Samples/Maps/ConfigureBasemapStyleLanguage">
+        <file alias="sample.json">README.metadata.json</file>
+        <file>ConfigureBasemapStyleLanguage.qml</file>
+        <file>ConfigureBasemapStyleLanguage.h</file>
+        <file>ConfigureBasemapStyleLanguage.cpp</file>
+        <file>main.qml</file>
+        <file>screenshot.png</file>
+        <file>README.md</file>
+    </qresource>
+</RCC>

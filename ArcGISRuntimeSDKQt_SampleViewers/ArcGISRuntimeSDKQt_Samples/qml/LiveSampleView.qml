@@ -19,4 +19,5 @@ import Esri.ArcGISRuntimeSamples
 Loader {
     anchors.fill: parent
     visible: SampleManager.currentMode === SampleManager.LiveSampleView
+    enabled: visible
 }

@@ -3,9 +3,9 @@
 <plist version="1.0">
 <dict>
 	<key>CFBundleDisplayName</key>
-	<string>DisplayPointsUsingClusteringFeatureReduction</string>
+	<string>Add3DTilesLayer</string>
 	<key>CFBundleExecutable</key>
-	<string>DisplayPointsUsingClusteringFeatureReduction</string>
+	<string>Add3DTilesLayer</string>
 	<key>CFBundleGetInfoString</key>
 	<string>ArcGIS</string>
 	<key>CFBundleIcons~ipad</key>

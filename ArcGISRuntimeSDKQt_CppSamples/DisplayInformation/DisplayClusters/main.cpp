@@ -11,7 +11,7 @@
 // See the License for the specific language governing permissions and
 // limitations under the License.
 
-#include "DisplayPointsUsingClusteringFeatureReduction.h"
+#include "DisplayClusters.h"
 #include "ArcGISRuntimeEnvironment.h"
 
 #include <QDir>
@@ -27,7 +27,7 @@
 int main(int argc, char *argv[])
 {
   QGuiApplication app(argc, argv);
-  app.setApplicationName(QStringLiteral("DisplayPointsUsingClusteringFeatureReduction - C++"));
+  app.setApplicationName(QStringLiteral("DisplayClusters - C++"));
 
   // Use of Esri location services, including basemaps and geocoding,
   // requires authentication using either an ArcGIS identity or an API Key.
@@ -48,7 +48,7 @@ int main(int argc, char *argv[])
   }
 
   // Initialize the sample
-  DisplayPointsUsingClusteringFeatureReduction::init();
+  DisplayClusters::init();
 
   // Initialize application view
   QQmlApplicationEngine engine;
@@ -62,7 +62,7 @@ int main(int argc, char *argv[])
   Esri::ArcGISRuntime::Toolkit::registerComponents(engine);
 
   // Set the source
-  engine.load(QUrl("qrc:/Samples/DisplayInformation/DisplayPointsUsingClusteringFeatureReduction/main.qml"));
+  engine.load(QUrl("qrc:/Samples/DisplayInformation/DisplayClusters/main.qml"));
 
   return app.exec();
 }

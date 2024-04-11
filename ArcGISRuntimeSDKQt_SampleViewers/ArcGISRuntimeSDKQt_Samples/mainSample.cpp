@@ -59,6 +59,7 @@
 
 // All CPP Samples
 #ifdef CPP_VIEWER
+#include "Add3DTilesLayer.h"
 #include "AddAPointSceneLayer.h"
 #include "AddCustomDynamicEntityDataSource.h"
 #include "AddDynamicEntityLayer.h"
@@ -93,6 +94,8 @@
 #include "ChooseCameraController.h"
 #include "ClipGeometry.h"
 #include "ClosestFacility.h"
+#include "ConfigureBasemapStyleLanguage.h"
+#include "ConfigureClusters.h"
 #include "ConfigureSubnetworkTrace.h"
 #include "ContingentValues.h"
 #include "ControlAnnotationSublayerVisibility.h"
@@ -127,7 +130,7 @@
 #include "DisplayMap.h"
 #include "DisplayOgcApiFeatureCollection.h"
 #include "DisplayOverviewMap.h"
-#include "DisplayPointsUsingClustering.h"
+#include "DisplayClusters.h"
 #include "DisplayRouteLayer.h"
 #include "DisplaySceneLayer.h"
 #include "DisplaySubtypeFeatureLayer.h"
@@ -266,6 +269,7 @@
 #include "Unique_Value_Renderer.h"
 #include "UpdateAttributesFeatureService.h"
 #include "UpdateGeometryFeatureService.h"
+#include "ValidateUtilityNetworkTopology.h"
 #include "VectorTiledLayerUrl.h"
 #include "ViewContentBeneathTerrainSurface.h"
 #include "ViewPointCloudDataOffline.h"
@@ -376,6 +380,7 @@ void registerCppSampleClasses()
 
 #ifdef CPP_VIEWER
   // Register the C++ Samples under the Esri.Samples namespace
+  Add3DTilesLayer::init();
   AddAPointSceneLayer::init();
   AddCustomDynamicEntityDataSource::init();
   AddDynamicEntityLayer::init();
@@ -407,6 +412,8 @@ void registerCppSampleClasses()
   ChooseCameraController::init();
   ClipGeometry::init();
   ClosestFacility::init();
+  ConfigureBasemapStyleLanguage::init();
+  ConfigureClusters::init();
   ConfigureSubnetworkTrace::init();
   ContingentValues::init();
   ControlAnnotationSublayerVisibility::init();
@@ -440,7 +447,7 @@ void registerCppSampleClasses()
   DisplayMap::init();
   DisplayOgcApiFeatureCollection::init();
   DisplayOverviewMap::init();
-  DisplayPointsUsingClustering::init();
+  DisplayClusters::init();
   DisplayRouteLayer::init();
   DisplaySceneLayer::init();
   DisplaySubtypeFeatureLayer::init();
@@ -574,6 +581,7 @@ void registerCppSampleClasses()
   Unique_Value_Renderer::init();
   UpdateAttributesFeatureService::init();
   UpdateGeometryFeatureService::init();
+  ValidateUtilityNetworkTopology::init();
   VectorTiledLayerUrl::init();
   ViewContentBeneathTerrainSurface::init();
   ViewPointCloudDataOffline::init();
