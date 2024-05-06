@@ -16,7 +16,6 @@
 import QtQuick
 import QtQuick.Controls
 import Esri.ArcGISRuntimeSamples
-import Esri.ArcGISExtras
 import QtQuick.Layouts
 
 Page {

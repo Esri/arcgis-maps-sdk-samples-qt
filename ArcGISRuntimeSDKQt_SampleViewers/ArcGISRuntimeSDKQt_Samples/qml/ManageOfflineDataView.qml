@@ -18,7 +18,6 @@ import QtQuick.Controls
 import Qt.labs.platform
 import QtQuick.Layouts
 import Esri.ArcGISRuntimeSamples
-import Esri.ArcGISExtras
 
 Page {
     id: manageOfflineDataViewPage
@@ -30,9 +29,9 @@ Page {
             SampleManager.cancelDownload = true;
     }
 
-    FileFolder {
-        id: fileFolder
-    }
+    // FileFolder {
+    //     id: fileFolder
+    // }
 
     ColumnLayout {
         anchors.horizontalCenter: parent.horizontalCenter

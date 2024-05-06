@@ -16,7 +16,6 @@
 import QtQuick
 import QtQuick.Controls
 import Esri.ArcGISRuntimeSamples
-import Esri.ArcGISExtras
 
 Page {
     visible: SampleManager.currentMode === SampleManager.NetworkRequiredView

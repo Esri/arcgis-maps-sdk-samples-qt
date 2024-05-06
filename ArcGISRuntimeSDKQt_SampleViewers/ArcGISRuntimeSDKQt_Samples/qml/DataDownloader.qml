@@ -14,7 +14,6 @@
 // [Legal]
 
 import QtQuick
-import Esri.ArcGISExtras
 import Esri.ArcGISRuntimeSamples
 
 Item {
@@ -23,17 +22,17 @@ Item {
     property bool debug: false
     property bool failedToDownload: false
 
-    FileInfo {
-        id: fileInfo
-    }
+    // FileInfo {
+    //     id: fileInfo
+    // }
 
-    FileInfo {
-        id: dataPackageFileInfo
-    }
+    // FileInfo {
+    //     id: dataPackageFileInfo
+    // }
 
-    FileFolder {
-        id: fileFolder
-    }
+    // FileFolder {
+    //     id: fileFolder
+    // }
 
     function downloadAllDataItems() {
         SampleManager.downloadInProgress = true;
@@ -133,21 +132,21 @@ Item {
         }
     }
 
-    ZipArchive {
-        id: zipArchive
+    // ZipArchive {
+    //     id: zipArchive
 
-        onExtractProgress: {
-            if (debug)
-                console.log("Extracting file " + fileName + " (" + percent + "%)");
-        }
-        onExtractError: {
-            if (debug)
-                console.log("Extract error " + fileName);
-        }
-        onExtractCompleted: {
-            if (debug)
-                console.log("Extract completed");
-            downloadNextItem();
-        }
-    }
+    //     onExtractProgress: {
+    //         if (debug)
+    //             console.log("Extracting file " + fileName + " (" + percent + "%)");
+    //     }
+    //     onExtractError: {
+    //         if (debug)
+    //             console.log("Extract error " + fileName);
+    //     }
+    //     onExtractCompleted: {
+    //         if (debug)
+    //             console.log("Extract completed");
+    //         downloadNextItem();
+    //     }
+    // }
 }
