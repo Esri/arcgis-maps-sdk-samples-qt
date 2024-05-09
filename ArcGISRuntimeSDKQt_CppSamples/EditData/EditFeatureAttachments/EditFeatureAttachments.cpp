@@ -236,6 +236,8 @@ void EditFeatureAttachments::onQueryFeaturesCompleted_(FeatureQueryResult* featu
     emit featureSelected();
     emit attachmentModelChanged();
 
+    // get the number of attachments
+    // enableAutoFetch and enableAutoApplyEdits arguments of attachments() is set as false to avoid auto-fetching and auto-apply edits.
     m_selectedFeature->attachments(false, false)->fetchAttachmentsAsync().then(
         [this](const QList<Attachment*>& attachments)
         {
