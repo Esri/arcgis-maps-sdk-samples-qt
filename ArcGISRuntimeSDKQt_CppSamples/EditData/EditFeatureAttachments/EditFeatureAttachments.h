@@ -19,6 +19,7 @@
 
 namespace Esri::ArcGISRuntime
 {
+  class AttachmentListModel;
   class CalloutData;
   class Map;
   class MapQuickView;
@@ -59,6 +60,7 @@ signals:
 private:
   void connectSignals();
   QAbstractListModel* attachmentModel() const;
+  void applyEdits();
 
   void onIdentifyLayerCompleted_(Esri::ArcGISRuntime::IdentifyLayerResult* identifyResult);
   void onQueryFeaturesCompleted_(Esri::ArcGISRuntime::FeatureQueryResult* featureQueryResult);
@@ -69,6 +71,7 @@ private:
   Esri::ArcGISRuntime::FeatureLayer* m_featureLayer = nullptr;
   Esri::ArcGISRuntime::ServiceFeatureTable* m_featureTable = nullptr;
   Esri::ArcGISRuntime::ArcGISFeature* m_selectedFeature = nullptr;
+  Esri::ArcGISRuntime::AttachmentListModel* m_attachmentListModel = nullptr;
   QString m_whereClause;
   QMetaObject::Connection m_attachmentConnection;
 };

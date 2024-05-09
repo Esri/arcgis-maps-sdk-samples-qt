@@ -18,6 +18,7 @@
 #include "pch.hpp"
 #endif // PCH_BUILD
 
+#include "AttachmentListModel.h"
 #include "EditFeatureAttachments.h"
 
 #include "Map.h"
@@ -147,8 +148,10 @@ void EditFeatureAttachments::addAttachment(const QUrl& fileUrl, const QString& c
     if (m_selectedFeature->loadStatus() == LoadStatus::Loaded)
     {
       QFile file(fileUrl.toLocalFile());
-      auto future = m_selectedFeature->attachments()->addAttachmentAsync(file, contentType, fileName);
-      Q_UNUSED(future)
+      m_attachmentListModel->addAttachmentAsync(file, contentType, fileName).then(this , [this](QFuture<Attachment*>)
+      {
+        applyEdits();
+      });
     }
     else
     {
@@ -159,8 +162,10 @@ void EditFeatureAttachments::addAttachment(const QUrl& fileUrl, const QString& c
         {
           QFile file(fileUrl.toLocalFile());
           disconnect(m_attachmentConnection);
-          auto future = m_selectedFeature->attachments()->addAttachmentAsync(file, contentType, fileName);
-          Q_UNUSED(future)
+          m_attachmentListModel->addAttachmentAsync(file, contentType, fileName).then(this , [this](QFuture<Attachment*>)
+          {
+            applyEdits();
+          });
         }
       });
       m_selectedFeature->load();
@@ -175,8 +180,10 @@ void EditFeatureAttachments::deleteAttachment(int index)
   if (m_selectedFeature->loadStatus() == LoadStatus::Loaded)
   {
     qDebug() << "Attachments size: " << m_selectedFeature->attachments()->rowCount();
-    auto future = m_selectedFeature->attachments()->deleteAttachmentAsync(index);
-    Q_UNUSED(future)
+    m_attachmentListModel->deleteAttachmentAsync(index).then(this, [this]()
+    {
+      applyEdits();
+    });
   }
   else
   {
@@ -186,8 +193,10 @@ void EditFeatureAttachments::deleteAttachment(int index)
       if (m_selectedFeature->loadStatus() == LoadStatus::Loaded)
       {
         disconnect(m_attachmentConnection);
-        auto future = m_selectedFeature->attachments()->deleteAttachmentAsync(index);
-        Q_UNUSED(future)
+        m_attachmentListModel->deleteAttachmentAsync(index).then(this, [this]()
+        {
+          applyEdits();
+        });
       }
     });
     m_selectedFeature->load();
@@ -228,7 +237,9 @@ void EditFeatureAttachments::onQueryFeaturesCompleted_(FeatureQueryResult* featu
     m_selectedFeature = static_cast<ArcGISFeature*>(featureQueryResult->iterator().next(this));
     // Don't delete selected feature when parent featureQueryResult is deleted.
     m_selectedFeature->setParent(this);
-
+    // enableAutoFetch and enableAutoApplyEdits for AttachmentListModel are set as false
+    // to avoid automatic behavior. We will call fetchDataAsync explicitly as needed.
+    m_attachmentListModel = m_selectedFeature->attachments(false, false);
     const QString featureType = m_selectedFeature->attributes()->attributeValue(QStringLiteral("typdamage")).toString();
     m_mapView->calloutData()->setLocation(m_selectedFeature->geometry().extent().center());
     m_mapView->calloutData()->setTitle(QString("<b>%1</b>").arg(featureType));
@@ -237,13 +248,11 @@ void EditFeatureAttachments::onQueryFeaturesCompleted_(FeatureQueryResult* featu
     emit attachmentModelChanged();
 
     // get the number of attachments
-    // enableAutoFetch and enableAutoApplyEdits for AttachmentListModel are set as false to avoid automatic behavior. We will call fetchDataAsync explicitly as needed.
-    m_selectedFeature->attachments(false, false)->fetchAttachmentsAsync().then(
-        [this](const QList<Attachment*>& attachments)
-        {
-          m_mapView->calloutData()->setDetail(QString("Number of attachments: %1").arg(attachments.size()));
-          m_mapView->calloutData()->setVisible(true); // Resizes the calloutData after details has been set.
-        });
+    m_attachmentListModel->fetchAttachmentsAsync().then([this](const QList<Attachment*>& attachments)
+    {
+      m_mapView->calloutData()->setDetail(QString("Number of attachments: %1").arg(attachments.size()));
+      m_mapView->calloutData()->setVisible(true); // Resizes the calloutData after details has been set.
+    });
   }
 }
 
@@ -275,4 +284,12 @@ void EditFeatureAttachments::onApplyEditsCompleted_(const QList<FeatureEditResul
       qDebug() << "Apply edits error:" << featureEditResult->error().message();
     }
   }
+}
+
+void EditFeatureAttachments::applyEdits()
+{
+  m_featureTable->applyEditsAsync(this).then(this, [this](const QList<FeatureEditResult*>& featureEditResults)
+  {
+    onApplyEditsCompleted_(featureEditResults);
+  });
 }

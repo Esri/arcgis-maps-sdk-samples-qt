@@ -85,6 +85,7 @@ private:
   QUrl m_currentFeatureImageUrl;
   QMap<QString, Esri::ArcGISRuntime::ArcGISFeature*> m_featureQMap;
   QMap<QString, QUrl> m_featureAttachmentImageUrls;
+  Esri::ArcGISRuntime::AttachmentListModel* m_attachmentListModel = nullptr;
 
 };
 

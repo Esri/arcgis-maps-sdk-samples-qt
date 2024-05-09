@@ -228,8 +228,10 @@ void Geotriggers::getFeatureInformation(const QString& sectionName)
   }
 
   emit displayInfoChanged();
-
-  feature->attachments(false, false)->fetchAttachmentsAsync().then(
+  // enableAutoFetch and enableAutoApplyEdits for AttachmentListModel are set as false
+  // to avoid automatic behavior. We will call fetchDataAsync explicitly as needed.
+  m_attachmentListModel = feature->attachments(false, false);
+  m_attachmentListModel->fetchAttachmentsAsync().then(
       [this, sectionName](const QList<Attachment*>& attachments)
       {
         if (attachments.isEmpty())
@@ -245,4 +247,7 @@ void Geotriggers::getFeatureInformation(const QString& sectionName)
           emit displayInfoChanged();
         });
       });
+
+ auto future = m_gardenSections->applyEditsAsync(this);
+ Q_UNUSED(future)
 }
