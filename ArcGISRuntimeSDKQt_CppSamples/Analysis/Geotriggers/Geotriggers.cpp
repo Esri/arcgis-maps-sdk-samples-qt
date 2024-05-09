@@ -229,22 +229,20 @@ void Geotriggers::getFeatureInformation(const QString& sectionName)
 
   emit displayInfoChanged();
 
-  AttachmentListModel* featureAttachments = feature->attachments();
+  feature->attachments(false, false)->fetchAttachmentsAsync().then(
+      [this, sectionName](const QList<Attachment*>& attachments)
+      {
+        if (attachments.isEmpty())
+          return;
 
-  // Fetch attachments will automatically trigger upon instantiation of the AttachmentListModel
-  connect(featureAttachments, &AttachmentListModel::fetchAttachmentsCompleted, this, [this, sectionName](const QUuid&, const QList<Attachment*>& attachments)
-  {
-    if (attachments.isEmpty())
-      return;
+        // Get the first (and only) attachment for the feature
+        Attachment* sectionImageAttachment = attachments.first();
 
-    // Get the first (and only) attachment for the feature
-    Attachment* sectionImageAttachment = attachments.first();
-
-    sectionImageAttachment->fetchDataAsync().then(this, [this, sectionImageAttachment, sectionName](const QByteArray&)
-    {
-      m_featureAttachmentImageUrls[sectionName] = sectionImageAttachment->attachmentUrl();
-      m_currentFeatureImageUrl = m_featureAttachmentImageUrls[sectionName];
-      emit displayInfoChanged();
-    });
-  });
+        sectionImageAttachment->fetchDataAsync().then(this, [this, sectionImageAttachment, sectionName](const QByteArray&)
+        {
+          m_featureAttachmentImageUrls[sectionName] = sectionImageAttachment->attachmentUrl();
+          m_currentFeatureImageUrl = m_featureAttachmentImageUrls[sectionName];
+          emit displayInfoChanged();
+        });
+      });
 }
