@@ -1,0 +1,467 @@
+The system is: Darwin - 22.6.0 - arm64
+Compiling the C compiler identification source file "CMakeCCompilerId.c" succeeded.
+Compiler: /Applications/Xcode_15.0.0.app/Contents/Developer/Toolchains/XcodeDefault.xctoolchain/usr/bin/cc 
+Build flags: 
+Id flags: -c 
+
+The output was:
+0
+
+
+Compilation of the C compiler identification source "CMakeCCompilerId.c" produced "CMakeCCompilerId.o"
+
+The C compiler identification is AppleClang, found in "/Users/jare8800/applications/qt/sdk/samples/ArcGISRuntimeSDKQt_SampleViewers/ArcGISRuntimeSDKQt_CppSamples/zlib-ng/build/CMakeFiles/3.24.3/CompilerIdC/CMakeCCompilerId.o"
+
+Detecting C compiler ABI info compiled with the following output:
+Change Dir: /Users/jare8800/applications/qt/sdk/samples/ArcGISRuntimeSDKQt_SampleViewers/ArcGISRuntimeSDKQt_CppSamples/zlib-ng/build/CMakeFiles/CMakeTmp
+
+Run Build Command(s):/usr/bin/make -f Makefile cmTC_b87fb/fast && /Applications/Xcode_15.0.0.app/Contents/Developer/usr/bin/make  -f CMakeFiles/cmTC_b87fb.dir/build.make CMakeFiles/cmTC_b87fb.dir/build
+Building C object CMakeFiles/cmTC_b87fb.dir/CMakeCCompilerABI.c.o
+/Applications/Xcode_15.0.0.app/Contents/Developer/Toolchains/XcodeDefault.xctoolchain/usr/bin/cc   -arch arm64 -isysroot /Applications/Xcode_15.0.0.app/Contents/Developer/Platforms/MacOSX.platform/Developer/SDKs/MacOSX14.0.sdk -mmacosx-version-min=13.6   -v -Wl,-v -std=c11 -MD -MT CMakeFiles/cmTC_b87fb.dir/CMakeCCompilerABI.c.o -MF CMakeFiles/cmTC_b87fb.dir/CMakeCCompilerABI.c.o.d -o CMakeFiles/cmTC_b87fb.dir/CMakeCCompilerABI.c.o -c /opt/homebrew/Cellar/cmake/3.24.3/share/cmake/Modules/CMakeCCompilerABI.c
+Apple clang version 15.0.0 (clang-1500.0.40.1)
+Target: arm64-apple-darwin22.6.0
+Thread model: posix
+InstalledDir: /Applications/Xcode_15.0.0.app/Contents/Developer/Toolchains/XcodeDefault.xctoolchain/usr/bin
+clang: warning: -Wl,-v: 'linker' input unused [-Wunused-command-line-argument]
+ "/Applications/Xcode_15.0.0.app/Contents/Developer/Toolchains/XcodeDefault.xctoolchain/usr/bin/clang" -cc1 -triple arm64-apple-macosx13.6.0 -Wundef-prefix=TARGET_OS_ -Wdeprecated-objc-isa-usage -Werror=deprecated-objc-isa-usage -Werror=implicit-function-declaration -emit-obj -mrelax-all --mrelax-relocations -disable-free -clear-ast-before-backend -disable-llvm-verifier -discard-value-names -main-file-name CMakeCCompilerABI.c -mrelocation-model pic -pic-level 2 -mframe-pointer=non-leaf -fno-strict-return -ffp-contract=on -fno-rounding-math -funwind-tables=1 -fobjc-msgsend-selector-stubs -target-sdk-version=14.0 -fvisibility-inlines-hidden-static-local-var -target-cpu apple-m1 -target-feature +v8.5a -target-feature +crc -target-feature +lse -target-feature +rdm -target-feature +crypto -target-feature +dotprod -target-feature +fp-armv8 -target-feature +neon -target-feature +fp16fml -target-feature +ras -target-feature +rcpc -target-feature +zcm -target-feature +zcz -target-feature +fullfp16 -target-feature +sm4 -target-feature +sha3 -target-feature +sha2 -target-feature +aes -target-abi darwinpcs -mllvm -treat-scalable-fixed-error-as-warning -debugger-tuning=lldb -target-linker-version 1015.6 -v -fcoverage-compilation-dir=/Users/jare8800/applications/qt/sdk/samples/ArcGISRuntimeSDKQt_SampleViewers/ArcGISRuntimeSDKQt_CppSamples/zlib-ng/build/CMakeFiles/CMakeTmp -resource-dir /Applications/Xcode_15.0.0.app/Contents/Developer/Toolchains/XcodeDefault.xctoolchain/usr/lib/clang/15.0.0 -dependency-file CMakeFiles/cmTC_b87fb.dir/CMakeCCompilerABI.c.o.d -skip-unused-modulemap-deps -MT CMakeFiles/cmTC_b87fb.dir/CMakeCCompilerABI.c.o -sys-header-deps -isysroot /Applications/Xcode_15.0.0.app/Contents/Developer/Platforms/MacOSX.platform/Developer/SDKs/MacOSX14.0.sdk -internal-isystem /Applications/Xcode_15.0.0.app/Contents/Developer/Platforms/MacOSX.platform/Developer/SDKs/MacOSX14.0.sdk/usr/local/include -internal-isystem /Applications/Xcode_15.0.0.app/Contents/Developer/Toolchains/XcodeDefault.xctoolchain/usr/lib/clang/15.0.0/include -internal-externc-isystem /Applications/Xcode_15.0.0.app/Contents/Developer/Platforms/MacOSX.platform/Developer/SDKs/MacOSX14.0.sdk/usr/include -internal-externc-isystem /Applications/Xcode_15.0.0.app/Contents/Developer/Toolchains/XcodeDefault.xctoolchain/usr/include -Wno-reorder-init-list -Wno-implicit-int-float-conversion -Wno-c99-designator -Wno-final-dtor-non-final-class -Wno-extra-semi-stmt -Wno-misleading-indentation -Wno-quoted-include-in-framework-header -Wno-implicit-fallthrough -Wno-enum-enum-conversion -Wno-enum-float-conversion -Wno-elaborated-enum-base -Wno-reserved-identifier -Wno-gnu-folding-constant -std=c11 -fdebug-compilation-dir=/Users/jare8800/applications/qt/sdk/samples/ArcGISRuntimeSDKQt_SampleViewers/ArcGISRuntimeSDKQt_CppSamples/zlib-ng/build/CMakeFiles/CMakeTmp -ferror-limit 19 -stack-protector 1 -fstack-check -mdarwin-stkchk-strong-link -fblocks -fencode-extended-block-signature -fregister-global-dtors-with-atexit -fgnuc-version=4.2.1 -fmax-type-align=16 -fcommon -clang-vendor-feature=+disableNonDependentMemberExprInCurrentInstantiation -fno-odr-hash-protocols -clang-vendor-feature=+enableAggressiveVLAFolding -clang-vendor-feature=+revert09abecef7bbf -clang-vendor-feature=+thisNoAlignAttr -clang-vendor-feature=+thisNoNullAttr -mllvm -disable-aligned-alloc-awareness=1 -D__GCC_HAVE_DWARF2_CFI_ASM=1 -o CMakeFiles/cmTC_b87fb.dir/CMakeCCompilerABI.c.o -x c /opt/homebrew/Cellar/cmake/3.24.3/share/cmake/Modules/CMakeCCompilerABI.c
+clang -cc1 version 15.0.0 (clang-1500.0.40.1) default target arm64-apple-darwin22.6.0
+ignoring nonexistent directory "/Applications/Xcode_15.0.0.app/Contents/Developer/Platforms/MacOSX.platform/Developer/SDKs/MacOSX14.0.sdk/usr/local/include"
+ignoring nonexistent directory "/Applications/Xcode_15.0.0.app/Contents/Developer/Platforms/MacOSX.platform/Developer/SDKs/MacOSX14.0.sdk/Library/Frameworks"
+#include "..." search starts here:
+#include <...> search starts here:
+ /Applications/Xcode_15.0.0.app/Contents/Developer/Toolchains/XcodeDefault.xctoolchain/usr/lib/clang/15.0.0/include
+ /Applications/Xcode_15.0.0.app/Contents/Developer/Platforms/MacOSX.platform/Developer/SDKs/MacOSX14.0.sdk/usr/include
+ /Applications/Xcode_15.0.0.app/Contents/Developer/Toolchains/XcodeDefault.xctoolchain/usr/include
+ /Applications/Xcode_15.0.0.app/Contents/Developer/Platforms/MacOSX.platform/Developer/SDKs/MacOSX14.0.sdk/System/Library/Frameworks (framework directory)
+End of search list.
+Linking C executable cmTC_b87fb
+/opt/homebrew/Cellar/cmake/3.24.3/bin/cmake -E cmake_link_script CMakeFiles/cmTC_b87fb.dir/link.txt --verbose=1
+/Applications/Xcode_15.0.0.app/Contents/Developer/Toolchains/XcodeDefault.xctoolchain/usr/bin/cc  -arch arm64 -isysroot /Applications/Xcode_15.0.0.app/Contents/Developer/Platforms/MacOSX.platform/Developer/SDKs/MacOSX14.0.sdk -mmacosx-version-min=13.6 -Wl,-search_paths_first -Wl,-headerpad_max_install_names  -v -Wl,-v CMakeFiles/cmTC_b87fb.dir/CMakeCCompilerABI.c.o -o cmTC_b87fb 
+Apple clang version 15.0.0 (clang-1500.0.40.1)
+Target: arm64-apple-darwin22.6.0
+Thread model: posix
+InstalledDir: /Applications/Xcode_15.0.0.app/Contents/Developer/Toolchains/XcodeDefault.xctoolchain/usr/bin
+ "/Applications/Xcode_15.0.0.app/Contents/Developer/Toolchains/XcodeDefault.xctoolchain/usr/bin/ld" -demangle -lto_library /Applications/Xcode_15.0.0.app/Contents/Developer/Toolchains/XcodeDefault.xctoolchain/usr/lib/libLTO.dylib -dynamic -arch arm64 -platform_version macos 13.6.0 14.0 -syslibroot /Applications/Xcode_15.0.0.app/Contents/Developer/Platforms/MacOSX.platform/Developer/SDKs/MacOSX14.0.sdk -o cmTC_b87fb -search_paths_first -headerpad_max_install_names -v CMakeFiles/cmTC_b87fb.dir/CMakeCCompilerABI.c.o -lSystem /Applications/Xcode_15.0.0.app/Contents/Developer/Toolchains/XcodeDefault.xctoolchain/usr/lib/clang/15.0.0/lib/darwin/libclang_rt.osx.a
+@(#)PROGRAM:ld  PROJECT:dyld-1015.7
+BUILD 18:48:48 Aug 22 2023
+configured to support archs: armv6 armv7 armv7s arm64 arm64e arm64_32 i386 x86_64 x86_64h armv6m armv7k armv7m armv7em
+will use ld-classic for: armv6 armv7 armv7s arm64_32 i386 armv6m armv7k armv7m armv7em
+LTO support using: LLVM version 15.0.0 (static support for 29, runtime is 29)
+TAPI support using: Apple TAPI version 15.0.0 (tapi-1500.0.12.3)
+Library search paths:
+Framework search paths:
+
+
+
+Parsed C implicit include dir info from above output: rv=done
+  found start of include info
+  found start of implicit include info
+    add: [/Applications/Xcode_15.0.0.app/Contents/Developer/Toolchains/XcodeDefault.xctoolchain/usr/lib/clang/15.0.0/include]
+    add: [/Applications/Xcode_15.0.0.app/Contents/Developer/Platforms/MacOSX.platform/Developer/SDKs/MacOSX14.0.sdk/usr/include]
+    add: [/Applications/Xcode_15.0.0.app/Contents/Developer/Toolchains/XcodeDefault.xctoolchain/usr/include]
+  end of search list found
+  collapse include dir [/Applications/Xcode_15.0.0.app/Contents/Developer/Toolchains/XcodeDefault.xctoolchain/usr/lib/clang/15.0.0/include] ==> [/Applications/Xcode_15.0.0.app/Contents/Developer/Toolchains/XcodeDefault.xctoolchain/usr/lib/clang/15.0.0/include]
+  collapse include dir [/Applications/Xcode_15.0.0.app/Contents/Developer/Platforms/MacOSX.platform/Developer/SDKs/MacOSX14.0.sdk/usr/include] ==> [/Applications/Xcode_15.0.0.app/Contents/Developer/Platforms/MacOSX.platform/Developer/SDKs/MacOSX14.0.sdk/usr/include]
+  collapse include dir [/Applications/Xcode_15.0.0.app/Contents/Developer/Toolchains/XcodeDefault.xctoolchain/usr/include] ==> [/Applications/Xcode_15.0.0.app/Contents/Developer/Toolchains/XcodeDefault.xctoolchain/usr/include]
+  implicit include dirs: [/Applications/Xcode_15.0.0.app/Contents/Developer/Toolchains/XcodeDefault.xctoolchain/usr/lib/clang/15.0.0/include;/Applications/Xcode_15.0.0.app/Contents/Developer/Platforms/MacOSX.platform/Developer/SDKs/MacOSX14.0.sdk/usr/include;/Applications/Xcode_15.0.0.app/Contents/Developer/Toolchains/XcodeDefault.xctoolchain/usr/include]
+
+
+Parsed C implicit link information from above output:
+  link line regex: [^( *|.*[/\])(ld|CMAKE_LINK_STARTFILE-NOTFOUND|([^/\]+-)?ld|collect2)[^/\]*( |$)]
+  ignore line: [Change Dir: /Users/jare8800/applications/qt/sdk/samples/ArcGISRuntimeSDKQt_SampleViewers/ArcGISRuntimeSDKQt_CppSamples/zlib-ng/build/CMakeFiles/CMakeTmp]
+  ignore line: []
+  ignore line: [Run Build Command(s):/usr/bin/make -f Makefile cmTC_b87fb/fast && /Applications/Xcode_15.0.0.app/Contents/Developer/usr/bin/make  -f CMakeFiles/cmTC_b87fb.dir/build.make CMakeFiles/cmTC_b87fb.dir/build]
+  ignore line: [Building C object CMakeFiles/cmTC_b87fb.dir/CMakeCCompilerABI.c.o]
+  ignore line: [/Applications/Xcode_15.0.0.app/Contents/Developer/Toolchains/XcodeDefault.xctoolchain/usr/bin/cc   -arch arm64 -isysroot /Applications/Xcode_15.0.0.app/Contents/Developer/Platforms/MacOSX.platform/Developer/SDKs/MacOSX14.0.sdk -mmacosx-version-min=13.6   -v -Wl -v -std=c11 -MD -MT CMakeFiles/cmTC_b87fb.dir/CMakeCCompilerABI.c.o -MF CMakeFiles/cmTC_b87fb.dir/CMakeCCompilerABI.c.o.d -o CMakeFiles/cmTC_b87fb.dir/CMakeCCompilerABI.c.o -c /opt/homebrew/Cellar/cmake/3.24.3/share/cmake/Modules/CMakeCCompilerABI.c]
+  ignore line: [Apple clang version 15.0.0 (clang-1500.0.40.1)]
+  ignore line: [Target: arm64-apple-darwin22.6.0]
+  ignore line: [Thread model: posix]
+  ignore line: [InstalledDir: /Applications/Xcode_15.0.0.app/Contents/Developer/Toolchains/XcodeDefault.xctoolchain/usr/bin]
+  ignore line: [clang: warning: -Wl -v: 'linker' input unused [-Wunused-command-line-argument]]
+  ignore line: [ "/Applications/Xcode_15.0.0.app/Contents/Developer/Toolchains/XcodeDefault.xctoolchain/usr/bin/clang" -cc1 -triple arm64-apple-macosx13.6.0 -Wundef-prefix=TARGET_OS_ -Wdeprecated-objc-isa-usage -Werror=deprecated-objc-isa-usage -Werror=implicit-function-declaration -emit-obj -mrelax-all --mrelax-relocations -disable-free -clear-ast-before-backend -disable-llvm-verifier -discard-value-names -main-file-name CMakeCCompilerABI.c -mrelocation-model pic -pic-level 2 -mframe-pointer=non-leaf -fno-strict-return -ffp-contract=on -fno-rounding-math -funwind-tables=1 -fobjc-msgsend-selector-stubs -target-sdk-version=14.0 -fvisibility-inlines-hidden-static-local-var -target-cpu apple-m1 -target-feature +v8.5a -target-feature +crc -target-feature +lse -target-feature +rdm -target-feature +crypto -target-feature +dotprod -target-feature +fp-armv8 -target-feature +neon -target-feature +fp16fml -target-feature +ras -target-feature +rcpc -target-feature +zcm -target-feature +zcz -target-feature +fullfp16 -target-feature +sm4 -target-feature +sha3 -target-feature +sha2 -target-feature +aes -target-abi darwinpcs -mllvm -treat-scalable-fixed-error-as-warning -debugger-tuning=lldb -target-linker-version 1015.6 -v -fcoverage-compilation-dir=/Users/jare8800/applications/qt/sdk/samples/ArcGISRuntimeSDKQt_SampleViewers/ArcGISRuntimeSDKQt_CppSamples/zlib-ng/build/CMakeFiles/CMakeTmp -resource-dir /Applications/Xcode_15.0.0.app/Contents/Developer/Toolchains/XcodeDefault.xctoolchain/usr/lib/clang/15.0.0 -dependency-file CMakeFiles/cmTC_b87fb.dir/CMakeCCompilerABI.c.o.d -skip-unused-modulemap-deps -MT CMakeFiles/cmTC_b87fb.dir/CMakeCCompilerABI.c.o -sys-header-deps -isysroot /Applications/Xcode_15.0.0.app/Contents/Developer/Platforms/MacOSX.platform/Developer/SDKs/MacOSX14.0.sdk -internal-isystem /Applications/Xcode_15.0.0.app/Contents/Developer/Platforms/MacOSX.platform/Developer/SDKs/MacOSX14.0.sdk/usr/local/include -internal-isystem /Applications/Xcode_15.0.0.app/Contents/Developer/Toolchains/XcodeDefault.xctoolchain/usr/lib/clang/15.0.0/include -internal-externc-isystem /Applications/Xcode_15.0.0.app/Contents/Developer/Platforms/MacOSX.platform/Developer/SDKs/MacOSX14.0.sdk/usr/include -internal-externc-isystem /Applications/Xcode_15.0.0.app/Contents/Developer/Toolchains/XcodeDefault.xctoolchain/usr/include -Wno-reorder-init-list -Wno-implicit-int-float-conversion -Wno-c99-designator -Wno-final-dtor-non-final-class -Wno-extra-semi-stmt -Wno-misleading-indentation -Wno-quoted-include-in-framework-header -Wno-implicit-fallthrough -Wno-enum-enum-conversion -Wno-enum-float-conversion -Wno-elaborated-enum-base -Wno-reserved-identifier -Wno-gnu-folding-constant -std=c11 -fdebug-compilation-dir=/Users/jare8800/applications/qt/sdk/samples/ArcGISRuntimeSDKQt_SampleViewers/ArcGISRuntimeSDKQt_CppSamples/zlib-ng/build/CMakeFiles/CMakeTmp -ferror-limit 19 -stack-protector 1 -fstack-check -mdarwin-stkchk-strong-link -fblocks -fencode-extended-block-signature -fregister-global-dtors-with-atexit -fgnuc-version=4.2.1 -fmax-type-align=16 -fcommon -clang-vendor-feature=+disableNonDependentMemberExprInCurrentInstantiation -fno-odr-hash-protocols -clang-vendor-feature=+enableAggressiveVLAFolding -clang-vendor-feature=+revert09abecef7bbf -clang-vendor-feature=+thisNoAlignAttr -clang-vendor-feature=+thisNoNullAttr -mllvm -disable-aligned-alloc-awareness=1 -D__GCC_HAVE_DWARF2_CFI_ASM=1 -o CMakeFiles/cmTC_b87fb.dir/CMakeCCompilerABI.c.o -x c /opt/homebrew/Cellar/cmake/3.24.3/share/cmake/Modules/CMakeCCompilerABI.c]
+  ignore line: [clang -cc1 version 15.0.0 (clang-1500.0.40.1) default target arm64-apple-darwin22.6.0]
+  ignore line: [ignoring nonexistent directory "/Applications/Xcode_15.0.0.app/Contents/Developer/Platforms/MacOSX.platform/Developer/SDKs/MacOSX14.0.sdk/usr/local/include"]
+  ignore line: [ignoring nonexistent directory "/Applications/Xcode_15.0.0.app/Contents/Developer/Platforms/MacOSX.platform/Developer/SDKs/MacOSX14.0.sdk/Library/Frameworks"]
+  ignore line: [#include "..." search starts here:]
+  ignore line: [#include <...> search starts here:]
+  ignore line: [ /Applications/Xcode_15.0.0.app/Contents/Developer/Toolchains/XcodeDefault.xctoolchain/usr/lib/clang/15.0.0/include]
+  ignore line: [ /Applications/Xcode_15.0.0.app/Contents/Developer/Platforms/MacOSX.platform/Developer/SDKs/MacOSX14.0.sdk/usr/include]
+  ignore line: [ /Applications/Xcode_15.0.0.app/Contents/Developer/Toolchains/XcodeDefault.xctoolchain/usr/include]
+  ignore line: [ /Applications/Xcode_15.0.0.app/Contents/Developer/Platforms/MacOSX.platform/Developer/SDKs/MacOSX14.0.sdk/System/Library/Frameworks (framework directory)]
+  ignore line: [End of search list.]
+  ignore line: [Linking C executable cmTC_b87fb]
+  ignore line: [/opt/homebrew/Cellar/cmake/3.24.3/bin/cmake -E cmake_link_script CMakeFiles/cmTC_b87fb.dir/link.txt --verbose=1]
+  ignore line: [/Applications/Xcode_15.0.0.app/Contents/Developer/Toolchains/XcodeDefault.xctoolchain/usr/bin/cc  -arch arm64 -isysroot /Applications/Xcode_15.0.0.app/Contents/Developer/Platforms/MacOSX.platform/Developer/SDKs/MacOSX14.0.sdk -mmacosx-version-min=13.6 -Wl -search_paths_first -Wl -headerpad_max_install_names  -v -Wl -v CMakeFiles/cmTC_b87fb.dir/CMakeCCompilerABI.c.o -o cmTC_b87fb ]
+  ignore line: [Apple clang version 15.0.0 (clang-1500.0.40.1)]
+  ignore line: [Target: arm64-apple-darwin22.6.0]
+  ignore line: [Thread model: posix]
+  ignore line: [InstalledDir: /Applications/Xcode_15.0.0.app/Contents/Developer/Toolchains/XcodeDefault.xctoolchain/usr/bin]
+  link line: [ "/Applications/Xcode_15.0.0.app/Contents/Developer/Toolchains/XcodeDefault.xctoolchain/usr/bin/ld" -demangle -lto_library /Applications/Xcode_15.0.0.app/Contents/Developer/Toolchains/XcodeDefault.xctoolchain/usr/lib/libLTO.dylib -dynamic -arch arm64 -platform_version macos 13.6.0 14.0 -syslibroot /Applications/Xcode_15.0.0.app/Contents/Developer/Platforms/MacOSX.platform/Developer/SDKs/MacOSX14.0.sdk -o cmTC_b87fb -search_paths_first -headerpad_max_install_names -v CMakeFiles/cmTC_b87fb.dir/CMakeCCompilerABI.c.o -lSystem /Applications/Xcode_15.0.0.app/Contents/Developer/Toolchains/XcodeDefault.xctoolchain/usr/lib/clang/15.0.0/lib/darwin/libclang_rt.osx.a]
+    arg [/Applications/Xcode_15.0.0.app/Contents/Developer/Toolchains/XcodeDefault.xctoolchain/usr/bin/ld] ==> ignore
+    arg [-demangle] ==> ignore
+    arg [-lto_library] ==> ignore, skip following value
+    arg [/Applications/Xcode_15.0.0.app/Contents/Developer/Toolchains/XcodeDefault.xctoolchain/usr/lib/libLTO.dylib] ==> skip value of -lto_library
+    arg [-dynamic] ==> ignore
+    arg [-arch] ==> ignore
+    arg [arm64] ==> ignore
+    arg [-platform_version] ==> ignore
+    arg [macos] ==> ignore
+    arg [13.6.0] ==> ignore
+    arg [14.0] ==> ignore
+    arg [-syslibroot] ==> ignore
+    arg [/Applications/Xcode_15.0.0.app/Contents/Developer/Platforms/MacOSX.platform/Developer/SDKs/MacOSX14.0.sdk] ==> ignore
+    arg [-o] ==> ignore
+    arg [cmTC_b87fb] ==> ignore
+    arg [-search_paths_first] ==> ignore
+    arg [-headerpad_max_install_names] ==> ignore
+    arg [-v] ==> ignore
+    arg [CMakeFiles/cmTC_b87fb.dir/CMakeCCompilerABI.c.o] ==> ignore
+    arg [-lSystem] ==> lib [System]
+    arg [/Applications/Xcode_15.0.0.app/Contents/Developer/Toolchains/XcodeDefault.xctoolchain/usr/lib/clang/15.0.0/lib/darwin/libclang_rt.osx.a] ==> lib [/Applications/Xcode_15.0.0.app/Contents/Developer/Toolchains/XcodeDefault.xctoolchain/usr/lib/clang/15.0.0/lib/darwin/libclang_rt.osx.a]
+  remove lib [System]
+  remove lib [/Applications/Xcode_15.0.0.app/Contents/Developer/Toolchains/XcodeDefault.xctoolchain/usr/lib/clang/15.0.0/lib/darwin/libclang_rt.osx.a]
+  implicit libs: []
+  implicit objs: []
+  implicit dirs: []
+  implicit fwks: []
+
+
+Performing C SOURCE FILE Test FNO_LTO_AVAILABLE succeeded with the following output:
+Change Dir: /Users/jare8800/applications/qt/sdk/samples/ArcGISRuntimeSDKQt_SampleViewers/ArcGISRuntimeSDKQt_CppSamples/zlib-ng/build/CMakeFiles/CMakeTmp
+
+Run Build Command(s):/usr/bin/make -f Makefile cmTC_84520/fast && /Applications/Xcode_15.0.0.app/Contents/Developer/usr/bin/make  -f CMakeFiles/cmTC_84520.dir/build.make CMakeFiles/cmTC_84520.dir/build
+Building C object CMakeFiles/cmTC_84520.dir/src.c.o
+/Applications/Xcode_15.0.0.app/Contents/Developer/Toolchains/XcodeDefault.xctoolchain/usr/bin/cc -DFNO_LTO_AVAILABLE  -fno-lto -arch arm64 -isysroot /Applications/Xcode_15.0.0.app/Contents/Developer/Platforms/MacOSX.platform/Developer/SDKs/MacOSX14.0.sdk -mmacosx-version-min=13.6 -std=c11 -MD -MT CMakeFiles/cmTC_84520.dir/src.c.o -MF CMakeFiles/cmTC_84520.dir/src.c.o.d -o CMakeFiles/cmTC_84520.dir/src.c.o -c /Users/jare8800/applications/qt/sdk/samples/ArcGISRuntimeSDKQt_SampleViewers/ArcGISRuntimeSDKQt_CppSamples/zlib-ng/build/CMakeFiles/CMakeTmp/src.c
+Linking C executable cmTC_84520
+/opt/homebrew/Cellar/cmake/3.24.3/bin/cmake -E cmake_link_script CMakeFiles/cmTC_84520.dir/link.txt --verbose=1
+/Applications/Xcode_15.0.0.app/Contents/Developer/Toolchains/XcodeDefault.xctoolchain/usr/bin/cc  -fno-lto -arch arm64 -isysroot /Applications/Xcode_15.0.0.app/Contents/Developer/Platforms/MacOSX.platform/Developer/SDKs/MacOSX14.0.sdk -mmacosx-version-min=13.6 -Wl,-search_paths_first -Wl,-headerpad_max_install_names CMakeFiles/cmTC_84520.dir/src.c.o -o cmTC_84520 
+
+
+Source file was:
+int main() { return 0; }
+Determining if the include file arm_acle.h exists passed with the following output:
+Change Dir: /Users/jare8800/applications/qt/sdk/samples/ArcGISRuntimeSDKQt_SampleViewers/ArcGISRuntimeSDKQt_CppSamples/zlib-ng/build/CMakeFiles/CMakeTmp
+
+Run Build Command(s):/usr/bin/make -f Makefile cmTC_872ae/fast && /Applications/Xcode_15.0.0.app/Contents/Developer/usr/bin/make  -f CMakeFiles/cmTC_872ae.dir/build.make CMakeFiles/cmTC_872ae.dir/build
+Building C object CMakeFiles/cmTC_872ae.dir/CheckIncludeFile.c.o
+/Applications/Xcode_15.0.0.app/Contents/Developer/Toolchains/XcodeDefault.xctoolchain/usr/bin/cc   -arch arm64 -isysroot /Applications/Xcode_15.0.0.app/Contents/Developer/Platforms/MacOSX.platform/Developer/SDKs/MacOSX14.0.sdk -mmacosx-version-min=13.6 -std=c11 -MD -MT CMakeFiles/cmTC_872ae.dir/CheckIncludeFile.c.o -MF CMakeFiles/cmTC_872ae.dir/CheckIncludeFile.c.o.d -o CMakeFiles/cmTC_872ae.dir/CheckIncludeFile.c.o -c /Users/jare8800/applications/qt/sdk/samples/ArcGISRuntimeSDKQt_SampleViewers/ArcGISRuntimeSDKQt_CppSamples/zlib-ng/build/CMakeFiles/CMakeTmp/CheckIncludeFile.c
+Linking C executable cmTC_872ae
+/opt/homebrew/Cellar/cmake/3.24.3/bin/cmake -E cmake_link_script CMakeFiles/cmTC_872ae.dir/link.txt --verbose=1
+/Applications/Xcode_15.0.0.app/Contents/Developer/Toolchains/XcodeDefault.xctoolchain/usr/bin/cc  -arch arm64 -isysroot /Applications/Xcode_15.0.0.app/Contents/Developer/Platforms/MacOSX.platform/Developer/SDKs/MacOSX14.0.sdk -mmacosx-version-min=13.6 -Wl,-search_paths_first -Wl,-headerpad_max_install_names CMakeFiles/cmTC_872ae.dir/CheckIncludeFile.c.o -o cmTC_872ae 
+
+
+
+Determining if the include file sys/sdt.h exists passed with the following output:
+Change Dir: /Users/jare8800/applications/qt/sdk/samples/ArcGISRuntimeSDKQt_SampleViewers/ArcGISRuntimeSDKQt_CppSamples/zlib-ng/build/CMakeFiles/CMakeTmp
+
+Run Build Command(s):/usr/bin/make -f Makefile cmTC_0562a/fast && /Applications/Xcode_15.0.0.app/Contents/Developer/usr/bin/make  -f CMakeFiles/cmTC_0562a.dir/build.make CMakeFiles/cmTC_0562a.dir/build
+Building C object CMakeFiles/cmTC_0562a.dir/CheckIncludeFile.c.o
+/Applications/Xcode_15.0.0.app/Contents/Developer/Toolchains/XcodeDefault.xctoolchain/usr/bin/cc   -arch arm64 -isysroot /Applications/Xcode_15.0.0.app/Contents/Developer/Platforms/MacOSX.platform/Developer/SDKs/MacOSX14.0.sdk -mmacosx-version-min=13.6 -std=c11 -MD -MT CMakeFiles/cmTC_0562a.dir/CheckIncludeFile.c.o -MF CMakeFiles/cmTC_0562a.dir/CheckIncludeFile.c.o.d -o CMakeFiles/cmTC_0562a.dir/CheckIncludeFile.c.o -c /Users/jare8800/applications/qt/sdk/samples/ArcGISRuntimeSDKQt_SampleViewers/ArcGISRuntimeSDKQt_CppSamples/zlib-ng/build/CMakeFiles/CMakeTmp/CheckIncludeFile.c
+Linking C executable cmTC_0562a
+/opt/homebrew/Cellar/cmake/3.24.3/bin/cmake -E cmake_link_script CMakeFiles/cmTC_0562a.dir/link.txt --verbose=1
+/Applications/Xcode_15.0.0.app/Contents/Developer/Toolchains/XcodeDefault.xctoolchain/usr/bin/cc  -arch arm64 -isysroot /Applications/Xcode_15.0.0.app/Contents/Developer/Platforms/MacOSX.platform/Developer/SDKs/MacOSX14.0.sdk -mmacosx-version-min=13.6 -Wl,-search_paths_first -Wl,-headerpad_max_install_names CMakeFiles/cmTC_0562a.dir/CheckIncludeFile.c.o -o cmTC_0562a 
+
+
+
+Determining if the include file unistd.h exists passed with the following output:
+Change Dir: /Users/jare8800/applications/qt/sdk/samples/ArcGISRuntimeSDKQt_SampleViewers/ArcGISRuntimeSDKQt_CppSamples/zlib-ng/build/CMakeFiles/CMakeTmp
+
+Run Build Command(s):/usr/bin/make -f Makefile cmTC_34ca0/fast && /Applications/Xcode_15.0.0.app/Contents/Developer/usr/bin/make  -f CMakeFiles/cmTC_34ca0.dir/build.make CMakeFiles/cmTC_34ca0.dir/build
+Building C object CMakeFiles/cmTC_34ca0.dir/CheckIncludeFile.c.o
+/Applications/Xcode_15.0.0.app/Contents/Developer/Toolchains/XcodeDefault.xctoolchain/usr/bin/cc   -arch arm64 -isysroot /Applications/Xcode_15.0.0.app/Contents/Developer/Platforms/MacOSX.platform/Developer/SDKs/MacOSX14.0.sdk -mmacosx-version-min=13.6 -std=c11 -MD -MT CMakeFiles/cmTC_34ca0.dir/CheckIncludeFile.c.o -MF CMakeFiles/cmTC_34ca0.dir/CheckIncludeFile.c.o.d -o CMakeFiles/cmTC_34ca0.dir/CheckIncludeFile.c.o -c /Users/jare8800/applications/qt/sdk/samples/ArcGISRuntimeSDKQt_SampleViewers/ArcGISRuntimeSDKQt_CppSamples/zlib-ng/build/CMakeFiles/CMakeTmp/CheckIncludeFile.c
+Linking C executable cmTC_34ca0
+/opt/homebrew/Cellar/cmake/3.24.3/bin/cmake -E cmake_link_script CMakeFiles/cmTC_34ca0.dir/link.txt --verbose=1
+/Applications/Xcode_15.0.0.app/Contents/Developer/Toolchains/XcodeDefault.xctoolchain/usr/bin/cc  -arch arm64 -isysroot /Applications/Xcode_15.0.0.app/Contents/Developer/Platforms/MacOSX.platform/Developer/SDKs/MacOSX14.0.sdk -mmacosx-version-min=13.6 -Wl,-search_paths_first -Wl,-headerpad_max_install_names CMakeFiles/cmTC_34ca0.dir/CheckIncludeFile.c.o -o cmTC_34ca0 
+
+
+
+Determining if the include file sys/types.h exists passed with the following output:
+Change Dir: /Users/jare8800/applications/qt/sdk/samples/ArcGISRuntimeSDKQt_SampleViewers/ArcGISRuntimeSDKQt_CppSamples/zlib-ng/build/CMakeFiles/CMakeTmp
+
+Run Build Command(s):/usr/bin/make -f Makefile cmTC_645be/fast && /Applications/Xcode_15.0.0.app/Contents/Developer/usr/bin/make  -f CMakeFiles/cmTC_645be.dir/build.make CMakeFiles/cmTC_645be.dir/build
+Building C object CMakeFiles/cmTC_645be.dir/CheckIncludeFile.c.o
+/Applications/Xcode_15.0.0.app/Contents/Developer/Toolchains/XcodeDefault.xctoolchain/usr/bin/cc -D_LARGEFILE64_SOURCE=1 -D__USE_LARGEFILE64  -arch arm64 -isysroot /Applications/Xcode_15.0.0.app/Contents/Developer/Platforms/MacOSX.platform/Developer/SDKs/MacOSX14.0.sdk -mmacosx-version-min=13.6 -std=c11 -MD -MT CMakeFiles/cmTC_645be.dir/CheckIncludeFile.c.o -MF CMakeFiles/cmTC_645be.dir/CheckIncludeFile.c.o.d -o CMakeFiles/cmTC_645be.dir/CheckIncludeFile.c.o -c /Users/jare8800/applications/qt/sdk/samples/ArcGISRuntimeSDKQt_SampleViewers/ArcGISRuntimeSDKQt_CppSamples/zlib-ng/build/CMakeFiles/CMakeTmp/CheckIncludeFile.c
+Linking C executable cmTC_645be
+/opt/homebrew/Cellar/cmake/3.24.3/bin/cmake -E cmake_link_script CMakeFiles/cmTC_645be.dir/link.txt --verbose=1
+/Applications/Xcode_15.0.0.app/Contents/Developer/Toolchains/XcodeDefault.xctoolchain/usr/bin/cc  -arch arm64 -isysroot /Applications/Xcode_15.0.0.app/Contents/Developer/Platforms/MacOSX.platform/Developer/SDKs/MacOSX14.0.sdk -mmacosx-version-min=13.6 -Wl,-search_paths_first -Wl,-headerpad_max_install_names CMakeFiles/cmTC_645be.dir/CheckIncludeFile.c.o -o cmTC_645be 
+
+
+
+Determining if the include file stdint.h exists passed with the following output:
+Change Dir: /Users/jare8800/applications/qt/sdk/samples/ArcGISRuntimeSDKQt_SampleViewers/ArcGISRuntimeSDKQt_CppSamples/zlib-ng/build/CMakeFiles/CMakeTmp
+
+Run Build Command(s):/usr/bin/make -f Makefile cmTC_3ccc2/fast && /Applications/Xcode_15.0.0.app/Contents/Developer/usr/bin/make  -f CMakeFiles/cmTC_3ccc2.dir/build.make CMakeFiles/cmTC_3ccc2.dir/build
+Building C object CMakeFiles/cmTC_3ccc2.dir/CheckIncludeFile.c.o
+/Applications/Xcode_15.0.0.app/Contents/Developer/Toolchains/XcodeDefault.xctoolchain/usr/bin/cc -D_LARGEFILE64_SOURCE=1 -D__USE_LARGEFILE64  -arch arm64 -isysroot /Applications/Xcode_15.0.0.app/Contents/Developer/Platforms/MacOSX.platform/Developer/SDKs/MacOSX14.0.sdk -mmacosx-version-min=13.6 -std=c11 -MD -MT CMakeFiles/cmTC_3ccc2.dir/CheckIncludeFile.c.o -MF CMakeFiles/cmTC_3ccc2.dir/CheckIncludeFile.c.o.d -o CMakeFiles/cmTC_3ccc2.dir/CheckIncludeFile.c.o -c /Users/jare8800/applications/qt/sdk/samples/ArcGISRuntimeSDKQt_SampleViewers/ArcGISRuntimeSDKQt_CppSamples/zlib-ng/build/CMakeFiles/CMakeTmp/CheckIncludeFile.c
+Linking C executable cmTC_3ccc2
+/opt/homebrew/Cellar/cmake/3.24.3/bin/cmake -E cmake_link_script CMakeFiles/cmTC_3ccc2.dir/link.txt --verbose=1
+/Applications/Xcode_15.0.0.app/Contents/Developer/Toolchains/XcodeDefault.xctoolchain/usr/bin/cc  -arch arm64 -isysroot /Applications/Xcode_15.0.0.app/Contents/Developer/Platforms/MacOSX.platform/Developer/SDKs/MacOSX14.0.sdk -mmacosx-version-min=13.6 -Wl,-search_paths_first -Wl,-headerpad_max_install_names CMakeFiles/cmTC_3ccc2.dir/CheckIncludeFile.c.o -o cmTC_3ccc2 
+
+
+
+Determining if the include file stddef.h exists passed with the following output:
+Change Dir: /Users/jare8800/applications/qt/sdk/samples/ArcGISRuntimeSDKQt_SampleViewers/ArcGISRuntimeSDKQt_CppSamples/zlib-ng/build/CMakeFiles/CMakeTmp
+
+Run Build Command(s):/usr/bin/make -f Makefile cmTC_92055/fast && /Applications/Xcode_15.0.0.app/Contents/Developer/usr/bin/make  -f CMakeFiles/cmTC_92055.dir/build.make CMakeFiles/cmTC_92055.dir/build
+Building C object CMakeFiles/cmTC_92055.dir/CheckIncludeFile.c.o
+/Applications/Xcode_15.0.0.app/Contents/Developer/Toolchains/XcodeDefault.xctoolchain/usr/bin/cc -D_LARGEFILE64_SOURCE=1 -D__USE_LARGEFILE64  -arch arm64 -isysroot /Applications/Xcode_15.0.0.app/Contents/Developer/Platforms/MacOSX.platform/Developer/SDKs/MacOSX14.0.sdk -mmacosx-version-min=13.6 -std=c11 -MD -MT CMakeFiles/cmTC_92055.dir/CheckIncludeFile.c.o -MF CMakeFiles/cmTC_92055.dir/CheckIncludeFile.c.o.d -o CMakeFiles/cmTC_92055.dir/CheckIncludeFile.c.o -c /Users/jare8800/applications/qt/sdk/samples/ArcGISRuntimeSDKQt_SampleViewers/ArcGISRuntimeSDKQt_CppSamples/zlib-ng/build/CMakeFiles/CMakeTmp/CheckIncludeFile.c
+Linking C executable cmTC_92055
+/opt/homebrew/Cellar/cmake/3.24.3/bin/cmake -E cmake_link_script CMakeFiles/cmTC_92055.dir/link.txt --verbose=1
+/Applications/Xcode_15.0.0.app/Contents/Developer/Toolchains/XcodeDefault.xctoolchain/usr/bin/cc  -arch arm64 -isysroot /Applications/Xcode_15.0.0.app/Contents/Developer/Platforms/MacOSX.platform/Developer/SDKs/MacOSX14.0.sdk -mmacosx-version-min=13.6 -Wl,-search_paths_first -Wl,-headerpad_max_install_names CMakeFiles/cmTC_92055.dir/CheckIncludeFile.c.o -o cmTC_92055 
+
+
+
+Determining if the function fseeko exists passed with the following output:
+Change Dir: /Users/jare8800/applications/qt/sdk/samples/ArcGISRuntimeSDKQt_SampleViewers/ArcGISRuntimeSDKQt_CppSamples/zlib-ng/build/CMakeFiles/CMakeTmp
+
+Run Build Command(s):/usr/bin/make -f Makefile cmTC_20156/fast && /Applications/Xcode_15.0.0.app/Contents/Developer/usr/bin/make  -f CMakeFiles/cmTC_20156.dir/build.make CMakeFiles/cmTC_20156.dir/build
+Building C object CMakeFiles/cmTC_20156.dir/CheckFunctionExists.c.o
+/Applications/Xcode_15.0.0.app/Contents/Developer/Toolchains/XcodeDefault.xctoolchain/usr/bin/cc   -DCHECK_FUNCTION_EXISTS=fseeko -arch arm64 -isysroot /Applications/Xcode_15.0.0.app/Contents/Developer/Platforms/MacOSX.platform/Developer/SDKs/MacOSX14.0.sdk -mmacosx-version-min=13.6 -std=c11 -MD -MT CMakeFiles/cmTC_20156.dir/CheckFunctionExists.c.o -MF CMakeFiles/cmTC_20156.dir/CheckFunctionExists.c.o.d -o CMakeFiles/cmTC_20156.dir/CheckFunctionExists.c.o -c /opt/homebrew/Cellar/cmake/3.24.3/share/cmake/Modules/CheckFunctionExists.c
+Linking C executable cmTC_20156
+/opt/homebrew/Cellar/cmake/3.24.3/bin/cmake -E cmake_link_script CMakeFiles/cmTC_20156.dir/link.txt --verbose=1
+/Applications/Xcode_15.0.0.app/Contents/Developer/Toolchains/XcodeDefault.xctoolchain/usr/bin/cc  -DCHECK_FUNCTION_EXISTS=fseeko -arch arm64 -isysroot /Applications/Xcode_15.0.0.app/Contents/Developer/Platforms/MacOSX.platform/Developer/SDKs/MacOSX14.0.sdk -mmacosx-version-min=13.6 -Wl,-search_paths_first -Wl,-headerpad_max_install_names CMakeFiles/cmTC_20156.dir/CheckFunctionExists.c.o -o cmTC_20156 
+
+
+
+Determining if the function strerror exists passed with the following output:
+Change Dir: /Users/jare8800/applications/qt/sdk/samples/ArcGISRuntimeSDKQt_SampleViewers/ArcGISRuntimeSDKQt_CppSamples/zlib-ng/build/CMakeFiles/CMakeTmp
+
+Run Build Command(s):/usr/bin/make -f Makefile cmTC_e0656/fast && /Applications/Xcode_15.0.0.app/Contents/Developer/usr/bin/make  -f CMakeFiles/cmTC_e0656.dir/build.make CMakeFiles/cmTC_e0656.dir/build
+Building C object CMakeFiles/cmTC_e0656.dir/CheckFunctionExists.c.o
+/Applications/Xcode_15.0.0.app/Contents/Developer/Toolchains/XcodeDefault.xctoolchain/usr/bin/cc   -DCHECK_FUNCTION_EXISTS=strerror -arch arm64 -isysroot /Applications/Xcode_15.0.0.app/Contents/Developer/Platforms/MacOSX.platform/Developer/SDKs/MacOSX14.0.sdk -mmacosx-version-min=13.6 -std=c11 -MD -MT CMakeFiles/cmTC_e0656.dir/CheckFunctionExists.c.o -MF CMakeFiles/cmTC_e0656.dir/CheckFunctionExists.c.o.d -o CMakeFiles/cmTC_e0656.dir/CheckFunctionExists.c.o -c /opt/homebrew/Cellar/cmake/3.24.3/share/cmake/Modules/CheckFunctionExists.c
+/opt/homebrew/Cellar/cmake/3.24.3/share/cmake/Modules/CheckFunctionExists.c:7:3: warning: incompatible redeclaration of library function 'strerror' [-Wincompatible-library-redeclaration]
+  CHECK_FUNCTION_EXISTS(void);
+  ^
+<command line>:1:31: note: expanded from macro 'CHECK_FUNCTION_EXISTS'
+#define CHECK_FUNCTION_EXISTS strerror
+                              ^
+/opt/homebrew/Cellar/cmake/3.24.3/share/cmake/Modules/CheckFunctionExists.c:7:3: note: 'strerror' is a builtin with type 'char *(int)'
+<command line>:1:31: note: expanded from macro 'CHECK_FUNCTION_EXISTS'
+#define CHECK_FUNCTION_EXISTS strerror
+                              ^
+1 warning generated.
+Linking C executable cmTC_e0656
+/opt/homebrew/Cellar/cmake/3.24.3/bin/cmake -E cmake_link_script CMakeFiles/cmTC_e0656.dir/link.txt --verbose=1
+/Applications/Xcode_15.0.0.app/Contents/Developer/Toolchains/XcodeDefault.xctoolchain/usr/bin/cc  -DCHECK_FUNCTION_EXISTS=strerror -arch arm64 -isysroot /Applications/Xcode_15.0.0.app/Contents/Developer/Platforms/MacOSX.platform/Developer/SDKs/MacOSX14.0.sdk -mmacosx-version-min=13.6 -Wl,-search_paths_first -Wl,-headerpad_max_install_names CMakeFiles/cmTC_e0656.dir/CheckFunctionExists.c.o -o cmTC_e0656 
+
+
+
+Determining if the posix_memalign exist passed with the following output:
+Change Dir: /Users/jare8800/applications/qt/sdk/samples/ArcGISRuntimeSDKQt_SampleViewers/ArcGISRuntimeSDKQt_CppSamples/zlib-ng/build/CMakeFiles/CMakeTmp
+
+Run Build Command(s):/usr/bin/make -f Makefile cmTC_d0438/fast && /Applications/Xcode_15.0.0.app/Contents/Developer/usr/bin/make  -f CMakeFiles/cmTC_d0438.dir/build.make CMakeFiles/cmTC_d0438.dir/build
+Building C object CMakeFiles/cmTC_d0438.dir/CheckSymbolExists.c.o
+/Applications/Xcode_15.0.0.app/Contents/Developer/Toolchains/XcodeDefault.xctoolchain/usr/bin/cc -D_POSIX_C_SOURCE=200112L  -arch arm64 -isysroot /Applications/Xcode_15.0.0.app/Contents/Developer/Platforms/MacOSX.platform/Developer/SDKs/MacOSX14.0.sdk -mmacosx-version-min=13.6 -std=c11 -MD -MT CMakeFiles/cmTC_d0438.dir/CheckSymbolExists.c.o -MF CMakeFiles/cmTC_d0438.dir/CheckSymbolExists.c.o.d -o CMakeFiles/cmTC_d0438.dir/CheckSymbolExists.c.o -c /Users/jare8800/applications/qt/sdk/samples/ArcGISRuntimeSDKQt_SampleViewers/ArcGISRuntimeSDKQt_CppSamples/zlib-ng/build/CMakeFiles/CMakeTmp/CheckSymbolExists.c
+Linking C executable cmTC_d0438
+/opt/homebrew/Cellar/cmake/3.24.3/bin/cmake -E cmake_link_script CMakeFiles/cmTC_d0438.dir/link.txt --verbose=1
+/Applications/Xcode_15.0.0.app/Contents/Developer/Toolchains/XcodeDefault.xctoolchain/usr/bin/cc  -arch arm64 -isysroot /Applications/Xcode_15.0.0.app/Contents/Developer/Platforms/MacOSX.platform/Developer/SDKs/MacOSX14.0.sdk -mmacosx-version-min=13.6 -Wl,-search_paths_first -Wl,-headerpad_max_install_names CMakeFiles/cmTC_d0438.dir/CheckSymbolExists.c.o -o cmTC_d0438 
+
+
+File /Users/jare8800/applications/qt/sdk/samples/ArcGISRuntimeSDKQt_SampleViewers/ArcGISRuntimeSDKQt_CppSamples/zlib-ng/build/CMakeFiles/CMakeTmp/CheckSymbolExists.c:
+/* */
+#include <stdlib.h>
+
+int main(int argc, char** argv)
+{
+  (void)argv;
+#ifndef posix_memalign
+  return ((int*)(&posix_memalign))[argc];
+#else
+  (void)argc;
+  return 0;
+#endif
+}
+Determining if the aligned_alloc exist passed with the following output:
+Change Dir: /Users/jare8800/applications/qt/sdk/samples/ArcGISRuntimeSDKQt_SampleViewers/ArcGISRuntimeSDKQt_CppSamples/zlib-ng/build/CMakeFiles/CMakeTmp
+
+Run Build Command(s):/usr/bin/make -f Makefile cmTC_778ca/fast && /Applications/Xcode_15.0.0.app/Contents/Developer/usr/bin/make  -f CMakeFiles/cmTC_778ca.dir/build.make CMakeFiles/cmTC_778ca.dir/build
+Building C object CMakeFiles/cmTC_778ca.dir/CheckSymbolExists.c.o
+/Applications/Xcode_15.0.0.app/Contents/Developer/Toolchains/XcodeDefault.xctoolchain/usr/bin/cc -D_ISOC11_SOURCE=1  -arch arm64 -isysroot /Applications/Xcode_15.0.0.app/Contents/Developer/Platforms/MacOSX.platform/Developer/SDKs/MacOSX14.0.sdk -mmacosx-version-min=13.6 -std=c11 -MD -MT CMakeFiles/cmTC_778ca.dir/CheckSymbolExists.c.o -MF CMakeFiles/cmTC_778ca.dir/CheckSymbolExists.c.o.d -o CMakeFiles/cmTC_778ca.dir/CheckSymbolExists.c.o -c /Users/jare8800/applications/qt/sdk/samples/ArcGISRuntimeSDKQt_SampleViewers/ArcGISRuntimeSDKQt_CppSamples/zlib-ng/build/CMakeFiles/CMakeTmp/CheckSymbolExists.c
+Linking C executable cmTC_778ca
+/opt/homebrew/Cellar/cmake/3.24.3/bin/cmake -E cmake_link_script CMakeFiles/cmTC_778ca.dir/link.txt --verbose=1
+/Applications/Xcode_15.0.0.app/Contents/Developer/Toolchains/XcodeDefault.xctoolchain/usr/bin/cc  -arch arm64 -isysroot /Applications/Xcode_15.0.0.app/Contents/Developer/Platforms/MacOSX.platform/Developer/SDKs/MacOSX14.0.sdk -mmacosx-version-min=13.6 -Wl,-search_paths_first -Wl,-headerpad_max_install_names CMakeFiles/cmTC_778ca.dir/CheckSymbolExists.c.o -o cmTC_778ca 
+
+
+File /Users/jare8800/applications/qt/sdk/samples/ArcGISRuntimeSDKQt_SampleViewers/ArcGISRuntimeSDKQt_CppSamples/zlib-ng/build/CMakeFiles/CMakeTmp/CheckSymbolExists.c:
+/* */
+#include <stdlib.h>
+
+int main(int argc, char** argv)
+{
+  (void)argv;
+#ifndef aligned_alloc
+  return ((int*)(&aligned_alloc))[argc];
+#else
+  (void)argc;
+  return 0;
+#endif
+}
+Performing C SOURCE FILE Test HAVE_NO_INTERPOSITION succeeded with the following output:
+Change Dir: /Users/jare8800/applications/qt/sdk/samples/ArcGISRuntimeSDKQt_SampleViewers/ArcGISRuntimeSDKQt_CppSamples/zlib-ng/build/CMakeFiles/CMakeTmp
+
+Run Build Command(s):/usr/bin/make -f Makefile cmTC_869a8/fast && /Applications/Xcode_15.0.0.app/Contents/Developer/usr/bin/make  -f CMakeFiles/cmTC_869a8.dir/build.make CMakeFiles/cmTC_869a8.dir/build
+Building C object CMakeFiles/cmTC_869a8.dir/src.c.o
+/Applications/Xcode_15.0.0.app/Contents/Developer/Toolchains/XcodeDefault.xctoolchain/usr/bin/cc -DHAVE_NO_INTERPOSITION  -arch arm64 -isysroot /Applications/Xcode_15.0.0.app/Contents/Developer/Platforms/MacOSX.platform/Developer/SDKs/MacOSX14.0.sdk -mmacosx-version-min=13.6   -fno-semantic-interposition -std=c11 -MD -MT CMakeFiles/cmTC_869a8.dir/src.c.o -MF CMakeFiles/cmTC_869a8.dir/src.c.o.d -o CMakeFiles/cmTC_869a8.dir/src.c.o -c /Users/jare8800/applications/qt/sdk/samples/ArcGISRuntimeSDKQt_SampleViewers/ArcGISRuntimeSDKQt_CppSamples/zlib-ng/build/CMakeFiles/CMakeTmp/src.c
+clang: warning: argument unused during compilation: '-fno-semantic-interposition' [-Wunused-command-line-argument]
+Linking C executable cmTC_869a8
+/opt/homebrew/Cellar/cmake/3.24.3/bin/cmake -E cmake_link_script CMakeFiles/cmTC_869a8.dir/link.txt --verbose=1
+/Applications/Xcode_15.0.0.app/Contents/Developer/Toolchains/XcodeDefault.xctoolchain/usr/bin/cc  -arch arm64 -isysroot /Applications/Xcode_15.0.0.app/Contents/Developer/Platforms/MacOSX.platform/Developer/SDKs/MacOSX14.0.sdk -mmacosx-version-min=13.6 -Wl,-search_paths_first -Wl,-headerpad_max_install_names CMakeFiles/cmTC_869a8.dir/src.c.o -o cmTC_869a8 
+
+
+Source file was:
+int main(void) { return 0; }
+Performing C SOURCE FILE Test HAVE_ATTRIBUTE_VISIBILITY_HIDDEN succeeded with the following output:
+Change Dir: /Users/jare8800/applications/qt/sdk/samples/ArcGISRuntimeSDKQt_SampleViewers/ArcGISRuntimeSDKQt_CppSamples/zlib-ng/build/CMakeFiles/CMakeTmp
+
+Run Build Command(s):/usr/bin/make -f Makefile cmTC_bd3d7/fast && /Applications/Xcode_15.0.0.app/Contents/Developer/usr/bin/make  -f CMakeFiles/cmTC_bd3d7.dir/build.make CMakeFiles/cmTC_bd3d7.dir/build
+Building C object CMakeFiles/cmTC_bd3d7.dir/src.c.o
+/Applications/Xcode_15.0.0.app/Contents/Developer/Toolchains/XcodeDefault.xctoolchain/usr/bin/cc -DHAVE_ATTRIBUTE_VISIBILITY_HIDDEN  -arch arm64 -isysroot /Applications/Xcode_15.0.0.app/Contents/Developer/Platforms/MacOSX.platform/Developer/SDKs/MacOSX14.0.sdk -mmacosx-version-min=13.6 -std=c11 -MD -MT CMakeFiles/cmTC_bd3d7.dir/src.c.o -MF CMakeFiles/cmTC_bd3d7.dir/src.c.o.d -o CMakeFiles/cmTC_bd3d7.dir/src.c.o -c /Users/jare8800/applications/qt/sdk/samples/ArcGISRuntimeSDKQt_SampleViewers/ArcGISRuntimeSDKQt_CppSamples/zlib-ng/build/CMakeFiles/CMakeTmp/src.c
+Linking C executable cmTC_bd3d7
+/opt/homebrew/Cellar/cmake/3.24.3/bin/cmake -E cmake_link_script CMakeFiles/cmTC_bd3d7.dir/link.txt --verbose=1
+/Applications/Xcode_15.0.0.app/Contents/Developer/Toolchains/XcodeDefault.xctoolchain/usr/bin/cc  -arch arm64 -isysroot /Applications/Xcode_15.0.0.app/Contents/Developer/Platforms/MacOSX.platform/Developer/SDKs/MacOSX14.0.sdk -mmacosx-version-min=13.6 -Wl,-search_paths_first -Wl,-headerpad_max_install_names CMakeFiles/cmTC_bd3d7.dir/src.c.o -o cmTC_bd3d7 
+
+
+Source file was:
+#define Z_INTERNAL __attribute__((visibility ("hidden")))
+    int Z_INTERNAL foo;
+    int main() {
+        return 0;
+    }
+Performing C SOURCE FILE Test HAVE_ATTRIBUTE_VISIBILITY_INTERNAL succeeded with the following output:
+Change Dir: /Users/jare8800/applications/qt/sdk/samples/ArcGISRuntimeSDKQt_SampleViewers/ArcGISRuntimeSDKQt_CppSamples/zlib-ng/build/CMakeFiles/CMakeTmp
+
+Run Build Command(s):/usr/bin/make -f Makefile cmTC_924c1/fast && /Applications/Xcode_15.0.0.app/Contents/Developer/usr/bin/make  -f CMakeFiles/cmTC_924c1.dir/build.make CMakeFiles/cmTC_924c1.dir/build
+Building C object CMakeFiles/cmTC_924c1.dir/src.c.o
+/Applications/Xcode_15.0.0.app/Contents/Developer/Toolchains/XcodeDefault.xctoolchain/usr/bin/cc -DHAVE_ATTRIBUTE_VISIBILITY_INTERNAL  -arch arm64 -isysroot /Applications/Xcode_15.0.0.app/Contents/Developer/Platforms/MacOSX.platform/Developer/SDKs/MacOSX14.0.sdk -mmacosx-version-min=13.6 -std=c11 -MD -MT CMakeFiles/cmTC_924c1.dir/src.c.o -MF CMakeFiles/cmTC_924c1.dir/src.c.o.d -o CMakeFiles/cmTC_924c1.dir/src.c.o -c /Users/jare8800/applications/qt/sdk/samples/ArcGISRuntimeSDKQt_SampleViewers/ArcGISRuntimeSDKQt_CppSamples/zlib-ng/build/CMakeFiles/CMakeTmp/src.c
+Linking C executable cmTC_924c1
+/opt/homebrew/Cellar/cmake/3.24.3/bin/cmake -E cmake_link_script CMakeFiles/cmTC_924c1.dir/link.txt --verbose=1
+/Applications/Xcode_15.0.0.app/Contents/Developer/Toolchains/XcodeDefault.xctoolchain/usr/bin/cc  -arch arm64 -isysroot /Applications/Xcode_15.0.0.app/Contents/Developer/Platforms/MacOSX.platform/Developer/SDKs/MacOSX14.0.sdk -mmacosx-version-min=13.6 -Wl,-search_paths_first -Wl,-headerpad_max_install_names CMakeFiles/cmTC_924c1.dir/src.c.o -o cmTC_924c1 
+
+
+Source file was:
+#define Z_INTERNAL __attribute__((visibility ("internal")))
+    int Z_INTERNAL foo;
+    int main() {
+        return 0;
+    }
+Performing C SOURCE FILE Test HAVE_ATTRIBUTE_ALIGNED succeeded with the following output:
+Change Dir: /Users/jare8800/applications/qt/sdk/samples/ArcGISRuntimeSDKQt_SampleViewers/ArcGISRuntimeSDKQt_CppSamples/zlib-ng/build/CMakeFiles/CMakeTmp
+
+Run Build Command(s):/usr/bin/make -f Makefile cmTC_0e937/fast && /Applications/Xcode_15.0.0.app/Contents/Developer/usr/bin/make  -f CMakeFiles/cmTC_0e937.dir/build.make CMakeFiles/cmTC_0e937.dir/build
+Building C object CMakeFiles/cmTC_0e937.dir/src.c.o
+/Applications/Xcode_15.0.0.app/Contents/Developer/Toolchains/XcodeDefault.xctoolchain/usr/bin/cc -DHAVE_ATTRIBUTE_ALIGNED  -arch arm64 -isysroot /Applications/Xcode_15.0.0.app/Contents/Developer/Platforms/MacOSX.platform/Developer/SDKs/MacOSX14.0.sdk -mmacosx-version-min=13.6 -std=c11 -MD -MT CMakeFiles/cmTC_0e937.dir/src.c.o -MF CMakeFiles/cmTC_0e937.dir/src.c.o.d -o CMakeFiles/cmTC_0e937.dir/src.c.o -c /Users/jare8800/applications/qt/sdk/samples/ArcGISRuntimeSDKQt_SampleViewers/ArcGISRuntimeSDKQt_CppSamples/zlib-ng/build/CMakeFiles/CMakeTmp/src.c
+Linking C executable cmTC_0e937
+/opt/homebrew/Cellar/cmake/3.24.3/bin/cmake -E cmake_link_script CMakeFiles/cmTC_0e937.dir/link.txt --verbose=1
+/Applications/Xcode_15.0.0.app/Contents/Developer/Toolchains/XcodeDefault.xctoolchain/usr/bin/cc  -arch arm64 -isysroot /Applications/Xcode_15.0.0.app/Contents/Developer/Platforms/MacOSX.platform/Developer/SDKs/MacOSX14.0.sdk -mmacosx-version-min=13.6 -Wl,-search_paths_first -Wl,-headerpad_max_install_names CMakeFiles/cmTC_0e937.dir/src.c.o -o cmTC_0e937 
+
+
+Source file was:
+int main(void) {
+        __attribute__((aligned(8))) int test = 0;
+        (void)test;
+        return 0;
+    }
+Performing C SOURCE FILE Test HAVE_BUILTIN_CTZ succeeded with the following output:
+Change Dir: /Users/jare8800/applications/qt/sdk/samples/ArcGISRuntimeSDKQt_SampleViewers/ArcGISRuntimeSDKQt_CppSamples/zlib-ng/build/CMakeFiles/CMakeTmp
+
+Run Build Command(s):/usr/bin/make -f Makefile cmTC_be5fe/fast && /Applications/Xcode_15.0.0.app/Contents/Developer/usr/bin/make  -f CMakeFiles/cmTC_be5fe.dir/build.make CMakeFiles/cmTC_be5fe.dir/build
+Building C object CMakeFiles/cmTC_be5fe.dir/src.c.o
+/Applications/Xcode_15.0.0.app/Contents/Developer/Toolchains/XcodeDefault.xctoolchain/usr/bin/cc -DHAVE_BUILTIN_CTZ  -arch arm64 -isysroot /Applications/Xcode_15.0.0.app/Contents/Developer/Platforms/MacOSX.platform/Developer/SDKs/MacOSX14.0.sdk -mmacosx-version-min=13.6 -std=c11 -MD -MT CMakeFiles/cmTC_be5fe.dir/src.c.o -MF CMakeFiles/cmTC_be5fe.dir/src.c.o.d -o CMakeFiles/cmTC_be5fe.dir/src.c.o -c /Users/jare8800/applications/qt/sdk/samples/ArcGISRuntimeSDKQt_SampleViewers/ArcGISRuntimeSDKQt_CppSamples/zlib-ng/build/CMakeFiles/CMakeTmp/src.c
+Linking C executable cmTC_be5fe
+/opt/homebrew/Cellar/cmake/3.24.3/bin/cmake -E cmake_link_script CMakeFiles/cmTC_be5fe.dir/link.txt --verbose=1
+/Applications/Xcode_15.0.0.app/Contents/Developer/Toolchains/XcodeDefault.xctoolchain/usr/bin/cc  -arch arm64 -isysroot /Applications/Xcode_15.0.0.app/Contents/Developer/Platforms/MacOSX.platform/Developer/SDKs/MacOSX14.0.sdk -mmacosx-version-min=13.6 -Wl,-search_paths_first -Wl,-headerpad_max_install_names CMakeFiles/cmTC_be5fe.dir/src.c.o -o cmTC_be5fe 
+
+
+Source file was:
+int main(void) {
+        unsigned int zero = 0;
+        long test = __builtin_ctz(zero);
+        (void)test;
+        return 0;
+    }
+Performing C SOURCE FILE Test HAVE_BUILTIN_CTZLL succeeded with the following output:
+Change Dir: /Users/jare8800/applications/qt/sdk/samples/ArcGISRuntimeSDKQt_SampleViewers/ArcGISRuntimeSDKQt_CppSamples/zlib-ng/build/CMakeFiles/CMakeTmp
+
+Run Build Command(s):/usr/bin/make -f Makefile cmTC_bbe93/fast && /Applications/Xcode_15.0.0.app/Contents/Developer/usr/bin/make  -f CMakeFiles/cmTC_bbe93.dir/build.make CMakeFiles/cmTC_bbe93.dir/build
+Building C object CMakeFiles/cmTC_bbe93.dir/src.c.o
+/Applications/Xcode_15.0.0.app/Contents/Developer/Toolchains/XcodeDefault.xctoolchain/usr/bin/cc -DHAVE_BUILTIN_CTZLL  -arch arm64 -isysroot /Applications/Xcode_15.0.0.app/Contents/Developer/Platforms/MacOSX.platform/Developer/SDKs/MacOSX14.0.sdk -mmacosx-version-min=13.6 -std=c11 -MD -MT CMakeFiles/cmTC_bbe93.dir/src.c.o -MF CMakeFiles/cmTC_bbe93.dir/src.c.o.d -o CMakeFiles/cmTC_bbe93.dir/src.c.o -c /Users/jare8800/applications/qt/sdk/samples/ArcGISRuntimeSDKQt_SampleViewers/ArcGISRuntimeSDKQt_CppSamples/zlib-ng/build/CMakeFiles/CMakeTmp/src.c
+Linking C executable cmTC_bbe93
+/opt/homebrew/Cellar/cmake/3.24.3/bin/cmake -E cmake_link_script CMakeFiles/cmTC_bbe93.dir/link.txt --verbose=1
+/Applications/Xcode_15.0.0.app/Contents/Developer/Toolchains/XcodeDefault.xctoolchain/usr/bin/cc  -arch arm64 -isysroot /Applications/Xcode_15.0.0.app/Contents/Developer/Platforms/MacOSX.platform/Developer/SDKs/MacOSX14.0.sdk -mmacosx-version-min=13.6 -Wl,-search_paths_first -Wl,-headerpad_max_install_names CMakeFiles/cmTC_bbe93.dir/src.c.o -o cmTC_bbe93 
+
+
+Source file was:
+int main(void) {
+        unsigned int zero = 0;
+        long test = __builtin_ctzll(zero);
+        (void)test;
+        return 0;
+    }
+Performing C SOURCE FILE Test HAVE_PTRDIFF_T succeeded with the following output:
+Change Dir: /Users/jare8800/applications/qt/sdk/samples/ArcGISRuntimeSDKQt_SampleViewers/ArcGISRuntimeSDKQt_CppSamples/zlib-ng/build/CMakeFiles/CMakeTmp
+
+Run Build Command(s):/usr/bin/make -f Makefile cmTC_10f9c/fast && /Applications/Xcode_15.0.0.app/Contents/Developer/usr/bin/make  -f CMakeFiles/cmTC_10f9c.dir/build.make CMakeFiles/cmTC_10f9c.dir/build
+Building C object CMakeFiles/cmTC_10f9c.dir/src.c.o
+/Applications/Xcode_15.0.0.app/Contents/Developer/Toolchains/XcodeDefault.xctoolchain/usr/bin/cc -DHAVE_PTRDIFF_T  -arch arm64 -isysroot /Applications/Xcode_15.0.0.app/Contents/Developer/Platforms/MacOSX.platform/Developer/SDKs/MacOSX14.0.sdk -mmacosx-version-min=13.6 -std=c11 -MD -MT CMakeFiles/cmTC_10f9c.dir/src.c.o -MF CMakeFiles/cmTC_10f9c.dir/src.c.o.d -o CMakeFiles/cmTC_10f9c.dir/src.c.o -c /Users/jare8800/applications/qt/sdk/samples/ArcGISRuntimeSDKQt_SampleViewers/ArcGISRuntimeSDKQt_CppSamples/zlib-ng/build/CMakeFiles/CMakeTmp/src.c
+Linking C executable cmTC_10f9c
+/opt/homebrew/Cellar/cmake/3.24.3/bin/cmake -E cmake_link_script CMakeFiles/cmTC_10f9c.dir/link.txt --verbose=1
+/Applications/Xcode_15.0.0.app/Contents/Developer/Toolchains/XcodeDefault.xctoolchain/usr/bin/cc  -arch arm64 -isysroot /Applications/Xcode_15.0.0.app/Contents/Developer/Platforms/MacOSX.platform/Developer/SDKs/MacOSX14.0.sdk -mmacosx-version-min=13.6 -Wl,-search_paths_first -Wl,-headerpad_max_install_names CMakeFiles/cmTC_10f9c.dir/src.c.o -o cmTC_10f9c 
+
+
+Source file was:
+#include <stddef.h>
+     int main() {
+         ptrdiff_t *a;
+         (void)a;
+         return 0;
+    }
+Performing C SOURCE FILE Test HAVE_ACLE_FLAG succeeded with the following output:
+Change Dir: /Users/jare8800/applications/qt/sdk/samples/ArcGISRuntimeSDKQt_SampleViewers/ArcGISRuntimeSDKQt_CppSamples/zlib-ng/build/CMakeFiles/CMakeTmp
+
+Run Build Command(s):/usr/bin/make -f Makefile cmTC_036e3/fast && /Applications/Xcode_15.0.0.app/Contents/Developer/usr/bin/make  -f CMakeFiles/cmTC_036e3.dir/build.make CMakeFiles/cmTC_036e3.dir/build
+Building C object CMakeFiles/cmTC_036e3.dir/src.c.o
+/Applications/Xcode_15.0.0.app/Contents/Developer/Toolchains/XcodeDefault.xctoolchain/usr/bin/cc -DHAVE_ACLE_FLAG  -march=armv8-a+crc  -fno-lto -arch arm64 -isysroot /Applications/Xcode_15.0.0.app/Contents/Developer/Platforms/MacOSX.platform/Developer/SDKs/MacOSX14.0.sdk -mmacosx-version-min=13.6 -std=c11 -MD -MT CMakeFiles/cmTC_036e3.dir/src.c.o -MF CMakeFiles/cmTC_036e3.dir/src.c.o.d -o CMakeFiles/cmTC_036e3.dir/src.c.o -c /Users/jare8800/applications/qt/sdk/samples/ArcGISRuntimeSDKQt_SampleViewers/ArcGISRuntimeSDKQt_CppSamples/zlib-ng/build/CMakeFiles/CMakeTmp/src.c
+Linking C executable cmTC_036e3
+/opt/homebrew/Cellar/cmake/3.24.3/bin/cmake -E cmake_link_script CMakeFiles/cmTC_036e3.dir/link.txt --verbose=1
+/Applications/Xcode_15.0.0.app/Contents/Developer/Toolchains/XcodeDefault.xctoolchain/usr/bin/cc  -march=armv8-a+crc  -fno-lto -arch arm64 -isysroot /Applications/Xcode_15.0.0.app/Contents/Developer/Platforms/MacOSX.platform/Developer/SDKs/MacOSX14.0.sdk -mmacosx-version-min=13.6 -Wl,-search_paths_first -Wl,-headerpad_max_install_names CMakeFiles/cmTC_036e3.dir/src.c.o -o cmTC_036e3 
+
+
+Source file was:
+int main() { return 0; }
+Performing C SOURCE FILE Test NEON_AVAILABLE succeeded with the following output:
+Change Dir: /Users/jare8800/applications/qt/sdk/samples/ArcGISRuntimeSDKQt_SampleViewers/ArcGISRuntimeSDKQt_CppSamples/zlib-ng/build/CMakeFiles/CMakeTmp
+
+Run Build Command(s):/usr/bin/make -f Makefile cmTC_bc7b0/fast && /Applications/Xcode_15.0.0.app/Contents/Developer/usr/bin/make  -f CMakeFiles/cmTC_bc7b0.dir/build.make CMakeFiles/cmTC_bc7b0.dir/build
+Building C object CMakeFiles/cmTC_bc7b0.dir/src.c.o
+/Applications/Xcode_15.0.0.app/Contents/Developer/Toolchains/XcodeDefault.xctoolchain/usr/bin/cc -DNEON_AVAILABLE  -march=armv8-a+simd  -fno-lto -arch arm64 -isysroot /Applications/Xcode_15.0.0.app/Contents/Developer/Platforms/MacOSX.platform/Developer/SDKs/MacOSX14.0.sdk -mmacosx-version-min=13.6 -std=c11 -MD -MT CMakeFiles/cmTC_bc7b0.dir/src.c.o -MF CMakeFiles/cmTC_bc7b0.dir/src.c.o.d -o CMakeFiles/cmTC_bc7b0.dir/src.c.o -c /Users/jare8800/applications/qt/sdk/samples/ArcGISRuntimeSDKQt_SampleViewers/ArcGISRuntimeSDKQt_CppSamples/zlib-ng/build/CMakeFiles/CMakeTmp/src.c
+Linking C executable cmTC_bc7b0
+/opt/homebrew/Cellar/cmake/3.24.3/bin/cmake -E cmake_link_script CMakeFiles/cmTC_bc7b0.dir/link.txt --verbose=1
+/Applications/Xcode_15.0.0.app/Contents/Developer/Toolchains/XcodeDefault.xctoolchain/usr/bin/cc  -march=armv8-a+simd  -fno-lto -arch arm64 -isysroot /Applications/Xcode_15.0.0.app/Contents/Developer/Platforms/MacOSX.platform/Developer/SDKs/MacOSX14.0.sdk -mmacosx-version-min=13.6 -Wl,-search_paths_first -Wl,-headerpad_max_install_names CMakeFiles/cmTC_bc7b0.dir/src.c.o -o cmTC_bc7b0 
+
+
+Source file was:
+#if defined(_M_ARM64) || defined(_M_ARM64EC)
+        #  include <arm64_neon.h>
+        #else
+        #  include <arm_neon.h>
+        #endif
+        int main() { return 0; }
+Performing C SOURCE FILE Test NEON_HAS_LD4 succeeded with the following output:
+Change Dir: /Users/jare8800/applications/qt/sdk/samples/ArcGISRuntimeSDKQt_SampleViewers/ArcGISRuntimeSDKQt_CppSamples/zlib-ng/build/CMakeFiles/CMakeTmp
+
+Run Build Command(s):/usr/bin/make -f Makefile cmTC_379fe/fast && /Applications/Xcode_15.0.0.app/Contents/Developer/usr/bin/make  -f CMakeFiles/cmTC_379fe.dir/build.make CMakeFiles/cmTC_379fe.dir/build
+Building C object CMakeFiles/cmTC_379fe.dir/src.c.o
+/Applications/Xcode_15.0.0.app/Contents/Developer/Toolchains/XcodeDefault.xctoolchain/usr/bin/cc -DNEON_HAS_LD4  -march=armv8-a+simd  -fno-lto -arch arm64 -isysroot /Applications/Xcode_15.0.0.app/Contents/Developer/Platforms/MacOSX.platform/Developer/SDKs/MacOSX14.0.sdk -mmacosx-version-min=13.6 -std=c11 -MD -MT CMakeFiles/cmTC_379fe.dir/src.c.o -MF CMakeFiles/cmTC_379fe.dir/src.c.o.d -o CMakeFiles/cmTC_379fe.dir/src.c.o -c /Users/jare8800/applications/qt/sdk/samples/ArcGISRuntimeSDKQt_SampleViewers/ArcGISRuntimeSDKQt_CppSamples/zlib-ng/build/CMakeFiles/CMakeTmp/src.c
+Linking C executable cmTC_379fe
+/opt/homebrew/Cellar/cmake/3.24.3/bin/cmake -E cmake_link_script CMakeFiles/cmTC_379fe.dir/link.txt --verbose=1
+/Applications/Xcode_15.0.0.app/Contents/Developer/Toolchains/XcodeDefault.xctoolchain/usr/bin/cc  -march=armv8-a+simd  -fno-lto -arch arm64 -isysroot /Applications/Xcode_15.0.0.app/Contents/Developer/Platforms/MacOSX.platform/Developer/SDKs/MacOSX14.0.sdk -mmacosx-version-min=13.6 -Wl,-search_paths_first -Wl,-headerpad_max_install_names CMakeFiles/cmTC_379fe.dir/src.c.o -o cmTC_379fe 
+
+
+Source file was:
+#if defined(_MSC_VER) && (defined(_M_ARM64) || defined(_M_ARM64EC))
+        #  include <arm64_neon.h>
+        #else
+        #  include <arm_neon.h>
+        #endif
+        int32x4x4_t f(int var[16]) { return vld1q_s32_x4(var); }
+        int main(void) { return 0; }

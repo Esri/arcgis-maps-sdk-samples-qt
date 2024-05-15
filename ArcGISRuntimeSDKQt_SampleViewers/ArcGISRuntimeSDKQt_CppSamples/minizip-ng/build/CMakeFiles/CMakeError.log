@@ -1,0 +1,139 @@
+Compiling the C compiler identification source file "CMakeCCompilerId.c" failed.
+Compiler: /Applications/Xcode_15.0.0.app/Contents/Developer/Toolchains/XcodeDefault.xctoolchain/usr/bin/cc 
+Build flags: 
+Id flags:  
+
+The output was:
+1
+ld: library 'System' not found
+clang: error: linker command failed with exit code 1 (use -v to see invocation)
+
+
+Determining size of off64_t failed with the following output:
+Change Dir: /Users/jare8800/applications/qt/sdk/samples/ArcGISRuntimeSDKQt_SampleViewers/ArcGISRuntimeSDKQt_CppSamples/minizip-ng/build/CMakeFiles/CMakeTmp
+
+Run Build Command(s):/usr/bin/make -f Makefile cmTC_600ef/fast && /Applications/Xcode_15.0.0.app/Contents/Developer/usr/bin/make  -f CMakeFiles/cmTC_600ef.dir/build.make CMakeFiles/cmTC_600ef.dir/build
+Building C object CMakeFiles/cmTC_600ef.dir/OFF64_T.c.o
+/Applications/Xcode_15.0.0.app/Contents/Developer/Toolchains/XcodeDefault.xctoolchain/usr/bin/cc   -arch arm64 -isysroot /Applications/Xcode_15.0.0.app/Contents/Developer/Platforms/MacOSX.platform/Developer/SDKs/MacOSX14.0.sdk -mmacosx-version-min=13.6 -MD -MT CMakeFiles/cmTC_600ef.dir/OFF64_T.c.o -MF CMakeFiles/cmTC_600ef.dir/OFF64_T.c.o.d -o CMakeFiles/cmTC_600ef.dir/OFF64_T.c.o -c /Users/jare8800/applications/qt/sdk/samples/ArcGISRuntimeSDKQt_SampleViewers/ArcGISRuntimeSDKQt_CppSamples/minizip-ng/build/CMakeFiles/CheckTypeSize/OFF64_T.c
+/Users/jare8800/applications/qt/sdk/samples/ArcGISRuntimeSDKQt_SampleViewers/ArcGISRuntimeSDKQt_CppSamples/minizip-ng/build/CMakeFiles/CheckTypeSize/OFF64_T.c:29:12: error: use of undeclared identifier 'off64_t'
+  ('0' + ((SIZE / 10000)%10)),
+           ^
+/Users/jare8800/applications/qt/sdk/samples/ArcGISRuntimeSDKQt_SampleViewers/ArcGISRuntimeSDKQt_CppSamples/minizip-ng/build/CMakeFiles/CheckTypeSize/OFF64_T.c:27:22: note: expanded from macro 'SIZE'
+#define SIZE (sizeof(off64_t))
+                     ^
+/Users/jare8800/applications/qt/sdk/samples/ArcGISRuntimeSDKQt_SampleViewers/ArcGISRuntimeSDKQt_CppSamples/minizip-ng/build/CMakeFiles/CheckTypeSize/OFF64_T.c:30:12: error: use of undeclared identifier 'off64_t'
+  ('0' + ((SIZE / 1000)%10)),
+           ^
+/Users/jare8800/applications/qt/sdk/samples/ArcGISRuntimeSDKQt_SampleViewers/ArcGISRuntimeSDKQt_CppSamples/minizip-ng/build/CMakeFiles/CheckTypeSize/OFF64_T.c:27:22: note: expanded from macro 'SIZE'
+#define SIZE (sizeof(off64_t))
+                     ^
+/Users/jare8800/applications/qt/sdk/samples/ArcGISRuntimeSDKQt_SampleViewers/ArcGISRuntimeSDKQt_CppSamples/minizip-ng/build/CMakeFiles/CheckTypeSize/OFF64_T.c:31:12: error: use of undeclared identifier 'off64_t'
+  ('0' + ((SIZE / 100)%10)),
+           ^
+/Users/jare8800/applications/qt/sdk/samples/ArcGISRuntimeSDKQt_SampleViewers/ArcGISRuntimeSDKQt_CppSamples/minizip-ng/build/CMakeFiles/CheckTypeSize/OFF64_T.c:27:22: note: expanded from macro 'SIZE'
+#define SIZE (sizeof(off64_t))
+                     ^
+/Users/jare8800/applications/qt/sdk/samples/ArcGISRuntimeSDKQt_SampleViewers/ArcGISRuntimeSDKQt_CppSamples/minizip-ng/build/CMakeFiles/CheckTypeSize/OFF64_T.c:32:12: error: use of undeclared identifier 'off64_t'
+  ('0' + ((SIZE / 10)%10)),
+           ^
+/Users/jare8800/applications/qt/sdk/samples/ArcGISRuntimeSDKQt_SampleViewers/ArcGISRuntimeSDKQt_CppSamples/minizip-ng/build/CMakeFiles/CheckTypeSize/OFF64_T.c:27:22: note: expanded from macro 'SIZE'
+#define SIZE (sizeof(off64_t))
+                     ^
+/Users/jare8800/applications/qt/sdk/samples/ArcGISRuntimeSDKQt_SampleViewers/ArcGISRuntimeSDKQt_CppSamples/minizip-ng/build/CMakeFiles/CheckTypeSize/OFF64_T.c:33:12: error: use of undeclared identifier 'off64_t'
+  ('0' +  (SIZE    % 10)),
+           ^
+/Users/jare8800/applications/qt/sdk/samples/ArcGISRuntimeSDKQt_SampleViewers/ArcGISRuntimeSDKQt_CppSamples/minizip-ng/build/CMakeFiles/CheckTypeSize/OFF64_T.c:27:22: note: expanded from macro 'SIZE'
+#define SIZE (sizeof(off64_t))
+                     ^
+5 errors generated.
+make[1]: *** [CMakeFiles/cmTC_600ef.dir/OFF64_T.c.o] Error 1
+make: *** [cmTC_600ef/fast] Error 2
+
+
+/Users/jare8800/applications/qt/sdk/samples/ArcGISRuntimeSDKQt_SampleViewers/ArcGISRuntimeSDKQt_CppSamples/minizip-ng/build/CMakeFiles/CheckTypeSize/OFF64_T.c:
+#include <sys/types.h>
+#include <stdint.h>
+#include <stddef.h>
+
+
+#undef KEY
+#if defined(__i386)
+# define KEY '_','_','i','3','8','6'
+#elif defined(__x86_64)
+# define KEY '_','_','x','8','6','_','6','4'
+#elif defined(__PPC64__)
+# define KEY '_','_','P','P','C','6','4','_','_'
+#elif defined(__ppc64__)
+# define KEY '_','_','p','p','c','6','4','_','_'
+#elif defined(__PPC__)
+# define KEY '_','_','P','P','C','_','_'
+#elif defined(__ppc__)
+# define KEY '_','_','p','p','c','_','_'
+#elif defined(__aarch64__)
+# define KEY '_','_','a','a','r','c','h','6','4','_','_'
+#elif defined(__ARM_ARCH_7A__)
+# define KEY '_','_','A','R','M','_','A','R','C','H','_','7','A','_','_'
+#elif defined(__ARM_ARCH_7S__)
+# define KEY '_','_','A','R','M','_','A','R','C','H','_','7','S','_','_'
+#endif
+
+#define SIZE (sizeof(off64_t))
+static char info_size[] =  {'I', 'N', 'F', 'O', ':', 's','i','z','e','[',
+  ('0' + ((SIZE / 10000)%10)),
+  ('0' + ((SIZE / 1000)%10)),
+  ('0' + ((SIZE / 100)%10)),
+  ('0' + ((SIZE / 10)%10)),
+  ('0' +  (SIZE    % 10)),
+  ']',
+#ifdef KEY
+  ' ','k','e','y','[', KEY, ']',
+#endif
+  '\0'};
+
+#ifdef __CLASSIC_C__
+int main(argc, argv) int argc; char *argv[];
+#else
+int main(int argc, char *argv[])
+#endif
+{
+  int require = 0;
+  require += info_size[argc];
+  (void)argv;
+  return require;
+}
+
+
+Performing C SOURCE FILE Test Iconv_IS_BUILT_IN failed with the following output:
+Change Dir: /Users/jare8800/applications/qt/sdk/samples/ArcGISRuntimeSDKQt_SampleViewers/ArcGISRuntimeSDKQt_CppSamples/minizip-ng/build/CMakeFiles/CMakeTmp
+
+Run Build Command(s):/usr/bin/make -f Makefile cmTC_cf3c8/fast && /Applications/Xcode_15.0.0.app/Contents/Developer/usr/bin/make  -f CMakeFiles/cmTC_cf3c8.dir/build.make CMakeFiles/cmTC_cf3c8.dir/build
+Building C object CMakeFiles/cmTC_cf3c8.dir/src.c.o
+/Applications/Xcode_15.0.0.app/Contents/Developer/Toolchains/XcodeDefault.xctoolchain/usr/bin/cc -DIconv_IS_BUILT_IN  -arch arm64 -isysroot /Applications/Xcode_15.0.0.app/Contents/Developer/Platforms/MacOSX.platform/Developer/SDKs/MacOSX14.0.sdk -mmacosx-version-min=13.6 -MD -MT CMakeFiles/cmTC_cf3c8.dir/src.c.o -MF CMakeFiles/cmTC_cf3c8.dir/src.c.o.d -o CMakeFiles/cmTC_cf3c8.dir/src.c.o -c /Users/jare8800/applications/qt/sdk/samples/ArcGISRuntimeSDKQt_SampleViewers/ArcGISRuntimeSDKQt_CppSamples/minizip-ng/build/CMakeFiles/CMakeTmp/src.c
+Linking C executable cmTC_cf3c8
+/opt/homebrew/Cellar/cmake/3.24.3/bin/cmake -E cmake_link_script CMakeFiles/cmTC_cf3c8.dir/link.txt --verbose=1
+/Applications/Xcode_15.0.0.app/Contents/Developer/Toolchains/XcodeDefault.xctoolchain/usr/bin/cc  -arch arm64 -isysroot /Applications/Xcode_15.0.0.app/Contents/Developer/Platforms/MacOSX.platform/Developer/SDKs/MacOSX14.0.sdk -mmacosx-version-min=13.6 -Wl,-search_paths_first -Wl,-headerpad_max_install_names CMakeFiles/cmTC_cf3c8.dir/src.c.o -o cmTC_cf3c8 
+ld: Undefined symbols:
+  _iconv, referenced from:
+      _main in src.c.o
+  _iconv_close, referenced from:
+      _main in src.c.o
+  _iconv_open, referenced from:
+      _main in src.c.o
+clang: error: linker command failed with exit code 1 (use -v to see invocation)
+make[1]: *** [cmTC_cf3c8] Error 1
+make: *** [cmTC_cf3c8/fast] Error 2
+
+
+Source file was:
+
+      #include <stddef.h>
+      #include <iconv.h>
+      int main() {
+        char *a, *b;
+        size_t i, j;
+        iconv_t ic;
+        ic = iconv_open("to", "from");
+        iconv(ic, &a, &i, &b, &j);
+        iconv_close(ic);
+      }
+      
