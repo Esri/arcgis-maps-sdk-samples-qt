@@ -133,7 +133,7 @@ void EditFeatureAttachments::connectSignals()
 
 QAbstractListModel* EditFeatureAttachments::attachmentModel() const
 {
-  return m_selectedFeature ? m_selectedFeature->attachments() : nullptr;
+  return m_selectedFeature ? m_selectedFeature->attachments(false, false) : nullptr;
 }
 
 void EditFeatureAttachments::addAttachment(const QUrl& fileUrl, const QString& contentType)
@@ -148,7 +148,7 @@ void EditFeatureAttachments::addAttachment(const QUrl& fileUrl, const QString& c
     if (m_selectedFeature->loadStatus() == LoadStatus::Loaded)
     {
       QFile file(fileUrl.toLocalFile());
-      m_attachmentListModel->addAttachmentAsync(file, contentType, fileName).then(this , [this](QFuture<Attachment*>)
+      m_selectedFeature->attachments(false, false)->addAttachmentAsync(file, contentType, fileName).then(this , [this](QFuture<Attachment*>)
       {
         applyEdits();
       });
@@ -162,7 +162,7 @@ void EditFeatureAttachments::addAttachment(const QUrl& fileUrl, const QString& c
         {
           QFile file(fileUrl.toLocalFile());
           disconnect(m_attachmentConnection);
-          m_attachmentListModel->addAttachmentAsync(file, contentType, fileName).then(this , [this](QFuture<Attachment*>)
+          m_selectedFeature->attachments(false, false)->addAttachmentAsync(file, contentType, fileName).then(this , [this](QFuture<Attachment*>)
           {
             applyEdits();
           });
@@ -179,8 +179,8 @@ void EditFeatureAttachments::deleteAttachment(int index)
 
   if (m_selectedFeature->loadStatus() == LoadStatus::Loaded)
   {
-    qDebug() << "Attachments size: " << m_selectedFeature->attachments()->rowCount();
-    m_attachmentListModel->deleteAttachmentAsync(index).then(this, [this]()
+    qDebug() << "Attachments size: " << m_selectedFeature->attachments(false, false)->rowCount();
+    m_selectedFeature->attachments(false, false)->deleteAttachmentAsync(index).then(this, [this]()
     {
       applyEdits();
     });
@@ -193,7 +193,7 @@ void EditFeatureAttachments::deleteAttachment(int index)
       if (m_selectedFeature->loadStatus() == LoadStatus::Loaded)
       {
         disconnect(m_attachmentConnection);
-        m_attachmentListModel->deleteAttachmentAsync(index).then(this, [this]()
+        m_selectedFeature->attachments(false, false)->deleteAttachmentAsync(index).then(this, [this]()
         {
           applyEdits();
         });
@@ -237,9 +237,6 @@ void EditFeatureAttachments::onQueryFeaturesCompleted_(FeatureQueryResult* featu
     m_selectedFeature = static_cast<ArcGISFeature*>(featureQueryResult->iterator().next(this));
     // Don't delete selected feature when parent featureQueryResult is deleted.
     m_selectedFeature->setParent(this);
-    // enableAutoFetch and enableAutoApplyEdits for AttachmentListModel are set as false
-    // to avoid automatic behavior. We will call fetchDataAsync explicitly as needed.
-    m_attachmentListModel = m_selectedFeature->attachments(false, false);
     const QString featureType = m_selectedFeature->attributes()->attributeValue(QStringLiteral("typdamage")).toString();
     m_mapView->calloutData()->setLocation(m_selectedFeature->geometry().extent().center());
     m_mapView->calloutData()->setTitle(QString("<b>%1</b>").arg(featureType));
@@ -248,7 +245,9 @@ void EditFeatureAttachments::onQueryFeaturesCompleted_(FeatureQueryResult* featu
     emit attachmentModelChanged();
 
     // get the number of attachments
-    m_attachmentListModel->fetchAttachmentsAsync().then([this](const QList<Attachment*>& attachments)
+    // enableAutoFetch and enableAutoApplyEdits for AttachmentListModel are set as false
+    // to avoid automatic behavior. We will call fetchDataAsync explicitly as needed.
+    m_selectedFeature->attachments(false, false)->fetchAttachmentsAsync().then([this](const QList<Attachment*>& attachments)
     {
       m_mapView->calloutData()->setDetail(QString("Number of attachments: %1").arg(attachments.size()));
       m_mapView->calloutData()->setVisible(true); // Resizes the calloutData after details has been set.
