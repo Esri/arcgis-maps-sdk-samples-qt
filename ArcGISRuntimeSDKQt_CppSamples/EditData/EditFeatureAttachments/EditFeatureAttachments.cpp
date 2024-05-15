@@ -18,7 +18,6 @@
 #include "pch.hpp"
 #endif // PCH_BUILD
 
-#include "AttachmentListModel.h"
 #include "EditFeatureAttachments.h"
 
 #include "Map.h"
