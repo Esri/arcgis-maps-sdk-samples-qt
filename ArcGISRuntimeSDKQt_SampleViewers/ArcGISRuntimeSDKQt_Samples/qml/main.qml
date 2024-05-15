@@ -324,7 +324,7 @@ ApplicationWindow {
     // check if the data exists locally
     function checkDataItems() {
         for (let i = 0; i < SampleManager.currentSample.dataItems.size; i++) {
-            const dataItem = SampleManager.currentSample.dataItems.get(i);
+            const dataItem = SampleManager.currentSample.dataItems.at(i);
             // if (Qt.platform.os === "ios")
             //     fileInfo.filePath = System.writableLocation(System.StandardPathsDocumentsLocation) + dataItem.path.substring(1);
             // else

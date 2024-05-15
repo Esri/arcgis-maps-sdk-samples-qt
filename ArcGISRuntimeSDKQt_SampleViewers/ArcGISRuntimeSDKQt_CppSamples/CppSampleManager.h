@@ -18,6 +18,7 @@
 
 #include "DownloadSampleManager.h"
 #include <QObject>
+#include <QFuture>
 
 Q_MOC_INCLUDE("AuthenticationManager.h")
 
@@ -40,6 +41,7 @@ public:
 
   void init() override;
   void clearCredentialCache() override;
+  Esri::ArcGISRuntime::Portal* portal() const;
 
 protected:
   QString api() const override;
@@ -55,6 +57,8 @@ private:
 private:
   Esri::ArcGISRuntime::Portal* m_portal = nullptr;
   Esri::ArcGISRuntime::PortalItem* m_portalItem = nullptr;
+  // std::unique_ptr<Esri::ArcGISRuntime::PortalItem> m_portalItem;
+  QFuture<void> fetchFuture;
 };
 
 #endif // CPPSAMPLEMANAGER_H

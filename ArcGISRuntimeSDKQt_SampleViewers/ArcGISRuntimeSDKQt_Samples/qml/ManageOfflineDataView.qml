@@ -62,13 +62,15 @@ Page {
             Layout.alignment: Qt.AlignHCenter | Qt.AlignVCenter
             visible: !SampleManager.downloadInProgress
             onClicked: {
-                SampleManager.downloadFailed = false;
-                if (System.reachability === System.ReachabilityOnline || System.reachability === System.ReachabilityUnknown) {
-                    allDataDownloadLoader.item.downloadAllDataItems();
-                    manageOfflineDataViewDownloadInProgress = true;
-                } else {
-                    SampleManager.currentMode = SampleManager.NetworkRequiredView;
-                }
+                SampleManager.downloadAllDataItems();
+                // allDataDownloadLoader.item.downloadAllDataItems();
+                // SampleManager.downloadFailed = false;
+                // if (System.reachability === System.ReachabilityOnline || System.reachability === System.ReachabilityUnknown) {
+                //     allDataDownloadLoader.item.downloadAllDataItems();
+                //     manageOfflineDataViewDownloadInProgress = true;
+                // } else {
+                //     SampleManager.currentMode = SampleManager.NetworkRequiredView;
+                // }
             }
             clip: true
         }

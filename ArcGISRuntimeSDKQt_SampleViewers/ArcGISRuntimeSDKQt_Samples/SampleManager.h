@@ -18,15 +18,21 @@
 
 class QAbstractItemModel;
 class CategoryListModel;
+class DataItem;
 class QTemporaryDir;
 class SampleListModel;
 class SourceCode;
 class SampleCategory;
 class Sample;
 
+
+#include "DataItem.h"
+#include "Portal.h"
+
 #include <QDir>
 #include <QJsonDocument>
 #include <QObject>
+#include <QQueue>
 #include <QString>
 #include <QUrl>
 #include <QVariantList>
@@ -62,10 +68,15 @@ public:
 
   Q_INVOKABLE virtual void init();
 
+  Q_INVOKABLE void clearCredentialCache();
+  Q_INVOKABLE void downloadAllDataItems();
+  Q_INVOKABLE void downloadDataItemsCurrentSample();
   Q_INVOKABLE void setSourceCodeIndex(int i);
   Q_INVOKABLE void setupProxy(const QString& hostName, quint16 port, const QString& user, const QString& pw);
   Q_INVOKABLE void doneDownloading() { emit doneDownloadingChanged(); }
   Q_INVOKABLE void setApiKey(bool isSupportsApiKey = true);
+
+  SampleListModel* samples() const { return m_allSamples; }
 
   enum CurrentMode
   {
@@ -105,7 +116,7 @@ private:
   QVariantMap toVariantMap(const QString& json);
   QVariant fileUrl(const QString& scheme, const QString& path);
   QString readTextFile(const QString& filePath);
-  SampleListModel* samples() { return m_allSamples; }
+  // SampleListModel* samples() { return m_allSamples; }
   SampleListModel* featuredSamples() const { return m_featuredSamples; }
   CategoryListModel* categories() { return m_categories; }
   CurrentMode currentMode() { return m_currentMode; }
@@ -120,9 +131,14 @@ private:
   QUrl qtSdkUrl() const { return m_qtSdkUrl; }
   QUrl qtSamplesUrl() const { return m_qtSamplesUrl; }
   bool downloadInProgress() const { return m_downloadInProgress; }
+  void downloadNextDataItem();
+  void fetchPortalItemData(const QString& itemId, const QString& outputPath);
   void setDownloadInProgress(bool inProgress);
-  QString downloadText() const { return m_downloadText; }
   void setDownloadText(const QString& downloadText);
+  QString formattedPath(const QString& outputPath,
+                        const QString& folderName = QString());
+private:
+  QString downloadText() const { return m_downloadText; }
   double downloadProgress() const { return m_downloadProgress; }
   void createAndSetTempDirForLocalServer();
   bool cancelDownload() const { return m_cancelDownload; }
@@ -130,7 +146,10 @@ private:
   bool downloadFailed() const { return m_downloadFailed; }
   void setDownloadFailed(bool didFail);
 
+
 private:
+  QQueue<DataItem*> m_dataItems;
+  Esri::ArcGISRuntime::Portal* m_portal = nullptr;
   CategoryListModel* m_categories = nullptr;
   SampleListModel* m_allSamples = nullptr;
   SampleListModel* m_featuredSamples = nullptr;

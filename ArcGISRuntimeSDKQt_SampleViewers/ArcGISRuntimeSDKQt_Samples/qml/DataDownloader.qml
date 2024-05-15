@@ -15,6 +15,7 @@
 
 import QtQuick
 import Esri.ArcGISRuntimeSamples
+import Esri.ArcGISExtras
 
 Item {
     property var currentItem
@@ -36,34 +37,38 @@ Item {
 
     function downloadAllDataItems() {
         SampleManager.downloadInProgress = true;
-        downloadQueue = [];
+
+
+        // downloadQueue = [];
 
         for (let i = 0; i < SampleManager.samples.size; i++) {
             const sample = SampleManager.samples.get(i);
             for (let j = 0; j < sample.dataItems.size; j++) {
                 if (sample.dataItems.size > 0) {
                     const dataItem = sample.dataItems.get(j);
+                    print(dataItem.exists);
+                    print(dataItem.path.substring(1));
 
-                    // Convert the relative path to a writable path
-                    if (Qt.platform.os === "ios")
-                        fileInfo.filePath = System.writableLocation(System.StandardPathsDocumentsLocation) + dataItem.path.substring(1);
-                    else
-                        fileInfo.filePath = System.writableLocation(System.StandardPathsHomeLocation) + dataItem.path.substring(1);
-                    fileInfo.refresh();
+        //             // // Convert the relative path to a writable path
+        //             // if (Qt.platform.os === "ios")
+        //             //     fileInfo.filePath = System.writableLocation(System.StandardPathsDocumentsLocation) + dataItem.path.substring(1);
+        //             // else
+        //             //     fileInfo.filePath = System.writableLocation(System.StandardPathsHomeLocation) + dataItem.path.substring(1);
+        //             // fileInfo.refresh();
 
-                    if (fileInfo.exists && (!fileInfo.isFolder))
-                        continue;
+        //             // if (fileInfo.exists && (!fileInfo.isFolder))
+        //             //     continue;
 
-                    fileFolder.path = fileInfo.filePath;
-                    dataPackageFileInfo.filePath = fileInfo.filePath + "/dataPackage.zip";
-                    if (fileFolder.exists && dataPackageFileInfo.exists)
-                        continue;
+        //             // fileFolder.path = fileInfo.filePath;
+        //             // dataPackageFileInfo.filePath = fileInfo.filePath + "/dataPackage.zip";
+        //             // if (fileFolder.exists && dataPackageFileInfo.exists)
+        //             //     continue;
 
-                    downloadQueue.push(dataItem);
+        //             // downloadQueue.push(dataItem);
                 }
             }
         }
-        downloadNextItem();
+        // downloadNextItem();
     }
 
     function downloadDataItems() {
@@ -117,7 +122,7 @@ Item {
         target: SampleManager
 
         function onDoneDownloadingPortalItem() {
-            downloadNextItem();
+            // downloadNextItem();
         }
 
         function onDownloadDataFailed(itemId) {
@@ -132,21 +137,21 @@ Item {
         }
     }
 
-    // ZipArchive {
-    //     id: zipArchive
+    ZipArchive {
+        id: zipArchive
 
-    //     onExtractProgress: {
-    //         if (debug)
-    //             console.log("Extracting file " + fileName + " (" + percent + "%)");
-    //     }
-    //     onExtractError: {
-    //         if (debug)
-    //             console.log("Extract error " + fileName);
-    //     }
-    //     onExtractCompleted: {
-    //         if (debug)
-    //             console.log("Extract completed");
-    //         downloadNextItem();
-    //     }
-    // }
+        onExtractProgress: {
+            if (debug)
+                console.log("Extracting file " + fileName + " (" + percent + "%)");
+        }
+        onExtractError: {
+            if (debug)
+                console.log("Extract error " + fileName);
+        }
+        onExtractCompleted: {
+            if (debug)
+                console.log("Extract completed");
+            // downloadNextItem();
+        }
+    }
 }

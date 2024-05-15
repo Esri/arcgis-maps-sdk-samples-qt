@@ -35,6 +35,8 @@ using namespace Esri::ArcGISRuntime;
 #endif // LOCALSERVER_SUPPORTED
 
 #include <QQmlEngine>
+#include <QFuture>
+#include <ErrorException.h>
 
 CppSampleManager::CppSampleManager(QObject* parent):
   DownloadSampleManager(parent),
@@ -86,6 +88,11 @@ void CppSampleManager::loadPortal()
   m_portal->load();
 }
 
+Portal* CppSampleManager::portal() const
+{
+  return m_portal;
+}
+
 bool CppSampleManager::isPortalLoaded() const
 {
   return m_portal->loadStatus() == LoadStatus::Loaded;
@@ -93,12 +100,23 @@ bool CppSampleManager::isPortalLoaded() const
 
 void CppSampleManager::createPortalItem(const QString& itemId)
 {
+  // if (m_portalItem)
+  // {
+  //   delete m_portalItem;
+  //   m_portalItem = nullptr;
+  // }
   m_portalItem = new PortalItem(m_portal, itemId, this);
+  // m_portalItem = std::make_unique<PortalItem>(m_portal, itemId, this);
+  connect(m_portalItem, &PortalItem::loadStatusChanged, this, [this](LoadStatus status)
+  {
+    qDebug() << "PortalItem load status changed: " << status;
+  });
 
   connect(m_portalItem, &PortalItem::doneLoading, this,
           [this](const Error& error)
   {
     bool success = error.isEmpty();
+    qDebug() << "m_portalItem done loading" << success;
 
     // Copy important parts before potential delete.
     auto type = m_portalItem->type();
@@ -107,8 +125,8 @@ void CppSampleManager::createPortalItem(const QString& itemId)
 
     if (!success)
     {
-      delete m_portalItem;
-      m_portalItem = nullptr;
+      // delete m_portalItem;
+      // m_portalItem = nullptr;
     }
 
     emit portalItemDoneLoading(
@@ -124,21 +142,36 @@ void CppSampleManager::createPortalItem(const QString& itemId)
     emit portalItemFetchDataProgress(m_portalItem->itemId(), progress.progressPercentage());
   });
 
-  connect(m_portalItem, &PortalItem::fetchDataCompleted,
-          this, [this](bool success)
-  {
-    auto id = m_portalItem->itemId();
-    delete m_portalItem;
-    m_portalItem = nullptr;
-    emit portalItemFetchDataCompleted(id, success);
-  });
+  // connect(m_portalItem, &PortalItem::fetchDataCompleted,
+  //         this, [this](bool success)
+  // {
+  //   auto id = m_portalItem->itemId();
+  //   delete m_portalItem;
+  //   m_portalItem = nullptr;
+  //   emit portalItemFetchDataCompleted(id, success);
+  // });
 
+  qDebug() << "calling m_portalItem->load()";
   m_portalItem->load();
 }
 
 void CppSampleManager::fetchData(const QString& outputPath)
 {
-  m_portalItem->fetchData(outputPath);
+  qDebug() << "calling fetchData" << m_portalItem;
+  // auto uniquePortalItem = std::unique_ptr<PortalItem>(m_portalItem);
+    // m_portalItem->fetchData(outputPath);ss
+  m_portalItem->fetchDataAsync(outputPath).then( [this]()
+  {
+    auto id = m_portalItem->itemId();
+    emit portalItemFetchDataCompleted(id, true);
+    // m_portalItem->deleteLater();
+  }).onFailed([&](const ErrorException &e)
+  {
+    auto placeholder = e.error();
+    qDebug() << placeholder.message();
+    auto id = m_portalItem->itemId();
+    emit portalItemFetchDataCompleted(id, false);
+  });
 }
 
 QString CppSampleManager::api() const

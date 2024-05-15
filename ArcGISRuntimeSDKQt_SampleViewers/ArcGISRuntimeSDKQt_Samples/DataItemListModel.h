@@ -18,12 +18,14 @@
 
 class DataItem;
 
+#include "Iterable.h"
+
 #include <QAbstractListModel>
 #include <QByteArray>
 #include <QHash>
 #include <QList>
 
-class DataItemListModel : public QAbstractListModel
+class DataItemListModel : public QAbstractListModel, public Esri::ArcGISRuntime::Iterable<DataItem*>
 {
   Q_OBJECT
 
@@ -40,11 +42,11 @@ public:
   explicit DataItemListModel(QObject* parent = nullptr);
   ~DataItemListModel() override = default;
 
-  Q_INVOKABLE DataItem* get(int index) const { return m_dataItems.at(index); }
+  Q_INVOKABLE DataItem* at(int index) const override { return m_dataItems.at(index); }
   void addDataItem(DataItem* dataItem);
   int rowCount(const QModelIndex& parent = QModelIndex()) const override;
   QVariant data(const QModelIndex& index, int role = Qt::DisplayRole) const override;
-  int size() const { return m_dataItems.size(); }
+  int size() const override { return m_dataItems.size(); }
   void setupRoles();
 
 signals:

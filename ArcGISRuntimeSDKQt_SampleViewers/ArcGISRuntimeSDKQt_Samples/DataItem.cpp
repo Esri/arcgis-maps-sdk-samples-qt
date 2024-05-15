@@ -20,12 +20,33 @@
 
 #include "DataItem.h"
 
+static QString homePath()
+{
+  QString homePath;
+
+#ifdef Q_OS_ANDROID
+  homePath = "/sdcard";
+#elif defined Q_OS_IOS
+  homePath = QStandardPaths::writableLocation(QStandardPaths::DocumentsLocation);
+#else
+  homePath = QDir::homePath();
+#endif
+
+  return homePath;
+}
+
 DataItem::DataItem(const QString& itemId, const QString& path,
                    QObject* parent /*= nullptr*/) :
   QObject(parent),
   m_itemId(itemId),
   m_path(path)
 {
+}
+
+bool DataItem::exists() const
+{
+  // qDebug() << homePath() + m_path.mid(1);
+  return QFile::exists(homePath() + m_path.mid(1));
 }
 
 void DataItem::setExists(bool exists)

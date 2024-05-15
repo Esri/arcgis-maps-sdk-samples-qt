@@ -41,6 +41,9 @@ exists($$PWD/../../../../DevBuildCpp.pri) {
   include($$PWD/../../../toolkit/uitools/toolkitcpp.pri)
 
   INCLUDEPATH += \
+      $$SAMPLEPATHCPP \
+      $$SAMPLEPATHCPP/zlib-ng \
+      $$SAMPLEPATHCPP/minizip-ng \
       $$COMMONVIEWER \
       $$COMMONVIEWER/SyntaxHighlighter \
       $$PWD/../../../../api/qt_cpp/Include \
@@ -71,6 +74,7 @@ exists($$PWD/../../../../DevBuildCpp.pri) {
   }
 
   INCLUDEPATH += \
+      $$SAMPLEPATHCPP \
       $$COMMONVIEWER \
       $$COMMONVIEWER/SyntaxHighlighter \
       $$priLocation/sdk/include \
@@ -160,14 +164,20 @@ android {
 }
 
 HEADERS += \
-    CppSampleManager.h \
+    # CppSampleManager.h \
+    # TkZipArchive.h \
+    # TkZipFileInfo.h \
+    # FileUtility.h \
+    # CommonExports.h \
+    # TkDebug.h \
+    # DebugUtility.h \
     $$PCH_HEADER \
     $$COMMONVIEWER/SyntaxHighlighter/syntax_highlighter.h \
     $$COMMONVIEWER/SyntaxHighlighter/QMLHighlighter.h \
     $$COMMONVIEWER/CategoryListModel.h \
     $$COMMONVIEWER/DataItem.h \
     $$COMMONVIEWER/DataItemListModel.h \
-    $$COMMONVIEWER/DownloadSampleManager.h \
+    # $$COMMONVIEWER/DownloadSampleManager.h \
     $$COMMONVIEWER/Sample.h \
     $$COMMONVIEWER/SampleCategory.h \
     $$COMMONVIEWER/SampleListModel.h \
@@ -177,16 +187,25 @@ HEADERS += \
     $$COMMONVIEWER/SearchFilterCriteria.h \
     $$COMMONVIEWER/SearchFilterSimpleKeywordCriteria.h \
     $$COMMONVIEWER/SourceCode.h \
-    $$COMMONVIEWER/SourceCodeListModel.h
+    $$COMMONVIEWER/SourceCodeListModel.h \
+    $$files(zlib-ng/*.h) \
+    $$files(minizip-ng/zip.h) \
+    $$files(minizip-ng/unzip.h) \
+    $$files(minizip-ng/ioapi.h)
 
 SOURCES += \
-    CppSampleManager.cpp \
+    # CppSampleManager.cpp \
+    # TkZipArchive.cpp \
+    # TkZipFileInfo.cpp \
+    # FileUtility.cpp \
+    # TkDebug.cpp \
+    # DebugUtility.cpp \
     $$COMMONVIEWER/SyntaxHighlighter/syntax_highlighter.cpp \
     $$COMMONVIEWER/SyntaxHighlighter/QMLHighlighter.cpp \
     $$COMMONVIEWER/CategoryListModel.cpp \
     $$COMMONVIEWER/DataItem.cpp \
     $$COMMONVIEWER/DataItemListModel.cpp \
-    $$COMMONVIEWER/DownloadSampleManager.cpp \
+    # $$COMMONVIEWER/DownloadSampleManager.cpp \
     $$COMMONVIEWER/Sample.cpp \
     $$COMMONVIEWER/SampleCategory.cpp \
     $$COMMONVIEWER/SampleListModel.cpp \
@@ -196,7 +215,17 @@ SOURCES += \
     $$COMMONVIEWER/SearchFilterSimpleKeywordCriteria.cpp \
     $$COMMONVIEWER/SourceCode.cpp \
     $$COMMONVIEWER/SourceCodeListModel.cpp \
-    $$COMMONVIEWER/mainSample.cpp
+    $$COMMONVIEWER/mainSample.cpp \
+    $$files(zlib-ng/*.c) \
+    $$files(minizip-ng/mz_compat.c) \
+    $$files(minizip-ng/mz_crypt.c) \
+    $$files(minizip-ng/mz_os.c) \
+    $$files(minizip-ng/mz_strm.c) \
+    $$files(minizip-ng/mz_strm_mem.c) \
+    $$files(minizip-ng/mz_strm_zlib.c) \
+    $$files(minizip-ng/mz_zip.c) \
+    $$files(minizip-ng/mz_os_posix.c) \
+    $$files(minizip-ng/mz_strm_os_posix.c)
 
 RESOURCES += \
     $$COMMONVIEWER/qml/qml.qrc \
@@ -206,6 +235,9 @@ RESOURCES += \
     $$PWD/imports.qrc
 
 DEFINES += QT_DEPRECATED_WARNINGS
+DEFINES += ZLIB_COMPAT
+DEFINES += HAVE_ATTRIBUTE_ALIGNED
+DEFINES += HAVE_ZLIB
 
 #-------------------------------------------------
 # Application Icon

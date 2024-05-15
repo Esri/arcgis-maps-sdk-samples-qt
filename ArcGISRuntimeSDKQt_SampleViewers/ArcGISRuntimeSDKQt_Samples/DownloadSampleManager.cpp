@@ -13,9 +13,30 @@
 // limitations under the License.
 // [Legal]
 
+#include "DataItemListModel.h"
+#include "Sample.h"
+#include "SampleListModel.h"
 #include "pch.hpp"
 
+// #include "DataItem.h"
 #include "DownloadSampleManager.h"
+
+#include <QQueue>
+
+static QString homePath()
+{
+  QString homePath;
+
+#ifdef Q_OS_ANDROID
+  homePath = "/sdcard";
+#elif defined Q_OS_IOS
+  homePath = QStandardPaths::writableLocation(QStandardPaths::DocumentsLocation);
+#else
+  homePath = QDir::homePath();
+#endif
+  return homePath;
+}
+
 
 DownloadSampleManager::DownloadSampleManager(QObject* parent) :
   SampleManager(parent)
@@ -59,10 +80,24 @@ void DownloadSampleManager::init()
         emit unzipFile(formattedPath,
                        QFileInfo(formattedPath).dir().absolutePath());
       }
-      else
-      {
-        emit doneDownloadingPortalItem();
-      }
+      // else
+      // {
+      //   emit doneDownloadingPortalItem();
+      //   // start next download
+      //   if (auto item = m_dataItems.dequeue(); !m_dataItems.isEmpty())
+      //   {
+      //     downloadData(item->itemId(), homePath() + item->path().mid(1));
+      //   }
+      //   emit doneDownloadingPortalItem();
+      // }
+      emit doneDownloadingPortalItem();
+      // start next download
+      // qDebug() << m_dataItems.size();
+      // if (auto item = m_dataItems.dequeue(); !m_dataItems.isEmpty())
+      // {
+      //   downloadData(item->itemId(), homePath() + item->path().mid(1));
+      // }
+      downloadNextItem();
     }
     else
     {
@@ -75,6 +110,11 @@ void DownloadSampleManager::init()
   {
     setDownloadProgress(progress);
   });
+
+  // connect(this, &DownloadSampleManager::doneDownloadingPortalItem, this, [this]()
+  // {
+
+  // });
 }
 
 void DownloadSampleManager::downloadData(const QString& itemId, const QString& outputPath)
@@ -96,8 +136,93 @@ void DownloadSampleManager::downloadData(const QString& itemId, const QString& o
   }
 
   m_outputPath = outputPath;
-  createPortalItem(itemId);
+  // createPortalItem(itemId);
+  auto portalItem = new PortalItem(m_portal, itemId, this);
+  // m_portalItem = std::make_unique<PortalItem>(m_portal, itemId, this);
+  connect(m_portalItem, &PortalItem::loadStatusChanged, this, [this](LoadStatus status)
+  {
+    qDebug() << "PortalItem load status changed: " << status;
+  });
+
+  connect(m_portalItem, &PortalItem::doneLoading, this,
+          [this](const Error& error)
+  {
+    bool success = error.isEmpty();
+    qDebug() << "m_portalItem done loading" << success;
+
+    // Copy important parts before potential delete.
+    auto type = m_portalItem->type();
+    auto name = m_portalItem->name();
+    auto id = m_portalItem->itemId();
+
+    if (!success)
+    {
+      // delete m_portalItem;
+      // m_portalItem = nullptr;
+    }
+
+    emit portalItemDoneLoading(
+          success,
+          id,
+          type == PortalItemType::CodeSample ? name : QString());
+
+  });
+
+  connect(m_portalItem, &PortalItem::fetchDataProgressChanged, this,
+          [this](const NetworkRequestProgress& progress)
+  {
+    emit portalItemFetchDataProgress(m_portalItem->itemId(), progress.progressPercentage());
+  });
+
+  // connect(m_portalItem, &PortalItem::fetchDataCompleted,
+  //         this, [this](bool success)
+  // {
+  //   auto id = m_portalItem->itemId();
+  //   delete m_portalItem;
+  //   m_portalItem = nullptr;
+  //   emit portalItemFetchDataCompleted(id, success);
+  // });
+
+  qDebug() << "calling m_portalItem->load()";
+  m_portalItem->load();
+
 }
+
+// void DownloadSampleManager::downloadAllDataItems()
+// {
+//     if (!m_dataItems.isEmpty())
+//       m_dataItems.clear();
+//     // for ( int i = 0; i < samples()->size(); i++)
+//     // {
+//     //   auto sample = samples()->get(i);
+//     // }
+//     for ( auto sample : *samples())
+//     {
+//       for (auto dataItem : *sample->dataItems())
+//       {
+//         if (!dataItem->exists())
+//         {
+//           qDebug() << sample->name().toString() << "; " << dataItem->exists() << "; " << dataItem->path();
+//           m_dataItems.enqueue(dataItem);
+//         }
+//       }
+//     }
+
+//     setDownloadInProgress(true);
+//     downloadNextItem();
+//     // if (!m_dataItems.isEmpty())
+//     // {
+//     //   qDebug() << m_dataItems.size();
+//     //   auto item = m_dataItems.dequeue();
+//     //   downloadData(item->itemId(), homePath() + item->path().mid(1));
+//     // }
+
+//     // for (auto item : items)
+//     // {
+//     //   downloadData(item->itemId(), homePath() + item->path().mid(1));
+//     // }
+
+// }
 
 QString DownloadSampleManager::formattedPath(const QString& outputPath,
                                              const QString& folderName)
@@ -128,4 +253,20 @@ QString DownloadSampleManager::formattedPath(const QString& outputPath,
 QString DownloadSampleManager::api() const
 {
   return QString();
+}
+
+void DownloadSampleManager::downloadNextItem()
+{
+  if (!m_dataItems.isEmpty())
+  {
+    qDebug() << m_dataItems.size();
+    setDownloadText(QString("Remaining items in queue: %1").arg(m_dataItems.size()));
+    emit downloadTextChanged();
+    auto item = m_dataItems.dequeue();
+    downloadData(item->itemId(), homePath() + item->path().mid(1));
+  }
+  else {
+    setDownloadInProgress(false);
+    emit downloadInProgressChanged();
+  }
 }

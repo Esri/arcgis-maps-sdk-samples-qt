@@ -32,10 +32,20 @@
 #include <QVariantList>
 #include <QVariantMap>
 #include <QQmlEngine>
+#include <NetworkRequestProgress.h>
+
+#include "AuthenticationManager.h"
+#include "CredentialCache.h"
+#include "ErrorException.h"
+
+#include "TkZipArchive.h"
 
 #include "CategoryListModel.h"
 #include "DataItem.h"
 #include "DataItemListModel.h"
+#include "Error.h"
+#include "MapTypes.h"
+#include "PortalTypes.h"
 #include "SampleCategory.h"
 #include "Sample.h"
 #include "SampleListModel.h"
@@ -61,7 +71,7 @@ using namespace Esri::ArcGISRuntime;
 
 namespace
 {
-QString apiKey = ""; // Provide your API key here
+QString apiKey = getenv("FUNC_API_KEY"); // Provide your API key here
 }
 
 SampleManager::SampleManager(QObject *parent):
@@ -175,7 +185,7 @@ bool SampleManager::appendCategoryToManager(SampleCategory* category)
     const auto totalRows = category->samples()->rowCount();
     for (int i = 0; i < totalRows; ++i)
     {
-      m_allSamples->addSample(category->samples()->get(i));
+      m_allSamples->addSample(category->samples()->at(i));
     }
     return true;
   }
@@ -390,6 +400,233 @@ void SampleManager::setDownloadProgress(double progress)
   m_downloadProgress = progress;
   emit downloadProgressChanged();
 }
+
+void SampleManager::clearCredentialCache()
+{
+  AuthenticationManager::credentialCache()->removeAndRevokeAllCredentials();
+}
+
+void SampleManager::downloadAllDataItems()
+{
+    if (!m_dataItems.isEmpty())
+      m_dataItems.clear();
+    // for ( int i = 0; i < samples()->size(); i++)
+    // {
+    //   auto sample = samples()->get(i);
+    // }
+    // populate list of data items needed to be downloaded.
+    for ( auto sample : *samples())
+    {
+      for (auto dataItem : *sample->dataItems())
+      {
+        if (!dataItem->exists())
+        {
+          qDebug() << sample->name().toString() << "; " << dataItem->exists() << "; " << dataItem->path();
+          m_dataItems.enqueue(dataItem);
+        }
+      }
+    }
+
+    setDownloadInProgress(true);
+    downloadNextDataItem();
+    // if (!m_dataItems.isEmpty())
+    // {
+    //   qDebug() << m_dataItems.size();
+    //   auto item = m_dataItems.dequeue();
+    //   downloadData(item->itemId(), homePath() + item->path().mid(1));
+    // }
+
+    // for (auto item : items)
+    // {
+    //   downloadData(item->itemId(), homePath() + item->path().mid(1));
+    // }
+
+}
+
+void SampleManager::downloadDataItemsCurrentSample()
+{
+  if (!m_dataItems.isEmpty())
+    m_dataItems.clear();
+  // for ( int i = 0; i < samples()->size(); i++)
+  // {
+  //   auto sample = samples()->get(i);
+  // }
+  // populate list of data items needed to be downloaded.
+  for (auto dataItem : *currentSample()->dataItems())
+  {
+    if (!dataItem->exists())
+    {
+      qDebug() << currentSample()->name().toString() << "; " << dataItem->exists() << "; " << dataItem->path();
+      m_dataItems.enqueue(dataItem);
+    }
+  }
+
+  setDownloadInProgress(true);
+  downloadNextDataItem();
+}
+
+static QString homePath()
+{
+  QString homePath;
+
+#ifdef Q_OS_ANDROID
+  homePath = "/sdcard";
+#elif defined Q_OS_IOS
+  homePath = QStandardPaths::writableLocation(QStandardPaths::DocumentsLocation);
+#else
+  homePath = QDir::homePath();
+#endif
+  return homePath;
+}
+
+void SampleManager::downloadNextDataItem()
+{
+  if (!m_dataItems.isEmpty())
+  {
+    if (!m_portal)
+    {
+      m_portal = new Portal(QUrl("https://www.arcgis.com"), this);
+      connect(m_portal, &Portal::doneLoading, this, [this](const Error& error)
+      {
+        if (!error.isEmpty())
+          return;
+          //do something
+        // qDebug() << m_dataItems.size();
+        setDownloadText(QString("Remaining items in queue: %1").arg(m_dataItems.size()));
+        emit downloadTextChanged();
+        auto item = m_dataItems.dequeue();
+        fetchPortalItemData(item->itemId(), homePath() + item->path().mid(1));
+      });
+      m_portal->load();
+    }
+    else {
+      // qDebug() << m_dataItems.size();
+      setDownloadText(QString("Remaining items in queue: %1").arg(m_dataItems.size()));
+      emit downloadTextChanged();
+      auto item = m_dataItems.dequeue();
+      fetchPortalItemData(item->itemId(), homePath() + item->path().mid(1));
+    }
+  }
+  else {
+    setDownloadInProgress(false);
+    emit downloadInProgressChanged();
+  }
+}
+
+void SampleManager::fetchPortalItemData(const QString& itemId, const QString& outputPath)
+{
+  // if ( !m_portal && m_portal->loadStatus() != LoadStatus::Loaded)
+  //   createAndLoadPortal();
+
+  // connect(m_portal, &Portal::doneLoading, this, [this, itemId, outputPath]()
+  // {
+  bool success = m_portal->loadStatus() == LoadStatus::Loaded;
+  // emit portalDoneLoading(success);
+  if (success)
+  {
+    auto portalItem = new PortalItem(m_portal, itemId, this);
+    if (portalItem)
+    {
+      connect(portalItem, &PortalItem::doneLoading, this, [this, portalItem, outputPath]()
+      {
+        bool success = portalItem->loadStatus() == LoadStatus::Loaded;
+        // emit portalItemDoneLoading(success, portalItem->itemId(), portalItem->type() == PortalItemType::CodeSample ? portalItem->name() : QString());
+        if (success)
+        {
+          auto folder = portalItem->type() == PortalItemType::CodeSample ? portalItem->name() : QString();
+          QString formattedPath = SampleManager::formattedPath(outputPath, folder);
+          portalItem->fetchDataAsync(formattedPath).then([this, portalItem, formattedPath]()
+          {
+            // IF ZIP? UNZIP THEN PROCEED
+            if (QFileInfo(formattedPath).suffix() == "zip")
+            {
+              auto zipArchive = new TkZipArchive(this);
+              zipArchive->setPath(formattedPath);
+              connect(zipArchive, &TkZipArchive::extractCompleted, this, [this, formattedPath]()
+              {
+                  downloadNextDataItem();
+              });
+              zipArchive->extractAll(QFileInfo(formattedPath).dir().absolutePath());
+            }
+            else
+            {
+              downloadNextDataItem();
+              portalItem->deleteLater();
+              // emit doneDownloadingPortalItem();
+            }
+          }).onFailed([](const ErrorException &e)
+          {
+            auto placeholder = e.error();
+            qDebug() << placeholder.message();
+            // auto id = m_portalItem->itemId();
+            // emit portalItemFetchDataCompleted(id, false);
+          });
+        }
+      });
+
+      connect(portalItem, &PortalItem::fetchDataProgressChanged, this,
+              [this](const NetworkRequestProgress& progress)
+      {
+        setDownloadProgress(progress.progressPercentage());
+        emit downloadProgressChanged();
+        // emit portalItemFetchDataProgress(portalItem->itemId(), progress.progressPercentage());
+      });
+      portalItem->load();
+    }
+  }
+  // });
+}
+
+QString SampleManager::formattedPath(const QString& outputPath,
+                                             const QString& folderName)
+{
+  // first make sure output path exists
+  if (!QFile::exists(outputPath))
+  {
+    QFileInfo fileInfo = QFileInfo(outputPath);
+    QDir dir = fileInfo.dir();
+    if (!dir.exists())
+      dir.mkpath(".");
+  }
+
+  // create the download data task
+  QString formattedFilePath = outputPath;
+
+  // check if the item is code sample
+  if (!folderName.isEmpty())
+  {
+    QFileInfo fileInfo = QFileInfo(outputPath);
+    QString dir = fileInfo.dir().absolutePath();
+    formattedFilePath = dir + "/" + folderName;
+  }
+
+  return formattedFilePath;
+}
+// bool SampleManager::downloadAllDataItems()
+// {
+//   QList<DataItem*> items;
+//   // for ( int i = 0; i < samples()->size(); i++)
+//   // {
+//   //   auto sample = samples()->get(i);
+//   // }
+//   for ( auto sample : *samples())
+//   {
+//     for (auto dataItem : *sample->dataItems())
+//     {
+//       if (dataItem->exists())
+//       {
+//         qDebug() << sample->name().toString() << "; " << dataItem->exists() << "; " << dataItem->path();
+//         items.append(dataItem);
+//       }
+//     }
+//   }
+
+//   for (auto item : items)
+//   {
+
+//   }
+
+//   }
 
 void SampleManager::setSourceCodeIndex(int i)
 {
