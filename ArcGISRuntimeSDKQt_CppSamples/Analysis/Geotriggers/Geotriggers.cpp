@@ -27,6 +27,7 @@
 #include "GeotriggerNotificationInfo.h"
 #include "GeotriggerMonitor.h"
 #include "GeotriggersTypes.h"
+#include "FeatureEditResult.h"
 #include "FeatureFenceParameters.h"
 #include "LocationGeotriggerFeed.h"
 #include "LocationDisplay.h"
@@ -244,9 +245,10 @@ void Geotriggers::getFeatureInformation(const QString& sectionName)
           m_featureAttachmentImageUrls[sectionName] = sectionImageAttachment->attachmentUrl();
           m_currentFeatureImageUrl = m_featureAttachmentImageUrls[sectionName];
           emit displayInfoChanged();
-        });
-        qDeleteAll(attachments);
+        }); 
       });
-   auto future = m_gardenSections->applyEditsAsync(this);
-   Q_UNUSED(future)
+  m_gardenSections->applyEditsAsync(this).then(this, [](QList<FeatureEditResult*> results)
+  {
+    qDeleteAll(results);
+  });
 }
