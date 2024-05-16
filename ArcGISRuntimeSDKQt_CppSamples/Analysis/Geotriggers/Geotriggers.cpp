@@ -27,6 +27,7 @@
 #include "GeotriggerNotificationInfo.h"
 #include "GeotriggerMonitor.h"
 #include "GeotriggersTypes.h"
+#include "FeatureEditResult.h"
 #include "FeatureFenceParameters.h"
 #include "LocationGeotriggerFeed.h"
 #include "LocationDisplay.h"
@@ -228,23 +229,26 @@ void Geotriggers::getFeatureInformation(const QString& sectionName)
   }
 
   emit displayInfoChanged();
+  // enableAutoFetch and enableAutoApplyEdits for AttachmentListModel are set as false
+  // to avoid automatic behavior. We will call fetchDataAsync explicitly as needed.
+  feature->attachments(false, false)->fetchAttachmentsAsync().then(
+      [this, sectionName](const QList<Attachment*>& attachments)
+      {
+        if (attachments.isEmpty())
+          return;
 
-  AttachmentListModel* featureAttachments = feature->attachments();
+        // Get the first (and only) attachment for the feature
+        Attachment* sectionImageAttachment = attachments.first();
 
-  // Fetch attachments will automatically trigger upon instantiation of the AttachmentListModel
-  connect(featureAttachments, &AttachmentListModel::fetchAttachmentsCompleted, this, [this, sectionName](const QUuid&, const QList<Attachment*>& attachments)
+        sectionImageAttachment->fetchDataAsync().then(this, [this, sectionImageAttachment, sectionName](const QByteArray&)
+        {
+          m_featureAttachmentImageUrls[sectionName] = sectionImageAttachment->attachmentUrl();
+          m_currentFeatureImageUrl = m_featureAttachmentImageUrls[sectionName];
+          emit displayInfoChanged();
+        }); 
+      });
+  m_gardenSections->applyEditsAsync(this).then(this, [](QList<FeatureEditResult*> results)
   {
-    if (attachments.isEmpty())
-      return;
-
-    // Get the first (and only) attachment for the feature
-    Attachment* sectionImageAttachment = attachments.first();
-
-    sectionImageAttachment->fetchDataAsync().then(this, [this, sectionImageAttachment, sectionName](const QByteArray&)
-    {
-      m_featureAttachmentImageUrls[sectionName] = sectionImageAttachment->attachmentUrl();
-      m_currentFeatureImageUrl = m_featureAttachmentImageUrls[sectionName];
-      emit displayInfoChanged();
-    });
+    qDeleteAll(results);
   });
 }

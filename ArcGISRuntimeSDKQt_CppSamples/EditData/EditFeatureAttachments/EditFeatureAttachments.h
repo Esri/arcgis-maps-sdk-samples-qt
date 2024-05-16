@@ -59,6 +59,7 @@ signals:
 private:
   void connectSignals();
   QAbstractListModel* attachmentModel() const;
+  void applyEdits();
 
   void onIdentifyLayerCompleted_(Esri::ArcGISRuntime::IdentifyLayerResult* identifyResult);
   void onQueryFeaturesCompleted_(Esri::ArcGISRuntime::FeatureQueryResult* featureQueryResult);
