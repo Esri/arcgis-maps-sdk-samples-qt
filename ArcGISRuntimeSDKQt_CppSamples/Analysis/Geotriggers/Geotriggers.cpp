@@ -245,8 +245,8 @@ void Geotriggers::getFeatureInformation(const QString& sectionName)
           m_currentFeatureImageUrl = m_featureAttachmentImageUrls[sectionName];
           emit displayInfoChanged();
         });
+        qDeleteAll(attachments);
       });
-
- auto future = m_gardenSections->applyEditsAsync(this);
- Q_UNUSED(future)
+   auto future = m_gardenSections->applyEditsAsync(this);
+   Q_UNUSED(future)
 }
