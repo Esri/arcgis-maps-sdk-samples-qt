@@ -25,6 +25,7 @@
 #include <QJsonDocument>
 #include <QJsonObject>
 #include <QNetworkProxy>
+#include <QStandardPaths>
 #include <QStringList>
 #include <QTemporaryDir>
 #include <QUrl>
@@ -481,13 +482,12 @@ static QString homePath()
 {
   QString homePath;
 
-#ifdef Q_OS_ANDROID
-  homePath = "/sdcard";
-#elif defined Q_OS_IOS
+#ifdef Q_OS_IOS
   homePath = QStandardPaths::writableLocation(QStandardPaths::DocumentsLocation);
 #else
-  homePath = QDir::homePath();
+  homePath = QStandardPaths::writableLocation(QStandardPaths::HomeLocation);
 #endif
+
   return homePath;
 }
 

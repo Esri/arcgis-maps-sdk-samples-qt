@@ -17,6 +17,7 @@
 
 #include <QObject>
 #include <QVariant>
+#include <QStandardPaths>
 
 #include "DataItem.h"
 
@@ -24,12 +25,10 @@ static QString homePath()
 {
   QString homePath;
 
-#ifdef Q_OS_ANDROID
-  homePath = "/sdcard";
-#elif defined Q_OS_IOS
+#ifdef Q_OS_IOS
   homePath = QStandardPaths::writableLocation(QStandardPaths::DocumentsLocation);
 #else
-  homePath = QDir::homePath();
+  homePath = QStandardPaths::writableLocation(QStandardPaths::HomeLocation);
 #endif
 
   return homePath;
