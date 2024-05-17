@@ -406,6 +406,18 @@ void SampleManager::clearCredentialCache()
   AuthenticationManager::credentialCache()->removeAndRevokeAllCredentials();
 }
 
+bool SampleManager::dataItemsExists()
+{
+  for (auto dataItem : *currentSample()->dataItems())
+  {
+    if (dataItem->exists())
+    {
+      return true;
+    }
+  }
+  return false;
+}
+
 void SampleManager::downloadAllDataItems()
 {
     if (!m_dataItems.isEmpty())

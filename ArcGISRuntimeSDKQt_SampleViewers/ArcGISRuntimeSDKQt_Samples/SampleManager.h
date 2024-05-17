@@ -68,6 +68,7 @@ public:
 
   Q_INVOKABLE virtual void init();
 
+  Q_INVOKABLE bool dataItemsExists();
   Q_INVOKABLE void clearCredentialCache();
   Q_INVOKABLE void downloadAllDataItems();
   Q_INVOKABLE void downloadDataItemsCurrentSample();

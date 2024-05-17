@@ -129,7 +129,7 @@ exists($$PWD/../../../../DevBuildCpp.pri) {
 
   ios {
     PLATFORM = "iOS"
-    ARCGIS_RUNTIME_IMPORT_PATH = $${priLocation}/sdk/$${PLATFORM}/universal/qml
+    # ARCGIS_RUNTIME_IMPORT_PATH = $${priLocation}/sdk/$${PLATFORM}/universal/qml
   }
 
   # Add plugin paths to QML_IMPORT_PATH
@@ -165,12 +165,12 @@ android {
 
 HEADERS += \
     # CppSampleManager.h \
-    # TkZipArchive.h \
-    # TkZipFileInfo.h \
-    # FileUtility.h \
-    # CommonExports.h \
-    # TkDebug.h \
-    # DebugUtility.h \
+    TkZipArchive.h \
+    TkZipFileInfo.h \
+    FileUtility.h \
+    CommonExports.h \
+    TkDebug.h \
+    DebugUtility.h \
     $$PCH_HEADER \
     $$COMMONVIEWER/SyntaxHighlighter/syntax_highlighter.h \
     $$COMMONVIEWER/SyntaxHighlighter/QMLHighlighter.h \
@@ -195,11 +195,11 @@ HEADERS += \
 
 SOURCES += \
     # CppSampleManager.cpp \
-    # TkZipArchive.cpp \
-    # TkZipFileInfo.cpp \
-    # FileUtility.cpp \
-    # TkDebug.cpp \
-    # DebugUtility.cpp \
+    TkZipArchive.cpp \
+    TkZipFileInfo.cpp \
+    FileUtility.cpp \
+    TkDebug.cpp \
+    DebugUtility.cpp \
     $$COMMONVIEWER/SyntaxHighlighter/syntax_highlighter.cpp \
     $$COMMONVIEWER/SyntaxHighlighter/QMLHighlighter.cpp \
     $$COMMONVIEWER/CategoryListModel.cpp \

@@ -257,9 +257,9 @@ ApplicationWindow {
             }
 
             // If the sample requires online resources but there is no network connectivity
-            if (SampleManager.currentSample.dataItems.size === 0
-                    && System.reachability !== System.ReachabilityOnline
-                    && System.reachability !== System.ReachabilityUnknown) {
+            if (SampleManager.currentSample.dataItems.size === 0)
+/*                    && System.reachability !== System.ReachabilityOnline
+                    && System.reachability !== System.ReachabilityUnknown)*/ {
                 SampleManager.currentMode = SampleManager.NetworkRequiredView;
                 return;
             // If the sample requires offline data
@@ -297,7 +297,7 @@ ApplicationWindow {
     function showSample() {
         if (SampleManager.currentSample) {
             descriptionView.descriptionText = SampleManager.currentSample.description;
-            if (checkDataItems()) {
+            if (SampleManager.dataItemsExists()) {
                 if (SampleManager.currentMode === SampleManager.ManageOfflineDataView
                         || SampleManager.currentMode === SampleManager.DownloadDataView
                         || SampleManager.currentMode === SampleManager.HomepageView)
@@ -323,6 +323,7 @@ ApplicationWindow {
 
     // check if the data exists locally
     function checkDataItems() {
+        return SampleManager.dataItemsExists();
         for (let i = 0; i < SampleManager.currentSample.dataItems.size; i++) {
             const dataItem = SampleManager.currentSample.dataItems.at(i);
             // if (Qt.platform.os === "ios")

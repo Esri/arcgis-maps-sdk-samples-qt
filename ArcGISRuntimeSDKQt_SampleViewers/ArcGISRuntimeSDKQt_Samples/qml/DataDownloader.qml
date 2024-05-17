@@ -15,7 +15,7 @@
 
 import QtQuick
 import Esri.ArcGISRuntimeSamples
-import Esri.ArcGISExtras
+// import Esri.ArcGISExtras
 
 Item {
     property var currentItem
@@ -137,21 +137,21 @@ Item {
         }
     }
 
-    ZipArchive {
-        id: zipArchive
+    // ZipArchive {
+    //     id: zipArchive
 
-        onExtractProgress: {
-            if (debug)
-                console.log("Extracting file " + fileName + " (" + percent + "%)");
-        }
-        onExtractError: {
-            if (debug)
-                console.log("Extract error " + fileName);
-        }
-        onExtractCompleted: {
-            if (debug)
-                console.log("Extract completed");
-            // downloadNextItem();
-        }
-    }
+    //     onExtractProgress: {
+    //         if (debug)
+    //             console.log("Extracting file " + fileName + " (" + percent + "%)");
+    //     }
+    //     onExtractError: {
+    //         if (debug)
+    //             console.log("Extract error " + fileName);
+    //     }
+    //     onExtractCompleted: {
+    //         if (debug)
+    //             console.log("Extract completed");
+    //         // downloadNextItem();
+    //     }
+    // }
 }
