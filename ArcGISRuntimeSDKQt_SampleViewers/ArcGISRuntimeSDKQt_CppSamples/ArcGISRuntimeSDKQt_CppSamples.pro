@@ -223,9 +223,24 @@ SOURCES += \
     $$files(minizip-ng/mz_strm.c) \
     $$files(minizip-ng/mz_strm_mem.c) \
     $$files(minizip-ng/mz_strm_zlib.c) \
-    $$files(minizip-ng/mz_zip.c) \
-    $$files(minizip-ng/mz_os_posix.c) \
-    $$files(minizip-ng/mz_strm_os_posix.c)
+    $$files(minizip-ng/mz_zip.c) # \
+#    $$files(minizip-ng/mz_os_posix.c) \
+#    $$files(minizip-ng/mz_strm_os_posix.c)
+win32 {
+    SOURCES += \
+        $$files(minizip-ng/mz_os_win32.c) \
+        $$files(minizip-ng/mz_strm_os_win32.c)
+
+    DEFINES += RTC_WINDOWS_FAMILY
+}
+
+!win32 {
+    SOURCES += \
+        $$files(minizip-ng/mz_os_posix.c) \
+        $$files(minizip-ng/mz_strm_os_posix.c)
+
+    DEFINES += HAVE_ATTRIBUTE_ALIGNED
+}
 
 RESOURCES += \
     $$COMMONVIEWER/qml/qml.qrc \
@@ -236,9 +251,7 @@ RESOURCES += \
 
 DEFINES += QT_DEPRECATED_WARNINGS
 DEFINES += ZLIB_COMPAT
-DEFINES += HAVE_ATTRIBUTE_ALIGNED
 DEFINES += HAVE_ZLIB
-
 #-------------------------------------------------
 # Application Icon
 #-------------------------------------------------
