@@ -47,12 +47,7 @@ Rectangle {
 
             Menu {
                 id: contextMenu
-                width: 72
-                height: 36
-
                 MenuItem {
-                    width: contextMenu.width - 10
-                    height: contextMenu.height - 10
                     text: qsTr('Copy')
                     onTriggered: {
                         textEdit.copy()
