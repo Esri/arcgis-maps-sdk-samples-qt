@@ -69,13 +69,13 @@
 /* If building or using zlib as a DLL, define ZLIB_DLL.
  * This is not mandatory, but it offers a little performance increase.
  */
-#if defined(ZLIB_DLL) && (defined(_WIN32) || (__has_declspec_attribute(dllexport) && __has_declspec_attribute(dllimport)))
-#  ifdef Z_INTERNAL
-#    define Z_EXTERN extern __declspec(dllexport)
-#  else
-#    define Z_EXTERN extern __declspec(dllimport)
-#  endif
-#endif
+//#if defined(ZLIB_DLL) && (defined(_WIN32) || (__has_declspec_attribute(dllexport) && __has_declspec_attribute(dllimport)))
+//#  ifdef Z_INTERNAL
+//#    define Z_EXTERN extern __declspec(dllexport)
+//#  else
+//#    define Z_EXTERN extern __declspec(dllimport)
+//#  endif
+//#endif
 
 /* If building or using zlib with the WINAPI/WINAPIV calling convention,
  * define ZLIB_WINAPI.
@@ -138,7 +138,14 @@ typedef void       *voidp;
 
 typedef unsigned int z_crc_t;
 
-#if 1    /* was set to #if 1 by configure/cmake/etc */
+// Begin RTC changes
+// This define is usually configured by cmake. We need to configure it manually.
+#if !defined(RTC_WINDOWS_FAMILY)
+#  define HAVE_UNISTD_H
+#endif
+// End RTC changes
+
+#ifdef HAVE_UNISTD_H    /* may be set to #if 1 by configure/cmake/etc */
 #  define Z_HAVE_UNISTD_H
 #endif
 
