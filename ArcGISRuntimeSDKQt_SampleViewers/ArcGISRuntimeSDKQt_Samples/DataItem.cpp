@@ -44,7 +44,6 @@ DataItem::DataItem(const QString& itemId, const QString& path,
 
 bool DataItem::exists() const
 {
-  // qDebug() << homePath() + m_path.mid(1);
   return QFile::exists(homePath() + m_path.mid(1));
 }
 

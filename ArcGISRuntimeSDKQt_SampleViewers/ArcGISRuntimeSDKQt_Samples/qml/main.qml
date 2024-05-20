@@ -257,9 +257,9 @@ ApplicationWindow {
             }
 
             // If the sample requires online resources but there is no network connectivity
-            if (SampleManager.currentSample.dataItems.size === 0)
-/*                    && System.reachability !== System.ReachabilityOnline
-                    && System.reachability !== System.ReachabilityUnknown)*/ {
+            if (SampleManager.currentSample.dataItems.size === 0
+                    && SampleManager.reachability !== SampleManager.ReachabilityOnline
+                    && SampleManager.reachability !== SampleManager.ReachabilityUnknown){
                 SampleManager.currentMode = SampleManager.NetworkRequiredView;
                 return;
             // If the sample requires offline data
@@ -319,26 +319,6 @@ ApplicationWindow {
             descriptionView.descriptionText = "";
             gc();
         }
-    }
-
-    // check if the data exists locally
-    function checkDataItems() {
-        return SampleManager.dataItemsExists();
-        for (let i = 0; i < SampleManager.currentSample.dataItems.size; i++) {
-            const dataItem = SampleManager.currentSample.dataItems.at(i);
-            // if (Qt.platform.os === "ios")
-            //     fileInfo.filePath = System.writableLocation(System.StandardPathsDocumentsLocation) + dataItem.path.substring(1);
-            // else
-            //     fileInfo.filePath = System.writableLocation(System.StandardPathsHomeLocation) + dataItem.path.substring(1);
-            // fileInfo.refresh();
-            // if (fileInfo.exists && (!fileInfo.isFolder))
-            //     continue;
-            // dataPackageFileInfo.filePath = fileInfo.filePath + "/dataPackage.zip";
-            // if (fileInfo.exists && dataPackageFileInfo.exists)
-            //     continue;
-            return false;
-        }
-        return true;
     }
 
     Loader {

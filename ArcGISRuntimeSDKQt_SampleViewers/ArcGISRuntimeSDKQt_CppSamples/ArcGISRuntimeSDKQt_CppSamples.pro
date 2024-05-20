@@ -88,19 +88,19 @@ exists($$PWD/../../../../DevBuildCpp.pri) {
     else {
       PLATFORM = "linux/x64"
     }
-    ARCGIS_RUNTIME_IMPORT_PATH = $${priLocation}/sdk/$${PLATFORM}/qml
+    # ARCGIS_RUNTIME_IMPORT_PATH = $${priLocation}/sdk/$${PLATFORM}/qml
   }
 
   macx:{
     PLATFORM = "macOS"
-    ARCGIS_RUNTIME_IMPORT_PATH = $${priLocation}/sdk/$${PLATFORM}/universal/qml
+    # ARCGIS_RUNTIME_IMPORT_PATH = $${priLocation}/sdk/$${PLATFORM}/universal/qml
   }
 
   win32:{
     contains(QT_ARCH, x86_64):{
       PLATFORM = "windows/x64"
     }
-    ARCGIS_RUNTIME_IMPORT_PATH = $${priLocation}/sdk/$${PLATFORM}/qml
+    # ARCGIS_RUNTIME_IMPORT_PATH = $${priLocation}/sdk/$${PLATFORM}/qml
   }
 
   android {
@@ -120,10 +120,10 @@ exists($$PWD/../../../../DevBuildCpp.pri) {
     }
     contains(QMAKE_HOST.os, Windows):{
       ANDROIDDIR = $$clean_path($$(ALLUSERSPROFILE)\\EsriRuntimeQt)
-      ARCGIS_RUNTIME_IMPORT_PATH = $${ANDROIDDIR}/Qt$${ARCGIS_RUNTIME_VERSION}/$${PLATFORM}/$${ANDROID_ARCH_FOLDER}/qml
+      # ARCGIS_RUNTIME_IMPORT_PATH = $${ANDROIDDIR}/Qt$${ARCGIS_RUNTIME_VERSION}/$${PLATFORM}/$${ANDROID_ARCH_FOLDER}/qml
     }
     else {
-      ARCGIS_RUNTIME_IMPORT_PATH = $${priLocation}/sdk/$${PLATFORM}/$${ANDROID_ARCH_FOLDER}/qml
+      # ARCGIS_RUNTIME_IMPORT_PATH = $${priLocation}/sdk/$${PLATFORM}/$${ANDROID_ARCH_FOLDER}/qml
     }
   }
 
@@ -133,13 +133,13 @@ exists($$PWD/../../../../DevBuildCpp.pri) {
   }
 
   # Add plugin paths to QML_IMPORT_PATH
-  QML_IMPORT_PATH += $${ARCGIS_RUNTIME_IMPORT_PATH}
+  # QML_IMPORT_PATH += $${ARCGIS_RUNTIME_IMPORT_PATH}
 
   # Add plugin paths to QMLPATHS
-  QMLPATHS += $${ARCGIS_RUNTIME_IMPORT_PATH}
+  # QMLPATHS += $${ARCGIS_RUNTIME_IMPORT_PATH}
 
   # Set ArcGIS Runtime QML import path for ArcGISExtras
-  DEFINES += ARCGIS_RUNTIME_IMPORT_PATH=\"$$ARCGIS_RUNTIME_IMPORT_PATH\"
+  # DEFINES += ARCGIS_RUNTIME_IMPORT_PATH=\"$$ARCGIS_RUNTIME_IMPORT_PATH\"
   DEFINES += BUILD_FROM_SETUP
 }
 
@@ -164,7 +164,6 @@ android {
 }
 
 HEADERS += \
-    # CppSampleManager.h \
     TkZipArchive.h \
     TkZipFileInfo.h \
     FileUtility.h \
@@ -177,7 +176,6 @@ HEADERS += \
     $$COMMONVIEWER/CategoryListModel.h \
     $$COMMONVIEWER/DataItem.h \
     $$COMMONVIEWER/DataItemListModel.h \
-    # $$COMMONVIEWER/DownloadSampleManager.h \
     $$COMMONVIEWER/Sample.h \
     $$COMMONVIEWER/SampleCategory.h \
     $$COMMONVIEWER/SampleListModel.h \
@@ -194,7 +192,6 @@ HEADERS += \
     $$files(minizip-ng/ioapi.h)
 
 SOURCES += \
-    # CppSampleManager.cpp \
     TkZipArchive.cpp \
     TkZipFileInfo.cpp \
     FileUtility.cpp \
@@ -205,7 +202,6 @@ SOURCES += \
     $$COMMONVIEWER/CategoryListModel.cpp \
     $$COMMONVIEWER/DataItem.cpp \
     $$COMMONVIEWER/DataItemListModel.cpp \
-    # $$COMMONVIEWER/DownloadSampleManager.cpp \
     $$COMMONVIEWER/Sample.cpp \
     $$COMMONVIEWER/SampleCategory.cpp \
     $$COMMONVIEWER/SampleListModel.cpp \
@@ -223,9 +219,8 @@ SOURCES += \
     $$files(minizip-ng/mz_strm.c) \
     $$files(minizip-ng/mz_strm_mem.c) \
     $$files(minizip-ng/mz_strm_zlib.c) \
-    $$files(minizip-ng/mz_zip.c) # \
-#    $$files(minizip-ng/mz_os_posix.c) \
-#    $$files(minizip-ng/mz_strm_os_posix.c)
+    $$files(minizip-ng/mz_zip.c)
+
 win32 {
     SOURCES += \
         $$files(minizip-ng/mz_os_win32.c) \

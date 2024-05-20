@@ -421,14 +421,13 @@ bool SampleManager::dataItemsExists()
 
 void SampleManager::downloadAllDataItems()
 {
+    setDownloadFailed(false);
+
     if (!m_dataItems.isEmpty())
       m_dataItems.clear();
-    // for ( int i = 0; i < samples()->size(); i++)
-    // {
-    //   auto sample = samples()->get(i);
-    // }
+
     // populate list of data items needed to be downloaded.
-    for ( auto sample : *samples())
+    for (auto sample : *samples())
     {
       for (auto dataItem : *sample->dataItems())
       {
@@ -442,29 +441,15 @@ void SampleManager::downloadAllDataItems()
 
     setDownloadInProgress(true);
     downloadNextDataItem();
-    // if (!m_dataItems.isEmpty())
-    // {
-    //   qDebug() << m_dataItems.size();
-    //   auto item = m_dataItems.dequeue();
-    //   downloadData(item->itemId(), homePath() + item->path().mid(1));
-    // }
-
-    // for (auto item : items)
-    // {
-    //   downloadData(item->itemId(), homePath() + item->path().mid(1));
-    // }
-
 }
 
 void SampleManager::downloadDataItemsCurrentSample()
 {
+  setDownloadFailed(false);
+
   if (!m_dataItems.isEmpty())
     m_dataItems.clear();
-  // for ( int i = 0; i < samples()->size(); i++)
-  // {
-  //   auto sample = samples()->get(i);
-  // }
-  // populate list of data items needed to be downloaded.
+
   for (auto dataItem : *currentSample()->dataItems())
   {
     if (!dataItem->exists())
@@ -493,6 +478,12 @@ static QString homePath()
 
 void SampleManager::downloadNextDataItem()
 {
+  if (cancelDownload())
+  {
+    m_dataItems.clear();
+    setCancelDownload(false);
+  }
+
   if (!m_dataItems.isEmpty())
   {
     if (!m_portal)
@@ -501,92 +492,79 @@ void SampleManager::downloadNextDataItem()
       connect(m_portal, &Portal::doneLoading, this, [this](const Error& error)
       {
         if (!error.isEmpty())
+        {
+          setDownloadFailed(true);
+          setDownloadText(QString("Download failed: %1").arg(error.message()));
+          setDownloadInProgress(false);
           return;
-          //do something
-        // qDebug() << m_dataItems.size();
+        }
+
         setDownloadText(QString("Remaining items in queue: %1").arg(m_dataItems.size()));
-        emit downloadTextChanged();
         auto item = m_dataItems.dequeue();
         fetchPortalItemData(item->itemId(), homePath() + item->path().mid(1));
       });
       m_portal->load();
     }
     else {
-      // qDebug() << m_dataItems.size();
       setDownloadText(QString("Remaining items in queue: %1").arg(m_dataItems.size()));
-      emit downloadTextChanged();
       auto item = m_dataItems.dequeue();
       fetchPortalItemData(item->itemId(), homePath() + item->path().mid(1));
     }
   }
   else {
+    setDownloadText("Downloads complete");
+    emit doneDownloadingChanged();
+    setDownloadProgress(0.0);
     setDownloadInProgress(false);
-    emit downloadInProgressChanged();
   }
 }
 
 void SampleManager::fetchPortalItemData(const QString& itemId, const QString& outputPath)
 {
-  // if ( !m_portal && m_portal->loadStatus() != LoadStatus::Loaded)
-  //   createAndLoadPortal();
-
-  // connect(m_portal, &Portal::doneLoading, this, [this, itemId, outputPath]()
-  // {
-  bool success = m_portal->loadStatus() == LoadStatus::Loaded;
-  // emit portalDoneLoading(success);
-  if (success)
+  auto portalItem = new PortalItem(m_portal, itemId, this);
+  if (portalItem)
   {
-    auto portalItem = new PortalItem(m_portal, itemId, this);
-    if (portalItem)
+    connect(portalItem, &PortalItem::doneLoading, this, [this, portalItem, outputPath]()
     {
-      connect(portalItem, &PortalItem::doneLoading, this, [this, portalItem, outputPath]()
+      if (portalItem->loadStatus() == LoadStatus::Loaded)
       {
-        bool success = portalItem->loadStatus() == LoadStatus::Loaded;
-        // emit portalItemDoneLoading(success, portalItem->itemId(), portalItem->type() == PortalItemType::CodeSample ? portalItem->name() : QString());
-        if (success)
+        auto folder = portalItem->type() == PortalItemType::CodeSample ? portalItem->name() : QString();
+        QString formattedPath = SampleManager::formattedPath(outputPath, folder);
+        portalItem->fetchDataAsync(formattedPath).then([this, portalItem, formattedPath]()
         {
-          auto folder = portalItem->type() == PortalItemType::CodeSample ? portalItem->name() : QString();
-          QString formattedPath = SampleManager::formattedPath(outputPath, folder);
-          portalItem->fetchDataAsync(formattedPath).then([this, portalItem, formattedPath]()
+          setDownloadProgress(0.0);
+          if (QFileInfo(formattedPath).suffix() == "zip")
           {
-            // IF ZIP? UNZIP THEN PROCEED
-            if (QFileInfo(formattedPath).suffix() == "zip")
+            auto zipArchive = new TkZipArchive(this);
+            zipArchive->setPath(formattedPath);
+            connect(zipArchive, &TkZipArchive::extractCompleted, this, [this, formattedPath, portalItem]()
             {
-              auto zipArchive = new TkZipArchive(this);
-              zipArchive->setPath(formattedPath);
-              connect(zipArchive, &TkZipArchive::extractCompleted, this, [this, formattedPath]()
-              {
-                  downloadNextDataItem();
-              });
-              zipArchive->extractAll(QFileInfo(formattedPath).dir().absolutePath());
-            }
-            else
-            {
-              downloadNextDataItem();
-              portalItem->deleteLater();
-              // emit doneDownloadingPortalItem();
-            }
-          }).onFailed([](const ErrorException &e)
+                downloadNextDataItem();
+                portalItem->deleteLater();
+            });
+            zipArchive->extractAll(QFileInfo(formattedPath).dir().absolutePath());
+          }
+          else
           {
-            auto placeholder = e.error();
-            qDebug() << placeholder.message();
-            // auto id = m_portalItem->itemId();
-            // emit portalItemFetchDataCompleted(id, false);
-          });
-        }
-      });
+            downloadNextDataItem();
+            portalItem->deleteLater();
+          }
+        }).onFailed([this, portalItem](const ErrorException&)
+        {
+          setDownloadFailed(true);
+          setDownloadText(QString("Download failed for item ").arg(portalItem->itemId()));
+          setDownloadInProgress(false);
+        });
+      }
+    });
 
-      connect(portalItem, &PortalItem::fetchDataProgressChanged, this,
-              [this](const NetworkRequestProgress& progress)
-      {
-        setDownloadProgress(progress.progressPercentage());
-        emit downloadProgressChanged();
-        // emit portalItemFetchDataProgress(portalItem->itemId(), progress.progressPercentage());
-      });
-      portalItem->load();
-    }
+    connect(portalItem, &PortalItem::fetchDataProgressChanged, this,
+            [this](const NetworkRequestProgress& progress)
+    {
+      setDownloadProgress(progress.progressPercentage());
+    });
+    portalItem->load();
   }
-  // });
 }
 
 QString SampleManager::formattedPath(const QString& outputPath,
@@ -614,31 +592,39 @@ QString SampleManager::formattedPath(const QString& outputPath,
 
   return formattedFilePath;
 }
-// bool SampleManager::downloadAllDataItems()
-// {
-//   QList<DataItem*> items;
-//   // for ( int i = 0; i < samples()->size(); i++)
-//   // {
-//   //   auto sample = samples()->get(i);
-//   // }
-//   for ( auto sample : *samples())
-//   {
-//     for (auto dataItem : *sample->dataItems())
-//     {
-//       if (dataItem->exists())
-//       {
-//         qDebug() << sample->name().toString() << "; " << dataItem->exists() << "; " << dataItem->path();
-//         items.append(dataItem);
-//       }
-//     }
-//   }
 
-//   for (auto item : items)
-//   {
+SampleManager::Reachability SampleManager::reachability() const
+{
+    auto* instance = QNetworkInformation::instance();
 
-//   }
+    if(!instance)
+        return SampleManager::Reachability::ReachabilityUnknown;
+    switch (instance->reachability())
+    {
+        case QNetworkInformation::Reachability::Online:
+            return SampleManager::Reachability::ReachabilityOnline;
+        case QNetworkInformation::Reachability::Site:
+            return SampleManager::Reachability::ReachabilitySite;
+        case QNetworkInformation::Reachability::Local:
+            return SampleManager::Reachability::ReachabilityLocal;
+        case QNetworkInformation::Reachability::Disconnected:
+            return SampleManager::Reachability::ReachabilityDisconnected;
+        case QNetworkInformation::Reachability::Unknown:
+        default:
+            return SampleManager::Reachability::ReachabilityUnknown;
+    };
+}
 
-//   }
+bool SampleManager::deleteAllOfflineData()
+{
+  QDir dir(homePath() + "/ArcGIS/Runtime/Data");
+  return dir.removeRecursively();
+}
+
+QString SampleManager::api() const
+{
+  return QStringLiteral("C++");
+}
 
 void SampleManager::setSourceCodeIndex(int i)
 {
