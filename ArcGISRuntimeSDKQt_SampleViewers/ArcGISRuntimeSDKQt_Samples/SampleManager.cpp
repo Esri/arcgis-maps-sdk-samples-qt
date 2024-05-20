@@ -535,8 +535,7 @@ void SampleManager::fetchPortalItemData(const QString& itemId, const QString& ou
           setDownloadProgress(0.0);
           if (QFileInfo(formattedPath).suffix() == "zip")
           {
-            auto zipArchive = new TkZipArchive(this);
-            zipArchive->setPath(formattedPath);
+            auto zipArchive = new TkZipArchive(formattedPath, this);
             connect(zipArchive, &TkZipArchive::extractCompleted, this, [this, formattedPath, portalItem]()
             {
                 downloadNextDataItem();
