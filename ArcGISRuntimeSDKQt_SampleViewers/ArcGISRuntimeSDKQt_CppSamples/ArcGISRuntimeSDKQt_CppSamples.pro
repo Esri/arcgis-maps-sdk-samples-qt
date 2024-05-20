@@ -167,11 +167,6 @@ android {
 
 HEADERS += \
     TkZipArchive.h \
-    TkZipFileInfo.h \
-    FileUtility.h \
-    CommonExports.h \
-    TkDebug.h \
-    DebugUtility.h \
     $$PCH_HEADER \
     $$COMMONVIEWER/SyntaxHighlighter/syntax_highlighter.h \
     $$COMMONVIEWER/SyntaxHighlighter/QMLHighlighter.h \
@@ -195,10 +190,6 @@ HEADERS += \
 
 SOURCES += \
     TkZipArchive.cpp \
-    TkZipFileInfo.cpp \
-    FileUtility.cpp \
-    TkDebug.cpp \
-    DebugUtility.cpp \
     $$COMMONVIEWER/SyntaxHighlighter/syntax_highlighter.cpp \
     $$COMMONVIEWER/SyntaxHighlighter/QMLHighlighter.cpp \
     $$COMMONVIEWER/CategoryListModel.cpp \
