@@ -353,7 +353,7 @@ Item {
                 }
 
                 Item {
-                    height: pointLayersColumn.height+25
+                    height: pointLayersColumn.height+20
                 }
 
                 Column {
