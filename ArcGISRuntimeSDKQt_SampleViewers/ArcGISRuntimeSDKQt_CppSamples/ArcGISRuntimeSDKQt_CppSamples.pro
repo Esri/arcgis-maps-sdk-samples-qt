@@ -42,12 +42,12 @@ exists($$PWD/../../../../DevBuildCpp.pri) {
 
   INCLUDEPATH += \
       $$SAMPLEPATHCPP \
-      $$SAMPLEPATHCPP/zlib-ng \
-      $$SAMPLEPATHCPP/minizip-ng \
       $$COMMONVIEWER \
       $$COMMONVIEWER/SyntaxHighlighter \
       $$PWD/../../../../api/qt_cpp/Include \
       $$PWD/../../../../api/qt_cpp/Include/LocalServer/ \
+      $$PWD/zlib-ng \
+      $$PWD/minizip-ng
 } else {
   message("Building against the installed SDK")
   CONFIG += build_from_setup
@@ -78,7 +78,9 @@ exists($$PWD/../../../../DevBuildCpp.pri) {
       $$COMMONVIEWER \
       $$COMMONVIEWER/SyntaxHighlighter \
       $$priLocation/sdk/include \
-      $$priLocation/sdk/include/LocalServer
+      $$priLocation/sdk/include/LocalServer \
+      $$PWD/zlib-ng \
+      $$PWD/minizip-ng
 
   PLATFORM = ""
   unix:!macx:!android:!ios {
