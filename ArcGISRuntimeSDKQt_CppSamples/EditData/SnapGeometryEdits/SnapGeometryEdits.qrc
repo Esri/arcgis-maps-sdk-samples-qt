@@ -7,6 +7,7 @@
         <file>main.qml</file>
         <file>screenshot.png</file>
         <file>README.md</file>
+        <file>GeometryEditorButton.qml</file>
         <file>iconAssets/erase-32.png</file>
         <file>iconAssets/line-32.png</file>
         <file>iconAssets/multipoint-32.png</file>
@@ -15,7 +16,6 @@
         <file>iconAssets/save-32.png</file>
         <file>iconAssets/trash-32.png</file>
         <file>iconAssets/undo-32.png</file>
-        <file>GeometryEditorButton.qml</file>
         <file>iconAssets/settings.png</file>
     </qresource>
 </RCC>

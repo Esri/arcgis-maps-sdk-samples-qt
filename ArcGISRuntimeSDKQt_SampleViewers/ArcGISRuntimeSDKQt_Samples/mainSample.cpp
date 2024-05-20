@@ -251,6 +251,7 @@
 #include "Simple_Marker_Symbol.h"
 #include "Simple_Renderer.h"
 #include "SketchOnMap.h"
+#include "SnapGeometryEdits.h"
 #include "SpatialOperations.h"
 #include "SpatialRelationships.h"
 #include "StatisticalQuery.h"
@@ -566,6 +567,7 @@ void registerCppSampleClasses()
   SketchOnMap::init();
   SpatialOperations::init();
   SpatialRelationships::init();
+  SnapGeometryEdits::init();
   StatisticalQuery::init();
   StatisticalQueryGroupSort::init();
   StyleWmsLayer::init();

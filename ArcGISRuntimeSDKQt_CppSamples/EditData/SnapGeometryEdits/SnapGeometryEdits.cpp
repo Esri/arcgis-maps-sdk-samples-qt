@@ -14,68 +14,68 @@
 // limitations under the License.
 // [Legal]
 
-#include "Geometry.h"
 #ifdef PCH_BUILD
 #include "pch.hpp"
 #endif // PCH_BUILD
 
 #include "SnapGeometryEdits.h"
 
+#include "FeatureLayer.h"
+#include "FeatureTable.h"
+#include "Geometry.h"
+#include "GeometryEditor.h"
+#include "GeometryEditorElement.h"
+#include "GeometryTypes.h"
+#include "Graphic.h"
+#include "GraphicListModel.h"
+#include "GraphicsOverlay.h"
+#include "GraphicsOverlayListModel.h"
+#include "IdentifyGraphicsOverlayResult.h"
+#include "Layer.h"
+#include "LayerListModel.h"
+#include "LoadSettings.h"
 #include "Map.h"
 #include "MapQuickView.h"
 #include "MapTypes.h"
 #include "Portal.h"
 #include "PortalItem.h"
-#include "SnapGeometryEdits.h"
-#include "LoadSettings.h"
-#include "LayerListModel.h"
-#include "Layer.h"
-#include "GeometryEditor.h"
-#include "GraphicsOverlay.h"
-#include "GeometryEditor.h"
-#include "GeometryTypes.h"
-#include "GraphicsOverlayListModel.h"
 #include "SimpleFillSymbol.h"
 #include "SimpleLineSymbol.h"
 #include "SimpleMarkerSymbol.h"
-#include "SymbolTypes.h"
-#include "IdentifyGraphicsOverlayResult.h"
-#include "Graphic.h"
+#include "SnapGeometryEdits.h"
 #include "SnapSettings.h"
 #include "SnapSourceSettings.h"
-#include "GraphicListModel.h"
-#include "GeometryEditorElement.h"
-#include "FeatureLayer.h"
-#include "FeatureTable.h"
+#include "SymbolTypes.h"
 
 #include <QFuture>
 
 using namespace Esri::ArcGISRuntime;
 
 SnapGeometryEdits::SnapGeometryEdits(QObject* parent /* = nullptr */) :
-  QObject(parent),
-  m_portal(new Portal(this)),
-  m_portalItem(new PortalItem(m_portal, "b95fe18073bc4f7788f0375af2bb445e", this))
+  QObject(parent)
 {
-  m_map = new Map(m_portalItem, this);
-  m_map->loadSettings()->setFeatureTilingMode(FeatureTilingMode::EnabledWhenSupported);
+  Portal* portal = new Portal(this);
+  PortalItem* portalItem = new PortalItem(portal, "b95fe18073bc4f7788f0375af2bb445e", this);
+  m_map = new Map(portalItem, this);
+
   m_geometryEditor = new GeometryEditor(this);
   m_graphicsOverlay = new GraphicsOverlay(this);
-  m_tempGraphicsParent = new QObject(this);
-  connect(m_map, &Map::doneLoading, this, [this]()
-          {
-            for (Layer* layer : *m_map->operationalLayers())
-            {
-              connect(layer, &Layer::doneLoading, this, [layer]()
-                      {
-                qDebug() << "done" << layer->name();
-              });
-            }
-          });
-  }
-
-
-
+  connect (m_map, &Map::doneLoading, this, [this]()
+  {
+    for (Layer* layer : *m_map->operationalLayers())
+    {
+      connect (layer, &Layer::doneLoading, this, [this]()
+      {
+        // Enable snap settings after layers load
+        if (m_layersLoaded == false)
+        {
+          m_layersLoaded = true;
+          emit layersLoadedChanged();
+        }
+      });
+    }
+  });
+}
 
 SnapGeometryEdits::~SnapGeometryEdits() = default;
 
@@ -100,71 +100,67 @@ void SnapGeometryEdits::setMapView(MapQuickView* mapView)
   m_mapView = mapView;
   m_mapView->setMap(m_map);
 
+  m_map->loadSettings()->setFeatureTilingMode(FeatureTilingMode::EnabledWithFullResolutionWhenSupported);
+
   m_mapView->graphicsOverlays()->append(m_graphicsOverlay);
 
   // Set the geometry editor on the map view
   m_mapView->setGeometryEditor(m_geometryEditor);
-
   m_mapView->setMagnifierEnabled(true);
-
 
   emit mapViewChanged();
   createInitialSymbols();
   createConnections();
-
-  // showBottomSheet();
 }
 
 // Create symbols used by all graphics
 void SnapGeometryEdits::createInitialSymbols()
 {
-  m_pointSymbol = new SimpleMarkerSymbol(SimpleMarkerSymbolStyle::Square, QColor(255, 45, 0), 20, this);
-  m_multiPointSymbol = new SimpleMarkerSymbol(SimpleMarkerSymbolStyle::Square, QColor(255, 45, 0), 20, this);
+  m_pointSymbol = new SimpleMarkerSymbol(SimpleMarkerSymbolStyle::Square, QColor(255, 45, 0), 10, this);
+  m_multiPointSymbol = new SimpleMarkerSymbol(SimpleMarkerSymbolStyle::Square, QColor(255, 45, 0), 10, this);
   m_lineSymbol = new SimpleLineSymbol(SimpleLineSymbolStyle::Solid, QColor(255, 45, 0), 2, this);
   m_polygonSymbol = new SimpleFillSymbol(SimpleFillSymbolStyle::Solid, QColor(255, 0, 0, 75),
-  new SimpleLineSymbol(SimpleLineSymbolStyle::Dash, QColor(0, 0, 0), 1.0, this), this);
+                      new SimpleLineSymbol(SimpleLineSymbolStyle::Dash, QColor(0, 0, 0), 1.0, this), this);
 }
 
 void SnapGeometryEdits::createConnections()
 {
-  qDebug() << "1";
-
   // Allow user to edit existing graphics by clicking on them
-  connect(m_mapView, &MapQuickView::mouseClicked, this, [this](const QMouseEvent& mouseEvent)
-          {qDebug() << "2";
-            if (!m_geometryEditor->isStarted())
-            {qDebug() << "3";
-              m_mapView->identifyGraphicsOverlayAsync(m_graphicsOverlay, mouseEvent.position(), 10 ,false).then(this,
-                [this](IdentifyGraphicsOverlayResult* rawResult){
-                // Handle editing selected graphics, if any
+  connect (m_mapView, &MapQuickView::mouseClicked, this, [this](const QMouseEvent& mouseEvent)
+  {
+    if (!m_geometryEditor->isStarted())
+    {
+      m_mapView->identifyGraphicsOverlayAsync(m_graphicsOverlay, mouseEvent.position(), 10 ,false).then(this, [this](IdentifyGraphicsOverlayResult* result)
+      {
+        // Handle editing selected graphics, if any
+        auto identifyResult = std::unique_ptr<IdentifyGraphicsOverlayResult>(result);
+        // Return if no graphics were identified
+        if (identifyResult->graphics().isEmpty())
+          return;
 
-                auto identifyResult = std::unique_ptr<IdentifyGraphicsOverlayResult>(rawResult);
+        m_editingGraphic = identifyResult->graphics().first();
 
-                // Return if no graphics were identified
-                if (identifyResult->graphics().isEmpty())
-                return;
+        // Hide the graphic currently being edited
+        m_editingGraphic->setVisible(false);
 
-                m_editingGraphic = identifyResult->graphics().first();
+        // Start the geometry editor with the graphic's geometry
+        m_geometryEditor->start(m_editingGraphic->geometry());
 
-                // Hide the graphic currently being edited
-                m_editingGraphic->setVisible(false);
+        emit geometryEditorStartedChanged();
 
-                // Start the geometry editor with the graphic's geometry. This does not directly affect the graphic.
-                m_geometryEditor->start(m_editingGraphic->geometry());
-
-                emit geometryEditorStartedChanged();
-                });
-            }
-            emit canUndoChanged();
-            emit elementIsSelectedChanged();
-          });
+        result->deleteLater();
+      });
+    }
+    emit canUndoChanged();
+    emit elementIsSelectedChanged();
+  });
 
   // Enable or disable buttons when mouse is released (ie after a drag operation)
   connect(m_mapView, &MapQuickView::mouseReleased, this, [this](const QMouseEvent&)
-          {
-            emit canUndoChanged();
-            emit elementIsSelectedChanged();
-          });
+  {
+    emit canUndoChanged();
+    emit elementIsSelectedChanged();
+  });
 }
 
 bool SnapGeometryEdits::geometryEditorStarted() const
@@ -182,78 +178,76 @@ bool SnapGeometryEdits::elementIsSelected()
   return (m_geometryEditor && m_geometryEditor->selectedElement() && m_geometryEditor->selectedElement()->canDelete());
 }
 
+// Toggles snapping using the enabled state from the snap settings
 void SnapGeometryEdits::snappingEnabledStatus(bool snappingCheckedState)
 {
   m_geometryEditor->snapSettings()->setEnabled(snappingCheckedState);
 }
 
+// Toggles snapping for the point layer snap source at [index] using the checked value from the snap settings
 void SnapGeometryEdits::pointSourceEnabledStatus(bool snappingCheckedState, int index)
 {
   m_pointSourceCheckedState[index] = snappingCheckedState;
-  m_geometryEditor->snapSettings()->sourceSettings()[index]->setEnabled(m_pointSourceCheckedState[index]);
+  m_pointSourceList[index]->setEnabled(m_pointSourceCheckedState[index]);
 
 }
 
+// Toggles snapping for the polyline layer snap source at [index] using the checked value from the snap settings
 void SnapGeometryEdits::polylineSourceEnabledStatus(bool snappingCheckedState, int index)
 {
   m_polylineSourceCheckedState[index] = snappingCheckedState;
-  m_geometryEditor->snapSettings()->sourceSettings()[index]->setEnabled(m_polylineSourceCheckedState[index]);
+  m_polylineSourceList[index]->setEnabled(m_polylineSourceCheckedState[index]);
 
 }
 
+// Enable snapping for all the point layer snap sources
 void SnapGeometryEdits::onPointLayersEnabled()
 {
-  for (int index = 0; index < m_snapSourceList.size()-1; ++index)
+  for (int index = 0; index < m_pointSourceList.size(); ++index)
   {
-    FeatureLayer *featureLayer = static_cast<FeatureLayer*>(m_snapSourceList[index]->source());
-    if (featureLayer && featureLayer->featureTable() && featureLayer->featureTable()->geometryType() == GeometryType::Point)
-    {
-      pointSourceEnabledStatus(true, index);
-    }
+    pointSourceEnabledStatus(true, index);
   }
-    emit pointSourceCheckedStateChanged();
+  emit pointSourceCheckedStateChanged();
 }
 
+// Enable snapping for all the polyline layer snap sources
 void SnapGeometryEdits::onPolylineLayersEnabled()
 {
-  for (int index = 0; index < m_snapSourceList.size()-1; ++index)
+  for (int index = 0; index < m_polylineSourceList.size(); ++index)
   {
-    FeatureLayer *featureLayer = static_cast<FeatureLayer*>(m_snapSourceList[index]->source());
-    if (featureLayer && featureLayer->featureTable() && featureLayer->featureTable()->geometryType() == GeometryType::Polyline)
-    {
-      polylineSourceEnabledStatus(true, index);
-    }
+    polylineSourceEnabledStatus(true, index);
   }
   emit polylineSourceCheckedStateChanged();
 }
 
+// Starts the GeometryEditor using the selected geometry type
 void SnapGeometryEdits::startEditor(GeometryEditorMode geometryEditorMode)
 {
-    switch (geometryEditorMode)
-    {
-    case GeometryEditorMode::PointMode:
-      m_geometryEditor->start(Esri::ArcGISRuntime::GeometryType::Point);
-      break;
+  switch (geometryEditorMode)
+  {
+  case GeometryEditorMode::PointMode:
+    m_geometryEditor->start(Esri::ArcGISRuntime::GeometryType::Point);
+    break;
 
-    case GeometryEditorMode::MultipointMode:
-      m_geometryEditor->start(Esri::ArcGISRuntime::GeometryType::Multipoint);
-      break;
+  case GeometryEditorMode::MultipointMode:
+    m_geometryEditor->start(Esri::ArcGISRuntime::GeometryType::Multipoint);
+    break;
 
-    case GeometryEditorMode::PolylineMode:
-      m_geometryEditor->start(Esri::ArcGISRuntime::GeometryType::Polyline);
-      break;
+  case GeometryEditorMode::PolylineMode:
+    m_geometryEditor->start(Esri::ArcGISRuntime::GeometryType::Polyline);
+    break;
 
-    case GeometryEditorMode::PolygonMode:
-      m_geometryEditor->start(Esri::ArcGISRuntime::GeometryType::Polygon);
-      break;
+  case GeometryEditorMode::PolygonMode:
+    m_geometryEditor->start(Esri::ArcGISRuntime::GeometryType::Polygon);
+    break;
 
-    default:
-      break;
-    }
-
-    emit geometryEditorStartedChanged();
+  default:
+    break;
+  }
+  emit geometryEditorStartedChanged();
 }
 
+// Stops the GeometryEditor and append the new graphic to the graphics overlay
 void SnapGeometryEdits::stopEditor()
 {
   const Geometry geometry = m_geometryEditor->stop();
@@ -263,7 +257,6 @@ void SnapGeometryEdits::stopEditor()
   {
     m_editingGraphic->setGeometry(geometry);
 
-    // Show the graphic and clear the selection
     m_editingGraphic->setVisible(true);
     m_editingGraphic = nullptr;
 
@@ -293,57 +286,50 @@ void SnapGeometryEdits::stopEditor()
     return;
   }
 
-  // Append the new graphic to the graphics overlay
-  m_graphicsOverlay->graphics()->append(new Graphic(geometry, geometrySymbol, m_tempGraphicsParent));
+  m_graphicsOverlay->graphics()->append(new Graphic(geometry, geometrySymbol, new QObject(this)));
 }
 
+// Deletes the selected element
 void SnapGeometryEdits::deleteSelection()
 {
   m_geometryEditor->deleteSelectedElement();
   emit canUndoChanged();
 }
 
+// Reverts the last event on the geometry editor
 void SnapGeometryEdits::editorUndo()
 {
-  // if (m_geometryEditor->canUndo())
-    m_geometryEditor->undo();
+  m_geometryEditor->undo();
   emit canUndoChanged();
 }
 
-void SnapGeometryEdits::configureSnapping()
+void SnapGeometryEdits::displaySnapSources()
 {
-
+  // create lists for displaying the snap sources in snap settings
+  QList<Esri::ArcGISRuntime::SnapSourceSettings*> snapSourceList;
   if (m_geometryEditor->snapSettings()->sourceSettings().empty())
   {
-
     m_geometryEditor->snapSettings()->syncSourceSettings();
-    m_geometryEditor->snapSettings()->setEnabled(true);
+    snapSourceList = m_geometryEditor->snapSettings()->sourceSettings();
 
-    m_snapSourceList = m_geometryEditor->snapSettings()->sourceSettings();
-    qDebug() << m_snapSourceList.size();
-    qDebug() << static_cast<FeatureLayer*>(m_snapSourceList[0]->source())->name();
-    qDebug() << static_cast<FeatureLayer*>(m_snapSourceList[1]->source())->name();
-    qDebug() << static_cast<FeatureLayer*>(m_snapSourceList[2]->source())->name();
-    qDebug() << static_cast<FeatureLayer*>(m_snapSourceList[3]->source())->name();
-  }
-
-  m_pointLayers.clear();
-  m_polylineLayers.clear();
-  for (int index = 0; index < m_snapSourceList.size()-1; ++index)
-  {
-    FeatureLayer *featureLayer = static_cast<FeatureLayer*>(m_snapSourceList[index]->source());
-    if (featureLayer->featureTable()->geometryType() == GeometryType::Point)
+    for (int index = 0; index < snapSourceList.size()-1; ++index)
     {
-      m_pointLayers.append(featureLayer->name());
-      m_pointSourceCheckedState.append(m_snapSourceList[index]->isEnabled());
+      FeatureLayer *featureLayer = static_cast<FeatureLayer*>(snapSourceList[index]->source());
+      if (featureLayer->featureTable()->geometryType() == GeometryType::Point)
+      {
+        m_pointLayers.append(featureLayer->name());
+        m_pointSourceCheckedState.append(snapSourceList[index]->isEnabled());
+        m_pointSourceList.append(snapSourceList[index]);
+      }
+      else if (featureLayer->featureTable()->geometryType() == GeometryType::Polyline)
+      {
+        m_polylineLayers.append(featureLayer->name());
+        m_polylineSourceCheckedState.append(snapSourceList[index]->isEnabled());
+        m_polylineSourceList.append(snapSourceList[index]);
+      }
     }
-    else if (featureLayer->featureTable()->geometryType() == GeometryType::Polyline)
-    {
-      m_polylineLayers.append(featureLayer->name());
-      m_polylineSourceCheckedState.append(m_snapSourceList[index]->isEnabled());
-    }
-  }
 
   emit pointLayersChanged();
   emit polylineLayersChanged();
+  }
 }

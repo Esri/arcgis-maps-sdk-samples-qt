@@ -17,18 +17,18 @@
 #ifndef SNAPGEOMETRYEDITS_H
 #define SNAPGEOMETRYEDITS_H
 
-#include "GeometryEditor.h"
 namespace Esri::ArcGISRuntime {
+  class GeometryEditor;
+  class GeometryEditor;
+  class Graphic;
+  class GraphicsOverlay;
   class Map;
   class MapQuickView;
   class Portal;
   class PortalItem;
-  class GeometryEditor;
-  class Graphic;
-  class GraphicsOverlay;
-  class SimpleMarkerSymbol;
-  class SimpleLineSymbol;
   class SimpleFillSymbol;
+  class SimpleLineSymbol;
+  class SimpleMarkerSymbol;
   class SnapSourceSettings;
 }
 
@@ -44,6 +44,7 @@ class SnapGeometryEdits : public QObject
   Q_PROPERTY(bool geometryEditorStarted READ geometryEditorStarted NOTIFY geometryEditorStartedChanged)
   Q_PROPERTY(bool canUndo READ canUndo NOTIFY canUndoChanged)
   Q_PROPERTY(bool elementIsSelected READ elementIsSelected NOTIFY elementIsSelectedChanged)
+  Q_PROPERTY(bool layersLoaded MEMBER m_layersLoaded NOTIFY layersLoadedChanged)
   Q_PROPERTY(QList<QString> pointLayers MEMBER m_pointLayers NOTIFY pointLayersChanged)
   Q_PROPERTY(QList<QString> polylineLayers MEMBER m_polylineLayers NOTIFY polylineLayersChanged)
   Q_PROPERTY(QList<bool> pointSourceCheckedState MEMBER m_pointSourceCheckedState NOTIFY pointSourceCheckedStateChanged)
@@ -70,35 +71,34 @@ public:
   Q_INVOKABLE void snappingEnabledStatus(bool checkedValue);
   Q_INVOKABLE void onPointLayersEnabled();
   Q_INVOKABLE void onPolylineLayersEnabled();
-  Q_INVOKABLE void configureSnapping();
+  Q_INVOKABLE void displaySnapSources();
   Q_INVOKABLE void pointSourceEnabledStatus(bool snappingCheckedState, int index);
   Q_INVOKABLE void polylineSourceEnabledStatus(bool snappingCheckedState, int index);
 
 signals:
-  void mapViewChanged();
-  void geometryEditorStartedChanged();
   void canUndoChanged();
   void elementIsSelectedChanged();
-  void polylineLayersChanged();
+  void geometryEditorStartedChanged();
+  void layersLoadedChanged();
+  void mapViewChanged();
   void pointLayersChanged();
   void pointSourceCheckedStateChanged();
+  void polylineLayersChanged();
   void polylineSourceCheckedStateChanged();
 
 private:
   Esri::ArcGISRuntime::MapQuickView* mapView() const;
   void setMapView(Esri::ArcGISRuntime::MapQuickView* mapView);
   bool geometryEditorStarted() const;
+  bool canUndo();
   void createInitialSymbols();
   void createConnections();
-  bool canUndo();
   bool elementIsSelected();
 
 
 
   Esri::ArcGISRuntime::Map* m_map = nullptr;
   Esri::ArcGISRuntime::MapQuickView* m_mapView = nullptr;
-  Esri::ArcGISRuntime::Portal* m_portal = nullptr;
-  Esri::ArcGISRuntime::PortalItem* m_portalItem = nullptr;
   Esri::ArcGISRuntime::GraphicsOverlay* m_graphicsOverlay = nullptr;
   Esri::ArcGISRuntime::Graphic* m_editingGraphic = nullptr;
   Esri::ArcGISRuntime::GeometryEditor* m_geometryEditor = nullptr;
@@ -108,10 +108,11 @@ private:
   Esri::ArcGISRuntime::SimpleFillSymbol* m_polygonSymbol = nullptr;
   QList<bool> m_pointSourceCheckedState;
   QList<bool> m_polylineSourceCheckedState;
-  QList<Esri::ArcGISRuntime::SnapSourceSettings*> m_snapSourceList;
+  QList<Esri::ArcGISRuntime::SnapSourceSettings*> m_pointSourceList;
+  QList<Esri::ArcGISRuntime::SnapSourceSettings*> m_polylineSourceList;
   QList<QString> m_pointLayers;
   QList<QString> m_polylineLayers;
-  QObject* m_tempGraphicsParent = nullptr;
+  bool m_layersLoaded;
 };
 
 #endif // SNAPGEOMETRYEDITS_H
