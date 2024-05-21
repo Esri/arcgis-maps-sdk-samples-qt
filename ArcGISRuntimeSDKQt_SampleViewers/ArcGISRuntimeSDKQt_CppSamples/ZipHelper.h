@@ -51,17 +51,16 @@ public:
   Q_INVOKABLE bool extractAll(const QString &outputPath);
   void setPath(const QString& path);
 
+  explicit ZipHelper(QObject* parent = nullptr);
+  ZipHelper(const QString& path, QObject* parent = nullptr);
+  ~ZipHelper();
+
 signals:
   void pathChanged();
 
   void extractError(const QString& fileName, const QString& outputFileName, ZipHelper::Result result);
   void extractProgress(const QString& fileName, const QString& outputFileName, qreal percent);
   void extractCompleted();
-
-public:
-  explicit ZipHelper(QObject* parent = nullptr);
-  ZipHelper(const QString& path, QObject* parent = nullptr);
-  ~ZipHelper();
 
 private:
   bool zrOpen(const QString& filePath);
