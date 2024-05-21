@@ -39,7 +39,7 @@
 #include "CredentialCache.h"
 #include "ErrorException.h"
 
-#include "TkZipArchive.h"
+#include "ZipHelper.h"
 
 #include "CategoryListModel.h"
 #include "DataItem.h"
@@ -409,6 +409,10 @@ void SampleManager::clearCredentialCache()
 
 bool SampleManager::dataItemsExists()
 {
+  // Sample has no data items, return true
+  if (currentSample()->dataItems()->size() == 0)
+    return true;
+
   for (auto dataItem : *currentSample()->dataItems())
   {
     if (dataItem->exists())
@@ -432,14 +436,10 @@ void SampleManager::downloadAllDataItems()
       for (auto dataItem : *sample->dataItems())
       {
         if (!dataItem->exists())
-        {
-          qDebug() << sample->name().toString() << "; " << dataItem->exists() << "; " << dataItem->path();
           m_dataItems.enqueue(dataItem);
-        }
       }
     }
 
-    setDownloadInProgress(true);
     downloadNextDataItem();
 }
 
@@ -453,13 +453,9 @@ void SampleManager::downloadDataItemsCurrentSample()
   for (auto dataItem : *currentSample()->dataItems())
   {
     if (!dataItem->exists())
-    {
-      qDebug() << currentSample()->name().toString() << "; " << dataItem->exists() << "; " << dataItem->path();
       m_dataItems.enqueue(dataItem);
-    }
   }
 
-  setDownloadInProgress(true);
   downloadNextDataItem();
 }
 
@@ -481,7 +477,6 @@ void SampleManager::downloadNextDataItem()
   if (cancelDownload())
   {
     m_dataItems.clear();
-    setCancelDownload(false);
   }
 
   if (!m_dataItems.isEmpty())
@@ -513,9 +508,12 @@ void SampleManager::downloadNextDataItem()
   }
   else {
     setDownloadText("Downloads complete");
-    emit doneDownloadingChanged();
+    if (!cancelDownload())
+      emit doneDownloadingChanged();
     setDownloadProgress(0.0);
     setDownloadInProgress(false);
+    if (cancelDownload())
+      setCancelDownload(false);
   }
 }
 
@@ -535,13 +533,14 @@ void SampleManager::fetchPortalItemData(const QString& itemId, const QString& ou
           setDownloadProgress(0.0);
           if (QFileInfo(formattedPath).suffix() == "zip")
           {
-            auto zipArchive = new TkZipArchive(formattedPath, this);
-            connect(zipArchive, &TkZipArchive::extractCompleted, this, [this, formattedPath, portalItem]()
+            auto zipHelper = new ZipHelper(formattedPath, this);
+            connect(zipHelper, &ZipHelper::extractCompleted, this, [this, formattedPath, portalItem, zipHelper]()
             {
                 downloadNextDataItem();
                 portalItem->deleteLater();
+                zipHelper->deleteLater();
             });
-            zipArchive->extractAll(QFileInfo(formattedPath).dir().absolutePath());
+            zipHelper->extractAll(QFileInfo(formattedPath).dir().absolutePath());
           }
           else
           {
@@ -560,6 +559,8 @@ void SampleManager::fetchPortalItemData(const QString& itemId, const QString& ou
     connect(portalItem, &PortalItem::fetchDataProgressChanged, this,
             [this](const NetworkRequestProgress& progress)
     {
+      if (!downloadInProgress())
+        setDownloadInProgress(true);
       setDownloadProgress(progress.progressPercentage());
     });
     portalItem->load();

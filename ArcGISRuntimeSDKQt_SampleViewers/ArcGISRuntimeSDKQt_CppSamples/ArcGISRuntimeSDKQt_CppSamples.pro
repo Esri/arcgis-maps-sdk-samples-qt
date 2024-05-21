@@ -166,7 +166,6 @@ android {
 }
 
 HEADERS += \
-    TkZipArchive.h \
     $$PCH_HEADER \
     $$COMMONVIEWER/SyntaxHighlighter/syntax_highlighter.h \
     $$COMMONVIEWER/SyntaxHighlighter/QMLHighlighter.h \
@@ -186,10 +185,10 @@ HEADERS += \
     $$files(zlib-ng/*.h) \
     $$files(minizip-ng/zip.h) \
     $$files(minizip-ng/unzip.h) \
-    $$files(minizip-ng/ioapi.h)
+    $$files(minizip-ng/ioapi.h) \
+    ZipHelper.h
 
 SOURCES += \
-    TkZipArchive.cpp \
     $$COMMONVIEWER/SyntaxHighlighter/syntax_highlighter.cpp \
     $$COMMONVIEWER/SyntaxHighlighter/QMLHighlighter.cpp \
     $$COMMONVIEWER/CategoryListModel.cpp \
@@ -212,7 +211,8 @@ SOURCES += \
     $$files(minizip-ng/mz_strm.c) \
     $$files(minizip-ng/mz_strm_mem.c) \
     $$files(minizip-ng/mz_strm_zlib.c) \
-    $$files(minizip-ng/mz_zip.c)
+    $$files(minizip-ng/mz_zip.c) \
+    ZipHelper.cpp
 
 win32 {
     SOURCES += \

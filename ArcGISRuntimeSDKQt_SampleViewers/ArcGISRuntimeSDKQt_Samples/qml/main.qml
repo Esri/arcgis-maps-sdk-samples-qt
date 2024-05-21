@@ -223,14 +223,6 @@ ApplicationWindow {
         anchors.fill: parent
     }
 
-    // FileInfo {
-    //     id: fileInfo
-    // }
-
-    // FileInfo {
-    //     id: dataPackageFileInfo
-    // }
-
     Connections {
         target: SampleManager
 
