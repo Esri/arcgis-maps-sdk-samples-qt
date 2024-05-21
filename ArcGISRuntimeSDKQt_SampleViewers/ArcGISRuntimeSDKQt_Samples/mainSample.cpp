@@ -653,7 +653,6 @@ void registerClasses()
 QObject* esriSampleManagerProvider(QQmlEngine* engine, QJSEngine*)
 {
 #ifdef CPP_VIEWER
-  // static QObject* sampleManager = new CppSampleManager(engine);
   static QObject* sampleManager = new SampleManager(engine);
 #else
   static QObject* sampleManager = new QmlSampleManager(engine, engine);
