@@ -17,14 +17,14 @@ INCLUDEPATH += \
     $$PWD/minizip-ng
 
 HEADERS += \
-    $$files($$PWD/zlib-ng/*.h)) \
+    $$files($$PWD/zlib-ng/*.h) \
     $$PWD/minizip-ng/zip.h \
     $$PWD/minizip-ng/unzip.h \
     $$PWD/minizip-ng/ioapi.h \
     $$PWD/ZipHelper.h
 
 SOURCES += \
-    $$files($$PWD/zlib-ng/*.c)) \
+    $$files($$PWD/zlib-ng/*.c) \
     $$PWD/minizip-ng/mz_compat.c \
     $$PWD/minizip-ng/mz_crypt.c \
     $$PWD/minizip-ng/mz_os.c \
