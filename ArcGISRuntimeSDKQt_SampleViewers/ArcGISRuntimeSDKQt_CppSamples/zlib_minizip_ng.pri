@@ -17,38 +17,38 @@ INCLUDEPATH += \
     $$PWD/minizip-ng
 
 HEADERS += \
-    $$files(zlib-ng/*.h) \
-    $$files(minizip-ng/zip.h) \
-    $$files(minizip-ng/unzip.h) \
-    $$files(minizip-ng/ioapi.h) \
-    ZipHelper.h
+    $$files($$PWD/zlib-ng/*.h)) \
+    $$PWD/minizip-ng/zip.h \
+    $$PWD/minizip-ng/unzip.h \
+    $$PWD/minizip-ng/ioapi.h \
+    $$PWD/ZipHelper.h
 
 SOURCES += \
-    $$files(zlib-ng/*.c) \
-    $$files(minizip-ng/mz_compat.c) \
-    $$files(minizip-ng/mz_crypt.c) \
-    $$files(minizip-ng/mz_os.c) \
-    $$files(minizip-ng/mz_strm.c) \
-    $$files(minizip-ng/mz_strm_mem.c) \
-    $$files(minizip-ng/mz_strm_zlib.c) \
-    $$files(minizip-ng/mz_zip.c) \
-    ZipHelper.cpp
+    $$files($$PWD/zlib-ng/*.c)) \
+    $$PWD/minizip-ng/mz_compat.c \
+    $$PWD/minizip-ng/mz_crypt.c \
+    $$PWD/minizip-ng/mz_os.c \
+    $$PWD/minizip-ng/mz_strm.c \
+    $$PWD/minizip-ng/mz_strm_mem.c \
+    $$PWD/minizip-ng/mz_strm_zlib.c \
+    $$PWD/minizip-ng/mz_zip.c \
+    $$PWD/ZipHelper.cpp
 
 DEFINES += ZLIB_COMPAT
 DEFINES += HAVE_ZLIB
 
 win32 {
     SOURCES += \
-        $$files(minizip-ng/mz_os_win32.c) \
-        $$files(minizip-ng/mz_strm_os_win32.c)
+        $$PWD/minizip-ng/mz_os_win32.c) \
+        $$PWD/minizip-ng/mz_strm_os_win32.c)
 
     DEFINES += RTC_WINDOWS_FAMILY
 }
 
 !win32 {
     SOURCES += \
-        $$files(minizip-ng/mz_os_posix.c) \
-        $$files(minizip-ng/mz_strm_os_posix.c)
+        $$PWD/minizip-ng/mz_os_posix.c \
+        $$PWD/minizip-ng/mz_strm_os_posix.c
 
     DEFINES += HAVE_ATTRIBUTE_ALIGNED
 }
