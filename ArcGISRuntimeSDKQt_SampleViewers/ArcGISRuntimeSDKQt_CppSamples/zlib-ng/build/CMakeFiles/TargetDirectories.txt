@@ -1,9 +1,0 @@
-/Users/jare8800/applications/qt/sdk/samples/ArcGISRuntimeSDKQt_SampleViewers/ArcGISRuntimeSDKQt_CppSamples/zlib-ng/build/CMakeFiles/zlib.dir
-/Users/jare8800/applications/qt/sdk/samples/ArcGISRuntimeSDKQt_SampleViewers/ArcGISRuntimeSDKQt_CppSamples/zlib-ng/build/CMakeFiles/package.dir
-/Users/jare8800/applications/qt/sdk/samples/ArcGISRuntimeSDKQt_SampleViewers/ArcGISRuntimeSDKQt_CppSamples/zlib-ng/build/CMakeFiles/package_source.dir
-/Users/jare8800/applications/qt/sdk/samples/ArcGISRuntimeSDKQt_SampleViewers/ArcGISRuntimeSDKQt_CppSamples/zlib-ng/build/CMakeFiles/edit_cache.dir
-/Users/jare8800/applications/qt/sdk/samples/ArcGISRuntimeSDKQt_SampleViewers/ArcGISRuntimeSDKQt_CppSamples/zlib-ng/build/CMakeFiles/rebuild_cache.dir
-/Users/jare8800/applications/qt/sdk/samples/ArcGISRuntimeSDKQt_SampleViewers/ArcGISRuntimeSDKQt_CppSamples/zlib-ng/build/CMakeFiles/list_install_components.dir
-/Users/jare8800/applications/qt/sdk/samples/ArcGISRuntimeSDKQt_SampleViewers/ArcGISRuntimeSDKQt_CppSamples/zlib-ng/build/CMakeFiles/install.dir
-/Users/jare8800/applications/qt/sdk/samples/ArcGISRuntimeSDKQt_SampleViewers/ArcGISRuntimeSDKQt_CppSamples/zlib-ng/build/CMakeFiles/install/local.dir
-/Users/jare8800/applications/qt/sdk/samples/ArcGISRuntimeSDKQt_SampleViewers/ArcGISRuntimeSDKQt_CppSamples/zlib-ng/build/CMakeFiles/install/strip.dir
