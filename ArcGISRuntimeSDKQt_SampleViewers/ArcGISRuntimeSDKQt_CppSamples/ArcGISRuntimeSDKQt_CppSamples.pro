@@ -142,6 +142,9 @@ QMAKE_TARGET_COPYRIGHT = Copyright 2017 Esri Inc.
 # include the samples.pri, which contains all the sample resources
 include(samples.pri)
 
+# contains source files for zlib-ng and minizip-ng and the helper that uses them
+include(zlib_minizip_ng.pri)
+
 CONFIG(precompile_header): DEFINES += PCH_BUILD
 
 android {
@@ -165,12 +168,7 @@ HEADERS += \
     $$COMMONVIEWER/SearchFilterCriteria.h \
     $$COMMONVIEWER/SearchFilterSimpleKeywordCriteria.h \
     $$COMMONVIEWER/SourceCode.h \
-    $$COMMONVIEWER/SourceCodeListModel.h \
-    $$files(zlib-ng/*.h) \
-    $$files(minizip-ng/zip.h) \
-    $$files(minizip-ng/unzip.h) \
-    $$files(minizip-ng/ioapi.h) \
-    ZipHelper.h
+    $$COMMONVIEWER/SourceCodeListModel.h
 
 SOURCES += \
     $$COMMONVIEWER/SyntaxHighlighter/syntax_highlighter.cpp \
@@ -187,32 +185,7 @@ SOURCES += \
     $$COMMONVIEWER/SearchFilterSimpleKeywordCriteria.cpp \
     $$COMMONVIEWER/SourceCode.cpp \
     $$COMMONVIEWER/SourceCodeListModel.cpp \
-    $$COMMONVIEWER/mainSample.cpp \
-    $$files(zlib-ng/*.c) \
-    $$files(minizip-ng/mz_compat.c) \
-    $$files(minizip-ng/mz_crypt.c) \
-    $$files(minizip-ng/mz_os.c) \
-    $$files(minizip-ng/mz_strm.c) \
-    $$files(minizip-ng/mz_strm_mem.c) \
-    $$files(minizip-ng/mz_strm_zlib.c) \
-    $$files(minizip-ng/mz_zip.c) \
-    ZipHelper.cpp
-
-win32 {
-    SOURCES += \
-        $$files(minizip-ng/mz_os_win32.c) \
-        $$files(minizip-ng/mz_strm_os_win32.c)
-
-    DEFINES += RTC_WINDOWS_FAMILY
-}
-
-!win32 {
-    SOURCES += \
-        $$files(minizip-ng/mz_os_posix.c) \
-        $$files(minizip-ng/mz_strm_os_posix.c)
-
-    DEFINES += HAVE_ATTRIBUTE_ALIGNED
-}
+    $$COMMONVIEWER/mainSample.cpp
 
 RESOURCES += \
     $$COMMONVIEWER/qml/qml.qrc \
@@ -222,8 +195,6 @@ RESOURCES += \
     $$PWD/imports.qrc
 
 DEFINES += QT_DEPRECATED_WARNINGS
-DEFINES += ZLIB_COMPAT
-DEFINES += HAVE_ZLIB
 #-------------------------------------------------
 # Application Icon
 #-------------------------------------------------
