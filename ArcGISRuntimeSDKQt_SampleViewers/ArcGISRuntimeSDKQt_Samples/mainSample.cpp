@@ -33,7 +33,7 @@
 // Choose a manager based on the type of interface.
 // Add toolkit header for Cpp only
 #ifdef CPP_VIEWER
-#  include "CppSampleManager.h"
+#  include "SampleManager.h"
 #  include "ArcGISRuntimeEnvironment.h"
 #else
 #  include "QmlSampleManager.h"
