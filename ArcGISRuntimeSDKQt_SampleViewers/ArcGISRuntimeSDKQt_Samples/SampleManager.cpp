@@ -72,7 +72,7 @@ using namespace Esri::ArcGISRuntime;
 
 namespace
 {
-QString apiKey = getenv("FUNC_API_KEY"); // Provide your API key here
+QString apiKey = ""; // Provide your API key here
 }
 
 SampleManager::SampleManager(QObject *parent):
