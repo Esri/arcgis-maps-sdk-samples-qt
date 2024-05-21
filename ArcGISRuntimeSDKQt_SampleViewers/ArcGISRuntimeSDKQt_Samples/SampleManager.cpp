@@ -508,12 +508,13 @@ void SampleManager::downloadNextDataItem()
   }
   else {
     setDownloadText("Downloads complete");
-    if (!cancelDownload())
-      emit doneDownloadingChanged();
+
     setDownloadProgress(0.0);
     setDownloadInProgress(false);
     if (cancelDownload())
       setCancelDownload(false);
+    else
+      emit doneDownloadingChanged();
   }
 }
 
