@@ -32,56 +32,55 @@
 
 class ZipHelper : public QObject
 {
-    Q_OBJECT
+  Q_OBJECT
 
 public:
-    enum class Result
-    {
-        EndOfListOfFile     = UNZ_END_OF_LIST_OF_FILE,
-        ErrNo               = UNZ_ERRNO,
-        EndOfFile           = UNZ_EOF,
-        ParameterError      = UNZ_PARAMERROR,
-        BadZipFile          = UNZ_BADZIPFILE,
-        InternalError       = UNZ_INTERNALERROR,
-        CrcError            = UNZ_CRCERROR
-    };
-    Q_ENUM(Result)
+  enum class Result
+  {
+    EndOfListOfFile     = UNZ_END_OF_LIST_OF_FILE,
+    ErrNo               = UNZ_ERRNO,
+    EndOfFile           = UNZ_EOF,
+    ParameterError      = UNZ_PARAMERROR,
+    BadZipFile          = UNZ_BADZIPFILE,
+    InternalError       = UNZ_INTERNALERROR,
+    CrcError            = UNZ_CRCERROR
+  };
+  Q_ENUM(Result)
 
 public:
-    Q_INVOKABLE bool extractAll(const QString &outputPath);
-
-    void setPath(const QString& path);
+  Q_INVOKABLE bool extractAll(const QString &outputPath);
+  void setPath(const QString& path);
 
 signals:
-    void pathChanged();
+  void pathChanged();
 
-    void extractError(const QString& fileName, const QString& outputFileName, ZipHelper::Result result);
-    void extractProgress(const QString& fileName, const QString& outputFileName, qreal percent);
-    void extractCompleted();
+  void extractError(const QString& fileName, const QString& outputFileName, ZipHelper::Result result);
+  void extractProgress(const QString& fileName, const QString& outputFileName, qreal percent);
+  void extractCompleted();
 
 public:
-    explicit ZipHelper(QObject* parent = nullptr);
-    ZipHelper(const QString& path, QObject* parent = nullptr);
-    ~ZipHelper();
+  explicit ZipHelper(QObject* parent = nullptr);
+  ZipHelper(const QString& path, QObject* parent = nullptr);
+  ~ZipHelper();
 
 private:
-    bool zrOpen(const QString& filePath);
-    void zrClose();
+  bool zrOpen(const QString& filePath);
+  void zrClose();
 
-    unzFile zrHandle() const { return m_unzFile; }
-    bool zrIsOpen() const { return m_unzFile != nullptr; }
+  unzFile zrHandle() const { return m_unzFile; }
+  bool zrIsOpen() const { return m_unzFile != nullptr; }
 
-    bool extractAll(QDir& outputDir);
-    bool extractCurrentFile(const QString& outputFilePath);
+  bool extractAll(QDir& outputDir);
+  bool extractCurrentFile(const QString& outputFilePath);
 
-    QString currentFileName();
-    QDateTime currentFileDateTime();
-    unz_file_info64 currentFileInfo();
+  QString currentFileName();
+  QDateTime currentFileDateTime();
+  unz_file_info64 currentFileInfo();
 
-    bool gotoFirstFile();
-    bool gotoNextFile();
+  bool gotoFirstFile();
+  bool gotoNextFile();
 
-//--------------------------------------------------------------------
+  //--------------------------------------------------------------------
 
 public:
   enum class PathVariableType
@@ -103,24 +102,17 @@ private:
   static QString defaultPathVariable(const QString& name);
   static QString defaultHomePath();
   static QString defaultTempPath();
-private:
   static QByteArray pathPropertyName(const QString& name);
 
-//--------------------------------------------------------------------
+  void zwClose(const QString& globalComment = QString());
+  bool exists() const;
+  bool zrOpen();
+  const QString& path() const { return m_Path; }
 
 private:
-    void zwClose(const QString& globalComment = QString());
-
-private:
-    bool exists() const;
-    bool zrOpen();
-
-    const QString& path() const { return m_Path; }
-
-private:
-    QString                     m_Path;
-    unzFile                     m_unzFile;
-    zipFile                     m_zipFile;
+  QString                     m_Path;
+  unzFile                     m_unzFile;
+  zipFile                     m_zipFile;
 };
 
 //--------------------------------------------------------------------
