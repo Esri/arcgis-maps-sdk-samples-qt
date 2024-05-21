@@ -17,10 +17,6 @@
 #define DOWNLOADSAMPLEMANAGER_H
 
 #include "SampleManager.h"
-#include "DataItem.h"
-
-#include <QQueue>
-class DataItem;
 
 /*!
  * \brief The DownloadSampleManager class is an abstract base class for the
@@ -45,7 +41,6 @@ public:
   void init() override;
 
   Q_INVOKABLE void downloadData(const QString& itemId, const QString& outputPath);
-  // Q_INVOKABLE void downloadAllDataItems();
 
 signals:
   /*
@@ -146,12 +141,10 @@ protected:
 protected:
   QString m_outputPath;
   QString m_formattedPath;
-  QQueue<DataItem*> m_dataItems;
 
 private:
   QString formattedPath(const QString& outputPath,
                         const QString& folderName = QString());
-  void downloadNextItem();
 
 };
 
