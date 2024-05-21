@@ -81,8 +81,6 @@ public:
   Q_INVOKABLE void doneDownloading() { emit doneDownloadingChanged(); }
   Q_INVOKABLE void setApiKey(bool isSupportsApiKey = true);
 
-  SampleListModel* samples() const { return m_allSamples; }
-
   enum CurrentMode
   {
     LiveSampleView,
@@ -132,6 +130,7 @@ private:
   QVariantMap toVariantMap(const QString& json);
   QVariant fileUrl(const QString& scheme, const QString& path);
   QString readTextFile(const QString& filePath);
+  SampleListModel* samples() const { return m_allSamples; }
   SampleListModel* featuredSamples() const { return m_featuredSamples; }
   CategoryListModel* categories() { return m_categories; }
   CurrentMode currentMode() { return m_currentMode; }
