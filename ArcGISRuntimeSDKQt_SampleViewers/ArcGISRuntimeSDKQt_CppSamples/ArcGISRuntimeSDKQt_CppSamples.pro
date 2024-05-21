@@ -90,19 +90,16 @@ exists($$PWD/../../../../DevBuildCpp.pri) {
     else {
       PLATFORM = "linux/x64"
     }
-    # ARCGIS_RUNTIME_IMPORT_PATH = $${priLocation}/sdk/$${PLATFORM}/qml
   }
 
   macx:{
     PLATFORM = "macOS"
-    # ARCGIS_RUNTIME_IMPORT_PATH = $${priLocation}/sdk/$${PLATFORM}/universal/qml
   }
 
   win32:{
     contains(QT_ARCH, x86_64):{
       PLATFORM = "windows/x64"
     }
-    # ARCGIS_RUNTIME_IMPORT_PATH = $${priLocation}/sdk/$${PLATFORM}/qml
   }
 
   android {
@@ -122,26 +119,13 @@ exists($$PWD/../../../../DevBuildCpp.pri) {
     }
     contains(QMAKE_HOST.os, Windows):{
       ANDROIDDIR = $$clean_path($$(ALLUSERSPROFILE)\\EsriRuntimeQt)
-      # ARCGIS_RUNTIME_IMPORT_PATH = $${ANDROIDDIR}/Qt$${ARCGIS_RUNTIME_VERSION}/$${PLATFORM}/$${ANDROID_ARCH_FOLDER}/qml
-    }
-    else {
-      # ARCGIS_RUNTIME_IMPORT_PATH = $${priLocation}/sdk/$${PLATFORM}/$${ANDROID_ARCH_FOLDER}/qml
     }
   }
 
   ios {
     PLATFORM = "iOS"
-    # ARCGIS_RUNTIME_IMPORT_PATH = $${priLocation}/sdk/$${PLATFORM}/universal/qml
   }
 
-  # Add plugin paths to QML_IMPORT_PATH
-  # QML_IMPORT_PATH += $${ARCGIS_RUNTIME_IMPORT_PATH}
-
-  # Add plugin paths to QMLPATHS
-  # QMLPATHS += $${ARCGIS_RUNTIME_IMPORT_PATH}
-
-  # Set ArcGIS Runtime QML import path for ArcGISExtras
-  # DEFINES += ARCGIS_RUNTIME_IMPORT_PATH=\"$$ARCGIS_RUNTIME_IMPORT_PATH\"
   DEFINES += BUILD_FROM_SETUP
 }
 
