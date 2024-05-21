@@ -45,9 +45,7 @@ exists($$PWD/../../../../DevBuildCpp.pri) {
       $$COMMONVIEWER \
       $$COMMONVIEWER/SyntaxHighlighter \
       $$PWD/../../../../api/qt_cpp/Include \
-      $$PWD/../../../../api/qt_cpp/Include/LocalServer/ \
-      $$PWD/zlib-ng \
-      $$PWD/minizip-ng
+      $$PWD/../../../../api/qt_cpp/Include/LocalServer/
 } else {
   message("Building against the installed SDK")
   CONFIG += build_from_setup
@@ -78,9 +76,7 @@ exists($$PWD/../../../../DevBuildCpp.pri) {
       $$COMMONVIEWER \
       $$COMMONVIEWER/SyntaxHighlighter \
       $$priLocation/sdk/include \
-      $$priLocation/sdk/include/LocalServer \
-      $$PWD/zlib-ng \
-      $$PWD/minizip-ng
+      $$priLocation/sdk/include/LocalServer
 
   PLATFORM = ""
   unix:!macx:!android:!ios {
