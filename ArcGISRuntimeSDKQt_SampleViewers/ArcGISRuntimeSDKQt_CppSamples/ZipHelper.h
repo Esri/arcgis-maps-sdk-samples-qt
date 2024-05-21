@@ -81,7 +81,6 @@ private:
     bool gotoFirstFile();
     bool gotoNextFile();
 
-// FileUtilty methods needed for ZipHelper::setPath to work
 //--------------------------------------------------------------------
 
 public:
