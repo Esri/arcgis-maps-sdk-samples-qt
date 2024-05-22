@@ -18,6 +18,7 @@
 #define SNAPGEOMETRYEDITS_H
 
 namespace Esri::ArcGISRuntime {
+  class Geometry;
   class GeometryEditor;
   class GeometryEditor;
   class Graphic;
@@ -30,6 +31,7 @@ namespace Esri::ArcGISRuntime {
   class SimpleLineSymbol;
   class SimpleMarkerSymbol;
   class SnapSourceSettings;
+  class Symbol;
 }
 
 #include <QObject>
