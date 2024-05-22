@@ -184,43 +184,42 @@ Item {
 
         ListView {
             id: snapSourceView
-            width: optionPanel.width
-            height: optionPanel.height
-            headerPositioning: ListView.OverlayHeader
-            spacing: 20
+            anchors {
+                fill: parent
+                margins: 10
+            }
+            //headerPositioning: ListView.OverlayHeader
+            spacing: 10
 
-            header: Column {
+            header: ColumnLayout {
                 id: snappingColumn
-                width: optionPanel.width
-                height: 100
+                Layout.minimumWidth: optionPanel.width
+                Layout.minimumHeight: 100
 
-                Item {
-                    width: optionPanel.width
-                    height: 25
+                RowLayout {
+                    Layout.minimumWidth: optionPanel.width
+                    Layout.minimumHeight: 25
 
                     Text {
+                        Layout.alignment: Qt.AlignLeft
+                        Layout.fillWidth: true
+                        Layout.minimumWidth: optionPanel.width * 0.75
+                        Layout.minimumHeight: 25
                         text: "Snapping"
                         font.pixelSize: 16
                         color: "#8434C1"
                         font.bold: true
-
                     }
 
-                    Rectangle {
-                        anchors {
-                            right: parent.right
-                            margins: 10
-                        }
-                        width: 45
-                        height: 20
-
-                        Text {
-                            text: "Done"
-                            font.pixelSize: 16
-                            color: "#8434C1"
-                            font.bold: true
-                        }
-
+                    Text {
+                        Layout.alignment: Qt.AlignRight
+                        Layout.fillWidth: true
+                        Layout.minimumWidth: optionPanel.width * 0.25
+                        Layout.minimumHeight: 25
+                        text: "Done"
+                        font.pixelSize: 16
+                        color: "#8434C1"
+                        font.bold: true
                         MouseArea {
                             anchors.fill: parent
                             onClicked: optionPanel.visible = false;
@@ -228,17 +227,14 @@ Item {
                     }
                 }
 
-                Item {
-                    width: optionPanel.width
-                    height: 25
+                RowLayout {
+                    Layout.minimumWidth: optionPanel.width
+                    Layout.minimumHeight: 25
 
                     Rectangle {
-                        anchors {
-                            margins: 10
-                        }
-
-                        width: 340
-                        height: 45
+                        Layout.alignment: Qt.AlignLeft
+                        Layout.minimumWidth: snapSourceView.width - (snapSourceView.anchors.margins / 2)
+                        Layout.minimumHeight: 45
                         color: "#E9DFEA"
                         radius: 5
                         border {
@@ -269,7 +265,6 @@ Item {
                 }
             }
 
-
             model: snapGeometryEditsSampleModel.snapSourceModel
 
             section {
@@ -283,30 +278,30 @@ Item {
                         Layout.margins: 10
                         Layout.fillWidth: true
                         Layout.minimumWidth: optionPanel.width
+                        Layout.minimumHeight: 25
 
                         Text {
                             Layout.alignment: Qt.AlignLeft
                             Layout.fillWidth: true
+                            Layout.minimumWidth: optionPanel.width * 0.5
+                            Layout.minimumHeight: 25
                             text: section
                             font.pixelSize: 16
                             font.bold: true
                         }
 
-                        Rectangle {
+                        Text {
                             Layout.alignment: Qt.AlignRight
-                            width: 140
-                            height: 20
-
-                            Text {
-                                text: "Enable All Sources"
-                                font.pixelSize: 15
-                                color: "#8434C1"
-                                font.bold: true
-                            }
+                            Layout.minimumWidth: optionPanel.width * 0.5
+                            Layout.minimumHeight: 25
+                            text: "Enable All Sources"
+                            font.pixelSize: 16
+                            color: "#8434C1"
+                            font.bold: true
 
                             MouseArea {
                                 anchors.fill: parent
-                                onClicked: snapGeometryEditsSampleModel.enableAllLayersInSection(section, true);
+                                onClicked: snapGeometryEditsSampleModel.enableAllLayersInSection(section);
                             }
                         }
                     }
@@ -325,12 +320,14 @@ Item {
                     Text {
                         Layout.alignment: Qt.AlignLeft
                         Layout.fillWidth: true
+                        Layout.minimumWidth: optionPanel.width / 2
                         text: name
                         font.pixelSize: 12
                     }
 
                     Switch {
                         Layout.alignment: Qt.AlignRight
+                        Layout.fillWidth: true
                         checked: isEnabled
                         onCheckedChanged: isEnabled = checked;
                     }

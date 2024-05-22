@@ -35,11 +35,12 @@ namespace Esri::ArcGISRuntime {
 }
 
 class SnapSourceListModel;
+class QAbstractListModel;
 
-#include <QAbstractListModel>
 #include <QObject>
 
 Q_MOC_INCLUDE("MapQuickView.h");
+Q_MOC_INCLUDE("QAbstractListModel");
 
 class SnapGeometryEdits : public QObject
 {
@@ -50,7 +51,7 @@ class SnapGeometryEdits : public QObject
   Q_PROPERTY(bool canUndo READ canUndo NOTIFY canUndoChanged)
   Q_PROPERTY(bool isElementSelected READ isElementSelected NOTIFY isElementSelectedChanged)
   Q_PROPERTY(bool layersLoaded MEMBER m_layersLoaded NOTIFY layersLoadedChanged)
-  Q_PROPERTY(QAbstractListModel* snapSourceModel READ snapSourceModel NOTIFY snapSourceModelChanged)
+  Q_PROPERTY(QAbstractListModel* snapSourceModel READ snapSourceListModel NOTIFY snapSourceModelChanged)
 
 public:
   explicit SnapGeometryEdits(QObject* parent = nullptr);
@@ -72,7 +73,7 @@ public:
   Q_INVOKABLE void editorUndo();
   Q_INVOKABLE void snappingEnabledStatus(bool checkedValue);
   Q_INVOKABLE void displaySnapSources();
-  Q_INVOKABLE void enableAllLayersInSection(const QString& section, bool enabled);
+  Q_INVOKABLE void enableAllLayersInSection(const QString& section);
 
 signals:
   void canUndoChanged();
@@ -94,9 +95,8 @@ private:
   void createInitialSymbols();
   void createConnections();
   bool isElementSelected();
-  QAbstractListModel* snapSourceModel() const;
+  QAbstractListModel* snapSourceListModel() const;
   Esri::ArcGISRuntime::Symbol* determineGeometrySymbol(const Esri::ArcGISRuntime::Geometry& geometry);
-
 
 
   Esri::ArcGISRuntime::Map* m_map = nullptr;
@@ -108,12 +108,6 @@ private:
   Esri::ArcGISRuntime::SimpleMarkerSymbol* m_multiPointSymbol = nullptr;
   Esri::ArcGISRuntime::SimpleLineSymbol* m_lineSymbol = nullptr;
   Esri::ArcGISRuntime::SimpleFillSymbol* m_polygonSymbol = nullptr;
-  QList<bool> m_pointSourceCheckedState;
-  QList<bool> m_polylineSourceCheckedState;
-  QList<Esri::ArcGISRuntime::SnapSourceSettings*> m_pointSourceList;
-  QList<Esri::ArcGISRuntime::SnapSourceSettings*> m_polylineSourceList;
-  QList<QString> m_pointLayers;
-  QList<QString> m_polylineLayers;
   bool m_layersLoaded = false;
   SnapSourceListModel* m_snapSourceListModel = nullptr;
 };

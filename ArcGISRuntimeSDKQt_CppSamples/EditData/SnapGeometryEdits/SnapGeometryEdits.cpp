@@ -185,12 +185,6 @@ void SnapGeometryEdits::snappingEnabledStatus(bool snappingCheckedState)
   m_geometryEditor->snapSettings()->setEnabled(snappingCheckedState);
 }
 
-void SnapGeometryEdits::enableAllLayersInSection(const QString& section, bool enabled)
-{
-    m_snapSourceListModel->enableAllLayersInSection(section, enabled);
-    emit snapSourceModelChanged();
-}
-
 // Starts the GeometryEditor using the selected geometry type
 void SnapGeometryEdits::startEditor(GeometryEditorMode geometryEditorMode)
 {
@@ -283,13 +277,20 @@ void SnapGeometryEdits::displaySnapSources()
   if (!m_snapSourceListModel)
     return;
 
+  // Sync the snap settings and update the list model
   m_geometryEditor->snapSettings()->syncSourceSettings();
   m_snapSourceListModel->setSnapSourceSettings(m_geometryEditor->snapSettings()->sourceSettings());
 
   emit snapSourceModelChanged();
 }
 
-QAbstractListModel* SnapGeometryEdits::snapSourceModel() const
+void SnapGeometryEdits::enableAllLayersInSection(const QString& section)
+{
+  m_snapSourceListModel->enableAllLayersInSection(section);
+  emit snapSourceModelChanged();
+}
+
+QAbstractListModel *SnapGeometryEdits::snapSourceListModel() const
 {
   return m_snapSourceListModel;
 }

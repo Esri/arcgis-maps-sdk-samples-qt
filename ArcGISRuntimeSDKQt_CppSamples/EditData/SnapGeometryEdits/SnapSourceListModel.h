@@ -43,7 +43,7 @@ public:
   void setSnapSourceSettings(QList<Esri::ArcGISRuntime::SnapSourceSettings*> snapSourceSettings);
   void setupRoles();
   int size() { return m_snapSourceSettings.size(); }
-  void enableAllLayersInSection(const QString& section, bool enabled);
+  void enableAllLayersInSection(const QString& section);
 
   // QAbstractItemModel interface
   int rowCount(const QModelIndex& parent = QModelIndex()) const override;
