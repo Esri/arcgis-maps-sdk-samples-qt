@@ -137,7 +137,7 @@ bool ZipHelper::extractCurrentFile(const QString& outputFilePath)
     do
     {
 
-        result = unzReadCurrentFile(zrHandle(), buffer.data(), buffer.size());
+        // result = unzReadCurrentFile(zrHandle(), buffer.data(), buffer.size());
 
         if (result < 0)
         {
