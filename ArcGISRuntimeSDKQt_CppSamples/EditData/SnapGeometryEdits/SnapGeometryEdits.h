@@ -34,6 +34,9 @@ namespace Esri::ArcGISRuntime {
   class Symbol;
 }
 
+class SnapSourceListModel;
+
+#include <QAbstractListModel>
 #include <QObject>
 
 Q_MOC_INCLUDE("MapQuickView.h");
@@ -47,10 +50,7 @@ class SnapGeometryEdits : public QObject
   Q_PROPERTY(bool canUndo READ canUndo NOTIFY canUndoChanged)
   Q_PROPERTY(bool isElementSelected READ isElementSelected NOTIFY isElementSelectedChanged)
   Q_PROPERTY(bool layersLoaded MEMBER m_layersLoaded NOTIFY layersLoadedChanged)
-  Q_PROPERTY(QStringList pointLayers MEMBER m_pointLayers NOTIFY pointLayersChanged)
-  Q_PROPERTY(QStringList polylineLayers MEMBER m_polylineLayers NOTIFY polylineLayersChanged)
-  Q_PROPERTY(QList<bool> pointSourceCheckedState MEMBER m_pointSourceCheckedState NOTIFY pointSourceCheckedStateChanged)
-  Q_PROPERTY(QList<bool> polylineSourceCheckedState MEMBER m_polylineSourceCheckedState NOTIFY polylineSourceCheckedStateChanged)
+  Q_PROPERTY(QAbstractListModel* snapSourceModel READ snapSourceModel NOTIFY snapSourceModelChanged)
 
 public:
   explicit SnapGeometryEdits(QObject* parent = nullptr);
@@ -71,11 +71,8 @@ public:
   Q_INVOKABLE void deleteSelection();
   Q_INVOKABLE void editorUndo();
   Q_INVOKABLE void snappingEnabledStatus(bool checkedValue);
-  Q_INVOKABLE void onPointLayersEnabled();
-  Q_INVOKABLE void onPolylineLayersEnabled();
   Q_INVOKABLE void displaySnapSources();
-  Q_INVOKABLE void pointSourceEnabledStatus(bool snappingCheckedState, int index);
-  Q_INVOKABLE void polylineSourceEnabledStatus(bool snappingCheckedState, int index);
+  Q_INVOKABLE void enableAllLayersInSection(const QString& section, bool enabled);
 
 signals:
   void canUndoChanged();
@@ -87,6 +84,7 @@ signals:
   void pointSourceCheckedStateChanged();
   void polylineLayersChanged();
   void polylineSourceCheckedStateChanged();
+  void snapSourceModelChanged();
 
 private:
   Esri::ArcGISRuntime::MapQuickView* mapView() const;
@@ -96,6 +94,7 @@ private:
   void createInitialSymbols();
   void createConnections();
   bool isElementSelected();
+  QAbstractListModel* snapSourceModel() const;
   Esri::ArcGISRuntime::Symbol* determineGeometrySymbol(const Esri::ArcGISRuntime::Geometry& geometry);
 
 
@@ -116,6 +115,7 @@ private:
   QList<QString> m_pointLayers;
   QList<QString> m_polylineLayers;
   bool m_layersLoaded = false;
+  SnapSourceListModel* m_snapSourceListModel = nullptr;
 };
 
 #endif // SNAPGEOMETRYEDITS_H
