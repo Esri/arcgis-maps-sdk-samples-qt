@@ -147,19 +147,17 @@ void SnapGeometryEdits::createConnections()
         m_geometryEditor->start(m_editingGraphic->geometry());
 
         emit geometryEditorStartedChanged();
-
-        result->deleteLater();
       });
     }
     emit canUndoChanged();
-    emit elementIsSelectedChanged();
+    emit isElementSelectedChanged();
   });
 
   // Enable or disable buttons when mouse is released (ie after a drag operation)
   connect(m_mapView, &MapQuickView::mouseReleased, this, [this](const QMouseEvent&)
   {
     emit canUndoChanged();
-    emit elementIsSelectedChanged();
+    emit isElementSelectedChanged();
   });
 }
 
@@ -173,7 +171,7 @@ bool SnapGeometryEdits::canUndo()
   return (m_geometryEditor && m_geometryEditor->canUndo());
 }
 
-bool SnapGeometryEdits::elementIsSelected()
+bool SnapGeometryEdits::isElementSelected()
 {
   return (m_geometryEditor && m_geometryEditor->selectedElement() && m_geometryEditor->selectedElement()->canDelete());
 }
@@ -189,7 +187,6 @@ void SnapGeometryEdits::pointSourceEnabledStatus(bool snappingCheckedState, int 
 {
   m_pointSourceCheckedState[index] = snappingCheckedState;
   m_pointSourceList[index]->setEnabled(m_pointSourceCheckedState[index]);
-
 }
 
 // Toggles snapping for the polyline layer snap source at [index] using the checked value from the snap settings
@@ -197,7 +194,6 @@ void SnapGeometryEdits::polylineSourceEnabledStatus(bool snappingCheckedState, i
 {
   m_polylineSourceCheckedState[index] = snappingCheckedState;
   m_polylineSourceList[index]->setEnabled(m_polylineSourceCheckedState[index]);
-
 }
 
 // Enable snapping for all the point layer snap sources
@@ -247,8 +243,31 @@ void SnapGeometryEdits::startEditor(GeometryEditorMode geometryEditorMode)
   emit geometryEditorStartedChanged();
 }
 
+Symbol* SnapGeometryEdits::determineGeometrySymbol(const Geometry& geometry)
+{
+  Symbol* geometrySymbol = nullptr;
+  switch (geometry.geometryType())
+  {
+  case GeometryType::Point:
+    geometrySymbol = m_pointSymbol;
+    break;
+  case GeometryType::Multipoint:
+    geometrySymbol = m_multiPointSymbol;
+    break;
+  case GeometryType::Polyline:
+    geometrySymbol = m_lineSymbol;
+    break;
+  case GeometryType::Polygon:
+    geometrySymbol = m_polygonSymbol;
+    break;
+  default:
+    break;
+  }
+  return geometrySymbol;
+}
+
 // Stops the GeometryEditor and append the new graphic to the graphics overlay
-void SnapGeometryEdits::stopEditor()
+void SnapGeometryEdits::stopEditing()
 {
   const Geometry geometry = m_geometryEditor->stop();
   emit geometryEditorStartedChanged();
@@ -263,30 +282,11 @@ void SnapGeometryEdits::stopEditor()
     return;
   }
 
-  Symbol* geometrySymbol = nullptr;
-  switch (geometry.geometryType())
+  Symbol* geometrySymbol = determineGeometrySymbol(geometry);
+  if (geometrySymbol)
   {
-  case GeometryType::Point:
-    geometrySymbol = m_pointSymbol;
-    break;
-
-  case GeometryType::Multipoint:
-    geometrySymbol = m_multiPointSymbol;
-    break;
-
-  case GeometryType::Polyline:
-    geometrySymbol = m_lineSymbol;
-    break;
-
-  case GeometryType::Polygon:
-    geometrySymbol = m_polygonSymbol;
-    break;
-
-  default:
-    return;
+    m_graphicsOverlay->graphics()->append(new Graphic(geometry, geometrySymbol, this));
   }
-
-  m_graphicsOverlay->graphics()->append(new Graphic(geometry, geometrySymbol, new QObject(this)));
 }
 
 // Deletes the selected element
@@ -306,7 +306,7 @@ void SnapGeometryEdits::editorUndo()
 void SnapGeometryEdits::displaySnapSources()
 {
   // create lists for displaying the snap sources in snap settings
-  QList<Esri::ArcGISRuntime::SnapSourceSettings*> snapSourceList;
+  QList<SnapSourceSettings*> snapSourceList;
   if (m_geometryEditor->snapSettings()->sourceSettings().empty())
   {
     m_geometryEditor->snapSettings()->syncSourceSettings();

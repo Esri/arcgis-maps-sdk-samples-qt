@@ -43,10 +43,10 @@ class SnapGeometryEdits : public QObject
   Q_PROPERTY(Esri::ArcGISRuntime::MapQuickView* mapView READ mapView WRITE setMapView NOTIFY mapViewChanged)
   Q_PROPERTY(bool geometryEditorStarted READ geometryEditorStarted NOTIFY geometryEditorStartedChanged)
   Q_PROPERTY(bool canUndo READ canUndo NOTIFY canUndoChanged)
-  Q_PROPERTY(bool elementIsSelected READ elementIsSelected NOTIFY elementIsSelectedChanged)
+  Q_PROPERTY(bool isElementSelected READ isElementSelected NOTIFY isElementSelectedChanged)
   Q_PROPERTY(bool layersLoaded MEMBER m_layersLoaded NOTIFY layersLoadedChanged)
-  Q_PROPERTY(QList<QString> pointLayers MEMBER m_pointLayers NOTIFY pointLayersChanged)
-  Q_PROPERTY(QList<QString> polylineLayers MEMBER m_polylineLayers NOTIFY polylineLayersChanged)
+  Q_PROPERTY(QStringList pointLayers MEMBER m_pointLayers NOTIFY pointLayersChanged)
+  Q_PROPERTY(QStringList polylineLayers MEMBER m_polylineLayers NOTIFY polylineLayersChanged)
   Q_PROPERTY(QList<bool> pointSourceCheckedState MEMBER m_pointSourceCheckedState NOTIFY pointSourceCheckedStateChanged)
   Q_PROPERTY(QList<bool> polylineSourceCheckedState MEMBER m_polylineSourceCheckedState NOTIFY polylineSourceCheckedStateChanged)
 
@@ -65,7 +65,7 @@ public:
 
   static void init();
   Q_INVOKABLE void startEditor(GeometryEditorMode geometryEditorMode);
-  Q_INVOKABLE void stopEditor();
+  Q_INVOKABLE void stopEditing();
   Q_INVOKABLE void deleteSelection();
   Q_INVOKABLE void editorUndo();
   Q_INVOKABLE void snappingEnabledStatus(bool checkedValue);
@@ -77,7 +77,7 @@ public:
 
 signals:
   void canUndoChanged();
-  void elementIsSelectedChanged();
+  void isElementSelectedChanged();
   void geometryEditorStartedChanged();
   void layersLoadedChanged();
   void mapViewChanged();
@@ -93,7 +93,8 @@ private:
   bool canUndo();
   void createInitialSymbols();
   void createConnections();
-  bool elementIsSelected();
+  bool isElementSelected();
+  Esri::ArcGISRuntime::Symbol* determineGeometrySymbol(const Esri::ArcGISRuntime::Geometry& geometry);
 
 
 
@@ -112,7 +113,7 @@ private:
   QList<Esri::ArcGISRuntime::SnapSourceSettings*> m_polylineSourceList;
   QList<QString> m_pointLayers;
   QList<QString> m_polylineLayers;
-  bool m_layersLoaded;
+  bool m_layersLoaded = false;
 };
 
 #endif // SNAPGEOMETRYEDITS_H

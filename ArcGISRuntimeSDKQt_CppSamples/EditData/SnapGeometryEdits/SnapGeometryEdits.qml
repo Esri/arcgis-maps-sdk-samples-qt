@@ -142,7 +142,7 @@ Item {
                         id: deleteButton
                         buttonName: qsTr("Delete")
                         iconPath: "qrc:/Samples/EditData/SnapGeometryEdits/iconAssets/erase-32.png"
-                        enabled: snapGeometryEditsSampleModel.geometryEditorStarted || snapGeometryEditsSampleModel.elementIsSelected
+                        enabled: snapGeometryEditsSampleModel.geometryEditorStarted || snapGeometryEditsSampleModel.isElementSelected
                         onClicked: snapGeometryEditsSampleModel.deleteSelection();
                     }
 
@@ -152,7 +152,7 @@ Item {
                         iconPath: "qrc:/Samples/EditData/SnapGeometryEdits/iconAssets/save-32.png"
                         Layout.columnSpan: 2
                         enabled: snapGeometryEditsSampleModel.geometryEditorStarted
-                        onClicked: snapGeometryEditsSampleModel.stopEditor();
+                        onClicked: snapGeometryEditsSampleModel.stopEditing();
                     }
 
                     GeometryEditorButton {
@@ -353,7 +353,7 @@ Item {
                 }
 
                 Item {
-                    height: pointLayersColumn.height+20
+                    height: pointLayersColumn.height+25
                 }
 
                 Column {
