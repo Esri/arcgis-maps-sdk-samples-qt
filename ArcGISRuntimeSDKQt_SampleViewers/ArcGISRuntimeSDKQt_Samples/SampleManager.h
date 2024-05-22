@@ -25,9 +25,7 @@ class SourceCode;
 class SampleCategory;
 class Sample;
 
-
-#include "DataItem.h"
-#include "Portal.h"
+namespace Esri::ArcGISRuntime { class Portal; }
 
 #include <QDir>
 #include <QJsonDocument>

@@ -38,6 +38,7 @@
 #include "AuthenticationManager.h"
 #include "CredentialCache.h"
 #include "ErrorException.h"
+#include "Portal.h"
 
 #include "ZipHelper.h"
 
