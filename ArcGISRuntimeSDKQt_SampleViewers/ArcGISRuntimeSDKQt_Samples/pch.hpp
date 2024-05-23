@@ -17,6 +17,8 @@
 #ifndef SAMPLEAPPS_PCH_HPP
 #define SAMPLEAPPS_PCH_HPP
 
+#ifdef __cplusplus
+
 #include <QtCore/qglobal.h>
 
 #ifdef CPP_VIEWER
@@ -70,5 +72,7 @@
 // but that makes some samples inconsistent
 #include <QQuickView>
 #endif // Q_OS_WIN
+
+#endif // __cplusplus
 
 #endif // SAMPLEAPPS_PCH_HPP
