@@ -140,6 +140,8 @@ include(samples.pri)
 
 # contains source files for zlib-ng and minizip-ng and the helper that uses them
 include(zlib_minizip_ng.pri)
+# contains source files for zlib-ng and minizip-ng
+include($$PWD/../../3rdparty/zlib_minizip_ng.pri)
 
 CONFIG(precompile_header): DEFINES += PCH_BUILD
 
@@ -164,7 +166,8 @@ HEADERS += \
     $$COMMONVIEWER/SearchFilterCriteria.h \
     $$COMMONVIEWER/SearchFilterSimpleKeywordCriteria.h \
     $$COMMONVIEWER/SourceCode.h \
-    $$COMMONVIEWER/SourceCodeListModel.h
+    $$COMMONVIEWER/SourceCodeListModel.h \
+    $$COMMONVIEWER/ZipHelper.h
 
 SOURCES += \
     $$COMMONVIEWER/SyntaxHighlighter/syntax_highlighter.cpp \
@@ -181,7 +184,8 @@ SOURCES += \
     $$COMMONVIEWER/SearchFilterSimpleKeywordCriteria.cpp \
     $$COMMONVIEWER/SourceCode.cpp \
     $$COMMONVIEWER/SourceCodeListModel.cpp \
-    $$COMMONVIEWER/mainSample.cpp
+    $$COMMONVIEWER/mainSample.cpp \
+    $$COMMONVIEWER/ZipHelper.cpp
 
 RESOURCES += \
     $$COMMONVIEWER/qml/qml.qrc \
