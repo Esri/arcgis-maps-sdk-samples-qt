@@ -139,6 +139,8 @@ Desktop.ini
 ehthumbs.db
 Thumbs.db
 
+*.user.2.7pre1
+
 # ignore all build directories
 
 *build*
