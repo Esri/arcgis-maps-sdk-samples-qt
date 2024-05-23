@@ -16,7 +16,6 @@
 import QtQuick
 import QtQuick.Controls
 import Esri.ArcGISRuntimeSamples
-import Esri.ArcGISExtras
 
 Page {
     visible: SampleManager.currentMode === SampleManager.NetworkRequiredView
@@ -63,7 +62,7 @@ Page {
             height: 48
             text: qsTr("Retry")
             onClicked: {
-                if (System.reachability === System.ReachabilityOnline || System.reachability === System.ReachabilityUnknown) {
+                if (SampleManager.reachability === SampleManager.ReachabilityOnline || SampleManager.reachability === SampleManager.ReachabilityUnknown) {
                     SampleManager.currentMode = SampleManager.LiveSampleView
                     showSample();
                 }

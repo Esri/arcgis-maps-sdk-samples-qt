@@ -3,7 +3,6 @@
         <file>main.qml</file>
         <file>CategoryDrawer.qml</file>
         <file>CategoryGridView.qml</file>
-        <file>DataDownloader.qml</file>
         <file>SampleListView.qml</file>
         <file>LiveSampleView.qml</file>
         <file>SourceCodeView.qml</file>

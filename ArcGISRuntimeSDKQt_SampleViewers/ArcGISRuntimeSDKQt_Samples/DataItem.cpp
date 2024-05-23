@@ -17,8 +17,22 @@
 
 #include <QObject>
 #include <QVariant>
+#include <QStandardPaths>
 
 #include "DataItem.h"
+
+static QString homePath()
+{
+  QString homePath;
+
+#ifdef Q_OS_IOS
+  homePath = QStandardPaths::writableLocation(QStandardPaths::DocumentsLocation);
+#else
+  homePath = QStandardPaths::writableLocation(QStandardPaths::HomeLocation);
+#endif
+
+  return homePath;
+}
 
 DataItem::DataItem(const QString& itemId, const QString& path,
                    QObject* parent /*= nullptr*/) :
@@ -26,6 +40,11 @@ DataItem::DataItem(const QString& itemId, const QString& path,
   m_itemId(itemId),
   m_path(path)
 {
+}
+
+bool DataItem::exists() const
+{
+  return QFile::exists(homePath() + m_path.mid(1));
 }
 
 void DataItem::setExists(bool exists)

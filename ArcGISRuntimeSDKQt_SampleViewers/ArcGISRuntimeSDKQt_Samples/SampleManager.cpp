@@ -25,6 +25,7 @@
 #include <QJsonDocument>
 #include <QJsonObject>
 #include <QNetworkProxy>
+#include <QStandardPaths>
 #include <QStringList>
 #include <QTemporaryDir>
 #include <QUrl>
@@ -32,10 +33,21 @@
 #include <QVariantList>
 #include <QVariantMap>
 #include <QQmlEngine>
+#include <NetworkRequestProgress.h>
+
+#include "AuthenticationManager.h"
+#include "CredentialCache.h"
+#include "ErrorException.h"
+#include "Portal.h"
+
+#include "ZipHelper.h"
 
 #include "CategoryListModel.h"
 #include "DataItem.h"
 #include "DataItemListModel.h"
+#include "Error.h"
+#include "MapTypes.h"
+#include "PortalTypes.h"
 #include "SampleCategory.h"
 #include "Sample.h"
 #include "SampleListModel.h"
@@ -175,7 +187,7 @@ bool SampleManager::appendCategoryToManager(SampleCategory* category)
     const auto totalRows = category->samples()->rowCount();
     for (int i = 0; i < totalRows; ++i)
     {
-      m_allSamples->addSample(category->samples()->get(i));
+      m_allSamples->addSample(category->samples()->at(i));
     }
     return true;
   }
@@ -389,6 +401,231 @@ void SampleManager::setDownloadProgress(double progress)
 {
   m_downloadProgress = progress;
   emit downloadProgressChanged();
+}
+
+void SampleManager::clearCredentialCache()
+{
+  AuthenticationManager::credentialCache()->removeAndRevokeAllCredentials();
+}
+
+bool SampleManager::dataItemsExists()
+{
+  // Sample has no data items, return true
+  if (currentSample()->dataItems()->size() == 0)
+    return true;
+
+  for (auto dataItem : *currentSample()->dataItems())
+  {
+    if (dataItem->exists())
+    {
+      return true;
+    }
+  }
+  return false;
+}
+
+void SampleManager::downloadAllDataItems()
+{
+    setDownloadFailed(false);
+
+    if (!m_dataItems.isEmpty())
+      m_dataItems.clear();
+
+    // populate list of data items needed to be downloaded.
+    for (auto sample : *samples())
+    {
+      for (auto dataItem : *sample->dataItems())
+      {
+        if (!dataItem->exists())
+          m_dataItems.enqueue(dataItem);
+      }
+    }
+
+    downloadNextDataItem();
+}
+
+void SampleManager::downloadDataItemsCurrentSample()
+{
+  setDownloadFailed(false);
+
+  if (!m_dataItems.isEmpty())
+    m_dataItems.clear();
+
+  for (auto dataItem : *currentSample()->dataItems())
+  {
+    if (!dataItem->exists())
+      m_dataItems.enqueue(dataItem);
+  }
+
+  downloadNextDataItem();
+}
+
+static QString homePath()
+{
+  QString homePath;
+
+#ifdef Q_OS_IOS
+  homePath = QStandardPaths::writableLocation(QStandardPaths::DocumentsLocation);
+#else
+  homePath = QStandardPaths::writableLocation(QStandardPaths::HomeLocation);
+#endif
+
+  return homePath;
+}
+
+void SampleManager::downloadNextDataItem()
+{
+  if (cancelDownload())
+  {
+    m_dataItems.clear();
+  }
+
+  if (!m_dataItems.isEmpty())
+  {
+    if (!m_portal)
+    {
+      m_portal = new Portal(QUrl("https://www.arcgis.com"), this);
+      connect(m_portal, &Portal::doneLoading, this, [this](const Error& error)
+      {
+        if (!error.isEmpty())
+        {
+          setDownloadFailed(true);
+          setDownloadText(QString("Download failed: %1").arg(error.message()));
+          setDownloadInProgress(false);
+          return;
+        }
+
+        setDownloadText(QString("Remaining items in queue: %1").arg(m_dataItems.size()));
+        auto item = m_dataItems.dequeue();
+        fetchPortalItemData(item->itemId(), homePath() + item->path().mid(1));
+      });
+      m_portal->load();
+    }
+    else {
+      setDownloadText(QString("Remaining items in queue: %1").arg(m_dataItems.size()));
+      auto item = m_dataItems.dequeue();
+      fetchPortalItemData(item->itemId(), homePath() + item->path().mid(1));
+    }
+  }
+  else {
+    setDownloadText("Downloads complete");
+
+    setDownloadProgress(0.0);
+    setDownloadInProgress(false);
+    if (cancelDownload())
+      setCancelDownload(false);
+    else
+      emit doneDownloadingChanged();
+  }
+}
+
+void SampleManager::fetchPortalItemData(const QString& itemId, const QString& outputPath)
+{
+  auto portalItem = new PortalItem(m_portal, itemId, this);
+  if (portalItem)
+  {
+    connect(portalItem, &PortalItem::doneLoading, this, [this, portalItem, outputPath]()
+    {
+      if (portalItem->loadStatus() == LoadStatus::Loaded)
+      {
+        auto folder = portalItem->type() == PortalItemType::CodeSample ? portalItem->name() : QString();
+        QString formattedPath = SampleManager::formattedPath(outputPath, folder);
+        portalItem->fetchDataAsync(formattedPath).then([this, portalItem, formattedPath]()
+        {
+          setDownloadProgress(0.0);
+          if (QFileInfo(formattedPath).suffix() == "zip")
+          {
+            auto zipHelper = new ZipHelper(formattedPath, this);
+            connect(zipHelper, &ZipHelper::extractCompleted, this, [this, formattedPath, portalItem, zipHelper]()
+            {
+                downloadNextDataItem();
+                portalItem->deleteLater();
+                zipHelper->deleteLater();
+            });
+            zipHelper->extractAll(QFileInfo(formattedPath).dir().absolutePath());
+          }
+          else
+          {
+            downloadNextDataItem();
+            portalItem->deleteLater();
+          }
+        }).onFailed([this, portalItem](const ErrorException&)
+        {
+          setDownloadFailed(true);
+          setDownloadText(QString("Download failed for item ").arg(portalItem->itemId()));
+          setDownloadInProgress(false);
+        });
+      }
+    });
+
+    connect(portalItem, &PortalItem::fetchDataProgressChanged, this,
+            [this](const NetworkRequestProgress& progress)
+    {
+      if (!downloadInProgress())
+        setDownloadInProgress(true);
+      setDownloadProgress(progress.progressPercentage());
+    });
+    portalItem->load();
+  }
+}
+
+QString SampleManager::formattedPath(const QString& outputPath,
+                                             const QString& folderName)
+{
+  // first make sure output path exists
+  if (!QFile::exists(outputPath))
+  {
+    QFileInfo fileInfo = QFileInfo(outputPath);
+    QDir dir = fileInfo.dir();
+    if (!dir.exists())
+      dir.mkpath(".");
+  }
+
+  // create the download data task
+  QString formattedFilePath = outputPath;
+
+  // check if the item is code sample
+  if (!folderName.isEmpty())
+  {
+    QFileInfo fileInfo = QFileInfo(outputPath);
+    QString dir = fileInfo.dir().absolutePath();
+    formattedFilePath = dir + "/" + folderName;
+  }
+
+  return formattedFilePath;
+}
+
+SampleManager::Reachability SampleManager::reachability() const
+{
+    auto* instance = QNetworkInformation::instance();
+
+    if(!instance)
+        return SampleManager::Reachability::ReachabilityUnknown;
+    switch (instance->reachability())
+    {
+        case QNetworkInformation::Reachability::Online:
+            return SampleManager::Reachability::ReachabilityOnline;
+        case QNetworkInformation::Reachability::Site:
+            return SampleManager::Reachability::ReachabilitySite;
+        case QNetworkInformation::Reachability::Local:
+            return SampleManager::Reachability::ReachabilityLocal;
+        case QNetworkInformation::Reachability::Disconnected:
+            return SampleManager::Reachability::ReachabilityDisconnected;
+        case QNetworkInformation::Reachability::Unknown:
+        default:
+            return SampleManager::Reachability::ReachabilityUnknown;
+    };
+}
+
+bool SampleManager::deleteAllOfflineData()
+{
+  QDir dir(homePath() + "/ArcGIS/Runtime/Data");
+  return dir.removeRecursively();
+}
+
+QString SampleManager::api() const
+{
+  return QStringLiteral("C++");
 }
 
 void SampleManager::setSourceCodeIndex(int i)

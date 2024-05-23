@@ -16,7 +16,6 @@
 import QtQuick
 import QtQuick.Controls
 import Esri.ArcGISRuntimeSamples
-import Esri.ArcGISExtras
 
 ApplicationWindow {
     id: window
@@ -224,14 +223,6 @@ ApplicationWindow {
         anchors.fill: parent
     }
 
-    FileInfo {
-        id: fileInfo
-    }
-
-    FileInfo {
-        id: dataPackageFileInfo
-    }
-
     Connections {
         target: SampleManager
 
@@ -259,8 +250,8 @@ ApplicationWindow {
 
             // If the sample requires online resources but there is no network connectivity
             if (SampleManager.currentSample.dataItems.size === 0
-                    && System.reachability !== System.ReachabilityOnline
-                    && System.reachability !== System.ReachabilityUnknown) {
+                    && SampleManager.reachability !== SampleManager.ReachabilityOnline
+                    && SampleManager.reachability !== SampleManager.ReachabilityUnknown){
                 SampleManager.currentMode = SampleManager.NetworkRequiredView;
                 return;
             // If the sample requires offline data
@@ -298,7 +289,7 @@ ApplicationWindow {
     function showSample() {
         if (SampleManager.currentSample) {
             descriptionView.descriptionText = SampleManager.currentSample.description;
-            if (checkDataItems()) {
+            if (SampleManager.dataItemsExists()) {
                 if (SampleManager.currentMode === SampleManager.ManageOfflineDataView
                         || SampleManager.currentMode === SampleManager.DownloadDataView
                         || SampleManager.currentMode === SampleManager.HomepageView)
@@ -320,25 +311,6 @@ ApplicationWindow {
             descriptionView.descriptionText = "";
             gc();
         }
-    }
-
-    // check if the data exists locally
-    function checkDataItems() {
-        for (let i = 0; i < SampleManager.currentSample.dataItems.size; i++) {
-            const dataItem = SampleManager.currentSample.dataItems.get(i);
-            if (Qt.platform.os === "ios")
-                fileInfo.filePath = System.writableLocation(System.StandardPathsDocumentsLocation) + dataItem.path.substring(1);
-            else
-                fileInfo.filePath = System.writableLocation(System.StandardPathsHomeLocation) + dataItem.path.substring(1);
-            fileInfo.refresh();
-            if (fileInfo.exists && (!fileInfo.isFolder))
-                continue;
-            dataPackageFileInfo.filePath = fileInfo.filePath + "/dataPackage.zip";
-            if (fileInfo.exists && dataPackageFileInfo.exists)
-                continue;
-            return false;
-        }
-        return true;
     }
 
     Loader {
