@@ -142,3 +142,7 @@ Thumbs.db
 # ignore all build directories
 
 *build*
+.qmake.stash
+*Makefile*
+.qtc_clangd
+mocinclude.opt

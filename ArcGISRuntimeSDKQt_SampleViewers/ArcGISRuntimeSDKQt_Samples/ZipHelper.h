@@ -25,8 +25,8 @@
 #include <QStringList>
 
 // minizip-ng headers
-#include <minizip-ng/zip.h>
-#include <minizip-ng/unzip.h>
+#include <zip.h>
+#include <unzip.h>
 
 //--------------------------------------------------------------------
 
