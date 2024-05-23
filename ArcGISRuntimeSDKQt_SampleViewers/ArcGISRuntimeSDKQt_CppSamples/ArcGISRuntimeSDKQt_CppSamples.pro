@@ -41,11 +41,10 @@ exists($$PWD/../../../../DevBuildCpp.pri) {
   include($$PWD/../../../toolkit/uitools/toolkitcpp.pri)
 
   INCLUDEPATH += \
-      $$SAMPLEPATHCPP \
       $$COMMONVIEWER \
       $$COMMONVIEWER/SyntaxHighlighter \
       $$PWD/../../../../api/qt_cpp/Include \
-      $$PWD/../../../../api/qt_cpp/Include/LocalServer/
+      $$PWD/../../../../api/qt_cpp/Include/LocalServer/ \
 } else {
   message("Building against the installed SDK")
   CONFIG += build_from_setup
@@ -72,7 +71,6 @@ exists($$PWD/../../../../DevBuildCpp.pri) {
   }
 
   INCLUDEPATH += \
-      $$SAMPLEPATHCPP \
       $$COMMONVIEWER \
       $$COMMONVIEWER/SyntaxHighlighter \
       $$priLocation/sdk/include \
@@ -86,16 +84,19 @@ exists($$PWD/../../../../DevBuildCpp.pri) {
     else {
       PLATFORM = "linux/x64"
     }
+    ARCGIS_RUNTIME_IMPORT_PATH = $${priLocation}/sdk/$${PLATFORM}/qml
   }
 
   macx:{
     PLATFORM = "macOS"
+    ARCGIS_RUNTIME_IMPORT_PATH = $${priLocation}/sdk/$${PLATFORM}/universal/qml
   }
 
   win32:{
     contains(QT_ARCH, x86_64):{
       PLATFORM = "windows/x64"
     }
+    ARCGIS_RUNTIME_IMPORT_PATH = $${priLocation}/sdk/$${PLATFORM}/qml
   }
 
   android {
@@ -115,13 +116,26 @@ exists($$PWD/../../../../DevBuildCpp.pri) {
     }
     contains(QMAKE_HOST.os, Windows):{
       ANDROIDDIR = $$clean_path($$(ALLUSERSPROFILE)\\EsriRuntimeQt)
+      ARCGIS_RUNTIME_IMPORT_PATH = $${ANDROIDDIR}/Qt$${ARCGIS_RUNTIME_VERSION}/$${PLATFORM}/$${ANDROID_ARCH_FOLDER}/qml
+    }
+    else {
+      ARCGIS_RUNTIME_IMPORT_PATH = $${priLocation}/sdk/$${PLATFORM}/$${ANDROID_ARCH_FOLDER}/qml
     }
   }
 
   ios {
     PLATFORM = "iOS"
+    ARCGIS_RUNTIME_IMPORT_PATH = $${priLocation}/sdk/$${PLATFORM}/universal/qml
   }
 
+  # Add plugin paths to QML_IMPORT_PATH
+  QML_IMPORT_PATH += $${ARCGIS_RUNTIME_IMPORT_PATH}
+
+  # Add plugin paths to QMLPATHS
+  QMLPATHS += $${ARCGIS_RUNTIME_IMPORT_PATH}
+
+  # Set ArcGIS Runtime QML import path for ArcGISExtras
+  DEFINES += ARCGIS_RUNTIME_IMPORT_PATH=\"$$ARCGIS_RUNTIME_IMPORT_PATH\"
   DEFINES += BUILD_FROM_SETUP
 }
 
@@ -138,9 +152,6 @@ QMAKE_TARGET_COPYRIGHT = Copyright 2017 Esri Inc.
 # include the samples.pri, which contains all the sample resources
 include(samples.pri)
 
-# contains source files for zlib-ng and minizip-ng and the helper that uses them
-include(zlib_minizip_ng.pri)
-
 CONFIG(precompile_header): DEFINES += PCH_BUILD
 
 android {
@@ -149,12 +160,14 @@ android {
 }
 
 HEADERS += \
+    CppSampleManager.h \
     $$PCH_HEADER \
     $$COMMONVIEWER/SyntaxHighlighter/syntax_highlighter.h \
     $$COMMONVIEWER/SyntaxHighlighter/QMLHighlighter.h \
     $$COMMONVIEWER/CategoryListModel.h \
     $$COMMONVIEWER/DataItem.h \
     $$COMMONVIEWER/DataItemListModel.h \
+    $$COMMONVIEWER/DownloadSampleManager.h \
     $$COMMONVIEWER/Sample.h \
     $$COMMONVIEWER/SampleCategory.h \
     $$COMMONVIEWER/SampleListModel.h \
@@ -167,11 +180,13 @@ HEADERS += \
     $$COMMONVIEWER/SourceCodeListModel.h
 
 SOURCES += \
+    CppSampleManager.cpp \
     $$COMMONVIEWER/SyntaxHighlighter/syntax_highlighter.cpp \
     $$COMMONVIEWER/SyntaxHighlighter/QMLHighlighter.cpp \
     $$COMMONVIEWER/CategoryListModel.cpp \
     $$COMMONVIEWER/DataItem.cpp \
     $$COMMONVIEWER/DataItemListModel.cpp \
+    $$COMMONVIEWER/DownloadSampleManager.cpp \
     $$COMMONVIEWER/Sample.cpp \
     $$COMMONVIEWER/SampleCategory.cpp \
     $$COMMONVIEWER/SampleListModel.cpp \
@@ -191,6 +206,7 @@ RESOURCES += \
     $$PWD/imports.qrc
 
 DEFINES += QT_DEPRECATED_WARNINGS
+
 #-------------------------------------------------
 # Application Icon
 #-------------------------------------------------

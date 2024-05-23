@@ -16,7 +16,6 @@
 #ifndef SAMPLELISTMODEL_H
 #define SAMPLELISTMODEL_H
 
-#include "Iterable.h"
 class Sample;
 
 #include <QAbstractListModel>
@@ -24,7 +23,7 @@ class Sample;
 #include <QHash>
 #include <QList>
 
-class SampleListModel : public QAbstractListModel, public Esri::ArcGISRuntime::Iterable<Sample*>
+class SampleListModel : public QAbstractListModel
 {
   Q_OBJECT
 
@@ -45,11 +44,11 @@ public:
   explicit SampleListModel(QObject* parent = nullptr);
   ~SampleListModel() override = default;
 
-  Q_INVOKABLE Sample* at(int index) const override { return m_samples.at(index); }
+  Q_INVOKABLE Sample* get(int index) const { return m_samples.at(index); }
   void addSample(Sample* sample);
   int rowCount(const QModelIndex& parent = QModelIndex()) const override;
   QVariant data(const QModelIndex& index, int role = Qt::DisplayRole) const override;
-  int size() const override { return m_samples.size(); }
+  int size() const { return m_samples.size(); }
 
 signals:
   void sizeChanged();

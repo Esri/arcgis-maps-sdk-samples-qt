@@ -33,7 +33,7 @@
 // Choose a manager based on the type of interface.
 // Add toolkit header for Cpp only
 #ifdef CPP_VIEWER
-#  include "SampleManager.h"
+#  include "CppSampleManager.h"
 #  include "ArcGISRuntimeEnvironment.h"
 #else
 #  include "QmlSampleManager.h"
@@ -615,7 +615,7 @@ void registerCppSampleClasses()
 
 void registerClasses()
 {
-  qmlRegisterSingletonType<SampleManager>("Esri.ArcGISRuntimeSamples", 1, 0, "SampleManager",
+  qmlRegisterSingletonType<DownloadSampleManager>("Esri.ArcGISRuntimeSamples", 1, 0, "SampleManager",
                                                   &esriSampleManagerProvider);
 
   qmlRegisterSingletonType<SyntaxHighlighter>("Esri.ArcGISRuntimeSamples", 1, 0, "SyntaxHighlighter",
@@ -653,7 +653,7 @@ void registerClasses()
 QObject* esriSampleManagerProvider(QQmlEngine* engine, QJSEngine*)
 {
 #ifdef CPP_VIEWER
-  static QObject* sampleManager = new SampleManager(engine);
+  static QObject* sampleManager = new CppSampleManager(engine);
 #else
   static QObject* sampleManager = new QmlSampleManager(engine, engine);
 #endif
