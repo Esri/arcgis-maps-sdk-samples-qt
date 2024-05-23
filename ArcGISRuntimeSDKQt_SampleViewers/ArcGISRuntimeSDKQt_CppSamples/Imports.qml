@@ -27,6 +27,7 @@ import QtSensors
 import QtPositioning
 import QtQuick.XmlListModel
 import QtWebView
+import Esri.ArcGISExtras
 import Esri.ArcGISRuntime.Toolkit
 
 Item {

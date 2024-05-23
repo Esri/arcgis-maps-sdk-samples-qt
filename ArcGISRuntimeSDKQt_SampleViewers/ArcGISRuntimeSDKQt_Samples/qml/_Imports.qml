@@ -20,6 +20,7 @@ import QtQuick.Window
 import QtSensors
 import QtPositioning
 import QtQml.XmlListModel
+import Esri.ArcGISExtras
 import Esri.ArcGISRuntime.Toolkit
 
 Item {

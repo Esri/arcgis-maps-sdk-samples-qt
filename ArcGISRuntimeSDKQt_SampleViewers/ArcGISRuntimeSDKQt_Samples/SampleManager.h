@@ -18,21 +18,16 @@
 
 class QAbstractItemModel;
 class CategoryListModel;
-class DataItem;
 class QTemporaryDir;
 class SampleListModel;
 class SourceCode;
 class SampleCategory;
 class Sample;
 
-namespace Esri::ArcGISRuntime { class Portal; }
-
 #include <QDir>
 #include <QJsonDocument>
 #include <QObject>
-#include <QQueue>
 #include <QString>
-#include <QNetworkInformation>
 #include <QUrl>
 #include <QVariantList>
 
@@ -60,8 +55,6 @@ class SampleManager : public QObject
   Q_PROPERTY(double downloadProgress READ downloadProgress WRITE setDownloadProgress NOTIFY downloadProgressChanged)
   Q_PROPERTY(bool cancelDownload READ cancelDownload WRITE setCancelDownload NOTIFY cancelDownloadChanged)
   Q_PROPERTY(bool downloadFailed READ downloadFailed WRITE setDownloadFailed NOTIFY downloadFailedChanged)
-  Q_PROPERTY(QString api READ api CONSTANT)
-  Q_PROPERTY(Reachability reachability READ reachability NOTIFY reachabilityChanged)
 
 public:
   explicit SampleManager(QObject* parent = nullptr);
@@ -69,11 +62,6 @@ public:
 
   Q_INVOKABLE virtual void init();
 
-  Q_INVOKABLE bool dataItemsExists();
-  Q_INVOKABLE void clearCredentialCache();
-  Q_INVOKABLE void downloadAllDataItems();
-  Q_INVOKABLE void downloadDataItemsCurrentSample();
-  Q_INVOKABLE bool deleteAllOfflineData();
   Q_INVOKABLE void setSourceCodeIndex(int i);
   Q_INVOKABLE void setupProxy(const QString& hostName, quint16 port, const QString& user, const QString& pw);
   Q_INVOKABLE void doneDownloading() { emit doneDownloadingChanged(); }
@@ -91,16 +79,6 @@ public:
   };
   Q_ENUM(CurrentMode)
 
-  enum class Reachability
-  {
-      ReachabilityOnline              = static_cast<int>(QNetworkInformation::Reachability::Online),
-      ReachabilitySite                = static_cast<int>(QNetworkInformation::Reachability::Site),
-      ReachabilityLocal               = static_cast<int>(QNetworkInformation::Reachability::Local),
-      ReachabilityDisconnected        = static_cast<int>(QNetworkInformation::Reachability::Disconnected),
-      ReachabilityUnknown             = static_cast<int>(QNetworkInformation::Reachability::Unknown)
-  };
-  Q_ENUM(Reachability)
-
 signals:
   void sampleInitComplete();
   void featuredSamplesChanged();
@@ -115,7 +93,6 @@ signals:
   void downloadTextChanged();
   void downloadProgressChanged();
   void apiKeyRequired(const QString& apiKey);
-  void reachabilityChanged();
 
 protected:
   void setDownloadProgress(double progress);
@@ -128,7 +105,7 @@ private:
   QVariantMap toVariantMap(const QString& json);
   QVariant fileUrl(const QString& scheme, const QString& path);
   QString readTextFile(const QString& filePath);
-  SampleListModel* samples() const { return m_allSamples; }
+  SampleListModel* samples() { return m_allSamples; }
   SampleListModel* featuredSamples() const { return m_featuredSamples; }
   CategoryListModel* categories() { return m_categories; }
   CurrentMode currentMode() { return m_currentMode; }
@@ -143,27 +120,17 @@ private:
   QUrl qtSdkUrl() const { return m_qtSdkUrl; }
   QUrl qtSamplesUrl() const { return m_qtSamplesUrl; }
   bool downloadInProgress() const { return m_downloadInProgress; }
-  void downloadNextDataItem();
-  void fetchPortalItemData(const QString& itemId, const QString& outputPath);
   void setDownloadInProgress(bool inProgress);
-  void setDownloadText(const QString& downloadText);
-  QString formattedPath(const QString& outputPath,
-                        const QString& folderName = QString());
-private:
   QString downloadText() const { return m_downloadText; }
+  void setDownloadText(const QString& downloadText);
   double downloadProgress() const { return m_downloadProgress; }
   void createAndSetTempDirForLocalServer();
   bool cancelDownload() const { return m_cancelDownload; }
   void setCancelDownload(bool cancel);
   bool downloadFailed() const { return m_downloadFailed; }
   void setDownloadFailed(bool didFail);
-  SampleManager::Reachability reachability() const;
-  QString api() const;
-
 
 private:
-  QQueue<DataItem*> m_dataItems;
-  Esri::ArcGISRuntime::Portal* m_portal = nullptr;
   CategoryListModel* m_categories = nullptr;
   SampleListModel* m_allSamples = nullptr;
   SampleListModel* m_featuredSamples = nullptr;

@@ -34,7 +34,7 @@ public:
 
   QString itemId() const { return m_itemId; }
   QString path() const { return m_path; }
-  bool exists() const;
+  bool exists() const { return m_exists; }
   void setExists(bool exists);
 
 signals:
