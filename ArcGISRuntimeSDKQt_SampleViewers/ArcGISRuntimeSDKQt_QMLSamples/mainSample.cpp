@@ -33,8 +33,8 @@
 // Choose a manager based on the type of interface.
 // Add toolkit header for Cpp only
 #ifdef CPP_VIEWER
-#  include "SampleManager.h"
-#  include "ArcGISRuntimeEnvironment.h"
+#include "SampleManager.h"
+#include "ArcGISRuntimeEnvironment.h"
 #include "CategoryListModel.h"
 #include "DataItem.h"
 #include "DataItemListModel.h"
