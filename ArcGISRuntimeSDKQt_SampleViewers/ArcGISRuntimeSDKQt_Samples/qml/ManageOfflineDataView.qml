@@ -18,20 +18,14 @@ import QtQuick.Controls
 import Qt.labs.platform
 import QtQuick.Layouts
 import Esri.ArcGISRuntimeSamples
-import Esri.ArcGISExtras
 
 Page {
     id: manageOfflineDataViewPage
     visible: SampleManager.currentMode === SampleManager.ManageOfflineDataView
-    property bool manageOfflineDataViewDownloadInProgress: false
 
     onVisibleChanged: {
         if (!manageOfflineDataViewPage.visible && SampleManager.downloadInProgress)
             SampleManager.cancelDownload = true;
-    }
-
-    FileFolder {
-        id: fileFolder
     }
 
     ColumnLayout {
@@ -63,10 +57,8 @@ Page {
             Layout.alignment: Qt.AlignHCenter | Qt.AlignVCenter
             visible: !SampleManager.downloadInProgress
             onClicked: {
-                SampleManager.downloadFailed = false;
-                if (System.reachability === System.ReachabilityOnline || System.reachability === System.ReachabilityUnknown) {
-                    allDataDownloadLoader.item.downloadAllDataItems();
-                    manageOfflineDataViewDownloadInProgress = true;
+                if (SampleManager.reachability === SampleManager.ReachabilityOnline || SampleManager.reachability === SampleManager.ReachabilityUnknown) {
+                    SampleManager.downloadAllDataItems();
                 } else {
                     SampleManager.currentMode = SampleManager.NetworkRequiredView;
                 }
@@ -79,13 +71,7 @@ Page {
             Layout.alignment: Qt.AlignHCenter | Qt.AlignVCenter
             visible: !SampleManager.downloadInProgress
             onClicked: {
-                let folderPath;
-                if (Qt.platform.os === "ios")
-                    folderPath = System.writableLocation(System.StandardPathsDocumentsLocation) + "/ArcGIS/Runtime/Data";
-                else
-                    folderPath = System.writableLocation(System.StandardPathsHomeLocation) + "/ArcGIS/Runtime/Data";
-                
-                messageDialog.visible = fileFolder.removeFolder(folderPath, true);
+                messageDialog.visible = SampleManager.deleteAllOfflineData();
             }
             clip: true
         }
@@ -145,27 +131,6 @@ Page {
         visible: false
         onRejected: {
             visible = false;
-        }
-    }
-
-    Loader {
-        id: allDataDownloadLoader
-        asynchronous: true
-        visible: status == Loader.Ready
-        sourceComponent: manageOfflineDataViewPage.visible || manageOfflineDataViewDownloadInProgress ? allDataDownloaderComponent : undefined
-    }
-
-    Component {
-        id: allDataDownloaderComponent
-        DataDownloader {
-        }
-    }
-
-    Connections {
-        target: SampleManager
-
-        function onDoneDownloadingChanged () {
-            manageOfflineDataViewDownloadInProgress = false;
         }
     }
 }

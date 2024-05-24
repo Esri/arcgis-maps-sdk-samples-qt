@@ -87,43 +87,21 @@ INCLUDEPATH += \
     $$COMMONVIEWER/SyntaxHighlighter
 
 HEADERS += \
-    QmlSampleManager.h \
     $$COMMONVIEWER/pch.hpp \
     $$COMMONVIEWER/SyntaxHighlighter/syntax_highlighter.h \
     $$COMMONVIEWER/SyntaxHighlighter/QMLHighlighter.h \
-    $$COMMONVIEWER/CategoryListModel.h \
-    $$COMMONVIEWER/DataItem.h \
-    $$COMMONVIEWER/DataItemListModel.h \
-    $$COMMONVIEWER/DownloadSampleManager.h \
-    $$COMMONVIEWER/Sample.h \
-    $$COMMONVIEWER/SampleCategory.h \
-    $$COMMONVIEWER/SampleListModel.h \
-    $$COMMONVIEWER/SampleManager.h \
     $$COMMONVIEWER/SampleManager_definitions.h \
-    $$COMMONVIEWER/SampleSearchFilterModel.h \
     $$COMMONVIEWER/SearchFilterCriteria.h \
-    $$COMMONVIEWER/SearchFilterSimpleKeywordCriteria.h \
     $$COMMONVIEWER/SourceCode.h \
     $$COMMONVIEWER/SourceCodeListModel.h
 
 SOURCES += \
-    QmlSampleManager.cpp \
     $$COMMONVIEWER/SyntaxHighlighter/syntax_highlighter.cpp \
     $$COMMONVIEWER/SyntaxHighlighter/QMLHighlighter.cpp \
-    $$COMMONVIEWER/CategoryListModel.cpp \
-    $$COMMONVIEWER/DataItem.cpp \
-    $$COMMONVIEWER/DataItemListModel.cpp \
-    $$COMMONVIEWER/DownloadSampleManager.cpp \
-    $$COMMONVIEWER/Sample.cpp \
-    $$COMMONVIEWER/SampleCategory.cpp \
-    $$COMMONVIEWER/SampleListModel.cpp \
-    $$COMMONVIEWER/SampleManager.cpp \
-    $$COMMONVIEWER/SampleSearchFilterModel.cpp \
     $$COMMONVIEWER/SearchFilterCriteria.cpp \
-    $$COMMONVIEWER/SearchFilterSimpleKeywordCriteria.cpp \
     $$COMMONVIEWER/SourceCode.cpp \
     $$COMMONVIEWER/SourceCodeListModel.cpp \
-    $$COMMONVIEWER/mainSample.cpp
+    $$PWD/mainSample.cpp
 
 RESOURCES += \
     imports.qrc \

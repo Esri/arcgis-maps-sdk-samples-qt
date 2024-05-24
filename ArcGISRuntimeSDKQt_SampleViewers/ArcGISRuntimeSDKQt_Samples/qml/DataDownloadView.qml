@@ -16,7 +16,6 @@
 import QtQuick
 import QtQuick.Controls
 import Esri.ArcGISRuntimeSamples
-import Esri.ArcGISExtras
 import QtQuick.Layouts
 
 Page {
@@ -65,9 +64,8 @@ Page {
             Layout.alignment: Qt.AlignHCenter | Qt.AlignVCenter
             visible: !SampleManager.downloadInProgress
             onClicked: {
-                if (System.reachability === System.ReachabilityOnline || System.reachability === System.ReachabilityUnknown) {
-                    dataDownloadLoader.item.downloadDataItems();
-                    pageDownloadInProgress = true;
+                if (SampleManager.reachability === SampleManager.ReachabilityOnline || SampleManager.reachability === SampleManager.ReachabilityUnknown) {
+                    SampleManager.downloadDataItemsCurrentSample();
                 } else {
                     SampleManager.currentMode = SampleManager.NetworkRequiredView;
                 }
@@ -80,7 +78,7 @@ Page {
             Layout.alignment: Qt.AlignHCenter | Qt.AlignVCenter
             Layout.fillWidth: true
             horizontalAlignment: Label.AlignHCenter
-            visible: SampleManager.downloadInProgress || (dataDownloadLoader.item && dataDownloadLoader.item.failedToDownload)
+            visible: SampleManager.downloadInProgress
             font {
                 family: fontFamily
             }
@@ -108,25 +106,6 @@ Page {
             value: SampleManager.downloadProgress
             visible: SampleManager.downloadInProgress
             clip: true
-        }
-    }
-
-    Loader {
-        id: dataDownloadLoader
-        sourceComponent: page.visible || pageDownloadInProgress ? dataDownloaderComponent : undefined
-    }
-
-    Component {
-        id: dataDownloaderComponent
-        DataDownloader {
-        }
-    }
-
-    Connections {
-        target: SampleManager
-
-        function onDoneDownloadingChanged () {
-            pageDownloadInProgress = false;
         }
     }
 }
