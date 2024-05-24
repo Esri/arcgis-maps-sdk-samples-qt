@@ -138,8 +138,6 @@ QMAKE_TARGET_COPYRIGHT = Copyright 2017 Esri Inc.
 # include the samples.pri, which contains all the sample resources
 include(samples.pri)
 
-# contains source files for zlib-ng and minizip-ng and the helper that uses them
-include(zlib_minizip_ng.pri)
 # contains source files for zlib-ng and minizip-ng
 include($$PWD/../../3rdparty/zlib_minizip_ng.pri)
 
