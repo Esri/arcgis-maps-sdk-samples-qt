@@ -49,17 +49,9 @@
 #include "SyntaxHighlighter/syntax_highlighter.h"
 #include "DrawOrderLayerListModel.h"
 #else
-// #  include "QmlSampleManager.h"
 #endif
 
-// #include "CategoryListModel.h"
-// #include "DataItem.h"
-// #include "DataItemListModel.h"
 #include "Esri/ArcGISRuntime/Toolkit/register.h"
-// #include "Sample.h"
-// #include "SampleCategory.h"
-// #include "SampleListModel.h"
-// #include "SampleSearchFilterModel.h"
 #include "SearchFilterCriteria.h"
 #include "SourceCode.h"
 #include "SourceCodeListModel.h"
@@ -628,30 +620,11 @@ void registerCppSampleClasses()
 
 void registerClasses()
 {
-  // qmlRegisterSingletonType<SampleManager>("Esri.ArcGISRuntimeSamples", 1, 0, "SampleManager",
-  //                                                 &esriSampleManagerProvider);
-
   qmlRegisterSingletonType<SyntaxHighlighter>("Esri.ArcGISRuntimeSamples", 1, 0, "SyntaxHighlighter",
                                               &syntaxHighlighterProvider);
-  // qmlRegisterUncreatableType<DataItem>("Esri.ArcGISRuntimeSamples", 1, 0,
-  //                                      "DataItem", "DataItem is an uncreatable type");
-  // qmlRegisterUncreatableType<DataItemListModel>("Esri.ArcGISRuntimeSamples", 1, 0,
-  //                                               "DataItemListModel", "DataItemListModel is an uncreatable type");
-  // qmlRegisterUncreatableType<CategoryListModel>("Esri.ArcGISRuntimeSamples", 1, 0,
-  //                                               "CategoryListModel", "CategoryListModel is an uncreatable type");
-  // qmlRegisterUncreatableType<SampleListModel>("Esri.ArcGISRuntimeSamples", 1, 0,
-  //                                             "SampleListModel", "SampleListModel is an uncreatable type");
-  // qmlRegisterUncreatableType<SampleCategory>("Esri.ArcGISRuntimeSamples", 1, 0,
-  //                                            "SampleCategory", "SampleCategory is an uncreatable type");
-  // qmlRegisterUncreatableType<Sample>("Esri.ArcGISRuntimeSamples", 1, 0,
-                                     // "Sample", "Sample is an uncreatable type");
-  // qmlRegisterUncreatableType<SourceCodeListModel>("Esri.ArcGISRuntimeSamples", 1, 0,
-  //                                                 "SourceCodeListModel", "SourceCodeListModel is an uncreatable type");
   qmlRegisterUncreatableType<SourceCode>("Esri.ArcGISRuntimeSamples", 1, 0,
                                          "SourceCode", "SourceCode is an uncreatable type");
 
-  // qmlRegisterType<SampleSearchFilterModel>("Esri.ArcGISRuntimeSamples", 1, 0, "SampleSearchFilterModel");
-  // qmlRegisterUncreatableType<SearchFilterCriteria>("Esri.ArcGISRuntimeSamples", 1, 0, "SearchFilterCriteria", "Abstract base class");
 
 
 #ifndef CPP_VIEWER
@@ -667,8 +640,6 @@ QObject* esriSampleManagerProvider(QQmlEngine* engine, QJSEngine*)
 {
 #ifdef CPP_VIEWER
   static QObject* sampleManager = new SampleManager(engine);
-#else
-  // static QObject* sampleManager = new QmlSampleManager(engine, engine);
 #endif
   return new QObject();
 }
