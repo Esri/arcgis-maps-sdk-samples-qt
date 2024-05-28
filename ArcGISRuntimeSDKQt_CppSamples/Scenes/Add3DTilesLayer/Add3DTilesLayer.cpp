@@ -78,7 +78,7 @@ void Add3DTilesLayer::setSceneView(SceneQuickView* sceneView)
 
 void Add3DTilesLayer::add3DTilesLayer()
 {
-  const QUrl modelPath = QUrl("https://tiles.arcgis.com/tiles/N82JbI5EYtAkuUKU/arcgis/rest/services/Stuttgart/3DTilesServer/tileset.json");
+  const QUrl modelPath = QUrl("https://tiles.arcgis.com/tiles/ZQgQTuoyBrtmoGdP/arcgis/rest/services/Stuttgart/3DTilesServer/tileset.json");
   m_ogc3dTilesLayer = new Ogc3dTilesLayer(modelPath, this);
   m_scene->operationalLayers()->append(m_ogc3dTilesLayer);
 }
