@@ -38,7 +38,6 @@ Item {
     }
 
     Rectangle {
-
         anchors {
             right: parent.right
             margins: 10
@@ -170,6 +169,7 @@ Item {
             }
         }
     }
+
     Rectangle {
         id: optionPanel
         anchors {
@@ -182,260 +182,154 @@ Item {
         color: "white"
         opacity: 1
 
-        Flickable {
+        ListView {
+            id: snapSourceView
             anchors {
                 fill: parent
                 margins: 10
             }
-            contentWidth: parent.width
-            contentHeight: parent.height
-            flickableDirection: Flickable.VerticalFlick
-            ColumnLayout
-            {
-                id: layout
-                spacing: 40
-                Column {
-                    id: snappingColumn
-                    spacing: 10
-                    width: optionPanel.width
+            //headerPositioning: ListView.OverlayHeader
+            spacing: 10
 
-                    Item {
-                        width: parent.width
-                        height: 25
+            header: ColumnLayout {
+                id: snappingColumn
+                Layout.minimumWidth: optionPanel.width
+                Layout.minimumHeight: 100
 
-                        Text {
-                            text: "Snapping"
-                            font.pixelSize: 15
-                            color: "#8434C1"
-                            font.bold: true
+                RowLayout {
+                    Layout.minimumWidth: optionPanel.width
+                    Layout.minimumHeight: 25
 
-                        }
-
-                        Rectangle {
-                            anchors {
-                                right: parent.right
-                                margins: 10
-                            }
-                            width: 45
-                            height: 20
-
-                            Text {
-                                text: "Done"
-                                font.pixelSize: 15
-                                color: "#8434C1"
-                                font.bold: true
-                            }
-
-                            MouseArea {
-                                anchors.fill: parent
-                                onClicked: optionPanel.visible = false;
-                            }
-                        }
+                    Text {
+                        Layout.alignment: Qt.AlignLeft
+                        Layout.fillWidth: true
+                        Layout.minimumWidth: optionPanel.width * 0.75
+                        Layout.minimumHeight: 25
+                        text: "Snapping"
+                        font.pixelSize: 16
+                        color: "#8434C1"
+                        font.bold: true
                     }
 
-                    Item {
-                        width: parent.width
-                        height: 25
-
-                        Rectangle {
-                            anchors {
-                                margins: 10
-                            }
-
-                            width: 340
-                            height: 45
-                            color: "#E9DFEA"
-                            radius: 5
-                            border {
-                                color: "#4D4D4D"
-                                width: 1
-                            }
-
-                            Text {
-                                anchors.verticalCenter: parent.verticalCenter
-                                text: qsTr("Enabled")
-                                font.pixelSize: 15
-                                anchors {
-                                    left: parent.left
-                                    margins: 10
-                                    verticalCenter: parent.verticalCenter
-                                }
-                            }
-
-                            Switch {
-                                anchors {
-                                    right: parent.right
-                                    margins: 10
-                                    verticalCenter: parent.verticalCenter
-                                }
-                                onCheckedChanged: snapGeometryEditsSampleModel.snappingEnabledStatus(checked)
-                            }
-                        }
-                    }
-                }
-                Column {
-                    id: pointLayersColumn
-                    spacing: 10
-                    width: optionPanel.width
-                    Item {
-                        width: parent.width
-                        height: 25
-
-                        Text {
-                            text: "Point Layers"
-                            font.pixelSize: 15
-                            color: "#8434C1"
-                            font.bold: true
-                        }
-
-                        Rectangle {
-                            anchors {
-                                right: parent.right
-                                margins: 10
-                            }
-                            width: 140
-                            height: 20
-
-                            Text {
-                                text: "Enable All Sources"
-                                font.pixelSize: 15
-                                color: "#8434C1"
-                                font.bold: true
-                            }
-
-                            MouseArea {
-                                anchors.fill: parent
-                                onClicked: snapGeometryEditsSampleModel.onPointLayersEnabled()
-                            }
-                        }
-                    }
-
-                    Item {
-                        width: parent.width
-                        height: 25
-
-                        Rectangle {
-                            anchors.margins: 20
-                            width: 340
-                            height: pointLayersGrid.height
-                            color: "#E9DFEA"
-                            radius: 5
-                            border {
-                                color: "#4D4D4D"
-                                width: 1
-                            }
-
-                            ColumnLayout {
-                                id: pointLayersGrid
-                                Repeater {
-                                    model: snapGeometryEditsSampleModel.pointLayers
-                                    delegate: RowLayout {
-                                        Layout.margins: 10
-
-                                        Text {
-                                            text: snapGeometryEditsSampleModel.pointLayers[index]
-                                            Layout.alignment: Qt.AlignLeft
-                                            Layout.fillWidth: true
-                                            Layout.rightMargin: 110
-                                            font.pixelSize: 15
-                                        }
-
-                                        Switch {
-                                            Layout.alignment: Qt.AlignRight
-                                            checked: snapGeometryEditsSampleModel.pointSourceCheckedState[index]
-                                            onCheckedChanged: snapGeometryEditsSampleModel.pointSourceEnabledStatus(checked, index)
-                                        }
-                                    }
-                                }
-                            }
+                    Text {
+                        Layout.alignment: Qt.AlignRight
+                        Layout.fillWidth: true
+                        Layout.minimumWidth: optionPanel.width * 0.25
+                        Layout.minimumHeight: 25
+                        text: "Done"
+                        font.pixelSize: 16
+                        color: "#8434C1"
+                        font.bold: true
+                        MouseArea {
+                            anchors.fill: parent
+                            onClicked: optionPanel.visible = false;
                         }
                     }
                 }
 
-                Item {
-                    height: pointLayersColumn.height+25
-                }
+                RowLayout {
+                    Layout.minimumWidth: optionPanel.width
+                    Layout.minimumHeight: 25
 
-                Column {
-                    id: polylineLayersColumn
-                    spacing: 10
-                    width: optionPanel.width
-
-                    Item {
-                        width: parent.width
-                        height: 25
-
-
-                        Text {
-                            text: "Polyline Layers"
-                            font.pixelSize: 15
-                            color: "#8434C1"
-                            font.bold: true
+                    Rectangle {
+                        Layout.alignment: Qt.AlignLeft
+                        Layout.minimumWidth: snapSourceView.width - (snapSourceView.anchors.margins / 2)
+                        Layout.minimumHeight: 45
+                        color: "#E9DFEA"
+                        radius: 5
+                        border {
+                            color: "#4D4D4D"
+                            width: 1
                         }
 
+                        Text {
+                            anchors.verticalCenter: parent.verticalCenter
+                            text: qsTr("Enabled")
+                            font.pixelSize: 15
+                            anchors {
+                                left: parent.left
+                                margins: 10
+                                verticalCenter: parent.verticalCenter
+                            }
+                        }
 
-                        Rectangle {
+                        Switch {
                             anchors {
                                 right: parent.right
                                 margins: 10
+                                verticalCenter: parent.verticalCenter
                             }
-                            width: 140
-                            height: 20
+                            onCheckedChanged: snapGeometryEditsSampleModel.snappingEnabledStatus(checked)
+                        }
+                    }
+                }
+            }
 
-                            Text {
-                                text: "Enable All Sources"
-                                font.pixelSize: 15
-                                color: "#8434C1"
-                                font.bold: true
-                            }
+            model: snapGeometryEditsSampleModel.snapSourceModel
+
+            section {
+                property: "section"
+                criteria: ViewSection.FullString
+                delegate: Item {
+                    height: 25
+                    width: optionPanel.width
+
+                    RowLayout {
+                        Layout.margins: 10
+                        Layout.fillWidth: true
+                        Layout.minimumWidth: optionPanel.width
+                        Layout.minimumHeight: 25
+
+                        Text {
+                            Layout.alignment: Qt.AlignLeft
+                            Layout.fillWidth: true
+                            Layout.minimumWidth: optionPanel.width * 0.5
+                            Layout.minimumHeight: 25
+                            text: section
+                            font.pixelSize: 16
+                            font.bold: true
+                        }
+
+                        Text {
+                            Layout.alignment: Qt.AlignRight
+                            Layout.minimumWidth: optionPanel.width * 0.5
+                            Layout.minimumHeight: 25
+                            text: "Enable All Sources"
+                            font.pixelSize: 16
+                            color: "#8434C1"
+                            font.bold: true
 
                             MouseArea {
                                 anchors.fill: parent
-                                onClicked: snapGeometryEditsSampleModel.onPolylineLayersEnabled()
+                                onClicked: snapGeometryEditsSampleModel.enableAllLayersInSection(section);
                             }
                         }
                     }
+                }
+            }
 
-                    Item {
+            delegate: Item {
+                height: 25
+                width: optionPanel.width
 
-                        width: parent.width
-                        height: 25
+                RowLayout {
+                    Layout.margins: 10
+                    Layout.fillWidth: true
+                    Layout.minimumWidth: optionPanel.width
 
-                        Rectangle {
-                            anchors.margins: 20
-                            width: 340
-                            height: polylineLayersGrid.height
-                            color: "#E9DFEA"
-                            radius: 5
-                            border {
-                                color: "#4D4D4D"
-                                width: 1
-                            }
+                    Text {
+                        Layout.alignment: Qt.AlignLeft
+                        Layout.fillWidth: true
+                        Layout.minimumWidth: optionPanel.width / 2
+                        text: name
+                        font.pixelSize: 12
+                    }
 
-                            ColumnLayout {
-                                id: polylineLayersGrid
-                                Repeater {
-                                    model: snapGeometryEditsSampleModel.polylineLayers
-                                    delegate: RowLayout {
-                                        Layout.margins: 10
-
-                                        Text {
-                                            text: snapGeometryEditsSampleModel.polylineLayers[index]
-                                            Layout.alignment: Qt.AlignLeft
-                                            Layout.fillWidth: true
-                                            Layout.rightMargin: 200
-                                            font.pixelSize: 15
-                                        }
-
-                                        Switch {
-                                            Layout.alignment: Qt.AlignRight
-                                            checked: snapGeometryEditsSampleModel.polylineSourceCheckedState[index]
-                                            onCheckedChanged: snapGeometryEditsSampleModel.polylineSourceEnabledStatus(checked, index)
-                                        }
-                                    }
-                                }
-                            }
-                        }
+                    Switch {
+                        Layout.alignment: Qt.AlignRight
+                        Layout.fillWidth: true
+                        checked: isEnabled
+                        onCheckedChanged: isEnabled = checked;
                     }
                 }
             }

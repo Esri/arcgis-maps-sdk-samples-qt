@@ -17,5 +17,7 @@
         <file>iconAssets/trash-32.png</file>
         <file>iconAssets/undo-32.png</file>
         <file>iconAssets/settings.png</file>
+        <file>SnapSourceListModel.cpp</file>
+        <file>SnapSourceListModel.h</file>
     </qresource>
 </RCC>

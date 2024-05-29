@@ -47,12 +47,15 @@
 #include "SnapSourceSettings.h"
 #include "SymbolTypes.h"
 
+#include "SnapSourceListModel.h"
+
 #include <QFuture>
 
 using namespace Esri::ArcGISRuntime;
 
 SnapGeometryEdits::SnapGeometryEdits(QObject* parent /* = nullptr */) :
-  QObject(parent)
+  QObject(parent),
+  m_snapSourceListModel(new SnapSourceListModel(this))
 {
   Portal* portal = new Portal(this);
   PortalItem* portalItem = new PortalItem(portal, "b95fe18073bc4f7788f0375af2bb445e", this);
@@ -182,40 +185,6 @@ void SnapGeometryEdits::snappingEnabledStatus(bool snappingCheckedState)
   m_geometryEditor->snapSettings()->setEnabled(snappingCheckedState);
 }
 
-// Toggles snapping for the point layer snap source at [index] using the checked value from the snap settings
-void SnapGeometryEdits::pointSourceEnabledStatus(bool snappingCheckedState, int index)
-{
-  m_pointSourceCheckedState[index] = snappingCheckedState;
-  m_pointSourceList[index]->setEnabled(m_pointSourceCheckedState[index]);
-}
-
-// Toggles snapping for the polyline layer snap source at [index] using the checked value from the snap settings
-void SnapGeometryEdits::polylineSourceEnabledStatus(bool snappingCheckedState, int index)
-{
-  m_polylineSourceCheckedState[index] = snappingCheckedState;
-  m_polylineSourceList[index]->setEnabled(m_polylineSourceCheckedState[index]);
-}
-
-// Enable snapping for all the point layer snap sources
-void SnapGeometryEdits::onPointLayersEnabled()
-{
-  for (int index = 0; index < m_pointSourceList.size(); ++index)
-  {
-    pointSourceEnabledStatus(true, index);
-  }
-  emit pointSourceCheckedStateChanged();
-}
-
-// Enable snapping for all the polyline layer snap sources
-void SnapGeometryEdits::onPolylineLayersEnabled()
-{
-  for (int index = 0; index < m_polylineSourceList.size(); ++index)
-  {
-    polylineSourceEnabledStatus(true, index);
-  }
-  emit polylineSourceCheckedStateChanged();
-}
-
 // Starts the GeometryEditor using the selected geometry type
 void SnapGeometryEdits::startEditor(GeometryEditorMode geometryEditorMode)
 {
@@ -305,31 +274,23 @@ void SnapGeometryEdits::editorUndo()
 
 void SnapGeometryEdits::displaySnapSources()
 {
-  // create lists for displaying the snap sources in snap settings
-  QList<SnapSourceSettings*> snapSourceList;
-  if (m_geometryEditor->snapSettings()->sourceSettings().empty())
-  {
-    m_geometryEditor->snapSettings()->syncSourceSettings();
-    snapSourceList = m_geometryEditor->snapSettings()->sourceSettings();
+  if (!m_snapSourceListModel)
+    return;
 
-    for (int index = 0; index < snapSourceList.size()-1; ++index)
-    {
-      FeatureLayer *featureLayer = static_cast<FeatureLayer*>(snapSourceList[index]->source());
-      if (featureLayer->featureTable()->geometryType() == GeometryType::Point)
-      {
-        m_pointLayers.append(featureLayer->name());
-        m_pointSourceCheckedState.append(snapSourceList[index]->isEnabled());
-        m_pointSourceList.append(snapSourceList[index]);
-      }
-      else if (featureLayer->featureTable()->geometryType() == GeometryType::Polyline)
-      {
-        m_polylineLayers.append(featureLayer->name());
-        m_polylineSourceCheckedState.append(snapSourceList[index]->isEnabled());
-        m_polylineSourceList.append(snapSourceList[index]);
-      }
-    }
+  // Sync the snap settings and update the list model
+  m_geometryEditor->snapSettings()->syncSourceSettings();
+  m_snapSourceListModel->setSnapSourceSettings(m_geometryEditor->snapSettings()->sourceSettings());
 
-  emit pointLayersChanged();
-  emit polylineLayersChanged();
-  }
+  emit snapSourceModelChanged();
+}
+
+void SnapGeometryEdits::enableAllLayersInSection(const QString& section)
+{
+  m_snapSourceListModel->enableAllLayersInSection(section);
+  emit snapSourceModelChanged();
+}
+
+QAbstractListModel *SnapGeometryEdits::snapSourceListModel() const
+{
+  return m_snapSourceListModel;
 }
