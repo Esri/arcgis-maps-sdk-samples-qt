@@ -20,40 +20,40 @@
 TEMPLATE = app
 QT += core gui xml network qml quick positioning sensors multimedia
 QT += widgets quickcontrols2 opengl webview core5compat websockets texttospeech
-TARGET = ArcGISQt_CppSamples
+TARGET = ArcGISQt_Samples
 DEFINES += CPP_VIEWER
 DEFINES += Qt_Version=\"$$QT_VERSION\"
-SAMPLEPATHCPP = $$PWD/../../ArcGISRuntimeSDKQt_CppSamples
-COMMONVIEWER = $$PWD/../ArcGISRuntimeSDKQt_Samples
+SAMPLEPATHCPP = $$PWD/../ArcGISRuntimeSDKQt_CppSamples
+COMMONVIEWER = $$PWD
 PCH_HEADER = $$COMMONVIEWER/pch.hpp
 ARCGIS_RUNTIME_VERSION = 200.5.0
 DEFINES += ArcGIS_Runtime_Version=$$ARCGIS_RUNTIME_VERSION
 
 # This block determines whether to build against the installed SDK or the local dev build area
-exists($$PWD/../../../../DevBuildCpp.pri) {
+exists($$PWD/../../../DevBuildCpp.pri) {
   message("Building against the dev environment")
   DEFINES += ESRI_BUILD
   DEFINES += SAMPLE_VIEWER_API_KEY=$$(SAMPLEVIEWERAPIKEY_INTERNAL)
 
   # use the Esri dev build script
-  include ($$PWD/../../../../DevBuildCpp.pri)
+  include ($$PWD/../../../DevBuildCpp.pri)
   # include the toolkitcpp.pri, which contains all the toolkit resources
-  include($$PWD/../../../toolkit/uitools/toolkitcpp.pri)
+  include($$PWD/../../toolkit/uitools/toolkitcpp.pri)
 
   INCLUDEPATH += \
       $$SAMPLEPATHCPP \
       $$COMMONVIEWER \
       $$COMMONVIEWER/SyntaxHighlighter \
-      $$PWD/../../../../api/qt_cpp/Include \
-      $$PWD/../../../../api/qt_cpp/Include/LocalServer/
+      $$PWD/../../../api/qt_cpp/Include \
+      $$PWD/../../../api/qt_cpp/Include/LocalServer/
 } else {
   message("Building against the installed SDK")
   CONFIG += build_from_setup
   CONFIG += c++17
 
   # include the toolkitcpp.pri, which contains all the toolkit resources
-  !include($$PWD/../../arcgis-maps-sdk-toolkit-qt/uitools/toolkitcpp.pri) {
-    message("ERROR: Cannot find toolkitcpp.pri at path:" $$PWD/../../arcgis-maps-sdk-toolkit-qt/uitools/toolkitcpp.pri)
+  !include($$PWD/../arcgis-maps-sdk-toolkit-qt/uitools/toolkitcpp.pri) {
+    message("ERROR: Cannot find toolkitcpp.pri at path:" $$PWD/../arcgis-maps-sdk-toolkit-qt/uitools/toolkitcpp.pri)
     message("Please ensure the Qt Toolkit repository is cloned and the path above is correct.")
   }
 
@@ -139,7 +139,7 @@ QMAKE_TARGET_COPYRIGHT = Copyright 2017 Esri Inc.
 include(samples.pri)
 
 # contains source files for zlib-ng and minizip-ng
-include($$PWD/../../3rdparty/zlib_minizip_ng.pri)
+include($$PWD/../3rdparty/zlib_minizip_ng.pri)
 
 CONFIG(precompile_header): DEFINES += PCH_BUILD
 
@@ -204,11 +204,11 @@ CONFIG(build_from_setup) {
   }
 } else {
   win32 {
-      RC_FILE = ArcGISRuntimeSDKQt_CppSamples.rc
+      RC_FILE = ArcGISRuntimeSDKQt_Samples.rc
 
       OTHER_FILES += \
           $$COMMONVIEWER/images/ArcGISRuntimeSDKQtSamples.ico \
-          ArcGISRuntimeSDKQt_CppSamples.rc
+          ArcGISRuntimeSDKQt_Samples.rc
   }
 }
 mac {
@@ -271,11 +271,11 @@ CONFIG(daily){
     CONFIG(release, debug | release){
         win32 {
             contains(QT_ARCH, i386) {
-                message($${PWD}/../../../scripts/windows/deploy_windows.bat -bin $${DESTDIR} -dep ArcGISRuntimeSDKQt_CppSamples -exe ArcGISQt_CppSamples.exe -qt $${QMAKESPEC}/../.. -b x86 -toolkit -tk_qml)
-                QMAKE_POST_LINK +=$$quote(cmd /c $${PWD}/../../../scripts/windows/deploy_windows.bat -bin $${DESTDIR} -dep ArcGISRuntimeSDKQt_CppSamples -exe ArcGISQt_CppSamples.exe -qt $${QMAKESPEC}/../.. -b x86 -toolkit -tk_qml $$escape_expand(\n\t))
+                message($${PWD}/../../scripts/windows/deploy_windows.bat -bin $${DESTDIR} -dep ArcGISRuntimeSDKQt_Samples -exe ArcGISQt_Samples.exe -qt $${QMAKESPEC}/../.. -b x86 -toolkit -tk_qml)
+                QMAKE_POST_LINK +=$$quote(cmd /c $${PWD}/../../scripts/windows/deploy_windows.bat -bin $${DESTDIR} -dep ArcGISRuntimeSDKQt_Samples -exe ArcGISQt_Samples.exe -qt $${QMAKESPEC}/../.. -b x86 -toolkit -tk_qml $$escape_expand(\n\t))
             } else {
-                message($${PWD}/../../../scripts/windows/deploy_windows.bat -bin $${DESTDIR} -dep ArcGISRuntimeSDKQt_QMLSamples -exe ArcGISQt_CppSamples.exe -qt $${QMAKESPEC}/../.. -b x64 -toolkit -tk_qml)
-                QMAKE_POST_LINK +=$$quote(cmd /c $${PWD}/../../../scripts/windows/deploy_windows.bat -bin $${DESTDIR} -dep ArcGISRuntimeSDKQt_CppSamples -exe ArcGISQt_CppSamples.exe -qt $${QMAKESPEC}/../.. -b x64 -toolkit -tk_qml $$escape_expand(\n\t))
+                message($${PWD}/../../scripts/windows/deploy_windows.bat -bin $${DESTDIR} -dep ArcGISRuntimeSDKQt_QMLSamples -exe ArcGISQt_Samples.exe -qt $${QMAKESPEC}/../.. -b x64 -toolkit -tk_qml)
+                QMAKE_POST_LINK +=$$quote(cmd /c $${PWD}/../../scripts/windows/deploy_windows.bat -bin $${DESTDIR} -dep ArcGISRuntimeSDKQt_Samples -exe ArcGISQt_Samples.exe -qt $${QMAKESPEC}/../.. -b x64 -toolkit -tk_qml $$escape_expand(\n\t))
             }
         }
     }

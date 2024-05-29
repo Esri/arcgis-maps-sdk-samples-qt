@@ -5,7 +5,7 @@
     <key>CFBundleDisplayName</key>
     <string>Qt Samples C++</string>
     <key>CFBundleExecutable</key>
-    <string>ArcGISQt_CppSamples</string>
+    <string>ArcGISQt_Samples</string>
     <key>CFBundleGetInfoString</key>
     <string>ArcGIS</string>
     <key>CFBundleIcons</key>
