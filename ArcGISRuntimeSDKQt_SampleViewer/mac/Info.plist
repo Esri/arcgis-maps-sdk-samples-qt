@@ -9,7 +9,7 @@
     <key>CFBundleIconFile</key>
     <string>ArcGISRuntimeSDKQtSamples.icns</string>
     <key>CFBundleIdentifier</key>
-    <string>com.esri.ArcGISQt-CppSamples</string>
+    <string>com.esri.ArcGISQt-Samples</string>
     <key>CFBundlePackageType</key>
     <string>APPL</string>
     <key>CFBundleSignature</key>
