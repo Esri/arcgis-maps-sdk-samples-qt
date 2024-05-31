@@ -204,11 +204,11 @@ CONFIG(build_from_setup) {
   }
 } else {
   win32 {
-      RC_FILE = ArcGISRuntimeSDKQt_Samples.rc
+      RC_FILE = SampleViewer.rc
 
       OTHER_FILES += \
           $$COMMONVIEWER/images/ArcGISRuntimeSDKQtSamples.ico \
-          ArcGISRuntimeSDKQt_Samples.rc
+          SampleViewer.rc
   }
 }
 mac {
@@ -271,11 +271,11 @@ CONFIG(daily){
     CONFIG(release, debug | release){
         win32 {
             contains(QT_ARCH, i386) {
-                message($${PWD}/../../scripts/windows/deploy_windows.bat -bin $${DESTDIR} -dep ArcGISRuntimeSDKQt_Samples -exe ArcGISQt_Samples.exe -qt $${QMAKESPEC}/../.. -b x86 -toolkit -tk_qml)
-                QMAKE_POST_LINK +=$$quote(cmd /c $${PWD}/../../scripts/windows/deploy_windows.bat -bin $${DESTDIR} -dep ArcGISRuntimeSDKQt_Samples -exe ArcGISQt_Samples.exe -qt $${QMAKESPEC}/../.. -b x86 -toolkit -tk_qml $$escape_expand(\n\t))
+                message($${PWD}/../../scripts/windows/deploy_windows.bat -bin $${DESTDIR} -dep SampleViewer -exe ArcGISQt_Samples.exe -qt $${QMAKESPEC}/../.. -b x86 -toolkit -tk_qml)
+                QMAKE_POST_LINK +=$$quote(cmd /c $${PWD}/../../scripts/windows/deploy_windows.bat -bin $${DESTDIR} -dep SampleViewer -exe ArcGISQt_Samples.exe -qt $${QMAKESPEC}/../.. -b x86 -toolkit -tk_qml $$escape_expand(\n\t))
             } else {
                 message($${PWD}/../../scripts/windows/deploy_windows.bat -bin $${DESTDIR} -dep ArcGISRuntimeSDKQt_QMLSamples -exe ArcGISQt_Samples.exe -qt $${QMAKESPEC}/../.. -b x64 -toolkit -tk_qml)
-                QMAKE_POST_LINK +=$$quote(cmd /c $${PWD}/../../scripts/windows/deploy_windows.bat -bin $${DESTDIR} -dep ArcGISRuntimeSDKQt_Samples -exe ArcGISQt_Samples.exe -qt $${QMAKESPEC}/../.. -b x64 -toolkit -tk_qml $$escape_expand(\n\t))
+                QMAKE_POST_LINK +=$$quote(cmd /c $${PWD}/../../scripts/windows/deploy_windows.bat -bin $${DESTDIR} -dep SampleViewer -exe ArcGISQt_Samples.exe -qt $${QMAKESPEC}/../.. -b x64 -toolkit -tk_qml $$escape_expand(\n\t))
             }
         }
     }
