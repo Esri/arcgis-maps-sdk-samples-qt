@@ -61,6 +61,7 @@ Item {
                         }
                         Column {
                             spacing: 5
+                            padding: 10
                             Text {
                                 font.bold: true
                                 font.italic: true
