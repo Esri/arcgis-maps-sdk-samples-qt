@@ -289,7 +289,7 @@ void SnapGeometryEdits::enableAllLayersInSection(const QString& section)
   emit snapSourceModelChanged();
 }
 
-QAbstractListModel *SnapGeometryEdits::snapSourceListModel() const
+QAbstractListModel* SnapGeometryEdits::snapSourceListModel() const
 {
   return m_snapSourceListModel;
 }
