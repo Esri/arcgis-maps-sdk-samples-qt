@@ -102,6 +102,7 @@ void SnapGeometryEdits::setMapView(MapQuickView* mapView)
   m_mapView = mapView;
   m_mapView->setMap(m_map);
 
+  // Enable feature tiling mode to load geometries with full resolution for snapping support
   m_map->loadSettings()->setFeatureTilingMode(FeatureTilingMode::EnabledWithFullResolutionWhenSupported);
 
   m_mapView->graphicsOverlays()->append(m_graphicsOverlay);
