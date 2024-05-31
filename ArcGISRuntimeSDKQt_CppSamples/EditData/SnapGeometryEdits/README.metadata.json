@@ -27,7 +27,9 @@
     ],
     "snippets": [
         "SnapGeometryEdits.cpp",
+        "SnapSourceListModel.cpp",
         "SnapGeometryEdits.h",
+        "SnapSourceListModel.h",
         "GeometryEditorButton.qml",
         "SnapGeometryEdits.qml"
     ],

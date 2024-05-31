@@ -173,7 +173,7 @@ Item {
     Rectangle {
         id: optionPanel
         anchors {
-            right: parent.right
+            left: parent.left
             top: parent.top
             bottom: parent.bottom
         }
@@ -188,25 +188,21 @@ Item {
                 fill: parent
                 margins: 10
             }
-            //headerPositioning: ListView.OverlayHeader
-            spacing: 10
 
             header: ColumnLayout {
                 id: snappingColumn
                 Layout.minimumWidth: optionPanel.width
-                Layout.minimumHeight: 100
-
+                spacing: 0
                 RowLayout {
                     Layout.minimumWidth: optionPanel.width
-                    Layout.minimumHeight: 25
+                    Layout.minimumHeight: 35
 
                     Text {
                         Layout.alignment: Qt.AlignLeft
                         Layout.fillWidth: true
                         Layout.minimumWidth: optionPanel.width * 0.75
-                        Layout.minimumHeight: 25
                         text: "Snapping"
-                        font.pixelSize: 16
+                        font.pixelSize: 15
                         color: "#8434C1"
                         font.bold: true
                     }
@@ -215,9 +211,8 @@ Item {
                         Layout.alignment: Qt.AlignRight
                         Layout.fillWidth: true
                         Layout.minimumWidth: optionPanel.width * 0.25
-                        Layout.minimumHeight: 25
                         text: "Done"
-                        font.pixelSize: 16
+                        font.pixelSize: 15
                         color: "#8434C1"
                         font.bold: true
                         MouseArea {
@@ -229,21 +224,14 @@ Item {
 
                 RowLayout {
                     Layout.minimumWidth: optionPanel.width
-                    Layout.minimumHeight: 25
-
+                    Layout.minimumHeight: 35
                     Rectangle {
                         Layout.alignment: Qt.AlignLeft
                         Layout.minimumWidth: snapSourceView.width - (snapSourceView.anchors.margins / 2)
-                        Layout.minimumHeight: 45
+                        Layout.minimumHeight: 35
                         color: "#E9DFEA"
-                        radius: 5
-                        border {
-                            color: "#4D4D4D"
-                            width: 1
-                        }
 
                         Text {
-                            anchors.verticalCenter: parent.verticalCenter
                             text: qsTr("Enabled")
                             font.pixelSize: 15
                             anchors {
@@ -271,11 +259,10 @@ Item {
                 property: "section"
                 criteria: ViewSection.FullString
                 delegate: Item {
-                    height: 25
+                    height: 35
                     width: optionPanel.width
 
                     RowLayout {
-                        Layout.margins: 10
                         Layout.fillWidth: true
                         Layout.minimumWidth: optionPanel.width
                         Layout.minimumHeight: 25
@@ -285,9 +272,12 @@ Item {
                             Layout.fillWidth: true
                             Layout.minimumWidth: optionPanel.width * 0.5
                             Layout.minimumHeight: 25
-                            text: section
-                            font.pixelSize: 16
+                            color: "#8434C1"
+                            text: section + " layers"
+                            font.pixelSize: 15
                             font.bold: true
+                            Layout.topMargin: 10
+                            Layout.bottomMargin: 10
                         }
 
                         Text {
@@ -295,9 +285,11 @@ Item {
                             Layout.minimumWidth: optionPanel.width * 0.5
                             Layout.minimumHeight: 25
                             text: "Enable All Sources"
-                            font.pixelSize: 16
+                            font.pixelSize: 15
                             color: "#8434C1"
                             font.bold: true
+                            Layout.topMargin: 10
+                            Layout.bottomMargin: 10
 
                             MouseArea {
                                 anchors.fill: parent
@@ -309,27 +301,39 @@ Item {
             }
 
             delegate: Item {
-                height: 25
+                height: 35
                 width: optionPanel.width
-
-                RowLayout {
-                    Layout.margins: 10
-                    Layout.fillWidth: true
-                    Layout.minimumWidth: optionPanel.width
-
-                    Text {
-                        Layout.alignment: Qt.AlignLeft
-                        Layout.fillWidth: true
-                        Layout.minimumWidth: optionPanel.width / 2
-                        text: name
-                        font.pixelSize: 12
+                id:delegate
+                Rectangle {
+                    id: wrapper
+                    color: "#E9DFEA"
+                    width: snapSourceView.width - (snapSourceView.anchors.margins / 2)
+                    height: delegate.height
+                    anchors {
+                        margins: 15
                     }
 
-                    Switch {
-                        Layout.alignment: Qt.AlignRight
+                    RowLayout {
+                        id : row
                         Layout.fillWidth: true
-                        checked: isEnabled
-                        onCheckedChanged: isEnabled = checked;
+                        Layout.minimumWidth: optionPanel.width
+                        width: wrapper.width
+
+                        Text {
+                            Layout.alignment: Qt.AlignLeft
+                            Layout.fillWidth: true
+                            Layout.minimumWidth: optionPanel.width / 2
+                            text: name
+                            font.pixelSize: 15
+                            Layout.leftMargin: 10
+                        }
+
+                        Switch {
+                            Layout.alignment: Qt.AlignRight
+                            Layout.fillWidth: true
+                            checked: isEnabled
+                            onCheckedChanged: isEnabled = checked;
+                        }
                     }
                 }
             }

@@ -282,6 +282,7 @@ HEADERS += \
     "$$SAMPLEPATHCPP/EditData/EditKmlGroundOverlay/EditKmlGroundOverlay.h" \
     "$$SAMPLEPATHCPP/EditData/EditWithBranchVersioning/EditWithBranchVersioning.h" \
     "$$SAMPLEPATHCPP/EditData/SnapGeometryEdits/SnapGeometryEdits.h" \
+    "$$SAMPLEPATHCPP/EditData/SnapGeometryEdits/SnapSourceListModel.h" \
     "$$SAMPLEPATHCPP/EditData/UpdateAttributesFeatureService/UpdateAttributesFeatureService.h" \
     "$$SAMPLEPATHCPP/EditData/UpdateGeometryFeatureService/UpdateGeometryFeatureService.h" \
     "$$SAMPLEPATHCPP/Features/ControlTimeExtentTimeSlider/ControlTimeExtentTimeSlider.h" \
@@ -506,6 +507,7 @@ SOURCES += \
     "$$SAMPLEPATHCPP/EditData/EditKmlGroundOverlay/EditKmlGroundOverlay.cpp" \
     "$$SAMPLEPATHCPP/EditData/EditWithBranchVersioning/EditWithBranchVersioning.cpp" \
     "$$SAMPLEPATHCPP/EditData/SnapGeometryEdits/SnapGeometryEdits.cpp" \
+    "$$SAMPLEPATHCPP/EditData/SnapGeometryEdits/SnapSourceListModel.cpp" \
     "$$SAMPLEPATHCPP/EditData/UpdateAttributesFeatureService/UpdateAttributesFeatureService.cpp" \
     "$$SAMPLEPATHCPP/EditData/UpdateGeometryFeatureService/UpdateGeometryFeatureService.cpp" \
     "$$SAMPLEPATHCPP/Features/ControlTimeExtentTimeSlider/ControlTimeExtentTimeSlider.cpp" \
