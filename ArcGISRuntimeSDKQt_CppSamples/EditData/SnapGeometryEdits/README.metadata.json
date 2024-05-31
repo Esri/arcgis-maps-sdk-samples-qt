@@ -10,6 +10,7 @@
         "edit",
         "feature",
         "geometry editor",
+        "graphics",
         "layers",
         "map",
         "snapping"
@@ -20,6 +21,7 @@
         "Geometry",
         "GeometryEditor",
         "GeometryEditorStyle",
+        "GraphicsOverlay",
         "MapView",
         "SnapSettings",
         "SnapSource",
