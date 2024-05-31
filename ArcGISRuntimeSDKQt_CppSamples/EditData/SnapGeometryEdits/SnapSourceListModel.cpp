@@ -107,14 +107,14 @@ bool SnapSourceListModel::setData(const QModelIndex& index, const QVariant& valu
           emit dataChanged(index, index, QVector<int>() << role);
         }
         return true;
-        }
-        default:
-          break;
-        }
+      }
+      default:
+        break;
       }
     }
+  }
 
-    return false;
+  return false;
 }
 
 QHash<int, QByteArray> SnapSourceListModel::roleNames() const
