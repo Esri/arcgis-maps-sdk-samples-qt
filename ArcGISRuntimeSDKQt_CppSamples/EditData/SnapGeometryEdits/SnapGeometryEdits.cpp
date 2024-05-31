@@ -57,8 +57,7 @@ SnapGeometryEdits::SnapGeometryEdits(QObject* parent /* = nullptr */) :
   QObject(parent),
   m_snapSourceListModel(new SnapSourceListModel(this))
 {
-  Portal* portal = new Portal(this);
-  PortalItem* portalItem = new PortalItem(portal, "b95fe18073bc4f7788f0375af2bb445e", this);
+  PortalItem* portalItem = new PortalItem("b95fe18073bc4f7788f0375af2bb445e", this);
   m_map = new Map(portalItem, this);
 
   m_geometryEditor = new GeometryEditor(this);
