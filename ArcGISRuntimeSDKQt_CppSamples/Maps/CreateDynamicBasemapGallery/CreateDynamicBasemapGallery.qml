@@ -16,18 +16,119 @@
 
 import QtQuick
 import QtQuick.Controls
+import QtQuick.Controls.Material
+import QtQuick.Layouts
 import Esri.Samples
 
 Item {
-
-    // add a mapView component
-    MapView {
-        id: view
+    Row {
         anchors.fill: parent
 
-        Component.onCompleted: {
-            // Set and keep the focus on MapView to enable keyboard navigation
-            forceActiveFocus();
+        Pane {
+            id: basemapGallery
+            width: 220
+            height: parent.height
+
+            contentItem: ColumnLayout {
+                GridView {
+                    id: basemapView
+                    Layout.alignment: Qt.AlignTop
+                    Layout.fillWidth: true
+                    Layout.fillHeight: true
+                    clip: true
+
+                    width: parent.width
+                    model: model.gallery
+                    cellWidth: 200
+                    cellHeight: 160
+                    highlight: Rectangle {
+                        width: basemapView.cellWidth;
+                        height: basemapView.cellHeight
+                        color: "lightsteelblue";
+                        anchors.fill: basemapView.currentItem
+                    }
+                    highlightFollowsCurrentItem: false;
+
+                    delegate: ItemDelegate {
+                        id: basemapDelegate
+                        width: basemapView.cellWidth
+                        height: basemapView.cellHeight
+                        required property string styleName
+                        required property string previewImageUrl
+                        onClicked: {
+                            model.updateSelectedStyle(styleName);
+                            basemapView.currentIndex = model.indexOfSelectedStyle();
+                        }
+                        Column {
+                            spacing: 5
+                            Text {
+                                font.bold: true
+                                font.italic: true
+                                font.underline: true
+                                text: styleName + ":"
+                            }
+                            Image {
+                                source: previewImageUrl
+                                fillMode: Image.PreserveAspectFit
+                                width: basemapView.cellWidth - 25
+                            }
+                        }
+                    }
+                }
+                Text {
+                    Layout.preferredHeight: 15
+                    font.underline: true
+                    text: "Language Strategy:"
+                }
+                ComboBox {
+                    id: languageStrategyOptions
+                    Layout.fillWidth: true
+                    Layout.preferredHeight: 30
+                    model: model.languageStrategies
+                    enabled: model.languageStrategies.length !== 0
+                }
+                Text {
+                    Layout.preferredHeight: 15
+                    font.underline: true
+                    text: "Language:"
+                }
+                ComboBox {
+                    id: languages
+                    Layout.fillWidth: true
+                    Layout.preferredHeight: 30
+                    model: model.languages
+                    enabled: model.languages.length !== 0
+                }
+                Text {
+                    Layout.preferredHeight: 15
+                    font.underline: true
+                    text: "Worldview:"
+                }
+                ComboBox {
+                    id: worldviews
+                    Layout.fillWidth: true
+                    Layout.preferredHeight: 30
+                    model: model.worldviews
+                    enabled: model.worldviews.length !== 0
+                }
+                Button {
+                    height: 50
+                    text: "Load"
+                    onPressed: model.loadBasemap(
+                                   languageStrategyOptions.currentText,
+                                   languages.currentText,
+                                   worldviews.currentText);
+                }
+            }
+        }
+
+        // Create MapQuickView here, and create its Map etc. in C++ code
+        MapView {
+            id: view
+            width: parent.width - 220
+            height: parent.height
+            // set focus to enable keyboard navigation
+            focus: true
         }
     }
 

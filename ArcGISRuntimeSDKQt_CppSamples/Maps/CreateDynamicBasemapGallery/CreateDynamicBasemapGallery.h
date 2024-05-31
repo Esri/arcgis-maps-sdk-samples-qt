@@ -17,14 +17,26 @@
 #ifndef CREATEDYNAMICBASEMAPGALLERY_H
 #define CREATEDYNAMICBASEMAPGALLERY_H
 
+#include <QAbstractListModel>
+#include <QMap>
+#include <QObject>
+#include <QUrl>
+
+#include "BasemapStyleInfo.h"
+#include "Viewpoint.h"
+
+Q_MOC_INCLUDE("MapQuickView.h")
+Q_MOC_INCLUDE("BasemapStyleInfo.h")
+Q_MOC_INCLUDE("BasemapStyleListModel.h")
+
+class BasemapStyleListModel;
+
 namespace Esri::ArcGISRuntime {
+enum class BasemapStyleLanguageStrategy;
 class Map;
 class MapQuickView;
+class Viewpoint;
 } // namespace Esri::ArcGISRuntime
-
-#include <QObject>
-
-Q_MOC_INCLUDE("MapQuickView.h");
 
 class CreateDynamicBasemapGallery : public QObject
 {
@@ -32,6 +44,10 @@ class CreateDynamicBasemapGallery : public QObject
 
     Q_PROPERTY(Esri::ArcGISRuntime::MapQuickView *mapView READ mapView WRITE setMapView NOTIFY
                    mapViewChanged)
+    Q_PROPERTY(const BasemapStyleListModel* const gallery READ gallery NOTIFY galleryChanged)
+    Q_PROPERTY(const QList<QString>& languageStrategies READ languageStrategies NOTIFY languageStrategiesChanged)
+    Q_PROPERTY(const QList<QString>& languages READ languages NOTIFY languagesChanged)
+    Q_PROPERTY(const QList<QString>& worldviews READ worldviews NOTIFY worldviewsChanged)
 
 public:
     explicit CreateDynamicBasemapGallery(QObject *parent = nullptr);
@@ -39,15 +55,40 @@ public:
 
     static void init();
 
-signals:
-    void mapViewChanged();
-
-private:
     Esri::ArcGISRuntime::MapQuickView *mapView() const;
     void setMapView(Esri::ArcGISRuntime::MapQuickView *mapView);
+    const BasemapStyleListModel* const gallery() const;
+    const QList<QString>& languageStrategies() const;
+    const QList<QString>& languages() const;
+    const QList<QString>& worldviews() const;
+
+    Q_INVOKABLE void updateSelectedStyle(const QString& styleName);
+    Q_INVOKABLE void loadBasemap(const QString& selectedStrategy, const QString& selectedLanguage, const QString& selectedWorldview);
+    Q_INVOKABLE int indexOfSelectedStyle();
+
+signals:
+    void mapViewChanged();
+    void selectedStyleChanged();
+    void galleryChanged();
+    void languageStrategiesChanged();
+    void languagesChanged();
+    void worldviewsChanged();
+
+private:
+    void createGallery();
+    void updateLanguageStrategiesList();
+    void updateLanguagesList();
+    void updateWorldviewsList();
 
     Esri::ArcGISRuntime::Map *m_map = nullptr;
     Esri::ArcGISRuntime::MapQuickView *m_mapView = nullptr;
+    Esri::ArcGISRuntime::Viewpoint m_viewpoint{52.3433, -1.5796, 2500000};
+    QList<Esri::ArcGISRuntime::BasemapStyleInfo*> m_styleInfos;
+    BasemapStyleListModel* m_gallery = nullptr;
+    Esri::ArcGISRuntime::BasemapStyleInfo* m_selectedStyle = nullptr;
+    QList<QString> m_languageStrategies;
+    QList<QString> m_languages;
+    QList<QString> m_worldviews;
 };
 
 #endif // CREATEDYNAMICBASEMAPGALLERY_H
