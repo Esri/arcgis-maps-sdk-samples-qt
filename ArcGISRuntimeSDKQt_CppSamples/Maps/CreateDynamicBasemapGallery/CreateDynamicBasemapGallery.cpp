@@ -113,17 +113,21 @@ void CreateDynamicBasemapGallery::updateLanguageStrategiesList()
     m_languageStrategies.clear();
     if (!m_selectedStyle->languageStrategies().isEmpty())
     {
-        m_languageStrategies.append("None"); // Add "None" to allow the user to unset this parameter in the UI.
-        for(const BasemapStyleLanguageStrategy& strategy : m_selectedStyle->languageStrategies())
-        {
-            QString displayName = languageStrategyNameToEnumMap.key(strategy);
-            if (displayName.isEmpty())
-            {
-                continue;
-            }
-            m_languageStrategies.append(displayName);
-        }
+        emit languageStrategiesChanged();
+        return;
     }
+
+    m_languageStrategies.append("None"); // Add "None" to allow the user to unset this parameter in the UI.
+    for(const BasemapStyleLanguageStrategy& strategy : m_selectedStyle->languageStrategies())
+    {
+        QString displayName = languageStrategyNameToEnumMap.key(strategy);
+        if (displayName.isEmpty())
+        {
+            continue;
+        }
+        m_languageStrategies.append(displayName);
+    }
+
     emit languageStrategiesChanged();
 }
 
