@@ -22,7 +22,6 @@
 #include <QObject>
 #include <QUrl>
 
-#include "BasemapStyleInfo.h"
 #include "Viewpoint.h"
 
 Q_MOC_INCLUDE("MapQuickView.h")
@@ -32,10 +31,10 @@ Q_MOC_INCLUDE("BasemapStyleListModel.h")
 class BasemapStyleListModel;
 
 namespace Esri::ArcGISRuntime {
+class BasemapStyleInfo;
 enum class BasemapStyleLanguageStrategy;
 class Map;
 class MapQuickView;
-class Viewpoint;
 } // namespace Esri::ArcGISRuntime
 
 class CreateDynamicBasemapGallery : public QObject
