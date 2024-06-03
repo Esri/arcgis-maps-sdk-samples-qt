@@ -28,7 +28,8 @@ QHash<int, QByteArray> BasemapStyleListModel::roleNames() const {
 
 QVariant BasemapStyleListModel::data(const QModelIndex& index, int role) const
 {
-    if (!index.isValid())
+    bool modelIndexIsOutOfBounds = index.row() > m_previews.size();
+    if (!index.isValid() || modelIndexIsOutOfBounds)
     {
         return QVariant();
     }
@@ -61,6 +62,7 @@ void BasemapStyleListModel::insertRowIntoGallery(StylePreview newItem)
         return;
     }
 
+    // Put all data in the same row - the BasemapStyleListModel should only have one column.
     QModelIndex newIndex = this->createIndex(currentSizeOfList, 0);
     beginInsertRows(newIndex, m_previews.size() - 1, m_previews.size());
     m_previews.append(std::move(newItem));
