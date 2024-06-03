@@ -33,15 +33,15 @@ QVariant BasemapStyleListModel::data(const QModelIndex& index, int role) const
         return QVariant();
     }
 
-    if (role == StyleNameRole)
+    switch(role)
     {
+    case StyleNameRole:
         return m_previews[index.row()].styleName;
-    }
-    if (role == PreviewImageUrlRole)
-    {
+    case PreviewImageUrlRole:
         return m_previews[index.row()].previewImageUrl;
+    default:
+        return QVariant();
     }
-    return QVariant();
 }
 
 int BasemapStyleListModel::rowCount(const QModelIndex& parent) const
