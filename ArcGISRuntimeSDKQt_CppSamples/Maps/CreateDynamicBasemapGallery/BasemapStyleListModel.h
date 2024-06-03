@@ -35,7 +35,7 @@ public:
         PreviewImageUrlRole
     };
 
-    BasemapStyleListModel(QObject *parent = nullptr);
+    BasemapStyleListModel(QObject* parent = nullptr);
 
     QHash<int, QByteArray> roleNames() const override;
     QVariant data(const QModelIndex& index, int role = Qt::DisplayRole) const override;

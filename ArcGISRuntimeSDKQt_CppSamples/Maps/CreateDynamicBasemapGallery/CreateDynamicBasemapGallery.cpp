@@ -49,7 +49,7 @@ QMap<QString, BasemapStyleLanguageStrategy> languageStrategyNameToEnumMap{
 }
 
 CreateDynamicBasemapGallery::CreateDynamicBasemapGallery(
-    QObject *parent /* = nullptr */)
+    QObject* parent /* = nullptr */)
     : QObject(parent),
     m_map(new Map(BasemapStyle::ArcGISNavigation, this))
 {
@@ -233,13 +233,13 @@ int CreateDynamicBasemapGallery::indexOfSelectedStyle()
 //             Property getters and setters           //
 // -------------------------------------------------- //
 
-MapQuickView *CreateDynamicBasemapGallery::mapView() const
+MapQuickView* CreateDynamicBasemapGallery::mapView() const
 {
     return m_mapView;
 }
 
 // Set the view (created in QML)
-void CreateDynamicBasemapGallery::setMapView(MapQuickView *mapView)
+void CreateDynamicBasemapGallery::setMapView(MapQuickView* mapView)
 {
     if (!mapView || mapView == m_mapView)
     {
