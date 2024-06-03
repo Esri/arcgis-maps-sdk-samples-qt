@@ -40,7 +40,7 @@ public:
     QHash<int, QByteArray> roleNames() const override;
     QVariant data(const QModelIndex& index, int role = Qt::DisplayRole) const override;
     int rowCount(const QModelIndex& parent = QModelIndex()) const override;
-    void insertRowIntoGallery(const Esri::ArcGISRuntime::BasemapStyleInfo* newItem);
+    void insertItemsIntoGallery(const QList<Esri::ArcGISRuntime::BasemapStyleInfo*> infos);
 
 private:
     QList<const Esri::ArcGISRuntime::BasemapStyleInfo*> m_previews;

@@ -54,21 +54,13 @@ int BasemapStyleListModel::rowCount(const QModelIndex& parent) const
     return m_previews.size();
 }
 
-void BasemapStyleListModel::insertRowIntoGallery(const BasemapStyleInfo* newItem)
+void BasemapStyleListModel::insertItemsIntoGallery(const QList<BasemapStyleInfo*> infos)
 {
-    int currentSizeOfList = m_previews.size();
-    if (currentSizeOfList == 0)
+    beginResetModel();
+    m_previews.clear();
+    for (const BasemapStyleInfo* info : infos)
     {
-        beginResetModel();
-        m_previews.clear();
-        m_previews.append(std::move(newItem));
-        endResetModel();
-        return;
+        m_previews.append(std::move(info));
     }
-
-    // Put all data in the same row - the BasemapStyleListModel should only have one column.
-    QModelIndex newIndex = this->createIndex(currentSizeOfList, 0);
-    beginInsertRows(newIndex, m_previews.size() - 1, m_previews.size());
-    m_previews.append(std::move(newItem));
-    endInsertRows();
+    endResetModel();
 }

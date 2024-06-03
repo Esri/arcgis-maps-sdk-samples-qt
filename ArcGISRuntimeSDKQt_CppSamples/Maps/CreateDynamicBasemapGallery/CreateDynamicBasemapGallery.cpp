@@ -23,6 +23,7 @@
 #include "Basemap.h"
 #include "BasemapStyleInfo.h"
 #include "BasemapStyleLanguageInfo.h"
+#include "BasemapStyleListModel.h"
 #include "BasemapStyleParameters.h"
 #include "BasemapStylesService.h"
 #include "BasemapStylesServiceInfo.h"
@@ -49,7 +50,8 @@ QMap<QString, BasemapStyleLanguageStrategy> languageStrategyNameToEnumMap{
 CreateDynamicBasemapGallery::CreateDynamicBasemapGallery(
     QObject* parent /* = nullptr */)
     : QObject(parent),
-    m_map(new Map(BasemapStyle::ArcGISNavigation, this))
+    m_map(new Map(BasemapStyle::ArcGISNavigation, this)),
+    m_gallery(new BasemapStyleListModel(this))
 {
     BasemapStylesService* service = new BasemapStylesService(this);
 
@@ -85,11 +87,7 @@ void CreateDynamicBasemapGallery::init()
 
 void CreateDynamicBasemapGallery::createGallery()
 {
-    for (const BasemapStyleInfo* info : m_styleInfos)
-    {
-        m_gallery->insertRowIntoGallery(info);
-    }
-
+    m_gallery->insertItemsIntoGallery(m_styleInfos);
     emit galleryChanged();
 }
 
