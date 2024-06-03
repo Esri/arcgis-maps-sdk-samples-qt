@@ -174,11 +174,11 @@ void CreateDynamicBasemapGallery::loadBasemap(const QString& selectedStrategy,
         return;
     }
 
-    BasemapStyleParameters* customisations = new BasemapStyleParameters(this);
+    BasemapStyleParameters* customisationParameters = new BasemapStyleParameters(this);
 
     if (!selectedStrategy.isEmpty() && selectedStrategy != "None")
     {
-        customisations->setLanguageStrategy(languageStrategyNameToEnumMap[selectedStrategy]);
+        customisationParameters->setLanguageStrategy(languageStrategyNameToEnumMap[selectedStrategy]);
     }
 
     if (!selectedLanguage.isEmpty() && selectedLanguage != "None")
@@ -196,7 +196,7 @@ void CreateDynamicBasemapGallery::loadBasemap(const QString& selectedStrategy,
         {
             const BasemapStyleLanguageInfo* languageInfo = *iteratorToLanguageInfoForSelectedLanguage;
             const QString code = languageInfo->languageCode();
-            customisations->setSpecificLanguage(code);
+            customisationParameters->setSpecificLanguage(code);
         }
     }
 
@@ -211,11 +211,11 @@ void CreateDynamicBasemapGallery::loadBasemap(const QString& selectedStrategy,
 
         if (iteratorToSelectedWorldview != worldviews.end())
         {
-            customisations->setWorldview(*iteratorToSelectedWorldview);
+            customisationParameters->setWorldview(*iteratorToSelectedWorldview);
         }
     }
 
-    Basemap* newBasemap = new Basemap(m_selectedStyle->style(), customisations, this);
+    Basemap* newBasemap = new Basemap(m_selectedStyle->style(), customisationParameters, this);
     connect(newBasemap, &Basemap::doneLoading, this, [newBasemap, this](const Esri::ArcGISRuntime::Error& loadError){
         if (!loadError.isEmpty())
         {
