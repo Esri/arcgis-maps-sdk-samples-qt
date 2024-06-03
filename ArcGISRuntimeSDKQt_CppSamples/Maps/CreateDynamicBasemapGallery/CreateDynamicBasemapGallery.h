@@ -41,7 +41,7 @@ class CreateDynamicBasemapGallery : public QObject
 {
     Q_OBJECT
 
-    Q_PROPERTY(Esri::ArcGISRuntime::MapQuickView *mapView READ mapView WRITE setMapView NOTIFY
+    Q_PROPERTY(Esri::ArcGISRuntime::MapQuickView* mapView READ mapView WRITE setMapView NOTIFY
                    mapViewChanged)
     Q_PROPERTY(const BasemapStyleListModel* const gallery READ gallery NOTIFY galleryChanged)
     Q_PROPERTY(const QList<QString>& languageStrategies READ languageStrategies NOTIFY languageStrategiesChanged)
@@ -49,13 +49,13 @@ class CreateDynamicBasemapGallery : public QObject
     Q_PROPERTY(const QList<QString>& worldviews READ worldviews NOTIFY worldviewsChanged)
 
 public:
-    explicit CreateDynamicBasemapGallery(QObject *parent = nullptr);
+    explicit CreateDynamicBasemapGallery(QObject* parent = nullptr);
     ~CreateDynamicBasemapGallery() override;
 
     static void init();
 
-    Esri::ArcGISRuntime::MapQuickView *mapView() const;
-    void setMapView(Esri::ArcGISRuntime::MapQuickView *mapView);
+    Esri::ArcGISRuntime::MapQuickView* mapView() const;
+    void setMapView(Esri::ArcGISRuntime::MapQuickView* mapView);
     const BasemapStyleListModel* const gallery() const;
     const QList<QString>& languageStrategies() const;
     const QList<QString>& languages() const;
@@ -79,8 +79,8 @@ private:
     void updateLanguagesList();
     void updateWorldviewsList();
 
-    Esri::ArcGISRuntime::Map *m_map = nullptr;
-    Esri::ArcGISRuntime::MapQuickView *m_mapView = nullptr;
+    Esri::ArcGISRuntime::Map* m_map = nullptr;
+    Esri::ArcGISRuntime::MapQuickView* m_mapView = nullptr;
     Esri::ArcGISRuntime::Viewpoint m_viewpoint{52.3433, -1.5796, 2500000};
     QList<Esri::ArcGISRuntime::BasemapStyleInfo*> m_styleInfos;
     BasemapStyleListModel* m_gallery = nullptr;
