@@ -23,7 +23,6 @@
 #include "Basemap.h"
 #include "BasemapStyleInfo.h"
 #include "BasemapStyleLanguageInfo.h"
-#include "BasemapStyleListModel.h"
 #include "BasemapStyleParameters.h"
 #include "BasemapStylesService.h"
 #include "BasemapStylesServiceInfo.h"
@@ -86,8 +85,6 @@ void CreateDynamicBasemapGallery::init()
 
 void CreateDynamicBasemapGallery::createGallery()
 {
-    m_gallery = new BasemapStyleListModel(this);
-
     for (const BasemapStyleInfo* info : m_styleInfos)
     {
         m_gallery->insertRowIntoGallery(info);
