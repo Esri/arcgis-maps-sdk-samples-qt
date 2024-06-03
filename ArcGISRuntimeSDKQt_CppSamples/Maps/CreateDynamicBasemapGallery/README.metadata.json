@@ -1,17 +1,25 @@
 {
-    "category": "TODO",
-    "description": "TODO",
+    "category": "Maps",
+    "description": "Implement a basemap gallery that automatically integrates new customisation options added to the basemap styles service.",
     "featured": false,
     "ignore": false,
     "images": [
         "screenshot.png"
     ],
     "keywords": [
-        "TODO"
+        "basemap",
+        "languages",
+        "service",
+        "style"
     ],
     "redirect_from": "",
     "relevant_apis": [
-        "TODO"
+        "BasemapStyleParameters",
+        "BasemapStylesService",
+        "BasemapStylesServiceInfo",
+        "BasemapStyleInfo",
+        "BasemapStyleLanguageInfo",
+        "Worldview"
     ],
     "snippets": [
         "CreateDynamicBasemapGallery.cpp",
