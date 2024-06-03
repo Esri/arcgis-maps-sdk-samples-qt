@@ -45,9 +45,9 @@ class CreateDynamicBasemapGallery : public QObject
     Q_PROPERTY(Esri::ArcGISRuntime::MapQuickView* mapView READ mapView WRITE setMapView NOTIFY
                    mapViewChanged)
     Q_PROPERTY(QAbstractListModel* gallery READ gallery NOTIFY galleryChanged)
-    Q_PROPERTY(QList<QString> languageStrategies READ languageStrategies NOTIFY languageStrategiesChanged)
-    Q_PROPERTY(QList<QString> languages READ languages NOTIFY languagesChanged)
-    Q_PROPERTY(QList<QString> worldviews READ worldviews NOTIFY worldviewsChanged)
+    Q_PROPERTY(QStringList languageStrategies READ languageStrategies NOTIFY languageStrategiesChanged)
+    Q_PROPERTY(QStringList languages READ languages NOTIFY languagesChanged)
+    Q_PROPERTY(QStringList worldviews READ worldviews NOTIFY worldviewsChanged)
 
 public:
     explicit CreateDynamicBasemapGallery(QObject* parent = nullptr);
@@ -58,9 +58,9 @@ public:
     Esri::ArcGISRuntime::MapQuickView* mapView() const;
     void setMapView(Esri::ArcGISRuntime::MapQuickView* mapView);
     QAbstractListModel* gallery() const;
-    const QList<QString>& languageStrategies() const;
-    const QList<QString>& languages() const;
-    const QList<QString>& worldviews() const;
+    const QStringList& languageStrategies() const;
+    const QStringList& languages() const;
+    const QStringList& worldviews() const;
 
     Q_INVOKABLE void updateSelectedStyle(const QString& styleName);
     Q_INVOKABLE void loadBasemap(const QString& selectedStrategy, const QString& selectedLanguage, const QString& selectedWorldview);
@@ -86,9 +86,9 @@ private:
     QList<Esri::ArcGISRuntime::BasemapStyleInfo*> m_styleInfos;
     BasemapStyleListModel* m_gallery = new BasemapStyleListModel(this);
     Esri::ArcGISRuntime::BasemapStyleInfo* m_selectedStyle = nullptr;
-    QList<QString> m_languageStrategies;
-    QList<QString> m_languages;
-    QList<QString> m_worldviews;
+    QStringList m_languageStrategies;
+    QStringList m_languages;
+    QStringList m_worldviews;
 };
 
 #endif // CREATEDYNAMICBASEMAPGALLERY_H
