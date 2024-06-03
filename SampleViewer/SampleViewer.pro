@@ -23,7 +23,7 @@ QT += widgets quickcontrols2 opengl webview core5compat websockets texttospeech
 TARGET = ArcGISQt_Samples
 DEFINES += CPP_VIEWER
 DEFINES += Qt_Version=\"$$QT_VERSION\"
-SAMPLEPATHCPP = $$PWD/../ArcGISRuntimeSDKQt_CppSamples
+SAMPLEPATHCPP = $$PWD/../CppSamples
 COMMONVIEWER = $$PWD
 PCH_HEADER = $$COMMONVIEWER/pch.hpp
 ARCGIS_RUNTIME_VERSION = 200.5.0
