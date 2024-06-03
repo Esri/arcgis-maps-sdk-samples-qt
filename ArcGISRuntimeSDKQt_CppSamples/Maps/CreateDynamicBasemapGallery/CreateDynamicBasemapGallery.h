@@ -44,9 +44,9 @@ class CreateDynamicBasemapGallery : public QObject
     Q_PROPERTY(Esri::ArcGISRuntime::MapQuickView* mapView READ mapView WRITE setMapView NOTIFY
                    mapViewChanged)
     Q_PROPERTY(const BasemapStyleListModel* const gallery READ gallery NOTIFY galleryChanged)
-    Q_PROPERTY(const QList<QString>& languageStrategies READ languageStrategies NOTIFY languageStrategiesChanged)
-    Q_PROPERTY(const QList<QString>& languages READ languages NOTIFY languagesChanged)
-    Q_PROPERTY(const QList<QString>& worldviews READ worldviews NOTIFY worldviewsChanged)
+    Q_PROPERTY(QList<QString> languageStrategies READ languageStrategies NOTIFY languageStrategiesChanged)
+    Q_PROPERTY(QList<QString> languages READ languages NOTIFY languagesChanged)
+    Q_PROPERTY(QList<QString> worldviews READ worldviews NOTIFY worldviewsChanged)
 
 public:
     explicit CreateDynamicBasemapGallery(QObject* parent = nullptr);
