@@ -23,8 +23,8 @@
 
 struct StylePreview {
     StylePreview(QString name, QUrl imageUrl) :
-        styleName(name),
-        previewImageUrl(imageUrl)
+        styleName(std::move(name)),
+        previewImageUrl(std::move(imageUrl))
     {}
 
     QString styleName;
