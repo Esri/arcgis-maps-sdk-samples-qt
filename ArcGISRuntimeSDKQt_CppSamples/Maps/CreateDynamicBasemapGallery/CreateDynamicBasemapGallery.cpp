@@ -183,7 +183,7 @@ void CreateDynamicBasemapGallery::loadBasemap(const QString& selectedStrategy,
 
     if (!selectedLanguage.isEmpty() && selectedLanguage != "None")
     {
-        const auto specificLanguages = m_selectedStyle->specificLanguages();
+        const QList<BasemapStyleLanguageInfo*> specificLanguages = m_selectedStyle->specificLanguages();
 
         const auto iteratorToLanguageInfoForSelectedLanguage = std::find_if(specificLanguages.begin(),
                                                                             specificLanguages.end(),
@@ -202,7 +202,7 @@ void CreateDynamicBasemapGallery::loadBasemap(const QString& selectedStrategy,
 
     if (!selectedWorldview.isEmpty() && selectedWorldview != "None")
     {
-        const auto worldviews = m_selectedStyle->worldviews();
+        const QList<Worldview*> worldviews = m_selectedStyle->worldviews();
 
         const auto iteratorToSelectedWorldview = std::find_if(worldviews.begin(), worldviews.end(), [selectedWorldview](const Worldview* view)
                                                               {
