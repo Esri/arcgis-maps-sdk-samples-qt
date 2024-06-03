@@ -21,15 +21,9 @@
 #include <QObject>
 #include <QUrl>
 
-struct StylePreview {
-    StylePreview(QString name, QUrl imageUrl) :
-        styleName(std::move(name)),
-        previewImageUrl(std::move(imageUrl))
-    {}
-
-    QString styleName;
-    QUrl previewImageUrl;
-};
+namespace Esri::ArcGISRuntime {
+class BasemapStyleInfo;
+}
 
 class BasemapStyleListModel : public QAbstractListModel
 {
@@ -46,10 +40,10 @@ public:
     QHash<int, QByteArray> roleNames() const override;
     QVariant data(const QModelIndex& index, int role = Qt::DisplayRole) const override;
     int rowCount(const QModelIndex& parent = QModelIndex()) const override;
-    void insertRowIntoGallery(StylePreview newItem);
+    void insertRowIntoGallery(const Esri::ArcGISRuntime::BasemapStyleInfo* newItem);
 
 private:
-    QList<StylePreview> m_previews;
+    QList<const Esri::ArcGISRuntime::BasemapStyleInfo*> m_previews;
 };
 
 #endif // BASEMAPSTYLELISTMODEL_H

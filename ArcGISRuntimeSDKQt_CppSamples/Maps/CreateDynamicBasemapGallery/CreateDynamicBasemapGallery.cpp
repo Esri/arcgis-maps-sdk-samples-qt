@@ -91,8 +91,7 @@ void CreateDynamicBasemapGallery::createGallery()
 
     for (const BasemapStyleInfo* info : m_styleInfos)
     {
-        StylePreview stylesPreviewData(info->styleName(), info->thumbnail_url());
-        m_gallery->insertRowIntoGallery(stylesPreviewData);
+        m_gallery->insertRowIntoGallery(info);
     }
 
     emit galleryChanged();

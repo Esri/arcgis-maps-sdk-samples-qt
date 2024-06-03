@@ -16,6 +16,10 @@
 
 #include "BasemapStyleListModel.h"
 
+#include "BasemapStyleInfo.h"
+
+using namespace Esri::ArcGISRuntime;
+
 BasemapStyleListModel::BasemapStyleListModel(QObject* parent /* = nullptr */)
     : QAbstractListModel(parent){}
 
@@ -37,9 +41,9 @@ QVariant BasemapStyleListModel::data(const QModelIndex& index, int role) const
     switch(role)
     {
     case StyleNameRole:
-        return m_previews[index.row()].styleName;
+        return m_previews[index.row()]->styleName();
     case PreviewImageUrlRole:
-        return m_previews[index.row()].previewImageUrl;
+        return m_previews[index.row()]->thumbnail_url();
     default:
         return QVariant();
     }
@@ -50,7 +54,7 @@ int BasemapStyleListModel::rowCount(const QModelIndex& parent) const
     return m_previews.size();
 }
 
-void BasemapStyleListModel::insertRowIntoGallery(StylePreview newItem)
+void BasemapStyleListModel::insertRowIntoGallery(const BasemapStyleInfo* newItem)
 {
     int currentSizeOfList = m_previews.size();
     if (currentSizeOfList == 0)
