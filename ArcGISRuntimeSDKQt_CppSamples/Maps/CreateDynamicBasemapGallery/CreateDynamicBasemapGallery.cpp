@@ -20,8 +20,7 @@
 
 #include "CreateDynamicBasemapGallery.h"
 
-#include "basemap.h"
-
+#include "Basemap.h"
 #include "BasemapStyleInfo.h"
 #include "BasemapStyleLanguageInfo.h"
 #include "BasemapStyleListModel.h"
