@@ -26,11 +26,11 @@ When launched, this sample displays a basemap and a gallery of previes images fo
 
 ## Relevant API
 
+* BasemapStyleInfo
+* BasemapStyleLanguageInfo
 * BasemapStyleParameters
 * BasemapStylesService
 * BasemapStylesServiceInfo
-* BasemapStyleInfo
-* BasemapStyleLanguageInfo
 * Worldview
 
 ## Tags
