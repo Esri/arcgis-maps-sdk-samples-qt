@@ -22,8 +22,6 @@
 #include <QObject>
 #include <QUrl>
 
-#include "Viewpoint.h"
-
 Q_MOC_INCLUDE("MapQuickView.h")
 Q_MOC_INCLUDE("BasemapStyleInfo.h")
 Q_MOC_INCLUDE("BasemapStyleListModel.h")
@@ -82,7 +80,6 @@ private:
 
     Esri::ArcGISRuntime::Map* m_map = nullptr;
     Esri::ArcGISRuntime::MapQuickView* m_mapView = nullptr;
-    Esri::ArcGISRuntime::Viewpoint m_viewpoint{52.3433, -1.5796, 2500000};
     QList<Esri::ArcGISRuntime::BasemapStyleInfo*> m_styleInfos;
     BasemapStyleListModel* m_gallery = nullptr;
     Esri::ArcGISRuntime::BasemapStyleInfo* m_selectedStyle = nullptr;

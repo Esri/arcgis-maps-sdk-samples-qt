@@ -31,6 +31,7 @@
 #include "Map.h"
 #include "MapQuickView.h"
 #include "MapTypes.h"
+#include "Viewpoint.h"
 #include "Worldview.h"
 
 #include <QFuture>
@@ -222,9 +223,9 @@ void CreateDynamicBasemapGallery::loadBasemap(const QString& selectedStrategy,
             return;
         }
 
-        m_viewpoint = m_mapView->currentViewpoint(ViewpointType::CenterAndScale);
+        const Viewpoint currentVewpoint = m_mapView->currentViewpoint(ViewpointType::CenterAndScale);
         m_mapView->setMap(new Map(newBasemap, this));
-        m_mapView->setViewpointAsync(m_viewpoint);
+        m_mapView->setViewpointAsync(currentVewpoint);
     });
 
     newBasemap->load();
@@ -254,7 +255,7 @@ void CreateDynamicBasemapGallery::setMapView(MapQuickView* mapView)
 
     m_mapView = mapView;
     m_mapView->setMap(m_map);
-    m_mapView->setViewpointAsync(m_viewpoint);
+    m_mapView->setViewpointAsync(Viewpoint{52.3433, -1.5796, 2500000});
 
     emit mapViewChanged();
 }
