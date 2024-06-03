@@ -39,6 +39,7 @@ Item {
 
                     width: parent.width
                     model: model.gallery
+                    currentIndex: model.indexOfSelectedStyle;
                     cellWidth: 200
                     cellHeight: 160
                     highlight: Rectangle {
@@ -57,7 +58,6 @@ Item {
                         required property string previewImageUrl
                         onClicked: {
                             model.updateSelectedStyle(styleName);
-                            basemapView.currentIndex = model.indexOfSelectedStyle();
                         }
                         Column {
                             spacing: 5

@@ -64,6 +64,7 @@ CreateDynamicBasemapGallery::CreateDynamicBasemapGallery(
 
         m_styleInfos = service->info()->stylesInfo();
         createGallery();
+        updateSelectedStyle("ArcGIS Navigation");
     });
 
     service->load();
@@ -99,12 +100,16 @@ void CreateDynamicBasemapGallery::updateSelectedStyle(const QString& nameOfSelec
                                                              [nameOfSelectedStyle](const BasemapStyleInfo* info){
                                                                  return info->styleName().compare(nameOfSelectedStyle, Qt::CaseInsensitive) == 0;
                                                              });
-    m_selectedStyle = *iteratorToInfoForSelectedStyle;
-    emit selectedStyleChanged();
 
-    updateLanguageStrategiesList();
-    updateLanguagesList();
-    updateWorldviewsList();
+    if (iteratorToInfoForSelectedStyle != m_styleInfos.end())
+    {
+        m_selectedStyle = *iteratorToInfoForSelectedStyle;
+        emit selectedStyleChanged();
+
+        updateLanguageStrategiesList();
+        updateLanguagesList();
+        updateWorldviewsList();
+    }
 }
 
 void CreateDynamicBasemapGallery::updateLanguageStrategiesList()
@@ -222,11 +227,6 @@ void CreateDynamicBasemapGallery::loadBasemap(const QString& selectedStrategy,
     m_mapView->setViewpointAsync(currentVewpoint);
 }
 
-int CreateDynamicBasemapGallery::indexOfSelectedStyle()
-{
-    return static_cast<int>(m_styleInfos.indexOf(m_selectedStyle));
-}
-
 // -------------------------------------------------- //
 //             Property getters and setters           //
 // -------------------------------------------------- //
@@ -269,4 +269,9 @@ const QStringList& CreateDynamicBasemapGallery::languages() const
 const QStringList& CreateDynamicBasemapGallery::worldviews() const
 {
     return m_worldviews;
+}
+
+const int CreateDynamicBasemapGallery::indexOfSelectedStyle() const
+{
+    return static_cast<int>(m_styleInfos.indexOf(m_selectedStyle));
 }
