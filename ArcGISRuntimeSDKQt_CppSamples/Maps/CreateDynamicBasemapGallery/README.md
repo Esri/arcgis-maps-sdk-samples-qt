@@ -2,7 +2,7 @@
 
 Implement a basemap gallery that automatically integrates new customisation options added to the [basemap styles service](https://developers.arcgis.com/rest/basemap-styles/).
 
-![screenshot](screenshot.png)
+![](screenshot.png)
 
 ## Use case
 
