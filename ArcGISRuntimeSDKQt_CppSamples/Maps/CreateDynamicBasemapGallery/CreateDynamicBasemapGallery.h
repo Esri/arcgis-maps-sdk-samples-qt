@@ -29,6 +29,7 @@ Q_MOC_INCLUDE("BasemapStyleInfo.h")
 Q_MOC_INCLUDE("BasemapStyleListModel.h")
 
 class BasemapStyleListModel;
+class QAbstractListModel;
 
 namespace Esri::ArcGISRuntime {
 class BasemapStyleInfo;
@@ -43,7 +44,7 @@ class CreateDynamicBasemapGallery : public QObject
 
     Q_PROPERTY(Esri::ArcGISRuntime::MapQuickView* mapView READ mapView WRITE setMapView NOTIFY
                    mapViewChanged)
-    Q_PROPERTY(const BasemapStyleListModel* const gallery READ gallery NOTIFY galleryChanged)
+    Q_PROPERTY(QAbstractListModel* gallery READ gallery NOTIFY galleryChanged)
     Q_PROPERTY(QList<QString> languageStrategies READ languageStrategies NOTIFY languageStrategiesChanged)
     Q_PROPERTY(QList<QString> languages READ languages NOTIFY languagesChanged)
     Q_PROPERTY(QList<QString> worldviews READ worldviews NOTIFY worldviewsChanged)
@@ -56,7 +57,7 @@ public:
 
     Esri::ArcGISRuntime::MapQuickView* mapView() const;
     void setMapView(Esri::ArcGISRuntime::MapQuickView* mapView);
-    const BasemapStyleListModel* const gallery() const;
+    QAbstractListModel* gallery() const;
     const QList<QString>& languageStrategies() const;
     const QList<QString>& languages() const;
     const QList<QString>& worldviews() const;
