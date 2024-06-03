@@ -253,7 +253,7 @@ void CreateDynamicBasemapGallery::setMapView(MapQuickView* mapView)
     emit mapViewChanged();
 }
 
-const BasemapStyleListModel* const CreateDynamicBasemapGallery::gallery() const
+QAbstractListModel* CreateDynamicBasemapGallery::gallery() const
 {
     return m_gallery;
 }
