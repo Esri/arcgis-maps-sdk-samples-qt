@@ -217,18 +217,9 @@ void CreateDynamicBasemapGallery::loadBasemap(const QString& selectedStrategy,
     }
 
     Basemap* newBasemap = new Basemap(m_selectedStyle->style(), customisationParameters, this);
-    connect(newBasemap, &Basemap::doneLoading, this, [newBasemap, this](const Esri::ArcGISRuntime::Error& loadError){
-        if (!loadError.isEmpty())
-        {
-            return;
-        }
-
-        const Viewpoint currentVewpoint = m_mapView->currentViewpoint(ViewpointType::CenterAndScale);
-        m_mapView->setMap(new Map(newBasemap, this));
-        m_mapView->setViewpointAsync(currentVewpoint);
-    });
-
-    newBasemap->load();
+    const Viewpoint currentVewpoint = m_mapView->currentViewpoint(ViewpointType::CenterAndScale);
+    m_mapView->map()->setBasemap(newBasemap);
+    m_mapView->setViewpointAsync(currentVewpoint);
 }
 
 int CreateDynamicBasemapGallery::indexOfSelectedStyle()
