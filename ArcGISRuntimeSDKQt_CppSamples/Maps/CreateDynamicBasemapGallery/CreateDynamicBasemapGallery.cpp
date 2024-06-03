@@ -111,7 +111,7 @@ void CreateDynamicBasemapGallery::updateSelectedStyle(const QString& nameOfSelec
 void CreateDynamicBasemapGallery::updateLanguageStrategiesList()
 {
     m_languageStrategies.clear();
-    if (!m_selectedStyle->languageStrategies().isEmpty())
+    if (m_selectedStyle->languageStrategies().isEmpty())
     {
         emit languageStrategiesChanged();
         return;
@@ -134,28 +134,36 @@ void CreateDynamicBasemapGallery::updateLanguageStrategiesList()
 void CreateDynamicBasemapGallery::updateLanguagesList()
 {
     m_languages.clear();
-    if (!m_selectedStyle->specificLanguages().isEmpty())
+    if (m_selectedStyle->specificLanguages().isEmpty())
     {
-        m_languages.append("None"); // Add "None" to allow the user to unset this parameter in the UI.
-        for (const BasemapStyleLanguageInfo* info : m_selectedStyle->specificLanguages())
-        {
-            m_languages.append(info->displayName());
-        }
+        emit languagesChanged();
+        return;
     }
+
+    m_languages.append("None"); // Add "None" to allow the user to unset this parameter in the UI.
+    for (const BasemapStyleLanguageInfo* info : m_selectedStyle->specificLanguages())
+    {
+        m_languages.append(info->displayName());
+    }
+
     emit languagesChanged();
 }
 
 void CreateDynamicBasemapGallery::updateWorldviewsList()
 {
     m_worldviews.clear();
-    if (!m_selectedStyle->worldviews().isEmpty())
+    if (m_selectedStyle->worldviews().isEmpty())
     {
-        m_worldviews.append("None"); // Add "None" to allow the user to unset this parameter in the UI.
-        for(const Worldview* worldview : m_selectedStyle->worldviews())
-        {
-            m_worldviews.append(worldview->displayName());
-        }
+        emit worldviewsChanged();
+        return;
     }
+
+    m_worldviews.append("None"); // Add "None" to allow the user to unset this parameter in the UI.
+    for(const Worldview* worldview : m_selectedStyle->worldviews())
+    {
+        m_worldviews.append(worldview->displayName());
+    }
+
     emit worldviewsChanged();
 }
 
