@@ -266,17 +266,17 @@ QAbstractListModel* CreateDynamicBasemapGallery::gallery() const
     return m_gallery;
 }
 
-const QList<QString>& CreateDynamicBasemapGallery::languageStrategies() const
+const QStringList& CreateDynamicBasemapGallery::languageStrategies() const
 {
     return m_languageStrategies;
 }
 
-const QList<QString>& CreateDynamicBasemapGallery::languages() const
+const QStringList& CreateDynamicBasemapGallery::languages() const
 {
     return m_languages;
 }
 
-const QList<QString>& CreateDynamicBasemapGallery::worldviews() const
+const QStringList& CreateDynamicBasemapGallery::worldviews() const
 {
     return m_worldviews;
 }
