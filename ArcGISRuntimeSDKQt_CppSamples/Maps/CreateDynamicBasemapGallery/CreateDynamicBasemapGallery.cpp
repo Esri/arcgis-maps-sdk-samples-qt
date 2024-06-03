@@ -57,7 +57,9 @@ CreateDynamicBasemapGallery::CreateDynamicBasemapGallery(
 
     connect(service, &BasemapStylesService::doneLoading, this, [this, service](const Error& /*error*/){
         if (service->loadStatus() != LoadStatus::Loaded)
+        {
             return;
+        }
 
         m_styleInfos = service->info()->stylesInfo();
         createGallery();
@@ -159,11 +161,13 @@ void CreateDynamicBasemapGallery::updateWorldviewsList()
 }
 
 void CreateDynamicBasemapGallery::loadBasemap(const QString& selectedStrategy,
-                                                                   const QString& selectedLanguage,
-                                                                   const QString& selectedWorldview)
+                                              const QString& selectedLanguage,
+                                              const QString& selectedWorldview)
 {
     if (!m_selectedStyle)
+    {
         return;
+    }
 
     BasemapStyleParameters* customisations = new BasemapStyleParameters(this);
 
@@ -239,7 +243,9 @@ MapQuickView *CreateDynamicBasemapGallery::mapView() const
 void CreateDynamicBasemapGallery::setMapView(MapQuickView *mapView)
 {
     if (!mapView || mapView == m_mapView)
+    {
         return;
+    }
 
     m_mapView = mapView;
     m_mapView->setMap(m_map);

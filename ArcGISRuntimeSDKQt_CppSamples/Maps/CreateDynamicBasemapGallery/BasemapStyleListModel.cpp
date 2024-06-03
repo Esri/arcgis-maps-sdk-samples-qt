@@ -29,7 +29,10 @@ QHash<int, QByteArray> BasemapStyleListModel::roleNames() const {
 QVariant BasemapStyleListModel::data(const QModelIndex& index, int role) const
 {
     if (!index.isValid())
+    {
         return QVariant();
+    }
+
     if (role == StyleNameRole)
     {
         return m_previews[index.row()].styleName;
