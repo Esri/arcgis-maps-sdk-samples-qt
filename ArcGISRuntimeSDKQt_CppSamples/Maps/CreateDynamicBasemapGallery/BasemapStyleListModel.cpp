@@ -32,7 +32,7 @@ QHash<int, QByteArray> BasemapStyleListModel::roleNames() const {
 
 QVariant BasemapStyleListModel::data(const QModelIndex& index, int role) const
 {
-    bool modelIndexIsOutOfBounds = index.row() > m_previews.size();
+    bool modelIndexIsOutOfBounds = index.row() >= m_previews.size();
     if (!index.isValid() || modelIndexIsOutOfBounds)
     {
         return QVariant();
