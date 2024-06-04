@@ -30,8 +30,8 @@ class BasemapStyleListModel;
 class QAbstractListModel;
 
 namespace Esri::ArcGISRuntime {
-class BasemapStyleInfo;
 enum class BasemapStyleLanguageStrategy;
+class BasemapStyleInfo;
 class Map;
 class MapQuickView;
 } // namespace Esri::ArcGISRuntime
