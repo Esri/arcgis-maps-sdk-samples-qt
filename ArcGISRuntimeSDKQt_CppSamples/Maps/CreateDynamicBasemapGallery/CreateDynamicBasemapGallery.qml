@@ -21,117 +21,135 @@ import QtQuick.Layouts
 import Esri.Samples
 
 Item {
-    Row {
+    // Create MapQuickView here, and create its Map etc. in C++ code
+    MapView {
+        id: view
         anchors.fill: parent
+        // set focus to enable keyboard navigation
+        focus: true
 
-        Pane {
-            id: basemapGallery
-            width: 220
-            height: parent.height
+        Button {
+            x: 10
+            y: 10
+            icon.name: "menu_icon"
+            icon.source: "menu_icon.png"
+            onClicked: popup.open()
+            }
 
-            contentItem: ColumnLayout {
-                GridView {
-                    id: basemapView
-                    Layout.alignment: Qt.AlignTop
-                    Layout.fillWidth: true
-                    Layout.fillHeight: true
+            Popup {
+                id: popup
+                x: parent.width * 0.1
+                y: parent.height * 0.1
+                width: parent.width * 0.8
+                height: parent.height * 0.8
+                modal: true
+                focus: true
+                closePolicy: Popup.CloseOnEscape | Popup.CloseOnPressOutside
+
+                ColumnLayout {
+                    anchors.fill: parent
                     clip: true
 
-                    width: parent.width
-                    model: model.gallery
-                    currentIndex: model.indexOfSelectedStyle;
-                    cellWidth: 200
-                    cellHeight: 160
-                    highlight: Rectangle {
-                        width: basemapView.cellWidth;
-                        height: basemapView.cellHeight
-                        color: "lightsteelblue";
-                        anchors.fill: basemapView.currentItem
-                    }
-                    highlightFollowsCurrentItem: false;
+                    GridView {
+                        id: basemapView
+                        Layout.alignment: Qt.AlignHCenter
+                        Layout.fillWidth: false
+                        Layout.fillHeight: true
+                        implicitWidth: {
+                            var numCellsInPopup_fract = popup.width / basemapView.cellWidth;
+                            var numCellsInPopup_int = Math.trunc(numCellsInPopup_fract);
+                            return Math.max(1, numCellsInPopup_int) * basemapView.cellWidth;
+                        }
+                        clip: true
+                        model: model.gallery
+                        currentIndex: model.indexOfSelectedStyle;
+                        cellWidth: 200
+                        cellHeight: 160
+                        highlight: Rectangle {
+                            width: basemapView.cellWidth;
+                            height: basemapView.cellHeight
+                            color: "lightsteelblue";
+                            anchors.fill: basemapView.currentItem
+                        }
+                        highlightFollowsCurrentItem: false;
 
-                    delegate: ItemDelegate {
-                        id: basemapDelegate
-                        width: basemapView.cellWidth
-                        height: basemapView.cellHeight
-                        required property string styleName
-                        required property string previewImageUrl
-                        onClicked: {
-                            model.updateSelectedStyle(styleName);
-                        }
-                        Column {
-                            spacing: 5
-                            padding: 10
-                            Text {
-                                font.bold: true
-                                font.italic: true
-                                font.underline: true
-                                text: styleName + ":"
+                        delegate: ItemDelegate {
+                            id: basemapDelegate
+                            width: basemapView.cellWidth
+                            height: basemapView.cellHeight
+                            required property string styleName
+                            required property string previewImageUrl
+                            onClicked: {
+                                model.updateSelectedStyle(styleName);
                             }
-                            Image {
-                                source: previewImageUrl
-                                fillMode: Image.PreserveAspectFit
-                                width: basemapView.cellWidth - 25
+                            clip: true
+                            Column {
+                                spacing: 5
+                                padding: 10
+                                Text {
+                                    font.bold: true
+                                    font.italic: true
+                                    font.underline: true
+                                    text: styleName + ":"
+                                }
+                                Image {
+                                    source: previewImageUrl
+                                    fillMode: Image.PreserveAspectFit
+                                    width: basemapView.cellWidth - 25
+                                }
                             }
                         }
                     }
-                }
-                Text {
-                    Layout.preferredHeight: 15
-                    font.underline: true
-                    text: "Language Strategy:"
-                }
-                ComboBox {
-                    id: languageStrategyOptions
-                    Layout.fillWidth: true
-                    Layout.preferredHeight: 30
-                    model: model.languageStrategies
-                    enabled: model.languageStrategies.length !== 0
-                }
-                Text {
-                    Layout.preferredHeight: 15
-                    font.underline: true
-                    text: "Language:"
-                }
-                ComboBox {
-                    id: languages
-                    Layout.fillWidth: true
-                    Layout.preferredHeight: 30
-                    model: model.languages
-                    enabled: model.languages.length !== 0
-                }
-                Text {
-                    Layout.preferredHeight: 15
-                    font.underline: true
-                    text: "Worldview:"
-                }
-                ComboBox {
-                    id: worldviews
-                    Layout.fillWidth: true
-                    Layout.preferredHeight: 30
-                    model: model.worldviews
-                    enabled: model.worldviews.length !== 0
-                }
-                Button {
-                    height: 50
-                    text: "Load"
-                    onPressed: model.loadBasemap(
-                                   languageStrategyOptions.currentText,
-                                   languages.currentText,
-                                   worldviews.currentText);
+                    Text {
+                        Layout.preferredHeight: 15
+                        font.underline: true
+                        text: "Language Strategy:"
+                    }
+                    ComboBox {
+                        id: languageStrategyOptions
+                        implicitWidth: Math.min(200, parent.width)
+                        Layout.preferredHeight: 30
+                        model: model.languageStrategies
+                        enabled: model.languageStrategies.length !== 0
+                    }
+                    Text {
+                        Layout.preferredHeight: 15
+                        font.underline: true
+                        text: "Language:"
+                    }
+                    ComboBox {
+                        id: languages
+                        implicitWidth: Math.min(200, parent.width)
+                        Layout.preferredHeight: 30
+                        model: model.languages
+                        enabled: model.languages.length !== 0
+                    }
+                    Text {
+                        Layout.preferredHeight: 15
+                        font.underline: true
+                        text: "Worldview:"
+                    }
+                    ComboBox {
+                        id: worldviews
+                        implicitWidth: Math.min(200, parent.width)
+                        Layout.preferredHeight: 30
+                        model: model.worldviews
+                        enabled: model.worldviews.length !== 0
+                    }
+                    Button {
+                        height: 50
+                        text: "Load"
+                        onPressed: {
+                            model.loadBasemap(
+                                       languageStrategyOptions.currentText,
+                                       languages.currentText,
+                                       worldviews.currentText);
+                            popup.close();
+                        }
+                    }
                 }
             }
         }
-
-        // Create MapQuickView here, and create its Map etc. in C++ code
-        MapView {
-            id: view
-            width: parent.width - 220
-            height: parent.height
-            // set focus to enable keyboard navigation
-            focus: true
-        }
-    }
 
     // Declare the C++ instance which creates the map etc. and supply the view
     CreateDynamicBasemapGallerySample {
