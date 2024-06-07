@@ -31,8 +31,8 @@ Item {
         RoundButton {
             x: 10
             y: 10
-            icon.name: "gallery_icon"
-            icon.source: "gallery_icon.png"
+            icon.name: "grid-24"
+            icon.source: "grid-24.svg"
             onClicked: popup.open()
             }
 
@@ -88,8 +88,7 @@ Item {
                                 padding: 10
                                 Text {
                                     font.bold: true
-                                    font.italic: true
-                                    font.underline: true
+                                    font.pixelSize: 12
                                     text: styleName + ":"
                                 }
                                 Image {
@@ -100,51 +99,56 @@ Item {
                             }
                         }
                     }
-                    Text {
-                        Layout.preferredHeight: 15
-                        font.underline: true
-                        text: "Language Strategy:"
-                    }
-                    ComboBox {
-                        id: languageStrategyOptions
-                        implicitWidth: Math.min(200, parent.width)
-                        Layout.preferredHeight: 30
-                        model: model.languageStrategies
-                        enabled: model.languageStrategies.length !== 0
-                    }
-                    Text {
-                        Layout.preferredHeight: 15
-                        font.underline: true
-                        text: "Language:"
-                    }
-                    ComboBox {
-                        id: languages
-                        implicitWidth: Math.min(200, parent.width)
-                        Layout.preferredHeight: 30
-                        model: model.languages
-                        enabled: model.languages.length !== 0
-                    }
-                    Text {
-                        Layout.preferredHeight: 15
-                        font.underline: true
-                        text: "Worldview:"
-                    }
-                    ComboBox {
-                        id: worldviews
-                        implicitWidth: Math.min(200, parent.width)
-                        Layout.preferredHeight: 30
-                        model: model.worldviews
-                        enabled: model.worldviews.length !== 0
-                    }
-                    Button {
-                        height: 50
-                        text: "Load"
-                        onPressed: {
-                            model.loadBasemap(
-                                       languageStrategyOptions.currentText,
-                                       languages.currentText,
-                                       worldviews.currentText);
-                            popup.close();
+
+                    ColumnLayout {
+                        Layout.alignment: Qt.AlignHCenter
+
+                        Text {
+                            Layout.preferredHeight: 15
+                            font.underline: true
+                            text: "Language Strategy:"
+                        }
+                        ComboBox {
+                            id: languageStrategyOptions
+                            Layout.preferredHeight: 30
+                            Layout.preferredWidth: 200
+                            model: model.languageStrategies
+                            enabled: model.languageStrategies.length !== 0
+                        }
+                        Text {
+                            Layout.preferredHeight: 15
+                            font.underline: true
+                            text: "Language:"
+                        }
+                        ComboBox {
+                            id: languages
+                            Layout.preferredHeight: 30
+                            Layout.preferredWidth: 200
+                            model: model.languages
+                            enabled: model.languages.length !== 0
+                        }
+                        Text {
+                            Layout.preferredHeight: 15
+                            font.underline: true
+                            text: "Worldview:"
+                        }
+                        ComboBox {
+                            id: worldviews
+                            Layout.preferredHeight: 30
+                            Layout.preferredWidth: 200
+                            model: model.worldviews
+                            enabled: model.worldviews.length !== 0
+                        }
+                        Button {
+                            height: 50
+                            text: "Load"
+                            onPressed: {
+                                model.loadBasemap(
+                                           languageStrategyOptions.currentText,
+                                           languages.currentText,
+                                           worldviews.currentText);
+                                popup.close();
+                            }
                         }
                     }
                 }
