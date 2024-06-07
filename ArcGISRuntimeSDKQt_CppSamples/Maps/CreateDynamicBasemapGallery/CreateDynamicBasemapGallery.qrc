@@ -7,6 +7,6 @@
         <file>main.qml</file>
         <file>screenshot.png</file>
         <file>README.md</file>
-        <file>menu_icon.png</file>
+        <file>gallery_icon.png</file>
     </qresource>
 </RCC>
