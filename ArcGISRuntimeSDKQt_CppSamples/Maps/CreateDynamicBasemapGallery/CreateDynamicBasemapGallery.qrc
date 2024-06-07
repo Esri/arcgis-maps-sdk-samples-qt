@@ -7,6 +7,6 @@
         <file>main.qml</file>
         <file>screenshot.png</file>
         <file>README.md</file>
-        <file>gallery_icon.png</file>
+        <file>grid-24.svg</file>
     </qresource>
 </RCC>
