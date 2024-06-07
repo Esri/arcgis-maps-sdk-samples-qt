@@ -28,11 +28,11 @@ Item {
         // set focus to enable keyboard navigation
         focus: true
 
-        Button {
+        RoundButton {
             x: 10
             y: 10
-            icon.name: "menu_icon"
-            icon.source: "menu_icon.png"
+            icon.name: "gallery_icon"
+            icon.source: "gallery_icon.png"
             onClicked: popup.open()
             }
 
