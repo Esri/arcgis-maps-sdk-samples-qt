@@ -1,6 +1,0 @@
-<RCC>
-    <qresource prefix="/qmlsamples">
-        <file>QmlSampleManagerPortalItem.qml</file>
-        <file>QmlArcGISRuntimeEnvironment.qml</file>
-    </qresource>
-</RCC>

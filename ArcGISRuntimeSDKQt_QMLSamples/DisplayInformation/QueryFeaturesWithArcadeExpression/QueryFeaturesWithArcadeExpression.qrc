@@ -1,8 +1,0 @@
-<RCC>
-    <qresource prefix="/Samples/DisplayInformation/QueryFeaturesWithArcadeExpression">
-        <file alias="sample.json">README.metadata.json</file>
-        <file>QueryFeaturesWithArcadeExpression.qml</file>
-        <file>screenshot.png</file>
-        <file>README.md</file>
-    </qresource>
-</RCC>

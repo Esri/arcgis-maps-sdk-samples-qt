@@ -1,8 +1,0 @@
-<RCC>
-    <qresource prefix="/Samples/Layers/ApplyUniqueValuesWithAlternateSymbols">
-        <file alias="sample.json">README.metadata.json</file>
-        <file>ApplyUniqueValuesWithAlternateSymbols.qml</file>
-        <file>screenshot.png</file>
-        <file>README.md</file>
-    </qresource>
-</RCC>

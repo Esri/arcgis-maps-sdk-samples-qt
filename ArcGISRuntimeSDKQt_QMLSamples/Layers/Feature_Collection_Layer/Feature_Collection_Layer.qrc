@@ -1,8 +1,0 @@
-<RCC>
-    <qresource prefix="/Samples/Layers/Feature_Collection_Layer">
-        <file alias="sample.json">README.metadata.json</file>
-        <file>screenshot.png</file>
-        <file>Feature_Collection_Layer.qml</file>
-        <file>README.md</file>
-    </qresource>
-</RCC>

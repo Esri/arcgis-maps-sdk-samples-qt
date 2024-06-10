@@ -1,8 +1,0 @@
-<RCC>
-    <qresource prefix="/Samples/Geometry/ListTransformations">
-        <file alias="sample.json">README.metadata.json</file>
-        <file>ListTransformations.qml</file>
-        <file>screenshot.png</file>
-        <file>README.md</file>
-    </qresource>
-</RCC>

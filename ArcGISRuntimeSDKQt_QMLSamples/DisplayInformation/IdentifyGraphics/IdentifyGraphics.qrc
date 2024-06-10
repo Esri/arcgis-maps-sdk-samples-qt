@@ -1,8 +1,0 @@
-<RCC>
-    <qresource prefix="/Samples/DisplayInformation/IdentifyGraphics">
-        <file alias="sample.json">README.metadata.json</file>
-        <file>screenshot.png</file>
-        <file>IdentifyGraphics.qml</file>
-        <file>README.md</file>
-    </qresource>
-</RCC>

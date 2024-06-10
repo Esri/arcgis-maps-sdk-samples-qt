@@ -1,0 +1,23 @@
+<RCC>
+    <qresource prefix="/qml">
+        <file>main.qml</file>
+        <file>CategoryDrawer.qml</file>
+        <file>CategoryGridView.qml</file>
+        <file>SampleListView.qml</file>
+        <file>LiveSampleView.qml</file>
+        <file>SourceCodeView.qml</file>
+        <file>DescriptionView.qml</file>
+        <file>ProxySetupView.qml</file>
+        <file>CategoryCard.qml</file>
+        <file>AboutView.qml</file>
+        <file>NetworkRequiredView.qml</file>
+        <file>DataDownloadView.qml</file>
+        <file>_Imports.qml</file>
+        <file>QmlAuthenticationView.qml</file>
+        <file>CppAuthenticationView.qml</file>
+        <file>SearchView.qml</file>
+        <file>SearchBar.qml</file>
+        <file>ManageOfflineDataView.qml</file>
+        <file>HomepageView.qml</file>
+    </qresource>
+</RCC>
