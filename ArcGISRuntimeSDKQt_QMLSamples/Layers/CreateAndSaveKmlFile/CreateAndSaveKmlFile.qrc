@@ -1,9 +1,0 @@
-<RCC>
-    <qresource prefix="/Samples/Layers/CreateAndSaveKmlFile">
-        <file alias="sample.json">README.metadata.json</file>
-        <file>CreateAndSaveKmlFile.qml</file>
-        <file>screenshot.png</file>
-        <file>README.md</file>
-        <file>main.qml</file>
-    </qresource>
-</RCC>

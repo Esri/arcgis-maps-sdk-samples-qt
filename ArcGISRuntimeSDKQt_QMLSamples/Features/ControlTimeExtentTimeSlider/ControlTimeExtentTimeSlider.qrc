@@ -1,8 +1,0 @@
-<RCC>
-    <qresource prefix="/Samples/Features/ControlTimeExtentTimeSlider">
-        <file alias="sample.json">README.metadata.json</file>
-        <file>ControlTimeExtentTimeSlider.qml</file>
-        <file>screenshot.png</file>
-        <file>README.md</file>
-    </qresource>
-</RCC>

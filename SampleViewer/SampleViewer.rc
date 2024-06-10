@@ -1,0 +1,55 @@
+#include "..\..\..\..\buildnum\buildnum.h"
+#include <winver.h>
+
+
+/////////////////////////////////////////////////////////////////////////////
+//
+// Version
+//
+
+VS_VERSION_INFO VERSIONINFO
+ FILEVERSION BUILD_VER
+ PRODUCTVERSION BUILD_VER
+ FILEFLAGSMASK 0x3fL
+#ifdef _DEBUG
+ FILEFLAGS 0x1L
+#else
+ FILEFLAGS 0x0L
+#endif
+ FILEOS 0x4L
+ FILETYPE 0x2L
+ FILESUBTYPE 0x0L
+BEGIN
+    BLOCK "StringFileInfo"
+    BEGIN
+        BLOCK "040904B0"
+        BEGIN
+            VALUE "Comments","ArcGIS Maps SDK for Qt Samples - C++"
+            VALUE "CompanyName", COMPANY_NAME
+            VALUE "FileDescription", "ArcGIS Maps SDK for Qt Samples - C++\0"
+            VALUE "FileVersion", BUILD_NUM
+            VALUE "InternalName", "SampleViewer\0"
+            VALUE "LegalCopyright", COPY_RIGHT
+            VALUE "LegalTrademarks", "\0"
+            VALUE "OriginalFilename", "SampleViewer.exe\0"
+            VALUE "ProductName", PRODUCT_NAME
+            VALUE "ProductVersion", BUILD_NUM
+        END
+    END
+    BLOCK "VarFileInfo"
+    BEGIN
+        VALUE "Translation", 0x409, 1200
+    END
+END
+
+/////////////////////////////////////////////////////////////////////////////
+//
+// Icon
+//
+
+// Icon with lowest ID value placed first to ensure application icon
+// remains consistent on all systems.
+IDI_ICON1               ICON    DISCARDABLE     "./images/ArcGISRuntimeSDKQtSamples.ico"
+/////////////////////////////////////////////////////////////////////////////
+
+
