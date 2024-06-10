@@ -22,9 +22,9 @@
         "Worldview"
     ],
     "snippets": [
+        "CreateDynamicBasemapGallery.qml",
         "CreateDynamicBasemapGallery.cpp",
-        "CreateDynamicBasemapGallery.h",
-        "CreateDynamicBasemapGallery.qml"
+        "CreateDynamicBasemapGallery.h"
     ],
     "title": "CreateDynamicBasemapGallery"
 }
