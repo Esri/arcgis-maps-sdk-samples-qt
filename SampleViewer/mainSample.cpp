@@ -104,6 +104,7 @@
 #include "CreateAndSaveKmlFile.h"
 #include "CreateAndSaveMap.h"
 #include "CreateAndEditGeometries.h"
+#include "CreateDynamicBasemapGallery.h"
 #include "CreateGeometries.h"
 #include "CreateLoadReport.h"
 #include "CreateMobileGeodatabase.h"
@@ -422,6 +423,7 @@ void registerCppSampleClasses()
   CreateAndSaveKmlFile::init();
   CreateAndSaveMap::init();
   CreateAndEditGeometries::init();
+  CreateDynamicBasemapGallery::init();
   CreateGeometries::init();
   CreateLoadReport::init();
   CreateMobileGeodatabase::init();
