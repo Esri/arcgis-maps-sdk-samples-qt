@@ -153,6 +153,7 @@ INCLUDEPATH += \
     "$$SAMPLEPATHCPP/Maps/ChangeViewpoint" \
     "$$SAMPLEPATHCPP/Maps/ConfigureBasemapStyleLanguage" \
     "$$SAMPLEPATHCPP/Maps/CreateAndSaveMap" \
+    "$$SAMPLEPATHCPP/Maps/CreateDynamicBasemapGallery" \
     "$$SAMPLEPATHCPP/Maps/DisplayDeviceLocation" \
     "$$SAMPLEPATHCPP/Maps/DisplayDeviceLocationWithNmeaDataSources" \
     "$$SAMPLEPATHCPP/Maps/DisplayDrawingStatus" \
@@ -373,6 +374,8 @@ HEADERS += \
     "$$SAMPLEPATHCPP/Maps/ChangeViewpoint/ChangeViewpoint.h" \
     "$$SAMPLEPATHCPP/Maps/ConfigureBasemapStyleLanguage/ConfigureBasemapStyleLanguage.h" \
     "$$SAMPLEPATHCPP/Maps/CreateAndSaveMap/CreateAndSaveMap.h" \
+    "$$SAMPLEPATHCPP/Maps/CreateDynamicBasemapGallery/CreateDynamicBasemapGallery.h" \
+    "$$SAMPLEPATHCPP/Maps/CreateDynamicBasemapGallery/BasemapStyleListModel.h" \
     "$$SAMPLEPATHCPP/Maps/DisplayDeviceLocation/DisplayDeviceLocation.h" \
     "$$SAMPLEPATHCPP/Maps/DisplayDeviceLocationWithNmeaDataSources/DisplayDeviceLocationWithNmeaDataSources.h" \
     "$$SAMPLEPATHCPP/Maps/DisplayDrawingStatus/DisplayDrawingStatus.h" \
@@ -596,6 +599,8 @@ SOURCES += \
     "$$SAMPLEPATHCPP/Maps/ChangeViewpoint/ChangeViewpoint.cpp" \
     "$$SAMPLEPATHCPP/Maps/ConfigureBasemapStyleLanguage/ConfigureBasemapStyleLanguage.cpp" \
     "$$SAMPLEPATHCPP/Maps/CreateAndSaveMap/CreateAndSaveMap.cpp" \
+    "$$SAMPLEPATHCPP/Maps/CreateDynamicBasemapGallery/CreateDynamicBasemapGallery.cpp" \
+    "$$SAMPLEPATHCPP/Maps/CreateDynamicBasemapGallery/BasemapStyleListModel.cpp" \
     "$$SAMPLEPATHCPP/Maps/DisplayDeviceLocation/DisplayDeviceLocation.cpp" \
     "$$SAMPLEPATHCPP/Maps/DisplayDeviceLocationWithNmeaDataSources/DisplayDeviceLocationWithNmeaDataSources.cpp" \
     "$$SAMPLEPATHCPP/Maps/DisplayDrawingStatus/DisplayDrawingStatus.cpp" \
@@ -812,6 +817,7 @@ RESOURCES += \
     "$$SAMPLEPATHCPP/Maps/ChangeViewpoint/ChangeViewpoint.qrc" \
     "$$SAMPLEPATHCPP/Maps/ConfigureBasemapStyleLanguage/ConfigureBasemapStyleLanguage.qrc" \
     "$$SAMPLEPATHCPP/Maps/CreateAndSaveMap/CreateAndSaveMap.qrc" \
+    "$$SAMPLEPATHCPP/Maps/CreateDynamicBasemapGallery/CreateDynamicBasemapGallery.qrc" \
     "$$SAMPLEPATHCPP/Maps/DisplayDeviceLocation/DisplayDeviceLocation.qrc" \
     "$$SAMPLEPATHCPP/Maps/DisplayDeviceLocationWithNmeaDataSources/DisplayDeviceLocationWithNmeaDataSources.qrc" \
     "$$SAMPLEPATHCPP/Maps/DisplayDrawingStatus/DisplayDrawingStatus.qrc" \
