@@ -21,6 +21,8 @@ import QtQuick.Layouts
 import Esri.Samples
 
 Item {
+    property real flowCellWidth: 200
+
     // Create MapQuickView here, and create its Map etc. in C++ code
     MapView {
         id: view
@@ -56,8 +58,8 @@ Item {
                         Layout.fillWidth: false
                         Layout.fillHeight: true
                         implicitWidth: {
-                            var numCellsInPopup_fract = popup.width / basemapView.cellWidth;
-                            var numCellsInPopup_int = Math.trunc(numCellsInPopup_fract);
+                            var numCellsInPopup_dbl = popup.width / basemapView.cellWidth;
+                            var numCellsInPopup_int = Math.trunc(numCellsInPopup_dbl);
                             return Math.max(1, numCellsInPopup_int) * basemapView.cellWidth;
                         }
                         clip: true
@@ -100,54 +102,70 @@ Item {
                         }
                     }
 
-                    ColumnLayout {
+                    Flow {
+                        id: flow
+                        Layout.fillWidth: false
                         Layout.alignment: Qt.AlignHCenter
+                        Layout.preferredWidth: calculateFlowLayoutWidth();
+                        spacing: 10
 
-                        Text {
-                            Layout.preferredHeight: 15
-                            font.underline: true
-                            text: "Language Strategy:"
+                        ColumnLayout {
+                            Text {
+                                Layout.preferredHeight: 15
+                                font.underline: true
+                                text: "Language Strategy:"
+                            }
+                            ComboBox {
+                                id: languageStrategyOptions
+                                Layout.preferredHeight: 30
+                                Layout.preferredWidth: flowCellWidth
+                                model: model.languageStrategies
+                                enabled: model.languageStrategies.length !== 0
+                            }
                         }
-                        ComboBox {
-                            id: languageStrategyOptions
-                            Layout.preferredHeight: 30
-                            Layout.preferredWidth: 200
-                            model: model.languageStrategies
-                            enabled: model.languageStrategies.length !== 0
+                        ColumnLayout {
+                            Text {
+                                Layout.preferredHeight: 15
+                                font.underline: true
+                                text: "Language:"
+                            }
+                            ComboBox {
+                                id: languages
+                                Layout.preferredHeight: 30
+                                Layout.preferredWidth: flowCellWidth
+                                model: model.languages
+                                enabled: model.languages.length !== 0
+                            }
                         }
-                        Text {
-                            Layout.preferredHeight: 15
-                            font.underline: true
-                            text: "Language:"
+                        ColumnLayout {
+                            Text {
+                                Layout.preferredHeight: 15
+                                font.underline: true
+                                text: "Worldview:"
+                            }
+                            ComboBox {
+                                id: worldviews
+                                Layout.preferredHeight: 30
+                                Layout.preferredWidth: flowCellWidth
+                                model: model.worldviews
+                                enabled: model.worldviews.length !== 0
+                            }
                         }
-                        ComboBox {
-                            id: languages
-                            Layout.preferredHeight: 30
-                            Layout.preferredWidth: 200
-                            model: model.languages
-                            enabled: model.languages.length !== 0
-                        }
-                        Text {
-                            Layout.preferredHeight: 15
-                            font.underline: true
-                            text: "Worldview:"
-                        }
-                        ComboBox {
-                            id: worldviews
-                            Layout.preferredHeight: 30
-                            Layout.preferredWidth: 200
-                            model: model.worldviews
-                            enabled: model.worldviews.length !== 0
-                        }
-                        Button {
-                            height: 50
-                            text: "Load"
-                            onPressed: {
-                                model.loadBasemap(
-                                           languageStrategyOptions.currentText,
-                                           languages.currentText,
-                                           worldviews.currentText);
-                                popup.close();
+                        RowLayout {
+                            width: flowCellWidth
+                            height: 45
+                            Button {
+                                Layout.alignment: Qt.AlignCenter
+                                text: "Load"
+                                Layout.preferredHeight: 40
+                                Layout.preferredWidth: 80
+                                onPressed: {
+                                    model.loadBasemap(
+                                               languageStrategyOptions.currentText,
+                                               languages.currentText,
+                                               worldviews.currentText);
+                                    popup.close();
+                                }
                             }
                         }
                     }
@@ -159,5 +177,14 @@ Item {
     CreateDynamicBasemapGallerySample {
         id: model
         mapView: view
+    }
+
+    function calculateFlowLayoutWidth() {
+        var widthOfMargins = 2 * flow.spacing;
+        var numHorizontalInputs_dbl = (popup.width - widthOfMargins) / (flowCellWidth + flow.spacing);
+        var numHorizontalInputs_int = Math.trunc(numHorizontalInputs_dbl);
+        var widthOfInputElements = Math.max(1, numHorizontalInputs_int) * flowCellWidth;
+        var widthOfSpacing = ((Math.max(1, numHorizontalInputs_int) + 2) * flow.spacing);
+        return widthOfInputElements + widthOfSpacing;
     }
 }
