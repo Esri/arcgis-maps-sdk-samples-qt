@@ -138,14 +138,14 @@ void CreateDynamicBasemapGallery::updateLanguageStrategiesList()
 void CreateDynamicBasemapGallery::updateLanguagesList()
 {
     m_languages.clear();
-    if (m_selectedStyle->specificLanguages().isEmpty())
+    if (m_selectedStyle->languages().isEmpty())
     {
         emit languagesChanged();
         return;
     }
 
     m_languages.append("None"); // Add "None" to allow the user to unset this parameter in the UI.
-    for (const BasemapStyleLanguageInfo* info : m_selectedStyle->specificLanguages())
+    for (const BasemapStyleLanguageInfo* info : m_selectedStyle->languages())
     {
         m_languages.append(info->displayName());
     }
@@ -189,7 +189,7 @@ void CreateDynamicBasemapGallery::loadBasemap(const QString& selectedStrategy,
 
     if (!selectedLanguage.isEmpty() && selectedLanguage != "None")
     {
-        const QList<BasemapStyleLanguageInfo*> specificLanguages = m_selectedStyle->specificLanguages();
+        const QList<BasemapStyleLanguageInfo*> specificLanguages = m_selectedStyle->languages();
 
         const auto iteratorToLanguageInfoForSelectedLanguage = std::find_if(specificLanguages.begin(),
                                                                             specificLanguages.end(),

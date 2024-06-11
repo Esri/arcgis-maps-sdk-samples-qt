@@ -43,7 +43,7 @@ QVariant BasemapStyleListModel::data(const QModelIndex& index, int role) const
     case StyleNameRole:
         return m_previews[index.row()]->styleName();
     case PreviewImageUrlRole:
-        return m_previews[index.row()]->thumbnail_url();
+        return m_previews[index.row()]->thumbnailUrl();
     default:
         return QVariant();
     }
