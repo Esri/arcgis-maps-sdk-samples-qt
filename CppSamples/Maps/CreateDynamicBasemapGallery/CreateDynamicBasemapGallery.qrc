@@ -8,5 +8,7 @@
         <file>screenshot.png</file>
         <file>README.md</file>
         <file>grid-24.svg</file>
+        <file>BasemapStyleListModel.cpp</file>
+        <file>BasemapStyleListModel.h</file>
     </qresource>
 </RCC>
