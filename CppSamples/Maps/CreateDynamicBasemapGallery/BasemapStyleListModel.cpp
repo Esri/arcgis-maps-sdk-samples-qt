@@ -61,7 +61,7 @@ void BasemapStyleListModel::insertItemsIntoGallery(const QList<BasemapStyleInfo*
     m_previews.clear();
     for (auto index = 0; index < infos.size(); ++index)
     {
-        m_previews.insert(index, std::move(infos.at(index)));
+        m_previews.insert(index, infos.at(index));
         QModelIndex modelIndex = createIndex(index, 0);
         connect(m_previews.at(index), &BasemapStyleInfo::thumbnailUrlChanged, this, [this, modelIndex]() {
             emit dataChanged(modelIndex, modelIndex);
