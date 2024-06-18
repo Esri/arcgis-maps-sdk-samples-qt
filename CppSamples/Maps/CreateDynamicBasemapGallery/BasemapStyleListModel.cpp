@@ -51,7 +51,7 @@ QVariant BasemapStyleListModel::data(const QModelIndex& index, int role) const
 
 int BasemapStyleListModel::rowCount(const QModelIndex& parent) const
 {
-    Q_UNUSED(parent);
+    Q_UNUSED(parent)
     return m_previews.size();
 }
 
