@@ -51,6 +51,7 @@ QVariant BasemapStyleListModel::data(const QModelIndex& index, int role) const
 
 int BasemapStyleListModel::rowCount(const QModelIndex& parent) const
 {
+    Q_UNUSED(parent);
     return m_previews.size();
 }
 
@@ -60,7 +61,11 @@ void BasemapStyleListModel::insertItemsIntoGallery(const QList<BasemapStyleInfo*
     m_previews.clear();
     for (const BasemapStyleInfo* info : infos)
     {
-        m_previews.append(std::move(info));
+        connect(info, &BasemapStyleInfo::thumbnailUrlChanged, this, [this, info]() {
+            QModelIndex index = createIndex(m_previews.indexOf(info), 0);
+            emit dataChanged(index, index);
+        });
+        m_previews.append(info);
     }
     endResetModel();
 }
