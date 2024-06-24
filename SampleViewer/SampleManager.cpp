@@ -416,12 +416,12 @@ bool SampleManager::dataItemsExists()
 
   for (auto dataItem : *currentSample()->dataItems())
   {
-    if (dataItem->exists())
+    if (!dataItem->exists())
     {
-      return true;
+      return false;
     }
   }
-  return false;
+  return true;
 }
 
 void SampleManager::downloadAllDataItems()
