@@ -89,8 +89,7 @@ void FindAddress::componentComplete()
   m_graphicsOverlay->graphics()->append(m_graphic);
 
   // create locator task and parameters
-  //! [FindAddress create LocatorTask]
-  // An API key is required to utilize this world geocoding service
+  //! [FindAddress create LocatorTask]  
   m_locatorTask = new LocatorTask(QUrl("https://geocode-api.arcgis.com/arcgis/rest/services/World/GeocodeServer"), this);
   //! [FindAddress create LocatorTask]
   m_geocodeParameters.setMinScore(75);
