@@ -1,8 +1,0 @@
-<RCC>
-    <qresource prefix="/qml">
-        <file alias="sample.json">README.metadata.json</file>
-        <file>ExploreScenesInFlyoverAR.qml</file>
-        <file>screenshot.png</file>
-        <file>README.md</file>
-    </qresource>
-</RCC>

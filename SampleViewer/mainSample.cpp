@@ -104,6 +104,7 @@
 #include "CreateAndSaveKmlFile.h"
 #include "CreateAndSaveMap.h"
 #include "CreateAndEditGeometries.h"
+#include "CreateDynamicBasemapGallery.h"
 #include "CreateGeometries.h"
 #include "CreateLoadReport.h"
 #include "CreateMobileGeodatabase.h"
@@ -251,6 +252,7 @@
 #include "Simple_Marker_Symbol.h"
 #include "Simple_Renderer.h"
 #include "SketchOnMap.h"
+#include "SnapGeometryEdits.h"
 #include "SpatialOperations.h"
 #include "SpatialRelationships.h"
 #include "StatisticalQuery.h"
@@ -422,6 +424,7 @@ void registerCppSampleClasses()
   CreateAndSaveKmlFile::init();
   CreateAndSaveMap::init();
   CreateAndEditGeometries::init();
+  CreateDynamicBasemapGallery::init();
   CreateGeometries::init();
   CreateLoadReport::init();
   CreateMobileGeodatabase::init();
@@ -566,6 +569,7 @@ void registerCppSampleClasses()
   SketchOnMap::init();
   SpatialOperations::init();
   SpatialRelationships::init();
+  SnapGeometryEdits::init();
   StatisticalQuery::init();
   StatisticalQueryGroupSort::init();
   StyleWmsLayer::init();

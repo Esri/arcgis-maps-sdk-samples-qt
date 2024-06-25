@@ -57,7 +57,7 @@ Page {
             Layout.alignment: Qt.AlignHCenter | Qt.AlignVCenter
             visible: !SampleManager.downloadInProgress
             onClicked: {
-                if (SampleManager.reachability === SampleManager.ReachabilityOnline || SampleManager.reachability === SampleManager.ReachabilityUnknown) {
+                if (SampleManager.reachability === SampleManager.ReachabilityOnline) {
                     SampleManager.downloadAllDataItems();
                 } else {
                     SampleManager.currentMode = SampleManager.NetworkRequiredView;

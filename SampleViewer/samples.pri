@@ -65,6 +65,7 @@ INCLUDEPATH += \
     "$$SAMPLEPATHCPP/EditData/EditFeaturesWithFeatureLinkedAnnotation" \
     "$$SAMPLEPATHCPP/EditData/EditKmlGroundOverlay" \
     "$$SAMPLEPATHCPP/EditData/EditWithBranchVersioning" \
+    "$$SAMPLEPATHCPP/EditData/SnapGeometryEdits" \
     "$$SAMPLEPATHCPP/EditData/UpdateAttributesFeatureService" \
     "$$SAMPLEPATHCPP/EditData/UpdateGeometryFeatureService" \
     "$$SAMPLEPATHCPP/Features/ControlTimeExtentTimeSlider" \
@@ -153,6 +154,7 @@ INCLUDEPATH += \
     "$$SAMPLEPATHCPP/Maps/ChangeViewpoint" \
     "$$SAMPLEPATHCPP/Maps/ConfigureBasemapStyleLanguage" \
     "$$SAMPLEPATHCPP/Maps/CreateAndSaveMap" \
+    "$$SAMPLEPATHCPP/Maps/CreateDynamicBasemapGallery" \
     "$$SAMPLEPATHCPP/Maps/DisplayDeviceLocation" \
     "$$SAMPLEPATHCPP/Maps/DisplayDeviceLocationWithNmeaDataSources" \
     "$$SAMPLEPATHCPP/Maps/DisplayDrawingStatus" \
@@ -280,6 +282,8 @@ HEADERS += \
     "$$SAMPLEPATHCPP/EditData/EditFeaturesWithFeatureLinkedAnnotation/EditFeaturesWithFeatureLinkedAnnotation.h" \
     "$$SAMPLEPATHCPP/EditData/EditKmlGroundOverlay/EditKmlGroundOverlay.h" \
     "$$SAMPLEPATHCPP/EditData/EditWithBranchVersioning/EditWithBranchVersioning.h" \
+    "$$SAMPLEPATHCPP/EditData/SnapGeometryEdits/SnapGeometryEdits.h" \
+    "$$SAMPLEPATHCPP/EditData/SnapGeometryEdits/SnapSourceListModel.h" \
     "$$SAMPLEPATHCPP/EditData/UpdateAttributesFeatureService/UpdateAttributesFeatureService.h" \
     "$$SAMPLEPATHCPP/EditData/UpdateGeometryFeatureService/UpdateGeometryFeatureService.h" \
     "$$SAMPLEPATHCPP/Features/ControlTimeExtentTimeSlider/ControlTimeExtentTimeSlider.h" \
@@ -373,6 +377,8 @@ HEADERS += \
     "$$SAMPLEPATHCPP/Maps/ChangeViewpoint/ChangeViewpoint.h" \
     "$$SAMPLEPATHCPP/Maps/ConfigureBasemapStyleLanguage/ConfigureBasemapStyleLanguage.h" \
     "$$SAMPLEPATHCPP/Maps/CreateAndSaveMap/CreateAndSaveMap.h" \
+    "$$SAMPLEPATHCPP/Maps/CreateDynamicBasemapGallery/CreateDynamicBasemapGallery.h" \
+    "$$SAMPLEPATHCPP/Maps/CreateDynamicBasemapGallery/BasemapStyleListModel.h" \
     "$$SAMPLEPATHCPP/Maps/DisplayDeviceLocation/DisplayDeviceLocation.h" \
     "$$SAMPLEPATHCPP/Maps/DisplayDeviceLocationWithNmeaDataSources/DisplayDeviceLocationWithNmeaDataSources.h" \
     "$$SAMPLEPATHCPP/Maps/DisplayDrawingStatus/DisplayDrawingStatus.h" \
@@ -503,6 +509,8 @@ SOURCES += \
     "$$SAMPLEPATHCPP/EditData/EditFeaturesWithFeatureLinkedAnnotation/EditFeaturesWithFeatureLinkedAnnotation.cpp" \
     "$$SAMPLEPATHCPP/EditData/EditKmlGroundOverlay/EditKmlGroundOverlay.cpp" \
     "$$SAMPLEPATHCPP/EditData/EditWithBranchVersioning/EditWithBranchVersioning.cpp" \
+    "$$SAMPLEPATHCPP/EditData/SnapGeometryEdits/SnapGeometryEdits.cpp" \
+    "$$SAMPLEPATHCPP/EditData/SnapGeometryEdits/SnapSourceListModel.cpp" \
     "$$SAMPLEPATHCPP/EditData/UpdateAttributesFeatureService/UpdateAttributesFeatureService.cpp" \
     "$$SAMPLEPATHCPP/EditData/UpdateGeometryFeatureService/UpdateGeometryFeatureService.cpp" \
     "$$SAMPLEPATHCPP/Features/ControlTimeExtentTimeSlider/ControlTimeExtentTimeSlider.cpp" \
@@ -596,6 +604,8 @@ SOURCES += \
     "$$SAMPLEPATHCPP/Maps/ChangeViewpoint/ChangeViewpoint.cpp" \
     "$$SAMPLEPATHCPP/Maps/ConfigureBasemapStyleLanguage/ConfigureBasemapStyleLanguage.cpp" \
     "$$SAMPLEPATHCPP/Maps/CreateAndSaveMap/CreateAndSaveMap.cpp" \
+    "$$SAMPLEPATHCPP/Maps/CreateDynamicBasemapGallery/CreateDynamicBasemapGallery.cpp" \
+    "$$SAMPLEPATHCPP/Maps/CreateDynamicBasemapGallery/BasemapStyleListModel.cpp" \
     "$$SAMPLEPATHCPP/Maps/DisplayDeviceLocation/DisplayDeviceLocation.cpp" \
     "$$SAMPLEPATHCPP/Maps/DisplayDeviceLocationWithNmeaDataSources/DisplayDeviceLocationWithNmeaDataSources.cpp" \
     "$$SAMPLEPATHCPP/Maps/DisplayDrawingStatus/DisplayDrawingStatus.cpp" \
@@ -724,6 +734,7 @@ RESOURCES += \
     "$$SAMPLEPATHCPP/EditData/EditFeaturesWithFeatureLinkedAnnotation/EditFeaturesWithFeatureLinkedAnnotation.qrc" \
     "$$SAMPLEPATHCPP/EditData/EditKmlGroundOverlay/EditKmlGroundOverlay.qrc" \
     "$$SAMPLEPATHCPP/EditData/EditWithBranchVersioning/EditWithBranchVersioning.qrc" \
+    "$$SAMPLEPATHCPP/EditData/SnapGeometryEdits/SnapGeometryEdits.qrc" \
     "$$SAMPLEPATHCPP/EditData/UpdateAttributesFeatureService/UpdateAttributesFeatureService.qrc" \
     "$$SAMPLEPATHCPP/EditData/UpdateGeometryFeatureService/UpdateGeometryFeatureService.qrc" \
     "$$SAMPLEPATHCPP/Features/ControlTimeExtentTimeSlider/ControlTimeExtentTimeSlider.qrc" \
@@ -812,6 +823,7 @@ RESOURCES += \
     "$$SAMPLEPATHCPP/Maps/ChangeViewpoint/ChangeViewpoint.qrc" \
     "$$SAMPLEPATHCPP/Maps/ConfigureBasemapStyleLanguage/ConfigureBasemapStyleLanguage.qrc" \
     "$$SAMPLEPATHCPP/Maps/CreateAndSaveMap/CreateAndSaveMap.qrc" \
+    "$$SAMPLEPATHCPP/Maps/CreateDynamicBasemapGallery/CreateDynamicBasemapGallery.qrc" \
     "$$SAMPLEPATHCPP/Maps/DisplayDeviceLocation/DisplayDeviceLocation.qrc" \
     "$$SAMPLEPATHCPP/Maps/DisplayDeviceLocationWithNmeaDataSources/DisplayDeviceLocationWithNmeaDataSources.qrc" \
     "$$SAMPLEPATHCPP/Maps/DisplayDrawingStatus/DisplayDrawingStatus.qrc" \

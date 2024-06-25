@@ -1,8 +1,0 @@
-<RCC>
-    <qresource prefix="/Samples/Scenes/ExtrudeGraphics">
-        <file alias="sample.json">README.metadata.json</file>
-        <file>screenshot.png</file>
-        <file>ExtrudeGraphics.qml</file>
-        <file>README.md</file>
-    </qresource>
-</RCC>

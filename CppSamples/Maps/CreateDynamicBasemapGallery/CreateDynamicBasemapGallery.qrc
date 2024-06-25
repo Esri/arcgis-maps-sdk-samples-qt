@@ -1,0 +1,14 @@
+<RCC>
+    <qresource prefix="/Samples/Maps/CreateDynamicBasemapGallery">
+        <file alias="sample.json">README.metadata.json</file>
+        <file>CreateDynamicBasemapGallery.qml</file>
+        <file>CreateDynamicBasemapGallery.h</file>
+        <file>CreateDynamicBasemapGallery.cpp</file>
+        <file>main.qml</file>
+        <file>screenshot.png</file>
+        <file>README.md</file>
+        <file>grid-24.svg</file>
+        <file>BasemapStyleListModel.cpp</file>
+        <file>BasemapStyleListModel.h</file>
+    </qresource>
+</RCC>
