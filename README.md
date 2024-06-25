@@ -2,7 +2,7 @@
 
 ## Overview
 
-The repo contains [Qt](http://qt.io) projects for each sample that can be run from within the Qt Creator IDE. It also contains source code to build and run the [C++](https://www.arcgis.com/home/search.html?t=content&q=tags%3A%22CppSampleViewer%22) sample viewer app locally.
+The repo contains [Qt](http://qt.io) projects for each sample that can be run from within the Qt Creator IDE. It also contains source code to build and run the [sample viewer app](https://www.arcgis.com/home/search.html?t=content&q=tags%3A%22CppSampleViewer%22) locally.
 
 ## Table of Contents
 
