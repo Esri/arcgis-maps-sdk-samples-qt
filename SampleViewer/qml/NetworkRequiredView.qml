@@ -62,7 +62,7 @@ Page {
             height: 48
             text: qsTr("Retry")
             onClicked: {
-                if (SampleManager.reachability === SampleManager.ReachabilityOnline || SampleManager.reachability === SampleManager.ReachabilityUnknown) {
+                if (SampleManager.reachability === SampleManager.ReachabilityOnline) {
                     SampleManager.currentMode = SampleManager.LiveSampleView
                     showSample();
                 }
