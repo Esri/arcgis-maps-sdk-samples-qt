@@ -250,8 +250,7 @@ ApplicationWindow {
 
             // If the sample requires online resources but there is no network connectivity
             if (SampleManager.currentSample.dataItems.size === 0
-                    && SampleManager.reachability !== SampleManager.ReachabilityOnline
-                    && SampleManager.reachability !== SampleManager.ReachabilityUnknown){
+                    && SampleManager.reachability !== SampleManager.ReachabilityOnline){
                 SampleManager.currentMode = SampleManager.NetworkRequiredView;
                 return;
             // If the sample requires offline data
