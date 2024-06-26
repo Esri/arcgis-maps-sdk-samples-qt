@@ -84,6 +84,14 @@ SampleManager::SampleManager(QObject *parent):
 #ifdef LOCALSERVER_SUPPORTED
   createAndSetTempDirForLocalServer();
 #endif
+
+  if (QNetworkInformation::loadBackendByFeatures(QNetworkInformation::Feature::Reachability))
+  {
+      if (QNetworkInformation* networkInfo = QNetworkInformation::instance())
+      {
+          connect(networkInfo, &QNetworkInformation::reachabilityChanged, this, &SampleManager::reachabilityChanged);
+      }
+  }
 }
 
 SampleManager::~SampleManager() = default;
