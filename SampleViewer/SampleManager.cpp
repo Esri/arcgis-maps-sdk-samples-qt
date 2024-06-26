@@ -84,6 +84,14 @@ SampleManager::SampleManager(QObject *parent):
 #ifdef LOCALSERVER_SUPPORTED
   createAndSetTempDirForLocalServer();
 #endif
+
+  if (QNetworkInformation::loadBackendByFeatures(QNetworkInformation::Feature::Reachability))
+  {
+    if (QNetworkInformation* networkInfo = QNetworkInformation::instance())
+    {
+      connect(networkInfo, &QNetworkInformation::reachabilityChanged, this, &SampleManager::reachabilityChanged);
+    }
+  }
 }
 
 SampleManager::~SampleManager() = default;
@@ -386,7 +394,7 @@ void SampleManager::setApiKey(bool isSupportsApiKey)
 
   if (isSupportsApiKey && apiKey == "")
   {
-    qWarning() << "This sample expects an API key to be set, but none was provided. Please provide an API key in ArcGISRuntimeSDKQt_Samples/SampleManager.cpp";
+    qWarning() << "This sample expects an API key to be set, but none was provided. Please provide an API key in SampleViewer/SampleManager.cpp";
   }
   const QString sampleApiKey = isSupportsApiKey ? apiKey : ""; // empty string will "unset" the key
   // set apikey for CPP/QML sample viewer
