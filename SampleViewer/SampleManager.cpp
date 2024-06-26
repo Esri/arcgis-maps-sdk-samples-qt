@@ -87,10 +87,10 @@ SampleManager::SampleManager(QObject *parent):
 
   if (QNetworkInformation::loadBackendByFeatures(QNetworkInformation::Feature::Reachability))
   {
-      if (QNetworkInformation* networkInfo = QNetworkInformation::instance())
-      {
-          connect(networkInfo, &QNetworkInformation::reachabilityChanged, this, &SampleManager::reachabilityChanged);
-      }
+    if (QNetworkInformation* networkInfo = QNetworkInformation::instance())
+    {
+      connect(networkInfo, &QNetworkInformation::reachabilityChanged, this, &SampleManager::reachabilityChanged);
+    }
   }
 }
 
