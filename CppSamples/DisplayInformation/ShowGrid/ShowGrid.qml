@@ -1,6 +1,6 @@
-// [WriteFile Name=DisplayGrid, Category=DisplayInformation]
+// [WriteFile Name=ShowGrid, Category=DisplayInformation]
 // [Legal]
-// Copyright 2016 Esri.
+// Copyright 2024 Esri.
 
 // Licensed under the Apache License, Version 2.0 (the "License");
 // you may not use this file except in compliance with the License.
@@ -19,24 +19,32 @@ import QtQuick.Controls
 import QtQuick.Layouts
 import Esri.Samples
 
-DisplayGridSample {
-    id: displayGrid
-    clip: true
-    width: 800
-    height: 600
-
-    property real centerWindowY: (displayGrid.height / 2) - (styleWindow.height / 2)
+Item {
+    id: root
+    property real centerWindowY: (root.height / 2) - (styleWindow.height / 2)
 
     MapView {
         id: mapQuickView
         anchors.fill: parent
-
+        visible: gridSample.currentViewType == "MapView"
         Component.onCompleted: {
-            // Set the focus on MapView to initially enable keyboard navigation
+            // Set and keep the focus on SceneView to enable keyboard navigation
             forceActiveFocus();
         }
     }
-    mapView: mapQuickView
+
+    SceneView {
+        id: sceneQuickView
+        anchors.fill: parent
+        visible: gridSample.currentViewType == "SceneView"
+    }
+
+    // Declare the C++ instance which creates the map, scene etc. and supply the views
+    ShowGridSample {
+        id: gridSample
+        mapView: mapQuickView
+        sceneView: sceneQuickView
+    }
 
     // Button to view the styling window
     Rectangle {
@@ -114,12 +122,37 @@ DisplayGridSample {
 
         SequentialAnimation {
             id: hideAnimation
-            NumberAnimation { target: styleWindow; property: "y"; to: displayGrid.height; duration: 200 }
+            NumberAnimation { target: styleWindow; property: "y"; to: root.height; duration: 200 }
         }
 
         GridLayout {
             id: grid
             columns: 2
+
+            Text {
+                Layout.leftMargin: 10
+                text: "GeoView Type"
+            }
+
+            ComboBox {
+                id: viewCombo
+                property int modelWidth: 0
+                Layout.minimumWidth: modelWidth + leftPadding + rightPadding + (indicator ? indicator.width : 10)
+                Layout.rightMargin: 10
+                Layout.fillWidth: true
+                model: gridSample.viewTypes
+                onCurrentTextChanged: gridSample.setViewType(currentText);
+                Component.onCompleted : {
+                    for (let i = 0; i < model.length; ++i) {
+                        viewComboMetrics.text = model[i];
+                        modelWidth = Math.max(modelWidth, viewComboMetrics.width);
+                    }
+                }
+                TextMetrics {
+                    id: viewComboMetrics
+                    font: viewCombo.font
+                }
+            }
 
             Text {
                 Layout.leftMargin: 10
@@ -132,8 +165,8 @@ DisplayGridSample {
                 Layout.minimumWidth: modelWidth + leftPadding + rightPadding + (indicator ? indicator.width : 10)
                 Layout.rightMargin: 10
                 Layout.fillWidth: true
-                model: [latlonGrid, mgrsGrid, utmGrid, usngGrid]
-                onCurrentTextChanged: changeGrid(currentText)
+                model: gridSample.gridTypes
+                onCurrentTextChanged: gridSample.setGridType(currentText)
                 Component.onCompleted : {
                     for (let i = 0; i < model.length; ++i) {
                         metricsGridTypeComboBox.text = model[i];
@@ -158,7 +191,7 @@ DisplayGridSample {
                 Layout.rightMargin: 10
                 checked: true
                 enabled: gridVisibleSwitch.checked
-                onCheckedChanged: gridLabelVisibility = checked
+                onCheckedChanged: gridSample.setLabelsVisible(checked);
             }
 
             Text {
@@ -170,7 +203,7 @@ DisplayGridSample {
                 id: gridVisibleSwitch
                 Layout.rightMargin: 10
                 checked: true
-                onCheckedChanged: gridVisibility = checked
+                onCheckedChanged: gridSample.setGridVisible(checked);
             }
 
             Text {
@@ -184,8 +217,8 @@ DisplayGridSample {
                 Layout.minimumWidth: modelWidth + leftPadding + rightPadding + (indicator ? indicator.width : 10)
                 Layout.rightMargin: 10
                 Layout.fillWidth: true
-                model: ["red", "white", "blue"]
-                onCurrentTextChanged: currentGridColor = currentText
+                model: gridSample.lineColors
+                onCurrentTextChanged: gridSample.setLineColor(currentText);
                 Component.onCompleted : {
                     for (let i = 0; i < model.length; ++i) {
                         colorComboMetrics.text = model[i];
@@ -209,8 +242,8 @@ DisplayGridSample {
                 Layout.minimumWidth: modelWidth + leftPadding + rightPadding + (indicator ? indicator.width : 10)
                 Layout.rightMargin: 10
                 Layout.fillWidth: true
-                model: ["red", "black", "blue"]
-                onCurrentTextChanged: currentLabelColor = currentText;
+                model: gridSample.labelColors
+                onCurrentTextChanged: gridSample.setLabelColor(currentText);
                 Component.onCompleted : {
                     for (let i = 0; i < model.length; ++i) {
                         colorCombo2Metrics.text = model[i];
@@ -235,8 +268,8 @@ DisplayGridSample {
                 Layout.minimumWidth: modelWidth + leftPadding + rightPadding + (indicator ? indicator.width : 10)
                 Layout.rightMargin: 10
                 Layout.fillWidth: true
-                model: [geographicPosition, bottomLeftPosition, bottomRightPosition, topLeftPosition, topRightPosition, centerPosition, allSidesPosition]
-                onCurrentTextChanged: currentLabelPosition = currentText;
+                model: gridSample.labelPositions
+                onCurrentTextChanged: gridSample.setLabelPosition(currentText);
                 Component.onCompleted : {
                     for (let i = 0; i < model.length; ++i) {
                         positionComboMetrics.text = model[i];
@@ -252,7 +285,7 @@ DisplayGridSample {
             Text {
                 Layout.leftMargin: 10
                 text: "Label format"
-                enabled: gridTypeComboBox.currentText == latlonGrid
+                enabled: gridSample.currentGridType === "LatLong"
                 color: enabled ? "black"  : "gray"
             }
 
@@ -262,9 +295,9 @@ DisplayGridSample {
                 Layout.minimumWidth: modelWidth + leftPadding + rightPadding + (indicator ? indicator.width : 10)
                 Layout.rightMargin: 10
                 Layout.fillWidth: true
-                model: [ddFormat, dmsFormat]
-                enabled: gridTypeComboBox.currentText == latlonGrid
-                onCurrentTextChanged: currentLabelFormat = currentText;
+                model: gridSample.labelFormats
+                enabled: gridSample.currentGridType === "LatLong"
+                onCurrentTextChanged: gridSample.setLabelFormat(currentText);
                 Component.onCompleted : {
                     for (let i = 0; i < model.length; ++i) {
                         formatComboMetrics.text = model[i];
@@ -307,7 +340,11 @@ DisplayGridSample {
                     onReleased: hideButton.pressed = false
                     onClicked: {
                         background.visible = false;
-                        hideAnimation.restart()
+                        hideAnimation.restart();
+                        if (gridSample.currentViewType === "MapView")
+                            mapQuickView.forceActiveFocus();
+                        else
+                            sceneQuickView.forceActiveFocus();
                     }
                 }
             }

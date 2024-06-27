@@ -1,4 +1,4 @@
-# Display a grid
+# Show grid
 
 Display coordinate system grids including Latitude/Longitude, MGRS, UTM and USNG on a map view. Also, toggle label visibility and change the color of grid lines and grid labels.
 
@@ -29,6 +29,7 @@ Tap on the `Change Grid` button in the toolbar to open a settings view. You can 
 * MapView
 * MGRSGrid
 * SimpleLineSymbol
+* SceneView
 * TextSymbol
 * USNGGrid
 * UTMGrid
