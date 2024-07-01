@@ -60,7 +60,7 @@ public:
     const QStringList& languageStrategies() const;
     const QStringList& languages() const;
     const QStringList& worldviews() const;
-    const int indexOfSelectedStyle() const;
+    int indexOfSelectedStyle() const;
 
     Q_INVOKABLE void updateSelectedStyle(const QString& styleName);
     Q_INVOKABLE void loadBasemap(const QString& selectedStrategy, const QString& selectedLanguage, const QString& selectedWorldview);

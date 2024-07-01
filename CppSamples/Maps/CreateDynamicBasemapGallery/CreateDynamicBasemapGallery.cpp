@@ -271,7 +271,7 @@ const QStringList& CreateDynamicBasemapGallery::worldviews() const
     return m_worldviews;
 }
 
-const int CreateDynamicBasemapGallery::indexOfSelectedStyle() const
+int CreateDynamicBasemapGallery::indexOfSelectedStyle() const
 {
     return static_cast<int>(m_styleInfos.indexOf(m_selectedStyle));
 }
