@@ -54,7 +54,7 @@
 #include "DrawOrderLayerListModel.h"
 
 #ifdef ESRI_BUILD
-#include "../../../../../buildnum/buildnum.h"
+#include "buildnum.h"
 #endif
 
 // All CPP Samples

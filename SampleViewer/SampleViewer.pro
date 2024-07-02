@@ -32,8 +32,7 @@ DEFINES += ArcGIS_Runtime_Version=$$ARCGIS_RUNTIME_VERSION
 # This block determines whether to build against the installed SDK or the local dev build area
 exists($$PWD/../../../DevBuildCpp.pri) {
   message("Building against the dev environment")
-  DEFINES += ESRI_BUILD
-  DEFINES += SAMPLE_VIEWER_API_KEY=$$(SAMPLEVIEWERAPIKEY_INTERNAL)
+  DEFINES += SAMPLE_VIEWER_API_KEY=$$(SAMPLEVIEWERAPIKEY_INTERNAL) ESRI_BUILD
 
   # use the Esri dev build script
   include ($$PWD/../../../DevBuildCpp.pri)
@@ -45,7 +44,8 @@ exists($$PWD/../../../DevBuildCpp.pri) {
       $$COMMONVIEWER \
       $$COMMONVIEWER/SyntaxHighlighter \
       $$PWD/../../../api/qt_cpp/Include \
-      $$PWD/../../../api/qt_cpp/Include/LocalServer/
+      $$PWD/../../../api/qt_cpp/Include/LocalServer \
+      $$PWD/../../../../buildnum
 } else {
   message("Building against the installed SDK")
   CONFIG += build_from_setup
