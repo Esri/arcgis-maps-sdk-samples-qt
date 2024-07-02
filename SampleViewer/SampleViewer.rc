@@ -24,9 +24,9 @@ BEGIN
     BEGIN
         BLOCK "040904B0"
         BEGIN
-            VALUE "Comments","ArcGIS Maps SDK for Qt Samples - C++"
+            VALUE "Comments","ArcGIS Maps Qt Samples"
             VALUE "CompanyName", COMPANY_NAME
-            VALUE "FileDescription", "ArcGIS Maps SDK for Qt Samples - C++\0"
+            VALUE "FileDescription", "ArcGIS Maps Qt Samples\0"
             VALUE "FileVersion", BUILD_NUM
             VALUE "InternalName", "SampleViewer\0"
             VALUE "LegalCopyright", COPY_RIGHT

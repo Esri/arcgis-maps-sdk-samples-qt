@@ -319,11 +319,7 @@ int main(int argc, char *argv[])
   QtWebEngineQuick::initialize();
 #endif // QT_WEBVIEW_WEBENGINE_BACKEND
 
-#ifdef CPP_VIEWER
-  QGuiApplication::setApplicationName("ArcGIS Maps SDK Qt Cpp Samples");
-#else
-  QGuiApplication::setApplicationName("ArcGIS Maps SDK Qt Qml Samples");
-#endif
+  QGuiApplication::setApplicationName("ArcGIS Maps Qt Samples");
 
   QGuiApplication::setOrganizationName("Esri");
   QApplication app(argc, argv);
