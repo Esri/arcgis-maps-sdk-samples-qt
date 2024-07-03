@@ -132,7 +132,7 @@ Rectangle {
                         break;
                     }
                 }
-                // If a matching file is not found, the Sample Viewer default is `control.currentIndex = 0` which is usually the primary C++/QML file depending on the viewer
+                // If a matching file is not found, the Sample Viewer default is `control.currentIndex = 0` which is usually the primary source file
             }
         }
     }

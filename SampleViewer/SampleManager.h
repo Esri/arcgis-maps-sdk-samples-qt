@@ -114,7 +114,6 @@ signals:
   void downloadInProgressChanged();
   void downloadTextChanged();
   void downloadProgressChanged();
-  void apiKeyRequired(const QString& apiKey);
   void reachabilityChanged();
 
 protected:
