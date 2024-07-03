@@ -49,7 +49,7 @@ ApplicationWindow {
 
         Label {
             anchors.centerIn: parent
-            text: qsTr("Qt Samples - %1").arg(SampleManager.api)
+            text: qsTr("Qt Samples")
             font {
                 pixelSize: 24
                 family: fontFamily
