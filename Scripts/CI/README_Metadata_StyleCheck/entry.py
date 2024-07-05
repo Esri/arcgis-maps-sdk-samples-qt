@@ -58,7 +58,7 @@ def check_files(file_list):
             directory_list = file.split("/")
 
             # Do not check widgets
-            if "ArcGISRuntimeSDKQt_CppSamples_Widgets" in directory_list:
+            if "CppWidgetsSamples" in directory_list:
                 continue
 
             file_name = directory_list[-1]
@@ -294,15 +294,11 @@ class MetadataFile:
             self.sample_name + ".qml",
         ]
 
-        if self.sample_type == "ArcGISRuntimeSDKQt_CppSamples":
+        if self.sample_type == "CppSamples":
             expected_snippets += [self.sample_name + ".cpp", self.sample_name + ".h"]
 
-        if self.sample_type == "ArcGISRuntimeSDKQt_CppSamples":
             if not snippets[-1] == expected_snippets[0]:
                 errors.append(f"The primary .qml snippet must be listed last in the list for C++ samples.")
-        else:
-            if not snippets[0] == expected_snippets[0]:
-                errors.append(f"The primary .qml snippet must be listed first in the list for QML samples.")
 
         for expected_snippet in expected_snippets:
             if expected_snippet not in snippets:
