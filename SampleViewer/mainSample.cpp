@@ -30,14 +30,8 @@
 #  include <QtWebEngineQuick>
 #endif // QT_WEBVIEW_WEBENGINE_BACKEND
 
-// Choose a manager based on the type of interface.
-// Add toolkit header for Cpp only
-#ifdef CPP_VIEWER
-#  include "SampleManager.h"
-#  include "ArcGISRuntimeEnvironment.h"
-#else
-#  include "QmlSampleManager.h"
-#endif
+#include "SampleManager.h"
+#include "ArcGISRuntimeEnvironment.h"
 
 #include "CategoryListModel.h"
 #include "DataItem.h"
@@ -57,8 +51,7 @@
 #include "buildnum.h"
 #endif
 
-// All CPP Samples
-#ifdef CPP_VIEWER
+// All Samples
 #include "Add3DTilesLayer.h"
 #include "AddAPointSceneLayer.h"
 #include "AddCustomDynamicEntityDataSource.h"
@@ -300,10 +293,6 @@
 #include "RasterFunctionFile.h"
 #endif // SHOW_RASTER_FUNCTION_SAMPLE
 
-#else // QML_VIEWER
-#include "NavigateRouteSpeaker.h"
-#include "XmlParser.h"
-#endif
 
 #define STRINGIZE(x) #x
 #define QUOTE(x) STRINGIZE(x)
@@ -319,11 +308,7 @@ int main(int argc, char *argv[])
   QtWebEngineQuick::initialize();
 #endif // QT_WEBVIEW_WEBENGINE_BACKEND
 
-#ifdef CPP_VIEWER
-  QGuiApplication::setApplicationName("ArcGIS Maps SDK Qt Cpp Samples");
-#else
-  QGuiApplication::setApplicationName("ArcGIS Maps SDK Qt Qml Samples");
-#endif
+  QGuiApplication::setApplicationName("ArcGIS Maps Qt Samples");
 
   QGuiApplication::setOrganizationName("Esri");
   QApplication app(argc, argv);
@@ -364,11 +349,9 @@ int main(int argc, char *argv[])
   // register toolkit components
   Esri::ArcGISRuntime::Toolkit::registerComponents(engine);
 
-#ifdef CPP_VIEWER
   // add image provider
   const QString name = MapImageProvider::imageProviderId();
   engine.addImageProvider(name, new MapImageProvider);
-#endif // CPP_VIEWER
 
   engine.load(QUrl(QStringLiteral("qrc:/qml/main.qml")));
 
@@ -380,8 +363,7 @@ void registerCppSampleClasses()
   // register the draw order model
   qmlRegisterType<DrawOrderLayerListModel>("Esri.Samples", 1, 0, "DrawOrderListModel");
 
-#ifdef CPP_VIEWER
-  // Register the C++ Samples under the Esri.Samples namespace
+  // Register the Samples under the Esri.Samples namespace
   Add3DTilesLayer::init();
   AddAPointSceneLayer::init();
   AddCustomDynamicEntityDataSource::init();
@@ -614,7 +596,6 @@ void registerCppSampleClasses()
   LocalServerGeoprocessing::init();
 #endif // LOCALSERVER_SUPPORTED
 
-#endif // CPP_VIEWER
 }
 
 void registerClasses()
@@ -644,23 +625,13 @@ void registerClasses()
   qmlRegisterType<SampleSearchFilterModel>("Esri.ArcGISRuntimeSamples", 1, 0, "SampleSearchFilterModel");
   qmlRegisterUncreatableType<SearchFilterCriteria>("Esri.ArcGISRuntimeSamples", 1, 0, "SearchFilterCriteria", "Abstract base class");
 
-
-#ifndef CPP_VIEWER
-  qmlRegisterType<NavigateRouteSpeaker>("Esri.samples", 1, 0, "NavigateRouteSpeaker");
-  qmlRegisterType<XmlParser>("Esri.samples", 1, 0, "XmlParser");
-#endif
-
-  // register the C++ Sample Classes if building for C++ API
+  // register the Sample Classes
   registerCppSampleClasses();
 }
 
 QObject* esriSampleManagerProvider(QQmlEngine* engine, QJSEngine*)
 {
-#ifdef CPP_VIEWER
   static QObject* sampleManager = new SampleManager(engine);
-#else
-  static QObject* sampleManager = new QmlSampleManager(engine, engine);
-#endif
   return sampleManager;
 }
 

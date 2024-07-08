@@ -58,11 +58,9 @@
 
 #include <cstdlib>
 
-#ifdef CPP_VIEWER
 #include "ArcGISQt_global.h" // for LOCALSERVER_SUPPORTED
 #include "ArcGISRuntimeEnvironment.h"
 using namespace Esri::ArcGISRuntime;
-#endif
 
 #ifdef LOCALSERVER_SUPPORTED
 #include "LocalServer.h"
@@ -224,15 +222,9 @@ SampleListModel* SampleManager::buildSamplesList(const QDir& dir, const QString&
     auto name = sampleConfig.contains(PROPERTYNAME) ? sampleConfig.value(PROPERTYNAME).toString() : sample;
 
     // Get the name of the sample's QML source file from the README.metadata.json snippets section - often titled "SampleName.qml"
-    // The ordering of the snippets is specific to the sample viewer
-#ifdef CPP_VIEWER
-    // C++ sample snippets will list the primary C++ file name first (often SampleName.cpp) so it initially displays upon loading the sample in the ArcGIS Developer website
-    // C++ sample snippets will list the QML source file name *last* to ensure consistent retrieval (rather than by a specific index)
+    // Sample snippets will list the primary C++ file name first (often SampleName.cpp) so it initially displays upon loading the sample in the ArcGIS Developer website
+    // Sample snippets will list the QML source file name *last* to ensure consistent retrieval (rather than by a specific index)
     auto sourceFileName = sampleConfig.value(PROPERTYSOURCE).isValid() ? sampleConfig.value(PROPERTYSOURCE).toStringList().last() : "sample.qml";
-#else
-    // QML sample snippets will list the QML source file *first* so they display upon loading the sample in the ArcGIS Developer website
-    auto sourceFileName = sampleConfig.value(PROPERTYSOURCE).isValid() ? sampleConfig.value(PROPERTYSOURCE).toStringList().first() : "sample.qml";
-#endif
 
     auto descriptionFileName = "README.md";
     auto thumbnailFileName = "screenshot.png";
@@ -397,12 +389,8 @@ void SampleManager::setApiKey(bool isSupportsApiKey)
     qWarning() << "This sample expects an API key to be set, but none was provided. Please provide an API key in SampleViewer/SampleManager.cpp";
   }
   const QString sampleApiKey = isSupportsApiKey ? apiKey : ""; // empty string will "unset" the key
-  // set apikey for CPP/QML sample viewer
-#ifdef CPP_VIEWER
+  // set apikey for the sample viewer
   ArcGISRuntimeEnvironment::setApiKey(sampleApiKey);
-#else
-  emit apiKeyRequired(sampleApiKey);
-#endif
 }
 
 void SampleManager::setDownloadProgress(double progress)

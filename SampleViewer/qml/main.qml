@@ -49,7 +49,7 @@ ApplicationWindow {
 
         Label {
             anchors.centerIn: parent
-            text: qsTr("Qt Samples - %1").arg(SampleManager.api)
+            text: qsTr("Qt Samples")
             font {
                 pixelSize: 24
                 family: fontFamily
@@ -260,17 +260,9 @@ ApplicationWindow {
             }
         }
 
-        function onApiKeyRequired(apiKey) {
-            qmlArcGISRuntimeEnvironment.setSource("qrc:/qmlsamples/QmlArcGISRuntimeEnvironment.qml", {apiKey: apiKey})
-        }
-
         function onSampleInitComplete() {
             // set AuthenticationView
-            if (SampleManager.api === "QML") {
-                qmlLoaderAuthView.setSource("qrc:/qml/QmlAuthenticationView.qml");
-            } else {
-                qmlLoaderAuthView.setSource("qrc:/qml/CppAuthenticationView.qml");
-            }
+            qmlLoaderAuthView.setSource("qrc:/qml/AuthenticationView.qml");
 
             SampleManager.currentMode = SampleManager.HomepageView;
         }
@@ -311,10 +303,6 @@ ApplicationWindow {
             descriptionView.descriptionText = "";
             gc();
         }
-    }
-
-    Loader {
-        id: qmlArcGISRuntimeEnvironment
     }
 
     Loader {

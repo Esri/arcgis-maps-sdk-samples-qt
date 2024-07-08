@@ -15,10 +15,10 @@
 
 import QtQuick
 import Esri.ArcGISRuntimeSamples
-import Esri.ArcGISRuntime.Toolkit
+import Esri.ArcGISRuntime.Toolkit as Toolkit
 
 Item {
-    AuthenticationView {
+    Toolkit.AuthenticationView {
         anchors.fill: parent
     }
 }

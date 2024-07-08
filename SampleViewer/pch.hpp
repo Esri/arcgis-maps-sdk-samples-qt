@@ -21,7 +21,6 @@
 
 #include <QtCore/qglobal.h>
 
-#ifdef CPP_VIEWER
 #include "ArcGISTiledElevationSource.h"
 #include "Basemap.h"
 #include "Envelope.h"
@@ -44,7 +43,6 @@
 #include "SimpleRenderer.h"
 #include "SpatialReference.h"
 #include "Viewpoint.h"
-#endif // CPP_VIEWER
 
 #include <QAbstractListModel>
 #include <QByteArray>
