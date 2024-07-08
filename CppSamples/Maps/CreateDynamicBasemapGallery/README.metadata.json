@@ -23,10 +23,10 @@
     ],
     "snippets": [
         "CreateDynamicBasemapGallery.cpp",
+        "CreateDynamicBasemapGallery.qml",
         "CreateDynamicBasemapGallery.h",
         "BasemapStyleListModel.h",
-        "BasemapStyleListModel.cpp",
-        "CreateDynamicBasemapGallery.qml"
+        "BasemapStyleListModel.cpp"
     ],
     "title": "Create dynamic basemap gallery"
 }
