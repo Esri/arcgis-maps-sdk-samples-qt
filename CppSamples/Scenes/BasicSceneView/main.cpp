@@ -40,9 +40,31 @@ int main(int argc, char *argv[])
   QGuiApplication app(argc, argv);
   app.setApplicationName(QString("BasicSceneView - C++"));
 
-  // Access to Esri location services requires an API key. This can be copied below or used as a command line argument.
-  const QString apiKey = QString("");
-  setAPIKey(app, apiKey);
+  // Use of ArcGIS location services, such as basemap styles, geocoding, and routing services,
+  // requires an access token. For more information see
+  // https://links.esri.com/arcgis-runtime-security-auth.
+
+  // The following methods grant an access token:
+
+  // 1. User authentication: Grants a temporary access token associated with a user's ArcGIS account.
+  // To generate a token, a user logs in to the app with an ArcGIS account that is part of an
+  // organization in ArcGIS Online or ArcGIS Enterprise.
+
+  // 2. API key authentication: Get a long-lived access token that gives your application access to
+  // ArcGIS location services. Go to the tutorial at https://links.esri.com/create-an-api-key.
+  // Copy the API Key access token.
+
+  const QString accessToken = QString("");
+
+  if (accessToken.isEmpty())
+  {
+      qWarning() << "Use of ArcGIS location services, such as the basemap styles service, requires" <<
+                    "you to authenticate with an ArcGIS account or set the API Key property.";
+  }
+  else
+  {
+      Esri::ArcGISRuntime::ArcGISRuntimeEnvironment::setApiKey(accessToken);
+  }
 
   // Initialize the sample
   BasicSceneView::init();
