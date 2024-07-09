@@ -25,8 +25,6 @@
 #include <Windows.h>
 #endif
 
-void setAPIKey(const QGuiApplication& app, QString apiKey);
-
 int main(int argc, char *argv[])
 {
 #if defined(Q_OS_LINUX) && !defined(Q_OS_ANDROID)

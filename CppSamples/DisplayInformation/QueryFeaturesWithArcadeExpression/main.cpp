@@ -26,8 +26,6 @@
 
 #include "Esri/ArcGISRuntime/Toolkit/register.h"
 
-void setAPIKey(const QGuiApplication& app, QString apiKey);
-
 int main(int argc, char *argv[])
 {
   QGuiApplication app(argc, argv);
