@@ -28,7 +28,7 @@
 int main(int argc, char *argv[])
 {
   QGuiApplication app(argc, argv);
-  app.setApplicationName(QStringLiteral("ControlAnnotationSublayerVisibility - C++"));
+  app.setApplicationName(QString("ControlAnnotationSublayerVisibility"));
 
   // Use of ArcGIS location services, such as basemap styles, geocoding, and routing services,
   // requires an access token. For more information see

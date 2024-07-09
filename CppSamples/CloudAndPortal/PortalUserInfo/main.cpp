@@ -40,7 +40,7 @@ int main(int argc, char *argv[])
 #endif // QT_WEBVIEW_WEBENGINE_BACKEND
 
   QGuiApplication app(argc, argv);
-  app.setApplicationName("Portal User Info - C++");
+  app.setApplicationName(QString("Portal User Info"));
 
   // Use of ArcGIS location services, such as basemap styles, geocoding, and routing services,
   // requires an access token. For more information see

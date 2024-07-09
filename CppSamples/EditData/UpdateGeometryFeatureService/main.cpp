@@ -31,7 +31,7 @@
 int main(int argc, char *argv[])
 {
   QGuiApplication app(argc, argv);
-  app.setApplicationName("Update Geometry Feature Service - C++");
+  app.setApplicationName(QString("Update Geometry Feature Service"));
 
   // Use of ArcGIS location services, such as basemap styles, geocoding, and routing services,
   // requires an access token. For more information see

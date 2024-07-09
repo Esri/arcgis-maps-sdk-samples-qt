@@ -39,7 +39,7 @@ int main(int argc, char *argv[])
 #endif // QT_WEBVIEW_WEBENGINE_BACKEND
 
   QGuiApplication app(argc, argv);
-  app.setApplicationName("Search for Webmap - C++");
+  app.setApplicationName(QString("Search for Webmap"));
 
   // Use of ArcGIS location services, such as basemap styles, geocoding, and routing services,
   // requires an access token. For more information see

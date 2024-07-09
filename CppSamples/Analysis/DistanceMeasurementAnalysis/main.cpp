@@ -36,7 +36,7 @@ int main(int argc, char *argv[])
 #endif
 
   QGuiApplication app(argc, argv);
-  app.setApplicationName(QString("DistanceMeasurementAnalysis - C++"));
+  app.setApplicationName(QString("DistanceMeasurementAnalysis"));
 
   // Use of ArcGIS location services, such as basemap styles, geocoding, and routing services,
   // requires an access token. For more information see

@@ -38,7 +38,7 @@ int main(int argc, char *argv[])
 #endif // QT_WEBVIEW_WEBENGINE_BACKEND
 
   QGuiApplication app(argc, argv);
-  app.setApplicationName("Add Items to Portal - C++");
+  app.setApplicationName(QString("Add Items to Portal"));
 
   // Initialize the sample
   AddItemsToPortal::init();

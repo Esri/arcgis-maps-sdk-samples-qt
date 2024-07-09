@@ -27,7 +27,7 @@
 int main(int argc, char *argv[])
 {
   QGuiApplication app(argc, argv);
-  app.setApplicationName(QStringLiteral("DisplayClusters - C++"));
+  app.setApplicationName(QString("DisplayClusters"));
 
   // Use of ArcGIS location services, such as basemap styles, geocoding, and routing services,
   // requires an access token. For more information see

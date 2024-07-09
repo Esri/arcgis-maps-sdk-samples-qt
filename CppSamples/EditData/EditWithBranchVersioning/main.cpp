@@ -31,7 +31,7 @@
 int main(int argc, char *argv[])
 {
   QGuiApplication app(argc, argv);
-  app.setApplicationName(QStringLiteral("EditWithBranchVersioning - C++"));
+  app.setApplicationName(QString("EditWithBranchVersioning"));
 
 #ifdef QT_WEBVIEW_WEBENGINE_BACKEND
   QtWebEngineQuick::initialize();
