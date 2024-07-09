@@ -41,12 +41,14 @@ jobs:
         name: Detect changed file paths
         uses: trilom/file-changes-action@master
 
-      # Checks-out your repository under $GITHUB_WORKSPACE, so the workflow can 
+      # Checks-out your repository under $GITHUB_WORKSPACE, so the workflow can
       # access the files.
       # https://github.com/actions/checkout
       - name: Checkout the repository
         uses: actions/checkout@v2
-      
+        with:
+          ref: 'v.next'
+
       # Print out changed file paths for debugging purposes.
       - name: Print changed file paths
         run: |
