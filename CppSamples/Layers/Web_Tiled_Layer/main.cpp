@@ -30,7 +30,7 @@
 int main(int argc, char *argv[])
 {
   QGuiApplication app(argc, argv);
-  app.setApplicationName("Web_Tiled_Layer - C++");
+  app.setApplicationName(QString("Web_Tiled_Layer"));
 
   // Use of ArcGIS location services, such as basemap styles, geocoding, and routing services,
   // requires an access token. For more information see

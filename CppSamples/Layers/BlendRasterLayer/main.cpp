@@ -32,7 +32,7 @@ using namespace Esri::ArcGISRuntime;
 int main(int argc, char *argv[])
 {
   QGuiApplication app(argc, argv);
-  app.setApplicationName("BlendRasterLayer - C++");
+  app.setApplicationName(QString("BlendRasterLayer"));
 
   // Use of ArcGIS location services, such as basemap styles, geocoding, and routing services,
   // requires an access token. For more information see

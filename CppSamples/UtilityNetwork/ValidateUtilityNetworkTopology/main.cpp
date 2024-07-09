@@ -24,7 +24,7 @@
 int main(int argc, char *argv[])
 {
   QGuiApplication app(argc, argv);
-  app.setApplicationName(QString("ValidateUtilityNetworkTopology - C++"));
+  app.setApplicationName(QString("ValidateUtilityNetworkTopology"));
 
   // Initialize the sample
   ValidateUtilityNetworkTopology::init();

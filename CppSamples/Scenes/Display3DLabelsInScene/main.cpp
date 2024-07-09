@@ -34,7 +34,7 @@ int main(int argc, char *argv[])
 #endif
 
   QGuiApplication app(argc, argv);
-  app.setApplicationName(QStringLiteral("Display3DLabelsInScene - C++"));
+  app.setApplicationName(QString("Display3DLabelsInScene"));
 
   // Use of ArcGIS location services, such as basemap styles, geocoding, and routing services,
   // requires an access token. For more information see

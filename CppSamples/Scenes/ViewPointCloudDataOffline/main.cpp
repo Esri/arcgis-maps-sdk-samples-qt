@@ -38,7 +38,7 @@ int main(int argc, char *argv[])
 #endif
 
   QGuiApplication app(argc, argv);
-  app.setApplicationName(QStringLiteral("ViewPointCloudDataOffline - C++"));
+  app.setApplicationName(QString("ViewPointCloudDataOffline"));
 
   // Use of ArcGIS location services, such as basemap styles, geocoding, and routing services,
   // requires an access token. For more information see

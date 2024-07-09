@@ -39,7 +39,7 @@ int main(int argc, char *argv[])
 #endif // QT_WEBVIEW_WEBENGINE_BACKEND
 
   QGuiApplication app(argc, argv);
-  app.setApplicationName("CreateAndSaveMap - C++");
+  app.setApplicationName(QString("CreateAndSaveMap"));
 
   // Initialize the sample
   CreateAndSaveMap::init();

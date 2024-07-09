@@ -32,7 +32,7 @@
 int main(int argc, char *argv[])
 {
   QGuiApplication app(argc, argv);
-  app.setApplicationName("TakeScreenshot - C++");
+  app.setApplicationName(QString("TakeScreenshot"));
 
   // Use of ArcGIS location services, such as basemap styles, geocoding, and routing services,
   // requires an access token. For more information see

@@ -32,7 +32,7 @@
 int main(int argc, char *argv[])
 {
   QGuiApplication app(argc, argv);
-  app.setApplicationName("LocalServerServices - C++");
+  app.setApplicationName(QString("LocalServerServices"));
 
   // Use of ArcGIS location services, such as basemap styles, geocoding, and routing services,
   // requires an access token. For more information see

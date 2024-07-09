@@ -39,7 +39,7 @@ int main(int argc, char *argv[])
 #endif
 
   QGuiApplication app(argc, argv);
-    app.setApplicationName("FeatureLayerExtrusion - C++");
+    app.setApplicationName(QString("FeatureLayerExtrusion"));
 
   // Use of ArcGIS location services, such as basemap styles, geocoding, and routing services,
   // requires an access token. For more information see
