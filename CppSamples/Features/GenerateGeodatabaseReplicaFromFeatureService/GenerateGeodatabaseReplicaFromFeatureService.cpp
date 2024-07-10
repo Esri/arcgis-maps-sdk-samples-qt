@@ -173,7 +173,7 @@ GenerateGeodatabaseParameters GenerateGeodatabaseReplicaFromFeatureService::getU
 
   // set the layer options for all of the service IDs
   QList<GenerateLayerOption> layerOptions;
-  for (const QString& id : qAsConst(m_serviceIds))
+  for (const QString& id : std::as_const(m_serviceIds))
   {
     GenerateLayerOption generateLayerOption(id.toInt());
     layerOptions << generateLayerOption;

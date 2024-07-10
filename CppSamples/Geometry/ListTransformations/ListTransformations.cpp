@@ -161,7 +161,7 @@ void ListTransformations::refreshTransformationList(bool orderBySuitability)
 
   // update the QML property list
   m_transformationList.clear();
-  for (DatumTransformation* transformation : qAsConst(m_transformations))
+  for (DatumTransformation* transformation : std::as_const(m_transformations))
   {
     QVariantMap transformationMap;
     transformationMap["name"] = transformation->name();

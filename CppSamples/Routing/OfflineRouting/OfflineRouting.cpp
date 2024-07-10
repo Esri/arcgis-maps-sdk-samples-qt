@@ -262,7 +262,7 @@ void OfflineRouting::findRoute()
 
     // clear old route
     m_routeOverlay->graphics()->clear();
-    Polyline routeGeometry = qAsConst(routeResult).routes().first().routeGeometry();
+    Polyline routeGeometry = std::as_const(routeResult).routes().first().routeGeometry();
     Graphic* routeGraphic = new Graphic(routeGeometry, this);
 
     m_routeOverlay->graphics()->append(routeGraphic);

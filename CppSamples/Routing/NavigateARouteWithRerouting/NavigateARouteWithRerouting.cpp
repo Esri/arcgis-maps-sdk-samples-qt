@@ -175,7 +175,7 @@ void NavigateARouteWithRerouting::initializeRoute()
                             return;
 
                           m_routeResult = routeResult;
-                          m_route = qAsConst(m_routeResult).routes()[0];
+                          m_route = std::as_const(m_routeResult).routes()[0];
 
                           m_directionManeuvers = m_route.directionManeuvers(this)->directionManeuvers();
 

@@ -425,7 +425,7 @@ void PerformValveIsolationTrace::onIdentifyLayersCompleted_(const QList<Identify
     return;
 
   const IdentifyLayerResult* result = results[0];
-  ArcGISFeature* feature = static_cast<ArcGISFeature*>(qAsConst(result)->geoElements()[0]);
+  ArcGISFeature* feature = static_cast<ArcGISFeature*>(std::as_const(result)->geoElements()[0]);
   m_element = m_utilityNetwork->createElementWithArcGISFeature(feature);
 
   const UtilityNetworkSourceType elementSourceType = m_element->networkSource()->sourceType();
