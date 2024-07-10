@@ -59,7 +59,7 @@ BrowseWfsLayers::BrowseWfsLayers(QObject* parent /* = nullptr */):
       return;
 
     m_wfsLayersInfoList = m_wfsService->serviceInfo().layerInfos();
-    for (const WfsLayerInfo& i : qAsConst(m_wfsLayersInfoList))
+    for (const WfsLayerInfo& i : std::as_const(m_wfsLayersInfoList))
         m_layerInfoTitleList.append(i.title());
 
     emit layerInfoTitleListChanged();

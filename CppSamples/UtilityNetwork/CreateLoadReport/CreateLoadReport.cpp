@@ -207,7 +207,7 @@ void CreateLoadReport::runReport(const QStringList& selectedPhaseNames)
   emit sampleStatusChanged();
 
   QVector<CodedValue> activeValues;
-  for (const CodedValue& codedValue : qAsConst(m_phaseList))
+  for (const CodedValue& codedValue : std::as_const(m_phaseList))
   {
     if (selectedPhaseNames.contains(codedValue.name()))
       activeValues.append(codedValue);
@@ -264,7 +264,7 @@ void CreateLoadReport::onTraceCompleted_(const QString& codedValueName)
 
     // Get the total load from the UtilityFunctionTraceResult
     else if (UtilityFunctionTraceResult* functionResult = dynamic_cast<UtilityFunctionTraceResult*>(result))
-      m_phaseLoad[codedValueName] = qAsConst(functionResult)->functionOutputs().first()->result().toInt();
+      m_phaseLoad[codedValueName] = std::as_const(functionResult)->functionOutputs().first()->result().toInt();
   }
 
   emit loadReportUpdated();

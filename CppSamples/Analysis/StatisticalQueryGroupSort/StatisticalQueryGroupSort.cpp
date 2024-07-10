@@ -139,7 +139,7 @@ void StatisticalQueryGroupSort::queryStatistics()
 
   // add the statistic definitions
   QList<StatisticDefinition> statisticDefinitionList;
-  for (const QVariant& def : qAsConst(m_statisticDefinitions))
+  for (const QVariant& def : std::as_const(m_statisticDefinitions))
   {
     QVariantMap definitionMap = def.toMap();
     StatisticDefinition statisticDefinition;
@@ -154,7 +154,7 @@ void StatisticalQueryGroupSort::queryStatistics()
 
   // add the order by objects
   QList<OrderBy> orderByList;
-  for (const QVariant& ob : qAsConst(m_orderBys))
+  for (const QVariant& ob : std::as_const(m_orderBys))
   {
     QVariantMap orderByMap = ob.toMap();
     OrderBy orderBy;
@@ -177,7 +177,7 @@ void StatisticalQueryGroupSort::queryStatistics()
 void StatisticalQueryGroupSort::addStatisticDefinition(const QString& field, const QString& statistic)
 {
   // only add if the definition does not already exist
-  for (const QVariant& def : qAsConst(m_statisticDefinitions))
+  for (const QVariant& def : std::as_const(m_statisticDefinitions))
   {
     QVariantMap definitionMap = def.toMap();
     if (field == definitionMap["field"].toString())
@@ -207,7 +207,7 @@ void StatisticalQueryGroupSort::removeStatisticDefinition(int index)
 void StatisticalQueryGroupSort::addOrderBy(const QString& field, const QString& order)
 {
   // only add if the orderby is not in the list
-  for (const QVariant& orderBy : qAsConst(m_orderBys))
+  for (const QVariant& orderBy : std::as_const(m_orderBys))
   {
     QVariantMap orderByMap = orderBy.toMap();
     if (field == orderByMap["field"].toString())

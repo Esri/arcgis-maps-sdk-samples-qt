@@ -323,7 +323,7 @@ void TraceUtilityNetwork::onIdentifyLayersCompleted_(const QList<IdentifyLayerRe
   m_mediumVoltageTier = domainNetwork->tier("Medium Voltage Radial");
 
   const IdentifyLayerResult* result = results[0];
-  m_feature = static_cast<ArcGISFeature*>(qAsConst(result)->geoElements()[0]);
+  m_feature = static_cast<ArcGISFeature*>(std::as_const(result)->geoElements()[0]);
   UtilityElement* element = nullptr;
   const UtilityNetworkSource* networkSource = m_utilityNetwork->definition()->networkSource(m_feature->featureTable()->tableName());
 

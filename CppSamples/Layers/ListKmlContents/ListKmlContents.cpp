@@ -191,7 +191,7 @@ void ListKmlContents::processSelectedNode(const QString& nodeName)
   }
 
   // find node in the list
-  for (KmlNode* node : qAsConst(m_kmlNodesList))
+  for (KmlNode* node : std::as_const(m_kmlNodesList))
   {
     if (extractedNodeName == node->name())
     {

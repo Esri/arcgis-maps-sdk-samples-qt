@@ -235,7 +235,7 @@ void ValidateUtilityNetworkTopology::onIdentifyLayersAsyncCompleted(const QList<
     {
       if (result && (result->layerContent()->name() == "Electric Distribution Device" || result->layerContent()->name() == "Electric Distribution Line"))
       {
-        m_feature = static_cast<ArcGISFeature*>(qAsConst(result)->geoElements().first());
+        m_feature = static_cast<ArcGISFeature*>(std::as_const(result)->geoElements().first());
         break;
       }
     }

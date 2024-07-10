@@ -150,7 +150,7 @@ void ClosestFacility::createGraphics()
   m_facilityOverlay->setRenderer(facilityRenderer);
 
   // add a graphic at the location of each of the facilities
-  for (const Facility& facility : qAsConst(m_facilities))
+  for (const Facility& facility : std::as_const(m_facilities))
   {
     Graphic* facilityGraphic = new Graphic(facility.geometry(), this);
     m_facilityOverlay->graphics()->append(facilityGraphic);

@@ -151,7 +151,7 @@ void NavigateRoute::connectRouteTaskSignals()
           return;
 
         m_routeResult = routeResult;
-        m_route = qAsConst(m_routeResult).routes()[0];
+        m_route = std::as_const(m_routeResult).routes()[0];
 
         // adjust viewpoint to enclose the route with a 100 DPI padding
         m_mapView->setViewpointGeometryAsync(m_route.routeGeometry(), 100);
@@ -250,7 +250,7 @@ void NavigateRoute::connectRouteTrackerSignals()
       {
         if (trackingStatus->currentManeuverIndex() + 1 < directionList->directionManeuvers().length())
         {
-          textString += "Next direction: " + qAsConst(directionList)->directionManeuvers()[trackingStatus->currentManeuverIndex() + 1].directionText() + "\n";
+          textString += "Next direction: " + std::as_const(directionList)->directionManeuvers()[trackingStatus->currentManeuverIndex() + 1].directionText() + "\n";
         }
       }
       m_routeTraveledGraphic->setGeometry(trackingStatus->routeProgress()->traversedGeometry());
