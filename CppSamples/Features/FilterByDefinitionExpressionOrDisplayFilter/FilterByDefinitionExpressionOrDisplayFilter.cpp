@@ -104,7 +104,9 @@ int FilterByDefinitionExpressionOrDisplayFilter::currentFeatureCount() const
 
 void FilterByDefinitionExpressionOrDisplayFilter::setDefExpression(const QString& whereClause)
 {
-  // In QML, "req_type = \'Tree Maintenance or Damage\'"
+  // reset display filter parameters before setting definition expression parameters
+  resetDisplayFilterParams();
+
   m_featureLayer->setDefinitionExpression(whereClause);
 
   // Feature count in the extent should not change with different definition expressions.
@@ -115,6 +117,9 @@ void FilterByDefinitionExpressionOrDisplayFilter::setDefExpression(const QString
 
 void FilterByDefinitionExpressionOrDisplayFilter::setDisplayFilter(const QString& whereClause)
 {
+  // reset definition expression parameters before setting display filter parameters
+  resetDefExpressionParams();
+
   DisplayFilter* displayFilter = new DisplayFilter("Damaged Trees", whereClause, this);
   const QList<DisplayFilter*> availableFilters{displayFilter};
 
