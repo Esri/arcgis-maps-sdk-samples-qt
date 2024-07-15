@@ -51,7 +51,7 @@
 #include "SnapSourceListModel.h"
 
 #include <QFuture>
-#include <QtCore/qglobal.h>
+#include <QtGlobal>
 
 using namespace Esri::ArcGISRuntime;
 
