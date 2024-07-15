@@ -42,6 +42,7 @@
 #include "PolygonBuilder.h"
 #include "Polyline.h"
 #include "PolylineBuilder.h"
+#include "ReticleVertexTool.h"
 #include "ShapeTool.h"
 #include "SimpleFillSymbol.h"
 #include "SimpleLineSymbol.h"
@@ -70,6 +71,7 @@ CreateAndEditGeometries::CreateAndEditGeometries(QObject* parent /* = nullptr */
   m_ellipseTool = ShapeTool::create(ShapeToolType::Ellipse, this);
   m_rectangleTool = ShapeTool::create(ShapeToolType::Rectangle, this);
   m_triangleTool = ShapeTool::create(ShapeToolType::Triangle, this);
+  m_reticleTool = new ReticleVertexTool(this);
 }
 
 CreateAndEditGeometries::~CreateAndEditGeometries() = default;
@@ -220,6 +222,9 @@ void CreateAndEditGeometries::setTool(GeometryEditorToolType toolType)
     case GeometryEditorToolType::Triangle:
       m_geometryEditor->setTool(m_triangleTool);
       break;
+
+    case GeometryEditorToolType::Reticle:
+      m_geometryEditor->setTool(m_reticleTool);
 
     default:
       break;

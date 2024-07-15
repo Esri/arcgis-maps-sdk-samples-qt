@@ -138,7 +138,8 @@ Item {
 
                 ComboBox {
                     id: toolCombo
-                    model: [qsTr("Vertex Tool"), qsTr("Freehand Tool"), qsTr("Arrow Shape Tool"), qsTr("Ellipse Shape Tool"), qsTr("Rectangle Shape Tool"), qsTr("Triangle Shape Tool")]
+                    model: [qsTr("Vertex Tool"), qsTr("Freehand Tool"), qsTr("Arrow Shape Tool"), qsTr("Ellipse Shape Tool"),
+                           ("Rectangle Shape Tool"), qsTr("Triangle Shape Tool"), qsTr("Reticle Tool")]
                     Layout.columnSpan: 2
                     Layout.fillWidth: true
 
@@ -170,6 +171,9 @@ Item {
                             break;
                         case 5: // ShapeTool with triangle shape type
                             model.setTool(CreateAndEditGeometriesSample.Triangle);
+                            break;
+                        case 6: // Reticle Vertex Tool
+                            model.setTool(CreateAndEditGeometriesSample.Reticle);
                             break;
                         default:
                             model.setTool(CreateAndEditGeometriesSample.Vertex);

@@ -30,6 +30,7 @@ namespace Esri::ArcGISRuntime
   class SimpleLineSymbol;
   class SimpleFillSymbol;
   class VertexTool;
+  class ReticleVertexTool;
 }
 
 #include <QObject>
@@ -72,7 +73,8 @@ public:
     Arrow,
     Ellipse,
     Rectangle,
-    Triangle
+    Triangle,
+    Reticle
   };
 
   Q_ENUM(GeometryEditorToolType)
@@ -126,6 +128,7 @@ private:
   Esri::ArcGISRuntime::ShapeTool* m_ellipseTool = nullptr;
   Esri::ArcGISRuntime::ShapeTool* m_rectangleTool = nullptr;
   Esri::ArcGISRuntime::ShapeTool* m_triangleTool = nullptr;
+  Esri::ArcGISRuntime::ReticleVertexTool* m_reticleTool = nullptr;
 
   QObject* m_tempGraphicsParent = nullptr;
 };

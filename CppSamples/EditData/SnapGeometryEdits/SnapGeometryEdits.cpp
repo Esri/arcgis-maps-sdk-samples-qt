@@ -39,6 +39,7 @@
 #include "MapTypes.h"
 #include "Portal.h"
 #include "PortalItem.h"
+#include "ReticleVertexTool.h"
 #include "SimpleFillSymbol.h"
 #include "SimpleLineSymbol.h"
 #include "SimpleMarkerSymbol.h"
@@ -50,6 +51,7 @@
 #include "SnapSourceListModel.h"
 
 #include <QFuture>
+#include <QtCore/qglobal.h>
 
 using namespace Esri::ArcGISRuntime;
 
@@ -62,6 +64,12 @@ SnapGeometryEdits::SnapGeometryEdits(QObject* parent /* = nullptr */) :
 
   m_geometryEditor = new GeometryEditor(this);
   m_graphicsOverlay = new GraphicsOverlay(this);
+
+  // if mobile, use ReticleVertexTool
+  #if defined(Q_OS_IOS) || defined(Q_OS_ANDROID)
+    m_geometryEditor->setTool(new ReticleVertexTool(this));
+  #endif // defined(Q_OS_IOS) || defined(Q_OS_ANDROID)
+
   connect (m_map, &Map::doneLoading, this, [this]()
   {
     for (Layer* layer : *m_map->operationalLayers())
@@ -108,8 +116,7 @@ void SnapGeometryEdits::setMapView(MapQuickView* mapView)
   m_mapView->graphicsOverlays()->append(m_graphicsOverlay);
 
   // Set the geometry editor on the map view
-  m_mapView->setGeometryEditor(m_geometryEditor);
-  m_mapView->setMagnifierEnabled(true);
+  m_mapView->setGeometryEditor(m_geometryEditor);  
 
   emit mapViewChanged();
   createInitialSymbols();
