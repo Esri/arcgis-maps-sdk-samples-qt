@@ -26,6 +26,7 @@ class MapQuickView;
 }
 
 #include "Location.h"
+#include "IndoorsLocationDataSource.h"
 
 #include <QObject>
 #include <QMap>
@@ -38,6 +39,7 @@ class ShowDeviceLocationUsingIndoorPositioning : public QObject
 
   Q_PROPERTY(Esri::ArcGISRuntime::MapQuickView* mapView READ mapView WRITE setMapView NOTIFY mapViewChanged)
   Q_PROPERTY(QVariantMap locationProperties READ locationProperties NOTIFY locationPropertiesChanged)
+  Q_PROPERTY(QString ipsInfoMessage READ getIpsInfoMessage NOTIFY ipsInfoMessageChanged)
 
 public:
   explicit ShowDeviceLocationUsingIndoorPositioning(QObject* parent = nullptr);
@@ -50,10 +52,12 @@ public:
 signals:
   void mapViewChanged();
   void locationPropertiesChanged();
+  void ipsInfoMessageChanged();
 
 private:
   Esri::ArcGISRuntime::MapQuickView* mapView() const;
   QVariantMap locationProperties() const;
+  QString getIpsInfoMessage() const;
 
   void setMapView(Esri::ArcGISRuntime::MapQuickView* mapView);
   void setupIndoorsLocationDataSource();
@@ -64,8 +68,10 @@ private:
   Esri::ArcGISRuntime::MapQuickView* m_mapView = nullptr;
   Esri::ArcGISRuntime::FeatureTable* m_positioningTable = nullptr;
   Esri::ArcGISRuntime::ArcGISFeatureTable* m_pathwaysTable = nullptr;
+  std::unique_ptr<Esri::ArcGISRuntime::IndoorsLocationDataSource> m_indoorsLocationDataSource = nullptr;
   QVariantMap m_locationProperties;
   int m_currentFloor;
+  QString m_ipsInfoMessage = "No message!";
 };
 
 #endif // SHOWDEVICELOCATIONUSINGINDOORPOSITIONING_H

@@ -20,7 +20,8 @@
 
 #include "IndoorsLocationDataSourceCreator.h"
 #include "ShowDeviceLocationUsingIndoorPositioning.h"
-#include "IndoorsLocationDataSource.h"
+#include "IndoorsLocationDataSourceConfiguration.h"
+#include "IpsInfoMessage.h"
 #include "Map.h"
 #include "MapQuickView.h"
 #include "MapViewTypes.h"
@@ -89,6 +90,15 @@ void ShowDeviceLocationUsingIndoorPositioning::setupIndoorsLocationDataSource()
   connect(indoorsLocationDataSourceCreator, &IndoorsLocationDataSourceCreator::createIndoorsLocationDataSourceCompleted, this, [this](IndoorsLocationDataSource* indoorsLDS)
   {
     connect(m_mapView->locationDisplay(), &LocationDisplay::locationChanged, this, &ShowDeviceLocationUsingIndoorPositioning::locationChangedHandler);
+    m_indoorsLocationDataSource.reset(indoorsLDS);
+    m_indoorsLocationDataSource->configuration()->setInfoMessagesEnabled(true);
+    connect(m_indoorsLocationDataSource.get(), &IndoorsLocationDataSource::messageReceived, this, [this](IpsInfoMessage* ipsInfoMsg)
+    {
+      qDebug() << "IPS info Message Received - "<< ipsInfoMsg->message();
+      m_ipsInfoMessage = ipsInfoMsg->message();
+      emit ipsInfoMessageChanged();
+      delete ipsInfoMsg;
+    });
 
     m_mapView->locationDisplay()->setDataSource(indoorsLDS);
     m_mapView->locationDisplay()->setAutoPanMode(LocationDisplayAutoPanMode::Navigation);
@@ -127,7 +137,12 @@ void ShowDeviceLocationUsingIndoorPositioning::changeFloorDisplay()
   }
 }
 
-  QVariantMap ShowDeviceLocationUsingIndoorPositioning::locationProperties() const
-  {
-    return m_locationProperties;
-  }
+QVariantMap ShowDeviceLocationUsingIndoorPositioning::locationProperties() const
+{
+  return m_locationProperties;
+}
+
+QString ShowDeviceLocationUsingIndoorPositioning::getIpsInfoMessage() const
+{
+  return m_ipsInfoMessage;
+}
