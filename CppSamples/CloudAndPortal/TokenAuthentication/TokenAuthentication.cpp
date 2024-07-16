@@ -18,14 +18,17 @@
 #include "pch.hpp"
 #endif // PCH_BUILD
 
+// sample headers
 #include "TokenAuthentication.h"
 
+// C++ API headers
 #include "Map.h"
 #include "MapQuickView.h"
+#include "MapViewTypes.h"
 #include "Portal.h"
 #include "PortalItem.h"
-#include "MapViewTypes.h"
 
+// Qt headers
 #include <QUrl>
 
 namespace

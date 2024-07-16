@@ -18,8 +18,10 @@
 #include "pch.hpp"
 #endif // PCH_BUILD
 
+// sample headers
 #include "ExploreScenesInFlyoverAR.h"
 
+// C++ API headers
 #include "ArcGISTiledElevationSource.h"
 #include "ElevationSourceListModel.h"
 #include "Envelope.h"

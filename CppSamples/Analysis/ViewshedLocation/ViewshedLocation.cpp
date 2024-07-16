@@ -18,22 +18,25 @@
 #include "pch.hpp"
 #endif // PCH_BUILD
 
+// sample headers
 #include "ViewshedLocation.h"
 
+// C++ API headers
+#include "AnalysisListModel.h"
+#include "AnalysisOverlay.h"
+#include "AnalysisOverlayListModel.h"
 #include "ArcGISTiledElevationSource.h"
+#include "Camera.h"
+#include "ElevationSourceListModel.h"
+#include "LocationViewshed.h"
+#include "MapTypes.h"
+#include "Point.h"
 #include "Scene.h"
 #include "SceneQuickView.h"
-#include "LocationViewshed.h"
-#include "Camera.h"
-#include "Point.h"
-#include "AnalysisOverlay.h"
-#include "MapTypes.h"
-#include "Surface.h"
-#include "ElevationSourceListModel.h"
-#include "AnalysisOverlayListModel.h"
-#include "AnalysisListModel.h"
 #include "SpatialReference.h"
+#include "Surface.h"
 
+// Qt headers
 #include <QFuture>
 
 using namespace Esri::ArcGISRuntime;

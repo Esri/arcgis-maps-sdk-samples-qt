@@ -18,8 +18,10 @@
 #include "pch.hpp"
 #endif // PCH_BUILD
 
+// sample headers
 #include "DisplayScenesInTabletopAR.h"
 
+// C++ API headers
 #include "Error.h"
 #include "MobileScenePackage.h"
 #include "Scene.h"
@@ -27,8 +29,9 @@
 #include "SceneViewTypes.h"
 #include "Surface.h"
 
-#include <QtCore/qglobal.h>
+// Qt headers
 #include <QStandardPaths>
+#include <QtCore/qglobal.h>
 
 using namespace Esri::ArcGISRuntime;
 

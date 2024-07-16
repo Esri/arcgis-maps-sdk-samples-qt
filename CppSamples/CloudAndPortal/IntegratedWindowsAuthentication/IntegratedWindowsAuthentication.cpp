@@ -18,19 +18,22 @@
 #include "pch.hpp"
 #endif // PCH_BUILD
 
+// sample headers
 #include "IntegratedWindowsAuthentication.h"
 
+// C++ API headers
+#include "Error.h"
 #include "Map.h"
 #include "MapQuickView.h"
+#include "MapTypes.h"
 #include "Portal.h"
 #include "PortalItem.h"
-#include "PortalQueryResultSetForItems.h"
 #include "PortalItemListModel.h"
-#include "MapTypes.h"
 #include "PortalQueryParametersForItems.h"
+#include "PortalQueryResultSetForItems.h"
 #include "PortalTypes.h"
-#include "Error.h"
 
+// Qt headers
 #include <QFuture>
 
 using namespace Esri::ArcGISRuntime;

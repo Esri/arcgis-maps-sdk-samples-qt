@@ -18,46 +18,49 @@
 #include "pch.hpp"
 #endif // PCH_BUILD
 
+// sample headers
 #include "ViewshedGeoElement.h"
 
-#include "ArcGISTiledElevationSource.h"
-#include "Scene.h"
-#include "SceneQuickView.h"
-#include "Point.h"
-#include "ArcGISSceneLayer.h"
-#include "SimpleRenderer.h"
-#include "ModelSceneSymbol.h"
-#include "GeoElementViewshed.h"
-#include "GeometryEngine.h"
-#include "OrbitGeoElementCameraController.h"
-#include "MapTypes.h"
-#include "Surface.h"
-#include "ElevationSourceListModel.h"
-#include "LayerListModel.h"
+// C++ API headers
+#include "AnalysisListModel.h"
 #include "AnalysisOverlay.h"
 #include "AnalysisOverlayListModel.h"
-#include "AnalysisListModel.h"
-#include "GraphicsOverlayListModel.h"
-#include "LayerSceneProperties.h"
-#include "SceneViewTypes.h"
-#include "RendererSceneProperties.h"
-#include "SymbolTypes.h"
-#include "GraphicListModel.h"
-#include "GeodeticDistanceResult.h"
-#include "LinearUnit.h"
 #include "AngularUnit.h"
+#include "ArcGISSceneLayer.h"
+#include "ArcGISTiledElevationSource.h"
 #include "AttributeListModel.h"
+#include "ElevationSourceListModel.h"
+#include "GeoElementViewshed.h"
+#include "GeodeticDistanceResult.h"
+#include "GeometryEngine.h"
 #include "Graphic.h"
+#include "GraphicListModel.h"
 #include "GraphicsOverlay.h"
+#include "GraphicsOverlayListModel.h"
+#include "LayerListModel.h"
+#include "LayerSceneProperties.h"
+#include "LinearUnit.h"
+#include "MapTypes.h"
+#include "ModelSceneSymbol.h"
+#include "OrbitGeoElementCameraController.h"
+#include "Point.h"
+#include "RendererSceneProperties.h"
+#include "Scene.h"
+#include "SceneQuickView.h"
+#include "SceneViewTypes.h"
+#include "SimpleRenderer.h"
 #include "SpatialReference.h"
+#include "Surface.h"
+#include "SymbolTypes.h"
 
-#include <QTimer>
+// Qt headers
+#include <QList>
+#include <QStandardPaths>
 #include <QString>
+#include <QTimer>
 #include <QUrl>
 #include <QVariant>
-#include <QList>
 #include <QtCore/qglobal.h>
-#include <QStandardPaths>
 
 using namespace Esri::ArcGISRuntime;
 

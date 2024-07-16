@@ -18,20 +18,24 @@
 #include "pch.hpp"
 #endif // PCH_BUILD
 
+// sample headers
+#include "ShowOrgBasemaps.h"
+
+// C++ API headers
 #include "AuthenticationManager.h"
-#include "Map.h"
-#include "MapQuickView.h"
 #include "Basemap.h"
 #include "BasemapListModel.h"
-#include "Portal.h"
-#include "ShowOrgBasemaps.h"
-#include "MapTypes.h"
 #include "CoreTypes.h"
 #include "Credential.h"
-#include "OAuthClientInfo.h"
 #include "Error.h"
+#include "Map.h"
+#include "MapQuickView.h"
+#include "MapTypes.h"
+#include "OAuthClientInfo.h"
+#include "Portal.h"
 #include "PortalInfo.h"
 
+// Qt headers
 #include <QFuture>
 
 using namespace Esri::ArcGISRuntime;

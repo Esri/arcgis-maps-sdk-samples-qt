@@ -18,21 +18,25 @@
 #include "pch.hpp"
 #endif // PCH_BUILD
 
-#include "AuthenticationManager.h"
-#include "Portal.h"
-#include "PortalItem.h"
-#include "PortalItemListModel.h"
+// sample headers
 #include "AddItemsToPortal.h"
-#include "MapTypes.h"
-#include "PortalTypes.h"
+
+// C++ API headers
+#include "AuthenticationManager.h"
 #include "CoreTypes.h"
 #include "Credential.h"
-#include "OAuthClientInfo.h"
-#include "PortalUser.h"
 #include "Error.h"
 #include "ErrorException.h"
 #include "ErrorInformationKeys.h"
+#include "MapTypes.h"
+#include "OAuthClientInfo.h"
+#include "Portal.h"
+#include "PortalItem.h"
+#include "PortalItemListModel.h"
+#include "PortalTypes.h"
+#include "PortalUser.h"
 
+// Qt headers
 #include <QFuture>
 #include <QVariantMap>
 

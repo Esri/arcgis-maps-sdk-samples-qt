@@ -18,24 +18,30 @@
 #include "pch.hpp"
 #endif // PCH_BUILD
 
+// sample headers
+#include "StatisticResultListModel.h"
 #include "StatisticalQueryGroupSort.h"
+
+// C++ API headers
+#include "CoreTypes.h"
+#include "Error.h"
+#include "Field.h"
+#include "OrderBy.h"
 #include "ServiceFeatureTable.h"
 #include "StatisticDefinition.h"
 #include "StatisticRecord.h"
 #include "StatisticRecordIterator.h"
 #include "StatisticsQueryParameters.h"
 #include "StatisticsQueryResult.h"
-#include "Field.h"
-#include "StatisticResultListModel.h"
-#include "Error.h"
-#include "OrderBy.h"
-#include "CoreTypes.h"
 
+// Qt headers
 #include <QFuture>
-#include <QUuid>
-#include <QStringList>
-#include <QVariantList>
 #include <QList>
+#include <QStringList>
+#include <QUuid>
+#include <QVariantList>
+
+// STL headers
 #include <memory>
 
 using namespace Esri::ArcGISRuntime;

@@ -13,41 +13,42 @@
 // See the License for the specific language governing permissions and
 // limitations under the License.
 // [Legal]
-// C++ API headers
-#include "ArcGISFeature.h"
 
 #ifdef PCH_BUILD
 #include "pch.hpp"
 #endif // PCH_BUILD
 
+// sample headers
 #include "Geotriggers.h"
 
+// C++ API headers
+#include "ArcGISFeature.h"
 #include "ArcadeExpression.h"
-#include "FenceGeotrigger.h"
-#include "FenceGeotriggerNotificationInfo.h"
-#include "GeotriggerNotificationInfo.h"
-#include "GeotriggerMonitor.h"
-#include "GeotriggersTypes.h"
+#include "Attachment.h"
+#include "AttachmentListModel.h"
+#include "AttributeListModel.h"
 #include "FeatureEditResult.h"
 #include "FeatureFenceParameters.h"
-#include "LocationGeotriggerFeed.h"
+#include "FenceGeotrigger.h"
+#include "FenceGeotriggerNotificationInfo.h"
+#include "GeotriggerMonitor.h"
+#include "GeotriggerNotificationInfo.h"
+#include "GeotriggersTypes.h"
 #include "LocationDisplay.h"
+#include "LocationGeotriggerFeed.h"
 #include "Map.h"
 #include "MapQuickView.h"
 #include "MapViewTypes.h"
+#include "Polyline.h"
 #include "PortalItem.h"
 #include "ServiceFeatureTable.h"
 #include "SimulatedLocationDataSource.h"
 #include "SimulationParameters.h"
-#include "ArcGISFeature.h"
-#include "AttributeListModel.h"
-#include "Attachment.h"
-#include "AttachmentListModel.h"
-#include "Polyline.h"
 
+// Qt headers
+#include <QDateTime>
 #include <QFuture>
 #include <QUuid>
-#include <QDateTime>
 
 using namespace Esri::ArcGISRuntime;
 

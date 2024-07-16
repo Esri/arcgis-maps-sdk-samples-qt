@@ -18,20 +18,22 @@
 #include "pch.hpp"
 #endif // PCH_BUILD
 
+// sample headers
 #include "PortalUserInfo.h"
 
+// C++ API headers
 #include "AuthenticationManager.h"
-#include "Credential.h"
-#include "Portal.h"
-#include "PortalUser.h"
-#include "MapTypes.h"
-#include "PortalTypes.h"
 #include "CoreTypes.h"
 #include "Credential.h"
-#include "OAuthClientInfo.h"
-#include "PortalUser.h"
 #include "Error.h"
+#include "MapTypes.h"
+#include "OAuthClientInfo.h"
+#include "Portal.h"
 #include "PortalInfo.h"
+#include "PortalTypes.h"
+#include "PortalUser.h"
+
+// Qt headers
 #include <QUrl>
 
 using namespace Esri::ArcGISRuntime;

@@ -18,8 +18,10 @@
 #include "pch.hpp"
 #endif // PCH_BUILD
 
+// sample headers
 #include "AddGraphicsWithRenderer.h"
 
+// C++ API headers
 #include "AngularUnit.h"
 #include "CubicBezierSegment.h"
 #include "EllipticArcSegment.h"
@@ -40,7 +42,6 @@
 #include "PolygonBuilder.h"
 #include "SimpleFillSymbol.h"
 #include "SimpleLineSymbol.h"
-#include "SimpleMarkerSymbol.h"
 #include "SimpleMarkerSymbol.h"
 #include "SimpleRenderer.h"
 #include "SpatialReference.h"

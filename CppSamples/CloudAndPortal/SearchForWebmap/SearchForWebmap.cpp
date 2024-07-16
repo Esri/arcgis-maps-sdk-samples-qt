@@ -18,20 +18,24 @@
 #include "pch.hpp"
 #endif // PCH_BUILD
 
+// sample headers
+#include "SearchForWebmap.h"
+
+// C++ API headers
 #include "AuthenticationManager.h"
+#include "Error.h"
 #include "Map.h"
 #include "MapQuickView.h"
+#include "MapTypes.h"
+#include "MapViewTypes.h"
 #include "Portal.h"
 #include "PortalItem.h"
 #include "PortalItemListModel.h"
 #include "PortalQueryParametersForItems.h"
-#include "SearchForWebmap.h"
-#include "MapTypes.h"
-#include "PortalTypes.h"
-#include "Error.h"
 #include "PortalQueryResultSetForItems.h"
-#include "MapViewTypes.h"
+#include "PortalTypes.h"
 
+// Qt headers
 #include <QDate>
 #include <QDateTime>
 #include <QFuture>

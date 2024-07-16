@@ -18,22 +18,25 @@
 #include "pch.hpp"
 #endif // PCH_BUILD
 
+// sample headers
 #include "AnalyzeHotspots.h"
 
+// C++ API headers
+#include "ArcGISMapImageLayer.h"
+#include "Envelope.h"
+#include "Error.h"
+#include "GeoprocessingJob.h"
+#include "GeoprocessingResult.h"
+#include "GeoprocessingString.h"
+#include "GeoprocessingTask.h"
+#include "GeoprocessingTypes.h"
+#include "LayerListModel.h"
 #include "Map.h"
 #include "MapQuickView.h"
 #include "MapTypes.h"
-#include "GeoprocessingTask.h"
-#include "GeoprocessingJob.h"
-#include "GeoprocessingString.h"
-#include "GeoprocessingTypes.h"
-#include "ArcGISMapImageLayer.h"
-#include "Error.h"
 #include "TaskTypes.h"
-#include "LayerListModel.h"
-#include "GeoprocessingResult.h"
-#include "Envelope.h"
 
+// Qt headers
 #include <QFuture>
 
 using namespace Esri::ArcGISRuntime;

@@ -18,8 +18,10 @@
 #include "pch.hpp"
 #endif // PCH_BUILD
 
+// sample headers
 #include "DistanceMeasurementAnalysis.h"
 
+// C++ API headers
 #include "AnalysisListModel.h"
 #include "AnalysisOverlay.h"
 #include "AnalysisOverlayListModel.h"
@@ -40,6 +42,7 @@
 #include "Surface.h"
 #include "Viewpoint.h"
 
+// Qt headers
 #include <QFuture>
 #include <QUuid>
 
