@@ -18,21 +18,24 @@
 #include "pch.hpp"
 #endif // PCH_BUILD
 
+// sample headers
 #include "BuildLegend.h"
 
+// C++ API headers
+#include "ArcGISMapImageLayer.h"
+#include "Basemap.h"
+#include "FeatureLayer.h"
+#include "LayerListModel.h"
+#include "LegendInfoListModel.h"
 #include "Map.h"
 #include "MapQuickView.h"
-#include "Basemap.h"
-#include "ArcGISMapImageLayer.h"
-#include "FeatureLayer.h"
-#include "ServiceFeatureTable.h"
 #include "MapTypes.h"
-#include "LegendInfoListModel.h"
-#include "LayerListModel.h"
-#include "SpatialReference.h"
 #include "Point.h"
+#include "ServiceFeatureTable.h"
+#include "SpatialReference.h"
 #include "Viewpoint.h"
 
+// Qt headers
 #include <QUrl>
 
 using namespace Esri::ArcGISRuntime;
