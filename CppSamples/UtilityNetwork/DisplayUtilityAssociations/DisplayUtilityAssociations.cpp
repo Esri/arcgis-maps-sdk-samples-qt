@@ -14,21 +14,34 @@
 // limitations under the License.
 // [Legal]
 
+#endif // PCH_BUILD
 #ifdef PCH_BUILD
 #include "pch.hpp"
-#endif // PCH_BUILD
 
+// sample headers
 #include "DisplayUtilityAssociations.h"
 #include "SymbolImageProvider.h"
 
+// C++ API headers
 #include "ArcGISFeatureTable.h"
 #include "AttributeListModel.h"
+#include "Credential.h"
+#include "Envelope.h"
+#include "Error.h"
 #include "FeatureLayer.h"
-#include "GraphicsOverlay.h"
 #include "Graphic.h"
+#include "GraphicListModel.h"
+#include "GraphicsOverlay.h"
+#include "GraphicsOverlayListModel.h"
+#include "LayerListModel.h"
 #include "Map.h"
 #include "MapQuickView.h"
+#include "MapTypes.h"
+#include "Point.h"
 #include "SimpleLineSymbol.h"
+#include "SpatialReference.h"
+#include "SymbolTypes.h"
+#include "UniqueValue.h"
 #include "UniqueValueRenderer.h"
 #include "UtilityAssociation.h"
 #include "UtilityNetwork.h"
@@ -36,23 +49,12 @@
 #include "UtilityNetworkListModel.h"
 #include "UtilityNetworkSource.h"
 #include "UtilityNetworkTypes.h"
-#include "MapTypes.h"
-#include "SymbolTypes.h"
-#include "Error.h"
-#include "GraphicsOverlayListModel.h"
-#include "GraphicListModel.h"
-#include "AttributeListModel.h"
-#include "LayerListModel.h"
-#include "Credential.h"
-#include "UniqueValue.h"
 #include "Viewpoint.h"
-#include "Envelope.h"
-#include "SpatialReference.h"
-#include "Point.h"
 
+// Qt headers
 #include <QFuture>
-#include <QList>
 #include <QImage>
+#include <QList>
 #include <QQmlContext>
 #include <QUuid>
 

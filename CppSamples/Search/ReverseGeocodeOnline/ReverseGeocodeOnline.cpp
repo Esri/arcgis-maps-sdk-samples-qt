@@ -14,32 +14,35 @@
 // limitations under the License.
 // [Legal]
 
+#endif // PCH_BUILD
 #ifdef PCH_BUILD
 #include "pch.hpp"
-#endif // PCH_BUILD
 
+// sample headers
 #include "ReverseGeocodeOnline.h"
 
+// C++ API headers
+#include "AttributeListModel.h"
 #include "CalloutData.h"
+#include "Envelope.h"
+#include "GeocodeResult.h"
 #include "Graphic.h"
+#include "GraphicListModel.h"
 #include "GraphicsOverlay.h"
+#include "GraphicsOverlayListModel.h"
 #include "LocatorTask.h"
 #include "Map.h"
 #include "MapQuickView.h"
-#include "PictureMarkerSymbol.h"
-#include "SimpleRenderer.h"
 #include "MapTypes.h"
-#include "GraphicsOverlayListModel.h"
-#include "GraphicListModel.h"
-#include "AttributeListModel.h"
-#include "ReverseGeocodeParameters.h"
-#include "GeocodeResult.h"
+#include "PictureMarkerSymbol.h"
 #include "Point.h"
+#include "ReverseGeocodeParameters.h"
+#include "SimpleRenderer.h"
 #include "SpatialReference.h"
-#include "Envelope.h"
 
-#include <QFuture>
+// Qt headers
 #include <QDir>
+#include <QFuture>
 #include <QUrl>
 #include <QUuid>
 

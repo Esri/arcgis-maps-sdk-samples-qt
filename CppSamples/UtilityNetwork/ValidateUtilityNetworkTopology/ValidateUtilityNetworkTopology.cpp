@@ -14,10 +14,14 @@
 // limitations under the License.
 // [Legal]
 
+#endif // PCH_BUILD
 #ifdef PCH_BUILD
 #include "pch.hpp"
-#endif // PCH_BUILD
 
+// sample headers
+#include "ValidateUtilityNetworkTopology.h"
+
+// C++ API headers
 #include "ArcGISFeature.h"
 #include "ArcGISFeatureListModel.h"
 #include "AttributeListModel.h"
@@ -26,8 +30,8 @@
 #include "Error.h"
 #include "FeatureEditResult.h"
 #include "FeatureLayer.h"
-#include "FeatureTableEditResult.h"
 #include "FeatureQueryResult.h"
+#include "FeatureTableEditResult.h"
 #include "Field.h"
 #include "Graphic.h"
 #include "GraphicListModel.h"
@@ -73,11 +77,11 @@
 #include "UtilityTraceParameters.h"
 #include "UtilityTraceResultListModel.h"
 #include "UtilityValidationResult.h"
-#include "ValidateUtilityNetworkTopology.h"
 #include "Viewpoint.h"
 
-#include <QUuid>
+// Qt headers
 #include <QFuture>
+#include <QUuid>
 
 using namespace Esri::ArcGISRuntime;
 

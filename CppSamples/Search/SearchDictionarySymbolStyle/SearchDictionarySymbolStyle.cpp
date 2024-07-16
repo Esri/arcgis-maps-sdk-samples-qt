@@ -14,18 +14,22 @@
 // limitations under the License.
 // [Legal]
 
+#endif // PCH_BUILD
 #ifdef PCH_BUILD
 #include "pch.hpp"
-#endif // PCH_BUILD
 
+// sample headers
 #include "SearchDictionarySymbolStyle.h"
-#include "DictionarySymbolStyle.h"
-#include "SymbolStyleSearchResultListModel.h"
-#include "SymbolStyleSearchParameters.h"
 
+// C++ API headers
+#include "DictionarySymbolStyle.h"
+#include "SymbolStyleSearchParameters.h"
+#include "SymbolStyleSearchResultListModel.h"
+
+// Qt headers
 #include <QFuture>
-#include <QtCore/qglobal.h>
 #include <QStandardPaths>
+#include <QtCore/qglobal.h>
 
 using namespace Esri::ArcGISRuntime;
 

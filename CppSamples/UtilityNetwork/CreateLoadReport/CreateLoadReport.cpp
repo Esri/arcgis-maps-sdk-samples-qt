@@ -14,15 +14,18 @@
 // limitations under the License.
 // [Legal]
 
+#endif // PCH_BUILD
 #ifdef PCH_BUILD
 #include "pch.hpp"
-#endif // PCH_BUILD
 
+// sample headers
 #include "CreateLoadReport.h"
 
-#include "MapQuickView.h"
-
+// C++ API headers
 #include "CodedValueDomain.h"
+#include "Credential.h"
+#include "MapQuickView.h"
+#include "MapTypes.h"
 #include "UtilityAssetGroup.h"
 #include "UtilityAssetType.h"
 #include "UtilityCategory.h"
@@ -40,16 +43,15 @@
 #include "UtilityTerminalConfiguration.h"
 #include "UtilityTier.h"
 #include "UtilityTraceConfiguration.h"
+#include "UtilityTraceFunction.h"
 #include "UtilityTraceFunctionListModel.h"
 #include "UtilityTraceFunctionOutput.h"
 #include "UtilityTraceOrCondition.h"
 #include "UtilityTraceParameters.h"
 #include "UtilityTraceResultListModel.h"
 #include "UtilityTraversability.h"
-#include "Credential.h"
-#include "MapTypes.h"
-#include "UtilityTraceFunction.h"
 
+// Qt headers
 #include <QFuture>
 
 using namespace Esri::ArcGISRuntime;

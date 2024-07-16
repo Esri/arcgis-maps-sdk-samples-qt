@@ -14,38 +14,40 @@
 // limitations under the License.
 // [Legal]
 
+#endif // PCH_BUILD
 #ifdef PCH_BUILD
 #include "pch.hpp"
-#endif // PCH_BUILD
 
+// sample headers
 #include "FindPlace.h"
 
+// C++ API headers
+#include "AttributeListModel.h"
 #include "CalloutData.h"
+#include "GeoElement.h"
+#include "GeocodeResult.h"
+#include "GeometryEngine.h"
+#include "Graphic.h"
+#include "GraphicListModel.h"
+#include "GraphicsOverlay.h"
+#include "GraphicsOverlayListModel.h"
+#include "IdentifyGraphicsOverlayResult.h"
+#include "Location.h"
+#include "LocationDisplay.h"
+#include "LocatorTask.h"
 #include "Map.h"
 #include "MapQuickView.h"
-#include "GraphicsOverlay.h"
-#include "GeocodeResult.h"
-#include "GeoElement.h"
-#include "GeometryEngine.h"
-#include "PictureMarkerSymbol.h"
-#include "IdentifyGraphicsOverlayResult.h"
-#include "Point.h"
-#include "SimpleRenderer.h"
-#include "LocatorTask.h"
-#include "LocationDisplay.h"
-#include "SuggestListModel.h"
 #include "MapTypes.h"
 #include "MapViewTypes.h"
-#include "GraphicsOverlayListModel.h"
-#include "GraphicListModel.h"
-#include "AttributeListModel.h"
-#include "SuggestParameters.h"
-#include "Location.h"
-#include "Graphic.h"
-#include "Viewpoint.h"
+#include "PictureMarkerSymbol.h"
+#include "Point.h"
+#include "SimpleRenderer.h"
 #include "SpatialReference.h"
-#include "GeocodeResult.h"
+#include "SuggestListModel.h"
+#include "SuggestParameters.h"
+#include "Viewpoint.h"
 
+// Qt headers
 #include <QFuture>
 #include <QUrl>
 #include <QUuid>

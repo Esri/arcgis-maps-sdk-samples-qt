@@ -14,42 +14,47 @@
 // limitations under the License.
 // [Legal]
 
+#endif // PCH_BUILD
 #ifdef PCH_BUILD
 #include "pch.hpp"
-#endif // PCH_BUILD
 
+// sample headers
 #include "OfflineGeocode.h"
 
-#include "Map.h"
-#include "Point.h"
-#include "Graphic.h"
-#include "CalloutData.h"
-#include "LocatorTask.h"
-#include "MapQuickView.h"
-#include "GeocodeResult.h"
-#include "GraphicsOverlay.h"
-#include "SuggestListModel.h"
+// C++ API headers
 #include "ArcGISTiledLayer.h"
-#include "GeocodeParameters.h"
-#include "PictureMarkerSymbol.h"
-#include "IdentifyGraphicsOverlayResult.h"
-#include "MapViewTypes.h"
-#include "Error.h"
-#include "GraphicsOverlayListModel.h"
-#include "GraphicListModel.h"
-#include "LayerListModel.h"
-#include "TileCache.h"
 #include "Basemap.h"
-#include "SpatialReference.h"
-#include "Viewpoint.h"
+#include "CalloutData.h"
+#include "Error.h"
 #include "ErrorException.h"
+#include "GeocodeParameters.h"
+#include "GeocodeResult.h"
+#include "Graphic.h"
+#include "GraphicListModel.h"
+#include "GraphicsOverlay.h"
+#include "GraphicsOverlayListModel.h"
+#include "IdentifyGraphicsOverlayResult.h"
+#include "LayerListModel.h"
+#include "LocatorTask.h"
+#include "Map.h"
+#include "MapQuickView.h"
+#include "MapViewTypes.h"
+#include "PictureMarkerSymbol.h"
+#include "Point.h"
+#include "SpatialReference.h"
+#include "SuggestListModel.h"
+#include "TileCache.h"
+#include "Viewpoint.h"
 
+// Qt headers
 #include <QFuture>
 #include <QScopedPointer>
-#include <QtCore/qglobal.h>
-#include <memory>
-#include <QUuid>
 #include <QStandardPaths>
+#include <QUuid>
+#include <QtCore/qglobal.h>
+
+// STL headers
+#include <memory>
 
 using namespace Esri::ArcGISRuntime;
 
