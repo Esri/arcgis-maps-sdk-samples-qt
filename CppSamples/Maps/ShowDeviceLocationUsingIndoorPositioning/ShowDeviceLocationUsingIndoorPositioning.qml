@@ -72,6 +72,10 @@ Item {
                 text: "Horizontal accuracy: " + (model.locationProperties.horizontalAccuracy ? model.locationProperties.horizontalAccuracy.toFixed(2) + " m" : "undefined")
                 visible: model.locationProperties.horizontalAccuracy !== undefined
             }
+            Text {
+                text: "IPS Info Messages: " + model.ipsInfoMessage
+                visible: true
+            }
         }
     }
 
