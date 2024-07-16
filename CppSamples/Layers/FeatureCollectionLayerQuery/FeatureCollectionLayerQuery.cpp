@@ -18,20 +18,22 @@
 #include "pch.hpp"
 #endif // PCH_BUILD
 
+// sample headers
 #include "FeatureCollectionLayerQuery.h"
 
+// C++ API headers
 #include "FeatureCollection.h"
 #include "FeatureCollectionLayer.h"
 #include "FeatureCollectionTable.h"
+#include "FeatureQueryResult.h"
+#include "LayerListModel.h"
 #include "Map.h"
 #include "MapQuickView.h"
-#include "ServiceFeatureTable.h"
 #include "MapTypes.h"
-#include "LayerListModel.h"
 #include "QueryParameters.h"
-#include "FeatureCollectionTable.h"
-#include "FeatureQueryResult.h"
+#include "ServiceFeatureTable.h"
 
+// Qt headers
 #include <QFuture>
 #include <QString>
 #include <QUuid>

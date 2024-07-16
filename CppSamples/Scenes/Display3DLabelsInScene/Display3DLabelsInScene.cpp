@@ -18,19 +18,21 @@
 #include "pch.hpp"
 #endif // PCH_BUILD
 
+// sample headers
 #include "Display3DLabelsInScene.h"
 
+// C++ API headers
 #include "ArcadeLabelExpression.h"
+#include "Error.h"
 #include "FeatureLayer.h"
+#include "GroupLayer.h"
 #include "LabelDefinition.h"
+#include "LabelDefinitionListModel.h"
+#include "LayerListModel.h"
 #include "Scene.h"
 #include "SceneQuickView.h"
-#include "TextSymbol.h"
-#include "Error.h"
-#include "LayerListModel.h"
-#include "GroupLayer.h"
 #include "ServiceTypes.h"
-#include "LabelDefinitionListModel.h"
+#include "TextSymbol.h"
 
 using namespace Esri::ArcGISRuntime;
 

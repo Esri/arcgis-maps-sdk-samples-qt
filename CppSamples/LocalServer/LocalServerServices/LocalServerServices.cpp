@@ -18,14 +18,17 @@
 #include "pch.hpp"
 #endif // PCH_BUILD
 
+// sample headers
 #include "LocalServerServices.h"
 
-#include "LocalServer.h"
-#include "LocalMapService.h"
+// C++ API headers
 #include "LocalFeatureService.h"
 #include "LocalGeoprocessingService.h"
+#include "LocalMapService.h"
+#include "LocalServer.h"
 #include "LocalServerTypes.h"
 
+// Qt headers
 #include <QDesktopServices>
 #include <QDir>
 #include <QTemporaryDir>

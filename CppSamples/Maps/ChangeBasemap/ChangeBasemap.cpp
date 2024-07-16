@@ -18,8 +18,10 @@
 #include "pch.hpp"
 #endif // PCH_BUILD
 
+// sample headers
 #include "ChangeBasemap.h"
 
+// C++ API headers
 #include "Map.h"
 #include "MapQuickView.h"
 #include "MapTypes.h"

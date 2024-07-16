@@ -18,23 +18,26 @@
 #include "pch.hpp"
 #endif // PCH_BUILD
 
+// sample headers
 #include "ViewPointCloudDataOffline.h"
 
+// C++ API headers
 #include "ArcGISTiledElevationSource.h"
+#include "ElevationSourceListModel.h"
+#include "Envelope.h"
+#include "Error.h"
+#include "LayerListModel.h"
+#include "MapTypes.h"
+#include "PointCloudLayer.h"
 #include "Scene.h"
 #include "SceneQuickView.h"
-#include "PointCloudLayer.h"
-#include "MapTypes.h"
-#include "Error.h"
 #include "Surface.h"
-#include "ElevationSourceListModel.h"
-#include "LayerListModel.h"
 #include "Viewpoint.h"
-#include "Envelope.h"
 
+// Qt headers
 #include <QFuture>
-#include <QtCore/qglobal.h>
 #include <QStandardPaths>
+#include <QtCore/qglobal.h>
 
 using namespace Esri::ArcGISRuntime;
 

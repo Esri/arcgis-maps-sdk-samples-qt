@@ -18,32 +18,35 @@
 #include "pch.hpp"
 #endif // PCH_BUILD
 
+// sample headers
 #include "ExportVectorTiles.h"
 
+// C++ API headers
 #include "ArcGISVectorTiledLayer.h"
-#include "ExportVectorTilesTask.h"
+#include "Basemap.h"
+#include "Envelope.h"
+#include "Error.h"
+#include "ExportVectorTilesJob.h"
 #include "ExportVectorTilesParameters.h"
+#include "ExportVectorTilesResult.h"
+#include "ExportVectorTilesTask.h"
 #include "GeometryEngine.h"
+#include "Graphic.h"
+#include "GraphicListModel.h"
 #include "GraphicsOverlay.h"
+#include "GraphicsOverlayListModel.h"
+#include "LayerListModel.h"
 #include "Map.h"
 #include "MapQuickView.h"
-#include "SimpleLineSymbol.h"
 #include "MapTypes.h"
-#include "GraphicsOverlayListModel.h"
-#include "GraphicListModel.h"
-#include "SymbolTypes.h"
-#include "LayerListModel.h"
-#include "ServiceTypes.h"
-#include "ExportVectorTilesJob.h"
-#include "Error.h"
-#include "ExportVectorTilesResult.h"
-#include "Viewpoint.h"
-#include "Graphic.h"
-#include "Envelope.h"
 #include "Point.h"
-#include "Basemap.h"
+#include "ServiceTypes.h"
+#include "SimpleLineSymbol.h"
 #include "SpatialReference.h"
+#include "SymbolTypes.h"
+#include "Viewpoint.h"
 
+// Qt headers
 #include <QFuture>
 #include <QTemporaryDir>
 #include <QUuid>

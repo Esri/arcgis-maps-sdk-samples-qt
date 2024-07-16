@@ -18,18 +18,21 @@
 #include "pch.hpp"
 #endif // PCH_BUILD
 
+// sample headers
 #include "ManageBookmarks.h"
 
+// C++ API headers
+#include "Basemap.h"
+#include "Bookmark.h"
+#include "BookmarkListModel.h"
+#include "Envelope.h"
 #include "Map.h"
 #include "MapQuickView.h"
-#include "Basemap.h"
-#include "SpatialReference.h"
-#include "Envelope.h"
-#include "Viewpoint.h"
-#include "Bookmark.h"
 #include "MapTypes.h"
-#include "BookmarkListModel.h"
+#include "SpatialReference.h"
+#include "Viewpoint.h"
 
+// Qt headers
 #include <QFuture>
 
 using namespace Esri::ArcGISRuntime;

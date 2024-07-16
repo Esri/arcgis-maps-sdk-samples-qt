@@ -18,14 +18,16 @@
 #include "pch.hpp"
 #endif // PCH_BUILD
 
+// sample headers
+#include "DrawOrderLayerListModel.h"
 #include "ManageOperationalLayers.h"
 
+// C++ API headers
+#include "ArcGISMapImageLayer.h"
+#include "LayerListModel.h"
 #include "Map.h"
 #include "MapQuickView.h"
-#include "ArcGISMapImageLayer.h"
-#include "DrawOrderLayerListModel.h"
 #include "MapTypes.h"
-#include "LayerListModel.h"
 
 using namespace Esri::ArcGISRuntime;
 

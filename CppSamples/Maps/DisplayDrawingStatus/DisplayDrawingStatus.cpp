@@ -18,19 +18,22 @@
 #include "pch.hpp"
 #endif // PCH_BUILD
 
+// sample headers
 #include "DisplayDrawingStatus.h"
 
+// C++ API headers
+#include "Envelope.h"
+#include "FeatureLayer.h"
+#include "LayerListModel.h"
 #include "Map.h"
 #include "MapQuickView.h"
-#include "FeatureLayer.h"
-#include "ServiceFeatureTable.h"
 #include "MapTypes.h"
 #include "MapViewTypes.h"
-#include "LayerListModel.h"
+#include "ServiceFeatureTable.h"
 #include "SpatialReference.h"
-#include "Envelope.h"
 #include "Viewpoint.h"
 
+// Qt headers
 #include <QUrl>
 
 using namespace Esri::ArcGISRuntime;

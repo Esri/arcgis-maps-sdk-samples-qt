@@ -18,16 +18,18 @@
 #include "pch.hpp"
 #endif // PCH_BUILD
 
+// sample headers
 #include "WMTS_Layer.h"
 
+// C++ API headers
+#include "Basemap.h"
+#include "Error.h"
 #include "Map.h"
 #include "MapQuickView.h"
 #include "WmtsLayer.h"
+#include "WmtsLayerInfo.h"
 #include "WmtsService.h"
 #include "WmtsServiceInfo.h"
-#include "WmtsLayerInfo.h"
-#include "Basemap.h"
-#include "Error.h"
 
 using namespace Esri::ArcGISRuntime;
 

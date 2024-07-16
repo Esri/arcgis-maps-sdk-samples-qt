@@ -18,14 +18,16 @@
 #include "pch.hpp"
 #endif // PCH_BUILD
 
+// sample headers
 #include "DisplayDeviceLocation.h"
 
+// C++ API headers
+#include "Basemap.h"
+#include "LocationDisplay.h"
 #include "Map.h"
 #include "MapQuickView.h"
-#include "Basemap.h"
 #include "MapTypes.h"
 #include "MapViewTypes.h"
-#include "LocationDisplay.h"
 
 using namespace Esri::ArcGISRuntime;
 

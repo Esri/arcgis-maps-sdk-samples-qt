@@ -18,36 +18,38 @@
 #include "pch.hpp"
 #endif // PCH_BUILD
 
+// sample headers
 #include "GenerateOfflineMap_Overrides.h"
 
-#include "Envelope.h"
-#include "FeatureLayer.h"
-#include "GeometryEngine.h"
-#include "Map.h"
-#include "MapQuickView.h"
-#include "Portal.h"
-#include "PortalItem.h"
-#include "OfflineMapTask.h"
-#include "Point.h"
-#include "Error.h"
-#include "MapTypes.h"
-#include "LayerListModel.h"
-#include "OfflineMapParametersKey.h"
-#include "OfflineMapTypes.h"
-#include "ExportTileCacheParameters.h"
-#include "GenerateOfflineMapParameterOverrides.h"
+// C++ API headers
 #include "ArcGISFeatureLayerInfo.h"
-#include "GenerateLayerOption.h"
+#include "Basemap.h"
+#include "Envelope.h"
+#include "Error.h"
+#include "ExportTileCacheParameters.h"
+#include "FeatureLayer.h"
 #include "GenerateGeodatabaseParameters.h"
 #include "GenerateLayerOption.h"
-#include "TaskTypes.h"
 #include "GenerateOfflineMapJob.h"
+#include "GenerateOfflineMapParameterOverrides.h"
 #include "GenerateOfflineMapResult.h"
-#include "SpatialReference.h"
-#include "Basemap.h"
+#include "GeometryEngine.h"
+#include "LayerListModel.h"
+#include "Map.h"
+#include "MapQuickView.h"
+#include "MapTypes.h"
+#include "OfflineMapParametersKey.h"
+#include "OfflineMapTask.h"
+#include "OfflineMapTypes.h"
+#include "Point.h"
 #include "Polygon.h"
+#include "Portal.h"
+#include "PortalItem.h"
 #include "ServiceFeatureTable.h"
+#include "SpatialReference.h"
+#include "TaskTypes.h"
 
+// Qt headers
 #include <QFuture>
 #include <QUuid>
 

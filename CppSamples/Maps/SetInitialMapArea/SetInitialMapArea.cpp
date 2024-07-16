@@ -18,15 +18,17 @@
 #include "pch.hpp"
 #endif // PCH_BUILD
 
+// sample headers
 #include "SetInitialMapArea.h"
 
+// C++ API headers
+#include "Basemap.h"
+#include "Envelope.h"
 #include "Map.h"
 #include "MapQuickView.h"
-#include "Basemap.h"
-#include "Viewpoint.h"
-#include "Envelope.h"
 #include "MapTypes.h"
 #include "SpatialReference.h"
+#include "Viewpoint.h"
 
 using namespace Esri::ArcGISRuntime;
 

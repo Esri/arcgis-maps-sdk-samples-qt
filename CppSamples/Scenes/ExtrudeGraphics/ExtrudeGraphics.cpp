@@ -18,31 +18,34 @@
 #include "pch.hpp"
 #endif // PCH_BUILD
 
+// sample headers
 #include "ExtrudeGraphics.h"
 
+// C++ API headers
+#include "ArcGISTiledElevationSource.h"
+#include "AttributeListModel.h"
+#include "Basemap.h"
+#include "Camera.h"
+#include "ElevationSourceListModel.h"
+#include "Graphic.h"
+#include "GraphicListModel.h"
+#include "GraphicsOverlay.h"
+#include "GraphicsOverlayListModel.h"
+#include "MapTypes.h"
+#include "Point.h"
+#include "Polygon.h"
+#include "PolygonBuilder.h"
+#include "RendererSceneProperties.h"
 #include "Scene.h"
 #include "SceneQuickView.h"
-#include "Basemap.h"
-#include "ArcGISTiledElevationSource.h"
-#include "SimpleRenderer.h"
-#include "Point.h"
-#include "PolygonBuilder.h"
-#include "Polygon.h"
-#include "SimpleFillSymbol.h"
-#include "Camera.h"
-#include "MapTypes.h"
-#include "SymbolTypes.h"
-#include "GraphicsOverlayListModel.h"
-#include "GraphicListModel.h"
-#include "Surface.h"
-#include "ElevationSourceListModel.h"
-#include "RendererSceneProperties.h"
 #include "SceneViewTypes.h"
-#include "GraphicsOverlay.h"
+#include "SimpleFillSymbol.h"
+#include "SimpleRenderer.h"
 #include "SpatialReference.h"
-#include "Graphic.h"
-#include "AttributeListModel.h"
+#include "Surface.h"
+#include "SymbolTypes.h"
 
+// STL headers
 #include <cmath>
 #include <ctime>
 

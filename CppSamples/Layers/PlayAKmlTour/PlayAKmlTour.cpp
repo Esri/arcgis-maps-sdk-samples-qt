@@ -18,25 +18,28 @@
 #include "pch.hpp"
 #endif // PCH_BUILD
 
+// sample headers
 #include "PlayAKmlTour.h"
 
+// C++ API headers
 #include "ArcGISTiledElevationSource.h"
-#include "Scene.h"
-#include "SceneQuickView.h"
+#include "ElevationSourceListModel.h"
+#include "Error.h"
+#include "KmlContainer.h"
+#include "KmlDataset.h"
+#include "KmlLayer.h"
+#include "KmlNodeListModel.h"
 #include "KmlTour.h"
 #include "KmlTourController.h"
-#include "KmlLayer.h"
-#include "KmlContainer.h"
-#include "KmlNodeListModel.h"
-#include "Error.h"
-#include "MapTypes.h"
 #include "LayerListModel.h"
+#include "MapTypes.h"
+#include "Scene.h"
+#include "SceneQuickView.h"
 #include "Surface.h"
-#include "ElevationSourceListModel.h"
-#include "KmlDataset.h"
 
-#include <QtCore/qglobal.h>
+// Qt headers
 #include <QStandardPaths>
+#include <QtCore/qglobal.h>
 
 using namespace Esri::ArcGISRuntime;
 

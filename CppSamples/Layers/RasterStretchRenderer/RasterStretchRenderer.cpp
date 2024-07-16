@@ -18,21 +18,24 @@
 #include "pch.hpp"
 #endif // PCH_BUILD
 
+// sample headers
 #include "RasterStretchRenderer.h"
 
+// C++ API headers
+#include "Basemap.h"
 #include "Map.h"
 #include "MapQuickView.h"
+#include "MapViewTypes.h"
 #include "MinMaxStretchParameters.h"
 #include "PercentClipStretchParameters.h"
 #include "Raster.h"
 #include "RasterLayer.h"
-#include "StretchRenderer.h"
 #include "StandardDeviationStretchParameters.h"
-#include "MapViewTypes.h"
-#include "Basemap.h"
+#include "StretchRenderer.h"
 
-#include <QtCore/qglobal.h>
+// Qt headers
 #include <QStandardPaths>
+#include <QtCore/qglobal.h>
 
 using namespace Esri::ArcGISRuntime;
 

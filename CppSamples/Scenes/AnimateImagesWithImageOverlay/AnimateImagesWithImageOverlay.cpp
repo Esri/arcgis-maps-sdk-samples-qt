@@ -18,35 +18,38 @@
 #include "pch.hpp"
 #endif // PCH_BUILD
 
+// sample headers
 #include "AnimateImagesWithImageOverlay.h"
 
+// C++ API headers
 #include "ArcGISTiledElevationSource.h"
 #include "ArcGISTiledLayer.h"
-#include "Scene.h"
-#include "SceneQuickView.h"
+#include "Camera.h"
+#include "ElevationSourceListModel.h"
+#include "Envelope.h"
 #include "ImageFrame.h"
 #include "ImageOverlay.h"
 #include "ImageOverlayListModel.h"
-#include "SceneView.h"
-#include "Envelope.h"
-#include "Point.h"
-#include "Camera.h"
-#include "Viewpoint.h"
-#include "Surface.h"
-#include "ElevationSourceListModel.h"
 #include "LayerListModel.h"
-#include "SpatialReference.h"
 #include "MapTypes.h"
+#include "Point.h"
+#include "Scene.h"
+#include "SceneQuickView.h"
+#include "SceneView.h"
+#include "SpatialReference.h"
+#include "Surface.h"
+#include "Viewpoint.h"
 
 // Qt headers
-#include <QtCore/qglobal.h>
 #include <QDir>
 #include <QFile>
 #include <QImage>
 #include <QStandardPaths>
 #include <QString>
 #include <QTimer>
+#include <QtCore/qglobal.h>
 
+// STL headers
 #include <memory>
 
 using namespace Esri::ArcGISRuntime;

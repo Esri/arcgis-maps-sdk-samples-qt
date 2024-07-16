@@ -18,22 +18,25 @@
 #include "pch.hpp"
 #endif // PCH_BUILD
 
+// sample headers
 #include "QueryOGCAPICQLFilters.h"
 
+// C++ API headers
 #include "FeatureLayer.h"
+#include "GeodatabaseTypes.h"
+#include "LayerListModel.h"
 #include "Map.h"
 #include "MapQuickView.h"
+#include "MapTypes.h"
 #include "OgcFeatureCollectionTable.h"
+#include "QueryParameters.h"
 #include "SimpleLineSymbol.h"
 #include "SimpleRenderer.h"
-#include "MapTypes.h"
 #include "SymbolTypes.h"
-#include "LayerListModel.h"
-#include "GeodatabaseTypes.h"
-#include "QueryParameters.h"
 #include "TimeExtent.h"
 #include "Viewpoint.h"
 
+// Qt headers
 #include <QDateTime>
 #include <QFuture>
 

@@ -18,9 +18,12 @@
 #include "pch.hpp"
 #endif // PCH_BUILD
 
+// sample headers
+#include "ConfigureBasemapStyleLanguage.h"
+
+// C++ API headers
 #include "Basemap.h"
 #include "BasemapStyleParameters.h"
-#include "ConfigureBasemapStyleLanguage.h"
 #include "Map.h"
 #include "MapQuickView.h"
 #include "MapTypes.h"
@@ -28,6 +31,7 @@
 #include "SpatialReference.h"
 #include "Viewpoint.h"
 
+// Qt headers
 #include <QFuture>
 
 using namespace Esri::ArcGISRuntime;

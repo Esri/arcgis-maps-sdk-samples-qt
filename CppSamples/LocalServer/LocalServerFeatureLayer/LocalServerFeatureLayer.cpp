@@ -18,26 +18,29 @@
 #include "pch.hpp"
 #endif // PCH_BUILD
 
+// sample headers
 #include "LocalServerFeatureLayer.h"
 
+// C++ API headers
 #include "Basemap.h"
 #include "Envelope.h"
-#include "MapQuickView.h"
-#include "Map.h"
-#include "LocalServer.h"
-#include "LocalFeatureService.h"
-#include "ServiceFeatureTable.h"
 #include "FeatureLayer.h"
-#include "Viewpoint.h"
-#include "MapViewTypes.h"
-#include "MapTypes.h"
-#include "LocalServerTypes.h"
 #include "LayerListModel.h"
+#include "LocalFeatureService.h"
+#include "LocalServer.h"
+#include "LocalServerTypes.h"
+#include "Map.h"
+#include "MapQuickView.h"
+#include "MapTypes.h"
+#include "MapViewTypes.h"
+#include "ServiceFeatureTable.h"
+#include "Viewpoint.h"
 
+// Qt headers
 #include <QDir>
+#include <QFile>
 #include <QFuture>
 #include <QTemporaryDir>
-#include <QFile>
 
 using namespace Esri::ArcGISRuntime;
 

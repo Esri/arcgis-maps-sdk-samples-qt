@@ -18,17 +18,19 @@
 #include "pch.hpp"
 #endif // PCH_BUILD
 
+// sample headers
 #include "FeatureCollectionLayerFromPortal.h"
 
+// C++ API headers
+#include "Error.h"
 #include "FeatureCollection.h"
 #include "FeatureCollectionLayer.h"
+#include "LayerListModel.h"
 #include "Map.h"
 #include "MapQuickView.h"
+#include "MapTypes.h"
 #include "Portal.h"
 #include "PortalItem.h"
-#include "Error.h"
-#include "MapTypes.h"
-#include "LayerListModel.h"
 #include "PortalTypes.h"
 
 using namespace Esri::ArcGISRuntime;

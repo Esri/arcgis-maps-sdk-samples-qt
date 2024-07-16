@@ -18,30 +18,33 @@
 #include "pch.hpp"
 #endif // PCH_BUILD
 
+// sample headers
 #include "LocalServerGeoprocessing.h"
 
+// C++ API headers
+#include "ArcGISMapImageLayer.h"
+#include "ArcGISTiledLayer.h"
 #include "Basemap.h"
 #include "Envelope.h"
-#include "MapQuickView.h"
-#include "Map.h"
-#include "LocalServer.h"
-#include "Viewpoint.h"
-#include "TileCache.h"
-#include "LocalGeoprocessingService.h"
-#include "ArcGISTiledLayer.h"
-#include "GeoprocessingTask.h"
+#include "GeoprocessingDouble.h"
 #include "GeoprocessingJob.h"
 #include "GeoprocessingParameter.h"
 #include "GeoprocessingParameters.h"
-#include "GeoprocessingDouble.h"
-#include "ArcGISMapImageLayer.h"
-#include "MapViewTypes.h"
-#include "MapTypes.h"
-#include "LayerListModel.h"
-#include "LocalServerTypes.h"
-#include "TaskTypes.h"
+#include "GeoprocessingTask.h"
 #include "GeoprocessingTypes.h"
+#include "LayerListModel.h"
+#include "LocalGeoprocessingService.h"
+#include "LocalServer.h"
+#include "LocalServerTypes.h"
+#include "Map.h"
+#include "MapQuickView.h"
+#include "MapTypes.h"
+#include "MapViewTypes.h"
+#include "TaskTypes.h"
+#include "TileCache.h"
+#include "Viewpoint.h"
 
+// Qt headers
 #include <QDir>
 #include <QFuture>
 #include <QTemporaryDir>

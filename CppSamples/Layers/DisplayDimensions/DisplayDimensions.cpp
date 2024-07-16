@@ -18,16 +18,19 @@
 #include "pch.hpp"
 #endif // PCH_BUILD
 
+// sample headers
 #include "DisplayDimensions.h"
 
+// C++ API headers
 #include "DimensionLayer.h"
+#include "Error.h"
+#include "LayerListModel.h"
 #include "Map.h"
 #include "MapQuickView.h"
-#include "MobileMapPackage.h"
-#include "Error.h"
 #include "MapTypes.h"
-#include "LayerListModel.h"
+#include "MobileMapPackage.h"
 
+// Qt headers
 #include <QStandardPaths>
 
 using namespace Esri::ArcGISRuntime;

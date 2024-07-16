@@ -18,17 +18,20 @@
 #include "pch.hpp"
 #endif // PCH_BUILD
 
+// sample headers
 #include "HonorMobileMapPackageExpiration.h"
 
-#include "MobileMapPackage.h"
-#include "MapQuickView.h"
+// C++ API headers
+#include "CoreTypes.h"
 #include "Error.h"
 #include "Expiration.h"
-#include "CoreTypes.h"
+#include "MapQuickView.h"
+#include "MobileMapPackage.h"
 
-#include <QtGlobal>
+// Qt headers
 #include <QDateTime>
 #include <QStandardPaths>
+#include <QtGlobal>
 
 using namespace Esri::ArcGISRuntime;
 

@@ -18,8 +18,10 @@
 #include "pch.hpp"
 #endif // PCH_BUILD
 
+// sample headers
 #include "NavigateARouteWithRerouting.h"
 
+// C++ API headers
 #include "DirectionManeuverListModel.h"
 #include "Error.h"
 #include "ErrorException.h"
@@ -48,23 +50,26 @@
 #include "SimpleMarkerSymbol.h"
 #include "SimulatedLocationDataSource.h"
 #include "SimulationParameters.h"
+#include "SpatialReference.h"
 #include "Stop.h"
+#include "SymbolTypes.h"
 #include "TrackingDistance.h"
 #include "TrackingProgress.h"
 #include "TrackingStatus.h"
-#include "SpatialReference.h"
-#include "SymbolTypes.h"
 #include "VoiceGuidance.h"
 
-#include <memory>
+// Qt headers
 #include <QFileInfo>
 #include <QFuture>
 #include <QList>
 #include <QStandardPaths>
 #include <QTime>
-#include <QtTextToSpeech/QTextToSpeech>
 #include <QUrl>
 #include <QUuid>
+#include <QtTextToSpeech/QTextToSpeech>
+
+// STL headers
+#include <memory>
 
 using namespace Esri::ArcGISRuntime;
 

@@ -18,17 +18,26 @@
 #include "pch.hpp"
 #endif // PCH_BUILD
 
+// sample headers
 #include "RouteAroundBarriers.h"
 
+// C++ API headers
 #include "CompositeSymbol.h"
+#include "DirectionManeuverListModel.h"
+#include "Error.h"
 #include "GeometryEngine.h"
 #include "Graphic.h"
+#include "GraphicListModel.h"
 #include "GraphicsOverlay.h"
+#include "GraphicsOverlayListModel.h"
 #include "Map.h"
 #include "MapQuickView.h"
+#include "MapTypes.h"
 #include "PictureMarkerSymbol.h"
+#include "Point.h"
 #include "Polygon.h"
 #include "PolygonBarrier.h"
+#include "Polyline.h"
 #include "Route.h"
 #include "RouteResult.h"
 #include "RouteTask.h"
@@ -36,20 +45,14 @@
 #include "SimpleLineSymbol.h"
 #include "SimpleRenderer.h"
 #include "Stop.h"
-#include "TextSymbol.h"
-#include "MapTypes.h"
 #include "SymbolTypes.h"
-#include "Error.h"
-#include "GraphicsOverlayListModel.h"
-#include "GraphicListModel.h"
-#include "DirectionManeuverListModel.h"
+#include "TextSymbol.h"
 #include "Viewpoint.h"
-#include "Point.h"
-#include "Polyline.h"
 
+// Qt headers
+#include <QDir>
 #include <QFuture>
 #include <QUuid>
-#include <QDir>
 
 using namespace Esri::ArcGISRuntime;
 

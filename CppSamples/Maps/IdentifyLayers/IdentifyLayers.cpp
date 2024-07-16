@@ -18,27 +18,30 @@
 #include "pch.hpp"
 #endif // PCH_BUILD
 
+// sample headers
 #include "IdentifyLayers.h"
 
+// C++ API headers
+#include "ArcGISMapImageLayer.h"
+#include "ArcGISSublayer.h"
+#include "ArcGISSublayerListModel.h"
+#include "Basemap.h"
+#include "Error.h"
+#include "FeatureLayer.h"
+#include "IdentifyLayerResult.h"
+#include "LayerListModel.h"
 #include "Map.h"
 #include "MapQuickView.h"
-#include "Basemap.h"
-#include "ArcGISMapImageLayer.h"
-#include "FeatureLayer.h"
-#include "ServiceFeatureTable.h"
-#include "Viewpoint.h"
-#include "Point.h"
-#include "IdentifyLayerResult.h"
-#include "Error.h"
 #include "MapTypes.h"
-#include "LayerListModel.h"
-#include "ArcGISSublayerListModel.h"
-#include "ArcGISSublayer.h"
+#include "Point.h"
+#include "ServiceFeatureTable.h"
 #include "SpatialReference.h"
+#include "Viewpoint.h"
 
+// Qt headers
 #include <QFuture>
-#include <QUuid>
 #include <QQueue>
+#include <QUuid>
 
 using namespace Esri::ArcGISRuntime;
 

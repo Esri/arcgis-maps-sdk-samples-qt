@@ -18,31 +18,34 @@
 #include "pch.hpp"
 #endif // PCH_BUILD
 
+// sample headers
 #include "ChooseCameraController.h"
 
+// C++ API headers
 #include "ArcGISTiledElevationSource.h"
+#include "Camera.h"
+#include "ElevationSourceListModel.h"
 #include "GlobeCameraController.h"
+#include "Graphic.h"
+#include "GraphicListModel.h"
+#include "GraphicsOverlay.h"
+#include "GraphicsOverlayListModel.h"
+#include "LayerSceneProperties.h"
+#include "MapTypes.h"
 #include "ModelSceneSymbol.h"
-#include "OrbitLocationCameraController.h"
 #include "OrbitGeoElementCameraController.h"
+#include "OrbitLocationCameraController.h"
+#include "Point.h"
 #include "Scene.h"
 #include "SceneQuickView.h"
-#include "MapTypes.h"
-#include "GraphicsOverlayListModel.h"
-#include "GraphicListModel.h"
-#include "Camera.h"
-#include "Surface.h"
-#include "ElevationSourceListModel.h"
 #include "SceneViewTypes.h"
-#include "LayerSceneProperties.h"
 #include "SpatialReference.h"
-#include "GraphicsOverlay.h"
-#include "Point.h"
-#include "Graphic.h"
+#include "Surface.h"
 
+// Qt headers
 #include <QFuture>
-#include <QtCore/qglobal.h>
 #include <QStandardPaths>
+#include <QtCore/qglobal.h>
 
 namespace
 {

@@ -18,21 +18,24 @@
 #include "pch.hpp"
 #endif // PCH_BUILD
 
+// sample headers
 #include "LocalServerMapImageLayer.h"
 
+// C++ API headers
+#include "ArcGISMapImageLayer.h"
 #include "Basemap.h"
 #include "Envelope.h"
-#include "MapQuickView.h"
-#include "Map.h"
-#include "LocalServer.h"
-#include "LocalMapService.h"
-#include "ArcGISMapImageLayer.h"
-#include "Viewpoint.h"
-#include "MapViewTypes.h"
-#include "MapTypes.h"
 #include "LayerListModel.h"
+#include "LocalMapService.h"
+#include "LocalServer.h"
 #include "LocalServerTypes.h"
+#include "Map.h"
+#include "MapQuickView.h"
+#include "MapTypes.h"
+#include "MapViewTypes.h"
+#include "Viewpoint.h"
 
+// Qt headers
 #include <QDir>
 #include <QFuture>
 #include <QTemporaryDir>

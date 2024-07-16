@@ -18,28 +18,29 @@
 #include "pch.hpp"
 #endif // PCH_BUILD
 
-// C++ API headers
-#include "ExportTileCacheParameters.h"
+// sample headers
+#include "ExportTiles.h"
 
+// C++ API headers
+#include "ArcGISTiledLayer.h"
+#include "Basemap.h"
+#include "Envelope.h"
+#include "Error.h"
+#include "ExportTileCacheJob.h"
+#include "ExportTileCacheParameters.h"
+#include "ExportTileCacheTask.h"
+#include "GeometryEngine.h"
+#include "LayerListModel.h"
 #include "Map.h"
 #include "MapQuickView.h"
-#include "Basemap.h"
-#include "ExportTiles.h"
-#include "ArcGISTiledLayer.h"
-#include "ExportTileCacheTask.h"
-#include "Envelope.h"
-#include "GeometryEngine.h"
-#include "SpatialReference.h"
-#include "TileCache.h"
-#include "Error.h"
 #include "MapTypes.h"
-#include "LayerListModel.h"
-#include "ExportTileCacheJob.h"
-#include "TaskTypes.h"
 #include "Point.h"
-#include "Envelope.h"
+#include "SpatialReference.h"
+#include "TaskTypes.h"
+#include "TileCache.h"
 #include "Viewpoint.h"
 
+// Qt headers
 #include <QFuture>
 #include <QUrl>
 #include <QUuid>

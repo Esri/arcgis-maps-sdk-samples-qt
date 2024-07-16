@@ -18,18 +18,21 @@
 #include "pch.hpp"
 #endif // PCH_BUILD
 
+// sample headers
 #include "FeatureLayerRenderingModeMap.h"
 
-#include "Map.h"
-#include "MapQuickView.h"
-#include "ServiceFeatureTable.h"
+// C++ API headers
 #include "FeatureLayer.h"
-#include "Point.h"
-#include "SpatialReference.h"
-#include "MapTypes.h"
 #include "LayerListModel.h"
 #include "LoadSettings.h"
+#include "Map.h"
+#include "MapQuickView.h"
+#include "MapTypes.h"
+#include "Point.h"
+#include "ServiceFeatureTable.h"
+#include "SpatialReference.h"
 
+// Qt headers
 #include <QFuture>
 #include <QString>
 #include <QStringList>

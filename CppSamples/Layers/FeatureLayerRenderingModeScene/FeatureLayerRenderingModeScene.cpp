@@ -18,19 +18,22 @@
 #include "pch.hpp"
 #endif // PCH_BUILD
 
+// sample headers
 #include "FeatureLayerRenderingModeScene.h"
 
+// C++ API headers
+#include "Camera.h"
+#include "FeatureLayer.h"
+#include "LayerListModel.h"
+#include "LoadSettings.h"
+#include "MapTypes.h"
+#include "Point.h"
 #include "Scene.h"
 #include "SceneQuickView.h"
-#include "LoadSettings.h"
 #include "ServiceFeatureTable.h"
-#include "FeatureLayer.h"
-#include "Point.h"
 #include "SpatialReference.h"
-#include "Camera.h"
-#include "MapTypes.h"
-#include "LayerListModel.h"
 
+// Qt headers
 #include <QFuture>
 #include <QString>
 #include <QStringList>

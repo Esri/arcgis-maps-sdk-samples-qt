@@ -18,20 +18,23 @@
 #include "pch.hpp"
 #endif // PCH_BUILD
 
+// sample headers
 #include "CreateTerrainSurfaceFromLocalRaster.h"
 
+// C++ API headers
+#include "Camera.h"
+#include "ElevationSourceListModel.h"
+#include "Error.h"
+#include "MapTypes.h"
 #include "RasterElevationSource.h"
 #include "Scene.h"
 #include "SceneQuickView.h"
-#include "MapTypes.h"
-#include "Error.h"
 #include "Surface.h"
-#include "ElevationSourceListModel.h"
-#include "Camera.h"
 
-#include <QUrl>
+// Qt headers
 #include <QFileInfo>
 #include <QStandardPaths>
+#include <QUrl>
 
 using namespace Esri::ArcGISRuntime;
 

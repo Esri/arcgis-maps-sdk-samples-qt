@@ -18,21 +18,23 @@
 #include "pch.hpp"
 #endif // PCH_BUILD
 
+// sample headers
 #include "DisplaySceneLayer.h"
 
-#include "Scene.h"
-#include "SceneQuickView.h"
-#include "Basemap.h"
-#include "ArcGISTiledElevationSource.h"
+// C++ API headers
 #include "ArcGISSceneLayer.h"
-#include "Point.h"
-#include "Viewpoint.h"
+#include "ArcGISTiledElevationSource.h"
+#include "Basemap.h"
 #include "Camera.h"
-#include "MapTypes.h"
-#include "Surface.h"
 #include "ElevationSourceListModel.h"
 #include "LayerListModel.h"
+#include "MapTypes.h"
+#include "Point.h"
+#include "Scene.h"
+#include "SceneQuickView.h"
 #include "SpatialReference.h"
+#include "Surface.h"
+#include "Viewpoint.h"
 
 using namespace Esri::ArcGISRuntime;
 

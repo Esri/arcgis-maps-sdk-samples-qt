@@ -18,30 +18,33 @@
 #include "pch.hpp"
 #endif // PCH_BUILD
 
+// sample headers
 #include "DisplayRouteLayer.h"
 
-#include "FeatureCollection.h"
-#include "FeatureCollectionLayer.h"
-#include "Map.h"
-#include "MapQuickView.h"
-#include "Portal.h"
-#include "PortalItem.h"
-#include "Error.h"
-#include "MapTypes.h"
-#include "PortalTypes.h"
-#include "LayerListModel.h"
-#include "FeatureCollectionTableListModel.h"
-#include "FeatureTable.h"
-#include "FeatureQueryResult.h"
-#include "FeatureIterator.h"
-#include "QueryParameters.h"
-#include "Feature.h"
+// C++ API headers
 #include "ArcGISFeature.h"
 #include "AttributeListModel.h"
+#include "Error.h"
+#include "Feature.h"
+#include "FeatureCollection.h"
+#include "FeatureCollectionLayer.h"
 #include "FeatureCollectionTable.h"
-#include "SpatialReference.h"
+#include "FeatureCollectionTableListModel.h"
+#include "FeatureIterator.h"
+#include "FeatureQueryResult.h"
+#include "FeatureTable.h"
+#include "LayerListModel.h"
+#include "Map.h"
+#include "MapQuickView.h"
+#include "MapTypes.h"
 #include "Point.h"
+#include "Portal.h"
+#include "PortalItem.h"
+#include "PortalTypes.h"
+#include "QueryParameters.h"
+#include "SpatialReference.h"
 
+// Qt headers
 #include <QFuture>
 #include <QJsonValue>
 

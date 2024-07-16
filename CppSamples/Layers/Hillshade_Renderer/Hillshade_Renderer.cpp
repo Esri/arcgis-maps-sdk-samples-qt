@@ -18,22 +18,25 @@
 #include "pch.hpp"
 #endif // PCH_BUILD
 
+// sample headers
 #include "Hillshade_Renderer.h"
 
-#include "Map.h"
-#include "MapQuickView.h"
-#include "Raster.h"
-#include "RasterLayer.h"
+// C++ API headers
 #include "Basemap.h"
 #include "HillshadeRenderer.h"
+#include "Map.h"
+#include "MapQuickView.h"
 #include "MapTypes.h"
 #include "MapViewTypes.h"
+#include "Raster.h"
+#include "RasterLayer.h"
 #include "RasterTypes.h"
 
+// Qt headers
 #include <QFuture>
+#include <QStandardPaths>
 #include <QUrl>
 #include <QtCore/qglobal.h>
-#include <QStandardPaths>
 
 using namespace Esri::ArcGISRuntime;
 

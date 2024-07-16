@@ -18,50 +18,54 @@
 #include "pch.hpp"
 #endif // PCH_BUILD
 
+// sample headers
 #include "NavigateRoute.h"
 
+// C++ API headers
+#include "DirectionManeuver.h"
 #include "DirectionManeuverListModel.h"
+#include "Error.h"
+#include "Graphic.h"
+#include "GraphicListModel.h"
 #include "GraphicsOverlay.h"
+#include "GraphicsOverlayListModel.h"
+#include "LinearUnit.h"
 #include "Location.h"
 #include "LocationDisplay.h"
 #include "Map.h"
 #include "MapQuickView.h"
+#include "MapTypes.h"
+#include "MapViewTypes.h"
 #include "NavigationTypes.h"
 #include "Point.h"
+#include "Polyline.h"
 #include "Route.h"
+#include "RouteParameters.h"
 #include "RouteResult.h"
 #include "RouteTask.h"
 #include "RouteTracker.h"
+#include "SimpleLineSymbol.h"
 #include "SimpleMarkerSymbol.h"
 #include "SimulatedLocationDataSource.h"
 #include "SimulationParameters.h"
+#include "SpatialReference.h"
 #include "Stop.h"
+#include "SymbolTypes.h"
 #include "TrackingDistance.h"
 #include "TrackingProgress.h"
 #include "TrackingStatus.h"
 #include "VoiceGuidance.h"
-#include "MapTypes.h"
-#include "MapViewTypes.h"
-#include "SymbolTypes.h"
-#include "Error.h"
-#include "GraphicsOverlayListModel.h"
-#include "GraphicListModel.h"
-#include "RouteTask.h"
-#include "LinearUnit.h"
-#include "RouteParameters.h"
-#include "DirectionManeuver.h"
-#include "SpatialReference.h"
-#include "Polyline.h"
-#include "Graphic.h"
-#include "SimpleLineSymbol.h"
 
-#include <memory>
+// Qt headers
 #include <QFuture>
 #include <QList>
 #include <QTime>
-#include <QtTextToSpeech/QTextToSpeech>
 #include <QUrl>
 #include <QUuid>
+#include <QtTextToSpeech/QTextToSpeech>
+
+// STL headers
+#include <memory>
 
 using namespace Esri::ArcGISRuntime;
 

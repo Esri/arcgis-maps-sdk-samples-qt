@@ -18,36 +18,38 @@
 #include "pch.hpp"
 #endif // PCH_BUILD
 
+// sample headers
 #include "QueryMapImageSublayer.h"
 
-#include "Basemap.h"
-#include "Map.h"
-#include "MapQuickView.h"
+// C++ API headers
 #include "ArcGISMapImageLayer.h"
 #include "ArcGISMapImageSublayer.h"
+#include "ArcGISSublayerListModel.h"
+#include "Basemap.h"
+#include "Envelope.h"
+#include "Error.h"
+#include "Feature.h"
+#include "FeatureIterator.h"
+#include "FeatureQueryResult.h"
+#include "Graphic.h"
+#include "GraphicListModel.h"
+#include "GraphicsOverlay.h"
+#include "GraphicsOverlayListModel.h"
+#include "LayerListModel.h"
+#include "Map.h"
+#include "MapQuickView.h"
+#include "MapTypes.h"
+#include "Point.h"
+#include "QueryParameters.h"
+#include "ServiceFeatureTable.h"
 #include "SimpleFillSymbol.h"
 #include "SimpleLineSymbol.h"
 #include "SimpleMarkerSymbol.h"
-#include "QueryParameters.h"
-#include "Graphic.h"
-#include "GraphicsOverlay.h"
-#include "GraphicListModel.h"
-#include "Error.h"
-#include "MapTypes.h"
-#include "GraphicsOverlayListModel.h"
-#include "GraphicListModel.h"
-#include "SymbolTypes.h"
-#include "LayerListModel.h"
-#include "ArcGISSublayerListModel.h"
-#include "FeatureQueryResult.h"
-#include "FeatureIterator.h"
-#include "Feature.h"
 #include "SpatialReference.h"
+#include "SymbolTypes.h"
 #include "Viewpoint.h"
-#include "Point.h"
-#include "ServiceFeatureTable.h"
-#include "Envelope.h"
 
+// Qt headers
 #include <QFuture>
 #include <QUuid>
 

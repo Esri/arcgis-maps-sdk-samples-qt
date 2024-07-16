@@ -18,18 +18,21 @@
 #include "pch.hpp"
 #endif // PCH_BUILD
 
+// sample headers
 #include "LoadWfsXmlQuery.h"
 
+// C++ API headers
+#include "Envelope.h"
+#include "Error.h"
+#include "FeatureLayer.h"
+#include "GeodatabaseTypes.h"
+#include "LayerListModel.h"
 #include "Map.h"
 #include "MapQuickView.h"
-#include "FeatureLayer.h"
-#include "WfsFeatureTable.h"
-#include "Error.h"
 #include "MapTypes.h"
-#include "LayerListModel.h"
-#include "GeodatabaseTypes.h"
-#include "Envelope.h"
+#include "WfsFeatureTable.h"
 
+// Qt headers
 #include <QFuture>
 
 using namespace Esri::ArcGISRuntime;

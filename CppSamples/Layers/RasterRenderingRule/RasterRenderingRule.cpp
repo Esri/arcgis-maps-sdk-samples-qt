@@ -18,26 +18,29 @@
 #include "pch.hpp"
 #endif // PCH_BUILD
 
+// sample headers
 #include "RasterRenderingRule.h"
 
+// C++ API headers
+#include "ArcGISImageServiceInfo.h"
+#include "Basemap.h"
+#include "Envelope.h"
+#include "Error.h"
+#include "ImageServiceRaster.h"
+#include "LayerListModel.h"
 #include "Map.h"
 #include "MapQuickView.h"
-#include "RasterLayer.h"
-#include "Basemap.h"
-#include "ImageServiceRaster.h"
-#include "RenderingRule.h"
-#include "RenderingRuleInfo.h"
-#include "Error.h"
 #include "MapTypes.h"
 #include "MapViewTypes.h"
-#include "LayerListModel.h"
-#include "ArcGISImageServiceInfo.h"
-#include "Envelope.h"
+#include "RasterLayer.h"
+#include "RenderingRule.h"
+#include "RenderingRuleInfo.h"
 #include "Viewpoint.h"
 
+// Qt headers
 #include <QFuture>
-#include <QJsonObject>
 #include <QJsonDocument>
+#include <QJsonObject>
 
 using namespace Esri::ArcGISRuntime;
 

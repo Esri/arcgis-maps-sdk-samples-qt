@@ -18,13 +18,15 @@
 #include "pch.hpp"
 #endif // PCH_BUILD
 
+// sample headers
 #include "ViewContentBeneathTerrainSurface.h"
 
+// C++ API headers
+#include "Error.h"
 #include "Scene.h"
 #include "SceneQuickView.h"
-#include "Error.h"
-#include "Surface.h"
 #include "SceneViewTypes.h"
+#include "Surface.h"
 
 using namespace Esri::ArcGISRuntime;
 

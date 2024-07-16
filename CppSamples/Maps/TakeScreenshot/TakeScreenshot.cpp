@@ -18,13 +18,16 @@
 #include "pch.hpp"
 #endif // PCH_BUILD
 
+// sample headers
+#include "MapImageProvider.h"
 #include "TakeScreenshot.h"
 
+// C++ API headers
 #include "Map.h"
 #include "MapQuickView.h"
-#include "MapImageProvider.h"
 #include "MapTypes.h"
 
+// Qt headers
 #include <QFuture>
 #include <QQmlContext>
 #include <QUuid>

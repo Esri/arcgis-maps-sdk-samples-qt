@@ -18,13 +18,17 @@
 #include "pch.hpp"
 #endif // PCH_BUILD
 
+// sample headers
 #include "TileCacheLayer.h"
+
+// C++ API headers
 #include "ArcGISTiledLayer.h"
+#include "Basemap.h"
 #include "Map.h"
 #include "MapQuickView.h"
 #include "TileCache.h"
-#include "Basemap.h"
 
+// Qt headers
 #include <QStandardPaths>
 
 using namespace Esri::ArcGISRuntime;

@@ -18,13 +18,15 @@
 #include "pch.hpp"
 #endif // PCH_BUILD
 
+// sample headers
 #include "OSM_Layer.h"
 
+// C++ API headers
+#include "Basemap.h"
+#include "LayerListModel.h"
 #include "Map.h"
 #include "MapQuickView.h"
 #include "OpenStreetMapLayer.h"
-#include "Basemap.h"
-#include "LayerListModel.h"
 
 using namespace Esri::ArcGISRuntime;
 

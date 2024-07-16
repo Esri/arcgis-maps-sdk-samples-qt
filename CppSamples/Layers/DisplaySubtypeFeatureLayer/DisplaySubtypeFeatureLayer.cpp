@@ -18,29 +18,31 @@
 #include "pch.hpp"
 #endif // PCH_BUILD
 
+// sample headers
 #include "DisplaySubtypeFeatureLayer.h"
 
+// C++ API headers
+#include "Credential.h"
+#include "Envelope.h"
+#include "Error.h"
 #include "FeatureLayer.h"
 #include "LabelDefinition.h"
+#include "LabelDefinitionListModel.h"
+#include "LayerListModel.h"
 #include "Map.h"
 #include "MapQuickView.h"
+#include "MapTypes.h"
 #include "ServiceFeatureTable.h"
+#include "ServiceTypes.h"
 #include "SimpleLabelExpression.h"
+#include "SimpleMarkerSymbol.h"
 #include "SimpleRenderer.h"
+#include "SpatialReference.h"
 #include "SubtypeFeatureLayer.h"
 #include "SubtypeSublayer.h"
-#include "TextSymbol.h"
-#include "Error.h"
-#include "MapTypes.h"
 #include "SymbolTypes.h"
-#include "LayerListModel.h"
-#include "Credential.h"
-#include "LabelDefinitionListModel.h"
-#include "ServiceTypes.h"
-#include "SimpleMarkerSymbol.h"
-#include "SpatialReference.h"
+#include "TextSymbol.h"
 #include "Viewpoint.h"
-#include "Envelope.h"
 
 using namespace Esri::ArcGISRuntime;
 

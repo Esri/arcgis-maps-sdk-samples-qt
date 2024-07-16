@@ -18,8 +18,10 @@
 #include "pch.hpp"
 #endif // PCH_BUILD
 
+// sample headers
 #include "Add3DTilesLayer.h"
 
+// C++ API headers
 #include "ArcGISTiledElevationSource.h"
 #include "Basemap.h"
 #include "Camera.h"

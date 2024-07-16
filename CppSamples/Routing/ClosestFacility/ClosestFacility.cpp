@@ -18,33 +18,36 @@
 #include "pch.hpp"
 #endif // PCH_BUILD
 
+// sample headers
 #include "ClosestFacility.h"
 
+// C++ API headers
 #include "ClosestFacilityParameters.h"
-#include "ClosestFacilityTask.h"
-#include "Facility.h"
-#include "Map.h"
-#include "MapQuickView.h"
-#include "PictureMarkerSymbol.h"
-#include "SimpleMarkerSymbol.h"
-#include "SimpleRenderer.h"
-#include "Error.h"
-#include "MapTypes.h"
-#include "MapViewTypes.h"
-#include "GraphicsOverlayListModel.h"
-#include "SymbolTypes.h"
-#include "GraphicListModel.h"
 #include "ClosestFacilityResult.h"
 #include "ClosestFacilityRoute.h"
-#include "Incident.h"
-#include "SpatialReference.h"
-#include "Point.h"
-#include "Viewpoint.h"
-#include "GraphicsOverlay.h"
+#include "ClosestFacilityTask.h"
+#include "Error.h"
+#include "Facility.h"
 #include "Graphic.h"
-#include "SimpleLineSymbol.h"
+#include "GraphicListModel.h"
+#include "GraphicsOverlay.h"
+#include "GraphicsOverlayListModel.h"
+#include "Incident.h"
+#include "Map.h"
+#include "MapQuickView.h"
+#include "MapTypes.h"
+#include "MapViewTypes.h"
+#include "PictureMarkerSymbol.h"
+#include "Point.h"
 #include "Polyline.h"
+#include "SimpleLineSymbol.h"
+#include "SimpleMarkerSymbol.h"
+#include "SimpleRenderer.h"
+#include "SpatialReference.h"
+#include "SymbolTypes.h"
+#include "Viewpoint.h"
 
+// Qt headers
 #include <QFuture>
 #include <QUuid>
 

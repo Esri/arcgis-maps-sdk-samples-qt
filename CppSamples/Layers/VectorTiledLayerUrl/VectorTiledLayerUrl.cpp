@@ -18,18 +18,21 @@
 #include "pch.hpp"
 #endif // PCH_BUILD
 
+// sample headers
 #include "VectorTiledLayerUrl.h"
 
-#include <QUrl>
-
+// C++ API headers
+#include "ArcGISVectorTiledLayer.h"
+#include "Basemap.h"
 #include "Map.h"
 #include "MapQuickView.h"
-#include "Basemap.h"
-#include "ArcGISVectorTiledLayer.h"
-#include "Point.h"
-#include "Viewpoint.h"
 #include "MapTypes.h"
+#include "Point.h"
 #include "SpatialReference.h"
+#include "Viewpoint.h"
+
+// Qt headers
+#include <QUrl>
 
 using namespace Esri::ArcGISRuntime;
 

@@ -18,11 +18,13 @@
 #include "pch.hpp"
 #endif // PCH_BUILD
 
+// sample headers
 #include "OpenMapUrl.h"
 
+// C++ API headers
+#include "Basemap.h"
 #include "Map.h"
 #include "MapQuickView.h"
-#include "Basemap.h"
 #include "MapTypes.h"
 
 using namespace Esri::ArcGISRuntime;

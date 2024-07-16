@@ -18,19 +18,22 @@
 #include "pch.hpp"
 #endif // PCH_BUILD
 
+// sample headers
 #include "DisplayKmlNetworkLinks.h"
 
+// C++ API headers
 #include "KmlDataset.h"
 #include "KmlLayer.h"
+#include "KmlNetworkLink.h"
+#include "LayerListModel.h"
+#include "MapTypes.h"
+#include "Point.h"
 #include "Scene.h"
 #include "SceneQuickView.h"
-#include "MapTypes.h"
-#include "LayerListModel.h"
-#include "KmlNetworkLink.h"
 #include "SpatialReference.h"
-#include "Point.h"
 #include "Viewpoint.h"
 
+// Qt headers
 #include <QFuture>
 
 using namespace Esri::ArcGISRuntime;

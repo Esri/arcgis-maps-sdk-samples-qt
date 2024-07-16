@@ -18,12 +18,20 @@
 #include "pch.hpp"
 #endif // PCH_BUILD
 
+// sample headers
 #include "ShowLocationHistory.h"
 
+// C++ API headers
 #include "Graphic.h"
+#include "GraphicListModel.h"
 #include "GraphicsOverlay.h"
+#include "GraphicsOverlayListModel.h"
+#include "Location.h"
+#include "LocationDisplay.h"
 #include "Map.h"
 #include "MapQuickView.h"
+#include "MapTypes.h"
+#include "MapViewTypes.h"
 #include "Polyline.h"
 #include "PolylineBuilder.h"
 #include "SimpleLineSymbol.h"
@@ -31,15 +39,10 @@
 #include "SimpleRenderer.h"
 #include "SimulatedLocationDataSource.h"
 #include "SimulationParameters.h"
-#include "MapTypes.h"
-#include "MapViewTypes.h"
-#include "GraphicsOverlayListModel.h"
-#include "SymbolTypes.h"
-#include "GraphicListModel.h"
-#include "LocationDisplay.h"
-#include "Location.h"
 #include "SpatialReference.h"
+#include "SymbolTypes.h"
 
+// Qt headers
 #include <QDateTime>
 #include <QFuture>
 

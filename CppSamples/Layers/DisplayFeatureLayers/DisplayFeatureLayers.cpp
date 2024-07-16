@@ -18,15 +18,17 @@
 #include "pch.hpp"
 #endif // PCH_BUILD
 
+// sample headers
 #include "DisplayFeatureLayers.h"
 
+// C++ API headers
 #include "Envelope.h"
 #include "Error.h"
 #include "FeatureLayer.h"
-#include "Geodatabase.h"
-#include "GeodatabaseFeatureTable.h"
 #include "GeoPackage.h"
 #include "GeoPackageFeatureTable.h"
+#include "Geodatabase.h"
+#include "GeodatabaseFeatureTable.h"
 #include "LayerListModel.h"
 #include "Map.h"
 #include "MapQuickView.h"
@@ -39,6 +41,7 @@
 #include "SpatialReference.h"
 #include "Viewpoint.h"
 
+// Qt headers
 #include <QFuture>
 #include <QStandardPaths>
 

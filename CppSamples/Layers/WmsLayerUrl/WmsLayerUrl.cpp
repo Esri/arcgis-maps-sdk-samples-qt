@@ -18,19 +18,22 @@
 #include "pch.hpp"
 #endif // PCH_BUILD
 
+// sample headers
 #include "WmsLayerUrl.h"
 
+// C++ API headers
 #include "Envelope.h"
+#include "LayerListModel.h"
 #include "Map.h"
 #include "MapQuickView.h"
-#include "WmsLayer.h"
 #include "MapTypes.h"
-#include "LayerListModel.h"
 #include "SpatialReference.h"
+#include "WmsLayer.h"
 
+// Qt headers
 #include <QFuture>
-#include <QUrl>
 #include <QStringList>
+#include <QUrl>
 
 using namespace Esri::ArcGISRuntime;
 

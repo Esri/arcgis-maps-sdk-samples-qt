@@ -18,35 +18,38 @@
 #include "pch.hpp"
 #endif // PCH_BUILD
 
+// sample headers
 #include "ServiceArea.h"
 
+// C++ API headers
+#include "Error.h"
+#include "Graphic.h"
+#include "GraphicListModel.h"
+#include "GraphicsOverlay.h"
+#include "GraphicsOverlayListModel.h"
 #include "Map.h"
 #include "MapQuickView.h"
+#include "MapTypes.h"
+#include "MapViewTypes.h"
+#include "NetworkAnalystTypes.h"
 #include "PictureMarkerSymbol.h"
+#include "Point.h"
+#include "Polygon.h"
+#include "Polyline.h"
+#include "PolylineBarrier.h"
 #include "PolylineBuilder.h"
+#include "ServiceAreaFacility.h"
+#include "ServiceAreaPolygon.h"
+#include "ServiceAreaResult.h"
 #include "ServiceAreaTask.h"
 #include "SimpleFillSymbol.h"
 #include "SimpleLineSymbol.h"
 #include "SimpleRenderer.h"
-#include "MapTypes.h"
-#include "MapViewTypes.h"
-#include "SymbolTypes.h"
-#include "Error.h"
-#include "GraphicsOverlayListModel.h"
-#include "GraphicListModel.h"
-#include "Graphic.h"
-#include "ServiceAreaFacility.h"
-#include "PolylineBarrier.h"
-#include "NetworkAnalystTypes.h"
-#include "ServiceAreaResult.h"
-#include "ServiceAreaPolygon.h"
 #include "SpatialReference.h"
-#include "Point.h"
+#include "SymbolTypes.h"
 #include "Viewpoint.h"
-#include "GraphicsOverlay.h"
-#include "Polyline.h"
-#include "Polygon.h"
 
+// Qt headers
 #include <QFuture>
 #include <QUuid>
 

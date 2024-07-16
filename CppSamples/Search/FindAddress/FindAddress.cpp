@@ -18,31 +18,36 @@
 #include "pch.hpp"
 #endif // PCH_BUILD
 
+// sample headers
 #include "FindAddress.h"
 
+// C++ API headers
+#include "AttributeListModel.h"
+#include "Basemap.h"
+#include "CalloutData.h"
+#include "Envelope.h"
+#include "GeocodeParameters.h"
+#include "GeocodeResult.h"
+#include "Graphic.h"
+#include "GraphicListModel.h"
+#include "GraphicsOverlay.h"
+#include "GraphicsOverlayListModel.h"
+#include "IdentifyGraphicsOverlayResult.h"
+#include "LocatorTask.h"
 #include "Map.h"
 #include "MapQuickView.h"
-#include "Basemap.h"
-#include "GraphicsOverlay.h"
-#include "PictureMarkerSymbol.h"
-#include "SimpleRenderer.h"
-#include "LocatorTask.h"
-#include "GeocodeParameters.h"
-#include "Graphic.h"
 #include "MapTypes.h"
-#include "GraphicsOverlayListModel.h"
-#include "GraphicListModel.h"
-#include "AttributeListModel.h"
-#include "GeocodeResult.h"
-#include "CalloutData.h"
-#include "IdentifyGraphicsOverlayResult.h"
+#include "PictureMarkerSymbol.h"
 #include "Point.h"
-#include "Envelope.h"
+#include "SimpleRenderer.h"
 
+// Qt headers
 #include <QFuture>
 #include <QUrl>
-#include <memory>
 #include <QUuid>
+
+// STL headers
+#include <memory>
 
 using namespace Esri::ArcGISRuntime;
 

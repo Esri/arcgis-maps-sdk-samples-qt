@@ -18,19 +18,22 @@
 #include "pch.hpp"
 #endif // PCH_BUILD
 
+// sample headers
 #include "CreateAndSaveMap.h"
 
+// C++ API headers
+#include "ArcGISMapImageLayer.h"
+#include "Basemap.h"
+#include "Error.h"
 #include "ErrorException.h"
+#include "Item.h"
+#include "LayerListModel.h"
 #include "Map.h"
 #include "MapQuickView.h"
-#include "Basemap.h"
-#include "ArcGISMapImageLayer.h"
-#include "Portal.h"
 #include "MapTypes.h"
-#include "LayerListModel.h"
-#include "Error.h"
-#include "Item.h"
+#include "Portal.h"
 
+// Qt headers
 #include <QFuture>
 #include <QUuid>
 

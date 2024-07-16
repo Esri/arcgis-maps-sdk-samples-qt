@@ -18,32 +18,35 @@
 #include "pch.hpp"
 #endif // PCH_BUILD
 
+// sample headers
 #include "FindRoute.h"
 
-#include "Map.h"
-#include "MapQuickView.h"
-#include "Basemap.h"
+// C++ API headers
 #include "ArcGISVectorTiledLayer.h"
-#include "GraphicsOverlay.h"
-#include "Viewpoint.h"
-#include "Point.h"
-#include "SpatialReference.h"
-#include "SimpleRenderer.h"
-#include "SimpleLineSymbol.h"
-#include "PictureMarkerSymbol.h"
-#include "RouteTask.h"
-#include "RouteParameters.h"
-#include "Stop.h"
-#include "MapTypes.h"
-#include "SymbolTypes.h"
-#include "GraphicsOverlayListModel.h"
-#include "GraphicListModel.h"
-#include "RouteResult.h"
-#include "Route.h"
+#include "Basemap.h"
 #include "DirectionManeuverListModel.h"
 #include "Graphic.h"
+#include "GraphicListModel.h"
+#include "GraphicsOverlay.h"
+#include "GraphicsOverlayListModel.h"
+#include "Map.h"
+#include "MapQuickView.h"
+#include "MapTypes.h"
+#include "PictureMarkerSymbol.h"
+#include "Point.h"
 #include "Polyline.h"
+#include "Route.h"
+#include "RouteParameters.h"
+#include "RouteResult.h"
+#include "RouteTask.h"
+#include "SimpleLineSymbol.h"
+#include "SimpleRenderer.h"
+#include "SpatialReference.h"
+#include "Stop.h"
+#include "SymbolTypes.h"
+#include "Viewpoint.h"
 
+// Qt headers
 #include <QFuture>
 #include <QUuid>
 

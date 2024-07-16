@@ -18,12 +18,14 @@
 #include "pch.hpp"
 #endif // PCH_BUILD
 
+// sample headers
+#include "BasemapStyleListModel.h"
 #include "CreateDynamicBasemapGallery.h"
 
+// C++ API headers
 #include "Basemap.h"
 #include "BasemapStyleInfo.h"
 #include "BasemapStyleLanguageInfo.h"
-#include "BasemapStyleListModel.h"
 #include "BasemapStyleParameters.h"
 #include "BasemapStylesService.h"
 #include "BasemapStylesServiceInfo.h"
@@ -34,6 +36,7 @@
 #include "Viewpoint.h"
 #include "Worldview.h"
 
+// Qt headers
 #include <QFuture>
 
 using namespace Esri::ArcGISRuntime;

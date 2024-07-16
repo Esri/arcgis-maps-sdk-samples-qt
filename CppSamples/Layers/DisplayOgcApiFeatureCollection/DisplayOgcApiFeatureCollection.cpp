@@ -18,23 +18,26 @@
 #include "pch.hpp"
 #endif // PCH_BUILD
 
+// sample headers
 #include "DisplayOgcApiFeatureCollection.h"
 
+// C++ API headers
+#include "CoreTypes.h"
 #include "FeatureLayer.h"
+#include "GeodatabaseTypes.h"
+#include "Geometry.h"
+#include "LayerListModel.h"
 #include "Map.h"
 #include "MapQuickView.h"
+#include "MapTypes.h"
 #include "OgcFeatureCollectionTable.h"
 #include "QueryParameters.h"
 #include "SimpleLineSymbol.h"
 #include "SimpleRenderer.h"
-#include "MapTypes.h"
 #include "SymbolTypes.h"
-#include "LayerListModel.h"
-#include "CoreTypes.h"
-#include "GeodatabaseTypes.h"
 #include "Viewpoint.h"
-#include "Geometry.h"
 
+// Qt headers
 #include <QFuture>
 
 using namespace Esri::ArcGISRuntime;

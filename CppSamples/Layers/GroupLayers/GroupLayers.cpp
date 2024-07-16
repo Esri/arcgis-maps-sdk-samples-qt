@@ -18,23 +18,26 @@
 #include "pch.hpp"
 #endif // PCH_BUILD
 
+// sample headers
 #include "GroupLayers.h"
 
-#include "ArcGISTiledElevationSource.h"
-#include "Scene.h"
-#include "SceneQuickView.h"
-#include "GroupLayer.h"
+// C++ API headers
 #include "ArcGISSceneLayer.h"
-#include "FeatureLayer.h"
-#include "ServiceFeatureTable.h"
-#include "Viewpoint.h"
+#include "ArcGISTiledElevationSource.h"
+#include "ElevationSourceListModel.h"
 #include "Envelope.h"
 #include "Error.h"
-#include "MapTypes.h"
+#include "FeatureLayer.h"
+#include "GroupLayer.h"
 #include "LayerListModel.h"
+#include "MapTypes.h"
+#include "Scene.h"
+#include "SceneQuickView.h"
+#include "ServiceFeatureTable.h"
 #include "Surface.h"
-#include "ElevationSourceListModel.h"
+#include "Viewpoint.h"
 
+// Qt headers
 #include <QFuture>
 
 using namespace Esri::ArcGISRuntime;

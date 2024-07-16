@@ -18,23 +18,24 @@
 #include "pch.hpp"
 #endif // PCH_BUILD
 
+// sample headers
 #include "DisplayLayerViewDrawState.h"
 
+// C++ API headers
+#include "Error.h"
 #include "FeatureLayer.h"
+#include "LayerListModel.h"
+#include "LayerViewState.h"
 #include "Map.h"
 #include "MapQuickView.h"
-#include "PortalItem.h"
-#include "Viewpoint.h"
-#include "Point.h"
-#include "Error.h"
 #include "MapTypes.h"
-#include "LayerListModel.h"
-#include "Portal.h"
-#include "LayerViewState.h"
-#include "SpatialReference.h"
 #include "Point.h"
+#include "Portal.h"
+#include "PortalItem.h"
+#include "SpatialReference.h"
 #include "Viewpoint.h"
 
+// Qt headers
 #include <QFuture>
 
 using namespace Esri::ArcGISRuntime;

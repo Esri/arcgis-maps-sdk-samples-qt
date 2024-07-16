@@ -18,26 +18,31 @@
 #include "pch.hpp"
 #endif // PCH_BUILD
 
+// sample headers
 #include "IdentifyRasterCell.h"
 
+// C++ API headers
+#include "AttributeListModel.h"
 #include "CalloutData.h"
+#include "Envelope.h"
+#include "Error.h"
+#include "IdentifyLayerResult.h"
+#include "LayerListModel.h"
 #include "Map.h"
 #include "MapQuickView.h"
-#include "Raster.h"
-#include "RasterLayer.h"
-#include "Error.h"
 #include "MapTypes.h"
-#include "LayerListModel.h"
+#include "Raster.h"
 #include "RasterCell.h"
-#include "IdentifyLayerResult.h"
-#include "AttributeListModel.h"
-#include "Envelope.h"
+#include "RasterLayer.h"
 
-#include <memory>
+// Qt headers
 #include <QFuture>
+#include <QStandardPaths>
 #include <QString>
 #include <QUuid>
-#include <QStandardPaths>
+
+// STL headers
+#include <memory>
 
 using namespace Esri::ArcGISRuntime;
 

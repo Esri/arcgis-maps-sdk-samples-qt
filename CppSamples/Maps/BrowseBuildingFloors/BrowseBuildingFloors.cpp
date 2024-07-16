@@ -18,13 +18,15 @@
 #include "pch.hpp"
 #endif // PCH_BUILD
 
+// sample headers
 #include "BrowseBuildingFloors.h"
 
+// C++ API headers
+#include "Error.h"
 #include "FloorLevel.h"
 #include "FloorManager.h"
 #include "Map.h"
 #include "MapQuickView.h"
-#include "Error.h"
 #include "MapTypes.h"
 #include "Portal.h"
 #include "PortalItem.h"

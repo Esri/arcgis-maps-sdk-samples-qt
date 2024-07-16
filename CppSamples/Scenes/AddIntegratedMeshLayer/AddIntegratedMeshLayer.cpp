@@ -18,18 +18,21 @@
 #include "pch.hpp"
 #endif // PCH_BUILD
 
+// sample headers
 #include "AddIntegratedMeshLayer.h"
 
+// C++ API headers
+#include "Camera.h"
+#include "Error.h"
+#include "IntegratedMeshLayer.h"
+#include "LayerListModel.h"
+#include "Point.h"
 #include "Scene.h"
 #include "SceneQuickView.h"
-#include "IntegratedMeshLayer.h"
-#include "Error.h"
-#include "LayerListModel.h"
-#include "Camera.h"
 #include "SpatialReference.h"
-#include "Point.h"
 #include "Viewpoint.h"
 
+// Qt headers
 #include <QUuid>
 
 using namespace Esri::ArcGISRuntime;

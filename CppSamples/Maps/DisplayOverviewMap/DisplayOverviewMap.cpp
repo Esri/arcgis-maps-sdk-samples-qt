@@ -18,17 +18,19 @@
 #include "pch.hpp"
 #endif // PCH_BUILD
 
+// sample headers
 #include "DisplayOverviewMap.h"
 
+// C++ API headers
+#include "Basemap.h"
 #include "FeatureLayer.h"
+#include "GeodatabaseTypes.h"
+#include "LayerListModel.h"
 #include "Map.h"
 #include "MapQuickView.h"
+#include "MapTypes.h"
 #include "ServiceFeatureTable.h"
 #include "Viewpoint.h"
-#include "MapTypes.h"
-#include "LayerListModel.h"
-#include "GeodatabaseTypes.h"
-#include "Basemap.h"
 
 using namespace Esri::ArcGISRuntime;
 

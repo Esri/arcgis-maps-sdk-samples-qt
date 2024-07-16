@@ -18,17 +18,20 @@
 #include "pch.hpp"
 #endif // PCH_BUILD
 
+// sample headers
 #include "DisplayDeviceLocationWithNmeaDataSources.h"
 
+// C++ API headers
+#include "LocationDisplay.h"
 #include "Map.h"
 #include "MapQuickView.h"
-#include "NmeaLocationDataSource.h"
 #include "MapTypes.h"
 #include "MapViewTypes.h"
-#include "LocationDisplay.h"
-#include "SpatialReference.h"
+#include "NmeaLocationDataSource.h"
 #include "Point.h"
+#include "SpatialReference.h"
 
+// Qt headers
 #include <QFile>
 #include <QFuture>
 #include <QTimer>

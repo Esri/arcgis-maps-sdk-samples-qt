@@ -18,16 +18,19 @@
 #include "pch.hpp"
 #endif // PCH_BUILD
 
+// sample headers
 #include "ChangeAtmosphereEffect.h"
 
+// C++ API headers
 #include "ArcGISTiledElevationSource.h"
-#include "Scene.h"
-#include "SceneQuickView.h"
-#include "MapTypes.h"
-#include "Surface.h"
 #include "Camera.h"
 #include "ElevationSourceListModel.h"
+#include "MapTypes.h"
+#include "Scene.h"
+#include "SceneQuickView.h"
+#include "Surface.h"
 
+// Qt headers
 #include <QFuture>
 
 using namespace Esri::ArcGISRuntime;

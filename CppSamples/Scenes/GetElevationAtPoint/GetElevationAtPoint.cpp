@@ -14,9 +14,9 @@
 // limitations under the License.
 // [Legal]
 
-#endif // PCH_BUILD
 #ifdef PCH_BUILD
 #include "pch.hpp"
+#endif // PCH_BUILD
 
 // sample headers
 #include "GetElevationAtPoint.h"

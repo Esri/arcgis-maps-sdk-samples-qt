@@ -18,20 +18,23 @@
 #include "pch.hpp"
 #endif // PCH_BUILD
 
+// sample headers
 #include "IdentifyKmlFeatures.h"
 
+// C++ API headers
 #include "CalloutData.h"
+#include "Envelope.h"
+#include "IdentifyLayerResult.h"
 #include "KmlDataset.h"
 #include "KmlLayer.h"
+#include "KmlPlacemark.h"
+#include "LayerListModel.h"
 #include "Map.h"
 #include "MapQuickView.h"
 #include "MapTypes.h"
-#include "LayerListModel.h"
-#include "IdentifyLayerResult.h"
-#include "KmlPlacemark.h"
 #include "SpatialReference.h"
-#include "Envelope.h"
 
+// Qt headers
 #include <QFuture>
 #include <QUuid>
 

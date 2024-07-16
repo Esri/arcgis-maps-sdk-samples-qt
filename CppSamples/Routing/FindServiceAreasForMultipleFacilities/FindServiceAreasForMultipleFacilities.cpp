@@ -18,14 +18,27 @@
 #include "pch.hpp"
 #endif // PCH_BUILD
 
+// sample headers
 #include "FindServiceAreasForMultipleFacilities.h"
 
+// C++ API headers
+#include "Envelope.h"
+#include "Error.h"
+#include "ErrorException.h"
 #include "FeatureLayer.h"
+#include "Graphic.h"
+#include "GraphicListModel.h"
 #include "GraphicsOverlay.h"
+#include "GraphicsOverlayListModel.h"
+#include "LayerListModel.h"
 #include "Map.h"
 #include "MapQuickView.h"
+#include "MapTypes.h"
+#include "NetworkAnalystTypes.h"
 #include "PictureMarkerSymbol.h"
+#include "Polygon.h"
 #include "QueryParameters.h"
+#include "ServiceAreaFacility.h"
 #include "ServiceAreaParameters.h"
 #include "ServiceAreaPolygon.h"
 #include "ServiceAreaResult.h"
@@ -33,21 +46,11 @@
 #include "ServiceFeatureTable.h"
 #include "SimpleFillSymbol.h"
 #include "SimpleRenderer.h"
-#include "MapTypes.h"
 #include "SymbolTypes.h"
-#include "Error.h"
-#include "GraphicsOverlayListModel.h"
-#include "GraphicListModel.h"
-#include "NetworkAnalystTypes.h"
-#include "LayerListModel.h"
-#include "ServiceAreaFacility.h"
-#include "Envelope.h"
-#include "Polygon.h"
-#include "Graphic.h"
-#include "ErrorException.h"
 
-#include <QUuid>
+// Qt headers
 #include <QUrl>
+#include <QUuid>
 
 using namespace Esri::ArcGISRuntime;
 

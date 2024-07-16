@@ -18,26 +18,28 @@
 #include "pch.hpp"
 #endif // PCH_BUILD
 
+// sample headers
 #include "ApplyScheduledMapUpdates.h"
 
+// C++ API headers
+#include "Error.h"
 #include "Map.h"
 #include "MapQuickView.h"
 #include "MobileMapPackage.h"
-#include "OfflineMapSyncTask.h"
-#include "OfflineMapUpdatesInfo.h"
-#include "OfflineMapSyncParameters.h"
 #include "OfflineMapSyncJob.h"
-#include "Error.h"
-#include "OfflineMapUpdatesInfo.h"
-#include "OfflineMapTypes.h"
+#include "OfflineMapSyncParameters.h"
 #include "OfflineMapSyncResult.h"
+#include "OfflineMapSyncTask.h"
+#include "OfflineMapTypes.h"
+#include "OfflineMapUpdatesInfo.h"
 
+// Qt headers
 #include <QFile>
 #include <QFileInfo>
 #include <QFuture>
-#include <QtCore/qglobal.h>
-#include <QUuid>
 #include <QStandardPaths>
+#include <QUuid>
+#include <QtCore/qglobal.h>
 
 using namespace Esri::ArcGISRuntime;
 

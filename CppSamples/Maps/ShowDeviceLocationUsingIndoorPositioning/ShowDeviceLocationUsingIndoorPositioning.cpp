@@ -18,17 +18,20 @@
 #include "pch.hpp"
 #endif // PCH_BUILD
 
+// sample headers
 #include "IndoorsLocationDataSourceCreator.h"
 #include "ShowDeviceLocationUsingIndoorPositioning.h"
+
+// C++ API headers
+#include "FeatureLayer.h"
 #include "IndoorsLocationDataSource.h"
+#include "LayerListModel.h"
+#include "LocationDisplay.h"
 #include "Map.h"
 #include "MapQuickView.h"
-#include "MapViewTypes.h"
-#include "LocationDisplay.h"
-#include "LayerListModel.h"
 #include "MapTypes.h"
+#include "MapViewTypes.h"
 #include "PortalItem.h"
-#include "FeatureLayer.h"
 
 using namespace Esri::ArcGISRuntime;
 

@@ -18,14 +18,18 @@
 #include "pch.hpp"
 #endif // PCH_BUILD
 
+// sample headers
 #include "SetMapSpatialReference.h"
 
+// C++ API headers
+#include "ArcGISMapImageLayer.h"
+#include "Basemap.h"
 #include "Map.h"
 #include "MapQuickView.h"
-#include "Basemap.h"
-#include "SpatialReference.h"
-#include "ArcGISMapImageLayer.h"
 #include "MapViewTypes.h"
+#include "SpatialReference.h"
+
+// Qt headers
 #include <QUrl>
 
 using namespace Esri::ArcGISRuntime;

@@ -18,30 +18,33 @@
 #include "pch.hpp"
 #endif // PCH_BUILD
 
+// sample headers
 #include "DownloadPreplannedMap.h"
 
+// C++ API headers
 #include "DownloadPreplannedOfflineMapJob.h"
 #include "DownloadPreplannedOfflineMapResult.h"
+#include "Error.h"
+#include "Geometry.h"
 #include "Graphic.h"
+#include "GraphicListModel.h"
+#include "GraphicsOverlay.h"
+#include "GraphicsOverlayListModel.h"
 #include "Map.h"
 #include "MapQuickView.h"
+#include "MapTypes.h"
+#include "MobileMapPackage.h"
 #include "OfflineMapTask.h"
+#include "OfflineMapTypes.h"
+#include "PortalItem.h"
 #include "PreplannedMapArea.h"
 #include "PreplannedMapAreaListModel.h"
 #include "SimpleLineSymbol.h"
 #include "SimpleRenderer.h"
-#include "Error.h"
-#include "MapTypes.h"
-#include "GraphicsOverlayListModel.h"
-#include "GraphicListModel.h"
 #include "SymbolTypes.h"
-#include "OfflineMapTypes.h"
 #include "TaskTypes.h"
-#include "MobileMapPackage.h"
-#include "GraphicsOverlay.h"
-#include "PortalItem.h"
-#include "Geometry.h"
 
+// Qt headers
 #include <QFuture>
 #include <QUuid>
 
