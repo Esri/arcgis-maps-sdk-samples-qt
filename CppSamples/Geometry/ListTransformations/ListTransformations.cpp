@@ -18,33 +18,36 @@
 #include "pch.hpp"
 #endif // PCH_BUILD
 
+// sample headers
 #include "ListTransformations.h"
 
+// C++ API headers
+#include "DatumTransformation.h"
+#include "Envelope.h"
+#include "Error.h"
+#include "GeographicTransformation.h"
+#include "GeographicTransformationStep.h"
+#include "GeometryEngine.h"
+#include "Graphic.h"
+#include "GraphicListModel.h"
+#include "GraphicsOverlay.h"
+#include "GraphicsOverlayListModel.h"
 #include "Map.h"
 #include "MapQuickView.h"
-#include "TransformationCatalog.h"
-#include "GeometryEngine.h"
-#include "GraphicsOverlay.h"
-#include "Graphic.h"
-#include "Point.h"
-#include "SimpleMarkerSymbol.h"
-#include "DatumTransformation.h"
-#include "GeographicTransformationStep.h"
-#include "GeographicTransformation.h"
-#include "Error.h"
 #include "MapTypes.h"
-#include "GraphicsOverlayListModel.h"
-#include "GraphicListModel.h"
-#include "SymbolTypes.h"
-#include "SpatialReference.h"
-#include "Viewpoint.h"
-#include "Envelope.h"
+#include "Point.h"
 #include "Polygon.h"
+#include "SimpleMarkerSymbol.h"
+#include "SpatialReference.h"
+#include "SymbolTypes.h"
+#include "TransformationCatalog.h"
+#include "Viewpoint.h"
 
-#include <QtCore/qglobal.h>
-#include <QUrl>
+// Qt headers
 #include <QStandardPaths>
+#include <QUrl>
 #include <QVariantMap>
+#include <QtCore/qglobal.h>
 
 using namespace Esri::ArcGISRuntime;
 

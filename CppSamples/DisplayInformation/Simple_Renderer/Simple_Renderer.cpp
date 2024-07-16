@@ -18,23 +18,26 @@
 #include "pch.hpp"
 #endif // PCH_BUILD
 
+// sample headers
 #include "Simple_Renderer.h"
 
+// C++ API headers
+#include "Envelope.h"
+#include "Graphic.h"
+#include "GraphicListModel.h"
+#include "GraphicsOverlay.h"
+#include "GraphicsOverlayListModel.h"
 #include "Map.h"
 #include "MapQuickView.h"
+#include "MapTypes.h"
+#include "MapViewTypes.h"
 #include "Point.h"
-#include "GraphicsOverlay.h"
-#include "Graphic.h"
 #include "SimpleMarkerSymbol.h"
 #include "SimpleRenderer.h"
 #include "SpatialReference.h"
-#include "MapViewTypes.h"
-#include "MapTypes.h"
 #include "SymbolTypes.h"
-#include "GraphicsOverlayListModel.h"
-#include "GraphicListModel.h"
-#include "Envelope.h"
 
+// Qt headers
 #include <QFuture>
 
 using namespace Esri::ArcGISRuntime;

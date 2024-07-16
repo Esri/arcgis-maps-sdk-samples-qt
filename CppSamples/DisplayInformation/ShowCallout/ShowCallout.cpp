@@ -18,16 +18,20 @@
 #include "pch.hpp"
 #endif // PCH_BUILD
 
+// sample headers
 #include "ShowCallout.h"
 
+// C++ API headers
+#include "CalloutData.h"
 #include "Map.h"
 #include "MapQuickView.h"
-#include "CalloutData.h"
 #include "MapTypes.h"
 #include "MapViewTypes.h"
-#include "SpatialReference.h"
 #include "Point.h"
+#include "SpatialReference.h"
 #include "Viewpoint.h"
+
+// Qt headers
 #include <QImage>
 
 using namespace Esri::ArcGISRuntime;

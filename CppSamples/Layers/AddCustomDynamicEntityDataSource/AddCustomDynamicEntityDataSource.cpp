@@ -18,33 +18,35 @@
 #include "pch.hpp"
 #endif // PCH_BUILD
 
+// sample headers
 #include "AddCustomDynamicEntityDataSource.h"
-
 #include "CustomDataSource.h"
-#include "ServiceTypes.h"
+
+// C++ API headers
+#include "ArcGISMapImageLayer.h"
+#include "AttributeListModel.h"
+#include "Basemap.h"
+#include "CalloutData.h"
+#include "DynamicEntity.h"
+#include "DynamicEntityChangedInfo.h"
 #include "DynamicEntityDataSource.h"
+#include "DynamicEntityDataSourcePurgeOptions.h"
 #include "DynamicEntityLayer.h"
+#include "DynamicEntityObservation.h"
+#include "IdentifyLayerResult.h"
+#include "LabelDefinition.h"
+#include "LabelDefinitionListModel.h"
+#include "LayerListModel.h"
 #include "Map.h"
 #include "MapQuickView.h"
 #include "MapTypes.h"
-#include "Viewpoint.h"
-#include "LayerListModel.h"
-#include "Basemap.h"
-#include "ArcGISMapImageLayer.h"
-#include "TrackDisplayProperties.h"
+#include "ServiceTypes.h"
 #include "SimpleLabelExpression.h"
 #include "TextSymbol.h"
-#include "LabelDefinition.h"
-#include "ServiceTypes.h"
-#include "LabelDefinitionListModel.h"
-#include "CalloutData.h"
-#include "IdentifyLayerResult.h"
-#include "DynamicEntityObservation.h"
-#include "DynamicEntity.h"
-#include "AttributeListModel.h"
-#include "DynamicEntityChangedInfo.h"
-#include "DynamicEntityDataSourcePurgeOptions.h"
+#include "TrackDisplayProperties.h"
+#include "Viewpoint.h"
 
+// Qt headers
 #include <QFuture>
 #include <QtConcurrent/QtConcurrent>
 

@@ -18,7 +18,10 @@
 #include "pch.hpp"
 #endif // PCH_BUILD
 
+// sample headers
 #include "AddDynamicEntityLayer.h"
+
+// C++ API headers
 #include "ArcGISStreamService.h"
 #include "ArcGISStreamServiceFilter.h"
 #include "CalloutData.h"
@@ -49,6 +52,7 @@
 #include "UniqueValueRenderer.h"
 #include "Viewpoint.h"
 
+// Qt headers
 #include <QFuture>
 
 using namespace Esri::ArcGISRuntime;

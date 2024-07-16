@@ -18,44 +18,47 @@
 #include "pch.hpp"
 #endif // PCH_BUILD
 
+// sample headers
 #include "ContingentValues.h"
 
+// C++ API headers
+#include "ArcGISFeature.h"
 #include "ArcGISVectorTiledLayer.h"
+#include "AttributeListModel.h"
+#include "Basemap.h"
 #include "CodedValueDomain.h"
 #include "ContingentCodedValue.h"
 #include "ContingentRangeValue.h"
 #include "ContingentValuesDefinition.h"
 #include "ContingentValuesResult.h"
+#include "FeatureIterator.h"
 #include "FeatureLayer.h"
+#include "FeatureQueryResult.h"
 #include "Geodatabase.h"
 #include "GeodatabaseFeatureTable.h"
+#include "GeodatabaseTypes.h"
 #include "GeometryEngine.h"
+#include "Graphic.h"
+#include "GraphicListModel.h"
+#include "GraphicsOverlay.h"
+#include "GraphicsOverlayListModel.h"
+#include "LayerListModel.h"
 #include "Map.h"
 #include "MapQuickView.h"
-#include "SimpleRenderer.h"
-#include "GraphicsOverlayListModel.h"
-#include "SymbolTypes.h"
-#include "LayerListModel.h"
-#include "ArcGISFeature.h"
 #include "MapTypes.h"
-#include "GeodatabaseTypes.h"
-#include "AttributeListModel.h"
-#include "GraphicListModel.h"
-#include "QueryParameters.h"
-#include "FeatureIterator.h"
-#include "FeatureQueryResult.h"
 #include "Point.h"
-#include "Basemap.h"
-#include "Viewpoint.h"
-#include "GraphicsOverlay.h"
-#include "SimpleLineSymbol.h"
-#include "SimpleFillSymbol.h"
 #include "Polygon.h"
-#include "Graphic.h"
+#include "QueryParameters.h"
+#include "SimpleFillSymbol.h"
+#include "SimpleLineSymbol.h"
+#include "SimpleRenderer.h"
+#include "SymbolTypes.h"
+#include "Viewpoint.h"
 
+// Qt headers
 #include <QFuture>
-#include <QUuid>
 #include <QStandardPaths>
+#include <QUuid>
 
 using namespace Esri::ArcGISRuntime;
 

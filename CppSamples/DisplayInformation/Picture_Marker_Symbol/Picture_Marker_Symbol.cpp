@@ -18,26 +18,29 @@
 #include "pch.hpp"
 #endif // PCH_BUILD
 
+// sample headers
 #include "Picture_Marker_Symbol.h"
 
-#include "Map.h"
-#include "Point.h"
+// C++ API headers
+#include "Envelope.h"
 #include "Graphic.h"
-#include "Viewpoint.h"
-#include "MapQuickView.h"
+#include "GraphicListModel.h"
 #include "GraphicsOverlay.h"
-#include "SpatialReference.h"
-#include "PictureMarkerSymbol.h"
+#include "GraphicsOverlayListModel.h"
+#include "Map.h"
+#include "MapQuickView.h"
 #include "MapTypes.h"
 #include "MapViewTypes.h"
-#include "GraphicsOverlayListModel.h"
-#include "GraphicListModel.h"
-#include "Envelope.h"
+#include "PictureMarkerSymbol.h"
+#include "Point.h"
+#include "SpatialReference.h"
+#include "Viewpoint.h"
 
-#include <QUrl>
-#include <QString>
-#include <QtCore/qglobal.h>
+// Qt headers
 #include <QStandardPaths>
+#include <QString>
+#include <QUrl>
+#include <QtCore/qglobal.h>
 
 using namespace Esri::ArcGISRuntime;
 

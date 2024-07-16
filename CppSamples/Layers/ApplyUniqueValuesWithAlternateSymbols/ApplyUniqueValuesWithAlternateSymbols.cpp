@@ -18,26 +18,29 @@
 #include "pch.hpp"
 #endif // PCH_BUILD
 
+// sample headers
 #include "ApplyUniqueValuesWithAlternateSymbols.h"
 
+// C++ API headers
 #include "Basemap.h"
 #include "FeatureLayer.h"
+#include "LayerListModel.h"
 #include "Map.h"
 #include "MapQuickView.h"
+#include "MapTypes.h"
 #include "MultilayerPointSymbol.h"
+#include "Point.h"
 #include "ServiceFeatureTable.h"
 #include "SimpleMarkerSymbol.h"
-#include "SymbolReferenceProperties.h"
-#include "UniqueValueRenderer.h"
-#include "MapTypes.h"
-#include "SymbolTypes.h"
-#include "LayerListModel.h"
-#include "UniqueValueListModel.h"
-#include "UniqueValue.h"
 #include "SpatialReference.h"
+#include "SymbolReferenceProperties.h"
+#include "SymbolTypes.h"
+#include "UniqueValue.h"
+#include "UniqueValueListModel.h"
+#include "UniqueValueRenderer.h"
 #include "Viewpoint.h"
-#include "Point.h"
 
+// Qt headers
 #include <QFuture>
 
 using namespace Esri::ArcGISRuntime;

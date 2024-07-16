@@ -18,8 +18,11 @@
 #include "pch.hpp"
 #endif // PCH_BUILD
 
+// sample headers
 #include "SnapGeometryEdits.h"
+#include "SnapSourceListModel.h"
 
+// C++ API headers
 #include "FeatureLayer.h"
 #include "FeatureTable.h"
 #include "Geometry.h"
@@ -43,13 +46,11 @@
 #include "SimpleFillSymbol.h"
 #include "SimpleLineSymbol.h"
 #include "SimpleMarkerSymbol.h"
-#include "SnapGeometryEdits.h"
 #include "SnapSettings.h"
 #include "SnapSourceSettings.h"
 #include "SymbolTypes.h"
 
-#include "SnapSourceListModel.h"
-
+// Qt headers
 #include <QFuture>
 #include <QtGlobal>
 

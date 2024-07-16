@@ -18,19 +18,22 @@
 #include "pch.hpp"
 #endif // PCH_BUILD
 
+// sample headers
 #include "ControlAnnotationSublayerVisibility.h"
 
-#include "Map.h"
-#include "MapQuickView.h"
-#include "MobileMapPackage.h"
+// C++ API headers
 #include "AnnotationSublayer.h"
 #include "Error.h"
-#include "LayerListModel.h"
-#include "MapTypes.h"
 #include "Layer.h"
+#include "LayerListModel.h"
+#include "Map.h"
+#include "MapQuickView.h"
+#include "MapTypes.h"
+#include "MobileMapPackage.h"
 
-#include <QtCore/qglobal.h>
+// Qt headers
 #include <QStandardPaths>
+#include <QtCore/qglobal.h>
 
 using namespace Esri::ArcGISRuntime;
 

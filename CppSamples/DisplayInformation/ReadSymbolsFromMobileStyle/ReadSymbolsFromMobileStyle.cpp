@@ -18,33 +18,36 @@
 #include "pch.hpp"
 #endif // PCH_BUILD
 
+// sample headers
 #include "ReadSymbolsFromMobileStyle.h"
+#include "SymbolImageProvider.h"
 
+// C++ API headers
+#include "Error.h"
+#include "Graphic.h"
+#include "GraphicListModel.h"
+#include "GraphicsOverlay.h"
+#include "GraphicsOverlayListModel.h"
 #include "Map.h"
 #include "MapQuickView.h"
-#include "GraphicsOverlay.h"
-#include "Graphic.h"
-#include "SymbolStyle.h"
+#include "MapTypes.h"
+#include "MultilayerPointSymbol.h"
 #include "MultilayerSymbol.h"
 #include "Point.h"
-#include "MultilayerPointSymbol.h"
-#include "SymbolImageProvider.h"
-#include "SymbolStyleSearchResultListModel.h"
-#include "MapTypes.h"
-#include "Error.h"
-#include "SymbolStyleSearchParameters.h"
-#include "SymbolLayerListModel.h"
 #include "SymbolLayer.h"
-#include "GraphicsOverlayListModel.h"
-#include "GraphicListModel.h"
+#include "SymbolLayerListModel.h"
+#include "SymbolStyle.h"
+#include "SymbolStyleSearchParameters.h"
 #include "SymbolStyleSearchResult.h"
+#include "SymbolStyleSearchResultListModel.h"
 
+// Qt headers
 #include <QFuture>
 #include <QObject>
 #include <QQmlContext>
+#include <QStandardPaths>
 #include <QTemporaryDir>
 #include <QtCore/qglobal.h>
-#include <QStandardPaths>
 
 using namespace Esri::ArcGISRuntime;
 

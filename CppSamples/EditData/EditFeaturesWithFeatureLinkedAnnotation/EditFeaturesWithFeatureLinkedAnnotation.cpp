@@ -18,42 +18,44 @@
 #include "pch.hpp"
 #endif // PCH_BUILD
 
+// sample headers
 #include "EditFeaturesWithFeatureLinkedAnnotation.h"
 
-#include "Map.h"
-#include "MapQuickView.h"
-#include "Geodatabase.h"
+// C++ API headers
 #include "AnnotationLayer.h"
+#include "AttributeListModel.h"
+#include "Feature.h"
 #include "FeatureLayer.h"
-#include "AnnotationLayer.h"
+#include "GeoElement.h"
+#include "Geodatabase.h"
 #include "GeodatabaseFeatureTable.h"
 #include "GeometryEngine.h"
-#include "PolylineBuilder.h"
-#include "PartCollection.h"
-#include "MapTypes.h"
-#include "LayerListModel.h"
 #include "IdentifyLayerResult.h"
-#include "GeoElement.h"
-#include "Feature.h"
-#include "ImmutablePartCollection.h"
 #include "ImmutablePart.h"
-#include "AttributeListModel.h"
-#include "ProximityResult.h"
+#include "ImmutablePartCollection.h"
+#include "LayerListModel.h"
+#include "Map.h"
+#include "MapQuickView.h"
+#include "MapTypes.h"
 #include "Part.h"
-#include "Viewpoint.h"
+#include "PartCollection.h"
 #include "Polyline.h"
+#include "PolylineBuilder.h"
+#include "ProximityResult.h"
 #include "SpatialReference.h"
+#include "Viewpoint.h"
 
 // Qt headers
-#include <QFuture>
-#include <QString>
 #include <QFile>
-#include <QtCore/qglobal.h>
+#include <QFuture>
+#include <QStandardPaths>
+#include <QString>
 #include <QTimer>
 #include <QUuid>
+#include <QtCore/qglobal.h>
 
+// STL headers
 #include <memory>
-#include <QStandardPaths>
 
 using namespace Esri::ArcGISRuntime;
 

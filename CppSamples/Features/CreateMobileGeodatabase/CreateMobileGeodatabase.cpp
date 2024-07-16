@@ -18,10 +18,11 @@
 #include "pch.hpp"
 #endif // PCH_BUILD
 
+// sample headers
 #include "CreateMobileGeodatabase.h"
-
 #include "FeatureListModel.h"
 
+// C++ API headers
 #include "FeatureIterator.h"
 #include "FeatureLayer.h"
 #include "FeatureQueryResult.h"
@@ -36,17 +37,12 @@
 #include "MapTypes.h"
 #include "Point.h"
 #include "QueryParameters.h"
-#include "TableDescription.h"
 #include "ServiceTypes.h"
-#include "LayerListModel.h"
-#include "FieldDescriptionListModel.h"
-#include "QueryParameters.h"
-#include "FeatureIterator.h"
-#include "FeatureQueryResult.h"
-#include "Viewpoint.h"
 #include "SpatialReference.h"
-#include "Point.h"
+#include "TableDescription.h"
+#include "Viewpoint.h"
 
+// Qt headers
 #include <QFuture>
 
 using namespace Esri::ArcGISRuntime;

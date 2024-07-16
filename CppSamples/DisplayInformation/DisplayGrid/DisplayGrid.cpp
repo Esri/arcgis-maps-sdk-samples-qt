@@ -18,23 +18,25 @@
 #include "pch.hpp"
 #endif // PCH_BUILD
 
+// sample headers
 #include "DisplayGrid.h"
 
-#include "Map.h"
-#include "MapQuickView.h"
+// C++ API headers
 #include "Grid.h"
 #include "LatitudeLongitudeGrid.h"
-#include "UTMGrid.h"
-#include "USNGGrid.h"
 #include "MGRSGrid.h"
-#include "SimpleLineSymbol.h"
-#include "TextSymbol.h"
-#include "Viewpoint.h"
-#include "Point.h"
-#include "MapViewTypes.h"
+#include "Map.h"
+#include "MapQuickView.h"
 #include "MapTypes.h"
-#include "SymbolTypes.h"
+#include "MapViewTypes.h"
+#include "Point.h"
+#include "SimpleLineSymbol.h"
 #include "SpatialReference.h"
+#include "SymbolTypes.h"
+#include "TextSymbol.h"
+#include "USNGGrid.h"
+#include "UTMGrid.h"
+#include "Viewpoint.h"
 
 using namespace Esri::ArcGISRuntime;
 

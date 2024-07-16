@@ -18,28 +18,30 @@
 #include "pch.hpp"
 #endif // PCH_BUILD
 
+// sample headers
 #include "GODictionaryRenderer_3D.h"
 
-#include <QFileInfo>
-
+// C++ API headers
 #include "ArcGISTiledElevationSource.h"
 #include "Camera.h"
 #include "DictionaryRenderer.h"
+#include "DictionarySymbolStyle.h"
+#include "ElevationSourceListModel.h"
 #include "GeometryEngine.h"
+#include "Graphic.h"
 #include "GraphicListModel.h"
+#include "GraphicsOverlay.h"
+#include "GraphicsOverlayListModel.h"
+#include "MapTypes.h"
+#include "Point.h"
 #include "Scene.h"
 #include "SceneQuickView.h"
 #include "Surface.h"
-#include "DictionarySymbolStyle.h"
-#include "MapTypes.h"
-#include "ElevationSourceListModel.h"
-#include "GraphicsOverlayListModel.h"
-#include "GraphicsOverlay.h"
-#include "Graphic.h"
-#include "Point.h"
 
-#include <QtCore/qglobal.h>
+// Qt headers
+#include <QFileInfo>
 #include <QStandardPaths>
+#include <QtCore/qglobal.h>
 
 using namespace Esri::ArcGISRuntime;
 

@@ -18,25 +18,28 @@
 #include "pch.hpp"
 #endif // PCH_BUILD
 
+// sample headers
 #include "SketchOnMap.h"
 
-#include "Map.h"
-#include "MapQuickView.h"
-#include "SimpleFillSymbol.h"
-#include "SimpleMarkerSymbol.h"
-#include "SketchEditor.h"
-#include "MapTypes.h"
-#include "GraphicsOverlayListModel.h"
-#include "MapViewTypes.h"
-#include "GraphicListModel.h"
-#include "SymbolTypes.h"
-#include "GraphicsOverlay.h"
-#include "SpatialReference.h"
-#include "Point.h"
-#include "SimpleLineSymbol.h"
+// C++ API headers
 #include "Envelope.h"
 #include "Graphic.h"
+#include "GraphicListModel.h"
+#include "GraphicsOverlay.h"
+#include "GraphicsOverlayListModel.h"
+#include "Map.h"
+#include "MapQuickView.h"
+#include "MapTypes.h"
+#include "MapViewTypes.h"
+#include "Point.h"
+#include "SimpleFillSymbol.h"
+#include "SimpleLineSymbol.h"
+#include "SimpleMarkerSymbol.h"
+#include "SketchEditor.h"
+#include "SpatialReference.h"
+#include "SymbolTypes.h"
 
+// Qt headers
 #include <QFuture>
 
 using namespace Esri::ArcGISRuntime;

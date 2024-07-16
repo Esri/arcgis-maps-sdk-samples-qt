@@ -18,9 +18,11 @@
 #include "pch.hpp"
 #endif // PCH_BUILD
 
-#include <QString>
-
+// sample headers
 #include "RelatedFeature.h"
+
+// Qt headers
+#include <QString>
 
 RelatedFeature::RelatedFeature(const QString& displayFieldName, const QString& displayFieldValue,
                                const QString& serviceLayerName) :

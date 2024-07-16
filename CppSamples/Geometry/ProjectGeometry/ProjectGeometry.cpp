@@ -18,23 +18,25 @@
 #include "pch.hpp"
 #endif // PCH_BUILD
 
+// sample headers
 #include "ProjectGeometry.h"
 
-#include "Map.h"
-#include "MapQuickView.h"
-#include "Viewpoint.h"
+// C++ API headers
+#include "CalloutData.h"
 #include "Envelope.h"
 #include "GeometryEngine.h"
+#include "Graphic.h"
+#include "GraphicListModel.h"
+#include "GraphicsOverlay.h"
+#include "GraphicsOverlayListModel.h"
+#include "Map.h"
+#include "MapQuickView.h"
+#include "MapTypes.h"
 #include "Point.h"
 #include "SimpleMarkerSymbol.h"
-#include "Graphic.h"
-#include "GraphicsOverlay.h"
-#include "CalloutData.h"
-#include "MapTypes.h"
-#include "GraphicsOverlayListModel.h"
-#include "GraphicListModel.h"
-#include "SymbolTypes.h"
 #include "SpatialReference.h"
+#include "SymbolTypes.h"
+#include "Viewpoint.h"
 
 using namespace Esri::ArcGISRuntime;
 

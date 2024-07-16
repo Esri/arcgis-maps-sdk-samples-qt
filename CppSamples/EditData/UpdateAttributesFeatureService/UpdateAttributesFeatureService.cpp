@@ -18,34 +18,37 @@
 #include "pch.hpp"
 #endif // PCH_BUILD
 
+// sample headers
 #include "UpdateAttributesFeatureService.h"
 
-#include "Map.h"
-#include "MapQuickView.h"
-#include "Basemap.h"
-#include "Viewpoint.h"
-#include "Point.h"
-#include "SpatialReference.h"
-#include "ServiceFeatureTable.h"
-#include "FeatureLayer.h"
-#include "Feature.h"
+// C++ API headers
 #include "ArcGISFeature.h"
-#include "FeatureEditResult.h"
-#include "FeatureQueryResult.h"
-#include "MapViewTypes.h"
-#include "MapTypes.h"
-#include "LayerListModel.h"
-#include "IdentifyLayerResult.h"
-#include "QueryParameters.h"
 #include "AttributeListModel.h"
-#include "FeatureIterator.h"
+#include "Basemap.h"
 #include "CalloutData.h"
 #include "Envelope.h"
+#include "Feature.h"
+#include "FeatureEditResult.h"
+#include "FeatureIterator.h"
+#include "FeatureLayer.h"
+#include "FeatureQueryResult.h"
+#include "IdentifyLayerResult.h"
+#include "LayerListModel.h"
+#include "Map.h"
+#include "MapQuickView.h"
+#include "MapTypes.h"
+#include "MapViewTypes.h"
+#include "Point.h"
+#include "QueryParameters.h"
+#include "ServiceFeatureTable.h"
+#include "SpatialReference.h"
+#include "Viewpoint.h"
 
+// Qt headers
 #include <QFuture>
+#include <QMouseEvent>
 #include <QUrl>
 #include <QUuid>
-#include <QMouseEvent>
 
 using namespace Esri::ArcGISRuntime;
 

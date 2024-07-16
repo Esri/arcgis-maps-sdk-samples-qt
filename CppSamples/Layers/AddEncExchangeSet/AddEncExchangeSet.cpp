@@ -18,25 +18,28 @@
 #include "pch.hpp"
 #endif // PCH_BUILD
 
+// sample headers
 #include "AddEncExchangeSet.h"
 
-#include "Map.h"
-#include "MapQuickView.h"
+// C++ API headers
+#include "EncCell.h"
+#include "EncDataset.h"
+#include "EncEnvironmentSettings.h"
 #include "EncExchangeSet.h"
 #include "EncLayer.h"
-#include "EncDataset.h"
-#include "EncCell.h"
-#include "EncEnvironmentSettings.h"
 #include "Envelope.h"
-#include "GeometryEngine.h"
 #include "Error.h"
-#include "MapTypes.h"
+#include "GeometryEngine.h"
 #include "LayerListModel.h"
+#include "Map.h"
+#include "MapQuickView.h"
+#include "MapTypes.h"
 #include "Viewpoint.h"
 
-#include <QtCore/qglobal.h>
+// Qt headers
 #include <QFuture>
 #include <QStandardPaths>
+#include <QtCore/qglobal.h>
 
 using namespace Esri::ArcGISRuntime;
 

@@ -18,40 +18,43 @@
 #include "pch.hpp"
 #endif // PCH_BUILD
 
+// sample headers
 #include "EditAndSyncFeatures.h"
 
-#include "Map.h"
-#include "MapQuickView.h"
-#include "TileCache.h"
+// C++ API headers
+#include "ArcGISFeature.h"
 #include "ArcGISTiledLayer.h"
 #include "Basemap.h"
-#include "Viewpoint.h"
 #include "Envelope.h"
-#include "GenerateGeodatabaseParameters.h"
-#include "ServiceFeatureTable.h"
+#include "Error.h"
 #include "FeatureLayer.h"
-#include "GeodatabaseSyncTask.h"
-#include "GeodatabaseFeatureTable.h"
-#include "GeometryEngine.h"
-#include "Geodatabase.h"
-#include "Point.h"
-#include "MapViewTypes.h"
-#include "LayerListModel.h"
-#include "ArcGISFeature.h"
-#include "IdentifyLayerResult.h"
+#include "GenerateGeodatabaseJob.h"
+#include "GenerateGeodatabaseParameters.h"
 #include "GenerateLayerOption.h"
+#include "Geodatabase.h"
+#include "GeodatabaseFeatureTable.h"
+#include "GeodatabaseSyncTask.h"
+#include "GeometryEngine.h"
+#include "IdentifyLayerResult.h"
+#include "LayerListModel.h"
+#include "Map.h"
+#include "MapQuickView.h"
+#include "MapViewTypes.h"
+#include "Point.h"
+#include "ServiceFeatureTable.h"
+#include "SpatialReference.h"
+#include "SyncGeodatabaseJob.h"
 #include "SyncLayerOption.h"
 #include "TaskTypes.h"
-#include "GenerateGeodatabaseJob.h"
-#include "Error.h"
-#include "SyncGeodatabaseJob.h"
-#include "SpatialReference.h"
+#include "TileCache.h"
+#include "Viewpoint.h"
 
+// Qt headers
 #include <QFuture>
-#include <QUuid>
-#include <QUrl>
-#include <QtCore/qglobal.h>
 #include <QStandardPaths>
+#include <QUrl>
+#include <QUuid>
+#include <QtCore/qglobal.h>
 
 using namespace Esri::ArcGISRuntime;
 

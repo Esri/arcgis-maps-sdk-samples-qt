@@ -18,20 +18,23 @@
 #include "pch.hpp"
 #endif // PCH_BUILD
 
+// sample headers
 #include "BlendRasterLayer.h"
 
+// C++ API headers
+#include "Basemap.h"
+#include "BlendRenderer.h"
+#include "ColorRamp.h"
 #include "Map.h"
 #include "MapQuickView.h"
+#include "MapViewTypes.h"
 #include "Raster.h"
 #include "RasterLayer.h"
-#include "BlendRenderer.h"
-#include "MapViewTypes.h"
 #include "RasterTypes.h"
-#include "ColorRamp.h"
-#include "Basemap.h"
 
-#include <QtCore/qglobal.h>
+// Qt headers
 #include <QStandardPaths>
+#include <QtCore/qglobal.h>
 
 using namespace Esri::ArcGISRuntime;
 

@@ -18,15 +18,17 @@
 #include "pch.hpp"
 #endif // PCH_BUILD
 
+// sample headers
+#include "RelatedFeature.h"
+#include "RelatedFeatureListModel.h"
+
+// Qt headers
 #include <QAbstractListModel>
 #include <QByteArray>
 #include <QHash>
 #include <QModelIndex>
 #include <QObject>
 #include <QVariant>
-
-#include "RelatedFeatureListModel.h"
-#include "RelatedFeature.h"
 
 RelatedFeatureListModel::RelatedFeatureListModel(QObject* parent) :
   QAbstractListModel(parent)

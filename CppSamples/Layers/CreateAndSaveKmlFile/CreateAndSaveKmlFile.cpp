@@ -18,30 +18,33 @@
 #include "pch.hpp"
 #endif // PCH_BUILD
 
+// sample headers
 #include "CreateAndSaveKmlFile.h"
 
-#include "Map.h"
-#include "MapQuickView.h"
-#include "PolygonBuilder.h"
-#include "PolylineBuilder.h"
-#include "KmlDocument.h"
-#include "KmlPlacemark.h"
-#include "KmlNodeListModel.h"
+// C++ API headers
+#include "Envelope.h"
+#include "Error.h"
 #include "KmlDataset.h"
-#include "KmlLayer.h"
-#include "KmlLineStyle.h"
+#include "KmlDocument.h"
+#include "KmlGeometry.h"
 #include "KmlIcon.h"
 #include "KmlIconStyle.h"
+#include "KmlLayer.h"
+#include "KmlLineStyle.h"
+#include "KmlNodeListModel.h"
+#include "KmlPlacemark.h"
 #include "KmlPolygonStyle.h"
 #include "KmlStyle.h"
-#include "Error.h"
-#include "MapTypes.h"
 #include "LayerListModel.h"
-#include "KmlGeometry.h"
+#include "Map.h"
+#include "MapQuickView.h"
+#include "MapTypes.h"
+#include "PolygonBuilder.h"
+#include "PolylineBuilder.h"
 #include "SpatialReference.h"
 #include "Viewpoint.h"
-#include "Envelope.h"
 
+// Qt headers
 #include <QFuture>
 
 using namespace Esri::ArcGISRuntime;

@@ -18,24 +18,27 @@
 #include "pch.hpp"
 #endif // PCH_BUILD
 
+// sample headers
 #include "QueryFeaturesWithArcadeExpression.h"
 
-#include "ArcadeEvaluator.h"
+// C++ API headers
+#include "ArcGISFeature.h"
 #include "ArcadeEvaluationResult.h"
+#include "ArcadeEvaluator.h"
 #include "ArcadeExpression.h"
 #include "CalloutData.h"
+#include "ExpressionTypes.h"
+#include "IdentifyLayerResult.h"
+#include "Layer.h"
+#include "LayerListModel.h"
 #include "Map.h"
 #include "MapQuickView.h"
-#include "Point.h"
-#include "PortalItem.h"
 #include "MapTypes.h"
+#include "Point.h"
 #include "Portal.h"
-#include "LayerListModel.h"
-#include "IdentifyLayerResult.h"
-#include "ArcGISFeature.h"
-#include "ExpressionTypes.h"
-#include "Layer.h"
+#include "PortalItem.h"
 
+// Qt headers
 #include <QFuture>
 #include <QUuid>
 #include <QVariantMap>

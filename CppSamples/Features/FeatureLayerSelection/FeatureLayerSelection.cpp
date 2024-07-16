@@ -18,8 +18,10 @@
 #include "pch.hpp"
 #endif // PCH_BUILD
 
+// sample headers
 #include "FeatureLayerSelection.h"
 
+// C++ API headers
 #include "Envelope.h"
 #include "Feature.h"
 #include "FeatureLayer.h"
@@ -32,8 +34,11 @@
 #include "SpatialReference.h"
 #include "Viewpoint.h"
 
+// Qt headers
 #include <QFuture>
 #include <QUuid>
+
+// STL headers
 #include <memory>
 
 using namespace Esri::ArcGISRuntime;

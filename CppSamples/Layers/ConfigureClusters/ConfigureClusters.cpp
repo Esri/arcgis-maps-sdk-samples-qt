@@ -18,11 +18,13 @@
 #include "pch.hpp" // IWYU pragma: keep
 #endif // PCH_BUILD
 
+// sample headers
 #include "ConfigureClusters.h"
 
-#include "AggregateGeoElement.h"
+// C++ API headers
 #include "AggregateField.h"
 #include "AggregateFieldListModel.h"
+#include "AggregateGeoElement.h"
 #include "AttributeListModel.h"
 #include "ClassBreaksRenderer.h"
 #include "ClusteringFeatureReduction.h"
@@ -46,6 +48,7 @@
 #include "TextSymbol.h"
 #include "Viewpoint.h"
 
+// Qt headers
 #include <QColor>
 #include <QFuture>
 

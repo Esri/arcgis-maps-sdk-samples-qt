@@ -18,25 +18,28 @@
 #include "pch.hpp"
 #endif // PCH_BUILD
 
+// sample headers
 #include "CreateSymbolStylesFromWebStyles.h"
 
+// C++ API headers
 #include "FeatureLayer.h"
+#include "LayerListModel.h"
 #include "Map.h"
 #include "MapQuickView.h"
-#include "ServiceFeatureTable.h"
-#include "SymbolStyle.h"
-#include "UniqueValueRenderer.h"
 #include "MapTypes.h"
-#include "LayerListModel.h"
+#include "Point.h"
+#include "ServiceFeatureTable.h"
+#include "SpatialReference.h"
+#include "Symbol.h"
+#include "SymbolStyle.h"
 #include "SymbolStyleSearchParameters.h"
-#include "SymbolStyleSearchResultListModel.h"
 #include "SymbolStyleSearchResult.h"
+#include "SymbolStyleSearchResultListModel.h"
 #include "UniqueValue.h"
 #include "UniqueValueListModel.h"
-#include "SpatialReference.h"
-#include "Point.h"
-#include "Symbol.h"
+#include "UniqueValueRenderer.h"
 
+// Qt headers
 #include <QFuture>
 #include <QUuid>
 

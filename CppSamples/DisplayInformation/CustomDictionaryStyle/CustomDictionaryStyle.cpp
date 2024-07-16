@@ -18,23 +18,26 @@
 #include "pch.hpp"
 #endif // PCH_BUILD
 
+// sample headers
 #include "CustomDictionaryStyle.h"
 
+// C++ API headers
 #include "DictionaryRenderer.h"
 #include "DictionarySymbolStyle.h"
 #include "FeatureLayer.h"
+#include "LayerListModel.h"
 #include "Map.h"
 #include "MapQuickView.h"
-#include "ServiceFeatureTable.h"
-#include "Viewpoint.h"
-#include "PortalItem.h"
 #include "MapTypes.h"
-#include "LayerListModel.h"
-#include "SpatialReference.h"
 #include "Point.h"
+#include "PortalItem.h"
+#include "ServiceFeatureTable.h"
+#include "SpatialReference.h"
+#include "Viewpoint.h"
 
-#include <QtCore/qglobal.h>
+// Qt headers
 #include <QStandardPaths>
+#include <QtCore/qglobal.h>
 
 using namespace Esri::ArcGISRuntime;
 

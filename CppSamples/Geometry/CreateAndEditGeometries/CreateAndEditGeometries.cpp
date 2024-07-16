@@ -18,8 +18,10 @@
 #include "pch.hpp"
 #endif // PCH_BUILD
 
+// sample headers
 #include "CreateAndEditGeometries.h"
 
+// C++ API headers
 #include "FreehandTool.h"
 #include "GeometryEditor.h"
 #include "GeometryEditorElement.h"
@@ -51,6 +53,7 @@
 #include "SymbolTypes.h"
 #include "VertexTool.h"
 
+// Qt headers
 #include <QFuture>
 #include <QUuid>
 

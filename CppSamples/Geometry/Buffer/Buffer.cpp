@@ -18,8 +18,10 @@
 #include "pch.hpp"
 #endif // PCH_BUILD
 
+// sample headers
 #include "Buffer.h"
 
+// C++ API headers
 #include "GeometryEngine.h"
 #include "Graphic.h"
 #include "GraphicListModel.h"
@@ -37,6 +39,7 @@
 #include "SimpleRenderer.h"
 #include "SymbolTypes.h"
 
+// STL headers
 #include <cmath>
 
 using namespace Esri::ArcGISRuntime;

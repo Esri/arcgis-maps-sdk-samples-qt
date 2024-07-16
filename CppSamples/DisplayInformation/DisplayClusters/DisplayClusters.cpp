@@ -18,8 +18,10 @@
 #include "pch.hpp"
 #endif // PCH_BUILD
 
+// sample headers
 #include "DisplayClusters.h"
 
+// C++ API headers
 #include "AggregateGeoElement.h"
 #include "CalloutData.h"
 #include "Error.h"
@@ -37,6 +39,7 @@
 #include "PopupManager.h"
 #include "PortalItem.h"
 
+// Qt headers
 #include <QFuture>
 
 using namespace Esri::ArcGISRuntime;

@@ -18,8 +18,10 @@
 #include "pch.hpp"
 #endif // PCH_BUILD
 
+// sample headers
 #include "AddFeaturesFeatureService.h"
 
+// C++ API headers
 #include "Basemap.h"
 #include "Feature.h"
 #include "FeatureEditResult.h"
@@ -33,6 +35,7 @@
 #include "SpatialReference.h"
 #include "Viewpoint.h"
 
+// Qt headers
 #include <QFuture>
 #include <QMap>
 #include <QMouseEvent>

@@ -18,23 +18,25 @@
 #include "pch.hpp"
 #endif // PCH_BUILD
 
+// sample headers
 #include "ChangeSublayerRenderer.h"
 
-#include "Map.h"
-#include "MapQuickView.h"
+// C++ API headers
 #include "ArcGISMapImageLayer.h"
 #include "ArcGISMapImageSublayer.h"
-#include "Viewpoint.h"
+#include "ArcGISSublayerListModel.h"
 #include "ClassBreaksRenderer.h"
+#include "Envelope.h"
+#include "Error.h"
+#include "LayerListModel.h"
+#include "Map.h"
+#include "MapQuickView.h"
+#include "MapTypes.h"
 #include "SimpleFillSymbol.h"
 #include "SimpleLineSymbol.h"
-#include "Error.h"
-#include "MapTypes.h"
-#include "SymbolTypes.h"
-#include "LayerListModel.h"
-#include "ArcGISSublayerListModel.h"
 #include "SpatialReference.h"
-#include "Envelope.h"
+#include "SymbolTypes.h"
+#include "Viewpoint.h"
 
 using namespace Esri::ArcGISRuntime;
 

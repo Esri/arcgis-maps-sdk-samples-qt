@@ -18,20 +18,23 @@
 #include "pch.hpp"
 #endif // PCH_BUILD
 
+// sample headers
 #include "ApplyMosaicRuleToRasters.h"
 
+// C++ API headers
+#include "Envelope.h"
+#include "Error.h"
 #include "ImageServiceRaster.h"
+#include "LayerListModel.h"
 #include "Map.h"
 #include "MapQuickView.h"
-#include "MosaicRule.h"
-#include "RasterLayer.h"
-#include "Error.h"
 #include "MapTypes.h"
-#include "LayerListModel.h"
-#include "RasterTypes.h"
-#include "Envelope.h"
+#include "MosaicRule.h"
 #include "Point.h"
+#include "RasterLayer.h"
+#include "RasterTypes.h"
 
+// Qt headers
 #include <QFuture>
 
 using namespace Esri::ArcGISRuntime;

@@ -18,35 +18,40 @@
 #include "pch.hpp"
 #endif // PCH_BUILD
 
+// sample headers
 #include "ListRelatedFeatures.h"
-
-#include "Map.h"
-#include "MapQuickView.h"
-#include "FeatureLayer.h"
-#include "ViewInsets.h"
-#include "Envelope.h"
-#include "QueryParameters.h"
-#include "ArcGISFeature.h"
-#include "ArcGISFeatureTable.h"
-#include "RelatedFeatureQueryResult.h"
-#include "FeatureQueryResult.h"
 #include "RelatedFeature.h"
 #include "RelatedFeatureListModel.h"
-#include "SelectionProperties.h"
-#include "Error.h"
-#include "LayerListModel.h"
-#include "FeatureIterator.h"
+
+// C++ API headers
+#include "ArcGISFeature.h"
 #include "ArcGISFeatureLayerInfo.h"
+#include "ArcGISFeatureTable.h"
 #include "AttributeListModel.h"
-#include "SpatialReference.h"
 #include "CoreTypes.h"
+#include "Envelope.h"
+#include "Error.h"
+#include "FeatureIterator.h"
+#include "FeatureLayer.h"
+#include "FeatureQueryResult.h"
+#include "LayerListModel.h"
+#include "Map.h"
+#include "MapQuickView.h"
 #include "MapTypes.h"
 #include "Point.h"
+#include "QueryParameters.h"
+#include "RelatedFeatureQueryResult.h"
+#include "SelectionProperties.h"
+#include "SpatialReference.h"
+#include "ViewInsets.h"
 
+// Qt headers
 #include <QFuture>
-#include <QUuid>
 #include <QList>
 #include <QUrl>
+#include <QUuid>
+
+// STL headers
 #include <memory>
 
 using namespace Esri::ArcGISRuntime;

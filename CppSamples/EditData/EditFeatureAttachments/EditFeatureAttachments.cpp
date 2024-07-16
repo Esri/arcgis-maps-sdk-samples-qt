@@ -18,38 +18,41 @@
 #include "pch.hpp"
 #endif // PCH_BUILD
 
+// sample headers
 #include "EditFeatureAttachments.h"
 
+// C++ API headers
+#include "ArcGISFeature.h"
+#include "Attachment.h"
+#include "AttachmentListModel.h"
+#include "AttributeListModel.h"
+#include "Basemap.h"
+#include "CalloutData.h"
+#include "Envelope.h"
+#include "Error.h"
+#include "Feature.h"
+#include "FeatureEditResult.h"
+#include "FeatureIterator.h"
+#include "FeatureLayer.h"
+#include "FeatureQueryResult.h"
+#include "IdentifyLayerResult.h"
+#include "LayerListModel.h"
 #include "Map.h"
 #include "MapQuickView.h"
-#include "Basemap.h"
-#include "Viewpoint.h"
-#include "Point.h"
-#include "SpatialReference.h"
-#include "ServiceFeatureTable.h"
-#include "FeatureLayer.h"
-#include "Feature.h"
-#include "ArcGISFeature.h"
-#include "FeatureEditResult.h"
-#include "FeatureQueryResult.h"
-#include "AttachmentListModel.h"
-#include "MapViewTypes.h"
 #include "MapTypes.h"
-#include "LayerListModel.h"
-#include "IdentifyLayerResult.h"
+#include "MapViewTypes.h"
+#include "Point.h"
 #include "QueryParameters.h"
-#include "AttributeListModel.h"
-#include "FeatureIterator.h"
-#include "CalloutData.h"
-#include "Error.h"
-#include "Attachment.h"
-#include "Envelope.h"
+#include "ServiceFeatureTable.h"
+#include "SpatialReference.h"
+#include "Viewpoint.h"
 
-#include <QUrl>
-#include <QUuid>
-#include <QMouseEvent>
+// Qt headers
 #include <QFile>
 #include <QFileInfo>
+#include <QMouseEvent>
+#include <QUrl>
+#include <QUuid>
 
 using namespace Esri::ArcGISRuntime;
 

@@ -18,23 +18,24 @@
 #include "pch.hpp"
 #endif // PCH_BUILD
 
+// sample headers
 #include "ShowPopup.h"
 
+// C++ API headers
+#include "Error.h"
+#include "Feature.h"
 #include "FeatureLayer.h"
+#include "IdentifyLayerResult.h"
+#include "LayerListModel.h"
 #include "Map.h"
 #include "MapQuickView.h"
-#include "PopupManager.h"
-#include "PopupAttachmentListModel.h"
-#include "IdentifyLayerResult.h"
-#include "Error.h"
 #include "MapTypes.h"
-#include "LayerListModel.h"
-#include "Feature.h"
-#include "PopupManager.h"
+#include "PopupAttachmentListModel.h"
 #include "PopupAttachmentManager.h"
 #include "PopupAttributeListModel.h"
-#include "PopupAttachmentListModel.h"
+#include "PopupManager.h"
 
+// Qt headers
 #include <QUuid>
 
 using namespace Esri::ArcGISRuntime;

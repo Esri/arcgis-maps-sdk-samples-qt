@@ -18,14 +18,16 @@
 #include "pch.hpp"
 #endif // PCH_BUILD
 
+// sample headers
 #include "ControlTimeExtentTimeSlider.h"
 
+// C++ API headers
+#include "FeatureLayer.h"
+#include "LayerListModel.h"
 #include "Map.h"
 #include "MapQuickView.h"
-#include "FeatureLayer.h"
-#include "ServiceFeatureTable.h"
 #include "MapTypes.h"
-#include "LayerListModel.h"
+#include "ServiceFeatureTable.h"
 
 using namespace Esri::ArcGISRuntime;
 

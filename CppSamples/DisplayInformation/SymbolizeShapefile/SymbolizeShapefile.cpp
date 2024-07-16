@@ -18,25 +18,28 @@
 #include "pch.hpp"
 #endif // PCH_BUILD
 
+// sample headers
 #include "SymbolizeShapefile.h"
 
+// C++ API headers
+#include "FeatureLayer.h"
+#include "LayerListModel.h"
 #include "Map.h"
 #include "MapQuickView.h"
+#include "MapTypes.h"
+#include "Point.h"
 #include "ShapefileFeatureTable.h"
-#include "FeatureLayer.h"
-#include "SimpleRenderer.h"
 #include "SimpleFillSymbol.h"
 #include "SimpleLineSymbol.h"
-#include "MapTypes.h"
-#include "LayerListModel.h"
-#include "SymbolTypes.h"
+#include "SimpleRenderer.h"
 #include "SpatialReference.h"
-#include "Point.h"
+#include "SymbolTypes.h"
 #include "Viewpoint.h"
 
+// Qt headers
+#include <QStandardPaths>
 #include <QUrl>
 #include <QtCore/qglobal.h>
-#include <QStandardPaths>
 
 using namespace Esri::ArcGISRuntime;
 

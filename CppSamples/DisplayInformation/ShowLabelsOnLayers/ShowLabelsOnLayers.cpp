@@ -18,25 +18,28 @@
 #include "pch.hpp"
 #endif // PCH_BUILD
 
+// sample headers
 #include "ShowLabelsOnLayers.h"
 
+// C++ API headers
 #include "ArcadeLabelExpression.h"
+#include "Envelope.h"
+#include "Error.h"
 #include "FeatureLayer.h"
 #include "LabelDefinition.h"
+#include "LabelDefinitionListModel.h"
+#include "LayerListModel.h"
 #include "Map.h"
 #include "MapQuickView.h"
-#include "ServiceFeatureTable.h"
-#include "TextSymbol.h"
 #include "MapTypes.h"
-#include "Error.h"
-#include "LayerListModel.h"
-#include "LabelDefinitionListModel.h"
-#include "SymbolTypes.h"
-#include "Envelope.h"
-#include "SpatialReference.h"
 #include "Point.h"
+#include "ServiceFeatureTable.h"
+#include "SpatialReference.h"
+#include "SymbolTypes.h"
+#include "TextSymbol.h"
 #include "Viewpoint.h"
 
+// Qt headers
 #include <QFuture>
 
 using namespace Esri::ArcGISRuntime;

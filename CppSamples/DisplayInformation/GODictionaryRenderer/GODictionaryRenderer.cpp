@@ -18,27 +18,30 @@
 #include "pch.hpp"
 #endif // PCH_BUILD
 
+// sample headers
 #include "GODictionaryRenderer.h"
 
+// C++ API headers
 #include "DictionaryRenderer.h"
-#include "GraphicListModel.h"
-#include "Map.h"
-#include "MapQuickView.h"
-#include "MultipointBuilder.h"
 #include "DictionarySymbolStyle.h"
 #include "DictionarySymbolStyleConfiguration.h"
-#include "MapTypes.h"
-#include "GraphicsOverlayListModel.h"
-#include "PointCollection.h"
-#include "GraphicsOverlay.h"
-#include "SpatialReference.h"
-#include "Point.h"
 #include "Graphic.h"
+#include "GraphicListModel.h"
+#include "GraphicsOverlay.h"
+#include "GraphicsOverlayListModel.h"
+#include "Map.h"
+#include "MapQuickView.h"
+#include "MapTypes.h"
+#include "MultipointBuilder.h"
+#include "Point.h"
+#include "PointCollection.h"
+#include "SpatialReference.h"
 
-#include <QtCore/qglobal.h>
-#include <QFuture>
+// Qt headers
 #include <QFile>
+#include <QFuture>
 #include <QStandardPaths>
+#include <QtCore/qglobal.h>
 
 using namespace Esri::ArcGISRuntime;
 
