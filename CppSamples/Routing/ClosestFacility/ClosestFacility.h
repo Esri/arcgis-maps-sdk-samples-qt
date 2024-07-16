@@ -1,12 +1,12 @@
 // [WriteFile Name=FindClosestFacilityToAnIncidentInteractive, Category=Routing]
 // [Legal]
 // Copyright 2017 Esri.
-
+//
 // Licensed under the Apache License, Version 2.0 (the "License");
 // you may not use this file except in compliance with the License.
 // You may obtain a copy of the License at
 // http://www.apache.org/licenses/LICENSE-2.0
-
+//
 // Unless required by applicable law or agreed to in writing, software
 // distributed under the License is distributed on an "AS IS" BASIS,
 // WITHOUT WARRANTIES OR CONDITIONS OF ANY KIND, either express or implied.
@@ -16,6 +16,14 @@
 
 #ifndef CLOSESTFACILITY_H
 #define CLOSESTFACILITY_H
+
+// C++ API headers
+#include "ClosestFacilityParameters.h"
+
+// Qt headers
+#include <QList>
+#include <QQuickItem>
+#include <QUrl>
 
 namespace Esri::ArcGISRuntime
 {
@@ -27,12 +35,6 @@ namespace Esri::ArcGISRuntime
   class MapQuickView;
   class Point;
 }
-
-#include "ClosestFacilityParameters.h"
-
-#include <QList>
-#include <QQuickItem>
-#include <QUrl>
 
 class ClosestFacility : public QQuickItem
 {
