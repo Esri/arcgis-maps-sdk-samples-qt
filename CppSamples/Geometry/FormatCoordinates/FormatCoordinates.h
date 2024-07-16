@@ -1,12 +1,12 @@
 // [WriteFile Name=FormatCoordinates, Category=Geometry]
 // [Legal]
 // Copyright 2017 Esri.
-
+//
 // Licensed under the Apache License, Version 2.0 (the "License");
 // you may not use this file except in compliance with the License.
 // You may obtain a copy of the License at
 // http://www.apache.org/licenses/LICENSE-2.0
-
+//
 // Unless required by applicable law or agreed to in writing, software
 // distributed under the License is distributed on an "AS IS" BASIS,
 // WITHOUT WARRANTIES OR CONDITIONS OF ANY KIND, either express or implied.
@@ -17,16 +17,18 @@
 #ifndef FORMATCOORDINATES_H
 #define FORMATCOORDINATES_H
 
+// C++ API headers
+#include "Point.h"
+
+// Qt headers
+#include <QObject>
+
 namespace Esri::ArcGISRuntime
 {
 class Map;
 class MapQuickView;
 class GraphicsOverlay;
 }
-
-#include <QObject>
-
-#include "Point.h"
 
 Q_MOC_INCLUDE("MapQuickView.h")
 
@@ -82,4 +84,3 @@ private:
 };
 
 #endif // FORMATCOORDINATES_H
-
