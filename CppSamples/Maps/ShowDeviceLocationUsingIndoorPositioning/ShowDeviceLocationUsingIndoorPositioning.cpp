@@ -91,7 +91,9 @@ void ShowDeviceLocationUsingIndoorPositioning::setupIndoorsLocationDataSource()
   {
     connect(m_mapView->locationDisplay(), &LocationDisplay::locationChanged, this, &ShowDeviceLocationUsingIndoorPositioning::locationChangedHandler);
     m_indoorsLocationDataSource.reset(indoorsLDS);
-    m_indoorsLocationDataSource->configuration()->setInfoMessagesEnabled(true);
+    IndoorsLocationDataSourceConfiguration* conf = m_indoorsLocationDataSource->configuration();
+    conf->setInfoMessagesEnabled(true);
+    m_indoorsLocationDataSource->setConfiguration(conf);
     connect(m_indoorsLocationDataSource.get(), &IndoorsLocationDataSource::messageReceived, this, [this](IpsInfoMessage* ipsInfoMsg)
     {
       qDebug() << "IPS info Message Received - "<< ipsInfoMsg->message();
