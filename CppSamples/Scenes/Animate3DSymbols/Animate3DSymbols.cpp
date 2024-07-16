@@ -18,46 +18,49 @@
 #include "pch.hpp"
 #endif // PCH_BUILD
 
+// sample headers
 #include "Animate3DSymbols.h"
+#include "MissionData.h"
 
+// C++ API headers
 #include "ArcGISTiledElevationSource.h"
+#include "AttributeListModel.h"
 #include "Camera.h"
 #include "DistanceCompositeSceneSymbol.h"
+#include "ElevationSourceListModel.h"
 #include "GlobeCameraController.h"
+#include "Graphic.h"
+#include "GraphicListModel.h"
 #include "GraphicsOverlay.h"
+#include "GraphicsOverlayListModel.h"
+#include "LayerSceneProperties.h"
 #include "Map.h"
 #include "MapQuickView.h"
+#include "MapTypes.h"
 #include "ModelSceneSymbol.h"
 #include "OrbitGeoElementCameraController.h"
 #include "PointCollection.h"
 #include "Polyline.h"
 #include "PolylineBuilder.h"
+#include "RendererSceneProperties.h"
 #include "Scene.h"
 #include "SceneQuickView.h"
 #include "SceneViewTypes.h"
-#include "SimpleMarkerSymbol.h"
+#include "SimpleLineSymbol.h"
 #include "SimpleMarkerSceneSymbol.h"
+#include "SimpleMarkerSymbol.h"
 #include "SimpleRenderer.h"
 #include "SpatialReference.h"
-#include "MissionData.h"
-#include "MapTypes.h"
-#include "SymbolTypes.h"
-#include "GraphicsOverlayListModel.h"
-#include "GraphicListModel.h"
 #include "Surface.h"
-#include "ElevationSourceListModel.h"
-#include "LayerSceneProperties.h"
-#include "RendererSceneProperties.h"
-#include "AttributeListModel.h"
-#include "Graphic.h"
+#include "SymbolTypes.h"
 #include "Viewpoint.h"
-#include "SimpleLineSymbol.h"
 
+// Qt headers
 #include <QFileInfo>
 #include <QFuture>
+#include <QStandardPaths>
 #include <QStringListModel>
 #include <QtCore/qglobal.h>
-#include <QStandardPaths>
 
 using namespace Esri::ArcGISRuntime;
 
