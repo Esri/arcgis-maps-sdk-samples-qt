@@ -13,6 +13,12 @@
 // See the License for the specific language governing permissions and
 // limitations under the License.
 // [Legal]
+
+#endif // PCH_BUILD
+#ifdef PCH_BUILD
+#include "pch.hpp"
+
+// sample headers
 #include "FeatureLayerQuery.h"
 
 // C++ API headers
