@@ -14,33 +14,35 @@
 // limitations under the License.
 // [Legal]
 
+#endif // PCH_BUILD
 #ifdef PCH_BUILD
 #include "pch.hpp"
-#endif // PCH_BUILD
 
+// sample headers
 #include "ScenePropertiesExpressions.h"
 
+// C++ API headers
 #include "ArcGISTiledElevationSource.h"
+#include "AttributeListModel.h"
 #include "Basemap.h"
+#include "Camera.h"
+#include "ElevationSourceListModel.h"
+#include "Graphic.h"
+#include "GraphicListModel.h"
+#include "GraphicsOverlay.h"
+#include "GraphicsOverlayListModel.h"
+#include "LayerSceneProperties.h"
+#include "MapTypes.h"
+#include "Point.h"
+#include "RendererSceneProperties.h"
 #include "Scene.h"
 #include "SceneQuickView.h"
+#include "SceneViewTypes.h"
 #include "SimpleMarkerSceneSymbol.h"
 #include "SimpleRenderer.h"
-#include "Camera.h"
-#include "MapTypes.h"
-#include "SymbolTypes.h"
-#include "GraphicsOverlayListModel.h"
-#include "GraphicListModel.h"
-#include "Graphic.h"
-#include "Surface.h"
-#include "ElevationSourceListModel.h"
-#include "LayerSceneProperties.h"
-#include "RendererSceneProperties.h"
-#include "AttributeListModel.h"
-#include "SceneViewTypes.h"
-#include "GraphicsOverlay.h"
 #include "SpatialReference.h"
-#include "Point.h"
+#include "Surface.h"
+#include "SymbolTypes.h"
 
 using namespace Esri::ArcGISRuntime;
 

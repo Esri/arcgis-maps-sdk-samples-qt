@@ -14,35 +14,38 @@
 // limitations under the License.
 // [Legal]
 
+#endif // PCH_BUILD
 #ifdef PCH_BUILD
 #include "pch.hpp"
-#endif // PCH_BUILD
 
+// sample headers
 #include "OrbitCameraAroundObject.h"
 
+// C++ API headers
 #include "ArcGISTiledElevationSource.h"
+#include "AttributeListModel.h"
+#include "ElevationSourceListModel.h"
 #include "Graphic.h"
+#include "GraphicListModel.h"
+#include "GraphicsOverlay.h"
+#include "GraphicsOverlayListModel.h"
+#include "LayerSceneProperties.h"
+#include "MapTypes.h"
 #include "ModelSceneSymbol.h"
 #include "OrbitGeoElementCameraController.h"
+#include "Point.h"
+#include "RendererSceneProperties.h"
 #include "Scene.h"
 #include "SceneQuickView.h"
-#include "SimpleRenderer.h"
-#include "MapTypes.h"
-#include "GraphicsOverlayListModel.h"
-#include "GraphicListModel.h"
-#include "Surface.h"
-#include "ElevationSourceListModel.h"
-#include "LayerSceneProperties.h"
-#include "RendererSceneProperties.h"
-#include "AttributeListModel.h"
 #include "SceneViewTypes.h"
-#include "GraphicsOverlay.h"
+#include "SimpleRenderer.h"
 #include "SpatialReference.h"
-#include "Point.h"
+#include "Surface.h"
 
+// Qt headers
 #include <QFuture>
-#include <QUuid>
 #include <QStandardPaths>
+#include <QUuid>
 
 using namespace Esri::ArcGISRuntime;
 

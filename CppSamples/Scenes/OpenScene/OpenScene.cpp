@@ -14,15 +14,17 @@
 // limitations under the License.
 // [Legal]
 
+#endif // PCH_BUILD
 #ifdef PCH_BUILD
 #include "pch.hpp"
-#endif // PCH_BUILD
 
+// sample headers
 #include "OpenScene.h"
 
+// C++ API headers
+#include "PortalItem.h"
 #include "Scene.h"
 #include "SceneQuickView.h"
-#include "PortalItem.h"
 
 using namespace Esri::ArcGISRuntime;
 

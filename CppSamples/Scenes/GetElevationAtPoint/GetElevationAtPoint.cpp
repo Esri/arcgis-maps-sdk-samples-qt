@@ -14,28 +14,30 @@
 // limitations under the License.
 // [Legal]
 
+#endif // PCH_BUILD
 #ifdef PCH_BUILD
 #include "pch.hpp"
-#endif // PCH_BUILD
 
+// sample headers
 #include "GetElevationAtPoint.h"
 
+// C++ API headers
 #include "ArcGISTiledElevationSource.h"
+#include "Camera.h"
+#include "ElevationSourceListModel.h"
+#include "Graphic.h"
+#include "GraphicListModel.h"
 #include "GraphicsOverlay.h"
+#include "GraphicsOverlayListModel.h"
+#include "MapTypes.h"
+#include "Point.h"
 #include "Scene.h"
 #include "SceneQuickView.h"
 #include "SimpleMarkerSymbol.h"
 #include "Surface.h"
-#include "Camera.h"
-#include "MapTypes.h"
 #include "SymbolTypes.h"
-#include "GraphicsOverlayListModel.h"
-#include "GraphicListModel.h"
-#include "Surface.h"
-#include "ElevationSourceListModel.h"
-#include "Graphic.h"
-#include "Point.h"
 
+// Qt headers
 #include <QFuture>
 #include <QUuid>
 

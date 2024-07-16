@@ -14,30 +14,31 @@
 // limitations under the License.
 // [Legal]
 
+#endif // PCH_BUILD
 #ifdef PCH_BUILD
 #include "pch.hpp"
-#endif // PCH_BUILD
 
+// sample headers
 #include "SceneLayerSelection.h"
 
+// C++ API headers
+#include "ArcGISSceneLayer.h"
 #include "ArcGISTiledElevationSource.h"
+#include "Basemap.h"
+#include "Camera.h"
+#include "ElevationSourceListModel.h"
+#include "Feature.h"
+#include "IdentifyLayerResult.h"
+#include "LayerListModel.h"
+#include "MapTypes.h"
+#include "Point.h"
 #include "Scene.h"
 #include "SceneQuickView.h"
-#include "Surface.h"
-#include "Basemap.h"
-#include "ArcGISSceneLayer.h"
-#include "Point.h"
-#include "Camera.h"
 #include "SpatialReference.h"
-#include "Viewpoint.h"
-#include "Camera.h"
-#include "MapTypes.h"
 #include "Surface.h"
-#include "ElevationSourceListModel.h"
-#include "LayerListModel.h"
-#include "IdentifyLayerResult.h"
-#include "Feature.h"
+#include "Viewpoint.h"
 
+// Qt headers
 #include <QFuture>
 #include <QUuid>
 

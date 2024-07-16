@@ -14,12 +14,14 @@
 // limitations under the License.
 // [Legal]
 
+#endif // PCH_BUILD
 #ifdef PCH_BUILD
 #include "pch.hpp"
-#endif // PCH_BUILD
 
+// sample headers
 #include "FilterFeaturesInScene.h"
 
+// C++ API headers
 #include "ArcGISSceneLayer.h"
 #include "ArcGISTiledElevationSource.h"
 #include "ArcGISVectorTiledLayer.h"
@@ -47,6 +49,7 @@
 #include "Surface.h"
 #include "SymbolTypes.h"
 
+// Qt headers
 #include <QFuture>
 
 using namespace Esri::ArcGISRuntime;

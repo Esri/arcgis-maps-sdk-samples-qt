@@ -14,30 +14,34 @@
 // limitations under the License.
 // [Legal]
 
+#endif // PCH_BUILD
 #ifdef PCH_BUILD
 #include "pch.hpp"
-#endif // PCH_BUILD
 
+// sample headers
 #include "RealisticLightingAndShadows.h"
 
-#include "ArcGISTiledElevationSource.h"
-#include "Scene.h"
-#include "SceneQuickView.h"
+// C++ API headers
 #include "ArcGISSceneLayer.h"
+#include "ArcGISTiledElevationSource.h"
 #include "Camera.h"
-#include "MapTypes.h"
-#include "Surface.h"
 #include "ElevationSourceListModel.h"
 #include "LayerListModel.h"
+#include "MapTypes.h"
+#include "Scene.h"
+#include "SceneQuickView.h"
 #include "SceneViewTypes.h"
+#include "Surface.h"
 
-#include <QDateTime>
+// Qt headers
 #include <QDate>
+#include <QDateTime>
 #include <QFuture>
 #include <QTime>
 #include <QTimeZone>
 #include <QUrl>
 
+// STL headers
 #include <cmath>
 
 using namespace Esri::ArcGISRuntime;

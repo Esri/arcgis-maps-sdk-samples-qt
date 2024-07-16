@@ -14,19 +14,22 @@
 // limitations under the License.
 // [Legal]
 
+#endif // PCH_BUILD
 #ifdef PCH_BUILD
 #include "pch.hpp"
-#endif // PCH_BUILD
 
+// sample headers
 #include "SyncMapViewSceneView.h"
 
-#include "Scene.h"
-#include "SceneQuickView.h"
+// C++ API headers
 #include "Map.h"
 #include "MapQuickView.h"
 #include "MapTypes.h"
+#include "Scene.h"
+#include "SceneQuickView.h"
 #include "Viewpoint.h"
 
+// Qt headers
 #include <QFuture>
 
 using namespace Esri::ArcGISRuntime;

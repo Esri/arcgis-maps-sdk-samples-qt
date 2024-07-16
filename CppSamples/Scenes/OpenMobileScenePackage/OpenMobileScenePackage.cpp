@@ -14,19 +14,22 @@
 // limitations under the License.
 // [Legal]
 
+#endif // PCH_BUILD
 #ifdef PCH_BUILD
 #include "pch.hpp"
-#endif // PCH_BUILD
 
+// sample headers
 #include "OpenMobileScenePackage.h"
 
+// C++ API headers
 #include "Error.h"
 #include "MobileScenePackage.h"
 #include "Scene.h"
 #include "SceneQuickView.h"
 
-#include <QtCore/qglobal.h>
+// Qt headers
 #include <QStandardPaths>
+#include <QtCore/qglobal.h>
 
 using namespace Esri::ArcGISRuntime;
 
