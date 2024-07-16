@@ -1,12 +1,12 @@
 // [WriteFile Name=EditAndSyncFeatures, Category=EditData]
 // [Legal]
 // Copyright 2016 Esri.
-
+//
 // Licensed under the Apache License, Version 2.0 (the "License");
 // you may not use this file except in compliance with the License.
 // You may obtain a copy of the License at
 // http://www.apache.org/licenses/LICENSE-2.0
-
+//
 // Unless required by applicable law or agreed to in writing, software
 // distributed under the License is distributed on an "AS IS" BASIS,
 // WITHOUT WARRANTIES OR CONDITIONS OF ANY KIND, either express or implied.
@@ -17,6 +17,16 @@
 #ifndef EDITANDSYNCFEATURES_H
 #define EDITANDSYNCFEATURES_H
 
+// C++ API headers
+#include "GenerateGeodatabaseParameters.h"
+#include "SyncGeodatabaseParameters.h"
+
+// Qt headers
+#include <QQuickItem>
+#include <QString>
+#include <QTemporaryDir>
+#include <QUrl>
+
 namespace Esri::ArcGISRuntime
 {
   class Map;
@@ -26,14 +36,6 @@ namespace Esri::ArcGISRuntime
   class ArcGISFeature;
   class Envelope;
 }
-
-#include "GenerateGeodatabaseParameters.h"
-#include "SyncGeodatabaseParameters.h"
-
-#include <QQuickItem>
-#include <QString>
-#include <QTemporaryDir>
-#include <QUrl>
 
 class EditAndSyncFeatures : public QQuickItem
 {
