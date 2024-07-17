@@ -60,7 +60,7 @@ Page {
         }
         clip: true
         model: SampleManager.categories
-        delegate: categoryCard
+        delegate: CategoryCard {}
         cellWidth: width / 2
         cellHeight: cellWidth
         visible: searchBar.text === ""

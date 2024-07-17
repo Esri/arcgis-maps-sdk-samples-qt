@@ -56,8 +56,6 @@
 #include "SourceCode.h"
 #include "SourceCodeListModel.h"
 
-#include <cstdlib>
-
 #include "ArcGISQt_global.h" // for LOCALSERVER_SUPPORTED
 #include "ArcGISRuntimeEnvironment.h"
 using namespace Esri::ArcGISRuntime;

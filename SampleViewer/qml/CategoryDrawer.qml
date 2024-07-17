@@ -34,7 +34,7 @@ Drawer {
         id: sampleListView
     }
 
-    CategoryCard {
-        id: categoryCard
-    }
+    // CategoryCard {
+    //     id: categoryCard
+    // }
 }

@@ -17,77 +17,76 @@ import QtQuick
 import QtQuick.Controls
 import Esri.ArcGISRuntimeSamples
 
-Component {
+// qt.qml.typecompiler: qrc:/qml/CategoryCard.qml:20:1: Using a Component as the root of a QML document is deprecated: types defined in qml documents are automatically wrapped into Components when needed.
+ItemDelegate {
     id: categoryDelegate
+    width: 105
+    height: 105
+    clip: true
 
-    ItemDelegate {
-        width: 105
-        height: 105
+    background: Image {
+        id: categoryImg
+        anchors.fill: parent
+        source: backgroundThumbnailUrl
         clip: true
 
-        background: Image {
-            id: categoryImg
+        Rectangle {
             anchors.fill: parent
-            source: backgroundThumbnailUrl
             clip: true
+            opacity: 0.4
+            color: "black"
+            radius: 10
+        }
+    }
+
+    contentItem: Item {
+        id: con
+        anchors.fill: parent
+
+        Column {
+            anchors.centerIn: parent
+            width: parent.width
+            spacing: 2
 
             Rectangle {
-                anchors.fill: parent
-                clip: true
-                opacity: 0.4
-                color: "black"
-                radius: 10
-            }
-        }
+                // anchors.horizontalCenter: parent.horizontalCenter
+                width: 30
+                height: width
+                radius: 30
+                color: "#eeeeee"
 
-        contentItem: Item {
-            anchors.fill: parent
-
-            Column {
-                anchors.centerIn: parent
-                width: parent.width
-                spacing: 2
-
-                Rectangle {
-                    anchors.horizontalCenter: parent.horizontalCenter
-                    width: 30
+                Image {
+                    id: thumbnailImage
+                    anchors.centerIn: parent
+                    width: 18
                     height: width
-                    radius: 30
-                    color: "#eeeeee"
-
-                    Image {
-                        id: thumbnailImage
-                        anchors.centerIn: parent
-                        width: 18
-                        height: width
-                        source: thumbnailUrl
-                        clip: true
-                        visible: drawer.visible
-                    }
-                }
-
-                Text {
-                    width: parent.width
-                    antialiasing: true
-                    text: displayName
+                    source: thumbnailUrl
+                    clip: true
                     visible: drawer.visible
-                    color: "white"
-                    font {
-                        capitalization: Font.AllUppercase
-                        pixelSize: 11
-                        weight: Font.DemiBold
-                        family: fontFamily
-                    }
-                    wrapMode: Text.WordWrap
-                    horizontalAlignment: Text.AlignHCenter
                 }
             }
-        }
 
-        onClicked: {
-            sampleListView.currentCategory = displayName;
-            SampleManager.currentCategory = SampleManager.categories.get(index);
-            stackView.push(sampleListView);
+            Text {
+                width: parent.width
+                antialiasing: true
+                text: displayName
+                visible: drawer.visible
+                color: "white"
+                font {
+                    capitalization: Font.AllUppercase
+                    pixelSize: 11
+                    weight: Font.DemiBold
+                    family: fontFamily
+                }
+                wrapMode: Text.WordWrap
+                horizontalAlignment: Text.AlignHCenter
+            }
         }
+    }
+
+    onClicked: {
+        sampleListView.currentCategory = displayName;
+        SampleManager.currentCategory = SampleManager.categories.get(index);
+        stackView.push(sampleListView);
     }
 }
