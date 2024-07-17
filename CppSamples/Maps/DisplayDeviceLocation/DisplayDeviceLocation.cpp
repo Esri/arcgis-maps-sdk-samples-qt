@@ -27,6 +27,8 @@
 #include "MapViewTypes.h"
 #include "LocationDisplay.h"
 
+#include <QPermission>
+
 using namespace Esri::ArcGISRuntime;
 
 const QString DisplayDeviceLocation::s_compassMode = QStringLiteral("Compass");
@@ -71,10 +73,22 @@ void DisplayDeviceLocation::componentComplete()
 
 void DisplayDeviceLocation::startLocationDisplay()
 {
-  //! [start location display api snippet]
-  // turn on the location display
-  m_mapView->locationDisplay()->start();
-  //! [start location display api snippet]
+  QLocationPermission locationPermission{};
+  switch (qApp->checkPermission(locationPermission))
+  {
+  case Qt::PermissionStatus::Undetermined:
+    qApp->requestPermission(locationPermission, this, &DisplayDeviceLocation::startLocationDisplay);
+    return;
+  case Qt::PermissionStatus::Granted:
+    //! [start location display api snippet]
+    // turn on the location display
+    m_mapView->locationDisplay()->start();
+    //! [start location display api snippet]
+    return;
+  case Qt::PermissionStatus::Denied:
+    emit locationPermissionDenied();
+    return;
+  }
 }
 
 void DisplayDeviceLocation::stopLocationDisplay()
