@@ -74,6 +74,8 @@ void DisplayDeviceLocation::componentComplete()
 void DisplayDeviceLocation::startLocationDisplay()
 {
   QLocationPermission locationPermission{};
+  locationPermission.setAccuracy(QLocationPermission::Accuracy::Precise);
+  locationPermission.setAvailability(QLocationPermission::Availability::WhenInUse);
   switch (qApp->checkPermission(locationPermission))
   {
   case Qt::PermissionStatus::Undetermined:
