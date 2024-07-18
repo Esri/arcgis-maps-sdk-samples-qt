@@ -27,7 +27,7 @@
 #include "MapViewTypes.h"
 #include "LocationDisplay.h"
 
-#include <QPermission>
+#include <QPermissions>
 
 using namespace Esri::ArcGISRuntime;
 
