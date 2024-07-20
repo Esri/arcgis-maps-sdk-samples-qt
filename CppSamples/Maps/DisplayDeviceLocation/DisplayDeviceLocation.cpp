@@ -27,7 +27,10 @@
 #include "MapViewTypes.h"
 #include "LocationDisplay.h"
 
+#if (QT_VERSION >= QT_VERSION_CHECK(6, 6, 0)) || defined(Q_OS_IOS) || defined(Q_OS_MACOS) || defined(Q_OS_ANDROID)
+#define PERMISSIONS_PLATFORM
 #include <QPermissions>
+#endif
 
 using namespace Esri::ArcGISRuntime;
 
@@ -73,6 +76,8 @@ void DisplayDeviceLocation::componentComplete()
 
 void DisplayDeviceLocation::startLocationDisplay()
 {
+  // https://bugreports.qt.io/browse/QTBUG-116178
+#ifdef PERMISSIONS_PLATFORM
   QLocationPermission locationPermission{};
   locationPermission.setAccuracy(QLocationPermission::Accuracy::Precise);
   locationPermission.setAvailability(QLocationPermission::Availability::WhenInUse);
@@ -91,6 +96,9 @@ void DisplayDeviceLocation::startLocationDisplay()
     emit locationPermissionDenied();
     return;
   }
+#else
+  m_mapView->locationDisplay()->start();
+#endif
 }
 
 void DisplayDeviceLocation::stopLocationDisplay()
