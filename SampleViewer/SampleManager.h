@@ -67,7 +67,7 @@ public:
   explicit SampleManager(QObject* parent = nullptr);
   ~SampleManager() override;
 
-  Q_INVOKABLE virtual void init();
+  Q_INVOKABLE void init();
 
   Q_INVOKABLE bool dataItemsExists();
   Q_INVOKABLE void clearCredentialCache();
@@ -118,7 +118,7 @@ signals:
 
 protected:
   void setDownloadProgress(double progress);
-  virtual void buildCategoriesList();
+  void buildCategoriesList();
   SampleCategory* createCategory(const QString& name, const QString& displayName, const QDir& dir);
   bool appendCategoryToManager(SampleCategory* category);
 
