@@ -139,7 +139,7 @@ void SampleManager::setDownloadFailed(bool didFail)
 // Build the Categories List
 void SampleManager::buildCategoriesList()
 {
-  QDir dir(DIRNAMESAMPLES);
+  const QDir dir(DIRNAMESAMPLES);
   QFile xmlFile(":/Samples/Categories.xml");
 
   // Go through the XML to find the sample categories
@@ -148,16 +148,16 @@ void SampleManager::buildCategoriesList()
     xmlFile.open(QIODevice::ReadOnly);
     QDomDocument doc;
     doc.setContent(&xmlFile);
-    QDomNodeList fileList = doc.documentElement().elementsByTagName("category");
+    const QDomNodeList fileList = doc.documentElement().elementsByTagName("category");
 
     for (int i = 0; i < fileList.count(); i++)
     {
       // The first node contains the name
-      QDomNode node = fileList.at(i).childNodes().at(0);
-      QString name = node.toElement().text();
+      const QDomNode node = fileList.at(i).childNodes().at(0);
+      const QString name = node.toElement().text();
       // The second node contains the display name
-      QDomNode nameNode = fileList.at(i).childNodes().at(1);
-      QString displayName = nameNode.toElement().text();
+      const QDomNode nameNode = fileList.at(i).childNodes().at(1);
+      const QString displayName = nameNode.toElement().text();
       appendCategoryToManager(createCategory(name, displayName, dir));
     }
   }
@@ -169,7 +169,6 @@ void SampleManager::buildCategoriesList()
 #ifdef LOCALSERVER_SUPPORTED
   if (LocalServer::isInstallValid())
   {
-    const QDir dir(DIRNAMESAMPLES);
     appendCategoryToManager(createCategory("LocalServer", "Local Server", dir));
   }
 #endif // LOCALSERVER_SUPPORTED
