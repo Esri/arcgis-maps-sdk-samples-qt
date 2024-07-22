@@ -64,7 +64,7 @@ using namespace Esri::ArcGISRuntime;
 
 #ifdef LOCALSERVER_SUPPORTED
 #include "LocalServer.h"
-#endif
+#endif // LOCALSERVER_SUPPORTED
 
 #define STRINGIZE(x) #x
 #define QUOTE(x) STRINGIZE(x)
@@ -81,7 +81,7 @@ SampleManager::SampleManager(QObject *parent):
 {
 #ifdef LOCALSERVER_SUPPORTED
   createAndSetTempDirForLocalServer();
-#endif
+#endif // LOCALSERVER_SUPPORTED
 
   if (QNetworkInformation::loadBackendByFeatures(QNetworkInformation::Feature::Reachability))
   {
@@ -122,7 +122,7 @@ void SampleManager::createAndSetTempDirForLocalServer()
   // set the temp & app data path for the local server
   LocalServer::setTempDataPath(m_tempDir->path());
   LocalServer::setAppDataPath(m_tempDir->path());
-#endif
+#endif // LOCALSERVER_SUPPORTED
 }
 
 void SampleManager::setCancelDownload(bool cancel)
@@ -165,6 +165,14 @@ void SampleManager::buildCategoriesList()
   {
     qWarning() << "could not find Categories.xml";
   }
+
+#ifdef LOCALSERVER_SUPPORTED
+  if (LocalServer::isInstallValid())
+  {
+    const QDir dir(DIRNAMESAMPLES);
+    appendCategoryToManager(createCategory("LocalServer", "Local Server", dir));
+  }
+#endif // LOCALSERVER_SUPPORTED
 }
 
 SampleCategory* SampleManager::createCategory(const QString& name, const QString& displayName, const QDir& dir)
