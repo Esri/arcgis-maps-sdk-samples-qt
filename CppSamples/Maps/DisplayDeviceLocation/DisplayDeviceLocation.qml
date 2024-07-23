@@ -16,6 +16,7 @@
 
 import QtQuick
 import QtQuick.Controls
+import QtQuick.Dialogs
 import Esri.Samples
 
 DisplayDeviceLocationSample {
@@ -169,6 +170,27 @@ DisplayDeviceLocationSample {
                     autoPanListView.visible = true;
                 }
             }
+        }
+    }
+
+    Connections {
+        target: deviceLocationSample
+        function onLocationPermissionDenied() {
+            permissionDeniedDialog.open()
+        }
+    }
+
+    Dialog {
+        id: permissionDeniedDialog
+        title: "Location Permission Denied"
+        modal: true
+        standardButtons: Dialog.Ok
+        x: (parent.width - width) / 2
+        y: (parent.height - height) / 2
+
+        Text {
+            text: "This application requires location permissions."
+            color: "white"
         }
     }
 }

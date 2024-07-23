@@ -27,6 +27,11 @@
 #include "MapViewTypes.h"
 #include "LocationDisplay.h"
 
+#if (QT_VERSION >= QT_VERSION_CHECK(6, 6, 0)) || defined(Q_OS_IOS) || defined(Q_OS_MACOS) || defined(Q_OS_ANDROID)
+#define PERMISSIONS_PLATFORM
+#include <QPermissions>
+#endif
+
 using namespace Esri::ArcGISRuntime;
 
 const QString DisplayDeviceLocation::s_compassMode = QStringLiteral("Compass");
@@ -71,10 +76,29 @@ void DisplayDeviceLocation::componentComplete()
 
 void DisplayDeviceLocation::startLocationDisplay()
 {
-  //! [start location display api snippet]
-  // turn on the location display
+  // https://bugreports.qt.io/browse/QTBUG-116178
+#ifdef PERMISSIONS_PLATFORM
+  QLocationPermission locationPermission{};
+  locationPermission.setAccuracy(QLocationPermission::Accuracy::Precise);
+  locationPermission.setAvailability(QLocationPermission::Availability::WhenInUse);
+  switch (qApp->checkPermission(locationPermission))
+  {
+  case Qt::PermissionStatus::Undetermined:
+    qApp->requestPermission(locationPermission, this, &DisplayDeviceLocation::startLocationDisplay);
+    return;
+  case Qt::PermissionStatus::Granted:
+    //! [start location display api snippet]
+    // turn on the location display
+    m_mapView->locationDisplay()->start();
+    //! [start location display api snippet]
+    return;
+  case Qt::PermissionStatus::Denied:
+    emit locationPermissionDenied();
+    return;
+  }
+#else
   m_mapView->locationDisplay()->start();
-  //! [start location display api snippet]
+#endif
 }
 
 void DisplayDeviceLocation::stopLocationDisplay()

@@ -54,6 +54,8 @@ signals:
   void stopModeChanged();
   void closeModeChanged();
 
+  void locationPermissionDenied();
+
 private:
   static const QString compassMode();
   static const QString navigationMode();
