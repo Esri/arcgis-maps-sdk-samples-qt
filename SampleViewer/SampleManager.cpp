@@ -101,6 +101,8 @@ void SampleManager::init()
   buildCategoriesList();
   emit sampleInitComplete();
 
+  qDebug() << QGuiApplication::font();
+  QGuiApplication::setFont(QFont("Arial"));
   const QStringList fontFamilies = QFontDatabase::families();
   for (const QString &family : fontFamilies) {
     qDebug() << family;
