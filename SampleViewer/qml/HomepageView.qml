@@ -149,6 +149,7 @@ Rectangle {
                             clip: true
 
                             color: "white"
+                            Component.onCompleted: console.log("----", font.family, font.styleName, font.pointSize)
                         }
                     }
 

@@ -55,6 +55,7 @@
 #include "SampleManager_definitions.h"
 #include "SourceCode.h"
 #include "SourceCodeListModel.h"
+#include <QFontDatabase>
 
 #include <cstdlib>
 
@@ -99,6 +100,15 @@ void SampleManager::init()
   m_featuredSamples = new SampleListModel(this);
   buildCategoriesList();
   emit sampleInitComplete();
+
+  const QStringList fontFamilies = QFontDatabase::families();
+  for (const QString &family : fontFamilies) {
+    qDebug() << family;
+    const QStringList fontStyles = QFontDatabase::styles(family);
+    for (const QString &style : fontStyles) {
+      qDebug() << "  " << style << QFontDatabase::smoothSizes(family, style);
+    }
+  }
 }
 
 void SampleManager::createAndSetTempDirForLocalServer()
