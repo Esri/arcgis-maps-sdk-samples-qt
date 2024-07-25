@@ -72,10 +72,10 @@
     <string>NO</string>
     <key>LSRequiresIPhoneOS</key>
     <true/>
-    <key>NSLocationAlwaysUsageDescription</key>
-    <string></string>
     <key>NSLocationWhenInUseUsageDescription</key>
-    <string></string>
+    <string>Location required for application</string>
+    <key>NSLocationAlwaysAndWhenInUseUsageDescription</key>
+    <string>Location required for application</string>
     <key>NSPhotoLibraryUsageDescription</key>
     <string></string>
     <key>NSBluetoothAlwaysUsageDescription</key>
