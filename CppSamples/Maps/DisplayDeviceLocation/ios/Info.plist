@@ -32,6 +32,8 @@
 	<true/>
 	<key>NSLocationWhenInUseUsageDescription</key>
         <string>Location required for application</string>
+        <key>NSLocationAlwaysAndWhenInUseUsageDescription</key>
+        <string>Location required for application</string>
 	<key>UISupportedInterfaceOrientations</key>
 	<array>
 		<string>UIInterfaceOrientationPortrait</string>
