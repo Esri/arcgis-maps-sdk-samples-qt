@@ -25,10 +25,10 @@
     <key>NSRequiresAquaSystemAppearance</key>
     <string>true</string>
     <key>NSLocationUsageDescription</key>
-    <string>DisplayDeviceLocation requires location services</string>
+    <string>Application requires location services</string>
     <key>NSLocationWhenInUseUsageDescription</key>
-    <string>Location required for application</string>
+    <string>Application requires location services</string>
     <key>NSLocationAlwaysAndWhenInUseUsageDescription</key>
-    <string>Location required for application</string>
+    <string>Application requires location services</string>
 </dict>
 </plist>
