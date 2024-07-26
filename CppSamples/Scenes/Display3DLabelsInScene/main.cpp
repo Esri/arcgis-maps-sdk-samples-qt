@@ -1,3 +1,4 @@
+// [Legal]
 // Copyright 2021 Esri.
 //
 // Licensed under the Apache License, Version 2.0 (the "License");
@@ -10,15 +11,21 @@
 // WITHOUT WARRANTIES OR CONDITIONS OF ANY KIND, either express or implied.
 // See the License for the specific language governing permissions and
 // limitations under the License.
+// [Legal]
 
+// sample headers
 #include "Display3DLabelsInScene.h"
+
+// C++ API headers
 #include "ArcGISRuntimeEnvironment.h"
 
+// Qt headers
 #include <QDir>
 #include <QGuiApplication>
 #include <QQmlApplicationEngine>
 #include <QSurfaceFormat>
 
+// Platform specific headers
 #ifdef Q_OS_WIN
 #include <Windows.h>
 #endif

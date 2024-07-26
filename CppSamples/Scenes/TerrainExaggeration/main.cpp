@@ -1,3 +1,4 @@
+// [Legal]
 // Copyright 2018 Esri.
 //
 // Licensed under the Apache License, Version 2.0 (the "License");
@@ -10,20 +11,26 @@
 // WITHOUT WARRANTIES OR CONDITIONS OF ANY KIND, either express or implied.
 // See the License for the specific language governing permissions and
 // limitations under the License.
+// [Legal]
 
-#include <QGuiApplication>
-#include <QQuickView>
+// sample headers
+#include "TerrainExaggeration.h"
+
+// C++ API headers
+#include "ArcGISRuntimeEnvironment.h"
+
+// Qt headers
 #include <QCommandLineParser>
 #include <QDir>
+#include <QGuiApplication>
 #include <QQmlEngine>
+#include <QQuickView>
 #include <QSurfaceFormat>
 
+// Platform specific headers
 #ifdef Q_OS_WIN
 #include <Windows.h>
 #endif
-
-#include "TerrainExaggeration.h"
-#include "ArcGISRuntimeEnvironment.h"
 
 #define STRINGIZE(x) #x
 #define QUOTE(x) STRINGIZE(x)
