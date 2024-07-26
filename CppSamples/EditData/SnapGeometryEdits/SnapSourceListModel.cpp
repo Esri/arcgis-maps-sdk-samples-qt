@@ -1,33 +1,38 @@
+// [Legal]
 // Copyright 2024 Esri.
-
+//
 // Licensed under the Apache License, Version 2.0 (the "License");
 // you may not use this file except in compliance with the License.
 // You may obtain a copy of the License at
 // http://www.apache.org/licenses/LICENSE-2.0
-
+//
 // Unless required by applicable law or agreed to in writing, software
 // distributed under the License is distributed on an "AS IS" BASIS,
 // WITHOUT WARRANTIES OR CONDITIONS OF ANY KIND, either express or implied.
 // See the License for the specific language governing permissions and
 // limitations under the License.
+// [Legal]
 
+// sample headers
+#include "SnapSourceListModel.h"
+
+// C++ API headers
+#include "FeatureLayer.h"
+#include "FeatureTable.h"
+#include "GeometryTypes.h"
+#include "GraphicsOverlay.h"
+#include "SnapSourceSettings.h"
+
+// Qt headers
 #include <QAbstractListModel>
 #include <QByteArray>
+#include <QDir>
+#include <QFileInfo>
 #include <QHash>
+#include <QList>
 #include <QModelIndex>
 #include <QObject>
 #include <QVariant>
-#include <QFileInfo>
-#include <QDir>
-#include <QList>
-
-#include "GraphicsOverlay.h"
-#include "GeometryTypes.h"
-#include "FeatureTable.h"
-#include "FeatureLayer.h"
-#include "SnapSourceSettings.h"
-
-#include "SnapSourceListModel.h"
 
 using namespace Esri::ArcGISRuntime;
 
