@@ -25,7 +25,7 @@ class Map;
 class MapQuickView;
 }
 
-#include <FeatureListModel.h>
+#include "FeatureListModel.h"
 
 #include <QMouseEvent>
 #include <QObject>

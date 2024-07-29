@@ -21,7 +21,7 @@
 #include <QByteArray>
 #include <QHash>
 #include <QList>
-#include <RelatedFeature.h>
+#include "RelatedFeature.h"
 
 class RelatedFeatureListModel : public QAbstractListModel
 {

@@ -3,8 +3,6 @@
 
 #include "DynamicEntityDataSource.h"
 #include "Field.h"
-#include "Geometry.h"
-#include "RealTimeTypes.h"
 
 #include <QTextStream>
 #include <QUrl>
