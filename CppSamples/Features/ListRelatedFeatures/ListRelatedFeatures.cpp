@@ -194,3 +194,8 @@ void ListRelatedFeatures::connectSignals()
     });
   });
 }
+
+QAbstractListModel* ListRelatedFeatures::relatedFeaturesModel() const
+{
+  return m_relatedFeaturesModel;
+}
