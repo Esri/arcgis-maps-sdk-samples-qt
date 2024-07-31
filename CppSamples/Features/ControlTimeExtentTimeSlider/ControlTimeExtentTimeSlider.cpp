@@ -21,7 +21,7 @@
 // sample headers
 #include "ControlTimeExtentTimeSlider.h"
 
-// C++ API headers
+// ArcGIS Maps SDK headers
 #include "FeatureLayer.h"
 #include "LayerListModel.h"
 #include "Map.h"

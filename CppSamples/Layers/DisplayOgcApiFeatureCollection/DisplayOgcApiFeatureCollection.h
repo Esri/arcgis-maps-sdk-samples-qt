@@ -17,7 +17,7 @@
 #ifndef DisplayOgcApiFeatureCollection_H
 #define DisplayOgcApiFeatureCollection_H
 
-// C++ API headers
+// ArcGIS Maps SDK headers
 #include "QueryParameters.h"
 
 // Qt headers

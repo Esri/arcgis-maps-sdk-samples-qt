@@ -16,7 +16,7 @@
 // sample headers
 #include "Unique_Value_Renderer.h"
 
-// C++ API headers
+// ArcGIS Maps SDK headers
 #include "ArcGISRuntimeEnvironment.h"
 
 // Qt headers

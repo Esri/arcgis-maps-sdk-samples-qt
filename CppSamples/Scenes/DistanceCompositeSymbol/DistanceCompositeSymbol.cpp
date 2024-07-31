@@ -21,7 +21,7 @@
 // sample headers
 #include "DistanceCompositeSymbol.h"
 
-// C++ API headers
+// ArcGIS Maps SDK headers
 #include "ArcGISTiledElevationSource.h"
 #include "Basemap.h"
 #include "DistanceCompositeSceneSymbol.h"

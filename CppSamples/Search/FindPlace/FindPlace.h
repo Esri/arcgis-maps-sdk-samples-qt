@@ -17,7 +17,7 @@
 #ifndef FINDPLACE_H
 #define FINDPLACE_H
 
-// C++ API headers
+// ArcGIS Maps SDK headers
 #include "Envelope.h"
 #include "GeocodeParameters.h"
 #include "Point.h"

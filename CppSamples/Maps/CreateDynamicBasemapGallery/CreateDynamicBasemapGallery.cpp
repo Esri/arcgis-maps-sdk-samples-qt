@@ -22,7 +22,7 @@
 #include "BasemapStyleListModel.h"
 #include "CreateDynamicBasemapGallery.h"
 
-// C++ API headers
+// ArcGIS Maps SDK headers
 #include "Basemap.h"
 #include "BasemapStyleInfo.h"
 #include "BasemapStyleLanguageInfo.h"

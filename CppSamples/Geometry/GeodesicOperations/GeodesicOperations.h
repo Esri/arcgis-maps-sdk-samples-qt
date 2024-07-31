@@ -17,7 +17,7 @@
 #ifndef GEODESICOPERATIONS_H
 #define GEODESICOPERATIONS_H
 
-// C++ API headers
+// ArcGIS Maps SDK headers
 #include "Point.h"
 #include "Polyline.h"
 

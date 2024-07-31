@@ -22,7 +22,7 @@
 #include "StatisticResultListModel.h"
 #include "StatisticalQueryGroupSort.h"
 
-// C++ API headers
+// ArcGIS Maps SDK headers
 #include "CoreTypes.h"
 #include "Error.h"
 #include "Field.h"

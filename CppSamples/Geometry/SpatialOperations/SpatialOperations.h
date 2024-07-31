@@ -17,7 +17,7 @@
 #ifndef SpatialOperations_H
 #define SpatialOperations_H
 
-// C++ API headers
+// ArcGIS Maps SDK headers
 #include "Geometry.h"
 
 // Qt headers

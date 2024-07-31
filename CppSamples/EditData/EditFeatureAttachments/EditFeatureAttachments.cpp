@@ -21,7 +21,7 @@
 // sample headers
 #include "EditFeatureAttachments.h"
 
-// C++ API headers
+// ArcGIS Maps SDK headers
 #include "ArcGISFeature.h"
 #include "Attachment.h"
 #include "AttachmentListModel.h"

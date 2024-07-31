@@ -17,7 +17,7 @@
 #ifndef GraphicsOverlayDictionaryRenderer_3D_H
 #define GraphicsOverlayDictionaryRenderer_3D_H
 
-// C++ API headers
+// ArcGIS Maps SDK headers
 #include "Envelope.h"
 #include "Error.h"
 #include "SpatialReference.h"

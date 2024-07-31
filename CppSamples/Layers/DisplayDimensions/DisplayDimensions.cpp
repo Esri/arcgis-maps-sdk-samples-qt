@@ -21,7 +21,7 @@
 // sample headers
 #include "DisplayDimensions.h"
 
-// C++ API headers
+// ArcGIS Maps SDK headers
 #include "DimensionLayer.h"
 #include "Error.h"
 #include "LayerListModel.h"

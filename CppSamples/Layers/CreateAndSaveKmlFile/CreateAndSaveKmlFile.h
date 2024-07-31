@@ -17,7 +17,7 @@
 #ifndef CREATEANDSAVEKMLFILE_H
 #define CREATEANDSAVEKMLFILE_H
 
-// C++ API headers
+// ArcGIS Maps SDK headers
 #include "Geometry.h"
 #include "Point.h"
 #include "Polygon.h"

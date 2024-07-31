@@ -22,7 +22,7 @@
 #include "DisplayUtilityAssociations.h"
 #include "SymbolImageProvider.h"
 
-// C++ API headers
+// ArcGIS Maps SDK headers
 #include "ArcGISFeatureTable.h"
 #include "AttributeListModel.h"
 #include "Credential.h"

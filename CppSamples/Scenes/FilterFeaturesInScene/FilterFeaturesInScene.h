@@ -17,7 +17,7 @@
 #ifndef FILTERFEATURESINSCENE_H
 #define FILTERFEATURESINSCENE_H
 
-// C++ API headers
+// ArcGIS Maps SDK headers
 #include "Polygon.h"
 
 // Qt headers

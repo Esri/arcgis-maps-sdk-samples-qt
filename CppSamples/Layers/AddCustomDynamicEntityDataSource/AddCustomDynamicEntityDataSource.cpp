@@ -22,7 +22,7 @@
 #include "AddCustomDynamicEntityDataSource.h"
 #include "CustomDataSource.h"
 
-// C++ API headers
+// ArcGIS Maps SDK headers
 #include "ArcGISMapImageLayer.h"
 #include "AttributeListModel.h"
 #include "Basemap.h"

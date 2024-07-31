@@ -21,7 +21,7 @@
 // sample headers
 #include "SetSurfacePlacementMode.h"
 
-// C++ API headers
+// ArcGIS Maps SDK headers
 #include "ArcGISSceneLayer.h"
 #include "ArcGISTiledElevationSource.h"
 #include "Camera.h"

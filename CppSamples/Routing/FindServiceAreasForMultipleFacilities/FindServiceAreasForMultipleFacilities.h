@@ -17,7 +17,7 @@
 #ifndef FINDSERVICEAREASFORMULTIPLEFACILITIES_H
 #define FINDSERVICEAREASFORMULTIPLEFACILITIES_H
 
-// C++ API headers
+// ArcGIS Maps SDK headers
 #include "ServiceAreaResult.h"
 
 // Qt headers

@@ -21,7 +21,7 @@
 // sample headers
 #include "PortalUserInfo.h"
 
-// C++ API headers
+// ArcGIS Maps SDK headers
 #include "AuthenticationManager.h"
 #include "CoreTypes.h"
 #include "Credential.h"

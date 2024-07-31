@@ -21,7 +21,7 @@
 // sample headers
 #include "DisplayMap.h"
 
-// C++ API headers
+// ArcGIS Maps SDK headers
 #include "Map.h"
 #include "MapQuickView.h"
 #include "MapTypes.h"

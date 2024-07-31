@@ -17,7 +17,7 @@
 #ifndef MISSIONDATA_H
 #define MISSIONDATA_H
 
-// C++ API headers
+// ArcGIS Maps SDK headers
 #include "Point.h"
 #include "SpatialReference.h"
 

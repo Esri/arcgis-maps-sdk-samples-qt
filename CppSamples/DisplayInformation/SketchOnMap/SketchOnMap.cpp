@@ -21,7 +21,7 @@
 // sample headers
 #include "SketchOnMap.h"
 
-// C++ API headers
+// ArcGIS Maps SDK headers
 #include "Envelope.h"
 #include "Graphic.h"
 #include "GraphicListModel.h"

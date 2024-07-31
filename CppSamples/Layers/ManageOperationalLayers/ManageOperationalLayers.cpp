@@ -22,7 +22,7 @@
 #include "DrawOrderLayerListModel.h"
 #include "ManageOperationalLayers.h"
 
-// C++ API headers
+// ArcGIS Maps SDK headers
 #include "ArcGISMapImageLayer.h"
 #include "LayerListModel.h"
 #include "Map.h"

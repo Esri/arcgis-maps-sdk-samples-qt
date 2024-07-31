@@ -21,7 +21,7 @@
 // sample headers
 #include "BuildLegend.h"
 
-// C++ API headers
+// ArcGIS Maps SDK headers
 #include "ArcGISMapImageLayer.h"
 #include "Basemap.h"
 #include "FeatureLayer.h"

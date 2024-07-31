@@ -22,7 +22,7 @@
 #include "CreateMobileGeodatabase.h"
 #include "FeatureListModel.h"
 
-// C++ API headers
+// ArcGIS Maps SDK headers
 #include "FeatureIterator.h"
 #include "FeatureLayer.h"
 #include "FeatureQueryResult.h"

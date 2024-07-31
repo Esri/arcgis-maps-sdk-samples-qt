@@ -17,7 +17,7 @@
 #ifndef SHOWLOCATIONHISTORY_H
 #define SHOWLOCATIONHISTORY_H
 
-// C++ API headers
+// ArcGIS Maps SDK headers
 #include "Point.h"
 
 // Qt headers

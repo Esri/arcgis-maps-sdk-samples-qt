@@ -21,7 +21,7 @@
 // sample headers
 #include "DisplayKmlNetworkLinks.h"
 
-// C++ API headers
+// ArcGIS Maps SDK headers
 #include "KmlDataset.h"
 #include "KmlLayer.h"
 #include "KmlNetworkLink.h"

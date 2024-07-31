@@ -17,7 +17,7 @@
 // sample headers
 #include "BasemapStyleListModel.h"
 
-// C++ API headers
+// ArcGIS Maps SDK headers
 #include "BasemapStyleInfo.h"
 
 using namespace Esri::ArcGISRuntime;

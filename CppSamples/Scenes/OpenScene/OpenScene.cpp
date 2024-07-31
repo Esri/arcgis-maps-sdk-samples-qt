@@ -21,7 +21,7 @@
 // sample headers
 #include "OpenScene.h"
 
-// C++ API headers
+// ArcGIS Maps SDK headers
 #include "PortalItem.h"
 #include "Scene.h"
 #include "SceneQuickView.h"

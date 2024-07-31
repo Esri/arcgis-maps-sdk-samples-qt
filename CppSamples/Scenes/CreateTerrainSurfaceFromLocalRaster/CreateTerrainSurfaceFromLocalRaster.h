@@ -17,7 +17,7 @@
 #ifndef CREATETERRAINSURFACEFROMLOCALRASTER_H
 #define CREATETERRAINSURFACEFROMLOCALRASTER_H
 
-// C++ API headers
+// ArcGIS Maps SDK headers
 #include "Error.h"
 
 // Qt headers

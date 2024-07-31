@@ -21,7 +21,7 @@
 // sample headers
 #include "IdentifyGraphics.h"
 
-// C++ API headers
+// ArcGIS Maps SDK headers
 #include "Geometry.h"
 #include "Graphic.h"
 #include "GraphicListModel.h"

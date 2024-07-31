@@ -17,7 +17,7 @@
 #ifndef ROUTEAROUNDBARRIERS_H
 #define ROUTEAROUNDBARRIERS_H
 
-// C++ API headers
+// ArcGIS Maps SDK headers
 #include "PolygonBarrier.h"
 #include "RouteParameters.h"
 #include "Stop.h"

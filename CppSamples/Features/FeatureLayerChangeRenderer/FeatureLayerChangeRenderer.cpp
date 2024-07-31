@@ -21,7 +21,7 @@
 // sample headers
 #include "FeatureLayerChangeRenderer.h"
 
-// C++ API headers
+// ArcGIS Maps SDK headers
 #include "Basemap.h"
 #include "Envelope.h"
 #include "FeatureLayer.h"

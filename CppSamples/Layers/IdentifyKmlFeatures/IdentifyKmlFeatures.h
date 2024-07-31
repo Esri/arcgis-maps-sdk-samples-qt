@@ -17,7 +17,7 @@
 #ifndef IDENTIFYKMLFEATURES_H
 #define IDENTIFYKMLFEATURES_H
 
-// C++ API headers
+// ArcGIS Maps SDK headers
 #include "Point.h"
 
 // Qt headers

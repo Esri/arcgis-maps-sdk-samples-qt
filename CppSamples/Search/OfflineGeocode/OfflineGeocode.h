@@ -17,7 +17,7 @@
 #ifndef OFFLINEGEOCODE_H
 #define OFFLINEGEOCODE_H
 
-// C++ API headers
+// ArcGIS Maps SDK headers
 #include "Error.h"
 #include "GeocodeParameters.h"
 #include "Point.h"

@@ -21,7 +21,7 @@
 // sample headers
 #include "ControlAnnotationSublayerVisibility.h"
 
-// C++ API headers
+// ArcGIS Maps SDK headers
 #include "AnnotationSublayer.h"
 #include "Error.h"
 #include "Layer.h"

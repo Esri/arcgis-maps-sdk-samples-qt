@@ -21,7 +21,7 @@
 // sample headers
 #include "CreateTerrainSurfaceFromLocalTilePackage.h"
 
-// C++ API headers
+// ArcGIS Maps SDK headers
 #include "ArcGISTiledElevationSource.h"
 #include "Camera.h"
 #include "ElevationSourceListModel.h"

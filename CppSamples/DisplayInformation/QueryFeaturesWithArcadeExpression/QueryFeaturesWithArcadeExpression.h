@@ -17,7 +17,7 @@
 #ifndef QUERYFEATURESWITHARCADEEXPRESSION_H
 #define QUERYFEATURESWITHARCADEEXPRESSION_H
 
-// C++ API headers
+// ArcGIS Maps SDK headers
 #include "Point.h"
 
 // Qt headers

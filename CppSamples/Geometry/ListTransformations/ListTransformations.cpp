@@ -21,7 +21,7 @@
 // sample headers
 #include "ListTransformations.h"
 
-// C++ API headers
+// ArcGIS Maps SDK headers
 #include "DatumTransformation.h"
 #include "Envelope.h"
 #include "Error.h"

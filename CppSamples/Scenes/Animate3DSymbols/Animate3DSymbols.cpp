@@ -22,7 +22,7 @@
 #include "Animate3DSymbols.h"
 #include "MissionData.h"
 
-// C++ API headers
+// ArcGIS Maps SDK headers
 #include "ArcGISTiledElevationSource.h"
 #include "AttributeListModel.h"
 #include "Camera.h"

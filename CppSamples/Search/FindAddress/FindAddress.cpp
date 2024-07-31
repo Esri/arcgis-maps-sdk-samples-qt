@@ -21,7 +21,7 @@
 // sample headers
 #include "FindAddress.h"
 
-// C++ API headers
+// ArcGIS Maps SDK headers
 #include "AttributeListModel.h"
 #include "Basemap.h"
 #include "CalloutData.h"

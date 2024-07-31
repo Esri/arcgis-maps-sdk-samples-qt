@@ -21,7 +21,7 @@
 // sample headers
 #include "DownloadPreplannedMap.h"
 
-// C++ API headers
+// ArcGIS Maps SDK headers
 #include "DownloadPreplannedOfflineMapJob.h"
 #include "DownloadPreplannedOfflineMapResult.h"
 #include "Error.h"

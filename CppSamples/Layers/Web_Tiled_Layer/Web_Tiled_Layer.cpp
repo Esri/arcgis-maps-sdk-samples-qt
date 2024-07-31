@@ -21,7 +21,7 @@
 // sample headers
 #include "Web_Tiled_Layer.h"
 
-// C++ API headers
+// ArcGIS Maps SDK headers
 #include "Basemap.h"
 #include "Map.h"
 #include "MapQuickView.h"

@@ -21,7 +21,7 @@
 // sample headers
 #include "FeatureLayerDictionaryRenderer.h"
 
-// C++ API headers
+// ArcGIS Maps SDK headers
 #include "DictionaryRenderer.h"
 #include "DictionarySymbolStyle.h"
 #include "Envelope.h"

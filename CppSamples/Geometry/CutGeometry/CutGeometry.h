@@ -17,7 +17,7 @@
 #ifndef CUTGEOMETRY_H
 #define CUTGEOMETRY_H
 
-// C++ API headers
+// ArcGIS Maps SDK headers
 #include "Polygon.h"
 #include "Polyline.h"
 

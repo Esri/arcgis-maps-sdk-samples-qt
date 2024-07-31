@@ -21,7 +21,7 @@
 // sample headers
 #include "DisplaySubtypeFeatureLayer.h"
 
-// C++ API headers
+// ArcGIS Maps SDK headers
 #include "Credential.h"
 #include "Envelope.h"
 #include "Error.h"

@@ -21,7 +21,7 @@
 // sample headers
 #include "HonorMobileMapPackageExpiration.h"
 
-// C++ API headers
+// ArcGIS Maps SDK headers
 #include "CoreTypes.h"
 #include "Error.h"
 #include "Expiration.h"

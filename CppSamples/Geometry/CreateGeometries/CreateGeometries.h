@@ -17,7 +17,7 @@
 #ifndef CREATEGEOMETRIES_H
 #define CREATEGEOMETRIES_H
 
-// C++ API headers
+// ArcGIS Maps SDK headers
 #include "Geometry.h"
 
 // Qt headers

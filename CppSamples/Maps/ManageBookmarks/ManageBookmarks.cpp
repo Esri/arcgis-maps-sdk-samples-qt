@@ -21,7 +21,7 @@
 // sample headers
 #include "ManageBookmarks.h"
 
-// C++ API headers
+// ArcGIS Maps SDK headers
 #include "Basemap.h"
 #include "Bookmark.h"
 #include "BookmarkListModel.h"

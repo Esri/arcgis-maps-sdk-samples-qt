@@ -21,7 +21,7 @@
 // sample headers
 #include "UpdateAttributesFeatureService.h"
 
-// C++ API headers
+// ArcGIS Maps SDK headers
 #include "ArcGISFeature.h"
 #include "AttributeListModel.h"
 #include "Basemap.h"

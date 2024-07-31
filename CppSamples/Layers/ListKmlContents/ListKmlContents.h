@@ -17,7 +17,7 @@
 #ifndef LISTKMLCONTENTS_H
 #define LISTKMLCONTENTS_H
 
-// C++ API headers
+// ArcGIS Maps SDK headers
 #include "Viewpoint.h"
 
 // Qt headers

@@ -17,7 +17,7 @@
 #ifndef SERVICEAREA_H
 #define SERVICEAREA_H
 
-// C++ API headers
+// ArcGIS Maps SDK headers
 #include "ServiceAreaParameters.h"
 
 // Qt headers

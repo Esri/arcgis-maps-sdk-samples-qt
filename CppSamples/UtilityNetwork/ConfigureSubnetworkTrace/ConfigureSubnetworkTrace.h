@@ -17,7 +17,7 @@
 #ifndef CONFIGURESUBNETWORKTRACE_H
 #define CONFIGURESUBNETWORKTRACE_H
 
-// C++ API headers
+// ArcGIS Maps SDK headers
 #include "UtilityNetworkAttribute.h"
 #include "UtilityNetworkAttributeComparison.h"
 

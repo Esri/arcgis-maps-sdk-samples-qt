@@ -21,7 +21,7 @@
 // sample headers
 #include "OfflineGeocode.h"
 
-// C++ API headers
+// ArcGIS Maps SDK headers
 #include "ArcGISTiledLayer.h"
 #include "Basemap.h"
 #include "CalloutData.h"

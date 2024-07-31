@@ -21,7 +21,7 @@
 // sample headers
 #include "FilterByDefinitionExpressionOrDisplayFilter.h"
 
-// C++ API headers
+// ArcGIS Maps SDK headers
 #include "Basemap.h"
 #include "DisplayFilter.h"
 #include "DisplayFilterDefinition.h"

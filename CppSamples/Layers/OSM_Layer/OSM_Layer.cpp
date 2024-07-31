@@ -21,7 +21,7 @@
 // sample headers
 #include "OSM_Layer.h"
 
-// C++ API headers
+// ArcGIS Maps SDK headers
 #include "Basemap.h"
 #include "LayerListModel.h"
 #include "Map.h"

@@ -21,7 +21,7 @@
 // sample headers
 #include "CreateTerrainSurfaceFromLocalRaster.h"
 
-// C++ API headers
+// ArcGIS Maps SDK headers
 #include "Camera.h"
 #include "ElevationSourceListModel.h"
 #include "Error.h"

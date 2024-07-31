@@ -21,7 +21,7 @@
 // sample headers
 #include "SearchForWebmap.h"
 
-// C++ API headers
+// ArcGIS Maps SDK headers
 #include "AuthenticationManager.h"
 #include "Error.h"
 #include "Map.h"

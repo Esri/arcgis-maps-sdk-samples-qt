@@ -21,7 +21,7 @@
 // sample headers
 #include "CreateLoadReport.h"
 
-// C++ API headers
+// ArcGIS Maps SDK headers
 #include "CodedValueDomain.h"
 #include "Credential.h"
 #include "MapQuickView.h"

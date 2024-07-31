@@ -21,7 +21,7 @@
 // sample headers
 #include "FindClosestFacilityToMultipleIncidentsService.h"
 
-// C++ API headers
+// ArcGIS Maps SDK headers
 #include "ClosestFacilityParameters.h"
 #include "ClosestFacilityResult.h"
 #include "ClosestFacilityRoute.h"

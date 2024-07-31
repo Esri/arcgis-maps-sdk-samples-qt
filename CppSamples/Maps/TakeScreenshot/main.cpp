@@ -17,7 +17,7 @@
 #include "MapImageProvider.h"
 #include "TakeScreenshot.h"
 
-// C++ API headers
+// ArcGIS Maps SDK headers
 #include "ArcGISRuntimeEnvironment.h"
 
 // Qt headers

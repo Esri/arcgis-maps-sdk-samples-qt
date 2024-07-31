@@ -17,7 +17,7 @@
 #ifndef MOBILEMAP_SEARCHANDROUTE_H
 #define MOBILEMAP_SEARCHANDROUTE_H
 
-// C++ API headers
+// ArcGIS Maps SDK headers
 #include "Point.h"
 #include "ReverseGeocodeParameters.h"
 #include "RouteParameters.h"

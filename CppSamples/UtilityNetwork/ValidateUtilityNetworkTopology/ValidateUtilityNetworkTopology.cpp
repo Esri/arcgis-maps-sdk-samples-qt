@@ -21,7 +21,7 @@
 // sample headers
 #include "ValidateUtilityNetworkTopology.h"
 
-// C++ API headers
+// ArcGIS Maps SDK headers
 #include "ArcGISFeature.h"
 #include "ArcGISFeatureListModel.h"
 #include "AttributeListModel.h"

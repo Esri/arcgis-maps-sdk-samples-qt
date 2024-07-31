@@ -21,7 +21,7 @@
 // sample headers
 #include "ConfigureBasemapStyleLanguage.h"
 
-// C++ API headers
+// ArcGIS Maps SDK headers
 #include "Basemap.h"
 #include "BasemapStyleParameters.h"
 #include "Map.h"

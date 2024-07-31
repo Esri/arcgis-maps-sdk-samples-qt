@@ -21,7 +21,7 @@
 // sample headers
 #include "FeatureLayerQuery.h"
 
-// C++ API headers
+// ArcGIS Maps SDK headers
 #include "Basemap.h"
 #include "Feature.h"
 #include "FeatureIterator.h"

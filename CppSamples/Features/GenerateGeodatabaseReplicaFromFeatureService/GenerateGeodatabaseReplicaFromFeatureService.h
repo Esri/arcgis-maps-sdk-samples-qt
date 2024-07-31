@@ -17,7 +17,7 @@
 #ifndef GENERATE_GEODATABASE_H
 #define GENERATE_GEODATABASE_H
 
-// C++ API headers
+// ArcGIS Maps SDK headers
 #include "ArcGISFeatureServiceInfo.h"
 #include "Envelope.h"
 #include "GenerateGeodatabaseParameters.h"

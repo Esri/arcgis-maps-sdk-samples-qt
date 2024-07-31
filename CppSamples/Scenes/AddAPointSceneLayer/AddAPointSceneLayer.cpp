@@ -21,7 +21,7 @@
 // sample headers
 #include "AddAPointSceneLayer.h"
 
-// C++ API headers
+// ArcGIS Maps SDK headers
 #include "ArcGISSceneLayer.h"
 #include "ArcGISTiledElevationSource.h"
 #include "ElevationSourceListModel.h"

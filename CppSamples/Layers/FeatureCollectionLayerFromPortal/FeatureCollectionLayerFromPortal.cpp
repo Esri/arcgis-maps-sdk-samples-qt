@@ -21,7 +21,7 @@
 // sample headers
 #include "FeatureCollectionLayerFromPortal.h"
 
-// C++ API headers
+// ArcGIS Maps SDK headers
 #include "Error.h"
 #include "FeatureCollection.h"
 #include "FeatureCollectionLayer.h"

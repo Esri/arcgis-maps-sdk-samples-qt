@@ -16,7 +16,7 @@
 // sample headers
 #include "ManageOperationalLayers.h"
 
-// C++ API headers
+// ArcGIS Maps SDK headers
 #include "ArcGISRuntimeEnvironment.h"
 
 // Qt headers

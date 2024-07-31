@@ -21,7 +21,7 @@
 // sample headers
 #include "SearchDictionarySymbolStyle.h"
 
-// C++ API headers
+// ArcGIS Maps SDK headers
 #include "DictionarySymbolStyle.h"
 #include "SymbolStyleSearchParameters.h"
 #include "SymbolStyleSearchResultListModel.h"

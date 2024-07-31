@@ -21,7 +21,7 @@
 // sample headers
 #include "DisplayLayerViewDrawState.h"
 
-// C++ API headers
+// ArcGIS Maps SDK headers
 #include "Error.h"
 #include "FeatureLayer.h"
 #include "LayerListModel.h"

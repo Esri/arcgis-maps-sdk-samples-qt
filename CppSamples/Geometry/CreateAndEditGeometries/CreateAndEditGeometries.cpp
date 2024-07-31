@@ -21,7 +21,7 @@
 // sample headers
 #include "CreateAndEditGeometries.h"
 
-// C++ API headers
+// ArcGIS Maps SDK headers
 #include "FreehandTool.h"
 #include "GeometryEditor.h"
 #include "GeometryEditorElement.h"

@@ -17,7 +17,7 @@
 #ifndef ANIMATEIMAGESWITHIMAGEOVERLAY_H
 #define ANIMATEIMAGESWITHIMAGEOVERLAY_H
 
-// C++ API headers
+// ArcGIS Maps SDK headers
 #include "Envelope.h"
 
 // Qt headers

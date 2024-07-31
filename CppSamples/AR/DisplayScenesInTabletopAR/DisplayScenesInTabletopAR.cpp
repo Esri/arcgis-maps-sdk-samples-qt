@@ -21,7 +21,7 @@
 // sample headers
 #include "DisplayScenesInTabletopAR.h"
 
-// C++ API headers
+// ArcGIS Maps SDK headers
 #include "Error.h"
 #include "MobileScenePackage.h"
 #include "Scene.h"

@@ -17,7 +17,7 @@
 #ifndef NAVIGATEROUTE_H
 #define NAVIGATEROUTE_H
 
-// C++ API headers
+// ArcGIS Maps SDK headers
 #include "Route.h"
 #include "RouteResult.h"
 

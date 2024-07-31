@@ -21,7 +21,7 @@
 // sample headers
 #include "ShowLabelsOnLayers.h"
 
-// C++ API headers
+// ArcGIS Maps SDK headers
 #include "ArcadeLabelExpression.h"
 #include "Envelope.h"
 #include "Error.h"

@@ -23,7 +23,7 @@
 #include "RelatedFeature.h"
 #include "RelatedFeatureListModel.h"
 
-// C++ API headers
+// ArcGIS Maps SDK headers
 #include "ArcGISFeature.h"
 #include "ArcGISFeatureLayerInfo.h"
 #include "ArcGISFeatureTable.h"

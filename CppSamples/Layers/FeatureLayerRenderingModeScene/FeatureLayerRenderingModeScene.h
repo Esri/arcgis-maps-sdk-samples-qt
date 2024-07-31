@@ -17,7 +17,7 @@
 #ifndef FEATURELAYERRENDERINGMODESCENE_H
 #define FEATURELAYERRENDERINGMODESCENE_H
 
-// C++ API headers
+// ArcGIS Maps SDK headers
 #include "Camera.h"
 
 // Qt headers

@@ -21,7 +21,7 @@
 // sample headers
 #include "ServiceFeatureTableManualCache.h"
 
-// C++ API headers
+// ArcGIS Maps SDK headers
 #include "Basemap.h"
 #include "FeatureLayer.h"
 #include "GeodatabaseTypes.h"

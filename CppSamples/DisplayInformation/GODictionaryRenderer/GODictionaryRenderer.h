@@ -17,7 +17,7 @@
 #ifndef GraphicsOverlayDictionaryRenderer_H
 #define GraphicsOverlayDictionaryRenderer_H
 
-// C++ API headers
+// ArcGIS Maps SDK headers
 #include "Envelope.h"
 
 // Qt headers

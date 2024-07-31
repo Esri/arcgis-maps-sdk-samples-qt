@@ -21,7 +21,7 @@
 // sample headers
 #include "ConfigureClusters.h"
 
-// C++ API headers
+// ArcGIS Maps SDK headers
 #include "AggregateField.h"
 #include "AggregateFieldListModel.h"
 #include "AggregateGeoElement.h"

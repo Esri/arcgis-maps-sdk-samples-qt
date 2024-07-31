@@ -21,7 +21,7 @@
 // sample headers
 #include "DistanceMeasurementAnalysis.h"
 
-// C++ API headers
+// ArcGIS Maps SDK headers
 #include "AnalysisListModel.h"
 #include "AnalysisOverlay.h"
 #include "AnalysisOverlayListModel.h"

@@ -16,7 +16,7 @@
 // sample headers
 #include "ArcGISTiledLayerUrl.h"
 
-// C++ API headers
+// ArcGIS Maps SDK headers
 #include "ArcGISRuntimeEnvironment.h"
 #include "MapQuickView.h"
 

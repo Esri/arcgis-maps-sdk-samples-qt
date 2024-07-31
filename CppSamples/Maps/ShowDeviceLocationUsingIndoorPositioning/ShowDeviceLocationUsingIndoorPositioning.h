@@ -17,7 +17,7 @@
 #ifndef SHOWDEVICELOCATIONUSINGINDOORPOSITIONING_H
 #define SHOWDEVICELOCATIONUSINGINDOORPOSITIONING_H
 
-// C++ API headers
+// ArcGIS Maps SDK headers
 #include "Location.h"
 
 // Qt headers

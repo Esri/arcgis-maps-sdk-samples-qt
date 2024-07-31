@@ -17,7 +17,7 @@
 #ifndef VALIDATEUTILITYNETWORKTOPOLOGY_H
 #define VALIDATEUTILITYNETWORKTOPOLOGY_H
 
-// C++ API headers
+// ArcGIS Maps SDK headers
 #include "CodedValueDomain.h"
 #include "IdentifyLayerResult.h"
 

@@ -17,7 +17,7 @@
 #ifndef FEATURELAYEREXTRUSION_H
 #define FEATURELAYEREXTRUSION_H
 
-// C++ API headers
+// ArcGIS Maps SDK headers
 #include "Camera.h"
 #include "Point.h"
 

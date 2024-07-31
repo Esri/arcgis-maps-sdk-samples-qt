@@ -17,7 +17,7 @@
 #ifndef FIND_ADDRESS_H
 #define FIND_ADDRESS_H
 
-// C++ API headers
+// ArcGIS Maps SDK headers
 #include "GeocodeParameters.h"
 
 // Qt headers

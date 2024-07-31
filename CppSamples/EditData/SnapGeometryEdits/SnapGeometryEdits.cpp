@@ -22,7 +22,7 @@
 #include "SnapGeometryEdits.h"
 #include "SnapSourceListModel.h"
 
-// C++ API headers
+// ArcGIS Maps SDK headers
 #include "FeatureLayer.h"
 #include "FeatureTable.h"
 #include "Geometry.h"

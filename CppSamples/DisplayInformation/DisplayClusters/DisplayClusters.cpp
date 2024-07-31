@@ -21,7 +21,7 @@
 // sample headers
 #include "DisplayClusters.h"
 
-// C++ API headers
+// ArcGIS Maps SDK headers
 #include "AggregateGeoElement.h"
 #include "CalloutData.h"
 #include "Error.h"

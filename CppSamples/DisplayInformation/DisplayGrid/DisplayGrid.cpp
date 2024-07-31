@@ -21,7 +21,7 @@
 // sample headers
 #include "DisplayGrid.h"
 
-// C++ API headers
+// ArcGIS Maps SDK headers
 #include "Grid.h"
 #include "LatitudeLongitudeGrid.h"
 #include "MGRSGrid.h"

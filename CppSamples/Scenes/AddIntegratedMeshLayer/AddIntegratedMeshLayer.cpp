@@ -21,7 +21,7 @@
 // sample headers
 #include "AddIntegratedMeshLayer.h"
 
-// C++ API headers
+// ArcGIS Maps SDK headers
 #include "Camera.h"
 #include "Error.h"
 #include "IntegratedMeshLayer.h"

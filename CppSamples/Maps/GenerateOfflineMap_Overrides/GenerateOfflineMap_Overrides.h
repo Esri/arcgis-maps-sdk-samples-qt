@@ -17,7 +17,7 @@
 #ifndef GENERATEOFFLINEMAP_OVERRIDES_H
 #define GENERATEOFFLINEMAP_OVERRIDES_H
 
-// C++ API headers
+// ArcGIS Maps SDK headers
 #include "GenerateOfflineMapParameters.h"
 
 // Qt headers

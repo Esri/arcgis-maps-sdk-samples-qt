@@ -21,7 +21,7 @@
 // sample headers
 #include "DisplayDeviceLocationWithNmeaDataSources.h"
 
-// C++ API headers
+// ArcGIS Maps SDK headers
 #include "LocationDisplay.h"
 #include "Map.h"
 #include "MapQuickView.h"

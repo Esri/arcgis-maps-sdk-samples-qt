@@ -21,7 +21,7 @@
 // sample headers
 #include "ViewContentBeneathTerrainSurface.h"
 
-// C++ API headers
+// ArcGIS Maps SDK headers
 #include "Error.h"
 #include "Scene.h"
 #include "SceneQuickView.h"

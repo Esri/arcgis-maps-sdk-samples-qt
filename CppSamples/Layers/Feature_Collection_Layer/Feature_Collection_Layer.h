@@ -17,7 +17,7 @@
 #ifndef FEATURE_COLLECTION_LAYER_H
 #define FEATURE_COLLECTION_LAYER_H
 
-// C++ API headers
+// ArcGIS Maps SDK headers
 #include "Point.h"
 
 // Qt headers

@@ -21,7 +21,7 @@
 // sample headers
 #include "AnimateImagesWithImageOverlay.h"
 
-// C++ API headers
+// ArcGIS Maps SDK headers
 #include "ArcGISTiledElevationSource.h"
 #include "ArcGISTiledLayer.h"
 #include "Camera.h"

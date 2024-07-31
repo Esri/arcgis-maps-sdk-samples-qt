@@ -21,7 +21,7 @@
 // sample headers
 #include "PlayAKmlTour.h"
 
-// C++ API headers
+// ArcGIS Maps SDK headers
 #include "ArcGISTiledElevationSource.h"
 #include "ElevationSourceListModel.h"
 #include "Error.h"

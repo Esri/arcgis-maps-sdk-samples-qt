@@ -21,7 +21,7 @@
 // sample headers
 #include "LocalServerServices.h"
 
-// C++ API headers
+// ArcGIS Maps SDK headers
 #include "LocalFeatureService.h"
 #include "LocalGeoprocessingService.h"
 #include "LocalMapService.h"

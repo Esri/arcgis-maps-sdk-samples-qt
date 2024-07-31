@@ -17,7 +17,7 @@
 #ifndef APPLYSCHEDULEDMAPUPDATES_H
 #define APPLYSCHEDULEDMAPUPDATES_H
 
-// C++ API headers
+// ArcGIS Maps SDK headers
 #include "Error.h"
 
 // Qt headers

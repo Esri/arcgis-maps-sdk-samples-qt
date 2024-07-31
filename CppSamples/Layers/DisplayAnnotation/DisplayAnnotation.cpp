@@ -21,7 +21,7 @@
 // sample headers
 #include "DisplayAnnotation.h"
 
-// C++ API headers
+// ArcGIS Maps SDK headers
 #include "AnnotationLayer.h"
 #include "FeatureLayer.h"
 #include "LayerListModel.h"

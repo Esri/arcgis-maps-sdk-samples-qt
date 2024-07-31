@@ -21,7 +21,7 @@
 // sample headers
 #include "ContingentValues.h"
 
-// C++ API headers
+// ArcGIS Maps SDK headers
 #include "ArcGISFeature.h"
 #include "ArcGISVectorTiledLayer.h"
 #include "AttributeListModel.h"

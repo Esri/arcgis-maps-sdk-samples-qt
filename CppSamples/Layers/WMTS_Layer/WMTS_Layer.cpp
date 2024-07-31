@@ -21,7 +21,7 @@
 // sample headers
 #include "WMTS_Layer.h"
 
-// C++ API headers
+// ArcGIS Maps SDK headers
 #include "Basemap.h"
 #include "Error.h"
 #include "Map.h"

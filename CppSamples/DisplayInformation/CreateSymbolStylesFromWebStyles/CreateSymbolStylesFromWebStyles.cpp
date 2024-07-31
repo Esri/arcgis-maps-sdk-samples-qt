@@ -21,7 +21,7 @@
 // sample headers
 #include "CreateSymbolStylesFromWebStyles.h"
 
-// C++ API headers
+// ArcGIS Maps SDK headers
 #include "FeatureLayer.h"
 #include "LayerListModel.h"
 #include "Map.h"

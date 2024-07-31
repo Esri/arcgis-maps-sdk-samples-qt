@@ -21,7 +21,7 @@
 // sample headers
 #include "CutGeometry.h"
 
-// C++ API headers
+// ArcGIS Maps SDK headers
 #include "GeometryEngine.h"
 #include "Graphic.h"
 #include "GraphicListModel.h"

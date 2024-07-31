@@ -16,7 +16,7 @@
 #ifndef CUSTOMDATASOURCE_H
 #define CUSTOMDATASOURCE_H
 
-// C++ API headers
+// ArcGIS Maps SDK headers
 #include "DynamicEntityDataSource.h"
 #include "Field.h"
 #include "Geometry.h"

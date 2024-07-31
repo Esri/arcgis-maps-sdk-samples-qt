@@ -21,7 +21,7 @@
 // sample headers
 #include "IdentifyKmlFeatures.h"
 
-// C++ API headers
+// ArcGIS Maps SDK headers
 #include "CalloutData.h"
 #include "Envelope.h"
 #include "IdentifyLayerResult.h"

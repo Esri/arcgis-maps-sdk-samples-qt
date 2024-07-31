@@ -21,7 +21,7 @@
 // sample headers
 #include "AddGraphicsWithRenderer.h"
 
-// C++ API headers
+// ArcGIS Maps SDK headers
 #include "AngularUnit.h"
 #include "CubicBezierSegment.h"
 #include "EllipticArcSegment.h"

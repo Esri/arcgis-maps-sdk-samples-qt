@@ -21,7 +21,7 @@
 // sample headers
 #include "ShowOrgBasemaps.h"
 
-// C++ API headers
+// ArcGIS Maps SDK headers
 #include "AuthenticationManager.h"
 #include "Basemap.h"
 #include "BasemapListModel.h"

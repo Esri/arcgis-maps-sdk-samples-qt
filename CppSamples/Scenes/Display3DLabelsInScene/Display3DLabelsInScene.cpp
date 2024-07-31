@@ -21,7 +21,7 @@
 // sample headers
 #include "Display3DLabelsInScene.h"
 
-// C++ API headers
+// ArcGIS Maps SDK headers
 #include "ArcadeLabelExpression.h"
 #include "Error.h"
 #include "FeatureLayer.h"

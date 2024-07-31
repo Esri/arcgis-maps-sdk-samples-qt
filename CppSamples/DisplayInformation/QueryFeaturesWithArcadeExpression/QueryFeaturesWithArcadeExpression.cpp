@@ -21,7 +21,7 @@
 // sample headers
 #include "QueryFeaturesWithArcadeExpression.h"
 
-// C++ API headers
+// ArcGIS Maps SDK headers
 #include "ArcGISFeature.h"
 #include "ArcadeEvaluationResult.h"
 #include "ArcadeEvaluator.h"

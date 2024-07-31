@@ -22,7 +22,7 @@
 #include "DisplayContentOfUtilityNetworkContainer.h"
 #include "SymbolImageProvider.h"
 
-// C++ API headers
+// ArcGIS Maps SDK headers
 #include "ArcGISFeature.h"
 #include "ArcGISFeatureLayerInfo.h"
 #include "ArcGISFeatureListModel.h"

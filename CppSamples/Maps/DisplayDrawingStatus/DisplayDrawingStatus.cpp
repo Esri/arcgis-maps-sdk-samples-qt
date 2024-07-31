@@ -21,7 +21,7 @@
 // sample headers
 #include "DisplayDrawingStatus.h"
 
-// C++ API headers
+// ArcGIS Maps SDK headers
 #include "Envelope.h"
 #include "FeatureLayer.h"
 #include "LayerListModel.h"

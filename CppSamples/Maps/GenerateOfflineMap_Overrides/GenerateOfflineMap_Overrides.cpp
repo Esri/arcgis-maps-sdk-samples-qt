@@ -21,7 +21,7 @@
 // sample headers
 #include "GenerateOfflineMap_Overrides.h"
 
-// C++ API headers
+// ArcGIS Maps SDK headers
 #include "ArcGISFeatureLayerInfo.h"
 #include "Basemap.h"
 #include "Envelope.h"

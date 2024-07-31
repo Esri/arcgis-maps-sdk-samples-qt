@@ -21,7 +21,7 @@
 // sample headers
 #include "ProjectGeometry.h"
 
-// C++ API headers
+// ArcGIS Maps SDK headers
 #include "CalloutData.h"
 #include "Envelope.h"
 #include "GeometryEngine.h"

@@ -21,7 +21,7 @@
 // sample headers
 #include "RouteAroundBarriers.h"
 
-// C++ API headers
+// ArcGIS Maps SDK headers
 #include "CompositeSymbol.h"
 #include "DirectionManeuverListModel.h"
 #include "Error.h"

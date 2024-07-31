@@ -21,7 +21,7 @@
 // sample headers
 #include "BrowseBuildingFloors.h"
 
-// C++ API headers
+// ArcGIS Maps SDK headers
 #include "Error.h"
 #include "FloorLevel.h"
 #include "FloorManager.h"

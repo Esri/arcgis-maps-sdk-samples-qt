@@ -21,7 +21,7 @@
 // sample headers
 #include "FormatCoordinates.h"
 
-// C++ API headers
+// ArcGIS Maps SDK headers
 #include "CoordinateFormatter.h"
 #include "Graphic.h"
 #include "GraphicListModel.h"

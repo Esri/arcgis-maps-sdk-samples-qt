@@ -21,7 +21,7 @@
 // sample headers
 #include "MapRotation.h"
 
-// C++ API headers
+// ArcGIS Maps SDK headers
 #include "Basemap.h"
 #include "Map.h"
 #include "MapQuickView.h"

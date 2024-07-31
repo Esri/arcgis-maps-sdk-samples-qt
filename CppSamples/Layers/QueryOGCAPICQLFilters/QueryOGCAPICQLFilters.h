@@ -17,7 +17,7 @@
 #ifndef QUERYOGCAPICQLFILTERS_H
 #define QUERYOGCAPICQLFILTERS_H
 
-// C++ API headers
+// ArcGIS Maps SDK headers
 #include "Envelope.h"
 
 // Qt headers

@@ -17,7 +17,7 @@
 #ifndef EDITANDSYNCFEATURES_H
 #define EDITANDSYNCFEATURES_H
 
-// C++ API headers
+// ArcGIS Maps SDK headers
 #include "GenerateGeodatabaseParameters.h"
 #include "SyncGeodatabaseParameters.h"
 

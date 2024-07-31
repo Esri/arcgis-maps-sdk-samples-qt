@@ -21,7 +21,7 @@
 // sample headers
 #include "ConvexHull.h"
 
-// C++ API headers
+// ArcGIS Maps SDK headers
 #include "Error.h"
 #include "Geometry.h"
 #include "GeometryEngine.h"

@@ -17,7 +17,7 @@
 #ifndef EDITWITHBRANCHVERSIONING_H
 #define EDITWITHBRANCHVERSIONING_H
 
-// C++ API headers
+// ArcGIS Maps SDK headers
 #include "Error.h"
 
 // Qt headers

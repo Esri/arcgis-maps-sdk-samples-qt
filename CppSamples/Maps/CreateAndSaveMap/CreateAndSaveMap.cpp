@@ -21,7 +21,7 @@
 // sample headers
 #include "CreateAndSaveMap.h"
 
-// C++ API headers
+// ArcGIS Maps SDK headers
 #include "ArcGISMapImageLayer.h"
 #include "Basemap.h"
 #include "Error.h"

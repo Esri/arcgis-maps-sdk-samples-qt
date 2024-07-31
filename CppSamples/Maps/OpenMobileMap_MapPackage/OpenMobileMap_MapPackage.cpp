@@ -21,7 +21,7 @@
 // sample headers
 #include "OpenMobileMap_MapPackage.h"
 
-// C++ API headers
+// ArcGIS Maps SDK headers
 #include "Basemap.h"
 #include "Error.h"
 #include "MapQuickView.h"

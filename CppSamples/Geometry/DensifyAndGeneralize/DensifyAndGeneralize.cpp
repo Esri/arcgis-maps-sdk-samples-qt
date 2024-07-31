@@ -21,7 +21,7 @@
 // sample headers
 #include "DensifyAndGeneralize.h"
 
-// C++ API headers
+// ArcGIS Maps SDK headers
 #include "Envelope.h"
 #include "GeometryEngine.h"
 #include "Graphic.h"

@@ -21,7 +21,7 @@
 // sample headers
 #include "OfflineRouting.h"
 
-// C++ API headers
+// ArcGIS Maps SDK headers
 #include "ArcGISTiledLayer.h"
 #include "Basemap.h"
 #include "CompositeSymbol.h"

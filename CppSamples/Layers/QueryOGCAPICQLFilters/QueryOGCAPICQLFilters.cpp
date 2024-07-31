@@ -21,7 +21,7 @@
 // sample headers
 #include "QueryOGCAPICQLFilters.h"
 
-// C++ API headers
+// ArcGIS Maps SDK headers
 #include "FeatureLayer.h"
 #include "GeodatabaseTypes.h"
 #include "LayerListModel.h"

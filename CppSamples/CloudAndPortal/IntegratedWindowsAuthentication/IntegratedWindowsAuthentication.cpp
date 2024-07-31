@@ -21,7 +21,7 @@
 // sample headers
 #include "IntegratedWindowsAuthentication.h"
 
-// C++ API headers
+// ArcGIS Maps SDK headers
 #include "Error.h"
 #include "Map.h"
 #include "MapQuickView.h"

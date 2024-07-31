@@ -21,7 +21,7 @@
 // sample headers
 #include "DisplayDeviceLocation.h"
 
-// C++ API headers
+// ArcGIS Maps SDK headers
 #include "Basemap.h"
 #include "LocationDisplay.h"
 #include "Map.h"

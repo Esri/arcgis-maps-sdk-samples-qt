@@ -16,7 +16,7 @@
 // sample headers
 #include "Simple_Marker_Symbol.h"
 
-// C++ API headers
+// ArcGIS Maps SDK headers
 #include "ArcGISRuntimeEnvironment.h"
 
 // Qt headers

@@ -21,7 +21,7 @@
 // sample headers
 #include "ExtrudeGraphics.h"
 
-// C++ API headers
+// ArcGIS Maps SDK headers
 #include "ArcGISTiledElevationSource.h"
 #include "AttributeListModel.h"
 #include "Basemap.h"

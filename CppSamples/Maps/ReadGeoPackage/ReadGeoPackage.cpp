@@ -21,7 +21,7 @@
 // sample headers
 #include "ReadGeoPackage.h"
 
-// C++ API headers
+// ArcGIS Maps SDK headers
 #include "Error.h"
 #include "FeatureLayer.h"
 #include "FeatureTable.h"

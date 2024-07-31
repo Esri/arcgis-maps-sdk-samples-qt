@@ -21,7 +21,7 @@
 // sample headers
 #include "AddDynamicEntityLayer.h"
 
-// C++ API headers
+// ArcGIS Maps SDK headers
 #include "ArcGISStreamService.h"
 #include "ArcGISStreamServiceFilter.h"
 #include "CalloutData.h"

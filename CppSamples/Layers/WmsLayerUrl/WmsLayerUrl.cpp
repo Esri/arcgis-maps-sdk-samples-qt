@@ -21,7 +21,7 @@
 // sample headers
 #include "WmsLayerUrl.h"
 
-// C++ API headers
+// ArcGIS Maps SDK headers
 #include "Envelope.h"
 #include "LayerListModel.h"
 #include "Map.h"

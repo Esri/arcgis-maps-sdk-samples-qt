@@ -21,7 +21,7 @@
 // sample headers
 #include "ChangeSublayerRenderer.h"
 
-// C++ API headers
+// ArcGIS Maps SDK headers
 #include "ArcGISMapImageLayer.h"
 #include "ArcGISMapImageSublayer.h"
 #include "ArcGISSublayerListModel.h"

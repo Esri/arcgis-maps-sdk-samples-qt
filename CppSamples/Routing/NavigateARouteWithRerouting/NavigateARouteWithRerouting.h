@@ -17,7 +17,7 @@
 #ifndef NAVIGATEAROUTEWITHREROUTING_H
 #define NAVIGATEAROUTEWITHREROUTING_H
 
-// C++ API headers
+// ArcGIS Maps SDK headers
 #include "DirectionManeuver.h"
 #include "Route.h"
 #include "RouteParameters.h"

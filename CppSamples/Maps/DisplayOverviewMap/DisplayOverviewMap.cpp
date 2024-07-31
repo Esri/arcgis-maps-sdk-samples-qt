@@ -21,7 +21,7 @@
 // sample headers
 #include "DisplayOverviewMap.h"
 
-// C++ API headers
+// ArcGIS Maps SDK headers
 #include "Basemap.h"
 #include "FeatureLayer.h"
 #include "GeodatabaseTypes.h"

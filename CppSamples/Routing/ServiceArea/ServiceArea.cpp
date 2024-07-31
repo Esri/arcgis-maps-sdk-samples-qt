@@ -21,7 +21,7 @@
 // sample headers
 #include "ServiceArea.h"
 
-// C++ API headers
+// ArcGIS Maps SDK headers
 #include "Error.h"
 #include "Graphic.h"
 #include "GraphicListModel.h"

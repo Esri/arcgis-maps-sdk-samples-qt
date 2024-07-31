@@ -17,7 +17,7 @@
 #ifndef IDENTIFYRASTERCELL_H
 #define IDENTIFYRASTERCELL_H
 
-// C++ API headers
+// ArcGIS Maps SDK headers
 #include "Point.h"
 
 // Qt headers

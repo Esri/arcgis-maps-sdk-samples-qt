@@ -17,7 +17,7 @@
 #ifndef EDITFEATURESWITHFEATURELINKEDANNOTATION_H
 #define EDITFEATURESWITHFEATURELINKEDANNOTATION_H
 
-// C++ API headers
+// ArcGIS Maps SDK headers
 #include "Error.h"
 #include "Point.h"
 

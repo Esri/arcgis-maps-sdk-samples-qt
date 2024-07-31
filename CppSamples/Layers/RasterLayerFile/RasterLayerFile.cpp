@@ -21,7 +21,7 @@
 // sample headers
 #include "RasterLayerFile.h"
 
-// C++ API headers
+// ArcGIS Maps SDK headers
 #include "Basemap.h"
 #include "Envelope.h"
 #include "Error.h"

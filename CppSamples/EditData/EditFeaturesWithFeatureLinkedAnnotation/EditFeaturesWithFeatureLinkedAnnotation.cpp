@@ -21,7 +21,7 @@
 // sample headers
 #include "EditFeaturesWithFeatureLinkedAnnotation.h"
 
-// C++ API headers
+// ArcGIS Maps SDK headers
 #include "AnnotationLayer.h"
 #include "AttributeListModel.h"
 #include "Feature.h"

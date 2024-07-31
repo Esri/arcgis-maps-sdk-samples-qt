@@ -16,7 +16,7 @@
 // sample headers
 #include "IndoorsLocationDataSourceCreator.h"
 
-// C++ API headers
+// ArcGIS Maps SDK headers
 #include "ArcGISFeatureTable.h"
 #include "Error.h"
 #include "FeatureLayer.h"

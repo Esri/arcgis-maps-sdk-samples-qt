@@ -17,7 +17,7 @@
 #ifndef OFFLINEROUTING_H
 #define OFFLINEROUTING_H
 
-// C++ API headers
+// ArcGIS Maps SDK headers
 #include "Envelope.h"
 #include "RouteParameters.h"
 #include "RouteResult.h"

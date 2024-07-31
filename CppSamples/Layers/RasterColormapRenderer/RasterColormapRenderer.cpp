@@ -21,7 +21,7 @@
 // sample headers
 #include "RasterColormapRenderer.h"
 
-// C++ API headers
+// ArcGIS Maps SDK headers
 #include "ColormapRenderer.h"
 #include "Envelope.h"
 #include "Error.h"

@@ -21,7 +21,7 @@
 // sample headers
 #include "ClipGeometry.h"
 
-// C++ API headers
+// ArcGIS Maps SDK headers
 #include "Geometry.h"
 #include "GeometryEngine.h"
 #include "Graphic.h"

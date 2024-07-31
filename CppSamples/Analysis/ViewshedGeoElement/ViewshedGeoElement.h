@@ -17,7 +17,7 @@
 #ifndef VIEWSHEDGEOELEMENT_H
 #define VIEWSHEDGEOELEMENT_H
 
-// C++ API headers
+// ArcGIS Maps SDK headers
 #include "GeometryTypes.h"
 #include "Point.h"
 

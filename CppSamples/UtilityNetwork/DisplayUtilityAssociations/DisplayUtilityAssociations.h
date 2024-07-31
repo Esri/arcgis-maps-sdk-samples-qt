@@ -17,7 +17,7 @@
 #ifndef DISPLAYUTILITYASSOCIATIONS_H
 #define DISPLAYUTILITYASSOCIATIONS_H
 
-// C++ API headers
+// ArcGIS Maps SDK headers
 #include "UtilityNetworkTypes.h"
 
 // Qt headers

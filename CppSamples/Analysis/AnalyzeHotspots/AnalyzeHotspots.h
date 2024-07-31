@@ -17,7 +17,7 @@
 #ifndef ANALYZEHOTSPOTS_H
 #define ANALYZEHOTSPOTS_H
 
-// C++ API headers
+// ArcGIS Maps SDK headers
 #include "GeoprocessingParameters.h"
 
 // Qt headers

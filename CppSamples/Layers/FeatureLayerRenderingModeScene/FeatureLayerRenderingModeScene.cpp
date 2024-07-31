@@ -21,7 +21,7 @@
 // sample headers
 #include "FeatureLayerRenderingModeScene.h"
 
-// C++ API headers
+// ArcGIS Maps SDK headers
 #include "Camera.h"
 #include "FeatureLayer.h"
 #include "LayerListModel.h"

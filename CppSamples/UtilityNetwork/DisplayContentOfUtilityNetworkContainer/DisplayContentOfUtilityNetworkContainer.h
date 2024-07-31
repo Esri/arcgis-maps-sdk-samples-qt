@@ -17,7 +17,7 @@
 #ifndef DISPLAYCONTENTOFUTILITYNETWORKCONTAINER_H
 #define DISPLAYCONTENTOFUTILITYNETWORKCONTAINER_H
 
-// C++ API headers
+// ArcGIS Maps SDK headers
 #include "Geometry.h"
 #include "Viewpoint.h"
 

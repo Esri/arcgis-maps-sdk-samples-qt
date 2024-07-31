@@ -21,7 +21,7 @@
 // sample headers
 #include "CreateAndSaveKmlFile.h"
 
-// C++ API headers
+// ArcGIS Maps SDK headers
 #include "Envelope.h"
 #include "Error.h"
 #include "KmlDataset.h"

@@ -17,7 +17,7 @@
 #ifndef DOWNLOADPREPLANNEDMAP_H
 #define DOWNLOADPREPLANNEDMAP_H
 
-// C++ API headers
+// ArcGIS Maps SDK headers
 #include "DownloadPreplannedOfflineMapParameters.h"
 
 // Qt headers

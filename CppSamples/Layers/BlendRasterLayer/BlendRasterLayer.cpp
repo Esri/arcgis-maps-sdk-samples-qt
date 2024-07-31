@@ -21,7 +21,7 @@
 // sample headers
 #include "BlendRasterLayer.h"
 
-// C++ API headers
+// ArcGIS Maps SDK headers
 #include "Basemap.h"
 #include "BlendRenderer.h"
 #include "ColorRamp.h"

@@ -21,7 +21,7 @@
 // sample headers
 #include "SceneLayerSelection.h"
 
-// C++ API headers
+// ArcGIS Maps SDK headers
 #include "ArcGISSceneLayer.h"
 #include "ArcGISTiledElevationSource.h"
 #include "Basemap.h"

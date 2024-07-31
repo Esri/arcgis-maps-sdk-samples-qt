@@ -21,7 +21,7 @@
 // sample headers
 #include "BrowseWfsLayers.h"
 
-// C++ API headers
+// ArcGIS Maps SDK headers
 #include "CoreTypes.h"
 #include "Envelope.h"
 #include "Error.h"

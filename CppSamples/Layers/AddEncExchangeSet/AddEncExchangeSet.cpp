@@ -21,7 +21,7 @@
 // sample headers
 #include "AddEncExchangeSet.h"
 
-// C++ API headers
+// ArcGIS Maps SDK headers
 #include "EncCell.h"
 #include "EncDataset.h"
 #include "EncEnvironmentSettings.h"

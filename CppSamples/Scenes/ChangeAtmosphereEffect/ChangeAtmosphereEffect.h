@@ -17,7 +17,7 @@
 #ifndef CHANGEATMOSPHEREEFFECT_H
 #define CHANGEATMOSPHEREEFFECT_H
 
-// C++ API headers
+// ArcGIS Maps SDK headers
 #include "SceneViewTypes.h"
 
 // Qt headers

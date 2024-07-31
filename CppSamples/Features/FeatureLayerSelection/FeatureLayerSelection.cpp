@@ -21,7 +21,7 @@
 // sample headers
 #include "FeatureLayerSelection.h"
 
-// C++ API headers
+// ArcGIS Maps SDK headers
 #include "Envelope.h"
 #include "Feature.h"
 #include "FeatureLayer.h"

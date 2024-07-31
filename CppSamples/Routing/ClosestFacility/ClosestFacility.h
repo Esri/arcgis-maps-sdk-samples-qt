@@ -17,7 +17,7 @@
 #ifndef CLOSESTFACILITY_H
 #define CLOSESTFACILITY_H
 
-// C++ API headers
+// ArcGIS Maps SDK headers
 #include "ClosestFacilityParameters.h"
 
 // Qt headers

@@ -21,7 +21,7 @@
 // sample headers
 #include "LocalServerGeoprocessing.h"
 
-// C++ API headers
+// ArcGIS Maps SDK headers
 #include "ArcGISMapImageLayer.h"
 #include "ArcGISTiledLayer.h"
 #include "Basemap.h"

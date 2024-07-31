@@ -17,7 +17,7 @@
 #ifndef FEATURELAYERRENDERINGMODEMAP_H
 #define FEATURELAYERRENDERINGMODEMAP_H
 
-// C++ API headers
+// ArcGIS Maps SDK headers
 #include "Viewpoint.h"
 
 // Qt headers

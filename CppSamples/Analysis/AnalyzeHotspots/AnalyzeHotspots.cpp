@@ -21,7 +21,7 @@
 // sample headers
 #include "AnalyzeHotspots.h"
 
-// C++ API headers
+// ArcGIS Maps SDK headers
 #include "ArcGISMapImageLayer.h"
 #include "Envelope.h"
 #include "Error.h"

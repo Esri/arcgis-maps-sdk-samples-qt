@@ -21,7 +21,7 @@
 // sample headers
 #include "StatisticalQuery.h"
 
-// C++ API headers
+// ArcGIS Maps SDK headers
 #include "CoreTypes.h"
 #include "Error.h"
 #include "FeatureLayer.h"

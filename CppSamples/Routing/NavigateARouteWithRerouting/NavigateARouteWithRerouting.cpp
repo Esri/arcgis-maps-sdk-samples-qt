@@ -21,7 +21,7 @@
 // sample headers
 #include "NavigateARouteWithRerouting.h"
 
-// C++ API headers
+// ArcGIS Maps SDK headers
 #include "DirectionManeuverListModel.h"
 #include "Error.h"
 #include "ErrorException.h"

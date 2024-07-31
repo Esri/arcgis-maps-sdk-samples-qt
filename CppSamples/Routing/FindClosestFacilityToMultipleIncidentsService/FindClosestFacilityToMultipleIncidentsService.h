@@ -17,7 +17,7 @@
 #ifndef FINDCLOSESTFACILITYTOMULTIPLEINCIDENTSSERVICE_H
 #define FINDCLOSESTFACILITYTOMULTIPLEINCIDENTSSERVICE_H
 
-// C++ API headers
+// ArcGIS Maps SDK headers
 #include "ClosestFacilityParameters.h"
 
 // Qt headers

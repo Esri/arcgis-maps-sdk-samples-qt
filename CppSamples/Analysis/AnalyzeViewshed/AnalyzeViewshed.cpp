@@ -21,7 +21,7 @@
 // sample headers
 #include "AnalyzeViewshed.h"
 
-// C++ API headers
+// ArcGIS Maps SDK headers
 #include "Error.h"
 #include "Feature.h"
 #include "FeatureCollectionTable.h"

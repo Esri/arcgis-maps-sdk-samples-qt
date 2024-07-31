@@ -21,7 +21,7 @@
 // sample headers
 #include "EditKmlGroundOverlay.h"
 
-// C++ API headers
+// ArcGIS Maps SDK headers
 #include "Camera.h"
 #include "Envelope.h"
 #include "Error.h"

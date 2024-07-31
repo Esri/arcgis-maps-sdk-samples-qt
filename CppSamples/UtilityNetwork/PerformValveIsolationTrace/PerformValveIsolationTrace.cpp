@@ -21,7 +21,7 @@
 // sample headers
 #include "PerformValveIsolationTrace.h"
 
-// C++ API headers
+// ArcGIS Maps SDK headers
 #include "ArcGISFeature.h"
 #include "ArcGISFeatureListModel.h"
 #include "Credential.h"

@@ -21,7 +21,7 @@
 // sample headers
 #include "SpatialOperations.h"
 
-// C++ API headers
+// ArcGIS Maps SDK headers
 #include "Basemap.h"
 #include "GeometryEngine.h"
 #include "Graphic.h"

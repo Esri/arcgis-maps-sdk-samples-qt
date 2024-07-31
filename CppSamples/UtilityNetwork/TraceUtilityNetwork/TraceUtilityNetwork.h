@@ -17,7 +17,7 @@
 #ifndef TraceUtilityNetwork_H
 #define TraceUtilityNetwork_H
 
-// C++ API headers
+// ArcGIS Maps SDK headers
 #include "Point.h"
 
 // Qt headers

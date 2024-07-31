@@ -21,7 +21,7 @@
 // sample headers
 #include "IdentifyRasterCell.h"
 
-// C++ API headers
+// ArcGIS Maps SDK headers
 #include "AttributeListModel.h"
 #include "CalloutData.h"
 #include "Envelope.h"

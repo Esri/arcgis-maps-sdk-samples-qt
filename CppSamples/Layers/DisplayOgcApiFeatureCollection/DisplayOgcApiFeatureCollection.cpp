@@ -21,7 +21,7 @@
 // sample headers
 #include "DisplayOgcApiFeatureCollection.h"
 
-// C++ API headers
+// ArcGIS Maps SDK headers
 #include "CoreTypes.h"
 #include "FeatureLayer.h"
 #include "GeodatabaseTypes.h"

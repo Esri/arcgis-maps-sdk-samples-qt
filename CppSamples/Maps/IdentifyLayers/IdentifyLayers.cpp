@@ -21,7 +21,7 @@
 // sample headers
 #include "IdentifyLayers.h"
 
-// C++ API headers
+// ArcGIS Maps SDK headers
 #include "ArcGISMapImageLayer.h"
 #include "ArcGISSublayer.h"
 #include "ArcGISSublayerListModel.h"

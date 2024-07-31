@@ -22,7 +22,7 @@
 #include "IndoorsLocationDataSourceCreator.h"
 #include "ShowDeviceLocationUsingIndoorPositioning.h"
 
-// C++ API headers
+// ArcGIS Maps SDK headers
 #include "FeatureLayer.h"
 #include "IndoorsLocationDataSource.h"
 #include "LayerListModel.h"

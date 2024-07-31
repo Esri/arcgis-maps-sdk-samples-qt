@@ -21,7 +21,7 @@
 // sample headers
 #include "GenerateGeodatabaseReplicaFromFeatureService.h"
 
-// C++ API headers
+// ArcGIS Maps SDK headers
 #include "ArcGISFeatureServiceInfo.h"
 #include "ArcGISTiledLayer.h"
 #include "Basemap.h"

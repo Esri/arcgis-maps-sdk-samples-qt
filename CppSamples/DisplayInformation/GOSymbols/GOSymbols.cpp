@@ -21,7 +21,7 @@
 // sample headers
 #include "GOSymbols.h"
 
-// C++ API headers
+// ArcGIS Maps SDK headers
 #include "Graphic.h"
 #include "GraphicListModel.h"
 #include "GraphicsOverlay.h"

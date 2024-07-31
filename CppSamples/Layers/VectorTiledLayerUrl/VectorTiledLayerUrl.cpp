@@ -21,7 +21,7 @@
 // sample headers
 #include "VectorTiledLayerUrl.h"
 
-// C++ API headers
+// ArcGIS Maps SDK headers
 #include "ArcGISVectorTiledLayer.h"
 #include "Basemap.h"
 #include "Map.h"

@@ -17,7 +17,7 @@
 #ifndef DISPLAYKML_H
 #define DISPLAYKML_H
 
-// C++ API headers
+// ArcGIS Maps SDK headers
 #include "Viewpoint.h"
 
 // Qt headers

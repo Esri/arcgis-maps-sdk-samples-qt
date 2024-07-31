@@ -21,7 +21,7 @@
 // sample headers
 #include "Hillshade_Renderer.h"
 
-// C++ API headers
+// ArcGIS Maps SDK headers
 #include "Basemap.h"
 #include "HillshadeRenderer.h"
 #include "Map.h"

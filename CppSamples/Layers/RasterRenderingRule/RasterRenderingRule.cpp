@@ -21,7 +21,7 @@
 // sample headers
 #include "RasterRenderingRule.h"
 
-// C++ API headers
+// ArcGIS Maps SDK headers
 #include "ArcGISImageServiceInfo.h"
 #include "Basemap.h"
 #include "Envelope.h"

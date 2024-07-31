@@ -17,7 +17,7 @@
 #ifndef LISTTRANSFORMATIONS_H
 #define LISTTRANSFORMATIONS_H
 
-// C++ API headers
+// ArcGIS Maps SDK headers
 #include "Point.h"
 
 // Qt headers

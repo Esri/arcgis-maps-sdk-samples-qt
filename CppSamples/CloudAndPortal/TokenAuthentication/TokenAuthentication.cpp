@@ -21,7 +21,7 @@
 // sample headers
 #include "TokenAuthentication.h"
 
-// C++ API headers
+// ArcGIS Maps SDK headers
 #include "Map.h"
 #include "MapQuickView.h"
 #include "MapViewTypes.h"

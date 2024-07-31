@@ -21,7 +21,7 @@
 // sample headers
 #include "ChangeSublayerVisibility.h"
 
-// C++ API headers
+// ArcGIS Maps SDK headers
 #include "ArcGISMapImageLayer.h"
 #include "ArcGISSublayerListModel.h"
 #include "Basemap.h"

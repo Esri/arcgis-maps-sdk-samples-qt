@@ -21,7 +21,7 @@
 // sample headers
 #include "EditAndSyncFeatures.h"
 
-// C++ API headers
+// ArcGIS Maps SDK headers
 #include "ArcGISFeature.h"
 #include "ArcGISTiledLayer.h"
 #include "Basemap.h"

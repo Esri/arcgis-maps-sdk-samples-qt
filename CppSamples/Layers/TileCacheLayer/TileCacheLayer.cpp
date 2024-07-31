@@ -21,7 +21,7 @@
 // sample headers
 #include "TileCacheLayer.h"
 
-// C++ API headers
+// ArcGIS Maps SDK headers
 #include "ArcGISTiledLayer.h"
 #include "Basemap.h"
 #include "Map.h"

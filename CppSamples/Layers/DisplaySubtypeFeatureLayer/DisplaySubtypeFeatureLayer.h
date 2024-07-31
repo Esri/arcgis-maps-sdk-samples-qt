@@ -17,7 +17,7 @@
 #ifndef DISPLAYSUBTYPEFEATURELAYER_H
 #define DISPLAYSUBTYPEFEATURELAYER_H
 
-// C++ API headers
+// ArcGIS Maps SDK headers
 #include "SubtypeSublayer.h"
 
 // Qt headers
