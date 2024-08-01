@@ -1,12 +1,12 @@
 // [WriteFile Name=DisplayGrid, Category=DisplayInformation]
 // [Legal]
 // Copyright 2016 Esri.
-
+//
 // Licensed under the Apache License, Version 2.0 (the "License");
 // you may not use this file except in compliance with the License.
 // You may obtain a copy of the License at
 // http://www.apache.org/licenses/LICENSE-2.0
-
+//
 // Unless required by applicable law or agreed to in writing, software
 // distributed under the License is distributed on an "AS IS" BASIS,
 // WITHOUT WARRANTIES OR CONDITIONS OF ANY KIND, either express or implied.
@@ -18,23 +18,25 @@
 #include "pch.hpp"
 #endif // PCH_BUILD
 
+// sample headers
 #include "DisplayGrid.h"
 
-#include "Map.h"
-#include "MapQuickView.h"
+// ArcGIS Maps SDK headers
 #include "Grid.h"
 #include "LatitudeLongitudeGrid.h"
-#include "UTMGrid.h"
-#include "USNGGrid.h"
 #include "MGRSGrid.h"
-#include "SimpleLineSymbol.h"
-#include "TextSymbol.h"
-#include "Viewpoint.h"
-#include "Point.h"
-#include "MapViewTypes.h"
+#include "Map.h"
+#include "MapQuickView.h"
 #include "MapTypes.h"
-#include "SymbolTypes.h"
+#include "MapViewTypes.h"
+#include "Point.h"
+#include "SimpleLineSymbol.h"
 #include "SpatialReference.h"
+#include "SymbolTypes.h"
+#include "TextSymbol.h"
+#include "USNGGrid.h"
+#include "UTMGrid.h"
+#include "Viewpoint.h"
 
 using namespace Esri::ArcGISRuntime;
 

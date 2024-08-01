@@ -1,12 +1,12 @@
 // [WriteFile Name=MobileMap_SearchAndRoute, Category=Maps]
 // [Legal]
 // Copyright 2016 Esri.
-
+//
 // Licensed under the Apache License, Version 2.0 (the "License");
 // you may not use this file except in compliance with the License.
 // You may obtain a copy of the License at
 // http://www.apache.org/licenses/LICENSE-2.0
-
+//
 // Unless required by applicable law or agreed to in writing, software
 // distributed under the License is distributed on an "AS IS" BASIS,
 // WITHOUT WARRANTIES OR CONDITIONS OF ANY KIND, either express or implied.
@@ -18,44 +18,47 @@
 #include "pch.hpp"
 #endif // PCH_BUILD
 
+// sample headers
 #include "MobileMap_SearchAndRoute.h"
 
-#include "Map.h"
-#include "Stop.h"
-#include "Graphic.h"
-#include "RouteTask.h"
-#include "TextSymbol.h"
-#include "LocatorTask.h"
-#include "RouteResult.h"
-#include "MapQuickView.h"
-#include "GeocodeResult.h"
-#include "GraphicsOverlay.h"
-#include "RouteParameters.h"
-#include "MobileMapPackage.h"
-#include "PictureMarkerSymbol.h"
-#include "ReverseGeocodeParameters.h"
-#include "Error.h"
-#include "MapTypes.h"
-#include "MapViewTypes.h"
+// ArcGIS Maps SDK headers
+#include "AttributeListModel.h"
 #include "CalloutData.h"
+#include "Error.h"
+#include "GeocodeResult.h"
+#include "Graphic.h"
+#include "GraphicListModel.h"
+#include "GraphicsOverlay.h"
 #include "GraphicsOverlayListModel.h"
 #include "IdentifyGraphicsOverlayResult.h"
-#include "SymbolTypes.h"
-#include "AttributeListModel.h"
-#include "GraphicListModel.h"
-#include "Route.h"
-#include "SimpleRenderer.h"
-#include "SimpleLineSymbol.h"
 #include "Item.h"
+#include "LocatorTask.h"
+#include "Map.h"
+#include "MapQuickView.h"
+#include "MapTypes.h"
+#include "MapViewTypes.h"
+#include "MobileMapPackage.h"
+#include "PictureMarkerSymbol.h"
 #include "Polyline.h"
+#include "ReverseGeocodeParameters.h"
+#include "Route.h"
+#include "RouteParameters.h"
+#include "RouteResult.h"
+#include "RouteTask.h"
+#include "SimpleLineSymbol.h"
+#include "SimpleRenderer.h"
+#include "Stop.h"
+#include "SymbolTypes.h"
+#include "TextSymbol.h"
 
-#include <QUuid>
-#include <QFileInfoList>
-#include <QFile>
-#include <QFuture>
-#include <QtCore/qglobal.h>
+// Qt headers
 #include <QDir>
+#include <QFile>
+#include <QFileInfoList>
+#include <QFuture>
 #include <QStandardPaths>
+#include <QUuid>
+#include <QtCore/qglobal.h>
 
 using namespace Esri::ArcGISRuntime;
 

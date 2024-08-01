@@ -1,12 +1,12 @@
 // [WriteFile Name=DisplayOgcApiFeatureCollection, Category=Layers]
 // [Legal]
 // Copyright 2021 Esri.
-
+//
 // Licensed under the Apache License, Version 2.0 (the "License");
 // you may not use this file except in compliance with the License.
 // You may obtain a copy of the License at
 // http://www.apache.org/licenses/LICENSE-2.0
-
+//
 // Unless required by applicable law or agreed to in writing, software
 // distributed under the License is distributed on an "AS IS" BASIS,
 // WITHOUT WARRANTIES OR CONDITIONS OF ANY KIND, either express or implied.
@@ -18,23 +18,26 @@
 #include "pch.hpp"
 #endif // PCH_BUILD
 
+// sample headers
 #include "DisplayOgcApiFeatureCollection.h"
 
+// ArcGIS Maps SDK headers
+#include "CoreTypes.h"
 #include "FeatureLayer.h"
+#include "GeodatabaseTypes.h"
+#include "Geometry.h"
+#include "LayerListModel.h"
 #include "Map.h"
 #include "MapQuickView.h"
+#include "MapTypes.h"
 #include "OgcFeatureCollectionTable.h"
 #include "QueryParameters.h"
 #include "SimpleLineSymbol.h"
 #include "SimpleRenderer.h"
-#include "MapTypes.h"
 #include "SymbolTypes.h"
-#include "LayerListModel.h"
-#include "CoreTypes.h"
-#include "GeodatabaseTypes.h"
 #include "Viewpoint.h"
-#include "Geometry.h"
 
+// Qt headers
 #include <QFuture>
 
 using namespace Esri::ArcGISRuntime;

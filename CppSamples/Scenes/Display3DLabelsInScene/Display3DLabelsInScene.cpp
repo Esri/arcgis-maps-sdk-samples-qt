@@ -1,12 +1,12 @@
 // [WriteFile Name=Display3DLabelsInScene, Category=Scenes]
 // [Legal]
 // Copyright 2021 Esri.
-
+//
 // Licensed under the Apache License, Version 2.0 (the "License");
 // you may not use this file except in compliance with the License.
 // You may obtain a copy of the License at
 // http://www.apache.org/licenses/LICENSE-2.0
-
+//
 // Unless required by applicable law or agreed to in writing, software
 // distributed under the License is distributed on an "AS IS" BASIS,
 // WITHOUT WARRANTIES OR CONDITIONS OF ANY KIND, either express or implied.
@@ -18,19 +18,21 @@
 #include "pch.hpp"
 #endif // PCH_BUILD
 
+// sample headers
 #include "Display3DLabelsInScene.h"
 
+// ArcGIS Maps SDK headers
 #include "ArcadeLabelExpression.h"
+#include "Error.h"
 #include "FeatureLayer.h"
+#include "GroupLayer.h"
 #include "LabelDefinition.h"
+#include "LabelDefinitionListModel.h"
+#include "LayerListModel.h"
 #include "Scene.h"
 #include "SceneQuickView.h"
-#include "TextSymbol.h"
-#include "Error.h"
-#include "LayerListModel.h"
-#include "GroupLayer.h"
 #include "ServiceTypes.h"
-#include "LabelDefinitionListModel.h"
+#include "TextSymbol.h"
 
 using namespace Esri::ArcGISRuntime;
 
@@ -103,4 +105,3 @@ void Display3DLabelsInScene::setSceneView(SceneQuickView* sceneView)
 
   emit sceneViewChanged();
 }
-

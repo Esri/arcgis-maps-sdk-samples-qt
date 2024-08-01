@@ -1,12 +1,12 @@
 // [WriteFile Name=CreateAndSaveKmlFile, Category=Layers]
 // [Legal]
 // Copyright 2019 Esri.
-
+//
 // Licensed under the Apache License, Version 2.0 (the "License");
 // you may not use this file except in compliance with the License.
 // You may obtain a copy of the License at
 // http://www.apache.org/licenses/LICENSE-2.0
-
+//
 // Unless required by applicable law or agreed to in writing, software
 // distributed under the License is distributed on an "AS IS" BASIS,
 // WITHOUT WARRANTIES OR CONDITIONS OF ANY KIND, either express or implied.
@@ -17,6 +17,17 @@
 #ifndef CREATEANDSAVEKMLFILE_H
 #define CREATEANDSAVEKMLFILE_H
 
+// ArcGIS Maps SDK headers
+#include "Geometry.h"
+#include "Point.h"
+#include "Polygon.h"
+#include "Polyline.h"
+
+// Qt headers
+#include <QObject>
+#include <QTemporaryDir>
+#include <QUrl>
+
 namespace Esri::ArcGISRuntime
 {
 class Map;
@@ -26,15 +37,6 @@ class KmlDataset;
 class KmlLayer;
 class KmlStyle;
 }
-
-#include <QObject>
-#include <QUrl>
-#include <QTemporaryDir>
-
-#include "Geometry.h"
-#include "Point.h"
-#include "Polyline.h"
-#include "Polygon.h"
 
 Q_MOC_INCLUDE("MapQuickView.h")
 
