@@ -1,12 +1,12 @@
 // [WriteFile Name=FindRoute, Category=Routing]
 // [Legal]
 // Copyright 2016 Esri.
-
+//
 // Licensed under the Apache License, Version 2.0 (the "License");
 // you may not use this file except in compliance with the License.
 // You may obtain a copy of the License at
 // http://www.apache.org/licenses/LICENSE-2.0
-
+//
 // Unless required by applicable law or agreed to in writing, software
 // distributed under the License is distributed on an "AS IS" BASIS,
 // WITHOUT WARRANTIES OR CONDITIONS OF ANY KIND, either express or implied.
@@ -17,6 +17,13 @@
 #ifndef FIND_ROUTE_H
 #define FIND_ROUTE_H
 
+// Qt headers
+#include <QQuickItem>
+#include <QUrl>
+
+// STL headers
+#include <RouteParameters.h>
+
 namespace Esri::ArcGISRuntime
 {
   class Map;
@@ -25,10 +32,6 @@ namespace Esri::ArcGISRuntime
   class PictureMarkerSymbol;
   class RouteTask;
 }
-
-#include <RouteParameters.h>
-#include <QQuickItem>
-#include <QUrl>
 
 class QAbstractListModel;
 Q_MOC_INCLUDE("QAbstractListModel")
@@ -68,4 +71,3 @@ private:
 };
 
 #endif // FIND_ROUTE_H
-

@@ -1,12 +1,12 @@
 // [WriteFile Name=PortalUserInfo, Category=CloudAndPortal]
 // [Legal]
 // Copyright 2016 Esri.
-
+//
 // Licensed under the Apache License, Version 2.0 (the "License");
 // you may not use this file except in compliance with the License.
 // You may obtain a copy of the License at
 // http://www.apache.org/licenses/LICENSE-2.0
-
+//
 // Unless required by applicable law or agreed to in writing, software
 // distributed under the License is distributed on an "AS IS" BASIS,
 // WITHOUT WARRANTIES OR CONDITIONS OF ANY KIND, either express or implied.
@@ -18,20 +18,22 @@
 #include "pch.hpp"
 #endif // PCH_BUILD
 
+// sample headers
 #include "PortalUserInfo.h"
 
+// ArcGIS Maps SDK headers
 #include "AuthenticationManager.h"
-#include "Credential.h"
-#include "Portal.h"
-#include "PortalUser.h"
-#include "MapTypes.h"
-#include "PortalTypes.h"
 #include "CoreTypes.h"
 #include "Credential.h"
-#include "OAuthClientInfo.h"
-#include "PortalUser.h"
 #include "Error.h"
+#include "MapTypes.h"
+#include "OAuthClientInfo.h"
+#include "Portal.h"
 #include "PortalInfo.h"
+#include "PortalTypes.h"
+#include "PortalUser.h"
+
+// Qt headers
 #include <QUrl>
 
 using namespace Esri::ArcGISRuntime;

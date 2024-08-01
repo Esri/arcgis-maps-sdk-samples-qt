@@ -1,12 +1,12 @@
 // [WriteFile Name=Simple_Renderer, Category=DisplayInformation]
 // [Legal]
 // Copyright 2016 Esri.
-
+//
 // Licensed under the Apache License, Version 2.0 (the "License");
 // you may not use this file except in compliance with the License.
 // You may obtain a copy of the License at
 // http://www.apache.org/licenses/LICENSE-2.0
-
+//
 // Unless required by applicable law or agreed to in writing, software
 // distributed under the License is distributed on an "AS IS" BASIS,
 // WITHOUT WARRANTIES OR CONDITIONS OF ANY KIND, either express or implied.
@@ -18,23 +18,26 @@
 #include "pch.hpp"
 #endif // PCH_BUILD
 
+// sample headers
 #include "Simple_Renderer.h"
 
+// ArcGIS Maps SDK headers
+#include "Envelope.h"
+#include "Graphic.h"
+#include "GraphicListModel.h"
+#include "GraphicsOverlay.h"
+#include "GraphicsOverlayListModel.h"
 #include "Map.h"
 #include "MapQuickView.h"
+#include "MapTypes.h"
+#include "MapViewTypes.h"
 #include "Point.h"
-#include "GraphicsOverlay.h"
-#include "Graphic.h"
 #include "SimpleMarkerSymbol.h"
 #include "SimpleRenderer.h"
 #include "SpatialReference.h"
-#include "MapViewTypes.h"
-#include "MapTypes.h"
 #include "SymbolTypes.h"
-#include "GraphicsOverlayListModel.h"
-#include "GraphicListModel.h"
-#include "Envelope.h"
 
+// Qt headers
 #include <QFuture>
 
 using namespace Esri::ArcGISRuntime;

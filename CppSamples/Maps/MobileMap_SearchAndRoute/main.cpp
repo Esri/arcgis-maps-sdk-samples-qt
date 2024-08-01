@@ -1,30 +1,38 @@
+// [Legal]
 // Copyright 2015 Esri.
-
+//
 // Licensed under the Apache License, Version 2.0 (the "License");
 // you may not use this file except in compliance with the License.
 // You may obtain a copy of the License at
 // http://www.apache.org/licenses/LICENSE-2.0
-
+//
 // Unless required by applicable law or agreed to in writing, software
 // distributed under the License is distributed on an "AS IS" BASIS,
 // WITHOUT WARRANTIES OR CONDITIONS OF ANY KIND, either express or implied.
 // See the License for the specific language governing permissions and
 // limitations under the License.
+// [Legal]
 
-#include <QGuiApplication>
-#include <QQuickView>
-#include <QCommandLineParser>
-#include <QDir>
-#include <QQmlEngine>
+// sample headers
+#include "MobileMap_SearchAndRoute.h"
 
-#include "Esri/ArcGISRuntime/Toolkit/register.h"
+// ArcGIS Maps SDK headers
 #include "ArcGISRuntimeEnvironment.h"
 
+// Qt headers
+#include <QCommandLineParser>
+#include <QDir>
+#include <QGuiApplication>
+#include <QQmlEngine>
+#include <QQuickView>
+
+// Other headers
+#include "Esri/ArcGISRuntime/Toolkit/register.h"
+
+// Platform specific headers
 #ifdef Q_OS_WIN
 #include <Windows.h>
 #endif
-
-#include "MobileMap_SearchAndRoute.h"
 
 #define STRINGIZE(x) #x
 #define QUOTE(x) STRINGIZE(x)

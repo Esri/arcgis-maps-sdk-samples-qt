@@ -1,12 +1,12 @@
 // [WriteFile Name=DistanceCompositeSymbol, Category=Scenes]
 // [Legal]
 // Copyright 2016 Esri.
-
+//
 // Licensed under the Apache License, Version 2.0 (the "License");
 // you may not use this file except in compliance with the License.
 // You may obtain a copy of the License at
 // http://www.apache.org/licenses/LICENSE-2.0
-
+//
 // Unless required by applicable law or agreed to in writing, software
 // distributed under the License is distributed on an "AS IS" BASIS,
 // WITHOUT WARRANTIES OR CONDITIONS OF ANY KIND, either express or implied.
@@ -18,32 +18,35 @@
 #include "pch.hpp"
 #endif // PCH_BUILD
 
+// sample headers
 #include "DistanceCompositeSymbol.h"
 
-#include "Scene.h"
-#include "SceneQuickView.h"
-#include "Basemap.h"
+// ArcGIS Maps SDK headers
 #include "ArcGISTiledElevationSource.h"
+#include "Basemap.h"
 #include "DistanceCompositeSceneSymbol.h"
-#include "SimpleMarkerSymbol.h"
-#include "SimpleMarkerSceneSymbol.h"
+#include "ElevationSourceListModel.h"
+#include "Graphic.h"
+#include "GraphicListModel.h"
+#include "GraphicsOverlay.h"
+#include "GraphicsOverlayListModel.h"
+#include "LayerSceneProperties.h"
+#include "MapTypes.h"
 #include "ModelSceneSymbol.h"
 #include "OrbitGeoElementCameraController.h"
-#include "MapTypes.h"
-#include "SymbolTypes.h"
-#include "GraphicsOverlayListModel.h"
-#include "GraphicListModel.h"
-#include "Surface.h"
-#include "ElevationSourceListModel.h"
-#include "SceneViewTypes.h"
-#include "LayerSceneProperties.h"
-#include "SpatialReference.h"
-#include "GraphicsOverlay.h"
 #include "Point.h"
-#include "Graphic.h"
+#include "Scene.h"
+#include "SceneQuickView.h"
+#include "SceneViewTypes.h"
+#include "SimpleMarkerSceneSymbol.h"
+#include "SimpleMarkerSymbol.h"
+#include "SpatialReference.h"
+#include "Surface.h"
+#include "SymbolTypes.h"
 
-#include <QtCore/qglobal.h>
+// Qt headers
 #include <QStandardPaths>
+#include <QtCore/qglobal.h>
 
 using namespace Esri::ArcGISRuntime;
 
