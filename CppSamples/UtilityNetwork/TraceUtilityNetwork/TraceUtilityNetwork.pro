@@ -27,7 +27,7 @@ QT += opengl qml quick
 TEMPLATE = app
 TARGET = TraceUtilityNetwork
 
-ARCGIS_RUNTIME_VERSION = 200.5.0
+ARCGIS_RUNTIME_VERSION = 200.6.0
 include($$PWD/arcgisruntime.pri)
 
 #-------------------------------------------------------------------------------
