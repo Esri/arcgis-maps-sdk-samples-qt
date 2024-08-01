@@ -1,12 +1,12 @@
 // [WriteFile Name=IdentifyRasterCell, Category=Layers]
 // [Legal]
 // Copyright 2020 Esri.
-
+//
 // Licensed under the Apache License, Version 2.0 (the "License");
 // you may not use this file except in compliance with the License.
 // You may obtain a copy of the License at
 // http://www.apache.org/licenses/LICENSE-2.0
-
+//
 // Unless required by applicable law or agreed to in writing, software
 // distributed under the License is distributed on an "AS IS" BASIS,
 // WITHOUT WARRANTIES OR CONDITIONS OF ANY KIND, either express or implied.
@@ -18,26 +18,31 @@
 #include "pch.hpp"
 #endif // PCH_BUILD
 
+// sample headers
 #include "IdentifyRasterCell.h"
 
+// ArcGIS Maps SDK headers
+#include "AttributeListModel.h"
 #include "CalloutData.h"
+#include "Envelope.h"
+#include "Error.h"
+#include "IdentifyLayerResult.h"
+#include "LayerListModel.h"
 #include "Map.h"
 #include "MapQuickView.h"
-#include "Raster.h"
-#include "RasterLayer.h"
-#include "Error.h"
 #include "MapTypes.h"
-#include "LayerListModel.h"
+#include "Raster.h"
 #include "RasterCell.h"
-#include "IdentifyLayerResult.h"
-#include "AttributeListModel.h"
-#include "Envelope.h"
+#include "RasterLayer.h"
 
-#include <memory>
+// Qt headers
 #include <QFuture>
+#include <QStandardPaths>
 #include <QString>
 #include <QUuid>
-#include <QStandardPaths>
+
+// STL headers
+#include <memory>
 
 using namespace Esri::ArcGISRuntime;
 

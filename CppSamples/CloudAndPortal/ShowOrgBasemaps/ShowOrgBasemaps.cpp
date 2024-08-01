@@ -1,12 +1,12 @@
 // [WriteFile Name=ShowOrgBasemaps, Category=CloudAndPortal]
 // [Legal]
 // Copyright 2016 Esri.
-
+//
 // Licensed under the Apache License, Version 2.0 (the "License");
 // you may not use this file except in compliance with the License.
 // You may obtain a copy of the License at
 // http://www.apache.org/licenses/LICENSE-2.0
-
+//
 // Unless required by applicable law or agreed to in writing, software
 // distributed under the License is distributed on an "AS IS" BASIS,
 // WITHOUT WARRANTIES OR CONDITIONS OF ANY KIND, either express or implied.
@@ -18,20 +18,24 @@
 #include "pch.hpp"
 #endif // PCH_BUILD
 
+// sample headers
+#include "ShowOrgBasemaps.h"
+
+// ArcGIS Maps SDK headers
 #include "AuthenticationManager.h"
-#include "Map.h"
-#include "MapQuickView.h"
 #include "Basemap.h"
 #include "BasemapListModel.h"
-#include "Portal.h"
-#include "ShowOrgBasemaps.h"
-#include "MapTypes.h"
 #include "CoreTypes.h"
 #include "Credential.h"
-#include "OAuthClientInfo.h"
 #include "Error.h"
+#include "Map.h"
+#include "MapQuickView.h"
+#include "MapTypes.h"
+#include "OAuthClientInfo.h"
+#include "Portal.h"
 #include "PortalInfo.h"
 
+// Qt headers
 #include <QFuture>
 
 using namespace Esri::ArcGISRuntime;
@@ -50,7 +54,6 @@ void ShowOrgBasemaps::init()
   qmlRegisterType<MapQuickView>("Esri.Samples", 1, 0, "MapView");
   qmlRegisterType<ShowOrgBasemaps>("Esri.Samples", 1, 0, "ShowOrgBasemapsSample");
 }
-
 
 void ShowOrgBasemaps::connectLoadStatusSignal()
 {

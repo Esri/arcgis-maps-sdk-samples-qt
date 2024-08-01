@@ -1,36 +1,42 @@
 // [WriteFile Name=AddItemsToPortal, Category=CloudAndPortal]
 // [Legal]
-// Copyright 2016 ESRI
+// Copyright 2016 Esri.
 //
-// All rights reserved under the copyright laws of the United States
-// and applicable international laws, treaties, and conventions.
+// Licensed under the Apache License, Version 2.0 (the "License");
+// you may not use this file except in compliance with the License.
+// You may obtain a copy of the License at
+// http://www.apache.org/licenses/LICENSE-2.0
 //
-// You may freely redistribute and use this sample code, with or
-// without modification, provided you include the original copyright
-// notice and use restrictions.
-//
-// See the Sample code usage restrictions document for further information.
+// Unless required by applicable law or agreed to in writing, software
+// distributed under the License is distributed on an "AS IS" BASIS,
+// WITHOUT WARRANTIES OR CONDITIONS OF ANY KIND, either express or implied.
+// See the License for the specific language governing permissions and
+// limitations under the License.
 // [Legal]
 
 #ifdef PCH_BUILD
 #include "pch.hpp"
 #endif // PCH_BUILD
 
-#include "AuthenticationManager.h"
-#include "Portal.h"
-#include "PortalItem.h"
-#include "PortalItemListModel.h"
+// sample headers
 #include "AddItemsToPortal.h"
-#include "MapTypes.h"
-#include "PortalTypes.h"
+
+// ArcGIS Maps SDK headers
+#include "AuthenticationManager.h"
 #include "CoreTypes.h"
 #include "Credential.h"
-#include "OAuthClientInfo.h"
-#include "PortalUser.h"
 #include "Error.h"
 #include "ErrorException.h"
 #include "ErrorInformationKeys.h"
+#include "MapTypes.h"
+#include "OAuthClientInfo.h"
+#include "Portal.h"
+#include "PortalItem.h"
+#include "PortalItemListModel.h"
+#include "PortalTypes.h"
+#include "PortalUser.h"
 
+// Qt headers
 #include <QFuture>
 #include <QVariantMap>
 
