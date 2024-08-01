@@ -29,14 +29,15 @@ namespace Esri::ArcGISRuntime
   class MapQuickView;
 }
 class RelatedFeatureListModel;
+class QAbstractListModel;
 
-Q_MOC_INCLUDE("RelatedFeatureListModel.h")
+Q_MOC_INCLUDE("QAbstractListModel")
 
 class ListRelatedFeatures : public QQuickItem
 {
   Q_OBJECT
 
-  Q_PROPERTY(RelatedFeatureListModel* relatedFeaturesModel MEMBER m_relatedFeaturesModel NOTIFY relatedFeaturesModelChanged)
+  Q_PROPERTY(QAbstractListModel* relatedFeaturesModel READ relatedFeaturesModel NOTIFY relatedFeaturesModelChanged)
 
 public:
   explicit ListRelatedFeatures(QQuickItem* parent = nullptr);
@@ -52,8 +53,8 @@ signals:
 
 private:
   void connectSignals();
+  QAbstractListModel* relatedFeaturesModel() const;
 
-private:
   Esri::ArcGISRuntime::Map* m_map = nullptr;
   Esri::ArcGISRuntime::MapQuickView* m_mapView = nullptr;
   Esri::ArcGISRuntime::FeatureLayer* m_alaskaNationalParks = nullptr;

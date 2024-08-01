@@ -19,8 +19,6 @@
 // ArcGIS Maps SDK headers
 #include "DynamicEntityDataSource.h"
 #include "Field.h"
-#include "Geometry.h"
-#include "RealTimeTypes.h"
 
 // Qt headers
 #include <QFile>

@@ -24,8 +24,6 @@
 #include <QUrl>
 
 Q_MOC_INCLUDE("MapQuickView.h")
-Q_MOC_INCLUDE("BasemapStyleInfo.h")
-Q_MOC_INCLUDE("BasemapStyleListModel.h")
 
 class BasemapStyleListModel;
 class QAbstractListModel;

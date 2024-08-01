@@ -17,14 +17,14 @@
 #ifndef RELATEDFEATURELISTMODEL_H
 #define RELATEDFEATURELISTMODEL_H
 
+// sample headers
+#include "RelatedFeature.h"
+
 // Qt headers
 #include <QAbstractListModel>
 #include <QByteArray>
 #include <QHash>
 #include <QList>
-
-// STL headers
-#include <RelatedFeature.h>
 
 class RelatedFeatureListModel : public QAbstractListModel
 {

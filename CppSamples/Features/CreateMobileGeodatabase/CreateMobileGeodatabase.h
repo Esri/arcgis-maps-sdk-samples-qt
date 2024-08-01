@@ -17,13 +17,13 @@
 #ifndef CREATEMOBILEGEODATABASE_H
 #define CREATEMOBILEGEODATABASE_H
 
+// sample headers
+#include "FeatureListModel.h"
+
 // Qt headers
 #include <QMouseEvent>
 #include <QObject>
 #include <QTemporaryDir>
-
-// STL headers
-#include <FeatureListModel.h>
 
 namespace Esri::ArcGISRuntime
 {

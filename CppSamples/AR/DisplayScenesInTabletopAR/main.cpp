@@ -16,6 +16,9 @@
 // sample headers
 #include "DisplayScenesInTabletopAR.h"
 
+// toolkit headers
+#include "ArcGISArView.h"
+
 // ArcGIS Maps SDK headers
 #include "ArcGISRuntimeEnvironment.h"
 
@@ -25,9 +28,6 @@
 #include <QQmlApplicationEngine>
 #include <QQuickWindow>
 #include <QSurfaceFormat>
-
-// Other headers
-#include "ArcGISArView.h"
 
 // Platform specific headers
 #ifdef Q_OS_WIN
