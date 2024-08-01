@@ -2,7 +2,7 @@
 
 ## Overview
 
-The repo contains [Qt](http://qt.io) projects for each sample that can be run from within the Qt Creator IDE. It also contians source code to build and run the [C++](https://www.arcgis.com/home/search.html?t=content&q=tags%3A%22CppSampleViewer%22) and [QML](https://www.arcgis.com/home/search.html?t=content&q=tags%3A%22QmlSampleViewer%22) sample viewer apps locally.
+The repo contains [Qt](http://qt.io) projects for each sample that can be run from within the Qt Creator IDE. It also contains source code to build and run the [sample viewer app](https://www.arcgis.com/home/search.html?t=content&q=tags%3A%22CppSampleViewer%22) locally.
 
 ## Table of Contents
 
@@ -19,9 +19,9 @@ The repo contains [Qt](http://qt.io) projects for each sample that can be run fr
 
 ## Prerequisites
 
-* Qt SDK 6.5.1 or higher (Open source or commercial)
+* Qt SDK 6.5.6 or higher (Open source or commercial)
 * Qt Creator
-* An [ArcGIS Developer API key](https://developers.arcgis.com/documentation/mapping-apis-and-services/security/api-keys/)
+* An [access token](http://links.esri.com/create-an-api-key)
 * [ArcGIS Maps SDK for Qt Toolkit](https://github.com/Esri/arcgis-runtime-toolkit-qt) is required as some samples utilize toolkit components.
 * For more information, please visit the [System Requirements](https://developers.arcgis.com/qt/reference/system-requirements/) page.
 
@@ -115,9 +115,9 @@ git merge upstream/main
 
 Start Qt Creator. When the IDE opens to the Welcome screen, click on the **Open Project** button and browse to a project file (.pro) within your forked repo location. Configure the project, [set your ArcGIS Developer API key](https://developers.arcgis.com/documentation/mapping-apis-and-services/security/tutorials/create-and-manage-an-api-key/#set-your-api-key) in `main.cpp`, and run the sample.
 
-## Build and run the ArcGIS Maps SDK for Qt Sample Viewers locally
+## Build and run the ArcGIS Maps SDK for Qt Sample Viewer locally
 
-Start Qt Creator. When the IDE opens to the Welcome screen, click on the **Open Project** button and browse to either sample viewer's project file (.pro) within your forked repo location. The sample viewer project files are located at `arcgis-maps-sdk-samples-qt\ArcGISRuntimeSDKQt_SampleViewers\`, in either `ArcGISRuntimeSDKQt_CppSamples` or `ArcGISRuntimeSDKQt_QMLSamples`. Configure the project, [set your ArcGIS Developer API key](https://developers.arcgis.com/documentation/mapping-apis-and-services/security/tutorials/create-and-manage-an-api-key/#set-your-api-key) in `ArcGISRuntimeSDKQt_Samples\SampleManager.cpp`, and run the sample.
+Start Qt Creator. When the IDE opens to the Welcome screen, click on the **Open Project** button and browse to either sample viewer's project file (.pro) within your forked repo location. The sample viewer project file is located at `arcgis-maps-sdk-samples-qt\SampleViewer\`. Configure the project, [set your API key](http://links.esri.com/create-an-api-key) in `SampleViewer\SampleManager.cpp`, and run the sample.
 
 NOTE: the sample viewer project files search for the toolkit.pri at the [default location specified above](#clone-the-toolkit-repo). If you cloned the toolkit repo to a different location, you will need to update the path in the respective sample viewer's project file.
 

@@ -1,0 +1,23 @@
+<RCC>
+    <qresource prefix="/Samples/EditData/SnapGeometryEdits">
+        <file alias="sample.json">README.metadata.json</file>
+        <file>SnapGeometryEdits.qml</file>
+        <file>SnapGeometryEdits.h</file>
+        <file>SnapGeometryEdits.cpp</file>
+        <file>main.qml</file>
+        <file>screenshot.png</file>
+        <file>README.md</file>
+        <file>GeometryEditorButton.qml</file>
+        <file>iconAssets/erase-32.png</file>
+        <file>iconAssets/line-32.png</file>
+        <file>iconAssets/multipoint-32.png</file>
+        <file>iconAssets/point-32.png</file>
+        <file>iconAssets/polygon-32.png</file>
+        <file>iconAssets/save-32.png</file>
+        <file>iconAssets/trash-32.png</file>
+        <file>iconAssets/undo-32.png</file>
+        <file>iconAssets/settings.png</file>
+        <file>SnapSourceListModel.cpp</file>
+        <file>SnapSourceListModel.h</file>
+    </qresource>
+</RCC>

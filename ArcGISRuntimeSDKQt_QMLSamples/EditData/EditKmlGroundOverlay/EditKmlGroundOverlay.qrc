@@ -1,8 +1,0 @@
-<RCC>
-    <qresource prefix="/Samples/EditData/EditKmlGroundOverlay">
-        <file alias="sample.json">README.metadata.json</file>
-        <file>EditKmlGroundOverlay.qml</file>
-        <file>screenshot.png</file>
-        <file>README.md</file>
-    </qresource>
-</RCC>
