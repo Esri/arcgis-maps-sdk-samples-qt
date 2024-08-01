@@ -1,100 +1,100 @@
 {
-    "version": 1,
-    "kind": "project",
-    "supportedProjectTypes": [ "Qt4ProjectManager.Qt4Project" ],
-    "id": "A.Sample_ArcGISQt_CPP__Widgets_200_6_0",
-    "category": "B.CustomProjects",
-    "trDescription": "Creates a Sample ArcGIS Maps 200.6.0 Qt C++ Widgets application.",
-    "trDisplayName": "Sample ArcGIS Maps 200.6.0 Qt C++ Widgets App",
-    "trDisplayCategory": "ArcGIS",
-    "icon": "wizard.png",
-    "featuresRequired": [ "QtSupport.Wizards.FeatureQt", "QtSupport.Wizards.FeatureQWidgets", "QtSupport.Wizards.FeatureDesktop" ],
-    "platformIndependent": "false",
-    "enabled": "%{JS: [ %{Plugins} ].indexOf('QmakeProjectManager') >= 0 && [ %{Plugins} ].indexOf('CppEditor') >= 0}",
+  "version": 1,
+  "kind": "project",
+  "supportedProjectTypes": [ "Qt4ProjectManager.Qt4Project" ],
+  "id": "A.Sample_ArcGISQt_CPP__Widgets_200_6_0",
+  "category": "B.CustomProjects",
+  "trDescription": "Creates a Sample ArcGIS Maps 200.6.0 Qt C++ Widgets application.",
+  "trDisplayName": "Sample ArcGIS Maps 200.6.0 Qt C++ Widgets App",
+  "trDisplayCategory": "ArcGIS",
+  "icon": "wizard.png",
+  "featuresRequired": [ "QtSupport.Wizards.FeatureQt", "QtSupport.Wizards.FeatureQWidgets", "QtSupport.Wizards.FeatureDesktop" ],
+  "platformIndependent": "false",
+  "enabled": "%{JS: [ %{Plugins} ].indexOf('QmakeProjectManager') >= 0 && [ %{Plugins} ].indexOf('CppEditor') >= 0}",
 
-    "options":
-    [
-        { "key": "ProFileName", "value": "%{JS: Util.fileName('%{ProjectDirectory}/%{ProjectName}', 'pro')}" },
-        { "key": "MainCppFileName", "value": "%{JS: 'main.' + Util.preferredSuffix('text/x-c++src')}" },
-        { "key": "QtQuickVersion", "value": "%{JS: %{QtVersion}.qtQuickVersion}" },
-        { "key": "QtQuickWindowVersion", "value": "%{JS: %{QtVersion}.qtQuickWindowVersion}" },
-        { "key": "QtQuickFeature", "value": "QtSupport.Wizards.FeatureQtQuick.%{QtQuickVersion}" },
-        { "key": "DisplayName", "value": "%{JS: Cpp.className('%{DispName}')}" },
-        { "key": "SampleName", "value": "%{JS: '%{Class}'.charAt(0).toUpperCase() + '%{Class}'.substring(1)}" },
-        { "key": "SampleDescription", "value": "%{SampleDesc}" },
-        { "key": "SampleCategory", "value": "%{SampleCat}" },
-        { "key": "IncludeGuard", "value": "%{JS: Cpp.classToHeaderGuard('%{Class}', '%{JS: Util.preferredSuffix('text/x-c++hdr')}')}" },
-        { "key": "ThreeDSample", "value": "%{threeD}" },
-        { "key": "UseFeatureLayer", "value": "%{JS: ( '%{FeatureLayerURL}'.length === 0 ) ? 'false' : 'true'}" },
-        { "key": "UseAPIKey", "value": "%{apiKey}" },
-        { "key": "CurrentYear", "value": "%{JS: new Date().getFullYear()}" }
-    ],
+  "options":
+  [
+    { "key": "ProFileName", "value": "%{JS: Util.fileName('%{ProjectDirectory}/%{ProjectName}', 'pro')}" },
+    { "key": "MainCppFileName", "value": "%{JS: 'main.' + Util.preferredSuffix('text/x-c++src')}" },
+    { "key": "QtQuickVersion", "value": "%{JS: %{QtVersion}.qtQuickVersion}" },
+    { "key": "QtQuickWindowVersion", "value": "%{JS: %{QtVersion}.qtQuickWindowVersion}" },
+    { "key": "QtQuickFeature", "value": "QtSupport.Wizards.FeatureQtQuick.%{QtQuickVersion}" },
+    { "key": "DisplayName", "value": "%{JS: Cpp.className('%{DispName}')}" },
+    { "key": "SampleName", "value": "%{JS: '%{Class}'.charAt(0).toUpperCase() + '%{Class}'.substring(1)}" },
+    { "key": "SampleDescription", "value": "%{SampleDesc}" },
+    { "key": "SampleCategory", "value": "%{SampleCat}" },
+    { "key": "IncludeGuard", "value": "%{JS: Cpp.classToHeaderGuard('%{Class}', '%{JS: Util.preferredSuffix('text/x-c++hdr')}')}" },
+    { "key": "ThreeDSample", "value": "%{threeD}" },
+    { "key": "UseFeatureLayer", "value": "%{JS: ( '%{FeatureLayerURL}'.length === 0 ) ? 'false' : 'true'}" },
+    { "key": "UseAPIKey", "value": "%{apiKey}" },
+    { "key": "CurrentYear", "value": "%{JS: new Date().getFullYear()}" }
+  ],
 
-    "pages":
-    [
+  "pages":
+  [
+    {
+      "trDisplayName": "Project Location",
+      "trShortTitle": "Location",
+      "typeId": "Project"
+    },
+    {
+      "trDisplayName": "Define Project Details",
+      "trShortTitle": "Details",
+      "typeId": "Fields",
+      "data":
+      [
         {
-            "trDisplayName": "Project Location",
-            "trShortTitle": "Location",
-            "typeId": "Project"
-        },
-        {
-            "trDisplayName": "Define Project Details",
-            "trShortTitle": "Details",
-            "typeId": "Fields",
-            "data":
+          "name": "SampleCat",
+          "trDisplayName": "ArcGIS SDK Samples Category:",
+          "type": "ComboBox",
+          "data":
+          {
+            "index": 0,
+            "items":
             [
-        {
-                    "name": "SampleCat",
-                    "trDisplayName": "ArcGIS SDK Samples Category:",
-                    "type": "ComboBox",
-                    "data":
-                    {
-                        "index": 0,
-                        "items":
-                        [
-                            {
-                                "trKey": "Analysis",
-                                "value": "Analysis"
-                            },
-                            {
-                                "trKey": "CloudAndPortal",
-                                "value": "CloudAndPortal"
-                            },
               {
-                                "trKey": "DisplayInformation",
-                                "value": "DisplayInformation"
-                            },
+                "trKey": "Analysis",
+                "value": "Analysis"
+              },
               {
-                                "trKey": "EditData",
-                                "value": "EditData"
-                            },
+                "trKey": "CloudAndPortal",
+                "value": "CloudAndPortal"
+              },
               {
-                                "trKey": "Features",
-                                "value": "Features"
-                            },
+                "trKey": "DisplayInformation",
+                "value": "DisplayInformation"
+              },
               {
-                                "trKey": "Layers",
-                                "value": "Layers"
-                            },
+                "trKey": "EditData",
+                "value": "EditData"
+              },
               {
-                                "trKey": "Maps",
-                                "value": "Maps"
-                            },
+                "trKey": "Features",
+                "value": "Features"
+              },
               {
-                                "trKey": "Routing",
-                                "value": "Routing"
-                            },
+                "trKey": "Layers",
+                "value": "Layers"
+              },
               {
-                                "trKey": "Scenes",
-                                "value": "Scenes"
-                            },
+                "trKey": "Maps",
+                "value": "Maps"
+              },
               {
-                                "trKey": "Search",
-                                "value": "Search"
-                            }
-                        ]
-                    }
-                },
+                "trKey": "Routing",
+                "value": "Routing"
+              },
+              {
+                "trKey": "Scenes",
+                "value": "Scenes"
+              },
+              {
+                "trKey": "Search",
+                "value": "Search"
+              }
+            ]
+          }
+        },
         {
           "name": "DispName",
           "trDisplayName": "Display Name:",
@@ -134,66 +134,66 @@
           {
             "trPlaceholder" : "Optionally add the URL for a FeatureLayer"
           }
-                                },
-                                {
-                                        "name": "apiKey",
-                                        "trDisplayName": "Use API Key",
-                                        "type": "CheckBox",
-                                        "data":{"checked": true}
-                                }
-            ]
         },
         {
-            "trDisplayName": "Kit Selection",
-            "trShortTitle": "Kits",
-            "typeId": "Kits",
-            "data": {
-                "projectFilePath": "%{ProFileName}"
-            }
-        },
-        {
-            "trDisplayName": "Project Management",
-            "trShortTitle": "Summary",
-            "typeId": "Summary"
+          "name": "apiKey",
+          "trDisplayName": "Use API Key",
+          "type": "CheckBox",
+          "data":{"checked": true}
         }
-    ],
-    "generators":
-    [
+      ]
+    },
+    {
+      "trDisplayName": "Kit Selection",
+      "trShortTitle": "Kits",
+      "typeId": "Kits",
+      "data": {
+        "projectFilePath": "%{ProFileName}"
+      }
+    },
+    {
+      "trDisplayName": "Project Management",
+      "trShortTitle": "Summary",
+      "typeId": "Summary"
+    }
+  ],
+  "generators":
+  [
+    {
+      "typeId": "File",
+      "data":
+      [
         {
-            "typeId": "File",
-            "data":
-            [
+          "source": "main.cpp.tmpl",
+          "target": "%{MainCppFileName}"
+        },
         {
-                    "source": "main.cpp.tmpl",
-                    "target": "%{MainCppFileName}"
-                },
-        {
-                    "source": "sample.cpp.tmpl",
-                    "target": "%{SampleName}.cpp",
+          "source": "sample.cpp.tmpl",
+          "target": "%{SampleName}.cpp",
           "openInEditor": true
-                },
+        },
         {
-                    "source": "sample.h.tmpl",
-                    "target": "%{SampleName}.h"
-                },
+          "source": "sample.h.tmpl",
+          "target": "%{SampleName}.h"
+        },
         {
-                    "source": "sample.pro.tmpl",
-                    "target": "%{ProFileName}",
-                    "openAsProject": true
-                },
+          "source": "sample.pro.tmpl",
+          "target": "%{ProFileName}",
+          "openAsProject": true
+        },
         {
-                    "source": "screenshot.png",
+          "source": "screenshot.png",
           "isBinary": true
-                },
+        },
         {
-                    "source": "README.md.tmpl",
-                    "target": "README.md"
-                },
-                {
-                    "source": "arcgisruntime.pri",
-                    "target": "arcgisruntime.pri"
-                }
-            ]
+          "source": "README.md.tmpl",
+          "target": "README.md"
+        },
+        {
+          "source": "arcgisruntime.pri",
+          "target": "arcgisruntime.pri"
         }
-    ]
+      ]
+    }
+  ]
 }
