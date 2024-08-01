@@ -2,10 +2,10 @@
     "version": 1,
     "kind": "project",
     "supportedProjectTypes": [ "Qt4ProjectManager.Qt4Project" ],
-    "id": "A.Sample_ArcGISQt_CPP__Widgets_200_5_0",
+    "id": "A.Sample_ArcGISQt_CPP__Widgets_200_6_0",
     "category": "B.CustomProjects",
-    "trDescription": "Creates a Sample ArcGIS Maps 200.5.0 Qt C++ Widgets application.",
-    "trDisplayName": "Sample ArcGIS Maps 200.5.0 Qt C++ Widgets App",
+    "trDescription": "Creates a Sample ArcGIS Maps 200.6.0 Qt C++ Widgets application.",
+    "trDisplayName": "Sample ArcGIS Maps 200.6.0 Qt C++ Widgets App",
     "trDisplayCategory": "ArcGIS",
     "icon": "wizard.png",
     "featuresRequired": [ "QtSupport.Wizards.FeatureQt", "QtSupport.Wizards.FeatureQWidgets", "QtSupport.Wizards.FeatureDesktop" ],
@@ -43,7 +43,7 @@
             "typeId": "Fields",
             "data":
             [
-				{
+        {
                     "name": "SampleCat",
                     "trDisplayName": "ArcGIS SDK Samples Category:",
                     "type": "ComboBox",
@@ -60,80 +60,80 @@
                                 "trKey": "CloudAndPortal",
                                 "value": "CloudAndPortal"
                             },
-							{
+              {
                                 "trKey": "DisplayInformation",
                                 "value": "DisplayInformation"
                             },
-							{
+              {
                                 "trKey": "EditData",
                                 "value": "EditData"
                             },
-							{
+              {
                                 "trKey": "Features",
                                 "value": "Features"
                             },
-							{
+              {
                                 "trKey": "Layers",
                                 "value": "Layers"
                             },
-							{
+              {
                                 "trKey": "Maps",
                                 "value": "Maps"
                             },
-							{
+              {
                                 "trKey": "Routing",
                                 "value": "Routing"
                             },
-							{
+              {
                                 "trKey": "Scenes",
                                 "value": "Scenes"
                             },
-							{
+              {
                                 "trKey": "Search",
                                 "value": "Search"
                             }
                         ]
                     }
                 },
-				{
-					"name": "DispName",
-					"trDisplayName": "Display Name:",
-					"mandatory": true,
-					"type": "LineEdit",
-					"data": { "trPlaceholder" : "This will be the name we display to the user etc." }
-				},
-				{
-					"name": "Class",
-					"trDisplayName": "Sample Name:",
-					"mandatory": true,
-					"type": "LineEdit",
-					"data": { "validator": "(?:[a-zA-Z_0-9]*)", "trPlaceholder" : "This will be the name of files/classes etc." }
-				},
-				{
-					"name": "SampleDesc",
-					"trDisplayName": "Sample Description:",
-					"mandatory": false,
-					"type": "LineEdit",
-					"data":
-					{
-						"trText": "This sample demonstrates how to XXXXX."
-					}
-				},
-				{
-					"name": "threeD",
-					"trDisplayName": "3-D sample",
-					"type": "CheckBox",
-					"data":{"checked": false}
-				},
-				{
-					"name": "FeatureLayerURL",
-					"trDisplayName": "Feature Layer URL:",
-					"mandatory": false,
-					"type": "LineEdit",
-					"data":
-					{
-						"trPlaceholder" : "Optionally add the URL for a FeatureLayer"
-					}
+        {
+          "name": "DispName",
+          "trDisplayName": "Display Name:",
+          "mandatory": true,
+          "type": "LineEdit",
+          "data": { "trPlaceholder" : "This will be the name we display to the user etc." }
+        },
+        {
+          "name": "Class",
+          "trDisplayName": "Sample Name:",
+          "mandatory": true,
+          "type": "LineEdit",
+          "data": { "validator": "(?:[a-zA-Z_0-9]*)", "trPlaceholder" : "This will be the name of files/classes etc." }
+        },
+        {
+          "name": "SampleDesc",
+          "trDisplayName": "Sample Description:",
+          "mandatory": false,
+          "type": "LineEdit",
+          "data":
+          {
+            "trText": "This sample demonstrates how to XXXXX."
+          }
+        },
+        {
+          "name": "threeD",
+          "trDisplayName": "3-D sample",
+          "type": "CheckBox",
+          "data":{"checked": false}
+        },
+        {
+          "name": "FeatureLayerURL",
+          "trDisplayName": "Feature Layer URL:",
+          "mandatory": false,
+          "type": "LineEdit",
+          "data":
+          {
+            "trPlaceholder" : "Optionally add the URL for a FeatureLayer"
+          }
                                 },
                                 {
                                         "name": "apiKey",
@@ -163,29 +163,29 @@
             "typeId": "File",
             "data":
             [
-				{
+        {
                     "source": "main.cpp.tmpl",
                     "target": "%{MainCppFileName}"
                 },
-				{
+        {
                     "source": "sample.cpp.tmpl",
                     "target": "%{SampleName}.cpp",
-					"openInEditor": true
+          "openInEditor": true
                 },
-				{
+        {
                     "source": "sample.h.tmpl",
                     "target": "%{SampleName}.h"
                 },
-				{
+        {
                     "source": "sample.pro.tmpl",
                     "target": "%{ProFileName}",
                     "openAsProject": true
                 },
-				{
+        {
                     "source": "screenshot.png",
-					"isBinary": true
+          "isBinary": true
                 },
-				{
+        {
                     "source": "README.md.tmpl",
                     "target": "README.md"
                 },
