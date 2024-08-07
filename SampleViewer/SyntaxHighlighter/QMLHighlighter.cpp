@@ -16,7 +16,7 @@
 #include "pch.hpp"
 
 #include <QStringList>
-#include <QRegExp>
+#include <QRegularExpression>
 
 #include "QMLHighlighter.h"
 
@@ -35,43 +35,43 @@ QMLHighlighter::QMLHighlighter(QTextDocument* parent) :
                     << "\\bendif\\b" << "\\bQ_DECL_OVERRIDE\\b";
     foreach (const QString& pattern, keywordPatterns)
     {
-        rule.pattern = QRegExp(pattern);
+        rule.pattern = QRegularExpression(pattern);
         rule.format = m_keywordFormat;
         m_highlightingRules.append(rule);
     }
 
     m_classFormat.setForeground(Qt::darkMagenta);
-    rule.pattern = QRegExp("\\b[A-Z][A-Za-z]+\\b");
+    rule.pattern = QRegularExpression("\\b[A-Z][A-Za-z]+\\b");
     rule.format = m_classFormat;
     m_highlightingRules.append(rule);
 
     m_classFormat_2.setForeground(Qt::darkMagenta);
-    rule.pattern = QRegExp("\\bQ_PROPERTY\\b");
+    rule.pattern = QRegularExpression("\\bQ_PROPERTY\\b");
     rule.format = m_classFormat_2;
     m_highlightingRules.append(rule);
 
     m_classFormat_3.setForeground(Qt::darkMagenta);
-    rule.pattern = QRegExp("\\bQ_INVOKABLE\\b");
+    rule.pattern = QRegularExpression("\\bQ_INVOKABLE\\b");
     rule.format = m_classFormat_3;
     m_highlightingRules.append(rule);
 
     m_memberVarName_1.setForeground(Qt::darkRed);
-    rule.pattern = QRegExp("\\b[a-z][A-Za-z]+(?=:)\\b");
+    rule.pattern = QRegularExpression("\\b[a-z][A-Za-z]+(?=:)\\b");
     rule.format = m_memberVarName_1;
     m_highlightingRules.append(rule);
 
     m_memberVarName_2.setForeground(Qt::darkRed);
-    rule.pattern = QRegExp("\\b[a-z]+(?=:)\\b");
+    rule.pattern = QRegularExpression("\\b[a-z]+(?=:)\\b");
     rule.format = m_memberVarName_2;
     m_highlightingRules.append(rule);
 
     m_memberVarName_3.setForeground(Qt::darkRed);
-    rule.pattern = QRegExp("\\banchors.\\b");
+    rule.pattern = QRegularExpression("\\banchors.\\b");
     rule.format = m_memberVarName_3;
     m_highlightingRules.append(rule);
 
     m_memberVarName_4.setForeground(Qt::darkRed);
-    rule.pattern = QRegExp("\\banchors\\b");
+    rule.pattern = QRegularExpression("\\banchors\\b");
     rule.format = m_memberVarName_4;
     m_highlightingRules.append(rule);
 
@@ -91,49 +91,52 @@ QMLHighlighter::QMLHighlighter(QTextDocument* parent) :
 
     foreach (const QString& pattern, keywordPatternsOther)
     {
-        rule.pattern = QRegExp(pattern);
+        rule.pattern = QRegularExpression(pattern);
         rule.format = m_keywordOtherFormat;
         m_highlightingRules.append(rule);
     }
 
     m_singleLineCommentFormat.setForeground(Qt::darkGreen);
-    rule.pattern = QRegExp("^(?!\"([^\"']*)\")\\s*//[^\n]*");
+    rule.pattern = QRegularExpression("^(?!\"([^\"']*)\")\\s*//[^\n]*");
     rule.format = m_singleLineCommentFormat;
     m_highlightingRules.append(rule);
 
     m_multiLineCommentFormat.setForeground(Qt::darkGreen);
 
     m_quotationFormat.setForeground(Qt::darkGreen);
-    rule.pattern = QRegExp("(\"[^\"]+\"|'[^\']+')");
+    rule.pattern = QRegularExpression("(\"[^\"]+\"|'[^\']+')");
     rule.format = m_quotationFormat;
     m_highlightingRules.append(rule);
 
-    m_commentStartExpression = QRegExp("/\\*");
-    m_commentEndExpression = QRegExp("\\*/");
+    m_commentStartExpression = QRegularExpression("/\\*");
+    m_commentEndExpression = QRegularExpression("\\*/");
 }
 
 void QMLHighlighter::highlightBlock(const QString& text)
 {
     foreach (const HighlightingRule& rule, m_highlightingRules)
     {
-        QRegExp expression(rule.pattern);
-        int index = expression.indexIn(text);
-        while (index >= 0)
+        QRegularExpression expression(rule.pattern);
+        QRegularExpressionMatchIterator matchIterator = expression.globalMatch(text);
+        while (matchIterator.hasNext())
         {
-            int length = expression.matchedLength();
+            QRegularExpressionMatch match = matchIterator.next();
+            int index = match.capturedStart();
+            int length = match.capturedLength();
             setFormat(index, length, rule.format);
-            index = expression.indexIn(text, index + length);
         }
     }
     setCurrentBlockState(0);
 
     int startIndex = 0;
     if (previousBlockState() != 1)
-        startIndex = m_commentStartExpression.indexIn(text);
+        startIndex = m_commentStartExpression.match(text).capturedStart();
 
     while (startIndex >= 0)
     {
-        int endIndex = m_commentEndExpression.indexIn(text, startIndex);
+        QRegularExpressionMatch match = m_commentEndExpression.match(text, startIndex);
+
+        int endIndex = match.capturedStart();
         int commentLength;
         if (endIndex == -1)
         {
@@ -142,10 +145,10 @@ void QMLHighlighter::highlightBlock(const QString& text)
         }
         else
         {
-            commentLength = endIndex - startIndex + m_commentEndExpression.matchedLength();
+            commentLength = endIndex - startIndex + match.capturedLength();
         }
         setFormat(startIndex, commentLength, m_multiLineCommentFormat);
-        startIndex = m_commentStartExpression.indexIn(text, startIndex + commentLength);
+        startIndex = m_commentStartExpression.match(text, startIndex + commentLength).capturedStart();
     }
 }
 
