@@ -257,12 +257,10 @@ void PerformValveIsolationTrace::performTrace()
       traceParameters->traceConfiguration()->filter()->setBarriers(categoryComparison);
     }
 
-    m_taskCanceler->addTask(
-      m_utilityNetwork->traceAsync(traceParameters).then(this, [this](QList<UtilityTraceResult*>)
-      {
-        onTraceCompleted_();
-      })
-    );
+    m_taskCanceler->addTask(m_utilityNetwork->traceAsync(traceParameters).then(this, [this](QList<UtilityTraceResult*>)
+    {
+      onTraceCompleted_();
+    }));
   }
 }
 
