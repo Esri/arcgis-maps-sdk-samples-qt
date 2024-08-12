@@ -70,6 +70,9 @@
 // Qt headers
 #include <QFuture>
 
+// Other headers
+#include "TaskCanceler.h"
+
 using namespace Esri::ArcGISRuntime;
 
 TraceUtilityNetwork::TraceUtilityNetwork(QObject* parent /* = nullptr */):
@@ -81,7 +84,8 @@ TraceUtilityNetwork::TraceUtilityNetwork(QObject* parent /* = nullptr */):
   m_mediumVoltageSymbol(new SimpleLineSymbol(SimpleLineSymbolStyle::Solid, QColor(Qt::darkCyan), 3, this)),
   m_lowVoltageSymbol(new SimpleLineSymbol(SimpleLineSymbolStyle::Dash, QColor(Qt::darkCyan), 3, this)),
   m_serviceGeodatabase(new ServiceGeodatabase(m_serviceUrl, m_cred, this)),
-  m_graphicParent(new QObject())
+  m_graphicParent(new QObject()),
+  m_taskCanceler(std::make_unique<TaskCanceler>())
 {
   m_map->setInitialViewpoint(Viewpoint(Envelope(-9813547.35557238, 5129980.36635111, -9813185.0602376, 5130215.41254146, SpatialReference::webMercator())));
 
@@ -186,10 +190,10 @@ void TraceUtilityNetwork::connectSignals()
     constexpr double tolerance = 10.0;
     constexpr bool returnPopups = false;
     m_clickPoint = m_mapView->screenToLocation(mouseEvent.position().x(), mouseEvent.position().y());
-    m_mapView->identifyLayersAsync(mouseEvent.position(), tolerance, returnPopups).then(this, [this](const QList<IdentifyLayerResult*>& results)
+    m_taskCanceler->addTask(m_mapView->identifyLayersAsync(mouseEvent.position(), tolerance, returnPopups).then(this, [this](const QList<IdentifyLayerResult*>& results)
     {
       onIdentifyLayersCompleted_(results);
-    });
+    }));
   });
 }
 
@@ -277,13 +281,13 @@ void TraceUtilityNetwork::trace(int index)
   m_traceParams->setStartingLocations(m_startingLocations);
   m_traceParams->setBarriers(m_barriers);
   // Perform a connected trace on the utility network
-  m_utilityNetwork->traceAsync(m_traceParams).then(this, [this](QList<UtilityTraceResult*>)
+  m_taskCanceler->addTask(m_utilityNetwork->traceAsync(m_traceParams).then(this, [this](QList<UtilityTraceResult*>)
   {
     onTraceCompleted_();
   }).onFailed([this](const ErrorException& exception)
   {
     onTaskFailed_(exception);
-  });
+  }));
 }
 
 void TraceUtilityNetwork::reset()
@@ -398,7 +402,9 @@ void TraceUtilityNetwork::onIdentifyLayersCompleted_(const QList<IdentifyLayerRe
     }
   }
   else
+  {
     return;
+  }
 
   updateTraceParams(element);
 }
@@ -437,15 +443,15 @@ void TraceUtilityNetwork::onTraceCompleted_()
   deviceParams.setObjectIds(deviceObjIds);
   lineParams.setObjectIds(lineObjIds);
 
-  m_deviceLayer->selectFeaturesAsync(deviceParams, SelectionMode::Add).then(this, [this](FeatureQueryResult*)
+  m_taskCanceler->addTask(m_deviceLayer->selectFeaturesAsync(deviceParams, SelectionMode::Add).then(this, [this](FeatureQueryResult*)
   {
     setBusyIndicator(false);
-  });
+  }));
 
-  m_lineLayer->selectFeaturesAsync(lineParams, SelectionMode::Add).then(this, [this](FeatureQueryResult*)
+  m_taskCanceler->addTask(m_lineLayer->selectFeaturesAsync(lineParams, SelectionMode::Add).then(this, [this](FeatureQueryResult*)
   {
     setBusyIndicator(false);
-  });
+  }));
 }
 
 UniqueValue* TraceUtilityNetwork::createUniqueValue(const QString& label, Esri::ArcGISRuntime::Symbol* fillSymbol, int value)

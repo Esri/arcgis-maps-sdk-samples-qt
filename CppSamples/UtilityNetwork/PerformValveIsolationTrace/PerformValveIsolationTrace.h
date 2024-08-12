@@ -44,6 +44,8 @@ class ServiceGeodatabase;
 Q_MOC_INCLUDE("MapQuickView.h")
 Q_MOC_INCLUDE("IdentifyLayerResult.h")
 
+class TaskCanceler;
+
 class PerformValveIsolationTrace : public QObject
 {
   Q_OBJECT
@@ -99,6 +101,7 @@ private:
   QStringList m_terminals;
   QScopedPointer<QObject> m_graphicParent;
   QStringList m_categoriesList;
+  std::unique_ptr<TaskCanceler> m_taskCanceler;
   int m_selectedIndex = -1;
   bool m_isolateFeatures = false;
   bool m_tasksRunning = false;

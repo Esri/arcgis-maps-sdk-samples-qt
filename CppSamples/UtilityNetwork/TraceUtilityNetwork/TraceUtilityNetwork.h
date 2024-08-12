@@ -54,6 +54,8 @@ class UtilityTraceParameters;
 Q_MOC_INCLUDE("MapQuickView.h")
 Q_MOC_INCLUDE("IdentifyLayerResult.h")
 
+class TaskCanceler;
+
 class TraceUtilityNetwork : public QObject
 {
   Q_OBJECT
@@ -135,7 +137,7 @@ private:
   QList<Esri::ArcGISRuntime::UtilityElement*> m_barriers;
   QList<Esri::ArcGISRuntime::UtilityTerminal*> m_terminals;
   QScopedPointer<QObject> m_graphicParent;
-
+  std::unique_ptr<TaskCanceler> m_taskCanceler;
 };
 
 #endif // TraceUtilityNetwork_H
