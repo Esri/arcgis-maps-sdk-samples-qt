@@ -102,7 +102,7 @@ void SampleManager::init()
   emit sampleInitComplete();
 
   qDebug() << QGuiApplication::font();
-  QGuiApplication::setFont(QFont("Arial"));
+  QGuiApplication::setFont(QFont("Monospace"));
   const QStringList fontFamilies = QFontDatabase::families();
   for (const QString &family : fontFamilies) {
     qDebug() << family;
