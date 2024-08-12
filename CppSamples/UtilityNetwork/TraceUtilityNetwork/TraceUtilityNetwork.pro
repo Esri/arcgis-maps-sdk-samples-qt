@@ -32,8 +32,11 @@ include($$PWD/arcgisruntime.pri)
 
 #-------------------------------------------------------------------------------
 
+INCLUDEPATH += $${PWD}/../../../SampleViewer
+
 HEADERS += \
-    TraceUtilityNetwork.h
+    TraceUtilityNetwork.h \
+    $${PWD}/../../../SampleViewer/TaskCanceler.h
 
 SOURCES += \
     main.cpp \
