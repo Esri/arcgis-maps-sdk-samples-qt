@@ -69,6 +69,9 @@
 #include <QFuture>
 #include <QUuid>
 
+// Other headers
+#include "TaskCanceler.h"
+
 using namespace Esri::ArcGISRuntime;
 
 namespace
@@ -103,7 +106,8 @@ PerformValveIsolationTrace::PerformValveIsolationTrace(QObject* parent /* = null
   m_startingLocationOverlay(new GraphicsOverlay(this)),
   m_filterBarriersOverlay(new GraphicsOverlay(this)),
   m_serviceGeodatabase(new ServiceGeodatabase(featureServiceUrl, m_cred, this)),
-  m_graphicParent(new QObject())
+  m_graphicParent(new QObject()),
+  m_taskCanceler(std::make_unique<TaskCanceler>())
 {
   // disable UI while loading service geodatabase and utility network
   m_tasksRunning = true;
@@ -174,11 +178,12 @@ void PerformValveIsolationTrace::setMapView(MapQuickView* mapView)
     constexpr double tolerance = 10.0;
     constexpr bool returnPopups = false;
     m_clickPoint = m_mapView->screenToLocation(mouseEvent.position().x(), mouseEvent.position().y());
-    m_mapView->identifyLayersAsync(mouseEvent.position(), tolerance, returnPopups).then(this, [this](const QList<IdentifyLayerResult*>& results)
+    auto f = m_mapView->identifyLayersAsync(mouseEvent.position(), tolerance, returnPopups).then(this, [this](const QList<IdentifyLayerResult*>& results)
     {
       // handle the identify results
       onIdentifyLayersCompleted_(results);
     });
+    m_taskCanceler->addTask(f);
   });
 
   // apply renderers
@@ -252,10 +257,13 @@ void PerformValveIsolationTrace::performTrace()
       UtilityCategoryComparison* categoryComparison = new UtilityCategoryComparison(selectedCategory, UtilityCategoryComparisonOperator::Exists, this);
       traceParameters->traceConfiguration()->filter()->setBarriers(categoryComparison);
     }
-    m_utilityNetwork->traceAsync(traceParameters).then(this, [this](QList<UtilityTraceResult*>)
-    {
-      onTraceCompleted_();
-    });
+
+    m_taskCanceler->addTask(
+      m_utilityNetwork->traceAsync(traceParameters).then(this, [this](QList<UtilityTraceResult*>)
+      {
+        onTraceCompleted_();
+      })
+    );
   }
 }
 
@@ -313,7 +321,7 @@ void PerformValveIsolationTrace::onTraceCompleted_()
         }
         queryParameters.setObjectIds(objectIds);
         auto future = featureLayer->selectFeaturesAsync(queryParameters, SelectionMode::New);
-        Q_UNUSED(future)
+        m_taskCanceler->addTask(future);
       }
     }
   }
@@ -388,7 +396,7 @@ void PerformValveIsolationTrace::connectSignals()
       return;
 
     // display starting location
-    m_utilityNetwork->featuresForElementsAsync(QList<UtilityElement*> {m_startingLocation}).then(this, [this](QList<ArcGISFeature*>)
+    auto f = m_utilityNetwork->featuresForElementsAsync(QList<UtilityElement*> {m_startingLocation}).then(this, [this](QList<ArcGISFeature*>)
     {
       // display starting location
       ArcGISFeatureListModel* elementFeaturesList = m_utilityNetwork->featuresForElementsResult();
@@ -397,10 +405,11 @@ void PerformValveIsolationTrace::connectSignals()
       m_startingLocationOverlay->graphics()->append(graphic);
 
       constexpr double scale = 3000.0;
-      m_mapView->setViewpointCenterAsync(startingLocationGeometry, scale);
+      m_taskCanceler->addTask(m_mapView->setViewpointCenterAsync(startingLocationGeometry, scale));
       m_tasksRunning = false;
       emit tasksRunningChanged();
     });
+    m_taskCanceler->addTask(f);
 
     // populate the combo box choices
     m_categoriesList = categoriesList();

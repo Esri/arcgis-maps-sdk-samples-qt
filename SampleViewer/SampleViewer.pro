@@ -164,7 +164,8 @@ HEADERS += \
     $$COMMONVIEWER/SearchFilterSimpleKeywordCriteria.h \
     $$COMMONVIEWER/SourceCode.h \
     $$COMMONVIEWER/SourceCodeListModel.h \
-    $$COMMONVIEWER/ZipHelper.h
+    $$COMMONVIEWER/ZipHelper.h \
+    $$COMMONVIEWER/TaskCanceler.h
 
 SOURCES += \
     $$COMMONVIEWER/SyntaxHighlighter/syntax_highlighter.cpp \
