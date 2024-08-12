@@ -18,16 +18,15 @@
 
 // Qt headers
 #include <QFutureWatcher>
-#include <QDebug>
 
 #include <memory>
 #include <mutex>
 #include <unordered_set>
 
 // This class is a helper to ensure any QFuture-based async tasks are
-// canceled upon destruction. This is useful to ensure
-// callbacks aren't being executed at the same time as samples are being
-// shut down
+// canceled upon destruction. This is useful to ensure QFuture
+// continuations aren't being executed at the same time as samples are being
+// destructed
 
 class TaskCanceler
 {
@@ -58,7 +57,6 @@ private:
   void cancelAllTasks_()
   {
     std::lock_guard<std::mutex> lock(m_mutex);
-    qDebug() << QString("canceling %1 tasks").arg(QString::number(m_watchers.size()));
     for (auto& watcher : m_watchers)
     {
       if (watcher->isRunning())
