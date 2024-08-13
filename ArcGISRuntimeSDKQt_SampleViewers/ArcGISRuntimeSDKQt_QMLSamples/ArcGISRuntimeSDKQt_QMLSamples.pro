@@ -200,6 +200,8 @@ android {
 }
 
 ios {
+    QMAKE_IOS_DEPLOYMENT_TARGET = 16.0
+
     ios_icon.files = $$files($$PWD/iOS/Images.xcassets/AppIcon.appiconset/iOS_*.png)
     QMAKE_BUNDLE_DATA += ios_icon
 
