@@ -18,9 +18,9 @@
 #include <QTextDocument>
 #include <QQuickTextDocument>
 
-#include "QMLHighlighter.h"
+#include "QmlHighlighter.h"
 
-#include "syntax_highlighter.h"
+#include "SyntaxHighlighter.h"
 
 SyntaxHighlighter::SyntaxHighlighter(QObject* parent) :
   QObject(parent)
@@ -30,6 +30,6 @@ SyntaxHighlighter::SyntaxHighlighter(QObject* parent) :
 void SyntaxHighlighter::setHighlighter(QObject* textArea) {
     QQuickTextDocument* quickTextDocument = qvariant_cast<QQuickTextDocument*>(textArea->property("textDocument"));
     QTextDocument* document = quickTextDocument->textDocument();
-    QMLHighlighter* highlighter = new QMLHighlighter(document);
+    QmlHighlighter* highlighter = new QmlHighlighter(document);
     highlighter->rehighlight();
 }

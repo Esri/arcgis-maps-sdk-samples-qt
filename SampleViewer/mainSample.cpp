@@ -45,7 +45,7 @@
 #include "SearchFilterCriteria.h"
 #include "SourceCode.h"
 #include "SourceCodeListModel.h"
-#include "SyntaxHighlighter/syntax_highlighter.h"
+#include "SyntaxHighlighter/SyntaxHighlighter.h"
 #include "../CppSamples/Layers/ManageOperationalLayers/DrawOrderLayerListModel.h"
 
 #ifdef ESRI_BUILD

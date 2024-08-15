@@ -22,10 +22,10 @@
 #include <QList>
 #include <QRegularExpression>
 
-class QMLHighlighter : public QSyntaxHighlighter {
+class QmlHighlighter : public QSyntaxHighlighter {
 
 public:
-    explicit QMLHighlighter(QTextDocument* parent = nullptr);
+    explicit QmlHighlighter(QTextDocument* parent = nullptr);
 
 protected:
     void highlightBlock(const QString& text);

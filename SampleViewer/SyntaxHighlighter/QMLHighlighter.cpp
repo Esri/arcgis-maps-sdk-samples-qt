@@ -18,9 +18,9 @@
 #include <QStringList>
 #include <QRegularExpression>
 
-#include "QMLHighlighter.h"
+#include "QmlHighlighter.h"
 
-QMLHighlighter::QMLHighlighter(QTextDocument* parent) :
+QmlHighlighter::QmlHighlighter(QTextDocument* parent) :
   QSyntaxHighlighter(parent)
 {
     HighlightingRule rule;
@@ -41,37 +41,37 @@ QMLHighlighter::QMLHighlighter(QTextDocument* parent) :
     }
 
     m_classFormat.setForeground(Qt::darkMagenta);
-    rule.pattern = QRegularExpression("\\b[A-Z][A-Za-z]+\\b");
+    rule.pattern = QRegularExpression(QStringLiteral("\\b[A-Z][A-Za-z]+\\b"));
     rule.format = m_classFormat;
     m_highlightingRules.append(rule);
 
     m_classFormat_2.setForeground(Qt::darkMagenta);
-    rule.pattern = QRegularExpression("\\bQ_PROPERTY\\b");
+    rule.pattern = QRegularExpression(QStringLiteral("\\bQ_PROPERTY\\b"));
     rule.format = m_classFormat_2;
     m_highlightingRules.append(rule);
 
     m_classFormat_3.setForeground(Qt::darkMagenta);
-    rule.pattern = QRegularExpression("\\bQ_INVOKABLE\\b");
+    rule.pattern = QRegularExpression(QStringLiteral("\\bQ_INVOKABLE\\b"));
     rule.format = m_classFormat_3;
     m_highlightingRules.append(rule);
 
     m_memberVarName_1.setForeground(Qt::darkRed);
-    rule.pattern = QRegularExpression("\\b[a-z][A-Za-z]+(?=:)\\b");
+    rule.pattern = QRegularExpression(QStringLiteral("\\b[a-z][A-Za-z]+(?=:)\\b"));
     rule.format = m_memberVarName_1;
     m_highlightingRules.append(rule);
 
     m_memberVarName_2.setForeground(Qt::darkRed);
-    rule.pattern = QRegularExpression("\\b[a-z]+(?=:)\\b");
+    rule.pattern = QRegularExpression(QStringLiteral("\\b[a-z]+(?=:)\\b"));
     rule.format = m_memberVarName_2;
     m_highlightingRules.append(rule);
 
     m_memberVarName_3.setForeground(Qt::darkRed);
-    rule.pattern = QRegularExpression("\\banchors.\\b");
+    rule.pattern = QRegularExpression(QStringLiteral("\\banchors.\\b"));
     rule.format = m_memberVarName_3;
     m_highlightingRules.append(rule);
 
     m_memberVarName_4.setForeground(Qt::darkRed);
-    rule.pattern = QRegularExpression("\\banchors\\b");
+    rule.pattern = QRegularExpression(QStringLiteral("\\banchors\\b"));
     rule.format = m_memberVarName_4;
     m_highlightingRules.append(rule);
 
@@ -97,22 +97,22 @@ QMLHighlighter::QMLHighlighter(QTextDocument* parent) :
     }
 
     m_singleLineCommentFormat.setForeground(Qt::darkGreen);
-    rule.pattern = QRegularExpression("^(?!\"([^\"']*)\")\\s*//[^\n]*");
+    rule.pattern = QRegularExpression(QStringLiteral("^(?!\"([^\"']*)\")\\s*//[^\n]*"));
     rule.format = m_singleLineCommentFormat;
     m_highlightingRules.append(rule);
 
     m_multiLineCommentFormat.setForeground(Qt::darkGreen);
 
     m_quotationFormat.setForeground(Qt::darkGreen);
-    rule.pattern = QRegularExpression("(\"[^\"]+\"|'[^\']+')");
+    rule.pattern = QRegularExpression(QStringLiteral("(\"[^\"]+\"|'[^\']+')"));
     rule.format = m_quotationFormat;
     m_highlightingRules.append(rule);
 
-    m_commentStartExpression = QRegularExpression("/\\*");
-    m_commentEndExpression = QRegularExpression("\\*/");
+    m_commentStartExpression = QRegularExpression(QStringLiteral("/\\*"));
+    m_commentEndExpression = QRegularExpression(QStringLiteral("\\*/"));
 }
 
-void QMLHighlighter::highlightBlock(const QString& text)
+void QmlHighlighter::highlightBlock(const QString& text)
 {
     foreach (const HighlightingRule& rule, m_highlightingRules)
     {
@@ -134,9 +134,7 @@ void QMLHighlighter::highlightBlock(const QString& text)
 
     while (startIndex >= 0)
     {
-        QRegularExpressionMatch match = m_commentEndExpression.match(text, startIndex);
-
-        int endIndex = match.capturedStart();
+        int endIndex = m_commentEndExpression.match(text, startIndex).capturedStart();
         int commentLength;
         if (endIndex == -1)
         {
@@ -145,7 +143,7 @@ void QMLHighlighter::highlightBlock(const QString& text)
         }
         else
         {
-            commentLength = endIndex - startIndex + match.capturedLength();
+            commentLength = endIndex - startIndex + m_commentEndExpression.match(text, startIndex).capturedLength();
         }
         setFormat(startIndex, commentLength, m_multiLineCommentFormat);
         startIndex = m_commentStartExpression.match(text, startIndex + commentLength).capturedStart();
