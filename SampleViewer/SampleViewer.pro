@@ -149,8 +149,8 @@ android {
 
 HEADERS += \
     $$PCH_HEADER \
-    $$COMMONVIEWER/SyntaxHighlighter/syntax_highlighter.h \
-    $$COMMONVIEWER/SyntaxHighlighter/QMLHighlighter.h \
+    $$COMMONVIEWER/SyntaxHighlighter/SyntaxHighlighter.h \
+    $$COMMONVIEWER/SyntaxHighlighter/QmlHighlighter.h \
     $$COMMONVIEWER/CategoryListModel.h \
     $$COMMONVIEWER/DataItem.h \
     $$COMMONVIEWER/DataItemListModel.h \
@@ -168,8 +168,8 @@ HEADERS += \
     $$COMMONVIEWER/TaskCanceler.h
 
 SOURCES += \
-    $$COMMONVIEWER/SyntaxHighlighter/syntax_highlighter.cpp \
-    $$COMMONVIEWER/SyntaxHighlighter/QMLHighlighter.cpp \
+    $$COMMONVIEWER/SyntaxHighlighter/SyntaxHighlighter.cpp \
+    $$COMMONVIEWER/SyntaxHighlighter/QmlHighlighter.cpp \
     $$COMMONVIEWER/CategoryListModel.cpp \
     $$COMMONVIEWER/DataItem.cpp \
     $$COMMONVIEWER/DataItemListModel.cpp \
