@@ -686,8 +686,8 @@ RESOURCES += \
     "$$SAMPLEPATHCPP/UtilityNetwork/TraceUtilityNetwork/TraceUtilityNetwork.qrc" \
     "$$SAMPLEPATHCPP/UtilityNetwork/ValidateUtilityNetworkTopology/ValidateUtilityNetworkTopology.qrc"
 
-# Local Server Only (Linux and Windows)
-!android:!ios:!macx {
+# Local Server Only (Linux x86_64 and Windows x86_64)
+win32:contains(QMAKE_TARGET.arch, x86_64)|unix:contains(QMAKE_TARGET.arch, x86_64) {
   INCLUDEPATH += \
     "$$SAMPLEPATHCPP/LocalServer/LocalServerFeatureLayer" \
     "$$SAMPLEPATHCPP/LocalServer/LocalServerGeoprocessing" \
