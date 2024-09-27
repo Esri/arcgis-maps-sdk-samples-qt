@@ -193,6 +193,18 @@ void SnapGeometryEdits::snappingEnabledStatus(bool snappingCheckedState)
   m_geometryEditor->snapSettings()->setEnabled(snappingCheckedState);
 }
 
+// Toggles geometry guides using the enabled state from the snap settings
+void SnapGeometryEdits::geometryGuidesEnabledStatus(bool geometryGuidesCheckedState)
+{
+  m_geometryEditor->snapSettings()->setGeometryGuidesEnabled(geometryGuidesCheckedState);
+}
+
+// Toggles feature snapping using the enabled state from the snap settings
+void SnapGeometryEdits::featureSnappingEnabledStatus(bool featureSnappingCheckedState)
+{
+  m_geometryEditor->snapSettings()->setFeatureSnappingEnabled(featureSnappingCheckedState);
+}
+
 // Starts the GeometryEditor using the selected geometry type
 void SnapGeometryEdits::startEditor(GeometryEditorMode geometryEditorMode)
 {
