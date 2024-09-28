@@ -222,9 +222,10 @@ Item {
                     }
                 }
 
-                RowLayout {
+                ColumnLayout {
                     Layout.minimumWidth: optionPanel.width
                     Layout.minimumHeight: 35
+                    spacing: 0
                     Rectangle {
                         Layout.alignment: Qt.AlignLeft
                         Layout.minimumWidth: snapSourceView.width - (snapSourceView.anchors.margins / 2)
@@ -232,7 +233,7 @@ Item {
                         color: "#E9DFEA"
 
                         Text {
-                            text: qsTr("Enabled")
+                            text: qsTr("Snapping enabled")
                             font.pixelSize: 15
                             anchors {
                                 left: parent.left
@@ -248,6 +249,57 @@ Item {
                                 verticalCenter: parent.verticalCenter
                             }
                             onCheckedChanged: snapGeometryEditsSampleModel.snappingEnabledStatus(checked)
+                        }
+                    }
+                    Rectangle {
+                        Layout.alignment: Qt.AlignLeft
+                        Layout.minimumWidth: snapSourceView.width - (snapSourceView.anchors.margins / 2)
+                        Layout.minimumHeight: 35
+                        color: "#E9DFEA"
+
+                        Text {
+                            text: qsTr("Geometry guides")
+                            font.pixelSize: 15
+                            anchors {
+                                left: parent.left
+                                margins: 10
+                                verticalCenter: parent.verticalCenter
+                            }
+                        }
+
+                        Switch {
+                            anchors {
+                                right: parent.right
+                                margins: 10
+                                verticalCenter: parent.verticalCenter
+                            }
+                            onCheckedChanged: snapGeometryEditsSampleModel.geometryGuidesEnabledStatus(checked)
+                        }
+                    }
+                    Rectangle {
+                        Layout.alignment: Qt.AlignLeft
+                        Layout.minimumWidth: snapSourceView.width - (snapSourceView.anchors.margins / 2)
+                        Layout.minimumHeight: 35
+                        color: "#E9DFEA"
+
+
+                        Text {
+                            text: qsTr("Feature snapping")
+                            font.pixelSize: 15
+                            anchors {
+                                left: parent.left
+                                margins: 10
+                                verticalCenter: parent.verticalCenter
+                            }
+                        }
+
+                        Switch {
+                            anchors {
+                                right: parent.right
+                                margins: 10
+                                verticalCenter: parent.verticalCenter
+                            }
+                            onCheckedChanged: snapGeometryEditsSampleModel.featureSnappingEnabledStatus(checked)
                         }
                     }
                 }

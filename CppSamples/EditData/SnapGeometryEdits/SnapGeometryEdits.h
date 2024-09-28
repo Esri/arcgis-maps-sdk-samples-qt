@@ -73,6 +73,8 @@ public:
   Q_INVOKABLE void deleteSelection();
   Q_INVOKABLE void editorUndo();
   Q_INVOKABLE void snappingEnabledStatus(bool checkedValue);
+  Q_INVOKABLE void geometryGuidesEnabledStatus(bool checkedValue);
+  Q_INVOKABLE void featureSnappingEnabledStatus(bool checkedValue);
   Q_INVOKABLE void displaySnapSources();
   Q_INVOKABLE void enableAllLayersInSection(const QString& section);
 
