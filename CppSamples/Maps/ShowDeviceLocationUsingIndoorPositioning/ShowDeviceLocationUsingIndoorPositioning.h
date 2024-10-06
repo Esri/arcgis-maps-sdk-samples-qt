@@ -52,6 +52,8 @@ public:
 signals:
   void mapViewChanged();
   void locationPropertiesChanged();
+  void locationPermissionDenied();
+  void bluetoothPermissionDenied();
 
 private:
   Esri::ArcGISRuntime::MapQuickView* mapView() const;
@@ -61,6 +63,8 @@ private:
   void setupIndoorsLocationDataSource();
   void locationChangedHandler(const Esri::ArcGISRuntime::Location& loc);
   void changeFloorDisplay();
+  void startLocationDisplay();
+  void startBluetoothPermision();
 
   Esri::ArcGISRuntime::Map* m_map = nullptr;
   Esri::ArcGISRuntime::MapQuickView* m_mapView = nullptr;

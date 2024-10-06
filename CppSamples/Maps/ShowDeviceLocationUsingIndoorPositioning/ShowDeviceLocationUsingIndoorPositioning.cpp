@@ -33,6 +33,11 @@
 #include "MapViewTypes.h"
 #include "PortalItem.h"
 
+#if (QT_VERSION >= QT_VERSION_CHECK(6, 6, 0)) || defined(Q_OS_IOS) || defined(Q_OS_MACOS) || defined(Q_OS_ANDROID)
+#define PERMISSIONS_PLATFORM
+#include <QPermissions>
+#endif
+
 using namespace Esri::ArcGISRuntime;
 
 namespace {
@@ -84,6 +89,48 @@ void ShowDeviceLocationUsingIndoorPositioning::setMapView(MapQuickView* mapView)
   emit mapViewChanged();
 }
 
+void ShowDeviceLocationUsingIndoorPositioning::startBluetoothPermision()
+{
+#ifdef PERMISSIONS_PLATFORM
+  QBluetoothPermission bluetoothPermission{};
+  switch (qApp->checkPermission(bluetoothPermission))
+  {
+  case Qt::PermissionStatus::Undetermined:
+    qApp->requestPermission(bluetoothPermission, this, &ShowDeviceLocationUsingIndoorPositioning::startBluetoothPermision);
+    return;
+  case Qt::PermissionStatus::Granted:
+    return;
+  case Qt::PermissionStatus::Denied:
+    emit bluetoothPermissionDenied();
+    return;
+  }
+#endif
+}
+
+void ShowDeviceLocationUsingIndoorPositioning::startLocationDisplay()
+{
+#ifdef PERMISSIONS_PLATFORM
+  QLocationPermission locationPermission{};
+  locationPermission.setAccuracy(QLocationPermission::Accuracy::Precise);
+  locationPermission.setAvailability(QLocationPermission::Availability::WhenInUse);
+  switch (qApp->checkPermission(locationPermission))
+  {
+  case Qt::PermissionStatus::Undetermined:
+    qApp->requestPermission(locationPermission, this, &ShowDeviceLocationUsingIndoorPositioning::startLocationDisplay);
+    return;
+  case Qt::PermissionStatus::Granted:
+    // turn on the location display
+    m_mapView->locationDisplay()->start();
+    return;
+  case Qt::PermissionStatus::Denied:
+    emit locationPermissionDenied();
+    return;
+  }
+#else
+      m_mapView->locationDisplay()->start();
+#endif
+}
+
 // This function uses a helper class `IndoorsLocationDataSourceCreator` to construct the IndoorsLocationDataSource
 void ShowDeviceLocationUsingIndoorPositioning::setupIndoorsLocationDataSource()
 {
@@ -95,7 +142,9 @@ void ShowDeviceLocationUsingIndoorPositioning::setupIndoorsLocationDataSource()
 
     m_mapView->locationDisplay()->setDataSource(indoorsLDS);
     m_mapView->locationDisplay()->setAutoPanMode(LocationDisplayAutoPanMode::Navigation);
-    m_mapView->locationDisplay()->start();
+
+    startBluetoothPermision();
+    startLocationDisplay();
   });
 
   indoorsLocationDataSourceCreator->createIndoorsLocationDataSource(m_map, positioningTableName, pathwaysLayerName);
