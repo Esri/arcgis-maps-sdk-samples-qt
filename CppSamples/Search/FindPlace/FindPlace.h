@@ -69,6 +69,7 @@ signals:
   void hideCallout();
   void showCallout();
   void showExtentButton();
+  void locationPermissionDenied();
 
 private:
   void addGraphicsOverlay();
@@ -78,6 +79,7 @@ private:
   void setPoiTextHasFocus(bool hasFocus);
   Esri::ArcGISRuntime::GeocodeParameters createParameters();
   void onGeocodingCompleted_(const QList<Esri::ArcGISRuntime::GeocodeResult>& results);
+  void startLocationDisplay();
 
 private:
   Esri::ArcGISRuntime::Map* m_map = nullptr;

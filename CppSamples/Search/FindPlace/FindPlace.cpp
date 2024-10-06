@@ -52,6 +52,11 @@
 #include <QUrl>
 #include <QUuid>
 
+#if (QT_VERSION >= QT_VERSION_CHECK(6, 6, 0)) || defined(Q_OS_IOS) || defined(Q_OS_MACOS) || defined(Q_OS_ANDROID)
+#define PERMISSIONS_PLATFORM
+#include <QPermissions>
+#endif
+
 using namespace Esri::ArcGISRuntime;
 
 FindPlace::FindPlace(QQuickItem* parent /* = nullptr */):
@@ -107,9 +112,9 @@ void FindPlace::connectSignals()
     if (drawStatus != DrawStatus::Completed || m_mapView->locationDisplay()->isStarted())
       return;
 
-    // turn on the location display
-    m_mapView->locationDisplay()->setAutoPanMode(LocationDisplayAutoPanMode::Recenter);
-    m_mapView->locationDisplay()->start();
+      // turn on the location display
+      m_mapView->locationDisplay()->setAutoPanMode(LocationDisplayAutoPanMode::Recenter);
+      startLocationDisplay();
   });
 
   connect(m_mapView, &MapQuickView::mousePressed, this, [this](QMouseEvent& /*event*/)
@@ -141,6 +146,30 @@ void FindPlace::connectSignals()
       emit showCallout();
     });
   });
+}
+
+void FindPlace::startLocationDisplay()
+{
+#ifdef PERMISSIONS_PLATFORM
+  QLocationPermission locationPermission{};
+  locationPermission.setAccuracy(QLocationPermission::Accuracy::Precise);
+  locationPermission.setAvailability(QLocationPermission::Availability::WhenInUse);
+  switch (qApp->checkPermission(locationPermission))
+  {
+  case Qt::PermissionStatus::Undetermined:
+    qApp->requestPermission(locationPermission, this, &FindPlace::startLocationDisplay);
+    return;
+  case Qt::PermissionStatus::Granted:
+    // turn on the location display
+    m_mapView->locationDisplay()->start();
+    return;
+  case Qt::PermissionStatus::Denied:
+    emit locationPermissionDenied();
+    return;
+  }
+#else
+  m_mapView->locationDisplay()->start();
+#endif
 }
 
 void FindPlace::addGraphicsOverlay()

@@ -19,6 +19,7 @@ import QtQuick.Controls
 import QtPositioning
 import Esri.ArcGISRuntime.Toolkit
 import Esri.Samples
+import QtQuick.Dialogs
 
 FindPlaceSample {
     id: findPlaceSample
@@ -149,6 +150,27 @@ FindPlaceSample {
         onButtonClicked: {
             geocodePOIs(poiTextField.text, FindPlaceSample.MapExtent);
             callout.dismiss();
+        }
+    }
+
+    Connections {
+        target: findPlaceSample
+        function onLocationPermissionDenied() {
+            permissionDeniedDialog.open()
+        }
+    }
+
+    Dialog {
+        id: permissionDeniedDialog
+        title: "Location Permission Denied"
+        modal: true
+        standardButtons: Dialog.Ok
+        x: (parent.width - width) / 2
+        y: (parent.height - height) / 2
+
+        Text {
+            text: "This application requires location permissions."
+            color: "white"
         }
     }
 }
