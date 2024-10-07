@@ -84,6 +84,9 @@ void ShowDeviceLocationUsingIndoorPositioning::setMapView(MapQuickView* mapView)
   m_mapView = mapView;
   m_mapView->setMap(m_map);
 
+  startBluetoothPermision();
+  startLocationDisplay();
+
   setupIndoorsLocationDataSource();
 
   emit mapViewChanged();
@@ -142,9 +145,6 @@ void ShowDeviceLocationUsingIndoorPositioning::setupIndoorsLocationDataSource()
 
     m_mapView->locationDisplay()->setDataSource(indoorsLDS);
     m_mapView->locationDisplay()->setAutoPanMode(LocationDisplayAutoPanMode::Navigation);
-
-    startBluetoothPermision();
-    startLocationDisplay();
   });
 
   indoorsLocationDataSourceCreator->createIndoorsLocationDataSource(m_map, positioningTableName, pathwaysLayerName);

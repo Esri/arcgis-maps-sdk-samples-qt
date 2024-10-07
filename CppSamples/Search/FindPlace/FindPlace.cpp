@@ -101,6 +101,10 @@ void FindPlace::componentComplete()
   m_mapView->calloutData()->setVisible(false);
   m_calloutData = m_mapView->calloutData();
 
+  // turn on the location display
+  startLocationDisplay();
+  m_mapView->locationDisplay()->setAutoPanMode(LocationDisplayAutoPanMode::Recenter);
+
   // connect mapview signals
   connectSignals();
 }
@@ -111,10 +115,6 @@ void FindPlace::connectSignals()
   {
     if (drawStatus != DrawStatus::Completed || m_mapView->locationDisplay()->isStarted())
       return;
-
-      // turn on the location display
-      m_mapView->locationDisplay()->setAutoPanMode(LocationDisplayAutoPanMode::Recenter);
-      startLocationDisplay();
   });
 
   connect(m_mapView, &MapQuickView::mousePressed, this, [this](QMouseEvent& /*event*/)
