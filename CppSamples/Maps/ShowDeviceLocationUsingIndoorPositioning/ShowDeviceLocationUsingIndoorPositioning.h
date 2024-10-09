@@ -17,12 +17,12 @@
 #ifndef SHOWDEVICELOCATIONUSINGINDOORPOSITIONING_H
 #define SHOWDEVICELOCATIONUSINGINDOORPOSITIONING_H
 
-// ArcGIS Maps SDK headers
-#include "Location.h"
-
 // Qt headers
 #include <QMap>
 #include <QObject>
+
+// Other headers
+#include "Location.h"
 
 namespace Esri::ArcGISRuntime
 {
@@ -56,6 +56,9 @@ signals:
 private:
   Esri::ArcGISRuntime::MapQuickView* mapView() const;
   QVariantMap locationProperties() const;
+
+  void requestBluetoothPermissionThenSetupIndoors();
+  void requestLocationThenBluetoothPermission();
 
   void setMapView(Esri::ArcGISRuntime::MapQuickView* mapView);
   void setupIndoorsLocationDataSource();

@@ -23,12 +23,18 @@
 #include "ShowDeviceLocationUsingIndoorPositioning.h"
 
 // ArcGIS Maps SDK headers
+#include "Error.h"
+#include "MapQuickView.h"
+
+// Qt headers
+#include <QPermissions>
+
+// Other headers
 #include "FeatureLayer.h"
 #include "IndoorsLocationDataSource.h"
 #include "LayerListModel.h"
 #include "LocationDisplay.h"
 #include "Map.h"
-#include "MapQuickView.h"
 #include "MapTypes.h"
 #include "MapViewTypes.h"
 #include "PortalItem.h"
@@ -79,7 +85,29 @@ void ShowDeviceLocationUsingIndoorPositioning::setMapView(MapQuickView* mapView)
   m_mapView = mapView;
   m_mapView->setMap(m_map);
 
-  setupIndoorsLocationDataSource();
+  // // Request no permissions
+  // setupIndoorsLocationDataSource();
+
+  // Request only location permission
+  // QLocationPermission p{};
+  // p.setAccuracy(QLocationPermission::Accuracy::Precise);
+  // p.setAvailability(QLocationPermission::Availability::Always);
+  // qApp->requestPermission(p, [this](const QPermission& permission)
+  // {
+  //   Q_UNUSED(permission);
+  //   setupIndoorsLocationDataSource();
+  // });
+
+  // // Request only bluetooth permission
+  // QBluetoothPermission p{};
+  // qApp->requestPermission(p, [this](const QPermission& permission)
+  // {
+  //   Q_UNUSED(permission);
+  //   setupIndoorsLocationDataSource();
+  // });
+
+  // // Request both location and bluetooth permissions
+  // requestLocationThenBluetoothPermission();
 
   emit mapViewChanged();
 }
@@ -92,6 +120,11 @@ void ShowDeviceLocationUsingIndoorPositioning::setupIndoorsLocationDataSource()
   connect(indoorsLocationDataSourceCreator, &IndoorsLocationDataSourceCreator::createIndoorsLocationDataSourceCompleted, this, [this](IndoorsLocationDataSource* indoorsLDS)
   {
     connect(m_mapView->locationDisplay(), &LocationDisplay::locationChanged, this, &ShowDeviceLocationUsingIndoorPositioning::locationChangedHandler);
+    connect(indoorsLDS, &IndoorsLocationDataSource::warningChanged, this,
+    [](const Esri::ArcGISRuntime::Error& warning)
+    {
+      qDebug() << warning.message();
+    });
 
     m_mapView->locationDisplay()->setDataSource(indoorsLDS);
     m_mapView->locationDisplay()->setAutoPanMode(LocationDisplayAutoPanMode::Navigation);
@@ -130,7 +163,29 @@ void ShowDeviceLocationUsingIndoorPositioning::changeFloorDisplay()
   }
 }
 
-  QVariantMap ShowDeviceLocationUsingIndoorPositioning::locationProperties() const
+void ShowDeviceLocationUsingIndoorPositioning::requestLocationThenBluetoothPermission()
+{
+  QLocationPermission p{};
+  p.setAccuracy(QLocationPermission::Accuracy::Precise);
+  p.setAvailability(QLocationPermission::Availability::Always);
+  qApp->requestPermission(p, [this](const QPermission& permission)
   {
-    return m_locationProperties;
-  }
+    Q_UNUSED(permission);
+    requestBluetoothPermissionThenSetupIndoors();
+  });
+}
+
+void ShowDeviceLocationUsingIndoorPositioning::requestBluetoothPermissionThenSetupIndoors()
+{
+  QBluetoothPermission p{};
+  qApp->requestPermission(p, [this](const QPermission& permission)
+  {
+    Q_UNUSED(permission);
+    setupIndoorsLocationDataSource();
+  });
+}
+
+QVariantMap ShowDeviceLocationUsingIndoorPositioning::locationProperties() const
+{
+  return m_locationProperties;
+}
