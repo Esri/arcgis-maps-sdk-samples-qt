@@ -116,21 +116,25 @@ void ShowDeviceLocationUsingIndoorPositioning::startLocationDisplay()
   QLocationPermission locationPermission{};
   locationPermission.setAccuracy(QLocationPermission::Accuracy::Precise);
   locationPermission.setAvailability(QLocationPermission::Availability::WhenInUse);
-  switch (qApp->checkPermission(locationPermission))
-  {
-  case Qt::PermissionStatus::Undetermined:
-    qApp->requestPermission(locationPermission, this, &ShowDeviceLocationUsingIndoorPositioning::startLocationDisplay);
-    return;
-  case Qt::PermissionStatus::Granted:
-    // turn on the location display
-    m_mapView->locationDisplay()->start();
-    return;
-  case Qt::PermissionStatus::Denied:
-    emit locationPermissionDenied();
-    return;
-  }
-#else
+  #if !defined(Q_OS_ANDROID)
+    switch (qApp->checkPermission(locationPermission))
+    {
+    case Qt::PermissionStatus::Undetermined:
+      qApp->requestPermission(locationPermission, this, &ShowDeviceLocationUsingIndoorPositioning::startLocationDisplay);
+      return;
+    case Qt::PermissionStatus::Granted:
+      // turn on the location display
       m_mapView->locationDisplay()->start();
+      return;
+    case Qt::PermissionStatus::Denied:
+      emit locationPermissionDenied();
+      return;
+    }
+  #else
+    m_mapView->locationDisplay()->start();
+  #endif
+#else
+  m_mapView->locationDisplay()->start();
 #endif
 }
 
