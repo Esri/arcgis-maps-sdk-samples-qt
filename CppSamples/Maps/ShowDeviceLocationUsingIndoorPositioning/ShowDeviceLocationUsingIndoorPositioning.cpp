@@ -116,6 +116,7 @@ void ShowDeviceLocationUsingIndoorPositioning::startLocationDisplay()
   QLocationPermission locationPermission{};
   locationPermission.setAccuracy(QLocationPermission::Accuracy::Precise);
   locationPermission.setAvailability(QLocationPermission::Availability::WhenInUse);
+  // Location requests together with bluetooth on Android
   #if !defined(Q_OS_ANDROID)
     switch (qApp->checkPermission(locationPermission))
     {
