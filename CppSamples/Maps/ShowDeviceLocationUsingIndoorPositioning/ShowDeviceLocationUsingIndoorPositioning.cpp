@@ -116,8 +116,6 @@ void ShowDeviceLocationUsingIndoorPositioning::startLocationDisplay()
   QLocationPermission locationPermission{};
   locationPermission.setAccuracy(QLocationPermission::Accuracy::Precise);
   locationPermission.setAvailability(QLocationPermission::Availability::WhenInUse);
-  // Location requests together with bluetooth on Android
-  #if !defined(Q_OS_ANDROID)
     switch (qApp->checkPermission(locationPermission))
     {
     case Qt::PermissionStatus::Undetermined:
@@ -131,11 +129,6 @@ void ShowDeviceLocationUsingIndoorPositioning::startLocationDisplay()
       emit locationPermissionDenied();
       return;
     }
-  #else
-    m_mapView->locationDisplay()->start();
-  #endif
-#else
-  m_mapView->locationDisplay()->start();
 #endif
 }
 
@@ -150,6 +143,7 @@ void ShowDeviceLocationUsingIndoorPositioning::setupIndoorsLocationDataSource()
 
     m_mapView->locationDisplay()->setDataSource(indoorsLDS);
     m_mapView->locationDisplay()->setAutoPanMode(LocationDisplayAutoPanMode::Navigation);
+    m_mapView->locationDisplay()->start();
   });
 
   indoorsLocationDataSourceCreator->createIndoorsLocationDataSource(m_map, positioningTableName, pathwaysLayerName);
