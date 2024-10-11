@@ -28,71 +28,71 @@
 
 namespace Esri::ArcGISRuntime
 {
-    class CalloutData;
-    class Map;
-    class MapQuickView;
-    class GraphicsOverlay;
-    class LocatorTask;
-    class GeocodeResult;
+class CalloutData;
+class Map;
+class MapQuickView;
+class GraphicsOverlay;
+class LocatorTask;
+class GeocodeResult;
 }
 
 class FindPlace : public QQuickItem
 {
-  Q_OBJECT
+    Q_OBJECT
 
-  Q_PROPERTY(QAbstractListModel* suggestions MEMBER m_suggestListModel NOTIFY suggestionsChanged)
-  Q_PROPERTY(bool poiTextHasFocus READ poiTextHasFocus WRITE setPoiTextHasFocus NOTIFY poiTextHasFocusChanged)
+    Q_PROPERTY(QAbstractListModel* suggestions MEMBER m_suggestListModel NOTIFY suggestionsChanged)
+    Q_PROPERTY(bool poiTextHasFocus READ poiTextHasFocus WRITE setPoiTextHasFocus NOTIFY poiTextHasFocusChanged)
 
 public:
-  explicit FindPlace(QQuickItem* parent = nullptr);
-  ~FindPlace() override;
+    explicit FindPlace(QQuickItem* parent = nullptr);
+    ~FindPlace() override;
 
-  enum class SearchMode
-  {
-    CurrentLocation,
-    MapExtent
-  };
-  Q_ENUM(SearchMode)
+    enum class SearchMode
+    {
+        CurrentLocation,
+        MapExtent
+    };
+    Q_ENUM(SearchMode)
 
-  void componentComplete() override;
-  static void init();
-  Q_INVOKABLE void setSuggestionsText(const QString& searchText);
-  Q_INVOKABLE void geocodePOIs(const QString& poi, const QString& location);
-  Q_INVOKABLE void geocodePOIs(const QString& poi, const Esri::ArcGISRuntime::Point& location);
-  Q_INVOKABLE void geocodePOIs(const QString& poi, FindPlace::SearchMode mode);
-  Q_INVOKABLE void geocodePOIs(const QString& poi);
+    void componentComplete() override;
+    static void init();
+    Q_INVOKABLE void setSuggestionsText(const QString& searchText);
+    Q_INVOKABLE void geocodePOIs(const QString& poi, const QString& location);
+    Q_INVOKABLE void geocodePOIs(const QString& poi, const Esri::ArcGISRuntime::Point& location);
+    Q_INVOKABLE void geocodePOIs(const QString& poi, FindPlace::SearchMode mode);
+    Q_INVOKABLE void geocodePOIs(const QString& poi);
 
 signals:
-  void suggestionsChanged();
-  void poiTextHasFocusChanged();
-  void hideSuggestionView();
-  void hideCallout();
-  void showCallout();
-  void showExtentButton();
-  void locationPermissionDenied();
+    void suggestionsChanged();
+    void poiTextHasFocusChanged();
+    void hideSuggestionView();
+    void hideCallout();
+    void showCallout();
+    void showExtentButton();
+    void locationPermissionDenied();
 
 private:
-  void addGraphicsOverlay();
-  void createLocator();
-  void connectSignals();
-  bool poiTextHasFocus() const { return m_poiTextHasFocus; }
-  void setPoiTextHasFocus(bool hasFocus);
-  Esri::ArcGISRuntime::GeocodeParameters createParameters();
-  void onGeocodingCompleted_(const QList<Esri::ArcGISRuntime::GeocodeResult>& results);
-  void startLocationDisplay();
+    void addGraphicsOverlay();
+    void createLocator();
+    void connectSignals();
+    bool poiTextHasFocus() const { return m_poiTextHasFocus; }
+    void setPoiTextHasFocus(bool hasFocus);
+    Esri::ArcGISRuntime::GeocodeParameters createParameters();
+    void onGeocodingCompleted_(const QList<Esri::ArcGISRuntime::GeocodeResult>& results);
+    void startLocationPermission();
 
 private:
-  Esri::ArcGISRuntime::Map* m_map = nullptr;
-  Esri::ArcGISRuntime::MapQuickView* m_mapView = nullptr;
-  Esri::ArcGISRuntime::GraphicsOverlay* m_graphicsOverlay = nullptr;
-  Esri::ArcGISRuntime::CalloutData* m_calloutData = nullptr;
-  Esri::ArcGISRuntime::LocatorTask* m_locatorTask = nullptr;
-  QAbstractListModel* m_suggestListModel = nullptr;
-  bool m_poiTextHasFocus = true;
-  bool m_isSearchingLocation = false;
-  QString m_poiSearchText;
-  QString m_currentLocationText = QStringLiteral("Current Location");
-  QObject* m_graphicParent = nullptr;
+    Esri::ArcGISRuntime::Map* m_map = nullptr;
+    Esri::ArcGISRuntime::MapQuickView* m_mapView = nullptr;
+    Esri::ArcGISRuntime::GraphicsOverlay* m_graphicsOverlay = nullptr;
+    Esri::ArcGISRuntime::CalloutData* m_calloutData = nullptr;
+    Esri::ArcGISRuntime::LocatorTask* m_locatorTask = nullptr;
+    QAbstractListModel* m_suggestListModel = nullptr;
+    bool m_poiTextHasFocus = true;
+    bool m_isSearchingLocation = false;
+    QString m_poiSearchText;
+    QString m_currentLocationText = QStringLiteral("Current Location");
+    QObject* m_graphicParent = nullptr;
 };
 
 #endif // FINDPLACE_H
