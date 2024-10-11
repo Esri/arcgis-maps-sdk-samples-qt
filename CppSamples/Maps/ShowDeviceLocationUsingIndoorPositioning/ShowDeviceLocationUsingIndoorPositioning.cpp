@@ -84,8 +84,9 @@ void ShowDeviceLocationUsingIndoorPositioning::setMapView(MapQuickView* mapView)
   m_mapView = mapView;
   m_mapView->setMap(m_map);
 
+  // Start bluetooth and location permissions
   startBluetoothPermision();
-  startLocationDisplay();
+  startLocationPermission();
 
   setupIndoorsLocationDataSource();
 
@@ -110,7 +111,7 @@ void ShowDeviceLocationUsingIndoorPositioning::startBluetoothPermision()
 #endif
 }
 
-void ShowDeviceLocationUsingIndoorPositioning::startLocationDisplay()
+void ShowDeviceLocationUsingIndoorPositioning::startLocationPermission()
 {
 #ifdef PERMISSIONS_PLATFORM
   QLocationPermission locationPermission{};
@@ -119,11 +120,9 @@ void ShowDeviceLocationUsingIndoorPositioning::startLocationDisplay()
     switch (qApp->checkPermission(locationPermission))
     {
     case Qt::PermissionStatus::Undetermined:
-      qApp->requestPermission(locationPermission, this, &ShowDeviceLocationUsingIndoorPositioning::startLocationDisplay);
+      qApp->requestPermission(locationPermission, this, &ShowDeviceLocationUsingIndoorPositioning::startLocationPermission);
       return;
     case Qt::PermissionStatus::Granted:
-      // turn on the location display
-      m_mapView->locationDisplay()->start();
       return;
     case Qt::PermissionStatus::Denied:
       emit locationPermissionDenied();

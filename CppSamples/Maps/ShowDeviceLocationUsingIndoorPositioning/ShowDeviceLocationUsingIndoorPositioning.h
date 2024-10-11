@@ -63,7 +63,7 @@ private:
   void setupIndoorsLocationDataSource();
   void locationChangedHandler(const Esri::ArcGISRuntime::Location& loc);
   void changeFloorDisplay();
-  void startLocationDisplay();
+  void startLocationPermission();
   void startBluetoothPermision();
 
   Esri::ArcGISRuntime::Map* m_map = nullptr;
