@@ -35,7 +35,6 @@
 
 #if (QT_VERSION >= QT_VERSION_CHECK(6, 6, 0)) || defined(Q_OS_IOS) || defined(Q_OS_MACOS) || defined(Q_OS_ANDROID)
 #define PERMISSIONS_PLATFORM
-#include <QPermissions>
 #endif
 
 using namespace Esri::ArcGISRuntime;
@@ -84,51 +83,47 @@ void ShowDeviceLocationUsingIndoorPositioning::setMapView(MapQuickView* mapView)
   m_mapView = mapView;
   m_mapView->setMap(m_map);
 
-  // Start bluetooth and location permissions
-  startBluetoothPermision();
-  startLocationPermission();
-
-  setupIndoorsLocationDataSource();
+  #ifdef PERMISSIONS_PLATFORM
+    requestBluetoothPermision();
+  #else
+    setupIndoorsLocationDataSource();
+  #endif
 
   emit mapViewChanged();
 }
 
-void ShowDeviceLocationUsingIndoorPositioning::startBluetoothPermision()
+void ShowDeviceLocationUsingIndoorPositioning::requestBluetoothPermision()
 {
-#ifdef PERMISSIONS_PLATFORM
-  QBluetoothPermission bluetoothPermission{};
-  switch (qApp->checkPermission(bluetoothPermission))
+  qApp->requestPermission(bluetoothPermission, [this](const QPermission& permission)
   {
-  case Qt::PermissionStatus::Undetermined:
-    qApp->requestPermission(bluetoothPermission, this, &ShowDeviceLocationUsingIndoorPositioning::startBluetoothPermision);
-    return;
-  case Qt::PermissionStatus::Granted:
-    return;
-  case Qt::PermissionStatus::Denied:
-    emit bluetoothPermissionDenied();
-    return;
-  }
-#endif
+    Q_UNUSED(permission);
+    requestLocationPermission();
+  });
 }
 
-void ShowDeviceLocationUsingIndoorPositioning::startLocationPermission()
+void ShowDeviceLocationUsingIndoorPositioning::requestLocationPermission()
 {
-#ifdef PERMISSIONS_PLATFORM
-  QLocationPermission locationPermission{};
   locationPermission.setAccuracy(QLocationPermission::Accuracy::Precise);
   locationPermission.setAvailability(QLocationPermission::Availability::WhenInUse);
-    switch (qApp->checkPermission(locationPermission))
-    {
-    case Qt::PermissionStatus::Undetermined:
-      qApp->requestPermission(locationPermission, this, &ShowDeviceLocationUsingIndoorPositioning::startLocationPermission);
-      return;
-    case Qt::PermissionStatus::Granted:
-      return;
-    case Qt::PermissionStatus::Denied:
-      emit locationPermissionDenied();
-      return;
-    }
-#endif
+  qApp->requestPermission(locationPermission, [this](const QPermission& permission)
+  {
+    Q_UNUSED(permission);
+    checkPermissions();
+    setupIndoorsLocationDataSource();
+  });
+}
+
+void ShowDeviceLocationUsingIndoorPositioning::checkPermissions()
+{
+  if (qApp->checkPermission(bluetoothPermission) == Qt::PermissionStatus::Denied)
+  {
+    emit bluetoothPermissionDenied();
+  }
+
+  if (qApp->checkPermission(locationPermission) == Qt::PermissionStatus::Denied)
+  {
+    emit locationPermissionDenied();
+  }
 }
 
 // This function uses a helper class `IndoorsLocationDataSourceCreator` to construct the IndoorsLocationDataSource

@@ -23,6 +23,7 @@
 // Qt headers
 #include <QMap>
 #include <QObject>
+#include <QPermissions>
 
 namespace Esri::ArcGISRuntime
 {
@@ -63,8 +64,9 @@ private:
   void setupIndoorsLocationDataSource();
   void locationChangedHandler(const Esri::ArcGISRuntime::Location& loc);
   void changeFloorDisplay();
-  void startLocationPermission();
-  void startBluetoothPermision();
+  void requestLocationPermission();
+  void requestBluetoothPermision();
+  void checkPermissions();
 
   Esri::ArcGISRuntime::Map* m_map = nullptr;
   Esri::ArcGISRuntime::MapQuickView* m_mapView = nullptr;
@@ -72,6 +74,8 @@ private:
   Esri::ArcGISRuntime::ArcGISFeatureTable* m_pathwaysTable = nullptr;
   QVariantMap m_locationProperties;
   int m_currentFloor;
+  QBluetoothPermission bluetoothPermission{};
+  QLocationPermission locationPermission{};
 };
 
 #endif // SHOWDEVICELOCATIONUSINGINDOORPOSITIONING_H
