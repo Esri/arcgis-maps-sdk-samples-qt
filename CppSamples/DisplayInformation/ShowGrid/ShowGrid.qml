@@ -67,7 +67,7 @@ Item {
 
         Text {
             anchors.centerIn: parent
-            text: "Change grid style"
+            text: "Change properties"
             font.pixelSize: 14
             color: "#474747"
         }
@@ -141,7 +141,15 @@ Item {
                 Layout.rightMargin: 10
                 Layout.fillWidth: true
                 model: gridSample.viewTypes
-                onCurrentTextChanged: gridSample.setViewType(currentText);
+                onCurrentTextChanged: {
+                    gridSample.setViewType(currentText);
+                    if (gridTypeComboBox.currentText !== "LatLong" && currentText === "SceneView") {
+                        positionCombo.currentIndex = 0;
+                        positionCombo.enabled = false;
+                    } else {
+                        positionCombo.enabled = true;
+                    }
+                }
                 Component.onCompleted : {
                     for (let i = 0; i < model.length; ++i) {
                         viewComboMetrics.text = model[i];
@@ -166,7 +174,15 @@ Item {
                 Layout.rightMargin: 10
                 Layout.fillWidth: true
                 model: gridSample.gridTypes
-                onCurrentTextChanged: gridSample.setGridType(currentText)
+                onCurrentTextChanged: {
+                    gridSample.setGridType(currentText)
+                    if (currentText !== "LatLong" && viewCombo.currentText === "SceneView") {
+                        positionCombo.currentIndex = 0;
+                        positionCombo.enabled = false;
+                    } else {
+                        positionCombo.enabled = true;
+                    }
+                }
                 Component.onCompleted : {
                     for (let i = 0; i < model.length; ++i) {
                         metricsGridTypeComboBox.text = model[i];
@@ -177,6 +193,18 @@ Item {
                     id: metricsGridTypeComboBox
                     font: gridTypeComboBox.font
                 }
+            }
+
+            Text {
+                Layout.leftMargin: 10
+                text: "Grid visible"
+            }
+
+            Switch {
+                id: gridVisibleSwitch
+                Layout.rightMargin: 10
+                checked: true
+                onCheckedChanged: gridSample.setGridVisible(checked);
             }
 
             Text {
@@ -192,18 +220,6 @@ Item {
                 checked: true
                 enabled: gridVisibleSwitch.checked
                 onCheckedChanged: gridSample.setLabelsVisible(checked);
-            }
-
-            Text {
-                Layout.leftMargin: 10
-                text: "Grid visible"
-            }
-
-            Switch {
-                id: gridVisibleSwitch
-                Layout.rightMargin: 10
-                checked: true
-                onCheckedChanged: gridSample.setGridVisible(checked);
             }
 
             Text {
@@ -259,6 +275,7 @@ Item {
             Text {
                 Layout.leftMargin: 10
                 text: "Label position"
+                enabled: positionCombo.enabled
                 color: enabled ? "black"  : "gray"
             }
 
@@ -285,7 +302,7 @@ Item {
             Text {
                 Layout.leftMargin: 10
                 text: "Label format"
-                enabled: gridSample.currentGridType === "LatLong"
+                enabled: formatCombo.enabled
                 color: enabled ? "black"  : "gray"
             }
 

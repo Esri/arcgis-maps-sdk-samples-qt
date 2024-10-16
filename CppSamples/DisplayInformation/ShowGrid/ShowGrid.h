@@ -96,8 +96,8 @@ private:
   // Constants
   QStringList m_viewTypes = {"MapView", "SceneView"};
   QStringList m_gridTypes = {"LatLong", "MGRS", "UTM", "USNG"};
-  QStringList m_lineColors = {"Red", "White", "Blue"};
-  QStringList m_labelColors = {"Red", "Black", "Blue"};
+  QStringList m_lineColors = {"White", "Red", "Blue"};
+  QStringList m_labelColors = {"Black", "Red", "Blue"};
   QStringList m_labelPositions = {"Geographic", "Top Left", "Top Right", "Bottom Left", "Bottom Right", "Center", "All sides"};
   QStringList m_labelFormats = {"Decimal Degrees", "Degrees Minutes Seconds"};
 };
