@@ -64,8 +64,8 @@ private:
   void setupIndoorsLocationDataSource();
   void locationChangedHandler(const Esri::ArcGISRuntime::Location& loc);
   void changeFloorDisplay();
-  void requestLocationPermission();
-  void requestBluetoothPermision();
+  void requestLocationPermissionThenSetupILDS();
+  void requestBluetoothThenLocationPermissions();
   void checkPermissions();
 
   Esri::ArcGISRuntime::Map* m_map = nullptr;
@@ -74,8 +74,6 @@ private:
   Esri::ArcGISRuntime::ArcGISFeatureTable* m_pathwaysTable = nullptr;
   QVariantMap m_locationProperties;
   int m_currentFloor;
-  QBluetoothPermission bluetoothPermission{};
-  QLocationPermission locationPermission{};
 };
 
 #endif // SHOWDEVICELOCATIONUSINGINDOORPOSITIONING_H

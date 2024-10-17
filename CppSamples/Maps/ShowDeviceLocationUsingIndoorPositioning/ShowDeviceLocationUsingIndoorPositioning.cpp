@@ -84,7 +84,7 @@ void ShowDeviceLocationUsingIndoorPositioning::setMapView(MapQuickView* mapView)
   m_mapView->setMap(m_map);
 
   #ifdef PERMISSIONS_PLATFORM
-    requestBluetoothPermision();
+    requestBluetoothThenLocationPermissions();
   #else
     setupIndoorsLocationDataSource();
   #endif
@@ -92,17 +92,18 @@ void ShowDeviceLocationUsingIndoorPositioning::setMapView(MapQuickView* mapView)
   emit mapViewChanged();
 }
 
-void ShowDeviceLocationUsingIndoorPositioning::requestBluetoothPermision()
+void ShowDeviceLocationUsingIndoorPositioning::requestBluetoothThenLocationPermissions()
 {
-  qApp->requestPermission(bluetoothPermission, [this](const QPermission& permission)
+    qApp->requestPermission(QBluetoothPermission{}, [this](const QPermission& permission)
   {
     Q_UNUSED(permission);
-    requestLocationPermission();
+    requestLocationPermissionThenSetupILDS();
   });
 }
 
-void ShowDeviceLocationUsingIndoorPositioning::requestLocationPermission()
+void ShowDeviceLocationUsingIndoorPositioning::requestLocationPermissionThenSetupILDS()
 {
+  QLocationPermission locationPermission{};
   locationPermission.setAccuracy(QLocationPermission::Accuracy::Precise);
   locationPermission.setAvailability(QLocationPermission::Availability::WhenInUse);
   qApp->requestPermission(locationPermission, [this](const QPermission& permission)
@@ -115,12 +116,12 @@ void ShowDeviceLocationUsingIndoorPositioning::requestLocationPermission()
 
 void ShowDeviceLocationUsingIndoorPositioning::checkPermissions()
 {
-  if (qApp->checkPermission(bluetoothPermission) == Qt::PermissionStatus::Denied)
+  if (qApp->checkPermission(QBluetoothPermission{}) == Qt::PermissionStatus::Denied)
   {
     emit bluetoothPermissionDenied();
   }
 
-  if (qApp->checkPermission(locationPermission) == Qt::PermissionStatus::Denied)
+  if (qApp->checkPermission(QLocationPermission{}) == Qt::PermissionStatus::Denied)
   {
     emit locationPermissionDenied();
   }
