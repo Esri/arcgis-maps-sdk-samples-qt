@@ -44,6 +44,90 @@ Item {
         id: gridSample
         mapView: mapQuickView
         sceneView: sceneQuickView
+
+        onCurrentViewTypeChanged: {
+            if (gridSample.currentViewType === "MapView")
+                mapQuickView.forceActiveFocus();
+            else
+                sceneQuickView.forceActiveFocus();
+        }
+    }
+
+    Row {
+        id: viewButtonsRow
+        anchors
+        {
+            top: parent.top
+            horizontalCenter: parent.horizontalCenter
+            topMargin: 5
+        }
+
+        spacing: 2
+
+        Rectangle {
+            id: mapViewButton
+            property bool selected: gridSample.currentViewType === "MapView"
+
+            width: 100
+            height: 30
+
+            color: selected ? "#959595" : "#D6D6D6"
+            radius: 8
+            border {
+                color: selected ? "#7938b6" : "#585858"
+                width: selected ? 2 : 1
+            }
+
+            Text {
+                anchors.centerIn: parent
+                text: "Map View"
+                font.pixelSize: 14
+                color: "#474747"
+            }
+
+            MouseArea {
+                anchors.fill: parent
+                onClicked: {
+                    gridSample.setViewType("MapView");
+                    positionCombo.enabled = true;
+                }
+            }
+        }
+
+        Rectangle {
+            id: sceneViewButton
+            property bool selected: gridSample.currentViewType === "SceneView"
+
+            width: 100
+            height: 30
+
+            color: selected ? "#959595" : "#D6D6D6"
+            radius: 8
+            border {
+                color: selected ? "#7938b6" : "#585858"
+                width: selected ? 2 : 1
+            }
+
+            Text {
+                anchors.centerIn: parent
+                text: "Scene View"
+                font.pixelSize: 14
+                color: "#474747"
+            }
+
+            MouseArea {
+                anchors.fill: parent
+                onClicked: {
+                    gridSample.setViewType("SceneView");
+                    if (gridTypeComboBox.currentText !== "LatLong") {
+                        positionCombo.currentIndex = 0;
+                        positionCombo.enabled = false;
+                    } else {
+                        positionCombo.enabled = true;
+                    }
+                }
+            }
+        }
     }
 
     // Button to view the styling window
@@ -67,7 +151,7 @@ Item {
 
         Text {
             anchors.centerIn: parent
-            text: "Change properties"
+            text: "Change grid style"
             font.pixelSize: 14
             color: "#474747"
         }
@@ -103,7 +187,9 @@ Item {
 
     Rectangle {
         id: styleWindow
-        anchors.horizontalCenter: parent.horizontalCenter
+        anchors {
+            horizontalCenter: parent.horizontalCenter
+        }
         y: parent.height // initially display below the page
         height: childrenRect.height
         width: childrenRect.width
@@ -131,39 +217,6 @@ Item {
 
             Text {
                 Layout.leftMargin: 10
-                text: "GeoView Type"
-            }
-
-            ComboBox {
-                id: viewCombo
-                property int modelWidth: 0
-                Layout.minimumWidth: modelWidth + leftPadding + rightPadding + (indicator ? indicator.width : 10)
-                Layout.rightMargin: 10
-                Layout.fillWidth: true
-                model: gridSample.viewTypes
-                onCurrentTextChanged: {
-                    gridSample.setViewType(currentText);
-                    if (gridTypeComboBox.currentText !== "LatLong" && currentText === "SceneView") {
-                        positionCombo.currentIndex = 0;
-                        positionCombo.enabled = false;
-                    } else {
-                        positionCombo.enabled = true;
-                    }
-                }
-                Component.onCompleted : {
-                    for (let i = 0; i < model.length; ++i) {
-                        viewComboMetrics.text = model[i];
-                        modelWidth = Math.max(modelWidth, viewComboMetrics.width);
-                    }
-                }
-                TextMetrics {
-                    id: viewComboMetrics
-                    font: viewCombo.font
-                }
-            }
-
-            Text {
-                Layout.leftMargin: 10
                 text: "Grid type"
             }
 
@@ -176,7 +229,7 @@ Item {
                 model: gridSample.gridTypes
                 onCurrentTextChanged: {
                     gridSample.setGridType(currentText)
-                    if (currentText !== "LatLong" && viewCombo.currentText === "SceneView") {
+                    if (currentText !== "LatLong" && gridSample.currentViewType === "SceneView") {
                         positionCombo.currentIndex = 0;
                         positionCombo.enabled = false;
                     } else {
@@ -358,10 +411,6 @@ Item {
                     onClicked: {
                         background.visible = false;
                         hideAnimation.restart();
-                        if (gridSample.currentViewType === "MapView")
-                            mapQuickView.forceActiveFocus();
-                        else
-                            sceneQuickView.forceActiveFocus();
                     }
                 }
             }

@@ -22,21 +22,21 @@
 
 #include "ArcGISTiledElevationSource.h"
 #include "ElevationSourceListModel.h"
+#include "LatitudeLongitudeGrid.h"
 #include "Map.h"
 #include "MapTypes.h"
-#include "MapViewTypes.h"
 #include "MapQuickView.h"
-#include "Scene.h"
-#include "SceneQuickView.h"
-#include "Surface.h"
-#include "LatitudeLongitudeGrid.h"
+#include "MapViewTypes.h"
 #include "MGRSGrid.h"
 #include "Point.h"
-#include "UTMGrid.h"
-#include "USNGGrid.h"
+#include "Scene.h"
+#include "SceneQuickView.h"
 #include "SimpleLineSymbol.h"
-#include "TextSymbol.h"
 #include "SpatialReference.h"
+#include "Surface.h"
+#include "TextSymbol.h"
+#include "USNGGrid.h"
+#include "UTMGrid.h"
 #include "Viewpoint.h"
 
 #include <QFuture>
@@ -55,6 +55,8 @@ ShowGrid::ShowGrid(QObject* parent /* = nullptr */):
   // add the elevation source to the scene to display elevation
   m_scene->baseSurface()->elevationSources()->append(elevationSource);
 
+  m_currentViewType = "MapView";
+
   double targetScale = 6450785;
   m_map->setInitialViewpoint(Viewpoint(Point(-10336141.70018318, 5418213.05332071, SpatialReference::webMercator()), targetScale));
 
@@ -71,15 +73,45 @@ void ShowGrid::init()
   qmlRegisterType<ShowGrid>("Esri.Samples", 1, 0, "ShowGridSample");
 }
 
-void ShowGrid::setGridVisible(bool visible)
+MapQuickView* ShowGrid::mapView() const
 {
-  m_grid->setVisible(visible);
+  return m_mapView;
 }
 
-void ShowGrid::setLabelsVisible(bool visible)
+// Set the view (created in QML)
+void ShowGrid::setMapView(MapQuickView* mapView)
 {
-  m_grid->setLabelsVisible(visible);
+  if (!mapView || mapView == m_mapView)
+    return;
+
+  m_mapView = mapView;
+  m_mapView->setMap(m_map);
+
+  m_mapView->setGrid(m_grid);
+
+  emit viewChanged();
 }
+
+SceneQuickView* ShowGrid::sceneView() const
+{
+  return m_sceneView;
+}
+
+// Set the view (created in QML)
+void ShowGrid::setSceneView(SceneQuickView* sceneView)
+{
+  if (!sceneView || sceneView == m_sceneView)
+    return;
+
+  m_sceneView = sceneView;
+  m_sceneView->setArcGISScene(m_scene);
+
+  // Set the SceneView initially to be invisible
+  m_sceneView->setVisible(false);
+
+  emit viewChanged();
+}
+
 
 void ShowGrid::setViewType(const QString& viewType)
 {
@@ -110,11 +142,15 @@ void ShowGrid::setViewType(const QString& viewType)
 
 void ShowGrid::setGridType(const QString& gridType)
 {
-  delete m_grid;
-  m_grid = nullptr;
+  if (m_grid)
+  {
+    delete m_grid;
+    m_grid = nullptr;
+  }
 
   m_currentGridType = gridType;
 
+  // Create a new Grid of the selected type
   if (gridType == "LatLong")
     m_grid = new LatitudeLongitudeGrid(this);
   else if (gridType == "MGRS")
@@ -124,11 +160,13 @@ void ShowGrid::setGridType(const QString& gridType)
   else if (gridType == "USNG")
     m_grid = new USNGGrid(this);
 
+  // Set the grid on the current view
   if (m_mapView->isVisible())
     m_mapView->setGrid(m_grid);
   else
     m_sceneView->setGrid(m_grid);
 
+  // Set properties from current UI values
   setLineColor(m_currentLineColor);
   setLabelColor(m_currentLabelColor);
   setLabelPosition(m_currentLabelPosition);
@@ -137,12 +175,23 @@ void ShowGrid::setGridType(const QString& gridType)
   emit propertiesChanged();
 }
 
+void ShowGrid::setGridVisible(bool visible)
+{
+  m_grid->setVisible(visible);
+}
+
+void ShowGrid::setLabelsVisible(bool visible)
+{
+  m_grid->setLabelsVisible(visible);
+}
+
 void ShowGrid::setLineColor(const QString& lineColor)
 {
   m_currentLineColor = lineColor;
   SimpleLineSymbol* lineSymbol = static_cast<SimpleLineSymbol*>(m_grid->lineSymbol(0));
   lineSymbol->setColor(lineColor.toLower());
 
+  // Some grids have multiple levels, in this sample we set the same symbol for all levels
   for (int level = 0; level < m_grid->levelCount(); ++level)
     m_grid->setLineSymbol(level, lineSymbol);
 
@@ -155,6 +204,7 @@ void ShowGrid::setLabelColor(const QString& labelColor)
   TextSymbol* labelSymbol = static_cast<TextSymbol*>(m_grid->textSymbol(0));
   labelSymbol->setColor(labelColor.toLower());
 
+  // Some grids have multiple levels, in this sample we set the same symbol for all levels
   for (int level = 0; level < m_grid->levelCount(); ++level)
     m_grid->setTextSymbol(level, labelSymbol);
 
@@ -184,6 +234,7 @@ void ShowGrid::setLabelPosition(const QString& labelPosition)
 
 void ShowGrid::setLabelFormat(const QString& labelFormat)
 {
+  // Only LatitudeLongitudeGrid supports label formats
   if (m_grid->gridType() != GridType::LatitudeLongitudeGrid)
     return;
 
@@ -195,40 +246,3 @@ void ShowGrid::setLabelFormat(const QString& labelFormat)
 
   emit propertiesChanged();
 }
-
-SceneQuickView* ShowGrid::sceneView() const
-{
-  return m_sceneView;
-}
-
-// Set the view (created in QML)
-void ShowGrid::setSceneView(SceneQuickView* sceneView)
-{
-  if (!sceneView || sceneView == m_sceneView)
-    return;
-
-  m_sceneView = sceneView;
-  m_sceneView->setArcGISScene(m_scene);
-
-  emit viewChanged();
-}
-
-MapQuickView* ShowGrid::mapView() const
-{
-  return m_mapView;
-}
-
-// Set the view (created in QML)
-void ShowGrid::setMapView(MapQuickView* mapView)
-{
-  if (!mapView || mapView == m_mapView)
-    return;
-
-  m_mapView = mapView;
-  m_mapView->setMap(m_map);
-
-  m_mapView->setGrid(m_grid);
-
-  emit viewChanged();
-}
-
