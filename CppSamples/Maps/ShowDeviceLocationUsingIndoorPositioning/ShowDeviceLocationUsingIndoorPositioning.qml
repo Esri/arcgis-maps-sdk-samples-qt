@@ -18,6 +18,7 @@ import QtQuick
 import QtQuick.Controls
 import QtQuick.Layouts
 import Esri.Samples
+import QtQuick.Dialogs
 
 Item {
 
@@ -79,5 +80,47 @@ Item {
     ShowDeviceLocationUsingIndoorPositioningSample {
         id: model
         mapView: view
+    }
+
+    Connections {
+        target: model
+        function onLocationPermissionDenied() {
+            locationPermissionDeniedDialog.open()
+        }
+    }
+
+    Dialog {
+        id: locationPermissionDeniedDialog
+        title: "Location Permission Denied"
+        modal: true
+        standardButtons: Dialog.Ok
+        x: (parent.width - width) / 2
+        y: (parent.height - height) / 2
+
+        Text {
+            text: "This application requires location permission."
+            color: "white"
+        }
+    }
+
+    Connections {
+        target: model
+        function onBluetoothPermissionDenied() {
+            bluetoothPermissionDeniedDialog.open()
+        }
+    }
+
+    Dialog {
+        id: bluetoothPermissionDeniedDialog
+        title: "Bluetooth Permission Denied"
+        modal: true
+        standardButtons: Dialog.Ok
+        x: (parent.width - width) / 2
+        y: (parent.height - height) / 2
+
+        Text {
+            text: "This application requires bluetooth permission."
+            color: "white"
+        }
     }
 }
