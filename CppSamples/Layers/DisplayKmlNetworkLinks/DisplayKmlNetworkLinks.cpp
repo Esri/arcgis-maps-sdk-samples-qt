@@ -1,12 +1,12 @@
 // [WriteFile Name=DisplayKmlNetworkLinks, Category=Layers]
 // [Legal]
 // Copyright 2018 Esri.
-
+//
 // Licensed under the Apache License, Version 2.0 (the "License");
 // you may not use this file except in compliance with the License.
 // You may obtain a copy of the License at
 // http://www.apache.org/licenses/LICENSE-2.0
-
+//
 // Unless required by applicable law or agreed to in writing, software
 // distributed under the License is distributed on an "AS IS" BASIS,
 // WITHOUT WARRANTIES OR CONDITIONS OF ANY KIND, either express or implied.
@@ -18,19 +18,22 @@
 #include "pch.hpp"
 #endif // PCH_BUILD
 
+// sample headers
 #include "DisplayKmlNetworkLinks.h"
 
+// ArcGIS Maps SDK headers
 #include "KmlDataset.h"
 #include "KmlLayer.h"
+#include "KmlNetworkLink.h"
+#include "LayerListModel.h"
+#include "MapTypes.h"
+#include "Point.h"
 #include "Scene.h"
 #include "SceneQuickView.h"
-#include "MapTypes.h"
-#include "LayerListModel.h"
-#include "KmlNetworkLink.h"
 #include "SpatialReference.h"
-#include "Point.h"
 #include "Viewpoint.h"
 
+// Qt headers
 #include <QFuture>
 
 using namespace Esri::ArcGISRuntime;
@@ -85,4 +88,3 @@ void DisplayKmlNetworkLinks::componentComplete()
   m_sceneView->setViewpointAsync(Viewpoint { Point { 8.150526, 50.472421, SpatialReference::wgs84() }, 20000000 } );
   m_sceneView->setArcGISScene(scene);
 }
-

@@ -1,12 +1,12 @@
 // [WriteFile Name=CreateAndEditGeometries, Category=Geometry]
 // [Legal]
 // Copyright 2023 Esri.
-
+//
 // Licensed under the Apache License, Version 2.0 (the "License");
 // you may not use this file except in compliance with the License.
 // You may obtain a copy of the License at
 // http://www.apache.org/licenses/LICENSE-2.0
-
+//
 // Unless required by applicable law or agreed to in writing, software
 // distributed under the License is distributed on an "AS IS" BASIS,
 // WITHOUT WARRANTIES OR CONDITIONS OF ANY KIND, either express or implied.
@@ -16,6 +16,9 @@
 
 #ifndef CREATEANDEDITGEOMETRIES_H
 #define CREATEANDEDITGEOMETRIES_H
+
+// Qt headers
+#include <QObject>
 
 namespace Esri::ArcGISRuntime
 {
@@ -30,9 +33,8 @@ namespace Esri::ArcGISRuntime
   class SimpleLineSymbol;
   class SimpleFillSymbol;
   class VertexTool;
+  class ReticleVertexTool;
 }
-
-#include <QObject>
 
 Q_MOC_INCLUDE("MapQuickView.h");
 
@@ -72,7 +74,8 @@ public:
     Arrow,
     Ellipse,
     Rectangle,
-    Triangle
+    Triangle,
+    Reticle
   };
 
   Q_ENUM(GeometryEditorToolType)
@@ -126,6 +129,7 @@ private:
   Esri::ArcGISRuntime::ShapeTool* m_ellipseTool = nullptr;
   Esri::ArcGISRuntime::ShapeTool* m_rectangleTool = nullptr;
   Esri::ArcGISRuntime::ShapeTool* m_triangleTool = nullptr;
+  Esri::ArcGISRuntime::ReticleVertexTool* m_reticleTool = nullptr;
 
   QObject* m_tempGraphicsParent = nullptr;
 };

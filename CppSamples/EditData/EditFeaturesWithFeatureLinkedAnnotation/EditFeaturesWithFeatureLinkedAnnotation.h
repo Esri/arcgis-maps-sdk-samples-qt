@@ -1,12 +1,12 @@
 // [WriteFile Name=EditFeaturesWithFeatureLinkedAnnotation, Category=EditData]
 // [Legal]
 // Copyright 2020 Esri.
-
+//
 // Licensed under the Apache License, Version 2.0 (the "License");
 // you may not use this file except in compliance with the License.
 // You may obtain a copy of the License at
 // http://www.apache.org/licenses/LICENSE-2.0
-
+//
 // Unless required by applicable law or agreed to in writing, software
 // distributed under the License is distributed on an "AS IS" BASIS,
 // WITHOUT WARRANTIES OR CONDITIONS OF ANY KIND, either express or implied.
@@ -16,6 +16,16 @@
 
 #ifndef EDITFEATURESWITHFEATURELINKEDANNOTATION_H
 #define EDITFEATURESWITHFEATURELINKEDANNOTATION_H
+
+// ArcGIS Maps SDK headers
+#include "Error.h"
+#include "Point.h"
+
+// Qt headers
+#include <QDir>
+#include <QMouseEvent>
+#include <QObject>
+#include <QUuid>
 
 namespace Esri::ArcGISRuntime
 {
@@ -27,14 +37,6 @@ class IdentifyLayerResult;
 class Map;
 class MapQuickView;
 }
-
-#include <QObject>
-#include <QDir>
-#include <QMouseEvent>
-#include <QUuid>
-
-#include "Point.h"
-#include "Error.h"
 
 Q_MOC_INCLUDE("MapQuickView.h")
 Q_MOC_INCLUDE("IdentifyLayerResult.h")

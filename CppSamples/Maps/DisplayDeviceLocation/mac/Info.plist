@@ -1,0 +1,31 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE plist PUBLIC "-//Apple//DTD PLIST 1.0//EN" "http://www.apple.com/DTDs/PropertyList-1.0.dtd">
+<plist version="1.0">
+<dict>
+    <key>CFBundleDisplayName</key>
+    <string>DisplayDeviceLocation</string>
+    <key>CFBundleExecutable</key>
+    <string>DisplayDeviceLocation</string>
+    <key>CFBundleGetInfoString</key>
+    <string>ArcGIS</string>
+    <key>CFBundleIdentifier</key>
+    <string>com.esri.DisplayDeviceLocation</string>
+    <key>CFBundleName</key>
+    <string>DisplayDeviceLocation</string>
+    <key>CFBundlePackageType</key>
+    <string>APPL</string>
+    <key>CFBundleShortVersionString</key>
+    <string>1.0</string>
+    <key>CFBundleSignature</key>
+    <string>????</string>
+    <key>CFBundleVersion</key>
+    <string>1.0</string>
+    <key>NSLocationUsageDescription</key>
+    <string>DisplayDeviceLocation requires location services</string>
+    <key>NSLocationWhenInUseUsageDescription</key>
+    <string>DisplayDeviceLocation requires location services</string>
+    <key>NSLocationAlwaysAndWhenInUseUsageDescription</key>
+    <string>DisplayDeviceLocation requires location services</string>
+</dict>
+</plist>
+

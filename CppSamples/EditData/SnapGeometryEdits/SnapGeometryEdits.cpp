@@ -1,12 +1,12 @@
 // [WriteFile Name=SnapGeometryEdits, Category=EditData]
 // [Legal]
 // Copyright 2024 Esri.
-
+//
 // Licensed under the Apache License, Version 2.0 (the "License");
 // you may not use this file except in compliance with the License.
 // You may obtain a copy of the License at
 // http://www.apache.org/licenses/LICENSE-2.0
-
+//
 // Unless required by applicable law or agreed to in writing, software
 // distributed under the License is distributed on an "AS IS" BASIS,
 // WITHOUT WARRANTIES OR CONDITIONS OF ANY KIND, either express or implied.
@@ -18,8 +18,11 @@
 #include "pch.hpp"
 #endif // PCH_BUILD
 
+// sample headers
 #include "SnapGeometryEdits.h"
+#include "SnapSourceListModel.h"
 
+// ArcGIS Maps SDK headers
 #include "FeatureLayer.h"
 #include "FeatureTable.h"
 #include "Geometry.h"
@@ -39,17 +42,17 @@
 #include "MapTypes.h"
 #include "Portal.h"
 #include "PortalItem.h"
+#include "ReticleVertexTool.h"
 #include "SimpleFillSymbol.h"
 #include "SimpleLineSymbol.h"
 #include "SimpleMarkerSymbol.h"
-#include "SnapGeometryEdits.h"
 #include "SnapSettings.h"
 #include "SnapSourceSettings.h"
 #include "SymbolTypes.h"
 
-#include "SnapSourceListModel.h"
-
+// Qt headers
 #include <QFuture>
+#include <QtGlobal>
 
 using namespace Esri::ArcGISRuntime;
 
@@ -62,6 +65,12 @@ SnapGeometryEdits::SnapGeometryEdits(QObject* parent /* = nullptr */) :
 
   m_geometryEditor = new GeometryEditor(this);
   m_graphicsOverlay = new GraphicsOverlay(this);
+
+  // if mobile, use ReticleVertexTool
+  #if defined(Q_OS_IOS) || defined(Q_OS_ANDROID)
+    m_geometryEditor->setTool(new ReticleVertexTool(this));
+  #endif // defined(Q_OS_IOS) || defined(Q_OS_ANDROID)
+
   connect (m_map, &Map::doneLoading, this, [this]()
   {
     for (Layer* layer : *m_map->operationalLayers())
@@ -108,8 +117,7 @@ void SnapGeometryEdits::setMapView(MapQuickView* mapView)
   m_mapView->graphicsOverlays()->append(m_graphicsOverlay);
 
   // Set the geometry editor on the map view
-  m_mapView->setGeometryEditor(m_geometryEditor);
-  m_mapView->setMagnifierEnabled(true);
+  m_mapView->setGeometryEditor(m_geometryEditor);  
 
   emit mapViewChanged();
   createInitialSymbols();
@@ -183,6 +191,18 @@ bool SnapGeometryEdits::isElementSelected()
 void SnapGeometryEdits::snappingEnabledStatus(bool snappingCheckedState)
 {
   m_geometryEditor->snapSettings()->setEnabled(snappingCheckedState);
+}
+
+// Toggles geometry guides using the enabled state from the snap settings
+void SnapGeometryEdits::geometryGuidesEnabledStatus(bool geometryGuidesCheckedState)
+{
+  m_geometryEditor->snapSettings()->setGeometryGuidesEnabled(geometryGuidesCheckedState);
+}
+
+// Toggles feature snapping using the enabled state from the snap settings
+void SnapGeometryEdits::featureSnappingEnabledStatus(bool featureSnappingCheckedState)
+{
+  m_geometryEditor->snapSettings()->setFeatureSnappingEnabled(featureSnappingCheckedState);
 }
 
 // Starts the GeometryEditor using the selected geometry type

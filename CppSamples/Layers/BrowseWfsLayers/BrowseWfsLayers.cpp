@@ -1,12 +1,12 @@
 // [WriteFile Name=BrowseWfsLayers, Category=Layers]
 // [Legal]
 // Copyright 2019 Esri.
-
+//
 // Licensed under the Apache License, Version 2.0 (the "License");
 // you may not use this file except in compliance with the License.
 // You may obtain a copy of the License at
 // http://www.apache.org/licenses/LICENSE-2.0
-
+//
 // Unless required by applicable law or agreed to in writing, software
 // distributed under the License is distributed on an "AS IS" BASIS,
 // WITHOUT WARRANTIES OR CONDITIONS OF ANY KIND, either express or implied.
@@ -18,29 +18,32 @@
 #include "pch.hpp"
 #endif // PCH_BUILD
 
+// sample headers
 #include "BrowseWfsLayers.h"
 
+// ArcGIS Maps SDK headers
+#include "CoreTypes.h"
+#include "Envelope.h"
+#include "Error.h"
+#include "FeatureLayer.h"
+#include "FeatureQueryResult.h"
+#include "GeodatabaseTypes.h"
+#include "LayerListModel.h"
 #include "Map.h"
 #include "MapQuickView.h"
-#include "WfsFeatureTable.h"
-#include "FeatureLayer.h"
+#include "MapTypes.h"
+#include "Polygon.h"
 #include "QueryParameters.h"
-#include "SimpleRenderer.h"
 #include "SimpleLineSymbol.h"
 #include "SimpleMarkerSymbol.h"
+#include "SimpleRenderer.h"
+#include "SymbolTypes.h"
+#include "WfsFeatureTable.h"
+#include "WfsLayerInfo.h"
 #include "WfsService.h"
 #include "WfsServiceInfo.h"
-#include "WfsLayerInfo.h"
-#include "Error.h"
-#include "MapTypes.h"
-#include "SymbolTypes.h"
-#include "LayerListModel.h"
-#include "GeodatabaseTypes.h"
-#include "CoreTypes.h"
-#include "FeatureQueryResult.h"
-#include "Polygon.h"
-#include "Envelope.h"
 
+// Qt headers
 #include <QFuture>
 
 using namespace Esri::ArcGISRuntime;
@@ -59,7 +62,7 @@ BrowseWfsLayers::BrowseWfsLayers(QObject* parent /* = nullptr */):
       return;
 
     m_wfsLayersInfoList = m_wfsService->serviceInfo().layerInfos();
-    for (const WfsLayerInfo& i : qAsConst(m_wfsLayersInfoList))
+    for (const WfsLayerInfo& i : std::as_const(m_wfsLayersInfoList))
         m_layerInfoTitleList.append(i.title());
 
     emit layerInfoTitleListChanged();

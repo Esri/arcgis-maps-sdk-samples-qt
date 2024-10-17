@@ -1,12 +1,12 @@
 // [WriteFile Name=DisplayContentOfUtilityNetworkContainer, Category=UtilityNetwork]
 // [Legal]
 // Copyright 2021 Esri.
-
+//
 // Licensed under the Apache License, Version 2.0 (the "License");
 // you may not use this file except in compliance with the License.
 // You may obtain a copy of the License at
 // http://www.apache.org/licenses/LICENSE-2.0
-
+//
 // Unless required by applicable law or agreed to in writing, software
 // distributed under the License is distributed on an "AS IS" BASIS,
 // WITHOUT WARRANTIES OR CONDITIONS OF ANY KIND, either express or implied.
@@ -18,46 +18,47 @@
 #include "pch.hpp"
 #endif // PCH_BUILD
 
+// sample headers
 #include "DisplayContentOfUtilityNetworkContainer.h"
 #include "SymbolImageProvider.h"
 
+// ArcGIS Maps SDK headers
+#include "ArcGISFeature.h"
+#include "ArcGISFeatureLayerInfo.h"
 #include "ArcGISFeatureListModel.h"
 #include "ArcGISFeatureTable.h"
+#include "AuthenticationChallenge.h"
 #include "AuthenticationManager.h"
+#include "Credential.h"
+#include "DrawingInfo.h"
+#include "Envelope.h"
+#include "Error.h"
+#include "ErrorException.h"
 #include "GeometryEngine.h"
+#include "Graphic.h"
+#include "GraphicListModel.h"
+#include "GraphicsOverlay.h"
+#include "GraphicsOverlayListModel.h"
+#include "IdentifyLayerResult.h"
+#include "LayerListModel.h"
 #include "Map.h"
 #include "MapQuickView.h"
+#include "MapTypes.h"
+#include "Point.h"
+#include "Polygon.h"
+#include "Renderer.h"
+#include "SimpleLineSymbol.h"
+#include "SpatialReference.h"
 #include "SubtypeFeatureLayer.h"
+#include "Symbol.h"
+#include "SymbolTypes.h"
 #include "UtilityAssetType.h"
 #include "UtilityAssociation.h"
 #include "UtilityElement.h"
 #include "UtilityNetwork.h"
 #include "UtilityNetworkTypes.h"
-#include "MapTypes.h"
-#include "SymbolTypes.h"
-#include "Error.h"
-#include "GraphicsOverlayListModel.h"
-#include "GraphicListModel.h"
-#include "LayerListModel.h"
-#include "Credential.h"
-#include "AuthenticationChallenge.h"
-#include "IdentifyLayerResult.h"
-#include "ArcGISFeature.h"
-#include "ArcGISFeatureTable.h"
-#include "ArcGISFeatureLayerInfo.h"
-#include "DrawingInfo.h"
-#include "GraphicsOverlay.h"
-#include "Graphic.h"
-#include "ErrorException.h"
-#include "Envelope.h"
-#include "ArcGISFeatureTable.h"
-#include "SpatialReference.h"
-#include "Renderer.h"
-#include "Point.h"
-#include "Polygon.h"
-#include "Symbol.h"
-#include "SimpleLineSymbol.h"
 
+// Qt headers
 #include <QImage>
 #include <QQmlContext>
 #include <QUuid>

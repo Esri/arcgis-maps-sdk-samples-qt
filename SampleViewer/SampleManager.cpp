@@ -58,15 +58,13 @@
 
 #include <cstdlib>
 
-#ifdef CPP_VIEWER
 #include "ArcGISQt_global.h" // for LOCALSERVER_SUPPORTED
 #include "ArcGISRuntimeEnvironment.h"
 using namespace Esri::ArcGISRuntime;
-#endif
 
 #ifdef LOCALSERVER_SUPPORTED
 #include "LocalServer.h"
-#endif
+#endif // LOCALSERVER_SUPPORTED
 
 #define STRINGIZE(x) #x
 #define QUOTE(x) STRINGIZE(x)
@@ -83,7 +81,15 @@ SampleManager::SampleManager(QObject *parent):
 {
 #ifdef LOCALSERVER_SUPPORTED
   createAndSetTempDirForLocalServer();
-#endif
+#endif // LOCALSERVER_SUPPORTED
+
+  if (QNetworkInformation::loadBackendByFeatures(QNetworkInformation::Feature::Reachability))
+  {
+    if (QNetworkInformation* networkInfo = QNetworkInformation::instance())
+    {
+      connect(networkInfo, &QNetworkInformation::reachabilityChanged, this, &SampleManager::reachabilityChanged);
+    }
+  }
 }
 
 SampleManager::~SampleManager() = default;
@@ -116,7 +122,7 @@ void SampleManager::createAndSetTempDirForLocalServer()
   // set the temp & app data path for the local server
   LocalServer::setTempDataPath(m_tempDir->path());
   LocalServer::setAppDataPath(m_tempDir->path());
-#endif
+#endif // LOCALSERVER_SUPPORTED
 }
 
 void SampleManager::setCancelDownload(bool cancel)
@@ -133,7 +139,7 @@ void SampleManager::setDownloadFailed(bool didFail)
 // Build the Categories List
 void SampleManager::buildCategoriesList()
 {
-  QDir dir(DIRNAMESAMPLES);
+  const QDir dir(DIRNAMESAMPLES);
   QFile xmlFile(":/Samples/Categories.xml");
 
   // Go through the XML to find the sample categories
@@ -142,16 +148,16 @@ void SampleManager::buildCategoriesList()
     xmlFile.open(QIODevice::ReadOnly);
     QDomDocument doc;
     doc.setContent(&xmlFile);
-    QDomNodeList fileList = doc.documentElement().elementsByTagName("category");
+    const QDomNodeList fileList = doc.documentElement().elementsByTagName("category");
 
     for (int i = 0; i < fileList.count(); i++)
     {
       // The first node contains the name
-      QDomNode node = fileList.at(i).childNodes().at(0);
-      QString name = node.toElement().text();
+      const QDomNode node = fileList.at(i).childNodes().at(0);
+      const QString name = node.toElement().text();
       // The second node contains the display name
-      QDomNode nameNode = fileList.at(i).childNodes().at(1);
-      QString displayName = nameNode.toElement().text();
+      const QDomNode nameNode = fileList.at(i).childNodes().at(1);
+      const QString displayName = nameNode.toElement().text();
       appendCategoryToManager(createCategory(name, displayName, dir));
     }
   }
@@ -159,6 +165,13 @@ void SampleManager::buildCategoriesList()
   {
     qWarning() << "could not find Categories.xml";
   }
+
+#ifdef LOCALSERVER_SUPPORTED
+  if (LocalServer::isInstallValid())
+  {
+    appendCategoryToManager(createCategory("LocalServer", "Local Server", dir));
+  }
+#endif // LOCALSERVER_SUPPORTED
 }
 
 SampleCategory* SampleManager::createCategory(const QString& name, const QString& displayName, const QDir& dir)
@@ -216,15 +229,9 @@ SampleListModel* SampleManager::buildSamplesList(const QDir& dir, const QString&
     auto name = sampleConfig.contains(PROPERTYNAME) ? sampleConfig.value(PROPERTYNAME).toString() : sample;
 
     // Get the name of the sample's QML source file from the README.metadata.json snippets section - often titled "SampleName.qml"
-    // The ordering of the snippets is specific to the sample viewer
-#ifdef CPP_VIEWER
-    // C++ sample snippets will list the primary C++ file name first (often SampleName.cpp) so it initially displays upon loading the sample in the ArcGIS Developer website
-    // C++ sample snippets will list the QML source file name *last* to ensure consistent retrieval (rather than by a specific index)
+    // Sample snippets will list the primary C++ file name first (often SampleName.cpp) so it initially displays upon loading the sample in the ArcGIS Developer website
+    // Sample snippets will list the QML source file name *last* to ensure consistent retrieval (rather than by a specific index)
     auto sourceFileName = sampleConfig.value(PROPERTYSOURCE).isValid() ? sampleConfig.value(PROPERTYSOURCE).toStringList().last() : "sample.qml";
-#else
-    // QML sample snippets will list the QML source file *first* so they display upon loading the sample in the ArcGIS Developer website
-    auto sourceFileName = sampleConfig.value(PROPERTYSOURCE).isValid() ? sampleConfig.value(PROPERTYSOURCE).toStringList().first() : "sample.qml";
-#endif
 
     auto descriptionFileName = "README.md";
     auto thumbnailFileName = "screenshot.png";
@@ -386,15 +393,11 @@ void SampleManager::setApiKey(bool isSupportsApiKey)
 
   if (isSupportsApiKey && apiKey == "")
   {
-    qWarning() << "This sample expects an API key to be set, but none was provided. Please provide an API key in ArcGISRuntimeSDKQt_Samples/SampleManager.cpp";
+    qWarning() << "This sample expects an API key to be set, but none was provided. Please provide an API key in SampleViewer/SampleManager.cpp";
   }
   const QString sampleApiKey = isSupportsApiKey ? apiKey : ""; // empty string will "unset" the key
-  // set apikey for CPP/QML sample viewer
-#ifdef CPP_VIEWER
+  // set apikey for the sample viewer
   ArcGISRuntimeEnvironment::setApiKey(sampleApiKey);
-#else
-  emit apiKeyRequired(sampleApiKey);
-#endif
 }
 
 void SampleManager::setDownloadProgress(double progress)

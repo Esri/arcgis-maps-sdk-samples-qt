@@ -1,12 +1,12 @@
 // [WriteFile Name=Unique_Value_Renderer, Category=DisplayInformation]
 // [Legal]
 // Copyright 2016 Esri.
-
+//
 // Licensed under the Apache License, Version 2.0 (the "License");
 // you may not use this file except in compliance with the License.
 // You may obtain a copy of the License at
 // http://www.apache.org/licenses/LICENSE-2.0
-
+//
 // Unless required by applicable law or agreed to in writing, software
 // distributed under the License is distributed on an "AS IS" BASIS,
 // WITHOUT WARRANTIES OR CONDITIONS OF ANY KIND, either express or implied.
@@ -14,34 +14,35 @@
 // limitations under the License.
 // [Legal]
 
-
 #ifdef PCH_BUILD
 #include "pch.hpp"
 #endif // PCH_BUILD
 
+// sample headers
 #include "Unique_Value_Renderer.h"
 
+// ArcGIS Maps SDK headers
+#include "Basemap.h"
+#include "Envelope.h"
+#include "FeatureLayer.h"
+#include "LayerListModel.h"
 #include "Map.h"
 #include "MapQuickView.h"
-#include "Basemap.h"
-#include "ServiceFeatureTable.h"
-#include "FeatureLayer.h"
-#include "UniqueValueRenderer.h"
-#include "SimpleFillSymbol.h"
-#include "Viewpoint.h"
-#include "Envelope.h"
 #include "MapTypes.h"
-#include "LayerListModel.h"
+#include "ServiceFeatureTable.h"
+#include "SimpleFillSymbol.h"
+#include "SimpleLineSymbol.h"
+#include "SpatialReference.h"
 #include "SymbolTypes.h"
 #include "UniqueValue.h"
 #include "UniqueValueListModel.h"
-#include "SimpleLineSymbol.h"
-#include "SpatialReference.h"
+#include "UniqueValueRenderer.h"
+#include "Viewpoint.h"
 
-#include <QUrl>
+// Qt headers
 #include <QStringList>
+#include <QUrl>
 #include <QVariantList>
-
 
 using namespace Esri::ArcGISRuntime;
 

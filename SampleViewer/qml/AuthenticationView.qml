@@ -13,23 +13,12 @@
 // limitations under the License.
 // [Legal]
 
-#include "pch.hpp"
+import QtQuick
+import Esri.ArcGISRuntimeSamples
+import Esri.ArcGISRuntime.Toolkit as Toolkit
 
-#include <QTextDocument>
-#include <QQuickTextDocument>
-
-#include "QMLHighlighter.h"
-
-#include "syntax_highlighter.h"
-
-SyntaxHighlighter::SyntaxHighlighter(QObject* parent) :
-  QObject(parent)
-{
-}
-
-void SyntaxHighlighter::setHighlighter(QObject* textArea) {
-    QQuickTextDocument* quickTextDocument = qvariant_cast<QQuickTextDocument*>(textArea->property("textDocument"));
-    QTextDocument* document = quickTextDocument->textDocument();
-    QMLHighlighter* highlighter = new QMLHighlighter(document);
-    highlighter->rehighlight();
+Item {
+    Toolkit.AuthenticationView {
+        anchors.fill: parent
+    }
 }

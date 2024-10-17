@@ -1,12 +1,12 @@
 // [WriteFile Name=Animate3DSymbols, Category=Scenes]
 // [Legal]
 // Copyright 2016 Esri.
-
+//
 // Licensed under the Apache License, Version 2.0 (the "License");
 // you may not use this file except in compliance with the License.
 // You may obtain a copy of the License at
 // http://www.apache.org/licenses/LICENSE-2.0
-
+//
 // Unless required by applicable law or agreed to in writing, software
 // distributed under the License is distributed on an "AS IS" BASIS,
 // WITHOUT WARRANTIES OR CONDITIONS OF ANY KIND, either express or implied.
@@ -18,46 +18,49 @@
 #include "pch.hpp"
 #endif // PCH_BUILD
 
+// sample headers
 #include "Animate3DSymbols.h"
+#include "MissionData.h"
 
+// ArcGIS Maps SDK headers
 #include "ArcGISTiledElevationSource.h"
+#include "AttributeListModel.h"
 #include "Camera.h"
 #include "DistanceCompositeSceneSymbol.h"
+#include "ElevationSourceListModel.h"
 #include "GlobeCameraController.h"
+#include "Graphic.h"
+#include "GraphicListModel.h"
 #include "GraphicsOverlay.h"
+#include "GraphicsOverlayListModel.h"
+#include "LayerSceneProperties.h"
 #include "Map.h"
 #include "MapQuickView.h"
+#include "MapTypes.h"
 #include "ModelSceneSymbol.h"
 #include "OrbitGeoElementCameraController.h"
 #include "PointCollection.h"
 #include "Polyline.h"
 #include "PolylineBuilder.h"
+#include "RendererSceneProperties.h"
 #include "Scene.h"
 #include "SceneQuickView.h"
 #include "SceneViewTypes.h"
-#include "SimpleMarkerSymbol.h"
+#include "SimpleLineSymbol.h"
 #include "SimpleMarkerSceneSymbol.h"
+#include "SimpleMarkerSymbol.h"
 #include "SimpleRenderer.h"
 #include "SpatialReference.h"
-#include "MissionData.h"
-#include "MapTypes.h"
-#include "SymbolTypes.h"
-#include "GraphicsOverlayListModel.h"
-#include "GraphicListModel.h"
 #include "Surface.h"
-#include "ElevationSourceListModel.h"
-#include "LayerSceneProperties.h"
-#include "RendererSceneProperties.h"
-#include "AttributeListModel.h"
-#include "Graphic.h"
+#include "SymbolTypes.h"
 #include "Viewpoint.h"
-#include "SimpleLineSymbol.h"
 
+// Qt headers
 #include <QFileInfo>
 #include <QFuture>
+#include <QStandardPaths>
 #include <QStringListModel>
 #include <QtCore/qglobal.h>
-#include <QStandardPaths>
 
 using namespace Esri::ArcGISRuntime;
 
@@ -388,4 +391,3 @@ double Animate3DSymbols::minZoom() const
 {
   return m_followingController ? m_followingController->minCameraDistance() : 0;
 }
-

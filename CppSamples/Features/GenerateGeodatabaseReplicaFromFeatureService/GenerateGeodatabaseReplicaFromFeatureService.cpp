@@ -1,12 +1,12 @@
 // [WriteFile Name=GenerateGeodatabaseReplicaFromFeatureService, Category=Features]
 // [Legal]
 // Copyright 2016 Esri.
-
+//
 // Licensed under the Apache License, Version 2.0 (the "License");
 // you may not use this file except in compliance with the License.
 // You may obtain a copy of the License at
 // http://www.apache.org/licenses/LICENSE-2.0
-
+//
 // Unless required by applicable law or agreed to in writing, software
 // distributed under the License is distributed on an "AS IS" BASIS,
 // WITHOUT WARRANTIES OR CONDITIONS OF ANY KIND, either express or implied.
@@ -18,37 +18,40 @@
 #include "pch.hpp"
 #endif // PCH_BUILD
 
+// sample headers
 #include "GenerateGeodatabaseReplicaFromFeatureService.h"
 
-#include "Map.h"
-#include "MapQuickView.h"
-#include "FeatureLayer.h"
-#include "Basemap.h"
-#include "SpatialReference.h"
-#include "ServiceFeatureTable.h"
-#include "ArcGISTiledLayer.h"
+// ArcGIS Maps SDK headers
 #include "ArcGISFeatureServiceInfo.h"
+#include "ArcGISTiledLayer.h"
+#include "Basemap.h"
 #include "Envelope.h"
+#include "Error.h"
+#include "FeatureLayer.h"
+#include "GenerateGeodatabaseJob.h"
 #include "GenerateGeodatabaseParameters.h"
+#include "GenerateLayerOption.h"
+#include "Geodatabase.h"
+#include "GeodatabaseFeatureTable.h"
 #include "GeodatabaseSyncTask.h"
 #include "GeometryEngine.h"
-#include "GenerateLayerOption.h"
-#include "GeodatabaseFeatureTable.h"
-#include "MapViewTypes.h"
-#include "TileCache.h"
-#include "Error.h"
 #include "IdInfo.h"
 #include "LayerListModel.h"
-#include "GenerateGeodatabaseJob.h"
-#include "TaskTypes.h"
-#include "Geodatabase.h"
-#include "Viewpoint.h"
+#include "Map.h"
+#include "MapQuickView.h"
+#include "MapViewTypes.h"
 #include "Point.h"
+#include "ServiceFeatureTable.h"
+#include "SpatialReference.h"
+#include "TaskTypes.h"
+#include "TileCache.h"
+#include "Viewpoint.h"
 
+// Qt headers
 #include <QFuture>
-#include <QtCore/qglobal.h>
-#include <QUrl>
 #include <QStandardPaths>
+#include <QUrl>
+#include <QtCore/qglobal.h>
 
 using namespace Esri::ArcGISRuntime;
 
@@ -173,7 +176,7 @@ GenerateGeodatabaseParameters GenerateGeodatabaseReplicaFromFeatureService::getU
 
   // set the layer options for all of the service IDs
   QList<GenerateLayerOption> layerOptions;
-  for (const QString& id : qAsConst(m_serviceIds))
+  for (const QString& id : std::as_const(m_serviceIds))
   {
     GenerateLayerOption generateLayerOption(id.toInt());
     layerOptions << generateLayerOption;

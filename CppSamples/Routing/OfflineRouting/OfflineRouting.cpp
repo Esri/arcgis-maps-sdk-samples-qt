@@ -1,12 +1,12 @@
 // [WriteFile Name=OfflineRouting, Category=Routing]
 // [Legal]
 // Copyright 2020 Esri.
-
+//
 // Licensed under the Apache License, Version 2.0 (the "License");
 // you may not use this file except in compliance with the License.
 // You may obtain a copy of the License at
 // http://www.apache.org/licenses/LICENSE-2.0
-
+//
 // Unless required by applicable law or agreed to in writing, software
 // distributed under the License is distributed on an "AS IS" BASIS,
 // WITHOUT WARRANTIES OR CONDITIONS OF ANY KIND, either express or implied.
@@ -18,44 +18,49 @@
 #include "pch.hpp"
 #endif // PCH_BUILD
 
+// sample headers
 #include "OfflineRouting.h"
 
+// ArcGIS Maps SDK headers
 #include "ArcGISTiledLayer.h"
+#include "Basemap.h"
 #include "CompositeSymbol.h"
 #include "Envelope.h"
+#include "Error.h"
 #include "GeometryEngine.h"
 #include "Graphic.h"
+#include "GraphicListModel.h"
 #include "GraphicsOverlay.h"
+#include "GraphicsOverlayListModel.h"
+#include "IdentifyGraphicsOverlayResult.h"
 #include "Map.h"
 #include "MapQuickView.h"
+#include "MapTypes.h"
 #include "PictureMarkerSymbol.h"
+#include "Point.h"
 #include "Polyline.h"
+#include "Route.h"
 #include "RouteParameters.h"
 #include "RouteResult.h"
 #include "RouteTask.h"
+#include "RouteTaskInfo.h"
 #include "SimpleLineSymbol.h"
 #include "SimpleRenderer.h"
+#include "SpatialReference.h"
 #include "Stop.h"
+#include "SymbolTypes.h"
 #include "TextSymbol.h"
 #include "TileCache.h"
-#include "MapTypes.h"
-#include "SymbolTypes.h"
-#include "Error.h"
-#include "GraphicsOverlayListModel.h"
-#include "GraphicListModel.h"
-#include "RouteTaskInfo.h"
 #include "TravelMode.h"
-#include "IdentifyGraphicsOverlayResult.h"
-#include "Route.h"
-#include "Basemap.h"
-#include "Point.h"
-#include "SpatialReference.h"
 
-#include <QUuid>
-#include <memory>
-#include <QScopedPointer>
+// Qt headers
 #include <QFileInfo>
+#include <QScopedPointer>
 #include <QStandardPaths>
+#include <QUuid>
+
+// STL headers
+#include <memory>
 
 using namespace Esri::ArcGISRuntime;
 
@@ -262,7 +267,7 @@ void OfflineRouting::findRoute()
 
     // clear old route
     m_routeOverlay->graphics()->clear();
-    Polyline routeGeometry = qAsConst(routeResult).routes().first().routeGeometry();
+    Polyline routeGeometry = std::as_const(routeResult).routes().first().routeGeometry();
     Graphic* routeGraphic = new Graphic(routeGeometry, this);
 
     m_routeOverlay->graphics()->append(routeGraphic);

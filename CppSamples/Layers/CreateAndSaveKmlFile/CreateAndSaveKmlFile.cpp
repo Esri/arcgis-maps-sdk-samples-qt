@@ -1,12 +1,12 @@
 // [WriteFile Name=CreateAndSaveKmlFile, Category=Layers]
 // [Legal]
 // Copyright 2019 Esri.
-
+//
 // Licensed under the Apache License, Version 2.0 (the "License");
 // you may not use this file except in compliance with the License.
 // You may obtain a copy of the License at
 // http://www.apache.org/licenses/LICENSE-2.0
-
+//
 // Unless required by applicable law or agreed to in writing, software
 // distributed under the License is distributed on an "AS IS" BASIS,
 // WITHOUT WARRANTIES OR CONDITIONS OF ANY KIND, either express or implied.
@@ -18,30 +18,33 @@
 #include "pch.hpp"
 #endif // PCH_BUILD
 
+// sample headers
 #include "CreateAndSaveKmlFile.h"
 
-#include "Map.h"
-#include "MapQuickView.h"
-#include "PolygonBuilder.h"
-#include "PolylineBuilder.h"
-#include "KmlDocument.h"
-#include "KmlPlacemark.h"
-#include "KmlNodeListModel.h"
+// ArcGIS Maps SDK headers
+#include "Envelope.h"
+#include "Error.h"
 #include "KmlDataset.h"
-#include "KmlLayer.h"
-#include "KmlLineStyle.h"
+#include "KmlDocument.h"
+#include "KmlGeometry.h"
 #include "KmlIcon.h"
 #include "KmlIconStyle.h"
+#include "KmlLayer.h"
+#include "KmlLineStyle.h"
+#include "KmlNodeListModel.h"
+#include "KmlPlacemark.h"
 #include "KmlPolygonStyle.h"
 #include "KmlStyle.h"
-#include "Error.h"
-#include "MapTypes.h"
 #include "LayerListModel.h"
-#include "KmlGeometry.h"
+#include "Map.h"
+#include "MapQuickView.h"
+#include "MapTypes.h"
+#include "PolygonBuilder.h"
+#include "PolylineBuilder.h"
 #include "SpatialReference.h"
 #include "Viewpoint.h"
-#include "Envelope.h"
 
+// Qt headers
 #include <QFuture>
 
 using namespace Esri::ArcGISRuntime;
