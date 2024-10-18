@@ -122,7 +122,10 @@ void ShowDeviceLocationUsingIndoorPositioning::checkPermissions()
     emit bluetoothPermissionDenied();
   }
 
-  if (qApp->checkPermission(QLocationPermission{}) == Qt::PermissionStatus::Denied)
+  QLocationPermission locationPermission{};
+  locationPermission.setAccuracy(QLocationPermission::Accuracy::Precise);
+  locationPermission.setAvailability(QLocationPermission::Availability::WhenInUse);
+  if (qApp->checkPermission(locationPermission) == Qt::PermissionStatus::Denied)
   {
     emit locationPermissionDenied();
   }
