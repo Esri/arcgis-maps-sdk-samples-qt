@@ -35,6 +35,7 @@
 
 #if (QT_VERSION >= QT_VERSION_CHECK(6, 6, 0)) || defined(Q_OS_IOS) || defined(Q_OS_MACOS) || defined(Q_OS_ANDROID)
 #define PERMISSIONS_PLATFORM
+#include <QPermissions>
 #endif
 
 using namespace Esri::ArcGISRuntime;

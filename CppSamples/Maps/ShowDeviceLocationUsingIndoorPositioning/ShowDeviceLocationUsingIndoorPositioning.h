@@ -23,7 +23,6 @@
 // Qt headers
 #include <QMap>
 #include <QObject>
-#include <QPermissions>
 
 namespace Esri::ArcGISRuntime
 {
