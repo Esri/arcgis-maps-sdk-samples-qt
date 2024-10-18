@@ -57,7 +57,11 @@ ios {
     OTHER_FILES += \
         $$PWD/Info.plist
 
-    QMAKE_INFO_PLIST = $$PWD/Info.plist
+    QMAKE_INFO_PLIST = $$PWD/ios/Info.plist
+}
+
+macx {
+    QMAKE_INFO_PLIST = $$PWD/mac/Info.plist
 }
 
 android {
