@@ -65,8 +65,8 @@ ios {
 # path of the toolkit relative to the sample
 ARCGIS_TOOLKIT_PATH = $$PWD/../../../arcgis-maps-sdk-toolkit-qt
 
-exists($$ARCGIS_TOOLKIT_PATH/augmentedreality/CppApi/ArCppApi.pri) {
-    include($$ARCGIS_TOOLKIT_PATH/augmentedreality/CppApi/ArCppApi.pri)
+exists($$ARCGIS_TOOLKIT_PATH/augmented_reality/ArApi/ArApi.pri) {
+    include($$ARCGIS_TOOLKIT_PATH/augmented_reality/ArApi/ArApi.pri)
 } else {
     error(ARCGIS_TOOLKIT_PATH is missing which is required to build this application.)
 }
