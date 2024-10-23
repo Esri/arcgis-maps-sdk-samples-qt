@@ -52,6 +52,11 @@
 #include <QUrl>
 #include <QUuid>
 
+#if (QT_VERSION >= QT_VERSION_CHECK(6, 6, 0)) || defined(Q_OS_IOS) || defined(Q_OS_MACOS) || defined(Q_OS_ANDROID)
+#define PERMISSIONS_PLATFORM
+#include <QPermissions>
+#endif
+
 using namespace Esri::ArcGISRuntime;
 
 FindPlace::FindPlace(QQuickItem* parent /* = nullptr */):
@@ -95,6 +100,9 @@ void FindPlace::componentComplete()
   // initialize callout
   m_mapView->calloutData()->setVisible(false);
   m_calloutData = m_mapView->calloutData();
+
+  // start location permission
+  startLocationPermission();
 
   // connect mapview signals
   connectSignals();
@@ -141,6 +149,26 @@ void FindPlace::connectSignals()
       emit showCallout();
     });
   });
+}
+
+void FindPlace::startLocationPermission()
+{
+#ifdef PERMISSIONS_PLATFORM
+  QLocationPermission locationPermission{};
+  locationPermission.setAccuracy(QLocationPermission::Accuracy::Precise);
+  locationPermission.setAvailability(QLocationPermission::Availability::WhenInUse);
+  switch (qApp->checkPermission(locationPermission))
+  {
+  case Qt::PermissionStatus::Undetermined:
+    qApp->requestPermission(locationPermission, this, &FindPlace::startLocationPermission);
+    return;
+  case Qt::PermissionStatus::Granted:
+    return;
+  case Qt::PermissionStatus::Denied:
+    emit locationPermissionDenied();
+    return;
+  }
+#endif
 }
 
 void FindPlace::addGraphicsOverlay()
