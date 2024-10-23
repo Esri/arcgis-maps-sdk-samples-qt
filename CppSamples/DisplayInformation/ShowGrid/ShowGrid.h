@@ -17,6 +17,8 @@
 #ifndef SHOWGRID_H
 #define SHOWGRID_H
 
+#include <QObject>
+
 namespace Esri::ArcGISRuntime
 {
 class Grid;
@@ -27,8 +29,6 @@ class SceneQuickView;
 class SimpleLineSymbol;
 class TextSymbol;
 }
-
-#include <QObject>
 
 Q_MOC_INCLUDE("MapQuickView.h");
 Q_MOC_INCLUDE("SceneQuickView.h");
@@ -43,6 +43,8 @@ class ShowGrid : public QObject
   Q_PROPERTY(QStringList viewTypes MEMBER m_viewTypes CONSTANT)
   Q_PROPERTY(QString currentGridType MEMBER m_currentGridType NOTIFY propertiesChanged)
   Q_PROPERTY(QStringList gridTypes MEMBER m_gridTypes CONSTANT)
+  Q_PROPERTY(bool gridVisible MEMBER m_gridVisible NOTIFY propertiesChanged)
+  Q_PROPERTY(bool labelsVisible MEMBER m_labelsVisible NOTIFY propertiesChanged)
   Q_PROPERTY(QString currentLineColor MEMBER m_currentLineColor NOTIFY propertiesChanged)
   Q_PROPERTY(QStringList lineColors MEMBER m_lineColors CONSTANT)
   Q_PROPERTY(QString currentLabelColor MEMBER m_currentLabelColor NOTIFY propertiesChanged)
@@ -88,18 +90,43 @@ private:
   // Properties
   QString m_currentViewType;
   QString m_currentGridType;
+  bool m_gridVisible = true;
+  bool m_labelsVisible = true;
   QString m_currentLineColor;
   QString m_currentLabelColor;
   QString m_currentLabelPosition;
   QString m_currentLabelFormat;
 
   // Constants
-  QStringList m_viewTypes = {"MapView", "SceneView"};
-  QStringList m_gridTypes = {"LatLong", "MGRS", "UTM", "USNG"};
-  QStringList m_lineColors = {"White", "Red", "Blue"};
-  QStringList m_labelColors = {"Black", "Red", "Blue"};
-  QStringList m_labelPositions = {"Geographic", "Top Left", "Top Right", "Bottom Left", "Bottom Right", "Center", "All sides"};
-  QStringList m_labelFormats = {"Decimal Degrees", "Degrees Minutes Seconds"};
+  const QString s_mapView = QStringLiteral("MapView");
+  const QString s_sceneView = QStringLiteral("SceneView");
+  const QStringList m_viewTypes = {s_mapView, s_sceneView};
+
+  const QString s_latLong = QStringLiteral("LatLong");
+  const QString s_mgrs = QStringLiteral("MGRS");
+  const QString s_utm = QStringLiteral("UTM");
+  const QString s_usng = QStringLiteral("USNG");
+  const QStringList m_gridTypes = {s_latLong, s_mgrs, s_utm, s_usng};
+
+  const QString s_white = QStringLiteral("White");
+  const QString s_red = QStringLiteral("Red");
+  const QString s_blue = QStringLiteral("Blue");
+  const QString s_black = QStringLiteral("Black");
+  const QStringList m_lineColors = {s_white, s_red, s_blue};
+  const QStringList m_labelColors = {s_black, s_red, s_blue};
+
+  const QString s_geographic = QStringLiteral("Geographic");
+  const QString s_topLeft = QStringLiteral("Top Left");
+  const QString s_topRight = QStringLiteral("Top Right");
+  const QString s_bottomLeft = QStringLiteral("Bottom Left");
+  const QString s_bottomRight = QStringLiteral("Bottom Right");
+  const QString s_center = QStringLiteral("Center");
+  const QString s_allSides = QStringLiteral("All sides");
+  const QStringList m_labelPositions = {s_geographic, s_topLeft, s_topRight, s_bottomLeft, s_bottomRight, s_center, s_allSides};
+
+  const QString s_decimalDegrees = QStringLiteral("Decimal Degrees");
+  const QString s_degreesMinutesSeconds = QStringLiteral("Degrees Minutes Seconds");
+  const QStringList m_labelFormats = {s_decimalDegrees, s_degreesMinutesSeconds};
 };
 
 #endif // SHOWGRID_H

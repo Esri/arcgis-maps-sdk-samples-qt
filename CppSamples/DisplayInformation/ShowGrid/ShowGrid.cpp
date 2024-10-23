@@ -55,11 +55,14 @@ ShowGrid::ShowGrid(QObject* parent /* = nullptr */):
   // add the elevation source to the scene to display elevation
   m_scene->baseSurface()->elevationSources()->append(elevationSource);
 
-  m_currentViewType = "MapView";
+  // Set the sample's initial GeoView type to MapView
+  m_currentViewType = s_mapView;
 
-  double targetScale = 6450785;
+  // Set the initial viewpoint of the map
+  constexpr double targetScale = 6450785;
   m_map->setInitialViewpoint(Viewpoint(Point(-10336141.70018318, 5418213.05332071, SpatialReference::webMercator()), targetScale));
 
+  // Set the intial grid to LatitudeLongitudeGrid
   m_grid = new LatitudeLongitudeGrid(this);
 }
 
@@ -115,8 +118,12 @@ void ShowGrid::setSceneView(SceneQuickView* sceneView)
 
 void ShowGrid::setViewType(const QString& viewType)
 {
+  if (m_currentViewType == viewType)
+    return;
+
   m_currentViewType = viewType;
-  if (viewType == "MapView")
+
+  if (viewType == s_mapView)
   {
     m_mapView->setViewpointAsync(m_sceneView->currentViewpoint(ViewpointType::BoundingGeometry), 0);
 
@@ -126,7 +133,7 @@ void ShowGrid::setViewType(const QString& viewType)
     m_sceneView->setGrid(nullptr);
     m_mapView->setGrid(m_grid);
   }
-  else if (viewType == "SceneView")
+  else if (viewType == s_sceneView)
   {
     m_sceneView->setViewpointAsync(m_mapView->currentViewpoint(ViewpointType::BoundingGeometry), 0);
 
@@ -142,22 +149,25 @@ void ShowGrid::setViewType(const QString& viewType)
 
 void ShowGrid::setGridType(const QString& gridType)
 {
+  if (m_currentGridType == gridType)
+    return;
+
+  m_currentGridType = gridType;
+
   if (m_grid)
   {
     delete m_grid;
     m_grid = nullptr;
   }
 
-  m_currentGridType = gridType;
-
   // Create a new Grid of the selected type
-  if (gridType == "LatLong")
+  if (gridType == s_latLong)
     m_grid = new LatitudeLongitudeGrid(this);
-  else if (gridType == "MGRS")
+  else if (gridType == s_mgrs)
     m_grid = new MGRSGrid(this);
-  else if (gridType == "UTM")
+  else if (gridType == s_utm)
     m_grid = new UTMGrid(this);
-  else if (gridType == "USNG")
+  else if (gridType == s_usng)
     m_grid = new USNGGrid(this);
 
   // Set the grid on the current view
@@ -167,27 +177,40 @@ void ShowGrid::setGridType(const QString& gridType)
     m_sceneView->setGrid(m_grid);
 
   // Set properties from current UI values
+  setGridVisible(m_gridVisible);
+  setLabelsVisible(m_labelsVisible);
   setLineColor(m_currentLineColor);
   setLabelColor(m_currentLabelColor);
   setLabelPosition(m_currentLabelPosition);
   setLabelFormat(m_currentLabelFormat);
-
-  emit propertiesChanged();
 }
 
 void ShowGrid::setGridVisible(bool visible)
 {
+  if (m_grid->isVisible() == visible)
+    return;
+
+  m_gridVisible = visible;
   m_grid->setVisible(visible);
+
+  emit propertiesChanged();
 }
 
 void ShowGrid::setLabelsVisible(bool visible)
 {
+  if (m_grid->isLabelsVisible() == visible)
+    return;
+
+  m_labelsVisible = visible;
   m_grid->setLabelsVisible(visible);
+
+  emit propertiesChanged();
 }
 
 void ShowGrid::setLineColor(const QString& lineColor)
-{
+{  
   m_currentLineColor = lineColor;
+
   SimpleLineSymbol* lineSymbol = static_cast<SimpleLineSymbol*>(m_grid->lineSymbol(0));
   lineSymbol->setColor(lineColor.toLower());
 
@@ -201,6 +224,7 @@ void ShowGrid::setLineColor(const QString& lineColor)
 void ShowGrid::setLabelColor(const QString& labelColor)
 {
   m_currentLabelColor = labelColor;
+
   TextSymbol* labelSymbol = static_cast<TextSymbol*>(m_grid->textSymbol(0));
   labelSymbol->setColor(labelColor.toLower());
 
@@ -214,19 +238,20 @@ void ShowGrid::setLabelColor(const QString& labelColor)
 void ShowGrid::setLabelPosition(const QString& labelPosition)
 {
   m_currentLabelPosition = labelPosition;
-  if (labelPosition == "Geographic")
+
+  if (labelPosition == s_geographic)
     m_grid->setLabelPosition(GridLabelPosition::Geographic);
-  else if (labelPosition == "Bottom Left")
+  else if (labelPosition == s_bottomLeft)
     m_grid->setLabelPosition(GridLabelPosition::BottomLeft);
-  else if (labelPosition == "Bottom Right")
+  else if (labelPosition == s_bottomRight)
     m_grid->setLabelPosition(GridLabelPosition::BottomRight);
-  else if (labelPosition == "Top Left")
+  else if (labelPosition == s_topLeft)
     m_grid->setLabelPosition(GridLabelPosition::TopLeft);
-  else if (labelPosition == "Top Right")
+  else if (labelPosition == s_topRight)
     m_grid->setLabelPosition(GridLabelPosition::TopRight);
-  else if (labelPosition == "Center")
+  else if (labelPosition == s_center)
     m_grid->setLabelPosition(GridLabelPosition::Center);
-  else if (labelPosition == "All sides")
+  else if (labelPosition == s_allSides)
     m_grid->setLabelPosition(GridLabelPosition::AllSides);
 
   emit propertiesChanged();
@@ -239,9 +264,9 @@ void ShowGrid::setLabelFormat(const QString& labelFormat)
     return;
 
   m_currentLabelFormat = labelFormat;
-  if (labelFormat == "Decimal Degrees")
+  if (labelFormat == s_decimalDegrees)
     static_cast<LatitudeLongitudeGrid*>(m_grid)->setLabelFormat(LatitudeLongitudeGridLabelFormat::DecimalDegrees);
-  else if (labelFormat == "Degrees Minutes Seconds")
+  else if (labelFormat == s_degreesMinutesSeconds)
     static_cast<LatitudeLongitudeGrid*>(m_grid)->setLabelFormat(LatitudeLongitudeGridLabelFormat::DegreesMinutesSeconds);
 
   emit propertiesChanged();

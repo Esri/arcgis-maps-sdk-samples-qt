@@ -1,6 +1,6 @@
 {
-    "category": "Show grid",
-    "description": "Display coordinate system grids including Latitude/Longitude, MGRS, UTM and USNG on a map view or scene view. Additionally customize the grid by changing the label visibility, label formatting, and the color of grid lines and grid labels.",
+    "category": "Display information",
+    "description": "Display and customize coordinate system grids including Latitude/Longitude, MGRS, UTM and USNG on a map view or scene view.",
     "featured": false,
     "ignore": false,
     "images": [
@@ -30,7 +30,9 @@
         "USNGGrid",
         "UTMGrid"
     ],
-    "redirect_from": "",
+    "redirect_from": [
+        "/qt/latest/cpp/sample-code/sample-qt-displaygrid.htm"
+    ],
     "relevant_apis": [
         "ArcGISGrid",
         "LatitudeLongitudeGrid",

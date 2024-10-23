@@ -1,12 +1,7 @@
 // [WriteFile Name=ShowGrid, Category=DisplayInformation]
 // [Legal]
-<<<<<<< HEAD:CppSamples/DisplayInformation/ShowGrid/ShowGrid.qml
 // Copyright 2024 Esri.
-
-=======
-// Copyright 2016 Esri.
 //
->>>>>>> v.next:CppSamples/DisplayInformation/DisplayGrid/DisplayGrid.qml
 // Licensed under the Apache License, Version 2.0 (the "License");
 // you may not use this file except in compliance with the License.
 // You may obtain a copy of the License at
@@ -60,8 +55,7 @@ Item {
 
     Row {
         id: viewButtonsRow
-        anchors
-        {
+        anchors {
             top: parent.top
             horizontalCenter: parent.horizontalCenter
             topMargin: 5
@@ -261,7 +255,7 @@ Item {
             Switch {
                 id: gridVisibleSwitch
                 Layout.rightMargin: 10
-                checked: true
+                checked: gridSample.gridVisible
                 onCheckedChanged: gridSample.setGridVisible(checked);
             }
 
@@ -275,7 +269,7 @@ Item {
             Switch {
                 id: labelVisibleSwitch
                 Layout.rightMargin: 10
-                checked: true
+                checked: gridSample.labelsVisible
                 enabled: gridVisibleSwitch.checked
                 onCheckedChanged: gridSample.setLabelsVisible(checked);
             }
