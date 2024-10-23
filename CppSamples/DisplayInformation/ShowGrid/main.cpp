@@ -1,5 +1,4 @@
-// [Legal]
-// Copyright 2015 Esri.
+// Copyright 2024 Esri.
 //
 // Licensed under the Apache License, Version 2.0 (the "License");
 // you may not use this file except in compliance with the License.
@@ -11,33 +10,24 @@
 // WITHOUT WARRANTIES OR CONDITIONS OF ANY KIND, either express or implied.
 // See the License for the specific language governing permissions and
 // limitations under the License.
-// [Legal]
 
-// sample headers
-#include "DisplayGrid.h"
+#include "ShowGrid.h"
 
-// ArcGIS Maps SDK headers
 #include "ArcGISRuntimeEnvironment.h"
 
-// Qt headers
 #include <QCommandLineParser>
 #include <QDir>
 #include <QGuiApplication>
-#include <QQmlEngine>
-#include <QQuickView>
+#include <QQmlApplicationEngine>
 
-// Platform specific headers
 #ifdef Q_OS_WIN
 #include <Windows.h>
 #endif
 
-#define STRINGIZE(x) #x
-#define QUOTE(x) STRINGIZE(x)
-
 int main(int argc, char *argv[])
 {
   QGuiApplication app(argc, argv);
-  app.setApplicationName(QString("Display Grid"));
+  app.setApplicationName(QString("ShowGrid"));
 
   // Use of ArcGIS location services, such as basemap styles, geocoding, and routing services,
   // requires an access token. For more information see
@@ -57,40 +47,28 @@ int main(int argc, char *argv[])
 
   if (accessToken.isEmpty())
   {
-      qWarning() << "Use of ArcGIS location services, such as the basemap styles service, requires" <<
-                    "you to authenticate with an ArcGIS account or set the API Key property.";
+    qWarning() << "Use of ArcGIS location services, such as the basemap styles service, requires" <<
+                  "you to authenticate with an ArcGIS account or set the API Key property.";
   }
   else
   {
-      Esri::ArcGISRuntime::ArcGISRuntimeEnvironment::setApiKey(accessToken);
+    Esri::ArcGISRuntime::ArcGISRuntimeEnvironment::setApiKey(accessToken);
   }
 
   // Initialize the sample
-  DisplayGrid::init();
+  ShowGrid::init();
 
   // Initialize application view
-  QQuickView view;
-  view.setResizeMode(QQuickView::SizeRootObjectToView);
-
+  QQmlApplicationEngine engine;
   // Add the import Path
-  view.engine()->addImportPath(QDir(QCoreApplication::applicationDirPath()).filePath("qml"));
+  engine.addImportPath(QDir(QCoreApplication::applicationDirPath()).filePath("qml"));
 
-  QString arcGISRuntimeImportPath = QUOTE(ARCGIS_RUNTIME_IMPORT_PATH);
-
- #if defined(LINUX_PLATFORM_REPLACEMENT)
-  // on some linux platforms the string 'linux' is replaced with 1
-  // fix the replacement paths which were created
-  QString replaceString = QUOTE(LINUX_PLATFORM_REPLACEMENT);
-  arcGISRuntimeImportPath = arcGISRuntimeImportPath.replace(replaceString, "linux", Qt::CaseSensitive);
- #endif
-
-  // Add the Runtime and Extras path
-  view.engine()->addImportPath(arcGISRuntimeImportPath);
+#ifdef ARCGIS_RUNTIME_IMPORT_PATH_2
+  engine.addImportPath(ARCGIS_RUNTIME_IMPORT_PATH_2);
+#endif
 
   // Set the source
-  view.setSource(QUrl("qrc:/Samples/DisplayInformation/DisplayGrid/DisplayGrid.qml"));
-
-  view.show();
+  engine.load(QUrl("qrc:/Samples/DisplayInformation/ShowGrid/main.qml"));
 
   return app.exec();
 }

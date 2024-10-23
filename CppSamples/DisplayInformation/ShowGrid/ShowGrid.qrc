@@ -1,10 +1,11 @@
 <RCC>
-    <qresource prefix="/Samples/DisplayInformation/DisplayGrid">
+    <qresource prefix="/Samples/DisplayInformation/ShowGrid">
         <file alias="sample.json">README.metadata.json</file>
+        <file>ShowGrid.qml</file>
+        <file>ShowGrid.h</file>
+        <file>ShowGrid.cpp</file>
+        <file>main.qml</file>
         <file>screenshot.png</file>
-        <file>DisplayGrid.qml</file>
-	    <file>DisplayGrid.h</file>
-	    <file>DisplayGrid.cpp</file>
         <file>README.md</file>
     </qresource>
 </RCC>
