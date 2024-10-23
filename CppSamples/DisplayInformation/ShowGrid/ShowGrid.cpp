@@ -92,7 +92,7 @@ void ShowGrid::setMapView(MapQuickView* mapView)
 
   m_mapView->setGrid(m_grid);
 
-  emit viewChanged();
+  emit mapViewChanged();
 }
 
 SceneQuickView* ShowGrid::sceneView() const
@@ -112,7 +112,7 @@ void ShowGrid::setSceneView(SceneQuickView* sceneView)
   // Set the SceneView initially to be invisible
   m_sceneView->setVisible(false);
 
-  emit viewChanged();
+  emit sceneViewChanged();
 }
 
 
@@ -144,7 +144,7 @@ void ShowGrid::setViewType(const QString& viewType)
     m_sceneView->setGrid(m_grid);
   }
 
-  emit propertiesChanged();
+  emit viewTypeChanged();
 }
 
 void ShowGrid::setGridType(const QString& gridType)
@@ -183,6 +183,8 @@ void ShowGrid::setGridType(const QString& gridType)
   setLabelColor(m_currentLabelColor);
   setLabelPosition(m_currentLabelPosition);
   setLabelFormat(m_currentLabelFormat);
+
+  emit gridTypeChanged();
 }
 
 void ShowGrid::setGridVisible(bool visible)
@@ -193,7 +195,7 @@ void ShowGrid::setGridVisible(bool visible)
   m_gridVisible = visible;
   m_grid->setVisible(visible);
 
-  emit propertiesChanged();
+  emit gridVisibleChanged();
 }
 
 void ShowGrid::setLabelsVisible(bool visible)
@@ -204,7 +206,7 @@ void ShowGrid::setLabelsVisible(bool visible)
   m_labelsVisible = visible;
   m_grid->setLabelsVisible(visible);
 
-  emit propertiesChanged();
+  emit labelsVisibleChanged();
 }
 
 void ShowGrid::setLineColor(const QString& lineColor)
@@ -218,7 +220,7 @@ void ShowGrid::setLineColor(const QString& lineColor)
   for (int level = 0; level < m_grid->levelCount(); ++level)
     m_grid->setLineSymbol(level, lineSymbol);
 
-  emit propertiesChanged();
+  emit lineColorChanged();
 }
 
 void ShowGrid::setLabelColor(const QString& labelColor)
@@ -232,7 +234,7 @@ void ShowGrid::setLabelColor(const QString& labelColor)
   for (int level = 0; level < m_grid->levelCount(); ++level)
     m_grid->setTextSymbol(level, labelSymbol);
 
-  emit propertiesChanged();
+  emit labelColorChanged();
 }
 
 void ShowGrid::setLabelPosition(const QString& labelPosition)
@@ -254,20 +256,21 @@ void ShowGrid::setLabelPosition(const QString& labelPosition)
   else if (labelPosition == s_allSides)
     m_grid->setLabelPosition(GridLabelPosition::AllSides);
 
-  emit propertiesChanged();
+  emit labelPositionChanged();
 }
 
 void ShowGrid::setLabelFormat(const QString& labelFormat)
 {
+  m_currentLabelFormat = labelFormat;
+
   // Only LatitudeLongitudeGrid supports label formats
   if (m_grid->gridType() != GridType::LatitudeLongitudeGrid)
     return;
 
-  m_currentLabelFormat = labelFormat;
   if (labelFormat == s_decimalDegrees)
     static_cast<LatitudeLongitudeGrid*>(m_grid)->setLabelFormat(LatitudeLongitudeGridLabelFormat::DecimalDegrees);
   else if (labelFormat == s_degreesMinutesSeconds)
     static_cast<LatitudeLongitudeGrid*>(m_grid)->setLabelFormat(LatitudeLongitudeGridLabelFormat::DegreesMinutesSeconds);
 
-  emit propertiesChanged();
+  emit labelFormatChanged();
 }

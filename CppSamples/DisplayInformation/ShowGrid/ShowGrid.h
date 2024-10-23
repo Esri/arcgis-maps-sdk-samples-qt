@@ -37,21 +37,21 @@ class ShowGrid : public QObject
 {
   Q_OBJECT
 
-  Q_PROPERTY(Esri::ArcGISRuntime::MapQuickView* mapView READ mapView WRITE setMapView NOTIFY viewChanged)
-  Q_PROPERTY(Esri::ArcGISRuntime::SceneQuickView* sceneView READ sceneView WRITE setSceneView NOTIFY viewChanged)
-  Q_PROPERTY(QString currentViewType MEMBER m_currentViewType NOTIFY propertiesChanged)
+  Q_PROPERTY(Esri::ArcGISRuntime::MapQuickView* mapView READ mapView WRITE setMapView NOTIFY mapViewChanged)
+  Q_PROPERTY(Esri::ArcGISRuntime::SceneQuickView* sceneView READ sceneView WRITE setSceneView NOTIFY sceneViewChanged)
+  Q_PROPERTY(QString currentViewType MEMBER m_currentViewType NOTIFY viewTypeChanged)
   Q_PROPERTY(QStringList viewTypes MEMBER m_viewTypes CONSTANT)
-  Q_PROPERTY(QString currentGridType MEMBER m_currentGridType NOTIFY propertiesChanged)
+  Q_PROPERTY(QString currentGridType MEMBER m_currentGridType NOTIFY gridTypeChanged)
   Q_PROPERTY(QStringList gridTypes MEMBER m_gridTypes CONSTANT)
-  Q_PROPERTY(bool gridVisible MEMBER m_gridVisible NOTIFY propertiesChanged)
-  Q_PROPERTY(bool labelsVisible MEMBER m_labelsVisible NOTIFY propertiesChanged)
-  Q_PROPERTY(QString currentLineColor MEMBER m_currentLineColor NOTIFY propertiesChanged)
+  Q_PROPERTY(bool gridVisible MEMBER m_gridVisible NOTIFY gridVisibleChanged)
+  Q_PROPERTY(bool labelsVisible MEMBER m_labelsVisible NOTIFY labelsVisibleChanged)
+  Q_PROPERTY(QString currentLineColor MEMBER m_currentLineColor NOTIFY lineColorChanged)
   Q_PROPERTY(QStringList lineColors MEMBER m_lineColors CONSTANT)
-  Q_PROPERTY(QString currentLabelColor MEMBER m_currentLabelColor NOTIFY propertiesChanged)
+  Q_PROPERTY(QString currentLabelColor MEMBER m_currentLabelColor NOTIFY labelColorChanged)
   Q_PROPERTY(QStringList labelColors MEMBER m_labelColors CONSTANT)
-  Q_PROPERTY(QString currentLabelPosition MEMBER m_currentLabelPosition NOTIFY propertiesChanged)
+  Q_PROPERTY(QString currentLabelPosition MEMBER m_currentLabelPosition NOTIFY labelPositionChanged)
   Q_PROPERTY(QStringList labelFormats MEMBER m_labelFormats CONSTANT)
-  Q_PROPERTY(QString currentLabelFormat MEMBER m_currentLabelFormat NOTIFY propertiesChanged)
+  Q_PROPERTY(QString currentLabelFormat MEMBER m_currentLabelFormat NOTIFY labelFormatChanged)
   Q_PROPERTY(QStringList labelPositions MEMBER m_labelPositions CONSTANT)
 
 public:
@@ -70,8 +70,16 @@ public:
   Q_INVOKABLE void setLabelFormat(const QString& labelFormat);
 
 signals:
-  void viewChanged();
-  void propertiesChanged();
+  void mapViewChanged();
+  void sceneViewChanged();
+  void viewTypeChanged();
+  void gridTypeChanged();
+  void gridVisibleChanged();
+  void labelsVisibleChanged();
+  void lineColorChanged();
+  void labelColorChanged();
+  void labelPositionChanged();
+  void labelFormatChanged();
 
 private:
   // Declare private methods
