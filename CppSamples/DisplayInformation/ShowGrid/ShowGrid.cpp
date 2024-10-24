@@ -123,26 +123,16 @@ void ShowGrid::setViewType(const QString& viewType)
 
   m_currentViewType = viewType;
 
-  if (viewType == s_mapView)
-  {
-    m_mapView->setViewpointAsync(m_sceneView->currentViewpoint(ViewpointType::BoundingGeometry), 0);
+  // MapView and SceneView share the same inherited class GeoView
+  GeoView* newGeoView = viewType == s_mapView ? dynamic_cast<GeoView*>(m_mapView) : dynamic_cast<GeoView*>(m_sceneView);
+  GeoView* oldGeoView = viewType != s_mapView ? dynamic_cast<GeoView*>(m_mapView) : dynamic_cast<GeoView*>(m_sceneView);
 
-    m_mapView->setVisible(true);
-    m_sceneView->setVisible(false);
+  // Set the viewpoint of the new view to the current viewpoint of the old view
+  newGeoView->setViewpointAsync(oldGeoView->currentViewpoint(ViewpointType::BoundingGeometry), 0);
 
-    m_sceneView->setGrid(nullptr);
-    m_mapView->setGrid(m_grid);
-  }
-  else if (viewType == s_sceneView)
-  {
-    m_sceneView->setViewpointAsync(m_mapView->currentViewpoint(ViewpointType::BoundingGeometry), 0);
-
-    m_mapView->setVisible(false);
-    m_sceneView->setVisible(true);
-
-    m_mapView->setGrid(nullptr);
-    m_sceneView->setGrid(m_grid);
-  }
+  // The Grid cannot be shared between a MapView and a SceneView so we need to unset it first
+  oldGeoView->setGrid(nullptr);
+  newGeoView->setGrid(m_grid);
 
   emit viewTypeChanged();
 }
@@ -171,7 +161,7 @@ void ShowGrid::setGridType(const QString& gridType)
     m_grid = new USNGGrid(this);
 
   // Set the grid on the current view
-  if (m_mapView->isVisible())
+  if (m_currentViewType == s_mapView)
     m_mapView->setGrid(m_grid);
   else
     m_sceneView->setGrid(m_grid);
