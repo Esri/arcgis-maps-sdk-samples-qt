@@ -102,7 +102,7 @@ void ShowDeviceLocationUsingIndoorPositioning::requestBluetoothThenLocationPermi
     Q_UNUSED(permission);
     requestLocationPermissionThenSetupILDS();
   });
-  #endif
+  #endif // PERMISSIONS_PLATFORM
 }
 
 void ShowDeviceLocationUsingIndoorPositioning::requestLocationPermissionThenSetupILDS()
