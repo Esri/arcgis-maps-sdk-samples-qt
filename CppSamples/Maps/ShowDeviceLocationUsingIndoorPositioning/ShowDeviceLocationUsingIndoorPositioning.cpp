@@ -117,7 +117,7 @@ void ShowDeviceLocationUsingIndoorPositioning::requestLocationPermissionThenSetu
     checkPermissions();
     setupIndoorsLocationDataSource();
   });
-  #endif
+  #endif // PERMISSIONS_PLATFORM
 }
 
 void ShowDeviceLocationUsingIndoorPositioning::checkPermissions()
