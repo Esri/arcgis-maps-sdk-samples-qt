@@ -135,7 +135,7 @@ void ShowDeviceLocationUsingIndoorPositioning::checkPermissions()
   {
     emit locationPermissionDenied();
   }
-  #endif
+  #endif // PERMISSIONS_PLATFORM
 }
 
 // This function uses a helper class `IndoorsLocationDataSourceCreator` to construct the IndoorsLocationDataSource
