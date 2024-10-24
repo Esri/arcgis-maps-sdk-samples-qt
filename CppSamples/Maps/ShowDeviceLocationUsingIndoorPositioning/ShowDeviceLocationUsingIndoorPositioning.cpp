@@ -96,15 +96,18 @@ void ShowDeviceLocationUsingIndoorPositioning::setMapView(MapQuickView* mapView)
 
 void ShowDeviceLocationUsingIndoorPositioning::requestBluetoothThenLocationPermissions()
 {
+  #ifdef PERMISSIONS_PLATFORM
     qApp->requestPermission(QBluetoothPermission{}, [this](const QPermission& permission)
   {
     Q_UNUSED(permission);
     requestLocationPermissionThenSetupILDS();
   });
+  #endif
 }
 
 void ShowDeviceLocationUsingIndoorPositioning::requestLocationPermissionThenSetupILDS()
 {
+  #ifdef PERMISSIONS_PLATFORM
   QLocationPermission locationPermission{};
   locationPermission.setAccuracy(QLocationPermission::Accuracy::Precise);
   locationPermission.setAvailability(QLocationPermission::Availability::WhenInUse);
@@ -114,10 +117,12 @@ void ShowDeviceLocationUsingIndoorPositioning::requestLocationPermissionThenSetu
     checkPermissions();
     setupIndoorsLocationDataSource();
   });
+  #endif
 }
 
 void ShowDeviceLocationUsingIndoorPositioning::checkPermissions()
 {
+  #ifdef PERMISSIONS_PLATFORM
   if (qApp->checkPermission(QBluetoothPermission{}) == Qt::PermissionStatus::Denied)
   {
     emit bluetoothPermissionDenied();
@@ -130,6 +135,7 @@ void ShowDeviceLocationUsingIndoorPositioning::checkPermissions()
   {
     emit locationPermissionDenied();
   }
+  #endif
 }
 
 // This function uses a helper class `IndoorsLocationDataSourceCreator` to construct the IndoorsLocationDataSource
