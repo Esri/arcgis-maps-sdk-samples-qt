@@ -161,7 +161,7 @@ void FindPlace::startLocationPermission()
 
   qApp->requestPermission(locationPermission, [this, locationPermission](const QPermission& permission)
   {
-    Q_UNUSED(permission);
+    Q_UNUSED(permission)
     if (qApp->checkPermission(locationPermission) == Qt::PermissionStatus::Denied)
     {
       emit locationPermissionDenied();
