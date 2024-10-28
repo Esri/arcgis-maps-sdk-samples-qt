@@ -101,11 +101,12 @@ void FindPlace::componentComplete()
   m_mapView->calloutData()->setVisible(false);
   m_calloutData = m_mapView->calloutData();
 
-  // start location permission
-  startLocationPermission();
-
   // connect mapview signals
+#ifdef PERMISSIONS_PLATFORM
+  startLocationPermission();
+#else
   connectSignals();
+#endif
 }
 
 void FindPlace::connectSignals()
@@ -157,17 +158,16 @@ void FindPlace::startLocationPermission()
   QLocationPermission locationPermission{};
   locationPermission.setAccuracy(QLocationPermission::Accuracy::Precise);
   locationPermission.setAvailability(QLocationPermission::Availability::WhenInUse);
-  switch (qApp->checkPermission(locationPermission))
+
+  qApp->requestPermission(locationPermission, [this, locationPermission](const QPermission& permission)
   {
-  case Qt::PermissionStatus::Undetermined:
-    qApp->requestPermission(locationPermission, this, &FindPlace::startLocationPermission);
-    return;
-  case Qt::PermissionStatus::Granted:
-    return;
-  case Qt::PermissionStatus::Denied:
-    emit locationPermissionDenied();
-    return;
-  }
+    Q_UNUSED(permission)
+    if (qApp->checkPermission(locationPermission) == Qt::PermissionStatus::Denied)
+    {
+      emit locationPermissionDenied();
+    }
+    connectSignals();
+  });
 #endif
 }
 
