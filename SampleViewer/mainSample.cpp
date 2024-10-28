@@ -72,7 +72,6 @@
 #include "../CppSamples/DisplayInformation/CreateSymbolStylesFromWebStyles/CreateSymbolStylesFromWebStyles.h"
 #include "../CppSamples/DisplayInformation/CustomDictionaryStyle/CustomDictionaryStyle.h"
 #include "../CppSamples/DisplayInformation/DisplayClusters/DisplayClusters.h"
-#include "../CppSamples/DisplayInformation/DisplayGrid/DisplayGrid.h"
 #include "../CppSamples/DisplayInformation/GODictionaryRenderer/GODictionaryRenderer.h"
 #include "../CppSamples/DisplayInformation/GODictionaryRenderer_3D/GODictionaryRenderer_3D.h"
 #include "../CppSamples/DisplayInformation/GOSymbols/GOSymbols.h"
@@ -81,6 +80,7 @@
 #include "../CppSamples/DisplayInformation/QueryFeaturesWithArcadeExpression/QueryFeaturesWithArcadeExpression.h"
 #include "../CppSamples/DisplayInformation/ReadSymbolsFromMobileStyle/ReadSymbolsFromMobileStyle.h"
 #include "../CppSamples/DisplayInformation/ShowCallout/ShowCallout.h"
+#include "../CppSamples/DisplayInformation/ShowGrid/ShowGrid.h"
 #include "../CppSamples/DisplayInformation/ShowLabelsOnLayers/ShowLabelsOnLayers.h"
 #include "../CppSamples/DisplayInformation/ShowPopup/ShowPopup.h"
 #include "../CppSamples/DisplayInformation/Simple_Marker_Symbol/Simple_Marker_Symbol.h"
@@ -419,7 +419,6 @@ void registerCppSampleClasses()
   DisplayDimensions::init();
   DisplayDrawingStatus::init();
   DisplayFeatureLayers::init();
-  DisplayGrid::init();
   DisplayKml::init();
   DisplayKmlNetworkLinks::init();
   DisplayLayerViewDrawState::init();
@@ -536,6 +535,7 @@ void registerCppSampleClasses()
   SetSurfacePlacementMode::init();
   ShowCallout::init();
   ShowDeviceLocationUsingIndoorPositioning::init();
+  ShowGrid::init();
   ShowLabelsOnLayers::init();
   ShowLocationHistory::init();
   ShowMagnifier::init();

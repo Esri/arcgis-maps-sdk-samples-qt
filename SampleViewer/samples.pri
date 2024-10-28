@@ -37,7 +37,6 @@ HEADERS += \
     "$$SAMPLEPATHCPP/DisplayInformation/ControlAnnotationSublayerVisibility/ControlAnnotationSublayerVisibility.h" \
     "$$SAMPLEPATHCPP/DisplayInformation/CreateSymbolStylesFromWebStyles/CreateSymbolStylesFromWebStyles.h" \
     "$$SAMPLEPATHCPP/DisplayInformation/CustomDictionaryStyle/CustomDictionaryStyle.h" \
-    "$$SAMPLEPATHCPP/DisplayInformation/DisplayGrid/DisplayGrid.h" \
     "$$SAMPLEPATHCPP/DisplayInformation/DisplayClusters/DisplayClusters.h" \
     "$$SAMPLEPATHCPP/DisplayInformation/GODictionaryRenderer_3D/GODictionaryRenderer_3D.h" \
     "$$SAMPLEPATHCPP/DisplayInformation/GODictionaryRenderer/GODictionaryRenderer.h" \
@@ -48,6 +47,7 @@ HEADERS += \
     "$$SAMPLEPATHCPP/DisplayInformation/ReadSymbolsFromMobileStyle/ReadSymbolsFromMobileStyle.h" \
     "$$SAMPLEPATHCPP/DisplayInformation/ReadSymbolsFromMobileStyle/SymbolImageProvider.h" \
     "$$SAMPLEPATHCPP/DisplayInformation/ShowCallout/ShowCallout.h" \
+    "$$SAMPLEPATHCPP/DisplayInformation/ShowGrid/ShowGrid.h" \
     "$$SAMPLEPATHCPP/DisplayInformation/ShowLabelsOnLayers/ShowLabelsOnLayers.h" \
     "$$SAMPLEPATHCPP/DisplayInformation/ShowPopup/ShowPopup.h" \
     "$$SAMPLEPATHCPP/DisplayInformation/Simple_Marker_Symbol/Simple_Marker_Symbol.h" \
@@ -264,7 +264,6 @@ SOURCES += \
     "$$SAMPLEPATHCPP/DisplayInformation/ControlAnnotationSublayerVisibility/ControlAnnotationSublayerVisibility.cpp" \
     "$$SAMPLEPATHCPP/DisplayInformation/CreateSymbolStylesFromWebStyles/CreateSymbolStylesFromWebStyles.cpp" \
     "$$SAMPLEPATHCPP/DisplayInformation/CustomDictionaryStyle/CustomDictionaryStyle.cpp" \
-    "$$SAMPLEPATHCPP/DisplayInformation/DisplayGrid/DisplayGrid.cpp" \
     "$$SAMPLEPATHCPP/DisplayInformation/DisplayClusters/DisplayClusters.cpp" \
     "$$SAMPLEPATHCPP/DisplayInformation/GODictionaryRenderer_3D/GODictionaryRenderer_3D.cpp" \
     "$$SAMPLEPATHCPP/DisplayInformation/GODictionaryRenderer/GODictionaryRenderer.cpp" \
@@ -275,6 +274,7 @@ SOURCES += \
     "$$SAMPLEPATHCPP/DisplayInformation/ReadSymbolsFromMobileStyle/ReadSymbolsFromMobileStyle.cpp" \
     "$$SAMPLEPATHCPP/DisplayInformation/ReadSymbolsFromMobileStyle/SymbolImageProvider.cpp" \
     "$$SAMPLEPATHCPP/DisplayInformation/ShowCallout/ShowCallout.cpp" \
+    "$$SAMPLEPATHCPP/DisplayInformation/ShowGrid/ShowGrid.cpp" \
     "$$SAMPLEPATHCPP/DisplayInformation/ShowLabelsOnLayers/ShowLabelsOnLayers.cpp" \
     "$$SAMPLEPATHCPP/DisplayInformation/ShowPopup/ShowPopup.cpp" \
     "$$SAMPLEPATHCPP/DisplayInformation/Simple_Marker_Symbol/Simple_Marker_Symbol.cpp" \
@@ -490,7 +490,6 @@ RESOURCES += \
     "$$SAMPLEPATHCPP/DisplayInformation/ControlAnnotationSublayerVisibility/ControlAnnotationSublayerVisibility.qrc" \
     "$$SAMPLEPATHCPP/DisplayInformation/CreateSymbolStylesFromWebStyles/CreateSymbolStylesFromWebStyles.qrc" \
     "$$SAMPLEPATHCPP/DisplayInformation/CustomDictionaryStyle/CustomDictionaryStyle.qrc" \
-    "$$SAMPLEPATHCPP/DisplayInformation/DisplayGrid/DisplayGrid.qrc" \
     "$$SAMPLEPATHCPP/DisplayInformation/DisplayClusters/DisplayClusters.qrc" \
     "$$SAMPLEPATHCPP/DisplayInformation/GODictionaryRenderer_3D/GODictionaryRenderer_3D.qrc" \
     "$$SAMPLEPATHCPP/DisplayInformation/GODictionaryRenderer/GODictionaryRenderer.qrc" \
@@ -500,6 +499,7 @@ RESOURCES += \
     "$$SAMPLEPATHCPP/DisplayInformation/QueryFeaturesWithArcadeExpression/QueryFeaturesWithArcadeExpression.qrc" \
     "$$SAMPLEPATHCPP/DisplayInformation/ReadSymbolsFromMobileStyle/ReadSymbolsFromMobileStyle.qrc" \
     "$$SAMPLEPATHCPP/DisplayInformation/ShowCallout/ShowCallout.qrc" \
+    "$$SAMPLEPATHCPP/DisplayInformation/ShowGrid/ShowGrid.qrc" \
     "$$SAMPLEPATHCPP/DisplayInformation/ShowLabelsOnLayers/ShowLabelsOnLayers.qrc" \
     "$$SAMPLEPATHCPP/DisplayInformation/ShowPopup/ShowPopup.qrc" \
     "$$SAMPLEPATHCPP/DisplayInformation/Simple_Marker_Symbol/Simple_Marker_Symbol.qrc" \
