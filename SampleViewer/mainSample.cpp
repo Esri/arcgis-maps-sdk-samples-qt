@@ -72,7 +72,7 @@
 #include "../CppSamples/DisplayInformation/CreateSymbolStylesFromWebStyles/CreateSymbolStylesFromWebStyles.h"
 #include "../CppSamples/DisplayInformation/CustomDictionaryStyle/CustomDictionaryStyle.h"
 #include "../CppSamples/DisplayInformation/DisplayClusters/DisplayClusters.h"
-#include "../CppSamples/DisplayInformation/DisplayGrid/DisplayGrid.h"
+#include "../CppSamples/DisplayInformation/ShowGrid/ShowGrid.h"
 #include "../CppSamples/DisplayInformation/GODictionaryRenderer/GODictionaryRenderer.h"
 #include "../CppSamples/DisplayInformation/GODictionaryRenderer_3D/GODictionaryRenderer_3D.h"
 #include "../CppSamples/DisplayInformation/GOSymbols/GOSymbols.h"
@@ -419,7 +419,7 @@ void registerCppSampleClasses()
   DisplayDimensions::init();
   DisplayDrawingStatus::init();
   DisplayFeatureLayers::init();
-  DisplayGrid::init();
+  ShowGrid::init();
   DisplayKml::init();
   DisplayKmlNetworkLinks::init();
   DisplayLayerViewDrawState::init();

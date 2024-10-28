@@ -37,7 +37,7 @@ HEADERS += \
     "$$SAMPLEPATHCPP/DisplayInformation/ControlAnnotationSublayerVisibility/ControlAnnotationSublayerVisibility.h" \
     "$$SAMPLEPATHCPP/DisplayInformation/CreateSymbolStylesFromWebStyles/CreateSymbolStylesFromWebStyles.h" \
     "$$SAMPLEPATHCPP/DisplayInformation/CustomDictionaryStyle/CustomDictionaryStyle.h" \
-    "$$SAMPLEPATHCPP/DisplayInformation/DisplayGrid/DisplayGrid.h" \
+    "$$SAMPLEPATHCPP/DisplayInformation/ShowGrid/ShowGrid.h" \
     "$$SAMPLEPATHCPP/DisplayInformation/DisplayClusters/DisplayClusters.h" \
     "$$SAMPLEPATHCPP/DisplayInformation/GODictionaryRenderer_3D/GODictionaryRenderer_3D.h" \
     "$$SAMPLEPATHCPP/DisplayInformation/GODictionaryRenderer/GODictionaryRenderer.h" \
@@ -264,7 +264,7 @@ SOURCES += \
     "$$SAMPLEPATHCPP/DisplayInformation/ControlAnnotationSublayerVisibility/ControlAnnotationSublayerVisibility.cpp" \
     "$$SAMPLEPATHCPP/DisplayInformation/CreateSymbolStylesFromWebStyles/CreateSymbolStylesFromWebStyles.cpp" \
     "$$SAMPLEPATHCPP/DisplayInformation/CustomDictionaryStyle/CustomDictionaryStyle.cpp" \
-    "$$SAMPLEPATHCPP/DisplayInformation/DisplayGrid/DisplayGrid.cpp" \
+    "$$SAMPLEPATHCPP/DisplayInformation/ShowGrid/ShowGrid.cpp" \
     "$$SAMPLEPATHCPP/DisplayInformation/DisplayClusters/DisplayClusters.cpp" \
     "$$SAMPLEPATHCPP/DisplayInformation/GODictionaryRenderer_3D/GODictionaryRenderer_3D.cpp" \
     "$$SAMPLEPATHCPP/DisplayInformation/GODictionaryRenderer/GODictionaryRenderer.cpp" \
@@ -490,7 +490,7 @@ RESOURCES += \
     "$$SAMPLEPATHCPP/DisplayInformation/ControlAnnotationSublayerVisibility/ControlAnnotationSublayerVisibility.qrc" \
     "$$SAMPLEPATHCPP/DisplayInformation/CreateSymbolStylesFromWebStyles/CreateSymbolStylesFromWebStyles.qrc" \
     "$$SAMPLEPATHCPP/DisplayInformation/CustomDictionaryStyle/CustomDictionaryStyle.qrc" \
-    "$$SAMPLEPATHCPP/DisplayInformation/DisplayGrid/DisplayGrid.qrc" \
+    "$$SAMPLEPATHCPP/DisplayInformation/ShowGrid/ShowGrid.qrc" \
     "$$SAMPLEPATHCPP/DisplayInformation/DisplayClusters/DisplayClusters.qrc" \
     "$$SAMPLEPATHCPP/DisplayInformation/GODictionaryRenderer_3D/GODictionaryRenderer_3D.qrc" \
     "$$SAMPLEPATHCPP/DisplayInformation/GODictionaryRenderer/GODictionaryRenderer.qrc" \
