@@ -33,6 +33,14 @@
 #include "MapViewTypes.h"
 #include "PortalItem.h"
 
+#ifdef Q_OS_ANDROID
+#define ANDROID_PLATFORM
+#include "ArcGISRuntimeEnvironment.h"
+
+#include <QCoreApplication>
+#include <QJniObject>
+#endif
+
 #if (QT_VERSION >= QT_VERSION_CHECK(6, 6, 0)) || defined(Q_OS_IOS) || defined(Q_OS_MACOS) || defined(Q_OS_ANDROID)
 #define PERMISSIONS_PLATFORM
 #include <QPermissions>
@@ -97,7 +105,7 @@ void ShowDeviceLocationUsingIndoorPositioning::setMapView(MapQuickView* mapView)
 void ShowDeviceLocationUsingIndoorPositioning::requestBluetoothThenLocationPermissions()
 {
   #ifdef PERMISSIONS_PLATFORM
-    qApp->requestPermission(QBluetoothPermission{}, [this](const QPermission& permission)
+  qApp->requestPermission(QBluetoothPermission{}, [this](const QPermission& permission)
   {
     Q_UNUSED(permission);
     requestLocationPermissionThenSetupILDS();
@@ -141,6 +149,10 @@ void ShowDeviceLocationUsingIndoorPositioning::checkPermissions()
 // This function uses a helper class `IndoorsLocationDataSourceCreator` to construct the IndoorsLocationDataSource
 void ShowDeviceLocationUsingIndoorPositioning::setupIndoorsLocationDataSource()
 {
+  #ifdef ANDROID_PLATFORM
+  ArcGISRuntimeEnvironment::setAndroidApplicationContext(QJniObject{QNativeInterface::QAndroidApplication::context()});
+  #endif
+
   IndoorsLocationDataSourceCreator* indoorsLocationDataSourceCreator = new IndoorsLocationDataSourceCreator(this);
 
   connect(indoorsLocationDataSourceCreator, &IndoorsLocationDataSourceCreator::createIndoorsLocationDataSourceCompleted, this, [this](IndoorsLocationDataSource* indoorsLDS)
