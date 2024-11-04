@@ -38,6 +38,13 @@
 #include <QPermissions>
 #endif
 
+#ifdef Q_OS_ANDROID
+#include "ArcGISRuntimeEnvironment.h"
+
+#include <QCoreApplication>
+#include <QJniObject>
+#endif
+
 using namespace Esri::ArcGISRuntime;
 
 namespace {
@@ -141,6 +148,10 @@ void ShowDeviceLocationUsingIndoorPositioning::checkPermissions()
 // This function uses a helper class `IndoorsLocationDataSourceCreator` to construct the IndoorsLocationDataSource
 void ShowDeviceLocationUsingIndoorPositioning::setupIndoorsLocationDataSource()
 {
+  #ifdef Q_OS_ANDROID
+  ArcGISRuntimeEnvironment::setAndroidApplicationContext(QJniObject{QNativeInterface::QAndroidApplication::context()});
+  #endif
+
   IndoorsLocationDataSourceCreator* indoorsLocationDataSourceCreator = new IndoorsLocationDataSourceCreator(this);
 
   connect(indoorsLocationDataSourceCreator, &IndoorsLocationDataSourceCreator::createIndoorsLocationDataSourceCompleted, this, [this](IndoorsLocationDataSource* indoorsLDS)

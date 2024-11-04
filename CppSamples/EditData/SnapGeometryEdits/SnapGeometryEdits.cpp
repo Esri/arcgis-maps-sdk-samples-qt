@@ -54,6 +54,13 @@
 #include <QFuture>
 #include <QtGlobal>
 
+#ifdef Q_OS_ANDROID
+#include "ArcGISRuntimeEnvironment.h"
+
+#include <QCoreApplication>
+#include <QJniObject>
+#endif
+
 using namespace Esri::ArcGISRuntime;
 
 SnapGeometryEdits::SnapGeometryEdits(QObject* parent /* = nullptr */) :
@@ -62,6 +69,10 @@ SnapGeometryEdits::SnapGeometryEdits(QObject* parent /* = nullptr */) :
 {
   PortalItem* portalItem = new PortalItem("b95fe18073bc4f7788f0375af2bb445e", this);
   m_map = new Map(portalItem, this);
+
+  #ifdef Q_OS_ANDROID
+  ArcGISRuntimeEnvironment::setAndroidApplicationContext(QJniObject{QNativeInterface::QAndroidApplication::context()});
+  #endif
 
   m_geometryEditor = new GeometryEditor(this);
   m_graphicsOverlay = new GraphicsOverlay(this);
