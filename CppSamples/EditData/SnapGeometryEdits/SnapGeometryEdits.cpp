@@ -71,7 +71,7 @@ SnapGeometryEdits::SnapGeometryEdits(QObject* parent /* = nullptr */) :
   m_map = new Map(portalItem, this);
 
   #ifdef Q_OS_ANDROID
-    ArcGISRuntimeEnvironment::setAndroidApplicationContext(QJniObject{QNativeInterface::QAndroidApplication::context()});
+  ArcGISRuntimeEnvironment::setAndroidApplicationContext(QJniObject{QNativeInterface::QAndroidApplication::context()});
   #endif
 
   m_geometryEditor = new GeometryEditor(this);
