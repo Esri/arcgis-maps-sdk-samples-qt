@@ -18,7 +18,7 @@
 #-------------------------------------------------
 
 TEMPLATE = app
-QT += core gui xml network qml quick positioning sensors multimedia
+QT += core gui xml network qml quick positioning sensors multimedia bluetooth
 QT += widgets quickcontrols2 opengl webview core5compat websockets texttospeech
 TARGET = ArcGISQt_Samples
 DEFINES += Qt_Version=\"$$QT_VERSION\"
