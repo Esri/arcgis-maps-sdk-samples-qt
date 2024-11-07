@@ -101,26 +101,13 @@ void FindPlace::componentComplete()
   m_mapView->calloutData()->setVisible(false);
   m_calloutData = m_mapView->calloutData();
 
-  // connect mapview signals
-#ifdef PERMISSIONS_PLATFORM
-  startLocationPermission();
-#else
   connectSignals();
-#endif
+
+  initiateLocation();
 }
 
 void FindPlace::connectSignals()
 {
-  connect(m_mapView, &MapQuickView::drawStatusChanged, this, [this](DrawStatus drawStatus)
-  {
-    if (drawStatus != DrawStatus::Completed || m_mapView->locationDisplay()->isStarted())
-      return;
-
-    // turn on the location display
-    m_mapView->locationDisplay()->setAutoPanMode(LocationDisplayAutoPanMode::Recenter);
-    m_mapView->locationDisplay()->start();
-  });
-
   connect(m_mapView, &MapQuickView::mousePressed, this, [this](QMouseEvent& /*event*/)
   {
     emit hideSuggestionView();
@@ -152,22 +139,29 @@ void FindPlace::connectSignals()
   });
 }
 
-void FindPlace::startLocationPermission()
+void FindPlace::initiateLocation()
 {
 #ifdef PERMISSIONS_PLATFORM
   QLocationPermission locationPermission{};
   locationPermission.setAccuracy(QLocationPermission::Accuracy::Precise);
   locationPermission.setAvailability(QLocationPermission::Availability::WhenInUse);
 
-  qApp->requestPermission(locationPermission, [this, locationPermission](const QPermission& permission)
+  switch (qApp->checkPermission(locationPermission))
   {
-    Q_UNUSED(permission)
-    if (qApp->checkPermission(locationPermission) == Qt::PermissionStatus::Denied)
-    {
+    case Qt::PermissionStatus::Undetermined:
+      qApp->requestPermission(locationPermission, this, &FindPlace::initiateLocation);
+      return;
+    case Qt::PermissionStatus::Denied:
       emit locationPermissionDenied();
-    }
-    connectSignals();
-  });
+      return;
+    case Qt::PermissionStatus::Granted:
+      m_mapView->locationDisplay()->setAutoPanMode(LocationDisplayAutoPanMode::Recenter);
+      m_mapView->locationDisplay()->start();
+      return;
+  }
+#else
+  m_mapView->locationDisplay()->setAutoPanMode(LocationDisplayAutoPanMode::Recenter);
+  m_mapView->locationDisplay()->start();
 #endif
 }
 
