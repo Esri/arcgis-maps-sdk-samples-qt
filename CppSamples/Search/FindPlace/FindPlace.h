@@ -79,7 +79,7 @@ private:
   void setPoiTextHasFocus(bool hasFocus);
   Esri::ArcGISRuntime::GeocodeParameters createParameters();
   void onGeocodingCompleted_(const QList<Esri::ArcGISRuntime::GeocodeResult>& results);
-  void startLocationPermission();
+  void initiateLocation();
 
 private:
   Esri::ArcGISRuntime::Map* m_map = nullptr;
