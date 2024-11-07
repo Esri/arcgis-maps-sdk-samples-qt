@@ -22,7 +22,8 @@ mac {
 CONFIG += c++17
 
 # additional modules are pulled in via arcgisruntime.pri
-QT += opengl qml quick bluetooth
+QT += opengl qml quick
+android|ios: QT += bluetooth
 
 TEMPLATE = app
 TARGET = ShowDeviceLocationUsingIndoorPositioning
