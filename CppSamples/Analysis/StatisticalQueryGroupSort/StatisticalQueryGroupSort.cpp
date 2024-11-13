@@ -1,12 +1,12 @@
 // [WriteFile Name=StatisticalQueryGroupSort, Category=Analysis]
 // [Legal]
 // Copyright 2017 Esri.
-//
+
 // Licensed under the Apache License, Version 2.0 (the "License");
 // you may not use this file except in compliance with the License.
 // You may obtain a copy of the License at
 // http://www.apache.org/licenses/LICENSE-2.0
-//
+
 // Unless required by applicable law or agreed to in writing, software
 // distributed under the License is distributed on an "AS IS" BASIS,
 // WITHOUT WARRANTIES OR CONDITIONS OF ANY KIND, either express or implied.
@@ -18,30 +18,24 @@
 #include "pch.hpp"
 #endif // PCH_BUILD
 
-// sample headers
-#include "StatisticResultListModel.h"
 #include "StatisticalQueryGroupSort.h"
-
-// ArcGIS Maps SDK headers
-#include "CoreTypes.h"
-#include "Error.h"
-#include "Field.h"
-#include "OrderBy.h"
 #include "ServiceFeatureTable.h"
 #include "StatisticDefinition.h"
 #include "StatisticRecord.h"
 #include "StatisticRecordIterator.h"
 #include "StatisticsQueryParameters.h"
 #include "StatisticsQueryResult.h"
+#include "Field.h"
+#include "StatisticResultListModel.h"
+#include "Error.h"
+#include "OrderBy.h"
+#include "CoreTypes.h"
 
-// Qt headers
 #include <QFuture>
-#include <QList>
-#include <QStringList>
 #include <QUuid>
+#include <QStringList>
 #include <QVariantList>
-
-// STL headers
+#include <QList>
 #include <memory>
 
 using namespace Esri::ArcGISRuntime;

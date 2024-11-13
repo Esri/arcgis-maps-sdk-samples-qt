@@ -1,12 +1,12 @@
 // [WriteFile Name=AnalyzeViewshed, Category=Analysis]
 // [Legal]
 // Copyright 2016 Esri.
-//
+
 // Licensed under the Apache License, Version 2.0 (the "License");
 // you may not use this file except in compliance with the License.
 // You may obtain a copy of the License at
 // http://www.apache.org/licenses/LICENSE-2.0
-//
+
 // Unless required by applicable law or agreed to in writing, software
 // distributed under the License is distributed on an "AS IS" BASIS,
 // WITHOUT WARRANTIES OR CONDITIONS OF ANY KIND, either express or implied.
@@ -18,43 +18,40 @@
 #include "pch.hpp"
 #endif // PCH_BUILD
 
-// sample headers
 #include "AnalyzeViewshed.h"
 
-// ArcGIS Maps SDK headers
-#include "Error.h"
-#include "Feature.h"
-#include "FeatureCollectionTable.h"
-#include "FeatureIterator.h"
-#include "Field.h"
-#include "GeoprocessingFeatures.h"
+#include "Map.h"
+#include "MapTypes.h"
+#include "MapQuickView.h"
+#include "MapViewTypes.h"
+#include "Point.h"
+#include "Viewpoint.h"
+#include "SpatialReference.h"
+#include "GraphicsOverlay.h"
+#include "GraphicsOverlayListModel.h"
+#include "GraphicListModel.h"
+#include "SimpleMarkerSymbol.h"
+#include "SimpleFillSymbol.h"
+#include "SimpleRenderer.h"
+#include "Graphic.h"
+#include "GeoprocessingTask.h"
 #include "GeoprocessingJob.h"
+#include "GeoprocessingFeatures.h"
 #include "GeoprocessingParameter.h"
 #include "GeoprocessingParameters.h"
 #include "GeoprocessingResult.h"
-#include "GeoprocessingTask.h"
 #include "GeoprocessingTypes.h"
-#include "Graphic.h"
-#include "GraphicListModel.h"
-#include "GraphicsOverlay.h"
-#include "GraphicsOverlayListModel.h"
-#include "Map.h"
-#include "MapQuickView.h"
-#include "MapTypes.h"
-#include "MapViewTypes.h"
-#include "Point.h"
-#include "SimpleFillSymbol.h"
-#include "SimpleMarkerSymbol.h"
-#include "SimpleRenderer.h"
-#include "SpatialReference.h"
+#include "FeatureCollectionTable.h"
+#include "Feature.h"
 #include "SymbolTypes.h"
+#include "Error.h"
 #include "TaskTypes.h"
-#include "Viewpoint.h"
+#include "FeatureIterator.h"
+#include "Field.h"
 
-// Qt headers
 #include <QFuture>
-#include <QMouseEvent>
 #include <QUuid>
+#include <QMouseEvent>
 
 using namespace Esri::ArcGISRuntime;
 

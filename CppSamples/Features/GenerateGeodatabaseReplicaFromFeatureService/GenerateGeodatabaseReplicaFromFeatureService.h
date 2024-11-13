@@ -1,12 +1,12 @@
 // [WriteFile Name=GenerateGeodatabaseReplicaFromFeatureService, Category=Features]
 // [Legal]
 // Copyright 2016 Esri.
-//
+
 // Licensed under the Apache License, Version 2.0 (the "License");
 // you may not use this file except in compliance with the License.
 // You may obtain a copy of the License at
 // http://www.apache.org/licenses/LICENSE-2.0
-//
+
 // Unless required by applicable law or agreed to in writing, software
 // distributed under the License is distributed on an "AS IS" BASIS,
 // WITHOUT WARRANTIES OR CONDITIONS OF ANY KIND, either express or implied.
@@ -17,16 +17,6 @@
 #ifndef GENERATE_GEODATABASE_H
 #define GENERATE_GEODATABASE_H
 
-// ArcGIS Maps SDK headers
-#include "ArcGISFeatureServiceInfo.h"
-#include "Envelope.h"
-#include "GenerateGeodatabaseParameters.h"
-
-// Qt headers
-#include <QQuickItem>
-#include <QStringList>
-#include <QTemporaryDir>
-
 namespace Esri::ArcGISRuntime
 {
   class Map;
@@ -34,6 +24,13 @@ namespace Esri::ArcGISRuntime
   class GeodatabaseSyncTask;
   class Geodatabase;
 }
+
+#include "Envelope.h"
+#include "GenerateGeodatabaseParameters.h"
+#include "ArcGISFeatureServiceInfo.h"
+#include <QQuickItem>
+#include <QStringList>
+#include <QTemporaryDir>
 
 class GenerateGeodatabaseReplicaFromFeatureService : public QQuickItem
 {
@@ -68,3 +65,4 @@ private:
 };
 
 #endif // GENERATE_GEODATABASE_H
+

@@ -1,12 +1,12 @@
 // [WriteFile Name=ShowDeviceLocationUsingIndoorPositioning, Category=Maps]
 // [Legal]
 // Copyright 2022 Esri.
-//
+
 // Licensed under the Apache License, Version 2.0 (the "License");
 // you may not use this file except in compliance with the License.
 // You may obtain a copy of the License at
 // http://www.apache.org/licenses/LICENSE-2.0
-//
+
 // Unless required by applicable law or agreed to in writing, software
 // distributed under the License is distributed on an "AS IS" BASIS,
 // WITHOUT WARRANTIES OR CONDITIONS OF ANY KIND, either express or implied.
@@ -18,7 +18,6 @@ import QtQuick
 import QtQuick.Controls
 import QtQuick.Layouts
 import Esri.Samples
-import QtQuick.Dialogs
 
 Item {
 
@@ -80,47 +79,5 @@ Item {
     ShowDeviceLocationUsingIndoorPositioningSample {
         id: model
         mapView: view
-    }
-
-    Connections {
-        target: model
-        function onLocationPermissionDenied() {
-            locationPermissionDeniedDialog.open()
-        }
-    }
-
-    Dialog {
-        id: locationPermissionDeniedDialog
-        title: "Location Permission Denied"
-        modal: true
-        standardButtons: Dialog.Ok
-        x: (parent.width - width) / 2
-        y: (parent.height - height) / 2
-
-        Text {
-            text: "This application requires location permission."
-            color: "white"
-        }
-    }
-
-    Connections {
-        target: model
-        function onBluetoothPermissionDenied() {
-            bluetoothPermissionDeniedDialog.open()
-        }
-    }
-
-    Dialog {
-        id: bluetoothPermissionDeniedDialog
-        title: "Bluetooth Permission Denied"
-        modal: true
-        standardButtons: Dialog.Ok
-        x: (parent.width - width) / 2
-        y: (parent.height - height) / 2
-
-        Text {
-            text: "This application requires bluetooth permission."
-            color: "white"
-        }
     }
 }

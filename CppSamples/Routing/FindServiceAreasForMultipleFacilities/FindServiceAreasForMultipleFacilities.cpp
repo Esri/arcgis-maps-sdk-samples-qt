@@ -1,12 +1,12 @@
 // [WriteFile Name=FindServiceAreasForMultipleFacilities, Category=Routing]
 // [Legal]
 // Copyright 2020 Esri.
-//
+
 // Licensed under the Apache License, Version 2.0 (the "License");
 // you may not use this file except in compliance with the License.
 // You may obtain a copy of the License at
 // http://www.apache.org/licenses/LICENSE-2.0
-//
+
 // Unless required by applicable law or agreed to in writing, software
 // distributed under the License is distributed on an "AS IS" BASIS,
 // WITHOUT WARRANTIES OR CONDITIONS OF ANY KIND, either express or implied.
@@ -18,27 +18,14 @@
 #include "pch.hpp"
 #endif // PCH_BUILD
 
-// sample headers
 #include "FindServiceAreasForMultipleFacilities.h"
 
-// ArcGIS Maps SDK headers
-#include "Envelope.h"
-#include "Error.h"
-#include "ErrorException.h"
 #include "FeatureLayer.h"
-#include "Graphic.h"
-#include "GraphicListModel.h"
 #include "GraphicsOverlay.h"
-#include "GraphicsOverlayListModel.h"
-#include "LayerListModel.h"
 #include "Map.h"
 #include "MapQuickView.h"
-#include "MapTypes.h"
-#include "NetworkAnalystTypes.h"
 #include "PictureMarkerSymbol.h"
-#include "Polygon.h"
 #include "QueryParameters.h"
-#include "ServiceAreaFacility.h"
 #include "ServiceAreaParameters.h"
 #include "ServiceAreaPolygon.h"
 #include "ServiceAreaResult.h"
@@ -46,11 +33,21 @@
 #include "ServiceFeatureTable.h"
 #include "SimpleFillSymbol.h"
 #include "SimpleRenderer.h"
+#include "MapTypes.h"
 #include "SymbolTypes.h"
+#include "Error.h"
+#include "GraphicsOverlayListModel.h"
+#include "GraphicListModel.h"
+#include "NetworkAnalystTypes.h"
+#include "LayerListModel.h"
+#include "ServiceAreaFacility.h"
+#include "Envelope.h"
+#include "Polygon.h"
+#include "Graphic.h"
+#include "ErrorException.h"
 
-// Qt headers
-#include <QUrl>
 #include <QUuid>
+#include <QUrl>
 
 using namespace Esri::ArcGISRuntime;
 

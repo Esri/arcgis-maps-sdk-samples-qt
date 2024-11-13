@@ -1,5 +1,5 @@
 #-------------------------------------------------
-# Copyright 2024 Esri.
+# Copyright 2015 Esri.
 
 # Licensed under the Apache License, Version 2.0 (the "License");
 # you may not use this file except in compliance with the License.
@@ -24,39 +24,31 @@ CONFIG += c++17
 # additional modules are pulled in via arcgisruntime.pri
 QT += opengl qml quick
 
-ARCGIS_RUNTIME_VERSION = 200.6.0
+ARCGIS_RUNTIME_VERSION = 200.5.0
 include($$PWD/arcgisruntime.pri)
 
 TEMPLATE = app
-TARGET = ShowGrid
-
-ARCGIS_RUNTIME_VERSION = 200.6.0
-include($$PWD/arcgisruntime.pri)
+TARGET = DisplayGrid
 
 #-------------------------------------------------------------------------------
 
-HEADERS += \
-    ShowGrid.h
+HEADERS += DisplayGrid.h
 
-SOURCES += \
-    main.cpp \
-    ShowGrid.cpp
+SOURCES += main.cpp DisplayGrid.cpp
 
-RESOURCES += ShowGrid.qrc
+RESOURCES += DisplayGrid.qrc
 
 #-------------------------------------------------------------------------------
 
 win32 {
-    LIBS += \
-        Ole32.lib
+    LIBS += Ole32.lib
 }
 
 ios {
     INCLUDEPATH += $$PWD
     DEPENDPATH += $$PWD
 
-    OTHER_FILES += \
-        $$PWD/Info.plist
+    OTHER_FILES += $$PWD/Info.plist
 
     QMAKE_INFO_PLIST = $$PWD/Info.plist
 }
@@ -65,3 +57,4 @@ android {
     INCLUDEPATH += $$PWD
     DEPENDPATH += $$PWD
 }
+

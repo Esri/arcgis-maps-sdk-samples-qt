@@ -13,7 +13,7 @@
 // limitations under the License.
 // [Legal]
 
-#include "pch.hpp" // IWYU pragma: keep
+#include "pch.hpp"
 
 // Qt headers
 #include <QApplication>
@@ -30,9 +30,8 @@
 #  include <QtWebEngineQuick>
 #endif // QT_WEBVIEW_WEBENGINE_BACKEND
 
-#include "ArcGISQt_global.h" // IWYU pragma: keep - for LOCALSERVER_SUPPORTED
-
 #include "SampleManager.h"
+#include "ArcGISRuntimeEnvironment.h"
 
 #include "CategoryListModel.h"
 #include "DataItem.h"
@@ -45,245 +44,253 @@
 #include "SearchFilterCriteria.h"
 #include "SourceCode.h"
 #include "SourceCodeListModel.h"
-#include "SyntaxHighlighter/SyntaxHighlighter.h"
-#include "../CppSamples/Layers/ManageOperationalLayers/DrawOrderLayerListModel.h"
+#include "SyntaxHighlighter/syntax_highlighter.h"
+#include "DrawOrderLayerListModel.h"
 
 #ifdef ESRI_BUILD
 #include "buildnum.h"
 #endif
 
 // All Samples
-#include "../CppSamples/Analysis/AnalyzeHotspots/AnalyzeHotspots.h"
-#include "../CppSamples/Analysis/AnalyzeViewshed/AnalyzeViewshed.h"
-#include "../CppSamples/Analysis/DistanceMeasurementAnalysis/DistanceMeasurementAnalysis.h"
-#include "../CppSamples/Analysis/Geotriggers/Geotriggers.h"
-#include "../CppSamples/Analysis/LineOfSightGeoElement/LineOfSightGeoElement.h"
-#include "../CppSamples/Analysis/LineOfSightLocation/LineOfSightLocation.h"
-#include "../CppSamples/Analysis/StatisticalQuery/StatisticalQuery.h"
-#include "../CppSamples/Analysis/StatisticalQueryGroupSort/StatisticalQueryGroupSort.h"
-#include "../CppSamples/Analysis/ViewshedCamera/ViewshedCamera.h"
-#include "../CppSamples/Analysis/ViewshedGeoElement/ViewshedGeoElement.h"
-#include "../CppSamples/Analysis/ViewshedLocation/ViewshedLocation.h"
-#include "../CppSamples/CloudAndPortal/IntegratedWindowsAuthentication/IntegratedWindowsAuthentication.h"
-#include "../CppSamples/CloudAndPortal/TokenAuthentication/TokenAuthentication.h"
-#include "../CppSamples/DisplayInformation/AddGraphicsWithRenderer/AddGraphicsWithRenderer.h"
-#include "../CppSamples/DisplayInformation/BuildLegend/BuildLegend.h"
-#include "../CppSamples/DisplayInformation/ControlAnnotationSublayerVisibility/ControlAnnotationSublayerVisibility.h"
-#include "../CppSamples/DisplayInformation/CreateSymbolStylesFromWebStyles/CreateSymbolStylesFromWebStyles.h"
-#include "../CppSamples/DisplayInformation/CustomDictionaryStyle/CustomDictionaryStyle.h"
-#include "../CppSamples/DisplayInformation/DisplayClusters/DisplayClusters.h"
-#include "../CppSamples/DisplayInformation/GODictionaryRenderer/GODictionaryRenderer.h"
-#include "../CppSamples/DisplayInformation/GODictionaryRenderer_3D/GODictionaryRenderer_3D.h"
-#include "../CppSamples/DisplayInformation/GOSymbols/GOSymbols.h"
-#include "../CppSamples/DisplayInformation/IdentifyGraphics/IdentifyGraphics.h"
-#include "../CppSamples/DisplayInformation/Picture_Marker_Symbol/Picture_Marker_Symbol.h"
-#include "../CppSamples/DisplayInformation/QueryFeaturesWithArcadeExpression/QueryFeaturesWithArcadeExpression.h"
-#include "../CppSamples/DisplayInformation/ReadSymbolsFromMobileStyle/ReadSymbolsFromMobileStyle.h"
-#include "../CppSamples/DisplayInformation/ShowCallout/ShowCallout.h"
-#include "../CppSamples/DisplayInformation/ShowGrid/ShowGrid.h"
-#include "../CppSamples/DisplayInformation/ShowLabelsOnLayers/ShowLabelsOnLayers.h"
-#include "../CppSamples/DisplayInformation/ShowPopup/ShowPopup.h"
-#include "../CppSamples/DisplayInformation/Simple_Marker_Symbol/Simple_Marker_Symbol.h"
-#include "../CppSamples/DisplayInformation/Simple_Renderer/Simple_Renderer.h"
-#include "../CppSamples/DisplayInformation/SketchOnMap/SketchOnMap.h"
-#include "../CppSamples/DisplayInformation/SymbolizeShapefile/SymbolizeShapefile.h"
-#include "../CppSamples/DisplayInformation/Unique_Value_Renderer/Unique_Value_Renderer.h"
-#include "../CppSamples/EditData/AddFeaturesFeatureService/AddFeaturesFeatureService.h"
-#include "../CppSamples/EditData/ContingentValues/ContingentValues.h"
-#include "../CppSamples/EditData/DeleteFeaturesFeatureService/DeleteFeaturesFeatureService.h"
-#include "../CppSamples/EditData/EditAndSyncFeatures/EditAndSyncFeatures.h"
-#include "../CppSamples/EditData/EditFeatureAttachments/EditFeatureAttachments.h"
-#include "../CppSamples/EditData/EditFeaturesWithFeatureLinkedAnnotation/EditFeaturesWithFeatureLinkedAnnotation.h"
-#include "../CppSamples/EditData/EditKmlGroundOverlay/EditKmlGroundOverlay.h"
-#include "../CppSamples/EditData/EditWithBranchVersioning/EditWithBranchVersioning.h"
-#include "../CppSamples/EditData/SnapGeometryEdits/SnapGeometryEdits.h"
-#include "../CppSamples/EditData/UpdateAttributesFeatureService/UpdateAttributesFeatureService.h"
-#include "../CppSamples/EditData/UpdateGeometryFeatureService/UpdateGeometryFeatureService.h"
-#include "../CppSamples/Features/ControlTimeExtentTimeSlider/ControlTimeExtentTimeSlider.h"
-#include "../CppSamples/Features/CreateMobileGeodatabase/CreateMobileGeodatabase.h"
-#include "../CppSamples/Features/FeatureLayerChangeRenderer/FeatureLayerChangeRenderer.h"
-#include "../CppSamples/Features/FeatureLayerDictionaryRenderer/FeatureLayerDictionaryRenderer.h"
-#include "../CppSamples/Features/FeatureLayerQuery/FeatureLayerQuery.h"
-#include "../CppSamples/Features/FeatureLayerSelection/FeatureLayerSelection.h"
-#include "../CppSamples/Features/FilterByDefinitionExpressionOrDisplayFilter/FilterByDefinitionExpressionOrDisplayFilter.h"
-#include "../CppSamples/Features/GenerateGeodatabaseReplicaFromFeatureService/GenerateGeodatabaseReplicaFromFeatureService.h"
-#include "../CppSamples/Features/ListRelatedFeatures/ListRelatedFeatures.h"
-#include "../CppSamples/Features/ServiceFeatureTableCache/ServiceFeatureTableCache.h"
-#include "../CppSamples/Features/ServiceFeatureTableManualCache/ServiceFeatureTableManualCache.h"
-#include "../CppSamples/Features/ServiceFeatureTableNoCache/ServiceFeatureTableNoCache.h"
-#include "../CppSamples/Geometry/Buffer/Buffer.h"
-#include "../CppSamples/Geometry/ClipGeometry/ClipGeometry.h"
-#include "../CppSamples/Geometry/ConvexHull/ConvexHull.h"
-#include "../CppSamples/Geometry/CreateAndEditGeometries/CreateAndEditGeometries.h"
-#include "../CppSamples/Geometry/CreateGeometries/CreateGeometries.h"
-#include "../CppSamples/Geometry/CutGeometry/CutGeometry.h"
-#include "../CppSamples/Geometry/DensifyAndGeneralize/DensifyAndGeneralize.h"
-#include "../CppSamples/Geometry/FormatCoordinates/FormatCoordinates.h"
-#include "../CppSamples/Geometry/GeodesicOperations/GeodesicOperations.h"
-#include "../CppSamples/Geometry/ListTransformations/ListTransformations.h"
-#include "../CppSamples/Geometry/NearestVertex/NearestVertex.h"
-#include "../CppSamples/Geometry/ProjectGeometry/ProjectGeometry.h"
-#include "../CppSamples/Geometry/SpatialOperations/SpatialOperations.h"
-#include "../CppSamples/Geometry/SpatialRelationships/SpatialRelationships.h"
-#include "../CppSamples/Layers/AddCustomDynamicEntityDataSource/AddCustomDynamicEntityDataSource.h"
-#include "../CppSamples/Layers/AddDynamicEntityLayer/AddDynamicEntityLayer.h"
-#include "../CppSamples/Layers/AddEncExchangeSet/AddEncExchangeSet.h"
-#include "../CppSamples/Layers/ApplyMosaicRuleToRasters/ApplyMosaicRuleToRasters.h"
-#include "../CppSamples/Layers/ApplyUniqueValuesWithAlternateSymbols/ApplyUniqueValuesWithAlternateSymbols.h"
-#include "../CppSamples/Layers/ArcGISMapImageLayerUrl/ArcGISMapImageLayerUrl.h"
-#include "../CppSamples/Layers/ArcGISTiledLayerUrl/ArcGISTiledLayerUrl.h"
-#include "../CppSamples/Layers/BlendRasterLayer/BlendRasterLayer.h"
-#include "../CppSamples/Layers/BrowseOGCAPIFeatureService/BrowseOGCAPIFeatureService.h"
-#include "../CppSamples/Layers/BrowseWfsLayers/BrowseWfsLayers.h"
-#include "../CppSamples/Layers/ChangeSublayerRenderer/ChangeSublayerRenderer.h"
-#include "../CppSamples/Layers/ChangeSublayerVisibility/ChangeSublayerVisibility.h"
-#include "../CppSamples/Layers/ConfigureClusters/ConfigureClusters.h"
-#include "../CppSamples/Layers/CreateAndSaveKmlFile/CreateAndSaveKmlFile.h"
-#include "../CppSamples/Layers/DisplayAnnotation/DisplayAnnotation.h"
-#include "../CppSamples/Layers/DisplayDimensions/DisplayDimensions.h"
-#include "../CppSamples/Layers/DisplayFeatureLayers/DisplayFeatureLayers.h"
-#include "../CppSamples/Layers/DisplayKml/DisplayKml.h"
-#include "../CppSamples/Layers/DisplayKmlNetworkLinks/DisplayKmlNetworkLinks.h"
-#include "../CppSamples/Layers/DisplayOgcApiFeatureCollection/DisplayOgcApiFeatureCollection.h"
-#include "../CppSamples/Layers/DisplaySubtypeFeatureLayer/DisplaySubtypeFeatureLayer.h"
-#include "../CppSamples/Layers/DisplayWfsLayer/DisplayWfsLayer.h"
-#include "../CppSamples/Layers/ExportTiles/ExportTiles.h"
-#include "../CppSamples/Layers/ExportVectorTiles/ExportVectorTiles.h"
-#include "../CppSamples/Layers/FeatureCollectionLayerFromPortal/FeatureCollectionLayerFromPortal.h"
-#include "../CppSamples/Layers/FeatureCollectionLayerQuery/FeatureCollectionLayerQuery.h"
-#include "../CppSamples/Layers/FeatureLayerRenderingModeMap/FeatureLayerRenderingModeMap.h"
-#include "../CppSamples/Layers/FeatureLayerRenderingModeScene/FeatureLayerRenderingModeScene.h"
-#include "../CppSamples/Layers/Feature_Collection_Layer/Feature_Collection_Layer.h"
-#include "../CppSamples/Layers/GroupLayers/GroupLayers.h"
-#include "../CppSamples/Layers/Hillshade_Renderer/Hillshade_Renderer.h"
-#include "../CppSamples/Layers/IdentifyKmlFeatures/IdentifyKmlFeatures.h"
-#include "../CppSamples/Layers/IdentifyRasterCell/IdentifyRasterCell.h"
-#include "../CppSamples/Layers/ListKmlContents/ListKmlContents.h"
-#include "../CppSamples/Layers/LoadWfsXmlQuery/LoadWfsXmlQuery.h"
-#include "../CppSamples/Layers/ManageOperationalLayers/ManageOperationalLayers.h"
-#include "../CppSamples/Layers/OSM_Layer/OSM_Layer.h"
-#include "../CppSamples/Layers/PlayAKmlTour/PlayAKmlTour.h"
-#include "../CppSamples/Layers/QueryMapImageSublayer/QueryMapImageSublayer.h"
-#include "../CppSamples/Layers/QueryOGCAPICQLFilters/QueryOGCAPICQLFilters.h"
-#include "../CppSamples/Layers/RasterColormapRenderer/RasterColormapRenderer.h"
-#include "../CppSamples/Layers/RasterFunctionService/RasterFunctionService.h"
-#include "../CppSamples/Layers/RasterLayerFile/RasterLayerFile.h"
-#include "../CppSamples/Layers/RasterLayerGeoPackage/RasterLayerGeoPackage.h"
-#include "../CppSamples/Layers/RasterLayerService/RasterLayerService.h"
-#include "../CppSamples/Layers/RasterRenderingRule/RasterRenderingRule.h"
-#include "../CppSamples/Layers/RasterRgbRenderer/RasterRgbRenderer.h"
-#include "../CppSamples/Layers/RasterStretchRenderer/RasterStretchRenderer.h"
-#include "../CppSamples/Layers/StyleWmsLayer/StyleWmsLayer.h"
-#include "../CppSamples/Layers/TileCacheLayer/TileCacheLayer.h"
-#include "../CppSamples/Layers/VectorTiledLayerUrl/VectorTiledLayerUrl.h"
-#include "../CppSamples/Layers/WMTS_Layer/WMTS_Layer.h"
-#include "../CppSamples/Layers/Web_Tiled_Layer/Web_Tiled_Layer.h"
-#include "../CppSamples/Layers/WmsLayerUrl/WmsLayerUrl.h"
-#include "../CppSamples/Maps/ApplyScheduledMapUpdates/ApplyScheduledMapUpdates.h"
-#include "../CppSamples/Maps/BrowseBuildingFloors/BrowseBuildingFloors.h"
-#include "../CppSamples/Maps/ChangeBasemap/ChangeBasemap.h"
-#include "../CppSamples/Maps/ChangeViewpoint/ChangeViewpoint.h"
-#include "../CppSamples/Maps/ConfigureBasemapStyleLanguage/ConfigureBasemapStyleLanguage.h"
-#include "../CppSamples/Maps/CreateAndSaveMap/CreateAndSaveMap.h"
-#include "../CppSamples/Maps/CreateDynamicBasemapGallery/CreateDynamicBasemapGallery.h"
-#include "../CppSamples/Maps/DisplayDeviceLocation/DisplayDeviceLocation.h"
-#include "../CppSamples/Maps/DisplayDeviceLocationWithNmeaDataSources/DisplayDeviceLocationWithNmeaDataSources.h"
-#include "../CppSamples/Maps/DisplayDrawingStatus/DisplayDrawingStatus.h"
-#include "../CppSamples/Maps/DisplayLayerViewDrawState/DisplayLayerViewDrawState.h"
-#include "../CppSamples/Maps/DisplayMap/DisplayMap.h"
-#include "../CppSamples/Maps/DisplayOverviewMap/DisplayOverviewMap.h"
-#include "../CppSamples/Maps/DownloadPreplannedMap/DownloadPreplannedMap.h"
-#include "../CppSamples/Maps/GenerateOfflineMap/GenerateOfflineMap.h"
-#include "../CppSamples/Maps/GenerateOfflineMapLocalBasemap/GenerateOfflineMapLocalBasemap.h"
-#include "../CppSamples/Maps/GenerateOfflineMap_Overrides/GenerateOfflineMap_Overrides.h"
-#include "../CppSamples/Maps/HonorMobileMapPackageExpiration/HonorMobileMapPackageExpiration.h"
-#include "../CppSamples/Maps/IdentifyLayers/IdentifyLayers.h"
-#include "../CppSamples/Maps/ManageBookmarks/ManageBookmarks.h"
-#include "../CppSamples/Maps/MapLoaded/MapLoaded.h"
-#include "../CppSamples/Maps/MapReferenceScale/MapReferenceScale.h"
-#include "../CppSamples/Maps/MapRotation/MapRotation.h"
-#include "../CppSamples/Maps/MinMaxScale/MinMaxScale.h"
-#include "../CppSamples/Maps/MobileMap_SearchAndRoute/MobileMap_SearchAndRoute.h"
-#include "../CppSamples/Maps/OpenMapUrl/OpenMapUrl.h"
-#include "../CppSamples/Maps/OpenMobileMap_MapPackage/OpenMobileMap_MapPackage.h"
-#include "../CppSamples/Maps/ReadGeoPackage/ReadGeoPackage.h"
-#include "../CppSamples/Maps/SetInitialMapArea/SetInitialMapArea.h"
-#include "../CppSamples/Maps/SetInitialMapLocation/SetInitialMapLocation.h"
-#include "../CppSamples/Maps/SetMapSpatialReference/SetMapSpatialReference.h"
-#include "../CppSamples/Maps/SetMaxExtent/SetMaxExtent.h"
-#include "../CppSamples/Maps/ShowDeviceLocationUsingIndoorPositioning/ShowDeviceLocationUsingIndoorPositioning.h"
-#include "../CppSamples/Maps/ShowLocationHistory/ShowLocationHistory.h"
-#include "../CppSamples/Maps/ShowMagnifier/ShowMagnifier.h"
-#include "../CppSamples/Maps/TakeScreenshot/MapImageProvider.h"
-#include "../CppSamples/Maps/TakeScreenshot/TakeScreenshot.h"
-#include "../CppSamples/Routing/ClosestFacility/ClosestFacility.h"
-#include "../CppSamples/Routing/DisplayRouteLayer/DisplayRouteLayer.h"
-#include "../CppSamples/Routing/FindClosestFacilityToMultipleIncidentsService/FindClosestFacilityToMultipleIncidentsService.h"
-#include "../CppSamples/Routing/FindRoute/FindRoute.h"
-#include "../CppSamples/Routing/FindServiceAreasForMultipleFacilities/FindServiceAreasForMultipleFacilities.h"
-#include "../CppSamples/Routing/NavigateARouteWithRerouting/NavigateARouteWithRerouting.h"
-#include "../CppSamples/Routing/NavigateRoute/NavigateRoute.h"
-#include "../CppSamples/Routing/OfflineRouting/OfflineRouting.h"
-#include "../CppSamples/Routing/RouteAroundBarriers/RouteAroundBarriers.h"
-#include "../CppSamples/Routing/ServiceArea/ServiceArea.h"
-#include "../CppSamples/Scenes/Add3DTilesLayer/Add3DTilesLayer.h"
-#include "../CppSamples/Scenes/AddAPointSceneLayer/AddAPointSceneLayer.h"
-#include "../CppSamples/Scenes/AddIntegratedMeshLayer/AddIntegratedMeshLayer.h"
-#include "../CppSamples/Scenes/Animate3DSymbols/Animate3DSymbols.h"
-#include "../CppSamples/Scenes/AnimateImagesWithImageOverlay/AnimateImagesWithImageOverlay.h"
-#include "../CppSamples/Scenes/BasicSceneView/BasicSceneView.h"
-#include "../CppSamples/Scenes/ChangeAtmosphereEffect/ChangeAtmosphereEffect.h"
-#include "../CppSamples/Scenes/ChooseCameraController/ChooseCameraController.h"
-#include "../CppSamples/Scenes/CreateTerrainSurfaceFromLocalRaster/CreateTerrainSurfaceFromLocalRaster.h"
-#include "../CppSamples/Scenes/CreateTerrainSurfaceFromLocalTilePackage/CreateTerrainSurfaceFromLocalTilePackage.h"
-#include "../CppSamples/Scenes/Display3DLabelsInScene/Display3DLabelsInScene.h"
-#include "../CppSamples/Scenes/DisplaySceneLayer/DisplaySceneLayer.h"
-#include "../CppSamples/Scenes/DistanceCompositeSymbol/DistanceCompositeSymbol.h"
-#include "../CppSamples/Scenes/ExtrudeGraphics/ExtrudeGraphics.h"
-#include "../CppSamples/Scenes/FeatureLayerExtrusion/FeatureLayerExtrusion.h"
-#include "../CppSamples/Scenes/FilterFeaturesInScene/FilterFeaturesInScene.h"
-#include "../CppSamples/Scenes/GetElevationAtPoint/GetElevationAtPoint.h"
-#include "../CppSamples/Scenes/OpenMobileScenePackage/OpenMobileScenePackage.h"
-#include "../CppSamples/Scenes/OpenScene/OpenScene.h"
-#include "../CppSamples/Scenes/OrbitCameraAroundObject/OrbitCameraAroundObject.h"
-#include "../CppSamples/Scenes/RealisticLightingAndShadows/RealisticLightingAndShadows.h"
-#include "../CppSamples/Scenes/SceneLayerSelection/SceneLayerSelection.h"
-#include "../CppSamples/Scenes/ScenePropertiesExpressions/ScenePropertiesExpressions.h"
-#include "../CppSamples/Scenes/SetSurfacePlacementMode/SetSurfacePlacementMode.h"
-#include "../CppSamples/Scenes/Symbols/Symbols.h"
-#include "../CppSamples/Scenes/SyncMapViewSceneView/SyncMapViewSceneView.h"
-#include "../CppSamples/Scenes/TerrainExaggeration/TerrainExaggeration.h"
-#include "../CppSamples/Scenes/ViewContentBeneathTerrainSurface/ViewContentBeneathTerrainSurface.h"
-#include "../CppSamples/Scenes/ViewPointCloudDataOffline/ViewPointCloudDataOffline.h"
-#include "../CppSamples/Search/FindAddress/FindAddress.h"
-#include "../CppSamples/Search/FindPlace/FindPlace.h"
-#include "../CppSamples/Search/OfflineGeocode/OfflineGeocode.h"
-#include "../CppSamples/Search/ReverseGeocodeOnline/ReverseGeocodeOnline.h"
-#include "../CppSamples/Search/SearchDictionarySymbolStyle/SearchDictionarySymbolStyle.h"
-#include "../CppSamples/UtilityNetwork/ConfigureSubnetworkTrace/ConfigureSubnetworkTrace.h"
-#include "../CppSamples/UtilityNetwork/CreateLoadReport/CreateLoadReport.h"
-#include "../CppSamples/UtilityNetwork/DisplayContentOfUtilityNetworkContainer/DisplayContentOfUtilityNetworkContainer.h"
-#include "../CppSamples/UtilityNetwork/DisplayUtilityAssociations/DisplayUtilityAssociations.h"
-#include "../CppSamples/UtilityNetwork/PerformValveIsolationTrace/PerformValveIsolationTrace.h"
-#include "../CppSamples/UtilityNetwork/TraceUtilityNetwork/TraceUtilityNetwork.h"
-#include "../CppSamples/UtilityNetwork/ValidateUtilityNetworkTopology/ValidateUtilityNetworkTopology.h"
+#include "Add3DTilesLayer.h"
+#include "AddAPointSceneLayer.h"
+#include "AddCustomDynamicEntityDataSource.h"
+#include "AddDynamicEntityLayer.h"
+#include "AddEncExchangeSet.h"
+#include "AddFeaturesFeatureService.h"
+#include "AddGraphicsWithRenderer.h"
+#include "AddIntegratedMeshLayer.h"
+#include "AddItemsToPortal.h"
+#include "AnalyzeHotspots.h"
+#include "AnalyzeViewshed.h"
+#include "Animate3DSymbols.h"
+#include "AnimateImagesWithImageOverlay.h"
+#include "ApplyMosaicRuleToRasters.h"
+#include "ApplyScheduledMapUpdates.h"
+#include "ApplyUniqueValuesWithAlternateSymbols.h"
+#include "ArcGISMapImageLayerUrl.h"
+#include "ArcGISQt_global.h" // for LOCALSERVER_SUPPORTED
+#include "ArcGISTiledLayerUrl.h"
+#include "BasicSceneView.h"
+#include "BlendRasterLayer.h"
+#include "BookmarkListModel.h"
+#include "BrowseBuildingFloors.h"
+#include "BrowseOGCAPIFeatureService.h"
+#include "BrowseWfsLayers.h"
+#include "Buffer.h"
+#include "BuildLegend.h"
+#include "ChangeAtmosphereEffect.h"
+#include "ChangeBasemap.h"
+#include "ChangeSublayerRenderer.h"
+#include "ChangeSublayerVisibility.h"
+#include "ChangeViewpoint.h"
+#include "ChooseCameraController.h"
+#include "ClipGeometry.h"
+#include "ClosestFacility.h"
+#include "ConfigureBasemapStyleLanguage.h"
+#include "ConfigureClusters.h"
+#include "ConfigureSubnetworkTrace.h"
+#include "ContingentValues.h"
+#include "ControlAnnotationSublayerVisibility.h"
+#include "ControlTimeExtentTimeSlider.h"
+#include "ConvexHull.h"
+#include "CreateAndSaveKmlFile.h"
+#include "CreateAndSaveMap.h"
+#include "CreateAndEditGeometries.h"
+#include "CreateDynamicBasemapGallery.h"
+#include "CreateGeometries.h"
+#include "CreateLoadReport.h"
+#include "CreateMobileGeodatabase.h"
+#include "CreateSymbolStylesFromWebStyles.h"
+#include "CreateTerrainSurfaceFromLocalRaster.h"
+#include "CreateTerrainSurfaceFromLocalTilePackage.h"
+#include "Credential.h"
+#include "CustomDictionaryStyle.h"
+#include "CutGeometry.h"
+#include "DeleteFeaturesFeatureService.h"
+#include "DensifyAndGeneralize.h"
+#include "Display3DLabelsInScene.h"
+#include "DisplayAnnotation.h"
+#include "DisplayContentOfUtilityNetworkContainer.h"
+#include "DisplayDimensions.h"
+#include "DisplayDeviceLocation.h"
+#include "DisplayDeviceLocationWithNmeaDataSources.h"
+#include "DisplayDrawingStatus.h"
+#include "DisplayFeatureLayers.h"
+#include "DisplayGrid.h"
+#include "DisplayKml.h"
+#include "DisplayKmlNetworkLinks.h"
+#include "DisplayLayerViewDrawState.h"
+#include "DisplayMap.h"
+#include "DisplayOgcApiFeatureCollection.h"
+#include "DisplayOverviewMap.h"
+#include "DisplayClusters.h"
+#include "DisplayRouteLayer.h"
+#include "DisplaySceneLayer.h"
+#include "DisplaySubtypeFeatureLayer.h"
+#include "DisplayUtilityAssociations.h"
+#include "DisplayWfsLayer.h"
+#include "DistanceCompositeSymbol.h"
+#include "DistanceMeasurementAnalysis.h"
+#include "DownloadPreplannedMap.h"
+#include "EditAndSyncFeatures.h"
+#include "EditFeatureAttachments.h"
+#include "EditFeaturesWithFeatureLinkedAnnotation.h"
+#include "EditKmlGroundOverlay.h"
+#include "EditWithBranchVersioning.h"
+#include "ExportTiles.h"
+#include "ExportVectorTiles.h"
+#include "ExtrudeGraphics.h"
+#include "Feature_Collection_Layer.h"
+#include "FeatureCollectionLayerFromPortal.h"
+#include "FeatureCollectionLayerQuery.h"
+#include "FeatureLayerChangeRenderer.h"
+#include "FeatureLayerDictionaryRenderer.h"
+#include "FeatureLayerExtrusion.h"
+#include "FilterFeaturesInScene.h"
+#include "FeatureLayerQuery.h"
+#include "FeatureLayerRenderingModeMap.h"
+#include "FeatureLayerRenderingModeScene.h"
+#include "FeatureLayerSelection.h"
+#include "FilterByDefinitionExpressionOrDisplayFilter.h"
+#include "FindAddress.h"
+#include "FindClosestFacilityToMultipleIncidentsService.h"
+#include "FindPlace.h"
+#include "FindRoute.h"
+#include "FindServiceAreasForMultipleFacilities.h"
+#include "FormatCoordinates.h"
+#include "GenerateGeodatabaseReplicaFromFeatureService.h"
+#include "GenerateOfflineMap_Overrides.h"
+#include "GenerateOfflineMap.h"
+#include "GenerateOfflineMapLocalBasemap.h"
+#include "GeodesicOperations.h"
+#include "Geotriggers.h"
+#include "GetElevationAtPoint.h"
+#include "GODictionaryRenderer_3D.h"
+#include "GODictionaryRenderer.h"
+#include "GOSymbols.h"
+#include "GroupLayers.h"
+#include "Hillshade_Renderer.h"
+#include "HonorMobileMapPackageExpiration.h"
+#include "IdentifyGraphics.h"
+#include "IdentifyKmlFeatures.h"
+#include "IdentifyLayers.h"
+#include "IdentifyRasterCell.h"
+#include "IntegratedWindowsAuthentication.h"
+#include "LineOfSightGeoElement.h"
+#include "LineOfSightLocation.h"
+#include "ListKmlContents.h"
+#include "ListRelatedFeatures.h"
+#include "ListTransformations.h"
+#include "LoadWfsXmlQuery.h"
+#include "ManageBookmarks.h"
+#include "ManageOperationalLayers.h"
+#include "MapImageProvider.h"
+#include "MapLoaded.h"
+#include "MapReferenceScale.h"
+#include "MapRotation.h"
+#include "MinMaxScale.h"
+#include "MobileMap_SearchAndRoute.h"
+#include "NavigateRoute.h"
+#include "NavigateARouteWithRerouting.h"
+#include "NearestVertex.h"
+#include "OfflineGeocode.h"
+#include "OfflineRouting.h"
+#include "OpenMapUrl.h"
+#include "OpenMobileMap_MapPackage.h"
+#include "OpenMobileScenePackage.h"
+#include "OpenScene.h"
+#include "OrbitCameraAroundObject.h"
+#include "OSM_Layer.h"
+#include "PerformValveIsolationTrace.h"
+#include "Picture_Marker_Symbol.h"
+#include "PlayAKmlTour.h"
+#include "PortalUserInfo.h"
+#include "ProjectGeometry.h"
+#include "QueryFeaturesWithArcadeExpression.h"
+#include "QueryMapImageSublayer.h"
+#include "QueryOGCAPICQLFilters.h"
+#include "RasterColormapRenderer.h"
+#include "RasterFunctionService.h"
+#include "RasterLayerFile.h"
+#include "RasterLayerGeoPackage.h"
+#include "RasterLayerService.h"
+#include "RasterRenderingRule.h"
+#include "RasterRgbRenderer.h"
+#include "RasterStretchRenderer.h"
+#include "ReadGeoPackage.h"
+#include "ReadSymbolsFromMobileStyle.h"
+#include "RealisticLightingAndShadows.h"
+#include "ReverseGeocodeOnline.h"
+#include "RouteAroundBarriers.h"
+#include "SceneLayerSelection.h"
+#include "ScenePropertiesExpressions.h"
+#include "SearchDictionarySymbolStyle.h"
+#include "SearchForWebmap.h"
+#include "ServiceArea.h"
+#include "ServiceFeatureTableCache.h"
+#include "ServiceFeatureTableManualCache.h"
+#include "ServiceFeatureTableNoCache.h"
+#include "SetInitialMapArea.h"
+#include "SetInitialMapLocation.h"
+#include "SetMapSpatialReference.h"
+#include "SetMaxExtent.h"
+#include "ShowCallout.h"
+#include "ShowDeviceLocationUsingIndoorPositioning.h"
+#include "ShowLabelsOnLayers.h"
+#include "ShowLocationHistory.h"
+#include "ShowMagnifier.h"
+#include "ShowOrgBasemaps.h"
+#include "ShowPopup.h"
+#include "Simple_Marker_Symbol.h"
+#include "Simple_Renderer.h"
+#include "SketchOnMap.h"
+#include "SnapGeometryEdits.h"
+#include "SpatialOperations.h"
+#include "SpatialRelationships.h"
+#include "StatisticalQuery.h"
+#include "StatisticalQueryGroupSort.h"
+#include "StyleWmsLayer.h"
+#include "SuggestListModel.h"
+#include "SetSurfacePlacementMode.h"
+#include "SymbolizeShapefile.h"
+#include "Symbols.h"
+#include "SyncMapViewSceneView.h"
+#include "TakeScreenshot.h"
+#include "TerrainExaggeration.h"
+#include "TileCacheLayer.h"
+#include "TokenAuthentication.h"
+#include "TraceUtilityNetwork.h"
+#include "Unique_Value_Renderer.h"
+#include "UpdateAttributesFeatureService.h"
+#include "UpdateGeometryFeatureService.h"
+#include "ValidateUtilityNetworkTopology.h"
+#include "VectorTiledLayerUrl.h"
+#include "ViewContentBeneathTerrainSurface.h"
+#include "ViewPointCloudDataOffline.h"
+#include "ViewshedCamera.h"
+#include "ViewshedGeoElement.h"
+#include "ViewshedLocation.h"
+#include "Web_Tiled_Layer.h"
+#include "WmsLayerUrl.h"
+#include "WMTS_Layer.h"
 
 #ifdef LOCALSERVER_SUPPORTED
-#include "../CppSamples/LocalServer/LocalServerGeoprocessing/LocalServerGeoprocessing.h"
-#include "../CppSamples/LocalServer/LocalServerFeatureLayer/LocalServerFeatureLayer.h"
-#include "../CppSamples/LocalServer/LocalServerMapImageLayer/LocalServerMapImageLayer.h"
-#include "../CppSamples/LocalServer/LocalServerServices/LocalServerServices.h"
+#include "LocalServerFeatureLayer.h"
+#include "LocalServerGeoprocessing.h"
+#include "LocalServerMapImageLayer.h"
+#include "LocalServerServices.h"
 #endif // LOCALSERVER_SUPPORTED
 
 #ifdef SHOW_PORTAL_SAMPLES
-#include "../CppSamples/CloudAndPortal/SearchForWebmap/SearchForWebmap.h"
-#include "../CppSamples/CloudAndPortal/AddItemsToPortal/AddItemsToPortal.h"
-#include "../CppSamples/CloudAndPortal/PortalUserInfo/PortalUserInfo.h"
-#include "../CppSamples/CloudAndPortal/ShowOrgBasemaps/ShowOrgBasemaps.h"
+#include "AddItemsToPortal.h"
+#include "PortalUserInfo.h"
+#include "SearchForWebmap.h"
+#include "ShowOrgBasemaps.h"
 #endif // HIDE_PORTAL_SAMPLES
 
 #ifdef SHOW_RASTER_FUNCTION_SAMPLE
-#include "../CppSamples/Layers/RasterFunctionFile/RasterFunctionFile.h"
+#include "RasterFunctionFile.h"
 #endif // SHOW_RASTER_FUNCTION_SAMPLE
 
 
@@ -396,9 +403,9 @@ void registerCppSampleClasses()
   ControlAnnotationSublayerVisibility::init();
   ControlTimeExtentTimeSlider::init();
   ConvexHull::init();
-  CreateAndEditGeometries::init();
   CreateAndSaveKmlFile::init();
   CreateAndSaveMap::init();
+  CreateAndEditGeometries::init();
   CreateDynamicBasemapGallery::init();
   CreateGeometries::init();
   CreateLoadReport::init();
@@ -412,19 +419,20 @@ void registerCppSampleClasses()
   DensifyAndGeneralize::init();
   Display3DLabelsInScene::init();
   DisplayAnnotation::init();
-  DisplayClusters::init();
+  DisplayDimensions::init();
   DisplayContentOfUtilityNetworkContainer::init();
   DisplayDeviceLocation::init();
   DisplayDeviceLocationWithNmeaDataSources::init();
-  DisplayDimensions::init();
   DisplayDrawingStatus::init();
   DisplayFeatureLayers::init();
+  DisplayGrid::init();
   DisplayKml::init();
   DisplayKmlNetworkLinks::init();
   DisplayLayerViewDrawState::init();
   DisplayMap::init();
   DisplayOgcApiFeatureCollection::init();
   DisplayOverviewMap::init();
+  DisplayClusters::init();
   DisplayRouteLayer::init();
   DisplaySceneLayer::init();
   DisplaySubtypeFeatureLayer::init();
@@ -441,34 +449,34 @@ void registerCppSampleClasses()
   ExportTiles::init();
   ExportVectorTiles::init();
   ExtrudeGraphics::init();
+  Feature_Collection_Layer::init();
   FeatureCollectionLayerFromPortal::init();
   FeatureCollectionLayerQuery::init();
   FeatureLayerChangeRenderer::init();
   FeatureLayerDictionaryRenderer::init();
   FeatureLayerExtrusion::init();
+  FilterFeaturesInScene::init();
   FeatureLayerQuery::init();
   FeatureLayerRenderingModeMap::init();
   FeatureLayerRenderingModeScene::init();
   FeatureLayerSelection::init();
-  Feature_Collection_Layer::init();
   FilterByDefinitionExpressionOrDisplayFilter::init();
-  FilterFeaturesInScene::init();
   FindAddress::init();
   FindClosestFacilityToMultipleIncidentsService::init();
   FindPlace::init();
   FindRoute::init();
   FindServiceAreasForMultipleFacilities::init();
   FormatCoordinates::init();
-  GODictionaryRenderer::init();
-  GODictionaryRenderer_3D::init();
-  GOSymbols::init();
   GenerateGeodatabaseReplicaFromFeatureService::init();
+  GenerateOfflineMap_Overrides::init();
   GenerateOfflineMap::init();
   GenerateOfflineMapLocalBasemap::init();
-  GenerateOfflineMap_Overrides::init();
   GeodesicOperations::init();
   Geotriggers::init();
   GetElevationAtPoint::init();
+  GODictionaryRenderer_3D::init();
+  GODictionaryRenderer::init();
+  GOSymbols::init();
   GroupLayers::init();
   Hillshade_Renderer::init();
   HonorMobileMapPackageExpiration::init();
@@ -490,10 +498,9 @@ void registerCppSampleClasses()
   MapRotation::init();
   MinMaxScale::init();
   MobileMap_SearchAndRoute::init();
-  NavigateARouteWithRerouting::init();
   NavigateRoute::init();
+  NavigateARouteWithRerouting::init();
   NearestVertex::init();
-  OSM_Layer::init();
   OfflineGeocode::init();
   OfflineRouting::init();
   OpenMapUrl::init();
@@ -501,6 +508,7 @@ void registerCppSampleClasses()
   OpenMobileScenePackage::init();
   OpenScene::init();
   OrbitCameraAroundObject::init();
+  OSM_Layer::init();
   PerformValveIsolationTrace::init();
   Picture_Marker_Symbol::init();
   PlayAKmlTour::init();
@@ -532,10 +540,8 @@ void registerCppSampleClasses()
   SetInitialMapLocation::init();
   SetMapSpatialReference::init();
   SetMaxExtent::init();
-  SetSurfacePlacementMode::init();
   ShowCallout::init();
   ShowDeviceLocationUsingIndoorPositioning::init();
-  ShowGrid::init();
   ShowLabelsOnLayers::init();
   ShowLocationHistory::init();
   ShowMagnifier::init();
@@ -543,12 +549,13 @@ void registerCppSampleClasses()
   Simple_Marker_Symbol::init();
   Simple_Renderer::init();
   SketchOnMap::init();
-  SnapGeometryEdits::init();
   SpatialOperations::init();
   SpatialRelationships::init();
+  SnapGeometryEdits::init();
   StatisticalQuery::init();
   StatisticalQueryGroupSort::init();
   StyleWmsLayer::init();
+  SetSurfacePlacementMode::init();
   SymbolizeShapefile::init();
   Symbols::init();
   SyncMapViewSceneView::init();
@@ -567,9 +574,9 @@ void registerCppSampleClasses()
   ViewshedCamera::init();
   ViewshedGeoElement::init();
   ViewshedLocation::init();
-  WMTS_Layer::init();
   Web_Tiled_Layer::init();
   WmsLayerUrl::init();
+  WMTS_Layer::init();
 
 #ifdef SHOW_PORTAL_SAMPLES
   PortalUserInfo::init();

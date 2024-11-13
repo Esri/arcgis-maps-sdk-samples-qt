@@ -1,12 +1,12 @@
 // [WriteFile Name=GenerateOfflineMap_Overrides, Category=Maps]
 // [Legal]
 // Copyright 2018 Esri.
-//
+
 // Licensed under the Apache License, Version 2.0 (the "License");
 // you may not use this file except in compliance with the License.
 // You may obtain a copy of the License at
 // http://www.apache.org/licenses/LICENSE-2.0
-//
+
 // Unless required by applicable law or agreed to in writing, software
 // distributed under the License is distributed on an "AS IS" BASIS,
 // WITHOUT WARRANTIES OR CONDITIONS OF ANY KIND, either express or implied.
@@ -17,12 +17,8 @@
 #ifndef GENERATEOFFLINEMAP_OVERRIDES_H
 #define GENERATEOFFLINEMAP_OVERRIDES_H
 
-// ArcGIS Maps SDK headers
+// C++ API headers
 #include "GenerateOfflineMapParameters.h"
-
-// Qt headers
-#include <QQuickItem>
-#include <QTemporaryDir>
 
 namespace Esri::ArcGISRuntime
 {
@@ -33,6 +29,9 @@ class MapQuickView;
 class OfflineMapTask;
 class PortalItem;
 }
+
+#include <QQuickItem>
+#include <QTemporaryDir>
 
 class GenerateOfflineMap_Overrides: public QQuickItem
 {

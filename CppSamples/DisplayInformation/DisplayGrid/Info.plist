@@ -3,9 +3,9 @@
 <plist version="1.0">
 <dict>
 	<key>CFBundleDisplayName</key>
-	<string>FindPlace</string>
+	<string>DisplayGrid</string>
 	<key>CFBundleExecutable</key>
-	<string>FindPlace</string>
+	<string>DisplayGrid</string>
 	<key>CFBundleGetInfoString</key>
 	<string>ArcGIS</string>
 	<key>CFBundleIcons~ipad</key>
@@ -25,15 +25,15 @@
 	<key>NOTE</key>
 	<string>This app is cool</string>
 	<key>UIFileSharingEnabled</key>
-    	<string>FALSE</string>
+        <string>FALSE</string>
 	<key>UIRequiresPersistentWiFi</key>
 	<string>NO</string>
 	<key>LSRequiresIPhoneOS</key>
 	<true/>
+	<key>NSLocationAlwaysUsageDescription</key>
+	<string></string>
 	<key>NSLocationWhenInUseUsageDescription</key>
-    	<string>Location required for application</string>
-    	<key>NSLocationAlwaysAndWhenInUseUsageDescription</key>
-    	<string>Location required for application</string>
+	<string></string>
 	<key>UISupportedInterfaceOrientations</key>
 	<array>
 		<string>UIInterfaceOrientationPortrait</string>
@@ -48,8 +48,8 @@
 		<string>UIInterfaceOrientationLandscapeLeft</string>
 		<string>UIInterfaceOrientationLandscapeRight</string>
 	</array>
-        <key>UILaunchStoryboardName</key>
-        <string>LaunchScreen</string>
+    <key>UILaunchStoryboardName</key>
+    <string>LaunchScreen</string>
 </dict>
 </plist>
 

@@ -1,12 +1,12 @@
 // [WriteFile Name=EditFeatureAttachments, Category=EditData]
 // [Legal]
 // Copyright 2016 Esri.
-//
+
 // Licensed under the Apache License, Version 2.0 (the "License");
 // you may not use this file except in compliance with the License.
 // You may obtain a copy of the License at
 // http://www.apache.org/licenses/LICENSE-2.0
-//
+
 // Unless required by applicable law or agreed to in writing, software
 // distributed under the License is distributed on an "AS IS" BASIS,
 // WITHOUT WARRANTIES OR CONDITIONS OF ANY KIND, either express or implied.
@@ -18,41 +18,38 @@
 #include "pch.hpp"
 #endif // PCH_BUILD
 
-// sample headers
 #include "EditFeatureAttachments.h"
 
-// ArcGIS Maps SDK headers
-#include "ArcGISFeature.h"
-#include "Attachment.h"
-#include "AttachmentListModel.h"
-#include "AttributeListModel.h"
-#include "Basemap.h"
-#include "CalloutData.h"
-#include "Envelope.h"
-#include "Error.h"
-#include "Feature.h"
-#include "FeatureEditResult.h"
-#include "FeatureIterator.h"
-#include "FeatureLayer.h"
-#include "FeatureQueryResult.h"
-#include "IdentifyLayerResult.h"
-#include "LayerListModel.h"
 #include "Map.h"
 #include "MapQuickView.h"
-#include "MapTypes.h"
-#include "MapViewTypes.h"
-#include "Point.h"
-#include "QueryParameters.h"
-#include "ServiceFeatureTable.h"
-#include "SpatialReference.h"
+#include "Basemap.h"
 #include "Viewpoint.h"
+#include "Point.h"
+#include "SpatialReference.h"
+#include "ServiceFeatureTable.h"
+#include "FeatureLayer.h"
+#include "Feature.h"
+#include "ArcGISFeature.h"
+#include "FeatureEditResult.h"
+#include "FeatureQueryResult.h"
+#include "AttachmentListModel.h"
+#include "MapViewTypes.h"
+#include "MapTypes.h"
+#include "LayerListModel.h"
+#include "IdentifyLayerResult.h"
+#include "QueryParameters.h"
+#include "AttributeListModel.h"
+#include "FeatureIterator.h"
+#include "CalloutData.h"
+#include "Error.h"
+#include "Attachment.h"
+#include "Envelope.h"
 
-// Qt headers
-#include <QFile>
-#include <QFileInfo>
-#include <QMouseEvent>
 #include <QUrl>
 #include <QUuid>
+#include <QMouseEvent>
+#include <QFile>
+#include <QFileInfo>
 
 using namespace Esri::ArcGISRuntime;
 

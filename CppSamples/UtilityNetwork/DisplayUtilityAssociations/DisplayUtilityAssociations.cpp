@@ -1,12 +1,12 @@
 // [WriteFile Name=DisplayUtilityAssociations, Category=UtilityNetwork]
 // [Legal]
 // Copyright 2020 Esri.
-//
+
 // Licensed under the Apache License, Version 2.0 (the "License");
 // you may not use this file except in compliance with the License.
 // You may obtain a copy of the License at
 // http://www.apache.org/licenses/LICENSE-2.0
-//
+
 // Unless required by applicable law or agreed to in writing, software
 // distributed under the License is distributed on an "AS IS" BASIS,
 // WITHOUT WARRANTIES OR CONDITIONS OF ANY KIND, either express or implied.
@@ -18,30 +18,17 @@
 #include "pch.hpp"
 #endif // PCH_BUILD
 
-// sample headers
 #include "DisplayUtilityAssociations.h"
 #include "SymbolImageProvider.h"
 
-// ArcGIS Maps SDK headers
 #include "ArcGISFeatureTable.h"
 #include "AttributeListModel.h"
-#include "Credential.h"
-#include "Envelope.h"
-#include "Error.h"
 #include "FeatureLayer.h"
-#include "Graphic.h"
-#include "GraphicListModel.h"
 #include "GraphicsOverlay.h"
-#include "GraphicsOverlayListModel.h"
-#include "LayerListModel.h"
+#include "Graphic.h"
 #include "Map.h"
 #include "MapQuickView.h"
-#include "MapTypes.h"
-#include "Point.h"
 #include "SimpleLineSymbol.h"
-#include "SpatialReference.h"
-#include "SymbolTypes.h"
-#include "UniqueValue.h"
 #include "UniqueValueRenderer.h"
 #include "UtilityAssociation.h"
 #include "UtilityNetwork.h"
@@ -49,12 +36,23 @@
 #include "UtilityNetworkListModel.h"
 #include "UtilityNetworkSource.h"
 #include "UtilityNetworkTypes.h"
+#include "MapTypes.h"
+#include "SymbolTypes.h"
+#include "Error.h"
+#include "GraphicsOverlayListModel.h"
+#include "GraphicListModel.h"
+#include "AttributeListModel.h"
+#include "LayerListModel.h"
+#include "Credential.h"
+#include "UniqueValue.h"
 #include "Viewpoint.h"
+#include "Envelope.h"
+#include "SpatialReference.h"
+#include "Point.h"
 
-// Qt headers
 #include <QFuture>
-#include <QImage>
 #include <QList>
+#include <QImage>
 #include <QQmlContext>
 #include <QUuid>
 

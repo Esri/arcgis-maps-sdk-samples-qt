@@ -1,12 +1,12 @@
 // [WriteFile Name=OfflineGeocode, Category=Search]
 // [Legal]
 // Copyright 2016 Esri.
-//
+
 // Licensed under the Apache License, Version 2.0 (the "License");
 // you may not use this file except in compliance with the License.
 // You may obtain a copy of the License at
 // http://www.apache.org/licenses/LICENSE-2.0
-//
+
 // Unless required by applicable law or agreed to in writing, software
 // distributed under the License is distributed on an "AS IS" BASIS,
 // WITHOUT WARRANTIES OR CONDITIONS OF ANY KIND, either express or implied.
@@ -18,43 +18,38 @@
 #include "pch.hpp"
 #endif // PCH_BUILD
 
-// sample headers
 #include "OfflineGeocode.h"
 
-// ArcGIS Maps SDK headers
-#include "ArcGISTiledLayer.h"
-#include "Basemap.h"
-#include "CalloutData.h"
-#include "Error.h"
-#include "ErrorException.h"
-#include "GeocodeParameters.h"
-#include "GeocodeResult.h"
-#include "Graphic.h"
-#include "GraphicListModel.h"
-#include "GraphicsOverlay.h"
-#include "GraphicsOverlayListModel.h"
-#include "IdentifyGraphicsOverlayResult.h"
-#include "LayerListModel.h"
-#include "LocatorTask.h"
 #include "Map.h"
-#include "MapQuickView.h"
-#include "MapViewTypes.h"
-#include "PictureMarkerSymbol.h"
 #include "Point.h"
-#include "SpatialReference.h"
+#include "Graphic.h"
+#include "CalloutData.h"
+#include "LocatorTask.h"
+#include "MapQuickView.h"
+#include "GeocodeResult.h"
+#include "GraphicsOverlay.h"
 #include "SuggestListModel.h"
+#include "ArcGISTiledLayer.h"
+#include "GeocodeParameters.h"
+#include "PictureMarkerSymbol.h"
+#include "IdentifyGraphicsOverlayResult.h"
+#include "MapViewTypes.h"
+#include "Error.h"
+#include "GraphicsOverlayListModel.h"
+#include "GraphicListModel.h"
+#include "LayerListModel.h"
 #include "TileCache.h"
+#include "Basemap.h"
+#include "SpatialReference.h"
 #include "Viewpoint.h"
+#include "ErrorException.h"
 
-// Qt headers
 #include <QFuture>
 #include <QScopedPointer>
-#include <QStandardPaths>
-#include <QUuid>
 #include <QtCore/qglobal.h>
-
-// STL headers
 #include <memory>
+#include <QUuid>
+#include <QStandardPaths>
 
 using namespace Esri::ArcGISRuntime;
 

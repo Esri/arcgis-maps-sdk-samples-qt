@@ -1,12 +1,12 @@
 // [WriteFile Name=TraceUtilityNetwork, Category=UtilityNetwork]
 // [Legal]
 // Copyright 2019 Esri.
-//
+
 // Licensed under the Apache License, Version 2.0 (the "License");
 // you may not use this file except in compliance with the License.
 // You may obtain a copy of the License at
 // http://www.apache.org/licenses/LICENSE-2.0
-//
+
 // Unless required by applicable law or agreed to in writing, software
 // distributed under the License is distributed on an "AS IS" BASIS,
 // WITHOUT WARRANTIES OR CONDITIONS OF ANY KIND, either express or implied.
@@ -18,38 +18,16 @@
 #include "pch.hpp"
 #endif // PCH_BUILD
 
-// sample headers
 #include "TraceUtilityNetwork.h"
 
-// ArcGIS Maps SDK headers
-#include "ArcGISFeature.h"
-#include "AttributeListModel.h"
-#include "Credential.h"
-#include "Envelope.h"
-#include "Error.h"
 #include "ErrorException.h"
 #include "FeatureLayer.h"
-#include "FeatureQueryResult.h"
 #include "GeometryEngine.h"
-#include "Graphic.h"
-#include "GraphicListModel.h"
-#include "GraphicsOverlay.h"
-#include "GraphicsOverlayListModel.h"
-#include "IdentifyLayerResult.h"
-#include "LayerListModel.h"
 #include "Map.h"
 #include "MapQuickView.h"
-#include "MapTypes.h"
-#include "Polyline.h"
-#include "QueryParameters.h"
 #include "ServiceFeatureTable.h"
 #include "ServiceGeodatabase.h"
-#include "SimpleLineSymbol.h"
 #include "SimpleMarkerSymbol.h"
-#include "SpatialReference.h"
-#include "SymbolTypes.h"
-#include "UniqueValue.h"
-#include "UniqueValueListModel.h"
 #include "UniqueValueRenderer.h"
 #include "UtilityAssetGroup.h"
 #include "UtilityAssetType.h"
@@ -65,13 +43,30 @@
 #include "UtilityTier.h"
 #include "UtilityTraceParameters.h"
 #include "UtilityTraceResultListModel.h"
+#include "MapTypes.h"
+#include "SymbolTypes.h"
+#include "Error.h"
+#include "GraphicsOverlayListModel.h"
+#include "GraphicsOverlay.h"
+#include "GraphicListModel.h"
+#include "Graphic.h"
+#include "AttributeListModel.h"
+#include "LayerListModel.h"
+#include "Credential.h"
+#include "UniqueValueListModel.h"
+#include "IdentifyLayerResult.h"
+#include "ArcGISFeature.h"
+#include "QueryParameters.h"
+#include "UniqueValue.h"
+#include "FeatureQueryResult.h"
+#include "SimpleLineSymbol.h"
+#include "SpatialReference.h"
+#include "Envelope.h"
 #include "Viewpoint.h"
+#include "Polyline.h"
+#include "ErrorException.h"
 
-// Qt headers
 #include <QFuture>
-
-// Other headers
-#include "TaskCanceler.h"
 
 using namespace Esri::ArcGISRuntime;
 
@@ -84,8 +79,7 @@ TraceUtilityNetwork::TraceUtilityNetwork(QObject* parent /* = nullptr */):
   m_mediumVoltageSymbol(new SimpleLineSymbol(SimpleLineSymbolStyle::Solid, QColor(Qt::darkCyan), 3, this)),
   m_lowVoltageSymbol(new SimpleLineSymbol(SimpleLineSymbolStyle::Dash, QColor(Qt::darkCyan), 3, this)),
   m_serviceGeodatabase(new ServiceGeodatabase(m_serviceUrl, m_cred, this)),
-  m_graphicParent(new QObject()),
-  m_taskCanceler(std::make_unique<TaskCanceler>())
+  m_graphicParent(new QObject())
 {
   m_map->setInitialViewpoint(Viewpoint(Envelope(-9813547.35557238, 5129980.36635111, -9813185.0602376, 5130215.41254146, SpatialReference::webMercator())));
 
@@ -190,10 +184,10 @@ void TraceUtilityNetwork::connectSignals()
     constexpr double tolerance = 10.0;
     constexpr bool returnPopups = false;
     m_clickPoint = m_mapView->screenToLocation(mouseEvent.position().x(), mouseEvent.position().y());
-    m_taskCanceler->addTask(m_mapView->identifyLayersAsync(mouseEvent.position(), tolerance, returnPopups).then(this, [this](const QList<IdentifyLayerResult*>& results)
+    m_mapView->identifyLayersAsync(mouseEvent.position(), tolerance, returnPopups).then(this, [this](const QList<IdentifyLayerResult*>& results)
     {
       onIdentifyLayersCompleted_(results);
-    }));
+    });
   });
 }
 
@@ -281,13 +275,13 @@ void TraceUtilityNetwork::trace(int index)
   m_traceParams->setStartingLocations(m_startingLocations);
   m_traceParams->setBarriers(m_barriers);
   // Perform a connected trace on the utility network
-  m_taskCanceler->addTask(m_utilityNetwork->traceAsync(m_traceParams).then(this, [this](QList<UtilityTraceResult*>)
+  m_utilityNetwork->traceAsync(m_traceParams).then(this, [this](QList<UtilityTraceResult*>)
   {
     onTraceCompleted_();
   }).onFailed([this](const ErrorException& exception)
   {
     onTaskFailed_(exception);
-  }));
+  });
 }
 
 void TraceUtilityNetwork::reset()
@@ -402,9 +396,7 @@ void TraceUtilityNetwork::onIdentifyLayersCompleted_(const QList<IdentifyLayerRe
     }
   }
   else
-  {
     return;
-  }
 
   updateTraceParams(element);
 }
@@ -443,15 +435,15 @@ void TraceUtilityNetwork::onTraceCompleted_()
   deviceParams.setObjectIds(deviceObjIds);
   lineParams.setObjectIds(lineObjIds);
 
-  m_taskCanceler->addTask(m_deviceLayer->selectFeaturesAsync(deviceParams, SelectionMode::Add).then(this, [this](FeatureQueryResult*)
+  m_deviceLayer->selectFeaturesAsync(deviceParams, SelectionMode::Add).then(this, [this](FeatureQueryResult*)
   {
     setBusyIndicator(false);
-  }));
+  });
 
-  m_taskCanceler->addTask(m_lineLayer->selectFeaturesAsync(lineParams, SelectionMode::Add).then(this, [this](FeatureQueryResult*)
+  m_lineLayer->selectFeaturesAsync(lineParams, SelectionMode::Add).then(this, [this](FeatureQueryResult*)
   {
     setBusyIndicator(false);
-  }));
+  });
 }
 
 UniqueValue* TraceUtilityNetwork::createUniqueValue(const QString& label, Esri::ArcGISRuntime::Symbol* fillSymbol, int value)
