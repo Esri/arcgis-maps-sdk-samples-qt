@@ -1,12 +1,12 @@
 // [WriteFile Name=PerformValveIsolationTrace, Category=UtilityNetwork]
 // [Legal]
 // Copyright 2020 Esri.
-
+//
 // Licensed under the Apache License, Version 2.0 (the "License");
 // you may not use this file except in compliance with the License.
 // You may obtain a copy of the License at
 // http://www.apache.org/licenses/LICENSE-2.0
-
+//
 // Unless required by applicable law or agreed to in writing, software
 // distributed under the License is distributed on an "AS IS" BASIS,
 // WITHOUT WARRANTIES OR CONDITIONS OF ANY KIND, either express or implied.
@@ -18,21 +18,33 @@
 #include "pch.hpp"
 #endif // PCH_BUILD
 
+// sample headers
 #include "PerformValveIsolationTrace.h"
 
+// ArcGIS Maps SDK headers
+#include "ArcGISFeature.h"
 #include "ArcGISFeatureListModel.h"
+#include "Credential.h"
+#include "Error.h"
 #include "FeatureLayer.h"
+#include "GeometryEngine.h"
 #include "Graphic.h"
+#include "GraphicListModel.h"
 #include "GraphicsOverlay.h"
+#include "GraphicsOverlayListModel.h"
+#include "IdentifyLayerResult.h"
+#include "LayerListModel.h"
 #include "Map.h"
 #include "MapQuickView.h"
+#include "MapTypes.h"
 #include "Point.h"
+#include "Polyline.h"
 #include "QueryParameters.h"
 #include "ServiceFeatureTable.h"
 #include "ServiceGeodatabase.h"
 #include "SimpleMarkerSymbol.h"
 #include "SimpleRenderer.h"
-#include "UtilityTraceResultListModel.h"
+#include "SymbolTypes.h"
 #include "UtilityAssetGroup.h"
 #include "UtilityAssetType.h"
 #include "UtilityCategory.h"
@@ -51,20 +63,14 @@
 #include "UtilityTraceConfiguration.h"
 #include "UtilityTraceFilter.h"
 #include "UtilityTraceParameters.h"
-#include "GeometryEngine.h"
-#include "MapTypes.h"
-#include "SymbolTypes.h"
-#include "Error.h"
-#include "GraphicsOverlayListModel.h"
-#include "GraphicListModel.h"
-#include "LayerListModel.h"
-#include "Credential.h"
-#include "IdentifyLayerResult.h"
-#include "ArcGISFeature.h"
-#include "Polyline.h"
+#include "UtilityTraceResultListModel.h"
 
+// Qt headers
 #include <QFuture>
 #include <QUuid>
+
+// Other headers
+#include "TaskCanceler.h"
 
 using namespace Esri::ArcGISRuntime;
 
@@ -100,7 +106,8 @@ PerformValveIsolationTrace::PerformValveIsolationTrace(QObject* parent /* = null
   m_startingLocationOverlay(new GraphicsOverlay(this)),
   m_filterBarriersOverlay(new GraphicsOverlay(this)),
   m_serviceGeodatabase(new ServiceGeodatabase(featureServiceUrl, m_cred, this)),
-  m_graphicParent(new QObject())
+  m_graphicParent(new QObject()),
+  m_taskCanceler(std::make_unique<TaskCanceler>())
 {
   // disable UI while loading service geodatabase and utility network
   m_tasksRunning = true;
@@ -171,11 +178,11 @@ void PerformValveIsolationTrace::setMapView(MapQuickView* mapView)
     constexpr double tolerance = 10.0;
     constexpr bool returnPopups = false;
     m_clickPoint = m_mapView->screenToLocation(mouseEvent.position().x(), mouseEvent.position().y());
-    m_mapView->identifyLayersAsync(mouseEvent.position(), tolerance, returnPopups).then(this, [this](const QList<IdentifyLayerResult*>& results)
+    m_taskCanceler->addTask(m_mapView->identifyLayersAsync(mouseEvent.position(), tolerance, returnPopups).then(this, [this](const QList<IdentifyLayerResult*>& results)
     {
       // handle the identify results
       onIdentifyLayersCompleted_(results);
-    });
+    }));
   });
 
   // apply renderers
@@ -249,10 +256,11 @@ void PerformValveIsolationTrace::performTrace()
       UtilityCategoryComparison* categoryComparison = new UtilityCategoryComparison(selectedCategory, UtilityCategoryComparisonOperator::Exists, this);
       traceParameters->traceConfiguration()->filter()->setBarriers(categoryComparison);
     }
-    m_utilityNetwork->traceAsync(traceParameters).then(this, [this](QList<UtilityTraceResult*>)
+
+    m_taskCanceler->addTask(m_utilityNetwork->traceAsync(traceParameters).then(this, [this](QList<UtilityTraceResult*>)
     {
       onTraceCompleted_();
-    });
+    }));
   }
 }
 
@@ -309,8 +317,7 @@ void PerformValveIsolationTrace::onTraceCompleted_()
             objectIds.append(utilityElement->objectId());
         }
         queryParameters.setObjectIds(objectIds);
-        auto future = featureLayer->selectFeaturesAsync(queryParameters, SelectionMode::New);
-        Q_UNUSED(future)
+        m_taskCanceler->addTask(featureLayer->selectFeaturesAsync(queryParameters, SelectionMode::New));
       }
     }
   }
@@ -385,7 +392,7 @@ void PerformValveIsolationTrace::connectSignals()
       return;
 
     // display starting location
-    m_utilityNetwork->featuresForElementsAsync(QList<UtilityElement*> {m_startingLocation}).then(this, [this](QList<ArcGISFeature*>)
+    m_taskCanceler->addTask(m_utilityNetwork->featuresForElementsAsync(QList<UtilityElement*> {m_startingLocation}).then(this, [this](QList<ArcGISFeature*>)
     {
       // display starting location
       ArcGISFeatureListModel* elementFeaturesList = m_utilityNetwork->featuresForElementsResult();
@@ -394,10 +401,10 @@ void PerformValveIsolationTrace::connectSignals()
       m_startingLocationOverlay->graphics()->append(graphic);
 
       constexpr double scale = 3000.0;
-      m_mapView->setViewpointCenterAsync(startingLocationGeometry, scale);
+      m_taskCanceler->addTask(m_mapView->setViewpointCenterAsync(startingLocationGeometry, scale));
       m_tasksRunning = false;
       emit tasksRunningChanged();
-    });
+    }));
 
     // populate the combo box choices
     m_categoriesList = categoriesList();

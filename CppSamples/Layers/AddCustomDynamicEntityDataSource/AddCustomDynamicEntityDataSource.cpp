@@ -1,12 +1,12 @@
 // [WriteFile Name=AddCustomDynamicEntityDataSource, Category=Layers]
 // [Legal]
 // Copyright 2023 Esri.
-
+//
 // Licensed under the Apache License, Version 2.0 (the "License");
 // you may not use this file except in compliance with the License.
 // You may obtain a copy of the License at
 // http://www.apache.org/licenses/LICENSE-2.0
-
+//
 // Unless required by applicable law or agreed to in writing, software
 // distributed under the License is distributed on an "AS IS" BASIS,
 // WITHOUT WARRANTIES OR CONDITIONS OF ANY KIND, either express or implied.
@@ -18,33 +18,35 @@
 #include "pch.hpp"
 #endif // PCH_BUILD
 
+// sample headers
 #include "AddCustomDynamicEntityDataSource.h"
-
 #include "CustomDataSource.h"
-#include "ServiceTypes.h"
+
+// ArcGIS Maps SDK headers
+#include "ArcGISMapImageLayer.h"
+#include "AttributeListModel.h"
+#include "Basemap.h"
+#include "CalloutData.h"
+#include "DynamicEntity.h"
+#include "DynamicEntityChangedInfo.h"
 #include "DynamicEntityDataSource.h"
+#include "DynamicEntityDataSourcePurgeOptions.h"
 #include "DynamicEntityLayer.h"
+#include "DynamicEntityObservation.h"
+#include "IdentifyLayerResult.h"
+#include "LabelDefinition.h"
+#include "LabelDefinitionListModel.h"
+#include "LayerListModel.h"
 #include "Map.h"
 #include "MapQuickView.h"
 #include "MapTypes.h"
-#include "Viewpoint.h"
-#include "LayerListModel.h"
-#include "Basemap.h"
-#include "ArcGISMapImageLayer.h"
-#include "TrackDisplayProperties.h"
+#include "ServiceTypes.h"
 #include "SimpleLabelExpression.h"
 #include "TextSymbol.h"
-#include "LabelDefinition.h"
-#include "ServiceTypes.h"
-#include "LabelDefinitionListModel.h"
-#include "CalloutData.h"
-#include "IdentifyLayerResult.h"
-#include "DynamicEntityObservation.h"
-#include "DynamicEntity.h"
-#include "AttributeListModel.h"
-#include "DynamicEntityChangedInfo.h"
-#include "DynamicEntityDataSourcePurgeOptions.h"
+#include "TrackDisplayProperties.h"
+#include "Viewpoint.h"
 
+// Qt headers
 #include <QFuture>
 #include <QtConcurrent/QtConcurrent>
 

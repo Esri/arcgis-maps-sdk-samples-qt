@@ -1,12 +1,12 @@
 // [WriteFile Name=ListRelatedFeatures, Category=Features]
 // [Legal]
 // Copyright 2017 Esri.
-
+//
 // Licensed under the Apache License, Version 2.0 (the "License");
 // you may not use this file except in compliance with the License.
 // You may obtain a copy of the License at
 // http://www.apache.org/licenses/LICENSE-2.0
-
+//
 // Unless required by applicable law or agreed to in writing, software
 // distributed under the License is distributed on an "AS IS" BASIS,
 // WITHOUT WARRANTIES OR CONDITIONS OF ANY KIND, either express or implied.
@@ -17,6 +17,9 @@
 #ifndef LISTRELATEDFEATURES_H
 #define LISTRELATEDFEATURES_H
 
+// Qt headers
+#include <QQuickItem>
+
 namespace Esri::ArcGISRuntime
 {
   class ArcGISFeature;
@@ -26,16 +29,15 @@ namespace Esri::ArcGISRuntime
   class MapQuickView;
 }
 class RelatedFeatureListModel;
+class QAbstractListModel;
 
-#include <QQuickItem>
-
-Q_MOC_INCLUDE("RelatedFeatureListModel.h")
+Q_MOC_INCLUDE("QAbstractListModel")
 
 class ListRelatedFeatures : public QQuickItem
 {
   Q_OBJECT
 
-  Q_PROPERTY(RelatedFeatureListModel* relatedFeaturesModel MEMBER m_relatedFeaturesModel NOTIFY relatedFeaturesModelChanged)
+  Q_PROPERTY(QAbstractListModel* relatedFeaturesModel READ relatedFeaturesModel NOTIFY relatedFeaturesModelChanged)
 
 public:
   explicit ListRelatedFeatures(QQuickItem* parent = nullptr);
@@ -51,8 +53,8 @@ signals:
 
 private:
   void connectSignals();
+  QAbstractListModel* relatedFeaturesModel() const;
 
-private:
   Esri::ArcGISRuntime::Map* m_map = nullptr;
   Esri::ArcGISRuntime::MapQuickView* m_mapView = nullptr;
   Esri::ArcGISRuntime::FeatureLayer* m_alaskaNationalParks = nullptr;

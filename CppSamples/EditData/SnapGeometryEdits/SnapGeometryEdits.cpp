@@ -1,12 +1,12 @@
 // [WriteFile Name=SnapGeometryEdits, Category=EditData]
 // [Legal]
 // Copyright 2024 Esri.
-
+//
 // Licensed under the Apache License, Version 2.0 (the "License");
 // you may not use this file except in compliance with the License.
 // You may obtain a copy of the License at
 // http://www.apache.org/licenses/LICENSE-2.0
-
+//
 // Unless required by applicable law or agreed to in writing, software
 // distributed under the License is distributed on an "AS IS" BASIS,
 // WITHOUT WARRANTIES OR CONDITIONS OF ANY KIND, either express or implied.
@@ -18,8 +18,11 @@
 #include "pch.hpp"
 #endif // PCH_BUILD
 
+// sample headers
 #include "SnapGeometryEdits.h"
+#include "SnapSourceListModel.h"
 
+// ArcGIS Maps SDK headers
 #include "FeatureLayer.h"
 #include "FeatureTable.h"
 #include "Geometry.h"
@@ -43,15 +46,20 @@
 #include "SimpleFillSymbol.h"
 #include "SimpleLineSymbol.h"
 #include "SimpleMarkerSymbol.h"
-#include "SnapGeometryEdits.h"
 #include "SnapSettings.h"
 #include "SnapSourceSettings.h"
 #include "SymbolTypes.h"
 
-#include "SnapSourceListModel.h"
-
+// Qt headers
 #include <QFuture>
 #include <QtGlobal>
+
+#ifdef Q_OS_ANDROID
+#include "ArcGISRuntimeEnvironment.h"
+
+#include <QCoreApplication>
+#include <QJniObject>
+#endif
 
 using namespace Esri::ArcGISRuntime;
 
@@ -61,6 +69,10 @@ SnapGeometryEdits::SnapGeometryEdits(QObject* parent /* = nullptr */) :
 {
   PortalItem* portalItem = new PortalItem("b95fe18073bc4f7788f0375af2bb445e", this);
   m_map = new Map(portalItem, this);
+
+  #ifdef Q_OS_ANDROID
+  ArcGISRuntimeEnvironment::setAndroidApplicationContext(QJniObject{QNativeInterface::QAndroidApplication::context()});
+  #endif
 
   m_geometryEditor = new GeometryEditor(this);
   m_graphicsOverlay = new GraphicsOverlay(this);
@@ -190,6 +202,18 @@ bool SnapGeometryEdits::isElementSelected()
 void SnapGeometryEdits::snappingEnabledStatus(bool snappingCheckedState)
 {
   m_geometryEditor->snapSettings()->setEnabled(snappingCheckedState);
+}
+
+// Toggles geometry guides using the enabled state from the snap settings
+void SnapGeometryEdits::geometryGuidesEnabledStatus(bool geometryGuidesCheckedState)
+{
+  m_geometryEditor->snapSettings()->setGeometryGuidesEnabled(geometryGuidesCheckedState);
+}
+
+// Toggles feature snapping using the enabled state from the snap settings
+void SnapGeometryEdits::featureSnappingEnabledStatus(bool featureSnappingCheckedState)
+{
+  m_geometryEditor->snapSettings()->setFeatureSnappingEnabled(featureSnappingCheckedState);
 }
 
 // Starts the GeometryEditor using the selected geometry type

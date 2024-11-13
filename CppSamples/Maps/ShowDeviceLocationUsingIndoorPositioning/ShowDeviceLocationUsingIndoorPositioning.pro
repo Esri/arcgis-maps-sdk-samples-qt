@@ -23,11 +23,12 @@ CONFIG += c++17
 
 # additional modules are pulled in via arcgisruntime.pri
 QT += opengl qml quick
+android|ios: QT += bluetooth
 
 TEMPLATE = app
 TARGET = ShowDeviceLocationUsingIndoorPositioning
 
-ARCGIS_RUNTIME_VERSION = 200.5.0
+ARCGIS_RUNTIME_VERSION = 200.6.0
 include($$PWD/arcgisruntime.pri)
 
 #-------------------------------------------------------------------------------
@@ -57,7 +58,11 @@ ios {
     OTHER_FILES += \
         $$PWD/Info.plist
 
-    QMAKE_INFO_PLIST = $$PWD/Info.plist
+    QMAKE_INFO_PLIST = $$PWD/ios/Info.plist
+}
+
+macx {
+    QMAKE_INFO_PLIST = $$PWD/mac/Info.plist
 }
 
 android {

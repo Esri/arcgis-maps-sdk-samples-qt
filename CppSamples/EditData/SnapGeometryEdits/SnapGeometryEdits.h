@@ -1,12 +1,12 @@
 // [WriteFile Name=SnapGeometryEdits, Category=EditData]
 // [Legal]
 // Copyright 2024 Esri.
-
+//
 // Licensed under the Apache License, Version 2.0 (the "License");
 // you may not use this file except in compliance with the License.
 // You may obtain a copy of the License at
 // http://www.apache.org/licenses/LICENSE-2.0
-
+//
 // Unless required by applicable law or agreed to in writing, software
 // distributed under the License is distributed on an "AS IS" BASIS,
 // WITHOUT WARRANTIES OR CONDITIONS OF ANY KIND, either express or implied.
@@ -16,6 +16,9 @@
 
 #ifndef SNAPGEOMETRYEDITS_H
 #define SNAPGEOMETRYEDITS_H
+
+// Qt headers
+#include <QObject>
 
 namespace Esri::ArcGISRuntime {
   class Geometry;
@@ -36,8 +39,6 @@ namespace Esri::ArcGISRuntime {
 
 class SnapSourceListModel;
 class QAbstractListModel;
-
-#include <QObject>
 
 Q_MOC_INCLUDE("MapQuickView.h");
 Q_MOC_INCLUDE("QAbstractListModel");
@@ -72,6 +73,8 @@ public:
   Q_INVOKABLE void deleteSelection();
   Q_INVOKABLE void editorUndo();
   Q_INVOKABLE void snappingEnabledStatus(bool checkedValue);
+  Q_INVOKABLE void geometryGuidesEnabledStatus(bool checkedValue);
+  Q_INVOKABLE void featureSnappingEnabledStatus(bool checkedValue);
   Q_INVOKABLE void displaySnapSources();
   Q_INVOKABLE void enableAllLayersInSection(const QString& section);
 
@@ -97,7 +100,6 @@ private:
   bool isElementSelected();
   QAbstractListModel* snapSourceListModel() const;
   Esri::ArcGISRuntime::Symbol* determineGeometrySymbol(const Esri::ArcGISRuntime::Geometry& geometry);
-
 
   Esri::ArcGISRuntime::Map* m_map = nullptr;
   Esri::ArcGISRuntime::MapQuickView* m_mapView = nullptr;

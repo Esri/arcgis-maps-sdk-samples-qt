@@ -1,12 +1,12 @@
 // [WriteFile Name=ShowDeviceLocationUsingIndoorPositioning, Category=Maps]
 // [Legal]
 // Copyright 2022 Esri.
-
+//
 // Licensed under the Apache License, Version 2.0 (the "License");
 // you may not use this file except in compliance with the License.
 // You may obtain a copy of the License at
 // http://www.apache.org/licenses/LICENSE-2.0
-
+//
 // Unless required by applicable law or agreed to in writing, software
 // distributed under the License is distributed on an "AS IS" BASIS,
 // WITHOUT WARRANTIES OR CONDITIONS OF ANY KIND, either express or implied.
@@ -18,17 +18,32 @@
 #include "pch.hpp"
 #endif // PCH_BUILD
 
+// sample headers
 #include "IndoorsLocationDataSourceCreator.h"
 #include "ShowDeviceLocationUsingIndoorPositioning.h"
+
+// ArcGIS Maps SDK headers
+#include "FeatureLayer.h"
 #include "IndoorsLocationDataSource.h"
+#include "LayerListModel.h"
+#include "LocationDisplay.h"
 #include "Map.h"
 #include "MapQuickView.h"
-#include "MapViewTypes.h"
-#include "LocationDisplay.h"
-#include "LayerListModel.h"
 #include "MapTypes.h"
+#include "MapViewTypes.h"
 #include "PortalItem.h"
-#include "FeatureLayer.h"
+
+#if (QT_VERSION >= QT_VERSION_CHECK(6, 6, 0)) || defined(Q_OS_IOS) || defined(Q_OS_MACOS) || defined(Q_OS_ANDROID)
+#define PERMISSIONS_PLATFORM
+#include <QPermissions>
+#endif
+
+#ifdef Q_OS_ANDROID
+#include "ArcGISRuntimeEnvironment.h"
+
+#include <QCoreApplication>
+#include <QJniObject>
+#endif
 
 using namespace Esri::ArcGISRuntime;
 
@@ -76,14 +91,67 @@ void ShowDeviceLocationUsingIndoorPositioning::setMapView(MapQuickView* mapView)
   m_mapView = mapView;
   m_mapView->setMap(m_map);
 
-  setupIndoorsLocationDataSource();
+  // Issue expected with Android - https://bugreports.qt.io/browse/QTBUG-130301
+  #ifdef PERMISSIONS_PLATFORM
+    requestBluetoothThenLocationPermissions();
+  #else
+    setupIndoorsLocationDataSource();
+  #endif
 
   emit mapViewChanged();
+}
+
+void ShowDeviceLocationUsingIndoorPositioning::requestBluetoothThenLocationPermissions()
+{
+  #ifdef PERMISSIONS_PLATFORM
+    qApp->requestPermission(QBluetoothPermission{}, [this](const QPermission& permission)
+  {
+    Q_UNUSED(permission);
+    requestLocationPermissionThenSetupILDS();
+  });
+  #endif // PERMISSIONS_PLATFORM
+}
+
+void ShowDeviceLocationUsingIndoorPositioning::requestLocationPermissionThenSetupILDS()
+{
+  #ifdef PERMISSIONS_PLATFORM
+  QLocationPermission locationPermission{};
+  locationPermission.setAccuracy(QLocationPermission::Accuracy::Precise);
+  locationPermission.setAvailability(QLocationPermission::Availability::WhenInUse);
+  qApp->requestPermission(locationPermission, [this](const QPermission& permission)
+  {
+    Q_UNUSED(permission);
+    checkPermissions();
+    setupIndoorsLocationDataSource();
+  });
+  #endif // PERMISSIONS_PLATFORM
+}
+
+void ShowDeviceLocationUsingIndoorPositioning::checkPermissions()
+{
+  #ifdef PERMISSIONS_PLATFORM
+  if (qApp->checkPermission(QBluetoothPermission{}) == Qt::PermissionStatus::Denied)
+  {
+    emit bluetoothPermissionDenied();
+  }
+
+  QLocationPermission locationPermission{};
+  locationPermission.setAccuracy(QLocationPermission::Accuracy::Precise);
+  locationPermission.setAvailability(QLocationPermission::Availability::WhenInUse);
+  if (qApp->checkPermission(locationPermission) == Qt::PermissionStatus::Denied)
+  {
+    emit locationPermissionDenied();
+  }
+  #endif // PERMISSIONS_PLATFORM
 }
 
 // This function uses a helper class `IndoorsLocationDataSourceCreator` to construct the IndoorsLocationDataSource
 void ShowDeviceLocationUsingIndoorPositioning::setupIndoorsLocationDataSource()
 {
+  #ifdef Q_OS_ANDROID
+  ArcGISRuntimeEnvironment::setAndroidApplicationContext(QJniObject{QNativeInterface::QAndroidApplication::context()});
+  #endif
+
   IndoorsLocationDataSourceCreator* indoorsLocationDataSourceCreator = new IndoorsLocationDataSourceCreator(this);
 
   connect(indoorsLocationDataSourceCreator, &IndoorsLocationDataSourceCreator::createIndoorsLocationDataSourceCompleted, this, [this](IndoorsLocationDataSource* indoorsLDS)

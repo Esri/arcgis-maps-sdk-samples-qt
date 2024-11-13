@@ -20,12 +20,13 @@
 TEMPLATE = app
 QT += core gui xml network qml quick positioning sensors multimedia
 QT += widgets quickcontrols2 opengl webview core5compat websockets texttospeech
+android|ios: QT += bluetooth
 TARGET = ArcGISQt_Samples
 DEFINES += Qt_Version=\"$$QT_VERSION\"
 SAMPLEPATHCPP = $$PWD/../CppSamples
 COMMONVIEWER = $$PWD
 PCH_HEADER = $$COMMONVIEWER/pch.hpp
-ARCGIS_RUNTIME_VERSION = 200.5.0
+ARCGIS_RUNTIME_VERSION = 200.6.0
 DEFINES += ArcGIS_Runtime_Version=$$ARCGIS_RUNTIME_VERSION
 
 # This block determines whether to build against the installed SDK or the local dev build area
@@ -149,8 +150,8 @@ android {
 
 HEADERS += \
     $$PCH_HEADER \
-    $$COMMONVIEWER/SyntaxHighlighter/syntax_highlighter.h \
-    $$COMMONVIEWER/SyntaxHighlighter/QMLHighlighter.h \
+    $$COMMONVIEWER/SyntaxHighlighter/SyntaxHighlighter.h \
+    $$COMMONVIEWER/SyntaxHighlighter/QmlHighlighter.h \
     $$COMMONVIEWER/CategoryListModel.h \
     $$COMMONVIEWER/DataItem.h \
     $$COMMONVIEWER/DataItemListModel.h \
@@ -164,11 +165,12 @@ HEADERS += \
     $$COMMONVIEWER/SearchFilterSimpleKeywordCriteria.h \
     $$COMMONVIEWER/SourceCode.h \
     $$COMMONVIEWER/SourceCodeListModel.h \
-    $$COMMONVIEWER/ZipHelper.h
+    $$COMMONVIEWER/ZipHelper.h \
+    $$COMMONVIEWER/TaskCanceler.h
 
 SOURCES += \
-    $$COMMONVIEWER/SyntaxHighlighter/syntax_highlighter.cpp \
-    $$COMMONVIEWER/SyntaxHighlighter/QMLHighlighter.cpp \
+    $$COMMONVIEWER/SyntaxHighlighter/SyntaxHighlighter.cpp \
+    $$COMMONVIEWER/SyntaxHighlighter/QmlHighlighter.cpp \
     $$COMMONVIEWER/CategoryListModel.cpp \
     $$COMMONVIEWER/DataItem.cpp \
     $$COMMONVIEWER/DataItemListModel.cpp \
