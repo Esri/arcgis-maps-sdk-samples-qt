@@ -1,12 +1,12 @@
 // [WriteFile Name=AnalyzeHotspots, Category=Analysis]
 // [Legal]
 // Copyright 2017 Esri.
-//
+
 // Licensed under the Apache License, Version 2.0 (the "License");
 // you may not use this file except in compliance with the License.
 // You may obtain a copy of the License at
 // http://www.apache.org/licenses/LICENSE-2.0
-//
+
 // Unless required by applicable law or agreed to in writing, software
 // distributed under the License is distributed on an "AS IS" BASIS,
 // WITHOUT WARRANTIES OR CONDITIONS OF ANY KIND, either express or implied.
@@ -18,25 +18,22 @@
 #include "pch.hpp"
 #endif // PCH_BUILD
 
-// sample headers
 #include "AnalyzeHotspots.h"
 
-// ArcGIS Maps SDK headers
-#include "ArcGISMapImageLayer.h"
-#include "Envelope.h"
-#include "Error.h"
-#include "GeoprocessingJob.h"
-#include "GeoprocessingResult.h"
-#include "GeoprocessingString.h"
-#include "GeoprocessingTask.h"
-#include "GeoprocessingTypes.h"
-#include "LayerListModel.h"
 #include "Map.h"
 #include "MapQuickView.h"
 #include "MapTypes.h"
+#include "GeoprocessingTask.h"
+#include "GeoprocessingJob.h"
+#include "GeoprocessingString.h"
+#include "GeoprocessingTypes.h"
+#include "ArcGISMapImageLayer.h"
+#include "Error.h"
 #include "TaskTypes.h"
+#include "LayerListModel.h"
+#include "GeoprocessingResult.h"
+#include "Envelope.h"
 
-// Qt headers
 #include <QFuture>
 
 using namespace Esri::ArcGISRuntime;
@@ -76,6 +73,7 @@ void AnalyzeHotspots::componentComplete()
     emit displayErrorDialog("Geoprocessing Task failed", error.message());
   });
 }
+
 
 void AnalyzeHotspots::executeTaskWithDates(const QString& fromDate, const QString& toDate)
 {

@@ -17,6 +17,225 @@
 
 #-------------------------------------------------
 
+INCLUDEPATH += \
+    "$$SAMPLEPATHCPP/Analysis/AnalyzeHotspots" \
+    "$$SAMPLEPATHCPP/Analysis/AnalyzeViewshed" \
+    "$$SAMPLEPATHCPP/Analysis/DistanceMeasurementAnalysis" \
+    "$$SAMPLEPATHCPP/Analysis/Geotriggers" \
+    "$$SAMPLEPATHCPP/Analysis/LineOfSightGeoElement" \
+    "$$SAMPLEPATHCPP/Analysis/LineOfSightLocation" \
+    "$$SAMPLEPATHCPP/Analysis/StatisticalQuery" \
+    "$$SAMPLEPATHCPP/Analysis/StatisticalQueryGroupSort" \
+    "$$SAMPLEPATHCPP/Analysis/ViewshedCamera" \
+    "$$SAMPLEPATHCPP/Analysis/ViewshedGeoElement" \
+    "$$SAMPLEPATHCPP/Analysis/ViewshedLocation" \
+    "$$SAMPLEPATHCPP/CloudAndPortal/AddItemsToPortal" \
+    "$$SAMPLEPATHCPP/CloudAndPortal/IntegratedWindowsAuthentication" \
+    "$$SAMPLEPATHCPP/CloudAndPortal/PortalUserInfo" \
+    "$$SAMPLEPATHCPP/CloudAndPortal/SearchForWebmap" \
+    "$$SAMPLEPATHCPP/CloudAndPortal/ShowOrgBasemaps" \
+    "$$SAMPLEPATHCPP/CloudAndPortal/TokenAuthentication" \
+    "$$SAMPLEPATHCPP/DisplayInformation/AddGraphicsWithRenderer" \
+    "$$SAMPLEPATHCPP/DisplayInformation/BuildLegend" \
+    "$$SAMPLEPATHCPP/DisplayInformation/ControlAnnotationSublayerVisibility" \
+    "$$SAMPLEPATHCPP/DisplayInformation/CreateSymbolStylesFromWebStyles" \
+    "$$SAMPLEPATHCPP/DisplayInformation/CustomDictionaryStyle" \
+    "$$SAMPLEPATHCPP/DisplayInformation/DisplayGrid" \
+    "$$SAMPLEPATHCPP/DisplayInformation/DisplayClusters" \
+    "$$SAMPLEPATHCPP/DisplayInformation/GODictionaryRenderer_3D" \
+    "$$SAMPLEPATHCPP/DisplayInformation/GODictionaryRenderer" \
+    "$$SAMPLEPATHCPP/DisplayInformation/GOSymbols" \
+    "$$SAMPLEPATHCPP/DisplayInformation/IdentifyGraphics" \
+    "$$SAMPLEPATHCPP/DisplayInformation/Picture_Marker_Symbol" \
+    "$$SAMPLEPATHCPP/DisplayInformation/QueryFeaturesWithArcadeExpression" \
+    "$$SAMPLEPATHCPP/DisplayInformation/ReadSymbolsFromMobileStyle" \
+    "$$SAMPLEPATHCPP/DisplayInformation/ShowCallout" \
+    "$$SAMPLEPATHCPP/DisplayInformation/ShowLabelsOnLayers" \
+    "$$SAMPLEPATHCPP/DisplayInformation/ShowPopup" \
+    "$$SAMPLEPATHCPP/DisplayInformation/Simple_Marker_Symbol" \
+    "$$SAMPLEPATHCPP/DisplayInformation/Simple_Renderer" \
+    "$$SAMPLEPATHCPP/DisplayInformation/SketchOnMap" \
+    "$$SAMPLEPATHCPP/DisplayInformation/SymbolizeShapefile" \
+    "$$SAMPLEPATHCPP/DisplayInformation/Unique_Value_Renderer" \
+    "$$SAMPLEPATHCPP/EditData/AddFeaturesFeatureService" \
+    "$$SAMPLEPATHCPP/EditData/ContingentValues" \
+    "$$SAMPLEPATHCPP/EditData/DeleteFeaturesFeatureService" \
+    "$$SAMPLEPATHCPP/EditData/EditAndSyncFeatures" \
+    "$$SAMPLEPATHCPP/EditData/EditFeatureAttachments" \
+    "$$SAMPLEPATHCPP/EditData/EditFeaturesWithFeatureLinkedAnnotation" \
+    "$$SAMPLEPATHCPP/EditData/EditKmlGroundOverlay" \
+    "$$SAMPLEPATHCPP/EditData/EditWithBranchVersioning" \
+    "$$SAMPLEPATHCPP/EditData/SnapGeometryEdits" \
+    "$$SAMPLEPATHCPP/EditData/UpdateAttributesFeatureService" \
+    "$$SAMPLEPATHCPP/EditData/UpdateGeometryFeatureService" \
+    "$$SAMPLEPATHCPP/Features/ControlTimeExtentTimeSlider" \
+    "$$SAMPLEPATHCPP/Features/CreateMobileGeodatabase" \
+    "$$SAMPLEPATHCPP/Features/FeatureLayerChangeRenderer" \
+    "$$SAMPLEPATHCPP/Features/FeatureLayerDictionaryRenderer" \
+    "$$SAMPLEPATHCPP/Features/FeatureLayerQuery" \
+    "$$SAMPLEPATHCPP/Features/FeatureLayerSelection" \
+    "$$SAMPLEPATHCPP/Features/FilterByDefinitionExpressionOrDisplayFilter" \
+    "$$SAMPLEPATHCPP/Features/GenerateGeodatabaseReplicaFromFeatureService" \
+    "$$SAMPLEPATHCPP/Features/ListRelatedFeatures" \
+    "$$SAMPLEPATHCPP/Features/ServiceFeatureTableCache" \
+    "$$SAMPLEPATHCPP/Features/ServiceFeatureTableManualCache" \
+    "$$SAMPLEPATHCPP/Features/ServiceFeatureTableNoCache" \
+    "$$SAMPLEPATHCPP/Geometry/Buffer" \
+    "$$SAMPLEPATHCPP/Geometry/ClipGeometry" \
+    "$$SAMPLEPATHCPP/Geometry/ConvexHull" \
+    "$$SAMPLEPATHCPP/Geometry/CreateAndEditGeometries" \
+    "$$SAMPLEPATHCPP/Geometry/CreateGeometries" \
+    "$$SAMPLEPATHCPP/Geometry/CutGeometry" \
+    "$$SAMPLEPATHCPP/Geometry/DensifyAndGeneralize" \
+    "$$SAMPLEPATHCPP/Geometry/FormatCoordinates" \
+    "$$SAMPLEPATHCPP/Geometry/GeodesicOperations" \
+    "$$SAMPLEPATHCPP/Geometry/ListTransformations" \
+    "$$SAMPLEPATHCPP/Geometry/NearestVertex" \
+    "$$SAMPLEPATHCPP/Geometry/ProjectGeometry" \
+    "$$SAMPLEPATHCPP/Geometry/SpatialOperations" \
+    "$$SAMPLEPATHCPP/Geometry/SpatialRelationships" \
+    "$$SAMPLEPATHCPP/Layers/ConfigureClusters" \
+    "$$SAMPLEPATHCPP/Layers/AddCustomDynamicEntityDataSource" \
+    "$$SAMPLEPATHCPP/Layers/AddDynamicEntityLayer" \
+    "$$SAMPLEPATHCPP/Layers/AddEncExchangeSet" \
+    "$$SAMPLEPATHCPP/Layers/ApplyMosaicRuleToRasters" \
+    "$$SAMPLEPATHCPP/Layers/ApplyUniqueValuesWithAlternateSymbols" \
+    "$$SAMPLEPATHCPP/Layers/ArcGISMapImageLayerUrl" \
+    "$$SAMPLEPATHCPP/Layers/ArcGISTiledLayerUrl" \
+    "$$SAMPLEPATHCPP/Layers/BlendRasterLayer" \
+    "$$SAMPLEPATHCPP/Layers/BrowseOGCAPIFeatureService" \
+    "$$SAMPLEPATHCPP/Layers/BrowseWfsLayers" \
+    "$$SAMPLEPATHCPP/Layers/ChangeSublayerRenderer" \
+    "$$SAMPLEPATHCPP/Layers/ChangeSublayerVisibility" \
+    "$$SAMPLEPATHCPP/Layers/CreateAndSaveKmlFile" \
+    "$$SAMPLEPATHCPP/Layers/DisplayAnnotation" \
+    "$$SAMPLEPATHCPP/Layers/DisplayDimensions" \
+    "$$SAMPLEPATHCPP/Layers/DisplayFeatureLayers" \
+    "$$SAMPLEPATHCPP/Layers/DisplayKml" \
+    "$$SAMPLEPATHCPP/Layers/DisplayKmlNetworkLinks" \
+    "$$SAMPLEPATHCPP/Layers/DisplayOgcApiFeatureCollection" \
+    "$$SAMPLEPATHCPP/Layers/DisplaySubtypeFeatureLayer" \
+    "$$SAMPLEPATHCPP/Layers/DisplayWfsLayer" \
+    "$$SAMPLEPATHCPP/Layers/ExportTiles" \
+    "$$SAMPLEPATHCPP/Layers/ExportVectorTiles" \
+    "$$SAMPLEPATHCPP/Layers/Feature_Collection_Layer" \
+    "$$SAMPLEPATHCPP/Layers/FeatureCollectionLayerFromPortal" \
+    "$$SAMPLEPATHCPP/Layers/FeatureCollectionLayerQuery" \
+    "$$SAMPLEPATHCPP/Layers/FeatureLayerRenderingModeMap" \
+    "$$SAMPLEPATHCPP/Layers/FeatureLayerRenderingModeScene" \
+    "$$SAMPLEPATHCPP/Layers/GroupLayers" \
+    "$$SAMPLEPATHCPP/Layers/Hillshade_Renderer" \
+    "$$SAMPLEPATHCPP/Layers/IdentifyKmlFeatures" \
+    "$$SAMPLEPATHCPP/Layers/IdentifyRasterCell" \
+    "$$SAMPLEPATHCPP/Layers/ListKmlContents" \
+    "$$SAMPLEPATHCPP/Layers/LoadWfsXmlQuery" \
+    "$$SAMPLEPATHCPP/Layers/ManageOperationalLayers" \
+    "$$SAMPLEPATHCPP/Layers/OSM_Layer" \
+    "$$SAMPLEPATHCPP/Layers/PlayAKmlTour" \
+    "$$SAMPLEPATHCPP/Layers/QueryMapImageSublayer" \
+    "$$SAMPLEPATHCPP/Layers/QueryOGCAPICQLFilters" \
+    "$$SAMPLEPATHCPP/Layers/RasterColormapRenderer" \
+    "$$SAMPLEPATHCPP/Layers/RasterFunctionService" \
+    "$$SAMPLEPATHCPP/Layers/RasterLayerFile" \
+    "$$SAMPLEPATHCPP/Layers/RasterLayerGeoPackage" \
+    "$$SAMPLEPATHCPP/Layers/RasterLayerService"\
+    "$$SAMPLEPATHCPP/Layers/RasterRenderingRule" \
+    "$$SAMPLEPATHCPP/Layers/RasterRgbRenderer" \
+    "$$SAMPLEPATHCPP/Layers/RasterStretchRenderer" \
+    "$$SAMPLEPATHCPP/Layers/StyleWmsLayer" \
+    "$$SAMPLEPATHCPP/Layers/TileCacheLayer" \
+    "$$SAMPLEPATHCPP/Layers/VectorTiledLayerUrl" \
+    "$$SAMPLEPATHCPP/Layers/Web_Tiled_Layer" \
+    "$$SAMPLEPATHCPP/Layers/WmsLayerUrl" \
+    "$$SAMPLEPATHCPP/Layers/WMTS_Layer" \
+    "$$SAMPLEPATHCPP/Maps/ApplyScheduledMapUpdates" \
+    "$$SAMPLEPATHCPP/Maps/BrowseBuildingFloors" \
+    "$$SAMPLEPATHCPP/Maps/ChangeBasemap" \
+    "$$SAMPLEPATHCPP/Maps/ChangeViewpoint" \
+    "$$SAMPLEPATHCPP/Maps/ConfigureBasemapStyleLanguage" \
+    "$$SAMPLEPATHCPP/Maps/CreateAndSaveMap" \
+    "$$SAMPLEPATHCPP/Maps/CreateDynamicBasemapGallery" \
+    "$$SAMPLEPATHCPP/Maps/DisplayDeviceLocation" \
+    "$$SAMPLEPATHCPP/Maps/DisplayDeviceLocationWithNmeaDataSources" \
+    "$$SAMPLEPATHCPP/Maps/DisplayDrawingStatus" \
+    "$$SAMPLEPATHCPP/Maps/DisplayLayerViewDrawState" \
+    "$$SAMPLEPATHCPP/Maps/DisplayMap" \
+    "$$SAMPLEPATHCPP/Maps/DisplayOverviewMap" \
+    "$$SAMPLEPATHCPP/Maps/DownloadPreplannedMap" \
+    "$$SAMPLEPATHCPP/Maps/GenerateOfflineMap_Overrides" \
+    "$$SAMPLEPATHCPP/Maps/GenerateOfflineMap" \
+    "$$SAMPLEPATHCPP/Maps/GenerateOfflineMapLocalBasemap" \
+    "$$SAMPLEPATHCPP/Maps/HonorMobileMapPackageExpiration" \
+    "$$SAMPLEPATHCPP/Maps/IdentifyLayers" \
+    "$$SAMPLEPATHCPP/Maps/ManageBookmarks" \
+    "$$SAMPLEPATHCPP/Maps/MapLoaded" \
+    "$$SAMPLEPATHCPP/Maps/MapReferenceScale" \
+    "$$SAMPLEPATHCPP/Maps/MapRotation" \
+    "$$SAMPLEPATHCPP/Maps/MinMaxScale" \
+    "$$SAMPLEPATHCPP/Maps/MobileMap_SearchAndRoute" \
+    "$$SAMPLEPATHCPP/Maps/OpenMapUrl" \
+    "$$SAMPLEPATHCPP/Maps/OpenMobileMap_MapPackage" \
+    "$$SAMPLEPATHCPP/Maps/ReadGeoPackage" \
+    "$$SAMPLEPATHCPP/Maps/SetInitialMapArea" \
+    "$$SAMPLEPATHCPP/Maps/SetInitialMapLocation" \
+    "$$SAMPLEPATHCPP/Maps/SetMapSpatialReference" \
+    "$$SAMPLEPATHCPP/Maps/SetMaxExtent" \
+    "$$SAMPLEPATHCPP/Maps/ShowDeviceLocationUsingIndoorPositioning" \
+    "$$SAMPLEPATHCPP/Maps/ShowLocationHistory" \
+    "$$SAMPLEPATHCPP/Maps/ShowMagnifier" \
+    "$$SAMPLEPATHCPP/Maps/TakeScreenshot" \
+    "$$SAMPLEPATHCPP/Routing/ClosestFacility" \
+    "$$SAMPLEPATHCPP/Routing/DisplayRouteLayer" \
+    "$$SAMPLEPATHCPP/Routing/FindClosestFacilityToMultipleIncidentsService" \
+    "$$SAMPLEPATHCPP/Routing/FindRoute" \
+    "$$SAMPLEPATHCPP/Routing/FindServiceAreasForMultipleFacilities" \
+    "$$SAMPLEPATHCPP/Routing/NavigateRoute" \
+    "$$SAMPLEPATHCPP/Routing/NavigateARouteWithRerouting" \
+    "$$SAMPLEPATHCPP/Routing/OfflineRouting" \
+    "$$SAMPLEPATHCPP/Routing/RouteAroundBarriers" \
+    "$$SAMPLEPATHCPP/Routing/ServiceArea" \
+    "$$SAMPLEPATHCPP/Scenes/Add3DTilesLayer" \
+    "$$SAMPLEPATHCPP/Scenes/AddAPointSceneLayer" \
+    "$$SAMPLEPATHCPP/Scenes/AddIntegratedMeshLayer" \
+    "$$SAMPLEPATHCPP/Scenes/Animate3DSymbols" \
+    "$$SAMPLEPATHCPP/Scenes/AnimateImagesWithImageOverlay" \
+    "$$SAMPLEPATHCPP/Scenes/BasicSceneView" \
+    "$$SAMPLEPATHCPP/Scenes/ChangeAtmosphereEffect" \
+    "$$SAMPLEPATHCPP/Scenes/ChooseCameraController" \
+    "$$SAMPLEPATHCPP/Scenes/CreateTerrainSurfaceFromLocalRaster" \
+    "$$SAMPLEPATHCPP/Scenes/CreateTerrainSurfaceFromLocalTilePackage" \
+    "$$SAMPLEPATHCPP/Scenes/Display3DLabelsInScene" \
+    "$$SAMPLEPATHCPP/Scenes/DisplaySceneLayer" \
+    "$$SAMPLEPATHCPP/Scenes/DistanceCompositeSymbol" \
+    "$$SAMPLEPATHCPP/Scenes/ExtrudeGraphics" \
+    "$$SAMPLEPATHCPP/Scenes/FeatureLayerExtrusion" \
+    "$$SAMPLEPATHCPP/Scenes/FilterFeaturesInScene" \
+    "$$SAMPLEPATHCPP/Scenes/GetElevationAtPoint" \
+    "$$SAMPLEPATHCPP/Scenes/OpenMobileScenePackage" \
+    "$$SAMPLEPATHCPP/Scenes/OpenScene" \
+    "$$SAMPLEPATHCPP/Scenes/OrbitCameraAroundObject" \
+    "$$SAMPLEPATHCPP/Scenes/RealisticLightingAndShadows" \
+    "$$SAMPLEPATHCPP/Scenes/SceneLayerSelection" \
+    "$$SAMPLEPATHCPP/Scenes/ScenePropertiesExpressions" \
+    "$$SAMPLEPATHCPP/Scenes/SetSurfacePlacementMode" \
+    "$$SAMPLEPATHCPP/Scenes/Symbols" \
+    "$$SAMPLEPATHCPP/Scenes/SyncMapViewSceneView" \
+    "$$SAMPLEPATHCPP/Scenes/TerrainExaggeration" \
+    "$$SAMPLEPATHCPP/Scenes/ViewContentBeneathTerrainSurface" \
+    "$$SAMPLEPATHCPP/Scenes/ViewPointCloudDataOffline" \
+    "$$SAMPLEPATHCPP/Search/FindAddress" \
+    "$$SAMPLEPATHCPP/Search/FindPlace" \
+    "$$SAMPLEPATHCPP/Search/OfflineGeocode" \
+    "$$SAMPLEPATHCPP/Search/ReverseGeocodeOnline" \
+    "$$SAMPLEPATHCPP/Search/SearchDictionarySymbolStyle" \
+    "$$SAMPLEPATHCPP/UtilityNetwork/ConfigureSubnetworkTrace" \
+    "$$SAMPLEPATHCPP/UtilityNetwork/CreateLoadReport" \
+    "$$SAMPLEPATHCPP/UtilityNetwork/DisplayContentOfUtilityNetworkContainer" \
+    "$$SAMPLEPATHCPP/UtilityNetwork/DisplayUtilityAssociations" \
+    "$$SAMPLEPATHCPP/UtilityNetwork/PerformValveIsolationTrace" \
+    "$$SAMPLEPATHCPP/UtilityNetwork/TraceUtilityNetwork" \
+    "$$SAMPLEPATHCPP/UtilityNetwork/ValidateUtilityNetworkTopology"
+
 HEADERS += \
     "$$SAMPLEPATHCPP/Analysis/AnalyzeHotspots/AnalyzeHotspots.h" \
     "$$SAMPLEPATHCPP/Analysis/AnalyzeViewshed/AnalyzeViewshed.h" \
@@ -37,6 +256,7 @@ HEADERS += \
     "$$SAMPLEPATHCPP/DisplayInformation/ControlAnnotationSublayerVisibility/ControlAnnotationSublayerVisibility.h" \
     "$$SAMPLEPATHCPP/DisplayInformation/CreateSymbolStylesFromWebStyles/CreateSymbolStylesFromWebStyles.h" \
     "$$SAMPLEPATHCPP/DisplayInformation/CustomDictionaryStyle/CustomDictionaryStyle.h" \
+    "$$SAMPLEPATHCPP/DisplayInformation/DisplayGrid/DisplayGrid.h" \
     "$$SAMPLEPATHCPP/DisplayInformation/DisplayClusters/DisplayClusters.h" \
     "$$SAMPLEPATHCPP/DisplayInformation/GODictionaryRenderer_3D/GODictionaryRenderer_3D.h" \
     "$$SAMPLEPATHCPP/DisplayInformation/GODictionaryRenderer/GODictionaryRenderer.h" \
@@ -47,7 +267,6 @@ HEADERS += \
     "$$SAMPLEPATHCPP/DisplayInformation/ReadSymbolsFromMobileStyle/ReadSymbolsFromMobileStyle.h" \
     "$$SAMPLEPATHCPP/DisplayInformation/ReadSymbolsFromMobileStyle/SymbolImageProvider.h" \
     "$$SAMPLEPATHCPP/DisplayInformation/ShowCallout/ShowCallout.h" \
-    "$$SAMPLEPATHCPP/DisplayInformation/ShowGrid/ShowGrid.h" \
     "$$SAMPLEPATHCPP/DisplayInformation/ShowLabelsOnLayers/ShowLabelsOnLayers.h" \
     "$$SAMPLEPATHCPP/DisplayInformation/ShowPopup/ShowPopup.h" \
     "$$SAMPLEPATHCPP/DisplayInformation/Simple_Marker_Symbol/Simple_Marker_Symbol.h" \
@@ -264,6 +483,7 @@ SOURCES += \
     "$$SAMPLEPATHCPP/DisplayInformation/ControlAnnotationSublayerVisibility/ControlAnnotationSublayerVisibility.cpp" \
     "$$SAMPLEPATHCPP/DisplayInformation/CreateSymbolStylesFromWebStyles/CreateSymbolStylesFromWebStyles.cpp" \
     "$$SAMPLEPATHCPP/DisplayInformation/CustomDictionaryStyle/CustomDictionaryStyle.cpp" \
+    "$$SAMPLEPATHCPP/DisplayInformation/DisplayGrid/DisplayGrid.cpp" \
     "$$SAMPLEPATHCPP/DisplayInformation/DisplayClusters/DisplayClusters.cpp" \
     "$$SAMPLEPATHCPP/DisplayInformation/GODictionaryRenderer_3D/GODictionaryRenderer_3D.cpp" \
     "$$SAMPLEPATHCPP/DisplayInformation/GODictionaryRenderer/GODictionaryRenderer.cpp" \
@@ -274,7 +494,6 @@ SOURCES += \
     "$$SAMPLEPATHCPP/DisplayInformation/ReadSymbolsFromMobileStyle/ReadSymbolsFromMobileStyle.cpp" \
     "$$SAMPLEPATHCPP/DisplayInformation/ReadSymbolsFromMobileStyle/SymbolImageProvider.cpp" \
     "$$SAMPLEPATHCPP/DisplayInformation/ShowCallout/ShowCallout.cpp" \
-    "$$SAMPLEPATHCPP/DisplayInformation/ShowGrid/ShowGrid.cpp" \
     "$$SAMPLEPATHCPP/DisplayInformation/ShowLabelsOnLayers/ShowLabelsOnLayers.cpp" \
     "$$SAMPLEPATHCPP/DisplayInformation/ShowPopup/ShowPopup.cpp" \
     "$$SAMPLEPATHCPP/DisplayInformation/Simple_Marker_Symbol/Simple_Marker_Symbol.cpp" \
@@ -490,6 +709,7 @@ RESOURCES += \
     "$$SAMPLEPATHCPP/DisplayInformation/ControlAnnotationSublayerVisibility/ControlAnnotationSublayerVisibility.qrc" \
     "$$SAMPLEPATHCPP/DisplayInformation/CreateSymbolStylesFromWebStyles/CreateSymbolStylesFromWebStyles.qrc" \
     "$$SAMPLEPATHCPP/DisplayInformation/CustomDictionaryStyle/CustomDictionaryStyle.qrc" \
+    "$$SAMPLEPATHCPP/DisplayInformation/DisplayGrid/DisplayGrid.qrc" \
     "$$SAMPLEPATHCPP/DisplayInformation/DisplayClusters/DisplayClusters.qrc" \
     "$$SAMPLEPATHCPP/DisplayInformation/GODictionaryRenderer_3D/GODictionaryRenderer_3D.qrc" \
     "$$SAMPLEPATHCPP/DisplayInformation/GODictionaryRenderer/GODictionaryRenderer.qrc" \
@@ -499,7 +719,6 @@ RESOURCES += \
     "$$SAMPLEPATHCPP/DisplayInformation/QueryFeaturesWithArcadeExpression/QueryFeaturesWithArcadeExpression.qrc" \
     "$$SAMPLEPATHCPP/DisplayInformation/ReadSymbolsFromMobileStyle/ReadSymbolsFromMobileStyle.qrc" \
     "$$SAMPLEPATHCPP/DisplayInformation/ShowCallout/ShowCallout.qrc" \
-    "$$SAMPLEPATHCPP/DisplayInformation/ShowGrid/ShowGrid.qrc" \
     "$$SAMPLEPATHCPP/DisplayInformation/ShowLabelsOnLayers/ShowLabelsOnLayers.qrc" \
     "$$SAMPLEPATHCPP/DisplayInformation/ShowPopup/ShowPopup.qrc" \
     "$$SAMPLEPATHCPP/DisplayInformation/Simple_Marker_Symbol/Simple_Marker_Symbol.qrc" \
@@ -686,8 +905,8 @@ RESOURCES += \
     "$$SAMPLEPATHCPP/UtilityNetwork/TraceUtilityNetwork/TraceUtilityNetwork.qrc" \
     "$$SAMPLEPATHCPP/UtilityNetwork/ValidateUtilityNetworkTopology/ValidateUtilityNetworkTopology.qrc"
 
-# Local Server Only (Linux x86_64 and Windows x86_64)
-win32:contains(QMAKE_TARGET.arch, x86_64)|unix:contains(QMAKE_TARGET.arch, x86_64) {
+# Local Server Only (Linux and Windows)
+!android:!ios:!macx {
   INCLUDEPATH += \
     "$$SAMPLEPATHCPP/LocalServer/LocalServerFeatureLayer" \
     "$$SAMPLEPATHCPP/LocalServer/LocalServerGeoprocessing" \

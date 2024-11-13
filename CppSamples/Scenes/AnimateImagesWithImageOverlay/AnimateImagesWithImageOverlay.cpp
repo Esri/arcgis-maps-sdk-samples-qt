@@ -1,12 +1,12 @@
 // [WriteFile Name=AnimateImagesWithImageOverlay, Category=Scenes]
 // [Legal]
 // Copyright 2020 Esri.
-//
+
 // Licensed under the Apache License, Version 2.0 (the "License");
 // you may not use this file except in compliance with the License.
 // You may obtain a copy of the License at
 // http://www.apache.org/licenses/LICENSE-2.0
-//
+
 // Unless required by applicable law or agreed to in writing, software
 // distributed under the License is distributed on an "AS IS" BASIS,
 // WITHOUT WARRANTIES OR CONDITIONS OF ANY KIND, either express or implied.
@@ -18,38 +18,35 @@
 #include "pch.hpp"
 #endif // PCH_BUILD
 
-// sample headers
 #include "AnimateImagesWithImageOverlay.h"
 
-// ArcGIS Maps SDK headers
 #include "ArcGISTiledElevationSource.h"
 #include "ArcGISTiledLayer.h"
-#include "Camera.h"
-#include "ElevationSourceListModel.h"
-#include "Envelope.h"
+#include "Scene.h"
+#include "SceneQuickView.h"
 #include "ImageFrame.h"
 #include "ImageOverlay.h"
 #include "ImageOverlayListModel.h"
-#include "LayerListModel.h"
-#include "MapTypes.h"
-#include "Point.h"
-#include "Scene.h"
-#include "SceneQuickView.h"
 #include "SceneView.h"
-#include "SpatialReference.h"
-#include "Surface.h"
+#include "Envelope.h"
+#include "Point.h"
+#include "Camera.h"
 #include "Viewpoint.h"
+#include "Surface.h"
+#include "ElevationSourceListModel.h"
+#include "LayerListModel.h"
+#include "SpatialReference.h"
+#include "MapTypes.h"
 
 // Qt headers
+#include <QtCore/qglobal.h>
 #include <QDir>
 #include <QFile>
 #include <QImage>
 #include <QStandardPaths>
 #include <QString>
 #include <QTimer>
-#include <QtCore/qglobal.h>
 
-// STL headers
 #include <memory>
 
 using namespace Esri::ArcGISRuntime;
@@ -85,6 +82,7 @@ AnimateImagesWithImageOverlay::AnimateImagesWithImageOverlay(QObject* parent /* 
   // create a new elevation source from Terrain3D REST service
   ArcGISTiledElevationSource* elevationSource = new ArcGISTiledElevationSource(
         QUrl("https://elevation3d.arcgis.com/arcgis/rest/services/WorldElevation3D/Terrain3D/ImageServer"), this);
+
 
   // add the elevation source to the scene to display elevation
   m_scene->baseSurface()->elevationSources()->append(elevationSource);

@@ -20,12 +20,12 @@
 #include <QSyntaxHighlighter>
 #include <QTextDocument>
 #include <QList>
-#include <QRegularExpression>
+#include <QRegExp>
 
-class QmlHighlighter : public QSyntaxHighlighter {
+class QMLHighlighter : public QSyntaxHighlighter {
 
 public:
-    explicit QmlHighlighter(QTextDocument* parent = nullptr);
+    explicit QMLHighlighter(QTextDocument* parent = nullptr);
 
 protected:
     void highlightBlock(const QString& text);
@@ -33,14 +33,14 @@ protected:
 private:
     struct HighlightingRule
     {
-        QRegularExpression pattern;
+        QRegExp pattern;
         QTextCharFormat format;
     };
 
     QList<HighlightingRule> m_highlightingRules;
 
-    QRegularExpression m_commentStartExpression;
-    QRegularExpression m_commentEndExpression;
+    QRegExp m_commentStartExpression;
+    QRegExp m_commentEndExpression;
 
     QTextCharFormat m_keywordFormat;
     QTextCharFormat m_keywordOtherFormat;

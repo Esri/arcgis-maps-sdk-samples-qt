@@ -1,12 +1,12 @@
 // [WriteFile Name=CreateLoadReport, Category=UtilityNetwork]
 // [Legal]
 // Copyright 2021 Esri.
-//
+
 // Licensed under the Apache License, Version 2.0 (the "License");
 // you may not use this file except in compliance with the License.
 // You may obtain a copy of the License at
 // http://www.apache.org/licenses/LICENSE-2.0
-//
+
 // Unless required by applicable law or agreed to in writing, software
 // distributed under the License is distributed on an "AS IS" BASIS,
 // WITHOUT WARRANTIES OR CONDITIONS OF ANY KIND, either express or implied.
@@ -18,14 +18,11 @@
 #include "pch.hpp"
 #endif // PCH_BUILD
 
-// sample headers
 #include "CreateLoadReport.h"
 
-// ArcGIS Maps SDK headers
-#include "CodedValueDomain.h"
-#include "Credential.h"
 #include "MapQuickView.h"
-#include "MapTypes.h"
+
+#include "CodedValueDomain.h"
 #include "UtilityAssetGroup.h"
 #include "UtilityAssetType.h"
 #include "UtilityCategory.h"
@@ -43,15 +40,16 @@
 #include "UtilityTerminalConfiguration.h"
 #include "UtilityTier.h"
 #include "UtilityTraceConfiguration.h"
-#include "UtilityTraceFunction.h"
 #include "UtilityTraceFunctionListModel.h"
 #include "UtilityTraceFunctionOutput.h"
 #include "UtilityTraceOrCondition.h"
 #include "UtilityTraceParameters.h"
 #include "UtilityTraceResultListModel.h"
 #include "UtilityTraversability.h"
+#include "Credential.h"
+#include "MapTypes.h"
+#include "UtilityTraceFunction.h"
 
-// Qt headers
 #include <QFuture>
 
 using namespace Esri::ArcGISRuntime;

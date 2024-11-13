@@ -1,12 +1,12 @@
 // [WriteFile Name=EditWithBranchVersioning, Category=EditData]
 // [Legal]
 // Copyright 2020 Esri.
-//
+
 // Licensed under the Apache License, Version 2.0 (the "License");
 // you may not use this file except in compliance with the License.
 // You may obtain a copy of the License at
 // http://www.apache.org/licenses/LICENSE-2.0
-//
+
 // Unless required by applicable law or agreed to in writing, software
 // distributed under the License is distributed on an "AS IS" BASIS,
 // WITHOUT WARRANTIES OR CONDITIONS OF ANY KIND, either express or implied.
@@ -18,36 +18,33 @@
 #include "pch.hpp"
 #endif // PCH_BUILD
 
-// sample headers
 #include "EditWithBranchVersioning.h"
 
-// ArcGIS Maps SDK headers
-#include "ArcGISFeature.h"
-#include "AttributeListModel.h"
 #include "AuthenticationManager.h"
-#include "CalloutData.h"
-#include "Credential.h"
-#include "Envelope.h"
 #include "ErrorException.h"
 #include "FeatureEditResult.h"
 #include "FeatureLayer.h"
 #include "FeatureTableEditResult.h"
-#include "IdentifyLayerResult.h"
 #include "Layer.h"
-#include "LayerListModel.h"
 #include "Map.h"
 #include "MapQuickView.h"
-#include "MapTypes.h"
-#include "Point.h"
-#include "Polyline.h"
 #include "ServiceFeatureTable.h"
 #include "ServiceGeodatabase.h"
-#include "ServiceTypes.h"
 #include "ServiceVersionInfo.h"
 #include "ServiceVersionParameters.h"
+#include "MapTypes.h"
+#include "Credential.h"
+#include "IdentifyLayerResult.h"
+#include "ArcGISFeature.h"
+#include "AttributeListModel.h"
+#include "CalloutData.h"
+#include "LayerListModel.h"
+#include "ServiceTypes.h"
+#include "Point.h"
+#include "Envelope.h"
+#include "Polyline.h"
 #include "Viewpoint.h"
 
-// Qt headers
 #include <QFuture>
 
 using namespace Esri::ArcGISRuntime;

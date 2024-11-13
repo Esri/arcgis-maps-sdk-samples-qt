@@ -1,12 +1,12 @@
 // [WriteFile Name=CreateSymbolStylesFromWebStyles, Category=DisplayInformation]
 // [Legal]
 // Copyright 2021 Esri.
-//
+
 // Licensed under the Apache License, Version 2.0 (the "License");
 // you may not use this file except in compliance with the License.
 // You may obtain a copy of the License at
 // http://www.apache.org/licenses/LICENSE-2.0
-//
+
 // Unless required by applicable law or agreed to in writing, software
 // distributed under the License is distributed on an "AS IS" BASIS,
 // WITHOUT WARRANTIES OR CONDITIONS OF ANY KIND, either express or implied.
@@ -18,28 +18,25 @@
 #include "pch.hpp"
 #endif // PCH_BUILD
 
-// sample headers
 #include "CreateSymbolStylesFromWebStyles.h"
 
-// ArcGIS Maps SDK headers
 #include "FeatureLayer.h"
-#include "LayerListModel.h"
 #include "Map.h"
 #include "MapQuickView.h"
-#include "MapTypes.h"
-#include "Point.h"
 #include "ServiceFeatureTable.h"
-#include "SpatialReference.h"
-#include "Symbol.h"
 #include "SymbolStyle.h"
+#include "UniqueValueRenderer.h"
+#include "MapTypes.h"
+#include "LayerListModel.h"
 #include "SymbolStyleSearchParameters.h"
-#include "SymbolStyleSearchResult.h"
 #include "SymbolStyleSearchResultListModel.h"
+#include "SymbolStyleSearchResult.h"
 #include "UniqueValue.h"
 #include "UniqueValueListModel.h"
-#include "UniqueValueRenderer.h"
+#include "SpatialReference.h"
+#include "Point.h"
+#include "Symbol.h"
 
-// Qt headers
 #include <QFuture>
 #include <QUuid>
 

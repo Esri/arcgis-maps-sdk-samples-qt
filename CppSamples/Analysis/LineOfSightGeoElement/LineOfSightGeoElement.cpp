@@ -1,12 +1,12 @@
 // [WriteFile Name=LineOfSightGeoElement, Category=Analysis]
 // [Legal]
 // Copyright 2019 Esri.
-//
+
 // Licensed under the Apache License, Version 2.0 (the "License");
 // you may not use this file except in compliance with the License.
 // You may obtain a copy of the License at
 // http://www.apache.org/licenses/LICENSE-2.0
-//
+
 // Unless required by applicable law or agreed to in writing, software
 // distributed under the License is distributed on an "AS IS" BASIS,
 // WITHOUT WARRANTIES OR CONDITIONS OF ANY KIND, either express or implied.
@@ -18,51 +18,46 @@
 #include "pch.hpp"
 #endif // PCH_BUILD
 
-// sample headers
 #include "LineOfSightGeoElement.h"
 
-// ArcGIS Maps SDK headers
-#include "AnalysisListModel.h"
-#include "AnalysisOverlay.h"
-#include "AnalysisOverlayListModel.h"
-#include "AngularUnit.h"
 #include "ArcGISSceneLayer.h"
 #include "ArcGISTiledElevationSource.h"
-#include "AttributeListModel.h"
-#include "Camera.h"
-#include "ElevationSourceListModel.h"
-#include "Error.h"
 #include "GeoElementLineOfSight.h"
-#include "GeodeticDistanceResult.h"
 #include "GeometryEngine.h"
-#include "Graphic.h"
-#include "GraphicListModel.h"
 #include "GraphicsOverlay.h"
 #include "GraphicsOverlayListModel.h"
-#include "LayerListModel.h"
-#include "LayerSceneProperties.h"
-#include "LinearUnit.h"
-#include "MapTypes.h"
 #include "ModelSceneSymbol.h"
-#include "Point.h"
 #include "PointBuilder.h"
-#include "RendererSceneProperties.h"
 #include "Scene.h"
 #include "SceneQuickView.h"
 #include "SceneViewTypes.h"
-#include "SimpleMarkerSymbol.h"
 #include "SimpleRenderer.h"
-#include "SpatialReference.h"
+#include "MapTypes.h"
 #include "Surface.h"
+#include "ElevationSourceListModel.h"
+#include "LayerListModel.h"
+#include "LayerSceneProperties.h"
+#include "RendererSceneProperties.h"
 #include "SymbolTypes.h"
+#include "GraphicListModel.h"
+#include "Error.h"
+#include "AttributeListModel.h"
+#include "AnalysisOverlay.h"
+#include "AnalysisOverlayListModel.h"
+#include "AnalysisListModel.h"
+#include "Camera.h"
+#include "GeodeticDistanceResult.h"
+#include "LinearUnit.h"
+#include "AngularUnit.h"
+#include "SpatialReference.h"
+#include "Point.h"
+#include "Graphic.h"
+#include "SimpleMarkerSymbol.h"
 
-// Qt headers
-#include <QFuture>
-#include <QStandardPaths>
-#include <QtCore/qglobal.h>
-
-// STL headers
 #include <array>
+#include <QFuture>
+#include <QtCore/qglobal.h>
+#include <QStandardPaths>
 
 using namespace Esri::ArcGISRuntime;
 

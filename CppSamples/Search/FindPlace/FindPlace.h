@@ -1,12 +1,12 @@
 // [WriteFile Name=FindPlace, Category=Search]
 // [Legal]
 // Copyright 2017 Esri.
-//
+
 // Licensed under the Apache License, Version 2.0 (the "License");
 // you may not use this file except in compliance with the License.
 // You may obtain a copy of the License at
 // http://www.apache.org/licenses/LICENSE-2.0
-//
+
 // Unless required by applicable law or agreed to in writing, software
 // distributed under the License is distributed on an "AS IS" BASIS,
 // WITHOUT WARRANTIES OR CONDITIONS OF ANY KIND, either express or implied.
@@ -17,15 +17,6 @@
 #ifndef FINDPLACE_H
 #define FINDPLACE_H
 
-// ArcGIS Maps SDK headers
-#include "Envelope.h"
-#include "GeocodeParameters.h"
-#include "Point.h"
-
-// Qt headers
-#include <QAbstractListModel>
-#include <QQuickItem>
-
 namespace Esri::ArcGISRuntime
 {
     class CalloutData;
@@ -35,6 +26,13 @@ namespace Esri::ArcGISRuntime
     class LocatorTask;
     class GeocodeResult;
 }
+
+#include "Point.h"
+#include "Envelope.h"
+#include "GeocodeParameters.h"
+
+#include <QAbstractListModel>
+#include <QQuickItem>
 
 class FindPlace : public QQuickItem
 {
@@ -69,7 +67,6 @@ signals:
   void hideCallout();
   void showCallout();
   void showExtentButton();
-  void locationPermissionDenied();
 
 private:
   void addGraphicsOverlay();
@@ -79,7 +76,6 @@ private:
   void setPoiTextHasFocus(bool hasFocus);
   Esri::ArcGISRuntime::GeocodeParameters createParameters();
   void onGeocodingCompleted_(const QList<Esri::ArcGISRuntime::GeocodeResult>& results);
-  void initiateLocation();
 
 private:
   Esri::ArcGISRuntime::Map* m_map = nullptr;

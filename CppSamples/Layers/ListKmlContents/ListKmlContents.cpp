@@ -1,12 +1,12 @@
 // [WriteFile Name=ListKmlContents, Category=Layers]
 // [Legal]
 // Copyright 2020 Esri.
-//
+
 // Licensed under the Apache License, Version 2.0 (the "License");
 // you may not use this file except in compliance with the License.
 // You may obtain a copy of the License at
 // http://www.apache.org/licenses/LICENSE-2.0
-//
+
 // Unless required by applicable law or agreed to in writing, software
 // distributed under the License is distributed on an "AS IS" BASIS,
 // WITHOUT WARRANTIES OR CONDITIONS OF ANY KIND, either express or implied.
@@ -18,37 +18,32 @@
 #include "pch.hpp"
 #endif // PCH_BUILD
 
-// sample headers
 #include "ListKmlContents.h"
 
-// ArcGIS Maps SDK headers
 #include "ArcGISTiledElevationSource.h"
-#include "Camera.h"
-#include "ElevationSourceListModel.h"
-#include "Envelope.h"
-#include "Error.h"
 #include "KmlContainer.h"
 #include "KmlDataset.h"
 #include "KmlLayer.h"
 #include "KmlNetworkLink.h"
 #include "KmlNode.h"
 #include "KmlNodeListModel.h"
-#include "KmlViewpoint.h"
-#include "LayerListModel.h"
-#include "MapTypes.h"
-#include "Point.h"
 #include "Scene.h"
 #include "SceneQuickView.h"
-#include "SpatialReference.h"
+#include "Error.h"
+#include "MapTypes.h"
+#include "LayerListModel.h"
 #include "Surface.h"
+#include "ElevationSourceListModel.h"
+#include "KmlViewpoint.h"
+#include "Camera.h"
+#include "Envelope.h"
+#include "Point.h"
+#include "SpatialReference.h"
 
-// Qt headers
-#include <QFuture>
-#include <QStandardPaths>
-#include <QUuid>
-
-// STL headers
 #include <algorithm>
+#include <QFuture>
+#include <QUuid>
+#include <QStandardPaths>
 
 using namespace Esri::ArcGISRuntime;
 

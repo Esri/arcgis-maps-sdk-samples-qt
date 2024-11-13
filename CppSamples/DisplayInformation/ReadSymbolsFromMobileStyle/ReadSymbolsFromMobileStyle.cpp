@@ -1,12 +1,12 @@
 // [WriteFile Name=ReadSymbolsFromMobileStyle, Category=DisplayInformation]
 // [Legal]
 // Copyright 2019 Esri.
-//
+
 // Licensed under the Apache License, Version 2.0 (the "License");
 // you may not use this file except in compliance with the License.
 // You may obtain a copy of the License at
 // http://www.apache.org/licenses/LICENSE-2.0
-//
+
 // Unless required by applicable law or agreed to in writing, software
 // distributed under the License is distributed on an "AS IS" BASIS,
 // WITHOUT WARRANTIES OR CONDITIONS OF ANY KIND, either express or implied.
@@ -18,36 +18,33 @@
 #include "pch.hpp"
 #endif // PCH_BUILD
 
-// sample headers
 #include "ReadSymbolsFromMobileStyle.h"
-#include "SymbolImageProvider.h"
 
-// ArcGIS Maps SDK headers
-#include "Error.h"
-#include "Graphic.h"
-#include "GraphicListModel.h"
-#include "GraphicsOverlay.h"
-#include "GraphicsOverlayListModel.h"
 #include "Map.h"
 #include "MapQuickView.h"
-#include "MapTypes.h"
-#include "MultilayerPointSymbol.h"
+#include "GraphicsOverlay.h"
+#include "Graphic.h"
+#include "SymbolStyle.h"
 #include "MultilayerSymbol.h"
 #include "Point.h"
-#include "SymbolLayer.h"
-#include "SymbolLayerListModel.h"
-#include "SymbolStyle.h"
-#include "SymbolStyleSearchParameters.h"
-#include "SymbolStyleSearchResult.h"
+#include "MultilayerPointSymbol.h"
+#include "SymbolImageProvider.h"
 #include "SymbolStyleSearchResultListModel.h"
+#include "MapTypes.h"
+#include "Error.h"
+#include "SymbolStyleSearchParameters.h"
+#include "SymbolLayerListModel.h"
+#include "SymbolLayer.h"
+#include "GraphicsOverlayListModel.h"
+#include "GraphicListModel.h"
+#include "SymbolStyleSearchResult.h"
 
-// Qt headers
 #include <QFuture>
 #include <QObject>
 #include <QQmlContext>
-#include <QStandardPaths>
 #include <QTemporaryDir>
 #include <QtCore/qglobal.h>
+#include <QStandardPaths>
 
 using namespace Esri::ArcGISRuntime;
 

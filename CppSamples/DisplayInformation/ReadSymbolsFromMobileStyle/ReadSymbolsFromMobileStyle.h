@@ -1,12 +1,12 @@
 // [WriteFile Name=ReadSymbolsFromMobileStyle, Category=DisplayInformation]
 // [Legal]
 // Copyright 2019 Esri.
-//
+
 // Licensed under the Apache License, Version 2.0 (the "License");
 // you may not use this file except in compliance with the License.
 // You may obtain a copy of the License at
 // http://www.apache.org/licenses/LICENSE-2.0
-//
+
 // Unless required by applicable law or agreed to in writing, software
 // distributed under the License is distributed on an "AS IS" BASIS,
 // WITHOUT WARRANTIES OR CONDITIONS OF ANY KIND, either express or implied.
@@ -16,14 +16,6 @@
 
 #ifndef READSYMBOLSFROMMOBILESTYLE_H
 #define READSYMBOLSFROMMOBILESTYLE_H
-
-// Qt headers
-#include <QColor>
-#include <QList>
-#include <QObject>
-#include <QScopedPointer>
-#include <QUrl>
-#include <QUuid>
 
 namespace Esri::ArcGISRuntime
 {
@@ -36,6 +28,13 @@ class SymbolStyleSearchResultListModel;
 
 class SymbolImageProvider;
 class QAbstractListModel;
+
+#include <QObject>
+#include <QUuid>
+#include <QColor>
+#include <QUrl>
+#include <QList>
+#include <QScopedPointer>
 
 Q_MOC_INCLUDE("MapQuickView.h")
 Q_MOC_INCLUDE("SymbolStyleSearchResultListModel.h")

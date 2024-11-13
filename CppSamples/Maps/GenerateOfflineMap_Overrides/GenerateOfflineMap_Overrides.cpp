@@ -1,12 +1,12 @@
 // [WriteFile Name=GenerateOfflineMap_Overrides, Category=Maps]
 // [Legal]
 // Copyright 2018 Esri.
-//
+
 // Licensed under the Apache License, Version 2.0 (the "License");
 // you may not use this file except in compliance with the License.
 // You may obtain a copy of the License at
 // http://www.apache.org/licenses/LICENSE-2.0
-//
+
 // Unless required by applicable law or agreed to in writing, software
 // distributed under the License is distributed on an "AS IS" BASIS,
 // WITHOUT WARRANTIES OR CONDITIONS OF ANY KIND, either express or implied.
@@ -18,38 +18,36 @@
 #include "pch.hpp"
 #endif // PCH_BUILD
 
-// sample headers
 #include "GenerateOfflineMap_Overrides.h"
 
-// ArcGIS Maps SDK headers
-#include "ArcGISFeatureLayerInfo.h"
-#include "Basemap.h"
 #include "Envelope.h"
-#include "Error.h"
-#include "ExportTileCacheParameters.h"
 #include "FeatureLayer.h"
-#include "GenerateGeodatabaseParameters.h"
-#include "GenerateLayerOption.h"
-#include "GenerateOfflineMapJob.h"
-#include "GenerateOfflineMapParameterOverrides.h"
-#include "GenerateOfflineMapResult.h"
 #include "GeometryEngine.h"
-#include "LayerListModel.h"
 #include "Map.h"
 #include "MapQuickView.h"
-#include "MapTypes.h"
-#include "OfflineMapParametersKey.h"
-#include "OfflineMapTask.h"
-#include "OfflineMapTypes.h"
-#include "Point.h"
-#include "Polygon.h"
 #include "Portal.h"
 #include "PortalItem.h"
-#include "ServiceFeatureTable.h"
-#include "SpatialReference.h"
+#include "OfflineMapTask.h"
+#include "Point.h"
+#include "Error.h"
+#include "MapTypes.h"
+#include "LayerListModel.h"
+#include "OfflineMapParametersKey.h"
+#include "OfflineMapTypes.h"
+#include "ExportTileCacheParameters.h"
+#include "GenerateOfflineMapParameterOverrides.h"
+#include "ArcGISFeatureLayerInfo.h"
+#include "GenerateLayerOption.h"
+#include "GenerateGeodatabaseParameters.h"
+#include "GenerateLayerOption.h"
 #include "TaskTypes.h"
+#include "GenerateOfflineMapJob.h"
+#include "GenerateOfflineMapResult.h"
+#include "SpatialReference.h"
+#include "Basemap.h"
+#include "Polygon.h"
+#include "ServiceFeatureTable.h"
 
-// Qt headers
 #include <QFuture>
 #include <QUuid>
 

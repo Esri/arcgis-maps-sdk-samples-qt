@@ -1,12 +1,12 @@
 // [WriteFile Name=FindPlace, Category=Search]
 // [Legal]
 // Copyright 2017 Esri.
-//
+
 // Licensed under the Apache License, Version 2.0 (the "License");
 // you may not use this file except in compliance with the License.
 // You may obtain a copy of the License at
 // http://www.apache.org/licenses/LICENSE-2.0
-//
+
 // Unless required by applicable law or agreed to in writing, software
 // distributed under the License is distributed on an "AS IS" BASIS,
 // WITHOUT WARRANTIES OR CONDITIONS OF ANY KIND, either express or implied.
@@ -18,44 +18,37 @@
 #include "pch.hpp"
 #endif // PCH_BUILD
 
-// sample headers
 #include "FindPlace.h"
 
-// ArcGIS Maps SDK headers
-#include "AttributeListModel.h"
 #include "CalloutData.h"
-#include "GeoElement.h"
-#include "GeocodeResult.h"
-#include "GeometryEngine.h"
-#include "Graphic.h"
-#include "GraphicListModel.h"
-#include "GraphicsOverlay.h"
-#include "GraphicsOverlayListModel.h"
-#include "IdentifyGraphicsOverlayResult.h"
-#include "Location.h"
-#include "LocationDisplay.h"
-#include "LocatorTask.h"
 #include "Map.h"
 #include "MapQuickView.h"
-#include "MapTypes.h"
-#include "MapViewTypes.h"
+#include "GraphicsOverlay.h"
+#include "GeocodeResult.h"
+#include "GeoElement.h"
+#include "GeometryEngine.h"
 #include "PictureMarkerSymbol.h"
+#include "IdentifyGraphicsOverlayResult.h"
 #include "Point.h"
 #include "SimpleRenderer.h"
-#include "SpatialReference.h"
+#include "LocatorTask.h"
+#include "LocationDisplay.h"
 #include "SuggestListModel.h"
+#include "MapTypes.h"
+#include "MapViewTypes.h"
+#include "GraphicsOverlayListModel.h"
+#include "GraphicListModel.h"
+#include "AttributeListModel.h"
 #include "SuggestParameters.h"
+#include "Location.h"
+#include "Graphic.h"
 #include "Viewpoint.h"
+#include "SpatialReference.h"
+#include "GeocodeResult.h"
 
-// Qt headers
 #include <QFuture>
 #include <QUrl>
 #include <QUuid>
-
-#if (QT_VERSION >= QT_VERSION_CHECK(6, 6, 0)) || defined(Q_OS_IOS) || defined(Q_OS_MACOS) || defined(Q_OS_ANDROID)
-#define PERMISSIONS_PLATFORM
-#include <QPermissions>
-#endif
 
 using namespace Esri::ArcGISRuntime;
 
@@ -101,13 +94,22 @@ void FindPlace::componentComplete()
   m_mapView->calloutData()->setVisible(false);
   m_calloutData = m_mapView->calloutData();
 
+  // connect mapview signals
   connectSignals();
-
-  initiateLocation();
 }
 
 void FindPlace::connectSignals()
 {
+  connect(m_mapView, &MapQuickView::drawStatusChanged, this, [this](DrawStatus drawStatus)
+  {
+    if (drawStatus != DrawStatus::Completed || m_mapView->locationDisplay()->isStarted())
+      return;
+
+    // turn on the location display
+    m_mapView->locationDisplay()->setAutoPanMode(LocationDisplayAutoPanMode::Recenter);
+    m_mapView->locationDisplay()->start();
+  });
+
   connect(m_mapView, &MapQuickView::mousePressed, this, [this](QMouseEvent& /*event*/)
   {
     emit hideSuggestionView();
@@ -137,32 +139,6 @@ void FindPlace::connectSignals()
       emit showCallout();
     });
   });
-}
-
-void FindPlace::initiateLocation()
-{
-#ifdef PERMISSIONS_PLATFORM
-  QLocationPermission locationPermission{};
-  locationPermission.setAccuracy(QLocationPermission::Accuracy::Precise);
-  locationPermission.setAvailability(QLocationPermission::Availability::WhenInUse);
-
-  switch (qApp->checkPermission(locationPermission))
-  {
-    case Qt::PermissionStatus::Undetermined:
-      qApp->requestPermission(locationPermission, this, &FindPlace::initiateLocation);
-      return;
-    case Qt::PermissionStatus::Denied:
-      emit locationPermissionDenied();
-      return;
-    case Qt::PermissionStatus::Granted:
-      m_mapView->locationDisplay()->setAutoPanMode(LocationDisplayAutoPanMode::Recenter);
-      m_mapView->locationDisplay()->start();
-      return;
-  }
-#else
-  m_mapView->locationDisplay()->setAutoPanMode(LocationDisplayAutoPanMode::Recenter);
-  m_mapView->locationDisplay()->start();
-#endif
 }
 
 void FindPlace::addGraphicsOverlay()
