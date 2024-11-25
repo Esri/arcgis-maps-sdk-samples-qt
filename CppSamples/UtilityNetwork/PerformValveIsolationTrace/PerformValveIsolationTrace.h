@@ -1,12 +1,12 @@
 // [WriteFile Name=PerformValveIsolationTrace, Category=UtilityNetwork]
 // [Legal]
 // Copyright 2020 Esri.
-
+//
 // Licensed under the Apache License, Version 2.0 (the "License");
 // you may not use this file except in compliance with the License.
 // You may obtain a copy of the License at
 // http://www.apache.org/licenses/LICENSE-2.0
-
+//
 // Unless required by applicable law or agreed to in writing, software
 // distributed under the License is distributed on an "AS IS" BASIS,
 // WITHOUT WARRANTIES OR CONDITIONS OF ANY KIND, either express or implied.
@@ -16,6 +16,13 @@
 
 #ifndef PERFORMVALVEISOLATIONTRACE_H
 #define PERFORMVALVEISOLATIONTRACE_H
+
+// Qt headers
+#include <QObject>
+#include <QUuid>
+
+// STL headers
+#include <Point.h>
 
 namespace Esri::ArcGISRuntime
 {
@@ -34,12 +41,10 @@ class IdentifyLayerResult;
 class ServiceGeodatabase;
 }
 
-#include <QObject>
-#include <QUuid>
-#include <Point.h>
-
 Q_MOC_INCLUDE("MapQuickView.h")
 Q_MOC_INCLUDE("IdentifyLayerResult.h")
+
+class TaskCanceler;
 
 class PerformValveIsolationTrace : public QObject
 {
@@ -96,6 +101,7 @@ private:
   QStringList m_terminals;
   QScopedPointer<QObject> m_graphicParent;
   QStringList m_categoriesList;
+  std::unique_ptr<TaskCanceler> m_taskCanceler;
   int m_selectedIndex = -1;
   bool m_isolateFeatures = false;
   bool m_tasksRunning = false;

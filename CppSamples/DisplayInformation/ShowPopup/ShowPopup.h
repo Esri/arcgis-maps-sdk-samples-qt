@@ -1,12 +1,12 @@
 // [WriteFile Name=ShowPopup, Category=DisplayInformation]
 // [Legal]
 // Copyright 2020 Esri.
-
+//
 // Licensed under the Apache License, Version 2.0 (the "License");
 // you may not use this file except in compliance with the License.
 // You may obtain a copy of the License at
 // http://www.apache.org/licenses/LICENSE-2.0
-
+//
 // Unless required by applicable law or agreed to in writing, software
 // distributed under the License is distributed on an "AS IS" BASIS,
 // WITHOUT WARRANTIES OR CONDITIONS OF ANY KIND, either express or implied.
@@ -17,6 +17,13 @@
 #ifndef SHOWPOPUP_H
 #define SHOWPOPUP_H
 
+// Qt headers
+#include <QFuture>
+#include <QMouseEvent>
+#include <QObject>
+#include <QQmlListProperty>
+#include <QUuid>
+
 namespace Esri::ArcGISRuntime
 {
 class FeatureLayer;
@@ -26,12 +33,6 @@ class Map;
 class MapQuickView;
 class PopupManager;
 }
-
-#include <QObject>
-#include <QQmlListProperty>
-#include <QMouseEvent>
-#include <QFuture>
-#include <QUuid>
 
 Q_MOC_INCLUDE("MapQuickView.h")
 Q_MOC_INCLUDE("PopupManager.h")

@@ -1,12 +1,12 @@
 // [WriteFile Name=GenerateOfflineMapLocalBasemap, Category=Maps]
 // [Legal]
 // Copyright 2019 Esri.
-
+//
 // Licensed under the Apache License, Version 2.0 (the "License");
 // you may not use this file except in compliance with the License.
 // You may obtain a copy of the License at
 // http://www.apache.org/licenses/LICENSE-2.0
-
+//
 // Unless required by applicable law or agreed to in writing, software
 // distributed under the License is distributed on an "AS IS" BASIS,
 // WITHOUT WARRANTIES OR CONDITIONS OF ANY KIND, either express or implied.
@@ -18,29 +18,31 @@
 #include "pch.hpp"
 #endif // PCH_BUILD
 
+// sample headers
 #include "GenerateOfflineMapLocalBasemap.h"
 
-#include "Map.h"
-#include "MapQuickView.h"
-#include "PortalItem.h"
-#include "OfflineMapTask.h"
-#include "GeometryEngine.h"
+// ArcGIS Maps SDK headers
 #include "Envelope.h"
-#include "Point.h"
 #include "Error.h"
 #include "GenerateOfflineMapJob.h"
-#include "TaskTypes.h"
-#include "GenerateOfflineMapResult.h"
-#include "Error.h"
 #include "GenerateOfflineMapParameters.h"
-#include "SpatialReference.h"
+#include "GenerateOfflineMapResult.h"
+#include "GeometryEngine.h"
 #include "Layer.h"
+#include "Map.h"
+#include "MapQuickView.h"
+#include "OfflineMapTask.h"
+#include "Point.h"
+#include "PortalItem.h"
+#include "SpatialReference.h"
+#include "TaskTypes.h"
 
+// Qt headers
 #include <QFuture>
-#include <QTemporaryDir>
-#include <QtCore/qglobal.h>
-#include <QUuid>
 #include <QStandardPaths>
+#include <QTemporaryDir>
+#include <QUuid>
+#include <QtCore/qglobal.h>
 
 using namespace Esri::ArcGISRuntime;
 

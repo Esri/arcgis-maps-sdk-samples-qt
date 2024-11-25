@@ -1,12 +1,12 @@
 // [WriteFile Name=LocalServerFeatureLayer, Category=LocalServer]
 // [Legal]
 // Copyright 2017 Esri.
-
+//
 // Licensed under the Apache License, Version 2.0 (the "License");
 // you may not use this file except in compliance with the License.
 // You may obtain a copy of the License at
 // http://www.apache.org/licenses/LICENSE-2.0
-
+//
 // Unless required by applicable law or agreed to in writing, software
 // distributed under the License is distributed on an "AS IS" BASIS,
 // WITHOUT WARRANTIES OR CONDITIONS OF ANY KIND, either express or implied.
@@ -18,26 +18,29 @@
 #include "pch.hpp"
 #endif // PCH_BUILD
 
+// sample headers
 #include "LocalServerFeatureLayer.h"
 
+// ArcGIS Maps SDK headers
 #include "Basemap.h"
 #include "Envelope.h"
-#include "MapQuickView.h"
-#include "Map.h"
-#include "LocalServer.h"
-#include "LocalFeatureService.h"
-#include "ServiceFeatureTable.h"
 #include "FeatureLayer.h"
-#include "Viewpoint.h"
-#include "MapViewTypes.h"
-#include "MapTypes.h"
-#include "LocalServerTypes.h"
 #include "LayerListModel.h"
+#include "LocalFeatureService.h"
+#include "LocalServer.h"
+#include "LocalServerTypes.h"
+#include "Map.h"
+#include "MapQuickView.h"
+#include "MapTypes.h"
+#include "MapViewTypes.h"
+#include "ServiceFeatureTable.h"
+#include "Viewpoint.h"
 
+// Qt headers
 #include <QDir>
+#include <QFile>
 #include <QFuture>
 #include <QTemporaryDir>
-#include <QFile>
 
 using namespace Esri::ArcGISRuntime;
 
