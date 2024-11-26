@@ -31,7 +31,9 @@
         "UTMGrid"
     ],
     "redirect_from": [
-        "/qt/latest/cpp/sample-code/sample-qt-displaygrid.htm"
+        "/qt/latest/cpp/sample-code/sample-qt-displaygrid.htm",
+        "/qt/latest/cpp/sample-code/display-a-grid",
+        "/qt/cpp/sample-code/display-a-grid"
     ],
     "relevant_apis": [
         "ArcGISGrid",
