@@ -35,6 +35,15 @@ Item {
     SnapGeometryEditsSample {
         id: snapGeometryEditsSampleModel
         mapView: view
+
+        onGeometryEditorStartedChanged: {
+            if (!geometryEditorStarted) {
+                pointButton.checked = false;
+                multiPointButton.checked = false;
+                lineButton.checked = false;
+                polygonButton.checked = false;
+            }
+        }
     }
 
     Rectangle {

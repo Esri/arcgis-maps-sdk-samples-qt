@@ -55,7 +55,7 @@ void SnapSourceListModel::enableAllLayersInSection(const QString &section)
   for (auto* source : m_snapSourceSettings)
   {
     if (determineSection(source) == section)
-      source->setEnabled(!source->isEnabled());
+      source->setEnabled(true);
   }
   endResetModel();
 }
