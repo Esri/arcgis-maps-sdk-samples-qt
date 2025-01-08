@@ -37,7 +37,7 @@ exists($$PWD/../../../DevBuildCpp.pri) {
   # use the Esri dev build script
   include ($$PWD/../../../DevBuildCpp.pri)
   # include the toolkitcpp.pri, which contains all the toolkit resources
-  include($$PWD/../../toolkit/uitools/toolkitcpp.pri)
+  include($$PWD/../../toolkit/uitools/toolkitcpp/toolkitcpp.pri)
 
   INCLUDEPATH += \
       $$SAMPLEPATHCPP \
@@ -52,8 +52,8 @@ exists($$PWD/../../../DevBuildCpp.pri) {
   CONFIG += c++17
 
   # include the toolkitcpp.pri, which contains all the toolkit resources
-  !include($$PWD/../arcgis-maps-sdk-toolkit-qt/uitools/toolkitcpp.pri) {
-    message("ERROR: Cannot find toolkitcpp.pri at path:" $$PWD/../arcgis-maps-sdk-toolkit-qt/uitools/toolkitcpp.pri)
+  !include($$PWD/../arcgis-maps-sdk-toolkit-qt/uitools/toolkitcpp/toolkitcpp.pri) {
+    message("ERROR: Cannot find toolkitcpp.pri at path:" $$PWD/../arcgis-maps-sdk-toolkit-qt/uitools/toolkitcpp/toolkitcpp.pri)
     message("Please ensure the Qt Toolkit repository is cloned and the path above is correct.")
   }
 
