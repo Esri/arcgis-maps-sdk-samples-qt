@@ -56,6 +56,25 @@ ios {
         $$PWD/Info.plist
 
     QMAKE_INFO_PLIST = $$PWD/Info.plist
+
+    # workaround for https://bugreports.qt.io/browse/QTBUG-129651
+    # ArcGIS Maps SDK for Qt adds 'QMAKE_RPATHDIR = @executable_path/Frameworks'
+    # and ffmpeg frameworks have embedded '@rpath/Frameworks' path.
+    # so in order for them to be found, we need to add @executable_path to the
+    # search path.
+    QMAKE_LFLAGS += -F$$(QTDIR)/lib/ffmpeg -Wl,-rpath,@executable_path
+    LIBS += -framework libavcodec \
+            -framework libavformat \
+            -framework libavutil \
+            -framework libswresample \
+            -framework libswscale
+    ffmpeg.files = $$(QTDIR)/lib/ffmpeg/libavcodec.framework \
+                   $$(QTDIR)/lib/ffmpeg/libavformat.framework \
+                   $$(QTDIR)/lib/ffmpeg/libavutil.framework \
+                   $$(QTDIR)/lib/ffmpeg/libswresample.framework \
+                   $$(QTDIR)/lib/ffmpeg/libswscale.framework
+    ffmpeg.path = Frameworks
+    QMAKE_BUNDLE_DATA += ffmpeg
 }
 
 android {

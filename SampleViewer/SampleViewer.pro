@@ -37,7 +37,7 @@ exists($$PWD/../../../DevBuildCpp.pri) {
   # use the Esri dev build script
   include ($$PWD/../../../DevBuildCpp.pri)
   # include the toolkitcpp.pri, which contains all the toolkit resources
-  include($$PWD/../../toolkit/uitools/toolkitcpp.pri)
+  include($$PWD/../../toolkit/uitools/toolkitcpp/toolkitcpp.pri)
 
   INCLUDEPATH += \
       $$SAMPLEPATHCPP \
@@ -52,8 +52,8 @@ exists($$PWD/../../../DevBuildCpp.pri) {
   CONFIG += c++17
 
   # include the toolkitcpp.pri, which contains all the toolkit resources
-  !include($$PWD/../arcgis-maps-sdk-toolkit-qt/uitools/toolkitcpp.pri) {
-    message("ERROR: Cannot find toolkitcpp.pri at path:" $$PWD/../arcgis-maps-sdk-toolkit-qt/uitools/toolkitcpp.pri)
+  !include($$PWD/../arcgis-maps-sdk-toolkit-qt/uitools/toolkitcpp/toolkitcpp.pri) {
+    message("ERROR: Cannot find toolkitcpp.pri at path:" $$PWD/../arcgis-maps-sdk-toolkit-qt/uitools/toolkitcpp/toolkitcpp.pri)
     message("Please ensure the Qt Toolkit repository is cloned and the path above is correct.")
   }
 
@@ -246,6 +246,25 @@ android {
 }
 
 ios {
+    # workaround for https://bugreports.qt.io/browse/QTBUG-129651
+    # ArcGIS Maps SDK for Qt adds 'QMAKE_RPATHDIR = @executable_path/Frameworks'
+    # and ffmpeg frameworks have embedded '@rpath/Frameworks' path.
+    # so in order for them to be found, we need to add @executable_path to the
+    # search path.
+    QMAKE_LFLAGS += -F$$(QTDIR)/lib/ffmpeg -Wl,-rpath,@executable_path
+    LIBS += -framework libavcodec \
+            -framework libavformat \
+            -framework libavutil \
+            -framework libswresample \
+            -framework libswscale
+    ffmpeg.files = $$(QTDIR)/lib/ffmpeg/libavcodec.framework \
+                   $$(QTDIR)/lib/ffmpeg/libavformat.framework \
+                   $$(QTDIR)/lib/ffmpeg/libavutil.framework \
+                   $$(QTDIR)/lib/ffmpeg/libswresample.framework \
+                   $$(QTDIR)/lib/ffmpeg/libswscale.framework
+    ffmpeg.path = Frameworks
+    QMAKE_BUNDLE_DATA += ffmpeg
+
     ios_icon.files = $$files($$PWD/iOS/Images.xcassets/AppIcon.appiconset/iOS_*.png)
     QMAKE_BUNDLE_DATA += ios_icon
 
