@@ -259,11 +259,11 @@ ios {
             -framework libavutil \
             -framework libswresample \
             -framework libswscale
-    ffmpeg.files = $$(QTDIR)/lib/ffmpeg/libavcodec.framework \
-                   $$(QTDIR)/lib/ffmpeg/libavformat.framework \
-                   $$(QTDIR)/lib/ffmpeg/libavutil.framework \
-                   $$(QTDIR)/lib/ffmpeg/libswresample.framework \
-                   $$(QTDIR)/lib/ffmpeg/libswscale.framework
+    ffmpeg.files = $${FFMPEG_LIB_DIR}/libavcodec.framework \
+                   $${FFMPEG_LIB_DIR}/libavformat.framework \
+                   $${FFMPEG_LIB_DIR}/libavutil.framework \
+                   $${FFMPEG_LIB_DIR}/libswresample.framework \
+                   $${FFMPEG_LIB_DIR}/libswscale.framework
     ffmpeg.path = Frameworks
     QMAKE_BUNDLE_DATA += ffmpeg
 
