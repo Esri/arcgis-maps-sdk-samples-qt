@@ -251,7 +251,9 @@ ios {
     # and ffmpeg frameworks have embedded '@rpath/Frameworks' path.
     # so in order for them to be found, we need to add @executable_path to the
     # search path.
-    QMAKE_LFLAGS += -F$$(QTDIR)/lib/ffmpeg -Wl,-rpath,@executable_path
+    FFMPEG_LIB_DIR = $$absolute_path($$replace(QMAKE_QMAKE, "qmake6", "../../ios/lib/ffmpeg"))
+    FFMPEG_LIB_DIR = $$absolute_path($$replace(FFMPEG_LIB_DIR, "qmake", "../../ios/lib/ffmpeg"))
+    QMAKE_LFLAGS += -F$${FFMPEG_LIB_DIR} -Wl,-rpath,@executable_path
     LIBS += -framework libavcodec \
             -framework libavformat \
             -framework libavutil \
