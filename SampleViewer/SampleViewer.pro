@@ -120,6 +120,27 @@ exists($$PWD/../../../DevBuildCpp.pri) {
 
   ios {
     PLATFORM = "iOS"
+
+    # workaround for https://bugreports.qt.io/browse/QTBUG-129651
+    # ArcGIS Maps SDK for Qt adds 'QMAKE_RPATHDIR = @executable_path/Frameworks'
+    # and ffmpeg frameworks have embedded '@rpath/Frameworks' path.
+    # so in order for them to be found, we need to add @executable_path to the
+    # search path.
+    FFMPEG_LIB_DIR = $$absolute_path($$replace(QMAKE_QMAKE, "qmake6", "../../ios/lib/ffmpeg"))
+    FFMPEG_LIB_DIR = $$absolute_path($$replace(FFMPEG_LIB_DIR, "qmake", "../../ios/lib/ffmpeg"))
+    QMAKE_LFLAGS += -F$${FFMPEG_LIB_DIR} -Wl,-rpath,@executable_path
+    LIBS += -framework libavcodec \
+            -framework libavformat \
+            -framework libavutil \
+            -framework libswresample \
+            -framework libswscale
+    ffmpeg.files = $${FFMPEG_LIB_DIR}/libavcodec.framework \
+                   $${FFMPEG_LIB_DIR}/libavformat.framework \
+                   $${FFMPEG_LIB_DIR}/libavutil.framework \
+                   $${FFMPEG_LIB_DIR}/libswresample.framework \
+                   $${FFMPEG_LIB_DIR}/libswscale.framework
+    ffmpeg.path = Frameworks
+    QMAKE_BUNDLE_DATA += ffmpeg
   }
 
   DEFINES += BUILD_FROM_SETUP
@@ -246,27 +267,6 @@ android {
 }
 
 ios {
-    # workaround for https://bugreports.qt.io/browse/QTBUG-129651
-    # ArcGIS Maps SDK for Qt adds 'QMAKE_RPATHDIR = @executable_path/Frameworks'
-    # and ffmpeg frameworks have embedded '@rpath/Frameworks' path.
-    # so in order for them to be found, we need to add @executable_path to the
-    # search path.
-    FFMPEG_LIB_DIR = $$absolute_path($$replace(QMAKE_QMAKE, "qmake6", "../../ios/lib/ffmpeg"))
-    FFMPEG_LIB_DIR = $$absolute_path($$replace(FFMPEG_LIB_DIR, "qmake", "../../ios/lib/ffmpeg"))
-    QMAKE_LFLAGS += -F$${FFMPEG_LIB_DIR} -Wl,-rpath,@executable_path
-    LIBS += -framework libavcodec \
-            -framework libavformat \
-            -framework libavutil \
-            -framework libswresample \
-            -framework libswscale
-    ffmpeg.files = $${FFMPEG_LIB_DIR}/libavcodec.framework \
-                   $${FFMPEG_LIB_DIR}/libavformat.framework \
-                   $${FFMPEG_LIB_DIR}/libavutil.framework \
-                   $${FFMPEG_LIB_DIR}/libswresample.framework \
-                   $${FFMPEG_LIB_DIR}/libswscale.framework
-    ffmpeg.path = Frameworks
-    QMAKE_BUNDLE_DATA += ffmpeg
-
     ios_icon.files = $$files($$PWD/iOS/Images.xcassets/AppIcon.appiconset/iOS_*.png)
     QMAKE_BUNDLE_DATA += ios_icon
 
