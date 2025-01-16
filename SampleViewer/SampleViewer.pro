@@ -19,7 +19,7 @@
 
 TEMPLATE = app
 QT += core gui xml network qml quick positioning sensors multimedia
-QT += widgets quickcontrols2 opengl webview core5compat websockets texttospeech
+QT += widgets quickcontrols2 opengl webview websockets texttospeech
 android|ios: QT += bluetooth
 TARGET = ArcGISQt_Samples
 DEFINES += Qt_Version=\"$$QT_VERSION\"
