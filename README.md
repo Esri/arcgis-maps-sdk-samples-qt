@@ -19,7 +19,7 @@ The repo contains [Qt](http://qt.io) projects for each sample that can be run fr
 
 ## Prerequisites
 
-* Qt SDK 6.5.6 or higher (Open source or commercial)
+* Qt SDK 6.8.1 or higher (Open source or commercial)
 * Qt Creator
 * An [access token](http://links.esri.com/create-an-api-key)
 * [ArcGIS Maps SDK for Qt Toolkit](https://github.com/Esri/arcgis-runtime-toolkit-qt) is required as some samples utilize toolkit components.
