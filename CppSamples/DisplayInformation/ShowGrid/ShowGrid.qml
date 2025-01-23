@@ -406,14 +406,14 @@ Item {
                     y: offsetSlider.topPadding + offsetSlider.availableHeight / 2 - height / 2
                     implicitWidth: 26
                     implicitHeight: 26
-                    //radius: 13
-                    color: offsetSlider.enabled ? offsetSlider.pressed ? "#f0f0f0" : "#f6f6f6" : "#d6d6d6"
-                    border.color: "#bdbebf"
+
+                    color: offsetSlider.enabled ? "white" : "lightgrey"
+                    border.color: "gray"
                     Text {
                         anchors.centerIn: parent
                         text: offsetSlider.value.toFixed(0)
                         font.pixelSize: 14
-                        color: offsetSlider.enabled ? "#474747" : "#959595"
+                        color: offsetSlider.enabled ? "black" : "gray"
                         onWidthChanged: {
                             parent.width = Math.max(width + 10, 26)
                         }
