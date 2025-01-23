@@ -379,6 +379,47 @@ Item {
                 }
             }
 
+            Text {
+                Layout.leftMargin: 10
+                text: "Label offset"
+                enabled: offsetSlider.enabled
+                color: enabled ? "black"  : "gray"
+            }
+
+            Slider {
+                id: offsetSlider
+                Layout.minimumWidth: leftPadding + rightPadding
+                Layout.rightMargin: 10
+                Layout.fillWidth: true
+                from: 0
+                to: 150
+                value: gridSample.currentLabelOffset
+                enabled: (gridSample.currentLabelPosition !== "Geographic" && gridSample.currentLabelPosition !== "Center")
+                onValueChanged: {
+                    if (value !== gridSample.currentLabelOffset)
+                        gridSample.setLabelOffset(value);
+                }
+
+                handle: Rectangle {
+                    x: offsetSlider.leftPadding + offsetSlider.visualPosition * (offsetSlider.availableWidth - width)
+                    y: offsetSlider.topPadding + offsetSlider.availableHeight / 2 - height / 2
+                    implicitWidth: 26
+                    implicitHeight: 26
+
+                    color: offsetSlider.enabled ? "white" : "lightgrey"
+                    border.color: "gray"
+                    Text {
+                        anchors.centerIn: parent
+                        text: offsetSlider.value.toFixed(0)
+                        font.pixelSize: 14
+                        color: offsetSlider.enabled ? "black" : "gray"
+                        onWidthChanged: {
+                            parent.width = Math.max(width + 10, 26)
+                        }
+                    }
+                }
+            }
+
             // Button to hide the styling window
             Rectangle {
                 id: hideButton

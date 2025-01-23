@@ -53,6 +53,7 @@ class ShowGrid : public QObject
   Q_PROPERTY(QStringList labelFormats MEMBER m_labelFormats CONSTANT)
   Q_PROPERTY(QString currentLabelFormat MEMBER m_currentLabelFormat NOTIFY labelFormatChanged)
   Q_PROPERTY(QStringList labelPositions MEMBER m_labelPositions CONSTANT)
+  Q_PROPERTY(double currentLabelOffset MEMBER m_currentLabelOffset NOTIFY labelOffsetChanged)
 
 public:
   explicit ShowGrid(QObject* parent = nullptr);
@@ -68,6 +69,7 @@ public:
   Q_INVOKABLE void setLabelColor(const QString& labelColor);
   Q_INVOKABLE void setLabelPosition(const QString& labelPosition);
   Q_INVOKABLE void setLabelFormat(const QString& labelFormat);
+  Q_INVOKABLE void setLabelOffset(double offset);
 
 signals:
   void mapViewChanged();
@@ -80,6 +82,7 @@ signals:
   void labelColorChanged();
   void labelPositionChanged();
   void labelFormatChanged();
+  void labelOffsetChanged();
 
 private:
   // Declare private methods
@@ -104,6 +107,7 @@ private:
   QString m_currentLabelColor;
   QString m_currentLabelPosition;
   QString m_currentLabelFormat;
+  double m_currentLabelOffset = 0.0;
 
   // Constants
   const QString s_mapView = QStringLiteral("MapView");
