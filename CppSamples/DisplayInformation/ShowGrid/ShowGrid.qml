@@ -388,8 +388,7 @@ Item {
 
             Slider {
                 id: offsetSlider
-                property int modelWidth: 0
-                Layout.minimumWidth: modelWidth + leftPadding + rightPadding
+                Layout.minimumWidth: leftPadding + rightPadding
                 Layout.rightMargin: 10
                 Layout.fillWidth: true
                 from: 0
