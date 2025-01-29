@@ -305,11 +305,13 @@ int main(int argc, char *argv[])
   QGuiApplication::setOrganizationName("Esri");
   QApplication app(argc, argv);
   
-  #ifdef ESRI_AUTOMATION_TEST_SUSE_FONT_PATH
-  // There is a known issue on certain Linux distros with newer versions of Qt 
-  // where no fonts are loaded by default. Work around it by loading a specific font
-  QFontDatabase::addApplicationFont(QUOTE(ESRI_AUTOMATION_TEST_SUSE_FONT_PATH));
-  #endif // ESRI_AUTOMATION_TEST_SUSE_FONT
+  const auto fontPath = qEnvironmentVariable("ESRI_AUTOMATION_TEST_SUSE_FONT_PATH");
+  if (!fontPath.isEmpty())
+  {
+    // There is a known issue on certain Linux distros with newer versions of Qt
+    // where no fonts are loaded by default. Work around it by loading a specific font
+    QFontDatabase::addApplicationFont(fontPath);
+  }
   
   // register sample viewer classes
   registerClasses();
