@@ -308,7 +308,7 @@ int main(int argc, char *argv[])
   #ifdef ESRI_AUTOMATION_TEST_SUSE_FONT_PATH
   // There is a known issue on certain Linux distros with newer versions of Qt 
   // where no fonts are loaded by default. Work around it by loading a specific font
-  QFontDatabase::addApplicationFont(STRINGIZE(ESRI_AUTOMATION_TEST_SUSE_FONT_PATH));
+  QFontDatabase::addApplicationFont(QUOTE(ESRI_AUTOMATION_TEST_SUSE_FONT_PATH));
   #endif // ESRI_AUTOMATION_TEST_SUSE_FONT
   
   // register sample viewer classes

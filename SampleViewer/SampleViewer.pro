@@ -215,6 +215,11 @@ RESOURCES += \
     $$PWD/imports.qrc
 
 DEFINES += QT_DEPRECATED_WARNINGS
+
+# There is a known issue on certain Linux distros with newer versions of Qt
+# where no fonts are loaded by default. Work around it by loading a specific font
+DEFINES += ESRI_AUTOMATION_TEST_SUSE_FONT_PATH=$$(ESRI_AUTOMATION_TEST_SUSE_FONT_PATH)
+
 #-------------------------------------------------
 # Application Icon
 #-------------------------------------------------
