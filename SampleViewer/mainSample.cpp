@@ -26,7 +26,7 @@
 #include <QQuickWindow>
 #include <QtGlobal>
 
-#ifdef Q_OS_LINUX
+#if defined(Q_OS_LINUX) && !defined(Q_OS_ANDROID)
 #include <QFontDatabase>
 #endif
 
