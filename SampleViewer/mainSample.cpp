@@ -26,6 +26,10 @@
 #include <QQuickWindow>
 #include <QtGlobal>
 
+#ifdef Q_OS_LINUX
+#include <QFontDatabase>
+#endif
+
 #ifdef QT_WEBVIEW_WEBENGINE_BACKEND
 #  include <QtWebEngineQuick>
 #endif // QT_WEBVIEW_WEBENGINE_BACKEND
