@@ -215,6 +215,7 @@ RESOURCES += \
     $$PWD/imports.qrc
 
 DEFINES += QT_DEPRECATED_WARNINGS
+
 #-------------------------------------------------
 # Application Icon
 #-------------------------------------------------
