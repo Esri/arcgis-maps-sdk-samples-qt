@@ -304,14 +304,16 @@ int main(int argc, char *argv[])
   QGuiApplication::setApplicationName("ArcGIS Maps Qt Samples");
   QGuiApplication::setOrganizationName("Esri");
   QApplication app(argc, argv);
-  
-  const auto fontPath = qEnvironmentVariable("ESRI_AUTOMATION_TEST_SUSE_FONT_PATH");
-  if (!fontPath.isEmpty())
+
+#ifdef Q_OS_LINUX
+  if (qEnvironmentVariableIsSet("ESRI_AUTOMATION_TEST_SUSE_FONT_PATH"))
   {
+    const auto fontPath = qEnvironmentVariable("ESRI_AUTOMATION_TEST_SUSE_FONT_PATH");
     // There is a known issue on certain Linux distros with newer versions of Qt
     // where no fonts are loaded by default. Work around it by loading a specific font
     QFontDatabase::addApplicationFont(fontPath);
   }
+#endif
   
   // register sample viewer classes
   registerClasses();
