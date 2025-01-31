@@ -26,6 +26,10 @@
 #include <QQuickWindow>
 #include <QtGlobal>
 
+#if defined(Q_OS_LINUX) && !defined(Q_OS_ANDROID)
+#include <QFontDatabase>
+#endif
+
 #ifdef QT_WEBVIEW_WEBENGINE_BACKEND
 #  include <QtWebEngineQuick>
 #endif // QT_WEBVIEW_WEBENGINE_BACKEND
@@ -305,7 +309,7 @@ int main(int argc, char *argv[])
   QGuiApplication::setOrganizationName("Esri");
   QApplication app(argc, argv);
 
-#ifdef Q_OS_LINUX
+#if defined(Q_OS_LINUX) && !defined(Q_OS_ANDROID)
   if (qEnvironmentVariableIsSet("ESRI_AUTOMATION_TEST_SUSE_FONT_PATH"))
   {
     const auto fontPath = qEnvironmentVariable("ESRI_AUTOMATION_TEST_SUSE_FONT_PATH");
