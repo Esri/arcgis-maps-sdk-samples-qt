@@ -33,10 +33,7 @@
 #include "MapViewTypes.h"
 #include "PortalItem.h"
 
-#if (QT_VERSION >= QT_VERSION_CHECK(6, 6, 0)) || defined(Q_OS_IOS) || defined(Q_OS_MACOS) || defined(Q_OS_ANDROID)
-#define PERMISSIONS_PLATFORM
 #include <QPermissions>
-#endif
 
 #ifdef Q_OS_ANDROID
 #include "ArcGISRuntimeEnvironment.h"
@@ -91,30 +88,22 @@ void ShowDeviceLocationUsingIndoorPositioning::setMapView(MapQuickView* mapView)
   m_mapView = mapView;
   m_mapView->setMap(m_map);
 
-  // Issue expected with Android - https://bugreports.qt.io/browse/QTBUG-130301
-  #ifdef PERMISSIONS_PLATFORM
-    requestBluetoothThenLocationPermissions();
-  #else
-    setupIndoorsLocationDataSource();
-  #endif
+  requestBluetoothThenLocationPermissions();
 
   emit mapViewChanged();
 }
 
 void ShowDeviceLocationUsingIndoorPositioning::requestBluetoothThenLocationPermissions()
 {
-  #ifdef PERMISSIONS_PLATFORM
-    qApp->requestPermission(QBluetoothPermission{}, [this](const QPermission& permission)
+  qApp->requestPermission(QBluetoothPermission{}, [this](const QPermission& permission)
   {
     Q_UNUSED(permission);
     requestLocationPermissionThenSetupILDS();
   });
-  #endif // PERMISSIONS_PLATFORM
 }
 
 void ShowDeviceLocationUsingIndoorPositioning::requestLocationPermissionThenSetupILDS()
 {
-  #ifdef PERMISSIONS_PLATFORM
   QLocationPermission locationPermission{};
   locationPermission.setAccuracy(QLocationPermission::Accuracy::Precise);
   locationPermission.setAvailability(QLocationPermission::Availability::WhenInUse);
@@ -124,12 +113,10 @@ void ShowDeviceLocationUsingIndoorPositioning::requestLocationPermissionThenSetu
     checkPermissions();
     setupIndoorsLocationDataSource();
   });
-  #endif // PERMISSIONS_PLATFORM
 }
 
 void ShowDeviceLocationUsingIndoorPositioning::checkPermissions()
 {
-  #ifdef PERMISSIONS_PLATFORM
   if (qApp->checkPermission(QBluetoothPermission{}) == Qt::PermissionStatus::Denied)
   {
     emit bluetoothPermissionDenied();
@@ -142,7 +129,6 @@ void ShowDeviceLocationUsingIndoorPositioning::checkPermissions()
   {
     emit locationPermissionDenied();
   }
-  #endif // PERMISSIONS_PLATFORM
 }
 
 // This function uses a helper class `IndoorsLocationDataSourceCreator` to construct the IndoorsLocationDataSource
