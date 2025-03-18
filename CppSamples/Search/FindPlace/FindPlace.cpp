@@ -49,10 +49,10 @@
 
 // Qt headers
 #include <QFuture>
+#include <QMetaObject>
+#include <QPermissions>
 #include <QUrl>
 #include <QUuid>
-
-#include <QPermissions>
 
 using namespace Esri::ArcGISRuntime;
 
@@ -100,7 +100,11 @@ void FindPlace::componentComplete()
 
   connectSignals();
 
-  initiateLocation();
+  // workaround for https://bugreports.qt.io/browse/QTBUG-134211
+  // do not request permissions from componentComplete
+  QMetaObject::invokeMethod(this, [this](){
+    initiateLocation();
+  }, Qt::QueuedConnection);
 }
 
 void FindPlace::connectSignals()
