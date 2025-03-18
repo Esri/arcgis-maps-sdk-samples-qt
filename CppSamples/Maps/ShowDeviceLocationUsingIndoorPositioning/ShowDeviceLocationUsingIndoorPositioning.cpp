@@ -33,8 +33,11 @@
 #include "MapViewTypes.h"
 #include "PortalItem.h"
 
+// Qt headers
+#include <QMetaObject>
 #include <QPermissions>
 
+// Platform specific headers
 #ifdef Q_OS_ANDROID
 #include "ArcGISRuntimeEnvironment.h"
 
@@ -88,7 +91,10 @@ void ShowDeviceLocationUsingIndoorPositioning::setMapView(MapQuickView* mapView)
   m_mapView = mapView;
   m_mapView->setMap(m_map);
 
-  requestBluetoothThenLocationPermissions();
+  // workaround for https://bugreports.qt.io/browse/QTBUG-134211
+  QMetaObject::invokeMethod(this, [this](){
+    requestBluetoothThenLocationPermissions();
+  }, Qt::QueuedConnection);
 
   emit mapViewChanged();
 }
