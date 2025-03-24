@@ -57,7 +57,7 @@ NearestVertex::NearestVertex(QObject* parent /* = nullptr */):
 {
   m_map = new Map(statePlaneCaliforniaZone5SpatialReference, this);
 
-  PortalItem* portalItem = new PortalItem("99fd67933e754a1181cc755146be21ca", this);
+  PortalItem* portalItem = new PortalItem("8c2d6d7df8fa4142b0a1211c8dd66903", this);
   FeatureLayer* usStatesGeneralizedLayer = new FeatureLayer(portalItem, this);
   m_map->basemap()->baseLayers()->append(usStatesGeneralizedLayer);
 }
