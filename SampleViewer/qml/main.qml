@@ -228,7 +228,7 @@ ApplicationWindow {
 
         function onCurrentSampleChanged() {
             clearSample();
-            SampleManager.clearCredentialCache();
+            SampleManager.resetAuthenticationState();
 
             const noAuthSamplesList = [
                                         "qrc:/Samples/CloudAndPortal/AddItemsToPortal/AddItemsToPortal.qml",

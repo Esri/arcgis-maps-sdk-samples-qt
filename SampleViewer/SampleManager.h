@@ -1,5 +1,18 @@
-// [Legal]
-// Copyright 2022 Esri.
+// COPYRIGHT 2025 ESRI
+// TRADE SECRETS: ESRI PROPRIETARY AND CONFIDENTIAL
+// Unpublished material - all rights reserved under the
+// Copyright Laws of the United States and applicable international
+// laws, treaties, and conventions.
+//
+// For additional information, contact:
+// Environmental Systems Research Institute, Inc.
+// Attn: Contracts and Legal Services Department
+// 380 New York Street
+// Redlands, California, 92373
+// USA
+//
+// email: contracts@esri.com
+/// \file SampleManager.h
 
 // Licensed under the Apache License, Version 2.0 (the "License");
 // you may not use this file except in compliance with the License.
@@ -70,7 +83,7 @@ public:
   Q_INVOKABLE void init();
 
   Q_INVOKABLE bool dataItemsExists();
-  Q_INVOKABLE void clearCredentialCache();
+  Q_INVOKABLE void resetAuthenticationState();
   Q_INVOKABLE void downloadAllDataItems();
   Q_INVOKABLE void downloadDataItemsCurrentSample();
   Q_INVOKABLE bool deleteAllOfflineData();
@@ -158,7 +171,6 @@ private:
   void setDownloadFailed(bool didFail);
   SampleManager::Reachability reachability() const;
   QString api() const;
-
 
 private:
   QQueue<DataItem*> m_dataItems;
