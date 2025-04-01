@@ -70,7 +70,7 @@ public:
   Q_INVOKABLE void init();
 
   Q_INVOKABLE bool dataItemsExists();
-  Q_INVOKABLE void clearCredentialCache();
+  Q_INVOKABLE void resetAuthenticationState();
   Q_INVOKABLE void downloadAllDataItems();
   Q_INVOKABLE void downloadDataItemsCurrentSample();
   Q_INVOKABLE bool deleteAllOfflineData();
@@ -158,7 +158,6 @@ private:
   void setDownloadFailed(bool didFail);
   SampleManager::Reachability reachability() const;
   QString api() const;
-
 
 private:
   QQueue<DataItem*> m_dataItems;

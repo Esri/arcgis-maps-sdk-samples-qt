@@ -406,9 +406,10 @@ void SampleManager::setDownloadProgress(double progress)
   emit downloadProgressChanged();
 }
 
-void SampleManager::clearCredentialCache()
+void SampleManager::resetAuthenticationState()
 {
   AuthenticationManager::credentialCache()->removeAndRevokeAllCredentials();
+  AuthenticationManager::setCredentialCacheEnabled(true);
 }
 
 bool SampleManager::dataItemsExists()
