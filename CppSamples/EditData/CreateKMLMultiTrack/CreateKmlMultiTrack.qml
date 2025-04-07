@@ -51,7 +51,6 @@ Item {
                 font.bold: true
                 color: "red"
                 Layout.alignment: Qt.AlignCenter
-                Layout.margins: 5
             }
 
             Text {
@@ -63,9 +62,8 @@ Item {
 
             RowLayout {
                 width: parent.width
-                Layout.alignment: Qt.AlignCenter
                 Image {
-                    source: "qrc:/Samples/EditData/CreateKmlMultiTrack/save-32.png"
+                    source: "qrc:/Samples/EditData/CreateKmlMultiTrack/point-32.png"
                     enabled: multiTrackModel.isRecenterButtonEnabled
                     Layout.margins: 10
                     MouseArea {
@@ -136,10 +134,11 @@ Item {
                 font.pixelSize: 18
                 font.bold: true
                 color: "red"
-                Layout.alignment: Qt.AlignCenter
+                Layout.alignment: Qt.AlignBottom | Qt.AlignHCenter
             }
+
             RowLayout {
-                Layout.alignment: Qt.AlignCenter
+                Layout.alignment: Qt.AlignTop | Qt.AlignCenter
                 // Dropdown Menu for Tracks
                 ComboBox {
                     id: trackDropdown
@@ -148,22 +147,10 @@ Item {
                     onCurrentIndexChanged: {
                         multiTrackModel.previewKmlTrack(currentIndex)
                     }
-
-                    // Add a background to the ComboBox
-                    Rectangle {
-                        anchors.fill: parent
-                        radius: 10
-                        // Make the rectangle visible if a dropdown indicator exists
-                        // An indicator only exists if a theme is set
-                        visible: parent.indicator
-                        border.width: 1
-                    }
                 }
 
                 // Reset Button
                 Button {
-                    width: 100
-                    height: 50
                     onClicked: multiTrackModel.reset()
                     background: Rectangle {
                         color: "purple"
@@ -171,7 +158,7 @@ Item {
                     }
                     contentItem: Text {
                         text: qsTr("Reset")
-                        font.pixelSize: 20
+                        font.pixelSize: 15
                         font.bold: true
                         color: "white"
                     }
