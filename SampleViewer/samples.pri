@@ -57,6 +57,7 @@ HEADERS += \
     "$$SAMPLEPATHCPP/DisplayInformation/Unique_Value_Renderer/Unique_Value_Renderer.h" \
     "$$SAMPLEPATHCPP/EditData/AddFeaturesFeatureService/AddFeaturesFeatureService.h" \
     "$$SAMPLEPATHCPP/EditData/ContingentValues/ContingentValues.h" \
+    "$$SAMPLEPATHCPP/EditData/CreateKmlMultiTrack/CreateKmlMultiTrack.h" \
     "$$SAMPLEPATHCPP/EditData/DeleteFeaturesFeatureService/DeleteFeaturesFeatureService.h" \
     "$$SAMPLEPATHCPP/EditData/EditAndSyncFeatures/EditAndSyncFeatures.h" \
     "$$SAMPLEPATHCPP/EditData/EditFeatureAttachments/EditFeatureAttachments.h" \
@@ -284,6 +285,7 @@ SOURCES += \
     "$$SAMPLEPATHCPP/DisplayInformation/Unique_Value_Renderer/Unique_Value_Renderer.cpp" \
     "$$SAMPLEPATHCPP/EditData/AddFeaturesFeatureService/AddFeaturesFeatureService.cpp" \
     "$$SAMPLEPATHCPP/EditData/ContingentValues/ContingentValues.cpp" \
+    "$$SAMPLEPATHCPP/EditData/CreateKmlMultiTrack/CreateKmlMultiTrack.cpp" \
     "$$SAMPLEPATHCPP/EditData/DeleteFeaturesFeatureService/DeleteFeaturesFeatureService.cpp" \
     "$$SAMPLEPATHCPP/EditData/EditAndSyncFeatures/EditAndSyncFeatures.cpp" \
     "$$SAMPLEPATHCPP/EditData/EditFeatureAttachments/EditFeatureAttachments.cpp" \
@@ -509,6 +511,7 @@ RESOURCES += \
     "$$SAMPLEPATHCPP/DisplayInformation/Unique_Value_Renderer/Unique_Value_Renderer.qrc" \
     "$$SAMPLEPATHCPP/EditData/AddFeaturesFeatureService/AddFeaturesFeatureService.qrc" \
     "$$SAMPLEPATHCPP/EditData/ContingentValues/ContingentValues.qrc" \
+    "$$SAMPLEPATHCPP/EditData/CreateKmlMultiTrack/CreateKmlMultiTrack.qrc" \
     "$$SAMPLEPATHCPP/EditData/DeleteFeaturesFeatureService/DeleteFeaturesFeatureService.qrc" \
     "$$SAMPLEPATHCPP/EditData/EditAndSyncFeatures/EditAndSyncFeatures.qrc" \
     "$$SAMPLEPATHCPP/EditData/EditFeatureAttachments/EditFeatureAttachments.qrc" \

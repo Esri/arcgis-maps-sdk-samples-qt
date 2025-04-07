@@ -1,0 +1,44 @@
+{
+    "category": "EditData",
+    "description": "Create, save and preview a KML multi-track, captured from a location data source.",
+    "featured": true,
+    "ignore": false,
+    "images": [
+        "screenshot.png"
+    ],
+    "keywords": [
+        "export",
+        "geoview-compose",
+        "hiking",
+        "kml",
+        "kmz",
+        "multi-track",
+        "record",
+        "track",
+        "KmlDataset",
+        "KmlDocument",
+        "KmlMultiTrack",
+        "KmlPlacemark",
+        "KmlTrack",
+        "LocationDisplay",
+        "SimulatedLocationDataSource"
+    ],
+    "redirect_from": [
+        ""
+    ],
+    "relevant_apis": [
+        "KmlDataset",
+        "KmlDocument",
+        "KmlMultiTrack",
+        "KmlPlacemark",
+        "KmlTrack",
+        "LocationDisplay",
+        "SimulatedLocationDataSource"
+    ],
+    "snippets": [
+        "CreateKmlMultiTrack.cpp",
+        "CreateKmlMultiTrack.h",
+        "CreateKmlMultiTrack.qml"
+    ],
+    "title": "Create KML Multi Track"
+}
