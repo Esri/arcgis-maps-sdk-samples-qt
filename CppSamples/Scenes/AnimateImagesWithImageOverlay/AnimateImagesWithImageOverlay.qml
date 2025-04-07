@@ -85,7 +85,6 @@ Item {
                                 horizontalAlignment: Qt.AlignHCenter
                                 verticalAlignment: Qt.AlignVCenter
                                 text: "opacity: " + (opacitySlider.value).toFixed(2)
-                                color: "white"
                             }
                         }
                     }
