@@ -47,7 +47,7 @@ Item {
                 Layout.alignment: Qt.AlignLeft
                 Layout.margins: 3
                 Layout.bottomMargin: 0
-                width: Qt.platform.os === "ios" || Qt.platform.os === "android" ? 200 : 300
+                implicitWidth: grid.implicitWidth
                 height: childrenRect.height
                 color: "lightgrey"
 
