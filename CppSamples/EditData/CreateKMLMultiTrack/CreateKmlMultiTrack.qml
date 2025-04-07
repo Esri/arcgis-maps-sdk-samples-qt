@@ -22,8 +22,8 @@ import QtQuick.Layouts
 Item {
     MapView {
         id: view
-        height: parent.height * 0.8
         width: parent.width
+        height: parent.height * 0.8
         Component.onCompleted: {
             // Set the focus on MapView to initially enable keyboard navigation
             forceActiveFocus();
@@ -46,34 +46,32 @@ Item {
             anchors.fill: parent
             Component.onCompleted : multiTrackModel.startNavigation()
             Text {
-                height: 25
-                text: multiTrackModel.isRecordingTrack ? "Recording KML track. Elements added = " + multiTrackModel.elementsCount: ""
+                text: multiTrackModel.isRecordingTrack ? qsTr("Recording KML track. Elements added = ") + multiTrackModel.elementsCount : ""
                 font.pixelSize: 18
                 font.bold: true
                 color: "red"
                 Layout.alignment: Qt.AlignCenter
+                Layout.margins: 5
             }
 
             Text {
-                text: "Number of track in Multitrack: " + multiTrackModel.multiTrackCount
+                text: qsTr("Number of tracks in Multitrack: ") + multiTrackModel.multiTrackCount
                 font.pixelSize: 15
+                font.bold: true
                 Layout.alignment: Qt.AlignCenter
             }
 
             RowLayout {
                 width: parent.width
                 Layout.alignment: Qt.AlignCenter
-                //spacing: 30
                 Image {
-                    width: 32
-                    height: 32
-                    source: "point-32.png"
+                    source: "qrc:/Samples/EditData/CreateKmlMultiTrack/save-32.png"
                     enabled: multiTrackModel.isRecenterButtonEnabled
-                    Layout.alignment: Qt.AlignLeft
+                    Layout.margins: 10
                     MouseArea {
                         anchors.fill: parent
                         onClicked: {
-                            onClicked: multiTrackModel.recenter()
+                            multiTrackModel.recenter()
                         }
                     }
                 }
@@ -85,8 +83,7 @@ Item {
 
                 Button {
                     id: startRecordingButton
-                    height: 200
-                    text: multiTrackModel.isRecordingTrack ? "Stop Recording" : "Record Track(s)";
+                    text: multiTrackModel.isRecordingTrack ? qsTr("Stop Recording") : qsTr("Record Track(s)")
                     background: Rectangle {
                         color: "purple"
                         radius: 20
@@ -112,11 +109,10 @@ Item {
                 }
 
                 Image {
-                    width: 32
-                    height: 32
                     Layout.alignment: Qt.AlignRight
                     enabled: !multiTrackModel.isRecordingTrack
-                    source: "save-32.png"
+                    source: "qrc:/Samples/EditData/CreateKmlMultiTrack/save-32.png"
+                    Layout.margins: 10
                     MouseArea {
                         anchors.fill: parent
                         onClicked: {
@@ -132,12 +128,11 @@ Item {
     Component {
         id: trackBrowseOptions
         ColumnLayout {
-            //spacing: 12
             anchors.fill: parent
             Component.onCompleted : multiTrackModel.loadLocalKmlFile()
             Text {
                 width: parent.width
-                text: "Browse KML Tracks"
+                text: qsTr("Browse KML Tracks")
                 font.pixelSize: 18
                 font.bold: true
                 color: "red"
@@ -175,7 +170,7 @@ Item {
                         radius: 10
                     }
                     contentItem: Text {
-                        text: "Reset"
+                        text: qsTr("Reset")
                         font.pixelSize: 20
                         font.bold: true
                         color: "white"
