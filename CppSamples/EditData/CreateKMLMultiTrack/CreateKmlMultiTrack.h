@@ -46,9 +46,9 @@ class CreateKmlMultiTrack : public QObject
   Q_PROPERTY(Esri::ArcGISRuntime::MapQuickView* mapView READ mapView WRITE setMapView NOTIFY mapViewChanged)
   Q_PROPERTY(bool isRecordingTrack READ isRecordingTrack NOTIFY isRecordingTrackChanged)
   Q_PROPERTY(bool isRecenterButtonEnabled READ isRecenterButtonEnabled NOTIFY isRecenterButtonEnabledChanged)
+  Q_PROPERTY(bool isShowTracksFromFileEnabled READ isShowTracksFromFileEnabled NOTIFY isShowTracksFromFileEnabledChanged)
   Q_PROPERTY(int elementsCount READ elementsCount NOTIFY elementsCountChanged)
   Q_PROPERTY(int multiTrackCount READ multiTrackCount NOTIFY multiTrackCountChanged)
-  Q_PROPERTY(int showTracksFromFileEnabled READ showTracksFromFileEnabled NOTIFY showTracksFromFileEnabledChanged)
   Q_PROPERTY(int trackGeometriesCount READ trackGeometriesCount NOTIFY trackGeometriesCountChanged)
 
 public:
@@ -69,13 +69,12 @@ public:
 
 signals:
   void mapViewChanged();
-  void recenterButtonEnabledChanged();
   void isRecordingTrackChanged();
+  void isShowTracksFromFileEnabledChanged();
+  void isRecenterButtonEnabledChanged();
   void elementsCountChanged();
   void multiTrackCountChanged();
-  void showTracksFromFileEnabledChanged();
   void trackGeometriesCountChanged();
-  void isRecenterButtonEnabledChanged();
 
 private:
   Esri::ArcGISRuntime::MapQuickView* mapView() const;
@@ -84,7 +83,7 @@ private:
   void addTrackElement(const Esri::ArcGISRuntime::Point& locationPoint);
   void displayKmlTracks();
   bool isRecordingTrack() const;
-  bool showTracksFromFileEnabled() const;
+  bool isShowTracksFromFileEnabled() const;
   bool isRecenterButtonEnabled() const;
   int elementsCount() const;
   int multiTrackCount() const;

@@ -86,7 +86,6 @@ namespace
 
 CreateKmlMultiTrack::CreateKmlMultiTrack(QObject* parent /* = nullptr */):
   QObject(parent),
-  m_isShowTracksFromFileEnabled(false),
   m_map(new Map(BasemapStyle::ArcGISStreets, this)),
   m_graphicsOverlay(new GraphicsOverlay(this)),
   m_locationSymbol(new SimpleMarkerSymbol(SimpleMarkerSymbolStyle::Circle, Qt::red, 10, this)),
@@ -131,7 +130,7 @@ void CreateKmlMultiTrack::setMapView(MapQuickView* mapView)
   connect(m_mapView->locationDisplay(), &LocationDisplay::autoPanModeChanged, this, [this](LocationDisplayAutoPanMode autoPanMode)
   {
     m_isRecenterButtonEnabled = (autoPanMode == LocationDisplayAutoPanMode::Off);
-    emit recenterButtonEnabledChanged();
+    emit isRecenterButtonEnabledChanged();
   });
 
   // Listen for changes in location
@@ -172,7 +171,7 @@ void CreateKmlMultiTrack::startNavigation()
   m_simulatedLocationDataSource->start();
 }
 
-void CreateKmlMultiTrack::addTrackElement(const Point &locationPoint)
+void CreateKmlMultiTrack::addTrackElement(const Point& locationPoint)
 {
   // Add a new element to the list of KML track elements
   auto* trackElement = new KmlTrackElement(QDateTime::currentDateTime(), locationPoint, nullptr, this);
@@ -263,7 +262,7 @@ void CreateKmlMultiTrack::stopNavigation()
     m_simulatedLocationDataSource->stop();
   }
   m_isShowTracksFromFileEnabled = true;
-  emit showTracksFromFileEnabledChanged();
+  emit isShowTracksFromFileEnabledChanged();
 }
 
 void CreateKmlMultiTrack::loadLocalKmlFile()
@@ -302,7 +301,7 @@ void CreateKmlMultiTrack::loadLocalKmlFile()
     const auto kmlMultiTrack = static_cast<KmlMultiTrack>(kmlPlacemark->kmlGeometry());
 
     QList<Geometry> geometries;
-    for (const auto &track : kmlMultiTrack.tracks())
+    for (const auto& track : kmlMultiTrack.tracks())
     {
       geometries.append(track.geometry());
     }
@@ -316,7 +315,7 @@ void CreateKmlMultiTrack::loadLocalKmlFile()
     m_mapView->setViewpointGeometryAsync(allTracksGeometry, 25.0);
 
     m_trackGeometries.append(allTracksGeometry);
-    for (const auto &track : kmlMultiTrack.tracks())
+    for (const auto& track : kmlMultiTrack.tracks())
     {
       m_trackGeometries.append(track.geometry());
     }
@@ -335,7 +334,7 @@ void CreateKmlMultiTrack::recenter()
 {
   m_mapView->locationDisplay()->setAutoPanMode(LocationDisplayAutoPanMode::Navigation);
   m_isRecenterButtonEnabled = false;
-  emit recenterButtonEnabledChanged();
+  emit isRecenterButtonEnabledChanged();
 }
 
 void CreateKmlMultiTrack::reset()
@@ -346,10 +345,10 @@ void CreateKmlMultiTrack::reset()
   m_trackGeometries.clear();
   m_graphicsOverlay->graphics()->clear();
   m_isShowTracksFromFileEnabled = false;
-  emit showTracksFromFileEnabledChanged();
+  emit isShowTracksFromFileEnabledChanged();
 }
 
-bool CreateKmlMultiTrack::showTracksFromFileEnabled() const
+bool CreateKmlMultiTrack::isShowTracksFromFileEnabled() const
 {
   return m_isShowTracksFromFileEnabled;
 }

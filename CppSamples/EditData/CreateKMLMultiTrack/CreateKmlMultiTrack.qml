@@ -35,7 +35,7 @@ Item {
         anchors.top: view.bottom
         Loader {
             anchors.fill: parent
-            sourceComponent: multiTrackModel.showTracksFromFileEnabled ? trackBrowseOptions : trackSimulationOptions
+            sourceComponent: multiTrackModel.isShowTracksFromFileEnabled ? trackBrowseOptions : trackSimulationOptions
         }
     }
 
