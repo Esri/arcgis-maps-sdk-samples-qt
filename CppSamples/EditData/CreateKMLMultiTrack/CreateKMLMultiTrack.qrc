@@ -11,5 +11,6 @@
         <file>point.png</file>
         <file>disabled-save.png</file>
         <file>disabled-point.png</file>
+        <file>coastalTrail.json</file>
     </qresource>
 </RCC>

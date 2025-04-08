@@ -2,7 +2,7 @@
 
 Create, save and preview a KML multi-track, captured from a location data source.
 
-![Create KML multi-track](screenshot.png)
+![](screenshot.png)
 
 ## Use case
 
