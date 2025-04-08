@@ -7,7 +7,9 @@
         <file>main.qml</file>
         <file>screenshot.png</file>
         <file>README.md</file>
-        <file>save-32.png</file>
-        <file>point-32.png</file>
+        <file>save.png</file>
+        <file>point.png</file>
+        <file>disabled-save.png</file>
+        <file>disabled-point.png</file>
     </qresource>
 </RCC>

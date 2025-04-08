@@ -63,7 +63,7 @@ Item {
             RowLayout {
                 width: parent.width
                 Image {
-                    source: "qrc:/Samples/EditData/CreateKmlMultiTrack/point-32.png"
+                    source: "qrc:/Samples/EditData/CreateKmlMultiTrack/" + (enabled ? "point.png" : "disabled-point.png")
                     enabled: multiTrackModel.isRecenterButtonEnabled
                     Layout.margins: 10
                     MouseArea {
@@ -109,7 +109,7 @@ Item {
                 Image {
                     Layout.alignment: Qt.AlignRight
                     enabled: !multiTrackModel.isRecordingTrack
-                    source: "qrc:/Samples/EditData/CreateKmlMultiTrack/save-32.png"
+                    source: "qrc:/Samples/EditData/CreateKmlMultiTrack/" + (enabled ? "save.png" : "disabled-save.png")
                     Layout.margins: 10
                     MouseArea {
                         anchors.fill: parent
@@ -133,7 +133,7 @@ Item {
                 text: qsTr("Browse KML Tracks")
                 font.pixelSize: 18
                 font.bold: true
-                color: "red"
+                color: "black"
                 Layout.alignment: Qt.AlignBottom | Qt.AlignHCenter
             }
 

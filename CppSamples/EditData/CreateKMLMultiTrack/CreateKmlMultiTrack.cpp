@@ -86,10 +86,11 @@ namespace
 
 CreateKmlMultiTrack::CreateKmlMultiTrack(QObject* parent /* = nullptr */):
   QObject(parent),
+  m_isShowTracksFromFileEnabled(false),
   m_map(new Map(BasemapStyle::ArcGISStreets, this)),
   m_graphicsOverlay(new GraphicsOverlay(this)),
   m_locationSymbol(new SimpleMarkerSymbol(SimpleMarkerSymbolStyle::Circle, Qt::red, 10, this)),
-  m_lineSymbol(new SimpleLineSymbol(SimpleLineSymbolStyle::Solid, Qt::blue, 3, this))
+  m_lineSymbol(new SimpleLineSymbol(SimpleLineSymbolStyle::Solid, Qt::black, 3, this))
 {
 }
 
@@ -142,6 +143,9 @@ void CreateKmlMultiTrack::setMapView(MapQuickView* mapView)
       m_polyLineBuilder->addPoint(location.position());
     }
   });
+
+  // turn on map view's navigation mode
+  m_mapView->locationDisplay()->setAutoPanMode(LocationDisplayAutoPanMode::Navigation);
 }
 
 void CreateKmlMultiTrack::startNavigation()
@@ -161,17 +165,11 @@ void CreateKmlMultiTrack::startNavigation()
   // Set the map's initial viewpoint
   m_mapView->setViewpointGeometryAsync(routeGeometry, paddingInDips);
 
-  // Update UI state
-  m_isShowTracksFromFileEnabled = false;
-
   // Set the simulated location data source as the location data source for this app
   m_mapView->locationDisplay()->setDataSource(m_simulatedLocationDataSource);
 
   // Start the location data source
   m_simulatedLocationDataSource->start();
-
-  // Set the auto pan to navigation mode
-  m_mapView->locationDisplay()->setAutoPanMode(LocationDisplayAutoPanMode::Navigation);
 }
 
 void CreateKmlMultiTrack::addTrackElement(const Point &locationPoint)
@@ -248,7 +246,7 @@ void CreateKmlMultiTrack::exportKmlMultiTrack()
   }
   // Save KML file to local storage
   // Write the KML document to the chosen path.
-  kmlDocument->saveAsAsync(localKmlFilePath).then(this, [ localKmlFilePath, this]()
+  kmlDocument->saveAsAsync(localKmlFilePath).then(this, [localKmlFilePath, this]()
   {
     qDebug() << "Saved KmlMultiTrack: " + QFileInfo(localKmlFilePath).filePath();
     stopNavigation();
@@ -345,6 +343,7 @@ void CreateKmlMultiTrack::reset()
   m_kmlTrackElements.clear();
   m_kmlTracks.clear();
   m_polyLineBuilderList.clear();
+  m_trackGeometries.clear();
   m_graphicsOverlay->graphics()->clear();
   m_isShowTracksFromFileEnabled = false;
   emit showTracksFromFileEnabledChanged();
