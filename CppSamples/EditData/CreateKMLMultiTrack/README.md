@@ -14,7 +14,7 @@ Tap **Start Navigation** to begin moving along a simulated trail. Tap **Record T
 
 ## How it works
 
-1. Create an `ArcGISMap` with a basemap and a `GraphicsOverlay` to display the path geometry for your navigation route.
+1. Create a `Map` with a basemap and a `GraphicsOverlay` to display the path geometry for your navigation route.
 2. Create a `SimulatedLocationDataSource` to drive the `LocationDisplay`.
 3. As you receive `Location` updates, add each point to a list of `KmlTrackElement` objects while recording.
 4. Once recording stops, create a `KmlTrack` using one or more `KmlTrackElement` objects.
