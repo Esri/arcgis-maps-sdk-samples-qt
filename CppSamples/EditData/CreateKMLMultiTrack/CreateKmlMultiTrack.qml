@@ -1,4 +1,4 @@
-// [WriteFile Name=NavigateRoute, Category=EditData]
+// [WriteFile Name=CreateKMLMultiTrack, Category=EditData]
 // [Legal]
 // Copyright 2025 Esri.
 //
