@@ -1,4 +1,4 @@
-// [WriteFile Name=CreateKMLMultiTrack, Category=EditData]
+// [WriteFile Name=CreateKmlMultiTrack, Category=EditData]
 // [Legal]
 // Copyright 2025 Esri.
 //
