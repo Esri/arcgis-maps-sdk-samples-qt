@@ -26,21 +26,21 @@
 class QMouseEvent;
 
 namespace Esri::ArcGISRuntime {
-    class UtilityAssetType;
-    class FeatureLayer;
-    class IdentifyLayerResult;
-    class Map;
-    class MapQuickView;
-    class GraphicsOverlay;
-    class GeometryEditor;
-    class Geodatabase;
-    class SubtypeSublayer;
-    class SubtypeFeatureLayer;
-    class SnapSourceSettings;
-    class ArcGISFeature;
-    class UtilityNetwork;
-    class Renderer;
-    class SimpleLineSymbol;
+  class ArcGISFeature;
+  class FeatureLayer;
+  class Geodatabase;
+  class GeometryEditor;
+  class GraphicsOverlay;
+  class IdentifyLayerResult;
+  class Map;
+  class MapQuickView;
+  class Renderer;
+  class SimpleLineSymbol;
+  class SnapSourceSettings;
+  class SubtypeSublayer;
+  class SubtypeFeatureLayer;
+  class UtilityAssetType;
+  class UtilityNetwork;
 }
 
 Q_MOC_INCLUDE("MapQuickView.h");
@@ -79,23 +79,28 @@ signals:
     void assetGroupChanged(const QString& assetGroup);
     void assetTypeChanged(const QString& assetType);
 
+private slots:
+    void onMapViewClicked(const QMouseEvent& mouseEvent);
+
 private:
     void initializeMap();
+
     QFuture<void>  loadGeodatabase();
     QFuture<std::pair<Esri::ArcGISRuntime::SubtypeFeatureLayer*, Esri::ArcGISRuntime::SubtypeFeatureLayer*>> loadOperationalLayers();
     QFuture<void> loadUtilityNetwork();
-    void connectSignals();
-    void onMapViewClicked(const QMouseEvent& mouseEvent);
+
     void modifyOperationalLayersVisibility(Esri::ArcGISRuntime::SubtypeFeatureLayer* pipeLayer, Esri::ArcGISRuntime::SubtypeFeatureLayer* deviceLayer);
-    void modifySnapSourceRenderers(const QList<Esri::ArcGISRuntime::SnapSourceSettings*> snapSourceSettings);
+    void updateSnapSourceRenderers(const QList<Esri::ArcGISRuntime::SnapSourceSettings*>& snapSourceSettings);
     Esri::ArcGISRuntime::ArcGISFeature* getFeatureFromResult(const QList<Esri::ArcGISRuntime::IdentifyLayerResult*>& identifyResult);
     void setSnapSettings(Esri::ArcGISRuntime::UtilityAssetType* assetType);
     void resetSelections();
 
     Esri::ArcGISRuntime::Map* m_map = nullptr;
     Esri::ArcGISRuntime::MapQuickView* m_mapView = nullptr;
+
     Esri::ArcGISRuntime::Geodatabase* m_geodatabase = nullptr;
-    SnapSourceListModel* m_snapSourceListModel;
+
+    SnapSourceListModel* m_snapSourceListModel = nullptr;
 
     Esri::ArcGISRuntime::Renderer* m_defaultDistributionRenderer = nullptr;
     Esri::ArcGISRuntime::Renderer* m_defaultServiceRenderer = nullptr;
