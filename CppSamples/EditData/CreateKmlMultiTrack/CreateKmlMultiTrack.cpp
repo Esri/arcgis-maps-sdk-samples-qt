@@ -148,7 +148,7 @@ void CreateKmlMultiTrack::setMapView(MapQuickView* mapView)
     if (m_isRecordingTrack)
     {
       addTrackElement(location.position());
-      m_polyLineBuilder->addPoint(location.position());
+      m_polylineBuilder->addPoint(location.position());
     }
   });
 
@@ -200,7 +200,7 @@ void CreateKmlMultiTrack::startRecordingKmlTrack()
   m_kmlTrackElements.clear();
   emit elementsCountChanged();
 
-  m_polyLineBuilder = new PolylineBuilder(SpatialReference::wgs84(), this);
+  m_polylineBuilder = new PolylineBuilder(SpatialReference::wgs84(), this);
 }
 
 void CreateKmlMultiTrack::stopRecordingKmlTrack()
@@ -210,7 +210,7 @@ void CreateKmlMultiTrack::stopRecordingKmlTrack()
     return;
   }
 
-  m_polyLineBuilderList.append(m_polyLineBuilder);
+  m_polylineBuilderList.append(m_polylineBuilder);
 
   const KmlTrack kmlTrack(m_kmlTrackElements, KmlAltitudeMode::RelativeToGround);
   m_kmlTracks.append(kmlTrack);
@@ -224,7 +224,7 @@ void CreateKmlMultiTrack::stopRecordingKmlTrack()
 void CreateKmlMultiTrack::displayKmlTracks()
 {
   m_graphicsOverlay->graphics()->clear();
-  for (const auto& polyLineBuilder : m_polyLineBuilderList)
+  for (const auto* polyLineBuilder : m_polylineBuilderList)
   {
     // Add the polyline graphic to the map
     auto* graphic = new Graphic(polyLineBuilder->toPolyline(), m_lineSymbol, this);
@@ -348,9 +348,11 @@ void CreateKmlMultiTrack::recenter()
 
 void CreateKmlMultiTrack::reset()
 {
+  qDeleteAll(m_kmlTrackElements);
   m_kmlTrackElements.clear();
   m_kmlTracks.clear();
-  m_polyLineBuilderList.clear();
+  qDeleteAll(m_polylineBuilderList);
+  m_polylineBuilderList.clear();
   m_trackGeometries.clear();
   m_graphicsOverlay->graphics()->clear();
   m_isShowTracksFromFileEnabled = false;

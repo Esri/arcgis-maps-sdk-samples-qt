@@ -103,8 +103,8 @@ private:
   QList<Esri::ArcGISRuntime::KmlTrackElement*> m_kmlTrackElements;
   QList<Esri::ArcGISRuntime::KmlTrack> m_kmlTracks;
 
-  Esri::ArcGISRuntime::PolylineBuilder* m_polyLineBuilder = nullptr;
-  QList<Esri::ArcGISRuntime::PolylineBuilder*> m_polyLineBuilderList;
+  Esri::ArcGISRuntime::PolylineBuilder* m_polylineBuilder = nullptr;
+  QList<Esri::ArcGISRuntime::PolylineBuilder*> m_polylineBuilderList;
 
   Esri::ArcGISRuntime::SimpleMarkerSymbol* m_locationSymbol = nullptr;
   Esri::ArcGISRuntime::SimpleLineSymbol* m_lineSymbol = nullptr;
