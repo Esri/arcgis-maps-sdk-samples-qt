@@ -359,21 +359,6 @@ void CreateKmlMultiTrack::reset()
   emit isShowTracksFromFileEnabledChanged();
 }
 
-bool CreateKmlMultiTrack::isShowTracksFromFileEnabled() const
-{
-  return m_isShowTracksFromFileEnabled;
-}
-
-bool CreateKmlMultiTrack::isRecenterButtonEnabled() const
-{
-  return m_isRecenterButtonEnabled;
-}
-
-bool CreateKmlMultiTrack::isRecordingTrack() const
-{
-  return m_isRecordingTrack;
-}
-
 int CreateKmlMultiTrack::elementsCount() const
 {
   return m_kmlTrackElements.count();
