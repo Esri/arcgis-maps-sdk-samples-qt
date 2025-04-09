@@ -45,7 +45,14 @@ Item {
         ColumnLayout {
             anchors.fill: parent
             Component.onCompleted : multiTrackModel.startNavigation()
+
+            // Spacer
+            Item {
+                height: 10
+            }
+
             Text {
+                visible: multiTrackModel.isRecordingTrack
                 text: multiTrackModel.isRecordingTrack ? qsTr("Recording KML track. Elements added = ") + multiTrackModel.elementsCount : ""
                 font.pixelSize: 18
                 font.bold: true
@@ -61,11 +68,14 @@ Item {
             }
 
             RowLayout {
-                width: parent.width
+                spacing: 0
+                Layout.bottomMargin: 30
                 Image {
+                    sourceSize.width: 40
+                    sourceSize.height: 40
+                    Layout.leftMargin: 30
                     source: "qrc:/Samples/EditData/CreateKmlMultiTrack/" + (enabled ? "point.png" : "disabled-point.png")
                     enabled: multiTrackModel.isRecenterButtonEnabled
-                    Layout.margins: 10
                     MouseArea {
                         anchors.fill: parent
                         onClicked: {
@@ -88,12 +98,12 @@ Item {
                     }
                     contentItem: Text {
                         text: startRecordingButton.text
-                        font.pixelSize: 20
+                        font.pixelSize: 15
                         font.bold: true
                         color: "white"
                     }
                     onClicked: {
-                        if (multiTrackModel.isRecordingTrack ) {
+                        if (multiTrackModel.isRecordingTrack) {
                             multiTrackModel.stopRecordingKmlTrack();
                         } else {
                             multiTrackModel.startRecordingKmlTrack();
@@ -107,10 +117,11 @@ Item {
                 }
 
                 Image {
-                    Layout.alignment: Qt.AlignRight
+                    sourceSize.width: 30
+                    sourceSize.height: 30
+                    Layout.rightMargin: 30
                     enabled: !multiTrackModel.isRecordingTrack
                     source: "qrc:/Samples/EditData/CreateKmlMultiTrack/" + (enabled ? "save.png" : "disabled-save.png")
-                    Layout.margins: 10
                     MouseArea {
                         anchors.fill: parent
                         onClicked: {
