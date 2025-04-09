@@ -27,7 +27,7 @@ QT += opengl qml quick
 TEMPLATE = app
 TARGET = StatisticalQuery
 
-ARCGIS_RUNTIME_VERSION = 200.7.0
+ARCGIS_RUNTIME_VERSION = 200.8.0
 include($$PWD/arcgisruntime.pri)
 
 #-------------------------------------------------------------------------------

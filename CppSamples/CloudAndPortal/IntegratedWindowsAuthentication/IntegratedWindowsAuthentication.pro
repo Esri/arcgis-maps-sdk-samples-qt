@@ -27,7 +27,7 @@ QT += opengl qml quick
 TEMPLATE = app
 TARGET = IntegratedWindowsAuthentication
 
-ARCGIS_RUNTIME_VERSION = 200.7.0
+ARCGIS_RUNTIME_VERSION = 200.8.0
 include($$PWD/arcgisruntime.pri)
 
 # path of the toolkit relative to the sample
