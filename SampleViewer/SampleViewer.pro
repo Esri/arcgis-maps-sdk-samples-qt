@@ -19,14 +19,14 @@
 
 TEMPLATE = app
 QT += core gui xml network qml quick positioning sensors multimedia
-QT += widgets quickcontrols2 opengl webview core5compat websockets texttospeech
+QT += widgets quickcontrols2 opengl webview websockets texttospeech
 android|ios: QT += bluetooth
 TARGET = ArcGISQt_Samples
 DEFINES += Qt_Version=\"$$QT_VERSION\"
 SAMPLEPATHCPP = $$PWD/../CppSamples
 COMMONVIEWER = $$PWD
 PCH_HEADER = $$COMMONVIEWER/pch.hpp
-ARCGIS_RUNTIME_VERSION = 200.6.0
+ARCGIS_RUNTIME_VERSION = 200.7.0
 DEFINES += ArcGIS_Runtime_Version=$$ARCGIS_RUNTIME_VERSION
 
 # This block determines whether to build against the installed SDK or the local dev build area
@@ -37,7 +37,7 @@ exists($$PWD/../../../DevBuildCpp.pri) {
   # use the Esri dev build script
   include ($$PWD/../../../DevBuildCpp.pri)
   # include the toolkitcpp.pri, which contains all the toolkit resources
-  include($$PWD/../../toolkit/uitools/toolkitcpp.pri)
+  include($$PWD/../../toolkit/uitools/toolkitcpp/toolkitcpp.pri)
 
   INCLUDEPATH += \
       $$SAMPLEPATHCPP \
@@ -52,8 +52,8 @@ exists($$PWD/../../../DevBuildCpp.pri) {
   CONFIG += c++17
 
   # include the toolkitcpp.pri, which contains all the toolkit resources
-  !include($$PWD/../arcgis-maps-sdk-toolkit-qt/uitools/toolkitcpp.pri) {
-    message("ERROR: Cannot find toolkitcpp.pri at path:" $$PWD/../arcgis-maps-sdk-toolkit-qt/uitools/toolkitcpp.pri)
+  !include($$PWD/../arcgis-maps-sdk-toolkit-qt/uitools/toolkitcpp/toolkitcpp.pri) {
+    message("ERROR: Cannot find toolkitcpp.pri at path:" $$PWD/../arcgis-maps-sdk-toolkit-qt/uitools/toolkitcpp/toolkitcpp.pri)
     message("Please ensure the Qt Toolkit repository is cloned and the path above is correct.")
   }
 
@@ -120,6 +120,32 @@ exists($$PWD/../../../DevBuildCpp.pri) {
 
   ios {
     PLATFORM = "iOS"
+
+    # workaround for https://bugreports.qt.io/browse/QTBUG-129651
+    # ArcGIS Maps SDK for Qt adds 'QMAKE_RPATHDIR = @executable_path/Frameworks'
+    # and ffmpeg frameworks have embedded '@rpath/Frameworks' path.
+    # so in order for them to be found, we need to add @executable_path to the
+    # search path.
+    FFMPEG_LIB_DIR = $$absolute_path($$replace(QMAKE_QMAKE, "qmake6", "../../ios/lib/ffmpeg"))
+    FFMPEG_LIB_DIR = $$absolute_path($$replace(FFMPEG_LIB_DIR, "qmake", "../../ios/lib/ffmpeg"))
+    QMAKE_LFLAGS += -F$${FFMPEG_LIB_DIR} -Wl,-rpath,@executable_path
+    versionAtLeast(QT_VERSION, 6.8.3) {
+      FRAMEWORK = "xcframework"
+    } else {
+      FRAMEWORK = "framework"
+    }
+    LIBS += -framework libavcodec \
+            -framework libavformat \
+            -framework libavutil \
+            -framework libswresample \
+            -framework libswscale
+    ffmpeg.files = $${FFMPEG_LIB_DIR}/libavcodec.$${FRAMEWORK} \
+                   $${FFMPEG_LIB_DIR}/libavformat.$${FRAMEWORK} \
+                   $${FFMPEG_LIB_DIR}/libavutil.$${FRAMEWORK} \
+                   $${FFMPEG_LIB_DIR}/libswresample.$${FRAMEWORK} \
+                   $${FFMPEG_LIB_DIR}/libswscale.$${FRAMEWORK}
+    ffmpeg.path = Frameworks
+    QMAKE_BUNDLE_DATA += ffmpeg
   }
 
   DEFINES += BUILD_FROM_SETUP
@@ -194,6 +220,7 @@ RESOURCES += \
     $$PWD/imports.qrc
 
 DEFINES += QT_DEPRECATED_WARNINGS
+
 #-------------------------------------------------
 # Application Icon
 #-------------------------------------------------

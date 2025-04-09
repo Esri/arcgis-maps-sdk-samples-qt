@@ -10,7 +10,7 @@ Grids are often used on printed maps, but can also be helpful on digital 2D maps
 
 ## How to use the sample
 
-Tap on the `Change Grid` button in the toolbar to open a settings view. You can change the view from 2D or 3D, select the type of grid from `Grid Type` (LatLong, MGRS, UTM, and USNG) and modify its properties like label visibility, grid line color, grid label color, and label formatting.
+Tap on the `Change Grid` button in the toolbar to open a settings view. You can change the view from 2D or 3D, select the type of grid from `Grid Type` (LatLong, MGRS, UTM, and USNG) and modify its properties like label visibility, grid line color, grid label color, label formatting, and label offset.
 
 ## How it works
 
@@ -19,14 +19,13 @@ Tap on the `Change Grid` button in the toolbar to open a settings view. You can 
 3. The label position can be set with `setLabelPosition(labelPosition)` method on the grid.
    * Note that as of 200.6, MGRS, UTM, and USNG grids in a SceneView only support the `Geographic` label position.
 4. For the `LatitudeLongitudeGrid` type, you can specify a label format of `DECIMAL_DEGREES` or `DEGREES_MINUTES_SECONDS`.
-5. To set the grid, use the `setGrid(grid)` method on the map view or scene view.
+5. For all screen-aligned label placement strategies, you can set the labels' offset in device-independent pixels (DIPs) from the screen edge with `setLabelOffset(offset)`.
+6. To set the grid, use the `setGrid(grid)` method on the map view or scene view.
 
 ## Relevant API
 
 * ArcGISGrid
 * LatitudeLongitudeGrid
-* LatitudeLongitudeGridLabelFormat::DecimalDegrees
-* LatitudeLongitudeGridLabelFormat::DegreesMinutesSeconds
 * MapView
 * MGRSGrid
 * SceneView

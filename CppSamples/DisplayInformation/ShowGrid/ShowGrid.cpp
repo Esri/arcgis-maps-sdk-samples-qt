@@ -62,8 +62,11 @@ ShowGrid::ShowGrid(QObject* parent /* = nullptr */):
   constexpr double targetScale = 6450785;
   m_map->setInitialViewpoint(Viewpoint(Point(-10336141.70018318, 5418213.05332071, SpatialReference::webMercator()), targetScale));
 
-  // Set the intial grid to LatitudeLongitudeGrid
+  // Set the initial grid to LatitudeLongitudeGrid
   m_grid = new LatitudeLongitudeGrid(this);
+
+  // Most values are populated from the UI, but we need to set some initial values
+  m_currentLabelOffset = m_grid->labelOffset();
 }
 
 ShowGrid::~ShowGrid() = default;
@@ -173,6 +176,7 @@ void ShowGrid::setGridType(const QString& gridType)
   setLabelColor(m_currentLabelColor);
   setLabelPosition(m_currentLabelPosition);
   setLabelFormat(m_currentLabelFormat);
+  setLabelOffset(m_currentLabelOffset);
 
   emit gridTypeChanged();
 }
@@ -200,7 +204,7 @@ void ShowGrid::setLabelsVisible(bool visible)
 }
 
 void ShowGrid::setLineColor(const QString& lineColor)
-{  
+{
   m_currentLineColor = lineColor;
 
   SimpleLineSymbol* lineSymbol = static_cast<SimpleLineSymbol*>(m_grid->lineSymbol(0));
@@ -263,4 +267,11 @@ void ShowGrid::setLabelFormat(const QString& labelFormat)
     static_cast<LatitudeLongitudeGrid*>(m_grid)->setLabelFormat(LatitudeLongitudeGridLabelFormat::DegreesMinutesSeconds);
 
   emit labelFormatChanged();
+}
+
+void ShowGrid::setLabelOffset(double offset)
+{
+  m_currentLabelOffset = offset;
+  m_grid->setLabelOffset(offset);
+  emit labelOffsetChanged();
 }

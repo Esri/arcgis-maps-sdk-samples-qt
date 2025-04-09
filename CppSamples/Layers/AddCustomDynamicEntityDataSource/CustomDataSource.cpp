@@ -66,14 +66,14 @@ QFuture<DynamicEntityDataSourceInfo*> CustomDataSource::onLoadAsync()
   dynamicEntityDataSourceInfo->setSpatialReference(SpatialReference::wgs84());
 
   // Return the QFuture<DynamicEntityDataSourceInfo*>
-  return QtFuture::makeReadyFuture(dynamicEntityDataSourceInfo);
+  return QtFuture::makeReadyValueFuture(dynamicEntityDataSourceInfo);
 }
 
 // Override the virtual onConnectAsync method to define what the DynamicEntityDataSource will do when the data source is connected
 QFuture<void> CustomDataSource::onConnectAsync()
 {
   m_watcher.setFuture(QtConcurrent::run([this](){observationProcessLoopAsync();}));
-  return QtFuture::makeReadyFuture();
+  return QtFuture::makeReadyVoidFuture();
 }
 
 // Override the virtual onDisconnectAsync method to define what the DynamicEntityDataSource will do when the data source is disconnected
@@ -81,14 +81,14 @@ QFuture<void> CustomDataSource::onDisconnectAsync()
 {
   m_watcher.cancel();
   m_watcher.waitForFinished();
-  return QtFuture::makeReadyFuture();
+  return QtFuture::makeReadyVoidFuture();
 }
 
 // This method runs asynchronously to step through the accompanying .json file and call addObservation(geometry, attributes) with each line
 void CustomDataSource::observationProcessLoopAsync()
 {
   while (!m_textStream.atEnd() && !m_watcher.isCanceled())
-  {   
+  {
     const QString line = m_textStream.readLine();
     const QJsonObject jsonObject = QJsonDocument::fromJson(line.toUtf8()).object();
 
