@@ -40,6 +40,7 @@
 #include "MapQuickView.h"
 #include "MapTypes.h"
 #include "Point.h"
+#include "ReticleVertexTool.h"
 #include "SimpleLineSymbol.h"
 #include "SimpleRenderer.h"
 #include "SnapRules.h"
@@ -312,6 +313,9 @@ void SnapGeometryEditsWithRules::setMapView(MapQuickView* mapView)
   m_mapView = mapView;
   m_mapView->setMap(m_map);
   m_mapView->setGeometryEditor(new GeometryEditor(this));
+#if defined(Q_OS_IOS) || defined(Q_OS_ANDROID)
+  m_mapView->geometryEditor()->setTool(new ReticleVertexTool(this));
+#endif
 
   auto* snapSettings = new SnapSettings(this);
   snapSettings->setEnabled(true);
