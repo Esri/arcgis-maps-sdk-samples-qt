@@ -1,5 +1,7 @@
 <RCC>
     <qresource prefix="/Samples/EditData/SnapGeometryEditsWithRules">
+        <file alias="sample.json">README.metadata.json</file>
+        <file>README.md</file>
         <file>SnapGeometryEditsWithRules.qml</file>
         <file>SnapGeometryEditsWithRules.h</file>
         <file>SnapGeometryEditsWithRules.cpp</file>
@@ -8,6 +10,7 @@
         <file>GeometryEditorButton.qml</file>
         <file>iconAssets/trash-32.png</file>
         <file>iconAssets/save-32.png</file>
-        <file>main.qml</file>
+        <file>iconAssets/settings.png</file>
+        <file>main.qml</file>        
     </qresource>
 </RCC>

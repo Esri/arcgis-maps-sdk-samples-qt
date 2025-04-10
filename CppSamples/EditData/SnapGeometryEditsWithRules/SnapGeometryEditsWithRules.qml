@@ -121,7 +121,7 @@ Item {
                 GeometryEditorButton {
                     id: snapSettingsButton
                     buttonName: qsTr("Snap Settings")
-                    iconPath: ""
+                    iconPath: "qrc:/Samples/EditData/SnapGeometryEditsWithRules/iconAssets/settings.png"
                     Layout.columnSpan: 2
                     enabled: snapGeometryEditsWithRulesModel.isElementSelected
                     onClicked: {

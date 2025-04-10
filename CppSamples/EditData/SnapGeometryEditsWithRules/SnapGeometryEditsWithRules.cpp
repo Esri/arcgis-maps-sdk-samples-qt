@@ -418,13 +418,17 @@ void SnapGeometryEditsWithRules::modifyOperationalLayersVisibility(SubtypeFeatur
   std::for_each(pipelineSublayers->begin(), pipelineSublayers->end(),
   [this](SubtypeSublayer* sublayer)
   {
-    if (sublayer && sublayer->name() == "Distribution Pipe")
+    if (!sublayer)
+    {
+      return;
+    }
+    if (sublayer->name() == "Distribution Pipe")
     {
       // Store the default renderer for the distribution pipe layer.
       m_distributionPipeLayer = sublayer;
       m_defaultDistributionRenderer = sublayer->renderer();
     }
-    else if (sublayer && sublayer->name() == "Service Pipe")
+    else if (sublayer->name() == "Service Pipe")
     {
       // Store the default renderer for the service pipe layer.
       m_servicePipeLayer = sublayer;
@@ -440,7 +444,11 @@ void SnapGeometryEditsWithRules::modifyOperationalLayersVisibility(SubtypeFeatur
   std::for_each(deviceSublayers->begin(), deviceSublayers->end(),
   [](SubtypeSublayer* sublayer)
   {
-    if (sublayer && (sublayer->name() == "Excess Flow Valve" || sublayer->name() == "Controllable Tee"))
+    if (!sublayer)
+    {
+      return;
+    }
+    if (sublayer->name() == "Excess Flow Valve" || sublayer->name() == "Controllable Tee")
     {
       sublayer->setVisible(true);
     }
