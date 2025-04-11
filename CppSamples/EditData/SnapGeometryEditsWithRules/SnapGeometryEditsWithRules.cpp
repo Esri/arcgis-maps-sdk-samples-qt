@@ -86,13 +86,13 @@ namespace
   template <typename T>
   QFuture<void> load(T* loadable)
   {
-    static_assert(std::is_base_of<Esri::ArcGISRuntime::Loadable, T>::value, "T must derive from Loadable");
+    static_assert(std::is_base_of<Loadable, T>::value, "T must derive from Loadable");
 
     QPromise<void> promise;
     QFuture<void> future = promise.future();
 
     QObject::connect(loadable, &T::doneLoading,
-    [promise = std::move(promise)](const Esri::ArcGISRuntime::Error& error) mutable {
+    [promise = std::move(promise)](const Error& error) mutable {
       if (!error.isEmpty())
       {
         promise.setException(ErrorException{error});
