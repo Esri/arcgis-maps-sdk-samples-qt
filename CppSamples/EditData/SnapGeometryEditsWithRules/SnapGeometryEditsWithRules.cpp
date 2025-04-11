@@ -123,7 +123,7 @@ SnapGeometryEditsWithRules::SnapGeometryEditsWithRules(QObject* parent) :
   QObject(parent),
   m_map(new Map(BasemapStyle::ArcGISStreetsNight, this)),
   m_snapSourceListModel(new SnapSourceListModel(this)),
-  m_defaultGraphicsOverlayRenderer(new SimpleRenderer(new SimpleLineSymbol(SimpleLineSymbolStyle::Dash, QColor(Qt::gray), 3,this), this)),
+  m_defaultGraphicsOverlayRenderer(new SimpleRenderer(new SimpleLineSymbol(SimpleLineSymbolStyle::Dash, QColor(Qt::gray), 3, this), this)),
   m_rulesLimitSymbol(new SimpleLineSymbol(SimpleLineSymbolStyle::Solid, QColor("orange"), 3, this)),
   m_rulesPreventSymbol(new SimpleLineSymbol(SimpleLineSymbolStyle::Solid, QColor("red"), 3, this)),
   m_noneSymbol(new SimpleLineSymbol(SimpleLineSymbolStyle::Dash, QColor("green"), 3, this))
@@ -143,16 +143,16 @@ void SnapGeometryEditsWithRules::init()
 void SnapGeometryEditsWithRules::initializeMap()
 {
   m_map->setInitialViewpoint(Viewpoint(Point(-9811055.156028448, 5131792.19502501, SpatialReference::webMercator()), 10000));
-\
+
   // Load the geodatabase
   loadGeodatabase().then(
   [this]()
   {
     loadOperationalLayers().then(
-    [this](const std::pair<SubtypeFeatureLayer*, SubtypeFeatureLayer*>& layers)
+    [this](const LoadOperationalLayersReturnStruct& layers)
     {
       // Pass the returned pipeLayer and deviceLayer from the future to modify their visibility
-      modifyOperationalLayersVisibility(layers.first, layers.second);
+      modifyOperationalLayersVisibility(layers.m_pipeSubtypeLayer, layers.m_deviceSubtypeLayer);
     });
 
     loadUtilityNetwork();
@@ -173,7 +173,7 @@ QFuture<void> SnapGeometryEditsWithRules::loadGeodatabase()
   return load(m_geodatabase);
 }
 
-QFuture<std::pair<SubtypeFeatureLayer*, SubtypeFeatureLayer*>> SnapGeometryEditsWithRules::loadOperationalLayers()
+QFuture<LoadOperationalLayersReturnStruct> SnapGeometryEditsWithRules::loadOperationalLayers()
 {
   // Get and load feature tables from the geodatabase.
   // Create subtype feature layers from the feature tables and add them to the map.
@@ -182,7 +182,7 @@ QFuture<std::pair<SubtypeFeatureLayer*, SubtypeFeatureLayer*>> SnapGeometryEdits
   auto* pipeTable = m_geodatabase->geodatabaseFeatureTable("PipelineLine");
   if (!pipeTable)
   {
-    return makeExceptionalFutureHelper<std::pair<SubtypeFeatureLayer*, SubtypeFeatureLayer*>>("Unable to create PipelineLine feature table");
+    return makeExceptionalFutureHelper<LoadOperationalLayersReturnStruct>("Unable to create PipelineLine feature table");
   }
   auto pipeLayer = new SubtypeFeatureLayer(pipeTable, this);
   m_map->operationalLayers()->append(pipeLayer);
@@ -191,7 +191,7 @@ QFuture<std::pair<SubtypeFeatureLayer*, SubtypeFeatureLayer*>> SnapGeometryEdits
   auto* deviceTable = m_geodatabase->geodatabaseFeatureTable("PipelineDevice");
   if (!deviceTable)
   {
-    return makeExceptionalFutureHelper<std::pair<SubtypeFeatureLayer*, SubtypeFeatureLayer*>>("Unable to create PipelineDevice feature table");
+    return makeExceptionalFutureHelper<LoadOperationalLayersReturnStruct>("Unable to create PipelineDevice feature table");
   }
   auto deviceLayer = new SubtypeFeatureLayer(deviceTable, this);
   m_map->operationalLayers()->append(deviceLayer);
@@ -200,7 +200,7 @@ QFuture<std::pair<SubtypeFeatureLayer*, SubtypeFeatureLayer*>> SnapGeometryEdits
   auto* junctionTable = m_geodatabase->geodatabaseFeatureTable("PipelineJunction");
   if (!junctionTable)
   {
-    return makeExceptionalFutureHelper<std::pair<SubtypeFeatureLayer*, SubtypeFeatureLayer*>>("Unable to create PipelineJunction feature table");
+    return makeExceptionalFutureHelper<LoadOperationalLayersReturnStruct>("Unable to create PipelineJunction feature table");
   }
   auto junctionLayer = new SubtypeFeatureLayer(junctionTable, this);
   m_map->operationalLayers()->append(junctionLayer);
@@ -209,7 +209,7 @@ QFuture<std::pair<SubtypeFeatureLayer*, SubtypeFeatureLayer*>> SnapGeometryEdits
   return QtFuture::whenAll(layerLoadingFutures.begin(), layerLoadingFutures.end()).then(
   [pipeLayer, deviceLayer](const QList<QFuture<void>>&)
   {
-    return std::make_pair(pipeLayer, deviceLayer);
+    return LoadOperationalLayersReturnStruct{pipeLayer, deviceLayer};
   });
 }
 
@@ -227,7 +227,7 @@ QFuture<void> SnapGeometryEditsWithRules::loadUtilityNetwork()
   return load(utilityNetwork);
 }
 
-Esri::ArcGISRuntime::ArcGISFeature* SnapGeometryEditsWithRules::getFeatureFromResult(const QList<Esri::ArcGISRuntime::IdentifyLayerResult*>& identifyResult)
+ArcGISFeature* SnapGeometryEditsWithRules::getFeatureFromResult(const QList<IdentifyLayerResult*>& identifyResult)
 {
   if (identifyResult.isEmpty())
   {
@@ -279,14 +279,14 @@ void SnapGeometryEditsWithRules::onMapViewClicked(const QMouseEvent& mouseEvent)
     if (m_selectedFeature != nullptr && selectedFeature != m_selectedFeature)
     {
       // If a feature is already selected and the tapped feature is not the selected feature then clear the previous selection.
-      dynamic_cast<FeatureLayer*>(m_selectedFeature->featureTable()->layer())->clearSelection();
+      static_cast<FeatureLayer*>(m_selectedFeature->featureTable()->layer())->clearSelection();
     }
 
     // Update the selected feature.
     m_selectedFeature = selectedFeature;
 
     // Select the feature on the layer.
-    if (auto* layer = dynamic_cast<FeatureLayer*>(m_selectedFeature->featureTable()->layer()))
+    if (auto* layer = static_cast<FeatureLayer*>(m_selectedFeature->featureTable()->layer()))
     {
       layer->selectFeature(m_selectedFeature);
     }
@@ -415,7 +415,7 @@ void SnapGeometryEditsWithRules::modifyOperationalLayersVisibility(SubtypeFeatur
   // Set the visibility of the sublayers and store the default renderer for the distribution and service pipe layers.
   // In this sample we will only set a small subset of sublayers to be visible.
   auto pipelineSublayers = pipeLayer->subtypeSublayers();
-  std::for_each(pipelineSublayers->begin(), pipelineSublayers->end(),
+  std::for_each(std::begin(*pipelineSublayers), std::end(*pipelineSublayers),
   [this](SubtypeSublayer* sublayer)
   {
     if (!sublayer)
@@ -441,7 +441,7 @@ void SnapGeometryEditsWithRules::modifyOperationalLayersVisibility(SubtypeFeatur
   });
 
   auto deviceSublayers = deviceLayer->subtypeSublayers();
-  std::for_each(deviceSublayers->begin(), deviceSublayers->end(),
+  std::for_each(std::begin(*deviceSublayers), std::end(*deviceSublayers),
   [](SubtypeSublayer* sublayer)
   {
     if (!sublayer)
@@ -471,7 +471,7 @@ void SnapGeometryEditsWithRules::setSnapSettings(UtilityAssetType* assetType)
 
     QList<SnapSourceSettings*> sourceSettingsForListModel;
     const auto currentSourceSettings = m_mapView->geometryEditor()->snapSettings()->sourceSettings();
-    std::for_each(currentSourceSettings.begin(), currentSourceSettings.end(),
+    std::for_each(std::begin(currentSourceSettings), std::end(currentSourceSettings),
     [&sourceSettingsForListModel](SnapSourceSettings* sourceSetting)
     {
       // Enable snapping for the graphics overlay.
@@ -483,7 +483,7 @@ void SnapGeometryEditsWithRules::setSnapSettings(UtilityAssetType* assetType)
       else if (auto subtypeFeatureLayer = dynamic_cast<SubtypeFeatureLayer*>(sourceSetting->source()); subtypeFeatureLayer && subtypeFeatureLayer->name() == "PipelineLine")
       {
         QList<SnapSourceSettings*> childSourceSettings = sourceSetting->childSourceSettings();
-        std::for_each(childSourceSettings.begin(), childSourceSettings.end(),
+        std::for_each(std::begin(childSourceSettings), std::end(childSourceSettings),
         [&sourceSettingsForListModel](SnapSourceSettings* sourceSetting)
         {
           if (auto* subtypeSublayer = dynamic_cast<SubtypeSublayer*>(sourceSetting->source()); subtypeSublayer &&
@@ -502,31 +502,31 @@ void SnapGeometryEditsWithRules::setSnapSettings(UtilityAssetType* assetType)
   });
 }
 
-void SnapGeometryEditsWithRules::updateSnapSourceRenderers(const QList<Esri::ArcGISRuntime::SnapSourceSettings*>& snapSourceSettings)
+void SnapGeometryEditsWithRules::updateSnapSourceRenderers(const QList<SnapSourceSettings*>& snapSourceSettings)
 {
   // Update the renderer for each snap source based on their snap rule behavior.
-  std::for_each(snapSourceSettings.begin(), snapSourceSettings.end(),
+  std::for_each(std::begin(snapSourceSettings), std::end(snapSourceSettings),
   [this](const SnapSourceSettings* settings)
   {
-    Esri::ArcGISRuntime::Symbol* symbol = nullptr;
+    Symbol* symbol = nullptr;
     switch (settings->ruleBehavior())
     {
-      case Esri::ArcGISRuntime::SnapRuleBehavior::None:
+      case SnapRuleBehavior::None:
         symbol = m_noneSymbol;
         break;
-      case Esri::ArcGISRuntime::SnapRuleBehavior::RulesLimitSnapping:
+      case SnapRuleBehavior::RulesLimitSnapping:
         symbol = m_rulesLimitSymbol;
         break;
-      case Esri::ArcGISRuntime::SnapRuleBehavior::RulesPreventSnapping:
+      case SnapRuleBehavior::RulesPreventSnapping:
         symbol = m_rulesPreventSymbol;
         break;
     }
 
-    if (auto graphicsOverlay = dynamic_cast<GraphicsOverlay*>(settings->source()))
+    if (auto graphicsOverlay = dynamic_cast<GraphicsOverlay*>(settings->source()); graphicsOverlay)
     {
       graphicsOverlay->setRenderer(std::make_unique<SimpleRenderer>(symbol).get());
     }
-    else if (auto subtypeSublayer = dynamic_cast<SubtypeSublayer*>(settings->source()))
+    else if (auto subtypeSublayer = dynamic_cast<SubtypeSublayer*>(settings->source()); subtypeSublayer)
     {
       subtypeSublayer->setRenderer(std::make_unique<SimpleRenderer>(symbol).get());
     }
@@ -535,11 +535,12 @@ void SnapGeometryEditsWithRules::updateSnapSourceRenderers(const QList<Esri::Arc
 
 void SnapGeometryEditsWithRules::resetSelections()
 {
-  if (m_selectedFeature && m_selectedFeature->featureTable() && dynamic_cast<FeatureLayer*>(m_selectedFeature->featureTable()->layer()))
+  if (m_selectedFeature && m_selectedFeature->featureTable() && m_selectedFeature->featureTable()->layer())
   {
     // Clear the existing selection and show the selected feature;
-    dynamic_cast<FeatureLayer*>(m_selectedFeature->featureTable()->layer())->clearSelection();
-    dynamic_cast<FeatureLayer*>(m_selectedFeature->featureTable()->layer())->setFeatureVisible(m_selectedFeature, true);
+    auto* featureLayer = static_cast<FeatureLayer*>(m_selectedFeature->featureTable()->layer());
+    featureLayer->clearSelection();
+    featureLayer->setFeatureVisible(m_selectedFeature, true);
   }
 
   // Reset the selected feature.

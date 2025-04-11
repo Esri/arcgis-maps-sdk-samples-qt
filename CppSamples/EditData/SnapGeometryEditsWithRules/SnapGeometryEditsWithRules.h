@@ -47,6 +47,12 @@ Q_MOC_INCLUDE("MapQuickView.h");
 
 template <typename T> class QFuture;
 
+struct LoadOperationalLayersReturnStruct
+{
+  Esri::ArcGISRuntime::SubtypeFeatureLayer* m_pipeSubtypeLayer = nullptr;
+  Esri::ArcGISRuntime::SubtypeFeatureLayer* m_deviceSubtypeLayer = nullptr;
+};
+
 class SnapGeometryEditsWithRules : public QObject
 {
     Q_OBJECT
@@ -86,7 +92,7 @@ private:
     void initializeMap();
 
     QFuture<void>  loadGeodatabase();
-    QFuture<std::pair<Esri::ArcGISRuntime::SubtypeFeatureLayer*, Esri::ArcGISRuntime::SubtypeFeatureLayer*>> loadOperationalLayers();
+    QFuture<LoadOperationalLayersReturnStruct> loadOperationalLayers();
     QFuture<void> loadUtilityNetwork();
 
     void modifyOperationalLayersVisibility(Esri::ArcGISRuntime::SubtypeFeatureLayer* pipeLayer, Esri::ArcGISRuntime::SubtypeFeatureLayer* deviceLayer);
