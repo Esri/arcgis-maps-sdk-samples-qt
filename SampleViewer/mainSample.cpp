@@ -94,6 +94,7 @@
 #include "../CppSamples/DisplayInformation/Unique_Value_Renderer/Unique_Value_Renderer.h"
 #include "../CppSamples/EditData/AddFeaturesFeatureService/AddFeaturesFeatureService.h"
 #include "../CppSamples/EditData/ContingentValues/ContingentValues.h"
+#include "../CppSamples/EditData/CreateKmlMultiTrack/CreateKmlMultiTrack.h"
 #include "../CppSamples/EditData/DeleteFeaturesFeatureService/DeleteFeaturesFeatureService.h"
 #include "../CppSamples/EditData/EditAndSyncFeatures/EditAndSyncFeatures.h"
 #include "../CppSamples/EditData/EditFeatureAttachments/EditFeatureAttachments.h"
@@ -406,6 +407,7 @@ void registerCppSampleClasses()
   ConfigureClusters::init();
   ConfigureSubnetworkTrace::init();
   ContingentValues::init();
+  CreateKmlMultiTrack::init();
   ControlAnnotationSublayerVisibility::init();
   ControlTimeExtentTimeSlider::init();
   ConvexHull::init();
