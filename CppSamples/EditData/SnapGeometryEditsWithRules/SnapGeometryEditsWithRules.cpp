@@ -286,20 +286,23 @@ void SnapGeometryEditsWithRules::onMapViewClicked(const QMouseEvent& mouseEvent)
     m_selectedFeature = selectedFeature;
 
     // Select the feature on the layer.
-    if (auto* layer = static_cast<FeatureLayer*>(m_selectedFeature->featureTable()->layer()))
+    if (auto* layer = static_cast<FeatureLayer*>(m_selectedFeature->featureTable()->layer()); layer)
     {
       layer->selectFeature(m_selectedFeature);
     }
 
     // Create a utility element for the selected feature using the utility network.
-    std::unique_ptr<UtilityElement> utilityEle{m_mapView->map()->utilityNetworks()->first()->createElementWithArcGISFeature(m_selectedFeature)};
+    std::unique_ptr<UtilityElement> utilityEle =
+    (m_mapView->map()->utilityNetworks() && m_mapView->map()->utilityNetworks()->first())
+    ? std::unique_ptr<UtilityElement>(m_mapView->map()->utilityNetworks()->first()->createElementWithArcGISFeature(m_selectedFeature))
+    : nullptr;
 
     // Update the UI visbility with the selected feature information.
-    emit assetTypeChanged(utilityEle->assetType()->name());
-    emit assetGroupChanged(utilityEle->assetGroup()->name());
+    emit assetTypeChanged(utilityEle ? utilityEle->assetType()->name() : QString());
+    emit assetGroupChanged(utilityEle ? utilityEle->assetGroup()->name() : QString());
     emit isElementSelectedChanged();
 
-    setSnapSettings(utilityEle->assetType());
+    setSnapSettings(utilityEle ? utilityEle->assetType() : nullptr);
   });
 }
 
@@ -307,7 +310,7 @@ void SnapGeometryEditsWithRules::setMapView(MapQuickView* mapView)
 {
   if (m_mapView == mapView)
   {
-      return;
+    return;
   }
 
   m_mapView = mapView;
@@ -357,13 +360,13 @@ bool SnapGeometryEditsWithRules::geometryEditorStarted() const
 
 void SnapGeometryEditsWithRules::startEditor()
 {
-  if (!m_selectedFeature || !m_selectedFeature->featureTable() || !dynamic_cast<FeatureLayer*>(m_selectedFeature->featureTable()->layer()))
+  if (!m_selectedFeature || !m_selectedFeature->featureTable() || !m_selectedFeature->featureTable()->layer())
   {
     return;
   }
 
   // Get the symbol for the selected feature.
-  Symbol* selectedFeatureSymbol = dynamic_cast<GeodatabaseFeatureTable*>(m_selectedFeature->featureTable())->layerInfo().drawingInfo().renderer()->symbol(m_selectedFeature);
+  Symbol* selectedFeatureSymbol = static_cast<GeodatabaseFeatureTable*>(m_selectedFeature->featureTable())->layerInfo().drawingInfo().renderer()->symbol(m_selectedFeature);
 
   // Set the vertex symbol for the geometry editor tool.
   auto* geometryEditorStyle = m_mapView->geometryEditor()->tool()->style();
@@ -372,7 +375,7 @@ void SnapGeometryEditsWithRules::startEditor()
   geometryEditorStyle->setSelectedVertexSymbol(selectedFeatureSymbol);
 
   // Hide the selected feature.
-  dynamic_cast<FeatureLayer*>(m_selectedFeature->featureTable()->layer())->setFeatureVisible(m_selectedFeature, false);
+  static_cast<FeatureLayer*>(m_selectedFeature->featureTable()->layer())->setFeatureVisible(m_selectedFeature, false);
 
   // Start the geometry editor.
   m_mapView->geometryEditor()->start(m_selectedFeature->geometry());
@@ -461,6 +464,11 @@ void SnapGeometryEditsWithRules::modifyOperationalLayersVisibility(SubtypeFeatur
 
 void SnapGeometryEditsWithRules::setSnapSettings(UtilityAssetType* assetType)
 {
+  if (!assetType)
+  {
+    return;
+  }
+
   // Get the snap rules associated with the asset type.
   SnapRules::createAsync(m_mapView->map()->utilityNetworks()->first(), assetType).then(
   [this](SnapRules* createdRules)

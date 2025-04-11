@@ -50,6 +50,11 @@ void SnapSourceListModel::setupRoles()
   m_roles[IsEnabledRole] = "isEnabled";
 }
 
+int SnapSourceListModel::size() const
+{
+  return m_snapSourceSettings.size();
+}
+
 void SnapSourceListModel::clear()
 {
   beginResetModel();
@@ -115,19 +120,19 @@ void SnapSourceListModel::setSnapSourceSettings(QList<SnapSourceSettings*> snapS
   endResetModel();
 }
 
-QList<SnapSourceSettings*> SnapSourceListModel::snapSourceSettings()
+QList<SnapSourceSettings*> SnapSourceListModel::snapSourceSettings() const
 {
   return m_snapSourceSettings;
 }
 
 QString SnapSourceListModel::determineName(Esri::ArcGISRuntime::SnapSourceSettings* snapSourceSettings) const
 {
-  if (auto graphicsOverlay = dynamic_cast<Esri::ArcGISRuntime::GraphicsOverlay*>(snapSourceSettings->source()))
+  if (auto graphicsOverlay = dynamic_cast<Esri::ArcGISRuntime::GraphicsOverlay*>(snapSourceSettings->source()); graphicsOverlay)
   {
     QString overlayId = graphicsOverlay->overlayId();
     return overlayId.isEmpty() ? "Default Graphics Overlay" : overlayId;
   }
-  if (auto subtypeSublayer = dynamic_cast<Esri::ArcGISRuntime::SubtypeSublayer*>(snapSourceSettings->source()))
+  if (auto subtypeSublayer = dynamic_cast<Esri::ArcGISRuntime::SubtypeSublayer*>(snapSourceSettings->source()); subtypeSublayer)
   {
     return subtypeSublayer->name();
   }

@@ -53,9 +53,9 @@ public:
 
 public:
   void setSnapSourceSettings(QList<Esri::ArcGISRuntime::SnapSourceSettings*> snapSourceSettings);
-  QList<Esri::ArcGISRuntime::SnapSourceSettings*> snapSourceSettings();
+  QList<Esri::ArcGISRuntime::SnapSourceSettings*> snapSourceSettings() const;
   void setupRoles();
-  int size() { return m_snapSourceSettings.size(); }
+  int size() const;
   void clear();
 
   // QAbstractItemModel interface

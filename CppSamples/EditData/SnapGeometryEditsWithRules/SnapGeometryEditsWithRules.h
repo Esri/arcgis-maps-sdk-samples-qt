@@ -37,8 +37,8 @@ namespace Esri::ArcGISRuntime {
   class Renderer;
   class SimpleLineSymbol;
   class SnapSourceSettings;
-  class SubtypeSublayer;
   class SubtypeFeatureLayer;
+  class SubtypeSublayer;
   class UtilityAssetType;
   class UtilityNetwork;
 }
