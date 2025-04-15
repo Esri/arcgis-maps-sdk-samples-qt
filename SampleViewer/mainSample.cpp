@@ -1,5 +1,5 @@
 // [Legal]
-// Copyright 2022 Esri.
+// COPYRIGHT 2025 ESRI
 
 // Licensed under the Apache License, Version 2.0 (the "License");
 // you may not use this file except in compliance with the License.
@@ -102,6 +102,7 @@
 #include "../CppSamples/EditData/EditKmlGroundOverlay/EditKmlGroundOverlay.h"
 #include "../CppSamples/EditData/EditWithBranchVersioning/EditWithBranchVersioning.h"
 #include "../CppSamples/EditData/SnapGeometryEdits/SnapGeometryEdits.h"
+#include "../CppSamples/EditData/SnapGeometryEditsWithRules/SnapGeometryEditsWithRules.h"
 #include "../CppSamples/EditData/UpdateAttributesFeatureService/UpdateAttributesFeatureService.h"
 #include "../CppSamples/EditData/UpdateGeometryFeatureService/UpdateGeometryFeatureService.h"
 #include "../CppSamples/Features/ControlTimeExtentTimeSlider/ControlTimeExtentTimeSlider.h"
@@ -290,7 +291,6 @@
 #ifdef SHOW_RASTER_FUNCTION_SAMPLE
 #include "../CppSamples/Layers/RasterFunctionFile/RasterFunctionFile.h"
 #endif // SHOW_RASTER_FUNCTION_SAMPLE
-
 
 #define STRINGIZE(x) #x
 #define QUOTE(x) STRINGIZE(x)
@@ -559,6 +559,7 @@ void registerCppSampleClasses()
   Simple_Renderer::init();
   SketchOnMap::init();
   SnapGeometryEdits::init();
+  SnapGeometryEditsWithRules::init();
   SpatialOperations::init();
   SpatialRelationships::init();
   StatisticalQuery::init();

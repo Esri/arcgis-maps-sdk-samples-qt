@@ -65,7 +65,9 @@ HEADERS += \
     "$$SAMPLEPATHCPP/EditData/EditKmlGroundOverlay/EditKmlGroundOverlay.h" \
     "$$SAMPLEPATHCPP/EditData/EditWithBranchVersioning/EditWithBranchVersioning.h" \
     "$$SAMPLEPATHCPP/EditData/SnapGeometryEdits/SnapGeometryEdits.h" \
+    "$$SAMPLEPATHCPP/EditData/SnapGeometryEditsWithRules/SnapGeometryEditsWithRules.h" \
     "$$SAMPLEPATHCPP/EditData/SnapGeometryEdits/SnapSourceListModel.h" \
+    "$$SAMPLEPATHCPP/EditData/SnapGeometryEditsWithRules/SnapSourcesListModel.h" \
     "$$SAMPLEPATHCPP/EditData/UpdateAttributesFeatureService/UpdateAttributesFeatureService.h" \
     "$$SAMPLEPATHCPP/EditData/UpdateGeometryFeatureService/UpdateGeometryFeatureService.h" \
     "$$SAMPLEPATHCPP/Features/ControlTimeExtentTimeSlider/ControlTimeExtentTimeSlider.h" \
@@ -293,7 +295,9 @@ SOURCES += \
     "$$SAMPLEPATHCPP/EditData/EditKmlGroundOverlay/EditKmlGroundOverlay.cpp" \
     "$$SAMPLEPATHCPP/EditData/EditWithBranchVersioning/EditWithBranchVersioning.cpp" \
     "$$SAMPLEPATHCPP/EditData/SnapGeometryEdits/SnapGeometryEdits.cpp" \
+    "$$SAMPLEPATHCPP/EditData/SnapGeometryEditsWithRules/SnapGeometryEditsWithRules.cpp" \
     "$$SAMPLEPATHCPP/EditData/SnapGeometryEdits/SnapSourceListModel.cpp" \
+    "$$SAMPLEPATHCPP/EditData/SnapGeometryEditsWithRules/SnapSourcesListModel.cpp" \
     "$$SAMPLEPATHCPP/EditData/UpdateAttributesFeatureService/UpdateAttributesFeatureService.cpp" \
     "$$SAMPLEPATHCPP/EditData/UpdateGeometryFeatureService/UpdateGeometryFeatureService.cpp" \
     "$$SAMPLEPATHCPP/Features/ControlTimeExtentTimeSlider/ControlTimeExtentTimeSlider.cpp" \
@@ -519,6 +523,7 @@ RESOURCES += \
     "$$SAMPLEPATHCPP/EditData/EditKmlGroundOverlay/EditKmlGroundOverlay.qrc" \
     "$$SAMPLEPATHCPP/EditData/EditWithBranchVersioning/EditWithBranchVersioning.qrc" \
     "$$SAMPLEPATHCPP/EditData/SnapGeometryEdits/SnapGeometryEdits.qrc" \
+    "$$SAMPLEPATHCPP/EditData/SnapGeometryEditsWithRules/SnapGeometryEditsWithRules.qrc" \
     "$$SAMPLEPATHCPP/EditData/UpdateAttributesFeatureService/UpdateAttributesFeatureService.qrc" \
     "$$SAMPLEPATHCPP/EditData/UpdateGeometryFeatureService/UpdateGeometryFeatureService.qrc" \
     "$$SAMPLEPATHCPP/Features/ControlTimeExtentTimeSlider/ControlTimeExtentTimeSlider.qrc" \
