@@ -36,6 +36,7 @@
 #include "GraphicsOverlayListModel.h"
 #include "IdentifyLayerResult.h"
 #include "LayerListModel.h"
+#include "LoadSettings.h"
 #include "Map.h"
 #include "MapQuickView.h"
 #include "MapTypes.h"
@@ -142,6 +143,7 @@ void SnapGeometryEditsWithRules::init()
 
 void SnapGeometryEditsWithRules::initializeMap()
 {
+  m_map->loadSettings()->setFeatureTilingMode(FeatureTilingMode::EnabledWithFullResolutionWhenSupported);
   m_map->setInitialViewpoint(Viewpoint(Point(-9811055.156028448, 5131792.19502501, SpatialReference::webMercator()), 10000));
 
   // Load the geodatabase
@@ -555,9 +557,18 @@ void SnapGeometryEditsWithRules::resetSelections()
   m_selectedFeature = nullptr;
 
   // Revert back to the default renderer for the distribution and service pipe layers and graphics overlay.
-  m_distributionPipeLayer->setRenderer(m_defaultDistributionRenderer);
-  m_servicePipeLayer->setRenderer(m_defaultServiceRenderer);
-  m_mapView->graphicsOverlays()->at(0)->setRenderer(m_defaultGraphicsOverlayRenderer);
+  if (m_distributionPipeLayer)
+  {
+    m_distributionPipeLayer->setRenderer(m_defaultDistributionRenderer);
+  }
+  if (m_servicePipeLayer)
+  {
+    m_servicePipeLayer->setRenderer(m_defaultServiceRenderer);
+  }
+  if (m_mapView && m_mapView->graphicsOverlays() && m_mapView->graphicsOverlays()->at(0))
+  {
+    m_mapView->graphicsOverlays()->at(0)->setRenderer(m_defaultGraphicsOverlayRenderer);
+  }
 
   // Clear the snap sources list.
   m_snapSourcesListModel->clear();

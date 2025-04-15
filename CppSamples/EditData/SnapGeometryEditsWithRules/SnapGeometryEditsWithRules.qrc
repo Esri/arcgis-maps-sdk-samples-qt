@@ -11,6 +11,7 @@
         <file>iconAssets/trash-32.png</file>
         <file>iconAssets/save-32.png</file>
         <file>iconAssets/settings.png</file>
-        <file>main.qml</file>        
+        <file>main.qml</file>
+        <file>screenshot.png</file>
     </qresource>
 </RCC>
