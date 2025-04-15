@@ -42,7 +42,6 @@ Item {
         }
     }
 
-
     Control {
         id: control
         visible: snapGeometryEditsWithRulesModel.isElementSelected ? true : false

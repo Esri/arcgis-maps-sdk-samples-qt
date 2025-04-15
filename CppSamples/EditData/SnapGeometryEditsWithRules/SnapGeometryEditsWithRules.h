@@ -23,14 +23,13 @@
 #include <QImage>
 #include <QObject>
 
+template <typename T> class QFuture;
 class QMouseEvent;
 
 namespace Esri::ArcGISRuntime {
   class ArcGISFeature;
-  class FeatureLayer;
   class Geodatabase;
   class GeometryEditor;
-  class GraphicsOverlay;
   class IdentifyLayerResult;
   class Map;
   class MapQuickView;
@@ -40,12 +39,9 @@ namespace Esri::ArcGISRuntime {
   class SubtypeFeatureLayer;
   class SubtypeSublayer;
   class UtilityAssetType;
-  class UtilityNetwork;
 }
 
 Q_MOC_INCLUDE("MapQuickView.h");
-
-template <typename T> class QFuture;
 
 struct LoadOperationalLayersReturnStruct
 {
