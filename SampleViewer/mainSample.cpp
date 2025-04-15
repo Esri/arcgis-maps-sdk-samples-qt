@@ -1,4 +1,3 @@
-// [Legal]
 // COPYRIGHT 2025 ESRI
 // TRADE SECRETS: ESRI PROPRIETARY AND CONFIDENTIAL
 // Unpublished material - all rights reserved under the
