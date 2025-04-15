@@ -17,7 +17,7 @@
 #define SNAPGEOMETRYEDITSWITHRULES_H
 
 // sample headers
-#include "SnapSourceListModel.h"
+#include "SnapSourcesListModel.h"
 
 // Qt headers
 #include <QImage>
@@ -59,7 +59,7 @@ class SnapGeometryEditsWithRules : public QObject
     Q_PROPERTY(Esri::ArcGISRuntime::MapQuickView* mapView READ mapView WRITE setMapView NOTIFY mapViewChanged)
     Q_PROPERTY(bool geometryEditorStarted READ geometryEditorStarted NOTIFY geometryEditorStartedChanged)
     Q_PROPERTY(bool isElementSelected READ isElementSelected NOTIFY isElementSelectedChanged)
-    Q_PROPERTY(SnapSourceListModel* snapSourceListModel READ snapSourceListModel NOTIFY snapSourceModelChanged)
+    Q_PROPERTY(SnapSourcesListModel* snapSourcesListModel READ snapSourcesListModel NOTIFY snapSourceModelChanged)
 
 public:
     explicit SnapGeometryEditsWithRules(QObject* parent = nullptr);
@@ -75,7 +75,7 @@ public:
 
     bool isElementSelected() const;
     bool geometryEditorStarted() const;
-    SnapSourceListModel* snapSourceListModel() const;
+    SnapSourcesListModel* snapSourcesListModel() const;
 
 signals:
     void mapViewChanged();
@@ -106,7 +106,7 @@ private:
 
     Esri::ArcGISRuntime::Geodatabase* m_geodatabase = nullptr;
 
-    SnapSourceListModel* m_snapSourceListModel = nullptr;
+    SnapSourcesListModel* m_snapSourcesListModel = nullptr;
 
     Esri::ArcGISRuntime::Renderer* m_defaultDistributionRenderer = nullptr;
     Esri::ArcGISRuntime::Renderer* m_defaultServiceRenderer = nullptr;

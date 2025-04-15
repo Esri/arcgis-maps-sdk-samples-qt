@@ -15,7 +15,7 @@
 
 // sample headers
 #include "SnapGeometryEditsWithRules.h"
-#include "SnapSourceListModel.h"
+#include "SnapSourcesListModel.h"
 
 // ArcGIS Maps SDK headers
 #include "ArcGISFeature.h"
@@ -122,7 +122,7 @@ namespace
 SnapGeometryEditsWithRules::SnapGeometryEditsWithRules(QObject* parent) :
   QObject(parent),
   m_map(new Map(BasemapStyle::ArcGISStreetsNight, this)),
-  m_snapSourceListModel(new SnapSourceListModel(this)),
+  m_snapSourcesListModel(new SnapSourcesListModel(this)),
   m_defaultGraphicsOverlayRenderer(new SimpleRenderer(new SimpleLineSymbol(SimpleLineSymbolStyle::Dash, QColor(Qt::gray), 3, this), this)),
   m_rulesLimitSymbol(new SimpleLineSymbol(SimpleLineSymbolStyle::Solid, QColor("orange"), 3, this)),
   m_rulesPreventSymbol(new SimpleLineSymbol(SimpleLineSymbolStyle::Solid, QColor("red"), 3, this)),
@@ -348,9 +348,9 @@ bool SnapGeometryEditsWithRules::isElementSelected() const
   return (m_selectedFeature != nullptr);
 }
 
-SnapSourceListModel* SnapGeometryEditsWithRules::snapSourceListModel() const
+SnapSourcesListModel* SnapGeometryEditsWithRules::snapSourcesListModel() const
 {
-  return m_snapSourceListModel;
+  return m_snapSourcesListModel;
 }
 
 bool SnapGeometryEditsWithRules::geometryEditorStarted() const
@@ -503,7 +503,7 @@ void SnapGeometryEditsWithRules::setSnapSettings(UtilityAssetType* assetType)
       }
     });
 
-    m_snapSourceListModel->setSnapSourceSettings(sourceSettingsForListModel);
+    m_snapSourcesListModel->setSnapSourceSettings(sourceSettingsForListModel);
     updateSnapSourceRenderers(sourceSettingsForListModel);
 
     emit snapSourceModelChanged();
@@ -560,7 +560,7 @@ void SnapGeometryEditsWithRules::resetSelections()
   m_mapView->graphicsOverlays()->at(0)->setRenderer(m_defaultGraphicsOverlayRenderer);
 
   // Clear the snap sources list.
-  m_snapSourceListModel->clear();
+  m_snapSourcesListModel->clear();
 
   // Update the UI visibility.
   emit isElementSelectedChanged();

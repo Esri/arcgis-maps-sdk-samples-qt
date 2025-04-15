@@ -34,12 +34,12 @@ include($$PWD/arcgisruntime.pri)
 
 HEADERS += \
     SnapGeometryEditsWithRules.h \
-    SnapSourceListModel.h
+    SnapSourcesListModel.h
 
 SOURCES += \
     main.cpp \
     SnapGeometryEditsWithRules.cpp \
-    SnapSourceListModel.cpp
+    SnapSourcesListModel.cpp
 
 RESOURCES += SnapGeometryEditsWithRules.qrc
 

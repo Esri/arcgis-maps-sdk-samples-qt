@@ -5,8 +5,8 @@
         <file>SnapGeometryEditsWithRules.qml</file>
         <file>SnapGeometryEditsWithRules.h</file>
         <file>SnapGeometryEditsWithRules.cpp</file>
-        <file>SnapSourceListModel.cpp</file>
-        <file>SnapSourceListModel.h</file>
+        <file>SnapSourcesListModel.cpp</file>
+        <file>SnapSourcesListModel.h</file>
         <file>GeometryEditorButton.qml</file>
         <file>iconAssets/trash-32.png</file>
         <file>iconAssets/save-32.png</file>

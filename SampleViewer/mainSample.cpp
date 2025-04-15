@@ -1,5 +1,20 @@
-// [Legal]
-// Copyright 2022 Esri.
+// COPYRIGHT 2025 ESRI
+// TRADE SECRETS: ESRI PROPRIETARY AND CONFIDENTIAL
+// Unpublished material - all rights reserved under the
+// Copyright Laws of the United States and applicable international
+// laws, treaties, and conventions.
+//
+// For additional information, contact:
+// Environmental Systems Research Institute, Inc.
+// Attn: Contracts and Legal Services Department
+// 380 New York Street
+// Redlands, California, 92373
+// USA
+//
+// email: contracts@esri.com
+/// \file mainSample.cpp
+
+#include "pch.hpp" // IWYU pragma: keep
 
 // Licensed under the Apache License, Version 2.0 (the "License");
 // you may not use this file except in compliance with the License.
@@ -12,8 +27,6 @@
 // See the License for the specific language governing permissions and
 // limitations under the License.
 // [Legal]
-
-#include "pch.hpp" // IWYU pragma: keep
 
 // Qt headers
 #include <QApplication>
@@ -101,6 +114,7 @@
 #include "../CppSamples/EditData/EditKmlGroundOverlay/EditKmlGroundOverlay.h"
 #include "../CppSamples/EditData/EditWithBranchVersioning/EditWithBranchVersioning.h"
 #include "../CppSamples/EditData/SnapGeometryEdits/SnapGeometryEdits.h"
+#include "../CppSamples/EditData/SnapGeometryEditsWithRules/SnapGeometryEditsWithRules.h"
 #include "../CppSamples/EditData/UpdateAttributesFeatureService/UpdateAttributesFeatureService.h"
 #include "../CppSamples/EditData/UpdateGeometryFeatureService/UpdateGeometryFeatureService.h"
 #include "../CppSamples/Features/ControlTimeExtentTimeSlider/ControlTimeExtentTimeSlider.h"
@@ -289,7 +303,6 @@
 #ifdef SHOW_RASTER_FUNCTION_SAMPLE
 #include "../CppSamples/Layers/RasterFunctionFile/RasterFunctionFile.h"
 #endif // SHOW_RASTER_FUNCTION_SAMPLE
-
 
 #define STRINGIZE(x) #x
 #define QUOTE(x) STRINGIZE(x)
@@ -557,6 +570,7 @@ void registerCppSampleClasses()
   Simple_Renderer::init();
   SketchOnMap::init();
   SnapGeometryEdits::init();
+  SnapGeometryEditsWithRules::init();
   SpatialOperations::init();
   SpatialRelationships::init();
   StatisticalQuery::init();

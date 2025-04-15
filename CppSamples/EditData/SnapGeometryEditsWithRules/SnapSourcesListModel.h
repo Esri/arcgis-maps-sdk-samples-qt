@@ -24,8 +24,8 @@
 // See the License for the specific language governing permissions and
 // limitations under the License.
 
-#ifndef SNAPSOURCELISTMODEL_H
-#define SNAPSOURCELISTMODEL_H
+#ifndef SNAPSOURCESLISTMODEL_H
+#define SNAPSOURCESLISTMODEL_H
 
 // Qt headers
 #include <QAbstractListModel>
@@ -37,7 +37,7 @@ namespace Esri::ArcGISRuntime {
   class SnapSourceSettings;
 }
 
-class SnapSourceListModel : public QAbstractListModel
+class SnapSourcesListModel : public QAbstractListModel
 {
   Q_OBJECT
 
@@ -48,8 +48,8 @@ public:
     IsEnabledRole
   };
 
-  explicit SnapSourceListModel(QObject* parent = nullptr);
-  ~SnapSourceListModel() override = default;
+  explicit SnapSourcesListModel(QObject* parent = nullptr);
+  ~SnapSourcesListModel() override = default;
 
 public:
   void setSnapSourceSettings(QList<Esri::ArcGISRuntime::SnapSourceSettings*> snapSourceSettings);
@@ -72,4 +72,4 @@ private:
   QString determineName(Esri::ArcGISRuntime::SnapSourceSettings* snapSourceSettings) const;
 };
 
-#endif // SNAPSOURCELISTMODEL_H
+#endif // SNAPSOURCESLISTMODEL_H

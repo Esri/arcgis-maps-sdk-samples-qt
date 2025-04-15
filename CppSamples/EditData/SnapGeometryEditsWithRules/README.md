@@ -2,7 +2,7 @@
 
 Use the Geometry Editor to edit geometries using utility network connectivity rules.
 
-![Image of snapping](Image)
+![](screenshot.png)
 
 ## Use case
 

@@ -4,7 +4,7 @@
     "featured": false,
     "ignore": false,
     "images": [
-        "screenshot.jpg"
+        "screenshot.png"
     ],
     "keywords": [
         "edit",
@@ -35,8 +35,8 @@
     "snippets": [
         "SnapGeometryEditsWithRules.h",
         "SnapGeometryEditsWithRules.cpp",
-        "SnapSourceListModel.h",
-        "SnapSourceListModel.cpp",
+        "SnapSourcesListModel.h",
+        "SnapSourcesListModel.cpp",
         "GeometryEditorButton.qml",
         "SnapGeometryEditsWithRules.qml"
     ],

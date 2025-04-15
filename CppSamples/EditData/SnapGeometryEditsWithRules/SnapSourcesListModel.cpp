@@ -14,7 +14,7 @@
 // [Legal]
 
 // sample headers
-#include "SnapSourceListModel.h"
+#include "SnapSourcesListModel.h"
 
 // ArcGIS Maps SDK headers
 #include "FeatureLayer.h"
@@ -38,37 +38,37 @@
 
 using namespace Esri::ArcGISRuntime;
 
-SnapSourceListModel::SnapSourceListModel(QObject* parent) :
+SnapSourcesListModel::SnapSourcesListModel(QObject* parent) :
   QAbstractListModel(parent)
 {
   setupRoles();
 }
 
-void SnapSourceListModel::setupRoles()
+void SnapSourcesListModel::setupRoles()
 {
   m_roles[NameRole] = "name";
   m_roles[IsEnabledRole] = "isEnabled";
 }
 
-int SnapSourceListModel::size() const
+int SnapSourcesListModel::size() const
 {
   return m_snapSourceSettings.size();
 }
 
-void SnapSourceListModel::clear()
+void SnapSourcesListModel::clear()
 {
   beginResetModel();
   m_snapSourceSettings.clear();
   endResetModel();
 }
 
-int SnapSourceListModel::rowCount(const QModelIndex& parent) const
+int SnapSourcesListModel::rowCount(const QModelIndex& parent) const
 {
   Q_UNUSED(parent);
   return m_snapSourceSettings.count();
 }
 
-QVariant SnapSourceListModel::data(const QModelIndex& index, int role) const
+QVariant SnapSourcesListModel::data(const QModelIndex& index, int role) const
 {
   if (!index.isValid() || index.row() < 0 || index.row() >= m_snapSourceSettings.count())
   {
@@ -87,7 +87,7 @@ QVariant SnapSourceListModel::data(const QModelIndex& index, int role) const
   return {};
 }
 
-bool SnapSourceListModel::setData(const QModelIndex& index, const QVariant& value, int role)
+bool SnapSourcesListModel::setData(const QModelIndex& index, const QVariant& value, int role)
 {
   if (!index.isValid() || index.row() < 0 || index.row() >= m_snapSourceSettings.count())
   {
@@ -107,12 +107,12 @@ bool SnapSourceListModel::setData(const QModelIndex& index, const QVariant& valu
   return false;
 }
 
-QHash<int, QByteArray> SnapSourceListModel::roleNames() const
+QHash<int, QByteArray> SnapSourcesListModel::roleNames() const
 {
   return m_roles;
 }
 
-void SnapSourceListModel::setSnapSourceSettings(QList<SnapSourceSettings*> snapSourceSettings)
+void SnapSourcesListModel::setSnapSourceSettings(QList<SnapSourceSettings*> snapSourceSettings)
 {
   beginResetModel();
   m_snapSourceSettings.clear();
@@ -120,12 +120,12 @@ void SnapSourceListModel::setSnapSourceSettings(QList<SnapSourceSettings*> snapS
   endResetModel();
 }
 
-QList<SnapSourceSettings*> SnapSourceListModel::snapSourceSettings() const
+QList<SnapSourceSettings*> SnapSourcesListModel::snapSourceSettings() const
 {
   return m_snapSourceSettings;
 }
 
-QString SnapSourceListModel::determineName(Esri::ArcGISRuntime::SnapSourceSettings* snapSourceSettings) const
+QString SnapSourcesListModel::determineName(Esri::ArcGISRuntime::SnapSourceSettings* snapSourceSettings) const
 {
   if (auto graphicsOverlay = dynamic_cast<Esri::ArcGISRuntime::GraphicsOverlay*>(snapSourceSettings->source()); graphicsOverlay)
   {

@@ -242,7 +242,7 @@ Item {
                 }
             }
 
-            model: snapGeometryEditsWithRulesModel.snapSourceListModel
+            model: snapGeometryEditsWithRulesModel.snapSourcesListModel
 
             delegate: Item {
                 height: 35
