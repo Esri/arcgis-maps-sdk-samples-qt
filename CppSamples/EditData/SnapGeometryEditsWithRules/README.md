@@ -50,6 +50,14 @@ To save your edits, press the save button.
 * SnapSourceSettings
 * UtilityNetwork
 
+## Offline data
+
+Read more about how to set up the sample's offline data [here](http://links.esri.com/ArcGISRuntimeQtSamples#use-offline-data-in-the-samples).
+
+Link | Local Location
+---------|-------|
+|[Naperville gas network](https://www.arcgis.com/home/item.html?id=0fd3a39660d54c12b05d5f81f207dffd)| `<userhome>`/ArcGIS/Runtime/Data/raster/NapervilleGasUtilities.geodatabase |
+
 ## About the data
 
 The [Naperville gas network](https://www.arcgis.com/home/item.html?id=0fd3a39660d54c12b05d5f81f207dffd) mobile geodatabase contains a utility network with a set of connectivity rules that can be used to perform geometry edits with rules based snapping.
