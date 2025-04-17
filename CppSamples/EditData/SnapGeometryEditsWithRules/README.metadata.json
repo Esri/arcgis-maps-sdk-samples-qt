@@ -1,5 +1,11 @@
 {
     "category": "Utility network",
+    "dataItems": [
+        {
+            "itemId": "0fd3a39660d54c12b05d5f81f207dffd",
+            "path": "~/ArcGIS/Runtime/Data/geodatabase/NapervilleGasUtilities.geodatabase"
+        }
+    ],
     "description": "Use the Geometry Editor to edit geometries using utility network connectivity rules.",
     "featured": false,
     "ignore": false,
