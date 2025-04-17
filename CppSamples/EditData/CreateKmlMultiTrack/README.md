@@ -10,7 +10,7 @@ When capturing location data for outdoor activities such as hiking or skiing, it
 
 ## How to use the sample
 
-Tap **Start Navigation** to begin moving along a simulated trail. Tap **Record Track** to start recording your current path. Tap **Stop Recording** to end recording and capture a KML track. Repeat these steps to capture multiple KML tracks in a single session. Tap the **Save** button to save your recorded tracks as a `.kmz` file to local storage. Then load the created `.kmz` file containing your KML multi-track to view all created tracks on the map.
+Start the KML multi track sample application to begin moving along a simulated trail. Tap **Record Track(s)** to start recording your current path. Tap **Stop Recording** to end recording and capture a KML track. Repeat these steps to capture multiple KML tracks in a single session. Tap the **Save** button to save your recorded tracks as a `.kmz` file to local storage. Then load the created `.kmz` file containing your KML multi-track to view all created tracks on the map. Tap the **Recenter** icon to position the location at the center of the map view.  
 
 ## How it works
 
