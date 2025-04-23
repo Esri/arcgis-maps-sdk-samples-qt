@@ -200,6 +200,15 @@ Item {
         color: "black"
         opacity: .5
 
+        Connections {
+            target: snapGeometryEditsWithRulesModel
+            function onIsElementSelectedChanged() {
+                if (!snapGeometryEditsWithRulesModel.isElementSelected) {
+                    optionPanel.visible = false;
+                }
+            }
+        }
+
         ListView {
             id: snapSourceView
             anchors {
