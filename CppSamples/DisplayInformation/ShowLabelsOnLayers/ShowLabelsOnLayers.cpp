@@ -67,7 +67,7 @@ void ShowLabelsOnLayers::componentComplete()
   m_map = new Map(BasemapStyle::ArcGISLightGray, this);
 
   // Create a feature layer
-  ServiceFeatureTable* featureTable = new ServiceFeatureTable(QUrl("https://services.arcgis.com/P3ePLMYs2RVChkJx/arcgis/rest/services/USA_115th_Congressional_Districts/FeatureServer/0"), this);
+  ServiceFeatureTable* featureTable = new ServiceFeatureTable(QUrl("https://services.arcgis.com/P3ePLMYs2RVChkJx/arcgis/rest/services/USA_116th_Congressional_Districts/FeatureServer/0"), this);
   FeatureLayer* featureLayer = new FeatureLayer(featureTable, this);
   connect(featureLayer, &FeatureLayer::doneLoading, this, [this, featureLayer](const Error& e)
   {
