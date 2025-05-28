@@ -319,7 +319,7 @@ int main(int argc, char *argv[])
     QFontDatabase::addApplicationFont(fontPath);
   }
 #endif
-  
+
   // register sample viewer classes
   registerClasses();
 
@@ -340,7 +340,7 @@ int main(int argc, char *argv[])
   engine.addImportPath(EsriQmlImportPath);
 #endif
 
-#ifdef BUILD_FROM_SETUP
+#ifdef BUILD_FROM_CONFIGURED_SDK
   QString arcGISRuntimeImportPath = QUOTE(ARCGIS_RUNTIME_IMPORT_PATH);
 
 #if defined(LINUX_PLATFORM_REPLACEMENT)
@@ -351,7 +351,7 @@ int main(int argc, char *argv[])
 #endif // LINUX_PLATFORM_REPLACEMENT
 
   engine.addImportPath(arcGISRuntimeImportPath);
-#endif // BUILD_FROM_SETUP
+#endif // BUILD_FROM_CONFIGURED_SDK
 
   // register toolkit components
   Esri::ArcGISRuntime::Toolkit::registerComponents(engine);
