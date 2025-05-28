@@ -167,8 +167,8 @@ PortalUserInfoSample {
         }
     }
 
-    // Declare AuthenticationView to handle any authentication challenges
-    AuthenticationView {
+    // Declare Authenticator to handle any authentication challenges
+    Authenticator {
         id: authView
         anchors.fill: parent
     }

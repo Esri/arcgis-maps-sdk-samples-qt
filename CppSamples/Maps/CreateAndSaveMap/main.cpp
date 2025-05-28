@@ -14,6 +14,7 @@
 // [Legal]
 
 // Qt headers
+#include "ArcGISRuntimeEnvironment.h"
 #include <QCommandLineParser>
 #include <QDir>
 #include <QGuiApplication>
@@ -37,6 +38,7 @@
 
 int main(int argc, char *argv[])
 {
+  Esri::ArcGISRuntime::ArcGISRuntimeEnvironment::setUseLegacyAuthentication(false);
 #ifdef QT_WEBVIEW_WEBENGINE_BACKEND
   QtWebEngineQuick::initialize();
 #endif // QT_WEBVIEW_WEBENGINE_BACKEND

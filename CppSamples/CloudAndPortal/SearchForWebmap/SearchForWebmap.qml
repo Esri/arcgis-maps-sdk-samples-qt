@@ -195,8 +195,8 @@ SearchForWebmapSample {
         }
     }
 
-    // Declare AuthenticationView to handle any authentication challenges
-    AuthenticationView {
+    // Declare Authenticator to handle any authentication challenges
+    Authenticator {
         anchors.fill: parent
     }
 

@@ -25,6 +25,7 @@
 #endif // QT_WEBVIEW_WEBENGINE_BACKEND
 
 #include "Esri/ArcGISRuntime/Toolkit/register.h"
+#include "ArcGISRuntimeEnvironment.h"
 
 #ifdef Q_OS_WIN
 #include <Windows.h>
@@ -37,6 +38,7 @@
 
 int main(int argc, char *argv[])
 {
+  Esri::ArcGISRuntime::ArcGISRuntimeEnvironment::setUseLegacyAuthentication(false);
 #ifdef QT_WEBVIEW_WEBENGINE_BACKEND
   QtWebEngineQuick::initialize();
 #endif // QT_WEBVIEW_WEBENGINE_BACKEND

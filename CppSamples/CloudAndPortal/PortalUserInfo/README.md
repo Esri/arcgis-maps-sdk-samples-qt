@@ -16,7 +16,7 @@ When prompted, enter your ArcGIS Online credentials.
 
 1. A `Portal` is created, and supplied a `Credential` which uses OAuth in user mode.
 2. When the app launches, the portal is loaded, which triggers an authentication challenge.
-3. An `AuthenticationView` listens to the challenge and displays a login screen to allow user credentials to be entered.
+3. An `Authenticator` listens to the challenge and displays a login screen to allow user credentials to be entered.
 4. If the portal is successfully loaded, the `portalUser` property is used to populate a series of fields including:
     - `fullName`
     - `username`
@@ -33,7 +33,7 @@ When prompted, enter your ArcGIS Online credentials.
 ## Relevant API
 
 * AuthenticationManager
-* AuthenticationView
+* Authenticator
 * Credential
 * PortalInfo
 * PortalUser
