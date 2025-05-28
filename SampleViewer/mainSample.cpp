@@ -1,5 +1,20 @@
-// [Legal]
 // COPYRIGHT 2025 ESRI
+// TRADE SECRETS: ESRI PROPRIETARY AND CONFIDENTIAL
+// Unpublished material - all rights reserved under the
+// Copyright Laws of the United States and applicable international
+// laws, treaties, and conventions.
+//
+// For additional information, contact:
+// Environmental Systems Research Institute, Inc.
+// Attn: Contracts and Legal Services Department
+// 380 New York Street
+// Redlands, California, 92373
+// USA
+//
+// email: contracts@esri.com
+/// \file mainSample.cpp
+
+#include "pch.hpp" // IWYU pragma: keep
 
 // Licensed under the Apache License, Version 2.0 (the "License");
 // you may not use this file except in compliance with the License.
@@ -12,8 +27,6 @@
 // See the License for the specific language governing permissions and
 // limitations under the License.
 // [Legal]
-
-#include "pch.hpp" // IWYU pragma: keep
 
 // Qt headers
 #include <QApplication>
@@ -319,7 +332,7 @@ int main(int argc, char *argv[])
     QFontDatabase::addApplicationFont(fontPath);
   }
 #endif
-  
+
   // register sample viewer classes
   registerClasses();
 
@@ -340,7 +353,7 @@ int main(int argc, char *argv[])
   engine.addImportPath(EsriQmlImportPath);
 #endif
 
-#ifdef BUILD_FROM_SETUP
+#ifdef BUILD_FROM_CONFIGURED_SDK
   QString arcGISRuntimeImportPath = QUOTE(ARCGIS_RUNTIME_IMPORT_PATH);
 
 #if defined(LINUX_PLATFORM_REPLACEMENT)
@@ -351,7 +364,7 @@ int main(int argc, char *argv[])
 #endif // LINUX_PLATFORM_REPLACEMENT
 
   engine.addImportPath(arcGISRuntimeImportPath);
-#endif // BUILD_FROM_SETUP
+#endif // BUILD_FROM_CONFIGURED_SDK
 
   // register toolkit components
   Esri::ArcGISRuntime::Toolkit::registerComponents(engine);
