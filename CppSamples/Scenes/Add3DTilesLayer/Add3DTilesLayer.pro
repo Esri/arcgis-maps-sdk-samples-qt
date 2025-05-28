@@ -20,7 +20,6 @@ mac {
 #-------------------------------------------------------------------------------
 
 CONFIG += c++17
-#CONFIG+=build_from_setup
 
 # additional modules are pulled in via arcgisruntime.pri
 QT += opengl qml quick
