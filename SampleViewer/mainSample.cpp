@@ -1,20 +1,5 @@
+// [Legal]
 // COPYRIGHT 2025 ESRI
-// TRADE SECRETS: ESRI PROPRIETARY AND CONFIDENTIAL
-// Unpublished material - all rights reserved under the
-// Copyright Laws of the United States and applicable international
-// laws, treaties, and conventions.
-//
-// For additional information, contact:
-// Environmental Systems Research Institute, Inc.
-// Attn: Contracts and Legal Services Department
-// 380 New York Street
-// Redlands, California, 92373
-// USA
-//
-// email: contracts@esri.com
-/// \file mainSample.cpp
-
-#include "pch.hpp" // IWYU pragma: keep
 
 // Licensed under the Apache License, Version 2.0 (the "License");
 // you may not use this file except in compliance with the License.
@@ -27,6 +12,8 @@
 // See the License for the specific language governing permissions and
 // limitations under the License.
 // [Legal]
+
+#include "pch.hpp" // IWYU pragma: keep
 
 // Qt headers
 #include <QApplication>
