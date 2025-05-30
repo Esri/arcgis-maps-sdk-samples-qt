@@ -30,10 +30,7 @@
 #include "Map.h"
 #include "MapQuickView.h"
 #include "MapTypes.h"
-#include "PopupAttachmentListModel.h"
-#include "PopupAttachmentManager.h"
-#include "PopupAttributeListModel.h"
-#include "PopupManager.h"
+#include "Popup.h"
 
 // Qt headers
 #include <QUuid>
@@ -53,12 +50,6 @@ void ShowPopup::init()
   // Register the map view for QML
   qmlRegisterType<MapQuickView>("Esri.Samples", 1, 0, "MapView");
   qmlRegisterType<ShowPopup>("Esri.Samples", 1, 0, "ShowPopupSample");
-
-  // Required to use the PopupManager with a QML UI.
-  qmlRegisterUncreatableType<PopupManager>("Esri.Samples", 1, 0, "PopupManager", "PopupManager is uncreateable");
-  qmlRegisterUncreatableType<PopupAttachmentManager>("Esri.Samples", 1, 0, "PopupAttachmentManager", "PopupAttachmentManager is uncreateable");
-  qmlRegisterUncreatableType<PopupAttributeListModel>("Esri.Samples", 1, 0, "PopupAttributeListModel", "PopupAttributeListModel is uncreateable");
-  qmlRegisterUncreatableType<PopupAttachmentListModel>("Esri.Samples", 1, 0, "PopupAttachmentListModel", "PopupAttachmentListModel is uncreateable");
 }
 
 MapQuickView* ShowPopup::mapView() const
@@ -97,27 +88,14 @@ void ShowPopup::onIdentifyLayerCompleted(const QUuid&, IdentifyLayerResult* rawI
   }
 
   m_featureLayer->clearSelection();
-  const auto elements = identifyResult->geoElements();
-  for (GeoElement* geoElement : elements)
-  {
-    Feature* feature = static_cast<Feature*>(geoElement);
-    m_featureLayer->selectFeature(feature);
-  }
-
   if (!identifyResult->popups().isEmpty())
   {
-    // clear the list of PopupManagers
-    m_popupManagers.clear();
-    const auto popups = identifyResult->popups();
-    for (Popup* popup : popups)
-    {
-      // create a popup manager
-      PopupManager* popupManager = new PopupManager{popup, this};
-      // append popup manager to list
-      m_popupManagers.append(popupManager);
-      // notify QML that m_popupManagers has changed and to display the popup(s).
-      emit popupManagersChanged();
-    }
+    GeoElement* geoElement = identifyResult->geoElements().first();
+    Feature* feature = static_cast<Feature*>(geoElement);
+    m_featureLayer->selectFeature(feature);
+
+    m_popup = new Popup(geoElement, this);
+    emit popupChanged();
   }
 }
 
@@ -153,9 +131,9 @@ bool ShowPopup::taskRunning() const
   return m_future.isRunning();
 }
 
-QQmlListProperty<PopupManager> ShowPopup::popupManagers()
+Esri::ArcGISRuntime::Popup* ShowPopup::popup()
 {
-  return QQmlListProperty<PopupManager>(this, &m_popupManagers);
+  return m_popup;
 }
 
 void ShowPopup::clearSelection() const

@@ -18,6 +18,7 @@
 #define ConfigureClusters_H
 
 // Qt headers
+#include "Popup.h"
 #include <QObject>
 
 namespace Esri::ArcGISRuntime
@@ -27,6 +28,7 @@ namespace Esri::ArcGISRuntime
   class FeatureLayer;
   class Map;
   class MapQuickView;
+  class Popup;
 }
 
 class QMouseEvent;
@@ -39,7 +41,7 @@ class ConfigureClusters : public QObject
 
   Q_PROPERTY(Esri::ArcGISRuntime::MapQuickView* mapView READ mapView WRITE setMapView NOTIFY mapViewChanged)
   Q_PROPERTY(double mapScale READ mapScale NOTIFY mapScaleChanged)
-  Q_PROPERTY(QString popupContent READ popupContent NOTIFY popupContentChanged)
+  Q_PROPERTY(Esri::ArcGISRuntime::Popup* popup READ popup NOTIFY popupChanged)
 
 public:
   explicit ConfigureClusters(QObject* parent = nullptr);
@@ -47,6 +49,7 @@ public:
 
   static void init();
 
+  Q_INVOKABLE void clearSelection() const;
   Q_INVOKABLE void displayLabels(bool checked);
   Q_INVOKABLE void drawClusters();
   Q_INVOKABLE void setClusterRadius(double clusterRadius);
@@ -55,7 +58,7 @@ public:
 signals:
   void mapViewChanged();
   void mapScaleChanged();
-  void popupContentChanged();
+  void popupChanged();
 
 private:
   Esri::ArcGISRuntime::MapQuickView* mapView() const;
@@ -67,13 +70,14 @@ private:
 
   void mouseClicked(QMouseEvent& mouseEvent);
 
-  QString popupContent() const;
+
+  Esri::ArcGISRuntime::Popup* popup();
 
   Esri::ArcGISRuntime::Map* m_map = nullptr;
   Esri::ArcGISRuntime::MapQuickView* m_mapView = nullptr;
   Esri::ArcGISRuntime::FeatureLayer* m_layer = nullptr;
   Esri::ArcGISRuntime::ClusteringFeatureReduction* m_clusteringFeatureReduction = nullptr;
-  QString m_popupContent;
+  Esri::ArcGISRuntime::Popup* m_popup = nullptr;
 
   QScopedPointer<QObject> m_resultParent;
   Esri::ArcGISRuntime::AggregateGeoElement* m_aggregateGeoElement = nullptr;

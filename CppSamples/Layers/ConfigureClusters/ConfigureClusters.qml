@@ -18,6 +18,7 @@ import QtQuick
 import QtQuick.Controls
 import Esri.Samples
 import QtQuick.Layouts
+import Esri.ArcGISRuntime.Toolkit
 
 Item {
     // add a mapView component
@@ -35,23 +36,8 @@ Item {
     ConfigureClustersSample {
         id: sample
         mapView: view
-    }
 
-    // Add a background to the column
-    Rectangle {
-        anchors.fill: popupContent
-        visible: sample.popupContent !== ""
-        radius: 10
-        border.width: 1
-    }
-
-    Label {
-        id: popupContent
-        anchors.right: parent.right
-        visible: sample.popupContent !== ""
-        text: sample.popupContent
-        font.pointSize: 14
-        padding: 5
+        onPopupChanged: popupView.visible = true
     }
 
     // Add a background to the column
@@ -59,6 +45,22 @@ Item {
         anchors.fill: dialog
         radius: 10
         border.width: 1
+    }
+
+    PopupView {
+        id: popupView
+        anchors {
+            top: parent.top
+            bottom: parent.bottom
+            right: parent.right
+        }
+        popup: sample.popup
+
+        visible: false
+        onVisibleChanged: {
+            if (!visible)
+                sample.clearSelection();
+        }
     }
 
     Column {
