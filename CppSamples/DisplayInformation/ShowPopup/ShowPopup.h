@@ -35,7 +35,6 @@ class Popup;
 }
 
 Q_MOC_INCLUDE("MapQuickView.h")
-Q_MOC_INCLUDE("PopupManager.h")
 Q_MOC_INCLUDE("Popup.h")
 
 class ShowPopup : public QObject
@@ -43,7 +42,7 @@ class ShowPopup : public QObject
   Q_OBJECT
 
   Q_PROPERTY(Esri::ArcGISRuntime::MapQuickView* mapView READ mapView WRITE setMapView NOTIFY mapViewChanged)
-  Q_PROPERTY(Esri::ArcGISRuntime::Popup* popup READ popup NOTIFY popupChanged)
+  Q_PROPERTY(Esri::ArcGISRuntime::Popup* popup MEMBER m_popup NOTIFY popupChanged)
   Q_PROPERTY(bool taskRunning READ taskRunning NOTIFY taskRunningChanged)
 
 public:
@@ -65,7 +64,6 @@ private slots:
 
 private:
   bool taskRunning() const;
-  Esri::ArcGISRuntime::Popup* popup();
   Esri::ArcGISRuntime::MapQuickView* mapView() const;
   void setMapView(Esri::ArcGISRuntime::MapQuickView* mapView);
 

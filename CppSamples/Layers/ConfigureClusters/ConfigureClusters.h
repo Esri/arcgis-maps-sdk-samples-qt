@@ -18,7 +18,6 @@
 #define ConfigureClusters_H
 
 // Qt headers
-#include "Popup.h"
 #include <QObject>
 
 namespace Esri::ArcGISRuntime
@@ -34,6 +33,7 @@ namespace Esri::ArcGISRuntime
 class QMouseEvent;
 
 Q_MOC_INCLUDE("MapQuickView.h");
+Q_MOC_INCLUDE("Popup.h")
 
 class ConfigureClusters : public QObject
 {
@@ -41,7 +41,7 @@ class ConfigureClusters : public QObject
 
   Q_PROPERTY(Esri::ArcGISRuntime::MapQuickView* mapView READ mapView WRITE setMapView NOTIFY mapViewChanged)
   Q_PROPERTY(double mapScale READ mapScale NOTIFY mapScaleChanged)
-  Q_PROPERTY(Esri::ArcGISRuntime::Popup* popup READ popup NOTIFY popupChanged)
+  Q_PROPERTY(Esri::ArcGISRuntime::Popup* popup MEMBER m_popup NOTIFY popupChanged)
 
 public:
   explicit ConfigureClusters(QObject* parent = nullptr);
@@ -69,9 +69,6 @@ private:
   void createCustomFeatureReduction();
 
   void mouseClicked(QMouseEvent& mouseEvent);
-
-
-  Esri::ArcGISRuntime::Popup* popup();
 
   Esri::ArcGISRuntime::Map* m_map = nullptr;
   Esri::ArcGISRuntime::MapQuickView* m_mapView = nullptr;

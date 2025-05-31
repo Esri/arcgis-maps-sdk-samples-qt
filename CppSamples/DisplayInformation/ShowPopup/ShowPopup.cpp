@@ -131,11 +131,6 @@ bool ShowPopup::taskRunning() const
   return m_future.isRunning();
 }
 
-Esri::ArcGISRuntime::Popup* ShowPopup::popup()
-{
-  return m_popup;
-}
-
 void ShowPopup::clearSelection() const
 {
   m_featureLayer->clearSelection();

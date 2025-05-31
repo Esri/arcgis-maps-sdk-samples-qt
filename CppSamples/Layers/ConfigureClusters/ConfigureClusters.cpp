@@ -245,7 +245,7 @@ void ConfigureClusters::mouseClicked(QMouseEvent& mouseEvent)
     // clear cluster selection
     if (m_aggregateGeoElement)
       m_aggregateGeoElement->setSelected(false);
-    if (!result->popups().empty())
+    if (!result->popups().isEmpty())
     {
       Popup* popup = result->popups().at(0);
       m_aggregateGeoElement = dynamic_cast<AggregateGeoElement*>(popup->geoElement());
@@ -266,11 +266,6 @@ void ConfigureClusters::mouseClicked(QMouseEvent& mouseEvent)
       emit popupChanged();
     }
     });
-}
-
-Esri::ArcGISRuntime::Popup* ConfigureClusters::popup()
-{
-  return m_popup;
 }
 
 void ConfigureClusters::clearSelection() const
