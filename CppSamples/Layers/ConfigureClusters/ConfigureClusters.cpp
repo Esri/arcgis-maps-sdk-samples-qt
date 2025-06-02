@@ -45,6 +45,7 @@
 #include "SimpleLabelExpression.h"
 #include "SimpleMarkerSymbol.h"
 #include "SymbolTypes.h"
+#include "TextPopupElement.h"
 #include "TextSymbol.h"
 #include "Viewpoint.h"
 
@@ -230,9 +231,6 @@ void ConfigureClusters::mouseClicked(QMouseEvent& mouseEvent)
   if (!m_layer)
     return;
 
-  // clear the list of popup content
-  m_popupContent.clear();
-
   // clear cluster selection
   if (m_aggregateGeoElement)
     m_aggregateGeoElement->setSelected(false);
@@ -247,27 +245,31 @@ void ConfigureClusters::mouseClicked(QMouseEvent& mouseEvent)
     // clear cluster selection
     if (m_aggregateGeoElement)
       m_aggregateGeoElement->setSelected(false);
-
-    for (Popup* popup: result->popups())
+    if (!result->popups().isEmpty())
     {
-      // if the identified object is a cluster, select it
+      Popup* popup = result->popups().at(0);
       m_aggregateGeoElement = dynamic_cast<AggregateGeoElement*>(popup->geoElement());
       if (m_aggregateGeoElement)
         m_aggregateGeoElement->setSelected(true);
 
-      const auto attributes = popup->geoElement()->attributes();
-      for (const QString& name: attributes->attributeNames())
-      {
-        m_popupContent += name + ": " + attributes->attributeValue(name).toString() + "\n";
-      }
-    }
+      QList<PopupElement*> popupElements;
 
-    // notify QML that popup content has changed and to display the popup(s).
-    emit popupContentChanged();
-  });
+      const auto attributes = popup->geoElement()->attributes();
+      for (const QString& attrName : attributes->attributeNames())
+      {
+       QString value = attributes->attributeValue(attrName).toString();
+
+       TextPopupElement* textElement = new TextPopupElement(attrName + ": " + value, this);
+       popupElements.append(textElement);
+      }
+      m_popup = new Popup(popup->geoElement(), this);
+      emit popupChanged();
+    }
+    });
 }
 
-QString ConfigureClusters::popupContent() const
+void ConfigureClusters::clearSelection() const
 {
-  return m_popupContent;
+  if (m_aggregateGeoElement)
+    m_aggregateGeoElement->setSelected(false);
 }
