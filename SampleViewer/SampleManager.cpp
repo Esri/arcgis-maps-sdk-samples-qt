@@ -35,8 +35,9 @@
 #include <QQmlEngine>
 #include <NetworkRequestProgress.h>
 
-#include "AuthenticationManager.h"
-#include "CredentialCache.h"
+#include "Authentication/AuthenticationManager.h"
+#include "Authentication/ArcGISCredentialStore.h"
+#include "Authentication/NetworkCredentialStore.h"
 #include "ErrorException.h"
 #include "Portal.h"
 
@@ -408,8 +409,14 @@ void SampleManager::setDownloadProgress(double progress)
 
 void SampleManager::resetAuthenticationState()
 {
-  AuthenticationManager::credentialCache()->removeAndRevokeAllCredentials();
-  AuthenticationManager::setCredentialCacheEnabled(true);
+  // clear all credentials
+  ArcGISRuntimeEnvironment::authenticationManager()->arcGISCredentialStore()->removeAll();
+  auto f = ArcGISRuntimeEnvironment::authenticationManager()->networkCredentialStore()->removeAllAsync();
+  Q_UNUSED(f)
+
+  // and remove all challenge handlers
+  ArcGISRuntimeEnvironment::authenticationManager()->setArcGISAuthenticationChallengeHandler(nullptr);
+  ArcGISRuntimeEnvironment::authenticationManager()->setNetworkAuthenticationChallengeHandler(nullptr);
 }
 
 bool SampleManager::dataItemsExists()

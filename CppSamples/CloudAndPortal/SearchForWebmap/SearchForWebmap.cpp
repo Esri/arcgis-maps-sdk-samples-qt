@@ -22,7 +22,6 @@
 #include "SearchForWebmap.h"
 
 // ArcGIS Maps SDK headers
-#include "AuthenticationManager.h"
 #include "Error.h"
 #include "Map.h"
 #include "MapQuickView.h"
@@ -46,7 +45,6 @@ SearchForWebmap::SearchForWebmap(QQuickItem* parent /* = nullptr */):
   QQuickItem(parent),
   m_portal(new Portal(this))
 {
-  AuthenticationManager::instance()->setCredentialCacheEnabled(false);
 }
 
 SearchForWebmap::~SearchForWebmap() = default;

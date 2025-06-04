@@ -18,16 +18,15 @@
 #define EDITWITHBRANCHVERSIONING_H
 
 // ArcGIS Maps SDK headers
+#include "Authentication/ArcGISAuthenticationChallengeHandler.h"
 #include "Error.h"
 
 // Qt headers
-#include <QObject>
 #include <QUrl>
 #include <QUuid>
 
 namespace Esri::ArcGISRuntime
 {
-class AuthenticationManager;
 class ServiceVersionParameters;
 class Map;
 class MapQuickView;
@@ -36,21 +35,23 @@ class FeatureLayer;
 class ServiceFeatureTable;
 class ServiceVersionInfo;
 class ArcGISFeature;
-class Credential;
 class Point;
 class IdentifyLayerResult;
 class ErrorException;
 class FeatureTableEditResult;
 }
 
-Q_MOC_INCLUDE("AuthenticationManager.h")
+namespace Esri::ArcGISRuntime::Authentication
+{
+  class ArcGISAuthenticationChallenge;
+}
+
 Q_MOC_INCLUDE("MapQuickView.h")
 
-class EditWithBranchVersioning : public QObject
+class EditWithBranchVersioning : public Esri::ArcGISRuntime::Authentication::ArcGISAuthenticationChallengeHandler
 {
   Q_OBJECT
 
-  Q_PROPERTY(Esri::ArcGISRuntime::AuthenticationManager* authManager READ authManager NOTIFY authManagerChanged)
   Q_PROPERTY(Esri::ArcGISRuntime::MapQuickView* mapView READ mapView WRITE setMapView NOTIFY mapViewChanged)
   Q_PROPERTY(QString sgdbCurrentVersion MEMBER m_sgdbCurrentVersionName NOTIFY sgdbCurrentVersionChanged)
   Q_PROPERTY(QString currentTypeDamage MEMBER m_currentTypeDamage NOTIFY currentTypeDamageChanged)
@@ -64,7 +65,6 @@ public:
 
   static void init();
 
-  Esri::ArcGISRuntime::AuthenticationManager* authManager() const;
   Esri::ArcGISRuntime::ServiceVersionParameters* createParams();
   void clearSelection();
   void moveFeature(const Esri::ArcGISRuntime::Point& mapPoint);
@@ -77,7 +77,6 @@ public:
 signals:
   void applyingEdits();
   void applyingEditsCompleted();
-  void authManagerChanged();
   void busyChanged();
   void createVersionSuccess();
   void currentTypeDamageChanged();
@@ -102,13 +101,14 @@ private:
   void connectSgdbSignals();
   bool sgdbVerionIsDefault() const;
 
+  void handleArcGISAuthenticationChallenge(Esri::ArcGISRuntime::Authentication::ArcGISAuthenticationChallenge* challenge) override;
+
   Esri::ArcGISRuntime::ArcGISFeature* m_selectedFeature = nullptr;
   Esri::ArcGISRuntime::FeatureLayer* m_featureLayer = nullptr;
   Esri::ArcGISRuntime::Map* m_map = nullptr;
   Esri::ArcGISRuntime::MapQuickView* m_mapView = nullptr;
   Esri::ArcGISRuntime::ServiceFeatureTable* m_featureTable = nullptr;
   Esri::ArcGISRuntime::ServiceGeodatabase* m_serviceGeodatabase = nullptr;
-  Esri::ArcGISRuntime::Credential* m_cred = nullptr;
 
   bool m_busy = false;
   bool m_sgdbVersionIsDefault = true;

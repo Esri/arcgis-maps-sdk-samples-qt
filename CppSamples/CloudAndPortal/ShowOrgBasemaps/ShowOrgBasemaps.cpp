@@ -22,28 +22,29 @@
 #include "ShowOrgBasemaps.h"
 
 // ArcGIS Maps SDK headers
-#include "AuthenticationManager.h"
+#include "Authentication/OAuthUserConfiguration.h"
 #include "Basemap.h"
 #include "BasemapListModel.h"
-#include "CoreTypes.h"
-#include "Credential.h"
 #include "Error.h"
 #include "Map.h"
 #include "MapQuickView.h"
 #include "MapTypes.h"
-#include "OAuthClientInfo.h"
 #include "Portal.h"
 #include "PortalInfo.h"
+
+// Other headers
+#include "AuthenticatorController.h"
 
 // Qt headers
 #include <QFuture>
 
 using namespace Esri::ArcGISRuntime;
+using namespace Esri::ArcGISRuntime::Authentication;
+using namespace Esri::ArcGISRuntime::Toolkit;
 
 ShowOrgBasemaps::ShowOrgBasemaps(QQuickItem* parent /* = nullptr */):
   QQuickItem(parent)
 {
-  AuthenticationManager::instance()->setCredentialCacheEnabled(false);
 }
 
 ShowOrgBasemaps::~ShowOrgBasemaps() = default;
@@ -119,14 +120,21 @@ void ShowOrgBasemaps::load(bool anonymous)
     m_portal = nullptr;
   }
 
-  m_portal = new Portal(this);
+  const bool loginRequired = !anonymous;
+  m_portal = new Portal(loginRequired, this);
   connectLoadStatusSignal();
 
-  if (!anonymous && m_portal)
+  if (loginRequired)
   {
-    Credential* cred = new Credential(OAuthClientInfo("iLkGIj0nX8A4EJda", OAuthMode::User), this);
-    m_portal->setCredential(cred);
+    const QString redirectUrl{"urn:ietf:wg:oauth:2.0:oob"};
+    OAuthUserConfiguration* config = new OAuthUserConfiguration(m_portal->url(), "iLkGIj0nX8A4EJda", redirectUrl, this);
+    AuthenticatorController::instance()->addOAuthUserConfiguration(config);
   }
+  else
+  {
+    AuthenticatorController::instance()->clearOAuthUserConfigurations();
+  }
+
   load();
 }
 

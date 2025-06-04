@@ -23,7 +23,6 @@
 
 namespace Esri::ArcGISRuntime
 {
-    class Credential;
     class Portal;
     class PortalUser;
     enum class LoadStatus;
@@ -88,7 +87,6 @@ private:
 
   static const QString UNKNOWN;
 
-  Esri::ArcGISRuntime::Credential* m_credential = nullptr;
   Esri::ArcGISRuntime::Portal* m_portal = nullptr;
   Esri::ArcGISRuntime::PortalUser* m_user = nullptr;
 };

@@ -22,11 +22,13 @@
 #include "EditWithBranchVersioning.h"
 
 // ArcGIS Maps SDK headers
+#include "ArcGISRuntimeEnvironment.h"
+#include "Authentication/AuthenticationManager.h"
+#include "Authentication/ArcGISAuthenticationChallenge.h"
+#include "Authentication/TokenCredential.h"
 #include "ArcGISFeature.h"
 #include "AttributeListModel.h"
-#include "AuthenticationManager.h"
 #include "CalloutData.h"
-#include "Credential.h"
 #include "Envelope.h"
 #include "ErrorException.h"
 #include "FeatureEditResult.h"
@@ -51,6 +53,7 @@
 #include <QFuture>
 
 using namespace Esri::ArcGISRuntime;
+using namespace Esri::ArcGISRuntime::Authentication;
 
 namespace
 {
@@ -64,10 +67,10 @@ namespace
 }
 
 EditWithBranchVersioning::EditWithBranchVersioning(QObject* parent /* = nullptr */):
-  QObject(parent),
-  m_map(new Map(BasemapStyle::ArcGISStreets, this)),
-  m_cred(new Credential("editor01", "S7#i2LWmYH75", this))
+  ArcGISAuthenticationChallengeHandler(parent),
+  m_map(new Map(BasemapStyle::ArcGISStreets, this))
 {
+  ArcGISRuntimeEnvironment::authenticationManager()->setArcGISAuthenticationChallengeHandler(this);
 }
 
 EditWithBranchVersioning::~EditWithBranchVersioning() = default;
@@ -75,7 +78,6 @@ EditWithBranchVersioning::~EditWithBranchVersioning() = default;
 void EditWithBranchVersioning::init()
 {
   // Register the map view for QML
-  qmlRegisterUncreatableType<AuthenticationManager>("Esri.Samples", 1, 0, "AuthenticationManager", "AuthenticationManager is uncreateable");
   qmlRegisterType<MapQuickView>("Esri.Samples", 1, 0, "MapView");
   qmlRegisterType<EditWithBranchVersioning>("Esri.Samples", 1, 0, "EditWithBranchVersioningSample");
 }
@@ -101,11 +103,6 @@ void EditWithBranchVersioning::setMapView(MapQuickView* mapView)
   connect(m_map, &Map::doneLoading, this, &EditWithBranchVersioning::onMapDoneLoading_);
 
   emit mapViewChanged();
-}
-
-AuthenticationManager *EditWithBranchVersioning::authManager() const
-{
-  return AuthenticationManager::instance();
 }
 
 void EditWithBranchVersioning::onMapDoneLoading_(const Error& error)
@@ -162,7 +159,7 @@ void EditWithBranchVersioning::onMapDoneLoading_(const Error& error)
 
 void EditWithBranchVersioning::connectSgdbSignals()
 {
-  m_serviceGeodatabase = new ServiceGeodatabase(QUrl("https://sampleserver7.arcgisonline.com/server/rest/services/DamageAssessment/FeatureServer"), m_cred, this);
+  m_serviceGeodatabase = new ServiceGeodatabase(QUrl("https://sampleserver7.arcgisonline.com/server/rest/services/DamageAssessment/FeatureServer"), this);
   m_busy = true;
   emit busyChanged();
 
@@ -395,7 +392,7 @@ void EditWithBranchVersioning::onApplyEditsCompleted_(const QList<FeatureTableEd
 
   for (FeatureTableEditResult* featureTableEditResult : featureTableEditResults)
   {
-    const auto results = featureTableEditResult->editResults();
+    const QList<FeatureEditResult*> results = featureTableEditResult->editResults();
     for (FeatureEditResult* featureEditResult : results)
     {
       if (!featureEditResult->error().isEmpty())
@@ -418,4 +415,15 @@ void EditWithBranchVersioning::onTaskFailed_(const ErrorException& taskException
   emit errorMessageChanged();
   m_busy = false;
   emit busyChanged();
+}
+
+void EditWithBranchVersioning::handleArcGISAuthenticationChallenge(ArcGISAuthenticationChallenge* challenge)
+{
+  TokenCredential::createWithChallengeAsync(challenge, "editor01", "S7#i2LWmYH75", {}, this).then(this, [challenge](TokenCredential* tokenCredential)
+  {
+    challenge->continueWithCredential(tokenCredential);
+  }).onFailed(this, [challenge](const ErrorException& e)
+  {
+    challenge->continueAndFailWithError(e.error());
+  });
 }

@@ -22,31 +22,36 @@
 #include "AddItemsToPortal.h"
 
 // ArcGIS Maps SDK headers
-#include "AuthenticationManager.h"
-#include "CoreTypes.h"
-#include "Credential.h"
+#include "Authentication/OAuthUserConfiguration.h"
 #include "Error.h"
 #include "ErrorException.h"
 #include "ErrorInformationKeys.h"
 #include "MapTypes.h"
-#include "OAuthClientInfo.h"
 #include "Portal.h"
 #include "PortalItem.h"
 #include "PortalItemListModel.h"
 #include "PortalTypes.h"
 #include "PortalUser.h"
 
+// Other headers
+#include "AuthenticatorController.h"
+
 // Qt headers
 #include <QFuture>
 #include <QVariantMap>
 
 using namespace Esri::ArcGISRuntime;
+using namespace Esri::ArcGISRuntime::Authentication;
+using namespace Esri::ArcGISRuntime::Toolkit;
 
 AddItemsToPortal::AddItemsToPortal(QQuickItem* parent /* = nullptr */):
   QQuickItem(parent),
-  m_portal(new Portal(new Credential(OAuthClientInfo("iLkGIj0nX8A4EJda", OAuthMode::User), this), this))
+  m_portal(new Portal(true, this))
 {
-  AuthenticationManager::instance()->setCredentialCacheEnabled(false);
+  const QString redirectUrl{"urn:ietf:wg:oauth:2.0:oob"};
+  OAuthUserConfiguration* config = new OAuthUserConfiguration(m_portal->url(), "iLkGIj0nX8A4EJda", redirectUrl, this);
+  AuthenticatorController::instance()->addOAuthUserConfiguration(config);
+
   m_item = new PortalItem(m_portal, PortalItemType::CSV, this);
   m_item->setTitle("Add Items Sample");
 }
