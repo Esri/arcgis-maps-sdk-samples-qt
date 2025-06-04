@@ -18,16 +18,15 @@
 #define PERFORMVALVEISOLATIONTRACE_H
 
 // Qt headers
-#include <QObject>
 #include <QUuid>
 
-// STL headers
-#include <Point.h>
+// ArcGIS Maps SDK headers
+#include "Authentication/ArcGISAuthenticationChallengeHandler.h"
+#include "Point.h"
 
 namespace Esri::ArcGISRuntime
 {
 class ArcGISFeature;
-class Credential;
 class FeatureLayer;
 class GraphicsOverlay;
 class Map;
@@ -41,12 +40,17 @@ class IdentifyLayerResult;
 class ServiceGeodatabase;
 }
 
+namespace Esri::ArcGISRuntime::Authentication
+{
+  class ArcGISAuthenticationChallenge;
+}
+
 Q_MOC_INCLUDE("MapQuickView.h")
 Q_MOC_INCLUDE("IdentifyLayerResult.h")
 
 class TaskCanceler;
 
-class PerformValveIsolationTrace : public QObject
+class PerformValveIsolationTrace : public Esri::ArcGISRuntime::Authentication::ArcGISAuthenticationChallengeHandler
 {
   Q_OBJECT
 
@@ -86,8 +90,9 @@ private:
   void onIdentifyLayersCompleted_(const QList<Esri::ArcGISRuntime::IdentifyLayerResult*>& results);
   void onTraceCompleted_();
 
+  void handleArcGISAuthenticationChallenge(Esri::ArcGISRuntime::Authentication::ArcGISAuthenticationChallenge* challenge) override;
+
   Esri::ArcGISRuntime::Map* m_map = nullptr;
-  Esri::ArcGISRuntime::Credential* m_cred = nullptr;
   Esri::ArcGISRuntime::MapQuickView* m_mapView = nullptr;
   Esri::ArcGISRuntime::GraphicsOverlay* m_startingLocationOverlay = nullptr;
   Esri::ArcGISRuntime::GraphicsOverlay* m_filterBarriersOverlay = nullptr;

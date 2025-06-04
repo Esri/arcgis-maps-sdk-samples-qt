@@ -22,10 +22,14 @@
 #include "PerformValveIsolationTrace.h"
 
 // ArcGIS Maps SDK headers
+#include "ArcGISRuntimeEnvironment.h"
+#include "Authentication/AuthenticationManager.h"
+#include "Authentication/ArcGISAuthenticationChallenge.h"
+#include "Authentication/TokenCredential.h"
 #include "ArcGISFeature.h"
 #include "ArcGISFeatureListModel.h"
-#include "Credential.h"
 #include "Error.h"
+#include "ErrorException.h"
 #include "FeatureLayer.h"
 #include "GeometryEngine.h"
 #include "Graphic.h"
@@ -73,6 +77,7 @@
 #include "TaskCanceler.h"
 
 using namespace Esri::ArcGISRuntime;
+using namespace Esri::ArcGISRuntime::Authentication;
 
 namespace
 {
@@ -100,15 +105,16 @@ struct ScopedCleanup
 }
 
 PerformValveIsolationTrace::PerformValveIsolationTrace(QObject* parent /* = nullptr */):
-  QObject(parent),
+  ArcGISAuthenticationChallengeHandler(parent),
   m_map(new Map(BasemapStyle::ArcGISStreetsNight, this)),
-  m_cred(new Credential{sampleServer7Username, sampleServer7Password, this}),
   m_startingLocationOverlay(new GraphicsOverlay(this)),
   m_filterBarriersOverlay(new GraphicsOverlay(this)),
-  m_serviceGeodatabase(new ServiceGeodatabase(featureServiceUrl, m_cred, this)),
+  m_serviceGeodatabase(new ServiceGeodatabase(featureServiceUrl, this)),
   m_graphicParent(new QObject()),
   m_taskCanceler(std::make_unique<TaskCanceler>())
 {
+  ArcGISRuntimeEnvironment::authenticationManager()->setArcGISAuthenticationChallengeHandler(this);
+
   // disable UI while loading service geodatabase and utility network
   m_tasksRunning = true;
 
@@ -139,7 +145,7 @@ PerformValveIsolationTrace::PerformValveIsolationTrace(QObject* parent /* = null
   m_serviceGeodatabase->load();
 
   // Create and add the utility network to the map before loading
-  m_utilityNetwork = new UtilityNetwork(featureServiceUrl, m_map, m_cred, this);
+  m_utilityNetwork = new UtilityNetwork(featureServiceUrl, m_map, this);
   m_map->utilityNetworks()->append(m_utilityNetwork);
 
   connectSignals();
@@ -474,4 +480,15 @@ void PerformValveIsolationTrace::selectedTerminal(int index)
 
   m_filterBarriersOverlay->graphics()->append(new Graphic(m_clickPoint, m_graphicParent.get()));
   m_filterBarriers.append(m_element);
+}
+
+void PerformValveIsolationTrace::handleArcGISAuthenticationChallenge(ArcGISAuthenticationChallenge* challenge)
+{
+  TokenCredential::createWithChallengeAsync(challenge, sampleServer7Username, sampleServer7Password, {}, this).then(this, [challenge](TokenCredential* tokenCredential)
+  {
+    challenge->continueWithCredential(tokenCredential);
+  }).onFailed(this, [challenge](const ErrorException& e)
+  {
+    challenge->continueAndFailWithError(e.error());
+  });
 }

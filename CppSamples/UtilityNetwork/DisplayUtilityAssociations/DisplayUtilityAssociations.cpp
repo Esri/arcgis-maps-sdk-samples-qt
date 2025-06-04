@@ -23,11 +23,14 @@
 #include "SymbolImageProvider.h"
 
 // ArcGIS Maps SDK headers
+#include "ArcGISRuntimeEnvironment.h"
+#include "Authentication/AuthenticationManager.h"
+#include "Authentication/ArcGISAuthenticationChallenge.h"
+#include "Authentication/TokenCredential.h"
 #include "ArcGISFeatureTable.h"
 #include "AttributeListModel.h"
-#include "Credential.h"
 #include "Envelope.h"
-#include "Error.h"
+#include "ErrorException.h"
 #include "FeatureLayer.h"
 #include "Graphic.h"
 #include "GraphicListModel.h"
@@ -59,6 +62,7 @@
 #include <QUuid>
 
 using namespace Esri::ArcGISRuntime;
+using namespace Esri::ArcGISRuntime::Authentication;
 
 namespace
 {
@@ -68,17 +72,27 @@ constexpr int targetScale = 50;
 }
 
 DisplayUtilityAssociations::DisplayUtilityAssociations(QObject* parent /* = nullptr */):
-  QObject(parent),
+  ArcGISAuthenticationChallengeHandler(parent),
   m_map(new Map(BasemapStyle::ArcGISTopographic, this)),
-  m_cred(new Credential("viewer01", "I68VGU^nMurF", this)),
   m_associationsOverlay(new GraphicsOverlay(this)),
-  m_utilityNetwork(new UtilityNetwork(featureServerUrl, m_cred, this)),
+  m_utilityNetwork(new UtilityNetwork(featureServerUrl, this)),
   m_attachmentSymbol(new SimpleLineSymbol(SimpleLineSymbolStyle::Dot, Qt::green, 5, this)),
   m_connectivitySymbol(new SimpleLineSymbol(SimpleLineSymbolStyle::Dot, Qt::red, 5, this))
 {
+  ArcGISRuntimeEnvironment::authenticationManager()->setArcGISAuthenticationChallengeHandler(this);
   m_map->utilityNetworks()->append(m_utilityNetwork);
-
   connectSignals();
+}
+
+void DisplayUtilityAssociations::handleArcGISAuthenticationChallenge(ArcGISAuthenticationChallenge* challenge)
+{
+  TokenCredential::createWithChallengeAsync(challenge, "viewer01", "I68VGU^nMurF", {}, this).then(this, [challenge](TokenCredential* tokenCredential)
+  {
+    challenge->continueWithCredential(tokenCredential);
+  }).onFailed(this, [challenge](const ErrorException& e)
+  {
+    challenge->continueAndFailWithError(e.error());
+  });
 }
 
 void DisplayUtilityAssociations::addAssociations()
