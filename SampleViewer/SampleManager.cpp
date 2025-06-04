@@ -1,5 +1,20 @@
-// [Legal]
-// Copyright 2022 Esri.
+// COPYRIGHT 2025 ESRI
+// TRADE SECRETS: ESRI PROPRIETARY AND CONFIDENTIAL
+// Unpublished material - all rights reserved under the
+// Copyright Laws of the United States and applicable international
+// laws, treaties, and conventions.
+//
+// For additional information, contact:
+// Environmental Systems Research Institute, Inc.
+// Attn: Contracts and Legal Services Department
+// 380 New York Street
+// Redlands, California, 92373
+// USA
+//
+// email: contracts@esri.com
+/// \file SampleManager.cpp
+
+#include "pch.hpp"
 
 // Licensed under the Apache License, Version 2.0 (the "License");
 // you may not use this file except in compliance with the License.
@@ -12,8 +27,6 @@
 // See the License for the specific language governing permissions and
 // limitations under the License.
 // [Legal]
-
-#include "pch.hpp"
 
 #include <QByteArray>
 #include <QDebug>
@@ -35,11 +48,16 @@
 #include <QQmlEngine>
 #include <NetworkRequestProgress.h>
 
-#include "Authentication/AuthenticationManager.h"
+#include "ArcGISQt_global.h" // for LOCALSERVER_SUPPORTED
+#include "ArcGISRuntimeEnvironment.h"
 #include "Authentication/ArcGISCredentialStore.h"
+#include "Authentication/AuthenticationManager.h"
 #include "Authentication/NetworkCredentialStore.h"
 #include "ErrorException.h"
 #include "Portal.h"
+
+// toolkit authentication support
+#include "AuthenticatorController.h"
 
 #include "ZipHelper.h"
 
@@ -59,8 +77,6 @@
 
 #include <cstdlib>
 
-#include "ArcGISQt_global.h" // for LOCALSERVER_SUPPORTED
-#include "ArcGISRuntimeEnvironment.h"
 using namespace Esri::ArcGISRuntime;
 
 #ifdef LOCALSERVER_SUPPORTED
@@ -414,9 +430,11 @@ void SampleManager::resetAuthenticationState()
   auto f = ArcGISRuntimeEnvironment::authenticationManager()->networkCredentialStore()->removeAllAsync();
   Q_UNUSED(f)
 
-  // and remove all challenge handlers
-  ArcGISRuntimeEnvironment::authenticationManager()->setArcGISAuthenticationChallengeHandler(nullptr);
-  ArcGISRuntimeEnvironment::authenticationManager()->setNetworkAuthenticationChallengeHandler(nullptr);
+  // and remove any oauth configurations
+  Toolkit::AuthenticatorController::instance()->clearOAuthUserConfigurations();
+
+  // the AuthenticatorController is a singleton, so do not remove its challenge handlers
+  // since they still need to be available to handle challenges for various samples
 }
 
 bool SampleManager::dataItemsExists()
