@@ -427,8 +427,8 @@ void SampleManager::resetAuthenticationState()
 {
   // clear all credentials
   ArcGISRuntimeEnvironment::authenticationManager()->arcGISCredentialStore()->removeAll();
-  auto f = ArcGISRuntimeEnvironment::authenticationManager()->networkCredentialStore()->removeAllAsync();
-  Q_UNUSED(f)
+  auto removeAllFuture = ArcGISRuntimeEnvironment::authenticationManager()->networkCredentialStore()->removeAllAsync();
+  Q_UNUSED(removeAllFuture)
 
   // and remove any oauth configurations
   Toolkit::AuthenticatorController::instance()->clearOAuthUserConfigurations();
