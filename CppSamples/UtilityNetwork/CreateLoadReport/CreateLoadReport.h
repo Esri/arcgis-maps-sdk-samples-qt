@@ -44,7 +44,6 @@ namespace Esri::ArcGISRuntime::Authentication
   class ArcGISAuthenticationChallenge;
 }
 
-
 class CreateLoadReport : public Esri::ArcGISRuntime::Authentication::ArcGISAuthenticationChallengeHandler
 {
   Q_OBJECT
