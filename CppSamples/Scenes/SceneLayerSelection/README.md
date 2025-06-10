@@ -28,8 +28,8 @@ Click on a building in the scene layer to select it. Deselect buildings by click
 
 ## About the data
 
-This sample shows a [Berlin, Germany Scene](https://www.arcgis.com/home/item.html?id=31874da8a16d45bfbc1273422f772270) hosted on ArcGIS Online.
+This sample shows a [Brest France Buildings Scene](https://tiles.arcgis.com/tiles/P3ePLMYs2RVChkJx/arcgis/rest/services/Buildings_Brest/SceneServer/layers/0) hosted on ArcGIS Online.
 
 ## Tags
 
-3D, Berlin, buildings, identify, model, query, search, select
+3D, buildings, identify, model, query, search, select
