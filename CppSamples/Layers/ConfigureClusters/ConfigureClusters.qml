@@ -134,6 +134,6 @@ Item {
             font.pointSize: 14
             padding: 5
         }
-        visible: Qt.platform.os === "android" || Qt.platform.os === "ios" ? !popupView.visible : true
+        visible: (Qt.platform.os === "android" || Qt.platform.os === "ios") ? !popupView.visible : true
     }
 }
