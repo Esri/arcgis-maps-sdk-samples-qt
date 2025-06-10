@@ -45,7 +45,7 @@ Item {
         anchors.fill: dialog
         radius: 10
         border.width: 1
-        visible: Qt.platform.os === "android" || Qt.platform.os === "ios" ? !popupView.visible : true
+        visible: (Qt.platform.os === "android" || Qt.platform.os === "ios") ? !popupView.visible : true
     }
 
     PopupView {
