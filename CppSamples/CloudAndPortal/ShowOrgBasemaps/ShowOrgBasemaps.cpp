@@ -32,11 +32,11 @@
 #include "Portal.h"
 #include "PortalInfo.h"
 
-// Other headers
-#include "AuthenticatorController.h"
-
 // Qt headers
 #include <QFuture>
+
+// Other headers
+#include "OAuthUserConfigurationManager.h"
 
 using namespace Esri::ArcGISRuntime;
 using namespace Esri::ArcGISRuntime::Authentication;
@@ -128,11 +128,11 @@ void ShowOrgBasemaps::load(bool anonymous)
   {
     const QString redirectUrl{"urn:ietf:wg:oauth:2.0:oob"};
     OAuthUserConfiguration* config = new OAuthUserConfiguration(m_portal->url(), "iLkGIj0nX8A4EJda", redirectUrl, this);
-    AuthenticatorController::instance()->addOAuthUserConfiguration(config);
+    OAuthUserConfigurationManager::addConfiguration(config);
   }
   else
   {
-    AuthenticatorController::instance()->clearOAuthUserConfigurations();
+    OAuthUserConfigurationManager::clearConfigurations();
   }
 
   load();

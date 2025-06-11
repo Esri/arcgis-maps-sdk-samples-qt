@@ -33,12 +33,12 @@
 #include "PortalTypes.h"
 #include "PortalUser.h"
 
-// Other headers
-#include "AuthenticatorController.h"
-
 // Qt headers
 #include <QFuture>
 #include <QVariantMap>
+
+// Other headers
+#include "OAuthUserConfigurationManager.h"
 
 using namespace Esri::ArcGISRuntime;
 using namespace Esri::ArcGISRuntime::Authentication;
@@ -50,7 +50,7 @@ AddItemsToPortal::AddItemsToPortal(QQuickItem* parent /* = nullptr */):
 {
   const QString redirectUrl{"urn:ietf:wg:oauth:2.0:oob"};
   OAuthUserConfiguration* config = new OAuthUserConfiguration(m_portal->url(), "iLkGIj0nX8A4EJda", redirectUrl, this);
-  AuthenticatorController::instance()->addOAuthUserConfiguration(config);
+  OAuthUserConfigurationManager::addConfiguration(config);
 
   m_item = new PortalItem(m_portal, PortalItemType::CSV, this);
   m_item->setTitle("Add Items Sample");
