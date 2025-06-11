@@ -22,9 +22,13 @@
 #include "DisplaySubtypeFeatureLayer.h"
 
 // ArcGIS Maps SDK headers
-#include "Credential.h"
+#include "ArcGISRuntimeEnvironment.h"
+#include "Authentication/AuthenticationManager.h"
+#include "Authentication/ArcGISAuthenticationChallenge.h"
+#include "Authentication/TokenCredential.h"
 #include "Envelope.h"
 #include "Error.h"
+#include "ErrorException.h"
 #include "FeatureLayer.h"
 #include "LabelDefinition.h"
 #include "LabelDefinitionListModel.h"
@@ -44,18 +48,22 @@
 #include "TextSymbol.h"
 #include "Viewpoint.h"
 
+#include <QFuture>
+
 using namespace Esri::ArcGISRuntime;
+using namespace Esri::ArcGISRuntime::Authentication;
 
 DisplaySubtypeFeatureLayer::DisplaySubtypeFeatureLayer(QObject* parent /* = nullptr */):
-  QObject(parent),
+  ArcGISAuthenticationChallengeHandler(parent),
   m_map(new Map(BasemapStyle::ArcGISStreetsNight, this)),
-  m_cred(new Credential("viewer01", "I68VGU^nMurF", this)),
   m_alternateRenderer(new SimpleRenderer(new SimpleMarkerSymbol(SimpleMarkerSymbolStyle::Diamond, QColor(Qt::magenta), 20, this), this))
 {
+  ArcGISRuntimeEnvironment::authenticationManager()->setArcGISAuthenticationChallengeHandler(this);
+
   m_busy = true;
 
   // create the feature table
-  ServiceFeatureTable* featureTable = new ServiceFeatureTable(QUrl("https://sampleserver7.arcgisonline.com/server/rest/services/UtilityNetwork/NapervilleElectric/FeatureServer/0"), m_cred, this);
+  ServiceFeatureTable* featureTable = new ServiceFeatureTable(QUrl("https://sampleserver7.arcgisonline.com/server/rest/services/UtilityNetwork/NapervilleElectric/FeatureServer/0"), this);
   // create the feature layer using the feature table
   m_subtypeFeatureLayer = new SubtypeFeatureLayer(featureTable, this);
 
@@ -176,4 +184,15 @@ LabelDefinition* DisplaySubtypeFeatureLayer::createLabelDefinition()
   labelDefinition->setPlacement(LabelingPlacement::PointAboveRight);
   labelDefinition->setUseCodedValues(true);
   return labelDefinition;
+}
+
+void DisplaySubtypeFeatureLayer::handleArcGISAuthenticationChallenge(ArcGISAuthenticationChallenge* challenge)
+{
+  TokenCredential::createWithChallengeAsync(challenge, "viewer01", "I68VGU^nMurF", {}, this).then(this, [challenge](TokenCredential* tokenCredential)
+  {
+    challenge->continueWithCredential(tokenCredential);
+  }).onFailed(this, [challenge](const ErrorException& e)
+  {
+    challenge->continueAndFailWithError(e.error());
+  });
 }

@@ -27,9 +27,10 @@
 #include "ArcGISFeatureLayerInfo.h"
 #include "ArcGISFeatureListModel.h"
 #include "ArcGISFeatureTable.h"
-#include "AuthenticationChallenge.h"
-#include "AuthenticationManager.h"
-#include "Credential.h"
+#include "ArcGISRuntimeEnvironment.h"
+#include "Authentication/AuthenticationManager.h"
+#include "Authentication/ArcGISAuthenticationChallenge.h"
+#include "Authentication/TokenCredential.h"
 #include "DrawingInfo.h"
 #include "Envelope.h"
 #include "Error.h"
@@ -64,15 +65,12 @@
 #include <QUuid>
 
 using namespace Esri::ArcGISRuntime;
+using namespace Esri::ArcGISRuntime::Authentication;
 
 DisplayContentOfUtilityNetworkContainer::DisplayContentOfUtilityNetworkContainer(QObject* parent /* = nullptr */):
-  QObject(parent),
-  m_cred(new Credential("viewer01", "I68VGU^nMurF", this))
+  ArcGISAuthenticationChallengeHandler(parent)
 {
-  connect(AuthenticationManager::instance(), &AuthenticationManager::authenticationChallenge, this, [this](AuthenticationChallenge* challenge)
-  {
-    challenge->continueWithCredential(m_cred);
-  });
+  ArcGISRuntimeEnvironment::authenticationManager()->setArcGISAuthenticationChallengeHandler(this);
 
   // Load a web map that includes ArcGIS Pro Subtype Group Layers with only container features visible (i.e. fuse bank, switch bank, transformer bank, hand hole and junction box)
   m_map = new Map(QUrl("https://sampleserver7.arcgisonline.com/portal/home/item.html?id=813eda749a9444e4a9d833a4db19e1c8"), this);
@@ -402,4 +400,15 @@ QString DisplayContentOfUtilityNetworkContainer::connectivitySymbolUrl() const
 QString DisplayContentOfUtilityNetworkContainer::boundingBoxSymbolUrl() const
 {
   return m_boundingBoxSymbolUrl;
+}
+
+void DisplayContentOfUtilityNetworkContainer::handleArcGISAuthenticationChallenge(ArcGISAuthenticationChallenge* challenge)
+{
+  TokenCredential::createWithChallengeAsync(challenge, "viewer01", "I68VGU^nMurF", {}, this).then(this, [challenge](TokenCredential* tokenCredential)
+  {
+    challenge->continueWithCredential(tokenCredential);
+  }).onFailed(this, [challenge](const ErrorException& e)
+  {
+    challenge->continueAndFailWithError(e.error());
+  });
 }

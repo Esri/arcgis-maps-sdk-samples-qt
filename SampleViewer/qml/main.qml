@@ -261,8 +261,8 @@ ApplicationWindow {
         }
 
         function onSampleInitComplete() {
-            // set AuthenticationView
-            qmlLoaderAuthView.setSource("qrc:/qml/AuthenticationView.qml");
+            // set Authenticator
+            qmlLoaderAuthView.setSource("qrc:/qml/Authenticator.qml");
 
             SampleManager.currentMode = SampleManager.HomepageView;
         }

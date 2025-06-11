@@ -18,14 +18,10 @@
 #define DISPLAYUTILITYASSOCIATIONS_H
 
 // ArcGIS Maps SDK headers
-#include "UtilityNetworkTypes.h"
-
-// Qt headers
-#include <QObject>
+#include "Authentication/ArcGISAuthenticationChallengeHandler.h"
 
 namespace Esri::ArcGISRuntime
 {
-class Credential;
 class GraphicsOverlay;
 class Map;
 class MapQuickView;
@@ -33,11 +29,16 @@ class Symbol;
 class UtilityNetwork;
 }
 
+namespace Esri::ArcGISRuntime::Authentication
+{
+class ArcGISAuthenticationChallenge;
+}
+
 class SymbolImageProvider;
 
 Q_MOC_INCLUDE("MapQuickView.h")
 
-class DisplayUtilityAssociations : public QObject
+class DisplayUtilityAssociations : public Esri::ArcGISRuntime::Authentication::ArcGISAuthenticationChallengeHandler
 {
   Q_OBJECT
 
@@ -64,9 +65,10 @@ private:
   QString connectivitySymbolUrl() const;
   void connectSignals();
 
+  void handleArcGISAuthenticationChallenge(Esri::ArcGISRuntime::Authentication::ArcGISAuthenticationChallenge* challenge) override;
+
   Esri::ArcGISRuntime::Map* m_map = nullptr;
   Esri::ArcGISRuntime::MapQuickView* m_mapView = nullptr;
-  Esri::ArcGISRuntime::Credential* m_cred = nullptr;
   Esri::ArcGISRuntime::GraphicsOverlay* m_associationsOverlay = nullptr;
   Esri::ArcGISRuntime::UtilityNetwork* m_utilityNetwork = nullptr;
   Esri::ArcGISRuntime::Symbol* m_attachmentSymbol = nullptr;

@@ -18,7 +18,7 @@ import Esri.ArcGISRuntimeSamples
 import Esri.ArcGISRuntime.Toolkit as Toolkit
 
 Item {
-    Toolkit.AuthenticationView {
+    Toolkit.Authenticator {
         anchors.fill: parent
     }
 }

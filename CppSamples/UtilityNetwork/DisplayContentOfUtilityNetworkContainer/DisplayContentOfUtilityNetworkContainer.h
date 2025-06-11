@@ -18,18 +18,17 @@
 #define DISPLAYCONTENTOFUTILITYNETWORKCONTAINER_H
 
 // ArcGIS Maps SDK headers
+#include "Authentication/ArcGISAuthenticationChallengeHandler.h"
 #include "Geometry.h"
 #include "Viewpoint.h"
 
 // Qt headers
 #include <QFuture>
 #include <QMouseEvent>
-#include <QObject>
 
 namespace Esri::ArcGISRuntime
 {
   class ArcGISFeature;
-  class Credential;
   class ErrorException;
   class GraphicsOverlay;
   class IdentifyLayerResult;
@@ -42,11 +41,16 @@ namespace Esri::ArcGISRuntime
   class UtilityNetwork;
 }
 
+namespace Esri::ArcGISRuntime::Authentication
+{
+  class ArcGISAuthenticationChallenge;
+}
+
 class SymbolImageProvider;
 
 Q_MOC_INCLUDE("MapQuickView.h")
 
-class DisplayContentOfUtilityNetworkContainer : public QObject
+class DisplayContentOfUtilityNetworkContainer : public Esri::ArcGISRuntime::Authentication::ArcGISAuthenticationChallengeHandler
 {
   Q_OBJECT
 
@@ -91,7 +95,8 @@ private:
   void onAssociationsCompleted_(const QList<Esri::ArcGISRuntime::UtilityAssociation*>& containmentAssociations);
   void onTaskFailed(const QString& errorMsg, const Esri::ArcGISRuntime::ErrorException& taskException);
 
-  Esri::ArcGISRuntime::Credential* m_cred = nullptr;
+  void handleArcGISAuthenticationChallenge(Esri::ArcGISRuntime::Authentication::ArcGISAuthenticationChallenge* challenge) override;
+
   Esri::ArcGISRuntime::Geometry m_boundingBox;
   Esri::ArcGISRuntime::GraphicsOverlay* m_containerGraphicsOverlay = nullptr;
   Esri::ArcGISRuntime::Map* m_map = nullptr;
@@ -103,10 +108,10 @@ private:
   Esri::ArcGISRuntime::Viewpoint m_previousViewpoint;
   bool m_showContainerView = false;
   bool m_setBoundingBox = false;
-  QString m_messageBoxText = "";
-  QString m_attachmentSymbolUrl = "";
-  QString m_connectivitySymbolUrl = "";
-  QString m_boundingBoxSymbolUrl = "";
+  QString m_messageBoxText;
+  QString m_attachmentSymbolUrl;
+  QString m_connectivitySymbolUrl;
+  QString m_boundingBoxSymbolUrl;
   Esri::ArcGISRuntime::Symbol* m_attachmentSymbol = nullptr;
   Esri::ArcGISRuntime::Symbol* m_connectivitySymbol = nullptr;
   Esri::ArcGISRuntime::Symbol* m_boundingBoxSymbol = nullptr;

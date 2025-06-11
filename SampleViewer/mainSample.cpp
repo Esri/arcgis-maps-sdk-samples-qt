@@ -34,6 +34,7 @@
 #  include <QtWebEngineQuick>
 #endif // QT_WEBVIEW_WEBENGINE_BACKEND
 
+#include "ArcGISRuntimeEnvironment.h"
 #include "ArcGISQt_global.h" // IWYU pragma: keep - for LOCALSERVER_SUPPORTED
 
 #include "SampleManager.h"
@@ -305,6 +306,8 @@ int main(int argc, char *argv[])
 #ifdef QT_WEBVIEW_WEBENGINE_BACKEND
   QtWebEngineQuick::initialize();
 #endif // QT_WEBVIEW_WEBENGINE_BACKEND
+
+  Esri::ArcGISRuntime::ArcGISRuntimeEnvironment::setUseLegacyAuthentication(false);
 
   QGuiApplication::setApplicationName("ArcGIS Maps Qt Samples");
   QGuiApplication::setOrganizationName("Esri");

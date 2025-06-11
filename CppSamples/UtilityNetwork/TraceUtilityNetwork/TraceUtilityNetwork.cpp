@@ -22,9 +22,12 @@
 #include "TraceUtilityNetwork.h"
 
 // ArcGIS Maps SDK headers
+#include "ArcGISRuntimeEnvironment.h"
 #include "ArcGISFeature.h"
 #include "AttributeListModel.h"
-#include "Credential.h"
+#include "Authentication/AuthenticationManager.h"
+#include "Authentication/ArcGISAuthenticationChallenge.h"
+#include "Authentication/TokenCredential.h"
 #include "Envelope.h"
 #include "Error.h"
 #include "ErrorException.h"
@@ -74,19 +77,21 @@
 #include "TaskCanceler.h"
 
 using namespace Esri::ArcGISRuntime;
+using namespace Esri::ArcGISRuntime::Authentication;
 
 TraceUtilityNetwork::TraceUtilityNetwork(QObject* parent /* = nullptr */):
-  QObject(parent),
+  ArcGISAuthenticationChallengeHandler(parent),
   m_map(new Map(BasemapStyle::ArcGISStreetsNight, this)),
-  m_cred(new Credential("viewer01", "I68VGU^nMurF", this)),
   m_startingSymbol(new SimpleMarkerSymbol(SimpleMarkerSymbolStyle::Cross, QColor(Qt::green), 20, this)),
   m_barrierSymbol(new SimpleMarkerSymbol(SimpleMarkerSymbolStyle::X, QColor(Qt::red), 20, this)),
   m_mediumVoltageSymbol(new SimpleLineSymbol(SimpleLineSymbolStyle::Solid, QColor(Qt::darkCyan), 3, this)),
   m_lowVoltageSymbol(new SimpleLineSymbol(SimpleLineSymbolStyle::Dash, QColor(Qt::darkCyan), 3, this)),
-  m_serviceGeodatabase(new ServiceGeodatabase(m_serviceUrl, m_cred, this)),
+  m_serviceGeodatabase(new ServiceGeodatabase(m_serviceUrl, this)),
   m_graphicParent(new QObject()),
   m_taskCanceler(std::make_unique<TaskCanceler>())
 {
+  ArcGISRuntimeEnvironment::authenticationManager()->setArcGISAuthenticationChallengeHandler(this);
+
   m_map->setInitialViewpoint(Viewpoint(Envelope(-9813547.35557238, 5129980.36635111, -9813185.0602376, 5130215.41254146, SpatialReference::webMercator())));
 
   connect(m_serviceGeodatabase, &ServiceGeodatabase::doneLoading, this, &TraceUtilityNetwork::createFeatureLayers);
@@ -140,7 +145,7 @@ void TraceUtilityNetwork::loadUtilityNetwork(const Error& error)
   m_graphicsOverlay = new GraphicsOverlay(this);
   m_mapView->graphicsOverlays()->append(m_graphicsOverlay);
 
-  m_utilityNetwork = new UtilityNetwork(m_serviceUrl, m_map, m_cred, this);
+  m_utilityNetwork = new UtilityNetwork(m_serviceUrl, m_map, this);
 
   connect(m_utilityNetwork, &UtilityNetwork::errorOccurred, this, &TraceUtilityNetwork::hasErrorOccurred);
 
@@ -473,4 +478,15 @@ void TraceUtilityNetwork::setBusyIndicator(bool status)
   emit busyChanged();
 
   return;
+}
+
+void TraceUtilityNetwork::handleArcGISAuthenticationChallenge(ArcGISAuthenticationChallenge* challenge)
+{
+  TokenCredential::createWithChallengeAsync(challenge, "viewer01", "I68VGU^nMurF", {}, this).then(this, [challenge](TokenCredential* tokenCredential)
+  {
+    challenge->continueWithCredential(tokenCredential);
+  }).onFailed(this, [challenge](const ErrorException& e)
+  {
+    challenge->continueAndFailWithError(e.error());
+  });
 }

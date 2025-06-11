@@ -19,14 +19,11 @@
 
 // ArcGIS Maps SDK headers
 #include "SubtypeSublayer.h"
-
-// Qt headers
-#include <QObject>
+#include "Authentication/ArcGISAuthenticationChallengeHandler.h"
 
 namespace Esri::ArcGISRuntime
 {
 class FeatureLayer;
-class Credential;
 class LabelDefinition;
 class Map;
 class MapQuickView;
@@ -36,9 +33,14 @@ class SubtypeFeatureLayer;
 class SubtypeSublayer;
 }
 
+namespace Esri::ArcGISRuntime::Authentication
+{
+  class ArcGISAuthenticationChallenge;
+}
+
 Q_MOC_INCLUDE("MapQuickView.h")
 
-class DisplaySubtypeFeatureLayer : public QObject
+class DisplaySubtypeFeatureLayer : public Esri::ArcGISRuntime::Authentication::ArcGISAuthenticationChallengeHandler
 {
   Q_OBJECT
 
@@ -72,8 +74,9 @@ private:
   void setMapView(Esri::ArcGISRuntime::MapQuickView* mapView);
   Esri::ArcGISRuntime::LabelDefinition* createLabelDefinition();
 
+  void handleArcGISAuthenticationChallenge(Esri::ArcGISRuntime::Authentication::ArcGISAuthenticationChallenge* challenge) override;
+
   Esri::ArcGISRuntime::Map* m_map = nullptr;
-  Esri::ArcGISRuntime::Credential* m_cred = nullptr;
   Esri::ArcGISRuntime::MapQuickView* m_mapView = nullptr;
   Esri::ArcGISRuntime::SubtypeFeatureLayer* m_subtypeFeatureLayer = nullptr;
   Esri::ArcGISRuntime::SubtypeSublayer* m_subtypeSublayer = nullptr;
