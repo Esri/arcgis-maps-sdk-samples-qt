@@ -559,7 +559,7 @@ void SampleManager::fetchPortalItemData(const QString& itemId, const QString& ou
       {
         auto folder = portalItem->type() == PortalItemType::CodeSample ? portalItem->name() : QString();
         QString formattedPath = SampleManager::formattedPath(outputPath, folder);
-        portalItem->fetchDataAsync(formattedPath).then([this, portalItem, formattedPath]()
+        portalItem->fetchDataAsync(formattedPath).then(this, [this, portalItem, formattedPath]()
         {
           setDownloadProgress(0.0);
           if (QFileInfo(formattedPath).suffix() == "zip")

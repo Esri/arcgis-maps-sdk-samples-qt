@@ -71,7 +71,7 @@ void ShowOrgBasemaps::connectLoadStatusSignal()
 
       if (m_portalLoaded)
       {
-        m_portal->fetchBasemapsAsync().then(
+        m_portal->fetchBasemapsAsync().then(this,
         [this]()
         {
           emit basemapsChanged();
