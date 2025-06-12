@@ -57,7 +57,7 @@
 #include "Portal.h"
 
 // toolkit authentication support
-#include "AuthenticatorController.h"
+#include "OAuthUserConfigurationManager.h".h"
 
 #include "ZipHelper.h"
 
@@ -431,7 +431,7 @@ void SampleManager::resetAuthenticationState()
   Q_UNUSED(removeAllFuture)
 
   // and remove any oauth configurations
-  Toolkit::AuthenticatorController::instance()->clearOAuthUserConfigurations();
+  Toolkit::OAuthUserConfigurationManager::clearConfigurations();
 
   // the AuthenticatorController is a singleton, so do not remove its challenge handlers
   // since they still need to be available to handle challenges for various samples
