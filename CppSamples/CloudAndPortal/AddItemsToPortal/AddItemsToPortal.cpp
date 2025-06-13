@@ -170,7 +170,7 @@ void AddItemsToPortal::addItem()
 
   //! [PortalUser addItemWithUrlAsync]
   QUrl localCSV("qrc:/Samples/CloudAndPortal/AddItemsToPortal/add_item_sample.csv");
-  m_user->addPortalItemWithUrlAsync(m_item, localCSV, "add_item_sample.csv" ).then(
+  m_user->addPortalItemWithUrlAsync(m_item, localCSV, "add_item_sample.csv" ).then(this,
   [this]()
   {
     m_busy = false;
@@ -207,7 +207,7 @@ void AddItemsToPortal::deleteItem()
 
   m_busy = true;
 
-  m_user->deletePortalItemAsync(m_item).then(
+  m_user->deletePortalItemAsync(m_item).then(this,
   [this]()
   {
     m_busy = false;
@@ -235,7 +235,7 @@ void AddItemsToPortal::fetchItem()
 
   m_busy = true;
 
-  m_user->fetchContentAsync().then(
+  m_user->fetchContentAsync().then(this,
   [this]()
   {
     m_busy = false;

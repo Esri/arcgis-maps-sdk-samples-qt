@@ -249,7 +249,7 @@ void EditFeatureAttachments::onQueryFeaturesCompleted_(FeatureQueryResult* featu
     // get the number of attachments
     // enableAutoFetch and enableAutoApplyEdits for AttachmentListModel are set as false
     // to avoid automatic behavior. We will call fetchDataAsync explicitly as needed.
-    m_selectedFeature->attachments(false, false)->fetchAttachmentsAsync().then([this](const QList<Attachment*>& attachments)
+    m_selectedFeature->attachments(false, false)->fetchAttachmentsAsync().then(this, [this](const QList<Attachment*>& attachments)
     {
       m_mapView->calloutData()->setDetail(QString("Number of attachments: %1").arg(attachments.size()));
       m_mapView->calloutData()->setVisible(true); // Resizes the calloutData after details has been set.

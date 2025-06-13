@@ -147,10 +147,10 @@ void SnapGeometryEditsWithRules::initializeMap()
   m_map->setInitialViewpoint(Viewpoint(Point(-9811055.156028448, 5131792.19502501, SpatialReference::webMercator()), 10000));
 
   // Load the geodatabase
-  loadGeodatabase().then(
+  loadGeodatabase().then(this,
   [this]()
   {
-    loadOperationalLayers().then(
+    loadOperationalLayers().then(this,
     [this](const LoadOperationalLayersReturnStruct& layers)
     {
       // Pass the returned pipeLayer and deviceLayer from the future to modify their visibility
@@ -208,7 +208,7 @@ QFuture<LoadOperationalLayersReturnStruct> SnapGeometryEditsWithRules::loadOpera
   m_map->operationalLayers()->append(junctionLayer);
   layerLoadingFutures.emplace_back(load(junctionLayer));
 
-  return QtFuture::whenAll(layerLoadingFutures.begin(), layerLoadingFutures.end()).then(
+  return QtFuture::whenAll(layerLoadingFutures.begin(), layerLoadingFutures.end()).then(this,
   [pipeLayer, deviceLayer](const QList<QFuture<void>>&)
   {
     return LoadOperationalLayersReturnStruct{pipeLayer, deviceLayer};
@@ -265,7 +265,7 @@ void SnapGeometryEditsWithRules::onMapViewClicked(const QMouseEvent& mouseEvent)
   }
 
   // Identify the feature at the tapped location.
-  m_mapView->identifyLayersAsync(mouseEvent.position(), 5, false).then(
+  m_mapView->identifyLayersAsync(mouseEvent.position(), 5, false).then(this,
   [this](const QList<IdentifyLayerResult*>& identifyResult)
   {
     ArcGISFeature* selectedFeature = getFeatureFromResult(identifyResult);
@@ -395,7 +395,7 @@ void SnapGeometryEditsWithRules::stopEditing()
   if (m_selectedFeature)
   {
     m_selectedFeature->setGeometry(geometry);
-    m_selectedFeature->featureTable()->updateFeatureAsync(m_selectedFeature).then(
+    m_selectedFeature->featureTable()->updateFeatureAsync(m_selectedFeature).then(this,
     [this]()
     {
       // Reset the selection.
@@ -472,7 +472,7 @@ void SnapGeometryEditsWithRules::setSnapSettings(UtilityAssetType* assetType)
   }
 
   // Get the snap rules associated with the asset type.
-  SnapRules::createAsync(m_mapView->map()->utilityNetworks()->first(), assetType).then(
+  SnapRules::createAsync(m_mapView->map()->utilityNetworks()->first(), assetType).then(this,
   [this](SnapRules* createdRules)
   {
     // Synchronize the snap source collection with the map's operational layers using the snap rules.

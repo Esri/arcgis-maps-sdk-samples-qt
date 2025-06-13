@@ -397,7 +397,7 @@ void ValidateUtilityNetworkTopology::onGetState()
 
     updateMessage("Getting utility network state...");
 
-    m_utilityNetwork->stateAsync().then([this](const QFuture<Esri::ArcGISRuntime::UtilityNetworkState*>& state)
+    m_utilityNetwork->stateAsync().then(this, [this](const QFuture<Esri::ArcGISRuntime::UtilityNetworkState*>& state)
     {
       m_utilityNetworkstate = state.result();
 
