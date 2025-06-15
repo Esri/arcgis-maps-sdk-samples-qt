@@ -182,7 +182,6 @@
 #include "../CppSamples/Layers/RasterStretchRenderer/RasterStretchRenderer.h"
 #include "../CppSamples/Layers/StyleWmsLayer/StyleWmsLayer.h"
 #include "../CppSamples/Layers/TileCacheLayer/TileCacheLayer.h"
-#include "../CppSamples/Layers/VectorTiledLayerUrl/VectorTiledLayerUrl.h"
 #include "../CppSamples/Layers/WMTS_Layer/WMTS_Layer.h"
 #include "../CppSamples/Layers/Web_Tiled_Layer/Web_Tiled_Layer.h"
 #include "../CppSamples/Layers/WmsLayerUrl/WmsLayerUrl.h"
@@ -580,7 +579,6 @@ void registerCppSampleClasses()
   UpdateAttributesFeatureService::init();
   UpdateGeometryFeatureService::init();
   ValidateUtilityNetworkTopology::init();
-  VectorTiledLayerUrl::init();
   ViewContentBeneathTerrainSurface::init();
   ViewPointCloudDataOffline::init();
   ViewshedCamera::init();

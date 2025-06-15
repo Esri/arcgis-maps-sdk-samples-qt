@@ -151,7 +151,6 @@ HEADERS += \
     "$$SAMPLEPATHCPP/Layers/RasterStretchRenderer/RasterStretchRenderer.h" \
     "$$SAMPLEPATHCPP/Layers/StyleWmsLayer/StyleWmsLayer.h" \
     "$$SAMPLEPATHCPP/Layers/TileCacheLayer/TileCacheLayer.h" \
-    "$$SAMPLEPATHCPP/Layers/VectorTiledLayerUrl/VectorTiledLayerUrl.h" \
     "$$SAMPLEPATHCPP/Layers/Web_Tiled_Layer/Web_Tiled_Layer.h" \
     "$$SAMPLEPATHCPP/Layers/WmsLayerUrl/WmsLayerUrl.h" \
     "$$SAMPLEPATHCPP/Layers/WMTS_Layer/WMTS_Layer.h" \
@@ -381,7 +380,6 @@ SOURCES += \
     "$$SAMPLEPATHCPP/Layers/RasterStretchRenderer/RasterStretchRenderer.cpp" \
     "$$SAMPLEPATHCPP/Layers/StyleWmsLayer/StyleWmsLayer.cpp" \
     "$$SAMPLEPATHCPP/Layers/TileCacheLayer/TileCacheLayer.cpp" \
-    "$$SAMPLEPATHCPP/Layers/VectorTiledLayerUrl/VectorTiledLayerUrl.cpp" \
     "$$SAMPLEPATHCPP/Layers/Web_Tiled_Layer/Web_Tiled_Layer.cpp" \
     "$$SAMPLEPATHCPP/Layers/WmsLayerUrl/WmsLayerUrl.cpp" \
     "$$SAMPLEPATHCPP/Layers/WMTS_Layer/WMTS_Layer.cpp" \
@@ -602,7 +600,6 @@ RESOURCES += \
     "$$SAMPLEPATHCPP/Layers/RasterStretchRenderer/RasterStretchRenderer.qrc" \
     "$$SAMPLEPATHCPP/Layers/StyleWmsLayer/StyleWmsLayer.qrc" \
     "$$SAMPLEPATHCPP/Layers/TileCacheLayer/TileCacheLayer.qrc" \
-    "$$SAMPLEPATHCPP/Layers/VectorTiledLayerUrl/VectorTiledLayerUrl.qrc" \
     "$$SAMPLEPATHCPP/Layers/Web_Tiled_Layer/Web_Tiled_Layer.qrc" \
     "$$SAMPLEPATHCPP/Layers/WmsLayerUrl/WmsLayerUrl.qrc" \
     "$$SAMPLEPATHCPP/Layers/WMTS_Layer/WMTS_Layer.qrc" \
