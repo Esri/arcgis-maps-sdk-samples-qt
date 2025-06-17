@@ -378,6 +378,6 @@ void ConfigureSubnetworkTrace::handleArcGISAuthenticationChallenge(ArcGISAuthent
     challenge->continueWithCredential(tokenCredential);
   }).onFailed(this, [challenge](const ErrorException& e)
   {
-    challenge->continueAndFailWithError(e.error());
+    challenge->continueWithError(e.error());
   });
 }
