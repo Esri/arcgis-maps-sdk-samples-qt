@@ -121,6 +121,7 @@ private:
   bool m_progressBarVisibility = false;
   bool m_clearButtonAvailability = false;
   bool m_stateButtonAvailability = false;
+  Esri::ArcGISRuntime::Authentication::ArcGISAuthenticationChallengeHandler* m_previousChallengeHandler = nullptr;
 };
 
 #endif // VALIDATEUTILITYNETWORKTOPOLOGY_H

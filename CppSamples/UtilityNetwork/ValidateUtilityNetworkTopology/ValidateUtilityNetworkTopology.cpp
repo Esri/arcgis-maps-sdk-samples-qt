@@ -93,6 +93,7 @@ using namespace Esri::ArcGISRuntime::Authentication;
 ValidateUtilityNetworkTopology::ValidateUtilityNetworkTopology(QObject* parent /* = nullptr */) :
   ArcGISAuthenticationChallengeHandler(parent)
 {
+  m_previousChallengeHandler = ArcGISRuntimeEnvironment::authenticationManager()->arcGISAuthenticationChallengeHandler();
   ArcGISRuntimeEnvironment::authenticationManager()->setArcGISAuthenticationChallengeHandler(this);
 
   Portal* portal = new Portal(QUrl("https://sampleserver7.arcgisonline.com/portal/sharing/rest"), this);
@@ -107,7 +108,11 @@ ValidateUtilityNetworkTopology::ValidateUtilityNetworkTopology(QObject* parent /
   });
 }
 
-ValidateUtilityNetworkTopology::~ValidateUtilityNetworkTopology() = default;
+ValidateUtilityNetworkTopology::~ValidateUtilityNetworkTopology()
+{
+  // this is not needed in typically workflows - it is to allow different samples to manage their credentials themselves
+  ArcGISRuntimeEnvironment::authenticationManager()->setArcGISAuthenticationChallengeHandler(m_previousChallengeHandler);
+}
 
 void ValidateUtilityNetworkTopology::init()
 {

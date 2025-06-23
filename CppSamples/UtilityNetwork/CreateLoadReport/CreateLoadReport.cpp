@@ -64,6 +64,7 @@ using namespace Esri::ArcGISRuntime::Authentication;
 CreateLoadReport::CreateLoadReport(QObject* parent /* = nullptr */):
   ArcGISAuthenticationChallengeHandler(parent)
 {
+  m_previousChallengeHandler = ArcGISRuntimeEnvironment::authenticationManager()->arcGISAuthenticationChallengeHandler();
   ArcGISRuntimeEnvironment::authenticationManager()->setArcGISAuthenticationChallengeHandler(this);
 
   m_networkSourceName = "Electric Distribution Device";
@@ -284,7 +285,11 @@ void CreateLoadReport::onTraceCompleted_(const QString& codedValueName)
   }
 }
 
-CreateLoadReport::~CreateLoadReport() = default;
+CreateLoadReport::~CreateLoadReport()
+{
+  // this is not needed in typically workflows - it is to allow different samples to manage their credentials themselves
+  ArcGISRuntimeEnvironment::authenticationManager()->setArcGISAuthenticationChallengeHandler(m_previousChallengeHandler);
+}
 
 void CreateLoadReport::init()
 {

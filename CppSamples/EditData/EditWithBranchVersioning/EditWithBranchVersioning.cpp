@@ -70,10 +70,15 @@ EditWithBranchVersioning::EditWithBranchVersioning(QObject* parent /* = nullptr 
   ArcGISAuthenticationChallengeHandler(parent),
   m_map(new Map(BasemapStyle::ArcGISStreets, this))
 {
+  m_previousChallengeHandler = ArcGISRuntimeEnvironment::authenticationManager()->arcGISAuthenticationChallengeHandler();
   ArcGISRuntimeEnvironment::authenticationManager()->setArcGISAuthenticationChallengeHandler(this);
 }
 
-EditWithBranchVersioning::~EditWithBranchVersioning() = default;
+EditWithBranchVersioning::~EditWithBranchVersioning()
+{
+  // this is not needed in typically workflows - it is to allow different samples to manage their credentials themselves
+  ArcGISRuntimeEnvironment::authenticationManager()->setArcGISAuthenticationChallengeHandler(m_previousChallengeHandler);
+}
 
 void EditWithBranchVersioning::init()
 {

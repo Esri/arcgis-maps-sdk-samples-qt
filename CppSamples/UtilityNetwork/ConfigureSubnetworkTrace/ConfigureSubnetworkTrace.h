@@ -115,7 +115,7 @@ private:
   const QUuid m_gloabId = QUuid("{1CAF7740-0BF4-4113-8DB2-654E18800028}");
   QString m_dialogText;
   QString m_expressionBuilder;
-
+  Esri::ArcGISRuntime::Authentication::ArcGISAuthenticationChallengeHandler* m_previousChallengeHandler = nullptr;
 };
 
 #endif // CONFIGURESUBNETWORKTRACE_H

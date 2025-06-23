@@ -58,6 +58,7 @@ DisplaySubtypeFeatureLayer::DisplaySubtypeFeatureLayer(QObject* parent /* = null
   m_map(new Map(BasemapStyle::ArcGISStreetsNight, this)),
   m_alternateRenderer(new SimpleRenderer(new SimpleMarkerSymbol(SimpleMarkerSymbolStyle::Diamond, QColor(Qt::magenta), 20, this), this))
 {
+  m_previousChallengeHandler = ArcGISRuntimeEnvironment::authenticationManager()->arcGISAuthenticationChallengeHandler();
   ArcGISRuntimeEnvironment::authenticationManager()->setArcGISAuthenticationChallengeHandler(this);
 
   m_busy = true;
@@ -77,7 +78,11 @@ DisplaySubtypeFeatureLayer::DisplaySubtypeFeatureLayer(QObject* parent /* = null
   connect(m_subtypeFeatureLayer, &SubtypeFeatureLayer::doneLoading, this, &DisplaySubtypeFeatureLayer::getSubtypeSublayerAndDefineLabels);
 }
 
-DisplaySubtypeFeatureLayer::~DisplaySubtypeFeatureLayer() = default;
+DisplaySubtypeFeatureLayer::~DisplaySubtypeFeatureLayer()
+{
+  // this is not needed in typically workflows - it is to allow different samples to manage their credentials themselves
+  ArcGISRuntimeEnvironment::authenticationManager()->setArcGISAuthenticationChallengeHandler(m_previousChallengeHandler);
+}
 
 void DisplaySubtypeFeatureLayer::init()
 {

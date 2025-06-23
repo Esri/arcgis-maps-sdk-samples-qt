@@ -113,6 +113,7 @@ PerformValveIsolationTrace::PerformValveIsolationTrace(QObject* parent /* = null
   m_graphicParent(new QObject()),
   m_taskCanceler(std::make_unique<TaskCanceler>())
 {
+  m_previousChallengeHandler = ArcGISRuntimeEnvironment::authenticationManager()->arcGISAuthenticationChallengeHandler();
   ArcGISRuntimeEnvironment::authenticationManager()->setArcGISAuthenticationChallengeHandler(this);
 
   // disable UI while loading service geodatabase and utility network
@@ -153,7 +154,11 @@ PerformValveIsolationTrace::PerformValveIsolationTrace(QObject* parent /* = null
   m_utilityNetwork->load();
 }
 
-PerformValveIsolationTrace::~PerformValveIsolationTrace() = default;
+PerformValveIsolationTrace::~PerformValveIsolationTrace()
+{
+  // this is not needed in typically workflows - it is to allow different samples to manage their credentials themselves
+  ArcGISRuntimeEnvironment::authenticationManager()->setArcGISAuthenticationChallengeHandler(m_previousChallengeHandler);
+}
 
 void PerformValveIsolationTrace::init()
 {

@@ -145,6 +145,7 @@ private:
   QList<Esri::ArcGISRuntime::UtilityTerminal*> m_terminals;
   QScopedPointer<QObject> m_graphicParent;
   std::unique_ptr<TaskCanceler> m_taskCanceler;
+  Esri::ArcGISRuntime::Authentication::ArcGISAuthenticationChallengeHandler* m_previousChallengeHandler = nullptr;
 };
 
 #endif // TraceUtilityNetwork_H

@@ -83,6 +83,7 @@ private:
   Esri::ArcGISRuntime::LabelDefinition* m_labelDefinition = nullptr;
   Esri::ArcGISRuntime::Renderer* m_originalRenderer = nullptr;
   Esri::ArcGISRuntime::SimpleRenderer* m_alternateRenderer = nullptr;
+  Esri::ArcGISRuntime::Authentication::ArcGISAuthenticationChallengeHandler* m_previousChallengeHandler = nullptr;
 
   double m_mapScale = 0.0;
   double m_sublayerMinScale = 0.0;

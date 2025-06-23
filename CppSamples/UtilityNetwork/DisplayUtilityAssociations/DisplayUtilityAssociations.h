@@ -76,6 +76,7 @@ private:
   QString m_attachmentSymbolUrl = "";
   QString m_connectivitySymbolUrl = "";
   SymbolImageProvider* m_symbolImageProvider = nullptr;
+  Esri::ArcGISRuntime::Authentication::ArcGISAuthenticationChallengeHandler* m_previousChallengeHandler = nullptr;
 };
 
 #endif // DISPLAYUTILITYASSOCIATIONS_H

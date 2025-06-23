@@ -90,6 +90,7 @@ TraceUtilityNetwork::TraceUtilityNetwork(QObject* parent /* = nullptr */):
   m_graphicParent(new QObject()),
   m_taskCanceler(std::make_unique<TaskCanceler>())
 {
+  m_previousChallengeHandler = ArcGISRuntimeEnvironment::authenticationManager()->arcGISAuthenticationChallengeHandler();
   ArcGISRuntimeEnvironment::authenticationManager()->setArcGISAuthenticationChallengeHandler(this);
 
   m_map->setInitialViewpoint(Viewpoint(Envelope(-9813547.35557238, 5129980.36635111, -9813185.0602376, 5130215.41254146, SpatialReference::webMercator())));
@@ -202,7 +203,11 @@ void TraceUtilityNetwork::connectSignals()
   });
 }
 
-TraceUtilityNetwork::~TraceUtilityNetwork() = default;
+TraceUtilityNetwork::~TraceUtilityNetwork()
+{
+  // this is not needed in typically workflows - it is to allow different samples to manage their credentials themselves
+  ArcGISRuntimeEnvironment::authenticationManager()->setArcGISAuthenticationChallengeHandler(m_previousChallengeHandler);
+}
 
 void TraceUtilityNetwork::init()
 {

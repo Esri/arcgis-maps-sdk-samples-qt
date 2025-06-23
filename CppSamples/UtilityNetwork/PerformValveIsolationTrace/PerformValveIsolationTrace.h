@@ -112,6 +112,7 @@ private:
   bool m_tasksRunning = false;
   bool m_traceRunning = false;
   bool m_noResults = false;
+  Esri::ArcGISRuntime::Authentication::ArcGISAuthenticationChallengeHandler* m_previousChallengeHandler = nullptr;
 };
 
 #endif // PERFORMVALVEISOLATIONTRACE_H

@@ -112,6 +112,7 @@ private:
   QString m_terminalName;
   QString m_tierName;
   int m_traceRequestCount;
+  Esri::ArcGISRuntime::Authentication::ArcGISAuthenticationChallengeHandler* m_previousChallengeHandler = nullptr;
 };
 
 #endif // CREATELOADREPORT_H

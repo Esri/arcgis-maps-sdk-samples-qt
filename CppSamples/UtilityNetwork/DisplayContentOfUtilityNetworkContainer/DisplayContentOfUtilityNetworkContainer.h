@@ -116,6 +116,7 @@ private:
   Esri::ArcGISRuntime::Symbol* m_connectivitySymbol = nullptr;
   Esri::ArcGISRuntime::Symbol* m_boundingBoxSymbol = nullptr;
   SymbolImageProvider* m_symbolImageProvider = nullptr;
+  Esri::ArcGISRuntime::Authentication::ArcGISAuthenticationChallengeHandler* m_previousChallengeHandler = nullptr;
 };
 
 #endif // DISPLAYCONTENTOFUTILITYNETWORKCONTAINER_H

@@ -70,6 +70,7 @@ using namespace Esri::ArcGISRuntime::Authentication;
 DisplayContentOfUtilityNetworkContainer::DisplayContentOfUtilityNetworkContainer(QObject* parent /* = nullptr */):
   ArcGISAuthenticationChallengeHandler(parent)
 {
+  m_previousChallengeHandler = ArcGISRuntimeEnvironment::authenticationManager()->arcGISAuthenticationChallengeHandler();
   ArcGISRuntimeEnvironment::authenticationManager()->setArcGISAuthenticationChallengeHandler(this);
 
   // Load a web map that includes ArcGIS Pro Subtype Group Layers with only container features visible (i.e. fuse bank, switch bank, transformer bank, hand hole and junction box)
@@ -80,7 +81,11 @@ DisplayContentOfUtilityNetworkContainer::DisplayContentOfUtilityNetworkContainer
   m_utilityNetwork->load();
 }
 
-DisplayContentOfUtilityNetworkContainer::~DisplayContentOfUtilityNetworkContainer() = default;
+DisplayContentOfUtilityNetworkContainer::~DisplayContentOfUtilityNetworkContainer()
+{
+  // this is not needed in typically workflows - it is to allow different samples to manage their credentials themselves
+  ArcGISRuntimeEnvironment::authenticationManager()->setArcGISAuthenticationChallengeHandler(m_previousChallengeHandler);
+}
 
 void DisplayContentOfUtilityNetworkContainer::init()
 {

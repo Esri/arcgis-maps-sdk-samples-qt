@@ -63,6 +63,7 @@ using namespace Esri::ArcGISRuntime::Authentication;
 ConfigureSubnetworkTrace::ConfigureSubnetworkTrace(QObject* parent /* = nullptr */):
   ArcGISAuthenticationChallengeHandler(parent)
 {
+  m_previousChallengeHandler = ArcGISRuntimeEnvironment::authenticationManager()->arcGISAuthenticationChallengeHandler();
   ArcGISRuntimeEnvironment::authenticationManager()->setArcGISAuthenticationChallengeHandler(this);
   m_utilityNetwork = new UtilityNetwork(m_featureLayerUrl, this);
 
@@ -364,7 +365,11 @@ void ConfigureSubnetworkTrace::onUtilityNetworkLoaded(const Error& e)
   utilityTierSource->defaultTraceConfiguration()->traversability()->setScope(UtilityTraversabilityScope::Junctions);
 }
 
-ConfigureSubnetworkTrace::~ConfigureSubnetworkTrace() = default;
+ConfigureSubnetworkTrace::~ConfigureSubnetworkTrace()
+{
+  // this is not needed in typically workflows - it is to allow different samples to manage their credentials themselves
+  ArcGISRuntimeEnvironment::authenticationManager()->setArcGISAuthenticationChallengeHandler(m_previousChallengeHandler);
+}
 
 void ConfigureSubnetworkTrace::init()
 {

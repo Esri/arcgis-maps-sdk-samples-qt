@@ -79,6 +79,7 @@ DisplayUtilityAssociations::DisplayUtilityAssociations(QObject* parent /* = null
   m_attachmentSymbol(new SimpleLineSymbol(SimpleLineSymbolStyle::Dot, Qt::green, 5, this)),
   m_connectivitySymbol(new SimpleLineSymbol(SimpleLineSymbolStyle::Dot, Qt::red, 5, this))
 {
+  m_previousChallengeHandler = ArcGISRuntimeEnvironment::authenticationManager()->arcGISAuthenticationChallengeHandler();
   ArcGISRuntimeEnvironment::authenticationManager()->setArcGISAuthenticationChallengeHandler(this);
   m_map->utilityNetworks()->append(m_utilityNetwork);
   connectSignals();
@@ -137,7 +138,11 @@ void DisplayUtilityAssociations::addAssociations()
   });
 }
 
-DisplayUtilityAssociations::~DisplayUtilityAssociations() = default;
+DisplayUtilityAssociations::~DisplayUtilityAssociations()
+{
+  // this is not needed in typically workflows - it is to allow different samples to manage their credentials themselves
+  ArcGISRuntimeEnvironment::authenticationManager()->setArcGISAuthenticationChallengeHandler(m_previousChallengeHandler);
+}
 
 void DisplayUtilityAssociations::init()
 {
