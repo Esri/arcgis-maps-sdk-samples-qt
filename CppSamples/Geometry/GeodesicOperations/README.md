@@ -18,12 +18,12 @@ Click anywhere on the map. A line graphic will display the geodesic line between
 2. Obtain a new point when a click occurs on the `MapView` and add this point as a graphic.
 3. Create a `Polyline` from the two points.
 4. Execute `GeometryEngine::densifyGeodetic` by passing in the created polyine then create a graphic from the returned `Geometry`.
-5. Execute `GeometryEngine::lengthGeodetic` by passing in the two points and display the returned length on the screen.
+5. Execute `GeometryEngine::distanceGeodetic` by passing in the two points and display the returned length on the screen.
 
 ## Relevant API
 
 * GeometryEngine::densifyGeodetic
-* GeometryEngine::lengthGeodetic
+* GeometryEngine::distanceGeodetic
 
 ## About the data
 
