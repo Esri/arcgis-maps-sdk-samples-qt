@@ -180,7 +180,7 @@ private:
   std::unique_ptr<QTemporaryDir> m_tempDir;
   bool m_cancelDownload = false;
   bool m_downloadFailed = false;
-  Esri::ArcGISRuntime::Authentication::ArcGISAuthenticationChallengeHandler* m_previousChallengeHandler = nullptr;
+  Esri::ArcGISRuntime::Authentication::ArcGISAuthenticationChallengeHandler* m_toolkitChallengeHandler = nullptr;
 };
 
 #endif // SAMPLEMANAGER_H
