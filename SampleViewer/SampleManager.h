@@ -26,6 +26,7 @@ class SampleCategory;
 class Sample;
 
 namespace Esri::ArcGISRuntime { class Portal; }
+namespace Esri::ArcGISRuntime::Authentication { class ArcGISAuthenticationChallengeHandler; }
 
 #include <QDir>
 #include <QJsonDocument>
@@ -133,6 +134,7 @@ private:
   CurrentMode currentMode() { return m_currentMode; }
   void setCurrentMode(const CurrentMode& mode);
   Sample* currentSample() const { return m_currentSample; }
+  void cacheToolkitChallengeHandler();
   void setCurrentSample(Sample* sample);
   void setCurrentSample(const QVariant& sample);
   SampleCategory* currentCategory() const { return m_currentCategory; }
@@ -178,6 +180,7 @@ private:
   std::unique_ptr<QTemporaryDir> m_tempDir;
   bool m_cancelDownload = false;
   bool m_downloadFailed = false;
+  Esri::ArcGISRuntime::Authentication::ArcGISAuthenticationChallengeHandler* m_toolkitChallengeHandler = nullptr;
 };
 
 #endif // SAMPLEMANAGER_H

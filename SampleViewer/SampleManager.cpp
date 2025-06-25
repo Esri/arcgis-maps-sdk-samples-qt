@@ -347,8 +347,14 @@ void SampleManager::setCurrentMode(const CurrentMode& mode)
   emit currentModeChanged();
 }
 
+void SampleManager::cacheToolkitChallengeHandler() 
+{
+  m_toolkitChallengeHandler = ArcGISRuntimeEnvironment::authenticationManager()->arcGISAuthenticationChallengeHandler();
+}
+
 void SampleManager::setCurrentSample(Sample* sample)
 {
+  cacheToolkitChallengeHandler();
   m_currentSample = sample;
 
   // NOTE - currently we know we cannot set an API Key for the
@@ -371,6 +377,7 @@ void SampleManager::setCurrentSample(Sample* sample)
 
 void SampleManager::setCurrentSample(const QVariant& sample)
 {
+  cacheToolkitChallengeHandler();
   if (sample.isValid())
   {
     auto samplePtr = qvariant_cast<Sample*>(sample);
@@ -433,8 +440,11 @@ void SampleManager::resetAuthenticationState()
   // and remove any oauth configurations
   Toolkit::OAuthUserConfigurationManager::clearConfigurations();
 
-  // the AuthenticatorController is a singleton, so do not remove its challenge handlers
-  // since they still need to be available to handle challenges for various samples
+  if (m_toolkitChallengeHandler != nullptr)
+  {
+    // when sample changes, restore the original toolkit challenge handler
+    ArcGISRuntimeEnvironment::authenticationManager()->setArcGISAuthenticationChallengeHandler(m_toolkitChallengeHandler);
+  }
 }
 
 bool SampleManager::dataItemsExists()
