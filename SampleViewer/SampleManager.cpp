@@ -347,7 +347,8 @@ void SampleManager::setCurrentMode(const CurrentMode& mode)
   emit currentModeChanged();
 }
 
-void SampleManager::cacheToolkitChallengeHandler() {
+void SampleManager::cacheToolkitChallengeHandler() 
+{
   if ( m_previousChallengeHandler == nullptr )
   {
     // cache the original toolkit challenge handler
