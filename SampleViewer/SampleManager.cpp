@@ -444,7 +444,7 @@ void SampleManager::resetAuthenticationState()
   // and remove any oauth configurations
   Toolkit::OAuthUserConfigurationManager::clearConfigurations();
 
-  if ( m_previousChallengeHandler != nullptr )
+  if (m_previousChallengeHandler != nullptr)
   {
     // when sample changes, restore the original toolkit challenge handler
     ArcGISRuntimeEnvironment::authenticationManager()->setArcGISAuthenticationChallengeHandler(m_previousChallengeHandler);
