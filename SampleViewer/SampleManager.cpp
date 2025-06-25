@@ -349,11 +349,7 @@ void SampleManager::setCurrentMode(const CurrentMode& mode)
 
 void SampleManager::cacheToolkitChallengeHandler() 
 {
-  if (m_toolkitChallengeHandler == nullptr)
-  {
-    // cache the original toolkit challenge handler
-    m_toolkitChallengeHandler = ArcGISRuntimeEnvironment::authenticationManager()->arcGISAuthenticationChallengeHandler();
-  }
+  m_toolkitChallengeHandler = ArcGISRuntimeEnvironment::authenticationManager()->arcGISAuthenticationChallengeHandler();
 }
 
 void SampleManager::setCurrentSample(Sample* sample)
