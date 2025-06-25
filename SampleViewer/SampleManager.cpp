@@ -351,7 +351,9 @@ void SampleManager::cacheToolkitChallengeHandler()
 {
   // Only cache the first instance of the challenge handler from the toolkit
   if (m_toolkitChallengeHandler == nullptr)
+  {
     m_toolkitChallengeHandler = ArcGISRuntimeEnvironment::authenticationManager()->arcGISAuthenticationChallengeHandler();
+  }
 }
 
 void SampleManager::setCurrentSample(Sample* sample)
