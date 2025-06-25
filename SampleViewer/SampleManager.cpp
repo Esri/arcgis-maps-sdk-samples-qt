@@ -443,8 +443,6 @@ void SampleManager::resetAuthenticationState()
   // and remove any oauth configurations
   Toolkit::OAuthUserConfigurationManager::clearConfigurations();
 
-  // the AuthenticatorController is a singleton, so do not remove its challenge handlers
-  // since they still need to be available to handle challenges for various samples
   if ( m_previousChallengeHandler != nullptr )
   {
     // when sample changes, restore the original toolkit challenge handler
