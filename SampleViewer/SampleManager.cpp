@@ -349,10 +349,10 @@ void SampleManager::setCurrentMode(const CurrentMode& mode)
 
 void SampleManager::cacheToolkitChallengeHandler() 
 {
-  if ( m_previousChallengeHandler == nullptr )
+  if (m_toolkitChallengeHandler == nullptr)
   {
     // cache the original toolkit challenge handler
-    m_previousChallengeHandler = ArcGISRuntimeEnvironment::authenticationManager()->arcGISAuthenticationChallengeHandler();
+    m_toolkitChallengeHandler = ArcGISRuntimeEnvironment::authenticationManager()->arcGISAuthenticationChallengeHandler();
   }
 }
 
@@ -444,10 +444,10 @@ void SampleManager::resetAuthenticationState()
   // and remove any oauth configurations
   Toolkit::OAuthUserConfigurationManager::clearConfigurations();
 
-  if (m_previousChallengeHandler != nullptr)
+  if (m_toolkitChallengeHandler != nullptr)
   {
     // when sample changes, restore the original toolkit challenge handler
-    ArcGISRuntimeEnvironment::authenticationManager()->setArcGISAuthenticationChallengeHandler(m_previousChallengeHandler);
+    ArcGISRuntimeEnvironment::authenticationManager()->setArcGISAuthenticationChallengeHandler(m_toolkitChallengeHandler);
   }
 }
 
