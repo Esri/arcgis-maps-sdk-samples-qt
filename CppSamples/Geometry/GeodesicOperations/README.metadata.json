@@ -12,14 +12,14 @@
         "geodesic",
         "geodetic",
         "GeometryEngine::densifyGeodetic",
-        "GeometryEngine::lengthGeodetic"
+        "GeometryEngine::distanceGeodetic"
     ],
     "redirect_from": [
         "/qt/latest/cpp/sample-code/sample-qt-geodesicoperations.htm"
     ],
     "relevant_apis": [
         "GeometryEngine::densifyGeodetic",
-        "GeometryEngine::lengthGeodetic"
+        "GeometryEngine::distanceGeodetic"
     ],
     "snippets": [
         "GeodesicOperations.cpp",
