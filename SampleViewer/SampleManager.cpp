@@ -57,7 +57,7 @@
 #include "Portal.h"
 
 // toolkit authentication support
-#include "OAuthUserConfigurationManager.h".h"
+#include "OAuthUserConfigurationManager.h"
 
 #include "ZipHelper.h"
 
@@ -347,7 +347,7 @@ void SampleManager::setCurrentMode(const CurrentMode& mode)
   emit currentModeChanged();
 }
 
-void SampleManager::cacheToolkitChallengeHandler() 
+void SampleManager::cacheToolkitChallengeHandler()
 {
   // Only cache the first instance of the challenge handler from the toolkit
   if (m_toolkitChallengeHandler == nullptr)
