@@ -96,7 +96,7 @@ bool PortalUserInfo::loaded()
 bool PortalUserInfo::loginDismissed()
 {
   if (m_portal)
-    return m_portal->loadError().message().contains("canceled");
+    return m_portal->loadError().errorType() == ErrorType::AuthenticationChallengeCanceled;
 
   return false;
 }
