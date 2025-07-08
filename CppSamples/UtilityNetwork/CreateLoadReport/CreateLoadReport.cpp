@@ -30,6 +30,7 @@
 #include "ErrorException.h"
 #include "MapQuickView.h"
 #include "MapTypes.h"
+#include "ServiceGeodatabase.h"
 #include "UtilityAssetGroup.h"
 #include "UtilityAssetType.h"
 #include "UtilityCategory.h"
@@ -77,8 +78,9 @@ CreateLoadReport::CreateLoadReport(QObject* parent /* = nullptr */):
   m_loadNetworkAttributeName = "Service Load";
   m_phasesNetworkAttributeName = "Phases Current";
   m_sampleStatus = CreateLoadReport::SampleNotLoaded;
+  m_featureLayerUrl = QUrl("https://sampleserver7.arcgisonline.com/server/rest/services/UtilityNetwork/NapervilleElectric/FeatureServer");
 
-  m_utilityNetwork = new UtilityNetwork(QUrl("https://sampleserver7.arcgisonline.com/server/rest/services/UtilityNetwork/NapervilleElectric/FeatureServer"), this);
+  m_utilityNetwork = new UtilityNetwork(new ServiceGeodatabase(m_featureLayerUrl, this), this);
 
   connect(m_utilityNetwork, &UtilityNetwork::loadStatusChanged, this, [this]()
   {

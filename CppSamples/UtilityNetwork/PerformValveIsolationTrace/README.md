@@ -15,26 +15,25 @@ Select one or more features to use as filter barriers or create and set the conf
 ## How it works
 
 1. Create a `MapView` and connect to its `mouseClicked` signal.
-2. Create and load a `ServiceGeodatabase` with a feature service URL and get tables with their layer IDs.
-3. Create a `Map` that contains `FeatureLayer`(s) created from the `ServiceGeodatabase`'s tables.
-4. Create and load a `UtilityNetwork` with the feature service URL and the `Map`.
-5. Add a `GraphicsOverlay` with a `Graphic` that represents the starting location, and another graphics overlay for the filter barriers.
-6. Populate the list of filter barrier categories from `UtilityNetworkDefinition::categories`.
-7. When the map view is clicked, identify which features are at that location and add a graphic that represents a filter barrier.
-8. Create a `UtilityElement` for the identified feature and add this utility element to a list of filter barriers.
+2. Create and load a `Map` with a web map item URL that contains a `UtilityNetwork`.
+3. Get and load the first `UtilityNetwork` from the web map.
+4. Add a `GraphicsOverlay` with a `Graphic` that represents the starting location, and another graphics overlay for the filter barriers.
+5. Populate the list of filter barrier categories from `UtilityNetworkDefinition::categories`.
+6. When the map view is clicked, identify which features are at that location and add a graphic that represents a filter barrier.
+7. Create a `UtilityElement` for the identified feature and add this utility element to a list of filter barriers.
    - If the element is a junction with more than one terminal, display a terminal picker. Then set the junction's `terminal` property with the selected terminal.
    - If an edge, set its `fractionAlongEdge` property using `GeometryEngine::fractionAlong`.
-9. When "Trace" is pressed:
+8. When "Trace" is pressed:
    - Create `UtilityTraceParameters` with `UtilityTraceType::Isolation` and a starting location from a given asset type and global ID.
    - Set the `UtilityTraceParameters::traceConfiguration` property from a default `UtilityTraceConfiguration`. Set the `filter` property with an `UtilityTraceFilter` object.
-10. If 'Trace' is clicked without filter barriers:
+9. If 'Trace' is clicked without filter barriers:
    - Create a new `UtilityCategoryComparison` with the selected category and `UtilityCategoryComparisonOperator::Exists`.
    - Create a new `UtilityTraceFilter` with this condition as `Barriers` to set `Filter` and update `IncludeIsolatedFeatures` properties of the default configuration from step 5.
    - Run `UtilityNetwork::trace`.
-11. If `Trace` is clicked with filter barriers:
+10. If `Trace` is clicked with filter barriers:
    - Update `IncludeIsolatedFeatures` property of the default configuration from step 5.
    - Run `UtilityNetwork::trace`.
-12.  For every `FeatureLayer` in the map, select the features returned by `featuresForElementsAsync` from the elements matching their `NetworkSource::name` with the layer's `FeatureTable::name`.
+11.  For every `FeatureLayer` in the map, select the features returned by `featuresForElementsAsync` from the elements matching their `NetworkSource::name` with the layer's `FeatureTable::name`.
 
 ## Relevant API
 

@@ -104,7 +104,6 @@ private:
   void createRenderers();
   void loadUtilityNetwork(const Esri::ArcGISRuntime::Error& error);
   bool hasErrorOccurred(const Esri::ArcGISRuntime::Error& error);
-  void addUtilityNetworkToMap(const Esri::ArcGISRuntime::Error& error);
   void setBusyIndicator(bool status);
   void onIdentifyLayersCompleted_(const QList<Esri::ArcGISRuntime::IdentifyLayerResult*>& results);
   void onTraceCompleted_();
@@ -116,7 +115,6 @@ private:
 
   Esri::ArcGISRuntime::Map* m_map = nullptr;
   Esri::ArcGISRuntime::MapQuickView* m_mapView = nullptr;
-  Esri::ArcGISRuntime::FeatureLayer* m_deviceLayer = nullptr;
   Esri::ArcGISRuntime::FeatureLayer* m_lineLayer = nullptr;
   Esri::ArcGISRuntime::ServiceFeatureTable* m_deviceFeatureTable = nullptr;
   Esri::ArcGISRuntime::ServiceFeatureTable* m_lineFeatureTable = nullptr;

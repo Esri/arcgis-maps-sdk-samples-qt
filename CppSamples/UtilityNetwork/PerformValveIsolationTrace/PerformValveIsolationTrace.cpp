@@ -81,7 +81,6 @@ using namespace Esri::ArcGISRuntime::Authentication;
 
 namespace
 {
-const QString featureServiceUrl = QStringLiteral("https://sampleserver7.arcgisonline.com/server/rest/services/UtilityNetwork/NapervilleGas/FeatureServer");
 const QString domainNetworkName = QStringLiteral("Pipeline");
 const QString tierName = QStringLiteral("Pipe Distribution System");
 const QString networkSourceName = QStringLiteral("Gas Device");
@@ -106,51 +105,26 @@ struct ScopedCleanup
 
 PerformValveIsolationTrace::PerformValveIsolationTrace(QObject* parent /* = nullptr */):
   ArcGISAuthenticationChallengeHandler(parent),
-  m_map(new Map(BasemapStyle::ArcGISStreetsNight, this)),
+  m_map(new Map(QUrl("https://sampleserver7.arcgisonline.com/portal/home/item.html?id=f439b4724bb54ac088a2c21eaf70da7b"), this)),
   m_startingLocationOverlay(new GraphicsOverlay(this)),
   m_filterBarriersOverlay(new GraphicsOverlay(this)),
-  m_serviceGeodatabase(new ServiceGeodatabase(featureServiceUrl, this)),
   m_graphicParent(new QObject()),
   m_taskCanceler(std::make_unique<TaskCanceler>())
 {
   ArcGISRuntimeEnvironment::authenticationManager()->setArcGISAuthenticationChallengeHandler(this);
 
-  // disable UI while loading service geodatabase and utility network
+  // disable UI while loading utility network
   m_tasksRunning = true;
+  emit tasksRunningChanged();
 
-  connect(m_serviceGeodatabase, &ServiceGeodatabase::doneLoading, this, [this](const Error& error)
+  connect(m_map, &Map::doneLoading, this, [this]()
   {
-    if (m_utilityNetwork->loadStatus() == LoadStatus::Loaded)
-    {
-      // re-enable UI if both service geodatabase and utility network are loaded
-      m_tasksRunning = false;
-      emit tasksRunningChanged();
-    }
-
-    if (!error.isEmpty())
-      return;
-
-    // obtain service feature tables from the service geodatabase
-    ServiceFeatureTable* lineLayerTable = m_serviceGeodatabase->table(3);
-    ServiceFeatureTable* deviceLayerTable = m_serviceGeodatabase->table(0);
-
-    // create feature layers from the service feature tables
-    FeatureLayer* lineLayer = new FeatureLayer(lineLayerTable, this);
-    FeatureLayer* deviceLayer = new FeatureLayer(deviceLayerTable, this);
-
-    // add the feature layers to the map
-    m_map->operationalLayers()->append(lineLayer);
-    m_map->operationalLayers()->append(deviceLayer);
+    m_utilityNetwork = m_map->utilityNetworks()->first();
+    m_utilityNetwork->load();
+    connectSignals();
   });
-  m_serviceGeodatabase->load();
 
-  // Create and add the utility network to the map before loading
-  m_utilityNetwork = new UtilityNetwork(featureServiceUrl, m_map, this);
-  m_map->utilityNetworks()->append(m_utilityNetwork);
 
-  connectSignals();
-
-  m_utilityNetwork->load();
 }
 
 PerformValveIsolationTrace::~PerformValveIsolationTrace() = default;
@@ -349,12 +323,8 @@ void PerformValveIsolationTrace::connectSignals()
 {
   connect(m_utilityNetwork, &UtilityNetwork::doneLoading, this, [this](const Error& error)
   {
-    if (m_serviceGeodatabase->loadStatus() == LoadStatus::Loaded)
-    {
-      // re-enable UI if both service geodatabase and utility network are loaded
-      m_tasksRunning = false;
-      emit tasksRunningChanged();
-    }
+    m_tasksRunning = false;
+    emit tasksRunningChanged();
 
     if (!error.isEmpty())
     {

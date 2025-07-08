@@ -22,6 +22,7 @@
 
 // Qt headers
 #include <QObject>
+#include <QUrl>
 #include <QUuid>
 #include <QVariantMap>
 
@@ -111,6 +112,7 @@ private:
   QString m_serviceCategoryName;
   QString m_terminalName;
   QString m_tierName;
+  QUrl m_featureLayerUrl;
   int m_traceRequestCount;
 };
 
