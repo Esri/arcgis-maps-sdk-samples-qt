@@ -45,7 +45,6 @@
 #include "Polyline.h"
 #include "QueryParameters.h"
 #include "ServiceFeatureTable.h"
-#include "ServiceGeodatabase.h"
 #include "SimpleMarkerSymbol.h"
 #include "SimpleRenderer.h"
 #include "SymbolTypes.h"
@@ -117,14 +116,21 @@ PerformValveIsolationTrace::PerformValveIsolationTrace(QObject* parent /* = null
   m_tasksRunning = true;
   emit tasksRunningChanged();
 
-  connect(m_map, &Map::doneLoading, this, [this]()
+  connect(m_map, &Map::doneLoading, this, [this](const Error& error)
   {
-    m_utilityNetwork = m_map->utilityNetworks()->first();
-    m_utilityNetwork->load();
-    connectSignals();
+    if (!error.isEmpty())
+      return;
+
+    if (!m_map->utilityNetworks()->isEmpty())
+    {
+      m_utilityNetwork = m_map->utilityNetworks()->first();
+      if (m_utilityNetwork)
+      {
+        m_utilityNetwork->load();
+        connectSignals();
+      }
+    }
   });
-
-
 }
 
 PerformValveIsolationTrace::~PerformValveIsolationTrace() = default;

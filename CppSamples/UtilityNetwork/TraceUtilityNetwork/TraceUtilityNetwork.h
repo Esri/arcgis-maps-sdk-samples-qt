@@ -100,7 +100,7 @@ private:
   void connectSignals();
   void updateTraceParams(Esri::ArcGISRuntime::UtilityElement* element);
   Esri::ArcGISRuntime::UniqueValue* createUniqueValue(const QString& label, Esri::ArcGISRuntime::Symbol* fillSymbol, int value);
-  void createFeatureLayers(const Esri::ArcGISRuntime::Error& error);
+  void createFeatureLayers();
   void createRenderers();
   void loadUtilityNetwork(const Esri::ArcGISRuntime::Error& error);
   bool hasErrorOccurred(const Esri::ArcGISRuntime::Error& error);

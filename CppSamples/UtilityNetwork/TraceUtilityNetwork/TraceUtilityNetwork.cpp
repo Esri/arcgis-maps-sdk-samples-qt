@@ -97,19 +97,14 @@ TraceUtilityNetwork::TraceUtilityNetwork(QObject* parent /* = nullptr */):
   connect(m_map, &Map::doneLoading, this, &TraceUtilityNetwork::loadUtilityNetwork);
 }
 
-void TraceUtilityNetwork::createFeatureLayers(const Error& error)
+void TraceUtilityNetwork::createFeatureLayers()
 {
-  if (hasErrorOccurred(error))
-    return;
-
   setBusyIndicator(false);
 
   // Get the feature table from the 4th table (index = 3) in the serviceGeodatabase
   m_serviceGeodatabase = m_utilityNetwork->serviceGeodatabase();
   m_lineFeatureTable = m_serviceGeodatabase->table(3);
   m_lineLayer = qobject_cast<FeatureLayer*>(m_lineFeatureTable->layer());
-
-  createRenderers();
 }
 
 void TraceUtilityNetwork::createRenderers()
@@ -126,8 +121,6 @@ void TraceUtilityNetwork::createRenderers()
 
   // set unique value renderer to the line layer
   m_lineLayer->setRenderer(m_uniqueValueRenderer);
-
-  connectSignals();
 }
 
 void TraceUtilityNetwork::loadUtilityNetwork(const Error& error)
@@ -144,7 +137,15 @@ void TraceUtilityNetwork::loadUtilityNetwork(const Error& error)
 
   connect(m_utilityNetwork, &UtilityNetwork::errorOccurred, this, &TraceUtilityNetwork::hasErrorOccurred);
 
-  connect(m_utilityNetwork, &UtilityNetwork::doneLoading, this, &TraceUtilityNetwork::createFeatureLayers);
+  connect(m_utilityNetwork, &UtilityNetwork::doneLoading, this, [this](const Error& error)
+  {
+    if (hasErrorOccurred(error))
+      return;
+
+    createFeatureLayers();
+    createRenderers();
+    connectSignals();
+  });
 
   setBusyIndicator(true);
 }

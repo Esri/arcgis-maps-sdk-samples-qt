@@ -76,10 +76,17 @@ DisplayContentOfUtilityNetworkContainer::DisplayContentOfUtilityNetworkContainer
   // Load a web map that includes ArcGIS Pro Subtype Group Layers with only container features visible (i.e. fuse bank, switch bank, transformer bank, hand hole and junction box)
   m_map = new Map(QUrl("https://sampleserver7.arcgisonline.com/portal/home/item.html?id=0e38e82729f942a19e937b31bfac1b8d"), this);
 
-  connect(m_map, &Map::doneLoading, this, [this]()
+  connect(m_map, &Map::doneLoading, this, [this](const Error& error)
   {
-    m_utilityNetwork = m_map->utilityNetworks()->first();
-    m_utilityNetwork->load();
+    if (error.isEmpty())
+    {
+      if (!m_map->utilityNetworks()->isEmpty())
+      {
+        m_utilityNetwork = m_map->utilityNetworks()->first();
+        if (m_utilityNetwork)
+          m_utilityNetwork->load();
+      }
+    }
   });
 }
 

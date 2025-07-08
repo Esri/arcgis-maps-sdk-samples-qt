@@ -37,7 +37,6 @@ class UtilityNetwork;
 class UtilityTraceConfiguration;
 class UtilityTraceParameters;
 class IdentifyLayerResult;
-class ServiceGeodatabase;
 }
 
 namespace Esri::ArcGISRuntime::Authentication

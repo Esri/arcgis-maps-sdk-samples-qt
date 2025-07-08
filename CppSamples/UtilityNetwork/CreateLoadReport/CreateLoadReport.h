@@ -112,7 +112,7 @@ private:
   QString m_serviceCategoryName;
   QString m_terminalName;
   QString m_tierName;
-  QUrl m_featureLayerUrl;
+  const QUrl m_featureLayerUrl;
   int m_traceRequestCount;
 };
 
