@@ -37,7 +37,6 @@ class UtilityNetwork;
 class UtilityTraceConfiguration;
 class UtilityTraceParameters;
 class IdentifyLayerResult;
-class ServiceGeodatabase;
 }
 
 namespace Esri::ArcGISRuntime::Authentication
@@ -100,7 +99,6 @@ private:
   Esri::ArcGISRuntime::UtilityElement* m_element = nullptr;
   Esri::ArcGISRuntime::UtilityNetwork* m_utilityNetwork = nullptr;
   Esri::ArcGISRuntime::UtilityTraceConfiguration* m_traceConfiguration = nullptr;
-  Esri::ArcGISRuntime::ServiceGeodatabase* m_serviceGeodatabase = nullptr;
   Esri::ArcGISRuntime::Point m_clickPoint;
   QList<Esri::ArcGISRuntime::UtilityElement*> m_filterBarriers;
   QStringList m_terminals;

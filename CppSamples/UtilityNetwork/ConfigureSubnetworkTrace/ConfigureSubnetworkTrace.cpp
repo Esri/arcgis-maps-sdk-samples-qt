@@ -29,6 +29,7 @@
 #include "CodedValueDomain.h"
 #include "Error.h"
 #include "ErrorException.h"
+#include "ServiceGeodatabase.h"
 #include "UtilityAssetGroup.h"
 #include "UtilityAssetType.h"
 #include "UtilityCategory.h"
@@ -64,7 +65,7 @@ ConfigureSubnetworkTrace::ConfigureSubnetworkTrace(QObject* parent /* = nullptr 
   ArcGISAuthenticationChallengeHandler(parent)
 {
   ArcGISRuntimeEnvironment::authenticationManager()->setArcGISAuthenticationChallengeHandler(this);
-  m_utilityNetwork = new UtilityNetwork(m_featureLayerUrl, this);
+  m_utilityNetwork = new UtilityNetwork(new ServiceGeodatabase(m_featureLayerUrl, this), this);
 
   connect(m_utilityNetwork, &UtilityNetwork::doneLoading, this, &ConfigureSubnetworkTrace::onUtilityNetworkLoaded);
 
