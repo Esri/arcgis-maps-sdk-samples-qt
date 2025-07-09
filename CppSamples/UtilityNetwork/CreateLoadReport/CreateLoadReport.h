@@ -112,7 +112,7 @@ private:
   QString m_serviceCategoryName;
   QString m_terminalName;
   QString m_tierName;
-  const QUrl m_featureLayerUrl;
+  const QUrl m_featureLayerUrl = QUrl("https://sampleserver7.arcgisonline.com/server/rest/services/UtilityNetwork/NapervilleElectric/FeatureServer");
   int m_traceRequestCount;
 };
 
