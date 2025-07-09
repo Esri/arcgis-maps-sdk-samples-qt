@@ -77,20 +77,17 @@ DisplayUtilityAssociations::DisplayUtilityAssociations(QObject* parent /* = null
   m_connectivitySymbol(new SimpleLineSymbol(SimpleLineSymbolStyle::Dot, Qt::red, 5, this))
 {
   ArcGISRuntimeEnvironment::authenticationManager()->setArcGISAuthenticationChallengeHandler(this);
+
   connect(m_map, &Map::doneLoading, this, [this](const Error& error)
   {
-    if (!error.isEmpty())
-      return;
-
-    if (!m_map->utilityNetworks()->isEmpty())
+    if (!error.isEmpty() || m_map->utilityNetworks()->isEmpty())
     {
-      m_utilityNetwork = m_map->utilityNetworks()->first();
-      if (m_utilityNetwork)
-      {
-        m_utilityNetwork->load();
-        connectSignals();
-      }
+      return;
     }
+
+    m_utilityNetwork = m_map->utilityNetworks()->first();
+    m_utilityNetwork->load();
+    connectSignals();
   });
 }
 

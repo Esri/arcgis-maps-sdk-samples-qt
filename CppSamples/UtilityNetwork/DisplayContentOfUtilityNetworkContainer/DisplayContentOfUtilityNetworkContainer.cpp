@@ -78,15 +78,13 @@ DisplayContentOfUtilityNetworkContainer::DisplayContentOfUtilityNetworkContainer
 
   connect(m_map, &Map::doneLoading, this, [this](const Error& error)
   {
-    if (error.isEmpty())
+    if (!error.isEmpty() || m_map->utilityNetworks()->isEmpty())
     {
-      if (!m_map->utilityNetworks()->isEmpty())
-      {
-        m_utilityNetwork = m_map->utilityNetworks()->first();
-        if (m_utilityNetwork)
-          m_utilityNetwork->load();
-      }
+      return;
     }
+
+    m_utilityNetwork = m_map->utilityNetworks()->first();
+    m_utilityNetwork->load();
   });
 }
 
