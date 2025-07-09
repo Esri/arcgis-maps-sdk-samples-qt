@@ -265,11 +265,6 @@ Item {
         accessComboBox.currentIndex = 0;
     }
 
-    // Declare Authenticator to handle any authentication challenges
-    Authenticator {
-        anchors.fill: parent
-    }
-
     // Declare the C++ instance which creates the map etc. and supply the view
     EditWithBranchVersioningSample {
         id: model
