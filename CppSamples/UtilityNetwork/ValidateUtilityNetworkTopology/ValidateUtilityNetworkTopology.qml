@@ -74,7 +74,6 @@ Item {
                         text: "Get State"
                         Layout.row: 0
                         Layout.column: 0
-                        Layout.fillWidth: true
                         onClicked: model.onGetState()
                         Layout.preferredWidth: clearBtn.width
                         enabled: model.stateButtonAvailability
@@ -84,7 +83,6 @@ Item {
                         text: "Validate"
                         Layout.row: 0
                         Layout.column: 1
-                        Layout.fillWidth: true
                         enabled: model.validateButtonAvailability
                         onClicked: model.onValidate()
                         Layout.preferredWidth: clearBtn.width
@@ -94,7 +92,6 @@ Item {
                         text: "Trace"
                         Layout.row: 1
                         Layout.column: 0
-                        Layout.fillWidth: true
                         enabled: model.traceButtonAvailability
                         onClicked: model.onTrace()
                         Layout.preferredWidth: clearBtn.width
