@@ -21,8 +21,9 @@ Enter the URL to your IWA-secured portal in the text field at the top of the scr
 
 ## Relevant API
 
-* AuthenticationManager
-* Credential
+* Authenticator
+* Authentication::AuthenticationManager
+* Authentication::PasswordCredential
 * Portal
 
 ## About the data

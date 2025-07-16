@@ -14,16 +14,19 @@ Once you launch the app, you will be challenged for an ArcGIS Online login to vi
 
 ## How it works
 
-1. Create a `Portal`.
-2. Create a `PortalItem` for the protected web map using the `Portal` and Item ID of the protected map service.
-3. Create a `Map` using the `PortalItem`.
-4. Set the map to display in the `MapView`.
+1. Declare an `Authenticator` in your QML.
+2. Create a `Portal`.
+3. Create a `PortalItem` for the protected web map using the `Portal` and Item ID of the protected map service.
+4. Create a `Map` using the `PortalItem`.
+5. Set the map to display in the `MapView`.
+6. This will trigger an `ArcGISAuthenticationChallenge`, which will be handled by the `Authenticator`.
+7. An `ArcGISCredential` will be created with the username and password, and if successful, will display the service.
 
 ## Relevant API
 
-* Map
-* MapView
-* Portal
+* Authenticator
+* Authentication::ArcGISCredential
+* Authentication::AuthenticationManager
 * PortalItem
 
 ## About the data
