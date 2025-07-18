@@ -101,8 +101,10 @@ void ConfigureBasemapStyleLanguage::setNewBasemapLanguage(bool global, const QSt
   }
 
   if (m_basemap)
+  {
     m_basemap->deleteLater();
-    
-  m_basemap = new Basemap(BasemapStyle::OsmLightGray, m_basemapStyleParameters, this);
+  }
+
+  m_basemap = new Basemap(BasemapStyle::ArcGISLightGray, m_basemapStyleParameters, this);
   m_map->setBasemap(m_basemap);
 }
