@@ -28,7 +28,7 @@ android|ios: QT += bluetooth
 TEMPLATE = app
 TARGET = ShowDeviceLocationUsingIndoorPositioning
 
-ARCGIS_RUNTIME_VERSION = 200.8.0
+ARCGIS_RUNTIME_VERSION = 300.0.0
 include($$PWD/arcgisruntime.pri)
 
 #-------------------------------------------------------------------------------
