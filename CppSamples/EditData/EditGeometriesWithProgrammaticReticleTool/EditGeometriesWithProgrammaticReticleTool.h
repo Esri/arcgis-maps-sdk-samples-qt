@@ -68,7 +68,6 @@ public:
 
   Q_ENUM(GeometryEditorMode)
 
-  // Reticle state enum for parity with .NET sample
   enum class ReticleState {
     Default,
     PickedUp,
@@ -100,8 +99,8 @@ private:
 
   bool geometryEditorStarted() const;
 
-  bool canUndo();
-  bool canRedo();
+  bool canUndo() const;
+  bool canRedo() const;
 
   bool vertexCreationAllowed() const;
   void setVertexCreationAllowed(bool allowed);

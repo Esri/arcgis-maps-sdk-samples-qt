@@ -122,9 +122,9 @@ void EditGeometriesWithProgrammaticReticleTool::createInitialGraphics()
   const QString beechLodgeBoundaryJson = R"({"paths":[[[-87090.652708065536,6714158.9244240439],[-87247.362370337316,6714232.880689906], [-87226.314032974493,6714605.4697726099],[-86910.499335316243,6714488.006312645], [-86750.82198052686,6714401.1768307304],[-86749.846825938366,6714305.8450344801]]],"spatialReference":{"wkid":102100,"latestWkid":3857}})";
   const QString treeMarkersJson = R"({"points":[[-86750.751150056443,6713749.4529355941],[-86879.381793060631,6713437.3335486846], [-87596.503104619667,6714381.7342108283],[-87553.257569537804,6714402.0910389507], [-86831.019903597829,6714398.4128562529],[-86854.105933315877,6714396.1957954112], [-86800.624094892439,6713992.3374453448]],"spatialReference":{"wkid":102100,"latestWkid":3857}})";
 
-  const auto pinkneysGreen = geometry_cast<Polygon>(Polygon::fromJson(pinkneysGreenJson.toUtf8()));
-  const auto beechLodgeBoundary = geometry_cast<Polyline>(Polyline::fromJson(beechLodgeBoundaryJson.toUtf8()));
-  const auto treeMarkers = geometry_cast<Multipoint>(Multipoint::fromJson(treeMarkersJson.toUtf8()));
+  const Polygon pinkneysGreen = geometry_cast<Polygon>(Polygon::fromJson(pinkneysGreenJson));
+  const Polyline beechLodgeBoundary = geometry_cast<Polyline>(Polyline::fromJson(beechLodgeBoundaryJson));
+  const Multipoint treeMarkers = geometry_cast<Multipoint>(Multipoint::fromJson(treeMarkersJson));
 
   // Add graphics
   m_graphicsOverlay->graphics()->append({
@@ -168,28 +168,27 @@ void EditGeometriesWithProgrammaticReticleTool::handleMapTap(const QMouseEvent& 
     m_mapView->identifyGeometryEditorAsync(mouseEvent.position(), 10).then(this, [this](IdentifyGeometryEditorResult* result)
     {
       std::unique_ptr<IdentifyGeometryEditorResult> identifyResult(result);
-      if (identifyResult && !identifyResult->elements().isEmpty())
+      if (!identifyResult || identifyResult->elements().isEmpty())
       {
-        // Get the first element from the result.
-        auto* element = identifyResult->elements().first();
-
-        // If the element is a vertex or mid-vertex, set the viewpoint to its position and select it.
-        if (auto* vertex = dynamic_cast<GeometryEditorVertex*>(element); vertex)
-        {
-          m_mapView->setViewpointAsync(vertex->point(), m_mapView->mapScale());
-          m_geometryEditor->selectVertex(vertex->partIndex(), vertex->vertexIndex());
-        }
-        else if (auto* midVertex = dynamic_cast<GeometryEditorMidVertex*>(element); midVertex)
-        {
-          if (m_vertexCreationAllowed)
-          {
-            m_mapView->setViewpointAsync(vertex->point(), m_mapView->mapScale());
-            m_geometryEditor->selectMidVertex(midVertex->partIndex(), midVertex->segmentIndex());
-          }
-        }
+        return;
       }
-    }).onFailed(this, [this](const ErrorException&)
+      // Get the first element from the result.
+      GeometryEditorElement* element = identifyResult->elements().first();
+
+      // If the element is a vertex or mid-vertex, set the viewpoint to its position and select it.
+      if (GeometryEditorVertex* vertex = dynamic_cast<GeometryEditorVertex*>(element); vertex)
+      {
+        m_mapView->setViewpointAsync(vertex->point(), m_mapView->mapScale());
+        m_geometryEditor->selectVertex(vertex->partIndex(), vertex->vertexIndex());
+      }
+      else if (GeometryEditorMidVertex* midVertex = dynamic_cast<GeometryEditorMidVertex*>(element); midVertex && m_vertexCreationAllowed)
+      {
+        m_mapView->setViewpointAsync(vertex->point(), m_mapView->mapScale());
+        m_geometryEditor->selectMidVertex(midVertex->partIndex(), midVertex->segmentIndex());
+      }
+    }).onFailed(this, [this](const ErrorException& error)
     {
+      qDebug() << "Error editing! Identify geometry editor failed with error " << error.error().message();
       resetFromEditingSession();
     });
   }
@@ -232,13 +231,13 @@ void EditGeometriesWithProgrammaticReticleTool::handleMapTap(const QMouseEvent& 
       }
       else
       {
-        const auto geometry = m_editingGraphic->geometry();
+        const Geometry geometry = m_editingGraphic->geometry();
         Point targetPoint;
         switch (geometry.geometryType())
         {
           case GeometryType::Polygon:
           {
-            if (const auto polygon = geometry_cast<Polygon>(geometry); !polygon.parts().isEmpty())
+            if (const Polygon polygon = geometry_cast<Polygon>(geometry); !polygon.parts().isEmpty())
             {
               targetPoint = polygon.parts().part(0).endPoint();
             }
@@ -246,7 +245,7 @@ void EditGeometriesWithProgrammaticReticleTool::handleMapTap(const QMouseEvent& 
           }
           case GeometryType::Polyline:
           {
-            if (const auto polyline = geometry_cast<Polyline>(geometry); !polyline.parts().isEmpty())
+            if (const Polyline polyline = geometry_cast<Polyline>(geometry); !polyline.parts().isEmpty())
             {
               targetPoint = polyline.parts().part(0).endPoint();
             }
@@ -254,7 +253,7 @@ void EditGeometriesWithProgrammaticReticleTool::handleMapTap(const QMouseEvent& 
           }
           case GeometryType::Multipoint:
           {
-            if (const auto multiPoint = geometry_cast<Multipoint>(geometry);!multiPoint.points().isEmpty())
+            if (const Multipoint multiPoint = geometry_cast<Multipoint>(geometry);!multiPoint.points().isEmpty())
             {
               targetPoint = multiPoint.points().point(multiPoint.points().size() - 1);
             }
@@ -269,15 +268,15 @@ void EditGeometriesWithProgrammaticReticleTool::handleMapTap(const QMouseEvent& 
             break;
         }
         m_mapView->setViewpointAsync(!targetPoint.isEmpty() ? targetPoint : geometry.extent().center(), m_mapView->mapScale());
+
+        // Hide the selected graphic while editing.
+        m_editingGraphic->setVisible(false);
       }
     }).onFailed(this, [this](const ErrorException& error)
     {
       qDebug() << "Error editing! Identify failed with error " << error.error().message();
       resetFromEditingSession();
     });
-
-    // Hide the selected graphic while editing.
-    m_editingGraphic->setVisible(false);
   }
 }
 
@@ -312,11 +311,11 @@ void EditGeometriesWithProgrammaticReticleTool::handleMultifunctionButton()
   {
     switch (m_reticleState)
     {
-      case ReticleState::Default:
+      case ReticleState::Default: [[fallthrough]];
       case ReticleState::PickedUp:
         m_reticleTool->placeElementAtReticle();
         break;
-      case ReticleState::HoveringVertex:
+      case ReticleState::HoveringVertex: [[fallthrough]];
       case ReticleState::HoveringMidVertex:
         m_reticleTool->selectElementAtReticle();
         m_reticleTool->pickUpSelectedElement();
@@ -345,7 +344,7 @@ void EditGeometriesWithProgrammaticReticleTool::handleMultifunctionButton()
 void EditGeometriesWithProgrammaticReticleTool::saveEdits()
 {
   // Stop the geometry editor and get the resulting geometry
-  const auto geometry = m_geometryEditor->stop();
+  const Geometry geometry = m_geometryEditor->stop();
   emit geometryEditorStartedChanged();
 
   if (!geometry.isEmpty())
@@ -420,22 +419,25 @@ bool EditGeometriesWithProgrammaticReticleTool::vertexCreationAllowed() const
 
 void EditGeometriesWithProgrammaticReticleTool::setVertexCreationAllowed(bool allowed)
 {
-  if (m_vertexCreationAllowed != allowed)
+  if (m_vertexCreationAllowed == allowed)
   {
-    m_vertexCreationAllowed = allowed;
-    // Toggle the reticle tool's vertex creation preview and grow effect for mid-vertices
-    if (m_reticleTool)
+    return;
+  }
+
+  m_vertexCreationAllowed = allowed;
+  emit vertexCreationAllowedChanged();
+
+  // Toggle the reticle tool's vertex creation preview and grow effect for mid-vertices
+  if (m_reticleTool)
+  {
+    m_reticleTool->setVertexCreationPreviewEnabled(allowed);
+    if (GeometryEditorStyle* style = m_reticleTool->style(); style)
     {
-      m_reticleTool->setVertexCreationPreviewEnabled(allowed);
-      if (auto* style = m_reticleTool->style(); style)
+      if (GeometryEditorGrowEffect* growEffect = style->growEffect(); growEffect)
       {
-        if (auto* growEffect = style->growEffect(); growEffect)
-        {
-          growEffect->setApplyToMidVertices(allowed);
-        }
+        growEffect->setApplyToMidVertices(allowed);
       }
     }
-    emit vertexCreationAllowedChanged();
   }
 }
 
@@ -474,17 +476,17 @@ MapQuickView* EditGeometriesWithProgrammaticReticleTool::mapView() const
 // State checks to control when buttons are enabled
 bool EditGeometriesWithProgrammaticReticleTool::geometryEditorStarted() const
 {
-  return (m_mapView && m_mapView->geometryEditor() && m_mapView->geometryEditor()->isStarted());
+  return m_geometryEditor->isStarted();
 }
 
-bool EditGeometriesWithProgrammaticReticleTool::canUndo()
+bool EditGeometriesWithProgrammaticReticleTool::canUndo() const
 {
-  return (m_mapView && m_mapView->geometryEditor() && m_mapView->geometryEditor()->canUndo());
+  return m_geometryEditor->canUndo();
 }
 
-bool EditGeometriesWithProgrammaticReticleTool::canRedo()
+bool EditGeometriesWithProgrammaticReticleTool::canRedo() const
 {
-  return (m_mapView && m_mapView->geometryEditor() && m_mapView->geometryEditor()->canRedo());
+  return m_geometryEditor->canRedo();
 }
 
 void EditGeometriesWithProgrammaticReticleTool::undoOrCancel()
@@ -536,10 +538,10 @@ void EditGeometriesWithProgrammaticReticleTool::setMultifunctionButtonState()
   }
   else if (m_vertexCreationAllowed)
   {
-    auto* hovered = dynamic_cast<GeometryEditorElement*>(m_geometryEditor->hoveredElement());
+    GeometryEditorElement* hovered = dynamic_cast<GeometryEditorElement*>(m_geometryEditor->hoveredElement());
     if (hovered)
     {
-      auto type = hovered->geometryEditorElementType();
+      const GeometryEditorElementType type = hovered->geometryEditorElementType();
       if (type == GeometryEditorElementType::GeometryEditorVertex)
       {
         newText = "Pick up point";
@@ -563,7 +565,7 @@ void EditGeometriesWithProgrammaticReticleTool::setMultifunctionButtonState()
   }
   else
   {
-    auto* hovered = dynamic_cast<GeometryEditorElement*>(m_geometryEditor->hoveredElement());
+    GeometryEditorElement* hovered = dynamic_cast<GeometryEditorElement*>(m_geometryEditor->hoveredElement());
     if (hovered && hovered->geometryEditorElementType() == GeometryEditorElementType::GeometryEditorVertex)
     {
       newText = "Pick up point";
