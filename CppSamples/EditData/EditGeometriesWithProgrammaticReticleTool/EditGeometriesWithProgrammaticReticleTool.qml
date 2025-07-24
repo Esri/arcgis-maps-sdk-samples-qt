@@ -72,7 +72,7 @@ Item {
                 }
                 ComboBox {
                     id: geometryTypePicker
-                    model: ["POINT", "MULTIPOINT", "POLYLINE", "POLYGON"]
+                    model: ["Point", "Multipoint", "Polyline", "Polygon"]
                     onCurrentIndexChanged: reticleModel.selectedGeometryType = currentIndex
                     contentItem: Text {
                         color: "white"
@@ -92,21 +92,21 @@ Item {
                 columnSpacing: 10
                 GeometryEditorButton {
                     iconSource: "qrc:/Samples/EditData/EditGeometriesWithProgrammaticReticleTool/iconAssets/undo-32.png"
-                    tooltipText: "undo"
+                    tooltipText: "Undo"
                     buttonOpacity: (reticleModel.canUndo || reticleModel.pickedUpElement) ? 1.0 : 0.5
                     enabled: reticleModel.canUndo
                     onClickedHandler: function() { reticleModel.undoOrCancel(); }
                 }
                 GeometryEditorButton {
                     iconSource: "qrc:/Samples/EditData/EditGeometriesWithProgrammaticReticleTool/iconAssets/redo-32.png"
-                    tooltipText: "redo"
+                    tooltipText: "Redo"
                     buttonOpacity: reticleModel.canRedo ? 1.0 : 0.5
                     enabled: reticleModel.canRedo
                     onClickedHandler: function() { reticleModel.redo(); }
                 }
                 GeometryEditorButton {
                     iconSource: "qrc:/Samples/EditData/EditGeometriesWithProgrammaticReticleTool/iconAssets/erase-32.png"
-                    tooltipText: "delete selected"
+                    tooltipText: "Delete selected"
                     buttonOpacity: reticleModel.selectedElementCanDelete ? 1.0 : 0.5
                     enabled: reticleModel.selectedElementCanDelete
                     onClickedHandler: function() { reticleModel.deleteSelectedElement(); }
