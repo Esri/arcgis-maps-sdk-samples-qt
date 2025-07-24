@@ -22,6 +22,7 @@
 #include "EditGeometriesWithProgrammaticReticleTool.h"
 
 // ArcGIS Maps SDK headers
+#include "ErrorException.h"
 #include "Envelope.h"
 #include "GeometryEditor.h"
 #include "GeometryEditorElement.h"
@@ -98,6 +99,7 @@ void EditGeometriesWithProgrammaticReticleTool::setMapView(MapQuickView* mapView
   m_mapView->setMap(m_map);
 
   m_mapView->setViewpointCenterAsync(Point(-0.775395, 51.523806, SpatialReference::wgs84()), 50000);
+  //m_mapView->setViewpointCenterAsync(Point(51.523806, -0.775395), 20000); //.Net version
 
   m_mapView->graphicsOverlays()->append(m_graphicsOverlay);
 
@@ -112,53 +114,21 @@ void EditGeometriesWithProgrammaticReticleTool::setMapView(MapQuickView* mapView
   createConnections();
 }
 
-// Create graphics that are present upon sample instantiation
 void EditGeometriesWithProgrammaticReticleTool::createInitialGraphics()
 {
-  // Create a temporary parent to give all the builders so we can easily delete them later
-  auto* tempParent = new QObject(this);
+  const QString pinkneysGreenJson = R"({"rings":[[[-84843.262719916485,6713749.9329888355],[-85833.376589175183,6714679.7122141244], [-85406.822347959576,6715063.9827222107],[-85184.329997390232,6715219.6195847588], [-85092.653857582554,6715119.5391713539],[-85090.446872787768,6714792.7656492386], [-84915.369168906298,6714297.8798246197],[-84854.295522911285,6714080.907587287], [-84843.262719916485,6713749.9329888355]]],"spatialReference":{"wkid":102100,"latestWkid":3857}})";
+  const QString beechLodgeBoundaryJson = R"({"paths":[[[-87090.652708065536,6714158.9244240439],[-87247.362370337316,6714232.880689906], [-87226.314032974493,6714605.4697726099],[-86910.499335316243,6714488.006312645], [-86750.82198052686,6714401.1768307304],[-86749.846825938366,6714305.8450344801]]],"spatialReference":{"wkid":102100,"latestWkid":3857}})";
+  const QString treeMarkersJson = R"({"points":[[-86750.751150056443,6713749.4529355941],[-86879.381793060631,6713437.3335486846], [-87596.503104619667,6714381.7342108283],[-87553.257569537804,6714402.0910389507], [-86831.019903597829,6714398.4128562529],[-86854.105933315877,6714396.1957954112], [-86800.624094892439,6713992.3374453448]],"spatialReference":{"wkid":102100,"latestWkid":3857}})";
 
-  // Polygon (Pinkneys Green) - WGS84 coordinates
-  auto* polygonBuilder = new PolygonBuilder(SpatialReference::wgs84(), tempParent);
-  polygonBuilder->addPoints({
-    Point(-0.775395, 51.523806), Point(-0.789000, 51.532000),
-    Point(-0.783000, 51.535000), Point(-0.779000, 51.536000),
-    Point(-0.777000, 51.535000), Point(-0.776970, 51.531000),
-    Point(-0.774000, 51.526000), Point(-0.773000, 51.524000),
-    Point(-0.775395, 51.523806)
-  });
-  const Polygon pinkneysGreen(polygonBuilder->toPolygon());
-
-  // Polyline (Beech Lodge Boundary) - WGS84 coordinates
-  auto* polylineBuilder = new PolylineBuilder(SpatialReference::wgs84(), tempParent);
-  polylineBuilder->addPoints({
-    Point(-0.810000, 51.525000), Point(-0.812000, 51.526000),
-    Point(-0.811700, 51.530000), Point(-0.806000, 51.528000),
-    Point(-0.803000, 51.527000), Point(-0.802990, 51.526000)
-  });
-  const Polyline beechLodgeBoundary(polylineBuilder->toPolyline());
-
-  // Multipoint (Tree Markers) - WGS84 coordinates
-  auto* multipointBuilder = new MultipointBuilder(SpatialReference::wgs84(), tempParent);
-  auto* pointCollection = new PointCollection(SpatialReference::wgs84(), tempParent);
-  pointCollection->addPoints({
-    Point(-0.803000, 51.523800), Point(-0.805000, 51.520000),
-    Point(-0.816000, 51.527000), Point(-0.815000, 51.527300),
-    Point(-0.804000, 51.527200), Point(-0.804400, 51.527170),
-    Point(-0.803500, 51.523000)
-  });
-  multipointBuilder->setPoints(pointCollection);
-  const Multipoint treeMarkers(multipointBuilder->toMultipoint());
-
-  // Point (house) - use first tree marker as example, WGS84
-  const Point house(-0.803000, 51.523800, SpatialReference::wgs84());
+  const auto pinkneysGreen = geometry_cast<Polygon>(Polygon::fromJson(pinkneysGreenJson.toUtf8()));
+  const auto beechLodgeBoundary = geometry_cast<Polyline>(Polyline::fromJson(beechLodgeBoundaryJson.toUtf8()));
+  const auto treeMarkers = geometry_cast<Multipoint>(Multipoint::fromJson(treeMarkersJson.toUtf8()));
 
   // Add graphics
   m_graphicsOverlay->graphics()->append({
     new Graphic(pinkneysGreen, m_polygonSymbol, this),
     new Graphic(beechLodgeBoundary, m_lineSymbol, this),
     new Graphic(treeMarkers, m_multiPointSymbol, this),
-    new Graphic(house, m_pointSymbol, this)
   });
 }
 
@@ -198,7 +168,6 @@ void EditGeometriesWithProgrammaticReticleTool::handleMapTap(const QMouseEvent& 
       if (identifyResult && !identifyResult->elements().isEmpty())
       {
         auto* element = identifyResult->elements().first();
-        // If the element is a vertex or mid-vertex, zoom to it and select it
         if (auto* vertex = dynamic_cast<GeometryEditorVertex*>(element); vertex)
         {
           m_mapView->setViewpointAsync(vertex->point(), m_mapView->mapScale());
@@ -213,6 +182,9 @@ void EditGeometriesWithProgrammaticReticleTool::handleMapTap(const QMouseEvent& 
           }
         }
       }
+    }).onFailed(this, [this](const ErrorException&)
+    {
+      resetFromEditingSession();
     });
     return;
   }
@@ -230,14 +202,11 @@ void EditGeometriesWithProgrammaticReticleTool::handleMapTap(const QMouseEvent& 
     m_editingGraphic = identifyResult->graphics().first();
     m_editingGraphic->setSelected(true);
 
-    // Hide the selected graphic and start editing
     m_editingGraphic->setVisible(false);
 
-    // Hide the selected graphic and start an editing session with a copy of it.
     m_geometryEditor->start(m_editingGraphic->geometry());
     emit geometryEditorStartedChanged();
 
-    // Optionally zoom to the selected graphic
     if (m_vertexCreationAllowed)
     {
       m_mapView->setViewpointCenterAsync(m_editingGraphic->geometry().extent().center(), m_mapView->mapScale());
@@ -247,9 +216,11 @@ void EditGeometriesWithProgrammaticReticleTool::handleMapTap(const QMouseEvent& 
       m_mapView->setViewpointAsync(m_editingGraphic->geometry().extent().center(), m_mapView->mapScale());
       //TODO set the viewpoint to the end point of the first part of the geometry.
     }
+  }).onFailed(this, [this](const ErrorException&)
+  {
+    resetFromEditingSession();
   });
-  //on Error resetFromEditingSession();
-  // Set the button text to indicate that the editor is active.
+
   setMultifunctionButtonState();
 }
 
