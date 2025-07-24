@@ -15,57 +15,44 @@
 // [Legal]
 
 import QtQuick 2.15
+import QtQuick.Controls 2.15
 import QtQuick.Layouts
 
-
-Rectangle {
-    property bool hovered: false
-    property bool enabled: true
+AbstractButton {
+    id: root
+    property alias iconSource: icon.source
+    property string tooltipText: ""
     property real buttonOpacity: 1.0
     property color hoverColor: "#30111111"
     property color normalColor: "transparent"
     property color textColor: "white"
     property var onClickedHandler
-    property alias iconSource: icon.source
-    property alias label: labelText.text
-
-    color: hovered ? hoverColor : normalColor
-    border.color: "#888"
-    border.width: 1
-    radius: 6
-    height: 40
-    width: 100
+    width: 140
+    height: 56
     opacity: buttonOpacity
-    Row {
+    background: Rectangle {
+        color: root.down ? root.hoverColor : root.normalColor
+        border.color: "#888"
+        border.width: 1
+        radius: 10
+    }
+    contentItem: Row {
         anchors.centerIn: parent
-        spacing: 3
+        spacing: 6
         Rectangle {
-            width: 28; height: 28
-            radius: 6
+            width: 40; height: 40
+            radius: 10
             color: "white"
             border.width: 0
             Image {
                 id: icon
                 anchors.centerIn: parent
-                width: 24; height: 24
+                width: 32; height: 32
             }
         }
-        Text {
-            id: labelText
-            color: parent.parent.textColor
-            font.bold: true
-            font.pixelSize: 10
-            anchors.verticalCenter: parent.verticalCenter
-            verticalAlignment: Text.AlignVCenter
-        }
     }
-    MouseArea {
-        hoverEnabled: true
-        onEntered: parent.hovered = true
-        onExited: parent.hovered = false
-        anchors.fill: parent
-        enabled: parent.enabled
-        onClicked: if (parent.onClickedHandler) parent.onClickedHandler()
-        cursorShape: Qt.PointingHandCursor
-    }
+    ToolTip.visible: hovered && tooltipText.length > 0
+    ToolTip.text: tooltipText
+    ToolTip.delay: 0
+    onClicked: if (onClickedHandler) onClickedHandler()
 }

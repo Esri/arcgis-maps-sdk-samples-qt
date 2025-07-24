@@ -32,8 +32,8 @@ Item {
     // Settings
     Rectangle {
         anchors.margins: 10
-        width: parent.width / 6
-        height: parent.height * 0.8
+        width: parent.width / 4
+        height: parent.height * 0.5 + 20
         anchors.top: parent.top
         anchors.right: parent.right
         color: "#AA333333"
@@ -45,7 +45,7 @@ Item {
             spacing: 5
             anchors.fill: parent
             // Vertex creation switch
-            ColumnLayout {
+            RowLayout {
                 spacing: 5
                 Layout.alignment: Qt.AlignCenter
                 Label {
@@ -84,41 +84,43 @@ Item {
             }
 
             GridLayout {
-                columns: 1
-                rows: 5
+                columns: 3
+                rows: 2
                 anchors.margins: 10
                 Layout.alignment: Qt.AlignCenter
+                rowSpacing: 10
+                columnSpacing: 10
                 GeometryEditorButton {
                     iconSource: "qrc:/Samples/EditData/EditGeometriesWithProgrammaticReticleTool/iconAssets/undo-32.png"
-                    label: "UNDO"
+                    tooltipText: "undo"
                     buttonOpacity: (reticleModel.canUndo || reticleModel.pickedUpElement) ? 1.0 : 0.5
                     enabled: reticleModel.canUndo
                     onClickedHandler: function() { reticleModel.undoOrCancel(); }
                 }
                 GeometryEditorButton {
                     iconSource: "qrc:/Samples/EditData/EditGeometriesWithProgrammaticReticleTool/iconAssets/redo-32.png"
-                    label: "REDO"
+                    tooltipText: "redo"
                     buttonOpacity: reticleModel.canRedo ? 1.0 : 0.5
                     enabled: reticleModel.canRedo
                     onClickedHandler: function() { reticleModel.redo(); }
                 }
                 GeometryEditorButton {
                     iconSource: "qrc:/Samples/EditData/EditGeometriesWithProgrammaticReticleTool/iconAssets/erase-32.png"
-                    label: "DELETE\nSELECTED"
+                    tooltipText: "delete selected"
                     buttonOpacity: reticleModel.selectedElementCanDelete ? 1.0 : 0.5
                     enabled: reticleModel.selectedElementCanDelete
                     onClickedHandler: function() { reticleModel.deleteSelectedElement(); }
                 }
                 GeometryEditorButton {
                     iconSource: "qrc:/Samples/EditData/EditGeometriesWithProgrammaticReticleTool/iconAssets/save-32.png"
-                    label: "SAVE\nEDITS"
+                    tooltipText: "save edits"
                     buttonOpacity: reticleModel.canUndo ? 1.0 : 0.5
                     enabled: reticleModel.canUndo
                     onClickedHandler: function() {reticleModel.saveEdits();}
                 }
                 GeometryEditorButton {
                     iconSource: "qrc:/Samples/EditData/EditGeometriesWithProgrammaticReticleTool/iconAssets/trash-32.png"
-                    label: "DISCARD\nEDITS"
+                    tooltipText: "discard edits"
                     buttonOpacity: reticleModel.geometryEditorStarted ? 1.0 : 0.5
                     enabled: reticleModel.geometryEditorStarted
                     onClickedHandler: function() {reticleModel.discardEdits();}
@@ -131,14 +133,14 @@ Item {
                 border.width: 1
                 radius: 6
                 height: 40
-                width: parent.width
+                width: parent.width - 20
                 anchors.margins: 10
                 Layout.alignment: Qt.AlignCenter
                 opacity: reticleModel.multifunctionButtonEnabled ? 1.0 : 0.5
                 Text {
                     anchors.fill: parent
                     anchors.margins: 6
-                    text: reticleModel.multifunctionButtonText.toUpperCase()
+                    text: reticleModel.multifunctionButtonText
                     wrapMode: Text.Wrap
                     color: "white"
                     font.bold: true
