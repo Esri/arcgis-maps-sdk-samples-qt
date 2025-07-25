@@ -143,20 +143,11 @@ void EditGeometriesWithProgrammaticReticleTool::createConnections()
   });
 
   // Enable or disable buttons when mouse is released (ie after a drag operation)
-  connect(m_mapView, &MapQuickView::mouseReleased, this, [this](const QMouseEvent&)
-  {
-    setMultifunctionButtonState();
-  });
+  connect(m_mapView, &MapQuickView::mouseReleased, this, &EditGeometriesWithProgrammaticReticleTool::setMultifunctionButtonState);
 
-  connect(m_geometryEditor, &GeometryEditor::hoveredElementChanged, this, [this]()
-  {
-    setMultifunctionButtonState();
-  });
+  connect(m_geometryEditor, &GeometryEditor::hoveredElementChanged, this, &EditGeometriesWithProgrammaticReticleTool::setMultifunctionButtonState);
+  connect(m_geometryEditor, &GeometryEditor::pickedUpElementChanged, this, &EditGeometriesWithProgrammaticReticleTool::setMultifunctionButtonState);
 
-  connect(m_geometryEditor, &GeometryEditor::pickedUpElementChanged, this, [this]()
-  {
-    setMultifunctionButtonState();
-  });
 }
 
 void EditGeometriesWithProgrammaticReticleTool::handleMapTap(const QMouseEvent& mouseEvent)
@@ -165,7 +156,7 @@ void EditGeometriesWithProgrammaticReticleTool::handleMapTap(const QMouseEvent& 
   if (m_geometryEditor->isStarted())
   {
     // Identify the geometry editor result at the tapped position.
-    m_mapView->identifyGeometryEditorAsync(mouseEvent.position(), 10).then(this, [this](IdentifyGeometryEditorResult* result)
+    m_mapView->identifyGeometryEditorAsync(mouseEvent.position(), 10, this).then(this, [this](IdentifyGeometryEditorResult* result)
     {
       std::unique_ptr<IdentifyGeometryEditorResult> identifyResult(result);
       if (!identifyResult || identifyResult->elements().isEmpty())
@@ -174,6 +165,7 @@ void EditGeometriesWithProgrammaticReticleTool::handleMapTap(const QMouseEvent& 
       }
       // Get the first element from the result.
       GeometryEditorElement* element = identifyResult->elements().first();
+      element->setParent(this);
 
       // If the element is a vertex or mid-vertex, set the viewpoint to its position and select it.
       if (GeometryEditorVertex* vertex = dynamic_cast<GeometryEditorVertex*>(element); vertex)

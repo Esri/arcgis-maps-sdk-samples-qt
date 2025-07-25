@@ -61,11 +61,11 @@ Item {
             }
 
             // Geometry type picker (only when editor stopped)
-            ColumnLayout {
+            RowLayout {
                 enabled: !reticleModel.geometryEditorStarted
                 Layout.alignment: Qt.AlignCenter
                 Label {
-                    text: "Geometry Type"
+                    text: "Geometry\nType"
                     color: "white"
                     font.bold: true
                     horizontalAlignment: Text.AlignHCenter
@@ -89,7 +89,7 @@ Item {
                 anchors.margins: 10
                 Layout.alignment: Qt.AlignCenter
                 rowSpacing: 10
-                columnSpacing: 10
+                columnSpacing: 20
                 GeometryEditorButton {
                     iconSource: "qrc:/Samples/EditData/EditGeometriesWithProgrammaticReticleTool/iconAssets/undo-32.png"
                     tooltipText: "Undo"
@@ -113,14 +113,14 @@ Item {
                 }
                 GeometryEditorButton {
                     iconSource: "qrc:/Samples/EditData/EditGeometriesWithProgrammaticReticleTool/iconAssets/save-32.png"
-                    tooltipText: "save edits"
+                    tooltipText: "Save edits"
                     buttonOpacity: reticleModel.canUndo ? 1.0 : 0.5
                     enabled: reticleModel.canUndo
                     onClickedHandler: function() {reticleModel.saveEdits();}
                 }
                 GeometryEditorButton {
                     iconSource: "qrc:/Samples/EditData/EditGeometriesWithProgrammaticReticleTool/iconAssets/trash-32.png"
-                    tooltipText: "discard edits"
+                    tooltipText: "Discard edits"
                     buttonOpacity: reticleModel.geometryEditorStarted ? 1.0 : 0.5
                     enabled: reticleModel.geometryEditorStarted
                     onClickedHandler: function() {reticleModel.discardEdits();}
