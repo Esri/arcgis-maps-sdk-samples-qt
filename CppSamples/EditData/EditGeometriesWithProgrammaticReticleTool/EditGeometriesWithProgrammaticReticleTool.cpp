@@ -100,8 +100,7 @@ void EditGeometriesWithProgrammaticReticleTool::setMapView(MapQuickView* mapView
   m_mapView = mapView;
   m_mapView->setMap(m_map);
 
-  m_mapView->setViewpointCenterAsync(Point(-0.775395, 51.523806, SpatialReference::wgs84()), 50000);
-  //m_mapView->setViewpointCenterAsync(Point(51.523806, -0.775395), 20000); //.Net version
+  m_mapView->setViewpointCenterAsync(Point(-0.775395, 51.523806, SpatialReference::wgs84()), 20000);
 
   m_mapView->graphicsOverlays()->append(m_graphicsOverlay);
 
@@ -114,6 +113,11 @@ void EditGeometriesWithProgrammaticReticleTool::setMapView(MapQuickView* mapView
 
   createInitialGraphics();
   createConnections();
+}
+
+MapQuickView* EditGeometriesWithProgrammaticReticleTool::mapView() const
+{
+  return m_mapView;
 }
 
 void EditGeometriesWithProgrammaticReticleTool::createInitialGraphics()
@@ -137,10 +141,7 @@ void EditGeometriesWithProgrammaticReticleTool::createInitialGraphics()
 void EditGeometriesWithProgrammaticReticleTool::createConnections()
 {
   // Allow user to edit existing graphics by clicking on them
-  connect(m_mapView, &MapQuickView::mouseClicked, this, [this](const QMouseEvent& mouseEvent)
-  {
-    handleMapTap(mouseEvent);
-  });
+  connect(m_mapView, &MapQuickView::mouseClicked, this, &EditGeometriesWithProgrammaticReticleTool::handleMapTap);
 
   // Enable or disable buttons when mouse is released (ie after a drag operation)
   connect(m_mapView, &MapQuickView::mouseReleased, this, &EditGeometriesWithProgrammaticReticleTool::setMultifunctionButtonState);
@@ -170,12 +171,12 @@ void EditGeometriesWithProgrammaticReticleTool::handleMapTap(const QMouseEvent& 
       // If the element is a vertex or mid-vertex, set the viewpoint to its position and select it.
       if (GeometryEditorVertex* vertex = dynamic_cast<GeometryEditorVertex*>(element); vertex)
       {
-        m_mapView->setViewpointAsync(vertex->point(), m_mapView->mapScale());
+        m_mapView->setViewpointAsync(Viewpoint(Point(vertex->point().x(), vertex->point().y(), vertex->point().spatialReference())));
         m_geometryEditor->selectVertex(vertex->partIndex(), vertex->vertexIndex());
       }
       else if (GeometryEditorMidVertex* midVertex = dynamic_cast<GeometryEditorMidVertex*>(element); midVertex && m_vertexCreationAllowed)
       {
-        m_mapView->setViewpointAsync(vertex->point(), m_mapView->mapScale());
+        m_mapView->setViewpointAsync(Viewpoint(Point(midVertex->point().x(), midVertex->point().y(), midVertex->point().spatialReference())));
         m_geometryEditor->selectMidVertex(midVertex->partIndex(), midVertex->segmentIndex());
       }
     }).onFailed(this, [this](const ErrorException& error)
@@ -187,7 +188,7 @@ void EditGeometriesWithProgrammaticReticleTool::handleMapTap(const QMouseEvent& 
   else
   {
     // Identify graphics in the graphics overlay using the tapped position.
-    m_mapView->identifyGraphicsOverlayAsync(m_graphicsOverlay, mouseEvent.position(), 10, false)
+    m_mapView->identifyGraphicsOverlayAsync(m_graphicsOverlay, mouseEvent.position(), 10, false, this)
       .then(this, [this](IdentifyGraphicsOverlayResult* rawResult)
     {
       auto identifyResult = std::unique_ptr<IdentifyGraphicsOverlayResult>(rawResult);
@@ -245,7 +246,7 @@ void EditGeometriesWithProgrammaticReticleTool::handleMapTap(const QMouseEvent& 
           }
           case GeometryType::Multipoint:
           {
-            if (const Multipoint multiPoint = geometry_cast<Multipoint>(geometry);!multiPoint.points().isEmpty())
+            if (const Multipoint multiPoint = geometry_cast<Multipoint>(geometry); !multiPoint.points().isEmpty())
             {
               targetPoint = multiPoint.points().point(multiPoint.points().size() - 1);
             }
@@ -295,12 +296,14 @@ void EditGeometriesWithProgrammaticReticleTool::handleMultifunctionButton()
         break;
     }
     emit geometryEditorStartedChanged();
+    // Set the button text to indicate that the editor is active.
     setMultifunctionButtonState();
     return;
   }
 
   if (m_vertexCreationAllowed)
   {
+    // When vertex creation is allowed vertices and mid-vertices can be picked up, new vertices can be inserted.
     switch (m_reticleState)
     {
       case ReticleState::Default: [[fallthrough]];
@@ -316,6 +319,7 @@ void EditGeometriesWithProgrammaticReticleTool::handleMultifunctionButton()
   }
   else
   {
+    // When vertex creation is not allowed functionality is limited to picking up and moving existing vertices, mid-vertices cannot be picked up.
     switch (m_reticleState)
     {
       case ReticleState::PickedUp:
@@ -346,13 +350,13 @@ void EditGeometriesWithProgrammaticReticleTool::saveEdits()
       // Update the geometry of the graphic being edited and make it visible again
       m_editingGraphic->setGeometry(geometry);
       m_editingGraphic->setVisible(true);
-      m_editingGraphic = nullptr;
     }
     else
     {
       Symbol* geometrySymbol = getSymbol(geometry.geometryType());
       if (geometrySymbol)
       {
+        // Create a new graphic based on the geometry and add it to the graphics overlay.
         m_graphicsOverlay->graphics()->append(new Graphic(geometry, geometrySymbol, this));
       }
     }
@@ -379,6 +383,7 @@ Symbol* EditGeometriesWithProgrammaticReticleTool::getSymbol(GeometryType type) 
 
 void EditGeometriesWithProgrammaticReticleTool::discardEdits()
 {
+  // Stop the geometry editor and discard the geometry.
   m_geometryEditor->stop();
   resetFromEditingSession();
 }
@@ -388,7 +393,9 @@ void EditGeometriesWithProgrammaticReticleTool::resetFromEditingSession()
   // Reset the selected graphic
   if (m_editingGraphic)
   {
-    delete m_editingGraphic;
+    m_editingGraphic->setSelected(false);
+    m_editingGraphic->setVisible(true);
+    m_editingGraphic = nullptr;
   }
 
   // Update the multifunction button text and enable it
@@ -420,6 +427,7 @@ void EditGeometriesWithProgrammaticReticleTool::setVertexCreationAllowed(bool al
   // Toggle the reticle tool's vertex creation preview and grow effect for mid-vertices
   if (m_reticleTool)
   {
+    // Update the programmatic reticle tool and geometry editor settings based on the switch state.
     m_reticleTool->setVertexCreationPreviewEnabled(allowed);
     if (GeometryEditorStyle* style = m_reticleTool->style(); style)
     {
@@ -428,6 +436,12 @@ void EditGeometriesWithProgrammaticReticleTool::setVertexCreationAllowed(bool al
         growEffect->setApplyToMidVertices(allowed);
       }
     }
+  }
+
+  // If the geometry editor is started, update the button text to reflect the new state.
+  if (geometryEditorStarted())
+  {
+    setMultifunctionButtonState();
   }
 }
 
@@ -442,8 +456,7 @@ void EditGeometriesWithProgrammaticReticleTool::setSelectedGeometryType(Geometry
 
 bool EditGeometriesWithProgrammaticReticleTool::selectedElementCanDelete() const
 {
-  return m_mapView && m_mapView->geometryEditor() && m_mapView->geometryEditor()->selectedElement() &&
-         m_mapView->geometryEditor()->selectedElement()->canDelete();
+  return m_geometryEditor->selectedElement() && m_geometryEditor->selectedElement()->canDelete();
 }
 
 void EditGeometriesWithProgrammaticReticleTool::deleteSelectedElement()
@@ -458,11 +471,6 @@ EditGeometriesWithProgrammaticReticleTool::GeometryEditorMode EditGeometriesWith
   return m_selectedGeometryEditorType;
 }
 
-MapQuickView* EditGeometriesWithProgrammaticReticleTool::mapView() const
-{
-  return m_mapView;
-}
-
 // State checks to control when buttons are enabled
 bool EditGeometriesWithProgrammaticReticleTool::geometryEditorStarted() const
 {
@@ -471,7 +479,7 @@ bool EditGeometriesWithProgrammaticReticleTool::geometryEditorStarted() const
 
 bool EditGeometriesWithProgrammaticReticleTool::canUndo() const
 {
-  return m_geometryEditor->canUndo();
+  return (m_geometryEditor->canUndo() || m_geometryEditor->pickedUpElement());
 }
 
 bool EditGeometriesWithProgrammaticReticleTool::canRedo() const
@@ -490,6 +498,7 @@ void EditGeometriesWithProgrammaticReticleTool::undoOrCancel()
     m_geometryEditor->undo();
   }
   emit canUndoOrRedoChanged();
+  emit selectedElementCanDeleteChanged();
 }
 
 void EditGeometriesWithProgrammaticReticleTool::redo()
@@ -498,6 +507,7 @@ void EditGeometriesWithProgrammaticReticleTool::redo()
   {
     m_geometryEditor->redo();
     emit canUndoOrRedoChanged();
+    emit selectedElementCanDeleteChanged();
   }
 }
 
@@ -513,46 +523,40 @@ bool EditGeometriesWithProgrammaticReticleTool::multifunctionButtonEnabled() con
 
 void EditGeometriesWithProgrammaticReticleTool::setMultifunctionButtonState()
 {
+  // Update the multifunction button text and state based on the geometry editor state and hovered/picked up elements.
   QString newText;
   bool newEnabled = true;
   ReticleState newReticleState = ReticleState::Default;
 
-  if (!m_geometryEditor->isStarted())
-  {
-    newText = "Start geometry editor";
-  }
-  else if (m_geometryEditor->pickedUpElement())
+  // Picked up elements can be dropped, so the button text indicates that a point can be dropped.
+  if (m_geometryEditor->pickedUpElement())
   {
     newText = "Drop point";
     newReticleState = ReticleState::PickedUp;
   }
+  // When vertex creation is allowed, the button text changes based on the hovered or picked up element. Vertices and mid-vertices can be picked up.
   else if (m_vertexCreationAllowed)
   {
-    GeometryEditorElement* hovered = dynamic_cast<GeometryEditorElement*>(m_geometryEditor->hoveredElement());
-    if (hovered)
+    if (m_geometryEditor->pickedUpElement())
     {
-      const GeometryEditorElementType type = hovered->geometryEditorElementType();
-      if (type == GeometryEditorElementType::GeometryEditorVertex)
-      {
-        newText = "Pick up point";
-        newReticleState = ReticleState::HoveringVertex;
-      }
-      else if (type == GeometryEditorElementType::GeometryEditorMidVertex)
-      {
-        newText = "Insert point";
-        newReticleState = ReticleState::HoveringMidVertex;
-      }
-      else
-      {
-        newText = "Insert point";
-        newEnabled = false;
-      }
+      newText = "Drop point";
+      newReticleState = ReticleState::PickedUp;
+    }
+    else if (GeometryEditorElement* hovered = dynamic_cast<GeometryEditorElement*>(m_geometryEditor->hoveredElement());
+             hovered && (hovered->geometryEditorElementType() == GeometryEditorElementType::GeometryEditorVertex ||
+                         hovered->geometryEditorElementType() == GeometryEditorElementType::GeometryEditorMidVertex))
+    {
+      newText = "Pick up point";
+      newReticleState = (hovered->geometryEditorElementType() == GeometryEditorElementType::GeometryEditorVertex) ?
+                          ReticleState::HoveringVertex : ReticleState::HoveringMidVertex;
     }
     else
     {
       newText = "Insert point";
+      newReticleState = ReticleState::Default;
     }
   }
+  // When vertex creation is not allowed, the button text changes based on the hovered element only.
   else
   {
     GeometryEditorElement* hovered = dynamic_cast<GeometryEditorElement*>(m_geometryEditor->hoveredElement());
@@ -563,8 +567,18 @@ void EditGeometriesWithProgrammaticReticleTool::setMultifunctionButtonState()
     }
     else
     {
-      newText = "Insert point";
+      newText = "Pick up point";
+      newEnabled = false;
+      newReticleState = ReticleState::HoveringMidVertex;
     }
+  }
+
+  // If the geometry editor is not started, override with "Start geometry editor"
+  if (!m_geometryEditor->isStarted())
+  {
+    newText = "Start geometry editor";
+    newEnabled = true;
+    newReticleState = ReticleState::Default;
   }
 
   if (m_multifunctionButtonText != newText)

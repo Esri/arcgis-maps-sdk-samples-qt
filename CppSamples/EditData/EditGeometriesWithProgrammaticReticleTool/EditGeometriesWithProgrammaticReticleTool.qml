@@ -32,26 +32,54 @@ Item {
     // Settings
     Rectangle {
         anchors.margins: 10
-        width: parent.width / 4
-        height: parent.height * 0.5 + 20
+        width: 180
+        height: 240
         anchors.top: parent.top
         anchors.right: parent.right
         color: "#AA333333"
-        radius: 10
         border.color: "#888"
         border.width: 1
 
         ColumnLayout {
             spacing: 5
             anchors.fill: parent
+
+            // Spacer
+            Item {
+                height: 5
+            }
+
+            RowLayout {
+                enabled: !reticleModel.geometryEditorStarted
+                Layout.alignment: Qt.AlignCenter
+                Label {
+                    text: "Geometry\nType:"
+                    color: "white"
+                }
+                ComboBox {
+                    id: geometryTypePicker
+                    model: ["Point", "Multipoint", "Polygon", "Polyline"]
+                    onCurrentIndexChanged: reticleModel.selectedGeometryType = currentIndex
+                    background: Rectangle {
+                        color: "white"
+                    }
+                    contentItem: Text {
+                        color: "black"
+                        text: geometryTypePicker.displayText
+                        horizontalAlignment: Text.AlignHCenter
+                        verticalAlignment: Text.AlignVCenter
+                        elide: Text.ElideRight
+                    }
+                }
+            }
+
             // Vertex creation switch
             RowLayout {
                 spacing: 5
                 Layout.alignment: Qt.AlignCenter
                 Label {
-                    text: "Allow Vertex\nCreation"
+                    text: "Allow Vertex\nCreation:"
                     color: "white"
-                    font.bold: true
                 }
                 Switch {
                     id: vertexSwitch
@@ -60,40 +88,16 @@ Item {
                 }
             }
 
-            // Geometry type picker (only when editor stopped)
-            RowLayout {
-                enabled: !reticleModel.geometryEditorStarted
-                Layout.alignment: Qt.AlignCenter
-                Label {
-                    text: "Geometry\nType"
-                    color: "white"
-                    font.bold: true
-                    horizontalAlignment: Text.AlignHCenter
-                }
-                ComboBox {
-                    id: geometryTypePicker
-                    model: ["Point", "Multipoint", "Polyline", "Polygon"]
-                    onCurrentIndexChanged: reticleModel.selectedGeometryType = currentIndex
-                    contentItem: Text {
-                        color: "white"
-                        text: geometryTypePicker.displayText
-                        horizontalAlignment: Text.AlignHCenter
-                        verticalAlignment: Text.AlignVCenter
-                    }
-                }
-            }
-
             GridLayout {
                 columns: 3
                 rows: 2
-                anchors.margins: 10
-                Layout.alignment: Qt.AlignCenter
                 rowSpacing: 10
                 columnSpacing: 20
+                Layout.alignment: Qt.AlignCenter
                 GeometryEditorButton {
                     iconSource: "qrc:/Samples/EditData/EditGeometriesWithProgrammaticReticleTool/iconAssets/undo-32.png"
                     tooltipText: "Undo"
-                    buttonOpacity: (reticleModel.canUndo || reticleModel.pickedUpElement) ? 1.0 : 0.5
+                    buttonOpacity: reticleModel.canUndo ? 1.0 : 0.5
                     enabled: reticleModel.canUndo
                     onClickedHandler: function() { reticleModel.undoOrCancel(); }
                 }
@@ -128,25 +132,19 @@ Item {
             }
 
             Rectangle {
-                color: "transparent"
-                border.color: "#888"
-                border.width: 1
-                radius: 6
-                height: 40
-                width: parent.width - 20
-                anchors.margins: 10
+                height: 30
+                width: 150
                 Layout.alignment: Qt.AlignCenter
                 opacity: reticleModel.multifunctionButtonEnabled ? 1.0 : 0.5
+                color : reticleModel.multifunctionButtonEnabled ? "white" : "#FF888888"
                 Text {
+                    id: multifunctionButtonText
                     anchors.fill: parent
-                    anchors.margins: 6
+                    //anchors.margins: 6
                     text: reticleModel.multifunctionButtonText
-                    wrapMode: Text.Wrap
-                    color: "white"
-                    font.bold: true
+                    color: "black"
                     horizontalAlignment: Text.AlignHCenter
                     verticalAlignment: Text.AlignVCenter
-                    elide: Text.ElideNone
                 }
                 MouseArea {
                     anchors.fill: parent
@@ -154,6 +152,10 @@ Item {
                     onClicked: reticleModel.handleMultifunctionButton()
                     cursorShape: Qt.PointingHandCursor
                 }
+            }
+            // Spacer
+            Item {
+                height: 5
             }
         }
     }

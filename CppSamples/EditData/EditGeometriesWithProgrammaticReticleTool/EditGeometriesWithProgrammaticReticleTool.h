@@ -62,8 +62,8 @@ public:
   enum class GeometryEditorMode {
     PointMode,
     MultipointMode,
-    PolylineMode,
-    PolygonMode
+    PolygonMode,
+    PolylineMode
   };
 
   Q_ENUM(GeometryEditorMode)
@@ -76,6 +76,7 @@ public:
   };
 
   static void init();
+
   Q_INVOKABLE void handleMultifunctionButton();
   Q_INVOKABLE void undoOrCancel();
   Q_INVOKABLE void redo();

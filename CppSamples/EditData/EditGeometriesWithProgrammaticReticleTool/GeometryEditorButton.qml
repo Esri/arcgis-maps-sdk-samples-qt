@@ -23,36 +23,31 @@ AbstractButton {
     property alias iconSource: icon.source
     property string tooltipText: ""
     property real buttonOpacity: 1.0
-    property color hoverColor: "#30111111"
-    property color normalColor: "transparent"
-    property color textColor: "white"
     property var onClickedHandler
+
     width: 140
     height: 56
     opacity: buttonOpacity
     background: Rectangle {
-        color: root.down ? root.hoverColor : root.normalColor
         border.color: "#888"
         border.width: 1
-        radius: 10
     }
     contentItem: Row {
         anchors.centerIn: parent
         spacing: 6
         Rectangle {
-            width: 40; height: 40
-            radius: 10
+            width: 36; height: 36
             color: "white"
             border.width: 0
             Image {
                 id: icon
                 anchors.centerIn: parent
-                width: 32; height: 32
+                width: 32
+                height: 32
             }
         }
     }
     ToolTip.visible: hovered && tooltipText.length > 0
     ToolTip.text: tooltipText
-    ToolTip.delay: 0
     onClicked: if (onClickedHandler) onClickedHandler()
 }
