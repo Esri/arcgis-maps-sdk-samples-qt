@@ -36,6 +36,7 @@
 
 int main(int argc, char *argv[])
 {
+  Esri::ArcGISRuntime::ArcGISRuntimeEnvironment::setUseLegacyAuthentication(false);
   QGuiApplication app(argc, argv);
 
   // Use of ArcGIS location services, such as basemap styles, geocoding, and routing services,

@@ -22,7 +22,6 @@
 #include "SearchForWebmap.h"
 
 // ArcGIS Maps SDK headers
-#include "AuthenticationManager.h"
 #include "Error.h"
 #include "Map.h"
 #include "MapQuickView.h"
@@ -46,7 +45,6 @@ SearchForWebmap::SearchForWebmap(QQuickItem* parent /* = nullptr */):
   QQuickItem(parent),
   m_portal(new Portal(this))
 {
-  AuthenticationManager::instance()->setCredentialCacheEnabled(false);
 }
 
 SearchForWebmap::~SearchForWebmap() = default;
@@ -114,7 +112,7 @@ void SearchForWebmap::search(const QString& keyword)
                         .arg(keyword, fromDate, toDate));
   query.setTypes(QList<PortalItemType>() << PortalItemType::WebMap);
 
-  m_portal->findItemsAsync(query).then(
+  m_portal->findItemsAsync(query).then(this,
   [this](PortalQueryResultSetForItems* webmapResults)
   {
     onFindItemsCompleted(webmapResults);
@@ -135,7 +133,7 @@ void SearchForWebmap::searchNext()
   // check whether the startIndex of the new query is valid
   if (!nextQuery.isEmpty())
   {
-    m_portal->findItemsAsync(nextQuery).then(
+    m_portal->findItemsAsync(nextQuery).then(this,
     [this](PortalQueryResultSetForItems* webmapResults)
     {
       onFindItemsCompleted(webmapResults);

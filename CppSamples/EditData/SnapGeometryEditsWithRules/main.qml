@@ -1,5 +1,4 @@
-// [Legal]
-// Copyright 2022 Esri.
+// Copyright 2025 Esri.
 
 // Licensed under the Apache License, Version 2.0 (the "License");
 // you may not use this file except in compliance with the License.
@@ -11,14 +10,16 @@
 // WITHOUT WARRANTIES OR CONDITIONS OF ANY KIND, either express or implied.
 // See the License for the specific language governing permissions and
 // limitations under the License.
-// [Legal]
 
-import QtQuick
-import Esri.ArcGISRuntimeSamples
-import Esri.ArcGISRuntime.Toolkit as Toolkit
+import QtQuick.Controls
+import Esri.Samples
 
-Item {
-    Toolkit.AuthenticationView {
+ApplicationWindow {
+    visible: true
+    width: 800
+    height: 600
+
+    SnapGeometryEditsWithRules {
         anchors.fill: parent
     }
 }

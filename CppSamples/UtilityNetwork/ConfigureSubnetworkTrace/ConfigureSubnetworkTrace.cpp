@@ -22,9 +22,14 @@
 #include "ConfigureSubnetworkTrace.h"
 
 // ArcGIS Maps SDK headers
+#include "ArcGISRuntimeEnvironment.h"
+#include "Authentication/AuthenticationManager.h"
+#include "Authentication/ArcGISAuthenticationChallenge.h"
+#include "Authentication/TokenCredential.h"
 #include "CodedValueDomain.h"
-#include "Credential.h"
 #include "Error.h"
+#include "ErrorException.h"
+#include "ServiceGeodatabase.h"
 #include "UtilityAssetGroup.h"
 #include "UtilityAssetType.h"
 #include "UtilityCategory.h"
@@ -54,12 +59,13 @@
 #include <algorithm>
 
 using namespace Esri::ArcGISRuntime;
+using namespace Esri::ArcGISRuntime::Authentication;
 
 ConfigureSubnetworkTrace::ConfigureSubnetworkTrace(QObject* parent /* = nullptr */):
-  QObject(parent),
-  m_cred(new Credential("viewer01", "I68VGU^nMurF", this))
+  ArcGISAuthenticationChallengeHandler(parent)
 {
-  m_utilityNetwork = new UtilityNetwork(m_featureLayerUrl, m_cred, this);
+  ArcGISRuntimeEnvironment::authenticationManager()->setArcGISAuthenticationChallengeHandler(this);
+  m_utilityNetwork = new UtilityNetwork(new ServiceGeodatabase(m_featureLayerUrl, this), this);
 
   connect(m_utilityNetwork, &UtilityNetwork::doneLoading, this, &ConfigureSubnetworkTrace::onUtilityNetworkLoaded);
 
@@ -364,4 +370,15 @@ ConfigureSubnetworkTrace::~ConfigureSubnetworkTrace() = default;
 void ConfigureSubnetworkTrace::init()
 {
   qmlRegisterType<ConfigureSubnetworkTrace>("Esri.Samples", 1, 0, "ConfigureSubnetworkTraceSample");
+}
+
+void ConfigureSubnetworkTrace::handleArcGISAuthenticationChallenge(ArcGISAuthenticationChallenge* challenge)
+{
+  TokenCredential::createWithChallengeAsync(challenge, "viewer01", "I68VGU^nMurF", {}, this).then(this, [challenge](TokenCredential* tokenCredential)
+  {
+    challenge->continueWithCredential(tokenCredential);
+  }).onFailed(this, [challenge](const ErrorException& e)
+  {
+    challenge->continueWithError(e.error());
+  });
 }

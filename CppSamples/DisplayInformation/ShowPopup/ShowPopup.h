@@ -31,18 +31,18 @@ class GeoElement;
 class IdentifyLayerResult;
 class Map;
 class MapQuickView;
-class PopupManager;
+class Popup;
 }
 
 Q_MOC_INCLUDE("MapQuickView.h")
-Q_MOC_INCLUDE("PopupManager.h")
+Q_MOC_INCLUDE("Popup.h")
 
 class ShowPopup : public QObject
 {
   Q_OBJECT
 
   Q_PROPERTY(Esri::ArcGISRuntime::MapQuickView* mapView READ mapView WRITE setMapView NOTIFY mapViewChanged)
-  Q_PROPERTY(QQmlListProperty<Esri::ArcGISRuntime::PopupManager> popupManagers READ popupManagers NOTIFY popupManagersChanged)
+  Q_PROPERTY(Esri::ArcGISRuntime::Popup* popup MEMBER m_popup NOTIFY popupChanged)
   Q_PROPERTY(bool taskRunning READ taskRunning NOTIFY taskRunningChanged)
 
 public:
@@ -55,7 +55,7 @@ public:
 
 signals:
   void mapViewChanged();
-  void popupManagersChanged();
+  void popupChanged();
   void taskRunningChanged();
 
 private slots:
@@ -64,14 +64,12 @@ private slots:
 
 private:
   bool taskRunning() const;
-  QQmlListProperty<Esri::ArcGISRuntime::PopupManager> popupManagers();
   Esri::ArcGISRuntime::MapQuickView* mapView() const;
   void setMapView(Esri::ArcGISRuntime::MapQuickView* mapView);
 
   Esri::ArcGISRuntime::Map* m_map = nullptr;
   Esri::ArcGISRuntime::MapQuickView* m_mapView = nullptr;
-  Esri::ArcGISRuntime::PopupManager* m_popupManager = nullptr;
-  QList<Esri::ArcGISRuntime::PopupManager*> m_popupManagers;
+  Esri::ArcGISRuntime::Popup* m_popup = nullptr;
   Esri::ArcGISRuntime::FeatureLayer* m_featureLayer = nullptr;
 
   QFuture<Esri::ArcGISRuntime::IdentifyLayerResult*> m_future;

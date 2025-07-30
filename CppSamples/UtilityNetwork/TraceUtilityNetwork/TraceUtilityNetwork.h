@@ -18,17 +18,16 @@
 #define TraceUtilityNetwork_H
 
 // ArcGIS Maps SDK headers
+#include "Authentication/ArcGISAuthenticationChallengeHandler.h"
 #include "Point.h"
 
 // Qt headers
-#include <QObject>
 #include <QUrl>
 #include <QUuid>
 
 namespace Esri::ArcGISRuntime
 {
 class ArcGISFeature;
-class Credential;
 class Error;
 class ErrorException;
 class FeatureLayer;
@@ -51,12 +50,18 @@ class UtilityTier;
 class UtilityTraceParameters;
 }
 
+namespace Esri::ArcGISRuntime::Authentication
+{
+  class ArcGISAuthenticationChallenge;
+}
+
+
 Q_MOC_INCLUDE("MapQuickView.h")
 Q_MOC_INCLUDE("IdentifyLayerResult.h")
 
 class TaskCanceler;
 
-class TraceUtilityNetwork : public QObject
+class TraceUtilityNetwork : public Esri::ArcGISRuntime::Authentication::ArcGISAuthenticationChallengeHandler
 {
   Q_OBJECT
 
@@ -95,21 +100,21 @@ private:
   void connectSignals();
   void updateTraceParams(Esri::ArcGISRuntime::UtilityElement* element);
   Esri::ArcGISRuntime::UniqueValue* createUniqueValue(const QString& label, Esri::ArcGISRuntime::Symbol* fillSymbol, int value);
-  void createFeatureLayers(const Esri::ArcGISRuntime::Error& error);
+  void createFeatureLayers();
   void createRenderers();
   void loadUtilityNetwork(const Esri::ArcGISRuntime::Error& error);
   bool hasErrorOccurred(const Esri::ArcGISRuntime::Error& error);
-  void addUtilityNetworkToMap(const Esri::ArcGISRuntime::Error& error);
   void setBusyIndicator(bool status);
   void onIdentifyLayersCompleted_(const QList<Esri::ArcGISRuntime::IdentifyLayerResult*>& results);
   void onTraceCompleted_();
   void onTaskFailed_(const Esri::ArcGISRuntime::ErrorException& exception);
+
+  void handleArcGISAuthenticationChallenge(Esri::ArcGISRuntime::Authentication::ArcGISAuthenticationChallenge* challenge) override;
+
   const QUrl m_serviceUrl = QUrl("https://sampleserver7.arcgisonline.com/server/rest/services/UtilityNetwork/NapervilleElectric/FeatureServer");
 
   Esri::ArcGISRuntime::Map* m_map = nullptr;
-  Esri::ArcGISRuntime::Credential* m_cred = nullptr;
   Esri::ArcGISRuntime::MapQuickView* m_mapView = nullptr;
-  Esri::ArcGISRuntime::FeatureLayer* m_deviceLayer = nullptr;
   Esri::ArcGISRuntime::FeatureLayer* m_lineLayer = nullptr;
   Esri::ArcGISRuntime::ServiceFeatureTable* m_deviceFeatureTable = nullptr;
   Esri::ArcGISRuntime::ServiceFeatureTable* m_lineFeatureTable = nullptr;

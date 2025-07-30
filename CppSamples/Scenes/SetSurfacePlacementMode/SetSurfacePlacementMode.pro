@@ -24,11 +24,11 @@ CONFIG += c++17
 # additional modules are pulled in via arcgisruntime.pri
 QT += opengl qml quick
 
-ARCGIS_RUNTIME_VERSION = 200.7.0
-include($$PWD/arcgisruntime.pri)
-
 TEMPLATE = app
 TARGET = SurfacePlacement
+
+ARCGIS_RUNTIME_VERSION = 200.8.0
+include($$PWD/arcgisruntime.pri)
 
 #-------------------------------------------------------------------------------
 

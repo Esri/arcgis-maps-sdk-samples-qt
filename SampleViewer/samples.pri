@@ -57,6 +57,7 @@ HEADERS += \
     "$$SAMPLEPATHCPP/DisplayInformation/Unique_Value_Renderer/Unique_Value_Renderer.h" \
     "$$SAMPLEPATHCPP/EditData/AddFeaturesFeatureService/AddFeaturesFeatureService.h" \
     "$$SAMPLEPATHCPP/EditData/ContingentValues/ContingentValues.h" \
+    "$$SAMPLEPATHCPP/EditData/CreateKmlMultiTrack/CreateKmlMultiTrack.h" \
     "$$SAMPLEPATHCPP/EditData/DeleteFeaturesFeatureService/DeleteFeaturesFeatureService.h" \
     "$$SAMPLEPATHCPP/EditData/EditAndSyncFeatures/EditAndSyncFeatures.h" \
     "$$SAMPLEPATHCPP/EditData/EditFeatureAttachments/EditFeatureAttachments.h" \
@@ -64,7 +65,9 @@ HEADERS += \
     "$$SAMPLEPATHCPP/EditData/EditKmlGroundOverlay/EditKmlGroundOverlay.h" \
     "$$SAMPLEPATHCPP/EditData/EditWithBranchVersioning/EditWithBranchVersioning.h" \
     "$$SAMPLEPATHCPP/EditData/SnapGeometryEdits/SnapGeometryEdits.h" \
+    "$$SAMPLEPATHCPP/EditData/SnapGeometryEditsWithRules/SnapGeometryEditsWithRules.h" \
     "$$SAMPLEPATHCPP/EditData/SnapGeometryEdits/SnapSourceListModel.h" \
+    "$$SAMPLEPATHCPP/EditData/SnapGeometryEditsWithRules/SnapSourcesListModel.h" \
     "$$SAMPLEPATHCPP/EditData/UpdateAttributesFeatureService/UpdateAttributesFeatureService.h" \
     "$$SAMPLEPATHCPP/EditData/UpdateGeometryFeatureService/UpdateGeometryFeatureService.h" \
     "$$SAMPLEPATHCPP/Features/ControlTimeExtentTimeSlider/ControlTimeExtentTimeSlider.h" \
@@ -148,7 +151,6 @@ HEADERS += \
     "$$SAMPLEPATHCPP/Layers/RasterStretchRenderer/RasterStretchRenderer.h" \
     "$$SAMPLEPATHCPP/Layers/StyleWmsLayer/StyleWmsLayer.h" \
     "$$SAMPLEPATHCPP/Layers/TileCacheLayer/TileCacheLayer.h" \
-    "$$SAMPLEPATHCPP/Layers/VectorTiledLayerUrl/VectorTiledLayerUrl.h" \
     "$$SAMPLEPATHCPP/Layers/Web_Tiled_Layer/Web_Tiled_Layer.h" \
     "$$SAMPLEPATHCPP/Layers/WmsLayerUrl/WmsLayerUrl.h" \
     "$$SAMPLEPATHCPP/Layers/WMTS_Layer/WMTS_Layer.h" \
@@ -284,6 +286,7 @@ SOURCES += \
     "$$SAMPLEPATHCPP/DisplayInformation/Unique_Value_Renderer/Unique_Value_Renderer.cpp" \
     "$$SAMPLEPATHCPP/EditData/AddFeaturesFeatureService/AddFeaturesFeatureService.cpp" \
     "$$SAMPLEPATHCPP/EditData/ContingentValues/ContingentValues.cpp" \
+    "$$SAMPLEPATHCPP/EditData/CreateKmlMultiTrack/CreateKmlMultiTrack.cpp" \
     "$$SAMPLEPATHCPP/EditData/DeleteFeaturesFeatureService/DeleteFeaturesFeatureService.cpp" \
     "$$SAMPLEPATHCPP/EditData/EditAndSyncFeatures/EditAndSyncFeatures.cpp" \
     "$$SAMPLEPATHCPP/EditData/EditFeatureAttachments/EditFeatureAttachments.cpp" \
@@ -291,7 +294,9 @@ SOURCES += \
     "$$SAMPLEPATHCPP/EditData/EditKmlGroundOverlay/EditKmlGroundOverlay.cpp" \
     "$$SAMPLEPATHCPP/EditData/EditWithBranchVersioning/EditWithBranchVersioning.cpp" \
     "$$SAMPLEPATHCPP/EditData/SnapGeometryEdits/SnapGeometryEdits.cpp" \
+    "$$SAMPLEPATHCPP/EditData/SnapGeometryEditsWithRules/SnapGeometryEditsWithRules.cpp" \
     "$$SAMPLEPATHCPP/EditData/SnapGeometryEdits/SnapSourceListModel.cpp" \
+    "$$SAMPLEPATHCPP/EditData/SnapGeometryEditsWithRules/SnapSourcesListModel.cpp" \
     "$$SAMPLEPATHCPP/EditData/UpdateAttributesFeatureService/UpdateAttributesFeatureService.cpp" \
     "$$SAMPLEPATHCPP/EditData/UpdateGeometryFeatureService/UpdateGeometryFeatureService.cpp" \
     "$$SAMPLEPATHCPP/Features/ControlTimeExtentTimeSlider/ControlTimeExtentTimeSlider.cpp" \
@@ -375,7 +380,6 @@ SOURCES += \
     "$$SAMPLEPATHCPP/Layers/RasterStretchRenderer/RasterStretchRenderer.cpp" \
     "$$SAMPLEPATHCPP/Layers/StyleWmsLayer/StyleWmsLayer.cpp" \
     "$$SAMPLEPATHCPP/Layers/TileCacheLayer/TileCacheLayer.cpp" \
-    "$$SAMPLEPATHCPP/Layers/VectorTiledLayerUrl/VectorTiledLayerUrl.cpp" \
     "$$SAMPLEPATHCPP/Layers/Web_Tiled_Layer/Web_Tiled_Layer.cpp" \
     "$$SAMPLEPATHCPP/Layers/WmsLayerUrl/WmsLayerUrl.cpp" \
     "$$SAMPLEPATHCPP/Layers/WMTS_Layer/WMTS_Layer.cpp" \
@@ -509,6 +513,7 @@ RESOURCES += \
     "$$SAMPLEPATHCPP/DisplayInformation/Unique_Value_Renderer/Unique_Value_Renderer.qrc" \
     "$$SAMPLEPATHCPP/EditData/AddFeaturesFeatureService/AddFeaturesFeatureService.qrc" \
     "$$SAMPLEPATHCPP/EditData/ContingentValues/ContingentValues.qrc" \
+    "$$SAMPLEPATHCPP/EditData/CreateKmlMultiTrack/CreateKmlMultiTrack.qrc" \
     "$$SAMPLEPATHCPP/EditData/DeleteFeaturesFeatureService/DeleteFeaturesFeatureService.qrc" \
     "$$SAMPLEPATHCPP/EditData/EditAndSyncFeatures/EditAndSyncFeatures.qrc" \
     "$$SAMPLEPATHCPP/EditData/EditFeatureAttachments/EditFeatureAttachments.qrc" \
@@ -516,6 +521,7 @@ RESOURCES += \
     "$$SAMPLEPATHCPP/EditData/EditKmlGroundOverlay/EditKmlGroundOverlay.qrc" \
     "$$SAMPLEPATHCPP/EditData/EditWithBranchVersioning/EditWithBranchVersioning.qrc" \
     "$$SAMPLEPATHCPP/EditData/SnapGeometryEdits/SnapGeometryEdits.qrc" \
+    "$$SAMPLEPATHCPP/EditData/SnapGeometryEditsWithRules/SnapGeometryEditsWithRules.qrc" \
     "$$SAMPLEPATHCPP/EditData/UpdateAttributesFeatureService/UpdateAttributesFeatureService.qrc" \
     "$$SAMPLEPATHCPP/EditData/UpdateGeometryFeatureService/UpdateGeometryFeatureService.qrc" \
     "$$SAMPLEPATHCPP/Features/ControlTimeExtentTimeSlider/ControlTimeExtentTimeSlider.qrc" \
@@ -594,7 +600,6 @@ RESOURCES += \
     "$$SAMPLEPATHCPP/Layers/RasterStretchRenderer/RasterStretchRenderer.qrc" \
     "$$SAMPLEPATHCPP/Layers/StyleWmsLayer/StyleWmsLayer.qrc" \
     "$$SAMPLEPATHCPP/Layers/TileCacheLayer/TileCacheLayer.qrc" \
-    "$$SAMPLEPATHCPP/Layers/VectorTiledLayerUrl/VectorTiledLayerUrl.qrc" \
     "$$SAMPLEPATHCPP/Layers/Web_Tiled_Layer/Web_Tiled_Layer.qrc" \
     "$$SAMPLEPATHCPP/Layers/WmsLayerUrl/WmsLayerUrl.qrc" \
     "$$SAMPLEPATHCPP/Layers/WMTS_Layer/WMTS_Layer.qrc" \

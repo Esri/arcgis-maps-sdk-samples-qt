@@ -26,7 +26,7 @@ DEFINES += Qt_Version=\"$$QT_VERSION\"
 SAMPLEPATHCPP = $$PWD/../CppSamples
 COMMONVIEWER = $$PWD
 PCH_HEADER = $$COMMONVIEWER/pch.hpp
-ARCGIS_RUNTIME_VERSION = 200.7.0
+ARCGIS_RUNTIME_VERSION = 200.8.0
 DEFINES += ArcGIS_Runtime_Version=$$ARCGIS_RUNTIME_VERSION
 
 # This block determines whether to build against the installed SDK or the local dev build area
@@ -47,8 +47,8 @@ exists($$PWD/../../../DevBuildCpp.pri) {
       $$PWD/../../../api/qt_cpp/Include/LocalServer \
       $$PWD/../../../../buildnum
 } else {
-  message("Building against the installed SDK")
-  CONFIG += build_from_setup
+  message("Building against the locally configured SDK")
+  CONFIG += build_from_configured_sdk
   CONFIG += c++17
 
   # include the toolkitcpp.pri, which contains all the toolkit resources
@@ -148,7 +148,7 @@ exists($$PWD/../../../DevBuildCpp.pri) {
     QMAKE_BUNDLE_DATA += ffmpeg
   }
 
-  DEFINES += BUILD_FROM_SETUP
+  DEFINES += BUILD_FROM_CONFIGURED_SDK
 }
 
 qtHaveModule(webenginequick) {
@@ -225,7 +225,7 @@ DEFINES += QT_DEPRECATED_WARNINGS
 # Application Icon
 #-------------------------------------------------
 
-CONFIG(build_from_setup) {
+CONFIG(build_from_configured_sdk) {
   win32 {
       OTHER_FILES += \
           $$COMMONVIEWER/images/ArcGISRuntimeSDKQtSamples.ico
@@ -249,7 +249,7 @@ mac {
 }
 
 android {
-    CONFIG(build_from_setup) {
+    CONFIG(build_from_configured_sdk) {
         for (ABI, ANDROID_ABIS): {
             ANDROID_SSL_DIR = $$dirname(QMAKE_QMAKE)/../lib/ssl/$${ABI}
             LIST_SSL_LIBS = libcrypto_1_1.so libssl_1_1.so

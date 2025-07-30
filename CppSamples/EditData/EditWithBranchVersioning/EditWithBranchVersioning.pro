@@ -27,13 +27,13 @@ QT += opengl qml quick
 TEMPLATE = app
 TARGET = EditWithBranchVersioning
 
-ARCGIS_RUNTIME_VERSION = 200.7.0
+ARCGIS_RUNTIME_VERSION = 200.8.0
 include($$PWD/arcgisruntime.pri)
 
 TOOLKIT_PRI_PATH = $$PWD/../../../arcgis-maps-sdk-toolkit-qt
 
-exists($$TOOLKIT_PRI_PATH/uitools/toolkitcpp.pri) {
-    include($$TOOLKIT_PRI_PATH/uitools/toolkitcpp.pri)
+exists($$TOOLKIT_PRI_PATH/uitools/toolkitcpp/toolkitcpp.pri) {
+    include($$TOOLKIT_PRI_PATH/uitools/toolkitcpp/toolkitcpp.pri)
 } else {
     error(TOOLKIT_PRI_PATH is missing which is required to build this application.)
 }

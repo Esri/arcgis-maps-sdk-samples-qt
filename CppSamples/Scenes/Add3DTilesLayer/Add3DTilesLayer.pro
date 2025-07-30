@@ -20,7 +20,6 @@ mac {
 #-------------------------------------------------------------------------------
 
 CONFIG += c++17
-#CONFIG+=build_from_setup
 
 # additional modules are pulled in via arcgisruntime.pri
 QT += opengl qml quick
@@ -28,7 +27,7 @@ QT += opengl qml quick
 TEMPLATE = app
 TARGET = Add3DTilesLayer
 
-ARCGIS_RUNTIME_VERSION = 200.7.0
+ARCGIS_RUNTIME_VERSION = 200.8.0
 include($$PWD/arcgisruntime.pri)
 
 #-------------------------------------------------------------------------------

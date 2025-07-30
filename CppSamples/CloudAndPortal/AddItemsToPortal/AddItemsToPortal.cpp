@@ -22,14 +22,11 @@
 #include "AddItemsToPortal.h"
 
 // ArcGIS Maps SDK headers
-#include "AuthenticationManager.h"
-#include "CoreTypes.h"
-#include "Credential.h"
+#include "Authentication/OAuthUserConfiguration.h"
 #include "Error.h"
 #include "ErrorException.h"
 #include "ErrorInformationKeys.h"
 #include "MapTypes.h"
-#include "OAuthClientInfo.h"
 #include "Portal.h"
 #include "PortalItem.h"
 #include "PortalItemListModel.h"
@@ -40,13 +37,21 @@
 #include <QFuture>
 #include <QVariantMap>
 
+// Other headers
+#include "OAuthUserConfigurationManager.h"
+
 using namespace Esri::ArcGISRuntime;
+using namespace Esri::ArcGISRuntime::Authentication;
+using namespace Esri::ArcGISRuntime::Toolkit;
 
 AddItemsToPortal::AddItemsToPortal(QQuickItem* parent /* = nullptr */):
   QQuickItem(parent),
-  m_portal(new Portal(new Credential(OAuthClientInfo("iLkGIj0nX8A4EJda", OAuthMode::User), this), this))
+  m_portal(new Portal(true, this))
 {
-  AuthenticationManager::instance()->setCredentialCacheEnabled(false);
+  const QString redirectUrl{"urn:ietf:wg:oauth:2.0:oob"};
+  OAuthUserConfiguration* config = new OAuthUserConfiguration(m_portal->url(), "iLkGIj0nX8A4EJda", redirectUrl, this);
+  OAuthUserConfigurationManager::addConfiguration(config);
+
   m_item = new PortalItem(m_portal, PortalItemType::CSV, this);
   m_item->setTitle("Add Items Sample");
 }
@@ -165,7 +170,7 @@ void AddItemsToPortal::addItem()
 
   //! [PortalUser addItemWithUrlAsync]
   QUrl localCSV("qrc:/Samples/CloudAndPortal/AddItemsToPortal/add_item_sample.csv");
-  m_user->addPortalItemWithUrlAsync(m_item, localCSV, "add_item_sample.csv" ).then(
+  m_user->addPortalItemWithUrlAsync(m_item, localCSV, "add_item_sample.csv" ).then(this,
   [this]()
   {
     m_busy = false;
@@ -202,7 +207,7 @@ void AddItemsToPortal::deleteItem()
 
   m_busy = true;
 
-  m_user->deletePortalItemAsync(m_item).then(
+  m_user->deletePortalItemAsync(m_item).then(this,
   [this]()
   {
     m_busy = false;
@@ -230,7 +235,7 @@ void AddItemsToPortal::fetchItem()
 
   m_busy = true;
 
-  m_user->fetchContentAsync().then(
+  m_user->fetchContentAsync().then(this,
   [this]()
   {
     m_busy = false;

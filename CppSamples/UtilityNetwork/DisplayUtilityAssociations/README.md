@@ -14,8 +14,8 @@ Pan and zoom around the map. Observe graphics that show utility associations bet
 
 ## How it works
 
-1. Create a `UtilityNetwork` with a feature service URL, add it to the map's `utilityNetworks` list, then load it.
-2. Add a `FeatureLayer` to the map for every `UtilityNetworkSource` of type `Edge` or `Junction`.
+1. Create and load a `Map` with a web map item URL that contains a `UtilityNetwork`.
+2. Get and load the first `UtilityNetwork` from the web map.
 3. Create a `GraphicsOverlay` for the utility associations.
 4. Add connection for the `ViewpointChanged` signal of the `MapView`.
 5. When the sample starts and every time the viewpoint changes, do the following steps.
@@ -35,7 +35,7 @@ Pan and zoom around the map. Observe graphics that show utility associations bet
 
 ## About the data
 
-The [Naperville electrical](https://sampleserver7.arcgisonline.com/server/rest/services/UtilityNetwork/NapervilleElectric/FeatureServer) network feature service, hosted on ArcGIS Online (authentication required: this is handled within the sample code), contains a utility network used to run the subnetwork-based trace in this sample.
+The [Naperville electrical](https://sampleserver7.arcgisonline.com/portal/home/item.html?id=be0e4637620a453584118107931f718b) web map contains a utility network used to run the subnetwork-based trace in this sample.
 
 ## Additional information
 

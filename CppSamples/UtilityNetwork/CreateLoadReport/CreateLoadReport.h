@@ -17,14 +17,17 @@
 #ifndef CREATELOADREPORT_H
 #define CREATELOADREPORT_H
 
+// ArcGIS Maps SDK headers
+#include "Authentication/ArcGISAuthenticationChallengeHandler.h"
+
 // Qt headers
 #include <QObject>
+#include <QUrl>
 #include <QUuid>
 #include <QVariantMap>
 
 namespace Esri::ArcGISRuntime
 {
-class Credential;
 class CodedValue;
 class UtilityAssetType;
 class UtilityCategory;
@@ -37,7 +40,12 @@ class UtilityTraceConfiguration;
 class UtilityTraceParameters;
 }
 
-class CreateLoadReport : public QObject
+namespace Esri::ArcGISRuntime::Authentication
+{
+  class ArcGISAuthenticationChallenge;
+}
+
+class CreateLoadReport : public Esri::ArcGISRuntime::Authentication::ArcGISAuthenticationChallengeHandler
 {
   Q_OBJECT
 
@@ -78,7 +86,8 @@ private:
   void onTraceCompleted_(const QString& codeValueName);
   void setUtilityTraceOrconditionWithCodedValue(Esri::ArcGISRuntime::CodedValue);
 
-  Esri::ArcGISRuntime::Credential* m_cred = nullptr;
+  void handleArcGISAuthenticationChallenge(Esri::ArcGISRuntime::Authentication::ArcGISAuthenticationChallenge* challenge) override;
+
   Esri::ArcGISRuntime::UtilityAssetType* m_utilityAssetType = nullptr;
   Esri::ArcGISRuntime::UtilityElement* m_startingLocation = nullptr;
   Esri::ArcGISRuntime::UtilityNetwork* m_utilityNetwork = nullptr;
@@ -103,6 +112,7 @@ private:
   QString m_serviceCategoryName;
   QString m_terminalName;
   QString m_tierName;
+  const QUrl m_featureLayerUrl = QUrl("https://sampleserver7.arcgisonline.com/server/rest/services/UtilityNetwork/NapervilleElectric/FeatureServer");
   int m_traceRequestCount;
 };
 

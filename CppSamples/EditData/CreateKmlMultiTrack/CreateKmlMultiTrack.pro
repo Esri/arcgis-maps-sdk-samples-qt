@@ -1,5 +1,5 @@
 #-------------------------------------------------
-# Copyright 2015 Esri.
+# Copyright 2025 Esri.
 
 # Licensed under the Apache License, Version 2.0 (the "License");
 # you may not use this file except in compliance with the License.
@@ -24,22 +24,22 @@ CONFIG += c++17
 # additional modules are pulled in via arcgisruntime.pri
 QT += opengl qml quick
 
-ARCGIS_RUNTIME_VERSION = 200.7.0
-include($$PWD/arcgisruntime.pri)
-
 TEMPLATE = app
-TARGET = VectorTiledLayerUrl
+TARGET = CreateKmlMultiTrack
+
+ARCGIS_RUNTIME_VERSION = 200.8.0
+include($$PWD/arcgisruntime.pri)
 
 #-------------------------------------------------------------------------------
 
 HEADERS += \
-    VectorTiledLayerUrl.h
+    CreateKmlMultiTrack.h
 
 SOURCES += \
-    main.cpp \
-    VectorTiledLayerUrl.cpp
+    CreateKmlMultiTrack.cpp \
+    main.cpp
 
-RESOURCES += VectorTiledLayerUrl.qrc
+RESOURCES += CreateKmlMultiTrack.qrc
 
 #-------------------------------------------------------------------------------
 
@@ -62,4 +62,3 @@ android {
     INCLUDEPATH += $$PWD
     DEPENDPATH += $$PWD
 }
-

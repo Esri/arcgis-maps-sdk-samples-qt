@@ -22,9 +22,12 @@
 #include "TraceUtilityNetwork.h"
 
 // ArcGIS Maps SDK headers
+#include "ArcGISRuntimeEnvironment.h"
 #include "ArcGISFeature.h"
 #include "AttributeListModel.h"
-#include "Credential.h"
+#include "Authentication/AuthenticationManager.h"
+#include "Authentication/ArcGISAuthenticationChallenge.h"
+#include "Authentication/TokenCredential.h"
 #include "Envelope.h"
 #include "Error.h"
 #include "ErrorException.h"
@@ -74,45 +77,34 @@
 #include "TaskCanceler.h"
 
 using namespace Esri::ArcGISRuntime;
+using namespace Esri::ArcGISRuntime::Authentication;
 
 TraceUtilityNetwork::TraceUtilityNetwork(QObject* parent /* = nullptr */):
-  QObject(parent),
-  m_map(new Map(BasemapStyle::ArcGISStreetsNight, this)),
-  m_cred(new Credential("viewer01", "I68VGU^nMurF", this)),
+  ArcGISAuthenticationChallengeHandler(parent),
+  m_map(new Map(QUrl("https://sampleserver7.arcgisonline.com/portal/home/item.html?id=be0e4637620a453584118107931f718b"), this)),
   m_startingSymbol(new SimpleMarkerSymbol(SimpleMarkerSymbolStyle::Cross, QColor(Qt::green), 20, this)),
   m_barrierSymbol(new SimpleMarkerSymbol(SimpleMarkerSymbolStyle::X, QColor(Qt::red), 20, this)),
   m_mediumVoltageSymbol(new SimpleLineSymbol(SimpleLineSymbolStyle::Solid, QColor(Qt::darkCyan), 3, this)),
   m_lowVoltageSymbol(new SimpleLineSymbol(SimpleLineSymbolStyle::Dash, QColor(Qt::darkCyan), 3, this)),
-  m_serviceGeodatabase(new ServiceGeodatabase(m_serviceUrl, m_cred, this)),
+  m_serviceGeodatabase(new ServiceGeodatabase(m_serviceUrl, this)),
   m_graphicParent(new QObject()),
   m_taskCanceler(std::make_unique<TaskCanceler>())
 {
+  ArcGISRuntimeEnvironment::authenticationManager()->setArcGISAuthenticationChallengeHandler(this);
+
   m_map->setInitialViewpoint(Viewpoint(Envelope(-9813547.35557238, 5129980.36635111, -9813185.0602376, 5130215.41254146, SpatialReference::webMercator())));
-
-  connect(m_serviceGeodatabase, &ServiceGeodatabase::doneLoading, this, &TraceUtilityNetwork::createFeatureLayers);
-
-  m_serviceGeodatabase->load();
 
   connect(m_map, &Map::doneLoading, this, &TraceUtilityNetwork::loadUtilityNetwork);
 }
 
-void TraceUtilityNetwork::createFeatureLayers(const Error& error)
+void TraceUtilityNetwork::createFeatureLayers()
 {
-  if (hasErrorOccurred(error))
-    return;
+  setBusyIndicator(false);
 
-  // Create feature table from the 1st table (index = 0) in the serviceGeodatabase
-  m_deviceFeatureTable = m_serviceGeodatabase->table(0);
-  m_deviceLayer = new FeatureLayer(m_deviceFeatureTable, this);
-
-  // Create feature table from the 4th table (index = 3) in the serviceGeodatabase
+  // Get the feature table from the 4th table (index = 3) in the serviceGeodatabase
+  m_serviceGeodatabase = m_utilityNetwork->serviceGeodatabase();
   m_lineFeatureTable = m_serviceGeodatabase->table(3);
-  m_lineLayer = new FeatureLayer(m_lineFeatureTable, this);
-
-  m_map->operationalLayers()->append(m_lineLayer);
-  m_map->operationalLayers()->append(m_deviceLayer);
-
-  createRenderers();
+  m_lineLayer = qobject_cast<FeatureLayer*>(m_lineFeatureTable->layer());
 }
 
 void TraceUtilityNetwork::createRenderers()
@@ -136,17 +128,24 @@ void TraceUtilityNetwork::loadUtilityNetwork(const Error& error)
   if (hasErrorOccurred(error))
     return;
 
+  m_utilityNetwork = m_map->utilityNetworks()->first();
+  m_utilityNetwork->load();
+
   // Create graphics overlay and append to mapview
   m_graphicsOverlay = new GraphicsOverlay(this);
   m_mapView->graphicsOverlays()->append(m_graphicsOverlay);
 
-  m_utilityNetwork = new UtilityNetwork(m_serviceUrl, m_map, m_cred, this);
-
   connect(m_utilityNetwork, &UtilityNetwork::errorOccurred, this, &TraceUtilityNetwork::hasErrorOccurred);
 
-  connect(m_utilityNetwork, &UtilityNetwork::doneLoading, this, &TraceUtilityNetwork::addUtilityNetworkToMap);
+  connect(m_utilityNetwork, &UtilityNetwork::doneLoading, this, [this](const Error& error)
+  {
+    if (hasErrorOccurred(error))
+      return;
 
-  m_utilityNetwork->load();
+    createFeatureLayers();
+    createRenderers();
+    connectSignals();
+  });
 
   setBusyIndicator(true);
 }
@@ -165,18 +164,6 @@ void TraceUtilityNetwork::onTaskFailed_(const Esri::ArcGISRuntime::ErrorExceptio
 {
   m_dialogText = QString(exception.error().message() + " - " + exception.error().additionalMessage());
   emit dialogVisibleChanged();
-}
-
-void TraceUtilityNetwork::addUtilityNetworkToMap(const Error& error)
-{
-  setBusyIndicator(false);
-
-  if (hasErrorOccurred(error))
-    return;
-
-  m_map->utilityNetworks()->append(m_utilityNetwork);
-
-  connectSignals();
 }
 
 void TraceUtilityNetwork::connectSignals()
@@ -427,26 +414,16 @@ void TraceUtilityNetwork::onTraceCompleted_()
 
   const QList<UtilityElement*> elements = static_cast<UtilityElementTraceResult*>(result)->elements(this);
 
-  QueryParameters deviceParams;
   QueryParameters lineParams;
-  QList<qint64> deviceObjIds;
   QList<qint64> lineObjIds;
 
   for (UtilityElement* item : elements)
   {
-    if (item->networkSource()->name() == "Electric Distribution Device")
-      deviceObjIds.append(item->objectId());
-    else if (item->networkSource()->name() == "Electric Distribution Line")
+    if (item->networkSource()->name() == "Electric Distribution Line")
       lineObjIds.append(item->objectId());
   }
 
-  deviceParams.setObjectIds(deviceObjIds);
   lineParams.setObjectIds(lineObjIds);
-
-  m_taskCanceler->addTask(m_deviceLayer->selectFeaturesAsync(deviceParams, SelectionMode::Add).then(this, [this](FeatureQueryResult*)
-  {
-    setBusyIndicator(false);
-  }));
 
   m_taskCanceler->addTask(m_lineLayer->selectFeaturesAsync(lineParams, SelectionMode::Add).then(this, [this](FeatureQueryResult*)
   {
@@ -473,4 +450,15 @@ void TraceUtilityNetwork::setBusyIndicator(bool status)
   emit busyChanged();
 
   return;
+}
+
+void TraceUtilityNetwork::handleArcGISAuthenticationChallenge(ArcGISAuthenticationChallenge* challenge)
+{
+  TokenCredential::createWithChallengeAsync(challenge, "viewer01", "I68VGU^nMurF", {}, this).then(this, [challenge](TokenCredential* tokenCredential)
+  {
+    challenge->continueWithCredential(tokenCredential);
+  }).onFailed(this, [challenge](const ErrorException& e)
+  {
+    challenge->continueWithError(e.error());
+  });
 }

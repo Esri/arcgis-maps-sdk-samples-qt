@@ -25,6 +25,9 @@
 #include <QGuiApplication>
 #include <QQmlApplicationEngine>
 
+// Other headers
+#include "Esri/ArcGISRuntime/Toolkit/register.h"
+
 // Platform specific headers
 #ifdef Q_OS_WIN
 #include <Windows.h>
@@ -32,6 +35,7 @@
 
 int main(int argc, char *argv[])
 {
+  Esri::ArcGISRuntime::ArcGISRuntimeEnvironment::setUseLegacyAuthentication(false);
   QGuiApplication app(argc, argv);
   app.setApplicationName(QString("ConfigureClusters"));
 
@@ -73,6 +77,8 @@ int main(int argc, char *argv[])
 #ifdef ARCGIS_RUNTIME_IMPORT_PATH_2
   engine.addImportPath(ARCGIS_RUNTIME_IMPORT_PATH_2);
 #endif
+
+    Esri::ArcGISRuntime::Toolkit::registerComponents(engine);
 
   // Set the source
   engine.load(QUrl("qrc:/Samples/Layers/ConfigureClusters/main.qml"));

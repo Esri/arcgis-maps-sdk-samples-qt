@@ -24,10 +24,14 @@
 // ArcGIS Maps SDK headers
 #include "ArcGISFeature.h"
 #include "ArcGISFeatureListModel.h"
+#include "ArcGISRuntimeEnvironment.h"
 #include "AttributeListModel.h"
-#include "Credential.h"
+#include "Authentication/AuthenticationManager.h"
+#include "Authentication/ArcGISAuthenticationChallenge.h"
+#include "Authentication/TokenCredential.h"
 #include "Envelope.h"
 #include "Error.h"
+#include "ErrorException.h"
 #include "FeatureEditResult.h"
 #include "FeatureLayer.h"
 #include "FeatureQueryResult.h"
@@ -84,13 +88,14 @@
 #include <QUuid>
 
 using namespace Esri::ArcGISRuntime;
+using namespace Esri::ArcGISRuntime::Authentication;
 
 ValidateUtilityNetworkTopology::ValidateUtilityNetworkTopology(QObject* parent /* = nullptr */) :
-  QObject(parent)
+  ArcGISAuthenticationChallengeHandler(parent)
 {
-  Credential* cred = new Credential("editor01", "S7#i2LWmYH75", this);
+  ArcGISRuntimeEnvironment::authenticationManager()->setArcGISAuthenticationChallengeHandler(this);
 
-  Portal* portal = new Portal(QUrl("https://sampleserver7.arcgisonline.com/portal/sharing/rest"), cred, this);
+  Portal* portal = new Portal(QUrl("https://sampleserver7.arcgisonline.com/portal/sharing/rest"), this);
 
   PortalItem* portalItem = new PortalItem(portal, "6e3fc6db3d0b4e6589eb4097eb3e5b9b", this);
 
@@ -392,7 +397,7 @@ void ValidateUtilityNetworkTopology::onGetState()
 
     updateMessage("Getting utility network state...");
 
-    m_utilityNetwork->stateAsync().then([this](const QFuture<Esri::ArcGISRuntime::UtilityNetworkState*>& state)
+    m_utilityNetwork->stateAsync().then(this, [this](const QFuture<Esri::ArcGISRuntime::UtilityNetworkState*>& state)
     {
       m_utilityNetworkstate = state.result();
 
@@ -429,7 +434,7 @@ void ValidateUtilityNetworkTopology::onGetState()
 }
 
 void ValidateUtilityNetworkTopology::onValidate()
-{  
+{
   m_utilityNetwork = m_mapView ? (m_mapView->map() ? m_mapView->map()->utilityNetworks()->first() : nullptr) : nullptr;
 
   if (m_utilityNetwork)
@@ -490,7 +495,7 @@ void ValidateUtilityNetworkTopology::onValidate()
 }
 
 void ValidateUtilityNetworkTopology::onTrace()
-{  
+{
   m_utilityNetwork = m_mapView ? (m_mapView->map() ? m_mapView->map()->utilityNetworks()->first() : nullptr) : nullptr;
 
   if (m_utilityNetwork)
@@ -690,4 +695,15 @@ LabelDefinition* ValidateUtilityNetworkTopology::createLineLabelDefinition()
   LabelDefinition* lineLabelDefinition = new LabelDefinition(labelExpression, textSymbol, this);
   lineLabelDefinition->setUseCodedValues(true);
   return lineLabelDefinition;
+}
+
+void ValidateUtilityNetworkTopology::handleArcGISAuthenticationChallenge(ArcGISAuthenticationChallenge* challenge)
+{
+  TokenCredential::createWithChallengeAsync(challenge, "editor01", "S7#i2LWmYH75", {}, this).then(this, [challenge](TokenCredential* tokenCredential)
+  {
+    challenge->continueWithCredential(tokenCredential);
+  }).onFailed(this, [challenge](const ErrorException& e)
+  {
+    challenge->continueWithError(e.error());
+  });
 }

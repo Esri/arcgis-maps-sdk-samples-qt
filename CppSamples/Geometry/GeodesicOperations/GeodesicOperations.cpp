@@ -22,6 +22,8 @@
 #include "GeodesicOperations.h"
 
 // ArcGIS Maps SDK headers
+#include "AngularUnit.h"
+#include "GeodeticDistanceResult.h"
 #include "GeometryEngine.h"
 #include "Graphic.h"
 #include "GraphicListModel.h"
@@ -104,15 +106,17 @@ void GeodesicOperations::componentComplete()
 
     // densify the path as a geodesic curve and show it with the path graphic
     constexpr double maxSegmentLength = 1.0;
-    const LinearUnit unitOfMeasurement(LinearUnitId::Kilometers);
+    const LinearUnit linearUnitOfMeasurementKm = LinearUnit::kilometers();
+    const AngularUnit angularUnitOfMeasurementRads = AngularUnit::radians();
     constexpr GeodeticCurveType curveType = GeodeticCurveType::Geodesic;
-    const Geometry pathGeometry = GeometryEngine::densifyGeodetic(polyline, maxSegmentLength, unitOfMeasurement, curveType);
+    const Geometry pathGeometry = GeometryEngine::densifyGeodetic(polyline, maxSegmentLength, linearUnitOfMeasurementKm, curveType);
 
     // update the graphic
     m_pathGraphic->setGeometry(pathGeometry);
 
     // calculate the path's geodetic length
-    m_distanceText = QString::number(GeometryEngine::lengthGeodetic(pathGeometry, unitOfMeasurement, curveType), 'f', 2);
+    const GeodeticDistanceResult result = GeometryEngine::distanceGeodetic(nycPoint, destination, linearUnitOfMeasurementKm, angularUnitOfMeasurementRads, curveType);
+    m_distanceText = QString::number(result.distance());
     emit distanceTextChanged();
   });
 }

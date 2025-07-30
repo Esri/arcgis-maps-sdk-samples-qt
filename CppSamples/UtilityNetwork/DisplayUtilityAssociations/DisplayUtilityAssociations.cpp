@@ -23,11 +23,14 @@
 #include "SymbolImageProvider.h"
 
 // ArcGIS Maps SDK headers
+#include "ArcGISRuntimeEnvironment.h"
+#include "Authentication/AuthenticationManager.h"
+#include "Authentication/ArcGISAuthenticationChallenge.h"
+#include "Authentication/TokenCredential.h"
 #include "ArcGISFeatureTable.h"
 #include "AttributeListModel.h"
-#include "Credential.h"
 #include "Envelope.h"
-#include "Error.h"
+#include "ErrorException.h"
 #include "FeatureLayer.h"
 #include "Graphic.h"
 #include "GraphicListModel.h"
@@ -47,7 +50,6 @@
 #include "UtilityNetwork.h"
 #include "UtilityNetworkDefinition.h"
 #include "UtilityNetworkListModel.h"
-#include "UtilityNetworkSource.h"
 #include "UtilityNetworkTypes.h"
 #include "Viewpoint.h"
 
@@ -59,26 +61,45 @@
 #include <QUuid>
 
 using namespace Esri::ArcGISRuntime;
+using namespace Esri::ArcGISRuntime::Authentication;
 
 namespace
 {
-const QString featureServerUrl("https://sampleserver7.arcgisonline.com/server/rest/services/UtilityNetwork/NapervilleElectric/FeatureServer");
 const int maxScale = 2000;
 constexpr int targetScale = 50;
 }
 
 DisplayUtilityAssociations::DisplayUtilityAssociations(QObject* parent /* = nullptr */):
-  QObject(parent),
-  m_map(new Map(BasemapStyle::ArcGISTopographic, this)),
-  m_cred(new Credential("viewer01", "I68VGU^nMurF", this)),
+  ArcGISAuthenticationChallengeHandler(parent),
+  m_map(new Map(QUrl("https://sampleserver7.arcgisonline.com/portal/home/item.html?id=be0e4637620a453584118107931f718b"), this)),
   m_associationsOverlay(new GraphicsOverlay(this)),
-  m_utilityNetwork(new UtilityNetwork(featureServerUrl, m_cred, this)),
   m_attachmentSymbol(new SimpleLineSymbol(SimpleLineSymbolStyle::Dot, Qt::green, 5, this)),
   m_connectivitySymbol(new SimpleLineSymbol(SimpleLineSymbolStyle::Dot, Qt::red, 5, this))
 {
-  m_map->utilityNetworks()->append(m_utilityNetwork);
+  ArcGISRuntimeEnvironment::authenticationManager()->setArcGISAuthenticationChallengeHandler(this);
 
-  connectSignals();
+  connect(m_map, &Map::doneLoading, this, [this](const Error& error)
+  {
+    if (!error.isEmpty() || m_map->utilityNetworks()->isEmpty())
+    {
+      return;
+    }
+
+    m_utilityNetwork = m_map->utilityNetworks()->first();
+    m_utilityNetwork->load();
+    connectSignals();
+  });
+}
+
+void DisplayUtilityAssociations::handleArcGISAuthenticationChallenge(ArcGISAuthenticationChallenge* challenge)
+{
+  TokenCredential::createWithChallengeAsync(challenge, "viewer01", "I68VGU^nMurF", {}, this).then(this, [challenge](TokenCredential* tokenCredential)
+  {
+    challenge->continueWithCredential(tokenCredential);
+  }).onFailed(this, [challenge](const ErrorException& e)
+  {
+    challenge->continueWithError(e.error());
+  });
 }
 
 void DisplayUtilityAssociations::addAssociations()
@@ -159,8 +180,6 @@ void DisplayUtilityAssociations::setMapView(MapQuickView* mapView)
       addAssociations();
   });
 
-  m_utilityNetwork->load();
-
   emit mapViewChanged();
 }
 
@@ -181,33 +200,6 @@ void DisplayUtilityAssociations::connectSignals()
 
       addAssociations();
     });
-
-    // get all the edges and junctions in the network
-    QList<UtilityNetworkSource*> edges;
-    QList<UtilityNetworkSource*> junctions;
-    const QList<UtilityNetworkSource*> allSources = m_utilityNetwork->definition()->networkSources();
-
-    for (UtilityNetworkSource* networkSource : allSources)
-    {
-      if (networkSource->sourceType() == UtilityNetworkSourceType::Edge)
-        edges.append(networkSource);
-      else if (networkSource->sourceType() == UtilityNetworkSourceType::Junction)
-        junctions.append(networkSource);
-    }
-
-    // add all edges that are not subnet lines to the map
-    for (UtilityNetworkSource* source : edges)
-    {
-      if (source->sourceUsageType() != UtilityNetworkSourceUsageType::SubnetLine && source->featureTable() != nullptr)
-        m_map->operationalLayers()->append(new FeatureLayer(source->featureTable(), this));
-    }
-
-    // add all junctions to the map
-    for (UtilityNetworkSource* source : junctions)
-    {
-      if (source->featureTable())
-        m_map->operationalLayers()->append(new FeatureLayer(source->featureTable(), this));
-    }
 
     // create a renderer for the associations
     UniqueValue* attachmentValue = new UniqueValue("Attachment", "",

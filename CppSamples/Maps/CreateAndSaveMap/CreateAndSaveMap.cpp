@@ -129,7 +129,7 @@ void CreateAndSaveMap::saveMap(const QString& title, const QString& tags, const 
   const QByteArray thumbnail;
 
   // save the map
-  m_map->saveAsAsync(m_portal, title, tagsList, forceSave, folder, description, thumbnail).then(
+  m_map->saveAsAsync(m_portal, title, tagsList, forceSave, folder, description, thumbnail).then(this,
   [this]()
   {
     const QString itemId = m_map->item()->itemId();

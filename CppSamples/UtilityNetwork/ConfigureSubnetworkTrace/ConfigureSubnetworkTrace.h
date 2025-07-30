@@ -18,11 +18,11 @@
 #define CONFIGURESUBNETWORKTRACE_H
 
 // ArcGIS Maps SDK headers
+#include "Authentication/ArcGISAuthenticationChallengeHandler.h"
 #include "UtilityNetworkAttribute.h"
 #include "UtilityNetworkAttributeComparison.h"
 
 // Qt headers
-#include <QObject>
 #include <QUrl>
 #include <QUuid>
 
@@ -41,7 +41,12 @@ class UtilityTraceConfiguration;
 class UtilityTraceParameters;
 }
 
-class ConfigureSubnetworkTrace : public QObject
+namespace Esri::ArcGISRuntime::Authentication
+{
+  class ArcGISAuthenticationChallenge;
+}
+
+class ConfigureSubnetworkTrace : public Esri::ArcGISRuntime::Authentication::ArcGISAuthenticationChallengeHandler
 {
   Q_OBJECT
 
@@ -86,13 +91,14 @@ private:
   static QString expressionToString(Esri::ArcGISRuntime::UtilityTraceConditionalExpression* expression);
   static QVariant convertToDataType(const QVariant& value, const Esri::ArcGISRuntime::UtilityNetworkAttributeDataType& dataType);
 
+  void handleArcGISAuthenticationChallenge(Esri::ArcGISRuntime::Authentication::ArcGISAuthenticationChallenge* challenge) override;
+
   Esri::ArcGISRuntime::UtilityElement* m_utilityElementStartingLocation = nullptr;
   Esri::ArcGISRuntime::UtilityNetwork* m_utilityNetwork = nullptr;
   Esri::ArcGISRuntime::UtilityNetworkDefinition* m_networkDefinition = nullptr;
   Esri::ArcGISRuntime::UtilityTraceCondition* m_initialExpression = nullptr;
   Esri::ArcGISRuntime::UtilityTraceConfiguration* m_traceConfiguration = nullptr;
   Esri::ArcGISRuntime::UtilityTraceParameters* m_traceParams = nullptr;
-  Esri::ArcGISRuntime::Credential* m_cred = nullptr;
 
   QStringList m_attributeListModel;
   QStringList m_conditionBarrierExpressionListModel;

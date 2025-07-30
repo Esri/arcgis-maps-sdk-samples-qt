@@ -18,6 +18,7 @@
 #define VALIDATEUTILITYNETWORKTOPOLOGY_H
 
 // ArcGIS Maps SDK headers
+#include "Authentication/ArcGISAuthenticationChallengeHandler.h"
 #include "CodedValueDomain.h"
 #include "IdentifyLayerResult.h"
 
@@ -39,9 +40,13 @@ namespace Esri::ArcGISRuntime {
   class UtilityTraceParameters;
 }
 
+namespace Esri::ArcGISRuntime::Authentication {
+  class ArcGISAuthenticationChallenge;
+}
+
 Q_MOC_INCLUDE("MapQuickView.h");
 
-class ValidateUtilityNetworkTopology : public QObject
+class ValidateUtilityNetworkTopology : public Esri::ArcGISRuntime::Authentication::ArcGISAuthenticationChallengeHandler
 {
   Q_OBJECT
 
@@ -91,6 +96,8 @@ private:
   void onServiceGeodatabaseLoaded(Esri::ArcGISRuntime::ServiceVersionParameters* params, const Esri::ArcGISRuntime::Error& loadError);
   void onIdentifyLayersAsyncCompleted(const QList<Esri::ArcGISRuntime::IdentifyLayerResult*>& results);
   void updateMessage(QString message);
+
+  void handleArcGISAuthenticationChallenge(Esri::ArcGISRuntime::Authentication::ArcGISAuthenticationChallenge* challenge) override;
 
   Esri::ArcGISRuntime::Map* m_map = nullptr;
   Esri::ArcGISRuntime::MapQuickView* m_mapView = nullptr;

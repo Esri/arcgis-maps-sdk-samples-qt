@@ -22,12 +22,9 @@
 #include "PortalUserInfo.h"
 
 // ArcGIS Maps SDK headers
-#include "AuthenticationManager.h"
-#include "CoreTypes.h"
-#include "Credential.h"
+#include "Authentication/OAuthUserConfiguration.h"
 #include "Error.h"
 #include "MapTypes.h"
-#include "OAuthClientInfo.h"
 #include "Portal.h"
 #include "PortalInfo.h"
 #include "PortalTypes.h"
@@ -36,18 +33,25 @@
 // Qt headers
 #include <QUrl>
 
+// Other headers
+#include "OAuthUserConfigurationManager.h"
+
 using namespace Esri::ArcGISRuntime;
+using namespace Esri::ArcGISRuntime::Authentication;
+using namespace Esri::ArcGISRuntime::Toolkit;
 
 const QString PortalUserInfo::UNKNOWN = "Unknown";
 
 PortalUserInfo::PortalUserInfo(QQuickItem* parent /* = nullptr */):
   QQuickItem(parent),
-  m_credential(new Credential(OAuthClientInfo("iLkGIj0nX8A4EJda", OAuthMode::User), this)),
-  m_portal(new Portal(m_credential, this))
+  m_portal(new Portal(true, this))
 {
+  const QString redirectUrl{"urn:ietf:wg:oauth:2.0:oob"};
+  OAuthUserConfiguration* config = new OAuthUserConfiguration(m_portal->url(), "iLkGIj0nX8A4EJda", redirectUrl, this);
+  OAuthUserConfigurationManager::addConfiguration(config);
+
   connect(m_portal, &Portal::loadStatusChanged, this, &PortalUserInfo::onPortalLoadStatusChanged);
   connect(m_portal, &Portal::doneLoading, this, &PortalUserInfo::loadErrorMessageChanged);
-  AuthenticationManager::instance()->setCredentialCacheEnabled(false);
 }
 
 PortalUserInfo::~PortalUserInfo() = default;
@@ -64,7 +68,7 @@ void PortalUserInfo::componentComplete()
 
 void PortalUserInfo::load()
 {
-  if (!m_portal || !m_credential)
+  if (!m_portal)
     return;
 
   if (m_portal->loadStatus() == LoadStatus::NotLoaded)
@@ -92,7 +96,7 @@ bool PortalUserInfo::loaded()
 bool PortalUserInfo::loginDismissed()
 {
   if (m_portal)
-    return m_portal->loadError().message() == "Code unauthorized." || m_portal->loadError().message() == "User canceled error.";
+    return m_portal->loadError().errorType() == ErrorType::AuthenticationChallengeCanceled;
 
   return false;
 }

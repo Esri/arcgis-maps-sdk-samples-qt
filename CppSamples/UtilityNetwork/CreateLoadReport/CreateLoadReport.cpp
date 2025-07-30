@@ -22,10 +22,15 @@
 #include "CreateLoadReport.h"
 
 // ArcGIS Maps SDK headers
+#include "ArcGISRuntimeEnvironment.h"
+#include "Authentication/AuthenticationManager.h"
+#include "Authentication/ArcGISAuthenticationChallenge.h"
+#include "Authentication/TokenCredential.h"
 #include "CodedValueDomain.h"
-#include "Credential.h"
+#include "ErrorException.h"
 #include "MapQuickView.h"
 #include "MapTypes.h"
+#include "ServiceGeodatabase.h"
 #include "UtilityAssetGroup.h"
 #include "UtilityAssetType.h"
 #include "UtilityCategory.h"
@@ -55,11 +60,13 @@
 #include <QFuture>
 
 using namespace Esri::ArcGISRuntime;
+using namespace Esri::ArcGISRuntime::Authentication;
 
 CreateLoadReport::CreateLoadReport(QObject* parent /* = nullptr */):
-  QObject(parent),
-  m_cred(new Credential("viewer01", "I68VGU^nMurF", this))
+  ArcGISAuthenticationChallengeHandler(parent)
 {
+  ArcGISRuntimeEnvironment::authenticationManager()->setArcGISAuthenticationChallengeHandler(this);
+
   m_networkSourceName = "Electric Distribution Device";
   m_assetGroupName = "Circuit Breaker";
   m_assetTypeName = "Three Phase";
@@ -72,7 +79,7 @@ CreateLoadReport::CreateLoadReport(QObject* parent /* = nullptr */):
   m_phasesNetworkAttributeName = "Phases Current";
   m_sampleStatus = CreateLoadReport::SampleNotLoaded;
 
-  m_utilityNetwork = new UtilityNetwork(QUrl("https://sampleserver7.arcgisonline.com/server/rest/services/UtilityNetwork/NapervilleElectric/FeatureServer"), m_cred, this);
+  m_utilityNetwork = new UtilityNetwork(new ServiceGeodatabase(m_featureLayerUrl, this), this);
 
   connect(m_utilityNetwork, &UtilityNetwork::loadStatusChanged, this, [this]()
   {
@@ -303,4 +310,15 @@ QVariantMap CreateLoadReport::phaseLoad()
 int CreateLoadReport::sampleStatus()
 {
   return m_sampleStatus;
+}
+
+void CreateLoadReport::handleArcGISAuthenticationChallenge(ArcGISAuthenticationChallenge* challenge)
+{
+  TokenCredential::createWithChallengeAsync(challenge, "viewer01", "I68VGU^nMurF", {}, this).then(this, [challenge](TokenCredential* tokenCredential)
+  {
+    challenge->continueWithCredential(tokenCredential);
+  }).onFailed(this, [challenge](const ErrorException& e)
+  {
+    challenge->continueWithError(e.error());
+  });
 }

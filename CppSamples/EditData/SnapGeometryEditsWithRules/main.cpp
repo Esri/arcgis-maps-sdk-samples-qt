@@ -1,5 +1,5 @@
 // [Legal]
-// Copyright 2015 Esri.
+// Copyright 2025 Esri.
 //
 // Licensed under the Apache License, Version 2.0 (the "License");
 // you may not use this file except in compliance with the License.
@@ -14,7 +14,7 @@
 // [Legal]
 
 // sample headers
-#include "VectorTiledLayerUrl.h"
+#include "SnapGeometryEditsWithRules.h"
 
 // ArcGIS Maps SDK headers
 #include "ArcGISRuntimeEnvironment.h"
@@ -23,22 +23,18 @@
 #include <QCommandLineParser>
 #include <QDir>
 #include <QGuiApplication>
-#include <QQmlEngine>
-#include <QQuickView>
-#include <QSettings>
+#include <QQmlApplicationEngine>
 
 // Platform specific headers
 #ifdef Q_OS_WIN
 #include <Windows.h>
 #endif
 
-#define STRINGIZE(x) #x
-#define QUOTE(x) STRINGIZE(x)
-
 int main(int argc, char *argv[])
 {
+  Esri::ArcGISRuntime::ArcGISRuntimeEnvironment::setUseLegacyAuthentication(false);
   QGuiApplication app(argc, argv);
-  app.setApplicationName(QString("VectorTiledLayerUrl"));
+  app.setApplicationName(QString("SnapGeometryEditsWithRules"));
 
   // Use of ArcGIS location services, such as basemap styles, geocoding, and routing services,
   // requires an access token. For more information see
@@ -67,31 +63,19 @@ int main(int argc, char *argv[])
   }
 
   // Initialize the sample
-  VectorTiledLayerUrl::init();
+  SnapGeometryEditsWithRules::init();
 
   // Initialize application view
-  QQuickView view;
-  view.setResizeMode(QQuickView::SizeRootObjectToView);
-
+  QQmlApplicationEngine engine;
   // Add the import Path
-  view.engine()->addImportPath(QDir(QCoreApplication::applicationDirPath()).filePath("qml"));
+  engine.addImportPath(QDir(QCoreApplication::applicationDirPath()).filePath("qml"));
 
-  QString arcGISRuntimeImportPath = QUOTE(ARCGIS_RUNTIME_IMPORT_PATH);
-
- #if defined(LINUX_PLATFORM_REPLACEMENT)
-  // on some linux platforms the string 'linux' is replaced with 1
-  // fix the replacement paths which were created
-  QString replaceString = QUOTE(LINUX_PLATFORM_REPLACEMENT);
-  arcGISRuntimeImportPath = arcGISRuntimeImportPath.replace(replaceString, "linux", Qt::CaseSensitive);
- #endif
-
-  // Add the Runtime and Extras path
-  view.engine()->addImportPath(arcGISRuntimeImportPath);
+#ifdef ARCGIS_RUNTIME_IMPORT_PATH_2
+  engine.addImportPath(ARCGIS_RUNTIME_IMPORT_PATH_2);
+#endif
 
   // Set the source
-  view.setSource(QUrl("qrc:/Samples/Layers/VectorTiledLayerUrl/VectorTiledLayerUrl.qml"));
-
-  view.show();
+  engine.load(QUrl("qrc:/Samples/EditData/SnapGeometryEditsWithRules/main.qml"));
 
   return app.exec();
 }

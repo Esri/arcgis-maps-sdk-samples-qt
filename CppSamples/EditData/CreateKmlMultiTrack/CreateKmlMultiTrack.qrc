@@ -1,0 +1,16 @@
+<RCC>
+    <qresource prefix="/Samples/EditData/CreateKmlMultiTrack">
+        <file alias="sample.json">README.metadata.json</file>
+        <file>CreateKmlMultiTrack.cpp</file>
+        <file>CreateKmlMultiTrack.h</file>
+        <file>CreateKmlMultiTrack.qml</file>
+        <file>main.qml</file>
+        <file>screenshot.png</file>
+        <file>README.md</file>
+        <file>save.png</file>
+        <file>point.png</file>
+        <file>disabled-save.png</file>
+        <file>disabled-point.png</file>
+        <file>coastalTrail.json</file>
+    </qresource>
+</RCC>

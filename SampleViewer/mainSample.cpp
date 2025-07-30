@@ -1,5 +1,5 @@
 // [Legal]
-// Copyright 2022 Esri.
+// COPYRIGHT 2025 ESRI
 
 // Licensed under the Apache License, Version 2.0 (the "License");
 // you may not use this file except in compliance with the License.
@@ -34,6 +34,7 @@
 #  include <QtWebEngineQuick>
 #endif // QT_WEBVIEW_WEBENGINE_BACKEND
 
+#include "ArcGISRuntimeEnvironment.h"
 #include "ArcGISQt_global.h" // IWYU pragma: keep - for LOCALSERVER_SUPPORTED
 
 #include "SampleManager.h"
@@ -94,6 +95,7 @@
 #include "../CppSamples/DisplayInformation/Unique_Value_Renderer/Unique_Value_Renderer.h"
 #include "../CppSamples/EditData/AddFeaturesFeatureService/AddFeaturesFeatureService.h"
 #include "../CppSamples/EditData/ContingentValues/ContingentValues.h"
+#include "../CppSamples/EditData/CreateKmlMultiTrack/CreateKmlMultiTrack.h"
 #include "../CppSamples/EditData/DeleteFeaturesFeatureService/DeleteFeaturesFeatureService.h"
 #include "../CppSamples/EditData/EditAndSyncFeatures/EditAndSyncFeatures.h"
 #include "../CppSamples/EditData/EditFeatureAttachments/EditFeatureAttachments.h"
@@ -101,6 +103,7 @@
 #include "../CppSamples/EditData/EditKmlGroundOverlay/EditKmlGroundOverlay.h"
 #include "../CppSamples/EditData/EditWithBranchVersioning/EditWithBranchVersioning.h"
 #include "../CppSamples/EditData/SnapGeometryEdits/SnapGeometryEdits.h"
+#include "../CppSamples/EditData/SnapGeometryEditsWithRules/SnapGeometryEditsWithRules.h"
 #include "../CppSamples/EditData/UpdateAttributesFeatureService/UpdateAttributesFeatureService.h"
 #include "../CppSamples/EditData/UpdateGeometryFeatureService/UpdateGeometryFeatureService.h"
 #include "../CppSamples/Features/ControlTimeExtentTimeSlider/ControlTimeExtentTimeSlider.h"
@@ -179,7 +182,6 @@
 #include "../CppSamples/Layers/RasterStretchRenderer/RasterStretchRenderer.h"
 #include "../CppSamples/Layers/StyleWmsLayer/StyleWmsLayer.h"
 #include "../CppSamples/Layers/TileCacheLayer/TileCacheLayer.h"
-#include "../CppSamples/Layers/VectorTiledLayerUrl/VectorTiledLayerUrl.h"
 #include "../CppSamples/Layers/WMTS_Layer/WMTS_Layer.h"
 #include "../CppSamples/Layers/Web_Tiled_Layer/Web_Tiled_Layer.h"
 #include "../CppSamples/Layers/WmsLayerUrl/WmsLayerUrl.h"
@@ -290,7 +292,6 @@
 #include "../CppSamples/Layers/RasterFunctionFile/RasterFunctionFile.h"
 #endif // SHOW_RASTER_FUNCTION_SAMPLE
 
-
 #define STRINGIZE(x) #x
 #define QUOTE(x) STRINGIZE(x)
 
@@ -305,6 +306,8 @@ int main(int argc, char *argv[])
   QtWebEngineQuick::initialize();
 #endif // QT_WEBVIEW_WEBENGINE_BACKEND
 
+  Esri::ArcGISRuntime::ArcGISRuntimeEnvironment::setUseLegacyAuthentication(false);
+
   QGuiApplication::setApplicationName("ArcGIS Maps Qt Samples");
   QGuiApplication::setOrganizationName("Esri");
   QApplication app(argc, argv);
@@ -318,7 +321,7 @@ int main(int argc, char *argv[])
     QFontDatabase::addApplicationFont(fontPath);
   }
 #endif
-  
+
   // register sample viewer classes
   registerClasses();
 
@@ -339,7 +342,7 @@ int main(int argc, char *argv[])
   engine.addImportPath(EsriQmlImportPath);
 #endif
 
-#ifdef BUILD_FROM_SETUP
+#ifdef BUILD_FROM_CONFIGURED_SDK
   QString arcGISRuntimeImportPath = QUOTE(ARCGIS_RUNTIME_IMPORT_PATH);
 
 #if defined(LINUX_PLATFORM_REPLACEMENT)
@@ -350,7 +353,7 @@ int main(int argc, char *argv[])
 #endif // LINUX_PLATFORM_REPLACEMENT
 
   engine.addImportPath(arcGISRuntimeImportPath);
-#endif // BUILD_FROM_SETUP
+#endif // BUILD_FROM_CONFIGURED_SDK
 
   // register toolkit components
   Esri::ArcGISRuntime::Toolkit::registerComponents(engine);
@@ -406,6 +409,7 @@ void registerCppSampleClasses()
   ConfigureClusters::init();
   ConfigureSubnetworkTrace::init();
   ContingentValues::init();
+  CreateKmlMultiTrack::init();
   ControlAnnotationSublayerVisibility::init();
   ControlTimeExtentTimeSlider::init();
   ConvexHull::init();
@@ -557,6 +561,7 @@ void registerCppSampleClasses()
   Simple_Renderer::init();
   SketchOnMap::init();
   SnapGeometryEdits::init();
+  SnapGeometryEditsWithRules::init();
   SpatialOperations::init();
   SpatialRelationships::init();
   StatisticalQuery::init();
@@ -574,7 +579,6 @@ void registerCppSampleClasses()
   UpdateAttributesFeatureService::init();
   UpdateGeometryFeatureService::init();
   ValidateUtilityNetworkTopology::init();
-  VectorTiledLayerUrl::init();
   ViewContentBeneathTerrainSurface::init();
   ViewPointCloudDataOffline::init();
   ViewshedCamera::init();

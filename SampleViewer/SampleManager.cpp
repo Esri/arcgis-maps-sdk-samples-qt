@@ -1,5 +1,20 @@
-// [Legal]
-// Copyright 2022 Esri.
+// COPYRIGHT 2025 ESRI
+// TRADE SECRETS: ESRI PROPRIETARY AND CONFIDENTIAL
+// Unpublished material - all rights reserved under the
+// Copyright Laws of the United States and applicable international
+// laws, treaties, and conventions.
+//
+// For additional information, contact:
+// Environmental Systems Research Institute, Inc.
+// Attn: Contracts and Legal Services Department
+// 380 New York Street
+// Redlands, California, 92373
+// USA
+//
+// email: contracts@esri.com
+/// \file SampleManager.cpp
+
+#include "pch.hpp"
 
 // Licensed under the Apache License, Version 2.0 (the "License");
 // you may not use this file except in compliance with the License.
@@ -12,8 +27,6 @@
 // See the License for the specific language governing permissions and
 // limitations under the License.
 // [Legal]
-
-#include "pch.hpp"
 
 #include <QByteArray>
 #include <QDebug>
@@ -35,10 +48,16 @@
 #include <QQmlEngine>
 #include <NetworkRequestProgress.h>
 
-#include "AuthenticationManager.h"
-#include "CredentialCache.h"
+#include "ArcGISQt_global.h" // for LOCALSERVER_SUPPORTED
+#include "ArcGISRuntimeEnvironment.h"
+#include "Authentication/ArcGISCredentialStore.h"
+#include "Authentication/AuthenticationManager.h"
+#include "Authentication/NetworkCredentialStore.h"
 #include "ErrorException.h"
 #include "Portal.h"
+
+// toolkit authentication support
+#include "OAuthUserConfigurationManager.h"
 
 #include "ZipHelper.h"
 
@@ -58,8 +77,6 @@
 
 #include <cstdlib>
 
-#include "ArcGISQt_global.h" // for LOCALSERVER_SUPPORTED
-#include "ArcGISRuntimeEnvironment.h"
 using namespace Esri::ArcGISRuntime;
 
 #ifdef LOCALSERVER_SUPPORTED
@@ -330,8 +347,18 @@ void SampleManager::setCurrentMode(const CurrentMode& mode)
   emit currentModeChanged();
 }
 
+void SampleManager::cacheToolkitChallengeHandler()
+{
+  // Only cache the first instance of the challenge handler from the toolkit
+  if (m_toolkitChallengeHandler == nullptr)
+  {
+    m_toolkitChallengeHandler = ArcGISRuntimeEnvironment::authenticationManager()->arcGISAuthenticationChallengeHandler();
+  }
+}
+
 void SampleManager::setCurrentSample(Sample* sample)
 {
+  cacheToolkitChallengeHandler();
   m_currentSample = sample;
 
   // NOTE - currently we know we cannot set an API Key for the
@@ -354,6 +381,7 @@ void SampleManager::setCurrentSample(Sample* sample)
 
 void SampleManager::setCurrentSample(const QVariant& sample)
 {
+  cacheToolkitChallengeHandler();
   if (sample.isValid())
   {
     auto samplePtr = qvariant_cast<Sample*>(sample);
@@ -408,8 +436,19 @@ void SampleManager::setDownloadProgress(double progress)
 
 void SampleManager::resetAuthenticationState()
 {
-  AuthenticationManager::credentialCache()->removeAndRevokeAllCredentials();
-  AuthenticationManager::setCredentialCacheEnabled(true);
+  // clear all credentials
+  ArcGISRuntimeEnvironment::authenticationManager()->arcGISCredentialStore()->removeAll();
+  auto removeAllFuture = ArcGISRuntimeEnvironment::authenticationManager()->networkCredentialStore()->removeAllAsync();
+  Q_UNUSED(removeAllFuture)
+
+  // and remove any oauth configurations
+  Toolkit::OAuthUserConfigurationManager::clearConfigurations();
+
+  if (m_toolkitChallengeHandler != nullptr)
+  {
+    // when sample changes, restore the original toolkit challenge handler
+    ArcGISRuntimeEnvironment::authenticationManager()->setArcGISAuthenticationChallengeHandler(m_toolkitChallengeHandler);
+  }
 }
 
 bool SampleManager::dataItemsExists()
@@ -534,7 +573,7 @@ void SampleManager::fetchPortalItemData(const QString& itemId, const QString& ou
       {
         auto folder = portalItem->type() == PortalItemType::CodeSample ? portalItem->name() : QString();
         QString formattedPath = SampleManager::formattedPath(outputPath, folder);
-        portalItem->fetchDataAsync(formattedPath).then([this, portalItem, formattedPath]()
+        portalItem->fetchDataAsync(formattedPath).then(this, [this, portalItem, formattedPath]()
         {
           setDownloadProgress(0.0);
           if (QFileInfo(formattedPath).suffix() == "zip")

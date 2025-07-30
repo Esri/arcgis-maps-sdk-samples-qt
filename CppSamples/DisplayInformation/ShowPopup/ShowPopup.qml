@@ -32,14 +32,15 @@ Item {
         }
     }
 
-    PopupStackView {
-        id: popupStackView
+    PopupView {
+        id: popupView
         anchors {
             top: parent.top
             bottom: parent.bottom
             right: parent.right
         }
-        popupManagers: model.popupManagers
+        popup: model.popup
+
         visible: false
 
         onVisibleChanged: {
@@ -53,7 +54,7 @@ Item {
         id: model
         mapView: view
 
-        onPopupManagersChanged: popupStackView.visible = true
+        onPopupChanged: popupView.visible = true
     }
 
     BusyIndicator {
