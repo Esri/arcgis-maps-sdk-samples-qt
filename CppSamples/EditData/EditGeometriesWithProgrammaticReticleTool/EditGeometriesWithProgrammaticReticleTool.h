@@ -17,9 +17,6 @@
 #ifndef EDITGEOMETRIESWITHPROGRAMMATICRETICLETOOL_H
 #define EDITGEOMETRIESWITHPROGRAMMATICRETICLETOOL_H
 
-// ArcGIS Maps SDK headers
-#include "GeometryTypes.h"
-
 // Qt headers
 #include <QObject>
 
@@ -37,6 +34,7 @@ namespace Esri::ArcGISRuntime
   class SimpleLineSymbol;
   class SimpleFillSymbol;
   class Symbol;
+  enum class GeometryType;
 }
 
 Q_MOC_INCLUDE("MapQuickView.h");
@@ -119,6 +117,9 @@ private:
   void resetFromEditingSession();
   void handleMapTap(const QMouseEvent& mouseEvent);
   Esri::ArcGISRuntime::Symbol* getSymbol(Esri::ArcGISRuntime::GeometryType type) const;
+
+  void handleMapTapGeNotStarted(const QMouseEvent& mouseEvent);
+  void handleMapTapGeStarted(const QMouseEvent& mouseEvent);
 
   bool m_vertexCreationAllowed = true;
   bool m_multifunctionButtonEnabled = true;

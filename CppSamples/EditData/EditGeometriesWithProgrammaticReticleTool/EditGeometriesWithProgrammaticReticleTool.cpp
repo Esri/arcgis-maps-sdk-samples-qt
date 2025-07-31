@@ -62,10 +62,17 @@
 
 // Qt headers
 #include <QFuture>
+#include <QString>
+
+namespace {
+  const QString startGeometryEditorText{"Start geometry editor"};
+  const QString dropPointText{"Drop point"};
+  const QString pickUpPointText{"Pick up point"};
+  const QString insertPointText{"Insert point"};
+}
 
 using namespace Esri::ArcGISRuntime;
 
-// Hold references to the geometry editor and programmatic reticle tool.
 EditGeometriesWithProgrammaticReticleTool::EditGeometriesWithProgrammaticReticleTool(QObject* parent /* = nullptr */):
   QObject(parent),
   m_map(new Map(BasemapStyle::ArcGISImagery, this)),
@@ -148,129 +155,140 @@ void EditGeometriesWithProgrammaticReticleTool::createConnections()
 
   connect(m_geometryEditor, &GeometryEditor::hoveredElementChanged, this, &EditGeometriesWithProgrammaticReticleTool::setMultifunctionButtonState);
   connect(m_geometryEditor, &GeometryEditor::pickedUpElementChanged, this, &EditGeometriesWithProgrammaticReticleTool::setMultifunctionButtonState);
-
 }
 
 void EditGeometriesWithProgrammaticReticleTool::handleMapTap(const QMouseEvent& mouseEvent)
 {
-  // If the geometry editor is started, identify the geometry editor result at the tapped position.
   if (m_geometryEditor->isStarted())
   {
-    // Identify the geometry editor result at the tapped position.
-    m_mapView->identifyGeometryEditorAsync(mouseEvent.position(), 10, this).then(this, [this](IdentifyGeometryEditorResult* result)
-    {
-      std::unique_ptr<IdentifyGeometryEditorResult> identifyResult(result);
-      if (!identifyResult || identifyResult->elements().isEmpty())
-      {
-        return;
-      }
-      // Get the first element from the result.
-      GeometryEditorElement* element = identifyResult->elements().first();
-      element->setParent(this);
-
-      // If the element is a vertex or mid-vertex, set the viewpoint to its position and select it.
-      if (GeometryEditorVertex* vertex = dynamic_cast<GeometryEditorVertex*>(element); vertex)
-      {
-        m_mapView->setViewpointAsync(Viewpoint(Point(vertex->point().x(), vertex->point().y(), vertex->point().spatialReference())));
-        m_geometryEditor->selectVertex(vertex->partIndex(), vertex->vertexIndex());
-      }
-      else if (GeometryEditorMidVertex* midVertex = dynamic_cast<GeometryEditorMidVertex*>(element); midVertex && m_vertexCreationAllowed)
-      {
-        m_mapView->setViewpointAsync(Viewpoint(Point(midVertex->point().x(), midVertex->point().y(), midVertex->point().spatialReference())));
-        m_geometryEditor->selectMidVertex(midVertex->partIndex(), midVertex->segmentIndex());
-      }
-    }).onFailed(this, [this](const ErrorException& error)
-    {
-      qDebug() << "Error editing! Identify geometry editor failed with error " << error.error().message();
-      resetFromEditingSession();
-    });
+    // If the geometry editor is started, identify the geometry editor result at the tapped position.
+    handleMapTapGeNotStarted(mouseEvent);
   }
   else
   {
-    // Identify graphics in the graphics overlay using the tapped position.
-    m_mapView->identifyGraphicsOverlayAsync(m_graphicsOverlay, mouseEvent.position(), 10, false, this)
-      .then(this, [this](IdentifyGraphicsOverlayResult* rawResult)
-    {
-      auto identifyResult = std::unique_ptr<IdentifyGraphicsOverlayResult>(rawResult);
-      if (!identifyResult || identifyResult->graphics().isEmpty())
-      {
-        m_editingGraphic = nullptr;
-        return;
-      }
-
-      // Try to get the first graphic from the first result.
-      m_editingGraphic = identifyResult->graphics().first();
-
-      // Return if no graphic was selected.
-      if (m_editingGraphic == nullptr)
-      {
-        return;
-      }
-
-      m_editingGraphic->setSelected(true);
-
-      // Hide the selected graphic and start an editing session with a copy of it.
-      m_geometryEditor->start(m_editingGraphic->geometry());
-      emit geometryEditorStartedChanged();
-
-      // Set the button text to indicate that the editor is active.
-      setMultifunctionButtonState();
-
-      // If vertex creation is allowed, set the viewpoint to the center of the selected graphic's geometry.
-      // Otherwise, set the viewpoint to the end point of the first part of the geometry.
-      if (m_vertexCreationAllowed)
-      {
-        m_mapView->setViewpointCenterAsync(m_editingGraphic->geometry().extent().center(), m_mapView->mapScale());
-      }
-      else
-      {
-        const Geometry geometry = m_editingGraphic->geometry();
-        Point targetPoint;
-        switch (geometry.geometryType())
-        {
-          case GeometryType::Polygon:
-          {
-            if (const Polygon polygon = geometry_cast<Polygon>(geometry); !polygon.parts().isEmpty())
-            {
-              targetPoint = polygon.parts().part(0).endPoint();
-            }
-            break;
-          }
-          case GeometryType::Polyline:
-          {
-            if (const Polyline polyline = geometry_cast<Polyline>(geometry); !polyline.parts().isEmpty())
-            {
-              targetPoint = polyline.parts().part(0).endPoint();
-            }
-            break;
-          }
-          case GeometryType::Multipoint:
-          {
-            if (const Multipoint multiPoint = geometry_cast<Multipoint>(geometry); !multiPoint.points().isEmpty())
-            {
-              targetPoint = multiPoint.points().point(multiPoint.points().size() - 1);
-            }
-            break;
-          }
-          case GeometryType::Point:
-          {
-            targetPoint = geometry_cast<Point>(geometry);
-            break;
-          }
-          default:
-            break;
-        }
-        m_mapView->setViewpointAsync(!targetPoint.isEmpty() ? targetPoint : geometry.extent().center(), m_mapView->mapScale());
-
-        // Hide the selected graphic while editing.
-        m_editingGraphic->setVisible(false);
-      }
-    }).onFailed(this, [this](const ErrorException& error)
-    {
-      qDebug() << "Error editing! Identify failed with error " << error.error().message();
-      resetFromEditingSession();
-    });
+    // If the geometry editor is not started, identify the graphics in the graphics overlay at the tapped position.
+    handleMapTapGeStarted(mouseEvent);
   }
+}
+
+void EditGeometriesWithProgrammaticReticleTool::handleMapTapGeNotStarted(const QMouseEvent& mouseEvent)
+{
+  // Identify the geometry editor result at the tapped position.
+  m_mapView->identifyGeometryEditorAsync(mouseEvent.position(), 10, this).then(this, [this](IdentifyGeometryEditorResult* result)
+  {
+    std::unique_ptr<IdentifyGeometryEditorResult> identifyResult(result);
+    if (!identifyResult || identifyResult->elements().isEmpty())
+    {
+      return;
+    }
+    // Get the first element from the result.
+    GeometryEditorElement* element = identifyResult->elements().first();
+    element->setParent(this);
+
+    // If the element is a vertex or mid-vertex, set the viewpoint to its position and select it.
+    if (GeometryEditorVertex* vertex = dynamic_cast<GeometryEditorVertex*>(element); vertex)
+    {
+      m_mapView->setViewpointAsync(Viewpoint(Point(vertex->point().x(), vertex->point().y(), vertex->point().spatialReference())));
+      m_geometryEditor->selectVertex(vertex->partIndex(), vertex->vertexIndex());
+    }
+    else if (GeometryEditorMidVertex* midVertex = dynamic_cast<GeometryEditorMidVertex*>(element); midVertex && m_vertexCreationAllowed)
+    {
+      m_mapView->setViewpointAsync(Viewpoint(Point(midVertex->point().x(), midVertex->point().y(), midVertex->point().spatialReference())));
+      m_geometryEditor->selectMidVertex(midVertex->partIndex(), midVertex->segmentIndex());
+    }
+  }).onFailed(this, [this](const ErrorException& error)
+  {
+    qDebug() << "Error editing! Identify geometry editor failed with error " << error.error().message();
+    resetFromEditingSession();
+  });
+}
+
+void EditGeometriesWithProgrammaticReticleTool::handleMapTapGeStarted(const QMouseEvent& mouseEvent)
+{
+  // Identify graphics in the graphics overlay using the tapped position.
+  m_mapView->identifyGraphicsOverlayAsync(m_graphicsOverlay, mouseEvent.position(), 10, false, this)
+    .then(this, [this](IdentifyGraphicsOverlayResult* rawResult)
+  {
+    auto identifyResult = std::unique_ptr<IdentifyGraphicsOverlayResult>(rawResult);
+    if (!identifyResult || identifyResult->graphics().isEmpty())
+    {
+      m_editingGraphic = nullptr;
+      return;
+    }
+
+    // Try to get the first graphic from the first result.
+    m_editingGraphic = identifyResult->graphics().first();
+
+    // Return if no graphic was selected.
+    if (m_editingGraphic == nullptr)
+    {
+      return;
+    }
+
+    m_editingGraphic->setParent(this);
+    m_editingGraphic->setSelected(true);
+
+    // Hide the selected graphic and start an editing session with a copy of it.
+    m_geometryEditor->start(m_editingGraphic->geometry());
+    emit geometryEditorStartedChanged();
+
+    // Set the button text to indicate that the editor is active.
+    setMultifunctionButtonState();
+
+    // If vertex creation is allowed, set the viewpoint to the center of the selected graphic's geometry.
+    // Otherwise, set the viewpoint to the end point of the first part of the geometry.
+    if (m_vertexCreationAllowed)
+    {
+      m_mapView->setViewpointCenterAsync(m_editingGraphic->geometry().extent().center(), m_mapView->mapScale());
+    }
+    else
+    {
+      const Geometry geometry = m_editingGraphic->geometry();
+      Point targetPoint;
+      switch (geometry.geometryType())
+      {
+        case GeometryType::Polygon:
+        {
+          if (const Polygon polygon = geometry_cast<Polygon>(geometry); !polygon.parts().isEmpty())
+          {
+            targetPoint = polygon.parts().part(0).endPoint();
+          }
+          break;
+        }
+        case GeometryType::Polyline:
+        {
+          if (const Polyline polyline = geometry_cast<Polyline>(geometry); !polyline.parts().isEmpty())
+          {
+            targetPoint = polyline.parts().part(0).endPoint();
+          }
+          break;
+        }
+        case GeometryType::Multipoint:
+        {
+          if (const Multipoint multiPoint = geometry_cast<Multipoint>(geometry); !multiPoint.points().isEmpty())
+          {
+            targetPoint = multiPoint.points().point(multiPoint.points().size() - 1);
+          }
+          break;
+        }
+        case GeometryType::Point:
+        {
+          targetPoint = geometry_cast<Point>(geometry);
+          break;
+        }
+        default:
+          break;
+      }
+      m_mapView->setViewpointAsync(!targetPoint.isEmpty() ? targetPoint : geometry.extent().center(), m_mapView->mapScale());
+
+      // Hide the selected graphic while editing.
+      m_editingGraphic->setVisible(false);
+    }
+  }).onFailed(this, [this](const ErrorException& error)
+  {
+    qDebug() << "Error editing! Identify failed with error " << error.error().message();
+    resetFromEditingSession();
+  });
 }
 
 void EditGeometriesWithProgrammaticReticleTool::handleMultifunctionButton()
@@ -351,14 +369,10 @@ void EditGeometriesWithProgrammaticReticleTool::saveEdits()
       m_editingGraphic->setGeometry(geometry);
       m_editingGraphic->setVisible(true);
     }
-    else
+    else if (Symbol* geometrySymbol = getSymbol(geometry.geometryType()); geometrySymbol)
     {
-      Symbol* geometrySymbol = getSymbol(geometry.geometryType());
-      if (geometrySymbol)
-      {
-        // Create a new graphic based on the geometry and add it to the graphics overlay.
-        m_graphicsOverlay->graphics()->append(new Graphic(geometry, geometrySymbol, this));
-      }
+      // Create a new graphic based on the geometry and add it to the graphics overlay.
+      m_graphicsOverlay->graphics()->append(new Graphic(geometry, geometrySymbol, this));
     }
   }
   resetFromEditingSession();
@@ -393,13 +407,11 @@ void EditGeometriesWithProgrammaticReticleTool::resetFromEditingSession()
   // Reset the selected graphic
   if (m_editingGraphic)
   {
-    m_editingGraphic->setSelected(false);
-    m_editingGraphic->setVisible(true);
-    m_editingGraphic = nullptr;
+    m_editingGraphic->deleteLater();
   }
 
   // Update the multifunction button text and enable it
-  m_multifunctionButtonText = "Start geometry editor";
+  m_multifunctionButtonText = startGeometryEditorText;
   m_multifunctionButtonEnabled = true;
 
   emit multifunctionButtonTextChanged();
@@ -531,7 +543,7 @@ void EditGeometriesWithProgrammaticReticleTool::setMultifunctionButtonState()
   // Picked up elements can be dropped, so the button text indicates that a point can be dropped.
   if (m_geometryEditor->pickedUpElement())
   {
-    newText = "Drop point";
+    newText = dropPointText;
     newReticleState = ReticleState::PickedUp;
   }
   // When vertex creation is allowed, the button text changes based on the hovered or picked up element. Vertices and mid-vertices can be picked up.
@@ -539,35 +551,35 @@ void EditGeometriesWithProgrammaticReticleTool::setMultifunctionButtonState()
   {
     if (m_geometryEditor->pickedUpElement())
     {
-      newText = "Drop point";
+      newText = dropPointText;
       newReticleState = ReticleState::PickedUp;
     }
-    else if (GeometryEditorElement* hovered = dynamic_cast<GeometryEditorElement*>(m_geometryEditor->hoveredElement());
-             hovered && (hovered->geometryEditorElementType() == GeometryEditorElementType::GeometryEditorVertex ||
-                         hovered->geometryEditorElementType() == GeometryEditorElementType::GeometryEditorMidVertex))
+    else if (GeometryEditorElement* hoveredElement = dynamic_cast<GeometryEditorElement*>(m_geometryEditor->hoveredElement());
+             hoveredElement && (hoveredElement->geometryEditorElementType() == GeometryEditorElementType::GeometryEditorVertex ||
+                         hoveredElement->geometryEditorElementType() == GeometryEditorElementType::GeometryEditorMidVertex))
     {
-      newText = "Pick up point";
-      newReticleState = (hovered->geometryEditorElementType() == GeometryEditorElementType::GeometryEditorVertex) ?
+      newText = pickUpPointText;
+      newReticleState = (hoveredElement->geometryEditorElementType() == GeometryEditorElementType::GeometryEditorVertex) ?
                           ReticleState::HoveringVertex : ReticleState::HoveringMidVertex;
     }
     else
     {
-      newText = "Insert point";
+      newText = insertPointText;
       newReticleState = ReticleState::Default;
     }
   }
   // When vertex creation is not allowed, the button text changes based on the hovered element only.
   else
   {
-    GeometryEditorElement* hovered = dynamic_cast<GeometryEditorElement*>(m_geometryEditor->hoveredElement());
-    if (hovered && hovered->geometryEditorElementType() == GeometryEditorElementType::GeometryEditorVertex)
+    GeometryEditorElement* hoveredElement = dynamic_cast<GeometryEditorElement*>(m_geometryEditor->hoveredElement());
+    if (hoveredElement && hoveredElement->geometryEditorElementType() == GeometryEditorElementType::GeometryEditorVertex)
     {
-      newText = "Pick up point";
+      newText = pickUpPointText;
       newReticleState = ReticleState::HoveringVertex;
     }
     else
     {
-      newText = "Pick up point";
+      newText = pickUpPointText;
       newEnabled = false;
       newReticleState = ReticleState::HoveringMidVertex;
     }
@@ -576,7 +588,7 @@ void EditGeometriesWithProgrammaticReticleTool::setMultifunctionButtonState()
   // If the geometry editor is not started, override with "Start geometry editor"
   if (!m_geometryEditor->isStarted())
   {
-    newText = "Start geometry editor";
+    newText = startGeometryEditorText;
     newEnabled = true;
     newReticleState = ReticleState::Default;
   }
