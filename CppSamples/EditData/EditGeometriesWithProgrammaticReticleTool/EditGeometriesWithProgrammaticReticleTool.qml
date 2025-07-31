@@ -140,7 +140,6 @@ Item {
                 Text {
                     id: multifunctionButtonText
                     anchors.fill: parent
-                    //anchors.margins: 6
                     text: reticleModel.multifunctionButtonText
                     color: "black"
                     horizontalAlignment: Text.AlignHCenter
