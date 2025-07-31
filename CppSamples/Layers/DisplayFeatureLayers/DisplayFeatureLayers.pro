@@ -27,7 +27,7 @@ QT += qml quick
 TEMPLATE = app
 TARGET = DisplayFeatureLayers
 
-ARCGIS_RUNTIME_VERSION = 200.8.0
+ARCGIS_RUNTIME_VERSION = 300.0.0
 include($$PWD/arcgisruntime.pri)
 
 #-------------------------------------------------------------------------------
