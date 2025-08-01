@@ -100,6 +100,7 @@
 #include "../CppSamples/EditData/EditAndSyncFeatures/EditAndSyncFeatures.h"
 #include "../CppSamples/EditData/EditFeatureAttachments/EditFeatureAttachments.h"
 #include "../CppSamples/EditData/EditFeaturesWithFeatureLinkedAnnotation/EditFeaturesWithFeatureLinkedAnnotation.h"
+#include "../CppSamples/EditData/EditGeometriesWithProgrammaticReticleTool/EditGeometriesWithProgrammaticReticleTool.h"
 #include "../CppSamples/EditData/EditKmlGroundOverlay/EditKmlGroundOverlay.h"
 #include "../CppSamples/EditData/EditWithBranchVersioning/EditWithBranchVersioning.h"
 #include "../CppSamples/EditData/SnapGeometryEdits/SnapGeometryEdits.h"
@@ -453,6 +454,7 @@ void registerCppSampleClasses()
   EditAndSyncFeatures::init();
   EditFeatureAttachments::init();
   EditFeaturesWithFeatureLinkedAnnotation::init();
+  EditGeometriesWithProgrammaticReticleTool::init();
   EditKmlGroundOverlay::init();
   EditWithBranchVersioning::init();
   ExportTiles::init();

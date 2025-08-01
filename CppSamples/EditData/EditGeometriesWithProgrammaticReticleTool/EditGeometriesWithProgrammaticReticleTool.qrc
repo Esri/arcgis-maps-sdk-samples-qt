@@ -1,0 +1,17 @@
+<RCC>
+    <qresource prefix="/Samples/EditData/EditGeometriesWithProgrammaticReticleTool">
+        <file alias="sample.json">README.metadata.json</file>
+        <file>EditGeometriesWithProgrammaticReticleTool.qml</file>
+        <file>EditGeometriesWithProgrammaticReticleTool.h</file>
+        <file>EditGeometriesWithProgrammaticReticleTool.cpp</file>
+        <file>main.qml</file>
+        <file>screenshot.png</file>
+        <file>README.md</file>
+        <file>iconAssets/undo-32.png</file>
+        <file>iconAssets/redo-32.png</file>
+        <file>iconAssets/erase-32.png</file>
+        <file>iconAssets/save-32.png</file>
+        <file>iconAssets/trash-32.png</file>
+        <file>GeometryEditorButton.qml</file>
+    </qresource>
+</RCC>
