@@ -30,15 +30,12 @@ Item {
     }
 
     // Settings
-    Rectangle {
+    Item {
         anchors.margins: 10
         width: 180
-        height: 240
+        height: 250
         anchors.top: parent.top
         anchors.right: parent.right
-        color: "#AA333333"
-        border.color: "#888"
-        border.width: 1
 
         ColumnLayout {
             spacing: 5
@@ -50,89 +47,110 @@ Item {
             }
 
             RowLayout {
-                enabled: !reticleModel.geometryEditorStarted
                 Layout.alignment: Qt.AlignCenter
-                Label {
-                    text: "Geometry\nType:"
-                    color: "white"
-                }
-                ComboBox {
-                    id: geometryTypePicker
-                    model: ["Point", "Multipoint", "Polygon", "Polyline"]
-                    onCurrentIndexChanged: reticleModel.selectedGeometryType = currentIndex
-                    background: Rectangle {
-                        color: "white"
-                    }
-                    contentItem: Text {
-                        color: "black"
-                        text: geometryTypePicker.displayText
-                        horizontalAlignment: Text.AlignHCenter
-                        verticalAlignment: Text.AlignVCenter
-                        elide: Text.ElideRight
+                Rectangle {
+                    color: "#E0E0E0"
+                    height: 60
+                    width: 150
+                    ColumnLayout {
+                        anchors.fill: parent
+                        anchors.margins: 6
+                        enabled: !reticleModel.geometryEditorStarted
+                        Label {
+                            text: "Geometry Type:"
+                            color: "black"
+                            font.pixelSize: 12
+                            Layout.alignment: Qt.AlignVCenter
+                        }
+                        ComboBox {
+                            id: geometryTypePicker
+                            Layout.preferredWidth: 140
+                            model: ["Point", "Multipoint", "Polygon", "Polyline"]
+                            onCurrentIndexChanged: reticleModel.selectedGeometryType = currentIndex
+                            background: Rectangle {
+                                color: "white"
+                                border.color: "#888"
+                                border.width: 1
+                            }
+                            contentItem: Text {
+                                color: "black"
+                                text: geometryTypePicker.displayText
+                                horizontalAlignment: Qt.AlignHCenter
+                                verticalAlignment: Qt.AlignVCenter
+                            }
+                            Layout.alignment: Qt.AlignVCenter
+                        }
                     }
                 }
             }
 
-            // Vertex creation switch
             RowLayout {
-                spacing: 5
                 Layout.alignment: Qt.AlignCenter
-                Label {
-                    text: "Allow Vertex\nCreation:"
-                    color: "white"
-                }
-                Switch {
-                    id: vertexSwitch
-                    checked: reticleModel.vertexCreationAllowed
-                    onCheckedChanged: reticleModel.vertexCreationAllowed = checked
+                Rectangle {
+                    color: "#E0E0E0"
+                    height: 45
+                    width: 150
+                    // Vertex creation switch
+                    RowLayout {
+                        anchors.fill: parent
+                        anchors.margins: 6
+                        Layout.alignment: Qt.AlignCenter
+                        Label {
+                            text: "Allow Vertex\n Creation:"
+                            color: "black"
+                            font.pixelSize: 12
+                        }
+                        Switch {
+                            id: vertexSwitch
+                            width: 40
+                            height: 20
+                            checked: reticleModel.vertexCreationAllowed
+                            onCheckedChanged: reticleModel.vertexCreationAllowed = checked
+                        }
+                    }
                 }
             }
 
             GridLayout {
                 columns: 3
                 rows: 2
-                rowSpacing: 10
-                columnSpacing: 20
+                rowSpacing: 5
+                columnSpacing: 5
                 Layout.alignment: Qt.AlignCenter
                 GeometryEditorButton {
                     iconSource: "qrc:/Samples/EditData/EditGeometriesWithProgrammaticReticleTool/iconAssets/undo-32.png"
                     tooltipText: "Undo"
-                    buttonOpacity: reticleModel.canUndo ? 1.0 : 0.5
                     enabled: reticleModel.canUndo
                     onClickedHandler: function() { reticleModel.undoOrCancel(); }
                 }
                 GeometryEditorButton {
                     iconSource: "qrc:/Samples/EditData/EditGeometriesWithProgrammaticReticleTool/iconAssets/redo-32.png"
                     tooltipText: "Redo"
-                    buttonOpacity: reticleModel.canRedo ? 1.0 : 0.5
                     enabled: reticleModel.canRedo
                     onClickedHandler: function() { reticleModel.redo(); }
                 }
                 GeometryEditorButton {
                     iconSource: "qrc:/Samples/EditData/EditGeometriesWithProgrammaticReticleTool/iconAssets/erase-32.png"
                     tooltipText: "Delete selected"
-                    buttonOpacity: reticleModel.selectedElementCanDelete ? 1.0 : 0.5
                     enabled: reticleModel.selectedElementCanDelete
                     onClickedHandler: function() { reticleModel.deleteSelectedElement(); }
                 }
                 GeometryEditorButton {
                     iconSource: "qrc:/Samples/EditData/EditGeometriesWithProgrammaticReticleTool/iconAssets/save-32.png"
                     tooltipText: "Save edits"
-                    buttonOpacity: reticleModel.canUndo ? 1.0 : 0.5
                     enabled: reticleModel.canUndo
                     onClickedHandler: function() {reticleModel.saveEdits();}
                 }
                 GeometryEditorButton {
                     iconSource: "qrc:/Samples/EditData/EditGeometriesWithProgrammaticReticleTool/iconAssets/trash-32.png"
                     tooltipText: "Discard edits"
-                    buttonOpacity: reticleModel.geometryEditorStarted ? 1.0 : 0.5
                     enabled: reticleModel.geometryEditorStarted
                     onClickedHandler: function() {reticleModel.discardEdits();}
                 }
             }
 
             Rectangle {
-                height: 30
+                height: 35
                 width: 150
                 Layout.alignment: Qt.AlignCenter
                 opacity: reticleModel.multifunctionButtonEnabled ? 1.0 : 0.5
@@ -142,6 +160,7 @@ Item {
                     anchors.fill: parent
                     text: reticleModel.multifunctionButtonText
                     color: "black"
+                    font.pixelSize: 14
                     horizontalAlignment: Text.AlignHCenter
                     verticalAlignment: Text.AlignVCenter
                 }

@@ -16,38 +16,37 @@
 
 import QtQuick 2.15
 import QtQuick.Controls 2.15
-import QtQuick.Layouts
 
-AbstractButton {
+Rectangle {
     id: root
+    width: 47
+    height: 36
+    color: enabled ? "white" : "#E0E0E0"
     property alias iconSource: icon.source
     property string tooltipText: ""
-    property real buttonOpacity: 1.0
     property var onClickedHandler
+    property alias enabled: mouseArea.enabled
 
-    width: 140
-    height: 56
-    opacity: buttonOpacity
-    background: Rectangle {
-        border.color: "#888"
-        border.width: 1
-    }
-    contentItem: Row {
+    border.color: "#888"
+    border.width: 1
+
+    Image {
+        id: icon
         anchors.centerIn: parent
-        spacing: 6
-        Rectangle {
-            width: 36; height: 36
-            color: "white"
-            border.width: 0
-            Image {
-                id: icon
-                anchors.centerIn: parent
-                width: 32
-                height: 32
-            }
-        }
+        width: 32
+        height: 32
     }
-    ToolTip.visible: hovered && tooltipText.length > 0
-    ToolTip.text: tooltipText
-    onClicked: if (onClickedHandler) onClickedHandler()
+
+    MouseArea {
+        id: mouseArea
+        anchors.fill: parent
+        acceptedButtons: Qt.LeftButton
+        hoverEnabled: true
+        enabled: true
+        onClicked: {
+            if (onClickedHandler) onClickedHandler()
+        }
+        ToolTip.visible: containsMouse && tooltipText.length > 0
+        ToolTip.text: tooltipText
+    }
 }
