@@ -57,7 +57,7 @@ Item {
                         anchors.margins: 6
                         enabled: !reticleModel.geometryEditorStarted
                         Label {
-                            text: "Geometry Type:"
+                            text: qsTr("Geometry Type:")
                             color: "black"
                             font.pixelSize: 12
                             Layout.alignment: Qt.AlignVCenter
