@@ -164,7 +164,7 @@ Item {
                 Text {
                     id: multifunctionButtonText
                     anchors.fill: parent
-                    text: reticleModel.multifunctionButtonText
+                    text: qsTr(reticleModel.multifunctionButtonText)
                     color: "black"
                     font.pixelSize: 14
                     horizontalAlignment: Text.AlignHCenter
