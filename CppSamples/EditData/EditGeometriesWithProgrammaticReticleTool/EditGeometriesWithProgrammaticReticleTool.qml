@@ -31,11 +31,13 @@ Item {
 
     // Settings
     Item {
-        anchors.margins: 10
         width: 180
         height: 250
-        anchors.top: parent.top
-        anchors.right: parent.right
+        anchors {
+            top: parent.top
+            right: parent.right
+            margins: 10
+        }
 
         ColumnLayout {
             spacing: 5
@@ -53,8 +55,10 @@ Item {
                     height: 60
                     width: 150
                     ColumnLayout {
-                        anchors.fill: parent
-                        anchors.margins: 6
+                        anchors {
+                            fill: parent
+                            margins: 6
+                        }
                         enabled: !reticleModel.geometryEditorStarted
                         Label {
                             text: qsTr("Geometry Type:")
@@ -92,11 +96,13 @@ Item {
                     width: 150
                     // Vertex creation switch
                     RowLayout {
-                        anchors.fill: parent
-                        anchors.margins: 6
+                        anchors {
+                            fill: parent
+                            margins: 6
+                        }
                         Layout.alignment: Qt.AlignCenter
                         Label {
-                            text: "Allow Vertex\n Creation:"
+                            text: qsTr("Allow Vertex\n Creation:")
                             color: "black"
                             font.pixelSize: 12
                         }
@@ -119,31 +125,31 @@ Item {
                 Layout.alignment: Qt.AlignCenter
                 GeometryEditorButton {
                     iconSource: "qrc:/Samples/EditData/EditGeometriesWithProgrammaticReticleTool/iconAssets/undo-32.png"
-                    tooltipText: "Undo"
+                    tooltipText: qsTr("Undo")
                     enabled: reticleModel.canUndo
                     onClickedHandler: function() { reticleModel.undoOrCancel(); }
                 }
                 GeometryEditorButton {
                     iconSource: "qrc:/Samples/EditData/EditGeometriesWithProgrammaticReticleTool/iconAssets/redo-32.png"
-                    tooltipText: "Redo"
+                    tooltipText: qsTr("Redo")
                     enabled: reticleModel.canRedo
                     onClickedHandler: function() { reticleModel.redo(); }
                 }
                 GeometryEditorButton {
                     iconSource: "qrc:/Samples/EditData/EditGeometriesWithProgrammaticReticleTool/iconAssets/erase-32.png"
-                    tooltipText: "Delete selected"
+                    tooltipText: qsTr("Delete selected")
                     enabled: reticleModel.selectedElementCanDelete
                     onClickedHandler: function() { reticleModel.deleteSelectedElement(); }
                 }
                 GeometryEditorButton {
                     iconSource: "qrc:/Samples/EditData/EditGeometriesWithProgrammaticReticleTool/iconAssets/save-32.png"
-                    tooltipText: "Save edits"
+                    tooltipText: qsTr("Save edits")
                     enabled: reticleModel.canUndo
                     onClickedHandler: function() {reticleModel.saveEdits();}
                 }
                 GeometryEditorButton {
                     iconSource: "qrc:/Samples/EditData/EditGeometriesWithProgrammaticReticleTool/iconAssets/trash-32.png"
-                    tooltipText: "Discard edits"
+                    tooltipText: qsTr("Discard edits")
                     enabled: reticleModel.geometryEditorStarted
                     onClickedHandler: function() {reticleModel.discardEdits();}
                 }
