@@ -20,168 +20,100 @@ import QtQuick.Layouts
 import Esri.Samples
 
 Item {
+    Rectangle {
+        id: settings
+        width: parent.width
+        height: parent.height * 0.07
+        color: "white"
+        RowLayout {
+            anchors.fill: parent
+            Item {
+                Layout.fillWidth: true
+                Layout.fillHeight: true
+                opacity: reticleModel.geometryEditorStarted ? 1.0 : 0.5
+                Text {
+                    anchors.centerIn: parent
+                    text: qsTr("CANCEL")
+                }
+
+                MouseArea {
+                    anchors.fill: parent
+                    enabled: reticleModel.geometryEditorStarted
+                    onClicked: reticleModel.discardEdits()
+                }
+            }
+
+            Item {
+                Layout.fillWidth: true
+                Layout.fillHeight: true
+                Text {
+                    anchors.centerIn: parent
+                    text: qsTr("SETTINGS")
+                }
+
+                MouseArea {
+                    anchors.fill: parent
+                    onClicked: settingsPopup.visible = true
+                }
+            }
+            
+            Item {
+                Layout.fillWidth: true
+                Layout.fillHeight: true
+                opacity: reticleModel.canUndo ? 1.0 : 0.5
+                Text {
+                    anchors.centerIn: parent
+                    text: qsTr("DONE")
+                }
+
+                MouseArea {
+                    anchors.fill: parent
+                    enabled: reticleModel.canUndo
+                    onClicked: reticleModel.saveEdits()
+                }
+            }
+        }
+    }
+
     MapView {
         id: mapView
-        anchors.fill: parent
+        anchors.top: settings.bottom
+        width: parent.width
+        height: parent.height * 0.86
         Component.onCompleted: {
             // Set the focus on MapView to initially enable keyboard navigation
             forceActiveFocus();
         }
     }
 
-    // Settings
     Item {
-        width: 180
-        height: 250
+        id: multifunctionButton
+        width: parent.width
+        height: parent.height * 0.07
+        opacity: reticleModel.multifunctionButtonEnabled ? 1.0 : 0.5
         anchors {
-            top: parent.top
-            right: parent.right
-            margins: 10
+            top: mapView.bottom
+            horizontalCenter: parent.horizontalCenter
         }
 
-        ColumnLayout {
-            spacing: 5
+        Text {
+            anchors.centerIn: parent
+            text: qsTr(reticleModel.multifunctionButtonText)
+            font.capitalization: Font.AllUppercase
+            horizontalAlignment: Text.AlignHCenter
+            verticalAlignment: Text.AlignVCenter
+        }
+
+        MouseArea {
             anchors.fill: parent
-
-            // Spacer
-            Item {
-                height: 5
-            }
-
-            RowLayout {
-                Layout.alignment: Qt.AlignCenter
-                Rectangle {
-                    color: "#E0E0E0"
-                    height: 60
-                    width: 150
-                    ColumnLayout {
-                        anchors {
-                            fill: parent
-                            margins: 6
-                        }
-                        enabled: !reticleModel.geometryEditorStarted
-                        Label {
-                            text: qsTr("Geometry Type:")
-                            color: "black"
-                            font.pixelSize: 12
-                            Layout.alignment: Qt.AlignVCenter
-                        }
-                        ComboBox {
-                            id: geometryTypePicker
-                            Layout.preferredWidth: 140
-                            model: ["Point", "Multipoint", "Polygon", "Polyline"]
-                            onCurrentIndexChanged: reticleModel.selectedGeometryType = currentIndex
-                            background: Rectangle {
-                                color: "white"
-                                border.color: "#888"
-                                border.width: 1
-                            }
-                            contentItem: Text {
-                                color: "black"
-                                text: geometryTypePicker.displayText
-                                horizontalAlignment: Qt.AlignHCenter
-                                verticalAlignment: Qt.AlignVCenter
-                            }
-                            Layout.alignment: Qt.AlignVCenter
-                        }
-                    }
-                }
-            }
-
-            RowLayout {
-                Layout.alignment: Qt.AlignCenter
-                Rectangle {
-                    color: "#E0E0E0"
-                    height: 45
-                    width: 150
-                    // Vertex creation switch
-                    RowLayout {
-                        anchors {
-                            fill: parent
-                            margins: 6
-                        }
-                        Layout.alignment: Qt.AlignCenter
-                        Label {
-                            text: qsTr("Allow Vertex\n Creation:")
-                            color: "black"
-                            font.pixelSize: 12
-                        }
-                        Switch {
-                            id: vertexSwitch
-                            width: 40
-                            height: 20
-                            checked: reticleModel.vertexCreationAllowed
-                            onCheckedChanged: reticleModel.vertexCreationAllowed = checked
-                        }
-                    }
-                }
-            }
-
-            GridLayout {
-                columns: 3
-                rows: 2
-                rowSpacing: 5
-                columnSpacing: 5
-                Layout.alignment: Qt.AlignCenter
-                GeometryEditorButton {
-                    iconSource: "qrc:/Samples/EditData/EditGeometriesWithProgrammaticReticleTool/iconAssets/undo-32.png"
-                    tooltipText: qsTr("Undo")
-                    enabled: reticleModel.canUndo
-                    onClickedHandler: function() { reticleModel.undoOrCancel(); }
-                }
-                GeometryEditorButton {
-                    iconSource: "qrc:/Samples/EditData/EditGeometriesWithProgrammaticReticleTool/iconAssets/redo-32.png"
-                    tooltipText: qsTr("Redo")
-                    enabled: reticleModel.canRedo
-                    onClickedHandler: function() { reticleModel.redo(); }
-                }
-                GeometryEditorButton {
-                    iconSource: "qrc:/Samples/EditData/EditGeometriesWithProgrammaticReticleTool/iconAssets/erase-32.png"
-                    tooltipText: qsTr("Delete selected")
-                    enabled: reticleModel.selectedElementCanDelete
-                    onClickedHandler: function() { reticleModel.deleteSelectedElement(); }
-                }
-                GeometryEditorButton {
-                    iconSource: "qrc:/Samples/EditData/EditGeometriesWithProgrammaticReticleTool/iconAssets/save-32.png"
-                    tooltipText: qsTr("Save edits")
-                    enabled: reticleModel.canUndo
-                    onClickedHandler: function() {reticleModel.saveEdits();}
-                }
-                GeometryEditorButton {
-                    iconSource: "qrc:/Samples/EditData/EditGeometriesWithProgrammaticReticleTool/iconAssets/trash-32.png"
-                    tooltipText: qsTr("Discard edits")
-                    enabled: reticleModel.geometryEditorStarted
-                    onClickedHandler: function() {reticleModel.discardEdits();}
-                }
-            }
-
-            Rectangle {
-                height: 35
-                width: 150
-                Layout.alignment: Qt.AlignCenter
-                opacity: reticleModel.multifunctionButtonEnabled ? 1.0 : 0.5
-                color : reticleModel.multifunctionButtonEnabled ? "white" : "#FF888888"
-                Text {
-                    id: multifunctionButtonText
-                    anchors.fill: parent
-                    text: qsTr(reticleModel.multifunctionButtonText)
-                    color: "black"
-                    font.pixelSize: 14
-                    horizontalAlignment: Text.AlignHCenter
-                    verticalAlignment: Text.AlignVCenter
-                }
-                MouseArea {
-                    anchors.fill: parent
-                    enabled: reticleModel.multifunctionButtonEnabled
-                    onClicked: reticleModel.handleMultifunctionButton()
-                    cursorShape: Qt.PointingHandCursor
-                }
-            }
-            // Spacer
-            Item {
-                height: 5
-            }
+            enabled: reticleModel.multifunctionButtonEnabled
+            onClicked: reticleModel.handleMultifunctionButton()
         }
+    }
+    
+    GeometryEditorPopup {
+        id: settingsPopup
+        reticleModel: reticleModel
     }
 
     // Declare the C++ instance which creates the map etc. and supply the view
