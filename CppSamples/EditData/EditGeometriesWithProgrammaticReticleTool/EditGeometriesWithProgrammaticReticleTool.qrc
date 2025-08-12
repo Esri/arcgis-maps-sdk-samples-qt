@@ -12,6 +12,6 @@
         <file>iconAssets/erase-32.png</file>
         <file>iconAssets/save-32.png</file>
         <file>iconAssets/trash-32.png</file>
-        <file>GeometryEditorButton.qml</file>
+        <file>GeometryEditorPopup.qml</file>
     </qresource>
 </RCC>

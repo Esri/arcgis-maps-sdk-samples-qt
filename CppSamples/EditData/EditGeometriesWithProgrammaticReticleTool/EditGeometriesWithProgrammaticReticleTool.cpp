@@ -407,7 +407,10 @@ void EditGeometriesWithProgrammaticReticleTool::resetFromEditingSession()
   // Reset the selected graphic
   if (m_editingGraphic)
   {
-    m_editingGraphic->deleteLater();
+    m_editingGraphic->setSelected(false);
+    m_editingGraphic->setVisible(true);
+    delete m_editingGraphic;
+    m_editingGraphic = nullptr;
   }
 
   // Update the multifunction button text and enable it
