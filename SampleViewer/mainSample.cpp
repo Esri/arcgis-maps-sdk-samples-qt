@@ -307,8 +307,6 @@ int main(int argc, char *argv[])
   QtWebEngineQuick::initialize();
 #endif // QT_WEBVIEW_WEBENGINE_BACKEND
 
-  Esri::ArcGISRuntime::ArcGISRuntimeEnvironment::setUseLegacyAuthentication(false);
-
   QGuiApplication::setApplicationName("ArcGIS Maps Qt Samples");
   QGuiApplication::setOrganizationName("Esri");
   QApplication app(argc, argv);
