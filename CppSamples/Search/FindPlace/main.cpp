@@ -39,7 +39,6 @@
 
 int main(int argc, char *argv[])
 {
-  Esri::ArcGISRuntime::ArcGISRuntimeEnvironment::setUseLegacyAuthentication(false);
   QGuiApplication app(argc, argv);
   app.setApplicationName(QString("FindPlace"));
 

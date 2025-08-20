@@ -34,7 +34,6 @@ void setAPIKey(const QGuiApplication& app, QString apiKey);
 
 int main(int argc, char *argv[])
 {
-  Esri::ArcGISRuntime::ArcGISRuntimeEnvironment::setUseLegacyAuthentication(false);
   QGuiApplication app(argc, argv);
   app.setApplicationName(QString("CreateKmlMultiTrack"));
 
