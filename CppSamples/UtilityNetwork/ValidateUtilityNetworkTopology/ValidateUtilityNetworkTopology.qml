@@ -45,7 +45,7 @@ Item {
             top: parent.top
             margins: 20
         }
-        width: layout.width
+        width: Math.min(layout.width, parent.width * 0.9)
         height: layout.height
         color: "white"
         opacity: 1
@@ -64,19 +64,20 @@ Item {
                 rightPadding: 20
                 bottomPadding: 10
                 width: grid.width
+
                 spacing: 10
                 GridLayout {
                     id: grid
                     flow: GridLayout.LeftToRight
-
+                    width: Math.min(layout.width, backBox.width * 0.9)
                     Button {
                         id: stateBtn
                         text: "Get State"
                         Layout.row: 0
                         Layout.column: 0
                         onClicked: model.onGetState()
-                        Layout.preferredWidth: clearBtn.width
                         enabled: model.stateButtonAvailability
+                        Layout.preferredWidth: parent.width *0.5
                     }
                     Button {
                         id: validateBtn
@@ -85,7 +86,7 @@ Item {
                         Layout.column: 1
                         enabled: model.validateButtonAvailability
                         onClicked: model.onValidate()
-                        Layout.preferredWidth: clearBtn.width
+                        Layout.preferredWidth: parent.width *0.5
                     }
                     Button {
                         id: traceBtn
@@ -94,16 +95,17 @@ Item {
                         Layout.column: 0
                         enabled: model.traceButtonAvailability
                         onClicked: model.onTrace()
-                        Layout.preferredWidth: clearBtn.width
+                        Layout.preferredWidth: parent.width *0.5
                     }
                     Button {
                         id: clearBtn
                         text: "Clear Selected"
                         Layout.row: 1
                         Layout.column: 1
-                        Layout.fillWidth: true
+                        //Layout.fillWidth: true
                         onClicked: model.onClear()
                         enabled: model.clearButtonAvailability
+                        Layout.preferredWidth: parent.width *0.5
                     }
                     Text {
                         id: status
@@ -111,6 +113,9 @@ Item {
                         Layout.columnSpan: 2
                         bottomPadding: 10
                         text: model.message
+                        wrapMode: Text.WordWrap
+                        Layout.fillWidth: true
+                        //elide: Text.ElideRight
                     }
                     ProgressBar {
                         id: isBusy
@@ -140,7 +145,7 @@ Item {
             onClicked: mouse => mouse.accepted = true;
         }
         Column{
-            padding: 10
+            padding:10
             GridLayout {
                 columns: 2
                 rows: 2
