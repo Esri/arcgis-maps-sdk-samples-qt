@@ -46,7 +46,7 @@ Item {
             margins: 20
         }
         width: Math.min(layout.width, parent.width * 0.9)
-        height: layout.height
+        height: layout.implicitHeight
         color: "white"
         opacity: 1
         border.color: "black"
@@ -70,41 +70,34 @@ Item {
                     id: grid
                     flow: GridLayout.LeftToRight
                     width: Math.min(layout.width, backBox.width * 0.9)
+                    columns: 2
                     Button {
                         id: stateBtn
                         text: "Get State"
-                        Layout.row: 0
-                        Layout.column: 0
                         onClicked: model.onGetState()
                         enabled: model.stateButtonAvailability
-                        Layout.preferredWidth: parent.width *0.5
+                        Layout.preferredWidth: (grid.width - grid.columnSpacing) / 2
                     }
                     Button {
                         id: validateBtn
                         text: "Validate"
-                        Layout.row: 0
-                        Layout.column: 1
                         enabled: model.validateButtonAvailability
                         onClicked: model.onValidate()
-                        Layout.preferredWidth: parent.width *0.5
+                        Layout.preferredWidth: (grid.width - grid.columnSpacing) / 2
                     }
                     Button {
                         id: traceBtn
                         text: "Trace"
-                        Layout.row: 1
-                        Layout.column: 0
                         enabled: model.traceButtonAvailability
                         onClicked: model.onTrace()
-                        Layout.preferredWidth: parent.width *0.5
+                        Layout.preferredWidth: (grid.width - grid.columnSpacing) / 2
                     }
                     Button {
                         id: clearBtn
                         text: "Clear Selected"
-                        Layout.row: 1
-                        Layout.column: 1
                         onClicked: model.onClear()
                         enabled: model.clearButtonAvailability
-                        Layout.preferredWidth: parent.width *0.5
+                        Layout.preferredWidth: (grid.width - grid.columnSpacing) / 2
                     }
                     Text {
                         id: status
