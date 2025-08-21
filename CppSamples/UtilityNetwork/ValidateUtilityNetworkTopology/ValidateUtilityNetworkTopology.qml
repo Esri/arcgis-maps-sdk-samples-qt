@@ -136,7 +136,7 @@ Item {
             onClicked: mouse => mouse.accepted = true;
         }
         Column{
-            padding:10
+            padding: 10
             GridLayout {
                 columns: 2
                 rows: 2
