@@ -26,6 +26,7 @@
 #include "GraphicsOverlay.h"
 #include "Graphic.h"
 #include "Point.h"
+#include "Viewpoint.h"
 #include "SpatialReference.h"
 #include "TextSymbol.h"
 #include "MultilayerPointSymbol.h"
@@ -54,6 +55,7 @@
 #include <QUrl>
 #include <QFile>
 #include <QImage>
+#include <QFuture>
 
 using namespace Esri::ArcGISRuntime;
 
@@ -84,6 +86,11 @@ void RenderMultilayerSymbols::setMapView(MapQuickView *mapView)
 
     m_mapView = mapView;
     m_mapView->setMap(m_map);
+
+    // Set initial view
+    Point centerPoint(65.0,0.0,SpatialReference::wgs84());
+    Viewpoint initalViewPoint(centerPoint);
+    m_mapView->setViewpointAsync(initalViewPoint);
 
     addAllGraphics();
 
