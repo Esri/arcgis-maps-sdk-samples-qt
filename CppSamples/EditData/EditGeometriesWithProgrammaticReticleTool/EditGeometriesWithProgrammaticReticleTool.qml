@@ -86,10 +86,10 @@ Item {
         }
     }
 
-    Item {
-        id: multifunctionButton
+    Rectangle {
         width: parent.width
         height: parent.height * 0.07
+        color: "white"
         opacity: reticleModel.multifunctionButtonEnabled ? 1.0 : 0.5
         anchors {
             top: mapView.bottom
