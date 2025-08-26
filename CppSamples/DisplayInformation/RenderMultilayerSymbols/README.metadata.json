@@ -1,0 +1,34 @@
+{
+    "category": "Display information",
+    "description": "Show different kinds of multilayer symbols on a map similar to some pre-defined 2D simple symbol styles.",
+    "featured": false,
+    "ignore": false,
+    "images": [
+        "screenshot.png"
+    ],
+    "keywords": [
+        "graphic",
+        "marker",
+        "multilayer",
+        "picture",
+        "symbol"
+    ],
+    "redirect_from": "",
+    "relevant_apis": [
+        "Graphic",
+        "GraphicsOverlay",
+        "MultiLayerPointSymbol",
+        "MultiLayerPolygonSymbol",
+        "MultiLayerPolylineSymbol",
+        "PictureMarkerSymbolLayer",
+        "SolidFillSymbolLayer",
+        "SolidStrokeSymbolLayer",
+        "VectorMarkerSymbolLayer"
+    ],
+    "snippets": [
+        "RenderMultilayerSymbols.cpp",
+        "RenderMultilayerSymbols.h",
+        "RenderMultilayerSymbols.qml"
+    ],
+    "title": "Render multilayer symbols"
+}

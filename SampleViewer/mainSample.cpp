@@ -93,6 +93,7 @@
 #include "../CppSamples/DisplayInformation/SketchOnMap/SketchOnMap.h"
 #include "../CppSamples/DisplayInformation/SymbolizeShapefile/SymbolizeShapefile.h"
 #include "../CppSamples/DisplayInformation/Unique_Value_Renderer/Unique_Value_Renderer.h"
+#include "../CppSamples/DisplayInformation/RenderMultilayerSymbols/RenderMultilayerSymbols.h"
 #include "../CppSamples/EditData/AddFeaturesFeatureService/AddFeaturesFeatureService.h"
 #include "../CppSamples/EditData/ContingentValues/ContingentValues.h"
 #include "../CppSamples/EditData/CreateKmlMultiTrack/CreateKmlMultiTrack.h"
@@ -536,6 +537,7 @@ void registerCppSampleClasses()
   ReadGeoPackage::init();
   ReadSymbolsFromMobileStyle::init();
   RealisticLightingAndShadows::init();
+  RenderMultilayerSymbols::init();
   ReverseGeocodeOnline::init();
   RouteAroundBarriers::init();
   SceneLayerSelection::init();

@@ -55,6 +55,7 @@ HEADERS += \
     "$$SAMPLEPATHCPP/DisplayInformation/SketchOnMap/SketchOnMap.h" \
     "$$SAMPLEPATHCPP/DisplayInformation/SymbolizeShapefile/SymbolizeShapefile.h" \
     "$$SAMPLEPATHCPP/DisplayInformation/Unique_Value_Renderer/Unique_Value_Renderer.h" \
+    "$$SAMPLEPATHCPP/DisplayInformation/RenderMultilayerSymbols/RenderMultilayerSymbols.h" \
     "$$SAMPLEPATHCPP/EditData/AddFeaturesFeatureService/AddFeaturesFeatureService.h" \
     "$$SAMPLEPATHCPP/EditData/ContingentValues/ContingentValues.h" \
     "$$SAMPLEPATHCPP/EditData/CreateKmlMultiTrack/CreateKmlMultiTrack.h" \
@@ -285,6 +286,7 @@ SOURCES += \
     "$$SAMPLEPATHCPP/DisplayInformation/SketchOnMap/SketchOnMap.cpp" \
     "$$SAMPLEPATHCPP/DisplayInformation/SymbolizeShapefile/SymbolizeShapefile.cpp" \
     "$$SAMPLEPATHCPP/DisplayInformation/Unique_Value_Renderer/Unique_Value_Renderer.cpp" \
+    "$$SAMPLEPATHCPP/DisplayInformation/RenderMultilayerSymbols/RenderMultilayerSymbols.cpp" \
     "$$SAMPLEPATHCPP/EditData/AddFeaturesFeatureService/AddFeaturesFeatureService.cpp" \
     "$$SAMPLEPATHCPP/EditData/ContingentValues/ContingentValues.cpp" \
     "$$SAMPLEPATHCPP/EditData/CreateKmlMultiTrack/CreateKmlMultiTrack.cpp" \
@@ -513,6 +515,7 @@ RESOURCES += \
     "$$SAMPLEPATHCPP/DisplayInformation/SketchOnMap/SketchOnMap.qrc" \
     "$$SAMPLEPATHCPP/DisplayInformation/SymbolizeShapefile/SymbolizeShapefile.qrc" \
     "$$SAMPLEPATHCPP/DisplayInformation/Unique_Value_Renderer/Unique_Value_Renderer.qrc" \
+    "$$SAMPLEPATHCPP/DisplayInformation/RenderMultilayerSymbols/RenderMultilayerSymbols.qrc" \
     "$$SAMPLEPATHCPP/EditData/AddFeaturesFeatureService/AddFeaturesFeatureService.qrc" \
     "$$SAMPLEPATHCPP/EditData/ContingentValues/ContingentValues.qrc" \
     "$$SAMPLEPATHCPP/EditData/CreateKmlMultiTrack/CreateKmlMultiTrack.qrc" \
