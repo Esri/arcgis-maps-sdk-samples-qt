@@ -245,7 +245,8 @@ void RenderMultilayerSymbols::addPointGraphicsWithPictureMarkerSymbolFromResourc
   // File pin_star_blue.png loaded from resouces.
   QString resourcePath(":/Samples/DisplayInformation/RenderMultilayerSymbols/pin_star_blue.png");
 
-  if (QFile::exists(resourcePath)) {
+  if (QFile::exists(resourcePath))
+  {
     QImage img(resourcePath);
 
     // Create new PictureMarkerSymbolLayer from the runtime image object
