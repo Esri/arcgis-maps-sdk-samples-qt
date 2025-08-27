@@ -63,8 +63,6 @@ private:
   Esri::ArcGISRuntime::Map *m_map = nullptr;
   Esri::ArcGISRuntime::MapQuickView *m_mapView = nullptr;
 
-  const double m_offset = 20.0;
-
 };
 
 #endif // RENDERMULTILAYERSYMBOLS_H

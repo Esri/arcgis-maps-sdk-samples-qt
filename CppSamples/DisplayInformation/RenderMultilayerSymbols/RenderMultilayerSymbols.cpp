@@ -61,6 +61,11 @@
 
 using namespace Esri::ArcGISRuntime;
 
+namespace
+{
+    constexpr double symbolOffset = 20.0;
+}
+
 RenderMultilayerSymbols::RenderMultilayerSymbols(QObject *parent /* = nullptr */)
     : QObject(parent)
     , m_map(new Map(BasemapStyle::ArcGISLightGray, this))
@@ -206,7 +211,7 @@ void RenderMultilayerSymbols::addPointGraphicsWithMarkerSymbols(GraphicsOverlay*
   markerSymbol = new MultilayerPointSymbol(QList<SymbolLayer*>{vectorMarkerSymbol}, this);
 
   // Create point graphics using the triangle symbol created above
-  const Point trianglePoint(-150, 20 - m_offset, SpatialReference::wgs84());
+  const Point trianglePoint(-150, 20 - symbolOffset, SpatialReference::wgs84());
   Graphic* triangleGraphic = new Graphic(trianglePoint, markerSymbol, this);
   overlay->graphics()->append(triangleGraphic);
 
@@ -219,14 +224,14 @@ void RenderMultilayerSymbols::addPointGraphicsWithMarkerSymbols(GraphicsOverlay*
   markerSymbol = new MultilayerPointSymbol(QList<SymbolLayer*>{vectorMarkerSymbol}, this);
 
   // Create point graphics using the cross symbol created above
-  const Point crossPoint(-150, 20 - 2 * m_offset, SpatialReference::wgs84());
+  const Point crossPoint(-150, 20 - 2 * symbolOffset, SpatialReference::wgs84());
   Graphic* crossGraphic = new Graphic(crossPoint, markerSymbol, this);
   overlay->graphics()->append(crossGraphic);
 }
 
 void RenderMultilayerSymbols::addPointGraphicsWithPictureMarkerSymbolFromUri(GraphicsOverlay* overlay)
 {
-  QUrl symbolUri("https://static.arcgis.com/images/Symbols/OutdoorRecreation/Camping.png");
+  const QUrl symbolUri("https://static.arcgis.com/images/Symbols/OutdoorRecreation/Camping.png");
 
   // Create a new symbol using Uri
   PictureMarkerSymbolLayer* campsiteMarker = new PictureMarkerSymbolLayer(symbolUri, this);
@@ -257,7 +262,7 @@ void RenderMultilayerSymbols::addPointGraphicsWithPictureMarkerSymbolFromResourc
     MultilayerPointSymbol* pinSymbol = new MultilayerPointSymbol(QList<SymbolLayer*>{pinMarker}, this);
 
     // Create location for the pin
-    const Point pinPoint(-80, 20 - m_offset, SpatialReference::wgs84());
+    const Point pinPoint(-80, 20 - symbolOffset, SpatialReference::wgs84());
 
     // Create graphic with the location and symbol
     Graphic* pinGraphic = new Graphic(pinPoint, pinSymbol, this);
@@ -271,7 +276,7 @@ void RenderMultilayerSymbols::addLineGraphicsWithMarkerSymbols(GraphicsOverlay* 
   SolidStrokeSymbolLayer* strokeLayer = nullptr;
 
   strokeLayer = new SolidStrokeSymbolLayer(3, Qt::red, this);
-  strokeLayer->setCapStyle(Esri::ArcGISRuntime::StrokeSymbolLayerCapStyle::Round);
+  strokeLayer->setCapStyle(StrokeSymbolLayerCapStyle::Round);
 
   // Create a polyline for the multilayer polyline symbol
   PolylineBuilder* polylineBuilder = new PolylineBuilder(SpatialReference::wgs84(), this);
@@ -293,11 +298,11 @@ void RenderMultilayerSymbols::addLineGraphicsWithMarkerSymbols(GraphicsOverlay* 
   overlay->graphics()->append(shortDashDotGraphic);
 
   polylineBuilder = new PolylineBuilder(SpatialReference::wgs84(), this);
-  polylineBuilder->addPoint(Point(-30, 20 - m_offset, SpatialReference::wgs84()));
-  polylineBuilder->addPoint(Point(30, 20 - m_offset, SpatialReference::wgs84()));
+  polylineBuilder->addPoint(Point(-30, 20 - symbolOffset, SpatialReference::wgs84()));
+  polylineBuilder->addPoint(Point(30, 20 - symbolOffset, SpatialReference::wgs84()));
 
   strokeLayer = new SolidStrokeSymbolLayer(3, Qt::red, this);
-  strokeLayer->setCapStyle(Esri::ArcGISRuntime::StrokeSymbolLayerCapStyle::Round);
+  strokeLayer->setCapStyle(StrokeSymbolLayerCapStyle::Round);
   dashEffect = new DashGeometricEffect(this);
 
   // Create a dash effect
@@ -312,11 +317,11 @@ void RenderMultilayerSymbols::addLineGraphicsWithMarkerSymbols(GraphicsOverlay* 
   overlay->graphics()->append(shortDashGraphic);
 
   polylineBuilder = new PolylineBuilder(SpatialReference::wgs84(), this);
-  polylineBuilder->addPoint(Point(-30, 20 - 2 * m_offset, SpatialReference::wgs84()));
-  polylineBuilder->addPoint(Point(30, 20 - 2 * m_offset, SpatialReference::wgs84()));
+  polylineBuilder->addPoint(Point(-30, 20 - 2 * symbolOffset, SpatialReference::wgs84()));
+  polylineBuilder->addPoint(Point(30, 20 - 2 * symbolOffset, SpatialReference::wgs84()));
 
   strokeLayer = new SolidStrokeSymbolLayer(3, Qt::red, this);
-  strokeLayer->setCapStyle(Esri::ArcGISRuntime::StrokeSymbolLayerCapStyle::Round);
+  strokeLayer->setCapStyle(StrokeSymbolLayerCapStyle::Round);
   dashEffect = new DashGeometricEffect(this);
 
   // Create a dash effect
@@ -344,8 +349,9 @@ void RenderMultilayerSymbols::addPolygonGraphicsWithMarkerSymbols(GraphicsOverla
   SolidStrokeSymbolLayer* strokeForOutline = new SolidStrokeSymbolLayer(1, Qt::black, this);
 
   // Create a diagonal cross pattern hatch symbol layers for diagonal cross fill style
-  HatchFillSymbolLayer* diagonalStroke1 = new HatchFillSymbolLayer(new MultilayerPolylineSymbol(QList<SymbolLayer*>{strokeForHatches}, this), 45, this);
-  HatchFillSymbolLayer* diagonalStroke2 = new HatchFillSymbolLayer(new MultilayerPolylineSymbol(QList<SymbolLayer*>{strokeForHatches}, this), -45, this);
+  MultilayerPolylineSymbol* hatchSymbol = new MultilayerPolylineSymbol(QList<SymbolLayer*>{strokeForHatches}, this);
+  HatchFillSymbolLayer* diagonalStroke1 = new HatchFillSymbolLayer(hatchSymbol, 45, this);
+  HatchFillSymbolLayer* diagonalStroke2 = new HatchFillSymbolLayer(hatchSymbol, -45, this);
 
   diagonalStroke1->setSeparation(9);
   diagonalStroke2->setSeparation(9);
@@ -358,13 +364,13 @@ void RenderMultilayerSymbols::addPolygonGraphicsWithMarkerSymbols(GraphicsOverla
   overlay->graphics()->append(diagonalCrossGraphic);
 
   polygonBuilder = new PolygonBuilder(SpatialReference::wgs84(), this);
-  polygonBuilder->addPoint(Point(60, 25 - m_offset, SpatialReference::wgs84()));
-  polygonBuilder->addPoint(Point(70, 25 - m_offset, SpatialReference::wgs84()));
-  polygonBuilder->addPoint(Point(70, 20 - m_offset, SpatialReference::wgs84()));
-  polygonBuilder->addPoint(Point(60, 20 - m_offset, SpatialReference::wgs84()));
+  polygonBuilder->addPoint(Point(60, 25 - symbolOffset, SpatialReference::wgs84()));
+  polygonBuilder->addPoint(Point(70, 25 - symbolOffset, SpatialReference::wgs84()));
+  polygonBuilder->addPoint(Point(70, 20 - symbolOffset, SpatialReference::wgs84()));
+  polygonBuilder->addPoint(Point(60, 20 - symbolOffset, SpatialReference::wgs84()));
 
   // Create a forward diagonal pattern hatch symbol layer for forward diagonal fill style
-  HatchFillSymbolLayer* forwardDiagonal = new HatchFillSymbolLayer(new MultilayerPolylineSymbol(QList<SymbolLayer*>{strokeForHatches}, this), -45, this);
+  HatchFillSymbolLayer* forwardDiagonal = new HatchFillSymbolLayer(hatchSymbol, -45, this);
   forwardDiagonal->setSeparation(9);
 
   // Create a multilayer polygon symbol with symbol layers
@@ -375,13 +381,13 @@ void RenderMultilayerSymbols::addPolygonGraphicsWithMarkerSymbols(GraphicsOverla
   overlay->graphics()->append(forwardDiagonalGraphic);
 
   polygonBuilder = new PolygonBuilder(SpatialReference::wgs84(), this);
-  polygonBuilder->addPoint(Point(60, 25 - 2 * m_offset, SpatialReference::wgs84()));
-  polygonBuilder->addPoint(Point(70, 25 - 2 * m_offset, SpatialReference::wgs84()));
-  polygonBuilder->addPoint(Point(70, 20 - 2 * m_offset, SpatialReference::wgs84()));
-  polygonBuilder->addPoint(Point(60, 20 - 2 * m_offset, SpatialReference::wgs84()));
+  polygonBuilder->addPoint(Point(60, 25 - 2 * symbolOffset, SpatialReference::wgs84()));
+  polygonBuilder->addPoint(Point(70, 25 - 2 * symbolOffset, SpatialReference::wgs84()));
+  polygonBuilder->addPoint(Point(70, 20 - 2 * symbolOffset, SpatialReference::wgs84()));
+  polygonBuilder->addPoint(Point(60, 20 - 2 * symbolOffset, SpatialReference::wgs84()));
 
   // Create a vertical pattern hatch symbol layer for vertical fill style
-  HatchFillSymbolLayer* vertical = new HatchFillSymbolLayer(new MultilayerPolylineSymbol(QList<SymbolLayer*>{strokeForHatches}, this), 90, this);
+  HatchFillSymbolLayer* vertical = new HatchFillSymbolLayer(hatchSymbol, 90, this);
   vertical->setSeparation(9);
 
   // Create a multilayer polygon symbol with symbol layers
@@ -401,38 +407,41 @@ void RenderMultilayerSymbols::addComplexPointGraphic(GraphicsOverlay* overlay)
   VectorMarkerSymbolElement* orangeSquareVectorElement = new VectorMarkerSymbolElement(orangeSquareGeometry, new MultilayerPolygonSymbol(QList<SymbolLayer*>{orangeFillLayer, pinkOutline}, this), this);
   VectorMarkerSymbolLayer* orangeSquareVectorMarkerLayer = new VectorMarkerSymbolLayer(QList<VectorMarkerSymbolElement*>{orangeSquareVectorElement}, this);
   orangeSquareVectorMarkerLayer->setSize(11);
-  orangeSquareVectorMarkerLayer->setAnchor(SymbolAnchor(-4, -6, Esri::ArcGISRuntime::SymbolAnchorPlacementMode::Absolute));
+  orangeSquareVectorMarkerLayer->setAnchor(SymbolAnchor(-4, -6, SymbolAnchorPlacementMode::Absolute));
 
   // Create a black envelope
   SolidFillSymbolLayer* blackFillLayer = new SolidFillSymbolLayer(Qt::black, this);
   SolidStrokeSymbolLayer* orangeOutline = new SolidStrokeSymbolLayer(2, QColor(255, 69, 0), this); // OrangeRed
   Envelope blackSquareGeometry(-0.5, -0.5, 0.5, 0.5, SpatialReference::wgs84());
-  VectorMarkerSymbolElement* blackSquareVectorElement = new VectorMarkerSymbolElement(blackSquareGeometry, new MultilayerPolygonSymbol(QList<SymbolLayer*>{blackFillLayer, orangeOutline}, this), this);
+  MultilayerPolygonSymbol* blackFillOrangeOutlineSymbol = new MultilayerPolygonSymbol(QList<SymbolLayer*>{blackFillLayer, orangeOutline}, this);
+  VectorMarkerSymbolElement* blackSquareVectorElement = new VectorMarkerSymbolElement(blackSquareGeometry, blackFillOrangeOutlineSymbol, this);
   VectorMarkerSymbolLayer* blackSquareVectorMarkerLayer = new VectorMarkerSymbolLayer(QList<VectorMarkerSymbolElement*>{blackSquareVectorElement}, this);
   blackSquareVectorMarkerLayer->setSize(6);
-  blackSquareVectorMarkerLayer->setAnchor(SymbolAnchor(2, 1, Esri::ArcGISRuntime::SymbolAnchorPlacementMode::Absolute));
+  blackSquareVectorMarkerLayer->setAnchor(SymbolAnchor(2, 1, SymbolAnchorPlacementMode::Absolute));
 
-  // // Create an envelope with no purple outline
+  // Create an envelope with no purple outline
   SolidFillSymbolLayer* transparentFillLayer = new SolidFillSymbolLayer(Qt::transparent, this);
   SolidStrokeSymbolLayer* purpleOutline = new SolidStrokeSymbolLayer(2, QColor(128, 0, 128), this); // Purple
   Envelope purpleSquareGeometry(-0.5, -0.5, 0.5, 0.5, SpatialReference::wgs84());
-  VectorMarkerSymbolElement* purpleSquareVectorElement = new VectorMarkerSymbolElement(purpleSquareGeometry, new MultilayerPolygonSymbol(QList<SymbolLayer*>{transparentFillLayer, purpleOutline}, this), this);
+  MultilayerPolygonSymbol* transparentPurpleOutlineSymbol = new MultilayerPolygonSymbol(QList<SymbolLayer*>{transparentFillLayer, purpleOutline}, this);
+  VectorMarkerSymbolElement* purpleSquareVectorElement = new VectorMarkerSymbolElement(purpleSquareGeometry, transparentPurpleOutlineSymbol, this);
   VectorMarkerSymbolLayer* purpleSquareVectorMarkerLayer = new VectorMarkerSymbolLayer(QList<VectorMarkerSymbolElement*>{purpleSquareVectorElement}, this);
   purpleSquareVectorMarkerLayer->setSize(14);
-  purpleSquareVectorMarkerLayer->setAnchor(SymbolAnchor(4, 2, Esri::ArcGISRuntime::SymbolAnchorPlacementMode::Absolute));
+  purpleSquareVectorMarkerLayer->setAnchor(SymbolAnchor(4, 2, SymbolAnchorPlacementMode::Absolute));
 
-  // // First layer with its marker graphics and nested symbol layers
+  // First layer with its marker graphics and nested symbol layers
   Geometry hexagonElementGeometry = Geometry::fromJson(R"({"rings":[[[-2.89,5.0],[2.89,5.0],[5.77,0.0],[2.89,-5.0],[-2.89,-5.0],[-5.77,0.0],[-2.89,5.0]]]})"); // Hexagon geometry
   SolidFillSymbolLayer* yellowFillLayer = new SolidFillSymbolLayer(Qt::yellow, this);
   SolidStrokeSymbolLayer* blackOutline = new SolidStrokeSymbolLayer(2, Qt::black, this);
-  VectorMarkerSymbolElement* hexagonVectorElement = new VectorMarkerSymbolElement(hexagonElementGeometry, new MultilayerPolygonSymbol(QList<SymbolLayer*>{yellowFillLayer, blackOutline}, this), this);
+  MultilayerPolygonSymbol* yellowFillBlackOutlineSymbol = new MultilayerPolygonSymbol(QList<SymbolLayer*>{yellowFillLayer, blackOutline}, this);
+  VectorMarkerSymbolElement* hexagonVectorElement = new VectorMarkerSymbolElement(hexagonElementGeometry, yellowFillBlackOutlineSymbol, this);
   VectorMarkerSymbolLayer* hexagonVectorMarkerLayer = new VectorMarkerSymbolLayer(QList<VectorMarkerSymbolElement*>{hexagonVectorElement}, this);
   hexagonVectorMarkerLayer->setSize(35);
 
   // // Create the multilayer point symbol
   MultilayerPointSymbol* pointSymbol = new MultilayerPointSymbol(QList<SymbolLayer*>{hexagonVectorMarkerLayer, orangeSquareVectorMarkerLayer, blackSquareVectorMarkerLayer, purpleSquareVectorMarkerLayer}, this);
 
-  // // Create the multilayer point graphic using the symbols created above
+  // Create the multilayer point graphic using the symbols created above
   const Point complexPoint(130, 20, SpatialReference::wgs84());
   Graphic* complexPointGraphic = new Graphic(complexPoint, pointSymbol, this);
   overlay->graphics()->append(complexPointGraphic);
@@ -454,7 +463,7 @@ void RenderMultilayerSymbols::addComplexPolygonGraphic(GraphicsOverlay* overlay)
   QList<double> dashTemplate = {5, 3};
   dashEffect->setDashTemplate(dashTemplate);
   blackDashes->geometricEffects()->append(dashEffect);
-  blackDashes->setCapStyle(Esri::ArcGISRuntime::StrokeSymbolLayerCapStyle::Square);
+  blackDashes->setCapStyle(StrokeSymbolLayerCapStyle::Square);
 
   // Create a red filling for the polygon
   SolidFillSymbolLayer* redFillLayer = new SolidFillSymbolLayer(Qt::red, this);
@@ -482,7 +491,7 @@ void RenderMultilayerSymbols::addComplexPolylineGraphic(GraphicsOverlay* overlay
   QList<double> dashTemplate = {5, 3};
   dashEffect->setDashTemplate(dashTemplate);
   blackDashes->geometricEffects()->append(dashEffect);
-  blackDashes->setCapStyle(Esri::ArcGISRuntime::StrokeSymbolLayerCapStyle::Square);
+  blackDashes->setCapStyle(StrokeSymbolLayerCapStyle::Square);
 
   // Create the yellow stroke inside
   SolidStrokeSymbolLayer* yellowStroke = new SolidStrokeSymbolLayer(5, Qt::yellow, this);
