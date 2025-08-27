@@ -77,7 +77,7 @@ void RenderMultilayerSymbols::init()
 
 MapQuickView *RenderMultilayerSymbols::mapView() const
 {
-    return m_mapView;
+  return m_mapView;
 }
 
 // Set the view (created in QML)
