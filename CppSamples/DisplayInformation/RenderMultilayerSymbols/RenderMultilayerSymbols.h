@@ -17,6 +17,7 @@
 #ifndef RENDERMULTILAYERSYMBOLS_H
 #define RENDERMULTILAYERSYMBOLS_H
 
+// Qt headers
 #include <QObject>
 
 namespace Esri::ArcGISRuntime {
@@ -27,42 +28,45 @@ class GraphicsOverlay;
 
 Q_MOC_INCLUDE("MapQuickView.h");
 
+namespace {
+  // This is used to keep consistent distance from each symbol on the column
+  const double m_offset = 20.0;
+}
+
 class RenderMultilayerSymbols : public QObject
 {
-    Q_OBJECT
+  Q_OBJECT
 
-    Q_PROPERTY(Esri::ArcGISRuntime::MapQuickView *mapView READ mapView WRITE setMapView NOTIFY
+  Q_PROPERTY(Esri::ArcGISRuntime::MapQuickView *mapView READ mapView WRITE setMapView NOTIFY
                    mapViewChanged)
 
 public:
-    explicit RenderMultilayerSymbols(QObject *parent = nullptr);
-    ~RenderMultilayerSymbols() override;
+  explicit RenderMultilayerSymbols(QObject *parent = nullptr);
+  ~RenderMultilayerSymbols() override;
 
-    static void init();
+  static void init();
 
 signals:
-    void mapViewChanged();
+  void mapViewChanged();
 
 private:
-    Esri::ArcGISRuntime::MapQuickView *mapView() const;
-    void setMapView(Esri::ArcGISRuntime::MapQuickView *mapView);
+  Esri::ArcGISRuntime::MapQuickView *mapView() const;
+  void setMapView(Esri::ArcGISRuntime::MapQuickView *mapView);
 
-    void addAllGraphics();
+  void addAllGraphics();
 
-    void addPointGraphicsWithMarkerSymbols(Esri::ArcGISRuntime::GraphicsOverlay* overlay);
-    void addPointGraphicsWithPictureMarkerSymbolFromUri(Esri::ArcGISRuntime::GraphicsOverlay* overlay);
-    void addPointGraphicsWithPictureMarkerSymbolFromResources(Esri::ArcGISRuntime::GraphicsOverlay* overlay);
-    void addLineGraphicsWithMarkerSymbols(Esri::ArcGISRuntime::GraphicsOverlay* overlay);
-    void addPolygonGraphicsWithMarkerSymbols(Esri::ArcGISRuntime::GraphicsOverlay* overlay);
-    void addComplexPointGraphic(Esri::ArcGISRuntime::GraphicsOverlay* overlay);
-    void addComplexPolylineGraphic(Esri::ArcGISRuntime::GraphicsOverlay* overlay);
-    void addComplexPolygonGraphic(Esri::ArcGISRuntime::GraphicsOverlay* overlay);
+  void addPointGraphicsWithMarkerSymbols(Esri::ArcGISRuntime::GraphicsOverlay* overlay);
+  void addPointGraphicsWithPictureMarkerSymbolFromUri(Esri::ArcGISRuntime::GraphicsOverlay* overlay);
+  void addPointGraphicsWithPictureMarkerSymbolFromResources(Esri::ArcGISRuntime::GraphicsOverlay* overlay);
+  void addLineGraphicsWithMarkerSymbols(Esri::ArcGISRuntime::GraphicsOverlay* overlay);
+  void addPolygonGraphicsWithMarkerSymbols(Esri::ArcGISRuntime::GraphicsOverlay* overlay);
+  void addComplexPointGraphic(Esri::ArcGISRuntime::GraphicsOverlay* overlay);
+  void addComplexPolylineGraphic(Esri::ArcGISRuntime::GraphicsOverlay* overlay);
+  void addComplexPolygonGraphic(Esri::ArcGISRuntime::GraphicsOverlay* overlay);
 
-    Esri::ArcGISRuntime::Map *m_map = nullptr;
-    Esri::ArcGISRuntime::MapQuickView *m_mapView = nullptr;
+  Esri::ArcGISRuntime::Map *m_map = nullptr;
+  Esri::ArcGISRuntime::MapQuickView *m_mapView = nullptr;
 
-    // This is used to keep consistent distance from each symbol on the column
-    double m_offset = 20.0;
 };
 
 #endif // RENDERMULTILAYERSYMBOLS_H

@@ -33,7 +33,6 @@ Item {
 
     // Declare the C++ instance which creates the map etc. and supply the view
     RenderMultilayerSymbolsSample {
-        id: model
         mapView: view
     }
 }
