@@ -28,10 +28,6 @@ class GraphicsOverlay;
 
 Q_MOC_INCLUDE("MapQuickView.h");
 
-namespace {
-  // This is used to keep consistent distance from each symbol on the column
-  const double m_offset = 20.0;
-}
 
 class RenderMultilayerSymbols : public QObject
 {
@@ -66,6 +62,8 @@ private:
 
   Esri::ArcGISRuntime::Map *m_map = nullptr;
   Esri::ArcGISRuntime::MapQuickView *m_mapView = nullptr;
+
+  const double m_offset = 20.0;
 
 };
 

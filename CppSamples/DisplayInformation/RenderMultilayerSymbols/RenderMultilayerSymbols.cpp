@@ -193,7 +193,7 @@ void RenderMultilayerSymbols::addPointGraphicsWithMarkerSymbols(GraphicsOverlay*
   markerSymbol = new MultilayerPointSymbol(QList<SymbolLayer*>{vectorMarkerSymbol}, this);
 
   // Create point graphics using the diamond symbol created above
-  Point diamondPoint(-150, 20, SpatialReference::wgs84());
+  const Point diamondPoint(-150, 20, SpatialReference::wgs84());
   Graphic* diamondGraphic = new Graphic(diamondPoint, markerSymbol, this);
   overlay->graphics()->append(diamondGraphic);
 
@@ -206,7 +206,7 @@ void RenderMultilayerSymbols::addPointGraphicsWithMarkerSymbols(GraphicsOverlay*
   markerSymbol = new MultilayerPointSymbol(QList<SymbolLayer*>{vectorMarkerSymbol}, this);
 
   // Create point graphics using the triangle symbol created above
-  Point trianglePoint(-150, 20 - m_offset, SpatialReference::wgs84());
+  const Point trianglePoint(-150, 20 - m_offset, SpatialReference::wgs84());
   Graphic* triangleGraphic = new Graphic(trianglePoint, markerSymbol, this);
   overlay->graphics()->append(triangleGraphic);
 
@@ -219,7 +219,7 @@ void RenderMultilayerSymbols::addPointGraphicsWithMarkerSymbols(GraphicsOverlay*
   markerSymbol = new MultilayerPointSymbol(QList<SymbolLayer*>{vectorMarkerSymbol}, this);
 
   // Create point graphics using the cross symbol created above
-  Point crossPoint(-150, 20 - 2 * m_offset, SpatialReference::wgs84());
+  const Point crossPoint(-150, 20 - 2 * m_offset, SpatialReference::wgs84());
   Graphic* crossGraphic = new Graphic(crossPoint, markerSymbol, this);
   overlay->graphics()->append(crossGraphic);
 }
@@ -233,7 +233,7 @@ void RenderMultilayerSymbols::addPointGraphicsWithPictureMarkerSymbolFromUri(Gra
   campsiteMarker->setSize(40);
   MultilayerPointSymbol* campsiteSymbol = new MultilayerPointSymbol(QList<SymbolLayer*>{campsiteMarker}, this);
 
-  Point campsitePoint(-80, 20, SpatialReference::wgs84());
+  const Point campsitePoint(-80, 20, SpatialReference::wgs84());
 
   // Create graphic with the location and symbol
   Graphic* campsiteGraphic = new Graphic(campsitePoint, campsiteSymbol, this);
@@ -256,7 +256,7 @@ void RenderMultilayerSymbols::addPointGraphicsWithPictureMarkerSymbolFromResourc
     MultilayerPointSymbol* pinSymbol = new MultilayerPointSymbol(QList<SymbolLayer*>{pinMarker}, this);
 
     // Create location for the pin
-    Point pinPoint(-80, 20 - m_offset, SpatialReference::wgs84());
+    const Point pinPoint(-80, 20 - m_offset, SpatialReference::wgs84());
 
     // Create graphic with the location and symbol
     Graphic* pinGraphic = new Graphic(pinPoint, pinSymbol, this);
@@ -432,7 +432,7 @@ void RenderMultilayerSymbols::addComplexPointGraphic(GraphicsOverlay* overlay)
   MultilayerPointSymbol* pointSymbol = new MultilayerPointSymbol(QList<SymbolLayer*>{hexagonVectorMarkerLayer, orangeSquareVectorMarkerLayer, blackSquareVectorMarkerLayer, purpleSquareVectorMarkerLayer}, this);
 
   // // Create the multilayer point graphic using the symbols created above
-  Point complexPoint(130, 20, SpatialReference::wgs84());
+  const Point complexPoint(130, 20, SpatialReference::wgs84());
   Graphic* complexPointGraphic = new Graphic(complexPoint, pointSymbol, this);
   overlay->graphics()->append(complexPointGraphic);
 }
