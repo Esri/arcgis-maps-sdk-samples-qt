@@ -11,8 +11,7 @@
 # See the License for the specific language governing permissions and
 # limitations under the License.
 
-# Using Debian slim which uses minimum packages necessary; Alpine is not preferred 
-FROM alpine:3.12
+FROM alpine:3.17
 
 LABEL maintainer="Tanner Yould <tyould@esri.com>"
 
@@ -26,9 +25,9 @@ ENV PYTHONUNBUFFERED=1
 ADD entry.py /entry.py
 ADD style.rb /style.rb
 
-# Install dependencies
+# Install dependencies (ruby 3.x, python3, mdl)
 RUN echo "**** Install Ruby and mdl ****" && \
-    apk add --update --no-cache ruby-full && \
+    apk add --update --no-cache ruby ruby-dev ruby-bundler && \
     gem install mdl --no-document && \
     echo "**** Install Python ****" && \
     apk add --no-cache python3 && \
