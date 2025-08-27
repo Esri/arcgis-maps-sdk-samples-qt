@@ -22,42 +22,42 @@
 #include "RenderMultilayerSymbols.h"
 
 // ArcGIS Maps SDK headers
+#include "DashGeometricEffect.h"
+#include "Envelope.h"
+#include "GeometricEffectListModel.h"
+#include "Geometry.h"
+#include "Graphic.h"
+#include "GraphicListModel.h"
+#include "GraphicsOverlay.h"
+#include "GraphicsOverlayListModel.h"
+#include "HatchFillSymbolLayer.h"
 #include "Map.h"
 #include "MapQuickView.h"
 #include "MapTypes.h"
-#include "GraphicsOverlay.h"
-#include "Graphic.h"
-#include "Point.h"
-#include "Viewpoint.h"
-#include "SpatialReference.h"
-#include "TextSymbol.h"
 #include "MultilayerPointSymbol.h"
-#include "VectorMarkerSymbolLayer.h"
-#include "VectorMarkerSymbolElement.h"
 #include "MultilayerPolygonSymbol.h"
-#include "SolidFillSymbolLayer.h"
-#include "Geometry.h"
-#include "PictureMarkerSymbolLayer.h"
 #include "MultilayerPolylineSymbol.h"
-#include "SolidStrokeSymbolLayer.h"
-#include "DashGeometricEffect.h"
-#include "PolylineBuilder.h"
-#include "HatchFillSymbolLayer.h"
+#include "PictureMarkerSymbolLayer.h"
+#include "Point.h"
 #include "PolygonBuilder.h"
-#include "Envelope.h"
+#include "PolylineBuilder.h"
+#include "SolidFillSymbolLayer.h"
+#include "SolidStrokeSymbolLayer.h"
+#include "SpatialReference.h"
+#include "StrokeSymbolLayer.h"
 #include "SymbolAnchor.h"
 #include "SymbolTypes.h"
-#include "GraphicListModel.h"
-#include "GraphicsOverlayListModel.h"
-#include "GeometricEffectListModel.h"
-#include "StrokeSymbolLayer.h"
+#include "TextSymbol.h"
+#include "VectorMarkerSymbolElement.h"
+#include "VectorMarkerSymbolLayer.h"
+#include "Viewpoint.h"
 
 // Qt headers
 #include <QColor>
-#include <QUrl>
 #include <QFile>
-#include <QImage>
 #include <QFuture>
+#include <QImage>
+#include <QUrl>
 
 using namespace Esri::ArcGISRuntime;
 
