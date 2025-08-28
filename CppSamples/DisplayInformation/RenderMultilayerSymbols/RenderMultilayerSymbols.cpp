@@ -423,7 +423,7 @@ void RenderMultilayerSymbols::addComplexPointGraphic(GraphicsOverlay* overlay)
   // Create an envelope with no purple outline
   SolidFillSymbolLayer* transparentFillLayer = new SolidFillSymbolLayer(Qt::transparent, this);
   SolidStrokeSymbolLayer* purpleOutline = new SolidStrokeSymbolLayer(2, QColor(128, 0, 128), this); // Purple
-  Envelope purpleSquareGeometry(-0.5, -0.5, 0.5, 0.5, SpatialReference::wgs84());
+  const Envelope purpleSquareGeometry(-0.5, -0.5, 0.5, 0.5, SpatialReference::wgs84());
   MultilayerPolygonSymbol* transparentPurpleOutlineSymbol = new MultilayerPolygonSymbol(QList<SymbolLayer*>{transparentFillLayer, purpleOutline}, this);
   VectorMarkerSymbolElement* purpleSquareVectorElement = new VectorMarkerSymbolElement(purpleSquareGeometry, transparentPurpleOutlineSymbol, this);
   VectorMarkerSymbolLayer* purpleSquareVectorMarkerLayer = new VectorMarkerSymbolLayer(QList<VectorMarkerSymbolElement*>{purpleSquareVectorElement}, this);
