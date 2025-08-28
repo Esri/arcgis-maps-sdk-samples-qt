@@ -431,7 +431,7 @@ void RenderMultilayerSymbols::addComplexPointGraphic(GraphicsOverlay* overlay)
   purpleSquareVectorMarkerLayer->setAnchor(SymbolAnchor(4, 2, SymbolAnchorPlacementMode::Absolute));
 
   // First layer with its marker graphics and nested symbol layers
-  Geometry hexagonElementGeometry = Geometry::fromJson(R"({"rings":[[[-2.89,5.0],[2.89,5.0],[5.77,0.0],[2.89,-5.0],[-2.89,-5.0],[-5.77,0.0],[-2.89,5.0]]]})"); // Hexagon geometry
+  const Geometry hexagonElementGeometry = Geometry::fromJson(R"({"rings":[[[-2.89,5.0],[2.89,5.0],[5.77,0.0],[2.89,-5.0],[-2.89,-5.0],[-5.77,0.0],[-2.89,5.0]]]})"); // Hexagon geometry
   SolidFillSymbolLayer* yellowFillLayer = new SolidFillSymbolLayer(Qt::yellow, this);
   SolidStrokeSymbolLayer* blackOutline = new SolidStrokeSymbolLayer(2, Qt::black, this);
   MultilayerPolygonSymbol* yellowFillBlackOutlineSymbol = new MultilayerPolygonSymbol(QList<SymbolLayer*>{yellowFillLayer, blackOutline}, this);
