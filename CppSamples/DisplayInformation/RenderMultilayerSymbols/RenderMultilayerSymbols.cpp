@@ -63,7 +63,7 @@ using namespace Esri::ArcGISRuntime;
 
 namespace
 {
-    constexpr double symbolOffset = 20.0;
+  constexpr double symbolOffset = 20.0;
 }
 
 RenderMultilayerSymbols::RenderMultilayerSymbols(QObject *parent /* = nullptr */)
