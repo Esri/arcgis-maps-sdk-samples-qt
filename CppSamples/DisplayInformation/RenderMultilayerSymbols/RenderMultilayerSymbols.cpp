@@ -18,7 +18,7 @@
 #include "pch.hpp"
 #endif // PCH_BUILD
 
-// Sample headers
+// sample headers
 #include "RenderMultilayerSymbols.h"
 
 // ArcGIS Maps SDK headers
