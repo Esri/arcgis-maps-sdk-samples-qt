@@ -67,9 +67,10 @@ namespace
 }
 
 RenderMultilayerSymbols::RenderMultilayerSymbols(QObject *parent /* = nullptr */)
-    : QObject(parent)
-    , m_map(new Map(BasemapStyle::ArcGISLightGray, this))
-{}
+  : QObject(parent),
+  m_map(new Map(BasemapStyle::ArcGISLightGray, this))
+{
+}
 
 RenderMultilayerSymbols::~RenderMultilayerSymbols() = default;
 
