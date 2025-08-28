@@ -249,7 +249,7 @@ void RenderMultilayerSymbols::addPointGraphicsWithPictureMarkerSymbolFromUri(Gra
 void RenderMultilayerSymbols::addPointGraphicsWithPictureMarkerSymbolFromResources(GraphicsOverlay* overlay)
 {
   // File pin_star_blue.png loaded from resouces.
-  QString resourcePath(":/Samples/DisplayInformation/RenderMultilayerSymbols/pin_star_blue.png");
+  const QString resourcePath(":/Samples/DisplayInformation/RenderMultilayerSymbols/pin_star_blue.png");
 
   if (QFile::exists(resourcePath))
   {
