@@ -404,7 +404,7 @@ void RenderMultilayerSymbols::addComplexPointGraphic(GraphicsOverlay* overlay)
   // Create an orange envelope with reddish outline
   SolidFillSymbolLayer* orangeFillLayer = new SolidFillSymbolLayer(QColor(255, 165, 0), this); // Orange
   SolidStrokeSymbolLayer* pinkOutline = new SolidStrokeSymbolLayer(2, Qt::blue, this);
-  Envelope orangeSquareGeometry(-0.5, -0.5, 0.5, 0.5, SpatialReference::wgs84());
+  const Envelope orangeSquareGeometry(-0.5, -0.5, 0.5, 0.5, SpatialReference::wgs84());
   VectorMarkerSymbolElement* orangeSquareVectorElement = new VectorMarkerSymbolElement(orangeSquareGeometry, new MultilayerPolygonSymbol(QList<SymbolLayer*>{orangeFillLayer, pinkOutline}, this), this);
   VectorMarkerSymbolLayer* orangeSquareVectorMarkerLayer = new VectorMarkerSymbolLayer(QList<VectorMarkerSymbolElement*>{orangeSquareVectorElement}, this);
   orangeSquareVectorMarkerLayer->setSize(11);
