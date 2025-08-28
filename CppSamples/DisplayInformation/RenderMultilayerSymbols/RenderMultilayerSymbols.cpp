@@ -95,7 +95,7 @@ void RenderMultilayerSymbols::setMapView(MapQuickView *mapView)
   m_mapView->setMap(m_map);
 
   // Set initial view
-  Point centerPoint(65.0, 0.0, SpatialReference::wgs84());
+  const Point centerPoint(65.0, 0.0, SpatialReference::wgs84());
   Viewpoint initalViewPoint(centerPoint);
   m_mapView->setViewpointAsync(initalViewPoint);
 
