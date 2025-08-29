@@ -1,19 +1,3 @@
-// [WriteFile Name=RenderMultilayerSymbols, Category=DisplayInformation]
-// [Legal]
-// Copyright 2025 Esri.
-//
-// Licensed under the Apache License, Version 2.0 (the "License");
-// you may not use this file except in compliance with the License.
-// You may obtain a copy of the License at
-// http://www.apache.org/licenses/LICENSE-2.0
-//
-// Unless required by applicable law or agreed to in writing, software
-// distributed under the License is distributed on an "AS IS" BASIS,
-// WITHOUT WARRANTIES OR CONDITIONS OF ANY KIND, either express or implied.
-// See the License for the specific language governing permissions and
-// limitations under the License.
-// [Legal]
-
 #ifdef PCH_BUILD
 #include "pch.hpp"
 #endif // PCH_BUILD
@@ -63,12 +47,12 @@ using namespace Esri::ArcGISRuntime;
 
 namespace
 {
-  constexpr double symbolOffset = 20.0;
+constexpr double symbolOffset = 20.0;
 }
 
 RenderMultilayerSymbols::RenderMultilayerSymbols(QObject *parent /* = nullptr */)
   : QObject(parent),
-  m_map(new Map(BasemapStyle::ArcGISLightGray, this))
+    m_map(new Map(BasemapStyle::ArcGISLightGray, this))
 {
 }
 
@@ -188,45 +172,61 @@ void RenderMultilayerSymbols::addAllGraphics()
 
 void RenderMultilayerSymbols::addPointGraphicsWithMarkerSymbols(GraphicsOverlay* overlay)
 {
-  MultilayerPointSymbol* markerSymbol = nullptr;
 
-  // Define a vector element, a diamond in this case
-  Geometry vectorElementGeometry = Geometry::fromJson(R"({"rings":[[[0.0,2.5],[2.5,0.0],[0.0,-2.5],[-2.5,0.0],[0.0,2.5]]]})"); // Diamond geometry
-  SolidFillSymbolLayer* vectorElementFill = new SolidFillSymbolLayer(Qt::red, this);
-  MultilayerPolygonSymbol* multiLayerPolygonSymbol = new MultilayerPolygonSymbol(QList<SymbolLayer*>{vectorElementFill}, this);
-  VectorMarkerSymbolElement* vectorMarkerDiamond = new VectorMarkerSymbolElement(vectorElementGeometry, multiLayerPolygonSymbol, this);
-  VectorMarkerSymbolLayer* vectorMarkerSymbol = new VectorMarkerSymbolLayer(QList<VectorMarkerSymbolElement*>{vectorMarkerDiamond}, this);
-  markerSymbol = new MultilayerPointSymbol(QList<SymbolLayer*>{vectorMarkerSymbol}, this);
+  // Create a solid fill symbol layer with red color and create a MultilayerPolygonSymbol.
+  SolidFillSymbolLayer* redFillSymbolLayer = new SolidFillSymbolLayer(Qt::red, this);
+  MultilayerPolygonSymbol* redFillMultilayerPolygonSymbol = new MultilayerPolygonSymbol(QList<SymbolLayer*>{redFillSymbolLayer}, this);
+
+  // Diamond
+  // Define a diamond shape geometry using JSON format. The "rings" array specifies the vertices of the diamond.
+  Geometry diamondGeometry = Geometry::fromJson(R"({"rings":[[[0.0,2.5],[2.5,0.0],[0.0,-2.5],[-2.5,0.0],[0.0,2.5]]]})");
+
+  // Create a vector marker symbol element using the diamond geometry and the red fill symbol and create a layer.
+  VectorMarkerSymbolElement* diamondVectorMarkerElement = new VectorMarkerSymbolElement(diamondGeometry, redFillMultilayerPolygonSymbol, this);
+  VectorMarkerSymbolLayer* diamondVectorMarkerLayer = new VectorMarkerSymbolLayer(QList<VectorMarkerSymbolElement*>{diamondVectorMarkerElement}, this);
+
+  // Create a multilayer point symbol that uses the diamond vector marker layer.
+  MultilayerPointSymbol* diamondSymbol = new MultilayerPointSymbol(QList<SymbolLayer*>{diamondVectorMarkerLayer}, this);
 
   // Create point graphics using the diamond symbol created above
   const Point diamondPoint(-150, 20, SpatialReference::wgs84());
-  Graphic* diamondGraphic = new Graphic(diamondPoint, markerSymbol, this);
+  Graphic* diamondGraphic = new Graphic(diamondPoint, diamondSymbol, this);
   overlay->graphics()->append(diamondGraphic);
 
-  // Define a vector element, a triangle in this case
-  vectorElementGeometry = Geometry::fromJson(R"({"rings":[[[0.0,5.0],[5,-5.0],[-5,-5.0],[0.0,5.0]]]})"); // Triangle geometry
-  vectorElementFill = new SolidFillSymbolLayer(Qt::red, this);
-  multiLayerPolygonSymbol = new MultilayerPolygonSymbol(QList<SymbolLayer*>{vectorElementFill}, this);
-  VectorMarkerSymbolElement* vectorMarkerTriangle = new VectorMarkerSymbolElement(vectorElementGeometry, multiLayerPolygonSymbol, this);
-  vectorMarkerSymbol = new VectorMarkerSymbolLayer(QList<VectorMarkerSymbolElement*>{vectorMarkerTriangle}, this);
-  markerSymbol = new MultilayerPointSymbol(QList<SymbolLayer*>{vectorMarkerSymbol}, this);
+  // Triangle
+  // Define a triangle shape geometry using JSON format. The "rings" array specifies the vertices of the triangle.
+  Geometry triangleGeometry = Geometry::fromJson(R"({"rings":[[[0.0,5.0],[5,-5.0],[-5,-5.0],[0.0,5.0]]]})");
+
+  // Create a vector marker symbol element using the triangle geometry and the multilayer polygon symbol and create a layer.
+  VectorMarkerSymbolElement* triangleVectorMarkerElement = new VectorMarkerSymbolElement(triangleGeometry, redFillMultilayerPolygonSymbol, this);
+  VectorMarkerSymbolLayer* triangleVectorMarkerLayer = new VectorMarkerSymbolLayer(QList<VectorMarkerSymbolElement*>{triangleVectorMarkerElement}, this);
+
+  // Create a multilayer point symbol that uses the triangle vector marker layer.
+  MultilayerPointSymbol* triangleSymbol = new MultilayerPointSymbol(QList<SymbolLayer*>{triangleVectorMarkerLayer}, this);
 
   // Create point graphics using the triangle symbol created above
   const Point trianglePoint(-150, 20 - symbolOffset, SpatialReference::wgs84());
-  Graphic* triangleGraphic = new Graphic(trianglePoint, markerSymbol, this);
+  Graphic* triangleGraphic = new Graphic(trianglePoint, triangleSymbol, this);
   overlay->graphics()->append(triangleGraphic);
 
-  // Define a vector element, a cross in this case
-  vectorElementGeometry = Geometry::fromJson(R"({"paths":[[[-1,1],[0,0],[1,-1]],[[1,1],[0,0],[-1,-1]]]})"); // Cross geometry
-  SolidStrokeSymbolLayer* vectorElementStroke = new SolidStrokeSymbolLayer(1, Qt::red, this);
-  MultilayerPolylineSymbol* multilayerPolylineSymbol = new MultilayerPolylineSymbol(QList<SymbolLayer*>{vectorElementStroke}, this);
-  VectorMarkerSymbolElement* vectorMarkerX = new VectorMarkerSymbolElement(vectorElementGeometry, multilayerPolylineSymbol, this);
-  vectorMarkerSymbol = new VectorMarkerSymbolLayer(QList<VectorMarkerSymbolElement*>{vectorMarkerX}, this);
-  markerSymbol = new MultilayerPointSymbol(QList<SymbolLayer*>{vectorMarkerSymbol}, this);
+  // Cross
+  // Define a cross shape geometry using JSON format. The "paths" array specifies the lines that form the cross.
+  Geometry crossGeometry = Geometry::fromJson(R"({"paths":[[[-1,1],[0,0],[1,-1]],[[1,1],[0,0],[-1,-1]]]})");
+
+  // Create a solid stroke symbol layer with red color and create a MultilayerPolylineSymbol.
+  SolidStrokeSymbolLayer* redStroke = new SolidStrokeSymbolLayer(1, Qt::red, this);
+  MultilayerPolylineSymbol* redStrokeMultilayerPolylineSymbol = new MultilayerPolylineSymbol(QList<SymbolLayer*>{redStroke}, this);
+
+  // Create a vector marker symbol element using the cross geometry and the multilayer polyline symbol and create a layer.
+  VectorMarkerSymbolElement* crossVectorMarkerElement = new VectorMarkerSymbolElement(crossGeometry, redStrokeMultilayerPolylineSymbol, this);
+  VectorMarkerSymbolLayer* crossVectorMarkerLayer = new VectorMarkerSymbolLayer(QList<VectorMarkerSymbolElement*>{crossVectorMarkerElement}, this);
+
+  // Create a multilayer point symbol that uses the cross vector marker layer.
+  MultilayerPointSymbol* crossSymbol = new MultilayerPointSymbol(QList<SymbolLayer*>{crossVectorMarkerLayer}, this);
 
   // Create point graphics using the cross symbol created above
   const Point crossPoint(-150, 20 - 2 * symbolOffset, SpatialReference::wgs84());
-  Graphic* crossGraphic = new Graphic(crossPoint, markerSymbol, this);
+  Graphic* crossGraphic = new Graphic(crossPoint, crossSymbol, this);
   overlay->graphics()->append(crossGraphic);
 }
 
@@ -276,13 +276,14 @@ void RenderMultilayerSymbols::addLineGraphicsWithMarkerSymbols(GraphicsOverlay* 
   MultilayerPolylineSymbol* lineSymbol = nullptr;
   SolidStrokeSymbolLayer* strokeLayer = nullptr;
 
-  strokeLayer = new SolidStrokeSymbolLayer(3, Qt::red, this);
-  strokeLayer->setCapStyle(StrokeSymbolLayerCapStyle::Round);
-
+  // Dash style 1 - ShortDashDotDot
   // Create a polyline for the multilayer polyline symbol
   PolylineBuilder* polylineBuilder = new PolylineBuilder(SpatialReference::wgs84(), this);
   polylineBuilder->addPoint(Point(-30, 20, SpatialReference::wgs84()));
   polylineBuilder->addPoint(Point(30, 20, SpatialReference::wgs84()));
+
+  strokeLayer = new SolidStrokeSymbolLayer(3, Qt::red, this);
+  strokeLayer->setCapStyle(StrokeSymbolLayerCapStyle::Round);
 
   // Dash geometric effects that define the dash and dot template used by different line style
   DashGeometricEffect* dashEffect = new DashGeometricEffect(this);
@@ -298,6 +299,7 @@ void RenderMultilayerSymbols::addLineGraphicsWithMarkerSymbols(GraphicsOverlay* 
   Graphic* shortDashDotGraphic = new Graphic(polylineBuilder->toGeometry(), lineSymbol, this);
   overlay->graphics()->append(shortDashDotGraphic);
 
+  // Dash style 2 - ShortDash
   polylineBuilder = new PolylineBuilder(SpatialReference::wgs84(), this);
   polylineBuilder->addPoint(Point(-30, 20 - symbolOffset, SpatialReference::wgs84()));
   polylineBuilder->addPoint(Point(30, 20 - symbolOffset, SpatialReference::wgs84()));
@@ -317,6 +319,7 @@ void RenderMultilayerSymbols::addLineGraphicsWithMarkerSymbols(GraphicsOverlay* 
   Graphic* shortDashGraphic = new Graphic(polylineBuilder->toGeometry(), lineSymbol, this);
   overlay->graphics()->append(shortDashGraphic);
 
+  // Dash style 3 - DashDot
   polylineBuilder = new PolylineBuilder(SpatialReference::wgs84(), this);
   polylineBuilder->addPoint(Point(-30, 20 - 2 * symbolOffset, SpatialReference::wgs84()));
   polylineBuilder->addPoint(Point(30, 20 - 2 * symbolOffset, SpatialReference::wgs84()));
