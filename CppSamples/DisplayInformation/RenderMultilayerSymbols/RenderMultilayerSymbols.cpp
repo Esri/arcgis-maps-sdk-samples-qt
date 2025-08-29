@@ -405,7 +405,7 @@ void RenderMultilayerSymbols::addPolygonGraphicsWithMarkerSymbols(GraphicsOverla
 void RenderMultilayerSymbols::addComplexPointGraphic(GraphicsOverlay* overlay)
 {
   // Create an orange envelope with reddish outline
-  SolidFillSymbolLayer* orangeFillLayer = new SolidFillSymbolLayer(QColor(255, 165, 0), this); // Orange
+  SolidFillSymbolLayer* orangeFillLayer = new SolidFillSymbolLayer(QColor(255, 165, 0), this);
   SolidStrokeSymbolLayer* pinkOutline = new SolidStrokeSymbolLayer(2, Qt::blue, this);
   const Envelope orangeSquareGeometry(-0.5, -0.5, 0.5, 0.5, SpatialReference::wgs84());
   VectorMarkerSymbolElement* orangeSquareVectorElement = new VectorMarkerSymbolElement(orangeSquareGeometry, new MultilayerPolygonSymbol(QList<SymbolLayer*>{orangeFillLayer, pinkOutline}, this), this);
@@ -415,7 +415,7 @@ void RenderMultilayerSymbols::addComplexPointGraphic(GraphicsOverlay* overlay)
 
   // Create a black envelope
   SolidFillSymbolLayer* blackFillLayer = new SolidFillSymbolLayer(Qt::black, this);
-  SolidStrokeSymbolLayer* orangeOutline = new SolidStrokeSymbolLayer(2, QColor(255, 69, 0), this); // OrangeRed
+  SolidStrokeSymbolLayer* orangeOutline = new SolidStrokeSymbolLayer(2, QColor(255, 69, 0), this);
   const Envelope blackSquareGeometry(-0.5, -0.5, 0.5, 0.5, SpatialReference::wgs84());
   MultilayerPolygonSymbol* blackFillOrangeOutlineSymbol = new MultilayerPolygonSymbol(QList<SymbolLayer*>{blackFillLayer, orangeOutline}, this);
   VectorMarkerSymbolElement* blackSquareVectorElement = new VectorMarkerSymbolElement(blackSquareGeometry, blackFillOrangeOutlineSymbol, this);
@@ -425,7 +425,7 @@ void RenderMultilayerSymbols::addComplexPointGraphic(GraphicsOverlay* overlay)
 
   // Create an envelope with no purple outline
   SolidFillSymbolLayer* transparentFillLayer = new SolidFillSymbolLayer(Qt::transparent, this);
-  SolidStrokeSymbolLayer* purpleOutline = new SolidStrokeSymbolLayer(2, QColor(128, 0, 128), this); // Purple
+  SolidStrokeSymbolLayer* purpleOutline = new SolidStrokeSymbolLayer(2, QColor(128, 0, 128), this);
   const Envelope purpleSquareGeometry(-0.5, -0.5, 0.5, 0.5, SpatialReference::wgs84());
   MultilayerPolygonSymbol* transparentPurpleOutlineSymbol = new MultilayerPolygonSymbol(QList<SymbolLayer*>{transparentFillLayer, purpleOutline}, this);
   VectorMarkerSymbolElement* purpleSquareVectorElement = new VectorMarkerSymbolElement(purpleSquareGeometry, transparentPurpleOutlineSymbol, this);
