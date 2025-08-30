@@ -84,6 +84,7 @@
 #include "../CppSamples/DisplayInformation/Picture_Marker_Symbol/Picture_Marker_Symbol.h"
 #include "../CppSamples/DisplayInformation/QueryFeaturesWithArcadeExpression/QueryFeaturesWithArcadeExpression.h"
 #include "../CppSamples/DisplayInformation/ReadSymbolsFromMobileStyle/ReadSymbolsFromMobileStyle.h"
+#include "../CppSamples/DisplayInformation/RenderMultilayerSymbols/RenderMultilayerSymbols.h"
 #include "../CppSamples/DisplayInformation/ShowCallout/ShowCallout.h"
 #include "../CppSamples/DisplayInformation/ShowGrid/ShowGrid.h"
 #include "../CppSamples/DisplayInformation/ShowLabelsOnLayers/ShowLabelsOnLayers.h"
@@ -536,6 +537,7 @@ void registerCppSampleClasses()
   ReadGeoPackage::init();
   ReadSymbolsFromMobileStyle::init();
   RealisticLightingAndShadows::init();
+  RenderMultilayerSymbols::init();
   ReverseGeocodeOnline::init();
   RouteAroundBarriers::init();
   SceneLayerSelection::init();

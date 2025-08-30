@@ -46,6 +46,7 @@ HEADERS += \
     "$$SAMPLEPATHCPP/DisplayInformation/QueryFeaturesWithArcadeExpression/QueryFeaturesWithArcadeExpression.h" \
     "$$SAMPLEPATHCPP/DisplayInformation/ReadSymbolsFromMobileStyle/ReadSymbolsFromMobileStyle.h" \
     "$$SAMPLEPATHCPP/DisplayInformation/ReadSymbolsFromMobileStyle/SymbolImageProvider.h" \
+    "$$SAMPLEPATHCPP/DisplayInformation/RenderMultilayerSymbols/RenderMultilayerSymbols.h" \
     "$$SAMPLEPATHCPP/DisplayInformation/ShowCallout/ShowCallout.h" \
     "$$SAMPLEPATHCPP/DisplayInformation/ShowGrid/ShowGrid.h" \
     "$$SAMPLEPATHCPP/DisplayInformation/ShowLabelsOnLayers/ShowLabelsOnLayers.h" \
@@ -276,6 +277,7 @@ SOURCES += \
     "$$SAMPLEPATHCPP/DisplayInformation/QueryFeaturesWithArcadeExpression/QueryFeaturesWithArcadeExpression.cpp" \
     "$$SAMPLEPATHCPP/DisplayInformation/ReadSymbolsFromMobileStyle/ReadSymbolsFromMobileStyle.cpp" \
     "$$SAMPLEPATHCPP/DisplayInformation/ReadSymbolsFromMobileStyle/SymbolImageProvider.cpp" \
+    "$$SAMPLEPATHCPP/DisplayInformation/RenderMultilayerSymbols/RenderMultilayerSymbols.cpp" \
     "$$SAMPLEPATHCPP/DisplayInformation/ShowCallout/ShowCallout.cpp" \
     "$$SAMPLEPATHCPP/DisplayInformation/ShowGrid/ShowGrid.cpp" \
     "$$SAMPLEPATHCPP/DisplayInformation/ShowLabelsOnLayers/ShowLabelsOnLayers.cpp" \
@@ -504,6 +506,7 @@ RESOURCES += \
     "$$SAMPLEPATHCPP/DisplayInformation/Picture_Marker_Symbol/Picture_Marker_Symbol.qrc" \
     "$$SAMPLEPATHCPP/DisplayInformation/QueryFeaturesWithArcadeExpression/QueryFeaturesWithArcadeExpression.qrc" \
     "$$SAMPLEPATHCPP/DisplayInformation/ReadSymbolsFromMobileStyle/ReadSymbolsFromMobileStyle.qrc" \
+    "$$SAMPLEPATHCPP/DisplayInformation/RenderMultilayerSymbols/RenderMultilayerSymbols.qrc" \
     "$$SAMPLEPATHCPP/DisplayInformation/ShowCallout/ShowCallout.qrc" \
     "$$SAMPLEPATHCPP/DisplayInformation/ShowGrid/ShowGrid.qrc" \
     "$$SAMPLEPATHCPP/DisplayInformation/ShowLabelsOnLayers/ShowLabelsOnLayers.qrc" \

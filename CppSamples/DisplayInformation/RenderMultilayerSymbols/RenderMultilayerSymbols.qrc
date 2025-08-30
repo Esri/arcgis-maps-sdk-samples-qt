@@ -1,0 +1,12 @@
+<RCC>
+    <qresource prefix="/Samples/DisplayInformation/RenderMultilayerSymbols">
+        <file alias="sample.json">README.metadata.json</file>
+        <file>RenderMultilayerSymbols.qml</file>
+        <file>RenderMultilayerSymbols.h</file>
+        <file>RenderMultilayerSymbols.cpp</file>
+        <file>main.qml</file>
+        <file>screenshot.png</file>
+        <file>pin_star_blue.png</file>
+        <file>README.md</file>
+    </qresource>
+</RCC>
