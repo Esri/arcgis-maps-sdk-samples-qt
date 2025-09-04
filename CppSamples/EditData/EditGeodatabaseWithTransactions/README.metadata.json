@@ -13,11 +13,21 @@
         "screenshot.png"
     ],
     "keywords": [
-        "TODO"
+        "comit",
+        "database",
+        "geodatabase",
+        "geometry editor",
+        "transact",
+        "transactions"
     ],
     "redirect_from": "",
     "relevant_apis": [
-        "TODO"
+        "Geodatabase",
+        "Geodatabase.BeginTransaction",
+        "Geodatabase.CommitTransaction",
+        "Geodatabase.IsInTransaction",
+        "Geodatabase.RollbackTransaction",
+        "GeometryEditor"
     ],
     "snippets": [
         "EditGeodatabaseWithTransactions.cpp",

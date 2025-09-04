@@ -1,5 +1,18 @@
 #ifdef PCH_BUILD
 #include "pch.hpp"
+
+// Licensed under the Apache License, Version 2.0 (the "License");
+// you may not use this file except in compliance with the License.
+// You may obtain a copy of the License at
+// http://www.apache.org/licenses/LICENSE-2.0
+
+// Unless required by applicable law or agreed to in writing, software
+// distributed under the License is distributed on an "AS IS" BASIS,
+// WITHOUT WARRANTIES OR CONDITIONS OF ANY KIND, either express or implied.
+// See the License for the specific language governing permissions and
+// limitations under the License.
+// [Legal]
+
 #endif // PCH_BUILD
 
 // sample headers
@@ -95,6 +108,32 @@ void EditGeodatabaseWithTransactions::setMapView(MapQuickView* mapView)
     m_mapView->setMap(m_map);
 
     emit mapViewChanged();
+
+    connectSignals();
+}
+
+void EditGeodatabaseWithTransactions::connectSignals()
+{
+    connect(m_mapView, &MapQuickView::mouseClicked, this, [this](QMouseEvent& mouseEvent)
+    {
+        if (!m_geodatabase)
+        {
+            return;
+        }
+
+        // Only allow adding features if transaction conditions are met
+        if (m_requireTransaction && !m_geodatabase->isInTransaction())
+        {
+            setMessageText("Start a transaction first.");
+            return;
+        }
+
+        // Get screen coordinates and emit signal to show feature type dialog
+        const double screenX = mouseEvent.position().x();
+        const double screenY = mouseEvent.position().y();
+
+        emit featureTypeSelectionRequested(screenX, screenY);
+    });
 }
 
 void EditGeodatabaseWithTransactions::onGeodatabaseDoneLoading_(const Error& error)
@@ -113,12 +152,16 @@ void EditGeodatabaseWithTransactions::onGeodatabaseDoneLoading_(const Error& err
     m_tablesByName.clear();
     m_availableTableNames.clear();
 
-    m_totalTablesToLoad = m_geodatabase->geodatabaseFeatureTables().size();
-    m_tablesLoadedCount = 0;
+    int totalTablesToLoad = m_geodatabase->geodatabaseFeatureTables().size();
+
+    // Use a shared pointer to track the count across lambda captures
+    auto tablesLoadedCount = std::make_shared<int>(0);
 
     for (GeodatabaseFeatureTable* table : m_geodatabase->geodatabaseFeatureTables())
     {
-        connect(table, &GeodatabaseFeatureTable::doneLoading, this, [this, table](const Error& error)
+        // Capture totalTablesToLoad by value and tablesLoadedCount by reference
+        connect(table, &GeodatabaseFeatureTable::doneLoading, this,
+                [this, table, totalTablesToLoad, tablesLoadedCount](const Error& error)
         {
             if (!error.isEmpty())
             {
@@ -159,10 +202,10 @@ void EditGeodatabaseWithTransactions::onGeodatabaseDoneLoading_(const Error& err
                 m_mapView->map()->operationalLayers()->append(layer);
             }
 
-            m_tablesLoadedCount++;
+            (*tablesLoadedCount)++;
 
             // When all tables are loaded
-            if (m_tablesLoadedCount == m_totalTablesToLoad)
+            if (*tablesLoadedCount == totalTablesToLoad)
             {
                 // Initialize with first table as default selection
                 if (!m_availableTableNames.isEmpty())
@@ -314,24 +357,6 @@ void EditGeodatabaseWithTransactions::cancelTransaction()
 {
     // User canceled - keep transaction active
     setMessageText("Transaction started.");
-}
-
-void EditGeodatabaseWithTransactions::handleMapClick(int x, int y)
-{
-    if (!m_mapView || !m_geodatabase)
-    {
-        return;
-    }
-
-    // Only allow adding features if transaction conditions are met
-    if (m_requireTransaction && !m_geodatabase->isInTransaction())
-    {
-        setMessageText("Start a transaction first.");
-        return;
-    }
-
-    // Emit signal to show the feature type selection dialog
-    emit featureTypeSelectionRequested(x, y);
 }
 
 void EditGeodatabaseWithTransactions::updateFeatureTypesForTable(GeodatabaseFeatureTable* table)

@@ -30,13 +30,6 @@ Item {
             // Set and keep the focus on MapView to enable keyboard navigation
             forceActiveFocus();
         }
-
-        MouseArea{
-            anchors.fill: parent
-            onClicked: function(mouse){
-                gdbModel.handleMapClick(mouse.x, mouse.y);
-            }
-        }
     }
 
     // Status text overlay
@@ -152,8 +145,7 @@ Item {
             ListView {
                 id: tableSelectionList
                 Layout.fillWidth: true
-                Layout.preferredHeight: Math.min(contentHeight, 96) // 3 items max (32px each)
-                //Layout.maximumHeight: 96
+                Layout.preferredHeight: Math.min(contentHeight, 96)
                 clip: true
                 boundsBehavior: Flickable.StopAtBounds
 
@@ -216,15 +208,13 @@ Item {
                 font.bold: true
             }
 
-            // Feature type list - will be populated from geodatabase
+            // Feature type list - populated from geodatabase
             ListView {
                 id: featureTypeList
                 Layout.fillWidth: true
 
                 Layout.fillHeight: true
                 Layout.preferredHeight: 128
-                // Layout.maximumHeight: 256
-                //Layout.maximumHeight: 256
 
                 clip: true
                 boundsBehavior: Flickable.StopAtBounds

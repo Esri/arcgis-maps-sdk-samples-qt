@@ -1,37 +1,45 @@
 # Edit geodatabase with transactions
 
-This sample demonstrates how to use transactions to manage how changes are committed to a geodatabase.
-This sample demonstrates ...
-This is **why** you would do it this way ...
+Use transactions to manage how changes are committed to a geodatabase.
 
 ![](screenshot.png)
 
+## Use case
+
+Transactions allow you to control how changes are added to a database. This is useful to ensure that when multiple changes are made to a database, they all succeed or fail at once. For example, you could have a business rule that both parent/guardian and student must be added to a database used for calculating school bus routes. You can use transactions to avoid breaking the business rule if you lose power while between the steps of adding the student and parent/guardian.
+
 ## How to use the sample
 
-e.g. Use the input controls to define a ... Click the "Go" button to ...
+Tap on the map to add multiple types of features. To apply edits directly, uncheck the "Requires Transaction". When using transactions, use the buttons to start editing and stop editing. When you stop editing, you can choose to commit the changes or roll them back.
 
 ## How it works
 
-e.g. In the `GeoView.Tapped` event, features in the `Map` are selected using an `Envelope` defined by the user's tap location ...
+1. Create a `Geodatabase` using the mobile geodatabase file location.
+2. Display the `Geodatabase.FeatureTables` in feature layers.
+3. If a transaction is required, begin one using `Geodatabase.BeginTransaction()`.
+4. To check if a Geodatabase is in transaction use `Geodatabase.isInTransaction()`.
+4. Add one or more features to the feature table(s).
+5. When ready, either commit the transaction to the geodatabase with `Geodatabase.CommitTransaction()` or roll back the transaction with `Geodatabase.RollbackTransaction()`.
+
 
 ## Relevant API
 
- - ClassName1
- - MethodName
+* Geodatabase
+* Geodatabase.BeginTransaction
+* Geodatabase.CommitTransaction
+* Geodatabase.IsInTransaction
+* Geodatabase.RollbackTransaction
+* GeometryEditor
 
 ## Offline data
 
-Read more about how to set up the sample's offline data [here](http://links.esri.com/ArcGISRuntimeQtSamples).
+This sample downloads the [Save The Bay Geodatabase](https://www.arcgis.com/home/item.html?id=43809fd639f242fd8045ecbafd61a579) item from ArcGIS Online.
 
-Link | Local Location
----------|-------|
-|[San Francisco Streets TPK](https://www.arcgis.com/home/item.html?id=3f1bbf0ec70b409a975f5c91f363fe7d)| `<userhome>`/ArcGIS/Runtime/Data/tpk/SanFrancisco.tpk |
+## About the data
 
-## Additional information
-
-A standard level license is required to ...
+The mobile geodatabase contains a collection schema for wildlife sightings around Christmas Bay, TX, USA. It was created using data from the [Save The Bay Feature Service](https://sampleserver6.arcgisonline.com/arcgis/rest/services/Sync/SaveTheBaySync/FeatureServer).
 
 ## Tags
 
-routing, network analysis, geocode
+commit, database, geodatabase, geometry editor, transact, transactions
 

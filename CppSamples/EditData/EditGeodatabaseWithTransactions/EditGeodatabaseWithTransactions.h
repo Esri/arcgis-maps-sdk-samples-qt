@@ -1,4 +1,16 @@
 
+// Licensed under the Apache License, Version 2.0 (the "License");
+// you may not use this file except in compliance with the License.
+// You may obtain a copy of the License at
+// http://www.apache.org/licenses/LICENSE-2.0
+
+// Unless required by applicable law or agreed to in writing, software
+// distributed under the License is distributed on an "AS IS" BASIS,
+// WITHOUT WARRANTIES OR CONDITIONS OF ANY KIND, either express or implied.
+// See the License for the specific language governing permissions and
+// limitations under the License.
+// [Legal]
+
 #ifndef EDITGEODATABASETRANSACTIONS_H
 #define EDITGEODATABASETRANSACTIONS_H
 
@@ -59,7 +71,6 @@ public slots:
   void cancelTransaction();
   void setRequireTransaction(bool require);
   void setSelectedTableName(const QString& tableName);
-  void handleMapClick(int x, int y);
   void addFeatureAtLocation(const QString& tableName, const QString& featureTypeName, const QPoint& location);
   void updateFeatureTypesForSelectedTable(const QString& tableName);
 
@@ -80,6 +91,7 @@ private:
   Esri::ArcGISRuntime::MapQuickView* mapView() const;
   void setMapView(Esri::ArcGISRuntime::MapQuickView* mapView);
   void onGeodatabaseDoneLoading_(const Esri::ArcGISRuntime::Error& error);
+  void connectSignals();
 
   void setMessageText(const QString& message);
   void setLoadingVisible(bool visible);
@@ -105,10 +117,6 @@ private:
   QStringList m_availableTableNames;
   QString m_selectedTableName;
   QStringList m_currentFeatureTypes;
-
-  // Table loading tracking
-  int m_totalTablesToLoad = 0;
-  int m_tablesLoadedCount = 0;
 
 private slots:
   void gdbTransactionStatusChanged();
