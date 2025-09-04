@@ -53,7 +53,6 @@ HEADERS += \
     "$$SAMPLEPATHCPP/DisplayInformation/ShowPopup/ShowPopup.h" \
     "$$SAMPLEPATHCPP/DisplayInformation/Simple_Marker_Symbol/Simple_Marker_Symbol.h" \
     "$$SAMPLEPATHCPP/DisplayInformation/Simple_Renderer/Simple_Renderer.h" \
-    "$$SAMPLEPATHCPP/DisplayInformation/SketchOnMap/SketchOnMap.h" \
     "$$SAMPLEPATHCPP/DisplayInformation/SymbolizeShapefile/SymbolizeShapefile.h" \
     "$$SAMPLEPATHCPP/DisplayInformation/Unique_Value_Renderer/Unique_Value_Renderer.h" \
     "$$SAMPLEPATHCPP/EditData/AddFeaturesFeatureService/AddFeaturesFeatureService.h" \
@@ -284,7 +283,6 @@ SOURCES += \
     "$$SAMPLEPATHCPP/DisplayInformation/ShowPopup/ShowPopup.cpp" \
     "$$SAMPLEPATHCPP/DisplayInformation/Simple_Marker_Symbol/Simple_Marker_Symbol.cpp" \
     "$$SAMPLEPATHCPP/DisplayInformation/Simple_Renderer/Simple_Renderer.cpp" \
-    "$$SAMPLEPATHCPP/DisplayInformation/SketchOnMap/SketchOnMap.cpp" \
     "$$SAMPLEPATHCPP/DisplayInformation/SymbolizeShapefile/SymbolizeShapefile.cpp" \
     "$$SAMPLEPATHCPP/DisplayInformation/Unique_Value_Renderer/Unique_Value_Renderer.cpp" \
     "$$SAMPLEPATHCPP/EditData/AddFeaturesFeatureService/AddFeaturesFeatureService.cpp" \
@@ -513,7 +511,6 @@ RESOURCES += \
     "$$SAMPLEPATHCPP/DisplayInformation/ShowPopup/ShowPopup.qrc" \
     "$$SAMPLEPATHCPP/DisplayInformation/Simple_Marker_Symbol/Simple_Marker_Symbol.qrc" \
     "$$SAMPLEPATHCPP/DisplayInformation/Simple_Renderer/Simple_Renderer.qrc" \
-    "$$SAMPLEPATHCPP/DisplayInformation/SketchOnMap/SketchOnMap.qrc" \
     "$$SAMPLEPATHCPP/DisplayInformation/SymbolizeShapefile/SymbolizeShapefile.qrc" \
     "$$SAMPLEPATHCPP/DisplayInformation/Unique_Value_Renderer/Unique_Value_Renderer.qrc" \
     "$$SAMPLEPATHCPP/EditData/AddFeaturesFeatureService/AddFeaturesFeatureService.qrc" \
