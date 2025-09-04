@@ -6,7 +6,8 @@
 #include "Error.h"
 
 // Qt headers
-#include <QMouseEvent>
+#include <QList>
+#include <QMap>
 #include <QObject>
 
 namespace Esri::ArcGISRuntime
@@ -29,6 +30,7 @@ class EditGeodatabaseWithTransactions : public QObject
   Q_PROPERTY(bool stopEditingEnabled READ stopEditingEnabled NOTIFY stopEditingEnabledChanged)
   Q_PROPERTY(bool requireTransaction READ requireTransaction WRITE setRequireTransaction NOTIFY requireTransactionChanged)
   Q_PROPERTY(QString messageText READ messageText NOTIFY messageTextChanged)
+  Q_PROPERTY(bool loadingVisible READ loadingVisible NOTIFY loadingVisibleChanged)
   Q_PROPERTY(QStringList availableTableNames READ availableTableNames NOTIFY availableTableNamesChanged)
   Q_PROPERTY(QString selectedTableName READ selectedTableName WRITE setSelectedTableName NOTIFY selectedTableNameChanged)
   Q_PROPERTY(QStringList currentFeatureTypes READ currentFeatureTypes NOTIFY currentFeatureTypesChanged)
@@ -44,16 +46,22 @@ public:
   bool stopEditingEnabled() const{return m_stopEditingEnabled;}
   bool requireTransaction() const{return m_requireTransaction;}
   QString messageText() const{return m_messageText;}
-  QStringList availableTableNames() const;
+  bool loadingVisible() const{return m_loadingVisible;}
+  QStringList availableTableNames() const{return m_availableTableNames;}
   QString selectedTableName() const{return m_selectedTableName;}
   QStringList currentFeatureTypes() const{return m_currentFeatureTypes;}
 
 public slots:
   void beginTransaction();
   void stopTransaction();
+  void commitTransaction();
+  void rollbackTransaction();
+  void cancelTransaction();
   void setRequireTransaction(bool require);
   void setSelectedTableName(const QString& tableName);
   void handleMapClick(int x, int y);
+  void addFeatureAtLocation(const QString& tableName, const QString& featureTypeName, const QPoint& location);
+  void updateFeatureTypesForSelectedTable(const QString& tableName);
 
 signals:
   void mapViewChanged();
@@ -61,19 +69,22 @@ signals:
   void stopEditingEnabledChanged();
   void requireTransactionChanged();
   void messageTextChanged();
+  void loadingVisibleChanged();
   void availableTableNamesChanged();
   void selectedTableNameChanged();
   void currentFeatureTypesChanged();
   void featureTypeSelectionRequested(int x, int y);
+  void commitDialogRequested();
 
 private:
   Esri::ArcGISRuntime::MapQuickView* mapView() const;
   void setMapView(Esri::ArcGISRuntime::MapQuickView* mapView);
-  void onMouseClicked_(QMouseEvent& mouseEvent);
   void onGeodatabaseDoneLoading_(const Esri::ArcGISRuntime::Error& error);
 
   void setMessageText(const QString& message);
+  void setLoadingVisible(bool visible);
   void updateFeatureTypesForTable(Esri::ArcGISRuntime::GeodatabaseFeatureTable* table);
+  void showExtent();
 
   Esri::ArcGISRuntime::Map* m_map = nullptr;
   Esri::ArcGISRuntime::MapQuickView* m_mapView = nullptr;
@@ -81,16 +92,17 @@ private:
   const Esri::ArcGISRuntime::Envelope *m_extent = nullptr;
   Esri::ArcGISRuntime::Geodatabase* m_geodatabase = nullptr;
 
-  // Store a reference to the table to be edited
-  Esri::ArcGISRuntime::GeodatabaseFeatureTable* m_editTable = nullptr;
-
+  // Store references to all available feature tables
   QList<Esri::ArcGISRuntime::GeodatabaseFeatureTable*> m_allFeatureTables;
+  QMap<QString, Esri::ArcGISRuntime::GeodatabaseFeatureTable*> m_tablesByName;
 
   // UI state properties
   bool m_startEditingEnabled = false;
   bool m_stopEditingEnabled = false;
   bool m_requireTransaction = true;
   QString m_messageText;
+  bool m_loadingVisible = true;
+  QStringList m_availableTableNames;
   QString m_selectedTableName;
   QStringList m_currentFeatureTypes;
 

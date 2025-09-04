@@ -47,18 +47,33 @@ Item {
             left: parent.left
             right: parent.right
         }
-        height: statusText.height + 16
+        height: statusText.implicitHeight + (parent.height * 0.02)
         opacity: 0.9
 
         Text {
             id: statusText
             anchors.centerIn: parent
             text: gdbModel.messageText
-            font.pointSize: 12
+            font.pointSize: Math.max(10, parent.height * 0.025)
             wrapMode: Text.WordWrap
-            width: parent.width - 16
+            width: parent.width - (parent.width * 0.05)
             horizontalAlignment: Text.AlignHCenter
         }
+    }
+
+    // Loading progress bar
+    ProgressBar {
+        id: loadingProgressBar
+        anchors {
+            bottom: bottomToolbar.top
+            left: parent.left
+            right: parent.right
+            leftMargin: parent.width * 0.05
+            rightMargin: parent.width * 0.05
+            bottomMargin: parent.height * 0.01
+        }
+        visible: gdbModel.loadingVisible
+        indeterminate: true
     }
 
     // Bottom toolbar
@@ -69,7 +84,8 @@ Item {
             left: parent.left
             right: parent.right
         }
-        height: 60
+        height: Math.max(parent.height * 0.08, 50)
+        border.color: "gray"
         border.width: 1
 
         RowLayout {
@@ -88,7 +104,7 @@ Item {
                 enabled: gdbModel.requireTransaction
                 onClicked: {
                     if (gdbModel.stopEditingEnabled) {
-                        gdbModel.stopEditTransaction()
+                        gdbModel.stopTransaction()
                     } else {
                         gdbModel.beginTransaction()
                     }
@@ -117,14 +133,15 @@ Item {
         id: featureTypeDialog
         title: "New Feature"
         anchors.centerIn: parent
-        width: Math.min(400, parent.width * 0.8)
-        height: Math.min(400, parent.height * 0.6)
+        width: Math.min(500, parent.width * 0.9)
+        height: Math.min(600, parent.height * 0.8)
 
         property point tapLocation: Qt.point(0, 0)
 
         ColumnLayout {
             anchors.fill: parent
-            spacing: 10
+            anchors.margins: 15
+            spacing: 12
 
             Label {
                 text: "Feature Table"
@@ -135,18 +152,25 @@ Item {
             ListView {
                 id: tableSelectionList
                 Layout.fillWidth: true
-                Layout.preferredHeight: Math.min(contentHeight, 100)
+                Layout.preferredHeight: Math.min(contentHeight, 96) // 3 items max (32px each)
+                //Layout.maximumHeight: 96
+                clip: true
+                boundsBehavior: Flickable.StopAtBounds
 
                 model: gdbModel.availableTableNames
 
+                ScrollBar.vertical: ScrollBar {
+                    policy: ScrollBar.AsNeeded
+                }
+
                 delegate: ItemDelegate {
                     width: tableSelectionList.width
-                    height: 40
+                    implicitHeight: 32
 
                     Rectangle {
                         anchors.fill: parent
-                        color: gdbModel.selectedTableName === modelData ? "#0078d4" : "transparent"
-                        border.color: "#d0d0d0"
+                        color: gdbModel.selectedTableName === modelData ? "#7938b6" : "transparent"
+                        border.color: "gray"
                         border.width: 1
 
                         Text {
@@ -158,12 +182,9 @@ Item {
 
                     onClicked: {
                         gdbModel.selectedTableName = modelData
-                        console.log(gdbModel.hasOwnProperty("selectedTableName"))
-                        console.log("Selected table:", gdbModel.selectedTableName)
                     }
                 }
 
-                // Update selection when gdbModel or selectedTableName changes
                 Component.onCompleted: {
                     if (gdbModel.selectedTableName && gdbModel) {
                         for (let i = 0; i < model.length; i++) {
@@ -199,20 +220,31 @@ Item {
             ListView {
                 id: featureTypeList
                 Layout.fillWidth: true
+
                 Layout.fillHeight: true
+                Layout.preferredHeight: 128
+                // Layout.maximumHeight: 256
+                //Layout.maximumHeight: 256
+
+                clip: true
+                boundsBehavior: Flickable.StopAtBounds
 
                 property string selectedFeatureType: ""
 
                 model: gdbModel.currentFeatureTypes
 
+                ScrollBar.vertical: ScrollBar {
+                    policy: ScrollBar.AsNeeded
+                }
+
                 delegate: ItemDelegate {
                     width: featureTypeList.width
-                    height: 40
+                    implicitHeight: 32
 
                     Rectangle {
                         anchors.fill: parent
-                        color: featureTypeList.currentIndex === index ? "#0078d4" : "transparent"
-                        border.color: "#d0d0d0"
+                        color: featureTypeList.currentIndex === index ? "#7938b6" : "transparent"
+                        border.color: "gray"
                         border.width: 1
 
                         Text {
@@ -225,16 +257,20 @@ Item {
                     onClicked: {
                         featureTypeList.selectedFeatureType = modelData
                         featureTypeList.currentIndex = index
-                        console.log("Selected feature type:", modelData)
                     }
                 }
 
-                // Initialize selection with first item
                 onModelChanged: {
-                    if (gdbModel && gdbModel.length > 0) {
+                    if (model && model.length > 0) {
                         currentIndex = 0
-                        selectedFeatureType = gdbModel[0]
-                        console.log("Initialized with feature type:", selectedFeatureType)
+                        selectedFeatureType = model[0]
+                    }
+                }
+
+                Component.onCompleted: {
+                    if (model && model.length > 0) {
+                        currentIndex = 0
+                        selectedFeatureType = model[0]
                     }
                 }
             }
@@ -247,7 +283,6 @@ Item {
                 DialogButtonBox.buttonRole: DialogButtonBox.AcceptRole
                 onClicked: {
                     var tableName = gdbModel.selectedTableName
-                    console.log("Adding feature:", tableName, featureTypeList.selectedFeatureType, "at", featureTypeDialog.tapLocation)
                     gdbModel.addFeatureAtLocation(tableName, featureTypeList.selectedFeatureType, featureTypeDialog.tapLocation)
                     featureTypeDialog.accept()
                 }
@@ -264,13 +299,11 @@ Item {
         id: commitDialog
         title: "Commit Edits"
         anchors.centerIn: parent
-        width: Math.min(400, parent.width * 0.8)
-        height: Math.min(200, parent.height * 0.4)
+        width: Math.min(400, parent.width * 0.9)
         modal: true
 
         contentItem: Column {
-            spacing: 20
-            padding: 20
+            spacing: 10
 
             Label {
                 text: "Commit the edits in the transaction to the geodatabase or rollback to discard them."
@@ -316,19 +349,25 @@ Item {
         id: gdbModel
         mapView: view
 
-        // onCommitDialogRequested: {
-        //     commitDialog.open()
-        // }
+        onCommitDialogRequested: {
+            commitDialog.open()
+        }
 
         onFeatureTypeSelectionRequested: function(x, y)
         {
-            console.log("Feature type selection requested at:", x, y)
             featureTypeDialog.tapLocation = Qt.point(x, y)
-            // Initialize with currently selected table and update feature types
             if (gdbModel.selectedTableName)
             {
                 gdbModel.updateFeatureTypesForSelectedTable(gdbModel.selectedTableName)
             }
+
+            Qt.callLater(function() {
+                if (featureTypeList.model && featureTypeList.model.length > 0) {
+                    featureTypeList.currentIndex = 0
+                    featureTypeList.selectedFeatureType = featureTypeList.model[0]
+                }
+            })
+
             featureTypeDialog.open()
         }
     }
