@@ -190,7 +190,7 @@ void EditGeodatabaseWithTransactions::onGeodatabaseDoneLoading_(const Error &err
   m_tablesByName.clear();
   m_availableTableNames.clear();
 
-  int totalTablesToLoad = m_geodatabase->geodatabaseFeatureTables().size();
+  const int totalTablesToLoad = m_geodatabase->geodatabaseFeatureTables().size();
 
   // Use a shared pointer to track the count across lambda captures
   auto tablesLoadedCount = std::make_shared<int>(0);
