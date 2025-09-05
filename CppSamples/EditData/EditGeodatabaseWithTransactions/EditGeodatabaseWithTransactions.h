@@ -27,11 +27,11 @@
 
 namespace Esri::ArcGISRuntime
 {
-class Error;
-class Geodatabase;
-class GeodatabaseFeatureTable;
-class Map;
-class MapQuickView;
+  class Error;
+  class Geodatabase;
+  class GeodatabaseFeatureTable;
+  class Map;
+  class MapQuickView;
 } // namespace Esri::ArcGISRuntime
 
 Q_MOC_INCLUDE("MapQuickView.h");
@@ -40,7 +40,7 @@ class EditGeodatabaseWithTransactions : public QObject
 {
   Q_OBJECT
 
-  Q_PROPERTY(Esri::ArcGISRuntime::MapQuickView *mapView READ mapView WRITE setMapView NOTIFY mapViewChanged)
+  Q_PROPERTY(Esri::ArcGISRuntime::MapQuickView* mapView READ mapView WRITE setMapView NOTIFY mapViewChanged)
   Q_PROPERTY(bool stopEditingEnabled READ stopEditingEnabled NOTIFY stopEditingEnabledChanged)
   Q_PROPERTY(bool requireTransaction READ requireTransaction WRITE setRequireTransaction NOTIFY requireTransactionChanged)
   Q_PROPERTY(QString messageText READ messageText NOTIFY messageTextChanged)
@@ -50,7 +50,7 @@ class EditGeodatabaseWithTransactions : public QObject
   Q_PROPERTY(QStringList currentFeatureTypes READ currentFeatureTypes NOTIFY currentFeatureTypesChanged)
 
 public:
-  explicit EditGeodatabaseWithTransactions(QObject *parent = nullptr);
+  explicit EditGeodatabaseWithTransactions(QObject* parent = nullptr);
   ~EditGeodatabaseWithTransactions() override;
 
   static void init();
@@ -71,9 +71,9 @@ public slots:
   void rollbackTransaction();
   void cancelTransactionCommit();
   void setRequireTransaction(bool require);
-  void setSelectedTableName(const QString &tableName);
-  void addFeatureAtLocation(const QString &tableName, const QString &featureTypeName, const QPoint &location);
-  void updateFeatureTypesForSelectedTable(const QString &tableName);
+  void setSelectedTableName(const QString& tableName);
+  void addFeatureAtLocation(const QString& tableName, const QString& featureTypeName, const QPoint& location);
+  void updateFeatureTypesForSelectedTable(const QString& tableName);
 
 signals:
   void mapViewChanged();
@@ -88,8 +88,8 @@ signals:
   void commitDialogRequested();
 
 private:
-  Esri::ArcGISRuntime::MapQuickView *mapView() const;
-  void setMapView(Esri::ArcGISRuntime::MapQuickView *mapView);
+  Esri::ArcGISRuntime::MapQuickView* mapView() const;
+  void setMapView(Esri::ArcGISRuntime::MapQuickView* mapView);
   void setMessageText(const QString& message);
 
   void onGeodatabaseDoneLoading_(const Esri::ArcGISRuntime::Error& error);
@@ -101,14 +101,14 @@ private:
   void drawExtent_();
 
   Esri::ArcGISRuntime::Map* m_map = nullptr;
-  Esri::ArcGISRuntime::MapQuickView *m_mapView = nullptr;
+  Esri::ArcGISRuntime::MapQuickView* m_mapView = nullptr;
 
   Esri::ArcGISRuntime::Envelope m_extent;
-  Esri::ArcGISRuntime::Geodatabase *m_geodatabase = nullptr;
+  Esri::ArcGISRuntime::Geodatabase* m_geodatabase = nullptr;
 
   // Store references to all available feature tables
-  QList<Esri::ArcGISRuntime::GeodatabaseFeatureTable *> m_allFeatureTables;
-  QMap<QString, Esri::ArcGISRuntime::GeodatabaseFeatureTable *> m_tablesByName;
+  QList<Esri::ArcGISRuntime::GeodatabaseFeatureTable*> m_allFeatureTables;
+  QMap<QString, Esri::ArcGISRuntime::GeodatabaseFeatureTable*> m_tablesByName;
 
   // UI state properties
   bool m_stopEditingEnabled = false;
