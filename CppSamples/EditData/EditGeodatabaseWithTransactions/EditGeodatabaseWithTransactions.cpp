@@ -195,7 +195,7 @@ void EditGeodatabaseWithTransactions::onGeodatabaseDoneLoading_(const Error &err
   // Use a shared pointer to track the count across lambda captures
   auto tablesLoadedCount = std::make_shared<int>(0);
 
-  for (GeodatabaseFeatureTable *table : m_geodatabase->geodatabaseFeatureTables())
+  for (GeodatabaseFeatureTable* table : m_geodatabase->geodatabaseFeatureTables())
   {
     // Capture totalTablesToLoad by value and tablesLoadedCount by reference
     connect(table, &GeodatabaseFeatureTable::doneLoading, this, [this, table, totalTablesToLoad, tablesLoadedCount](const Error &error)
