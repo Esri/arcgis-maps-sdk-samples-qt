@@ -15,20 +15,20 @@ Tap on the map to add multiple types of features. To apply edits directly, unche
 ## How it works
 
 1. Create a `Geodatabase` using the mobile geodatabase file location.
-2. Display the `Geodatabase.FeatureTables` in feature layers.
-3. If a transaction is required, begin one using `Geodatabase.BeginTransaction()`.
-4. To check if a Geodatabase is in transaction use `Geodatabase.isInTransaction()`.
+2. Display the `GeodatabaseFeatureTable` in feature layers.
+3. If a transaction is required, begin one using `Geodatabase::beginTransaction()`.
+4. To check if a Geodatabase is in transaction use `Geodatabase::isInTransaction()`.
 4. Add one or more features to the feature table(s).
-5. When ready, either commit the transaction to the geodatabase with `Geodatabase.CommitTransaction()` or roll back the transaction with `Geodatabase.RollbackTransaction()`.
+5. When ready, either commit the transaction to the geodatabase with `Geodatabase::commitTransaction()` or roll back the transaction with `Geodatabase::rollbackTransaction()`.
 
 
 ## Relevant API
 
 * Geodatabase
-* Geodatabase.BeginTransaction
-* Geodatabase.CommitTransaction
-* Geodatabase.IsInTransaction
-* Geodatabase.RollbackTransaction
+* Geodatabase::beginTransaction
+* Geodatabase::commitTransaction
+* Geodatabase::isInTransaction
+* Geodatabase::rollbackTransaction
 * GeometryEditor
 
 ## Offline data

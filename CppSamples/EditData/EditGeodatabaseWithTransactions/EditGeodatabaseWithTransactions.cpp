@@ -22,7 +22,7 @@
 #include "EditGeodatabaseWithTransactions.h"
 
 // ArcGIS Maps SDK headers
-#include "Error.h"
+#include "ErrorException.h"
 #include "Feature.h"
 #include "FeatureLayer.h"
 #include "FeatureTemplate.h"
@@ -46,6 +46,7 @@
 #include "Viewpoint.h"
 
 // Qt headers
+#include <QException>
 #include <QFuture>
 #include <QFutureWatcher>
 #include <QStandardPaths>
@@ -197,7 +198,6 @@ void EditGeodatabaseWithTransactions::onGeodatabaseDoneLoading_(const Error& err
 
   for (GeodatabaseFeatureTable* table : m_geodatabase->geodatabaseFeatureTables())
   {
-    // Capture totalTablesToLoad by value and tablesLoadedCount by reference
     connect(table, &GeodatabaseFeatureTable::doneLoading, this, [this, table, totalTablesToLoad, tablesLoadedCount](const Error& error)
     {
       if (!error.isEmpty())
@@ -507,10 +507,10 @@ void EditGeodatabaseWithTransactions::addFeatureAtLocation(const QString& tableN
     setMessageText("Added feature.");
   })
     .onFailed(this,
-              [this](const Error& error)
+              [this](const ErrorException& exception)
   {
-    setMessageText("Error adding feature.");
-    qDebug() << "Add feature failed:" << error.message();
+    QString errorMsg = QString("Error adding feature: %1").arg(exception.error().message());
+    setMessageText(errorMsg);
   })
     .onCanceled(this, [this]()
   {

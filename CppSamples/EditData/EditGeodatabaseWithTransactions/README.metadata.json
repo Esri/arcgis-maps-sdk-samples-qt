@@ -23,10 +23,10 @@
     "redirect_from": "",
     "relevant_apis": [
         "Geodatabase",
-        "Geodatabase.BeginTransaction",
-        "Geodatabase.CommitTransaction",
-        "Geodatabase.IsInTransaction",
-        "Geodatabase.RollbackTransaction",
+        "Geodatabase::beginTransaction",
+        "Geodatabase::commitTransaction",
+        "Geodatabase::isInTransaction",
+        "Geodatabase::rollbackTransaction",
         "GeometryEditor"
     ],
     "snippets": [

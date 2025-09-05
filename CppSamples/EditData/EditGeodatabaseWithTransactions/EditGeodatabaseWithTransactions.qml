@@ -43,14 +43,14 @@ Item {
         height: statusText.implicitHeight + (parent.height * 0.02)
         opacity: 0.9
 
-        Text {
+        Label {
             id: statusText
             anchors.centerIn: parent
             text: gdbModel.messageText
             font.pointSize: Math.max(10, parent.height * 0.025)
             wrapMode: Text.WordWrap
             width: parent.width - (parent.width * 0.05)
-            horizontalAlignment: Text.AlignHCenter
+            horizontalAlignment: Label.AlignHCenter
         }
     }
 
@@ -93,7 +93,7 @@ Item {
             // Start/Stop Transaction button
             Button {
                 id: transactionButton
-                text: gdbModel.stopEditingEnabled ? "End Transaction" : "Start Transaction"
+                text: gdbModel.stopEditingEnabled ? qsTr("End Transaction") : qsTr("Start Transaction")
                 enabled: gdbModel.requireTransaction
                 onClicked: {
                     if (gdbModel.stopEditingEnabled) {
@@ -111,7 +111,7 @@ Item {
             // Require Transaction toggle
             CheckBox {
                 id: requireTransactionCheckBox
-                text: "Requires Transaction"
+                text: qsTr("Requires Transaction")
                 checked: true
                 enabled: !gdbModel.stopEditingEnabled
                 onCheckedChanged: {
@@ -124,7 +124,7 @@ Item {
     // Feature type selection dialog
     Dialog {
         id: featureTypeDialog
-        title: "New Feature"
+        title: qsTr("New Feature")
         anchors.centerIn: parent
         width: Math.min(500, parent.width * 0.9)
         height: Math.min(600, parent.height * 0.8)
@@ -137,11 +137,10 @@ Item {
             spacing: 12
 
             Label {
-                text: "Feature Table"
+                text: qsTr("Feature Table")
                 font.bold: true
             }
 
-            // Dynamic feature table selection
             ListView {
                 id: tableSelectionList
                 Layout.fillWidth: true
@@ -165,7 +164,7 @@ Item {
                         border.color: "gray"
                         border.width: 1
 
-                        Text {
+                        Label {
                             anchors.centerIn: parent
                             text: modelData
                             color: gdbModel.selectedTableName === modelData ? "white" : "black"
@@ -174,17 +173,6 @@ Item {
 
                     onClicked: {
                         gdbModel.selectedTableName = modelData
-                    }
-                }
-
-                Component.onCompleted: {
-                    if (gdbModel.selectedTableName && gdbModel) {
-                        for (let i = 0; i < model.length; i++) {
-                            if (model[i] === gdbModel.selectedTableName) {
-                                currentIndex = i
-                                break
-                            }
-                        }
                     }
                 }
 
@@ -204,7 +192,7 @@ Item {
             }
 
             Label {
-                text: "Feature Type"
+                text: qsTr("Feature Type")
                 font.bold: true
             }
 
@@ -237,7 +225,7 @@ Item {
                         border.color: "gray"
                         border.width: 1
 
-                        Text {
+                        Label {
                             anchors.centerIn: parent
                             text: modelData
                             color: featureTypeList.currentIndex === index ? "white" : "black"
@@ -268,7 +256,7 @@ Item {
 
         footer: DialogButtonBox {
             Button {
-                text: "Done"
+                text: qsTr("Done")
                 enabled: featureTypeList.selectedFeatureType !== ""
                 DialogButtonBox.buttonRole: DialogButtonBox.AcceptRole
                 onClicked: {
@@ -278,7 +266,7 @@ Item {
                 }
             }
             Button {
-                text: "Cancel"
+                text: qsTr("Cancel")
                 DialogButtonBox.buttonRole: DialogButtonBox.RejectRole
                 onClicked: featureTypeDialog.reject()
             }
@@ -287,7 +275,7 @@ Item {
 
     Dialog {
         id: commitDialog
-        title: "Commit Edits"
+        title: qsTr("Commit Edits")
         anchors.centerIn: parent
         width: Math.min(400, parent.width * 0.9)
         modal: true
@@ -296,15 +284,15 @@ Item {
             spacing: 10
 
             Label {
-                text: "Commit the edits in the transaction to the geodatabase or rollback to discard them."
+                text: qsTr("Commit the edits in the transaction to the geodatabase or rollback to discard them.")
                 width: parent.width - 40
-                wrapMode: Text.WordWrap
+                wrapMode: Label.WordWrap
             }
         }
 
         footer: DialogButtonBox {
             Button {
-                text: "Commit"
+                text: qsTr("Commit")
                 DialogButtonBox.buttonRole: DialogButtonBox.AcceptRole
                 onClicked: {
                     commitDialog.close()
@@ -313,7 +301,7 @@ Item {
             }
 
             Button {
-                text: "Rollback"
+                text: qsTr("Rollback")
                 DialogButtonBox.buttonRole: DialogButtonBox.DestructiveRole
                 onClicked: {
                     commitDialog.close()
@@ -322,7 +310,7 @@ Item {
             }
 
             Button {
-                text: "Cancel"
+                text: qsTr("Cancel")
                 DialogButtonBox.buttonRole: DialogButtonBox.RejectRole
                 onClicked: {
                     commitDialog.close()
