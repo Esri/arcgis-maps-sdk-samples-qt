@@ -344,17 +344,9 @@ Item {
         onFeatureTypeSelectionRequested: function(x, y)
         {
             featureTypeDialog.tapLocation = Qt.point(x, y)
-            if (gdbModel.selectedTableName)
-            {
+            if (gdbModel.selectedTableName){
                 gdbModel.updateFeatureTypesForSelectedTable(gdbModel.selectedTableName)
             }
-
-            Qt.callLater(function() {
-                if (featureTypeList.model && featureTypeList.model.length > 0) {
-                    featureTypeList.currentIndex = 0
-                    featureTypeList.selectedFeatureType = featureTypeList.model[0]
-                }
-            })
 
             featureTypeDialog.open()
         }
