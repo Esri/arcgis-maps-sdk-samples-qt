@@ -69,7 +69,7 @@ public slots:
   void stopTransaction();
   void commitTransaction();
   void rollbackTransaction();
-  void cancelTransaction();
+  void cancelTransactionCommit();
   void setRequireTransaction(bool require);
   void setSelectedTableName(const QString &tableName);
   void addFeatureAtLocation(const QString &tableName, const QString &featureTypeName, const QPoint &location);
@@ -90,17 +90,17 @@ signals:
 private:
   Esri::ArcGISRuntime::MapQuickView *mapView() const;
   void setMapView(Esri::ArcGISRuntime::MapQuickView *mapView);
-  void onGeodatabaseDoneLoading_(const Esri::ArcGISRuntime::Error &error);
-  void connectSignals();
+  void setMessageText(const QString& message);
 
-  void setMessageText(const QString &message);
-  void setLoadingVisible(bool visible);
-  void updateFeatureTypesForTable(Esri::ArcGISRuntime::GeodatabaseFeatureTable *table);
-  void showExtent();
-
+  void onGeodatabaseDoneLoading_(const Esri::ArcGISRuntime::Error& error);
   void gdbTransactionStatusChanged_();
+  void onAllTablesLoaded_();
+  void connectSignals_();
+  void setLoadingVisible_(bool visible);
+  void updateFeatureTypesForTable_(Esri::ArcGISRuntime::GeodatabaseFeatureTable* table);
+  void drawExtent_();
 
-  Esri::ArcGISRuntime::Map *m_map = nullptr;
+  Esri::ArcGISRuntime::Map* m_map = nullptr;
   Esri::ArcGISRuntime::MapQuickView *m_mapView = nullptr;
 
   Esri::ArcGISRuntime::Envelope m_extent;

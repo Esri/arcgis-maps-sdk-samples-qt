@@ -56,23 +56,23 @@ using namespace Esri::ArcGISRuntime;
 // helper method to get cross platform data path
 namespace
 {
-QString defaultDataPath()
-{
-  QString dataPath;
+  QString defaultDataPath()
+  {
+    QString dataPath;
 
 #ifdef Q_OS_IOS
-  dataPath = QStandardPaths::writableLocation(QStandardPaths::DocumentsLocation);
+    dataPath = QStandardPaths::writableLocation(QStandardPaths::DocumentsLocation);
 #else
-  dataPath = QStandardPaths::writableLocation(QStandardPaths::HomeLocation);
+    dataPath = QStandardPaths::writableLocation(QStandardPaths::HomeLocation);
 #endif
 
-  return dataPath;
-}
+    return dataPath;
+  }
 } // namespace
 
-EditGeodatabaseWithTransactions::EditGeodatabaseWithTransactions(QObject *parent /* = nullptr */)
-  : QObject(parent)
-  , m_map(new Map(BasemapStyle::ArcGISTopographic, this))
+EditGeodatabaseWithTransactions::EditGeodatabaseWithTransactions(QObject* parent /* = nullptr */) :
+  QObject(parent),
+  m_map(new Map(BasemapStyle::ArcGISTopographic, this))
 {
   m_extent = Envelope(-95.3035, 29.0100, -95.1053, 29.1298, SpatialReference::wgs84());
   m_map->setInitialViewpoint(Viewpoint(m_extent));
@@ -94,7 +94,7 @@ void EditGeodatabaseWithTransactions::init()
   qmlRegisterType<EditGeodatabaseWithTransactions>("Esri.Samples", 1, 0, "EditGeodatabaseWithTransactionsSample");
 }
 
-MapQuickView *EditGeodatabaseWithTransactions::mapView() const
+MapQuickView* EditGeodatabaseWithTransactions::mapView() const
 {
   return m_mapView;
 }
@@ -135,7 +135,7 @@ QStringList EditGeodatabaseWithTransactions::currentFeatureTypes() const
 }
 
 // Set the view (created in QML)
-void EditGeodatabaseWithTransactions::setMapView(MapQuickView *mapView)
+void EditGeodatabaseWithTransactions::setMapView(MapQuickView* mapView)
 {
   if (!mapView || mapView == m_mapView)
   {
@@ -147,12 +147,12 @@ void EditGeodatabaseWithTransactions::setMapView(MapQuickView *mapView)
 
   emit mapViewChanged();
 
-  connectSignals();
+  connectSignals_();
 }
 
-void EditGeodatabaseWithTransactions::connectSignals()
+void EditGeodatabaseWithTransactions::connectSignals_()
 {
-  connect(m_mapView, &MapQuickView::mouseClicked, this, [this](QMouseEvent &mouseEvent)
+  connect(m_mapView, &MapQuickView::mouseClicked, this, [this](QMouseEvent& mouseEvent)
   {
     if (!m_geodatabase)
     {
@@ -174,16 +174,16 @@ void EditGeodatabaseWithTransactions::connectSignals()
   });
 }
 
-void EditGeodatabaseWithTransactions::onGeodatabaseDoneLoading_(const Error &error)
+void EditGeodatabaseWithTransactions::onGeodatabaseDoneLoading_(const Error& error)
 {
   if (!error.isEmpty())
   {
     setMessageText(error.message());
-    setLoadingVisible(false);
+    setLoadingVisible_(false);
     return;
   }
 
-  setLoadingVisible(false);
+  setLoadingVisible_(false);
   setMessageText("Using local geodatabase.");
 
   m_allFeatureTables.clear();
@@ -198,7 +198,7 @@ void EditGeodatabaseWithTransactions::onGeodatabaseDoneLoading_(const Error &err
   for (GeodatabaseFeatureTable* table : m_geodatabase->geodatabaseFeatureTables())
   {
     // Capture totalTablesToLoad by value and tablesLoadedCount by reference
-    connect(table, &GeodatabaseFeatureTable::doneLoading, this, [this, table, totalTablesToLoad, tablesLoadedCount](const Error &error)
+    connect(table, &GeodatabaseFeatureTable::doneLoading, this, [this, table, totalTablesToLoad, tablesLoadedCount](const Error& error)
     {
       if (!error.isEmpty())
       {
@@ -232,7 +232,7 @@ void EditGeodatabaseWithTransactions::onGeodatabaseDoneLoading_(const Error &err
       // Create feature layer for the map
       if (m_mapView && m_mapView->map())
       {
-        FeatureLayer *layer = new FeatureLayer(table, this);
+        FeatureLayer* layer = new FeatureLayer(table, this);
         layer->setMinScale(0);
         layer->setMaxScale(0);
         layer->setVisible(true);
@@ -244,34 +244,39 @@ void EditGeodatabaseWithTransactions::onGeodatabaseDoneLoading_(const Error &err
       // When all tables are loaded
       if (*tablesLoadedCount == totalTablesToLoad)
       {
-        // Initialize with first table as default selection
-        if (!m_availableTableNames.isEmpty())
-        {
-          m_selectedTableName = m_availableTableNames.first();
-          updateFeatureTypesForTable(m_tablesByName[m_selectedTableName]);
-          emit selectedTableNameChanged();
-        }
-
-        emit availableTableNamesChanged();
-
-        // Connect transaction status monitoring
-        connect(m_geodatabase, &Geodatabase::transactionStatusChanged, this, &EditGeodatabaseWithTransactions::gdbTransactionStatusChanged_);
-
-        // Show the extent graphic
-        showExtent();
-
-        // Set the map viewpoint to show the geodatabase extent
-        if (m_mapView)
-        {
-          m_mapView->setViewpointAsync(Viewpoint(m_extent));
-        }
-
-        setMessageText("Tap Start to begin a transaction.");
+        onAllTablesLoaded_();
       }
     });
 
     table->load();
   }
+}
+
+void EditGeodatabaseWithTransactions::onAllTablesLoaded_()
+{
+  // Initialize with first table as default selection
+  if (!m_availableTableNames.isEmpty())
+  {
+    m_selectedTableName = m_availableTableNames.first();
+    updateFeatureTypesForTable_(m_tablesByName[m_selectedTableName]);
+    emit selectedTableNameChanged();
+  }
+
+  emit availableTableNamesChanged();
+
+  // Connect transaction status monitoring
+  connect(m_geodatabase, &Geodatabase::transactionStatusChanged, this, &EditGeodatabaseWithTransactions::gdbTransactionStatusChanged_);
+
+  // Show the extent graphic
+  drawExtent_();
+
+  // Set the map viewpoint to show the geodatabase extent
+  if (m_mapView)
+  {
+    m_mapView->setViewpointAsync(Viewpoint(m_extent));
+  }
+
+  setMessageText("Tap Start to begin a transaction.");
 }
 
 void EditGeodatabaseWithTransactions::gdbTransactionStatusChanged_()
@@ -342,7 +347,7 @@ void EditGeodatabaseWithTransactions::beginTransaction()
     return;
   }
 
-  // Begin transaction for the geodatabase if its not in transaction
+  // Begin transaction for the geodatabase if it's not in transaction
   if (!m_geodatabase->isInTransaction())
   {
     m_geodatabase->beginTransaction();
@@ -384,13 +389,13 @@ void EditGeodatabaseWithTransactions::rollbackTransaction()
   setMessageText("Edits discarded.");
 }
 
-void EditGeodatabaseWithTransactions::cancelTransaction()
+void EditGeodatabaseWithTransactions::cancelTransactionCommit()
 {
-  // User canceled - keep transaction active
+  // User canceled - indicate that the transaction is active
   setMessageText("Transaction started.");
 }
 
-void EditGeodatabaseWithTransactions::updateFeatureTypesForTable(GeodatabaseFeatureTable *table)
+void EditGeodatabaseWithTransactions::updateFeatureTypesForTable_(GeodatabaseFeatureTable* table)
 {
   if (!table)
   {
@@ -400,7 +405,9 @@ void EditGeodatabaseWithTransactions::updateFeatureTypesForTable(GeodatabaseFeat
   m_currentFeatureTypes.clear();
 
   QStringList featureTypeNames;
-  for (const FeatureType &featureType : table->featureTypes())
+  featureTypeNames.reserve(table->featureTypes().size());
+
+  for (const FeatureType& featureType : table->featureTypes())
   {
     featureTypeNames.append(featureType.name());
   }
@@ -411,7 +418,7 @@ void EditGeodatabaseWithTransactions::updateFeatureTypesForTable(GeodatabaseFeat
   emit currentFeatureTypesChanged();
 }
 
-void EditGeodatabaseWithTransactions::setSelectedTableName(const QString &tableName)
+void EditGeodatabaseWithTransactions::setSelectedTableName(const QString& tableName)
 {
   if (m_selectedTableName != tableName)
   {
@@ -419,24 +426,22 @@ void EditGeodatabaseWithTransactions::setSelectedTableName(const QString &tableN
     emit selectedTableNameChanged();
 
     // Update feature types for the newly selected table
-    GeodatabaseFeatureTable *table = m_tablesByName.value(tableName, nullptr);
+    GeodatabaseFeatureTable* table = m_tablesByName.value(tableName, nullptr);
     if (table)
     {
-      updateFeatureTypesForTable(table);
+      updateFeatureTypesForTable_(table);
     }
   }
 }
 
-void EditGeodatabaseWithTransactions::addFeatureAtLocation(const QString &tableName, const QString &featureTypeName, const QPoint &location)
+void EditGeodatabaseWithTransactions::addFeatureAtLocation(const QString& tableName, const QString& featureTypeName, const QPoint& location)
 {
   if (!m_mapView || !m_geodatabase)
   {
     return;
   }
 
-  // Get the correct table using dynamic lookup
-  GeodatabaseFeatureTable *targetTable = m_tablesByName.value(tableName, nullptr);
-
+  GeodatabaseFeatureTable* targetTable = m_tablesByName.value(tableName, nullptr);
   if (!targetTable)
   {
     setMessageText(QString("Table '%1' not found.").arg(tableName));
@@ -446,7 +451,7 @@ void EditGeodatabaseWithTransactions::addFeatureAtLocation(const QString &tableN
   // Find the feature type
   FeatureType selectedFeatureType;
   bool foundType = false;
-  for (const FeatureType &featureType : targetTable->featureTypes())
+  for (const FeatureType& featureType : targetTable->featureTypes())
   {
     if (featureType.name() == featureTypeName)
     {
@@ -463,31 +468,16 @@ void EditGeodatabaseWithTransactions::addFeatureAtLocation(const QString &tableN
   }
 
   // Convert screen point to map point
-  Point mapPoint = m_mapView->screenToLocation(location.x(), location.y());
-
+  const Point mapPoint = m_mapView->screenToLocation(location.x(), location.y());
   if (mapPoint.isEmpty())
   {
     setMessageText("Invalid location clicked.");
     return;
   }
 
-  // Convert point to WGS84 for comparison with extent (extent is in WGS84)
-  Point wgs84Point = mapPoint;
-  if (!mapPoint.spatialReference().isEmpty() && mapPoint.spatialReference().wkid() != 4326)
-  {
-    // Project the point to WGS84
-    Geometry projectedGeometry = GeometryEngine::project(mapPoint, SpatialReference::wgs84());
-    if (!projectedGeometry.isEmpty())
-    {
-      wgs84Point = static_cast<Point>(projectedGeometry);
-    }
-  }
-
-  // Check if point is within extent
-  bool withinBounds = (wgs84Point.x() >= m_extent.xMin() && wgs84Point.x() <= m_extent.xMax()
-                       && wgs84Point.y() >= m_extent.yMin()
-                       && wgs84Point.y() <= m_extent.yMax());
-
+  // Convert point to WGS84 and check if point is in the extent (extent is in WGS84)
+  const Geometry projectedGeometry = GeometryEngine::project(mapPoint, SpatialReference::wgs84());
+  bool withinBounds = GeometryEngine::contains(m_extent, projectedGeometry);
   if (!withinBounds)
   {
     setMessageText("Error: Feature geometry is outside the generate geodatabase geometry.");
@@ -496,13 +486,13 @@ void EditGeodatabaseWithTransactions::addFeatureAtLocation(const QString &tableN
 
   // Create feature using the selected type's template attributes
   QVariantMap attributes;
-  if (!selectedFeatureType.templates().empty())
+  if (!selectedFeatureType.templates().isEmpty())
   {
     // Use the first template's attributes if available
     attributes = selectedFeatureType.templates().at(0).prototypeAttributes();
   }
 
-  Feature *newFeature = targetTable->createFeature(attributes, mapPoint);
+  Feature* newFeature = targetTable->createFeature(attributes, mapPoint, this);
   if (!newFeature)
   {
     setMessageText("Failed to create new feature.");
@@ -510,60 +500,31 @@ void EditGeodatabaseWithTransactions::addFeatureAtLocation(const QString &tableN
   }
 
   // Add the new feature to the table
-  QFuture<void> addFuture = targetTable->addFeatureAsync(newFeature);
-  QFutureWatcher<void> *addWatcher = new QFutureWatcher<void>(this);
-
-  connect(addWatcher, &QFutureWatcher<void>::finished, this, [this, addWatcher, targetTable]()
+  targetTable->addFeatureAsync(newFeature)
+    .then(this,
+          [this]()
   {
-    try
-    {
-      if (addWatcher && addWatcher->future().isValid() && !addWatcher->future().isCanceled())
-      {
-        setMessageText("Added feature.");
-
-        // Force refresh of the feature layer to show the new feature
-        if (m_mapView && m_mapView->map() && m_mapView->map()->operationalLayers())
-        {
-          for (Layer *layer : *m_mapView->map()->operationalLayers())
-          {
-            if (FeatureLayer *featureLayer = qobject_cast<FeatureLayer *>(layer))
-            {
-              if (featureLayer->featureTable() == targetTable)
-              {
-                // Force redraw of the layer to show new features
-                featureLayer->setVisible(false);
-                featureLayer->setVisible(true);
-                break;
-              }
-            }
-          }
-        }
-      }
-      else
-      {
-        setMessageText("Error adding feature.");
-      }
-    }
-    catch (...)
-    {
-      setMessageText("Error adding feature.");
-    }
-
-    if (addWatcher)
-    {
-      addWatcher->deleteLater();
-    }
+    setMessageText("Added feature.");
+  })
+    .onFailed(this,
+              [this](const Error& error)
+  {
+    setMessageText("Error adding feature.");
+    qDebug() << "Add feature failed:" << error.message();
+  })
+    .onCanceled(this, [this]()
+  {
+    setMessageText("Add feature operation was canceled.");
   });
-  addWatcher->setFuture(addFuture);
 }
 
-void EditGeodatabaseWithTransactions::updateFeatureTypesForSelectedTable(const QString &tableName)
+void EditGeodatabaseWithTransactions::updateFeatureTypesForSelectedTable(const QString& tableName)
 {
-  GeodatabaseFeatureTable *table = m_tablesByName.value(tableName, nullptr);
-  updateFeatureTypesForTable(table);
+  GeodatabaseFeatureTable* table = m_tablesByName.value(tableName, nullptr);
+  updateFeatureTypesForTable_(table);
 }
 
-void EditGeodatabaseWithTransactions::setMessageText(const QString &message)
+void EditGeodatabaseWithTransactions::setMessageText(const QString& message)
 {
   if (m_messageText != message)
   {
@@ -572,7 +533,7 @@ void EditGeodatabaseWithTransactions::setMessageText(const QString &message)
   }
 }
 
-void EditGeodatabaseWithTransactions::setLoadingVisible(bool visible)
+void EditGeodatabaseWithTransactions::setLoadingVisible_(bool visible)
 {
   if (m_loadingVisible != visible)
   {
@@ -581,7 +542,7 @@ void EditGeodatabaseWithTransactions::setLoadingVisible(bool visible)
   }
 }
 
-void EditGeodatabaseWithTransactions::showExtent()
+void EditGeodatabaseWithTransactions::drawExtent_()
 {
   if (!m_mapView)
   {
@@ -589,11 +550,11 @@ void EditGeodatabaseWithTransactions::showExtent()
   }
 
   // Create a graphic for the geodatabase extent
-  SimpleLineSymbol *lineSymbol = new SimpleLineSymbol(SimpleLineSymbolStyle::Solid, QColor(Qt::red), 2, this);
-  Graphic *extentGraphic = new Graphic(m_extent, lineSymbol, this);
+  SimpleLineSymbol* lineSymbol = new SimpleLineSymbol(SimpleLineSymbolStyle::Solid, QColor(Qt::red), 2, this);
+  Graphic* extentGraphic = new Graphic(m_extent, lineSymbol, this);
 
   // Create a graphics overlay for the extent graphic
-  GraphicsOverlay *extentOverlay = new GraphicsOverlay(this);
+  GraphicsOverlay* extentOverlay = new GraphicsOverlay(this);
   extentOverlay->graphics()->append(extentGraphic);
 
   // Add graphics overlay to the map view

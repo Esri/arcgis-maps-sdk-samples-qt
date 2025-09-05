@@ -326,7 +326,7 @@ Item {
                 DialogButtonBox.buttonRole: DialogButtonBox.RejectRole
                 onClicked: {
                     commitDialog.close()
-                    gdbModel.cancelTransaction()
+                    gdbModel.cancelTransactionCommit()
                 }
             }
         }
