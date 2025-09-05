@@ -99,11 +99,6 @@ MapQuickView *EditGeodatabaseWithTransactions::mapView() const
   return m_mapView;
 }
 
-bool EditGeodatabaseWithTransactions::startEditingEnabled() const
-{
-  return m_startEditingEnabled;
-}
-
 bool EditGeodatabaseWithTransactions::stopEditingEnabled() const
 {
   return m_stopEditingEnabled;
@@ -271,9 +266,6 @@ void EditGeodatabaseWithTransactions::onGeodatabaseDoneLoading_(const Error &err
           m_mapView->setViewpointAsync(Viewpoint(m_extent));
         }
 
-        m_startEditingEnabled = true;
-        emit startEditingEnabledChanged();
-
         setMessageText("Tap Start to begin a transaction.");
       }
     });
@@ -292,7 +284,6 @@ void EditGeodatabaseWithTransactions::gdbTransactionStatusChanged_()
   const bool isInTransaction = m_geodatabase->isInTransaction();
 
   m_stopEditingEnabled = isInTransaction;
-  m_startEditingEnabled = !isInTransaction && m_requireTransaction;
 
   // Update status message based on current state
   if (isInTransaction)
@@ -309,7 +300,6 @@ void EditGeodatabaseWithTransactions::gdbTransactionStatusChanged_()
   }
 
   emit stopEditingEnabledChanged();
-  emit startEditingEnabledChanged();
 }
 
 void EditGeodatabaseWithTransactions::setRequireTransaction(bool require)
@@ -339,11 +329,9 @@ void EditGeodatabaseWithTransactions::setRequireTransaction(bool require)
   }
 
   // Update control states
-  bool isInTransaction = m_geodatabase->isInTransaction();
-  m_startEditingEnabled = require && !isInTransaction;
+  const bool isInTransaction = m_geodatabase->isInTransaction();
   m_stopEditingEnabled = require && isInTransaction;
 
-  emit startEditingEnabledChanged();
   emit stopEditingEnabledChanged();
 }
 

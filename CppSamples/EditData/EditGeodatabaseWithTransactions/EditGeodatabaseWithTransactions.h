@@ -41,7 +41,6 @@ class EditGeodatabaseWithTransactions : public QObject
   Q_OBJECT
 
   Q_PROPERTY(Esri::ArcGISRuntime::MapQuickView *mapView READ mapView WRITE setMapView NOTIFY mapViewChanged)
-  Q_PROPERTY(bool startEditingEnabled READ startEditingEnabled NOTIFY startEditingEnabledChanged)
   Q_PROPERTY(bool stopEditingEnabled READ stopEditingEnabled NOTIFY stopEditingEnabledChanged)
   Q_PROPERTY(bool requireTransaction READ requireTransaction WRITE setRequireTransaction NOTIFY requireTransactionChanged)
   Q_PROPERTY(QString messageText READ messageText NOTIFY messageTextChanged)
@@ -57,7 +56,6 @@ public:
   static void init();
 
   // Property getters
-  bool startEditingEnabled() const;
   bool stopEditingEnabled() const;
   bool requireTransaction() const;
   QString messageText() const;
@@ -79,7 +77,6 @@ public slots:
 
 signals:
   void mapViewChanged();
-  void startEditingEnabledChanged();
   void stopEditingEnabledChanged();
   void requireTransactionChanged();
   void messageTextChanged();
@@ -114,7 +111,6 @@ private:
   QMap<QString, Esri::ArcGISRuntime::GeodatabaseFeatureTable *> m_tablesByName;
 
   // UI state properties
-  bool m_startEditingEnabled = false;
   bool m_stopEditingEnabled = false;
   bool m_requireTransaction = true;
   QString m_messageText;
