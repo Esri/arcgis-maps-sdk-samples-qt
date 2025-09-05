@@ -1,6 +1,3 @@
-// [WriteFile Name=EditGeodatabaseWithTransactions, Category=EditData]
-// [Legal]
-// Copyright 2025 Esri.
 
 // Licensed under the Apache License, Version 2.0 (the "License");
 // you may not use this file except in compliance with the License.
@@ -17,6 +14,9 @@
 #ifndef EDITGEODATABASETRANSACTIONS_H
 #define EDITGEODATABASETRANSACTIONS_H
 
+// ArcGIS Maps SDK headers
+#include "Envelope.h"
+
 // Qt headers
 #include <QList>
 #include <QMap>
@@ -24,7 +24,6 @@
 
 namespace Esri::ArcGISRuntime
 {
-class Envelope;
 class Error;
 class Geodatabase;
 class GeodatabaseFeatureTable;
@@ -104,7 +103,7 @@ private:
   Esri::ArcGISRuntime::Map *m_map = nullptr;
   Esri::ArcGISRuntime::MapQuickView *m_mapView = nullptr;
 
-  Esri::ArcGISRuntime::Envelope *m_extent;
+  Esri::ArcGISRuntime::Envelope m_extent;
   Esri::ArcGISRuntime::Geodatabase *m_geodatabase = nullptr;
 
   // Store references to all available feature tables

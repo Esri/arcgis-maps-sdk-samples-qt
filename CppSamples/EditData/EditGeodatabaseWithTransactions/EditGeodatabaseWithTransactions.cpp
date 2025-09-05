@@ -1,6 +1,5 @@
-// [WriteFile Name=EditGeodatabaseWithTransactions, Category=EditData]
-// [Legal]
-// Copyright 2025 Esri.
+#ifdef PCH_BUILD
+#include "pch.hpp"
 
 // Licensed under the Apache License, Version 2.0 (the "License");
 // you may not use this file except in compliance with the License.
@@ -14,15 +13,12 @@
 // limitations under the License.
 // [Legal]
 
-#ifdef PCH_BUILD
-#include "pch.hpp"
 #endif // PCH_BUILD
 
 // sample headers
 #include "EditGeodatabaseWithTransactions.h"
 
 // ArcGIS Maps SDK headers
-#include "Envelope.h"
 #include "Error.h"
 #include "Feature.h"
 #include "FeatureLayer.h"
@@ -74,9 +70,9 @@ QString defaultDataPath()
 EditGeodatabaseWithTransactions::EditGeodatabaseWithTransactions(QObject *parent /* = nullptr */)
   : QObject(parent)
   , m_map(new Map(BasemapStyle::ArcGISTopographic, this))
-  , m_extent(new Envelope(-95.3035, 29.0100, -95.1053, 29.1298, SpatialReference::wgs84()))
 {
-  m_map->setInitialViewpoint(Viewpoint(*m_extent));
+  m_extent = Envelope(-95.3035, 29.0100, -95.1053, 29.1298, SpatialReference::wgs84());
+  m_map->setInitialViewpoint(Viewpoint(m_extent));
 
   const QString dataPath = defaultDataPath() + "/ArcGIS/Runtime/Data/geodatabase/SaveTheBay.geodatabase";
 
@@ -269,7 +265,7 @@ void EditGeodatabaseWithTransactions::onGeodatabaseDoneLoading_(const Error &err
         // Set the map viewpoint to show the geodatabase extent
         if (m_mapView)
         {
-          m_mapView->setViewpointAsync(Viewpoint(*m_extent));
+          m_mapView->setViewpointAsync(Viewpoint(m_extent));
         }
 
         m_startEditingEnabled = true;
@@ -290,7 +286,7 @@ void EditGeodatabaseWithTransactions::gdbTransactionStatusChanged_()
     return;
   }
   // Update UI controls based on whether the geodatabase has a current transaction
-  bool isInTransaction = m_geodatabase->isInTransaction();
+  const bool isInTransaction = m_geodatabase->isInTransaction();
 
   m_stopEditingEnabled = isInTransaction;
   m_startEditingEnabled = !isInTransaction && m_requireTransaction;
@@ -484,30 +480,27 @@ void EditGeodatabaseWithTransactions::addFeatureAtLocation(const QString &tableN
     return;
   }
 
-  // Check if the point is within the geodatabase extent
-  if (m_extent)
+  // Convert point to WGS84 for comparison with extent (extent is in WGS84)
+  Point wgs84Point = mapPoint;
+  if (!mapPoint.spatialReference().isEmpty() && mapPoint.spatialReference().wkid() != 4326)
   {
-    // Convert point to WGS84 for comparison with extent (extent is in WGS84)
-    Point wgs84Point = mapPoint;
-    if (!mapPoint.spatialReference().isEmpty() && mapPoint.spatialReference().wkid() != 4326)
+    // Project the point to WGS84
+    Geometry projectedGeometry = GeometryEngine::project(mapPoint, SpatialReference::wgs84());
+    if (!projectedGeometry.isEmpty())
     {
-      // Project the point to WGS84
-      Geometry projectedGeometry = GeometryEngine::project(mapPoint, SpatialReference::wgs84());
-      if (!projectedGeometry.isEmpty())
-      {
-        wgs84Point = static_cast<Point>(projectedGeometry);
-      }
+      wgs84Point = static_cast<Point>(projectedGeometry);
     }
+  }
 
-    bool withinBounds = (wgs84Point.x() >= m_extent->xMin() && wgs84Point.x() <= m_extent->xMax()
-                         && wgs84Point.y() >= m_extent->yMin()
-                         && wgs84Point.y() <= m_extent->yMax());
+  // Check if point is within extent
+  bool withinBounds = (wgs84Point.x() >= m_extent.xMin() && wgs84Point.x() <= m_extent.xMax()
+                       && wgs84Point.y() >= m_extent.yMin()
+                       && wgs84Point.y() <= m_extent.yMax());
 
-    if (!withinBounds)
-    {
-      setMessageText("Error: Feature geometry is outside the generate geodatabase geometry.");
-      return;
-    }
+  if (!withinBounds)
+  {
+    setMessageText("Error: Feature geometry is outside the generate geodatabase geometry.");
+    return;
   }
 
   // Create feature using the selected type's template attributes
@@ -606,7 +599,7 @@ void EditGeodatabaseWithTransactions::showExtent()
 
   // Create a graphic for the geodatabase extent
   SimpleLineSymbol *lineSymbol = new SimpleLineSymbol(SimpleLineSymbolStyle::Solid, QColor(Qt::red), 2, this);
-  Graphic *extentGraphic = new Graphic(*m_extent, lineSymbol, this);
+  Graphic *extentGraphic = new Graphic(m_extent, lineSymbol, this);
 
   // Create a graphics overlay for the extent graphic
   GraphicsOverlay *extentOverlay = new GraphicsOverlay(this);
