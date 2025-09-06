@@ -1,6 +1,5 @@
-// [WriteFile Name=EditGeodatabaseWithTransactions, Category=EditData]
-// [Legal]
-// Copyright 2025 Esri.
+#ifdef PCH_BUILD
+#include "pch.hpp"
 
 // Licensed under the Apache License, Version 2.0 (the "License");
 // you may not use this file except in compliance with the License.
@@ -14,8 +13,6 @@
 // limitations under the License.
 // [Legal]
 
-#ifdef PCH_BUILD
-#include "pch.hpp"
 #endif // PCH_BUILD
 
 // sample headers
@@ -110,14 +107,14 @@ bool EditGeodatabaseWithTransactions::requireTransaction() const
   return m_requireTransaction;
 }
 
-QString EditGeodatabaseWithTransactions::messageText() const
-{
-  return m_messageText;
-}
-
 bool EditGeodatabaseWithTransactions::loadingVisible() const
 {
   return m_loadingVisible;
+}
+
+QStringList EditGeodatabaseWithTransactions::currentFeatureTypes() const
+{
+  return m_currentFeatureTypes;
 }
 
 QStringList EditGeodatabaseWithTransactions::availableTableNames() const
@@ -125,14 +122,14 @@ QStringList EditGeodatabaseWithTransactions::availableTableNames() const
   return m_availableTableNames;
 }
 
+QString EditGeodatabaseWithTransactions::messageText() const
+{
+  return m_messageText;
+}
+
 QString EditGeodatabaseWithTransactions::selectedTableName() const
 {
   return m_selectedTableName;
-}
-
-QStringList EditGeodatabaseWithTransactions::currentFeatureTypes() const
-{
-  return m_currentFeatureTypes;
 }
 
 // Set the view (created in QML)

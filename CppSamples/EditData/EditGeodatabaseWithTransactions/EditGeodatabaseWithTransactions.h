@@ -1,6 +1,3 @@
-// [WriteFile Name=EditGeodatabaseWithTransactions, Category=EditData]
-// [Legal]
-// Copyright 2025 Esri.
 
 // Licensed under the Apache License, Version 2.0 (the "License");
 // you may not use this file except in compliance with the License.
@@ -43,11 +40,11 @@ class EditGeodatabaseWithTransactions : public QObject
   Q_PROPERTY(Esri::ArcGISRuntime::MapQuickView* mapView READ mapView WRITE setMapView NOTIFY mapViewChanged)
   Q_PROPERTY(bool stopEditingEnabled READ stopEditingEnabled NOTIFY stopEditingEnabledChanged)
   Q_PROPERTY(bool requireTransaction READ requireTransaction WRITE setRequireTransaction NOTIFY requireTransactionChanged)
-  Q_PROPERTY(QString messageText READ messageText NOTIFY messageTextChanged)
   Q_PROPERTY(bool loadingVisible READ loadingVisible NOTIFY loadingVisibleChanged)
-  Q_PROPERTY(QStringList availableTableNames READ availableTableNames NOTIFY availableTableNamesChanged)
-  Q_PROPERTY(QString selectedTableName READ selectedTableName WRITE setSelectedTableName NOTIFY selectedTableNameChanged)
   Q_PROPERTY(QStringList currentFeatureTypes READ currentFeatureTypes NOTIFY currentFeatureTypesChanged)
+  Q_PROPERTY(QStringList availableTableNames READ availableTableNames NOTIFY availableTableNamesChanged)
+  Q_PROPERTY(QString messageText READ messageText NOTIFY messageTextChanged)
+  Q_PROPERTY(QString selectedTableName READ selectedTableName WRITE setSelectedTableName NOTIFY selectedTableNameChanged)
 
 public:
   explicit EditGeodatabaseWithTransactions(QObject* parent = nullptr);
@@ -58,11 +55,11 @@ public:
   // Property getters
   bool stopEditingEnabled() const;
   bool requireTransaction() const;
-  QString messageText() const;
   bool loadingVisible() const;
-  QStringList availableTableNames() const;
-  QString selectedTableName() const;
   QStringList currentFeatureTypes() const;
+  QStringList availableTableNames() const;
+  QString messageText() const;
+  QString selectedTableName() const;
 
 public slots:
   void beginTransaction();
@@ -111,13 +108,13 @@ private:
   QMap<QString, Esri::ArcGISRuntime::GeodatabaseFeatureTable*> m_tablesByName;
 
   // UI state properties
-  bool m_stopEditingEnabled = false;
-  bool m_requireTransaction = true;
-  QString m_messageText;
   bool m_loadingVisible = true;
+  bool m_requireTransaction = true;
+  bool m_stopEditingEnabled = false;
   QStringList m_availableTableNames;
-  QString m_selectedTableName;
   QStringList m_currentFeatureTypes;
+  QString m_messageText;
+  QString m_selectedTableName;
 };
 
 #endif
