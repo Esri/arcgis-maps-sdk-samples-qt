@@ -97,9 +97,9 @@ Item {
                 enabled: gdbModel.requireTransaction
                 onClicked: {
                     if (gdbModel.stopEditingEnabled) {
-                        gdbModel.stopTransaction()
+                        gdbModel.stopTransaction();
                     } else {
-                        gdbModel.beginTransaction()
+                        gdbModel.beginTransaction();
                     }
                 }
             }
@@ -115,7 +115,7 @@ Item {
                 checked: true
                 enabled: !gdbModel.stopEditingEnabled
                 onCheckedChanged: {
-                    gdbModel.requireTransaction = checked
+                    gdbModel.requireTransaction = checked;
                 }
             }
         }
@@ -172,7 +172,7 @@ Item {
                     }
 
                     onClicked: {
-                        gdbModel.selectedTableName = modelData
+                        gdbModel.selectedTableName = modelData;
                     }
                 }
 
@@ -182,8 +182,8 @@ Item {
                         if (gdbModel.selectedTableName && tableSelectionList.model) {
                             for (let i = 0; i < tableSelectionList.model.length; i++) {
                                 if (tableSelectionList.model[i] === gdbModel.selectedTableName) {
-                                    tableSelectionList.currentIndex = i
-                                    break
+                                    tableSelectionList.currentIndex = i;
+                                    break;
                                 }
                             }
                         }
@@ -233,22 +233,22 @@ Item {
                     }
 
                     onClicked: {
-                        featureTypeList.selectedFeatureType = modelData
-                        featureTypeList.currentIndex = index
+                        featureTypeList.selectedFeatureType = modelData;
+                        featureTypeList.currentIndex = index;
                     }
                 }
 
                 onModelChanged: {
                     if (model && model.length > 0) {
-                        currentIndex = 0
-                        selectedFeatureType = model[0]
+                        currentIndex = 0;
+                        selectedFeatureType = model[0];
                     }
                 }
 
                 Component.onCompleted: {
                     if (model && model.length > 0) {
-                        currentIndex = 0
-                        selectedFeatureType = model[0]
+                        currentIndex = 0;
+                        selectedFeatureType = model[0];
                     }
                 }
             }
@@ -260,15 +260,15 @@ Item {
                 enabled: featureTypeList.selectedFeatureType !== ""
                 DialogButtonBox.buttonRole: DialogButtonBox.AcceptRole
                 onClicked: {
-                    var tableName = gdbModel.selectedTableName
-                    gdbModel.addFeatureAtLocation(tableName, featureTypeList.selectedFeatureType, featureTypeDialog.tapLocation)
-                    featureTypeDialog.accept()
+                    var tableName = gdbModel.selectedTableName;
+                    gdbModel.addFeatureAtLocation(tableName, featureTypeList.selectedFeatureType, featureTypeDialog.tapLocation);
+                    featureTypeDialog.accept();
                 }
             }
             Button {
                 text: qsTr("Cancel")
                 DialogButtonBox.buttonRole: DialogButtonBox.RejectRole
-                onClicked: featureTypeDialog.reject()
+                onClicked: featureTypeDialog.reject();
             }
         }
     }
@@ -295,8 +295,8 @@ Item {
                 text: qsTr("Commit")
                 DialogButtonBox.buttonRole: DialogButtonBox.AcceptRole
                 onClicked: {
-                    commitDialog.close()
-                    gdbModel.commitTransaction()
+                    commitDialog.close();
+                    gdbModel.commitTransaction();
                 }
             }
 
@@ -304,8 +304,8 @@ Item {
                 text: qsTr("Rollback")
                 DialogButtonBox.buttonRole: DialogButtonBox.DestructiveRole
                 onClicked: {
-                    commitDialog.close()
-                    gdbModel.rollbackTransaction()
+                    commitDialog.close();
+                    gdbModel.rollbackTransaction();
                 }
             }
 
@@ -313,8 +313,8 @@ Item {
                 text: qsTr("Cancel")
                 DialogButtonBox.buttonRole: DialogButtonBox.RejectRole
                 onClicked: {
-                    commitDialog.close()
-                    gdbModel.cancelTransactionCommit()
+                    commitDialog.close();
+                    gdbModel.cancelTransactionCommit();
                 }
             }
         }
@@ -326,17 +326,17 @@ Item {
         mapView: view
 
         onCommitDialogRequested: {
-            commitDialog.open()
+            commitDialog.open();
         }
 
         onFeatureTypeSelectionRequested: function(x, y)
         {
-            featureTypeDialog.tapLocation = Qt.point(x, y)
+            featureTypeDialog.tapLocation = Qt.point(x, y);
             if (gdbModel.selectedTableName){
-                gdbModel.updateFeatureTypesForSelectedTable(gdbModel.selectedTableName)
+                gdbModel.updateFeatureTypesForSelectedTable(gdbModel.selectedTableName);
             }
 
-            featureTypeDialog.open()
+            featureTypeDialog.open();
         }
     }
 }
