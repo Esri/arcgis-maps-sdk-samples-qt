@@ -34,7 +34,6 @@ Item {
 
     // Status text overlay
     Rectangle {
-        id: statusOverlay
         anchors {
             top: parent.top
             left: parent.left
@@ -56,7 +55,6 @@ Item {
 
     // Loading progress bar
     ProgressBar {
-        id: loadingProgressBar
         anchors {
             bottom: bottomToolbar.top
             left: parent.left
@@ -92,7 +90,6 @@ Item {
 
             // Start/Stop Transaction button
             Button {
-                id: transactionButton
                 text: gdbModel.stopEditingEnabled ? qsTr("End Transaction") : qsTr("Start Transaction")
                 enabled: gdbModel.requireTransaction
                 onClicked: {
@@ -110,7 +107,6 @@ Item {
 
             // Require Transaction toggle
             CheckBox {
-                id: requireTransactionCheckBox
                 text: qsTr("Requires Transaction")
                 checked: true
                 enabled: !gdbModel.stopEditingEnabled
