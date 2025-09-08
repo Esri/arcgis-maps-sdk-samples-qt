@@ -59,15 +59,11 @@ namespace
 {
   QString defaultDataPath()
   {
-    QString dataPath;
-
 #ifdef Q_OS_IOS
-    dataPath = QStandardPaths::writableLocation(QStandardPaths::DocumentsLocation);
+    return QStandardPaths::writableLocation(QStandardPaths::DocumentsLocation);
 #else
-    dataPath = QStandardPaths::writableLocation(QStandardPaths::HomeLocation);
+    return QStandardPaths::writableLocation(QStandardPaths::HomeLocation);
 #endif
-
-    return dataPath;
   }
 } // namespace
 
