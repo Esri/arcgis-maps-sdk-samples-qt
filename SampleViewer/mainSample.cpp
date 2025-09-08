@@ -91,7 +91,6 @@
 #include "../CppSamples/DisplayInformation/ShowPopup/ShowPopup.h"
 #include "../CppSamples/DisplayInformation/Simple_Marker_Symbol/Simple_Marker_Symbol.h"
 #include "../CppSamples/DisplayInformation/Simple_Renderer/Simple_Renderer.h"
-#include "../CppSamples/DisplayInformation/SketchOnMap/SketchOnMap.h"
 #include "../CppSamples/DisplayInformation/SymbolizeShapefile/SymbolizeShapefile.h"
 #include "../CppSamples/DisplayInformation/Unique_Value_Renderer/Unique_Value_Renderer.h"
 #include "../CppSamples/EditData/AddFeaturesFeatureService/AddFeaturesFeatureService.h"
@@ -561,7 +560,6 @@ void registerCppSampleClasses()
   ShowPopup::init();
   Simple_Marker_Symbol::init();
   Simple_Renderer::init();
-  SketchOnMap::init();
   SnapGeometryEdits::init();
   SnapGeometryEditsWithRules::init();
   SpatialOperations::init();
