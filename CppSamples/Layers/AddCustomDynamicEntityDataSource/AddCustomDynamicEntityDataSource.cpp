@@ -40,7 +40,7 @@
 #include "Map.h"
 #include "MapQuickView.h"
 #include "MapTypes.h"
-#include "ServiceTypes.h"
+#include "LabelingTypes.h"
 #include "SimpleLabelExpression.h"
 #include "TextSymbol.h"
 #include "TrackDisplayProperties.h"

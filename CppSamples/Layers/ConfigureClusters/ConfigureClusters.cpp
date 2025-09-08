@@ -41,7 +41,7 @@
 #include "PopupDefinition.h"
 #include "PortalItem.h"
 #include "ReductionTypes.h"
-#include "ServiceTypes.h"
+#include "LabelingTypes.h"
 #include "SimpleLabelExpression.h"
 #include "SimpleMarkerSymbol.h"
 #include "SymbolTypes.h"

@@ -37,7 +37,7 @@
 #include "MapQuickView.h"
 #include "MapTypes.h"
 #include "ServiceFeatureTable.h"
-#include "ServiceTypes.h"
+#include "LabelingTypes.h"
 #include "SimpleLabelExpression.h"
 #include "SimpleMarkerSymbol.h"
 #include "SimpleRenderer.h"
