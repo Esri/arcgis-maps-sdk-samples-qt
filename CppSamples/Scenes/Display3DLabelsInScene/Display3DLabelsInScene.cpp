@@ -31,7 +31,7 @@
 #include "LayerListModel.h"
 #include "Scene.h"
 #include "SceneQuickView.h"
-#include "ServiceTypes.h"
+#include "LabelingTypes.h"
 #include "TextSymbol.h"
 
 using namespace Esri::ArcGISRuntime;
