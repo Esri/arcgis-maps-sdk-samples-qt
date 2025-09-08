@@ -477,8 +477,7 @@ void EditGeodatabaseWithTransactions::addFeatureAtLocation(const QString& tableN
 
   // Convert point to WGS84 and check if point is in the extent (extent is in WGS84)
   const Geometry projectedGeometry = GeometryEngine::project(mapPoint, SpatialReference::wgs84());
-  bool withinBounds = GeometryEngine::contains(m_extent, projectedGeometry);
-  if (!withinBounds)
+  if (GeometryEngine::contains(m_extent, projectedGeometry) == false)
   {
     setMessageText("Error: Feature geometry is outside the generate geodatabase geometry.");
     return;
