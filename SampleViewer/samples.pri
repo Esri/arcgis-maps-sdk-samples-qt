@@ -62,6 +62,7 @@ HEADERS += \
     "$$SAMPLEPATHCPP/EditData/EditAndSyncFeatures/EditAndSyncFeatures.h" \
     "$$SAMPLEPATHCPP/EditData/EditFeatureAttachments/EditFeatureAttachments.h" \
     "$$SAMPLEPATHCPP/EditData/EditFeaturesWithFeatureLinkedAnnotation/EditFeaturesWithFeatureLinkedAnnotation.h" \
+    "$$SAMPLEPATHCPP/EditData/EditGeodatabaseWithTransactions/EditGeodatabaseWithTransactions.h" \
     "$$SAMPLEPATHCPP/EditData/EditGeometriesWithProgrammaticReticleTool/EditGeometriesWithProgrammaticReticleTool.h" \
     "$$SAMPLEPATHCPP/EditData/EditKmlGroundOverlay/EditKmlGroundOverlay.h" \
     "$$SAMPLEPATHCPP/EditData/EditWithBranchVersioning/EditWithBranchVersioning.h" \
@@ -292,6 +293,7 @@ SOURCES += \
     "$$SAMPLEPATHCPP/EditData/EditAndSyncFeatures/EditAndSyncFeatures.cpp" \
     "$$SAMPLEPATHCPP/EditData/EditFeatureAttachments/EditFeatureAttachments.cpp" \
     "$$SAMPLEPATHCPP/EditData/EditFeaturesWithFeatureLinkedAnnotation/EditFeaturesWithFeatureLinkedAnnotation.cpp" \
+    "$$SAMPLEPATHCPP/EditData/EditGeodatabaseWithTransactions/EditGeodatabaseWithTransactions.cpp" \
     "$$SAMPLEPATHCPP/EditData/EditGeometriesWithProgrammaticReticleTool/EditGeometriesWithProgrammaticReticleTool.cpp" \
     "$$SAMPLEPATHCPP/EditData/EditKmlGroundOverlay/EditKmlGroundOverlay.cpp" \
     "$$SAMPLEPATHCPP/EditData/EditWithBranchVersioning/EditWithBranchVersioning.cpp" \
@@ -520,6 +522,7 @@ RESOURCES += \
     "$$SAMPLEPATHCPP/EditData/EditAndSyncFeatures/EditAndSyncFeatures.qrc" \
     "$$SAMPLEPATHCPP/EditData/EditFeatureAttachments/EditFeatureAttachments.qrc" \
     "$$SAMPLEPATHCPP/EditData/EditFeaturesWithFeatureLinkedAnnotation/EditFeaturesWithFeatureLinkedAnnotation.qrc" \
+    "$$SAMPLEPATHCPP/EditData/EditGeodatabaseWithTransactions/EditGeodatabaseWithTransactions.qrc" \
     "$$SAMPLEPATHCPP/EditData/EditGeometriesWithProgrammaticReticleTool/EditGeometriesWithProgrammaticReticleTool.qrc" \
     "$$SAMPLEPATHCPP/EditData/EditKmlGroundOverlay/EditKmlGroundOverlay.qrc" \
     "$$SAMPLEPATHCPP/EditData/EditWithBranchVersioning/EditWithBranchVersioning.qrc" \
