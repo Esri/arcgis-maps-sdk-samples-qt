@@ -17,7 +17,7 @@ Pick an operation, then tap on the map to perform the operation at that location
 1. Create a `ServiceGeodatabase` from a URL.
 2. Get a `ServiceFeatureTable` from the `ServiceGeodatabase`.
 3. Create a `FeatureLayer` derived from the `ServiceFeatureTable` instance.
-4. Update the `GeoViewTappedEvent` subscription when a feature management operation is selected.
+4. Update the `operationMode` property when a feature management operation is selected.
 5. Apply the feature management operation upon tapping the map.
     * Create features: create a `Feature` with attributes and a location using the `ServiceFeatureTable`.
     * Delete features: delete the selected `Feature` from the `FeatureTable`.

@@ -65,7 +65,7 @@ ManageFeaturesFeatureServiceSample {
     TextMetrics {
         id: textMetrics
         font.pixelSize: 12
-        text: "Update Attributes"
+        text: qsTr("Update Attributes")
     }
 
     // Simple right panel - only takes space it needs
@@ -125,17 +125,17 @@ ManageFeaturesFeatureServiceSample {
             callout.showCallout();
             
             if (addFeaturesSample.operationMode === 2) {
-                // set the combo box's default value for update attributes mode
+                // Set the combo box's default value for update attributes mode
                 damageComboBox.currentIndex = featAttributes.indexOf(addFeaturesSample.featureType);
             }
         }
     }
 
     onHideWindow: {
-        // hide the callout
+        // Hide the callout
         if (callout.visible)
             callout.dismiss();
-        // hide the update window
+        // Hide the update window
         updateWindow.visible = false;
     }
 
@@ -164,7 +164,7 @@ ManageFeaturesFeatureServiceSample {
             spacing: 15
 
             Label {
-                text: "Update Feature Attribute"
+                text: qsTr("Update Feature Attribute")
                 font.pixelSize: 16
                 font.bold: true
                 anchors.horizontalCenter: parent.horizontalCenter
@@ -175,7 +175,7 @@ ManageFeaturesFeatureServiceSample {
                 spacing: 8
 
                 Label {
-                    text: "Damage Type:"
+                    text: qsTr("Damage Type:")
                     font.pixelSize: 12
                     font.bold: true
                 }
@@ -193,7 +193,7 @@ ManageFeaturesFeatureServiceSample {
                 spacing: 10
 
                 Button {
-                    text: "Update"
+                    text: qsTr("Update")
                     width: 100
                     height: 35
                     
@@ -206,7 +206,7 @@ ManageFeaturesFeatureServiceSample {
                 }
 
                 Button {
-                    text: "Cancel"
+                    text: qstr("Cancel")
                     width: 100
                     height: 35
                     
