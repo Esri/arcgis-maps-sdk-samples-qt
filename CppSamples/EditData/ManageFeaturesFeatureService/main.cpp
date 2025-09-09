@@ -18,6 +18,8 @@
 // sample headers
 
 // sample headers
+
+// sample headers
 #include "ManageFeaturesFeatureService.h"
 
 // ArcGIS Maps SDK headers
@@ -53,7 +55,7 @@ int main(int argc, char *argv[])
   // ArcGIS location services. Go to the tutorial at https://links.esri.com/create-an-api-key.
   // Copy the API Key access token.
 
-  const QString accessToken = qEnvironmentVariable("ARCGIS_RUNTIME_API_KEY"); //QString("");
+  const QString accessToken = QString("");
 
   if (accessToken.isEmpty())
   {
