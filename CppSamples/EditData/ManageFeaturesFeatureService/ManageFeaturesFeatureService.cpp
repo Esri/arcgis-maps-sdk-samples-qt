@@ -198,10 +198,8 @@ QString ManageFeaturesFeatureService::featureType() const
 
 void ManageFeaturesFeatureService::deleteSelectedFeature()
 {
-  // Get the feature table that contains this feature
-  ServiceFeatureTable* featureTable = static_cast<ServiceFeatureTable*>(m_selectedFeature->featureTable());
-
-  featureTable->deleteFeatureAsync(m_selectedFeature)
+  m_serviceGeodatabase->table(0)
+    ->deleteFeatureAsync(m_selectedFeature)
     .then(this, [this]()
   {
     // Handle the completion of applyEditsAsync from the ServiceGeodatabase
@@ -250,11 +248,9 @@ void ManageFeaturesFeatureService::updateSelectedFeature(QString fieldVal)
       // Update the select feature's attribute value
       m_selectedFeature->attributes()->replaceAttribute("typdamage", fieldVal);
 
-      // Get the feature table that contains this feature
-      ServiceFeatureTable* featureTable = static_cast<ServiceFeatureTable*>(m_selectedFeature->featureTable());
-
-      // Update the selected feature
-      featureTable->updateFeatureAsync(m_selectedFeature)
+      // Update the selected feature from the table that contains it
+      m_serviceGeodatabase->table(0)
+        ->updateFeatureAsync(m_selectedFeature)
         .then(this, [this]()
       {
         // Call apply edits on ServiceGeodatabase
@@ -275,11 +271,9 @@ void ManageFeaturesFeatureService::updateSelectedFeature(QString fieldVal)
     // Update the select feature's attribute value
     m_selectedFeature->attributes()->replaceAttribute("typdamage", fieldVal);
 
-    // Get the feature table that contains this feature
-    ServiceFeatureTable* featureTable = static_cast<ServiceFeatureTable*>(m_selectedFeature->featureTable());
-
     // Update the selected feature
-    featureTable->updateFeatureAsync(m_selectedFeature)
+    m_serviceGeodatabase->table(0)
+      ->updateFeatureAsync(m_selectedFeature)
       .then(this, [this]()
     {
       // Call apply edits on ServiceGeodatabase
@@ -295,70 +289,46 @@ void ManageFeaturesFeatureService::updateSelectedFeature(QString fieldVal)
   }
 }
 
-void ManageFeaturesFeatureService::onIdentifyLayerCompleted_(IdentifyLayerResult* rawIdentifyResult)
+void ManageFeaturesFeatureService::onIdentifyLayerCompleted_(IdentifyLayerResult* identifyResult)
 {
-  // Deletes rawIdentifyResult instance when we leave scope.
-  auto identifyResult = std::unique_ptr<IdentifyLayerResult>(rawIdentifyResult);
-
   if (!identifyResult)
   {
     return;
   }
 
-  if (identifyResult->geoElements().isEmpty())
+  if (!identifyResult->geoElements().empty())
   {
-    return;
-  }
+    // select the item in the result
+    m_featureLayer->selectFeature(static_cast<Feature*>(identifyResult->geoElements().at(0)));
+    // Update the parent so the featureLayer is not deleted when the identifyResult is deleted.
+    m_featureLayer->setParent(this);
 
-  // Delete selected feature member if not nullptr
-  if (m_selectedFeature)
-  {
-    delete m_selectedFeature;
-    m_selectedFeature = nullptr;
-  }
+    // obtain the selected feature with attributes
+    QueryParameters queryParams;
+    QString whereClause = "objectid=" + identifyResult->geoElements().at(0)->attributes()->attributeValue("objectid").toString();
+    queryParams.setWhereClause(whereClause);
+    m_serviceGeodatabase->table(0)
+      ->queryFeaturesAsync(queryParams)
+      .then(this, [this](FeatureQueryResult* featureQueryResult)
+    {
+      if (featureQueryResult && featureQueryResult->iterator().hasNext())
+      {
+        // first delete if not nullptr
+        if (m_selectedFeature)
+        {
+          delete m_selectedFeature;
+        }
 
-  GeoElement* element = identifyResult->geoElements().at(0);
-  if (!element)
-  {
-    return;
-  }
-
-  // Select the item in the result
-  QueryParameters query;
-  query.setObjectIds(QList<qint64>{element->attributes()->attributeValue(QStringLiteral("objectid")).toLongLong()});
-  m_featureLayer->selectFeaturesAsync(query, SelectionMode::New)
-    .then(this, [this](FeatureQueryResult* rawFeatureQueryResult)
-  {
-    onSelectFeaturesCompleted_(rawFeatureQueryResult);
-  });
-
-  // Set selected feature member
-  m_selectedFeature = static_cast<ArcGISFeature*>(element);
-  // Don't delete the selected feature when the IdentityResult is deleted.
-  m_selectedFeature->setParent(this);
-}
-
-void ManageFeaturesFeatureService::onSelectFeaturesCompleted_(FeatureQueryResult* rawFeatureQueryResult)
-{
-  // Delete rawFeatureQueryResult pointer when we leave scope.
-  auto featureQueryResult = std::unique_ptr<FeatureQueryResult>(rawFeatureQueryResult);
-
-  FeatureIterator iter = featureQueryResult->iterator();
-  if (iter.hasNext())
-  {
-    Feature* feat = iter.next();
-    // Emit signal for QML
-    const QString featureType = feat->attributes()->attributeValue(QStringLiteral("typdamage")).toString();
-    const QString primaryCause = feat->attributes()->attributeValue(QStringLiteral("primcause")).toString();
-    const QString objectId = feat->attributes()->attributeValue(QStringLiteral("objectid")).toString();
-
-    m_featureType = featureType;
-    emit featureTypeChanged();
-
-    // Html tags used to bold and increase pt size of callout title.
-    m_mapView->calloutData()->setTitle(QString("<br><b><font size=\"+2\">%1</font></b>").arg(featureType));
-    m_mapView->calloutData()->setLocation(feat->geometry().extent().center());
-    emit featureSelected();
+        // set selected feature member
+        m_selectedFeature = static_cast<ArcGISFeature*>(featureQueryResult->iterator().next(this));
+        m_selectedFeature->setParent(this);
+        m_featureType = m_selectedFeature->attributes()->attributeValue("typdamage").toString();
+        m_mapView->calloutData()->setTitle(QString("<br><font size=\"+2\"><b>%1</b></font>").arg(m_featureType));
+        m_mapView->calloutData()->setLocation(m_selectedFeature->geometry().extent().center());
+        emit featureTypeChanged();
+        emit featureSelected();
+      }
+    });
   }
 }
 

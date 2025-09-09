@@ -74,8 +74,7 @@ signals:
 
 private:
   void connectSignals();
-  void onIdentifyLayerCompleted_(Esri::ArcGISRuntime::IdentifyLayerResult* rawIdentifyResult);
-  void onSelectFeaturesCompleted_(Esri::ArcGISRuntime::FeatureQueryResult* rawFeatureQueryResult);
+  void onIdentifyLayerCompleted_(Esri::ArcGISRuntime::IdentifyLayerResult* identifyResult);
   void onApplyEditsCompleted_(const QList<Esri::ArcGISRuntime::FeatureTableEditResult*>& tableEditResults);
 
   void handleAddFeatureClick_(QMouseEvent& mouseEvent);
