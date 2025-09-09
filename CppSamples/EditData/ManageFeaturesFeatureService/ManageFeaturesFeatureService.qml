@@ -206,7 +206,7 @@ ManageFeaturesFeatureServiceSample {
                 }
 
                 Button {
-                    text: qstr("Cancel")
+                    text: qsTr("Cancel")
                     width: 100
                     height: 35
                     
