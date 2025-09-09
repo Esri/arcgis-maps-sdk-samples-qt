@@ -1,5 +1,18 @@
-// [Legal]
 // COPYRIGHT 2025 ESRI
+// TRADE SECRETS: ESRI PROPRIETARY AND CONFIDENTIAL
+// Unpublished material - all rights reserved under the
+// Copyright Laws of the United States and applicable international
+// laws, treaties, and conventions.
+//
+// For additional information, contact:
+// Environmental Systems Research Institute, Inc.
+// Attn: Contracts and Legal Services Department
+// 380 New York Street
+// Redlands, California, 92373
+// USA
+//
+// email: contracts@esri.com
+/// \file mainSample.cpp
 
 // Licensed under the Apache License, Version 2.0 (the "License");
 // you may not use this file except in compliance with the License.
@@ -93,7 +106,6 @@
 #include "../CppSamples/DisplayInformation/Simple_Renderer/Simple_Renderer.h"
 #include "../CppSamples/DisplayInformation/SymbolizeShapefile/SymbolizeShapefile.h"
 #include "../CppSamples/DisplayInformation/Unique_Value_Renderer/Unique_Value_Renderer.h"
-#include "../CppSamples/EditData/AddFeaturesFeatureService/AddFeaturesFeatureService.h"
 #include "../CppSamples/EditData/ContingentValues/ContingentValues.h"
 #include "../CppSamples/EditData/CreateKmlMultiTrack/CreateKmlMultiTrack.h"
 #include "../CppSamples/EditData/DeleteFeaturesFeatureService/DeleteFeaturesFeatureService.h"
@@ -104,6 +116,7 @@
 #include "../CppSamples/EditData/EditGeometriesWithProgrammaticReticleTool/EditGeometriesWithProgrammaticReticleTool.h"
 #include "../CppSamples/EditData/EditKmlGroundOverlay/EditKmlGroundOverlay.h"
 #include "../CppSamples/EditData/EditWithBranchVersioning/EditWithBranchVersioning.h"
+#include "../CppSamples/EditData/ManageFeaturesFeatureService/ManageFeaturesFeatureService.h"
 #include "../CppSamples/EditData/SnapGeometryEdits/SnapGeometryEdits.h"
 #include "../CppSamples/EditData/SnapGeometryEditsWithRules/SnapGeometryEditsWithRules.h"
 #include "../CppSamples/EditData/UpdateAttributesFeatureService/UpdateAttributesFeatureService.h"
@@ -378,7 +391,6 @@ void registerCppSampleClasses()
   AddCustomDynamicEntityDataSource::init();
   AddDynamicEntityLayer::init();
   AddEncExchangeSet::init();
-  AddFeaturesFeatureService::init();
   AddGraphicsWithRenderer::init();
   AddIntegratedMeshLayer::init();
   AnalyzeHotspots::init();
@@ -503,6 +515,7 @@ void registerCppSampleClasses()
   ListTransformations::init();
   LoadWfsXmlQuery::init();
   ManageBookmarks::init();
+  ManageFeaturesFeatureService::init();
   ManageOperationalLayers::init();
   MapLoaded::init();
   MapReferenceScale::init();

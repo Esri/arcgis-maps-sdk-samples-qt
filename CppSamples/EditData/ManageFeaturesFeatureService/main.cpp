@@ -14,7 +14,9 @@
 // [Legal]
 
 // sample headers
-#include "AddFeaturesFeatureService.h"
+
+// sample headers
+#include "ManageFeaturesFeatureService.h"
 
 // ArcGIS Maps SDK headers
 #include "ArcGISRuntimeEnvironment.h"
@@ -33,7 +35,7 @@
 int main(int argc, char *argv[])
 {
   QGuiApplication app(argc, argv);
-  app.setApplicationName(QString("AddFeaturesFeatureService"));
+  app.setApplicationName(QString("ManageFeaturesFeatureService"));
 
   // Use of ArcGIS location services, such as basemap styles, geocoding, and routing services,
   // requires an access token. For more information see
@@ -49,7 +51,7 @@ int main(int argc, char *argv[])
   // ArcGIS location services. Go to the tutorial at https://links.esri.com/create-an-api-key.
   // Copy the API Key access token.
 
-  const QString accessToken = QString("");
+  const QString accessToken = qEnvironmentVariable("ARCGIS_RUNTIME_API_KEY"); //QString("");
 
   if (accessToken.isEmpty())
   {
@@ -62,7 +64,7 @@ int main(int argc, char *argv[])
   }
 
   // Initialize the sample
-  AddFeaturesFeatureService::init();
+  ManageFeaturesFeatureService::init();
 
   // Initialize application view
   QQmlApplicationEngine engine;

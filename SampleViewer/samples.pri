@@ -55,7 +55,6 @@ HEADERS += \
     "$$SAMPLEPATHCPP/DisplayInformation/Simple_Renderer/Simple_Renderer.h" \
     "$$SAMPLEPATHCPP/DisplayInformation/SymbolizeShapefile/SymbolizeShapefile.h" \
     "$$SAMPLEPATHCPP/DisplayInformation/Unique_Value_Renderer/Unique_Value_Renderer.h" \
-    "$$SAMPLEPATHCPP/EditData/AddFeaturesFeatureService/AddFeaturesFeatureService.h" \
     "$$SAMPLEPATHCPP/EditData/ContingentValues/ContingentValues.h" \
     "$$SAMPLEPATHCPP/EditData/CreateKmlMultiTrack/CreateKmlMultiTrack.h" \
     "$$SAMPLEPATHCPP/EditData/DeleteFeaturesFeatureService/DeleteFeaturesFeatureService.h" \
@@ -66,6 +65,7 @@ HEADERS += \
     "$$SAMPLEPATHCPP/EditData/EditGeometriesWithProgrammaticReticleTool/EditGeometriesWithProgrammaticReticleTool.h" \
     "$$SAMPLEPATHCPP/EditData/EditKmlGroundOverlay/EditKmlGroundOverlay.h" \
     "$$SAMPLEPATHCPP/EditData/EditWithBranchVersioning/EditWithBranchVersioning.h" \
+    "$$SAMPLEPATHCPP/EditData/ManageFeaturesFeatureService/ManageFeaturesFeatureService.h" \
     "$$SAMPLEPATHCPP/EditData/SnapGeometryEdits/SnapGeometryEdits.h" \
     "$$SAMPLEPATHCPP/EditData/SnapGeometryEditsWithRules/SnapGeometryEditsWithRules.h" \
     "$$SAMPLEPATHCPP/EditData/SnapGeometryEdits/SnapSourceListModel.h" \
@@ -286,7 +286,6 @@ SOURCES += \
     "$$SAMPLEPATHCPP/DisplayInformation/Simple_Renderer/Simple_Renderer.cpp" \
     "$$SAMPLEPATHCPP/DisplayInformation/SymbolizeShapefile/SymbolizeShapefile.cpp" \
     "$$SAMPLEPATHCPP/DisplayInformation/Unique_Value_Renderer/Unique_Value_Renderer.cpp" \
-    "$$SAMPLEPATHCPP/EditData/AddFeaturesFeatureService/AddFeaturesFeatureService.cpp" \
     "$$SAMPLEPATHCPP/EditData/ContingentValues/ContingentValues.cpp" \
     "$$SAMPLEPATHCPP/EditData/CreateKmlMultiTrack/CreateKmlMultiTrack.cpp" \
     "$$SAMPLEPATHCPP/EditData/DeleteFeaturesFeatureService/DeleteFeaturesFeatureService.cpp" \
@@ -297,6 +296,7 @@ SOURCES += \
     "$$SAMPLEPATHCPP/EditData/EditGeometriesWithProgrammaticReticleTool/EditGeometriesWithProgrammaticReticleTool.cpp" \
     "$$SAMPLEPATHCPP/EditData/EditKmlGroundOverlay/EditKmlGroundOverlay.cpp" \
     "$$SAMPLEPATHCPP/EditData/EditWithBranchVersioning/EditWithBranchVersioning.cpp" \
+    "$$SAMPLEPATHCPP/EditData/ManageFeaturesFeatureService/ManageFeaturesFeatureService.cpp" \
     "$$SAMPLEPATHCPP/EditData/SnapGeometryEdits/SnapGeometryEdits.cpp" \
     "$$SAMPLEPATHCPP/EditData/SnapGeometryEditsWithRules/SnapGeometryEditsWithRules.cpp" \
     "$$SAMPLEPATHCPP/EditData/SnapGeometryEdits/SnapSourceListModel.cpp" \
@@ -515,7 +515,6 @@ RESOURCES += \
     "$$SAMPLEPATHCPP/DisplayInformation/Simple_Renderer/Simple_Renderer.qrc" \
     "$$SAMPLEPATHCPP/DisplayInformation/SymbolizeShapefile/SymbolizeShapefile.qrc" \
     "$$SAMPLEPATHCPP/DisplayInformation/Unique_Value_Renderer/Unique_Value_Renderer.qrc" \
-    "$$SAMPLEPATHCPP/EditData/AddFeaturesFeatureService/AddFeaturesFeatureService.qrc" \
     "$$SAMPLEPATHCPP/EditData/ContingentValues/ContingentValues.qrc" \
     "$$SAMPLEPATHCPP/EditData/CreateKmlMultiTrack/CreateKmlMultiTrack.qrc" \
     "$$SAMPLEPATHCPP/EditData/DeleteFeaturesFeatureService/DeleteFeaturesFeatureService.qrc" \
@@ -526,6 +525,7 @@ RESOURCES += \
     "$$SAMPLEPATHCPP/EditData/EditGeometriesWithProgrammaticReticleTool/EditGeometriesWithProgrammaticReticleTool.qrc" \
     "$$SAMPLEPATHCPP/EditData/EditKmlGroundOverlay/EditKmlGroundOverlay.qrc" \
     "$$SAMPLEPATHCPP/EditData/EditWithBranchVersioning/EditWithBranchVersioning.qrc" \
+    "$$SAMPLEPATHCPP/EditData/ManageFeaturesFeatureService/ManageFeaturesFeatureService.qrc" \
     "$$SAMPLEPATHCPP/EditData/SnapGeometryEdits/SnapGeometryEdits.qrc" \
     "$$SAMPLEPATHCPP/EditData/SnapGeometryEditsWithRules/SnapGeometryEditsWithRules.qrc" \
     "$$SAMPLEPATHCPP/EditData/UpdateAttributesFeatureService/UpdateAttributesFeatureService.qrc" \

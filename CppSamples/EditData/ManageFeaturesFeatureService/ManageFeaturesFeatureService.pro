@@ -27,8 +27,13 @@ QT += opengl qml quick
 TEMPLATE = app
 TARGET = AddFeaturesFeatureService
 
-ARCGIS_RUNTIME_VERSION = 300.0.0
-include($$PWD/arcgisruntime.pri)
+#ARCGIS_RUNTIME_VERSION = 300.0.0
+#include($$PWD/arcgisruntime.pri)
+include ($$PWD/../../../../../DevBuildCpp.pri)
+# include the toolkitcpp.pri, which contains all the toolkit resources
+include($$PWD/../../../../toolkit/uitools/toolkitcpp/toolkitcpp.pri)
+
+
 
 #-------------------------------------------------------------------------------
 

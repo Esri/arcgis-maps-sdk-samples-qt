@@ -1,6 +1,6 @@
 {
     "category": "Edit data",
-    "description": "Add features to a feature layer.",
+    "description": "Manage features in a feature layer.",
     "featured": true,
     "ignore": false,
     "images": [
@@ -25,9 +25,9 @@
         "ServiceFeatureTable"
     ],
     "snippets": [
-        "AddFeaturesFeatureService.cpp",
-        "AddFeaturesFeatureService.h",
-        "AddFeaturesFeatureService.qml"
+        "ManageFeaturesFeatureService.cpp",
+        "ManageFeaturesFeatureService.h",
+        "ManageFeaturesFeatureService.qml"
     ],
-    "title": "Add features (feature service)"
+    "title": "Manage features (feature service)"
 }
