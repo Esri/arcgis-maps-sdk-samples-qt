@@ -36,8 +36,13 @@
 #include "MapTypes.h"
 #include "Point.h"
 #include "Popup.h"
-#include "PopupManager.h"
+#include "PopupExpressionEvaluation.h"
+#include "PopupExpression.h"
+#include "PopupDefinition.h"
+#include "PopupElement.h"
+#include "PopupTypes.h"
 #include "PortalItem.h"
+#include "TextPopupElement.h"
 
 // Qt headers
 #include <QFuture>
@@ -135,15 +140,20 @@ void DisplayClusters::onMouseClicked(const QMouseEvent &mouseClick)
     if (m_aggregateGeoElement)
       m_aggregateGeoElement->setSelected(true);
 
-    // Create a PopupManager with the IdentifyLayerResult's parent so it will get cleaned up as well.
-    PopupManager* popupManager = new PopupManager(popup, identifyResult->parent());
+    popup->evaluateExpressionsAsync(this).then([this, popup](const QList<PopupExpressionEvaluation*>&)
+    {
+      QList<PopupElement*> elements = popup->evaluatedElements();
+      if (!elements.isEmpty() && (elements.at(0)->popupElementType() == PopupElementType::TextPopupElement))
+      {
+        TextPopupElement* textElement = static_cast<TextPopupElement*>(elements.at(0));
+        m_calloutText = textElement->text();
+        m_mapView->calloutData()->setDetail(m_calloutText);
+        emit calloutTextChanged();
+      }
+    });
 
-    // Use the custom HTML description in the PopupManager to popuplate a Callout and display it.
-    m_calloutText = popupManager->customHtmlDescription();
     m_mapView->calloutData()->setLocation(Point(popup->geoElement()->geometry()));
     m_mapView->calloutData()->setVisible(true);
-
-    emit calloutTextChanged();
   });
 }
 
