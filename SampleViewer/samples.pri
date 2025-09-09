@@ -57,7 +57,6 @@ HEADERS += \
     "$$SAMPLEPATHCPP/DisplayInformation/Unique_Value_Renderer/Unique_Value_Renderer.h" \
     "$$SAMPLEPATHCPP/EditData/ContingentValues/ContingentValues.h" \
     "$$SAMPLEPATHCPP/EditData/CreateKmlMultiTrack/CreateKmlMultiTrack.h" \
-    "$$SAMPLEPATHCPP/EditData/DeleteFeaturesFeatureService/DeleteFeaturesFeatureService.h" \
     "$$SAMPLEPATHCPP/EditData/EditAndSyncFeatures/EditAndSyncFeatures.h" \
     "$$SAMPLEPATHCPP/EditData/EditFeatureAttachments/EditFeatureAttachments.h" \
     "$$SAMPLEPATHCPP/EditData/EditFeaturesWithFeatureLinkedAnnotation/EditFeaturesWithFeatureLinkedAnnotation.h" \
@@ -70,8 +69,6 @@ HEADERS += \
     "$$SAMPLEPATHCPP/EditData/SnapGeometryEditsWithRules/SnapGeometryEditsWithRules.h" \
     "$$SAMPLEPATHCPP/EditData/SnapGeometryEdits/SnapSourceListModel.h" \
     "$$SAMPLEPATHCPP/EditData/SnapGeometryEditsWithRules/SnapSourcesListModel.h" \
-    "$$SAMPLEPATHCPP/EditData/UpdateAttributesFeatureService/UpdateAttributesFeatureService.h" \
-    "$$SAMPLEPATHCPP/EditData/UpdateGeometryFeatureService/UpdateGeometryFeatureService.h" \
     "$$SAMPLEPATHCPP/Features/ControlTimeExtentTimeSlider/ControlTimeExtentTimeSlider.h" \
     "$$SAMPLEPATHCPP/Features/CreateMobileGeodatabase/CreateMobileGeodatabase.h" \
     "$$SAMPLEPATHCPP/Features/CreateMobileGeodatabase/FeatureListModel.h" \
@@ -288,7 +285,6 @@ SOURCES += \
     "$$SAMPLEPATHCPP/DisplayInformation/Unique_Value_Renderer/Unique_Value_Renderer.cpp" \
     "$$SAMPLEPATHCPP/EditData/ContingentValues/ContingentValues.cpp" \
     "$$SAMPLEPATHCPP/EditData/CreateKmlMultiTrack/CreateKmlMultiTrack.cpp" \
-    "$$SAMPLEPATHCPP/EditData/DeleteFeaturesFeatureService/DeleteFeaturesFeatureService.cpp" \
     "$$SAMPLEPATHCPP/EditData/EditAndSyncFeatures/EditAndSyncFeatures.cpp" \
     "$$SAMPLEPATHCPP/EditData/EditFeatureAttachments/EditFeatureAttachments.cpp" \
     "$$SAMPLEPATHCPP/EditData/EditFeaturesWithFeatureLinkedAnnotation/EditFeaturesWithFeatureLinkedAnnotation.cpp" \
@@ -301,8 +297,6 @@ SOURCES += \
     "$$SAMPLEPATHCPP/EditData/SnapGeometryEditsWithRules/SnapGeometryEditsWithRules.cpp" \
     "$$SAMPLEPATHCPP/EditData/SnapGeometryEdits/SnapSourceListModel.cpp" \
     "$$SAMPLEPATHCPP/EditData/SnapGeometryEditsWithRules/SnapSourcesListModel.cpp" \
-    "$$SAMPLEPATHCPP/EditData/UpdateAttributesFeatureService/UpdateAttributesFeatureService.cpp" \
-    "$$SAMPLEPATHCPP/EditData/UpdateGeometryFeatureService/UpdateGeometryFeatureService.cpp" \
     "$$SAMPLEPATHCPP/Features/ControlTimeExtentTimeSlider/ControlTimeExtentTimeSlider.cpp" \
     "$$SAMPLEPATHCPP/Features/CreateMobileGeodatabase/CreateMobileGeodatabase.cpp" \
     "$$SAMPLEPATHCPP/Features/CreateMobileGeodatabase/FeatureListModel.cpp" \
@@ -517,7 +511,6 @@ RESOURCES += \
     "$$SAMPLEPATHCPP/DisplayInformation/Unique_Value_Renderer/Unique_Value_Renderer.qrc" \
     "$$SAMPLEPATHCPP/EditData/ContingentValues/ContingentValues.qrc" \
     "$$SAMPLEPATHCPP/EditData/CreateKmlMultiTrack/CreateKmlMultiTrack.qrc" \
-    "$$SAMPLEPATHCPP/EditData/DeleteFeaturesFeatureService/DeleteFeaturesFeatureService.qrc" \
     "$$SAMPLEPATHCPP/EditData/EditAndSyncFeatures/EditAndSyncFeatures.qrc" \
     "$$SAMPLEPATHCPP/EditData/EditFeatureAttachments/EditFeatureAttachments.qrc" \
     "$$SAMPLEPATHCPP/EditData/EditFeaturesWithFeatureLinkedAnnotation/EditFeaturesWithFeatureLinkedAnnotation.qrc" \
@@ -528,8 +521,6 @@ RESOURCES += \
     "$$SAMPLEPATHCPP/EditData/ManageFeaturesFeatureService/ManageFeaturesFeatureService.qrc" \
     "$$SAMPLEPATHCPP/EditData/SnapGeometryEdits/SnapGeometryEdits.qrc" \
     "$$SAMPLEPATHCPP/EditData/SnapGeometryEditsWithRules/SnapGeometryEditsWithRules.qrc" \
-    "$$SAMPLEPATHCPP/EditData/UpdateAttributesFeatureService/UpdateAttributesFeatureService.qrc" \
-    "$$SAMPLEPATHCPP/EditData/UpdateGeometryFeatureService/UpdateGeometryFeatureService.qrc" \
     "$$SAMPLEPATHCPP/Features/ControlTimeExtentTimeSlider/ControlTimeExtentTimeSlider.qrc" \
     "$$SAMPLEPATHCPP/Features/CreateMobileGeodatabase/CreateMobileGeodatabase.qrc" \
     "$$SAMPLEPATHCPP/Features/FeatureLayerChangeRenderer/FeatureLayerChangeRenderer.qrc" \
