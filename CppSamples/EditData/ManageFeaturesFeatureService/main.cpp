@@ -16,6 +16,8 @@
 // sample headers
 
 // sample headers
+
+// sample headers
 #include "ManageFeaturesFeatureService.h"
 
 // ArcGIS Maps SDK headers
@@ -76,7 +78,7 @@ int main(int argc, char *argv[])
 #endif
 
   // Set the source
-  engine.load(QUrl("qrc:/Samples/EditData/AddFeaturesFeatureService/main.qml"));
+  engine.load(QUrl("qrc:/Samples/EditData/ManageFeaturesFeatureService/main.qml"));
 
   return app.exec();
 }
