@@ -25,26 +25,21 @@ CONFIG += c++17
 QT += opengl qml quick
 
 TEMPLATE = app
-TARGET = AddFeaturesFeatureService
+TARGET = ManageFeaturesFeatureService
 
-#ARCGIS_RUNTIME_VERSION = 300.0.0
-#include($$PWD/arcgisruntime.pri)
-include ($$PWD/../../../../../DevBuildCpp.pri)
-# include the toolkitcpp.pri, which contains all the toolkit resources
-include($$PWD/../../../../toolkit/uitools/toolkitcpp/toolkitcpp.pri)
-
-
+ARCGIS_RUNTIME_VERSION = 300.0.0
+include($$PWD/arcgisruntime.pri)
 
 #-------------------------------------------------------------------------------
 
 HEADERS += \
-    AddFeaturesFeatureService.h
+    ManageFeaturesFeatureService.h
 
 SOURCES += \
     main.cpp \
-    AddFeaturesFeatureService.cpp
+    ManageFeaturesFeatureService.cpp
 
-RESOURCES += AddFeaturesFeatureService.qrc
+RESOURCES += ManageFeaturesFeatureService.qrc
 
 #-------------------------------------------------------------------------------
 
