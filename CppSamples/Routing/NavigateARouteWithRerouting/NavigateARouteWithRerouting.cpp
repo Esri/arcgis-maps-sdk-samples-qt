@@ -227,7 +227,7 @@ void NavigateARouteWithRerouting::startNavigation()
   m_directionManeuvers = m_route.directionManeuvers(this)->directionManeuvers();
 
   // create a route tracker
-  m_routeTracker = new RouteTracker(m_routeResult, 0, this);
+  m_routeTracker = new RouteTracker(m_routeResult, 0, false, this);
 
   connectRouteTrackerSignals();
 

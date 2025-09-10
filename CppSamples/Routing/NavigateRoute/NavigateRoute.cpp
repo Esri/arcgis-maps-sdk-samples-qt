@@ -195,7 +195,7 @@ void NavigateRoute::startNavigation()
   m_directions = m_route.directionManeuvers(this);
 
   // create a route tracker
-  m_routeTracker = new RouteTracker(m_routeResult, 0, this);
+  m_routeTracker = new RouteTracker(m_routeResult, 0, false, this);
   connectRouteTrackerSignals();
 
   // enable the RouteTracker to know when the QTextToSpeech engine is ready

@@ -117,10 +117,5 @@ void IndoorsLocationDataSourceCreator::findPathwaysTable()
 
 void IndoorsLocationDataSourceCreator::returnIndoorsLocationDataSource()
 {
-  // The IndoorsLocationDataSource constructor takes an optional GlobalId to identify which row of the positioning table to use.
-  // If not specified, the constructor will use the row from the most recent survey
-  if (m_globalId.isNull())
-    emit createIndoorsLocationDataSourceCompleted(new IndoorsLocationDataSource(m_positioningTable, m_pathwaysTable, this));
-  else
-    emit createIndoorsLocationDataSourceCompleted(new IndoorsLocationDataSource(m_positioningTable, m_pathwaysTable, m_globalId, this));
+    emit createIndoorsLocationDataSourceCompleted(new IndoorsLocationDataSource(m_positioningTable, m_globalId, this));
 }
