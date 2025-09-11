@@ -42,7 +42,7 @@ using namespace Esri::ArcGISRuntime;
 
 namespace
 {
-const QUrl datasetUrl("https://www.wpc.ncep.noaa.gov/kml/noaa_chart/WPC_Day1_SigWx_latest.kml");
+  const QUrl datasetUrl("https://www.spc.noaa.gov/products/outlook/SPC_outlooks.kml");
 }
 
 IdentifyKmlFeatures::IdentifyKmlFeatures(QObject* parent /* = nullptr */):
