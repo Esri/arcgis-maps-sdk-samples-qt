@@ -97,34 +97,35 @@ void ManageFeaturesFeatureService::componentComplete()
 {
   QQuickItem::componentComplete();
 
-  // find QML MapView component
+  // Find QML MapView component
   m_mapView = findChild<MapQuickView*>("mapView");
   m_mapView->setWrapAroundMode(WrapAroundMode::Disabled);
 
-  // create a Map by passing in the Basemap
+  // Create a Map by passing in the Basemap
   m_map = new Map(BasemapStyle::ArcGISStreets, this);
   m_map->setInitialViewpoint(Viewpoint(Point(-10800000, 4500000, SpatialReference(102100)), 3e7));
 
-  // set map on the map view
+  // Set map on the map view
   m_mapView->setMap(m_map);
 
-  // create a ServiceGeodatabase
+  // Create a ServiceGeodatabase
   m_serviceGeodatabase =
     new ServiceGeodatabase(QUrl("https://sampleserver6.arcgisonline.com/arcgis/rest/services/DamageAssessment/FeatureServer/"), this);
 
   connect(m_serviceGeodatabase, &ServiceGeodatabase::loadStatusChanged, this, [this](LoadStatus loadStatus)
   {
-    if (loadStatus == LoadStatus::Loaded)
+    if (loadStatus != LoadStatus::Loaded)
     {
-      // Get the first table(id 0) from the ServiceGeodatabase
-      if (m_serviceGeodatabase->table(0))
-      {
-        ServiceFeatureTable* featureTable = m_serviceGeodatabase->table(0);
-        m_featureLayer = new FeatureLayer(featureTable, this);
-        m_map->operationalLayers()->append(m_featureLayer);
+      return;
+    }
+    // Get the first table(id 0) from the ServiceGeodatabase
+    if (m_serviceGeodatabase->table(0))
+    {
+      ServiceFeatureTable* featureTable = m_serviceGeodatabase->table(0);
+      m_featureLayer = new FeatureLayer(featureTable, this);
+      m_map->operationalLayers()->append(m_featureLayer);
 
-        connectSignals();
-      }
+      connectSignals();
     }
   });
 
@@ -134,14 +135,14 @@ void ManageFeaturesFeatureService::componentComplete()
 
 void ManageFeaturesFeatureService::connectSignals()
 {
-  // connect to the mouse clicked signal on the MapQuickView
+  // Connect to the mouse clicked signal on the MapQuickView
   connect(m_mapView, &MapQuickView::mouseClicked, this, [this](QMouseEvent& mouseEvent)
   {
-    if (m_operationMode == AddFeatures)
+    if (m_operationMode == OperationMode::AddFeatures)
     {
       handleAddFeatureClick_(mouseEvent);
     }
-    else if (m_operationMode == UpdateGeometry)
+    else if (m_operationMode == OperationMode::UpdateGeometry)
     {
       handleUpdateGeometryClick_(mouseEvent);
     }
@@ -154,24 +155,25 @@ void ManageFeaturesFeatureService::connectSignals()
   // Connect to the viewpoint changed signal on the MapQuickView
   connect(m_mapView, &MapQuickView::viewpointChanged, this, [this]()
   {
-    if (m_operationMode != AddFeatures)
+    if (m_operationMode == OperationMode::AddFeatures)
     {
-      m_featureLayer->clearSelection();
-      emit hideWindow();
-      if (m_operationMode == UpdateGeometry)
-      {
-        m_featureSelected = false;
-      }
+      return;
+    }
+    m_featureLayer->clearSelection();
+    emit hideWindow();
+    if (m_operationMode == OperationMode::UpdateGeometry)
+    {
+      m_featureSelected = false;
     }
   });
 }
 
-int ManageFeaturesFeatureService::operationMode() const
+ManageFeaturesFeatureService::OperationMode ManageFeaturesFeatureService::operationMode() const
 {
   return m_operationMode;
 }
 
-void ManageFeaturesFeatureService::setOperationMode(int mode)
+void ManageFeaturesFeatureService::setOperationMode(OperationMode mode)
 {
   if (m_operationMode == mode)
   {
@@ -187,7 +189,6 @@ void ManageFeaturesFeatureService::setOperationMode(int mode)
     m_featureSelected = false;
   }
   emit hideWindow();
-
   emit operationModeChanged();
 }
 
@@ -205,13 +206,16 @@ void ManageFeaturesFeatureService::deleteSelectedFeature()
     // Handle the completion of applyEditsAsync from the ServiceGeodatabase
     m_serviceGeodatabase->applyEditsAsync().then(this, [](const QList<FeatureTableEditResult*>& tableEditResults)
     {
-      if (tableEditResults.isEmpty())
+      // Lock is a convenience wrapper that deletes the contents of the list once we leave scope.
+      FeatureTableResultLock lock(tableEditResults);
+
+      if (lock.results.isEmpty())
       {
         return;
       }
 
       // Get the first table result
-      FeatureTableEditResult* tableResult = tableEditResults.first();
+      FeatureTableEditResult* tableResult = lock.results.first();
       if (!tableResult->editResults().isEmpty())
       {
         // Get the first feature edit result from the table
@@ -226,8 +230,6 @@ void ManageFeaturesFeatureService::deleteSelectedFeature()
           qDebug() << "Apply edits error.";
         }
       }
-
-      qDeleteAll(tableEditResults);
     });
   });
 }
@@ -298,12 +300,12 @@ void ManageFeaturesFeatureService::onIdentifyLayerCompleted_(IdentifyLayerResult
 
   if (!identifyResult->geoElements().empty())
   {
-    // select the item in the result
+    // Select the item in the result
     m_featureLayer->selectFeature(static_cast<Feature*>(identifyResult->geoElements().at(0)));
     // Update the parent so the featureLayer is not deleted when the identifyResult is deleted.
     m_featureLayer->setParent(this);
 
-    // obtain the selected feature with attributes
+    // Obtain the selected feature with attributes
     QueryParameters queryParams;
     QString whereClause = "objectid=" + identifyResult->geoElements().at(0)->attributes()->attributeValue("objectid").toString();
     queryParams.setWhereClause(whereClause);
@@ -313,13 +315,7 @@ void ManageFeaturesFeatureService::onIdentifyLayerCompleted_(IdentifyLayerResult
     {
       if (featureQueryResult && featureQueryResult->iterator().hasNext())
       {
-        // first delete if not nullptr
-        if (m_selectedFeature)
-        {
-          delete m_selectedFeature;
-        }
-
-        // set selected feature member
+        // Set selected feature member
         m_selectedFeature = static_cast<ArcGISFeature*>(featureQueryResult->iterator().next(this));
         m_selectedFeature->setParent(this);
         m_featureType = m_selectedFeature->attributes()->attributeValue("typdamage").toString();
@@ -334,14 +330,17 @@ void ManageFeaturesFeatureService::onIdentifyLayerCompleted_(IdentifyLayerResult
 
 void ManageFeaturesFeatureService::onApplyEditsCompleted_(const QList<FeatureTableEditResult*>& tableEditResults)
 {
-  if (tableEditResults.isEmpty())
+  // Lock is a convenience wrapper that deletes the contents of the list once we leave scope.
+  FeatureTableResultLock lock(tableEditResults);
+
+  if (lock.results.isEmpty())
   {
     qDebug() << "No table edit results";
     return;
   }
 
   // Get the first table result
-  FeatureTableEditResult* tableResult = tableEditResults.first();
+  FeatureTableEditResult* tableResult = lock.results.first();
   if (!tableResult->editResults().isEmpty())
   {
     // Get the first feature edit result from the table
@@ -356,14 +355,11 @@ void ManageFeaturesFeatureService::onApplyEditsCompleted_(const QList<FeatureTab
       qDebug() << "Apply edits error.";
     }
   }
-
-  // Delete table edit results
-  qDeleteAll(tableEditResults);
 }
 
 void ManageFeaturesFeatureService::handleAddFeatureClick_(QMouseEvent& mouseEvent)
 {
-  // ADD FEATURES MODE
+  // Add features mode
   // Obtain the map point
   const double screenX = mouseEvent.position().x();
   const double screenY = mouseEvent.position().y();
@@ -414,7 +410,7 @@ void ManageFeaturesFeatureService::handleAddFeatureClick_(QMouseEvent& mouseEven
 
 void ManageFeaturesFeatureService::handleUpdateGeometryClick_(QMouseEvent& mouseEvent)
 {
-  // UPDATE GEOMETRY MODE
+  // Update geometry mode
   // Get the point from the mouse point
   Point mapPoint = m_mapView->screenToLocation(mouseEvent.position().x(), mouseEvent.position().y());
 
@@ -431,7 +427,7 @@ void ManageFeaturesFeatureService::handleUpdateGeometryClick_(QMouseEvent& mouse
 
 void ManageFeaturesFeatureService::handleIdentifyFeatureClick_(QMouseEvent& mouseEvent)
 {
-  // IDENTIFY AND SELECT FEATURE MODE (for delete and update attributes)
+  // Identify and select feature mode (for delete and update attributes)
   // First clear the selection
   m_featureLayer->clearSelection();
 
@@ -515,13 +511,6 @@ void ManageFeaturesFeatureService::selectFeatureForGeometryUpdate_(QMouseEvent& 
 
     if (!identifyResult->geoElements().isEmpty())
     {
-      // Delete selected feature member
-      if (m_selectedFeature)
-      {
-        delete m_selectedFeature;
-        m_selectedFeature = nullptr;
-      }
-
       GeoElement* geoElement = identifyResult->geoElements().at(0);
       Feature* feature = static_cast<Feature*>(geoElement);
 

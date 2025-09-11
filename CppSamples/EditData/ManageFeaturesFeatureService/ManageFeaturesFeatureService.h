@@ -40,19 +40,19 @@ class ManageFeaturesFeatureService : public QQuickItem
 {
   Q_OBJECT
 
-  Q_PROPERTY(QString featureType READ featureType NOTIFY featureTypeChanged)
-  Q_PROPERTY(int operationMode READ operationMode WRITE setOperationMode NOTIFY operationModeChanged)
-
-public:
-  enum OperationMode
+  enum class OperationMode
   {
-    AddFeatures = 0,
-    DeleteFeatures = 1,
-    UpdateAttributes = 2,
-    UpdateGeometry = 3
+    AddFeatures,
+    DeleteFeatures,
+    UpdateAttributes,
+    UpdateGeometry
   };
   Q_ENUM(OperationMode)
 
+  Q_PROPERTY(QString featureType READ featureType NOTIFY featureTypeChanged)
+  Q_PROPERTY(OperationMode operationMode READ operationMode WRITE setOperationMode NOTIFY operationModeChanged)
+
+public:
   explicit ManageFeaturesFeatureService(QQuickItem* parent = nullptr);
   ~ManageFeaturesFeatureService() override;
 
@@ -62,8 +62,8 @@ public:
   Q_INVOKABLE void deleteSelectedFeature();
   Q_INVOKABLE void updateSelectedFeature(QString fieldVal);
 
-  int operationMode() const;
-  void setOperationMode(int mode);
+  OperationMode operationMode() const;
+  void setOperationMode(OperationMode mode);
   QString featureType() const;
 
 signals:
@@ -87,9 +87,9 @@ private:
   Esri::ArcGISRuntime::MapQuickView* m_mapView = nullptr;
   Esri::ArcGISRuntime::FeatureLayer* m_featureLayer = nullptr;
   Esri::ArcGISRuntime::ServiceGeodatabase* m_serviceGeodatabase = nullptr;
-  Esri::ArcGISRuntime::ArcGISFeature* m_selectedFeature = nullptr;
+  QPointer<Esri::ArcGISRuntime::ArcGISFeature> m_selectedFeature;
   QString m_featureType;
-  int m_operationMode = AddFeatures;
+  OperationMode m_operationMode = OperationMode::AddFeatures;
   bool m_featureSelected = false;
   QMetaObject::Connection m_featureLoadStatusChangedConnection;
 };

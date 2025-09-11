@@ -111,16 +111,16 @@ ManageFeaturesFeatureServiceSample {
                 wrapMode: Text.WordWrap
                 text: {
                     switch(addFeaturesSample.operationMode) {
-                    case 0:
-                        return "Click anywhere on the map to add new features"
-                    case 1:
-                        return "Click on an existing feature to select and delete it"
-                    case 2:
-                        return "Click on an existing feature to select and update its attributes"
-                    case 3:
-                        return "Click to select a feature, then click again to move it to a new location"
+                    case ManageFeaturesFeatureService.OperationMode.AddFeatures:
+                        return qsTr("Click anywhere on the map to add new features")
+                    case ManageFeaturesFeatureService.OperationMode.DeleteFeatures:
+                        return qsTr("Click on an existing feature to select and delete it")
+                    case ManageFeaturesFeatureService.OperationMode.UpdateAttributes:
+                        return qsTr("Click on an existing feature to select and update its attributes")
+                    case ManageFeaturesFeatureService.OperationMode.UpdateGeometry:
+                        return qsTr("Click to select a feature, then click again to move it to a new location")
                     default:
-                        return ""
+                        return qsTr("")
                     }
                 }
             }
@@ -130,7 +130,7 @@ ManageFeaturesFeatureServiceSample {
     // Handle feature selection for callout modes
     onFeatureSelected: {
         if (addFeaturesSample.operationMode === 1 || addFeaturesSample.operationMode === 2) {
-            // show the callout
+            // Show the callout
             callout.showCallout();
             
             if (addFeaturesSample.operationMode === 2) {

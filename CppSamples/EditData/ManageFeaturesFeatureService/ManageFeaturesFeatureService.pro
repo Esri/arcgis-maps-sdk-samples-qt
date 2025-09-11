@@ -30,6 +30,15 @@ TARGET = ManageFeaturesFeatureService
 ARCGIS_RUNTIME_VERSION = 300.0.0
 include($$PWD/arcgisruntime.pri)
 
+# path of the toolkit relative to the sample
+TOOLKIT_PRI_PATH = $$PWD/../../../arcgis-maps-sdk-toolkit-qt
+
+exists($$TOOLKIT_PRI_PATH/uitools/toolkitcpp/toolkitcpp.pri) {
+    include($$TOOLKIT_PRI_PATH/uitools/toolkitcpp/toolkitcpp.pri)
+} else {
+    error(TOOLKIT_PRI_PATH is missing which is required to build this application.)
+}
+
 #-------------------------------------------------------------------------------
 
 HEADERS += \
