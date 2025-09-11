@@ -7,14 +7,20 @@
         "screenshot.png"
     ],
     "keywords": [
+        "3D",
         "group layer",
-        "GroupLayer"
+        "GroupLayer",
+        "GroupLayer.VisibilityMode",
+        "LayerContent",
+        "layers"
     ],
     "redirect_from": [
         ""
     ],
     "relevant_apis": [
-        "GroupLayer"
+        "GroupLayer",
+        "GroupLayer.VisibilityMode",
+        "LayerContent"
     ],
     "snippets": [
         "GroupLayers.cpp",
