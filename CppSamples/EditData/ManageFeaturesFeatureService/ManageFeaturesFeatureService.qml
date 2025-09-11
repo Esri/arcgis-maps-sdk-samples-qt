@@ -71,9 +71,11 @@ ManageFeaturesFeatureServiceSample {
     // Simple right panel - only takes space it needs
     Rectangle {
         id: rightPanel
-        anchors.top: parent.top
-        anchors.right: parent.right
-        anchors.margins: 10
+        anchors {
+            top: parent.top
+            right: parent.right
+            margins: 10
+        }
         width: Math.max(textMetrics.width + 60, 200) + 20
         height: instructionText.visible ? 100 : 55
         color: palette.window
