@@ -111,11 +111,16 @@ ManageFeaturesFeatureServiceSample {
                 wrapMode: Text.WordWrap
                 text: {
                     switch(addFeaturesSample.operationMode) {
-                    case 0: return "Click anywhere on the map to add new features"
-                    case 1: return "Click on an existing feature to select and delete it"
-                    case 2: return "Click on an existing feature to select and update its attributes"
-                    case 3: return "Click to select a feature, then click again to move it to a new location"
-                    default: return ""
+                    case 0:
+                        return "Click anywhere on the map to add new features"
+                    case 1:
+                        return "Click on an existing feature to select and delete it"
+                    case 2:
+                        return "Click on an existing feature to select and update its attributes"
+                    case 3:
+                        return "Click to select a feature, then click again to move it to a new location"
+                    default:
+                        return ""
                     }
                 }
             }
