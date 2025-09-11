@@ -84,10 +84,12 @@ ManageFeaturesFeatureServiceSample {
         radius: 5
 
         Column {
-            anchors.top: parent.top
-            anchors.left: parent.left
-            anchors.right: parent.right
-            anchors.margins: 10
+            anchors {
+                top: parent.top
+                left: parent.left
+                right: parent.right
+                margins: 10
+            }
             spacing: 5
 
             ComboBox {
