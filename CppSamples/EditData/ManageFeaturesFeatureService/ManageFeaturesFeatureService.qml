@@ -44,6 +44,11 @@ ManageFeaturesFeatureServiceSample {
             id: callout
             calloutData: view.calloutData
             leaderPosition: Callout.LeaderPosition.Automatic
+            // Override the background to keep it consistent with button images
+            background: Rectangle {
+                color: "#ffffff"
+                border.color: "#000000"
+            }
             
             // Delete mode - show trash button, Update mode - show accessory button
             accessoryButtonType: addFeaturesSample.operationMode === 1 ? "Custom" : (addFeaturesSample.operationMode === 2 ? "Info" : "None")
@@ -78,8 +83,6 @@ ManageFeaturesFeatureServiceSample {
         }
         width: Math.max(textMetrics.width + 60, 200) + 20
         height: instructionText.visible ? 100 : 55
-        color: palette.window
-        border.color: palette.windowText
         border.width: 1
         radius: 5
 
@@ -156,8 +159,6 @@ ManageFeaturesFeatureServiceSample {
         anchors.centerIn: parent
         radius: 8
         visible: false
-        color: palette.window
-        border.color: palette.windowText
         border.width: 1
         z: 200
 
