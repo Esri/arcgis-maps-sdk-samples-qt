@@ -517,7 +517,7 @@ void ManageFeaturesFeatureService::selectFeatureForGeometryUpdate_(const QMouseE
       // Select the feature
       QueryParameters query;
       query.setObjectIds(QList<qint64>{feature->attributes()->attributeValue(QStringLiteral("objectid")).toLongLong()});
-      (void)m_featureLayer->selectFeaturesAsync(query, SelectionMode::New);
+      m_featureLayer->selectFeaturesAsync(query, SelectionMode::New);
 
       // Set selected feature member and switch to selected mode
       m_selectedFeature = static_cast<ArcGISFeature*>(feature);
