@@ -1,19 +1,3 @@
-// [WriteFile Name=TraceUtilityNetwork, Category=UtilityNetwork]
-// [Legal]
-// Copyright 2019 Esri.
-//
-// Licensed under the Apache License, Version 2.0 (the "License");
-// you may not use this file except in compliance with the License.
-// You may obtain a copy of the License at
-// http://www.apache.org/licenses/LICENSE-2.0
-//
-// Unless required by applicable law or agreed to in writing, software
-// distributed under the License is distributed on an "AS IS" BASIS,
-// WITHOUT WARRANTIES OR CONDITIONS OF ANY KIND, either express or implied.
-// See the License for the specific language governing permissions and
-// limitations under the License.
-// [Legal]
-
 #ifdef PCH_BUILD
 #include "pch.hpp"
 #endif // PCH_BUILD
@@ -22,11 +6,11 @@
 #include "TraceUtilityNetwork.h"
 
 // ArcGIS Maps SDK headers
-#include "ArcGISRuntimeEnvironment.h"
 #include "ArcGISFeature.h"
+#include "ArcGISRuntimeEnvironment.h"
 #include "AttributeListModel.h"
-#include "Authentication/AuthenticationManager.h"
 #include "Authentication/ArcGISAuthenticationChallenge.h"
+#include "Authentication/AuthenticationManager.h"
 #include "Authentication/TokenCredential.h"
 #include "Envelope.h"
 #include "Error.h"
@@ -79,9 +63,9 @@
 using namespace Esri::ArcGISRuntime;
 using namespace Esri::ArcGISRuntime::Authentication;
 
-TraceUtilityNetwork::TraceUtilityNetwork(QObject* parent /* = nullptr */):
+TraceUtilityNetwork::TraceUtilityNetwork(QObject* parent /* = nullptr */) :
   ArcGISAuthenticationChallengeHandler(parent),
-  m_map(new Map(QUrl("https://sampleserver7.arcgisonline.com/portal/home/item.html?id=be0e4637620a453584118107931f718b"), this)),
+  m_map(new Map(BasemapStyle::ArcGISStreetsNight, this)),
   m_startingSymbol(new SimpleMarkerSymbol(SimpleMarkerSymbolStyle::Cross, QColor(Qt::green), 20, this)),
   m_barrierSymbol(new SimpleMarkerSymbol(SimpleMarkerSymbolStyle::X, QColor(Qt::red), 20, this)),
   m_mediumVoltageSymbol(new SimpleLineSymbol(SimpleLineSymbolStyle::Solid, QColor(Qt::darkCyan), 3, this)),
@@ -92,23 +76,46 @@ TraceUtilityNetwork::TraceUtilityNetwork(QObject* parent /* = nullptr */):
 {
   ArcGISRuntimeEnvironment::authenticationManager()->setArcGISAuthenticationChallengeHandler(this);
 
-  m_map->setInitialViewpoint(Viewpoint(Envelope(-9813547.35557238, 5129980.36635111, -9813185.0602376, 5130215.41254146, SpatialReference::webMercator())));
+  m_map->setInitialViewpoint(
+    Viewpoint(Envelope(-9813547.35557238, 5129980.36635111, -9813185.0602376, 5130215.41254146, SpatialReference::webMercator())));
+
+  connect(m_serviceGeodatabase, &ServiceGeodatabase::doneLoading, this, [this](const Error& loadError)
+  {
+    createFeatureLayers(loadError);
+    createRenderers(loadError);
+  });
+
+  m_serviceGeodatabase->load();
 
   connect(m_map, &Map::doneLoading, this, &TraceUtilityNetwork::loadUtilityNetwork);
 }
 
-void TraceUtilityNetwork::createFeatureLayers()
+void TraceUtilityNetwork::createFeatureLayers(const Error& error)
 {
-  setBusyIndicator(false);
+  if (hasErrorOccurred(error))
+  {
+    return;
+  }
 
-  // Get the feature table from the 4th table (index = 3) in the serviceGeodatabase
-  m_serviceGeodatabase = m_utilityNetwork->serviceGeodatabase();
+  // Create feature table from the 1st table (index = 0) in the serviceGeodatabase
+  m_deviceFeatureTable = m_serviceGeodatabase->table(0);
+  m_deviceLayer = new FeatureLayer(m_deviceFeatureTable, this);
+
+  // Create feature table from the 4th table (index = 3) in the serviceGeodatabase
   m_lineFeatureTable = m_serviceGeodatabase->table(3);
-  m_lineLayer = qobject_cast<FeatureLayer*>(m_lineFeatureTable->layer());
+  m_lineLayer = new FeatureLayer(m_lineFeatureTable, this);
+
+  m_map->operationalLayers()->append(m_lineLayer);
+  m_map->operationalLayers()->append(m_deviceLayer);
 }
 
-void TraceUtilityNetwork::createRenderers()
+void TraceUtilityNetwork::createRenderers(const Error& error)
 {
+  if (hasErrorOccurred(error))
+  {
+    return;
+  }
+
   // create unique renderer
   m_uniqueValueRenderer = new UniqueValueRenderer(this);
   m_uniqueValueRenderer->setFieldNames(QStringList("ASSETGROUP"));
@@ -126,26 +133,21 @@ void TraceUtilityNetwork::createRenderers()
 void TraceUtilityNetwork::loadUtilityNetwork(const Error& error)
 {
   if (hasErrorOccurred(error))
+  {
     return;
-
-  m_utilityNetwork = m_map->utilityNetworks()->first();
-  m_utilityNetwork->load();
+  }
 
   // Create graphics overlay and append to mapview
   m_graphicsOverlay = new GraphicsOverlay(this);
   m_mapView->graphicsOverlays()->append(m_graphicsOverlay);
 
+  m_utilityNetwork = new UtilityNetwork(m_serviceGeodatabase, this);
+
   connect(m_utilityNetwork, &UtilityNetwork::errorOccurred, this, &TraceUtilityNetwork::hasErrorOccurred);
 
-  connect(m_utilityNetwork, &UtilityNetwork::doneLoading, this, [this](const Error& error)
-  {
-    if (hasErrorOccurred(error))
-      return;
+  connect(m_utilityNetwork, &UtilityNetwork::doneLoading, this, &TraceUtilityNetwork::addUtilityNetworkToMap);
 
-    createFeatureLayers();
-    createRenderers();
-    connectSignals();
-  });
+  m_utilityNetwork->load();
 
   setBusyIndicator(true);
 }
@@ -153,7 +155,9 @@ void TraceUtilityNetwork::loadUtilityNetwork(const Error& error)
 bool TraceUtilityNetwork::hasErrorOccurred(const Error& error)
 {
   if (error.isEmpty())
+  {
     return false;
+  }
 
   m_dialogText = QString(error.message() + " - " + error.additionalMessage());
   emit dialogVisibleChanged();
@@ -166,18 +170,35 @@ void TraceUtilityNetwork::onTaskFailed_(const Esri::ArcGISRuntime::ErrorExceptio
   emit dialogVisibleChanged();
 }
 
+void TraceUtilityNetwork::addUtilityNetworkToMap(const Error& error)
+{
+  setBusyIndicator(false);
+
+  if (hasErrorOccurred(error))
+  {
+    return;
+  }
+
+  m_map->utilityNetworks()->append(m_utilityNetwork);
+
+  connectSignals();
+}
+
 void TraceUtilityNetwork::connectSignals()
 {
   // identify layers on mouse click
   connect(m_mapView, &MapQuickView::mouseClicked, this, [this](QMouseEvent& mouseEvent)
   {
     if (m_map->loadStatus() != LoadStatus::Loaded)
+    {
       return;
+    }
 
     constexpr double tolerance = 10.0;
     constexpr bool returnPopups = false;
     m_clickPoint = m_mapView->screenToLocation(mouseEvent.position().x(), mouseEvent.position().y());
-    m_taskCanceler->addTask(m_mapView->identifyLayersAsync(mouseEvent.position(), tolerance, returnPopups).then(this, [this](const QList<IdentifyLayerResult*>& results)
+    m_taskCanceler->addTask(m_mapView->identifyLayersAsync(mouseEvent.position(), tolerance, returnPopups)
+                              .then(this, [this](const QList<IdentifyLayerResult*>& results)
     {
       onIdentifyLayersCompleted_(results);
     }));
@@ -202,7 +223,9 @@ MapQuickView* TraceUtilityNetwork::mapView() const
 void TraceUtilityNetwork::setMapView(MapQuickView* mapView)
 {
   if (!mapView || mapView == m_mapView)
+  {
     return;
+  }
 
   m_mapView = mapView;
   m_mapView->setMap(m_map);
@@ -213,10 +236,14 @@ void TraceUtilityNetwork::setMapView(MapQuickView* mapView)
 void TraceUtilityNetwork::multiTerminalIndex(int index)
 {
   if (m_terminals.isEmpty())
+  {
     return;
+  }
 
   if (!m_feature)
+  {
     return;
+  }
 
   UtilityElement* element = m_utilityNetwork->createElementWithArcGISFeature(m_feature, m_terminals[index]);
   updateTraceParams(element);
@@ -263,15 +290,20 @@ void TraceUtilityNetwork::trace(int index)
   }
 
   if (m_mediumVoltageTier)
+  {
     m_traceParams->setTraceConfiguration(m_mediumVoltageTier->defaultTraceConfiguration());
+  }
 
   m_traceParams->setStartingLocations(m_startingLocations);
   m_traceParams->setBarriers(m_barriers);
   // Perform a connected trace on the utility network
-  m_taskCanceler->addTask(m_utilityNetwork->traceAsync(m_traceParams).then(this, [this](QList<UtilityTraceResult*>)
+  m_taskCanceler->addTask(m_utilityNetwork->traceAsync(m_traceParams)
+                            .then(this,
+                                  [this](const QList<UtilityTraceResult*>&)
   {
     onTraceCompleted_();
-  }).onFailed([this](const ErrorException& exception)
+  })
+                            .onFailed([this](const ErrorException& exception)
   {
     onTaskFailed_(exception);
   }));
@@ -294,7 +326,9 @@ void TraceUtilityNetwork::reset()
   {
     FeatureLayer* featureLayer = dynamic_cast<FeatureLayer*>(layer);
     if (!featureLayer)
+    {
       return;
+    }
 
     featureLayer->clearSelection();
   }
@@ -329,7 +363,7 @@ void TraceUtilityNetwork::onIdentifyLayersCompleted_(const QList<IdentifyLayerRe
     const int assetGroupCode = m_feature->attributes()->attributeValue(assetGroupFieldName).toInt();
     UtilityAssetGroup* assetGroup = nullptr;
 
-    const auto groups = networkSource->assetGroups();
+    const QList<UtilityAssetGroup*> groups = networkSource->assetGroups();
     for (UtilityAssetGroup* group : groups)
     {
       if (group->code() == assetGroupCode)
@@ -339,12 +373,14 @@ void TraceUtilityNetwork::onIdentifyLayersCompleted_(const QList<IdentifyLayerRe
       }
     }
     if (!assetGroup)
+    {
       return;
+    }
 
     const int assetTypeCode = m_feature->attributes()->attributeValue("assettype").toInt();
 
     UtilityAssetType* assetType = nullptr;
-    const auto types = assetGroup->assetTypes();
+    const QList<UtilityAssetType*> types = assetGroup->assetTypes();
     for (UtilityAssetType* type : types)
     {
       if (type->code() == assetTypeCode)
@@ -355,7 +391,9 @@ void TraceUtilityNetwork::onIdentifyLayersCompleted_(const QList<IdentifyLayerRe
     }
 
     if (!assetType)
+    {
       return;
+    }
 
     m_terminals = assetType->terminalConfiguration()->terminals();
 
@@ -365,11 +403,15 @@ void TraceUtilityNetwork::onIdentifyLayersCompleted_(const QList<IdentifyLayerRe
       emit terminalDialogVisisbleChanged();
       return;
     }
-    else if (m_terminals.size() == 1)
-      element = m_utilityNetwork->createElementWithArcGISFeature(m_feature, m_terminals[0]);
-    else
-      return;
 
+    if (m_terminals.size() == 1)
+    {
+      element = m_utilityNetwork->createElementWithArcGISFeature(m_feature, m_terminals[0]);
+    }
+    else
+    {
+      return;
+    }
   }
   else if (networkSource->sourceType() == UtilityNetworkSourceType::Edge)
   {
@@ -414,18 +456,34 @@ void TraceUtilityNetwork::onTraceCompleted_()
 
   const QList<UtilityElement*> elements = static_cast<UtilityElementTraceResult*>(result)->elements(this);
 
+  QueryParameters deviceParams;
   QueryParameters lineParams;
+  QList<qint64> deviceObjIds;
   QList<qint64> lineObjIds;
 
   for (UtilityElement* item : elements)
   {
-    if (item->networkSource()->name() == "Electric Distribution Line")
+    if (item->networkSource()->name() == "Electric Distribution Device")
+    {
+      deviceObjIds.append(item->objectId());
+    }
+    else if (item->networkSource()->name() == "Electric Distribution Line")
+    {
       lineObjIds.append(item->objectId());
+    }
   }
 
+  deviceParams.setObjectIds(deviceObjIds);
   lineParams.setObjectIds(lineObjIds);
 
-  m_taskCanceler->addTask(m_lineLayer->selectFeaturesAsync(lineParams, SelectionMode::Add).then(this, [this](FeatureQueryResult*)
+  m_taskCanceler->addTask(m_deviceLayer->selectFeaturesAsync(deviceParams, SelectionMode::Add)
+                            .then(this, [this](FeatureQueryResult*)
+  {
+    setBusyIndicator(false);
+  }));
+
+  m_taskCanceler->addTask(m_lineLayer->selectFeaturesAsync(lineParams, SelectionMode::Add)
+                            .then(this, [this](FeatureQueryResult*)
   {
     setBusyIndicator(false);
   }));
@@ -454,10 +512,13 @@ void TraceUtilityNetwork::setBusyIndicator(bool status)
 
 void TraceUtilityNetwork::handleArcGISAuthenticationChallenge(ArcGISAuthenticationChallenge* challenge)
 {
-  TokenCredential::createWithChallengeAsync(challenge, "viewer01", "I68VGU^nMurF", {}, this).then(this, [challenge](TokenCredential* tokenCredential)
+  TokenCredential::createWithChallengeAsync(challenge, "viewer01", "I68VGU^nMurF", {}, this)
+    .then(this,
+          [challenge](TokenCredential* tokenCredential)
   {
     challenge->continueWithCredential(tokenCredential);
-  }).onFailed(this, [challenge](const ErrorException& e)
+  })
+    .onFailed(this, [challenge](const ErrorException& e)
   {
     challenge->continueWithError(e.error());
   });

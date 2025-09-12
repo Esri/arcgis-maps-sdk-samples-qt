@@ -1,18 +1,3 @@
-// [WriteFile Name=TraceUtilityNetwork, Category=UtilityNetwork]
-// [Legal]
-// Copyright 2019 Esri.
-//
-// Licensed under the Apache License, Version 2.0 (the "License");
-// you may not use this file except in compliance with the License.
-// You may obtain a copy of the License at
-// http://www.apache.org/licenses/LICENSE-2.0
-//
-// Unless required by applicable law or agreed to in writing, software
-// distributed under the License is distributed on an "AS IS" BASIS,
-// WITHOUT WARRANTIES OR CONDITIONS OF ANY KIND, either express or implied.
-// See the License for the specific language governing permissions and
-// limitations under the License.
-// [Legal]
 
 #ifndef TraceUtilityNetwork_H
 #define TraceUtilityNetwork_H
@@ -27,34 +12,33 @@
 
 namespace Esri::ArcGISRuntime
 {
-class ArcGISFeature;
-class Error;
-class ErrorException;
-class FeatureLayer;
-class GraphicsOverlay;
-class IdentifyLayerResult;
-class Map;
-class MapQuickView;
-class ServiceFeatureTable;
-class ServiceGeodatabase;
-class SimpleFillSymbol;
-class SimpleLineSymbol;
-class SimpleMarkerSymbol;
-class Symbol;
-class UniqueValue;
-class UniqueValueRenderer;
-class UtilityElement;
-class UtilityNetwork;
-class UtilityTerminal;
-class UtilityTier;
-class UtilityTraceParameters;
-}
+  class ArcGISFeature;
+  class Error;
+  class ErrorException;
+  class FeatureLayer;
+  class GraphicsOverlay;
+  class IdentifyLayerResult;
+  class Map;
+  class MapQuickView;
+  class ServiceFeatureTable;
+  class ServiceGeodatabase;
+  class SimpleFillSymbol;
+  class SimpleLineSymbol;
+  class SimpleMarkerSymbol;
+  class Symbol;
+  class UniqueValue;
+  class UniqueValueRenderer;
+  class UtilityElement;
+  class UtilityNetwork;
+  class UtilityTerminal;
+  class UtilityTier;
+  class UtilityTraceParameters;
+} // namespace Esri::ArcGISRuntime
 
 namespace Esri::ArcGISRuntime::Authentication
 {
   class ArcGISAuthenticationChallenge;
 }
-
 
 Q_MOC_INCLUDE("MapQuickView.h")
 Q_MOC_INCLUDE("IdentifyLayerResult.h")
@@ -100,10 +84,11 @@ private:
   void connectSignals();
   void updateTraceParams(Esri::ArcGISRuntime::UtilityElement* element);
   Esri::ArcGISRuntime::UniqueValue* createUniqueValue(const QString& label, Esri::ArcGISRuntime::Symbol* fillSymbol, int value);
-  void createFeatureLayers();
-  void createRenderers();
+  void createFeatureLayers(const Esri::ArcGISRuntime::Error& error);
+  void createRenderers(const Esri::ArcGISRuntime::Error& error);
   void loadUtilityNetwork(const Esri::ArcGISRuntime::Error& error);
   bool hasErrorOccurred(const Esri::ArcGISRuntime::Error& error);
+  void addUtilityNetworkToMap(const Esri::ArcGISRuntime::Error& error);
   void setBusyIndicator(bool status);
   void onIdentifyLayersCompleted_(const QList<Esri::ArcGISRuntime::IdentifyLayerResult*>& results);
   void onTraceCompleted_();
@@ -115,6 +100,7 @@ private:
 
   Esri::ArcGISRuntime::Map* m_map = nullptr;
   Esri::ArcGISRuntime::MapQuickView* m_mapView = nullptr;
+  Esri::ArcGISRuntime::FeatureLayer* m_deviceLayer = nullptr;
   Esri::ArcGISRuntime::FeatureLayer* m_lineLayer = nullptr;
   Esri::ArcGISRuntime::ServiceFeatureTable* m_deviceFeatureTable = nullptr;
   Esri::ArcGISRuntime::ServiceFeatureTable* m_lineFeatureTable = nullptr;
@@ -127,7 +113,7 @@ private:
   Esri::ArcGISRuntime::UtilityNetwork* m_utilityNetwork = nullptr;
   Esri::ArcGISRuntime::UtilityTraceParameters* m_traceParams = nullptr;
   Esri::ArcGISRuntime::ArcGISFeature* m_feature = nullptr;
-  Esri::ArcGISRuntime::UtilityTier * m_mediumVoltageTier = nullptr;
+  Esri::ArcGISRuntime::UtilityTier* m_mediumVoltageTier = nullptr;
   Esri::ArcGISRuntime::UniqueValueRenderer* m_uniqueValueRenderer = nullptr;
 
   bool m_terminalDialogVisisble = false;
