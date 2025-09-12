@@ -63,6 +63,7 @@ class SampleManager : public QObject
   Q_PROPERTY(bool downloadFailed READ downloadFailed WRITE setDownloadFailed NOTIFY downloadFailedChanged)
   Q_PROPERTY(QString api READ api CONSTANT)
   Q_PROPERTY(Reachability reachability READ reachability NOTIFY reachabilityChanged)
+  Q_PROPERTY(QVariantList offlineDataProjects READ offlineDataProjects NOTIFY offlineDataProjectsChanged)
 
 public:
   explicit SampleManager(QObject* parent = nullptr);
@@ -75,6 +76,10 @@ public:
   Q_INVOKABLE void downloadAllDataItems();
   Q_INVOKABLE void downloadDataItemsCurrentSample();
   Q_INVOKABLE bool deleteAllOfflineData();
+  Q_INVOKABLE bool deleteProjectOfflineData(const QString& sampleName);
+  Q_INVOKABLE void downloadProjectData(const QString& sampleName);
+  Q_INVOKABLE bool hasOfflineData(const QString& sampleName);
+  Q_INVOKABLE QVariantList getOfflineDataProjects();
   Q_INVOKABLE void setSourceCodeIndex(int i);
   Q_INVOKABLE void setupProxy(const QString& hostName, quint16 port, const QString& user, const QString& pw);
   Q_INVOKABLE void doneDownloading() { emit doneDownloadingChanged(); }
@@ -116,6 +121,7 @@ signals:
   void downloadTextChanged();
   void downloadProgressChanged();
   void reachabilityChanged();
+  void offlineDataProjectsChanged();
 
 protected:
   void setDownloadProgress(double progress);
@@ -160,6 +166,8 @@ private:
   void setDownloadFailed(bool didFail);
   SampleManager::Reachability reachability() const;
   QString api() const;
+  QVariantList offlineDataProjects() const { return m_offlineDataProjects; }
+  void updateOfflineDataProjects();
 
 private:
   QQueue<DataItem*> m_dataItems;
@@ -181,6 +189,7 @@ private:
   bool m_cancelDownload = false;
   bool m_downloadFailed = false;
   Esri::ArcGISRuntime::Authentication::ArcGISAuthenticationChallengeHandler* m_toolkitChallengeHandler = nullptr;
+  QVariantList m_offlineDataProjects;
 };
 
 #endif // SAMPLEMANAGER_H

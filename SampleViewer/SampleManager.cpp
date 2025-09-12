@@ -88,7 +88,7 @@ using namespace Esri::ArcGISRuntime;
 
 namespace
 {
-QString apiKey = ""; // Provide your API key here
+  QString apiKey = ""; // Provide your API key here
 }
 
 SampleManager::SampleManager(QObject *parent):
@@ -559,6 +559,9 @@ void SampleManager::downloadNextDataItem()
       setCancelDownload(false);
     else
       emit doneDownloadingChanged();
+    
+    // Update the offline data projects list to reflect new download status
+    updateOfflineDataProjects();
   }
 }
 
@@ -663,7 +666,15 @@ SampleManager::Reachability SampleManager::reachability() const
 bool SampleManager::deleteAllOfflineData()
 {
   QDir dir(homePath() + "/ArcGIS/Runtime/Data");
-  return dir.removeRecursively();
+  bool success = dir.removeRecursively();
+  
+  // Update the offline data projects list to reflect deletion status
+  if (success)
+  {
+    updateOfflineDataProjects();
+  }
+  
+  return success;
 }
 
 QString SampleManager::api() const
@@ -689,4 +700,129 @@ void SampleManager::setupProxy(const QString& hostName, quint16 port, const QStr
   proxy.setUser(user);
   proxy.setPassword(pw);
   QNetworkProxy::setApplicationProxy(proxy);
+}
+
+QVariantList SampleManager::getOfflineDataProjects()
+{
+  updateOfflineDataProjects();
+  return m_offlineDataProjects;
+}
+
+void SampleManager::updateOfflineDataProjects()
+{
+  m_offlineDataProjects.clear();
+  
+  const int totalSamples = samples()->size();
+  for (int i = 0; i < totalSamples; ++i)
+  {
+    Sample* sample = samples()->at(i);
+    if (sample->dataItems()->size() > 0)
+    {
+      QVariantMap projectInfo;
+      projectInfo["sample"] = QVariant::fromValue(sample);
+      projectInfo["downloaded"] = hasOfflineData(sample->name().toString());
+      
+      m_offlineDataProjects.append(projectInfo);
+    }
+  }
+  
+  emit offlineDataProjectsChanged();
+}
+
+bool SampleManager::hasOfflineData(const QString& sampleName)
+{
+  const int totalSamples = samples()->size();
+  for (int i = 0; i < totalSamples; ++i)
+  {
+    Sample* sample = samples()->at(i);
+    if (sample->name().toString() == sampleName)
+    {
+      const int dataItemCount = sample->dataItems()->size();
+      for (int j = 0; j < dataItemCount; ++j)
+      {
+        DataItem* dataItem = sample->dataItems()->at(j);
+        if (dataItem->exists())
+        {
+          return true;
+        }
+      }
+      break;
+    }
+  }
+  return false;
+}
+
+bool SampleManager::deleteProjectOfflineData(const QString& sampleName)
+{
+  bool success = true;
+  
+  const int totalSamples = samples()->size();
+  for (int i = 0; i < totalSamples; ++i)
+  {
+    Sample* sample = samples()->at(i);
+    if (sample->name().toString() == sampleName)
+    {
+      const int dataItemCount = sample->dataItems()->size();
+      for (int j = 0; j < dataItemCount; ++j)
+      {
+        DataItem* dataItem = sample->dataItems()->at(j);
+        if (dataItem->exists())
+        {
+          QString fullPath = homePath() + dataItem->path().mid(1);
+          QFileInfo fileInfo(fullPath);
+          
+          if (fileInfo.isDir())
+          {
+            QDir dir(fullPath);
+            if (!dir.removeRecursively())
+            {
+              success = false;
+            }
+          }
+          else
+          {
+            QFile file(fullPath);
+            if (!file.remove())
+            {
+              success = false;
+            }
+          }
+        }
+      }
+      break;
+    }
+  }
+  
+  // Update the projects list after deletion
+  updateOfflineDataProjects();
+  
+  return success;
+}
+
+void SampleManager::downloadProjectData(const QString& sampleName)
+{
+  setDownloadFailed(false);
+  
+  if (!m_dataItems.isEmpty())
+    m_dataItems.clear();
+    
+  // Find the sample and add its data items to download queue
+  const int totalSamples = samples()->size();
+  for (int i = 0; i < totalSamples; ++i)
+  {
+    Sample* sample = samples()->at(i);
+    if (sample->name().toString() == sampleName)
+    {
+      const int dataItemCount = sample->dataItems()->size();
+      for (int j = 0; j < dataItemCount; ++j)
+      {
+        DataItem* dataItem = sample->dataItems()->at(j);
+        if (!dataItem->exists())
+          m_dataItems.enqueue(dataItem);
+      }
+      break;
+    }
+  }
+  
+  downloadNextDataItem();
 }
