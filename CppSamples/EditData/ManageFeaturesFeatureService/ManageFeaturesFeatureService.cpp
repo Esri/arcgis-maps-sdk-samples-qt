@@ -291,7 +291,7 @@ void ManageFeaturesFeatureService::updateSelectedFeature(QString fieldVal)
   }
 }
 
-void ManageFeaturesFeatureService::onIdentifyLayerCompleted_(IdentifyLayerResult* identifyResult)
+void ManageFeaturesFeatureService::onIdentifyLayerCompleted_(const IdentifyLayerResult* identifyResult)
 {
   if (!identifyResult)
   {
