@@ -1,19 +1,3 @@
-// [WriteFile Name=TraceUtilityNetwork, Category=UtilityNetwork]
-// [Legal]
-// Copyright 2019 Esri.
-//
-// Licensed under the Apache License, Version 2.0 (the "License");
-// you may not use this file except in compliance with the License.
-// You may obtain a copy of the License at
-// http://www.apache.org/licenses/LICENSE-2.0
-//
-// Unless required by applicable law or agreed to in writing, software
-// distributed under the License is distributed on an "AS IS" BASIS,
-// WITHOUT WARRANTIES OR CONDITIONS OF ANY KIND, either express or implied.
-// See the License for the specific language governing permissions and
-// limitations under the License.
-// [Legal]
-
 #ifdef PCH_BUILD
 #include "pch.hpp"
 #endif // PCH_BUILD
@@ -81,7 +65,7 @@ using namespace Esri::ArcGISRuntime::Authentication;
 
 TraceUtilityNetwork::TraceUtilityNetwork(QObject* parent /* = nullptr */) :
   ArcGISAuthenticationChallengeHandler(parent),
-  m_map(new Map(BasemapStyle::ArcGISStreetsNight, this)),
+  m_map(new Map(QUrl("https://sampleserver7.arcgisonline.com/portal/home/item.html?id=be0e4637620a453584118107931f718b"), this)),
   m_startingSymbol(new SimpleMarkerSymbol(SimpleMarkerSymbolStyle::Cross, QColor(Qt::green), 20, this)),
   m_barrierSymbol(new SimpleMarkerSymbol(SimpleMarkerSymbolStyle::X, QColor(Qt::red), 20, this)),
   m_mediumVoltageSymbol(new SimpleLineSymbol(SimpleLineSymbolStyle::Solid, QColor(Qt::darkCyan), 3, this)),
