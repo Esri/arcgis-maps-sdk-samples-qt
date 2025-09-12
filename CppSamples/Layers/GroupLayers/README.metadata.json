@@ -10,7 +10,7 @@
         "3D",
         "group layer",
         "GroupLayer",
-        "GroupLayer.VisibilityMode",
+        "GroupLayer::visibilityMode",
         "LayerContent",
         "layers"
     ],
