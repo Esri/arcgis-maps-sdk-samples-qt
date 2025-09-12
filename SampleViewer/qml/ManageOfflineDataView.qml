@@ -26,23 +26,38 @@ Page {
     onVisibleChanged: {
         if (!manageOfflineDataViewPage.visible && SampleManager.downloadInProgress)
             SampleManager.cancelDownload = true;
+        else if (manageOfflineDataViewPage.visible)
+            SampleManager.getOfflineDataProjects();
     }
 
+    Connections {
+        target: SampleManager
+        function onDoneDownloadingChanged() {
+            SampleManager.getOfflineDataProjects();
+        }
+    }
+
+    property bool showOnlyDownloaded: false
+
     ColumnLayout {
-        anchors.horizontalCenter: parent.horizontalCenter
-        anchors.verticalCenter: parent.verticalCenter
+        anchors.fill: parent
+        anchors.margins: 20
+        spacing: 10
 
         Image {
             Layout.alignment: Qt.AlignHCenter | Qt.AlignVCenter
             source: "qrc:/logo.png"
+            Layout.preferredWidth: 100
+            Layout.preferredHeight: 100
+            fillMode: Image.PreserveAspectFit
             clip: true
+            visible: !SampleManager.downloadInProgress
         }
 
-        Text {
-            id: name
+        Label {
             text: qsTr("Currently downloading offline data.")
             Layout.alignment: Qt.AlignHCenter | Qt.AlignVCenter
-            horizontalAlignment: Text.AlignHCenter
+            horizontalAlignment: Label.AlignHCenter
             font {
                 family: fontFamily
                 weight: Font.DemiBold
@@ -52,28 +67,165 @@ Page {
             visible: SampleManager.downloadInProgress
         }
 
-        Button {
-            text: SampleManager.downloadFailed ?  "Retry download all offline data" : "Download all offline data"
+        RowLayout {
             Layout.alignment: Qt.AlignHCenter | Qt.AlignVCenter
             visible: !SampleManager.downloadInProgress
-            onClicked: {
-                if (SampleManager.reachability === SampleManager.ReachabilityOnline || SampleManager.reachability === SampleManager.ReachabilityUnknown) {
-                    SampleManager.downloadAllDataItems();
-                } else {
-                    SampleManager.currentMode = SampleManager.NetworkRequiredView;
+            spacing: 10
+
+            Button {
+                text: SampleManager.downloadFailed ? "Retry download all offline data" : "Download all offline data"
+                enabled: {
+                    if (SampleManager.offlineDataProjects.length === 0) return false;
+                    for (let i = 0; i < SampleManager.offlineDataProjects.length; i++) {
+                        if (!SampleManager.offlineDataProjects[i].downloaded) return true;
+                    }
+                    return false;
                 }
+                onClicked: {
+                    if (SampleManager.reachability === SampleManager.ReachabilityOnline || SampleManager.reachability === SampleManager.ReachabilityUnknown) {
+                        SampleManager.downloadAllDataItems();
+                    } else {
+                        SampleManager.currentMode = SampleManager.NetworkRequiredView;
+                    }
+                }
+                clip: true
             }
-            clip: true
+
+            Button {
+                text: qsTr("Delete all offline data")
+                enabled: {
+                    if (SampleManager.offlineDataProjects.length === 0) return false;
+                    for (let i = 0; i < SampleManager.offlineDataProjects.length; i++) {
+                        if (SampleManager.offlineDataProjects[i].downloaded) return true;
+                    }
+                    return false;
+                }
+                onClicked: {
+                    deleteAllDialog.visible = SampleManager.deleteAllOfflineData();
+                }
+                clip: true
+            }
         }
 
-        Button {
-            text: qsTr("Delete all offline data")
-            Layout.alignment: Qt.AlignHCenter | Qt.AlignVCenter
+        RowLayout {
+            Layout.fillWidth: true
             visible: !SampleManager.downloadInProgress
-            onClicked: {
-                messageDialog.visible = SampleManager.deleteAllOfflineData();
+
+            Item {
+                Layout.fillWidth: true
             }
-            clip: true
+
+            CheckBox {
+                text: "Show only downloaded data"
+                checked: showOnlyDownloaded
+                enabled: {
+                    if (SampleManager.offlineDataProjects.length === 0) return false;
+                    for (let i = 0; i < SampleManager.offlineDataProjects.length; i++) {
+                        if (SampleManager.offlineDataProjects[i].downloaded) return true;
+                    }
+                    return false;
+                }
+                Layout.alignment: Qt.AlignRight
+                onClicked: {
+                    showOnlyDownloaded = checked;
+                }
+                onEnabledChanged: {
+                    if (!enabled) {
+                        showOnlyDownloaded = false;
+                    }
+                }
+            }
+        }
+
+        Rectangle {
+            Layout.fillWidth: true
+            Layout.fillHeight: true
+            visible: !SampleManager.downloadInProgress
+            color: "transparent"
+            border {
+                color: "lightgray"
+                width: 1
+            }
+            radius: 5
+
+            ScrollView {
+                anchors.fill: parent
+                anchors.margins: 5
+                clip: true
+
+                ListView {
+                    model: {
+                        if (!showOnlyDownloaded) {
+                            return SampleManager.offlineDataProjects;
+                        } else {
+                            return SampleManager.offlineDataProjects.filter(function(item) {
+                                return item.downloaded;
+                            });
+                        }
+                    }
+                    spacing: 5
+
+                    Component.onCompleted: {
+                        SampleManager.getOfflineDataProjects();
+                    }
+
+                    delegate: Rectangle {
+                        width: ListView.view.width
+                        height: 80
+                        color: "lightgray"
+                        radius: 5
+                        border {
+                            color: "darkgray"
+                            width: 1
+                        }
+
+                        RowLayout {
+                            anchors.fill: parent
+                            anchors.margins: 10
+                            spacing: 10
+
+                            Column {
+                                Layout.fillWidth: true
+                                spacing: 5
+
+                                Label {
+                                    text: modelData.sample.name
+                                    font {
+                                        family: fontFamily
+                                        weight: Font.DemiBold
+                                    }
+                                    elide: Label.ElideRight
+                                }
+
+                                Label {
+                                    text: modelData.downloaded ? "Downloaded" : "Not downloaded"
+                                    color: modelData.downloaded ? "green" : "red"
+                                    font {
+                                        family: fontFamily
+                                    }
+                                }
+                            }
+
+                            Button {
+                                text: "Download"
+                                enabled: !modelData.downloaded && !SampleManager.downloadInProgress
+                                onClicked: {
+                                    SampleManager.downloadProjectData(modelData.sample.name);
+                                }
+                            }
+
+                            Button {
+                                text: "Delete"
+                                enabled: modelData.downloaded
+                                onClicked: {
+                                    deleteProjectDialog.sampleName = modelData.sample.name;
+                                    deleteProjectDialog.visible = true;
+                                }
+                            }
+                        }
+                    }
+                }
+            }
         }
 
         Label {
@@ -125,10 +277,31 @@ Page {
     }
 
     MessageDialog {
-        id: messageDialog
+        id: deleteAllDialog
         title: "Delete all offline data"
         text: "Delete all offline data was successful"
         visible: false
+        onRejected: {
+            visible = false;
+        }
+    }
+
+    MessageDialog {
+        id: deleteProjectDialog
+        property string sampleName: ""
+        title: "Delete project data"
+        text: "Are you sure you want to delete offline data for '" + sampleName + "'?"
+        visible: false
+        buttons: MessageDialog.Yes | MessageDialog.No
+        onAccepted: {
+            if (SampleManager.deleteProjectOfflineData(sampleName)) {
+                text = "Project data deleted successfully";
+                buttons = MessageDialog.Ok;
+            } else {
+                text = "Failed to delete project data";
+                buttons = MessageDialog.Ok;
+            }
+        }
         onRejected: {
             visible = false;
         }
