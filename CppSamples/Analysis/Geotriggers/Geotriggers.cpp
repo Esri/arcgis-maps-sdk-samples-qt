@@ -161,7 +161,7 @@ void Geotriggers::createGeotriggerMonitor(ServiceFeatureTable* serviceFeatureTab
   connect(geotriggerMonitor, &GeotriggerMonitor::geotriggerNotification, this, &Geotriggers::handleGeotriggerNotification);
 
   // startAsync must be explicitly called. It is called after the signal connection is defined to avoid a race condition in Qt.
-  auto future = geotriggerMonitor->startAsync();
+  QFuture<void> future = geotriggerMonitor->startAsync();
   Q_UNUSED(future)
 }
 
@@ -231,9 +231,7 @@ void Geotriggers::getFeatureInformation(const QString& sectionName)
   }
 
   emit displayInfoChanged();
-  // enableAutoFetch and enableAutoApplyEdits for AttachmentListModel are set as false
-  // to avoid automatic behavior. We will call fetchDataAsync explicitly as needed.
-  feature->attachments(false, false)->fetchAttachmentsAsync().then(this,
+  feature->attachments()->fetchAttachmentsAsync().then(this,
       [this, sectionName](const QList<Attachment*>& attachments)
       {
         if (attachments.isEmpty())
