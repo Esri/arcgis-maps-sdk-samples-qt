@@ -19,7 +19,7 @@
     ],
     "relevant_apis": [
         "GroupLayer",
-        "GroupLayer.VisibilityMode",
+        "GroupLayer::visibilityMode",
         "LayerContent"
     ],
     "snippets": [
