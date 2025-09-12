@@ -97,8 +97,13 @@ TraceUtilityNetwork::TraceUtilityNetwork(QObject* parent /* = nullptr */) :
 
   connect(m_serviceGeodatabase, &ServiceGeodatabase::doneLoading, this, [this](const Error& loadError)
   {
-    createFeatureLayers(loadError);
-    createRenderers(loadError);
+    if (hasErrorOccurred(loadError))
+    {
+      return;
+    }
+
+    createFeatureLayers();
+    createRenderers();
   });
 
   m_serviceGeodatabase->load();
@@ -106,12 +111,8 @@ TraceUtilityNetwork::TraceUtilityNetwork(QObject* parent /* = nullptr */) :
   connect(m_map, &Map::doneLoading, this, &TraceUtilityNetwork::loadUtilityNetwork);
 }
 
-void TraceUtilityNetwork::createFeatureLayers(const Error& error)
+void TraceUtilityNetwork::createFeatureLayers()
 {
-  if (hasErrorOccurred(error))
-  {
-    return;
-  }
 
   // Create feature table from the 1st table (index = 0) in the serviceGeodatabase
   m_deviceFeatureTable = m_serviceGeodatabase->table(0);
@@ -125,13 +126,8 @@ void TraceUtilityNetwork::createFeatureLayers(const Error& error)
   m_map->operationalLayers()->append(m_deviceLayer);
 }
 
-void TraceUtilityNetwork::createRenderers(const Error& error)
+void TraceUtilityNetwork::createRenderers()
 {
-  if (hasErrorOccurred(error))
-  {
-    return;
-  }
-
   // create unique renderer
   m_uniqueValueRenderer = new UniqueValueRenderer(this);
   m_uniqueValueRenderer->setFieldNames(QStringList("ASSETGROUP"));
