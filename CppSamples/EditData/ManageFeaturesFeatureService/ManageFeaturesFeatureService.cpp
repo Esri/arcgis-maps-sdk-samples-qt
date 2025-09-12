@@ -357,7 +357,7 @@ void ManageFeaturesFeatureService::onApplyEditsCompleted_(const QList<FeatureTab
   }
 }
 
-void ManageFeaturesFeatureService::handleAddFeatureClick_(QMouseEvent& mouseEvent)
+void ManageFeaturesFeatureService::handleAddFeatureClick_(const QMouseEvent& mouseEvent)
 {
   // Add features mode
   // Obtain the map point
@@ -408,7 +408,7 @@ void ManageFeaturesFeatureService::handleAddFeatureClick_(QMouseEvent& mouseEven
   });
 }
 
-void ManageFeaturesFeatureService::handleUpdateGeometryClick_(QMouseEvent& mouseEvent)
+void ManageFeaturesFeatureService::handleUpdateGeometryClick_(const QMouseEvent& mouseEvent)
 {
   // Update geometry mode
   // Get the point from the mouse point
@@ -425,7 +425,7 @@ void ManageFeaturesFeatureService::handleUpdateGeometryClick_(QMouseEvent& mouse
   }
 }
 
-void ManageFeaturesFeatureService::handleIdentifyFeatureClick_(QMouseEvent& mouseEvent)
+void ManageFeaturesFeatureService::handleIdentifyFeatureClick_(const QMouseEvent& mouseEvent)
 {
   // Identify and select feature mode (for delete and update attributes)
   // First clear the selection
@@ -492,7 +492,7 @@ void ManageFeaturesFeatureService::updateSelectedFeatureGeometry_(const Point& m
   m_featureSelected = false;
 }
 
-void ManageFeaturesFeatureService::selectFeatureForGeometryUpdate_(QMouseEvent& mouseEvent)
+void ManageFeaturesFeatureService::selectFeatureForGeometryUpdate_(const QMouseEvent& mouseEvent)
 {
   // First clear the selection
   m_featureLayer->clearSelection();

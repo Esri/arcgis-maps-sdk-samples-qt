@@ -51,15 +51,16 @@ ManageFeaturesFeatureServiceSample {
             }
             
             // Delete mode - show trash button, Update mode - show accessory button
-            accessoryButtonType: addFeaturesSample.operationMode === 1 ? "Custom" : (addFeaturesSample.operationMode === 2 ? "Info" : "None")
-            customImageUrl: addFeaturesSample.operationMode === 1 ? "qrc:/Samples/EditData/ManageFeaturesFeatureService/ic_menu_trash_light.png" : ""
+            accessoryButtonType: addFeaturesSample.operationMode === ManageFeaturesFeatureService.OperationMode.DeleteFeatures ? "Custom" :
+                                                                                                                                 (addFeaturesSample.operationMode === ManageFeaturesFeatureService.OperationMode.UpdateAttributes ? "Info" : "None")
+            customImageUrl: addFeaturesSample.operationMode === ManageFeaturesFeatureService.OperationMode.DeleteFeatures ? "qrc:/Samples/EditData/ManageFeaturesFeatureService/ic_menu_trash_light.png" : ""
 
             onAccessoryButtonClicked: {
-                if (addFeaturesSample.operationMode === 1) {
+                if (addFeaturesSample.operationMode === ManageFeaturesFeatureService.OperationMode.DeleteFeatures) {
                     if (callout.visible)
                         callout.dismiss();
                     addFeaturesSample.deleteSelectedFeature();
-                } else if (addFeaturesSample.operationMode === 2) {
+                } else if (addFeaturesSample.operationMode === ManageFeaturesFeatureService.OperationMode.UpdateAttributes) {
                     updateWindow.visible = true;
                 }
             }
@@ -132,11 +133,11 @@ ManageFeaturesFeatureServiceSample {
 
     // Handle feature selection for callout modes
     onFeatureSelected: {
-        if (addFeaturesSample.operationMode === 1 || addFeaturesSample.operationMode === 2) {
+        if (addFeaturesSample.operationMode === ManageFeaturesFeatureService.OperationMode.DeleteFeatures || addFeaturesSample.operationMode === ManageFeaturesFeatureService.OperationMode.UpdateAttributes) {
             // Show the callout
             callout.showCallout();
             
-            if (addFeaturesSample.operationMode === 2) {
+            if (addFeaturesSample.operationMode === ManageFeaturesFeatureService.OperationMode.UpdateAttributes) {
                 // Set the combo box's default value for update attributes mode
                 damageComboBox.currentIndex = featAttributes.indexOf(addFeaturesSample.featureType);
             }

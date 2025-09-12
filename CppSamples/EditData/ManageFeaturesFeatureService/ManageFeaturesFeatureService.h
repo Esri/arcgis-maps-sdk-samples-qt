@@ -77,11 +77,11 @@ private:
   void onIdentifyLayerCompleted_(Esri::ArcGISRuntime::IdentifyLayerResult* identifyResult);
   void onApplyEditsCompleted_(const QList<Esri::ArcGISRuntime::FeatureTableEditResult*>& tableEditResults);
 
-  void handleAddFeatureClick_(QMouseEvent& mouseEvent);
-  void handleUpdateGeometryClick_(QMouseEvent& mouseEvent);
-  void handleIdentifyFeatureClick_(QMouseEvent& mouseEvent);
+  void handleAddFeatureClick_(const QMouseEvent& mouseEvent);
+  void handleUpdateGeometryClick_(const QMouseEvent& mouseEvent);
+  void handleIdentifyFeatureClick_(const QMouseEvent& mouseEvent);
   void updateSelectedFeatureGeometry_(const Esri::ArcGISRuntime::Point& mapPoint);
-  void selectFeatureForGeometryUpdate_(QMouseEvent& mouseEvent);
+  void selectFeatureForGeometryUpdate_(const QMouseEvent& mouseEvent);
 
   Esri::ArcGISRuntime::Map* m_map = nullptr;
   Esri::ArcGISRuntime::MapQuickView* m_mapView = nullptr;
