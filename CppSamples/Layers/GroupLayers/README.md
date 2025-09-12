@@ -31,7 +31,7 @@ The layers in the map will be displayed in a table of contents. Toggle the check
 ## Relevant API
 
 * GroupLayer
-* GroupLayer.VisibilityMode
+* GroupLayer::visibilityMode
 * LayerContent
 
 ## Additional information
