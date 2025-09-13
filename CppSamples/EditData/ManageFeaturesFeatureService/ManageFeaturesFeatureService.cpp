@@ -234,7 +234,7 @@ void ManageFeaturesFeatureService::deleteSelectedFeature()
   });
 }
 
-void ManageFeaturesFeatureService::updateSelectedFeature(QString fieldVal)
+void ManageFeaturesFeatureService::updateSelectedFeature(const QString& fieldVal)
 {
   // If the last connection is still hanging around we want to ensure it is disconnected.
   disconnect(m_featureLoadStatusChangedConnection);
@@ -517,7 +517,11 @@ void ManageFeaturesFeatureService::selectFeatureForGeometryUpdate_(const QMouseE
       // Select the feature
       QueryParameters query;
       query.setObjectIds(QList<qint64>{feature->attributes()->attributeValue(QStringLiteral("objectid")).toLongLong()});
-      m_featureLayer->selectFeaturesAsync(query, SelectionMode::New);
+      m_featureLayer->selectFeaturesAsync(query, SelectionMode::New)
+        .then(this, [](FeatureQueryResult* rawResult)
+      {
+        std::unique_ptr<FeatureQueryResult>{rawResult};
+      });
 
       // Set selected feature member and switch to selected mode
       m_selectedFeature = static_cast<ArcGISFeature*>(feature);

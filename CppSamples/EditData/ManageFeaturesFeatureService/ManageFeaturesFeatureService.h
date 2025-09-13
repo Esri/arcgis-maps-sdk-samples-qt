@@ -60,7 +60,7 @@ public:
   static void init();
 
   Q_INVOKABLE void deleteSelectedFeature();
-  Q_INVOKABLE void updateSelectedFeature(QString fieldVal);
+  Q_INVOKABLE void updateSelectedFeature(const QString& fieldVal);
 
   OperationMode operationMode() const;
   void setOperationMode(OperationMode mode);
