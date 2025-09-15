@@ -22,22 +22,34 @@
 #include "AddEncExchangeSet.h"
 
 // ArcGIS Maps SDK headers
+#include "CalloutData.h"
 #include "EncCell.h"
 #include "EncDataset.h"
+#include "EncDisplaySettings.h"
 #include "EncEnvironmentSettings.h"
 #include "EncExchangeSet.h"
+#include "EncFeature.h"
 #include "EncLayer.h"
+#include "EncMarinerSettings.h"
+#include "EncTextGroupVisibilitySettings.h"
+#include "EncViewingGroupSettings.h"
+#include "HydrographyTypes.h"
 #include "Envelope.h"
 #include "Error.h"
+#include "ErrorException.h"
 #include "GeometryEngine.h"
+#include "IdentifyLayerResult.h"
 #include "LayerListModel.h"
 #include "Map.h"
 #include "MapQuickView.h"
 #include "MapTypes.h"
+#include "Point.h"
 #include "Viewpoint.h"
 
 // Qt headers
+#include <QDebug>
 #include <QFuture>
+#include <QMouseEvent>
 #include <QStandardPaths>
 #include <QtCore/qglobal.h>
 
@@ -67,12 +79,23 @@ AddEncExchangeSet::AddEncExchangeSet(QObject* parent /* = nullptr */):
   // set resource path
   EncEnvironmentSettings::setResourcePath(defaultDataPath() + "/ArcGIS/Runtime/Data/ENC/hydrography");
 
+  // Apply initial display settings
+  updateDisplaySettings();
+
   // create ENC Exchange Set
   QStringList encPaths = { defaultDataPath() + "/ArcGIS/Runtime/Data/ENC/ExchangeSetwithoutUpdates/ENC_ROOT/CATALOG.031" };
   m_encExchangeSet = new EncExchangeSet(encPaths, this);
 }
 
-AddEncExchangeSet::~AddEncExchangeSet() = default;
+AddEncExchangeSet::~AddEncExchangeSet()
+{
+  // ENC environment settings apply to the entire application.
+  // They need to be reset after leaving the sample to avoid affecting other samples.
+  EncDisplaySettings* globalDisplaySettings = EncEnvironmentSettings::displaySettings();
+  globalDisplaySettings->marinerSettings()->resetToDefaults();
+  globalDisplaySettings->viewingGroupSettings()->resetToDefaults();
+  globalDisplaySettings->textGroupVisibilitySettings()->resetToDefaults();
+}
 
 void AddEncExchangeSet::init()
 {
@@ -94,6 +117,13 @@ void AddEncExchangeSet::setMapView(MapQuickView* mapView)
 
   m_mapView = mapView;
   m_mapView->setMap(m_map);
+
+  // Initialize callout data (following ShowCallout pattern)
+  m_mapView->calloutData()->setVisible(false);
+  m_mapView->calloutData()->setTitle("ENC Feature");
+
+  // Connect to mouse clicked events for feature identification
+  connect(m_mapView, &MapQuickView::mouseClicked, this, &AddEncExchangeSet::onGeoViewTapped);
 
   // connect to doneLoading signal of EncExchangeSet
   connect(m_encExchangeSet, &EncExchangeSet::doneLoading, this, [this](const Error& e)
@@ -136,4 +166,176 @@ void AddEncExchangeSet::setMapView(MapQuickView* mapView)
   m_encExchangeSet->load();
 
   emit mapViewChanged();
+}
+
+QString AddEncExchangeSet::colorScheme() const
+{
+  return m_colorScheme;
+}
+
+void AddEncExchangeSet::setColorScheme(const QString& colorScheme)
+{
+  if (m_colorScheme == colorScheme)
+    return;
+
+  m_colorScheme = colorScheme;
+  updateDisplaySettings();
+  emit colorSchemeChanged();
+}
+
+QString AddEncExchangeSet::areaSymbolizationType() const
+{
+  return m_areaSymbolizationType;
+}
+
+void AddEncExchangeSet::setAreaSymbolizationType(const QString& areaSymbolizationType)
+{
+  if (m_areaSymbolizationType == areaSymbolizationType)
+    return;
+
+  m_areaSymbolizationType = areaSymbolizationType;
+  updateDisplaySettings();
+  emit areaSymbolizationTypeChanged();
+}
+
+QString AddEncExchangeSet::pointSymbolizationType() const
+{
+  return m_pointSymbolizationType;
+}
+
+void AddEncExchangeSet::setPointSymbolizationType(const QString& pointSymbolizationType)
+{
+  if (m_pointSymbolizationType == pointSymbolizationType)
+    return;
+
+  m_pointSymbolizationType = pointSymbolizationType;
+  updateDisplaySettings();
+  emit pointSymbolizationTypeChanged();
+}
+
+void AddEncExchangeSet::updateDisplaySettings()
+{
+  // Hold a reference to the application-wide ENC Display Settings
+  EncDisplaySettings* globalDisplaySettings = EncEnvironmentSettings::displaySettings();
+  
+  // Hold a reference to the application-wide ENC Mariner Settings (part of display settings)
+  EncMarinerSettings* globalMarinerSettings = globalDisplaySettings->marinerSettings();
+
+  // Apply color scheme
+  if (m_colorScheme == "Day")
+    globalMarinerSettings->setColorScheme(Esri::ArcGISRuntime::EncColorScheme::Day);
+  else if (m_colorScheme == "Dusk")
+    globalMarinerSettings->setColorScheme(Esri::ArcGISRuntime::EncColorScheme::Dusk);
+  else if (m_colorScheme == "Night")
+    globalMarinerSettings->setColorScheme(Esri::ArcGISRuntime::EncColorScheme::Night);
+
+  // Apply area symbolization
+  if (m_areaSymbolizationType == "Plain")
+    globalMarinerSettings->setAreaSymbolizationType(Esri::ArcGISRuntime::EncAreaSymbolizationType::Plain);
+  else
+    globalMarinerSettings->setAreaSymbolizationType(Esri::ArcGISRuntime::EncAreaSymbolizationType::Symbolized);
+
+  // Apply point symbolization
+  if (m_pointSymbolizationType == "PaperChart")
+    globalMarinerSettings->setPointSymbolizationType(Esri::ArcGISRuntime::EncPointSymbolizationType::PaperChart);
+  else
+    globalMarinerSettings->setPointSymbolizationType(Esri::ArcGISRuntime::EncPointSymbolizationType::Simplified);
+}
+
+void AddEncExchangeSet::clearAllSelections()
+{
+  if (!m_mapView)
+    return;
+
+  // For each layer in the operational layers that is an ENC layer
+  LayerListModel* operationalLayers = m_map->operationalLayers();
+  for (int i = 0; i < operationalLayers->size(); ++i)
+  {
+    EncLayer* encLayer = qobject_cast<EncLayer*>(operationalLayers->at(i));
+    if (encLayer)
+    {
+      // Clear the layer's selection
+      encLayer->clearSelection();
+    }
+  }
+
+  // Hide the callout
+  m_mapView->calloutData()->setVisible(false);
+}
+
+void AddEncExchangeSet::onGeoViewTapped(QMouseEvent& mouseEvent)
+{
+  if (!m_mapView)
+    return;
+
+  // Set callout position for new location
+  const Point mapPoint = m_mapView->screenToLocation(mouseEvent.position().x(), mouseEvent.position().y());
+  m_mapView->calloutData()->setLocation(mapPoint);
+
+  // Clear existing selections
+  clearAllSelections();
+
+  // Perform the identify operation on ENC layers specifically
+  const double tolerance = 12.0;
+  const bool returnPopupsOnly = false;
+
+  m_mapView->identifyLayersAsync(mouseEvent.position(), tolerance, returnPopupsOnly)
+    .then(this,
+          [this](const QList<IdentifyLayerResult*>& results)
+  {
+    // Filter to get only ENC layer results
+    QList<IdentifyLayerResult*> encResults;
+    for (IdentifyLayerResult* result : results)
+    {
+      if (qobject_cast<EncLayer*>(result->layerContent()))
+      {
+        encResults.append(result);
+      }
+    }
+
+    // Return early if no ENC results
+    if (encResults.isEmpty())
+    {
+      m_mapView->calloutData()->setVisible(false);
+      return;
+    }
+
+    // Get the first ENC result
+    IdentifyLayerResult* firstResult = encResults.first();
+    EncLayer* containingLayer = qobject_cast<EncLayer*>(firstResult->layerContent());
+
+    // Get the first ENC feature from the result
+    const QList<GeoElement*> geoElements = firstResult->geoElements();
+    if (!geoElements.isEmpty())
+    {
+      EncFeature* encFeature = dynamic_cast<EncFeature*>(geoElements.first());
+      if (encFeature)
+      {
+        // Select the feature
+        containingLayer->selectFeature(encFeature);
+
+        // Create callout content
+        QString title = encFeature->acronym().isEmpty() ? "ENC Feature" : encFeature->acronym();
+        QString detail = encFeature->description().isEmpty() ? "ENC Chart Feature" : encFeature->description();
+
+        // Show callout
+        m_mapView->calloutData()->setTitle(title);
+        m_mapView->calloutData()->setDetail(detail);
+        m_mapView->calloutData()->setVisible(true);
+      }
+      else
+      {
+        m_mapView->calloutData()->setVisible(false);
+      }
+    }
+    else
+    {
+      m_mapView->calloutData()->setVisible(false);
+    }
+  })
+    .onFailed(this, [this](const ErrorException& e)
+  {
+    // If identify fails, hide callout
+    m_mapView->calloutData()->setVisible(false);
+  });
 }
