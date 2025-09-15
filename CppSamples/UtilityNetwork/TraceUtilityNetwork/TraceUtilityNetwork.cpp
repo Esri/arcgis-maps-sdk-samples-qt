@@ -113,7 +113,6 @@ TraceUtilityNetwork::TraceUtilityNetwork(QObject* parent /* = nullptr */) :
 
 void TraceUtilityNetwork::createFeatureLayers()
 {
-
   // Create feature table from the 1st table (index = 0) in the serviceGeodatabase
   m_deviceFeatureTable = m_serviceGeodatabase->table(0);
   m_deviceLayer = new FeatureLayer(m_deviceFeatureTable, this);
