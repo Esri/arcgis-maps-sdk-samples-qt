@@ -1,4 +1,4 @@
-# Local server geoprocessing
+# Local Server geoprocessing
 
 Create contour lines from local raster data using a local geoprocessing package `.gpkx` and the contour geoprocessing tool.
 

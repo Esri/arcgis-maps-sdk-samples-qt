@@ -1,4 +1,4 @@
-# Create feature collection layer (Portal item)
+# Create feature collection layer (portal item)
 
 Create a feature collection layer from a portal item.
 

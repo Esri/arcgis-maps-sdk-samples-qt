@@ -30,5 +30,5 @@
         "DisplayOgcApiFeatureCollection.h",
         "DisplayOgcApiFeatureCollection.qml"
     ],
-    "title": "Display OGC API Feature Collection"
+    "title": "Display OGC API feature collection"
 }
