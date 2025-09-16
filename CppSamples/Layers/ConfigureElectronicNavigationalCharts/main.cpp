@@ -1,5 +1,5 @@
 // [Legal]
-// Copyright 2019 Esri.
+// Copyright 2025 Esri.
 //
 // Licensed under the Apache License, Version 2.0 (the "License");
 // you may not use this file except in compliance with the License.
@@ -14,7 +14,7 @@
 // [Legal]
 
 // sample headers
-#include "AddEncExchangeSet.h"
+#include "ConfigureElectronicNavigationalCharts.h"
 
 // ArcGIS Maps SDK headers
 #include "ArcGISRuntimeEnvironment.h"
@@ -35,7 +35,7 @@
 int main(int argc, char *argv[])
 {
   QGuiApplication app(argc, argv);
-  app.setApplicationName(QString("AddEncExchangeSet"));
+  app.setApplicationName(QString("ConfigureElectronicNavigationalCharts"));
 
   // Use of ArcGIS location services, such as basemap styles, geocoding, and routing services,
   // requires an access token. For more information see
@@ -64,7 +64,7 @@ int main(int argc, char *argv[])
   }
 
   // Initialize the sample
-  AddEncExchangeSet::init();
+  ConfigureElectronicNavigationalCharts::init();
 
   QString arcGISRuntimeImportPath = QUOTE(ARCGIS_RUNTIME_IMPORT_PATH);
 
@@ -83,7 +83,7 @@ int main(int argc, char *argv[])
   engine.addImportPath(arcGISRuntimeImportPath);
 
   // Set the source
-  engine.load(QUrl("qrc:/Samples/Layers/AddEncExchangeSet/main.qml"));
+  engine.load(QUrl("qrc:/Samples/Layers/ConfigureElectronicNavigationalCharts/main.qml"));
 
   return app.exec();
 }

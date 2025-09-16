@@ -1,4 +1,4 @@
-// [WriteFile Name=AddEncExchangeSet, Category=Layers]
+// [WriteFile Name=ConfigureElectronicNavigationalCharts, Category=Layers]
 // [Legal]
 // Copyright 2019 Esri.
 //
@@ -14,8 +14,8 @@
 // limitations under the License.
 // [Legal]
 
-#ifndef ADDENCEXCHANGESET_H
-#define ADDENCEXCHANGESET_H
+#ifndef CONFIGUREELECTRONICNAVIGATIONALCHARTS_H
+#define CONFIGUREELECTRONICNAVIGATIONALCHARTS_H
 
 // Qt headers
 #include <QObject>
@@ -34,7 +34,7 @@ class EncMarinerSettings;
 
 Q_MOC_INCLUDE("MapQuickView.h")
 
-class AddEncExchangeSet : public QObject
+class ConfigureElectronicNavigationalCharts : public QObject
 {
   Q_OBJECT
 
@@ -44,8 +44,8 @@ class AddEncExchangeSet : public QObject
   Q_PROPERTY(QString pointSymbolizationType READ pointSymbolizationType WRITE setPointSymbolizationType NOTIFY pointSymbolizationTypeChanged)
 
 public:
-  explicit AddEncExchangeSet(QObject* parent = nullptr);
-  ~AddEncExchangeSet();
+  explicit ConfigureElectronicNavigationalCharts(QObject* parent = nullptr);
+  ~ConfigureElectronicNavigationalCharts();
 
   static void init();
 
@@ -84,4 +84,4 @@ private:
   QString m_pointSymbolizationType = "PaperChart";
 };
 
-#endif // ADDENCEXCHANGESET_H
+#endif // CONFIGUREELECTRONICNAVIGATIONALCHARTS_H

@@ -1,6 +1,6 @@
-// [WriteFile Name=AddEncExchangeSet, Category=Layers]
+// [WriteFile Name=ConfigureElectronicNavigationalCharts, Category=Layers]
 // [Legal]
-// Copyright 2019 Esri.
+// Copyright 2025 Esri.
 //
 // Licensed under the Apache License, Version 2.0 (the "License");
 // you may not use this file except in compliance with the License.
@@ -19,7 +19,7 @@
 #endif // PCH_BUILD
 
 // sample headers
-#include "AddEncExchangeSet.h"
+#include "ConfigureElectronicNavigationalCharts.h"
 
 // ArcGIS Maps SDK headers
 #include "CalloutData.h"
@@ -72,7 +72,7 @@ namespace
   }
 } // namespace
 
-AddEncExchangeSet::AddEncExchangeSet(QObject* parent /* = nullptr */):
+ConfigureElectronicNavigationalCharts::ConfigureElectronicNavigationalCharts(QObject* parent /* = nullptr */):
   QObject(parent),
   m_map(new Map(BasemapStyle::ArcGISOceans, this))
 {
@@ -87,7 +87,7 @@ AddEncExchangeSet::AddEncExchangeSet(QObject* parent /* = nullptr */):
   m_encExchangeSet = new EncExchangeSet(encPaths, this);
 }
 
-AddEncExchangeSet::~AddEncExchangeSet()
+ConfigureElectronicNavigationalCharts::~ConfigureElectronicNavigationalCharts()
 {
   // ENC environment settings apply to the entire application.
   // They need to be reset after leaving the sample to avoid affecting other samples.
@@ -97,20 +97,20 @@ AddEncExchangeSet::~AddEncExchangeSet()
   globalDisplaySettings->textGroupVisibilitySettings()->resetToDefaults();
 }
 
-void AddEncExchangeSet::init()
+void ConfigureElectronicNavigationalCharts::init()
 {
   // Register the map view for QML
   qmlRegisterType<MapQuickView>("Esri.Samples", 1, 0, "MapView");
-  qmlRegisterType<AddEncExchangeSet>("Esri.Samples", 1, 0, "AddEncExchangeSetSample");
+  qmlRegisterType<ConfigureElectronicNavigationalCharts>("Esri.Samples", 1, 0, "ConfigureElectronicNavigationalChartsSample");
 }
 
-MapQuickView* AddEncExchangeSet::mapView() const
+MapQuickView* ConfigureElectronicNavigationalCharts::mapView() const
 {
   return m_mapView;
 }
 
 // Set the view (created in QML)
-void AddEncExchangeSet::setMapView(MapQuickView* mapView)
+void ConfigureElectronicNavigationalCharts::setMapView(MapQuickView* mapView)
 {
   if (!mapView || mapView == m_mapView)
     return;
@@ -123,7 +123,7 @@ void AddEncExchangeSet::setMapView(MapQuickView* mapView)
   m_mapView->calloutData()->setTitle("ENC Feature");
 
   // Connect to mouse clicked events for feature identification
-  connect(m_mapView, &MapQuickView::mouseClicked, this, &AddEncExchangeSet::onGeoViewTapped);
+  connect(m_mapView, &MapQuickView::mouseClicked, this, &ConfigureElectronicNavigationalCharts::onGeoViewTapped);
 
   // connect to doneLoading signal of EncExchangeSet
   connect(m_encExchangeSet, &EncExchangeSet::doneLoading, this, [this](const Error& e)
@@ -168,12 +168,12 @@ void AddEncExchangeSet::setMapView(MapQuickView* mapView)
   emit mapViewChanged();
 }
 
-QString AddEncExchangeSet::colorScheme() const
+QString ConfigureElectronicNavigationalCharts::colorScheme() const
 {
   return m_colorScheme;
 }
 
-void AddEncExchangeSet::setColorScheme(const QString& colorScheme)
+void ConfigureElectronicNavigationalCharts::setColorScheme(const QString& colorScheme)
 {
   if (m_colorScheme == colorScheme)
     return;
@@ -183,12 +183,12 @@ void AddEncExchangeSet::setColorScheme(const QString& colorScheme)
   emit colorSchemeChanged();
 }
 
-QString AddEncExchangeSet::areaSymbolizationType() const
+QString ConfigureElectronicNavigationalCharts::areaSymbolizationType() const
 {
   return m_areaSymbolizationType;
 }
 
-void AddEncExchangeSet::setAreaSymbolizationType(const QString& areaSymbolizationType)
+void ConfigureElectronicNavigationalCharts::setAreaSymbolizationType(const QString& areaSymbolizationType)
 {
   if (m_areaSymbolizationType == areaSymbolizationType)
     return;
@@ -198,12 +198,12 @@ void AddEncExchangeSet::setAreaSymbolizationType(const QString& areaSymbolizatio
   emit areaSymbolizationTypeChanged();
 }
 
-QString AddEncExchangeSet::pointSymbolizationType() const
+QString ConfigureElectronicNavigationalCharts::pointSymbolizationType() const
 {
   return m_pointSymbolizationType;
 }
 
-void AddEncExchangeSet::setPointSymbolizationType(const QString& pointSymbolizationType)
+void ConfigureElectronicNavigationalCharts::setPointSymbolizationType(const QString& pointSymbolizationType)
 {
   if (m_pointSymbolizationType == pointSymbolizationType)
     return;
@@ -213,7 +213,7 @@ void AddEncExchangeSet::setPointSymbolizationType(const QString& pointSymbolizat
   emit pointSymbolizationTypeChanged();
 }
 
-void AddEncExchangeSet::updateDisplaySettings()
+void ConfigureElectronicNavigationalCharts::updateDisplaySettings()
 {
   // Hold a reference to the application-wide ENC Display Settings
   EncDisplaySettings* globalDisplaySettings = EncEnvironmentSettings::displaySettings();
@@ -242,7 +242,7 @@ void AddEncExchangeSet::updateDisplaySettings()
     globalMarinerSettings->setPointSymbolizationType(Esri::ArcGISRuntime::EncPointSymbolizationType::Simplified);
 }
 
-void AddEncExchangeSet::clearAllSelections()
+void ConfigureElectronicNavigationalCharts::clearAllSelections()
 {
   if (!m_mapView)
     return;
@@ -263,7 +263,7 @@ void AddEncExchangeSet::clearAllSelections()
   m_mapView->calloutData()->setVisible(false);
 }
 
-void AddEncExchangeSet::onGeoViewTapped(QMouseEvent& mouseEvent)
+void ConfigureElectronicNavigationalCharts::onGeoViewTapped(QMouseEvent& mouseEvent)
 {
   if (!m_mapView)
     return;

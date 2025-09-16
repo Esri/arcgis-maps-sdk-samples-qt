@@ -10,23 +10,25 @@
             "path": "~/ArcGIS/Runtime/Data/ENC/hydrography.zip"
         }
     ],
-    "description": "Display nautical charts per the ENC specification.",
+    "description": "Display and configure electronic navigational charts per ENC specification.",
     "featured": false,
     "ignore": false,
     "images": [
         "screenshot.png"
     ],
     "keywords": [
-        "Data",
         "ENC",
-        "hydrographic",
+        "IHO",
+        "S-52",
+        "S-57",
+        "hydrography",
+        "identify",
         "layers",
         "maritime",
         "nautical chart",
-        "EncCell",
-        "EncDataset",
-        "EncExchangeSet",
-        "EncLayer"
+        "select",
+        "settings",
+        "symbology"
     ],
     "redirect_from": [
         ""
@@ -34,13 +36,19 @@
     "relevant_apis": [
         "EncCell",
         "EncDataset",
+        "EncDisplaySettings",
+        "EncEnvironmentSettings",
         "EncExchangeSet",
-        "EncLayer"
+        "EncLayer",
+        "EncMarinerSettings",
+        "EncTextGroupVisibilitySettings",
+        "EncViewingGroupSettings",
+        "IdentifyLayerResult"
     ],
     "snippets": [
-        "AddEncExchangeSet.cpp",
-        "AddEncExchangeSet.h",
-        "AddEncExchangeSet.qml"
+        "ConfigureElectronicNavigationalCharts.cpp",
+        "ConfigureElectronicNavigationalCharts.h",
+        "ConfigureElectronicNavigationalCharts.qml"
     ],
-    "title": "Add ENC exchange set"
+    "title": "Configure electronic navigational charts"
 }

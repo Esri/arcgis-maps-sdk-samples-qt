@@ -1,5 +1,5 @@
 #-------------------------------------------------
-# Copyright 2019 Esri.
+# Copyright 2025 Esri.
 
 # Licensed under the Apache License, Version 2.0 (the "License");
 # you may not use this file except in compliance with the License.
@@ -25,7 +25,7 @@ CONFIG += c++17
 QT += opengl qml quick
 
 TEMPLATE = app
-TARGET = AddEncExchangeSet
+TARGET = ConfigureElectronicNavigationalCharts
 
 ARCGIS_RUNTIME_VERSION = 300.0.0
 include($$PWD/arcgisruntime.pri)
@@ -33,13 +33,13 @@ include($$PWD/arcgisruntime.pri)
 #-------------------------------------------------------------------------------
 
 HEADERS += \
-    AddEncExchangeSet.h
+    ConfigureElectronicNavigationalCharts.h
 
 SOURCES += \
     main.cpp \
-    AddEncExchangeSet.cpp
+    ConfigureElectronicNavigationalCharts.cpp
 
-RESOURCES += AddEncExchangeSet.qrc
+RESOURCES += ConfigureElectronicNavigationalCharts.qrc
 
 #-------------------------------------------------------------------------------
 

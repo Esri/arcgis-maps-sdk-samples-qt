@@ -40,7 +40,7 @@ Item {
     }
 
     // Declare the C++ instance which creates the map etc. and supply the view
-    AddEncExchangeSetSample {
+    ConfigureElectronicNavigationalChartsSample {
         id: model
         mapView: mapView
     }
@@ -80,7 +80,7 @@ Item {
                 spacing: 10
 
                 // Header
-                Text {
+                Label {
                     Layout.fillWidth: true
                     text: qsTr("ENC Settings")
                     font.pixelSize: 16
@@ -96,7 +96,7 @@ Item {
                 }
 
                 // Color Scheme Section
-                Text {
+                Label {
                     text: qsTr("Color Scheme")
                     font.pixelSize: 13
                     color: "#444444"
@@ -132,7 +132,7 @@ Item {
                 Rectangle { Layout.fillWidth: true; height: 1; color: "#e0e0e0" }
 
                 // Area Display Section
-                Text {
+                Label {
                     text: qsTr("Area Display")
                     font.pixelSize: 13
                     color: "#444444"
@@ -161,7 +161,7 @@ Item {
                 Rectangle { Layout.fillWidth: true; height: 1; color: "#e0e0e0" }
 
                 // Point Symbols Section
-                Text {
+                Label {
                     text: qsTr("Point Symbols")
                     font.pixelSize: 13
                     color: "#444444"
@@ -190,7 +190,7 @@ Item {
                 Rectangle { Layout.fillWidth: true; height: 1; color: "#e0e0e0" }
 
                 // Instructions
-                Text {
+                Label {
                     Layout.fillWidth: true
                     text: qsTr("Tap map features for details")
                     font.pixelSize: 10

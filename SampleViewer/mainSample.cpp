@@ -136,7 +136,6 @@
 #include "../CppSamples/Geometry/SpatialRelationships/SpatialRelationships.h"
 #include "../CppSamples/Layers/AddCustomDynamicEntityDataSource/AddCustomDynamicEntityDataSource.h"
 #include "../CppSamples/Layers/AddDynamicEntityLayer/AddDynamicEntityLayer.h"
-#include "../CppSamples/Layers/AddEncExchangeSet/AddEncExchangeSet.h"
 #include "../CppSamples/Layers/ApplyMosaicRuleToRasters/ApplyMosaicRuleToRasters.h"
 #include "../CppSamples/Layers/ApplyUniqueValuesWithAlternateSymbols/ApplyUniqueValuesWithAlternateSymbols.h"
 #include "../CppSamples/Layers/ArcGISMapImageLayerUrl/ArcGISMapImageLayerUrl.h"
@@ -147,6 +146,7 @@
 #include "../CppSamples/Layers/ChangeSublayerRenderer/ChangeSublayerRenderer.h"
 #include "../CppSamples/Layers/ChangeSublayerVisibility/ChangeSublayerVisibility.h"
 #include "../CppSamples/Layers/ConfigureClusters/ConfigureClusters.h"
+#include "../CppSamples/Layers/ConfigureElectronicNavigationalCharts/ConfigureElectronicNavigationalCharts.h"
 #include "../CppSamples/Layers/CreateAndSaveKmlFile/CreateAndSaveKmlFile.h"
 #include "../CppSamples/Layers/DisplayAnnotation/DisplayAnnotation.h"
 #include "../CppSamples/Layers/DisplayDimensions/DisplayDimensions.h"
@@ -377,7 +377,6 @@ void registerCppSampleClasses()
   AddAPointSceneLayer::init();
   AddCustomDynamicEntityDataSource::init();
   AddDynamicEntityLayer::init();
-  AddEncExchangeSet::init();
   AddFeaturesFeatureService::init();
   AddGraphicsWithRenderer::init();
   AddIntegratedMeshLayer::init();
@@ -407,6 +406,7 @@ void registerCppSampleClasses()
   ClosestFacility::init();
   ConfigureBasemapStyleLanguage::init();
   ConfigureClusters::init();
+  ConfigureElectronicNavigationalCharts::init();
   ConfigureSubnetworkTrace::init();
   ContingentValues::init();
   CreateKmlMultiTrack::init();

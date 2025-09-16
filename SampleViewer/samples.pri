@@ -105,7 +105,6 @@ HEADERS += \
     "$$SAMPLEPATHCPP/Layers/AddCustomDynamicEntityDataSource/AddCustomDynamicEntityDataSource.h" \
     "$$SAMPLEPATHCPP/Layers/AddCustomDynamicEntityDataSource/CustomDataSource.h" \
     "$$SAMPLEPATHCPP/Layers/AddDynamicEntityLayer/AddDynamicEntityLayer.h" \
-    "$$SAMPLEPATHCPP/Layers/AddEncExchangeSet/AddEncExchangeSet.h" \
     "$$SAMPLEPATHCPP/Layers/ApplyMosaicRuleToRasters/ApplyMosaicRuleToRasters.h" \
     "$$SAMPLEPATHCPP/Layers/ApplyUniqueValuesWithAlternateSymbols/ApplyUniqueValuesWithAlternateSymbols.h" \
     "$$SAMPLEPATHCPP/Layers/ArcGISMapImageLayerUrl/ArcGISMapImageLayerUrl.h" \
@@ -115,6 +114,7 @@ HEADERS += \
     "$$SAMPLEPATHCPP/Layers/BrowseWfsLayers/BrowseWfsLayers.h" \
     "$$SAMPLEPATHCPP/Layers/ChangeSublayerRenderer/ChangeSublayerRenderer.h" \
     "$$SAMPLEPATHCPP/Layers/ChangeSublayerVisibility/ChangeSublayerVisibility.h" \
+    "$$SAMPLEPATHCPP/Layers/ConfigureElectronicNavigationalCharts/ConfigureElectronicNavigationalCharts.h" \
     "$$SAMPLEPATHCPP/Layers/CreateAndSaveKmlFile/CreateAndSaveKmlFile.h" \
     "$$SAMPLEPATHCPP/Layers/DisplayAnnotation/DisplayAnnotation.h" \
     "$$SAMPLEPATHCPP/Layers/DisplayDimensions/DisplayDimensions.h" \
@@ -336,7 +336,6 @@ SOURCES += \
     "$$SAMPLEPATHCPP/Layers/AddCustomDynamicEntityDataSource/AddCustomDynamicEntityDataSource.cpp" \
     "$$SAMPLEPATHCPP/Layers/AddCustomDynamicEntityDataSource/CustomDataSource.cpp" \
     "$$SAMPLEPATHCPP/Layers/AddDynamicEntityLayer/AddDynamicEntityLayer.cpp" \
-    "$$SAMPLEPATHCPP/Layers/AddEncExchangeSet/AddEncExchangeSet.cpp" \
     "$$SAMPLEPATHCPP/Layers/ApplyMosaicRuleToRasters/ApplyMosaicRuleToRasters.cpp" \
     "$$SAMPLEPATHCPP/Layers/ApplyUniqueValuesWithAlternateSymbols/ApplyUniqueValuesWithAlternateSymbols.cpp" \
     "$$SAMPLEPATHCPP/Layers/ArcGISMapImageLayerUrl/ArcGISMapImageLayerUrl.cpp" \
@@ -346,6 +345,7 @@ SOURCES += \
     "$$SAMPLEPATHCPP/Layers/BrowseWfsLayers/BrowseWfsLayers.cpp" \
     "$$SAMPLEPATHCPP/Layers/ChangeSublayerRenderer/ChangeSublayerRenderer.cpp" \
     "$$SAMPLEPATHCPP/Layers/ChangeSublayerVisibility/ChangeSublayerVisibility.cpp" \
+    "$$SAMPLEPATHCPP/Layers/ConfigureElectronicNavigationalCharts/ConfigureElectronicNavigationalCharts.cpp" \
     "$$SAMPLEPATHCPP/Layers/CreateAndSaveKmlFile/CreateAndSaveKmlFile.cpp" \
     "$$SAMPLEPATHCPP/Layers/DisplayAnnotation/DisplayAnnotation.cpp" \
     "$$SAMPLEPATHCPP/Layers/DisplayDimensions/DisplayDimensions.cpp" \
@@ -559,7 +559,6 @@ RESOURCES += \
     "$$SAMPLEPATHCPP/Layers/ConfigureClusters/ConfigureClusters.qrc" \
     "$$SAMPLEPATHCPP/Layers/AddCustomDynamicEntityDataSource/AddCustomDynamicEntityDataSource.qrc" \
     "$$SAMPLEPATHCPP/Layers/AddDynamicEntityLayer/AddDynamicEntityLayer.qrc" \
-    "$$SAMPLEPATHCPP/Layers/AddEncExchangeSet/AddEncExchangeSet.qrc" \
     "$$SAMPLEPATHCPP/Layers/ApplyMosaicRuleToRasters/ApplyMosaicRuleToRasters.qrc" \
     "$$SAMPLEPATHCPP/Layers/ApplyUniqueValuesWithAlternateSymbols/ApplyUniqueValuesWithAlternateSymbols.qrc" \
     "$$SAMPLEPATHCPP/Layers/ArcGISMapImageLayerUrl/ArcGISMapImageLayerUrl.qrc" \
@@ -569,6 +568,7 @@ RESOURCES += \
     "$$SAMPLEPATHCPP/Layers/BrowseWfsLayers/BrowseWfsLayers.qrc" \
     "$$SAMPLEPATHCPP/Layers/ChangeSublayerRenderer/ChangeSublayerRenderer.qrc" \
     "$$SAMPLEPATHCPP/Layers/ChangeSublayerVisibility/ChangeSublayerVisibility.qrc" \
+    "$$SAMPLEPATHCPP/Layers/ConfigureElectronicNavigationalCharts/ConfigureElectronicNavigationalCharts.qrc" \
     "$$SAMPLEPATHCPP/Layers/CreateAndSaveKmlFile/CreateAndSaveKmlFile.qrc" \
     "$$SAMPLEPATHCPP/Layers/DisplayAnnotation/DisplayAnnotation.qrc" \
     "$$SAMPLEPATHCPP/Layers/DisplayDimensions/DisplayDimensions.qrc" \
