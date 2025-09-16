@@ -1,0 +1,32 @@
+{
+    "category": "Features",
+    "description": "Use different feature request modes to populate the map from a service feature table.",
+    "featured": false,
+    "ignore": false,
+    "images": [
+        "screenshot.png"
+    ],
+    "keywords": [
+        "cache", 
+        "data", 
+        "feature", 
+        "feature request mode",
+        "performance"
+    ],
+    "redirect_from": [
+        "/qt/cpp/sample-code/service-feature-table-cache",
+        "/qt/cpp/sample-code/service-feature-table-manual-cache",
+        "/qt/cpp/sample-code/service-feature-table-no-cache"
+    ],
+    "relevant_apis": [
+        "FeatureLayer",
+        "FeatureRequestMode",
+        "ServiceFeatureTable"
+    ],
+    "snippets": [
+        "ToggleBetweenFeatureRequestModes.cpp",
+        "ToggleBetweenFeatureRequestModes.h",
+        "ToggleBetweenFeatureRequestModes.qml"
+    ],
+    "title": "Toggle between feature request modes"
+}
