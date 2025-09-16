@@ -119,9 +119,9 @@ void ManageFeaturesFeatureService::componentComplete()
       return;
     }
     // Get the first table(id 0) from the ServiceGeodatabase
-    if (m_serviceGeodatabase->table(0))
+    if (ServiceFeatureTable* table = m_serviceGeodatabase->table(0); table)
     {
-      ServiceFeatureTable* featureTable = m_serviceGeodatabase->table(0);
+      ServiceFeatureTable* featureTable = table;
       m_featureLayer = new FeatureLayer(featureTable, this);
       m_map->operationalLayers()->append(m_featureLayer);
 
