@@ -84,9 +84,7 @@ HEADERS += \
     "$$SAMPLEPATHCPP/Features/ListRelatedFeatures/ListRelatedFeatures.h" \
     "$$SAMPLEPATHCPP/Features/ListRelatedFeatures/RelatedFeature.h" \
     "$$SAMPLEPATHCPP/Features/ListRelatedFeatures/RelatedFeatureListModel.h" \
-    "$$SAMPLEPATHCPP/Features/ServiceFeatureTableCache/ServiceFeatureTableCache.h" \
-    "$$SAMPLEPATHCPP/Features/ServiceFeatureTableManualCache/ServiceFeatureTableManualCache.h" \
-    "$$SAMPLEPATHCPP/Features/ServiceFeatureTableNoCache/ServiceFeatureTableNoCache.h" \
+    "$$SAMPLEPATHCPP/Features/ToggleBetweenFeatureRequestModes/ToggleBetweenFeatureRequestModes.h" \
     "$$SAMPLEPATHCPP/Geometry/Buffer/Buffer.h" \
     "$$SAMPLEPATHCPP/Geometry/ClipGeometry/ClipGeometry.h" \
     "$$SAMPLEPATHCPP/Geometry/ConvexHull/ConvexHull.h" \
@@ -315,9 +313,7 @@ SOURCES += \
     "$$SAMPLEPATHCPP/Features/ListRelatedFeatures/ListRelatedFeatures.cpp" \
     "$$SAMPLEPATHCPP/Features/ListRelatedFeatures/RelatedFeature.cpp" \
     "$$SAMPLEPATHCPP/Features/ListRelatedFeatures/RelatedFeatureListModel.cpp" \
-    "$$SAMPLEPATHCPP/Features/ServiceFeatureTableCache/ServiceFeatureTableCache.cpp" \
-    "$$SAMPLEPATHCPP/Features/ServiceFeatureTableManualCache/ServiceFeatureTableManualCache.cpp" \
-    "$$SAMPLEPATHCPP/Features/ServiceFeatureTableNoCache/ServiceFeatureTableNoCache.cpp" \
+    "$$SAMPLEPATHCPP/Features/ToggleBetweenFeatureRequestModes/ToggleBetweenFeatureRequestModes.cpp" \
     "$$SAMPLEPATHCPP/Geometry/Buffer/Buffer.cpp" \
     "$$SAMPLEPATHCPP/Geometry/ClipGeometry/ClipGeometry.cpp" \
     "$$SAMPLEPATHCPP/Geometry/ConvexHull/ConvexHull.cpp" \
@@ -539,9 +535,7 @@ RESOURCES += \
     "$$SAMPLEPATHCPP/Features/FilterByDefinitionExpressionOrDisplayFilter/FilterByDefinitionExpressionOrDisplayFilter.qrc" \
     "$$SAMPLEPATHCPP/Features/GenerateGeodatabaseReplicaFromFeatureService/GenerateGeodatabaseReplicaFromFeatureService.qrc" \
     "$$SAMPLEPATHCPP/Features/ListRelatedFeatures/ListRelatedFeatures.qrc" \
-    "$$SAMPLEPATHCPP/Features/ServiceFeatureTableCache/ServiceFeatureTableCache.qrc" \
-    "$$SAMPLEPATHCPP/Features/ServiceFeatureTableManualCache/ServiceFeatureTableManualCache.qrc" \
-    "$$SAMPLEPATHCPP/Features/ServiceFeatureTableNoCache/ServiceFeatureTableNoCache.qrc" \
+    "$$SAMPLEPATHCPP/Features/ToggleBetweenFeatureRequestModes/ToggleBetweenFeatureRequestModes.qrc" \
     "$$SAMPLEPATHCPP/Geometry/Buffer/Buffer.qrc" \
     "$$SAMPLEPATHCPP/Geometry/ClipGeometry/ClipGeometry.qrc" \
     "$$SAMPLEPATHCPP/Geometry/ConvexHull/ConvexHull.qrc" \
