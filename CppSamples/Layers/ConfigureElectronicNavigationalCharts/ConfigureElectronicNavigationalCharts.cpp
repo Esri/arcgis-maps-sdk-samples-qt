@@ -76,13 +76,13 @@ ConfigureElectronicNavigationalCharts::ConfigureElectronicNavigationalCharts(QOb
   QObject(parent),
   m_map(new Map(BasemapStyle::ArcGISOceans, this))
 {
-  // set resource path
+  // Set resource path
   EncEnvironmentSettings::setResourcePath(defaultDataPath() + "/ArcGIS/Runtime/Data/ENC/hydrography");
 
   // Apply initial display settings
   updateDisplaySettings();
 
-  // create ENC Exchange Set
+  // Create ENC Exchange Set
   QStringList encPaths = { defaultDataPath() + "/ArcGIS/Runtime/Data/ENC/ExchangeSetwithoutUpdates/ENC_ROOT/CATALOG.031" };
   m_encExchangeSet = new EncExchangeSet(encPaths, this);
 }
@@ -126,43 +126,47 @@ void ConfigureElectronicNavigationalCharts::setMapView(MapQuickView* mapView)
   connect(m_mapView, &MapQuickView::mouseClicked, this, &ConfigureElectronicNavigationalCharts::onGeoViewTapped);
 
   // connect to doneLoading signal of EncExchangeSet
-  connect(m_encExchangeSet, &EncExchangeSet::doneLoading, this, [this](const Error& e)
+  connect(m_encExchangeSet, &EncExchangeSet::doneLoading, this, [this](const Error& error)
   {
-    if (!e.isEmpty())
+    if (!error.isEmpty())
+    {
       return;
+    }
 
-    // loop through datasets
-    const auto datasets = m_encExchangeSet->datasets();
+    // Loop through datasets
+    const QList<EncDataset*> datasets = m_encExchangeSet->datasets();
     for (EncDataset* dataset : datasets)
     {
-      // create an EncCell from each dataset
+      // Create an EncCell from each dataset
       EncCell* cell = new EncCell(dataset, this);
 
-      // create an EncLayer from each cell
+      // Create an EncLayer from each cell
       EncLayer* encLayer = new EncLayer(cell, this);
 
-      // connect to the doneLoading signal of the layer
-      connect(encLayer, &EncLayer::doneLoading, this, [this, encLayer](const Error& e)
+      // Connect to the doneLoading signal of the layer
+      connect(encLayer, &EncLayer::doneLoading, this, [this, encLayer](const Error& error)
       {
-        if (!e.isEmpty())
+        if (!error.isEmpty())
+        {
           return;
+        }
 
         m_extents << encLayer->fullExtent();
 
         if (m_extents.length() != m_encExchangeSet->datasets().length())
           return;
 
-        // combine the extents
+        // Combine the extents
         Envelope fullExtent = GeometryEngine::combineExtents(m_extents);
         m_mapView->setViewpointAsync(Viewpoint{fullExtent});
       });
 
-      // add the layer to the map
+      // Add the layer to the map
       m_map->operationalLayers()->append(encLayer);
     }
   });
 
-  // load the EncExchangeSet
+  // Load the EncExchangeSet
   m_encExchangeSet->load();
 
   emit mapViewChanged();
@@ -223,23 +227,37 @@ void ConfigureElectronicNavigationalCharts::updateDisplaySettings()
 
   // Apply color scheme
   if (m_colorScheme == "Day")
+  {
     globalMarinerSettings->setColorScheme(Esri::ArcGISRuntime::EncColorScheme::Day);
+  }
   else if (m_colorScheme == "Dusk")
+  {
     globalMarinerSettings->setColorScheme(Esri::ArcGISRuntime::EncColorScheme::Dusk);
+  }
   else if (m_colorScheme == "Night")
+  {
     globalMarinerSettings->setColorScheme(Esri::ArcGISRuntime::EncColorScheme::Night);
+  }
 
   // Apply area symbolization
   if (m_areaSymbolizationType == "Plain")
+  {
     globalMarinerSettings->setAreaSymbolizationType(Esri::ArcGISRuntime::EncAreaSymbolizationType::Plain);
+  }
   else
+  {
     globalMarinerSettings->setAreaSymbolizationType(Esri::ArcGISRuntime::EncAreaSymbolizationType::Symbolized);
+  }
 
   // Apply point symbolization
   if (m_pointSymbolizationType == "PaperChart")
+  {
     globalMarinerSettings->setPointSymbolizationType(Esri::ArcGISRuntime::EncPointSymbolizationType::PaperChart);
+  }
   else
+  {
     globalMarinerSettings->setPointSymbolizationType(Esri::ArcGISRuntime::EncPointSymbolizationType::Simplified);
+  }
 }
 
 void ConfigureElectronicNavigationalCharts::clearAllSelections()

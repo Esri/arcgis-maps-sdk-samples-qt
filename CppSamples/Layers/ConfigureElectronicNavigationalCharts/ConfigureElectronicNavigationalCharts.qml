@@ -1,6 +1,6 @@
 // [WriteFile Name=AddEncExchangeSet, Category=Layers]
 // [Legal]
-// Copyright 2019 Esri.
+// Copyright 2025 Esri.
 //
 // Licensed under the Apache License, Version 2.0 (the "License");
 // you may not use this file except in compliance with the License.
@@ -54,7 +54,6 @@ Item {
             margins: 12
         }
         
-        // Larger, more readable sizing (max 42% of window)
         width: Math.min(280, parent.width * 0.42)
         height: Math.min(settingsColumn.implicitHeight + 24, parent.height * 0.42)
         
