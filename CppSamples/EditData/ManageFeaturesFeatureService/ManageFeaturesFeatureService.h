@@ -73,7 +73,7 @@ signals:
   void operationModeChanged();
 
 private:
-  void connectSignals();
+  void connectSignals_();
   void onIdentifyLayerCompleted_(const Esri::ArcGISRuntime::IdentifyLayerResult* identifyResult);
   void onApplyEditsCompleted_(const QList<Esri::ArcGISRuntime::FeatureTableEditResult*>& tableEditResults);
 

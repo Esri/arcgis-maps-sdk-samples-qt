@@ -108,7 +108,7 @@ void ManageFeaturesFeatureService::componentComplete()
       m_featureLayer = new FeatureLayer(featureTable, this);
       m_map->operationalLayers()->append(m_featureLayer);
 
-      connectSignals();
+      connectSignals_();
     }
   });
 
@@ -116,7 +116,7 @@ void ManageFeaturesFeatureService::componentComplete()
   m_serviceGeodatabase->load();
 }
 
-void ManageFeaturesFeatureService::connectSignals()
+void ManageFeaturesFeatureService::connectSignals_()
 {
   // Connect to the mouse clicked signal on the MapQuickView
   connect(m_mapView, &MapQuickView::mouseClicked, this, [this](QMouseEvent& mouseEvent)
