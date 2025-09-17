@@ -491,7 +491,7 @@ void ManageFeaturesFeatureService::selectFeatureForGeometryUpdate_(const QMouseE
       return;
     }
 
-    Feature* const feature = static_cast<Feature*>(identifyResult->geoElements().at(0));
+    const Feature* feature = static_cast<Feature*>(identifyResult->geoElements().at(0));
     QueryParameters query;
     query.setObjectIds(QList<qint64>{feature->attributes()->attributeValue(QStringLiteral("objectid")).toLongLong()});
     m_featureLayer->selectFeaturesAsync(query, SelectionMode::New)
