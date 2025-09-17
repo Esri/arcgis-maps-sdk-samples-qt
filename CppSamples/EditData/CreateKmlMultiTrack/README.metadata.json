@@ -1,5 +1,5 @@
 {
-    "category": "EditData",
+    "category": "Edit data",
     "description": "Create, save and preview a KML multi-track, captured from a location data source.",
     "featured": true,
     "ignore": false,
@@ -39,5 +39,5 @@
         "CreateKmlMultiTrack.h",
         "CreateKmlMultiTrack.qml"
     ],
-    "title": "Create KML Multi Track"
+    "title": "Create KML multi-track"
 }

@@ -1,4 +1,4 @@
-# Display OGC API Feature Collection
+# Display OGC API feature collection
 
 This sample demonstrates how to display an OGC API feature collection and query features while navigating the map view.
 
