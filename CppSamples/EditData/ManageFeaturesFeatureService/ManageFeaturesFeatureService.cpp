@@ -200,11 +200,11 @@ void ManageFeaturesFeatureService::deleteSelectedFeature()
       }
 
       // Get the first table result
-      FeatureTableEditResult* const tableResult = tableEditResults.first();
+      const FeatureTableEditResult* tableResult = tableEditResults.first();
       if (!tableResult->editResults().isEmpty())
       {
         // Get the first feature edit result from the table
-        FeatureEditResult* const featureEditResult = tableResult->editResults().first();
+        const FeatureEditResult* featureEditResult = tableResult->editResults().first();
         // Check if there were errors, and if not, log the object ID
         if (featureEditResult && !featureEditResult->isCompletedWithErrors())
         {
@@ -269,7 +269,7 @@ void ManageFeaturesFeatureService::onIdentifyLayerCompleted_(const IdentifyLayer
   }
 
   // Select the first item in the result
-  Feature* const feature = static_cast<Feature*>(identifyResult->geoElements().at(0));
+  Feature* feature = static_cast<Feature*>(identifyResult->geoElements().at(0));
   m_featureLayer->selectFeature(feature);
   // Ensure layer isn't deleted with identify result
   m_featureLayer->setParent(this);
@@ -311,11 +311,11 @@ void ManageFeaturesFeatureService::onApplyEditsCompleted_(const QList<FeatureTab
   }
 
   // Get the first table result
-  FeatureTableEditResult* const tableResult = tableEditResults.first();
+  const FeatureTableEditResult* tableResult = tableEditResults.first();
   if (!tableResult->editResults().isEmpty())
   {
     // Get the first feature edit result from the table
-    FeatureEditResult* const featureEditResult = tableResult->editResults().first();
+    const FeatureEditResult* featureEditResult = tableResult->editResults().first();
     // Check if there were errors, and if not, log the object ID
     if (featureEditResult && !featureEditResult->isCompletedWithErrors())
     {
@@ -362,11 +362,11 @@ void ManageFeaturesFeatureService::handleAddFeatureClick_(const QMouseEvent& mou
       }
 
       // Get the first table result
-      FeatureTableEditResult* const tableResult = tableEditResults.first();
+      const FeatureTableEditResult* tableResult = tableEditResults.first();
       if (!tableResult->editResults().isEmpty())
       {
         // Get the first feature edit result from the table
-        FeatureEditResult* const featureEditResult = tableResult->editResults().first();
+        const FeatureEditResult* featureEditResult = tableResult->editResults().first();
         // Check if there were errors, and if not, log the new object ID
         if (!featureEditResult->isCompletedWithErrors())
         {
@@ -445,11 +445,11 @@ void ManageFeaturesFeatureService::updateSelectedFeatureGeometry_(const Point& m
       }
 
       // Get the first table result
-      FeatureTableEditResult* const tableResult = tableEditResults.first();
+      const FeatureTableEditResult* tableResult = tableEditResults.first();
       if (!tableResult->editResults().isEmpty())
       {
         // Get the first feature edit result from the table
-        FeatureEditResult* const featureEditResult = tableResult->editResults().first();
+        const FeatureEditResult* featureEditResult = tableResult->editResults().first();
         // Check if there were errors, and if not, log the object ID
         if (featureEditResult && !featureEditResult->isCompletedWithErrors())
         {
