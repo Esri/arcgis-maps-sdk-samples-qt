@@ -117,9 +117,7 @@
 #include "../CppSamples/Features/FilterByDefinitionExpressionOrDisplayFilter/FilterByDefinitionExpressionOrDisplayFilter.h"
 #include "../CppSamples/Features/GenerateGeodatabaseReplicaFromFeatureService/GenerateGeodatabaseReplicaFromFeatureService.h"
 #include "../CppSamples/Features/ListRelatedFeatures/ListRelatedFeatures.h"
-#include "../CppSamples/Features/ServiceFeatureTableCache/ServiceFeatureTableCache.h"
-#include "../CppSamples/Features/ServiceFeatureTableManualCache/ServiceFeatureTableManualCache.h"
-#include "../CppSamples/Features/ServiceFeatureTableNoCache/ServiceFeatureTableNoCache.h"
+#include "../CppSamples/Features/ToggleBetweenFeatureRequestModes/ToggleBetweenFeatureRequestModes.h"
 #include "../CppSamples/Geometry/Buffer/Buffer.h"
 #include "../CppSamples/Geometry/ClipGeometry/ClipGeometry.h"
 #include "../CppSamples/Geometry/ConvexHull/ConvexHull.h"
@@ -545,9 +543,7 @@ void registerCppSampleClasses()
   ScenePropertiesExpressions::init();
   SearchDictionarySymbolStyle::init();
   ServiceArea::init();
-  ServiceFeatureTableCache::init();
-  ServiceFeatureTableManualCache::init();
-  ServiceFeatureTableNoCache::init();
+  ToggleBetweenFeatureRequestModes::init();
   SetInitialMapArea::init();
   SetInitialMapLocation::init();
   SetMapSpatialReference::init();

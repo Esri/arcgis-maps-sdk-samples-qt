@@ -1,5 +1,5 @@
 #-------------------------------------------------
-# Copyright 2015 Esri.
+# Copyright 2025 Esri.
 
 # Licensed under the Apache License, Version 2.0 (the "License");
 # you may not use this file except in compliance with the License.
@@ -24,22 +24,22 @@ CONFIG += c++17
 # additional modules are pulled in via arcgisruntime.pri
 QT += opengl qml quick
 
+TEMPLATE = app
+TARGET = ToggleBetweenFeatureRequestModes
+
 ARCGIS_RUNTIME_VERSION = 300.0.0
 include($$PWD/arcgisruntime.pri)
-
-TEMPLATE = app
-TARGET = ServiceFeatureTableCache
 
 #-------------------------------------------------------------------------------
 
 HEADERS += \
-    ServiceFeatureTableCache.h
+    ToggleBetweenFeatureRequestModes.h
 
 SOURCES += \
     main.cpp \
-    ServiceFeatureTableCache.cpp
+    ToggleBetweenFeatureRequestModes.cpp
 
-RESOURCES += ServiceFeatureTableCache.qrc
+RESOURCES += ToggleBetweenFeatureRequestModes.qrc
 
 #-------------------------------------------------------------------------------
 
@@ -62,6 +62,3 @@ android {
     INCLUDEPATH += $$PWD
     DEPENDPATH += $$PWD
 }
-
-
-

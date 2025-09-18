@@ -1,6 +1,4 @@
-// [WriteFile Name=ServiceFeatureTableNoCache, Category=Features]
-// [Legal]
-// Copyright 2016 Esri.
+// Copyright 2025 Esri.
 //
 // Licensed under the Apache License, Version 2.0 (the "License");
 // you may not use this file except in compliance with the License.
@@ -12,24 +10,16 @@
 // WITHOUT WARRANTIES OR CONDITIONS OF ANY KIND, either express or implied.
 // See the License for the specific language governing permissions and
 // limitations under the License.
-// [Legal]
 
-import QtQuick
 import QtQuick.Controls
 import Esri.Samples
 
-ServiceFeatureTableNoCacheSample {
+ApplicationWindow {
+    visible: true
     width: 800
     height: 600
 
-    // add a mapView component
-    MapView {
+    ToggleBetweenFeatureRequestModes {
         anchors.fill: parent
-        objectName: "mapView"
-
-        Component.onCompleted: {
-            // Set the focus on MapView to initially enable keyboard navigation
-            forceActiveFocus();
-        }
     }
 }
