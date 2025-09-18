@@ -141,26 +141,25 @@ Item {
                     font.bold: true
                 }
 
-                // EncColorScheme::Day = 1; EncColorScheme::Dusk = 2; EncColorScheme::Night = 3;
                 Flow {
                     Layout.fillWidth: true
                     spacing: 6
                     RadioButton {
                         text: qsTr("Day")
-                        checked: model.colorScheme === 1
-                        onClicked: model.colorScheme = 1
+                        checked: model.colorScheme === ConfigureElectronicNavigationalChartsSample.EncColorSchemeDay
+                        onClicked: model.colorScheme = ConfigureElectronicNavigationalChartsSample.EncColorSchemeDay
                         font.pixelSize: 12
                     }
                     RadioButton {
                         text: qsTr("Dusk")
-                        checked: model.colorScheme === 2
-                        onClicked: model.colorScheme = 2
+                        checked: model.colorScheme === ConfigureElectronicNavigationalChartsSample.EncColorSchemeDusk
+                        onClicked: model.colorScheme = ConfigureElectronicNavigationalChartsSample.EncColorSchemeDusk
                         font.pixelSize: 12
                     }
                     RadioButton {
                         text: qsTr("Night")
-                        checked: model.colorScheme === 3
-                        onClicked: model.colorScheme = 3
+                        checked: model.colorScheme === ConfigureElectronicNavigationalChartsSample.EncColorSchemeNight
+                        onClicked: model.colorScheme = ConfigureElectronicNavigationalChartsSample.EncColorSchemeNight
                         font.pixelSize: 12
                     }
                 }
@@ -178,20 +177,19 @@ Item {
                     font.bold: true
                 }
 
-                // EncAreaSymbolizationType::Plain = 4; EncAreaSymbolizationType::Symbolized = 5;
                 Flow {
                     Layout.fillWidth: true
                     spacing: 6
                     RadioButton {
                         text: qsTr("Plain")
-                        checked: model.areaSymbolizationType === 4
-                        onClicked: model.areaSymbolizationType = 4
+                        checked: model.areaSymbolizationType === ConfigureElectronicNavigationalChartsSample.EncAreaSymbolizationTypePlain
+                        onClicked: model.areaSymbolizationType = ConfigureElectronicNavigationalChartsSample.EncAreaSymbolizationTypePlain
                         font.pixelSize: 12
                     }
                     RadioButton {
                         text: qsTr("Symbolized")
-                        checked: model.areaSymbolizationType === 5
-                        onClicked: model.areaSymbolizationType = 5
+                        checked: model.areaSymbolizationType === ConfigureElectronicNavigationalChartsSample.EncAreaSymbolizationTypeSymbolized
+                        onClicked: model.areaSymbolizationType = ConfigureElectronicNavigationalChartsSample.EncAreaSymbolizationTypeSymbolized
                         font.pixelSize: 12
                     }
                 }
@@ -209,20 +207,19 @@ Item {
                     font.bold: true
                 }
 
-                // EncPointSymbolizationType::PaperChart = 1; EncPointSymbolizationType::Simplified = 2;
                 Flow {
                     Layout.fillWidth: true
                     spacing: 6
                     RadioButton {
                         text: qsTr("Paper Chart")
-                        checked: model.pointSymbolizationType === 1
-                        onClicked: model.pointSymbolizationType = 1
+                        checked: model.pointSymbolizationType === ConfigureElectronicNavigationalChartsSample.EncPointSymbolizationTypePaperChart
+                        onClicked: model.pointSymbolizationType = ConfigureElectronicNavigationalChartsSample.EncPointSymbolizationTypePaperChart
                         font.pixelSize: 12
                     }
                     RadioButton {
                         text: qsTr("Simplified")
-                        checked: model.pointSymbolizationType === 2
-                        onClicked: model.pointSymbolizationType = 2
+                        checked: model.pointSymbolizationType === ConfigureElectronicNavigationalChartsSample.EncPointSymbolizationTypeSimplified
+                        onClicked: model.pointSymbolizationType = ConfigureElectronicNavigationalChartsSample.EncPointSymbolizationTypeSimplified
                         font.pixelSize: 12
                     }
                 }

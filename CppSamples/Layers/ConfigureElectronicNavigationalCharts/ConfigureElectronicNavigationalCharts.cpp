@@ -37,7 +37,6 @@
 #include "Error.h"
 #include "ErrorException.h"
 #include "GeometryEngine.h"
-#include "HydrographyTypes.h"
 #include "IdentifyLayerResult.h"
 #include "LayerListModel.h"
 #include "Map.h"
@@ -75,9 +74,9 @@ namespace
 ConfigureElectronicNavigationalCharts::ConfigureElectronicNavigationalCharts(QObject* parent /* = nullptr */) :
   QObject(parent),
   m_map(new Map(BasemapStyle::ArcGISOceans, this)),
-  m_colorScheme(EncColorScheme::Day),
-  m_areaSymbolizationType(EncAreaSymbolizationType::Plain),
-  m_pointSymbolizationType(EncPointSymbolizationType::PaperChart)
+  m_colorScheme(Esri::ArcGISRuntime::EncColorScheme::Day),
+  m_areaSymbolizationType(Esri::ArcGISRuntime::EncAreaSymbolizationType::Plain),
+  m_pointSymbolizationType(Esri::ArcGISRuntime::EncPointSymbolizationType::PaperChart)
 {
   // Set resource path
   EncEnvironmentSettings::setResourcePath(defaultDataPath() + "/ArcGIS/Runtime/Data/ENC/hydrography");
@@ -183,7 +182,7 @@ EncColorScheme ConfigureElectronicNavigationalCharts::colorScheme() const
   return m_colorScheme;
 }
 
-void ConfigureElectronicNavigationalCharts::setColorScheme(EncColorScheme colorScheme)
+void ConfigureElectronicNavigationalCharts::setColorScheme(Esri::ArcGISRuntime::EncColorScheme colorScheme)
 {
   if (m_colorScheme == colorScheme)
   {
@@ -199,7 +198,7 @@ EncAreaSymbolizationType ConfigureElectronicNavigationalCharts::areaSymbolizatio
   return m_areaSymbolizationType;
 }
 
-void ConfigureElectronicNavigationalCharts::setAreaSymbolizationType(EncAreaSymbolizationType areaSymbolizationType)
+void ConfigureElectronicNavigationalCharts::setAreaSymbolizationType(Esri::ArcGISRuntime::EncAreaSymbolizationType areaSymbolizationType)
 {
   if (m_areaSymbolizationType == areaSymbolizationType)
   {
@@ -215,7 +214,7 @@ EncPointSymbolizationType ConfigureElectronicNavigationalCharts::pointSymbolizat
   return m_pointSymbolizationType;
 }
 
-void ConfigureElectronicNavigationalCharts::setPointSymbolizationType(EncPointSymbolizationType pointSymbolizationType)
+void ConfigureElectronicNavigationalCharts::setPointSymbolizationType(Esri::ArcGISRuntime::EncPointSymbolizationType pointSymbolizationType)
 {
   if (m_pointSymbolizationType == pointSymbolizationType)
   {

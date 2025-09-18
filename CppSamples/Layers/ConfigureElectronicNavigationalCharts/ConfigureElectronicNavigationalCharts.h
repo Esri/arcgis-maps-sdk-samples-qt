@@ -17,6 +17,9 @@
 #ifndef CONFIGUREELECTRONICNAVIGATIONALCHARTS_H
 #define CONFIGUREELECTRONICNAVIGATIONALCHARTS_H
 
+// ArcGIS Maps SDK headers
+#include "HydrographyTypes.h"
+
 // Qt headers
 #include <QObject>
 
@@ -30,9 +33,6 @@ namespace Esri::ArcGISRuntime
   class Geometry;
   class EncDisplaySettings;
   class EncMarinerSettings;
-  enum class EncColorScheme;
-  enum class EncAreaSymbolizationType;
-  enum class EncPointSymbolizationType;
 } // namespace Esri::ArcGISRuntime
 
 Q_MOC_INCLUDE("MapQuickView.h")
@@ -49,6 +49,28 @@ class ConfigureElectronicNavigationalCharts : public QObject
                pointSymbolizationTypeChanged)
 
 public:
+  enum class EncColorScheme
+  {
+    EncColorSchemeDay = static_cast<int>(Esri::ArcGISRuntime::EncColorScheme::Day),
+    EncColorSchemeDusk = static_cast<int>(Esri::ArcGISRuntime::EncColorScheme::Dusk),
+    EncColorSchemeNight = static_cast<int>(Esri::ArcGISRuntime::EncColorScheme::Night)
+  };
+  Q_ENUM(EncColorScheme)
+
+  enum class EncAreaSymbolizationType
+  {
+    EncAreaSymbolizationTypePlain = static_cast<int>(Esri::ArcGISRuntime::EncAreaSymbolizationType::Plain),
+    EncAreaSymbolizationTypeSymbolized = static_cast<int>(Esri::ArcGISRuntime::EncAreaSymbolizationType::Symbolized)
+  };
+  Q_ENUM(EncAreaSymbolizationType)
+
+  enum class EncPointSymbolizationType
+  {
+    EncPointSymbolizationTypeSimplified = static_cast<int>(Esri::ArcGISRuntime::EncPointSymbolizationType::Simplified),
+    EncPointSymbolizationTypePaperChart = static_cast<int>(Esri::ArcGISRuntime::EncPointSymbolizationType::PaperChart)
+  };
+  Q_ENUM(EncPointSymbolizationType)
+
   explicit ConfigureElectronicNavigationalCharts(QObject* parent = nullptr);
   ~ConfigureElectronicNavigationalCharts();
 
