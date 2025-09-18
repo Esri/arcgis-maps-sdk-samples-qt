@@ -14,11 +14,12 @@
 // limitations under the License.
 // [Legal]
 
-import QtQuick
-import QtQuick.Controls
-import QtQuick.Layouts
+import QtQuick 2.15
+import QtQuick.Controls 2.15
+import QtQuick.Layouts 1.15
 import Esri.Samples
 import Esri.ArcGISRuntime.Toolkit
+
 
 Item {
     // add a mapView component
@@ -45,47 +46,85 @@ Item {
         mapView: mapView
     }
 
-    // ENC Settings Panel - Top Right
+    // Dim background when popup open
     Rectangle {
-        id: settingsPanel
-        anchors {
-            top: parent.top
-            right: parent.right
-            margins: 12
+        anchors.fill: parent
+        color: "#000000"
+        opacity: settingsPopup.opened ? 0.30 : 0
+        visible: settingsPopup.opened
+        MouseArea {
+            anchors.fill: parent
+            onClicked: settingsPopup.close()
         }
-        
-        width: Math.min(280, parent.width * 0.42)
-        height: Math.min(settingsColumn.implicitHeight + 24, parent.height * 0.42)
-        
-        color: "#f5f5f5"
-        radius: 8
-        border {
-            color: "#999999"
-            width: 1
-        }
-        opacity: 0.95
+    }
 
-        ScrollView {
-            anchors {
-                fill: parent
-                margins: 12
-            }
+    // Bottom toolbar
+    Rectangle {
+        anchors {
+            bottom: parent.bottom
+            left: parent.left
+            right: parent.right
+        }
+        height: Math.max(parent.height * 0.08, 50)
+        border.color: "gray"
+        border.width: 1
+        color: palette.window
+
+
+        // Settings toggle button
+        Button {
+            text: qsTr("Display Settings")
+            anchors.horizontalCenter: parent.horizontalCenter
+            anchors.verticalCenter: parent.verticalCenter
+            onClicked: settingsPopup.opened ? settingsPopup.close() : settingsPopup.open()
+        }
+    }
+
+    // Popup containing settings
+    Popup {
+        id: settingsPopup
+        modal: true
+        focus: true
+        closePolicy: Popup.CloseOnEscape | Popup.CloseOnPressOutside
+        x: (parent.width - width) / 2
+        y: parent.height * 0.12
+        width: Math.min(parent.width * 0.90, 360)
+        height: Math.min(parent.height * 0.76, settingsColumn.implicitHeight + 24)
+
+        contentItem: Flickable {
+            id: scrollArea
             clip: true
-            ScrollBar.vertical.policy: ScrollBar.AlwaysOn
-            
+            contentWidth: parent.width
+            contentHeight: settingsColumn.implicitHeight + 24
+            anchors.fill: parent
+            flickableDirection: Flickable.VerticalFlick
+            interactive: contentHeight > height
+            ScrollBar.vertical: ScrollBar {
+                policy: scrollArea.contentHeight > scrollArea.height ? ScrollBar.AlwaysOn : ScrollBar.AsNeeded
+            }
+
             ColumnLayout {
                 id: settingsColumn
-                width: parent.width
+                width: scrollArea.width - 24
+                anchors.horizontalCenter: parent.horizontalCenter
                 spacing: 10
+                anchors.margins: 12
+                anchors.top: parent.top
+                anchors.topMargin: 12
 
-                // Header
-                Label {
+                // Header Row with title
+                RowLayout {
                     Layout.fillWidth: true
-                    text: qsTr("ENC Settings")
-                    font.pixelSize: 16
-                    font.bold: true
-                    color: "#333333"
-                    horizontalAlignment: Text.AlignHCenter
+                    spacing: 4
+                    Label {
+                        Layout.fillWidth: true
+                        text: qsTr("ENC Settings")
+                        font.pixelSize: 18
+                        font.bold: true
+                        horizontalAlignment: Text.AlignLeft
+                        wrapMode: Text.NoWrap
+                        elide: Text.ElideRight
+                    }
                 }
 
                 Rectangle {
@@ -97,106 +136,110 @@ Item {
                 // Color Scheme Section
                 Label {
                     text: qsTr("Color Scheme")
-                    font.pixelSize: 13
-                    color: "#444444"
+                    font.pixelSize: 14
                     font.bold: true
                 }
 
+                // EncColorScheme::Day = 1; EncColorScheme::Dusk = 2; EncColorScheme::Night = 3;
                 Flow {
                     Layout.fillWidth: true
-                    spacing: 5
-
+                    spacing: 6
                     RadioButton {
                         text: qsTr("Day")
-                        checked: model.colorScheme === "Day"
-                        onClicked: model.colorScheme = "Day"
-                        font.pixelSize: 11
+                        checked: model.colorScheme === 1
+                        onClicked: model.colorScheme = 1
+                        font.pixelSize: 12
                     }
-
                     RadioButton {
                         text: qsTr("Dusk")
-                        checked: model.colorScheme === "Dusk"
-                        onClicked: model.colorScheme = "Dusk"
-                        font.pixelSize: 11
+                        checked: model.colorScheme === 2
+                        onClicked: model.colorScheme = 2
+                        font.pixelSize: 12
                     }
-
                     RadioButton {
                         text: qsTr("Night")
-                        checked: model.colorScheme === "Night"
-                        onClicked: model.colorScheme = "Night"
-                        font.pixelSize: 11
+                        checked: model.colorScheme === 3
+                        onClicked: model.colorScheme = 3
+                        font.pixelSize: 12
                     }
                 }
 
-                Rectangle { Layout.fillWidth: true; height: 1; color: "#e0e0e0" }
+                Rectangle {
+                    Layout.fillWidth: true
+                    height: 1
+                    color: "#e0e0e0"
+                }
 
                 // Area Display Section
                 Label {
                     text: qsTr("Area Display")
-                    font.pixelSize: 13
-                    color: "#444444"
+                    font.pixelSize: 14
                     font.bold: true
                 }
 
+                // EncAreaSymbolizationType::Plain = 4; EncAreaSymbolizationType::Symbolized = 5;
                 Flow {
                     Layout.fillWidth: true
-                    spacing: 5
-
+                    spacing: 6
                     RadioButton {
                         text: qsTr("Plain")
-                        checked: model.areaSymbolizationType === "Plain"
-                        onClicked: model.areaSymbolizationType = "Plain"
-                        font.pixelSize: 11
+                        checked: model.areaSymbolizationType === 4
+                        onClicked: model.areaSymbolizationType = 4
+                        font.pixelSize: 12
                     }
-
                     RadioButton {
                         text: qsTr("Symbolized")
-                        checked: model.areaSymbolizationType === "Symbolized"
-                        onClicked: model.areaSymbolizationType = "Symbolized"
-                        font.pixelSize: 11
+                        checked: model.areaSymbolizationType === 5
+                        onClicked: model.areaSymbolizationType = 5
+                        font.pixelSize: 12
                     }
                 }
 
-                Rectangle { Layout.fillWidth: true; height: 1; color: "#e0e0e0" }
+                Rectangle {
+                    Layout.fillWidth: true
+                    height: 1
+                    color: "#e0e0e0"
+                }
 
                 // Point Symbols Section
                 Label {
                     text: qsTr("Point Symbols")
-                    font.pixelSize: 13
-                    color: "#444444"
+                    font.pixelSize: 14
                     font.bold: true
                 }
 
+                // EncPointSymbolizationType::PaperChart = 1; EncPointSymbolizationType::Simplified = 2;
                 Flow {
                     Layout.fillWidth: true
-                    spacing: 5
-
+                    spacing: 6
                     RadioButton {
                         text: qsTr("Paper Chart")
-                        checked: model.pointSymbolizationType === "PaperChart"
-                        onClicked: model.pointSymbolizationType = "PaperChart"
-                        font.pixelSize: 11
+                        checked: model.pointSymbolizationType === 1
+                        onClicked: model.pointSymbolizationType = 1
+                        font.pixelSize: 12
                     }
-
                     RadioButton {
                         text: qsTr("Simplified")
-                        checked: model.pointSymbolizationType === "Simplified"
-                        onClicked: model.pointSymbolizationType = "Simplified"
-                        font.pixelSize: 11
+                        checked: model.pointSymbolizationType === 2
+                        onClicked: model.pointSymbolizationType = 2
+                        font.pixelSize: 12
                     }
                 }
 
-                Rectangle { Layout.fillWidth: true; height: 1; color: "#e0e0e0" }
-
-                // Instructions
-                Label {
+                Rectangle {
                     Layout.fillWidth: true
-                    text: qsTr("Tap map features for details")
-                    font.pixelSize: 10
-                    color: "#666666"
-                    horizontalAlignment: Text.AlignHCenter
-                    wrapMode: Text.WordWrap
-                    Layout.topMargin: 5
+                    height: 1
+                    color: "#e0e0e0"
+                }
+
+                // Footer close button
+                Button {
+                    text: qsTr("Close")
+                    Layout.alignment: Qt.AlignHCenter
+                    implicitWidth: Math.max(100, contentItem.implicitWidth + 32)
+                    Layout.preferredWidth: implicitWidth
+                    Layout.maximumWidth: 160
+                    onClicked: settingsPopup.close()
                 }
             }
         }

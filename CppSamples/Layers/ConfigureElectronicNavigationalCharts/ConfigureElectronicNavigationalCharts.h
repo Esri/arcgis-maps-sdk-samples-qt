@@ -30,6 +30,9 @@ class EncExchangeSet;
 class Geometry;
 class EncDisplaySettings;
 class EncMarinerSettings;
+enum class EncColorScheme;
+enum class EncAreaSymbolizationType;
+enum class EncPointSymbolizationType;
 }
 
 Q_MOC_INCLUDE("MapQuickView.h")
@@ -39,9 +42,9 @@ class ConfigureElectronicNavigationalCharts : public QObject
   Q_OBJECT
 
   Q_PROPERTY(Esri::ArcGISRuntime::MapQuickView* mapView READ mapView WRITE setMapView NOTIFY mapViewChanged)
-  Q_PROPERTY(QString colorScheme READ colorScheme WRITE setColorScheme NOTIFY colorSchemeChanged)
-  Q_PROPERTY(QString areaSymbolizationType READ areaSymbolizationType WRITE setAreaSymbolizationType NOTIFY areaSymbolizationTypeChanged)
-  Q_PROPERTY(QString pointSymbolizationType READ pointSymbolizationType WRITE setPointSymbolizationType NOTIFY pointSymbolizationTypeChanged)
+  Q_PROPERTY(Esri::ArcGISRuntime::EncColorScheme colorScheme READ colorScheme WRITE setColorScheme NOTIFY colorSchemeChanged)
+  Q_PROPERTY(Esri::ArcGISRuntime::EncAreaSymbolizationType areaSymbolizationType READ areaSymbolizationType WRITE setAreaSymbolizationType NOTIFY areaSymbolizationTypeChanged)
+  Q_PROPERTY(Esri::ArcGISRuntime::EncPointSymbolizationType pointSymbolizationType READ pointSymbolizationType WRITE setPointSymbolizationType NOTIFY pointSymbolizationTypeChanged)
 
 public:
   explicit ConfigureElectronicNavigationalCharts(QObject* parent = nullptr);
@@ -65,23 +68,23 @@ private:
   Esri::ArcGISRuntime::MapQuickView* mapView() const;
   void setMapView(Esri::ArcGISRuntime::MapQuickView* mapView);
   
-  QString colorScheme() const;
-  void setColorScheme(const QString& colorScheme);
-  
-  QString areaSymbolizationType() const;
-  void setAreaSymbolizationType(const QString& areaSymbolizationType);
-  
-  QString pointSymbolizationType() const;
-  void setPointSymbolizationType(const QString& pointSymbolizationType);
+  Esri::ArcGISRuntime::EncColorScheme colorScheme() const;
+  void setColorScheme(Esri::ArcGISRuntime::EncColorScheme colorScheme);
+
+  Esri::ArcGISRuntime::EncAreaSymbolizationType areaSymbolizationType() const;
+  void setAreaSymbolizationType(Esri::ArcGISRuntime::EncAreaSymbolizationType areaSymbolizationType);
+
+  Esri::ArcGISRuntime::EncPointSymbolizationType pointSymbolizationType() const;
+  void setPointSymbolizationType(Esri::ArcGISRuntime::EncPointSymbolizationType pointSymbolizationType);
 
   Esri::ArcGISRuntime::Map* m_map = nullptr;
   Esri::ArcGISRuntime::MapQuickView* m_mapView = nullptr;
   Esri::ArcGISRuntime::EncExchangeSet* m_encExchangeSet = nullptr;
   QList<Esri::ArcGISRuntime::Geometry> m_extents;
   
-  QString m_colorScheme = "Day";
-  QString m_areaSymbolizationType = "Plain";
-  QString m_pointSymbolizationType = "PaperChart";
+  Esri::ArcGISRuntime::EncColorScheme m_colorScheme;
+  Esri::ArcGISRuntime::EncAreaSymbolizationType m_areaSymbolizationType;
+  Esri::ArcGISRuntime::EncPointSymbolizationType m_pointSymbolizationType;
 };
 
 #endif // CONFIGUREELECTRONICNAVIGATIONALCHARTS_H

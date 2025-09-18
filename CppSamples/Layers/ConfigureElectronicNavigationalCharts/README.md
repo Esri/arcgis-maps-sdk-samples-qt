@@ -17,18 +17,18 @@ When opened, the sample displays an electronic navigational chart. Tap on the ma
 ## How it works
 
 1. To display Enc content:
-    1. Create an `EncExchangeSet` using a path to the local Enc exchange set files and load it.
-    2. Make an `EncCell` for each of the `EncExchangeSet.Datasets` and then make an `EncLayer` from each cell.
-    3. Add the layers to the map using `Map.OperationalLayers.Add()` and create a `MapView` to display the map.
+    1. Create an `EncExchangeSet` using a path to the local ENC exchange set files and load it.
+    2. For each dataset returned by `EncExchangeSet::datasets()`, create an `EncCell`, then create an `EncLayer` from that cell.
+    3. Append each layer to the map with `map->operationalLayers()->append(encLayer)` and display it in a `MapQuickView`.
 2. To select Enc features:
-    1. Use `GeoViewTapped()` on the map view to get the screen point from the tapped location.
-    2. Identify nearby features to the tapped location with `IdentifyLayersAsync()`.
-    3. From the resulting `IdentifyLayerResult`, get the `EncLayer` from `LayerContent` and the `EncFeature`(s) from `GeoElements`.
-    4. Use `EncLayer.SelectFeature()` to select the Enc feature(s).
+    1. Handle the `MapQuickView::mouseClicked` signal and call your slot (e.g. `onGeoViewTapped`) to get the screen position.
+    2. Call `identifyLayersAsync()` on the map view with the screen point.
+    3. From each resulting `IdentifyLayerResult`, get the `EncLayer` via `layerContent()` and ENC features via `geoElements()`.
+    4. Use `EncLayer::selectFeature()` to select the ENC feature(s).
 3. To set Enc display settings:
-    1. Get the `EncDisplaySettings` instance from `EncEnvironmentSettings.Default.DisplaySettings`.
-    2. Use `MarinerSettings`, `TextGroupVisibilitySettings`, and `ViewingGroupSettings` to access the settings instances and set their properties.
-    3. Reset the display settings using `ResetToDefaults()` on the settings instances.
+    1. Get the `EncDisplaySettings` instance via `EncEnvironmentSettings::displaySettings()`.
+    2. Access `marinerSettings()`, `textGroupVisibilitySettings()`, and `viewingGroupSettings()` to set their properties (e.g. color scheme, symbolization).
+    3. Reset settings using `resetToDefaults()` on each settings object.
 
 ## Relevant API
 

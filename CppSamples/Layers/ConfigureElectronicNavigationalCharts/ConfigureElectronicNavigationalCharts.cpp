@@ -33,11 +33,11 @@
 #include "EncMarinerSettings.h"
 #include "EncTextGroupVisibilitySettings.h"
 #include "EncViewingGroupSettings.h"
-#include "HydrographyTypes.h"
 #include "Envelope.h"
 #include "Error.h"
 #include "ErrorException.h"
 #include "GeometryEngine.h"
+#include "HydrographyTypes.h"
 #include "IdentifyLayerResult.h"
 #include "LayerListModel.h"
 #include "Map.h"
@@ -62,19 +62,22 @@ namespace
   {
     QString dataPath;
 
-  #ifdef Q_OS_IOS
+#ifdef Q_OS_IOS
     dataPath = QStandardPaths::writableLocation(QStandardPaths::DocumentsLocation);
-  #else
+#else
     dataPath = QStandardPaths::writableLocation(QStandardPaths::HomeLocation);
-  #endif
+#endif
 
     return dataPath;
   }
 } // namespace
 
-ConfigureElectronicNavigationalCharts::ConfigureElectronicNavigationalCharts(QObject* parent /* = nullptr */):
+ConfigureElectronicNavigationalCharts::ConfigureElectronicNavigationalCharts(QObject* parent /* = nullptr */) :
   QObject(parent),
-  m_map(new Map(BasemapStyle::ArcGISOceans, this))
+  m_map(new Map(BasemapStyle::ArcGISOceans, this)),
+  m_colorScheme(EncColorScheme::Day),
+  m_areaSymbolizationType(EncAreaSymbolizationType::Plain),
+  m_pointSymbolizationType(EncPointSymbolizationType::PaperChart)
 {
   // Set resource path
   EncEnvironmentSettings::setResourcePath(defaultDataPath() + "/ArcGIS/Runtime/Data/ENC/hydrography");
@@ -83,14 +86,13 @@ ConfigureElectronicNavigationalCharts::ConfigureElectronicNavigationalCharts(QOb
   updateDisplaySettings();
 
   // Create ENC Exchange Set
-  QStringList encPaths = { defaultDataPath() + "/ArcGIS/Runtime/Data/ENC/ExchangeSetwithoutUpdates/ENC_ROOT/CATALOG.031" };
+  QStringList encPaths = {defaultDataPath() + "/ArcGIS/Runtime/Data/ENC/ExchangeSetwithoutUpdates/ENC_ROOT/CATALOG.031"};
   m_encExchangeSet = new EncExchangeSet(encPaths, this);
 }
 
 ConfigureElectronicNavigationalCharts::~ConfigureElectronicNavigationalCharts()
 {
-  // ENC environment settings apply to the entire application.
-  // They need to be reset after leaving the sample to avoid affecting other samples.
+  // Reset settings to avoid affecting other samples.
   EncDisplaySettings* globalDisplaySettings = EncEnvironmentSettings::displaySettings();
   globalDisplaySettings->marinerSettings()->resetToDefaults();
   globalDisplaySettings->viewingGroupSettings()->resetToDefaults();
@@ -113,7 +115,9 @@ MapQuickView* ConfigureElectronicNavigationalCharts::mapView() const
 void ConfigureElectronicNavigationalCharts::setMapView(MapQuickView* mapView)
 {
   if (!mapView || mapView == m_mapView)
+  {
     return;
+  }
 
   m_mapView = mapView;
   m_mapView->setMap(m_map);
@@ -125,7 +129,7 @@ void ConfigureElectronicNavigationalCharts::setMapView(MapQuickView* mapView)
   // Connect to mouse clicked events for feature identification
   connect(m_mapView, &MapQuickView::mouseClicked, this, &ConfigureElectronicNavigationalCharts::onGeoViewTapped);
 
-  // connect to doneLoading signal of EncExchangeSet
+  // Connect to doneLoading signal of EncExchangeSet
   connect(m_encExchangeSet, &EncExchangeSet::doneLoading, this, [this](const Error& error)
   {
     if (!error.isEmpty())
@@ -154,7 +158,9 @@ void ConfigureElectronicNavigationalCharts::setMapView(MapQuickView* mapView)
         m_extents << encLayer->fullExtent();
 
         if (m_extents.length() != m_encExchangeSet->datasets().length())
+        {
           return;
+        }
 
         // Combine the extents
         Envelope fullExtent = GeometryEngine::combineExtents(m_extents);
@@ -172,46 +178,49 @@ void ConfigureElectronicNavigationalCharts::setMapView(MapQuickView* mapView)
   emit mapViewChanged();
 }
 
-QString ConfigureElectronicNavigationalCharts::colorScheme() const
+EncColorScheme ConfigureElectronicNavigationalCharts::colorScheme() const
 {
   return m_colorScheme;
 }
 
-void ConfigureElectronicNavigationalCharts::setColorScheme(const QString& colorScheme)
+void ConfigureElectronicNavigationalCharts::setColorScheme(EncColorScheme colorScheme)
 {
   if (m_colorScheme == colorScheme)
+  {
     return;
-
+  }
   m_colorScheme = colorScheme;
   updateDisplaySettings();
   emit colorSchemeChanged();
 }
 
-QString ConfigureElectronicNavigationalCharts::areaSymbolizationType() const
+EncAreaSymbolizationType ConfigureElectronicNavigationalCharts::areaSymbolizationType() const
 {
   return m_areaSymbolizationType;
 }
 
-void ConfigureElectronicNavigationalCharts::setAreaSymbolizationType(const QString& areaSymbolizationType)
+void ConfigureElectronicNavigationalCharts::setAreaSymbolizationType(EncAreaSymbolizationType areaSymbolizationType)
 {
   if (m_areaSymbolizationType == areaSymbolizationType)
+  {
     return;
-
+  }
   m_areaSymbolizationType = areaSymbolizationType;
   updateDisplaySettings();
   emit areaSymbolizationTypeChanged();
 }
 
-QString ConfigureElectronicNavigationalCharts::pointSymbolizationType() const
+EncPointSymbolizationType ConfigureElectronicNavigationalCharts::pointSymbolizationType() const
 {
   return m_pointSymbolizationType;
 }
 
-void ConfigureElectronicNavigationalCharts::setPointSymbolizationType(const QString& pointSymbolizationType)
+void ConfigureElectronicNavigationalCharts::setPointSymbolizationType(EncPointSymbolizationType pointSymbolizationType)
 {
   if (m_pointSymbolizationType == pointSymbolizationType)
+  {
     return;
-
+  }
   m_pointSymbolizationType = pointSymbolizationType;
   updateDisplaySettings();
   emit pointSymbolizationTypeChanged();
@@ -221,58 +230,29 @@ void ConfigureElectronicNavigationalCharts::updateDisplaySettings()
 {
   // Hold a reference to the application-wide ENC Display Settings
   EncDisplaySettings* globalDisplaySettings = EncEnvironmentSettings::displaySettings();
-  
+
   // Hold a reference to the application-wide ENC Mariner Settings (part of display settings)
   EncMarinerSettings* globalMarinerSettings = globalDisplaySettings->marinerSettings();
 
-  // Apply color scheme
-  if (m_colorScheme == "Day")
-  {
-    globalMarinerSettings->setColorScheme(Esri::ArcGISRuntime::EncColorScheme::Day);
-  }
-  else if (m_colorScheme == "Dusk")
-  {
-    globalMarinerSettings->setColorScheme(Esri::ArcGISRuntime::EncColorScheme::Dusk);
-  }
-  else if (m_colorScheme == "Night")
-  {
-    globalMarinerSettings->setColorScheme(Esri::ArcGISRuntime::EncColorScheme::Night);
-  }
-
-  // Apply area symbolization
-  if (m_areaSymbolizationType == "Plain")
-  {
-    globalMarinerSettings->setAreaSymbolizationType(Esri::ArcGISRuntime::EncAreaSymbolizationType::Plain);
-  }
-  else
-  {
-    globalMarinerSettings->setAreaSymbolizationType(Esri::ArcGISRuntime::EncAreaSymbolizationType::Symbolized);
-  }
-
-  // Apply point symbolization
-  if (m_pointSymbolizationType == "PaperChart")
-  {
-    globalMarinerSettings->setPointSymbolizationType(Esri::ArcGISRuntime::EncPointSymbolizationType::PaperChart);
-  }
-  else
-  {
-    globalMarinerSettings->setPointSymbolizationType(Esri::ArcGISRuntime::EncPointSymbolizationType::Simplified);
-  }
+  // Directly apply stored enum values
+  globalMarinerSettings->setColorScheme(m_colorScheme);
+  globalMarinerSettings->setAreaSymbolizationType(m_areaSymbolizationType);
+  globalMarinerSettings->setPointSymbolizationType(m_pointSymbolizationType);
 }
 
 void ConfigureElectronicNavigationalCharts::clearAllSelections()
 {
   if (!m_mapView)
+  {
     return;
+  }
 
   // For each layer in the operational layers that is an ENC layer
   LayerListModel* operationalLayers = m_map->operationalLayers();
-  for (int i = 0; i < operationalLayers->size(); ++i)
+  for (QObject* obj : *operationalLayers)
   {
-    EncLayer* encLayer = qobject_cast<EncLayer*>(operationalLayers->at(i));
-    if (encLayer)
+    if (EncLayer* encLayer = qobject_cast<EncLayer*>(obj); encLayer)
     {
-      // Clear the layer's selection
       encLayer->clearSelection();
     }
   }
@@ -284,7 +264,9 @@ void ConfigureElectronicNavigationalCharts::clearAllSelections()
 void ConfigureElectronicNavigationalCharts::onGeoViewTapped(QMouseEvent& mouseEvent)
 {
   if (!m_mapView)
+  {
     return;
+  }
 
   // Set callout position for new location
   const Point mapPoint = m_mapView->screenToLocation(mouseEvent.position().x(), mouseEvent.position().y());
@@ -324,34 +306,32 @@ void ConfigureElectronicNavigationalCharts::onGeoViewTapped(QMouseEvent& mouseEv
 
     // Get the first ENC feature from the result
     const QList<GeoElement*> geoElements = firstResult->geoElements();
-    if (!geoElements.isEmpty())
+    if (geoElements.isEmpty())
     {
-      EncFeature* encFeature = dynamic_cast<EncFeature*>(geoElements.first());
-      if (encFeature)
-      {
-        // Select the feature
-        containingLayer->selectFeature(encFeature);
+      m_mapView->calloutData()->setVisible(false);
+      return;
+    }
 
-        // Create callout content
-        QString title = encFeature->acronym().isEmpty() ? "ENC Feature" : encFeature->acronym();
-        QString detail = encFeature->description().isEmpty() ? "ENC Chart Feature" : encFeature->description();
+    if (EncFeature* encFeature = dynamic_cast<EncFeature*>(geoElements.first()); encFeature)
+    {
+      // Select the feature
+      containingLayer->selectFeature(encFeature);
 
-        // Show callout
-        m_mapView->calloutData()->setTitle(title);
-        m_mapView->calloutData()->setDetail(detail);
-        m_mapView->calloutData()->setVisible(true);
-      }
-      else
-      {
-        m_mapView->calloutData()->setVisible(false);
-      }
+      // Create callout content
+      QString title = encFeature->acronym().isEmpty() ? "ENC Feature" : encFeature->acronym();
+      QString detail = encFeature->description().isEmpty() ? "ENC Chart Feature" : encFeature->description();
+
+      // Show callout
+      m_mapView->calloutData()->setTitle(title);
+      m_mapView->calloutData()->setDetail(detail);
+      m_mapView->calloutData()->setVisible(true);
     }
     else
     {
       m_mapView->calloutData()->setVisible(false);
     }
   })
-    .onFailed(this, [this](const ErrorException& e)
+    .onFailed(this, [this](const ErrorException& error)
   {
     // If identify fails, hide callout
     m_mapView->calloutData()->setVisible(false);
