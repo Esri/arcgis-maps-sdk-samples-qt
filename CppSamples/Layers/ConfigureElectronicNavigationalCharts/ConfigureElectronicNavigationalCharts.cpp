@@ -50,7 +50,7 @@
 #include <QFuture>
 #include <QMouseEvent>
 #include <QStandardPaths>
-#include <QtCore/qglobal.h>
+#include <QtGlobal>
 
 using namespace Esri::ArcGISRuntime;
 
