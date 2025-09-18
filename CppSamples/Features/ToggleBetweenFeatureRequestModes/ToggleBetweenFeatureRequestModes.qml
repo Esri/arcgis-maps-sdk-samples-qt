@@ -57,12 +57,15 @@ Item {
                 switch (currentIndex) {
                     case 0:
                         model.setFeatureRequestMode(ToggleBetweenFeatureRequestModesSample.Cache)
+                        populate.enabled = false
                         break
                     case 1:
                         model.setFeatureRequestMode(ToggleBetweenFeatureRequestModesSample.NoCache)
+                        populate.enabled = false
                         break
                     case 2:
                         model.setFeatureRequestMode(ToggleBetweenFeatureRequestModesSample.ManualCache)
+                        populate.enabled = true
                         break
                 }
             }
@@ -73,7 +76,6 @@ Item {
             width: 200
             anchors.horizontalCenter: parent.horizontalCenter
             text: "Populate"
-            enabled: request_mode.currentText === "Manual Cache"
             onClicked: {
                 model.fetchCacheManually();
             }
