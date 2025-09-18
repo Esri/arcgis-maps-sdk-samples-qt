@@ -24,16 +24,16 @@ class QMouseEvent;
 
 namespace Esri::ArcGISRuntime
 {
-class Map;
-class MapQuickView;
-class EncExchangeSet;
-class Geometry;
-class EncDisplaySettings;
-class EncMarinerSettings;
-enum class EncColorScheme;
-enum class EncAreaSymbolizationType;
-enum class EncPointSymbolizationType;
-}
+  class Map;
+  class MapQuickView;
+  class EncExchangeSet;
+  class Geometry;
+  class EncDisplaySettings;
+  class EncMarinerSettings;
+  enum class EncColorScheme;
+  enum class EncAreaSymbolizationType;
+  enum class EncPointSymbolizationType;
+} // namespace Esri::ArcGISRuntime
 
 Q_MOC_INCLUDE("MapQuickView.h")
 
@@ -43,8 +43,10 @@ class ConfigureElectronicNavigationalCharts : public QObject
 
   Q_PROPERTY(Esri::ArcGISRuntime::MapQuickView* mapView READ mapView WRITE setMapView NOTIFY mapViewChanged)
   Q_PROPERTY(Esri::ArcGISRuntime::EncColorScheme colorScheme READ colorScheme WRITE setColorScheme NOTIFY colorSchemeChanged)
-  Q_PROPERTY(Esri::ArcGISRuntime::EncAreaSymbolizationType areaSymbolizationType READ areaSymbolizationType WRITE setAreaSymbolizationType NOTIFY areaSymbolizationTypeChanged)
-  Q_PROPERTY(Esri::ArcGISRuntime::EncPointSymbolizationType pointSymbolizationType READ pointSymbolizationType WRITE setPointSymbolizationType NOTIFY pointSymbolizationTypeChanged)
+  Q_PROPERTY(Esri::ArcGISRuntime::EncAreaSymbolizationType areaSymbolizationType READ areaSymbolizationType WRITE setAreaSymbolizationType NOTIFY
+               areaSymbolizationTypeChanged)
+  Q_PROPERTY(Esri::ArcGISRuntime::EncPointSymbolizationType pointSymbolizationType READ pointSymbolizationType WRITE setPointSymbolizationType NOTIFY
+               pointSymbolizationTypeChanged)
 
 public:
   explicit ConfigureElectronicNavigationalCharts(QObject* parent = nullptr);
@@ -67,7 +69,7 @@ private slots:
 private:
   Esri::ArcGISRuntime::MapQuickView* mapView() const;
   void setMapView(Esri::ArcGISRuntime::MapQuickView* mapView);
-  
+
   Esri::ArcGISRuntime::EncColorScheme colorScheme() const;
   void setColorScheme(Esri::ArcGISRuntime::EncColorScheme colorScheme);
 
@@ -81,7 +83,7 @@ private:
   Esri::ArcGISRuntime::MapQuickView* m_mapView = nullptr;
   Esri::ArcGISRuntime::EncExchangeSet* m_encExchangeSet = nullptr;
   QList<Esri::ArcGISRuntime::Geometry> m_extents;
-  
+
   Esri::ArcGISRuntime::EncColorScheme m_colorScheme;
   Esri::ArcGISRuntime::EncAreaSymbolizationType m_areaSymbolizationType;
   Esri::ArcGISRuntime::EncPointSymbolizationType m_pointSymbolizationType;
