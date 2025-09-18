@@ -175,7 +175,7 @@ void ShowDeviceLocationUsingIndoorPositioning::trySetupIndoorsLocationDataSource
     return;
   }
 
-  m_indoorsLocationDataSource = new IndoorsLocationDataSource(m_map->indoorPositioningDefinition(), this);
+  m_indoorsLocationDataSource = new IndoorsLocationDataSource(indoorPositioningDef, this);
   LocationDisplay* locationDisplay = m_mapView->locationDisplay();
 
   connect(locationDisplay, &LocationDisplay::locationChanged, this, &ShowDeviceLocationUsingIndoorPositioning::locationChangedHandler);
