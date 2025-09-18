@@ -24,6 +24,9 @@
 #include <QGuiApplication>
 #include <QQmlApplicationEngine>
 
+// Other headers
+#include "Esri/ArcGISRuntime/Toolkit/register.h"
+
 // Platform specific headers
 #ifdef Q_OS_WIN
 #include <Windows.h>
@@ -81,6 +84,9 @@ int main(int argc, char *argv[])
   engine.addImportPath(QDir(QCoreApplication::applicationDirPath()).filePath("qml"));
   // Add the Runtime and Extras path
   engine.addImportPath(arcGISRuntimeImportPath);
+
+  // Register the application view with the toolkit
+  Esri::ArcGISRuntime::Toolkit::registerComponents(engine);
 
   // Set the source
   engine.load(QUrl("qrc:/Samples/Layers/ConfigureElectronicNavigationalCharts/main.qml"));

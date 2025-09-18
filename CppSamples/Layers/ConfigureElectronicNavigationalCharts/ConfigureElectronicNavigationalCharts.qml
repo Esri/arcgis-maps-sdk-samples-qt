@@ -69,10 +69,15 @@ Item {
 
         // Settings toggle button
         Button {
-            text: qsTr("Display Settings")
             anchors.horizontalCenter: parent.horizontalCenter
             anchors.verticalCenter: parent.verticalCenter
             onClicked: settingsPopup.opened ? settingsPopup.close() : settingsPopup.open()
+            contentItem: Text {
+                text: qsTr("Display Settings")
+                color: "black"
+                horizontalAlignment: Text.AlignHCenter
+                verticalAlignment: Text.AlignVCenter
+            }
         }
     }
 
