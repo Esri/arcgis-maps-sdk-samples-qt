@@ -49,27 +49,27 @@ class ConfigureElectronicNavigationalCharts : public QObject
                pointSymbolizationTypeChanged)
 
 public:
-  enum class EncColorScheme
+  enum class ColorScheme
   {
-    EncColorSchemeDay = static_cast<int>(Esri::ArcGISRuntime::EncColorScheme::Day),
-    EncColorSchemeDusk = static_cast<int>(Esri::ArcGISRuntime::EncColorScheme::Dusk),
-    EncColorSchemeNight = static_cast<int>(Esri::ArcGISRuntime::EncColorScheme::Night)
+    ColorSchemeDay = static_cast<int>(Esri::ArcGISRuntime::EncColorScheme::Day),
+    ColorSchemeDusk = static_cast<int>(Esri::ArcGISRuntime::EncColorScheme::Dusk),
+    ColorSchemeNight = static_cast<int>(Esri::ArcGISRuntime::EncColorScheme::Night)
   };
-  Q_ENUM(EncColorScheme)
+  Q_ENUM(ColorScheme)
 
-  enum class EncAreaSymbolizationType
+  enum class AreaSymbolizationType
   {
-    EncAreaSymbolizationTypePlain = static_cast<int>(Esri::ArcGISRuntime::EncAreaSymbolizationType::Plain),
-    EncAreaSymbolizationTypeSymbolized = static_cast<int>(Esri::ArcGISRuntime::EncAreaSymbolizationType::Symbolized)
+    AreaSymbolizationTypePlain = static_cast<int>(Esri::ArcGISRuntime::EncAreaSymbolizationType::Plain),
+    AreaSymbolizationTypeSymbolized = static_cast<int>(Esri::ArcGISRuntime::EncAreaSymbolizationType::Symbolized)
   };
-  Q_ENUM(EncAreaSymbolizationType)
+  Q_ENUM(AreaSymbolizationType)
 
-  enum class EncPointSymbolizationType
+  enum class PointSymbolizationType
   {
-    EncPointSymbolizationTypeSimplified = static_cast<int>(Esri::ArcGISRuntime::EncPointSymbolizationType::Simplified),
-    EncPointSymbolizationTypePaperChart = static_cast<int>(Esri::ArcGISRuntime::EncPointSymbolizationType::PaperChart)
+    PointSymbolizationTypeSimplified = static_cast<int>(Esri::ArcGISRuntime::EncPointSymbolizationType::Simplified),
+    PointSymbolizationTypePaperChart = static_cast<int>(Esri::ArcGISRuntime::EncPointSymbolizationType::PaperChart)
   };
-  Q_ENUM(EncPointSymbolizationType)
+  Q_ENUM(PointSymbolizationType)
 
   explicit ConfigureElectronicNavigationalCharts(QObject* parent = nullptr);
   ~ConfigureElectronicNavigationalCharts();

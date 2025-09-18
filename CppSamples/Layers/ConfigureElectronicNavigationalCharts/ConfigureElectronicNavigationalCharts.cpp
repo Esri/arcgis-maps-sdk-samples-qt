@@ -74,9 +74,9 @@ namespace
 ConfigureElectronicNavigationalCharts::ConfigureElectronicNavigationalCharts(QObject* parent /* = nullptr */) :
   QObject(parent),
   m_map(new Map(BasemapStyle::ArcGISOceans, this)),
-  m_colorScheme(Esri::ArcGISRuntime::EncColorScheme::Day),
-  m_areaSymbolizationType(Esri::ArcGISRuntime::EncAreaSymbolizationType::Plain),
-  m_pointSymbolizationType(Esri::ArcGISRuntime::EncPointSymbolizationType::PaperChart)
+  m_colorScheme(EncColorScheme::Day),
+  m_areaSymbolizationType(EncAreaSymbolizationType::Plain),
+  m_pointSymbolizationType(EncPointSymbolizationType::PaperChart)
 {
   // Set resource path
   EncEnvironmentSettings::setResourcePath(defaultDataPath() + "/ArcGIS/Runtime/Data/ENC/hydrography");

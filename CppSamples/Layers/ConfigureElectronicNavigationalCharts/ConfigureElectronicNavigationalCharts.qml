@@ -41,7 +41,7 @@ Item {
 
     // Declare the C++ instance which creates the map etc. and supply the view
     ConfigureElectronicNavigationalChartsSample {
-        id: model
+        id: chartsSample
         mapView: mapView
     }
 
@@ -104,14 +104,17 @@ Item {
                 policy: scrollArea.contentHeight > scrollArea.height ? ScrollBar.AlwaysOn : ScrollBar.AsNeeded
             }
 
-            ColumnLayout {
+            ColumnLayout{
                 id: settingsColumn
                 width: scrollArea.width - 24
-                anchors.horizontalCenter: parent.horizontalCenter
                 spacing: 10
-                anchors.margins: 12
-                anchors.top: parent.top
-                anchors.topMargin: 12
+                anchors {
+                    horizontalCenter: parent.horizontalCenter
+                    margins: 12
+                    top: parent.top
+                    topMargin: 12
+                }
+
 
                 // Header Row with title
                 RowLayout {
@@ -120,9 +123,11 @@ Item {
                     Label {
                         Layout.fillWidth: true
                         text: qsTr("ENC Settings")
-                        font.pixelSize: 18
-                        font.bold: true
-                        horizontalAlignment: Text.AlignLeft
+                        font {
+                            pixelSize: 18
+                            bold: true
+                        }
+                        horizontalAlignment: Text.AlignHCenter
                         wrapMode: Text.NoWrap
                         elide: Text.ElideRight
                     }
@@ -137,8 +142,10 @@ Item {
                 // Color Scheme Section
                 Label {
                     text: qsTr("Color Scheme")
-                    font.pixelSize: 14
-                    font.bold: true
+                    font {
+                        pixelSize: 14
+                        bold: true
+                    }
                 }
 
                 Flow {
@@ -146,20 +153,20 @@ Item {
                     spacing: 6
                     RadioButton {
                         text: qsTr("Day")
-                        checked: model.colorScheme === ConfigureElectronicNavigationalChartsSample.EncColorSchemeDay
-                        onClicked: model.colorScheme = ConfigureElectronicNavigationalChartsSample.EncColorSchemeDay
+                        checked: chartsSample.colorScheme === ConfigureElectronicNavigationalChartsSample.ColorSchemeDay
+                        onClicked: chartsSample.colorScheme = ConfigureElectronicNavigationalChartsSample.ColorSchemeDay
                         font.pixelSize: 12
                     }
                     RadioButton {
                         text: qsTr("Dusk")
-                        checked: model.colorScheme === ConfigureElectronicNavigationalChartsSample.EncColorSchemeDusk
-                        onClicked: model.colorScheme = ConfigureElectronicNavigationalChartsSample.EncColorSchemeDusk
+                        checked: chartsSample.colorScheme === ConfigureElectronicNavigationalChartsSample.ColorSchemeDusk
+                        onClicked: chartsSample.colorScheme = ConfigureElectronicNavigationalChartsSample.ColorSchemeDusk
                         font.pixelSize: 12
                     }
                     RadioButton {
                         text: qsTr("Night")
-                        checked: model.colorScheme === ConfigureElectronicNavigationalChartsSample.EncColorSchemeNight
-                        onClicked: model.colorScheme = ConfigureElectronicNavigationalChartsSample.EncColorSchemeNight
+                        checked: chartsSample.colorScheme === ConfigureElectronicNavigationalChartsSample.ColorSchemeNight
+                        onClicked: chartsSample.colorScheme = ConfigureElectronicNavigationalChartsSample.ColorSchemeNight
                         font.pixelSize: 12
                     }
                 }
@@ -173,8 +180,10 @@ Item {
                 // Area Display Section
                 Label {
                     text: qsTr("Area Display")
-                    font.pixelSize: 14
-                    font.bold: true
+                    font{
+                        pixelSize: 14
+                        bold: true
+                    }
                 }
 
                 Flow {
@@ -182,14 +191,14 @@ Item {
                     spacing: 6
                     RadioButton {
                         text: qsTr("Plain")
-                        checked: model.areaSymbolizationType === ConfigureElectronicNavigationalChartsSample.EncAreaSymbolizationTypePlain
-                        onClicked: model.areaSymbolizationType = ConfigureElectronicNavigationalChartsSample.EncAreaSymbolizationTypePlain
+                        checked: chartsSample.areaSymbolizationType === ConfigureElectronicNavigationalChartsSample.AreaSymbolizationTypePlain
+                        onClicked: chartsSample.areaSymbolizationType = ConfigureElectronicNavigationalChartsSample.AreaSymbolizationTypePlain
                         font.pixelSize: 12
                     }
                     RadioButton {
                         text: qsTr("Symbolized")
-                        checked: model.areaSymbolizationType === ConfigureElectronicNavigationalChartsSample.EncAreaSymbolizationTypeSymbolized
-                        onClicked: model.areaSymbolizationType = ConfigureElectronicNavigationalChartsSample.EncAreaSymbolizationTypeSymbolized
+                        checked: chartsSample.areaSymbolizationType === ConfigureElectronicNavigationalChartsSample.AreaSymbolizationTypeSymbolized
+                        onClicked: chartsSample.areaSymbolizationType = ConfigureElectronicNavigationalChartsSample.AreaSymbolizationTypeSymbolized
                         font.pixelSize: 12
                     }
                 }
@@ -203,8 +212,10 @@ Item {
                 // Point Symbols Section
                 Label {
                     text: qsTr("Point Symbols")
-                    font.pixelSize: 14
-                    font.bold: true
+                    font {
+                        pixelSize: 14
+                        bold: true
+                    }
                 }
 
                 Flow {
@@ -212,14 +223,14 @@ Item {
                     spacing: 6
                     RadioButton {
                         text: qsTr("Paper Chart")
-                        checked: model.pointSymbolizationType === ConfigureElectronicNavigationalChartsSample.EncPointSymbolizationTypePaperChart
-                        onClicked: model.pointSymbolizationType = ConfigureElectronicNavigationalChartsSample.EncPointSymbolizationTypePaperChart
+                        checked: chartsSample.pointSymbolizationType === ConfigureElectronicNavigationalChartsSample.PointSymbolizationTypePaperChart
+                        onClicked: chartsSample.pointSymbolizationType = ConfigureElectronicNavigationalChartsSample.PointSymbolizationTypePaperChart
                         font.pixelSize: 12
                     }
                     RadioButton {
                         text: qsTr("Simplified")
-                        checked: model.pointSymbolizationType === ConfigureElectronicNavigationalChartsSample.EncPointSymbolizationTypeSimplified
-                        onClicked: model.pointSymbolizationType = ConfigureElectronicNavigationalChartsSample.EncPointSymbolizationTypeSimplified
+                        checked: chartsSample.pointSymbolizationType === ConfigureElectronicNavigationalChartsSample.PointSymbolizationTypeSimplified
+                        onClicked: chartsSample.pointSymbolizationType = ConfigureElectronicNavigationalChartsSample.PointSymbolizationTypeSimplified
                         font.pixelSize: 12
                     }
                 }
