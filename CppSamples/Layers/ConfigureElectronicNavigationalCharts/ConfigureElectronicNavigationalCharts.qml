@@ -20,7 +20,6 @@ import QtQuick.Layouts 1.15
 import Esri.Samples
 import Esri.ArcGISRuntime.Toolkit
 
-
 Item {
     // add a mapView component
     MapView {
@@ -66,10 +65,7 @@ Item {
             right: parent.right
         }
         height: Math.max(parent.height * 0.08, 50)
-        border.color: "gray"
         border.width: 1
-        color: palette.window
-
 
         // Settings toggle button
         Button {
