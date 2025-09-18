@@ -275,8 +275,8 @@ void ConfigureElectronicNavigationalCharts::onGeoViewTapped(QMouseEvent& mouseEv
   clearAllSelections();
 
   // Perform the identify operation on ENC layers specifically
-  const double tolerance = 12.0;
-  const bool returnPopupsOnly = false;
+  constexpr double tolerance = 12.0;
+  constexpr bool returnPopupsOnly = false;
 
   m_mapView->identifyLayersAsync(mouseEvent.position(), tolerance, returnPopupsOnly)
     .then(this,
