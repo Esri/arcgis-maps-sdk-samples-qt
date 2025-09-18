@@ -1,5 +1,6 @@
-#ifdef PCH_BUILD
-#include "pch.hpp"
+// [WriteFile Name=ToggleBetweenFeatureRequestModes, Category=Features]
+// [Legal]
+// Copyright 2025 Esri.
 
 // Licensed under the Apache License, Version 2.0 (the "License");
 // you may not use this file except in compliance with the License.
@@ -13,6 +14,8 @@
 // limitations under the License.
 // [Legal]
 
+#ifdef PCH_BUILD
+#include "pch.hpp"
 #endif // PCH_BUILD
 
 // sample headers

@@ -20,6 +20,12 @@ import Esri.Samples
 
 Item {
 
+    property var currentFeatureRequestMode;
+
+    onCurrentFeatureRequestModeChanged: {
+        model.setFeatureRequestMode(currentFeatureRequestMode);
+    }
+
     // add a mapView component
     MapView {
         id: view
@@ -53,19 +59,16 @@ Item {
             id: request_mode
             width: 200
             model: ["Cache", "No Cache", "Manual Cache"]
-            onCurrentTextChanged: {
+            onCurrentIndexChanged: {
                 switch (currentIndex) {
                     case 0:
-                        model.setFeatureRequestMode(ToggleBetweenFeatureRequestModesSample.Cache)
-                        populate.enabled = false
+                        currentFeatureRequestMode = ToggleBetweenFeatureRequestModesSample.Cache
                         break
                     case 1:
-                        model.setFeatureRequestMode(ToggleBetweenFeatureRequestModesSample.NoCache)
-                        populate.enabled = false
+                        currentFeatureRequestMode = ToggleBetweenFeatureRequestModesSample.NoCache
                         break
                     case 2:
-                        model.setFeatureRequestMode(ToggleBetweenFeatureRequestModesSample.ManualCache)
-                        populate.enabled = true
+                        currentFeatureRequestMode = ToggleBetweenFeatureRequestModesSample.ManualCache
                         break
                 }
             }
@@ -76,6 +79,7 @@ Item {
             width: 200
             anchors.horizontalCenter: parent.horizontalCenter
             text: "Populate"
+            enabled : currentFeatureRequestMode === ToggleBetweenFeatureRequestModesSample.ManualCache
             onClicked: {
                 model.fetchCacheManually();
             }
