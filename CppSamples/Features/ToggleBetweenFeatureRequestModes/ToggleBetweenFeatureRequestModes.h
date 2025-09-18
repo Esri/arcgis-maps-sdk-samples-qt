@@ -41,7 +41,7 @@ class ToggleBetweenFeatureRequestModes : public QObject
   Q_PROPERTY(Esri::ArcGISRuntime::MapQuickView* mapView READ mapView WRITE setMapView NOTIFY mapViewChanged)
 
 public:
-  enum RequestMode
+  enum class RequestMode
   {
     Cache = static_cast<int>(Esri::ArcGISRuntime::FeatureRequestMode::OnInteractionCache),
     NoCache = static_cast<int>(Esri::ArcGISRuntime::FeatureRequestMode::OnInteractionNoCache),
