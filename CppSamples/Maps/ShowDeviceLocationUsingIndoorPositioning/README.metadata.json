@@ -43,8 +43,6 @@
     "snippets": [
         "ShowDeviceLocationUsingIndoorPositioning.cpp",
         "ShowDeviceLocationUsingIndoorPositioning.h",
-        "IndoorsLocationDataSourceCreator.cpp",
-        "IndoorsLocationDataSourceCreator.h",
         "ShowDeviceLocationUsingIndoorPositioning.qml"
     ],
     "title": "Show device location using indoor positioning"
