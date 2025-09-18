@@ -54,7 +54,17 @@ Item {
             width: 200
             model: ["Cache", "No Cache", "Manual Cache"]
             onCurrentTextChanged: {
-                model.setFeatureRequestMode(currentIndex+1)
+                switch (currentIndex) {
+                    case 0:
+                        model.setFeatureRequestMode(ToggleBetweenFeatureRequestModesSample.Cache)
+                        break
+                    case 1:
+                        model.setFeatureRequestMode(ToggleBetweenFeatureRequestModesSample.NoCache)
+                        break
+                    case 2:
+                        model.setFeatureRequestMode(ToggleBetweenFeatureRequestModesSample.ManualCache)
+                        break
+                }
             }
         }
 
@@ -63,7 +73,7 @@ Item {
             width: 200
             anchors.horizontalCenter: parent.horizontalCenter
             text: "Populate"
-            enabled: request_mode.currentIndex === 2
+            enabled: request_mode.currentText === "Manual Cache"
             onClicked: {
                 model.fetchCacheManually();
             }

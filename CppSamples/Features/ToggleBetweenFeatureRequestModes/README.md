@@ -14,12 +14,12 @@ Feature tables can be initialized with a feature request mode which controls how
 
 ## How to use the sample
 
-Choose a request mode from the combo box. Pan and zoom to see how the features update at different scales. If you choose MANUAL\_CACHE, click the "Populate" button to manually get a cache with a subset of features.
+Choose a request mode from the combo box. Pan and zoom to see how the features update at different scales. If you choose ManualCache, click the "Populate" button to manually get a cache with a subset of features.
 
 ## How it works
 
 1. Create a `ServiceFeatureTable` with the a feature service URL.
-2. Create a `FeatureLayer` with the feature table and add it to an `MapView.Map`'s operational layers to display it.
+2. Create a `FeatureLayer` with the feature table and add it to a map's operational layers to display it.
 3. Set the `FeatureRequestMode` property of the service feature table to the desired mode (`OnInteractionCache`, `OnInteractionNoCache`, or `ManualCache`).
     * If using `ManualCache`, populate the features with `ServiceFeatureTable::populateFromServiceAsync()`.
 

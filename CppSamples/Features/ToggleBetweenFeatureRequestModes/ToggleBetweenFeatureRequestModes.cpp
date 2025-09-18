@@ -1,5 +1,18 @@
 #ifdef PCH_BUILD
 #include "pch.hpp"
+
+// Licensed under the Apache License, Version 2.0 (the "License");
+// you may not use this file except in compliance with the License.
+// You may obtain a copy of the License at
+// http://www.apache.org/licenses/LICENSE-2.0
+
+// Unless required by applicable law or agreed to in writing, software
+// distributed under the License is distributed on an "AS IS" BASIS,
+// WITHOUT WARRANTIES OR CONDITIONS OF ANY KIND, either express or implied.
+// See the License for the specific language governing permissions and
+// limitations under the License.
+// [Legal]
+
 #endif // PCH_BUILD
 
 // sample headers
@@ -71,7 +84,7 @@ void ToggleBetweenFeatureRequestModes::setMapView(MapQuickView* mapView)
 // Use this method for manual cache.
 void ToggleBetweenFeatureRequestModes::fetchCacheManually()
 {
-  Geometry geometry = m_mapView->visibleArea();
+  const Geometry geometry = m_mapView->visibleArea();
 
   // Create new query object that contains parameters to query specific request types.
   QueryParameters params;
@@ -80,9 +93,10 @@ void ToggleBetweenFeatureRequestModes::fetchCacheManually()
   // Create list of the fields that are returned from the service.
   // Using "*" will return all fields. This can be replaced to return certain fields.
   const QStringList outFields = {"*"};
+  constexpr bool clearCache = true;
 
   // Populate feature table with the data based on query.
-  m_treeFeatureTable->populateFromServiceAsync(params, true, outFields, this);
+  m_treeFeatureTable->populateFromServiceAsync(params, clearCache, outFields, this);
 }
 
 // Use this method to set feature request mode.
