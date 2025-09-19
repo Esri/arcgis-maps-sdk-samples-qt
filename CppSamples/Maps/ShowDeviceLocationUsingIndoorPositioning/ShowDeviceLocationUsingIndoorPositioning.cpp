@@ -128,7 +128,7 @@ void ShowDeviceLocationUsingIndoorPositioning::requestLocationPermissionThenSetu
 void ShowDeviceLocationUsingIndoorPositioning::validatePermissions()
 {
   bool bluetoothPermissionGranted = false;
-  if (auto status = qApp->checkPermission(QBluetoothPermission{}); status == Qt::PermissionStatus::Denied)
+  if (const Qt::PermissionStatus status = qApp->checkPermission(QBluetoothPermission{}); status == Qt::PermissionStatus::Denied)
   {
     emit bluetoothPermissionDenied();
   }
@@ -141,7 +141,7 @@ void ShowDeviceLocationUsingIndoorPositioning::validatePermissions()
   QLocationPermission locationPermission{};
   locationPermission.setAccuracy(QLocationPermission::Accuracy::Precise);
   locationPermission.setAvailability(QLocationPermission::Availability::WhenInUse);
-  if (auto status = qApp->checkPermission(locationPermission); status == Qt::PermissionStatus::Denied)
+  if (const Qt::PermissionStatus status = qApp->checkPermission(locationPermission); status == Qt::PermissionStatus::Denied)
   {
     emit locationPermissionDenied();
   }
