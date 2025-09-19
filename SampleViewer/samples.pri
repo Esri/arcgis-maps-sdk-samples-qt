@@ -187,7 +187,6 @@ HEADERS += \
     "$$SAMPLEPATHCPP/Maps/SetInitialMapLocation/SetInitialMapLocation.h" \
     "$$SAMPLEPATHCPP/Maps/SetMapSpatialReference/SetMapSpatialReference.h" \
     "$$SAMPLEPATHCPP/Maps/SetMaxExtent/SetMaxExtent.h" \
-    "$$SAMPLEPATHCPP/Maps/ShowDeviceLocationUsingIndoorPositioning/IndoorsLocationDataSourceCreator.h" \
     "$$SAMPLEPATHCPP/Maps/ShowDeviceLocationUsingIndoorPositioning/ShowDeviceLocationUsingIndoorPositioning.h" \
     "$$SAMPLEPATHCPP/Maps/ShowLocationHistory/ShowLocationHistory.h" \
     "$$SAMPLEPATHCPP/Maps/ShowMagnifier/ShowMagnifier.h" \
@@ -416,7 +415,6 @@ SOURCES += \
     "$$SAMPLEPATHCPP/Maps/SetInitialMapLocation/SetInitialMapLocation.cpp" \
     "$$SAMPLEPATHCPP/Maps/SetMapSpatialReference/SetMapSpatialReference.cpp" \
     "$$SAMPLEPATHCPP/Maps/SetMaxExtent/SetMaxExtent.cpp" \
-    "$$SAMPLEPATHCPP/Maps/ShowDeviceLocationUsingIndoorPositioning/IndoorsLocationDataSourceCreator.cpp" \
     "$$SAMPLEPATHCPP/Maps/ShowDeviceLocationUsingIndoorPositioning/ShowDeviceLocationUsingIndoorPositioning.cpp" \
     "$$SAMPLEPATHCPP/Maps/ShowLocationHistory/ShowLocationHistory.cpp" \
     "$$SAMPLEPATHCPP/Maps/ShowMagnifier/ShowMagnifier.cpp" \

@@ -30,6 +30,7 @@ class ArcGISFeatureTable;
 class FeatureTable;
 class Map;
 class MapQuickView;
+class IndoorsLocationDataSource;
 }
 
 Q_MOC_INCLUDE("MapQuickView.h")
@@ -60,19 +61,21 @@ private:
   QVariantMap locationProperties() const;
 
   void setMapView(Esri::ArcGISRuntime::MapQuickView* mapView);
-  void setupIndoorsLocationDataSource();
+  void trySetupIndoorsLocationDataSource();
   void locationChangedHandler(const Esri::ArcGISRuntime::Location& loc);
   void changeFloorDisplay();
   void requestLocationPermissionThenSetupILDS();
   void requestBluetoothThenLocationPermissions();
-  void checkPermissions();
+  void validatePermissions();
 
+  bool m_allPermissionsGranted = false;
   Esri::ArcGISRuntime::Map* m_map = nullptr;
   Esri::ArcGISRuntime::MapQuickView* m_mapView = nullptr;
   Esri::ArcGISRuntime::FeatureTable* m_positioningTable = nullptr;
   Esri::ArcGISRuntime::ArcGISFeatureTable* m_pathwaysTable = nullptr;
+  Esri::ArcGISRuntime::IndoorsLocationDataSource* m_indoorsLocationDataSource = nullptr;
   QVariantMap m_locationProperties;
-  int m_currentFloor;
+  int m_currentFloor = 0;
 };
 
 #endif // SHOWDEVICELOCATIONUSINGINDOORPOSITIONING_H
