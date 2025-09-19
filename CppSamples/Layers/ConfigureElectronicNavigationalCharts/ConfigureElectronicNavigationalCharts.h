@@ -27,12 +27,13 @@ class QMouseEvent;
 
 namespace Esri::ArcGISRuntime
 {
+  class EncDisplaySettings;
+  class EncExchangeSet;
+  class EncMarinerSettings;
+  class Geometry;
+  class IdentifyLayerResult;
   class Map;
   class MapQuickView;
-  class EncExchangeSet;
-  class Geometry;
-  class EncDisplaySettings;
-  class EncMarinerSettings;
 } // namespace Esri::ArcGISRuntime
 
 Q_MOC_INCLUDE("MapQuickView.h")
@@ -100,6 +101,8 @@ private:
 
   Esri::ArcGISRuntime::EncPointSymbolizationType pointSymbolizationType() const;
   void setPointSymbolizationType(Esri::ArcGISRuntime::EncPointSymbolizationType pointSymbolizationType);
+
+  void processIdentifyResults_(const QList<Esri::ArcGISRuntime::IdentifyLayerResult*>& results);
 
   Esri::ArcGISRuntime::Map* m_map = nullptr;
   Esri::ArcGISRuntime::MapQuickView* m_mapView = nullptr;

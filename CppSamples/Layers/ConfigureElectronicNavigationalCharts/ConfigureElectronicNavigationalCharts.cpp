@@ -50,7 +50,7 @@
 #include <QFuture>
 #include <QMouseEvent>
 #include <QStandardPaths>
-#include <QtCore/qglobal.h>
+#include <QtGlobal>
 
 using namespace Esri::ArcGISRuntime;
 
@@ -282,57 +282,65 @@ void ConfigureElectronicNavigationalCharts::onGeoViewTapped(QMouseEvent& mouseEv
     .then(this,
           [this](const QList<IdentifyLayerResult*>& results)
   {
-    // Filter to get only ENC layer results
-    QList<IdentifyLayerResult*> encResults;
-    for (IdentifyLayerResult* result : results)
-    {
-      if (qobject_cast<EncLayer*>(result->layerContent()))
-      {
-        encResults.append(result);
-      }
-    }
-
-    // Return early if no ENC results
-    if (encResults.isEmpty())
-    {
-      m_mapView->calloutData()->setVisible(false);
-      return;
-    }
-
-    // Get the first ENC result
-    IdentifyLayerResult* firstResult = encResults.first();
-    EncLayer* containingLayer = qobject_cast<EncLayer*>(firstResult->layerContent());
-
-    // Get the first ENC feature from the result
-    const QList<GeoElement*> geoElements = firstResult->geoElements();
-    if (geoElements.isEmpty())
-    {
-      m_mapView->calloutData()->setVisible(false);
-      return;
-    }
-
-    if (EncFeature* encFeature = dynamic_cast<EncFeature*>(geoElements.first()); encFeature)
-    {
-      // Select the feature
-      containingLayer->selectFeature(encFeature);
-
-      // Create callout content
-      QString title = encFeature->acronym().isEmpty() ? "ENC Feature" : encFeature->acronym();
-      QString detail = encFeature->description().isEmpty() ? "ENC Chart Feature" : encFeature->description();
-
-      // Show callout
-      m_mapView->calloutData()->setTitle(title);
-      m_mapView->calloutData()->setDetail(detail);
-      m_mapView->calloutData()->setVisible(true);
-    }
-    else
-    {
-      m_mapView->calloutData()->setVisible(false);
-    }
+    processIdentifyResults_(results);
   })
     .onFailed(this, [this](const ErrorException& error)
   {
     // If identify fails, hide callout
     m_mapView->calloutData()->setVisible(false);
   });
+}
+
+void ConfigureElectronicNavigationalCharts::processIdentifyResults_(const QList<Esri::ArcGISRuntime::IdentifyLayerResult*>& results)
+{
+  // Filter to get only ENC layer results
+  QList<IdentifyLayerResult*> encResults;
+  for (IdentifyLayerResult* result : results)
+  {
+    if (qobject_cast<EncLayer*>(result->layerContent()))
+    {
+      encResults.append(result);
+    }
+  }
+
+  // Return early if no ENC results
+  if (encResults.isEmpty())
+  {
+    m_mapView->calloutData()->setVisible(false);
+    return;
+  }
+
+  // Get the first ENC result
+  IdentifyLayerResult* firstResult = encResults.first();
+  EncLayer* containingLayer = qobject_cast<EncLayer*>(firstResult->layerContent());
+
+  // Get the first ENC feature from the result
+  const QList<GeoElement*> geoElements = firstResult->geoElements();
+  if (geoElements.isEmpty())
+  {
+    m_mapView->calloutData()->setVisible(false);
+    return;
+  }
+
+  if (EncFeature* encFeature = dynamic_cast<EncFeature*>(geoElements.first()); encFeature)
+  {
+    // Select the feature
+    if (containingLayer)
+    {
+      containingLayer->selectFeature(encFeature);
+    }
+
+    // Create callout content
+    QString title = encFeature->acronym().isEmpty() ? "ENC Feature" : encFeature->acronym();
+    QString detail = encFeature->description().isEmpty() ? "ENC Chart Feature" : encFeature->description();
+
+    // Show callout
+    m_mapView->calloutData()->setTitle(title);
+    m_mapView->calloutData()->setDetail(detail);
+    m_mapView->calloutData()->setVisible(true);
+  }
+  else
+  {
+    m_mapView->calloutData()->setVisible(false);
+  }
 }

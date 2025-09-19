@@ -48,6 +48,7 @@
     "snippets": [
         "ConfigureElectronicNavigationalCharts.cpp",
         "ConfigureElectronicNavigationalCharts.h",
+        "SettingsPopup.qml",
         "ConfigureElectronicNavigationalCharts.qml"
     ],
     "title": "Configure electronic navigational charts"

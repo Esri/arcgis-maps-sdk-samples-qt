@@ -68,92 +68,92 @@ Popup {
                 }
             }
 
-            // Flow {
-            //     Layout.fillWidth: true
-            //     spacing: 6
-            //     RadioButton {
-            //         text: qsTr("Day")
-            //         checked: chartsSample.colorScheme === ConfigureElectronicNavigationalChartsSample.ColorSchemeDay
-            //         onClicked: chartsSample.colorScheme = ConfigureElectronicNavigationalChartsSample.ColorSchemeDay
-            //         font.pixelSize: 12
-            //     }
-            //     RadioButton {
-            //         text: qsTr("Dusk")
-            //         checked: chartsSample.colorScheme === ConfigureElectronicNavigationalChartsSample.ColorSchemeDusk
-            //         onClicked: chartsSample.colorScheme = ConfigureElectronicNavigationalChartsSample.ColorSchemeDusk
-            //         font.pixelSize: 12
-            //     }
-            //     RadioButton {
-            //         text: qsTr("Night")
-            //         checked: chartsSample.colorScheme === ConfigureElectronicNavigationalChartsSample.ColorSchemeNight
-            //         onClicked: chartsSample.colorScheme = ConfigureElectronicNavigationalChartsSample.ColorSchemeNight
-            //         font.pixelSize: 12
-            //     }
-            // }
+            Flow {
+                Layout.fillWidth: true
+                spacing: 6
+                RadioButton {
+                    text: qsTr("Day")
+                    checked: chartsSample.colorScheme === ConfigureElectronicNavigationalChartsSample.ColorSchemeDay
+                    onClicked: chartsSample.colorScheme = ConfigureElectronicNavigationalChartsSample.ColorSchemeDay
+                    font.pixelSize: 12
+                }
+                RadioButton {
+                    text: qsTr("Dusk")
+                    checked: chartsSample.colorScheme === ConfigureElectronicNavigationalChartsSample.ColorSchemeDusk
+                    onClicked: chartsSample.colorScheme = ConfigureElectronicNavigationalChartsSample.ColorSchemeDusk
+                    font.pixelSize: 12
+                }
+                RadioButton {
+                    text: qsTr("Night")
+                    checked: chartsSample.colorScheme === ConfigureElectronicNavigationalChartsSample.ColorSchemeNight
+                    onClicked: chartsSample.colorScheme = ConfigureElectronicNavigationalChartsSample.ColorSchemeNight
+                    font.pixelSize: 12
+                }
+            }
 
-            // Rectangle {
-            //     Layout.fillWidth: true
-            //     height: 1
-            //     color: "#e0e0e0"
-            // }
+            Rectangle {
+                Layout.fillWidth: true
+                height: 1
+                color: "#e0e0e0"
+            }
 
-            // // Area Display Section
-            // Label {
-            //     text: qsTr("Area Display")
-            //     font {
-            //         pixelSize: 14
-            //         bold: true
-            //     }
-            // }
+            // Area Display Section
+            Label {
+                text: qsTr("Area Display")
+                font {
+                    pixelSize: 14
+                    bold: true
+                }
+            }
 
-            // Flow {
-            //     Layout.fillWidth: true
-            //     spacing: 6
-            //     RadioButton {
-            //         text: qsTr("Plain")
-            //         checked: chartsSample.areaSymbolizationType === ConfigureElectronicNavigationalChartsSample.AreaSymbolizationTypePlain
-            //         onClicked: chartsSample.areaSymbolizationType = ConfigureElectronicNavigationalChartsSample.AreaSymbolizationTypePlain
-            //         font.pixelSize: 12
-            //     }
-            //     RadioButton {
-            //         text: qsTr("Symbolized")
-            //         checked: chartsSample.areaSymbolizationType === ConfigureElectronicNavigationalChartsSample.AreaSymbolizationTypeSymbolized
-            //         onClicked: chartsSample.areaSymbolizationType = ConfigureElectronicNavigationalChartsSample.AreaSymbolizationTypeSymbolized
-            //         font.pixelSize: 12
-            //     }
-            // }
+            Flow {
+                Layout.fillWidth: true
+                spacing: 6
+                RadioButton {
+                    text: qsTr("Plain")
+                    checked: chartsSample.areaSymbolizationType === ConfigureElectronicNavigationalChartsSample.AreaSymbolizationTypePlain
+                    onClicked: chartsSample.areaSymbolizationType = ConfigureElectronicNavigationalChartsSample.AreaSymbolizationTypePlain
+                    font.pixelSize: 12
+                }
+                RadioButton {
+                    text: qsTr("Symbolized")
+                    checked: chartsSample.areaSymbolizationType === ConfigureElectronicNavigationalChartsSample.AreaSymbolizationTypeSymbolized
+                    onClicked: chartsSample.areaSymbolizationType = ConfigureElectronicNavigationalChartsSample.AreaSymbolizationTypeSymbolized
+                    font.pixelSize: 12
+                }
+            }
 
-            // Rectangle {
-            //     Layout.fillWidth: true
-            //     height: 1
-            //     color: "#e0e0e0"
-            // }
+            Rectangle {
+                Layout.fillWidth: true
+                height: 1
+                color: "#e0e0e0"
+            }
 
-            // // Point Symbols Section
-            // Label {
-            //     text: qsTr("Point Symbols")
-            //     font {
-            //         pixelSize: 14
-            //         bold: true
-            //     }
-            // }
+            // Point Symbols Section
+            Label {
+                text: qsTr("Point Symbols")
+                font {
+                    pixelSize: 14
+                    bold: true
+                }
+            }
 
-            // Flow {
-            //     Layout.fillWidth: true
-            //     spacing: 6
-            //     RadioButton {
-            //         text: qsTr("Paper Chart")
-            //         checked: chartsSample.pointSymbolizationType === ConfigureElectronicNavigationalChartsSample.PointSymbolizationTypePaperChart
-            //         onClicked: chartsSample.pointSymbolizationType = ConfigureElectronicNavigationalChartsSample.PointSymbolizationTypePaperChart
-            //         font.pixelSize: 12
-            //     }
-            //     RadioButton {
-            //         text: qsTr("Simplified")
-            //         checked: chartsSample.pointSymbolizationType === ConfigureElectronicNavigationalChartsSample.PointSymbolizationTypeSimplified
-            //         onClicked: chartsSample.pointSymbolizationType = ConfigureElectronicNavigationalChartsSample.PointSymbolizationTypeSimplified
-            //         font.pixelSize: 12
-            //     }
-            // }
+            Flow {
+                Layout.fillWidth: true
+                spacing: 6
+                RadioButton {
+                    text: qsTr("Paper Chart")
+                    checked: chartsSample.pointSymbolizationType === ConfigureElectronicNavigationalChartsSample.PointSymbolizationTypePaperChart
+                    onClicked: chartsSample.pointSymbolizationType = ConfigureElectronicNavigationalChartsSample.PointSymbolizationTypePaperChart
+                    font.pixelSize: 12
+                }
+                RadioButton {
+                    text: qsTr("Simplified")
+                    checked: chartsSample.pointSymbolizationType === ConfigureElectronicNavigationalChartsSample.PointSymbolizationTypeSimplified
+                    onClicked: chartsSample.pointSymbolizationType = ConfigureElectronicNavigationalChartsSample.PointSymbolizationTypeSimplified
+                    font.pixelSize: 12
+                }
+            }
 
             Rectangle {
                 Layout.fillWidth: true
@@ -164,8 +164,8 @@ Popup {
             // Footer close button
             Button {
                 text: qsTr("Close")
-                Layout.alignment: Qt.AlignHCenter
                 implicitWidth: Math.max(100, contentItem.implicitWidth + 32)
+                Layout.alignment: Qt.AlignHCenter
                 Layout.preferredWidth: implicitWidth
                 Layout.maximumWidth: 160
                 onClicked: settingsPopup.close()
