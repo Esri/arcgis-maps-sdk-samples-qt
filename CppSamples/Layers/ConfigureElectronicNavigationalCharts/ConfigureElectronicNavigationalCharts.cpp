@@ -85,7 +85,7 @@ ConfigureElectronicNavigationalCharts::ConfigureElectronicNavigationalCharts(QOb
   updateDisplaySettings();
 
   // Create ENC Exchange Set
-  QStringList encPaths = {defaultDataPath() + "/ArcGIS/Runtime/Data/ENC/ExchangeSetwithoutUpdates/ENC_ROOT/CATALOG.031"};
+  const QStringList encPaths = {defaultDataPath() + "/ArcGIS/Runtime/Data/ENC/ExchangeSetwithoutUpdates/ENC_ROOT/CATALOG.031"};
   m_encExchangeSet = new EncExchangeSet(encPaths, this);
 }
 
