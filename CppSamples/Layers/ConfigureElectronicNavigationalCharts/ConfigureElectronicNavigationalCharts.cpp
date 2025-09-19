@@ -331,8 +331,8 @@ void ConfigureElectronicNavigationalCharts::processIdentifyResults_(const QList<
     }
 
     // Create callout content
-    QString title = encFeature->acronym().isEmpty() ? "ENC Feature" : encFeature->acronym();
-    QString detail = encFeature->description().isEmpty() ? "ENC Chart Feature" : encFeature->description();
+    const QString title = encFeature->acronym().isEmpty() ? "ENC Feature" : encFeature->acronym();
+    const QString detail = encFeature->description().isEmpty() ? "ENC Chart Feature" : encFeature->description();
 
     // Show callout
     m_mapView->calloutData()->setTitle(title);
