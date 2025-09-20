@@ -93,10 +93,8 @@
 #include "../CppSamples/DisplayInformation/Simple_Renderer/Simple_Renderer.h"
 #include "../CppSamples/DisplayInformation/SymbolizeShapefile/SymbolizeShapefile.h"
 #include "../CppSamples/DisplayInformation/Unique_Value_Renderer/Unique_Value_Renderer.h"
-#include "../CppSamples/EditData/AddFeaturesFeatureService/AddFeaturesFeatureService.h"
 #include "../CppSamples/EditData/ContingentValues/ContingentValues.h"
 #include "../CppSamples/EditData/CreateKmlMultiTrack/CreateKmlMultiTrack.h"
-#include "../CppSamples/EditData/DeleteFeaturesFeatureService/DeleteFeaturesFeatureService.h"
 #include "../CppSamples/EditData/EditAndSyncFeatures/EditAndSyncFeatures.h"
 #include "../CppSamples/EditData/EditFeatureAttachments/EditFeatureAttachments.h"
 #include "../CppSamples/EditData/EditFeaturesWithFeatureLinkedAnnotation/EditFeaturesWithFeatureLinkedAnnotation.h"
@@ -104,10 +102,9 @@
 #include "../CppSamples/EditData/EditGeometriesWithProgrammaticReticleTool/EditGeometriesWithProgrammaticReticleTool.h"
 #include "../CppSamples/EditData/EditKmlGroundOverlay/EditKmlGroundOverlay.h"
 #include "../CppSamples/EditData/EditWithBranchVersioning/EditWithBranchVersioning.h"
+#include "../CppSamples/EditData/ManageFeaturesFeatureService/ManageFeaturesFeatureService.h"
 #include "../CppSamples/EditData/SnapGeometryEdits/SnapGeometryEdits.h"
 #include "../CppSamples/EditData/SnapGeometryEditsWithRules/SnapGeometryEditsWithRules.h"
-#include "../CppSamples/EditData/UpdateAttributesFeatureService/UpdateAttributesFeatureService.h"
-#include "../CppSamples/EditData/UpdateGeometryFeatureService/UpdateGeometryFeatureService.h"
 #include "../CppSamples/Features/ControlTimeExtentTimeSlider/ControlTimeExtentTimeSlider.h"
 #include "../CppSamples/Features/CreateMobileGeodatabase/CreateMobileGeodatabase.h"
 #include "../CppSamples/Features/FeatureLayerChangeRenderer/FeatureLayerChangeRenderer.h"
@@ -376,7 +373,6 @@ void registerCppSampleClasses()
   AddCustomDynamicEntityDataSource::init();
   AddDynamicEntityLayer::init();
   AddEncExchangeSet::init();
-  AddFeaturesFeatureService::init();
   AddGraphicsWithRenderer::init();
   AddIntegratedMeshLayer::init();
   AnalyzeHotspots::init();
@@ -423,7 +419,6 @@ void registerCppSampleClasses()
   CreateTerrainSurfaceFromLocalTilePackage::init();
   CustomDictionaryStyle::init();
   CutGeometry::init();
-  DeleteFeaturesFeatureService::init();
   DensifyAndGeneralize::init();
   Display3DLabelsInScene::init();
   DisplayAnnotation::init();
@@ -501,6 +496,7 @@ void registerCppSampleClasses()
   ListTransformations::init();
   LoadWfsXmlQuery::init();
   ManageBookmarks::init();
+  ManageFeaturesFeatureService::init();
   ManageOperationalLayers::init();
   MapLoaded::init();
   MapReferenceScale::init();
@@ -574,8 +570,6 @@ void registerCppSampleClasses()
   TokenAuthentication::init();
   TraceUtilityNetwork::init();
   Unique_Value_Renderer::init();
-  UpdateAttributesFeatureService::init();
-  UpdateGeometryFeatureService::init();
   ValidateUtilityNetworkTopology::init();
   ViewContentBeneathTerrainSurface::init();
   ViewPointCloudDataOffline::init();

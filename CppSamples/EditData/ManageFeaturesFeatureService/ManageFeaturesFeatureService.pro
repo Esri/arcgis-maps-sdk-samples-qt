@@ -1,5 +1,5 @@
 #-------------------------------------------------
-# Copyright 2015 Esri.
+# Copyright 2025 Esri.
 
 # Licensed under the Apache License, Version 2.0 (the "License");
 # you may not use this file except in compliance with the License.
@@ -24,22 +24,31 @@ CONFIG += c++17
 # additional modules are pulled in via arcgisruntime.pri
 QT += opengl qml quick
 
+TEMPLATE = app
+TARGET = ManageFeaturesFeatureService
+
 ARCGIS_RUNTIME_VERSION = 300.0.0
 include($$PWD/arcgisruntime.pri)
 
-TEMPLATE = app
-TARGET = UpdateGeometryFeatureService
+# path of the toolkit relative to the sample
+TOOLKIT_PRI_PATH = $$PWD/../../../arcgis-maps-sdk-toolkit-qt
+
+exists($$TOOLKIT_PRI_PATH/uitools/toolkitcpp/toolkitcpp.pri) {
+    include($$TOOLKIT_PRI_PATH/uitools/toolkitcpp/toolkitcpp.pri)
+} else {
+    error(TOOLKIT_PRI_PATH is missing which is required to build this application.)
+}
 
 #-------------------------------------------------------------------------------
 
 HEADERS += \
-    UpdateGeometryFeatureService.h
+    ManageFeaturesFeatureService.h
 
 SOURCES += \
     main.cpp \
-    UpdateGeometryFeatureService.cpp
+    ManageFeaturesFeatureService.cpp
 
-RESOURCES += UpdateGeometryFeatureService.qrc
+RESOURCES += ManageFeaturesFeatureService.qrc
 
 #-------------------------------------------------------------------------------
 
@@ -62,6 +71,3 @@ android {
     INCLUDEPATH += $$PWD
     DEPENDPATH += $$PWD
 }
-
-
-
