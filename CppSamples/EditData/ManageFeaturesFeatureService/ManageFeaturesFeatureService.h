@@ -40,6 +40,10 @@ class ManageFeaturesFeatureService : public QQuickItem
 {
   Q_OBJECT
 
+  Q_PROPERTY(QString featureType READ featureType NOTIFY featureTypeChanged)
+  Q_PROPERTY(OperationMode operationMode READ operationMode WRITE setOperationMode NOTIFY operationModeChanged)
+
+public:
   enum class OperationMode
   {
     AddFeatures,
@@ -49,10 +53,6 @@ class ManageFeaturesFeatureService : public QQuickItem
   };
   Q_ENUM(OperationMode)
 
-  Q_PROPERTY(QString featureType READ featureType NOTIFY featureTypeChanged)
-  Q_PROPERTY(OperationMode operationMode READ operationMode WRITE setOperationMode NOTIFY operationModeChanged)
-
-public:
   explicit ManageFeaturesFeatureService(QQuickItem* parent = nullptr);
   ~ManageFeaturesFeatureService() override;
 
