@@ -109,9 +109,9 @@ private:
   Esri::ArcGISRuntime::EncExchangeSet* m_encExchangeSet = nullptr;
   QList<Esri::ArcGISRuntime::Geometry> m_extents;
 
-  Esri::ArcGISRuntime::EncColorScheme m_colorScheme;
-  Esri::ArcGISRuntime::EncAreaSymbolizationType m_areaSymbolizationType;
-  Esri::ArcGISRuntime::EncPointSymbolizationType m_pointSymbolizationType;
+  Esri::ArcGISRuntime::EncColorScheme m_colorScheme = Esri::ArcGISRuntime::EncColorScheme::Day;
+  Esri::ArcGISRuntime::EncAreaSymbolizationType m_areaSymbolizationType = Esri::ArcGISRuntime::EncAreaSymbolizationType::Plain;
+  Esri::ArcGISRuntime::EncPointSymbolizationType m_pointSymbolizationType = Esri::ArcGISRuntime::EncPointSymbolizationType::PaperChart;
 };
 
 #endif // CONFIGUREELECTRONICNAVIGATIONALCHARTS_H

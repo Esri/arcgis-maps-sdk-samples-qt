@@ -73,10 +73,7 @@ namespace
 
 ConfigureElectronicNavigationalCharts::ConfigureElectronicNavigationalCharts(QObject* parent /* = nullptr */) :
   QObject(parent),
-  m_map(new Map(BasemapStyle::ArcGISOceans, this)),
-  m_colorScheme(EncColorScheme::Day),
-  m_areaSymbolizationType(EncAreaSymbolizationType::Plain),
-  m_pointSymbolizationType(EncPointSymbolizationType::PaperChart)
+  m_map(new Map(BasemapStyle::ArcGISOceans, this))
 {
   // Set resource path
   EncEnvironmentSettings::setResourcePath(defaultDataPath() + "/ArcGIS/Runtime/Data/ENC/hydrography");
@@ -182,7 +179,7 @@ EncColorScheme ConfigureElectronicNavigationalCharts::colorScheme() const
   return m_colorScheme;
 }
 
-void ConfigureElectronicNavigationalCharts::setColorScheme(Esri::ArcGISRuntime::EncColorScheme colorScheme)
+void ConfigureElectronicNavigationalCharts::setColorScheme(EncColorScheme colorScheme)
 {
   if (m_colorScheme == colorScheme)
   {
@@ -198,7 +195,7 @@ EncAreaSymbolizationType ConfigureElectronicNavigationalCharts::areaSymbolizatio
   return m_areaSymbolizationType;
 }
 
-void ConfigureElectronicNavigationalCharts::setAreaSymbolizationType(Esri::ArcGISRuntime::EncAreaSymbolizationType areaSymbolizationType)
+void ConfigureElectronicNavigationalCharts::setAreaSymbolizationType(EncAreaSymbolizationType areaSymbolizationType)
 {
   if (m_areaSymbolizationType == areaSymbolizationType)
   {
@@ -214,7 +211,7 @@ EncPointSymbolizationType ConfigureElectronicNavigationalCharts::pointSymbolizat
   return m_pointSymbolizationType;
 }
 
-void ConfigureElectronicNavigationalCharts::setPointSymbolizationType(Esri::ArcGISRuntime::EncPointSymbolizationType pointSymbolizationType)
+void ConfigureElectronicNavigationalCharts::setPointSymbolizationType(EncPointSymbolizationType pointSymbolizationType)
 {
   if (m_pointSymbolizationType == pointSymbolizationType)
   {
@@ -291,7 +288,7 @@ void ConfigureElectronicNavigationalCharts::onGeoViewTapped(QMouseEvent& mouseEv
   });
 }
 
-void ConfigureElectronicNavigationalCharts::processIdentifyResults_(const QList<Esri::ArcGISRuntime::IdentifyLayerResult*>& results)
+void ConfigureElectronicNavigationalCharts::processIdentifyResults_(const QList<IdentifyLayerResult*>& results)
 {
   // Filter to get only ENC layer results
   QList<IdentifyLayerResult*> encResults;
