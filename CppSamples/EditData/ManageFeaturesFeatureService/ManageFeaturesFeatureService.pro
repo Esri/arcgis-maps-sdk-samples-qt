@@ -1,5 +1,5 @@
 #-------------------------------------------------
-# Copyright 2022 Esri.
+# Copyright 2025 Esri.
 
 # Licensed under the Apache License, Version 2.0 (the "License");
 # you may not use this file except in compliance with the License.
@@ -23,24 +23,32 @@ CONFIG += c++17
 
 # additional modules are pulled in via arcgisruntime.pri
 QT += opengl qml quick
-android|ios: QT += bluetooth
 
 TEMPLATE = app
-TARGET = ShowDeviceLocationUsingIndoorPositioning
+TARGET = ManageFeaturesFeatureService
 
 ARCGIS_RUNTIME_VERSION = 300.0.0
 include($$PWD/arcgisruntime.pri)
 
+# path of the toolkit relative to the sample
+TOOLKIT_PRI_PATH = $$PWD/../../../arcgis-maps-sdk-toolkit-qt
+
+exists($$TOOLKIT_PRI_PATH/uitools/toolkitcpp/toolkitcpp.pri) {
+    include($$TOOLKIT_PRI_PATH/uitools/toolkitcpp/toolkitcpp.pri)
+} else {
+    error(TOOLKIT_PRI_PATH is missing which is required to build this application.)
+}
+
 #-------------------------------------------------------------------------------
 
 HEADERS += \
-    ShowDeviceLocationUsingIndoorPositioning.h
+    ManageFeaturesFeatureService.h
 
 SOURCES += \
     main.cpp \
-    ShowDeviceLocationUsingIndoorPositioning.cpp
+    ManageFeaturesFeatureService.cpp
 
-RESOURCES += ShowDeviceLocationUsingIndoorPositioning.qrc
+RESOURCES += ManageFeaturesFeatureService.qrc
 
 #-------------------------------------------------------------------------------
 
@@ -56,11 +64,7 @@ ios {
     OTHER_FILES += \
         $$PWD/Info.plist
 
-    QMAKE_INFO_PLIST = $$PWD/ios/Info.plist
-}
-
-macx {
-    QMAKE_INFO_PLIST = $$PWD/mac/Info.plist
+    QMAKE_INFO_PLIST = $$PWD/Info.plist
 }
 
 android {

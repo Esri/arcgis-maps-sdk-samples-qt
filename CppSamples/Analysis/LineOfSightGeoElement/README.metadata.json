@@ -34,5 +34,5 @@
         "LineOfSightGeoElement.h",
         "LineOfSightGeoElement.qml"
     ],
-    "title": "Line of sight (geoelement)"
+    "title": "Line of sight (GeoElement)"
 }

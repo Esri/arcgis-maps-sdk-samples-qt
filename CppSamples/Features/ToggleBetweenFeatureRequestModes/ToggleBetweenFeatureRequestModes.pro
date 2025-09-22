@@ -1,5 +1,5 @@
 #-------------------------------------------------
-# Copyright 2022 Esri.
+# Copyright 2025 Esri.
 
 # Licensed under the Apache License, Version 2.0 (the "License");
 # you may not use this file except in compliance with the License.
@@ -23,10 +23,9 @@ CONFIG += c++17
 
 # additional modules are pulled in via arcgisruntime.pri
 QT += opengl qml quick
-android|ios: QT += bluetooth
 
 TEMPLATE = app
-TARGET = ShowDeviceLocationUsingIndoorPositioning
+TARGET = ToggleBetweenFeatureRequestModes
 
 ARCGIS_RUNTIME_VERSION = 300.0.0
 include($$PWD/arcgisruntime.pri)
@@ -34,13 +33,13 @@ include($$PWD/arcgisruntime.pri)
 #-------------------------------------------------------------------------------
 
 HEADERS += \
-    ShowDeviceLocationUsingIndoorPositioning.h
+    ToggleBetweenFeatureRequestModes.h
 
 SOURCES += \
     main.cpp \
-    ShowDeviceLocationUsingIndoorPositioning.cpp
+    ToggleBetweenFeatureRequestModes.cpp
 
-RESOURCES += ShowDeviceLocationUsingIndoorPositioning.qrc
+RESOURCES += ToggleBetweenFeatureRequestModes.qrc
 
 #-------------------------------------------------------------------------------
 
@@ -56,11 +55,7 @@ ios {
     OTHER_FILES += \
         $$PWD/Info.plist
 
-    QMAKE_INFO_PLIST = $$PWD/ios/Info.plist
-}
-
-macx {
-    QMAKE_INFO_PLIST = $$PWD/mac/Info.plist
+    QMAKE_INFO_PLIST = $$PWD/Info.plist
 }
 
 android {
