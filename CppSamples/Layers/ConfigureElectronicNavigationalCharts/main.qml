@@ -1,6 +1,6 @@
 // [WriteFile Name=AddEncExchangeSet, Category=Layers]
 // [Legal]
-// Copyright 2019 Esri.
+// Copyright 2025 Esri.
 //
 // Licensed under the Apache License, Version 2.0 (the "License");
 // you may not use this file except in compliance with the License.
@@ -14,26 +14,15 @@
 // limitations under the License.
 // [Legal]
 
-import QtQuick
 import QtQuick.Controls
 import Esri.Samples
 
-Item {
+ApplicationWindow {
+    visible: true
+    width: 800
+    height: 600
 
-    // add a mapView component
-    MapView {
-        id: view
+    ConfigureElectronicNavigationalCharts {
         anchors.fill: parent
-
-        Component.onCompleted: {
-            // Set the focus on MapView to initially enable keyboard navigation
-            forceActiveFocus();
-        }
-    }
-
-    // Declare the C++ instance which creates the map etc. and supply the view
-    AddEncExchangeSetSample {
-        id: model
-        mapView: view
     }
 }
