@@ -1,0 +1,12 @@
+<RCC>
+    <qresource prefix="/Samples/Layers/ConfigureElectronicNavigationalCharts">
+        <file alias="sample.json">README.metadata.json</file>
+        <file>ConfigureElectronicNavigationalCharts.qml</file>
+        <file>SettingsPopup.qml</file>
+        <file>ConfigureElectronicNavigationalCharts.h</file>
+        <file>ConfigureElectronicNavigationalCharts.cpp</file>
+        <file>main.qml</file>
+        <file>screenshot.png</file>
+        <file>README.md</file>
+    </qresource>
+</RCC>

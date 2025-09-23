@@ -33,5 +33,5 @@
         "FeatureCollectionLayerFromPortal.h",
         "FeatureCollectionLayerFromPortal.qml"
     ],
-    "title": "Create feature collection layer (Portal item)"
+    "title": "Create feature collection layer (portal item)"
 }

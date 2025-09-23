@@ -34,5 +34,5 @@
         "BrowseOGCAPIFeatureService.h",
         "BrowseOGCAPIFeatureService.qml"
     ],
-    "title": "Browse OGC API Feature Service"
+    "title": "Browse OGC API feature service"
 }

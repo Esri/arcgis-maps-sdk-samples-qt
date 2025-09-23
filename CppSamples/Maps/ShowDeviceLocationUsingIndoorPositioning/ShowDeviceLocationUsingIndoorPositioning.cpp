@@ -19,10 +19,10 @@
 #endif // PCH_BUILD
 
 // sample headers
-#include "IndoorsLocationDataSourceCreator.h"
 #include "ShowDeviceLocationUsingIndoorPositioning.h"
 
 // ArcGIS Maps SDK headers
+#include "Error.h"
 #include "FeatureLayer.h"
 #include "IndoorsLocationDataSource.h"
 #include "LayerListModel.h"
@@ -49,11 +49,6 @@ using namespace Esri::ArcGISRuntime;
 
 namespace {
 const QString itemId = "8fa941613b4b4b2b8a34ad4cdc3e4bba";
-
-const QString positioningTableName = "ips_positioning";
-const QString pathwaysLayerName = "Pathways";
-const QStringList globalIdSortNames = {"DateCreated", "DATE_CREATED"};
-
 const QStringList layerNames = {"Details", "Units", "Levels"};
 }
 
@@ -61,6 +56,15 @@ ShowDeviceLocationUsingIndoorPositioning::ShowDeviceLocationUsingIndoorPositioni
   QObject(parent)
 {
   m_map = new Map(new PortalItem(itemId, this), this);
+  connect(m_map, &Map::doneLoading, this, [this](const Error& loadError)
+  {
+    if (!loadError.isEmpty())
+    {
+      return;
+    }
+
+    trySetupIndoorsLocationDataSource();
+  });
 }
 
 ShowDeviceLocationUsingIndoorPositioning::~ShowDeviceLocationUsingIndoorPositioning() = default;
@@ -116,46 +120,69 @@ void ShowDeviceLocationUsingIndoorPositioning::requestLocationPermissionThenSetu
   qApp->requestPermission(locationPermission, [this](const QPermission& permission)
   {
     Q_UNUSED(permission);
-    checkPermissions();
-    setupIndoorsLocationDataSource();
+    validatePermissions();
+    trySetupIndoorsLocationDataSource();
   });
 }
 
-void ShowDeviceLocationUsingIndoorPositioning::checkPermissions()
+void ShowDeviceLocationUsingIndoorPositioning::validatePermissions()
 {
-  if (qApp->checkPermission(QBluetoothPermission{}) == Qt::PermissionStatus::Denied)
+  bool bluetoothPermissionGranted = false;
+  if (const Qt::PermissionStatus status = qApp->checkPermission(QBluetoothPermission{}); status == Qt::PermissionStatus::Denied)
   {
     emit bluetoothPermissionDenied();
   }
+  else if (status == Qt::PermissionStatus::Granted)
+  {
+    bluetoothPermissionGranted = true;
+  }
 
+  bool locationPermissionGranted = false;
   QLocationPermission locationPermission{};
   locationPermission.setAccuracy(QLocationPermission::Accuracy::Precise);
   locationPermission.setAvailability(QLocationPermission::Availability::WhenInUse);
-  if (qApp->checkPermission(locationPermission) == Qt::PermissionStatus::Denied)
+  if (const Qt::PermissionStatus status = qApp->checkPermission(locationPermission); status == Qt::PermissionStatus::Denied)
   {
     emit locationPermissionDenied();
   }
+  else if (status == Qt::PermissionStatus::Granted)
+  {
+    locationPermissionGranted = true;
+  }
+
+  if (bluetoothPermissionGranted && locationPermissionGranted)
+  {
+    m_allPermissionsGranted = true;
+  }
 }
 
-// This function uses a helper class `IndoorsLocationDataSourceCreator` to construct the IndoorsLocationDataSource
-void ShowDeviceLocationUsingIndoorPositioning::setupIndoorsLocationDataSource()
+void ShowDeviceLocationUsingIndoorPositioning::trySetupIndoorsLocationDataSource()
 {
-  #ifdef Q_OS_ANDROID
-  ArcGISRuntimeEnvironment::setAndroidApplicationContext(QJniObject{QNativeInterface::QAndroidApplication::context()});
-  #endif
-
-  IndoorsLocationDataSourceCreator* indoorsLocationDataSourceCreator = new IndoorsLocationDataSourceCreator(this);
-
-  connect(indoorsLocationDataSourceCreator, &IndoorsLocationDataSourceCreator::createIndoorsLocationDataSourceCompleted, this, [this](IndoorsLocationDataSource* indoorsLDS)
+  // we must have both the map loaded and all permissions granted
+  if (m_indoorsLocationDataSource || (m_map->loadStatus() != LoadStatus::Loaded || !m_allPermissionsGranted))
   {
-    connect(m_mapView->locationDisplay(), &LocationDisplay::locationChanged, this, &ShowDeviceLocationUsingIndoorPositioning::locationChangedHandler);
+    return;
+  }
 
-    m_mapView->locationDisplay()->setDataSource(indoorsLDS);
-    m_mapView->locationDisplay()->setAutoPanMode(LocationDisplayAutoPanMode::Navigation);
-    m_mapView->locationDisplay()->start();
-  });
+#ifdef Q_OS_ANDROID
+  ArcGISRuntimeEnvironment::setAndroidApplicationContext(QJniObject{QNativeInterface::QAndroidApplication::context()});
+#endif
 
-  indoorsLocationDataSourceCreator->createIndoorsLocationDataSource(m_map, positioningTableName, pathwaysLayerName);
+  IndoorPositioningDefinition* indoorPositioningDef = m_map->indoorPositioningDefinition();
+  if (!indoorPositioningDef)
+  {
+    qDebug() << "The map is missing an indoor positioning definition";
+    return;
+  }
+
+  m_indoorsLocationDataSource = new IndoorsLocationDataSource(indoorPositioningDef, this);
+  LocationDisplay* locationDisplay = m_mapView->locationDisplay();
+
+  connect(locationDisplay, &LocationDisplay::locationChanged, this, &ShowDeviceLocationUsingIndoorPositioning::locationChangedHandler);
+
+  locationDisplay->setDataSource(m_indoorsLocationDataSource);
+  locationDisplay->setAutoPanMode(LocationDisplayAutoPanMode::Navigation);
+  locationDisplay->start();
 }
 
 // Change currently displayed location information and change floor display if necessary

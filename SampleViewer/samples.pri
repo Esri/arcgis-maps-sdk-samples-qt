@@ -55,10 +55,8 @@ HEADERS += \
     "$$SAMPLEPATHCPP/DisplayInformation/Simple_Renderer/Simple_Renderer.h" \
     "$$SAMPLEPATHCPP/DisplayInformation/SymbolizeShapefile/SymbolizeShapefile.h" \
     "$$SAMPLEPATHCPP/DisplayInformation/Unique_Value_Renderer/Unique_Value_Renderer.h" \
-    "$$SAMPLEPATHCPP/EditData/AddFeaturesFeatureService/AddFeaturesFeatureService.h" \
     "$$SAMPLEPATHCPP/EditData/ContingentValues/ContingentValues.h" \
     "$$SAMPLEPATHCPP/EditData/CreateKmlMultiTrack/CreateKmlMultiTrack.h" \
-    "$$SAMPLEPATHCPP/EditData/DeleteFeaturesFeatureService/DeleteFeaturesFeatureService.h" \
     "$$SAMPLEPATHCPP/EditData/EditAndSyncFeatures/EditAndSyncFeatures.h" \
     "$$SAMPLEPATHCPP/EditData/EditFeatureAttachments/EditFeatureAttachments.h" \
     "$$SAMPLEPATHCPP/EditData/EditFeaturesWithFeatureLinkedAnnotation/EditFeaturesWithFeatureLinkedAnnotation.h" \
@@ -66,12 +64,11 @@ HEADERS += \
     "$$SAMPLEPATHCPP/EditData/EditGeometriesWithProgrammaticReticleTool/EditGeometriesWithProgrammaticReticleTool.h" \
     "$$SAMPLEPATHCPP/EditData/EditKmlGroundOverlay/EditKmlGroundOverlay.h" \
     "$$SAMPLEPATHCPP/EditData/EditWithBranchVersioning/EditWithBranchVersioning.h" \
+    "$$SAMPLEPATHCPP/EditData/ManageFeaturesFeatureService/ManageFeaturesFeatureService.h" \
     "$$SAMPLEPATHCPP/EditData/SnapGeometryEdits/SnapGeometryEdits.h" \
     "$$SAMPLEPATHCPP/EditData/SnapGeometryEditsWithRules/SnapGeometryEditsWithRules.h" \
     "$$SAMPLEPATHCPP/EditData/SnapGeometryEdits/SnapSourceListModel.h" \
     "$$SAMPLEPATHCPP/EditData/SnapGeometryEditsWithRules/SnapSourcesListModel.h" \
-    "$$SAMPLEPATHCPP/EditData/UpdateAttributesFeatureService/UpdateAttributesFeatureService.h" \
-    "$$SAMPLEPATHCPP/EditData/UpdateGeometryFeatureService/UpdateGeometryFeatureService.h" \
     "$$SAMPLEPATHCPP/Features/ControlTimeExtentTimeSlider/ControlTimeExtentTimeSlider.h" \
     "$$SAMPLEPATHCPP/Features/CreateMobileGeodatabase/CreateMobileGeodatabase.h" \
     "$$SAMPLEPATHCPP/Features/CreateMobileGeodatabase/FeatureListModel.h" \
@@ -84,9 +81,7 @@ HEADERS += \
     "$$SAMPLEPATHCPP/Features/ListRelatedFeatures/ListRelatedFeatures.h" \
     "$$SAMPLEPATHCPP/Features/ListRelatedFeatures/RelatedFeature.h" \
     "$$SAMPLEPATHCPP/Features/ListRelatedFeatures/RelatedFeatureListModel.h" \
-    "$$SAMPLEPATHCPP/Features/ServiceFeatureTableCache/ServiceFeatureTableCache.h" \
-    "$$SAMPLEPATHCPP/Features/ServiceFeatureTableManualCache/ServiceFeatureTableManualCache.h" \
-    "$$SAMPLEPATHCPP/Features/ServiceFeatureTableNoCache/ServiceFeatureTableNoCache.h" \
+    "$$SAMPLEPATHCPP/Features/ToggleBetweenFeatureRequestModes/ToggleBetweenFeatureRequestModes.h" \
     "$$SAMPLEPATHCPP/Geometry/Buffer/Buffer.h" \
     "$$SAMPLEPATHCPP/Geometry/ClipGeometry/ClipGeometry.h" \
     "$$SAMPLEPATHCPP/Geometry/ConvexHull/ConvexHull.h" \
@@ -105,7 +100,6 @@ HEADERS += \
     "$$SAMPLEPATHCPP/Layers/AddCustomDynamicEntityDataSource/AddCustomDynamicEntityDataSource.h" \
     "$$SAMPLEPATHCPP/Layers/AddCustomDynamicEntityDataSource/CustomDataSource.h" \
     "$$SAMPLEPATHCPP/Layers/AddDynamicEntityLayer/AddDynamicEntityLayer.h" \
-    "$$SAMPLEPATHCPP/Layers/AddEncExchangeSet/AddEncExchangeSet.h" \
     "$$SAMPLEPATHCPP/Layers/ApplyMosaicRuleToRasters/ApplyMosaicRuleToRasters.h" \
     "$$SAMPLEPATHCPP/Layers/ApplyUniqueValuesWithAlternateSymbols/ApplyUniqueValuesWithAlternateSymbols.h" \
     "$$SAMPLEPATHCPP/Layers/ArcGISMapImageLayerUrl/ArcGISMapImageLayerUrl.h" \
@@ -115,6 +109,7 @@ HEADERS += \
     "$$SAMPLEPATHCPP/Layers/BrowseWfsLayers/BrowseWfsLayers.h" \
     "$$SAMPLEPATHCPP/Layers/ChangeSublayerRenderer/ChangeSublayerRenderer.h" \
     "$$SAMPLEPATHCPP/Layers/ChangeSublayerVisibility/ChangeSublayerVisibility.h" \
+    "$$SAMPLEPATHCPP/Layers/ConfigureElectronicNavigationalCharts/ConfigureElectronicNavigationalCharts.h" \
     "$$SAMPLEPATHCPP/Layers/CreateAndSaveKmlFile/CreateAndSaveKmlFile.h" \
     "$$SAMPLEPATHCPP/Layers/DisplayAnnotation/DisplayAnnotation.h" \
     "$$SAMPLEPATHCPP/Layers/DisplayDimensions/DisplayDimensions.h" \
@@ -189,7 +184,6 @@ HEADERS += \
     "$$SAMPLEPATHCPP/Maps/SetInitialMapLocation/SetInitialMapLocation.h" \
     "$$SAMPLEPATHCPP/Maps/SetMapSpatialReference/SetMapSpatialReference.h" \
     "$$SAMPLEPATHCPP/Maps/SetMaxExtent/SetMaxExtent.h" \
-    "$$SAMPLEPATHCPP/Maps/ShowDeviceLocationUsingIndoorPositioning/IndoorsLocationDataSourceCreator.h" \
     "$$SAMPLEPATHCPP/Maps/ShowDeviceLocationUsingIndoorPositioning/ShowDeviceLocationUsingIndoorPositioning.h" \
     "$$SAMPLEPATHCPP/Maps/ShowLocationHistory/ShowLocationHistory.h" \
     "$$SAMPLEPATHCPP/Maps/ShowMagnifier/ShowMagnifier.h" \
@@ -286,10 +280,8 @@ SOURCES += \
     "$$SAMPLEPATHCPP/DisplayInformation/Simple_Renderer/Simple_Renderer.cpp" \
     "$$SAMPLEPATHCPP/DisplayInformation/SymbolizeShapefile/SymbolizeShapefile.cpp" \
     "$$SAMPLEPATHCPP/DisplayInformation/Unique_Value_Renderer/Unique_Value_Renderer.cpp" \
-    "$$SAMPLEPATHCPP/EditData/AddFeaturesFeatureService/AddFeaturesFeatureService.cpp" \
     "$$SAMPLEPATHCPP/EditData/ContingentValues/ContingentValues.cpp" \
     "$$SAMPLEPATHCPP/EditData/CreateKmlMultiTrack/CreateKmlMultiTrack.cpp" \
-    "$$SAMPLEPATHCPP/EditData/DeleteFeaturesFeatureService/DeleteFeaturesFeatureService.cpp" \
     "$$SAMPLEPATHCPP/EditData/EditAndSyncFeatures/EditAndSyncFeatures.cpp" \
     "$$SAMPLEPATHCPP/EditData/EditFeatureAttachments/EditFeatureAttachments.cpp" \
     "$$SAMPLEPATHCPP/EditData/EditFeaturesWithFeatureLinkedAnnotation/EditFeaturesWithFeatureLinkedAnnotation.cpp" \
@@ -297,12 +289,11 @@ SOURCES += \
     "$$SAMPLEPATHCPP/EditData/EditGeometriesWithProgrammaticReticleTool/EditGeometriesWithProgrammaticReticleTool.cpp" \
     "$$SAMPLEPATHCPP/EditData/EditKmlGroundOverlay/EditKmlGroundOverlay.cpp" \
     "$$SAMPLEPATHCPP/EditData/EditWithBranchVersioning/EditWithBranchVersioning.cpp" \
+    "$$SAMPLEPATHCPP/EditData/ManageFeaturesFeatureService/ManageFeaturesFeatureService.cpp" \
     "$$SAMPLEPATHCPP/EditData/SnapGeometryEdits/SnapGeometryEdits.cpp" \
     "$$SAMPLEPATHCPP/EditData/SnapGeometryEditsWithRules/SnapGeometryEditsWithRules.cpp" \
     "$$SAMPLEPATHCPP/EditData/SnapGeometryEdits/SnapSourceListModel.cpp" \
     "$$SAMPLEPATHCPP/EditData/SnapGeometryEditsWithRules/SnapSourcesListModel.cpp" \
-    "$$SAMPLEPATHCPP/EditData/UpdateAttributesFeatureService/UpdateAttributesFeatureService.cpp" \
-    "$$SAMPLEPATHCPP/EditData/UpdateGeometryFeatureService/UpdateGeometryFeatureService.cpp" \
     "$$SAMPLEPATHCPP/Features/ControlTimeExtentTimeSlider/ControlTimeExtentTimeSlider.cpp" \
     "$$SAMPLEPATHCPP/Features/CreateMobileGeodatabase/CreateMobileGeodatabase.cpp" \
     "$$SAMPLEPATHCPP/Features/CreateMobileGeodatabase/FeatureListModel.cpp" \
@@ -315,9 +306,7 @@ SOURCES += \
     "$$SAMPLEPATHCPP/Features/ListRelatedFeatures/ListRelatedFeatures.cpp" \
     "$$SAMPLEPATHCPP/Features/ListRelatedFeatures/RelatedFeature.cpp" \
     "$$SAMPLEPATHCPP/Features/ListRelatedFeatures/RelatedFeatureListModel.cpp" \
-    "$$SAMPLEPATHCPP/Features/ServiceFeatureTableCache/ServiceFeatureTableCache.cpp" \
-    "$$SAMPLEPATHCPP/Features/ServiceFeatureTableManualCache/ServiceFeatureTableManualCache.cpp" \
-    "$$SAMPLEPATHCPP/Features/ServiceFeatureTableNoCache/ServiceFeatureTableNoCache.cpp" \
+    "$$SAMPLEPATHCPP/Features/ToggleBetweenFeatureRequestModes/ToggleBetweenFeatureRequestModes.cpp" \
     "$$SAMPLEPATHCPP/Geometry/Buffer/Buffer.cpp" \
     "$$SAMPLEPATHCPP/Geometry/ClipGeometry/ClipGeometry.cpp" \
     "$$SAMPLEPATHCPP/Geometry/ConvexHull/ConvexHull.cpp" \
@@ -336,7 +325,6 @@ SOURCES += \
     "$$SAMPLEPATHCPP/Layers/AddCustomDynamicEntityDataSource/AddCustomDynamicEntityDataSource.cpp" \
     "$$SAMPLEPATHCPP/Layers/AddCustomDynamicEntityDataSource/CustomDataSource.cpp" \
     "$$SAMPLEPATHCPP/Layers/AddDynamicEntityLayer/AddDynamicEntityLayer.cpp" \
-    "$$SAMPLEPATHCPP/Layers/AddEncExchangeSet/AddEncExchangeSet.cpp" \
     "$$SAMPLEPATHCPP/Layers/ApplyMosaicRuleToRasters/ApplyMosaicRuleToRasters.cpp" \
     "$$SAMPLEPATHCPP/Layers/ApplyUniqueValuesWithAlternateSymbols/ApplyUniqueValuesWithAlternateSymbols.cpp" \
     "$$SAMPLEPATHCPP/Layers/ArcGISMapImageLayerUrl/ArcGISMapImageLayerUrl.cpp" \
@@ -346,6 +334,7 @@ SOURCES += \
     "$$SAMPLEPATHCPP/Layers/BrowseWfsLayers/BrowseWfsLayers.cpp" \
     "$$SAMPLEPATHCPP/Layers/ChangeSublayerRenderer/ChangeSublayerRenderer.cpp" \
     "$$SAMPLEPATHCPP/Layers/ChangeSublayerVisibility/ChangeSublayerVisibility.cpp" \
+    "$$SAMPLEPATHCPP/Layers/ConfigureElectronicNavigationalCharts/ConfigureElectronicNavigationalCharts.cpp" \
     "$$SAMPLEPATHCPP/Layers/CreateAndSaveKmlFile/CreateAndSaveKmlFile.cpp" \
     "$$SAMPLEPATHCPP/Layers/DisplayAnnotation/DisplayAnnotation.cpp" \
     "$$SAMPLEPATHCPP/Layers/DisplayDimensions/DisplayDimensions.cpp" \
@@ -420,7 +409,6 @@ SOURCES += \
     "$$SAMPLEPATHCPP/Maps/SetInitialMapLocation/SetInitialMapLocation.cpp" \
     "$$SAMPLEPATHCPP/Maps/SetMapSpatialReference/SetMapSpatialReference.cpp" \
     "$$SAMPLEPATHCPP/Maps/SetMaxExtent/SetMaxExtent.cpp" \
-    "$$SAMPLEPATHCPP/Maps/ShowDeviceLocationUsingIndoorPositioning/IndoorsLocationDataSourceCreator.cpp" \
     "$$SAMPLEPATHCPP/Maps/ShowDeviceLocationUsingIndoorPositioning/ShowDeviceLocationUsingIndoorPositioning.cpp" \
     "$$SAMPLEPATHCPP/Maps/ShowLocationHistory/ShowLocationHistory.cpp" \
     "$$SAMPLEPATHCPP/Maps/ShowMagnifier/ShowMagnifier.cpp" \
@@ -515,10 +503,8 @@ RESOURCES += \
     "$$SAMPLEPATHCPP/DisplayInformation/Simple_Renderer/Simple_Renderer.qrc" \
     "$$SAMPLEPATHCPP/DisplayInformation/SymbolizeShapefile/SymbolizeShapefile.qrc" \
     "$$SAMPLEPATHCPP/DisplayInformation/Unique_Value_Renderer/Unique_Value_Renderer.qrc" \
-    "$$SAMPLEPATHCPP/EditData/AddFeaturesFeatureService/AddFeaturesFeatureService.qrc" \
     "$$SAMPLEPATHCPP/EditData/ContingentValues/ContingentValues.qrc" \
     "$$SAMPLEPATHCPP/EditData/CreateKmlMultiTrack/CreateKmlMultiTrack.qrc" \
-    "$$SAMPLEPATHCPP/EditData/DeleteFeaturesFeatureService/DeleteFeaturesFeatureService.qrc" \
     "$$SAMPLEPATHCPP/EditData/EditAndSyncFeatures/EditAndSyncFeatures.qrc" \
     "$$SAMPLEPATHCPP/EditData/EditFeatureAttachments/EditFeatureAttachments.qrc" \
     "$$SAMPLEPATHCPP/EditData/EditFeaturesWithFeatureLinkedAnnotation/EditFeaturesWithFeatureLinkedAnnotation.qrc" \
@@ -526,10 +512,9 @@ RESOURCES += \
     "$$SAMPLEPATHCPP/EditData/EditGeometriesWithProgrammaticReticleTool/EditGeometriesWithProgrammaticReticleTool.qrc" \
     "$$SAMPLEPATHCPP/EditData/EditKmlGroundOverlay/EditKmlGroundOverlay.qrc" \
     "$$SAMPLEPATHCPP/EditData/EditWithBranchVersioning/EditWithBranchVersioning.qrc" \
+    "$$SAMPLEPATHCPP/EditData/ManageFeaturesFeatureService/ManageFeaturesFeatureService.qrc" \
     "$$SAMPLEPATHCPP/EditData/SnapGeometryEdits/SnapGeometryEdits.qrc" \
     "$$SAMPLEPATHCPP/EditData/SnapGeometryEditsWithRules/SnapGeometryEditsWithRules.qrc" \
-    "$$SAMPLEPATHCPP/EditData/UpdateAttributesFeatureService/UpdateAttributesFeatureService.qrc" \
-    "$$SAMPLEPATHCPP/EditData/UpdateGeometryFeatureService/UpdateGeometryFeatureService.qrc" \
     "$$SAMPLEPATHCPP/Features/ControlTimeExtentTimeSlider/ControlTimeExtentTimeSlider.qrc" \
     "$$SAMPLEPATHCPP/Features/CreateMobileGeodatabase/CreateMobileGeodatabase.qrc" \
     "$$SAMPLEPATHCPP/Features/FeatureLayerChangeRenderer/FeatureLayerChangeRenderer.qrc" \
@@ -539,9 +524,7 @@ RESOURCES += \
     "$$SAMPLEPATHCPP/Features/FilterByDefinitionExpressionOrDisplayFilter/FilterByDefinitionExpressionOrDisplayFilter.qrc" \
     "$$SAMPLEPATHCPP/Features/GenerateGeodatabaseReplicaFromFeatureService/GenerateGeodatabaseReplicaFromFeatureService.qrc" \
     "$$SAMPLEPATHCPP/Features/ListRelatedFeatures/ListRelatedFeatures.qrc" \
-    "$$SAMPLEPATHCPP/Features/ServiceFeatureTableCache/ServiceFeatureTableCache.qrc" \
-    "$$SAMPLEPATHCPP/Features/ServiceFeatureTableManualCache/ServiceFeatureTableManualCache.qrc" \
-    "$$SAMPLEPATHCPP/Features/ServiceFeatureTableNoCache/ServiceFeatureTableNoCache.qrc" \
+    "$$SAMPLEPATHCPP/Features/ToggleBetweenFeatureRequestModes/ToggleBetweenFeatureRequestModes.qrc" \
     "$$SAMPLEPATHCPP/Geometry/Buffer/Buffer.qrc" \
     "$$SAMPLEPATHCPP/Geometry/ClipGeometry/ClipGeometry.qrc" \
     "$$SAMPLEPATHCPP/Geometry/ConvexHull/ConvexHull.qrc" \
@@ -559,7 +542,6 @@ RESOURCES += \
     "$$SAMPLEPATHCPP/Layers/ConfigureClusters/ConfigureClusters.qrc" \
     "$$SAMPLEPATHCPP/Layers/AddCustomDynamicEntityDataSource/AddCustomDynamicEntityDataSource.qrc" \
     "$$SAMPLEPATHCPP/Layers/AddDynamicEntityLayer/AddDynamicEntityLayer.qrc" \
-    "$$SAMPLEPATHCPP/Layers/AddEncExchangeSet/AddEncExchangeSet.qrc" \
     "$$SAMPLEPATHCPP/Layers/ApplyMosaicRuleToRasters/ApplyMosaicRuleToRasters.qrc" \
     "$$SAMPLEPATHCPP/Layers/ApplyUniqueValuesWithAlternateSymbols/ApplyUniqueValuesWithAlternateSymbols.qrc" \
     "$$SAMPLEPATHCPP/Layers/ArcGISMapImageLayerUrl/ArcGISMapImageLayerUrl.qrc" \
@@ -569,6 +551,7 @@ RESOURCES += \
     "$$SAMPLEPATHCPP/Layers/BrowseWfsLayers/BrowseWfsLayers.qrc" \
     "$$SAMPLEPATHCPP/Layers/ChangeSublayerRenderer/ChangeSublayerRenderer.qrc" \
     "$$SAMPLEPATHCPP/Layers/ChangeSublayerVisibility/ChangeSublayerVisibility.qrc" \
+    "$$SAMPLEPATHCPP/Layers/ConfigureElectronicNavigationalCharts/ConfigureElectronicNavigationalCharts.qrc" \
     "$$SAMPLEPATHCPP/Layers/CreateAndSaveKmlFile/CreateAndSaveKmlFile.qrc" \
     "$$SAMPLEPATHCPP/Layers/DisplayAnnotation/DisplayAnnotation.qrc" \
     "$$SAMPLEPATHCPP/Layers/DisplayDimensions/DisplayDimensions.qrc" \

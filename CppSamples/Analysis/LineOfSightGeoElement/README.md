@@ -1,4 +1,4 @@
-# Line of sight (geoelement)
+# Line of sight (GeoElement)
 
 Show a line of sight between two moving objects.
 

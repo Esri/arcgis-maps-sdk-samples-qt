@@ -27,34 +27,33 @@
 
 namespace Esri::ArcGISRuntime
 {
-class ArcGISFeature;
-class Error;
-class ErrorException;
-class FeatureLayer;
-class GraphicsOverlay;
-class IdentifyLayerResult;
-class Map;
-class MapQuickView;
-class ServiceFeatureTable;
-class ServiceGeodatabase;
-class SimpleFillSymbol;
-class SimpleLineSymbol;
-class SimpleMarkerSymbol;
-class Symbol;
-class UniqueValue;
-class UniqueValueRenderer;
-class UtilityElement;
-class UtilityNetwork;
-class UtilityTerminal;
-class UtilityTier;
-class UtilityTraceParameters;
-}
+  class ArcGISFeature;
+  class Error;
+  class ErrorException;
+  class FeatureLayer;
+  class GraphicsOverlay;
+  class IdentifyLayerResult;
+  class Map;
+  class MapQuickView;
+  class ServiceFeatureTable;
+  class ServiceGeodatabase;
+  class SimpleFillSymbol;
+  class SimpleLineSymbol;
+  class SimpleMarkerSymbol;
+  class Symbol;
+  class UniqueValue;
+  class UniqueValueRenderer;
+  class UtilityElement;
+  class UtilityNetwork;
+  class UtilityTerminal;
+  class UtilityTier;
+  class UtilityTraceParameters;
+} // namespace Esri::ArcGISRuntime
 
 namespace Esri::ArcGISRuntime::Authentication
 {
   class ArcGISAuthenticationChallenge;
 }
-
 
 Q_MOC_INCLUDE("MapQuickView.h")
 Q_MOC_INCLUDE("IdentifyLayerResult.h")
@@ -104,6 +103,7 @@ private:
   void createRenderers();
   void loadUtilityNetwork(const Esri::ArcGISRuntime::Error& error);
   bool hasErrorOccurred(const Esri::ArcGISRuntime::Error& error);
+  void addUtilityNetworkToMap(const Esri::ArcGISRuntime::Error& error);
   void setBusyIndicator(bool status);
   void onIdentifyLayersCompleted_(const QList<Esri::ArcGISRuntime::IdentifyLayerResult*>& results);
   void onTraceCompleted_();
@@ -115,6 +115,7 @@ private:
 
   Esri::ArcGISRuntime::Map* m_map = nullptr;
   Esri::ArcGISRuntime::MapQuickView* m_mapView = nullptr;
+  Esri::ArcGISRuntime::FeatureLayer* m_deviceLayer = nullptr;
   Esri::ArcGISRuntime::FeatureLayer* m_lineLayer = nullptr;
   Esri::ArcGISRuntime::ServiceFeatureTable* m_deviceFeatureTable = nullptr;
   Esri::ArcGISRuntime::ServiceFeatureTable* m_lineFeatureTable = nullptr;
@@ -127,7 +128,7 @@ private:
   Esri::ArcGISRuntime::UtilityNetwork* m_utilityNetwork = nullptr;
   Esri::ArcGISRuntime::UtilityTraceParameters* m_traceParams = nullptr;
   Esri::ArcGISRuntime::ArcGISFeature* m_feature = nullptr;
-  Esri::ArcGISRuntime::UtilityTier * m_mediumVoltageTier = nullptr;
+  Esri::ArcGISRuntime::UtilityTier* m_mediumVoltageTier = nullptr;
   Esri::ArcGISRuntime::UniqueValueRenderer* m_uniqueValueRenderer = nullptr;
 
   bool m_terminalDialogVisisble = false;
