@@ -87,6 +87,20 @@ ManageFeaturesFeatureServiceSample {
         border.width: 1
         radius: 5
 
+        // Mouse/Touch area to prevent mouse events from propogating through the UI
+        MouseArea {
+            anchors.fill: parent
+            acceptedButtons: Qt.AllButtons
+            propagateComposedEvents: false
+
+            onWheel: {
+            }
+        }
+
+        MultiPointTouchArea {
+            anchors.fill: parent
+        }
+
         Column {
             anchors {
                 top: parent.top
