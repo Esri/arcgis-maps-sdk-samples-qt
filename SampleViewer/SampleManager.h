@@ -25,8 +25,15 @@ class SourceCode;
 class SampleCategory;
 class Sample;
 
-namespace Esri::ArcGISRuntime { class Portal; }
-namespace Esri::ArcGISRuntime::Authentication { class ArcGISAuthenticationChallengeHandler; }
+namespace Esri::ArcGISRuntime
+{
+  class Portal;
+}
+
+namespace Esri::ArcGISRuntime::Authentication
+{
+  class ArcGISAuthenticationChallengeHandler;
+}
 
 #include <QDir>
 #include <QJsonDocument>
@@ -82,7 +89,12 @@ public:
   Q_INVOKABLE QVariantList getOfflineDataProjects();
   Q_INVOKABLE void setSourceCodeIndex(int i);
   Q_INVOKABLE void setupProxy(const QString& hostName, quint16 port, const QString& user, const QString& pw);
-  Q_INVOKABLE void doneDownloading() { emit doneDownloadingChanged(); }
+
+  Q_INVOKABLE void doneDownloading()
+  {
+    emit doneDownloadingChanged();
+  }
+
   Q_INVOKABLE void setApiKey(bool isSupportsApiKey = true);
 
   enum CurrentMode
@@ -99,11 +111,11 @@ public:
 
   enum class Reachability
   {
-      ReachabilityOnline              = static_cast<int>(QNetworkInformation::Reachability::Online),
-      ReachabilitySite                = static_cast<int>(QNetworkInformation::Reachability::Site),
-      ReachabilityLocal               = static_cast<int>(QNetworkInformation::Reachability::Local),
-      ReachabilityDisconnected        = static_cast<int>(QNetworkInformation::Reachability::Disconnected),
-      ReachabilityUnknown             = static_cast<int>(QNetworkInformation::Reachability::Unknown)
+    ReachabilityOnline = static_cast<int>(QNetworkInformation::Reachability::Online),
+    ReachabilitySite = static_cast<int>(QNetworkInformation::Reachability::Site),
+    ReachabilityLocal = static_cast<int>(QNetworkInformation::Reachability::Local),
+    ReachabilityDisconnected = static_cast<int>(QNetworkInformation::Reachability::Disconnected),
+    ReachabilityUnknown = static_cast<int>(QNetworkInformation::Reachability::Unknown)
   };
   Q_ENUM(Reachability)
 
@@ -134,39 +146,110 @@ private:
   QVariantMap toVariantMap(const QString& json);
   QVariant fileUrl(const QString& scheme, const QString& path);
   QString readTextFile(const QString& filePath);
-  SampleListModel* samples() const { return m_allSamples; }
-  SampleListModel* featuredSamples() const { return m_featuredSamples; }
-  CategoryListModel* categories() { return m_categories; }
-  CurrentMode currentMode() { return m_currentMode; }
+
+  SampleListModel* samples() const
+  {
+    return m_allSamples;
+  }
+
+  SampleListModel* featuredSamples() const
+  {
+    return m_featuredSamples;
+  }
+
+  CategoryListModel* categories()
+  {
+    return m_categories;
+  }
+
+  CurrentMode currentMode()
+  {
+    return m_currentMode;
+  }
+
   void setCurrentMode(const CurrentMode& mode);
-  Sample* currentSample() const { return m_currentSample; }
+
+  Sample* currentSample() const
+  {
+    return m_currentSample;
+  }
+
   void cacheToolkitChallengeHandler();
   void setCurrentSample(Sample* sample);
   void setCurrentSample(const QVariant& sample);
-  SampleCategory* currentCategory() const { return m_currentCategory; }
+
+  SampleCategory* currentCategory() const
+  {
+    return m_currentCategory;
+  }
+
   void setCurrentCategory(SampleCategory* category);
-  QString currentSourceCode() const { return m_currentSourceCode; }
-  QUrl apiReferenceUrl() const { return m_apiReferenecUrl; }
-  QUrl qtSdkUrl() const { return m_qtSdkUrl; }
-  QUrl qtSamplesUrl() const { return m_qtSamplesUrl; }
-  bool downloadInProgress() const { return m_downloadInProgress; }
+
+  QString currentSourceCode() const
+  {
+    return m_currentSourceCode;
+  }
+
+  QUrl apiReferenceUrl() const
+  {
+    return m_apiReferenecUrl;
+  }
+
+  QUrl qtSdkUrl() const
+  {
+    return m_qtSdkUrl;
+  }
+
+  QUrl qtSamplesUrl() const
+  {
+    return m_qtSamplesUrl;
+  }
+
+  bool downloadInProgress() const
+  {
+    return m_downloadInProgress;
+  }
+
   void downloadNextDataItem();
   void fetchPortalItemData(const QString& itemId, const QString& outputPath);
   void setDownloadInProgress(bool inProgress);
   void setDownloadText(const QString& downloadText);
-  QString formattedPath(const QString& outputPath,
-                        const QString& folderName = QString());
+  QString formattedPath(const QString& outputPath, const QString& folderName = QString());
+
 private:
-  QString downloadText() const { return m_downloadText; }
-  double downloadProgress() const { return m_downloadProgress; }
+  QString downloadText() const
+  {
+    return m_downloadText;
+  }
+
+  double downloadProgress() const
+  {
+    return m_downloadProgress;
+  }
+
   void createAndSetTempDirForLocalServer();
-  bool cancelDownload() const { return m_cancelDownload; }
+
+  bool cancelDownload() const
+  {
+    return m_cancelDownload;
+  }
+
   void setCancelDownload(bool cancel);
-  bool downloadFailed() const { return m_downloadFailed; }
+
+  bool downloadFailed() const
+  {
+    return m_downloadFailed;
+  }
+
   void setDownloadFailed(bool didFail);
   SampleManager::Reachability reachability() const;
   QString api() const;
-  QVariantList offlineDataProjects() const { return m_offlineDataProjects; }
+
+  QVariantList offlineDataProjects() const
+  {
+    return m_offlineDataProjects;
+  }
+
   void updateOfflineDataProjects();
 
 private:
