@@ -58,18 +58,72 @@ Page {
             visible: !SampleManager.downloadInProgress
         }
 
-        Label {
-            text: qsTr("Currently downloading offline data.")
-            Layout.alignment: Qt.AlignHCenter | Qt.AlignVCenter
-            horizontalAlignment: Label.AlignHCenter
-            font {
-                family: fontFamily
-                weight: Font.DemiBold
-                pixelSize: Math.max(12, baseFontSize + 2)
-            }
+        ColumnLayout {
             Layout.fillWidth: true
-            clip: true
+            Layout.fillHeight: true
+            Layout.margins: baseMargin
+            spacing: baseSpacing
             visible: SampleManager.downloadInProgress
+
+            Image {
+                Layout.alignment: Qt.AlignHCenter | Qt.AlignVCenter
+                source: "qrc:/logo.png"
+                Layout.preferredWidth: Math.max(100, 140 * scaleFactor)
+                Layout.preferredHeight: Math.max(100, 140 * scaleFactor)
+                fillMode: Image.PreserveAspectFit
+                clip: true
+            }
+
+            Label {
+                text: SampleManager.downloadText
+                horizontalAlignment: Text.AlignHCenter
+                Layout.alignment: Qt.AlignHCenter | Qt.AlignVCenter
+                Layout.fillWidth: true
+                font {
+                    family: fontFamily
+                    pixelSize: Math.max(11, baseFontSize)
+                }
+                wrapMode: Text.WordWrap
+                clip: true
+            }
+
+            Label {
+                text: "%1% complete".arg(SampleManager.downloadProgress)
+                horizontalAlignment: Text.AlignHCenter
+                Layout.alignment: Qt.AlignHCenter | Qt.AlignVCenter
+                Layout.fillWidth: true
+                visible: SampleManager.downloadInProgress
+                font {
+                    family: fontFamily
+                    pixelSize: Math.max(13, baseFontSize + 2)
+                    weight: Font.DemiBold
+                }
+                clip: true
+            }
+
+            ProgressBar {
+                Layout.fillHeight: false
+                Layout.alignment: Qt.AlignHCenter | Qt.AlignVCenter
+                Layout.fillWidth: true
+                from: 0
+                to: 100
+                value: SampleManager.downloadProgress
+                visible: SampleManager.downloadInProgress
+                clip: true
+            }
+
+            Button {
+                text: SampleManager.cancelDownload ? "Cancelling remaining downloads..." : "Cancel remaining downloads"
+                enabled: !SampleManager.cancelDownload
+                font.pixelSize: Math.max(10, baseFontSize)
+                Layout.alignment: Qt.AlignHCenter | Qt.AlignVCenter
+                Layout.preferredWidth: Math.max(implicitWidth, 200 * scaleFactor)
+                Layout.preferredHeight: Math.max(40, 50 * scaleFactor)
+                onClicked: {
+                    SampleManager.cancelDownload = true;
+                }
+                clip: true
+            }
         }
 
         RowLayout {
@@ -111,7 +165,7 @@ Page {
                     return false;
                 }
                 onClicked: {
-                    deleteAllDialog.visible = SampleManager.deleteAllOfflineData();
+                    deleteAllDialog.visible = true;
                 }
                 font.pixelSize: Math.max(10, baseFontSize)
                 clip: true
@@ -175,13 +229,7 @@ Page {
 
                     delegate: Rectangle {
                         width: ListView.view.width
-                        height: {
-                            var parentWidth = parent ? parent.width : ListView.view.width;
-                            var parentHeight = parent ? parent.height : ListView.view.height;
-                            return (parentWidth > 400 && parentWidth > parentHeight) ?
-                                        Math.max(45, 60 * scaleFactor) :
-                                        Math.max(80, 100 * scaleFactor);
-                        }
+                        height: Math.max(65, 80 * scaleFactor)
                         color: "#d1d5db"
                         radius: 8
                         border {
@@ -244,68 +292,31 @@ Page {
                                     Layout.fillWidth: true
                                 }
 
-                                Loader {
-                                    Layout.alignment: Qt.AlignRight | Qt.AlignVCenter
-                                    sourceComponent: (parent.width > 400 && parent.width > parent.height) ? rowButtonsComponent : columnButtonsComponent
+                                RowLayout {
+                                    spacing: baseSpacing / 2
 
-                                    Component {
-                                        id: rowButtonsComponent
-                                        RowLayout {
-                                            spacing: baseSpacing / 2
-
-                                            Button {
-                                                text: "Download"
-                                                Layout.preferredWidth: Math.max(100, 120 * scaleFactor)
-                                                Layout.preferredHeight: Math.max(32, 40 * scaleFactor)
-                                                enabled: !modelData.downloaded && !SampleManager.downloadInProgress
-                                                font.pixelSize: Math.max(9, baseFontSize - 1)
-                                                onClicked: {
-                                                    SampleManager.downloadProjectData(modelData.sample.name);
-                                                }
-                                            }
-
-                                            Button {
-                                                text: "Delete"
-                                                Layout.preferredWidth: Math.max(100, 120 * scaleFactor)
-                                                Layout.preferredHeight: Math.max(32, 40 * scaleFactor)
-                                                enabled: modelData.downloaded
-                                                font.pixelSize: Math.max(9, baseFontSize - 1)
-                                                onClicked: {
-                                                    deleteProjectDialog.sampleName = modelData.sample.name;
-                                                    deleteProjectDialog.visible = true;
-                                                }
-                                            }
+                                    Button {
+                                        text: "Download"
+                                        Layout.preferredWidth: Math.max(110, 110 * scaleFactor)
+                                        Layout.preferredHeight: Math.max(32, 40 * scaleFactor)
+                                        visible: !modelData.downloaded
+                                        font.pixelSize: Math.max(12, baseFontSize - 1)
+                                        onClicked: {
+                                            SampleManager.downloadProjectData(modelData.sample.name);
                                         }
                                     }
 
-                                    Component {
-                                        id: columnButtonsComponent
-                                        ColumnLayout {
-                                            anchors.centerIn: parent
-                                            spacing: 0
-
-                                            Button {
-                                                text: "Download"
-                                                Layout.preferredWidth: Math.max(95, 115 * scaleFactor)
-                                                Layout.preferredHeight: Math.max(32, 40 * scaleFactor)
-                                                enabled: !modelData.downloaded && !SampleManager.downloadInProgress
-                                                font.pixelSize: Math.max(9, baseFontSize - 1)
-                                                onClicked: {
-                                                    SampleManager.downloadProjectData(modelData.sample.name);
-                                                }
-                                            }
-
-                                            Button {
-                                                text: "Delete"
-                                                Layout.preferredWidth: Math.max(95, 115 * scaleFactor)
-                                                Layout.preferredHeight: Math.max(32, 40 * scaleFactor)
-                                                enabled: modelData.downloaded
-                                                font.pixelSize: Math.max(9, baseFontSize - 1)
-                                                onClicked: {
-                                                    deleteProjectDialog.sampleName = modelData.sample.name;
-                                                    deleteProjectDialog.visible = true;
-                                                }
-                                            }
+                                    Button {
+                                        text: "Delete"
+                                        Layout.preferredWidth: Math.max(110, 110 * scaleFactor)
+                                        Layout.preferredHeight: Math.max(32, 40 * scaleFactor)
+                                        visible: modelData.downloaded
+                                        font.pixelSize: Math.max(12, baseFontSize - 1)
+                                        onClicked: {
+                                            console.log(modelData.sample.name)
+                                            deleteProjectDialog.sampleName = modelData.sample.name;
+                                            deleteProjectDialog.resetDialog();
+                                            deleteProjectDialog.visible = true;
                                         }
                                     }
                                 }
@@ -315,84 +326,39 @@ Page {
                 }
             }
         }
-
-        Rectangle {
-            Layout.fillWidth: true
-            Layout.preferredHeight: Math.max(120, 150 * scaleFactor)
-            visible: SampleManager.downloadInProgress || SampleManager.downloadFailed
-            color: "#ffffff"
-            border.color: "#dee2e6"
-            border.width: 1
-            radius: 8
-
-            ColumnLayout {
-                anchors.fill: parent
-                anchors.margins: baseMargin
-                spacing: baseSpacing
-
-                Label {
-                    text: SampleManager.downloadText
-                    Layout.alignment: Qt.AlignHCenter | Qt.AlignVCenter
-                    Layout.fillWidth: true
-                    horizontalAlignment: Label.AlignHCenter
-                    font {
-                        family: fontFamily
-                        pixelSize: Math.max(11, baseFontSize)
-                    }
-                    wrapMode: Text.WordWrap
-                    clip: true
-                }
-
-                Label {
-                    text: "%1% complete".arg(SampleManager.downloadProgress)
-                    Layout.alignment: Qt.AlignHCenter | Qt.AlignVCenter
-                    Layout.fillWidth: true
-                    horizontalAlignment: Text.AlignHCenter
-                    visible: SampleManager.downloadInProgress
-                    font {
-                        family: fontFamily
-                        pixelSize: Math.max(13, baseFontSize + 2)
-                        weight: Font.DemiBold
-                    }
-                    clip: true
-                }
-
-                ProgressBar {
-                    Layout.fillHeight: false
-                    Layout.alignment: Qt.AlignHCenter | Qt.AlignVCenter
-                    Layout.fillWidth: true
-                    Layout.preferredHeight: Math.max(8, 12 * scaleFactor)
-                    from: 0
-                    to: 100
-                    value: SampleManager.downloadProgress
-                    visible: SampleManager.downloadInProgress
-                    clip: true
-                }
-
-                Button {
-                    text: SampleManager.cancelDownload ? "Cancelling remaining downloads..." : "Cancel remaining downloads"
-                    Layout.alignment: Qt.AlignHCenter | Qt.AlignVCenter
-                    Layout.preferredWidth: Math.max(200, 250 * scaleFactor)
-                    Layout.preferredHeight: Math.max(36, 45 * scaleFactor)
-                    visible: SampleManager.downloadInProgress
-                    enabled: !SampleManager.cancelDownload
-                    font.pixelSize: Math.max(10, baseFontSize)
-                    onClicked: {
-                        SampleManager.cancelDownload = true;
-                    }
-                    clip: true
-                }
-            }
-        }
     }
 
     MessageDialog {
         id: deleteAllDialog
         title: "Delete all offline data"
-        text: "Delete all offline data was successful"
+        text: "Are you sure you want to delete all offline data"
         visible: false
-        onRejected: {
+        buttons: MessageDialog.Yes | MessageDialog.No
+
+        function resetDialog() {
+            text = "Are you sure you want to delete all offline data?";
+            buttons = MessageDialog.Yes | MessageDialog.No;
             visible = false;
+        }
+
+        onClicked: function(button) {
+            if(button === MessageDialog.Yes){
+                if (SampleManager.deleteAllOfflineData()) {
+                    text = "Project data deleted successfully";
+                    buttons = MessageDialog.Ok;
+                    visible = true;
+                } else {
+                    text = "Failed to delete project data";
+                    buttons = MessageDialog.Ok;
+                    visible = true;
+                }
+            }
+            else if(button === MessageDialog.No){
+                visible = false;
+            }
+            else if(button === MessageDialog.Ok){
+                resetDialog();
+            }
         }
     }
 
@@ -403,17 +369,32 @@ Page {
         text: "Are you sure you want to delete offline data for '" + sampleName + "'?"
         visible: false
         buttons: MessageDialog.Yes | MessageDialog.No
-        onAccepted: {
-            if (SampleManager.deleteProjectOfflineData(sampleName)) {
-                text = "Project data deleted successfully";
-                buttons = MessageDialog.Ok;
-            } else {
-                text = "Failed to delete project data";
-                buttons = MessageDialog.Ok;
-            }
-        }
-        onRejected: {
+
+        function resetDialog() {
+            text = "Are you sure you want to delete offline data for '" + sampleName + "'?";
+            buttons = MessageDialog.Yes | MessageDialog.No;
             visible = false;
+        }
+
+        onClicked: function(button) {
+            if(button === MessageDialog.Yes){
+                if (SampleManager.deleteProjectOfflineData(sampleName)) {
+                    text = "Project data deleted successfully";
+                    buttons = MessageDialog.Ok;
+                    visible = true;
+                }
+                else {
+                    text = "Failed to delete project data";
+                    buttons = MessageDialog.Ok;
+                    visible = true;
+                }
+            }
+            else if(button === MessageDialog.No){
+                visible = false;
+            }
+            else if(button === MessageDialog.Ok){
+                resetDialog();
+            }
         }
     }
 }
