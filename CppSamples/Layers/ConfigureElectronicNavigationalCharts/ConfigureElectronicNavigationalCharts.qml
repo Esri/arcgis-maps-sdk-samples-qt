@@ -71,6 +71,19 @@ Item {
         height: Math.max(parent.height * 0.08, 50)
         border.width: 1
 
+        MouseArea {
+            anchors.fill: parent
+            acceptedButtons: Qt.AllButtons
+            propagateComposedEvents: false
+
+            onWheel: {
+            }
+        }
+
+        MultiPointTouchArea {
+            anchors.fill: parent
+        }
+
         // Settings toggle button
         Button {
             anchors.horizontalCenter: parent.horizontalCenter
