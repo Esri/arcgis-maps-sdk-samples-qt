@@ -131,6 +131,7 @@
 #include "../CppSamples/Geometry/SpatialRelationships/SpatialRelationships.h"
 #include "../CppSamples/Layers/AddCustomDynamicEntityDataSource/AddCustomDynamicEntityDataSource.h"
 #include "../CppSamples/Layers/AddDynamicEntityLayer/AddDynamicEntityLayer.h"
+#include "../CppSamples/Layers/AddVectorTiledLayerFromCustomStyle/AddVectorTiledLayerFromCustomStyle.h"
 #include "../CppSamples/Layers/ApplyMosaicRuleToRasters/ApplyMosaicRuleToRasters.h"
 #include "../CppSamples/Layers/ApplyUniqueValuesWithAlternateSymbols/ApplyUniqueValuesWithAlternateSymbols.h"
 #include "../CppSamples/Layers/ArcGISMapImageLayerUrl/ArcGISMapImageLayerUrl.h"
@@ -374,6 +375,7 @@ void registerCppSampleClasses()
   AddDynamicEntityLayer::init();
   AddGraphicsWithRenderer::init();
   AddIntegratedMeshLayer::init();
+  AddVectorTiledLayerFromCustomStyle::init();
   AnalyzeHotspots::init();
   AnalyzeViewshed::init();
   Animate3DSymbols::init();
