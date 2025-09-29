@@ -22,7 +22,7 @@
 
 // enable logging
 //#define ZIP_LOGGING_ENABLED
-static constexpr bool TOTAL_PROGRESS_ENABLED = true;
+static constexpr bool TOTAL_PROGRESS_ENABLED = false;
 
 #ifdef Q_OS_WIN
 #include <sys/utime.h>
