@@ -147,69 +147,25 @@ private:
   QVariant fileUrl(const QString& scheme, const QString& path);
   QString readTextFile(const QString& filePath);
 
-  SampleListModel* samples() const
-  {
-    return m_allSamples;
-  }
-
-  SampleListModel* featuredSamples() const
-  {
-    return m_featuredSamples;
-  }
-
-  CategoryListModel* categories()
-  {
-    return m_categories;
-  }
-
-  CurrentMode currentMode()
-  {
-    return m_currentMode;
-  }
-
+  SampleListModel* samples() const;
+  SampleListModel* featuredSamples() const;
+  CategoryListModel* categories();
+  CurrentMode currentMode();
   void setCurrentMode(const CurrentMode& mode);
 
-  Sample* currentSample() const
-  {
-    return m_currentSample;
-  }
-
+  Sample* currentSample() const;
   void cacheToolkitChallengeHandler();
   void setCurrentSample(Sample* sample);
   void setCurrentSample(const QVariant& sample);
 
-  SampleCategory* currentCategory() const
-  {
-    return m_currentCategory;
-  }
-
+  SampleCategory* currentCategory() const;
   void setCurrentCategory(SampleCategory* category);
+  QString currentSourceCode() const;
+  QUrl apiReferenceUrl() const;
+  QUrl qtSdkUrl() const;
+  QUrl qtSamplesUrl() const;
 
-  QString currentSourceCode() const
-  {
-    return m_currentSourceCode;
-  }
-
-  QUrl apiReferenceUrl() const
-  {
-    return m_apiReferenecUrl;
-  }
-
-  QUrl qtSdkUrl() const
-  {
-    return m_qtSdkUrl;
-  }
-
-  QUrl qtSamplesUrl() const
-  {
-    return m_qtSamplesUrl;
-  }
-
-  bool downloadInProgress() const
-  {
-    return m_downloadInProgress;
-  }
-
+  bool downloadInProgress() const;
   void downloadNextDataItem();
   void fetchPortalItemData(const QString& itemId, const QString& outputPath);
   void setDownloadInProgress(bool inProgress);
@@ -217,39 +173,21 @@ private:
   QString formattedPath(const QString& outputPath, const QString& folderName = QString());
 
 private:
-  QString downloadText() const
-  {
-    return m_downloadText;
-  }
-
-  double downloadProgress() const
-  {
-    return m_downloadProgress;
-  }
+  QString downloadText() const;
+  double downloadProgress() const;
 
   void createAndSetTempDirForLocalServer();
 
-  bool cancelDownload() const
-  {
-    return m_cancelDownload;
-  }
-
+  bool cancelDownload() const;
   void setCancelDownload(bool cancel);
 
-  bool downloadFailed() const
-  {
-    return m_downloadFailed;
-  }
-
+  bool downloadFailed() const;
   void setDownloadFailed(bool didFail);
+
   SampleManager::Reachability reachability() const;
   QString api() const;
 
-  QVariantList offlineDataProjects() const
-  {
-    return m_offlineDataProjects;
-  }
-
+  QVariantList offlineDataProjects() const;
   void updateOfflineDataProjects();
 
 private:

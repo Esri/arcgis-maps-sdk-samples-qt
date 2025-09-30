@@ -98,6 +98,86 @@ SampleManager::SampleManager(QObject* parent) :
 
 SampleManager::~SampleManager() = default;
 
+SampleListModel* SampleManager::samples() const
+{
+  return m_allSamples;
+}
+
+SampleListModel* SampleManager::featuredSamples() const
+{
+  return m_featuredSamples;
+}
+
+CategoryListModel* SampleManager::categories()
+{
+  return m_categories;
+}
+
+SampleManager::CurrentMode SampleManager::currentMode()
+{
+  return m_currentMode;
+}
+
+Sample* SampleManager::currentSample() const
+{
+  return m_currentSample;
+}
+
+SampleCategory* SampleManager::currentCategory() const
+{
+  return m_currentCategory;
+}
+
+QString SampleManager::currentSourceCode() const
+{
+  return m_currentSourceCode;
+}
+
+QUrl SampleManager::apiReferenceUrl() const
+{
+  return m_apiReferenecUrl;
+}
+
+QUrl SampleManager::qtSdkUrl() const
+{
+  return m_qtSdkUrl;
+}
+
+QUrl SampleManager::qtSamplesUrl() const
+{
+  return m_qtSamplesUrl;
+}
+
+bool SampleManager::downloadInProgress() const
+{
+  return m_downloadInProgress;
+}
+
+QString SampleManager::downloadText() const
+{
+  return m_downloadText;
+}
+
+double SampleManager::downloadProgress() const
+{
+  return m_downloadProgress;
+}
+
+bool SampleManager::cancelDownload() const
+{
+  return m_cancelDownload;
+}
+
+bool SampleManager::downloadFailed() const
+{
+  return m_downloadFailed;
+}
+
+QVariantList SampleManager::offlineDataProjects() const
+{
+  return m_offlineDataProjects;
+}
+
 void SampleManager::init()
 {
   m_featuredSamples = new SampleListModel(this);
