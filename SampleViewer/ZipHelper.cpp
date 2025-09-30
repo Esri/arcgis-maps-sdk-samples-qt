@@ -431,7 +431,7 @@ qreal ZipHelper::percentTotal() const
 {
     qreal percent = 0.0;
     if (m_bytesTotalUncompressed != 0)
-        percent = (qreal)m_bytesExtracted / (qreal)m_bytesTotalUncompressed * 100.0;
+        percent = m_bytesExtracted / static_cast<qreal>(m_bytesTotalUncompressed) * 100.0;
 
     return percent;
 }
