@@ -44,6 +44,11 @@ Item {
         }
         width: childrenRect.width
         height: childrenRect.height
+        MouseArea {
+            anchors.fill: parent
+            onClicked: mouse => mouse.accepted = true
+            onWheel: wheel => wheel.accepted = true
+        }
         Column {
             id: settingsColumn
             spacing: 5
