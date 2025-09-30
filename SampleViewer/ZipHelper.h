@@ -48,7 +48,7 @@ public:
   Q_ENUM(Result)
 
 public:
-  Q_INVOKABLE bool extractAll(const QString &outputPath);
+  Q_INVOKABLE bool extractAll(const QString &outputPath, bool trackTotalProgress = false);
   void setPath(const QString& path);
 
   explicit ZipHelper(QObject* parent = nullptr);
@@ -109,6 +109,7 @@ private:
   bool zrOpen();
   qreal percentTotal() const;
   const QString& path() const { return m_Path; }
+  bool m_trackTotalProgress = false;
 
 private:
   QString                     m_Path;

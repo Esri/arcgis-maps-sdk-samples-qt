@@ -22,7 +22,6 @@
 
 // enable logging
 //#define ZIP_LOGGING_ENABLED
-static constexpr bool TOTAL_PROGRESS_ENABLED = false;
 
 #ifdef Q_OS_WIN
 #include <sys/utime.h>
@@ -157,7 +156,7 @@ bool ZipHelper::extractCurrentFile(const QString& outputFilePath)
 
             emit extractProgress(fileName, outputFilePath, percent);
 
-            if constexpr (TOTAL_PROGRESS_ENABLED)
+            if (m_trackTotalProgress)
             {
                 // check for a new percentage but only by whole numbers
                 auto oldPercentTotal = static_cast<int>(percentTotal());
@@ -194,14 +193,13 @@ bool ZipHelper::extractAll(QDir& outputDir)
 {
     bool haveFile = gotoFirstFile();
 
-    if constexpr (TOTAL_PROGRESS_ENABLED)
+    if (m_trackTotalProgress)
     {
         m_bytesExtracted = 0;
         m_bytesTotalUncompressed = 0;
         while (haveFile)
         {
-            auto fileInfo = currentFileInfo();
-            m_bytesTotalUncompressed += fileInfo.uncompressed_size;
+            m_bytesTotalUncompressed += currentFileInfo().uncompressed_size;
             haveFile = gotoNextFile();
         }
         haveFile = gotoFirstFile();
@@ -459,13 +457,15 @@ void ZipHelper::setPath(const QString& path)
   \brief Extracts all files from the archive.
   \list
     \li \a outputPath The path to the destination folder.
+    \li \a trackTotalProgress Will enable signals for extract overall percentage
   \endlist
 
   Returns \c true if successful; otherwise \c false.
 */
 
-bool ZipHelper::extractAll(const QString &outputPath)
+bool ZipHelper::extractAll(const QString &outputPath, bool trackTotalProgress)
 {
+    m_trackTotalProgress = trackTotalProgress;
     if (!zrOpen())
     {
 #ifdef ZIP_LOGGING_ENABLED
