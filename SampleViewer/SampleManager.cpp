@@ -809,10 +809,12 @@ void SampleManager::updateOfflineDataProjects()
 {
   m_offlineDataProjects.clear();
 
-  const int totalSamples = samples()->size();
+  const SampleListModel* sampleList = samples();
+  const int totalSamples = sampleList->size();
+
   for (int i = 0; i < totalSamples; ++i)
   {
-    Sample* sample = samples()->at(i);
+    Sample* sample = sampleList->at(i);
     if (sample->dataItems()->size() > 0)
     {
       QVariantMap projectInfo;
@@ -828,10 +830,12 @@ void SampleManager::updateOfflineDataProjects()
 
 bool SampleManager::hasOfflineData(const QString& sampleName)
 {
-  const int totalSamples = samples()->size();
+  const SampleListModel* sampleList = samples();
+  const int totalSamples = sampleList->size();
+
   for (int i = 0; i < totalSamples; ++i)
   {
-    Sample* sample = samples()->at(i);
+    Sample* sample = sampleList->at(i);
     if (sample->name().toString() == sampleName)
     {
       const int dataItemCount = sample->dataItems()->size();
@@ -853,10 +857,12 @@ bool SampleManager::deleteProjectOfflineData(const QString& sampleName)
 {
   bool success = true;
 
-  const int totalSamples = samples()->size();
+  const SampleListModel* sampleList = samples();
+  const int totalSamples = sampleList->size();
+
   for (int i = 0; i < totalSamples; ++i)
   {
-    Sample* sample = samples()->at(i);
+    Sample* sample = sampleList->at(i);
     if (sample->name().toString() == sampleName)
     {
       const int dataItemCount = sample->dataItems()->size();
@@ -905,11 +911,13 @@ void SampleManager::downloadProjectData(const QString& sampleName)
     m_dataItems.clear();
   }
 
+  const SampleListModel* sampleList = samples();
+  const int totalSamples = sampleList->size();
+
   // Find the sample and add its data items to download queue
-  const int totalSamples = samples()->size();
   for (int i = 0; i < totalSamples; ++i)
   {
-    Sample* sample = samples()->at(i);
+    Sample* sample = sampleList->at(i);
     if (sample->name().toString() == sampleName)
     {
       const int dataItemCount = sample->dataItems()->size();

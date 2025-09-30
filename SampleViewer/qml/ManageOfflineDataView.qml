@@ -136,11 +136,8 @@ Page {
                 Layout.preferredWidth: Math.max(implicitWidth, 200 * scaleFactor)
                 Layout.preferredHeight: Math.max(40, 50 * scaleFactor)
                 enabled: {
-                    if (SampleManager.offlineDataProjects.length === 0) return false;
-                    for (let i = 0; i < SampleManager.offlineDataProjects.length; i++) {
-                        if (!SampleManager.offlineDataProjects[i].downloaded) return true;
-                    }
-                    return false;
+                    return SampleManager.offlineDataProjects &&
+                            SampleManager.offlineDataProjects.some(project => !project.downloaded);
                 }
                 onClicked: {
                     if (SampleManager.reachability === SampleManager.ReachabilityOnline || SampleManager.reachability === SampleManager.ReachabilityUnknown) {
@@ -158,11 +155,8 @@ Page {
                 Layout.preferredWidth: Math.max(implicitWidth, 200 * scaleFactor)
                 Layout.preferredHeight: Math.max(40, 50 * scaleFactor)
                 enabled: {
-                    if (SampleManager.offlineDataProjects.length === 0) return false;
-                    for (let i = 0; i < SampleManager.offlineDataProjects.length; i++) {
-                        if (SampleManager.offlineDataProjects[i].downloaded) return true;
-                    }
-                    return false;
+                    return SampleManager.offlineDataProjects.length > 0 &&
+                            SampleManager.offlineDataProjects.some(project => project.downloaded);
                 }
                 onClicked: {
                     deleteAllDialog.visible = true;
@@ -178,11 +172,8 @@ Page {
             visible: !SampleManager.downloadInProgress
             checked: showOnlyDownloaded
             enabled: {
-                if (SampleManager.offlineDataProjects.length === 0) return false;
-                for (let i = 0; i < SampleManager.offlineDataProjects.length; i++) {
-                    if (SampleManager.offlineDataProjects[i].downloaded) return true;
-                }
-                return false;
+                return SampleManager.offlineDataProjects.length > 0 &&
+                        SampleManager.offlineDataProjects.some(project => project.downloaded);
             }
             onClicked: {
                 showOnlyDownloaded = checked;
@@ -331,7 +322,7 @@ Page {
     MessageDialog {
         id: deleteAllDialog
         title: "Delete all offline data"
-        text: "Are you sure you want to delete all offline data"
+        text: "Are you sure you want to delete all offline data?"
         visible: false
         buttons: MessageDialog.Yes | MessageDialog.No
 
@@ -342,7 +333,7 @@ Page {
         }
 
         onClicked: function(button) {
-            if(button === MessageDialog.Yes){
+            if (button === MessageDialog.Yes){
                 if (SampleManager.deleteAllOfflineData()) {
                     text = "Project data deleted successfully";
                     buttons = MessageDialog.Ok;
@@ -353,10 +344,10 @@ Page {
                     visible = true;
                 }
             }
-            else if(button === MessageDialog.No){
+            else if (button === MessageDialog.No){
                 visible = false;
             }
-            else if(button === MessageDialog.Ok){
+            else if (button === MessageDialog.Ok){
                 resetDialog();
             }
         }
@@ -377,7 +368,7 @@ Page {
         }
 
         onClicked: function(button) {
-            if(button === MessageDialog.Yes){
+            if (button === MessageDialog.Yes){
                 if (SampleManager.deleteProjectOfflineData(sampleName)) {
                     text = "Project data deleted successfully";
                     buttons = MessageDialog.Ok;
@@ -389,10 +380,10 @@ Page {
                     visible = true;
                 }
             }
-            else if(button === MessageDialog.No){
+            else if (button === MessageDialog.No){
                 visible = false;
             }
-            else if(button === MessageDialog.Ok){
+            else if (button === MessageDialog.Ok){
                 resetDialog();
             }
         }
