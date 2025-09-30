@@ -1,0 +1,37 @@
+{
+    "category": "Layers",
+    "dataItems": [
+        {
+            "itemId": "f4b742a57af344988b02227e2824ca5f",
+            "path": "~/ArcGIS/Runtime/Data/vtpk/dodge_city.vtpk"
+        }
+    ],
+    "description": "Load ArcGIS vector tiled layers using custom styles.",
+    "featured": false,
+    "ignore": false,
+    "images": [
+        "screenshot.png"
+    ],
+    "keywords": [
+        "tiles",
+        "vector",
+        "vector basemap",
+        "vector tiled layer",
+        "vector tiles"
+    ],
+    "redirect_from": "",
+    "relevant_apis": [
+        "ExportVectorTilesJob",
+        "ExportVectorTilesResult",
+        "ExportVectorTilesTask",
+        "VectorTileCache",
+        "VectorTiledLayer",
+        "VectorTilesTask"
+    ],
+    "snippets": [
+        "AddVectorTiledLayerFromCustomStyle.cpp",
+        "AddVectorTiledLayerFromCustomStyle.h",
+        "AddVectorTiledLayerFromCustomStyle.qml"
+    ],
+    "title": "Add vector tiled layer from custom style"
+}
