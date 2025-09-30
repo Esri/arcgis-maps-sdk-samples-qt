@@ -799,6 +799,11 @@ void SampleManager::setupProxy(const QString& hostName, quint16 port, const QStr
   QNetworkProxy::setApplicationProxy(proxy);
 }
 
+void SampleManager::doneDownloading()
+{
+  emit doneDownloadingChanged();
+}
+
 QVariantList SampleManager::getOfflineDataProjects()
 {
   updateOfflineDataProjects();

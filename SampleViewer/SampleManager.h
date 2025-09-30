@@ -89,12 +89,7 @@ public:
   Q_INVOKABLE QVariantList getOfflineDataProjects();
   Q_INVOKABLE void setSourceCodeIndex(int i);
   Q_INVOKABLE void setupProxy(const QString& hostName, quint16 port, const QString& user, const QString& pw);
-
-  Q_INVOKABLE void doneDownloading()
-  {
-    emit doneDownloadingChanged();
-  }
-
+  Q_INVOKABLE void doneDownloading();
   Q_INVOKABLE void setApiKey(bool isSupportsApiKey = true);
 
   enum CurrentMode
