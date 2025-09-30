@@ -81,7 +81,7 @@ void AddVectorTiledLayerFromCustomStyle::setMapView(MapQuickView* mapView)
   m_mapView = mapView;
   m_mapView->setMap(m_map);
 
-  const Viewpoint defaultViewpoint(10, 5.5, 1e8);
+  const Viewpoint defaultViewpoint{10, 5.5, 1e8};
   m_map->setInitialViewpoint(defaultViewpoint);
 
   populatePortalIdMap();
@@ -100,13 +100,13 @@ void AddVectorTiledLayerFromCustomStyle::populatePortalIdMap()
   m_portalIds.insert("Offline custom style - Light", "e01262ef2a4f4d91897d9bbd3a9b1075");
   m_portalIds.insert("Offline custom style - Dark", "ce8a34e5d4ca4fa193a097511daa8855");
 
-  initialize();
+  setupPortalItemsAndExportStyles();
 
   m_styleNames = m_portalIds.keys();
-  emit setStyleNames();
+  emit styleNamesChanged();
 }
 
-void AddVectorTiledLayerFromCustomStyle::initialize()
+void AddVectorTiledLayerFromCustomStyle::setupPortalItemsAndExportStyles()
 {
   Portal* portal = new Portal(this);
 
@@ -134,80 +134,78 @@ void AddVectorTiledLayerFromCustomStyle::initialize()
   exportStyle(m_vectorTiledLayers.value("Offline custom style - Dark"), "Dark");
 }
 
-void AddVectorTiledLayerFromCustomStyle::selectionChanged(const QString style)
+void AddVectorTiledLayerFromCustomStyle::setStyle(const QString& style)
 {
-  // Check if the user selected a offline custom style.
+  // Check if the user selected an offline custom style.
   // Create a new basemap with the appropriate style.
   if (style.contains("Offline"))
   {
-    ItemResourceCache* cache = nullptr;
+    ItemResourceCache* cache = style.contains("Light") ? m_lightStyleResourceCache : m_darkStyleResourceCache;
 
-    if (style.contains("Light"))
-    {
-      cache = m_lightStyleResourceCache;
-    }
-    else
-    {
-      cache = m_darkStyleResourceCache;
-    }
+    VectorTileCache* vectorTileCache = new VectorTileCache(m_dataPath, this);
 
-    m_map->setBasemap(new Basemap(new ArcGISVectorTiledLayer(new VectorTileCache(m_dataPath), cache)));
+    ArcGISVectorTiledLayer* vectorTileLayer = new ArcGISVectorTiledLayer(vectorTileCache, cache, this);
 
-    const Viewpoint dodgeCityViewpoint(37.76528, -100.01766, 4e4);
+    m_map->setBasemap(new Basemap(vectorTileLayer, this));
+
+    const Viewpoint dodgeCityViewpoint{37.76528, -100.01766, 4e4};
     m_mapView->setViewpointAsync(dodgeCityViewpoint);
   }
   else
   {
     m_map->setBasemap(new Basemap(new ArcGISVectorTiledLayer(m_vectorTiledLayers.value(style))));
-    const Viewpoint defaultViewpoint(10, 5.5, 1e8);
+    const Viewpoint defaultViewpoint{10, 5.5, 1e8};
     m_mapView->setViewpointAsync(defaultViewpoint);
   }
 }
 
 void AddVectorTiledLayerFromCustomStyle::exportStyle(PortalItem* vectorTiledLayer, const QString& styleName)
 {
-  vectorTiledLayer->load();
   connect(vectorTiledLayer, &PortalItem::loadStatusChanged, this, [this, vectorTiledLayer, styleName](LoadStatus status)
   {
-    if (status == LoadStatus::Loaded)
+    if (status != LoadStatus::Loaded)
     {
-      // Create the task.
-      ExportVectorTilesTask* exportTask = new ExportVectorTilesTask(vectorTiledLayer->url(), this);
-      // Get the item resource path for the basemap styling.
-      const QString itemResourceCachePath = m_tempDir.path() + QString("/itemResources%1").arg(QDateTime::currentMSecsSinceEpoch());
-
-      // Create the export job and start it.
-      Esri::ArcGISRuntime::ExportVectorTilesJob* exportJob = exportTask->exportStyleResourceCache(itemResourceCachePath);
-      exportJob->start();
-
-      // Wait for the job to complete.
-      connect(exportJob, &ExportVectorTilesJob::jobDone, this, [this, exportJob, styleName]()
-      {
-        ExportVectorTilesResult* vectorTilesResult = exportJob->result();
-
-        ItemResourceCache* cache = vectorTilesResult->itemResourceCache();
-
-        if (styleName == "Light")
-        {
-          m_lightVectorTilesResult = vectorTilesResult;
-        }
-        else if (styleName == "Dark")
-        {
-          m_darkVectorTilesResult = vectorTilesResult;
-        }
-
-        connect(cache, &ItemResourceCache::loadStatusChanged, this, [this, cache, styleName](LoadStatus status)
-        {
-          if (status == LoadStatus::Loaded)
-          {
-            emit styleExported(styleName, cache);
-          }
-        });
-
-        cache->load();
-      });
+      return;
     }
+
+    // Create the task.
+    ExportVectorTilesTask* exportTask = new ExportVectorTilesTask(vectorTiledLayer->url(), this);
+    // Get the item resource path for the basemap styling.
+    const QString itemResourceCachePath = m_tempDir.path() + QString("/itemResources%1").arg(QDateTime::currentMSecsSinceEpoch());
+
+    // Create the export job and start it.
+    Esri::ArcGISRuntime::ExportVectorTilesJob* exportJob = exportTask->exportStyleResourceCache(itemResourceCachePath);
+    exportJob->start();
+
+    // Wait for the job to complete.
+    connect(exportJob, &ExportVectorTilesJob::jobDone, this, [this, exportJob, styleName]()
+    {
+      ExportVectorTilesResult* vectorTilesResult = exportJob->result();
+
+      ItemResourceCache* cache = vectorTilesResult->itemResourceCache();
+
+      if (styleName == "Light")
+      {
+        m_lightVectorTilesResult = vectorTilesResult;
+      }
+      else if (styleName == "Dark")
+      {
+        m_darkVectorTilesResult = vectorTilesResult;
+      }
+
+      connect(cache, &ItemResourceCache::loadStatusChanged, this, [this, cache, styleName](LoadStatus status)
+      {
+        if (status != LoadStatus::Loaded)
+        {
+          return;
+        }
+        emit styleExported(styleName, cache);
+      });
+
+      cache->load();
+    });
   });
+  vectorTiledLayer->load();
 }
 
 QStringList AddVectorTiledLayerFromCustomStyle::styleNames() const

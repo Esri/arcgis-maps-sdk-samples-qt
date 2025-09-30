@@ -37,27 +37,27 @@ class AddVectorTiledLayerFromCustomStyle : public QObject
   Q_OBJECT
 
   Q_PROPERTY(Esri::ArcGISRuntime::MapQuickView* mapView READ mapView WRITE setMapView NOTIFY mapViewChanged)
-  Q_PROPERTY(QStringList styleNames READ styleNames NOTIFY setStyleNames)
+  Q_PROPERTY(QStringList styleNames READ styleNames NOTIFY styleNamesChanged)
 
 public:
   explicit AddVectorTiledLayerFromCustomStyle(QObject* parent = nullptr);
   ~AddVectorTiledLayerFromCustomStyle() override;
 
   static void init();
-  QStringList styleNames() const;
-  Q_INVOKABLE void selectionChanged(const QString style);
+  Q_INVOKABLE void setStyle(const QString& style);
 
 signals:
   void mapViewChanged();
-  void setStyleNames();
+  void styleNamesChanged();
   void styleExported(const QString& styleName, Esri::ArcGISRuntime::ItemResourceCache* cache);
 
 private:
   void exportStyle(Esri::ArcGISRuntime::PortalItem* vectorTiledLayer, const QString& styleName);
-  void initialize();
+  void setupPortalItemsAndExportStyles();
   Esri::ArcGISRuntime::MapQuickView* mapView() const;
   void populatePortalIdMap();
   void setMapView(Esri::ArcGISRuntime::MapQuickView* mapView);
+  QStringList styleNames() const;
 
   const QString m_dataPath;
   Esri::ArcGISRuntime::ExportVectorTilesResult* m_darkVectorTilesResult = nullptr;

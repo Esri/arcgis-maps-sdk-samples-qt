@@ -37,32 +37,31 @@ Item {
     }
 
     Rectangle {
-            anchors {
-                top: parent.top
-                right: parent.right
-                margins: 5
+        anchors {
+            top: parent.top
+            right: parent.right
+            margins: 5
+        }
+        width: childrenRect.width
+        height: childrenRect.height
+        Column {
+            id: settingsColumn
+            spacing: 5
+            padding: 15
+            Text {
+                id: selectStyle
+                anchors.horizontalCenter: parent.horizontalCenter
+                font.pixelSize: 16
+                text: "Select style"
             }
-            width: childrenRect.width
-            height: childrenRect.height
-            Column {
-                id: settingsColumn
-                spacing: 5
-                padding: 15
-                Text {
-                    id: selectStyle
-                    anchors.horizontalCenter: parent.horizontalCenter
-                    font.pixelSize: 16
-                    text: "Select style"
-                }
+            ComboBox {
+                id: layerStyle
+                anchors.horizontalCenter: parent.horizontalCenter
+                width: 250
+                model: model.styleNames
 
-                ComboBox {
-                    id: layerStyle
-                    anchors.horizontalCenter: parent.horizontalCenter
-                    width: 250
-                    model: model.styleNames
-
-                    onCurrentTextChanged: model.selectionChanged(currentText);
-                }
+                onCurrentTextChanged: model.setStyle(currentText);
             }
         }
+    }
 }
