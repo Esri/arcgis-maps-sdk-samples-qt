@@ -304,7 +304,6 @@ Page {
                                         visible: modelData.downloaded
                                         font.pixelSize: Math.max(12, baseFontSize - 1)
                                         onClicked: {
-                                            console.log(modelData.sample.name)
                                             deleteProjectDialog.sampleName = modelData.sample.name;
                                             deleteProjectDialog.resetDialog();
                                             deleteProjectDialog.visible = true;
