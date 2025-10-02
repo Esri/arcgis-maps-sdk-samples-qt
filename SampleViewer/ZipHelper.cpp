@@ -191,21 +191,17 @@ bool ZipHelper::extractCurrentFile(const QString& outputFilePath)
 
 bool ZipHelper::extractAll(QDir& outputDir)
 {
-    bool haveFile = gotoFirstFile();
-
     if (m_trackTotalProgress)
     {
         m_bytesExtracted = 0;
         m_bytesTotalUncompressed = 0;
-        while (haveFile)
+        for (bool haveFile = gotoFirstFile(); haveFile; haveFile = gotoNextFile())
         {
             m_bytesTotalUncompressed += currentFileInfo().uncompressed_size;
-            haveFile = gotoNextFile();
         }
-        haveFile = gotoFirstFile();
     }
 
-    while (haveFile)
+    for (bool haveFile = gotoFirstFile(); haveFile; haveFile = gotoNextFile())
     {
         const auto fileName = currentFileName();
         const auto path = QFileInfo(fileName).path();
@@ -217,8 +213,6 @@ bool ZipHelper::extractAll(QDir& outputDir)
         auto outputFilePath = outputDir.filePath(fileName);
 
         extractCurrentFile(outputFilePath);
-
-        haveFile = gotoNextFile();
     }
 
     emit extractCompleted();
