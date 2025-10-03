@@ -48,7 +48,7 @@ public:
   Q_ENUM(Result)
 
 public:
-  Q_INVOKABLE bool extractAll(const QString &outputPath);
+  Q_INVOKABLE bool extractAll(const QString &outputPath, bool trackTotalProgress = false);
   void setPath(const QString& path);
 
   explicit ZipHelper(QObject* parent = nullptr);
@@ -60,6 +60,7 @@ signals:
 
   void extractError(const QString& fileName, const QString& outputFileName, ZipHelper::Result result);
   void extractProgress(const QString& fileName, const QString& outputFileName, qreal percent);
+  void extractProgressTotal(qsizetype percentTotal);
   void extractCompleted();
 
 private:
@@ -106,12 +107,16 @@ private:
   void zwClose(const QString& globalComment = QString());
   bool exists() const;
   bool zrOpen();
+  qreal percentTotal() const;
   const QString& path() const { return m_Path; }
+  bool m_trackTotalProgress = false;
 
 private:
   QString                     m_Path;
   unzFile                     m_unzFile;
   zipFile                     m_zipFile;
+  quint64                     m_bytesExtracted = 0;
+  quint64                     m_bytesTotalUncompressed = 0;
 };
 
 //--------------------------------------------------------------------

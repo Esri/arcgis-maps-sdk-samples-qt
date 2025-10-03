@@ -156,6 +156,16 @@ bool ZipHelper::extractCurrentFile(const QString& outputFilePath)
 
             emit extractProgress(fileName, outputFilePath, percent);
 
+            if (m_trackTotalProgress)
+            {
+                // check for a new percentage but only by whole numbers
+                auto oldPercentTotal = static_cast<int>(percentTotal());
+                m_bytesExtracted += result;
+                auto newPercentTotal = static_cast<int>(percentTotal());
+                if (newPercentTotal != oldPercentTotal)
+                    emit extractProgressTotal(newPercentTotal);
+            }
+
             outputFile.write(buffer.data(), result);
             readBytes += result;
         }
@@ -181,8 +191,17 @@ bool ZipHelper::extractCurrentFile(const QString& outputFilePath)
 
 bool ZipHelper::extractAll(QDir& outputDir)
 {
-    bool haveFile = gotoFirstFile();
-    while (haveFile)
+    if (m_trackTotalProgress)
+    {
+        m_bytesExtracted = 0;
+        m_bytesTotalUncompressed = 0;
+        for (bool haveFile = gotoFirstFile(); haveFile; haveFile = gotoNextFile())
+        {
+            m_bytesTotalUncompressed += currentFileInfo().uncompressed_size;
+        }
+    }
+
+    for (bool haveFile = gotoFirstFile(); haveFile; haveFile = gotoNextFile())
     {
         const auto fileName = currentFileName();
         const auto path = QFileInfo(fileName).path();
@@ -194,8 +213,6 @@ bool ZipHelper::extractAll(QDir& outputDir)
         auto outputFilePath = outputDir.filePath(fileName);
 
         extractCurrentFile(outputFilePath);
-
-        haveFile = gotoNextFile();
     }
 
     emit extractCompleted();
@@ -402,6 +419,15 @@ bool ZipHelper::zrOpen()
     return ok;
 }
 
+qreal ZipHelper::percentTotal() const
+{
+    qreal percent = 0.0;
+    if (m_bytesTotalUncompressed != 0)
+        percent = m_bytesExtracted / static_cast<qreal>(m_bytesTotalUncompressed) * 100.0;
+
+    return percent;
+}
+
 void ZipHelper::setPath(const QString& path)
 {
     auto resolvedPath = ZipHelper::resolvedPath(path);
@@ -425,13 +451,15 @@ void ZipHelper::setPath(const QString& path)
   \brief Extracts all files from the archive.
   \list
     \li \a outputPath The path to the destination folder.
+    \li \a trackTotalProgress Will enable signals for extract overall percentage
   \endlist
 
   Returns \c true if successful; otherwise \c false.
 */
 
-bool ZipHelper::extractAll(const QString &outputPath)
+bool ZipHelper::extractAll(const QString &outputPath, bool trackTotalProgress)
 {
+    m_trackTotalProgress = trackTotalProgress;
     if (!zrOpen())
     {
 #ifdef ZIP_LOGGING_ENABLED
