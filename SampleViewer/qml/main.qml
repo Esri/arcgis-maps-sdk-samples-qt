@@ -268,7 +268,7 @@ ApplicationWindow {
         }
 
         function onDoneDownloadingChanged() {
-            if(SampleManager.currentMode !== SampleManager.ManageOfflineDataView)
+            if (SampleManager.currentMode !== SampleManager.ManageOfflineDataView)
                 showSample();
         }
 
