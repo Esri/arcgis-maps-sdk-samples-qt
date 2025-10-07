@@ -16,6 +16,7 @@
 import QtQuick
 import QtQuick.Controls
 import Esri.ArcGISRuntimeSamples
+import Calcite
 
 ApplicationWindow {
     id: window
@@ -30,6 +31,10 @@ ApplicationWindow {
 
     header: ToolBar {
         height: 42
+
+        background: Rectangle {
+            color: "#7938b6"
+        }
 
         Image {
             anchors {
@@ -268,7 +273,8 @@ ApplicationWindow {
         }
 
         function onDoneDownloadingChanged() {
-            showSample();
+            if (SampleManager.currentMode !== SampleManager.ManageOfflineDataView)
+                showSample();
         }
 
         function onCurrentModeChanged() {

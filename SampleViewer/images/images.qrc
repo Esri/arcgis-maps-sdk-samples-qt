@@ -13,5 +13,7 @@
         <file>Built_with_Qt_RGB_logo.png</file>
         <file>Built_with_Qt_RGB_logo@2x.png</file>
         <file>ic_menu_closeclear_light.png</file>
+        <file>back_light.png</file>
+        <file>back_light@2x.png</file>
     </qresource>
 </RCC>

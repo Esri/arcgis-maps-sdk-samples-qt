@@ -33,7 +33,7 @@ Page {
                 verticalCenter: parent.verticalCenter
                 margins: 5
             }
-            source: "qrc:/back.png"
+            source: Calcite.theme === Calcite.Theme.Light ? "qrc:/back_light.png" : "qrc:/back.png"
             width: 32
             height: width
 
@@ -52,7 +52,7 @@ Page {
                 pixelSize: 18
                 family: fontFamily
             }
-            color: "white"
+            color: Calcite.text2
         }
     }
 

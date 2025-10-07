@@ -18,10 +18,15 @@ import QtQuick.Controls
 import Qt.labs.platform
 import QtQuick.Layouts
 import Esri.ArcGISRuntimeSamples
+import Calcite
 
 Page {
     id: manageOfflineDataViewPage
     visible: SampleManager.currentMode === SampleManager.ManageOfflineDataView
+
+    background: Rectangle {
+        color: Calcite.foreground1
+    }
 
     onVisibleChanged: {
         if (!manageOfflineDataViewPage.visible && SampleManager.downloadInProgress)
@@ -192,7 +197,7 @@ Page {
             visible: !SampleManager.downloadInProgress
             color: "transparent"
             border {
-                color: "darkgray"
+                color: Calcite.border1
                 width: 2
             }
             radius: 8
@@ -221,10 +226,10 @@ Page {
                     delegate: Rectangle {
                         width: ListView.view.width
                         height: Math.max(65, 80 * scaleFactor)
-                        color: "#d1d5db"
+                        color: Calcite.foreground2
                         radius: 8
                         border {
-                            color: "#6b7280"
+                            color: Calcite.border2
                             width: 1
                         }
 
@@ -262,14 +267,15 @@ Page {
                                     Rectangle {
                                         width: statusLabel.implicitWidth + 20
                                         height: statusLabel.implicitHeight + 10
-                                        color: modelData.downloaded ? "#d4edda" : "#f8d7da"
+                                        color: modelData.downloaded ? Calcite.success : Calcite.danger
                                         radius: 12
+                                        opacity: 0.2
 
                                         Label {
                                             id: statusLabel
                                             anchors.centerIn: parent
                                             text: modelData.downloaded ? "Downloaded" : "Not downloaded"
-                                            color: modelData.downloaded ? "#155724" : "#721c24"
+                                            color: Calcite.text1
                                             font {
                                                 family: fontFamily
                                                 pixelSize: Math.max(9, baseFontSize - 2)
