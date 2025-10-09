@@ -317,6 +317,11 @@ ApplicationWindow {
     }
 
     Component.onCompleted: {
+        // color overrides - purple
+        Calcite.brand = Calcite.Theme.Light ? "#7938B6" : "#8F53CA";
+        Calcite.brandHover = Calcite.Theme.Light ? "#652E98" : "#7938B6";
+        Calcite.brandPress = Calcite.Theme.Light ? "#51247A" : "#652E98";
+
         // initialize the SampleManager singleton
         SampleManager.init();
     }
