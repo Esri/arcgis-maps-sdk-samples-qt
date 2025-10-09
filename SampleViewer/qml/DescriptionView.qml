@@ -16,9 +16,11 @@
 import QtQuick
 import QtQuick.Controls
 import Esri.ArcGISRuntimeSamples
+import Calcite
 
 Rectangle {
     visible: SampleManager.currentMode === SampleManager.DescriptionView
+    color: Calcite.background
     property string descriptionText: "text"
 
     Flickable {
@@ -38,6 +40,7 @@ Rectangle {
             readOnly: true
             activeFocusOnPress: false
             textFormat: Text.MarkdownText
+            color: Calcite.text1
             text: descriptionText
             onLinkActivated: Qt.openUrlExternally(link)
 

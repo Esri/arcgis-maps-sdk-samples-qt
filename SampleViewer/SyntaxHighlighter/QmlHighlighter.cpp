@@ -1,5 +1,19 @@
 // [Legal]
 // Copyright 2022 Esri.
+//
+// Licensed under the Apache License, Version 2.0 (the "License");
+// you may not use this file except in compliance with the License.
+// You may obtain a copy of the License at
+// http://www.apache.org/licenses/LICENSE-2.0
+//
+// Unless required by applicable law or agreed to in writing, software
+// distributed under the License is distributed on an "AS IS" BASIS,
+// WITHOUT WARRANTIES OR CONDITIONS OF ANY KIND, either express or implied.
+// See the License for the specific language governing permissions and
+// limitations under the License.
+// [Legal]
+
+#include "pch.hpp"
 
 // Licensed under the Apache License, Version 2.0 (the "License");
 // you may not use this file except in compliance with the License.
@@ -13,19 +27,18 @@
 // limitations under the License.
 // [Legal]
 
-#include "pch.hpp"
-
 #include <QStringList>
 #include <QRegularExpression>
 
 #include "QmlHighlighter.h"
 
-QmlHighlighter::QmlHighlighter(QTextDocument* parent) :
-  QSyntaxHighlighter(parent)
+QmlHighlighter::QmlHighlighter(QTextDocument* parent, bool isDarkTheme) :
+  QSyntaxHighlighter(parent),
+  m_isDarkTheme(isDarkTheme)
 {
-    HighlightingRule rule;
+    setupColors(isDarkTheme);
 
-    m_keywordFormat.setForeground(Qt::darkBlue);
+    HighlightingRule rule;
     QStringList keywordPatterns;
     keywordPatterns << "\\bint\\b"  << "\\bbool\\b" << "\\bstring\\b"
                     << "\\bvar\\b"  << "\\bdouble\\b" << "\\breal\\b"
@@ -40,42 +53,34 @@ QmlHighlighter::QmlHighlighter(QTextDocument* parent) :
         m_highlightingRules.append(rule);
     }
 
-    m_classFormat.setForeground(Qt::darkMagenta);
     rule.pattern = QRegularExpression(QStringLiteral("\\b[A-Z][A-Za-z]+\\b"));
     rule.format = m_classFormat;
     m_highlightingRules.append(rule);
 
-    m_classFormat_2.setForeground(Qt::darkMagenta);
     rule.pattern = QRegularExpression(QStringLiteral("\\bQ_PROPERTY\\b"));
     rule.format = m_classFormat_2;
     m_highlightingRules.append(rule);
 
-    m_classFormat_3.setForeground(Qt::darkMagenta);
     rule.pattern = QRegularExpression(QStringLiteral("\\bQ_INVOKABLE\\b"));
     rule.format = m_classFormat_3;
     m_highlightingRules.append(rule);
 
-    m_memberVarName_1.setForeground(Qt::darkRed);
     rule.pattern = QRegularExpression(QStringLiteral("\\b[a-z][A-Za-z]+(?=:)\\b"));
     rule.format = m_memberVarName_1;
     m_highlightingRules.append(rule);
 
-    m_memberVarName_2.setForeground(Qt::darkRed);
     rule.pattern = QRegularExpression(QStringLiteral("\\b[a-z]+(?=:)\\b"));
     rule.format = m_memberVarName_2;
     m_highlightingRules.append(rule);
 
-    m_memberVarName_3.setForeground(Qt::darkRed);
     rule.pattern = QRegularExpression(QStringLiteral("\\banchors.\\b"));
     rule.format = m_memberVarName_3;
     m_highlightingRules.append(rule);
 
-    m_memberVarName_4.setForeground(Qt::darkRed);
     rule.pattern = QRegularExpression(QStringLiteral("\\banchors\\b"));
     rule.format = m_memberVarName_4;
     m_highlightingRules.append(rule);
 
-    m_keywordOtherFormat.setForeground(Qt::darkYellow);
     QStringList keywordPatternsOther;
     keywordPatternsOther << "\\bfor\\b"      << "\\bforeach\\b"
                          << "\\bif\\b"       << "\\bwhile\\b"
@@ -96,14 +101,10 @@ QmlHighlighter::QmlHighlighter(QTextDocument* parent) :
         m_highlightingRules.append(rule);
     }
 
-    m_singleLineCommentFormat.setForeground(Qt::darkGreen);
     rule.pattern = QRegularExpression(QStringLiteral("^(?!\"([^\"']*)\")\\s*//[^\n]*"));
     rule.format = m_singleLineCommentFormat;
     m_highlightingRules.append(rule);
 
-    m_multiLineCommentFormat.setForeground(Qt::darkGreen);
-
-    m_quotationFormat.setForeground(Qt::darkGreen);
     rule.pattern = QRegularExpression(QStringLiteral("(\"[^\"]+\"|'[^\']+')"));
     rule.format = m_quotationFormat;
     m_highlightingRules.append(rule);
@@ -150,3 +151,51 @@ void QmlHighlighter::highlightBlock(const QString& text)
     }
 }
 
+void QmlHighlighter::setupColors(bool isDarkTheme)
+{
+    if (isDarkTheme) {
+        // Dark theme - VS Code Dark+ standard colors
+        m_keywordFormat.setForeground(QColor("#569CD6"));              // Blue - keywords/types (int, bool, var, etc.)
+        m_classFormat.setForeground(QColor("#4EC9B0"));                // Teal - class/type names
+        m_classFormat_2.setForeground(QColor("#4EC9B0"));              // Teal - Q_PROPERTY
+        m_classFormat_3.setForeground(QColor("#4EC9B0"));              // Teal - Q_INVOKABLE
+        m_memberVarName_1.setForeground(QColor("#9CDCFE"));            // Light blue - properties/variables
+        m_memberVarName_2.setForeground(QColor("#9CDCFE"));            // Light blue - properties
+        m_memberVarName_3.setForeground(QColor("#9CDCFE"));            // Light blue - anchors
+        m_memberVarName_4.setForeground(QColor("#9CDCFE"));            // Light blue - anchors
+        m_keywordOtherFormat.setForeground(QColor("#C586C0"));         // Purple - control flow (if, for, return, function)
+        m_singleLineCommentFormat.setForeground(QColor("#6A9955"));    // Green - comments
+        m_multiLineCommentFormat.setForeground(QColor("#6A9955"));     // Green - comments
+        m_quotationFormat.setForeground(QColor("#D4A574"));            // Light brown/tan - strings
+    } else {
+        // Light theme - VS Code Light+ standard colors
+        m_keywordFormat.setForeground(QColor("#0000FF"));              // Blue - keywords/types (int, bool, var, etc.)
+        m_classFormat.setForeground(QColor("#267F99"));                // Teal - class/type names
+        m_classFormat_2.setForeground(QColor("#267F99"));              // Teal - Q_PROPERTY
+        m_classFormat_3.setForeground(QColor("#267F99"));              // Teal - Q_INVOKABLE
+        m_memberVarName_1.setForeground(QColor("#001080"));            // Dark blue - properties/variables
+        m_memberVarName_2.setForeground(QColor("#001080"));            // Dark blue - properties
+        m_memberVarName_3.setForeground(QColor("#001080"));            // Dark blue - anchors
+        m_memberVarName_4.setForeground(QColor("#001080"));            // Dark blue - anchors
+        m_keywordOtherFormat.setForeground(QColor("#AF00DB"));         // Purple - control flow (if, for, return, function)
+        m_singleLineCommentFormat.setForeground(QColor("#008000"));    // Green - comments
+        m_multiLineCommentFormat.setForeground(QColor("#008000"));     // Green - comments
+        m_quotationFormat.setForeground(QColor("#B07800"));            // Brown/orange - strings
+    }
+}
+
+void QmlHighlighter::updateTheme(bool isDarkTheme)
+{
+    m_isDarkTheme = isDarkTheme;
+    setupColors(isDarkTheme);
+
+    // Update all existing rules with new formats
+    for (int i = 0; i < m_highlightingRules.size(); ++i) {
+        if (m_highlightingRules[i].format.foreground() == m_keywordFormat.foreground() ||
+            m_highlightingRules[i].format == m_keywordFormat) {
+            m_highlightingRules[i].format = m_keywordFormat;
+        }
+    }
+
+    rehighlight();
+}

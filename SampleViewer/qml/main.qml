@@ -33,7 +33,7 @@ ApplicationWindow {
         height: 42
 
         background: Rectangle {
-            color: "#7938b6"
+            color: Calcite.brand
         }
 
         Image {

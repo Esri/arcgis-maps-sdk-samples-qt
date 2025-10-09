@@ -164,7 +164,7 @@ Rectangle {
                         }
                         onContainsMouseChanged: {
                             if (containsMouse) {
-                                backgroundRectangle.color = "#7938b6"
+                                backgroundRectangle.color = Calcite.brandHover
                                 img.anchors.margins = 3
 
                             } else {

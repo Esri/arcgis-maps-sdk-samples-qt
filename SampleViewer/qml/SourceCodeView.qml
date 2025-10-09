@@ -16,9 +16,11 @@
 import QtQuick
 import QtQuick.Controls
 import Esri.ArcGISRuntimeSamples
+import Calcite
 
 Rectangle {
     visible: SampleManager.currentMode === SampleManager.SourceCodeView
+    color: Calcite.background
 
     Flickable {
         anchors {
@@ -36,13 +38,21 @@ Rectangle {
             readOnly: true
             activeFocusOnPress: false
             textFormat: Text.PlainText
+            color: Calcite.text1
             selectByMouse: os === "ios" || os === "android" ? false : true
             Component.onCompleted: {
-                // Set binding imperatively instead of declaratively. The 5.9 Qt to 5.12 
-                // upgrade broke syntax highlighting on windows for the first sample. 
+                // Set binding imperatively instead of declaratively. The 5.9 Qt to 5.12
+                // upgrade broke syntax highlighting on windows for the first sample.
                 // Likely a timing issue of setting the highlighter.
                 textEdit.text = Qt.binding(function() {return SampleManager.currentSourceCode});
-                SyntaxHighlighter.setHighlighter(textEdit);
+                SyntaxHighlighter.setHighlighter(textEdit, Calcite.theme === Calcite.Theme.Dark);
+            }
+
+            Connections {
+                target: Calcite
+                function onThemeChanged() {
+                    SyntaxHighlighter.updateHighlighterTheme(Calcite.theme === Calcite.Theme.Dark);
+                }
             }
 
             Menu {
@@ -84,10 +94,13 @@ Rectangle {
 
         delegate: ItemDelegate {
             width: control.width
+            HoverHandler {
+                id: hoverHandler
+            }
             contentItem: Text {
                 text: name
                 font: control.font
-                color: control.currentIndex === index ? Material.accent : "black"
+                color: (control.currentIndex === index && !hoverHandler.hovered) ? Calcite.brand : Calcite.text1
                 elide: Text.ElideMiddle
                 verticalAlignment: Text.AlignVCenter
             }
@@ -95,10 +108,13 @@ Rectangle {
 
         contentItem: Text {
             text: control.displayText
-            elide: Text.ElideMiddle
+            elide: Text.ElideRight
             font: control.font
+            color: Calcite.text1
+            leftPadding: 10
+            rightPadding: 30
             verticalAlignment: Text.AlignVCenter
-            horizontalAlignment: Text.AlignHCenter
+            horizontalAlignment: Text.AlignLeft
         }
 
         visible: SampleManager.currentSample ? SampleManager.currentSample.codeFiles.size > 1 : false

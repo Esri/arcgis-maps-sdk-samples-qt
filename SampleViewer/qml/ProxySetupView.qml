@@ -15,8 +15,8 @@
 
 import QtQuick
 import QtQuick.Controls
-import QtQuick.Controls.Material
 import Esri.ArcGISRuntimeSamples
+import Calcite
 
 Item {
     id: dialogComponent
@@ -50,10 +50,15 @@ Item {
         clip: true
         background: Rectangle {
             radius: 3
+            color: Calcite.foreground1
         }
 
         header: ToolBar {
             height: 42
+
+            background: Rectangle {
+                color: Calcite.brand
+            }
 
             Label {
                 id: titleText
@@ -63,7 +68,7 @@ Item {
                     family: fontFamily
                     pixelSize: 18
                 }
-                color: "white"
+                color: Calcite.textInverse
             }
         }
 
@@ -84,9 +89,9 @@ Item {
                     pixelSize: 14
                 }
                 placeholderText: qsTr("* Enter host name e.g. 127.0.0.1")
-                placeholderTextColor: "darkgray"
+                placeholderTextColor: Calcite.text3
                 renderType: Text.NativeRendering
-                color: Material.primary
+                color: Calcite.text1
                 selectByMouse: true
             }
 
@@ -99,9 +104,9 @@ Item {
                     pixelSize: 14
                 }
                 placeholderText: qsTr("* Enter port number e.g. 8888")
-                placeholderTextColor: "darkgray"
+                placeholderTextColor: Calcite.text3
                 renderType: Text.NativeRendering
-                color: Material.primary
+                color: Calcite.text1
                 selectByMouse: true
             }
 
@@ -114,9 +119,9 @@ Item {
                     pixelSize: 14
                 }
                 placeholderText: qsTr("Enter user name e.g. my_name")
-                placeholderTextColor: "darkgray"
+                placeholderTextColor: Calcite.text3
                 renderType: Text.NativeRendering
-                color: Material.primary
+                color: Calcite.text1
                 selectByMouse: true
             }
 
@@ -130,15 +135,16 @@ Item {
                 }
                 echoMode: TextInput.Password
                 placeholderText: qsTr("Enter password")
-                placeholderTextColor: "darkgray"
+                placeholderTextColor: Calcite.text3
                 renderType: Text.NativeRendering
-                color: Material.primary
+                color: Calcite.text1
                 selectByMouse: true
             }
 
             Rectangle {
                 width: parent.width
                 height: okButton.height
+                color: Calcite.foreground1
 
                 Button {
                     id: okButton
@@ -147,15 +153,15 @@ Item {
                         verticalCenter: parent.verticalCenter
                     }
                     text: qsTr("Setup")
-                    width: 110
-                    height: 48
+                    width: 100
+                    height: 32
 
                     onClicked: {
                         if (!msg.visible) {
                             SampleManager.setupProxy(hostName.text, portNumber.text, userName.text, password.text);
                             dialogComponent.visible = false;
                         } else
-                            msg.color = "red";
+                            msg.color = Calcite.danger;
                     }
                 }
 
@@ -166,8 +172,8 @@ Item {
                         verticalCenter: parent.verticalCenter
                     }
                     text: qsTr("Cancel")
-                    width: 110
-                    height: 48
+                    width: 100
+                    height: 32
                     onClicked: dialogComponent.visible = false
                 }
             }
@@ -175,7 +181,7 @@ Item {
             Text {
                 id: msg
                 text: qsTr("*Required fields")
-                color: "darkgray"
+                color: Calcite.text3
                 font.pixelSize: 12
                 visible: hostName.text.trim() === "" || portNumber.text.trim() === ""
             }
