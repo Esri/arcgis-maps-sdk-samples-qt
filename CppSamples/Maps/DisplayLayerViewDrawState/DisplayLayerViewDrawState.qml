@@ -49,9 +49,9 @@ Item {
                 horizontalCenter: parent.horizontalCenter
                 margins: 5
             }
-            width: childrenRect.width
-            height: childrenRect.height
-            color: "#1976D2"
+            width: controlLayout.implicitWidth + 4
+            height: childrenRect.height + 4
+            color: palette.base
             radius: 3
 
             MouseArea {
@@ -63,11 +63,12 @@ Item {
 
             ColumnLayout{
                 id: controlLayout
+                anchors.centerIn: parent
 
-                Text {
+                Label {
                     id: textHeader
                     text: qsTr("Current view status:")
-                    color: "white"
+                    Layout.alignment: Qt.AlignHCenter
                 }
 
                 Column {
@@ -80,9 +81,8 @@ Item {
                         Item {
                             width: childrenRect.width
                             height: childrenRect.height
-                            Text {
+                            Label {
                                 text: modelData
-                                color: "white"
                             }
                         }
                     }

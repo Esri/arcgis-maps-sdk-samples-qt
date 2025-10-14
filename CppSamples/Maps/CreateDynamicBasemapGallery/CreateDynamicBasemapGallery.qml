@@ -16,7 +16,6 @@
 
 import QtQuick
 import QtQuick.Controls
-import QtQuick.Controls.Material
 import QtQuick.Layouts
 import Esri.Samples
 
@@ -36,134 +35,154 @@ Item {
             icon.name: "grid-24"
             icon.source: "grid-24.svg"
             onClicked: popup.open()
-            }
+        }
 
-            Popup {
-                id: popup
-                x: parent.width * 0.1
-                y: parent.height * 0.1
-                width: parent.width * 0.8
-                height: parent.height * 0.8
-                modal: true
-                focus: true
-                closePolicy: Popup.CloseOnEscape | Popup.CloseOnPressOutside
+        Popup {
+            id: popup
+            x: parent.width * 0.1
+            y: parent.height * 0.1
+            width: parent.width * 0.8
+            height: parent.height * 0.8
+            modal: true
+            focus: true
+            closePolicy: Popup.CloseOnEscape | Popup.CloseOnPressOutside
 
-                ColumnLayout {
-                    anchors.fill: parent
+            ColumnLayout {
+                anchors.fill: parent
+                clip: true
+
+                GridView {
+                    id: basemapView
+                    Layout.alignment: Qt.AlignHCenter
+                    Layout.fillWidth: false
+                    Layout.fillHeight: true
+                    implicitWidth: {
+                        var numCellsInPopup_dbl = popup.width / basemapView.cellWidth;
+                        var numCellsInPopup_int = Math.trunc(numCellsInPopup_dbl);
+                        return Math.max(1, numCellsInPopup_int) * basemapView.cellWidth + 25;
+                    }
                     clip: true
+                    model: model.gallery
+                    currentIndex: model.indexOfSelectedStyle;
+                    cellWidth: 200
+                    cellHeight: 160
+                    highlight: Rectangle {
+                        width: basemapView.cellWidth;
+                        height: basemapView.cellHeight
+                        color: palette.highlight
+                        anchors.fill: basemapView.currentItem
+                    }
+                    highlightFollowsCurrentItem: false;
 
-                    GridView {
-                        id: basemapView
-                        Layout.alignment: Qt.AlignHCenter
-                        Layout.fillWidth: false
-                        Layout.fillHeight: true
-                        implicitWidth: {
-                            var numCellsInPopup_dbl = popup.width / basemapView.cellWidth;
-                            var numCellsInPopup_int = Math.trunc(numCellsInPopup_dbl);
-                            return Math.max(1, numCellsInPopup_int) * basemapView.cellWidth;
+                    delegate: ItemDelegate {
+                        id: basemapDelegate
+                        width: basemapView.cellWidth
+                        height: basemapView.cellHeight
+                        hoverEnabled: true
+
+                        required property string styleName
+                        required property string previewImageUrl
+
+                        background: Rectangle {
+                            anchors.fill: parent
+                            color: basemapDelegate.hovered ? palette.highlight : "transparent"
+                        }
+
+                        onClicked: {
+                            model.updateSelectedStyle(styleName);
                         }
                         clip: true
-                        model: model.gallery
-                        currentIndex: model.indexOfSelectedStyle;
-                        cellWidth: 200
-                        cellHeight: 160
-                        highlight: Rectangle {
-                            width: basemapView.cellWidth;
-                            height: basemapView.cellHeight
-                            color: "lightsteelblue";
-                            anchors.fill: basemapView.currentItem
-                        }
-                        highlightFollowsCurrentItem: false;
-
-                        delegate: ItemDelegate {
-                            id: basemapDelegate
-                            width: basemapView.cellWidth
-                            height: basemapView.cellHeight
-                            required property string styleName
-                            required property string previewImageUrl
-                            onClicked: {
-                                model.updateSelectedStyle(styleName);
+                        Column {
+                            anchors.fill: parent
+                            spacing: 5
+                            padding: 10
+                            Image {
+                                source: previewImageUrl
+                                fillMode: Image.PreserveAspectFit
+                                width: basemapView.cellWidth - 25
+                                anchors {
+                                    topMargin: 5
+                                    horizontalCenter: parent.horizontalCenter
+                                }
                             }
-                            clip: true
-                            Column {
-                                spacing: 5
-                                padding: 10
-                                Text {
-                                    font.bold: true
-                                    font.pixelSize: 12
-                                    text: styleName + ":"
-                                }
-                                Image {
-                                    source: previewImageUrl
-                                    fillMode: Image.PreserveAspectFit
-                                    width: basemapView.cellWidth - 25
-                                }
+                            Label {
+                                font.bold: true
+                                font.pixelSize: 12
+                                text: styleName
+                                width: basemapView.cellWidth - 25
+                                wrapMode: Text.WordWrap
                             }
                         }
                     }
+                }
 
-                    Flow {
-                        id: flow
-                        Layout.fillWidth: false
-                        Layout.alignment: Qt.AlignHCenter
-                        Layout.preferredWidth: calculateFlowLayoutWidth();
-                        spacing: 10
+                Flow {
+                    id: flow
+                    Layout.fillWidth: false
+                    Layout.alignment: Qt.AlignHCenter
+                    Layout.preferredWidth: calculateFlowLayoutWidth();
+                    spacing: 10
 
-                        ColumnLayout {
-                            Text {
-                                Layout.preferredHeight: 15
-                                font.underline: true
-                                text: "Language Strategy:"
-                            }
-                            ComboBox {
-                                id: languageStrategyOptions
-                                Layout.preferredHeight: 30
-                                Layout.preferredWidth: flowCellWidth
-                                model: model.languageStrategies
-                                enabled: model.languageStrategies.length !== 0
-                            }
+                    ColumnLayout {
+                        Label {
+                            Layout.preferredHeight: 15
+                            font.underline: true
+                            text: "Language Strategy:"
                         }
-                        ColumnLayout {
-                            Text {
-                                Layout.preferredHeight: 15
-                                font.underline: true
-                                text: "Language:"
-                            }
-                            ComboBox {
-                                id: languages
-                                Layout.preferredHeight: 30
-                                Layout.preferredWidth: flowCellWidth
-                                model: model.languages
-                                enabled: model.languages.length !== 0
-                            }
+                        ComboBox {
+                            id: languageStrategyOptions
+                            Layout.preferredHeight: 30
+                            Layout.preferredWidth: flowCellWidth
+                            model: model.languageStrategies
+                            enabled: model.languageStrategies.length !== 0
                         }
-                        ColumnLayout {
-                            Text {
-                                Layout.preferredHeight: 15
-                                font.underline: true
-                                text: "Worldview:"
-                            }
-                            ComboBox {
-                                id: worldviews
-                                Layout.preferredHeight: 30
-                                Layout.preferredWidth: flowCellWidth
-                                model: model.worldviews
-                                enabled: model.worldviews.length !== 0
-                            }
+                    }
+                    ColumnLayout {
+                        Label {
+                            Layout.preferredHeight: 15
+                            font.underline: true
+                            text: "Language:"
+                        }
+                        ComboBox {
+                            id: languages
+                            Layout.preferredHeight: 30
+                            Layout.preferredWidth: flowCellWidth
+                            model: model.languages
+                            enabled: model.languages.length !== 0
+                        }
+                    }
+                    ColumnLayout {
+                        Label {
+                            Layout.preferredHeight: 15
+                            font.underline: true
+                            text: "Worldview:"
+                        }
+                        ComboBox {
+                            id: worldviews
+                            Layout.preferredHeight: 30
+                            Layout.preferredWidth: flowCellWidth
+                            model: model.worldviews
+                            enabled: model.worldviews.length !== 0
+                        }
+                    }
+                    ColumnLayout{
+                        Layout.preferredWidth: flowCellWidth
+                        Item {
+                            Layout.preferredHeight: 15
                         }
                         RowLayout {
-                            width: flowCellWidth
-                            height: 45
+                            height: 30
+                            Layout.alignment: Qt.AlignHCenter | Qt.AlignBottom
                             Button {
                                 Layout.alignment: Qt.AlignCenter
                                 text: "Load"
-                                Layout.preferredHeight: 40
+                                Layout.preferredHeight: 30
                                 Layout.preferredWidth: 80
                                 onPressed: {
                                     model.loadBasemap(
-                                               languageStrategyOptions.currentText,
-                                               languages.currentText,
-                                               worldviews.currentText);
+                                                languageStrategyOptions.currentText,
+                                                languages.currentText,
+                                                worldviews.currentText);
                                     popup.close();
                                 }
                             }
@@ -172,6 +191,7 @@ Item {
                 }
             }
         }
+    }
 
     // Declare the C++ instance which creates the map etc. and supply the view
     CreateDynamicBasemapGallerySample {

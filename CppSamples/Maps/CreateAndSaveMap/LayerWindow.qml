@@ -15,28 +15,25 @@ import QtQuick
 import QtQuick.Layouts
 import QtQuick.Controls
 
-Rectangle {
-    Rectangle {
-        anchors.fill: parent
-        color: "#60000000"
-    }
-
+Pane {
     signal createMapSelected(var basemap, var layerList)
 
-    Rectangle {
-        color: "#edeeef"
-        radius: 5
-        width: childrenRect.width
-        height: childrenRect.height
+    Pane {
+        padding: 10
         anchors.centerIn: parent
-        border {
-            color: "#77787a"
-            width: 1
+        background: Rectangle {
+            color: "transparent"
+            border.color: palette.shadow
+            border.width: 1
+            radius: 5
         }
 
         ColumnLayout {
             id: layerColumn
-            Text {
+            anchors.centerIn: parent
+            spacing:8
+
+            Label {
                 Layout.margins: 5
                 Layout.alignment: Qt.AlignHCenter
                 text: "Select Layers"
@@ -46,7 +43,7 @@ Rectangle {
                 }
             }
 
-            Text {
+            Label {
                 Layout.margins: 5
                 text: "Select Basemap:"
                 font {
@@ -63,7 +60,7 @@ Rectangle {
                 Layout.fillWidth: true
                 model: ["Streets", "Imagery", "Topographic", "Oceans"]
 
-               Component.onCompleted : {
+                Component.onCompleted : {
                     for (let i = 0; i < model.length; ++i) {
                         metrics.text = model[i];
                         modelWidth = Math.max(modelWidth, metrics.width);
@@ -75,7 +72,7 @@ Rectangle {
                 }
             }
 
-            Text {
+            Label {
                 Layout.margins: 5
                 text: "Select Operational Layers:"
                 font {

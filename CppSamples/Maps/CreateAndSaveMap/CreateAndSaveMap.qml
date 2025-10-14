@@ -56,18 +56,24 @@ CreateAndSaveMapSample {
             forceActiveFocus();
         }
 
-        Button {
+        Pane{
+            padding: 4
             anchors {
                 horizontalCenter: parent.horizontalCenter
                 bottom: mapView.attributionTop
                 margins: 5
             }
-            text: "Save map"
+            Button {
+                anchors.centerIn: parent
+                text: "Save map"
 
-            onClicked: {
-                loadPortal();
+                onClicked: {
+                    loadPortal();
+                }
             }
         }
+
+
     }
 
     Component {

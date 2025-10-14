@@ -37,7 +37,7 @@ Item {
         mapView: view
     }
 
-    Rectangle {
+    Pane {
         id: rectangle
         anchors {
             right: parent.right
@@ -46,11 +46,6 @@ Item {
         }
         width: column.width
         height: column.height
-        color: Qt.rgba(0, 0, 0, 0.5)
-        border {
-            color: "black"
-            width: 1
-        }
         opacity: 0.9
 
         Column {
@@ -58,15 +53,15 @@ Item {
             padding: 10
             spacing: 5
             width: 300
+            anchors.centerIn: parent
 
             Column {
                 id:languageStrategy
                 spacing: 5
 
-                Text {
+                Label {
                     text: "Set Language Strategy:"
                     font.bold: true
-                    color: "white"
                 }
 
                 Row {
@@ -79,12 +74,11 @@ Item {
                         enabled: comboBox.currentText == "none"
                     }
 
-                    Text {
+                    Label {
                         id: globalText
                         text: "Global"
                         height: globalButton.height
                         verticalAlignment: Text.AlignVCenter
-                        color: "white"
                     }
                 }
 
@@ -98,12 +92,11 @@ Item {
                         }
                         enabled: comboBox.currentText == "none"
                     }
-                    Text {
+                    Label {
                         id: localText
                         text: "Local"
                         height: localButton.height
                         verticalAlignment: Text.AlignVCenter
-                        color: "white"
                     }
                 }
 
@@ -112,10 +105,9 @@ Item {
             Column {
                 id:specificLanguage
 
-                Text {
+                Label {
                     text: "Set Specific Language:"
                     font.bold: true
-                    color: "white"
                 }
 
                 ComboBox {

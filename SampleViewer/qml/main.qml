@@ -26,6 +26,14 @@ ApplicationWindow {
     minimumWidth: 300
     minimumHeight: 400
 
+    palette {
+        button: Calcite.brand
+        buttonText: Calcite.text1
+        highlight: Calcite.brandHover
+        base: Calcite.background
+        text: Calcite.text1
+    }
+
     readonly property string os: Qt.platform.os
     readonly property string fontFamily: "Helvetica"
 
@@ -259,7 +267,7 @@ ApplicationWindow {
                     && SampleManager.reachability !== SampleManager.ReachabilityUnknown){
                 SampleManager.currentMode = SampleManager.NetworkRequiredView;
                 return;
-            // If the sample requires offline data
+                // If the sample requires offline data
             } else {
                 showSample();
             }
