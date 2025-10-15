@@ -18,11 +18,16 @@ import QtQuick.Controls
 Pane {
     signal createMapSelected(var basemap, var layerList)
 
+    background: Rectangle{
+        anchors.fill: parent
+        color: palette.base
+    }
+
     Pane {
         padding: 10
         anchors.centerIn: parent
         background: Rectangle {
-            color: "transparent"
+            color: palette.mid
             border.color: palette.shadow
             border.width: 1
             radius: 5

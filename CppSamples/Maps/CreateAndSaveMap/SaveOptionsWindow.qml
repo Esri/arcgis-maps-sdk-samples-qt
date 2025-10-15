@@ -20,10 +20,15 @@ Pane {
     signal saveMapClicked(var title, var tags, var description)
     signal cancelClicked()
 
+    background: Rectangle{
+        anchors.fill: parent
+        color: palette.base
+    }
+
     Pane {
         anchors.centerIn: parent
         background: Rectangle {
-            color: "transparent"
+            color: palette.mid
             border.color: palette.shadow
             border.width: 1
             radius: 5
