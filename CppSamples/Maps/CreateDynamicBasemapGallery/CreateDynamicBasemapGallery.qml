@@ -155,7 +155,7 @@ Item {
                         Label {
                             Layout.preferredHeight: 15
                             font.underline: true
-                            text: "Worldview:"
+                            text: qsTr("Worldview:")
                         }
                         ComboBox {
                             id: worldviews
