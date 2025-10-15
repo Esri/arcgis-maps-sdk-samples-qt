@@ -20,7 +20,7 @@ Rectangle {
 
     width: 190
     height: 35
-    color: pressed ? palette.hightlight : palette.button
+    color: pressed ? palette.highlight : palette.button
     radius: 5
     border {
         color: "#585858"
