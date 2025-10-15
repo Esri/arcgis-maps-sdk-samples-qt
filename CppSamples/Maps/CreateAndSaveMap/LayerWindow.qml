@@ -65,7 +65,7 @@ Pane {
                 Layout.fillWidth: true
                 model: ["Streets", "Imagery", "Topographic", "Oceans"]
 
-                Component.onCompleted : {
+                Component.onCompleted: {
                     for (let i = 0; i < model.length; ++i) {
                         metrics.text = model[i];
                         modelWidth = Math.max(modelWidth, metrics.width);
