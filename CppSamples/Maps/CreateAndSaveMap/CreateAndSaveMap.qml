@@ -56,7 +56,7 @@ CreateAndSaveMapSample {
             forceActiveFocus();
         }
 
-        Pane{
+        Pane {
             padding: 4
             anchors {
                 horizontalCenter: parent.horizontalCenter
