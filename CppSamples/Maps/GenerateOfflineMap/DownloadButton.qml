@@ -33,13 +33,13 @@ Rectangle {
         Image {
             width: 38
             height: width
-            source: Qt.application.styleHints.colorScheme === Qt.ColorScheme.Dark ? "qrc:/Samples/Maps/GenerateOfflineMap/download_light.png" :"qrc:/Samples/Maps/GenerateOfflineMap/download.png"
+            source: "qrc:/Samples/Maps/GenerateOfflineMap/download_light.png"
         }
         Text {
             anchors.verticalCenter: parent.verticalCenter
             text: "Generate Offline Map"
             font.pixelSize: 14
-            color: palette.text
+            color: "#F8F8F8"
         }
     }
 
