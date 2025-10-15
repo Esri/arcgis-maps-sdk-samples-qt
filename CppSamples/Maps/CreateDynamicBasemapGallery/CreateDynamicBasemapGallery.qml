@@ -127,7 +127,7 @@ Item {
                         Label {
                             Layout.preferredHeight: 15
                             font.underline: true
-                            text: "Language Strategy:"
+                            text: qsTr("Language Strategy:")
                         }
                         ComboBox {
                             id: languageStrategyOptions
