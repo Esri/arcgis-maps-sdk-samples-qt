@@ -36,7 +36,7 @@ Pane {
         ColumnLayout {
             id: layerColumn
             anchors.centerIn: parent
-            spacing:8
+            spacing: 8
 
             Label {
                 Layout.margins: 5
