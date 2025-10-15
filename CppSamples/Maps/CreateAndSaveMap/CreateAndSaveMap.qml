@@ -65,7 +65,7 @@ CreateAndSaveMapSample {
             }
             Button {
                 anchors.centerIn: parent
-                text: "Save map"
+                text: qsTr("Save map")
 
                 onClicked: {
                     loadPortal();
