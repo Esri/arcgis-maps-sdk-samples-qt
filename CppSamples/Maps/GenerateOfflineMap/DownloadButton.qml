@@ -20,7 +20,7 @@ Rectangle {
 
     width: 190
     height: 35
-    color: pressed ? "#959595" : "#D6D6D6"
+    color: pressed ? palette.highlight : palette.button
     radius: 5
     border {
         color: "#585858"
@@ -33,13 +33,13 @@ Rectangle {
         Image {
             width: 38
             height: width
-            source: "qrc:/Samples/Maps/GenerateOfflineMap/download.png"
+            source: "qrc:/Samples/Maps/GenerateOfflineMap/download_light.png"
         }
         Text {
             anchors.verticalCenter: parent.verticalCenter
             text: "Generate Offline Map"
             font.pixelSize: 14
-            color: "#474747"
+            color: "#F8F8F8"
         }
     }
 

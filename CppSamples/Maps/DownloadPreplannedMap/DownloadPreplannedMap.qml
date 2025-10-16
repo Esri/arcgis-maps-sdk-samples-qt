@@ -47,8 +47,7 @@ Item {
         }
         width: childrenRect.width
         height: childrenRect.height
-        color: "#000000"
-        opacity: .8
+        color: palette.base
         radius: 5
 
         // catch mouse signals from propagating to parent
@@ -70,9 +69,8 @@ Item {
                 onClicked: model.showOnlineMap(preplannedCombo.currentIndex);
             }
 
-            Text {
+            Label {
                 text: qsTr("Available Preplanned Areas:")
-                color: "white"
                 Layout.alignment: Qt.AlignHCenter
             }
 
@@ -85,10 +83,11 @@ Item {
                 textRole: "itemTitle"
                 onActivated: model.checkIfMapExists(preplannedCombo.currentIndex);
 
-                // Add a background to the ComboBox
+                //Add a background to the ComboBox
                 Rectangle {
                     anchors.fill: parent
                     radius: 10
+                    color: palette.base
                     // Make the rectangle visible if a dropdown indicator exists
                     // An indicator only exists if a theme is set
                     visible: parent.indicator
@@ -105,9 +104,8 @@ Item {
                 onClicked: model.checkIfMapAreaIsLoaded(preplannedCombo.currentIndex);
             }
 
-            Text {
+            Label {
                 text: qsTr("Download(s) deleted on exit")
-                color: "white"
                 Layout.alignment: Qt.AlignHCenter
                 Layout.margins: 1
             }

@@ -37,17 +37,16 @@ Item {
         mapView: view
 
         onUpdateUi: (enabled, text, detailedText) => {
-            downloadUpdatesButton.enabled = enabled;
-            availabilityText.text = text;
-            availabilityDetailsText.text = detailedText;
-            busyIndicator.visible = false;
-        }
+                        downloadUpdatesButton.enabled = enabled;
+                        availabilityText.text = text;
+                        availabilityDetailsText.text = detailedText;
+                        busyIndicator.visible = false;
+                    }
     }
 
-    Rectangle {
+    Pane {
         anchors.fill: controlColumn
         anchors.margins: -5
-        color: "#404040"
     }
 
     Column {
@@ -63,7 +62,6 @@ Item {
             id: downloadUpdatesButton
             text: "Apply Scheduled Updates"
             enabled: true
-
             onClicked: {
                 busyIndicator.visible = true;
                 model.updateMap();
@@ -71,14 +69,12 @@ Item {
             }
         }
 
-        Text {
+        Label {
             id: availabilityText
-            color: "white"
         }
 
-        Text {
+        Label {
             id: availabilityDetailsText
-            color: "white"
         }
     }
 

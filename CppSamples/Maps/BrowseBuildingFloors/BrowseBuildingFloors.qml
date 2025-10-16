@@ -33,10 +33,8 @@ Item {
     }
 
     // Add a background to the column
-    Rectangle {
+    Pane {
         anchors.fill: col
-        radius: 10
-        border.width: 1
     }
 
     Column {
@@ -60,4 +58,5 @@ Item {
             }
         }
     }
+
 }
