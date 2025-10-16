@@ -35,6 +35,7 @@ Item {
             icon.name: "grid-24"
             icon.source: "grid-24.svg"
             onClicked: popup.open()
+            icon.color: palette.text
         }
 
         Popup {
