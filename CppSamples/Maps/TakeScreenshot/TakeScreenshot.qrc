@@ -7,6 +7,7 @@
         <file>screenshot.png</file>
         <file>README.md</file>
         <file>close.png</file>
+		<file>close_light.png</file>
         <file>MapImageProvider.h</file>
         <file>MapImageProvider.cpp</file>
         <file>main.cpp</file>

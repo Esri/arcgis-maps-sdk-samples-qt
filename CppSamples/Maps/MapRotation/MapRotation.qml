@@ -45,6 +45,7 @@ MapRotationSample {
             height: childrenRect.height
             radius: 10
             opacity: 0.8
+            color: palette.base
 
             // sliderCombo: A slider and text for its value
             Row {
@@ -59,7 +60,7 @@ MapRotationSample {
                     }
                     // Slider controls degrees of rotation
                     from: 0.0
-                    to: 360.0
+                    to: 359.0
                     onPressedChanged: {
                         // Call C++ invokable function to change the rotation
                         // of the map view
@@ -67,7 +68,7 @@ MapRotationSample {
                     }
                 }
 
-                Text {
+                Label {
                     anchors {
                         verticalCenter: parent.verticalCenter
                         margins: 5

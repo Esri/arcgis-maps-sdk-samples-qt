@@ -32,6 +32,7 @@ ApplicationWindow {
         highlight: Calcite.brandHover
         base: Calcite.background
         text: Calcite.text1
+        mid: Calcite.foreground1
     }
 
     readonly property string os: Qt.platform.os

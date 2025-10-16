@@ -47,7 +47,7 @@ ManageBookmarksSample {
             }
             width: childrenRect.width
             height: childrenRect.height
-            color: pressed ? "#959595" : "#D6D6D6"
+            color: pressed ? palette.highlight : palette.button
             radius: 100
             border {
                 color: "#585858"
@@ -56,7 +56,7 @@ ManageBookmarksSample {
 
             Image {
                 rotation: 45
-                source: "qrc:/Samples/Maps/ManageBookmarks/add.png"
+                source: Qt.styleHints.colorScheme === Qt.ColorScheme.Dark ? "qrc:/Samples/Maps/ManageBookmarks/add_light.png" : "qrc:/Samples/Maps/ManageBookmarks/add.png"
                 width: 32
                 height: 32
             }
@@ -73,53 +73,52 @@ ManageBookmarksSample {
         }
     }
 
-    //! [Use BookmarkListModel in View]
-    ComboBox {
-        id: bookmarkComboBox
+    Pane {
         anchors {
             left: parent.left
             top: parent.top
             margins: 15
         }
-        property int bestWidth: implicitWidth
-        width: bestWidth + leftPadding + rightPadding + (indicator ? indicator.width : 10)
-        // Set the model to the BookmarkListModel
-        model: manageBookmarksSample.bookmarks
 
-        onModelChanged: {
-            const model = bookmarkComboBox.model;
-            if (model)
-            {
-                let w = bestWidth;
-                for (let i = 0; i < model.rowCount(); ++i) {
-                    metrics.text = manageBookmarksSample.bookmarkNameForIndex(i);
-                    w = Math.max(w, metrics.width);
+        width: bookmarkComboBox.width + leftPadding + rightPadding
+        height: bookmarkComboBox.height + topPadding + bottomPadding
+        padding: 8
+
+        //! [Use BookmarkListModel in View]
+        ComboBox {
+            id: bookmarkComboBox
+            anchors.centerIn: parent
+
+            property int bestWidth: implicitWidth
+            width: bestWidth + leftPadding + rightPadding + (indicator ? indicator.width : 10)
+            // Set the model to the BookmarkListModel
+            model: manageBookmarksSample.bookmarks
+
+            onModelChanged: {
+                const model = bookmarkComboBox.model;
+                if (model)
+                {
+                    let w = bestWidth;
+                    for (let i = 0; i < model.rowCount(); ++i) {
+                        metrics.text = manageBookmarksSample.bookmarkNameForIndex(i);
+                        w = Math.max(w, metrics.width);
+                    }
+                    bestWidth = w;
                 }
-                bestWidth = w;
+            }
+
+            onCurrentTextChanged: {
+                // Call C++ invokable function to to go to the bookmark
+                manageBookmarksSample.goToBookmark(bookmarkComboBox.currentIndex);
+            }
+
+            TextMetrics {
+                id: metrics
+                font: bookmarkComboBox.font
             }
         }
-
-        onCurrentTextChanged: {
-            // Call C++ invokable function to to go to the bookmark
-            manageBookmarksSample.goToBookmark(bookmarkComboBox.currentIndex);
-        }
-
-        // Add a background to the ComboBox
-        Rectangle {
-            anchors.fill: parent
-            radius: 10
-            // Make the rectangle visible if a dropdown indicator exists
-            // An indicator only exists if a theme is set
-            visible: parent.indicator
-            border.width: 1
-        }
-
-        TextMetrics {
-            id: metrics
-            font: bookmarkComboBox.font
-        }
+        //! [Use BookmarkListModel in View]
     }
-    //! [Use BookmarkListModel in View]
 
 
     // Create a window so names for new bookmarks can be specified
@@ -127,7 +126,7 @@ ManageBookmarksSample {
         id: addWindow
         visible: false
         enabled: visible
-        color: "lightgrey"
+        color: palette.base
         opacity: .9
         radius: 5
         anchors.centerIn: parent
@@ -145,7 +144,7 @@ ManageBookmarksSample {
 
         GridLayout {
             columns: 2
-            Text {
+            Label {
                 text: qsTr("Provide the bookmark name")
                 Layout.columnSpan: 2
                 Layout.margins: 5
