@@ -59,7 +59,7 @@ OpenMapUrlSample {
                }
                Row {
                    anchors.verticalCenter: parent.verticalCenter
-                   Text {
+                   Label {
                        width: 100
                        text: itemTitle
                        wrapMode: Text.WordWrap
@@ -100,8 +100,7 @@ OpenMapUrlSample {
            anchors.centerIn: parent
            width: 250
            height: 200
-           color: "lightgrey"
-           opacity: .8
+           color: palette.base
            radius: 5
            border {
                color: "#4D4D4D"
@@ -122,7 +121,7 @@ OpenMapUrlSample {
                spacing: 10
                clip: true
                highlightFollowsCurrentItem: true
-               highlight: Rectangle { color: "lightsteelblue"; radius: 5 }
+               highlight: Rectangle { color: palette.highlight; radius: 5 }
                focus: true
            }
        }
@@ -142,7 +141,7 @@ OpenMapUrlSample {
 
        width: 45
        height: width
-       color: pressed ? "#959595" : "#D6D6D6"
+       color: pressed ? palette.highlight : palette.button
        radius: 100
        border {
            color: "#585858"
@@ -153,7 +152,7 @@ OpenMapUrlSample {
            anchors.centerIn: parent
            width: 35
            height: width
-           source: "qrc:/Samples/Maps/OpenMapUrl/SwitchMap.png"
+           source: Qt.application.styleHints.colorScheme === Qt.ColorScheme.Dark ? "qrc:/Samples/Maps/OpenMapUrl/SwitchMap_light.png" : "qrc:/Samples/Maps/OpenMapUrl/SwitchMap.png"
        }
 
        MouseArea {

@@ -41,7 +41,7 @@ Item {
         id: locationInformationRectangle
         width: parent.width
         height: textColumn.height + 20
-        color: "lightgray"
+        color: palette.base
 
         ColumnLayout {
             id: textColumn
@@ -51,25 +51,25 @@ Item {
                 margins: 10
             }
 
-            Text {
+            Label {
                 text: "Initializing location data source\nand retrieving user location..."
                 // Display if there are no location properties to display
                 visible: Object.keys(model.locationProperties).length === 0;
             }
 
-            Text {
+            Label {
                 text: "Floor: " + model.locationProperties.floor
                 visible: model.locationProperties.floor !== undefined
             }
-            Text {
+            Label {
                 text: "Position source: " + model.locationProperties.positionSource
                 visible: model.locationProperties.positionSource !== undefined
             }
-            Text {
+            Label {
                 text: "Transmitter count: " + model.locationProperties.satelliteCount
                 visible: model.locationProperties.satelliteCount !== undefined
             }
-            Text {
+            Label {
                 text: "Horizontal accuracy: " + (model.locationProperties.horizontalAccuracy ? model.locationProperties.horizontalAccuracy.toFixed(2) + " m" : "undefined")
                 visible: model.locationProperties.horizontalAccuracy !== undefined
             }
@@ -97,9 +97,8 @@ Item {
         x: (parent.width - width) / 2
         y: (parent.height - height) / 2
 
-        Text {
+        Label {
             text: "This application requires location permission."
-            color: "white"
         }
     }
 
@@ -118,9 +117,8 @@ Item {
         x: (parent.width - width) / 2
         y: (parent.height - height) / 2
 
-        Text {
+        Label {
             text: "This application requires bluetooth permission."
-            color: "white"
         }
     }
 }
