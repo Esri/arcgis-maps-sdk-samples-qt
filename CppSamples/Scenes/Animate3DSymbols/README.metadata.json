@@ -67,7 +67,6 @@
     "snippets": [
         "Animate3DSymbols.cpp",
         "Animate3DSymbols.h",
-        "LabeledSlider.qml",
         "MissionData.cpp",
         "MissionData.h",
         "Animate3DSymbols.qml"
