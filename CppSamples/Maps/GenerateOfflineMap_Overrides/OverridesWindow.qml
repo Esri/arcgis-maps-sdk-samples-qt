@@ -42,10 +42,6 @@ Rectangle {
             height: layerColumn.implicitHeight + 24
             color: palette.mid
             radius: 8
-            border {
-                color: palette.dark
-                width: 2
-            }
 
             ColumnLayout {
                 id: layerColumn
@@ -194,7 +190,7 @@ Rectangle {
                                 property int bestWidth: 100
                                 model: [ "No filter", "FLOW < 500", "FLOW < 300", "FLOW < 100" ]
                                 font.pixelSize: 12
-                                width: bestWidth + leftPadding + rightPadding + indicator.width + 40
+                                width: bestWidth + leftPadding + rightPadding + (indicator ? indicator.width : 0) + 40
 
                                 onCurrentTextChanged: {
                                     // 1=1 equivelent to select all in a WHERE clause.
