@@ -126,7 +126,7 @@ GenerateOfflineMapLocalBasemapSample {
             spacing: 2
             width: parent.width
 
-            Text {
+            Label {
                 width: parent.width
                 horizontalAlignment: Text.AlignHCenter
                 wrapMode: Text.Wrap
