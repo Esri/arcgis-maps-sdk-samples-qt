@@ -212,6 +212,7 @@ HEADERS += \
     "$$SAMPLEPATHCPP/Scenes/CreateTerrainSurfaceFromLocalRaster/CreateTerrainSurfaceFromLocalRaster.h" \
     "$$SAMPLEPATHCPP/Scenes/CreateTerrainSurfaceFromLocalTilePackage/CreateTerrainSurfaceFromLocalTilePackage.h" \
     "$$SAMPLEPATHCPP/Scenes/Display3DLabelsInScene/Display3DLabelsInScene.h" \
+    "$$SAMPLEPATHCPP/Scenes/DisplayLocalSceneView/DisplayLocalSceneView.h" \
     "$$SAMPLEPATHCPP/Scenes/DisplaySceneLayer/DisplaySceneLayer.h" \
     "$$SAMPLEPATHCPP/Scenes/DistanceCompositeSymbol/DistanceCompositeSymbol.h" \
     "$$SAMPLEPATHCPP/Scenes/ExtrudeGraphics/ExtrudeGraphics.h" \
@@ -438,6 +439,7 @@ SOURCES += \
     "$$SAMPLEPATHCPP/Scenes/CreateTerrainSurfaceFromLocalRaster/CreateTerrainSurfaceFromLocalRaster.cpp" \
     "$$SAMPLEPATHCPP/Scenes/CreateTerrainSurfaceFromLocalTilePackage/CreateTerrainSurfaceFromLocalTilePackage.cpp" \
     "$$SAMPLEPATHCPP/Scenes/Display3DLabelsInScene/Display3DLabelsInScene.cpp" \
+    "$$SAMPLEPATHCPP/Scenes/DisplayLocalSceneView/DisplayLocalSceneView.cpp" \
     "$$SAMPLEPATHCPP/Scenes/DisplaySceneLayer/DisplaySceneLayer.cpp" \
     "$$SAMPLEPATHCPP/Scenes/DistanceCompositeSymbol/DistanceCompositeSymbol.cpp" \
     "$$SAMPLEPATHCPP/Scenes/ExtrudeGraphics/ExtrudeGraphics.cpp" \
@@ -652,6 +654,7 @@ RESOURCES += \
     "$$SAMPLEPATHCPP/Scenes/CreateTerrainSurfaceFromLocalRaster/CreateTerrainSurfaceFromLocalRaster.qrc" \
     "$$SAMPLEPATHCPP/Scenes/CreateTerrainSurfaceFromLocalTilePackage/CreateTerrainSurfaceFromLocalTilePackage.qrc" \
     "$$SAMPLEPATHCPP/Scenes/Display3DLabelsInScene/Display3DLabelsInScene.qrc" \
+    "$$SAMPLEPATHCPP/Scenes/DisplayLocalSceneView/DisplayLocalSceneView.qrc" \
     "$$SAMPLEPATHCPP/Scenes/DisplaySceneLayer/DisplaySceneLayer.qrc" \
     "$$SAMPLEPATHCPP/Scenes/DistanceCompositeSymbol/DistanceCompositeSymbol.qrc" \
     "$$SAMPLEPATHCPP/Scenes/ExtrudeGraphics/ExtrudeGraphics.qrc" \

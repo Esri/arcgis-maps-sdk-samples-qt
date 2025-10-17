@@ -1,0 +1,11 @@
+<RCC>
+    <qresource prefix="/Samples/Scenes/DisplayLocalSceneView">
+        <file alias="sample.json">README.metadata.json</file>
+        <file>DisplayLocalSceneView.qml</file>
+        <file>DisplayLocalSceneView.h</file>
+        <file>DisplayLocalSceneView.cpp</file>
+        <file>main.qml</file>
+        <file>screenshot.png</file>
+        <file>README.md</file>
+    </qresource>
+</RCC>
