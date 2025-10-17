@@ -12,6 +12,7 @@
 // limitations under the License.
 
 import QtQuick
+import QtQuick.Layouts
 import QtQuick.Controls
 
 Rectangle {
@@ -25,241 +26,194 @@ Rectangle {
     signal clipWaterPipesAOIChanged(bool clip)
     signal overridesAccepted()
 
-    color: "#D6D6D6"
+    color: palette.base
 
-    Text {
-        id: title
+    ColumnLayout {
+        id: layerColumn
         anchors {
             top: parent.top
+            bottom: parent.bottom
             horizontalCenter: parent.horizontalCenter
             margins: 16
         }
-        text: "Layer specific overrides"
-        font {
-            bold: true
-            underline: true
-            pixelSize: 18
-        }
-        color: "#474747"
-    }
+        width: parent.width * 0.6
+        spacing: 8
 
-    ScrollView {
-        id: scrollView
-        anchors {
-            top: title.bottom
-            left: overridesPanel.left
-            right: overridesPanel.right
-            bottom: takeOfflineButton.top
-            margins: 16
-        }
-        clip: true
-        ScrollBar.vertical.interactive: true
-        ScrollBar.vertical.policy: ScrollBar.AsNeeded
-
-        Rectangle {
-            implicitHeight: childrenRect.height
-            implicitWidth: overridesPanel.width
-            color: "transparent"
-
-            Text {
-                id: lodTitle
-                text: "Basemap Levels of Detail:"
-                anchors {
-                    topMargin: 16
-                    horizontalCenter: parent.horizontalCenter
-                }
-                font {
-                    pixelSize: 14
-                }
-                color: "#474747"
-            }
-
-            Row {
-                id: lodRange
-                anchors {
-                    top: lodTitle.bottom
-                    topMargin: 8
-                    horizontalCenter: parent.horizontalCenter
-                }
-                Text {
-                    text: "(Least detail)"
-                    font {
-                        pixelSize: 12
-                    }
-                    color: "#474747"
-                }
-
-                RangeSlider {
-                    id: lodsSlider
-                    from: 0
-                    to: 24
-                    width: overridesPanel.width * 0.5
-                    first.value: 0
-                    second.value: 23
-                    first.onPressedChanged: {
-                        if (first.pressed)
-                            return;
-                        basemapLODSelected(first.value, second.value);
-                    }
-
-                    second.onPressedChanged: {
-                        if (second.pressed)
-                            return;
-                        basemapLODSelected(first.value, second.value);
-                    }
-                }
-
-                Text {
-                    text: "(Most detail)"
-                    font {
-                        pixelSize: 12
-                    }
-                    color: "#474747"
-                }
-            }
-
-            Text {
-                id: basemapBufferLabel
-                text: "Basemap Buffer (m):"
-                anchors {
-                    top: lodRange.bottom
-                    topMargin: 32
-                    horizontalCenter: parent.horizontalCenter
-                }
-                font {
-                    pixelSize: 14
-                }
-                color: "#474747"
-            }
-
-            SpinBox {
-                id: basemapBufferSB
-                anchors {
-                    top: basemapBufferLabel.bottom
-                    topMargin: 8
-                    horizontalCenter: parent.horizontalCenter
-                }
-                from: 0
-                to: 500
-                stepSize: 50
-
-                font.pixelSize: 12
-                onValueChanged: basemapBufferChanged(value);
-            }
-
-            Button {
-                id: systemVavlesCB
-                text: "Remove System Valves"
-                anchors {
-                    top: basemapBufferSB.bottom
-                    topMargin: 32
-                    horizontalCenter: parent.horizontalCenter
-                }
-                font {
-                    pixelSize: 14
-                }
-
-                onClicked: {
-                    removeSystemValvesChanged();
-                    enabled = false;
-                }
-            }
-
-            Button {
-                id: serviceConnCB
-                text: "Remove Service Connection"
-                anchors {
-                    top: systemVavlesCB.bottom
-                    topMargin: 32
-                    horizontalCenter: parent.horizontalCenter
-                }
-                font {
-                    pixelSize: 14
-                }
-
-                onClicked: {
-                    removeServiceConnectionChanged();
-                    enabled = false;
-                }
-            }
-
-            Text {
-                id: filterLabel
-                text: "Filter Hydrants:"
-                anchors {
-                    top: serviceConnCB.bottom
-                    topMargin: 32
-                    horizontalCenter: parent.horizontalCenter
-                }
-                font {
-                    pixelSize: 14
-                }
-                color: "#474747"
-            }
-
-            ComboBox {
-                id: filterComboBox
-                anchors {
-                    top: filterLabel.bottom
-                    topMargin: 8
-                    horizontalCenter: parent.horizontalCenter
-                }
-                property int modelWidth: 0
-                width: modelWidth + leftPadding + rightPadding + (indicator ? indicator.width : 10)
-                model: [ "No filter", "FLOW < 500", "FLOW < 300", "FLOW < 100" ]
-
-                onCurrentTextChanged: {
-                    // 1=1 equivelent to select all in a WHERE clause.
-                    hydrantWhereClauseChanged(currentText === "No filter" ? "1=1"
-                                                                          : currentText)
-                }
-
-                Component.onCompleted : {
-                    for (let i = 0; i < model.length; ++i) {
-                        metrics.text = model[i];
-                        modelWidth = Math.max(modelWidth, metrics.width);
-                    }
-                }
-                TextMetrics {
-                    id: metrics
-                    font: filterComboBox.font
-                }
-            }
-
-            CheckBox {
-                id: clipCB
-                text: "Clip Water Pipes to AOI"
-                anchors {
-                    top: filterComboBox.bottom
-                    topMargin: 32
-                    horizontalCenter: parent.horizontalCenter
-                }
-                font {
-                    pixelSize: 14
-                }
-
-                checked: true
-
-                onCheckedChanged: clipWaterPipesAOIChanged(checked)
+        Label {
+            id: title
+            Layout.alignment: Qt.AlignHCenter
+            text: "Layer specific overrides"
+            font {
+                bold: true
+                underline: true
+                pixelSize: 18
             }
         }
-    }
 
-    Button {
-        id: takeOfflineButton
-        anchors.horizontalCenter: parent.horizontalCenter
-        anchors.bottom: parent.bottom
-        anchors.margins: 16
-        text: "Start Job"
-        font {
-            bold: true
-            pixelSize: 18
+        ScrollView {
+            id: scrollView
+            Layout.fillWidth: true
+            Layout.fillHeight: true
+            clip: true
+            ScrollBar.vertical.interactive: true
+            ScrollBar.vertical.policy: ScrollBar.AsNeeded
+
+            ColumnLayout {
+                width: scrollView.availableWidth
+                spacing: 16
+
+                GroupBox {
+                    Layout.fillWidth: true
+                    title: "Basemap Levels of Detail"
+                    font.pixelSize: 14
+
+                    ColumnLayout {
+                        anchors.fill: parent
+                        spacing: 8
+
+                        Label {
+                            Layout.alignment: Qt.AlignLeft
+                            text: "(Least detail)"
+                            font.pixelSize: 12
+                        }
+
+                        RangeSlider {
+                            id: lodsSlider
+                            Layout.fillWidth: true
+                            from: 0
+                            to: 24
+                            first.value: 0
+                            second.value: 23
+                            first.onPressedChanged: {
+                                if (first.pressed)
+                                    return;
+                                basemapLODSelected(first.value, second.value);
+                            }
+
+                            second.onPressedChanged: {
+                                if (second.pressed)
+                                    return;
+                                basemapLODSelected(first.value, second.value);
+                            }
+                        }
+
+                        Label {
+                            Layout.alignment: Qt.AlignRight
+                            text: "(Most detail)"
+                            font.pixelSize: 12
+                        }
+                    }
+                }
+
+                GroupBox {
+                    Layout.fillWidth: true
+                    title: "Basemap Buffer (m)"
+                    font.pixelSize: 14
+
+                    SpinBox {
+                        id: basemapBufferSB
+                        anchors.horizontalCenter: parent.horizontalCenter
+                        from: 0
+                        to: 500
+                        stepSize: 50
+                        font.pixelSize: 12
+                        onValueChanged: basemapBufferChanged(value);
+                    }
+                }
+
+                GroupBox {
+                    Layout.fillWidth: true
+                    title: "Layer Filters"
+                    font.pixelSize: 14
+
+                    ColumnLayout {
+                        anchors.fill: parent
+                        spacing: 12
+
+                        Button {
+                            id: systemVavlesCB
+                            Layout.fillWidth: true
+                            text: "Remove System Valves"
+                            font.pixelSize: 14
+
+                            onClicked: {
+                                removeSystemValvesChanged();
+                                enabled = false;
+                            }
+                        }
+
+                        Button {
+                            id: serviceConnCB
+                            Layout.fillWidth: true
+                            text: "Remove Service Connection"
+                            font.pixelSize: 14
+
+                            onClicked: {
+                                removeServiceConnectionChanged();
+                                enabled = false;
+                            }
+                        }
+                    }
+                }
+
+                GroupBox {
+                    Layout.fillWidth: true
+                    title: "Filter Hydrants"
+                    font.pixelSize: 14
+
+                    ComboBox {
+                        id: filterComboBox
+                        anchors.horizontalCenter: parent.horizontalCenter
+                        property int modelWidth: 0
+                        width: modelWidth + leftPadding + rightPadding + (indicator ? indicator.width : 10)
+                        model: [ "No filter", "FLOW < 500", "FLOW < 300", "FLOW < 100" ]
+
+                        onCurrentTextChanged: {
+                            // 1=1 equivelent to select all in a WHERE clause.
+                            hydrantWhereClauseChanged(currentText === "No filter" ? "1=1"
+                                                                                  : currentText)
+                        }
+
+                        Component.onCompleted : {
+                            for (let i = 0; i < model.length; ++i) {
+                                metrics.text = model[i];
+                                modelWidth = Math.max(modelWidth, metrics.width);
+                            }
+                        }
+                        TextMetrics {
+                            id: metrics
+                            font: filterComboBox.font
+                        }
+                    }
+                }
+
+                GroupBox {
+                    Layout.fillWidth: true
+                    title: "Clipping Options"
+                    font.pixelSize: 14
+
+                    CheckBox {
+                        id: clipCB
+                        anchors.horizontalCenter: parent.horizontalCenter
+                        text: "Clip Water Pipes to AOI"
+                        font.pixelSize: 14
+                        checked: true
+
+                        onCheckedChanged: clipWaterPipesAOIChanged(checked)
+                    }
+                }
+            }
         }
 
-        onClicked: {
-            overridesAccepted();
-            parent.visible = false;
+        Button {
+            id: takeOfflineButton
+            Layout.alignment: Qt.AlignHCenter
+            text: "Start Job"
+
+            onClicked: {
+                overridesAccepted();
+                layerColumn.visible = false;
+            }
         }
     }
 }
-

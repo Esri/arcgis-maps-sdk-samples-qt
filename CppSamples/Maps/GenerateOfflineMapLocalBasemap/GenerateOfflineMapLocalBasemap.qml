@@ -53,16 +53,26 @@ GenerateOfflineMapLocalBasemapSample {
         }
 
         // Create a button and anchor it to the attribution top
-        DownloadButton {
+        Button {
             id: downloadButton
             anchors {
                 horizontalCenter: parent.horizontalCenter
                 bottom: mapView.attributionTop
                 margins: 5
             }
+
+            text: "Download"
+            leftPadding: 20
+            rightPadding: 20
+            icon {
+                source: "qrc:/Samples/Maps/GenerateOfflineMapLocalBaseMap/download_light.png"
+                width: 24
+                height: 24
+                color: palette.text
+            }
             visible: mapLoaded
 
-            onButtonClicked: {
+            onClicked: {
                 dialog.open();
             }
         }

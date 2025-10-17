@@ -53,16 +53,26 @@ GenerateOfflineMap_OverridesSample {
         }
 
         // Create a button and anchor it to the attribution top
-        DownloadButton {
+        Button {
             id: downloadButton
             anchors {
                 horizontalCenter: parent.horizontalCenter
                 bottom: mapView.attributionTop
                 margins: 5
             }
+
+            text: "Download"
+            leftPadding: 20
+            rightPadding: 20
+            icon {
+                source: "qrc:/Samples/Maps/GenerateOfflineMap_Overrides/download_light.png"
+                width: 24
+                height: 24
+                color: palette.text
+            }
             visible: mapLoaded
 
-            onButtonClicked: {
+            onClicked: {
                 setAreaOfInterest(extentRectangle.x, extentRectangle.y, (extentRectangle.x + extentRectangle.width), (extentRectangle.y + extentRectangle.height));
             }
         }
@@ -127,5 +137,6 @@ GenerateOfflineMap_OverridesSample {
     BusyIndicator {
         anchors.centerIn: parent
         running: taskBusy
+        visible: taskBusy
     }
 }
