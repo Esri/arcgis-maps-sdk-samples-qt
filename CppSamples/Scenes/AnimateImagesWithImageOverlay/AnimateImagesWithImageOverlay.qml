@@ -40,8 +40,8 @@ Item {
             }
             width: childrenRect.width
             height: childrenRect.height
-            color: "lightgrey"
-            opacity: 0.8
+            color: palette.base
+            opacity: 0.9
             radius: 5
             ColumnLayout {
                 id: controlsLayout

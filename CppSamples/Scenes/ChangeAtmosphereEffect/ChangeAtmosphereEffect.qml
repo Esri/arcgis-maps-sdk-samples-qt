@@ -67,15 +67,14 @@ Item {
             margins: 5
         }
 
-        color: Qt.rgba(1, 1, 1, 0.3);
+        color: palette.base
         width: childrenRect.width
         height: childrenRect.height
         ColumnLayout {
             id: layout
 
-            Text {
+            Label {
                 Layout.margins: 5
-                color: "white"
                 text: "Atmosphere effects"
             }
 

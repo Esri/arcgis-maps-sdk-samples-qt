@@ -78,21 +78,21 @@ Item {
                 radius: 3
                 x: headingHandleNub.x - width / 2 + headingHandleNub.width / 2
                 y: headingHandleNub.y - height
+                color: palette.base
 
-                Text {
+                Label {
                     id: headingValue
                     font.pixelSize: 14
                     padding: 3
                     horizontalAlignment: Qt.AlignHCenter
                     verticalAlignment: Qt.AlignVCenter
                     text: Math.round(cameraHeadingSlider.value) + "\u00B0"
-                    color: "white"
                 }
             }
         }
     }
 
-    Text {
+    Label {
         id: cameraHeadingLabel
 
         anchors {
@@ -102,11 +102,10 @@ Item {
         }
 
         text: "Camera Heading"
-        color: "white"
     }
 
     //Plane pitch slider, placed in the top-right of the screen
-    Text {
+    Label {
         id: planePitchLabel
 
         anchors {
@@ -116,7 +115,6 @@ Item {
         }
 
         text: "Plane Pitch"
-        color: "white"
     }
 
     Slider {
@@ -153,15 +151,15 @@ Item {
                 radius: 3
                 x: pitchHandleNub.x - width
                 y: pitchHandleNub.y - height/2 + pitchHandleNub.height/2
+                color: palette.base
 
-                Text {
+                Label {
                     id: pitchValue
                     font.pixelSize: 14
                     padding: 3
                     horizontalAlignment: Qt.AlignHCenter
                     verticalAlignment: Qt.AlignVCenter
                     text: Math.round(planePitchSlider.value)  + "\u00B0"
-                    color: "white"
                 }
             }
         }
@@ -176,7 +174,7 @@ Item {
 
         height: childrenRect.height
         width: childrenRect.width
-        color: Qt.rgba(0.2, 0.2, 0.2, 0.65)
+        color: palette.base
 
         Column {
             spacing: 10
@@ -210,13 +208,12 @@ Item {
                     onCheckedChanged: model.allowCamDistanceInteraction = checked
                 }
 
-                Text {
+                Label {
                     id: allowCamDistanceInteractionCheckBoxText
                     anchors {
                         verticalCenter: allowCamDistanceInteractionCheckBox.verticalCenter
                     }
                     text: "Allow camera\ndistance interaction"
-                    color: "white"
                 }
             }
         }
