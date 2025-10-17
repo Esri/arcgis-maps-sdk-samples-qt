@@ -65,7 +65,7 @@ GenerateOfflineMap_OverridesSample {
             leftPadding: 20
             rightPadding: 20
             icon {
-                source: "qrc:/Samples/Maps/GenerateOfflineMap_Overrides/download_light.png"
+                source: "qrc:/Samples/Maps/GenerateOfflineMap_Overrides/download.png"
                 width: 24
                 height: 24
                 color: palette.text
