@@ -75,14 +75,14 @@ Item {
 
             Label {
                 Layout.margins: 5
-                text: "Atmosphere effects"
+                text: qsTr("Atmosphere effects")
             }
 
             Button {
                 id: noAtmosphereButton
                 Layout.margins: 5
                 Layout.fillWidth: true
-                text: "None"
+                text: qsTr("None")
                 checkable: true
             }
 
@@ -90,7 +90,7 @@ Item {
                 id: realisticAtmosphereButton
                 Layout.margins: 5
                 Layout.fillWidth: true
-                text: "Realistic"
+                text: qsTr("Realistic")
                 checkable: true
             }
 
@@ -98,7 +98,7 @@ Item {
                 id: horizonAtmosphereButton
                 Layout.margins: 5
                 Layout.fillWidth: true
-                text: "Horizon Only"
+                text: qsTr("Horizon Only")
                 checkable: true
                 checked: true
             }

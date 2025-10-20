@@ -97,14 +97,14 @@ Animate3DSymbolsSample {
                     checked: false
                     checkable: true
                     enabled: missionReady
-                    text: checked ? "pause" : "play"
+                    text: checked ? qsTr("pause") : qsTr("play")
                     Layout.fillWidth: true
                 }
 
                 Button {
                     id: followButton
                     enabled: missionReady
-                    text: checked ? "fixed" : "follow"
+                    text: checked ? qsTr("fixed") : qsTr("follow")
                     checked: true
                     checkable: true
                     onCheckedChanged: setFollowing(checked);
@@ -134,7 +134,7 @@ Animate3DSymbolsSample {
                     Layout.fillWidth: true
 
                     Label {
-                        text: "Zoom"
+                        text: qsTr("Zoom")
                         font.bold: true
                     }
                     Slider {
@@ -152,7 +152,7 @@ Animate3DSymbolsSample {
                     Layout.fillWidth: true
 
                     Label {
-                        text: "Angle"
+                        text: qsTr("Angle")
                         font.bold: true
                     }
                     Slider {
@@ -170,7 +170,7 @@ Animate3DSymbolsSample {
                     Layout.fillWidth: true
 
                     Label {
-                        text: "Progress: " + (progressSlider.value / missionSize * 100).toLocaleString(Qt.locale(), 'f', 0) + "%"
+                        text: qsTr("Progress: " + (progressSlider.value / missionSize * 100).toLocaleString(Qt.locale(), 'f', 0) + "%")
                         font.bold: true
                     }
                     Slider {
@@ -188,7 +188,7 @@ Animate3DSymbolsSample {
                     Layout.fillWidth: true
 
                     Label {
-                        text: "Speed"
+                        text: qsTr("Speed")
                         font.bold: true
                     }
                     Slider {

@@ -86,7 +86,7 @@ Item {
                     padding: 3
                     horizontalAlignment: Qt.AlignHCenter
                     verticalAlignment: Qt.AlignVCenter
-                    text: Math.round(cameraHeadingSlider.value) + "\u00B0"
+                    text: qsTr(Math.round(cameraHeadingSlider.value) + "\u00B0")
                 }
             }
         }
@@ -101,7 +101,7 @@ Item {
             bottomMargin: 10
         }
 
-        text: "Camera Heading"
+        text: qsTr("Camera Heading")
     }
 
     //Plane pitch slider, placed in the top-right of the screen
@@ -114,7 +114,7 @@ Item {
             bottomMargin: 10
         }
 
-        text: "Plane Pitch"
+        text: qsTr("Plane Pitch")
     }
 
     Slider {
@@ -159,7 +159,7 @@ Item {
                     padding: 3
                     horizontalAlignment: Qt.AlignHCenter
                     verticalAlignment: Qt.AlignVCenter
-                    text: Math.round(planePitchSlider.value)  + "\u00B0"
+                    text: qsTr(Math.round(planePitchSlider.value)  + "\u00B0")
                 }
             }
         }
@@ -180,7 +180,7 @@ Item {
             spacing: 10
             padding: 10
             Button {
-                text: "Cockpit View"
+                text: qsTr("Cockpit View")
                 onClicked: {
                     model.cockpitView();
                     allowCamDistanceInteractionCheckBox.enabled = false;
@@ -189,7 +189,7 @@ Item {
             }
 
             Button {
-                text: "Center View"
+                text: qsTr("Center View")
                 onClicked: {
                     model.centerView();
                     allowCamDistanceInteractionCheckBox.enabled = true;
@@ -213,7 +213,7 @@ Item {
                     anchors {
                         verticalCenter: allowCamDistanceInteractionCheckBox.verticalCenter
                     }
-                    text: "Allow camera\ndistance interaction"
+                    text: qsTr("Allow camera\ndistance interaction")
                 }
             }
         }

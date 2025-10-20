@@ -134,7 +134,7 @@ SetSurfacePlacementModeSample {
                             padding: 3
                             horizontalAlignment: Qt.AlignHCenter
                             verticalAlignment: Qt.AlignVCenter
-                            text: (zValueSlider.value).toFixed(0)
+                            text: qsTr((zValueSlider.value).toFixed(0))
                         }
                     }
                 }

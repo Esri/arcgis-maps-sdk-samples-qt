@@ -60,7 +60,7 @@ Item {
             scale: Math.min(1, (parent.width - padding) / contentWidth)
 
             // Display elevation value in meters, round to a single decimal place.
-            text: "Elevation : " + Math.round(model.elevation * 10) / 10 + "m"
+            text: qsTr("Elevation : " + Math.round(model.elevation * 10) / 10 + "m")
         }
     }
 

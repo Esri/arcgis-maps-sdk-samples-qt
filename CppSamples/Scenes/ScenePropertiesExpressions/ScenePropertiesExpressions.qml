@@ -56,7 +56,7 @@ Item {
             anchors {
                 margins: 5
             }
-            text: "Pitch : " + model.pitch.toFixed(0)
+            text: qsTr("Pitch : " + model.pitch.toFixed(0))
             font.pixelSize: 20
             verticalAlignment: Text.AlignTop
         }
@@ -79,7 +79,7 @@ Item {
             anchors {
                 margins: 5
             }
-            text: "Heading: " + model.heading.toFixed(0)
+            text: qsTr("Heading: " + model.heading.toFixed(0))
             verticalAlignment: Text.AlignTop
             font.pixelSize: 20
         }

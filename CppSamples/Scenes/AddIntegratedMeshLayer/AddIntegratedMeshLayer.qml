@@ -40,7 +40,7 @@ Item {
         id: errorMessageDialog
         anchors.centerIn: parent
         visible: model.errorMessage !== ""
-        title: "Error:"
+        title: qsTr("Error:")
         contentItem: Label {
             text: model.errorMessage
         }

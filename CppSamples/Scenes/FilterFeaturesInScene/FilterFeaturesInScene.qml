@@ -45,7 +45,7 @@ Item {
 
         property int step: 0
 
-        text: ["Load detailed buildings","Filter OSM buildings in extent","Reset scene"][step]
+        text: [qsTr("Load detailed buildings"),qsTr("Filter OSM buildings in extent"),qsTr("Reset scene")][step]
         onClicked: {
             switch (step) {
             case 0:
