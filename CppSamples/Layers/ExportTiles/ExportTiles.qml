@@ -49,7 +49,7 @@ ExportTilesSample {
             leftPadding: 20
             rightPadding: 20
             icon {
-                source: "qrc:/Samples/Maps/GenerateOfflineMap/download.png"
+                source: "qrc:/Samples/Layers/ExportTiles/download.png"
                 width: 24
                 height: 24
                 color: palette.text
