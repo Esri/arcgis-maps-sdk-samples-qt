@@ -61,7 +61,7 @@ GenerateOfflineMap_OverridesSample {
                 margins: 5
             }
 
-            text: "Download"
+            text: qsTr("Download")
             leftPadding: 20
             rightPadding: 20
             icon {
@@ -120,13 +120,13 @@ GenerateOfflineMap_OverridesSample {
         x: Math.round(parent.width - width) / 2
         y: Math.round(parent.height - height) / 2
         standardButtons: Dialog.Ok
-        title: "Layer Errors"
+        title: qsTr("Layer Errors")
         property alias text : textLabel.text
         property alias detailedText : detailsLabel.text
         ColumnLayout {
             Text {
                 id: textLabel
-                text: "Some layers could not be taken offline."
+                text: qsTr("Some layers could not be taken offline.")
             }
             Text {
                 id: detailsLabel

@@ -59,7 +59,7 @@ Rectangle {
 
             Label {
                 anchors.horizontalCenter: parent.horizontalCenter
-                text: "%1: %2%".arg(statusText).arg(progressText)
+                text: qsTr("%1: %2%".arg(statusText).arg(progressText))
                 font.pixelSize: 16
             }
         }

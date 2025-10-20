@@ -55,7 +55,7 @@ Rectangle {
                     id: title
                     Layout.alignment: Qt.AlignHCenter
                     Layout.bottomMargin: 8
-                    text: "Layer specific overrides"
+                    text: qsTr("Layer specific overrides")
                     font {
                         bold: true
                         underline: true
@@ -81,7 +81,7 @@ Rectangle {
                             Layout.fillWidth: true
                             Layout.leftMargin: 4
                             Layout.rightMargin: 4
-                            title: "Basemap Levels of Detail"
+                            title: qsTr("Basemap Levels of Detail")
                             font.pixelSize: 14
 
                             ColumnLayout {
@@ -90,7 +90,7 @@ Rectangle {
 
                                 Label {
                                     Layout.alignment: Qt.AlignLeft
-                                    text: "(Least detail)"
+                                    text: qsTr("(Least detail)")
                                     font.pixelSize: 11
                                 }
 
@@ -116,7 +116,7 @@ Rectangle {
 
                                 Label {
                                     Layout.alignment: Qt.AlignRight
-                                    text: "(Most detail)"
+                                    text: qsTr("(Most detail)")
                                     font.pixelSize: 11
                                 }
                             }
@@ -126,7 +126,7 @@ Rectangle {
                             Layout.fillWidth: true
                             Layout.leftMargin: 4
                             Layout.rightMargin: 4
-                            title: "Basemap Buffer (m)"
+                            title: qsTr("Basemap Buffer (m)")
                             font.pixelSize: 14
 
                             SpinBox {
@@ -144,7 +144,7 @@ Rectangle {
                             Layout.fillWidth: true
                             Layout.leftMargin: 4
                             Layout.rightMargin: 4
-                            title: "Layer Filters"
+                            title: qsTr("Layer Filters")
                             font.pixelSize: 14
 
                             ColumnLayout {
@@ -154,7 +154,7 @@ Rectangle {
                                 Button {
                                     id: systemVavlesCB
                                     Layout.fillWidth: true
-                                    text: "Remove System Valves"
+                                    text: qsTr("Remove System Valves")
                                     font.pixelSize: 13
 
                                     onClicked: {
@@ -166,7 +166,7 @@ Rectangle {
                                 Button {
                                     id: serviceConnCB
                                     Layout.fillWidth: true
-                                    text: "Remove Service Connection"
+                                    text: qsTr("Remove Service Connection")
                                     font.pixelSize: 13
 
                                     onClicked: {
@@ -181,7 +181,7 @@ Rectangle {
                             Layout.fillWidth: true
                             Layout.leftMargin: 4
                             Layout.rightMargin: 4
-                            title: "Filter Hydrants"
+                            title: qsTr("Filter Hydrants")
                             font.pixelSize: 14
 
                             ComboBox {
@@ -218,13 +218,13 @@ Rectangle {
                             Layout.fillWidth: true
                             Layout.leftMargin: 4
                             Layout.rightMargin: 4
-                            title: "Clipping Options"
+                            title: qsTr("Clipping Options")
                             font.pixelSize: 14
 
                             CheckBox {
                                 id: clipCB
                                 anchors.horizontalCenter: parent.horizontalCenter
-                                text: "Clip Water Pipes to AOI"
+                                text: qsTr("Clip Water Pipes to AOI")
                                 font.pixelSize: 13
                                 checked: true
 
@@ -238,7 +238,7 @@ Rectangle {
                     id: takeOfflineButton
                     Layout.alignment: Qt.AlignHCenter
                     Layout.topMargin: 8
-                    text: "Start Job"
+                    text: qsTr("Start Job")
                     font.pixelSize: 14
 
                     onClicked: {
