@@ -38,13 +38,12 @@ Item {
         }
         width: childrenRect.width
         height: childrenRect.height
-        color: "#000000"
-        opacity: .75
+        color: palette.base
+        opacity: .9
         radius: 5
 
         ColumnLayout {
-            Text {
-                color: "#ffffff"
+            Label {
                 text: qsTr("Current scale: 1:" + Math.round(model.currentScale))
                 Layout.fillWidth: true
                 Layout.margins: 3
