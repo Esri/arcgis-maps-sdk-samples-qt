@@ -27,10 +27,9 @@ MobileMap_SearchAndRouteSample {
 
     property bool isMapOpen: false
 
-    // make background a light gray
     Rectangle {
         anchors.fill: parent
-        color: "#E0E0E0"
+        color: palette.base
 
         // add a mapView component
         MapView {
@@ -58,7 +57,7 @@ MobileMap_SearchAndRouteSample {
                 opacity: 0.50
                 height: parent.height
                 width: 25
-                color: "#E0E0E0"
+                color: palette.base
 
                 Rectangle {
                     anchors {
@@ -67,7 +66,7 @@ MobileMap_SearchAndRouteSample {
                     }
                     width: parent.width
                     height: 100
-                    color: "#283593"
+                    color: palette.base
 
                     Image {
                         anchors.centerIn: parent
@@ -98,7 +97,7 @@ MobileMap_SearchAndRouteSample {
                 // solve route button
                 Rectangle {
                     id: routeButton
-                    color: "#E0E0E0"
+                    color: palette.button
                     height: 50
                     width: height
                     border.color: "black"
@@ -127,7 +126,7 @@ MobileMap_SearchAndRouteSample {
                 // clear graphics button
                 Rectangle {
                     id: clearButton
-                    color: "#E0E0E0"
+                    color: palette.button
                     height: 50
                     width: height
                     border.color: "black"
@@ -175,7 +174,8 @@ MobileMap_SearchAndRouteSample {
                     Rectangle {
                         width: parent.width
                         height: 100
-                        color: "#283593"
+                        color: palette.button
+                        border.color: "#4D4D4D"
 
                         // forward navigation button. Visible after first map is selected
                         Image {
@@ -197,9 +197,8 @@ MobileMap_SearchAndRouteSample {
                             }
                         }
 
-                        Text {
+                        Label {
                             anchors.centerIn: parent
-                            color: "white"
                             height: 40
                             font.pixelSize: 25
                             text: "Choose a Mobile Map Package"
@@ -219,14 +218,13 @@ MobileMap_SearchAndRouteSample {
 
                                 width: 200
                                 height: 50
-                                color: "#283593"
+                                color: palette.button
                                 radius: 2
                                 border.color: "darkgray"
 
-                                Text {
+                                Label {
                                     anchors.centerIn: parent
                                     horizontalAlignment: Text.AlignHCenter
-                                    color: "white"
                                     width: 150
                                     text: modelData
                                     elide: Text.ElideMiddle
@@ -264,7 +262,7 @@ MobileMap_SearchAndRouteSample {
                     Rectangle {
                         width: parent.width
                         height: 100
-                        color: "#283593"
+                        color: palette.button
 
                         // back button
                         Image {
@@ -306,9 +304,8 @@ MobileMap_SearchAndRouteSample {
                             }
                         }
 
-                        Text {
+                        Label {
                             anchors.centerIn: parent
-                            color: "white"
                             height: 40
                             font.pixelSize: 25
                             text: "Choose a Map"
@@ -327,14 +324,13 @@ MobileMap_SearchAndRouteSample {
                             Rectangle {
                                 width: 200
                                 height: 50
-                                color: "#283593"
+                                color: palette.button
                                 radius: 2
                                 border.color: "darkgray"
 
-                                Text {
+                                Label {
                                     anchors.centerIn: parent
                                     horizontalAlignment: Text.AlignHCenter
-                                    color: "white"
                                     width: 150
                                     text: modelData.name
                                     elide: Text.ElideMiddle

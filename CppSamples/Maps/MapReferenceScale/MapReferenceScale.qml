@@ -40,13 +40,11 @@ Item {
         }
         width: childrenRect.width
         height: childrenRect.height
-        color: "#000000"
-        opacity: .75
+        color: palette.base
         radius: 5
 
         ColumnLayout {
-            Text {
-                color: "#ffffff"
+            Label {
                 text: "Current Map Scale 1:%1".arg(Math.round(mapReferenceScaleSampleModel.currentMapScale))
                 Layout.fillWidth: true
                 Layout.margins: 3
@@ -56,8 +54,7 @@ Item {
                 }
             }
 
-            Text {
-                color: "#ffffff"
+            Label {
                 text: qsTr("Select a new reference scale")
                 Layout.fillWidth: true
                 Layout.margins: 3
@@ -78,16 +75,6 @@ Item {
                 model: ["1:500000","1:250000","1:100000","1:50000"]
                 Component.onCompleted: mapReferenceScaleSampleModel.currentMapScale = referenceScales[scales.currentIndex];
                 onActivated: mapReferenceScaleSampleModel.currentMapScale = referenceScales[scales.currentIndex];
-
-                // Add a background to the ComboBox
-                Rectangle {
-                    anchors.fill: parent
-                    radius: 10
-                    // Make the rectangle visible if a dropdown indicator exists
-                    // An indicator only exists if a theme is set
-                    visible: parent.indicator
-                    border.width: 1
-                }
             }
 
             Button {
@@ -110,13 +97,12 @@ Item {
             top: parent.top
         }
         width: childrenRect.width
-        height: childrenRect.height
-        color: "#000000"
-        opacity: .75
+        height: childrenRect.height + 8
+        color: palette.base
         radius: 5
 
         ColumnLayout {
-            Text {
+            Label {
                 text: qsTr("Apply Reference Scale")
                 horizontalAlignment: Text.AlignHCenter
                 Layout.fillWidth: true
@@ -125,7 +111,6 @@ Item {
                     weight: Font.DemiBold
                     pointSize: 10
                 }
-                color: "#ffffff"
             }
 
             Repeater {
@@ -142,13 +127,12 @@ Item {
                         checked: true
                         onCheckStateChanged: mapReferenceScaleSampleModel.featureLayerScaleSymbols(name,featureLayerBox.checked);
                     }
-                    Text {
+                    Label {
                         id: featureLayerText
                         text: name
                         height: featureLayerBox.height
                         verticalAlignment: Text.AlignVCenter
                         font.pointSize: 10
-                        color: "#ffffff"
                     }
                 }
             }

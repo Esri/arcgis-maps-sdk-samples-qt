@@ -15,6 +15,7 @@
 // [Legal]
 
 import QtQuick
+import QtQuick.Controls
 import Esri.Samples
 
 MapLoadedSample {
@@ -41,13 +42,13 @@ MapLoadedSample {
             bottom: parent.bottom
         }
         height: 30
-        color: "lightgrey"
+        color: palette.base
         border {
             width: 0.5
             color: "black"
         }
 
-        Text {
+        Label {
             anchors {
                 verticalCenter: parent.verticalCenter
                 left: parent.left
