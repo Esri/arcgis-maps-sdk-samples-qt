@@ -37,7 +37,7 @@ Item {
             implicitWidth: 300
             contentItem: Label {
                 id: customComponentText
-                text: view.calloutData.detail
+                text: qsTr(view.calloutData.detail)
                 wrapMode: Text.WordWrap
                 horizontalAlignment: Qt.AlignHCenter
                 verticalAlignment: Qt.AlignVCenter

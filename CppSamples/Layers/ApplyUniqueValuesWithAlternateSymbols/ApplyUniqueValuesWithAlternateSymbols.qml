@@ -45,7 +45,7 @@ Item {
         ColumnLayout {
             Text {
                 color: "#ffffff"
-                text: "Current scale: 1:" + Math.round(model.currentScale)
+                text: qsTr("Current scale: 1:" + Math.round(model.currentScale))
                 Layout.fillWidth: true
                 Layout.margins: 3
                 font {

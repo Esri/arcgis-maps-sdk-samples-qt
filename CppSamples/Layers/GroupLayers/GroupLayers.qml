@@ -43,7 +43,7 @@ Item {
             fill: layerVisibilityListView
             margins: -5
         }
-        color: "lightgrey"
+        color: palette.base
         border.color: "#4D4D4D"
         opacity: 0.9
         radius: 5
@@ -82,16 +82,16 @@ Item {
                 Column {
                     CheckBox {
                         id: parentBox
-                        text: name
+                        text: qsTr(name)
                         checked: layerVisible
-                        onCheckedChanged: layerVisible = checked
+                        onToggled: layerVisible = checked
                     }
 
                     Repeater {
                         model: sampleModel.getGroupLayerListModel(layerVisibilityListView.currentIndex)
                         delegate: RadioDelegate {
                             checked: index === 0
-                            text: name
+                            text: qsTr(name)
                             leftPadding: indicator.width
                             width: layerVisibilityRect.width - leftPadding
                             onCheckedChanged: layerVisible = checked
@@ -104,9 +104,9 @@ Item {
             Component {
                 id: layerDelegate
                 CheckBox {
-                    text: name
+                    text: qsTr(name)
                     checked: layerVisible
-                    onCheckedChanged: layerVisible = checked;
+                    onToggled: layerVisible = checked;
                 }
             }
         }

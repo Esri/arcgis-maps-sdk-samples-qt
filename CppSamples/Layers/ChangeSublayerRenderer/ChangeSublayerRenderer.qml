@@ -55,7 +55,7 @@ ChangeSublayerRendererSample {
             id: applyRendererButton
             width: 200
             enabled: false
-            text: "Apply Renderer"
+            text: qsTr("Apply Renderer")
             onClicked: applyRenderer();
         }
 
@@ -63,7 +63,7 @@ ChangeSublayerRendererSample {
             id: resetRendererButton
             width: 200
             enabled: false
-            text: "Reset"
+            text: qsTr("Reset")
             onClicked: resetRenderer();
         }
     }

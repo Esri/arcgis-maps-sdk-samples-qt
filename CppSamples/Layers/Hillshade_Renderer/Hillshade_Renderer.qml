@@ -41,7 +41,7 @@ Hillshade_RendererSample {
             bottom: parent.bottom
             bottomMargin: 25
         }
-        text: "Edit Renderer"
+        text: qsTr("Edit Renderer")
         onClicked: hillshadeSettings.visible = true;
     }
 

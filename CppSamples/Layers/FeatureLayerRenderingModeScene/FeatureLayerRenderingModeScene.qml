@@ -39,14 +39,14 @@ FeatureLayerRenderingModeSceneSample {
                 top: parent.top
                 margins: 5
             }
-            color: "white"
+            color: palette.base
             radius: 5
             width: 200
             height: 30
 
-            Text {
+            Label {
                 anchors.centerIn: parent
-                text: "Rendering Mode Static"
+                text: qsTr("Rendering Mode Static")
             }
         }
     }
@@ -66,14 +66,14 @@ FeatureLayerRenderingModeSceneSample {
                 top: parent.top
                 margins: 5
             }
-            color: "white"
+            color: palette.base
             radius: 5
             width: 200
             height: 30
 
-            Text {
+            Label {
                 anchors.centerIn: parent
-                text: "Rendering Mode Dynamic"
+                text: qsTr("Rendering Mode Dynamic")
             }
         }
     }
@@ -84,8 +84,8 @@ FeatureLayerRenderingModeSceneSample {
             top: parent.top
             margins: 10
         }
-        readonly property string startText: "Start Animation"
-        readonly property string stopText: "Stop Animation"
+        readonly property string startText: qsTr("Start Animation")
+        readonly property string stopText: qsTr("Stop Animation")
         text: startText
         onClicked: {
             if (text === startText) {

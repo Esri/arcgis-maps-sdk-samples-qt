@@ -43,7 +43,7 @@ QueryMapImageSublayerSample {
             fill: controlColumn
             margins: -5
         }
-        color: "#efefef"
+        color: palette.base
         radius: 5
         border {
             color: "darkgray"
@@ -62,17 +62,17 @@ QueryMapImageSublayerSample {
 
         Row {
             spacing: 5
-            Text {
+            Label {
                 id: fieldText
                 anchors.verticalCenter: parent.verticalCenter
-                text: "POP2000 >"
+                text: qsTr("POP2000 >")
             }
 
             TextField {
                 id: populationText
                 anchors.verticalCenter: parent.verticalCenter
                 width: 100
-                text: "1100000"
+                text: qsTr("1100000")
                 selectByMouse: true
                 validator: IntValidator{}
             }
@@ -80,7 +80,7 @@ QueryMapImageSublayerSample {
 
         Button {
             anchors.horizontalCenter: parent.horizontalCenter
-            text: "Query in extent"
+            text: qsTr("Query in extent")
             onClicked: query(fieldText.text + populationText.text);
         }
     }

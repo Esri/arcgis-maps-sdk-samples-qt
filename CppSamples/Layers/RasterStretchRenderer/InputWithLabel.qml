@@ -24,7 +24,7 @@ Row {
     property alias value: slider.value
     property alias label: text.text
 
-    Text {
+    Label {
         id: text
     }
 

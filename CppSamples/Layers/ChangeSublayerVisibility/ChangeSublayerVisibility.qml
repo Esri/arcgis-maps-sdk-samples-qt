@@ -56,7 +56,7 @@ ChangeSublayerVisibilitySample {
             anchors.fill: parent
             width: layerVisibilityRect.width
             height: layerVisibilityRect.height
-            color: "lightgrey"
+            color: palette.base
             opacity: .9
             radius: 5
             border {
@@ -71,9 +71,9 @@ ChangeSublayerVisibilitySample {
                     margins: 10
                 }
 
-                Text {
+                Label {
                     width: parent.width
-                    text: "Sublayers"
+                    text: qsTr("Sublayers")
                     wrapMode: Text.WordWrap
                     clip: true
                     font {
@@ -101,10 +101,10 @@ ChangeSublayerVisibilitySample {
 
                         Row {
                             spacing: 5
-                            Text {
+                            Label {
                                 anchors.verticalCenter: parent.verticalCenter
                                 width: 75
-                                text: name
+                                text: qsTr(name)
                                 wrapMode: Text.WordWrap
                                 font.pointSize: 14
                             }
@@ -113,7 +113,7 @@ ChangeSublayerVisibilitySample {
                                 anchors.verticalCenter: parent.verticalCenter
                                 checked: sublayerVisible
 
-                                onCheckedChanged: {
+                                onToggled: {
                                     sublayerVisible = checked;
                                 }
                             }

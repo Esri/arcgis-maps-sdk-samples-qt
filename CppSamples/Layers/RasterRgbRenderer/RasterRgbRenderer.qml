@@ -72,7 +72,7 @@ RasterRgbRendererSample {
         radius: 8
         height: editButton.height + 16
         width: editButton.width + 16
-        color: "lightgrey"
+        color: palette.base
         border.color: "darkgrey"
         border.width: 2
         opacity: 0.75
@@ -86,7 +86,7 @@ RasterRgbRendererSample {
             margins: 32
         }
         visible: rendererBox.width === 0
-        text: "Edit Renderer"
+        text: qsTr("Edit Renderer")
         onClicked: editingRenderer = true;
     }
 
@@ -99,7 +99,7 @@ RasterRgbRendererSample {
             bottom: parent.bottom
         }
 
-        color: "white"
+        color: palette.base
         opacity: 0.75
         width: editingRenderer ? parent.width : 0
         visible: width > 0
@@ -136,8 +136,8 @@ RasterRgbRendererSample {
                 margins: 24
             }
 
-            Text {
-                text: "Min"
+            Label {
+                text: qsTr("Min")
                 Layout.alignment: layout.labelAlignment
                 visible: selectedType === minMax
             }
@@ -154,8 +154,8 @@ RasterRgbRendererSample {
                 }
             }
 
-            Text {
-                text: "Max"
+            Label {
+                text: qsTr("Max")
                 Layout.alignment: layout.labelAlignment
                 visible: selectedType === minMax
             }
@@ -172,8 +172,8 @@ RasterRgbRendererSample {
                 }
             }
 
-            Text {
-                text: "Min"
+            Label {
+                text: qsTr("Min")
                 Layout.alignment: layout.labelAlignment
                 visible: selectedType === percentClip
             }
@@ -188,8 +188,8 @@ RasterRgbRendererSample {
                 value: from
             }
 
-            Text {
-                text: "Max"
+            Label {
+                text: qsTr("Max")
                 Layout.alignment: layout.labelAlignment
                 visible: selectedType === percentClip
             }
@@ -204,8 +204,8 @@ RasterRgbRendererSample {
                 value: to
             }
 
-            Text {
-                text: "Factor"
+            Label {
+                text: qsTr("Factor")
                 Layout.alignment: layout.labelAlignment
                 visible: selectedType === stdDeviation
             }
@@ -237,7 +237,7 @@ RasterRgbRendererSample {
         }
 
         Button {
-            text: "Render"
+            text: qsTr("Render")
             anchors {
                 top: layout.bottom
                 left: layout.left

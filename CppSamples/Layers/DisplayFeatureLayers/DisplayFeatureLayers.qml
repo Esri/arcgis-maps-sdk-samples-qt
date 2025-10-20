@@ -47,12 +47,13 @@ Item {
         }
         width: 225
         height: column.height + 10
+        color: palette.base
         border.color: "black"
         ColumnLayout {
             id: column
             anchors.centerIn: parent
-            Text {
-                text: "Feature Layer Mode"
+            Label {
+                text: qsTr("Feature Layer Mode")
             }
             ComboBox {
                 implicitWidth: layerSelectRectangle.width - 10

@@ -46,6 +46,7 @@ Item {
         radius: 10
         border.width: 1
         visible: (Qt.platform.os === "android" || Qt.platform.os === "ios") ? !popupView.visible : true
+        color: palette.base
     }
 
     PopupView {
@@ -74,7 +75,7 @@ Item {
             visible: !button.checked
             width: 200
             anchors.horizontalCenter: parent.horizontalCenter
-            text: "Draw clusters"
+            text: qsTr("Draw clusters")
             checkable: true
             onClicked: {
                 sample.drawClusters();
@@ -84,21 +85,21 @@ Item {
 
         Label {
             visible: button.checked
-            text: "Clustering properties"
+            text: qsTr("Clustering properties")
             font.pointSize: 14
             padding: 5
         }
 
         CheckBox {
             visible: button.checked
-            text: "Display Labels"
+            text: qsTr("Display Labels")
             checked: true
             onCheckedChanged: sample.displayLabels(checked);
         }
 
         Label {
             visible: button.checked
-            text: "Cluster radius: " + Math.round(clusterRadiusSlider.value);
+            text: qsTr("Cluster radius: " + Math.round(clusterRadiusSlider.value))
             font.pointSize: 14
             padding: 5
         }
@@ -114,7 +115,7 @@ Item {
 
         Label {
             visible: button.checked
-            text: "MaxScale: " + Math.round(maxScaleSlider.value)
+            text: qsTr("MaxScale: " + Math.round(maxScaleSlider.value))
             font.pointSize: 14
             padding: 5
         }
@@ -130,7 +131,7 @@ Item {
 
         Label {
             visible: button.checked
-            text: "Current map scale: " + Math.round(sample.mapScale);
+            text: qsTr("Current map scale: " + Math.round(sample.mapScale))
             font.pointSize: 14
             padding: 5
         }

@@ -34,25 +34,31 @@ Item {
         Control {
             width: 300
             background : Rectangle {
-                color: "lightgrey"
+                color: palette.base
             }
             contentItem: GridLayout {
                 columns: 2
                 Button {
                     id: backButton
                     Layout.margins: 3
-                    text: "<"
+                    text: qsTr("<")
                     enabled: !sampleModel.isTopLevel
                     flat: true
                     highlighted: pressed
                     onClicked: {
                         sampleModel.displayPreviousLevel();
                     }
+
+                    Binding {
+                        target: backButton.contentItem
+                        property: "color"
+                        value: Qt.styleHints.colorScheme === Qt.Dark ? "white" : "black"
+                    }
                 }
-                Text {
+                Label {
                     Layout.fillWidth: true
                     id: textLabel
-                    text: sampleModel.labelText
+                    text: qsTr(sampleModel.labelText)
                     wrapMode: Text.Wrap
                 }
                 ListView {
@@ -62,7 +68,7 @@ Item {
                     model: sampleModel.levelNodeNames
                     Layout.preferredHeight: contentHeight
                     delegate: Button {
-                        text: modelData
+                        text: qsTr(modelData)
                         anchors {
                             left: parent.left
                             right: parent.right

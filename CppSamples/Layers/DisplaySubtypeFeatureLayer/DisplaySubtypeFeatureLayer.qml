@@ -41,7 +41,7 @@ Item {
             }
             width: childrenRect.width
             height: childrenRect.height
-            color: "lightgrey"
+            color: palette.base
             opacity: 0.8
             radius: 5
 
@@ -99,13 +99,13 @@ Item {
                     }
                 }
 
-                Text {
+                Label {
                     text: qsTr("Current map scale: 1:%1".arg(Math.round(model.mapScale)))
                     Layout.margins: 2
                     Layout.alignment: Qt.AlignLeft
                 }
 
-                Text {
+                Label {
                     text: qsTr("Sublayer min scale: 1:%1".arg(model.sublayerMinScale > 0.0 ? Math.round(model.sublayerMinScale) : "not set"))
                     Layout.margins: 2
                     Layout.alignment: Qt.AlignLeft

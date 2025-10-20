@@ -39,7 +39,7 @@ Rectangle {
         anchors.centerIn: parent
         width: childrenRect.width
         height: childrenRect.height
-        color: "lightgrey"
+        color: palette.base
         radius: 5
         border {
             color: "#4D4D4D"
@@ -49,17 +49,17 @@ Rectangle {
         GridLayout {
             columns: 2
 
-            Text {
+            Label {
                 Layout.margins: 5
                 Layout.columnSpan: 2
                 Layout.alignment: Qt.AlignHCenter
-                text: "Hillshade Renderer Settings"
+                text: qsTr("Hillshade Renderer Settings")
                 font.weight: Font.DemiBold
             }
 
-            Text {
+            Label {
                 Layout.margins: 5
-                text: "Altitude"
+                text: qsTr("Altitude")
             }
 
             Slider {
@@ -70,9 +70,9 @@ Rectangle {
                 to: 90
             }
 
-            Text {
+            Label {
                 Layout.margins: 5
-                text: "Azimuth"
+                text: qsTr("Azimuth")
             }
 
             Slider {
@@ -82,9 +82,9 @@ Rectangle {
                 to: 360
             }
 
-            Text {
+            Label {
                 Layout.margins: 5
-                text: "Slope"
+                text: qsTr("Slope")
             }
 
             ComboBox {
@@ -112,7 +112,7 @@ Rectangle {
                 Layout.margins: 5
                 Layout.columnSpan: 2
                 Layout.alignment: Qt.AlignHCenter
-                text: "Apply"
+                text: qsTr("Apply")
                 onClicked: {
                     const altitude = altitudeSlider.value;
                     const azimuth = azimuthSlider.value;

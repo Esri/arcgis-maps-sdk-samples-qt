@@ -70,6 +70,7 @@ Item {
         }
         height: Math.max(parent.height * 0.08, 50)
         border.width: 1
+        color: palette.base
 
         MouseArea {
             anchors.fill: parent
@@ -89,12 +90,7 @@ Item {
             anchors.horizontalCenter: parent.horizontalCenter
             anchors.verticalCenter: parent.verticalCenter
             onClicked: settingsPopup.opened ? settingsPopup.close() : settingsPopup.open()
-            contentItem: Text {
-                text: qsTr("Display Settings")
-                color: "black"
-                horizontalAlignment: Text.AlignHCenter
-                verticalAlignment: Text.AlignVCenter
-            }
+            text: qsTr("Display Settings")
         }
     }
 }

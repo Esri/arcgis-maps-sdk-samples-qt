@@ -52,7 +52,7 @@ BlendRasterLayerSample {
         radius: 8
         height: editButton.height + (16)
         width: editButton.width + (16)
-        color: "lightgrey"
+        color: palette.base
         border.color: "darkgrey"
         border.width: 2
         opacity: 0.75
@@ -66,7 +66,7 @@ BlendRasterLayerSample {
             margins: 32
         }
         visible: rendererBox.width === 0
-        text: "Edit Renderer"
+        text: qsTr("Edit Renderer")
         onClicked: editingRenderer = true;
     }
 
@@ -79,7 +79,7 @@ BlendRasterLayerSample {
             bottom: parent.bottom
         }
 
-        color: "white"
+        color: palette.base
         opacity: 0.75
         width: editingRenderer ? parent.width : 0
 
@@ -91,8 +91,8 @@ BlendRasterLayerSample {
 
             columns: 2
 
-            Text {
-                text: "altitude"
+            Label {
+                text: qsTr("altitude")
             }
 
             SpinBox {
@@ -108,8 +108,8 @@ BlendRasterLayerSample {
                 }
             }
 
-            Text {
-                text: "azimuth"
+            Label {
+                text: qsTr("azimuth")
             }
 
             SpinBox {
@@ -125,8 +125,8 @@ BlendRasterLayerSample {
                 }
             }
 
-            Text {
-                text: "slope type"
+            Label {
+                text: qsTr("slope type")
             }
 
             ComboBox {
@@ -148,8 +148,8 @@ BlendRasterLayerSample {
                 }
             }
 
-            Text {
-                text: "color ramp"
+            Label {
+                text: qsTr("color ramp")
             }
 
             ComboBox {
@@ -172,7 +172,7 @@ BlendRasterLayerSample {
             }
 
             Button {
-                text: "Render"
+                text: qsTr("Render")
                 Layout.columnSpan: 2
                 Layout.alignment: Qt.AlignHCenter
                 onClicked: {
