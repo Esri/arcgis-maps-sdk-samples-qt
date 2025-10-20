@@ -64,14 +64,14 @@ Item {
             }
         }
 
-        Label{
+        Label {
             id: messageText
             anchors {
                 verticalCenter: messageImage.verticalCenter
                 margins: 5
             }
 
-            text: "Message Received"
+            text: qsTr("Message Received")
             font.pixelSize: 13
         }
     }
