@@ -34,7 +34,7 @@ ComboBox {
                 Layout.preferredHeight: 20
             }
             Label {
-                text: name
+                text: qsTr(name)
                 Layout.preferredWidth: cboDelegate.width - img.width
                 elide: Text.ElideRight
             }

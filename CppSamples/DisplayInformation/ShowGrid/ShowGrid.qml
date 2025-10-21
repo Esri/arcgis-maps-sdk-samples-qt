@@ -70,18 +70,17 @@ Item {
             width: 100
             height: 30
 
-            color: selected ? "#959595" : "#D6D6D6"
+            color: selected ? palette.highlight : palette.base
             radius: 8
             border {
-                color: selected ? "#7938b6" : "#585858"
+                color: selected ? palette.base : palette.highlight
                 width: selected ? 2 : 1
             }
 
-            Text {
+            Label {
                 anchors.centerIn: parent
-                text: "Map View"
+                text: qsTr("Map View")
                 font.pixelSize: 14
-                color: "#474747"
             }
 
             MouseArea {
@@ -100,18 +99,17 @@ Item {
             width: 100
             height: 30
 
-            color: selected ? "#959595" : "#D6D6D6"
+            color: selected ? palette.highlight : palette.base
             radius: 8
             border {
-                color: selected ? "#7938b6" : "#585858"
+                color: selected ? palette.base : palette.highlight
                 width: selected ? 2 : 1
             }
 
-            Text {
+            Label {
                 anchors.centerIn: parent
-                text: "Scene View"
+                text: qsTr("Scene View")
                 font.pixelSize: 14
-                color: "#474747"
             }
 
             MouseArea {
@@ -141,18 +139,17 @@ Item {
 
         width: 150
         height: 30
-        color: pressed ? "#959595" : "#D6D6D6"
+        color: pressed ? palette.highlight : palette.base
         radius: 8
         border {
             color: "#585858"
             width: 1
         }
 
-        Text {
+        Label {
             anchors.centerIn: parent
-            text: "Change grid style"
+            text: qsTr("Change grid style")
             font.pixelSize: 14
-            color: "#474747"
         }
 
         MouseArea {
@@ -193,7 +190,7 @@ Item {
         height: childrenRect.height
         width: childrenRect.width
 
-        color: "lightgray"
+        color: palette.base
         radius: 4
         border {
             color: "black"
@@ -214,9 +211,9 @@ Item {
             id: grid
             columns: 2
 
-            Text {
+            Label {
                 Layout.leftMargin: 10
-                text: "Grid type"
+                text: qsTr("Grid type")
             }
 
             ComboBox {
@@ -247,9 +244,9 @@ Item {
                 }
             }
 
-            Text {
+            Label {
                 Layout.leftMargin: 10
-                text: "Grid visible"
+                text: qsTr("Grid visible")
             }
 
             Switch {
@@ -260,10 +257,10 @@ Item {
             }
 
             Text {
-                text: "Labels visible"
+                text: qsTr("Labels visible")
                 Layout.leftMargin: 10
                 enabled: gridVisibleSwitch.checked
-                color: enabled ? "black" : "gray"
+                color: enabled ? palette.text : "gray"
             }
 
             Switch {
@@ -274,9 +271,9 @@ Item {
                 onCheckedChanged: gridSample.setLabelsVisible(checked);
             }
 
-            Text {
+            Label {
                 Layout.leftMargin: 10
-                text: "Grid color"
+                text: qsTr("Grid color")
             }
 
             ComboBox {
@@ -299,9 +296,9 @@ Item {
                 }
             }
 
-            Text {
+            Label {
                 Layout.leftMargin: 10
-                text: "Label color"
+                text: qsTr("Label color")
             }
 
             ComboBox {
@@ -324,11 +321,11 @@ Item {
                 }
             }
 
-            Text {
+            Label {
                 Layout.leftMargin: 10
-                text: "Label position"
+                text: qsTr("Label position")
                 enabled: positionCombo.enabled
-                color: enabled ? "black"  : "gray"
+                color: enabled ? palette.text  : "gray"
             }
 
             ComboBox {
@@ -351,11 +348,11 @@ Item {
                 }
             }
 
-            Text {
+            Label {
                 Layout.leftMargin: 10
-                text: "Label format"
+                text: qsTr("Label format")
                 enabled: formatCombo.enabled
-                color: enabled ? "black"  : "gray"
+                color: enabled ? palette.text  : "gray"
             }
 
             ComboBox {
@@ -379,11 +376,11 @@ Item {
                 }
             }
 
-            Text {
+            Label {
                 Layout.leftMargin: 10
-                text: "Label offset"
+                text: qsTr("Label offset")
                 enabled: offsetSlider.enabled
-                color: enabled ? "black"  : "gray"
+                color: enabled ? palette.text  : "gray"
             }
 
             Slider {
@@ -406,13 +403,13 @@ Item {
                     implicitWidth: 26
                     implicitHeight: 26
 
-                    color: offsetSlider.enabled ? "white" : "lightgrey"
+                    color: offsetSlider.enabled ? palette.highlight : "gray"
                     border.color: "gray"
-                    Text {
+                    Label {
                         anchors.centerIn: parent
-                        text: offsetSlider.value.toFixed(0)
+                        text: qsTr(offsetSlider.value.toFixed(0))
                         font.pixelSize: 14
-                        color: offsetSlider.enabled ? "black" : "gray"
+                        color: offsetSlider.enabled ? palette.text : "gray"
                         onWidthChanged: {
                             parent.width = Math.max(width + 10, 26)
                         }
@@ -430,18 +427,17 @@ Item {
 
                 width: 150
                 height: 30
-                color: pressed ? "#959595" : "#D6D6D6"
+                color: pressed ? palette.highlight : palette.base
                 radius: 8
                 border {
                     color: "#585858"
                     width: 1
                 }
 
-                Text {
+                Label {
                     anchors.centerIn: parent
-                    text: "Hide window"
+                    text: qsTr("Hide window")
                     font.pixelSize: 14
-                    color: "#474747"
                 }
 
                 MouseArea {

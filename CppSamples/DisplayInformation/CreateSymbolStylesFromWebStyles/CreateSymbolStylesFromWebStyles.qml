@@ -47,7 +47,7 @@ Item {
         }
         height: 545
         width: 175
-        color: "lightgrey"
+        color: palette.base
         opacity: 0.9
         clip: true
         border {
@@ -72,7 +72,7 @@ Item {
             Row {
                 spacing: 55
 
-                Text {
+                Label {
                     text: qsTr("Legend")
                     font {
                         pixelSize: 18
@@ -108,11 +108,11 @@ Item {
                             source: symbolUrl
                         }
 
-                        Text {
+                        Label {
                             id: symbolText
                             anchors.verticalCenter: parent.verticalCenter
                             width: 110
-                            text: name
+                            text: qsTr(name)
                             wrapMode: Text.Wrap
                             font.pixelSize: 12
                         }
