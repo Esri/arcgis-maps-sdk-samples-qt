@@ -50,7 +50,7 @@ SearchDictionarySymbolStyleSample {
                 Rectangle {
                     width: parent.width
                     height: childrenRect.height
-                    color: "lightgrey"
+                    color: palette.base
                     border.color: "darkgrey"
                     radius: 2
                     clip: true
@@ -63,8 +63,8 @@ SearchDictionarySymbolStyleSample {
                         }
                         columns: 3
                         rowSpacing: 0
-                        Text {
-                            text: repeaterModel[index]
+                        Label {
+                            text: qsTr(repeaterModel[index])
                             font.bold: true
                             verticalAlignment: Text.AlignVCenter
                             horizontalAlignment: Text.AlignLeft
@@ -112,7 +112,7 @@ SearchDictionarySymbolStyleSample {
                             Layout.fillWidth: true
                             Layout.column: 1
                             Layout.row: 1
-                            text: searchParamList[index].length > 0 ? searchParamList[index].join() : ""
+                            text: qsTr(searchParamList[index].length > 0 ? searchParamList[index].join() : "")
                         }
 
                         Rectangle {
@@ -145,31 +145,20 @@ SearchDictionarySymbolStyleSample {
             spacing: 10
 
             Button {
-                id: seachBtn
-                width: childrenRect.width
-                Image {
-                    id: searchImage
-                    anchors {
-                        top: parent.top
-                        bottom: parent.bottom
-                        margins: 3
-                    }
+                id: searchBtn
+                icon {
                     source: "qrc:/Samples/Search/SearchDictionarySymbolStyle/ic_menu_find_light.png"
+                    width: 24
+                    height: 24
+                    color: palette.buttonText
                 }
 
-                Text {
-                    anchors {
-                        left: searchImage.right
-                        verticalCenter: parent.verticalCenter
-                        margins: 3
-                    }
-                    text: searchParamList[0].length === 0 &&
-                          searchParamList[1].length === 0 &&
-                          searchParamList[2].length === 0 &&
-                          searchParamList[3].length === 0 &&
-                          searchParamList[4].length === 0 ?
-                              "List All" : "Search"
-                }
+                text: searchParamList[0].length === 0 &&
+                      searchParamList[1].length === 0 &&
+                      searchParamList[2].length === 0 &&
+                      searchParamList[3].length === 0 &&
+                      searchParamList[4].length === 0 ?
+                          qsTr("List All") : qsTr("Search")
 
                 onClicked: {
                     //start the search
@@ -184,7 +173,8 @@ SearchDictionarySymbolStyleSample {
             }
 
             Button {
-                text: "Clear"
+                text: qsTr("Clear")
+                height: searchBtn.height
                 onClicked: {
                     //Set the results visibility to false
                     resultView.visible = false;
@@ -197,6 +187,7 @@ SearchDictionarySymbolStyleSample {
                 id: hideSearch
                 checked: false
                 checkable: true
+                height: searchBtn.height
                 Image {
                     anchors {
                         top: parent.top
@@ -210,10 +201,10 @@ SearchDictionarySymbolStyleSample {
             }
         }
 
-        Text {
+        Label {
             id: resultText
             visible: resultView.visible
-            text: "Result(s) found: " + resultView.count
+            text: qsTr("Result(s) found: " + resultView.count)
             font.pixelSize: fontSize
         }
 
@@ -221,6 +212,7 @@ SearchDictionarySymbolStyleSample {
             id: bottomRectangle
             Layout.fillHeight: true
             Layout.fillWidth: true
+            color: palette.base
 
             //Listview of results returned from Dictionary
             ListView {
@@ -250,7 +242,7 @@ SearchDictionarySymbolStyleSample {
                             width: parent.width
                             spacing: 10
 
-                            Text {
+                            Label {
                                 id: nameText
                                 text: "<b>Name:</b> " + name
                                 font.pixelSize: fontSize
@@ -258,28 +250,28 @@ SearchDictionarySymbolStyleSample {
                                 wrapMode: Text.WrapAtWordBoundaryOrAnywhere
                             }
 
-                            Text {
+                            Label {
                                 text: "<b>Tags:</b> " + tags
                                 font.pixelSize: fontSize
                                 width: nameText.width
                                 wrapMode: Text.WrapAtWordBoundaryOrAnywhere
                             }
 
-                            Text {
+                            Label {
                                 text: "<b>SymbolClass:</b> " + symbolClass
                                 font.pixelSize: fontSize
                                 width: nameText.width
                                 wrapMode: Text.WrapAtWordBoundaryOrAnywhere
                             }
 
-                            Text {
+                            Label {
                                 text: "<b>Category:</b> " + category
                                 font.pixelSize: fontSize
                                 width: nameText.width
                                 wrapMode: Text.WrapAtWordBoundaryOrAnywhere
                             }
 
-                            Text {
+                            Label {
                                 text: "<b>Key:</b> " + key
                                 font.pixelSize: fontSize
                                 width: nameText.width
@@ -294,10 +286,10 @@ SearchDictionarySymbolStyleSample {
 
     //Search completed
     onSearchCompleted: count => {
-        seachBtn.enabled = true;
-        resultView.visible = true;
+                           searchBtn.enabled = true;
+                           resultView.visible = true;
 
-        //Update the number of results retuned
-        resultText.text = "Result(s) found: " + count
-    }
+                           //Update the number of results retuned
+                           resultText.text = "Result(s) found: " + count
+                       }
 }

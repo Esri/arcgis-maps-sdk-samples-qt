@@ -61,7 +61,7 @@ OfflineGeocodeSample {
             }
             height: childrenRect.height
 
-            color: "#f7f8fa"
+            color: palette.base
             border {
                 color: "#7B7C7D"
                 width: 1
@@ -79,7 +79,7 @@ OfflineGeocodeSample {
                     leftPadding: 5
                     selectByMouse: true
 
-                    placeholderText: "Enter an Address"
+                    placeholderText: qsTr("Enter an Address")
 
                     // set the SuggestListModel searchText whenever text is changed
                     onTextChanged: {
@@ -94,7 +94,7 @@ OfflineGeocodeSample {
 
                     // initial text
                     Component.onCompleted: {
-                        text = "910 N Harbor Dr, San Diego, CA 92101";
+                        text = qsTr("910 N Harbor Dr, San Diego, CA 92101")
                         suggestionRect.visible = false;
                     }
                 }
@@ -104,12 +104,15 @@ OfflineGeocodeSample {
                     Layout.margins: 5
                     width: height
                     height: textField.contentHeight
-                    color: "#f7f8fa"
+                    color: "transparent"
                     radius: 2
 
                     Image {
                         anchors.fill: parent
-                        source: suggestionRect.visible ? "qrc:/Samples/Search/OfflineGeocode/ic_menu_closeclear_light_d.png" : "qrc:/Samples/Search/OfflineGeocode/ic_menu_collapsedencircled_light_d.png"
+                        source: suggestionRect.visible ? Qt.application.styleHints.colorScheme === Qt.ColorScheme.Dark ?
+                                                             "qrc:/Samples/Search/OfflineGeocode/ic_menu_closeclear_d.png" : "qrc:/Samples/Search/OfflineGeocode/ic_menu_closeclear_light_d.png"
+                        : Qt.application.styleHints.colorScheme === Qt.ColorScheme.Dark ?
+                        "qrc:/Samples/Search/OfflineGeocode/ic_menu_collapsedencircled_d.png" : "qrc:/Samples/Search/OfflineGeocode/ic_menu_collapsedencircled_light_d.png"
 
                         MouseArea {
                             anchors.fill: parent
@@ -126,7 +129,7 @@ OfflineGeocodeSample {
             id: suggestionRect
             width: addressSearchRect.width
             height: 20 * suggestView.count
-            color: "#f7f8fa"
+            color: palette.base
             opacity: 0.85
             visible: false
 
@@ -139,10 +142,10 @@ OfflineGeocodeSample {
                     Rectangle {
                         width: addressSearchRect.width
                         height: 20
-                        color: "#f7f8fa"
+                        color: palette.mid
                         border.color: "darkgray"
 
-                        Text {
+                        Label {
                             anchors {
                                 verticalCenter: parent.verticalCenter
                                 margins: 10
@@ -153,10 +156,9 @@ OfflineGeocodeSample {
                                 pixelSize: 12
                             }
 
-                            text: label
+                            text: qsTr(label)
                             elide: Text.ElideRight
                             leftPadding: 5
-                            color: "black"
                         }
 
                         // when user clicks suggestion, geocode with the selected address
@@ -185,15 +187,15 @@ OfflineGeocodeSample {
         anchors.centerIn: parent
         height: 50
         width: 200
-        color: "#f7f8fa"
+        color: palette.base
         visible: offlineGeocodeSample.noResults
         radius: 2
         opacity: 0.85
         border.color: "black"
 
-        Text {
+        Label {
             anchors.centerIn: parent
-            text: "No matching address"
+            text: qsTr("No matching address")
             font.pixelSize: 18
         }
     }
@@ -215,17 +217,17 @@ OfflineGeocodeSample {
         y: Math.round(parent.height - height) / 2
         standardButtons: Dialog.Ok
         visible: text.length > 0
-        title: "Error"
+        title: qsTr("Error")
         property alias text : textLabel.text
         property alias informativeText : detailsLabel.text
         ColumnLayout {
-            Text {
+            Label {
                 id: textLabel
-                text: errorMessage
+                text: qsTr(errorMessage)
             }
-            Text {
+            Label {
                 id: detailsLabel
-                text: "please consult README.md"
+                text: qsTr("please consult README.md")
             }
         }
     }

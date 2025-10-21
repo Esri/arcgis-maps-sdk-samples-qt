@@ -65,7 +65,7 @@ FindAddressSample {
             margins: 10
         }
         Rectangle {
-            color: "#f7f8fa"
+            color: palette.base
             border {
                 color: "#7B7C7D"
             }
@@ -81,7 +81,7 @@ FindAddressSample {
                     Layout.fillWidth: true
                     id: textField
                     font.pixelSize: 14
-                    placeholderText: "Type in an address"
+                    placeholderText: qsTr("Type in an address")
                     selectByMouse: true
 
                     Keys.onEnterPressed: geocodeAddress();
@@ -98,12 +98,12 @@ FindAddressSample {
                     Layout.margins: 5
                     width: height
                     height: textField.height
-                    color: "#f7f8fa"
+                    color: palette.base
                     visible: textField.length === 0
                     enabled: visible
                     Image {
                         anchors.fill: parent
-                        source: "qrc:/Samples/Search/FindAddress/ic_menu_collapsedencircled_light_d.png"
+                        source: Qt.application.styleHints.colorScheme === Qt.ColorScheme.Dark ? "qrc:/Samples/Search/FindAddress/ic_menu_collapsedencircled_d.png" : "qrc:/Samples/Search/FindAddress/ic_menu_collapsedencircled_light_d.png"
                         MouseArea {
                             anchors.fill: parent
                             onClicked: {
@@ -123,7 +123,7 @@ FindAddressSample {
                     enabled: visible
                     Image {
                         anchors.fill: parent
-                        source: "qrc:/Samples/Search/FindAddress/ic_menu_closeclear_light_d.png"
+                        source: Qt.application.styleHints.colorScheme === Qt.ColorScheme.Dark ? "qrc:/Samples/Search/FindAddress/ic_menu_closeclear_d.png" : "qrc:/Samples/Search/FindAddress/ic_menu_closeclear_light_d.png"
 
                         MouseArea {
                             anchors.fill: parent
@@ -152,7 +152,7 @@ FindAddressSample {
                     id: rect
                     width: parent.width
                     height: 25
-                    color: "#f7f8fa"
+                    color: palette.base
 
                     Rectangle {
                         anchors {
@@ -163,12 +163,12 @@ FindAddressSample {
                             leftMargin: 20
                             rightMargin: 20
                         }
-                        color: "darkgrey"
+                        color: palette.mid
                         height: 1
                     }
 
-                    Text {
-                        text: name
+                    Label {
+                        text: qsTr(name)
                         anchors {
                             fill: parent
                             leftMargin: 5
