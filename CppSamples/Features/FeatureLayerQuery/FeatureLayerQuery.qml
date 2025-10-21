@@ -49,9 +49,10 @@ FeatureLayerQuerySample {
 
         TextField {
             id: findText
+            color: palette.text
 
             width: parent.width * 0.25
-            placeholderText: "Enter a state name to select"
+            placeholderText: qsTr("Enter a state name to select")
             inputMethodHints: Qt.ImhNoPredictiveText
             selectByMouse: true
             validator: RegularExpressionValidator{ regularExpression: /^[a-zA-Z ]*$/ }
@@ -62,7 +63,7 @@ FeatureLayerQuerySample {
         }
 
         Button {
-            text: "Find and Select"
+            text: qsTr("Find and Select")
             enabled: featureLayerQuerySample.layerInitialized
             onClicked: {
                 // Call C++ invokable function to run the query
@@ -78,9 +79,9 @@ FeatureLayerQuerySample {
         y: Math.round(parent.height - height) / 2
         standardButtons: Dialog.Ok
         property alias text : textLabel.text
-        Text {
+        Label {
             id: textLabel
-            text: "No state named " + findText.text.toUpperCase() + " exists."
+            text: qsTr("No state named " + findText.text.toUpperCase() + " exists.")
         }
     }
 

@@ -38,13 +38,13 @@ GenerateGeodatabaseReplicaFromFeatureServiceSample {
     }
 
     onHideWindow: (time, success) => {
-        generateWindow.hideWindow(time);
+                      generateWindow.hideWindow(time);
 
-        if (success) {
-            extentRectangle.visible = false;
-            downloadButton.visible = false;
-        }
-    }
+                      if (success) {
+                          extentRectangle.visible = false;
+                          downloadButton.visible = false;
+                      }
+                  }
 
     onUpdateStatus: status => statusText = status;
 
@@ -61,49 +61,28 @@ GenerateGeodatabaseReplicaFromFeatureServiceSample {
     }
 
     // Create the download button to generate geodatabase
-    Rectangle {
+    Button {
         id: downloadButton
-        property bool pressed: false
         anchors {
             horizontalCenter: parent.horizontalCenter
             bottom: parent.bottom
-            bottomMargin: 23
+            margins: 23
         }
 
-        width: 200
-        height: 35
-        color: pressed ? "#959595" : "#D6D6D6"
-        radius: 8
-        border {
-            color: "#585858"
-            width: 1
+        text: qsTr("Download")
+        leftPadding: 20
+        rightPadding: 20
+        icon {
+            source: "qrc:/Samples/Features/GenerateGeodatabaseReplicaFromFeatureService/download.png"
+            width: 24
+            height: 24
+            color: palette.text
         }
+        visible: mapLoaded
 
-        Row {
-            anchors.fill: parent
-            spacing: 5
-            Image {
-                width: 38
-                height: width
-                source: "qrc:/Samples/Features/GenerateGeodatabaseReplicaFromFeatureService/download.png"
-            }
-
-            Text {
-                anchors.verticalCenter: parent.verticalCenter
-                text: "Generate Geodatabase"
-                font.pixelSize: 14
-                color: "#474747"
-            }
-        }
-
-        MouseArea {
-            anchors.fill: parent
-            onPressed: downloadButton.pressed = true
-            onReleased: downloadButton.pressed = false
-            onClicked: {
-                generateSample.generateGeodatabaseFromCorners(extentRectangle.x, extentRectangle.y, (extentRectangle.x + extentRectangle.width), (extentRectangle.y + extentRectangle.height));
-                generateWindow.visible = true;
-            }
+        onClicked: {
+            generateSample.generateGeodatabaseFromCorners(extentRectangle.x, extentRectangle.y, (extentRectangle.x + extentRectangle.width), (extentRectangle.y + extentRectangle.height));
+            generateWindow.visible = true;
         }
     }
 
@@ -130,7 +109,7 @@ GenerateGeodatabaseReplicaFromFeatureServiceSample {
             anchors.centerIn: parent
             width: 125
             height: 100
-            color: "lightgrey"
+            color: palette.base
             opacity: 0.8
             radius: 5
             border {
@@ -149,9 +128,9 @@ GenerateGeodatabaseReplicaFromFeatureServiceSample {
                     anchors.horizontalCenter: parent.horizontalCenter
                 }
 
-                Text {
+                Label {
                     anchors.horizontalCenter: parent.horizontalCenter
-                    text: statusText
+                    text: qsTr(statusText)
                     font.pixelSize: 16
                 }
             }
