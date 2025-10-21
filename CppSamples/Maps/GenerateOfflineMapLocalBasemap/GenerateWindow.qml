@@ -38,7 +38,7 @@ Rectangle {
         anchors.centerIn: parent
         width: 135
         height: 100
-        color: "lightgrey"
+        color: palette.base
         opacity: 0.8
         radius: 5
         border {
@@ -57,9 +57,9 @@ Rectangle {
                 anchors.horizontalCenter: parent.horizontalCenter
             }
 
-            Text {
+            Label {
                 anchors.horizontalCenter: parent.horizontalCenter
-                text: "%1: %2%".arg(statusText).arg(progressText)
+                text: qsTr("%1: %2%".arg(statusText).arg(progressText))
                 font.pixelSize: 16
             }
         }

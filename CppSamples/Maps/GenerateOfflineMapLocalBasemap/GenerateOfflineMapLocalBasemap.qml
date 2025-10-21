@@ -53,16 +53,26 @@ GenerateOfflineMapLocalBasemapSample {
         }
 
         // Create a button and anchor it to the attribution top
-        DownloadButton {
+        Button {
             id: downloadButton
             anchors {
                 horizontalCenter: parent.horizontalCenter
                 bottom: mapView.attributionTop
                 margins: 5
             }
+
+            text: qsTr("Download")
+            leftPadding: 20
+            rightPadding: 20
+            icon {
+                source: "qrc:/Samples/Maps/GenerateOfflineMapLocalBaseMap/download_light.png"
+                width: 24
+                height: 24
+                color: palette.text
+            }
             visible: mapLoaded
 
-            onButtonClicked: {
+            onClicked: {
                 dialog.open();
             }
         }
@@ -93,13 +103,13 @@ GenerateOfflineMapLocalBasemapSample {
         x: Math.round(parent.width - width) / 2
         y: Math.round(parent.height - height) / 2
         standardButtons: Dialog.Ok
-        title: "Layer Errors"
+        title: qsTr("Layer Errors")
         property alias text : textLabel.text
         property alias detailedText : detailsLabel.text
         ColumnLayout {
             Text {
                 id: textLabel
-                text: "Some layers could not be taken offline."
+                text: qsTr("Some layers could not be taken offline.")
             }
             Text {
                 id: detailsLabel
@@ -116,16 +126,16 @@ GenerateOfflineMapLocalBasemapSample {
             spacing: 2
             width: parent.width
 
-            Text {
+            Label {
                 width: parent.width
                 horizontalAlignment: Text.AlignHCenter
                 wrapMode: Text.Wrap
-                text: "This web map references a local basemap with the name 'naperville_imagery.tpkx'.\nYou can use the basemap already on disk or download the basemap again"
+                text: qsTr("This web map references a local basemap with the name 'naperville_imagery.tpkx'.\nYou can use the basemap already on disk or download the basemap again")
             }
 
             Button {
                 anchors.horizontalCenter: parent.horizontalCenter
-                text: "Use Local Basemap"
+                text: qsTr("Use Local Basemap")
                 onClicked: {
                     useLocalBasemap = true;
                     generateMapByExtent(extentRectangle.x, extentRectangle.y, (extentRectangle.x + extentRectangle.width), (extentRectangle.y + extentRectangle.height));
@@ -136,7 +146,7 @@ GenerateOfflineMapLocalBasemapSample {
 
             Button {
                 anchors.horizontalCenter: parent.horizontalCenter
-                text: "Download Basemap"
+                text: qsTr("Download Basemap")
                 onClicked: {
                     useLocalBasemap = false;
                     generateMapByExtent(extentRectangle.x, extentRectangle.y, (extentRectangle.x + extentRectangle.width), (extentRectangle.y + extentRectangle.height));
@@ -147,7 +157,7 @@ GenerateOfflineMapLocalBasemapSample {
 
             Button {
                 anchors.horizontalCenter: parent.horizontalCenter
-                text: "Cancel"
+                text: qsTr("Cancel")
                 onClicked: dialog.close()
             }
         }

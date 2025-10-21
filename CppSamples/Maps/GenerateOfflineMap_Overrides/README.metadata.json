@@ -45,7 +45,6 @@
     "snippets": [
         "GenerateOfflineMap_Overrides.cpp",
         "GenerateOfflineMap_Overrides.h",
-        "DownloadButton.qml",
         "GenerateWindow.qml",
         "OverridesWindow.qml",
         "GenerateOfflineMap_Overrides.qml"

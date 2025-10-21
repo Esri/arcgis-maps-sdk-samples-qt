@@ -53,16 +53,26 @@ GenerateOfflineMapSample {
         }
 
         // Create a button and anchor it to the attribution top
-        DownloadButton {
+        Button {
             id: downloadButton
             anchors {
                 horizontalCenter: parent.horizontalCenter
                 bottom: mapView.attributionTop
                 margins: 5
             }
+
+            text: qsTr("Download")
+            leftPadding: 20
+            rightPadding: 20
+            icon {
+                source: "qrc:/Samples/Maps/GenerateOfflineMap/download.png"
+                width: 24
+                height: 24
+                color: palette.text
+            }
             visible: mapLoaded
 
-            onButtonClicked: {
+            onClicked: {
                 generateMapByExtent(extentRectangle.x, extentRectangle.y, (extentRectangle.x + extentRectangle.width), (extentRectangle.y + extentRectangle.height));
                 generateWindow.visible = true;
             }
@@ -94,15 +104,15 @@ GenerateOfflineMapSample {
         x: Math.round(parent.width - width) / 2
         y: Math.round(parent.height - height) / 2
         standardButtons: Dialog.Ok
-        title: "Layer Errors"
+        title: qsTr("Layer Errors")
         property alias text : textLabel.text
         property alias detailedText : detailsLabel.text
         ColumnLayout {
-            Text {
+            Label {
                 id: textLabel
-                text: "Some layers could not be taken offline."
+                text: qsTr("Some layers could not be taken offline.")
             }
-            Text {
+            Label {
                 id: detailsLabel
             }
         }
