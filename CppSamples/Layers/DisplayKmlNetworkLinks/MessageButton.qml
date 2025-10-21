@@ -24,6 +24,7 @@ Item {
     Rectangle {
         anchors.fill: messageContents
         radius: 4
+        color: palette.base
 
         border {
             color: "darkgray"
@@ -51,7 +52,7 @@ Item {
             id: messageImage
             width: 32
             height: 32
-            source: "qrc:/Samples/Layers/DisplayKmlNetworkLinks/iOS8_TabBar_Email90.png"
+            source: Qt.application.styleHints.colorScheme === Qt.ColorScheme.Dark ? "qrc:/Samples/Layers/DisplayKmlNetworkLinks/iOS8_TabBar_Email90_light.png" : "qrc:/Samples/Layers/DisplayKmlNetworkLinks/iOS8_TabBar_Email90.png"
             anchors.margins: 5
 
             SequentialAnimation on opacity {
@@ -63,15 +64,14 @@ Item {
             }
         }
 
-        Text{
+        Label {
             id: messageText
             anchors {
                 verticalCenter: messageImage.verticalCenter
                 margins: 5
             }
 
-            text: "Message Received"
-            color: "#2f2f2f"
+            text: qsTr("Message Received")
             font.pixelSize: 13
         }
     }

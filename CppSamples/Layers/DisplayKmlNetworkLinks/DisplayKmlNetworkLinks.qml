@@ -34,12 +34,12 @@ DisplayKmlNetworkLinksSample {
         y: Math.round(parent.height - height) / 2
         width: parent.width * 0.75
         standardButtons: Dialog.Ok
-        title: "KML layer message"
+        title: qsTr("KML layer message")
         property alias text : textLabel.text
-        Text {
+        Label {
             width: parent.width
             id: textLabel
-            text: currentKmlNetworkMessage
+            text: qsTr(currentKmlNetworkMessage)
             wrapMode: Text.WordWrap
         }
         onAccepted: {
