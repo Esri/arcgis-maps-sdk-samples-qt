@@ -38,13 +38,13 @@ GenerateGeodatabaseReplicaFromFeatureServiceSample {
     }
 
     onHideWindow: (time, success) => {
-                      generateWindow.hideWindow(time);
+        generateWindow.hideWindow(time);
 
-                      if (success) {
-                          extentRectangle.visible = false;
-                          downloadButton.visible = false;
-                      }
-                  }
+        if (success) {
+            extentRectangle.visible = false;
+            downloadButton.visible = false;
+        }
+  }
 
     onUpdateStatus: status => statusText = status;
 
