@@ -112,7 +112,7 @@ Item {
                             id: symbolText
                             anchors.verticalCenter: parent.verticalCenter
                             width: 110
-                            text: qsTr(name)
+                            text: name
                             wrapMode: Text.Wrap
                             font.pixelSize: 12
                         }

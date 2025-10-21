@@ -407,7 +407,7 @@ Item {
                     border.color: "gray"
                     Label {
                         anchors.centerIn: parent
-                        text: qsTr(offsetSlider.value.toFixed(0))
+                        text: offsetSlider.value.toFixed(0)
                         font.pixelSize: 14
                         color: offsetSlider.enabled ? palette.text : "gray"
                         onWidthChanged: {

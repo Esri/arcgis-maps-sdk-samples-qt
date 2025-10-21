@@ -137,7 +137,7 @@ BuildLegendSample {
                         Label {
                             anchors.verticalCenter: parent.verticalCenter
                             width: 125
-                            text: qsTr(name)
+                            text: name
                             wrapMode: Text.WordWrap
                             font.pixelSize: 12
                         }
@@ -155,7 +155,7 @@ BuildLegendSample {
                         color: palette.highlight
 
                         Label {
-                            text: qsTr(section)
+                            text: section
                             font.bold: true
                             font.pixelSize: 13
                         }

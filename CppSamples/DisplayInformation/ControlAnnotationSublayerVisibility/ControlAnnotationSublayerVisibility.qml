@@ -55,7 +55,7 @@ Item {
 
                     Label {
                         id: openBoxText
-                        text: qsTr(controlAnnotationSublayerVisibilityModel.openLayerText)
+                        text: controlAnnotationSublayerVisibilityModel.openLayerText
                         anchors.verticalCenter: openBox.verticalCenter
                         color: scale.color
                     }
@@ -70,7 +70,7 @@ Item {
 
                     Label {
                         id: closedBoxText
-                        text: qsTr(controlAnnotationSublayerVisibilityModel.closedLayerText)
+                        text: controlAnnotationSublayerVisibilityModel.closedLayerText
                         anchors.verticalCenter: closedBox.verticalCenter
                     }
                 }
