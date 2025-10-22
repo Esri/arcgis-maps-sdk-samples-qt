@@ -130,7 +130,7 @@ GenerateGeodatabaseReplicaFromFeatureServiceSample {
 
                 Label {
                     anchors.horizontalCenter: parent.horizontalCenter
-                    text: qsTr(statusText)
+                    text: statusText
                     font.pixelSize: 16
                 }
             }

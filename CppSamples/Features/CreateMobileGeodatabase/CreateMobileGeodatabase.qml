@@ -207,7 +207,7 @@ Item {
                 readOnly: true
                 activeFocusOnPress: false
                 selectByMouse: true
-                text: qsTr(model.gdbFilePath)
+                text: model.gdbFilePath
                 wrapMode: Text.WrapAnywhere
                 color: palette.text
             }

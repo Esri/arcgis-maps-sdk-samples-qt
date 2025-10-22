@@ -59,7 +59,7 @@ Item {
                 leftMargin: 10
             }
             // set the text equal to the C++ property
-            text: qsTr(model.selectedFeatureText)
+            text: model.selectedFeatureText
             font.pixelSize: 14
         }
     }

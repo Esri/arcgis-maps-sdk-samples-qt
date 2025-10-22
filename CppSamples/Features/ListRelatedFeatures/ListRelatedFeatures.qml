@@ -79,7 +79,7 @@ ListRelatedFeaturesSample {
                     anchors.horizontalCenter: parent.horizontalCenter
                     anchors.margins: 10
 
-                    text: qsTr(displayFieldValue)
+                    text: displayFieldValue
                     font.pixelSize: 12
                 }
             }
@@ -96,7 +96,7 @@ ListRelatedFeaturesSample {
 
                     Label {
                         anchors.horizontalCenter: parent.horizontalCenter
-                        text: qsTr(section)
+                        text: section
                         font {
                             bold: true
                             pixelSize: 13
