@@ -100,13 +100,13 @@ Item {
             }
 
             Label {
-                text: "Geodesic Buffer"
+                text: qsTr("Geodesic Buffer")
             }
         }
 
         Button {
             anchors.horizontalCenter: parent.horizontalCenter
-            text: "Clear"
+            text: qsTr("Clear")
             onClicked: {
                 model.clear();
             }

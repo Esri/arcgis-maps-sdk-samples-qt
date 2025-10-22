@@ -41,7 +41,7 @@ Item {
             Button {
                 Layout.fillWidth: true
                 Layout.fillHeight: true
-                text: "Convex hull"
+                text: qsTr("Convex hull")
                 onClicked: {
                     model.displayConvexHull();
                 }
@@ -50,7 +50,7 @@ Item {
             Button {
                 Layout.fillWidth: true
                 Layout.fillHeight: true
-                text: "Reset"
+                text: qsTr("Reset")
                 onClicked: {
                     model.clearGraphics();
                 }
