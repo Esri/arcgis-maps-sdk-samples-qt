@@ -31,12 +31,14 @@ RoundButton {
     // Set the focus policy so that the buttons do not take focus from the MapView
     focusPolicy: Qt.NoFocus
 
+    implicitWidth: Math.max(imgComponent.width, textComponent.width) + 20
+    implicitHeight: imgComponent.height + textComponent.height + 20
     radius: 5
 
     Rectangle {
         anchors.fill: parent
         radius: parent.radius
-        opacity: parent.enabled || parent.checked ? 1 : 0.4
+        opacity: parent.enabled || parent.checked ? 1 : 0.3
         color: geometryEditorButton.down ? palette.base : palette.highlight
     }
 
