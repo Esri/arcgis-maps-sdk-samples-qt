@@ -40,62 +40,78 @@
 using namespace Esri::ArcGISRuntime;
 
 DisplayLocalSceneView::DisplayLocalSceneView(QObject* parent /* = nullptr */):
-    QObject(parent),
-    m_scene(new Scene(BasemapStyle::ArcGISTopographic, SceneViewingMode::Local ,this))
+  QObject(parent),
+  m_scene(new Scene(BasemapStyle::ArcGISTopographic, SceneViewingMode::Local ,this))
 {
-    // create a new elevation source from Terrain3D REST service
-    ArcGISTiledElevationSource* elevationSource = new ArcGISTiledElevationSource(
-                QUrl("https://elevation3d.arcgis.com/arcgis/rest/services/WorldElevation3D/Terrain3D/ImageServer"), this);
+  // create a new elevation source from Terrain3D REST service
+  ArcGISTiledElevationSource* elevationSource = new ArcGISTiledElevationSource(
+    QUrl("https://elevation3d.arcgis.com/arcgis/rest/services/WorldElevation3D/Terrain3D/ImageServer"), this);
 
-    // add the elevation source to the scene to display elevation
-    m_scene->baseSurface()->elevationSources()->append(elevationSource);
+  // add the elevation source to the scene to display elevation
+  m_scene->baseSurface()->elevationSources()->append(elevationSource);
 
-    ArcGISSceneLayer* sceneLayer = new ArcGISSceneLayer(QUrl("https://www.arcgis.com/home/item.html?id=61da8dc1a7bc4eea901c20ffb3f8b7af"), this);
+  ArcGISSceneLayer* sceneLayer = new ArcGISSceneLayer(QUrl("https://www.arcgis.com/home/item.html?id=61da8dc1a7bc4eea901c20ffb3f8b7af"), this);
 
-    m_scene->operationalLayers()->append(sceneLayer);
+  m_scene->operationalLayers()->append(sceneLayer);
 }
 
 DisplayLocalSceneView::~DisplayLocalSceneView() = default;
 
 void DisplayLocalSceneView::init()
 {
-    // Register classes for QML
-    qmlRegisterType<LocalSceneQuickView>("Esri.Samples", 1, 0, "LocalSceneView");
-    qmlRegisterType<DisplayLocalSceneView>("Esri.Samples", 1, 0, "DisplayLocalSceneViewSample");
+  // Register classes for QML
+  qmlRegisterType<LocalSceneQuickView>("Esri.Samples", 1, 0, "LocalSceneView");
+  qmlRegisterType<DisplayLocalSceneView>("Esri.Samples", 1, 0, "DisplayLocalSceneViewSample");
 }
 
 LocalSceneQuickView* DisplayLocalSceneView::localSceneView() const
 {
-    return m_localSceneView;
+  return m_localSceneView;
 }
 
 // Set the view (created in QML)
 void DisplayLocalSceneView::setLocalSceneView(LocalSceneQuickView* localSceneView)
 {
-    if (!localSceneView || localSceneView == m_localSceneView)
-        return;
+  if (!localSceneView || localSceneView == m_localSceneView)
+  {
+    return;
+  }
 
-    m_localSceneView = localSceneView;
-    m_localSceneView->setArcGISScene(m_scene);
+  m_localSceneView = localSceneView;
+  m_localSceneView->setArcGISScene(m_scene);
 
+  // Sets the clipping area.
+  const Envelope envelope(
+    19454578.8235, // xMin
+    -5055381.4798, // yMin
+    19455518.8814, // xMax
+    -5054888.4150, // yMax
+    SpatialReference::webMercator()); // spatialReference
+  m_scene->setClippingArea(envelope);
 
-    // Sets the clipping area.
-    Envelope envelope(19454578.8235, -5055381.4798, 19455518.8814, -5054888.4150, SpatialReference::webMercator());
-    m_scene->setClippingArea(envelope);
+  m_scene->setClippingEnabled(true);
 
-    m_scene->setClippingEnabled(true);
+  // Sets the initial viewpoint.
+  const Point lookAtPoint(
+    19455578.6821, // x
+    -5056336.2227, // y
+    1699.3366, // z
+    SpatialReference::webMercator()); // spatialReference
 
-    // Sets the initial viewpoint.
-    Point lookAtPoint(19455578.6821, -5056336.2227, 1699.3366, SpatialReference::webMercator());
-    const double heading = 338.7410;
-    const double pitch = 40.3763;
-    const double roll = 0;
-    Camera camera(lookAtPoint, heading, pitch, roll);
+  const Camera camera(lookAtPoint,
+    338.7410, // heading
+    40.3763, // pitch
+    0.0); // roll
 
-    const Point point(19455026.8116, -5054995.7415, SpatialReference::webMercator());
+  const Point point(
+    19455026.8116, // x
+    -5054995.7415, // y
+    SpatialReference::webMercator()); // spatialReference
 
-    m_scene->setInitialViewpoint(Viewpoint(point, 8314.6991, camera));
+  m_scene->setInitialViewpoint(Viewpoint(point,
+    8314.6991, // scale
+    camera));
 
-    emit localSceneViewChanged();
+  emit localSceneViewChanged();
 }
 

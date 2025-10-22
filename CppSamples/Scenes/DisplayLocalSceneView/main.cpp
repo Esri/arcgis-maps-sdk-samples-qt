@@ -21,10 +21,6 @@
 #include <QQmlApplicationEngine>
 #include <QSurfaceFormat>
 
-#ifdef Q_OS_WIN
-#include <Windows.h>
-#endif
-
 int main(int argc, char *argv[])
 {
 #if defined(Q_OS_LINUX) && !defined(Q_OS_ANDROID)
