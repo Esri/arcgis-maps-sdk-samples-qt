@@ -156,7 +156,7 @@ OfflineGeocodeSample {
                                 pixelSize: 12
                             }
 
-                            text: qsTr(label)
+                            text: label
                             elide: Text.ElideRight
                             leftPadding: 5
                         }
@@ -223,7 +223,7 @@ OfflineGeocodeSample {
         ColumnLayout {
             Label {
                 id: textLabel
-                text: qsTr(errorMessage)
+                text: errorMessage
             }
             Label {
                 id: detailsLabel

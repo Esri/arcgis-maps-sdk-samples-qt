@@ -168,7 +168,7 @@ FindAddressSample {
                     }
 
                     Label {
-                        text: qsTr(name)
+                        text: name
                         anchors {
                             fill: parent
                             leftMargin: 5

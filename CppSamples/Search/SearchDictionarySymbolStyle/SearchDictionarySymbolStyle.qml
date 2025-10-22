@@ -64,7 +64,7 @@ SearchDictionarySymbolStyleSample {
                         columns: 3
                         rowSpacing: 0
                         Label {
-                            text: qsTr(repeaterModel[index])
+                            text: repeaterModel[index]
                             font.bold: true
                             verticalAlignment: Text.AlignVCenter
                             horizontalAlignment: Text.AlignLeft
