@@ -286,10 +286,10 @@ SearchDictionarySymbolStyleSample {
 
     //Search completed
     onSearchCompleted: count => {
-                           searchBtn.enabled = true;
-                           resultView.visible = true;
+        searchBtn.enabled = true;
+        resultView.visible = true;
 
-                           //Update the number of results retuned
-                           resultText.text = "Result(s) found: " + count
-                       }
+        //Update the number of results retuned
+        resultText.text = "Result(s) found: " + count
+   }
 }
