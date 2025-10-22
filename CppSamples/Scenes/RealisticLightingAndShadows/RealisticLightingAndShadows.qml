@@ -45,13 +45,13 @@ Item {
         }
         width: childrenRect.width
         height: childrenRect.height
-        color: "#ffffff"
+        color: palette.base
         opacity: 0.7
         Column {
             id: settingsColumn
             spacing: 5
             padding: 15
-            Text {
+            Label {
                 id: timeValue
                 anchors.horizontalCenter: parent.horizontalCenter
                 font.pixelSize: 16

@@ -78,21 +78,21 @@ Item {
                 radius: 3
                 x: headingHandleNub.x - width / 2 + headingHandleNub.width / 2
                 y: headingHandleNub.y - height
+                color: palette.base
 
-                Text {
+                Label {
                     id: headingValue
                     font.pixelSize: 14
                     padding: 3
                     horizontalAlignment: Qt.AlignHCenter
                     verticalAlignment: Qt.AlignVCenter
-                    text: Math.round(cameraHeadingSlider.value) + "\u00B0"
-                    color: "white"
+                    text: qsTr(Math.round(cameraHeadingSlider.value) + "\u00B0")
                 }
             }
         }
     }
 
-    Text {
+    Label {
         id: cameraHeadingLabel
 
         anchors {
@@ -101,12 +101,11 @@ Item {
             bottomMargin: 10
         }
 
-        text: "Camera Heading"
-        color: "white"
+        text: qsTr("Camera Heading")
     }
 
     //Plane pitch slider, placed in the top-right of the screen
-    Text {
+    Label {
         id: planePitchLabel
 
         anchors {
@@ -115,8 +114,7 @@ Item {
             bottomMargin: 10
         }
 
-        text: "Plane Pitch"
-        color: "white"
+        text: qsTr("Plane Pitch")
     }
 
     Slider {
@@ -153,15 +151,15 @@ Item {
                 radius: 3
                 x: pitchHandleNub.x - width
                 y: pitchHandleNub.y - height/2 + pitchHandleNub.height/2
+                color: palette.base
 
-                Text {
+                Label {
                     id: pitchValue
                     font.pixelSize: 14
                     padding: 3
                     horizontalAlignment: Qt.AlignHCenter
                     verticalAlignment: Qt.AlignVCenter
-                    text: Math.round(planePitchSlider.value)  + "\u00B0"
-                    color: "white"
+                    text: qsTr(Math.round(planePitchSlider.value)  + "\u00B0")
                 }
             }
         }
@@ -176,13 +174,13 @@ Item {
 
         height: childrenRect.height
         width: childrenRect.width
-        color: Qt.rgba(0.2, 0.2, 0.2, 0.65)
+        color: palette.base
 
         Column {
             spacing: 10
             padding: 10
             Button {
-                text: "Cockpit View"
+                text: qsTr("Cockpit View")
                 onClicked: {
                     model.cockpitView();
                     allowCamDistanceInteractionCheckBox.enabled = false;
@@ -191,7 +189,7 @@ Item {
             }
 
             Button {
-                text: "Center View"
+                text: qsTr("Center View")
                 onClicked: {
                     model.centerView();
                     allowCamDistanceInteractionCheckBox.enabled = true;
@@ -210,13 +208,12 @@ Item {
                     onCheckedChanged: model.allowCamDistanceInteraction = checked
                 }
 
-                Text {
+                Label {
                     id: allowCamDistanceInteractionCheckBoxText
                     anchors {
                         verticalCenter: allowCamDistanceInteractionCheckBox.verticalCenter
                     }
-                    text: "Allow camera\ndistance interaction"
-                    color: "white"
+                    text: qsTr("Allow camera\ndistance interaction")
                 }
             }
         }
