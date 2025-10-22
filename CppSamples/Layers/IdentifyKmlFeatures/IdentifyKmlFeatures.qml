@@ -38,7 +38,7 @@ Item {
             implicitHeight: contentText.implicitHeight + (contentText.implicitHeight * .05)
             contentItem: Label {
                 id: contentText
-                text: qsTr(model.calloutText)
+                text: model.calloutText
                 wrapMode: Text.WordWrap
                 textFormat: Text.RichText
                 horizontalAlignment: Qt.AlignHCenter

@@ -86,7 +86,7 @@ FeatureLayerRenderingModeMapSample {
         }
         readonly property string startText: "Start Animation"
         readonly property string stopText: "Stop Animation"
-        text: qsTr(startText)
+        text: startText
         onClicked: {
             if (text === startText) {
                 startAnimation();

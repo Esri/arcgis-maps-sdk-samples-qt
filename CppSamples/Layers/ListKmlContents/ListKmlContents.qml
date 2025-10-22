@@ -58,7 +58,7 @@ Item {
                 Label {
                     Layout.fillWidth: true
                     id: textLabel
-                    text: qsTr(sampleModel.labelText)
+                    text: sampleModel.labelText
                     wrapMode: Text.Wrap
                 }
                 ListView {
@@ -68,7 +68,7 @@ Item {
                     model: sampleModel.levelNodeNames
                     Layout.preferredHeight: contentHeight
                     delegate: Button {
-                        text: qsTr(modelData)
+                        text: modelData
                         anchors {
                             left: parent.left
                             right: parent.right

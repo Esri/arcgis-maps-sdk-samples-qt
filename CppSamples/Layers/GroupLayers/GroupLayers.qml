@@ -82,7 +82,7 @@ Item {
                 Column {
                     CheckBox {
                         id: parentBox
-                        text: qsTr(name)
+                        text: name
                         checked: layerVisible
                         onToggled: layerVisible = checked
                     }
@@ -91,7 +91,7 @@ Item {
                         model: sampleModel.getGroupLayerListModel(layerVisibilityListView.currentIndex)
                         delegate: RadioDelegate {
                             checked: index === 0
-                            text: qsTr(name)
+                            text: name
                             leftPadding: indicator.width
                             width: layerVisibilityRect.width - leftPadding
                             onCheckedChanged: layerVisible = checked
@@ -104,7 +104,7 @@ Item {
             Component {
                 id: layerDelegate
                 CheckBox {
-                    text: qsTr(name)
+                    text: name
                     checked: layerVisible
                     onToggled: layerVisible = checked;
                 }

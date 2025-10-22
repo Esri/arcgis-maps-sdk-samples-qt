@@ -104,7 +104,7 @@ ChangeSublayerVisibilitySample {
                             Label {
                                 anchors.verticalCenter: parent.verticalCenter
                                 width: 75
-                                text: qsTr(name)
+                                text: name
                                 wrapMode: Text.WordWrap
                                 font.pointSize: 14
                             }

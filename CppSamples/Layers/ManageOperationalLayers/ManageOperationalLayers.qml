@@ -180,7 +180,7 @@ Item {
                     spacing: 5
 
                     Label {
-                        text: qsTr(modelData)
+                        text: modelData
                         Layout.leftMargin: 5
                     }
 
