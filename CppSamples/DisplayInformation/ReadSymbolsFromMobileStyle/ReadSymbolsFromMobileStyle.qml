@@ -37,7 +37,7 @@ Item {
                 horizontalCenter: parent.horizontalCenter
                 bottomMargin: 10
             }
-            text: "Clear Graphics"
+            text: qsTr("Clear Graphics")
             onClicked: model.clearGraphics();
         }
     }
@@ -53,7 +53,7 @@ Item {
             fill: optionGrid
             margins: -5
         }
-        color: "#efefef"
+        color: palette.base
     }
 
     GridLayout {
@@ -69,12 +69,12 @@ Item {
         Label {
             Layout.columnSpan: 2
             Layout.alignment: Qt.AlignCenter
-            text: "Change Options to Modify Symbol"
+            text: qsTr("Change Options to Modify Symbol")
             font.underline: true
         }
 
         Label {
-            text: "Eyes"
+            text: qsTr("Eyes")
         }
 
         SymbolComboBox {
@@ -84,7 +84,7 @@ Item {
         }
 
         Label {
-            text: "Mouth"
+            text: qsTr("Mouth")
         }
 
         SymbolComboBox {
@@ -94,7 +94,7 @@ Item {
         }
 
         Label {
-            text: "Hat"
+            text: qsTr("Hat")
         }
 
         SymbolComboBox {
@@ -104,7 +104,7 @@ Item {
         }
 
         Label {
-            text: "Base Color"
+            text: qsTr("Base Color")
         }
 
         ComboBox {
@@ -114,7 +114,7 @@ Item {
         }
 
         Label {
-            text: "Size"
+            text: qsTr("Size")
         }
 
         Slider {
@@ -127,7 +127,7 @@ Item {
         }
 
         Label {
-            text: "Preview:"
+            text: qsTr("Preview:")
         }
 
         Image {

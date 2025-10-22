@@ -38,13 +38,14 @@ Item {
                 margins: 2
             }
             width: childrenRect.width
-            height: childrenRect.height
-            color: "white"
-            opacity: .75
+            height: childrenRect.height + 16
+            color: palette.base
+            opacity: .9
             radius: 5
 
             ColumnLayout {
-                spacing: 0
+                spacing: 8
+                anchors.centerIn: parent
                 Row {
                     CheckBox {
                         id: openBox
@@ -52,7 +53,7 @@ Item {
                         onCheckStateChanged: controlAnnotationSublayerVisibilityModel.openLayerVisible();
                     }
 
-                    Text {
+                    Label {
                         id: openBoxText
                         text: controlAnnotationSublayerVisibilityModel.openLayerText
                         anchors.verticalCenter: openBox.verticalCenter
@@ -67,7 +68,7 @@ Item {
                         onCheckStateChanged: controlAnnotationSublayerVisibilityModel.closedLayerVisible();
                     }
 
-                    Text {
+                    Label {
                         id: closedBoxText
                         text: controlAnnotationSublayerVisibilityModel.closedLayerText
                         anchors.verticalCenter: closedBox.verticalCenter
@@ -84,11 +85,12 @@ Item {
             }
             width: childrenRect.width
             height: childrenRect.height
+            color: palette.base
 
-            Text {
+            Label {
                 id: scale
-                text: "Current map scale: 1:%1".arg(Math.round(controlAnnotationSublayerVisibilityModel.mapScale))
-                color: controlAnnotationSublayerVisibilityModel.visibleAtCurrentExtent ? "black" : "grey"
+                text: qsTr("Current map scale: 1:%1".arg(Math.round(controlAnnotationSublayerVisibilityModel.mapScale)))
+                color: controlAnnotationSublayerVisibilityModel.visibleAtCurrentExtent ? palette.text : "grey"
                 padding: 2
             }
         }

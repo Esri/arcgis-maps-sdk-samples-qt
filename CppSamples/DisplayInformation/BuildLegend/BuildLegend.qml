@@ -45,7 +45,7 @@ BuildLegendSample {
         property bool expanded: true
         height: 200
         width: 175
-        color: "lightgrey"
+        color: palette.base
         opacity: 0.95
         radius: 10
         clip: true
@@ -80,7 +80,7 @@ BuildLegendSample {
             Row {
                 spacing: 55
 
-                Text {
+                Label {
                     text: qsTr("Legend")
                     font {
                         pixelSize: 18
@@ -134,7 +134,7 @@ BuildLegendSample {
                             height: width
                             source: symbolUrl
                         }
-                        Text {
+                        Label {
                             anchors.verticalCenter: parent.verticalCenter
                             width: 125
                             text: name
@@ -152,9 +152,9 @@ BuildLegendSample {
                     delegate: Rectangle {
                         width: 180
                         height: childrenRect.height
-                        color: "lightsteelblue"
+                        color: palette.highlight
 
-                        Text {
+                        Label {
                             text: section
                             font.bold: true
                             font.pixelSize: 13

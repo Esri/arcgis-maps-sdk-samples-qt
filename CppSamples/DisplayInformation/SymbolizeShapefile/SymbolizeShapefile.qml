@@ -42,7 +42,7 @@ SymbolizeShapefileSample {
             top: parent.top
             margins: 10
         }
-        text: "Change Renderer"
+        text: qsTr("Change Renderer")
         onClicked: {
             updateRenderer();
             visible = false;

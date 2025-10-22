@@ -70,6 +70,7 @@ Item {
     BusyIndicator {
         anchors.centerIn: parent
         running: model.taskRunning
+        visible: model.taskRunning
     }
 }
 //"DisplayClusters - C++"
