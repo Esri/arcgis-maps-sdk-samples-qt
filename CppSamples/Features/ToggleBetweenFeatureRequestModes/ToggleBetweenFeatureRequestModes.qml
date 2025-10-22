@@ -48,6 +48,8 @@ Item {
         anchors.fill: column
         radius: 10
         border.width: 1
+        color: palette.base
+
         MouseArea {
             anchors.fill: parent
             onClicked: mouse => mouse.accepted = true
@@ -83,7 +85,7 @@ Item {
             id: populate
             width: 200
             anchors.horizontalCenter: parent.horizontalCenter
-            text: "Populate"
+            text: qsTr("Populate")
             enabled : currentFeatureRequestMode === ToggleBetweenFeatureRequestModesSample.ManualCache
             onClicked: {
                 model.fetchCacheManually();

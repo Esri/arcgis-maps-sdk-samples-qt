@@ -49,6 +49,7 @@ ListRelatedFeaturesSample {
             bottom: parent.bottom
         }
         height: 0
+        color: palette.base
 
         // Animate the expand and collapse of the legend
         Behavior on height {
@@ -74,7 +75,7 @@ ListRelatedFeaturesSample {
                 height: childrenRect.height
                 color: "transparent"
 
-                Text {
+                Label {
                     anchors.horizontalCenter: parent.horizontalCenter
                     anchors.margins: 10
 
@@ -91,9 +92,9 @@ ListRelatedFeaturesSample {
                 delegate: Rectangle {
                     width: rootRectangle.width
                     height: childrenRect.height
-                    color: "lightsteelblue"
+                    color: palette.highlight
 
-                    Text {
+                    Label {
                         anchors.horizontalCenter: parent.horizontalCenter
                         text: section
                         font {

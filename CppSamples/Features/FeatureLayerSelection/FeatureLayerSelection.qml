@@ -45,13 +45,13 @@ Item {
             bottom: parent.bottom
         }
         height: 30
-        color: "lightgrey"
+        color: palette.base
         border {
             width: 0.5
             color: "black"
         }
 
-        Text {
+        Label {
             id: msgText
             anchors {
                 verticalCenter: parent.verticalCenter
