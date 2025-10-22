@@ -43,7 +43,7 @@ CutGeometrySample {
             margins: 10
         }
 
-        text: "Cut"
+        text: qsTr("Cut")
         onClicked: {
             if (cutOrResetButton.text === "Cut")
             {

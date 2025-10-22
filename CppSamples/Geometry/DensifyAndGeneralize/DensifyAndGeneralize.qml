@@ -43,8 +43,12 @@ DensifyAndGeneralizeSample {
             fill: controlColumn
             margins: -5
         }
-        color: "#f9f9f9"
+        color: palette.base
         radius: 5
+        border {
+            color: "black"
+            width: 1
+        }
     }
 
     Column {
@@ -59,12 +63,12 @@ DensifyAndGeneralizeSample {
 
         CheckBox {
             id: densifyCheckbox
-            text: "Densify"
+            text: qsTr("Densify")
             checked: true
         }
 
-        Text {
-            text: "Max segment length"
+        Label {
+            text: qsTr("Max segment length")
             enabled: densifyCheckbox.checked
         }
 
@@ -79,12 +83,12 @@ DensifyAndGeneralizeSample {
 
         CheckBox {
             id: generalizeCheckbox
-            text: "Generalize"
+            text: qsTr("Generalize")
             checked: true
         }
 
-        Text {
-            text: "Max deviation"
+        Label {
+            text: qsTr("Max deviation")
             enabled: generalizeCheckbox.checked
         }
 
@@ -98,7 +102,7 @@ DensifyAndGeneralizeSample {
 
         CheckBox {
             id: showResultCheckbox
-            text: "Show Result"
+            text: qsTr("Show Result")
             checked: true
             onCheckedChanged: showResults(checked);
         }

@@ -42,17 +42,17 @@ ClipGeometrySample {
             bottom: parent.bottom
             bottomMargin: 25
         }
-        text: "Clip"
+        text: qsTr("Clip")
         onClicked: {
             if (clipOrResetButton.text === "Clip")
             {
                 clipAreas();
-                clipOrResetButton.text = "Reset"
+                clipOrResetButton.text = qsTr("Reset")
             }
             else
             {
                 resetAreas();
-                clipOrResetButton.text = "Clip"
+                clipOrResetButton.text = qsTr("Clip")
             }
         }
     }

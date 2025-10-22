@@ -42,7 +42,7 @@ Item {
     {
         width: childrenRect.width
         height: childrenRect.height
-        color: "white"
+        color: palette.base
         border.color: "black"
         border.width: 2
         Label {

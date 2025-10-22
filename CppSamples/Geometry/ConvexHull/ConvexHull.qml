@@ -33,8 +33,9 @@ Item {
 
         RowLayout {
             anchors {
-                left: parent.left
-                top: parent.top
+                horizontalCenter: parent.horizontalCenter
+                bottom: view.attributionTop
+                margins: 5
             }
 
             Button {

@@ -36,8 +36,8 @@ RoundButton {
     Rectangle {
         anchors.fill: parent
         radius: parent.radius
-        opacity: parent.enabled || parent.checked ? 1 : 0.3
-        color: geometryEditorButton.down ? "#d0d0d0" : "#e0e0e0"
+        opacity: parent.enabled || parent.checked ? 1 : 0.4
+        color: geometryEditorButton.down ? palette.base : palette.highlight
     }
 
     Image {
@@ -52,7 +52,7 @@ RoundButton {
         fillMode: Image.PreserveAspectFit
     }
 
-    Text {
+    Label {
         id: textComponent
         anchors {
             top: imgComponent.bottom
