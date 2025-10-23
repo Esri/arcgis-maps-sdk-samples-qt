@@ -244,35 +244,35 @@ SearchDictionarySymbolStyleSample {
 
                             Label {
                                 id: nameText
-                                text: "<b>Name:</b> " + name
+                                text: qsTr("<b>Name:</b> %1").arg(name)
                                 font.pixelSize: fontSize
                                 width: parent.width
                                 wrapMode: Text.WrapAtWordBoundaryOrAnywhere
                             }
 
                             Label {
-                                text: "<b>Tags:</b> " + tags
+                                text: qsTr("<b>Tags:</b> %1").arg(tags)
                                 font.pixelSize: fontSize
                                 width: nameText.width
                                 wrapMode: Text.WrapAtWordBoundaryOrAnywhere
                             }
 
                             Label {
-                                text: "<b>SymbolClass:</b> " + symbolClass
+                                text: qsTr("<b>SymbolClass:</b> %1").arg(symbolClass)
                                 font.pixelSize: fontSize
                                 width: nameText.width
                                 wrapMode: Text.WrapAtWordBoundaryOrAnywhere
                             }
 
                             Label {
-                                text: "<b>Category:</b> " + category
+                                text: qsTr("<b>Category:</b> %1").arg(category)
                                 font.pixelSize: fontSize
                                 width: nameText.width
                                 wrapMode: Text.WrapAtWordBoundaryOrAnywhere
                             }
 
                             Label {
-                                text: "<b>Key:</b> " + key
+                                text: qsTr("<b>Key:</b> %1").arg(key)
                                 font.pixelSize: fontSize
                                 width: nameText.width
                                 wrapMode: Text.WrapAtWordBoundaryOrAnywhere
