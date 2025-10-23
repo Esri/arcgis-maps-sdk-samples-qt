@@ -41,7 +41,7 @@ Item {
                 Button {
                     id: backButton
                     Layout.margins: 3
-                    text: qsTr("<")
+                    text: "<"
                     enabled: !sampleModel.isTopLevel
                     flat: true
                     highlighted: pressed

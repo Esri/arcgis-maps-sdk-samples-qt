@@ -65,14 +65,14 @@ QueryMapImageSublayerSample {
             Label {
                 id: fieldText
                 anchors.verticalCenter: parent.verticalCenter
-                text: qsTr("POP2000 >")
+                text: "POP2000 >"
             }
 
             TextField {
                 id: populationText
                 anchors.verticalCenter: parent.verticalCenter
                 width: 100
-                text: qsTr("1100000")
+                text: "1100000"
                 selectByMouse: true
                 validator: IntValidator{}
             }

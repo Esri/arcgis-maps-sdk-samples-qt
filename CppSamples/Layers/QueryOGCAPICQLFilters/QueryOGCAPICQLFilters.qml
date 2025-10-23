@@ -80,7 +80,7 @@ Item {
                 id: maxFeatureField
                 anchors.verticalCenter: parent.verticalCenter
                 width: 200
-                text: qsTr("1000")
+                text: "1000"
                 selectByMouse: true
                 validator: IntValidator {}
             }
@@ -99,7 +99,7 @@ Item {
                 id: fromDate
                 anchors.verticalCenter: parent.verticalCenter
                 width: 200
-                text: qsTr("")
+                text: ""
                 selectByMouse: true
                 validator: RegularExpressionValidator {
                     regularExpression: /(0[1-9]|1[012])[/](0[1-9]|[12][0-9]|3[01])[/](19|20)\d\d/
@@ -121,7 +121,7 @@ Item {
                 id: toDate
                 anchors.verticalCenter: parent.verticalCenter
                 width: 200
-                text: qsTr("")
+                text: ""
                 selectByMouse: true
                 validator: RegularExpressionValidator {
                     regularExpression: /(0[1-9]|1[012])[/](0[1-9]|[12][0-9]|3[01])[/](19|20)\d\d/
