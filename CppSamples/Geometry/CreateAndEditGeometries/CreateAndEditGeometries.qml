@@ -62,8 +62,8 @@ Item {
         width: 140
 
         background: Rectangle {
-            color: "black"
-            opacity: .5
+            color: palette.base
+            opacity: .9
         }
 
         contentItem: ColumnLayout {
@@ -78,12 +78,11 @@ Item {
                 Layout.alignment: Qt.AlignHCenter | Qt.AlignVCenter
                 columns: 2
 
-                Text {
+                Label {
                     id: geometryHeader
                     Layout.alignment: Qt.AlignHCenter | Qt.AlignVCenter
                     Layout.columnSpan: 2
-                    text: "Create"
-                    color: "white"
+                    text: qsTr("Create")
                     font.pixelSize: 16
                     font.bold: true
                 }
@@ -143,15 +142,6 @@ Item {
                     Layout.columnSpan: 2
                     Layout.fillWidth: true
 
-                    Rectangle {
-                        anchors.fill: parent
-                        radius: 10
-                        // Make the rectangle visible if a dropdown indicator exists
-                        // An indicator only exists if a theme is set
-                        visible: parent.indicator
-                        border.width: 1
-                    }
-
                     onCurrentIndexChanged: {
                         switch (currentIndex) {
                         case 0: // Vertex Tool
@@ -187,15 +177,6 @@ Item {
                 Layout.columnSpan: 2
                 Layout.fillWidth: true
 
-                Rectangle {
-                    anchors.fill: parent
-                    radius: 10
-                    // Make the rectangle visible if a dropdown indicator exists
-                    // An indicator only exists if a theme is set
-                    visible: parent.indicator
-                    border.width: 1
-                }
-
                 model: ["Stretch Scale", "Uniform Scale"]
                 enabled: true
                 onCurrentIndexChanged: {
@@ -219,12 +200,11 @@ Item {
                 Layout.alignment: Qt.AlignHCenter | Qt.AlignVCenter
                 columns: 2
 
-                Text {
+                Label {
                     id: editingHeader
                     Layout.alignment: Qt.AlignHCenter | Qt.AlignVCenter
                     Layout.columnSpan: 2
                     text: qsTr("Edit")
-                    color: "white"
                     font.pixelSize: 16
                     font.bold: true
                 }

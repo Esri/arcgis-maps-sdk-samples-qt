@@ -43,7 +43,7 @@ GeodesicOperationsSample {
             margins: 10
         }
 
-        text: "%1 kilometers".arg(distanceText)
+        text: qsTr("%1 kilometers".arg(distanceText))
         visible: distanceText.length > 0
         font.pixelSize: 20
         color: "white"

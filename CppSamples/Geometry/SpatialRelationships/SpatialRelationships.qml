@@ -45,7 +45,7 @@ SpatialRelationshipsSample {
         }
         opacity: 0.85
         radius: 5
-        color: "#e2e2e2"
+        color: palette.base
         border {
             color: "darkgray"
             width: 1
@@ -61,8 +61,8 @@ SpatialRelationshipsSample {
         }
         spacing: 5
 
-        Text {
-            text: "Relationships:"
+        Label {
+            text: qsTr("Relationships:")
             font {
                 pixelSize: 16
                 bold: true
@@ -70,21 +70,21 @@ SpatialRelationshipsSample {
             }
         }
 
-        Text {
+        Label {
             id: pointText
             visible: text.length > 0
             font.family: "helvetica"
             text: pointRelationships
         }
 
-        Text {
+        Label {
             id: lineText
             visible: text.length > 0
             font.family: "helvetica"
             text: polylineRelationships
         }
 
-        Text {
+        Label {
             id: polygonText
             visible: text.length > 0
             font.family: "helvetica"
