@@ -43,7 +43,7 @@ Item {
             fill: layerVisibilityListView
             margins: -5
         }
-        color: "lightgrey"
+        color: palette.base
         border.color: "#4D4D4D"
         opacity: 0.9
         radius: 5
@@ -84,7 +84,7 @@ Item {
                         id: parentBox
                         text: name
                         checked: layerVisible
-                        onCheckedChanged: layerVisible = checked
+                        onToggled: layerVisible = checked
                     }
 
                     Repeater {
@@ -106,7 +106,7 @@ Item {
                 CheckBox {
                     text: name
                     checked: layerVisible
-                    onCheckedChanged: layerVisible = checked;
+                    onToggled: layerVisible = checked;
                 }
             }
         }

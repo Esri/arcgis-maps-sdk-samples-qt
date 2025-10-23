@@ -41,27 +41,27 @@ Item {
                 leftMargin: 10
             }
             background: Rectangle {
-                color: "white"
+                color: palette.base
                 border.color: "black"
             }
             padding: 5
 
             contentItem: GridLayout {
                 columns: 1
-                Text {
+                Label {
                     id: toggleBoxTitle
                     text: model.dimensionLayerName
                 }
                 CheckBox {
                     id: visibilityToggle
-                    text: "Dimension Layer visibility"
+                    text: qsTr("Dimension Layer visibility")
                     checked: true
                     onCheckStateChanged: model.dimensionLayerVisible = visibilityToggle.checkState;
                     enabled: model.dimensionsAvailable;
                 }
                 CheckBox {
                     id: definitionExpressionToggle
-                    text: "Definition Expression: \nDimensions >= 450m"
+                    text: qsTr("Definition Expression: \nDimensions >= 450m")
                     checked: false
                     onCheckStateChanged: model.useDefinitionExpression = definitionExpressionToggle.checkState;
                     enabled: model.dimensionsAvailable && visibilityToggle.checked ? true : false;
@@ -72,7 +72,7 @@ Item {
         // Pop-up error message box
         MessageDialog {
             id: errorMessageBox
-            title: "Error message!"
+            title: qsTr("Error message!")
             text: model.errorMessage
             visible: model.errorMessage === "" ? false : true
             onAccepted: model.errorMessage = "";

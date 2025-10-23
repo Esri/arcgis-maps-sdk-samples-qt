@@ -44,6 +44,7 @@ Item {
         }
         width: childrenRect.width
         height: childrenRect.height
+        color: palette.base
         MouseArea {
             anchors.fill: parent
             onClicked: mouse => mouse.accepted = true
@@ -53,11 +54,11 @@ Item {
             id: settingsColumn
             spacing: 5
             padding: 15
-            Text {
+            Label {
                 id: selectStyle
                 anchors.horizontalCenter: parent.horizontalCenter
                 font.pixelSize: 16
-                text: "Select style"
+                text: qsTr("Select style")
             }
             ComboBox {
                 id: layerStyle

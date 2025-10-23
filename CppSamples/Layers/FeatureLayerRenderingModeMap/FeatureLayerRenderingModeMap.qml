@@ -39,14 +39,14 @@ FeatureLayerRenderingModeMapSample {
                 top: parent.top
                 margins: 5
             }
-            color: "white"
+            color: palette.base
             radius: 5
             width: 200
             height: 30
 
-            Text {
+            Label {
                 anchors.centerIn: parent
-                text: "Rendering Mode Static"
+                text: qsTr("Rendering Mode Static")
             }
         }
     }
@@ -66,14 +66,14 @@ FeatureLayerRenderingModeMapSample {
                 top: parent.top
                 margins: 5
             }
-            color: "white"
+            color: palette.base
             radius: 5
             width: 200
             height: 30
 
-            Text {
+            Label {
                 anchors.centerIn: parent
-                text: "Rendering Mode Dynamic"
+                text: qsTr("Rendering Mode Dynamic")
             }
         }
     }

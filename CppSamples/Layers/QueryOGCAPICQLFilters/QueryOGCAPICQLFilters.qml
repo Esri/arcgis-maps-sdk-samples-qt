@@ -36,7 +36,7 @@ Item {
             fill: controlColumn
             margins: -5
         }
-        color: "#efefef"
+        color: palette.base
         radius: 5
         border {
             color: "darkgray"
@@ -55,10 +55,10 @@ Item {
 
         Row {
             spacing: 5
-            Text {
+            Label {
                 id: whereClauseText
                 anchors.verticalCenter: parent.verticalCenter
-                text: "Where Clause"
+                text: qsTr("Where Clause")
             }
 
             ComboBox {
@@ -70,10 +70,10 @@ Item {
 
         Row {
             spacing: 8
-            Text {
+            Label {
                 id: maxFeatureText
                 anchors.verticalCenter: parent.verticalCenter
-                text: "Max Features"
+                text: qsTr("Max Features")
             }
 
             TextField {
@@ -88,10 +88,10 @@ Item {
 
         Row {
             spacing: 8
-            Text {
+            Label {
                 id: fromField
                 anchors.verticalCenter: parent.verticalCenter
-                text: "From"
+                text: qsTr("From")
                 rightPadding: 40
             }
 
@@ -104,16 +104,16 @@ Item {
                 validator: RegularExpressionValidator {
                     regularExpression: /(0[1-9]|1[012])[/](0[1-9]|[12][0-9]|3[01])[/](19|20)\d\d/
                 }
-                placeholderText: "MM/DD/YYYY"
+                placeholderText: qsTr("MM/DD/YYYY")
             }
         }
 
         Row {
             spacing: 8
-            Text {
+            Label {
                 id: toField
                 anchors.verticalCenter: parent.verticalCenter
-                text: "To"
+                text: qsTr("To")
                 rightPadding: 53
             }
 
@@ -126,13 +126,13 @@ Item {
                 validator: RegularExpressionValidator {
                     regularExpression: /(0[1-9]|1[012])[/](0[1-9]|[12][0-9]|3[01])[/](19|20)\d\d/
                 }
-                placeholderText: "MM/DD/YYYY"
+                placeholderText: qsTr("MM/DD/YYYY")
             }
         }
 
         Button {
             anchors.horizontalCenter: parent.horizontalCenter
-            text: "Query"
+            text: qsTr("Query")
             onClicked: {
                 model.query(whereClauseMenu.currentText, maxFeatureField.text, fromDate.text, toDate.text);
             }
