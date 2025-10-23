@@ -16,19 +16,28 @@ Portals allow you to share and publish data with others. For example, you may cr
 
 ## How it works
 
-1. A `Portal` is created with a `Credential` using `OAuthModeUser`. The `Portal` instance is loaded and the OAuth sign in page is displayed. The user must now provide credentials.
-2. Once the sign-in process is complete, a `PortalItem` of type `CSV` is created using this `Portal` instance.
-3. When the portal is successfully loaded, the `PortalUser` object is obtained from the `Portal`.
-5. When the "Add Item" button is clicked, the item is added via the `PortalUser`'s `addPortalItemWithUrlAsync` method. The `PortalItem` and the local URL of the CSV file are supplied as parameters.
-6. When the item has been successfully added, it is loaded in order to retrieve online properties such as the `itemId`.'
-7. When the "Delete Item" button is clicked, the item is passed as a parameter for the portalUser's `deleteItemAsync` method.
+1. A `Portal` is created. An `OAuthUserConfiguration` is created with the portal URL, a client Id and a redirect URI. 
+2. The `OAuthUserConfiguration` is added to the Toolkit's `OAuthUserConfigurationManager` to use the OAuth dialog.
+3. The Portal is loaded and displays a login screen to allow user credentials to be entered.
+4. Once the sign-in process is complete, a `PortalItem` of type `CSV` is created using this `Portal` instance.
+5. When the portal is successfully loaded, the `PortalUser` object is obtained from the `Portal`.
+6. When the "Add Item" button is clicked, the item is added via the `PortalUser`'s `addPortalItemWithUrlAsync` method. The `PortalItem` and the local URL of the CSV file are supplied as parameters.
+7. When the item has been successfully added, it is loaded in order to retrieve online properties such as the `itemId`.'
+8. When the "Delete Item" button is clicked, the item is passed as a parameter for the portalUser's `deleteItemAsync` method.
 
 ## Relevant API
 
+* Authenticator
+* Authentication::OAuthUserConfiguration
+* OAuthUserConfigurationManager
 * Portal
 * PortalItem
 * PortalUser::addPortalItemWithUrlAsync
 * PortalUser::deleteItemAsync
+
+## Additional information
+
+This sample uses the `OAuthUserConfigurationManager` toolkit component and requires the [toolkit](https://github.com/Esri/arcgis-maps-sdk-toolkit-qt) to be cloned and set-up locally.
 
 ## Tags
 
