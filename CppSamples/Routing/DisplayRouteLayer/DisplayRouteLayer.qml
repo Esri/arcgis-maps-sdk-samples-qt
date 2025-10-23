@@ -38,7 +38,7 @@ Item {
                 horizontalCenter: parent.horizontalCenter
                 margins: 40
             }
-            text: "Directions"
+            text: qsTr("Directions")
             enabled: false
             onClicked: popup.open();
         }
@@ -51,7 +51,7 @@ Item {
             focus: true
             contentItem: Controls.ScrollView {
                 contentWidth: parent.width - 30
-                Text {
+                Controls.Label {
                     width: parent.width
                     text: model.directions
                     wrapMode: Text.WordWrap

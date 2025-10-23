@@ -40,7 +40,7 @@ ServiceAreaSample {
             radius: 8
             height: solveRow.height + (16)
             width: solveRow.width + (16)
-            color: "lightgrey"
+            color: palette.base
             border.color: "darkgrey"
             border.width: 2
             opacity: 0.75
@@ -57,14 +57,14 @@ ServiceAreaSample {
 
             Button {
                 id: serviceAreasButton
-                text: "Solve"
+                text: qsTr("Solve")
                 enabled: !busy
 
                 onClicked: solveServiceArea();
             }
 
             Button {
-                text: "Reset"
+                text: qsTr("Reset")
                 enabled: !busy
                 onClicked: {
                     reset();
@@ -78,7 +78,7 @@ ServiceAreaSample {
         radius: 8
         height: editRow.height + (16)
         width: editRow.width + (16)
-        color: "lightgrey"
+        color: palette.base
         border.color: "darkgrey"
         border.width: 2
         opacity: 0.75
@@ -98,17 +98,7 @@ ServiceAreaSample {
             model: ["Facility", "Barrier"]
 
             property int modelWidth: 0
-            width: modelWidth + leftPadding + rightPadding + (indicator ? indicator.width : 10)
-
-            // Add a background to the ComboBox
-            Rectangle {
-                anchors.fill: parent
-                radius: 10
-                // Make the rectangle visible if a dropdown indicator exists
-                // An indicator only exists if a theme is set
-                visible: parent.indicator
-                border.width: 1
-            }
+            width: Math.max(100, modelWidth + leftPadding + rightPadding + (indicator ? indicator.width : 10))
 
             onCurrentTextChanged: {
                 if (currentText === "Facility")
@@ -132,7 +122,7 @@ ServiceAreaSample {
         Button {
             id: newBarrierButton
             visible: modeComboBox.currentText === "Barrier"
-            text: "new barrier"
+            text: qsTr("new barrier")
             enabled: visible
 
             onClicked: {
@@ -144,6 +134,7 @@ ServiceAreaSample {
     BusyIndicator {
         anchors.centerIn: parent
         running: busy
+        visible: busy
     }
 
     Dialog {
@@ -152,10 +143,10 @@ ServiceAreaSample {
         x: Math.round(parent.width - width) / 2
         y: Math.round(parent.height - height) / 2
         standardButtons: Dialog.Ok
-        title: "Route Error"
+        title: qsTr("Route Error")
         visible: text.length > 0
         property alias text : textLabel.text
-        Text {
+        Label {
             id: textLabel
             text: message
         }

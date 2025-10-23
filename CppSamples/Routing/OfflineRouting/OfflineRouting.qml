@@ -45,22 +45,12 @@ Item {
                 routingModel.travelModeIndex = currentIndex;
                 routingModel.findRoute();
             }
-
-            // Add a background to the ComboBox
-            Rectangle {
-                anchors.fill: parent
-                radius: 10
-                // Make the rectangle visible if a dropdown indicator exists
-                // An indicator only exists if a theme is set
-                visible: parent.indicator
-                border.width: 1
-            }
         }
 
         Button {
             Layout.fillWidth: true
             Layout.fillHeight: true
-            text: "Reset"
+            text: qsTr("Reset")
             onClicked: {
                 routingModel.resetMap();
             }

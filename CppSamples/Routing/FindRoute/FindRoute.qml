@@ -35,7 +35,7 @@ FindRouteSample {
         }
         visible: false
         width: Qt.platform.os === "ios" || Qt.platform.os === "android" ? 250 : 350
-        color: "#FBFBFB"
+        color: palette.base
 
         //! [FindRoute cpp ListView directionsView]
         ListView {
@@ -45,9 +45,9 @@ FindRouteSample {
                 margins: 5
             }
             header: Component {
-                Text {
+                Label {
                     height: 40
-                    text: "Directions:"
+                    text: qsTr("Directions:")
                     font.pixelSize: 22
                 }
             }
@@ -78,40 +78,18 @@ FindRouteSample {
         }
 
         // Create the solve button to solve the route
-        Rectangle {
+        Button {
             id: solveButton
-            property bool pressed: false
+            width: 130
+            height: 30
             anchors {
                 horizontalCenter: parent.horizontalCenter
                 bottom: mapView.attributionTop
                 bottomMargin: 5
             }
 
-            width: 130
-            height: 30
-            color: pressed ? "#959595" : "#D6D6D6"
-            radius: 5
-            border {
-                color: "#585858"
-                width: 1
-            }
-
-            Text {
-                id: routeButtonText
-                anchors.centerIn: parent
-                text: "Solve route"
-                font.pixelSize: 14
-                color: "#35352E"
-            }
-
-            MouseArea {
-                anchors.fill: parent
-                onPressed: solveButton.pressed = true
-                onReleased: solveButton.pressed = false
-                onClicked: {
-                    findRouteSample.solveRoute();
-                }
-            }
+            text: qsTr("Solve Route")
+            onClicked: findRouteSample.solveRoute();
         }
 
         // Create a button to show the direction window
@@ -130,7 +108,7 @@ FindRouteSample {
 
             width: 45
             height: width
-            color: pressed ? "#959595" : "#D6D6D6"
+            color: pressed ? palette.base : palette.highlight
             radius: 100
             border {
                 color: "#585858"
@@ -174,11 +152,11 @@ FindRouteSample {
                     leftMargin: 20
                     rightMargin: 20
                 }
-                color: "darkgrey"
+                color: palette.base
                 height: 1
             }
 
-            Text {
+            Label {
                 text: directionText
                 anchors {
                     fill: parent
