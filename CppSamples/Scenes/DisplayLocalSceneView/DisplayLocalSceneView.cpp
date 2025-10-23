@@ -41,7 +41,7 @@ using namespace Esri::ArcGISRuntime;
 
 DisplayLocalSceneView::DisplayLocalSceneView(QObject* parent /* = nullptr */):
   QObject(parent),
-  m_scene(new Scene(BasemapStyle::ArcGISTopographic, SceneViewingMode::Local ,this))
+  m_scene(new Scene(BasemapStyle::ArcGISTopographic, SceneViewingMode::Local, this))
 {
   // create a new elevation source from Terrain3D REST service
   ArcGISTiledElevationSource* elevationSource = new ArcGISTiledElevationSource(
