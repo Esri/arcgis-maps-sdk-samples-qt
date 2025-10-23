@@ -16,7 +16,7 @@ Portals allow you to share and publish data with others. For example, you may cr
 
 ## How it works
 
-1. A `Portal` is created. An `OAuthUserConfiguration` is created with the portal URL, a client Id and a redirect URI. 
+1. A `Portal` is created and an `OAuthUserConfiguration` is created with the portal URL, a client Id and a redirect URI corresponding to the portal.
 2. The `OAuthUserConfiguration` is added to the Toolkit's `OAuthUserConfigurationManager` to use the OAuth dialog.
 3. The Portal is loaded and displays a login screen to allow user credentials to be entered.
 4. Once the sign-in process is complete, a `PortalItem` of type `CSV` is created using this `Portal` instance.
