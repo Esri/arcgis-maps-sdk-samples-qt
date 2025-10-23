@@ -61,7 +61,7 @@ FindPlaceSample {
             fill: searchColumn
             margins: -5
         }
-        color: "white"
+        color: palette.base
     }
 
     Column {
@@ -77,8 +77,8 @@ FindPlaceSample {
         // create a text field for the POI search
         SearchBox {
             id: poiTextField
-            imageUrl: "qrc:/Samples/Search/FindPlace/find.png"
-            placeholderText: "Point of interest (e.g. Movie Theater)"
+            imageUrl: Qt.application.styleHints.colorScheme === Qt.ColorScheme.Dark ? "qrc:/Samples/Search/FindPlace/find_light.png" : "qrc:/Samples/Search/FindPlace/find.png"
+            placeholderText: qsTr("Point of interest (e.g. Movie Theater)")
             onTextChanged: {
                 if (text.length > 0 && suggestionView)
                     suggestionView.visible = true;
@@ -102,7 +102,7 @@ FindPlaceSample {
             id: locationTextField
             imageUrl: "qrc:/Samples/Search/FindPlace/location.png"
             placeholderText: "In proximity of"
-            text: "Current Location"
+            text: qsTr("Current Location")
             onTextChanged: {
                 if (text.length > 0 && suggestionView)
                     suggestionView.visible = true;
@@ -162,15 +162,14 @@ FindPlaceSample {
 
     Dialog {
         id: permissionDeniedDialog
-        title: "Location Permission Denied"
+        title: qsTr("Location Permission Denied")
         modal: true
         standardButtons: Dialog.Ok
         x: (parent.width - width) / 2
         y: (parent.height - height) / 2
 
-        Text {
-            text: "This application requires location permissions."
-            color: "white"
+        Label {
+            text: qsTr("This application requires location permissions.")
         }
     }
 }

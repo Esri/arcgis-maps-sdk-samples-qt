@@ -17,7 +17,7 @@
 import QtQuick
 
 Rectangle {
-    color: "#f7f8fa"
+    color: palette.base
     opacity: 0.85
 
     signal suggestionClicked(var label)
@@ -32,7 +32,7 @@ Rectangle {
             Rectangle {
                 width: poiTextField.width
                 height: 20
-                color: "#f7f8fa"
+                color: palette.mid
                 border.color: "darkgray"
 
                 Text {
@@ -51,7 +51,7 @@ Rectangle {
                     text: label
                     elide: Text.ElideRight
                     leftPadding: 5
-                    color: "black"
+                    color: palette.text
                 }
 
                 MouseArea {
