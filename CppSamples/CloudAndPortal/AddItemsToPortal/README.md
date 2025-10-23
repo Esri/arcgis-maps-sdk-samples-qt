@@ -18,7 +18,7 @@ Portals allow you to share and publish data with others. For example, you may cr
 
 1. A `Portal` is created and an `OAuthUserConfiguration` is created with the portal URL, a client Id and a redirect URI corresponding to the portal.
 2. The `OAuthUserConfiguration` is added to the Toolkit's `OAuthUserConfigurationManager` in order to opt-in to receiving OAuth challenges.
-3. The Portal is loaded and displays a login screen to allow user credentials to be entered.
+3. The Portal is loaded and displays an OAuth web-based login page to allow user credentials to be entered.
 4. Once the sign-in process is complete, a `PortalItem` of type `CSV` is created using this `Portal` instance.
 5. When the portal is successfully loaded, the `PortalUser` object is obtained from the `Portal`.
 6. When the "Add Item" button is clicked, the item is added via the `PortalUser`'s `addPortalItemWithUrlAsync` method. The `PortalItem` and the local URL of the CSV file are supplied as parameters.
