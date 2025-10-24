@@ -1,0 +1,33 @@
+{
+    "category": "Scenes",
+    "description": "Display a local scene with a topographic surface and 3D scene layer clipped to a local area.",
+    "featured": false,
+    "ignore": false,
+    "images": [
+        "screenshot.png"
+    ],
+    "keywords": [
+        "3D",
+        "basemap",
+        "elevation",
+        "scene",
+        "surface",
+        "ArcGISSceneLayer",
+        "ArcGISTiledElevationSource",
+        "LocalSceneView",
+        "Scene"
+    ],
+    "redirect_from": "",
+    "relevant_apis": [
+        "ArcGISSceneLayer",
+        "ArcGISTiledElevationSource",
+        "LocalSceneView",
+        "Scene"
+    ],
+    "snippets": [
+        "DisplayLocalSceneView.cpp",
+        "DisplayLocalSceneView.h",
+        "DisplayLocalSceneView.qml"
+    ],
+    "title": "Display local scene view"
+}
