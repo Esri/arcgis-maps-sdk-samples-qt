@@ -24,14 +24,14 @@ Item {
         id: settings
         width: parent.width
         height: parent.height * 0.07
-        color: "white"
+        color: palette.base
         RowLayout {
             anchors.fill: parent
             Item {
                 Layout.fillWidth: true
                 Layout.fillHeight: true
                 opacity: reticleModel.geometryEditorStarted ? 1.0 : 0.5
-                Text {
+                Label {
                     anchors.centerIn: parent
                     text: qsTr("CANCEL")
                 }
@@ -46,7 +46,7 @@ Item {
             Item {
                 Layout.fillWidth: true
                 Layout.fillHeight: true
-                Text {
+                Label {
                     anchors.centerIn: parent
                     text: qsTr("SETTINGS")
                 }
@@ -61,7 +61,7 @@ Item {
                 Layout.fillWidth: true
                 Layout.fillHeight: true
                 opacity: reticleModel.canUndo ? 1.0 : 0.5
-                Text {
+                Label {
                     anchors.centerIn: parent
                     text: qsTr("DONE")
                 }
@@ -89,14 +89,14 @@ Item {
     Rectangle {
         width: parent.width
         height: parent.height * 0.07
-        color: "white"
+        color: palette.base
         opacity: reticleModel.multifunctionButtonEnabled ? 1.0 : 0.5
         anchors {
             top: mapView.bottom
             horizontalCenter: parent.horizontalCenter
         }
 
-        Text {
+        Label {
             anchors.centerIn: parent
             text: qsTr(reticleModel.multifunctionButtonText)
             font.capitalization: Font.AllUppercase

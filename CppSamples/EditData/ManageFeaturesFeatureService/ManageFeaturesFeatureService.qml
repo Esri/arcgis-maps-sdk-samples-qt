@@ -44,15 +44,11 @@ ManageFeaturesFeatureServiceSample {
             id: callout
             calloutData: view.calloutData
             leaderPosition: Callout.LeaderPosition.Automatic
-            // Override the background to keep it consistent with button images
-            background: Rectangle {
-                color: "#ffffff"
-                border.color: "#000000"
-            }
             
             // Delete mode - show trash button, Update mode - show accessory button
             accessoryButtonType: addFeaturesSample.operationMode === ManageFeaturesFeatureService.OperationMode.DeleteFeatures ? "Custom" :
                                                                                                                                  (addFeaturesSample.operationMode === ManageFeaturesFeatureService.OperationMode.UpdateAttributes ? "Info" : "None")
+
             customImageUrl: addFeaturesSample.operationMode === ManageFeaturesFeatureService.OperationMode.DeleteFeatures ? "qrc:/Samples/EditData/ManageFeaturesFeatureService/ic_menu_trash_light.png" : ""
 
             onAccessoryButtonClicked: {
@@ -86,6 +82,7 @@ ManageFeaturesFeatureServiceSample {
         height: instructionText.visible ? 100 : 55
         border.width: 1
         radius: 5
+        color: palette.base
 
         // Mouse/Touch area to prevent mouse events from propogating through the UI
         MouseArea {
@@ -176,6 +173,7 @@ ManageFeaturesFeatureServiceSample {
         visible: false
         border.width: 1
         z: 200
+        color: palette.base
 
         MouseArea {
             anchors.fill: parent

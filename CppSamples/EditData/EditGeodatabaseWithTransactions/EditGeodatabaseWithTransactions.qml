@@ -41,7 +41,7 @@ Item {
         }
         height: statusText.implicitHeight + (parent.height * 0.02)
         opacity: 0.9
-        color: palette.window
+        color: palette.base
 
         Label {
             id: statusText
@@ -79,7 +79,7 @@ Item {
         height: Math.max(parent.height * 0.08, 50)
         border.color: "gray"
         border.width: 1
-        color: palette.window
+        color: palette.base
 
         RowLayout {
             anchors {

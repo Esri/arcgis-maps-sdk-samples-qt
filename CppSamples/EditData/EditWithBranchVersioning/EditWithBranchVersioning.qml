@@ -37,10 +37,6 @@ Item {
 
         Callout {
             id: callout
-            background: Rectangle {
-                border.color: "lightgrey"
-                border.width: 1
-            }
             calloutData: model.mapView.calloutData
             leaderPosition: Callout.LeaderPosition.Automatic
             onAccessoryButtonClicked: {
@@ -92,22 +88,20 @@ Item {
             }
             width: childrenRect.width;
             height: childrenRect.height;
-            color: "#000000"
+            color: palette.base
             visible: currentVersionText.text !== "" ? true : false
 
             ColumnLayout {
                 spacing: 3
-                Text {
+                Label {
                     text: qsTr("Current version:")
                     Layout.alignment: Qt.AlignHCenter
-                    color: "white"
                 }
 
-                Text {
+                Label {
                     id: currentVersionText
                     Layout.alignment: Qt.AlignHCenter
                     text: model.sgdbCurrentVersion
-                    color: "white"
                 }
             }
         }
@@ -120,6 +114,7 @@ Item {
         height: childrenRect.height
         radius: 10
         visible: false
+        color: palette.base
 
         MouseArea {
             anchors.fill: parent
@@ -185,10 +180,12 @@ Item {
     Rectangle {
         id: updateWindow
         anchors.centerIn: parent
-        width: childrenRect.width
-        height: childrenRect.height
+        width: childrenRect.width + 10
+        height: childrenRect.height + 10
         radius: 10
         visible: false
+        color: palette.base
+        border.color: "gray"
 
         MouseArea {
             anchors.fill: parent
@@ -200,7 +197,7 @@ Item {
             columns: 2
             anchors.margins: 5
 
-            Text {
+            Label {
                 Layout.columnSpan: 2
                 Layout.margins: 5
                 Layout.alignment: Qt.AlignHCenter
@@ -208,7 +205,7 @@ Item {
                 font.pixelSize: 16
             }
 
-            Text {
+            Label {
                 text: "TYPDAMAGE:"
                 Layout.margins: 5
             }
@@ -304,7 +301,7 @@ Item {
         anchors.centerIn: parent
         standardButtons: Dialog.Ok
 
-        Text {
+        Label {
             id: errorText
             text: model.errorMessage;
         }
@@ -315,7 +312,7 @@ Item {
         x: Math.round(parent.width - width) / 2
         y: Math.round(parent.height - height) - view.attributionRect.height;
 
-        Text {
+        Label {
             id: applyEditsText
             text: qsTr("Applying Edits")
         }
