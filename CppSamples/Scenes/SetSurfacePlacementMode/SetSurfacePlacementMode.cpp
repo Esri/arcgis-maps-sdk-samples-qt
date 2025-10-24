@@ -35,7 +35,7 @@
 #include "MapTypes.h"
 #include "Point.h"
 #include "Scene.h"
-#include "SceneQuickView.h"
+#include "LocalSceneQuickView.h" #include "SceneViewTypes.h"
 #include "SceneViewTypes.h"
 #include "SimpleMarkerSymbol.h"
 #include "SpatialReference.h"
@@ -55,7 +55,7 @@ SetSurfacePlacementMode::~SetSurfacePlacementMode() = default;
 
 void SetSurfacePlacementMode::init()
 {
-  qmlRegisterType<SceneQuickView>("Esri.Samples", 1, 0, "SceneView");
+  qmlRegisterType<LocalSceneQuickView>("Esri.Samples", 1, 0, "SceneView");
   qmlRegisterType<SetSurfacePlacementMode>("Esri.Samples", 1, 0, "SetSurfacePlacementModeSample");
 }
 
@@ -65,8 +65,8 @@ void SetSurfacePlacementMode::componentComplete()
 
   //! [Create Scene API snippet]
   // Create a scene with the imagery basemap and world elevation surface
-  m_sceneView = findChild<SceneQuickView*>("sceneView");
-  Scene* scene = new Scene(BasemapStyle::ArcGISImageryStandard, this);
+  m_sceneView = findChild<LocalSceneQuickView*>("sceneView");
+  Scene* scene = new Scene(BasemapStyle::ArcGISImageryStandard, SceneViewingMode::Local, this);
   Surface* surface = new Surface(this);
   surface->elevationSources()->append(new ArcGISTiledElevationSource(QUrl("https://elevation3d.arcgis.com/arcgis/rest/services/WorldElevation3D/Terrain3D/ImageServer"), this));
   scene->setBaseSurface(surface);

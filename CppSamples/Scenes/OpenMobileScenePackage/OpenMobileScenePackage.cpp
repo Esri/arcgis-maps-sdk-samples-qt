@@ -25,7 +25,7 @@
 #include "Error.h"
 #include "MobileScenePackage.h"
 #include "Scene.h"
-#include "SceneQuickView.h"
+#include "LocalSceneQuickView.h" #include "SceneViewTypes.h"
 
 // Qt headers
 #include <QStandardPaths>
@@ -77,17 +77,17 @@ OpenMobileScenePackage::~OpenMobileScenePackage() = default;
 void OpenMobileScenePackage::init()
 {
   // Register classes for QML
-  qmlRegisterType<SceneQuickView>("Esri.Samples", 1, 0, "SceneView");
+  qmlRegisterType<LocalSceneQuickView>("Esri.Samples", 1, 0, "SceneView");
   qmlRegisterType<OpenMobileScenePackage>("Esri.Samples", 1, 0, "OpenMobileScenePackageSample");
 }
 
-SceneQuickView* OpenMobileScenePackage::sceneView() const
+LocalSceneQuickView* OpenMobileScenePackage::sceneView() const
 {
   return m_sceneView;
 }
 
 // Set the view (created in QML)
-void OpenMobileScenePackage::setSceneView(SceneQuickView* sceneView)
+void OpenMobileScenePackage::setSceneView(LocalSceneQuickView* sceneView)
 {
   if (!sceneView || sceneView == m_sceneView)
   {

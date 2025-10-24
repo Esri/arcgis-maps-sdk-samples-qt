@@ -24,7 +24,7 @@
 // ArcGIS Maps SDK headers
 #include "Error.h"
 #include "Scene.h"
-#include "SceneQuickView.h"
+#include "LocalSceneQuickView.h" #include "SceneViewTypes.h"
 #include "SceneViewTypes.h"
 #include "Surface.h"
 
@@ -51,17 +51,17 @@ ViewContentBeneathTerrainSurface::~ViewContentBeneathTerrainSurface() = default;
 void ViewContentBeneathTerrainSurface::init()
 {
   // Register classes for QML
-  qmlRegisterType<SceneQuickView>("Esri.Samples", 1, 0, "SceneView");
+  qmlRegisterType<LocalSceneQuickView>("Esri.Samples", 1, 0, "SceneView");
   qmlRegisterType<ViewContentBeneathTerrainSurface>("Esri.Samples", 1, 0, "ViewContentBeneathTerrainSurfaceSample");
 }
 
-SceneQuickView* ViewContentBeneathTerrainSurface::sceneView() const
+LocalSceneQuickView* ViewContentBeneathTerrainSurface::sceneView() const
 {
   return m_sceneView;
 }
 
 // Set the view (created in QML)
-void ViewContentBeneathTerrainSurface::setSceneView(SceneQuickView* sceneView)
+void ViewContentBeneathTerrainSurface::setSceneView(LocalSceneQuickView* sceneView)
 {
   if (!sceneView || sceneView == m_sceneView)
     return;

@@ -27,7 +27,7 @@
 #include "ElevationSourceListModel.h"
 #include "MapTypes.h"
 #include "Scene.h"
-#include "SceneQuickView.h"
+#include "LocalSceneQuickView.h" #include "SceneViewTypes.h"
 #include "Surface.h"
 
 using namespace Esri::ArcGISRuntime;
@@ -52,17 +52,17 @@ BasicSceneView::~BasicSceneView() = default;
 void BasicSceneView::init()
 {
   // Register classes for QML
-  qmlRegisterType<SceneQuickView>("Esri.Samples", 1, 0, "SceneView");
+  qmlRegisterType<LocalSceneQuickView>("Esri.Samples", 1, 0, "SceneView");
   qmlRegisterType<BasicSceneView>("Esri.Samples", 1, 0, "BasicSceneViewSample");
 }
 
-SceneQuickView* BasicSceneView::sceneView() const
+LocalSceneQuickView* BasicSceneView::sceneView() const
 {
   return m_sceneView;
 }
 
 // Set the view (created in QML)
-void BasicSceneView::setSceneView(SceneQuickView* sceneView)
+void BasicSceneView::setSceneView(LocalSceneQuickView* sceneView)
 {
   if (!sceneView || sceneView == m_sceneView)
     return;

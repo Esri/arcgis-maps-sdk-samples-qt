@@ -32,7 +32,7 @@
 #include "Point.h"
 #include "PortalItem.h"
 #include "Scene.h"
-#include "SceneQuickView.h"
+#include "LocalSceneQuickView.h" #include "SceneViewTypes.h"
 #include "SpatialReference.h"
 #include "Surface.h"
 #include "Viewpoint.h"
@@ -71,7 +71,7 @@ DisplayKml::~DisplayKml() = default;
 void DisplayKml::init()
 {
   // Register classes for QML
-  qmlRegisterType<SceneQuickView>("Esri.Samples", 1, 0, "SceneView");
+  qmlRegisterType<LocalSceneQuickView>("Esri.Samples", 1, 0, "SceneView");
   qmlRegisterType<DisplayKml>("Esri.Samples", 1, 0, "DisplayKmlSample");
 }
 
@@ -80,7 +80,7 @@ void DisplayKml::componentComplete()
   QQuickItem::componentComplete();
 
   // Create a scene and give it to the SceneView
-  m_sceneView = findChild<SceneQuickView*>("sceneView");
+  m_sceneView = findChild<LocalSceneQuickView*>("sceneView");
   m_scene = new Scene(BasemapStyle::ArcGISImagery, this);
   Surface* surface = new Surface(this);
   surface->elevationSources()->append(

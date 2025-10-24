@@ -24,7 +24,7 @@
 namespace Esri::ArcGISRuntime
 {
   class Scene;
-  class SceneQuickView;
+  class LocalSceneQuickView;
   class Point;
   class Polygon;
 }
@@ -44,7 +44,7 @@ private:
   Esri::ArcGISRuntime::Polygon createPolygonFromPoints(const QList<Esri::ArcGISRuntime::Point>&);
 
   Esri::ArcGISRuntime::Scene* m_scene = nullptr;
-  Esri::ArcGISRuntime::SceneQuickView* m_sceneView = nullptr;
+  Esri::ArcGISRuntime::LocalSceneQuickView* m_sceneView = nullptr;
   QUrl m_elevationSourceUrl = QUrl("https://elevation3d.arcgis.com/arcgis/rest/services/WorldElevation3D/Terrain3D/ImageServer");
   int m_maxZ = 1000;
   double m_size = 0.01;

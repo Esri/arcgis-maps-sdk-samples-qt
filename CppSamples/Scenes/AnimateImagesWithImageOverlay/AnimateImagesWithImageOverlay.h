@@ -27,20 +27,20 @@
 namespace Esri::ArcGISRuntime
 {
 class Scene;
-class SceneQuickView;
+class LocalSceneQuickView;
 class ImageFrame;
 class ImageOverlay;
 }
 
 class QTimer;
 
-Q_MOC_INCLUDE("SceneQuickView.h")
+Q_MOC_INCLUDE("LocalSceneQuickView.h")
 
 class AnimateImagesWithImageOverlay : public QObject
 {
   Q_OBJECT
 
-  Q_PROPERTY(Esri::ArcGISRuntime::SceneQuickView* sceneView READ sceneView WRITE setSceneView NOTIFY sceneViewChanged)
+  Q_PROPERTY(Esri::ArcGISRuntime::LocalSceneQuickView* sceneView READ sceneView WRITE setSceneView NOTIFY sceneViewChanged)
   Q_PROPERTY(bool isStopped MEMBER m_isStopped NOTIFY isStoppedChanged)
 
 public:
@@ -62,14 +62,14 @@ private slots:
   void animateImageFrames();
 
 private:
-  Esri::ArcGISRuntime::SceneQuickView* sceneView() const;
-  void setSceneView(Esri::ArcGISRuntime::SceneQuickView* sceneView);
+  Esri::ArcGISRuntime::LocalSceneQuickView* sceneView() const;
+  void setSceneView(Esri::ArcGISRuntime::LocalSceneQuickView* sceneView);
   void setupImageOverlay();
 
   Esri::ArcGISRuntime::Envelope m_pacificSouthwestEnvelope;
   Esri::ArcGISRuntime::ImageOverlay* m_imageOverlay = nullptr;
   Esri::ArcGISRuntime::Scene* m_scene = nullptr;
-  Esri::ArcGISRuntime::SceneQuickView* m_sceneView = nullptr;
+  Esri::ArcGISRuntime::LocalSceneQuickView* m_sceneView = nullptr;
 
   int m_index = 0;
   bool m_isStopped = true;

@@ -22,7 +22,7 @@
 
 namespace Esri::ArcGISRuntime
 {
-  class SceneQuickView;
+  class LocalSceneQuickView;
   class GraphicsOverlay;
 }
 
@@ -44,7 +44,7 @@ private:
   void addGraphicsOverlays();
 
 private:
-  Esri::ArcGISRuntime::SceneQuickView* m_sceneView = nullptr;
+  Esri::ArcGISRuntime::LocalSceneQuickView* m_sceneView = nullptr;
   Esri::ArcGISRuntime::GraphicsOverlay* m_drapedFlatOverlay = nullptr;
   Esri::ArcGISRuntime::GraphicsOverlay* m_drapedBillboardedOverlay = nullptr;
   Esri::ArcGISRuntime::GraphicsOverlay* m_relativeOverlay = nullptr;

@@ -25,7 +25,7 @@
 
 namespace Esri::ArcGISRuntime
 {
-class SceneQuickView;
+class LocalSceneQuickView;
 class Scene;
 class KmlLayer;
 class KmlDataset;
@@ -48,7 +48,7 @@ public:
   Q_INVOKABLE void createFromPortalItem();
 
 private:
-  Esri::ArcGISRuntime::SceneQuickView* m_sceneView = nullptr;
+  Esri::ArcGISRuntime::LocalSceneQuickView* m_sceneView = nullptr;
   Esri::ArcGISRuntime::Scene* m_scene = nullptr;
   Esri::ArcGISRuntime::Viewpoint m_viewpoint;
   Esri::ArcGISRuntime::KmlDataset* m_kmlDataset = nullptr;

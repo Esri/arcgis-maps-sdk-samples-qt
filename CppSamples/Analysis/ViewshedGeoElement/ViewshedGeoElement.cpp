@@ -46,7 +46,7 @@
 #include "Point.h"
 #include "RendererSceneProperties.h"
 #include "Scene.h"
-#include "SceneQuickView.h"
+#include "LocalSceneQuickView.h" #include "SceneViewTypes.h"
 #include "SceneViewTypes.h"
 #include "SimpleRenderer.h"
 #include "SpatialReference.h"
@@ -89,7 +89,7 @@ ViewshedGeoElement::ViewshedGeoElement(QQuickItem* parent /* = nullptr */):
 void ViewshedGeoElement::init()
 {
   // Register classes for QML
-  qmlRegisterType<SceneQuickView>("Esri.Samples", 1, 0, "SceneView");
+  qmlRegisterType<LocalSceneQuickView>("Esri.Samples", 1, 0, "SceneView");
   qmlRegisterType<ViewshedGeoElement>("Esri.Samples", 1, 0, "ViewshedGeoElementSample");
 }
 
@@ -98,8 +98,8 @@ void ViewshedGeoElement::componentComplete()
   QQuickItem::componentComplete();
 
   // Create a scene and give it to the SceneView
-  m_sceneView = findChild<SceneQuickView*>("sceneView");
-  Scene* scene = new Scene(BasemapStyle::ArcGISImageryStandard, this);
+  m_sceneView = findChild<LocalSceneQuickView*>("sceneView");
+  Scene* scene = new Scene(BasemapStyle::ArcGISImageryStandard, SceneViewingMode::Local, this);
 
   // Create a surface
   Surface* surface = new Surface(this);
@@ -115,7 +115,7 @@ void ViewshedGeoElement::componentComplete()
 
   // Add an AnalysisOverlay
   m_analysisOverlay = new AnalysisOverlay(this);
-  m_sceneView->analysisOverlays()->append(m_analysisOverlay);
+  // m_sceneView->analysisOverlays()->append(m_analysisOverlay);
 
   // Add a GraphicsOverlay
   createGraphicsOverlay();
@@ -144,7 +144,7 @@ void ViewshedGeoElement::componentComplete()
   // create the camera controller to follow the graphic
   OrbitGeoElementCameraController* followingController = new OrbitGeoElementCameraController(m_tank, 200.0, this);
   followingController->setCameraPitchOffset(45.0);
-  m_sceneView->setCameraController(followingController);
+  // m_sceneView->setCameraController(followingController);
 
   // Create a Timer
   m_timer = new QTimer(this);
@@ -152,9 +152,9 @@ void ViewshedGeoElement::componentComplete()
   connect(m_timer, &QTimer::timeout, this, &ViewshedGeoElement::animate);
 
   // connect to the mouse clicked signal
-  connect(m_sceneView, &SceneQuickView::mouseClicked, this, [this](QMouseEvent& event)
+  connect(m_sceneView, &LocalSceneQuickView::mouseClicked, this, [this](QMouseEvent& event)
   {
-    m_waypoint = m_sceneView->screenToBaseSurface(event.position().x(), event.position().y());
+    // m_waypoint = m_sceneView->screenToBaseSurface(event.position().x(), event.position().y());
     m_timer->start();
   });
 }

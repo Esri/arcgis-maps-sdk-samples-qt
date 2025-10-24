@@ -28,7 +28,7 @@
 #include "LayerListModel.h"
 #include "Point.h"
 #include "Scene.h"
-#include "SceneQuickView.h"
+#include "LocalSceneQuickView.h" #include "SceneViewTypes.h"
 #include "SpatialReference.h"
 #include "Viewpoint.h"
 
@@ -63,17 +63,17 @@ AddIntegratedMeshLayer::~AddIntegratedMeshLayer() = default;
 void AddIntegratedMeshLayer::init()
 {
   // Register classes for QML
-  qmlRegisterType<SceneQuickView>("Esri.Samples", 1, 0, "SceneView");
+  qmlRegisterType<LocalSceneQuickView>("Esri.Samples", 1, 0, "SceneView");
   qmlRegisterType<AddIntegratedMeshLayer>("Esri.Samples", 1, 0, "AddIntegratedMeshLayerSample");
 }
 
-SceneQuickView* AddIntegratedMeshLayer::sceneView() const
+LocalSceneQuickView* AddIntegratedMeshLayer::sceneView() const
 {
   return m_sceneView;
 }
 
 // Set the view (created in QML)
-void AddIntegratedMeshLayer::setSceneView(SceneQuickView* sceneView)
+void AddIntegratedMeshLayer::setSceneView(LocalSceneQuickView* sceneView)
 {
   if (!sceneView || sceneView == m_sceneView)
   {

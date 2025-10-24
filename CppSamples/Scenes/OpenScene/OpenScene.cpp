@@ -24,7 +24,7 @@
 // ArcGIS Maps SDK headers
 #include "PortalItem.h"
 #include "Scene.h"
-#include "SceneQuickView.h"
+#include "LocalSceneQuickView.h" #include "SceneViewTypes.h"
 
 using namespace Esri::ArcGISRuntime;
 
@@ -36,7 +36,7 @@ OpenScene::OpenScene(QQuickItem* parent /* = nullptr */):
 void OpenScene::init()
 {
   // Register classes for QML
-  qmlRegisterType<SceneQuickView>("Esri.Samples", 1, 0, "SceneView");
+  qmlRegisterType<LocalSceneQuickView>("Esri.Samples", 1, 0, "SceneView");
   qmlRegisterType<OpenScene>("Esri.Samples", 1, 0, "OpenSceneSample");
 }
 
@@ -44,7 +44,7 @@ void OpenScene::componentComplete()
 {
   QQuickItem::componentComplete();
 
-  m_sceneView = findChild<SceneQuickView*>("sceneView");
+  m_sceneView = findChild<LocalSceneQuickView*>("sceneView");
 
   // Create a PortalItem with an Item ID
   PortalItem* item = new PortalItem(QStringLiteral("31874da8a16d45bfbc1273422f772270"), this);

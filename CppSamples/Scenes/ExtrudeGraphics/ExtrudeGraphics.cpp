@@ -37,7 +37,7 @@
 #include "PolygonBuilder.h"
 #include "RendererSceneProperties.h"
 #include "Scene.h"
-#include "SceneQuickView.h"
+#include "LocalSceneQuickView.h" #include "SceneViewTypes.h"
 #include "SceneViewTypes.h"
 #include "SimpleFillSymbol.h"
 #include "SimpleRenderer.h"
@@ -61,7 +61,7 @@ ExtrudeGraphics::~ExtrudeGraphics() = default;
 
 void ExtrudeGraphics::init()
 {
-  qmlRegisterType<SceneQuickView>("Esri.Samples", 1, 0, "SceneView");
+  qmlRegisterType<LocalSceneQuickView>("Esri.Samples", 1, 0, "SceneView");
   qmlRegisterType<ExtrudeGraphics>("Esri.Samples", 1, 0, "ExtrudeGraphicsSample");
 }
 
@@ -70,7 +70,7 @@ void ExtrudeGraphics::componentComplete()
   QQuickItem::componentComplete();
 
   // find QML SceneView component
-  m_sceneView = findChild<SceneQuickView*>("sceneView");
+  m_sceneView = findChild<LocalSceneQuickView*>("sceneView");
 
   // create a new basemap instance
   Basemap* basemap = new Basemap(BasemapStyle::ArcGISImageryStandard, this);

@@ -44,7 +44,7 @@
 #include "PolylineBuilder.h"
 #include "RendererSceneProperties.h"
 #include "Scene.h"
-#include "SceneQuickView.h"
+#include "LocalSceneQuickView.h" #include "SceneViewTypes.h"
 #include "SceneViewTypes.h"
 #include "SimpleLineSymbol.h"
 #include "SimpleMarkerSceneSymbol.h"
@@ -104,7 +104,7 @@ Animate3DSymbols::~Animate3DSymbols() = default;
 
 void Animate3DSymbols::init()
 {
-  qmlRegisterType<SceneQuickView>("Esri.Samples", 1, 0, "SceneView");
+  qmlRegisterType<LocalSceneQuickView>("Esri.Samples", 1, 0, "SceneView");
   qmlRegisterType<MapQuickView>("Esri.Samples", 1, 0, "MapView");
   qmlRegisterType<Animate3DSymbols>("Esri.Samples", 1, 0, "Animate3DSymbolsSample");
   qmlRegisterUncreatableType<QAbstractListModel>("Esri.Samples", 1, 0, "AbstractListModel", "AbstractListModel is uncreateable");
@@ -115,9 +115,9 @@ void Animate3DSymbols::componentComplete()
   QQuickItem::componentComplete();
 
   // find QML SceneView component
-  m_sceneView = findChild<SceneQuickView*>("sceneView");
+  m_sceneView = findChild<LocalSceneQuickView*>("sceneView");
   // create a new scene instance
-  Scene* scene = new Scene(BasemapStyle::ArcGISImageryStandard, this);
+  Scene* scene = new Scene(BasemapStyle::ArcGISImageryStandard, SceneViewingMode::Local, this);
 
   // set scene on the scene view
   m_sceneView->setArcGISScene(scene);
@@ -306,7 +306,7 @@ void Animate3DSymbols::createGraphic3D()
 
     // create the camera controller to follow the graphic
     m_followingController = new OrbitGeoElementCameraController(m_graphic3d, 500, this);
-    m_sceneView->setCameraController(m_followingController);
+    // m_sceneView->setCameraController(m_followingController);
   }
   else
   {
@@ -320,10 +320,10 @@ void Animate3DSymbols::createGraphic3D()
 
 void Animate3DSymbols::setFollowing(bool following)
 {
-  if (following)
-    m_sceneView->setCameraController(m_followingController);
-  else
-    m_sceneView->setCameraController(m_globeController);
+  // if (following)
+  // m_sceneView->setCameraController(m_followingController);
+  // else
+  // m_sceneView->setCameraController(m_globeController);
 }
 
 void Animate3DSymbols::zoomMapIn()

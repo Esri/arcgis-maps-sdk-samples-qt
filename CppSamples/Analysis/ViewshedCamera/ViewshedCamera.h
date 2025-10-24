@@ -23,7 +23,7 @@
 namespace Esri::ArcGISRuntime
 {
 class Scene;
-class SceneQuickView;
+class LocalSceneQuickView;
 class AnalysisOverlay;
 class LocationViewshed;
 }
@@ -44,7 +44,7 @@ private:
   void setInitialViewpoint();
 
   Esri::ArcGISRuntime::Scene* m_scene = nullptr;
-  Esri::ArcGISRuntime::SceneQuickView* m_sceneView = nullptr;
+  Esri::ArcGISRuntime::LocalSceneQuickView* m_sceneView = nullptr;
   Esri::ArcGISRuntime::AnalysisOverlay* m_analysisOverlay = nullptr;
   Esri::ArcGISRuntime::LocationViewshed* m_viewshed = nullptr;
 };

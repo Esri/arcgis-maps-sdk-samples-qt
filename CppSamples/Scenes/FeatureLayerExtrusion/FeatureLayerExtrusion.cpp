@@ -31,7 +31,7 @@
 #include "Point.h"
 #include "RendererSceneProperties.h"
 #include "Scene.h"
-#include "SceneQuickView.h"
+#include "LocalSceneQuickView.h" #include "SceneViewTypes.h"
 #include "SceneViewTypes.h"
 #include "ServiceFeatureTable.h"
 #include "SimpleFillSymbol.h"
@@ -61,7 +61,7 @@ FeatureLayerExtrusion::FeatureLayerExtrusion(QQuickItem* parent /* = nullptr */)
 void FeatureLayerExtrusion::init()
 {
   // Register classes for QML
-  qmlRegisterType<SceneQuickView>("Esri.Samples", 1, 0, "SceneView");
+  qmlRegisterType<LocalSceneQuickView>("Esri.Samples", 1, 0, "SceneView");
   qmlRegisterType<FeatureLayerExtrusion>("Esri.Samples", 1, 0, "FeatureLayerExtrusionSample");
 }
 
@@ -82,8 +82,8 @@ void FeatureLayerExtrusion::componentComplete()
   m_featureLayer->setRenderer(m_renderer);
 
   // Create a scene and give it to the SceneView
-  m_sceneView = findChild<SceneQuickView*>("sceneView");
-  Scene* scene = new Scene(BasemapStyle::ArcGISImageryStandard, this);
+  m_sceneView = findChild<LocalSceneQuickView*>("sceneView");
+  Scene* scene = new Scene(BasemapStyle::ArcGISImageryStandard, SceneViewingMode::Local, this);
   Surface* surface = new Surface(this);
   surface->elevationSources()->append(
         new ArcGISTiledElevationSource(

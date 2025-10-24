@@ -36,7 +36,7 @@
 #include "Point.h"
 #include "RendererSceneProperties.h"
 #include "Scene.h"
-#include "SceneQuickView.h"
+#include "LocalSceneQuickView.h" #include "SceneViewTypes.h"
 #include "SceneViewTypes.h"
 #include "SimpleMarkerSceneSymbol.h"
 #include "SimpleRenderer.h"
@@ -54,7 +54,7 @@ namespace
 
 ScenePropertiesExpressions::ScenePropertiesExpressions(QObject* parent /* = nullptr */):
   QObject(parent),
-  m_scene(new Scene(BasemapStyle::ArcGISImageryStandard, this))
+  m_scene(new Scene(BasemapStyle::ArcGISImageryStandard, SceneViewingMode::Local, this))
 {
   // create a new elevation source from Terrain3D REST service
   ArcGISTiledElevationSource* elevationSource = new ArcGISTiledElevationSource(
@@ -81,17 +81,17 @@ ScenePropertiesExpressions::~ScenePropertiesExpressions() = default;
 void ScenePropertiesExpressions::init()
 {
   // Register classes for QML
-  qmlRegisterType<SceneQuickView>("Esri.Samples", 1, 0, "SceneView");
+  qmlRegisterType<LocalSceneQuickView>("Esri.Samples", 1, 0, "SceneView");
   qmlRegisterType<ScenePropertiesExpressions>("Esri.Samples", 1, 0, "ScenePropertiesExpressionsSample");
 }
 
-SceneQuickView* ScenePropertiesExpressions::sceneView() const
+LocalSceneQuickView* ScenePropertiesExpressions::sceneView() const
 {
   return m_sceneView;
 }
 
 // Set the view (created in QML)
-void ScenePropertiesExpressions::setSceneView(SceneQuickView* sceneView)
+void ScenePropertiesExpressions::setSceneView(LocalSceneQuickView* sceneView)
 {
   if (!sceneView || sceneView == m_sceneView)
   {

@@ -36,7 +36,7 @@
 #include "OrbitGeoElementCameraController.h"
 #include "Point.h"
 #include "Scene.h"
-#include "SceneQuickView.h"
+#include "LocalSceneQuickView.h" #include "SceneViewTypes.h"
 #include "SceneViewTypes.h"
 #include "SimpleMarkerSceneSymbol.h"
 #include "SimpleMarkerSymbol.h"
@@ -76,7 +76,7 @@ DistanceCompositeSymbol::~DistanceCompositeSymbol() = default;
 
 void DistanceCompositeSymbol::init()
 {
-  qmlRegisterType<SceneQuickView>("Esri.Samples", 1, 0, "SceneView");
+  qmlRegisterType<LocalSceneQuickView>("Esri.Samples", 1, 0, "SceneView");
   qmlRegisterType<DistanceCompositeSymbol>("Esri.Samples", 1, 0, "DistanceCompositeSymbolSample");
 }
 
@@ -88,7 +88,7 @@ void DistanceCompositeSymbol::componentComplete()
   const QString dataPath = defaultDataPath() + "/ArcGIS/Runtime/Data/3D/Bristol/Collada/Bristol.dae";
 
   // find QML SceneView component
-  m_sceneView = findChild<SceneQuickView*>("sceneView");
+  m_sceneView = findChild<LocalSceneQuickView*>("sceneView");
 
   // create a new basemap instance
   Basemap* basemap = new Basemap(BasemapStyle::ArcGISImageryStandard, this);
@@ -152,7 +152,7 @@ void DistanceCompositeSymbol::componentComplete()
       OrbitGeoElementCameraController* cameraController = new OrbitGeoElementCameraController(graphic, 200, this);
       cameraController->setCameraPitchOffset(80);
       cameraController->setCameraHeadingOffset(-30);
-      m_sceneView->setCameraController(cameraController);
+      // m_sceneView->setCameraController(cameraController);
     }
   });
 

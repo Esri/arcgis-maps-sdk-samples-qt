@@ -22,7 +22,7 @@
 
 namespace Esri::ArcGISRuntime
 {
-class SceneQuickView;
+class LocalSceneQuickView;
 class ArcGISSceneLayer;
 }
 
@@ -38,7 +38,7 @@ public:
   static void init();
 
 private:
-  Esri::ArcGISRuntime::SceneQuickView* m_sceneView = nullptr;
+  Esri::ArcGISRuntime::LocalSceneQuickView* m_sceneView = nullptr;
   Esri::ArcGISRuntime::ArcGISSceneLayer* m_sceneLayer = nullptr;
   void connectSignals();
 };

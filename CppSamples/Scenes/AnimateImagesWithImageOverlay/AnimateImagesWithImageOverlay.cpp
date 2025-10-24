@@ -34,7 +34,8 @@
 #include "MapTypes.h"
 #include "Point.h"
 #include "Scene.h"
-#include "SceneQuickView.h"
+#include "LocalSceneQuickView.h"
+#include "SceneViewTypes.h"
 #include "SceneView.h"
 #include "SpatialReference.h"
 #include "Surface.h"
@@ -76,7 +77,7 @@ using namespace Esri::ArcGISRuntime;
 AnimateImagesWithImageOverlay::AnimateImagesWithImageOverlay(QObject* parent /* = nullptr */):
   QObject(parent),
   // Create a scene using the dark gray basemap
-  m_scene(new Scene(BasemapStyle::ArcGISDarkGray, this)),
+  m_scene(new Scene(BasemapStyle::ArcGISDarkGray, SceneViewingMode::Local, this)),
   m_dataPath(defaultDataPath() + "/ArcGIS/Runtime/Data/3D/ImageOverlay/PacificSouthWest"),
   m_dir(m_dataPath),
   m_images(m_dir.entryList(QStringList() << "*.png", QDir::Files)),
@@ -96,17 +97,17 @@ AnimateImagesWithImageOverlay::~AnimateImagesWithImageOverlay() = default;
 void AnimateImagesWithImageOverlay::init()
 {
   // Register classes for QML
-  qmlRegisterType<SceneQuickView>("Esri.Samples", 1, 0, "SceneView");
+  qmlRegisterType<LocalSceneQuickView>("Esri.Samples", 1, 0, "SceneView");
   qmlRegisterType<AnimateImagesWithImageOverlay>("Esri.Samples", 1, 0, "AnimateImagesWithImageOverlaySample");
 }
 
-SceneQuickView* AnimateImagesWithImageOverlay::sceneView() const
+LocalSceneQuickView* AnimateImagesWithImageOverlay::sceneView() const
 {
   return m_sceneView;
 }
 
 // Set the view (created in QML)
-void AnimateImagesWithImageOverlay::setSceneView(SceneQuickView* sceneView)
+void AnimateImagesWithImageOverlay::setSceneView(LocalSceneQuickView* sceneView)
 {
   if (!sceneView || sceneView == m_sceneView)
     return;

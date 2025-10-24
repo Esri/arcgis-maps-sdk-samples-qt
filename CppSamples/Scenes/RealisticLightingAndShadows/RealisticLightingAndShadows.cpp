@@ -29,7 +29,7 @@
 #include "LayerListModel.h"
 #include "MapTypes.h"
 #include "Scene.h"
-#include "SceneQuickView.h"
+#include "LocalSceneQuickView.h" #include "SceneViewTypes.h"
 #include "SceneViewTypes.h"
 #include "Surface.h"
 
@@ -69,17 +69,17 @@ RealisticLightingAndShadows::~RealisticLightingAndShadows() = default;
 void RealisticLightingAndShadows::init()
 {
   // Register classes for QML
-  qmlRegisterType<SceneQuickView>("Esri.Samples", 1, 0, "SceneView");
+  qmlRegisterType<LocalSceneQuickView>("Esri.Samples", 1, 0, "SceneView");
   qmlRegisterType<RealisticLightingAndShadows>("Esri.Samples", 1, 0, "RealisticLightingAndShadowsSample");
 }
 
-SceneQuickView* RealisticLightingAndShadows::sceneView() const
+LocalSceneQuickView* RealisticLightingAndShadows::sceneView() const
 {
   return m_sceneView;
 }
 
 // Set the view (created in QML)
-void RealisticLightingAndShadows::setSceneView(SceneQuickView* sceneView)
+void RealisticLightingAndShadows::setSceneView(LocalSceneQuickView* sceneView)
 {
   if (!sceneView || sceneView == m_sceneView)
     return;
@@ -92,13 +92,13 @@ void RealisticLightingAndShadows::setSceneView(SceneQuickView* sceneView)
   m_sceneView->setViewpointCameraAsync(camera, 0);
 
   // set atmosphere effect to realistic
-  m_sceneView->setAtmosphereEffect(AtmosphereEffect::Realistic);
+  // m_sceneView->setAtmosphereEffect(AtmosphereEffect::Realistic);
 
   // set the sun time to the calendar
   setSunTimeFromValue(8.5);
 
   // add sun lighting
-  m_sceneView->setSunLighting(LightingMode::LightAndShadows);
+  // m_sceneView->setSunLighting(LightingMode::LightAndShadows);
 
   emit sceneViewChanged();
 }
@@ -121,7 +121,7 @@ void RealisticLightingAndShadows::setSunTimeFromValue(double sunTimeValue)
   // 3600 seconds/hour * -7 hours = -25,200 seconds.
 
   // set the sun time to the calendar
-  m_sceneView->setSunTime(sunTime);
+  // m_sceneView->setSunTime(sunTime);
 
   // trigger the time in the settings column to update
   emit sunTimeChanged(selectedTime.toString("h:mm ap"));
@@ -134,14 +134,14 @@ void RealisticLightingAndShadows::setLightingMode(int lightingModeValue)
 
   if (lightingModeValue == 0)
   {
-    m_sceneView->setSunLighting(LightingMode::NoLight);
+    // m_sceneView->setSunLighting(LightingMode::NoLight);
   }
   else if (lightingModeValue == 1)
   {
-    m_sceneView->setSunLighting(LightingMode::Light);
+    // m_sceneView->setSunLighting(LightingMode::Light);
   }
   else
   {
-    m_sceneView->setSunLighting(LightingMode::LightAndShadows);
+    // m_sceneView->setSunLighting(LightingMode::LightAndShadows);
   }
 }

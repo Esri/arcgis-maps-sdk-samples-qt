@@ -26,16 +26,16 @@
 namespace Esri::ArcGISRuntime
 {
 class Scene;
-class SceneQuickView;
+class LocalSceneQuickView;
 }
 
-Q_MOC_INCLUDE("SceneQuickView.h")
+Q_MOC_INCLUDE("LocalSceneQuickView.h")
 
 class ChangeAtmosphereEffect : public QObject
 {
   Q_OBJECT
   Q_PROPERTY(AtmosphereEnum atmosphereEffect READ atmosphereEffect WRITE setAtmosphereEffect NOTIFY atmosphereEffectChanged)
-  Q_PROPERTY(Esri::ArcGISRuntime::SceneQuickView* sceneView READ sceneView WRITE setSceneView NOTIFY sceneViewChanged)
+  Q_PROPERTY(Esri::ArcGISRuntime::LocalSceneQuickView* sceneView READ sceneView WRITE setSceneView NOTIFY sceneViewChanged)
 public:
   enum AtmosphereEnum {
     None = static_cast<int>(Esri::ArcGISRuntime::AtmosphereEffect::None),
@@ -54,14 +54,14 @@ signals:
   void atmosphereEffectChanged();
 
 private:
-  Esri::ArcGISRuntime::SceneQuickView* sceneView() const;
-  void setSceneView(Esri::ArcGISRuntime::SceneQuickView* sceneView);
+  Esri::ArcGISRuntime::LocalSceneQuickView* sceneView() const;
+  void setSceneView(Esri::ArcGISRuntime::LocalSceneQuickView* sceneView);
 
   void setAtmosphereEffect(AtmosphereEnum atmosphereEffect);
   AtmosphereEnum atmosphereEffect() const;
 
   Esri::ArcGISRuntime::Scene* m_scene = nullptr;
-  Esri::ArcGISRuntime::SceneQuickView* m_sceneView = nullptr;
+  Esri::ArcGISRuntime::LocalSceneQuickView* m_sceneView = nullptr;
 };
 
 #endif // CHANGEATMOSPHEREEFFECT_H

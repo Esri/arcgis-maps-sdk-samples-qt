@@ -28,7 +28,8 @@
 #include "LayerListModel.h"
 #include "MapTypes.h"
 #include "Scene.h"
-#include "SceneQuickView.h"
+#include "LocalSceneQuickView.h"
+#include "SceneViewTypes.h"
 #include "Surface.h"
 
 // Qt headers
@@ -36,9 +37,9 @@
 
 using namespace Esri::ArcGISRuntime;
 
-AddAPointSceneLayer::AddAPointSceneLayer(QObject* parent /* = nullptr */):
+AddAPointSceneLayer::AddAPointSceneLayer(QObject* parent /* = nullptr */) :
   QObject(parent),
-  m_scene(new Scene(BasemapStyle::ArcGISImageryStandard, this))
+  m_scene(new Scene(BasemapStyle::ArcGISImageryStandard, SceneViewingMode::Local, this))
 {
   // create a new elevation source from Terrain3D REST service
   ArcGISTiledElevationSource* elevationSource = new ArcGISTiledElevationSource(
@@ -60,17 +61,17 @@ AddAPointSceneLayer::~AddAPointSceneLayer() = default;
 void AddAPointSceneLayer::init()
 {
   // Register classes for QML
-  qmlRegisterType<SceneQuickView>("Esri.Samples", 1, 0, "SceneView");
+  qmlRegisterType<LocalSceneQuickView>("Esri.Samples", 1, 0, "SceneView");
   qmlRegisterType<AddAPointSceneLayer>("Esri.Samples", 1, 0, "AddAPointSceneLayerSample");
 }
 
-SceneQuickView* AddAPointSceneLayer::sceneView() const
+LocalSceneQuickView* AddAPointSceneLayer::sceneView() const
 {
   return m_sceneView;
 }
 
 // Set the view (created in QML)
-void AddAPointSceneLayer::setSceneView(SceneQuickView* sceneView)
+void AddAPointSceneLayer::setSceneView(LocalSceneQuickView* sceneView)
 {
   if (!sceneView || sceneView == m_sceneView)
     return;

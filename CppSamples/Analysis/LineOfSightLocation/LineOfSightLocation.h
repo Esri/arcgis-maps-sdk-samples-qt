@@ -22,7 +22,7 @@
 
 namespace Esri::ArcGISRuntime
 {
-class SceneQuickView;
+class LocalSceneQuickView;
 class AnalysisOverlay;
 class LocationLineOfSight;
 }
@@ -39,7 +39,7 @@ public:
   static void init();
 
 private:
-  Esri::ArcGISRuntime::SceneQuickView* m_sceneView = nullptr;
+  Esri::ArcGISRuntime::LocalSceneQuickView* m_sceneView = nullptr;
   Esri::ArcGISRuntime::AnalysisOverlay* m_analysisOverlay = nullptr;
   Esri::ArcGISRuntime::LocationLineOfSight* m_lineOfSight = nullptr;
 

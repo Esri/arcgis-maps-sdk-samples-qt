@@ -42,7 +42,7 @@
 #include "PortalItem.h"
 #include "Scene.h"
 #include "SceneLayerPolygonFilter.h"
-#include "SceneQuickView.h"
+#include "LocalSceneQuickView.h" #include "SceneViewTypes.h"
 #include "SimpleFillSymbol.h"
 #include "SimpleLineSymbol.h"
 #include "SpatialReference.h"
@@ -111,7 +111,7 @@ FilterFeaturesInScene::~FilterFeaturesInScene() = default;
 void FilterFeaturesInScene::init()
 {
   // Register the scene view for QML
-  qmlRegisterType<SceneQuickView>("Esri.Samples", 1, 0, "SceneView");
+  qmlRegisterType<LocalSceneQuickView>("Esri.Samples", 1, 0, "SceneView");
   qmlRegisterType<FilterFeaturesInScene>("Esri.Samples", 1, 0, "FilterFeaturesInSceneSample");
 }
 
@@ -148,13 +148,13 @@ void FilterFeaturesInScene::reset()
   m_sceneView->graphicsOverlays()->first()->graphics()->clear();
 }
 
-SceneQuickView* FilterFeaturesInScene::sceneView() const
+LocalSceneQuickView* FilterFeaturesInScene::sceneView() const
 {
   return m_sceneView;
 }
 
 // Set the view (created in QML)
-void FilterFeaturesInScene::setSceneView(SceneQuickView* sceneView)
+void FilterFeaturesInScene::setSceneView(LocalSceneQuickView* sceneView)
 {
   if (!sceneView || sceneView == m_sceneView)
     return;

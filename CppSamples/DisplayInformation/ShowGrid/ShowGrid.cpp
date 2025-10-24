@@ -30,7 +30,7 @@
 #include "MGRSGrid.h"
 #include "Point.h"
 #include "Scene.h"
-#include "SceneQuickView.h"
+#include "LocalSceneQuickView.h" #include "SceneViewTypes.h"
 #include "SimpleLineSymbol.h"
 #include "SpatialReference.h"
 #include "Surface.h"
@@ -75,7 +75,7 @@ void ShowGrid::init()
 {
   // Register classes for QML
   qmlRegisterType<MapQuickView>("Esri.Samples", 1, 0, "MapView");
-  qmlRegisterType<SceneQuickView>("Esri.Samples", 1, 0, "SceneView");
+  qmlRegisterType<LocalSceneQuickView>("Esri.Samples", 1, 0, "SceneView");
   qmlRegisterType<ShowGrid>("Esri.Samples", 1, 0, "ShowGridSample");
 }
 
@@ -98,13 +98,13 @@ void ShowGrid::setMapView(MapQuickView* mapView)
   emit mapViewChanged();
 }
 
-SceneQuickView* ShowGrid::sceneView() const
+LocalSceneQuickView* ShowGrid::sceneView() const
 {
   return m_sceneView;
 }
 
 // Set the view (created in QML)
-void ShowGrid::setSceneView(SceneQuickView* sceneView)
+void ShowGrid::setSceneView(LocalSceneQuickView* sceneView)
 {
   if (!sceneView || sceneView == m_sceneView)
     return;

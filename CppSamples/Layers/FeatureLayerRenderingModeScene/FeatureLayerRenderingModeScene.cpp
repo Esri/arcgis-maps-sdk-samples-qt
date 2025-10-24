@@ -29,7 +29,7 @@
 #include "MapTypes.h"
 #include "Point.h"
 #include "Scene.h"
-#include "SceneQuickView.h"
+#include "LocalSceneQuickView.h" #include "SceneViewTypes.h"
 #include "ServiceFeatureTable.h"
 #include "SpatialReference.h"
 
@@ -49,7 +49,7 @@ FeatureLayerRenderingModeScene::FeatureLayerRenderingModeScene(QQuickItem* paren
 void FeatureLayerRenderingModeScene::init()
 {
   // Register classes for QML
-  qmlRegisterType<SceneQuickView>("Esri.Samples", 1, 0, "SceneView");
+  qmlRegisterType<LocalSceneQuickView>("Esri.Samples", 1, 0, "SceneView");
   qmlRegisterType<FeatureLayerRenderingModeScene>("Esri.Samples", 1, 0, "FeatureLayerRenderingModeSceneSample");
 }
 
@@ -58,7 +58,7 @@ void FeatureLayerRenderingModeScene::componentComplete()
   QQuickItem::componentComplete();
 
   // Create a scene for static rendering
-  m_topSceneView = findChild<SceneQuickView*>("topSceneView");
+  m_topSceneView = findChild<LocalSceneQuickView*>("topSceneView");
   Scene* topScene = new Scene(this);
   topScene->loadSettings()->setPreferredPointFeatureRenderingMode(FeatureRenderingMode::Static);
   topScene->loadSettings()->setPreferredPolygonFeatureRenderingMode(FeatureRenderingMode::Static);
@@ -67,7 +67,7 @@ void FeatureLayerRenderingModeScene::componentComplete()
   m_topSceneView->setArcGISScene(topScene);
 
   // Create a scene for dynamic rendering
-  m_bottomSceneView = findChild<SceneQuickView*>("bottomSceneView");
+  m_bottomSceneView = findChild<LocalSceneQuickView*>("bottomSceneView");
   Scene* bottomScene = new Scene(this);
   bottomScene->loadSettings()->setPreferredPointFeatureRenderingMode(FeatureRenderingMode::Dynamic);
   bottomScene->loadSettings()->setPreferredPolygonFeatureRenderingMode(FeatureRenderingMode::Dynamic);

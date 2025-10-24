@@ -32,7 +32,8 @@
 #include "MapTypes.h"
 #include "Point.h"
 #include "Scene.h"
-#include "SceneQuickView.h"
+#include "LocalSceneQuickView.h"
+#include "SceneViewTypes.h"
 #include "SpatialReference.h"
 #include "Surface.h"
 
@@ -49,7 +50,7 @@ LineOfSightLocation::LineOfSightLocation(QQuickItem* parent /* = nullptr */):
 void LineOfSightLocation::init()
 {
   // Register classes for QML
-  qmlRegisterType<SceneQuickView>("Esri.Samples", 1, 0, "SceneView");
+  qmlRegisterType<LocalSceneQuickView>("Esri.Samples", 1, 0, "SceneView");
   qmlRegisterType<LineOfSightLocation>("Esri.Samples", 1, 0, "LineOfSightLocationSample");
 }
 
@@ -58,7 +59,7 @@ void LineOfSightLocation::componentComplete()
   QQuickItem::componentComplete();
 
   // Create a scene and give it to the SceneView
-  m_sceneView = findChild<SceneQuickView*>("sceneView");
+  m_sceneView = findChild<LocalSceneQuickView*>("sceneView");
 
   Scene* scene = new Scene(BasemapStyle::ArcGISTopographic, this);
   Surface* surface = new Surface(this);
@@ -71,7 +72,7 @@ void LineOfSightLocation::componentComplete()
 
   // Add an Analysis Overlay
   m_analysisOverlay = new AnalysisOverlay(this);
-  m_sceneView->analysisOverlays()->append(m_analysisOverlay);
+  // m_sceneView->analysisOverlays()->append(m_analysisOverlay);
 
   // set initial viewpoint
   setInitialViewpoint();
@@ -113,27 +114,27 @@ void LineOfSightLocation::setInitialViewpoint()
 void LineOfSightLocation::connectSignals()
 {
   // on mouse click perform the location viewshed
-  connect(m_sceneView, &SceneQuickView::mouseClicked, this, [this](QMouseEvent& event)
+  connect(m_sceneView, &LocalSceneQuickView::mouseClicked, this, [this](QMouseEvent& event)
   {
-    const Point pt = m_sceneView->screenToBaseSurface(event.position().x(), event.position().y());
-    m_lineOfSight->setTargetLocation(pt);
+    // const Point pt = m_sceneView->screenToBaseSurface(event.position().x(), event.position().y());
+    // m_lineOfSight->setTargetLocation(pt);
   });
 
-  connect(m_sceneView, &SceneQuickView::mousePressedAndHeld, this, [this]
+  connect(m_sceneView, &LocalSceneQuickView::mousePressedAndHeld, this, [this]
   {
     m_calculating = true;
   });
 
-  connect(m_sceneView, &SceneQuickView::mouseMoved, this, [this](QMouseEvent& event)
+  connect(m_sceneView, &LocalSceneQuickView::mouseMoved, this, [this](QMouseEvent& event)
   {
     if (m_calculating)
     {
-      const Point pt = m_sceneView->screenToBaseSurface(event.position().x(), event.position().y());
-      m_lineOfSight->setTargetLocation(pt);
+      // const Point pt = m_sceneView->screenToBaseSurface(event.position().x(), event.position().y());
+      // m_lineOfSight->setTargetLocation(pt);
     }
   });
 
-  connect(m_sceneView, &SceneQuickView::mouseReleased, this, [this]
+  connect(m_sceneView, &LocalSceneQuickView::mouseReleased, this, [this]
   {
     m_calculating = false;
   });

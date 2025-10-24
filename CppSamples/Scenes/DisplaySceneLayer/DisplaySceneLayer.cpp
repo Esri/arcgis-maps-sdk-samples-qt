@@ -31,7 +31,7 @@
 #include "MapTypes.h"
 #include "Point.h"
 #include "Scene.h"
-#include "SceneQuickView.h"
+#include "LocalSceneQuickView.h" #include "SceneViewTypes.h"
 #include "SpatialReference.h"
 #include "Surface.h"
 #include "Viewpoint.h"
@@ -47,7 +47,7 @@ DisplaySceneLayer::~DisplaySceneLayer() = default;
 
 void DisplaySceneLayer::init()
 {
-  qmlRegisterType<SceneQuickView>("Esri.Samples", 1, 0, "SceneView");
+  qmlRegisterType<LocalSceneQuickView>("Esri.Samples", 1, 0, "SceneView");
   qmlRegisterType<DisplaySceneLayer>("Esri.Samples", 1, 0, "DisplaySceneLayerSample");
 }
 
@@ -56,7 +56,7 @@ void DisplaySceneLayer::componentComplete()
   QQuickItem::componentComplete();
 
   // find QML SceneView component
-  m_sceneView = findChild<SceneQuickView*>("sceneView");
+  m_sceneView = findChild<LocalSceneQuickView*>("sceneView");
 
   // create a new scene instance
   Basemap* basemap = new Basemap(BasemapStyle::ArcGISTopographic, this);

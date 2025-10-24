@@ -22,7 +22,7 @@
 
 namespace Esri::ArcGISRuntime
 {
-class SceneQuickView;
+class LocalSceneQuickView;
 }
 
 class DisplayKmlNetworkLinks : public QQuickItem
@@ -45,7 +45,7 @@ signals:
 private:
   void setCurrentKmlNetworkMessage(const QString& message);
 
-  Esri::ArcGISRuntime::SceneQuickView* m_sceneView = nullptr;
+  Esri::ArcGISRuntime::LocalSceneQuickView* m_sceneView = nullptr;
   QString m_currentKmlNetworkMessage;
 };
 

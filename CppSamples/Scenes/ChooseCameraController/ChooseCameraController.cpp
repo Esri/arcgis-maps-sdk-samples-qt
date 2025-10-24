@@ -37,7 +37,7 @@
 #include "OrbitLocationCameraController.h"
 #include "Point.h"
 #include "Scene.h"
-#include "SceneQuickView.h"
+#include "LocalSceneQuickView.h" #include "SceneViewTypes.h"
 #include "SceneViewTypes.h"
 #include "SpatialReference.h"
 #include "Surface.h"
@@ -73,7 +73,7 @@ ChooseCameraController::ChooseCameraController(QObject* parent /* = nullptr */):
   QObject(parent),
   m_orbitGlobe(new GlobeCameraController(this)),
   m_orbitLocation(new OrbitLocationCameraController(Point(longitude, latitude, 0.0, SpatialReference::wgs84()), 100, this)),
-  m_scene(new Scene(BasemapStyle::ArcGISImageryStandard, this))
+  m_scene(new Scene(BasemapStyle::ArcGISImageryStandard, SceneViewingMode::Local, this))
 {
   // create a new elevation source from Terrain3D REST service
   ArcGISTiledElevationSource* elevationSource = new ArcGISTiledElevationSource(
@@ -103,7 +103,7 @@ void ChooseCameraController::setGlobeController()
 {
   if(m_sceneView != nullptr)
   {
-    m_sceneView->setCameraController(m_orbitGlobe);
+    // m_sceneView->setCameraController(m_orbitGlobe);
   }
 }
 
@@ -111,7 +111,7 @@ void ChooseCameraController::setOrbitLocationController()
 {
   if(m_sceneView != nullptr)
   {
-    m_sceneView->setCameraController(m_orbitLocation);
+    // m_sceneView->setCameraController(m_orbitLocation);
   }
 }
 
@@ -119,24 +119,24 @@ void ChooseCameraController::setOrbitGeoElementController()
 {
   if(m_sceneView != nullptr)
   {
-    m_sceneView->setCameraController(m_orbitGeoElement);
+    // m_sceneView->setCameraController(m_orbitGeoElement);
   }
 }
 
 void ChooseCameraController::init()
 {
   // Register classes for QML
-  qmlRegisterType<SceneQuickView>("Esri.Samples", 1, 0, "SceneView");
+  qmlRegisterType<LocalSceneQuickView>("Esri.Samples", 1, 0, "SceneView");
   qmlRegisterType<ChooseCameraController>("Esri.Samples", 1, 0, "ChooseCameraControllerSample");
 }
 
-SceneQuickView* ChooseCameraController::sceneView() const
+LocalSceneQuickView* ChooseCameraController::sceneView() const
 {
   return m_sceneView;
 }
 
 // Set the view (created in QML)
-void ChooseCameraController::setSceneView(SceneQuickView* sceneView)
+void ChooseCameraController::setSceneView(LocalSceneQuickView* sceneView)
 {
   if (!sceneView || sceneView == m_sceneView)
   {

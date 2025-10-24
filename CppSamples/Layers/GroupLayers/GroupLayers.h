@@ -23,20 +23,20 @@
 namespace Esri::ArcGISRuntime
 {
 class Scene;
-class SceneQuickView;
+class LocalSceneQuickView;
 class LayerListModel;
 }
 
 class QAbstractListModel;
 
-Q_MOC_INCLUDE("SceneQuickView.h")
+Q_MOC_INCLUDE("LocalSceneQuickView.h")
 Q_MOC_INCLUDE("LayerListModel.h")
 
 class GroupLayers : public QObject
 {
   Q_OBJECT
 
-  Q_PROPERTY(Esri::ArcGISRuntime::SceneQuickView* sceneView READ sceneView WRITE setSceneView NOTIFY sceneViewChanged)
+  Q_PROPERTY(Esri::ArcGISRuntime::LocalSceneQuickView* sceneView READ sceneView WRITE setSceneView NOTIFY sceneViewChanged)
   Q_PROPERTY(Esri::ArcGISRuntime::LayerListModel* layerListModel MEMBER m_layerListModel NOTIFY layerListModelChanged)
 
 public:
@@ -53,11 +53,11 @@ public:
   Q_INVOKABLE Esri::ArcGISRuntime::LayerListModel* getGroupLayerListModel(int layerId);
 
 private:
-  Esri::ArcGISRuntime::SceneQuickView* sceneView() const;
-  void setSceneView(Esri::ArcGISRuntime::SceneQuickView* sceneView);
+  Esri::ArcGISRuntime::LocalSceneQuickView* sceneView() const;
+  void setSceneView(Esri::ArcGISRuntime::LocalSceneQuickView* sceneView);
 
   Esri::ArcGISRuntime::Scene* m_scene = nullptr;
-  Esri::ArcGISRuntime::SceneQuickView* m_sceneView = nullptr;
+  Esri::ArcGISRuntime::LocalSceneQuickView* m_sceneView = nullptr;
   Esri::ArcGISRuntime::LayerListModel* m_layerListModel = nullptr;
 };
 

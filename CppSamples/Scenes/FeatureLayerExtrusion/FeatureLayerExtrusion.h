@@ -28,7 +28,7 @@ namespace Esri::ArcGISRuntime
 {
 class FeatureLayer;
 class ServiceFeatureTable;
-class SceneQuickView;
+class LocalSceneQuickView;
 class OrbitLocationCameraController;
 class SimpleLineSymbol;
 class SimpleFillSymbol;
@@ -50,7 +50,7 @@ public:
   Q_INVOKABLE void totalPopulation();
 
 private:
-  Esri::ArcGISRuntime::SceneQuickView* m_sceneView = nullptr;
+  Esri::ArcGISRuntime::LocalSceneQuickView* m_sceneView = nullptr;
   Esri::ArcGISRuntime::FeatureLayer* m_featureLayer = nullptr;
   Esri::ArcGISRuntime::ServiceFeatureTable* m_featureTable = nullptr;
   Esri::ArcGISRuntime::SimpleLineSymbol* m_lineSymbol = nullptr;
