@@ -59,8 +59,8 @@ Item {
             width: 140
 
             background: Rectangle {
-                color: "black"
-                opacity: .5
+                color: palette.base
+                opacity: .9
             }
 
             contentItem: ColumnLayout {
@@ -75,12 +75,11 @@ Item {
                     Layout.alignment: Qt.AlignHCenter | Qt.AlignVCenter
                     columns: 2
 
-                    Text {
+                    Label {
                         id: geometryHeader
                         Layout.alignment: Qt.AlignHCenter | Qt.AlignVCenter
                         Layout.columnSpan: 2
-                        text: "Create"
-                        color: "white"
+                        text: qsTr("Create")
                         font.pixelSize: 16
                         font.bold: true
                     }
@@ -128,12 +127,11 @@ Item {
                     Layout.alignment: Qt.AlignHCenter | Qt.AlignVCenter
                     columns: 2
 
-                    Text {
+                    Label {
                         id: editingHeader
                         Layout.alignment: Qt.AlignHCenter | Qt.AlignVCenter
                         Layout.columnSpan: 2
                         text: qsTr("Edit")
-                        color: "white"
                         font.pixelSize: 16
                         font.bold: true
                     }
@@ -188,7 +186,7 @@ Item {
         }
         width: 360
         visible: false
-        color: "white"
+        color: palette.base
         opacity: 1
 
         ListView {
@@ -206,23 +204,21 @@ Item {
                     Layout.minimumWidth: optionPanel.width
                     Layout.minimumHeight: 35
 
-                    Text {
+                    Label {
                         Layout.alignment: Qt.AlignLeft
                         Layout.fillWidth: true
                         Layout.minimumWidth: optionPanel.width * 0.75
-                        text: "Snapping"
+                        text: qsTr("Snapping")
                         font.pixelSize: 15
-                        color: "#8434C1"
                         font.bold: true
                     }
 
-                    Text {
+                    Label {
                         Layout.alignment: Qt.AlignRight
                         Layout.fillWidth: true
                         Layout.minimumWidth: optionPanel.width * 0.25
-                        text: "Done"
+                        text: qsTr("Done")
                         font.pixelSize: 15
-                        color: "#8434C1"
                         font.bold: true
                         MouseArea {
                             anchors.fill: parent
@@ -239,9 +235,9 @@ Item {
                         Layout.alignment: Qt.AlignLeft
                         Layout.minimumWidth: snapSourceView.width - (snapSourceView.anchors.margins / 2)
                         Layout.minimumHeight: 35
-                        color: "#E9DFEA"
+                        color: palette.mid
 
-                        Text {
+                        Label {
                             text: qsTr("Snapping enabled")
                             font.pixelSize: 15
                             anchors {
@@ -264,9 +260,9 @@ Item {
                         Layout.alignment: Qt.AlignLeft
                         Layout.minimumWidth: snapSourceView.width - (snapSourceView.anchors.margins / 2)
                         Layout.minimumHeight: 35
-                        color: "#E9DFEA"
+                        color: palette.mid
 
-                        Text {
+                        Label {
                             text: qsTr("Geometry guides")
                             font.pixelSize: 15
                             anchors {
@@ -289,10 +285,10 @@ Item {
                         Layout.alignment: Qt.AlignLeft
                         Layout.minimumWidth: snapSourceView.width - (snapSourceView.anchors.margins / 2)
                         Layout.minimumHeight: 35
-                        color: "#E9DFEA"
+                        color: palette.mid
 
 
-                        Text {
+                        Label {
                             text: qsTr("Feature snapping")
                             font.pixelSize: 15
                             anchors {
@@ -328,12 +324,11 @@ Item {
                         Layout.minimumWidth: optionPanel.width
                         Layout.minimumHeight: 25
 
-                        Text {
+                        Label {
                             Layout.alignment: Qt.AlignLeft
                             Layout.fillWidth: true
                             Layout.minimumWidth: optionPanel.width * 0.5
                             Layout.minimumHeight: 25
-                            color: "#8434C1"
                             text: section + " layers"
                             font.pixelSize: 15
                             font.bold: true
@@ -341,13 +336,12 @@ Item {
                             Layout.bottomMargin: 10
                         }
 
-                        Text {
+                        Label {
                             Layout.alignment: Qt.AlignRight
                             Layout.minimumWidth: optionPanel.width * 0.5
                             Layout.minimumHeight: 25
-                            text: "Enable All Sources"
+                            text: qsTr("Enable All Sources")
                             font.pixelSize: 15
-                            color: "#8434C1"
                             font.bold: true
                             Layout.topMargin: 10
                             Layout.bottomMargin: 10
@@ -367,7 +361,7 @@ Item {
                 id:delegate
                 Rectangle {
                     id: wrapper
-                    color: "#E9DFEA"
+                    color: palette.mid
                     width: snapSourceView.width - (snapSourceView.anchors.margins / 2)
                     height: delegate.height
                     anchors {
@@ -380,7 +374,7 @@ Item {
                         Layout.minimumWidth: optionPanel.width
                         width: wrapper.width
 
-                        Text {
+                        Label {
                             Layout.alignment: Qt.AlignLeft
                             Layout.fillWidth: true
                             Layout.minimumWidth: optionPanel.width / 2

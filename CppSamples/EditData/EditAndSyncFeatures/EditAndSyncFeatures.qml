@@ -71,54 +71,32 @@ EditAndSyncFeaturesSample {
     }
 
     // Create the button to generate/sync geodatabase
-    Rectangle {
+    Button {
         id: syncButton
-        property bool pressed: false
         anchors {
             horizontalCenter: parent.horizontalCenter
             bottom: parent.bottom
             bottomMargin: 23
         }
 
-        width: isOffline ? 175 : 200
-        height: 35
-        color: pressed ? "#959595" : "#D6D6D6"
-        radius: 8
-        border {
-            color: "#585858"
-            width: 1
+        text: isOffline ? qsTr("Sync Geodatabase") : qsTr("Generate Geodatabase")
+        leftPadding: 20
+        rightPadding: 20
+        icon {
+            source: isOffline ? "qrc:/Samples/EditData/EditAndSyncFeatures/sync.png" : "qrc:/Samples/EditData/EditAndSyncFeatures/download.png"
+            width: 24
+            height: 24
+            color: palette.text
         }
 
-        Row {
-            anchors.fill: parent
-            spacing: 5
-            Image {
-                width: 38
-                height: width
-                source: isOffline ? "qrc:/Samples/EditData/EditAndSyncFeatures/sync.png" : "qrc:/Samples/EditData/EditAndSyncFeatures/download.png"
-            }
-
-            Text {
-                anchors.verticalCenter: parent.verticalCenter
-                text: isOffline ? "Sync Geodatabase" : "Generate Geodatabase"
-                font.pixelSize: 14
-                color: "#474747"
-            }
-        }
-
-        MouseArea {
-            anchors.fill: parent
-            onPressed: syncButton.pressed = true
-            onReleased: syncButton.pressed = false
-            onClicked: {
-                if (isOffline) {
-                    instructions.visible = false;
-                    editAndSyncSample.executeSync();
-                    syncWindow.visible = true;
-                } else {
-                    editAndSyncSample.generateGeodatabaseFromCorners(extentRectangle.x, extentRectangle.y, (extentRectangle.x + extentRectangle.width), (extentRectangle.y + extentRectangle.height));
-                    syncWindow.visible = true;
-                }
+        onClicked: {
+            if (isOffline) {
+                instructions.visible = false;
+                editAndSyncSample.executeSync();
+                syncWindow.visible = true;
+            } else {
+                editAndSyncSample.generateGeodatabaseFromCorners(extentRectangle.x, extentRectangle.y, (extentRectangle.x + extentRectangle.width), (extentRectangle.y + extentRectangle.height));
+                syncWindow.visible = true;
             }
         }
     }
@@ -132,15 +110,14 @@ EditAndSyncFeaturesSample {
             right: parent.right
         }
         height: 25
-        color: "gray"
+        color: palette.base
         opacity: 0.9
         visible: false
 
-        Text {
+        Label {
             anchors.centerIn: parent
             text: instructionText
             font.pixelSize: 16
-            color: "white"
         }
     }
 
@@ -167,7 +144,7 @@ EditAndSyncFeaturesSample {
             anchors.centerIn: parent
             width: 125
             height: 100
-            color: "lightgrey"
+            color: palette.base
             opacity: 0.8
             radius: 5
             border {
@@ -186,7 +163,7 @@ EditAndSyncFeaturesSample {
                     anchors.horizontalCenter: parent.horizontalCenter
                 }
 
-                Text {
+                Label {
                     anchors.horizontalCenter: parent.horizontalCenter
                     text: statusText
                     font.pixelSize: 16
@@ -200,7 +177,7 @@ EditAndSyncFeaturesSample {
             onTriggered: {
                 syncWindow.visible = false;
                 instructions.visible = true;
-                instructionText = "Tap on a feature";
+                instructionText = qsTr("Tap on a feature");
             }
         }
 

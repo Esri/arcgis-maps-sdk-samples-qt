@@ -21,13 +21,13 @@ import QtQuick.Layouts 1.15
 Popup {
 	id: settingsPopup
 	property var reticleModel
-    x: (parent.width - width) / 2
-    y: (parent.height - height) / 2
-    width: 200
-    height: 280
+	x: (parent.width - width) / 2
+	y: (parent.height - height) / 2
+	width: 200
+	height: 280
 	modal: true
 	focus: true
-	background: Rectangle { color: "#E0E0E0"; radius: 10 }
+	background: Rectangle { color: palette.base; radius: 10 }
 	contentItem: ColumnLayout {
 		spacing: 10
 		anchors.fill: parent
@@ -47,29 +47,29 @@ Popup {
 				Layout.alignment: Qt.AlignCenter
 			}
 
-            ComboBox {
-                id: geometryTypePicker
-                Layout.preferredWidth: 140
-                model: [qsTr("Point"), qsTr("Multipoint"), qsTr("Polygon"), qsTr("Polyline")]
-                onCurrentIndexChanged: reticleModel.selectedGeometryType = currentIndex
-                background: Rectangle {
-                    color: "white"
-                    border.color: "#888"
-                    border.width: 1
-                }
-                contentItem: Text {
-                    text: qsTr(geometryTypePicker.currentText)
-                    horizontalAlignment: Text.AlignHCenter
-                    verticalAlignment: Text.AlignVCenter
-                }
+			ComboBox {
+				id: geometryTypePicker
+				Layout.preferredWidth: 140
+				model: [qsTr("Point"), qsTr("Multipoint"), qsTr("Polygon"), qsTr("Polyline")]
+				onCurrentIndexChanged: reticleModel.selectedGeometryType = currentIndex
+				background: Rectangle {
+					color: palette.mid
+					border.color: "#888"
+					border.width: 1
+				}
+				contentItem: Label {
+					text: qsTr(geometryTypePicker.currentText)
+					horizontalAlignment: Text.AlignHCenter
+					verticalAlignment: Text.AlignVCenter
+				}
 				Layout.alignment: Qt.AlignCenter
-            }
+			}
 		}
 
 		Rectangle {
 			height: 1
 			Layout.fillWidth: true
-			color: "#B0BEC5"
+			color: palette.mid
 		}
 
 		RowLayout {
@@ -91,15 +91,15 @@ Popup {
 		Rectangle {
 			height: 1
 			Layout.fillWidth: true
-			color: "#B0BEC5"
+			color: palette.mid
 		}
 
 		Item {
 			opacity: reticleModel.canUndo ? 1.0 : 0.5
-            Layout.fillWidth: true
+			Layout.fillWidth: true
 			Layout.fillHeight: true
 
-			Text {
+			Label {
 				anchors.centerIn: parent
 				text: qsTr("UNDO")
 			}
@@ -114,15 +114,15 @@ Popup {
 		Rectangle {
 			height: 1
 			Layout.fillWidth: true
-			color: "#B0BEC5"
+			color: palette.mid
 		}
 
 		Item {
-            Layout.fillWidth: true
-            Layout.fillHeight: true
+			Layout.fillWidth: true
+			Layout.fillHeight: true
 			opacity: reticleModel.canRedo ? 1.0 : 0.5
 
-			Text {
+			Label {
 				anchors.centerIn: parent
 				text: qsTr("REDO")
 			}
@@ -137,14 +137,14 @@ Popup {
 		Rectangle {
 			height: 1
 			Layout.fillWidth: true
-			color: "#B0BEC5"
+			color: palette.mid
 		}
 
 		Item {
 			Layout.fillWidth: true
 			Layout.fillHeight: true
 			opacity: reticleModel.selectedElementCanDelete ? 1.0 : 0.5
-			Text {
+			Label {
 				anchors.centerIn: parent
 				text: qsTr("DELETE")
 			}
@@ -159,13 +159,13 @@ Popup {
 		Rectangle {
 			height: 1
 			Layout.fillWidth: true
-			color: "#B0BEC5"
+			color: palette.mid
 		}
 
 		Item {
 			Layout.fillWidth: true
 			Layout.fillHeight: true
-			Text {
+			Label {
 				anchors.centerIn: parent
 				text: qsTr("CLOSE")
 			}

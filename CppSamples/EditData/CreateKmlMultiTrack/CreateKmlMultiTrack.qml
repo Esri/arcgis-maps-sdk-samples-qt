@@ -33,6 +33,7 @@ Item {
         width: parent.width
         height: parent.height * 0.2
         anchors.top: view.bottom
+        color: palette.base
         Loader {
             anchors.fill: parent
             sourceComponent: multiTrackModel.isShowTracksFromFileEnabled ? trackBrowseOptions : trackSimulationOptions
@@ -51,7 +52,7 @@ Item {
                 height: 10
             }
 
-            Text {
+            Label {
                 visible: multiTrackModel.isRecordingTrack
                 text: multiTrackModel.isRecordingTrack ? qsTr("Recording KML track. Elements added = ") + multiTrackModel.elementsCount : ""
                 font.pixelSize: 18
@@ -60,7 +61,7 @@ Item {
                 Layout.alignment: Qt.AlignCenter
             }
 
-            Text {
+            Label {
                 text: qsTr("Number of tracks in Multitrack: ") + multiTrackModel.multiTrackCount
                 font.pixelSize: 15
                 font.bold: true
@@ -93,14 +94,8 @@ Item {
                     id: startRecordingButton
                     text: multiTrackModel.isRecordingTrack ? qsTr("Stop Recording") : qsTr("Record Track(s)")
                     background: Rectangle {
-                        color: "purple"
+                        color: palette.button
                         radius: 20
-                    }
-                    contentItem: Text {
-                        text: startRecordingButton.text
-                        font.pixelSize: 15
-                        font.bold: true
-                        color: "white"
                     }
                     onClicked: {
                         if (multiTrackModel.isRecordingTrack) {
@@ -139,12 +134,11 @@ Item {
         ColumnLayout {
             anchors.fill: parent
             Component.onCompleted : multiTrackModel.loadLocalKmlFile()
-            Text {
+            Label {
                 width: parent.width
                 text: qsTr("Browse KML Tracks")
                 font.pixelSize: 18
                 font.bold: true
-                color: "black"
                 Layout.alignment: Qt.AlignBottom | Qt.AlignHCenter
             }
 
@@ -162,17 +156,17 @@ Item {
 
                 // Reset Button
                 Button {
-                    onClicked: multiTrackModel.reset()
+                    text: qsTr("Reset")
+                    font {
+                        pixelSize: 15
+                        bold: true
+                    }
                     background: Rectangle {
-                        color: "purple"
                         radius: 10
+                        color: palette.button
                     }
-                    contentItem: Text {
-                        text: qsTr("Reset")
-                        font.pixelSize: 15
-                        font.bold: true
-                        color: "white"
-                    }
+
+                    onClicked: multiTrackModel.reset()
                 }
             }
         }
