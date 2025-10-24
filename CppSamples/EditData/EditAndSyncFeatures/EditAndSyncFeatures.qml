@@ -40,13 +40,13 @@ EditAndSyncFeaturesSample {
     }
 
     onHideWindow: (time, success) => {
-                      syncWindow.hideWindow(time);
+        syncWindow.hideWindow(time);
 
-                      if (success) {
-                          extentRectangle.visible = false;
-                          syncButton.visible = false;
-                      }
-                  }
+        if (success) {
+            extentRectangle.visible = false;
+            syncButton.visible = false;
+        }
+    }
 
     onUpdateInstruction: instruction => {
                              instructions.visible = true;
