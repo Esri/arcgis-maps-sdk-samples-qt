@@ -177,7 +177,7 @@ EditAndSyncFeaturesSample {
             onTriggered: {
                 syncWindow.visible = false;
                 instructions.visible = true;
-                instructionText = "Tap on a feature";
+                instructionText = qsTr("Tap on a feature");
             }
         }
 

@@ -206,7 +206,7 @@ Item {
             }
 
             Label {
-                text: "TYPDAMAGE:"
+                text: qsTr("TYPDAMAGE:")
                 Layout.margins: 5
             }
 
