@@ -25,6 +25,7 @@ ViewshedCameraSample {
     height: 600
 
     SceneView {
+        id: view
         objectName: "sceneView"
         anchors.fill: parent
 
@@ -32,15 +33,15 @@ ViewshedCameraSample {
             // Set the focus on SceneView to initially enable keyboard navigation
             forceActiveFocus();
         }
-    }
 
-    Button {
-        anchors {
-            left: parent.left
-            top: parent.top
-            margins: 10
+        Button {
+            anchors {
+                horizontalCenter: parent.horizontalCenter
+                bottom: view.attributionTop
+                margins: 5
+            }
+            text: qsTr("Calculate Viewshed")
+            onClicked: calculateViewshed();
         }
-        text: "Calculate Viewshed"
-        onClicked: calculateViewshed();
     }
 }

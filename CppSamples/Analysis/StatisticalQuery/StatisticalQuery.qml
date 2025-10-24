@@ -45,7 +45,7 @@ StatisticalQuerySample {
             fill: controlColumn
             margins: -10
         }
-        color: "#E9E9EA"
+        color: palette.base
         radius: 3
         opacity: 0.8
         border {
@@ -65,17 +65,17 @@ StatisticalQuerySample {
 
         CheckBox {
             id: extentCheckbox
-            text: "Only cities in current extent"
+            text: qsTr("Only cities in current extent")
         }
 
         CheckBox {
             id: bigCitiesCheckbox
-            text: "Only cities greater than 5M"
+            text: qsTr("Only cities greater than 5M")
         }
 
         Button {
             anchors.horizontalCenter: parent.horizontalCenter
-            text: "Get Statistics"
+            text: qsTr("Get Statistics")
             onClicked: queryStatistics(extentOnly, bigCitiesOnly)
         }
     }
@@ -89,11 +89,11 @@ StatisticalQuerySample {
         property alias text : textLabel.text
         property alias informativeText : detailsLabel.text
         ColumnLayout {
-            Text {
+            Label {
                 id: textLabel
-                text: "Query Statistics Results:"
+                text: qsTr("Query Statistics Results:")
             }
-            Text {
+            Label {
                 id: detailsLabel
             }
         }
