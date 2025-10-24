@@ -15,17 +15,28 @@ You'll be prompted to load a portal anonymously or with a log-in. After you sign
 ## How it works
 
 1. The user is prompted to load a portal anonymously or with a log-in.
-2. A `Portal` is then loaded - if the user chose to log-in in step 1, this uses a `Credential` of type OAuth.
-3. When the app starts, the portal is loaded and if required, the `AuthenticationManager` issues a challenge for the supplied credential type.
-4. The user is presented with an `Authenticator` which allows them to log-in.
-5. After a successful load, get the list of basemaps: `portal::fetchBasemapsAsync()`
+2. A `Portal` is then loaded. 
+3. If the user chose to log-in in step 1, this uses `OAuthUserConfiguration`.
+4. An `OAuthUserConfiguration` is created with the portal URL, a client Id and a redirect URI corresponding to the portal.
+5. The `OAuthUserConfiguration` is added to the Toolkit's `OAuthUserConfigurationManager` in order to opt-in to receiving OAuth challenges.
+6. When the app launches, the portal is loaded, which triggers an authentication challenge.
+7. An `Authenticator` listens to the challenge and displays a login screen to allow user credentials to be entered.
+8. If the user chose to load a portal anonymously, all `OAuthUserConfiguration` are cleared.
+9. After a successful load, get the list of basemaps: `portal::fetchBasemapsAsync()`
 
 ## Relevant API
 
+* Authenticator
+* Authentication::OAuthUserConfiguration
+* OAuthUserConfigurationManager
 * Portal
 * Portal::fetchBasemapsAsync
 
 ## Additional information
+
+## Additional information
+
+This sample uses the `OAuthUserConfigurationManager` toolkit component and requires the [toolkit](https://github.com/Esri/arcgis-maps-sdk-toolkit-qt) to be cloned and set-up locally.
 
 See [Customize basemaps](https://enterprise.arcgis.com/en/portal/latest/administer/windows/customize-basemaps.htm) in the *Portal for ArcGIS* documentation to learn about customizing the organization's basemap list in a portal.
 
