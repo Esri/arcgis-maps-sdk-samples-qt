@@ -49,9 +49,9 @@ EditAndSyncFeaturesSample {
     }
 
     onUpdateInstruction: instruction => {
-                             instructions.visible = true;
-                             instructionText = instruction;
-                         }
+        instructions.visible = true;
+        instructionText = instruction;
+    }
 
     onShowButton: syncButton.visible = true;
 
