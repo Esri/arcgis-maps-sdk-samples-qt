@@ -33,14 +33,15 @@ Item {
 
         RowLayout {
             anchors {
-                left: parent.left
-                top: parent.top
+                horizontalCenter: parent.horizontalCenter
+                bottom: view.attributionTop
+                bottomMargin: 5
             }
 
             Button {
                 Layout.fillWidth: true
                 Layout.fillHeight: true
-                text: "Find service areas"
+                text: qsTr("Find service areas")
                 onClicked: {
                     model.findServiceAreas();
                     enabled = false;
@@ -57,7 +58,7 @@ Item {
 
     BusyIndicator {
         anchors.centerIn: parent
-        visible: true
+        visible: model.taskRunning
         running: model.taskRunning
     }
 }

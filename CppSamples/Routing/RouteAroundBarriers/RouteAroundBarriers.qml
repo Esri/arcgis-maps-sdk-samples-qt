@@ -49,7 +49,7 @@ Item {
                 Layout.bottomMargin: 0
                 implicitWidth: grid.implicitWidth
                 height: childrenRect.height
-                color: "lightgrey"
+                color: palette.base
 
                 GridLayout {
                     id: grid
@@ -65,7 +65,7 @@ Item {
                         padding: 5
                         Button {
                             id: stopButton
-                            text: "Add stop"
+                            text: qsTr("Add stop")
                             checked: true
                             highlighted: checked
                             onClicked: {
@@ -77,7 +77,7 @@ Item {
                         }
                         Button {
                             id: barrierButton
-                            text: "Add barrier"
+                            text: qsTr("Add barrier")
                             highlighted: checked;
                             onClicked: {
                                 checked = true;
@@ -89,11 +89,11 @@ Item {
                     }
 
                     Column {
-                        spacing: 2
+                        spacing: 8
 
                         CheckBox {
                             id: bestSequenceBox
-                            text: "Find best sequence"
+                            text: qsTr("Find best sequence")
                             onCheckedChanged: {
                                 sampleModel.findBestSequence = checked;
                                 sampleModel.createAndDisplayRoute();
@@ -101,7 +101,7 @@ Item {
                         }
                         CheckBox {
                             id: firstStopBox
-                            text: "Preserve first stop"
+                            text: qsTr("Preserve first stop")
                             leftPadding: checkBoxPadding
                             enabled: bestSequenceBox.checked
                             onCheckedChanged: {
@@ -111,7 +111,7 @@ Item {
                         }
                         CheckBox {
                             id: lastStopBox
-                            text: "Preserve last stop"
+                            text: qsTr("Preserve last stop")
                             leftPadding: checkBoxPadding
                             enabled: bestSequenceBox.checked
                             onCheckedChanged: {
@@ -125,7 +125,7 @@ Item {
                         Layout.alignment: Qt.AlignHCenter
                         Button {
                             id: resetButton
-                            text: "Reset"
+                            text: qsTr("Reset")
                             onClicked: {
                                 sampleModel.clearRouteAndGraphics();
                                 sampleModel.clearDirections();
@@ -136,14 +136,14 @@ Item {
                     Row {
                         Layout.alignment: Qt.AlignHCenter
                         Button {
-                            text: "Hide directions"
+                            text: qsTr("Hide directions")
                             onClicked: {
-                                if (text === "Hide directions") {
+                                if (text === qsTr("Hide directions")) {
                                     directionsView.delegate = blankDelegate;
-                                    text = "Show directions";
+                                    text = qsTr("Show directions");
                                 } else {
                                     directionsView.delegate = directionDelegate;
-                                    text = "Hide directions";
+                                    text = qsTr("Hide directions");
                                 }
                             }
                         }
@@ -160,19 +160,21 @@ Item {
                 Layout.preferredWidth: backBox.width
                 Layout.preferredHeight: 300
                 Layout.margins: 3
-                color: "lightgrey"
+                color: palette.base
 
                 ScrollView {
                     anchors.fill: parent
 
                     ListView {
                         id: directionsView
+                        implicitHeight: contentHeight
+                        clip: true
                         anchors {
                             fill: parent
                             margins: 5
                         }
-                        header: Text {
-                            text: "Directions:"
+                        header: Label {
+                            text: qsTr("Directions:")
                             font.pixelSize: 22
                             bottomPadding: 8
                         }
@@ -212,11 +214,11 @@ Item {
                     leftMargin: 20
                     rightMargin: 20
                 }
-                color: "darkgrey"
+                color: palette.mid
                 height: 1
             }
 
-            Text {
+            Label {
                 text: directionText
                 anchors {
                     fill: parent
