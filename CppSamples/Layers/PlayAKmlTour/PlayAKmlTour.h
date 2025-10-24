@@ -23,7 +23,7 @@
 namespace Esri::ArcGISRuntime
 {
 class Scene;
-class SceneQuickView;
+class LocalSceneQuickView;
 class KmlTour;
 class KmlTourController;
 class KmlLayer;
@@ -32,13 +32,13 @@ class KmlNode;
 class KmlNodeListModel;
 }
 
-Q_MOC_INCLUDE("SceneQuickView.h")
+Q_MOC_INCLUDE("LocalSceneQuickView.h")
 
 class PlayAKmlTour : public QObject
 {
   Q_OBJECT
 
-  Q_PROPERTY(Esri::ArcGISRuntime::SceneQuickView* sceneView READ sceneView WRITE setSceneView NOTIFY sceneViewChanged)
+  Q_PROPERTY(Esri::ArcGISRuntime::LocalSceneQuickView* sceneView READ sceneView WRITE setSceneView NOTIFY sceneViewChanged)
   Q_PROPERTY(bool playButtonEnabled MEMBER m_playButtonEnabled NOTIFY playButtonEnabledChanged())
   Q_PROPERTY(bool pauseButtonEnabled MEMBER m_pauseButtonEnabled NOTIFY pauseButtonEnabledChanged())
   Q_PROPERTY(bool resetButtonEnabled MEMBER m_resetButtonEnabled NOTIFY resetButtonEnabledChanged())
@@ -60,13 +60,13 @@ signals:
   void resetButtonEnabledChanged();
 
 private:
-  Esri::ArcGISRuntime::SceneQuickView* sceneView() const;
-  void setSceneView(Esri::ArcGISRuntime::SceneQuickView* sceneView);
+  Esri::ArcGISRuntime::LocalSceneQuickView* sceneView() const;
+  void setSceneView(Esri::ArcGISRuntime::LocalSceneQuickView* sceneView);
   Esri::ArcGISRuntime::KmlTour* findFirstKMLTour(const QList<Esri::ArcGISRuntime::KmlNode*>& nodes);
   Esri::ArcGISRuntime::KmlTour* findFirstKMLTourFromListModel(const Esri::ArcGISRuntime::KmlNodeListModel& nodes);
 
   Esri::ArcGISRuntime::Scene* m_scene = nullptr;
-  Esri::ArcGISRuntime::SceneQuickView* m_sceneView = nullptr;
+  Esri::ArcGISRuntime::LocalSceneQuickView* m_sceneView = nullptr;
   Esri::ArcGISRuntime::KmlTour* m_kmlTour = nullptr;
   Esri::ArcGISRuntime::KmlTourController* m_kmlTourController = nullptr;
   Esri::ArcGISRuntime::KmlLayer* m_kmlLayer = nullptr;

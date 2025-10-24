@@ -31,14 +31,15 @@
 #include "MapTypes.h"
 #include "Ogc3dTilesLayer.h"
 #include "Scene.h"
-#include "SceneQuickView.h"
+#include "LocalSceneQuickView.h"
+#include "SceneViewTypes.h"
 #include "Surface.h"
 
 using namespace Esri::ArcGISRuntime;
 
-Add3DTilesLayer::Add3DTilesLayer(QObject* parent /* = nullptr */):
+Add3DTilesLayer::Add3DTilesLayer(QObject* parent /* = nullptr */) :
   QObject(parent),
-  m_scene(new Scene(BasemapStyle::ArcGISDarkGray, this))
+  m_scene(new Scene(BasemapStyle::ArcGISDarkGray, SceneViewingMode::Local, this))
 {
   // create a new elevation source from Terrain3D REST service
   ArcGISTiledElevationSource* elevationSource = new ArcGISTiledElevationSource(
@@ -55,17 +56,17 @@ Add3DTilesLayer::~Add3DTilesLayer() = default;
 void Add3DTilesLayer::init()
 {
   // Register classes for QML
-  qmlRegisterType<SceneQuickView>("Esri.Samples", 1, 0, "SceneView");
+  qmlRegisterType<LocalSceneQuickView>("Esri.Samples", 1, 0, "SceneView");
   qmlRegisterType<Add3DTilesLayer>("Esri.Samples", 1, 0, "Add3DTilesLayerSample");
 }
 
-SceneQuickView* Add3DTilesLayer::sceneView() const
+LocalSceneQuickView* Add3DTilesLayer::sceneView() const
 {
   return m_sceneView;
 }
 
 // Set the view (created in QML)
-void Add3DTilesLayer::setSceneView(SceneQuickView* sceneView)
+void Add3DTilesLayer::setSceneView(LocalSceneQuickView* sceneView)
 {
   if (!sceneView || sceneView == m_sceneView)
     return;

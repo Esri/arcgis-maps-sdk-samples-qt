@@ -32,7 +32,8 @@
 #include "MapTypes.h"
 #include "Point.h"
 #include "Scene.h"
-#include "SceneQuickView.h"
+#include "LocalSceneQuickView.h"
+#include "SceneViewTypes.h"
 #include "SimpleMarkerSymbol.h"
 #include "Surface.h"
 #include "SymbolTypes.h"
@@ -45,7 +46,7 @@ using namespace Esri::ArcGISRuntime;
 
 GetElevationAtPoint::GetElevationAtPoint(QObject* parent /* = nullptr */):
   QObject(parent),
-  m_scene(new Scene(BasemapStyle::ArcGISImageryStandard, this)),
+  m_scene(new Scene(BasemapStyle::ArcGISImageryStandard, SceneViewingMode::Local, this)),
   m_graphicsOverlay(new GraphicsOverlay(this)),
   m_elevationMarker(new Graphic(Geometry(), new SimpleMarkerSymbol(SimpleMarkerSymbolStyle::Circle, QColor("red"), 12, this), this))
 {
@@ -68,17 +69,17 @@ GetElevationAtPoint::~GetElevationAtPoint() = default;
 void GetElevationAtPoint::init()
 {
   // Register classes for QML
-  qmlRegisterType<SceneQuickView>("Esri.Samples", 1, 0, "SceneView");
+  qmlRegisterType<LocalSceneQuickView>("Esri.Samples", 1, 0, "SceneView");
   qmlRegisterType<GetElevationAtPoint>("Esri.Samples", 1, 0, "GetElevationAtPointSample");
 }
 
-SceneQuickView* GetElevationAtPoint::sceneView() const
+LocalSceneQuickView* GetElevationAtPoint::sceneView() const
 {
   return m_sceneView;
 }
 
 // Set the view (created in QML)
-void GetElevationAtPoint::setSceneView(SceneQuickView* sceneView)
+void GetElevationAtPoint::setSceneView(LocalSceneQuickView* sceneView)
 {
   if (!sceneView || sceneView == m_sceneView)
   {
@@ -104,7 +105,7 @@ void GetElevationAtPoint::setSceneView(SceneQuickView* sceneView)
   m_sceneView->graphicsOverlays()->append(m_graphicsOverlay);
 
   // Hook up clicks into the 3d scene to below behaviour that displays marker & elevation value.
-  connect(sceneView, &SceneQuickView::mouseClicked, this, &GetElevationAtPoint::displayElevationOnClick);
+  connect(sceneView, &LocalSceneQuickView::mouseClicked, this, &GetElevationAtPoint::displayElevationOnClick);
 
   emit sceneViewChanged();
 }
@@ -112,22 +113,23 @@ void GetElevationAtPoint::setSceneView(SceneQuickView* sceneView)
 void GetElevationAtPoint::displayElevationOnClick(QMouseEvent& mouseEvent)
 {
   // Convert clicked screen position to position on the map surface.
-  const Point baseSurfacePos = m_sceneView->screenToBaseSurface(mouseEvent.position().x(), mouseEvent.position().y());
-
-  m_elevationQueryFuture = m_scene->baseSurface()->elevationAsync(baseSurfacePos);
-  m_elevationQueryFuture.then(this,
-  [this, baseSurfacePos](double elevation)
+  m_sceneView->screenToLocationAsync(mouseEvent.position().x(), mouseEvent.position().y())
+    .then(this, [this](const Point baseSurfacePos)
   {
-    // Place the elevation marker circle at the clicked position
-    m_elevationMarker->setGeometry(baseSurfacePos);
-    m_elevationMarker->setVisible(true);
+    m_elevationQueryFuture = m_scene->baseSurface()->elevationAsync(baseSurfacePos);
+    m_elevationQueryFuture.then(this, [this, baseSurfacePos](double elevation)
+    {
+      // Place the elevation marker circle at the clicked position
+      m_elevationMarker->setGeometry(baseSurfacePos);
+      m_elevationMarker->setVisible(true);
 
-    // Assign the elevation value. UI is bound to this value, so it updates to display new elevation.
-    m_elevation = elevation;
+      // Assign the elevation value. UI is bound to this value, so it updates to display new elevation.
+      m_elevation = elevation;
 
-    // Notify of property changes
-    emit elevationChanged(elevation);
-    emit elevationQueryRunningChanged();
+      // Notify of property changes
+      emit elevationChanged(elevation);
+      emit elevationQueryRunningChanged();
+    });
   });
 
   //Signal the start of the query

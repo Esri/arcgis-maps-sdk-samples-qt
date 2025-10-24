@@ -38,7 +38,7 @@
 #include "MapTypes.h"
 #include "Point.h"
 #include "Scene.h"
-#include "SceneQuickView.h"
+#include "LocalSceneQuickView.h" #include "SceneViewTypes.h"
 #include "SpatialReference.h"
 #include "Surface.h"
 
@@ -355,17 +355,17 @@ ListKmlContents::~ListKmlContents() = default;
 void ListKmlContents::init()
 {
   // Register classes for QML
-  qmlRegisterType<SceneQuickView>("Esri.Samples", 1, 0, "SceneView");
+  qmlRegisterType<LocalSceneQuickView>("Esri.Samples", 1, 0, "SceneView");
   qmlRegisterType<ListKmlContents>("Esri.Samples", 1, 0, "ListKmlContentsSample");
 }
 
-SceneQuickView* ListKmlContents::sceneView() const
+LocalSceneQuickView* ListKmlContents::sceneView() const
 {
   return m_sceneView;
 }
 
 // Set the view (created in QML)
-void ListKmlContents::setSceneView(SceneQuickView* sceneView)
+void ListKmlContents::setSceneView(LocalSceneQuickView* sceneView)
 {
   if (!sceneView || sceneView == m_sceneView)
     return;

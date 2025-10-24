@@ -27,7 +27,7 @@
 #include "ElevationSourceListModel.h"
 #include "MapTypes.h"
 #include "Scene.h"
-#include "SceneQuickView.h"
+#include "LocalSceneQuickView.h" #include "SceneViewTypes.h"
 #include "Surface.h"
 
 // Qt headers
@@ -37,7 +37,7 @@ using namespace Esri::ArcGISRuntime;
 
 ChangeAtmosphereEffect::ChangeAtmosphereEffect(QObject* parent /* = nullptr */):
   QObject(parent),
-  m_scene(new Scene(BasemapStyle::ArcGISImageryStandard, this))
+  m_scene(new Scene(BasemapStyle::ArcGISImageryStandard, SceneViewingMode::Local, this))
 {
   // create a new elevation source from %{ElevationOption} rest service
   ArcGISTiledElevationSource* elevationSource = new ArcGISTiledElevationSource(
@@ -53,16 +53,16 @@ ChangeAtmosphereEffect::~ChangeAtmosphereEffect() = default;
 void ChangeAtmosphereEffect::init()
 {
   // Register classes for QML
-  qmlRegisterType<SceneQuickView>("Esri.Samples", 1, 0, "SceneView");
+  qmlRegisterType<LocalSceneQuickView>("Esri.Samples", 1, 0, "SceneView");
   qmlRegisterType<ChangeAtmosphereEffect>("Esri.Samples", 1, 0, "ChangeAtmosphereEffectSample");
 }
-SceneQuickView* ChangeAtmosphereEffect::sceneView() const
+LocalSceneQuickView* ChangeAtmosphereEffect::sceneView() const
 {
   return m_sceneView;
 }
 
 // Set the view (created in QML)
-void ChangeAtmosphereEffect::setSceneView(SceneQuickView* sceneView)
+void ChangeAtmosphereEffect::setSceneView(LocalSceneQuickView* sceneView)
 {
   if (!sceneView || sceneView == m_sceneView)
   {
@@ -82,14 +82,14 @@ void ChangeAtmosphereEffect::setAtmosphereEffect(AtmosphereEnum atmosphereEffect
 {
   if (m_sceneView)
   {
-    m_sceneView->setAtmosphereEffect(static_cast<AtmosphereEffect>(atmosphereEffect));
-    emit atmosphereEffectChanged();
+    // m_sceneView->setAtmosphereEffect(static_cast<AtmosphereEffect>(atmosphereEffect));
+    // emit atmosphereEffectChanged();
   }
 }
 
 ChangeAtmosphereEffect::AtmosphereEnum ChangeAtmosphereEffect::atmosphereEffect() const
 {
   if (m_sceneView)
-    return static_cast<AtmosphereEnum>(m_sceneView->atmosphereEffect());
-  return static_cast<AtmosphereEnum>(AtmosphereEffect::None);
+    // return static_cast<AtmosphereEnum>(m_sceneView->atmosphereEffect());
+    return static_cast<AtmosphereEnum>(AtmosphereEffect::None);
 }

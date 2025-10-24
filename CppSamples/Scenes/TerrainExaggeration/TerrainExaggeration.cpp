@@ -28,7 +28,7 @@
 #include "MapTypes.h"
 #include "Point.h"
 #include "Scene.h"
-#include "SceneQuickView.h"
+#include "LocalSceneQuickView.h" #include "SceneViewTypes.h"
 #include "SpatialReference.h"
 #include "Surface.h"
 
@@ -45,7 +45,7 @@ TerrainExaggeration::TerrainExaggeration(QQuickItem* parent /* = nullptr */):
 void TerrainExaggeration::init()
 {
   // Register classes for QML
-  qmlRegisterType<SceneQuickView>("Esri.Samples", 1, 0, "SceneView");
+  qmlRegisterType<LocalSceneQuickView>("Esri.Samples", 1, 0, "SceneView");
   qmlRegisterType<TerrainExaggeration>("Esri.Samples", 1, 0, "TerrainExaggerationSample");
 }
 
@@ -54,7 +54,7 @@ void TerrainExaggeration::componentComplete()
   QQuickItem::componentComplete();
 
   // Create a scene and give it to the SceneView
-  m_sceneView = findChild<SceneQuickView*>("sceneView");
+  m_sceneView = findChild<LocalSceneQuickView*>("sceneView");
   Scene* scene = new Scene(BasemapStyle::ArcGISTopographic, this);
   m_surface = new Surface(this);
   m_surface->elevationSources()->append(

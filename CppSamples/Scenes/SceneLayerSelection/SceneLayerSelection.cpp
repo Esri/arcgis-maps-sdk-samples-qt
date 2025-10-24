@@ -33,7 +33,7 @@
 #include "MapTypes.h"
 #include "Point.h"
 #include "Scene.h"
-#include "SceneQuickView.h"
+#include "LocalSceneQuickView.h" #include "SceneViewTypes.h"
 #include "SpatialReference.h"
 #include "Surface.h"
 #include "Viewpoint.h"
@@ -52,7 +52,7 @@ SceneLayerSelection::SceneLayerSelection(QQuickItem* parent /* = nullptr */):
 void SceneLayerSelection::init()
 {
   // Register classes for QML
-  qmlRegisterType<SceneQuickView>("Esri.Samples", 1, 0, "SceneView");
+  qmlRegisterType<LocalSceneQuickView>("Esri.Samples", 1, 0, "SceneView");
   qmlRegisterType<SceneLayerSelection>("Esri.Samples", 1, 0, "SceneLayerSelectionSample");
 }
 
@@ -60,7 +60,7 @@ void SceneLayerSelection::componentComplete()
 {
   QQuickItem::componentComplete();
 
-  m_sceneView = findChild<SceneQuickView*>("sceneView");
+  m_sceneView = findChild<LocalSceneQuickView*>("sceneView");
 
   // Create a scene with the topographic basemap
   Scene* scene = new Scene(BasemapStyle::ArcGISTopographic, this);
@@ -93,7 +93,7 @@ void SceneLayerSelection::componentComplete()
 void SceneLayerSelection::connectSignals()
 {
   // when the scene is clicked, identify the clicked feature and select it
-  connect(m_sceneView, &SceneQuickView::mouseClicked, this, [this](QMouseEvent& mouseEvent)
+  connect(m_sceneView, &LocalSceneQuickView::mouseClicked, this, [this](QMouseEvent& mouseEvent)
   {
     // clear any previous selection
     m_sceneLayer->clearSelection();

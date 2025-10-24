@@ -30,7 +30,7 @@
 #include "LabelDefinitionListModel.h"
 #include "LayerListModel.h"
 #include "Scene.h"
-#include "SceneQuickView.h"
+#include "LocalSceneQuickView.h" #include "SceneViewTypes.h"
 #include "LabelingTypes.h"
 #include "TextSymbol.h"
 
@@ -85,17 +85,17 @@ Display3DLabelsInScene::~Display3DLabelsInScene() = default;
 void Display3DLabelsInScene::init()
 {
   // Register classes for QML
-  qmlRegisterType<SceneQuickView>("Esri.Samples", 1, 0, "SceneView");
+  qmlRegisterType<LocalSceneQuickView>("Esri.Samples", 1, 0, "SceneView");
   qmlRegisterType<Display3DLabelsInScene>("Esri.Samples", 1, 0, "Display3DLabelsInSceneSample");
 }
 
-SceneQuickView* Display3DLabelsInScene::sceneView() const
+LocalSceneQuickView* Display3DLabelsInScene::sceneView() const
 {
   return m_sceneView;
 }
 
 // Set the view (created in QML)
-void Display3DLabelsInScene::setSceneView(SceneQuickView* sceneView)
+void Display3DLabelsInScene::setSceneView(LocalSceneQuickView* sceneView)
 {
   if (!sceneView || sceneView == m_sceneView)
     return;

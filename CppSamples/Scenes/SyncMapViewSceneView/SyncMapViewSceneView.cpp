@@ -26,7 +26,8 @@
 #include "MapQuickView.h"
 #include "MapTypes.h"
 #include "Scene.h"
-#include "SceneQuickView.h"
+#include "LocalSceneQuickView.h"
+#include "SceneViewTypes.h"
 #include "Viewpoint.h"
 
 // Qt headers
@@ -36,7 +37,7 @@ using namespace Esri::ArcGISRuntime;
 
 SyncMapViewSceneView::SyncMapViewSceneView(QObject* parent /* = nullptr */):
   QObject(parent),
-  m_scene(new Scene(BasemapStyle::ArcGISImageryStandard, this)),
+  m_scene(new Scene(BasemapStyle::ArcGISImageryStandard, SceneViewingMode::Local, this)),
   m_map(new Map(BasemapStyle::ArcGISImageryStandard, this))
 {
 }
@@ -46,18 +47,18 @@ SyncMapViewSceneView::~SyncMapViewSceneView() = default;
 void SyncMapViewSceneView::init()
 {
   // Register classes for QML
-  qmlRegisterType<SceneQuickView>("Esri.Samples", 1, 0, "SceneView");
+  qmlRegisterType<LocalSceneQuickView>("Esri.Samples", 1, 0, "SceneView");
   qmlRegisterType<MapQuickView>("Esri.Samples", 1, 0, "MapView");
   qmlRegisterType<SyncMapViewSceneView>("Esri.Samples", 1, 0, "SyncMapViewSceneViewSample");
 }
 
-SceneQuickView* SyncMapViewSceneView::sceneView() const
+LocalSceneQuickView* SyncMapViewSceneView::sceneView() const
 {
   return m_sceneView;
 }
 
 // Set the view (created in QML)
-void SyncMapViewSceneView::setSceneView(SceneQuickView* sceneView)
+void SyncMapViewSceneView::setSceneView(LocalSceneQuickView* sceneView)
 {
   if (!sceneView || sceneView == m_sceneView)
   {
@@ -67,8 +68,7 @@ void SyncMapViewSceneView::setSceneView(SceneQuickView* sceneView)
   m_sceneView = sceneView;
   m_sceneView->setArcGISScene(m_scene);
 
-  connect(m_sceneView, &SceneQuickView::viewpointChanged, this,
-          [this]
+  connect(m_sceneView, &LocalSceneQuickView::viewpointChanged, this, [this]
   {
     if (m_mapView && m_sceneView->isNavigating())
       m_mapView->setViewpointAsync(m_sceneView->currentViewpoint(ViewpointType::CenterAndScale), 0);

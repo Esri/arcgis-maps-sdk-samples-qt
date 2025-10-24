@@ -25,16 +25,16 @@ namespace Esri::ArcGISRuntime
 class Graphic;
 class GraphicsOverlay;
 class Scene;
-class SceneQuickView;
+class LocalSceneQuickView;
 }
 
-Q_MOC_INCLUDE("SceneQuickView.h")
+Q_MOC_INCLUDE("LocalSceneQuickView.h")
 
 class ScenePropertiesExpressions : public QObject
 {
   Q_OBJECT
 
-  Q_PROPERTY(Esri::ArcGISRuntime::SceneQuickView* sceneView READ sceneView WRITE setSceneView NOTIFY sceneViewChanged)
+  Q_PROPERTY(Esri::ArcGISRuntime::LocalSceneQuickView* sceneView READ sceneView WRITE setSceneView NOTIFY sceneViewChanged)
   Q_PROPERTY(double pitch READ pitch WRITE setPitch NOTIFY pitchChanged)
   Q_PROPERTY(double heading READ heading WRITE setHeading NOTIFY headingChanged)
 
@@ -50,15 +50,15 @@ signals:
   void headingChanged();
 
 private:
-  Esri::ArcGISRuntime::SceneQuickView* sceneView() const;
-  void setSceneView(Esri::ArcGISRuntime::SceneQuickView* sceneView);
+  Esri::ArcGISRuntime::LocalSceneQuickView* sceneView() const;
+  void setSceneView(Esri::ArcGISRuntime::LocalSceneQuickView* sceneView);
   void setPitch(double pitchInDegress);
   double pitch() const;
   void setHeading(double headingInDegrees);
   double heading() const;
 
   Esri::ArcGISRuntime::Scene* m_scene = nullptr;
-  Esri::ArcGISRuntime::SceneQuickView* m_sceneView = nullptr;
+  Esri::ArcGISRuntime::LocalSceneQuickView* m_sceneView = nullptr;
   Esri::ArcGISRuntime::Graphic* m_graphic = nullptr;
   Esri::ArcGISRuntime::GraphicsOverlay* m_graphicsOverlay;
 };

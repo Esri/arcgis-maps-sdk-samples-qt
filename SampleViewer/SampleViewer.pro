@@ -30,14 +30,14 @@ ARCGIS_RUNTIME_VERSION = 300.0.0
 DEFINES += ArcGIS_Runtime_Version=$$ARCGIS_RUNTIME_VERSION
 
 # This block determines whether to build against the installed SDK or the local dev build area
-exists($$PWD/../../../DevBuildCpp.pri) {
-  message("Building against the dev environment")
-  DEFINES += SAMPLE_VIEWER_API_KEY=$$(SAMPLEVIEWERAPIKEY_INTERNAL) ESRI_BUILD
+# exists($$PWD/../../../DevBuildCpp.pri) {
+#   message("Building against the dev environment")
+#   DEFINES += SAMPLE_VIEWER_API_KEY=$$(SAMPLEVIEWERAPIKEY_INTERNAL) ESRI_BUILD
 
-  # use the Esri dev build script
-  include ($$PWD/../../../DevBuildCpp.pri)
-  # include the toolkitcpp.pri, which contains all the toolkit resources
-  include($$PWD/../../toolkit/uitools/toolkitcpp/toolkitcpp.pri)
+#   # use the Esri dev build script
+#   include ($$PWD/../../../DevBuildCpp.pri)
+#   # include the toolkitcpp.pri, which contains all the toolkit resources
+#   include($$PWD/../../toolkit/uitools/toolkitcpp/toolkitcpp.pri)
 
   # Include Calcite
   RESOURCES += $$PWD/../../toolkit/calcite/Calcite/calcite.qrc
@@ -51,6 +51,14 @@ exists($$PWD/../../../DevBuildCpp.pri) {
       $$PWD/../../../api/qt_cpp/Include/LocalServer \
       $$PWD/../../../../buildnum
 } else {
+#   INCLUDEPATH += \
+#       $$SAMPLEPATHCPP \
+#       $$COMMONVIEWER \
+#       $$COMMONVIEWER/SyntaxHighlighter \
+#       $$PWD/../../../api/qt_cpp/Include \
+#       $$PWD/../../../api/qt_cpp/Include/LocalServer \
+#       $$PWD/../../../../buildnum
+# } else {
   message("Building against the locally configured SDK")
   CONFIG += build_from_configured_sdk
   CONFIG += c++17
@@ -160,7 +168,7 @@ exists($$PWD/../../../DevBuildCpp.pri) {
   }
 
   DEFINES += BUILD_FROM_CONFIGURED_SDK
-}
+# }
 
 qtHaveModule(webenginequick) {
   QT += webenginequick

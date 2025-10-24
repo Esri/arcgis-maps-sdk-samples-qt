@@ -32,7 +32,8 @@
 #include "LayerListModel.h"
 #include "MapTypes.h"
 #include "Scene.h"
-#include "SceneQuickView.h"
+#include "LocalSceneQuickView.h"
+#include "SceneViewTypes.h"
 #include "ServiceFeatureTable.h"
 #include "Surface.h"
 #include "Viewpoint.h"
@@ -44,7 +45,7 @@ using namespace Esri::ArcGISRuntime;
 
 GroupLayers::GroupLayers(QObject* parent /* = nullptr */):
   QObject(parent),
-  m_scene(new Scene(BasemapStyle::ArcGISImageryStandard, this))
+  m_scene(new Scene(BasemapStyle::ArcGISImageryStandard, SceneViewingMode::Local, this))
 {
   // create a new elevation source from Terrain3D REST service
   ArcGISTiledElevationSource* elevationSource = new ArcGISTiledElevationSource(
@@ -88,18 +89,18 @@ GroupLayers::~GroupLayers() = default;
 void GroupLayers::init()
 {
   // Register classes for QML
-  qmlRegisterType<SceneQuickView>("Esri.Samples", 1, 0, "SceneView");
+  qmlRegisterType<LocalSceneQuickView>("Esri.Samples", 1, 0, "SceneView");
   qmlRegisterType<GroupLayers>("Esri.Samples", 1, 0, "GroupLayersSample");
   qmlRegisterUncreatableType<LayerListModel>("Esri.Samples", 1, 0, "AbstractListModel", "AbstractListModel is uncreateable");
 }
 
-SceneQuickView* GroupLayers::sceneView() const
+LocalSceneQuickView* GroupLayers::sceneView() const
 {
   return m_sceneView;
 }
 
 // Set the view (created in QML)
-void GroupLayers::setSceneView(SceneQuickView* sceneView)
+void GroupLayers::setSceneView(LocalSceneQuickView* sceneView)
 {
   if (!sceneView || sceneView == m_sceneView)
   {

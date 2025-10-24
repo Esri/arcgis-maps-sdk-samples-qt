@@ -34,7 +34,8 @@
 #include "LayerListModel.h"
 #include "MapTypes.h"
 #include "Scene.h"
-#include "SceneQuickView.h"
+#include "LocalSceneQuickView.h"
+#include "SceneViewTypes.h"
 #include "Surface.h"
 
 // Qt headers
@@ -62,7 +63,7 @@ namespace
 
 PlayAKmlTour::PlayAKmlTour(QObject* parent /* = nullptr */):
   QObject(parent),
-  m_scene(new Scene(BasemapStyle::ArcGISImageryStandard, this)),
+  m_scene(new Scene(BasemapStyle::ArcGISImageryStandard, SceneViewingMode::Local, this)),
   m_dataPath(defaultDataPath() + "/ArcGIS/Runtime/Data")
 {
   // create a new elevation source from Terrain3D REST service
@@ -131,17 +132,17 @@ PlayAKmlTour::~PlayAKmlTour() = default;
 void PlayAKmlTour::init()
 {
   // Register classes for QML
-  qmlRegisterType<SceneQuickView>("Esri.Samples", 1, 0, "SceneView");
+  qmlRegisterType<LocalSceneQuickView>("Esri.Samples", 1, 0, "SceneView");
   qmlRegisterType<PlayAKmlTour>("Esri.Samples", 1, 0, "PlayAKmlTourSample");
 }
 
-SceneQuickView* PlayAKmlTour::sceneView() const
+LocalSceneQuickView* PlayAKmlTour::sceneView() const
 {
   return m_sceneView;
 }
 
 // Set the view (created in QML)
-void PlayAKmlTour::setSceneView(SceneQuickView* sceneView)
+void PlayAKmlTour::setSceneView(LocalSceneQuickView* sceneView)
 {
   if (!sceneView || sceneView == m_sceneView)
     return;

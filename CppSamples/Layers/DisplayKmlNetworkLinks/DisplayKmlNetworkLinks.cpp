@@ -29,7 +29,8 @@
 #include "MapTypes.h"
 #include "Point.h"
 #include "Scene.h"
-#include "SceneQuickView.h"
+#include "LocalSceneQuickView.h"
+#include "SceneViewTypes.h"
 #include "SpatialReference.h"
 #include "Viewpoint.h"
 
@@ -48,7 +49,7 @@ DisplayKmlNetworkLinks::~DisplayKmlNetworkLinks() = default;
 void DisplayKmlNetworkLinks::init()
 {
   // Register classes for QML
-  qmlRegisterType<SceneQuickView>("Esri.Samples", 1, 0, "SceneView");
+  qmlRegisterType<LocalSceneQuickView>("Esri.Samples", 1, 0, "SceneView");
   qmlRegisterType<DisplayKmlNetworkLinks>("Esri.Samples", 1, 0, "DisplayKmlNetworkLinksSample");
 }
 
@@ -68,8 +69,8 @@ void DisplayKmlNetworkLinks::componentComplete()
   QQuickItem::componentComplete();
 
   // Create a scene and give it to the SceneView
-  m_sceneView = findChild<SceneQuickView*>("sceneView");
-  Scene* scene = new Scene(BasemapStyle::ArcGISImageryStandard, this);
+  m_sceneView = findChild<LocalSceneQuickView*>("sceneView");
+  Scene* scene = new Scene(BasemapStyle::ArcGISImageryStandard, SceneViewingMode::Local, this);
 
   // Create a KML dataset from the given resource.
   // This is a KML resource that references other KML resources over a network.

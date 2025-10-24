@@ -30,7 +30,8 @@
 #include "MapTypes.h"
 #include "PointCloudLayer.h"
 #include "Scene.h"
-#include "SceneQuickView.h"
+#include "LocalSceneQuickView.h"
+#include "SceneViewTypes.h"
 #include "Surface.h"
 #include "Viewpoint.h"
 
@@ -43,7 +44,7 @@ using namespace Esri::ArcGISRuntime;
 
 ViewPointCloudDataOffline::ViewPointCloudDataOffline(QObject* parent /* = nullptr */):
   QObject(parent),
-  m_scene(new Scene(BasemapStyle::ArcGISImageryStandard, this))
+  m_scene(new Scene(BasemapStyle::ArcGISImageryStandard, SceneViewingMode::Local, this))
 {
   // create a new elevation source from Terrain3D service
   ArcGISTiledElevationSource* elevationSource = new ArcGISTiledElevationSource(
@@ -58,10 +59,10 @@ ViewPointCloudDataOffline::~ViewPointCloudDataOffline() = default;
 void ViewPointCloudDataOffline::init()
 {
   // Register classes for QML
-  qmlRegisterType<SceneQuickView>("Esri.Samples", 1, 0, "SceneView");
+  qmlRegisterType<LocalSceneQuickView>("Esri.Samples", 1, 0, "SceneView");
   qmlRegisterType<ViewPointCloudDataOffline>("Esri.Samples", 1, 0, "ViewPointCloudDataOfflineSample");
 }
-SceneQuickView* ViewPointCloudDataOffline::sceneView() const
+LocalSceneQuickView* ViewPointCloudDataOffline::sceneView() const
 {
   return m_sceneView;
 }
@@ -84,7 +85,7 @@ namespace
 }
 
 // Set the view (created in QML)
-void ViewPointCloudDataOffline::setSceneView(SceneQuickView* sceneView)
+void ViewPointCloudDataOffline::setSceneView(LocalSceneQuickView* sceneView)
 {
   if (!sceneView || sceneView == m_sceneView)
   {

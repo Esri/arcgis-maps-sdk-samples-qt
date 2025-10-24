@@ -35,7 +35,8 @@
 #include "MapTypes.h"
 #include "Point.h"
 #include "Scene.h"
-#include "SceneQuickView.h"
+#include "LocalSceneQuickView.h"
+#include "SceneViewTypes.h"
 #include "Surface.h"
 
 // Qt headers
@@ -78,7 +79,7 @@ GODictionaryRenderer_3D::~GODictionaryRenderer_3D() = default;
 
 void GODictionaryRenderer_3D::init()
 {
-  qmlRegisterType<SceneQuickView>("Esri.Samples", 1, 0, "SceneView");
+  qmlRegisterType<LocalSceneQuickView>("Esri.Samples", 1, 0, "SceneView");
   qmlRegisterType<GODictionaryRenderer_3D>("Esri.Samples", 1, 0, "GODictionaryRenderer_3DSample");
 }
 
@@ -103,10 +104,10 @@ void GODictionaryRenderer_3D::componentComplete()
   m_graphicsOverlay->setRenderer(renderer);
 
   // Create a scene and give it to the SceneView
-  m_sceneView = findChild<SceneQuickView*>("sceneView");
-  connect(m_sceneView, &SceneQuickView::errorOccurred, this, &GODictionaryRenderer_3D::logError);
+  m_sceneView = findChild<LocalSceneQuickView*>("sceneView");
+  connect(m_sceneView, &LocalSceneQuickView::errorOccurred, this, &GODictionaryRenderer_3D::logError);
 
-  Scene* scene = new Scene(BasemapStyle::ArcGISImageryStandard, this);
+  Scene* scene = new Scene(BasemapStyle::ArcGISImageryStandard, SceneViewingMode::Local, this);
   connect(scene, &Scene::errorOccurred, this, &GODictionaryRenderer_3D::logError);
 
   Surface* surface = new Surface(this);

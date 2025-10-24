@@ -36,7 +36,7 @@
 #include "Point.h"
 #include "RendererSceneProperties.h"
 #include "Scene.h"
-#include "SceneQuickView.h"
+#include "LocalSceneQuickView.h" #include "SceneViewTypes.h"
 #include "SceneViewTypes.h"
 #include "SimpleRenderer.h"
 #include "SpatialReference.h"
@@ -68,7 +68,7 @@ namespace
 
 OrbitCameraAroundObject::OrbitCameraAroundObject(QObject* parent /* = nullptr */):
   QObject(parent),
-  m_scene(new Scene(BasemapStyle::ArcGISImageryStandard, this))
+  m_scene(new Scene(BasemapStyle::ArcGISImageryStandard, SceneViewingMode::Local, this))
 {
   // create a new elevation source from Terrain3D REST service
   ArcGISTiledElevationSource* elevationSource = new ArcGISTiledElevationSource(
@@ -83,17 +83,17 @@ OrbitCameraAroundObject::~OrbitCameraAroundObject() = default;
 void OrbitCameraAroundObject::init()
 {
   // Register classes for QML
-  qmlRegisterType<SceneQuickView>("Esri.Samples", 1, 0, "SceneView");
+  qmlRegisterType<LocalSceneQuickView>("Esri.Samples", 1, 0, "SceneView");
   qmlRegisterType<OrbitCameraAroundObject>("Esri.Samples", 1, 0, "OrbitCameraAroundObjectSample");
 }
 
-SceneQuickView* OrbitCameraAroundObject::sceneView() const
+LocalSceneQuickView* OrbitCameraAroundObject::sceneView() const
 {
   return m_sceneView;
 }
 
 // Set the view (created in QML)
-void OrbitCameraAroundObject::setSceneView(SceneQuickView* sceneView)
+void OrbitCameraAroundObject::setSceneView(LocalSceneQuickView* sceneView)
 {
   if (!sceneView || sceneView == m_sceneView)
   {
@@ -165,7 +165,7 @@ void OrbitCameraAroundObject::setSceneView(SceneQuickView* sceneView)
   connect(m_orbitCam, &OrbitGeoElementCameraController::cameraHeadingOffsetChanged, this, &OrbitCameraAroundObject::cameraHeadingChanged);
 
   //Apply our new orbiting camera to the scene view.
-  m_sceneView->setCameraController(m_orbitCam);
+  // m_sceneView->setCameraController(m_orbitCam);
 
   emit sceneViewChanged();
 }

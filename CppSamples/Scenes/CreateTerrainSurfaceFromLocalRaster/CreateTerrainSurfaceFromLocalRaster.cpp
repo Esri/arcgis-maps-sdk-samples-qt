@@ -28,7 +28,8 @@
 #include "MapTypes.h"
 #include "RasterElevationSource.h"
 #include "Scene.h"
-#include "SceneQuickView.h"
+#include "LocalSceneQuickView.h"
+#include "SceneViewTypes.h"
 #include "Surface.h"
 
 // Qt headers
@@ -57,7 +58,7 @@ namespace
 
 CreateTerrainSurfaceFromLocalRaster::CreateTerrainSurfaceFromLocalRaster(QObject* parent /* = nullptr */):
   QObject(parent),
-  m_scene(new Scene(BasemapStyle::ArcGISImageryStandard, this))
+  m_scene(new Scene(BasemapStyle::ArcGISImageryStandard, SceneViewingMode::Local, this))
 {
   // create the MontereyElevation data path
   // data is downloaded automatically by the sample viewer app. Instructions to download
@@ -102,17 +103,17 @@ CreateTerrainSurfaceFromLocalRaster::~CreateTerrainSurfaceFromLocalRaster() = de
 void CreateTerrainSurfaceFromLocalRaster::init()
 {
   // Register classes for QML
-  qmlRegisterType<SceneQuickView>("Esri.Samples", 1, 0, "SceneView");
+  qmlRegisterType<LocalSceneQuickView>("Esri.Samples", 1, 0, "SceneView");
   qmlRegisterType<CreateTerrainSurfaceFromLocalRaster>("Esri.Samples", 1, 0, "CreateTerrainSurfaceFromLocalRasterSample");
 }
 
-SceneQuickView* CreateTerrainSurfaceFromLocalRaster::sceneView() const
+LocalSceneQuickView* CreateTerrainSurfaceFromLocalRaster::sceneView() const
 {
   return m_sceneView;
 }
 
 // Set the view (created in QML)
-void CreateTerrainSurfaceFromLocalRaster::setSceneView(SceneQuickView* sceneView)
+void CreateTerrainSurfaceFromLocalRaster::setSceneView(LocalSceneQuickView* sceneView)
 {
   if (!sceneView || sceneView == m_sceneView)
   {

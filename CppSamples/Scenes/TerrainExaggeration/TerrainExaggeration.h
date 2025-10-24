@@ -22,7 +22,7 @@
 
 namespace Esri::ArcGISRuntime
 {
-class SceneQuickView;
+class LocalSceneQuickView;
 class Surface;
 }
 
@@ -39,7 +39,7 @@ public:
   Q_INVOKABLE void setElevationExaggeration(double factor);
 
 private:
-  Esri::ArcGISRuntime::SceneQuickView* m_sceneView = nullptr;
+  Esri::ArcGISRuntime::LocalSceneQuickView* m_sceneView = nullptr;
   Esri::ArcGISRuntime::Surface* m_surface = nullptr;
 };
 

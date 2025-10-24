@@ -32,7 +32,7 @@
 #include "MapTypes.h"
 #include "Point.h"
 #include "Scene.h"
-#include "SceneQuickView.h"
+#include "LocalSceneQuickView.h" #include "SceneViewTypes.h"
 #include "SpatialReference.h"
 #include "Surface.h"
 
@@ -49,7 +49,7 @@ ViewshedLocation::ViewshedLocation(QQuickItem* parent /* = nullptr */):
 void ViewshedLocation::init()
 {
   // Register classes for QML
-  qmlRegisterType<SceneQuickView>("Esri.Samples", 1, 0, "SceneView");
+  qmlRegisterType<LocalSceneQuickView>("Esri.Samples", 1, 0, "SceneView");
   qmlRegisterType<ViewshedLocation>("Esri.Samples", 1, 0, "ViewshedLocationSample");
 }
 
@@ -58,7 +58,7 @@ void ViewshedLocation::componentComplete()
   QQuickItem::componentComplete();
 
   // Create a scene and give it to the SceneView
-  m_sceneView = findChild<SceneQuickView*>("sceneView");
+  m_sceneView = findChild<LocalSceneQuickView*>("sceneView");
 
   Scene* scene = new Scene(BasemapStyle::ArcGISTopographic, this);
   Surface* surface = new Surface(this);
@@ -71,7 +71,7 @@ void ViewshedLocation::componentComplete()
 
   // Add an Analysis Overlay
   m_analysisOverlay = new AnalysisOverlay(this);
-  m_sceneView->analysisOverlays()->append(m_analysisOverlay);
+  // m_sceneView->analysisOverlays()->append(m_analysisOverlay);
 
   // set initial viewpoint
   setInitialViewpoint();
@@ -97,18 +97,18 @@ void ViewshedLocation::setInitialViewpoint()
 void ViewshedLocation::connectSignals()
 {
   // on mouse click perform the location viewshed
-  connect(m_sceneView, &SceneQuickView::mouseClicked, this, [this](QMouseEvent& event)
+  connect(m_sceneView, &LocalSceneQuickView::mouseClicked, this, [this](QMouseEvent& event)
   {
     if (!m_locationViewshed)
       createViewshed(event.position().x(), event.position().y());
     else
     {
-      const Point pt = m_sceneView->screenToBaseSurface(event.position().x(), event.position().y());
-      m_locationViewshed->setLocation(pt);
+      // const Point pt = m_sceneView->screenToLocationAsync(event.position().x(), event.position().y());
+      // m_locationViewshed->setLocation(pt);
     }
   });
 
-  connect(m_sceneView, &SceneQuickView::mousePressedAndHeld, this, [this](QMouseEvent& event)
+  connect(m_sceneView, &LocalSceneQuickView::mousePressedAndHeld, this, [this](QMouseEvent& event)
   {
     if (!m_locationViewshed)
       createViewshed(event.position().x(), event.position().y());
@@ -116,16 +116,16 @@ void ViewshedLocation::connectSignals()
     m_calculating = true;
   });
 
-  connect(m_sceneView, &SceneQuickView::mouseMoved, this, [this](QMouseEvent& event)
+  connect(m_sceneView, &LocalSceneQuickView::mouseMoved, this, [this](QMouseEvent& event)
   {
     if (m_calculating)
     {
-      const Point pt = m_sceneView->screenToBaseSurface(event.position().x(), event.position().y());
-      m_locationViewshed->setLocation(pt);
+      // const Point pt = m_sceneView->screenToBaseSurface(event.position().x(), event.position().y());
+      // m_locationViewshed->setLocation(pt);
     }
   });
 
-  connect(m_sceneView, &SceneQuickView::mouseReleased, this, [this]
+  connect(m_sceneView, &LocalSceneQuickView::mouseReleased, this, [this]
   {
     m_calculating = false;
   });
@@ -133,16 +133,16 @@ void ViewshedLocation::connectSignals()
 
 void ViewshedLocation::createViewshed(double x, double y)
 {
-  const Point pt = m_sceneView->screenToBaseSurface(x, y);
+  // const Point pt = m_sceneView->screenToBaseSurface(x, y);
 
   // Create the Location Viewshed
-  m_locationViewshed = new LocationViewshed(pt, m_heading, m_pitch,
-                                            m_horizontalAngle, m_veriticalAngle,
-                                            m_minDistance, m_maxDistance, this);
-  m_locationViewshed->setVisible(m_viewshedVisible);
+  // m_locationViewshed = new LocationViewshed(pt, m_heading, m_pitch,
+  //                                           m_horizontalAngle, m_veriticalAngle,
+  //                                           m_minDistance, m_maxDistance, this);
+  // m_locationViewshed->setVisible(m_viewshedVisible);
 
-  // Add the Viewshed to the Analysis Overlay
-  m_analysisOverlay->analyses()->append(m_locationViewshed);
+  // // Add the Viewshed to the Analysis Overlay
+  // m_analysisOverlay->analyses()->append(m_locationViewshed);
 
   return;
 }

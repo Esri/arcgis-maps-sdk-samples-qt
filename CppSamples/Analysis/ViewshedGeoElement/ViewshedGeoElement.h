@@ -27,7 +27,7 @@
 
 namespace Esri::ArcGISRuntime
 {
-class SceneQuickView;
+class LocalSceneQuickView;
 class AnalysisOverlay;
 class GeoElementViewshed;
 class GraphicsOverlay;
@@ -52,7 +52,7 @@ private:
   void createGraphicsOverlay();
   void createGraphic();
 
-  Esri::ArcGISRuntime::SceneQuickView* m_sceneView = nullptr;
+  Esri::ArcGISRuntime::LocalSceneQuickView* m_sceneView = nullptr;
   Esri::ArcGISRuntime::AnalysisOverlay* m_analysisOverlay = nullptr;
   Esri::ArcGISRuntime::GeoElementViewshed* m_viewshed = nullptr;
   Esri::ArcGISRuntime::GraphicsOverlay* m_graphicsOverlay = nullptr;

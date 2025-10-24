@@ -37,7 +37,7 @@
 #include "MapTypes.h"
 #include "Point.h"
 #include "Scene.h"
-#include "SceneQuickView.h"
+#include "LocalSceneQuickView.h" #include "SceneViewTypes.h"
 #include "SpatialReference.h"
 #include "Surface.h"
 #include "Viewpoint.h"
@@ -71,17 +71,17 @@ DistanceMeasurementAnalysis::~DistanceMeasurementAnalysis() = default;
 void DistanceMeasurementAnalysis::init()
 {
   // Register classes for QML
-  qmlRegisterType<SceneQuickView>("Esri.Samples", 1, 0, "SceneView");
+  qmlRegisterType<LocalSceneQuickView>("Esri.Samples", 1, 0, "SceneView");
   qmlRegisterType<DistanceMeasurementAnalysis>("Esri.Samples", 1, 0, "DistanceMeasurementAnalysisSample");
 }
 
-SceneQuickView* DistanceMeasurementAnalysis::sceneView() const
+LocalSceneQuickView* DistanceMeasurementAnalysis::sceneView() const
 {
   return m_sceneView;
 }
 
 // Set the view (created in QML)
-void DistanceMeasurementAnalysis::setSceneView(SceneQuickView* sceneView)
+void DistanceMeasurementAnalysis::setSceneView(LocalSceneQuickView* sceneView)
 {
   if (!sceneView || sceneView == m_sceneView)
     return;
@@ -92,7 +92,7 @@ void DistanceMeasurementAnalysis::setSceneView(SceneQuickView* sceneView)
 
   // Add Analysis Overlay
   AnalysisOverlay* analysisOverlay = new AnalysisOverlay(this);
-  m_sceneView->analysisOverlays()->append(analysisOverlay);
+  // m_sceneView->analysisOverlays()->append(analysisOverlay);
 
   // Create and add the LocationDistanceMeasurement
   const Point startLocation(-4.494677, 48.384472, 24.772694, SpatialReference::wgs84());
@@ -131,7 +131,7 @@ void DistanceMeasurementAnalysis::connectSignals()
   // connect to mouse signals to update the analysis
 
   // When the mouse is pressed and held, start updating the distance analysis end point
-  connect(m_sceneView, &SceneQuickView::mousePressedAndHeld, this, [this](QMouseEvent& mouseEvent)
+  connect(m_sceneView, &LocalSceneQuickView::mousePressedAndHeld, this, [this](QMouseEvent& mouseEvent)
   {
     m_isPressAndHold = true;
     m_sceneView->screenToLocationAsync(mouseEvent.position().x(), mouseEvent.position().y()).then(this, [this](const Point& pt)
@@ -141,7 +141,7 @@ void DistanceMeasurementAnalysis::connectSignals()
   });
 
   // When the mouse is released...
-  connect(m_sceneView, &SceneQuickView::mouseReleased, this, [this](QMouseEvent& mouseEvent)
+  connect(m_sceneView, &LocalSceneQuickView::mouseReleased, this, [this](QMouseEvent& mouseEvent)
   {
     // Check if the mouse was released from a pan gesture
     if (m_isNavigating)
@@ -166,7 +166,7 @@ void DistanceMeasurementAnalysis::connectSignals()
   });
 
   // Update the distance analysis when the mouse moves if it is a press and hold movement
-  connect(m_sceneView, &SceneQuickView::mouseMoved, this, [this](QMouseEvent& mouseEvent)
+  connect(m_sceneView, &LocalSceneQuickView::mouseMoved, this, [this](QMouseEvent& mouseEvent)
   {
     if (m_isPressAndHold)
       m_sceneView->screenToLocationAsync(mouseEvent.position().x(), mouseEvent.position().y()).then(this, [this](const Point& pt)
@@ -176,13 +176,13 @@ void DistanceMeasurementAnalysis::connectSignals()
   });
 
   // Set a flag when mousePressed signal emits
-  connect(m_sceneView, &SceneQuickView::mousePressed, this, [this]
+  connect(m_sceneView, &LocalSceneQuickView::mousePressed, this, [this]
   {
     m_isNavigating = false;
   });
 
   // Set a flag when viewpointChanged signal emits
-  connect(m_sceneView, &SceneQuickView::viewpointChanged, this, [this]
+  connect(m_sceneView, &LocalSceneQuickView::viewpointChanged, this, [this]
   {
     m_isNavigating = true;
   });

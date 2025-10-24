@@ -48,7 +48,7 @@
 #include "PointBuilder.h"
 #include "RendererSceneProperties.h"
 #include "Scene.h"
-#include "SceneQuickView.h"
+#include "LocalSceneQuickView.h" #include "SceneViewTypes.h"
 #include "SceneViewTypes.h"
 #include "SimpleMarkerSymbol.h"
 #include "SimpleRenderer.h"
@@ -100,7 +100,7 @@ const std::array<Point, 4> waypoints = {{
 
 LineOfSightGeoElement::LineOfSightGeoElement(QObject* parent /* = nullptr */):
   QObject(parent),
-  m_scene(new Scene(BasemapStyle::ArcGISImageryStandard, this))
+  m_scene(new Scene(BasemapStyle::ArcGISImageryStandard, SceneViewingMode::Local, this))
 {
   // create a new elevation source from Terrain3D rest service
   ArcGISTiledElevationSource* elevationSource = new ArcGISTiledElevationSource(
@@ -124,7 +124,7 @@ LineOfSightGeoElement::~LineOfSightGeoElement() = default;
 void LineOfSightGeoElement::init()
 {
   // Register classes for QML
-  qmlRegisterType<SceneQuickView>("Esri.Samples", 1, 0, "SceneView");
+  qmlRegisterType<LocalSceneQuickView>("Esri.Samples", 1, 0, "SceneView");
   qmlRegisterType<LineOfSightGeoElement>("Esri.Samples", 1, 0, "LineOfSightGeoElementSample");
 }
 
@@ -155,13 +155,13 @@ void LineOfSightGeoElement::setHeightZ(double z)
   }
 }
 
-SceneQuickView* LineOfSightGeoElement::sceneView() const
+LocalSceneQuickView* LineOfSightGeoElement::sceneView() const
 {
   return m_sceneView;
 }
 
 // Set the view (created in QML)
-void LineOfSightGeoElement::setSceneView(SceneQuickView* sceneView)
+void LineOfSightGeoElement::setSceneView(LocalSceneQuickView* sceneView)
 {
   if (!sceneView || sceneView == m_sceneView)
   {
@@ -221,7 +221,7 @@ void LineOfSightGeoElement::initialize()
 
     // Set up our line of sight analysis.
     AnalysisOverlay*  analysisOverlay = new AnalysisOverlay(this);
-    m_sceneView->analysisOverlays()->append(analysisOverlay);
+    // m_sceneView->analysisOverlays()->append(analysisOverlay);
 
     GeoElementLineOfSight* lineOfSight = new GeoElementLineOfSight(m_observer, m_taxi, this);
     analysisOverlay->analyses()->append(lineOfSight);

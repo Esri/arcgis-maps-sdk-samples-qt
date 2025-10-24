@@ -34,7 +34,7 @@ namespace Esri::ArcGISRuntime
   class MapQuickView;
   class ModelSceneSymbol;
   class OrbitGeoElementCameraController;
-  class SceneQuickView;
+  class LocalSceneQuickView;
   class SimpleMarkerSymbol;
 }
 
@@ -100,7 +100,7 @@ private:
   static const QString PITCH;
   static const QString ANGLE;
 
-  Esri::ArcGISRuntime::SceneQuickView* m_sceneView = nullptr;
+  Esri::ArcGISRuntime::LocalSceneQuickView* m_sceneView = nullptr;
   Esri::ArcGISRuntime::MapQuickView* m_mapView = nullptr;
   Esri::ArcGISRuntime::ModelSceneSymbol* m_model3d = nullptr;
   Esri::ArcGISRuntime::Graphic* m_graphic3d = nullptr;

@@ -23,7 +23,7 @@
 namespace Esri::ArcGISRuntime
 {
   class Scene;
-  class SceneQuickView;
+  class LocalSceneQuickView;
   class ArcGISSceneLayer;
 }
 
@@ -40,7 +40,7 @@ public:
 
 private:
   Esri::ArcGISRuntime::Scene* m_scene = nullptr;
-  Esri::ArcGISRuntime::SceneQuickView* m_sceneView = nullptr;
+  Esri::ArcGISRuntime::LocalSceneQuickView* m_sceneView = nullptr;
   Esri::ArcGISRuntime::ArcGISSceneLayer* m_sceneLayer = nullptr;
 };
 

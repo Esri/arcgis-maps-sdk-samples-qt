@@ -33,7 +33,8 @@
 #include "MapTypes.h"
 #include "Point.h"
 #include "Scene.h"
-#include "SceneQuickView.h"
+#include "LocalSceneQuickView.h"
+#include "SceneViewTypes.h"
 #include "SpatialReference.h"
 
 // Qt headers
@@ -62,7 +63,7 @@ namespace
 
 EditKmlGroundOverlay::EditKmlGroundOverlay(QObject* parent /* = nullptr */):
   QObject(parent),
-  m_scene(new Scene(BasemapStyle::ArcGISImageryStandard, this))
+  m_scene(new Scene(BasemapStyle::ArcGISImageryStandard, SceneViewingMode::Local, this))
 {
   // Create Geometry
   const Envelope env(-123.066227926904, 44.04736963555683,
@@ -99,7 +100,7 @@ EditKmlGroundOverlay::~EditKmlGroundOverlay() = default;
 void EditKmlGroundOverlay::init()
 {
   // Register classes for QML
-  qmlRegisterType<SceneQuickView>("Esri.Samples", 1, 0, "SceneView");
+  qmlRegisterType<LocalSceneQuickView>("Esri.Samples", 1, 0, "SceneView");
   qmlRegisterType<EditKmlGroundOverlay>("Esri.Samples", 1, 0, "EditKmlGroundOverlaySample");
 }
 
@@ -111,13 +112,13 @@ void EditKmlGroundOverlay::setOpacity(int opacity)
   m_groundOverlay->setColor(QColor(0, 0, 0, opacity));
 }
 
-SceneQuickView* EditKmlGroundOverlay::sceneView() const
+LocalSceneQuickView* EditKmlGroundOverlay::sceneView() const
 {
   return m_sceneView;
 }
 
 // Set the view (created in QML)
-void EditKmlGroundOverlay::setSceneView(SceneQuickView* sceneView)
+void EditKmlGroundOverlay::setSceneView(LocalSceneQuickView* sceneView)
 {
   if (!sceneView || sceneView == m_sceneView)
     return;

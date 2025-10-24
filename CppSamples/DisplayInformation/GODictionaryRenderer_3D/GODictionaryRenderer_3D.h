@@ -29,7 +29,7 @@
 namespace Esri::ArcGISRuntime
 {
   class GraphicsOverlay;
-  class SceneQuickView;
+  class LocalSceneQuickView;
 }
 
 class GODictionaryRenderer_3D : public QQuickItem
@@ -64,7 +64,7 @@ private:
 
   QString m_dataPath;
   QXmlStreamReader m_xmlParser;
-  Esri::ArcGISRuntime::SceneQuickView* m_sceneView = nullptr;
+  Esri::ArcGISRuntime::LocalSceneQuickView* m_sceneView = nullptr;
   Esri::ArcGISRuntime::GraphicsOverlay* m_graphicsOverlay = nullptr;
   Esri::ArcGISRuntime::Envelope m_bbox;
   QString m_errorMsg;

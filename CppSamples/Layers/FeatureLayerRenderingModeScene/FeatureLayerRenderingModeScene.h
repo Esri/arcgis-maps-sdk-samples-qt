@@ -25,7 +25,7 @@
 
 namespace Esri::ArcGISRuntime
 {
-class SceneQuickView;
+class LocalSceneQuickView;
 class Scene;
 }
 
@@ -51,8 +51,8 @@ private slots:
 private:
   void addFeatureLayers(Esri::ArcGISRuntime::Scene* scene);
 
-  Esri::ArcGISRuntime::SceneQuickView* m_topSceneView = nullptr;
-  Esri::ArcGISRuntime::SceneQuickView* m_bottomSceneView = nullptr;
+  Esri::ArcGISRuntime::LocalSceneQuickView* m_topSceneView = nullptr;
+  Esri::ArcGISRuntime::LocalSceneQuickView* m_bottomSceneView = nullptr;
   Esri::ArcGISRuntime::Camera m_zoomOutCamera;
   Esri::ArcGISRuntime::Camera m_zoomInCamera;
   QTimer* m_timer = nullptr;

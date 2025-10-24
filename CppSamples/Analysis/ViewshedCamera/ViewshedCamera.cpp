@@ -34,7 +34,8 @@
 #include "MapTypes.h"
 #include "Point.h"
 #include "Scene.h"
-#include "SceneQuickView.h"
+#include "LocalSceneQuickView.h"
+#include "SceneViewTypes.h"
 #include "SpatialReference.h"
 #include "Surface.h"
 #include "Viewpoint.h"
@@ -49,7 +50,7 @@ ViewshedCamera::ViewshedCamera(QQuickItem* parent /* = nullptr */):
 void ViewshedCamera::init()
 {
   // Register classes for QML
-  qmlRegisterType<SceneQuickView>("Esri.Samples", 1, 0, "SceneView");
+  qmlRegisterType<LocalSceneQuickView>("Esri.Samples", 1, 0, "SceneView");
   qmlRegisterType<ViewshedCamera>("Esri.Samples", 1, 0, "ViewshedCameraSample");
 }
 
@@ -58,8 +59,8 @@ void ViewshedCamera::componentComplete()
   QQuickItem::componentComplete();
 
   // Create a scene
-  m_sceneView = findChild<SceneQuickView*>("sceneView");
-  m_scene = new Scene(BasemapStyle::ArcGISImageryStandard, this);
+  m_sceneView = findChild<LocalSceneQuickView*>("sceneView");
+  m_scene = new Scene(BasemapStyle::ArcGISImageryStandard, SceneViewingMode::Local, this);
 
   // Set a base surface
   Surface* surface = new Surface(this);
@@ -75,7 +76,7 @@ void ViewshedCamera::componentComplete()
 
   // Add an AnalysisOverlay to display the viewshed analysis result
   m_analysisOverlay = new AnalysisOverlay(this);
-  m_sceneView->analysisOverlays()->append(m_analysisOverlay);
+  // m_sceneView->analysisOverlays()->append(m_analysisOverlay);
 
   // Set initial viewpoint
   setInitialViewpoint();
