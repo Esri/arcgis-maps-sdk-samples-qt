@@ -164,7 +164,7 @@ SearchForWebmapSample {
 
             TextField {
                 id: keyWordField
-                placeholderText: "Enter keyword"
+                placeholderText: qsTr("Enter keyword")
                 selectByMouse: true
 
                 Keys.onReturnPressed: {
