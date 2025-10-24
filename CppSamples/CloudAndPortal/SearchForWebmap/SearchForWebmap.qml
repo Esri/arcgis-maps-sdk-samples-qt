@@ -54,17 +54,16 @@ SearchForWebmapSample {
             height: 32
             border.color: "white"
             border.width: 2
-            color: index === webmapsList.currentIndex ? "orange" : "lightgrey"
+            color: index === webmapsList.currentIndex ? palette.highlight : palette.mid
             radius: 10
 
             //! [PortalItemListModel example QML delegate]
-            Text {
+            Label {
                 anchors {
                     fill: parent
                     margins: 10
                 }
                 text: title // access the title role of the model
-                color: "white"
                 elide: Text.ElideRight
                 wrapMode: Text.Wrap
                 horizontalAlignment: Text.AlignHCenter
@@ -82,6 +81,7 @@ SearchForWebmapSample {
     BusyIndicator {
         anchors.centerIn: parent
         running: !portalLoaded
+        visible: !portalLoaded
     }
 
     Rectangle {
@@ -97,8 +97,9 @@ SearchForWebmapSample {
         border.color: "grey"
         border.width: 2
         radius: 5
+        color: palette.base
 
-        Text {
+        Label {
             id: resultsTitle
             anchors {
                 margins: 10
@@ -106,7 +107,7 @@ SearchForWebmapSample {
                 left: parent.left
                 right: parent.right
             }
-            text: "web maps: " + keyWordField.text
+            text: qsTr("Web maps: ") + keyWordField.text
             elide: Text.ElideRight
             wrapMode: Text.Wrap
             font.bold: true
@@ -137,7 +138,7 @@ SearchForWebmapSample {
                 horizontalCenter: resultsBox.horizontalCenter
             }
             visible: hasMoreResults
-            text: "More Results"
+            text: qsTr("More Results")
             onClicked: searchNext();
         }
     }
@@ -152,9 +153,9 @@ SearchForWebmapSample {
         visible: portalLoaded
         spacing: 5
 
-        Text {
+        Label {
             id: instruction
-            text: qsTr("search for webmaps:")
+            text: qsTr("Search for webmaps:")
             font.bold: true
         }
 
@@ -163,7 +164,7 @@ SearchForWebmapSample {
 
             TextField {
                 id: keyWordField
-                placeholderText: "enter keyword"
+                placeholderText: "Enter keyword"
                 selectByMouse: true
 
                 Keys.onReturnPressed: {
@@ -206,16 +207,16 @@ SearchForWebmapSample {
         x: Math.round(parent.width - width) / 2
         y: Math.round(parent.height - height) / 2
         standardButtons: Dialog.Ok
-        title: "Could not load web map!"
+        title: qsTr("Could not load web map!")
         visible: mapLoadError.length > 0
         property alias text : textLabel.text
         property alias informativeText : detailsLabel.text
         ColumnLayout {
-            Text {
+            Label {
                 id: textLabel
                 text: mapLoadError
             }
-            Text {
+            Label {
                 id: detailsLabel
             }
         }

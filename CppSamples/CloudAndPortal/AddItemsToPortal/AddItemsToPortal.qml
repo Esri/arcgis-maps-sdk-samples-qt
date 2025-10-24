@@ -47,7 +47,7 @@ AddItemsToPortalSample {
                 anchors.horizontalCenter: parent.horizontalCenter
                 height: 64
                 width: Math.min(256, parent.width)
-                color: enabled ? "darkblue" : "darkgrey"
+                color: enabled ? palette.highlight : "darkgrey"
                 border{
                     color: "lightgrey"
                     width: 2
@@ -69,9 +69,9 @@ AddItemsToPortalSample {
                         width: height
                     }
 
-                    Text {
+                    Label {
                         anchors.verticalCenter: parent.verticalCenter
-                        text: "Authenticate Portal"
+                        text: qsTr("Authenticate Portal")
                         font.bold: true
                         color: "white"
                     }
@@ -91,7 +91,7 @@ AddItemsToPortalSample {
                 anchors.horizontalCenter: parent.horizontalCenter
                 height: authenticationButton.height
                 width: authenticationButton.width
-                color: enabled ? "darkblue" : "darkgrey"
+                color: enabled ? palette.highlight : "darkgrey"
                 border{
                     color: authenticationButton.border.color
                     width: 2
@@ -114,9 +114,9 @@ AddItemsToPortalSample {
                         width: height
                     }
 
-                    Text {
+                    Label {
                         anchors.verticalCenter: parent.verticalCenter
-                        text: "Add Item"
+                        text: qsTr("Add Item")
                         font.bold: true
                         color: "white"
                     }
@@ -136,7 +136,7 @@ AddItemsToPortalSample {
                 anchors.horizontalCenter: parent.horizontalCenter
                 height: authenticationButton.height
                 width: authenticationButton.width
-                color: enabled ? "darkblue" : "darkgrey"
+                color: enabled ? palette.highlight : "darkgrey"
                 border {
                     color: authenticationButton.border.color
                     width: 2
@@ -159,9 +159,9 @@ AddItemsToPortalSample {
                         width: height
                     }
 
-                    Text {
+                    Label {
                         anchors.verticalCenter: parent.verticalCenter
-                        text: "Delete Item"
+                        text: qsTr("Delete Item")
                         font.bold: true
                         color: "white"
                     }
@@ -182,7 +182,7 @@ AddItemsToPortalSample {
                     right: parent.right
                 }
                 height: 4
-                color: "lightgrey"
+                color: palette.mid
             }
 
             Rectangle {
@@ -192,7 +192,7 @@ AddItemsToPortalSample {
                     right: parent.right
                 }
                 height: 128
-                color: "lightsteelblue"
+                color: palette.base
                 border {
                     color: "darkgrey"
                     width: 4
@@ -200,16 +200,15 @@ AddItemsToPortalSample {
                 radius: 32
                 clip: true
 
-                Text {
+                Label {
                     id: portalItemLabel
                     anchors{
                         top: parent.top
                         horizontalCenter: parent.horizontalCenter
                         margins: 4
                     }
-                    color: "white"
                     font.bold: true
-                    text: "PortalItem"
+                    text: qsTr("PortalItem")
                     font.underline: true
                     horizontalAlignment: Text.AlignHCenter
                 }
@@ -234,8 +233,7 @@ AddItemsToPortalSample {
                     }
                     clip: true
                     model: portalItemModel
-                    delegate: Text {
-                        color: "white"
+                    delegate: Label {
                         text: label + ":\t" + value
                         wrapMode: Text.Wrap
                         elide: Text.ElideRight
@@ -243,7 +241,7 @@ AddItemsToPortalSample {
                 }
             }
 
-            Text {
+            Label {
                 id: statusBar
                 anchors{
                     left: parent.left
@@ -264,5 +262,6 @@ AddItemsToPortalSample {
     BusyIndicator {
         anchors.centerIn: parent
         running: busy
+        visible: busy
     }
 }
