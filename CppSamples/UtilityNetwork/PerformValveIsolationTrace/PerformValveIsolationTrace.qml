@@ -93,8 +93,6 @@ Item {
                 }
             }
 
-
-
             RowLayout {
                 id: checkBoxRow
                 anchors {
