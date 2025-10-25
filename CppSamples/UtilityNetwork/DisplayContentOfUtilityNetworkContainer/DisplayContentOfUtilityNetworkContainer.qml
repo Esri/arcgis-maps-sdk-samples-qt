@@ -69,6 +69,7 @@ Item {
                 margins: 20
             }
             background: Rectangle {
+                color: palette.base
                 border.color: "black"
                 border.width: 1
             }
@@ -87,7 +88,7 @@ Item {
                 }
                 Label {
                     id: attachmentLabel
-                    text: "Attachment"
+                    text: qsTr("Attachment")
                 }
 
                 Image {
@@ -96,7 +97,7 @@ Item {
                 }
                 Label {
                     id: connectivityLabel
-                    text: "Connectivity"
+                    text: qsTr("Connectivity")
                 }
 
                 Image {
@@ -105,7 +106,7 @@ Item {
                 }
                 Label {
                     id: boundingBoxLabel
-                    text: "Bounding box"
+                    text: qsTr("Bounding box")
                 }
             }
         }
@@ -117,11 +118,7 @@ Item {
                 bottomMargin: 30
                 horizontalCenter: parent.horizontalCenter
             }
-            background: Rectangle {
-                color: "white"
-                border.color: "black"
-            }
-            text: "Close container view"
+            text: qsTr("Close container view")
             font.pointSize: 16
             onClicked: model.showContainerView = false;
         }
@@ -134,13 +131,13 @@ Item {
         width: Math.max(messageBoxText.width, closeMessage.width) + (padding * 2)
         height: messageBoxText.height + closeMessage.height + (messageBoxPopup.padding * 3)
         background: Rectangle {
-            color: "white"
+            color: palette.base
             border.color: "black"
         }
 
         visible: model.messageBoxText !== ""
 
-        Text {
+        Label {
             id: messageBoxText
             anchors {
                 top: parent.top
@@ -157,7 +154,7 @@ Item {
                 bottomMargin: messageBoxPopup.padding
                 horizontalCenter: parent.horizontalCenter
             }
-            text: "Close"
+            text: qsTr("Close")
             onClicked: model.messageBoxText = "";
         }
     }

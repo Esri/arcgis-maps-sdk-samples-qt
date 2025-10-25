@@ -39,22 +39,23 @@ Item {
 
         Rectangle {
             id: backgroundRect
-            color: "#FBFBFB"
-            height: childrenRect.height
-            width: row.width * 1.25
+            color: palette.base
+            height: childrenRect.height + 20
+            width: row.width * 1.05
 
             RowLayout {
                 id: titleRow
                 anchors {
                     left: row.left
                     top: parent.top
+                    topMargin: 10
                 }
                 Rectangle {
                     color: backgroundRect.color
                     width: childrenRect.width
                     height: childrenRect.height
-                    Text {
-                        text: "Choose category for filter barrier:"
+                    Label {
+                        text: qsTr("Choose category for filter barrier:")
                         font.pixelSize: 14
                     }
                 }
@@ -65,6 +66,7 @@ Item {
                 anchors {
                     horizontalCenter: parent.horizontalCenter
                     top: titleRow.bottom
+                    topMargin: 10
                 }
                 ComboBox {
                     id: comboBox
@@ -76,14 +78,14 @@ Item {
                     }
                 }
                 Button {
-                    text: "Trace"
+                    text: qsTr("Trace")
                     onClicked: {
                         sampleModel.performTrace();
                     }
                     enabled: !sampleModel.tasksRunning
                 }
                 Button {
-                    text: "Reset"
+                    text: qsTr("Reset")
                     onClicked: {
                         sampleModel.performReset();
                     }
@@ -91,15 +93,18 @@ Item {
                 }
             }
 
+
+
             RowLayout {
                 id: checkBoxRow
                 anchors {
                     top: row.bottom
                     left: row.left
+                    topMargin: 10
                 }
 
                 CheckBox {
-                    text: "Include isolated features"
+                    text: qsTr("Include isolated features")
                     enabled: !sampleModel.tasksRunning
                     leftPadding: 0
                     onCheckedChanged: {
@@ -119,12 +124,13 @@ Item {
         id: busyIndicator
         anchors.centerIn: parent
         running: sampleModel.tasksRunning
+        visible: sampleModel.tasksRunning
     }
 
     Dialog {
         id: messageDialog
         visible: sampleModel.noResults
-        title: "Isolation trace returned no elements."
+        title: qsTr("Isolation trace returned no elements.")
         standardButtons: Dialog.Ok
         anchors.centerIn: parent
     }
