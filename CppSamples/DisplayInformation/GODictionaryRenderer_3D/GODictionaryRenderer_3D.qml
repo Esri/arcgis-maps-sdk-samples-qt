@@ -56,13 +56,13 @@ GODictionaryRenderer_3DSample {
         property alias text : textLabel.text
         property alias informativeText : detailsLabel.text
         ColumnLayout {
-            Text {
+            Label {
                 id: textLabel
                 text: errorMessage
             }
-            Text {
+            Label {
                 id: detailsLabel
-                text: "Please consult the README.md"
+                text: qsTr("Please consult the README.md")
             }
         }
         onAccepted: errorAccepted()
