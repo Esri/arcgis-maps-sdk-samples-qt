@@ -34,6 +34,7 @@ PortalUserInfoSample {
         id: loadingIndicator
         anchors.centerIn: parent
         running: !loaded && !loginDismissed
+        visible: !loaded && !loginDismissed
     }
 
     Column {
@@ -47,7 +48,7 @@ PortalUserInfoSample {
         }
         spacing: 10
 
-        Text {
+        Label {
             text: fullName.length > 0 ? fullName + " Profile" : ("????")
             font.bold: true
             font.pointSize: 15
@@ -74,14 +75,13 @@ PortalUserInfoSample {
         model: detailNames.length
 
         delegate: Column {
-            Text {
+            Label {
                 text: detailNames[index]
                 font.bold: true
             }
 
-            Text {
+            Label {
                 text: rootRectangle[detailValue[index]]
-                color: "grey"
             }
         }
     }
@@ -96,7 +96,7 @@ PortalUserInfoSample {
         }
         height: 4
         visible: loaded
-        color: "lightgrey"
+        color: palette.mid
     }
 
     Column {
@@ -110,7 +110,7 @@ PortalUserInfoSample {
         }
         spacing: 10
 
-        Text {
+        Label {
             text: orgTitle
             font.bold: true
             font.pointSize: 15
@@ -139,14 +139,13 @@ PortalUserInfoSample {
         model: infoValues.length
 
         delegate: Column {
-            Text {
+            Label {
                 text: loaded ? infoLabels[index] : ""
                 font.bold: true
             }
 
-            Text {
+            Label {
                 text: rootRectangle[infoValues[index]]
-                color: "grey"
             }
         }
     }
@@ -158,7 +157,7 @@ PortalUserInfoSample {
             horizontalCenter: parent.horizontalCenter
             top: parent.top
         }
-        text: "Authenticate Portal"
+        text: qsTr("Authenticate Portal")
         icon.source: "qrc:/Samples/CloudAndPortal/PortalUserInfo/ic_menu_account_dark.png"
 
         visible: loginDismissed
