@@ -38,9 +38,9 @@ OpenMapUrlSample {
     // Create a list model with information about different webmaps
     ListModel {
        id: webmapsListModel
-       ListElement { itemTitle: "Geology of United States"; imageUrl: "qrc:/Samples/Maps/OpenMapUrl/geology.jpg"; itemId: "92ad152b9da94dee89b9e387dfe21acd"}
-       ListElement { itemTitle: "Terrestrial Ecosystems of the World"; imageUrl: "qrc:/Samples/Maps/OpenMapUrl/ecosystems.png"; itemId: "5be0bc3ee36c4e058f7b3cebc21c74e6"}
-       ListElement { itemTitle: "Recent Hurricanes, Cyclones, and Typhoons"; imageUrl: "qrc:/Samples/Maps/OpenMapUrl/traces.png"; itemId: "064f2e898b094a17b84e4a4cd5e5f549"}
+       ListElement { itemTitle: qsTr("Geology of United States"); imageUrl: "qrc:/Samples/Maps/OpenMapUrl/geology.jpg"; itemId: "92ad152b9da94dee89b9e387dfe21acd"}
+       ListElement { itemTitle: qsTr("Terrestrial Ecosystems of the World"); imageUrl: "qrc:/Samples/Maps/OpenMapUrl/ecosystems.png"; itemId: "5be0bc3ee36c4e058f7b3cebc21c74e6"}
+       ListElement { itemTitle: qsTr("Recent Hurricanes, Cyclones, and Typhoons"); imageUrl: "qrc:/Samples/Maps/OpenMapUrl/traces.png"; itemId: "064f2e898b094a17b84e4a4cd5e5f549"}
     }
 
     // Create a delegate for how the webmaps display in the view
@@ -152,7 +152,7 @@ OpenMapUrlSample {
            anchors.centerIn: parent
            width: 35
            height: width
-           source: Qt.application.styleHints.colorScheme === Qt.ColorScheme.Dark ? "qrc:/Samples/Maps/OpenMapUrl/SwitchMap_light.png" : "qrc:/Samples/Maps/OpenMapUrl/SwitchMap.png"
+           source: "qrc:/Samples/Maps/OpenMapUrl/SwitchMap.png"
        }
 
        MouseArea {

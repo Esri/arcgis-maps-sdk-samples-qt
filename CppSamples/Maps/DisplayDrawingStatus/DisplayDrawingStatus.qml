@@ -77,7 +77,7 @@ DisplayDrawingStatusSample {
                     }
                     height: 20
                     horizontalAlignment: Text.AlignHCenter
-                    text: "Drawing..."
+                    text: qsTr("Drawing...")
                 }
             }
         }

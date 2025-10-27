@@ -41,7 +41,7 @@ Pane {
             Label {
                 Layout.margins: 5
                 Layout.alignment: Qt.AlignHCenter
-                text: "Select Layers"
+                text: qsTr("Select Layers")
                 font {
                     pixelSize: 18
                     family: "helvetica"
@@ -50,7 +50,7 @@ Pane {
 
             Label {
                 Layout.margins: 5
-                text: "Select Basemap:"
+                text: qsTr("Select Basemap:")
                 font {
                     pixelSize: 14
                     family: "helvetica"
@@ -63,7 +63,7 @@ Pane {
                 Layout.minimumWidth: modelWidth + leftPadding + rightPadding + (indicator ? indicator.width : 10)
                 Layout.margins: 5
                 Layout.fillWidth: true
-                model: ["Streets", "Imagery", "Topographic", "Oceans"]
+                model: [qsTr("Streets"), qsTr("Imagery"), qsTr("Topographic"), qsTr("Oceans")]
 
                 Component.onCompleted: {
                     for (let i = 0; i < model.length; ++i) {
@@ -79,7 +79,7 @@ Pane {
 
             Label {
                 Layout.margins: 5
-                text: "Select Operational Layers:"
+                text: qsTr("Select Operational Layers:")
                 font {
                     pixelSize: 14
                     family: "helvetica"
@@ -90,7 +90,7 @@ Pane {
                 id: operationalLayerRepeater
                 Layout.margins: 5
                 Layout.fillWidth: true
-                model: ["WorldElevations", "Census"]
+                model: [qsTr("WorldElevations"), qsTr("Census")]
 
                 CheckBox {
                     text: modelData
@@ -101,7 +101,7 @@ Pane {
             Button {
                 Layout.margins: 5
                 Layout.fillWidth: true
-                text: "Create Map"
+                text: qsTr("Create Map")
                 onClicked: {
                     const layerList = [];
                     for (let i = 0; i < operationalLayerRepeater.count; i++) {

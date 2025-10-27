@@ -33,7 +33,7 @@ Item {
                 bottom: view.attributionTop
                 bottomMargin: 10
             }
-            text: "Change Basemap"
+            text: qsTr("Change Basemap")
             checkable: true
         }
 

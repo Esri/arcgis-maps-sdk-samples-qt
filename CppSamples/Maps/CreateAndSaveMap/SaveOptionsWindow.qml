@@ -47,7 +47,7 @@ Pane {
                 Layout.columnSpan: 2
                 Layout.margins: 5
                 Layout.bottomMargin: 2
-                text: "Title*:"
+                text: qsTr("Title*:")
                 font {
                     pixelSize: 14
                     family: "helvetica"
@@ -61,7 +61,7 @@ Pane {
                 Layout.margins: 5
                 Layout.fillWidth: true
                 Layout.topMargin: 0
-                placeholderText: "ex: Sample Map"
+                placeholderText: qsTr("ex: Sample Map")
             }
 
             Label {
@@ -69,7 +69,7 @@ Pane {
                 Layout.columnSpan: 2
                 Layout.margins: 5
                 Layout.bottomMargin: 2
-                text: "Tags:"
+                text: qsTr("Tags:")
                 font {
                     pixelSize: 14
                     family: "helvetica"
@@ -83,7 +83,7 @@ Pane {
                 Layout.margins: 5
                 Layout.fillWidth: true
                 Layout.topMargin: 0
-                placeholderText: "ex: map, sample, elevation"
+                placeholderText: qsTr("ex: map, sample, elevation")
             }
 
             Label {
@@ -91,7 +91,7 @@ Pane {
                 Layout.columnSpan: 2
                 Layout.margins: 5
                 Layout.bottomMargin: 2
-                text: "Description:"
+                text: qsTr("Description:")
                 font {
                     pixelSize: 14
                     family: "helvetica"
@@ -105,13 +105,13 @@ Pane {
                 Layout.margins: 5
                 Layout.fillWidth: true
                 Layout.topMargin: 0
-                placeholderText: "ex: This map displays..."
+                placeholderText: qsTr("ex: This map displays...")
             }
 
             Label {
                 Layout.columnSpan: 2
                 Layout.margins: 5
-                text: "*Field is Required"
+                text: qsTr("*Field is Required")
                 color: "red"
                 font {
                     pixelSize: 10
@@ -121,7 +121,7 @@ Pane {
 
             Button {
                 Layout.margins: 5
-                text: "Save"
+                text: qsTr("Save")
                 onClicked: {
                     // Make sure a Title is supplied
                     if (titleText.text === "") {
@@ -135,7 +135,7 @@ Pane {
 
             Button {
                 Layout.margins: 5
-                text: "Cancel"
+                text: qsTr("Cancel")
                 onClicked: cancelClicked()
             }
         }
