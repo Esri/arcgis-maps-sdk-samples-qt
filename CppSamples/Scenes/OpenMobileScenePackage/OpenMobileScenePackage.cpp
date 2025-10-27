@@ -58,16 +58,6 @@ OpenMobileScenePackage::OpenMobileScenePackage(QObject* parent /* = nullptr */):
   // separately are specified in the readme.
   const QString dataPath = defaultDataPath() + "/ArcGIS/Runtime/Data/mspk/philadelphia.mspk";
 
-  // connect to the Mobile Scene Package instance to know when errors occur
-  connect(MobileScenePackage::instance(), &MobileScenePackage::errorOccurred,
-          [](const Error& e)
-  {
-    if (e.isEmpty())
-      return;
-
-    qDebug() << QString("Error: %1 %2").arg(e.message(), e.additionalMessage());
-  });
-
   // Create the Scene Package
   createScenePackage(dataPath);
 }
@@ -128,6 +118,19 @@ void OpenMobileScenePackage::packageLoaded(const Error& e)
 void OpenMobileScenePackage::createScenePackage(const QString& path)
 {
   m_scenePackage = new MobileScenePackage(path, this);
+
+  // connect to the Mobile Scene Package errorOccurred to know when errors occur
+  connect(m_scenePackage, &MobileScenePackage::errorOccurred, [](const Error& e)
+  {
+    if (e.isEmpty())
+    {
+      return;
+    }
+
+    qDebug() << QString("Error: %1 %2").arg(e.message(), e.additionalMessage());
+  });
+
   connect(m_scenePackage, &MobileScenePackage::doneLoading, this, &OpenMobileScenePackage::packageLoaded);
+
   m_scenePackage->load();
 }

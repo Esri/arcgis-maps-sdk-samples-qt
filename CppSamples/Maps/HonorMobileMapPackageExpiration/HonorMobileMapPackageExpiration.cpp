@@ -58,18 +58,6 @@ HonorMobileMapPackageExpiration::HonorMobileMapPackageExpiration(QObject* parent
   QObject(parent),
   m_dataPath(defaultDataPath() + sampleMmpk)
 {
-  // connect to the Mobile Map Package instance to know when errors occur
-  connect(MobileMapPackage::instance(), &MobileMapPackage::errorOccurred,
-          [](const Error& e)
-  {
-    if (e.isEmpty())
-    {
-      return;
-    }
-
-    qDebug() << QString("Error: %1 %2").arg(e.message(), e.additionalMessage());
-  });
-
 }
 
 HonorMobileMapPackageExpiration::~HonorMobileMapPackageExpiration() = default;
@@ -103,6 +91,17 @@ void HonorMobileMapPackageExpiration::createMapPackage(const QString& path)
 {
   // instatiate a mobile map package
   m_mobileMapPackage = new MobileMapPackage(path, this);
+
+  // connect to the Mobile Map Package errorOccurred to know when errors occur
+  connect(m_mobileMapPackage, &MobileMapPackage::errorOccurred, [](const Error& e)
+  {
+    if (e.isEmpty())
+    {
+      return;
+    }
+
+    qDebug() << QString("Error: %1 %2").arg(e.message(), e.additionalMessage());
+  });
 
   // wait for the mobile map package to load
   connect(m_mobileMapPackage, &MobileMapPackage::doneLoading, this, [this](const Error& error)
