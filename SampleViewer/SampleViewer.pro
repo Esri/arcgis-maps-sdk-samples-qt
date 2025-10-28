@@ -35,7 +35,7 @@ exists($$PWD/../../../DevBuildCpp.pri) {
   DEFINES += SAMPLE_VIEWER_API_KEY=$$(SAMPLEVIEWERAPIKEY_INTERNAL) ESRI_BUILD
 
   # use the Esri dev build script
-  include ($$PWD/../../../DevBuildCpp2.pri)
+  include ($$PWD/../../../DevBuildCpp.pri)
   # include the toolkitcpp.pri, which contains all the toolkit resources
   include($$PWD/../../toolkit/uitools/toolkitcpp/toolkitcpp.pri)
 
