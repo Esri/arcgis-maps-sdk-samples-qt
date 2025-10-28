@@ -22,7 +22,7 @@
         { "key": "SampleName", "value": "%{JS: '%{Class}'.charAt(0).toUpperCase() + '%{Class}'.substring(1)}" },
         { "key": "SampleDescription", "value": "%{SampleDesc}" },
         { "key": "SampleCategory", "value": "%{SampleCat}" },
-        { "key": "IncludeGuard", "value": "%{JS: Cpp.classToHeaderGuard('%{Class}', '%{JS: Util.preferredSuffix('text/x-c++hdr')}')}" },
+        { "key": "IncludeGuard", "value": "%{JS: Cpp.headerGuard('%{Class}' + '_H')}" },
         { "key": "ThreeDSample", "value": "%{threeD}" },
         { "key": "UseFeatureLayer", "value": "%{JS: ( '%{FeatureLayerURL}'.length === 0 ) ? 'false' : 'true'}" },
         { "key": "UseAPIKey", "value": "%{apiKey}" },

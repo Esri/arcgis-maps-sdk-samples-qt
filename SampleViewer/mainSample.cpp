@@ -241,6 +241,7 @@
 #include "../CppSamples/Scenes/CreateTerrainSurfaceFromLocalRaster/CreateTerrainSurfaceFromLocalRaster.h"
 #include "../CppSamples/Scenes/CreateTerrainSurfaceFromLocalTilePackage/CreateTerrainSurfaceFromLocalTilePackage.h"
 #include "../CppSamples/Scenes/Display3DLabelsInScene/Display3DLabelsInScene.h"
+#include "../CppSamples/Scenes/DisplayLocalSceneView/DisplayLocalSceneView.h"
 #include "../CppSamples/Scenes/DisplaySceneLayer/DisplaySceneLayer.h"
 #include "../CppSamples/Scenes/DistanceCompositeSymbol/DistanceCompositeSymbol.h"
 #include "../CppSamples/Scenes/ExtrudeGraphics/ExtrudeGraphics.h"
@@ -434,6 +435,7 @@ void registerCppSampleClasses()
   DisplayKml::init();
   DisplayKmlNetworkLinks::init();
   DisplayLayerViewDrawState::init();
+  DisplayLocalSceneView::init();
   DisplayMap::init();
   DisplayOgcApiFeatureCollection::init();
   DisplayOverviewMap::init();

@@ -57,17 +57,6 @@ const QString sampleFileYellowstone {"/ArcGIS/Runtime/Data/mmpk/Yellowstone.mmpk
 OpenMobileMap_MapPackage::OpenMobileMap_MapPackage(QQuickItem* parent) :
   QQuickItem(parent)
 {
-  // connect to the Mobile Map Package instance to know when errors occur
-  connect(MobileMapPackage::instance(), &MobileMapPackage::errorOccurred,
-          [](const Error& e)
-  {
-    if (e.isEmpty())
-    {
-      return;
-    }
-
-    qDebug() << QString("Error: %1 %2").arg(e.message(), e.additionalMessage());
-  });
 }
 
 OpenMobileMap_MapPackage::~OpenMobileMap_MapPackage() = default;
@@ -100,6 +89,17 @@ void OpenMobileMap_MapPackage::createMapPackage(const QString& path)
   //! [open mobile map package cpp snippet]
   // instatiate a mobile map package
   m_mobileMapPackage = new MobileMapPackage(path, this);
+
+  // connect to the Mobile Map Package errorOccurred to know when errors occur
+  connect(m_mobileMapPackage, &MobileMapPackage::errorOccurred, [](const Error& e)
+  {
+    if (e.isEmpty())
+    {
+      return;
+    }
+
+    qDebug() << QString("Error: %1 %2").arg(e.message(), e.additionalMessage());
+  });
 
   // wait for the mobile map package to load
   connect(m_mobileMapPackage, &MobileMapPackage::doneLoading, this, [this](const Error& error)
