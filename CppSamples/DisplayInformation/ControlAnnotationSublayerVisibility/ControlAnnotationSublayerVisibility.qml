@@ -37,13 +37,14 @@ Item {
                 top: parent.top
                 margins: 2
             }
-            width: childrenRect.width
-            height: childrenRect.height + 16
+            width: columnLayout.implicitWidth
+            height: columnLayout.implicitHeight + 16
             color: palette.base
             opacity: .9
             radius: 5
 
             ColumnLayout {
+                id: columnLayout
                 spacing: 8
                 anchors.centerIn: parent
                 Row {

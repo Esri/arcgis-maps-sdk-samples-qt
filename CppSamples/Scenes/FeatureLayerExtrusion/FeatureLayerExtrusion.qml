@@ -46,7 +46,7 @@ FeatureLayerExtrusionSample {
             property int modelWidth: 0
             width: modelWidth + leftPadding + rightPadding + (indicator ? indicator.width : 10)
 
-            model: ["TOTAL POPULATION", "POPULATION DENSITY"]
+            model: [qsTr("TOTAL POPULATION"), qsTr("POPULATION DENSITY")]
 
             onCurrentTextChanged: {
                 if (currentText === "TOTAL POPULATION")

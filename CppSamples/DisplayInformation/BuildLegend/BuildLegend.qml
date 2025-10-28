@@ -90,15 +90,17 @@ BuildLegendSample {
 
                 // Legend icon to allow expanding and collapsing
                 Image {
-                    source: legendRect.expanded ? "qrc:/Samples/DisplayInformation/BuildLegend/ic_menu_legendpopover_light_d.png" : "qrc:/Samples/DisplayInformation/BuildLegend/ic_menu_legendpopover_light.png"
-                    width: 28
+                    source: legendRect.expanded ?
+                                (Qt.application.styleHints.colorScheme === Qt.ColorScheme.Dark ? "qrc:/Samples/DisplayInformation/BuildLegend/ic_menu_legendpopover_light_d.png" : "qrc:/Samples/DisplayInformation/BuildLegend/ic_menu_legendpopover_light_d_dark.png")
+                                                                                                : "qrc:/Samples/DisplayInformation/BuildLegend/ic_menu_legendpopover_light.png"
+                    width: 24
                     height: width
 
                     MouseArea {
                         anchors.fill: parent
                         onClicked: {
                             if (legendRect.expanded) {
-                                legendRect.height = 40;
+                                legendRect.height = 36;
                                 legendRect.expanded = false;
                             } else {
                                 legendRect.height = 200;
