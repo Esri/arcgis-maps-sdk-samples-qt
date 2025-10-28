@@ -269,7 +269,7 @@ Page {
                                         height: statusLabel.implicitHeight + 10
                                         color: modelData.downloaded ? Calcite.success : Calcite.danger
                                         radius: 12
-                                        opacity: 0.2
+                                        opacity: 1
 
                                         Label {
                                             id: statusLabel

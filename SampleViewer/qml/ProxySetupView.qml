@@ -68,7 +68,7 @@ Item {
                     family: fontFamily
                     pixelSize: 18
                 }
-                color: Calcite.textInverse
+                color: Calcite.offWhite
             }
         }
 
