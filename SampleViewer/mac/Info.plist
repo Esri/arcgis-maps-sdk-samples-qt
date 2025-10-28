@@ -22,8 +22,6 @@
     <string>NSApplication</string>
     <key>NSSupportsAutomaticGraphicsSwitching</key>
     <true/>
-    <key>NSRequiresAquaSystemAppearance</key>
-    <string>true</string>
     <key>NSLocationUsageDescription</key>
     <string>Application requires location services</string>
     <key>NSLocationWhenInUseUsageDescription</key>
