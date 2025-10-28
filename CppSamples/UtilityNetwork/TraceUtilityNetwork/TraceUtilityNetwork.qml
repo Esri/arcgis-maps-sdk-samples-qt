@@ -46,7 +46,7 @@ Item {
         visible: model.terminalDialogVisisble
 
         ColumnLayout {
-            Text {
+            Label {
                 text: qsTr("Select the terminal for this junction.")
                 Layout.alignment: Qt.AlignHCenter
             }
@@ -68,7 +68,7 @@ Item {
         y: (parent.height - height) / 2
         visible: model.dialogVisible
 
-        Text {
+        Label {
             text: model.dialogText
             anchors.centerIn: parent
         }
@@ -89,8 +89,8 @@ Item {
         }
         width: childrenRect.width
         height: childrenRect.height
-        color: "lightgrey"
-        opacity: 0.8
+        color: palette.base
+        opacity: 0.9
         radius: 5
 
         // catch mouse signals from propagating to parent
@@ -121,7 +121,7 @@ Item {
                     onToggled: model.startingLocationsEnabled = !checked;
                 }
 
-                Text {
+                Label {
                     text: qsTr("Trace Type:")
                     Layout.alignment: Qt.AlignHCenter | Qt.AlignVCenter
                 }
@@ -149,7 +149,7 @@ Item {
                 }
             }
 
-            Text {
+            Label {
                 // Displays fraction along edge or if a junction is selected
                 text: model.junctionSelected ? qsTr("Junction selected") : qsTr("Fraction along edge: %1".arg(model.fractionAlongEdge.toFixed(6)))
                 anchors.horizontalCenter: parent.horizontalCenter
