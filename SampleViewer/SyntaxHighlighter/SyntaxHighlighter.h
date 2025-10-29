@@ -37,15 +37,15 @@ class QmlHighlighter;
 
 class SyntaxHighlighter : public QObject
 {
-    Q_OBJECT
+  Q_OBJECT
 
 public:
-    explicit SyntaxHighlighter(QObject* parent = nullptr);
-    Q_INVOKABLE void setHighlighter(QObject* textArea, bool isDarkTheme = false);
-    Q_INVOKABLE void updateHighlighterTheme(bool isDarkTheme);
+  explicit SyntaxHighlighter(QObject* parent = nullptr);
+  Q_INVOKABLE void setHighlighter(QObject* textArea, bool isDarkTheme = false);
+  Q_INVOKABLE void updateHighlighter(QObject* textArea, bool isDarkTheme);
 
 private:
-    QmlHighlighter* m_highlighter = nullptr;
+  QmlHighlighter* m_highlighter = nullptr;
 };
 
 #endif // SYNTAXHIGHLIGHTER_H

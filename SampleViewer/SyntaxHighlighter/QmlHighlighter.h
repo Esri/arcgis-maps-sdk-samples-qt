@@ -35,42 +35,41 @@
 #include <QTextCharFormat>
 #include <QTextDocument>
 
-class QmlHighlighter : public QSyntaxHighlighter {
-
+class QmlHighlighter : public QSyntaxHighlighter
+{
 public:
-    explicit QmlHighlighter(QTextDocument* parent = nullptr, bool isDarkTheme = false);
-
-    void updateTheme(bool isDarkTheme);
+  explicit QmlHighlighter(QTextDocument* parent = nullptr, bool isDarkTheme = false);
 
 protected:
-    void highlightBlock(const QString& text);
+  void highlightBlock(const QString& text);
 
 private:
-    void setupColors(bool isDarkTheme);
-    bool m_isDarkTheme;
-    struct HighlightingRule
-    {
-        QRegularExpression pattern;
-        QTextCharFormat format;
-    };
+  void setupColors(bool isDarkTheme);
+  bool m_isDarkTheme;
 
-    QList<HighlightingRule> m_highlightingRules;
+  struct HighlightingRule
+  {
+    QRegularExpression pattern;
+    QTextCharFormat format;
+  };
 
-    QRegularExpression m_commentStartExpression;
-    QRegularExpression m_commentEndExpression;
+  QList<HighlightingRule> m_highlightingRules;
 
-    QTextCharFormat m_keywordFormat;
-    QTextCharFormat m_keywordOtherFormat;
-    QTextCharFormat m_classFormat;
-    QTextCharFormat m_classFormat_2;
-    QTextCharFormat m_classFormat_3;
-    QTextCharFormat m_memberVarName_1;
-    QTextCharFormat m_memberVarName_2;
-    QTextCharFormat m_memberVarName_3;
-    QTextCharFormat m_memberVarName_4;
-    QTextCharFormat m_singleLineCommentFormat;
-    QTextCharFormat m_multiLineCommentFormat;
-    QTextCharFormat m_quotationFormat;
+  QRegularExpression m_commentStartExpression;
+  QRegularExpression m_commentEndExpression;
+
+  QTextCharFormat m_keywordFormat;
+  QTextCharFormat m_keywordOtherFormat;
+  QTextCharFormat m_classFormat;
+  QTextCharFormat m_classFormat_2;
+  QTextCharFormat m_classFormat_3;
+  QTextCharFormat m_memberVarName_1;
+  QTextCharFormat m_memberVarName_2;
+  QTextCharFormat m_memberVarName_3;
+  QTextCharFormat m_memberVarName_4;
+  QTextCharFormat m_singleLineCommentFormat;
+  QTextCharFormat m_multiLineCommentFormat;
+  QTextCharFormat m_quotationFormat;
 };
 
 #endif // QMLHIGHLIGHTER_H

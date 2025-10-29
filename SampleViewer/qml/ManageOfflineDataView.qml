@@ -118,7 +118,7 @@ Page {
             }
 
             Button {
-                text: SampleManager.cancelDownload ? "Cancelling remaining downloads..." : "Cancel remaining downloads"
+                text: SampleManager.cancelDownload ? qsTr("Cancelling remaining downloads...") : qsTr("Cancel remaining downloads")
                 enabled: !SampleManager.cancelDownload
                 font.pixelSize: Math.max(10, baseFontSize)
                 Layout.alignment: Qt.AlignHCenter | Qt.AlignVCenter
@@ -137,7 +137,7 @@ Page {
             spacing: baseSpacing
 
             Button {
-                text: SampleManager.downloadFailed ? "Retry download all offline data" : "Download all offline data"
+                text: SampleManager.downloadFailed ? qsTr("Retry download all offline data") : qsTr("Download all offline data")
                 Layout.preferredWidth: Math.max(implicitWidth, 200 * scaleFactor)
                 Layout.preferredHeight: Math.max(40, 50 * scaleFactor)
                 enabled: {
@@ -172,7 +172,7 @@ Page {
         }
 
         CheckBox {
-            text: "Show only downloaded data"
+            text: qsTr("Show only downloaded data")
             Layout.alignment: Qt.AlignRight
             visible: !SampleManager.downloadInProgress
             checked: showOnlyDownloaded
@@ -273,7 +273,7 @@ Page {
                                         Label {
                                             id: statusLabel
                                             anchors.centerIn: parent
-                                            text: modelData.downloaded ? "Downloaded" : "Not downloaded"
+                                            text: modelData.downloaded ? qsTr("Downloaded") : qsTr("Not downloaded")
                                             color: Calcite.text1
                                             font {
                                                 family: fontFamily
@@ -292,7 +292,7 @@ Page {
                                     spacing: baseSpacing / 2
 
                                     Button {
-                                        text: "Download"
+                                        text: qsTr("Download")
                                         Layout.preferredWidth: Math.max(110, 110 * scaleFactor)
                                         Layout.preferredHeight: Math.max(32, 40 * scaleFactor)
                                         visible: !modelData.downloaded
@@ -303,7 +303,7 @@ Page {
                                     }
 
                                     Button {
-                                        text: "Delete"
+                                        text: qsTr("Delete")
                                         Layout.preferredWidth: Math.max(110, 110 * scaleFactor)
                                         Layout.preferredHeight: Math.max(32, 40 * scaleFactor)
                                         visible: modelData.downloaded
@@ -325,13 +325,13 @@ Page {
 
     MessageDialog {
         id: deleteAllDialog
-        title: "Delete all offline data"
-        text: "Are you sure you want to delete all offline data?"
+        title: qsTr("Delete all offline data")
+        text: qsTr("Are you sure you want to delete all offline data?")
         visible: false
         buttons: MessageDialog.Yes | MessageDialog.No
 
         function resetDialog() {
-            text = "Are you sure you want to delete all offline data?";
+            text = qsTr("Are you sure you want to delete all offline data?");
             buttons = MessageDialog.Yes | MessageDialog.No;
             visible = false;
         }
@@ -339,11 +339,11 @@ Page {
         onClicked: function(button) {
             if (button === MessageDialog.Yes){
                 if (SampleManager.deleteAllOfflineData()) {
-                    text = "Project data deleted successfully";
+                    text = qsTr("Project data deleted successfully");
                     buttons = MessageDialog.Ok;
                     visible = true;
                 } else {
-                    text = "Failed to delete project data";
+                    text = qsTr("Failed to delete project data");
                     buttons = MessageDialog.Ok;
                     visible = true;
                 }
@@ -360,13 +360,13 @@ Page {
     MessageDialog {
         id: deleteProjectDialog
         property string sampleName: ""
-        title: "Delete project data"
-        text: "Are you sure you want to delete offline data for '" + sampleName + "'?"
+        title: qsTr("Delete project data")
+        text: qsTr("Are you sure you want to delete offline data for '") + sampleName + "'?"
         visible: false
         buttons: MessageDialog.Yes | MessageDialog.No
 
         function resetDialog() {
-            text = "Are you sure you want to delete offline data for '" + sampleName + "'?";
+            text = qsTr("Are you sure you want to delete offline data for '") + sampleName + "'?";
             buttons = MessageDialog.Yes | MessageDialog.No;
             visible = false;
         }
@@ -374,12 +374,12 @@ Page {
         onClicked: function(button) {
             if (button === MessageDialog.Yes){
                 if (SampleManager.deleteProjectOfflineData(sampleName)) {
-                    text = "Project data deleted successfully";
+                    text = qsTr("Project data deleted successfully");
                     buttons = MessageDialog.Ok;
                     visible = true;
                 }
                 else {
-                    text = "Failed to delete project data";
+                    text = qsTr("Failed to delete project data");
                     buttons = MessageDialog.Ok;
                     visible = true;
                 }

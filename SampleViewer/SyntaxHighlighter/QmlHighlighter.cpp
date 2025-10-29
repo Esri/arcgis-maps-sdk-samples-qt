@@ -176,20 +176,3 @@ void QmlHighlighter::setupColors(bool isDarkTheme)
     m_quotationFormat.setForeground(QColor("#B07800")); // Brown/orange - strings
   }
 }
-
-void QmlHighlighter::updateTheme(bool isDarkTheme)
-{
-  m_isDarkTheme = isDarkTheme;
-  setupColors(isDarkTheme);
-
-  // Update all existing rules with new formats
-  for (int i = 0; i < m_highlightingRules.size(); ++i)
-  {
-    if (m_highlightingRules[i].format.foreground() == m_keywordFormat.foreground() || m_highlightingRules[i].format == m_keywordFormat)
-    {
-      m_highlightingRules[i].format = m_keywordFormat;
-    }
-  }
-
-  rehighlight();
-}

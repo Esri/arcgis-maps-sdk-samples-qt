@@ -51,7 +51,7 @@ Rectangle {
             Connections {
                 target: Calcite
                 function onThemeChanged() {
-                    SyntaxHighlighter.updateHighlighterTheme(Calcite.theme === Calcite.Theme.Dark);
+                    SyntaxHighlighter.updateHighlighter(textEdit, Calcite.theme === Calcite.Theme.Dark);
                 }
             }
 

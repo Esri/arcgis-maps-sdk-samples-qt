@@ -36,10 +36,12 @@ void SyntaxHighlighter::setHighlighter(QObject* textArea, bool isDarkTheme)
   m_highlighter->rehighlight();
 }
 
-void SyntaxHighlighter::updateHighlighterTheme(bool isDarkTheme)
+void SyntaxHighlighter::updateHighlighter(QObject* textArea, bool isDarkTheme)
 {
   if (m_highlighter)
   {
-    m_highlighter->updateTheme(isDarkTheme);
+    delete m_highlighter;
   }
+
+  setHighlighter(textArea, isDarkTheme);
 }
