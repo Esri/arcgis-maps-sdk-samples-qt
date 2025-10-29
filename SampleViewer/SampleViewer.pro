@@ -228,7 +228,7 @@ RESOURCES += \
     $$COMMONVIEWER/images/images.qrc \
     $$COMMONVIEWER/resources/application.qrc \
     $$COMMONVIEWER/Samples/Categories.qrc \
-    $$PWD/imports.qrc \
+    $$PWD/imports.qrc
 
 DEFINES += QT_DEPRECATED_WARNINGS
 
