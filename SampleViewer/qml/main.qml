@@ -68,7 +68,7 @@ ApplicationWindow {
                 pixelSize: 24
                 family: fontFamily
             }
-            color: "white"
+            color: Calcite.offWhite
         }
 
         Image {
