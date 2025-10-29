@@ -45,7 +45,7 @@ Item {
 
         ColumnLayout {
             Label {
-                text: "Max extent enabled"
+                text: qsTr("Max extent enabled")
                 Layout.fillWidth: true
                 Layout.margins: 3
                 font {

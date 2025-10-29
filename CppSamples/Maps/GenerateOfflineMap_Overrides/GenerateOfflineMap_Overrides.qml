@@ -68,7 +68,7 @@ GenerateOfflineMap_OverridesSample {
                 source: "qrc:/Samples/Maps/GenerateOfflineMap_Overrides/download.png"
                 width: 24
                 height: 24
-                color: palette.text
+                color: "#F8F8F8"
             }
             visible: mapLoaded
 

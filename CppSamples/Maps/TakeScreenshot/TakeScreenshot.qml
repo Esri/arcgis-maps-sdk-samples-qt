@@ -41,7 +41,7 @@ TakeScreenshotSample {
                 bottom: mapView.attributionTop
                 margins: 10
             }
-            text: "Take screenshot"
+            text: qsTr("Take screenshot")
             onClicked: {
                 captureScreenshot();
                 busyIndicator.visible = true;

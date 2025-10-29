@@ -65,10 +65,10 @@ GenerateOfflineMapLocalBasemapSample {
             leftPadding: 20
             rightPadding: 20
             icon {
-                source: "qrc:/Samples/Maps/GenerateOfflineMapLocalBaseMap/download_light.png"
+                source: "qrc:/Samples/Maps/GenerateOfflineMapLocalBasemap/download.png"
                 width: 24
                 height: 24
-                color: palette.text
+                color: "#F8F8F8"
             }
             visible: mapLoaded
 

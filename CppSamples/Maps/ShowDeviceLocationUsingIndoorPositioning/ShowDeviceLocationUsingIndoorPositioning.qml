@@ -52,25 +52,25 @@ Item {
             }
 
             Label {
-                text: "Initializing location data source\nand retrieving user location..."
+                text: qsTr("Initializing location data source\nand retrieving user location...")
                 // Display if there are no location properties to display
                 visible: Object.keys(model.locationProperties).length === 0;
             }
 
             Label {
-                text: "Floor: " + model.locationProperties.floor
+                text: qsTr("Floor: ") + model.locationProperties.floor
                 visible: model.locationProperties.floor !== undefined
             }
             Label {
-                text: "Position source: " + model.locationProperties.positionSource
+                text: qsTr("Position source: ") + model.locationProperties.positionSource
                 visible: model.locationProperties.positionSource !== undefined
             }
             Label {
-                text: "Transmitter count: " + model.locationProperties.satelliteCount
+                text: qsTr("Transmitter count: ") + model.locationProperties.satelliteCount
                 visible: model.locationProperties.satelliteCount !== undefined
             }
             Label {
-                text: "Horizontal accuracy: " + (model.locationProperties.horizontalAccuracy ? model.locationProperties.horizontalAccuracy.toFixed(2) + " m" : "undefined")
+                text: qsTr("Horizontal accuracy: ") + (model.locationProperties.horizontalAccuracy ? model.locationProperties.horizontalAccuracy.toFixed(2) + " m" : "undefined")
                 visible: model.locationProperties.horizontalAccuracy !== undefined
             }
         }
@@ -91,14 +91,14 @@ Item {
 
     Dialog {
         id: locationPermissionDeniedDialog
-        title: "Location Permission Denied"
+        title: qsTr("Location Permission Denied")
         modal: true
         standardButtons: Dialog.Ok
         x: (parent.width - width) / 2
         y: (parent.height - height) / 2
 
         Label {
-            text: "This application requires location permission."
+            text: qsTr("This application requires location permission.")
         }
     }
 
@@ -111,14 +111,14 @@ Item {
 
     Dialog {
         id: bluetoothPermissionDeniedDialog
-        title: "Bluetooth Permission Denied"
+        title: qsTr("Bluetooth Permission Denied")
         modal: true
         standardButtons: Dialog.Ok
         x: (parent.width - width) / 2
         y: (parent.height - height) / 2
 
         Label {
-            text: "This application requires bluetooth permission."
+            text: qsTr("This application requires bluetooth permission.")
         }
     }
 }

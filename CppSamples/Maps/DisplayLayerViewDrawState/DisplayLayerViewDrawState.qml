@@ -50,13 +50,12 @@ Item {
                 margins: 5
             }
             width: controlLayout.implicitWidth + 4
-            height: childrenRect.height + 4
+            height: controlLayout.implicitHeight + 4
             color: palette.base
             radius: 3
 
             MouseArea {
-                width: controlLayout.childrenRect.width
-                height: controlLayout.childrenRect.height
+                anchors.fill: controlLayout
                 onClicked: mouse => mouse.accepted = true;
                 onWheel: wheel => wheel.accepted = true;
             }

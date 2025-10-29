@@ -37,7 +37,7 @@ Item {
                 bottom: view.attributionTop
                 margins: 10
             }
-            text: model.trackingEnabled ? "Stop tracking" : "Start tracking"
+            text: model.trackingEnabled ? qsTr("Stop tracking") : qsTr("Start tracking")
             width: 200
             onClicked: model.trackingEnabled =! model.trackingEnabled
         }

@@ -60,7 +60,7 @@ Item {
                 spacing: 5
 
                 Label {
-                    text: "Set Language Strategy:"
+                    text: qsTr("Set Language Strategy:")
                     font.bold: true
                 }
 
@@ -76,7 +76,7 @@ Item {
 
                     Label {
                         id: globalText
-                        text: "Global"
+                        text: qsTr("Global")
                         height: globalButton.height
                         verticalAlignment: Text.AlignVCenter
                     }
@@ -94,7 +94,7 @@ Item {
                     }
                     Label {
                         id: localText
-                        text: "Local"
+                        text: qsTr("Local")
                         height: localButton.height
                         verticalAlignment: Text.AlignVCenter
                     }
@@ -106,13 +106,13 @@ Item {
                 id:specificLanguage
 
                 Label {
-                    text: "Set Specific Language:"
+                    text: qsTr("Set Specific Language:")
                     font.bold: true
                 }
 
                 ComboBox {
                     id: comboBox
-                    model: ["none" , "Bulgarian", "Greek", "Turkish"]
+                    model: [qsTr("none") , qsTr("Bulgarian"), qsTr("Greek"), qsTr("Turkish")]
                     // onCurrentTextChanged executes when the text is changed and also initially on loading the sample
                     onCurrentTextChanged: model.setNewBasemapLanguage(globalButton.checked, comboBox.currentText);
                 }

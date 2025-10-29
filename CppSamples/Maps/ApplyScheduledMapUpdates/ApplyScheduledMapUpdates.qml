@@ -60,7 +60,7 @@ Item {
 
         Button {
             id: downloadUpdatesButton
-            text: "Apply Scheduled Updates"
+            text: qsTr("Apply Scheduled Updates")
             enabled: true
             onClicked: {
                 busyIndicator.visible = true;

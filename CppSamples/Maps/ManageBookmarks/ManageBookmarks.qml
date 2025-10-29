@@ -56,7 +56,7 @@ ManageBookmarksSample {
 
             Image {
                 rotation: 45
-                source: Qt.styleHints.colorScheme === Qt.ColorScheme.Dark ? "qrc:/Samples/Maps/ManageBookmarks/add_light.png" : "qrc:/Samples/Maps/ManageBookmarks/add.png"
+                source: "qrc:/Samples/Maps/ManageBookmarks/add.png"
                 width: 32
                 height: 32
             }

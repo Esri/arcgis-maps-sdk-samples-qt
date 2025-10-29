@@ -182,15 +182,14 @@ DisplayDeviceLocationSample {
 
     Dialog {
         id: permissionDeniedDialog
-        title: "Location Permission Denied"
+        title: qsTr("Location Permission Denied")
         modal: true
         standardButtons: Dialog.Ok
         x: (parent.width - width) / 2
         y: (parent.height - height) / 2
 
-        Text {
-            text: "This application requires location permissions."
-            color: "white"
+        Label {
+            text: qsTr("This application requires location permissions.")
         }
     }
 }

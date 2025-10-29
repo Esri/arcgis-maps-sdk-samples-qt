@@ -54,14 +54,14 @@ ChangeViewpointSample {
 
             width: bestWidth + rightPadding + leftPadding + 20
 
-            model: [ "Center",
-                "Center and scale",
-                "Geometry",
-                "Geometry and padding",
-                "Rotation",
-                "Scale 1:5,000,000",
-                "Scale 1:10,000,000",
-                "Animation" ]
+            model: [ qsTr("Center"),
+                qsTr("Center and scale"),
+                qsTr("Geometry"),
+                qsTr("Geometry and padding"),
+                qsTr("Rotation"),
+                qsTr("Scale 1:5,000,000"),
+                qsTr("Scale 1:10,000,000"),
+                qsTr("Animation") ]
 
             onCurrentTextChanged: {
                 // Call C++ invokable function to change the viewpoint

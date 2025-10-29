@@ -35,7 +35,7 @@ Item {
             icon.name: "grid-24"
             icon.source: "grid-24.svg"
             onClicked: popup.open()
-            icon.color: palette.text
+            icon.color: "#F8F8F8"
         }
 
         Popup {
@@ -176,7 +176,7 @@ Item {
                             Layout.alignment: Qt.AlignHCenter | Qt.AlignBottom
                             Button {
                                 Layout.alignment: Qt.AlignCenter
-                                text: "Load"
+                                text: qsTr("Load")
                                 Layout.preferredHeight: 30
                                 Layout.preferredWidth: 80
                                 onPressed: {
