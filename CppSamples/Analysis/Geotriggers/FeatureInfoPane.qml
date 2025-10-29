@@ -36,7 +36,7 @@ Pane {
     clip: true
 
     background: Rectangle {
-        color: "white"
+        color: palette.base
         border.color: "black"
     }
 
@@ -58,7 +58,7 @@ Pane {
                 width: scrollViewComponent.width
             }
 
-            Text {
+            Label {
                 id: sectionNameTextBox
                 anchors.horizontalCenter: parent.horizontalCenter
                 horizontalAlignment: Text.AlignHCenter
@@ -73,7 +73,7 @@ Pane {
                 wrapMode: Text.WordWrap
             }
 
-            Text {
+            Label {
                 id: descriptionTextBox
                 anchors.horizontalCenter: parent.horizontalCenter
                 horizontalAlignment: Text.AlignLeft
@@ -89,12 +89,12 @@ Pane {
                 id: closeButton
                 anchors.horizontalCenter: parent.horizontalCenter
                 width: parent.width
-                Text {
+                Label {
                     anchors.centerIn: parent
                     verticalAlignment: Text.AlignVCenter
                     horizontalAlignment: Text.AlignHCenter
 
-                    text: "Close"
+                    text: qsTr("Close")
                 }
 
                 onClicked: {

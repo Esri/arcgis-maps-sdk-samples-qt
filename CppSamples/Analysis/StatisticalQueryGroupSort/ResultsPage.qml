@@ -15,7 +15,7 @@ import QtQuick
 import QtQuick.Controls
 
 Rectangle {
-    color: "#F4F4F4"
+    color: palette.base
     signal backClicked()
 
     property var statisticResult
@@ -28,7 +28,7 @@ Rectangle {
             id: titleBar
             width: parent.width
             height: 40
-            color: "#005e95"
+            color: palette.highlight
             clip: true
 
             Item {
@@ -45,13 +45,13 @@ Rectangle {
                     onClicked: backClicked()
                 }
 
-                Text {
+                Label {
                     anchors {
                         left: parent.left
                         verticalCenter: parent.verticalCenter
                     }
 
-                    text: "< Options"
+                    text: qsTr("< Options")
                     color: "white"
                     font {
                         pixelSize: 18
@@ -60,12 +60,12 @@ Rectangle {
                 }
             }
 
-            Text {
+            Label {
                 anchors {
                     centerIn: parent
                     margins: 10
                 }
-                text: "Results"
+                text: qsTr("Results")
                 color: "white"
                 font.pixelSize: 28
             }
@@ -90,13 +90,14 @@ Rectangle {
                     delegate: Rectangle {
                         width: resultView.width
                         height: 25
-                        color: "lightsteelblue"
+                        color: palette.highlight
 
-                        Text {
+                        Label {
                             anchors.verticalCenter: parent.verticalCenter
                             text: section
                             font.bold: true
                             font.pixelSize: 12
+                            color: "white"
                         }
                     }
                 }
@@ -104,7 +105,7 @@ Rectangle {
                 delegate: Item {
                     height: 25
 
-                    Text {
+                    Label {
                         anchors.verticalCenter: parent.verticalCenter
                         text: statistic
                         font.pixelSize: 12

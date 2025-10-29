@@ -26,7 +26,7 @@ Dialog {
     property alias alpha: alphaSlider.value
     readonly property color color: Qt.rgba(red, green, blue, alpha);
 
-    title: "Pick a color"
+    title: qsTr("Pick a color")
     standardButtons: Dialog.Ok | Dialog.Cancel
 
     function setColor(c) {
@@ -50,32 +50,32 @@ Dialog {
             color: colorDialog.color
         }
 
-        Text {
-            text: "Red"
+        Label {
+            text: qsTr("Red")
         }
 
         Slider {
             id: redSlider
         }
 
-        Text {
-            text: "Green"
+        Label {
+            text: qsTr("Green")
         }
 
         Slider {
             id: greenSlider
         }
 
-        Text {
-            text: "Blue"
+        Label {
+            text: qsTr("Blue")
         }
 
         Slider {
             id: blueSlider
         }
 
-        Text {
-            text: "Alpha"
+        Label {
+            text: qsTr("Alpha")
         }
 
         Slider {

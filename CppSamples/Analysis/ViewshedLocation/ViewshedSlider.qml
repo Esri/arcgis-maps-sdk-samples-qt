@@ -27,7 +27,7 @@ Column {
     property real minValue: 1
     property real maxValue: 179
 
-    Text {
+    Label {
         width: 80
         text: titleText
         font.pixelSize: 14
@@ -51,7 +51,7 @@ Column {
             }
         }
 
-        Text {
+        Label {
             anchors.verticalCenter: parent.verticalCenter
             horizontalAlignment: Text.AlignRight
             text: Math.round(parameterValue)

@@ -9,6 +9,7 @@
         <file>README.md</file>
         <file>ViewshedSlider.qml</file>
         <file>close.png</file>
+		<file>close_light.png</file>
         <file>settings.png</file>
     </qresource>
 </RCC>

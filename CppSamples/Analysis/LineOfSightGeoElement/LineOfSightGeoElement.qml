@@ -35,17 +35,16 @@ Item {
                 top: parent.top
                 bottom: view.attributionTop
             }
-            color: Qt.rgba(0.7, 0.7, 0.7, 0.7);
+            color: palette.base
             radius: 10
             width: childrenRect.width
 
             Slider {
                 id: heightSlider
-
                 anchors {
                     top: parent.top
                     bottom: parent.bottom
-                    margins: 5
+                    margins: 10
                 }
                 from: 150
                 to: 300
