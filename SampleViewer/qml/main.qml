@@ -268,7 +268,7 @@ ApplicationWindow {
                     && SampleManager.reachability !== SampleManager.ReachabilityUnknown){
                 SampleManager.currentMode = SampleManager.NetworkRequiredView;
                 return;
-                // If the sample requires offline data
+            // If the sample requires offline data
             } else {
                 showSample();
             }
