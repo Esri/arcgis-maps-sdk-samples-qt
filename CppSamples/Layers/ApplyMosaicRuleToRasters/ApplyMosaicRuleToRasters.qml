@@ -39,12 +39,12 @@ Item {
                 bottom: view.attributionTop
                 horizontalCenter: view.horizontalCenter
             }
-            color: "lightgrey"
+            color: palette.base
             opacity: 0.8
             visible: model.rasterLoaded
 
             Column {
-                Text {
+                Label {
                     anchors.horizontalCenter: parent.horizontalCenter
                     text: qsTr("Select Mosaic Rule")
                 }

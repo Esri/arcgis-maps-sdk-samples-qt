@@ -29,9 +29,10 @@ ShowOrgBasemapsSample {
     BusyIndicator {
         anchors.centerIn: parent
         running: portalLoading
+        visible: portalLoading
     }
 
-    Text {
+    Label {
         id: titleLabel
         anchors {
             top: parent.top;
@@ -43,8 +44,8 @@ ShowOrgBasemapsSample {
         font.bold: true
         horizontalAlignment: Text.AlignHCenter
         verticalAlignment: Text.AlignTop
-        text: anonymousLogIn.visible ? "Load Portal" :
-                                       (basemapsGrid.count > 0 ? orgName + " Basemaps" : "Loading Organization Basemaps...")
+        text: anonymousLogIn.visible ? qsTr("Load Portal") :
+                                       (basemapsGrid.count > 0 ? orgName + qsTr(" Basemaps") : qsTr("Loading Organization Basemaps..."))
         wrapMode: Text.Wrap
         elide: Text.ElideRight
     }
@@ -69,8 +70,8 @@ ShowOrgBasemapsSample {
             anchors.margins: 5
             width: basemapsGrid.cellWidth
             height: width
-            border {width: 2; color: index === basemapsGrid.currentIndex ? "blue" : "lightgrey"}
-            color: index === basemapsGrid.currentIndex ? "yellow" : "white"
+            border {width: 2; color: "lightgrey"}
+            color: index === basemapsGrid.currentIndex ? palette.highlight : palette.mid
             radius: 2
             clip: true
 
@@ -87,7 +88,7 @@ ShowOrgBasemapsSample {
                 fillMode: Image.PreserveAspectCrop
             }
 
-            Text {
+            Label {
                 id: basemapLabel
                 anchors {
                     bottom: parent.bottom;
@@ -177,13 +178,14 @@ ShowOrgBasemapsSample {
             margins: 16
         }
         visible: mapView.visible
-        text: "Back"
+        text: qsTr("Back")
         icon.source: "qrc:/Samples/CloudAndPortal/ShowOrgBasemaps/ic_menu_back_dark.png"
+        icon.color: "#F8F8F8"
 
-        opacity: hovered ? 1 : 0.5
+        opacity: 1
 
         onClicked: {
-            titleLabel.text = "Basemaps";
+            titleLabel.text = qsTr("Basemaps");
             mapView.visible = false;
             basemapsGrid.enabled = true;
             gridFadeIn.running = true;
@@ -197,8 +199,9 @@ ShowOrgBasemapsSample {
             horizontalCenter: parent.horizontalCenter
             top: titleLabel.bottom
         }
-        text: "Anonymous"
+        text: qsTr("Anonymous")
         icon.source: "qrc:/Samples/CloudAndPortal/ShowOrgBasemaps/ic_menu_help_dark.png"
+        icon.color: "#F8F8F8"
         visible: !portalLoaded
 
         onClicked: {
@@ -214,8 +217,9 @@ ShowOrgBasemapsSample {
             top: anonymousLogIn.bottom
         }
         width: anonymousLogIn.width
-        text: "Sign-in"
+        text: qsTr("Sign-in")
         icon.source: "qrc:/Samples/CloudAndPortal/ShowOrgBasemaps/ic_menu_account_dark.png"
+        icon.color: "#F8F8F8"
         visible: !portalLoaded
 
         onClicked: {

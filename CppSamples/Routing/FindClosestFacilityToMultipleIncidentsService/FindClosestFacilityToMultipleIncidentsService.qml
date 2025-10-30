@@ -41,8 +41,7 @@ Item {
             }
             width: childrenRect.width
             height: childrenRect.height
-            color: "#000000"
-            opacity: .70
+            color: palette.base
             radius: 5
 
             // catch mouse signals from propagating to parent
@@ -78,6 +77,7 @@ Item {
     BusyIndicator {
         anchors.centerIn: parent
         running: closestFacilityModel.busy
+        visible: closestFacilityModel.busy
     }
 
     // Declare the C++ instance which creates the map etc. and supply the view

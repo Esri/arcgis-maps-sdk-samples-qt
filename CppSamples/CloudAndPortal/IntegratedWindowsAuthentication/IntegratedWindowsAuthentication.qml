@@ -46,8 +46,8 @@ Item {
         }
         width: 275
         height: 175
-        color: "#000000"
-        opacity: .70
+        color: palette.base
+        opacity: .9
         radius: 5
 
         // Prevent mouse interaction from propagating to the MapView
@@ -66,9 +66,8 @@ Item {
 
             visible: !webmapsList.model
 
-            Text {
+            Label {
                 text: qsTr("Enter portal URL secured by IWA")
-                color: "white"
                 font {
                     bold: true
                     pixelSize: 14
@@ -80,12 +79,6 @@ Item {
                 Layout.fillWidth: true
                 Layout.margins: 2
                 selectByMouse: true
-
-                background: Rectangle {
-                    implicitWidth: parent.width
-                    implicitHeight: parent.height
-                    color: "white"
-                }
             }
 
             Row {
@@ -116,24 +109,22 @@ Item {
             }
             visible: webmapsList.model
 
-            Text {
+            Label {
                 id: header
                 text: "Connected to:"
                 Layout.fillWidth: true
-                color: "white"
                 font {
                     bold: true
                     pointSize: 14
                 }
             }
 
-            Text {
+            Label {
                 id: portalName
                 Layout.fillWidth: true
                 text: securePortalUrl.text
                 horizontalAlignment: Text.AlignLeft
                 elide: Text.ElideMiddle
-                color: "white"
                 font {
                     bold: true
                     pointSize: 14
@@ -162,6 +153,7 @@ Item {
         id: indicator
         anchors.centerIn: parent
         running: integratedWindowsAuthenticationSampleModel.isLoading
+        visible: integratedWindowsAuthenticationSampleModel.isLoading
     }
 
     // Declare Authenticator to handle any authentication challenges
@@ -171,21 +163,27 @@ Item {
 
     Dialog {
         id: webMapMsg
-        anchors.centerIn: parent
+        x: (parent.width - width) / 2
+        y: (parent.height - height) / 2
+        contentWidth: parent.width * 0.5
         property alias text : textLabel.text
         property alias informativeText : detailsLabel.text
         modal: true
-
         standardButtons: Dialog.Ok
-        title: "Could not load web map!"
+        title: qsTr("Could not load web map!")
         visible: integratedWindowsAuthenticationSampleModel.mapLoadError.length > 0
         ColumnLayout {
-            Text {
+            width: parent.width
+            Label {
                 id: textLabel
                 text: integratedWindowsAuthenticationSampleModel.mapLoadError
+                Layout.fillWidth: true
+                wrapMode: Text.Wrap
             }
-            Text {
+            Label {
                 id: detailsLabel
+                Layout.fillWidth: true
+                wrapMode: Text.Wrap
             }
         }
         onAccepted: integratedWindowsAuthenticationSampleModel.errorAccepted();

@@ -35,16 +35,43 @@ ExportTilesSample {
             // Set the focus on MapView to initially enable keyboard navigation
             forceActiveFocus();
         }
+
+        // Create the download button to export tile cache
+        Button {
+            id: downloadButton
+            anchors {
+                horizontalCenter: parent.horizontalCenter
+                bottom: mapView.attributionTop
+                margins: 5
+            }
+
+            text: qsTr("Download")
+            leftPadding: 20
+            rightPadding: 20
+            icon {
+                source: "qrc:/Samples/Layers/ExportTiles/download.png"
+                width: 24
+                height: 24
+                color: palette.text
+            }
+            visible: mapLoaded
+
+            onClicked: {
+                // call the C++ invokable function to export tile cache from the input screen coordinates
+                exportTilesSample.exportTileCacheFromCorners(extentRectangle.x, extentRectangle.y, (extentRectangle.x + extentRectangle.width), (extentRectangle.y + extentRectangle.height));
+                exportWindow.visible = true;
+            }
+        }
     }
 
     onHideWindow: (time, success) => {
-        exportWindow.hideWindow(time);
+                      exportWindow.hideWindow(time);
 
-        if (success) {
-            extentRectangle.visible = false;
-            downloadButton.visible = false;
-        }
-    }
+                      if (success) {
+                          extentRectangle.visible = false;
+                          downloadButton.visible = false;
+                      }
+                  }
 
     onUpdateStatus: status => statusText = status;
 
@@ -57,53 +84,6 @@ ExportTilesSample {
         border {
             color: "red"
             width: 3
-        }
-    }
-
-    // Create the download button to export tile cache
-    Rectangle {
-        id: downloadButton
-        property bool pressed: false
-        anchors {
-            horizontalCenter: parent.horizontalCenter
-            bottom: parent.bottom
-            bottomMargin: 23
-        }
-
-        width: 130
-        height: 35
-        color: pressed ? "#959595" : "#D6D6D6"
-        radius: 8
-        border {
-            color: "#585858"
-            width: 1
-        }
-
-        Row {
-            anchors.fill: parent
-            spacing: 5
-            Image {
-                width: 38
-                height: width
-                source: "qrc:/Samples/Layers/ExportTiles/download.png"
-            }
-            Text {
-                anchors.verticalCenter: parent.verticalCenter
-                text: "Export tiles"
-                font.pixelSize: 14
-                color: "#474747"
-            }
-        }
-
-        MouseArea {
-            anchors.fill: parent
-            onPressed: downloadButton.pressed = true
-            onReleased: downloadButton.pressed = false
-            onClicked: {
-                // call the C++ invokable function to export tile cache from the input screen coordinates
-                exportTilesSample.exportTileCacheFromCorners(extentRectangle.x, extentRectangle.y, (extentRectangle.x + extentRectangle.width), (extentRectangle.y + extentRectangle.height));
-                exportWindow.visible = true;
-            }
         }
     }
 
@@ -130,7 +110,7 @@ ExportTilesSample {
             anchors.centerIn: parent
             width: 140
             height: 145
-            color: "lightgrey"
+            color: palette.base
             opacity: 0.8
             radius: 5
             border {
@@ -149,15 +129,15 @@ ExportTilesSample {
                     anchors.horizontalCenter: parent.horizontalCenter
                 }
 
-                Text {
+                Label {
                     anchors.horizontalCenter: parent.horizontalCenter
-                    text: statusText
+                    text: qsTr(statusText)
                     font.pixelSize: 16
                 }
 
-                Text {
+                Label {
                     anchors.horizontalCenter: parent.horizontalCenter
-                    text: exportTilesSample.exportTilesProgress + "% Completed"
+                    text: qsTr(exportTilesSample.exportTilesProgress + "% Completed")
                     font.pixelSize: 16
                 }
             }

@@ -45,7 +45,7 @@ BuildLegendSample {
         property bool expanded: true
         height: 200
         width: 175
-        color: "lightgrey"
+        color: palette.base
         opacity: 0.95
         radius: 10
         clip: true
@@ -80,7 +80,7 @@ BuildLegendSample {
             Row {
                 spacing: 55
 
-                Text {
+                Label {
                     text: qsTr("Legend")
                     font {
                         pixelSize: 18
@@ -90,15 +90,17 @@ BuildLegendSample {
 
                 // Legend icon to allow expanding and collapsing
                 Image {
-                    source: legendRect.expanded ? "qrc:/Samples/DisplayInformation/BuildLegend/ic_menu_legendpopover_light_d.png" : "qrc:/Samples/DisplayInformation/BuildLegend/ic_menu_legendpopover_light.png"
-                    width: 28
+                    source: legendRect.expanded ?
+                                (Qt.application.styleHints.colorScheme === Qt.ColorScheme.Dark ? "qrc:/Samples/DisplayInformation/BuildLegend/ic_menu_legendpopover_light_d.png" : "qrc:/Samples/DisplayInformation/BuildLegend/ic_menu_legendpopover_light_d_dark.png")
+                                                                                                : "qrc:/Samples/DisplayInformation/BuildLegend/ic_menu_legendpopover_light.png"
+                    width: 24
                     height: width
 
                     MouseArea {
                         anchors.fill: parent
                         onClicked: {
                             if (legendRect.expanded) {
-                                legendRect.height = 40;
+                                legendRect.height = 36;
                                 legendRect.expanded = false;
                             } else {
                                 legendRect.height = 200;
@@ -134,7 +136,7 @@ BuildLegendSample {
                             height: width
                             source: symbolUrl
                         }
-                        Text {
+                        Label {
                             anchors.verticalCenter: parent.verticalCenter
                             width: 125
                             text: name
@@ -152,9 +154,9 @@ BuildLegendSample {
                     delegate: Rectangle {
                         width: 180
                         height: childrenRect.height
-                        color: "lightsteelblue"
+                        color: palette.highlight
 
-                        Text {
+                        Label {
                             text: section
                             font.bold: true
                             font.pixelSize: 13

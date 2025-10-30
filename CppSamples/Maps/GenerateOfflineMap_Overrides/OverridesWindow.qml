@@ -12,6 +12,7 @@
 // limitations under the License.
 
 import QtQuick
+import QtQuick.Layouts
 import QtQuick.Controls
 
 Rectangle {
@@ -25,241 +26,227 @@ Rectangle {
     signal clipWaterPipesAOIChanged(bool clip)
     signal overridesAccepted()
 
-    color: "#D6D6D6"
+    color: palette.base
 
-    Text {
-        id: title
-        anchors {
-            top: parent.top
-            horizontalCenter: parent.horizontalCenter
-            margins: 16
-        }
-        text: "Layer specific overrides"
-        font {
-            bold: true
-            underline: true
-            pixelSize: 18
-        }
-        color: "#474747"
-    }
-
-    ScrollView {
-        id: scrollView
-        anchors {
-            top: title.bottom
-            left: overridesPanel.left
-            right: overridesPanel.right
-            bottom: takeOfflineButton.top
-            margins: 16
-        }
-        clip: true
-        ScrollBar.vertical.interactive: true
-        ScrollBar.vertical.policy: ScrollBar.AsNeeded
+    Item {
+        anchors.fill: parent
 
         Rectangle {
-            implicitHeight: childrenRect.height
-            implicitWidth: overridesPanel.width
-            color: "transparent"
-
-            Text {
-                id: lodTitle
-                text: "Basemap Levels of Detail:"
-                anchors {
-                    topMargin: 16
-                    horizontalCenter: parent.horizontalCenter
-                }
-                font {
-                    pixelSize: 14
-                }
-                color: "#474747"
+            id: menuBackground
+            anchors {
+                top: parent.top
+                horizontalCenter: parent.horizontalCenter
+                margins: 16
             }
+            width: Math.min(Math.max(parent.width * 0.6, 300), Math.min(500, parent.width - 32))
+            height: layerColumn.implicitHeight + 24
+            color: palette.mid
+            radius: 8
 
-            Row {
-                id: lodRange
+            ColumnLayout {
+                id: layerColumn
                 anchors {
-                    top: lodTitle.bottom
-                    topMargin: 8
-                    horizontalCenter: parent.horizontalCenter
+                    fill: parent
+                    margins: 12
                 }
-                Text {
-                    text: "(Least detail)"
+                spacing: 12
+
+                Label {
+                    id: title
+                    Layout.alignment: Qt.AlignHCenter
+                    Layout.bottomMargin: 8
+                    text: qsTr("Layer specific overrides")
                     font {
-                        pixelSize: 12
-                    }
-                    color: "#474747"
-                }
-
-                RangeSlider {
-                    id: lodsSlider
-                    from: 0
-                    to: 24
-                    width: overridesPanel.width * 0.5
-                    first.value: 0
-                    second.value: 23
-                    first.onPressedChanged: {
-                        if (first.pressed)
-                            return;
-                        basemapLODSelected(first.value, second.value);
-                    }
-
-                    second.onPressedChanged: {
-                        if (second.pressed)
-                            return;
-                        basemapLODSelected(first.value, second.value);
+                        bold: true
+                        underline: true
+                        pixelSize: 18
                     }
                 }
 
-                Text {
-                    text: "(Most detail)"
-                    font {
-                        pixelSize: 12
+                ScrollView {
+                    id: scrollView
+                    Layout.fillWidth: true
+                    implicitHeight: Math.min(contentColumn.implicitHeight, overridesPanel.height - title.height - takeOfflineButton.height - 100)
+                    clip: true
+                    ScrollBar.vertical.policy: ScrollBar.AsNeeded
+
+                    ColumnLayout {
+                        id: contentColumn
+                        width: scrollView.width
+                        spacing: 12
+                        Layout.leftMargin: 4
+                        Layout.rightMargin: 4
+
+                        GroupBox {
+                            Layout.fillWidth: true
+                            Layout.leftMargin: 4
+                            Layout.rightMargin: 4
+                            title: qsTr("Basemap Levels of Detail")
+                            font.pixelSize: 14
+
+                            ColumnLayout {
+                                width: parent.width
+                                spacing: 4
+
+                                Label {
+                                    Layout.alignment: Qt.AlignLeft
+                                    text: qsTr("(Least detail)")
+                                    font.pixelSize: 11
+                                }
+
+                                RangeSlider {
+                                    id: lodsSlider
+                                    Layout.fillWidth: true
+                                    from: 0
+                                    to: 24
+                                    first.value: 0
+                                    second.value: 23
+                                    first.onPressedChanged: {
+                                        if (first.pressed)
+                                            return;
+                                        basemapLODSelected(first.value, second.value);
+                                    }
+
+                                    second.onPressedChanged: {
+                                        if (second.pressed)
+                                            return;
+                                        basemapLODSelected(first.value, second.value);
+                                    }
+                                }
+
+                                Label {
+                                    Layout.alignment: Qt.AlignRight
+                                    text: qsTr("(Most detail)")
+                                    font.pixelSize: 11
+                                }
+                            }
+                        }
+
+                        GroupBox {
+                            Layout.fillWidth: true
+                            Layout.leftMargin: 4
+                            Layout.rightMargin: 4
+                            title: qsTr("Basemap Buffer (m)")
+                            font.pixelSize: 14
+
+                            SpinBox {
+                                id: basemapBufferSB
+                                anchors.horizontalCenter: parent.horizontalCenter
+                                from: 0
+                                to: 500
+                                stepSize: 50
+                                font.pixelSize: 12
+                                onValueChanged: basemapBufferChanged(value);
+                            }
+                        }
+
+                        GroupBox {
+                            Layout.fillWidth: true
+                            Layout.leftMargin: 4
+                            Layout.rightMargin: 4
+                            title: qsTr("Layer Filters")
+                            font.pixelSize: 14
+
+                            ColumnLayout {
+                                width: parent.width
+                                spacing: 8
+
+                                Button {
+                                    id: systemVavlesCB
+                                    Layout.fillWidth: true
+                                    text: qsTr("Remove System Valves")
+                                    font.pixelSize: 13
+
+                                    onClicked: {
+                                        removeSystemValvesChanged();
+                                        enabled = false;
+                                    }
+                                }
+
+                                Button {
+                                    id: serviceConnCB
+                                    Layout.fillWidth: true
+                                    text: qsTr("Remove Service Connection")
+                                    font.pixelSize: 13
+
+                                    onClicked: {
+                                        removeServiceConnectionChanged();
+                                        enabled = false;
+                                    }
+                                }
+                            }
+                        }
+
+                        GroupBox {
+                            Layout.fillWidth: true
+                            Layout.leftMargin: 4
+                            Layout.rightMargin: 4
+                            title: qsTr("Filter Hydrants")
+                            font.pixelSize: 14
+
+                            ComboBox {
+                                id: filterComboBox
+                                anchors.horizontalCenter: parent.horizontalCenter
+                                property int bestWidth: 100
+                                model: [ "No filter", "FLOW < 500", "FLOW < 300", "FLOW < 100" ]
+                                font.pixelSize: 12
+                                width: bestWidth + leftPadding + rightPadding + (indicator ? indicator.width : 0) + 40
+
+                                onCurrentTextChanged: {
+                                    // 1=1 equivelent to select all in a WHERE clause.
+                                    hydrantWhereClauseChanged(currentText === "No filter" ? "1=1"
+                                                                                          : currentText)
+                                }
+
+                                Component.onCompleted: {
+                                    let w = 0;
+                                    for (let i = 0; i < model.length; ++i) {
+                                        metrics.text = model[i];
+                                        w = Math.max(w, metrics.width);
+                                    }
+                                    bestWidth = w;
+                                }
+
+                                TextMetrics {
+                                    id: metrics
+                                    font: filterComboBox.font
+                                }
+                            }
+                        }
+
+                        GroupBox {
+                            Layout.fillWidth: true
+                            Layout.leftMargin: 4
+                            Layout.rightMargin: 4
+                            title: qsTr("Clipping Options")
+                            font.pixelSize: 14
+
+                            CheckBox {
+                                id: clipCB
+                                anchors.horizontalCenter: parent.horizontalCenter
+                                text: qsTr("Clip Water Pipes to AOI")
+                                font.pixelSize: 13
+                                checked: true
+
+                                onCheckedChanged: clipWaterPipesAOIChanged(checked)
+                            }
+                        }
                     }
-                    color: "#474747"
-                }
-            }
-
-            Text {
-                id: basemapBufferLabel
-                text: "Basemap Buffer (m):"
-                anchors {
-                    top: lodRange.bottom
-                    topMargin: 32
-                    horizontalCenter: parent.horizontalCenter
-                }
-                font {
-                    pixelSize: 14
-                }
-                color: "#474747"
-            }
-
-            SpinBox {
-                id: basemapBufferSB
-                anchors {
-                    top: basemapBufferLabel.bottom
-                    topMargin: 8
-                    horizontalCenter: parent.horizontalCenter
-                }
-                from: 0
-                to: 500
-                stepSize: 50
-
-                font.pixelSize: 12
-                onValueChanged: basemapBufferChanged(value);
-            }
-
-            Button {
-                id: systemVavlesCB
-                text: "Remove System Valves"
-                anchors {
-                    top: basemapBufferSB.bottom
-                    topMargin: 32
-                    horizontalCenter: parent.horizontalCenter
-                }
-                font {
-                    pixelSize: 14
                 }
 
-                onClicked: {
-                    removeSystemValvesChanged();
-                    enabled = false;
-                }
-            }
+                Button {
+                    id: takeOfflineButton
+                    Layout.alignment: Qt.AlignHCenter
+                    Layout.topMargin: 8
+                    text: qsTr("Start Job")
+                    font.pixelSize: 14
 
-            Button {
-                id: serviceConnCB
-                text: "Remove Service Connection"
-                anchors {
-                    top: systemVavlesCB.bottom
-                    topMargin: 32
-                    horizontalCenter: parent.horizontalCenter
-                }
-                font {
-                    pixelSize: 14
-                }
-
-                onClicked: {
-                    removeServiceConnectionChanged();
-                    enabled = false;
-                }
-            }
-
-            Text {
-                id: filterLabel
-                text: "Filter Hydrants:"
-                anchors {
-                    top: serviceConnCB.bottom
-                    topMargin: 32
-                    horizontalCenter: parent.horizontalCenter
-                }
-                font {
-                    pixelSize: 14
-                }
-                color: "#474747"
-            }
-
-            ComboBox {
-                id: filterComboBox
-                anchors {
-                    top: filterLabel.bottom
-                    topMargin: 8
-                    horizontalCenter: parent.horizontalCenter
-                }
-                property int modelWidth: 0
-                width: modelWidth + leftPadding + rightPadding + (indicator ? indicator.width : 10)
-                model: [ "No filter", "FLOW < 500", "FLOW < 300", "FLOW < 100" ]
-
-                onCurrentTextChanged: {
-                    // 1=1 equivelent to select all in a WHERE clause.
-                    hydrantWhereClauseChanged(currentText === "No filter" ? "1=1"
-                                                                          : currentText)
-                }
-
-                Component.onCompleted : {
-                    for (let i = 0; i < model.length; ++i) {
-                        metrics.text = model[i];
-                        modelWidth = Math.max(modelWidth, metrics.width);
+                    onClicked: {
+                        overridesAccepted();
+                        layerColumn.visible = false;
                     }
                 }
-                TextMetrics {
-                    id: metrics
-                    font: filterComboBox.font
-                }
             }
-
-            CheckBox {
-                id: clipCB
-                text: "Clip Water Pipes to AOI"
-                anchors {
-                    top: filterComboBox.bottom
-                    topMargin: 32
-                    horizontalCenter: parent.horizontalCenter
-                }
-                font {
-                    pixelSize: 14
-                }
-
-                checked: true
-
-                onCheckedChanged: clipWaterPipesAOIChanged(checked)
-            }
-        }
-    }
-
-    Button {
-        id: takeOfflineButton
-        anchors.horizontalCenter: parent.horizontalCenter
-        anchors.bottom: parent.bottom
-        anchors.margins: 16
-        text: "Start Job"
-        font {
-            bold: true
-            pixelSize: 18
-        }
-
-        onClicked: {
-            overridesAccepted();
-            parent.visible = false;
         }
     }
 }
-

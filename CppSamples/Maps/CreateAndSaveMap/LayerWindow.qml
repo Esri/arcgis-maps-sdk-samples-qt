@@ -15,40 +15,42 @@ import QtQuick
 import QtQuick.Layouts
 import QtQuick.Controls
 
-Rectangle {
-    Rectangle {
-        anchors.fill: parent
-        color: "#60000000"
-    }
-
+Pane {
     signal createMapSelected(var basemap, var layerList)
 
-    Rectangle {
-        color: "#edeeef"
-        radius: 5
-        width: childrenRect.width
-        height: childrenRect.height
+    background: Rectangle{
+        anchors.fill: parent
+        color: palette.base
+    }
+
+    Pane {
+        padding: 10
         anchors.centerIn: parent
-        border {
-            color: "#77787a"
-            width: 1
+        background: Rectangle {
+            color: palette.mid
+            border.color: palette.shadow
+            border.width: 1
+            radius: 5
         }
 
         ColumnLayout {
             id: layerColumn
-            Text {
+            anchors.centerIn: parent
+            spacing: 8
+
+            Label {
                 Layout.margins: 5
                 Layout.alignment: Qt.AlignHCenter
-                text: "Select Layers"
+                text: qsTr("Select Layers")
                 font {
                     pixelSize: 18
                     family: "helvetica"
                 }
             }
 
-            Text {
+            Label {
                 Layout.margins: 5
-                text: "Select Basemap:"
+                text: qsTr("Select Basemap:")
                 font {
                     pixelSize: 14
                     family: "helvetica"
@@ -61,9 +63,9 @@ Rectangle {
                 Layout.minimumWidth: modelWidth + leftPadding + rightPadding + (indicator ? indicator.width : 10)
                 Layout.margins: 5
                 Layout.fillWidth: true
-                model: ["Streets", "Imagery", "Topographic", "Oceans"]
+                model: [qsTr("Streets"), qsTr("Imagery"), qsTr("Topographic"), qsTr("Oceans")]
 
-               Component.onCompleted : {
+                Component.onCompleted: {
                     for (let i = 0; i < model.length; ++i) {
                         metrics.text = model[i];
                         modelWidth = Math.max(modelWidth, metrics.width);
@@ -75,9 +77,9 @@ Rectangle {
                 }
             }
 
-            Text {
+            Label {
                 Layout.margins: 5
-                text: "Select Operational Layers:"
+                text: qsTr("Select Operational Layers:")
                 font {
                     pixelSize: 14
                     family: "helvetica"
@@ -88,7 +90,7 @@ Rectangle {
                 id: operationalLayerRepeater
                 Layout.margins: 5
                 Layout.fillWidth: true
-                model: ["WorldElevations", "Census"]
+                model: [qsTr("WorldElevations"), qsTr("Census")]
 
                 CheckBox {
                     text: modelData
@@ -99,7 +101,7 @@ Rectangle {
             Button {
                 Layout.margins: 5
                 Layout.fillWidth: true
-                text: "Create Map"
+                text: qsTr("Create Map")
                 onClicked: {
                     const layerList = [];
                     for (let i = 0; i < operationalLayerRepeater.count; i++) {

@@ -45,6 +45,7 @@ TerrainExaggerationSample {
             height: childrenRect.height
             radius: 10
             opacity: 0.8
+            color: palette.base
 
             // sliderCombo: A slider and text for its value
             Row {
@@ -65,7 +66,7 @@ TerrainExaggerationSample {
                     }
                 }
 
-                Text {
+                Label {
                     anchors {
                         verticalCenter: parent.verticalCenter
                         margins: 5

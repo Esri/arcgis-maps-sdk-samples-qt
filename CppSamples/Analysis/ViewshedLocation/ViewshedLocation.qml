@@ -45,7 +45,7 @@ ViewshedLocationSample {
             visible: !optionPanel.visible
             width: 45
             height: width
-            color: "white"
+            color: palette.highlight
             radius: 25
 
             Image {
@@ -71,8 +71,8 @@ ViewshedLocationSample {
             }
             width: 260
             visible: false
-            color: "white"
-            opacity: 0.85
+            color: palette.base
+            opacity: 0.9
 
             Flickable {
                 anchors {
@@ -92,8 +92,8 @@ ViewshedLocationSample {
                         width: parent.width
                         height: 25
 
-                        Text {
-                            text: "Viewshed Options"
+                        Label {
+                            text: qsTr("Viewshed Options")
                             anchors.horizontalCenter: parent.horizontalCenter
                             font.pixelSize: 18
                             font.underline: true
@@ -111,7 +111,7 @@ ViewshedLocationSample {
 
                             Image {
                                 anchors.centerIn: parent
-                                source: "qrc:/Samples/Analysis/ViewshedLocation/close.png"
+                                source: Qt.styleHints.colorScheme === Qt.ColorScheme.Dark? "qrc:/Samples/Analysis/ViewshedLocation/close_light.png" : "qrc:/Samples/Analysis/ViewshedLocation/close.png"
                                 width: 40
                                 height: width
                             }
@@ -127,7 +127,7 @@ ViewshedLocationSample {
                         width: parent.width
                         height: 25
 
-                        Text {
+                        Label {
                             anchors.verticalCenter: parent.verticalCenter
                             width: parent.width * 0.75
                             text: qsTr("Viewshed Visible")
@@ -149,7 +149,7 @@ ViewshedLocationSample {
                         width: parent.width
                         height: 25
 
-                        Text {
+                        Label {
                             anchors.verticalCenter: parent.verticalCenter
                             width: parent.width * 0.75
                             text: qsTr("Frustum Outline Visible")
@@ -220,7 +220,7 @@ ViewshedLocationSample {
                         height: 25
                         spacing: 5
 
-                        Text {
+                        Label {
                             anchors.verticalCenter: parent.verticalCenter
                             width: parent.width * 0.75
                             text: qsTr("Visible Color")
@@ -255,7 +255,7 @@ ViewshedLocationSample {
                         height: 25
                         spacing: 5
 
-                        Text {
+                        Label {
                             anchors.verticalCenter: parent.verticalCenter
                             width: parent.width * 0.75
                             text: qsTr("Obstructed Color")

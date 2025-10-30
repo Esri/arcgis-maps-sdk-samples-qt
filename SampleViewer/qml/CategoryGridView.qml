@@ -16,6 +16,7 @@
 import QtQuick
 import QtQuick.Controls
 import Esri.ArcGISRuntimeSamples
+import Calcite
 
 Page {
     id: categoryView
@@ -24,6 +25,7 @@ Page {
         spacing: 2
         ToolBar {
             height: 42
+
             Label {
                 id: titleText
                 anchors.centerIn: parent
@@ -32,7 +34,7 @@ Page {
                     family: fontFamily
                     pixelSize: 18
                 }
-                color: "white"
+                color: Calcite.text2
             }
             anchors.left: parent.left
             anchors.right: parent.right

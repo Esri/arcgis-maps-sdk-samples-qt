@@ -30,7 +30,6 @@
     "snippets": [
         "GenerateOfflineMap.cpp",
         "GenerateOfflineMap.h",
-        "DownloadButton.qml",
         "GenerateWindow.qml",
         "GenerateOfflineMap.qml"
     ],

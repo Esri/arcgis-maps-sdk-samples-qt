@@ -41,7 +41,7 @@ TakeScreenshotSample {
                 bottom: mapView.attributionTop
                 margins: 10
             }
-            text: "Take screenshot"
+            text: qsTr("Take screenshot")
             onClicked: {
                 captureScreenshot();
                 busyIndicator.visible = true;
@@ -58,6 +58,8 @@ TakeScreenshotSample {
         id: imageRect
         anchors.fill: parent
         visible: false
+        color: palette.base
+
         Rectangle {
             anchors.fill: parent
             color: "#60000000"
@@ -78,14 +80,14 @@ TakeScreenshotSample {
                 }
                 width: 28
                 height: width
-                color: "lightgray"
+                color: palette.base
                 radius: 50
 
                 Image {
                     anchors.centerIn: parent
                     width: parent.width * 0.95
                     height: parent.height * 0.95
-                    source: "qrc:/Samples/Maps/TakeScreenshot/close.png"
+                    source: Qt.application.styleHints.colorScheme === Qt.ColorScheme.Dark ? "qrc:/Samples/Maps/TakeScreenshot/close.png" : "qrc:/Samples/Maps/TakeScreenshot/close_light.png"
                 }
 
                 MouseArea {

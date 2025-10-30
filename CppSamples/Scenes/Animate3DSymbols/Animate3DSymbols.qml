@@ -48,184 +48,231 @@ Animate3DSymbolsSample {
             forceActiveFocus();
         }
 
-        GridLayout {
+        // Left menu - Mission selector and controls
+        Pane {
+            id: leftPane
+            padding: 10
             anchors {
                 left: parent.left
-                right: parent.right
                 top: parent.top
-                bottom: sceneView.attributionTop
                 margins: 10
             }
+            width: Math.min(250, parent.width * 0.25)
 
-            columns: 2
+            ColumnLayout {
+                spacing: 10
+                width: parent.width
 
-            ComboBox {
-                id: missionList
-                enabled: !playButton.checked
-                model: missionsModel
-                textRole: "display"
-                property real modelWidth: 0
-                Layout.minimumWidth: leftPadding + rightPadding + modelWidth + (indicator ? indicator.width : 10)
+                ComboBox {
+                    id: missionList
+                    enabled: !playButton.checked
+                    model: missionsModel
+                    textRole: "display"
+                    property real modelWidth: 0
+                    Layout.fillWidth: true
 
-                onModelChanged: {
-                    for (let i = 0; i < missionsModel.rowCount(); ++i) {
-                        const index = missionsModel.index(i, 0);
-                        textMetrics.text = missionsModel.data(index);
-                        modelWidth = Math.max(modelWidth, textMetrics.width);
+                    onModelChanged: {
+                        for (let i = 0; i < missionsModel.rowCount(); ++i) {
+                            const index = missionsModel.index(i, 0);
+                            textMetrics.text = missionsModel.data(index);
+                            modelWidth = Math.max(modelWidth, textMetrics.width);
+                        }
                     }
+
+                    onCurrentTextChanged: {
+                        changeMission(currentText);
+                        progressSlider.value = 0;
+                    }
+
+                    TextMetrics {
+                        id: textMetrics
+                        font: missionList.font
+                    }
+
+                    Component.onCompleted: missionList.currentTextChanged()
                 }
 
-                onCurrentTextChanged: {
-                    changeMission(currentText);
-                    progressSlider.value = 0;
-                }
-
-                TextMetrics {
-                    id: textMetrics
-                    font: missionList.font
-                }
-
-                Component.onCompleted: missionList.currentTextChanged()
-
-                // Add a background to the ComboBox
-                Rectangle {
-                    anchors.fill: parent
-                    radius: 10
-                    // Make the rectangle visible if a dropdown indicator exists
-                    // An indicator only exists if a theme is set
-                    visible: parent.indicator
-                    border.width: 1
-                }
-            }
-
-            LabeledSlider {
-                id: cameraDistance
-                Layout.alignment: Qt.AlignRight
-                from: 10.0
-                to: 5000.0
-                value: 500.0
-                text: "zoom"
-            }
-
-            RowLayout {
                 Button {
                     id: playButton
                     checked: false
                     checkable: true
                     enabled: missionReady
-                    text: checked ? "pause" : "play"
+                    text: checked ? qsTr("pause") : qsTr("play")
+                    Layout.fillWidth: true
                 }
 
                 Button {
                     id: followButton
-                    Layout.alignment: Qt.AlignRight
                     enabled: missionReady
-                    text: checked? "fixed" : "follow "
+                    text: checked ? qsTr("fixed") : qsTr("follow")
                     checked: true
                     checkable: true
                     onCheckedChanged: setFollowing(checked);
+                    Layout.fillWidth: true
                 }
             }
+        }
 
-            LabeledSlider {
-                id: cameraAngle
-                Layout.alignment: Qt.AlignRight
-                from: 0
-                to: 180.0
-                value: 45.0
-                text: "angle"
+        // Right menu - Slider controls
+        Pane {
+            id: sliderPane
+            padding: 10
+            anchors {
+                top: parent.top
+                right: parent.right
+                margins: 10
             }
+            width: Math.min(300, parent.width * 0.25)
 
-            LabeledSlider {
-                id: progressSlider
-                from: 0
-                to: missionSize
-                enabled : missionReady
-                text: (value / missionSize * 100).toLocaleString(Qt.locale(), 'f', 0) + "%"
-                handleWidth: progressMetrics.width
-                TextMetrics {
-                    id: progressMetrics
-                    font: progressSlider.font
-                    text: "100%"
-                }
-            }
+            ColumnLayout {
+                spacing: 15
+                width: parent.width
 
-            LabeledSlider {
-                id: animationSpeed
-                Layout.alignment: Qt.AlignRight
-                from: 1
-                to: 100
-                value: 50
-                text: "speed"
-            }
+                // Zoom Slider
+                ColumnLayout {
+                    spacing: 4
+                    Layout.fillWidth: true
 
-            Rectangle {
-                id: mapFrame
-                Layout.columnSpan: 2
-                Layout.alignment: Qt.AlignLeft | Qt.AlignBottom
-                Layout.minimumHeight: parent.height * 0.25
-                Layout.minimumWidth: parent.width * 0.3
-                color: "black"
-                clip: true
-
-                MapView {
-                    id: mapView
-                    anchors {
-                        fill: parent
-                        margins: 2
+                    Label {
+                        text: qsTr("Zoom")
+                        font.bold: true
                     }
-                    objectName: "mapView"
-
-                    MouseArea {
-                        anchors.fill: parent
-                        onPressed: mouse => mouse.accepted
-                        onWheel: wheel.accepted
+                    Slider {
+                        id: cameraDistance
+                        from: 10.0
+                        to: 5000.0
+                        value: 500.0
+                        Layout.fillWidth: true
                     }
                 }
 
-                RowLayout {
-                    anchors {
-                        left: parent.left
-                        top: parent.top
-                    }
-                    spacing: 10
+                // Camera Angle Slider
+                ColumnLayout {
+                    spacing: 4
+                    Layout.fillWidth: true
 
-                    Rectangle {
-                        Layout.margins: 5
+                    Label {
+                        text: qsTr("Angle")
+                        font.bold: true
+                    }
+                    Slider {
+                        id: cameraAngle
+                        from: 0
+                        to: 180.0
+                        value: 45.0
+                        Layout.fillWidth: true
+                    }
+                }
+
+                // Progress Slider
+                ColumnLayout {
+                    spacing: 4
+                    Layout.fillWidth: true
+
+                    Label {
+                        text: qsTr("Progress: " + (progressSlider.value / missionSize * 100).toLocaleString(Qt.locale(), 'f', 0) + "%")
+                        font.bold: true
+                    }
+                    Slider {
+                        id: progressSlider
+                        from: 0
+                        to: missionSize
+                        enabled: missionReady
+                        Layout.fillWidth: true
+                    }
+                }
+
+                // Animation Speed Slider
+                ColumnLayout {
+                    spacing: 4
+                    Layout.fillWidth: true
+
+                    Label {
+                        text: qsTr("Speed")
+                        font.bold: true
+                    }
+                    Slider {
+                        id: animationSpeed
+                        from: 1
+                        to: 100
+                        value: 50
+                        Layout.fillWidth: true
+                    }
+                }
+            }
+        }
+
+        // Map view at bottom left
+        Rectangle {
+            id: mapFrame
+            anchors {
+                left: parent.left
+                bottom: sceneView.attributionTop
+                margins: 10
+            }
+            height: parent.height * 0.25
+            width: parent.width * 0.3
+            color: "black"
+            clip: true
+
+            MapView {
+                id: mapView
+                anchors {
+                    fill: parent
+                    margins: 2
+                }
+                objectName: "mapView"
+
+                MouseArea {
+                    anchors.fill: parent
+                    onPressed: mouse => mouse.accepted
+                    onWheel: wheel.accepted
+                }
+            }
+
+            RowLayout {
+                anchors {
+                    left: parent.left
+                    top: parent.top
+                }
+                spacing: 10
+
+                Rectangle {
+                    Layout.margins: 5
+                    height: width
+                    width: childrenRect.width
+                    clip: true
+                    radius: 5
+                    opacity: 0.9
+
+                    Image {
+                        source: "qrc:/Samples/Scenes/Animate3DSymbols/plus-16-f.png"
+                        width: 24
                         height: width
-                        width: childrenRect.width
-                        clip: true
-                        radius: 5
 
-                        opacity: 0.9
-                        Image {
-                            source: "qrc:/Samples/Scenes/Animate3DSymbols/plus-16-f.png"
-                            width: 24
-                            height: width
-
-                            MouseArea {
-                                anchors.fill: parent
-                                onClicked: zoomMapIn()
-                            }
+                        MouseArea {
+                            anchors.fill: parent
+                            onClicked: zoomMapIn()
                         }
                     }
+                }
 
-                    Rectangle {
-                        Layout.margins: 5
+                Rectangle {
+                    Layout.margins: 5
+                    height: width
+                    width: childrenRect.width
+                    opacity: 0.9
+                    clip: true
+                    radius: 5
+
+                    Image {
+                        source: "qrc:/Samples/Scenes/Animate3DSymbols/minus-16-f.png"
+                        width: 24
                         height: width
-                        width: childrenRect.width
-                        opacity: 0.9
-                        clip: true
-                        radius: 5
 
-                        Image {
-                            source: "qrc:/Samples/Scenes/Animate3DSymbols/minus-16-f.png"
-                            width: 24
-                            height: width
-                            MouseArea {
-                                anchors.fill: parent
-                                onClicked: zoomMapOut()
-                            }
+                        MouseArea {
+                            anchors.fill: parent
+                            onClicked: zoomMapOut()
                         }
                     }
                 }

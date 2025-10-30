@@ -39,6 +39,10 @@ exists($$PWD/../../../DevBuildCpp.pri) {
   # include the toolkitcpp.pri, which contains all the toolkit resources
   include($$PWD/../../toolkit/uitools/toolkitcpp/toolkitcpp.pri)
 
+  # Include Calcite
+  RESOURCES += $$PWD/../../toolkit/calcite/Calcite/calcite.qrc
+  QML_IMPORT_PATH += $$PWD/../../toolkit/calcite/
+
   INCLUDEPATH += \
       $$SAMPLEPATHCPP \
       $$COMMONVIEWER \
@@ -52,10 +56,17 @@ exists($$PWD/../../../DevBuildCpp.pri) {
   CONFIG += c++17
 
   # include the toolkitcpp.pri, which contains all the toolkit resources
-  !include($$PWD/../arcgis-maps-sdk-toolkit-qt/uitools/toolkitcpp/toolkitcpp.pri) {
+  exists($$PWD/../arcgis-maps-sdk-toolkit-qt/uitools/toolkitcpp/toolkitcpp.pri) {
+    include($$PWD/../arcgis-maps-sdk-toolkit-qt/uitools/toolkitcpp/toolkitcpp.pri)
+
+    # Include Calcite
+    RESOURCES += $$PWD/../arcgis-maps-sdk-toolkit-qt/calcite/Calcite/calcite.qrc
+    QML_IMPORT_PATH += $$PWD/../arcgis-maps-sdk-toolkit-qt/calcite/
+
+  } else {
     message("ERROR: Cannot find toolkitcpp.pri at path:" $$PWD/../arcgis-maps-sdk-toolkit-qt/uitools/toolkitcpp/toolkitcpp.pri)
     message("Please ensure the Qt Toolkit repository is cloned and the path above is correct.")
-  }
+    }
 
   contains(QMAKE_HOST.os, Windows):{
     iniPath = $$(ALLUSERSPROFILE)\\EsriRuntimeQt\\ArcGIS Runtime SDK for Qt $${ARCGIS_RUNTIME_VERSION}.ini

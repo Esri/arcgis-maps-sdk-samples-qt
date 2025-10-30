@@ -46,14 +46,14 @@ Item {
             }
             padding: 10
             background: Rectangle {
-                color: "white"
+                color: palette.base
                 border.color: "black"
             }
             contentItem: GridLayout {
                 columns: 2
                 Label {
                     id: instructionLabel
-                    text: "Load the service, then select a layer for display"
+                    text: qsTr("Load the service, then select a layer for display")
                     font.bold: true
                     verticalAlignment: "AlignVCenter"
                     horizontalAlignment: "AlignHCenter"
@@ -68,7 +68,7 @@ Item {
                 }
                 Button {
                     id: connectButton
-                    text: "Load service"
+                    text: qsTr("Load service")
                     enabled: !model.serviceOrFeatureLoading
                     onClicked: model.loadService(serviceURLBox.text);
 
@@ -82,7 +82,7 @@ Item {
                 }
                 Button {
                     id: loadLayerButton
-                    text: "Load selected layer"
+                    text: qsTr("Load selected layer")
                     enabled: !model.serviceOrFeatureLoading && featureList.currentIndex >= 0
                     onClicked: model.loadFeatureCollection(featureList.currentIndex);
                     Layout.columnSpan: 2

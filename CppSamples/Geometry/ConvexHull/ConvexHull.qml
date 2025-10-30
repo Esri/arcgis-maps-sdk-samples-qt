@@ -33,14 +33,15 @@ Item {
 
         RowLayout {
             anchors {
-                left: parent.left
-                top: parent.top
+                horizontalCenter: parent.horizontalCenter
+                bottom: view.attributionTop
+                margins: 5
             }
 
             Button {
                 Layout.fillWidth: true
                 Layout.fillHeight: true
-                text: "Convex hull"
+                text: qsTr("Convex hull")
                 onClicked: {
                     model.displayConvexHull();
                 }
@@ -49,7 +50,7 @@ Item {
             Button {
                 Layout.fillWidth: true
                 Layout.fillHeight: true
-                text: "Reset"
+                text: qsTr("Reset")
                 onClicked: {
                     model.clearGraphics();
                 }

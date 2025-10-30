@@ -16,6 +16,7 @@
 import QtQuick
 import QtQuick.Controls
 import Esri.ArcGISRuntimeSamples
+import Calcite
 
 ApplicationWindow {
     id: window
@@ -25,11 +26,24 @@ ApplicationWindow {
     minimumWidth: 300
     minimumHeight: 400
 
+    palette {
+        button: Calcite.brand
+        buttonText: Calcite.text1
+        highlight: Calcite.brandHover
+        base: Calcite.background
+        text: Calcite.text1
+        mid: Calcite.foreground1
+    }
+
     readonly property string os: Qt.platform.os
     readonly property string fontFamily: "Helvetica"
 
     header: ToolBar {
         height: 42
+
+        background: Rectangle {
+            color: Calcite.brand
+        }
 
         Image {
             anchors {
@@ -54,7 +68,7 @@ ApplicationWindow {
                 pixelSize: 24
                 family: fontFamily
             }
-            color: "white"
+            color: Calcite.offWhite
         }
 
         Image {
@@ -312,6 +326,11 @@ ApplicationWindow {
     }
 
     Component.onCompleted: {
+        // color overrides - purple
+        Calcite.brand = Calcite.Theme.Light ? "#7938B6" : "#8F53CA";
+        Calcite.brandHover = Calcite.Theme.Light ? "#652E98" : "#7938B6";
+        Calcite.brandPress = Calcite.Theme.Light ? "#51247A" : "#652E98";
+
         // initialize the SampleManager singleton
         SampleManager.init();
     }

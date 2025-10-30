@@ -34,7 +34,7 @@ Item {
         Control {
             width: 300
             background : Rectangle {
-                color: "lightgrey"
+                color: palette.base
             }
             contentItem: GridLayout {
                 columns: 2
@@ -48,8 +48,14 @@ Item {
                     onClicked: {
                         sampleModel.displayPreviousLevel();
                     }
+
+                    Binding {
+                        target: backButton.contentItem
+                        property: "color"
+                        value: Qt.styleHints.colorScheme === Qt.Dark ? "white" : "black"
+                    }
                 }
-                Text {
+                Label {
                     Layout.fillWidth: true
                     id: textLabel
                     text: sampleModel.labelText

@@ -32,6 +32,7 @@ TextField {
         }
         height: 22
         width: height
+        color: "transparent"
 
         Image {
             anchors {

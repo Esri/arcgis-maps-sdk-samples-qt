@@ -43,7 +43,7 @@ RasterRenderingRuleSample {
             }
             height: childrenRect.height
             width: childrenRect.width
-            color: "silver"
+            color: palette.base
             radius: 5
 
             GridLayout {
@@ -53,7 +53,7 @@ RasterRenderingRuleSample {
                     Layout.margins: 10
                     Layout.columnSpan: 2
                     Layout.alignment: Qt.AlignHCenter
-                    text: "Apply a Rendering Rule"
+                    text: qsTr("Apply a Rendering Rule")
                     font.pixelSize: 16
                 }
 
@@ -79,7 +79,7 @@ RasterRenderingRuleSample {
                 Button {
                     id: applyButton
                     Layout.margins: 10
-                    text: "Apply"
+                    text: qsTr("Apply")
                     onClicked: {
                         applyRenderingRule(renderingRulesCombo.currentIndex);
                     }

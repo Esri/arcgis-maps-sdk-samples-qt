@@ -15,6 +15,7 @@
 // [Legal]
 
 import QtQuick
+import QtQuick.Controls
 
 Rectangle {
     property bool pressed: false
@@ -22,18 +23,17 @@ Rectangle {
 
     width: 175
     height: 35
-    color: pressed ? "#959595" : "#D6D6D6"
+    color: pressed ? palette.base : palette.highlight
     radius: 5
     border {
         color: "#585858"
         width: 1
     }
 
-    Text {
+    Label {
         anchors.centerIn: parent
-        text: "Redo search in this area"
+        text: qsTr("Redo search in this area")
         font.pixelSize: 14
-        color: "#474747"
     }
 
     MouseArea {

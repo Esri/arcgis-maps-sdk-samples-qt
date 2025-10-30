@@ -36,7 +36,7 @@ AnalyzeViewshedSample {
     }
 
     onDisplayErrorDialog: {
-        messageDialog.title = "Error";
+        messageDialog.title = qsTr("Error");
         messageDialog.text = titleText;
         messageDialog.detailedText = detailedText;
         messageDialog.open();
@@ -48,7 +48,7 @@ AnalyzeViewshedSample {
             margins: -10
             fill: statusColumn
         }
-        color: "lightgrey"
+        color: palette.base
         radius: 5
         border.color: "black"
         opacity: 0.85
@@ -62,10 +62,10 @@ AnalyzeViewshedSample {
             margins: 20
         }
 
-        Text {
+        Label {
             anchors.margins: 5
             visible: !viewshedInProgress
-            text: "Click map to execute viewshed analysis"
+            text: qsTr("Click map to execute viewshed analysis")
             font.pixelSize: 12
         }
 
@@ -76,11 +76,11 @@ AnalyzeViewshedSample {
 
             BusyIndicator {
                 anchors.verticalCenter: parent.verticalCenter
-                width: 22
+                width: 32
                 height: width
             }
 
-            Text {
+            Label {
                 anchors.verticalCenter: parent.verticalCenter
                 text: statusText
                 font.pixelSize: 12
@@ -94,15 +94,15 @@ AnalyzeViewshedSample {
         x: Math.round(parent.width - width) / 2
         y: Math.round(parent.height - height) / 2
         standardButtons: Dialog.Ok
-        title: "Error"
+        title: qsTr("Error")
         property alias text : textLabel.text
         property alias detailedText : detailsLabel.text
         ColumnLayout {
-            Text {
+            Label {
                 id: textLabel
-                text: "Executing geoprocessing failed."
+                text: qsTr("Executing geoprocessing failed.")
             }
-            Text {
+            Label {
                 id: detailsLabel
             }
         }

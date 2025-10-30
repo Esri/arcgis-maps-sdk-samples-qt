@@ -53,16 +53,26 @@ GenerateOfflineMap_OverridesSample {
         }
 
         // Create a button and anchor it to the attribution top
-        DownloadButton {
+        Button {
             id: downloadButton
             anchors {
                 horizontalCenter: parent.horizontalCenter
                 bottom: mapView.attributionTop
                 margins: 5
             }
+
+            text: qsTr("Download")
+            leftPadding: 20
+            rightPadding: 20
+            icon {
+                source: "qrc:/Samples/Maps/GenerateOfflineMap_Overrides/download.png"
+                width: 24
+                height: 24
+                color: "#F8F8F8"
+            }
             visible: mapLoaded
 
-            onButtonClicked: {
+            onClicked: {
                 setAreaOfInterest(extentRectangle.x, extentRectangle.y, (extentRectangle.x + extentRectangle.width), (extentRectangle.y + extentRectangle.height));
             }
         }
@@ -110,13 +120,13 @@ GenerateOfflineMap_OverridesSample {
         x: Math.round(parent.width - width) / 2
         y: Math.round(parent.height - height) / 2
         standardButtons: Dialog.Ok
-        title: "Layer Errors"
+        title: qsTr("Layer Errors")
         property alias text : textLabel.text
         property alias detailedText : detailsLabel.text
         ColumnLayout {
             Text {
                 id: textLabel
-                text: "Some layers could not be taken offline."
+                text: qsTr("Some layers could not be taken offline.")
             }
             Text {
                 id: detailsLabel
@@ -127,5 +137,6 @@ GenerateOfflineMap_OverridesSample {
     BusyIndicator {
         anchors.centerIn: parent
         running: taskBusy
+        visible: taskBusy
     }
 }

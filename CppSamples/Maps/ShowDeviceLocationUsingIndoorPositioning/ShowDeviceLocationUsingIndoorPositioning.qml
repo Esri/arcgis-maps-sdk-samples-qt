@@ -41,7 +41,7 @@ Item {
         id: locationInformationRectangle
         width: parent.width
         height: textColumn.height + 20
-        color: "lightgray"
+        color: palette.base
 
         ColumnLayout {
             id: textColumn
@@ -51,26 +51,26 @@ Item {
                 margins: 10
             }
 
-            Text {
-                text: "Initializing location data source\nand retrieving user location..."
+            Label {
+                text: qsTr("Initializing location data source\nand retrieving user location...")
                 // Display if there are no location properties to display
                 visible: Object.keys(model.locationProperties).length === 0;
             }
 
-            Text {
-                text: "Floor: " + model.locationProperties.floor
+            Label {
+                text: qsTr("Floor: ") + model.locationProperties.floor
                 visible: model.locationProperties.floor !== undefined
             }
-            Text {
-                text: "Position source: " + model.locationProperties.positionSource
+            Label {
+                text: qsTr("Position source: ") + model.locationProperties.positionSource
                 visible: model.locationProperties.positionSource !== undefined
             }
-            Text {
-                text: "Transmitter count: " + model.locationProperties.satelliteCount
+            Label {
+                text: qsTr("Transmitter count: ") + model.locationProperties.satelliteCount
                 visible: model.locationProperties.satelliteCount !== undefined
             }
-            Text {
-                text: "Horizontal accuracy: " + (model.locationProperties.horizontalAccuracy ? model.locationProperties.horizontalAccuracy.toFixed(2) + " m" : "undefined")
+            Label {
+                text: qsTr("Horizontal accuracy: ") + (model.locationProperties.horizontalAccuracy ? model.locationProperties.horizontalAccuracy.toFixed(2) + " m" : "undefined")
                 visible: model.locationProperties.horizontalAccuracy !== undefined
             }
         }
@@ -91,15 +91,14 @@ Item {
 
     Dialog {
         id: locationPermissionDeniedDialog
-        title: "Location Permission Denied"
+        title: qsTr("Location Permission Denied")
         modal: true
         standardButtons: Dialog.Ok
         x: (parent.width - width) / 2
         y: (parent.height - height) / 2
 
-        Text {
-            text: "This application requires location permission."
-            color: "white"
+        Label {
+            text: qsTr("This application requires location permission.")
         }
     }
 
@@ -112,15 +111,14 @@ Item {
 
     Dialog {
         id: bluetoothPermissionDeniedDialog
-        title: "Bluetooth Permission Denied"
+        title: qsTr("Bluetooth Permission Denied")
         modal: true
         standardButtons: Dialog.Ok
         x: (parent.width - width) / 2
         y: (parent.height - height) / 2
 
-        Text {
-            text: "This application requires bluetooth permission."
-            color: "white"
+        Label {
+            text: qsTr("This application requires bluetooth permission.")
         }
     }
 }

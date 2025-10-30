@@ -1,3 +1,19 @@
+// [WriteFile Name=SnapGeometryEditsWithRules, Category=EditData]
+// [Legal]
+// Copyright 2025 Esri.
+//
+// Licensed under the Apache License, Version 2.0 (the "License");
+// you may not use this file except in compliance with the License.
+// You may obtain a copy of the License at
+// http://www.apache.org/licenses/LICENSE-2.0
+//
+// Unless required by applicable law or agreed to in writing, software
+// distributed under the License is distributed on an "AS IS" BASIS,
+// WITHOUT WARRANTIES OR CONDITIONS OF ANY KIND, either express or implied.
+// See the License for the specific language governing permissions and
+// limitations under the License.
+// [Legal]
+
 import QtQuick
 import QtQuick.Controls
 import QtQuick.Layouts
@@ -29,14 +45,13 @@ Item {
         }
         width: textItem.width + 20
         height: textItem.height + 10
-        color: "black"
-        opacity: .5
+        color: palette.base
+        opacity: .9
 
-        Text {
+        Label {
             id: textItem
             anchors.centerIn: parent
-            text: "Tap a point feature to edit."
-            color: "white"
+            text: qsTr("Tap a point feature to edit.")
             font.pixelSize: 16
             font.bold: true
         }
@@ -49,8 +64,8 @@ Item {
         padding: 5
 
         background: Rectangle {
-            color: "black"
-            opacity: .5
+            color: palette.base
+            opacity: .9
         }
         contentItem: ColumnLayout {
             id: columns
@@ -64,31 +79,28 @@ Item {
                 Layout.alignment: Qt.AlignHCenter | Qt.AlignVCenter
                 columns: 2
 
-                Text {
+                Label {
                     id: geometryHeader
                     Layout.alignment: Qt.AlignHCenter | Qt.AlignVCenter
                     Layout.columnSpan: 2
-                    text: "Feature selected"
-                    color: "white"
+                    text: qsTr("Feature selected")
                     font.pixelSize: 16
                     font.bold: true
                 }
 
-                Text {
+                Label {
                     id: assetGroupText
                     Layout.alignment: Qt.AlignHCenter | Qt.AlignVCenter
                     Layout.columnSpan: 2
-                    text: "AssetGroup: "
-                    color: "white"
+                    text: qsTr("AssetGroup: ")
                     font.pixelSize: 12
                 }
 
-                Text {
+                Label {
                     id: assetTypeText
                     Layout.alignment: Qt.AlignHCenter | Qt.AlignVCenter
                     Layout.columnSpan: 2
-                    text: "AssetType: "
-                    color: "white"
+                    text: qsTr("AssetType: ")
                     font.pixelSize: 12
                 }
 
@@ -155,9 +167,8 @@ Item {
                     color: "green"
                     radius: 2
                 }
-                Text {
-                    text: "None"
-                    color: "white"
+                Label {
+                    text: qsTr("None")
                     font.pixelSize: 12
                 }
 
@@ -167,9 +178,8 @@ Item {
                     color: "orange"
                     radius: 2
                 }
-                Text {
-                    text: "RulesLimitSnapping"
-                    color: "white"
+                Label {
+                    text: qsTr("RulesLimitSnapping")
                     font.pixelSize: 12
                 }
 
@@ -179,9 +189,8 @@ Item {
                     color: "red"
                     radius: 2
                 }
-                Text {
-                    text: "RulesPreventSnapping"
-                    color: "white"
+                Label {
+                    text: qsTr("RulesPreventSnapping")
                     font.pixelSize: 12
                 }
             }
@@ -197,8 +206,8 @@ Item {
         }
         width: 220
         visible: false
-        color: "black"
-        opacity: .5
+        color: palette.base
+        opacity: .9
 
         Connections {
             target: snapGeometryEditsWithRulesModel
@@ -224,23 +233,21 @@ Item {
                     Layout.minimumWidth: optionPanel.width
                     Layout.minimumHeight: 35
 
-                    Text {
+                    Label {
                         Layout.alignment: Qt.AlignLeft
                         Layout.fillWidth: true
                         Layout.minimumWidth: optionPanel.width * 0.75
-                        text: "Snapping"
+                        text: qsTr("Snapping")
                         font.pixelSize: 12
-                        color: "white"
                         font.bold: true
                     }
 
-                    Text {
+                    Label {
                         Layout.alignment: Qt.AlignRight
                         Layout.fillWidth: true
                         Layout.minimumWidth: optionPanel.width * 0.25
-                        text: "Done"
+                        text: qsTr("Done")
                         font.pixelSize: 12
-                        color: "white"
                         font.bold: true
                         MouseArea {
                             anchors.fill: parent
@@ -258,7 +265,7 @@ Item {
                 id:delegate
                 Rectangle {
                     id: wrapper
-                    color: "#E9DFEA"
+                    color: palette.mid
                     width: snapSourceView.width - (snapSourceView.anchors.margins / 2)
                     height: delegate.height
                     anchors {
@@ -271,7 +278,7 @@ Item {
                         Layout.minimumWidth: optionPanel.width
                         width: wrapper.width
 
-                        Text {
+                        Label {
                             Layout.alignment: Qt.AlignLeft
                             Layout.fillWidth: true
                             Layout.minimumWidth: optionPanel.width / 2

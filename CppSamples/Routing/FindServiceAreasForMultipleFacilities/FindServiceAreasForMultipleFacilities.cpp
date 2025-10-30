@@ -180,7 +180,7 @@ void FindServiceAreasForMultipleFacilities::connectServiceAreaTaskSignals()
       });
 
       if (!m_future.isValid())
-        qWarning() << "Furure not valid.";
+        qWarning() << "Future not valid.";
 
     });
 

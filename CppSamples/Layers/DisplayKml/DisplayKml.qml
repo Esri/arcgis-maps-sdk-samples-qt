@@ -50,6 +50,7 @@ DisplayKmlSample {
             // An indicator only exists if a theme is set
             visible: parent.indicator
             border.width: 1
+            color: palette.base
         }
 
         property int modelWidth: 0

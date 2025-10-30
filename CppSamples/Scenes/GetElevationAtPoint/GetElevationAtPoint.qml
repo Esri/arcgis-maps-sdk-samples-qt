@@ -45,15 +45,14 @@ Item {
             margins: 30
         }
 
-        color: Qt.rgba(0.2, 0.2, 0.2, 0.65);
+        color: palette.base
         height: childrenRect.height
 
         // Elevation display text
-        Text {
+        Label {
             anchors {
                 horizontalCenter: parent.horizontalCenter
             }
-            color: "white"
             padding: 15
             font.pointSize: 32
 
@@ -61,7 +60,7 @@ Item {
             scale: Math.min(1, (parent.width - padding) / contentWidth)
 
             // Display elevation value in meters, round to a single decimal place.
-            text: "Elevation : " + Math.round(model.elevation * 10) / 10 + "m"
+            text: qsTr("Elevation : " + Math.round(model.elevation * 10) / 10 + "m")
         }
     }
 
@@ -71,6 +70,7 @@ Item {
         anchors.centerIn: parent
         width: Math.min(parent.width, parent.height) / 6.0
         height: width
+        visible: model.elevationQueryRunning
     }
 
 }

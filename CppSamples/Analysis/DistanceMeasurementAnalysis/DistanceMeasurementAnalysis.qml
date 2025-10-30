@@ -41,8 +41,7 @@ Item {
             fill: resultsColumn
             margins: -5
         }
-        color: "black"
-        opacity: 0.5
+        color: palette.base
         radius: 5
     }
 
@@ -57,46 +56,39 @@ Item {
 
         Row {
             spacing: 5
-            Text {
-                text: "Direct Distance:"
-                color: "white"
+            Label {
+                text: qsTr("Direct Distance:")
             }
-            Text {
+            Label {
                 id: directDistanceText
-                color: "white"
                 text: model.directDistance
             }
         }
         Row {
             spacing: 5
-            Text {
-                text: "Vertical Distance:"
-                color: "white"
+            Label {
+                text: qsTr("Vertical Distance:")
             }
-            Text {
+            Label {
                 id: verticalDistanceText
-                color: "white"
                 text: model.verticalDistance
             }
         }
         Row {
             spacing: 5
-            Text {
-                text: "Horizontal Distance:"
-                color: "white"
+            Label {
+                text: qsTr("Horizontal Distance:")
             }
-            Text {
+            Label {
                 id: horizontalDistanceText
-                color: "white"
                 text: model.horizontalDistance
             }
         }
         Row {
             id: row
             spacing: 5
-            Text {
-                text: "Unit System:"
-                color: "white"
+            Label {
+                text: qsTr("Unit System:")
             }
             ComboBox {
                 id: comboBox

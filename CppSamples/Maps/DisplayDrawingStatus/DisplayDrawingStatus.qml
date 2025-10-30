@@ -53,7 +53,7 @@ DisplayDrawingStatusSample {
             height: 100
             radius: 3
             opacity: 0.85
-            color: "#E0E0E0"
+            color: palette.base
             border.color: "black"
 
             Column {
@@ -69,7 +69,7 @@ DisplayDrawingStatusSample {
                     running: displayDrawingStatusSample.mapDrawing
                 }
 
-                Text {
+                Label {
                     anchors.horizontalCenter: parent.horizontalCenter
                     font {
                         weight: Font.Black
@@ -77,7 +77,7 @@ DisplayDrawingStatusSample {
                     }
                     height: 20
                     horizontalAlignment: Text.AlignHCenter
-                    text: "Drawing..."
+                    text: qsTr("Drawing...")
                 }
             }
         }

@@ -17,11 +17,12 @@ import QtQuick
 import QtQuick.Controls
 import QtQuick.Shapes
 import Esri.ArcGISRuntimeSamples
+import Calcite
 
 Rectangle {
     visible: SampleManager.currentMode === SampleManager.HomepageView
 
-    color: "white"
+    color: Calcite.foreground1
 
     Flickable {
         anchors {
@@ -49,7 +50,7 @@ Rectangle {
             text: "# Featured Samples"
             wrapMode: Text.WordWrap
             textFormat: Text.MarkdownText
-            color: "#7938b6"
+            color: Calcite.text2
         }
 
         GridView {
@@ -163,7 +164,7 @@ Rectangle {
                         }
                         onContainsMouseChanged: {
                             if (containsMouse) {
-                                backgroundRectangle.color = "#7938b6"
+                                backgroundRectangle.color = Calcite.brandHover
                                 img.anchors.margins = 3
 
                             } else {

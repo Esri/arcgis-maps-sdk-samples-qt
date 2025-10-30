@@ -41,7 +41,7 @@ AnalyzeHotspotsSample {
     }
 
     onDisplayErrorDialog: {
-        messageDialog.title = "Error";
+        messageDialog.title = qsTr("Error");
         messageDialog.text = titleText;
         messageDialog.detailedText = detailedText;
         messageDialog.open();
@@ -53,7 +53,7 @@ AnalyzeHotspotsSample {
             margins: -10
             fill: settingsColumn
         }
-        color: "lightgrey"
+        color: palette.base
         radius: 5
         border.color: "black"
         opacity: 0.75
@@ -68,21 +68,21 @@ AnalyzeHotspotsSample {
         }
         spacing: 5
 
-        Text {
+        Label {
             anchors.horizontalCenter: parent.horizontalCenter
-            text: "Select date range for analysis\n(d MMM yyyy)"
+            text: qsTr("Select date range for analysis\n(d MMM yyyy)")
             font.pixelSize: 14
         }
 
-        Text {
-            text: "From"
+        Label {
+            text: qsTr("From")
             font.pixelSize: 12
         }
 
         TextField {
             id: fromDate
             width: parent.width
-            text: "1 Jan 1998"
+            text: qsTr("1 Jan 1998")
             onTextChanged: {
                 fromThisDate = Date.fromLocaleString(Qt.locale(), text, "d MMM yyyy")
                 validateDates();
@@ -90,15 +90,15 @@ AnalyzeHotspotsSample {
             selectByMouse: true
         }
 
-        Text {
-            text: "To"
+        Label {
+            text: qsTr("To")
             font.pixelSize: 12
         }
 
         TextField {
             id: toDate
             width: parent.width
-            text: "31 Jan 1998"
+            text: qsTr("31 Jan 1998")
             onTextChanged: {
                 toThisDate = Date.fromLocaleString(Qt.locale(), text, "d MMM yyyy")
                 validateDates();
@@ -109,7 +109,7 @@ AnalyzeHotspotsSample {
         Button {
             width: parent.width
             anchors.horizontalCenter: parent.horizontalCenter
-            text: "Run analysis"
+            text: qsTr("Run analysis")
             enabled: !jobInProgress && validateDates(fromThisDate, toThisDate)
 
             onClicked: {
@@ -126,11 +126,11 @@ AnalyzeHotspotsSample {
 
             BusyIndicator {
                 anchors.verticalCenter: parent.verticalCenter
-                width: 24
+                width: 32
                 height: width
             }
 
-            Text {
+            Label {
                 anchors.verticalCenter: parent.verticalCenter
                 text: statusText
                 font.pixelSize: 14
@@ -144,14 +144,14 @@ AnalyzeHotspotsSample {
         x: Math.round(parent.width - width) / 2
         y: Math.round(parent.height - height) / 2
         standardButtons: Dialog.Ok
-        title: "Error"
+        title: qsTr("Error")
         property alias text : textLabel.text
         property alias detailedText : detailsLabel.text
         ColumnLayout {
-            Text {
+            Label {
                 id: textLabel
             }
-            Text {
+            Label {
                 id: detailsLabel
             }
         }

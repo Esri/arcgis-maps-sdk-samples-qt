@@ -39,6 +39,7 @@ Item {
     Rectangle {
         anchors.fill: slider
         radius: 5
+        color: palette.base
     }
 
     Slider {

@@ -34,20 +34,18 @@ Item {
 
     Rectangle {
         anchors {
-            margins: 5
+            margins: 8
             left: parent.left
-            bottom: parent.bottom
+            top: parent.top
         }
         width: childrenRect.width
         height: childrenRect.height
-        color: "#D3D3D3"
-        opacity: .75
+        color: palette.base
         radius: 3
 
         ColumnLayout {
-            Text {
-                color: "#000000"
-                text: "Max extent enabled"
+            Label {
+                text: qsTr("Max extent enabled")
                 Layout.fillWidth: true
                 Layout.margins: 3
                 font {

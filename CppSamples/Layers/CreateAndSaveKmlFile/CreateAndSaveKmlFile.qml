@@ -65,7 +65,7 @@ Item {
         anchors.centerIn: parent
         width: parent.width * .8
         standardButtons: Dialog.Ok
-        title: "Item saved to temporary location:"
+        title: qsTr("Item saved to temporary location:")
         Label {
             text: model.kmlFilePath
             wrapMode: Text.Wrap

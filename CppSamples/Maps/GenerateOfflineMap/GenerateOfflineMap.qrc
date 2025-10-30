@@ -7,7 +7,6 @@
         <file>screenshot.png</file>
         <file>README.md</file>
         <file>download.png</file>
-        <file>DownloadButton.qml</file>
         <file>GenerateWindow.qml</file>
     </qresource>
 </RCC>
