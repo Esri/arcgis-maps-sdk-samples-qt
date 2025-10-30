@@ -39,12 +39,10 @@ Rectangle {
             activeFocusOnPress: false
             textFormat: Text.PlainText
             color: Calcite.text1
+            text: SampleManager.currentSourceCode
             selectByMouse: os === "ios" || os === "android" ? false : true
+
             Component.onCompleted: {
-                // Set binding imperatively instead of declaratively. The 5.9 Qt to 5.12
-                // upgrade broke syntax highlighting on windows for the first sample.
-                // Likely a timing issue of setting the highlighter.
-                textEdit.text = Qt.binding(function() {return SampleManager.currentSourceCode});
                 SyntaxHighlighter.setHighlighter(textEdit, Calcite.theme === Calcite.Theme.Dark);
             }
 
