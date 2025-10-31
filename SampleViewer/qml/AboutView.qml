@@ -69,7 +69,7 @@ Item {
 
                     Image {
                         anchors.horizontalCenter: parent.horizontalCenter
-                        source: "qrc:/esri_logo.png"
+                        source: Qt.application.styleHints.colorScheme === Qt.ColorScheme.Dark ? "qrc:/esri_logo_light.png" : "qrc:/esri_logo.png"
                         width: 210
                         height: 66
                     }
