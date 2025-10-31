@@ -94,7 +94,7 @@ Item {
 
         width: parent.width - parent.width * 0.1
         height: parent.height - parent.height * 0.25
-        color: qsTr("transparent")
+        color: "transparent"
         border {
             color: "red"
             width: 3
