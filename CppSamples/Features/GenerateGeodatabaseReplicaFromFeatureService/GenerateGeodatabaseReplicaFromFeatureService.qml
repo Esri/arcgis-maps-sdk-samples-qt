@@ -78,7 +78,6 @@ GenerateGeodatabaseReplicaFromFeatureServiceSample {
             height: 24
             color: palette.text
         }
-        visible: mapLoaded
 
         onClicked: {
             generateSample.generateGeodatabaseFromCorners(extentRectangle.x, extentRectangle.y, (extentRectangle.x + extentRectangle.width), (extentRectangle.y + extentRectangle.height));
