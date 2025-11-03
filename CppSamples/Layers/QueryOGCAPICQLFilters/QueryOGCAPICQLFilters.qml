@@ -92,7 +92,7 @@ Item {
                 id: fromField
                 anchors.verticalCenter: parent.verticalCenter
                 text: qsTr("From")
-                rightPadding: 40
+                width: 84.5
             }
 
             TextField {
@@ -114,7 +114,7 @@ Item {
                 id: toField
                 anchors.verticalCenter: parent.verticalCenter
                 text: qsTr("To")
-                rightPadding: 53
+                width: 84.5
             }
 
             TextField {
