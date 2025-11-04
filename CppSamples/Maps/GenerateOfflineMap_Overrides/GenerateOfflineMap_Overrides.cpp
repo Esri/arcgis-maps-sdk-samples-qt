@@ -356,6 +356,8 @@ void GenerateOfflineMap_Overrides::takeMapOffline()
       break;
     case JobStatus::Started:
       emit updateStatus("In progress");
+      m_parameterOverrides = nullptr;
+      emit overridesReadyChanged();
       break;
     case JobStatus::Succeeded:
       // show any layer errors
@@ -373,7 +375,6 @@ void GenerateOfflineMap_Overrides::takeMapOffline()
       // show the map
       emit updateStatus("Complete");
       emit hideWindow(1500, true);
-      m_mapView->setMap(generateJob->result()->offlineMap(this));
       break;
     default: // do nothing
       break;
