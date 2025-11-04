@@ -69,7 +69,7 @@ GenerateGeodatabaseReplicaFromFeatureServiceSample {
             margins: 23
         }
 
-        text: qsTr("Download")
+        text: qsTr("Generate Geodatabse")
         leftPadding: 20
         rightPadding: 20
         icon {
