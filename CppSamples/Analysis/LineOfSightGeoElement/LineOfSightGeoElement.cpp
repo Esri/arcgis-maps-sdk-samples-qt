@@ -48,7 +48,7 @@
 #include "PointBuilder.h"
 #include "RendererSceneProperties.h"
 #include "Scene.h"
-#include "LocalSceneQuickView.h" #include "SceneViewTypes.h"
+#include "LocalSceneQuickView.h"
 #include "SceneViewTypes.h"
 #include "SimpleMarkerSymbol.h"
 #include "SimpleRenderer.h"

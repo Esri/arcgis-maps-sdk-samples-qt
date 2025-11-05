@@ -24,7 +24,8 @@
 // ArcGIS Maps SDK headers
 #include "PortalItem.h"
 #include "Scene.h"
-#include "LocalSceneQuickView.h" #include "SceneViewTypes.h"
+#include "LocalSceneQuickView.h"
+#include "SceneViewTypes.h"
 
 using namespace Esri::ArcGISRuntime;
 

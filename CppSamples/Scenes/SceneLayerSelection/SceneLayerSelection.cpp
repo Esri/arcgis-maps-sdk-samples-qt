@@ -33,7 +33,8 @@
 #include "MapTypes.h"
 #include "Point.h"
 #include "Scene.h"
-#include "LocalSceneQuickView.h" #include "SceneViewTypes.h"
+#include "LocalSceneQuickView.h"
+#include "SceneViewTypes.h"
 #include "SpatialReference.h"
 #include "Surface.h"
 #include "Viewpoint.h"
@@ -63,7 +64,7 @@ void SceneLayerSelection::componentComplete()
   m_sceneView = findChild<LocalSceneQuickView*>("sceneView");
 
   // Create a scene with the topographic basemap
-  Scene* scene = new Scene(BasemapStyle::ArcGISTopographic, this);
+  Scene* scene = new Scene(BasemapStyle::ArcGISTopographic, SceneViewingMode::Local, this);
 
   // add a surface
   Surface* surface = new Surface(this);

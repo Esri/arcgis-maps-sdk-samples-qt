@@ -38,7 +38,8 @@
 #include "MapTypes.h"
 #include "Point.h"
 #include "Scene.h"
-#include "LocalSceneQuickView.h" #include "SceneViewTypes.h"
+#include "LocalSceneQuickView.h"
+#include "SceneViewTypes.h"
 #include "SpatialReference.h"
 #include "Surface.h"
 
@@ -71,7 +72,7 @@ QString defaultDataPath()
 
 ListKmlContents::ListKmlContents(QObject* parent /* = nullptr */):
   QObject(parent),
-  m_scene(new Scene(BasemapStyle::ArcGISImagery, this))
+  m_scene(new Scene(BasemapStyle::ArcGISImagery, SceneViewingMode::Local, this))
 {
   // create a new elevation source from Terrain3D REST service
   ArcGISTiledElevationSource* elevationSource = new ArcGISTiledElevationSource(

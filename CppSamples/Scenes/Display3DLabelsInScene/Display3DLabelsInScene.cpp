@@ -30,7 +30,8 @@
 #include "LabelDefinitionListModel.h"
 #include "LayerListModel.h"
 #include "Scene.h"
-#include "LocalSceneQuickView.h" #include "SceneViewTypes.h"
+#include "LocalSceneQuickView.h"
+#include "SceneViewTypes.h"
 #include "LabelingTypes.h"
 #include "TextSymbol.h"
 

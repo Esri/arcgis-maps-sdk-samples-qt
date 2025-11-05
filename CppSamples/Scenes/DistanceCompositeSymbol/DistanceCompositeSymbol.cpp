@@ -36,7 +36,7 @@
 #include "OrbitGeoElementCameraController.h"
 #include "Point.h"
 #include "Scene.h"
-#include "LocalSceneQuickView.h" #include "SceneViewTypes.h"
+#include "LocalSceneQuickView.h"
 #include "SceneViewTypes.h"
 #include "SimpleMarkerSceneSymbol.h"
 #include "SimpleMarkerSymbol.h"
@@ -93,7 +93,7 @@ void DistanceCompositeSymbol::componentComplete()
   // create a new basemap instance
   Basemap* basemap = new Basemap(BasemapStyle::ArcGISImageryStandard, this);
   // create a new scene instance
-  m_scene = new Scene(basemap, this);
+  m_scene = new Scene(basemap, SceneViewingMode::Local, this);
   // set scene on the scene view
   m_sceneView->setArcGISScene(m_scene);
 

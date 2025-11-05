@@ -29,9 +29,13 @@
 #include "LayerListModel.h"
 #include "MapTypes.h"
 #include "Scene.h"
-#include "LocalSceneQuickView.h" #include "SceneViewTypes.h"
+#include "LocalSceneQuickView.h"
 #include "SceneViewTypes.h"
 #include "Surface.h"
+#include "SceneEnvironment.h"
+#include "SceneLighting.h"
+#include "SunLighting.h"
+#include "VirtualLighting.h"
 
 // Qt headers
 #include <QDate>
@@ -48,18 +52,18 @@ using namespace Esri::ArcGISRuntime;
 
 RealisticLightingAndShadows::RealisticLightingAndShadows(QObject* parent /* = nullptr */):
   QObject(parent),
-  m_scene(new Scene(BasemapStyle::ArcGISTopographic, this))
+  m_scene(new Scene(BasemapStyle::ArcGISTopographic, SceneViewingMode::Local, this))
 {
   // create a new elevation source from Terrain3D REST service
   ArcGISTiledElevationSource* elevationSource = new ArcGISTiledElevationSource(
-        QUrl("https://elevation3d.arcgis.com/arcgis/rest/services/WorldElevation3D/Terrain3D/ImageServer"), this);
+    QUrl("https://elevation3d.arcgis.com/arcgis/rest/services/WorldElevation3D/Terrain3D/ImageServer"), this);
 
   // add the elevation source to the scene to display elevation
   m_scene->baseSurface()->elevationSources()->append(elevationSource);
 
   // add 3D building shells with a scene layer
   ArcGISSceneLayer* scenelayer = new ArcGISSceneLayer(
-        QUrl("https://tiles.arcgis.com/tiles/P3ePLMYs2RVChkJx/arcgis/rest/services/DevA_BuildingShells/SceneServer/layers/0"), this);
+    QUrl("https://tiles.arcgis.com/tiles/P3ePLMYs2RVChkJx/arcgis/rest/services/DevA_BuildingShells/SceneServer/layers/0"), this);
 
   m_scene->operationalLayers()->append(scenelayer);
 }
@@ -122,6 +126,10 @@ void RealisticLightingAndShadows::setSunTimeFromValue(double sunTimeValue)
 
   // set the sun time to the calendar
   // m_sceneView->setSunTime(sunTime);
+  if (auto* sunLighting = dynamic_cast<SunLighting*>(m_scene->environment()->lighting()))
+  {
+    sunLighting->setSimulatedDate(sunTime);
+  }
 
   // trigger the time in the settings column to update
   emit sunTimeChanged(selectedTime.toString("h:mm ap"));
@@ -132,16 +140,30 @@ void RealisticLightingAndShadows::setLightingMode(int lightingModeValue)
   if (!m_sceneView)
     return;
 
+  qDebug() << lightingModeValue;
+
   if (lightingModeValue == 0)
   {
+    // Virtual and no shadows
     // m_sceneView->setSunLighting(LightingMode::NoLight);
+    m_lighting = new VirtualLighting(false, m_lightingParent.get());
   }
   else if (lightingModeValue == 1)
   {
+    // Virtual and shadows
+    // m_sceneView->setSunLighting(LightingMode::NoLight);
+    m_lighting = new VirtualLighting(true, m_lightingParent.get());
+  }
+  else if (lightingModeValue == 2)
+  {
     // m_sceneView->setSunLighting(LightingMode::Light);
+    m_lighting = new SunLighting(QDateTime(QDate(2018, 8, 10), QTime(12, 0), QTimeZone(-25200)), false, m_lightingParent.get());
   }
   else
   {
     // m_sceneView->setSunLighting(LightingMode::LightAndShadows);
+    m_lighting = new SunLighting(QDateTime(QDate(2018, 8, 10), QTime(12, 0), QTimeZone(-25200)), true, m_lightingParent.get());
   }
+
+  m_scene->environment()->setLighting(m_lighting);
 }

@@ -25,7 +25,8 @@
 #include "Error.h"
 #include "MobileScenePackage.h"
 #include "Scene.h"
-#include "LocalSceneQuickView.h" #include "SceneViewTypes.h"
+#include "LocalSceneQuickView.h"
+#include "SceneViewTypes.h"
 
 // Qt headers
 #include <QStandardPaths>

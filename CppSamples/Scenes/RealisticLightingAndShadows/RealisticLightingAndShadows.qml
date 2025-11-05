@@ -35,7 +35,6 @@ Item {
         id: model
         sceneView: view
         onSunTimeChanged: sunTimeText => timeValue.text = "August 10, 2018, " + sunTimeText
-
     }
     Rectangle {
         anchors {
@@ -53,6 +52,7 @@ Item {
             padding: 15
             Label {
                 id: timeValue
+                visible: sunLightingSelection.currentIndex > 1
                 anchors.horizontalCenter: parent.horizontalCenter
                 font.pixelSize: 16
                 // text is set from C++ instance
@@ -63,21 +63,24 @@ Item {
                 anchors.horizontalCenter: parent.horizontalCenter
                 width: 200
                 model: [
-                    "No Light",
-                    "Light",
-                    "Light and Shadows"
+                    "Virtual Light",
+                    "Virtual Light and Shadows",
+                    "Sun Light",
+                    "Sun Light and Shadows"
                 ]
-                currentIndex: 2
+                currentIndex: 0
                 onCurrentIndexChanged: {
                     model.setLightingMode(currentIndex);
                 }
             }
+
             Slider {
                 id: sunTimeSlider
                 anchors.horizontalCenter: parent.horizontalCenter
                 opacity: 0.7
                 from: 0; to: 23.99
                 value: 8.5
+                visible: sunLightingSelection.currentIndex > 1
                 onValueChanged: {
                     model.setSunTimeFromValue(sunTimeSlider.value);
                 }

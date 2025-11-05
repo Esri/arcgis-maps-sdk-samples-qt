@@ -35,7 +35,7 @@
 #include "MapTypes.h"
 #include "Point.h"
 #include "Scene.h"
-#include "LocalSceneQuickView.h" #include "SceneViewTypes.h"
+#include "LocalSceneQuickView.h"
 #include "SceneViewTypes.h"
 #include "SimpleMarkerSymbol.h"
 #include "SpatialReference.h"

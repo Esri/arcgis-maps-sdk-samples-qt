@@ -27,14 +27,15 @@
 #include "ElevationSourceListModel.h"
 #include "MapTypes.h"
 #include "Scene.h"
-#include "LocalSceneQuickView.h" #include "SceneViewTypes.h"
+#include "LocalSceneQuickView.h"
+#include "SceneViewTypes.h"
 #include "Surface.h"
 
 using namespace Esri::ArcGISRuntime;
 
 BasicSceneView::BasicSceneView(QObject* parent /* = nullptr */):
   QObject(parent),
-  m_scene(new Scene(BasemapStyle::ArcGISImagery, this))
+  m_scene(new Scene(BasemapStyle::ArcGISImagery, SceneViewingMode::Local, this))
 {
   //! [create a new elevation source]
   // create a new elevation source from Terrain3D REST service

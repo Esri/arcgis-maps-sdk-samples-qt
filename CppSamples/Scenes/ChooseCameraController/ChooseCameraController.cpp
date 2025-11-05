@@ -37,7 +37,7 @@
 #include "OrbitLocationCameraController.h"
 #include "Point.h"
 #include "Scene.h"
-#include "LocalSceneQuickView.h" #include "SceneViewTypes.h"
+#include "LocalSceneQuickView.h"
 #include "SceneViewTypes.h"
 #include "SpatialReference.h"
 #include "Surface.h"

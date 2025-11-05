@@ -28,7 +28,8 @@
 #include "MapTypes.h"
 #include "Point.h"
 #include "Scene.h"
-#include "LocalSceneQuickView.h" #include "SceneViewTypes.h"
+#include "LocalSceneQuickView.h"
+#include "SceneViewTypes.h"
 #include "SpatialReference.h"
 #include "Surface.h"
 
@@ -55,7 +56,7 @@ void TerrainExaggeration::componentComplete()
 
   // Create a scene and give it to the SceneView
   m_sceneView = findChild<LocalSceneQuickView*>("sceneView");
-  Scene* scene = new Scene(BasemapStyle::ArcGISTopographic, this);
+  Scene* scene = new Scene(BasemapStyle::ArcGISTopographic, SceneViewingMode::Local, this);
   m_surface = new Surface(this);
   m_surface->elevationSources()->append(
         new ArcGISTiledElevationSource(

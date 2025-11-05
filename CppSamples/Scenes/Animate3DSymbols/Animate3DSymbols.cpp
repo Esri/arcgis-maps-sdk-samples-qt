@@ -44,7 +44,7 @@
 #include "PolylineBuilder.h"
 #include "RendererSceneProperties.h"
 #include "Scene.h"
-#include "LocalSceneQuickView.h" #include "SceneViewTypes.h"
+#include "LocalSceneQuickView.h"
 #include "SceneViewTypes.h"
 #include "SimpleLineSymbol.h"
 #include "SimpleMarkerSceneSymbol.h"

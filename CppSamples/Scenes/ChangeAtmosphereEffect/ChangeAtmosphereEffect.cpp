@@ -27,7 +27,8 @@
 #include "ElevationSourceListModel.h"
 #include "MapTypes.h"
 #include "Scene.h"
-#include "LocalSceneQuickView.h" #include "SceneViewTypes.h"
+#include "LocalSceneQuickView.h"
+#include "SceneViewTypes.h"
 #include "Surface.h"
 
 // Qt headers

@@ -29,7 +29,8 @@
 #include "MapTypes.h"
 #include "Point.h"
 #include "Scene.h"
-#include "LocalSceneQuickView.h" #include "SceneViewTypes.h"
+#include "LocalSceneQuickView.h"
+#include "SceneViewTypes.h"
 #include "ServiceFeatureTable.h"
 #include "SpatialReference.h"
 
@@ -59,7 +60,7 @@ void FeatureLayerRenderingModeScene::componentComplete()
 
   // Create a scene for static rendering
   m_topSceneView = findChild<LocalSceneQuickView*>("topSceneView");
-  Scene* topScene = new Scene(this);
+  Scene* topScene = new Scene(SceneViewingMode::Local, this);
   topScene->loadSettings()->setPreferredPointFeatureRenderingMode(FeatureRenderingMode::Static);
   topScene->loadSettings()->setPreferredPolygonFeatureRenderingMode(FeatureRenderingMode::Static);
   topScene->loadSettings()->setPreferredPolylineFeatureRenderingMode(FeatureRenderingMode::Static);
@@ -68,7 +69,7 @@ void FeatureLayerRenderingModeScene::componentComplete()
 
   // Create a scene for dynamic rendering
   m_bottomSceneView = findChild<LocalSceneQuickView*>("bottomSceneView");
-  Scene* bottomScene = new Scene(this);
+  Scene* bottomScene = new Scene(SceneViewingMode::Local, this);
   bottomScene->loadSettings()->setPreferredPointFeatureRenderingMode(FeatureRenderingMode::Dynamic);
   bottomScene->loadSettings()->setPreferredPolygonFeatureRenderingMode(FeatureRenderingMode::Dynamic);
   bottomScene->loadSettings()->setPreferredPolylineFeatureRenderingMode(FeatureRenderingMode::Dynamic);

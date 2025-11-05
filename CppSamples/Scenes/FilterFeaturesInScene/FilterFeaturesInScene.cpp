@@ -42,7 +42,8 @@
 #include "PortalItem.h"
 #include "Scene.h"
 #include "SceneLayerPolygonFilter.h"
-#include "LocalSceneQuickView.h" #include "SceneViewTypes.h"
+#include "LocalSceneQuickView.h"
+#include "SceneViewTypes.h"
 #include "SimpleFillSymbol.h"
 #include "SimpleLineSymbol.h"
 #include "SpatialReference.h"
@@ -63,7 +64,7 @@ FilterFeaturesInScene::FilterFeaturesInScene(QObject* parent /* = nullptr */):
   Basemap* basemap = new Basemap(this);
   basemap->baseLayers()->append(vectorTileLayer);
   basemap->baseLayers()->append(m_osmBuildings);
-  m_scene = new Scene(basemap, this);
+  m_scene = new Scene(basemap, SceneViewingMode::Local, this);
 
   // Construct and set the scene topography
   Surface* surface = new Surface(this);

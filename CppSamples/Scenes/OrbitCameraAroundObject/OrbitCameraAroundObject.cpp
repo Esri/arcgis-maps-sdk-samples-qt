@@ -36,7 +36,7 @@
 #include "Point.h"
 #include "RendererSceneProperties.h"
 #include "Scene.h"
-#include "LocalSceneQuickView.h" #include "SceneViewTypes.h"
+#include "LocalSceneQuickView.h"
 #include "SceneViewTypes.h"
 #include "SimpleRenderer.h"
 #include "SpatialReference.h"

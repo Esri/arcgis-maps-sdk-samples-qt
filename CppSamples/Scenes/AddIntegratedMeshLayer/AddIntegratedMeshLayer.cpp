@@ -28,7 +28,8 @@
 #include "LayerListModel.h"
 #include "Point.h"
 #include "Scene.h"
-#include "LocalSceneQuickView.h" #include "SceneViewTypes.h"
+#include "LocalSceneQuickView.h"
+#include "SceneViewTypes.h"
 #include "SpatialReference.h"
 #include "Viewpoint.h"
 
@@ -39,7 +40,7 @@ using namespace Esri::ArcGISRuntime;
 
 AddIntegratedMeshLayer::AddIntegratedMeshLayer(QObject* parent /* = nullptr */):
   QObject(parent),
-  m_scene(new Scene(this)),
+  m_scene(new Scene(SceneViewingMode::Local, this)),
   m_integratedMeshLyr(new IntegratedMeshLayer(QUrl("https://tiles.arcgis.com/tiles/z2tnIkrLQ2BRzr6P/arcgis/rest/services/Girona_Spain/SceneServer"), this))
 {
   // Connect the doneLoading signal to the handleError() method.

@@ -31,7 +31,8 @@
 #include "MapTypes.h"
 #include "Point.h"
 #include "Scene.h"
-#include "LocalSceneQuickView.h" #include "SceneViewTypes.h"
+#include "LocalSceneQuickView.h"
+#include "SceneViewTypes.h"
 #include "SpatialReference.h"
 #include "Surface.h"
 #include "Viewpoint.h"
@@ -60,7 +61,7 @@ void DisplaySceneLayer::componentComplete()
 
   // create a new scene instance
   Basemap* basemap = new Basemap(BasemapStyle::ArcGISTopographic, this);
-  m_scene = new Scene(basemap, this);
+  m_scene = new Scene(basemap, SceneViewingMode::Local, this);
 
   //! [add a scene service with ArcGISSceneLayer]
   m_sceneLayer = new ArcGISSceneLayer(QUrl("https://tiles.arcgis.com/tiles/P3ePLMYs2RVChkJx/arcgis/rest/services/Buildings_Brest/SceneServer/layers/0"), this);

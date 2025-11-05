@@ -30,7 +30,8 @@
 #include "MGRSGrid.h"
 #include "Point.h"
 #include "Scene.h"
-#include "LocalSceneQuickView.h" #include "SceneViewTypes.h"
+#include "LocalSceneQuickView.h"
+#include "SceneViewTypes.h"
 #include "SimpleLineSymbol.h"
 #include "SpatialReference.h"
 #include "Surface.h"
@@ -46,7 +47,7 @@ using namespace Esri::ArcGISRuntime;
 ShowGrid::ShowGrid(QObject* parent /* = nullptr */):
   QObject(parent),
   m_map(new Map(BasemapStyle::ArcGISImagery, this)),
-  m_scene(new Scene(BasemapStyle::ArcGISImagery, this))
+  m_scene(new Scene(BasemapStyle::ArcGISImagery, SceneViewingMode::Local, this))
 {
   // create a new elevation source from Terrain3D REST service
   ArcGISTiledElevationSource* elevationSource = new ArcGISTiledElevationSource(
