@@ -152,7 +152,7 @@ FindRouteSample {
                     leftMargin: 20
                     rightMargin: 20
                 }
-                color: palette.base
+                color: palette.dark
                 height: 1
             }
 

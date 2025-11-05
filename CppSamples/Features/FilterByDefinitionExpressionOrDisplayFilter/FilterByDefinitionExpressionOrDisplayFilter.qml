@@ -51,6 +51,7 @@ FilterByDefinitionExpressionOrDisplayFilterSample {
 
         Label {
             text: qsTr("Current feature count: " + definitionExpressionOrDisplayFilterSample.currentFeatureCount)
+            color: "black"
         }
 
         // button to apply a definition expression
