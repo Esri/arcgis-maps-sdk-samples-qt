@@ -51,6 +51,7 @@ DEFINES += ArcGIS_Runtime_Version=$$ARCGIS_RUNTIME_VERSION
       $$PWD/../../../api/qt_cpp/Include/LocalServer \
       $$PWD/../../../../buildnum
 } else {
+
 #   INCLUDEPATH += \
 #       $$SAMPLEPATHCPP \
 #       $$COMMONVIEWER \
