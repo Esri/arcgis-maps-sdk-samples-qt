@@ -97,7 +97,7 @@ MobileMap_SearchAndRouteSample {
                 // solve route button
                 Rectangle {
                     id: routeButton
-                    color: palette.button
+                    color: palette.highlight
                     height: 50
                     width: height
                     border.color: "black"
@@ -126,7 +126,7 @@ MobileMap_SearchAndRouteSample {
                 // clear graphics button
                 Rectangle {
                     id: clearButton
-                    color: palette.button
+                    color: palette.highlight
                     height: 50
                     width: height
                     border.color: "black"
