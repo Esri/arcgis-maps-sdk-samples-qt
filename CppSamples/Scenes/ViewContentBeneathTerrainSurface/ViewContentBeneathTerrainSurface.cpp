@@ -22,28 +22,16 @@
 #include "ViewContentBeneathTerrainSurface.h"
 
 // ArcGIS Maps SDK headers
-#include "Error.h"
 #include "Scene.h"
-#include "LocalSceneQuickView.h" #include "SceneViewTypes.h"
-#include "SceneViewTypes.h"
-#include "Surface.h"
+#include "LocalSceneQuickView.h"
 
 using namespace Esri::ArcGISRuntime;
 
 ViewContentBeneathTerrainSurface::ViewContentBeneathTerrainSurface(QObject* parent /* = nullptr */):
   QObject(parent)
 {
-  const auto url = QUrl("https://www.arcgis.com/home/item.html?id=91a4fafd747a47c7bab7797066cb9272");
+  const auto url = QUrl("https://arcgisruntime.maps.arcgis.com/home/item.html?id=6eccf1cfce4f4a38b0962982a64d9dde");
   m_scene = new Scene(url, this);
-
-  connect(m_scene, &Scene::doneLoading, this, [this](const Error& loadError)
-  {
-    if (!loadError.isEmpty())
-      return;
-
-    m_scene->baseSurface()->setOpacity(0.4f);
-    m_scene->baseSurface()->setNavigationConstraint(NavigationConstraint::None);
-  });
 }
 
 ViewContentBeneathTerrainSurface::~ViewContentBeneathTerrainSurface() = default;
@@ -64,7 +52,9 @@ LocalSceneQuickView* ViewContentBeneathTerrainSurface::sceneView() const
 void ViewContentBeneathTerrainSurface::setSceneView(LocalSceneQuickView* sceneView)
 {
   if (!sceneView || sceneView == m_sceneView)
+  {
     return;
+  }
 
   m_sceneView = sceneView;
   m_sceneView->setArcGISScene(m_scene);
