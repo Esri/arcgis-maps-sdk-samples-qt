@@ -115,7 +115,6 @@ Item {
                 Layout.fillWidth: true
                 font {
                     bold: true
-                    pointSize: 14
                 }
             }
 
@@ -127,7 +126,6 @@ Item {
                 elide: Text.ElideMiddle
                 font {
                     bold: true
-                    pointSize: 14
                 }
             }
 

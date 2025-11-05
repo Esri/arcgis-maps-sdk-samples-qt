@@ -69,7 +69,7 @@ Item {
                 margins: 20
             }
             background: Rectangle {
-                color: palette.base
+                color: palette.mid
                 border.color: "black"
                 border.width: 1
             }
@@ -80,6 +80,12 @@ Item {
                 anchors.horizontalCenter: parent.horizontalCenter
                 columns: 2
                 Layout.fillWidth: true
+
+                Label {
+                    text: qsTr("Utility association types")
+                    Layout.alignment: Qt.AlignHCenter
+                    Layout.columnSpan: 2
+                }
 
                 Image {
                     id: attachmentImage
@@ -94,6 +100,7 @@ Item {
                 Image {
                     id: connectivityImage
                     source: model.connectivitySymbolUrl
+                    fillMode: Image.PreserveAspectFit
                 }
                 Label {
                     id: connectivityLabel
@@ -103,6 +110,7 @@ Item {
                 Image {
                     id: boundingBoxSymbol
                     source: model.boundingBoxSymbolUrl
+                    fillMode: Image.PreserveAspectFit
                 }
                 Label {
                     id: boundingBoxLabel

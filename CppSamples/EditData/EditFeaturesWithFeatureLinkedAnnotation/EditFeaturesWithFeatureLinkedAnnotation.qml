@@ -41,8 +41,8 @@ Item {
     Rectangle {
         id: updateWindow
         anchors.centerIn: parent
-        width: childrenRect.width
-        height: childrenRect.height
+        width: gridLayout.implicitWidth + 10
+        height: gridLayout.implicitHeight + 10
         radius: 10
         visible: false
         color: palette.base
@@ -54,6 +54,7 @@ Item {
         }
 
         GridLayout {
+            id: gridLayout
             columns: 2
             anchors.margins: 5
 
