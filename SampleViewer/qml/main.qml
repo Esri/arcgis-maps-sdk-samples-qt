@@ -20,6 +20,7 @@ import Calcite
 
 ApplicationWindow {
     id: window
+    // Intially hidden - unhide window in Component.onCompleted after overriding color so color switch is not visible
     visible: false
     width: 800
     height: 600
