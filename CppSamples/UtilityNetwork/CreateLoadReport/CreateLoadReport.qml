@@ -50,6 +50,8 @@ Item {
                     id: grid
                     rows: phases.length + 1
                     flow: GridLayout.TopToBottom
+                    columnSpacing: 10
+                    rowSpacing: 10
 
                     CheckBox { id: parentBox; checkState: checkBoxes.checkState }
                     Repeater {
