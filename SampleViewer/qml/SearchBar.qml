@@ -27,9 +27,10 @@ TextField {
         anchors {
             top: parent.top
             right: parent.right
+            verticalCenter: parent.verticalCenter
         }
         visible : opacity !== 0
-        source: "qrc:/ic_menu_closeclear_light.png"
+        source: Qt.application.styleHints.colorScheme === Qt.ColorScheme.Dark ? "qrc:/ic_menu_closeclear.png" : "qrc:/ic_menu_closeclear_light.png"
         fillMode: Image.PreserveAspectFit
         height: parent.height - 10
 

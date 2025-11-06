@@ -57,7 +57,13 @@ ApplicationWindow {
 
             MouseArea {
                 anchors.fill: parent
-                onClicked: drawer.open()
+                onClicked: {
+                    if (drawer.opened) {
+                        drawer.close()
+                    } else {
+                        drawer.open()
+                    }
+                }
             }
         }
 
@@ -83,7 +89,12 @@ ApplicationWindow {
 
             MouseArea {
                 anchors.fill: parent
-                onClicked: optionsMenu.open()
+                onClicked: {
+                    if (drawer.opened) {
+                        drawer.close()
+                    }
+                    optionsMenu.open()
+                }
 
                 Menu {
                     id: optionsMenu
