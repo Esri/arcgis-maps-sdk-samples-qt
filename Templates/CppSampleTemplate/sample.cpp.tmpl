@@ -43,7 +43,7 @@ using namespace Esri::ArcGISRuntime;
   QObject(parent),
 @if %{UseAPIKey}
   @if %{ThreeDSample}
-    m_scene(new Scene(BasemapStyle::ArcGISImagery, this))
+    m_scene(new Scene(BasemapStyle::ArcGISImagery, SceneViewingMode::Local, this))
   @else
     m_map(new Map(BasemapStyle::ArcGISTopographic, this))
   @endif

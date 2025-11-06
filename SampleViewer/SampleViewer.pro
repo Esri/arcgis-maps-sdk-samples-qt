@@ -39,18 +39,9 @@ DEFINES += ArcGIS_Runtime_Version=$$ARCGIS_RUNTIME_VERSION
 #   # include the toolkitcpp.pri, which contains all the toolkit resources
 #   include($$PWD/../../toolkit/uitools/toolkitcpp/toolkitcpp.pri)
 
-  # Include Calcite
-  RESOURCES += $$PWD/../../toolkit/calcite/Calcite/calcite.qrc
-  QML_IMPORT_PATH += $$PWD/../../toolkit/calcite/
-
-  INCLUDEPATH += \
-      $$SAMPLEPATHCPP \
-      $$COMMONVIEWER \
-      $$COMMONVIEWER/SyntaxHighlighter \
-      $$PWD/../../../api/qt_cpp/Include \
-      $$PWD/../../../api/qt_cpp/Include/LocalServer \
-      $$PWD/../../../../buildnum
-} else {
+#   # Include Calcite
+#   RESOURCES += $$PWD/../../toolkit/calcite/Calcite/calcite.qrc
+#   QML_IMPORT_PATH += $$PWD/../../toolkit/calcite/
 
 #   INCLUDEPATH += \
 #       $$SAMPLEPATHCPP \
@@ -59,7 +50,8 @@ DEFINES += ArcGIS_Runtime_Version=$$ARCGIS_RUNTIME_VERSION
 #       $$PWD/../../../api/qt_cpp/Include \
 #       $$PWD/../../../api/qt_cpp/Include/LocalServer \
 #       $$PWD/../../../../buildnum
-# } else {
+# } else { // !exists($$PWD/../../../DevBuildCpp.pri)
+
   message("Building against the locally configured SDK")
   CONFIG += build_from_configured_sdk
   CONFIG += c++17
@@ -169,7 +161,7 @@ DEFINES += ArcGIS_Runtime_Version=$$ARCGIS_RUNTIME_VERSION
   }
 
   DEFINES += BUILD_FROM_CONFIGURED_SDK
-# }
+# } // !exists($$PWD/../../../DevBuildCpp.pri)
 
 qtHaveModule(webenginequick) {
   QT += webenginequick

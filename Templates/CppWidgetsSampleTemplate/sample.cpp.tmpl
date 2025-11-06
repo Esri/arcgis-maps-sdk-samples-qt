@@ -39,7 +39,7 @@ using namespace Esri::ArcGISRuntime;
 @if %{UseAPIKey}
 @if %{ThreeDSample}
   // Create a scene using the Imagery basemap
-  m_scene = new Scene(BasemapStyle::ArcGISImagery, this);
+  m_scene = new Scene(BasemapStyle::ArcGISImagery, SceneViewingMode::Local, this);
 
   // create an elevation source
   ArcGISTiledElevationSource* elevationSource = new ArcGISTiledElevationSource(
