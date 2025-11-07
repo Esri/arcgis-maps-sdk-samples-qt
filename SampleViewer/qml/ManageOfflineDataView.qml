@@ -43,7 +43,7 @@ Page {
     }
 
     property bool showOnlyDownloaded: false
-    property real scaleFactor: Math.min(width / 800, height / 600)
+    property real scaleFactor: Math.min(1.0, Math.max(0.5, Math.min(width / 800, height / 600)))
     property real baseFontSize: 12 * scaleFactor
     property real baseSpacing: 10 * scaleFactor
     property real baseMargin: Math.max(15, 20 * scaleFactor)
@@ -141,8 +141,18 @@ Page {
                 Layout.preferredWidth: Math.max(implicitWidth, 200 * scaleFactor)
                 Layout.preferredHeight: Math.max(40, 50 * scaleFactor)
                 enabled: {
-                    return SampleManager.offlineDataProjects &&
-                            SampleManager.offlineDataProjects.some(project => !project.downloaded);
+                    if (!SampleManager.offlineDataProjects)
+                        return false;
+
+                    for (let i = 0; i < SampleManager.offlineDataProjects.rowCount(); i++) {
+                        let downloaded = SampleManager.offlineDataProjects.data(
+                                SampleManager.offlineDataProjects.index(i),
+                                SampleManager.offlineDataProjects.DownloadedRole
+                                );
+                        if (!downloaded)
+                            return true;
+                    }
+                    return false;
                 }
                 onClicked: {
                     if (SampleManager.reachability === SampleManager.ReachabilityOnline || SampleManager.reachability === SampleManager.ReachabilityUnknown) {
@@ -160,8 +170,18 @@ Page {
                 Layout.preferredWidth: Math.max(implicitWidth, 200 * scaleFactor)
                 Layout.preferredHeight: Math.max(40, 50 * scaleFactor)
                 enabled: {
-                    return SampleManager.offlineDataProjects.length > 0 &&
-                            SampleManager.offlineDataProjects.some(project => project.downloaded);
+                    if (!SampleManager.offlineDataProjects)
+                        return false;
+
+                    for (let i = 0; i < SampleManager.offlineDataProjects.rowCount(); i++) {
+                        let downloaded = SampleManager.offlineDataProjects.data(
+                                SampleManager.offlineDataProjects.index(i),
+                                SampleManager.offlineDataProjects.DownloadedRole
+                                );
+                        if (downloaded)
+                            return true;
+                    }
+                    return false;
                 }
                 onClicked: {
                     deleteAllDialog.visible = true;
@@ -177,8 +197,18 @@ Page {
             visible: !SampleManager.downloadInProgress
             checked: showOnlyDownloaded
             enabled: {
-                return SampleManager.offlineDataProjects.length > 0 &&
-                        SampleManager.offlineDataProjects.some(project => project.downloaded);
+                if (!SampleManager.offlineDataProjects)
+                    return false;
+
+                for (let i = 0; i < SampleManager.offlineDataProjects.rowCount(); i++) {
+                    let downloaded = SampleManager.offlineDataProjects.data(
+                            SampleManager.offlineDataProjects.index(i),
+                            SampleManager.offlineDataProjects.DownloadedRole
+                            );
+                    if (downloaded)
+                        return true;
+                }
+                return false;
             }
             onClicked: {
                 showOnlyDownloaded = checked;
@@ -208,15 +238,7 @@ Page {
                 clip: true
 
                 ListView {
-                    model: {
-                        if (!showOnlyDownloaded) {
-                            return SampleManager.offlineDataProjects;
-                        } else {
-                            return SampleManager.offlineDataProjects.filter(function(item) {
-                                return item.downloaded;
-                            });
-                        }
-                    }
+                    model: SampleManager.offlineDataProjects
                     spacing: 5
 
                     Component.onCompleted: {
@@ -225,7 +247,8 @@ Page {
 
                     delegate: Rectangle {
                         width: ListView.view.width
-                        height: Math.max(65, 80 * scaleFactor)
+                        height: visible ? (downloading ? Math.max(100, 120 * scaleFactor) : Math.max(65, 80 * scaleFactor)) : 0
+                        visible: !showOnlyDownloaded || downloaded
                         color: Calcite.foreground2
                         radius: 8
                         border {
@@ -252,7 +275,7 @@ Page {
                                     spacing: 4
 
                                     Label {
-                                        text: modelData.sample.name
+                                        text: sample.name
                                         font {
                                             family: fontFamily
                                             weight: Font.DemiBold
@@ -267,13 +290,20 @@ Page {
                                     Rectangle {
                                         width: statusLabel.implicitWidth + 20
                                         height: statusLabel.implicitHeight + 10
-                                        color: modelData.downloaded ? Calcite.success : Calcite.danger
+                                        color: downloaded ? Calcite.success : (downloading ? Calcite.warning : Calcite.danger)
                                         radius: 12
 
                                         Label {
                                             id: statusLabel
                                             anchors.centerIn: parent
-                                            text: modelData.downloaded ? qsTr("Downloaded") : qsTr("Not downloaded")
+                                            text: {
+                                                if (downloaded)
+                                                    return qsTr("Downloaded")
+                                                else if (downloading)
+                                                    return qsTr("Downloading...")
+                                                else
+                                                    return qsTr("Not downloaded")
+                                            }
                                             color: Calcite.text1
                                             font {
                                                 family: fontFamily
@@ -282,7 +312,40 @@ Page {
                                             }
                                         }
                                     }
+
+                                    ColumnLayout {
+                                        width: parent.width
+                                        spacing: 2
+                                        visible: downloading
+
+                                        Label {
+                                            text: qsTr("%1 of %2 items").arg(downloadedItemsCount).arg(totalItemsCount)
+                                            font {
+                                                family: fontFamily
+                                                pixelSize: Math.max(9, baseFontSize - 2)
+                                            }
+                                            color: Calcite.text2
+                                        }
+
+                                        ProgressBar {
+                                            Layout.fillWidth: true
+                                            Layout.preferredHeight: 6
+                                            from: 0
+                                            to: 1.0
+                                            value: downloadProgress
+                                        }
+
+                                        Label {
+                                            text: qsTr("%1% complete").arg(Math.round(downloadProgress * 100))
+                                            font {
+                                                family: fontFamily
+                                                pixelSize: Math.max(9, baseFontSize - 2)
+                                            }
+                                            color: Calcite.text2
+                                        }
+                                    }
                                 }
+
 
                                 Item {
                                     Layout.fillWidth: true
@@ -295,10 +358,21 @@ Page {
                                         text: qsTr("Download")
                                         Layout.preferredWidth: Math.max(110, 110 * scaleFactor)
                                         Layout.preferredHeight: Math.max(32, 40 * scaleFactor)
-                                        visible: !modelData.downloaded
+                                        visible: !downloaded && !downloading
                                         font.pixelSize: Math.max(12, baseFontSize - 1)
                                         onClicked: {
-                                            SampleManager.downloadProjectData(modelData.sample.name);
+                                            SampleManager.downloadProjectData(sample.name);
+                                        }
+                                    }
+
+                                    Button {
+                                        text: qsTr("Cancel")
+                                        Layout.preferredWidth: Math.max(110, 110 * scaleFactor)
+                                        Layout.preferredHeight: Math.max(32, 40 * scaleFactor)
+                                        visible: downloading
+                                        font.pixelSize: Math.max(12, baseFontSize - 1)
+                                        onClicked: {
+                                            SampleManager.cancelSampleDownload(sample.name);
                                         }
                                     }
 
@@ -306,10 +380,10 @@ Page {
                                         text: qsTr("Delete")
                                         Layout.preferredWidth: Math.max(110, 110 * scaleFactor)
                                         Layout.preferredHeight: Math.max(32, 40 * scaleFactor)
-                                        visible: modelData.downloaded
+                                        visible: downloaded && !downloading
                                         font.pixelSize: Math.max(12, baseFontSize - 1)
                                         onClicked: {
-                                            deleteProjectDialog.sampleName = modelData.sample.name;
+                                            deleteProjectDialog.sampleName = sample.name;
                                             deleteProjectDialog.resetDialog();
                                             deleteProjectDialog.visible = true;
                                         }
