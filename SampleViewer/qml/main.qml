@@ -20,7 +20,8 @@ import Calcite
 
 ApplicationWindow {
     id: window
-    visible: true
+    // Intially hidden - unhide window in Component.onCompleted after overriding color so color switch is not visible
+    visible: false
     width: 800
     height: 600
     minimumWidth: 300
@@ -341,6 +342,8 @@ ApplicationWindow {
         Calcite.brand = Calcite.Theme.Light ? "#7938B6" : "#8F53CA";
         Calcite.brandHover = Calcite.Theme.Light ? "#652E98" : "#7938B6";
         Calcite.brandPress = Calcite.Theme.Light ? "#51247A" : "#652E98";
+
+        window.visible = true;
 
         // initialize the SampleManager singleton
         SampleManager.init();
