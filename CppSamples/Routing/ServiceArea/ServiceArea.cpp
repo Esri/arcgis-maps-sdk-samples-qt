@@ -55,10 +55,9 @@
 
 using namespace Esri::ArcGISRuntime;
 
-ServiceArea::ServiceArea(QQuickItem* parent /* = nullptr */):
+ServiceArea::ServiceArea(QQuickItem* parent /* = nullptr */) :
   QQuickItem(parent),
-  m_task(new ServiceAreaTask(
-           QUrl("https://sampleserver6.arcgisonline.com/arcgis/rest/services/NetworkAnalysis/SanDiego/NAServer/ServiceArea"), this))
+  m_task(new ServiceAreaTask(QUrl("https://sampleserver6.arcgisonline.com/arcgis/rest/services/NetworkAnalysis/SanDiego/NAServer/ServiceArea"), this))
 {
 }
 
@@ -88,10 +87,14 @@ void ServiceArea::componentComplete()
   connect(m_task, &ServiceAreaTask::doneLoading, this, [this](const Error& loadError)
   {
     if (!loadError.isEmpty())
+    {
       return;
+    }
 
     if (m_task->loadStatus() != LoadStatus::Loaded)
+    {
       return;
+    }
 
     setupRouting();
   });
@@ -110,7 +113,9 @@ void ServiceArea::setBarrierMode()
   m_mode = SampleMode::Barrier;
 
   if (m_barrierBuilder)
+  {
     return;
+  }
 
   m_barrierBuilder = new PolylineBuilder(SpatialReference::webMercator(), this);
 }
@@ -137,7 +142,9 @@ void ServiceArea::solveServiceArea()
   {
     Graphic* g = facilitiesGraphics->at(f);
     if (!g)
+    {
       continue;
+    }
 
     facilities.append(ServiceAreaFacility(geometry_cast<Point>(g->geometry())));
   }
@@ -150,15 +157,20 @@ void ServiceArea::solveServiceArea()
   {
     Graphic* g = barrierGraphics->at(b);
     if (!g)
+    {
       continue;
+    }
 
     barriers.append(PolylineBarrier(geometry_cast<Polyline>(g->geometry())));
   }
 
   if (!barriers.isEmpty())
+  {
     m_parameters.setPolylineBarriers(barriers);
+  }
 
-  m_task->solveServiceAreaAsync(m_parameters).then(this, [this](const ServiceAreaResult& serviceAreaResult)
+  m_task->solveServiceAreaAsync(m_parameters)
+    .then(this, [this](const ServiceAreaResult& serviceAreaResult)
   {
     setBusy(false);
     if (serviceAreaResult.isEmpty())
@@ -173,9 +185,13 @@ void ServiceArea::solveServiceArea()
     {
       const QList<ServiceAreaPolygon> results = serviceAreaResult.resultPolygons(i);
       if (!m_graphicParent)
+      {
         m_graphicParent = new QObject(this);
+      }
       for (const ServiceAreaPolygon& poly : results)
+      {
         m_areasOverlay->graphics()->append(new Graphic(poly.geometry(), m_graphicParent));
+      }
     }
   });
 }
@@ -207,7 +223,9 @@ void ServiceArea::newBarrier()
 
   setBarrierMode();
   if (!m_graphicParent)
+  {
     m_graphicParent = new QObject(this);
+  }
   m_barrierOverlay->graphics()->append(new Graphic(m_barrierBuilder->toPolyline(), m_graphicParent));
 }
 
@@ -224,7 +242,9 @@ QString ServiceArea::message() const
 void ServiceArea::setBusy(bool val)
 {
   if (m_busy == val)
+  {
     return;
+  }
 
   m_message.clear();
   m_busy = val;
@@ -235,8 +255,8 @@ void ServiceArea::setBusy(bool val)
 void ServiceArea::setupGraphics()
 {
   // create a symbol for the incidents
-  PictureMarkerSymbol* facilitySymbol = new PictureMarkerSymbol(
-        QUrl(QStringLiteral("https://static.arcgis.com/images/Symbols/SafetyHealth/Hospital.png")), this);
+  PictureMarkerSymbol* facilitySymbol =
+    new PictureMarkerSymbol(QUrl(QStringLiteral("https://static.arcgis.com/images/Symbols/SafetyHealth/Hospital.png")), this);
   facilitySymbol->setHeight(30);
   facilitySymbol->setWidth(30);
 
@@ -245,8 +265,6 @@ void ServiceArea::setupGraphics()
   SimpleRenderer* renderer = new SimpleRenderer(facilitySymbol, this);
   m_facilitiesOverlay->setRenderer(renderer);
 
-  m_mapView->graphicsOverlays()->append(m_facilitiesOverlay);
-
   // create a symbol for the barriers
   float lineWidth = 3.0f;
   SimpleLineSymbol* lineSymbol = new SimpleLineSymbol(SimpleLineSymbolStyle::Solid, Qt::black, lineWidth, this);
@@ -254,16 +272,17 @@ void ServiceArea::setupGraphics()
   SimpleRenderer* lineRenderer = new SimpleRenderer(lineSymbol, this);
   m_barrierOverlay->setRenderer(lineRenderer);
 
-  m_mapView->graphicsOverlays()->append(m_barrierOverlay);
-
-  //create a symbol for the service areas
+  // create a symbol for the service areas
   SimpleFillSymbol* fillSymbol = new SimpleFillSymbol(SimpleFillSymbolStyle::Solid, Qt::green, lineSymbol, this);
   m_areasOverlay = new GraphicsOverlay(this);
   SimpleRenderer* areaRenderer = new SimpleRenderer(fillSymbol, this);
   m_areasOverlay->setRenderer(areaRenderer);
   m_areasOverlay->setOpacity(0.5f);
 
+  // add in rendering order (bottom to top)
   m_mapView->graphicsOverlays()->append(m_areasOverlay);
+  m_mapView->graphicsOverlays()->append(m_barrierOverlay);
+  m_mapView->graphicsOverlays()->append(m_facilitiesOverlay);
 }
 
 void ServiceArea::setupRouting()
@@ -271,14 +290,17 @@ void ServiceArea::setupRouting()
   connect(m_mapView, &MapQuickView::mouseClicked, this, [this](QMouseEvent& mouseEvent)
   {
     if (busy())
+    {
       return;
+    }
 
-    switch (m_mode) {
-    case SampleMode::Barrier:
-    case SampleMode::Facility:
-      break;
-    default:
-      return;
+    switch (m_mode)
+    {
+      case SampleMode::Barrier:
+      case SampleMode::Facility:
+        break;
+      default:
+        return;
     }
 
     setBusy(true);
@@ -287,9 +309,13 @@ void ServiceArea::setupRouting()
     Point projectedPoint(mapPoint.x(), mapPoint.y(), SpatialReference::webMercator());
 
     if (m_mode == SampleMode::Barrier)
+    {
       handleBarrierPoint(projectedPoint);
-    else if(m_mode == SampleMode::Facility)
+    }
+    else if (m_mode == SampleMode::Facility)
+    {
       handleFacilityPoint(projectedPoint);
+    }
 
     setBusy(false);
   });
@@ -304,25 +330,31 @@ void ServiceArea::setupRouting()
   });
 }
 
-void ServiceArea::handleFacilityPoint(const Point &p)
+void ServiceArea::handleFacilityPoint(const Point& p)
 {
   if (!m_graphicParent)
+  {
     m_graphicParent = new QObject(this);
+  }
   m_facilitiesOverlay->graphics()->append(new Graphic(p, m_graphicParent));
 }
 
-void ServiceArea::handleBarrierPoint(const Point &p)
+void ServiceArea::handleBarrierPoint(const Point& p)
 {
   if (!m_graphicParent)
+  {
     m_graphicParent = new QObject(this);
+  }
   m_barrierBuilder->addPoint(p);
   // update the geometry for the current barrier - or create 1 if it does not exist
-  Graphic* barrier = m_barrierOverlay->graphics()->isEmpty() ?
-                       nullptr :
-                       m_barrierOverlay->graphics()->last();
+  Graphic* barrier = m_barrierOverlay->graphics()->isEmpty() ? nullptr : m_barrierOverlay->graphics()->last();
 
   if (barrier)
+  {
     barrier->setGeometry(m_barrierBuilder->toPolyline());
+  }
   else
+  {
     m_barrierOverlay->graphics()->append(new Graphic(m_barrierBuilder->toPolyline(), m_graphicParent));
+  }
 }
