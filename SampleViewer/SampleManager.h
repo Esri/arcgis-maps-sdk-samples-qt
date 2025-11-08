@@ -31,18 +31,18 @@
 class QAbstractItemModel;
 class CategoryListModel;
 class DataItem;
+class OfflineDataProjectsModel;
 class QTemporaryDir;
 class SampleListModel;
 class SourceCode;
 class SampleCategory;
 class Sample;
-class OfflineDataProjectsModel;
 
 namespace Esri::ArcGISRuntime
 {
   class Portal;
   class PortalItem;
-}
+} // namespace Esri::ArcGISRuntime
 
 namespace Esri::ArcGISRuntime::Authentication
 {
@@ -51,13 +51,14 @@ namespace Esri::ArcGISRuntime::Authentication
 
 #include <QDir>
 #include <QJsonDocument>
+#include <QMap>
 #include <QObject>
 #include <QQueue>
 #include <QString>
+#include <QTimer>
 #include <QNetworkInformation>
 #include <QUrl>
-#include <QMap>
-#include <QTimer>
+#include <QVariantList>
 
 Q_MOC_INCLUDE("SampleListModel.h")
 Q_MOC_INCLUDE("CategoryListModel.h")
@@ -80,6 +81,7 @@ class SampleManager : public QObject
   Q_PROPERTY(QUrl qtSdkUrl READ qtSdkUrl NOTIFY sampleInitComplete)
   Q_PROPERTY(QUrl qtSamplesUrl READ qtSamplesUrl NOTIFY sampleInitComplete)
   Q_PROPERTY(bool downloadInProgress READ downloadInProgress WRITE setDownloadInProgress NOTIFY downloadInProgressChanged)
+  Q_PROPERTY(bool isBulkDownload READ isBulkDownload WRITE setIsBulkDownload NOTIFY isBulkDownloadChanged)
   Q_PROPERTY(QString downloadText READ downloadText WRITE setDownloadText NOTIFY downloadTextChanged)
   Q_PROPERTY(double downloadProgress READ downloadProgress WRITE setDownloadProgress NOTIFY downloadProgressChanged)
   Q_PROPERTY(bool cancelDownload READ cancelDownload WRITE setCancelDownload NOTIFY cancelDownloadChanged)
@@ -87,7 +89,9 @@ class SampleManager : public QObject
   Q_PROPERTY(QString api READ api CONSTANT)
   Q_PROPERTY(Reachability reachability READ reachability NOTIFY reachabilityChanged)
   Q_PROPERTY(OfflineDataProjectsModel* offlineDataProjects READ offlineDataProjects CONSTANT)
-  Q_PROPERTY(bool showFullScreenDownload READ showFullScreenDownload WRITE setShowFullScreenDownload NOTIFY showFullScreenDownloadChanged)
+  Q_PROPERTY(bool hasAnyDataToDownload READ hasAnyDataToDownload NOTIFY offlineDataStateChanged)
+  Q_PROPERTY(bool hasAnyDataToDelete READ hasAnyDataToDelete NOTIFY offlineDataStateChanged)
+  Q_PROPERTY(QString downloadStatusText READ downloadStatusText NOTIFY offlineDataStateChanged)
 
 public:
   explicit SampleManager(QObject* parent = nullptr);
@@ -102,13 +106,13 @@ public:
   Q_INVOKABLE bool deleteAllOfflineData();
   Q_INVOKABLE bool deleteProjectOfflineData(const QString& sampleName);
   Q_INVOKABLE void downloadProjectData(const QString& sampleName);
+  Q_INVOKABLE void cancelSampleDownload(const QString& sampleName);
   Q_INVOKABLE bool hasOfflineData(const QString& sampleName);
   Q_INVOKABLE OfflineDataProjectsModel* getOfflineDataProjects();
   Q_INVOKABLE void setSourceCodeIndex(int i);
   Q_INVOKABLE void setupProxy(const QString& hostName, quint16 port, const QString& user, const QString& pw);
   Q_INVOKABLE void doneDownloading();
   Q_INVOKABLE void setApiKey(bool isSupportsApiKey = true);
-  Q_INVOKABLE void cancelSampleDownload(const QString& sampleName);
 
   enum CurrentMode
   {
@@ -143,11 +147,11 @@ signals:
   void doneDownloadingChanged();
   void downloadFailedChanged();
   void downloadInProgressChanged();
+  void isBulkDownloadChanged();
   void downloadTextChanged();
   void downloadProgressChanged();
   void reachabilityChanged();
-  void offlineDataProjectsChanged();
-  void showFullScreenDownloadChanged();
+  void offlineDataStateChanged();
 
 protected:
   void setDownloadProgress(double progress);
@@ -180,15 +184,13 @@ private:
   QUrl qtSamplesUrl() const;
 
   bool downloadInProgress() const;
+  bool isBulkDownload() const;
+  void setIsBulkDownload(bool isBulk);
   void downloadNextDataItem();
   void fetchPortalItemData(const QString& itemId, const QString& outputPath);
   void setDownloadInProgress(bool inProgress);
   void setDownloadText(const QString& downloadText);
   QString formattedPath(const QString& outputPath, const QString& folderName = QString());
-
-  bool showFullScreenDownload() const;
-  void setShowFullScreenDownload(bool show);
-  void updateDownloadProgress();
 
 private:
   QString downloadText() const;
@@ -207,13 +209,16 @@ private:
 
   OfflineDataProjectsModel* offlineDataProjects() const;
   void updateOfflineDataProjects();
-
   double calculateSampleDownloadProgress(Sample* sample) const;
-  bool m_showFullScreenDownload = false;
-  int m_totalDownloadItems = 0;
+  bool hasAnyDataToDownload() const;
+  bool hasAnyDataToDelete() const;
+  QString downloadStatusText() const;
 
 private:
   QQueue<DataItem*> m_dataItems;
+  QMap<QString, double> m_dataItemProgress; // Track progress for each unique data item (key: "itemId|path")
+  QMap<QString, Esri::ArcGISRuntime::PortalItem*> m_activeDownloads; // Track active PortalItem downloads for cancellation
+  QTimer* m_progressUpdateTimer = nullptr; // Throttle UI updates during downloads
   Esri::ArcGISRuntime::Portal* m_portal = nullptr;
   CategoryListModel* m_categories = nullptr;
   SampleListModel* m_allSamples = nullptr;
@@ -226,6 +231,7 @@ private:
   QUrl m_qtSdkUrl = QUrl("https://links.esri.com/qtDevelopersPage");
   QUrl m_qtSamplesUrl = QUrl("https://links.esri.com/qtSamples");
   bool m_downloadInProgress = false;
+  bool m_isBulkDownload = false;
   QString m_downloadText = QString("Downloading");
   double m_downloadProgress = 0.0;
   std::unique_ptr<QTemporaryDir> m_tempDir;
@@ -233,9 +239,6 @@ private:
   bool m_downloadFailed = false;
   Esri::ArcGISRuntime::Authentication::ArcGISAuthenticationChallengeHandler* m_toolkitChallengeHandler = nullptr;
   OfflineDataProjectsModel* m_offlineDataProjects = nullptr;
-  QMap<QString, double> m_dataItemProgress;
-  QMap<QString, Esri::ArcGISRuntime::PortalItem*> m_activeDownloads;
-  QTimer* m_progressUpdateTimer = nullptr;
 };
 
 #endif // SAMPLEMANAGER_H
