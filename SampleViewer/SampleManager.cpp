@@ -117,6 +117,7 @@ SampleManager::SampleManager(QObject* parent) :
   connect(m_progressUpdateTimer, &QTimer::timeout, this, [this]()
   {
     updateOfflineDataProjects();
+    updateDownloadProgress();
   });
 }
 
@@ -566,6 +567,7 @@ bool SampleManager::dataItemsExists()
 void SampleManager::downloadAllDataItems()
 {
   setDownloadFailed(false);
+  setShowFullScreenDownload(true);
 
   if (!m_dataItems.isEmpty())
   {
@@ -584,12 +586,14 @@ void SampleManager::downloadAllDataItems()
     }
   }
 
+  m_totalDownloadItems = m_dataItems.size();
   downloadNextDataItem();
 }
 
 void SampleManager::downloadDataItemsCurrentSample()
 {
   setDownloadFailed(false);
+  setShowFullScreenDownload(true);
 
   if (!m_dataItems.isEmpty())
   {
@@ -604,6 +608,7 @@ void SampleManager::downloadDataItemsCurrentSample()
     }
   }
 
+  m_totalDownloadItems = m_dataItems.size();
   downloadNextDataItem();
 }
 
@@ -660,6 +665,9 @@ void SampleManager::downloadNextDataItem()
     setDownloadText("Downloads complete");
     setDownloadProgress(0.0);
     setDownloadInProgress(false);
+
+    setShowFullScreenDownload(false);
+    m_totalDownloadItems = 0;
 
     // Stop progress timer
     if (m_progressUpdateTimer->isActive())
@@ -1038,6 +1046,7 @@ bool SampleManager::deleteProjectOfflineData(const QString& sampleName)
 void SampleManager::downloadProjectData(const QString& sampleName)
 {
   setDownloadFailed(false);
+  setShowFullScreenDownload(false);
 
   if (!m_dataItems.isEmpty())
   {
@@ -1110,6 +1119,18 @@ void SampleManager::downloadProjectData(const QString& sampleName)
 
 void SampleManager::cancelSampleDownload(const QString& sampleName)
 {
+  if (m_dataItems.isEmpty())
+  {
+    setShowFullScreenDownload(false);
+    setDownloadInProgress(false);
+
+    // Stop progress timer
+    if (m_progressUpdateTimer->isActive())
+    {
+      m_progressUpdateTimer->stop();
+    }
+  }
+
   // Find the sample
   Sample* targetSample = nullptr;
   for (int i = 0; i < m_allSamples->size(); ++i)
@@ -1173,4 +1194,38 @@ void SampleManager::cancelSampleDownload(const QString& sampleName)
 
   // Update the model to reflect cancellation
   updateOfflineDataProjects();
+}
+
+bool SampleManager::showFullScreenDownload() const
+{
+  return m_showFullScreenDownload;
+}
+
+void SampleManager::setShowFullScreenDownload(bool show)
+{
+  m_showFullScreenDownload = show;
+  emit showFullScreenDownloadChanged();
+}
+
+void SampleManager::updateDownloadProgress()
+{
+  if (m_totalDownloadItems == 0)
+  {
+    setDownloadProgress(0.0);
+    return;
+  }
+
+  // Calculate completed items
+  int completedItems = m_totalDownloadItems - m_dataItems.size() - m_activeDownloads.size();
+
+  // Add progress from currently downloading items
+  double currentProgress = 0.0;
+  for (const auto& progress : m_dataItemProgress)
+  {
+    currentProgress += progress;
+  }
+
+  // Overall progress: (completed + in-progress) / total
+  double overallProgress = ((completedItems + currentProgress) / m_totalDownloadItems) * 100.0;
+  setDownloadProgress(qBound(0.0, overallProgress, 100.0));
 }

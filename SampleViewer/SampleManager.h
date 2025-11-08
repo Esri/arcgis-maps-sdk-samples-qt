@@ -87,6 +87,7 @@ class SampleManager : public QObject
   Q_PROPERTY(QString api READ api CONSTANT)
   Q_PROPERTY(Reachability reachability READ reachability NOTIFY reachabilityChanged)
   Q_PROPERTY(OfflineDataProjectsModel* offlineDataProjects READ offlineDataProjects CONSTANT)
+  Q_PROPERTY(bool showFullScreenDownload READ showFullScreenDownload WRITE setShowFullScreenDownload NOTIFY showFullScreenDownloadChanged)
 
 public:
   explicit SampleManager(QObject* parent = nullptr);
@@ -146,6 +147,7 @@ signals:
   void downloadProgressChanged();
   void reachabilityChanged();
   void offlineDataProjectsChanged();
+  void showFullScreenDownloadChanged();
 
 protected:
   void setDownloadProgress(double progress);
@@ -184,6 +186,10 @@ private:
   void setDownloadText(const QString& downloadText);
   QString formattedPath(const QString& outputPath, const QString& folderName = QString());
 
+  bool showFullScreenDownload() const;
+  void setShowFullScreenDownload(bool show);
+  void updateDownloadProgress();
+
 private:
   QString downloadText() const;
   double downloadProgress() const;
@@ -203,6 +209,8 @@ private:
   void updateOfflineDataProjects();
 
   double calculateSampleDownloadProgress(Sample* sample) const;
+  bool m_showFullScreenDownload = false;
+  int m_totalDownloadItems = 0;
 
 private:
   QQueue<DataItem*> m_dataItems;

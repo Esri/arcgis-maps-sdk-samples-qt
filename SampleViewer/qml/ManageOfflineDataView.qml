@@ -60,7 +60,7 @@ Page {
             Layout.preferredHeight: Math.max(60, 100 * scaleFactor)
             fillMode: Image.PreserveAspectFit
             clip: true
-            visible: !SampleManager.downloadInProgress
+            visible: !SampleManager.showFullScreenDownload
         }
 
         ColumnLayout {
@@ -68,7 +68,7 @@ Page {
             Layout.fillHeight: true
             Layout.margins: baseMargin
             spacing: baseSpacing
-            visible: SampleManager.downloadInProgress
+            visible: SampleManager.downloadInProgress && SampleManager.showFullScreenDownload
 
             Image {
                 Layout.alignment: Qt.AlignHCenter | Qt.AlignVCenter
@@ -133,7 +133,7 @@ Page {
 
         RowLayout {
             Layout.alignment: Qt.AlignHCenter
-            visible: !SampleManager.downloadInProgress
+            visible: !SampleManager.showFullScreenDownload
             spacing: baseSpacing
 
             Button {
@@ -194,7 +194,7 @@ Page {
         CheckBox {
             text: qsTr("Show only downloaded data")
             Layout.alignment: Qt.AlignRight
-            visible: !SampleManager.downloadInProgress
+            visible: !SampleManager.showFullScreenDownload
             checked: showOnlyDownloaded
             enabled: {
                 if (!SampleManager.offlineDataProjects)
@@ -224,7 +224,7 @@ Page {
         Rectangle {
             Layout.fillWidth: true
             Layout.fillHeight: true
-            visible: !SampleManager.downloadInProgress
+            visible: !SampleManager.showFullScreenDownload
             color: "transparent"
             border {
                 color: Calcite.border1
