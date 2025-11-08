@@ -30,7 +30,7 @@ ARCGIS_RUNTIME_VERSION = 300.0.0
 DEFINES += ArcGIS_Runtime_Version=$$ARCGIS_RUNTIME_VERSION
 
 # This block determines whether to build against the installed SDK or the local dev build area
-exists($$PWD/../../../DevBuildCpp2.pri) {
+exists($$PWD/../../../DevBuildCpp.pri) {
   message("Building against the dev environment")
   DEFINES += SAMPLE_VIEWER_API_KEY=$$(SAMPLEVIEWERAPIKEY_INTERNAL) ESRI_BUILD
 
