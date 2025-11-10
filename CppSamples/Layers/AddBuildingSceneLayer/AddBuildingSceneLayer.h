@@ -35,14 +35,15 @@ class AddBuildingSceneLayer : public QObject
   Q_OBJECT
 
   Q_PROPERTY(Esri::ArcGISRuntime::LocalSceneQuickView* localSceneView READ localSceneView WRITE setLocalSceneView NOTIFY localSceneViewChanged)
-  Q_PROPERTY(bool layerLoaded MEMBER m_layerLoaded NOTIFY layerLoadedChanged)
+  Q_PROPERTY(bool layerLoaded READ layerLoaded NOTIFY layerLoadedChanged)
 
 public:
   explicit AddBuildingSceneLayer(QObject* parent = nullptr);
   ~AddBuildingSceneLayer() override;
 
   static void init();
-  Q_INVOKABLE void fullModelVisibility(bool visible);
+  Q_INVOKABLE void setFullModelAndOverviewVisibility(bool showFullModel);
+  bool layerLoaded() const;
 
 signals:
   void layerLoadedChanged();
@@ -54,7 +55,6 @@ private:
 
   Esri::ArcGISRuntime::BuildingSceneLayer* m_buildingSceneLayer = nullptr;
   Esri::ArcGISRuntime::BuildingSublayer* m_fullModelSublayer = nullptr;
-  bool m_layerLoaded;
   Esri::ArcGISRuntime::LocalSceneQuickView* m_localSceneView = nullptr;
   Esri::ArcGISRuntime::BuildingSublayer* m_overviewSublayer = nullptr;
   Esri::ArcGISRuntime::Scene* m_scene = nullptr;

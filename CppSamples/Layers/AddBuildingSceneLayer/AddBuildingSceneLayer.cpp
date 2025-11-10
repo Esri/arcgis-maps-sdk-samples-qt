@@ -69,9 +69,6 @@ LocalSceneQuickView* AddBuildingSceneLayer::localSceneView() const
 // Set the view (created in QML)
 void AddBuildingSceneLayer::setLocalSceneView(LocalSceneQuickView* localSceneView)
 {
-  m_layerLoaded = false;
-  emit layerLoadedChanged();
-
   if (!localSceneView || localSceneView == m_localSceneView)
   {
     return;
@@ -109,7 +106,7 @@ void AddBuildingSceneLayer::setLocalSceneView(LocalSceneQuickView* localSceneVie
     }
 
     // Get the overview and full model sublayers.
-    for (Esri::ArcGISRuntime::BuildingSublayer* sublayer : m_buildingSceneLayer->sublayers())
+    for (BuildingSublayer* sublayer : m_buildingSceneLayer->sublayers())
     {
       if (sublayer->name() == "Overview")
       {
@@ -120,15 +117,18 @@ void AddBuildingSceneLayer::setLocalSceneView(LocalSceneQuickView* localSceneVie
         m_fullModelSublayer = sublayer;
       }
     }
-
-    m_layerLoaded = true;
     emit layerLoadedChanged();
   });
   emit localSceneViewChanged();
 }
 
-void AddBuildingSceneLayer::fullModelVisibility(bool visible)
+void AddBuildingSceneLayer::setFullModelAndOverviewVisibility(bool showFullModel)
 {
-  m_fullModelSublayer->setVisible(visible);
-  m_overviewSublayer->setVisible(!visible);
+  m_fullModelSublayer->setVisible(showFullModel);
+  m_overviewSublayer->setVisible(!showFullModel);
+}
+
+bool AddBuildingSceneLayer::layerLoaded() const
+{
+  return m_buildingSceneLayer && m_buildingSceneLayer->loadStatus() == LoadStatus::Loaded;
 }

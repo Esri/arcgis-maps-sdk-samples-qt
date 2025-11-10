@@ -46,6 +46,6 @@ Item {
         text: qsTr("Full Model")
         visible: model.layerLoaded
         checkable: true
-        onCheckedChanged: model.fullModelVisibility(checked)
+        onCheckedChanged: model.setFullModelAndOverviewVisibility(checked)
     }
 }

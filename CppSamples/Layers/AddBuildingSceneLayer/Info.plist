@@ -22,18 +22,12 @@
 	<string>????</string>
 	<key>CFBundleVersion</key>
 	<string>1.0</string>
-	<key>NOTE</key>
-	<string>This app is cool</string>
 	<key>UIFileSharingEnabled</key>
         <string>FALSE</string>
 	<key>UIRequiresPersistentWiFi</key>
 	<string>NO</string>
 	<key>LSRequiresIPhoneOS</key>
 	<true/>
-	<key>NSLocationAlwaysUsageDescription</key>
-	<string></string>
-	<key>NSLocationWhenInUseUsageDescription</key>
-	<string></string>
 	<key>UISupportedInterfaceOrientations</key>
 	<array>
 		<string>UIInterfaceOrientationPortrait</string>
