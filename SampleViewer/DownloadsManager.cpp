@@ -1,0 +1,1015 @@
+// [Legal]
+// Copyright 2025 Esri.
+//
+// Licensed under the Apache License, Version 2.0 (the "License");
+// you may not use this file except in compliance with the License.
+// You may obtain a copy of the License at
+// http://www.apache.org/licenses/LICENSE-2.0
+//
+// Unless required by applicable law or agreed to in writing, software
+// distributed under the License is distributed on an "AS IS" BASIS,
+// WITHOUT WARRANTIES OR CONDITIONS OF ANY KIND, either express or implied.
+// See the License for the specific language governing permissions and
+// limitations under the License.
+// [Legal]
+
+// Licensed under the Apache License, Version 2.0 (the "License");
+// you may not use this file except in compliance with the License.
+// You may obtain a copy of the License at
+// http://www.apache.org/licenses/LICENSE-2.0
+
+// Unless required by applicable law or agreed to in writing, software
+// distributed under the License is distributed on an "AS IS" BASIS,
+// WITHOUT WARRANTIES OR CONDITIONS OF ANY KIND, either express or implied.
+// See the License for the specific language governing permissions and
+// limitations under the License.
+// [Legal]
+
+#include "pch.hpp"
+
+#include "DownloadsManager.h"
+
+#include <QDateTime>
+#include <QDebug>
+#include <QDir>
+#include <QDirIterator>
+#include <QFile>
+#include <QFileInfo>
+#include <QJsonArray>
+#include <QJsonDocument>
+#include <QJsonObject>
+#include <QSet>
+#include <QStandardPaths>
+#include <QTimer>
+#include <QUrl>
+
+#include <algorithm>
+
+#include "DataItem.h"
+#include "DataItemListModel.h"
+#include "ErrorException.h"
+#include "MapTypes.h"
+#include "NetworkRequestProgress.h"
+#include "OfflineDataProjectsModel.h"
+#include "Portal.h"
+#include "PortalItem.h"
+#include "PortalTypes.h"
+#include "Sample.h"
+#include "SampleListModel.h"
+#include "ZipHelper.h"
+
+using namespace Esri::ArcGISRuntime;
+
+DownloadsManager::DownloadsManager(QObject* parent) :
+  QObject(parent),
+  m_offlineDataProjects(new OfflineDataProjectsModel(this))
+{
+  m_progressUpdateTimer = new QTimer(this);
+  m_progressUpdateTimer->setInterval(PROGRESS_UPDATE_INTERVAL_MS);
+  connect(m_progressUpdateTimer, &QTimer::timeout, this, [this]()
+  {
+    // Calculate overall progress across all downloading items
+    if (m_dataItemProgress.isEmpty())
+    {
+      setDownloadProgress(0.0);
+      return;
+    }
+
+    double totalProgress = 0.0;
+    for (const double& progress : m_dataItemProgress)
+    {
+      totalProgress += progress;
+    }
+    setDownloadProgress(totalProgress / m_dataItemProgress.size());
+
+    // Update the offline data projects model to show inline progress
+    if (m_samples)
+    {
+      updateOfflineDataProjects(m_samples);
+    }
+  });
+}
+
+DownloadsManager::~DownloadsManager()
+{
+}
+
+void DownloadsManager::initialize(Portal* portal, const QString& homePath)
+{
+  if (!portal)
+  {
+    qWarning() << "DownloadsManager::initialize: Portal is null!";
+    return;
+  }
+
+  if (homePath.isEmpty())
+  {
+    qWarning() << "DownloadsManager::initialize: Home path is empty!";
+    return;
+  }
+
+  m_portal = portal;
+  m_homePath = homePath;
+}
+
+int DownloadsManager::countDownloadedItems(Sample* sample) const
+{
+  if (!sample || sample->dataItems()->size() == 0)
+    return 0;
+
+  int downloadedItems = 0;
+  const int totalItems = sample->dataItems()->size();
+  for (int j = 0; j < totalItems; ++j)
+  {
+    if (sample->dataItems()->at(j)->exists())
+      downloadedItems++;
+  }
+  return downloadedItems;
+}
+
+bool DownloadsManager::isSampleDownloading(Sample* sample) const
+{
+  if (!sample || sample->dataItems()->size() == 0)
+    return false;
+
+  const int totalItems = sample->dataItems()->size();
+  for (int j = 0; j < totalItems; ++j)
+  {
+    DataItem* dataItem = sample->dataItems()->at(j);
+    QString key = dataItem->itemId() + "|" + m_homePath + dataItem->path().mid(1);
+    if (m_dataItemProgress.contains(key))
+      return true;
+  }
+  return false;
+}
+
+void DownloadsManager::deleteDataItemFile(DataItem* dataItem)
+{
+  if (!dataItem)
+    return;
+
+  QJsonObject tracking = loadDownloadTracking();
+
+  if (!tracking.contains(dataItem->itemId()))
+  {
+    qWarning() << "No tracking data found for item:" << dataItem->itemId();
+    return;
+  }
+
+  QJsonObject itemData = tracking[dataItem->itemId()].toObject();
+  QJsonArray filesArray = itemData["files"].toArray();
+
+  QStringList deletedFiles;
+  QSet<QString> deletedDirs;
+
+  for (int i = filesArray.size() - 1; i >= 0; --i)
+  {
+    QString filePath = filesArray[i].toString();
+    QFileInfo fileInfo(filePath);
+
+    if (fileInfo.exists())
+    {
+      if (fileInfo.isDir())
+      {
+        QDir dir(filePath);
+        if (dir.removeRecursively())
+        {
+          deletedDirs.insert(filePath);
+        }
+        else
+        {
+          qWarning() << "Failed to delete directory:" << filePath;
+        }
+      }
+      else if (fileInfo.isFile())
+      {
+        if (QFile::remove(filePath))
+        {
+          deletedFiles.append(filePath);
+        }
+        else
+        {
+          qWarning() << "Failed to delete file:" << filePath;
+        }
+      }
+    }
+  }
+
+  // Clean up empty parent directories
+  QString dataRoot = m_homePath + "/ArcGIS/Runtime/Data";
+  QSet<QString> parentPaths;
+
+  for (const QString& filePath : deletedFiles)
+  {
+    parentPaths.insert(QFileInfo(filePath).dir().absolutePath());
+  }
+
+  for (const QString& dirPath : deletedDirs)
+  {
+    parentPaths.insert(QFileInfo(dirPath).dir().absolutePath());
+  }
+
+  QStringList sortedPaths = parentPaths.values();
+  std::sort(sortedPaths.begin(), sortedPaths.end(), [](const QString& a, const QString& b) {
+    return a.length() > b.length();
+  });
+
+  for (const QString& parentPath : sortedPaths)
+  {
+    cleanupEmptyParentDirectories(parentPath, dataRoot);
+  }
+
+  // Remove tracking data
+  tracking.remove(dataItem->itemId());
+  saveDownloadTracking(tracking);
+}
+
+void DownloadsManager::cancelDataItem(const QString& dataItemKey)
+{
+  PortalItem* portalItem = nullptr;
+  if (m_activeDownloads.contains(dataItemKey))
+    portalItem = m_activeDownloads[dataItemKey];
+
+  m_dataItemProgress.remove(dataItemKey);
+  m_activeDownloads.remove(dataItemKey);
+
+  // Cancel the download immediately
+  if (portalItem)
+    portalItem->cancelLoad();
+}
+
+void DownloadsManager::cleanupEmptyParentDirectories(const QString& startPath, const QString& boundary)
+{
+  QDir currentDir(startPath);
+
+  while (currentDir.absolutePath() != boundary && currentDir.absolutePath().startsWith(boundary))
+  {
+    if (currentDir.isEmpty())
+    {
+      QString pathToRemove = currentDir.absolutePath();
+
+      if (!currentDir.cdUp())
+        break;
+
+      if (!QDir().rmdir(pathToRemove))
+        break;
+    }
+    else
+    {
+      break;
+    }
+  }
+}
+
+QJsonObject DownloadsManager::loadDownloadTracking()
+{
+  QString trackingFile = m_homePath + "/ArcGIS/Runtime/Data/SampleDownloads.json";
+  QFile file(trackingFile);
+
+  if (!file.open(QIODevice::ReadOnly))
+    return QJsonObject();
+
+  QByteArray data = file.readAll();
+  file.close();
+
+  QJsonParseError parseError;
+  QJsonDocument doc = QJsonDocument::fromJson(data, &parseError);
+
+  if (parseError.error != QJsonParseError::NoError)
+  {
+    qWarning() << "Failed to parse tracking file, starting fresh";
+    return QJsonObject();
+  }
+
+  return doc.object();
+}
+
+void DownloadsManager::saveDownloadTracking(const QJsonObject& data)
+{
+  QString trackingFile = m_homePath + "/ArcGIS/Runtime/Data/SampleDownloads.json";
+
+  QFileInfo fileInfo(trackingFile);
+  QDir dir = fileInfo.dir();
+  if (!dir.exists())
+    dir.mkpath(".");
+
+  QFile file(trackingFile);
+  if (!file.open(QIODevice::WriteOnly))
+  {
+    qWarning() << "Failed to save tracking file";
+    return;
+  }
+
+  QJsonDocument doc(data);
+  file.write(doc.toJson(QJsonDocument::Indented));
+  file.close();
+}
+
+void DownloadsManager::trackFilesForItem(const QString& itemId, const QStringList& files)
+{
+  QJsonObject tracking = loadDownloadTracking();
+
+  QJsonObject itemData;
+  if (tracking.contains(itemId))
+    itemData = tracking[itemId].toObject();
+
+  QJsonArray filesArray;
+  if (itemData.contains("files"))
+    filesArray = itemData["files"].toArray();
+
+  QSet<QString> existingFiles;
+  for (const QJsonValue& val : filesArray)
+    existingFiles.insert(val.toString());
+
+  for (const QString& file : files)
+  {
+    if (!existingFiles.contains(file))
+      filesArray.append(file);
+  }
+
+  itemData["files"] = filesArray;
+  itemData["lastModified"] = QDateTime::currentDateTime().toString(Qt::ISODate);
+
+  tracking[itemId] = itemData;
+  saveDownloadTracking(tracking);
+}
+
+DownloadsManager::SampleDownloadState DownloadsManager::getSampleDownloadState(Sample* sample) const
+{
+  SampleDownloadState state;
+
+  if (!sample || sample->dataItems()->size() == 0)
+    return state;
+
+  state.totalItems = sample->dataItems()->size();
+  state.downloadedItems = countDownloadedItems(sample);
+  state.downloaded = (state.downloadedItems == state.totalItems);
+  state.isDownloading = isSampleDownloading(sample);
+  state.progress = calculateSampleDownloadProgress(sample);
+
+  return state;
+}
+
+bool DownloadsManager::downloadInProgress() const
+{
+  return m_downloadInProgress;
+}
+
+QString DownloadsManager::downloadText() const
+{
+  return m_downloadText;
+}
+
+double DownloadsManager::downloadProgress() const
+{
+  return m_downloadProgress;
+}
+
+bool DownloadsManager::cancelDownload() const
+{
+  return m_cancelDownload;
+}
+
+void DownloadsManager::setCancelDownload(bool cancel)
+{
+  m_cancelDownload = cancel;
+  emit cancelDownloadChanged();
+}
+
+bool DownloadsManager::downloadFailed() const
+{
+  return m_downloadFailed;
+}
+
+bool DownloadsManager::isBulkDownload() const
+{
+  return m_isBulkDownload;
+}
+
+OfflineDataProjectsModel* DownloadsManager::offlineDataProjects() const
+{
+  return m_offlineDataProjects;
+}
+
+void DownloadsManager::setDownloadInProgress(bool inProgress)
+{
+  m_downloadInProgress = inProgress;
+  emit downloadInProgressChanged();
+}
+
+void DownloadsManager::setIsBulkDownload(bool isBulk)
+{
+  m_isBulkDownload = isBulk;
+  emit isBulkDownloadChanged();
+}
+
+void DownloadsManager::setDownloadText(const QString& downloadText)
+{
+  m_downloadText = downloadText;
+  emit downloadTextChanged();
+}
+
+void DownloadsManager::setDownloadProgress(double progress)
+{
+  m_downloadProgress = progress;
+  emit downloadProgressChanged();
+}
+
+void DownloadsManager::setDownloadFailed(bool didFail)
+{
+  m_downloadFailed = didFail;
+  emit downloadFailedChanged();
+}
+
+void DownloadsManager::downloadAllDataItems(SampleListModel* samples)
+{
+  if (!samples)
+  {
+    qWarning() << "DownloadsManager::downloadAllDataItems: samples is null!";
+    return;
+  }
+
+  m_samples = samples;
+  setDownloadFailed(false);
+  setIsBulkDownload(true);
+
+  const int totalSamples = samples->size();
+
+  QSet<QString> uniqueDataItems;
+
+  for (int i = 0; i < totalSamples; ++i)
+  {
+    Sample* sample = samples->at(i);
+    const int dataItemCount = sample->dataItems()->size();
+    for (int j = 0; j < dataItemCount; ++j)
+    {
+      DataItem* dataItem = sample->dataItems()->at(j);
+      if (!dataItem->exists())
+      {
+        QString key = dataItem->itemId() + "|" + m_homePath + dataItem->path().mid(1);
+        if (!uniqueDataItems.contains(key))
+        {
+          uniqueDataItems.insert(key);
+          m_dataItems.enqueue(dataItem);
+        }
+      }
+    }
+  }
+
+  downloadNextDataItem();
+}
+
+void DownloadsManager::downloadDataItemsForSample(Sample* sample, SampleListModel* samples, bool isBulk)
+{
+  if (!sample)
+  {
+    qWarning() << "DownloadsManager::downloadDataItemsForSample: sample is null!";
+    return;
+  }
+
+  if (!samples)
+  {
+    qWarning() << "DownloadsManager::downloadDataItemsForSample: samples is null!";
+    return;
+  }
+
+  m_samples = samples;
+  setDownloadFailed(false);
+  setIsBulkDownload(isBulk);
+
+  const int dataItemCount = sample->dataItems()->size();
+  for (int j = 0; j < dataItemCount; ++j)
+  {
+    DataItem* dataItem = sample->dataItems()->at(j);
+    if (!dataItem->exists())
+    {
+      m_dataItems.enqueue(dataItem);
+    }
+  }
+
+  downloadNextDataItem();
+}
+
+void DownloadsManager::cancelSampleDownload(const QString& sampleName, SampleListModel* samples)
+{
+  const int totalSamples = samples->size();
+
+  Sample* targetSample = nullptr;
+
+  // Find the sample and cancel its downloads
+  for (int i = 0; i < totalSamples; ++i)
+  {
+    Sample* sample = samples->at(i);
+    if (sample->name().toString() == sampleName)
+    {
+      targetSample = sample;
+      const int dataItemCount = sample->dataItems()->size();
+      for (int j = 0; j < dataItemCount; ++j)
+      {
+        DataItem* dataItem = sample->dataItems()->at(j);
+        QString key = dataItem->itemId() + "|" + m_homePath + dataItem->path().mid(1);
+
+        // Cancel this data item
+        cancelDataItem(key);
+
+        // Delete any partial file immediately
+        deleteDataItemFile(dataItem);
+      }
+      break;
+    }
+  }
+
+  if (targetSample) {
+      int projectIndex = m_offlineDataProjects->findProjectBySample(targetSample);
+      if (projectIndex >= 0) {
+          SampleDownloadState state = getSampleDownloadState(targetSample);
+          m_offlineDataProjects->updateProject(projectIndex,
+                                               state.downloaded,
+                                               false,
+                                               state.progress,
+                                               state.downloadedItems,
+                                               state.totalItems);
+      }
+
+      // Check if there are any other downloads still in progress if not reset downloads state
+      if (m_dataItemProgress.isEmpty()) {
+          setDownloadInProgress(false);
+          setIsBulkDownload(false);
+          setDownloadProgress(0.0);
+
+          if (m_progressUpdateTimer && m_progressUpdateTimer->isActive()) {
+              m_progressUpdateTimer->stop();
+          }
+      }
+
+      // Notify that button states may need to update
+      emit offlineDataStateChanged();
+  }
+}
+
+void DownloadsManager::cancelAllDownloads()
+{
+  // Cancel all active downloads
+  QList<QString> keys = m_dataItemProgress.keys();
+  for (const QString& key : keys)
+  {
+    cancelDataItem(key);
+  }
+
+  m_dataItems.clear();
+
+  setDownloadInProgress(false);
+  setIsBulkDownload(false);
+  setDownloadProgress(0.0);
+
+  if (m_progressUpdateTimer && m_progressUpdateTimer->isActive())
+  {
+    m_progressUpdateTimer->stop();
+  }
+}
+
+bool DownloadsManager::deleteAllOfflineData(SampleListModel* samples)
+{
+  if (!samples)
+  {
+    qWarning() << "DownloadsManager::deleteAllOfflineData: samples is null!";
+    return false;
+  }
+
+  const int totalSamples = samples->size();
+  bool success = true;
+
+  for (int i = 0; i < totalSamples; ++i)
+  {
+    Sample* sample = samples->at(i);
+    const int dataItemCount = sample->dataItems()->size();
+    for (int j = 0; j < dataItemCount; ++j)
+    {
+      DataItem* dataItem = sample->dataItems()->at(j);
+      deleteDataItemFile(dataItem);
+    }
+  }
+
+  updateOfflineDataProjects(samples);
+
+  return success;
+}
+
+bool DownloadsManager::deleteProjectOfflineData(const QString& sampleName, SampleListModel* samples)
+{
+  if (!samples)
+  {
+    qWarning() << "DownloadsManager::deleteProjectOfflineData: samples is null!";
+    return false;
+  }
+
+  if (sampleName.isEmpty())
+  {
+    qWarning() << "DownloadsManager::deleteProjectOfflineData: sampleName is empty!";
+    return false;
+  }
+
+  const int totalSamples = samples->size();
+  bool success = false;
+
+  for (int i = 0; i < totalSamples; ++i)
+  {
+    Sample* sample = samples->at(i);
+    if (sample->name().toString() == sampleName)
+    {
+      const int dataItemCount = sample->dataItems()->size();
+      for (int j = 0; j < dataItemCount; ++j)
+      {
+        DataItem* dataItem = sample->dataItems()->at(j);
+        deleteDataItemFile(dataItem);
+      }
+      success = true;
+      break;
+    }
+  }
+
+  // Refresh the offline data projects list
+  updateOfflineDataProjects(samples);
+
+  return success;
+}
+
+bool DownloadsManager::hasOfflineData(const QString& sampleName, SampleListModel* samples)
+{
+  if (!samples)
+  {
+    qWarning() << "DownloadsManager::hasOfflineData: samples is null!";
+    return false;
+  }
+
+  if (sampleName.isEmpty())
+  {
+    qWarning() << "DownloadsManager::hasOfflineData: sampleName is empty!";
+    return false;
+  }
+
+  const int totalSamples = samples->size();
+
+  for (int i = 0; i < totalSamples; ++i)
+  {
+    Sample* sample = samples->at(i);
+    if (sample->name().toString() == sampleName)
+    {
+      const int dataItemCount = sample->dataItems()->size();
+      for (int j = 0; j < dataItemCount; ++j)
+      {
+        DataItem* dataItem = sample->dataItems()->at(j);
+        if (dataItem->exists())
+          return true;
+      }
+      return false;
+    }
+  }
+  return false;
+}
+
+OfflineDataProjectsModel* DownloadsManager::getOfflineDataProjects(SampleListModel* samples)
+{
+  if (!samples)
+  {
+    qWarning() << "DownloadsManager::getOfflineDataProjects: samples is null!";
+    return m_offlineDataProjects;
+  }
+
+  updateOfflineDataProjects(samples);
+  return m_offlineDataProjects;
+}
+
+bool DownloadsManager::hasAnyDataToDownload(SampleListModel* samples)
+{
+  if (!samples)
+  {
+    qWarning() << "DownloadsManager::hasAnyDataToDownload: samples is null!";
+    return false;
+  }
+
+  const int totalSamples = samples->size();
+
+  for (int i = 0; i < totalSamples; ++i)
+  {
+    Sample* sample = samples->at(i);
+    const int dataItemCount = sample->dataItems()->size();
+    for (int j = 0; j < dataItemCount; ++j)
+    {
+      DataItem* dataItem = sample->dataItems()->at(j);
+      if (!dataItem->exists())
+        return true;
+    }
+  }
+  return false;
+}
+
+bool DownloadsManager::hasAnyDataToDelete(SampleListModel* samples)
+{
+  if (!samples)
+  {
+    qWarning() << "DownloadsManager::hasAnyDataToDelete: samples is null!";
+    return false;
+  }
+
+  const int totalSamples = samples->size();
+
+  for (int i = 0; i < totalSamples; ++i)
+  {
+    Sample* sample = samples->at(i);
+    const int dataItemCount = sample->dataItems()->size();
+    for (int j = 0; j < dataItemCount; ++j)
+    {
+      DataItem* dataItem = sample->dataItems()->at(j);
+      if (dataItem->exists())
+        return true;
+    }
+  }
+  return false;
+}
+
+double DownloadsManager::calculateSampleDownloadProgress(Sample* sample) const
+{
+  if (!sample || sample->dataItems()->size() == 0)
+  {
+    return 0.0;
+  }
+
+  double totalProgress = 0.0;
+  int itemCount = 0;
+
+  // Calculate aggregate progress for all data items in this sample
+  for (int i = 0; i < sample->dataItems()->size(); ++i)
+  {
+    DataItem* dataItem = sample->dataItems()->at(i);
+    QString key = dataItem->itemId() + "|" + m_homePath + dataItem->path().mid(1);
+
+    // Get downlaod progress
+    if (m_dataItemProgress.contains(key))
+    {
+      totalProgress += m_dataItemProgress[key];
+    }
+    else if (dataItem->exists())
+    {
+        totalProgress += 100.0;
+    }
+    itemCount++;
+  }
+
+  return itemCount > 0 ? totalProgress / itemCount : 0.0;
+}
+
+void DownloadsManager::updateOfflineDataProjects(SampleListModel* samples)
+{
+  if (!samples)
+  {
+    qWarning() << "DownloadsManager::updateOfflineDataProjects: samples is null!";
+    return;
+  }
+
+  const int totalSamples = samples->size();
+
+  // Build list from scratch if empty (first time)
+  if (m_offlineDataProjects->rowCount() == 0)
+  {
+    for (int i = 0; i < totalSamples; ++i)
+    {
+      Sample* sample = samples->at(i);
+      if (sample->dataItems()->size() > 0)
+      {
+        // Use helper to get complete download state (eliminates duplication!)
+        SampleDownloadState state = getSampleDownloadState(sample);
+        m_offlineDataProjects->addProject(sample, state.downloaded, state.isDownloading, state.progress,
+                                           state.downloadedItems, state.totalItems);
+      }
+    }
+  }
+  else
+  {
+    // Update existing items in place - this preserves scroll position!
+    int projectIndex = 0;
+    for (int i = 0; i < totalSamples && projectIndex < m_offlineDataProjects->rowCount(); ++i)
+    {
+      Sample* sample = samples->at(i);
+      if (sample->dataItems()->size() > 0)
+      {
+        // Use helper to get complete download state (eliminates duplication!)
+        SampleDownloadState state = getSampleDownloadState(sample);
+        m_offlineDataProjects->updateProject(projectIndex, state.downloaded, state.isDownloading, state.progress,
+                                              state.downloadedItems, state.totalItems);
+        projectIndex++;
+      }
+    }
+  }
+
+  // Notify QML that button states may need to update
+  emit offlineDataStateChanged();
+}
+
+void DownloadsManager::downloadNextDataItem()
+{
+  if (cancelDownload())
+  {
+    return;
+  }
+
+  if (!m_dataItems.isEmpty())
+  {
+    if (!m_portal)
+    {
+      qWarning() << "DownloadsManager: Portal not initialized. Call initialize() first.";
+      return;
+    }
+
+    setDownloadText(QString("Remaining items in queue: %1").arg(m_dataItems.size()));
+    setDownloadInProgress(true);
+
+    // Start update timer
+    if (m_progressUpdateTimer && !m_progressUpdateTimer->isActive())
+    {
+      m_progressUpdateTimer->start();
+    }
+
+    auto item = m_dataItems.dequeue();
+    fetchPortalItemData(item->itemId(), m_homePath + item->path().mid(1));
+  }
+  else
+  {
+    setDownloadText("Downloads complete");
+
+    setDownloadProgress(0.0);
+    setDownloadInProgress(false);
+    setIsBulkDownload(false);
+
+    // Stop update timer
+    if (m_progressUpdateTimer && m_progressUpdateTimer->isActive())
+    {
+      m_progressUpdateTimer->stop();
+    }
+
+    if (cancelDownload())
+    {
+      setCancelDownload(false);
+    }
+    else
+    {
+      emit doneDownloadingChanged();
+    }
+  }
+}
+
+void DownloadsManager::fetchPortalItemData(const QString& itemId, const QString& outputPath)
+{
+  QString dataItemKey = itemId + "|" + outputPath;
+  m_dataItemProgress[dataItemKey] = 0.0;
+
+  auto portalItem = new PortalItem(m_portal, itemId, this);
+
+  // Store for cancellation
+  m_activeDownloads[dataItemKey] = portalItem;
+
+  connect(portalItem, &PortalItem::doneLoading, this, [this, portalItem, outputPath, dataItemKey]()
+  {
+    // Check if this download was cancelled
+    if (!m_dataItemProgress.contains(dataItemKey))
+      return;
+
+    if (portalItem->loadStatus() == LoadStatus::Loaded)
+    {
+      auto folder = portalItem->type() == PortalItemType::CodeSample ? portalItem->name() : QString();
+      QString formattedPath = this->formattedPath(outputPath, folder);
+      portalItem->fetchDataAsync(formattedPath)
+        .then(this, [this, portalItem, formattedPath, dataItemKey]()
+      {
+        // Check if this download was cancelled
+        if (!m_dataItemProgress.contains(dataItemKey))
+          return;
+
+        setDownloadProgress(0.0);
+
+        // Mark as complete (100%)
+        m_dataItemProgress[dataItemKey] = 100.0;
+
+        if (QFileInfo(formattedPath).suffix() == "zip")
+        {
+          QString extractPath = QFileInfo(formattedPath).dir().absolutePath();
+          QDir extractDir(extractPath);
+          QStringList filesBefore = extractDir.entryList(QDir::Files | QDir::AllDirs | QDir::NoDotAndDotDot, QDir::Name);
+
+          auto zipHelper = new ZipHelper(formattedPath, this);
+          connect(zipHelper, &ZipHelper::extractCompleted, this, [this, formattedPath, extractPath, filesBefore, portalItem, zipHelper, dataItemKey]()
+          {
+            if (!m_dataItemProgress.contains(dataItemKey))
+              return;
+
+            // Track all newly created files from extraction
+            QDir extractDir(extractPath);
+            QStringList filesAfter = extractDir.entryList(QDir::Files | QDir::AllDirs | QDir::NoDotAndDotDot, QDir::Name);
+
+            QStringList newFiles;
+            newFiles.append(formattedPath);
+
+            for (const QString& file : filesAfter)
+            {
+              if (!filesBefore.contains(file))
+              {
+                QString fullPath = extractPath + "/" + file;
+                newFiles.append(fullPath);
+
+                QFileInfo fileInfo(fullPath);
+                if (fileInfo.isDir())
+                {
+                  QDirIterator it(fullPath, QDir::Files | QDir::AllDirs | QDir::NoDotAndDotDot, QDirIterator::Subdirectories);
+                  while (it.hasNext())
+                    newFiles.append(it.next());
+                }
+              }
+            }
+
+            QString itemId = dataItemKey.split("|").first();
+            trackFilesForItem(itemId, newFiles);
+
+            // Remove from active downloads
+            m_dataItemProgress.remove(dataItemKey);
+            m_activeDownloads.remove(dataItemKey);
+            downloadNextDataItem();
+            portalItem->deleteLater();
+            zipHelper->deleteLater();
+          });
+          zipHelper->extractAll(extractPath);
+        }
+        else
+        {
+          QString itemId = dataItemKey.split("|").first();
+          trackFilesForItem(itemId, QStringList() << formattedPath);
+
+          // Remove from active downloads
+          m_dataItemProgress.remove(dataItemKey);
+          m_activeDownloads.remove(dataItemKey);
+          downloadNextDataItem();
+          portalItem->deleteLater();
+        }
+      })
+        .onFailed([this, portalItem, dataItemKey](const ErrorException&)
+      {
+        // Check if this download was cancelled
+        if (!m_dataItemProgress.contains(dataItemKey))
+          return;
+
+        setDownloadFailed(true);
+        setDownloadText(QString("Download failed for item ").arg(portalItem->itemId()));
+        setDownloadInProgress(false);
+        setIsBulkDownload(false);
+
+        // Stop timer
+        if (m_progressUpdateTimer && m_progressUpdateTimer->isActive())
+        {
+          m_progressUpdateTimer->stop();
+        }
+
+        // Remove from active downloads on failure
+        m_dataItemProgress.remove(dataItemKey);
+        m_activeDownloads.remove(dataItemKey);
+      });
+    }
+  });
+
+  connect(portalItem, &PortalItem::fetchDataProgressChanged, this, [this, dataItemKey](const NetworkRequestProgress& progress)
+  {
+    // Check if this download was cancelled
+    if (!m_dataItemProgress.contains(dataItemKey))
+      return;
+
+    // Update progress for this specific data item
+    m_dataItemProgress[dataItemKey] = progress.progressPercentage();
+  });
+
+  portalItem->load();
+}
+
+QString DownloadsManager::formattedPath(const QString& outputPath, const QString& folderName)
+{
+  // first make sure output path exists
+  if (!QFile::exists(outputPath))
+  {
+    QFileInfo fileInfo = QFileInfo(outputPath);
+    QDir dir = fileInfo.dir();
+    if (!dir.exists())
+    {
+      dir.mkpath(".");
+    }
+  }
+
+  // create the download data task
+  QString formattedFilePath = outputPath;
+
+  // check if the item is code sample
+  if (!folderName.isEmpty())
+  {
+    QFileInfo fileInfo = QFileInfo(outputPath);
+    QString dir = fileInfo.dir().absolutePath();
+    formattedFilePath = dir + "/" + folderName;
+  }
+
+  return formattedFilePath;
+}

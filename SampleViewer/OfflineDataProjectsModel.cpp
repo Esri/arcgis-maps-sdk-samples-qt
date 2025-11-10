@@ -13,9 +13,20 @@
 // limitations under the License.
 // [Legal]
 
+// Licensed under the Apache License, Version 2.0 (the "License");
+// you may not use this file except in compliance with the License.
+// You may obtain a copy of the License at
+// http://www.apache.org/licenses/LICENSE-2.0
+
+// Unless required by applicable law or agreed to in writing, software
+// distributed under the License is distributed on an "AS IS" BASIS,
+// WITHOUT WARRANTIES OR CONDITIONS OF ANY KIND, either express or implied.
+// See the License for the specific language governing permissions and
+// limitations under the License.
+// [Legal]
+
 #include "pch.hpp"
 
-// Qt headers
 #include <QAbstractListModel>
 #include <QByteArray>
 #include <QHash>
@@ -23,7 +34,6 @@
 #include <QObject>
 #include <QVariant>
 
-// Other headers
 #include "OfflineDataProjectsModel.h"
 #include "Sample.h"
 
@@ -68,7 +78,6 @@ void OfflineDataProjectsModel::updateProject(int index, bool downloaded, bool do
   m_projects[index].downloadedItemsCount = downloadedCount;
   m_projects[index].totalItemsCount = totalCount;
 
-  // Notify QML that THIS specific item changed - preserves scroll position
   QModelIndex modelIndex = this->index(index);
   emit dataChanged(modelIndex, modelIndex, {DownloadedRole, DownloadingRole, DownloadProgressRole, DownloadedItemsCountRole, TotalItemsCountRole});
 }
@@ -99,9 +108,7 @@ int OfflineDataProjectsModel::rowCount(const QModelIndex& parent) const
 QVariant OfflineDataProjectsModel::data(const QModelIndex& index, int role) const
 {
   if (index.row() < 0 || index.row() >= m_projects.count())
-  {
-    return QVariant{};
-  }
+    return QVariant();
 
   const OfflineDataProject& project = m_projects[index.row()];
   QVariant retVal;

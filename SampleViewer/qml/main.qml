@@ -159,7 +159,7 @@ ApplicationWindow {
                         onTriggered: {
                             aboutView.visible = false;
                             proxySetupView.visible = false;
-                            if (SampleManager.currentMode !== SampleManager.DownloadDataView || !SampleManager.downloadInProgress)
+                            if (SampleManager.currentMode !== SampleManager.DownloadDataView || !SampleManager.downloadsManager.downloadInProgress)
                                 SampleManager.currentMode = SampleManager.ManageOfflineDataView
                         }
                     }
@@ -280,7 +280,7 @@ ApplicationWindow {
                     && SampleManager.reachability !== SampleManager.ReachabilityUnknown){
                 SampleManager.currentMode = SampleManager.NetworkRequiredView;
                 return;
-            // If the sample requires offline data
+                // If the sample requires offline data
             } else {
                 showSample();
             }
@@ -293,13 +293,17 @@ ApplicationWindow {
             SampleManager.currentMode = SampleManager.HomepageView;
         }
 
-        function onDoneDownloadingChanged() {
-            if (SampleManager.currentMode !== SampleManager.ManageOfflineDataView)
-                showSample();
-        }
-
         function onCurrentModeChanged() {
             if (SampleManager.currentMode === SampleManager.LiveSampleView)
+                showSample();
+        }
+    }
+
+    Connections {
+        target: SampleManager.downloadsManager
+
+        function onDoneDownloadingChanged() {
+            if (SampleManager.currentMode !== SampleManager.ManageOfflineDataView)
                 showSample();
         }
     }
@@ -316,7 +320,7 @@ ApplicationWindow {
 
                 liveSample.source = SampleManager.currentSample.source;
             } else {
-                if (SampleManager.downloadInProgress)
+                if (SampleManager.downloadsManager.downloadInProgress)
                     SampleManager.currentMode = SampleManager.ManageOfflineDataView;
                 else
                     SampleManager.currentMode = SampleManager.DownloadDataView;

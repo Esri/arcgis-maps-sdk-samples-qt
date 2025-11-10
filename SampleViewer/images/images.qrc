@@ -16,5 +16,8 @@
         <file>logo@2x.png</file>
         <file>menu.png</file>
         <file>menu@2x.png</file>
+		<file>download_icon.svg</file>
+		<file>delete_icon.svg</file>
+		<file>cancel_icon.svg</file>
     </qresource>
 </RCC>

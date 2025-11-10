@@ -35,7 +35,7 @@ Page {
 
         Label {
             id: networkConnectionText
-            text: SampleManager.downloadInProgress ? qsTr("Currently downloading offline data.") : qsTr("Offline Data Required")
+            text: SampleManager.downloadsManager.downloadInProgress ? qsTr("Currently downloading offline data.") : qsTr("Offline Data Required")
             Layout.alignment: Qt.AlignHCenter | Qt.AlignVCenter
             horizontalAlignment: Text.AlignHCenter
             font {
@@ -47,11 +47,11 @@ Page {
         }
 
         Label {
-            text:  SampleManager.downloadFailed ? SampleManager.downloadText : "This sample uses offline data that is not detected on your system. Press the 'Download' button to download the data to your device."
+            text:  SampleManager.downloadsManager.downloadFailed ? SampleManager.downloadsManager.downloadText : "This sample uses offline data that is not detected on your system. Press the 'Download' button to download the data to your device."
             Layout.preferredWidth: parent.width
             Layout.alignment: Qt.AlignHCenter | Qt.AlignVCenter
             wrapMode: Text.WrapAtWordBoundaryOrAnywhere
-            visible: !SampleManager.downloadInProgress
+            visible: !SampleManager.downloadsManager.downloadInProgress
             font {
                 family: fontFamily
             }
@@ -60,9 +60,9 @@ Page {
         }
 
         Button {
-            text: (SampleManager.downloadFailed) ? qsTr("Retry") : qsTr("Download")
+            text: (SampleManager.downloadsManager.downloadFailed) ? qsTr("Retry") : qsTr("Download")
             Layout.alignment: Qt.AlignHCenter | Qt.AlignVCenter
-            visible: !SampleManager.downloadInProgress
+            visible: !SampleManager.downloadsManager.downloadInProgress
             onClicked: {
                 if (SampleManager.reachability === SampleManager.ReachabilityOnline || SampleManager.reachability === SampleManager.ReachabilityUnknown) {
                     SampleManager.downloadDataItemsCurrentSample();
@@ -74,11 +74,11 @@ Page {
         }
 
         Label {
-            text: SampleManager.downloadText
+            text: SampleManager.downloadsManager.downloadText
             Layout.alignment: Qt.AlignHCenter | Qt.AlignVCenter
             Layout.fillWidth: true
             horizontalAlignment: Label.AlignHCenter
-            visible: SampleManager.downloadInProgress
+            visible: SampleManager.downloadsManager.downloadInProgress
             font {
                 family: fontFamily
             }
@@ -86,11 +86,11 @@ Page {
         }
 
         Label {
-            text: "%1% complete".arg(SampleManager.downloadProgress)
+            text: "%1% complete".arg(SampleManager.downloadsManager.downloadProgress)
             Layout.alignment: Qt.AlignHCenter | Qt.AlignVCenter
             Layout.fillWidth: true
             horizontalAlignment: Text.AlignHCenter
-            visible: SampleManager.downloadInProgress
+            visible: SampleManager.downloadsManager.downloadInProgress
             font {
                 family: fontFamily
             }
@@ -103,8 +103,8 @@ Page {
             Layout.fillWidth: true
             from: 0
             to: 100
-            value: SampleManager.downloadProgress
-            visible: SampleManager.downloadInProgress
+            value: SampleManager.downloadsManager.downloadProgress
+            visible: SampleManager.downloadsManager.downloadInProgress
             clip: true
         }
     }

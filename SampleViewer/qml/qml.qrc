@@ -18,5 +18,6 @@
         <file>SearchBar.qml</file>
         <file>ManageOfflineDataView.qml</file>
         <file>HomepageView.qml</file>
+		<file>OfflineDataListView.qml</file>
     </qresource>
 </RCC>
