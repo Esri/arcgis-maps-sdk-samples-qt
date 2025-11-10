@@ -60,6 +60,7 @@ Item {
         width: 250
         height: childrenRect.height
         clip: true
+        spacing: 6
 
         // Assign the model to the list model of layers
         model: sampleModel.layerListModel

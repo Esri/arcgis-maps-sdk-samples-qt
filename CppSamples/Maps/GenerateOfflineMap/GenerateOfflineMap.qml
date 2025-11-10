@@ -61,7 +61,7 @@ GenerateOfflineMapSample {
                 margins: 5
             }
 
-            text: qsTr("Download")
+            text: qsTr("Generate offline map")
             leftPadding: 20
             rightPadding: 20
             icon {

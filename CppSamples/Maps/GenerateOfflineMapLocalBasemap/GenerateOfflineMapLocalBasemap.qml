@@ -61,7 +61,7 @@ GenerateOfflineMapLocalBasemapSample {
                 margins: 5
             }
 
-            text: qsTr("Download")
+            text: qsTr("Generate Offline Map")
             leftPadding: 20
             rightPadding: 20
             icon {

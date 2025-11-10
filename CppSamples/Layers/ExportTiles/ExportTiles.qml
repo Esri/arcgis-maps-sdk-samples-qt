@@ -45,7 +45,7 @@ ExportTilesSample {
                 margins: 5
             }
 
-            text: qsTr("Download")
+            text: qsTr("Export tiles")
             leftPadding: 20
             rightPadding: 20
             icon {
