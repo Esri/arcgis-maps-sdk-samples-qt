@@ -47,6 +47,7 @@ public:
 
   Q_INVOKABLE Sample* at(int index) const override { return m_samples.at(index); }
   void addSample(Sample* sample);
+  void sortSamples();
   int rowCount(const QModelIndex& parent = QModelIndex()) const override;
   QVariant data(const QModelIndex& index, int role = Qt::DisplayRole) const override;
   int size() const override { return m_samples.size(); }

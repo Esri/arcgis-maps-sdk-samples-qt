@@ -183,6 +183,7 @@ private:
   CategoryListModel* m_categories = nullptr;
   SampleListModel* m_allSamples = nullptr;
   SampleListModel* m_featuredSamples = nullptr;
+  SampleListModel* m_offlineDataSamples = nullptr;
   Sample* m_currentSample = nullptr;
   SampleCategory* m_currentCategory = nullptr;
   QString m_currentSourceCode;

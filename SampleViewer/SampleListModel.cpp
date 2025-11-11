@@ -61,6 +61,15 @@ void SampleListModel::addSample(Sample* sample)
   m_samples << sample;
   endInsertRows();
 }
+
+void SampleListModel::sortSamples()
+{
+  std::sort(m_samples.begin(), m_samples.end(), [](Sample* a, Sample* b)
+  {
+    return a->name().toString() < b->name().toString();
+  });
+}
+
 int SampleListModel::rowCount(const QModelIndex &parent) const
 {
   Q_UNUSED(parent);

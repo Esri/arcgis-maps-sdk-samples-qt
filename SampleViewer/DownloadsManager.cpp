@@ -71,10 +71,7 @@ DownloadsManager::DownloadsManager(QObject* parent) :
     setDownloadProgress(totalProgress / m_dataItemProgress.size());
 
     // Update the offline data projects model to show inline progress
-    if (m_samples)
-    {
-      updateOfflineDataProjects(m_samples);
-    }
+    updateOfflineDataProjects();
   });
 }
 
@@ -409,25 +406,24 @@ void DownloadsManager::setDownloadFailed(bool didFail)
   emit downloadFailedChanged();
 }
 
-void DownloadsManager::downloadAllDataItems(SampleListModel* samples)
+void DownloadsManager::downloadAllDataItems()
 {
-  if (!samples)
+  if (!m_samples)
   {
     qWarning() << "DownloadsManager::downloadAllDataItems: samples is null!";
     return;
   }
 
-  m_samples = samples;
   setDownloadFailed(false);
   setIsBulkDownload(true);
 
-  const int totalSamples = samples->size();
+  const int totalSamples = m_samples->size();
 
   QSet<QString> uniqueDataItems;
 
   for (int i = 0; i < totalSamples; ++i)
   {
-    Sample* sample = samples->at(i);
+    Sample* sample = m_samples->at(i);
     const int dataItemCount = sample->dataItems()->size();
     for (int j = 0; j < dataItemCount; ++j)
     {
@@ -447,7 +443,7 @@ void DownloadsManager::downloadAllDataItems(SampleListModel* samples)
   downloadNextDataItem();
 }
 
-void DownloadsManager::downloadDataItemsForSample(Sample* sample, SampleListModel* samples, bool isBulk)
+void DownloadsManager::downloadDataItemsForSample(Sample* sample, bool isBulk)
 {
   if (!sample)
   {
@@ -455,13 +451,12 @@ void DownloadsManager::downloadDataItemsForSample(Sample* sample, SampleListMode
     return;
   }
 
-  if (!samples)
+  if (!m_samples)
   {
     qWarning() << "DownloadsManager::downloadDataItemsForSample: samples is null!";
     return;
   }
 
-  m_samples = samples;
   setDownloadFailed(false);
   setIsBulkDownload(isBulk);
 
@@ -478,16 +473,16 @@ void DownloadsManager::downloadDataItemsForSample(Sample* sample, SampleListMode
   downloadNextDataItem();
 }
 
-void DownloadsManager::cancelSampleDownload(const QString& sampleName, SampleListModel* samples)
+void DownloadsManager::cancelSampleDownload(const QString& sampleName)
 {
-  const int totalSamples = samples->size();
+  const int totalSamples = m_samples->size();
 
   Sample* targetSample = nullptr;
 
   // Find the sample and cancel its downloads
   for (int i = 0; i < totalSamples; ++i)
   {
-    Sample* sample = samples->at(i);
+    Sample* sample = m_samples->at(i);
     if (sample->name().toString() == sampleName)
     {
       targetSample = sample;
@@ -556,20 +551,20 @@ void DownloadsManager::cancelAllDownloads()
   }
 }
 
-bool DownloadsManager::deleteAllOfflineData(SampleListModel* samples)
+bool DownloadsManager::deleteAllOfflineData()
 {
-  if (!samples)
+  if (!m_samples)
   {
     qWarning() << "DownloadsManager::deleteAllOfflineData: samples is null!";
     return false;
   }
 
-  const int totalSamples = samples->size();
+  const int totalSamples = m_samples->size();
   bool success = true;
 
   for (int i = 0; i < totalSamples; ++i)
   {
-    Sample* sample = samples->at(i);
+    Sample* sample = m_samples->at(i);
     const int dataItemCount = sample->dataItems()->size();
     for (int j = 0; j < dataItemCount; ++j)
     {
@@ -578,14 +573,14 @@ bool DownloadsManager::deleteAllOfflineData(SampleListModel* samples)
     }
   }
 
-  updateOfflineDataProjects(samples);
+  updateOfflineDataProjects();
 
   return success;
 }
 
-bool DownloadsManager::deleteProjectOfflineData(const QString& sampleName, SampleListModel* samples)
+bool DownloadsManager::deleteProjectOfflineData(const QString& sampleName)
 {
-  if (!samples)
+  if (!m_samples)
   {
     qWarning() << "DownloadsManager::deleteProjectOfflineData: samples is null!";
     return false;
@@ -597,12 +592,12 @@ bool DownloadsManager::deleteProjectOfflineData(const QString& sampleName, Sampl
     return false;
   }
 
-  const int totalSamples = samples->size();
+  const int totalSamples = m_samples->size();
   bool success = false;
 
   for (int i = 0; i < totalSamples; ++i)
   {
-    Sample* sample = samples->at(i);
+    Sample* sample = m_samples->at(i);
     if (sample->name().toString() == sampleName)
     {
       const int dataItemCount = sample->dataItems()->size();
@@ -617,14 +612,14 @@ bool DownloadsManager::deleteProjectOfflineData(const QString& sampleName, Sampl
   }
 
   // Refresh the offline data projects list
-  updateOfflineDataProjects(samples);
+  updateOfflineDataProjects();
 
   return success;
 }
 
-bool DownloadsManager::hasOfflineData(const QString& sampleName, SampleListModel* samples)
+bool DownloadsManager::hasOfflineData(const QString& sampleName)
 {
-  if (!samples)
+  if (!m_samples)
   {
     qWarning() << "DownloadsManager::hasOfflineData: samples is null!";
     return false;
@@ -636,11 +631,11 @@ bool DownloadsManager::hasOfflineData(const QString& sampleName, SampleListModel
     return false;
   }
 
-  const int totalSamples = samples->size();
+  const int totalSamples = m_samples->size();
 
   for (int i = 0; i < totalSamples; ++i)
   {
-    Sample* sample = samples->at(i);
+    Sample* sample = m_samples->at(i);
     if (sample->name().toString() == sampleName)
     {
       const int dataItemCount = sample->dataItems()->size();
@@ -656,31 +651,31 @@ bool DownloadsManager::hasOfflineData(const QString& sampleName, SampleListModel
   return false;
 }
 
-OfflineDataProjectsModel* DownloadsManager::getOfflineDataProjects(SampleListModel* samples)
+OfflineDataProjectsModel* DownloadsManager::getOfflineDataProjects()
 {
-  if (!samples)
+  if (!m_samples)
   {
     qWarning() << "DownloadsManager::getOfflineDataProjects: samples is null!";
     return m_offlineDataProjects;
   }
 
-  updateOfflineDataProjects(samples);
+  updateOfflineDataProjects();
   return m_offlineDataProjects;
 }
 
-bool DownloadsManager::hasAnyDataToDownload(SampleListModel* samples)
+bool DownloadsManager::hasAnyDataToDownload()
 {
-  if (!samples)
+  if (!m_samples)
   {
     qWarning() << "DownloadsManager::hasAnyDataToDownload: samples is null!";
     return false;
   }
 
-  const int totalSamples = samples->size();
+  const int totalSamples = m_samples->size();
 
   for (int i = 0; i < totalSamples; ++i)
   {
-    Sample* sample = samples->at(i);
+    Sample* sample = m_samples->at(i);
     const int dataItemCount = sample->dataItems()->size();
     for (int j = 0; j < dataItemCount; ++j)
     {
@@ -692,19 +687,19 @@ bool DownloadsManager::hasAnyDataToDownload(SampleListModel* samples)
   return false;
 }
 
-bool DownloadsManager::hasAnyDataToDelete(SampleListModel* samples)
+bool DownloadsManager::hasAnyDataToDelete()
 {
-  if (!samples)
+  if (!m_samples)
   {
     qWarning() << "DownloadsManager::hasAnyDataToDelete: samples is null!";
     return false;
   }
 
-  const int totalSamples = samples->size();
+  const int totalSamples = m_samples->size();
 
   for (int i = 0; i < totalSamples; ++i)
   {
-    Sample* sample = samples->at(i);
+    Sample* sample = m_samples->at(i);
     const int dataItemCount = sample->dataItems()->size();
     for (int j = 0; j < dataItemCount; ++j)
     {
@@ -747,25 +742,25 @@ double DownloadsManager::calculateSampleDownloadProgress(Sample* sample) const
   return itemCount > 0 ? totalProgress / itemCount : 0.0;
 }
 
-void DownloadsManager::updateOfflineDataProjects(SampleListModel* samples)
+void DownloadsManager::updateOfflineDataProjects()
 {
-  if (!samples)
+  if (!m_samples)
   {
     qWarning() << "DownloadsManager::updateOfflineDataProjects: samples is null!";
     return;
   }
 
-  const int totalSamples = samples->size();
+  const int totalSamples = m_samples->size();
 
   // Build list from scratch if empty (first time)
   if (m_offlineDataProjects->rowCount() == 0)
   {
     for (int i = 0; i < totalSamples; ++i)
     {
-      Sample* sample = samples->at(i);
+      Sample* sample = m_samples->at(i);
       if (sample->dataItems()->size() > 0)
       {
-        // Use helper to get complete download state (eliminates duplication!)
+        // Use helper to get complete download state
         SampleDownloadState state = getSampleDownloadState(sample);
         m_offlineDataProjects->addProject(sample, state.downloaded, state.isDownloading, state.progress,
                                            state.downloadedItems, state.totalItems);
@@ -774,11 +769,11 @@ void DownloadsManager::updateOfflineDataProjects(SampleListModel* samples)
   }
   else
   {
-    // Update existing items in place - this preserves scroll position!
+    // Update existing items in place
     int projectIndex = 0;
     for (int i = 0; i < totalSamples && projectIndex < m_offlineDataProjects->rowCount(); ++i)
     {
-      Sample* sample = samples->at(i);
+      Sample* sample = m_samples->at(i);
       if (sample->dataItems()->size() > 0)
       {
         // Use helper to get complete download state (eliminates duplication!)

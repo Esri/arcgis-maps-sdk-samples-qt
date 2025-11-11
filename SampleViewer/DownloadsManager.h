@@ -55,20 +55,20 @@ public:
   void initialize(Esri::ArcGISRuntime::Portal* portal, const QString& homePath);
 
   // Download operations
-  void downloadAllDataItems(SampleListModel* samples);
-  void downloadDataItemsForSample(Sample* sample, SampleListModel* samples, bool isBulk = false);
-  void cancelSampleDownload(const QString& sampleName, SampleListModel* samples);
+  void downloadAllDataItems();
+  void downloadDataItemsForSample(Sample* sample, bool isBulk = false);
+  void cancelSampleDownload(const QString& sampleName);
   void cancelAllDownloads();
 
   // Delete operations
-  bool deleteAllOfflineData(SampleListModel* samples);
-  bool deleteProjectOfflineData(const QString& sampleName, SampleListModel* samples);
+  bool deleteAllOfflineData();
+  bool deleteProjectOfflineData(const QString& sampleName);
 
   // Query methods
-  bool hasOfflineData(const QString& sampleName, SampleListModel* samples);
-  OfflineDataProjectsModel* getOfflineDataProjects(SampleListModel* samples);
-  bool hasAnyDataToDownload(SampleListModel* samples);
-  bool hasAnyDataToDelete(SampleListModel* samples);
+  bool hasOfflineData(const QString& sampleName);
+  OfflineDataProjectsModel* getOfflineDataProjects();
+  bool hasAnyDataToDownload();
+  bool hasAnyDataToDelete();
 
   // State getters
   bool downloadInProgress() const;
@@ -81,6 +81,11 @@ public:
 
   // State setters
   void setCancelDownload(bool cancel);
+
+  void setSamples(SampleListModel* samples)
+  {
+    m_samples = samples;
+  }
 
 signals:
   void downloadInProgressChanged();
@@ -117,7 +122,7 @@ private:
 
   void downloadNextDataItem();
   void fetchPortalItemData(const QString& itemId, const QString& outputPath);
-  void updateOfflineDataProjects(SampleListModel* samples);
+  void updateOfflineDataProjects();
   double calculateSampleDownloadProgress(Sample* sample) const;
   QString formattedPath(const QString& outputPath, const QString& folderName = QString());
 

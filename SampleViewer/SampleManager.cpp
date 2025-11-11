@@ -170,7 +170,15 @@ DownloadsManager* SampleManager::downloadsManager() const
 void SampleManager::init()
 {
   m_featuredSamples = new SampleListModel(this);
+  m_offlineDataSamples = new SampleListModel(this);
+
+  // Offline data samples get populated when we buildCategoriesList
   buildCategoriesList();
+
+  // sort so downloads list is in ascending order
+  //m_offlineDataSamples->sortSamples();
+  m_downloadsManager->setSamples(m_offlineDataSamples);
+
   emit sampleInitComplete();
 }
 
@@ -269,6 +277,12 @@ bool SampleManager::appendCategoryToManager(SampleCategory* category)
     for (int i = 0; i < totalRows; ++i)
     {
       m_allSamples->addSample(category->samples()->at(i));
+
+      // Maintain offline data list for downloads manager
+      if (m_offlineDataSamples && category->samples()->at(i)->dataItems()->size() > 0)
+      {
+        m_offlineDataSamples->addSample(category->samples()->at(i));
+      }
     }
     return true;
   }
@@ -507,12 +521,12 @@ bool SampleManager::dataItemsExists()
 
 void SampleManager::downloadAllDataItems()
 {
-  m_downloadsManager->downloadAllDataItems(m_allSamples);
+  m_downloadsManager->downloadAllDataItems();
 }
 
 void SampleManager::downloadDataItemsCurrentSample()
 {
-  m_downloadsManager->downloadDataItemsForSample(m_currentSample, m_allSamples, true);
+  m_downloadsManager->downloadDataItemsForSample(m_currentSample, true);
 }
 
 static QString homePath()
@@ -554,7 +568,7 @@ SampleManager::Reachability SampleManager::reachability() const
 
 bool SampleManager::deleteAllOfflineData()
 {
-  return m_downloadsManager->deleteAllOfflineData(m_allSamples);
+  return m_downloadsManager->deleteAllOfflineData();
 }
 
 QString SampleManager::api() const
@@ -588,27 +602,27 @@ void SampleManager::setupProxy(const QString& hostName, quint16 port, const QStr
 
 OfflineDataProjectsModel* SampleManager::getOfflineDataProjects()
 {
-  return m_downloadsManager->getOfflineDataProjects(m_allSamples);
+  return m_downloadsManager->getOfflineDataProjects();
 }
 
 bool SampleManager::hasOfflineData(const QString& sampleName)
 {
-  return m_downloadsManager->hasOfflineData(sampleName, m_allSamples);
+  return m_downloadsManager->hasOfflineData(sampleName);
 }
 
 bool SampleManager::hasAnyDataToDownload() const
 {
-  return m_downloadsManager->hasAnyDataToDownload(m_allSamples);
+  return m_downloadsManager->hasAnyDataToDownload();
 }
 
 bool SampleManager::hasAnyDataToDelete() const
 {
-  return m_downloadsManager->hasAnyDataToDelete(m_allSamples);
+  return m_downloadsManager->hasAnyDataToDelete();
 }
 
 bool SampleManager::deleteProjectOfflineData(const QString& sampleName)
 {
-  return m_downloadsManager->deleteProjectOfflineData(sampleName, m_allSamples);
+  return m_downloadsManager->deleteProjectOfflineData(sampleName);
 }
 
 void SampleManager::downloadProjectData(const QString& sampleName)
@@ -622,7 +636,7 @@ void SampleManager::downloadProjectData(const QString& sampleName)
     Sample* sample = sampleList->at(i);
     if (sample->name().toString() == sampleName)
     {
-      m_downloadsManager->downloadDataItemsForSample(sample, m_allSamples, false);
+      m_downloadsManager->downloadDataItemsForSample(sample, false);
       return;
     }
   }
@@ -630,5 +644,5 @@ void SampleManager::downloadProjectData(const QString& sampleName)
 
 void SampleManager::cancelSampleDownload(const QString& sampleName)
 {
-  m_downloadsManager->cancelSampleDownload(sampleName, m_allSamples);
+  m_downloadsManager->cancelSampleDownload(sampleName);
 }
