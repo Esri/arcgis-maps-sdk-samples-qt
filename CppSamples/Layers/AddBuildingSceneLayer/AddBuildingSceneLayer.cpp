@@ -25,6 +25,7 @@
 #include "ArcGISTiledElevationSource.h"
 #include "BuildingSceneLayer.h"
 #include "BuildingSublayer.h"
+#include "BuildingSublayerListModel.h"
 #include "Camera.h"
 #include "ElevationSourceListModel.h"
 #include "Error.h"
@@ -106,7 +107,7 @@ void AddBuildingSceneLayer::setLocalSceneView(LocalSceneQuickView* localSceneVie
     }
 
     // Get the overview and full model sublayers.
-    for (BuildingSublayer* sublayer : m_buildingSceneLayer->sublayers())
+    for (BuildingSublayer* sublayer : (*m_buildingSceneLayer->sublayers()))
     {
       if (sublayer->name() == "Overview")
       {
