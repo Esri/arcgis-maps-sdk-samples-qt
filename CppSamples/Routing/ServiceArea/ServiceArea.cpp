@@ -127,6 +127,13 @@ void ServiceArea::solveServiceArea()
   m_parameters.clearFacilities();
   m_parameters.clearPolylineBarriers();
 
+  // Clear graphicParent QObject so we dont have to wait for cleanup on close
+  if (m_graphicParent)
+  {
+    delete m_graphicParent;
+    m_graphicParent = nullptr;
+  }
+
   GraphicListModel* facilitiesGraphics = m_facilitiesOverlay->graphics();
   if (!facilitiesGraphics || facilitiesGraphics->rowCount() == 0)
   {
