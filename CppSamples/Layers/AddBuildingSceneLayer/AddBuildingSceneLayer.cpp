@@ -93,7 +93,7 @@ void AddBuildingSceneLayer::setLocalSceneView(LocalSceneQuickView* localSceneVie
 
   // Adds building scene layer to scene.
   m_buildingSceneLayer = new BuildingSceneLayer(
-    QUrl("https://www.arcgis.com/home/item.html?id=e989757f7dbc460eae592eefa4562e07"), this);
+    QUrl("https://www.arcgis.com/home/item.html?id=669f6279c579486eb4a0acc7eb59d7ca"), this);
 
   m_buildingSceneLayer->setAltitudeOffset(1.0);
   m_scene->operationalLayers()->append(m_buildingSceneLayer);
