@@ -129,6 +129,7 @@
 #include "../CppSamples/Geometry/ProjectGeometry/ProjectGeometry.h"
 #include "../CppSamples/Geometry/SpatialOperations/SpatialOperations.h"
 #include "../CppSamples/Geometry/SpatialRelationships/SpatialRelationships.h"
+#include "../CppSamples/Layers/AddBuildingSceneLayer/AddBuildingSceneLayer.h"
 #include "../CppSamples/Layers/AddCustomDynamicEntityDataSource/AddCustomDynamicEntityDataSource.h"
 #include "../CppSamples/Layers/AddDynamicEntityLayer/AddDynamicEntityLayer.h"
 #include "../CppSamples/Layers/AddVectorTiledLayerFromCustomStyle/AddVectorTiledLayerFromCustomStyle.h"
@@ -372,6 +373,7 @@ void registerCppSampleClasses()
   // Register the Samples under the Esri.Samples namespace
   Add3DTilesLayer::init();
   AddAPointSceneLayer::init();
+  AddBuildingSceneLayer::init();
   AddCustomDynamicEntityDataSource::init();
   AddDynamicEntityLayer::init();
   AddGraphicsWithRenderer::init();
