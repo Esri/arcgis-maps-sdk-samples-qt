@@ -39,75 +39,73 @@ Item {
     // Create a window to display the layers
     Rectangle {
         id: layerVisibilityRect
-        anchors {
-            fill: layerVisibilityListView
-            margins: -5
-        }
         color: palette.base
-        border.color: "#4D4D4D"
-        opacity: 0.9
+        border.color: palette.dark
+        opacity: 1
         radius: 5
-    }
-
-    // Create a list view to display the items
-    ListView {
-        id: layerVisibilityListView
-        anchors {
-            left: parent.left
-            top: parent.top
-            margins: 10
-        }
         width: 250
-        height: childrenRect.height
-        clip: true
-        spacing: 6
+        height: layerVisibilityListView.contentHeight + 20
 
-        // Assign the model to the list model of layers
-        model: sampleModel.layerListModel
 
-        // Assign the delegate to the delegate created above
-        delegate: Item {
-            height: childrenRect.height
-
-            // select the component based on the layer type
-            // GroupLayer is LayerType int value of 22. See API doc for more details:
-            // https://developers.arcgis.com/qt/layers/
-            Loader {
-                sourceComponent: layerType === 22 ?
-                                     groupLayerDelegate : layerDelegate
+        // Create a list view to display the items
+        ListView {
+            id: layerVisibilityListView
+            anchors {
+                fill: parent
+                margins: 10
             }
+            //clip: true
+            spacing: 12
 
-            // Delegate for GroupLayers - Contains secondary repeater for sublayers
-            Component {
-                id: groupLayerDelegate
-                Column {
-                    CheckBox {
-                        id: parentBox
-                        text: name
-                        checked: layerVisible
-                        onToggled: layerVisible = checked
-                    }
+            // Assign the model to the list model of layers
+            model: sampleModel.layerListModel
 
-                    Repeater {
-                        model: sampleModel.getGroupLayerListModel(layerVisibilityListView.currentIndex)
-                        delegate: RadioDelegate {
-                            checked: index === 0
+            // Assign the delegate to the delegate created above
+            delegate: Item {
+                height: childrenRect.height
+
+                // select the component based on the layer type
+                // GroupLayer is LayerType int value of 22. See API doc for more details:
+                // https://developers.arcgis.com/qt/layers/
+                Loader {
+                    sourceComponent: layerType === 22 ?
+                                         groupLayerDelegate : layerDelegate
+                }
+
+                // Delegate for GroupLayers - Contains secondary repeater for sublayers
+                Component {
+                    id: groupLayerDelegate
+                    Column {
+                        spacing: 8
+                        CheckBox {
+                            id: parentBox
                             text: name
-                            leftPadding: indicator.width
-                            width: layerVisibilityRect.width - leftPadding
-                            onCheckedChanged: layerVisible = checked
+                            checked: layerVisible
+                            onToggled: layerVisible = checked
+                        }
+
+                        Repeater {
+                            model: sampleModel.getGroupLayerListModel(layerVisibilityListView.currentIndex)
+                            delegate: RadioButton {
+                                checked: index === 0
+                                text: name
+                                leftPadding: indicator.width
+                                width: layerVisibilityRect.width - leftPadding
+                                onCheckedChanged: layerVisible = checked
+                                enabled: parentBox.checked
+                            }
                         }
                     }
                 }
-            }
 
-            // Delegate for all other layers - standard Checkbox
-            Component {
-                id: layerDelegate
-                CheckBox {
-                    text: name
-                    checked: layerVisible
-                    onToggled: layerVisible = checked;
+                // Delegate for all other layers - standard Checkbox
+                Component {
+                    id: layerDelegate
+                    CheckBox {
+                        text: name
+                        checked: layerVisible
+                        onToggled: layerVisible = checked;
+                    }
                 }
             }
         }
