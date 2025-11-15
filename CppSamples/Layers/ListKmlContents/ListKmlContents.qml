@@ -37,7 +37,7 @@ Item {
             background : Rectangle {
                 color: palette.base
                 border{
-                    color: palette.dark
+                    color: "darkgray"
                     width: 1
                 }
             }

@@ -40,7 +40,7 @@ Item {
     Rectangle {
         id: layerVisibilityRect
         color: palette.base
-        border.color: palette.dark
+        border.color: "darkgray"
         opacity: 1
         radius: 5
         width: 250
