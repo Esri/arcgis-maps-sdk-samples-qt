@@ -39,7 +39,7 @@ RoundButton {
         anchors.fill: parent
         radius: parent.radius
         opacity: parent.enabled || parent.checked ? 1 : 0.3
-        color: geometryEditorButton.down ? palette.base : palette.highlight
+        color: geometryEditorButton.down ? palette.highlight : palette.button
     }
 
     Image {
@@ -62,5 +62,6 @@ RoundButton {
         }
         text: buttonName
         font.pixelSize: 8
+        color: "white"
     }
 }
