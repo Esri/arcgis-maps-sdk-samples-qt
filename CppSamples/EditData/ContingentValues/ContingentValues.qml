@@ -165,13 +165,7 @@ Item {
 
             Button {
                 id: saveButton
-                Label {
-                    anchors.fill: parent
-                    horizontalAlignment: Text.AlignHCenter
-                    verticalAlignment: Text.AlignVCenter
-                    text: qsTr("Save")
-                }
-
+                text: qsTr("Save")
                 enabled: false
 
                 onClicked: {
@@ -185,12 +179,8 @@ Item {
 
             Button {
                 id: discardButton
-                Label {
-                    anchors.fill: parent
-                    horizontalAlignment: Text.AlignHCenter
-                    verticalAlignment: Text.AlignVCenter
-                    text: qsTr("Discard")
-                }
+                text: qsTr("Discard")
+
                 onClicked: {
                     contingentValuesSample.featureAttributesPaneVisibe = false;
                     contingentValuesSample.discardFeature();
