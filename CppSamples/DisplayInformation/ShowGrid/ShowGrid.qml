@@ -193,7 +193,6 @@ Item {
             NumberAnimation { target: styleWindow; property: "y"; to: root.height; duration: 200 }
         }
 
-
         GridLayout {
             id: grid
             columns: 2
