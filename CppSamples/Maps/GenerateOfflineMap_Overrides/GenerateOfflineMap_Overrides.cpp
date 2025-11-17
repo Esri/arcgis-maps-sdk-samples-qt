@@ -375,6 +375,7 @@ void GenerateOfflineMap_Overrides::takeMapOffline()
       // show the map
       emit updateStatus("Complete");
       emit hideWindow(1500, true);
+      m_mapView->setMap(generateJob->result()->offlineMap(this));
       break;
     default: // do nothing
       break;
