@@ -38,7 +38,7 @@ ExportTilesSample {
 
         // Create the download button to export tile cache
         Button {
-            id: downloadButton
+            id: exportTilesButton
             anchors {
                 horizontalCenter: parent.horizontalCenter
                 bottom: mapView.attributionTop
@@ -52,9 +52,8 @@ ExportTilesSample {
                 source: "qrc:/Samples/Layers/ExportTiles/download.png"
                 width: 24
                 height: 24
-                color: palette.text
+                color: "white"
             }
-            visible: mapLoaded
 
             onClicked: {
                 // call the C++ invokable function to export tile cache from the input screen coordinates
