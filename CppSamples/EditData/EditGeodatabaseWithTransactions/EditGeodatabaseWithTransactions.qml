@@ -226,7 +226,7 @@ Item {
                         Label {
                             anchors.centerIn: parent
                             text: modelData
-                            color: featureTypeList.currentIndex === index ? "white" : palette.text
+                            color: featureTypeList.currentIndex === index ? "#F8F8F8" : palette.text
                         }
                     }
 
