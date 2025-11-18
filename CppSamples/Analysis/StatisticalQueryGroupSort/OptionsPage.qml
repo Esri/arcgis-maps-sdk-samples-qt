@@ -138,7 +138,7 @@ Rectangle {
                         }
 
                         Button {
-                            text: "+"
+                            text: qsTr("Add")
                             onClicked: rootRectangle.addStatisticDefinition(fieldComboBox.currentText, statisticComboBox.currentText);
                         }
                     }
