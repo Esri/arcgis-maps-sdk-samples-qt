@@ -158,13 +158,14 @@ Item {
 
                     Rectangle {
                         anchors.fill: parent
-                        color: gdbModel.selectedTableName === modelData ? "#7938b6" : "transparent"
+                        color: gdbModel.selectedTableName === modelData ? palette.highlight : "transparent"
                         border.color: "gray"
                         border.width: 1
 
                         Label {
                             anchors.centerIn: parent
                             text: modelData
+                            color: gdbModel.selectedTableName === modelData ? "white" : palette.text
                         }
                     }
 
@@ -218,13 +219,14 @@ Item {
 
                     Rectangle {
                         anchors.fill: parent
-                        color: featureTypeList.currentIndex === index ? "#7938b6" : "transparent"
+                        color: featureTypeList.currentIndex === index ? palette.highlight : "transparent"
                         border.color: "gray"
                         border.width: 1
 
                         Label {
                             anchors.centerIn: parent
                             text: modelData
+                            color: featureTypeList.currentIndex === index ? "white" : palette.text
                         }
                     }
 
