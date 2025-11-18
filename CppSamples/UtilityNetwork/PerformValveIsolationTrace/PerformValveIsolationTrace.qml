@@ -33,7 +33,7 @@ Item {
 
     ColumnLayout {
         anchors {
-            left: parent.left
+            right: parent.right
             top: parent.top
         }
 
@@ -42,6 +42,11 @@ Item {
             color: palette.base
             height: childrenRect.height + 20
             width: row.width * 1.05
+
+            border {
+                width: 1
+                color: "darkgrey"
+            }
 
             RowLayout {
                 id: titleRow
