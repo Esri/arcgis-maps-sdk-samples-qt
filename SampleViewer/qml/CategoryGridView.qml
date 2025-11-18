@@ -62,7 +62,13 @@ Page {
         }
         clip: true
         model: SampleManager.categories
-        delegate: categoryCard
+        delegate: Component {
+            CategoryCard {
+                thumbnailUrl: model.thumbnailUrl
+                displayName: model.displayName
+                backgroundThumbnailUrl: model.backgroundThumbnailUrl
+            }
+        }
         cellWidth: width / 2
         cellHeight: cellWidth
         visible: searchBar.text === ""
