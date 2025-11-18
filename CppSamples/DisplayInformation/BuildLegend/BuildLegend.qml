@@ -160,7 +160,7 @@ BuildLegendSample {
                             text: section
                             font.bold: true
                             font.pixelSize: 13
-                            color: "white"
+                            color: "#F8F8F8"
                         }
                     }
                 }

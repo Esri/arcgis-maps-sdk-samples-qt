@@ -48,7 +48,7 @@ Item {
         }
         width: parent.width * 0.5
         height: 60
-        color: Qt.application.styleHints.colorScheme === Qt.ColorScheme.Dark ? "#2B2B2B" : "#FFFFFF"
+        color: Qt.application.styleHints.colorScheme === Qt.ColorScheme.Dark ? "#2B2B2B" : "#F8F8F8"
         radius: 5
         border {
             width: 1
@@ -95,7 +95,7 @@ Item {
 
                 Rectangle {
                     id: headingHandleNub
-                    color: Qt.application.styleHints.colorScheme === Qt.ColorScheme.Dark ? "#2B2B2B" : "#FFFFFF"
+                    color: Qt.application.styleHints.colorScheme === Qt.ColorScheme.Dark ? "#2B2B2B" : "#F8F8F8"
                     radius: width * 0.5
                     width: 20
                     height: width
@@ -109,7 +109,7 @@ Item {
                     radius: 3
                     x: headingHandleNub.x - width / 2 + headingHandleNub.width / 2
                     y: headingHandleNub.y - height - 5
-                    color: Qt.application.styleHints.colorScheme === Qt.ColorScheme.Dark ? "#2B2B2B" : "#FFFFFF"
+                    color: Qt.application.styleHints.colorScheme === Qt.ColorScheme.Dark ? "#2B2B2B" : "#F8F8F8"
                     border.width: 1
                     border.color: Qt.application.styleHints.colorScheme === Qt.ColorScheme.Dark ? "#404040" : "#DFDFDF"
 
@@ -121,7 +121,7 @@ Item {
                         horizontalAlignment: Qt.AlignHCenter
                         verticalAlignment: Qt.AlignVCenter
                         text: qsTr(Math.round(cameraHeadingSlider.value) + "\u00B0")
-                        color: Qt.application.styleHints.colorScheme === Qt.ColorScheme.Dark ? "#FFFFFF" : "#151515"
+                        color: Qt.application.styleHints.colorScheme === Qt.ColorScheme.Dark ? "#F8F8F8" : "#151515"
                     }
                 }
             }
@@ -150,7 +150,7 @@ Item {
         }
         width: 60
         height: parent.height * 0.5
-        color: Qt.application.styleHints.colorScheme === Qt.ColorScheme.Dark ? "#2B2B2B" : "#FFFFFF"
+        color: Qt.application.styleHints.colorScheme === Qt.ColorScheme.Dark ? "#2B2B2B" : "#F8F8F8"
         radius: 5
         border {
             width: 1
@@ -210,7 +210,7 @@ Item {
 
                 Rectangle {
                     id: pitchHandleNub
-                    color: Qt.application.styleHints.colorScheme === Qt.ColorScheme.Dark ? "#2B2B2B" : "#FFFFFF"
+                    color: Qt.application.styleHints.colorScheme === Qt.ColorScheme.Dark ? "#2B2B2B" : "#F8F8F8"
                     radius: width * 0.5
                     width: 20
                     height: width
@@ -224,7 +224,7 @@ Item {
                     radius: 3
                     x: pitchHandleNub.x - width - 5
                     y: pitchHandleNub.y - height/2 + pitchHandleNub.height/2
-                    color: Qt.application.styleHints.colorScheme === Qt.ColorScheme.Dark ? "#2B2B2B" : "#FFFFFF"
+                    color: Qt.application.styleHints.colorScheme === Qt.ColorScheme.Dark ? "#2B2B2B" : "#F8F8F8"
                     border.width: 1
                     border.color: Qt.application.styleHints.colorScheme === Qt.ColorScheme.Dark ? "#404040" : "#DFDFDF"
 
@@ -236,7 +236,7 @@ Item {
                         horizontalAlignment: Qt.AlignHCenter
                         verticalAlignment: Qt.AlignVCenter
                         text: qsTr(Math.round(planePitchSlider.value)  + "\u00B0")
-                        color: Qt.application.styleHints.colorScheme === Qt.ColorScheme.Dark ? "#FFFFFF" : "#151515"
+                        color: Qt.application.styleHints.colorScheme === Qt.ColorScheme.Dark ? "#F8F8F8" : "#151515"
                     }
                 }
             }
@@ -251,7 +251,7 @@ Item {
         }
         height: viewOptionsColumn.implicitHeight + 16
         width: viewOptionsColumn.implicitWidth + 16
-        color: Qt.application.styleHints.colorScheme === Qt.ColorScheme.Dark ? "#2B2B2B" : "#FFFFFF"
+        color: Qt.application.styleHints.colorScheme === Qt.ColorScheme.Dark ? "#2B2B2B" : "#F8F8F8"
         border{
             width: 1
             color: Qt.application.styleHints.colorScheme === Qt.ColorScheme.Dark ? "#404040" : "#DFDFDF"

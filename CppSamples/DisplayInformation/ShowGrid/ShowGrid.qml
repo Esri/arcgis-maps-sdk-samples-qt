@@ -81,7 +81,7 @@ Item {
                 anchors.centerIn: parent
                 text: qsTr("Map View")
                 font.pixelSize: 14
-                color: mapViewButton.selected ? "white" : palette.text
+                color: mapViewButton.selected ? "#F8F8F8" : palette.text
             }
 
             MouseArea {
@@ -111,7 +111,7 @@ Item {
                 anchors.centerIn: parent
                 text: qsTr("Scene View")
                 font.pixelSize: 14
-                color: sceneViewButton.selected ? "white" : palette.text
+                color: sceneViewButton.selected ? "#F8F8F8": palette.text
             }
 
             MouseArea {
