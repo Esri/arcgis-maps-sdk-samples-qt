@@ -62,7 +62,13 @@ FindRouteSample {
     // add a mapView component
     MapView {
         id: mapView
-        anchors.fill: parent
+        anchors {
+            left: parent.left
+            top: parent.top
+            bottom: parent.bottom
+        }
+        // Dynamically shrink when the directions window is visible
+        width: parent.width - (directionWindow.visible ? directionWindow.width : 0)
         objectName: "mapView"
 
         Component.onCompleted: {
@@ -70,12 +76,7 @@ FindRouteSample {
             forceActiveFocus();
         }
 
-        // set the transform to animate showing the direction window
-        transform: Translate {
-            id: translate
-            x: 0
-            Behavior on x { NumberAnimation { duration: 300; easing.type: Easing.OutQuad } }
-        }
+        Behavior on width { NumberAnimation { duration: 300; easing.type: Easing.OutQuad } }
 
         // Create the solve button to solve the route
         Button {
@@ -128,7 +129,6 @@ FindRouteSample {
                 onReleased: directionButton.pressed = false
                 onClicked: {
                     // Show the direction window when it is clicked
-                    translate.x = directionWindow.visible ? 0 : (directionWindow.width * -1);
                     directionWindow.visible = !directionWindow.visible;
                 }
             }
