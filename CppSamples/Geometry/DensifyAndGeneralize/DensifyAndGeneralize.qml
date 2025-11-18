@@ -43,7 +43,6 @@ DensifyAndGeneralizeSample {
             top: parent.top
             right: parent.right
         }
-
         color: palette.base
         radius: 5
         border {
