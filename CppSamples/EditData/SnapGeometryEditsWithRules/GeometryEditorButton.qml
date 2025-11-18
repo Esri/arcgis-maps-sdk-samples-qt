@@ -61,7 +61,7 @@ RoundButton {
             horizontalCenter: parent.horizontalCenter
         }
         text: buttonName
-        font.pixelSize: 8
+        font.pixelSize: 14
         color: "#F8F8F8"
     }
 }
