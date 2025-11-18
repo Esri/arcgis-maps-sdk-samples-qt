@@ -46,16 +46,7 @@ Item {
             id: floor_level
             width: 200
             model: [qsTr("Level 1"), qsTr("Level 2"), qsTr("Level 3")]
-        }
-
-        Button {
-            id: select_floor
-            width: 200
-            anchors.horizontalCenter: parent.horizontalCenter
-            text: qsTr("Select Floor")
-            onClicked: {
-                model.selectFloor(floor_level.currentText);
-            }
+            onCurrentTextChanged: model.selectFloor(currentText);
         }
     }
 
