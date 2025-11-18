@@ -57,6 +57,12 @@ AnalyzeHotspotsSample {
         radius: 5
         border.color: "black"
         opacity: 0.75
+
+        MouseArea {
+            anchors.fill: parent
+            onClicked: mouse => mouse.accepted = true
+            onWheel: wheel => wheel.accepted = true
+        }
     }
 
     Column {

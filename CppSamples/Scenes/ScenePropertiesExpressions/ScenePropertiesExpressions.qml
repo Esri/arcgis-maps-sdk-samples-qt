@@ -38,6 +38,12 @@ Item {
     Rectangle {
         anchors.fill: sliderColumn
         color: palette.base
+        
+        MouseArea {
+            anchors.fill: parent
+            onClicked: mouse => mouse.accepted = true
+            onWheel: wheel => wheel.accepted = true
+        }
     }
 
     Column{

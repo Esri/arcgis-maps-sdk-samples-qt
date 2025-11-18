@@ -42,6 +42,12 @@ Item {
         opacity: .9
         radius: 5
 
+        MouseArea {
+            anchors.fill: parent
+            onClicked: mouse => mouse.accepted = true
+            onWheel: wheel => wheel.accepted = true
+        }
+
         ColumnLayout {
             Label {
                 text: qsTr("Current scale: 1:" + Math.round(model.currentScale))

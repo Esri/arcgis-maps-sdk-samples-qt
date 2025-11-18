@@ -176,6 +176,12 @@ Item {
         width: childrenRect.width
         color: palette.base
 
+        MouseArea {
+            anchors.fill: parent
+            onClicked: mouse => mouse.accepted = true
+            onWheel: wheel => wheel.accepted = true
+        }
+
         Column {
             spacing: 10
             padding: 10

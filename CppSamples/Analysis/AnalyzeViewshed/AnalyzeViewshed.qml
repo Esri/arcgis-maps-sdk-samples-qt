@@ -88,6 +88,12 @@ AnalyzeViewshedSample {
         }
     }
 
+    MouseArea {
+        anchors.fill: statusColumn
+        onClicked: mouse => mouse.accepted = true
+        onWheel: wheel => wheel.accepted = true
+    }
+
     Dialog {
         id: messageDialog
         modal: true

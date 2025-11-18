@@ -45,6 +45,13 @@ Item {
         color: palette.base
         border.color: "black"
         border.width: 2
+
+        MouseArea {
+            anchors.fill: parent
+            onClicked: mouse => mouse.accepted = true
+            onWheel: wheel => wheel.accepted = true
+        }
+        
         Label {
             id: distancesLabel
             text: "Vertex distance: " + model.vertexDistance + " mi\nCoordinate distance: " + model.coordinateDistance + " mi";

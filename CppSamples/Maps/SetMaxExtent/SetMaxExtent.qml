@@ -43,6 +43,12 @@ Item {
         color: palette.base
         radius: 3
 
+        MouseArea {
+            anchors.fill: parent
+            onClicked: mouse => mouse.accepted = true
+            onWheel: wheel => wheel.accepted = true
+        }
+
         ColumnLayout {
             Label {
                 text: qsTr("Max extent enabled")

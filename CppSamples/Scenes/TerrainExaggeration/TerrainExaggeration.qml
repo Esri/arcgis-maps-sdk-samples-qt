@@ -47,6 +47,12 @@ TerrainExaggerationSample {
             opacity: 0.8
             color: palette.base
 
+            MouseArea {
+                anchors.fill: parent
+                onClicked: mouse => mouse.accepted = true
+                onWheel: wheel => wheel.accepted = true
+            }
+
             // sliderCombo: A slider and text for its value
             Row {
                 id: sliderCombo
