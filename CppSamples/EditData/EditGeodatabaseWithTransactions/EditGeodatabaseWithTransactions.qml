@@ -165,7 +165,7 @@ Item {
                         Label {
                             anchors.centerIn: parent
                             text: modelData
-                            color: gdbModel.selectedTableName === modelData ? "white" : palette.text
+                            color: gdbModel.selectedTableName === modelData ? "#F8F8F8" : palette.text
                         }
                     }
 
