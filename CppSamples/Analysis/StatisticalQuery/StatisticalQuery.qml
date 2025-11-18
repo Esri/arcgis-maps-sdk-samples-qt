@@ -46,10 +46,9 @@ StatisticalQuerySample {
             margins: -10
         }
         color: palette.base
-        radius: 3
-        opacity: 0.8
+        radius: 5
         border {
-            color: "black"
+            color: "darkgrey"
             width: 1
         }
     }
@@ -61,7 +60,7 @@ StatisticalQuerySample {
             top: parent.top
             margins: 15
         }
-        spacing: 5
+        spacing: 8
 
         CheckBox {
             id: extentCheckbox
