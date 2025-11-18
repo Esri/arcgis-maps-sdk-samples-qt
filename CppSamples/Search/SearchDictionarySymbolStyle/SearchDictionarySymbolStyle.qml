@@ -77,7 +77,7 @@ SearchDictionarySymbolStyleSample {
                             placeholderText: repeaterModel[index] +" (e.g. "+ hintsModel[index] +")"
                             selectByMouse: true
                             validator: RegularExpressionValidator{ regularExpression: /^\s*[\da-zA-Z_][\da-zA-Z\s_]*$/ }
-                            onAccepted: addCategoryButtonMouseArea.clicked(true);
+                            onAccepted: addCategoryButton.addCategory();
                         }
 
                         Rectangle {
@@ -94,16 +94,18 @@ SearchDictionarySymbolStyleSample {
                             MouseArea {
                                 id: addCategoryButtonMouseArea
                                 anchors.fill: parent
-                                onClicked: {
-                                    if (categoryEntry.text.length === 0)
-                                        return;
+                                onClicked: addCategoryButton.addCategory();
+                            }
 
-                                    const tmp = searchParamList;
-                                    tmp[index].push(categoryEntry.text);
+                            function addCategory() {
+                                if (categoryEntry.text.length === 0)
+                                    return;
 
-                                    searchParamList = tmp;
-                                    categoryEntry.text = "";
-                                }
+                                const tmp = searchParamList;
+                                tmp[index].push(categoryEntry.text);
+
+                                searchParamList = tmp;
+                                categoryEntry.text = "";
                             }
                         }
 
