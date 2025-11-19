@@ -39,127 +39,205 @@ Item {
     }
 
     //Camera heading slider, sits at the bottom of the screen
-    Slider {
-        id: cameraHeadingSlider
-
+    Rectangle {
+        id: cameraHeadingContainer
         anchors {
-            left: parent.left
-            right: parent.right
+            horizontalCenter: parent.horizontalCenter
             bottom: parent.bottom
             margins: 20
         }
-
-        value: model.cameraHeading //Value bound to the model, so rotating the camera will update the slider.
-        from: model.cameraHeadingBounds.x //Similarly, setting different initial bounds changes the UI automatically. Type used is QPointF for min/max, hence the x/y
-        to: model.cameraHeadingBounds.y
-
-        //To avoid getting stuck in a binding loop for the value, update the value of the camera heading from the slider only in response to a moving slider.
-        onMoved: {
-            model.cameraHeading = cameraHeadingSlider.value
+        width: parent.width * 0.5
+        height: 60
+        color: Qt.application.styleHints.colorScheme === Qt.ColorScheme.Dark ? "#2B2B2B" : "#F8F8F8"
+        radius: 5
+        border {
+            width: 1
+            color: Qt.application.styleHints.colorScheme === Qt.ColorScheme.Dark ? "#404040" : "#DFDFDF"
         }
 
-        //Custom slider handle that displays the current value
-        handle: Item {
-            x: parent.leftPadding + parent.visualPosition * (parent.availableWidth - headingHandleNub.width)
-            y: parent.topPadding + parent.availableHeight / 2 - headingHandleNub.height / 2
-
-
-            Rectangle {
-                id: headingHandleNub
-                color: headingHandleRect.color
-                radius: width * 0.5
-                width: 10
-                height: width
+        Slider {
+            id: cameraHeadingSlider
+            implicitHeight: 40
+            anchors {
+                left: parent.left
+                right: parent.right
+                top: parent.top
+                margins: 10
             }
-            Rectangle {
-                id: headingHandleRect
-                height: childrenRect.height
-                width: childrenRect.width
-                radius: 3
-                x: headingHandleNub.x - width / 2 + headingHandleNub.width / 2
-                y: headingHandleNub.y - height
-                color: palette.base
 
-                Label {
-                    id: headingValue
-                    font.pixelSize: 14
-                    padding: 3
-                    horizontalAlignment: Qt.AlignHCenter
-                    verticalAlignment: Qt.AlignVCenter
-                    text: qsTr(Math.round(cameraHeadingSlider.value) + "\u00B0")
+            value: model.cameraHeading
+            from: model.cameraHeadingBounds.x
+            to: model.cameraHeadingBounds.y
+
+            onMoved: {
+                model.cameraHeading = cameraHeadingSlider.value
+            }
+
+            background: Rectangle {
+                x: cameraHeadingSlider.leftPadding
+                y: cameraHeadingSlider.topPadding + cameraHeadingSlider.availableHeight / 2 - height / 2
+                implicitWidth: 200
+                implicitHeight: 2
+                width: cameraHeadingSlider.availableWidth
+                height: implicitHeight
+                color: Qt.application.styleHints.colorScheme === Qt.ColorScheme.Dark ? "#404040" : "#DFDFDF"
+
+                Rectangle {
+                    width: cameraHeadingSlider.visualPosition * parent.width
+                    height: parent.height
+                    color: palette.highlight
+                }
+            }
+
+            handle: Item {
+                x: parent.leftPadding + parent.visualPosition * (parent.availableWidth - headingHandleNub.width)
+                y: parent.topPadding + parent.availableHeight / 2 - headingHandleNub.height / 2
+
+                Rectangle {
+                    id: headingHandleNub
+                    color: Qt.application.styleHints.colorScheme === Qt.ColorScheme.Dark ? "#2B2B2B" : "#F8F8F8"
+                    radius: width * 0.5
+                    width: 20
+                    height: width
+                    border.width: 2
+                    border.color: Qt.application.styleHints.colorScheme === Qt.ColorScheme.Dark ? "#757575" : "#949494"
+                }
+                Rectangle {
+                    id: headingHandleRect
+                    height: childrenRect.height
+                    width: childrenRect.width
+                    radius: 3
+                    x: headingHandleNub.x - width / 2 + headingHandleNub.width / 2
+                    y: headingHandleNub.y - height - 5
+                    color: Qt.application.styleHints.colorScheme === Qt.ColorScheme.Dark ? "#2B2B2B" : "#F8F8F8"
+                    border.width: 1
+                    border.color: Qt.application.styleHints.colorScheme === Qt.ColorScheme.Dark ? "#404040" : "#DFDFDF"
+
+                    Label {
+                        id: headingValue
+                        font.pixelSize: 16
+                        font.bold: true
+                        padding: 5
+                        horizontalAlignment: Qt.AlignHCenter
+                        verticalAlignment: Qt.AlignVCenter
+                        text: qsTr(Math.round(cameraHeadingSlider.value) + "\u00B0")
+                        color: Qt.application.styleHints.colorScheme === Qt.ColorScheme.Dark ? "#F8F8F8" : "#151515"
+                    }
                 }
             }
         }
-    }
 
-    Label {
-        id: cameraHeadingLabel
-
-        anchors {
-            horizontalCenter: cameraHeadingSlider.horizontalCenter
-            bottom: cameraHeadingSlider.top
-            bottomMargin: 10
+        Label {
+            id: cameraHeadingLabel
+            anchors {
+                horizontalCenter: parent.horizontalCenter
+                bottom: parent.bottom
+                bottomMargin: 5
+            }
+            text: qsTr("Camera Heading")
+            font.pixelSize: 12
+            color: Qt.application.styleHints.colorScheme === Qt.ColorScheme.Dark ? "#BFBFBF" : "#4A4A4A"
         }
-
-        text: qsTr("Camera Heading")
     }
 
     //Plane pitch slider, placed in the top-right of the screen
-    Label {
-        id: planePitchLabel
-
+    Rectangle {
+        id: planePitchContainer
         anchors {
-            horizontalCenter: planePitchSlider.horizontalCenter
-            bottom: planePitchSlider.top
-            bottomMargin: 10
-        }
-
-        text: qsTr("Plane Pitch")
-    }
-
-    Slider {
-        id: planePitchSlider
-
-        anchors {
-            top: parent.top
-            bottom: parent.verticalCenter
             right: parent.right
-            margins: 30
+            verticalCenter: parent.verticalCenter
+            margins: 20
+        }
+        width: 60
+        height: parent.height * 0.5
+        color: Qt.application.styleHints.colorScheme === Qt.ColorScheme.Dark ? "#2B2B2B" : "#F8F8F8"
+        radius: 5
+        border {
+            width: 1
+            color: Qt.application.styleHints.colorScheme === Qt.ColorScheme.Dark ? "#404040" : "#DFDFDF"
         }
 
-        value: 0
-        from: 90
-        to: -90
-        orientation: Qt.Vertical
-
-        //Custom slider handle that displays the current value
-        handle: Item {
-            x: planePitchSlider.leftPadding + planePitchSlider.availableWidth / 2 - pitchHandleNub.width / 2
-            y: planePitchSlider.topPadding + planePitchSlider.visualPosition * (planePitchSlider.availableHeight - pitchHandleNub.height)
-
-            Rectangle {
-                id: pitchHandleNub
-                color: pitchHandleRect.color
-                radius: width * 0.5
-                width: 10
-                height: width
+        Label {
+            id: planePitchLabel
+            anchors {
+                horizontalCenter: parent.horizontalCenter
+                top: parent.top
+                topMargin: 8
             }
-            Rectangle {
-                id: pitchHandleRect
-                height: childrenRect.height
-                width: childrenRect.width
-                radius: 3
-                x: pitchHandleNub.x - width
-                y: pitchHandleNub.y - height/2 + pitchHandleNub.height/2
-                color: palette.base
+            text: qsTr("Plane\nPitch")
+            font.pixelSize: 12
+            horizontalAlignment: Text.AlignHCenter
+            color: Qt.application.styleHints.colorScheme === Qt.ColorScheme.Dark ? "#BFBFBF" : "#4A4A4A"
+        }
 
-                Label {
-                    id: pitchValue
-                    font.pixelSize: 14
-                    padding: 3
-                    horizontalAlignment: Qt.AlignHCenter
-                    verticalAlignment: Qt.AlignVCenter
-                    text: qsTr(Math.round(planePitchSlider.value)  + "\u00B0")
+        Slider {
+            id: planePitchSlider
+            implicitWidth: 40
+            anchors {
+                top: planePitchLabel.bottom
+                bottom: parent.bottom
+                horizontalCenter: parent.horizontalCenter
+                topMargin: 5
+                bottomMargin: 10
+            }
+
+            value: 0
+            from: 90
+            to: -90
+            orientation: Qt.Vertical
+
+            background: Rectangle {
+                x: planePitchSlider.leftPadding + planePitchSlider.availableWidth / 2 - width / 2
+                y: planePitchSlider.topPadding
+                implicitWidth: 2
+                implicitHeight: 160
+                width: implicitWidth
+                height: planePitchSlider.availableHeight
+                color: Qt.application.styleHints.colorScheme === Qt.ColorScheme.Dark ? "#404040" : "#DFDFDF"
+
+                Rectangle {
+                    y: planePitchSlider.visualPosition * parent.height
+                    width: parent.width
+                    height: planePitchSlider.position * parent.height
+                    color: palette.highlight
+                }
+            }
+
+            //Custom slider handle that displays the current value
+            handle: Item {
+                x: planePitchSlider.leftPadding + planePitchSlider.availableWidth / 2 - pitchHandleNub.width / 2
+                y: planePitchSlider.topPadding + planePitchSlider.visualPosition * (planePitchSlider.availableHeight - pitchHandleNub.height)
+
+                Rectangle {
+                    id: pitchHandleNub
+                    color: Qt.application.styleHints.colorScheme === Qt.ColorScheme.Dark ? "#2B2B2B" : "#F8F8F8"
+                    radius: width * 0.5
+                    width: 20
+                    height: width
+                    border.width: 2
+                    border.color: Qt.application.styleHints.colorScheme === Qt.ColorScheme.Dark ? "#757575" : "#949494"
+                }
+                Rectangle {
+                    id: pitchHandleRect
+                    height: childrenRect.height
+                    width: childrenRect.width
+                    radius: 3
+                    x: pitchHandleNub.x - width - 5
+                    y: pitchHandleNub.y - height/2 + pitchHandleNub.height/2
+                    color: Qt.application.styleHints.colorScheme === Qt.ColorScheme.Dark ? "#2B2B2B" : "#F8F8F8"
+                    border.width: 1
+                    border.color: Qt.application.styleHints.colorScheme === Qt.ColorScheme.Dark ? "#404040" : "#DFDFDF"
+
+                    Label {
+                        id: pitchValue
+                        font.pixelSize: 16
+                        font.bold: true
+                        padding: 5
+                        horizontalAlignment: Qt.AlignHCenter
+                        verticalAlignment: Qt.AlignVCenter
+                        text: qsTr(Math.round(planePitchSlider.value)  + "\u00B0")
+                        color: Qt.application.styleHints.colorScheme === Qt.ColorScheme.Dark ? "#F8F8F8" : "#151515"
+                    }
                 }
             }
         }
@@ -171,50 +249,43 @@ Item {
             left: parent.left
             top: parent.top
         }
-
-        height: childrenRect.height
-        width: childrenRect.width
-        color: palette.base
+        height: viewOptionsColumn.implicitHeight + 16
+        width: viewOptionsColumn.implicitWidth + 16
+        color: Qt.application.styleHints.colorScheme === Qt.ColorScheme.Dark ? "#2B2B2B" : "#F8F8F8"
+        border{
+            width: 1
+            color: Qt.application.styleHints.colorScheme === Qt.ColorScheme.Dark ? "#404040" : "#DFDFDF"
+        }
 
         Column {
+            id: viewOptionsColumn
             spacing: 10
-            padding: 10
+            anchors.centerIn: parent
+
             Button {
                 text: qsTr("Cockpit View")
+                implicitWidth: 180
                 onClicked: {
                     model.cockpitView();
                     allowCamDistanceInteractionCheckBox.enabled = false;
-                    allowCamDistanceInteractionCheckBoxText.color = "gray";
                 }
             }
 
             Button {
                 text: qsTr("Center View")
+                implicitWidth: 180
                 onClicked: {
                     model.centerView();
                     allowCamDistanceInteractionCheckBox.enabled = true;
-                    allowCamDistanceInteractionCheckBoxText.color = "white";
                 }
             }
 
-            Row {
-                anchors {
-                    left: parent.left
-                }
-
-                CheckBox {
-                    id: allowCamDistanceInteractionCheckBox
-                    checked: model.allowCamDistanceInteraction
-                    onCheckedChanged: model.allowCamDistanceInteraction = checked
-                }
-
-                Label {
-                    id: allowCamDistanceInteractionCheckBoxText
-                    anchors {
-                        verticalCenter: allowCamDistanceInteractionCheckBox.verticalCenter
-                    }
-                    text: qsTr("Allow camera\ndistance interaction")
-                }
+            CheckBox {
+                id: allowCamDistanceInteractionCheckBox
+                implicitWidth: 180
+                checked: model.allowCamDistanceInteraction
+                onCheckedChanged: model.allowCamDistanceInteraction = checked
+                text: qsTr("Allow camera\ndistance interaction")
             }
         }
     }
