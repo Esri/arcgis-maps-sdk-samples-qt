@@ -36,12 +36,30 @@
 #include "Point.h"
 #include "PointCollection.h"
 #include "SpatialReference.h"
+#include "AttributeListModel.h"
 
 // Qt headers
 #include <QFile>
 #include <QFuture>
 #include <QStandardPaths>
 #include <QtCore/qglobal.h>
+#include <QTimer>
+
+// STL headers
+#include <random>
+
+namespace
+{
+  std::mt19937 m_generator(std::random_device{}()); // mersenne_twister_engine seeded with rd()
+  const std::vector<std::string> identifications{"0", "1", "2", "3", "4", "5"};
+  std::uniform_int_distribution<std::size_t> identification_distribution{0, identifications.size() - 1};
+  const std::vector<std::string> mainIcons{"000000", "110000", "110100", "110101", "110102", "110103",
+                                           "110104", "110105", "110107", "110116", "110200"};
+  std::uniform_int_distribution<std::size_t> mainIcon_distribution{0, mainIcons.size() - 1};
+  std::uniform_int_distribution<std::size_t> azimuth_distribution{0, 360};
+  const std::vector<std::string> modifiers{"00", "01", "02", "03", "04", "05", "06", "07", "08", "09", "10"};
+  std::uniform_int_distribution<std::size_t> modifiers_distribution{0, modifiers.size() - 1};
+} // namespace
 
 using namespace Esri::ArcGISRuntime;
 
@@ -93,9 +111,12 @@ void GODictionaryRenderer::componentComplete()
   m_graphicsOverlay = new GraphicsOverlay(this);
 
   // Create dictionary renderer and apply to the graphics overlay
-  const QString specType = QStringLiteral("mil2525d");
-  const QString styleLocation = m_dataPath + "/styles/arcade_style/mil2525d.stylx";
-  DictionarySymbolStyle* dictionarySymbolStyle = DictionarySymbolStyle::createFromFile(styleLocation, this);
+  // const QString specType = QStringLiteral("mil2525d");
+  // const QString styleLocation = m_dataPath + "/styles/arcade_style/mil2525d.stylx";
+
+  // App6E dictionary
+  DictionarySymbolStyle* dictionarySymbolStyle = DictionarySymbolStyle::createDictionarySymbolStyleFromUrl(
+    QUrl{"https://www.arcgis.com/home/item.html?id=ab9e2684f07446199f81883577540e4d"}, this);
 
   // The style will be loaded automatically
   connect(dictionarySymbolStyle, &DictionarySymbolStyle::loadStatusChanged, this, [dictionarySymbolStyle]()
@@ -114,7 +135,7 @@ void GODictionaryRenderer::componentComplete()
   });
 
   //! [Apply Dictionary Renderer Graphics Overlay Cpp]
-  Q_UNUSED(specType)
+  // Q_UNUSED(specType)
 
   DictionaryRenderer* renderer = new DictionaryRenderer(dictionarySymbolStyle, this);
   m_graphicsOverlay->setRenderer(renderer);
@@ -130,7 +151,44 @@ void GODictionaryRenderer::componentComplete()
   // a MapQuickView with a valid spatial referenence
   connect(m_mapView, &MapQuickView::spatialReferenceChanged, this, [this]()
   {
-    zoomToGraphics();
+    // zoomToGraphics();
+    QTimer* timer = new QTimer(this);
+    connect(timer, &QTimer::timeout, this, [this]
+    {
+      for (auto* graphic : (*m_graphicsOverlay->graphics()))
+      {
+        QVariantMap attributes;
+        const auto& identification = identifications[identification_distribution(m_generator)];
+        const auto& mainIcon = mainIcons[mainIcon_distribution(m_generator)];
+        const auto& modifier1 = modifiers[modifiers_distribution(m_generator)];
+        const auto& modifier2 = modifiers[modifiers_distribution(m_generator)];
+        auto sidc = "140" + identification + "010000" + mainIcon + "00" + modifier1 + modifier2;
+        attributes["sidc"] = QString::fromStdString(sidc);
+        auto randomX = 8.5417 + (9.2417 - 8.5417) * static_cast<double>(rand()) / RAND_MAX;
+        auto randomY = 47.3769 + (46.3769 - 47.3769) * static_cast<double>(rand()) / RAND_MAX;
+        // attributes["direction"] = QString::number(static_cast<int>(azimuth_distribution(m_generator)) - 180);
+        //  qDebug() << attributes["direction"];
+        attributes["direction"] = QString::number(180.0 + (-180.0 - 180.0) * static_cast<double>(rand()) / RAND_MAX);
+        attributes["speed"] = QString::number(100000.0 + (0.0 - 100000.0) * static_cast<double>(rand()) / RAND_MAX);
+        attributes["staffcomment"] = QString::number(100000.0 + (0.0 - 100000.0) * static_cast<double>(rand()) / RAND_MAX);
+        attributes["uniquedesignation"] = QString::number(100000.0 + (0.0 - 100000.0) * static_cast<double>(rand()) / RAND_MAX);
+        attributes["additionalinformation"] = QString::number(100000.0 + (0.0 - 100000.0) * static_cast<double>(rand()) / RAND_MAX);
+        attributes["x"] = QString::number(100000.0 + (0.0 - 100000.0) * static_cast<double>(rand()) / RAND_MAX);
+        attributes["y"] = QString::number(100000.0 + (0.0 - 100000.0) * static_cast<double>(rand()) / RAND_MAX);
+        attributes["z"] = QString::number(100000.0 + (0.0 - 100000.0) * static_cast<double>(rand()) / RAND_MAX);
+        attributes["z2"] = QString::number(100000.0 + (0.0 - 100000.0) * static_cast<double>(rand()) / RAND_MAX);
+        auto point = Point(randomX, randomY, m_mapView->spatialReference());
+        graphic->attributes()->setAttributesMap(attributes);
+        graphic->setGeometry(point);
+      }
+      static const bool zoomedOnce = [this]()
+      {
+        zoomToGraphics();
+        return true;
+      }();
+      Q_UNUSED(zoomedOnce)
+    });
+    timer->start(100);
   });
 
   m_mapView->setMap(m_map);
