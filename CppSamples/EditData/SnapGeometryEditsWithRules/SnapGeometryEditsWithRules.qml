@@ -239,17 +239,6 @@ Item {
                         font.pixelSize: 14
                         font.bold: true
                     }
-
-                    Button {
-                        text: qsTr("Done")
-                        Layout.alignment: Qt.AlignRight
-                        font.pixelSize: 14
-                        font.bold: true
-
-                        onClicked: {
-                            optionPanel.visible = false
-                        }
-                    }
                 }
             }
 
@@ -288,6 +277,23 @@ Item {
                                 }
                             }
                         }
+                    }
+                }
+            }
+
+            footer: Item {
+                width: snapSourceView.width
+                height: 50
+
+                Button {
+                    text: qsTr("Done")
+                    anchors.centerIn: parent
+                    anchors.topMargin: 10
+                    font.pixelSize: 14
+                    font.bold: true
+
+                    onClicked: {
+                        optionPanel.visible = false
                     }
                 }
             }
