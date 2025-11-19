@@ -57,11 +57,11 @@ Animate3DSymbolsSample {
                 top: parent.top
                 margins: 10
             }
-            width: Math.min(250, parent.width * 0.25)
+            width: children.implicitWidth
 
             ColumnLayout {
                 spacing: 10
-                width: parent.width
+                width: children.implicitWidth
 
                 ComboBox {
                     id: missionList
@@ -122,20 +122,23 @@ Animate3DSymbolsSample {
                 right: parent.right
                 margins: 10
             }
-            width: Math.min(300, parent.width * 0.25)
+            width: children.implicitWidth
 
             ColumnLayout {
                 spacing: 15
-                width: parent.width
+                anchors.fill: parent
 
                 // Zoom Slider
                 ColumnLayout {
                     spacing: 4
                     Layout.fillWidth: true
+                    Layout.maximumWidth: parent.width
 
                     Label {
                         text: qsTr("Zoom")
                         font.bold: true
+                        Layout.maximumWidth: parent.width
+                        elide: Text.ElideRight
                     }
                     Slider {
                         id: cameraDistance
@@ -143,6 +146,7 @@ Animate3DSymbolsSample {
                         to: 5000.0
                         value: 500.0
                         Layout.fillWidth: true
+                        Layout.maximumWidth: parent.width
                     }
                 }
 
@@ -154,6 +158,7 @@ Animate3DSymbolsSample {
                     Label {
                         text: qsTr("Angle")
                         font.bold: true
+                        elide: Text.ElideRight
                     }
                     Slider {
                         id: cameraAngle
@@ -172,6 +177,7 @@ Animate3DSymbolsSample {
                     Label {
                         text: qsTr("Progress: " + (progressSlider.value / missionSize * 100).toLocaleString(Qt.locale(), 'f', 0) + "%")
                         font.bold: true
+                        elide: Text.ElideRight
                     }
                     Slider {
                         id: progressSlider
@@ -190,6 +196,7 @@ Animate3DSymbolsSample {
                     Label {
                         text: qsTr("Speed")
                         font.bold: true
+                        elide: Text.ElideRight
                     }
                     Slider {
                         id: animationSpeed
@@ -198,6 +205,11 @@ Animate3DSymbolsSample {
                         value: 50
                         Layout.fillWidth: true
                     }
+                }
+
+                // Spacer
+                Item {
+                    Layout.fillHeight: true
                 }
             }
         }
