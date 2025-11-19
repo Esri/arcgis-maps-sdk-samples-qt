@@ -17,9 +17,6 @@
 #ifndef GraphicsOverlayDictionaryRenderer_H
 #define GraphicsOverlayDictionaryRenderer_H
 
-// ArcGIS Maps SDK headers
-#include "Envelope.h"
-
 // Qt headers
 #include <QQuickItem>
 #include <QXmlStreamReader>
@@ -52,12 +49,8 @@ private:
   static const QString FIELD_WKID;
 
   bool graphicsLoaded() const;
-  void parseXmlFile();
-  void createGraphic(QVariantMap rawAttributes);
-  void zoomToGraphics();
 
   bool m_graphicsLoaded = false;
-  QString m_dataPath;
   QXmlStreamReader m_xmlParser;
   Esri::ArcGISRuntime::Map* m_map = nullptr;
   Esri::ArcGISRuntime::MapQuickView* m_mapView = nullptr;

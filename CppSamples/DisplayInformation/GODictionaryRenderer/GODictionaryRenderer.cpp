@@ -24,7 +24,7 @@
 // ArcGIS Maps SDK headers
 #include "DictionaryRenderer.h"
 #include "DictionarySymbolStyle.h"
-#include "DictionarySymbolStyleConfiguration.h"
+#include "Envelope.h"
 #include "Graphic.h"
 #include "GraphicListModel.h"
 #include "GraphicsOverlay.h"
@@ -32,17 +32,14 @@
 #include "Map.h"
 #include "MapQuickView.h"
 #include "MapTypes.h"
-#include "MultipointBuilder.h"
 #include "Point.h"
 #include "PointCollection.h"
 #include "SpatialReference.h"
 #include "AttributeListModel.h"
 
 // Qt headers
-#include <QFile>
 #include <QFuture>
 #include <QStandardPaths>
-#include <QtCore/qglobal.h>
 #include <QTimer>
 
 // STL headers
@@ -50,7 +47,7 @@
 
 namespace
 {
-  std::mt19937 m_generator(std::random_device{}()); // mersenne_twister_engine seeded with rd()
+  std::mt19937 m_generator(std::random_device{}());
   const std::vector<std::string> identifications{"0", "1", "2", "3", "4", "5"};
   std::uniform_int_distribution<std::size_t> identification_distribution{0, identifications.size() - 1};
   const std::vector<std::string> mainIcons{"000000", "110000", "110100", "110101", "110102", "110103",
@@ -63,29 +60,8 @@ namespace
 
 using namespace Esri::ArcGISRuntime;
 
-// helper method to get cross platform data path
-namespace
-{
-QString defaultDataPath()
-{
-  QString dataPath;
-
-#ifdef Q_OS_IOS
-  dataPath = QStandardPaths::writableLocation(QStandardPaths::DocumentsLocation);
-#else
-  dataPath = QStandardPaths::writableLocation(QStandardPaths::HomeLocation);
-#endif
-
-  return dataPath;
-}
-} // namespace
-
-const QString GODictionaryRenderer::FIELD_CONTROL_POINTS = QStringLiteral("_control_points");
-const QString GODictionaryRenderer::FIELD_WKID = QStringLiteral("_wkid");
-
 GODictionaryRenderer::GODictionaryRenderer(QQuickItem* parent) :
-  QQuickItem(parent),
-  m_dataPath(defaultDataPath() + "/ArcGIS/Runtime/Data")
+  QQuickItem(parent)
 {
 }
 
@@ -106,36 +82,12 @@ void GODictionaryRenderer::componentComplete()
 {
   QQuickItem::componentComplete();
 
-  //! [Apply Dictionary Renderer Graphics Overlay Cpp]
   // Create graphics overlay
   m_graphicsOverlay = new GraphicsOverlay(this);
-
-  // Create dictionary renderer and apply to the graphics overlay
-  // const QString specType = QStringLiteral("mil2525d");
-  // const QString styleLocation = m_dataPath + "/styles/arcade_style/mil2525d.stylx";
 
   // App6E dictionary
   DictionarySymbolStyle* dictionarySymbolStyle = DictionarySymbolStyle::createDictionarySymbolStyleFromUrl(
     QUrl{"https://www.arcgis.com/home/item.html?id=ab9e2684f07446199f81883577540e4d"}, this);
-
-  // The style will be loaded automatically
-  connect(dictionarySymbolStyle, &DictionarySymbolStyle::loadStatusChanged, this, [dictionarySymbolStyle]()
-  {
-    if (dictionarySymbolStyle->loadStatus() == LoadStatus::Loaded)
-    {
-      const QList<DictionarySymbolStyleConfiguration*> dictionarySymbolStyleConfigurations = dictionarySymbolStyle->configurations();
-      for (DictionarySymbolStyleConfiguration* dictionarySymbolStyleConfiguration : dictionarySymbolStyleConfigurations)
-      {
-        if (dictionarySymbolStyleConfiguration->name() == "model")
-        {
-          dictionarySymbolStyleConfiguration->setValue("ORDERED ANCHOR POINTS");
-        }
-      }
-    }
-  });
-
-  //! [Apply Dictionary Renderer Graphics Overlay Cpp]
-  // Q_UNUSED(specType)
 
   DictionaryRenderer* renderer = new DictionaryRenderer(dictionarySymbolStyle, this);
   m_graphicsOverlay->setRenderer(renderer);
@@ -143,12 +95,16 @@ void GODictionaryRenderer::componentComplete()
   m_mapView = findChild<MapQuickView*>("mapView");
   m_map = new Map(BasemapStyle::ArcGISTopographic, this);
 
-  parseXmlFile();
+  // add 200 graphics at random positions
+  const auto sr = SpatialReference::wgs84();
+  for (int i = 0; i < 200; i++)
+  {
+    // positions don't really matter - it will all be randomized once the loop begins
+    m_graphicsOverlay->graphics()->append(new Graphic{Point{100000.0 + static_cast<double>(i), 100000.0 + static_cast<double>(i), sr}, this});
+  }
 
   m_mapView->graphicsOverlays()->append(m_graphicsOverlay);
 
-  // The GraphicsOverlay will not have a valid extent until it is part of
-  // a MapQuickView with a valid spatial referenence
   connect(m_mapView, &MapQuickView::spatialReferenceChanged, this, [this]()
   {
     // zoomToGraphics();
@@ -183,7 +139,7 @@ void GODictionaryRenderer::componentComplete()
       }
       static const bool zoomedOnce = [this]()
       {
-        zoomToGraphics();
+        m_mapView->setViewpointGeometryAsync(m_graphicsOverlay->extent(), 20);
         return true;
       }();
       Q_UNUSED(zoomedOnce)
@@ -192,120 +148,4 @@ void GODictionaryRenderer::componentComplete()
   });
 
   m_mapView->setMap(m_map);
-}
-
-void GODictionaryRenderer::parseXmlFile()
-{
-  bool readingMessage = false;
-  QVariantMap elementValues;
-  QString currentElementName;
-
-  QFile xmlFile(m_dataPath + "/xml/arcade_style/Mil2525DMessages.xml");
-
-  // Open the file for reading
-  if (xmlFile.isOpen())
-  {
-    xmlFile.reset();
-  }
-  else
-  {
-    xmlFile.open(QIODevice::ReadOnly | QIODevice::Text);
-  }
-  m_xmlParser.setDevice(&xmlFile);
-
-  // Traverse the XML in a loop
-  while (!m_xmlParser.atEnd())
-  {
-    m_xmlParser.readNext();
-
-    // Is this the start or end of a message element?
-    if (m_xmlParser.name() == QString("message"))
-    {
-      if (!readingMessage)
-      {
-        // This is the start of a message element.
-        elementValues.clear();
-      }
-      else
-      {
-        // This is the end of a message element. Here we have a complete message that defines
-        // a military feature to display on the map. Create a graphic from its attributes.
-        createGraphic(elementValues);
-      }
-      // Either we just started reading a message, or we just finished reading a message.
-      readingMessage = !readingMessage;
-    }
-    // Are we already inside a message element?
-    else if (readingMessage)
-    {
-      // Is this the start of an element inside a message?
-      if (m_xmlParser.isStartElement())
-      {
-        // Remember which element we're reading
-        currentElementName = m_xmlParser.name().toString();
-      }
-      // Is this text?
-      else if (m_xmlParser.isCharacters())
-      {
-        // Is this text inside an element?
-        if (!currentElementName.isEmpty())
-        {
-          // Get the text and store it as the current element's value
-          const QStringView trimmedText = m_xmlParser.text().trimmed();
-          if (!trimmedText.isEmpty())
-          {
-            elementValues[currentElementName] = trimmedText.toString();
-          }
-        }
-      }
-    }
-  }
-
-  emit graphicsLoadedChanged();
-}
-
-void GODictionaryRenderer::createGraphic(QVariantMap rawAttributes)
-{
-  // If _wkid was absent, use WGS 1984 (4326) by default.
-  const int wkid = rawAttributes.count(FIELD_WKID) > 0 ? rawAttributes[FIELD_WKID].toInt() : 4326;
-  const SpatialReference sr(wkid);
-  const QStringList pointStrings = rawAttributes[FIELD_CONTROL_POINTS].toString().split(";");
-
-  Geometry geom;
-  if (pointStrings.length() == 1)
-  {
-    // It's a point
-    const QStringList coords = pointStrings[0].split(",");
-    geom = Point(coords[0].toDouble(), coords[1].toDouble(), sr);
-  }
-  else {
-    // It's a multipoint
-    MultipointBuilder* builder = new MultipointBuilder(sr, this);
-    PointCollection* collection = new PointCollection(sr, this);
-    for (const QString& pointString : pointStrings)
-    {
-      const QStringList coords = pointString.split(",");
-      if (coords.length() >= 2)
-        collection->addPoint(coords[0].toDouble(), coords[1].toDouble());
-    }
-    builder->setPoints(collection);
-    geom = builder->toGeometry();
-  }
-
-  if (!geom.isEmpty())
-  {
-    // Get rid of _control_points and _wkid. They are not needed in the graphic's
-    // attributes.
-    rawAttributes.remove(FIELD_CONTROL_POINTS);
-    rawAttributes.remove(FIELD_WKID);
-
-    Graphic* graphic = new Graphic(geom, rawAttributes, this);
-    m_graphicsOverlay->graphics()->append(graphic);
-  }
-}
-
-void GODictionaryRenderer::zoomToGraphics()
-{
-  if (m_graphicsOverlay)
-    m_mapView->setViewpointGeometryAsync(m_graphicsOverlay->extent(), 20);
 }
