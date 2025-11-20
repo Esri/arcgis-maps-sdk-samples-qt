@@ -33,14 +33,20 @@ Item {
         // Create window for displaying the KML contents
         Control {
             width: 300
+            padding: 2
             background : Rectangle {
                 color: palette.base
+                border{
+                    color: "darkgray"
+                    width: 1
+                }
             }
             contentItem: GridLayout {
                 columns: 2
+                columnSpacing: 2
+                rowSpacing: 2
                 Button {
                     id: backButton
-                    Layout.margins: 3
                     text: "<"
                     enabled: !sampleModel.isTopLevel
                     flat: true
@@ -59,7 +65,7 @@ Item {
                     Layout.fillWidth: true
                     id: textLabel
                     text: sampleModel.labelText
-                    wrapMode: Text.Wrap
+                    elide: Text.ElideRight
                 }
                 ListView {
                     id: myListView
@@ -67,17 +73,20 @@ Item {
                     Layout.fillWidth: true
                     model: sampleModel.levelNodeNames
                     Layout.preferredHeight: contentHeight
+                    spacing:4
                     delegate: Button {
                         text: modelData
-                        anchors {
-                            left: parent.left
-                            right: parent.right
-                        }
+                        width: myListView.width
                         highlighted: pressed
                         onClicked: {
                             sampleModel.processSelectedNode(text);
                         }
                     }
+                }
+                // Spacer
+                Item {
+                    width: parent.fillWidth
+                    height: 4
                 }
             }
         }

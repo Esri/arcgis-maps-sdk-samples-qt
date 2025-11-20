@@ -37,6 +37,16 @@ Item {
             accessoryButtonVisible: false
             leaderPosition: Callout.LeaderPosition.Automatic
         }
+
+        // Settings toggle button
+        Button {
+            anchors{
+                horizontalCenter: parent.horizontalCenter
+                bottom: mapView.attributionTop //+ 15
+            }
+            onClicked: settingsPopup.opened ? settingsPopup.close() : settingsPopup.open()
+            text: qsTr("Display Settings")
+        }
     }
 
     // Declare the C++ instance which creates the map etc. and supply the view
@@ -60,37 +70,5 @@ Item {
     SettingsPopup{
         id:settingsPopup
     }
-
-    // Bottom toolbar
-    Rectangle {
-        anchors {
-            bottom: parent.bottom
-            left: parent.left
-            right: parent.right
-        }
-        height: Math.max(parent.height * 0.08, 50)
-        border.width: 1
-        color: palette.base
-
-        MouseArea {
-            anchors.fill: parent
-            acceptedButtons: Qt.AllButtons
-            propagateComposedEvents: false
-
-            onWheel: {
-            }
-        }
-
-        MultiPointTouchArea {
-            anchors.fill: parent
-        }
-
-        // Settings toggle button
-        Button {
-            anchors.horizontalCenter: parent.horizontalCenter
-            anchors.verticalCenter: parent.verticalCenter
-            onClicked: settingsPopup.opened ? settingsPopup.close() : settingsPopup.open()
-            text: qsTr("Display Settings")
-        }
-    }
 }
+

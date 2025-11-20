@@ -31,28 +31,43 @@ Item {
         Rectangle {
             anchors {
                 margins: 5
-                left: parent.left
-                top: parent.top
-                bottom: view.attributionTop
+                right: parent.right
+                verticalCenter: parent.verticalCenter
             }
             color: palette.base
             radius: 10
-            width: childrenRect.width
+            width: 80
+            height: parent.height * 0.5
 
-            Slider {
-                id: heightSlider
+            Column {
                 anchors {
-                    top: parent.top
-                    bottom: parent.bottom
+                    fill: parent
                     margins: 10
                 }
-                from: 150
-                to: 300
-                stepSize: 10
-                value: model.heightZ
-                orientation: Qt.Vertical
-                onMoved: {
-                    model.heightZ = value;
+                spacing: 10
+
+                Label {
+                    text: "Height: " + Math.round(heightSlider.value) + " m"
+                    anchors.horizontalCenter: parent.horizontalCenter
+                    font.pixelSize: 14
+                    width: parent.width
+                    horizontalAlignment: Text.AlignHCenter
+                    wrapMode: Text.WordWrap
+                }
+
+                Slider {
+                    id: heightSlider
+                    anchors.horizontalCenter: parent.horizontalCenter
+                    height: parent.height - parent.spacing - 40
+                    width: 40
+                    from: 150
+                    to: 300
+                    stepSize: 10
+                    value: model.heightZ
+                    orientation: Qt.Vertical
+                    onMoved: {
+                        model.heightZ = value;
+                    }
                 }
             }
         }

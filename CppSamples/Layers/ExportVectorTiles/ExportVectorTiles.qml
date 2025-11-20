@@ -131,6 +131,7 @@ Item {
                 break;
             case ExportVectorTilesSample.ExportStatusFailed:
                 model.startExport(extentRectangle.x, (extentRectangle.y + extentRectangle.height), (extentRectangle.x + extentRectangle.width), extentRectangle.y);
+                extentRectangle.visible = false;
                 break;
             case ExportVectorTilesSample.ExportStatusCancelling:
                 break;

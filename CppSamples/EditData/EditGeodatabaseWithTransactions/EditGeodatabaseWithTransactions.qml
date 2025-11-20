@@ -43,6 +43,12 @@ Item {
         opacity: 0.9
         color: palette.base
 
+        MouseArea {
+            anchors.fill: parent
+            onClicked: mouse => mouse.accepted = true
+            onWheel: wheel => wheel.accepted = true
+        }
+
         Label {
             id: statusText
             anchors.centerIn: parent
@@ -80,6 +86,12 @@ Item {
         border.color: "gray"
         border.width: 1
         color: palette.base
+
+        MouseArea {
+            anchors.fill: parent
+            onClicked: mouse => mouse.accepted = true
+            onWheel: wheel => wheel.accepted = true
+        }
 
         RowLayout {
             anchors {

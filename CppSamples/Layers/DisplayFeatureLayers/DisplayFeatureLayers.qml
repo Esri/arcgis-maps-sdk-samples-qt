@@ -49,6 +49,13 @@ Item {
         height: column.height + 10
         color: palette.base
         border.color: "black"
+
+        MouseArea {
+            anchors.fill: parent
+            onClicked: mouse => mouse.accepted = true
+            onWheel: wheel => wheel.accepted = true
+        }
+        
         ColumnLayout {
             id: column
             anchors.centerIn: parent

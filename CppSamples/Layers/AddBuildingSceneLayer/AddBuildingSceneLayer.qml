@@ -28,6 +28,26 @@ Item {
             // Set and keep the focus on SceneView to enable keyboard navigation
             forceActiveFocus();
         }
+
+        Rectangle {
+            anchors {
+                horizontalCenter: parent.horizontalCenter
+                bottom: view.attributionTop
+            }
+            width: fullModelButton.width + 20
+            height: fullModelButton.height + 20
+            color: palette.base
+            radius: 5
+            visible: model.layerLoaded
+
+            Switch {
+                id: fullModelButton
+                anchors.centerIn: parent
+                text: qsTr("Full Model")
+                checkable: true
+                onCheckedChanged: model.setFullModelAndOverviewVisibility(checked)
+            }
+        }
     }
 
     // Declare the C++ instance which creates the scene etc. and supply the view
@@ -36,16 +56,6 @@ Item {
         localSceneView: view
     }
 
-    Button {
-        id: fullModelButton
-        anchors {
-            horizontalCenter: view.horizontalCenter
-            bottom: view.bottom
-            bottomMargin: 30
-        }
-        text: qsTr("Full Model")
-        visible: model.layerLoaded
-        checkable: true
-        onCheckedChanged: model.setFullModelAndOverviewVisibility(checked)
-    }
+
 }
+

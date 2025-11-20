@@ -47,6 +47,13 @@ Item {
         height: childrenRect.height
         color: palette.base
         opacity: 0.7
+
+        MouseArea {
+            anchors.fill: parent
+            onClicked: mouse => mouse.accepted = true
+            onWheel: wheel => wheel.accepted = true
+        }
+        
         Column {
             id: settingsColumn
             spacing: 5

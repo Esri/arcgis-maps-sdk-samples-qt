@@ -31,11 +31,13 @@ Item {
         ScrollView {
             id: scrollView
             anchors.fill: parent
+            anchors.margins: 5
+            ScrollBar.horizontal.policy: ScrollBar.AlwaysOff
 
             ColumnLayout {
                 id: controlItemsLayout
-                anchors.left: parent.left
-                anchors.right: parent.right
+                anchors.centerIn: parent
+                width: scrollView.availableWidth
 
                 // Spacer
                 Item {
@@ -51,12 +53,24 @@ Item {
                     onCheckStateChanged: model.changeIncludeBarriersState(checked);
                 }
 
+                // Spacer
+                Item {
+                    Layout.fillWidth: true
+                    Layout.preferredHeight: 2
+                }
+
                 CheckBox {
                     text: qsTr("Include containers")
                     Layout.fillWidth: true
                     enabled: !busyIndicator.visible
                     checkState: Qt.Checked
                     onCheckStateChanged: model.changeIncludeContainersState(checked);
+                }
+
+                // Spacer
+                Item {
+                    Layout.fillWidth: true
+                    Layout.preferredHeight: 2
                 }
 
                 Shape {
@@ -73,7 +87,7 @@ Item {
                 Label {
                     text: qsTr("Example barrier condition for this data. 'Transformer Load' Equal '15'")
                     font.pixelSize: 11
-                    Layout.minimumWidth: rootRectangle.width
+                    Layout.fillWidth: true
                     horizontalAlignment: Text.AlignHCenter
                     enabled: !model.busy
                 }
@@ -155,7 +169,6 @@ Item {
 
                 ScrollView {
                     Layout.fillWidth: true
-                    Layout.maximumWidth: rootRectangle.width
                     Layout.minimumHeight: 50
                     Layout.maximumHeight: .15 * rootRectangle.height
                     clip: true

@@ -43,6 +43,12 @@ Item {
             opacity: 0.8
             visible: model.rasterLoaded
 
+            MouseArea {
+                anchors.fill: parent
+                onClicked: mouse => mouse.accepted = true
+                onWheel: wheel => wheel.accepted = true
+            }
+
             Column {
                 Label {
                     anchors.horizontalCenter: parent.horizontalCenter

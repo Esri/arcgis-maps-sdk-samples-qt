@@ -54,6 +54,12 @@ Item {
             margins: -5
         }
         color: palette.base
+
+        MouseArea {
+            anchors.fill: parent
+            onClicked: mouse => mouse.accepted = true
+            onWheel: wheel => wheel.accepted = true
+        }
     }
 
     GridLayout {

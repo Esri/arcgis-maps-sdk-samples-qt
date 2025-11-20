@@ -25,8 +25,6 @@ StyleWmsLayerSample {
     width: 800
     height: 600
 
-
-
     // add a mapView component
     MapView {
         anchors.fill: parent
@@ -45,7 +43,11 @@ StyleWmsLayerSample {
         }
         color: palette.base
         radius: 5
-        opacity: 0.75
+
+        border {
+            width: 1
+            color: "darkgrey"
+        }
     }
 
     ButtonGroup {

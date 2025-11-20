@@ -61,6 +61,12 @@ Item {
             background: Rectangle {
                 color: palette.base
                 opacity: .9
+
+                MouseArea {
+                    anchors.fill: parent
+                    onClicked: mouse => mouse.accepted = true
+                    onWheel: wheel => wheel.accepted = true
+                }
             }
 
             contentItem: ColumnLayout {
@@ -184,6 +190,13 @@ Item {
             top: parent.top
             bottom: parent.bottom
         }
+
+        MouseArea {
+            anchors.fill: optionPanel
+            onClicked: mouse => mouse.accepted = true
+            onWheel: wheel => wheel.accepted = true
+        }
+
         width: 360
         visible: false
         color: palette.base
@@ -387,7 +400,11 @@ Item {
                             Layout.alignment: Qt.AlignRight
                             Layout.fillWidth: true
                             checked: isEnabled
-                            onCheckedChanged: isEnabled = checked;
+                            onCheckedChanged: {
+                                if (isEnabled !== checked) {
+                                    isEnabled = checked
+                                }
+                            }
                         }
                     }
                 }

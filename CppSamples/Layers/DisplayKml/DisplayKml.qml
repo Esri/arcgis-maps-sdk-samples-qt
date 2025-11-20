@@ -42,19 +42,8 @@ DisplayKmlSample {
             margins: 5
         }
 
-        // Add a background to the ComboBox
-        Rectangle {
-            anchors.fill: parent
-            radius: 10
-            // Make the rectangle visible if a dropdown indicator exists
-            // An indicator only exists if a theme is set
-            visible: parent.indicator
-            border.width: 1
-            color: palette.base
-        }
-
         property int modelWidth: 0
-        width: modelWidth + leftPadding + rightPadding + (indicator ? indicator.width : 10)
+        width: modelWidth + leftPadding + rightPadding + (indicator ? indicator.width : 10) + 32
 
         model: ["URL", "Local file", "Portal Item"]
 

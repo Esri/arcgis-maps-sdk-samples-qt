@@ -43,6 +43,13 @@ Item {
             color: palette.base
             opacity: 0.9
             radius: 5
+
+           MouseArea {
+                anchors.fill: parent
+                onClicked: mouse => mouse.accepted = true
+                onWheel: wheel => wheel.accepted = true
+            }
+
             ColumnLayout {
                 id: controlsLayout
                 Layout.alignment: Qt.AlignBottom
