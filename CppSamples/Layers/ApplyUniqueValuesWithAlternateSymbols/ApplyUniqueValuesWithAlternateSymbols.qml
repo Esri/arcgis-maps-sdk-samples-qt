@@ -41,6 +41,12 @@ Item {
         color: palette.base
         radius: 5
 
+        MouseArea {
+            anchors.fill: parent
+            onClicked: mouse => mouse.accepted = true
+            onWheel: wheel => wheel.accepted = true
+        }
+
         ColumnLayout {
             width: parent.width
             Label {

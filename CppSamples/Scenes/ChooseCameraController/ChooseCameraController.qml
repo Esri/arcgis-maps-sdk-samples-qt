@@ -53,6 +53,11 @@ Item {
             width: 1
         }
 
+        MouseArea {
+            anchors.fill: parent
+            onClicked: mouse => mouse.accepted = true
+            onWheel: wheel => wheel.accepted = true
+        }
         ColumnLayout {
             id: columnLayout
             anchors.centerIn: parent

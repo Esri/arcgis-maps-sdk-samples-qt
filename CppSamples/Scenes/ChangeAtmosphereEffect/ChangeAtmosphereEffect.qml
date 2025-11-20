@@ -70,6 +70,13 @@ Item {
         color: palette.base
         width: childrenRect.width
         height: childrenRect.height
+
+        MouseArea {
+            anchors.fill: parent
+            onClicked: mouse => mouse.accepted = true
+            onWheel: wheel => wheel.accepted = true
+        }
+        
         ColumnLayout {
             id: layout
 

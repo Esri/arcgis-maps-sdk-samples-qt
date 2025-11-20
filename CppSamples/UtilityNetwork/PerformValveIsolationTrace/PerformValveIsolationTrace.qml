@@ -43,6 +43,12 @@ Item {
             height: childrenRect.height + 20
             width: row.width * 1.05
 
+            MouseArea {
+                anchors.fill: parent
+                onClicked: mouse => mouse.accepted = true
+                onWheel: wheel => wheel.accepted = true
+            }
+
             RowLayout {
                 id: titleRow
                 anchors {

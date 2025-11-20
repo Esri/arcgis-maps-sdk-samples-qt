@@ -40,7 +40,14 @@ Item {
         height: sliderColumn.implicitHeight + 16
         color: palette.base
         radius: 5
-        border{
+
+        MouseArea {
+            anchors.fill: parent
+            onClicked: mouse => mouse.accepted = true
+            onWheel: wheel => wheel.accepted = true
+        }
+
+        border {
             width: 1
             color: "darkgrey"
         }
@@ -87,7 +94,6 @@ Item {
                 value: 180
             }
         }
-
     }
 
     // Declare the C++ instance which creates the scene etc. and supply the view

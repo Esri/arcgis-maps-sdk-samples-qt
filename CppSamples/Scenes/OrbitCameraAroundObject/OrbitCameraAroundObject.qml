@@ -257,6 +257,12 @@ Item {
             color: Qt.application.styleHints.colorScheme === Qt.ColorScheme.Dark ? "#404040" : "#DFDFDF"
         }
 
+        MouseArea {
+            anchors.fill: parent
+            onClicked: mouse => mouse.accepted = true
+            onWheel: wheel => wheel.accepted = true
+        }
+
         Column {
             id: viewOptionsColumn
             spacing: 10
