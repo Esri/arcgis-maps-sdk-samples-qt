@@ -50,6 +50,12 @@ TerrainExaggerationSample {
                 width: 1
                 color: "darkgrey"
             }
+            
+            MouseArea {
+                anchors.fill: parent
+                onClicked: mouse => mouse.accepted = true
+                onWheel: wheel => wheel.accepted = true
+            }
 
             // sliderCombo: A slider and text for its value
             Row {

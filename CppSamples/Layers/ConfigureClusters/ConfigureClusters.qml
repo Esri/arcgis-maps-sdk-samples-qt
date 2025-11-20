@@ -47,6 +47,12 @@ Item {
         border.width: 1
         visible: (Qt.platform.os === "android" || Qt.platform.os === "ios") ? !popupView.visible : true
         color: palette.base
+        
+        MouseArea {
+            anchors.fill: parent
+            onClicked: mouse => mouse.accepted = true
+            onWheel: wheel => wheel.accepted = true
+        }
     }
 
     PopupView {

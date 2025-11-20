@@ -30,31 +30,28 @@ Item {
             // Set and keep the focus on MapView to enable keyboard navigation
             forceActiveFocus();
         }
-    }
 
-    Rectangle {
-        anchors {
-            margins: 8
-            left: parent.left
-            top: parent.top
-        }
-        width: childrenRect.width
-        height: childrenRect.height
-        color: palette.base
-        radius: 3
-
-        ColumnLayout {
-            Label {
-                text: qsTr("Max extent enabled")
-                Layout.fillWidth: true
-                Layout.margins: 3
-                font {
-                    weight: Font.DemiBold
-                    pointSize: 10
-                }
+        Rectangle {
+            anchors {
+                horizontalCenter: parent.horizontalCenter
+                bottom: view.attributionTop
             }
+            width: maxExtentSwitch.width + 20
+            height: maxExtentSwitch.height + 20
+            color: palette.base
+            radius: 5
+
+            MouseArea {
+            anchors.fill: parent
+            onClicked: mouse => mouse.accepted = true
+            onWheel: wheel => wheel.accepted = true
+            }
+
+
             Switch {
                 id: maxExtentSwitch
+                anchors.centerIn: parent
+                text: qsTr("Max Extent")
                 checked: true
                 onClicked: model.toggleMaxExtent();
             }

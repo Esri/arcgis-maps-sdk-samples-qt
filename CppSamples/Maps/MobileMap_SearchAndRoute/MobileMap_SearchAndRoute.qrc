@@ -11,5 +11,6 @@
         <file>pinOutlineSymbol.png</file>
         <file>routingSymbol.png</file>
         <file>forwardIcon.png</file>
+		<file>forwardIcon_light.png</file>
     </qresource>
 </RCC>

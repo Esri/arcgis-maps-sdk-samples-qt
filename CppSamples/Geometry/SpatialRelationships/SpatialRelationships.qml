@@ -50,6 +50,12 @@ SpatialRelationshipsSample {
             color: "darkgray"
             width: 1
         }
+        
+        MouseArea {
+            anchors.fill: parent
+            onClicked: mouse => mouse.accepted = true
+            onWheel: wheel => wheel.accepted = true
+        }
     }
 
     Column {

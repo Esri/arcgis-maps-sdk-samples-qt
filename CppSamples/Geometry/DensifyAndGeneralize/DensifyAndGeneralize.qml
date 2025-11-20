@@ -39,15 +39,23 @@ DensifyAndGeneralizeSample {
     Rectangle {
         width: controlColumn.width + 16
         height: controlColumn.height + 16
+        color: palette.base
+        radius: 5
         anchors{
             top: parent.top
             right: parent.right
         }
-        color: palette.base
-        radius: 5
+
         border {
             color: "darkgrey"
             width: 1
+
+        }
+            
+        MouseArea {
+            anchors.fill: parent
+            onClicked: mouse => mouse.accepted = true
+            onWheel: wheel => wheel.accepted = true
         }
 
         Column {

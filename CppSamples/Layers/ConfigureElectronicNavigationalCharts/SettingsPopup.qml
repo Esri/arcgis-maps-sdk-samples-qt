@@ -25,7 +25,7 @@ Popup {
     focus: true
     closePolicy: Popup.CloseOnEscape | Popup.CloseOnPressOutside
     x: (parent ? (parent.width - width) / 2 : 0)
-    y: parent ? parent.height * 0.12 : 0
+    y: (parent ? (parent.height - height) / 2 : 0)
     width: parent ? Math.min(parent.width * 0.90, 360) : 360
     height: Math.min(parent ? parent.height * 0.76 : implicitHeight, settingsColumn.implicitHeight + 24)
 

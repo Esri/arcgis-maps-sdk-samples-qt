@@ -35,6 +35,12 @@ Item {
                 color: palette.base
                 border.color: "black"
                 border.width: 1
+                
+                MouseArea {
+                    anchors.fill: parent
+                    onClicked: mouse => mouse.accepted = true
+                    onWheel: wheel => wheel.accepted = true
+                }
             }
             padding: 5
             visible: model.attachmentSymbolUrl !== "" && model.connectivitySymbolUrl !== ""

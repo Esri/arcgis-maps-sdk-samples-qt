@@ -71,7 +71,7 @@ MobileMap_SearchAndRouteSample {
                     Image {
                         anchors.centerIn: parent
                         mirror: true
-                        source: "qrc:/Samples/Maps/MobileMap_SearchAndRoute/forwardIcon.png"
+                        source: Qt.application.styleHints.colorScheme === Qt.ColorScheme.Dark ? "qrc:/Samples/Maps/MobileMap_SearchAndRoute/forwardIcon_light.png" : "qrc:/Samples/Maps/MobileMap_SearchAndRoute/forwardIcon.png"
                         height: 33
                         width: height
                     }
@@ -86,71 +86,50 @@ MobileMap_SearchAndRouteSample {
             }
 
             // Map controls
-            Column {
+            Row {
                 anchors {
-                    top: parent.top
-                    right: parent.right
+                    horizontalCenter: parent.horizontalCenter
+                    bottom: mapView.attributionTop
                     margins: 10
                 }
                 spacing: 10
 
-                // solve route button
-                Rectangle {
-                    id: routeButton
-                    color: palette.highlight
-                    height: 50
-                    width: height
-                    border.color: "black"
-                    radius: 2
-                    opacity: 0.90
-                    visible: mobileMapSearchRoute.canRoute
+                Button {
+                     id: routeButton
+                     text: qsTr("Route")
+                     leftPadding: 15
+                     rightPadding: 15
+                     width: 125
+                     icon {
+                         source: "qrc:/Samples/Maps/MobileMap_SearchAndRoute/routingSymbol.png"
+                         width: 24
+                         height: 24
+                         color: "#F8F8F8"
+                     }
+                     visible: mobileMapSearchRoute.canRoute
+                     onClicked: {
+                         mobileMapSearchRoute.solveRoute();
+                     }
+                 }
 
-                    Image {
-                        anchors {
-                            centerIn: parent
-                            margins: 5
-                        }
-                        source: "qrc:/Samples/Maps/MobileMap_SearchAndRoute/routingSymbol.png"
-                        height: 44
-                        width: height
-                    }
-
-                    MouseArea {
-                        anchors.fill: parent
-                        onClicked: {
-                            mobileMapSearchRoute.solveRoute();
-                        }
-                    }
-                }
-
-                // clear graphics button
-                Rectangle {
-                    id: clearButton
-                    color: palette.highlight
-                    height: 50
-                    width: height
-                    border.color: "black"
-                    radius: 2
-                    opacity: 0.90
-                    visible: mobileMapSearchRoute.canClear
-
-                    Image {
-                        anchors {
-                            centerIn: parent
-                            margins: 5
-                        }
-                        source: "qrc:/Samples/Maps/MobileMap_SearchAndRoute/discardSymbol.png"
-                        height: 44
-                        width: height
-                    }
-
-                    MouseArea {
-                        anchors.fill: parent
-                        onClicked: {
-                            mobileMapSearchRoute.resetMapView();
-                        }
-                    }
-                }
+                 // clear graphics button
+                 Button {
+                     id: clearButton
+                     text: qsTr("Clear")
+                     leftPadding: 15
+                     rightPadding: 15
+                     width: 125
+                     icon {
+                         source: "qrc:/Samples/Maps/MobileMap_SearchAndRoute/discardSymbol.png"
+                         width: 24
+                         height: 24
+                         color: "#F8F8F8"
+                     }
+                     visible: mobileMapSearchRoute.canClear
+                     onClicked: {
+                         mobileMapSearchRoute.resetMapView();
+                     }
+                 }
             }
         }
 
@@ -175,7 +154,7 @@ MobileMap_SearchAndRouteSample {
                         width: parent.width
                         height: 100
                         color: palette.button
-                        border.color: "#4D4D4D"
+                        border.color: "darkgray"
 
                         // forward navigation button. Visible after first map is selected
                         Image {
@@ -184,7 +163,7 @@ MobileMap_SearchAndRouteSample {
                                 right: parent.right
                                 margins: 10
                             }
-                            source: "qrc:/Samples/Maps/MobileMap_SearchAndRoute/forwardIcon.png"
+                            source: "qrc:/Samples/Maps/MobileMap_SearchAndRoute/forwardIcon_light.png"
                             height: 44
                             width: height
                             visible: isMapOpen
@@ -202,6 +181,7 @@ MobileMap_SearchAndRouteSample {
                             height: 40
                             font.pixelSize: 25
                             text: "Choose a Mobile Map Package"
+                            color: "#F8F8F8"
                         }
                     }
 
@@ -227,6 +207,7 @@ MobileMap_SearchAndRouteSample {
                                     horizontalAlignment: Text.AlignHCenter
                                     width: 150
                                     text: modelData
+                                    color: "#F8F8F8"
                                     elide: Text.ElideMiddle
                                 }
 
@@ -263,6 +244,7 @@ MobileMap_SearchAndRouteSample {
                         width: parent.width
                         height: 100
                         color: palette.button
+                        border.color: "darkgray"
 
                         // back button
                         Image {
@@ -272,7 +254,7 @@ MobileMap_SearchAndRouteSample {
                                 margins: 10
                             }
                             mirror: true
-                            source: "qrc:/Samples/Maps/MobileMap_SearchAndRoute/forwardIcon.png"
+                            source: "qrc:/Samples/Maps/MobileMap_SearchAndRoute/forwardIcon_light.png"
                             height: 44
                             width: height
 
@@ -291,7 +273,7 @@ MobileMap_SearchAndRouteSample {
                                 right: parent.right
                                 margins: 10
                             }
-                            source: "qrc:/Samples/Maps/MobileMap_SearchAndRoute/forwardIcon.png"
+                            source: "qrc:/Samples/Maps/MobileMap_SearchAndRoute/forwardIcon_light.png"
                             height: 44
                             width: height
                             visible: isMapOpen
@@ -309,6 +291,7 @@ MobileMap_SearchAndRouteSample {
                             height: 40
                             font.pixelSize: 25
                             text: "Choose a Map"
+                            color: "#F8F8F8"
                         }
                     }
 
@@ -334,6 +317,7 @@ MobileMap_SearchAndRouteSample {
                                     width: 150
                                     text: modelData.name
                                     elide: Text.ElideMiddle
+                                    color: "#F8F8F8"
                                 }
 
                                 // geocoding available icon
