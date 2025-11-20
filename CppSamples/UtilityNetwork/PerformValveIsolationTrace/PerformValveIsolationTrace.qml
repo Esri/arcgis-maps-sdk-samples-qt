@@ -40,7 +40,7 @@ Item {
         Rectangle {
             id: backgroundRect
             color: palette.base
-            height: childrenRect.height + 20
+            height: row.height * 3
             width: row.width * 1.05
 
             MouseArea {
