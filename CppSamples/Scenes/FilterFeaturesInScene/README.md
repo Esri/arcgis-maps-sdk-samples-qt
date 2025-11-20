@@ -10,7 +10,7 @@ You can directly control what users see within a specific scene view to give a m
 
 ## How to use the sample
 
-The sample initializes showing the "Navigation" 3D Basemap. Click the "Filter 3D buildings in extent" button, to set a `SceneLayerPolygonFilter` and filter out the Esri 3D buildings within the extent of a detailed buildings scene layer. Notice how the OSM buildings within and intersecting the extent of the detailed buildings layer are hidden.  Click the "Load detailed buildings" button to load a scene layer that contains more detailed buildings. Click the "Reset scene" button to hide the detailed buildings scene layer and clear the 3D buildings filter.
+The sample initializes showing the "Navigation" 3D Basemap. Click the "Filter 3D buildings in extent" button, to set a `SceneLayerPolygonFilter` and filter out the Esri 3D buildings within the extent of a detailed buildings scene layer. Notice how the Esri 3D buildings within and intersecting the extent of the detailed buildings layer are hidden.  Click the "Load detailed buildings" button to load a scene layer that contains more detailed buildings. Click the "Reset scene" button to hide the detailed buildings scene layer and clear the 3D buildings filter.
 
 ## How it works
 

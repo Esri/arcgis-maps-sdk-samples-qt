@@ -149,7 +149,7 @@ void FilterFeaturesInScene::showDetailedBuildings()
 {
   if (!m_detailedBuildingsSceneLayer)
   {
-    qWarning() << "Detailed San Fransisco Buildings layer not loaded";
+    qWarning() << "Detailed San Francisco Buildings layer not loaded";
     return;
   }
   m_detailedBuildingsSceneLayer->setVisible(true);
@@ -196,8 +196,10 @@ void FilterFeaturesInScene::reset()
   m_detailedBuildingsSceneLayer->setVisible(false);
 
   if (!m_3dBuildings || !m_3dBuildings->polygonFilter())
-
-  // Set the OSM buildings polygon filter to an empty list of polygons to clear the filter
+  {
+    return;
+  }
+  // Set the 3D buildings polygon filter to an empty list of polygons to clear the filter
   m_3dBuildings->polygonFilter()->setPolygons(QList<Polygon>{});
 
   if (!m_sceneView || !m_sceneView->graphicsOverlays()->first())
