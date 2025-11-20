@@ -25,8 +25,6 @@ DensifyAndGeneralizeSample {
     width: 800
     height: 600
 
-
-
     // add a mapView component
     MapView {
         anchors.fill: parent
@@ -39,78 +37,81 @@ DensifyAndGeneralizeSample {
     }
 
     Rectangle {
-        anchors {
-            fill: controlColumn
-            margins: -5
-        }
+        width: controlColumn.width + 16
+        height: controlColumn.height + 16
         color: palette.base
         radius: 5
-        border {
-            color: "black"
-            width: 1
+        anchors{
+            top: parent.top
+            right: parent.right
         }
-        
+
+        border {
+            color: "darkgrey"
+            width: 1
+
+        }
+            
         MouseArea {
             anchors.fill: parent
             onClicked: mouse => mouse.accepted = true
             onWheel: wheel => wheel.accepted = true
         }
-    }
 
-    Column {
-        id: controlColumn
-        anchors {
-            left: parent.left
-            top: parent.top
-            margins: 10
-        }
-        spacing: 5
+        Column {
+            id: controlColumn
+            anchors {
+                centerIn: parent
+                margins: 10
+            }
+            spacing: 10
 
 
-        CheckBox {
-            id: densifyCheckbox
-            text: qsTr("Densify")
-            checked: true
-        }
+            CheckBox {
+                id: densifyCheckbox
+                text: qsTr("Densify")
+                checked: true
+            }
 
-        Label {
-            text: qsTr("Max segment length")
-            enabled: densifyCheckbox.checked
-        }
+            Label {
+                text: qsTr("Max segment length")
+                enabled: densifyCheckbox.checked
+            }
 
-        Slider {
-            id: maxSegmentLengthSlider
-            from: 100
-            to: 500
-            width: 175
-            value: 100
-            onValueChanged: updateGeometry(densifyCheckbox.checked, maxSegmentLengthSlider.value, generalizeCheckbox.checked, maxDeviationSlider.value);
-        }
+            Slider {
+                id: maxSegmentLengthSlider
+                from: 100
+                to: 500
+                width: 175
+                value: 100
+                onValueChanged: updateGeometry(densifyCheckbox.checked, maxSegmentLengthSlider.value, generalizeCheckbox.checked, maxDeviationSlider.value);
+            }
 
-        CheckBox {
-            id: generalizeCheckbox
-            text: qsTr("Generalize")
-            checked: true
-        }
+            CheckBox {
+                id: generalizeCheckbox
+                text: qsTr("Generalize")
+                checked: true
+            }
 
-        Label {
-            text: qsTr("Max deviation")
-            enabled: generalizeCheckbox.checked
-        }
+            Label {
+                text: qsTr("Max deviation")
+                enabled: generalizeCheckbox.checked
+            }
 
-        Slider {
-            id: maxDeviationSlider
-            from: 1
-            to: 250
-            width: 175
-            onValueChanged: updateGeometry(densifyCheckbox.checked, maxSegmentLengthSlider.value, generalizeCheckbox.checked, maxDeviationSlider.value);
-        }
+            Slider {
+                id: maxDeviationSlider
+                from: 1
+                to: 250
+                width: 175
+                onValueChanged: updateGeometry(densifyCheckbox.checked, maxSegmentLengthSlider.value, generalizeCheckbox.checked, maxDeviationSlider.value);
+            }
 
-        CheckBox {
-            id: showResultCheckbox
-            text: qsTr("Show Result")
-            checked: true
-            onCheckedChanged: showResults(checked);
+            CheckBox {
+                id: showResultCheckbox
+                text: qsTr("Show Result")
+                checked: true
+                onCheckedChanged: showResults(checked);
+            }
         }
     }
 }
