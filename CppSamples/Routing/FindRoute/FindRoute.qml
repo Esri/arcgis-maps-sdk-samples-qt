@@ -25,7 +25,6 @@ FindRouteSample {
 
     onSolveRouteComplete: solveButton.visible = false
 
-    // Create window for displaying the route directions
     Rectangle {
         id: directionWindow
         anchors {
@@ -34,8 +33,11 @@ FindRouteSample {
             bottom: parent.bottom
         }
         visible: false
-        width: Qt.platform.os === "ios" || Qt.platform.os === "android" ? 250 : 350
+        property int targetWidth: Qt.platform.os === "ios" || Qt.platform.os === "android" ? 250 : 350
+        width: visible ? targetWidth : 0
         color: palette.base
+        clip: true
+        Behavior on width { NumberAnimation { duration: 300; easing.type: Easing.OutQuad } }
 
         //! [FindRoute cpp ListView directionsView]
         ListView {
@@ -62,19 +64,18 @@ FindRouteSample {
     // add a mapView component
     MapView {
         id: mapView
-        anchors.fill: parent
+        anchors {
+            left: parent.left
+            top: parent.top
+            bottom: parent.bottom
+            right: directionWindow.left
+        }
+
         objectName: "mapView"
 
         Component.onCompleted: {
             // Set the focus on MapView to initially enable keyboard navigation
             forceActiveFocus();
-        }
-
-        // set the transform to animate showing the direction window
-        transform: Translate {
-            id: translate
-            x: 0
-            Behavior on x { NumberAnimation { duration: 300; easing.type: Easing.OutQuad } }
         }
 
         // Create the solve button to solve the route
@@ -128,7 +129,6 @@ FindRouteSample {
                 onReleased: directionButton.pressed = false
                 onClicked: {
                     // Show the direction window when it is clicked
-                    translate.x = directionWindow.visible ? 0 : (directionWindow.width * -1);
                     directionWindow.visible = !directionWindow.visible;
                 }
             }
