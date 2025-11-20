@@ -61,7 +61,7 @@ FilterFeaturesInScene::FilterFeaturesInScene(QObject* parent /* = nullptr */):
   surface->elevationSources()->append(new ArcGISTiledElevationSource(QUrl("https://elevation3d.arcgis.com/arcgis/rest/services/WorldElevation3D/Terrain3D/ImageServer"), this));
   m_scene->setBaseSurface(surface);
 
-  // Construct a basemap with the ArcGIS Navigation 3D Basemap then create a scene with it
+  // Construct a basemap with the ArcGIS Navigation 3D Basemap then set it on the Scene
   auto* basemap = new Basemap(QUrl("https://arcgisruntime.maps.arcgis.com/home/item.html?id=00a5f468dda941d7bf0b51c144aae3f0"), this);
   m_scene->setBasemap(basemap);
 
