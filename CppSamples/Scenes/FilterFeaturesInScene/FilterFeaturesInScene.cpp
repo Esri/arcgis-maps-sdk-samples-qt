@@ -98,6 +98,9 @@ FilterFeaturesInScene::FilterFeaturesInScene(QObject* parent /* = nullptr */):
   // Construct the detailed buildings scene layer
   m_detailedBuildingsSceneLayer = new ArcGISSceneLayer(QUrl("https://tiles.arcgis.com/tiles/z2tnIkrLQ2BRzr6P/arcgis/rest/services/SanFrancisco_Bldgs/SceneServer"), this);
 
+  // Initially hide the detailed buildings so they don't clip into the 3D basemap buildings
+  m_detailedBuildingsSceneLayer->setVisible(false);
+
   // When the detailed building scene layer finishes loading, get its extent for the polygon filter
   connect(m_detailedBuildingsSceneLayer, &ArcGISSceneLayer::doneLoading, this, [this](const Error& error)
   {
@@ -129,7 +132,7 @@ FilterFeaturesInScene::FilterFeaturesInScene(QObject* parent /* = nullptr */):
     m_sanFranciscoExtentGraphic = new Graphic(m_sceneLayerExtentPolygon, simpleFillSymbol, this);
   });
 
-  m_detailedBuildingsSceneLayer->load();
+  m_scene->operationalLayers()->append(m_detailedBuildingsSceneLayer);
 }
 
 FilterFeaturesInScene::~FilterFeaturesInScene() = default;
@@ -144,7 +147,7 @@ void FilterFeaturesInScene::init()
 // Show the detailed buildings scene layer
 void FilterFeaturesInScene::showDetailedBuildings()
 {
-  m_scene->operationalLayers()->append(m_detailedBuildingsSceneLayer);
+  m_detailedBuildingsSceneLayer->setVisible(true);
 }
 
 // Hide buildings within the detailed building extent so they don't clip
@@ -170,8 +173,8 @@ void FilterFeaturesInScene::filterScene()
 
 void FilterFeaturesInScene::reset()
 {
-  // Remove the detailed buildings layer from the scene
-  m_scene->operationalLayers()->clear();
+  // Hide the detailed buildings layer from the scene
+  m_detailedBuildingsSceneLayer->setVisible(false);
 
   // Set the OSM buildings polygon filter to an empty list of polygons to clear the filter
   m_3dBuildings->polygonFilter()->setPolygons(QList<Polygon>{});
