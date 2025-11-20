@@ -74,6 +74,13 @@ void SyncMapViewSceneView::setSceneView(SceneQuickView* sceneView)
       m_mapView->setViewpointAsync(m_sceneView->currentViewpoint(ViewpointType::CenterAndScale), 0);
     }
   });
+  connect(m_sceneView, &SceneQuickView::mousePressed, this, [this]
+  {
+    if (m_mapView)
+    {
+      m_mapView->setViewpointAsync(m_sceneView->currentViewpoint(ViewpointType::CenterAndScale), 0);
+    }
+  });
 
   emit sceneViewChanged();
 }
@@ -98,6 +105,13 @@ void SyncMapViewSceneView::setMapView(MapQuickView* mapView)
   connect(m_mapView, &MapQuickView::viewpointChanged, this, [this]
   {
     if (m_sceneView && m_mapView->isNavigating() && !m_sceneView->isNavigating())
+    {
+      m_sceneView->setViewpointAsync(m_mapView->currentViewpoint(ViewpointType::CenterAndScale), 0);
+    }
+  });
+  connect(m_mapView, &MapQuickView::mousePressed, this, [this]
+  {
+    if (m_sceneView)
     {
       m_sceneView->setViewpointAsync(m_mapView->currentViewpoint(ViewpointType::CenterAndScale), 0);
     }
