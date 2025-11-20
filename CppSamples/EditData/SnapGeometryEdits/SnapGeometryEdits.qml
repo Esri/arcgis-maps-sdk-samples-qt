@@ -400,7 +400,11 @@ Item {
                             Layout.alignment: Qt.AlignRight
                             Layout.fillWidth: true
                             checked: isEnabled
-                            onCheckedChanged: isEnabled = checked;
+                            onCheckedChanged: {
+                                if (isEnabled !== checked) {
+                                    isEnabled = checked
+                                }
+                            }
                         }
                     }
                 }

@@ -39,10 +39,9 @@ Item {
 
     // Create a rectangle to display the GUI
     Rectangle {
-        width: childrenRect.width
-        height: childrenRect.height
+        width: columnLayout.implicitWidth + 16
+        height: columnLayout.implicitHeight + 16
         color: palette.base
-        opacity: 0.9
         radius: 5
         anchors {
             margins: 10
@@ -50,7 +49,7 @@ Item {
             top: parent.top
         }
         border {
-            color: "#4D4D4D"
+            color: "darkgrey"
             width: 1
         }
 
@@ -60,7 +59,8 @@ Item {
             onWheel: wheel => wheel.accepted = true
         }
         ColumnLayout {
-
+            id: columnLayout
+            anchors.centerIn: parent
             Label {
                 Layout.margins: 5
                 Layout.fillWidth: true

@@ -36,10 +36,9 @@ Item {
             left: parent.left
             top: parent.top
         }
-        width: childrenRect.width
+        width: 200
         height: childrenRect.height
         color: palette.base
-        opacity: .9
         radius: 5
 
         MouseArea {
@@ -49,20 +48,19 @@ Item {
         }
 
         ColumnLayout {
+            width: parent.width
             Label {
                 text: qsTr("Current scale: 1:" + Math.round(model.currentScale))
                 Layout.fillWidth: true
                 Layout.margins: 3
                 font {
                     weight: Font.DemiBold
-                    pointSize: 10
                 }
             }
             Button {
                 text: qsTr("Reset Viewpoint")
                 font {
                     weight: Font.DemiBold
-                    pointSize: 10
                 }
                 Layout.margins: 3
                 Layout.fillWidth: true

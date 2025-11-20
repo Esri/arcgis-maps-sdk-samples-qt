@@ -54,7 +54,6 @@ ExportTilesSample {
                 height: 24
                 color: palette.text
             }
-            visible: mapLoaded
 
             onClicked: {
                 // call the C++ invokable function to export tile cache from the input screen coordinates

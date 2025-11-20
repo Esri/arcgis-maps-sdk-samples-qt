@@ -134,9 +134,11 @@ Item {
     Dialog {
         id: messageDialog
         visible: sampleModel.noResults
-        title: qsTr("Isolation trace returned no elements.")
         standardButtons: Dialog.Ok
         anchors.centerIn: parent
+        Label {
+            text: qsTr("Isolation trace returned no elements.")
+        }
     }
 
     // Declare the C++ instance which creates the map etc. and supply the view
