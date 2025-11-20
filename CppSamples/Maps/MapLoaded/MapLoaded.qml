@@ -41,11 +41,11 @@ MapLoadedSample {
             right: parent.right
             bottom: parent.bottom
         }
-        height: 30
+        height: 24
         color: palette.base
         border {
             width: 0.5
-            color: "black"
+            color: "darkgrey"
         }
 
         Label {
