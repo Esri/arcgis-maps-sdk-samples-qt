@@ -36,65 +36,62 @@ Item {
     }
 
     Rectangle {
-        anchors.fill: sliderColumn
+        width: sliderColumn.implicitWidth + 16
+        height: sliderColumn.implicitHeight + 16
         color: palette.base
-    }
+        radius: 5
 
-    Column{
-        id: sliderColumn
-
-        spacing: 4
-
-        anchors {
-            left: parent.left
-            top: parent.top
+        MouseArea {
+            anchors.fill: parent
+            onClicked: mouse => mouse.accepted = true
+            onWheel: wheel => wheel.accepted = true
         }
 
-        height: childrenRect.height
+        border {
+            width: 1
+            color: "darkgrey"
+        }
 
-        Label {
+        Column {
+            id: sliderColumn
+            spacing: 2
+
             anchors {
-                margins: 5
+                left: parent.left
+                top: parent.top
+                centerIn: parent
             }
-            text: qsTr("Pitch : " + model.pitch.toFixed(0))
-            font.pixelSize: 20
-            verticalAlignment: Text.AlignTop
-        }
 
-        Slider{
-            id: pitchSlider
-            opacity: 0.7
-            height: 64
+            height: childrenRect.height
 
-            // slider controls degrees of rotation:
-            from: -90
-            to: 90
-            value: 90
-            anchors {
-                margins: 5
+            Label {
+                text: qsTr("Pitch : " + model.pitch.toFixed(0))
+                verticalAlignment: Text.AlignTop
             }
-        }
 
-        Label {
-            anchors {
-                margins: 5
+            Slider {
+                id: pitchSlider
+                height: 64
+
+                // slider controls degrees of rotation:
+                from: -90
+                to: 90
+                value: 90
             }
-            text: qsTr("Heading: " + model.heading.toFixed(0))
-            verticalAlignment: Text.AlignTop
-            font.pixelSize: 20
-        }
 
-        Slider{
-            id: headingSlider
-            opacity: 0.7
-            height: 64
+            Label {
+                text: qsTr("Heading: " + model.heading.toFixed(0))
+                verticalAlignment: Text.AlignTop
+            }
 
-            // slider controls degrees of rotation:
-            from: 0
-            to: 360
-            value: 180
-            anchors {
-                margins: 5
+            Slider {
+                id: headingSlider
+                height: 64
+
+                // slider controls degrees of rotation:
+                from: 0
+                to: 360
+                value: 180
             }
         }
     }

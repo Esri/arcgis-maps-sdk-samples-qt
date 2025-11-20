@@ -48,6 +48,12 @@ Item {
             background: Rectangle {
                 color: palette.base
                 border.color: "black"
+                
+                MouseArea {
+                    anchors.fill: parent
+                    onClicked: mouse => mouse.accepted = true
+                    onWheel: wheel => wheel.accepted = true
+                }
             }
             contentItem: GridLayout {
                 columns: 2

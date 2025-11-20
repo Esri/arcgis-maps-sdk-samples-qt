@@ -73,7 +73,7 @@ private:
 
   QString m_openLayerText;
   QString m_closedLayerText;
-  bool m_visibleAtCurrentExtent;
+  bool m_visibleAtCurrentExtent = false;
   double m_mapScale = 0.0;
 };
 

@@ -41,6 +41,12 @@ Item {
             anchors.top: parent.top
             anchors.left: parent.left
             anchors.margins: 20
+            
+            MouseArea {
+                anchors.fill: parent
+                onClicked: mouse => mouse.accepted = true
+                onWheel: wheel => wheel.accepted = true
+            }
 
             RowLayout {
                 id: buttonRow

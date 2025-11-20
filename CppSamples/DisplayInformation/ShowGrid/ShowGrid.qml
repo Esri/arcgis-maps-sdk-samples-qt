@@ -81,6 +81,7 @@ Item {
                 anchors.centerIn: parent
                 text: qsTr("Map View")
                 font.pixelSize: 14
+                color: mapViewButton.selected ? "#F8F8F8" : palette.text
             }
 
             MouseArea {
@@ -110,6 +111,7 @@ Item {
                 anchors.centerIn: parent
                 text: qsTr("Scene View")
                 font.pixelSize: 14
+                color: sceneViewButton.selected ? "#F8F8F8": palette.text
             }
 
             MouseArea {
@@ -128,9 +130,8 @@ Item {
     }
 
     // Button to view the styling window
-    Rectangle {
+    Button {
         id: styleButton
-        property bool pressed: false
         anchors {
             horizontalCenter: parent.horizontalCenter
             bottom: parent.bottom
@@ -139,27 +140,12 @@ Item {
 
         width: 150
         height: 30
-        color: pressed ? palette.highlight : palette.base
-        radius: 8
-        border {
-            color: "#585858"
-            width: 1
-        }
+        text: qsTr("Change grid style")
+        font.pixelSize: 14
 
-        Label {
-            anchors.centerIn: parent
-            text: qsTr("Change grid style")
-            font.pixelSize: 14
-        }
-
-        MouseArea {
-            anchors.fill: parent
-            onPressed: styleButton.pressed = true
-            onReleased: styleButton.pressed = false
-            onClicked: {
-                background.visible = true;
-                showAnimation.restart()
-            }
+        onClicked: {
+            background.visible = true;
+            showAnimation.restart();
         }
     }
 
@@ -187,8 +173,8 @@ Item {
             horizontalCenter: parent.horizontalCenter
         }
         y: parent.height // initially display below the page
-        height: childrenRect.height
-        width: childrenRect.width
+        height: childrenRect.height + 16
+        width: childrenRect.width + 16
 
         color: palette.base
         radius: 4
@@ -210,6 +196,7 @@ Item {
         GridLayout {
             id: grid
             columns: 2
+            anchors.centerIn: parent
 
             Label {
                 Layout.leftMargin: 10
@@ -417,37 +404,28 @@ Item {
                 }
             }
 
+            // Spacer
+            Item {
+                height: 8
+                Layout.fillWidth: true
+                Layout.columnSpan: 2
+            }
+
             // Button to hide the styling window
-            Rectangle {
+            Button {
                 id: hideButton
-                property bool pressed: false
                 Layout.alignment: Qt.AlignHCenter
                 Layout.columnSpan: 2
                 Layout.bottomMargin: 5
 
                 width: 150
                 height: 30
-                color: pressed ? palette.highlight : palette.base
-                radius: 8
-                border {
-                    color: "#585858"
-                    width: 1
-                }
+                text: qsTr("Hide window")
+                font.pixelSize: 14
 
-                Label {
-                    anchors.centerIn: parent
-                    text: qsTr("Hide window")
-                    font.pixelSize: 14
-                }
-
-                MouseArea {
-                    anchors.fill: parent
-                    onPressed: hideButton.pressed = true
-                    onReleased: hideButton.pressed = false
-                    onClicked: {
-                        background.visible = false;
-                        hideAnimation.restart();
-                    }
+                onClicked: {
+                    background.visible = false;
+                    hideAnimation.restart();
                 }
             }
         }

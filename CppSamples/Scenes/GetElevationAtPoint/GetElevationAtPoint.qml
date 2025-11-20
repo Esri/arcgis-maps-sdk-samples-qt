@@ -54,7 +54,7 @@ Item {
                 horizontalCenter: parent.horizontalCenter
             }
             padding: 15
-            font.pointSize: 32
+            font.pointSize: 16
 
             // For vertical screens, keep the text within the bounding box via scaling down.
             scale: Math.min(1, (parent.width - padding) / contentWidth)

@@ -43,6 +43,12 @@ Item {
             height: childrenRect.height + 20
             width: row.width * 1.05
 
+            MouseArea {
+                anchors.fill: parent
+                onClicked: mouse => mouse.accepted = true
+                onWheel: wheel => wheel.accepted = true
+            }
+
             RowLayout {
                 id: titleRow
                 anchors {
@@ -128,9 +134,11 @@ Item {
     Dialog {
         id: messageDialog
         visible: sampleModel.noResults
-        title: qsTr("Isolation trace returned no elements.")
         standardButtons: Dialog.Ok
         anchors.centerIn: parent
+        Label {
+            text: qsTr("Isolation trace returned no elements.")
+        }
     }
 
     // Declare the C++ instance which creates the map etc. and supply the view
