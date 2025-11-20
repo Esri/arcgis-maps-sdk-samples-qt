@@ -38,6 +38,7 @@ class GroupLayers : public QObject
 
   Q_PROPERTY(Esri::ArcGISRuntime::SceneQuickView* sceneView READ sceneView WRITE setSceneView NOTIFY sceneViewChanged)
   Q_PROPERTY(Esri::ArcGISRuntime::LayerListModel* layerListModel MEMBER m_layerListModel NOTIFY layerListModelChanged)
+  Q_PROPERTY(bool busy READ busy NOTIFY busyChanged)
 
 public:
   explicit GroupLayers(QObject* parent = nullptr);
@@ -48,6 +49,7 @@ public:
 signals:
   void sceneViewChanged();
   void layerListModelChanged();
+  void busyChanged();
 
 public:
   Q_INVOKABLE Esri::ArcGISRuntime::LayerListModel* getGroupLayerListModel(int layerId);
@@ -55,10 +57,13 @@ public:
 private:
   Esri::ArcGISRuntime::SceneQuickView* sceneView() const;
   void setSceneView(Esri::ArcGISRuntime::SceneQuickView* sceneView);
+  bool busy() const;
 
   Esri::ArcGISRuntime::Scene* m_scene = nullptr;
   Esri::ArcGISRuntime::SceneQuickView* m_sceneView = nullptr;
   Esri::ArcGISRuntime::LayerListModel* m_layerListModel = nullptr;
+
+  bool m_busy = true;
 };
 
 #endif // GROUPLAYERS_H

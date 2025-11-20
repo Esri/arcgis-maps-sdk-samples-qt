@@ -41,10 +41,10 @@ Item {
         id: layerVisibilityRect
         color: palette.base
         border.color: "darkgray"
-        opacity: 1
         radius: 5
         width: 250
         height: layerVisibilityListView.contentHeight + 20
+        visible: !sampleModel.busy
 
 
         // Create a list view to display the items
@@ -105,9 +105,23 @@ Item {
                         text: name
                         checked: layerVisible
                         onToggled: layerVisible = checked;
+                        visible: name !== ""
                     }
                 }
             }
+        }
+    }
+
+    Rectangle {
+        anchors.fill: parent
+        color: "black"
+        opacity: 0.7
+        visible: sampleModel.busy
+
+        BusyIndicator {
+            anchors.centerIn: parent
+            running: sampleModel.busy
+            visible: running
         }
     }
 }
