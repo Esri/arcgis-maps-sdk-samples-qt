@@ -147,15 +147,29 @@ void FilterFeaturesInScene::init()
 // Show the detailed buildings scene layer
 void FilterFeaturesInScene::showDetailedBuildings()
 {
+  if (!m_detailedBuildingsSceneLayer)
+  {
+    qWarning() << "Detailed San Fransisco Buildings layer not loaded";
+    return;
+  }
   m_detailedBuildingsSceneLayer->setVisible(true);
 }
 
 // Hide buildings within the detailed building extent so they don't clip
 void FilterFeaturesInScene::filterScene()
 {
+  if (!m_sceneView || !m_sceneView->graphicsOverlays()->first())
+  {
+    return;
+  }
 
   // Show the extent graphic to visualize the polygon filter
   m_sceneView->graphicsOverlays()->first()->graphics()->append(m_sanFranciscoExtentGraphic);
+
+  if (!m_3dBuildings || !m_sceneLayerPolygonFilter)
+  {
+    return;
+  }
 
   // Initially, the building layer does not have a polygon filter, set it
   if (!m_3dBuildings->polygonFilter())
@@ -173,11 +187,23 @@ void FilterFeaturesInScene::filterScene()
 
 void FilterFeaturesInScene::reset()
 {
+  if (!m_detailedBuildingsSceneLayer)
+  {
+    return;
+  }
+
   // Hide the detailed buildings layer from the scene
   m_detailedBuildingsSceneLayer->setVisible(false);
 
+  if (!m_3dBuildings || !m_3dBuildings->polygonFilter())
+
   // Set the OSM buildings polygon filter to an empty list of polygons to clear the filter
   m_3dBuildings->polygonFilter()->setPolygons(QList<Polygon>{});
+
+  if (!m_sceneView || !m_sceneView->graphicsOverlays()->first())
+  {
+    return;
+  }
 
   // Clear the graphics list in the graphics overlay to remove the red extent boundary graphic
   m_sceneView->graphicsOverlays()->first()->graphics()->clear();
