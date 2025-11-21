@@ -75,6 +75,9 @@ GroupLayers::GroupLayers(QObject* parent /* = nullptr */):
 
   connect(m_scene, &Scene::doneLoading, this, [this](const Error& e)
   {
+    m_busy = false;
+    emit busyChanged();
+
     if (!e.isEmpty())
       return;
 
