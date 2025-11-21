@@ -56,8 +56,7 @@ public:
 
   // Download operations
   void downloadAllDataItems();
-  void downloadDataItemsForSample(Sample* sample, bool isBulk = false);
-  void cancelSampleDownload(const QString& sampleName);
+  void downloadDataItemsForSample(Sample* sample);
   void cancelAllDownloads();
 
   // Delete operations

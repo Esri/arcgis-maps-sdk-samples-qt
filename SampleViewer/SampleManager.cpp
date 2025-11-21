@@ -526,7 +526,12 @@ void SampleManager::downloadAllDataItems()
 
 void SampleManager::downloadDataItemsCurrentSample()
 {
-  m_downloadsManager->downloadDataItemsForSample(m_currentSample, true);
+  m_downloadsManager->downloadDataItemsForSample(m_currentSample);
+}
+
+void SampleManager::cancelAllDownloads()
+{
+  m_downloadsManager->cancelAllDownloads();
 }
 
 static QString homePath()
@@ -636,13 +641,8 @@ void SampleManager::downloadProjectData(const QString& sampleName)
     Sample* sample = sampleList->at(i);
     if (sample->name().toString() == sampleName)
     {
-      m_downloadsManager->downloadDataItemsForSample(sample, false);
+      m_downloadsManager->downloadDataItemsForSample(sample);
       return;
     }
   }
-}
-
-void SampleManager::cancelSampleDownload(const QString& sampleName)
-{
-  m_downloadsManager->cancelSampleDownload(sampleName);
 }

@@ -103,14 +103,13 @@ Page {
         }
 
         Button {
-            text: SampleManager.downloadsManager.cancelDownload ? qsTr("Cancelling remaining downloads...") : qsTr("Cancel remaining downloads")
-            enabled: !SampleManager.downloadsManager.cancelDownload
+            text: qsTr("Cancel all downloads")
             font.pixelSize: Math.max(10, baseFontSize)
             Layout.alignment: Qt.AlignHCenter | Qt.AlignVCenter
             Layout.preferredWidth: Math.max(implicitWidth, 200 * scaleFactor)
             Layout.preferredHeight: Math.max(40, 50 * scaleFactor)
             onClicked: {
-                SampleManager.downloadsManager.cancelDownload = true;
+                SampleManager.cancelAllDownloads();
             }
             clip: true
         }
@@ -197,6 +196,37 @@ Page {
             }
             else if (button === MessageDialog.Ok){
                 resetDialog();
+            }
+        }
+    }
+
+    // Busy overlay for cancelling downloads
+    Rectangle {
+        anchors.fill: parent
+        color: "#CC000000"  // Dark semi-transparent background
+        visible: SampleManager.downloadsManager.cancelDownload && SampleManager.downloadsManager.downloadInProgress
+        z: 1000  // Ensure it's on top of everything
+
+        ColumnLayout {
+            anchors.centerIn: parent
+            spacing: baseSpacing * 2
+
+            BusyIndicator {
+                Layout.alignment: Qt.AlignHCenter
+                running: parent.parent.visible
+                Layout.preferredWidth: Math.max(60, 80 * scaleFactor)
+                Layout.preferredHeight: Math.max(60, 80 * scaleFactor)
+            }
+
+            Label {
+                text: qsTr("Canceling remaining downloads...")
+                color: Calcite.offWhite
+                font {
+                    family: fontFamily
+                    pixelSize: Math.max(12, baseFontSize + 2)
+                    weight: Font.Medium
+                }
+                Layout.alignment: Qt.AlignHCenter
             }
         }
     }

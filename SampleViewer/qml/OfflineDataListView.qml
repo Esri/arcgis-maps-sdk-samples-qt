@@ -311,46 +311,6 @@ ColumnLayout {
                                     }
 
                                     Button {
-                                        id: cancelButton
-                                        Layout.preferredWidth: parent.useIconMode ? parent.buttonSize : Math.max(110, 110 * root.scaleFactor)
-                                        Layout.preferredHeight: parent.buttonSize
-                                        visible: model.downloading
-                                        padding: 0
-
-                                        background: Rectangle {
-                                            radius: cancelButton.parent.useIconMode ? cancelButton.width / 2 : 4
-                                            color: cancelButton.down ? Qt.darker(Calcite.brand, 1.2) : (cancelButton.hovered ? Calcite.brandHover : Calcite.brand)
-                                        }
-
-                                        contentItem: Item {
-                                            Image {
-                                                source: "qrc:/cancel_icon.svg"
-                                                width: cancelButton.parent.iconSize
-                                                height: cancelButton.parent.iconSize
-                                                sourceSize.width: cancelButton.parent.iconSize
-                                                sourceSize.height: cancelButton.parent.iconSize
-                                                fillMode: Image.PreserveAspectFit
-                                                anchors.centerIn: parent
-                                                visible: cancelButton.parent.useIconMode
-                                            }
-
-                                            Label {
-                                                text: qsTr("Cancel")
-                                                font.pixelSize: Math.max(12, root.baseFontSize - 1)
-                                                color: Calcite.offWhite
-                                                horizontalAlignment: Text.AlignHCenter
-                                                verticalAlignment: Text.AlignVCenter
-                                                anchors.fill: parent
-                                                visible: !cancelButton.parent.useIconMode
-                                            }
-                                        }
-
-                                        onClicked: {
-                                            SampleManager.cancelSampleDownload(model.sample.name);
-                                        }
-                                    }
-
-                                    Button {
                                         id: deleteButton
                                         Layout.preferredWidth: parent.useIconMode ? parent.buttonSize : Math.max(110, 110 * root.scaleFactor)
                                         Layout.preferredHeight: parent.buttonSize

@@ -87,7 +87,7 @@ public:
   Q_INVOKABLE void downloadAllDataItems();           // Bulk download - shows full-page view
   Q_INVOKABLE void downloadDataItemsCurrentSample();
   Q_INVOKABLE void downloadProjectData(const QString& sampleName);  // Individual download - inline progress
-  Q_INVOKABLE void cancelSampleDownload(const QString& sampleName);
+  Q_INVOKABLE void cancelAllDownloads();
 
   // Delete operations
   Q_INVOKABLE bool deleteAllOfflineData();
