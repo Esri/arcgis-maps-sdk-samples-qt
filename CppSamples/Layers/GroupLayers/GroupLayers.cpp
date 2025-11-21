@@ -53,8 +53,6 @@ GroupLayers::GroupLayers(QObject* parent /* = nullptr */):
   // add the elevation source to the scene to display elevation
   m_scene->baseSurface()->elevationSources()->append(elevationSource);
 
-  m_busy = true;
-
   // Create layers and append to a group layer
   ArcGISSceneLayer* layer1 = new ArcGISSceneLayer(QUrl("https://tiles.arcgis.com/tiles/P3ePLMYs2RVChkJx/arcgis/rest/services/DevA_BuildingShells/SceneServer"), this);
   ArcGISSceneLayer* layer2 = new ArcGISSceneLayer(QUrl("https://tiles.arcgis.com/tiles/P3ePLMYs2RVChkJx/arcgis/rest/services/DevB_BuildingShells/SceneServer"), this);
@@ -101,11 +99,6 @@ void GroupLayers::init()
 SceneQuickView* GroupLayers::sceneView() const
 {
   return m_sceneView;
-}
-
-bool GroupLayers::busy() const
-{
-  return m_busy;
 }
 
 // Set the view (created in QML)
