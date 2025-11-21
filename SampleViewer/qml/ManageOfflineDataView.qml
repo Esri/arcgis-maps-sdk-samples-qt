@@ -30,7 +30,7 @@ Page {
 
     onVisibleChanged: {
         if (!manageOfflineDataViewPage.visible && SampleManager.downloadsManager.downloadInProgress)
-            SampleManager.downloadsManager.cancelDownload = true;
+            SampleManager.cancelAllDownloads();
         else if (manageOfflineDataViewPage.visible)
             SampleManager.getOfflineDataProjects();
     }
@@ -50,43 +50,47 @@ Page {
 
     // Full page download view - bulk download
     ColumnLayout {
-        anchors.fill: parent
-        anchors.margins: baseMargin
-        spacing: baseSpacing
+        anchors.horizontalCenter: parent.horizontalCenter
+        anchors.verticalCenter: parent.verticalCenter
         visible: SampleManager.downloadsManager.downloadInProgress && SampleManager.downloadsManager.isBulkDownload
 
         Image {
             Layout.alignment: Qt.AlignHCenter | Qt.AlignVCenter
             source: "qrc:/logo.png"
-            Layout.preferredWidth: Math.max(100, 140 * scaleFactor)
-            Layout.preferredHeight: Math.max(100, 140 * scaleFactor)
-            fillMode: Image.PreserveAspectFit
+            clip: true
+        }
+
+        Label {
+            text: qsTr("Currently downloading all offline data.")
+            Layout.alignment: Qt.AlignHCenter | Qt.AlignVCenter
+            horizontalAlignment: Text.AlignHCenter
+            font {
+                family: fontFamily
+                weight: Font.DemiBold
+            }
+            Layout.fillWidth: true
             clip: true
         }
 
         Label {
             text: SampleManager.downloadsManager.downloadText
-            horizontalAlignment: Text.AlignHCenter
             Layout.alignment: Qt.AlignHCenter | Qt.AlignVCenter
             Layout.fillWidth: true
+            horizontalAlignment: Label.AlignHCenter
             font {
                 family: fontFamily
-                pixelSize: Math.max(11, baseFontSize)
             }
-            wrapMode: Text.WordWrap
             clip: true
         }
 
         Label {
             text: "%1% complete".arg(SampleManager.downloadsManager.downloadProgress)
-            horizontalAlignment: Text.AlignHCenter
             Layout.alignment: Qt.AlignHCenter | Qt.AlignVCenter
             Layout.fillWidth: true
-            visible: SampleManager.downloadsManager.downloadInProgress
+            horizontalAlignment: Text.AlignHCenter
+            visible: !SampleManager.downloadsManager.cancelDownload
             font {
                 family: fontFamily
-                pixelSize: Math.max(13, baseFontSize + 2)
-                weight: Font.DemiBold
             }
             clip: true
         }
@@ -98,20 +102,24 @@ Page {
             from: 0
             to: 100
             value: SampleManager.downloadsManager.downloadProgress
-            visible: SampleManager.downloadsManager.downloadInProgress
+            visible: !SampleManager.downloadsManager.cancelDownload
             clip: true
         }
 
         Button {
-            text: qsTr("Cancel all downloads")
-            font.pixelSize: Math.max(10, baseFontSize)
+            id: cancelAllButton
+            text: qsTr("Cancel remaining downloads")
             Layout.alignment: Qt.AlignHCenter | Qt.AlignVCenter
-            Layout.preferredWidth: Math.max(implicitWidth, 200 * scaleFactor)
-            Layout.preferredHeight: Math.max(40, 50 * scaleFactor)
+            padding: 12
             onClicked: {
                 SampleManager.cancelAllDownloads();
             }
             clip: true
+
+            background: Rectangle {
+                radius: 4
+                color: cancelAllButton.down ? Qt.darker(Calcite.brand, 1.2) : (cancelAllButton.hovered ? Calcite.brandHover : Calcite.brand)
+            }
         }
     }
 
@@ -203,9 +211,9 @@ Page {
     // Busy overlay for cancelling downloads
     Rectangle {
         anchors.fill: parent
-        color: "#CC000000"  // Dark semi-transparent background
+        color: "#CC000000"
         visible: SampleManager.downloadsManager.cancelDownload && SampleManager.downloadsManager.downloadInProgress
-        z: 1000  // Ensure it's on top of everything
+        z: 1000
 
         ColumnLayout {
             anchors.centerIn: parent
@@ -214,8 +222,6 @@ Page {
             BusyIndicator {
                 Layout.alignment: Qt.AlignHCenter
                 running: parent.parent.visible
-                Layout.preferredWidth: Math.max(60, 80 * scaleFactor)
-                Layout.preferredHeight: Math.max(60, 80 * scaleFactor)
             }
 
             Label {

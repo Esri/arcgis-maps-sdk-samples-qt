@@ -37,19 +37,28 @@ ColumnLayout {
     anchors.margins: baseMargin
     spacing: baseSpacing
 
+    function refreshState() {
+        root.hasDataToDelete = SampleManager.hasAnyDataToDelete();
+        if (!root.hasDataToDelete && root.showOnlyDownloaded) {
+            root.showOnlyDownloaded = false;
+        }
+    }
+
     Connections {
         target: SampleManager.downloadsManager
         function onOfflineDataStateChanged() {
-            root.hasDataToDelete = SampleManager.hasAnyDataToDelete();
-            // disable filter if no downloaded data
-            if (!root.hasDataToDelete && root.showOnlyDownloaded) {
-                root.showOnlyDownloaded = false;
-            }
+            root.refreshState();
         }
     }
 
     Component.onCompleted: {
-        root.hasDataToDelete = SampleManager.hasAnyDataToDelete();
+        root.refreshState();
+    }
+
+    onVisibleChanged: {
+        if (visible) {
+            root.refreshState();
+        }
     }
 
     // Logo
@@ -95,7 +104,7 @@ ColumnLayout {
             text: qsTr("Delete all offline data")
             Layout.preferredWidth: Math.max(implicitWidth, 200 * scaleFactor)
             Layout.preferredHeight: Math.max(40, 50 * scaleFactor)
-            enabled: SampleManager.hasAnyDataToDelete
+            visible: root.hasDataToDelete
             font.pixelSize: Math.max(10, baseFontSize)
             clip: true
 
@@ -105,7 +114,8 @@ ColumnLayout {
             }
 
             onClicked: {
-                deleteAllDialog.open();
+                deleteAllDialog.resetDialog();
+                deleteAllDialog.visible = true;
             }
         }
     }

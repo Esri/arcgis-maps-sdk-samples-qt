@@ -15,8 +15,15 @@
 
 #include "pch.hpp"
 
-#include "DownloadsManager.h"
+// ArcGIS Maps SDK headers
+#include "ErrorException.h"
+#include "MapTypes.h"
+#include "NetworkRequestProgress.h"
+#include "Portal.h"
+#include "PortalItem.h"
+#include "PortalTypes.h"
 
+// Qt headers
 #include <QDateTime>
 #include <QDebug>
 #include <QDir>
@@ -31,17 +38,14 @@
 #include <QTimer>
 #include <QUrl>
 
+// STL headers
 #include <algorithm>
 
+// Other headers
 #include "DataItem.h"
 #include "DataItemListModel.h"
-#include "ErrorException.h"
-#include "MapTypes.h"
-#include "NetworkRequestProgress.h"
+#include "DownloadsManager.h"
 #include "OfflineDataProjectsModel.h"
-#include "Portal.h"
-#include "PortalItem.h"
-#include "PortalTypes.h"
 #include "Sample.h"
 #include "SampleListModel.h"
 #include "ZipHelper.h"
@@ -479,8 +483,12 @@ void DownloadsManager::cancelAllDownloads()
   // Set cancel flag to prevent downloadNextDataItem from processing more
   setCancelDownload(true);
 
-  // Don't remove active downloads - let them finish and track their files
-  // When the last one completes, downloadNextDataItem() will clean up
+  // If no active downloads, trigger cleanup immediately
+  // Otherwise, cleanup will happen when the last active download completes
+  if (m_dataItemProgress.isEmpty())
+  {
+    downloadNextDataItem();
+  }
 }
 
 bool DownloadsManager::deleteAllOfflineData()
@@ -798,7 +806,8 @@ void DownloadsManager::fetchPortalItemData(const QString& itemId, const QString&
       auto folder = portalItem->type() == PortalItemType::CodeSample ? portalItem->name() : QString();
       QString formattedPath = this->formattedPath(outputPath, folder);
       portalItem->fetchDataAsync(formattedPath)
-        .then(this, [this, portalItem, formattedPath, dataItemKey]()
+        .then(this,
+              [this, portalItem, formattedPath, dataItemKey]()
       {
         setDownloadProgress(0.0);
         // Mark as complete (100%)
@@ -832,7 +841,9 @@ void DownloadsManager::fetchPortalItemData(const QString& itemId, const QString&
                 {
                   QDirIterator it(fullPath, QDir::Files | QDir::AllDirs | QDir::NoDotAndDotDot, QDirIterator::Subdirectories);
                   while (it.hasNext())
+                  {
                     newFiles.append(it.next());
+                  }
                 }
               }
             }
@@ -884,7 +895,9 @@ void DownloadsManager::fetchPortalItemData(const QString& itemId, const QString&
   connect(portalItem, &PortalItem::fetchDataProgressChanged, this, [this, dataItemKey](const NetworkRequestProgress& progress)
   {
     if (!m_dataItemProgress.contains(dataItemKey))
+    {
       return;
+    }
 
     // Update progress for this specific data item
     m_dataItemProgress[dataItemKey] = progress.progressPercentage();
