@@ -483,10 +483,9 @@ void DownloadsManager::cancelAllDownloads()
   // Set cancel flag to prevent downloadNextDataItem from processing more
   setCancelDownload(true);
 
-  // If no active downloads, trigger cleanup immediately
-  // Otherwise, cleanup will happen when the last active download completes
   if (m_dataItemProgress.isEmpty())
   {
+    // This function will handle when the cancel flag is set.
     downloadNextDataItem();
   }
 }
@@ -747,8 +746,8 @@ void DownloadsManager::downloadNextDataItem()
       }
 
       setCancelDownload(false);
-      updateOfflineDataProjects();  // Refresh the list with downloaded files
-      emit offlineDataStateChanged();  // Update button states
+      updateOfflineDataProjects();
+      emit offlineDataStateChanged();
     }
     return;
   }

@@ -252,7 +252,33 @@ ApplicationWindow {
     Connections {
         target: SampleManager
 
+        property var pendingSampleChangeConnection: null
+
         function onCurrentSampleChanged() {
+            // If we're in ManageOfflineData view and a download is in progress,
+            // cancel all downloads and wait for completion before changing samples
+            if (SampleManager.currentMode === SampleManager.ManageOfflineDataView &&
+                SampleManager.downloadsManager.downloadInProgress) {
+                pendingSampleChangeConnection = SampleManager.downloadsManager.downloadInProgressChanged.connect(function() {
+                    if (!SampleManager.downloadsManager.downloadInProgress) {
+                        if (pendingSampleChangeConnection) {
+                            SampleManager.downloadsManager.downloadInProgressChanged.disconnect(pendingSampleChangeConnection);
+                            pendingSampleChangeConnection = null;
+                        }
+                        sampleChangeHelper();
+                    }
+                });
+
+                // Cancel all downloads - this will show the busy indicator
+                SampleManager.cancelAllDownloads();
+                return;
+            }
+
+            // If no download in progress, proceed normally
+            sampleChangeHelper();
+        }
+
+        function sampleChangeHelper() {
             clearSample();
             SampleManager.resetAuthenticationState();
 
