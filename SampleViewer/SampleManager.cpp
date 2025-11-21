@@ -176,7 +176,7 @@ void SampleManager::init()
   buildCategoriesList();
 
   // sort so downloads list is in ascending order
-  //m_offlineDataSamples->sortSamples();
+  m_offlineDataSamples->sortSamples();
   m_downloadsManager->setSamples(m_offlineDataSamples);
 
   emit sampleInitComplete();
