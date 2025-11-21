@@ -63,7 +63,6 @@ Item {
 
         background: Rectangle {
             color: palette.base
-            opacity: .9
         }
 
         contentItem: ColumnLayout {

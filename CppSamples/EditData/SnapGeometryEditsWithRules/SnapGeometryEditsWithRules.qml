@@ -46,13 +46,12 @@ Item {
         width: textItem.width + 20
         height: textItem.height + 10
         color: palette.base
-        opacity: .9
 
         Label {
             id: textItem
             anchors.centerIn: parent
             text: qsTr("Tap a point feature to edit.")
-            font.pixelSize: 16
+            font.pixelSize: 18
             font.bold: true
         }
     }
@@ -65,7 +64,6 @@ Item {
 
         background: Rectangle {
             color: palette.base
-            opacity: .9
         }
         contentItem: ColumnLayout {
             id: columns
@@ -84,7 +82,7 @@ Item {
                     Layout.alignment: Qt.AlignHCenter | Qt.AlignVCenter
                     Layout.columnSpan: 2
                     text: qsTr("Feature selected")
-                    font.pixelSize: 16
+                    font.pixelSize: 18
                     font.bold: true
                 }
 
@@ -93,7 +91,7 @@ Item {
                     Layout.alignment: Qt.AlignHCenter | Qt.AlignVCenter
                     Layout.columnSpan: 2
                     text: qsTr("AssetGroup: ")
-                    font.pixelSize: 12
+                    font.pixelSize: 14
                 }
 
                 Label {
@@ -101,7 +99,7 @@ Item {
                     Layout.alignment: Qt.AlignHCenter | Qt.AlignVCenter
                     Layout.columnSpan: 2
                     text: qsTr("AssetType: ")
-                    font.pixelSize: 12
+                    font.pixelSize: 14
                 }
 
                 Connections {
@@ -169,7 +167,7 @@ Item {
                 }
                 Label {
                     text: qsTr("None")
-                    font.pixelSize: 12
+                    font.pixelSize: 14
                 }
 
                 Rectangle {
@@ -180,7 +178,7 @@ Item {
                 }
                 Label {
                     text: qsTr("RulesLimitSnapping")
-                    font.pixelSize: 12
+                    font.pixelSize: 14
                 }
 
                 Rectangle {
@@ -191,7 +189,7 @@ Item {
                 }
                 Label {
                     text: qsTr("RulesPreventSnapping")
-                    font.pixelSize: 12
+                    font.pixelSize: 14
                 }
             }
         }
@@ -204,10 +202,9 @@ Item {
             top: parent.top
             bottom: parent.bottom
         }
-        width: 220
+        width: 300
         visible: false
         color: palette.base
-        opacity: .9
 
         Connections {
             target: snapGeometryEditsWithRulesModel
@@ -227,32 +224,20 @@ Item {
 
             header: ColumnLayout {
                 id: snappingColumn
-                Layout.minimumWidth: optionPanel.width
+                width: snapSourceView.width
                 spacing: 0
+
                 RowLayout {
-                    Layout.minimumWidth: optionPanel.width
+                    Layout.fillWidth: true
                     Layout.minimumHeight: 35
+                    spacing: 10
 
                     Label {
                         Layout.alignment: Qt.AlignLeft
                         Layout.fillWidth: true
-                        Layout.minimumWidth: optionPanel.width * 0.75
                         text: qsTr("Snapping")
-                        font.pixelSize: 12
+                        font.pixelSize: 14
                         font.bold: true
-                    }
-
-                    Label {
-                        Layout.alignment: Qt.AlignRight
-                        Layout.fillWidth: true
-                        Layout.minimumWidth: optionPanel.width * 0.25
-                        text: qsTr("Done")
-                        font.pixelSize: 12
-                        font.bold: true
-                        MouseArea {
-                            anchors.fill: parent
-                            onClicked: optionPanel.visible = false;
-                        }
                     }
                 }
             }
@@ -261,42 +246,54 @@ Item {
 
             delegate: Item {
                 height: 35
-                width: optionPanel.width
-                id:delegate
+                width: snapSourceView.width
+
                 Rectangle {
                     id: wrapper
                     color: palette.mid
-                    width: snapSourceView.width - (snapSourceView.anchors.margins / 2)
-                    height: delegate.height
-                    anchors {
-                        margins: 15
-                    }
+                    width: parent.width
+                    height: parent.height
 
                     RowLayout {
-                        id : row
-                        Layout.fillWidth: true
-                        Layout.minimumWidth: optionPanel.width
-                        width: wrapper.width
+                        anchors.fill: parent
+                        anchors.leftMargin: 10
+                        anchors.rightMargin: 10
+                        spacing: 10
 
                         Label {
-                            Layout.alignment: Qt.AlignLeft
+                            Layout.alignment: Qt.AlignVCenter
                             Layout.fillWidth: true
-                            Layout.minimumWidth: optionPanel.width / 2
                             text: name
-                            font.pixelSize: 12
-                            Layout.leftMargin: 10
+                            font.pixelSize: 14
+                            elide: Text.ElideRight
                         }
 
                         Switch {
-                            Layout.alignment: Qt.AlignRight
-                            Layout.fillWidth: true
+                            Layout.alignment: Qt.AlignVCenter | Qt.AlignRight
                             checked: isEnabled
                             onCheckedChanged: {
                                 if (isEnabled !== checked) {
-                                    isEnabled = checked; // Update only if there's a difference
+                                    isEnabled = checked;
                                 }
                             }
                         }
+                    }
+                }
+            }
+
+            footer: Item {
+                width: snapSourceView.width
+                height: 50
+
+                Button {
+                    text: qsTr("Done")
+                    anchors.centerIn: parent
+                    anchors.topMargin: 10
+                    font.pixelSize: 14
+                    font.bold: true
+
+                    onClicked: {
+                        optionPanel.visible = false
                     }
                 }
             }

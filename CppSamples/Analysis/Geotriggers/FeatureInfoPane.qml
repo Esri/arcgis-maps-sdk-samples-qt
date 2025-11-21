@@ -69,7 +69,6 @@ Pane {
                     bold: true
                     pointSize: 20
                 }
-                color: "#3B4E1E"
                 wrapMode: Text.WordWrap
             }
 
@@ -89,14 +88,7 @@ Pane {
                 id: closeButton
                 anchors.horizontalCenter: parent.horizontalCenter
                 width: parent.width
-                Label {
-                    anchors.centerIn: parent
-                    verticalAlignment: Text.AlignVCenter
-                    horizontalAlignment: Text.AlignHCenter
-
-                    text: qsTr("Close")
-                }
-
+                text: qsTr("Close")
                 onClicked: {
                     aboutFeaturePane.visible = false
                 }

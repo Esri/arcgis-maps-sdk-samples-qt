@@ -33,7 +33,7 @@ Item {
 
     ColumnLayout {
         anchors {
-            left: parent.left
+            right: parent.right
             top: parent.top
         }
 
@@ -43,6 +43,11 @@ Item {
             height: row.height * 3
             width: row.width * 1.05
 
+            border {
+                width: 1
+                color: "darkgrey"
+            }
+            
             MouseArea {
                 anchors.fill: parent
                 onClicked: mouse => mouse.accepted = true

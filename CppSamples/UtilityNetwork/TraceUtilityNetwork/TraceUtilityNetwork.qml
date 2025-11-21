@@ -83,14 +83,19 @@ Item {
     Rectangle {
         id: backBox
         anchors {
-            left: parent.left
+            right: parent.right
             top: parent.top
             margins: 3
         }
-        width: childrenRect.width
-        height: childrenRect.height
+        width: contentColumn.implicitWidth + 16
+        height: contentColumn.implicitHeight + 16
         color: palette.base
         radius: 5
+
+        border {
+            width: 1
+            color: "darkgrey"
+        }
 
         // catch mouse signals from propagating to parent
         MouseArea {
@@ -100,7 +105,8 @@ Item {
         }
 
         Column {
-
+            id: contentColumn
+            anchors.centerIn: parent
             GridLayout {
                 columns: 2
                 rows: 3
