@@ -107,6 +107,7 @@ Page {
         }
 
         Button {
+            // PortalItem::fetchData does not have a cancel method so we can only clear the remaining items from the download queue
             id: cancelAllButton
             text: qsTr("Cancel remaining downloads")
             Layout.alignment: Qt.AlignHCenter | Qt.AlignVCenter
