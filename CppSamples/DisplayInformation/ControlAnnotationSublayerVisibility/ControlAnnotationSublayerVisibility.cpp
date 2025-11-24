@@ -95,12 +95,7 @@ void ControlAnnotationSublayerVisibility::setMapView(MapQuickView* mapView)
     m_mapScale = m_mapView->mapScale();
     emit mapScaleChanged();
 
-    const bool visibleAtCurrentExtent = m_annotationSubLayerOpen ? m_annotationSubLayerOpen->isVisibleAtScale(m_mapScale) : false;
-    if (m_visibleAtCurrentExtent != visibleAtCurrentExtent)
-    {
-      m_visibleAtCurrentExtent = visibleAtCurrentExtent;
-      emit visibleAtCurrentExtentChanged();
-    }
+    recalculateVisibleAtCurrentExtent();
   });
 
   emit mapViewChanged();
@@ -162,6 +157,7 @@ void ControlAnnotationSublayerVisibility::createMapPackage(const QString& path)
           m_openLayerText = QString("%1 (1:%2 - 1:%3)").arg(m_annotationSubLayerOpen->name()).arg(m_annotationSubLayerOpen->maxScale()).arg(m_annotationSubLayerOpen->minScale());
           emit openLayerTextChanged();
           emit closedLayerTextChanged();
+          recalculateVisibleAtCurrentExtent();
         });
         layer->load();
       }
@@ -186,4 +182,14 @@ void ControlAnnotationSublayerVisibility::closedLayerVisible()
     return;
 
   m_annotationSubLayerClosed->setVisible(!m_annotationSubLayerClosed->isVisible());
+}
+
+void ControlAnnotationSublayerVisibility::recalculateVisibleAtCurrentExtent()
+{
+  const bool visibleAtCurrentExtent = m_annotationSubLayerOpen ? m_annotationSubLayerOpen->isVisibleAtScale(m_mapScale) : false;
+  if (m_visibleAtCurrentExtent != visibleAtCurrentExtent)
+  {
+    m_visibleAtCurrentExtent = visibleAtCurrentExtent;
+    emit visibleAtCurrentExtentChanged();
+  }
 }
