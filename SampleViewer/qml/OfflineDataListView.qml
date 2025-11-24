@@ -65,8 +65,8 @@ ColumnLayout {
     Image {
         Layout.alignment: Qt.AlignHCenter | Qt.AlignVCenter
         source: "qrc:/logo.png"
-        Layout.preferredWidth: Math.max(60, 100 * scaleFactor)
-        Layout.preferredHeight: Math.max(60, 100 * scaleFactor)
+        Layout.preferredWidth: Math.max(80, 125 * scaleFactor)
+        Layout.preferredHeight: Math.max(80, 125 * scaleFactor)
         fillMode: Image.PreserveAspectFit
         clip: true
     }

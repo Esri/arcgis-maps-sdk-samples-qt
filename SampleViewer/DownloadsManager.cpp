@@ -485,7 +485,7 @@ void DownloadsManager::cancelAllDownloads()
 
   if (m_dataItemProgress.isEmpty())
   {
-    // This function will handle when the cancel flag is set.
+    // This function perfroms checks for the cancel flag
     downloadNextDataItem();
   }
 }

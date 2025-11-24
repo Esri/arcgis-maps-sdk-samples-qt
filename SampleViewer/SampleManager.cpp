@@ -494,13 +494,6 @@ void SampleManager::resetAuthenticationState()
   }
 }
 
-void SampleManager::doneDownloading()
-{
-  // Called when user dismisses the download completion view
-  // Return to manage offline data view
-  setCurrentMode(CurrentMode::ManageOfflineDataView);
-}
-
 bool SampleManager::dataItemsExists()
 {
   // Sample has no data items, return true

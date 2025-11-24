@@ -84,9 +84,9 @@ public:
   Q_INVOKABLE bool dataItemsExists();
 
   // Download operations (bulk and individual)
-  Q_INVOKABLE void downloadAllDataItems();           // Bulk download - shows full-page view
+  Q_INVOKABLE void downloadAllDataItems();
   Q_INVOKABLE void downloadDataItemsCurrentSample();
-  Q_INVOKABLE void downloadProjectData(const QString& sampleName);  // Individual download - inline progress
+  Q_INVOKABLE void downloadProjectData(const QString& sampleName);
   Q_INVOKABLE void cancelAllDownloads();
 
   // Delete operations
@@ -102,7 +102,6 @@ public:
   // Utility methods
   Q_INVOKABLE void setSourceCodeIndex(int i);
   Q_INVOKABLE void setupProxy(const QString& hostName, quint16 port, const QString& user, const QString& pw);
-  Q_INVOKABLE void doneDownloading();
   Q_INVOKABLE void setApiKey(bool isSupportsApiKey = true);
   Q_INVOKABLE void resetAuthenticationState();
 
