@@ -56,8 +56,10 @@ Item {
 
             MouseArea {
                 anchors.fill: controlLayout
-                onClicked: mouse => mouse.accepted = true;
-                onWheel: wheel => wheel.accepted = true;
+                acceptedButtons: Qt.LeftButton | Qt.RightButton
+                onClicked: mouse => mouse.accepted = true
+                onDoubleClicked: mouse => mouse.accepted = true
+                onWheel: wheel => wheel.accepted = true
             }
 
             ColumnLayout{
