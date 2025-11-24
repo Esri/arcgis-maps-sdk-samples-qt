@@ -22,7 +22,7 @@ mac {
 CONFIG += c++17
 
 # additional modules are pulled in via arcgisruntime.pri
-QT += opengl qml quick
+QT += qml quick
 
 ARCGIS_RUNTIME_VERSION = 300.0.0
 include($$PWD/arcgisruntime.pri)

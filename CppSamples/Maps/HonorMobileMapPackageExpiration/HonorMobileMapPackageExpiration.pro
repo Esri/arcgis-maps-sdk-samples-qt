@@ -21,7 +21,7 @@ mac {
 
 CONFIG += c++17
 
-QT += opengl qml quick positioning sensors
+QT += qml quick positioning sensors
 
 TEMPLATE = app
 TARGET = HonorMobileMapPackageExpiration
