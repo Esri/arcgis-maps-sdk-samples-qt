@@ -34,7 +34,7 @@
 
 using namespace Esri::ArcGISRuntime;
 
-SyncMapViewSceneView::SyncMapViewSceneView(QObject* parent /* = nullptr */):
+SyncMapViewSceneView::SyncMapViewSceneView(QObject* parent /* = nullptr */) :
   QObject(parent),
   m_scene(new Scene(BasemapStyle::ArcGISImageryStandard, this)),
   m_map(new Map(BasemapStyle::ArcGISImageryStandard, this))
@@ -67,11 +67,26 @@ void SyncMapViewSceneView::setSceneView(SceneQuickView* sceneView)
   m_sceneView = sceneView;
   m_sceneView->setArcGISScene(m_scene);
 
-  connect(m_sceneView, &SceneQuickView::viewpointChanged, this,
-          [this]
+  connect(m_sceneView, &SceneQuickView::viewpointChanged, this, [this]
   {
-    if (m_mapView && m_sceneView->isNavigating())
+    if (m_mapView && m_sceneView->isNavigating() && !m_mapView->isNavigating())
+    {
       m_mapView->setViewpointAsync(m_sceneView->currentViewpoint(ViewpointType::CenterAndScale), 0);
+    }
+  });
+  connect(m_sceneView, &SceneQuickView::mousePressed, this, [this]
+  {
+    if (m_mapView)
+    {
+      m_mapView->setViewpointAsync(m_sceneView->currentViewpoint(ViewpointType::CenterAndScale), 0);
+    }
+  });
+  connect(m_sceneView, &SceneQuickView::mouseWheelChanged, this, [this]
+  {
+    if (m_mapView)
+    {
+      m_mapView->setViewpointAsync(m_sceneView->currentViewpoint(ViewpointType::CenterAndScale), 0);
+    }
   });
 
   emit sceneViewChanged();
@@ -94,11 +109,27 @@ void SyncMapViewSceneView::setMapView(MapQuickView* mapView)
   m_mapView->setMap(m_map);
   m_mapView->setRotationByPinchingEnabled(true);
 
-  connect(m_mapView, &MapQuickView::viewpointChanged, this,
-          [this]
+  connect(m_mapView, &MapQuickView::viewpointChanged, this, [this]
   {
-    if (m_sceneView && m_mapView->isNavigating())
+    if (m_sceneView && m_mapView->isNavigating() && !m_sceneView->isNavigating())
+    {
       m_sceneView->setViewpointAsync(m_mapView->currentViewpoint(ViewpointType::CenterAndScale), 0);
+    }
+  });
+  connect(m_mapView, &MapQuickView::mousePressed, this, [this]
+  {
+    if (m_sceneView)
+    {
+      m_sceneView->setViewpointAsync(m_mapView->currentViewpoint(ViewpointType::CenterAndScale), 0);
+    }
+  });
+
+  connect(m_mapView, &MapQuickView::mouseWheelChanged, this, [this]
+  {
+    if (m_sceneView)
+    {
+      m_sceneView->setViewpointAsync(m_mapView->currentViewpoint(ViewpointType::CenterAndScale), 0);
+    }
   });
 
   emit mapViewChanged();
