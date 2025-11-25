@@ -134,7 +134,9 @@ Page {
         deleteProjectDialog: deleteProjectDialog
         deleteAllDialog: deleteAllDialog
         showOnlyDownloaded: manageOfflineDataViewPage.showOnlyDownloaded
-        onShowOnlyDownloadedChanged: manageOfflineDataViewPage.showOnlyDownloaded = showOnlyDownloaded
+        onShowOnlyDownloadedChanged: {
+            manageOfflineDataViewPage.showOnlyDownloaded = showOnlyDownloaded;
+        }
     }
 
     // Delete all offline data confirmation dialog
