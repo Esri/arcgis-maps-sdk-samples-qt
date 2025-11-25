@@ -101,14 +101,18 @@ void DownloadsManager::initialize(Portal* portal, const QString& homePath)
 int DownloadsManager::countDownloadedItems(Sample* sample) const
 {
   if (!sample || sample->dataItems()->size() == 0)
+  {
     return 0;
+  }
 
   int downloadedItems = 0;
   const int totalItems = sample->dataItems()->size();
   for (int j = 0; j < totalItems; ++j)
   {
     if (sample->dataItems()->at(j)->exists())
+    {
       downloadedItems++;
+    }
   }
   return downloadedItems;
 }
@@ -116,7 +120,9 @@ int DownloadsManager::countDownloadedItems(Sample* sample) const
 bool DownloadsManager::isSampleDownloading(Sample* sample) const
 {
   if (!sample || sample->dataItems()->size() == 0)
+  {
     return false;
+  }
 
   const int totalItems = sample->dataItems()->size();
   for (int j = 0; j < totalItems; ++j)
@@ -124,7 +130,9 @@ bool DownloadsManager::isSampleDownloading(Sample* sample) const
     DataItem* dataItem = sample->dataItems()->at(j);
     QString key = dataItem->itemId() + "|" + m_homePath + dataItem->path().mid(1);
     if (m_dataItemProgress.contains(key))
+    {
       return true;
+    }
   }
   return false;
 }
@@ -132,7 +140,9 @@ bool DownloadsManager::isSampleDownloading(Sample* sample) const
 void DownloadsManager::deleteDataItemFile(DataItem* dataItem)
 {
   if (!dataItem)
+  {
     return;
+  }
 
   QJsonObject tracking = loadDownloadTracking();
 
@@ -196,7 +206,8 @@ void DownloadsManager::deleteDataItemFile(DataItem* dataItem)
   }
 
   QStringList sortedPaths = parentPaths.values();
-  std::sort(sortedPaths.begin(), sortedPaths.end(), [](const QString& a, const QString& b) {
+  std::sort(sortedPaths.begin(), sortedPaths.end(), [](const QString& a, const QString& b)
+  {
     return a.length() > b.length();
   });
 
@@ -214,13 +225,17 @@ void DownloadsManager::cancelDataItem(const QString& dataItemKey)
 {
   PortalItem* portalItem = nullptr;
   if (m_activeDownloads.contains(dataItemKey))
+  {
     portalItem = m_activeDownloads[dataItemKey];
+  }
 
   m_dataItemProgress.remove(dataItemKey);
   m_activeDownloads.remove(dataItemKey);
 
   if (portalItem)
+  {
     portalItem->cancelLoad();
+  }
 }
 
 void DownloadsManager::cleanupEmptyParentDirectories(const QString& startPath, const QString& boundary)
@@ -234,10 +249,14 @@ void DownloadsManager::cleanupEmptyParentDirectories(const QString& startPath, c
       QString pathToRemove = currentDir.absolutePath();
 
       if (!currentDir.cdUp())
+      {
         break;
+      }
 
       if (!QDir().rmdir(pathToRemove))
+      {
         break;
+      }
     }
     else
     {
@@ -252,7 +271,9 @@ QJsonObject DownloadsManager::loadDownloadTracking()
   QFile file(trackingFile);
 
   if (!file.open(QIODevice::ReadOnly))
+  {
     return QJsonObject();
+  }
 
   QByteArray data = file.readAll();
   file.close();
@@ -276,7 +297,9 @@ void DownloadsManager::saveDownloadTracking(const QJsonObject& data)
   QFileInfo fileInfo(trackingFile);
   QDir dir = fileInfo.dir();
   if (!dir.exists())
+  {
     dir.mkpath(".");
+  }
 
   QFile file(trackingFile);
   if (!file.open(QIODevice::WriteOnly))
@@ -296,20 +319,28 @@ void DownloadsManager::trackFilesForItem(const QString& itemId, const QStringLis
 
   QJsonObject itemData;
   if (tracking.contains(itemId))
+  {
     itemData = tracking[itemId].toObject();
+  }
 
   QJsonArray filesArray;
   if (itemData.contains("files"))
+  {
     filesArray = itemData["files"].toArray();
+  }
 
   QSet<QString> existingFiles;
   for (const QJsonValue& val : filesArray)
+  {
     existingFiles.insert(val.toString());
+  }
 
   for (const QString& file : files)
   {
     if (!existingFiles.contains(file))
+    {
       filesArray.append(file);
+    }
   }
 
   itemData["files"] = filesArray;
@@ -324,7 +355,9 @@ DownloadsManager::SampleDownloadState DownloadsManager::getSampleDownloadState(S
   SampleDownloadState state;
 
   if (!sample || sample->dataItems()->size() == 0)
+  {
     return state;
+  }
 
   state.totalItems = sample->dataItems()->size();
   state.downloadedItems = countDownloadedItems(sample);
@@ -458,7 +491,7 @@ void DownloadsManager::downloadDataItemsForSample(Sample* sample)
   }
 
   setDownloadFailed(false);
-  setIsBulkDownload(false);  // Individual sample downloads use inline progress
+  setIsBulkDownload(false); // Individual sample downloads use inline progress
 
   const int dataItemCount = sample->dataItems()->size();
   for (int j = 0; j < dataItemCount; ++j)
@@ -580,7 +613,9 @@ bool DownloadsManager::hasOfflineData(const QString& sampleName)
       {
         DataItem* dataItem = sample->dataItems()->at(j);
         if (dataItem->exists())
+        {
           return true;
+        }
       }
       return false;
     }
@@ -618,7 +653,9 @@ bool DownloadsManager::hasAnyDataToDownload()
     {
       DataItem* dataItem = sample->dataItems()->at(j);
       if (!dataItem->exists())
+      {
         return true;
+      }
     }
   }
   return false;
@@ -642,7 +679,9 @@ bool DownloadsManager::hasAnyDataToDelete()
     {
       DataItem* dataItem = sample->dataItems()->at(j);
       if (dataItem->exists())
+      {
         return true;
+      }
     }
   }
   return false;
@@ -671,7 +710,7 @@ double DownloadsManager::calculateSampleDownloadProgress(Sample* sample) const
     }
     else if (dataItem->exists())
     {
-        totalProgress += 100.0;
+      totalProgress += 100.0;
     }
     itemCount++;
   }
@@ -699,8 +738,7 @@ void DownloadsManager::updateOfflineDataProjects()
       {
         // Use helper to get complete download state
         SampleDownloadState state = getSampleDownloadState(sample);
-        m_offlineDataProjects->addProject(sample, state.downloaded, state.isDownloading, state.progress,
-                                           state.downloadedItems, state.totalItems);
+        m_offlineDataProjects->addProject(sample, state.downloaded, state.isDownloading, state.progress, state.downloadedItems, state.totalItems);
       }
     }
   }
@@ -714,8 +752,8 @@ void DownloadsManager::updateOfflineDataProjects()
       if (sample->dataItems()->size() > 0)
       {
         SampleDownloadState state = getSampleDownloadState(sample);
-        m_offlineDataProjects->updateProject(projectIndex, state.downloaded, state.isDownloading, state.progress,
-                                              state.downloadedItems, state.totalItems);
+        m_offlineDataProjects->updateProject(projectIndex, state.downloaded, state.isDownloading, state.progress, state.downloadedItems,
+                                             state.totalItems);
         projectIndex++;
       }
     }

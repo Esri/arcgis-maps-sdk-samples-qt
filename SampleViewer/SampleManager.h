@@ -31,7 +31,7 @@ namespace Esri::ArcGISRuntime
 {
   class Portal;
   class PortalItem;
-}
+} // namespace Esri::ArcGISRuntime
 
 namespace Esri::ArcGISRuntime::Authentication
 {

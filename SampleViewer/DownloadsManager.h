@@ -26,7 +26,7 @@ namespace Esri::ArcGISRuntime
 {
   class Portal;
   class PortalItem;
-}
+} // namespace Esri::ArcGISRuntime
 
 #include <QMap>
 #include <QObject>
@@ -97,19 +97,20 @@ signals:
   void doneDownloadingChanged();
 
 private:
-    static constexpr int PROGRESS_UPDATE_INTERVAL_MS = 200;
+  static constexpr int PROGRESS_UPDATE_INTERVAL_MS = 200;
 
-    struct SampleDownloadState
-    {
-        int totalItems = 0;
-        int downloadedItems = 0;
-        bool downloaded = false;
-        bool isDownloading = false;
-        double progress = 0.0;
-    };
+  struct SampleDownloadState
+  {
+    int totalItems = 0;
+    int downloadedItems = 0;
+    bool downloaded = false;
+    bool isDownloading = false;
+    double progress = 0.0;
+  };
+
   SampleDownloadState getSampleDownloadState(Sample* sample) const;
 
-  int countDownloadedItems(Sample *sample) const;
+  int countDownloadedItems(Sample* sample) const;
   bool isSampleDownloading(Sample* sample) const;
   void deleteDataItemFile(DataItem* dataItem);
   void cancelDataItem(const QString& dataItemKey);
@@ -131,14 +132,14 @@ private:
   void setDownloadProgress(double progress);
   void setDownloadFailed(bool failed);
 
-  QQueue<DataItem *> m_dataItems;
+  QQueue<DataItem*> m_dataItems;
   QMap<QString, double> m_dataItemProgress;
-  QMap<QString, Esri::ArcGISRuntime::PortalItem *> m_activeDownloads;
+  QMap<QString, Esri::ArcGISRuntime::PortalItem*> m_activeDownloads;
   QTimer* m_progressUpdateTimer = nullptr;
 
   Esri::ArcGISRuntime::Portal* m_portal = nullptr;
   QString m_homePath;
-  SampleListModel *m_samples = nullptr;
+  SampleListModel* m_samples = nullptr;
 
   OfflineDataProjectsModel* m_offlineDataProjects = nullptr;
 
