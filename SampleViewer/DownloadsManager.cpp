@@ -78,9 +78,7 @@ DownloadsManager::DownloadsManager(QObject* parent) :
   });
 }
 
-DownloadsManager::~DownloadsManager()
-{
-}
+DownloadsManager::~DownloadsManager() = default;
 
 void DownloadsManager::initialize(Portal* portal, const QString& homePath)
 {
