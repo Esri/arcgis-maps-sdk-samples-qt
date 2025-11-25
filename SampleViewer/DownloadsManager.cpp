@@ -240,7 +240,7 @@ void DownloadsManager::cancelDataItem(const QString& dataItemKey)
 
 void DownloadsManager::cleanupEmptyParentDirectories(const QString& startPath, const QString& boundary)
 {
-  QDir currentDir(startPath);
+  QDir currentDir{startPath};
 
   while (currentDir.absolutePath() != boundary && currentDir.absolutePath().startsWith(boundary))
   {
