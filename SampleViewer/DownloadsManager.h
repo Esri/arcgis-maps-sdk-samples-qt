@@ -134,7 +134,7 @@ private:
   QQueue<DataItem *> m_dataItems;
   QMap<QString, double> m_dataItemProgress;
   QMap<QString, Esri::ArcGISRuntime::PortalItem *> m_activeDownloads;
-  QTimer *m_progressUpdateTimer = nullptr;
+  QTimer* m_progressUpdateTimer = nullptr;
 
   Esri::ArcGISRuntime::Portal* m_portal = nullptr;
   QString m_homePath;
