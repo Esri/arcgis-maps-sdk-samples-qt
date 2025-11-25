@@ -19,7 +19,7 @@ ApplicationWindow {
     width: 800
     height: 600
 
-    Display3DLabelsInScene {
+    ShowLabelsOnLayerIn3D {
         anchors.fill: parent
     }
 }

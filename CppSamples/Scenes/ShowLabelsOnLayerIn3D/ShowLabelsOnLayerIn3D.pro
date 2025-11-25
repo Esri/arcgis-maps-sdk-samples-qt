@@ -25,7 +25,7 @@ CONFIG += c++17
 QT += qml quick
 
 TEMPLATE = app
-TARGET = Display3DLabelsInScene
+TARGET = ShowLabelsOnLayerIn3D
 
 ARCGIS_RUNTIME_VERSION = 300.0.0
 include($$PWD/arcgisruntime.pri)
@@ -33,13 +33,13 @@ include($$PWD/arcgisruntime.pri)
 #-------------------------------------------------------------------------------
 
 HEADERS += \
-    Display3DLabelsInScene.h
+    ShowLabelsOnLayerIn3D.h
 
 SOURCES += \
     main.cpp \
-    Display3DLabelsInScene.cpp
+    ShowLabelsOnLayerIn3D.cpp
 
-RESOURCES += Display3DLabelsInScene.qrc
+RESOURCES += ShowLabelsOnLayerIn3D.qrc
 
 #-------------------------------------------------------------------------------
 

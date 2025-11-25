@@ -14,7 +14,7 @@
 // [Legal]
 
 // sample headers
-#include "Display3DLabelsInScene.h"
+#include "ShowLabelsOnLayerIn3D.h"
 
 // ArcGIS Maps SDK headers
 #include "ArcGISRuntimeEnvironment.h"
@@ -41,7 +41,7 @@ int main(int argc, char *argv[])
 #endif
 
   QGuiApplication app(argc, argv);
-  app.setApplicationName(QString("Display3DLabelsInScene"));
+  app.setApplicationName(QString("ShowLabelsOnLayerIn3D"));
 
   // Use of ArcGIS location services, such as basemap styles, geocoding, and routing services,
   // requires an access token. For more information see
@@ -70,7 +70,7 @@ int main(int argc, char *argv[])
   }
 
   // Initialize the sample
-  Display3DLabelsInScene::init();
+  ShowLabelsOnLayerIn3D::init();
 
   // Initialize application view
   QQmlApplicationEngine engine;
@@ -82,7 +82,7 @@ int main(int argc, char *argv[])
 #endif
 
   // Set the source
-  engine.load(QUrl("qrc:/Samples/Scenes/Display3DLabelsInScene/main.qml"));
+  engine.load(QUrl("qrc:/Samples/Scenes/ShowLabelsOnLayerIn3D/main.qml"));
 
   return app.exec();
 }
