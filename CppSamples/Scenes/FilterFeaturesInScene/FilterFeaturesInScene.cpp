@@ -57,12 +57,12 @@ FilterFeaturesInScene::FilterFeaturesInScene(QObject* parent /* = nullptr */):
   m_scene(new Scene(this))
 {
   // Construct and set the scene topography
-  auto* surface = new Surface(this);
+  Surface* surface = new Surface(this);
   surface->elevationSources()->append(new ArcGISTiledElevationSource(QUrl("https://elevation3d.arcgis.com/arcgis/rest/services/WorldElevation3D/Terrain3D/ImageServer"), this));
   m_scene->setBaseSurface(surface);
 
   // Construct a basemap with the ArcGIS Navigation 3D Basemap then set it on the Scene
-  auto* basemap = new Basemap(QUrl("https://arcgisruntime.maps.arcgis.com/home/item.html?id=00a5f468dda941d7bf0b51c144aae3f0"), this);
+  Basemap* basemap = new Basemap(QUrl("https://arcgisruntime.maps.arcgis.com/home/item.html?id=00a5f468dda941d7bf0b51c144aae3f0"), this);
   m_scene->setBasemap(basemap);
 
   connect(basemap, &Basemap::doneLoading, this, [basemap, this](const Error& error)
@@ -96,13 +96,13 @@ FilterFeaturesInScene::FilterFeaturesInScene(QObject* parent /* = nullptr */):
   });
 
   // Construct the detailed buildings scene layer
-  m_detailedBuildingsSceneLayer = new ArcGISSceneLayer(QUrl("https://tiles.arcgis.com/tiles/z2tnIkrLQ2BRzr6P/arcgis/rest/services/SanFrancisco_Bldgs/SceneServer"), this);
+  m_sanFrancisco3DOSceneLayer = new ArcGISSceneLayer(QUrl("https://tiles.arcgis.com/tiles/z2tnIkrLQ2BRzr6P/arcgis/rest/services/SanFrancisco_Bldgs/SceneServer"), this);
 
   // Initially hide the detailed buildings so they don't clip into the 3D basemap buildings
-  m_detailedBuildingsSceneLayer->setVisible(false);
+  m_sanFrancisco3DOSceneLayer->setVisible(false);
 
   // When the detailed building scene layer finishes loading, get its extent for the polygon filter
-  connect(m_detailedBuildingsSceneLayer, &ArcGISSceneLayer::doneLoading, this, [this](const Error& error)
+  connect(m_sanFrancisco3DOSceneLayer, &ArcGISSceneLayer::doneLoading, this, [this](const Error& error)
   {
     if (!error.isEmpty())
     {
@@ -111,9 +111,9 @@ FilterFeaturesInScene::FilterFeaturesInScene(QObject* parent /* = nullptr */):
     }
 
     // Construct a red polygon that shows the extent of the detailed buildings scene layer
-    const Envelope sfExtent = m_detailedBuildingsSceneLayer->fullExtent();
+    const Envelope sfExtent = m_sanFrancisco3DOSceneLayer->fullExtent();
 
-    auto* polygonBuilder = new PolygonBuilder(m_sceneView->spatialReference(), this);
+    PolygonBuilder* polygonBuilder = new PolygonBuilder(m_sceneView->spatialReference(), this);
     polygonBuilder->addPoint(sfExtent.xMin(), sfExtent.yMin());
     polygonBuilder->addPoint(sfExtent.xMax(), sfExtent.yMin());
     polygonBuilder->addPoint(sfExtent.xMax(), sfExtent.yMax());
@@ -128,11 +128,11 @@ FilterFeaturesInScene::FilterFeaturesInScene(QObject* parent /* = nullptr */):
       this);
 
     // Create the extent graphic so we can add it later with the detailed buildings scene layer
-    auto* simpleFillSymbol = new SimpleFillSymbol(SimpleFillSymbolStyle::Solid, QColor(Qt::transparent), new SimpleLineSymbol(SimpleLineSymbolStyle::Solid, QColor(Qt::red), 5.0f, this), this);
+    SimpleFillSymbol* simpleFillSymbol = new SimpleFillSymbol(SimpleFillSymbolStyle::Solid, QColor(Qt::transparent), new SimpleLineSymbol(SimpleLineSymbolStyle::Solid, QColor(Qt::red), 5.0f, this), this);
     m_sanFranciscoExtentGraphic = new Graphic(m_sceneLayerExtentPolygon, simpleFillSymbol, this);
   });
 
-  m_scene->operationalLayers()->append(m_detailedBuildingsSceneLayer);
+  m_scene->operationalLayers()->append(m_sanFrancisco3DOSceneLayer);
 }
 
 FilterFeaturesInScene::~FilterFeaturesInScene() = default;
@@ -147,12 +147,12 @@ void FilterFeaturesInScene::init()
 // Show the detailed buildings scene layer
 void FilterFeaturesInScene::showDetailedBuildings()
 {
-  if (!m_detailedBuildingsSceneLayer)
+  if (!m_sanFrancisco3DOSceneLayer)
   {
     qWarning() << "Detailed San Francisco Buildings layer not loaded";
     return;
   }
-  m_detailedBuildingsSceneLayer->setVisible(true);
+  m_sanFrancisco3DOSceneLayer->setVisible(true);
 }
 
 // Hide buildings within the detailed building extent so they don't clip
@@ -187,13 +187,13 @@ void FilterFeaturesInScene::filterScene()
 
 void FilterFeaturesInScene::reset()
 {
-  if (!m_detailedBuildingsSceneLayer)
+  if (!m_sanFrancisco3DOSceneLayer)
   {
     return;
   }
 
   // Hide the detailed buildings layer from the scene
-  m_detailedBuildingsSceneLayer->setVisible(false);
+  m_sanFrancisco3DOSceneLayer->setVisible(false);
 
   if (!m_3dBuildings || !m_3dBuildings->polygonFilter())
   {

@@ -60,7 +60,7 @@ private:
   Esri::ArcGISRuntime::Scene* m_scene = nullptr;
   Esri::ArcGISRuntime::SceneQuickView* m_sceneView = nullptr;
   Esri::ArcGISRuntime::ArcGISSceneLayer* m_3dBuildings = nullptr;
-  Esri::ArcGISRuntime::ArcGISSceneLayer* m_detailedBuildingsSceneLayer = nullptr;
+  Esri::ArcGISRuntime::ArcGISSceneLayer* m_sanFrancisco3DOSceneLayer = nullptr;
   Esri::ArcGISRuntime::Polygon m_sceneLayerExtentPolygon;
   Esri::ArcGISRuntime::Graphic* m_sanFranciscoExtentGraphic = nullptr;
   Esri::ArcGISRuntime::SceneLayerPolygonFilter* m_sceneLayerPolygonFilter = nullptr;
