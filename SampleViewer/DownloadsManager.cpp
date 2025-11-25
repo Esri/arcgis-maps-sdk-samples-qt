@@ -13,7 +13,7 @@
 // limitations under the License.
 // [Legal]
 
-#include "pch.hpp"
+#include "pch.hpp" // IWYU pragma: keep
 
 // ArcGIS Maps SDK headers
 #include "ErrorException.h"
