@@ -209,12 +209,12 @@ void FilterBuildingSceneLayer::updateFloorFilter(const QString& selectedFloor)
   // Build a building filter to show the selected floor and an xray view of the floors below.
   // Floors above the selected floor are not shown at all.
   BuildingFilterBlock* solidBlock =
-    new BuildingFilterBlock("solid block", QString("BldgLevel = '%1'").arg(selectedFloor), new BuildingSolidFilterMode(), this);
+    new BuildingFilterBlock("solid block", QString("BldgLevel = '%1'").arg(selectedFloor), new BuildingSolidFilterMode(this), this);
 
   m_blocks.append(solidBlock);
 
   BuildingFilterBlock* xrayBlock =
-    new BuildingFilterBlock("xray block", QString("BldgLevel < '%1'").arg(selectedFloor), new BuildingXrayFilterMode(), this);
+    new BuildingFilterBlock("xray block", QString("BldgLevel < '%1'").arg(selectedFloor), new BuildingXrayFilterMode(this), this);
 
   m_blocks.append(xrayBlock);
 

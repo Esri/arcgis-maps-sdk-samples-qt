@@ -17,12 +17,12 @@
 #ifndef FILTERBUILDINGSCENELAYER_H
 #define FILTERBUILDINGSCENELAYER_H
 
+// ArcGIS Maps SDK headers
+#include "Popup.h"
+
 // Qt headers
 #include <QMouseEvent>
 #include <QObject>
-
-// STL headers
-#include <Popup.h>
 
 namespace Esri::ArcGISRuntime
 {
@@ -33,9 +33,6 @@ namespace Esri::ArcGISRuntime
   class BuildingSceneLayer;
   class BuildingSceneLayerAttributeStatistics;
   class BuildingSublayerListModel;
-  class FeatureLayer;
-  class IdentifyLayerResult;
-  class LayerListModel;
   class LocalSceneQuickView;
   class Scene;
 } // namespace Esri::ArcGISRuntime
