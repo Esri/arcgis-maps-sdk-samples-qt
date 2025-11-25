@@ -22,7 +22,7 @@ mac {
 CONFIG += c++17
 
 # additional modules are pulled in via arcgisruntime.pri
-QT += opengl qml quick gui
+QT += qml quick gui
 
 TEMPLATE = app
 TARGET = ConfigureClusters

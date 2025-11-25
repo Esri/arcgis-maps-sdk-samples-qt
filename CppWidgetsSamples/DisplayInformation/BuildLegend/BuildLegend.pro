@@ -22,7 +22,7 @@ mac {
 CONFIG += c++17
 
 # additional modules are pulled in via arcgisruntime.pri
-QT += opengl widgets
+QT += widgets
 
 TEMPLATE = app
 TARGET = BuildLegend
