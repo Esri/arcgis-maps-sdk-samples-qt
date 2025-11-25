@@ -36,7 +36,6 @@ Item {
     }
 
     Button {
-        id: buildingFilterSettingsButton
         anchors {
             top: view.top
             right: view.right
@@ -60,7 +59,9 @@ Item {
 
         MouseArea {
             anchors.fill: settingsPanel
+            acceptedButtons: Qt.LeftButton | Qt.RightButton
             onClicked: mouse => mouse.accepted = true
+            onDoubleClicked: mouse => mouse.accepted = true
             onWheel: wheel => wheel.accepted = true
         }
 

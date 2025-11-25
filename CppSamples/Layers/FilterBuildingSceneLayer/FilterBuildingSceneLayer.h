@@ -18,7 +18,6 @@
 #define FILTERBUILDINGSCENELAYER_H
 
 // Qt headers
-#include <QFuture>
 #include <QMouseEvent>
 #include <QObject>
 
@@ -58,11 +57,8 @@ public:
   ~FilterBuildingSceneLayer() override;
 
   static void init();
-  QStringList floorList() const;
-  void getCategoriesList();
-  void getFloorList();
   Q_INVOKABLE void clearSelection();
-  Q_INVOKABLE Esri::ArcGISRuntime::BuildingSublayerListModel* getComponentSubLayerListModel(int layerId);
+  Q_INVOKABLE Esri::ArcGISRuntime::BuildingSublayerListModel* getComponentSubLayerListModel(int layerId) const;
   Q_INVOKABLE void updateFloorFilter(const QString& selectedFloor);
 
 signals:
@@ -77,6 +73,9 @@ private slots:
 private:
   Esri::ArcGISRuntime::LocalSceneQuickView* localSceneView() const;
   void setLocalSceneView(Esri::ArcGISRuntime::LocalSceneQuickView* localSceneView);
+  QStringList floorList() const;
+  void getCategoriesList();
+  void getFloorList();
 
   Esri::ArcGISRuntime::BuildingComponentSublayer* m_selectedSublayer = nullptr;
   Esri::ArcGISRuntime::BuildingFilter* m_buildingFilter = nullptr;
@@ -87,7 +86,6 @@ private:
   Esri::ArcGISRuntime::Popup* m_popup = nullptr;
   Esri::ArcGISRuntime::Scene* m_scene = nullptr;
 
-  QFuture<Esri::ArcGISRuntime::IdentifyLayerResult*> m_future;
   QList<Esri::ArcGISRuntime::BuildingFilterBlock*> m_blocks;
   QStringList m_floorList;
 };

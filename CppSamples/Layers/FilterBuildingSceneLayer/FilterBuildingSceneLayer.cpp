@@ -102,18 +102,19 @@ void FilterBuildingSceneLayer::onMouseClicked(QMouseEvent& mouseEvent)
     return;
   }
 
+  // Clear previous selection if any
   if (m_selectedSublayer)
   {
     m_selectedSublayer->clearSelection();
     m_selectedSublayer = nullptr;
   }
 
-  constexpr double tolerance = 5;
+  constexpr double tolerance = 5.0;
 
   // Identify on the building scene layer.
-  m_future = m_localSceneView->identifyLayerAsync(m_buildingSceneLayer, mouseEvent.position(), tolerance, false, this);
+  QFuture future = m_localSceneView->identifyLayerAsync(m_buildingSceneLayer, mouseEvent.position(), tolerance, false, this);
 
-  m_future.then(this, [this](IdentifyLayerResult* result)
+  future.then(this, [this](IdentifyLayerResult* result)
   {
     if (!result || result->sublayerResults().empty())
     {
@@ -125,10 +126,11 @@ void FilterBuildingSceneLayer::onMouseClicked(QMouseEvent& mouseEvent)
     GeoElement* geoElement = sublayerResult->geoElements().first();
     Feature* identifiedFeature = static_cast<Feature*>(geoElement);
 
-    BuildingComponentSublayer* selectedSublayer = static_cast<BuildingComponentSublayer*>(sublayerResult->layerContent());
-    selectedSublayer->selectFeature(identifiedFeature);
-
-    m_selectedSublayer = selectedSublayer;
+    m_selectedSublayer = static_cast<BuildingComponentSublayer*>(sublayerResult->layerContent());
+    if (m_selectedSublayer)
+    {
+      m_selectedSublayer->selectFeature(identifiedFeature);
+    }
 
     m_popup = new Popup(geoElement, this);
     emit popupChanged();
@@ -159,25 +161,31 @@ void FilterBuildingSceneLayer::getFloorList()
 
 void FilterBuildingSceneLayer::getCategoriesList()
 {
+  if (!m_buildingSceneLayer)
+  {
+    return;
+  }
+
   connect(m_buildingSceneLayer, &BuildingSceneLayer::loadStatusChanged, this, [this]()
   {
-    if (m_buildingSceneLayer->loadStatus() == LoadStatus::Loaded)
+    if (m_buildingSceneLayer->loadStatus() != LoadStatus::Loaded)
     {
-      for (BuildingSublayer* sublayer : *m_buildingSceneLayer->sublayers())
+      return;
+    }
+    for (BuildingSublayer* sublayer : *m_buildingSceneLayer->sublayers())
+    {
+      if (sublayer->name() == "Full Model")
       {
-        if (sublayer->name() == "Full Model")
-        {
-          // Get the sublayer group for the full building model.
-          m_fullModelSublayer = qobject_cast<BuildingGroupSublayer*>(sublayer);
-          break;
-        }
+        // Get the sublayer group for the full building model.
+        m_fullModelSublayer = qobject_cast<BuildingGroupSublayer*>(sublayer);
+        break;
       }
-      if (m_fullModelSublayer)
-      {
-        // The top-level sublayer groups will be the categories.
-        m_sublayerListModel = m_fullModelSublayer->sublayers();
-        emit sublayerListModelChanged();
-      }
+    }
+    if (m_fullModelSublayer)
+    {
+      // The top-level sublayer groups will be the categories.
+      m_sublayerListModel = m_fullModelSublayer->sublayers();
+      emit sublayerListModelChanged();
     }
   });
   m_buildingSceneLayer->load();
@@ -201,16 +209,16 @@ void FilterBuildingSceneLayer::updateFloorFilter(const QString& selectedFloor)
   // Build a building filter to show the selected floor and an xray view of the floors below.
   // Floors above the selected floor are not shown at all.
   BuildingFilterBlock* solidBlock =
-    new BuildingFilterBlock("solid block", QString("BldgLevel = '%1'").arg(selectedFloor), new Esri::ArcGISRuntime::BuildingSolidFilterMode(), this);
+    new BuildingFilterBlock("solid block", QString("BldgLevel = '%1'").arg(selectedFloor), new BuildingSolidFilterMode(), this);
 
   m_blocks.append(solidBlock);
 
   BuildingFilterBlock* xrayBlock =
-    new BuildingFilterBlock("xray block", QString("BldgLevel < '%1'").arg(selectedFloor), new Esri::ArcGISRuntime::BuildingXrayFilterMode(), this);
+    new BuildingFilterBlock("xray block", QString("BldgLevel < '%1'").arg(selectedFloor), new BuildingXrayFilterMode(), this);
 
   m_blocks.append(xrayBlock);
 
-  m_buildingFilter = new Esri::ArcGISRuntime::BuildingFilter("Floor filter", "Show selected floor and xray filter for lower floors.", m_blocks, this);
+  m_buildingFilter = new BuildingFilter("Floor filter", "Show selected floor and xray filter for lower floors.", m_blocks, this);
 
   // Apply the filter to the building scene layer.
   m_buildingSceneLayer->setActiveFilter(m_buildingFilter);
@@ -218,7 +226,7 @@ void FilterBuildingSceneLayer::updateFloorFilter(const QString& selectedFloor)
 }
 
 // Get the component sublayers for each category.
-BuildingSublayerListModel* FilterBuildingSceneLayer::getComponentSubLayerListModel(int layerId)
+BuildingSublayerListModel* FilterBuildingSceneLayer::getComponentSubLayerListModel(int layerId) const
 {
   if (!m_scene)
   {
