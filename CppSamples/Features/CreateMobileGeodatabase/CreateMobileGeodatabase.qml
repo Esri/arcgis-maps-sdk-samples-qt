@@ -54,8 +54,10 @@ Item {
         // Prevent mouse interaction from propagating to the MapView
         MouseArea {
             anchors.fill: parent
-            onPressed: mouse => mouse.accepted = true;
-            onWheel: wheel => wheel.accepted = true;
+            acceptedButtons: Qt.LeftButton | Qt.RightButton
+            onClicked: mouse => mouse.accepted = true
+            onDoubleClicked: mouse => mouse.accepted = true
+            onWheel: wheel => wheel.accepted = true
         }
 
         Column {
@@ -181,8 +183,10 @@ Item {
         // Prevent mouse interaction from propagating to the MapView
         MouseArea {
             anchors.fill: parent
-            onPressed: mouse => mouse.accepted = true;
-            onWheel: wheel => wheel.accepted = true;
+            acceptedButtons: Qt.LeftButton | Qt.RightButton
+            onClicked: mouse => mouse.accepted = true
+            onDoubleClicked: mouse => mouse.accepted = true
+            onWheel: wheel => wheel.accepted = true
         }
 
         Column {
@@ -237,8 +241,10 @@ Item {
         // Prevent mouse interaction from propagating to the MapView
         MouseArea {
             anchors.fill: parent
-            onPressed: mouse => mouse.accepted = true;
-            onWheel: wheel => wheel.accepted = true;
+            acceptedButtons: Qt.LeftButton | Qt.RightButton
+            onClicked: mouse => mouse.accepted = true
+            onDoubleClicked: mouse => mouse.accepted = true
+            onWheel: wheel => wheel.accepted = true
         }
 
         ListView {
@@ -325,8 +331,10 @@ Item {
         // Prevent mouse interaction from propagating to the MapView
         MouseArea {
             anchors.fill: parent
-            onPressed: mouse => mouse.accepted = true;
-            onWheel: wheel => wheel.accepted = true;
+            acceptedButtons: Qt.LeftButton | Qt.RightButton
+            onClicked: mouse => mouse.accepted = true
+            onDoubleClicked: mouse => mouse.accepted = true
+            onWheel: wheel => wheel.accepted = true
         }
 
         Button {

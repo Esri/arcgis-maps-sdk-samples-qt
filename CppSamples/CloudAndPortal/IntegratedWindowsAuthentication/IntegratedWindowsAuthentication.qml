@@ -53,8 +53,11 @@ Item {
         // Prevent mouse interaction from propagating to the MapView
         MouseArea {
             anchors.fill: parent
+            acceptedButtons: Qt.LeftButton | Qt.RightButton
             onPressed: mouse => mouse.accepted = true;
             onWheel: wheel => wheel.accepted = true;
+            onClicked: mouse => mouse.accepted = true
+            onDoubleClicked: mouse => mouse.accepted = true
         }
 
         ColumnLayout {

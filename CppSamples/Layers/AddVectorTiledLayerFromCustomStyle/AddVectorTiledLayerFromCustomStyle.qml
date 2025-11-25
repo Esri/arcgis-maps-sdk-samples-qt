@@ -47,7 +47,9 @@ Item {
         color: palette.base
         MouseArea {
             anchors.fill: parent
+            acceptedButtons: Qt.LeftButton | Qt.RightButton
             onClicked: mouse => mouse.accepted = true
+            onDoubleClicked: mouse => mouse.accepted = true
             onWheel: wheel => wheel.accepted = true
         }
         Column {
