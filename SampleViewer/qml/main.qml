@@ -258,7 +258,7 @@ ApplicationWindow {
             // If we're in ManageOfflineData view and a download is in progress,
             // cancel all downloads and wait for completion before changing samples
             if (SampleManager.currentMode === SampleManager.ManageOfflineDataView &&
-                SampleManager.downloadsManager.downloadInProgress) {
+                    SampleManager.downloadsManager.downloadInProgress) {
                 pendingSampleChangeConnection = SampleManager.downloadsManager.downloadInProgressChanged.connect(function() {
                     if (!SampleManager.downloadsManager.downloadInProgress) {
                         if (pendingSampleChangeConnection) {
