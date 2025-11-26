@@ -160,6 +160,7 @@ Item {
                             }
 
                             CheckBox {
+                                id: categoryCheckbox
                                 checked: model.visible
                                 onCheckedChanged: {
                                     if (model.visible !== checked) {
@@ -195,6 +196,7 @@ Item {
                                     }
                                     anchors.right: parent.right
                                     anchors.rightMargin: 12
+                                    enabled: categoryCheckbox.checked
                                 }
                             }
                         }
