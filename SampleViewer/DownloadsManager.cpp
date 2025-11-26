@@ -469,6 +469,11 @@ void DownloadsManager::setCancelDownload(bool cancel)
   emit cancelDownloadChanged();
 }
 
+void DownloadsManager::setSamples(SampleListModel* samples)
+{
+  m_samples = samples;
+}
+
 void DownloadsManager::downloadAllDataItems()
 {
   if (!m_samples)

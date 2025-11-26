@@ -47,7 +47,7 @@ Page {
         }
 
         Label {
-            text:  SampleManager.downloadsManager.downloadFailed ? SampleManager.downloadsManager.downloadText : "This sample uses offline data that is not detected on your system. Press the 'Download' button to download the data to your device."
+            text:  SampleManager.downloadsManager.downloadFailed ? SampleManager.downloadsManager.downloadText : qsTr("This sample uses offline data that is not detected on your system. Press the 'Download' button to download the data to your device.")
             Layout.preferredWidth: parent.width
             Layout.alignment: Qt.AlignHCenter | Qt.AlignVCenter
             wrapMode: Text.WrapAtWordBoundaryOrAnywhere
@@ -86,7 +86,7 @@ Page {
         }
 
         Label {
-            text: "%1% complete".arg(SampleManager.downloadsManager.downloadProgress)
+            text: qsTr("%1% complete").arg(SampleManager.downloadsManager.downloadProgress)
             Layout.alignment: Qt.AlignHCenter | Qt.AlignVCenter
             Layout.fillWidth: true
             horizontalAlignment: Text.AlignHCenter

@@ -81,10 +81,7 @@ public:
   // State setters
   void setCancelDownload(bool cancel);
 
-  void setSamples(SampleListModel* samples)
-  {
-    m_samples = samples;
-  }
+  void setSamples(SampleListModel* samples);
 
 signals:
   void downloadInProgressChanged();
