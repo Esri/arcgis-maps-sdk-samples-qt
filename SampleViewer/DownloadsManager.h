@@ -115,13 +115,15 @@ private:
   void deleteDataItemFile(DataItem* dataItem);
   void cancelDataItem(const QString& dataItemKey);
   void cleanupEmptyParentDirectories(const QString& startPath, const QString& boundary);
+  QString buildDataItemKey(const DataItem* dataItem) const;
 
   QJsonObject loadDownloadTracking();
   void saveDownloadTracking(const QJsonObject& data);
   void trackFilesForItem(const QString& itemId, const QStringList& files);
-
   void downloadNextDataItem();
   void fetchPortalItemData(const QString& itemId, const QString& outputPath);
+  void onPortalItemLoaded(Esri::ArcGISRuntime::PortalItem* portalItem, const QString& outputPath, const QString& dataItemKey);
+
   void updateOfflineDataProjects();
   double calculateSampleDownloadProgress(Sample* sample) const;
   QString formattedPath(const QString& outputPath, const QString& folderName = QString());

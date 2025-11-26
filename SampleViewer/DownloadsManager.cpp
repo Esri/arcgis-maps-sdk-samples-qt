@@ -54,9 +54,9 @@ using namespace Esri::ArcGISRuntime;
 
 DownloadsManager::DownloadsManager(QObject* parent) :
   QObject(parent),
+  m_progressUpdateTimer(new QTimer(this)),
   m_offlineDataProjects(new OfflineDataProjectsModel(this))
 {
-  m_progressUpdateTimer = new QTimer(this);
   m_progressUpdateTimer->setInterval(PROGRESS_UPDATE_INTERVAL_MS);
   connect(m_progressUpdateTimer, &QTimer::timeout, this, [this]()
   {
@@ -100,16 +100,15 @@ void DownloadsManager::initialize(Portal* portal, const QString& homePath)
 
 int DownloadsManager::countDownloadedItems(Sample* sample) const
 {
-  if (!sample || sample->dataItems()->size() == 0)
+  if (!sample || sample->dataItems()->isEmpty())
   {
     return 0;
   }
 
   int downloadedItems = 0;
-  const int totalItems = sample->dataItems()->size();
-  for (int j = 0; j < totalItems; ++j)
+  for (const auto& item : *sample->dataItems())
   {
-    if (sample->dataItems()->at(j)->exists())
+    if (item->exists())
     {
       downloadedItems++;
     }
@@ -119,16 +118,15 @@ int DownloadsManager::countDownloadedItems(Sample* sample) const
 
 bool DownloadsManager::isSampleDownloading(Sample* sample) const
 {
-  if (!sample || sample->dataItems()->size() == 0)
+  if (!sample || sample->dataItems()->isEmpty())
   {
     return false;
   }
 
-  const int totalItems = sample->dataItems()->size();
-  for (int j = 0; j < totalItems; ++j)
+  for (const auto& dataItem : *sample->dataItems())
   {
-    DataItem* dataItem = sample->dataItems()->at(j);
-    QString key = dataItem->itemId() + "|" + m_homePath + dataItem->path().mid(1);
+    QString key = buildDataItemKey(dataItem);
+    ;
     if (m_dataItemProgress.contains(key))
     {
       return true;
@@ -152,47 +150,50 @@ void DownloadsManager::deleteDataItemFile(DataItem* dataItem)
     return;
   }
 
-  QJsonObject itemData = tracking[dataItem->itemId()].toObject();
-  QJsonArray filesArray = itemData["files"].toArray();
+  const QJsonObject itemData = tracking[dataItem->itemId()].toObject();
+  const QJsonArray filesArray = itemData["files"].toArray();
+
+  auto reversedFilesArray = filesArray.toVariantList();
+  std::reverse(reversedFilesArray.begin(), reversedFilesArray.end());
 
   QStringList deletedFiles;
   QSet<QString> deletedDirs;
 
-  for (int i = filesArray.size() - 1; i >= 0; --i)
+  for (const QVariant& value : reversedFilesArray)
   {
-    QString filePath = filesArray[i].toString();
-    QFileInfo fileInfo(filePath);
-
-    if (fileInfo.exists())
+    const QString filePath = value.toString();
+    const QFileInfo fileInfo(filePath);
+    if (!fileInfo.exists())
     {
-      if (fileInfo.isDir())
+      continue;
+    }
+    if (fileInfo.isDir())
+    {
+      QDir dir(filePath);
+      if (dir.removeRecursively())
       {
-        QDir dir(filePath);
-        if (dir.removeRecursively())
-        {
-          deletedDirs.insert(filePath);
-        }
-        else
-        {
-          qWarning() << "Failed to delete directory:" << filePath;
-        }
+        deletedDirs.insert(filePath);
       }
-      else if (fileInfo.isFile())
+      else
       {
-        if (QFile::remove(filePath))
-        {
-          deletedFiles.append(filePath);
-        }
-        else
-        {
-          qWarning() << "Failed to delete file:" << filePath;
-        }
+        qWarning() << "Failed to delete directory:" << filePath;
+      }
+    }
+    else if (fileInfo.isFile())
+    {
+      if (QFile::remove(filePath))
+      {
+        deletedFiles.append(filePath);
+      }
+      else
+      {
+        qWarning() << "Failed to delete file:" << filePath;
       }
     }
   }
 
   // Clean up empty parent directories
-  QString dataRoot = m_homePath + "/ArcGIS/Runtime/Data";
+  const QString dataRoot = m_homePath + "/ArcGIS/Runtime/Data";
   QSet<QString> parentPaths;
 
   for (const QString& filePath : deletedFiles)
@@ -246,7 +247,7 @@ void DownloadsManager::cleanupEmptyParentDirectories(const QString& startPath, c
   {
     if (currentDir.isEmpty())
     {
-      QString pathToRemove = currentDir.absolutePath();
+      const QString pathToRemove = currentDir.absolutePath();
 
       if (!currentDir.cdUp())
       {
@@ -265,9 +266,14 @@ void DownloadsManager::cleanupEmptyParentDirectories(const QString& startPath, c
   }
 }
 
+QString DownloadsManager::buildDataItemKey(const DataItem* dataItem) const
+{
+  return dataItem->itemId() + "|" + m_homePath + dataItem->path().mid(1);
+}
+
 QJsonObject DownloadsManager::loadDownloadTracking()
 {
-  QString trackingFile = m_homePath + "/ArcGIS/Runtime/Data/SampleDownloads.json";
+  const QString trackingFile = m_homePath + "/ArcGIS/Runtime/Data/SampleDownloads.json";
   QFile file(trackingFile);
 
   if (!file.open(QIODevice::ReadOnly))
@@ -275,7 +281,7 @@ QJsonObject DownloadsManager::loadDownloadTracking()
     return QJsonObject();
   }
 
-  QByteArray data = file.readAll();
+  const QByteArray data = file.readAll();
   file.close();
 
   QJsonParseError parseError;
@@ -292,9 +298,9 @@ QJsonObject DownloadsManager::loadDownloadTracking()
 
 void DownloadsManager::saveDownloadTracking(const QJsonObject& data)
 {
-  QString trackingFile = m_homePath + "/ArcGIS/Runtime/Data/SampleDownloads.json";
+  const QString trackingFile = m_homePath + "/ArcGIS/Runtime/Data/SampleDownloads.json";
 
-  QFileInfo fileInfo(trackingFile);
+  const QFileInfo fileInfo(trackingFile);
   QDir dir = fileInfo.dir();
   if (!dir.exists())
   {
@@ -354,7 +360,7 @@ DownloadsManager::SampleDownloadState DownloadsManager::getSampleDownloadState(S
 {
   SampleDownloadState state;
 
-  if (!sample || sample->dataItems()->size() == 0)
+  if (!sample || sample->dataItems()->isEmpty())
   {
     return state;
   }
@@ -388,12 +394,6 @@ bool DownloadsManager::cancelDownload() const
   return m_cancelDownload;
 }
 
-void DownloadsManager::setCancelDownload(bool cancel)
-{
-  m_cancelDownload = cancel;
-  emit cancelDownloadChanged();
-}
-
 bool DownloadsManager::downloadFailed() const
 {
   return m_downloadFailed;
@@ -411,32 +411,62 @@ OfflineDataProjectsModel* DownloadsManager::offlineDataProjects() const
 
 void DownloadsManager::setDownloadInProgress(bool inProgress)
 {
+  if (m_downloadInProgress == inProgress)
+  {
+    return;
+  }
   m_downloadInProgress = inProgress;
   emit downloadInProgressChanged();
 }
 
 void DownloadsManager::setIsBulkDownload(bool isBulk)
 {
+  if (m_isBulkDownload == isBulk)
+  {
+    return;
+  }
   m_isBulkDownload = isBulk;
   emit isBulkDownloadChanged();
 }
 
 void DownloadsManager::setDownloadText(const QString& downloadText)
 {
+  if (m_downloadText == downloadText)
+  {
+    return;
+  }
   m_downloadText = downloadText;
   emit downloadTextChanged();
 }
 
 void DownloadsManager::setDownloadProgress(double progress)
 {
+  if (m_downloadProgress == progress)
+  {
+    return;
+  }
   m_downloadProgress = progress;
   emit downloadProgressChanged();
 }
 
 void DownloadsManager::setDownloadFailed(bool didFail)
 {
+  if (m_downloadFailed == didFail)
+  {
+    return;
+  }
   m_downloadFailed = didFail;
   emit downloadFailedChanged();
+}
+
+void DownloadsManager::setCancelDownload(bool cancel)
+{
+  if (m_cancelDownload == cancel)
+  {
+    return;
+  }
+  m_cancelDownload = cancel;
+  emit cancelDownloadChanged();
 }
 
 void DownloadsManager::downloadAllDataItems()
@@ -458,18 +488,25 @@ void DownloadsManager::downloadAllDataItems()
   {
     Sample* sample = m_samples->at(i);
     const int dataItemCount = sample->dataItems()->size();
+
     for (int j = 0; j < dataItemCount; ++j)
     {
       DataItem* dataItem = sample->dataItems()->at(j);
-      if (!dataItem->exists())
+
+      if (dataItem->exists())
       {
-        QString key = dataItem->itemId() + "|" + m_homePath + dataItem->path().mid(1);
-        if (!uniqueDataItems.contains(key))
-        {
-          uniqueDataItems.insert(key);
-          m_dataItems.enqueue(dataItem);
-        }
+        continue;
       }
+
+      const QString key = buildDataItemKey(dataItem);
+
+      if (uniqueDataItems.contains(key))
+      {
+        continue;
+      }
+
+      uniqueDataItems.insert(key);
+      m_dataItems.enqueue(dataItem);
     }
   }
 
@@ -689,7 +726,7 @@ bool DownloadsManager::hasAnyDataToDelete()
 
 double DownloadsManager::calculateSampleDownloadProgress(Sample* sample) const
 {
-  if (!sample || sample->dataItems()->size() == 0)
+  if (!sample || sample->dataItems()->isEmpty())
   {
     return 0.0;
   }
@@ -701,7 +738,7 @@ double DownloadsManager::calculateSampleDownloadProgress(Sample* sample) const
   for (int i = 0; i < sample->dataItems()->size(); ++i)
   {
     DataItem* dataItem = sample->dataItems()->at(i);
-    QString key = dataItem->itemId() + "|" + m_homePath + dataItem->path().mid(1);
+    const QString key = buildDataItemKey(dataItem);
 
     // Get downlaod progress
     if (m_dataItemProgress.contains(key))
@@ -734,12 +771,13 @@ void DownloadsManager::updateOfflineDataProjects()
     for (int i = 0; i < totalSamples; ++i)
     {
       Sample* sample = m_samples->at(i);
-      if (sample->dataItems()->size() > 0)
+      if (sample->dataItems()->isEmpty())
       {
-        // Use helper to get complete download state
-        SampleDownloadState state = getSampleDownloadState(sample);
-        m_offlineDataProjects->addProject(sample, state.downloaded, state.isDownloading, state.progress, state.downloadedItems, state.totalItems);
+        continue;
       }
+      // Use helper to get complete download state
+      SampleDownloadState state = getSampleDownloadState(sample);
+      m_offlineDataProjects->addProject(sample, state.downloaded, state.isDownloading, state.progress, state.downloadedItems, state.totalItems);
     }
   }
   else
@@ -749,13 +787,14 @@ void DownloadsManager::updateOfflineDataProjects()
     for (int i = 0; i < totalSamples && projectIndex < m_offlineDataProjects->rowCount(); ++i)
     {
       Sample* sample = m_samples->at(i);
-      if (sample->dataItems()->size() > 0)
+      if (sample->dataItems()->isEmpty())
       {
-        SampleDownloadState state = getSampleDownloadState(sample);
-        m_offlineDataProjects->updateProject(projectIndex, state.downloaded, state.isDownloading, state.progress, state.downloadedItems,
-                                             state.totalItems);
-        projectIndex++;
+        continue;
       }
+      SampleDownloadState state = getSampleDownloadState(sample);
+      m_offlineDataProjects->updateProject(projectIndex, state.downloaded, state.isDownloading, state.progress, state.downloadedItems,
+                                           state.totalItems);
+      projectIndex++;
     }
   }
 
@@ -828,7 +867,7 @@ void DownloadsManager::downloadNextDataItem()
 
 void DownloadsManager::fetchPortalItemData(const QString& itemId, const QString& outputPath)
 {
-  QString dataItemKey = itemId + "|" + outputPath;
+  const QString dataItemKey = itemId + "|" + outputPath;
   m_dataItemProgress[dataItemKey] = 0.0;
 
   auto portalItem = new PortalItem(m_portal, itemId, this);
@@ -836,109 +875,112 @@ void DownloadsManager::fetchPortalItemData(const QString& itemId, const QString&
 
   connect(portalItem, &PortalItem::doneLoading, this, [this, portalItem, outputPath, dataItemKey]()
   {
-    if (portalItem->loadStatus() == LoadStatus::Loaded)
-    {
-      auto folder = portalItem->type() == PortalItemType::CodeSample ? portalItem->name() : QString();
-      QString formattedPath = this->formattedPath(outputPath, folder);
-      portalItem->fetchDataAsync(formattedPath)
-        .then(this,
-              [this, portalItem, formattedPath, dataItemKey]()
-      {
-        setDownloadProgress(0.0);
-        // Mark as complete (100%)
-        m_dataItemProgress[dataItemKey] = 100.0;
-
-        if (QFileInfo(formattedPath).suffix() == "zip")
-        {
-          QString extractPath = QFileInfo(formattedPath).dir().absolutePath();
-          QDir extractDir(extractPath);
-          QStringList filesBefore = extractDir.entryList(QDir::Files | QDir::AllDirs | QDir::NoDotAndDotDot, QDir::Name);
-
-          auto zipHelper = new ZipHelper(formattedPath, this);
-          connect(zipHelper, &ZipHelper::extractCompleted, this, [this, formattedPath, extractPath, filesBefore, portalItem, zipHelper, dataItemKey]()
-          {
-            // Track all newly created files from extraction
-            QDir extractDir(extractPath);
-            QStringList filesAfter = extractDir.entryList(QDir::Files | QDir::AllDirs | QDir::NoDotAndDotDot, QDir::Name);
-
-            QStringList newFiles;
-            newFiles.append(formattedPath);
-
-            for (const QString& file : filesAfter)
-            {
-              if (!filesBefore.contains(file))
-              {
-                QString fullPath = extractPath + "/" + file;
-                newFiles.append(fullPath);
-
-                QFileInfo fileInfo(fullPath);
-                if (fileInfo.isDir())
-                {
-                  QDirIterator it(fullPath, QDir::Files | QDir::AllDirs | QDir::NoDotAndDotDot, QDirIterator::Subdirectories);
-                  while (it.hasNext())
-                  {
-                    newFiles.append(it.next());
-                  }
-                }
-              }
-            }
-
-            QString itemId = dataItemKey.split("|").first();
-            trackFilesForItem(itemId, newFiles);
-
-            // Remove from active downloads
-            m_dataItemProgress.remove(dataItemKey);
-            m_activeDownloads.remove(dataItemKey);
-            downloadNextDataItem();
-            portalItem->deleteLater();
-            zipHelper->deleteLater();
-          });
-          zipHelper->extractAll(extractPath);
-        }
-        else
-        {
-          QString itemId = dataItemKey.split("|").first();
-          trackFilesForItem(itemId, QStringList() << formattedPath);
-
-          // Remove from active downloads
-          m_dataItemProgress.remove(dataItemKey);
-          m_activeDownloads.remove(dataItemKey);
-          downloadNextDataItem();
-          portalItem->deleteLater();
-        }
-      })
-        .onFailed([this, portalItem, dataItemKey](const ErrorException&)
-      {
-        setDownloadFailed(true);
-        setDownloadText(QString("Download failed for item ").arg(portalItem->itemId()));
-        setDownloadInProgress(false);
-        setIsBulkDownload(false);
-
-        // Stop timer
-        if (m_progressUpdateTimer && m_progressUpdateTimer->isActive())
-        {
-          m_progressUpdateTimer->stop();
-        }
-
-        // Remove from active downloads on failure
-        m_dataItemProgress.remove(dataItemKey);
-        m_activeDownloads.remove(dataItemKey);
-      });
-    }
+    onPortalItemLoaded(portalItem, outputPath, dataItemKey);
   });
 
   connect(portalItem, &PortalItem::fetchDataProgressChanged, this, [this, dataItemKey](const NetworkRequestProgress& progress)
   {
-    if (!m_dataItemProgress.contains(dataItemKey))
+    if (m_dataItemProgress.contains(dataItemKey))
     {
-      return;
+      m_dataItemProgress[dataItemKey] = progress.progressPercentage();
     }
-
-    // Update progress for this specific data item
-    m_dataItemProgress[dataItemKey] = progress.progressPercentage();
   });
 
   portalItem->load();
+}
+
+void DownloadsManager::onPortalItemLoaded(PortalItem* portalItem, const QString& outputPath, const QString& dataItemKey)
+{
+  if (portalItem->loadStatus() != LoadStatus::Loaded)
+  {
+    return;
+  }
+
+  const auto folder = portalItem->type() == PortalItemType::CodeSample ? portalItem->name() : QString();
+  const QString formattedPath = this->formattedPath(outputPath, folder);
+
+  portalItem->fetchDataAsync(formattedPath)
+    .then(this,
+          [this, portalItem, formattedPath, dataItemKey]()
+  {
+    setDownloadProgress(0.0);
+    m_dataItemProgress[dataItemKey] = 100.0;
+
+    if (QFileInfo(formattedPath).suffix() == "zip")
+    {
+      const QString extractPath = QFileInfo(formattedPath).dir().absolutePath();
+      const QDir extractDir(extractPath);
+      const QStringList filesBefore = extractDir.entryList(QDir::Files | QDir::AllDirs | QDir::NoDotAndDotDot, QDir::Name);
+
+      auto zipHelper = new ZipHelper(formattedPath, this);
+      connect(zipHelper, &ZipHelper::extractCompleted, this, [this, formattedPath, extractPath, filesBefore, portalItem, zipHelper, dataItemKey]()
+      {
+        const QDir extractDir(extractPath);
+        const QStringList filesAfter = extractDir.entryList(QDir::Files | QDir::AllDirs | QDir::NoDotAndDotDot, QDir::Name);
+
+        QStringList newFiles;
+        newFiles.append(formattedPath);
+
+        for (const QString& file : filesAfter)
+        {
+          if (filesBefore.contains(file))
+          {
+            continue;
+          }
+
+          const QString fullPath = extractPath + "/" + file;
+          newFiles.append(fullPath);
+
+          const QFileInfo fileInfo(fullPath);
+          if (!fileInfo.isDir())
+          {
+            continue;
+          }
+
+          QDirIterator it(fullPath, QDir::Files | QDir::AllDirs | QDir::NoDotAndDotDot, QDirIterator::Subdirectories);
+          while (it.hasNext())
+          {
+            newFiles.append(it.next());
+          }
+        }
+
+        const QString itemId = dataItemKey.split("|").first();
+        trackFilesForItem(itemId, newFiles);
+
+        m_dataItemProgress.remove(dataItemKey);
+        m_activeDownloads.remove(dataItemKey);
+        downloadNextDataItem();
+        portalItem->deleteLater();
+        zipHelper->deleteLater();
+      });
+      zipHelper->extractAll(extractPath);
+    }
+    else
+    {
+      const QString itemId = dataItemKey.split("|").first();
+      trackFilesForItem(itemId, QStringList() << formattedPath);
+
+      m_dataItemProgress.remove(dataItemKey);
+      m_activeDownloads.remove(dataItemKey);
+      downloadNextDataItem();
+      portalItem->deleteLater();
+    }
+  })
+    .onFailed([this, portalItem, dataItemKey](const ErrorException&)
+  {
+    setDownloadFailed(true);
+    setDownloadText(QString("Download failed for item %1").arg(portalItem->itemId()));
+    setDownloadInProgress(false);
+    setIsBulkDownload(false);
+
+    if (m_progressUpdateTimer && m_progressUpdateTimer->isActive())
+    {
+      m_progressUpdateTimer->stop();
+    }
+
+    m_dataItemProgress.remove(dataItemKey);
+    m_activeDownloads.remove(dataItemKey);
+  });
 }
 
 QString DownloadsManager::formattedPath(const QString& outputPath, const QString& folderName)
@@ -946,7 +988,7 @@ QString DownloadsManager::formattedPath(const QString& outputPath, const QString
   // first make sure output path exists
   if (!QFile::exists(outputPath))
   {
-    QFileInfo fileInfo = QFileInfo(outputPath);
+    const QFileInfo fileInfo = QFileInfo(outputPath);
     QDir dir = fileInfo.dir();
     if (!dir.exists())
     {
@@ -960,8 +1002,8 @@ QString DownloadsManager::formattedPath(const QString& outputPath, const QString
   // check if the item is code sample
   if (!folderName.isEmpty())
   {
-    QFileInfo fileInfo = QFileInfo(outputPath);
-    QString dir = fileInfo.dir().absolutePath();
+    const QFileInfo fileInfo = QFileInfo(outputPath);
+    const QString dir = fileInfo.dir().absolutePath();
     formattedFilePath = dir + "/" + folderName;
   }
 
