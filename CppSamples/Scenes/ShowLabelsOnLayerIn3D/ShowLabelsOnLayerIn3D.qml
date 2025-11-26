@@ -1,4 +1,4 @@
-// [WriteFile Name=Display3DLabelsInScene, Category=Scenes]
+// [WriteFile Name=ShowLabelsOnLayerIn3D, Category=Scenes]
 // [Legal]
 // Copyright 2021 Esri.
 //
@@ -31,7 +31,7 @@ Item {
     }
 
     // Declare the C++ instance which creates the scene etc. and supply the view
-    Display3DLabelsInSceneSample {
+    ShowLabelsOnLayerIn3DSample {
         id: model
         sceneView: view
     }

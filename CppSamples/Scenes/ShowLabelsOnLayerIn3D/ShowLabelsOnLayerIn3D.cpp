@@ -1,4 +1,4 @@
-// [WriteFile Name=Display3DLabelsInScene, Category=Scenes]
+// [WriteFile Name=ShowLabelsOnLayerIn3D, Category=Scenes]
 // [Legal]
 // Copyright 2021 Esri.
 //
@@ -19,7 +19,7 @@
 #endif // PCH_BUILD
 
 // sample headers
-#include "Display3DLabelsInScene.h"
+#include "ShowLabelsOnLayerIn3D.h"
 
 // ArcGIS Maps SDK headers
 #include "ArcadeLabelExpression.h"
@@ -36,7 +36,7 @@
 
 using namespace Esri::ArcGISRuntime;
 
-Display3DLabelsInScene::Display3DLabelsInScene(QObject* parent /* = nullptr */):
+ShowLabelsOnLayerIn3D::ShowLabelsOnLayerIn3D(QObject* parent /* = nullptr */) :
   QObject(parent),
   m_scene(new Scene(QUrl("https://www.arcgis.com/home/item.html?id=850dfee7d30f4d9da0ebca34a533c169"), this))
 {
@@ -62,7 +62,7 @@ Display3DLabelsInScene::Display3DLabelsInScene(QObject* parent /* = nullptr */):
   });
 }
 
-void Display3DLabelsInScene::display3DLabelsOnFeatureLayer(FeatureLayer* featureLayer)
+void ShowLabelsOnLayerIn3D::display3DLabelsOnFeatureLayer(FeatureLayer* featureLayer)
 {
   TextSymbol* textSymbol = new TextSymbol(this);
   textSymbol->setColor(QColor("#ffa500"));
@@ -80,22 +80,22 @@ void Display3DLabelsInScene::display3DLabelsOnFeatureLayer(FeatureLayer* feature
   featureLayer->setLabelsEnabled(true);
 }
 
-Display3DLabelsInScene::~Display3DLabelsInScene() = default;
+ShowLabelsOnLayerIn3D::~ShowLabelsOnLayerIn3D() = default;
 
-void Display3DLabelsInScene::init()
+void ShowLabelsOnLayerIn3D::init()
 {
   // Register classes for QML
   qmlRegisterType<SceneQuickView>("Esri.Samples", 1, 0, "SceneView");
-  qmlRegisterType<Display3DLabelsInScene>("Esri.Samples", 1, 0, "Display3DLabelsInSceneSample");
+  qmlRegisterType<ShowLabelsOnLayerIn3D>("Esri.Samples", 1, 0, "ShowLabelsOnLayerIn3DSample");
 }
 
-SceneQuickView* Display3DLabelsInScene::sceneView() const
+SceneQuickView* ShowLabelsOnLayerIn3D::sceneView() const
 {
   return m_sceneView;
 }
 
 // Set the view (created in QML)
-void Display3DLabelsInScene::setSceneView(SceneQuickView* sceneView)
+void ShowLabelsOnLayerIn3D::setSceneView(SceneQuickView* sceneView)
 {
   if (!sceneView || sceneView == m_sceneView)
     return;

@@ -212,7 +212,7 @@ HEADERS += \
     "$$SAMPLEPATHCPP/Scenes/ChooseCameraController/ChooseCameraController.h" \
     "$$SAMPLEPATHCPP/Scenes/CreateTerrainSurfaceFromLocalRaster/CreateTerrainSurfaceFromLocalRaster.h" \
     "$$SAMPLEPATHCPP/Scenes/CreateTerrainSurfaceFromLocalTilePackage/CreateTerrainSurfaceFromLocalTilePackage.h" \
-    "$$SAMPLEPATHCPP/Scenes/Display3DLabelsInScene/Display3DLabelsInScene.h" \
+    "$$SAMPLEPATHCPP/Scenes/ShowLabelsOnLayerIn3D/ShowLabelsOnLayerIn3D.h" \
     "$$SAMPLEPATHCPP/Scenes/DisplayLocalSceneView/DisplayLocalSceneView.h" \
     "$$SAMPLEPATHCPP/Scenes/DisplaySceneLayer/DisplaySceneLayer.h" \
     "$$SAMPLEPATHCPP/Scenes/DistanceCompositeSymbol/DistanceCompositeSymbol.h" \
@@ -440,7 +440,7 @@ SOURCES += \
     "$$SAMPLEPATHCPP/Scenes/ChooseCameraController/ChooseCameraController.cpp" \
     "$$SAMPLEPATHCPP/Scenes/CreateTerrainSurfaceFromLocalRaster/CreateTerrainSurfaceFromLocalRaster.cpp" \
     "$$SAMPLEPATHCPP/Scenes/CreateTerrainSurfaceFromLocalTilePackage/CreateTerrainSurfaceFromLocalTilePackage.cpp" \
-    "$$SAMPLEPATHCPP/Scenes/Display3DLabelsInScene/Display3DLabelsInScene.cpp" \
+    "$$SAMPLEPATHCPP/Scenes/ShowLabelsOnLayerIn3D/ShowLabelsOnLayerIn3D.cpp" \
     "$$SAMPLEPATHCPP/Scenes/DisplayLocalSceneView/DisplayLocalSceneView.cpp" \
     "$$SAMPLEPATHCPP/Scenes/DisplaySceneLayer/DisplaySceneLayer.cpp" \
     "$$SAMPLEPATHCPP/Scenes/DistanceCompositeSymbol/DistanceCompositeSymbol.cpp" \
@@ -656,7 +656,7 @@ RESOURCES += \
     "$$SAMPLEPATHCPP/Scenes/ChooseCameraController/ChooseCameraController.qrc" \
     "$$SAMPLEPATHCPP/Scenes/CreateTerrainSurfaceFromLocalRaster/CreateTerrainSurfaceFromLocalRaster.qrc" \
     "$$SAMPLEPATHCPP/Scenes/CreateTerrainSurfaceFromLocalTilePackage/CreateTerrainSurfaceFromLocalTilePackage.qrc" \
-    "$$SAMPLEPATHCPP/Scenes/Display3DLabelsInScene/Display3DLabelsInScene.qrc" \
+    "$$SAMPLEPATHCPP/Scenes/ShowLabelsOnLayerIn3D/ShowLabelsOnLayerIn3D.qrc" \
     "$$SAMPLEPATHCPP/Scenes/DisplayLocalSceneView/DisplayLocalSceneView.qrc" \
     "$$SAMPLEPATHCPP/Scenes/DisplaySceneLayer/DisplaySceneLayer.qrc" \
     "$$SAMPLEPATHCPP/Scenes/DistanceCompositeSymbol/DistanceCompositeSymbol.qrc" \

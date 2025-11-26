@@ -1,4 +1,4 @@
-// [WriteFile Name=Display3DLabelsInScene, Category=Scenes]
+// [WriteFile Name=ShowLabelsOnLayerIn3D, Category=Scenes]
 // [Legal]
 // Copyright 2021 Esri.
 //
@@ -14,8 +14,8 @@
 // limitations under the License.
 // [Legal]
 
-#ifndef DISPLAY3DLABELSINSCENE_H
-#define DISPLAY3DLABELSINSCENE_H
+#ifndef SHOWLABELSONLAYERIN3D_H
+#define SHOWLABELSONLAYERIN3D_H
 
 // Qt headers
 #include <QObject>
@@ -29,15 +29,15 @@ class FeatureLayer;
 
 Q_MOC_INCLUDE("SceneQuickView.h")
 
-class Display3DLabelsInScene : public QObject
+class ShowLabelsOnLayerIn3D : public QObject
 {
   Q_OBJECT
 
   Q_PROPERTY(Esri::ArcGISRuntime::SceneQuickView* sceneView READ sceneView WRITE setSceneView NOTIFY sceneViewChanged)
 
 public:
-  explicit Display3DLabelsInScene(QObject* parent = nullptr);
-  ~Display3DLabelsInScene();
+  explicit ShowLabelsOnLayerIn3D(QObject* parent = nullptr);
+  ~ShowLabelsOnLayerIn3D();
 
   static void init();
 
@@ -53,4 +53,4 @@ private:
   Esri::ArcGISRuntime::SceneQuickView* m_sceneView = nullptr;
 };
 
-#endif // DISPLAY3DLABELSINSCENE_H
+#endif // SHOWLABELSONLAYERIN3D_H

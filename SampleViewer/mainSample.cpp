@@ -241,7 +241,7 @@
 #include "../CppSamples/Scenes/ChooseCameraController/ChooseCameraController.h"
 #include "../CppSamples/Scenes/CreateTerrainSurfaceFromLocalRaster/CreateTerrainSurfaceFromLocalRaster.h"
 #include "../CppSamples/Scenes/CreateTerrainSurfaceFromLocalTilePackage/CreateTerrainSurfaceFromLocalTilePackage.h"
-#include "../CppSamples/Scenes/Display3DLabelsInScene/Display3DLabelsInScene.h"
+#include "../CppSamples/Scenes/ShowLabelsOnLayerIn3D/ShowLabelsOnLayerIn3D.h"
 #include "../CppSamples/Scenes/DisplayLocalSceneView/DisplayLocalSceneView.h"
 #include "../CppSamples/Scenes/DisplaySceneLayer/DisplaySceneLayer.h"
 #include "../CppSamples/Scenes/DistanceCompositeSymbol/DistanceCompositeSymbol.h"
@@ -425,7 +425,7 @@ void registerCppSampleClasses()
   CustomDictionaryStyle::init();
   CutGeometry::init();
   DensifyAndGeneralize::init();
-  Display3DLabelsInScene::init();
+  ShowLabelsOnLayerIn3D::init();
   DisplayAnnotation::init();
   DisplayClusters::init();
   DisplayContentOfUtilityNetworkContainer::init();
