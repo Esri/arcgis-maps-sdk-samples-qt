@@ -160,6 +160,7 @@
 #include "../CppSamples/Layers/FeatureLayerRenderingModeMap/FeatureLayerRenderingModeMap.h"
 #include "../CppSamples/Layers/FeatureLayerRenderingModeScene/FeatureLayerRenderingModeScene.h"
 #include "../CppSamples/Layers/Feature_Collection_Layer/Feature_Collection_Layer.h"
+#include "../CppSamples/Layers/FilterBuildingSceneLayer/FilterBuildingSceneLayer.h"
 #include "../CppSamples/Layers/GroupLayers/GroupLayers.h"
 #include "../CppSamples/Layers/Hillshade_Renderer/Hillshade_Renderer.h"
 #include "../CppSamples/Layers/IdentifyKmlFeatures/IdentifyKmlFeatures.h"
@@ -470,6 +471,7 @@ void registerCppSampleClasses()
   FeatureLayerSelection::init();
   Feature_Collection_Layer::init();
   FilterByDefinitionExpressionOrDisplayFilter::init();
+  FilterBuildingSceneLayer::init();
   FilterFeaturesInScene::init();
   FindAddress::init();
   FindClosestFacilityToMultipleIncidentsService::init();

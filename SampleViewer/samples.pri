@@ -128,6 +128,7 @@ HEADERS += \
     "$$SAMPLEPATHCPP/Layers/FeatureCollectionLayerQuery/FeatureCollectionLayerQuery.h" \
     "$$SAMPLEPATHCPP/Layers/FeatureLayerRenderingModeMap/FeatureLayerRenderingModeMap.h" \
     "$$SAMPLEPATHCPP/Layers/FeatureLayerRenderingModeScene/FeatureLayerRenderingModeScene.h" \
+    "$$SAMPLEPATHCPP/Layers/FilterBuildingSceneLayer/FilterBuildingSceneLayer.h" \
     "$$SAMPLEPATHCPP/Layers/GroupLayers/GroupLayers.h" \
     "$$SAMPLEPATHCPP/Layers/Hillshade_Renderer/Hillshade_Renderer.h" \
     "$$SAMPLEPATHCPP/Layers/IdentifyKmlFeatures/IdentifyKmlFeatures.h" \
@@ -356,6 +357,7 @@ SOURCES += \
     "$$SAMPLEPATHCPP/Layers/FeatureCollectionLayerQuery/FeatureCollectionLayerQuery.cpp" \
     "$$SAMPLEPATHCPP/Layers/FeatureLayerRenderingModeMap/FeatureLayerRenderingModeMap.cpp" \
     "$$SAMPLEPATHCPP/Layers/FeatureLayerRenderingModeScene/FeatureLayerRenderingModeScene.cpp" \
+     "$$SAMPLEPATHCPP/Layers/FilterBuildingSceneLayer/FilterBuildingSceneLayer.cpp" \
     "$$SAMPLEPATHCPP/Layers/GroupLayers/GroupLayers.cpp" \
     "$$SAMPLEPATHCPP/Layers/Hillshade_Renderer/Hillshade_Renderer.cpp" \
     "$$SAMPLEPATHCPP/Layers/IdentifyKmlFeatures/IdentifyKmlFeatures.cpp" \
@@ -576,6 +578,7 @@ RESOURCES += \
     "$$SAMPLEPATHCPP/Layers/FeatureCollectionLayerQuery/FeatureCollectionLayerQuery.qrc" \
     "$$SAMPLEPATHCPP/Layers/FeatureLayerRenderingModeMap/FeatureLayerRenderingModeMap.qrc" \
     "$$SAMPLEPATHCPP/Layers/FeatureLayerRenderingModeScene/FeatureLayerRenderingModeScene.qrc" \
+     "$$SAMPLEPATHCPP/Layers/FilterBuildingSceneLayer/FilterBuildingSceneLayer.qrc" \
     "$$SAMPLEPATHCPP/Layers/GroupLayers/GroupLayers.qrc" \
     "$$SAMPLEPATHCPP/Layers/Hillshade_Renderer/Hillshade_Renderer.qrc" \
     "$$SAMPLEPATHCPP/Layers/IdentifyKmlFeatures/IdentifyKmlFeatures.qrc" \
