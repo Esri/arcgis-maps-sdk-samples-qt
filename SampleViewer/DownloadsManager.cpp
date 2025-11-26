@@ -868,7 +868,7 @@ void DownloadsManager::downloadNextDataItem()
 void DownloadsManager::fetchPortalItemData(const QString& itemId, const QString& outputPath)
 {
   const QString dataItemKey = itemId + "|" + outputPath;
-  m_dataItemProgress[dataItemKey] = 0.0;
+  m_dataItemProgress.insert(dataItemKey, 0.0);
 
   auto portalItem = new PortalItem(m_portal, itemId, this);
   m_activeDownloads[dataItemKey] = portalItem;
