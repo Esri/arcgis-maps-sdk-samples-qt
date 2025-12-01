@@ -355,7 +355,7 @@ void DownloadsManager::trackFilesForItem(const QString& itemId, const QStringLis
   saveDownloadTracking(tracking);
 }
 
-DownloadsManager::SampleDownloadState DownloadsManager::getSampleDownloadState(Sample* sample) const
+SampleDownloadState DownloadsManager::getSampleDownloadState(Sample* sample) const
 {
   SampleDownloadState state;
 
@@ -440,7 +440,7 @@ void DownloadsManager::setDownloadText(const QString& downloadText)
 
 void DownloadsManager::setDownloadProgress(double progress)
 {
-  if (m_downloadProgress == progress)
+  if (qFuzzyCompare(m_downloadProgress, progress))
   {
     return;
   }
@@ -760,7 +760,7 @@ double DownloadsManager::calculateSampleDownloadProgress(Sample* sample) const
     itemCount++;
   }
 
-  return itemCount > 0 ? totalProgress / itemCount : 0.0;
+  return totalProgress / itemCount;
 }
 
 void DownloadsManager::updateOfflineDataProjects()
@@ -785,7 +785,7 @@ void DownloadsManager::updateOfflineDataProjects()
       }
       // Use helper to get complete download state
       SampleDownloadState state = getSampleDownloadState(sample);
-      m_offlineDataProjects->addProject(sample, state.downloaded, state.isDownloading, state.progress, state.downloadedItems, state.totalItems);
+      m_offlineDataProjects->addProject(sample, state);
     }
   }
   else
@@ -800,8 +800,7 @@ void DownloadsManager::updateOfflineDataProjects()
         continue;
       }
       SampleDownloadState state = getSampleDownloadState(sample);
-      m_offlineDataProjects->updateProject(projectIndex, state.downloaded, state.isDownloading, state.progress, state.downloadedItems,
-                                           state.totalItems);
+      m_offlineDataProjects->updateProject(projectIndex, state);
       projectIndex++;
     }
   }

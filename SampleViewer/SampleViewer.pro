@@ -205,7 +205,8 @@ HEADERS += \
     $$COMMONVIEWER/SourceCode.h \
     $$COMMONVIEWER/SourceCodeListModel.h \
     $$COMMONVIEWER/ZipHelper.h \
-    $$COMMONVIEWER/TaskCanceler.h
+    $$COMMONVIEWER/TaskCanceler.h \
+    SampleDownloadState.h
 
 SOURCES += \
     $$COMMONVIEWER/SyntaxHighlighter/SyntaxHighlighter.cpp \

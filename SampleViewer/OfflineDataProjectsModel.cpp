@@ -41,30 +41,32 @@ void OfflineDataProjectsModel::setupRoles()
   m_roles[TotalItemsCountRole] = "totalItemsCount";
 }
 
-void OfflineDataProjectsModel::addProject(Sample* sample, bool downloaded, bool downloading, double progress, int downloadedCount, int totalCount)
+void OfflineDataProjectsModel::addProject(Sample* sample, SampleDownloadState state)
 {
   beginInsertRows(QModelIndex(), rowCount(), rowCount());
   OfflineDataProject project;
   project.sample = sample;
-  project.downloaded = downloaded;
-  project.downloading = downloading;
-  project.downloadProgress = progress;
-  project.downloadedItemsCount = downloadedCount;
-  project.totalItemsCount = totalCount;
+  project.downloaded = state.downloaded;
+  project.downloading = state.isDownloading;
+  project.downloadProgress = state.progress;
+  project.downloadedItemsCount = state.downloadedItems;
+  project.totalItemsCount = state.totalItems;
   m_projects << project;
   endInsertRows();
 }
 
-void OfflineDataProjectsModel::updateProject(int index, bool downloaded, bool downloading, double progress, int downloadedCount, int totalCount)
+void OfflineDataProjectsModel::updateProject(int index, SampleDownloadState state)
 {
-  if (index < 0 || index >= m_projects.count())
+  if (index < 0 || (index >= m_projects.count()))
+  {
     return;
+  }
 
-  m_projects[index].downloaded = downloaded;
-  m_projects[index].downloading = downloading;
-  m_projects[index].downloadProgress = progress;
-  m_projects[index].downloadedItemsCount = downloadedCount;
-  m_projects[index].totalItemsCount = totalCount;
+  m_projects[index].downloaded = state.downloaded;
+  m_projects[index].downloading = state.isDownloading;
+  m_projects[index].downloadProgress = state.progress;
+  m_projects[index].downloadedItemsCount = state.downloadedItems;
+  m_projects[index].totalItemsCount = state.totalItems;
 
   QModelIndex modelIndex = this->index(index);
   emit dataChanged(modelIndex, modelIndex, {DownloadedRole, DownloadingRole, DownloadProgressRole, DownloadedItemsCountRole, TotalItemsCountRole});

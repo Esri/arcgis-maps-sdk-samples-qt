@@ -23,6 +23,8 @@ class Sample;
 #include <QHash>
 #include <QList>
 
+#include "SampleDownloadState.h"
+
 struct OfflineDataProject
 {
   Sample* sample = nullptr;
@@ -51,8 +53,8 @@ public:
   explicit OfflineDataProjectsModel(QObject* parent = nullptr);
   ~OfflineDataProjectsModel() override = default;
 
-  void addProject(Sample* sample, bool downloaded, bool downloading, double progress, int downloadedCount, int totalCount);
-  void updateProject(int index, bool downloaded, bool downloading, double progress, int downloadedCount, int totalCount);
+  void addProject(Sample* sample, SampleDownloadState state);
+  void updateProject(int index, SampleDownloadState state);
   int findProjectBySample(Sample* sample) const;
   void clear();
   int rowCount(const QModelIndex& parent = QModelIndex()) const override;

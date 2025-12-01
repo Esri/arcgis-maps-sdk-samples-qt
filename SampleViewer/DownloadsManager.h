@@ -33,6 +33,8 @@ namespace Esri::ArcGISRuntime
 #include <QQueue>
 #include <QString>
 
+#include "SampleDownloadState.h"
+
 Q_MOC_INCLUDE("OfflineDataProjectsModel.h")
 
 class DownloadsManager : public QObject
@@ -95,15 +97,6 @@ signals:
 
 private:
   static constexpr int PROGRESS_UPDATE_INTERVAL_MS = 200;
-
-  struct SampleDownloadState
-  {
-    int totalItems = 0;
-    int downloadedItems = 0;
-    bool downloaded = false;
-    bool isDownloading = false;
-    double progress = 0.0;
-  };
 
   SampleDownloadState getSampleDownloadState(Sample* sample) const;
 
