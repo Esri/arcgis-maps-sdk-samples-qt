@@ -41,6 +41,11 @@ void CategoryListModel::setupRoles()
   m_roles[BackgroundThumbnailRole] = "backgroundThumbnailUrl";
 }
 
+Q_INVOKABLE SampleCategory* CategoryListModel::get(int index) const
+{
+  return m_categories.at(index);
+}
+
 void CategoryListModel::addCategory(SampleCategory* category)
 {
   beginInsertRows(QModelIndex(), rowCount(), rowCount());

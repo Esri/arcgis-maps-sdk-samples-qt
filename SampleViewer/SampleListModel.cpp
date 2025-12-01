@@ -55,6 +55,11 @@ void SampleListModel::setupRoles()
   }
 }
 
+Q_INVOKABLE Sample* SampleListModel::at(int index) const
+{
+  return m_samples.at(index);
+}
+
 void SampleListModel::addSample(Sample* sample)
 {
   beginInsertRows(QModelIndex(), rowCount(), rowCount());
@@ -110,6 +115,11 @@ QVariant SampleListModel::data(const QModelIndex & index, int role) const
   }
 
   return retVal;
+}
+
+int SampleListModel::size() const
+{
+  return m_samples.size();
 }
 
 QHash<int, QByteArray> SampleListModel::roleNames() const

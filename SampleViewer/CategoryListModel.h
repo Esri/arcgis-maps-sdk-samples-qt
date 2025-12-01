@@ -40,7 +40,8 @@ public:
   explicit CategoryListModel(QObject* parent = nullptr);
   ~CategoryListModel() override = default;
 
-  Q_INVOKABLE SampleCategory* get(int index) const { return m_categories.at(index); }
+  Q_INVOKABLE SampleCategory* get(int index) const;
+
   void addCategory(SampleCategory* category);
   int rowCount(const QModelIndex& parent = QModelIndex()) const override;
   QVariant data(const QModelIndex& index, int role = Qt::DisplayRole) const override;
