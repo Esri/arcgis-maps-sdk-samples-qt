@@ -84,7 +84,7 @@ Page {
         }
 
         Label {
-            text: "%1% complete".arg(SampleManager.downloadsManager.downloadProgress)
+            text: qsTr("%1% complete").arg(SampleManager.downloadsManager.downloadProgress)
             Layout.alignment: Qt.AlignHCenter | Qt.AlignVCenter
             Layout.fillWidth: true
             horizontalAlignment: Text.AlignHCenter

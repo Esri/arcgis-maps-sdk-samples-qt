@@ -72,7 +72,7 @@ DownloadsManager::DownloadsManager(QObject* parent) :
     {
       totalProgress += progress;
     }
-    setDownloadProgress(totalProgress / m_dataItemProgress.size());
+    setDownloadProgress(totalProgress / static_cast<double>(m_dataItemProgress.size()));
 
     updateOfflineDataProjects();
   });
@@ -145,7 +145,7 @@ void DownloadsManager::deleteDataItemFile(DataItem* dataItem)
 
   if (!tracking.contains(dataItem->itemId()))
   {
-    // qWarning() << "No tracking data found for item:" << dataItem->itemId();
+    qWarning() << "No tracking data found for item:" << dataItem->itemId();
     return;
   }
 
@@ -277,7 +277,7 @@ QJsonObject DownloadsManager::loadDownloadTracking()
 
   if (!file.open(QIODevice::ReadOnly))
   {
-    return QJsonObject();
+    return QJsonObject{};
   }
 
   const QByteArray data = file.readAll();
@@ -289,7 +289,7 @@ QJsonObject DownloadsManager::loadDownloadTracking()
   if (parseError.error != QJsonParseError::NoError)
   {
     qWarning() << "Failed to parse tracking file, starting fresh";
-    return QJsonObject();
+    return QJsonObject{};
   }
 
   return doc.object();
@@ -609,17 +609,19 @@ bool DownloadsManager::deleteProjectOfflineData(const QString& sampleName)
   for (int i = 0; i < totalSamples; ++i)
   {
     Sample* sample = m_samples->at(i);
-    if (sample->name().toString() == sampleName)
+
+    if (sample->name().toString() != sampleName)
     {
-      const int dataItemCount = sample->dataItems()->size();
-      for (int j = 0; j < dataItemCount; ++j)
-      {
-        DataItem* dataItem = sample->dataItems()->at(j);
-        deleteDataItemFile(dataItem);
-      }
-      success = true;
-      break;
+      continue;
     }
+    const int dataItemCount = sample->dataItems()->size();
+    for (int j = 0; j < dataItemCount; ++j)
+    {
+      DataItem* dataItem = sample->dataItems()->at(j);
+      deleteDataItemFile(dataItem);
+    }
+    success = true;
+    break;
   }
 
   // Refresh the offline data projects list
@@ -647,19 +649,21 @@ bool DownloadsManager::hasOfflineData(const QString& sampleName)
   for (int i = 0; i < totalSamples; ++i)
   {
     Sample* sample = m_samples->at(i);
-    if (sample->name().toString() == sampleName)
+
+    if (sample->name().toString() != sampleName)
     {
-      const int dataItemCount = sample->dataItems()->size();
-      for (int j = 0; j < dataItemCount; ++j)
-      {
-        DataItem* dataItem = sample->dataItems()->at(j);
-        if (dataItem->exists())
-        {
-          return true;
-        }
-      }
-      return false;
+      continue;
     }
+    const int dataItemCount = sample->dataItems()->size();
+    for (int j = 0; j < dataItemCount; ++j)
+    {
+      DataItem* dataItem = sample->dataItems()->at(j);
+      if (dataItem->exists())
+      {
+        return true;
+      }
+    }
+    return false;
   }
   return false;
 }
@@ -848,7 +852,7 @@ void DownloadsManager::downloadNextDataItem()
       m_progressUpdateTimer->start();
     }
 
-    auto item = m_dataItems.dequeue();
+    auto* item = m_dataItems.dequeue();
     fetchPortalItemData(item->itemId(), m_homePath + item->path().mid(1));
   }
   else
@@ -874,7 +878,7 @@ void DownloadsManager::fetchPortalItemData(const QString& itemId, const QString&
   const QString dataItemKey = itemId + "|" + outputPath;
   m_dataItemProgress.insert(dataItemKey, 0.0);
 
-  auto portalItem = new PortalItem(m_portal, itemId, this);
+  auto* portalItem = new PortalItem(m_portal, itemId, this);
   m_activeDownloads[dataItemKey] = portalItem;
 
   connect(portalItem, &PortalItem::doneLoading, this, [this, portalItem, outputPath, dataItemKey]()
@@ -916,7 +920,7 @@ void DownloadsManager::onPortalItemLoaded(PortalItem* portalItem, const QString&
       const QDir extractDir(extractPath);
       const QStringList filesBefore = extractDir.entryList(QDir::Files | QDir::AllDirs | QDir::NoDotAndDotDot, QDir::Name);
 
-      auto zipHelper = new ZipHelper(formattedPath, this);
+      auto* zipHelper = new ZipHelper(formattedPath, this);
       connect(zipHelper, &ZipHelper::extractCompleted, this, [this, formattedPath, extractPath, filesBefore, portalItem, zipHelper, dataItemKey]()
       {
         const QDir extractDir(extractPath);

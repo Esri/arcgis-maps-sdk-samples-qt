@@ -90,13 +90,15 @@ void OfflineDataProjectsModel::clear()
 int OfflineDataProjectsModel::rowCount(const QModelIndex& parent) const
 {
   Q_UNUSED(parent);
-  return m_projects.count();
+  return static_cast<int>(m_projects.count());
 }
 
 QVariant OfflineDataProjectsModel::data(const QModelIndex& index, int role) const
 {
-  if (index.row() < 0 || index.row() >= m_projects.count())
-    return QVariant();
+  if (index.row() < 0 || (index.row() >= m_projects.count()))
+  {
+    return QVariant{};
+  }
 
   const OfflineDataProject& project = m_projects[index.row()];
   QVariant retVal;

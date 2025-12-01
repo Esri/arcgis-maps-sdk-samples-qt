@@ -48,13 +48,25 @@ void DataItemListModel::addDataItem(DataItem* dataItem)
 int DataItemListModel::rowCount(const QModelIndex& parent) const
 {
   Q_UNUSED(parent);
-  return m_dataItems.count();
+  return static_cast<int>(m_dataItems.count());
+}
+
+int DataItemListModel::size() const
+{
+  return static_cast<int>(m_dataItems.size());
+}
+
+bool DataItemListModel::isEmpty() const
+{
+  return m_dataItems.isEmpty();
 }
 
 QVariant DataItemListModel::data(const QModelIndex& index, int role) const
 {
-  if (index.row() < 0 || index.row() >= m_dataItems.count())
-    return QVariant();
+  if (index.row() < 0 || (index.row() >= m_dataItems.count()))
+  {
+    return QVariant{};
+  }
 
   DataItem* dataItem = m_dataItems[index.row()];
   QVariant retVal;
