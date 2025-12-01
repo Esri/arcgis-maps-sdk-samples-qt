@@ -125,7 +125,7 @@ bool DownloadsManager::isSampleDownloading(Sample* sample) const
 
   for (const auto& dataItem : *sample->dataItems())
   {
-    QString key = buildDataItemKey(dataItem);
+    const QString key = buildDataItemKey(dataItem);
     if (m_dataItemProgress.contains(key))
     {
       return true;
