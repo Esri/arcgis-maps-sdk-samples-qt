@@ -145,7 +145,6 @@ void DownloadsManager::deleteDataItemFile(DataItem* dataItem)
 
   if (!tracking.contains(dataItem->itemId()))
   {
-    qWarning() << "No tracking data found for item:" << dataItem->itemId();
     return;
   }
 
