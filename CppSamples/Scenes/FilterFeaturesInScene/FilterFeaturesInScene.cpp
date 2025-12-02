@@ -24,7 +24,6 @@
 // ArcGIS Maps SDK headers
 #include "ArcGISSceneLayer.h"
 #include "ArcGISTiledElevationSource.h"
-#include "ArcGISVectorTiledLayer.h"
 #include "Basemap.h"
 #include "Camera.h"
 #include "ElevationSourceListModel.h"
@@ -39,7 +38,6 @@
 #include "Point.h"
 #include "Polygon.h"
 #include "PolygonBuilder.h"
-#include "PortalItem.h"
 #include "Scene.h"
 #include "SceneLayerPolygonFilter.h"
 #include "SceneQuickView.h"
@@ -55,25 +53,56 @@
 using namespace Esri::ArcGISRuntime;
 
 FilterFeaturesInScene::FilterFeaturesInScene(QObject* parent /* = nullptr */):
-  QObject(parent)
+  QObject(parent),
+  m_scene(new Scene(this))
 {
-  // Construct and set the basemap
-  ArcGISVectorTiledLayer* vectorTileLayer = new ArcGISVectorTiledLayer(new PortalItem("1e7d1784d1ef4b79ba6764d0bd6c3150", this), this);
-  m_osmBuildings = new ArcGISSceneLayer(new PortalItem("ca0470dbbddb4db28bad74ed39949e25", this), this);
-  Basemap* basemap = new Basemap(this);
-  basemap->baseLayers()->append(vectorTileLayer);
-  basemap->baseLayers()->append(m_osmBuildings);
-  m_scene = new Scene(basemap, this);
-
   // Construct and set the scene topography
   Surface* surface = new Surface(this);
   surface->elevationSources()->append(new ArcGISTiledElevationSource(QUrl("https://elevation3d.arcgis.com/arcgis/rest/services/WorldElevation3D/Terrain3D/ImageServer"), this));
   m_scene->setBaseSurface(surface);
 
-  // Construct the detailed buildings scene layer
-  m_detailedBuildingsSceneLayer = new ArcGISSceneLayer(QUrl("https://tiles.arcgis.com/tiles/z2tnIkrLQ2BRzr6P/arcgis/rest/services/SanFrancisco_Bldgs/SceneServer"), this);
+  // Construct a basemap with the ArcGIS Navigation 3D Basemap then set it on the Scene
+  Basemap* basemap = new Basemap(QUrl("https://arcgisruntime.maps.arcgis.com/home/item.html?id=00a5f468dda941d7bf0b51c144aae3f0"), this);
+  m_scene->setBasemap(basemap);
 
-  connect(m_detailedBuildingsSceneLayer, &ArcGISSceneLayer::doneLoading, this, [this](const Error& error)
+  connect(basemap, &Basemap::doneLoading, this, [basemap, this](const Error& error)
+  {
+    if (!error.isEmpty())
+    {
+      qWarning() << "Basemap failed to load." << error.message() << error.additionalMessage();
+      return;
+    }
+
+    // Loop through all layers in the basemap and look for the buildings layer
+    for (Layer* baseLayer : *basemap->baseLayers())
+    {
+      // As of 2025, the 3D basemap contains a layer called "Esri 3D Buildings" -- we'll search for a layer
+      // that contains 'building' in case the name is ever updated
+      if (baseLayer->name().contains("building", Qt::CaseInsensitive))
+      {
+        m_3dBuildings = dynamic_cast<ArcGISSceneLayer*>(baseLayer);
+        if (m_3dBuildings)
+        {
+          // Buildings layer found, we can return out of the lambda
+          return;
+        }
+      }
+    }
+    if (!m_3dBuildings)
+    {
+      qWarning() << "Buildings layer not found in base layers. Please check that your basemap"
+                 << "contains an ArcGIS Scene Layer with 'building' in the name";
+    }
+  });
+
+  // Construct the detailed buildings scene layer
+  m_sanFrancisco3DOSceneLayer = new ArcGISSceneLayer(QUrl("https://tiles.arcgis.com/tiles/z2tnIkrLQ2BRzr6P/arcgis/rest/services/SanFrancisco_Bldgs/SceneServer"), this);
+
+  // Initially hide the detailed buildings so they don't clip into the 3D basemap buildings
+  m_sanFrancisco3DOSceneLayer->setVisible(false);
+
+  // When the detailed building scene layer finishes loading, get its extent for the polygon filter
+  connect(m_sanFrancisco3DOSceneLayer, &ArcGISSceneLayer::doneLoading, this, [this](const Error& error)
   {
     if (!error.isEmpty())
     {
@@ -82,28 +111,28 @@ FilterFeaturesInScene::FilterFeaturesInScene(QObject* parent /* = nullptr */):
     }
 
     // Construct a red polygon that shows the extent of the detailed buildings scene layer
-    const Envelope sfExtent = m_detailedBuildingsSceneLayer->fullExtent();
+    const Envelope sfExtent = m_sanFrancisco3DOSceneLayer->fullExtent();
 
-    PolygonBuilder* builder = new PolygonBuilder(m_sceneView->spatialReference(), this);
-    builder->addPoint(sfExtent.xMin(), sfExtent.yMin());
-    builder->addPoint(sfExtent.xMax(), sfExtent.yMin());
-    builder->addPoint(sfExtent.xMax(), sfExtent.yMax());
-    builder->addPoint(sfExtent.xMin(), sfExtent.yMax());
+    PolygonBuilder* polygonBuilder = new PolygonBuilder(m_sceneView->spatialReference(), this);
+    polygonBuilder->addPoint(sfExtent.xMin(), sfExtent.yMin());
+    polygonBuilder->addPoint(sfExtent.xMax(), sfExtent.yMin());
+    polygonBuilder->addPoint(sfExtent.xMax(), sfExtent.yMax());
+    polygonBuilder->addPoint(sfExtent.xMin(), sfExtent.yMax());
 
-    m_sceneLayerExtentPolygon = builder->toPolygon();
+    m_sceneLayerExtentPolygon = polygonBuilder->toPolygon();
 
     // Create the SceneLayerPolygonFilter to later apply to the OSM buildings layer
     m_sceneLayerPolygonFilter = new SceneLayerPolygonFilter(
-          QList<Polygon>{m_sceneLayerExtentPolygon}, // polygons to filter by
-          SceneLayerPolygonFilterSpatialRelationship::Disjoint, // hide all features within the polygons
-          this);
+      QList<Polygon>{m_sceneLayerExtentPolygon}, // polygons to filter by
+      SceneLayerPolygonFilterSpatialRelationship::Disjoint, // hide all features within the polygons
+      this);
 
     // Create the extent graphic so we can add it later with the detailed buildings scene layer
-    SimpleFillSymbol* sfs = new SimpleFillSymbol(SimpleFillSymbolStyle::Solid, QColor(Qt::transparent), new SimpleLineSymbol(SimpleLineSymbolStyle::Solid, QColor(Qt::red), 5.0f, this), this);
-    m_sanFranciscoExtentGraphic = new Graphic(m_sceneLayerExtentPolygon, sfs, this);
+    SimpleFillSymbol* simpleFillSymbol = new SimpleFillSymbol(SimpleFillSymbolStyle::Solid, QColor(Qt::transparent), new SimpleLineSymbol(SimpleLineSymbolStyle::Solid, QColor(Qt::red), 5.0f, this), this);
+    m_sanFranciscoExtentGraphic = new Graphic(m_sceneLayerExtentPolygon, simpleFillSymbol, this);
   });
 
-  m_detailedBuildingsSceneLayer->load();
+  m_scene->operationalLayers()->append(m_sanFrancisco3DOSceneLayer);
 }
 
 FilterFeaturesInScene::~FilterFeaturesInScene() = default;
@@ -115,34 +144,68 @@ void FilterFeaturesInScene::init()
   qmlRegisterType<FilterFeaturesInScene>("Esri.Samples", 1, 0, "FilterFeaturesInSceneSample");
 }
 
-void FilterFeaturesInScene::loadScene()
+// Show the detailed buildings scene layer
+void FilterFeaturesInScene::showDetailedBuildings()
 {
-  // Show the detailed buildings scene layer and the extent graphic
-  m_scene->operationalLayers()->append(m_detailedBuildingsSceneLayer);
-  m_sceneView->graphicsOverlays()->first()->graphics()->append(m_sanFranciscoExtentGraphic);
+  if (!m_sanFrancisco3DOSceneLayer)
+  {
+    qWarning() << "Detailed San Francisco Buildings layer not loaded";
+    return;
+  }
+  m_sanFrancisco3DOSceneLayer->setVisible(true);
 }
 
+// Hide buildings within the detailed building extent so they don't clip
 void FilterFeaturesInScene::filterScene()
 {
-  // Hide buildings within the detailed building extent so they don't clip
+  if (!m_sceneView || !m_sceneView->graphicsOverlays()->first())
+  {
+    return;
+  }
+
+  // Show the extent graphic to visualize the polygon filter
+  m_sceneView->graphicsOverlays()->first()->graphics()->append(m_sanFranciscoExtentGraphic);
+
+  if (!m_3dBuildings || !m_sceneLayerPolygonFilter)
+  {
+    return;
+  }
 
   // Initially, the building layer does not have a polygon filter, set it
-  if (!m_osmBuildings->polygonFilter())
-    m_osmBuildings->setPolygonFilter(m_sceneLayerPolygonFilter);
+  if (!m_3dBuildings->polygonFilter())
+  {
+    m_3dBuildings->setPolygonFilter(m_sceneLayerPolygonFilter);
+  }
 
   // After the scene is reset, the layer will have a polygon filter, but that filter will not have polygons set
   // Add the polygon back to the polygon filter
   else
+  {
     m_sceneLayerPolygonFilter->setPolygons({m_sceneLayerExtentPolygon});
+  }
 }
 
 void FilterFeaturesInScene::reset()
 {
-  // Remove the detailed buildings layer from the scene
-  m_scene->operationalLayers()->clear();
+  if (!m_sanFrancisco3DOSceneLayer)
+  {
+    return;
+  }
 
-  // Set the OSM buildings polygon filter to an empty list of polygons to clear the filter
-  m_osmBuildings->polygonFilter()->setPolygons(QList<Polygon>{});
+  // Hide the detailed buildings layer from the scene
+  m_sanFrancisco3DOSceneLayer->setVisible(false);
+
+  if (!m_3dBuildings || !m_3dBuildings->polygonFilter())
+  {
+    return;
+  }
+  // Set the 3D buildings polygon filter to an empty list of polygons to clear the filter
+  m_3dBuildings->polygonFilter()->setPolygons(QList<Polygon>{});
+
+  if (!m_sceneView || !m_sceneView->graphicsOverlays()->first())
+  {
+    return;
+  }
 
   // Clear the graphics list in the graphics overlay to remove the red extent boundary graphic
   m_sceneView->graphicsOverlays()->first()->graphics()->clear();
@@ -157,7 +220,9 @@ SceneQuickView* FilterFeaturesInScene::sceneView() const
 void FilterFeaturesInScene::setSceneView(SceneQuickView* sceneView)
 {
   if (!sceneView || sceneView == m_sceneView)
+  {
     return;
+  }
 
   m_sceneView = sceneView;
   m_sceneView->setArcGISScene(m_scene);

@@ -45,18 +45,18 @@ Item {
 
         property int step: 0
 
-        text: [qsTr("Load detailed buildings"),qsTr("Filter OSM buildings in extent"),qsTr("Reset scene")][step]
+        text: [qsTr("Filter 3D buildings in extent"),qsTr("Show detailed buildings"),qsTr("Reset scene")][step]
         onClicked: {
             switch (step) {
             case 0:
-                // Show the detailed buildings scene layer and extent graphic
-                model.loadScene();
+                // Hide buildings within the detailed building extent so they don't clip
+                model.filterScene();
                 step++;
                 break;
 
             case 1:
-                // Hide buildings within the detailed building extent so they don't clip
-                model.filterScene();
+                // Show the detailed buildings scene layer and extent graphic
+                model.showDetailedBuildings();
                 step++;
                 break;
 

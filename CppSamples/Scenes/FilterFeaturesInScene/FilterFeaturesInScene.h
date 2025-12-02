@@ -25,11 +25,11 @@
 
 namespace Esri::ArcGISRuntime
 {
-class ArcGISSceneLayer;
-class Graphic;
-class Scene;
-class SceneLayerPolygonFilter;
-class SceneQuickView;
+  class ArcGISSceneLayer;
+  class Graphic;
+  class Scene;
+  class SceneLayerPolygonFilter;
+  class SceneQuickView;
 }
 
 Q_MOC_INCLUDE("SceneQuickView.h");
@@ -46,7 +46,7 @@ public:
 
   static void init();
 
-  Q_INVOKABLE void loadScene();
+  Q_INVOKABLE void showDetailedBuildings();
   Q_INVOKABLE void filterScene();
   Q_INVOKABLE void reset();
 
@@ -59,8 +59,8 @@ private:
 
   Esri::ArcGISRuntime::Scene* m_scene = nullptr;
   Esri::ArcGISRuntime::SceneQuickView* m_sceneView = nullptr;
-  Esri::ArcGISRuntime::ArcGISSceneLayer* m_osmBuildings = nullptr;
-  Esri::ArcGISRuntime::ArcGISSceneLayer* m_detailedBuildingsSceneLayer = nullptr;
+  Esri::ArcGISRuntime::ArcGISSceneLayer* m_3dBuildings = nullptr;
+  Esri::ArcGISRuntime::ArcGISSceneLayer* m_sanFrancisco3DOSceneLayer = nullptr;
   Esri::ArcGISRuntime::Polygon m_sceneLayerExtentPolygon;
   Esri::ArcGISRuntime::Graphic* m_sanFranciscoExtentGraphic = nullptr;
   Esri::ArcGISRuntime::SceneLayerPolygonFilter* m_sceneLayerPolygonFilter = nullptr;
