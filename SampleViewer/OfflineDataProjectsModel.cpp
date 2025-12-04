@@ -77,7 +77,9 @@ int OfflineDataProjectsModel::findProjectBySample(Sample* sample) const
   for (int i = 0; i < m_projects.count(); ++i)
   {
     if (m_projects[i].sample == sample)
+    {
       return i;
+    }
   }
   return -1;
 }
@@ -107,26 +109,26 @@ QVariant OfflineDataProjectsModel::data(const QModelIndex& index, int role) cons
 
   switch (role)
   {
-  case SampleRole:
-    retVal = QVariant::fromValue(project.sample);
-    break;
-  case DownloadedRole:
-    retVal = project.downloaded;
-    break;
-  case DownloadingRole:
-    retVal = project.downloading;
-    break;
-  case DownloadProgressRole:
-    retVal = project.downloadProgress;
-    break;
-  case DownloadedItemsCountRole:
-    retVal = project.downloadedItemsCount;
-    break;
-  case TotalItemsCountRole:
-    retVal = project.totalItemsCount;
-    break;
-  default:
-    break;
+    case SampleRole:
+      retVal = QVariant::fromValue(project.sample);
+      break;
+    case DownloadedRole:
+      retVal = project.downloaded;
+      break;
+    case DownloadingRole:
+      retVal = project.downloading;
+      break;
+    case DownloadProgressRole:
+      retVal = project.downloadProgress;
+      break;
+    case DownloadedItemsCountRole:
+      retVal = project.downloadedItemsCount;
+      break;
+    case TotalItemsCountRole:
+      retVal = project.totalItemsCount;
+      break;
+    default:
+      break;
   }
 
   return retVal;
