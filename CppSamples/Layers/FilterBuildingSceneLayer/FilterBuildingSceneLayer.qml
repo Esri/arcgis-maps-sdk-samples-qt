@@ -119,6 +119,16 @@ Item {
                     font.pixelSize: 14
                     Component.onCompleted: floorSelector.currentIndex = 0
                     onCurrentTextChanged: sampleModel.updateFloorFilter(currentText)
+
+                    background: Rectangle {
+                        color: palette.window
+                        border.width: 1
+                    }
+
+                    popup.background: Rectangle {
+                        color: palette.window
+                        border.width: 1
+                    }
                 }
             }
 
