@@ -40,7 +40,7 @@ public:
   explicit SourceCodeListModel(QObject* parent = nullptr);
   ~SourceCodeListModel() override = default;
 
-  Q_INVOKABLE SourceCode* get(int index) const { return m_codeFiles.at(index); }
+  Q_INVOKABLE SourceCode* get(int index) const;
   void addCodeFile(SourceCode* codeFile);
   int rowCount(const QModelIndex& parent = QModelIndex()) const override;
   QVariant data(const QModelIndex& index, int role = Qt::DisplayRole) const override;

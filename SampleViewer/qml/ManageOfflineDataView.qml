@@ -29,300 +29,117 @@ Page {
     }
 
     onVisibleChanged: {
-        if (!manageOfflineDataViewPage.visible && SampleManager.downloadInProgress)
-            SampleManager.cancelDownload = true;
+        if (!manageOfflineDataViewPage.visible && SampleManager.downloadsManager.downloadInProgress)
+            SampleManager.cancelAllDownloads();
         else if (manageOfflineDataViewPage.visible)
             SampleManager.getOfflineDataProjects();
     }
 
     Connections {
-        target: SampleManager
+        target: SampleManager.downloadsManager
         function onDoneDownloadingChanged() {
             SampleManager.getOfflineDataProjects();
         }
     }
 
     property bool showOnlyDownloaded: false
-    property real scaleFactor: Math.min(width / 800, height / 600)
+    property real scaleFactor: Math.min(1.0, Math.max(0.5, Math.min(width / 800, height / 600)))
     property real baseFontSize: 12 * scaleFactor
     property real baseSpacing: 10 * scaleFactor
     property real baseMargin: Math.max(15, 20 * scaleFactor)
 
+    // Full page download view - bulk download
     ColumnLayout {
-        anchors.fill: parent
-        anchors.margins: baseMargin
-        spacing: baseSpacing
+        anchors.horizontalCenter: parent.horizontalCenter
+        anchors.verticalCenter: parent.verticalCenter
+        visible: SampleManager.downloadsManager.downloadInProgress && SampleManager.downloadsManager.isBulkDownload
 
         Image {
             Layout.alignment: Qt.AlignHCenter | Qt.AlignVCenter
             source: "qrc:/logo.png"
-            Layout.preferredWidth: Math.max(60, 100 * scaleFactor)
-            Layout.preferredHeight: Math.max(60, 100 * scaleFactor)
-            fillMode: Image.PreserveAspectFit
             clip: true
-            visible: !SampleManager.downloadInProgress
         }
 
-        ColumnLayout {
+        Label {
+            text: qsTr("Currently downloading all offline data.")
+            Layout.alignment: Qt.AlignHCenter | Qt.AlignVCenter
+            horizontalAlignment: Text.AlignHCenter
+            font {
+                family: fontFamily
+                weight: Font.DemiBold
+            }
             Layout.fillWidth: true
-            Layout.fillHeight: true
-            Layout.margins: baseMargin
-            spacing: baseSpacing
-            visible: SampleManager.downloadInProgress
-
-            Image {
-                Layout.alignment: Qt.AlignHCenter | Qt.AlignVCenter
-                source: "qrc:/logo.png"
-                Layout.preferredWidth: Math.max(100, 140 * scaleFactor)
-                Layout.preferredHeight: Math.max(100, 140 * scaleFactor)
-                fillMode: Image.PreserveAspectFit
-                clip: true
-            }
-
-            Label {
-                text: SampleManager.downloadText
-                horizontalAlignment: Text.AlignHCenter
-                Layout.alignment: Qt.AlignHCenter | Qt.AlignVCenter
-                Layout.fillWidth: true
-                font {
-                    family: fontFamily
-                    pixelSize: Math.max(11, baseFontSize)
-                }
-                wrapMode: Text.WordWrap
-                clip: true
-            }
-
-            Label {
-                text: "%1% complete".arg(SampleManager.downloadProgress)
-                horizontalAlignment: Text.AlignHCenter
-                Layout.alignment: Qt.AlignHCenter | Qt.AlignVCenter
-                Layout.fillWidth: true
-                visible: SampleManager.downloadInProgress
-                font {
-                    family: fontFamily
-                    pixelSize: Math.max(13, baseFontSize + 2)
-                    weight: Font.DemiBold
-                }
-                clip: true
-            }
-
-            ProgressBar {
-                Layout.fillHeight: false
-                Layout.alignment: Qt.AlignHCenter | Qt.AlignVCenter
-                Layout.fillWidth: true
-                from: 0
-                to: 100
-                value: SampleManager.downloadProgress
-                visible: SampleManager.downloadInProgress
-                clip: true
-            }
-
-            Button {
-                text: SampleManager.cancelDownload ? qsTr("Cancelling remaining downloads...") : qsTr("Cancel remaining downloads")
-                enabled: !SampleManager.cancelDownload
-                font.pixelSize: Math.max(10, baseFontSize)
-                Layout.alignment: Qt.AlignHCenter | Qt.AlignVCenter
-                Layout.preferredWidth: Math.max(implicitWidth, 200 * scaleFactor)
-                Layout.preferredHeight: Math.max(40, 50 * scaleFactor)
-                onClicked: {
-                    SampleManager.cancelDownload = true;
-                }
-                clip: true
-            }
+            clip: true
         }
 
-        RowLayout {
-            Layout.alignment: Qt.AlignHCenter
-            visible: !SampleManager.downloadInProgress
-            spacing: baseSpacing
-
-            Button {
-                text: SampleManager.downloadFailed ? qsTr("Retry download all offline data") : qsTr("Download all offline data")
-                Layout.preferredWidth: Math.max(implicitWidth, 200 * scaleFactor)
-                Layout.preferredHeight: Math.max(40, 50 * scaleFactor)
-                enabled: {
-                    return SampleManager.offlineDataProjects &&
-                            SampleManager.offlineDataProjects.some(project => !project.downloaded);
-                }
-                onClicked: {
-                    if (SampleManager.reachability === SampleManager.ReachabilityOnline || SampleManager.reachability === SampleManager.ReachabilityUnknown) {
-                        SampleManager.downloadAllDataItems();
-                    } else {
-                        SampleManager.currentMode = SampleManager.NetworkRequiredView;
-                    }
-                }
-                font.pixelSize: Math.max(10, baseFontSize)
-                clip: true
+        Label {
+            text: SampleManager.downloadsManager.downloadText
+            Layout.alignment: Qt.AlignHCenter | Qt.AlignVCenter
+            Layout.fillWidth: true
+            horizontalAlignment: Label.AlignHCenter
+            font {
+                family: fontFamily
             }
-
-            Button {
-                text: qsTr("Delete all offline data")
-                Layout.preferredWidth: Math.max(implicitWidth, 200 * scaleFactor)
-                Layout.preferredHeight: Math.max(40, 50 * scaleFactor)
-                enabled: {
-                    return SampleManager.offlineDataProjects.length > 0 &&
-                            SampleManager.offlineDataProjects.some(project => project.downloaded);
-                }
-                onClicked: {
-                    deleteAllDialog.visible = true;
-                }
-                font.pixelSize: Math.max(10, baseFontSize)
-                clip: true
-            }
+            clip: true
         }
 
-        CheckBox {
-            text: qsTr("Show only downloaded data")
-            Layout.alignment: Qt.AlignRight
-            visible: !SampleManager.downloadInProgress
-            checked: showOnlyDownloaded
-            enabled: {
-                return SampleManager.offlineDataProjects.length > 0 &&
-                        SampleManager.offlineDataProjects.some(project => project.downloaded);
+        Label {
+            text: qsTr("%1% complete").arg(SampleManager.downloadsManager.downloadProgress)
+            Layout.alignment: Qt.AlignHCenter | Qt.AlignVCenter
+            Layout.fillWidth: true
+            horizontalAlignment: Text.AlignHCenter
+            visible: !SampleManager.downloadsManager.cancelDownload
+            font {
+                family: fontFamily
             }
+            clip: true
+        }
+
+        ProgressBar {
+            Layout.fillHeight: false
+            Layout.alignment: Qt.AlignHCenter | Qt.AlignVCenter
+            Layout.fillWidth: true
+            from: 0
+            to: 100
+            value: SampleManager.downloadsManager.downloadProgress
+            visible: !SampleManager.downloadsManager.cancelDownload
+            clip: true
+        }
+
+        Button {
+            // PortalItem::fetchData does not have a cancel method so we can only clear the remaining items from the download queue
+            id: cancelAllButton
+            text: qsTr("Cancel remaining downloads")
+            Layout.alignment: Qt.AlignHCenter | Qt.AlignVCenter
+            padding: 12
             onClicked: {
-                showOnlyDownloaded = checked;
+                SampleManager.cancelAllDownloads();
             }
-            onEnabledChanged: {
-                if (!enabled) {
-                    showOnlyDownloaded = false;
-                }
-            }
-            font.pixelSize: Math.max(10, baseFontSize)
-        }
+            clip: true
 
-        Rectangle {
-            Layout.fillWidth: true
-            Layout.fillHeight: true
-            visible: !SampleManager.downloadInProgress
-            color: "transparent"
-            border {
-                color: Calcite.border1
-                width: 2
-            }
-            radius: 8
-
-            ScrollView {
-                anchors.fill: parent
-                anchors.margins: 5
-                clip: true
-
-                ListView {
-                    model: {
-                        if (!showOnlyDownloaded) {
-                            return SampleManager.offlineDataProjects;
-                        } else {
-                            return SampleManager.offlineDataProjects.filter(function(item) {
-                                return item.downloaded;
-                            });
-                        }
-                    }
-                    spacing: 5
-
-                    Component.onCompleted: {
-                        SampleManager.getOfflineDataProjects();
-                    }
-
-                    delegate: Rectangle {
-                        width: ListView.view.width
-                        height: Math.max(65, 80 * scaleFactor)
-                        color: Calcite.foreground2
-                        radius: 8
-                        border {
-                            color: Calcite.border2
-                            width: 1
-                        }
-
-                        ColumnLayout {
-                            anchors.fill: parent
-                            anchors {
-                                margins: baseMargin
-                                topMargin: 2
-                                bottomMargin: 2
-                            }
-                            spacing: baseSpacing / 2
-
-                            RowLayout {
-                                Layout.fillWidth: true
-                                Layout.fillHeight: true
-                                spacing: baseSpacing
-
-                                Column {
-                                    Layout.fillWidth: true
-                                    spacing: 4
-
-                                    Label {
-                                        text: modelData.sample.name
-                                        font {
-                                            family: fontFamily
-                                            weight: Font.DemiBold
-                                            pixelSize: Math.max(11, baseFontSize + 1)
-                                        }
-                                        elide: Label.ElideRight
-                                        width: parent.width
-                                        wrapMode: Text.WordWrap
-                                        maximumLineCount: 2
-                                    }
-
-                                    Rectangle {
-                                        width: statusLabel.implicitWidth + 20
-                                        height: statusLabel.implicitHeight + 10
-                                        color: modelData.downloaded ? Calcite.success : Calcite.danger
-                                        radius: 12
-
-                                        Label {
-                                            id: statusLabel
-                                            anchors.centerIn: parent
-                                            text: modelData.downloaded ? qsTr("Downloaded") : qsTr("Not downloaded")
-                                            color: Calcite.text1
-                                            font {
-                                                family: fontFamily
-                                                pixelSize: Math.max(9, baseFontSize - 2)
-                                                weight: Font.Medium
-                                            }
-                                        }
-                                    }
-                                }
-
-                                Item {
-                                    Layout.fillWidth: true
-                                }
-
-                                RowLayout {
-                                    spacing: baseSpacing / 2
-
-                                    Button {
-                                        text: qsTr("Download")
-                                        Layout.preferredWidth: Math.max(110, 110 * scaleFactor)
-                                        Layout.preferredHeight: Math.max(32, 40 * scaleFactor)
-                                        visible: !modelData.downloaded
-                                        font.pixelSize: Math.max(12, baseFontSize - 1)
-                                        onClicked: {
-                                            SampleManager.downloadProjectData(modelData.sample.name);
-                                        }
-                                    }
-
-                                    Button {
-                                        text: qsTr("Delete")
-                                        Layout.preferredWidth: Math.max(110, 110 * scaleFactor)
-                                        Layout.preferredHeight: Math.max(32, 40 * scaleFactor)
-                                        visible: modelData.downloaded
-                                        font.pixelSize: Math.max(12, baseFontSize - 1)
-                                        onClicked: {
-                                            deleteProjectDialog.sampleName = modelData.sample.name;
-                                            deleteProjectDialog.resetDialog();
-                                            deleteProjectDialog.visible = true;
-                                        }
-                                    }
-                                }
-                            }
-                        }
-                    }
-                }
+            background: Rectangle {
+                radius: 4
+                color: cancelAllButton.down ? Qt.darker(Calcite.brand, 1.2) : (cancelAllButton.hovered ? Calcite.brandHover : Calcite.brand)
             }
         }
     }
 
+    // Individual sample list
+    OfflineDataListView {
+        visible: !(SampleManager.downloadsManager.downloadInProgress && SampleManager.downloadsManager.isBulkDownload)
+        scaleFactor: manageOfflineDataViewPage.scaleFactor
+        baseMargin: manageOfflineDataViewPage.baseMargin
+        baseSpacing: manageOfflineDataViewPage.baseSpacing
+        baseFontSize: manageOfflineDataViewPage.baseFontSize
+        deleteProjectDialog: deleteProjectDialog
+        deleteAllDialog: deleteAllDialog
+        showOnlyDownloaded: manageOfflineDataViewPage.showOnlyDownloaded
+        onShowOnlyDownloadedChanged: {
+            manageOfflineDataViewPage.showOnlyDownloaded = showOnlyDownloaded;
+        }
+    }
+
+    // Delete all offline data confirmation dialog
     MessageDialog {
         id: deleteAllDialog
         title: qsTr("Delete all offline data")
@@ -357,6 +174,7 @@ Page {
         }
     }
 
+    // Delete individual project data confirmation dialog
     MessageDialog {
         id: deleteProjectDialog
         property string sampleName: ""
@@ -389,6 +207,35 @@ Page {
             }
             else if (button === MessageDialog.Ok){
                 resetDialog();
+            }
+        }
+    }
+
+    // Busy overlay for cancelling downloads
+    Rectangle {
+        anchors.fill: parent
+        color: "#CC000000"
+        visible: SampleManager.downloadsManager.cancelDownload && SampleManager.downloadsManager.downloadInProgress
+        z: 1000
+
+        ColumnLayout {
+            anchors.centerIn: parent
+            spacing: baseSpacing * 2
+
+            BusyIndicator {
+                Layout.alignment: Qt.AlignHCenter
+                running: parent.parent.visible
+            }
+
+            Label {
+                text: qsTr("Canceling remaining downloads...")
+                color: Calcite.offWhite
+                font {
+                    family: fontFamily
+                    pixelSize: Math.max(12, baseFontSize + 2)
+                    weight: Font.Medium
+                }
+                Layout.alignment: Qt.AlignHCenter
             }
         }
     }

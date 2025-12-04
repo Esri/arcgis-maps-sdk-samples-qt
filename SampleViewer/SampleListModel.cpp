@@ -55,12 +55,26 @@ void SampleListModel::setupRoles()
   }
 }
 
+Q_INVOKABLE Sample* SampleListModel::at(int index) const
+{
+  return m_samples.at(index);
+}
+
 void SampleListModel::addSample(Sample* sample)
 {
   beginInsertRows(QModelIndex(), rowCount(), rowCount());
   m_samples << sample;
   endInsertRows();
 }
+
+void SampleListModel::sortSamples()
+{
+  std::sort(m_samples.begin(), m_samples.end(), [](Sample* a, Sample* b)
+  {
+    return a->name().toString() < b->name().toString();
+  });
+}
+
 int SampleListModel::rowCount(const QModelIndex &parent) const
 {
   Q_UNUSED(parent);
@@ -101,6 +115,11 @@ QVariant SampleListModel::data(const QModelIndex & index, int role) const
   }
 
   return retVal;
+}
+
+int SampleListModel::size() const
+{
+  return m_samples.size();
 }
 
 QHash<int, QByteArray> SampleListModel::roleNames() const

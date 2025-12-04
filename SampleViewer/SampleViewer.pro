@@ -192,6 +192,8 @@ HEADERS += \
     $$COMMONVIEWER/CategoryListModel.h \
     $$COMMONVIEWER/DataItem.h \
     $$COMMONVIEWER/DataItemListModel.h \
+    $$COMMONVIEWER/DownloadsManager.h \
+    $$COMMONVIEWER/OfflineDataProjectsModel.h \
     $$COMMONVIEWER/Sample.h \
     $$COMMONVIEWER/SampleCategory.h \
     $$COMMONVIEWER/SampleListModel.h \
@@ -203,7 +205,8 @@ HEADERS += \
     $$COMMONVIEWER/SourceCode.h \
     $$COMMONVIEWER/SourceCodeListModel.h \
     $$COMMONVIEWER/ZipHelper.h \
-    $$COMMONVIEWER/TaskCanceler.h
+    $$COMMONVIEWER/TaskCanceler.h \
+    SampleDownloadState.h
 
 SOURCES += \
     $$COMMONVIEWER/SyntaxHighlighter/SyntaxHighlighter.cpp \
@@ -211,6 +214,8 @@ SOURCES += \
     $$COMMONVIEWER/CategoryListModel.cpp \
     $$COMMONVIEWER/DataItem.cpp \
     $$COMMONVIEWER/DataItemListModel.cpp \
+    $$COMMONVIEWER/DownloadsManager.cpp \
+    $$COMMONVIEWER/OfflineDataProjectsModel.cpp \
     $$COMMONVIEWER/Sample.cpp \
     $$COMMONVIEWER/SampleCategory.cpp \
     $$COMMONVIEWER/SampleListModel.cpp \

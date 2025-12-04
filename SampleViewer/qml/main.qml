@@ -159,7 +159,7 @@ ApplicationWindow {
                         onTriggered: {
                             aboutView.visible = false;
                             proxySetupView.visible = false;
-                            if (SampleManager.currentMode !== SampleManager.DownloadDataView || !SampleManager.downloadInProgress)
+                            if (SampleManager.currentMode !== SampleManager.DownloadDataView || !SampleManager.downloadsManager.downloadInProgress)
                                 SampleManager.currentMode = SampleManager.ManageOfflineDataView
                         }
                     }
@@ -252,7 +252,33 @@ ApplicationWindow {
     Connections {
         target: SampleManager
 
+        property var pendingSampleChangeConnection: null
+
         function onCurrentSampleChanged() {
+            // If we're in ManageOfflineData view and a download is in progress,
+            // cancel all downloads and wait for completion before changing samples
+            if (SampleManager.currentMode === SampleManager.ManageOfflineDataView &&
+                    SampleManager.downloadsManager.downloadInProgress) {
+                pendingSampleChangeConnection = SampleManager.downloadsManager.downloadInProgressChanged.connect(function() {
+                    if (!SampleManager.downloadsManager.downloadInProgress) {
+                        if (pendingSampleChangeConnection) {
+                            SampleManager.downloadsManager.downloadInProgressChanged.disconnect(pendingSampleChangeConnection);
+                            pendingSampleChangeConnection = null;
+                        }
+                        sampleChangeHelper();
+                    }
+                });
+
+                // Cancel all downloads - this will show the busy indicator
+                SampleManager.cancelAllDownloads();
+                return;
+            }
+
+            // If no download in progress, proceed normally
+            sampleChangeHelper();
+        }
+
+        function sampleChangeHelper() {
             clearSample();
             SampleManager.resetAuthenticationState();
 
@@ -280,7 +306,7 @@ ApplicationWindow {
                     && SampleManager.reachability !== SampleManager.ReachabilityUnknown){
                 SampleManager.currentMode = SampleManager.NetworkRequiredView;
                 return;
-            // If the sample requires offline data
+                // If the sample requires offline data
             } else {
                 showSample();
             }
@@ -293,13 +319,17 @@ ApplicationWindow {
             SampleManager.currentMode = SampleManager.HomepageView;
         }
 
-        function onDoneDownloadingChanged() {
-            if (SampleManager.currentMode !== SampleManager.ManageOfflineDataView)
-                showSample();
-        }
-
         function onCurrentModeChanged() {
             if (SampleManager.currentMode === SampleManager.LiveSampleView)
+                showSample();
+        }
+    }
+
+    Connections {
+        target: SampleManager.downloadsManager
+
+        function onDoneDownloadingChanged() {
+            if (SampleManager.currentMode !== SampleManager.ManageOfflineDataView)
                 showSample();
         }
     }
@@ -316,7 +346,7 @@ ApplicationWindow {
 
                 liveSample.source = SampleManager.currentSample.source;
             } else {
-                if (SampleManager.downloadInProgress)
+                if (SampleManager.downloadsManager.downloadInProgress)
                     SampleManager.currentMode = SampleManager.ManageOfflineDataView;
                 else
                     SampleManager.currentMode = SampleManager.DownloadDataView;
