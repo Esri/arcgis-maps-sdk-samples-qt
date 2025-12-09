@@ -169,6 +169,7 @@ Item {
                 }
 
                 delegate: ItemDelegate {
+                    id: featureTableItem
                     width: tableSelectionList.width
                     implicitHeight: 32
 
@@ -181,7 +182,7 @@ Item {
                         Label {
                             anchors.centerIn: parent
                             text: modelData
-                            color: gdbModel.selectedTableName === modelData ? "#F8F8F8" : palette.text
+                            color: (gdbModel.selectedTableName === modelData || featureTableItem.hovered) ? "#F8F8F8" : palette.text
                         }
                     }
 
@@ -230,6 +231,7 @@ Item {
                 }
 
                 delegate: ItemDelegate {
+                    id: featureTypeItem
                     width: featureTypeList.width
                     implicitHeight: 32
 
@@ -242,7 +244,7 @@ Item {
                         Label {
                             anchors.centerIn: parent
                             text: modelData
-                            color: featureTypeList.currentIndex === index ? "#F8F8F8" : palette.text
+                            color: (featureTypeList.currentIndex === index || featureTypeItem.hovered)? "#F8F8F8" : palette.text
                         }
                     }
 
