@@ -209,10 +209,10 @@ ApplicationWindow {
                         text: currentSampleIsFavorite ? qsTr("Unfavorite") : qsTr("Favorite")
 
                         visible: SampleManager.currentSample && (
-                                 SampleManager.currentMode === SampleManager.LiveSampleView ||
-                                 SampleManager.currentMode === SampleManager.DescriptionView ||
-                                 SampleManager.currentMode === SampleManager.SourceCodeView ||
-                                 SampleManager.currentMode === SampleManager.DownloadDataView)
+                                     SampleManager.currentMode === SampleManager.LiveSampleView ||
+                                     SampleManager.currentMode === SampleManager.DescriptionView ||
+                                     SampleManager.currentMode === SampleManager.SourceCodeView ||
+                                     SampleManager.currentMode === SampleManager.DownloadDataView)
 
                         onTriggered: {
                             const styledName = "<font color='" + Calcite.brand + "'>" + SampleManager.currentSample.name + "</font>";
@@ -229,17 +229,17 @@ ApplicationWindow {
                             target: SampleManager
                             function onFavoriteSamplesChanged() {
                                 favoriteMenuItem.currentSampleIsFavorite =
-                                    SampleManager.currentSample ? SampleManager.isFavorite(SampleManager.currentSample) : false;
+                                        SampleManager.currentSample ? SampleManager.isFavorite(SampleManager.currentSample) : false;
                             }
                             function onCurrentSampleChanged() {
                                 favoriteMenuItem.currentSampleIsFavorite =
-                                    SampleManager.currentSample ? SampleManager.isFavorite(SampleManager.currentSample) : false;
+                                        SampleManager.currentSample ? SampleManager.isFavorite(SampleManager.currentSample) : false;
                             }
                         }
 
                         Component.onCompleted: {
                             currentSampleIsFavorite =
-                                SampleManager.currentSample ? SampleManager.isFavorite(SampleManager.currentSample) : false;
+                                    SampleManager.currentSample ? SampleManager.isFavorite(SampleManager.currentSample) : false;
                         }
                     }
                 }

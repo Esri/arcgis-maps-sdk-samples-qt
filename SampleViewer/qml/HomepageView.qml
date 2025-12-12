@@ -32,7 +32,7 @@ Rectangle {
 
         contentHeight: {
             (favoriteSamplesGrid.visible ? favoritesText.height + favoriteSamplesGrid.height + 30 : 0) +
-            featuredSamplesText.height + featuredSamplesGrid.height + 20
+                    featuredSamplesText.height + featuredSamplesGrid.height + 20
         }
 
         clip: true
