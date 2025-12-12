@@ -141,6 +141,7 @@ signals:
   void currentCategoryChanged();
   void currentSourceCodeChanged();
   void reachabilityChanged();
+  void favoriteSamplesChanged();
 
 protected:
   void buildCategoriesList();

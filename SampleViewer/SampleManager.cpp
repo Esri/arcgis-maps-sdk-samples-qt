@@ -649,3 +649,49 @@ void SampleManager::initFavorites()
 {
   m_favoriteSamples = new SampleListModel(this);
 }
+
+void SampleManager::addSampleToFavorites(Sample* sample)
+{
+  if (m_favoriteSamples->containsSample(sample))
+  {
+    qWarning() << "Skipping remove - Sample" << sample->name() << " already exists in favorites";
+    return;
+  }
+  m_favoriteSamples->addSample(sample);
+
+  // Persist to QSettings
+  QSettings settings;
+  QStringList favoriteNames;
+  for (const auto* favoriteSample : *m_favoriteSamples)
+  {
+    favoriteNames.append(favoriteSample->name().toString());
+  }
+  settings.setValue("favorites/samples", favoriteNames);
+
+  emit favoriteSamplesChanged();
+}
+
+void SampleManager::removeSampleFromFavorites(Sample* sample)
+{
+  if (!m_favoriteSamples->containsSample(sample))
+  {
+    qWarning() << "Skipping remove - Sample" << sample->name() << " does not exist in favorites";
+    return;
+  }
+  m_favoriteSamples->removeSample(sample);
+
+  // Persist to QSettings
+  QSettings settings;
+  QStringList favoriteNames;
+  for (const auto* favoriteSample : *m_favoriteSamples)
+  {
+    favoriteNames.append(favoriteSample->name().toString());
+  }
+  settings.setValue("favorites/samples", favoriteNames);
+  emit favoriteSamplesChanged();
+}
+
+bool SampleManager::isFavorite(Sample* sample) const
+{
+  return m_favoriteSamples->containsSample(sample);
+}
