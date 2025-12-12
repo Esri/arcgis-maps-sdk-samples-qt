@@ -175,6 +175,9 @@ void SampleManager::init()
   // Offline data samples get populated when we buildCategoriesList
   buildCategoriesList();
 
+  // Initialize favorites (must be after buildCategoriesList so m_allSamples is populated)
+  initFavorites();
+
   // sort so downloads list is in ascending order
   m_offlineDataSamples->sortSamples();
   m_downloadsManager->setSamples(m_offlineDataSamples);
@@ -648,6 +651,27 @@ SampleListModel* SampleManager::favoriteSamples() const
 void SampleManager::initFavorites()
 {
   m_favoriteSamples = new SampleListModel(this);
+
+  // Restore favorites from QSettings
+  QSettings settings;
+  const QStringList favoriteNames = settings.value("favorites/samples").toStringList();
+
+  for (const QString& favoriteName : favoriteNames)
+  {
+    for (Sample* sample : *m_allSamples)
+    {
+      if (sample->name().toString() == favoriteName)
+      {
+        m_favoriteSamples->addSample(sample);
+        break;
+      }
+    }
+  }
+
+  if (m_favoriteSamples->size() > 0)
+  {
+    emit favoriteSamplesChanged();
+  }
 }
 
 void SampleManager::addSampleToFavorites(Sample* sample)

@@ -200,15 +200,46 @@ ApplicationWindow {
                     }
 
                     MenuItem {
+                        id: favoriteMenuItem
                         width: parent.width
                         height: visible ? 48 : 0
-                        text: qsTr("Favorite")
-                        visible: SampleManager.currentMode == SampleManager.LiveSampleView ||
-                                 SampleManager.currentMode == SampleManager.LiveSampleView ||
-                                 SampleManager.currentMode == SampleManager.SourceCodeView
+
+                        property bool currentSampleIsFavorite: false
+
+                        text: currentSampleIsFavorite ? qsTr("Unfavorite") : qsTr("Favorite")
+
+                        visible: SampleManager.currentSample && (
+                                 SampleManager.currentMode === SampleManager.LiveSampleView ||
+                                 SampleManager.currentMode === SampleManager.DescriptionView ||
+                                 SampleManager.currentMode === SampleManager.SourceCodeView ||
+                                 SampleManager.currentMode === SampleManager.DownloadDataView)
+
                         onTriggered: {
-                            aboutView.visible = true;
-                            proxySetupView.visible = false;
+                            const styledName = "<font color='" + Calcite.brand + "'>" + SampleManager.currentSample.name + "</font>";
+                            if (currentSampleIsFavorite) {
+                                SampleManager.removeSampleFromFavorites(SampleManager.currentSample);
+                                showToast(qsTr("Removed %1 from favorites").arg(styledName));
+                            } else {
+                                SampleManager.addSampleToFavorites(SampleManager.currentSample);
+                                showToast(qsTr("Added %1 to favorites").arg(styledName));
+                            }
+                        }
+
+                        Connections {
+                            target: SampleManager
+                            function onFavoriteSamplesChanged() {
+                                favoriteMenuItem.currentSampleIsFavorite =
+                                    SampleManager.currentSample ? SampleManager.isFavorite(SampleManager.currentSample) : false;
+                            }
+                            function onCurrentSampleChanged() {
+                                favoriteMenuItem.currentSampleIsFavorite =
+                                    SampleManager.currentSample ? SampleManager.isFavorite(SampleManager.currentSample) : false;
+                            }
+                        }
+
+                        Component.onCompleted: {
+                            currentSampleIsFavorite =
+                                SampleManager.currentSample ? SampleManager.isFavorite(SampleManager.currentSample) : false;
                         }
                     }
                 }
@@ -383,6 +414,54 @@ ApplicationWindow {
     Loader {
         id: qmlLoaderAuthView
         anchors.fill: parent
+    }
+
+    // Toast notification
+    Rectangle {
+        id: toast
+        anchors.horizontalCenter: parent.horizontalCenter
+        anchors.bottom: parent.bottom
+        anchors.bottomMargin: 20
+        width: toastLabel.implicitWidth + 32
+        height: 40
+        radius: 8
+        color: Calcite.foreground3
+        opacity: 0
+        visible: opacity > 0
+
+        Label {
+            id: toastLabel
+            anchors.centerIn: parent
+            color: Calcite.text1
+            font.pixelSize: 14
+            textFormat: Text.StyledText
+        }
+
+        OpacityAnimator {
+            id: toastFadeIn
+            target: toast
+            from: 0; to: 1
+            duration: 200
+        }
+
+        OpacityAnimator {
+            id: toastFadeOut
+            target: toast
+            from: 1; to: 0
+            duration: 300
+        }
+
+        Timer {
+            id: toastTimer
+            interval: 2000
+            onTriggered: toastFadeOut.start()
+        }
+    }
+
+    function showToast(message) {
+        toastLabel.text = message;
+        toastFadeIn.start();
+        toastTimer.restart();
     }
 
     Component.onCompleted: {
