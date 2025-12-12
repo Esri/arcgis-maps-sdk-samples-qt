@@ -41,7 +41,7 @@ void CategoryListModel::setupRoles()
   m_roles[BackgroundThumbnailRole] = "backgroundThumbnailUrl";
 }
 
-Q_INVOKABLE SampleCategory* CategoryListModel::get(int index) const
+SampleCategory* CategoryListModel::get(int index) const
 {
   return m_categories.at(index);
 }

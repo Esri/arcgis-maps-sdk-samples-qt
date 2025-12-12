@@ -639,3 +639,13 @@ void SampleManager::downloadProjectData(const QString& sampleName)
     }
   }
 }
+
+SampleListModel* SampleManager::favoriteSamples() const
+{
+  return m_favoriteSamples;
+}
+
+void SampleManager::initFavorites()
+{
+  m_favoriteSamples = new SampleListModel(this);
+}

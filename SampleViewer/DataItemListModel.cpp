@@ -38,7 +38,7 @@ void DataItemListModel::setupRoles()
   m_roles[SizeRole] = "size";
 }
 
-Q_INVOKABLE DataItem* DataItemListModel::at(int index) const
+DataItem* DataItemListModel::at(int index) const
 {
   return m_dataItems.at(index);
 }

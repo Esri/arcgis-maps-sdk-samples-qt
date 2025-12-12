@@ -73,6 +73,7 @@ class SampleManager : public QObject
   Q_PROPERTY(QString api READ api CONSTANT)
   Q_PROPERTY(Reachability reachability READ reachability NOTIFY reachabilityChanged)
   Q_PROPERTY(DownloadsManager* downloadsManager READ downloadsManager CONSTANT)
+  Q_PROPERTY(SampleListModel* favoriteSamples READ favoriteSamples NOTIFY favoriteSamplesChanged)
 
 public:
   explicit SampleManager(QObject* parent = nullptr);
@@ -104,6 +105,11 @@ public:
   Q_INVOKABLE void setupProxy(const QString& hostName, quint16 port, const QString& user, const QString& pw);
   Q_INVOKABLE void setApiKey(bool isSupportsApiKey = true);
   Q_INVOKABLE void resetAuthenticationState();
+
+  // Favorites
+  Q_INVOKABLE void addSampleToFavorites(Sample* sample);
+  Q_INVOKABLE void removeSampleFromFavorites(Sample* sample);
+  Q_INVOKABLE bool isFavorite(Sample* sample) const;
 
   enum CurrentMode
   {
@@ -168,6 +174,10 @@ private:
   // Downloads manager accessor
   DownloadsManager* downloadsManager() const;
 
+  // Favorites
+  SampleListModel* favoriteSamples() const;
+  void initFavorites();
+
   // Other helpers
   SampleManager::Reachability reachability() const;
   QString api() const;
@@ -198,6 +208,9 @@ private:
   // Other
   std::unique_ptr<QTemporaryDir> m_tempDir;
   Esri::ArcGISRuntime::Authentication::ArcGISAuthenticationChallengeHandler* m_toolkitChallengeHandler = nullptr;
+
+  // Favorites
+  SampleListModel* m_favoriteSamples = nullptr;
 };
 
 #endif // SAMPLEMANAGER_H

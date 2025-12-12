@@ -79,6 +79,7 @@ ApplicationWindow {
         }
 
         Image {
+            id: menuImage
             anchors {
                 right: parent.right
                 verticalCenter: parent.verticalCenter
@@ -108,8 +109,9 @@ ApplicationWindow {
 
                     MenuItem {
                         width: parent.width
-                        height: 48
+                        height: visible? 48 : 0
                         text: qsTr("Home")
+                        visible: SampleManager.currentMode != SampleManager.HomepageView
                         onTriggered: {
                             aboutView.visible = false;
                             proxySetupView.visible = false;
@@ -152,6 +154,18 @@ ApplicationWindow {
                             SampleManager.currentMode = SampleManager.DescriptionView
                         }
                     }
+
+                    MenuItem {
+                        width: parent.width
+                        height: 48
+                        text: qsTr("API Reference")
+                        onTriggered: {
+                            aboutView.visible = false;
+                            proxySetupView.visible = false;
+                            Qt.openUrlExternally(SampleManager.apiReferenceUrl)
+                        }
+                    }
+
                     MenuItem {
                         width: parent.width
                         height: 48
@@ -161,16 +175,6 @@ ApplicationWindow {
                             proxySetupView.visible = false;
                             if (SampleManager.currentMode !== SampleManager.DownloadDataView || !SampleManager.downloadsManager.downloadInProgress)
                                 SampleManager.currentMode = SampleManager.ManageOfflineDataView
-                        }
-                    }
-                    MenuItem {
-                        width: parent.width
-                        height: 48
-                        text: qsTr("API Reference")
-                        onTriggered: {
-                            aboutView.visible = false;
-                            proxySetupView.visible = false;
-                            Qt.openUrlExternally(SampleManager.apiReferenceUrl)
                         }
                     }
 
@@ -186,8 +190,22 @@ ApplicationWindow {
 
                     MenuItem {
                         width: parent.width
-                        height: 48
+                        height: visible ? 48 : 0
                         text: qsTr("About")
+                        visible: SampleManager.currentMode == SampleManager.HomepageView
+                        onTriggered: {
+                            aboutView.visible = true;
+                            proxySetupView.visible = false;
+                        }
+                    }
+
+                    MenuItem {
+                        width: parent.width
+                        height: visible ? 48 : 0
+                        text: qsTr("Favorite")
+                        visible: SampleManager.currentMode == SampleManager.LiveSampleView ||
+                                 SampleManager.currentMode == SampleManager.LiveSampleView ||
+                                 SampleManager.currentMode == SampleManager.SourceCodeView
                         onTriggered: {
                             aboutView.visible = true;
                             proxySetupView.visible = false;
