@@ -69,7 +69,7 @@ void SampleListModel::addSample(Sample* sample)
 
 void SampleListModel::removeSample(Sample* sample)
 {
-  int index = m_samples.indexOf(sample);
+  const int index = m_samples.indexOf(sample);
   if (index != -1)
   {
     beginRemoveRows(QModelIndex(), index, index);

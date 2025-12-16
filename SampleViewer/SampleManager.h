@@ -178,6 +178,7 @@ private:
   // Favorites
   SampleListModel* favoriteSamples() const;
   void initFavorites();
+  void saveSampleListToFavorites(const SampleListModel* samples);
 
   // Other helpers
   SampleManager::Reachability reachability() const;
