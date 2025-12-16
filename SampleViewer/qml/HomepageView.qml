@@ -124,7 +124,7 @@ Rectangle {
         }
 
         // Favorites section - only visible when favorites exist
-        Text {
+        Label {
             id: favoritesText
             visible: SampleManager.favoriteSamples && SampleManager.favoriteSamples.size > 0
             anchors {
@@ -177,7 +177,7 @@ Rectangle {
             delegate: sampleCardDelegate
         }
 
-        Text {
+        Label {
             id: featuredSamplesText
             anchors {
                 top: favoriteSamplesGrid.visible ? favoriteSamplesGrid.bottom : parent.top
