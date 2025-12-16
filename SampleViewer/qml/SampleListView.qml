@@ -76,12 +76,34 @@ Page {
                 clip: true
                 text: name
 
-                contentItem: Label {
-                    text: itemDelegate.text
-                    font: itemDelegate.font
-                    elide: Text.ElideNone
-                    wrapMode: Text.Wrap
-                    verticalAlignment: Text.AlignVCenter
+                property bool isFavorite: false
+
+                contentItem: Row {
+                    spacing: 8
+
+                    Label {
+                        text: itemDelegate.text
+                        font: itemDelegate.font
+                        elide: Text.ElideNone
+                        wrapMode: Text.Wrap
+                        verticalAlignment: Text.AlignVCenter
+                        width: parent.width - (starButton.visible ? starButton.width + parent.spacing : 0)
+                        height: parent.height
+                    }
+
+                    ToolButton {
+                        id: starButton
+                        width: 18
+                        height: 18
+                        anchors.verticalCenter: parent.verticalCenter
+                        visible: itemDelegate.isFavorite
+                        background: Item {}
+                        icon.source: "qrc:/star-24-f.svg"
+                        icon.color: "#FFD700"
+                        icon.width: 18
+                        icon.height: 18
+                        padding: 0
+                    }
                 }
 
                 background: Rectangle {
@@ -94,6 +116,17 @@ Page {
                         color: "darkgray"
                         width: 1
                     }
+                }
+
+                Connections {
+                    target: SampleManager
+                    function onFavoriteSamplesChanged() {
+                        itemDelegate.isFavorite = SampleManager.isFavorite(sample);
+                    }
+                }
+
+                Component.onCompleted: {
+                    isFavorite = SampleManager.isFavorite(sample);
                 }
 
                 MouseArea {

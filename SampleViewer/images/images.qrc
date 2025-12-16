@@ -19,5 +19,6 @@
 		<file>download_icon.svg</file>
 		<file>delete_icon.svg</file>
 		<file>cancel_icon.svg</file>
+		<file>star-24-f.svg</file>
     </qresource>
 </RCC>

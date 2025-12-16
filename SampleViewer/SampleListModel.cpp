@@ -55,7 +55,7 @@ void SampleListModel::setupRoles()
   }
 }
 
-Q_INVOKABLE Sample* SampleListModel::at(int index) const
+Sample* SampleListModel::at(int index) const
 {
   return m_samples.at(index);
 }
@@ -65,6 +65,23 @@ void SampleListModel::addSample(Sample* sample)
   beginInsertRows(QModelIndex(), rowCount(), rowCount());
   m_samples << sample;
   endInsertRows();
+}
+
+void SampleListModel::removeSample(Sample* sample)
+{
+  const int index = m_samples.indexOf(sample);
+  if (index != -1)
+  {
+    beginRemoveRows(QModelIndex(), index, index);
+    m_samples.removeAt(index);
+    endRemoveRows();
+    emit sizeChanged();
+  }
+}
+
+bool SampleListModel::containsSample(Sample* sample) const
+{
+  return m_samples.contains(sample);
 }
 
 void SampleListModel::sortSamples()

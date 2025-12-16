@@ -39,7 +39,7 @@ void SourceCodeListModel::setupRoles()
   m_roles[SizeRole] = "size";
 }
 
-Q_INVOKABLE SourceCode* SourceCodeListModel::get(int index) const
+SourceCode* SourceCodeListModel::get(int index) const
 {
   return m_codeFiles.at(index);
 }

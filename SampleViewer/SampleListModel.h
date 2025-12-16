@@ -47,6 +47,8 @@ public:
 
   Q_INVOKABLE Sample* at(int index) const override;
   void addSample(Sample* sample);
+  void removeSample(Sample* sample);
+  bool containsSample(Sample* sample) const;
   void sortSamples();
   int rowCount(const QModelIndex& parent = QModelIndex()) const override;
   QVariant data(const QModelIndex& index, int role = Qt::DisplayRole) const override;
