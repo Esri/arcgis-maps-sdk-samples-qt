@@ -194,10 +194,10 @@ Rectangle {
 
         GridView {
             id: featuredSamplesGrid
-            property int cellsPerRow: 3 // This initial value is almost immediately overwritten when the window width is determined
+            property int cellsPerRow: 3
             property int rowCount: 1
             property int minColumnCount: 2
-            property int delegateItemSize: 175 // The width (and height) of the item container within the grid
+            property int delegateItemSize: 175
             property int originalItemSize: 175
 
             anchors {
