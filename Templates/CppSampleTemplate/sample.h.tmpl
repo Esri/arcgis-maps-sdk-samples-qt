@@ -21,12 +21,9 @@
 
 namespace Esri::ArcGISRuntime
 {
-@if %{UseFeatureLayer}
-  class FeatureLayer;
-@endif
 @if %{ThreeDSample}
   class Scene;
-  class SceneQuickView;
+  class %{JS: ( '%{GeoViewType}' === 'globalScene' ? 'SceneQuickView' : 'LocalSceneQuickView' )};
 @else
   class Map;
   class MapQuickView;
@@ -34,7 +31,7 @@ namespace Esri::ArcGISRuntime
 }
 
 @if %{ThreeDSample}
-  Q_MOC_INCLUDE("SceneQuickView.h");
+  Q_MOC_INCLUDE("%{JS: ( '%{GeoViewType}' === 'globalScene' ? 'SceneQuickView' : 'LocalSceneQuickView' )}.h")
 @else
   Q_MOC_INCLUDE("MapQuickView.h");
 @endif
@@ -44,7 +41,7 @@ class %{SampleName} : public QObject
   Q_OBJECT
 
 @if %{ThreeDSample}
-  Q_PROPERTY(Esri::ArcGISRuntime::SceneQuickView* sceneView READ sceneView WRITE setSceneView NOTIFY sceneViewChanged)
+  Q_PROPERTY(Esri::ArcGISRuntime::%{JS: ( '%{GeoViewType}' === 'globalScene' ? 'SceneQuickView*' : 'LocalSceneQuickView*' )} sceneView READ sceneView WRITE setSceneView NOTIFY sceneViewChanged)
 @else
   Q_PROPERTY(Esri::ArcGISRuntime::MapQuickView* mapView READ mapView WRITE setMapView NOTIFY mapViewChanged)
 @endif
@@ -64,20 +61,17 @@ signals:
 
 private:
 @if %{ThreeDSample}
-  Esri::ArcGISRuntime::SceneQuickView* sceneView() const;
-  void setSceneView(Esri::ArcGISRuntime::SceneQuickView* sceneView);
+  Esri::ArcGISRuntime::%{JS: ( '%{GeoViewType}' === 'globalScene' ? 'SceneQuickView*' : 'LocalSceneQuickView*' )} sceneView() const;
+  void setSceneView(Esri::ArcGISRuntime::%{JS: ( '%{GeoViewType}' === 'globalScene' ? 'SceneQuickView*' : 'LocalSceneQuickView*' )} sceneView);
 
   Esri::ArcGISRuntime::Scene* m_scene = nullptr;
-  Esri::ArcGISRuntime::SceneQuickView* m_sceneView = nullptr;
+  Esri::ArcGISRuntime::%{JS: ( '%{GeoViewType}' === 'globalScene' ? 'SceneQuickView*' : 'LocalSceneQuickView*' )} m_sceneView = nullptr;
 @else
   Esri::ArcGISRuntime::MapQuickView* mapView() const;
   void setMapView(Esri::ArcGISRuntime::MapQuickView* mapView);
 
   Esri::ArcGISRuntime::Map* m_map = nullptr;
   Esri::ArcGISRuntime::MapQuickView* m_mapView = nullptr;
-@endif
-@if %{UseFeatureLayer}
-  Esri::ArcGISRuntime::FeatureLayer* m_featureLayer = nullptr;
 @endif
 };
 

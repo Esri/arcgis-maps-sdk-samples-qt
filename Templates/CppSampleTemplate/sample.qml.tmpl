@@ -21,7 +21,7 @@ import Esri.Samples
 Item {
 
 @if %{ThreeDSample}
-    SceneView {
+    %{JS: ( '%{GeoViewType}' === 'globalScene' ? 'SceneView' : 'LocalSceneView' )} {
         id: view
         anchors.fill: parent
 
