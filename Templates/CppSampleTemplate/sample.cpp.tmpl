@@ -20,15 +20,12 @@
 
 #include "%{SampleName}.h"
 
-@if %{UseFeatureLayer}
-#include "FeatureLayer.h"
-#include "ServiceFeatureTable.h"
-@endif
 @if %{ThreeDSample}
 #include "ArcGISTiledElevationSource.h"
 #include "ElevationSourceListModel.h"
 #include "Scene.h"
-#include "SceneQuickView.h"
+#include %{JS: ( '%{GeoViewType}' === 'globalScene' ? '"SceneQuickView.h"' : '"LocalSceneQuickView.h"' )}
+#include "SceneViewTypes.h"
 #include "Surface.h"
 @else
 #include "Map.h"
@@ -40,19 +37,11 @@ using namespace Esri::ArcGISRuntime;
 
 %{SampleName}::%{SampleName}(QObject* parent /* = nullptr */):
   QObject(parent),
-@if %{UseAPIKey}
   @if %{ThreeDSample}
-    m_scene(new Scene(BasemapStyle::ArcGISImagery, this))
+    m_scene(new Scene(BasemapStyle::ArcGISTopographic, %{JS: ( '%{GeoViewType}' === 'globalScene' ? 'SceneViewingMode::Global' : 'SceneViewingMode::Local' )}, this))
   @else
     m_map(new Map(BasemapStyle::ArcGISTopographic, this))
   @endif
-@else
-  @if %{ThreeDSample}
-    m_scene(new Scene(Basemap::imagery(this), this))
-  @else
-    m_map(new Map(Basemap::topographicVector(this), this))
-  @endif
-@endif
 {
 @if %{ThreeDSample}
   // create a new elevation source from Terrain3D REST service
@@ -62,21 +51,6 @@ using namespace Esri::ArcGISRuntime;
   // add the elevation source to the scene to display elevation
   m_scene->baseSurface()->elevationSources()->append(elevationSource);
 @endif
-
-@if %{UseFeatureLayer}
-  // create the feature table
-  ServiceFeatureTable* featureTable = new ServiceFeatureTable(QUrl("%{FeatureLayerURL}"), this);
-  // create the feature layer using the feature table
-  m_featureLayer = new FeatureLayer(featureTable, this);
-
-@if %{ThreeDSample}
-   // add the feature layer to the scene
-   m_scene->operationalLayers()->append(m_featureLayer);
-@else
-   // add the feature layer to the map
-   m_map->operationalLayers()->append(m_featureLayer);
-@endif
-@endif
 }
 
 %{SampleName}::~%{SampleName}() = default;
@@ -85,7 +59,7 @@ void %{SampleName}::init()
 {
 @if %{ThreeDSample}
   // Register classes for QML
-  qmlRegisterType<SceneQuickView>("Esri.Samples", 1, 0, "SceneView");
+  qmlRegisterType<%{JS: ( '%{GeoViewType}' === 'globalScene' ? 'SceneQuickView' : 'LocalSceneQuickView' )}>("Esri.Samples", 1, 0, "%{JS: ( '%{GeoViewType}' === 'globalScene' ? 'SceneView' : 'LocalSceneView' )}");
 @else
   // Register the map view for QML
   qmlRegisterType<MapQuickView>("Esri.Samples", 1, 0, "MapView");
@@ -94,13 +68,13 @@ void %{SampleName}::init()
 }
 
 @if %{ThreeDSample}
-SceneQuickView* %{SampleName}::sceneView() const
+%{JS: ( '%{GeoViewType}' === 'globalScene' ? 'SceneQuickView*' : 'LocalSceneQuickView*' )} %{SampleName}::sceneView() const
 {
   return m_sceneView;
 }
 
 // Set the view (created in QML)
-void %{SampleName}::setSceneView(SceneQuickView* sceneView)
+void %{SampleName}::setSceneView(%{JS: ( '%{GeoViewType}' === 'globalScene' ? 'SceneQuickView*' : 'LocalSceneQuickView*' )} sceneView)
 {
   if (!sceneView || sceneView == m_sceneView)
     return;
