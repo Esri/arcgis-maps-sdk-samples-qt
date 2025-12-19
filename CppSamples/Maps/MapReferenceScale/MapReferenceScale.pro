@@ -27,7 +27,7 @@ QT += qml quick
 TEMPLATE = app
 TARGET = MapReferenceScale
 
-ARCGIS_RUNTIME_VERSION = 300.0.0
+include($$PWD/../../../ArcGISRuntimeVersion.pri)
 include($$PWD/arcgisruntime.pri)
 
 #-------------------------------------------------------------------------------

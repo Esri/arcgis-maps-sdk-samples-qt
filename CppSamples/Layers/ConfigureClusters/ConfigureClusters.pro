@@ -27,7 +27,7 @@ QT += qml quick gui
 TEMPLATE = app
 TARGET = ConfigureClusters
 
-ARCGIS_RUNTIME_VERSION = 300.0.0
+include($$PWD/../../../ArcGISRuntimeVersion.pri)
 include($$PWD/arcgisruntime.pri)
 
 # path of the toolkit relative to the sample
