@@ -22,7 +22,7 @@ CONFIG += c++17
 # additional modules are pulled in via arcgisruntime.pri
 QT += widgets
 
-ARCGIS_RUNTIME_VERSION = 300.0.0
+include($$PWD/../../../ArcGISRuntimeVersion.pri)
 include($$PWD/arcgisruntime.pri)
 
 win32:CONFIG += \
