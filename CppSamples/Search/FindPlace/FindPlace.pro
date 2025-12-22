@@ -27,7 +27,7 @@ QT += opengl qml quick
 TEMPLATE = app
 TARGET = FindPlace
 
-ARCGIS_RUNTIME_VERSION = 200.8.0
+include($$PWD/../../../ArcGISRuntimeVersion.pri)
 include($$PWD/arcgisruntime.pri)
 
 # path of the toolkit relative to the sample

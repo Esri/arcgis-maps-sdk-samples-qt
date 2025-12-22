@@ -1,9 +1,9 @@
 #-------------------------------------------------
-# Copyright 2015 Esri.
+# Copyright 2025 Esri.
 
 # Licensed under the Apache License, Version 2.0 (the "License");
 # you may not use this file except in compliance with the License.
-# You may obtain a copy of the License at:
+# You may obtain a copy of the License at
 # http://www.apache.org/licenses/LICENSE-2.0
 
 # Unless required by applicable law or agreed to in writing, software
@@ -13,28 +13,4 @@
 # limitations under the License.
 #-------------------------------------------------
 
-mac {
-    cache()
-}
-
-CONFIG += c++17
-
-# additional modules are pulled in via arcgisruntime.pri
-QT += opengl widgets
-
-include($$PWD/../../../ArcGISRuntimeVersion.pri)
-include($$PWD/arcgisruntime.pri)
-
-win32:CONFIG += \
-  embed_manifest_exe
-
-TARGET = DisplayMap
-TEMPLATE = app
-
-SOURCES += \
-    main.cpp \
-    DisplayMap.cpp
-
-HEADERS  += \
-    DisplayMap.h
-
+ARCGIS_RUNTIME_VERSION = 200.8.1
