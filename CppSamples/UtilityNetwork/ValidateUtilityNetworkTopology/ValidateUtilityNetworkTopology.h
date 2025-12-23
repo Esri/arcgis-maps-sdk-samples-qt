@@ -25,7 +25,8 @@
 // Qt headers
 #include <QObject>
 
-namespace Esri::ArcGISRuntime {
+namespace Esri::ArcGISRuntime
+{
   class ArcGISFeature;
   class FeatureLayer;
   class LabelDefinition;
@@ -38,9 +39,10 @@ namespace Esri::ArcGISRuntime {
   class UtilityNetwork;
   class UtilityNetworkState;
   class UtilityTraceParameters;
-}
+} // namespace Esri::ArcGISRuntime
 
-namespace Esri::ArcGISRuntime::Authentication {
+namespace Esri::ArcGISRuntime::Authentication
+{
   class ArcGISAuthenticationChallenge;
 }
 

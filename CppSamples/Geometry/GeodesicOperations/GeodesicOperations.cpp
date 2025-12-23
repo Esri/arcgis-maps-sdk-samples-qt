@@ -42,7 +42,7 @@
 
 using namespace Esri::ArcGISRuntime;
 
-GeodesicOperations::GeodesicOperations(QQuickItem* parent /* = nullptr */):
+GeodesicOperations::GeodesicOperations(QQuickItem* parent /* = nullptr */) :
   QQuickItem(parent)
 {
 }
@@ -115,7 +115,8 @@ void GeodesicOperations::componentComplete()
     m_pathGraphic->setGeometry(pathGeometry);
 
     // calculate the path's geodetic length
-    const GeodeticDistanceResult result = GeometryEngine::distanceGeodetic(nycPoint, destination, linearUnitOfMeasurementKm, angularUnitOfMeasurementRads, curveType);
+    const GeodeticDistanceResult result =
+      GeometryEngine::distanceGeodetic(nycPoint, destination, linearUnitOfMeasurementKm, angularUnitOfMeasurementRads, curveType);
     m_distanceText = QString::number(result.distance());
     emit distanceTextChanged();
   });
@@ -126,7 +127,9 @@ Polyline GeodesicOperations::pointsToPolyline(const QList<Point>& points)
 {
   PolylineBuilder polylineBuilder(SpatialReference(4326));
   for (const Point& point : points)
+  {
     polylineBuilder.addPoint(point);
+  }
 
   return polylineBuilder.toPolyline();
 }

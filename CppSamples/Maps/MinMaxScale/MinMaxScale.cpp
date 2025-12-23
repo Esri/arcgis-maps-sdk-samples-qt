@@ -33,7 +33,7 @@
 
 using namespace Esri::ArcGISRuntime;
 
-MinMaxScale::MinMaxScale(QQuickItem* parent /* = nullptr */):
+MinMaxScale::MinMaxScale(QQuickItem* parent /* = nullptr */) :
   QQuickItem(parent)
 {
 }
@@ -62,6 +62,6 @@ void MinMaxScale::componentComplete()
   // Set map to map view
   m_mapView->setMap(m_map);
 
-  Point edinburgh(-3.1927,55.9515, SpatialReference(4326));
+  Point edinburgh(-3.1927, 55.9515, SpatialReference(4326));
   m_mapView->setViewpointCenterAsync(edinburgh);
 }

@@ -26,7 +26,7 @@ namespace Esri::ArcGISRuntime
   class MapQuickView;
   class Raster;
   class RasterFunction;
-}
+} // namespace Esri::ArcGISRuntime
 
 class RasterFunctionFile : public QQuickItem
 {

@@ -25,12 +25,12 @@
 
 namespace Esri::ArcGISRuntime
 {
-    class Map;
-    class MapQuickView;
-    class GeoprocessingTask;
-    class GeoprocessingResult;
-    class ArcGISMapImageLayer;
-}
+  class Map;
+  class MapQuickView;
+  class GeoprocessingTask;
+  class GeoprocessingResult;
+  class ArcGISMapImageLayer;
+} // namespace Esri::ArcGISRuntime
 
 class AnalyzeHotspots : public QQuickItem
 {

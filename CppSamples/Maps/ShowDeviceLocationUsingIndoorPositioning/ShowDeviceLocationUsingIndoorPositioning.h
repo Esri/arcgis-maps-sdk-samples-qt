@@ -26,12 +26,12 @@
 
 namespace Esri::ArcGISRuntime
 {
-class ArcGISFeatureTable;
-class FeatureTable;
-class Map;
-class MapQuickView;
-class IndoorsLocationDataSource;
-}
+  class ArcGISFeatureTable;
+  class FeatureTable;
+  class Map;
+  class MapQuickView;
+  class IndoorsLocationDataSource;
+} // namespace Esri::ArcGISRuntime
 
 Q_MOC_INCLUDE("MapQuickView.h")
 

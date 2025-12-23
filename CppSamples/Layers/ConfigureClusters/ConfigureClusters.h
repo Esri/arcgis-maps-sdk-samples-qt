@@ -28,7 +28,7 @@ namespace Esri::ArcGISRuntime
   class Map;
   class MapQuickView;
   class Popup;
-}
+} // namespace Esri::ArcGISRuntime
 
 class QMouseEvent;
 

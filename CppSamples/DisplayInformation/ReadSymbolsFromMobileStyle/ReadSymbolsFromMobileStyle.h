@@ -27,12 +27,12 @@
 
 namespace Esri::ArcGISRuntime
 {
-class Map;
-class MapQuickView;
-class MultilayerPointSymbol;
-class SymbolStyle;
-class SymbolStyleSearchResultListModel;
-}
+  class Map;
+  class MapQuickView;
+  class MultilayerPointSymbol;
+  class SymbolStyle;
+  class SymbolStyleSearchResultListModel;
+} // namespace Esri::ArcGISRuntime
 
 class SymbolImageProvider;
 class QAbstractListModel;
@@ -79,7 +79,7 @@ private:
   Esri::ArcGISRuntime::MultilayerPointSymbol* m_currentSymbol = nullptr;
   Esri::ArcGISRuntime::SymbolStyle* m_symbolStyle = nullptr;
   SymbolImageProvider* m_symbolImageProvider = nullptr;
-  QList<Esri::ArcGISRuntime::SymbolStyleSearchResultListModel*> m_models = { nullptr, nullptr, nullptr, nullptr };
+  QList<Esri::ArcGISRuntime::SymbolStyleSearchResultListModel*> m_models = {nullptr, nullptr, nullptr, nullptr};
   QList<QUuid> m_taskIds;
   QColor m_currentColor = QColor(Qt::yellow);
   int m_symbolSize = 40;

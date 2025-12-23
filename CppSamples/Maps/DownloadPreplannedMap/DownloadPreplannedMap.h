@@ -26,17 +26,17 @@
 
 namespace Esri::ArcGISRuntime
 {
-class Map;
-class MapQuickView;
-class GraphicsOverlay;
-class PortalItem;
-class OfflineMapTask;
-class PreplannedMapArea;
-class DownloadPreplannedOfflineMapJob;
-class MobileMapPackage;
-class SimpleLineSymbol;
-class PreplannedMapAreaListModel;
-}
+  class Map;
+  class MapQuickView;
+  class GraphicsOverlay;
+  class PortalItem;
+  class OfflineMapTask;
+  class PreplannedMapArea;
+  class DownloadPreplannedOfflineMapJob;
+  class MobileMapPackage;
+  class SimpleLineSymbol;
+  class PreplannedMapAreaListModel;
+} // namespace Esri::ArcGISRuntime
 
 Q_MOC_INCLUDE("MapQuickView.h")
 Q_MOC_INCLUDE("PreplannedMapAreaListModel.h")

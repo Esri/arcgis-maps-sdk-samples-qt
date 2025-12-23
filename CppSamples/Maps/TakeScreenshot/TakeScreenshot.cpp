@@ -34,7 +34,7 @@
 
 using namespace Esri::ArcGISRuntime;
 
-TakeScreenshot::TakeScreenshot(QQuickItem* parent /* = nullptr */):
+TakeScreenshot::TakeScreenshot(QQuickItem* parent /* = nullptr */) :
   QQuickItem(parent)
 {
 }

@@ -25,10 +25,10 @@
 
 namespace Esri::ArcGISRuntime
 {
-class Map;
-class MapQuickView;
-class GraphicsOverlay;
-}
+  class Map;
+  class MapQuickView;
+  class GraphicsOverlay;
+} // namespace Esri::ArcGISRuntime
 
 class CreateGeometries : public QQuickItem
 {

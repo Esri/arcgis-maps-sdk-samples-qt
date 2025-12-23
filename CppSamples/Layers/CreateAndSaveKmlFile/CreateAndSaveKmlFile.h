@@ -30,13 +30,13 @@
 
 namespace Esri::ArcGISRuntime
 {
-class Map;
-class MapQuickView;
-class KmlDocument;
-class KmlDataset;
-class KmlLayer;
-class KmlStyle;
-}
+  class Map;
+  class MapQuickView;
+  class KmlDocument;
+  class KmlDataset;
+  class KmlLayer;
+  class KmlStyle;
+} // namespace Esri::ArcGISRuntime
 
 Q_MOC_INCLUDE("MapQuickView.h")
 

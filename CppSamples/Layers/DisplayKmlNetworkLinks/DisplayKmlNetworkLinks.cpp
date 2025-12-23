@@ -38,7 +38,7 @@
 
 using namespace Esri::ArcGISRuntime;
 
-DisplayKmlNetworkLinks::DisplayKmlNetworkLinks(QQuickItem* parent /* = nullptr */):
+DisplayKmlNetworkLinks::DisplayKmlNetworkLinks(QQuickItem* parent /* = nullptr */) :
   QQuickItem(parent)
 {
 }
@@ -74,8 +74,7 @@ void DisplayKmlNetworkLinks::componentComplete()
   // Create a KML dataset from the given resource.
   // This is a KML resource that references other KML resources over a network.
   KmlDataset* dataset = new KmlDataset(QUrl("https://www.arcgis.com/sharing/rest/content/items/600748d4464442288f6db8a4ba27dc95/data"), this);
-  connect(dataset, &KmlDataset::kmlNetworkLinkMessageReceived,
-          this, [this](KmlNetworkLink* /*link*/, const QString& message)
+  connect(dataset, &KmlDataset::kmlNetworkLinkMessageReceived, this, [this](KmlNetworkLink* /*link*/, const QString& message)
   {
     setCurrentKmlNetworkMessage(message);
   });
@@ -85,6 +84,6 @@ void DisplayKmlNetworkLinks::componentComplete()
   scene->operationalLayers()->append(fileLayer);
 
   // Take a look at continental Europe, where we'll see most of the data.
-  m_sceneView->setViewpointAsync(Viewpoint { Point { 8.150526, 50.472421, SpatialReference::wgs84() }, 20000000 } );
+  m_sceneView->setViewpointAsync(Viewpoint{Point{8.150526, 50.472421, SpatialReference::wgs84()}, 20000000});
   m_sceneView->setArcGISScene(scene);
 }

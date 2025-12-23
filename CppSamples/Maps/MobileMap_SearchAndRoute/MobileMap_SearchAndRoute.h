@@ -38,7 +38,7 @@ namespace Esri::ArcGISRuntime
   class MobileMapPackage;
   class PictureMarkerSymbol;
   class ReverseGeocodeParameters;
-}
+} // namespace Esri::ArcGISRuntime
 
 class MobileMap_SearchAndRoute : public QQuickItem
 {

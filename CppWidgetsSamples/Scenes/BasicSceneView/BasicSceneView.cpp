@@ -30,25 +30,26 @@ using namespace Esri::ArcGISRuntime;
 BasicSceneView::BasicSceneView(QWidget* parent) :
   QWidget(parent)
 {
-    // Create a scene using the Imagery basemap
-    m_scene = new Scene(BasemapStyle::ArcGISImageryStandard, this);
+  // Create a scene using the Imagery basemap
+  m_scene = new Scene(BasemapStyle::ArcGISImageryStandard, this);
 
-    // Create a scene view, and pass in the scene
-    m_sceneView = new SceneGraphicsView(m_scene, this);
+  // Create a scene view, and pass in the scene
+  m_sceneView = new SceneGraphicsView(m_scene, this);
 
-    // create an elevation source
-    ArcGISTiledElevationSource* elevationSource = new ArcGISTiledElevationSource(QUrl("https://elevation3d.arcgis.com/arcgis/rest/services/WorldElevation3D/Terrain3D/ImageServer"), this);
-    m_scene->baseSurface()->elevationSources()->append(elevationSource);
+  // create an elevation source
+  ArcGISTiledElevationSource* elevationSource =
+    new ArcGISTiledElevationSource(QUrl("https://elevation3d.arcgis.com/arcgis/rest/services/WorldElevation3D/Terrain3D/ImageServer"), this);
+  m_scene->baseSurface()->elevationSources()->append(elevationSource);
 
-    // create a camera
-    Camera camera(28.4, 83.9, 10010.0, 10.0, 80.0, 0.0);
-    // set the viewpoint to the camera
-    m_sceneView->setViewpointCameraAndWait(camera);
+  // create a camera
+  Camera camera(28.4, 83.9, 10010.0, 10.0, 80.0, 0.0);
+  // set the viewpoint to the camera
+  m_sceneView->setViewpointCameraAndWait(camera);
 
-    // Set up the UI
-    QVBoxLayout *vBoxLayout = new QVBoxLayout(this);
-    vBoxLayout->addWidget(m_sceneView);
-    setLayout(vBoxLayout);
+  // Set up the UI
+  QVBoxLayout* vBoxLayout = new QVBoxLayout(this);
+  vBoxLayout->addWidget(m_sceneView);
+  setLayout(vBoxLayout);
 }
 
 BasicSceneView::~BasicSceneView() = default;

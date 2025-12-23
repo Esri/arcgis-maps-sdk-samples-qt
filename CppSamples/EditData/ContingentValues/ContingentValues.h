@@ -23,14 +23,14 @@
 
 namespace Esri::ArcGISRuntime
 {
-class ArcGISFeature;
-class FeatureQueryResult;
-class Geodatabase;
-class GeodatabaseFeatureTable;
-class GraphicsOverlay;
-class Map;
-class MapQuickView;
-}
+  class ArcGISFeature;
+  class FeatureQueryResult;
+  class Geodatabase;
+  class GeodatabaseFeatureTable;
+  class GraphicsOverlay;
+  class Map;
+  class MapQuickView;
+} // namespace Esri::ArcGISRuntime
 
 Q_MOC_INCLUDE("MapQuickView.h")
 
@@ -40,7 +40,8 @@ class ContingentValues : public QObject
 
   Q_PROPERTY(Esri::ArcGISRuntime::MapQuickView* mapView READ mapView WRITE setMapView NOTIFY mapViewChanged)
   Q_PROPERTY(QVariantMap statusValues READ statusValues CONSTANT)
-  Q_PROPERTY(bool featureAttributesPaneVisibe READ featureAttributesPaneVisibe WRITE setFeatureAttributesPaneVisibe NOTIFY featureAttributesPaneVisibeChanged)
+  Q_PROPERTY(
+    bool featureAttributesPaneVisibe READ featureAttributesPaneVisibe WRITE setFeatureAttributesPaneVisibe NOTIFY featureAttributesPaneVisibeChanged)
 
 public:
   explicit ContingentValues(QObject* parent = nullptr);

@@ -22,29 +22,31 @@
 #include <QObject>
 #include <QUrl>
 
-namespace Esri::ArcGISRuntime {
-class BasemapStyleInfo;
+namespace Esri::ArcGISRuntime
+{
+  class BasemapStyleInfo;
 }
 
 class BasemapStyleListModel : public QAbstractListModel
 {
-    Q_OBJECT
+  Q_OBJECT
 
 public:
-    enum previewRoles {
-        StyleNameRole = Qt::UserRole + 1,
-        PreviewImageUrlRole
-    };
+  enum previewRoles
+  {
+    StyleNameRole = Qt::UserRole + 1,
+    PreviewImageUrlRole
+  };
 
-    BasemapStyleListModel(QObject* parent = nullptr);
+  BasemapStyleListModel(QObject* parent = nullptr);
 
-    QHash<int, QByteArray> roleNames() const override;
-    QVariant data(const QModelIndex& index, int role = Qt::DisplayRole) const override;
-    int rowCount(const QModelIndex& parent = QModelIndex()) const override;
-    void insertItemsIntoGallery(const QList<Esri::ArcGISRuntime::BasemapStyleInfo*> infos);
+  QHash<int, QByteArray> roleNames() const override;
+  QVariant data(const QModelIndex& index, int role = Qt::DisplayRole) const override;
+  int rowCount(const QModelIndex& parent = QModelIndex()) const override;
+  void insertItemsIntoGallery(const QList<Esri::ArcGISRuntime::BasemapStyleInfo*> infos);
 
 private:
-    QList<const Esri::ArcGISRuntime::BasemapStyleInfo*> m_previews;
+  QList<const Esri::ArcGISRuntime::BasemapStyleInfo*> m_previews;
 };
 
 #endif // BASEMAPSTYLELISTMODEL_H

@@ -33,7 +33,7 @@
 
 using namespace Esri::ArcGISRuntime;
 
-BrowseBuildingFloors::BrowseBuildingFloors(QObject* parent /* = nullptr */):
+BrowseBuildingFloors::BrowseBuildingFloors(QObject* parent /* = nullptr */) :
   QObject(parent)
 {
   Portal* portal = new Portal(QUrl("https://www.arcgis.com/"), this);
@@ -84,7 +84,9 @@ MapQuickView* BrowseBuildingFloors::mapView() const
 void BrowseBuildingFloors::setMapView(MapQuickView* mapView)
 {
   if (!mapView || mapView == m_mapView)
+  {
     return;
+  }
 
   m_mapView = mapView;
   m_mapView->setMap(m_map);
@@ -123,5 +125,4 @@ void BrowseBuildingFloors::selectFloor(const QString& floor_number)
       m_floorManager->levels().at(1)->setVisible(false);
     }
   }
-
 }

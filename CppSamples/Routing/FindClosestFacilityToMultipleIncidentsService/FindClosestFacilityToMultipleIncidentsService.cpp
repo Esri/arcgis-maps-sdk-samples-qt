@@ -52,10 +52,12 @@
 
 using namespace Esri::ArcGISRuntime;
 
-FindClosestFacilityToMultipleIncidentsService::FindClosestFacilityToMultipleIncidentsService(QObject* parent /* = nullptr */):
+FindClosestFacilityToMultipleIncidentsService::FindClosestFacilityToMultipleIncidentsService(QObject* parent /* = nullptr */) :
   QObject(parent),
   m_map(new Map(BasemapStyle::ArcGISStreetsRelief, this)),
-  m_task(new ClosestFacilityTask(QUrl("https://sampleserver6.arcgisonline.com/arcgis/rest/services/NetworkAnalysis/SanDiego/NAServer/ClosestFacility"), this)),
+  m_task(
+    new ClosestFacilityTask(QUrl("https://sampleserver6.arcgisonline.com/arcgis/rest/services/NetworkAnalysis/SanDiego/NAServer/ClosestFacility"),
+                            this)),
   m_resultsOverlay(new GraphicsOverlay(this))
 {
   // enable busy indicator while loading
@@ -95,7 +97,9 @@ MapQuickView* FindClosestFacilityToMultipleIncidentsService::mapView() const
 void FindClosestFacilityToMultipleIncidentsService::setMapView(MapQuickView* mapView)
 {
   if (!mapView || mapView == m_mapView)
+  {
     return;
+  }
 
   m_mapView = mapView;
   m_mapView->setMap(m_map);
@@ -118,11 +122,13 @@ void FindClosestFacilityToMultipleIncidentsService::createSymbols()
 
 void FindClosestFacilityToMultipleIncidentsService::createFeatureLayers()
 {
-  m_facilitiesFeatureTable = new ServiceFeatureTable(QUrl("https://services2.arcgis.com/ZQgQTuoyBrtmoGdP/ArcGIS/rest/services/San_Diego_Facilities/FeatureServer/0"), this);
+  m_facilitiesFeatureTable =
+    new ServiceFeatureTable(QUrl("https://services2.arcgis.com/ZQgQTuoyBrtmoGdP/ArcGIS/rest/services/San_Diego_Facilities/FeatureServer/0"), this);
   m_facilitiesFeatureLayer = new FeatureLayer(m_facilitiesFeatureTable, this);
   m_facilitiesFeatureLayer->setRenderer(new SimpleRenderer(m_facilitySymbol, this));
 
-  m_incidentsFeatureTable = new ServiceFeatureTable(QUrl("https://services2.arcgis.com/ZQgQTuoyBrtmoGdP/ArcGIS/rest/services/San_Diego_Incidents/FeatureServer/0"), this);
+  m_incidentsFeatureTable =
+    new ServiceFeatureTable(QUrl("https://services2.arcgis.com/ZQgQTuoyBrtmoGdP/ArcGIS/rest/services/San_Diego_Incidents/FeatureServer/0"), this);
   m_incidentsFeatureLayer = new FeatureLayer(m_incidentsFeatureTable, this);
   m_incidentsFeatureLayer->setRenderer(new SimpleRenderer(m_incidentSymbol, this));
 
@@ -161,16 +167,21 @@ void FindClosestFacilityToMultipleIncidentsService::setViewpointGeometry(const E
 
   // proceed only if both layers have been loaded
   if ((m_facilitiesFeatureTable->loadStatus() != LoadStatus::Loaded) || (m_incidentsFeatureTable->loadStatus() != LoadStatus::Loaded))
+  {
     return;
+  }
 
   // return if set viewpoint future has already been created
   if (m_setViewpointFuture.isValid())
+  {
     return;
+  }
 
   m_mapView->map()->operationalLayers()->append(m_facilitiesFeatureLayer);
   m_mapView->map()->operationalLayers()->append(m_incidentsFeatureLayer);
 
-  m_setViewpointFuture = m_mapView->setViewpointGeometryAsync(GeometryEngine::unionOf(m_facilitiesFeatureLayer->fullExtent(), m_incidentsFeatureLayer->fullExtent()), 20);
+  m_setViewpointFuture =
+    m_mapView->setViewpointGeometryAsync(GeometryEngine::unionOf(m_facilitiesFeatureLayer->fullExtent(), m_incidentsFeatureLayer->fullExtent()), 20);
 }
 
 void FindClosestFacilityToMultipleIncidentsService::solveRoute()
@@ -180,7 +191,8 @@ void FindClosestFacilityToMultipleIncidentsService::solveRoute()
   emit busyChanged();
   emit solveButtonChanged();
 
-  m_task->solveClosestFacilityAsync(m_facilityParams).then(this, [this]( const ClosestFacilityResult& closestFacilityResult)
+  m_task->solveClosestFacilityAsync(m_facilityParams)
+    .then(this, [this](const ClosestFacilityResult& closestFacilityResult)
   {
     if (closestFacilityResult.isEmpty())
     {

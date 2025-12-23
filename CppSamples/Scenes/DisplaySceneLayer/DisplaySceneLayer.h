@@ -25,7 +25,7 @@ namespace Esri::ArcGISRuntime
   class Scene;
   class SceneQuickView;
   class ArcGISSceneLayer;
-}
+} // namespace Esri::ArcGISRuntime
 
 class DisplaySceneLayer : public QQuickItem
 {

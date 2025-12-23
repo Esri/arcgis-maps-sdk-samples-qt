@@ -65,21 +65,21 @@ using namespace Esri::ArcGISRuntime;
 // helper method to get cross platform data path
 namespace
 {
-QString defaultDataPath()
-{
-  QString dataPath;
+  QString defaultDataPath()
+  {
+    QString dataPath;
 
 #ifdef Q_OS_IOS
-  dataPath = QStandardPaths::writableLocation(QStandardPaths::DocumentsLocation);
+    dataPath = QStandardPaths::writableLocation(QStandardPaths::DocumentsLocation);
 #else
-  dataPath = QStandardPaths::writableLocation(QStandardPaths::HomeLocation);
+    dataPath = QStandardPaths::writableLocation(QStandardPaths::HomeLocation);
 #endif
 
-  return dataPath;
-}
-}
+    return dataPath;
+  }
+} // namespace
 
-ContingentValues::ContingentValues(QObject* parent /* = nullptr */):
+ContingentValues::ContingentValues(QObject* parent /* = nullptr */) :
   QObject(parent)
 {
   //! [map with basemap from vtpk]
@@ -117,7 +117,9 @@ MapQuickView* ContingentValues::mapView() const
 void ContingentValues::setMapView(MapQuickView* mapView)
 {
   if (!mapView || mapView == m_mapView)
+  {
     return;
+  }
 
   m_mapView = mapView;
 
@@ -126,7 +128,8 @@ void ContingentValues::setMapView(MapQuickView* mapView)
 
   // Create the graphics overlay with which to display the nest buffer exclusion areas
   m_graphicsOverlay = new GraphicsOverlay(this);
-  Symbol* bufferSymbol = new SimpleFillSymbol(SimpleFillSymbolStyle::ForwardDiagonal, Qt::red, new SimpleLineSymbol(SimpleLineSymbolStyle::Solid, Qt::black, 2, this), this);
+  Symbol* bufferSymbol = new SimpleFillSymbol(SimpleFillSymbolStyle::ForwardDiagonal, Qt::red,
+                                              new SimpleLineSymbol(SimpleLineSymbolStyle::Solid, Qt::black, 2, this), this);
   m_graphicsOverlay->setRenderer(new SimpleRenderer(bufferSymbol, this));
   m_mapView->graphicsOverlays()->append(m_graphicsOverlay);
 
@@ -145,7 +148,9 @@ void ContingentValues::createConnections()
     m_gdbFeatureTable = m_geodatabase->geodatabaseFeatureTable("BirdNests");
 
     if (!m_gdbFeatureTable)
+    {
       return;
+    }
 
     connect(m_gdbFeatureTable, &GeodatabaseFeatureTable::doneLoading, this, [this]
     {
@@ -169,7 +174,8 @@ void ContingentValues::createConnections()
 void ContingentValues::createNewEmptyFeature(QMouseEvent& mouseEvent)
 {
   // Create a new empty feature to define attributes for
-  m_newFeature = static_cast<ArcGISFeature*>(m_gdbFeatureTable->createFeature({}, m_mapView->screenToLocation(mouseEvent.position().x(), mouseEvent.position().y()), this));
+  m_newFeature = static_cast<ArcGISFeature*>(
+    m_gdbFeatureTable->createFeature({}, m_mapView->screenToLocation(mouseEvent.position().x(), mouseEvent.position().y()), this));
   auto f = m_gdbFeatureTable->addFeatureAsync(m_newFeature);
   Q_UNUSED(f)
 
@@ -181,7 +187,9 @@ void ContingentValues::createNewEmptyFeature(QMouseEvent& mouseEvent)
 QVariantList ContingentValues::getContingentValues(const QString& field, const QString& fieldGroupName)
 {
   if (m_gdbFeatureTable->contingentValuesDefinition()->loadStatus() != LoadStatus::Loaded)
+  {
     return {};
+  }
 
   // Create an empty list with which to return the valid contingent values
   QVariantList contingentValuesNamesList = {};
@@ -198,7 +206,9 @@ QVariantList ContingentValues::getContingentValues(const QString& field, const Q
     {
       ContingentCodedValue* contingentCodedValue = static_cast<ContingentCodedValue*>(contingentValue);
       if (contingentCodedValue)
+      {
         contingentValuesNamesList.append(contingentCodedValue->codedValue().name());
+      }
     }
     // Contingent range values constrain a range value domain
     // the ContingentValuesResult for a field defined by a range value domain often contains only one entry with a minimum and maximum value
@@ -220,13 +230,17 @@ QVariantList ContingentValues::getContingentValues(const QString& field, const Q
 bool ContingentValues::validateContingentValues()
 {
   if (m_gdbFeatureTable->contingentValuesDefinition()->loadStatus() != LoadStatus::Loaded || !m_newFeature)
+  {
     return false;
+  }
   // Returns a list of field groups whose contingencies are in violation as well as the type of violation
   QList<ContingencyConstraintViolation*> constraintViolations = m_gdbFeatureTable->validateContingencyConstraints(m_newFeature);
 
   // If the list is empty, there are no violations and the attribute map satisfies all contingencies
   if (constraintViolations.isEmpty())
+  {
     return true;
+  }
 
   return false;
 }
@@ -251,13 +265,21 @@ void ContingentValues::discardFeature()
 void ContingentValues::updateField(const QString& field, const QVariant& value)
 {
   if (field == "Status")
+  {
     m_newFeature->attributes()->replaceAttribute(field, m_statusValues.value(value.toString()));
+  }
   else if (field == "Protection")
+  {
     m_newFeature->attributes()->replaceAttribute(field, m_protectionValues.value(value.toString()));
+  }
   else if (field == "BufferSize")
+  {
     m_newFeature->attributes()->replaceAttribute(field, value.toInt());
+  }
   else
+  {
     qWarning() << field << "not found in any of the data dictionaries";
+  }
 }
 
 // The following two functions create a buffer around nest features based on their BufferSize value
@@ -267,7 +289,9 @@ void ContingentValues::updateField(const QString& field, const QVariant& value)
 void ContingentValues::queryAndBufferFeatures()
 {
   if (!m_gdbFeatureTable || m_gdbFeatureTable->loadStatus() != LoadStatus::Loaded)
+  {
     return;
+  }
 
   m_graphicsOverlay->graphics()->clear();
 

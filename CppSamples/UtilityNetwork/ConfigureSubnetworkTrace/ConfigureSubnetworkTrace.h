@@ -28,18 +28,18 @@
 
 namespace Esri::ArcGISRuntime
 {
-class Credential;
-class Error;
-class UtilityElement;
-class UtilityNetwork;
-class UtilityNetworkDefinition;
-class UtilityTerminal;
-class UtilityTier;
-class UtilityTraceCondition;
-class UtilityTraceConditionalExpression;
-class UtilityTraceConfiguration;
-class UtilityTraceParameters;
-}
+  class Credential;
+  class Error;
+  class UtilityElement;
+  class UtilityNetwork;
+  class UtilityNetworkDefinition;
+  class UtilityTerminal;
+  class UtilityTier;
+  class UtilityTraceCondition;
+  class UtilityTraceConditionalExpression;
+  class UtilityTraceConfiguration;
+  class UtilityTraceParameters;
+} // namespace Esri::ArcGISRuntime
 
 namespace Esri::ArcGISRuntime::Authentication
 {
@@ -115,7 +115,6 @@ private:
   const QUuid m_gloabId = QUuid("{1CAF7740-0BF4-4113-8DB2-654E18800028}");
   QString m_dialogText;
   QString m_expressionBuilder;
-
 };
 
 #endif // CONFIGURESUBNETWORKTRACE_H

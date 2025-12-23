@@ -24,9 +24,9 @@ namespace Ui
 
 namespace Esri::ArcGISRuntime
 {
-class Map;
-class MapGraphicsView;
-}
+  class Map;
+  class MapGraphicsView;
+} // namespace Esri::ArcGISRuntime
 
 #include <QWidget>
 

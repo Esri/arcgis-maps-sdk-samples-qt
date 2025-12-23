@@ -30,7 +30,7 @@ namespace Esri::ArcGISRuntime
 {
   class GraphicsOverlay;
   class SceneQuickView;
-}
+} // namespace Esri::ArcGISRuntime
 
 class GODictionaryRenderer_3D : public QQuickItem
 {

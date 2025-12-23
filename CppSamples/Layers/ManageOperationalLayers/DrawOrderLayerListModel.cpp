@@ -1,3 +1,4 @@
+// [WriteFile Name=ManageOperationalLayers, Category=Layers]
 // [Legal]
 // Copyright 2019 Esri.
 //
@@ -16,7 +17,7 @@
 // sample headers
 #include "DrawOrderLayerListModel.h"
 
-DrawOrderLayerListModel::DrawOrderLayerListModel(QObject* parent):
+DrawOrderLayerListModel::DrawOrderLayerListModel(QObject* parent) :
   QSortFilterProxyModel(parent)
 {
   sort(0);

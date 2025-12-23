@@ -20,10 +20,14 @@
 
 #include "Sample.h"
 
-Sample::Sample(const QVariant& name, const QVariant& path,
-               const QVariant& source, const QVariant& description,
-               SourceCodeListModel* codeFiles, const QVariant& thumbnailUrl,
-               DataItemListModel* dataItems, QObject* parent /*= nullptr*/) :
+Sample::Sample(const QVariant& name,
+               const QVariant& path,
+               const QVariant& source,
+               const QVariant& description,
+               SourceCodeListModel* codeFiles,
+               const QVariant& thumbnailUrl,
+               DataItemListModel* dataItems,
+               QObject* parent /*= nullptr*/) :
   QObject(parent),
   m_name(name),
   m_path(path),

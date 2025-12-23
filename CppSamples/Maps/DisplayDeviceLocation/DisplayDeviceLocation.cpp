@@ -29,6 +29,7 @@
 #include "MapTypes.h"
 #include "MapViewTypes.h"
 
+// Qt headers
 #include <QPermissions>
 
 using namespace Esri::ArcGISRuntime;
@@ -80,18 +81,18 @@ void DisplayDeviceLocation::startLocationDisplay()
   locationPermission.setAvailability(QLocationPermission::Availability::WhenInUse);
   switch (qApp->checkPermission(locationPermission))
   {
-  case Qt::PermissionStatus::Undetermined:
-    qApp->requestPermission(locationPermission, this, &DisplayDeviceLocation::startLocationDisplay);
-    return;
-  case Qt::PermissionStatus::Granted:
-    //! [start location display api snippet]
-    // turn on the location display
-    m_mapView->locationDisplay()->start();
-    //! [start location display api snippet]
-    return;
-  case Qt::PermissionStatus::Denied:
-    emit locationPermissionDenied();
-    return;
+    case Qt::PermissionStatus::Undetermined:
+      qApp->requestPermission(locationPermission, this, &DisplayDeviceLocation::startLocationDisplay);
+      return;
+    case Qt::PermissionStatus::Granted:
+      //! [start location display api snippet]
+      // turn on the location display
+      m_mapView->locationDisplay()->start();
+      //! [start location display api snippet]
+      return;
+    case Qt::PermissionStatus::Denied:
+      emit locationPermissionDenied();
+      return;
   }
 }
 

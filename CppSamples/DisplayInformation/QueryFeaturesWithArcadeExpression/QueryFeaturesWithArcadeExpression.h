@@ -25,12 +25,12 @@
 
 namespace Esri::ArcGISRuntime
 {
-class ArcGISFeature;
-class CalloutData;
-class Feature;
-class Map;
-class MapQuickView;
-}
+  class ArcGISFeature;
+  class CalloutData;
+  class Feature;
+  class Map;
+  class MapQuickView;
+} // namespace Esri::ArcGISRuntime
 
 Q_MOC_INCLUDE("MapQuickView.h")
 

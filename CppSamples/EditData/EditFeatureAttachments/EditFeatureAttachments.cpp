@@ -61,11 +61,19 @@ namespace
   // Convenience RAII struct that deletes all pointers in given container.
   struct FeatureEditListResultLock
   {
-    FeatureEditListResultLock(const QList<FeatureEditResult*>& list) : results(list) { }
-    ~FeatureEditListResultLock() { qDeleteAll(results); }
+    FeatureEditListResultLock(const QList<FeatureEditResult*>& list) :
+      results(list)
+    {
+    }
+
+    ~FeatureEditListResultLock()
+    {
+      qDeleteAll(results);
+    }
+
     const QList<FeatureEditResult*>& results;
   };
-}
+} // namespace
 
 EditFeatureAttachments::EditFeatureAttachments(QQuickItem* parent) :
   QQuickItem(parent)
@@ -98,7 +106,8 @@ void EditFeatureAttachments::componentComplete()
   m_mapView->setMap(m_map);
 
   // create the ServiceFeatureTable
-  m_featureTable = new ServiceFeatureTable(QUrl("https://sampleserver6.arcgisonline.com/arcgis/rest/services/DamageAssessment/FeatureServer/0"), this);
+  m_featureTable =
+    new ServiceFeatureTable(QUrl("https://sampleserver6.arcgisonline.com/arcgis/rest/services/DamageAssessment/FeatureServer/0"), this);
 
   // create the FeatureLayer with the ServiceFeatureTable and add it to the Map
   m_featureLayer = new FeatureLayer(m_featureTable, this);
@@ -119,7 +128,8 @@ void EditFeatureAttachments::connectSignals()
     emit hideWindow();
 
     // call identify on the map view
-    m_mapView->identifyLayerAsync(m_featureLayer, mouseEvent.position(), 5, false, 1).then(this, [this](IdentifyLayerResult* identifyResult)
+    m_mapView->identifyLayerAsync(m_featureLayer, mouseEvent.position(), 5, false, 1)
+      .then(this, [this](IdentifyLayerResult* identifyResult)
     {
       onIdentifyLayerCompleted_(identifyResult);
     });
@@ -150,21 +160,25 @@ void EditFeatureAttachments::addAttachment(const QUrl& fileUrl, const QString& c
     if (m_selectedFeature->loadStatus() == LoadStatus::Loaded)
     {
       QFile file(fileUrl.toLocalFile());
-      m_selectedFeature->attachments()->addAttachmentAsync(file, contentType, fileName).then(this , [this](QFuture<Attachment*>)
+      m_selectedFeature->attachments()
+        ->addAttachmentAsync(file, contentType, fileName)
+        .then(this, [this](QFuture<Attachment*>)
       {
         applyEdits();
       });
     }
     else
     {
-      m_attachmentConnection = connect(m_selectedFeature, &ArcGISFeature::loadStatusChanged,
-                                       this, [this, fileUrl, contentType, fileName](Esri::ArcGISRuntime::LoadStatus)
+      m_attachmentConnection =
+        connect(m_selectedFeature, &ArcGISFeature::loadStatusChanged, this, [this, fileUrl, contentType, fileName](Esri::ArcGISRuntime::LoadStatus)
       {
         if (m_selectedFeature->loadStatus() == LoadStatus::Loaded)
         {
           QFile file(fileUrl.toLocalFile());
           disconnect(m_attachmentConnection);
-          m_selectedFeature->attachments()->addAttachmentAsync(file, contentType, fileName).then(this , [this](QFuture<Attachment*>)
+          m_selectedFeature->attachments()
+            ->addAttachmentAsync(file, contentType, fileName)
+            .then(this, [this](QFuture<Attachment*>)
           {
             applyEdits();
           });
@@ -189,8 +203,7 @@ void EditFeatureAttachments::deleteAttachment(int index)
   }
   else
   {
-    m_attachmentConnection = connect(m_selectedFeature, &ArcGISFeature::loadStatusChanged,
-                                     this, [this, index](Esri::ArcGISRuntime::LoadStatus)
+    m_attachmentConnection = connect(m_selectedFeature, &ArcGISFeature::loadStatusChanged, this, [this, index](Esri::ArcGISRuntime::LoadStatus)
     {
       if (m_selectedFeature->loadStatus() == LoadStatus::Loaded)
       {
@@ -209,7 +222,9 @@ void EditFeatureAttachments::deleteAttachment(int index)
 void EditFeatureAttachments::onIdentifyLayerCompleted_(IdentifyLayerResult* identifyResult)
 {
   if (!identifyResult)
+  {
     return;
+  }
 
   if (!identifyResult->geoElements().empty())
   {
@@ -220,7 +235,8 @@ void EditFeatureAttachments::onIdentifyLayerCompleted_(IdentifyLayerResult* iden
     QueryParameters queryParams;
     m_whereClause = "objectid=" + identifyResult->geoElements().at(0)->attributes()->attributeValue("objectid").toString();
     queryParams.setWhereClause(m_whereClause);
-    m_featureTable->queryFeaturesAsync(queryParams).then(this, [this](FeatureQueryResult* featureQueryResult)
+    m_featureTable->queryFeaturesAsync(queryParams)
+      .then(this, [this](FeatureQueryResult* featureQueryResult)
     {
       onQueryFeaturesCompleted_(featureQueryResult);
     });
@@ -233,7 +249,9 @@ void EditFeatureAttachments::onQueryFeaturesCompleted_(FeatureQueryResult* featu
   {
     // first delete if not nullptr
     if (m_selectedFeature)
+    {
       delete m_selectedFeature;
+    }
 
     // set selected feature and attachment model members
     m_selectedFeature = static_cast<ArcGISFeature*>(featureQueryResult->iterator().next(this));
@@ -273,7 +291,8 @@ void EditFeatureAttachments::onApplyEditsCompleted_(const QList<FeatureEditResul
       // update the selected feature with attributes
       QueryParameters queryParams;
       queryParams.setWhereClause(m_whereClause);
-      m_featureTable->queryFeaturesAsync(queryParams).then(this, [this](FeatureQueryResult* featureQueryResult)
+      m_featureTable->queryFeaturesAsync(queryParams)
+        .then(this, [this](FeatureQueryResult* featureQueryResult)
       {
         onQueryFeaturesCompleted_(featureQueryResult);
       });

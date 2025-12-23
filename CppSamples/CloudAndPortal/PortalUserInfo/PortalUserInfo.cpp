@@ -42,7 +42,7 @@ using namespace Esri::ArcGISRuntime::Toolkit;
 
 const QString PortalUserInfo::UNKNOWN = "Unknown";
 
-PortalUserInfo::PortalUserInfo(QQuickItem* parent /* = nullptr */):
+PortalUserInfo::PortalUserInfo(QQuickItem* parent /* = nullptr */) :
   QQuickItem(parent),
   m_portal(new Portal(true, this))
 {
@@ -55,6 +55,7 @@ PortalUserInfo::PortalUserInfo(QQuickItem* parent /* = nullptr */):
 }
 
 PortalUserInfo::~PortalUserInfo() = default;
+
 void PortalUserInfo::init()
 {
   qmlRegisterType<PortalUserInfo>("Esri.Samples", 1, 0, "PortalUserInfoSample");
@@ -69,18 +70,26 @@ void PortalUserInfo::componentComplete()
 void PortalUserInfo::load()
 {
   if (!m_portal)
+  {
     return;
+  }
 
   if (m_portal->loadStatus() == LoadStatus::NotLoaded)
+  {
     m_portal->load();
+  }
   else if (m_portal->loadStatus() == LoadStatus::FailedToLoad)
+  {
     m_portal->retryLoad();
+  }
 }
 
 QString PortalUserInfo::username() const
 {
   if (m_user)
+  {
     return m_user->username();
+  }
 
   return UNKNOWN;
 }
@@ -88,7 +97,9 @@ QString PortalUserInfo::username() const
 bool PortalUserInfo::loaded()
 {
   if (m_portal)
+  {
     return m_portal->loadStatus() == LoadStatus::Loaded;
+  }
 
   return false;
 }
@@ -96,7 +107,9 @@ bool PortalUserInfo::loaded()
 bool PortalUserInfo::loginDismissed()
 {
   if (m_portal)
+  {
     return m_portal->loadError().errorType() == ErrorType::AuthenticationChallengeCanceled;
+  }
 
   return false;
 }
@@ -104,7 +117,9 @@ bool PortalUserInfo::loginDismissed()
 QString PortalUserInfo::fullName() const
 {
   if (m_user)
+  {
     return m_user->fullName();
+  }
 
   return UNKNOWN;
 }
@@ -112,7 +127,9 @@ QString PortalUserInfo::fullName() const
 QString PortalUserInfo::email() const
 {
   if (m_user)
+  {
     return m_user->email();
+  }
 
   return UNKNOWN;
 }
@@ -120,7 +137,9 @@ QString PortalUserInfo::email() const
 QString PortalUserInfo::bio() const
 {
   if (m_user)
+  {
     return m_user->userDescription();
+  }
 
   return UNKNOWN;
 }
@@ -128,106 +147,123 @@ QString PortalUserInfo::bio() const
 QString PortalUserInfo::access() const
 {
   if (!m_user)
+  {
     return UNKNOWN;
+  }
 
   switch (m_user->access())
   {
     return UNKNOWN;
-  case PortalAccess::Organization:
-    return "Organization";
-  case PortalAccess::Private:
-    return "Only you";
-  case PortalAccess::Public:
-    return "Everyone";
-  case PortalAccess::Shared:
-    return "Shared Groups";
-  default:
-    return UNKNOWN;
+    case PortalAccess::Organization:
+      return "Organization";
+    case PortalAccess::Private:
+      return "Only you";
+    case PortalAccess::Public:
+      return "Everyone";
+    case PortalAccess::Shared:
+      return "Shared Groups";
+    default:
+      return UNKNOWN;
   }
 }
 
 QUrl PortalUserInfo::thumbnailUrl() const
 {
   if (m_user && !m_user->thumbnailUrl().isEmpty())
+  {
     return m_user->thumbnailUrl();
+  }
 
   return QUrl("qrc:/Samples/CloudAndPortal/PortalUserInfo/placeholder_img.png");
 }
 
 QString PortalUserInfo::orgTitle() const
 {
-    if (m_portal && m_portal->portalInfo())
-        return m_portal->portalInfo()->organizationName();
+  if (m_portal && m_portal->portalInfo())
+  {
+    return m_portal->portalInfo()->organizationName();
+  }
 
-    return "";
+  return "";
 }
 
 QString PortalUserInfo::orgDescription() const
 {
-    if (m_portal && m_portal->portalInfo())
-        return m_portal->portalInfo()->organizationDescription();
+  if (m_portal && m_portal->portalInfo())
+  {
+    return m_portal->portalInfo()->organizationDescription();
+  }
 
-    return "";
+  return "";
 }
 
 QUrl PortalUserInfo::orgThumbnailUrl() const
 {
-    if (m_portal && m_portal->portalInfo())
-        return m_portal->portalInfo()->thumbnailUrl();
+  if (m_portal && m_portal->portalInfo())
+  {
+    return m_portal->portalInfo()->thumbnailUrl();
+  }
 
-    return QUrl();
+  return QUrl();
 }
 
 QString PortalUserInfo::canSearchPublic() const
 {
-    if (m_portal && m_portal->portalInfo())
-        return m_portal->portalInfo()->isCanSearchPublic() ? "True" : "False";
+  if (m_portal && m_portal->portalInfo())
+  {
+    return m_portal->portalInfo()->isCanSearchPublic() ? "True" : "False";
+  }
 
-    return "";
+  return "";
 }
 
 QString PortalUserInfo::canSharePublic() const
 {
-    if (m_portal && m_portal->portalInfo())
-        return m_portal->portalInfo()->isCanSharePublic() ? "True" : "False";
+  if (m_portal && m_portal->portalInfo())
+  {
+    return m_portal->portalInfo()->isCanSharePublic() ? "True" : "False";
+  }
 
-    return "";
+  return "";
 }
 
 QString PortalUserInfo::loadErrorMessage() const
 {
   if (m_portal)
+  {
     return m_portal->loadError().message();
+  }
 
   return "";
 }
 
 void PortalUserInfo::onPortalLoadStatusChanged(LoadStatus loadStatus)
 {
-    switch (loadStatus) {
+  switch (loadStatus)
+  {
     case LoadStatus::Loaded:
-        if (m_portal)
-        {
-            m_user = m_portal->portalUser();
-            connect(m_user, &PortalUser::thumbnailUrlChanged, this, &PortalUserInfo::thumbnailUrlChanged);
-        }
-        emit fullNameChanged();
-        emit usernameChanged();
-        emit emailChanged();
-        emit bioChanged();
-        emit accessChanged();
-        emit thumbnailUrlChanged();
-        break;
+      if (m_portal)
+      {
+        m_user = m_portal->portalUser();
+        connect(m_user, &PortalUser::thumbnailUrlChanged, this, &PortalUserInfo::thumbnailUrlChanged);
+      }
+      emit fullNameChanged();
+      emit usernameChanged();
+      emit emailChanged();
+      emit bioChanged();
+      emit accessChanged();
+      emit thumbnailUrlChanged();
+      break;
     case LoadStatus::Loading:
-        break;
+      break;
     case LoadStatus::FailedToLoad:
-        break;
+      break;
     case LoadStatus::NotLoaded:
-        break;
+      break;
     case LoadStatus::Unknown:
-        break;
+      break;
     default:
-        break;
+      break;
   }
 
   emit loadedChanged();

@@ -48,17 +48,17 @@ namespace
   {
     QString dataPath;
 
-  #ifdef Q_OS_IOS
+#ifdef Q_OS_IOS
     dataPath = QStandardPaths::writableLocation(QStandardPaths::DocumentsLocation);
-  #else
+#else
     dataPath = QStandardPaths::writableLocation(QStandardPaths::HomeLocation);
-  #endif
+#endif
 
     return dataPath;
   }
 } // namespace
 
-RasterLayerGeoPackage::RasterLayerGeoPackage(QQuickItem* parent /* = nullptr */):
+RasterLayerGeoPackage::RasterLayerGeoPackage(QQuickItem* parent /* = nullptr */) :
   QQuickItem(parent)
 {
 }
@@ -93,10 +93,14 @@ void RasterLayerGeoPackage::componentComplete()
   connect(gpkg, &GeoPackage::doneLoading, this, [this, gpkg](const Error& e)
   {
     if (!e.isEmpty())
+    {
       return;
+    }
 
     if (!(gpkg->geoPackageRasters().size() > 0))
+    {
       return;
+    }
 
     GeoPackageRaster* gpkgRaster = gpkg->geoPackageRasters().at(0);
     RasterLayer* rasterLayer = new RasterLayer(gpkgRaster, this);
@@ -107,7 +111,9 @@ void RasterLayerGeoPackage::componentComplete()
   connect(m_map, &Map::doneLoading, this, [gpkg](const Error& e)
   {
     if (!e.isEmpty())
+    {
       return;
+    }
 
     // load the GeoPackage
     gpkg->load();

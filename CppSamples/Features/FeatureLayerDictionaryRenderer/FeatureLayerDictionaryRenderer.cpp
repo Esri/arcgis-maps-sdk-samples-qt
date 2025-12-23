@@ -48,11 +48,11 @@ namespace
   {
     QString dataPath;
 
-  #ifdef Q_OS_IOS
+#ifdef Q_OS_IOS
     dataPath = QStandardPaths::writableLocation(QStandardPaths::DocumentsLocation);
-  #else
+#else
     dataPath = QStandardPaths::writableLocation(QStandardPaths::HomeLocation);
-  #endif
+#endif
 
     return dataPath;
   }
@@ -103,7 +103,7 @@ void FeatureLayerDictionaryRenderer::componentComplete()
              * expects the field name "identity" but the database table contains the field "affiliation" instead,
              * and where the dictionary expects the field name "uniquedesignation" but the database table contains
              * the field "uniqueId" instead.
-             */
+ */
       //            QMap<QString, QString> symbologyFieldOverrides;
       //            QMap<QString, QString> textFieldOverrides;
       //            symbologyFieldOverrides["identity"] = "affiliation";
@@ -141,7 +141,7 @@ void FeatureLayerDictionaryRenderer::componentComplete()
               /**
                * If we get here, all the layers loaded. Union the extents and set
                * the viewpoint.
-               */
+ */
               LayerListModel* layers = m_mapView->map()->operationalLayers();
               if (layers->size() > 0)
               {
@@ -161,7 +161,7 @@ void FeatureLayerDictionaryRenderer::componentComplete()
         /**
                  * Add the layer to the map. Inserting at index 0 puts the layer below previously added
                  * layers.
-                 */
+ */
         m_mapView->map()->operationalLayers()->insert(0, layer);
       }
     }

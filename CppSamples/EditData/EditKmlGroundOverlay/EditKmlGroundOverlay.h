@@ -22,10 +22,10 @@
 
 namespace Esri::ArcGISRuntime
 {
-class Scene;
-class SceneQuickView;
-class KmlGroundOverlay;
-}
+  class Scene;
+  class SceneQuickView;
+  class KmlGroundOverlay;
+} // namespace Esri::ArcGISRuntime
 
 Q_MOC_INCLUDE("SceneQuickView.h")
 

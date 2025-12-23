@@ -28,7 +28,7 @@ namespace Esri::ArcGISRuntime
   class Map;
   class MapQuickView;
   class GeoPackage;
-}
+} // namespace Esri::ArcGISRuntime
 
 class ReadGeoPackage : public QQuickItem
 {

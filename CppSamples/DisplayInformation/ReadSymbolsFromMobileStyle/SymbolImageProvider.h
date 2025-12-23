@@ -1,3 +1,4 @@
+// [WriteFile Name=ReadSymbolsFromMobileStyle, Category=DisplayInformation]
 // [Legal]
 // Copyright 2019 Esri.
 //
@@ -34,7 +35,6 @@
 
 class SymbolImageProvider : public QQuickImageProvider
 {
-
 public:
   SymbolImageProvider();
   ~SymbolImageProvider() override = default;

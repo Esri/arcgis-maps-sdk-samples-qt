@@ -22,10 +22,10 @@
 
 namespace Esri::ArcGISRuntime
 {
-class SceneQuickView;
-class AnalysisOverlay;
-class LocationLineOfSight;
-}
+  class SceneQuickView;
+  class AnalysisOverlay;
+  class LocationLineOfSight;
+} // namespace Esri::ArcGISRuntime
 
 class LineOfSightLocation : public QQuickItem
 {

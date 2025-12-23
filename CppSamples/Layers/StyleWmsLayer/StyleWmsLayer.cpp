@@ -37,7 +37,7 @@
 
 using namespace Esri::ArcGISRuntime;
 
-StyleWmsLayer::StyleWmsLayer(QQuickItem* parent /* = nullptr */):
+StyleWmsLayer::StyleWmsLayer(QQuickItem* parent /* = nullptr */) :
   QQuickItem(parent)
 {
 }
@@ -61,21 +61,26 @@ void StyleWmsLayer::componentComplete()
   m_map->setMinScale(7'000'000);
 
   // Add a WMS Layer
-  WmsLayer* wmsLayer = new WmsLayer(QUrl("https://imageserver.gisdata.mn.gov/cgi-bin/mncomp?SERVICE=WMS&VERSION=1.3.0&REQUEST=GetCapabilities"), QStringList{"mncomp"}, this);
+  WmsLayer* wmsLayer = new WmsLayer(QUrl("https://imageserver.gisdata.mn.gov/cgi-bin/mncomp?SERVICE=WMS&VERSION=1.3.0&REQUEST=GetCapabilities"),
+                                    QStringList{"mncomp"}, this);
   m_map->operationalLayers()->append(wmsLayer);
 
   // connect to the doneLoading signal of the WMS Layer
   connect(wmsLayer, &WmsLayer::doneLoading, this, [this, wmsLayer](const Error& e)
   {
     if (!e.isEmpty())
+    {
       return;
+    }
 
     // zoom to the layer
     m_mapView->setViewpointGeometryAsync(wmsLayer->fullExtent());
 
     // get the subLayer
     if (!wmsLayer->sublayers().empty())
+    {
       m_wmsSublayer = wmsLayer->sublayers().at(0);
+    }
   });
 
   // Set map to map view
@@ -85,12 +90,16 @@ void StyleWmsLayer::componentComplete()
 void StyleWmsLayer::setCurrentStyle(int index)
 {
   if (!m_wmsSublayer)
+  {
     return;
+  }
 
   // get the styles
   const QStringList styles = m_wmsSublayer->sublayerInfo().styles();
   if (styles.length() < index + 1)
+  {
     return;
+  }
 
   // get the style
   const QString style = styles.at(index);

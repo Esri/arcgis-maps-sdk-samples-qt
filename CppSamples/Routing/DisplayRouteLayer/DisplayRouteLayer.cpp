@@ -49,12 +49,13 @@
 #include <QJsonValue>
 
 using namespace Esri::ArcGISRuntime;
+
 namespace
 {
-static const QString featureCollectionItemId("0e3c8e86b4544274b45ecb61c9f41336");
+  static const QString featureCollectionItemId("0e3c8e86b4544274b45ecb61c9f41336");
 }
 
-DisplayRouteLayer::DisplayRouteLayer(QObject* parent /* = nullptr */):
+DisplayRouteLayer::DisplayRouteLayer(QObject* parent /* = nullptr */) :
   QObject(parent),
   m_map(new Map(BasemapStyle::ArcGISTopographic, this))
 {
@@ -78,7 +79,9 @@ DisplayRouteLayer::DisplayRouteLayer(QObject* parent /* = nullptr */):
       connect(m_featureCollectionLayer, &FeatureCollectionLayer::doneLoading, this, [this](const Error& e)
       {
         if (!e.isEmpty())
+        {
           return;
+        }
 
         getDirections();
         emit enableDirectionsButton();
@@ -113,7 +116,9 @@ MapQuickView* DisplayRouteLayer::mapView() const
 void DisplayRouteLayer::setMapView(MapQuickView* mapView)
 {
   if (!mapView || mapView == m_mapView)
+  {
     return;
+  }
 
   m_mapView = mapView;
   m_mapView->setMap(m_map);
@@ -126,7 +131,9 @@ void DisplayRouteLayer::setMapView(MapQuickView* mapView)
 void DisplayRouteLayer::getDirections()
 {
   if (!m_featureCollectionLayer)
+  {
     return;
+  }
 
   FeatureCollectionTableListModel* tables = m_featureCollection->tables();
   for (FeatureTable* table : *tables)
@@ -137,10 +144,13 @@ void DisplayRouteLayer::getDirections()
       {
         QueryParameters queryParams;
         queryParams.setWhereClause("1=1");
-        table->queryFeaturesAsync(queryParams).then(this, [this](const FeatureQueryResult* featureQueryResult)
+        table->queryFeaturesAsync(queryParams)
+          .then(this, [this](const FeatureQueryResult* featureQueryResult)
         {
           if (!featureQueryResult)
+          {
             return;
+          }
           // Clear the directions list before repopulating it
           m_featureDirection.clear();
 

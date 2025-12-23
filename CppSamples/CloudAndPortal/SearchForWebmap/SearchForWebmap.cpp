@@ -41,7 +41,7 @@
 
 using namespace Esri::ArcGISRuntime;
 
-SearchForWebmap::SearchForWebmap(QQuickItem* parent /* = nullptr */):
+SearchForWebmap::SearchForWebmap(QQuickItem* parent /* = nullptr */) :
   QQuickItem(parent),
   m_portal(new Portal(this))
 {
@@ -72,8 +72,10 @@ void SearchForWebmap::componentComplete()
 
   // find QML MapView component
   m_mapView = findChild<MapQuickView*>("mapView");
-  if(m_mapView)
+  if (m_mapView)
+  {
     m_mapView->setWrapAroundMode(WrapAroundMode::Disabled);
+  }
 }
 
 bool SearchForWebmap::portalLoaded() const
@@ -99,7 +101,9 @@ QString SearchForWebmap::mapLoadError() const
 void SearchForWebmap::search(const QString& keyword)
 {
   if (!m_portal)
+  {
     return;
+  }
 
   //! [SearchForWebmap CPP Portal find items async]
   // webmaps authored prior to July 2nd, 2014 are not supported
@@ -108,33 +112,34 @@ void SearchForWebmap::search(const QString& keyword)
   QString toDate = QString("000000%1").arg(QDateTime::currentDateTime().toMSecsSinceEpoch());
 
   PortalQueryParametersForItems query;
-  query.setSearchString(QString("tags:\"%1\" AND +uploaded:[%2 TO %3]")
-                        .arg(keyword, fromDate, toDate));
+  query.setSearchString(QString("tags:\"%1\" AND +uploaded:[%2 TO %3]").arg(keyword, fromDate, toDate));
   query.setTypes(QList<PortalItemType>() << PortalItemType::WebMap);
 
-  m_portal->findItemsAsync(query).then(this,
-  [this](PortalQueryResultSetForItems* webmapResults)
+  m_portal->findItemsAsync(query).then(this, [this](PortalQueryResultSetForItems* webmapResults)
   {
     onFindItemsCompleted(webmapResults);
   });
   //! [SearchForWebmap CPP Portal find items async]
 
-  if(m_mapView)
+  if (m_mapView)
+  {
     m_mapView->setVisible(false);
+  }
 }
 
 void SearchForWebmap::searchNext()
 {
   if (!m_webmapResults || !m_portal)
+  {
     return;
+  }
 
   //! [Portal find with nextQueryParameters]
   PortalQueryParametersForItems nextQuery = m_webmapResults->nextQueryParameters();
   // check whether the startIndex of the new query is valid
   if (!nextQuery.isEmpty())
   {
-    m_portal->findItemsAsync(nextQuery).then(this,
-    [this](PortalQueryResultSetForItems* webmapResults)
+    m_portal->findItemsAsync(nextQuery).then(this, [this](PortalQueryResultSetForItems* webmapResults)
     {
       onFindItemsCompleted(webmapResults);
     });
@@ -145,23 +150,27 @@ void SearchForWebmap::searchNext()
 void SearchForWebmap::loadSelectedWebmap(int index)
 {
   if (!m_webmaps)
-     return;
+  {
+    return;
+  }
 
-   if (m_map)
-     delete m_map;
+  if (m_map)
+  {
+    delete m_map;
+  }
 
-   // create map from portal item
-   m_map = new Map(m_webmaps->at(index), this);
+  // create map from portal item
+  m_map = new Map(m_webmaps->at(index), this);
 
-   connect(m_map,&Map::errorOccurred, this, [this]()
-   {
-     m_mapLoadeError = m_map->loadError().message();
-     emit mapLoadErrorChanged();
-   });
+  connect(m_map, &Map::errorOccurred, this, [this]()
+  {
+    m_mapLoadeError = m_map->loadError().message();
+    emit mapLoadErrorChanged();
+  });
 
-   // set map on mapview
-   m_mapView->setMap(m_map);
-   m_mapView->setVisible(true);
+  // set map on mapview
+  m_mapView->setMap(m_map);
+  m_mapView->setVisible(true);
 }
 
 void SearchForWebmap::errorAccepted()

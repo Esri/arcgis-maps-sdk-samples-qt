@@ -50,24 +50,22 @@ namespace
   {
     QString dataPath;
 
-  #ifdef Q_OS_IOS
+#ifdef Q_OS_IOS
     dataPath = QStandardPaths::writableLocation(QStandardPaths::DocumentsLocation);
-  #else
+#else
     dataPath = QStandardPaths::writableLocation(QStandardPaths::HomeLocation);
-  #endif
+#endif
 
     return dataPath;
   }
 } // namespace
 
-EditKmlGroundOverlay::EditKmlGroundOverlay(QObject* parent /* = nullptr */):
+EditKmlGroundOverlay::EditKmlGroundOverlay(QObject* parent /* = nullptr */) :
   QObject(parent),
   m_scene(new Scene(BasemapStyle::ArcGISImageryStandard, this))
 {
   // Create Geometry
-  const Envelope env(-123.066227926904, 44.04736963555683,
-                     -123.0796942287304, 44.03878298600624,
-                     SpatialReference(4326));
+  const Envelope env(-123.066227926904, 44.04736963555683, -123.0796942287304, 44.03878298600624, SpatialReference(4326));
 
   // Create KML Icon
   KmlIcon* kmlIcon = new KmlIcon(QUrl(defaultDataPath() + "/ArcGIS/Runtime/Data/raster/1944.jpg"), this);
@@ -86,7 +84,9 @@ EditKmlGroundOverlay::EditKmlGroundOverlay(QObject* parent /* = nullptr */):
   connect(kmlLayer, &KmlLayer::doneLoading, this, [this, env](const Error& e)
   {
     if (!e.isEmpty() || !m_sceneView)
+    {
       return;
+    }
 
     const Camera camera(env.center(), 1250, 45, 60, 0);
     m_sceneView->setViewpointCameraAsync(camera);
@@ -106,7 +106,9 @@ void EditKmlGroundOverlay::init()
 void EditKmlGroundOverlay::setOpacity(int opacity)
 {
   if (!m_groundOverlay)
+  {
     return;
+  }
 
   m_groundOverlay->setColor(QColor(0, 0, 0, opacity));
 }
@@ -120,7 +122,9 @@ SceneQuickView* EditKmlGroundOverlay::sceneView() const
 void EditKmlGroundOverlay::setSceneView(SceneQuickView* sceneView)
 {
   if (!sceneView || sceneView == m_sceneView)
+  {
     return;
+  }
 
   m_sceneView = sceneView;
   m_sceneView->setArcGISScene(m_scene);

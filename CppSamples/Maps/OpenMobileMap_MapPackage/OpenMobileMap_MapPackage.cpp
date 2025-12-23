@@ -36,21 +36,21 @@ using namespace Esri::ArcGISRuntime;
 // helper method to get cross platform data path
 namespace
 {
-QString defaultDataPath()
-{
-  QString dataPath;
+  QString defaultDataPath()
+  {
+    QString dataPath;
 
 #ifdef Q_OS_IOS
-  dataPath = QStandardPaths::writableLocation(QStandardPaths::DocumentsLocation);
+    dataPath = QStandardPaths::writableLocation(QStandardPaths::DocumentsLocation);
 #else
-  dataPath = QStandardPaths::writableLocation(QStandardPaths::HomeLocation);
+    dataPath = QStandardPaths::writableLocation(QStandardPaths::HomeLocation);
 #endif
 
-  return dataPath;
-}
+    return dataPath;
+  }
 
-// sample MMPK location
-const QString sampleFileYellowstone {"/ArcGIS/Runtime/Data/mmpk/Yellowstone.mmpk"};
+  // sample MMPK location
+  const QString sampleFileYellowstone{"/ArcGIS/Runtime/Data/mmpk/Yellowstone.mmpk"};
 
 } // namespace
 
@@ -119,7 +119,6 @@ void OpenMobileMap_MapPackage::createMapPackage(const QString& path)
     // For simplicity, obtain the first map in the list of maps.
     // set the map on the map view to display
     m_mapView->setMap(m_mobileMapPackage->maps().at(0));
-
   });
 
   m_mobileMapPackage->load();

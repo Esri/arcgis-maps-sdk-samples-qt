@@ -28,17 +28,17 @@
 
 namespace Esri::ArcGISRuntime
 {
-class CodedValue;
-class UtilityAssetType;
-class UtilityCategory;
-class UtilityElement;
-class UtilityNetwork;
-class UtilityNetworkAttribute;
-class UtilityTier;
-class UtilityTraceConditionalExpression;
-class UtilityTraceConfiguration;
-class UtilityTraceParameters;
-}
+  class CodedValue;
+  class UtilityAssetType;
+  class UtilityCategory;
+  class UtilityElement;
+  class UtilityNetwork;
+  class UtilityNetworkAttribute;
+  class UtilityTier;
+  class UtilityTraceConditionalExpression;
+  class UtilityTraceConfiguration;
+  class UtilityTraceParameters;
+} // namespace Esri::ArcGISRuntime
 
 namespace Esri::ArcGISRuntime::Authentication
 {

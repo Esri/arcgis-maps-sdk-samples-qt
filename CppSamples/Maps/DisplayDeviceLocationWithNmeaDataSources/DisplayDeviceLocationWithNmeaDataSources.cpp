@@ -38,7 +38,7 @@
 
 using namespace Esri::ArcGISRuntime;
 
-DisplayDeviceLocationWithNmeaDataSources::DisplayDeviceLocationWithNmeaDataSources(QObject* parent /* = nullptr */):
+DisplayDeviceLocationWithNmeaDataSources::DisplayDeviceLocationWithNmeaDataSources(QObject* parent /* = nullptr */) :
   QObject(parent),
   m_map(new Map(BasemapStyle::ArcGISNavigation, this)),
   m_timer(new QTimer(this))
@@ -63,7 +63,9 @@ MapQuickView* DisplayDeviceLocationWithNmeaDataSources::mapView() const
 void DisplayDeviceLocationWithNmeaDataSources::setMapView(MapQuickView* mapView)
 {
   if (!mapView || mapView == m_mapView)
+  {
     return;
+  }
 
   m_mapView = mapView;
   m_mapView->setMap(m_map);
@@ -90,7 +92,7 @@ void DisplayDeviceLocationWithNmeaDataSources::start()
   if (m_mockNmeaSentences.isEmpty())
   {
     const QString filePath = ":/Samples/Maps/DisplayDeviceLocationWithNmeaDataSources/redlands.nmea";
-    if(!loadMockDataFile(filePath))
+    if (!loadMockDataFile(filePath))
     {
       qDebug() << "Unable to load file at path:" << filePath;
       m_nmeaSimulationActive = false;
@@ -112,7 +114,9 @@ void DisplayDeviceLocationWithNmeaDataSources::start()
 
     ++m_mockDataIterator;
     if (m_mockDataIterator >= m_mockNmeaSentences.size())
+    {
       m_mockDataIterator = 0;
+    }
   });
 
   m_mockDataIterator = 0;
@@ -134,25 +138,31 @@ void DisplayDeviceLocationWithNmeaDataSources::reset()
 
 bool DisplayDeviceLocationWithNmeaDataSources::loadMockDataFile(const QString& filePath)
 {
-
   // Load simulated NMEA sentences to display for sample
   QFile mockDataFile(filePath);
 
-  if(!mockDataFile.exists())
+  if (!mockDataFile.exists())
+  {
     return false;
+  }
 
   mockDataFile.open(QIODevice::ReadOnly);
 
-  while (!mockDataFile.atEnd()) {
+  while (!mockDataFile.atEnd())
+  {
     QByteArray line = mockDataFile.readLine();
 
     // In this simulated data stream, blocks of NMEA sentences start with $GPGGA (which provides the device's position)
     if (line.startsWith("$GPGGA"))
+    {
       m_mockNmeaSentences.append(line);
+    }
 
     // Additional sentences that provide information such as direction and velocity follow and are separated by line breaks
     else
+    {
       m_mockNmeaSentences.last() += line;
+    }
   }
 
   mockDataFile.close();

@@ -22,11 +22,11 @@
 
 namespace Esri::ArcGISRuntime
 {
-class DictionaryRenderer;
-class FeatureLayer;
-class Map;
-class MapQuickView;
-}
+  class DictionaryRenderer;
+  class FeatureLayer;
+  class Map;
+  class MapQuickView;
+} // namespace Esri::ArcGISRuntime
 
 Q_MOC_INCLUDE("MapQuickView.h")
 

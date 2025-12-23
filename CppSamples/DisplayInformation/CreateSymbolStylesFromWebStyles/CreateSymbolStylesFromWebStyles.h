@@ -31,7 +31,7 @@ namespace Esri::ArcGISRuntime
   class UniqueValueRenderer;
   class LegendInfo;
   class SymbolStyle;
-}
+} // namespace Esri::ArcGISRuntime
 
 class QAbstractListModel;
 
@@ -58,7 +58,7 @@ signals:
 private:
   Esri::ArcGISRuntime::MapQuickView* mapView() const;
   void setMapView(Esri::ArcGISRuntime::MapQuickView* mapView);
-  QMap<QString,QStringList> createCategoriesMap();
+  QMap<QString, QStringList> createCategoriesMap();
   void performSymbolSearch();
 
   Esri::ArcGISRuntime::FeatureLayer* m_webStyleLayer = nullptr;

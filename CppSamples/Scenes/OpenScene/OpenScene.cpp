@@ -28,7 +28,7 @@
 
 using namespace Esri::ArcGISRuntime;
 
-OpenScene::OpenScene(QQuickItem* parent /* = nullptr */):
+OpenScene::OpenScene(QQuickItem* parent /* = nullptr */) :
   QQuickItem(parent)
 {
 }

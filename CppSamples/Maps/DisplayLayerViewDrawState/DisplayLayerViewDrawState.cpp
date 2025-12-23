@@ -40,7 +40,7 @@
 
 using namespace Esri::ArcGISRuntime;
 
-DisplayLayerViewDrawState::DisplayLayerViewDrawState(QObject* parent /* = nullptr */):
+DisplayLayerViewDrawState::DisplayLayerViewDrawState(QObject* parent /* = nullptr */) :
   QObject(parent),
   m_map(new Map(BasemapStyle::ArcGISTopographic, this))
 {
@@ -64,7 +64,9 @@ MapQuickView* DisplayLayerViewDrawState::mapView() const
 void DisplayLayerViewDrawState::setMapView(MapQuickView* mapView)
 {
   if (!mapView || mapView == m_mapView)
+  {
     return;
+  }
 
   m_mapView = mapView;
   m_mapView->setMap(m_map);
@@ -81,7 +83,7 @@ void DisplayLayerViewDrawState::loadLayer()
   m_portalItem = new PortalItem(portal, "b8f4033069f141729ffb298b7418b653", this);
   m_featureLayer = new FeatureLayer(m_portalItem, 0, this);
 
-  connect(m_featureLayer, &FeatureLayer::loadStatusChanged, this, [this] (LoadStatus loadStatus)
+  connect(m_featureLayer, &FeatureLayer::loadStatusChanged, this, [this](LoadStatus loadStatus)
   {
     m_loading = (loadStatus == LoadStatus::Loading) ? true : false;
     emit loadingChanged();
@@ -91,7 +93,9 @@ void DisplayLayerViewDrawState::loadLayer()
   connect(m_featureLayer, &FeatureLayer::doneLoading, this, [this](const Error& e)
   {
     if (!e.isEmpty())
+    {
       return;
+    }
 
     const Point point{-11000000, 4500000, SpatialReference::webMercator()};
     const Viewpoint vp{point, 40000000.0};
@@ -107,32 +111,48 @@ void DisplayLayerViewDrawState::loadLayer()
 void DisplayLayerViewDrawState::changeFeatureLayerVisibility(bool visible)
 {
   if (m_featureLayer->loadStatus() == LoadStatus::Loaded)
+  {
     m_featureLayer->setVisible(visible);
+  }
 }
 
 void DisplayLayerViewDrawState::onLayerViewStateCompleted(Layer* layer, LayerViewState layerViewState)
 {
   // check if feature layer has been created otherwise do nothing.
   if (!m_featureLayer)
+  {
     return;
+  }
 
   // only update the QStringList if the layer is the feature layer.
   if (layer->name() != m_featureLayer->name())
+  {
     return;
+  }
 
   // clear string list for new view state(s).
   m_viewStatuses.clear();
 
   if (layerViewState.statusFlags() & Esri::ArcGISRuntime::LayerViewStatus::Active)
+  {
     m_viewStatuses.append("Active");
+  }
   if (layerViewState.statusFlags() & Esri::ArcGISRuntime::LayerViewStatus::NotVisible)
+  {
     m_viewStatuses.append("NotVisible");
+  }
   if (layerViewState.statusFlags() & Esri::ArcGISRuntime::LayerViewStatus::OutOfScale)
+  {
     m_viewStatuses.append("OutOfScale");
+  }
   if (layerViewState.statusFlags() & Esri::ArcGISRuntime::LayerViewStatus::Loading)
+  {
     m_viewStatuses.append("Loading");
+  }
   if (layerViewState.statusFlags() & Esri::ArcGISRuntime::LayerViewStatus::Error)
+  {
     m_viewStatuses.append("Error");
+  }
   if (layerViewState.statusFlags() & Esri::ArcGISRuntime::LayerViewStatus::Warning)
   {
     m_viewStatuses.append("Warning");

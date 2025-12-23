@@ -50,6 +50,7 @@ void DataItemListModel::addDataItem(DataItem* dataItem)
   endInsertRows();
   emit sizeChanged();
 }
+
 int DataItemListModel::rowCount(const QModelIndex& parent) const
 {
   Q_UNUSED(parent);
@@ -78,17 +79,17 @@ QVariant DataItemListModel::data(const QModelIndex& index, int role) const
 
   switch (role)
   {
-  case ItemIdRole:
-    retVal = dataItem->itemId();
-    break;
-  case PathRole:
-    retVal = dataItem->path();
-    break;
-  case SizeRole:
-    retVal = m_dataItems.length();
-    break;
-  default:
-    break;
+    case ItemIdRole:
+      retVal = dataItem->itemId();
+      break;
+    case PathRole:
+      retVal = dataItem->path();
+      break;
+    case SizeRole:
+      retVal = m_dataItems.length();
+      break;
+    default:
+      break;
   }
 
   return retVal;

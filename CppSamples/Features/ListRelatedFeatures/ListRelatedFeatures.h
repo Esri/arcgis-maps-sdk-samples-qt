@@ -27,7 +27,7 @@ namespace Esri::ArcGISRuntime
   class FeatureLayer;
   class Map;
   class MapQuickView;
-}
+} // namespace Esri::ArcGISRuntime
 class RelatedFeatureListModel;
 class QAbstractListModel;
 

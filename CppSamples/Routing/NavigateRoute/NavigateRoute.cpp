@@ -69,14 +69,15 @@
 
 using namespace Esri::ArcGISRuntime;
 
-namespace  {
-const QUrl routeTaskUrl("https://sampleserver6.arcgisonline.com/arcgis/rest/services/NetworkAnalysis/SanDiego/NAServer/Route");
-const Point conventionCenterPoint(-117.160386727, 32.706608, SpatialReference::wgs84());
-const Point memorialPoint(-117.173034, 32.712327, SpatialReference::wgs84());
-const Point aerospaceMuseumPoint(-117.147230, 32.730467, SpatialReference::wgs84());
-}
+namespace
+{
+  const QUrl routeTaskUrl("https://sampleserver6.arcgisonline.com/arcgis/rest/services/NetworkAnalysis/SanDiego/NAServer/Route");
+  const Point conventionCenterPoint(-117.160386727, 32.706608, SpatialReference::wgs84());
+  const Point memorialPoint(-117.173034, 32.712327, SpatialReference::wgs84());
+  const Point aerospaceMuseumPoint(-117.147230, 32.730467, SpatialReference::wgs84());
+} // namespace
 
-NavigateRoute::NavigateRoute(QObject* parent /* = nullptr */):
+NavigateRoute::NavigateRoute(QObject* parent /* = nullptr */) :
   QObject(parent),
   m_map(new Map(BasemapStyle::ArcGISNavigation, this))
 {
@@ -103,7 +104,9 @@ MapQuickView* NavigateRoute::mapView() const
 void NavigateRoute::setMapView(MapQuickView* mapView)
 {
   if (!mapView || mapView == m_mapView)
+  {
     return;
+  }
 
   m_mapView = mapView;
   m_mapView->setMap(m_map);
@@ -146,13 +149,18 @@ void NavigateRoute::connectRouteTaskSignals()
       QList<Stop> stopsList = {stop1, stop2, stop3};
       defaultParameters.setStops(stopsList);
 
-      m_routeTask->solveRouteAsync(defaultParameters).then(this, [this](const RouteResult& routeResult)
+      m_routeTask->solveRouteAsync(defaultParameters)
+        .then(this, [this](const RouteResult& routeResult)
       {
         if (routeResult.isEmpty())
+        {
           return;
+        }
 
         if (routeResult.routes().empty())
+        {
           return;
+        }
 
         m_routeResult = routeResult;
         m_route = std::as_const(m_routeResult).routes()[0];
@@ -245,7 +253,7 @@ void NavigateRoute::connectRouteTrackerSignals()
     if (trackingStatus->destinationStatus() == DestinationStatus::NotReached || trackingStatus->destinationStatus() == DestinationStatus::Approaching)
     {
       textString += "Distance remaining: " + trackingStatus->routeProgress()->remainingDistance()->displayText() + " " +
-          trackingStatus->routeProgress()->remainingDistance()->displayTextUnits().pluralDisplayName() + "\n";
+                    trackingStatus->routeProgress()->remainingDistance()->displayTextUnits().pluralDisplayName() + "\n";
       QTime time = QTime::fromMSecsSinceStartOfDay(trackingStatus->routeProgress()->remainingTime() * 60 * 1000); // convert time to milliseconds
       textString += "Time remaining: " + time.toString("hh:mm:ss") + "\n";
 
@@ -254,7 +262,9 @@ void NavigateRoute::connectRouteTrackerSignals()
       {
         if (trackingStatus->currentManeuverIndex() + 1 < directionList->directionManeuvers().length())
         {
-          textString += "Next direction: " + std::as_const(directionList)->directionManeuvers()[trackingStatus->currentManeuverIndex() + 1].directionText() + "\n";
+          textString +=
+            "Next direction: " + std::as_const(directionList)->directionManeuvers()[trackingStatus->currentManeuverIndex() + 1].directionText() +
+            "\n";
         }
       }
       m_routeTraveledGraphic->setGeometry(trackingStatus->routeProgress()->traversedGeometry());

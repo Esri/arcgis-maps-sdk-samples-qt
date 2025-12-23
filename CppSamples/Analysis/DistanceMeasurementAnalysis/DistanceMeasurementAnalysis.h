@@ -22,11 +22,11 @@
 
 namespace Esri::ArcGISRuntime
 {
-class LocationDistanceMeasurement;
-class Point;
-class Scene;
-class SceneQuickView;
-}
+  class LocationDistanceMeasurement;
+  class Point;
+  class Scene;
+  class SceneQuickView;
+} // namespace Esri::ArcGISRuntime
 
 Q_MOC_INCLUDE("SceneQuickView.h");
 

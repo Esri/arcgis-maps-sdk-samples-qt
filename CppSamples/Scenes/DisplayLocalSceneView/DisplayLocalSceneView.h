@@ -22,33 +22,33 @@
 
 namespace Esri::ArcGISRuntime
 {
-class Scene;
-class LocalSceneQuickView;
-}
+  class Scene;
+  class LocalSceneQuickView;
+} // namespace Esri::ArcGISRuntime
 
 Q_MOC_INCLUDE("LocalSceneQuickView.h");
 
 class DisplayLocalSceneView : public QObject
 {
-    Q_OBJECT
+  Q_OBJECT
 
-    Q_PROPERTY(Esri::ArcGISRuntime::LocalSceneQuickView* localSceneView READ localSceneView WRITE setLocalSceneView NOTIFY localSceneViewChanged)
+  Q_PROPERTY(Esri::ArcGISRuntime::LocalSceneQuickView* localSceneView READ localSceneView WRITE setLocalSceneView NOTIFY localSceneViewChanged)
 
 public:
-    explicit DisplayLocalSceneView(QObject* parent = nullptr);
-    ~DisplayLocalSceneView() override;
+  explicit DisplayLocalSceneView(QObject* parent = nullptr);
+  ~DisplayLocalSceneView() override;
 
-    static void init();
+  static void init();
 
 signals:
-    void localSceneViewChanged();
+  void localSceneViewChanged();
 
 private:
-    Esri::ArcGISRuntime::LocalSceneQuickView* localSceneView() const;
-    void setLocalSceneView(Esri::ArcGISRuntime::LocalSceneQuickView* localSceneView);
+  Esri::ArcGISRuntime::LocalSceneQuickView* localSceneView() const;
+  void setLocalSceneView(Esri::ArcGISRuntime::LocalSceneQuickView* localSceneView);
 
-    Esri::ArcGISRuntime::Scene* m_scene = nullptr;
-    Esri::ArcGISRuntime::LocalSceneQuickView* m_localSceneView = nullptr;
+  Esri::ArcGISRuntime::Scene* m_scene = nullptr;
+  Esri::ArcGISRuntime::LocalSceneQuickView* m_localSceneView = nullptr;
 };
 
 #endif // DISPLAYLOCALSCENEVIEW_H

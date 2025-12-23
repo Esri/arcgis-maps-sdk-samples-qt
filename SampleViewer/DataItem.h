@@ -24,16 +24,23 @@ class DataItem : public QObject
   Q_OBJECT
 
 public:
-  explicit DataItem(const QString& itemId, const QString& path,
-                    QObject* parent = nullptr);
+  explicit DataItem(const QString& itemId, const QString& path, QObject* parent = nullptr);
   ~DataItem() override = default;
 
   Q_PROPERTY(QString itemId READ itemId CONSTANT)
   Q_PROPERTY(QString path READ path CONSTANT)
   Q_PROPERTY(bool exists READ exists WRITE setExists NOTIFY existsChanged)
 
-  QString itemId() const { return m_itemId; }
-  QString path() const { return m_path; }
+  QString itemId() const
+  {
+    return m_itemId;
+  }
+
+  QString path() const
+  {
+    return m_path;
+  }
+
   bool exists() const;
   void setExists(bool exists);
 

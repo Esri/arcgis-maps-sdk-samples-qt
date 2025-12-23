@@ -37,7 +37,7 @@
 
 using namespace Esri::ArcGISRuntime;
 
-WmsLayerUrl::WmsLayerUrl(QQuickItem* parent /* = nullptr */):
+WmsLayerUrl::WmsLayerUrl(QQuickItem* parent /* = nullptr */) :
   QQuickItem(parent)
 {
 }

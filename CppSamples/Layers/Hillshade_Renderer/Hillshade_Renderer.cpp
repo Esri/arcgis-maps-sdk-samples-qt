@@ -43,21 +43,21 @@ using namespace Esri::ArcGISRuntime;
 // helper method to get cross platform data path
 namespace
 {
-QString defaultDataPath()
-{
-  QString dataPath;
+  QString defaultDataPath()
+  {
+    QString dataPath;
 
 #ifdef Q_OS_IOS
-  dataPath = QStandardPaths::writableLocation(QStandardPaths::DocumentsLocation);
+    dataPath = QStandardPaths::writableLocation(QStandardPaths::DocumentsLocation);
 #else
-  dataPath = QStandardPaths::writableLocation(QStandardPaths::HomeLocation);
+    dataPath = QStandardPaths::writableLocation(QStandardPaths::HomeLocation);
 #endif
 
-  return dataPath;
-}
+    return dataPath;
+  }
 } // namespace
 
-Hillshade_Renderer::Hillshade_Renderer(QQuickItem* parent /* = nullptr */):
+Hillshade_Renderer::Hillshade_Renderer(QQuickItem* parent /* = nullptr */) :
   QQuickItem(parent)
 {
 }
@@ -106,7 +106,8 @@ void Hillshade_Renderer::componentComplete()
   constexpr double pixelSizeFactor = 1.0;
   constexpr double pixelSizePower = 1.0;
   constexpr int outputBitDepth = 8;
-  HillshadeRenderer* hillshadeRenderer = new HillshadeRenderer(altitude, azimuth, zFactor, slopeType, pixelSizeFactor, pixelSizePower, outputBitDepth, this);
+  HillshadeRenderer* hillshadeRenderer =
+    new HillshadeRenderer(altitude, azimuth, zFactor, slopeType, pixelSizeFactor, pixelSizePower, outputBitDepth, this);
   m_rasterLayer->setRenderer(hillshadeRenderer);
   //! [HillshadeRenderer apply to layer snippet]
 }

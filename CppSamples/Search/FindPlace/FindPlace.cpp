@@ -56,7 +56,7 @@
 
 using namespace Esri::ArcGISRuntime;
 
-FindPlace::FindPlace(QQuickItem* parent /* = nullptr */):
+FindPlace::FindPlace(QQuickItem* parent /* = nullptr */) :
   QQuickItem(parent)
 {
 }
@@ -102,7 +102,8 @@ void FindPlace::componentComplete()
 
   // workaround for https://bugreports.qt.io/browse/QTBUG-134211
   // do not request permissions from componentComplete
-  QMetaObject::invokeMethod(this, [this](){
+  QMetaObject::invokeMethod(this, [this]()
+  {
     initiateLocation();
   }, Qt::QueuedConnection);
 }
@@ -118,17 +119,22 @@ void FindPlace::connectSignals()
   {
     emit hideSuggestionView();
     if (m_graphicsOverlay->graphics()->size() > 0)
+    {
       emit showExtentButton();
+    }
   });
 
   // perform an identify operation on mouse clicked
   connect(m_mapView, &MapQuickView::mouseClicked, this, [this](QMouseEvent& e)
   {
     emit hideCallout();
-    m_mapView->identifyGraphicsOverlayAsync(m_graphicsOverlay, e.position(), 5, false, 1).then(this, [this] (IdentifyGraphicsOverlayResult* result)
+    m_mapView->identifyGraphicsOverlayAsync(m_graphicsOverlay, e.position(), 5, false, 1)
+      .then(this, [this](IdentifyGraphicsOverlayResult* result)
     {
       if (result->graphics().length() == 0)
+      {
         return;
+      }
 
       // display the callout with the identify result
       Graphic* graphic = result->graphics().at(0);
@@ -194,7 +200,9 @@ void FindPlace::onGeocodingCompleted_(const QList<GeocodeResult>& results)
   {
     m_isSearchingLocation = false;
     if (results.length() == 0)
+    {
       return;
+    }
 
     GeocodeResult topLocation = results.at(0);
     geocodePOIs(m_poiSearchText, topLocation.displayLocation());
@@ -203,7 +211,9 @@ void FindPlace::onGeocodingCompleted_(const QList<GeocodeResult>& results)
 
   // create graphics for each geocode result
   if (results.length() == 0)
+  {
     return;
+  }
 
   m_graphicsOverlay->graphics()->clear();
 
@@ -222,9 +232,13 @@ void FindPlace::onGeocodingCompleted_(const QList<GeocodeResult>& results)
     m_graphicsOverlay->graphics()->append(graphic);
     // create bounding box so we can set the viewpoint at the end
     if (bbox.isEmpty())
+    {
       bbox = graphic->geometry();
+    }
     else
+    {
       bbox = GeometryEngine::unionOf(bbox, graphic->geometry());
+    }
   }
   // zoom to the bounding box
   m_mapView->setViewpointGeometryAsync(bbox, 40);
@@ -233,7 +247,9 @@ void FindPlace::onGeocodingCompleted_(const QList<GeocodeResult>& results)
 void FindPlace::setPoiTextHasFocus(bool hasFocus)
 {
   if (m_poiTextHasFocus == hasFocus)
+  {
     return;
+  }
 
   m_poiTextHasFocus = hasFocus;
 
@@ -246,7 +262,9 @@ void FindPlace::setPoiTextHasFocus(bool hasFocus)
   suggestParams.setCategories(categories);
   suggestParams.setMaxResults(5);
   if (m_locatorTask)
+  {
     m_locatorTask->suggestions()->setSuggestParameters(suggestParams);
+  }
   emit poiTextHasFocusChanged();
 }
 
@@ -254,11 +272,15 @@ void FindPlace::setPoiTextHasFocus(bool hasFocus)
 void FindPlace::setSuggestionsText(const QString& searchText)
 {
   if (!m_suggestListModel)
+  {
     return;
+  }
 
   SuggestListModel* suggestListModel = dynamic_cast<SuggestListModel*>(m_suggestListModel);
   if (!suggestListModel)
+  {
     return;
+  }
 
   suggestListModel->setSearchText(searchText);
 }
@@ -268,7 +290,8 @@ void FindPlace::geocodePOIs(const QString& poi)
 {
   m_poiSearchText = poi;
   GeocodeParameters params = createParameters();
-  m_locatorTask->geocodeWithParametersAsync(poi, params).then(this, [this](const QList<GeocodeResult>& results)
+  m_locatorTask->geocodeWithParametersAsync(poi, params)
+    .then(this, [this](const QList<GeocodeResult>& results)
   {
     onGeocodingCompleted_(results);
   });
@@ -287,7 +310,8 @@ void FindPlace::geocodePOIs(const QString& poi, SearchMode mode)
     params.setPreferredSearchLocation(m_mapView->locationDisplay()->location().position());
     params.setOutputSpatialReference(m_mapView->locationDisplay()->location().position().spatialReference());
 
-    m_locatorTask->geocodeWithParametersAsync(m_poiSearchText, params).then(this, [this](const QList<GeocodeResult>& results)
+    m_locatorTask->geocodeWithParametersAsync(m_poiSearchText, params)
+      .then(this, [this](const QList<GeocodeResult>& results)
     {
       onGeocodingCompleted_(results);
     });
@@ -300,7 +324,8 @@ void FindPlace::geocodePOIs(const QString& poi, SearchMode mode)
     params.setSearchArea(extent);
     params.setOutputSpatialReference(extent.spatialReference());
 
-    m_locatorTask->geocodeWithParametersAsync(m_poiSearchText, params).then(this, [this](const QList<GeocodeResult>& results)
+    m_locatorTask->geocodeWithParametersAsync(m_poiSearchText, params)
+      .then(this, [this](const QList<GeocodeResult>& results)
     {
       onGeocodingCompleted_(results);
     });
@@ -316,7 +341,8 @@ void FindPlace::geocodePOIs(const QString& poi, const Point& location)
   params.setPreferredSearchLocation(location);
   params.setOutputSpatialReference(location.spatialReference());
 
-  m_locatorTask->geocodeWithParametersAsync(m_poiSearchText, params).then(this, [this](const QList<GeocodeResult>& results)
+  m_locatorTask->geocodeWithParametersAsync(m_poiSearchText, params)
+    .then(this, [this](const QList<GeocodeResult>& results)
   {
     onGeocodingCompleted_(results);
   });
@@ -334,7 +360,8 @@ void FindPlace::geocodePOIs(const QString& poi, const QString& location)
   GeocodeParameters params = createParameters();
 
   m_isSearchingLocation = true;
-  m_locatorTask->geocodeWithParametersAsync(location, params).then(this, [this](const QList<GeocodeResult>& results)
+  m_locatorTask->geocodeWithParametersAsync(location, params)
+    .then(this, [this](const QList<GeocodeResult>& results)
   {
     onGeocodingCompleted_(results);
   });

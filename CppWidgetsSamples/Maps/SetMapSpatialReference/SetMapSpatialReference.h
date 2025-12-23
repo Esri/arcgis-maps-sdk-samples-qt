@@ -23,7 +23,7 @@ namespace Esri::ArcGISRuntime
   class MapGraphicsView;
   class Basemap;
   class ArcGISMapImageLayer;
-}
+} // namespace Esri::ArcGISRuntime
 
 #include <QWidget>
 

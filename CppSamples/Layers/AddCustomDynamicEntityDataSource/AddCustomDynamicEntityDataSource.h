@@ -23,11 +23,11 @@
 
 namespace Esri::ArcGISRuntime
 {
-class DynamicEntity;
-class DynamicEntityLayer;
-class Map;
-class MapQuickView;
-}
+  class DynamicEntity;
+  class DynamicEntityLayer;
+  class Map;
+  class MapQuickView;
+} // namespace Esri::ArcGISRuntime
 
 Q_MOC_INCLUDE("MapQuickView.h");
 

@@ -22,13 +22,13 @@
 
 namespace Esri::ArcGISRuntime
 {
-class Map;
-class MapQuickView;
-class Renderer;
-class ClassBreaksRenderer;
-class ArcGISMapImageSublayer;
-class ClassBreak;
-}
+  class Map;
+  class MapQuickView;
+  class Renderer;
+  class ClassBreaksRenderer;
+  class ArcGISMapImageSublayer;
+  class ClassBreak;
+} // namespace Esri::ArcGISRuntime
 
 class ChangeSublayerRenderer : public QQuickItem
 {

@@ -126,11 +126,8 @@ void ExtrudeGraphics::componentComplete()
     const double z = m_maxZ * randNum;
 
     // create a list of points
-    const QList<Point> points { Point(point.x(), point.y(), z)
-                              , Point(point.x() + m_size, point.y(), z)
-                              , Point(point.x() + m_size, point.y() + m_size, z)
-                              , Point(point.x(), point.y() + m_size, z)
-                              };
+    const QList<Point> points{Point(point.x(), point.y(), z), Point(point.x() + m_size, point.y(), z),
+                              Point(point.x() + m_size, point.y() + m_size, z), Point(point.x(), point.y() + m_size, z)};
 
     // create a new graphic
     Graphic* graphic = new Graphic(createPolygonFromPoints(points), this);
@@ -149,7 +146,9 @@ Polygon ExtrudeGraphics::createPolygonFromPoints(const QList<Point>& points)
 {
   Polygon polygon;
   if (points.length() == 0)
+  {
     return polygon;
+  }
 
   // create a polygon builder
   PolygonBuilder* pb = new PolygonBuilder(m_sceneView->spatialReference(), this);

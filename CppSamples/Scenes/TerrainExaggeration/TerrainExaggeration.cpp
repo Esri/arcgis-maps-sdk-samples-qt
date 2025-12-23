@@ -37,7 +37,7 @@
 
 using namespace Esri::ArcGISRuntime;
 
-TerrainExaggeration::TerrainExaggeration(QQuickItem* parent /* = nullptr */):
+TerrainExaggeration::TerrainExaggeration(QQuickItem* parent /* = nullptr */) :
   QQuickItem(parent)
 {
 }
@@ -58,9 +58,7 @@ void TerrainExaggeration::componentComplete()
   Scene* scene = new Scene(BasemapStyle::ArcGISTopographic, this);
   m_surface = new Surface(this);
   m_surface->elevationSources()->append(
-        new ArcGISTiledElevationSource(
-          QUrl("https://elevation3d.arcgis.com/arcgis/rest/services/WorldElevation3D/Terrain3D/ImageServer"),
-          this));
+    new ArcGISTiledElevationSource(QUrl("https://elevation3d.arcgis.com/arcgis/rest/services/WorldElevation3D/Terrain3D/ImageServer"), this));
 
   // Create the camera object at our initial viewpoint
   const Point initialPoint(-119.9616962169934, 46.7000413426849, 3183, SpatialReference(4326));
@@ -78,5 +76,7 @@ void TerrainExaggeration::setElevationExaggeration(double factor)
 {
   // If the surface exists, trigger a change in elevation exaggeration by [factor] amount
   if (m_surface)
+  {
     m_surface->setElevationExaggeration(factor);
+  }
 }

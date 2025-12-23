@@ -35,7 +35,7 @@ namespace Esri::ArcGISRuntime
   class Geodatabase;
   class ArcGISFeature;
   class Envelope;
-}
+} // namespace Esri::ArcGISRuntime
 
 class EditAndSyncFeatures : public QQuickItem
 {

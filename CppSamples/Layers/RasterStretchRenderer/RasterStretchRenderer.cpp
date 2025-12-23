@@ -46,17 +46,17 @@ namespace
   {
     QString dataPath;
 
-  #ifdef Q_OS_IOS
+#ifdef Q_OS_IOS
     dataPath = QStandardPaths::writableLocation(QStandardPaths::DocumentsLocation);
-  #else
+#else
     dataPath = QStandardPaths::writableLocation(QStandardPaths::HomeLocation);
-  #endif
+#endif
 
     return dataPath;
   }
 } // namespace
 
-RasterStretchRenderer::RasterStretchRenderer(QQuickItem* parent /* = nullptr */):
+RasterStretchRenderer::RasterStretchRenderer(QQuickItem* parent /* = nullptr */) :
   QQuickItem(parent),
   m_dataPath(defaultDataPath() + "/ArcGIS/Runtime/Data/raster")
 {
@@ -119,4 +119,5 @@ void RasterStretchRenderer::applyStandardDeviation(double factor)
 
   m_rasterLayer->setRenderer(renderer);
 }
+
 //! [RasterStretchRenderer cpp set renderers]

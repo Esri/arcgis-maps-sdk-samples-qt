@@ -36,7 +36,7 @@ namespace Esri::ArcGISRuntime
   class OrbitGeoElementCameraController;
   class SceneQuickView;
   class SimpleMarkerSymbol;
-}
+} // namespace Esri::ArcGISRuntime
 
 class QAbstractListModel;
 class MissionData;

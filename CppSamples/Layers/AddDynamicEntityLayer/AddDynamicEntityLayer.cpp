@@ -59,13 +59,12 @@ using namespace Esri::ArcGISRuntime;
 
 namespace
 {
-// This envelope is a limited region around Sandy, Utah. It will be the extent used by the `DynamicEntityFilter`.
-const Envelope utahSandyEnvelope(
-    Point(-112.110052, 40.718083, SpatialReference::wgs84()),
-    Point(-111.814782, 40.535247, SpatialReference::wgs84()));
-}
+  // This envelope is a limited region around Sandy, Utah. It will be the extent used by the `DynamicEntityFilter`.
+  const Envelope utahSandyEnvelope(Point(-112.110052, 40.718083, SpatialReference::wgs84()),
+                                   Point(-111.814782, 40.535247, SpatialReference::wgs84()));
+} // namespace
 
-AddDynamicEntityLayer::AddDynamicEntityLayer(QObject* parent /* = nullptr */):
+AddDynamicEntityLayer::AddDynamicEntityLayer(QObject* parent /* = nullptr */) :
   QObject(parent),
   m_map(new Map(BasemapStyle::ArcGISDarkGray, this))
 {
@@ -96,23 +95,26 @@ AddDynamicEntityLayer::AddDynamicEntityLayer(QObject* parent /* = nullptr */):
 
   // Create a unique value renderer for the latest observations
   QList<UniqueValue*> entityValues;
-  entityValues.append(new UniqueValue("","", {3}, new SimpleMarkerSymbol(SimpleMarkerSymbolStyle::Circle, Qt::magenta, 8, this), this));
-  entityValues.append(new UniqueValue("","", {4}, new SimpleMarkerSymbol(SimpleMarkerSymbolStyle::Circle, Qt::green, 8, this), this));
+  entityValues.append(new UniqueValue("", "", {3}, new SimpleMarkerSymbol(SimpleMarkerSymbolStyle::Circle, Qt::magenta, 8, this), this));
+  entityValues.append(new UniqueValue("", "", {4}, new SimpleMarkerSymbol(SimpleMarkerSymbolStyle::Circle, Qt::green, 8, this), this));
 
-  UniqueValueRenderer* entityRenderer = new UniqueValueRenderer("", new SimpleMarkerSymbol(SimpleMarkerSymbolStyle::Circle, Qt::blue, 8, this), {"agency"}, entityValues, this);
+  UniqueValueRenderer* entityRenderer =
+    new UniqueValueRenderer("", new SimpleMarkerSymbol(SimpleMarkerSymbolStyle::Circle, Qt::blue, 8, this), {"agency"}, entityValues, this);
   m_dynamicEntityLayer->setRenderer(entityRenderer);
 
   // Create a unique value renderer for the previous observations
   QList<UniqueValue*> previousObservationValues;
 
-  previousObservationValues.append(new UniqueValue("","", {3}, new SimpleMarkerSymbol(SimpleMarkerSymbolStyle::Circle, Qt::magenta, 3, this), this));
-  previousObservationValues.append(new UniqueValue("","", {4}, new SimpleMarkerSymbol(SimpleMarkerSymbolStyle::Circle, Qt::green, 3, this), this));
+  previousObservationValues.append(new UniqueValue("", "", {3}, new SimpleMarkerSymbol(SimpleMarkerSymbolStyle::Circle, Qt::magenta, 3, this), this));
+  previousObservationValues.append(new UniqueValue("", "", {4}, new SimpleMarkerSymbol(SimpleMarkerSymbolStyle::Circle, Qt::green, 3, this), this));
 
-  UniqueValueRenderer* trackRenderer = new UniqueValueRenderer("", new SimpleMarkerSymbol(SimpleMarkerSymbolStyle::Circle, Qt::blue, 3, this), {"agency"}, previousObservationValues);
+  UniqueValueRenderer* trackRenderer =
+    new UniqueValueRenderer("", new SimpleMarkerSymbol(SimpleMarkerSymbolStyle::Circle, Qt::blue, 3, this), {"agency"}, previousObservationValues);
   m_dynamicEntityLayer->trackDisplayProperties()->setPreviousObservationRenderer(trackRenderer);
 
   // Use a simple renderer to change the style of the trackline
-  m_dynamicEntityLayer->trackDisplayProperties()->setTrackLineRenderer(new SimpleRenderer(new SimpleLineSymbol(SimpleLineSymbolStyle::Solid, Qt::lightGray, 2, this)));
+  m_dynamicEntityLayer->trackDisplayProperties()->setTrackLineRenderer(
+    new SimpleRenderer(new SimpleLineSymbol(SimpleLineSymbolStyle::Solid, Qt::lightGray, 2, this)));
 
   m_map->operationalLayers()->append(m_dynamicEntityLayer);
 }
@@ -135,7 +137,9 @@ MapQuickView* AddDynamicEntityLayer::mapView() const
 void AddDynamicEntityLayer::setMapView(MapQuickView* mapView)
 {
   if (!mapView || mapView == m_mapView)
+  {
     return;
+  }
 
   m_mapView = mapView;
   m_mapView->setMap(m_map);
@@ -231,7 +235,7 @@ void AddDynamicEntityLayer::identifyLayerAtMouseClick(const QMouseEvent& e)
   m_mapView->calloutData()->setVisible(false);
 
   m_mapView->identifyLayerAsync(m_dynamicEntityLayer, e.position(), 5, false, this)
-      .then(this, [this](IdentifyLayerResult* result)
+    .then(this, [this](IdentifyLayerResult* result)
   {
     if (!result || result->geoElements().empty())
     {
@@ -251,7 +255,8 @@ void AddDynamicEntityLayer::identifyLayerAtMouseClick(const QMouseEvent& e)
       m_mapView->calloutData()->setTitleExpression(titleExpression);
 
       // Create a arcade expression for detail to display the dynamic entity's attributes in the callout.
-      const QString detailExpression = "concatenate(Round($feature.point_x,6), \",\", Round($feature.point_y,6),\" Heading: \",$feature.heading,\"°\")";
+      const QString detailExpression =
+        "concatenate(Round($feature.point_x,6), \",\", Round($feature.point_y,6),\" Heading: \",$feature.heading,\"°\")";
       m_mapView->calloutData()->setDetailExpression(detailExpression);
 
       // Show the callout when the title is available.

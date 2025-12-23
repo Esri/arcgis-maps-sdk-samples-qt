@@ -33,7 +33,7 @@ namespace Esri::ArcGISRuntime
   class MapQuickView;
   class GeodatabaseSyncTask;
   class Geodatabase;
-}
+} // namespace Esri::ArcGISRuntime
 
 class GenerateGeodatabaseReplicaFromFeatureService : public QQuickItem
 {

@@ -26,7 +26,7 @@ namespace Esri::ArcGISRuntime
   class Map;
   class MapQuickView;
   class RasterLayer;
-}
+} // namespace Esri::ArcGISRuntime
 
 class RasterLayerService : public QQuickItem
 {
@@ -41,7 +41,6 @@ public:
   void componentComplete() override;
 
 private:
-
   Esri::ArcGISRuntime::Map* m_map = nullptr;
   Esri::ArcGISRuntime::MapQuickView* m_mapView = nullptr;
   Esri::ArcGISRuntime::RasterLayer* m_rasterLayer = nullptr;

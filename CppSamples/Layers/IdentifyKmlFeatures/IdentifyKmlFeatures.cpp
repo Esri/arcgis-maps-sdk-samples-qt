@@ -45,7 +45,7 @@ namespace
   const QUrl datasetUrl("https://www.spc.noaa.gov/products/outlook/SPC_outlooks.kml");
 }
 
-IdentifyKmlFeatures::IdentifyKmlFeatures(QObject* parent /* = nullptr */):
+IdentifyKmlFeatures::IdentifyKmlFeatures(QObject* parent /* = nullptr */) :
   QObject(parent),
   m_map(new Map(BasemapStyle::ArcGISDarkGray, this))
 {
@@ -73,7 +73,9 @@ MapQuickView* IdentifyKmlFeatures::mapView() const
 void IdentifyKmlFeatures::setMapView(MapQuickView* mapView)
 {
   if (!mapView || mapView == m_mapView)
+  {
     return;
+  }
 
   m_mapView = mapView;
   m_mapView->setMap(m_map);
@@ -86,7 +88,7 @@ void IdentifyKmlFeatures::setMapView(MapQuickView* mapView)
   {
     m_clickedPoint = m_mapView->screenToLocation(e.position().x(), e.position().y());
     m_mapView->identifyLayerAsync(m_forecastLayer, e.position(), 15, false)
-        .then(this, [this](IdentifyLayerResult* rawResult)
+      .then(this, [this](IdentifyLayerResult* rawResult)
     {
       auto result = std::unique_ptr<IdentifyLayerResult>(rawResult);
 
@@ -106,7 +108,9 @@ void IdentifyKmlFeatures::setMapView(MapQuickView* mapView)
           // Google Earth only displays the placemarks with description or extended data. To
           // match its behavior, add a description placeholder if the data source is empty
           if (placemark->description().isEmpty())
+          {
             placemark->setDescription("Weather condition");
+          }
 
           m_calloutText = placemark->balloonContent();
           m_mapView->calloutData()->setLocation(m_clickedPoint);

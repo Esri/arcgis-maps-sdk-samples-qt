@@ -42,7 +42,7 @@
 
 using namespace Esri::ArcGISRuntime;
 
-CutGeometry::CutGeometry(QQuickItem* parent /* = nullptr */):
+CutGeometry::CutGeometry(QQuickItem* parent /* = nullptr */) :
   QQuickItem(parent)
 {
 }
@@ -82,8 +82,7 @@ void CutGeometry::componentComplete()
 void CutGeometry::cutPolygon()
 {
   // perform the cut
-  QList<Geometry> geoms = GeometryEngine::cut(m_lakeSuperiorGraphic->geometry(),
-                                              geometry_cast<Polyline>(m_borderGraphic->geometry()));
+  QList<Geometry> geoms = GeometryEngine::cut(m_lakeSuperiorGraphic->geometry(), geometry_cast<Polyline>(m_borderGraphic->geometry()));
 
   // create graphics for the U.S. side
   SimpleLineSymbol* outline = new SimpleLineSymbol(SimpleLineSymbolStyle::Solid, QColor("blue"), 1.0f, this);

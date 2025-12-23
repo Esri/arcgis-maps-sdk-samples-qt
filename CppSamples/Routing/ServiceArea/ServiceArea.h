@@ -32,7 +32,7 @@ namespace Esri::ArcGISRuntime
   class Point;
   class PolylineBuilder;
   class ServiceAreaTask;
-}
+} // namespace Esri::ArcGISRuntime
 
 class ServiceArea : public QQuickItem
 {
@@ -59,7 +59,8 @@ signals:
   void messageChanged();
 
 private:
-  enum class SampleMode {
+  enum class SampleMode
+  {
     Facility,
     Barrier
   };

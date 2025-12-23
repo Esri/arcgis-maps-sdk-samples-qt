@@ -22,11 +22,11 @@
 
 namespace Esri::ArcGISRuntime
 {
-class BuildingSceneLayer;
-class BuildingSublayer;
-class LocalSceneQuickView;
-class Scene;
-}
+  class BuildingSceneLayer;
+  class BuildingSublayer;
+  class LocalSceneQuickView;
+  class Scene;
+} // namespace Esri::ArcGISRuntime
 
 Q_MOC_INCLUDE("LocalSceneQuickView.h");
 

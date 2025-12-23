@@ -40,17 +40,17 @@ namespace
   {
     QString dataPath;
 
-  #ifdef Q_OS_IOS
+#ifdef Q_OS_IOS
     dataPath = QStandardPaths::writableLocation(QStandardPaths::DocumentsLocation);
-  #else
+#else
     dataPath = QStandardPaths::writableLocation(QStandardPaths::HomeLocation);
-  #endif
+#endif
 
     return dataPath;
   }
 } // namespace
 
-OpenMobileScenePackage::OpenMobileScenePackage(QObject* parent /* = nullptr */):
+OpenMobileScenePackage::OpenMobileScenePackage(QObject* parent /* = nullptr */) :
   QObject(parent)
 {
   // create the MSPK data path
@@ -88,7 +88,9 @@ void OpenMobileScenePackage::setSceneView(SceneQuickView* sceneView)
 
   // set the scene on the scene view to display
   if (m_scene && m_sceneView)
+  {
     m_sceneView->setArcGISScene(m_scene);
+  }
 
   emit sceneViewChanged();
 }
@@ -103,7 +105,9 @@ void OpenMobileScenePackage::packageLoaded(const Error& e)
   }
 
   if (m_scenePackage->scenes().isEmpty())
+  {
     return;
+  }
 
   // The package contains a list of scenes that could be show in a UI for selection.
   // For simplicity, obtain the first scene in the list of scenes
@@ -111,7 +115,9 @@ void OpenMobileScenePackage::packageLoaded(const Error& e)
 
   // set the scene on the scene view to display
   if (m_scene && m_sceneView)
+  {
     m_sceneView->setArcGISScene(m_scene);
+  }
 }
 
 // create scene package and connect to signals

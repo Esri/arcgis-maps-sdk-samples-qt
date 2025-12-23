@@ -27,24 +27,24 @@
 using namespace Esri::ArcGISRuntime;
 
 SetInitialMapArea::SetInitialMapArea(QWidget* parent) :
-    QWidget(parent)
+  QWidget(parent)
 {
-    // Create envelope for the area of interest
-    Envelope envelope(-12211308.778729, 4645116.003309, -12208257.879667, 4650542.535773, SpatialReference(102100));
+  // Create envelope for the area of interest
+  Envelope envelope(-12211308.778729, 4645116.003309, -12208257.879667, 4650542.535773, SpatialReference(102100));
 
-    // Create a new map with the imagery with labels basemap
-    m_map = new Map(BasemapStyle::ArcGISImagery, this);
+  // Create a new map with the imagery with labels basemap
+  m_map = new Map(BasemapStyle::ArcGISImagery, this);
 
-    // Set the initial viewpoint to the envelope
-    m_map->setInitialViewpoint(Viewpoint(envelope));
+  // Set the initial viewpoint to the envelope
+  m_map->setInitialViewpoint(Viewpoint(envelope));
 
-    // Create a map view, and pass in the map
-    m_mapView = new MapGraphicsView(m_map, this);
+  // Create a map view, and pass in the map
+  m_mapView = new MapGraphicsView(m_map, this);
 
-    // Set up the UI
-    QVBoxLayout *vBoxLayout = new QVBoxLayout(this);
-    vBoxLayout->addWidget(m_mapView);
-    setLayout(vBoxLayout);
+  // Set up the UI
+  QVBoxLayout* vBoxLayout = new QVBoxLayout(this);
+  vBoxLayout->addWidget(m_mapView);
+  setLayout(vBoxLayout);
 }
 
 SetInitialMapArea::~SetInitialMapArea() = default;

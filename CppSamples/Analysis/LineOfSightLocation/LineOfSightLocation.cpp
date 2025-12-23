@@ -41,7 +41,7 @@
 
 using namespace Esri::ArcGISRuntime;
 
-LineOfSightLocation::LineOfSightLocation(QQuickItem* parent /* = nullptr */):
+LineOfSightLocation::LineOfSightLocation(QQuickItem* parent /* = nullptr */) :
   QQuickItem(parent)
 {
 }
@@ -63,9 +63,7 @@ void LineOfSightLocation::componentComplete()
   Scene* scene = new Scene(BasemapStyle::ArcGISTopographic, this);
   Surface* surface = new Surface(this);
   surface->elevationSources()->append(
-        new ArcGISTiledElevationSource(
-          QUrl("https://elevation3d.arcgis.com/arcgis/rest/services/WorldElevation3D/Terrain3D/ImageServer"),
-          this));
+    new ArcGISTiledElevationSource(QUrl("https://elevation3d.arcgis.com/arcgis/rest/services/WorldElevation3D/Terrain3D/ImageServer"), this));
   scene->setBaseSurface(surface);
   m_sceneView->setArcGISScene(scene);
 

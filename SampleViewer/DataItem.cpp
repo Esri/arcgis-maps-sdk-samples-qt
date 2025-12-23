@@ -34,8 +34,7 @@ static QString homePath()
   return homePath;
 }
 
-DataItem::DataItem(const QString& itemId, const QString& path,
-                   QObject* parent /*= nullptr*/) :
+DataItem::DataItem(const QString& itemId, const QString& path, QObject* parent /*= nullptr*/) :
   QObject(parent),
   m_itemId(itemId),
   m_path(path)

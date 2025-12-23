@@ -25,11 +25,11 @@
 
 namespace Esri::ArcGISRuntime
 {
-class Map;
-class MapQuickView;
-class Graphic;
-class GraphicsOverlay;
-}
+  class Map;
+  class MapQuickView;
+  class Graphic;
+  class GraphicsOverlay;
+} // namespace Esri::ArcGISRuntime
 
 class SpatialRelationships : public QQuickItem
 {

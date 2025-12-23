@@ -1,3 +1,5 @@
+// [WriteFile Name=RenderMultilayerSymbols, Category=DisplayInformation]
+// [Legal]
 // Copyright 2025 Esri.
 //
 // Licensed under the Apache License, Version 2.0 (the "License");
@@ -10,6 +12,7 @@
 // WITHOUT WARRANTIES OR CONDITIONS OF ANY KIND, either express or implied.
 // See the License for the specific language governing permissions and
 // limitations under the License.
+// [Legal]
 
 // sample headers
 #include "RenderMultilayerSymbols.h"
@@ -28,7 +31,7 @@
 #include <Windows.h>
 #endif
 
-int main(int argc, char *argv[])
+int main(int argc, char* argv[])
 {
   QGuiApplication app(argc, argv);
   app.setApplicationName(QString("RenderMultilayerSymbols"));
@@ -47,14 +50,17 @@ int main(int argc, char *argv[])
   // ArcGIS location services. Go to the tutorial at https://links.esri.com/create-an-api-key.
   // Copy the API Key access token.
 
-  const QString accessToken = QString("");;
+  const QString accessToken = QString("");
+  ;
 
-  if (accessToken.isEmpty()) {
-      qWarning()
-          << "Use of ArcGIS location services, such as the basemap styles service, requires"
-          << "you to authenticate with an ArcGIS account or set the API Key property.";
-  } else {
-      Esri::ArcGISRuntime::ArcGISRuntimeEnvironment::setApiKey(accessToken);
+  if (accessToken.isEmpty())
+  {
+    qWarning() << "Use of ArcGIS location services, such as the basemap styles service, requires"
+               << "you to authenticate with an ArcGIS account or set the API Key property.";
+  }
+  else
+  {
+    Esri::ArcGISRuntime::ArcGISRuntimeEnvironment::setApiKey(accessToken);
   }
 
   // Initialize the sample

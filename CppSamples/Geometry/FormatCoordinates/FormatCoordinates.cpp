@@ -41,7 +41,7 @@ namespace
 {
   // Initial point marker 'X' symbol appears.
   const Point startPoint(-117.195723, 34.056195, SpatialReference::wgs84());
-}
+} // namespace
 
 FormatCoordinates::FormatCoordinates(QObject* parent) :
   QObject(parent),
@@ -85,14 +85,16 @@ void FormatCoordinates::handleLocationUpdate(Point point)
 Point FormatCoordinates::createPointFromText(const QString& textType, const QString& text) const
 {
   //! [FormatCoordinates CoordinateFormatter various text to point]
-  if (strDecimalDegrees() == textType
-      || strDegreesMinutesSeconds() == textType) {
+  if (strDecimalDegrees() == textType || strDegreesMinutesSeconds() == textType)
+  {
     return CoordinateFormatter::fromLatitudeLongitude(text, m_map->spatialReference());
   }
-  if (strUsng() == textType) {
+  if (strUsng() == textType)
+  {
     return CoordinateFormatter::fromUsng(text, m_map->spatialReference());
   }
-  if (strUtm() == textType) {
+  if (strUtm() == textType)
+  {
     return CoordinateFormatter::fromUtm(text, m_map->spatialReference(), UtmConversionMode::LatitudeBandIndicators);
   }
   return Point();

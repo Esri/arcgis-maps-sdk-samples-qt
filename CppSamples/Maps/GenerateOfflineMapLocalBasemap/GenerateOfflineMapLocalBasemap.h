@@ -23,11 +23,11 @@
 
 namespace Esri::ArcGISRuntime
 {
-class Map;
-class MapQuickView;
-class PortalItem;
-class OfflineMapTask;
-}
+  class Map;
+  class MapQuickView;
+  class PortalItem;
+  class OfflineMapTask;
+} // namespace Esri::ArcGISRuntime
 
 class GenerateOfflineMapLocalBasemap : public QQuickItem
 {
@@ -55,7 +55,10 @@ signals:
   void useLocalBasemapChanged();
 
 private:
-  static const QString webMapId() { return s_webMapId; }
+  static const QString webMapId()
+  {
+    return s_webMapId;
+  }
 
 private:
   Esri::ArcGISRuntime::Map* m_map = nullptr;

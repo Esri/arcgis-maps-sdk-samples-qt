@@ -27,76 +27,78 @@
 using namespace Esri::ArcGISRuntime;
 
 OpenExistingMap::OpenExistingMap(QWidget* parent) :
-    QWidget(parent)
+  QWidget(parent)
 {
-    // Create a map view
-    m_mapView = new MapGraphicsView(this);
+  // Create a map view
+  m_mapView = new MapGraphicsView(this);
 
-    // Create the portal items
-    createPortalMaps();
+  // Create the portal items
+  createPortalMaps();
 
-    // Create the button to display the input dialog
-    m_button = new QPushButton(this);
-    m_button->setText("Open a Map");
-    m_button->setStyleSheet("QPushbutton#text {color: black;}");
+  // Create the button to display the input dialog
+  m_button = new QPushButton(this);
+  m_button->setText("Open a Map");
+  m_button->setStyleSheet("QPushbutton#text {color: black;}");
 
-    // Create the input dialog
-    m_inputDialog = new QInputDialog(this);
-    m_inputDialog->setModal(true);
-    m_inputDialog->setLabelText("Select a map to open");
+  // Create the input dialog
+  m_inputDialog = new QInputDialog(this);
+  m_inputDialog->setModal(true);
+  m_inputDialog->setLabelText("Select a map to open");
 
-    m_inputDialog->setComboBoxItems(m_portalIds.keys());
+  m_inputDialog->setComboBoxItems(m_portalIds.keys());
 
-    // Connect the button clicked signal to lambda for showing input dialog
-    connect(m_button, &QPushButton::clicked, [this]() {
-        m_inputDialog->show();
-    });
+  // Connect the button clicked signal to lambda for showing input dialog
+  connect(m_button, &QPushButton::clicked, [this]()
+  {
+    m_inputDialog->show();
+  });
 
-    // Connect the input dialog accepted signal to lambda for opening the selected map
-    connect(m_inputDialog, &QInputDialog::accepted, [this]()
-      {
-        // create a portal item with the item id
-        QString portalId = m_portalIds.value(m_inputDialog->textValue() );
-        if(portalId.isEmpty())
-            return;
+  // Connect the input dialog accepted signal to lambda for opening the selected map
+  connect(m_inputDialog, &QInputDialog::accepted, [this]()
+  {
+    // create a portal item with the item id
+    QString portalId = m_portalIds.value(m_inputDialog->textValue());
+    if (portalId.isEmpty())
+    {
+      return;
+    }
 
-        PortalItem* portalItem = new PortalItem(QUrl("https://arcgis.com/sharing/rest/content/items/" + portalId), this);
+    PortalItem* portalItem = new PortalItem(QUrl("https://arcgis.com/sharing/rest/content/items/" + portalId), this);
 
-        // create a new map from the portal item
-        Map* map = new Map(portalItem, this);
+    // create a new map from the portal item
+    Map* map = new Map(portalItem, this);
 
-        // set the map to the map view
-        m_mapView->setMap(map);
-      }
-    );
+    // set the map to the map view
+    m_mapView->setMap(map);
+  });
 
-    // Set up the UI
-    createUi();
+  // Set up the UI
+  createUi();
 }
 
 OpenExistingMap::~OpenExistingMap() = default;
 
 void OpenExistingMap::createPortalMaps()
 {
-    m_portalIds.insert("Population Pressure", "392451c381ad4109bf04f7bd442bc038");
-    m_portalIds.insert("Terrestrial Ecosystems of the World", "5be0bc3ee36c4e058f7b3cebc21c74e6");
-    m_portalIds.insert("Geology of United States", "92ad152b9da94dee89b9e387dfe21acd");
+  m_portalIds.insert("Population Pressure", "392451c381ad4109bf04f7bd442bc038");
+  m_portalIds.insert("Terrestrial Ecosystems of the World", "5be0bc3ee36c4e058f7b3cebc21c74e6");
+  m_portalIds.insert("Geology of United States", "92ad152b9da94dee89b9e387dfe21acd");
 }
 
 void OpenExistingMap::createUi()
 {
-    QWidget* widget = new QWidget();
-    QVBoxLayout* layout = new QVBoxLayout();
-    layout->setContentsMargins(10, 10, 10, 10);
-    layout->addWidget(m_button);
-    widget->setPalette(QPalette(QPalette::Base));
-    widget->setLayout(layout);
+  QWidget* widget = new QWidget();
+  QVBoxLayout* layout = new QVBoxLayout();
+  layout->setContentsMargins(10, 10, 10, 10);
+  layout->addWidget(m_button);
+  widget->setPalette(QPalette(QPalette::Base));
+  widget->setLayout(layout);
 
-    QGraphicsProxyWidget *proxy = m_mapView->scene()->addWidget(widget);
-    proxy->setPos(10, 10);
-    proxy->setOpacity(0.95);
+  QGraphicsProxyWidget* proxy = m_mapView->scene()->addWidget(widget);
+  proxy->setPos(10, 10);
+  proxy->setOpacity(0.95);
 
-    QVBoxLayout* vBoxLayout = new QVBoxLayout();
-    vBoxLayout->addWidget(m_mapView);
-    setLayout(vBoxLayout);
+  QVBoxLayout* vBoxLayout = new QVBoxLayout();
+  vBoxLayout->addWidget(m_mapView);
+  setLayout(vBoxLayout);
 }

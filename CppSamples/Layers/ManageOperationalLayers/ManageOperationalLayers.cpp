@@ -31,10 +31,11 @@
 
 using namespace Esri::ArcGISRuntime;
 
-ManageOperationalLayers::ManageOperationalLayers(QObject* parent /* = nullptr */):
+ManageOperationalLayers::ManageOperationalLayers(QObject* parent /* = nullptr */) :
   QObject(parent),
   m_map(new Map(BasemapStyle::ArcGISTopographic, this)),
-  m_elevationLayer(new ArcGISMapImageLayer(QUrl("https://sampleserver5.arcgisonline.com/arcgis/rest/services/Elevation/WorldElevations/MapServer"), this)),
+  m_elevationLayer(
+    new ArcGISMapImageLayer(QUrl("https://sampleserver5.arcgisonline.com/arcgis/rest/services/Elevation/WorldElevations/MapServer"), this)),
   m_censusLayer(new ArcGISMapImageLayer(QUrl("https://sampleserver5.arcgisonline.com/arcgis/rest/services/Census/MapServer"), this)),
   m_damageLayer(new ArcGISMapImageLayer(QUrl("https://sampleserver5.arcgisonline.com/arcgis/rest/services/DamageAssessment/MapServer"), this)),
   m_drawOrderListModel(new DrawOrderLayerListModel(this))
@@ -71,7 +72,9 @@ MapQuickView* ManageOperationalLayers::mapView() const
 void ManageOperationalLayers::setMapView(MapQuickView* mapView)
 {
   if (!mapView || mapView == m_mapView)
+  {
     return;
+  }
 
   m_mapView = mapView;
   m_mapView->setMap(m_map);
@@ -87,7 +90,9 @@ QAbstractItemModel* ManageOperationalLayers::layerListModel() const
 void ManageOperationalLayers::moveLayerUp(int index)
 {
   if (!m_drawOrderListModel || !m_map)
+  {
     return;
+  }
 
   // get the index and move the layer up
   int modelIndex = m_drawOrderListModel->mappedIndex(index);
@@ -97,7 +102,9 @@ void ManageOperationalLayers::moveLayerUp(int index)
 void ManageOperationalLayers::moveLayerDown(int index)
 {
   if (!m_drawOrderListModel || !m_map)
+  {
     return;
+  }
 
   // get the index and move the layer down
   int modelIndex = m_drawOrderListModel->mappedIndex(index);
@@ -107,7 +114,9 @@ void ManageOperationalLayers::moveLayerDown(int index)
 void ManageOperationalLayers::removeLayer(int index)
 {
   if (!m_drawOrderListModel || !m_map)
+  {
     return;
+  }
 
   // get the index
   int modelIndex = m_drawOrderListModel->mappedIndex(index);
@@ -125,12 +134,16 @@ void ManageOperationalLayers::removeLayer(int index)
 void ManageOperationalLayers::addLayer(int index)
 {
   if (!m_drawOrderListModel || !m_map)
+  {
     return;
+  }
 
   // get the layer from the deleted list
   Layer* lyr = m_deletedLayers.at(index);
   if (!lyr)
+  {
     return;
+  }
 
   // remove the layer from the deleted list
   m_deletedLayers.removeAt(index);

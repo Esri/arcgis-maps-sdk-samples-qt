@@ -58,11 +58,11 @@ using namespace Esri::ArcGISRuntime;
 
 namespace
 {
-const QUrl pinUrl("qrc:/Samples/Routing/RouteAroundBarriers/orange_symbol.png");
-const QUrl routeTaskUrl("https://sampleserver6.arcgisonline.com/arcgis/rest/services/NetworkAnalysis/SanDiego/NAServer/Route");
-}
+  const QUrl pinUrl("qrc:/Samples/Routing/RouteAroundBarriers/orange_symbol.png");
+  const QUrl routeTaskUrl("https://sampleserver6.arcgisonline.com/arcgis/rest/services/NetworkAnalysis/SanDiego/NAServer/Route");
+} // namespace
 
-RouteAroundBarriers::RouteAroundBarriers(QObject* parent /* = nullptr */):
+RouteAroundBarriers::RouteAroundBarriers(QObject* parent /* = nullptr */) :
   QObject(parent),
   m_map(new Map(BasemapStyle::ArcGISStreets, this)),
   m_routeOverlay(new GraphicsOverlay(this)),
@@ -103,7 +103,9 @@ MapQuickView* RouteAroundBarriers::mapView() const
 void RouteAroundBarriers::setMapView(MapQuickView* mapView)
 {
   if (!mapView || mapView == m_mapView)
+  {
     return;
+  }
 
   m_mapView = mapView;
   m_mapView->setMap(m_map);
@@ -148,8 +150,8 @@ void RouteAroundBarriers::connectRouteSignals()
       m_stopsList << stopPoint;
 
       // create a marker symbol and graphics, and add the graphics to the graphics overlay
-      TextSymbol* textSymbol = new TextSymbol(QString::number(m_stopsList.size()), Qt::white, 16,
-                                              HorizontalAlignment::Center, VerticalAlignment::Bottom, this);
+      TextSymbol* textSymbol =
+        new TextSymbol(QString::number(m_stopsList.size()), Qt::white, 16, HorizontalAlignment::Center, VerticalAlignment::Bottom, this);
       textSymbol->setOffsetY(m_pinSymbol->height() / 2);
       CompositeSymbol* newStopSymbol = new CompositeSymbol(QList<Symbol*>{m_pinSymbol, textSymbol}, this);
 
@@ -179,7 +181,9 @@ void RouteAroundBarriers::createAndDisplayRoute()
   {
     // clear the previous route, if it exists
     if (m_routeOverlay)
+    {
       m_routeOverlay->graphics()->clear();
+    }
 
     // clear the directions list
     if (m_directions)
@@ -194,10 +198,13 @@ void RouteAroundBarriers::createAndDisplayRoute()
     m_routeParameters.setPreserveFirstStop(m_preserveFirstStop);
     m_routeParameters.setPreserveLastStop(m_preserveLastStop);
 
-    m_routeTask->solveRouteAsync(m_routeParameters).then(this, [this](const RouteResult& routeResult)
+    m_routeTask->solveRouteAsync(m_routeParameters)
+      .then(this, [this](const RouteResult& routeResult)
     {
       if (routeResult.isEmpty())
+      {
         return;
+      }
 
       const Route route = std::as_const(routeResult).routes()[0];
       const Geometry routeGeometry = route.routeGeometry();

@@ -22,12 +22,12 @@
 
 namespace Esri::ArcGISRuntime
 {
-class ImageServiceRaster;
-class Map;
-class MapQuickView;
-class MosaicRule;
-class RasterLayer;
-}
+  class ImageServiceRaster;
+  class Map;
+  class MapQuickView;
+  class MosaicRule;
+  class RasterLayer;
+} // namespace Esri::ArcGISRuntime
 
 Q_MOC_INCLUDE("MapQuickView.h")
 
@@ -61,7 +61,6 @@ private:
   Esri::ArcGISRuntime::RasterLayer* m_rasterLayer = nullptr;
   Esri::ArcGISRuntime::MosaicRule* m_mosaicRule = nullptr;
   bool m_rasterLoaded = false;
-
 };
 
 #endif // APPLYMOSAICRULETORASTERS_H

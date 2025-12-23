@@ -22,10 +22,10 @@
 
 namespace Esri::ArcGISRuntime
 {
-class Map;
-class MapQuickView;
-class FeatureLayer;
-}
+  class Map;
+  class MapQuickView;
+  class FeatureLayer;
+} // namespace Esri::ArcGISRuntime
 
 class SymbolizeShapefile : public QQuickItem
 {

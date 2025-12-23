@@ -18,20 +18,20 @@
 #define DISPLAYSUBTYPEFEATURELAYER_H
 
 // ArcGIS Maps SDK headers
-#include "SubtypeSublayer.h"
 #include "Authentication/ArcGISAuthenticationChallengeHandler.h"
+#include "SubtypeSublayer.h"
 
 namespace Esri::ArcGISRuntime
 {
-class FeatureLayer;
-class LabelDefinition;
-class Map;
-class MapQuickView;
-class Renderer;
-class SimpleRenderer;
-class SubtypeFeatureLayer;
-class SubtypeSublayer;
-}
+  class FeatureLayer;
+  class LabelDefinition;
+  class Map;
+  class MapQuickView;
+  class Renderer;
+  class SimpleRenderer;
+  class SubtypeFeatureLayer;
+  class SubtypeSublayer;
+} // namespace Esri::ArcGISRuntime
 
 namespace Esri::ArcGISRuntime::Authentication
 {

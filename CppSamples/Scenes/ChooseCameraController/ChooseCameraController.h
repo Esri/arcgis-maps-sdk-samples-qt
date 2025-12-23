@@ -22,13 +22,13 @@
 
 namespace Esri::ArcGISRuntime
 {
-class GlobeCameraController;
-class GraphicsOverlay;
-class OrbitGeoElementCameraController;
-class OrbitLocationCameraController;
-class Scene;
-class SceneQuickView;
-}
+  class GlobeCameraController;
+  class GraphicsOverlay;
+  class OrbitGeoElementCameraController;
+  class OrbitLocationCameraController;
+  class Scene;
+  class SceneQuickView;
+} // namespace Esri::ArcGISRuntime
 
 Q_MOC_INCLUDE("SceneQuickView.h")
 

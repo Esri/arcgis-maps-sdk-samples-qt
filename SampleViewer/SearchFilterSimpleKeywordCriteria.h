@@ -35,16 +35,17 @@ class SearchFilterSimpleKeywordCriteria : public SearchFilterCriteria
 {
   Q_OBJECT
 public:
-    // Modify the score if found in the title of the sample
-    static constexpr qint64 NAME_MODIFIER = 10;
-    // Modify the score if found in the readme of the sample
-    static constexpr qint64 DESCRIPTION_MODIFIER = 3;
-    // Modify the score if found in the code of the sample
-    static constexpr qint64 SOURCE_MODIFIER = 1;
+  // Modify the score if found in the title of the sample
+  static constexpr qint64 NAME_MODIFIER = 10;
+  // Modify the score if found in the readme of the sample
+  static constexpr qint64 DESCRIPTION_MODIFIER = 3;
+  // Modify the score if found in the code of the sample
+  static constexpr qint64 SOURCE_MODIFIER = 1;
+
 public:
   SearchFilterSimpleKeywordCriteria(QObject* parent = nullptr);
 
-   ~SearchFilterSimpleKeywordCriteria() override;
+  ~SearchFilterSimpleKeywordCriteria() override;
 
   void setNameModifier(qint64 modifier);
   qint64 nameModifier() const;
@@ -62,9 +63,7 @@ public:
    * \param searchString the string to search against.
    * \return pair of score value for this index , and a blank string.
    */
-  SearchResult scoreValue(
-          const QModelIndex& index,
-          const QString& searchString) const override;
+  SearchResult scoreValue(const QModelIndex& index, const QString& searchString) const override;
 
 protected:
   /*!
@@ -78,16 +77,12 @@ protected:
    * \return pair of score value for role time modifier and index of found
    *         position in search string.
    */
-  QPair<qint64, int> scoreIndex(
-          const QModelIndex& index,
-          const QString& searchString,
-          int role,
-          qint64 modifier) const;
+  QPair<qint64, int> scoreIndex(const QModelIndex& index, const QString& searchString, int role, qint64 modifier) const;
 
 private:
-  qint64 m_titleModifier { NAME_MODIFIER };
-  qint64 m_detailModifier { DESCRIPTION_MODIFIER };
-  qint64 m_codeModifier { SOURCE_MODIFIER };
+  qint64 m_titleModifier{NAME_MODIFIER};
+  qint64 m_detailModifier{DESCRIPTION_MODIFIER};
+  qint64 m_codeModifier{SOURCE_MODIFIER};
 };
 
 #endif // SEARCHFILTERKEYWORDSIMPLECRITERIA_H
