@@ -53,13 +53,12 @@
 
 using namespace Esri::ArcGISRuntime;
 
-const QUrl ClosestFacility::facilityImageUrl(
-    QStringLiteral("https://static.arcgis.com/images/Symbols/SafetyHealth/Hospital.png"));
+const QUrl ClosestFacility::facilityImageUrl(QStringLiteral("https://static.arcgis.com/images/Symbols/SafetyHealth/Hospital.png"));
 
 const QUrl ClosestFacility::sanDiegoRegion(
-    QStringLiteral("https://sampleserver6.arcgisonline.com/arcgis/rest/services/NetworkAnalysis/SanDiego/NAServer/ClosestFacility"));
+  QStringLiteral("https://sampleserver6.arcgisonline.com/arcgis/rest/services/NetworkAnalysis/SanDiego/NAServer/ClosestFacility"));
 
-ClosestFacility::ClosestFacility(QQuickItem* parent /* = nullptr */):
+ClosestFacility::ClosestFacility(QQuickItem* parent /* = nullptr */) :
   QQuickItem(parent),
   m_task(new ClosestFacilityTask(sanDiegoRegion, this))
 {
@@ -93,13 +92,17 @@ void ClosestFacility::componentComplete()
   createFacilities();
   createGraphics();
 
-  connect(m_task, &ClosestFacilityTask::doneLoading, this, [this] (const Error& loadError)
+  connect(m_task, &ClosestFacilityTask::doneLoading, this, [this](const Error& loadError)
   {
     if (!loadError.isEmpty())
+    {
       return;
+    }
 
     if (m_task->loadStatus() != LoadStatus::Loaded)
+    {
       return;
+    }
 
     setupRouting();
   });
@@ -120,7 +123,9 @@ QString ClosestFacility::message() const
 void ClosestFacility::setBusy(bool val)
 {
   if (m_busy == val)
+  {
     return;
+  }
 
   m_message.clear();
   m_busy = val;
@@ -199,7 +204,9 @@ void ClosestFacility::setupRouting()
   connect(m_mapView, &MapQuickView::mouseClicked, this, [this](QMouseEvent& mouseEvent)
   {
     if (busy())
+    {
       return;
+    }
 
     Point mapPoint = m_mapView->screenToLocation(mouseEvent.position().x(), mouseEvent.position().y());
     Point incidentPoint(mapPoint.x(), mapPoint.y(), SpatialReference::webMercator());
@@ -217,17 +224,17 @@ void ClosestFacility::setupRouting()
     m_facilityParams = defaultParameters;
     m_facilityParams.setFacilities(m_facilities);
   });
-
 }
 
 void ClosestFacility::solveRoute(const Point& incidentPoint)
 {
   m_facilityParams.clearIncidents();
-  m_facilityParams.setIncidents(QList<Incident> {Incident(incidentPoint)});
+  m_facilityParams.setIncidents(QList<Incident>{Incident(incidentPoint)});
 
   setBusy(true);
   // find the closest facility to the incident
-  m_task->solveClosestFacilityAsync(m_facilityParams).then(this, [this](const ClosestFacilityResult& closestFacilityResult)
+  m_task->solveClosestFacilityAsync(m_facilityParams)
+    .then(this, [this](const ClosestFacilityResult& closestFacilityResult)
   {
     setBusy(false);
 

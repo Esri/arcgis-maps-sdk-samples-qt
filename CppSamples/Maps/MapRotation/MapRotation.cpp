@@ -36,7 +36,7 @@
 using namespace Esri::ArcGISRuntime;
 
 MapRotation::MapRotation(QQuickItem* parent) :
-    QQuickItem(parent)
+  QQuickItem(parent)
 {
 }
 
@@ -50,22 +50,22 @@ void MapRotation::init()
 
 void MapRotation::componentComplete()
 {
-    QQuickItem::componentComplete();
+  QQuickItem::componentComplete();
 
-    // find QML MapView component
-    m_mapView = findChild<MapQuickView*>("mapView");
+  // find QML MapView component
+  m_mapView = findChild<MapQuickView*>("mapView");
 
-    // create a new basemap instance
-    Basemap* basemap = new Basemap(BasemapStyle::ArcGISStreets, this);
-    // create a new map instance and set the initial viewpoint
-    m_map = new Map(basemap, this);
-    Viewpoint initialViewpoint(Point(-11070722, 4658720, SpatialReference(102100)), 55151630);
-    m_map->setInitialViewpoint(initialViewpoint);
-    // set map on the map view
-    m_mapView->setMap(m_map);
+  // create a new basemap instance
+  Basemap* basemap = new Basemap(BasemapStyle::ArcGISStreets, this);
+  // create a new map instance and set the initial viewpoint
+  m_map = new Map(basemap, this);
+  Viewpoint initialViewpoint(Point(-11070722, 4658720, SpatialReference(102100)), 55151630);
+  m_map->setInitialViewpoint(initialViewpoint);
+  // set map on the map view
+  m_mapView->setMap(m_map);
 }
 
 void MapRotation::setMapViewRotation(double degrees)
 {
-    m_mapView->setViewpointRotationAsync(degrees);
+  m_mapView->setViewpointRotationAsync(degrees);
 }

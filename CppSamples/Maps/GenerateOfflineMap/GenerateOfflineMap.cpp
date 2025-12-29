@@ -46,7 +46,7 @@ using namespace Esri::ArcGISRuntime;
 
 const QString GenerateOfflineMap::s_webMapId = QStringLiteral("acc027394bc84c2fb04d1ed317aac674");
 
-GenerateOfflineMap::GenerateOfflineMap(QQuickItem* parent /* = nullptr */):
+GenerateOfflineMap::GenerateOfflineMap(QQuickItem* parent /* = nullptr */) :
   QQuickItem(parent)
 {
 }
@@ -77,7 +77,9 @@ void GenerateOfflineMap::componentComplete()
   connect(m_map, &Map::doneLoading, this, [this](const Error& e)
   {
     if (!e.isEmpty())
+    {
       return;
+    }
 
     m_mapLoaded = true;
     emit mapLoadedChanged();
@@ -93,7 +95,9 @@ void GenerateOfflineMap::componentComplete()
   connect(m_offlineMapTask, &OfflineMapTask::errorOccurred, this, [](const Error& e)
   {
     if (e.isEmpty())
+    {
       return;
+    }
 
     qDebug() << e.message() << e.additionalMessage();
   });
@@ -108,8 +112,7 @@ void GenerateOfflineMap::generateMapByExtent(double xCorner1, double yCorner1, d
   const Envelope mapExtent = geometry_cast<Envelope>(GeometryEngine::project(extent, SpatialReference::webMercator()));
 
   // generate parameters
-  m_offlineMapTask->createDefaultGenerateOfflineMapParametersAsync(mapExtent).then(this,
-  [this](const GenerateOfflineMapParameters& params)
+  m_offlineMapTask->createDefaultGenerateOfflineMapParametersAsync(mapExtent).then(this, [this](const GenerateOfflineMapParameters& params)
   {
     // Take the map offline once the parameters are generated
     GenerateOfflineMapJob* generateJob = m_offlineMapTask->generateOfflineMap(params, m_tempPath.path() + "/offlinemap");
@@ -121,40 +124,41 @@ void GenerateOfflineMap::generateMapByExtent(double xCorner1, double yCorner1, d
       connect(generateJob, &GenerateOfflineMapJob::statusChanged, this, [this, generateJob](JobStatus jobStatus)
       {
         // connect to the job's status changed signal to know once it is done
-        switch (jobStatus) {
-        case JobStatus::Failed:
-          emit updateStatus("Generate failed");
-          emit hideWindow(5000, false);
-          break;
-        case JobStatus::NotStarted:
-          emit updateStatus("Job not started");
-          break;
-        case JobStatus::Paused:
-          emit updateStatus("Job paused");
-          break;
-        case JobStatus::Started:
-          emit updateStatus("In progress");
-          break;
-        case JobStatus::Succeeded:
-          // show any layer errors
-          if (generateJob->result()->hasErrors())
-          {
-            QString layerErrors = "";
-            const QMap<Layer*, Error>& layerErrorsMap = generateJob->result()->layerErrors();
-            for (auto it = layerErrorsMap.cbegin(); it != layerErrorsMap.cend(); ++it)
+        switch (jobStatus)
+        {
+          case JobStatus::Failed:
+            emit updateStatus("Generate failed");
+            emit hideWindow(5000, false);
+            break;
+          case JobStatus::NotStarted:
+            emit updateStatus("Job not started");
+            break;
+          case JobStatus::Paused:
+            emit updateStatus("Job paused");
+            break;
+          case JobStatus::Started:
+            emit updateStatus("In progress");
+            break;
+          case JobStatus::Succeeded:
+            // show any layer errors
+            if (generateJob->result()->hasErrors())
             {
-              layerErrors += it.key()->name() + ": " + it.value().message() + "\n";
+              QString layerErrors = "";
+              const QMap<Layer*, Error>& layerErrorsMap = generateJob->result()->layerErrors();
+              for (auto it = layerErrorsMap.cbegin(); it != layerErrorsMap.cend(); ++it)
+              {
+                layerErrors += it.key()->name() + ": " + it.value().message() + "\n";
+              }
+              emit showLayerErrors(layerErrors);
             }
-            emit showLayerErrors(layerErrors);
-          }
 
-          // show the map
-          emit updateStatus("Complete");
-          emit hideWindow(1500, true);
-          m_mapView->setMap(generateJob->result()->offlineMap(this));
-          break;
-        default:
-          break;
+            // show the map
+            emit updateStatus("Complete");
+            emit hideWindow(1500, true);
+            m_mapView->setMap(generateJob->result()->offlineMap(this));
+            break;
+          default:
+            break;
         }
       });
 
@@ -168,7 +172,9 @@ void GenerateOfflineMap::generateMapByExtent(double xCorner1, double yCorner1, d
       connect(generateJob, &GenerateOfflineMapJob::errorOccurred, this, [](const Error& e)
       {
         if (e.isEmpty())
+        {
           return;
+        }
 
         qDebug() << e.message() << e.additionalMessage();
       });

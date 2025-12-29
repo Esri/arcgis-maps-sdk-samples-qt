@@ -44,14 +44,20 @@ int FeatureListModel::rowCount(const QModelIndex& parent) const
 QVariant FeatureListModel::data(const QModelIndex& index, int role) const
 {
   if (index.row() < 0 || index.row() >= m_features.count())
+  {
     return QVariant();
+  }
 
   const Feature* feature = m_features[index.row()];
 
   if (role == FeatureOidRole)
+  {
     return feature->attributes()->attributeValue("oid");
+  }
   else if (role == FeatureTimestampRole)
+  {
     return feature->attributes()->attributeValue("collection_timestamp");
+  }
 
   return QVariant();
 }

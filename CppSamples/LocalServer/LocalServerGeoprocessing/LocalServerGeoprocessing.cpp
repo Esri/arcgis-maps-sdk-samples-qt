@@ -57,7 +57,9 @@ LocalServerGeoprocessing::LocalServerGeoprocessing(QQuickItem* parent) :
 {
   // Create a temporary directory for the local server if one has not already been created
   if (!LocalServer::appDataPath().isEmpty() && !LocalServer::tempDataPath().isEmpty())
+  {
     return;
+  }
 
   // create temp/data path
   const QString tempPath = LocalServerGeoprocessing::shortestTempPath() + "/EsriQtTemp";
@@ -107,15 +109,19 @@ void LocalServerGeoprocessing::componentComplete()
   {
     connectSignals();
     if (LocalServer::instance()->status() == LocalServerStatus::Started)
+    {
       m_localGPService->start();
+    }
     else
+    {
       LocalServer::start();
+    }
   }
 }
 
 void LocalServerGeoprocessing::connectSignals()
 {
-  connect (m_tiledLayer, &ArcGISTiledLayer::loadStatusChanged, this, [this](LoadStatus status)
+  connect(m_tiledLayer, &ArcGISTiledLayer::loadStatusChanged, this, [this](LoadStatus status)
   {
     if (status == LoadStatus::Loaded)
     {
@@ -176,7 +182,9 @@ void LocalServerGeoprocessing::generateContours(double interval)
 void LocalServerGeoprocessing::clearResults()
 {
   if (m_mapView->map()->operationalLayers()->size() > 1)
+  {
     m_mapView->map()->operationalLayers()->removeAt(1);
+  }
 }
 
 QString LocalServerGeoprocessing::shortestTempPath()
@@ -187,7 +195,11 @@ QString LocalServerGeoprocessing::shortestTempPath()
 
   // return whichever is shorter, temp or home path
   if (homePath.length() > tmpPath.length())
+  {
     return tmpPath;
+  }
   else
+  {
     return homePath;
+  }
 }

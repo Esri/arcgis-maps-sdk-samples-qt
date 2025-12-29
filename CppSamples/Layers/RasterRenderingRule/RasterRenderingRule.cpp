@@ -44,7 +44,7 @@
 
 using namespace Esri::ArcGISRuntime;
 
-RasterRenderingRule::RasterRenderingRule(QQuickItem* parent /* = nullptr */):
+RasterRenderingRule::RasterRenderingRule(QQuickItem* parent /* = nullptr */) :
   QQuickItem(parent)
 {
 }

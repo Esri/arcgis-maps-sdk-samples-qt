@@ -48,7 +48,7 @@
 
 using namespace Esri::ArcGISRuntime;
 
-CreateGeometries::CreateGeometries(QQuickItem* parent /* = nullptr */):
+CreateGeometries::CreateGeometries(QQuickItem* parent /* = nullptr */) :
   QQuickItem(parent)
 {
 }
@@ -78,7 +78,9 @@ void CreateGeometries::componentComplete()
   connect(m_map, &Map::doneLoading, this, [this](const Error& e)
   {
     if (!e.isEmpty())
+    {
       return;
+    }
 
     addGraphics();
   });

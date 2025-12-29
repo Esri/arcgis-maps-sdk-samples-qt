@@ -42,7 +42,7 @@ using namespace Esri::ArcGISRuntime;
 using namespace Esri::ArcGISRuntime::Authentication;
 using namespace Esri::ArcGISRuntime::Toolkit;
 
-ShowOrgBasemaps::ShowOrgBasemaps(QQuickItem* parent /* = nullptr */):
+ShowOrgBasemaps::ShowOrgBasemaps(QQuickItem* parent /* = nullptr */) :
   QQuickItem(parent)
 {
 }
@@ -71,8 +71,7 @@ void ShowOrgBasemaps::connectLoadStatusSignal()
 
       if (m_portalLoaded)
       {
-        m_portal->fetchBasemapsAsync().then(this,
-        [this]()
+        m_portal->fetchBasemapsAsync().then(this, [this]()
         {
           emit basemapsChanged();
         });
@@ -97,7 +96,9 @@ bool ShowOrgBasemaps::portalLoading() const
 QString ShowOrgBasemaps::orgName() const
 {
   if (!m_portalLoaded || !m_portal || !m_portal->portalInfo())
+  {
     return QString();
+  }
 
   return m_portal->portalInfo()->organizationName();
 }
@@ -141,22 +142,32 @@ void ShowOrgBasemaps::load(bool anonymous)
 void ShowOrgBasemaps::load()
 {
   if (!m_portal)
+  {
     return;
+  }
 
   if (m_portal->loadStatus() == LoadStatus::FailedToLoad)
+  {
     m_portal->retryLoad();
+  }
   else
+  {
     m_portal->load();
+  }
 }
 
 void ShowOrgBasemaps::loadSelectedBasemap(int index)
 {
   if (!m_portal || !m_portal->basemaps())
+  {
     return;
+  }
 
   Basemap* selectedBasemap = m_portal->basemaps()->at(index);
   if (!selectedBasemap)
+  {
     return;
+  }
 
   if (m_map)
   {
@@ -178,7 +189,9 @@ void ShowOrgBasemaps::loadSelectedBasemap(int index)
   connect(m_map, &Map::loadStatusChanged, this, [this]()
   {
     if (!m_map || m_map->loadStatus() != LoadStatus::Loaded)
+    {
       return;
+    }
 
     m_mapView->setMap(m_map);
     m_mapView->setVisible(true);

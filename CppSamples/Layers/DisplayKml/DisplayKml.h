@@ -25,12 +25,12 @@
 
 namespace Esri::ArcGISRuntime
 {
-class SceneQuickView;
-class Scene;
-class KmlLayer;
-class KmlDataset;
-class PortalItem;
-}
+  class SceneQuickView;
+  class Scene;
+  class KmlLayer;
+  class KmlDataset;
+  class PortalItem;
+} // namespace Esri::ArcGISRuntime
 
 class DisplayKml : public QQuickItem
 {

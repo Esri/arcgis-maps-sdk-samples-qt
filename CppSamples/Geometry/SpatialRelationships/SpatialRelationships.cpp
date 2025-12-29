@@ -53,7 +53,7 @@
 
 using namespace Esri::ArcGISRuntime;
 
-SpatialRelationships::SpatialRelationships(QQuickItem* parent /* = nullptr */):
+SpatialRelationships::SpatialRelationships(QQuickItem* parent /* = nullptr */) :
   QQuickItem(parent)
 {
 }
@@ -156,15 +156,17 @@ void SpatialRelationships::connectSignals()
   connect(m_mapView, &MapQuickView::mouseClicked, this, [this](QMouseEvent& mouseEvent)
   {
     // identify graphics
-    m_mapView->identifyGraphicsOverlayAsync(m_graphicsOverlay, mouseEvent.position(), 1.0 /*tolerance*/, false /*returnPopupsOnly*/).then(this,
-    [this](IdentifyGraphicsOverlayResult* rawResult)
+    m_mapView->identifyGraphicsOverlayAsync(m_graphicsOverlay, mouseEvent.position(), 1.0 /*tolerance*/, false /*returnPopupsOnly*/)
+      .then(this, [this](IdentifyGraphicsOverlayResult* rawResult)
     {
       // Delete rawReslt when we leave scope.
       auto result = std::unique_ptr<IdentifyGraphicsOverlayResult>(rawResult);
 
       const QList<Graphic*> identifiedGraphics = result->graphics();
       if (identifiedGraphics.isEmpty())
+      {
         return;
+      }
 
       // get the first identified graphic
       Graphic* graphic = identifiedGraphics.at(0);
@@ -202,7 +204,6 @@ void SpatialRelationships::connectSignals()
 
       emit relationshipsChanged();
     });
-
   });
 }
 
@@ -211,18 +212,32 @@ QStringList SpatialRelationships::getSpatialRelationships(const Geometry& geom1,
 {
   QStringList relationships;
   if (GeometryEngine::crosses(geom1, geom2))
+  {
     relationships.append("CROSSES");
+  }
   if (GeometryEngine::contains(geom1, geom2))
+  {
     relationships.append("CONTAINS");
+  }
   if (GeometryEngine::disjoint(geom1, geom2))
+  {
     relationships.append("DISJOINT");
+  }
   if (GeometryEngine::intersects(geom1, geom2))
+  {
     relationships.append("INTERSECTS");
+  }
   if (GeometryEngine::overlaps(geom1, geom2))
+  {
     relationships.append("OVERLAPS");
+  }
   if (GeometryEngine::touches(geom1, geom2))
+  {
     relationships.append("TOUCHES");
+  }
   if (GeometryEngine::within(geom1, geom2))
+  {
     relationships.append("WITHIN");
+  }
   return relationships;
 }

@@ -44,7 +44,12 @@ public:
   void addCodeFile(SourceCode* codeFile);
   int rowCount(const QModelIndex& parent = QModelIndex()) const override;
   QVariant data(const QModelIndex& index, int role = Qt::DisplayRole) const override;
-  int size() const { return m_codeFiles.size(); }
+
+  int size() const
+  {
+    return m_codeFiles.size();
+  }
+
   void setupRoles();
 
 protected:

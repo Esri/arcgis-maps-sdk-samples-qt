@@ -26,15 +26,15 @@
 
 namespace Esri::ArcGISRuntime
 {
-class FeatureLayer;
-class GraphicsOverlay;
-class Map;
-class MapQuickView;
-class ServiceAreaResult;
-class ServiceAreaTask;
-class ServiceFeatureTable;
-class SimpleFillSymbol;
-}
+  class FeatureLayer;
+  class GraphicsOverlay;
+  class Map;
+  class MapQuickView;
+  class ServiceAreaResult;
+  class ServiceAreaTask;
+  class ServiceFeatureTable;
+  class SimpleFillSymbol;
+} // namespace Esri::ArcGISRuntime
 
 Q_MOC_INCLUDE("MapQuickView.h")
 

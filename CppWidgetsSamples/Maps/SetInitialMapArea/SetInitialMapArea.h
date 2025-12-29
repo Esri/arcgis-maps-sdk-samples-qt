@@ -17,11 +17,11 @@
 #ifndef SET_INITIAL_MAP_AREA_H
 #define SET_INITIAL_MAP_AREA_H
 
-namespace Esri::ArcGISRuntime 
+namespace Esri::ArcGISRuntime
 {
   class Map;
   class MapGraphicsView;
-}
+} // namespace Esri::ArcGISRuntime
 
 #include <QWidget>
 

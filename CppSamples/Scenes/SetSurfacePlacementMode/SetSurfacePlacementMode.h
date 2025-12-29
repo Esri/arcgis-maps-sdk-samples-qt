@@ -24,7 +24,7 @@ namespace Esri::ArcGISRuntime
 {
   class SceneQuickView;
   class GraphicsOverlay;
-}
+} // namespace Esri::ArcGISRuntime
 
 class SetSurfacePlacementMode : public QQuickItem
 {

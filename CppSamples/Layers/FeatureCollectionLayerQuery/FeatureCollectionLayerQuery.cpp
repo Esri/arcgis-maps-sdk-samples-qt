@@ -40,7 +40,7 @@
 
 using namespace Esri::ArcGISRuntime;
 
-FeatureCollectionLayerQuery::FeatureCollectionLayerQuery(QQuickItem* parent /* = nullptr */):
+FeatureCollectionLayerQuery::FeatureCollectionLayerQuery(QQuickItem* parent /* = nullptr */) :
   QQuickItem(parent)
 {
 }
@@ -60,7 +60,9 @@ bool FeatureCollectionLayerQuery::busy() const
 void FeatureCollectionLayerQuery::setBusy(bool val)
 {
   if (val == m_busy)
+  {
     return;
+  }
 
   m_busy = val;
   emit busyChanged();
@@ -80,7 +82,8 @@ void FeatureCollectionLayerQuery::componentComplete()
   m_mapView->setMap(m_map);
 
   //initialize service feature table to be queried
-  m_featureTable = new ServiceFeatureTable(QUrl(QStringLiteral("https://sampleserver6.arcgisonline.com/arcgis/rest/services/Wildfire/FeatureServer/0")), this);
+  m_featureTable =
+    new ServiceFeatureTable(QUrl(QStringLiteral("https://sampleserver6.arcgisonline.com/arcgis/rest/services/Wildfire/FeatureServer/0")), this);
 
   //create query parameters
   QueryParameters queryParams;
@@ -88,18 +91,21 @@ void FeatureCollectionLayerQuery::componentComplete()
   // 1=1 will give all the features from the table
   queryParams.setWhereClause("1=1");
 
-  m_featureTable->queryFeaturesAsync(queryParams).then(this, [this](FeatureQueryResult* featureQueryResult)
+  m_featureTable->queryFeaturesAsync(queryParams)
+    .then(this, [this](FeatureQueryResult* featureQueryResult)
   {
     setBusy(false);
 
     if (!featureQueryResult)
+    {
       return;
+    }
 
     //create a feature collection table fromt the query results
     FeatureCollectionTable* featureCollectionTable = new FeatureCollectionTable(featureQueryResult, this);
 
     //create a feature collection from the above feature collection table
-    FeatureCollection* featureCollection = new FeatureCollection(QList<FeatureCollectionTable*> {featureCollectionTable}, this);
+    FeatureCollection* featureCollection = new FeatureCollection(QList<FeatureCollectionTable*>{featureCollectionTable}, this);
 
     //create a feature collection layer
     FeatureCollectionLayer* featureCollectionLayer = new FeatureCollectionLayer(featureCollection, this);

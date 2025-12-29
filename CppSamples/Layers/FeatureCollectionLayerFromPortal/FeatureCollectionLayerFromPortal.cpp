@@ -37,10 +37,10 @@ using namespace Esri::ArcGISRuntime;
 
 namespace
 {
-const QString featureCollectionItemId("32798dfad17942858d5eef82ee802f0b");
+  const QString featureCollectionItemId("32798dfad17942858d5eef82ee802f0b");
 }
 
-FeatureCollectionLayerFromPortal::FeatureCollectionLayerFromPortal(QObject* parent /* = nullptr */):
+FeatureCollectionLayerFromPortal::FeatureCollectionLayerFromPortal(QObject* parent /* = nullptr */) :
   QObject(parent),
   m_map(new Map(BasemapStyle::ArcGISOceans, this))
 {
@@ -89,7 +89,9 @@ MapQuickView* FeatureCollectionLayerFromPortal::mapView() const
 void FeatureCollectionLayerFromPortal::setMapView(MapQuickView* mapView)
 {
   if (!mapView || mapView == m_mapView)
+  {
     return;
+  }
 
   m_mapView = mapView;
   m_mapView->setMap(m_map);

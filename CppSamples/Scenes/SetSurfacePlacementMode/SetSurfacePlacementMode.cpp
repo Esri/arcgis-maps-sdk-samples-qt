@@ -46,7 +46,7 @@
 
 using namespace Esri::ArcGISRuntime;
 
-SetSurfacePlacementMode::SetSurfacePlacementMode(QQuickItem* parent /* = nullptr */):
+SetSurfacePlacementMode::SetSurfacePlacementMode(QQuickItem* parent /* = nullptr */) :
   QQuickItem(parent)
 {
 }
@@ -68,11 +68,13 @@ void SetSurfacePlacementMode::componentComplete()
   m_sceneView = findChild<SceneQuickView*>("sceneView");
   Scene* scene = new Scene(BasemapStyle::ArcGISImageryStandard, this);
   Surface* surface = new Surface(this);
-  surface->elevationSources()->append(new ArcGISTiledElevationSource(QUrl("https://elevation3d.arcgis.com/arcgis/rest/services/WorldElevation3D/Terrain3D/ImageServer"), this));
+  surface->elevationSources()->append(
+    new ArcGISTiledElevationSource(QUrl("https://elevation3d.arcgis.com/arcgis/rest/services/WorldElevation3D/Terrain3D/ImageServer"), this));
   scene->setBaseSurface(surface);
 
   // Create scene layer from the Brest, France scene server.
-  ArcGISSceneLayer* sceneLayer = new ArcGISSceneLayer(QUrl("https://tiles.arcgis.com/tiles/P3ePLMYs2RVChkJx/arcgis/rest/services/Buildings_Brest/SceneServer"), this);
+  ArcGISSceneLayer* sceneLayer =
+    new ArcGISSceneLayer(QUrl("https://tiles.arcgis.com/tiles/P3ePLMYs2RVChkJx/arcgis/rest/services/Buildings_Brest/SceneServer"), this);
   scene->operationalLayers()->append(sceneLayer);
   //! [Create Scene API snippet]
 
@@ -127,19 +129,21 @@ void SetSurfacePlacementMode::addGraphics()
   const Point sceneRelatedPoint(-4.4610562, 48.3902727, 70, SpatialReference::wgs84());
 
   // create point for the surface related graphics with z value of 70
-  const Point surfaceRelatedPoint(-4.4609257, 48.3903965 , 70, SpatialReference::wgs84());
+  const Point surfaceRelatedPoint(-4.4609257, 48.3903965, 70, SpatialReference::wgs84());
 
   // create simple marker symbol
   SimpleMarkerSymbol* simpleMarkerSymbol = new SimpleMarkerSymbol(SimpleMarkerSymbolStyle::Triangle, QColor("red"), 20, this);
 
   // create text symbols
-  TextSymbol* drapedBillboardedText = new TextSymbol("DRAPED BILLBOARDED", QColor("blue"), 20, HorizontalAlignment::Left, VerticalAlignment::Middle, this);
+  TextSymbol* drapedBillboardedText =
+    new TextSymbol("DRAPED BILLBOARDED", QColor("blue"), 20, HorizontalAlignment::Left, VerticalAlignment::Middle, this);
   drapedBillboardedText->setOffsetX(20);
   TextSymbol* drapedFlatText = new TextSymbol("DRAPED FLAT", QColor("blue"), 20, HorizontalAlignment::Left, VerticalAlignment::Middle, this);
   drapedFlatText->setOffsetX(20);
   TextSymbol* relativeText = new TextSymbol("RELATIVE", QColor("blue"), 20, HorizontalAlignment::Left, VerticalAlignment::Middle, this);
   relativeText->setOffsetX(20);
-  TextSymbol* relativeToSceneText = new TextSymbol("RELATIVE TO SCENE", QColor("blue"), 20, HorizontalAlignment::Right, VerticalAlignment::Middle, this);
+  TextSymbol* relativeToSceneText =
+    new TextSymbol("RELATIVE TO SCENE", QColor("blue"), 20, HorizontalAlignment::Right, VerticalAlignment::Middle, this);
   relativeToSceneText->setOffsetX(-20);
   TextSymbol* absoluteText = new TextSymbol("ABSOLUTE", QColor("blue"), 20, HorizontalAlignment::Left, VerticalAlignment::Middle, this);
   absoluteText->setOffsetX(20);

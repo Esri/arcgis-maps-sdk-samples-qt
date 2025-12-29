@@ -23,10 +23,10 @@
 
 namespace Esri::ArcGISRuntime
 {
-class SceneQuickView;
-class LocationViewshed;
-class AnalysisOverlay;
-}
+  class SceneQuickView;
+  class LocationViewshed;
+  class AnalysisOverlay;
+} // namespace Esri::ArcGISRuntime
 
 class ViewshedLocation : public QQuickItem
 {

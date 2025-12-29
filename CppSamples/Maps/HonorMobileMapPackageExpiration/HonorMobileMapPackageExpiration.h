@@ -22,9 +22,9 @@
 
 namespace Esri::ArcGISRuntime
 {
-class MapQuickView;
-class MobileMapPackage;
-}
+  class MapQuickView;
+  class MobileMapPackage;
+} // namespace Esri::ArcGISRuntime
 
 Q_MOC_INCLUDE("MapQuickView.h")
 

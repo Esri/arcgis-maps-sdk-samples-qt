@@ -34,6 +34,7 @@
 #include "IdentifyLayerResult.h"
 #include "LabelDefinition.h"
 #include "LabelDefinitionListModel.h"
+#include "LabelingTypes.h"
 #include "LayerListModel.h"
 #include "Map.h"
 #include "MapQuickView.h"
@@ -41,7 +42,6 @@
 #include "PopupDefinition.h"
 #include "PortalItem.h"
 #include "ReductionTypes.h"
-#include "LabelingTypes.h"
 #include "SimpleLabelExpression.h"
 #include "SimpleMarkerSymbol.h"
 #include "SymbolTypes.h"
@@ -55,7 +55,7 @@
 
 using namespace Esri::ArcGISRuntime;
 
-ConfigureClusters::ConfigureClusters(QObject* parent /* = nullptr */):
+ConfigureClusters::ConfigureClusters(QObject* parent /* = nullptr */) :
   QObject(parent)
 {
   // Create a map from a web map PortalItem.
@@ -72,7 +72,9 @@ ConfigureClusters::ConfigureClusters(QObject* parent /* = nullptr */):
 
     const LayerListModel* operationalLayers = m_map->operationalLayers();
     if (operationalLayers->isEmpty())
+    {
       return;
+    }
 
     m_layer = qobject_cast<FeatureLayer*>(operationalLayers->first());
   });
@@ -96,7 +98,9 @@ MapQuickView* ConfigureClusters::mapView() const
 void ConfigureClusters::setMapView(MapQuickView* mapView)
 {
   if (!mapView || mapView == m_mapView)
+  {
     return;
+  }
 
   m_mapView = mapView;
   m_mapView->setMap(m_map);
@@ -112,7 +116,9 @@ void ConfigureClusters::setMapView(MapQuickView* mapView)
 void ConfigureClusters::setClusterRadius(double clusterRadius)
 {
   if (!m_clusteringFeatureReduction)
+  {
     return;
+  }
 
   m_clusteringFeatureReduction->setRadius(clusterRadius);
 }
@@ -120,7 +126,9 @@ void ConfigureClusters::setClusterRadius(double clusterRadius)
 void ConfigureClusters::setMaxScale(double maxScale)
 {
   if (!m_clusteringFeatureReduction)
+  {
     return;
+  }
 
   m_clusteringFeatureReduction->setMaxScale(maxScale);
 }
@@ -128,7 +136,9 @@ void ConfigureClusters::setMaxScale(double maxScale)
 double ConfigureClusters::mapScale() const
 {
   if (!m_mapView)
+  {
     return 0.0;
+  }
 
   return m_mapView->mapScale();
 }
@@ -138,8 +148,7 @@ void ConfigureClusters::createCustomFeatureReduction()
   // Add a class break for each intended value range and define a symbol to display for features in that range.
   // In this case, the average building height ranges from 0 to 8 stories.
   // For each cluster of features with a given average building height, a symbol is defined with a specified color.
-  const QList<ClassBreak*> classBreaks =
-  {
+  const QList<ClassBreak*> classBreaks = {
     new ClassBreak("0", "0", 0.0, 1.0, new SimpleMarkerSymbol(SimpleMarkerSymbolStyle::Circle, QColor(4, 251, 255), 8.0, this), this),
     new ClassBreak("1", "1", 1.0, 2.0, new SimpleMarkerSymbol(SimpleMarkerSymbolStyle::Circle, QColor(44, 211, 255), 8.0, this), this),
     new ClassBreak("2", "2", 2.0, 3.0, new SimpleMarkerSymbol(SimpleMarkerSymbolStyle::Circle, QColor(74, 181, 255), 8.0, this), this),
@@ -147,8 +156,7 @@ void ConfigureClusters::createCustomFeatureReduction()
     new ClassBreak("4", "4", 4.0, 5.0, new SimpleMarkerSymbol(SimpleMarkerSymbolStyle::Circle, QColor(165, 90, 255), 8.0, this), this),
     new ClassBreak("5", "5", 5.0, 6.0, new SimpleMarkerSymbol(SimpleMarkerSymbolStyle::Circle, QColor(194, 61, 255), 8.0, this), this),
     new ClassBreak("6", "6", 6.0, 7.0, new SimpleMarkerSymbol(SimpleMarkerSymbolStyle::Circle, QColor(224, 31, 255), 8.0, this), this),
-    new ClassBreak("7", "7", 7.0, 8.0, new SimpleMarkerSymbol(SimpleMarkerSymbolStyle::Circle, QColor(254, 1, 255), 8.0, this), this)
-  };
+    new ClassBreak("7", "7", 7.0, 8.0, new SimpleMarkerSymbol(SimpleMarkerSymbolStyle::Circle, QColor(254, 1, 255), 8.0, this), this)};
 
   // Create a class breaks renderer to apply to the custom feature reduction.
   // Define the field to use for the class breaks renderer.
@@ -164,10 +172,10 @@ void ConfigureClusters::createCustomFeatureReduction()
   // Set the feature reduction's aggregate fields. Note that the field names must match the names of fields in the feature layer's dataset.
   // The aggregate fields summarize values based on the defined aggregate statistic type.
   m_clusteringFeatureReduction->aggregateFields()->append(
-      new AggregateField("Total Residential Buildings", "Residential_Buildings", AggregateStatisticType::Sum, this));
+    new AggregateField("Total Residential Buildings", "Residential_Buildings", AggregateStatisticType::Sum, this));
 
   m_clusteringFeatureReduction->aggregateFields()->append(
-      new AggregateField("Average Building Height", "Most_common_number_of_storeys", AggregateStatisticType::Mode, this));
+    new AggregateField("Average Building Height", "Most_common_number_of_storeys", AggregateStatisticType::Mode, this));
 
   // Enable the feature reduction.
   m_clusteringFeatureReduction->setEnabled(true);
@@ -197,7 +205,9 @@ void ConfigureClusters::drawClusters()
 {
   // If the layer is not yet loaded, do nothing.
   if (!m_layer)
+  {
     return;
+  }
 
   // Create a new clustering feature reduction.
   createCustomFeatureReduction();
@@ -206,7 +216,9 @@ void ConfigureClusters::drawClusters()
 void ConfigureClusters::displayLabels(bool checked)
 {
   if (!m_clusteringFeatureReduction)
+  {
     return;
+  }
 
   if (checked)
   {
@@ -229,47 +241,58 @@ void ConfigureClusters::displayLabels(bool checked)
 void ConfigureClusters::mouseClicked(QMouseEvent& mouseEvent)
 {
   if (!m_layer)
+  {
     return;
+  }
 
   // clear cluster selection
   if (m_aggregateGeoElement)
+  {
     m_aggregateGeoElement->setSelected(false);
+  }
 
   // Clean up any children objects associated with this parent
   m_resultParent.reset(new QObject(this));
   m_aggregateGeoElement = nullptr;
 
   // Identify the tapped observation.
-  m_mapView->identifyLayerAsync(m_layer, mouseEvent.position(), 3.0, true, m_resultParent.get()).then(this, [this](IdentifyLayerResult* result)
+  m_mapView->identifyLayerAsync(m_layer, mouseEvent.position(), 3.0, true, m_resultParent.get())
+    .then(this, [this](IdentifyLayerResult* result)
   {
     // clear cluster selection
     if (m_aggregateGeoElement)
+    {
       m_aggregateGeoElement->setSelected(false);
+    }
     if (!result->popups().isEmpty())
     {
       Popup* popup = result->popups().at(0);
       m_aggregateGeoElement = dynamic_cast<AggregateGeoElement*>(popup->geoElement());
       if (m_aggregateGeoElement)
+      {
         m_aggregateGeoElement->setSelected(true);
+      }
 
       QList<PopupElement*> popupElements;
 
       const auto attributes = popup->geoElement()->attributes();
       for (const QString& attrName : attributes->attributeNames())
       {
-       QString value = attributes->attributeValue(attrName).toString();
+        QString value = attributes->attributeValue(attrName).toString();
 
-       TextPopupElement* textElement = new TextPopupElement(attrName + ": " + value, this);
-       popupElements.append(textElement);
+        TextPopupElement* textElement = new TextPopupElement(attrName + ": " + value, this);
+        popupElements.append(textElement);
       }
       m_popup = new Popup(popup->geoElement(), this);
       emit popupChanged();
     }
-    });
+  });
 }
 
 void ConfigureClusters::clearSelection() const
 {
   if (m_aggregateGeoElement)
+  {
     m_aggregateGeoElement->setSelected(false);
+  }
 }

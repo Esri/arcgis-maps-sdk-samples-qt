@@ -44,7 +44,7 @@
 
 using namespace Esri::ArcGISRuntime;
 
-FeatureLayerExtrusion::FeatureLayerExtrusion(QQuickItem* parent /* = nullptr */):
+FeatureLayerExtrusion::FeatureLayerExtrusion(QQuickItem* parent /* = nullptr */) :
   QQuickItem(parent),
   // define line and fill symbols for a simple renderer
   m_lineSymbol(new SimpleLineSymbol(SimpleLineSymbolStyle::Solid, QColor("Black"), 1.0f, this)),
@@ -86,9 +86,7 @@ void FeatureLayerExtrusion::componentComplete()
   Scene* scene = new Scene(BasemapStyle::ArcGISImageryStandard, this);
   Surface* surface = new Surface(this);
   surface->elevationSources()->append(
-        new ArcGISTiledElevationSource(
-          QUrl("https://elevation3d.arcgis.com/arcgis/rest/services/WorldElevation3D/Terrain3D/ImageServer"),
-          this));
+    new ArcGISTiledElevationSource(QUrl("https://elevation3d.arcgis.com/arcgis/rest/services/WorldElevation3D/Terrain3D/ImageServer"), this));
   scene->setBaseSurface(surface);
   scene->operationalLayers()->append(m_featureLayer);
 

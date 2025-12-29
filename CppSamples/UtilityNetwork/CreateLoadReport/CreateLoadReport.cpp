@@ -62,7 +62,7 @@
 using namespace Esri::ArcGISRuntime;
 using namespace Esri::ArcGISRuntime::Authentication;
 
-CreateLoadReport::CreateLoadReport(QObject* parent /* = nullptr */):
+CreateLoadReport::CreateLoadReport(QObject* parent /* = nullptr */) :
   ArcGISAuthenticationChallengeHandler(parent)
 {
   ArcGISRuntimeEnvironment::authenticationManager()->setArcGISAuthenticationChallengeHandler(this);
@@ -85,16 +85,10 @@ CreateLoadReport::CreateLoadReport(QObject* parent /* = nullptr */):
   {
     if (m_utilityNetwork->loadStatus() == LoadStatus::Loaded)
     {
-      m_utilityAssetType = m_utilityNetwork
-          ->definition()
-          ->networkSource(m_networkSourceName)
-          ->assetGroup(m_assetGroupName)
-          ->assetType(m_assetTypeName);
+      m_utilityAssetType =
+        m_utilityNetwork->definition()->networkSource(m_networkSourceName)->assetGroup(m_assetGroupName)->assetType(m_assetTypeName);
 
-      m_utilityTier = m_utilityNetwork
-          ->definition()
-          ->domainNetwork(m_domainNetworkName)
-          ->tier(m_tierName);
+      m_utilityTier = m_utilityNetwork->definition()->domainNetwork(m_domainNetworkName)->tier(m_tierName);
 
       // Create a UtilityElement from the UtilityAssetType to use as the starting location
       m_startingLocation = createStartingLocation();
@@ -130,11 +124,15 @@ CreateLoadReport::CreateLoadReport(QObject* parent /* = nullptr */):
 UtilityElement* CreateLoadReport::createStartingLocation()
 {
   if (!m_utilityAssetType)
+  {
     return nullptr;
+  }
 
   const QList<UtilityTerminal*> utilityTerminals = m_utilityAssetType->terminalConfiguration()->terminals();
   if (!utilityTerminals.first())
+  {
     return nullptr;
+  }
 
   UtilityTerminal* loadTerminal = nullptr;
 
@@ -149,7 +147,9 @@ UtilityElement* CreateLoadReport::createStartingLocation()
   }
 
   if (!loadTerminal)
+  {
     return nullptr;
+  }
 
   return m_utilityNetwork->createElementWithAssetType(m_utilityAssetType, QUuid(m_globalId), loadTerminal, this);
 }
@@ -165,8 +165,10 @@ UtilityTraceConfiguration* CreateLoadReport::createDefaultTraceConfiguration()
   UtilityNetworkAttribute* serviceLoadAttribute = m_utilityNetwork->definition()->networkAttribute(m_loadNetworkAttributeName);
 
   // Create a comparison to check the existence of service points.
-  UtilityCategoryComparison* serviceCategoryComparison = new UtilityCategoryComparison(servicePointCategory, UtilityCategoryComparisonOperator::Exists, this);
-  UtilityTraceFunction* addLoadAttributeFunction = new UtilityTraceFunction(UtilityTraceFunctionType::Add, serviceLoadAttribute, serviceCategoryComparison, this);
+  UtilityCategoryComparison* serviceCategoryComparison =
+    new UtilityCategoryComparison(servicePointCategory, UtilityCategoryComparisonOperator::Exists, this);
+  UtilityTraceFunction* addLoadAttributeFunction =
+    new UtilityTraceFunction(UtilityTraceFunctionType::Add, serviceLoadAttribute, serviceCategoryComparison, this);
 
   traceConfig->functions()->clear();
 
@@ -188,7 +190,9 @@ UtilityCategory* CreateLoadReport::getUtilityCategory(const QString& categoryNam
   for (UtilityCategory* utilityCategory : utilityCategories)
   {
     if (utilityCategory->name() == categoryName)
+    {
       return utilityCategory;
+    }
   }
   return nullptr;
 }
@@ -219,7 +223,9 @@ void CreateLoadReport::runReport(const QStringList& selectedPhaseNames)
   for (const CodedValue& codedValue : std::as_const(m_phaseList))
   {
     if (selectedPhaseNames.contains(codedValue.name()))
+    {
       activeValues.append(codedValue);
+    }
 
     // Reset the report values
     m_phaseCust.remove(codedValue.name());
@@ -231,14 +237,16 @@ void CreateLoadReport::runReport(const QStringList& selectedPhaseNames)
   for (const CodedValue& codedValue : activeValues)
   {
     setUtilityTraceOrconditionWithCodedValue(codedValue);
-    m_utilityNetwork->traceAsync(m_traceParameters).then(this, [this, codedValue](QList<UtilityTraceResult*>)
+    m_utilityNetwork->traceAsync(m_traceParameters)
+      .then(this, [this, codedValue](QList<UtilityTraceResult*>)
     {
       onTraceCompleted_(codedValue.name());
     });
   }
 
   // If no phases were selected then the sample was reset and can be marked ready
-  if (selectedPhaseNames.size() == 0) {
+  if (selectedPhaseNames.size() == 0)
+  {
     m_sampleStatus = CreateLoadReport::SampleReady;
     emit sampleStatusChanged();
   }
@@ -247,14 +255,13 @@ void CreateLoadReport::runReport(const QStringList& selectedPhaseNames)
 void CreateLoadReport::setUtilityTraceOrconditionWithCodedValue(CodedValue codedValue)
 {
   if (!m_baseCondition)
+  {
     return;
+  }
 
   // Create a conditional expression with the CodedValue
   UtilityNetworkAttributeComparison* utilityNetworkAttributeComparison =
-        new UtilityNetworkAttributeComparison(
-          m_phasesCurrentAttribute,
-          UtilityAttributeComparisonOperator::DoesNotIncludeAny,
-          codedValue.code(), this);
+    new UtilityNetworkAttributeComparison(m_phasesCurrentAttribute, UtilityAttributeComparisonOperator::DoesNotIncludeAny, codedValue.code(), this);
 
   // Chain it with the base condition using an OR operator.
   UtilityTraceOrCondition* utilityTraceOrCondition = new UtilityTraceOrCondition(m_baseCondition, utilityNetworkAttributeComparison, this);
@@ -269,11 +276,15 @@ void CreateLoadReport::onTraceCompleted_(const QString& codedValueName)
   {
     // Get the total customers from the UtilityElementTraceResult
     if (UtilityElementTraceResult* elementResult = dynamic_cast<UtilityElementTraceResult*>(result))
+    {
       m_phaseCust[codedValueName] = elementResult->elements(this).size();
+    }
 
     // Get the total load from the UtilityFunctionTraceResult
     else if (UtilityFunctionTraceResult* functionResult = dynamic_cast<UtilityFunctionTraceResult*>(result))
+    {
       m_phaseLoad[codedValueName] = std::as_const(functionResult)->functionOutputs().first()->result().toInt();
+    }
   }
 
   emit loadReportUpdated();
@@ -314,10 +325,13 @@ int CreateLoadReport::sampleStatus()
 
 void CreateLoadReport::handleArcGISAuthenticationChallenge(ArcGISAuthenticationChallenge* challenge)
 {
-  TokenCredential::createWithChallengeAsync(challenge, "viewer01", "I68VGU^nMurF", {}, this).then(this, [challenge](TokenCredential* tokenCredential)
+  TokenCredential::createWithChallengeAsync(challenge, "viewer01", "I68VGU^nMurF", {}, this)
+    .then(this,
+          [challenge](TokenCredential* tokenCredential)
   {
     challenge->continueWithCredential(tokenCredential);
-  }).onFailed(this, [challenge](const ErrorException& e)
+  })
+    .onFailed(this, [challenge](const ErrorException& e)
   {
     challenge->continueWithError(e.error());
   });

@@ -44,21 +44,21 @@ using namespace Esri::ArcGISRuntime;
 // helper method to get cross platform data path
 namespace
 {
-QString defaultDataPath()
-{
-  QString dataPath;
+  QString defaultDataPath()
+  {
+    QString dataPath;
 
 #ifdef Q_OS_IOS
-  dataPath = QStandardPaths::writableLocation(QStandardPaths::DocumentsLocation);
+    dataPath = QStandardPaths::writableLocation(QStandardPaths::DocumentsLocation);
 #else
-  dataPath = QStandardPaths::writableLocation(QStandardPaths::HomeLocation);
+    dataPath = QStandardPaths::writableLocation(QStandardPaths::HomeLocation);
 #endif
 
-  return dataPath;
-}
+    return dataPath;
+  }
 } // namespace
 
-CustomDictionaryStyle::CustomDictionaryStyle(QObject* parent /* = nullptr */):
+CustomDictionaryStyle::CustomDictionaryStyle(QObject* parent /* = nullptr */) :
   QObject(parent),
   m_map(new Map(BasemapStyle::ArcGISTopographic, this))
 {
@@ -67,12 +67,14 @@ CustomDictionaryStyle::CustomDictionaryStyle(QObject* parent /* = nullptr */):
   m_map->setInitialViewpoint(viewpoint);
 
   // Create a feature layer from a feature service and it to the map
-  ServiceFeatureTable* featureTable = new ServiceFeatureTable(QUrl("https://services2.arcgis.com/ZQgQTuoyBrtmoGdP/arcgis/rest/services/Redlands_Restaurants/FeatureServer/0"), this);
+  ServiceFeatureTable* featureTable =
+    new ServiceFeatureTable(QUrl("https://services2.arcgis.com/ZQgQTuoyBrtmoGdP/arcgis/rest/services/Redlands_Restaurants/FeatureServer/0"), this);
   m_featureLayer = new FeatureLayer(featureTable, this);
   m_map->operationalLayers()->append(m_featureLayer);
 
   // Create a DictionaryRenderer using the local .stylx file
-  DictionarySymbolStyle* localDictionaryStyle = DictionarySymbolStyle::createFromFile(defaultDataPath() + "/ArcGIS/Runtime/Data/styles/arcade_style/Restaurant.stylx", this);
+  DictionarySymbolStyle* localDictionaryStyle =
+    DictionarySymbolStyle::createFromFile(defaultDataPath() + "/ArcGIS/Runtime/Data/styles/arcade_style/Restaurant.stylx", this);
   m_localDictionaryRenderer = new DictionaryRenderer(localDictionaryStyle, this);
 
   // Set initial FeatureLayer renderer to the local DictionaryRenderer
@@ -112,7 +114,9 @@ MapQuickView* CustomDictionaryStyle::mapView() const
 void CustomDictionaryStyle::setMapView(MapQuickView* mapView)
 {
   if (!mapView || mapView == m_mapView)
+  {
     return;
+  }
 
   m_mapView = mapView;
   m_mapView->setMap(m_map);

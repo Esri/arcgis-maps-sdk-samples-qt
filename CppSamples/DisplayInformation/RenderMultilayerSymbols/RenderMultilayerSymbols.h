@@ -20,24 +20,23 @@
 // Qt headers
 #include <QObject>
 
-namespace Esri::ArcGISRuntime {
-class Map;
-class MapQuickView;
-class GraphicsOverlay;
+namespace Esri::ArcGISRuntime
+{
+  class Map;
+  class MapQuickView;
+  class GraphicsOverlay;
 } // namespace Esri::ArcGISRuntime
 
 Q_MOC_INCLUDE("MapQuickView.h");
-
 
 class RenderMultilayerSymbols : public QObject
 {
   Q_OBJECT
 
-  Q_PROPERTY(Esri::ArcGISRuntime::MapQuickView *mapView READ mapView WRITE setMapView NOTIFY
-                   mapViewChanged)
+  Q_PROPERTY(Esri::ArcGISRuntime::MapQuickView* mapView READ mapView WRITE setMapView NOTIFY mapViewChanged)
 
 public:
-  explicit RenderMultilayerSymbols(QObject *parent = nullptr);
+  explicit RenderMultilayerSymbols(QObject* parent = nullptr);
   ~RenderMultilayerSymbols() override;
 
   static void init();
@@ -46,8 +45,8 @@ signals:
   void mapViewChanged();
 
 private:
-  Esri::ArcGISRuntime::MapQuickView *mapView() const;
-  void setMapView(Esri::ArcGISRuntime::MapQuickView *mapView);
+  Esri::ArcGISRuntime::MapQuickView* mapView() const;
+  void setMapView(Esri::ArcGISRuntime::MapQuickView* mapView);
 
   void addAllGraphics();
 
@@ -60,9 +59,8 @@ private:
   void addComplexPolylineGraphic(Esri::ArcGISRuntime::GraphicsOverlay* overlay);
   void addComplexPolygonGraphic(Esri::ArcGISRuntime::GraphicsOverlay* overlay);
 
-  Esri::ArcGISRuntime::Map *m_map = nullptr;
-  Esri::ArcGISRuntime::MapQuickView *m_mapView = nullptr;
-
+  Esri::ArcGISRuntime::Map* m_map = nullptr;
+  Esri::ArcGISRuntime::MapQuickView* m_mapView = nullptr;
 };
 
 #endif // RENDERMULTILAYERSYMBOLS_H

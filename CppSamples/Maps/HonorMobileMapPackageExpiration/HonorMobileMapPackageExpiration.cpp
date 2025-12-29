@@ -36,25 +36,26 @@
 using namespace Esri::ArcGISRuntime;
 
 // helper method to get cross platform data path
-namespace {
-QString defaultDataPath()
+namespace
 {
-  QString dataPath;
+  QString defaultDataPath()
+  {
+    QString dataPath;
 
 #ifdef Q_OS_IOS
-  dataPath = QStandardPaths::writableLocation(QStandardPaths::DocumentsLocation);
+    dataPath = QStandardPaths::writableLocation(QStandardPaths::DocumentsLocation);
 #else
-  dataPath = QStandardPaths::writableLocation(QStandardPaths::HomeLocation);
+    dataPath = QStandardPaths::writableLocation(QStandardPaths::HomeLocation);
 #endif
 
-  return dataPath;
-}
-}
+    return dataPath;
+  }
+} // namespace
 
 // sample MMPK location
-const QString sampleMmpk {"/ArcGIS/Runtime/Data/mmpk/LothianRiversAnno.mmpk"};
+const QString sampleMmpk{"/ArcGIS/Runtime/Data/mmpk/LothianRiversAnno.mmpk"};
 
-HonorMobileMapPackageExpiration::HonorMobileMapPackageExpiration(QObject* parent /* = nullptr */):
+HonorMobileMapPackageExpiration::HonorMobileMapPackageExpiration(QObject* parent /* = nullptr */) :
   QObject(parent),
   m_dataPath(defaultDataPath() + sampleMmpk)
 {
@@ -78,7 +79,9 @@ MapQuickView* HonorMobileMapPackageExpiration::mapView() const
 void HonorMobileMapPackageExpiration::setMapView(MapQuickView* mapView)
 {
   if (!mapView || mapView == m_mapView)
+  {
     return;
+  }
 
   m_mapView = mapView;
 
@@ -131,7 +134,9 @@ void HonorMobileMapPackageExpiration::createMapPackage(const QString& path)
 
         // return if access after expiration is not allowed
         if (expiration.type() == ExpirationType::PreventExpiredAccess)
+        {
           return;
+        }
       }
     }
 

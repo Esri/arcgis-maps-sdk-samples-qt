@@ -20,7 +20,8 @@
 // Qt headers
 #include <QObject>
 
-namespace Esri::ArcGISRuntime {
+namespace Esri::ArcGISRuntime
+{
   class Geometry;
   class GeometryEditor;
   class GeometryEditor;
@@ -35,7 +36,7 @@ namespace Esri::ArcGISRuntime {
   class SimpleMarkerSymbol;
   class SnapSourceSettings;
   class Symbol;
-}
+} // namespace Esri::ArcGISRuntime
 
 class SnapSourceListModel;
 class QAbstractListModel;
@@ -58,7 +59,8 @@ public:
   explicit SnapGeometryEdits(QObject* parent = nullptr);
   ~SnapGeometryEdits() override;
 
-  enum class GeometryEditorMode {
+  enum class GeometryEditorMode
+  {
     PointMode,
     MultipointMode,
     PolylineMode,

@@ -22,16 +22,25 @@
 
 class RelatedFeature
 {
-
 public:
-  explicit RelatedFeature(const QString& displayFieldName, const QString& displayFieldValue,
-                          const QString& serviceLayerName);
+  explicit RelatedFeature(const QString& displayFieldName, const QString& displayFieldValue, const QString& serviceLayerName);
   ~RelatedFeature() = default;
 
 public:
-  QString displayFieldName() const { return m_displayFieldName; }
-  QString displayFieldValue() const { return m_displayFieldValue; }
-  QString serviceLayerName() const { return m_serviceLayerName; }
+  QString displayFieldName() const
+  {
+    return m_displayFieldName;
+  }
+
+  QString displayFieldValue() const
+  {
+    return m_displayFieldValue;
+  }
+
+  QString serviceLayerName() const
+  {
+    return m_serviceLayerName;
+  }
 
 private:
   QString m_displayFieldName;

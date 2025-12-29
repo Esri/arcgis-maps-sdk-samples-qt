@@ -56,23 +56,23 @@ namespace
   {
     QString dataPath;
 
-    #ifdef Q_OS_IOS
-      dataPath = QStandardPaths::writableLocation(QStandardPaths::DocumentsLocation);
-    #else
-      dataPath = QStandardPaths::writableLocation(QStandardPaths::HomeLocation);
-    #endif
+#ifdef Q_OS_IOS
+    dataPath = QStandardPaths::writableLocation(QStandardPaths::DocumentsLocation);
+#else
+    dataPath = QStandardPaths::writableLocation(QStandardPaths::HomeLocation);
+#endif
 
     return dataPath;
   }
-}
+} // namespace
 
-OrbitCameraAroundObject::OrbitCameraAroundObject(QObject* parent /* = nullptr */):
+OrbitCameraAroundObject::OrbitCameraAroundObject(QObject* parent /* = nullptr */) :
   QObject(parent),
   m_scene(new Scene(BasemapStyle::ArcGISImageryStandard, this))
 {
   // create a new elevation source from Terrain3D REST service
-  ArcGISTiledElevationSource* elevationSource = new ArcGISTiledElevationSource(
-        QUrl("https://elevation3d.arcgis.com/arcgis/rest/services/WorldElevation3D/Terrain3D/ImageServer"), this);
+  ArcGISTiledElevationSource* elevationSource =
+    new ArcGISTiledElevationSource(QUrl("https://elevation3d.arcgis.com/arcgis/rest/services/WorldElevation3D/Terrain3D/ImageServer"), this);
 
   // add the elevation source to the scene to display elevation
   m_scene->baseSurface()->elevationSources()->append(elevationSource);
@@ -194,13 +194,15 @@ void OrbitCameraAroundObject::cockpitView()
 
   //Start the camera move into the cockpit
   //If the camera is already tracking object pitch, don't want to animate the pitch any further, we're exactly where we should be.
-  m_orbitCam->moveCameraAsync(-m_orbitCam->cameraDistance(),
-                         -m_orbitCam->cameraHeadingOffset(),
-                         m_orbitCam->isAutoPitchEnabled() ? 0.0 : (90 - m_orbitCam->cameraPitchOffset()) + planePitch(), 1.0).then(this,
-  [this](bool succeeded)
+  m_orbitCam
+    ->moveCameraAsync(-m_orbitCam->cameraDistance(), -m_orbitCam->cameraHeadingOffset(),
+                      m_orbitCam->isAutoPitchEnabled() ? 0.0 : (90 - m_orbitCam->cameraPitchOffset()) + planePitch(), 1.0)
+    .then(this, [this](bool succeeded)
   {
     if (!succeeded)
+    {
       return;
+    }
 
     //once the camera is in the cockpit, only allow the camera's heading to change
     m_orbitCam->setMinCameraPitchOffset(90);
@@ -209,7 +211,6 @@ void OrbitCameraAroundObject::cockpitView()
     // pitch the camera when the plane pitches
     m_orbitCam->setAutoPitchEnabled(true);
   });
-
 }
 
 void OrbitCameraAroundObject::centerView()
@@ -267,7 +268,7 @@ void OrbitCameraAroundObject::setCameraHeading(double heading)
 
 float OrbitCameraAroundObject::planePitch() const
 {
-  if(!m_planeGraphic->attributes()->containsAttribute("PITCH"))
+  if (!m_planeGraphic->attributes()->containsAttribute("PITCH"))
   {
     return 0.0;
   }
@@ -279,17 +280,16 @@ void OrbitCameraAroundObject::setPlanePitch(float pitch)
 {
   if (!m_planeGraphic->attributes()->containsAttribute("PITCH"))
   {
-     m_planeGraphic->attributes()->insertAttribute("PITCH", pitch);
+    m_planeGraphic->attributes()->insertAttribute("PITCH", pitch);
   }
   else
   {
-     m_planeGraphic->attributes()->replaceAttribute("PITCH", pitch);
+    m_planeGraphic->attributes()->replaceAttribute("PITCH", pitch);
   }
   emit planePitchChanged();
 }
 
 QPointF OrbitCameraAroundObject::cameraHeadingBounds() const
 {
-  return m_orbitCam != nullptr ? QPointF{m_orbitCam->minCameraHeadingOffset(), m_orbitCam->maxCameraHeadingOffset()}
-                               : QPointF{-45.0, 45.0};
+  return m_orbitCam != nullptr ? QPointF{m_orbitCam->minCameraHeadingOffset(), m_orbitCam->maxCameraHeadingOffset()} : QPointF{-45.0, 45.0};
 }

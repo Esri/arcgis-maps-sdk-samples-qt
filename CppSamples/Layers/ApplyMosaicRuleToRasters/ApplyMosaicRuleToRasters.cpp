@@ -39,7 +39,7 @@
 
 using namespace Esri::ArcGISRuntime;
 
-ApplyMosaicRuleToRasters::ApplyMosaicRuleToRasters(QObject* parent /* = nullptr */):
+ApplyMosaicRuleToRasters::ApplyMosaicRuleToRasters(QObject* parent /* = nullptr */) :
   QObject(parent),
   m_map(new Map(BasemapStyle::ArcGISTopographic, this)),
   m_mosaicRule(new MosaicRule(this))
@@ -64,7 +64,9 @@ MapQuickView* ApplyMosaicRuleToRasters::mapView() const
 void ApplyMosaicRuleToRasters::setMapView(MapQuickView* mapView)
 {
   if (!mapView || mapView == m_mapView)
+  {
     return;
+  }
 
   m_mapView = mapView;
   m_mapView->setMap(m_map);
@@ -74,7 +76,9 @@ void ApplyMosaicRuleToRasters::setMapView(MapQuickView* mapView)
 
   // Set Mosaic Rule if none exists on the image service raster
   if (!m_imageServiceRaster->mosaicRule())
+  {
     m_imageServiceRaster->setMosaicRule(m_mosaicRule);
+  }
 
   // Create a raster layer form the image service raster
   m_rasterLayer = new RasterLayer(m_imageServiceRaster, this);
@@ -117,12 +121,11 @@ void ApplyMosaicRuleToRasters::applyRasterRule(const QString& ruleString)
   {
     m_mosaicRule->setMosaicMethod(MosaicMethod::Attribute);
     m_mosaicRule->setSortField("OBJECTID");
-
   }
-  else if (ruleString  == "LockRaster")
+  else if (ruleString == "LockRaster")
   {
     m_mosaicRule->setMosaicMethod(MosaicMethod::LockRaster);
-    m_mosaicRule->setLockRasterIds(QList<qint64>{1,7,12});
+    m_mosaicRule->setLockRasterIds(QList<qint64>{1, 7, 12});
   }
   m_imageServiceRaster->setMosaicRule(m_mosaicRule);
 }

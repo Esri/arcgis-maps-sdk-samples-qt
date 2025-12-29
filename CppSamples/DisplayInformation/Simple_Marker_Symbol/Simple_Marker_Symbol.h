@@ -22,10 +22,10 @@
 
 namespace Esri::ArcGISRuntime
 {
-    class Map;
-    class MapQuickView;
-    class GraphicsOverlay;
-}
+  class Map;
+  class MapQuickView;
+  class GraphicsOverlay;
+} // namespace Esri::ArcGISRuntime
 
 class Simple_Marker_Symbol : public QQuickItem
 {

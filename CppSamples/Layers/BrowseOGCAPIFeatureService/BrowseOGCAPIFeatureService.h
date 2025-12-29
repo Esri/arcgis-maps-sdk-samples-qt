@@ -23,15 +23,15 @@
 
 namespace Esri::ArcGISRuntime
 {
-class Error;
-class FeatureLayer;
-class Map;
-class MapQuickView;
-class OgcFeatureCollectionTable;
-class OgcFeatureCollectionInfo;
-class OgcFeatureService;
-class OgcFeatureServiceInfo;
-}
+  class Error;
+  class FeatureLayer;
+  class Map;
+  class MapQuickView;
+  class OgcFeatureCollectionTable;
+  class OgcFeatureCollectionInfo;
+  class OgcFeatureService;
+  class OgcFeatureServiceInfo;
+} // namespace Esri::ArcGISRuntime
 
 Q_MOC_INCLUDE("MapQuickView.h")
 

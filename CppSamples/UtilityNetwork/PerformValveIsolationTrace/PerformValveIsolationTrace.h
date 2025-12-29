@@ -26,18 +26,18 @@
 
 namespace Esri::ArcGISRuntime
 {
-class ArcGISFeature;
-class FeatureLayer;
-class GraphicsOverlay;
-class Map;
-class MapQuickView;
-class UtilityCategory;
-class UtilityElement;
-class UtilityNetwork;
-class UtilityTraceConfiguration;
-class UtilityTraceParameters;
-class IdentifyLayerResult;
-}
+  class ArcGISFeature;
+  class FeatureLayer;
+  class GraphicsOverlay;
+  class Map;
+  class MapQuickView;
+  class UtilityCategory;
+  class UtilityElement;
+  class UtilityNetwork;
+  class UtilityTraceConfiguration;
+  class UtilityTraceParameters;
+  class IdentifyLayerResult;
+} // namespace Esri::ArcGISRuntime
 
 namespace Esri::ArcGISRuntime::Authentication
 {

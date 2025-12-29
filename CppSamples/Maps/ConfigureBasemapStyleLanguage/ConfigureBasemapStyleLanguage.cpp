@@ -61,7 +61,9 @@ MapQuickView* ConfigureBasemapStyleLanguage::mapView() const
 void ConfigureBasemapStyleLanguage::setMapView(MapQuickView* mapView)
 {
   if (!mapView || mapView == m_mapView)
+  {
     return;
+  }
 
   m_mapView = mapView;
   m_mapView->setMap(m_map);
@@ -86,15 +88,15 @@ void ConfigureBasemapStyleLanguage::setNewBasemapLanguage(bool global, const QSt
   if (language == "none")
   {
     m_basemapStyleParameters->setSpecificLanguage("");
-  } 
+  }
   else if (language == "Bulgarian")
   {
     m_basemapStyleParameters->setSpecificLanguage("bg");
-  } 
+  }
   else if (language == "Greek")
   {
     m_basemapStyleParameters->setSpecificLanguage("el");
-  } 
+  }
   else if (language == "Turkish")
   {
     m_basemapStyleParameters->setSpecificLanguage("tr");

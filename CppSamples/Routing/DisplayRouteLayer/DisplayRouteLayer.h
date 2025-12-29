@@ -25,18 +25,18 @@
 
 namespace Esri
 {
-namespace ArcGISRuntime
-{
-class Feature;
-class FeatureCollection;
-class FeatureCollectionLayer;
-class FeatureCollectionTableListModel;
-class FeatureTable;
-class Map;
-class MapQuickView;
-class PortalItem;
-}
-}
+  namespace ArcGISRuntime
+  {
+    class Feature;
+    class FeatureCollection;
+    class FeatureCollectionLayer;
+    class FeatureCollectionTableListModel;
+    class FeatureTable;
+    class Map;
+    class MapQuickView;
+    class PortalItem;
+  } // namespace ArcGISRuntime
+} // namespace Esri
 
 Q_MOC_INCLUDE("MapQuickView.h")
 

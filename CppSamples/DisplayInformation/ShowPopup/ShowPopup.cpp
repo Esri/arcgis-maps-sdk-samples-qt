@@ -37,7 +37,7 @@
 
 using namespace Esri::ArcGISRuntime;
 
-ShowPopup::ShowPopup(QObject* parent /* = nullptr */):
+ShowPopup::ShowPopup(QObject* parent /* = nullptr */) :
   QObject(parent),
   m_map(new Map(QUrl("https://runtime.maps.arcgis.com/home/webmap/viewer.html?webmap=e4c6eb667e6c43b896691f10cc2f1580"), this))
 {
@@ -61,7 +61,9 @@ MapQuickView* ShowPopup::mapView() const
 void ShowPopup::setMapView(MapQuickView* mapView)
 {
   if (!mapView || mapView == m_mapView)
+  {
     return;
+  }
 
   m_mapView = mapView;
   m_mapView->setMap(m_map);
@@ -79,7 +81,9 @@ void ShowPopup::onIdentifyLayerCompleted(const QUuid&, IdentifyLayerResult* rawI
 
   // Invalid identify result
   if (!identifyResult)
+  {
     return;
+  }
 
   if (!identifyResult->error().isEmpty())
   {
@@ -102,7 +106,9 @@ void ShowPopup::onIdentifyLayerCompleted(const QUuid&, IdentifyLayerResult* rawI
 void ShowPopup::onMouseClicked(QMouseEvent& mouseEvent)
 {
   if (m_map->loadStatus() != LoadStatus::Loaded)
+  {
     return;
+  }
 
   Layer* layer = m_map->operationalLayers()->at(0);
   if (layer->layerType() == LayerType::FeatureLayer)
@@ -117,11 +123,13 @@ void ShowPopup::onMouseClicked(QMouseEvent& mouseEvent)
   m_future = m_mapView->identifyLayerAsync(m_featureLayer, mouseEvent.position(), tolerance, returnPopupsOnly, maximumResults);
   m_future.then(this, [this](IdentifyLayerResult* result)
   {
-    onIdentifyLayerCompleted(QUuid(),result);
+    onIdentifyLayerCompleted(QUuid(), result);
   });
 
   if (!m_future.isValid())
+  {
     qWarning() << "Future not valid.";
+  }
 
   emit taskRunningChanged();
 }

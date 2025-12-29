@@ -57,27 +57,27 @@ namespace
   {
     QString dataPath;
 
-  #ifdef Q_OS_IOS
+#ifdef Q_OS_IOS
     dataPath = QStandardPaths::writableLocation(QStandardPaths::DocumentsLocation);
-  #else
+#else
     dataPath = QStandardPaths::writableLocation(QStandardPaths::HomeLocation);
-  #endif
+#endif
 
     return dataPath;
   }
-}
+} // namespace
 
 using namespace Esri::ArcGISRuntime;
 
-ChooseCameraController::ChooseCameraController(QObject* parent /* = nullptr */):
+ChooseCameraController::ChooseCameraController(QObject* parent /* = nullptr */) :
   QObject(parent),
   m_orbitGlobe(new GlobeCameraController(this)),
   m_orbitLocation(new OrbitLocationCameraController(Point(longitude, latitude, 0.0, SpatialReference::wgs84()), 100, this)),
   m_scene(new Scene(BasemapStyle::ArcGISImageryStandard, this))
 {
   // create a new elevation source from Terrain3D REST service
-  ArcGISTiledElevationSource* elevationSource = new ArcGISTiledElevationSource(
-        QUrl("https://elevation3d.arcgis.com/arcgis/rest/services/WorldElevation3D/Terrain3D/ImageServer"), this);
+  ArcGISTiledElevationSource* elevationSource =
+    new ArcGISTiledElevationSource(QUrl("https://elevation3d.arcgis.com/arcgis/rest/services/WorldElevation3D/Terrain3D/ImageServer"), this);
 
   // add the elevation source to the scene to display elevation
   m_scene->baseSurface()->elevationSources()->append(elevationSource);
@@ -101,7 +101,7 @@ ChooseCameraController::~ChooseCameraController() = default;
 
 void ChooseCameraController::setGlobeController()
 {
-  if(m_sceneView != nullptr)
+  if (m_sceneView != nullptr)
   {
     m_sceneView->setCameraController(m_orbitGlobe);
   }
@@ -109,7 +109,7 @@ void ChooseCameraController::setGlobeController()
 
 void ChooseCameraController::setOrbitLocationController()
 {
-  if(m_sceneView != nullptr)
+  if (m_sceneView != nullptr)
   {
     m_sceneView->setCameraController(m_orbitLocation);
   }
@@ -117,7 +117,7 @@ void ChooseCameraController::setOrbitLocationController()
 
 void ChooseCameraController::setOrbitGeoElementController()
 {
-  if(m_sceneView != nullptr)
+  if (m_sceneView != nullptr)
   {
     m_sceneView->setCameraController(m_orbitGeoElement);
   }

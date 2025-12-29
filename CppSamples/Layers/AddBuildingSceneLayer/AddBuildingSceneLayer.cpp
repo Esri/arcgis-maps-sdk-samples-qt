@@ -41,13 +41,13 @@
 
 using namespace Esri::ArcGISRuntime;
 
-AddBuildingSceneLayer::AddBuildingSceneLayer(QObject* parent /* = nullptr */):
+AddBuildingSceneLayer::AddBuildingSceneLayer(QObject* parent /* = nullptr */) :
   QObject(parent),
   m_scene(new Scene(BasemapStyle::ArcGISTopographic, SceneViewingMode::Local, this))
 {
   // create a new elevation source from Terrain3D REST service
-  ArcGISTiledElevationSource* elevationSource = new ArcGISTiledElevationSource(
-    QUrl("https://elevation3d.arcgis.com/arcgis/rest/services/WorldElevation3D/Terrain3D/ImageServer"), this);
+  ArcGISTiledElevationSource* elevationSource =
+    new ArcGISTiledElevationSource(QUrl("https://elevation3d.arcgis.com/arcgis/rest/services/WorldElevation3D/Terrain3D/ImageServer"), this);
 
   // add the elevation source to the scene to display elevation
   m_scene->baseSurface()->elevationSources()->append(elevationSource);
@@ -79,22 +79,20 @@ void AddBuildingSceneLayer::setLocalSceneView(LocalSceneQuickView* localSceneVie
   m_localSceneView->setArcGISScene(m_scene);
 
   // Sets the initial viewpoint.
-  const Point point(
-    -13045109.0, // x
-    4036614.0, // y
-    511.0, // z
-    SpatialReference::webMercator()); // spatialReference
+  const Point point(-13045109.0, // x
+                    4036614.0, // y
+                    511.0, // z
+                    SpatialReference::webMercator()); // spatialReference
 
   const Camera camera(point,
-    343.0, // heading
-    68.0, // pitch
-    0.0); // roll
+                      343.0, // heading
+                      68.0, // pitch
+                      0.0); // roll
 
   m_scene->setInitialViewpoint(Viewpoint(point, camera));
 
   // Adds building scene layer to scene.
-  m_buildingSceneLayer = new BuildingSceneLayer(
-    QUrl("https://www.arcgis.com/home/item.html?id=669f6279c579486eb4a0acc7eb59d7ca"), this);
+  m_buildingSceneLayer = new BuildingSceneLayer(QUrl("https://www.arcgis.com/home/item.html?id=669f6279c579486eb4a0acc7eb59d7ca"), this);
 
   m_buildingSceneLayer->setAltitudeOffset(1.0);
   m_scene->operationalLayers()->append(m_buildingSceneLayer);

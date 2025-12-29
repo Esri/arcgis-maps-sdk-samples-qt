@@ -28,7 +28,7 @@ namespace Esri::ArcGISRuntime
   class GraphicsOverlay;
   class PictureMarkerSymbol;
   class Point;
-}
+} // namespace Esri::ArcGISRuntime
 
 class Picture_Marker_Symbol : public QQuickItem
 {
@@ -43,7 +43,7 @@ public:
 
 private:
   void setWidthAndHeight(Esri::ArcGISRuntime::PictureMarkerSymbol* symbol, float size);
-  void addGraphic(Esri::ArcGISRuntime::Point &point, Esri::ArcGISRuntime::PictureMarkerSymbol* symbol);
+  void addGraphic(Esri::ArcGISRuntime::Point& point, Esri::ArcGISRuntime::PictureMarkerSymbol* symbol);
 
   QString m_dataPath;
   Esri::ArcGISRuntime::Map* m_map = nullptr;

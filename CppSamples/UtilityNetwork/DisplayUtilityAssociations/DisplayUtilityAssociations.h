@@ -22,16 +22,16 @@
 
 namespace Esri::ArcGISRuntime
 {
-class GraphicsOverlay;
-class Map;
-class MapQuickView;
-class Symbol;
-class UtilityNetwork;
-}
+  class GraphicsOverlay;
+  class Map;
+  class MapQuickView;
+  class Symbol;
+  class UtilityNetwork;
+} // namespace Esri::ArcGISRuntime
 
 namespace Esri::ArcGISRuntime::Authentication
 {
-class ArcGISAuthenticationChallenge;
+  class ArcGISAuthenticationChallenge;
 }
 
 class SymbolImageProvider;

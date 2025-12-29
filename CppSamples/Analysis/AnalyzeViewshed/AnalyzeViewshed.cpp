@@ -58,7 +58,7 @@
 
 using namespace Esri::ArcGISRuntime;
 
-AnalyzeViewshed::AnalyzeViewshed(QQuickItem* parent /* = nullptr */):
+AnalyzeViewshed::AnalyzeViewshed(QQuickItem* parent /* = nullptr */) :
   QQuickItem(parent)
 {
 }
@@ -87,7 +87,8 @@ void AnalyzeViewshed::componentComplete()
   m_mapView->setMap(m_map);
 
   // Create the GeoprocessingTask
-  m_viewshedTask = new GeoprocessingTask(QUrl("https://sampleserver6.arcgisonline.com/arcgis/rest/services/Elevation/ESRI_Elevation_World/GPServer/Viewshed"), this);
+  m_viewshedTask =
+    new GeoprocessingTask(QUrl("https://sampleserver6.arcgisonline.com/arcgis/rest/services/Elevation/ESRI_Elevation_World/GPServer/Viewshed"), this);
 
   // Create the Graphics Overlays
   createOverlays();
@@ -122,7 +123,9 @@ void AnalyzeViewshed::connectSignals()
     // The geoprocessing task is still executing, don't do anything else (i.e. respond to
     // more user taps) until the processing is complete.
     if (m_viewshedInProgress)
+    {
       return;
+    }
 
     // Indicate that the geoprocessing is running
     m_viewshedInProgress = true;
@@ -138,7 +141,9 @@ void AnalyzeViewshed::connectSignals()
     // Create a marker graphic where the user clicked on the map and add it to the existing graphics overlay
     Point mapPoint = m_mapView->screenToLocation(mouse.position().x(), mouse.position().y());
     if (m_inputGraphic)
+    {
       m_inputGraphic->setGeometry(mapPoint);
+    }
 
     // Setup the geoprocessing task
     calculateViewshed();
@@ -154,10 +159,7 @@ void AnalyzeViewshed::connectSignals()
 void AnalyzeViewshed::calculateViewshed()
 {
   // Create a new feature collection table based upon point geometries using the current map view spatial reference
-  FeatureCollectionTable* inputFeatures = new FeatureCollectionTable(QList<Field>(),
-                                                                     GeometryType::Point,
-                                                                     SpatialReference::webMercator(),
-                                                                     this);
+  FeatureCollectionTable* inputFeatures = new FeatureCollectionTable(QList<Field>(), GeometryType::Point, SpatialReference::webMercator(), this);
 
   // Create a new feature from the feature collection table. It will not have a coordinate location (x,y) yet
   Feature* inputFeature = inputFeatures->createFeature(this);
@@ -166,7 +168,8 @@ void AnalyzeViewshed::calculateViewshed()
   inputFeature->setGeometry(m_inputOverlay->graphics()->at(0)->geometry());
 
   // Add the new feature with (x,y) location to the feature collection table
-  inputFeatures->addFeatureAsync(inputFeature).then(this, [this, inputFeatures]()
+  inputFeatures->addFeatureAsync(inputFeature)
+    .then(this, [this, inputFeatures]()
   {
     onAddFeatureCompleted_(inputFeatures);
   });
@@ -193,27 +196,27 @@ void AnalyzeViewshed::onAddFeatureCompleted_(FeatureCollectionTable* inputFeatur
   {
     switch (jobStatus)
     {
-    case JobStatus::Failed:
-      emit displayErrorDialog("Geoprocessing Task failed", !viewshedJob->error().isEmpty() ? viewshedJob->error().message() : "Unknown error.");
-      m_viewshedInProgress = false;
-      m_jobStatus = "Job failed";
-      break;
-    case JobStatus::Started:
-      m_viewshedInProgress = true;
-      m_jobStatus = "Job in progress...";
-      break;
-    case JobStatus::Paused:
-      m_viewshedInProgress = false;
-      m_jobStatus = "Job paused...";
-      break;
-    case JobStatus::Succeeded:
-      m_viewshedInProgress = false;
-      m_jobStatus = "Job succeeded";
-      // handle the results
-      processResults(viewshedJob->result());
-      break;
-    default:
-      break;
+      case JobStatus::Failed:
+        emit displayErrorDialog("Geoprocessing Task failed", !viewshedJob->error().isEmpty() ? viewshedJob->error().message() : "Unknown error.");
+        m_viewshedInProgress = false;
+        m_jobStatus = "Job failed";
+        break;
+      case JobStatus::Started:
+        m_viewshedInProgress = true;
+        m_jobStatus = "Job in progress...";
+        break;
+      case JobStatus::Paused:
+        m_viewshedInProgress = false;
+        m_jobStatus = "Job paused...";
+        break;
+      case JobStatus::Succeeded:
+        m_viewshedInProgress = false;
+        m_jobStatus = "Job succeeded";
+        // handle the results
+        processResults(viewshedJob->result());
+        break;
+      default:
+        break;
     }
 
     // emit signals
@@ -225,15 +228,17 @@ void AnalyzeViewshed::onAddFeatureCompleted_(FeatureCollectionTable* inputFeatur
   viewshedJob->start();
 }
 
-void AnalyzeViewshed::processResults(GeoprocessingResult *results)
+void AnalyzeViewshed::processResults(GeoprocessingResult* results)
 {
   // Get the results from the outputs as GeoprocessingFeatures
-  const auto outputs = results->outputs();
+  const QMap<QString, GeoprocessingParameter*> outputs = results->outputs();
   GeoprocessingFeatures* viewshedResultFeatures = static_cast<GeoprocessingFeatures*>(outputs["Viewshed_Result"]);
 
   // Create the parent for the graphic
   if (!m_graphicParent)
+  {
     m_graphicParent = new QObject(this);
+  }
 
   // Add all the features from the result feature set as a graphics to the map
   FeatureIterator features = viewshedResultFeatures->features()->iterator();

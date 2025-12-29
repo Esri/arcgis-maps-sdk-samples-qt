@@ -22,9 +22,9 @@
 
 namespace Esri::ArcGISRuntime
 {
-class SceneQuickView;
-class Surface;
-}
+  class SceneQuickView;
+  class Surface;
+} // namespace Esri::ArcGISRuntime
 
 class TerrainExaggeration : public QQuickItem
 {

@@ -24,18 +24,18 @@
 
 namespace Esri::ArcGISRuntime
 {
-class ArcGISFeature;
-class GeotriggerFeed;
-class GeotriggerMonitor;
-class GeotriggerNotificationInfo;
-class Graphic;
-class GraphicsOverlay;
-class Map;
-class MapQuickView;
-class Point;
-class ServiceFeatureTable;
-class SimulatedLocationDataSource;
-}
+  class ArcGISFeature;
+  class GeotriggerFeed;
+  class GeotriggerMonitor;
+  class GeotriggerNotificationInfo;
+  class Graphic;
+  class GraphicsOverlay;
+  class Map;
+  class MapQuickView;
+  class Point;
+  class ServiceFeatureTable;
+  class SimulatedLocationDataSource;
+} // namespace Esri::ArcGISRuntime
 
 Q_MOC_INCLUDE("MapQuickView.h")
 
@@ -55,7 +55,7 @@ public:
 
   static void init();
 
-  Q_INVOKABLE void getFeatureInformation(const QString &featureName);
+  Q_INVOKABLE void getFeatureInformation(const QString& featureName);
 
 signals:
   void mapViewChanged();
@@ -69,7 +69,7 @@ private:
   QUrl currentImageUrl() const;
   void setMapView(Esri::ArcGISRuntime::MapQuickView* mapView);
 
-  void createGeotriggerMonitor(Esri::ArcGISRuntime::ServiceFeatureTable* serviceFeatureTable, double bufferSize, const QString &geotriggerName);
+  void createGeotriggerMonitor(Esri::ArcGISRuntime::ServiceFeatureTable* serviceFeatureTable, double bufferSize, const QString& geotriggerName);
   void initializeSimulatedLocationDisplay();
   void handleGeotriggerNotification(Esri::ArcGISRuntime::GeotriggerNotificationInfo* geotriggerNotificationInfo);
 

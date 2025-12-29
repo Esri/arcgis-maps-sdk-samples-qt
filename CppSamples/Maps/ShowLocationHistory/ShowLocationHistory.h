@@ -25,13 +25,13 @@
 
 namespace Esri::ArcGISRuntime
 {
-class Graphic;
-class GraphicsOverlay;
-class Map;
-class MapQuickView;
-class PolylineBuilder;
-class SimulatedLocationDataSource;
-}
+  class Graphic;
+  class GraphicsOverlay;
+  class Map;
+  class MapQuickView;
+  class PolylineBuilder;
+  class SimulatedLocationDataSource;
+} // namespace Esri::ArcGISRuntime
 
 Q_MOC_INCLUDE("MapQuickView.h")
 

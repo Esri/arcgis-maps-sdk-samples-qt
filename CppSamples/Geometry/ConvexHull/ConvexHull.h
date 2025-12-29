@@ -23,15 +23,15 @@
 
 namespace Esri::ArcGISRuntime
 {
-class Graphic;
-class GraphicsOverlay;
-class Map;
-class MapQuickView;
-class MultipointBuilder;
-class SimpleFillSymbol;
-class SimpleLineSymbol;
-class SimpleMarkerSymbol;
-}
+  class Graphic;
+  class GraphicsOverlay;
+  class Map;
+  class MapQuickView;
+  class MultipointBuilder;
+  class SimpleFillSymbol;
+  class SimpleLineSymbol;
+  class SimpleMarkerSymbol;
+} // namespace Esri::ArcGISRuntime
 
 Q_MOC_INCLUDE("MapQuickView.h")
 

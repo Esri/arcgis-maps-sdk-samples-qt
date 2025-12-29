@@ -41,7 +41,7 @@
 
 using namespace Esri::ArcGISRuntime;
 
-ViewshedCamera::ViewshedCamera(QQuickItem* parent /* = nullptr */):
+ViewshedCamera::ViewshedCamera(QQuickItem* parent /* = nullptr */) :
   QQuickItem(parent)
 {
 }
@@ -64,13 +64,12 @@ void ViewshedCamera::componentComplete()
   // Set a base surface
   Surface* surface = new Surface(this);
   surface->elevationSources()->append(
-        new ArcGISTiledElevationSource(
-          QUrl("https://elevation3d.arcgis.com/arcgis/rest/services/WorldElevation3D/Terrain3D/ImageServer"),
-          this));
+    new ArcGISTiledElevationSource(QUrl("https://elevation3d.arcgis.com/arcgis/rest/services/WorldElevation3D/Terrain3D/ImageServer"), this));
   m_scene->setBaseSurface(surface);
 
   // Create and add the Girona, Spain integrated mesh layer
-  IntegratedMeshLayer* gironaMeshLayer = new IntegratedMeshLayer(QUrl("https://tiles.arcgis.com/tiles/z2tnIkrLQ2BRzr6P/arcgis/rest/services/Girona_Spain/SceneServer"), this);
+  IntegratedMeshLayer* gironaMeshLayer =
+    new IntegratedMeshLayer(QUrl("https://tiles.arcgis.com/tiles/z2tnIkrLQ2BRzr6P/arcgis/rest/services/Girona_Spain/SceneServer"), this);
   m_scene->operationalLayers()->append(gironaMeshLayer);
 
   // Add an AnalysisOverlay to display the viewshed analysis result

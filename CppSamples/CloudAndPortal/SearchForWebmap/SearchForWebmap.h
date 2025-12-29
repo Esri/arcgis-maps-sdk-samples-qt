@@ -29,7 +29,7 @@ namespace Esri::ArcGISRuntime
   class PortalItem;
   class PortalItemListModel;
   class PortalQueryResultSetForItems;
-}
+} // namespace Esri::ArcGISRuntime
 
 class SearchForWebmap : public QQuickItem
 {

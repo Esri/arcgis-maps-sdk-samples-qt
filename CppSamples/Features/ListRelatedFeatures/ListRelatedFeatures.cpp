@@ -61,13 +61,21 @@ namespace
   // Convenience RAII struct that deletes all pointers in given container.
   struct FeatureQueryListResultLock
   {
-    FeatureQueryListResultLock(const QList<RelatedFeatureQueryResult*>& list) : results(list) { }
-    ~FeatureQueryListResultLock() { qDeleteAll(results); }
+    FeatureQueryListResultLock(const QList<RelatedFeatureQueryResult*>& list) :
+      results(list)
+    {
+    }
+
+    ~FeatureQueryListResultLock()
+    {
+      qDeleteAll(results);
+    }
+
     const QList<RelatedFeatureQueryResult*>& results;
   };
-}
+} // namespace
 
-ListRelatedFeatures::ListRelatedFeatures(QQuickItem* parent /* = nullptr */):
+ListRelatedFeatures::ListRelatedFeatures(QQuickItem* parent /* = nullptr */) :
   QQuickItem(parent)
 {
 }
@@ -78,8 +86,8 @@ void ListRelatedFeatures::init()
   qmlRegisterType<MapQuickView>("Esri.Samples", 1, 0, "MapView");
   qmlRegisterType<ListRelatedFeatures>("Esri.Samples", 1, 0, "ListRelatedFeaturesSample");
   qmlRegisterAnonymousType<ViewInsets>("Esri.Samples", 1);
-  qmlRegisterUncreatableType<RelatedFeatureListModel>("Esri.ArcGISRuntimeSamples", 1, 0,
-                                                      "RelatedFeatureListModel", "RelatedFeatureListModel is an uncreatable type");
+  qmlRegisterUncreatableType<RelatedFeatureListModel>("Esri.ArcGISRuntimeSamples", 1, 0, "RelatedFeatureListModel",
+                                                      "RelatedFeatureListModel is an uncreatable type");
 }
 
 void ListRelatedFeatures::componentComplete()
@@ -110,7 +118,9 @@ void ListRelatedFeatures::connectSignals()
   connect(m_map, &Map::doneLoading, this, [this](const Error& loadError)
   {
     if (!loadError.isEmpty())
+    {
       return;
+    }
 
     bool foundLayer = false; // Found the Alaska National Parks layer.
     for (int i = 0; i < m_map->operationalLayers()->size() || !foundLayer; ++i)
@@ -137,11 +147,8 @@ void ListRelatedFeatures::connectSignals()
     // create objects required to do a selection with a query
     Point clickPoint = m_mapView->screenToLocation(mouseEvent.position().x(), mouseEvent.position().y());
     double mapTolerance = 10 * m_mapView->unitsPerDIP();
-    Envelope envelope = Envelope(clickPoint.x() - mapTolerance,
-                                 clickPoint.y() - mapTolerance,
-                                 clickPoint.x() + mapTolerance,
-                                 clickPoint.y() + mapTolerance,
-                                 m_map->spatialReference());
+    Envelope envelope = Envelope(clickPoint.x() - mapTolerance, clickPoint.y() - mapTolerance, clickPoint.x() + mapTolerance,
+                                 clickPoint.y() + mapTolerance, m_map->spatialReference());
     QueryParameters queryParams;
     queryParams.setGeometry(envelope);
     queryParams.setSpatialRelationship(SpatialRelationship::Intersects);
@@ -150,7 +157,8 @@ void ListRelatedFeatures::connectSignals()
     m_alaskaNationalParks->clearSelection();
 
     // select features
-    m_alaskaNationalParks->selectFeaturesAsync(queryParams, SelectionMode::New).then(this, [this](FeatureQueryResult* rawResult)
+    m_alaskaNationalParks->selectFeaturesAsync(queryParams, SelectionMode::New)
+      .then(this, [this](FeatureQueryResult* rawResult)
     {
       auto result = std::unique_ptr<FeatureQueryResult>(rawResult);
       // The result could contain more than 1 feature, but we assume that
@@ -164,7 +172,8 @@ void ListRelatedFeatures::connectSignals()
         m_mapView->setViewpointGeometryAsync(m_selectedFeature->geometry().extent(), 100);
 
         // query related features
-        m_alaskaFeatureTable->queryRelatedFeaturesAsync(m_selectedFeature).then(this, [this](QList<RelatedFeatureQueryResult*> rawRelatedResults)
+        m_alaskaFeatureTable->queryRelatedFeaturesAsync(m_selectedFeature)
+          .then(this, [this](QList<RelatedFeatureQueryResult*> rawRelatedResults)
         {
           FeatureQueryListResultLock lock(rawRelatedResults);
           for (const RelatedFeatureQueryResult* relatedResult : lock.results)
@@ -179,9 +188,7 @@ void ListRelatedFeatures::connectSignals()
               const QString displayFieldValue = feature->attributes()->attributeValue(displayFieldName).toString();
 
               // add the related feature to the list model
-              RelatedFeature relatedFeature = RelatedFeature(displayFieldName,
-                                                             displayFieldValue,
-                                                             serviceLayerName);
+              RelatedFeature relatedFeature = RelatedFeature(displayFieldName, displayFieldValue, serviceLayerName);
               m_relatedFeaturesModel->addRelatedFeature(relatedFeature);
               emit relatedFeaturesModelChanged();
             }

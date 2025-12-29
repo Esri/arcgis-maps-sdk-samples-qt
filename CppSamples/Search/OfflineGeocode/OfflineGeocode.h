@@ -39,7 +39,7 @@ namespace Esri::ArcGISRuntime
   class GraphicsOverlay;
   class ArcGISTiledLayer;
   class SuggestListModel;
-}
+} // namespace Esri::ArcGISRuntime
 
 Q_MOC_INCLUDE("SuggestListModel.h")
 

@@ -26,30 +26,30 @@
 using namespace Esri::ArcGISRuntime;
 
 SetMapSpatialReference::SetMapSpatialReference(QWidget* parent) :
-    QWidget(parent)
+  QWidget(parent)
 {
-    // Create a new map with the spatial reference
-    m_map = new Map(SpatialReference(54024), this);
+  // Create a new map with the spatial reference
+  m_map = new Map(SpatialReference(54024), this);
 
-    // create the URL pointing to the map image layer
-    QUrl imageLayerUrl("https://sampleserver6.arcgisonline.com/arcgis/rest/services/SampleWorldCities/MapServer");
+  // create the URL pointing to the map image layer
+  QUrl imageLayerUrl("https://sampleserver6.arcgisonline.com/arcgis/rest/services/SampleWorldCities/MapServer");
 
-    // construct the ArcGISMapImageLayer using the URL
-    m_imageLayer = new ArcGISMapImageLayer(imageLayerUrl, this);
+  // construct the ArcGISMapImageLayer using the URL
+  m_imageLayer = new ArcGISMapImageLayer(imageLayerUrl, this);
 
-    // create a Basemap and pass in the ArcGISMapImageLayer
-    m_basemap = new Basemap(m_imageLayer, this);
+  // create a Basemap and pass in the ArcGISMapImageLayer
+  m_basemap = new Basemap(m_imageLayer, this);
 
-    //Set the ArcGISMapImageLayer as basemap
-    m_map->setBasemap(m_basemap);
+  //Set the ArcGISMapImageLayer as basemap
+  m_map->setBasemap(m_basemap);
 
-    // Create a map view, and pass in the map
-    m_mapView = new MapGraphicsView(m_map, this);
+  // Create a map view, and pass in the map
+  m_mapView = new MapGraphicsView(m_map, this);
 
-    // Set up the UI
-    QVBoxLayout *vBoxLayout = new QVBoxLayout(this);
-    vBoxLayout->addWidget(m_mapView);
-    setLayout(vBoxLayout);
+  // Set up the UI
+  QVBoxLayout* vBoxLayout = new QVBoxLayout(this);
+  vBoxLayout->addWidget(m_mapView);
+  setLayout(vBoxLayout);
 }
 
 SetMapSpatialReference::~SetMapSpatialReference() = default;

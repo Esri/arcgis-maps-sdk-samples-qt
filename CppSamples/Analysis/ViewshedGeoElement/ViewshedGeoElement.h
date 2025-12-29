@@ -27,12 +27,12 @@
 
 namespace Esri::ArcGISRuntime
 {
-class SceneQuickView;
-class AnalysisOverlay;
-class GeoElementViewshed;
-class GraphicsOverlay;
-class Graphic;
-}
+  class SceneQuickView;
+  class AnalysisOverlay;
+  class GeoElementViewshed;
+  class GraphicsOverlay;
+  class Graphic;
+} // namespace Esri::ArcGISRuntime
 
 class ViewshedGeoElement : public QQuickItem
 {

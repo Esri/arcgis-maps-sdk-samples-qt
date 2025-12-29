@@ -22,53 +22,56 @@
 
 using namespace Esri::ArcGISRuntime;
 
-BasemapStyleListModel::BasemapStyleListModel(QObject* parent /* = nullptr */)
-    : QAbstractListModel(parent){}
+BasemapStyleListModel::BasemapStyleListModel(QObject* parent /* = nullptr */) :
+  QAbstractListModel(parent)
+{
+}
 
-QHash<int, QByteArray> BasemapStyleListModel::roleNames() const {
-    QHash<int, QByteArray> roles;
-    roles[StyleNameRole] = "styleName";
-    roles[PreviewImageUrlRole] = "previewImageUrl";
-    return roles;
+QHash<int, QByteArray> BasemapStyleListModel::roleNames() const
+{
+  QHash<int, QByteArray> roles;
+  roles[StyleNameRole] = "styleName";
+  roles[PreviewImageUrlRole] = "previewImageUrl";
+  return roles;
 }
 
 QVariant BasemapStyleListModel::data(const QModelIndex& index, int role) const
 {
-    bool modelIndexIsOutOfBounds = index.row() >= m_previews.size();
-    if (!index.isValid() || modelIndexIsOutOfBounds)
-    {
-        return QVariant();
-    }
+  bool modelIndexIsOutOfBounds = index.row() >= m_previews.size();
+  if (!index.isValid() || modelIndexIsOutOfBounds)
+  {
+    return QVariant();
+  }
 
-    switch(role)
-    {
+  switch (role)
+  {
     case StyleNameRole:
-        return m_previews[index.row()]->styleName();
+      return m_previews[index.row()]->styleName();
     case PreviewImageUrlRole:
-        return m_previews[index.row()]->thumbnailUrl();
+      return m_previews[index.row()]->thumbnailUrl();
     default:
-        return QVariant();
-    }
+      return QVariant();
+  }
 }
 
 int BasemapStyleListModel::rowCount(const QModelIndex& parent) const
 {
-    Q_UNUSED(parent)
-    return m_previews.size();
+  Q_UNUSED(parent)
+  return m_previews.size();
 }
 
 void BasemapStyleListModel::insertItemsIntoGallery(const QList<BasemapStyleInfo*> infos)
 {
-    beginResetModel();
-    m_previews.clear();
-    for (auto index = 0; index < infos.size(); ++index)
+  beginResetModel();
+  m_previews.clear();
+  for (auto index = 0; index < infos.size(); ++index)
+  {
+    m_previews.insert(index, infos.at(index));
+    connect(m_previews.at(index), &BasemapStyleInfo::thumbnailUrlChanged, this, [this, index]()
     {
-        m_previews.insert(index, infos.at(index));
-        connect(m_previews.at(index), &BasemapStyleInfo::thumbnailUrlChanged, this, [this, index]() 
-        {
-            QModelIndex modelIndex = createIndex(index, 0);
-            emit dataChanged(modelIndex, modelIndex);
-        });
-    }
-    endResetModel();
+      QModelIndex modelIndex = createIndex(index, 0);
+      emit dataChanged(modelIndex, modelIndex);
+    });
+  }
+  endResetModel();
 }

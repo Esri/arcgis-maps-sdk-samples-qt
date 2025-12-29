@@ -50,15 +50,15 @@ namespace
 {
   const QString HEADING("HEADING");
   const QString PITCH("PITCH");
-}
+} // namespace
 
-ScenePropertiesExpressions::ScenePropertiesExpressions(QObject* parent /* = nullptr */):
+ScenePropertiesExpressions::ScenePropertiesExpressions(QObject* parent /* = nullptr */) :
   QObject(parent),
   m_scene(new Scene(BasemapStyle::ArcGISImageryStandard, this))
 {
   // create a new elevation source from Terrain3D REST service
-  ArcGISTiledElevationSource* elevationSource = new ArcGISTiledElevationSource(
-        QUrl("https://elevation3d.arcgis.com/arcgis/rest/services/WorldElevation3D/Terrain3D/ImageServer"), this);
+  ArcGISTiledElevationSource* elevationSource =
+    new ArcGISTiledElevationSource(QUrl("https://elevation3d.arcgis.com/arcgis/rest/services/WorldElevation3D/Terrain3D/ImageServer"), this);
 
   // add the elevation source to the scene to display elevation
   m_scene->baseSurface()->elevationSources()->append(elevationSource);
@@ -113,9 +113,7 @@ void ScenePropertiesExpressions::setSceneView(SceneQuickView* sceneView)
   Camera camera(latitude - 1.0, // place the camera arbitrarily south of the cone
                 longitude,
                 altitude * 2, // place the camera arbitrarily higher than the cone
-                heading,
-                pitch,
-                roll);
+                heading, pitch, roll);
 
   // set the viewpoint
   m_sceneView->setViewpointCameraAndWait(camera);
@@ -124,7 +122,8 @@ void ScenePropertiesExpressions::setSceneView(SceneQuickView* sceneView)
   m_sceneView->graphicsOverlays()->append(m_graphicsOverlay);
 
   // create a scene symbol based on the current type
-  SimpleMarkerSceneSymbol* smss = new SimpleMarkerSceneSymbol(SimpleMarkerSceneSymbolStyle::Cone, QColor("red"), 200, 200, 200, SceneSymbolAnchorPosition::Center, this);
+  SimpleMarkerSceneSymbol* smss =
+    new SimpleMarkerSceneSymbol(SimpleMarkerSceneSymbolStyle::Cone, QColor("red"), 200, 200, 200, SceneSymbolAnchorPosition::Center, this);
   smss->setWidth(coneDimension);
   smss->setDepth(coneDimension);
   smss->setHeight(coneDimension * 2);

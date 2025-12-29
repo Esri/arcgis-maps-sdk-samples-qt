@@ -113,5 +113,3 @@ void GORenderers::addGraphicsOverlay()
   polygonGraphicsOverlay->graphics()->append(polygonGraphic);
   m_mapView->graphicsOverlays()->append(polygonGraphicsOverlay);
 }
-
-

@@ -71,11 +71,11 @@ namespace
   {
     QString dataPath;
 
-  #ifdef Q_OS_IOS
+#ifdef Q_OS_IOS
     dataPath = QStandardPaths::writableLocation(QStandardPaths::DocumentsLocation);
-  #else
+#else
     dataPath = QStandardPaths::writableLocation(QStandardPaths::HomeLocation);
-  #endif
+#endif
 
     return dataPath;
   }
@@ -88,14 +88,11 @@ const QString Animate3DSymbols::ROLL = QStringLiteral("roll");
 const QString Animate3DSymbols::PITCH = QStringLiteral("pitch");
 const QString Animate3DSymbols::ANGLE = QStringLiteral("angle");
 
-Animate3DSymbols::Animate3DSymbols(QQuickItem* parent /* = nullptr */):
+Animate3DSymbols::Animate3DSymbols(QQuickItem* parent /* = nullptr */) :
   QQuickItem(parent),
   m_dataPath(defaultDataPath() + "/ArcGIS/Runtime/Data/3D"),
-  m_missionsModel(new QStringListModel({QStringLiteral("Grand Canyon"),
-                                        QStringLiteral("Hawaii"),
-                                        QStringLiteral("Pyrenees"),
-                                        QStringLiteral("Snowdon")},
-                                       this)),
+  m_missionsModel(
+    new QStringListModel({QStringLiteral("Grand Canyon"), QStringLiteral("Hawaii"), QStringLiteral("Pyrenees"), QStringLiteral("Snowdon")}, this)),
   m_missionData(new MissionData())
 {
 }
@@ -126,8 +123,8 @@ void Animate3DSymbols::componentComplete()
   m_globeController = new GlobeCameraController(this);
 
   // create a new elevation source
-  ArcGISTiledElevationSource* elevationSource = new ArcGISTiledElevationSource(
-    QUrl("https://elevation3d.arcgis.com/arcgis/rest/services/WorldElevation3D/Terrain3D/ImageServer"), this);
+  ArcGISTiledElevationSource* elevationSource =
+    new ArcGISTiledElevationSource(QUrl("https://elevation3d.arcgis.com/arcgis/rest/services/WorldElevation3D/Terrain3D/ImageServer"), this);
 
   // add the elevation source to the scene to display elevation
   scene->baseSurface()->elevationSources()->append(elevationSource);
@@ -166,10 +163,10 @@ void Animate3DSymbols::componentComplete()
 
 void Animate3DSymbols::setMissionFrame(int newFrame)
 {
-  if (!m_missionData||
-     newFrame < 0 ||
-     m_frame == newFrame)
+  if (!m_missionData || newFrame < 0 || m_frame == newFrame)
+  {
     return;
+  }
 
   m_frame = newFrame;
   emit missionFrameChanged();
@@ -178,7 +175,9 @@ void Animate3DSymbols::setMissionFrame(int newFrame)
 void Animate3DSymbols::animate()
 {
   if (!m_missionData)
+  {
     return;
+  }
 
   if (missionFrame() < missionSize())
   {
@@ -201,7 +200,7 @@ void Animate3DSymbols::animate()
   emit nextFrameRequested();
 }
 
-void Animate3DSymbols::changeMission(const QString &missionNameStr)
+void Animate3DSymbols::changeMission(const QString& missionNameStr)
 {
   setMissionFrame(0);
 
@@ -231,7 +230,7 @@ void Animate3DSymbols::changeMission(const QString &missionNameStr)
   emit missionSizeChanged();
 }
 
-QAbstractListModel *Animate3DSymbols::missionsModel()
+QAbstractListModel* Animate3DSymbols::missionsModel()
 {
   return m_missionsModel;
 }
@@ -257,7 +256,9 @@ void Animate3DSymbols::setAngle(double angle)
 void Animate3DSymbols::createModel2d(GraphicsOverlay* mapOverlay)
 {
   if (m_symbol2d || m_graphic2d)
+  {
     return;
+  }
 
   // get the mission data for the frame
   const MissionData::DataPoint& dp = m_missionData->dataAt(missionFrame());
@@ -284,11 +285,15 @@ void Animate3DSymbols::createRoute2d(GraphicsOverlay* mapOverlay)
 void Animate3DSymbols::createGraphic3D()
 {
   if (!missionReady())
+  {
     return;
+  }
 
   // create the ModelSceneSymbol to be animated in the 3d view
   if (!m_model3d)
+  {
     m_model3d = new ModelSceneSymbol(QUrl(m_dataPath + "/Bristol/Collada/Bristol.dae"), 10.0f, this);
+  }
 
   // get the mission data for the frame
   const MissionData::DataPoint& dp = m_missionData->dataAt(missionFrame());
@@ -321,15 +326,21 @@ void Animate3DSymbols::createGraphic3D()
 void Animate3DSymbols::setFollowing(bool following)
 {
   if (following)
+  {
     m_sceneView->setCameraController(m_followingController);
+  }
   else
+  {
     m_sceneView->setCameraController(m_globeController);
+  }
 }
 
 void Animate3DSymbols::zoomMapIn()
 {
   if (!m_mapView || !m_routeGraphic)
+  {
     return;
+  }
 
   // zoom the map view in, focusing on the position of the 2d graphic for the airplane
   m_mapView->setViewpointAsync(Viewpoint((Point)m_routeGraphic->geometry(), m_mapView->mapScale() / m_mapZoomFactor));
@@ -338,7 +349,9 @@ void Animate3DSymbols::zoomMapIn()
 void Animate3DSymbols::zoomMapOut()
 {
   if (!m_mapView || !m_routeGraphic)
+  {
     return;
+  }
 
   // zoom the map view out, focusing on the position of the 2d graphic for the airplane
   m_mapView->setViewpointAsync(Viewpoint((Point)m_routeGraphic->geometry(), m_mapView->mapScale() * m_mapZoomFactor));
@@ -359,7 +372,9 @@ void Animate3DSymbols::viewWidthChanged(bool sceneViewIsWider)
 bool Animate3DSymbols::missionReady() const
 {
   if (!m_missionData)
+  {
     return false;
+  }
 
   return m_missionData->ready();
 }
@@ -367,7 +382,9 @@ bool Animate3DSymbols::missionReady() const
 int Animate3DSymbols::missionSize() const
 {
   if (!m_missionData)
+  {
     return 0;
+  }
 
   return (int)m_missionData->size();
 }

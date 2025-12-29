@@ -49,7 +49,7 @@
 
 using namespace Esri::ArcGISRuntime;
 
-DensifyAndGeneralize::DensifyAndGeneralize(QQuickItem* parent /* = nullptr */):
+DensifyAndGeneralize::DensifyAndGeneralize(QQuickItem* parent /* = nullptr */) :
   QQuickItem(parent)
 {
 }
@@ -122,27 +122,37 @@ void DensifyAndGeneralize::componentComplete()
 void DensifyAndGeneralize::updateGeometry(bool densify, double maxSegmentLength, bool generalize, double maxDeviation)
 {
   if (!m_originalLineGraphic)
+  {
     return;
+  }
 
   // Get the initial Geometry
   Polyline polyline = geometry_cast<Polyline>(m_originalLineGraphic->geometry());
   if (polyline.isEmpty())
+  {
     return;
+  }
 
   // Generalize the polyline
   if (generalize)
+  {
     polyline = geometry_cast<Polyline>(GeometryEngine::generalize(polyline, maxDeviation, true));
+  }
 
   // Densify the polyline
   if (densify)
+  {
     polyline = geometry_cast<Polyline>(GeometryEngine::densify(polyline, maxSegmentLength));
+  }
 
   // Update the line graphic
   m_resultLineGraphic->setGeometry(polyline);
 
   // Update the multipoint graphic
   if (polyline.parts().size() < 1)
+  {
     return;
+  }
 
   MultipointBuilder multipointBuilder(polyline.spatialReference());
   PointCollection* pointCollection = new PointCollection(polyline.spatialReference(), this);

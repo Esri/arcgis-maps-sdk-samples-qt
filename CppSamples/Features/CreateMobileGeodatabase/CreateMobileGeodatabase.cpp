@@ -47,7 +47,7 @@
 
 using namespace Esri::ArcGISRuntime;
 
-CreateMobileGeodatabase::CreateMobileGeodatabase(QObject* parent /* = nullptr */):
+CreateMobileGeodatabase::CreateMobileGeodatabase(QObject* parent /* = nullptr */) :
   QObject(parent),
   m_map(new Map(BasemapStyle::ArcGISTopographic, this))
 {
@@ -73,7 +73,9 @@ MapQuickView* CreateMobileGeodatabase::mapView() const
 void CreateMobileGeodatabase::setMapView(MapQuickView* mapView)
 {
   if (!mapView || mapView == m_mapView)
+  {
     return;
+  }
 
   m_mapView = mapView;
   m_mapView->setMap(m_map);
@@ -92,10 +94,13 @@ void CreateMobileGeodatabase::createGeodatabase()
 
   // We cannot overwrite an existing geodatabase
   if (QFile::exists(m_gdbFilePath))
+  {
     return;
+  }
 
   // Use static Geodatabase::createAsync with an empty file path
-  Geodatabase::createAsync(m_gdbFilePath, this).then(this, [this](Geodatabase* geodatabase)
+  Geodatabase::createAsync(m_gdbFilePath, this)
+    .then(this, [this](Geodatabase* geodatabase)
   {
     m_gdb = geodatabase;
     createTable();
@@ -116,7 +121,8 @@ void CreateMobileGeodatabase::createTable()
   tableDescription->fieldDescriptions()->append(new FieldDescription("oid", FieldType::OID));
   tableDescription->fieldDescriptions()->append(new FieldDescription("collection_timestamp", FieldType::Date));
 
-  m_gdb->createTableAsync(tableDescription, this).then(this, [this](GeodatabaseFeatureTable* gdbFeatureTableResult)
+  m_gdb->createTableAsync(tableDescription, this)
+    .then(this, [this](GeodatabaseFeatureTable* gdbFeatureTableResult)
   {
     m_featureTable = gdbFeatureTableResult;
 
@@ -129,7 +135,9 @@ void CreateMobileGeodatabase::createTable()
 void CreateMobileGeodatabase::closeGdb()
 {
   if (!m_gdb)
+  {
     return;
+  }
 
   m_gdb->close();
   m_gdbOpen = false;
@@ -146,7 +154,9 @@ void CreateMobileGeodatabase::closeGdb()
 void CreateMobileGeodatabase::addFeature(QMouseEvent& mouseEvent)
 {
   if (!m_featureTable)
+  {
     return;
+  }
 
   const Point mousePoint = m_mapView->screenToLocation(mouseEvent.position().x(), mouseEvent.position().y());
   QVariantMap attributes = {};
@@ -184,7 +194,9 @@ void CreateMobileGeodatabase::deleteFeatures()
 void CreateMobileGeodatabase::clearFeatures()
 {
   if (m_featureTable->numberOfFeatures() > 0)
+  {
     deleteFeatures();
+  }
 
   m_featureListModel->clear();
 }

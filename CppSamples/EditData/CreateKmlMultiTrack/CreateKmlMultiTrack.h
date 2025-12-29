@@ -23,19 +23,19 @@
 
 namespace Esri::ArcGISRuntime
 {
-class Geometry;
-class Graphic;
-class GraphicsOverlay;
-class KmlTrack;
-class KmlTrackElement;
-class Map;
-class MapQuickView;
-class Point;
-class PolylineBuilder;
-class SimpleLineSymbol;
-class SimpleMarkerSymbol;
-class SimulatedLocationDataSource;
-}
+  class Geometry;
+  class Graphic;
+  class GraphicsOverlay;
+  class KmlTrack;
+  class KmlTrackElement;
+  class Map;
+  class MapQuickView;
+  class Point;
+  class PolylineBuilder;
+  class SimpleLineSymbol;
+  class SimpleMarkerSymbol;
+  class SimulatedLocationDataSource;
+} // namespace Esri::ArcGISRuntime
 
 Q_MOC_INCLUDE("MapQuickView.h")
 

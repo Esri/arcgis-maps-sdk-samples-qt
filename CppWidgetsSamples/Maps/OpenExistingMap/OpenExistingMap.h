@@ -17,10 +17,11 @@
 #ifndef OPEN_EXISTING_MAP_H
 #define OPEN_EXISTING_MAP_H
 
-namespace Esri::ArcGISRuntime {
+namespace Esri::ArcGISRuntime
+{
   class Map;
   class MapGraphicsView;
-}
+} // namespace Esri::ArcGISRuntime
 
 class QPushButton;
 class QInputDialog;
@@ -46,7 +47,6 @@ private:
   QPushButton* m_button = nullptr;
   QInputDialog* m_inputDialog = nullptr;
   QMap<QString, QString> m_portalIds;
-
 };
 
 #endif // OPEN_EXISTING_MAP_H

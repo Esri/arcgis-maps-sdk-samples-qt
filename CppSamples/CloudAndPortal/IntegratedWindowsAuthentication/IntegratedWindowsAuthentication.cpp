@@ -38,7 +38,7 @@
 
 using namespace Esri::ArcGISRuntime;
 
-IntegratedWindowsAuthentication::IntegratedWindowsAuthentication(QObject* parent /* = nullptr */):
+IntegratedWindowsAuthentication::IntegratedWindowsAuthentication(QObject* parent /* = nullptr */) :
   QObject(parent),
   m_map(new Map(BasemapStyle::ArcGISTopographic, this)),
   query(new PortalQueryParametersForItems())
@@ -64,7 +64,9 @@ MapQuickView* IntegratedWindowsAuthentication::mapView() const
 void IntegratedWindowsAuthentication::setMapView(MapQuickView* mapView)
 {
   if (!mapView || mapView == m_mapView)
+  {
     return;
+  }
 
   m_mapView = mapView;
   m_mapView->setMap(m_map);
@@ -91,10 +93,14 @@ void IntegratedWindowsAuthentication::searchIwaSecurePortal(const QString& url)
 void IntegratedWindowsAuthentication::loadSelectedWebmap(int index)
 {
   if (!m_webmaps)
+  {
     return;
+  }
 
   if (m_map)
+  {
     delete m_map;
+  }
 
   m_map = new Map(m_webmaps->at(index), this);
 
@@ -119,8 +125,10 @@ void IntegratedWindowsAuthentication::securePortalDoneLoading(const Error& loadE
     m_mapLoadError = loadError.message();
     m_loadingIndicator = false;
 
-    if(m_webmaps)
+    if (m_webmaps)
+    {
       m_webmaps = nullptr;
+    }
 
     emit webmapListModelChanged();
     emit isLoadingChanged();
@@ -128,8 +136,7 @@ void IntegratedWindowsAuthentication::securePortalDoneLoading(const Error& loadE
     return;
   }
 
-  m_iwaSecurePortal->findItemsAsync(*query).then(this,
-  [this](PortalQueryResultSetForItems* result)
+  m_iwaSecurePortal->findItemsAsync(*query).then(this, [this](PortalQueryResultSetForItems* result)
   {
     searchItemsCompleted(result);
   });
@@ -137,11 +144,15 @@ void IntegratedWindowsAuthentication::securePortalDoneLoading(const Error& loadE
 
 void IntegratedWindowsAuthentication::searchItemsCompleted(PortalQueryResultSetForItems* result)
 {
-  if(!result)
+  if (!result)
+  {
     return;
+  }
 
-  if(m_webmaps)
+  if (m_webmaps)
+  {
     m_webmaps = nullptr;
+  }
 
   m_webmaps = result->itemResults();
   emit webmapListModelChanged();

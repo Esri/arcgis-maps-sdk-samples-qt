@@ -1,3 +1,4 @@
+// [WriteFile Name=SnapGeometryEditsWithRules, Category=EditData]
 // [Legal]
 // Copyright 2025 Esri.
 //
@@ -84,7 +85,7 @@ namespace
   }
 
   // Helper load function that converts a Loadable::doneLoading signal to a QFuture representation.
-  template <typename T>
+  template<typename T>
   QFuture<void> load(T* loadable)
   {
     static_assert(std::is_base_of<Loadable, T>::value, "T must derive from Loadable");
@@ -92,8 +93,8 @@ namespace
     QPromise<void> promise;
     QFuture<void> future = promise.future();
 
-    QObject::connect(loadable, &T::doneLoading,
-    [promise = std::move(promise)](const Error& error) mutable {
+    QObject::connect(loadable, &T::doneLoading, [promise = std::move(promise)](const Error& error) mutable
+    {
       if (!error.isEmpty())
       {
         promise.setException(ErrorException{error});
@@ -109,7 +110,7 @@ namespace
   }
 
   // Helper function to create a QFuture with an error.
-  template <typename T>
+  template<typename T>
   QFuture<T> makeExceptionalFutureHelper(const QString& error, const QString& additionalInfo = "")
   {
     // Create an error object with the provided error message and additional info.
@@ -118,7 +119,7 @@ namespace
     // Return a future that is already completed with the error.
     return QtFuture::makeExceptionalFuture<T>(ErrorException{e});
   }
-}
+} // namespace
 
 SnapGeometryEditsWithRules::SnapGeometryEditsWithRules(QObject* parent) :
   QObject(parent),
@@ -147,11 +148,9 @@ void SnapGeometryEditsWithRules::initializeMap()
   m_map->setInitialViewpoint(Viewpoint(Point(-9811055.156028448, 5131792.19502501, SpatialReference::webMercator()), 10000));
 
   // Load the geodatabase
-  loadGeodatabase().then(this,
-  [this]()
+  loadGeodatabase().then(this, [this]()
   {
-    loadOperationalLayers().then(this,
-    [this](const LoadOperationalLayersReturnStruct& layers)
+    loadOperationalLayers().then(this, [this](const LoadOperationalLayersReturnStruct& layers)
     {
       // Pass the returned pipeLayer and deviceLayer from the future to modify their visibility
       modifyOperationalLayersVisibility(layers.m_pipeSubtypeLayer, layers.m_deviceSubtypeLayer);
@@ -208,8 +207,8 @@ QFuture<LoadOperationalLayersReturnStruct> SnapGeometryEditsWithRules::loadOpera
   m_map->operationalLayers()->append(junctionLayer);
   layerLoadingFutures.emplace_back(load(junctionLayer));
 
-  return QtFuture::whenAll(layerLoadingFutures.begin(), layerLoadingFutures.end()).then(this,
-  [pipeLayer, deviceLayer](const QList<QFuture<void>>&)
+  return QtFuture::whenAll(layerLoadingFutures.begin(), layerLoadingFutures.end())
+    .then(this, [pipeLayer, deviceLayer](const QList<QFuture<void>>&)
   {
     return LoadOperationalLayersReturnStruct{pipeLayer, deviceLayer};
   });
@@ -265,8 +264,8 @@ void SnapGeometryEditsWithRules::onMapViewClicked(const QMouseEvent& mouseEvent)
   }
 
   // Identify the feature at the tapped location.
-  m_mapView->identifyLayersAsync(mouseEvent.position(), 5, false).then(this,
-  [this](const QList<IdentifyLayerResult*>& identifyResult)
+  m_mapView->identifyLayersAsync(mouseEvent.position(), 5, false)
+    .then(this, [this](const QList<IdentifyLayerResult*>& identifyResult)
   {
     ArcGISFeature* selectedFeature = getFeatureFromResult(identifyResult);
 
@@ -295,9 +294,9 @@ void SnapGeometryEditsWithRules::onMapViewClicked(const QMouseEvent& mouseEvent)
 
     // Create a utility element for the selected feature using the utility network.
     std::unique_ptr<UtilityElement> utilityEle =
-    (m_mapView->map()->utilityNetworks() && m_mapView->map()->utilityNetworks()->first())
-    ? std::unique_ptr<UtilityElement>(m_mapView->map()->utilityNetworks()->first()->createElementWithArcGISFeature(m_selectedFeature))
-    : nullptr;
+      (m_mapView->map()->utilityNetworks() && m_mapView->map()->utilityNetworks()->first()) ?
+        std::unique_ptr<UtilityElement>(m_mapView->map()->utilityNetworks()->first()->createElementWithArcGISFeature(m_selectedFeature)) :
+        nullptr;
 
     // Update the UI visbility with the selected feature information.
     emit assetTypeChanged(utilityEle ? utilityEle->assetType()->name() : QString());
@@ -330,7 +329,8 @@ void SnapGeometryEditsWithRules::setMapView(MapQuickView* mapView)
   auto* graphicsOverlay = new GraphicsOverlay(this);
   graphicsOverlay->setRenderer(m_defaultGraphicsOverlayRenderer);
 
-  const QString graphicJson = R"({"paths":[[[-9811826.6810284462,5132074.7700250093],[-9811786.4643617794,5132440.9533583419],[-9811384.2976951133,5132354.1700250087],[-9810372.5310284477,5132360.5200250093],[-9810353.4810284469,5132066.3033583425]]],"spatialReference":{"wkid":102100,"latestWkid":3857}})";
+  const QString graphicJson =
+    R"({"paths":[[[-9811826.6810284462,5132074.7700250093],[-9811786.4643617794,5132440.9533583419],[-9811384.2976951133,5132354.1700250087],[-9810372.5310284477,5132360.5200250093],[-9810353.4810284469,5132066.3033583425]]],"spatialReference":{"wkid":102100,"latestWkid":3857}})";
   graphicsOverlay->graphics()->append(new Graphic(Geometry::fromJson(graphicJson), this));
 
   m_mapView->graphicsOverlays()->append(graphicsOverlay);
@@ -368,7 +368,8 @@ void SnapGeometryEditsWithRules::startEditor()
   }
 
   // Get the symbol for the selected feature.
-  Symbol* selectedFeatureSymbol = static_cast<GeodatabaseFeatureTable*>(m_selectedFeature->featureTable())->layerInfo().drawingInfo().renderer()->symbol(m_selectedFeature);
+  Symbol* selectedFeatureSymbol =
+    static_cast<GeodatabaseFeatureTable*>(m_selectedFeature->featureTable())->layerInfo().drawingInfo().renderer()->symbol(m_selectedFeature);
 
   // Set the vertex symbol for the geometry editor tool.
   auto* geometryEditorStyle = m_mapView->geometryEditor()->tool()->style();
@@ -395,8 +396,9 @@ void SnapGeometryEditsWithRules::stopEditing()
   if (m_selectedFeature)
   {
     m_selectedFeature->setGeometry(geometry);
-    m_selectedFeature->featureTable()->updateFeatureAsync(m_selectedFeature).then(this,
-    [this]()
+    m_selectedFeature->featureTable()
+      ->updateFeatureAsync(m_selectedFeature)
+      .then(this, [this]()
     {
       // Reset the selection.
       resetSelections();
@@ -420,8 +422,7 @@ void SnapGeometryEditsWithRules::modifyOperationalLayersVisibility(SubtypeFeatur
   // Set the visibility of the sublayers and store the default renderer for the distribution and service pipe layers.
   // In this sample we will only set a small subset of sublayers to be visible.
   auto pipelineSublayers = pipeLayer->subtypeSublayers();
-  std::for_each(std::begin(*pipelineSublayers), std::end(*pipelineSublayers),
-  [this](SubtypeSublayer* sublayer)
+  std::for_each(std::begin(*pipelineSublayers), std::end(*pipelineSublayers), [this](SubtypeSublayer* sublayer)
   {
     if (!sublayer)
     {
@@ -446,8 +447,7 @@ void SnapGeometryEditsWithRules::modifyOperationalLayersVisibility(SubtypeFeatur
   });
 
   auto deviceSublayers = deviceLayer->subtypeSublayers();
-  std::for_each(std::begin(*deviceSublayers), std::end(*deviceSublayers),
-  [](SubtypeSublayer* sublayer)
+  std::for_each(std::begin(*deviceSublayers), std::end(*deviceSublayers), [](SubtypeSublayer* sublayer)
   {
     if (!sublayer)
     {
@@ -472,8 +472,8 @@ void SnapGeometryEditsWithRules::setSnapSettings(UtilityAssetType* assetType)
   }
 
   // Get the snap rules associated with the asset type.
-  SnapRules::createAsync(m_mapView->map()->utilityNetworks()->first(), assetType).then(this,
-  [this](SnapRules* createdRules)
+  SnapRules::createAsync(m_mapView->map()->utilityNetworks()->first(), assetType)
+    .then(this, [this](SnapRules* createdRules)
   {
     // Synchronize the snap source collection with the map's operational layers using the snap rules.
     // Setting SnapSourceEnablingBehavior.SetFromRules will enable snapping for the layers and sublayers specified in the snap rules.
@@ -481,8 +481,7 @@ void SnapGeometryEditsWithRules::setSnapSettings(UtilityAssetType* assetType)
 
     QList<SnapSourceSettings*> sourceSettingsForListModel;
     const auto currentSourceSettings = m_mapView->geometryEditor()->snapSettings()->sourceSettings();
-    std::for_each(std::begin(currentSourceSettings), std::end(currentSourceSettings),
-    [&sourceSettingsForListModel](SnapSourceSettings* sourceSetting)
+    std::for_each(std::begin(currentSourceSettings), std::end(currentSourceSettings), [&sourceSettingsForListModel](SnapSourceSettings* sourceSetting)
     {
       // Enable snapping for the graphics overlay.
       if (auto graphicsOverlay = dynamic_cast<GraphicsOverlay*>(sourceSetting->source()); graphicsOverlay)
@@ -490,14 +489,14 @@ void SnapGeometryEditsWithRules::setSnapSettings(UtilityAssetType* assetType)
         sourceSetting->setEnabled(true);
         sourceSettingsForListModel.append(sourceSetting);
       }
-      else if (auto subtypeFeatureLayer = dynamic_cast<SubtypeFeatureLayer*>(sourceSetting->source()); subtypeFeatureLayer && subtypeFeatureLayer->name() == "PipelineLine")
+      else if (auto subtypeFeatureLayer = dynamic_cast<SubtypeFeatureLayer*>(sourceSetting->source());
+               subtypeFeatureLayer && subtypeFeatureLayer->name() == "PipelineLine")
       {
         QList<SnapSourceSettings*> childSourceSettings = sourceSetting->childSourceSettings();
-        std::for_each(std::begin(childSourceSettings), std::end(childSourceSettings),
-        [&sourceSettingsForListModel](SnapSourceSettings* sourceSetting)
+        std::for_each(std::begin(childSourceSettings), std::end(childSourceSettings), [&sourceSettingsForListModel](SnapSourceSettings* sourceSetting)
         {
-          if (auto* subtypeSublayer = dynamic_cast<SubtypeSublayer*>(sourceSetting->source()); subtypeSublayer &&
-             (subtypeSublayer->name() == "Service Pipe" || subtypeSublayer->name() == "Distribution Pipe"))
+          if (auto* subtypeSublayer = dynamic_cast<SubtypeSublayer*>(sourceSetting->source());
+              subtypeSublayer && (subtypeSublayer->name() == "Service Pipe" || subtypeSublayer->name() == "Distribution Pipe"))
           {
             sourceSettingsForListModel.append(sourceSetting);
           }
@@ -515,8 +514,7 @@ void SnapGeometryEditsWithRules::setSnapSettings(UtilityAssetType* assetType)
 void SnapGeometryEditsWithRules::updateSnapSourceRenderers(const QList<SnapSourceSettings*>& snapSourceSettings)
 {
   // Update the renderer for each snap source based on their snap rule behavior.
-  std::for_each(std::begin(snapSourceSettings), std::end(snapSourceSettings),
-  [this](const SnapSourceSettings* settings)
+  std::for_each(std::begin(snapSourceSettings), std::end(snapSourceSettings), [this](const SnapSourceSettings* settings)
   {
     Symbol* symbol = nullptr;
     switch (settings->ruleBehavior())

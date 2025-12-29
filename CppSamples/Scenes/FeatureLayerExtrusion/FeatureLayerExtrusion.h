@@ -26,15 +26,15 @@
 
 namespace Esri::ArcGISRuntime
 {
-class FeatureLayer;
-class ServiceFeatureTable;
-class SceneQuickView;
-class OrbitLocationCameraController;
-class SimpleLineSymbol;
-class SimpleFillSymbol;
-class SimpleRenderer;
-enum class FeatureRenderingMode;
-}
+  class FeatureLayer;
+  class ServiceFeatureTable;
+  class SceneQuickView;
+  class OrbitLocationCameraController;
+  class SimpleLineSymbol;
+  class SimpleFillSymbol;
+  class SimpleRenderer;
+  enum class FeatureRenderingMode;
+} // namespace Esri::ArcGISRuntime
 
 class FeatureLayerExtrusion : public QQuickItem
 {
@@ -57,7 +57,6 @@ private:
   Esri::ArcGISRuntime::SimpleFillSymbol* m_fillSymbol = nullptr;
   Esri::ArcGISRuntime::SimpleRenderer* m_renderer = nullptr;
   bool m_showTotalPopulation = true;
-
 };
 
 #endif // FEATURELAYEREXTRUSION_H

@@ -1,3 +1,4 @@
+// [WriteFile Name=SnapGeometryEditsWithRules, Category=EditData]
 // [Legal]
 // Copyright 2025 Esri.
 //
@@ -33,7 +34,8 @@
 #include <QHash>
 #include <QList>
 
-namespace Esri::ArcGISRuntime {
+namespace Esri::ArcGISRuntime
+{
   class SnapSourceSettings;
 }
 
@@ -42,7 +44,7 @@ class SnapSourcesListModel : public QAbstractListModel
   Q_OBJECT
 
 public:
-  enum SnapSourceRoles 
+  enum SnapSourceRoles
   {
     NameRole = Qt::UserRole + 1,
     IsEnabledRole

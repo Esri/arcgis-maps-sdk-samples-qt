@@ -31,7 +31,7 @@ namespace Esri::ArcGISRuntime
   class GraphicsOverlay;
   class PictureMarkerSymbol;
   class RouteTask;
-}
+} // namespace Esri::ArcGISRuntime
 
 class QAbstractListModel;
 Q_MOC_INCLUDE("QAbstractListModel")

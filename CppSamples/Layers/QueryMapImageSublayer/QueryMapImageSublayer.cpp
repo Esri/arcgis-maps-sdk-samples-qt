@@ -55,7 +55,7 @@
 
 using namespace Esri::ArcGISRuntime;
 
-QueryMapImageSublayer::QueryMapImageSublayer(QQuickItem* parent /* = nullptr */):
+QueryMapImageSublayer::QueryMapImageSublayer(QQuickItem* parent /* = nullptr */) :
   QQuickItem(parent)
 {
 }
@@ -104,14 +104,18 @@ void QueryMapImageSublayer::connectSignals()
   connect(m_usaImageLayer, &ArcGISMapImageLayer::doneLoading, this, [this](const Error& e)
   {
     if (!e.isEmpty())
+    {
       return;
+    }
 
     // load the sublayers and tables of the map image layer
     m_usaImageLayer->loadTablesAndLayersAsync().then(this, [this]()
     {
       ArcGISSublayerListModel* sublayers = m_usaImageLayer->mapImageSublayers();
       if (sublayers->size() < 4)
+      {
         return;
+      }
 
       // get the sublayer's tables
       m_citiesTable = dynamic_cast<ArcGISMapImageSublayer*>(sublayers->at(0))->table();
@@ -155,7 +159,9 @@ void QueryMapImageSublayer::addResultsAsGraphics(FeatureQueryResult* result, Sym
 void QueryMapImageSublayer::query(const QString& whereClause)
 {
   if (!m_citiesTable || !m_countiesTable || !m_statesTable || !m_mapView || !m_selectionOverlay)
+  {
     return;
+  }
 
   // clear & delete previous graphics
   GraphicListModel* graphics = m_selectionOverlay->graphics();
@@ -172,17 +178,20 @@ void QueryMapImageSublayer::query(const QString& whereClause)
   queryParams.setWhereClause(whereClause);
 
   // query the feature tables
-  m_citiesTable->queryFeaturesAsync(queryParams).then(this, [this](FeatureQueryResult* result)
+  m_citiesTable->queryFeaturesAsync(queryParams)
+    .then(this, [this](FeatureQueryResult* result)
   {
     addResultsAsGraphics(result, m_citySymbol);
     delete result;
   });
-  m_countiesTable->queryFeaturesAsync(queryParams).then(this, [this](FeatureQueryResult* result)
+  m_countiesTable->queryFeaturesAsync(queryParams)
+    .then(this, [this](FeatureQueryResult* result)
   {
     addResultsAsGraphics(result, m_countySymbol);
     delete result;
   });
-  m_statesTable->queryFeaturesAsync(queryParams).then(this, [this](FeatureQueryResult* result)
+  m_statesTable->queryFeaturesAsync(queryParams)
+    .then(this, [this](FeatureQueryResult* result)
   {
     addResultsAsGraphics(result, m_stateSymbol);
     delete result;

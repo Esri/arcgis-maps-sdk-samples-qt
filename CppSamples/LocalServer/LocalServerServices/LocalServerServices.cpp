@@ -41,7 +41,9 @@ LocalServerServices::LocalServerServices(QQuickItem* parent) :
 {
   // Create a temporary directory for the local server if one has not already been created
   if (!LocalServer::appDataPath().isEmpty() && !LocalServer::tempDataPath().isEmpty())
+  {
     return;
+  }
 
   // create temp/data path
   const QString tempPath = LocalServerServices::shortestTempPath() + "/EsriQtSample";
@@ -76,7 +78,9 @@ void LocalServerServices::componentComplete()
   if (LocalServer::instance()->isInstallValid())
   {
     if (LocalServer::status() == LocalServerStatus::Started)
+    {
       LocalServer::stop();
+    }
 
     connectSignals();
   }
@@ -145,7 +149,9 @@ void LocalServerServices::connectSignals()
 void LocalServerServices::startLocalServer()
 {
   if (m_isServerRunning)
+  {
     return;
+  }
 
   // clear all the status messages
   m_serverStatus.clear();
@@ -164,14 +170,18 @@ void LocalServerServices::startService(const QString& serviceName, const QUrl& f
 {
   QString path;
   if (!filePath.isEmpty())
+  {
     path = QUrl(filePath).toLocalFile();
+  }
 
   if (serviceName == "Map Service")
   {
     if (path.isEmpty())
     {
       if (m_localMapService->status() == LocalServerStatus::Started)
+      {
         return;
+      }
 
       m_localMapService->start();
     }
@@ -190,7 +200,9 @@ void LocalServerServices::startService(const QString& serviceName, const QUrl& f
     if (path.isEmpty())
     {
       if (m_localFeatureService->status() == LocalServerStatus::Started)
+      {
         return;
+      }
 
       m_localFeatureService->start();
     }
@@ -209,7 +221,9 @@ void LocalServerServices::startService(const QString& serviceName, const QUrl& f
     if (path.isEmpty())
     {
       if (m_localGPService->status() == LocalServerStatus::Started)
+      {
         return;
+      }
 
       m_localGPService->start();
     }
@@ -229,7 +243,9 @@ void LocalServerServices::startService(const QString& serviceName, const QUrl& f
 void LocalServerServices::stopService(const QUrl& serviceUrl)
 {
   if (serviceUrl.isEmpty())
+  {
     return;
+  }
 
   LocalService* serviceToStop = m_servicesHash[serviceUrl];
   serviceToStop->stop();
@@ -311,7 +327,11 @@ QString LocalServerServices::shortestTempPath()
 
   // return whichever is shorter, temp or home path
   if (homePath.length() > tmpPath.length())
+  {
     return tmpPath;
+  }
   else
+  {
     return homePath;
+  }
 }

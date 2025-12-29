@@ -35,14 +35,15 @@ SampleSearchFilterModel::SampleSearchFilterModel(SearchFilterCriteria* searchCri
   QSortFilterProxyModel(parent),
   m_searchCriteria(searchCriteria)
 {
-  connect(this, &QAbstractProxyModel::sourceModelChanged,
-          this, &SampleSearchFilterModel::discoverUniqueRoleIdForRoles);
+  connect(this, &QAbstractProxyModel::sourceModelChanged, this, &SampleSearchFilterModel::discoverUniqueRoleIdForRoles);
 }
 
 QVariant SampleSearchFilterModel::data(const QModelIndex& index, int role) const
 {
   if (!index.isValid())
+  {
     return QVariant();
+  }
 
   auto source = mapToSource(index);
 
@@ -85,8 +86,7 @@ int SampleSearchFilterModel::blurbRole() const
   return m_blurbRole;
 }
 
-bool SampleSearchFilterModel::lessThan(const QModelIndex& left,
-                                       const QModelIndex& right) const
+bool SampleSearchFilterModel::lessThan(const QModelIndex& left, const QModelIndex& right) const
 {
   if (m_searchCriteria)
   {
@@ -98,8 +98,7 @@ bool SampleSearchFilterModel::lessThan(const QModelIndex& left,
     else
     {
       const auto indexR = m_filterResults.constFind(right.row());
-      return indexR == m_filterResults.cend() ? true
-                                              : indexL->first < indexR->first;
+      return indexR == m_filterResults.cend() ? true : indexL->first < indexR->first;
     }
   }
   else
@@ -154,7 +153,7 @@ QList<int> SampleSearchFilterModel::unusedRoleIds(int count) const
 
   // Blurb roles needs an id slotted where the source model does
   // not have an ID reserved.
-  for (int role = Qt::UserRole; ; ++role)
+  for (int role = Qt::UserRole;; ++role)
   {
     // Find first unique UserRole in the collection of roleNames.
     // End the unique ID discoverey.
@@ -162,7 +161,9 @@ QList<int> SampleSearchFilterModel::unusedRoleIds(int count) const
     {
       ids << role;
       if (ids.size() >= count)
+      {
         break;
+      }
     }
   }
   return ids;
@@ -186,9 +187,7 @@ void SampleSearchFilterModel::updateFilterResults()
     // Note that even though the source model does _not_ contain the given
     // roles, we are emitting the signal from the source model so that the
     // QSortFilterProxyModel will do the right thing.
-    emit sourceModel()->dataChanged(index(0, 0),
-                                    index(rowCount()-1, columnCount()-1),
-                                    { blurbRole(), scoreRole() });
+    emit sourceModel()->dataChanged(index(0, 0), index(rowCount() - 1, columnCount() - 1), {blurbRole(), scoreRole()});
   }
   // Update the filter
   invalidateFilter();

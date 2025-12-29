@@ -22,8 +22,8 @@
 #include "EditGeometriesWithProgrammaticReticleTool.h"
 
 // ArcGIS Maps SDK headers
-#include "ErrorException.h"
 #include "Envelope.h"
+#include "ErrorException.h"
 #include "GeometryEditor.h"
 #include "GeometryEditorElement.h"
 #include "GeometryEditorGrowEffect.h"
@@ -64,24 +64,27 @@
 #include <QFuture>
 #include <QString>
 
-namespace {
+namespace
+{
   const QString startGeometryEditorText{"Start geometry editor"};
   const QString dropPointText{"Drop point"};
   const QString pickUpPointText{"Pick up point"};
   const QString insertPointText{"Insert point"};
-}
+} // namespace
 
 using namespace Esri::ArcGISRuntime;
 
-EditGeometriesWithProgrammaticReticleTool::EditGeometriesWithProgrammaticReticleTool(QObject* parent /* = nullptr */):
+EditGeometriesWithProgrammaticReticleTool::EditGeometriesWithProgrammaticReticleTool(QObject* parent /* = nullptr */) :
   QObject(parent),
   m_map(new Map(BasemapStyle::ArcGISImagery, this)),
   m_graphicsOverlay(new GraphicsOverlay(this)),
   m_pointSymbol(new SimpleMarkerSymbol(SimpleMarkerSymbolStyle::Square, QColor(255, 45, 0), 10, this)),
   m_multiPointSymbol(new SimpleMarkerSymbol(SimpleMarkerSymbolStyle::Circle, QColor(255, 255, 0), 5, this)),
   m_lineSymbol(new SimpleLineSymbol(SimpleLineSymbolStyle::Solid, QColor(0, 0, 255), 2, this)),
-  m_polygonSymbol(new SimpleFillSymbol(SimpleFillSymbolStyle::Solid, QColor(255, 0, 0, 75),
-                                       new SimpleLineSymbol(SimpleLineSymbolStyle::Dash, QColor(0, 0, 0), 1.0, this), this)),
+  m_polygonSymbol(new SimpleFillSymbol(SimpleFillSymbolStyle::Solid,
+                                       QColor(255, 0, 0, 75),
+                                       new SimpleLineSymbol(SimpleLineSymbolStyle::Dash, QColor(0, 0, 0), 1.0, this),
+                                       this)),
   m_geometryEditor(new GeometryEditor(this)),
   m_reticleTool(new ProgrammaticReticleTool(this))
 {
@@ -129,9 +132,12 @@ MapQuickView* EditGeometriesWithProgrammaticReticleTool::mapView() const
 
 void EditGeometriesWithProgrammaticReticleTool::createInitialGraphics()
 {
-  const QString pinkneysGreenJson = R"({"rings":[[[-84843.262719916485,6713749.9329888355],[-85833.376589175183,6714679.7122141244], [-85406.822347959576,6715063.9827222107],[-85184.329997390232,6715219.6195847588], [-85092.653857582554,6715119.5391713539],[-85090.446872787768,6714792.7656492386], [-84915.369168906298,6714297.8798246197],[-84854.295522911285,6714080.907587287], [-84843.262719916485,6713749.9329888355]]],"spatialReference":{"wkid":102100,"latestWkid":3857}})";
-  const QString beechLodgeBoundaryJson = R"({"paths":[[[-87090.652708065536,6714158.9244240439],[-87247.362370337316,6714232.880689906], [-87226.314032974493,6714605.4697726099],[-86910.499335316243,6714488.006312645], [-86750.82198052686,6714401.1768307304],[-86749.846825938366,6714305.8450344801]]],"spatialReference":{"wkid":102100,"latestWkid":3857}})";
-  const QString treeMarkersJson = R"({"points":[[-86750.751150056443,6713749.4529355941],[-86879.381793060631,6713437.3335486846], [-87596.503104619667,6714381.7342108283],[-87553.257569537804,6714402.0910389507], [-86831.019903597829,6714398.4128562529],[-86854.105933315877,6714396.1957954112], [-86800.624094892439,6713992.3374453448]],"spatialReference":{"wkid":102100,"latestWkid":3857}})";
+  const QString pinkneysGreenJson =
+    R"({"rings":[[[-84843.262719916485,6713749.9329888355],[-85833.376589175183,6714679.7122141244], [-85406.822347959576,6715063.9827222107],[-85184.329997390232,6715219.6195847588], [-85092.653857582554,6715119.5391713539],[-85090.446872787768,6714792.7656492386], [-84915.369168906298,6714297.8798246197],[-84854.295522911285,6714080.907587287], [-84843.262719916485,6713749.9329888355]]],"spatialReference":{"wkid":102100,"latestWkid":3857}})";
+  const QString beechLodgeBoundaryJson =
+    R"({"paths":[[[-87090.652708065536,6714158.9244240439],[-87247.362370337316,6714232.880689906], [-87226.314032974493,6714605.4697726099],[-86910.499335316243,6714488.006312645], [-86750.82198052686,6714401.1768307304],[-86749.846825938366,6714305.8450344801]]],"spatialReference":{"wkid":102100,"latestWkid":3857}})";
+  const QString treeMarkersJson =
+    R"({"points":[[-86750.751150056443,6713749.4529355941],[-86879.381793060631,6713437.3335486846], [-87596.503104619667,6714381.7342108283],[-87553.257569537804,6714402.0910389507], [-86831.019903597829,6714398.4128562529],[-86854.105933315877,6714396.1957954112], [-86800.624094892439,6713992.3374453448]],"spatialReference":{"wkid":102100,"latestWkid":3857}})";
 
   const Polygon pinkneysGreen = geometry_cast<Polygon>(Polygon::fromJson(pinkneysGreenJson));
   const Polyline beechLodgeBoundary = geometry_cast<Polyline>(Polyline::fromJson(beechLodgeBoundaryJson));
@@ -174,7 +180,9 @@ void EditGeometriesWithProgrammaticReticleTool::handleMapTap(const QMouseEvent& 
 void EditGeometriesWithProgrammaticReticleTool::handleMapTapGeNotStarted(const QMouseEvent& mouseEvent)
 {
   // Identify the geometry editor result at the tapped position.
-  m_mapView->identifyGeometryEditorAsync(mouseEvent.position(), 10, this).then(this, [this](IdentifyGeometryEditorResult* result)
+  m_mapView->identifyGeometryEditorAsync(mouseEvent.position(), 10, this)
+    .then(this,
+          [this](IdentifyGeometryEditorResult* result)
   {
     std::unique_ptr<IdentifyGeometryEditorResult> identifyResult(result);
     if (!identifyResult || identifyResult->elements().isEmpty())
@@ -196,7 +204,8 @@ void EditGeometriesWithProgrammaticReticleTool::handleMapTapGeNotStarted(const Q
       m_mapView->setViewpointAsync(Viewpoint(Point(midVertex->point().x(), midVertex->point().y(), midVertex->point().spatialReference())));
       m_geometryEditor->selectMidVertex(midVertex->partIndex(), midVertex->segmentIndex());
     }
-  }).onFailed(this, [this](const ErrorException& error)
+  })
+    .onFailed(this, [this](const ErrorException& error)
   {
     qDebug() << "Error editing! Identify geometry editor failed with error " << error.error().message();
     resetFromEditingSession();
@@ -207,7 +216,8 @@ void EditGeometriesWithProgrammaticReticleTool::handleMapTapGeStarted(const QMou
 {
   // Identify graphics in the graphics overlay using the tapped position.
   m_mapView->identifyGraphicsOverlayAsync(m_graphicsOverlay, mouseEvent.position(), 10, false, this)
-    .then(this, [this](IdentifyGraphicsOverlayResult* rawResult)
+    .then(this,
+          [this](IdentifyGraphicsOverlayResult* rawResult)
   {
     auto identifyResult = std::unique_ptr<IdentifyGraphicsOverlayResult>(rawResult);
     if (!identifyResult || identifyResult->graphics().isEmpty())
@@ -284,7 +294,8 @@ void EditGeometriesWithProgrammaticReticleTool::handleMapTapGeStarted(const QMou
       // Hide the selected graphic while editing.
       m_editingGraphic->setVisible(false);
     }
-  }).onFailed(this, [this](const ErrorException& error)
+  })
+    .onFailed(this, [this](const ErrorException& error)
   {
     qDebug() << "Error editing! Identify failed with error " << error.error().message();
     resetFromEditingSession();
@@ -324,11 +335,13 @@ void EditGeometriesWithProgrammaticReticleTool::handleMultifunctionButton()
     // When vertex creation is allowed vertices and mid-vertices can be picked up, new vertices can be inserted.
     switch (m_reticleState)
     {
-      case ReticleState::Default: [[fallthrough]];
+      case ReticleState::Default:
+        [[fallthrough]];
       case ReticleState::PickedUp:
         m_reticleTool->placeElementAtReticle();
         break;
-      case ReticleState::HoveringVertex: [[fallthrough]];
+      case ReticleState::HoveringVertex:
+        [[fallthrough]];
       case ReticleState::HoveringMidVertex:
         m_reticleTool->selectElementAtReticle();
         m_reticleTool->pickUpSelectedElement();
@@ -559,11 +572,12 @@ void EditGeometriesWithProgrammaticReticleTool::setMultifunctionButtonState()
     }
     else if (GeometryEditorElement* hoveredElement = dynamic_cast<GeometryEditorElement*>(m_geometryEditor->hoveredElement());
              hoveredElement && (hoveredElement->geometryEditorElementType() == GeometryEditorElementType::GeometryEditorVertex ||
-                         hoveredElement->geometryEditorElementType() == GeometryEditorElementType::GeometryEditorMidVertex))
+                                hoveredElement->geometryEditorElementType() == GeometryEditorElementType::GeometryEditorMidVertex))
     {
       newText = pickUpPointText;
       newReticleState = (hoveredElement->geometryEditorElementType() == GeometryEditorElementType::GeometryEditorVertex) ?
-                          ReticleState::HoveringVertex : ReticleState::HoveringMidVertex;
+                          ReticleState::HoveringVertex :
+                          ReticleState::HoveringMidVertex;
     }
     else
     {

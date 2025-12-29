@@ -25,9 +25,9 @@
 
 namespace Esri::ArcGISRuntime
 {
-class MapQuickView;
-class Map;
-}
+  class MapQuickView;
+  class Map;
+} // namespace Esri::ArcGISRuntime
 
 class QTimer;
 

@@ -22,12 +22,12 @@
 
 namespace Esri::ArcGISRuntime
 {
-class Scene;
-class SceneQuickView;
+  class Scene;
+  class SceneQuickView;
 
-class Map;
-class MapQuickView;
-}
+  class Map;
+  class MapQuickView;
+} // namespace Esri::ArcGISRuntime
 
 Q_MOC_INCLUDE("MapQuickView.h")
 Q_MOC_INCLUDE("SceneQuickView.h")

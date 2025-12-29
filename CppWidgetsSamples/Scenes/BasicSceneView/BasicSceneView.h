@@ -21,7 +21,7 @@ namespace Esri::ArcGISRuntime
 {
   class Scene;
   class SceneGraphicsView;
-}
+} // namespace Esri::ArcGISRuntime
 
 #include <QWidget>
 
@@ -31,7 +31,7 @@ class BasicSceneView : public QWidget
 
 public:
   explicit BasicSceneView(QWidget* parent = nullptr);
-   ~BasicSceneView() override;
+  ~BasicSceneView() override;
 
 private:
   Esri::ArcGISRuntime::Scene* m_scene = nullptr;

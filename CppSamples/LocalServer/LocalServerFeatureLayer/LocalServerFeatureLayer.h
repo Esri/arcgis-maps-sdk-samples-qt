@@ -28,7 +28,7 @@ namespace Esri::ArcGISRuntime
   class LocalServer;
   class LocalFeatureService;
   class LocalService;
-}
+} // namespace Esri::ArcGISRuntime
 
 class QTemporaryDir;
 

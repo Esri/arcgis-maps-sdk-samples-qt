@@ -42,29 +42,34 @@
 
 using namespace Esri::ArcGISRuntime;
 
-GroupLayers::GroupLayers(QObject* parent /* = nullptr */):
+GroupLayers::GroupLayers(QObject* parent /* = nullptr */) :
   QObject(parent),
   m_scene(new Scene(BasemapStyle::ArcGISImageryStandard, this))
 {
   // create a new elevation source from Terrain3D REST service
-  ArcGISTiledElevationSource* elevationSource = new ArcGISTiledElevationSource(
-        QUrl("https://elevation3d.arcgis.com/arcgis/rest/services/WorldElevation3D/Terrain3D/ImageServer"), this);
+  ArcGISTiledElevationSource* elevationSource =
+    new ArcGISTiledElevationSource(QUrl("https://elevation3d.arcgis.com/arcgis/rest/services/WorldElevation3D/Terrain3D/ImageServer"), this);
 
   // add the elevation source to the scene to display elevation
   m_scene->baseSurface()->elevationSources()->append(elevationSource);
 
   // Create layers and append to a group layer
-  ArcGISSceneLayer* layer1 = new ArcGISSceneLayer(QUrl("https://tiles.arcgis.com/tiles/P3ePLMYs2RVChkJx/arcgis/rest/services/DevA_BuildingShells/SceneServer"), this);
-  ArcGISSceneLayer* layer2 = new ArcGISSceneLayer(QUrl("https://tiles.arcgis.com/tiles/P3ePLMYs2RVChkJx/arcgis/rest/services/DevB_BuildingShells/SceneServer"), this);
+  ArcGISSceneLayer* layer1 =
+    new ArcGISSceneLayer(QUrl("https://tiles.arcgis.com/tiles/P3ePLMYs2RVChkJx/arcgis/rest/services/DevA_BuildingShells/SceneServer"), this);
+  ArcGISSceneLayer* layer2 =
+    new ArcGISSceneLayer(QUrl("https://tiles.arcgis.com/tiles/P3ePLMYs2RVChkJx/arcgis/rest/services/DevB_BuildingShells/SceneServer"), this);
   GroupLayer* groupLayer = new GroupLayer(QList<Layer*>{layer1, layer2}, this);
   groupLayer->setName("Buildings group");
   groupLayer->setVisibilityMode(GroupVisibilityMode::Exclusive);
 
   // Create additional layers
-  ArcGISSceneLayer* layer3 = new ArcGISSceneLayer(QUrl("https://tiles.arcgis.com/tiles/P3ePLMYs2RVChkJx/arcgis/rest/services/DevA_Trees/SceneServer"), this);
-  ServiceFeatureTable* ft1 = new ServiceFeatureTable(QUrl("https://services.arcgis.com/P3ePLMYs2RVChkJx/arcgis/rest/services/DevelopmentProjectArea/FeatureServer/0"), this);
+  ArcGISSceneLayer* layer3 =
+    new ArcGISSceneLayer(QUrl("https://tiles.arcgis.com/tiles/P3ePLMYs2RVChkJx/arcgis/rest/services/DevA_Trees/SceneServer"), this);
+  ServiceFeatureTable* ft1 =
+    new ServiceFeatureTable(QUrl("https://services.arcgis.com/P3ePLMYs2RVChkJx/arcgis/rest/services/DevelopmentProjectArea/FeatureServer/0"), this);
   FeatureLayer* layer4 = new FeatureLayer(ft1, this);
-  ServiceFeatureTable* ft2 = new ServiceFeatureTable(QUrl("https://services.arcgis.com/P3ePLMYs2RVChkJx/arcgis/rest/services/DevA_Pathways/FeatureServer/1"), this);
+  ServiceFeatureTable* ft2 =
+    new ServiceFeatureTable(QUrl("https://services.arcgis.com/P3ePLMYs2RVChkJx/arcgis/rest/services/DevA_Pathways/FeatureServer/1"), this);
   FeatureLayer* layer5 = new FeatureLayer(ft2, this);
 
   // Add layers to the scene
@@ -79,7 +84,9 @@ GroupLayers::GroupLayers(QObject* parent /* = nullptr */):
     emit busyChanged();
 
     if (!e.isEmpty())
+    {
       return;
+    }
 
     m_layerListModel = m_scene->operationalLayers();
     emit layerListModelChanged();
@@ -130,12 +137,16 @@ void GroupLayers::setSceneView(SceneQuickView* sceneView)
 LayerListModel* GroupLayers::getGroupLayerListModel(int layerId)
 {
   if (!m_scene)
+  {
     return nullptr;
+  }
 
   GroupLayer* groupLayer = static_cast<GroupLayer*>(m_scene->operationalLayers()->at(layerId));
 
   if (groupLayer)
+  {
     return groupLayer->layers();
+  }
 
   return nullptr;
 }

@@ -42,20 +42,20 @@ namespace
   {
     QString dataPath;
 
-    #ifdef Q_OS_IOS
-      dataPath = QStandardPaths::writableLocation(QStandardPaths::DocumentsLocation);
-    #else
-      dataPath = QStandardPaths::writableLocation(QStandardPaths::HomeLocation);
-    #endif
+#ifdef Q_OS_IOS
+    dataPath = QStandardPaths::writableLocation(QStandardPaths::DocumentsLocation);
+#else
+    dataPath = QStandardPaths::writableLocation(QStandardPaths::HomeLocation);
+#endif
 
     return dataPath;
   }
 
   // Sample MMPK location.
-  const QString edinburghPylonFilePath {"/ArcGIS/Runtime/Data/mmpk/Edinburgh_Pylon_Dimensions.mmpk"};
-}
+  const QString edinburghPylonFilePath{"/ArcGIS/Runtime/Data/mmpk/Edinburgh_Pylon_Dimensions.mmpk"};
+} // namespace
 
-DisplayDimensions::DisplayDimensions(QObject* parent /* = nullptr */):
+DisplayDimensions::DisplayDimensions(QObject* parent /* = nullptr */) :
   QObject(parent)
 {
   QString mapPackagePath = defaultDataPath() + edinburghPylonFilePath;
@@ -131,9 +131,13 @@ void DisplayDimensions::findDimensionLayer()
 void DisplayDimensions::handleError(const Error& error)
 {
   if (error.additionalMessage().isEmpty())
+  {
     setErrorMessage(error.message());
+  }
   else
+  {
     setErrorMessage(error.message() + "\n" + error.additionalMessage());
+  }
 }
 
 MapQuickView* DisplayDimensions::mapView() const
@@ -145,12 +149,16 @@ MapQuickView* DisplayDimensions::mapView() const
 void DisplayDimensions::setMapView(MapQuickView* mapView)
 {
   if (!mapView || mapView == m_mapView)
+  {
     return;
+  }
 
   m_mapView = mapView;
 
   if (m_map)
+  {
     m_mapView->setMap(m_map);
+  }
 
   emit mapViewChanged();
 }
@@ -195,9 +203,13 @@ bool DisplayDimensions::useDefinitionExpression() const
 void DisplayDimensions::setUseDefinitionExpression(bool applied)
 {
   if (applied)
+  {
     m_dimensionLayer->setDefinitionExpression("DIMLENGTH >= 450");
+  }
   else
+  {
     m_dimensionLayer->setDefinitionExpression("");
+  }
 }
 
 bool DisplayDimensions::dimensionsAvailable()

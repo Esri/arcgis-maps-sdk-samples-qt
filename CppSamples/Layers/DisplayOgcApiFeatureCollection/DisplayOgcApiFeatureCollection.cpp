@@ -42,7 +42,7 @@
 
 using namespace Esri::ArcGISRuntime;
 
-DisplayOgcApiFeatureCollection::DisplayOgcApiFeatureCollection(QObject* parent /* = nullptr */):
+DisplayOgcApiFeatureCollection::DisplayOgcApiFeatureCollection(QObject* parent /* = nullptr */) :
   QObject(parent),
   m_map(new Map(BasemapStyle::ArcGISTopographic, this))
 {
@@ -78,7 +78,9 @@ MapQuickView* DisplayOgcApiFeatureCollection::mapView() const
 void DisplayOgcApiFeatureCollection::setMapView(MapQuickView* mapView)
 {
   if (!mapView || mapView == m_mapView)
+  {
     return;
+  }
 
   m_mapView = mapView;
   m_mapView->setMap(m_map);
@@ -94,7 +96,9 @@ void DisplayOgcApiFeatureCollection::createQueryConnection()
   connect(m_mapView, &MapQuickView::navigatingChanged, this, [this]()
   {
     if (m_mapView->isNavigating())
+    {
       return;
+    }
 
     QueryParameters queryParameters = QueryParameters();
     // Set the query area to what is currently visible in the map view

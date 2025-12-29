@@ -45,11 +45,12 @@
 
 using namespace Esri::ArcGISRuntime;
 
-CreateSymbolStylesFromWebStyles::CreateSymbolStylesFromWebStyles(QObject* parent /* = nullptr */):
+CreateSymbolStylesFromWebStyles::CreateSymbolStylesFromWebStyles(QObject* parent /* = nullptr */) :
   QObject(parent),
   m_map(new Map(BasemapStyle::ArcGISNavigation, this))
 {
-  const QUrl webStyleLayerUrl = QUrl("https://services.arcgis.com/V6ZHFr6zdgNZuVG0/arcgis/rest/services/LA_County_Points_of_Interest/FeatureServer/0");
+  const QUrl webStyleLayerUrl =
+    QUrl("https://services.arcgis.com/V6ZHFr6zdgNZuVG0/arcgis/rest/services/LA_County_Points_of_Interest/FeatureServer/0");
   m_webStyleLayer = new FeatureLayer(new ServiceFeatureTable(webStyleLayerUrl, this), this);
 
   m_uniqueValueRenderer = new UniqueValueRenderer(this);
@@ -71,14 +72,14 @@ CreateSymbolStylesFromWebStyles::CreateSymbolStylesFromWebStyles(QObject* parent
 
 void CreateSymbolStylesFromWebStyles::performSymbolSearch()
 {
-  QMap<QString,QStringList> categoriesMap = createCategoriesMap();
+  QMap<QString, QStringList> categoriesMap = createCategoriesMap();
   SymbolStyleSearchParameters searchParams;
   searchParams.setKeys(categoriesMap.keys());
   searchParams.setKeysStrictlyMatch(true);
 
   SymbolStyle* symbolStyle = new SymbolStyle("Esri2DPointSymbolsStyle", nullptr, this);
-  symbolStyle->searchSymbolsAsync(searchParams).then(this,
-  [this, symbolStyle, categoriesMap](SymbolStyleSearchResultListModel* searchResults)
+  symbolStyle->searchSymbolsAsync(searchParams)
+    .then(this, [this, symbolStyle, categoriesMap](SymbolStyleSearchResultListModel* searchResults)
   {
     m_legendInfoListModel = searchResults;
     emit legendInfoListModelChanged();
@@ -87,20 +88,19 @@ void CreateSymbolStylesFromWebStyles::performSymbolSearch()
     for (SymbolStyleSearchResult& symbolStyleSearchResult : results)
     {
       // We pass symbolStyle as the QObject parent for fetchSymbol() because we don't need access to the resulting class outside the lifetime of this SymbolStyle
-      symbolStyleSearchResult.fetchSymbolAsync(symbolStyle).then(this,
-      [this, symbolStyleSearchResult, categoriesMap](Symbol* symbol)
+      symbolStyleSearchResult.fetchSymbolAsync(symbolStyle)
+        .then(this, [this, symbolStyleSearchResult, categoriesMap](Symbol* symbol)
       {
         const QString symbolLabel = symbolStyleSearchResult.key();
         // If multiple field names are set, we can pass multiple values from each field,
         // However, even though we are using the same symbol, we must create a UniqueValue for each value from the same field
         // When the FeatureLayer is rendered, all features with a matching value in the specified FieldNames will appear with the defined UniqueValue
-        for (const QString &category : categoriesMap[symbolLabel])
+        for (const QString& category : categoriesMap[symbolLabel])
         {
           m_uniqueValueRenderer->uniqueValues()->append(new UniqueValue(symbolLabel, "", {category}, symbol, this));
         }
       });
     }
-
   });
 }
 
@@ -122,7 +122,9 @@ MapQuickView* CreateSymbolStylesFromWebStyles::mapView() const
 void CreateSymbolStylesFromWebStyles::setMapView(MapQuickView* mapView)
 {
   if (!mapView || mapView == m_mapView)
+  {
     return;
+  }
 
   m_mapView = mapView;
   m_mapView->setMap(m_map);
@@ -143,10 +145,9 @@ void CreateSymbolStylesFromWebStyles::setMapView(MapQuickView* mapView)
   emit mapViewChanged();
 }
 
-QMap<QString,QStringList> CreateSymbolStylesFromWebStyles::createCategoriesMap()
+QMap<QString, QStringList> CreateSymbolStylesFromWebStyles::createCategoriesMap()
 {
-  QMap<QString,QStringList> categories =
-  {
+  QMap<QString, QStringList> categories = {
     {"atm", {"Banking and Finance"}},
     {"beach", {"Beaches and Marinas"}},
     {"campground", {"Campgrounds"}},
@@ -158,8 +159,7 @@ QMap<QString,QStringList> CreateSymbolStylesFromWebStyles::createCategoriesMap()
     {"police-station", {"Sheriff and Police Stations"}},
     {"post-office", {"DHL Locations", "Federal Express Locations"}},
     {"school", {"Public High Schools", "Public Elementary Schools", "Private and Charter Schools"}},
-    {"trail", {"Trails"}}
-  };
+    {"trail", {"Trails"}}};
 
   return categories;
 }

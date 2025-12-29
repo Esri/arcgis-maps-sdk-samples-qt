@@ -1,3 +1,4 @@
+// [WriteFile Name=StatisticalQueryGroupSort, Category=Analysis]
 // [Legal]
 // Copyright 2016 Esri.
 //
@@ -40,7 +41,11 @@ public:
   void addStatisticResult(const QString& section, const QString& statistic);
   void clear();
   void setupRoles();
-  int size() { return m_results.size(); }
+
+  int size()
+  {
+    return m_results.size();
+  }
 
   // QAbstractItemModel interface
   int rowCount(const QModelIndex& parent = QModelIndex()) const override;

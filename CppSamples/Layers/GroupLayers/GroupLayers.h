@@ -22,10 +22,10 @@
 
 namespace Esri::ArcGISRuntime
 {
-class Scene;
-class SceneQuickView;
-class LayerListModel;
-}
+  class Scene;
+  class SceneQuickView;
+  class LayerListModel;
+} // namespace Esri::ArcGISRuntime
 
 class QAbstractListModel;
 

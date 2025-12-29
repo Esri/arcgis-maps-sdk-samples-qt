@@ -57,23 +57,23 @@ using namespace Esri::ArcGISRuntime;
 // helper method to get cross platform data path
 namespace
 {
-QString defaultDataPath()
-{
-  QString dataPath;
+  QString defaultDataPath()
+  {
+    QString dataPath;
 
 #ifdef Q_OS_IOS
-  dataPath = QStandardPaths::writableLocation(QStandardPaths::DocumentsLocation);
+    dataPath = QStandardPaths::writableLocation(QStandardPaths::DocumentsLocation);
 #else
-  dataPath = QStandardPaths::writableLocation(QStandardPaths::HomeLocation);
+    dataPath = QStandardPaths::writableLocation(QStandardPaths::HomeLocation);
 #endif
 
-  return dataPath;
-}
+    return dataPath;
+  }
 } // namespace
 
 using namespace Esri::ArcGISRuntime;
 
-AnimateImagesWithImageOverlay::AnimateImagesWithImageOverlay(QObject* parent /* = nullptr */):
+AnimateImagesWithImageOverlay::AnimateImagesWithImageOverlay(QObject* parent /* = nullptr */) :
   QObject(parent),
   // Create a scene using the dark gray basemap
   m_scene(new Scene(BasemapStyle::ArcGISDarkGray, this)),
@@ -83,12 +83,11 @@ AnimateImagesWithImageOverlay::AnimateImagesWithImageOverlay(QObject* parent /* 
   m_imagesSize(m_images.size())
 {
   // create a new elevation source from Terrain3D REST service
-  ArcGISTiledElevationSource* elevationSource = new ArcGISTiledElevationSource(
-        QUrl("https://elevation3d.arcgis.com/arcgis/rest/services/WorldElevation3D/Terrain3D/ImageServer"), this);
+  ArcGISTiledElevationSource* elevationSource =
+    new ArcGISTiledElevationSource(QUrl("https://elevation3d.arcgis.com/arcgis/rest/services/WorldElevation3D/Terrain3D/ImageServer"), this);
 
   // add the elevation source to the scene to display elevation
   m_scene->baseSurface()->elevationSources()->append(elevationSource);
-
 }
 
 AnimateImagesWithImageOverlay::~AnimateImagesWithImageOverlay() = default;
@@ -109,7 +108,9 @@ SceneQuickView* AnimateImagesWithImageOverlay::sceneView() const
 void AnimateImagesWithImageOverlay::setSceneView(SceneQuickView* sceneView)
 {
   if (!sceneView || sceneView == m_sceneView)
+  {
     return;
+  }
 
   m_sceneView = sceneView;
   m_sceneView->setArcGISScene(m_scene);
@@ -150,7 +151,9 @@ void AnimateImagesWithImageOverlay::animateImageFrames()
 {
   // check if string list of images is empty before trying to load and animate them
   if (m_imagesSize == 0)
+  {
     return;
+  }
 
   // create an image with the given path and use it to create an image frame
   const QImage image(m_dataPath + "/" + m_images[m_index]);
@@ -166,20 +169,27 @@ void AnimateImagesWithImageOverlay::animateImageFrames()
 
   // reset index once all files have been loaded
   if (m_index == m_imagesSize)
+  {
     m_index = 0;
+  }
 }
 
 void AnimateImagesWithImageOverlay::setTimerInterval(int value)
 {
   if (!m_timer)
+  {
     return;
+  }
 
   m_timer->setInterval(value);
 }
+
 void AnimateImagesWithImageOverlay::setOpacity(float value)
 {
   if (!m_imageOverlay)
+  {
     return;
+  }
 
   m_imageOverlay->setOpacity(value);
 }
@@ -187,7 +197,9 @@ void AnimateImagesWithImageOverlay::setOpacity(float value)
 void AnimateImagesWithImageOverlay::startTimer()
 {
   if (!m_timer)
+  {
     return;
+  }
 
   m_isStopped = false;
   emit isStoppedChanged();
@@ -197,7 +209,9 @@ void AnimateImagesWithImageOverlay::startTimer()
 void AnimateImagesWithImageOverlay::stopTimer()
 {
   if (!m_timer)
+  {
     return;
+  }
 
   m_isStopped = true;
   emit isStoppedChanged();

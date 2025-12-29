@@ -41,7 +41,7 @@
 
 using namespace Esri::ArcGISRuntime;
 
-ViewshedLocation::ViewshedLocation(QQuickItem* parent /* = nullptr */):
+ViewshedLocation::ViewshedLocation(QQuickItem* parent /* = nullptr */) :
   QQuickItem(parent)
 {
 }
@@ -63,9 +63,7 @@ void ViewshedLocation::componentComplete()
   Scene* scene = new Scene(BasemapStyle::ArcGISTopographic, this);
   Surface* surface = new Surface(this);
   surface->elevationSources()->append(
-        new ArcGISTiledElevationSource(
-          QUrl("https://elevation3d.arcgis.com/arcgis/rest/services/WorldElevation3D/Terrain3D/ImageServer"),
-          this));
+    new ArcGISTiledElevationSource(QUrl("https://elevation3d.arcgis.com/arcgis/rest/services/WorldElevation3D/Terrain3D/ImageServer"), this));
   scene->setBaseSurface(surface);
   m_sceneView->setArcGISScene(scene);
 
@@ -100,7 +98,9 @@ void ViewshedLocation::connectSignals()
   connect(m_sceneView, &SceneQuickView::mouseClicked, this, [this](QMouseEvent& event)
   {
     if (!m_locationViewshed)
+    {
       createViewshed(event.position().x(), event.position().y());
+    }
     else
     {
       const Point pt = m_sceneView->screenToBaseSurface(event.position().x(), event.position().y());
@@ -111,7 +111,9 @@ void ViewshedLocation::connectSignals()
   connect(m_sceneView, &SceneQuickView::mousePressedAndHeld, this, [this](QMouseEvent& event)
   {
     if (!m_locationViewshed)
+    {
       createViewshed(event.position().x(), event.position().y());
+    }
 
     m_calculating = true;
   });
@@ -136,9 +138,7 @@ void ViewshedLocation::createViewshed(double x, double y)
   const Point pt = m_sceneView->screenToBaseSurface(x, y);
 
   // Create the Location Viewshed
-  m_locationViewshed = new LocationViewshed(pt, m_heading, m_pitch,
-                                            m_horizontalAngle, m_veriticalAngle,
-                                            m_minDistance, m_maxDistance, this);
+  m_locationViewshed = new LocationViewshed(pt, m_heading, m_pitch, m_horizontalAngle, m_veriticalAngle, m_minDistance, m_maxDistance, this);
   m_locationViewshed->setVisible(m_viewshedVisible);
 
   // Add the Viewshed to the Analysis Overlay
@@ -158,7 +158,9 @@ void ViewshedLocation::setViewshedVisible(bool viewshedVisible)
   if (m_locationViewshed)
   {
     if (m_locationViewshed->isVisible() == viewshedVisible)
+    {
       return;
+    }
 
     m_viewshedVisible = viewshedVisible;
     m_locationViewshed->setVisible(viewshedVisible);
@@ -166,7 +168,9 @@ void ViewshedLocation::setViewshedVisible(bool viewshedVisible)
   else
   {
     if (m_viewshedVisible == viewshedVisible)
+    {
       return;
+    }
 
     m_viewshedVisible = viewshedVisible;
   }
@@ -184,7 +188,9 @@ void ViewshedLocation::setFrustumOutlineVisible(bool frustumVisible)
   if (m_locationViewshed)
   {
     if (m_locationViewshed->isFrustumOutlineVisible() == frustumVisible)
+    {
       return;
+    }
 
     m_frustumVisible = frustumVisible;
     m_locationViewshed->setFrustumOutlineVisible(frustumVisible);
@@ -192,7 +198,9 @@ void ViewshedLocation::setFrustumOutlineVisible(bool frustumVisible)
   else
   {
     if (m_frustumVisible == frustumVisible)
+    {
       return;
+    }
 
     m_frustumVisible = frustumVisible;
   }
@@ -210,7 +218,9 @@ void ViewshedLocation::setMinDistance(double minDistance)
   if (m_locationViewshed)
   {
     if (m_locationViewshed->minDistance() == minDistance)
+    {
       return;
+    }
 
     m_minDistance = minDistance;
     m_locationViewshed->setMinDistance(minDistance);
@@ -218,7 +228,9 @@ void ViewshedLocation::setMinDistance(double minDistance)
   else
   {
     if (m_minDistance == minDistance)
+    {
       return;
+    }
 
     m_minDistance = minDistance;
   }
@@ -238,7 +250,9 @@ void ViewshedLocation::setMaxDistance(double maxDistance)
   if (m_locationViewshed)
   {
     if (m_locationViewshed->maxDistance() == maxDistance)
+    {
       return;
+    }
 
     m_maxDistance = maxDistance;
     m_locationViewshed->setMaxDistance(maxDistance);
@@ -246,7 +260,9 @@ void ViewshedLocation::setMaxDistance(double maxDistance)
   else
   {
     if (m_maxDistance == maxDistance)
+    {
       return;
+    }
 
     m_maxDistance = maxDistance;
   }
@@ -264,7 +280,9 @@ void ViewshedLocation::setHorizontalAngle(double horizontalAngle)
   if (m_locationViewshed)
   {
     if (m_locationViewshed->horizontalAngle() == horizontalAngle)
+    {
       return;
+    }
 
     m_horizontalAngle = horizontalAngle;
     m_locationViewshed->setHorizontalAngle(horizontalAngle);
@@ -272,7 +290,9 @@ void ViewshedLocation::setHorizontalAngle(double horizontalAngle)
   else
   {
     if (m_horizontalAngle == horizontalAngle)
+    {
       return;
+    }
 
     m_horizontalAngle = horizontalAngle;
   }
@@ -290,7 +310,9 @@ void ViewshedLocation::setVerticalAngle(double verticalAngle)
   if (m_locationViewshed)
   {
     if (m_locationViewshed->verticalAngle() == verticalAngle)
+    {
       return;
+    }
 
     m_veriticalAngle = verticalAngle;
     m_locationViewshed->setVerticalAngle(verticalAngle);
@@ -298,7 +320,9 @@ void ViewshedLocation::setVerticalAngle(double verticalAngle)
   else
   {
     if (m_veriticalAngle == verticalAngle)
+    {
       return;
+    }
 
     m_veriticalAngle = verticalAngle;
   }
@@ -316,7 +340,9 @@ void ViewshedLocation::setHeading(double heading)
   if (m_locationViewshed)
   {
     if (m_locationViewshed->heading() == heading)
+    {
       return;
+    }
 
     m_heading = heading;
     m_locationViewshed->setHeading(heading);
@@ -324,7 +350,9 @@ void ViewshedLocation::setHeading(double heading)
   else
   {
     if (m_heading == heading)
+    {
       return;
+    }
 
     m_heading = heading;
   }
@@ -342,7 +370,9 @@ void ViewshedLocation::setPitch(double pitch)
   if (m_locationViewshed)
   {
     if (m_locationViewshed->pitch() == pitch)
+    {
       return;
+    }
 
     m_pitch = pitch;
     m_locationViewshed->setPitch(pitch);
@@ -350,7 +380,9 @@ void ViewshedLocation::setPitch(double pitch)
   else
   {
     if (m_pitch == pitch)
+    {
       return;
+    }
 
     m_pitch = pitch;
   }
@@ -366,7 +398,9 @@ QColor ViewshedLocation::visibleColor() const
 void ViewshedLocation::setVisibleColor(const QColor& visibleColor)
 {
   if (LocationViewshed::visibleColor() == visibleColor)
+  {
     return;
+  }
 
   LocationViewshed::setVisibleColor(visibleColor);
 
@@ -381,7 +415,9 @@ QColor ViewshedLocation::obstructedColor() const
 void ViewshedLocation::setObstructedColor(const QColor& obstructedColor)
 {
   if (LocationViewshed::obstructedColor() == obstructedColor)
+  {
     return;
+  }
 
   LocationViewshed::setObstructedColor(obstructedColor);
 

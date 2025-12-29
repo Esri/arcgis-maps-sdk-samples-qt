@@ -46,20 +46,20 @@
 
 using namespace Esri::ArcGISRuntime;
 
-RealisticLightingAndShadows::RealisticLightingAndShadows(QObject* parent /* = nullptr */):
+RealisticLightingAndShadows::RealisticLightingAndShadows(QObject* parent /* = nullptr */) :
   QObject(parent),
   m_scene(new Scene(BasemapStyle::ArcGISTopographic, this))
 {
   // create a new elevation source from Terrain3D REST service
-  ArcGISTiledElevationSource* elevationSource = new ArcGISTiledElevationSource(
-        QUrl("https://elevation3d.arcgis.com/arcgis/rest/services/WorldElevation3D/Terrain3D/ImageServer"), this);
+  ArcGISTiledElevationSource* elevationSource =
+    new ArcGISTiledElevationSource(QUrl("https://elevation3d.arcgis.com/arcgis/rest/services/WorldElevation3D/Terrain3D/ImageServer"), this);
 
   // add the elevation source to the scene to display elevation
   m_scene->baseSurface()->elevationSources()->append(elevationSource);
 
   // add 3D building shells with a scene layer
-  ArcGISSceneLayer* scenelayer = new ArcGISSceneLayer(
-        QUrl("https://tiles.arcgis.com/tiles/P3ePLMYs2RVChkJx/arcgis/rest/services/DevA_BuildingShells/SceneServer/layers/0"), this);
+  ArcGISSceneLayer* scenelayer =
+    new ArcGISSceneLayer(QUrl("https://tiles.arcgis.com/tiles/P3ePLMYs2RVChkJx/arcgis/rest/services/DevA_BuildingShells/SceneServer/layers/0"), this);
 
   m_scene->operationalLayers()->append(scenelayer);
 }
@@ -82,13 +82,15 @@ SceneQuickView* RealisticLightingAndShadows::sceneView() const
 void RealisticLightingAndShadows::setSceneView(SceneQuickView* sceneView)
 {
   if (!sceneView || sceneView == m_sceneView)
+  {
     return;
+  }
 
   m_sceneView = sceneView;
   m_sceneView->setArcGISScene(m_scene);
 
   // add camera and set scene viewpoint
-  const Camera camera(45.54605153789073, -122.69033380511073, 941.0002111233771, 162.58544227544266, 60.0,0.0);
+  const Camera camera(45.54605153789073, -122.69033380511073, 941.0002111233771, 162.58544227544266, 60.0, 0.0);
   m_sceneView->setViewpointCameraAsync(camera, 0);
 
   // set atmosphere effect to realistic
@@ -106,7 +108,9 @@ void RealisticLightingAndShadows::setSceneView(SceneQuickView* sceneView)
 void RealisticLightingAndShadows::setSunTimeFromValue(double sunTimeValue)
 {
   if (!m_sceneView)
+  {
     return;
+  }
 
   // convert a double from 0.0 to 23.99 into hours and minutes
   double remainder = std::fmod(sunTimeValue, 1);
@@ -130,7 +134,9 @@ void RealisticLightingAndShadows::setSunTimeFromValue(double sunTimeValue)
 void RealisticLightingAndShadows::setLightingMode(int lightingModeValue)
 {
   if (!m_sceneView)
+  {
     return;
+  }
 
   if (lightingModeValue == 0)
   {

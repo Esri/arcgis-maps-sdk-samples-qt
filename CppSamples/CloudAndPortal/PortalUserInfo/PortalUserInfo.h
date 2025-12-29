@@ -23,10 +23,10 @@
 
 namespace Esri::ArcGISRuntime
 {
-    class Portal;
-    class PortalUser;
-    enum class LoadStatus;
-}
+  class Portal;
+  class PortalUser;
+  enum class LoadStatus;
+} // namespace Esri::ArcGISRuntime
 
 class PortalUserInfo : public QQuickItem
 {

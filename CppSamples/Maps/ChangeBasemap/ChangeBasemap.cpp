@@ -28,7 +28,7 @@
 
 using namespace Esri::ArcGISRuntime;
 
-ChangeBasemap::ChangeBasemap(QObject* parent /* = nullptr */):
+ChangeBasemap::ChangeBasemap(QObject* parent /* = nullptr */) :
   QObject(parent),
   m_map(new Map(BasemapStyle::ArcGISTopographic, this))
 {
@@ -52,7 +52,9 @@ MapQuickView* ChangeBasemap::mapView() const
 void ChangeBasemap::setMapView(MapQuickView* mapView)
 {
   if (!mapView || mapView == m_mapView)
+  {
     return;
+  }
 
   m_mapView = mapView;
   m_mapView->setMap(m_map);

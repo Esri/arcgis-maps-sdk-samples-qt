@@ -40,25 +40,25 @@ using namespace Esri::ArcGISRuntime;
 // helper method to get cross platform data path
 namespace
 {
-QString defaultDataPath()
-{
-  QString dataPath;
+  QString defaultDataPath()
+  {
+    QString dataPath;
 
 #ifdef Q_OS_IOS
-  dataPath = QStandardPaths::writableLocation(QStandardPaths::DocumentsLocation);
+    dataPath = QStandardPaths::writableLocation(QStandardPaths::DocumentsLocation);
 #else
-  dataPath = QStandardPaths::writableLocation(QStandardPaths::HomeLocation);
+    dataPath = QStandardPaths::writableLocation(QStandardPaths::HomeLocation);
 #endif
 
-  return dataPath;
-}
+    return dataPath;
+  }
 
-// sample MMPK location
-const QString sampleFileAnno {"/ArcGIS/Runtime/Data/mmpk/GasDeviceAnno.mmpk"};
+  // sample MMPK location
+  const QString sampleFileAnno{"/ArcGIS/Runtime/Data/mmpk/GasDeviceAnno.mmpk"};
 
 } // namespace
 
-ControlAnnotationSublayerVisibility::ControlAnnotationSublayerVisibility(QObject* parent /* = nullptr */):
+ControlAnnotationSublayerVisibility::ControlAnnotationSublayerVisibility(QObject* parent /* = nullptr */) :
   QObject(parent)
 {
   const QString dataPath = defaultDataPath() + sampleFileAnno;
@@ -85,7 +85,9 @@ MapQuickView* ControlAnnotationSublayerVisibility::mapView() const
 void ControlAnnotationSublayerVisibility::setMapView(MapQuickView* mapView)
 {
   if (!mapView || mapView == m_mapView)
+  {
     return;
+  }
 
   m_mapView = mapView;
   m_mapView->setMap(m_map);
@@ -129,7 +131,9 @@ void ControlAnnotationSublayerVisibility::createMapPackage(const QString& path)
     }
 
     if (!m_mobileMapPackage || !m_mapView || m_mobileMapPackage->maps().isEmpty())
+    {
       return;
+    }
 
     // The package contains a list of maps that could be shown in the UI for selection.
     // For simplicity, obtain the first map in the list of maps.
@@ -154,7 +158,10 @@ void ControlAnnotationSublayerVisibility::createMapPackage(const QString& path)
           m_annotationSubLayerClosed = dynamic_cast<AnnotationSublayer*>(contents[0]);
           m_annotationSubLayerOpen = dynamic_cast<AnnotationSublayer*>(contents[1]);
           m_closedLayerText = m_annotationSubLayerClosed->name();
-          m_openLayerText = QString("%1 (1:%2 - 1:%3)").arg(m_annotationSubLayerOpen->name()).arg(m_annotationSubLayerOpen->maxScale()).arg(m_annotationSubLayerOpen->minScale());
+          m_openLayerText = QString("%1 (1:%2 - 1:%3)")
+                              .arg(m_annotationSubLayerOpen->name())
+                              .arg(m_annotationSubLayerOpen->maxScale())
+                              .arg(m_annotationSubLayerOpen->minScale());
           emit openLayerTextChanged();
           emit closedLayerTextChanged();
           recalculateVisibleAtCurrentExtent();
@@ -171,7 +178,9 @@ void ControlAnnotationSublayerVisibility::createMapPackage(const QString& path)
 void ControlAnnotationSublayerVisibility::openLayerVisible()
 {
   if (!m_annotationSubLayerOpen)
+  {
     return;
+  }
 
   m_annotationSubLayerOpen->setVisible(!m_annotationSubLayerOpen->isVisible());
 }
@@ -179,7 +188,9 @@ void ControlAnnotationSublayerVisibility::openLayerVisible()
 void ControlAnnotationSublayerVisibility::closedLayerVisible()
 {
   if (!m_annotationSubLayerClosed)
+  {
     return;
+  }
 
   m_annotationSubLayerClosed->setVisible(!m_annotationSubLayerClosed->isVisible());
 }

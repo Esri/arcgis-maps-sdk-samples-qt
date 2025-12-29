@@ -24,7 +24,7 @@ namespace Esri::ArcGISRuntime
 {
   class Scene;
   class SceneQuickView;
-}
+} // namespace Esri::ArcGISRuntime
 
 class DistanceCompositeSymbol : public QQuickItem
 {

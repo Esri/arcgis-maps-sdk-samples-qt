@@ -48,11 +48,12 @@
 
 using namespace Esri::ArcGISRuntime;
 
-namespace {
+namespace
+{
   const SpatialReference statePlaneCaliforniaZone5SpatialReference = SpatialReference(2229);
 }
 
-NearestVertex::NearestVertex(QObject* parent /* = nullptr */):
+NearestVertex::NearestVertex(QObject* parent /* = nullptr */) :
   QObject(parent)
 {
   m_map = new Map(statePlaneCaliforniaZone5SpatialReference, this);
@@ -90,7 +91,9 @@ int NearestVertex::coordinateDistance() const
 void NearestVertex::setMapView(MapQuickView* mapView)
 {
   if (!mapView || mapView == m_mapView)
+  {
     return;
+  }
 
   m_mapView = mapView;
   m_mapView->setMap(m_map);
@@ -110,13 +113,9 @@ void NearestVertex::setupGraphics()
   GraphicsOverlay* graphicsOverlay = new GraphicsOverlay(this);
 
   // Construct a polygon from a point collection that uses the California zone 5 (ftUS) state plane coordinate system
-  QList<Point> points = {
-    Point(6627416.41469281, 1804532.53233782),
-    Point(6669147.89779046, 2479145.16609522),
-    Point(7265673.02678292, 2484254.50442408),
-    Point(7676192.55880379, 2001458.66365744),
-    Point(7175695.94143837, 1840722.34474458)
-  };
+  QList<Point> points = {Point(6627416.41469281, 1804532.53233782), Point(6669147.89779046, 2479145.16609522),
+                         Point(7265673.02678292, 2484254.50442408), Point(7676192.55880379, 2001458.66365744),
+                         Point(7175695.94143837, 1840722.34474458)};
 
   PolygonBuilder* polygonBuilder = new PolygonBuilder(statePlaneCaliforniaZone5SpatialReference, this);
   polygonBuilder->addPoints(points);
@@ -144,8 +143,7 @@ void NearestVertex::setupGraphics()
 
   // add graphic to clicked location
   connect(m_mapView, &MapQuickView::mouseClicked, this,
-          [nearestVertexGraphic, nearestCoordinateGraphic, polygonBuilder, clickedLocationGraphic, this]
-          (QMouseEvent& e)
+          [nearestVertexGraphic, nearestCoordinateGraphic, polygonBuilder, clickedLocationGraphic, this](QMouseEvent& e)
   {
     const Point clickedLocation = m_mapView->screenToLocation(e.position().x(), e.position().y());
     // normalizing the geometry before performing geometric operations
@@ -160,8 +158,8 @@ void NearestVertex::setupGraphics()
     nearestVertexGraphic->setGeometry(nearestVertexResult.coordinate());
 
     // get the distances to the nearest vertex and nearest coordinate, converted from feet to miles
-    m_vertexDistance = nearestVertexResult.distance()/5280;
-    m_coordinateDistance = nearestCoordinateResult.distance()/5280;
+    m_vertexDistance = nearestVertexResult.distance() / 5280;
+    m_coordinateDistance = nearestCoordinateResult.distance() / 5280;
 
     e.accept();
     emit vertexDistanceCalculated();

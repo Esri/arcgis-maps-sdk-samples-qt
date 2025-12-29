@@ -27,14 +27,14 @@
 
 namespace Esri::ArcGISRuntime
 {
-class Graphic;
-class GraphicsOverlay;
-class Map;
-class MapQuickView;
-class RouteTask;
-class RouteTracker;
-class SimulatedLocationDataSource;
-}
+  class Graphic;
+  class GraphicsOverlay;
+  class Map;
+  class MapQuickView;
+  class RouteTask;
+  class RouteTracker;
+  class SimulatedLocationDataSource;
+} // namespace Esri::ArcGISRuntime
 
 class QTextToSpeech;
 

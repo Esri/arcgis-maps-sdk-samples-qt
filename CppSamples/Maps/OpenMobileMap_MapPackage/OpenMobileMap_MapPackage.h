@@ -26,7 +26,7 @@ namespace Esri::ArcGISRuntime
   class Map;
   class MapQuickView;
   class MobileMapPackage;
-}
+} // namespace Esri::ArcGISRuntime
 
 class OpenMobileMap_MapPackage : public QQuickItem
 {

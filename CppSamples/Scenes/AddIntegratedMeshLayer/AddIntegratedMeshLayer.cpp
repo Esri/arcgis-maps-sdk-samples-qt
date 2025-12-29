@@ -37,10 +37,11 @@
 
 using namespace Esri::ArcGISRuntime;
 
-AddIntegratedMeshLayer::AddIntegratedMeshLayer(QObject* parent /* = nullptr */):
+AddIntegratedMeshLayer::AddIntegratedMeshLayer(QObject* parent /* = nullptr */) :
   QObject(parent),
   m_scene(new Scene(this)),
-  m_integratedMeshLyr(new IntegratedMeshLayer(QUrl("https://tiles.arcgis.com/tiles/z2tnIkrLQ2BRzr6P/arcgis/rest/services/Girona_Spain/SceneServer"), this))
+  m_integratedMeshLyr(
+    new IntegratedMeshLayer(QUrl("https://tiles.arcgis.com/tiles/z2tnIkrLQ2BRzr6P/arcgis/rest/services/Girona_Spain/SceneServer"), this))
 {
   // Connect the doneLoading signal to the handleError() method.
   connect(m_integratedMeshLyr, &IntegratedMeshLayer::doneLoading, this, &AddIntegratedMeshLayer::handleError);
@@ -92,9 +93,13 @@ void AddIntegratedMeshLayer::handleError(const Error& error)
   if (!error.isEmpty())
   {
     if (error.additionalMessage().isEmpty())
+    {
       m_errorMessage = error.message();
+    }
     else
+    {
       m_errorMessage = error.message() + "\n" + error.additionalMessage();
+    }
   }
 
   emit errorMessageChanged();

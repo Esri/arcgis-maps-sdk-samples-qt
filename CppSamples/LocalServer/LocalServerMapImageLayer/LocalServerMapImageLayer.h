@@ -26,7 +26,7 @@ namespace Esri::ArcGISRuntime
   class MapQuickView;
   class LocalServer;
   class LocalMapService;
-}
+} // namespace Esri::ArcGISRuntime
 
 class QTemporaryDir;
 

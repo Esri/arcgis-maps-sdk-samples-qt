@@ -48,18 +48,18 @@ using namespace Esri::ArcGISRuntime;
 // helper method to get cross platform data path
 namespace
 {
-QString defaultDataPath()
-{
-  QString dataPath;
+  QString defaultDataPath()
+  {
+    QString dataPath;
 
 #ifdef Q_OS_IOS
-  dataPath = QStandardPaths::writableLocation(QStandardPaths::DocumentsLocation);
+    dataPath = QStandardPaths::writableLocation(QStandardPaths::DocumentsLocation);
 #else
-  dataPath = QStandardPaths::writableLocation(QStandardPaths::HomeLocation);
+    dataPath = QStandardPaths::writableLocation(QStandardPaths::HomeLocation);
 #endif
 
-  return dataPath;
-}
+    return dataPath;
+  }
 } // namespace
 
 const QString GODictionaryRenderer::FIELD_CONTROL_POINTS = QStringLiteral("_control_points");
@@ -220,7 +220,8 @@ void GODictionaryRenderer::createGraphic(QVariantMap rawAttributes)
     const QStringList coords = pointStrings[0].split(",");
     geom = Point(coords[0].toDouble(), coords[1].toDouble(), sr);
   }
-  else {
+  else
+  {
     // It's a multipoint
     MultipointBuilder* builder = new MultipointBuilder(sr, this);
     PointCollection* collection = new PointCollection(sr, this);
@@ -228,7 +229,9 @@ void GODictionaryRenderer::createGraphic(QVariantMap rawAttributes)
     {
       const QStringList coords = pointString.split(",");
       if (coords.length() >= 2)
+      {
         collection->addPoint(coords[0].toDouble(), coords[1].toDouble());
+      }
     }
     builder->setPoints(collection);
     geom = builder->toGeometry();
@@ -249,5 +252,7 @@ void GODictionaryRenderer::createGraphic(QVariantMap rawAttributes)
 void GODictionaryRenderer::zoomToGraphics()
 {
   if (m_graphicsOverlay)
+  {
     m_mapView->setViewpointGeometryAsync(m_graphicsOverlay->extent(), 20);
+  }
 }

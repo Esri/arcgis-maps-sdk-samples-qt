@@ -137,7 +137,8 @@ void FilterByDefinitionExpressionOrDisplayFilter::queryFeatureCountInCurrentExte
   QueryParameters parameters;
   parameters.setGeometry(m_mapView->currentViewpoint(ViewpointType::BoundingGeometry).targetGeometry());
 
-  m_featureTable->queryFeatureCountAsync(parameters).then(this, [this](int countResult)
+  m_featureTable->queryFeatureCountAsync(parameters)
+    .then(this, [this](int countResult)
   {
     m_currentFeatureCount = countResult;
     emit currentFeatureCountChanged();

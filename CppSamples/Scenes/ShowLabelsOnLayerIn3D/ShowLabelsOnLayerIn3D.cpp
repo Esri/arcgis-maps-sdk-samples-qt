@@ -50,11 +50,15 @@ ShowLabelsOnLayerIn3D::ShowLabelsOnLayerIn3D(QObject* parent /* = nullptr */) :
         // Labels can only be displayed on FeatureLayer types, so we must first convert it to a FeatureLayer class.
         GroupLayer* gasGroupLayer = dynamic_cast<GroupLayer*>(layer);
         if (!gasGroupLayer)
+        {
           continue;
+        }
 
         FeatureLayer* gasFeatureLayer = dynamic_cast<FeatureLayer*>(gasGroupLayer->layers()->first());
         if (gasFeatureLayer)
+        {
           display3DLabelsOnFeatureLayer(gasFeatureLayer);
+        }
 
         break;
       }
@@ -98,7 +102,9 @@ SceneQuickView* ShowLabelsOnLayerIn3D::sceneView() const
 void ShowLabelsOnLayerIn3D::setSceneView(SceneQuickView* sceneView)
 {
   if (!sceneView || sceneView == m_sceneView)
+  {
     return;
+  }
 
   m_sceneView = sceneView;
   m_sceneView->setArcGISScene(m_scene);

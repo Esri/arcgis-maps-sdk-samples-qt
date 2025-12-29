@@ -22,10 +22,10 @@
 
 namespace Esri::ArcGISRuntime
 {
-class Map;
-class MapQuickView;
-class LabelDefinition;
-}
+  class Map;
+  class MapQuickView;
+  class LabelDefinition;
+} // namespace Esri::ArcGISRuntime
 
 class ShowLabelsOnLayers : public QQuickItem
 {

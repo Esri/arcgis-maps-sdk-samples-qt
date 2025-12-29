@@ -34,7 +34,6 @@
 
 class MapImageProvider : public QQuickImageProvider
 {
-
 public:
   MapImageProvider();
   ~MapImageProvider() override = default;

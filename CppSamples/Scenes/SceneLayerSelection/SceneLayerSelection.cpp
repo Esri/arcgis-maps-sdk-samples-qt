@@ -44,7 +44,7 @@
 
 using namespace Esri::ArcGISRuntime;
 
-SceneLayerSelection::SceneLayerSelection(QQuickItem* parent /* = nullptr */):
+SceneLayerSelection::SceneLayerSelection(QQuickItem* parent /* = nullptr */) :
   QQuickItem(parent)
 {
 }
@@ -68,13 +68,12 @@ void SceneLayerSelection::componentComplete()
   // add a surface
   Surface* surface = new Surface(this);
   surface->elevationSources()->append(
-        new ArcGISTiledElevationSource(
-          QUrl("https://elevation3d.arcgis.com/arcgis/rest/services/WorldElevation3D/Terrain3D/ImageServer"),
-          this));
+    new ArcGISTiledElevationSource(QUrl("https://elevation3d.arcgis.com/arcgis/rest/services/WorldElevation3D/Terrain3D/ImageServer"), this));
   scene->setBaseSurface(surface);
 
   // add a scene layer
-  m_sceneLayer = new ArcGISSceneLayer(QUrl("https://tiles.arcgis.com/tiles/P3ePLMYs2RVChkJx/arcgis/rest/services/Buildings_Brest/SceneServer/layers/0"), this);
+  m_sceneLayer =
+    new ArcGISSceneLayer(QUrl("https://tiles.arcgis.com/tiles/P3ePLMYs2RVChkJx/arcgis/rest/services/Buildings_Brest/SceneServer/layers/0"), this);
   scene->operationalLayers()->append(m_sceneLayer);
 
   // Set an initial viewpoint
@@ -99,15 +98,17 @@ void SceneLayerSelection::connectSignals()
     m_sceneLayer->clearSelection();
 
     // identify from the click
-    m_sceneView->identifyLayerAsync(m_sceneLayer, mouseEvent.position(), 10, false).then(this,
-    [this](IdentifyLayerResult* result)
+    m_sceneView->identifyLayerAsync(m_sceneLayer, mouseEvent.position(), 10, false)
+      .then(this, [this](IdentifyLayerResult* result)
     {
       // get the results
       QList<GeoElement*> geoElements = result->geoElements();
 
       // make sure we have at least 1 GeoElement
       if (geoElements.isEmpty())
+      {
         return;
+      }
 
       // get the first GeoElement
       GeoElement* geoElement = geoElements.first();

@@ -44,7 +44,7 @@
 
 using namespace Esri::ArcGISRuntime;
 
-ShowLabelsOnLayers::ShowLabelsOnLayers(QQuickItem* parent /* = nullptr */):
+ShowLabelsOnLayers::ShowLabelsOnLayers(QQuickItem* parent /* = nullptr */) :
   QQuickItem(parent)
 {
 }
@@ -67,12 +67,15 @@ void ShowLabelsOnLayers::componentComplete()
   m_map = new Map(BasemapStyle::ArcGISLightGray, this);
 
   // Create a feature layer
-  ServiceFeatureTable* featureTable = new ServiceFeatureTable(QUrl("https://services.arcgis.com/P3ePLMYs2RVChkJx/arcgis/rest/services/USA_116th_Congressional_Districts/FeatureServer/0"), this);
+  ServiceFeatureTable* featureTable = new ServiceFeatureTable(
+    QUrl("https://services.arcgis.com/P3ePLMYs2RVChkJx/arcgis/rest/services/USA_116th_Congressional_Districts/FeatureServer/0"), this);
   FeatureLayer* featureLayer = new FeatureLayer(featureTable, this);
   connect(featureLayer, &FeatureLayer::doneLoading, this, [this, featureLayer](const Error& e)
   {
     if (!e.isEmpty())
+    {
       return;
+    }
 
     m_mapView->setViewpointAsync(Viewpoint(featureLayer->fullExtent().center(), 56759600));
   });
@@ -99,7 +102,8 @@ LabelDefinition* ShowLabelsOnLayers::createRepublicanLabelDefinition()
   // (2) The 'TextSymbol' for the labeled text will be red with a white halo centered in the target polygon.
   // (3) The 'where' clause of the 'LabelDefinition' restricts the labels to data from Republican districts.
 
-  ArcadeLabelExpression* republicanArcadeLabelExpression = new ArcadeLabelExpression("$feature.NAME + ' (' + left($feature.PARTY,1) + ')\\nDistrict ' + $feature.CDFIPS", this);
+  ArcadeLabelExpression* republicanArcadeLabelExpression =
+    new ArcadeLabelExpression("$feature.NAME + ' (' + left($feature.PARTY,1) + ')\\nDistrict ' + $feature.CDFIPS", this);
 
   TextSymbol* republicanTextSymbol = new TextSymbol(this);
   republicanTextSymbol->setSize(11);
@@ -125,7 +129,8 @@ LabelDefinition* ShowLabelsOnLayers::createDemocratLabelDefinition()
   // (2) The 'TextSymbol' for the labeled text will be blue with a white halo centered in the target polygon.
   // (3) The 'where' clause of the 'LabelDefinition' restricts the labels to data from Democrat districts.
 
-  ArcadeLabelExpression* democratArcadeLabelExpression = new ArcadeLabelExpression("$feature.NAME + ' (' + left($feature.PARTY,1) + ')\\nDistrict ' + $feature.CDFIPS", this);
+  ArcadeLabelExpression* democratArcadeLabelExpression =
+    new ArcadeLabelExpression("$feature.NAME + ' (' + left($feature.PARTY,1) + ')\\nDistrict ' + $feature.CDFIPS", this);
 
   TextSymbol* democratTextSymbol = new TextSymbol(this);
   democratTextSymbol->setSize(11);

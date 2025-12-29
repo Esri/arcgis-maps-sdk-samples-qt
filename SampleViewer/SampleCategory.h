@@ -28,20 +28,46 @@ class SampleCategory : public QObject
   Q_OBJECT
 
 public:
-  explicit SampleCategory(const QString& name, const QString& displayName,
-                          const QString& path, const QString& thumbnailUrl,
+  explicit SampleCategory(const QString& name,
+                          const QString& displayName,
+                          const QString& path,
+                          const QString& thumbnailUrl,
                           const QString& backgroundThumbnailUrl,
-                          SampleListModel* samples, QObject* parent = nullptr);
+                          SampleListModel* samples,
+                          QObject* parent = nullptr);
   ~SampleCategory() override = default;
 
   Q_PROPERTY(SampleListModel* samples READ samples NOTIFY samplesChanged)
 
-  QString name() const { return m_name; }
-  QString displayName() const { return m_displayName; }
-  QString path() const { return m_path; }
-  QString thumbnailUrl() const { return m_thumbnail; }
-  QString backgroundThumbnailUrl() const { return m_backgroundThumbnail; }
-  SampleListModel* samples() const { return m_samples; }
+  QString name() const
+  {
+    return m_name;
+  }
+
+  QString displayName() const
+  {
+    return m_displayName;
+  }
+
+  QString path() const
+  {
+    return m_path;
+  }
+
+  QString thumbnailUrl() const
+  {
+    return m_thumbnail;
+  }
+
+  QString backgroundThumbnailUrl() const
+  {
+    return m_backgroundThumbnail;
+  }
+
+  SampleListModel* samples() const
+  {
+    return m_samples;
+  }
 
 signals:
   void samplesChanged();

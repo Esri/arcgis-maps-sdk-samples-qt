@@ -26,7 +26,7 @@ namespace Esri::ArcGISRuntime
   class MapQuickView;
   class Geometry;
   class GraphicsOverlay;
-}
+} // namespace Esri::ArcGISRuntime
 
 class GOSymbols : public QQuickItem
 {

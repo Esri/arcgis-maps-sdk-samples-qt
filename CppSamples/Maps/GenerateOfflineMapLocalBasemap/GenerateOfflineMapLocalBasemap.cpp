@@ -49,23 +49,23 @@ using namespace Esri::ArcGISRuntime;
 // helper method to get cross platform data path
 namespace
 {
-QString defaultDataPath()
-{
-  QString dataPath;
+  QString defaultDataPath()
+  {
+    QString dataPath;
 
 #ifdef Q_OS_IOS
-  dataPath = QStandardPaths::writableLocation(QStandardPaths::DocumentsLocation);
+    dataPath = QStandardPaths::writableLocation(QStandardPaths::DocumentsLocation);
 #else
-  dataPath = QStandardPaths::writableLocation(QStandardPaths::HomeLocation);
+    dataPath = QStandardPaths::writableLocation(QStandardPaths::HomeLocation);
 #endif
 
-  return dataPath;
-}
+    return dataPath;
+  }
 } // namespace
 
 const QString GenerateOfflineMapLocalBasemap::s_webMapId = QStringLiteral("acc027394bc84c2fb04d1ed317aac674");
 
-GenerateOfflineMapLocalBasemap::GenerateOfflineMapLocalBasemap(QQuickItem* parent /* = nullptr */):
+GenerateOfflineMapLocalBasemap::GenerateOfflineMapLocalBasemap(QQuickItem* parent /* = nullptr */) :
   QQuickItem(parent)
 {
 }
@@ -94,7 +94,9 @@ void GenerateOfflineMapLocalBasemap::componentComplete()
   connect(m_map, &Map::doneLoading, this, [this](const Error& e)
   {
     if (!e.isEmpty())
+    {
       return;
+    }
 
     m_mapLoaded = true;
     emit mapLoadedChanged();
@@ -110,7 +112,9 @@ void GenerateOfflineMapLocalBasemap::componentComplete()
   connect(m_offlineMapTask, &OfflineMapTask::errorOccurred, this, [](const Error& e)
   {
     if (e.isEmpty())
+    {
       return;
+    }
 
     qDebug() << e.message() << e.additionalMessage();
   });
@@ -128,7 +132,7 @@ void GenerateOfflineMapLocalBasemap::generateMapByExtent(double xCorner1, double
 
   // generate parameters
   m_offlineMapTask->createDefaultGenerateOfflineMapParametersAsync(mapExtent).then(this,
-  [this, tempPath, dataPath](GenerateOfflineMapParameters params)
+                                                                                   [this, tempPath, dataPath](GenerateOfflineMapParameters params)
   {
     // update default parameters to specify use of local basemap
     // this will prevent new tiles from being generated on the server
@@ -150,7 +154,8 @@ void GenerateOfflineMapLocalBasemap::generateMapByExtent(double xCorner1, double
       connect(generateJob, &GenerateOfflineMapJob::statusChanged, this, [this, generateJob](JobStatus jobStatus)
       {
         // connect to the job's status changed signal to know once it is done
-        switch (jobStatus) {
+        switch (jobStatus)
+        {
           case JobStatus::Failed:
             emit updateStatus("Generate failed");
             emit hideWindow(5000, false);
@@ -197,7 +202,9 @@ void GenerateOfflineMapLocalBasemap::generateMapByExtent(double xCorner1, double
       connect(generateJob, &GenerateOfflineMapJob::errorOccurred, this, [](const Error& e)
       {
         if (e.isEmpty())
+        {
           return;
+        }
 
         qDebug() << e.message() << e.additionalMessage();
       });

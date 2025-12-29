@@ -17,10 +17,11 @@
 #ifndef MAP_LOADED_H
 #define MAP_LOADED_H
 
-namespace Esri::ArcGISRuntime {
+namespace Esri::ArcGISRuntime
+{
   class Map;
   class MapGraphicsView;
-}
+} // namespace Esri::ArcGISRuntime
 
 class QLabel;
 
