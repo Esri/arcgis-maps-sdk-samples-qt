@@ -15,34 +15,157 @@
 // [Legal]
 
 import QtQuick
+import QtQuick.Controls
 import Esri.Samples
 import Esri.ArcGISRuntime.Toolkit
 
-ShowCalloutSample {
-    id: showCalloutSample
-    clip: true
-    width: 800
-    height: 600
+Item {
+    function logSceneLocationVisibility() {
+        const cd = viewSelector.currentIndex === 0
+                ? mapView.calloutData
+                : (viewSelector.currentIndex === 1
+                   ? sceneView.calloutData
+                   : localSceneView.calloutData);
 
-    // add a mapView component
+        if (!cd) {
+            console.log("CalloutData is null");
+            return;
+        }
+
+        const v = cd.sceneLocationVisibility;
+        console.log("CalloutData.sceneLocationVisibility (" + viewSelector.currentText + "):", v);
+    }
+
+    Connections {
+        target: mapView.calloutData
+        function onSceneLocationVisibilityChanged() {
+            console.log("CalloutData.sceneLocationVisibility (MapView):", mapView.calloutData.sceneLocationVisibility);
+        }
+    }
+
+    Connections {
+        target: sceneView.calloutData
+        function onSceneLocationVisibilityChanged() {
+            console.log("CalloutData.sceneLocationVisibility (SceneView):", sceneView.calloutData.sceneLocationVisibility);
+        }
+    }
+
+    Connections {
+        target: localSceneView.calloutData
+        function onSceneLocationVisibilityChanged() {
+            console.log("CalloutData.sceneLocationVisibility (LocalSceneView):", localSceneView.calloutData.sceneLocationVisibility);
+        }
+    }
+
+    // Create the ShowCallout sample
+    ShowCalloutSample {
+        id: model
+        mapView: mapView
+        sceneView: sceneView
+        localSceneView: localSceneView
+    }
+
+    // add a MapView component
     MapView {
         id: mapView
         anchors.fill: parent
-        objectName: "mapView"
         clip: true
+        visible: viewSelector.currentIndex === 0
 
         Component.onCompleted: {
-            // Set the focus on MapView to initially enable keyboard navigation
-            forceActiveFocus();
+            if (visible)
+                forceActiveFocus();
         }
 
-        //! [set callout data]
         Callout {
-            id: callout
-            calloutData: mapView.calloutData // bind to the property that is exposed
+            calloutData: mapView.calloutData
             accessoryButtonVisible: false
             leaderPosition: Callout.LeaderPosition.Automatic
         }
-        //! [set callout data]
+    }
+
+    // add a SceneView component
+    SceneView {
+        id: sceneView
+        anchors.fill: parent
+        clip: true
+        visible: viewSelector.currentIndex === 1
+
+        Component.onCompleted: {
+            if (visible)
+                forceActiveFocus();
+        }
+
+        Callout {
+            calloutData: sceneView.calloutData
+            accessoryButtonVisible: false
+            leaderPosition: Callout.LeaderPosition.Automatic
+        }
+    }
+
+    // add a LocalSceneView component
+    LocalSceneView {
+        id: localSceneView
+        anchors.fill: parent
+        clip: true
+        visible: viewSelector.currentIndex === 2
+
+        Component.onCompleted: {
+            if (visible)
+                forceActiveFocus();
+        }
+
+        Callout {
+            calloutData: localSceneView.calloutData
+            accessoryButtonVisible: false
+            leaderPosition: Callout.LeaderPosition.Automatic
+        }
+    }
+
+    // Display instructions
+    Rectangle {
+        anchors {
+            top: parent.top
+            left: parent.left
+            margins: 10
+        }
+        width: Math.max(instructionText.implicitWidth, viewSelector.implicitWidth) + 40
+        height: instructionText.implicitHeight + viewSelector.implicitHeight + 40
+        color: "#ffffff"
+        opacity: 0.8
+        radius: 5
+
+        Column {
+            anchors.fill: parent
+            anchors.margins: 10
+            spacing: 10
+
+            ComboBox {
+                id: viewSelector
+                model: ["MapView", "SceneView", "LocalSceneView"]
+
+                onCurrentIndexChanged: {
+                    if (currentIndex === 0)
+                        mapView.forceActiveFocus();
+                    else if (currentIndex === 1)
+                        sceneView.forceActiveFocus();
+                    else
+                        localSceneView.forceActiveFocus();
+
+                    logSceneLocationVisibility();
+                }
+            }
+
+            Text {
+                id: instructionText
+                text: viewSelector.currentIndex === 0
+                      ? "Click anywhere in the map to show a callout"
+                      : (viewSelector.currentIndex === 1
+                         ? "Click anywhere in the scene to show a callout"
+                         : "Click anywhere in the local scene to show a callout")
+                font.pixelSize: 14
+                wrapMode: Text.Wrap
+            }
+        }
     }
 }
