@@ -62,18 +62,18 @@ using namespace Esri::ArcGISRuntime;
 // helper method to get cross platform data path
 namespace
 {
-QString defaultDataPath()
-{
-  QString dataPath;
+  QString defaultDataPath()
+  {
+    QString dataPath;
 
 #ifdef Q_OS_IOS
-  dataPath = QStandardPaths::writableLocation(QStandardPaths::DocumentsLocation);
+    dataPath = QStandardPaths::writableLocation(QStandardPaths::DocumentsLocation);
 #else
-  dataPath = QStandardPaths::writableLocation(QStandardPaths::HomeLocation);
+    dataPath = QStandardPaths::writableLocation(QStandardPaths::HomeLocation);
 #endif
 
-  return dataPath;
-}
+    return dataPath;
+  }
 } // namespace
 
 using namespace Esri::ArcGISRuntime;
@@ -83,13 +83,21 @@ namespace
   // Convenience RAII struct that deletes all pointers in given container.
   struct IdentifyLayerResultsScopedCleanup
   {
-    IdentifyLayerResultsScopedCleanup(const QList<IdentifyLayerResult*>& list) : results(list) { }
-    ~IdentifyLayerResultsScopedCleanup() { qDeleteAll(results); }
+    IdentifyLayerResultsScopedCleanup(const QList<IdentifyLayerResult*>& list) :
+      results(list)
+    {
+    }
+
+    ~IdentifyLayerResultsScopedCleanup()
+    {
+      qDeleteAll(results);
+    }
+
     const QList<IdentifyLayerResult*>& results;
   };
-}
+} // namespace
 
-EditFeaturesWithFeatureLinkedAnnotation::EditFeaturesWithFeatureLinkedAnnotation(QObject* parent /* = nullptr */):
+EditFeaturesWithFeatureLinkedAnnotation::EditFeaturesWithFeatureLinkedAnnotation(QObject* parent /* = nullptr */) :
   QObject(parent),
   s_ad_address(QStringLiteral("AD_ADDRESS")),
   s_st_str_nam(QStringLiteral("ST_STR_NAM"))
@@ -126,7 +134,9 @@ MapQuickView* EditFeaturesWithFeatureLinkedAnnotation::mapView() const
 void EditFeaturesWithFeatureLinkedAnnotation::setMapView(MapQuickView* mapView)
 {
   if (!mapView || mapView == m_mapView)
+  {
     return;
+  }
 
   m_mapView = mapView;
   m_mapView->setMap(m_map);
@@ -139,7 +149,9 @@ void EditFeaturesWithFeatureLinkedAnnotation::setMapView(MapQuickView* mapView)
 void EditFeaturesWithFeatureLinkedAnnotation::onGeodatabaseDoneLoading_(const Error& error)
 {
   if (!error.isEmpty())
+  {
     return;
+  }
 
   GeodatabaseFeatureTable* pointFeatureTable = m_geodatabase->geodatabaseFeatureTable("Loudoun_Address_Points_1");
   GeodatabaseFeatureTable* parcelLinesFeatureTable = m_geodatabase->geodatabaseFeatureTable("ParcelLines_1");
@@ -177,7 +189,8 @@ void EditFeaturesWithFeatureLinkedAnnotation::onMouseClicked_(QMouseEvent& mouse
   else
   {
     // identify and select feature
-    m_mapView->identifyLayersAsync(mouseEvent.position(), 10, false).then(this, [this](const QList<IdentifyLayerResult*>& identifyResults)
+    m_mapView->identifyLayersAsync(mouseEvent.position(), 10, false)
+      .then(this, [this](const QList<IdentifyLayerResult*>& identifyResults)
     {
       onIdentifyLayersCompleted_(identifyResults);
     });
@@ -247,7 +260,9 @@ void EditFeaturesWithFeatureLinkedAnnotation::clearSelection()
   {
     FeatureLayer* featureLayer = dynamic_cast<FeatureLayer*>(layer);
     if (featureLayer)
+    {
       featureLayer->clearSelection();
+    }
   }
 }
 
@@ -291,7 +306,9 @@ void EditFeaturesWithFeatureLinkedAnnotation::moveFeature(Point mapPoint)
 void EditFeaturesWithFeatureLinkedAnnotation::updateSelectedFeature(const QString& address, const QString& streetName)
 {
   if (!m_selectedFeature)
+  {
     return;
+  }
 
   // update the two attributes with the inputted text.
   m_selectedFeature->attributes()->replaceAttribute(s_ad_address, address);

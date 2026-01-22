@@ -36,20 +36,20 @@
 
 using namespace Esri::ArcGISRuntime;
 
-AddAPointSceneLayer::AddAPointSceneLayer(QObject* parent /* = nullptr */):
+AddAPointSceneLayer::AddAPointSceneLayer(QObject* parent /* = nullptr */) :
   QObject(parent),
   m_scene(new Scene(BasemapStyle::ArcGISImageryStandard, this))
 {
   // create a new elevation source from Terrain3D REST service
-  ArcGISTiledElevationSource* elevationSource = new ArcGISTiledElevationSource(
-        QUrl("https://elevation3d.arcgis.com/arcgis/rest/services/WorldElevation3D/Terrain3D/ImageServer"), this);
+  ArcGISTiledElevationSource* elevationSource =
+    new ArcGISTiledElevationSource(QUrl("https://elevation3d.arcgis.com/arcgis/rest/services/WorldElevation3D/Terrain3D/ImageServer"), this);
 
   // add the elevation source to the scene to display elevation
   m_scene->baseSurface()->elevationSources()->append(elevationSource);
 
   // create a new point scene layer from world airport REST service
   ArcGISSceneLayer* pointSceneLayer = new ArcGISSceneLayer(
-        QUrl("https://tiles.arcgis.com/tiles/V6ZHFr6zdgNZuVG0/arcgis/rest/services/Airports_PointSceneLayer/SceneServer/layers/0"), this);
+    QUrl("https://tiles.arcgis.com/tiles/V6ZHFr6zdgNZuVG0/arcgis/rest/services/Airports_PointSceneLayer/SceneServer/layers/0"), this);
 
   // add scene layer source to the scene to display points at world airport locations
   m_scene->operationalLayers()->append(pointSceneLayer);
@@ -73,7 +73,9 @@ SceneQuickView* AddAPointSceneLayer::sceneView() const
 void AddAPointSceneLayer::setSceneView(SceneQuickView* sceneView)
 {
   if (!sceneView || sceneView == m_sceneView)
+  {
     return;
+  }
 
   m_sceneView = sceneView;
   m_sceneView->setArcGISScene(m_scene);

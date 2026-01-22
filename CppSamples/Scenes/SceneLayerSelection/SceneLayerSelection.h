@@ -22,9 +22,9 @@
 
 namespace Esri::ArcGISRuntime
 {
-class SceneQuickView;
-class ArcGISSceneLayer;
-}
+  class SceneQuickView;
+  class ArcGISSceneLayer;
+} // namespace Esri::ArcGISRuntime
 
 class SceneLayerSelection : public QQuickItem
 {

@@ -39,13 +39,13 @@
 
 using namespace Esri::ArcGISRuntime;
 
-DisplayLocalSceneView::DisplayLocalSceneView(QObject* parent /* = nullptr */):
+DisplayLocalSceneView::DisplayLocalSceneView(QObject* parent /* = nullptr */) :
   QObject(parent),
   m_scene(new Scene(BasemapStyle::ArcGISTopographic, SceneViewingMode::Local, this))
 {
   // create a new elevation source from Terrain3D REST service
-  ArcGISTiledElevationSource* elevationSource = new ArcGISTiledElevationSource(
-    QUrl("https://elevation3d.arcgis.com/arcgis/rest/services/WorldElevation3D/Terrain3D/ImageServer"), this);
+  ArcGISTiledElevationSource* elevationSource =
+    new ArcGISTiledElevationSource(QUrl("https://elevation3d.arcgis.com/arcgis/rest/services/WorldElevation3D/Terrain3D/ImageServer"), this);
 
   // add the elevation source to the scene to display elevation
   m_scene->baseSurface()->elevationSources()->append(elevationSource);
@@ -81,37 +81,33 @@ void DisplayLocalSceneView::setLocalSceneView(LocalSceneQuickView* localSceneVie
   m_localSceneView->setArcGISScene(m_scene);
 
   // Sets the clipping area.
-  const Envelope envelope(
-    19454578.8235, // xMin
-    -5055381.4798, // yMin
-    19455518.8814, // xMax
-    -5054888.4150, // yMax
-    SpatialReference::webMercator()); // spatialReference
+  const Envelope envelope(19454578.8235, // xMin
+                          -5055381.4798, // yMin
+                          19455518.8814, // xMax
+                          -5054888.4150, // yMax
+                          SpatialReference::webMercator()); // spatialReference
   m_scene->setClippingArea(envelope);
 
   m_scene->setClippingEnabled(true);
 
   // Sets the initial viewpoint.
-  const Point lookAtPoint(
-    19455578.6821, // x
-    -5056336.2227, // y
-    1699.3366, // z
-    SpatialReference::webMercator()); // spatialReference
+  const Point lookAtPoint(19455578.6821, // x
+                          -5056336.2227, // y
+                          1699.3366, // z
+                          SpatialReference::webMercator()); // spatialReference
 
   const Camera camera(lookAtPoint,
-    338.7410, // heading
-    40.3763, // pitch
-    0.0); // roll
+                      338.7410, // heading
+                      40.3763, // pitch
+                      0.0); // roll
 
-  const Point point(
-    19455026.8116, // x
-    -5054995.7415, // y
-    SpatialReference::webMercator()); // spatialReference
+  const Point point(19455026.8116, // x
+                    -5054995.7415, // y
+                    SpatialReference::webMercator()); // spatialReference
 
   m_scene->setInitialViewpoint(Viewpoint(point,
-    8314.6991, // scale
-    camera));
+                                         8314.6991, // scale
+                                         camera));
 
   emit localSceneViewChanged();
 }
-

@@ -27,25 +27,25 @@ using namespace Esri::ArcGISRuntime;
 ArcGISTiledLayerUrl::ArcGISTiledLayerUrl(QWidget* parent) :
   QWidget(parent)
 {
-    // create the URL pointing to the tiled map service
-    QUrl tiledLayerUrl("https://services.arcgisonline.com/arcgis/rest/services/NatGeo_World_Map/MapServer");
+  // create the URL pointing to the tiled map service
+  QUrl tiledLayerUrl("https://services.arcgisonline.com/arcgis/rest/services/NatGeo_World_Map/MapServer");
 
-    // construct the ArcGISTiledLayer using the URL
-    m_tiledLayer = new ArcGISTiledLayer(tiledLayerUrl, this);
+  // construct the ArcGISTiledLayer using the URL
+  m_tiledLayer = new ArcGISTiledLayer(tiledLayerUrl, this);
 
-    // create a Basemap and pass in the ArcGISTiledLayer
-    m_basemap = new Basemap(m_tiledLayer, this);
+  // create a Basemap and pass in the ArcGISTiledLayer
+  m_basemap = new Basemap(m_tiledLayer, this);
 
-    // create a Map by passing in the Basemap
-    m_map = new Map(m_basemap, this);
+  // create a Map by passing in the Basemap
+  m_map = new Map(m_basemap, this);
 
-    // add the Map to a MapGraphicsView
-    m_mapView = new MapGraphicsView(m_map, this);
+  // add the Map to a MapGraphicsView
+  m_mapView = new MapGraphicsView(m_map, this);
 
-    // setup the UI
-    QVBoxLayout *vBoxLayout = new QVBoxLayout();
-    vBoxLayout->addWidget(m_mapView);
-    setLayout(vBoxLayout);
+  // setup the UI
+  QVBoxLayout* vBoxLayout = new QVBoxLayout();
+  vBoxLayout->addWidget(m_mapView);
+  setLayout(vBoxLayout);
 }
 
 ArcGISTiledLayerUrl::~ArcGISTiledLayerUrl() = default;

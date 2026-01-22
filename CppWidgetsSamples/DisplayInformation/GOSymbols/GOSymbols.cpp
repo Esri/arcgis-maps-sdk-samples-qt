@@ -88,17 +88,17 @@ void GOSymbols::createUi()
 void GOSymbols::addBuoyPoints(GraphicsOverlay* graphicsOverlay)
 {
   // create a list of points
-  const QList<Point> pointsList { Point(-2.712642647560347, 56.062812566811544, SpatialReference::wgs84()),
-        Point(-2.6908416959572303, 56.06444173689877, SpatialReference::wgs84()),
-        Point(-2.6697273884990937, 56.064250073402874, SpatialReference::wgs84()),
-        Point(-2.6395150461199726, 56.06127916736989, SpatialReference::wgs84())
-                                };
+  const QList<Point> pointsList{Point(-2.712642647560347, 56.062812566811544, SpatialReference::wgs84()),
+                                Point(-2.6908416959572303, 56.06444173689877, SpatialReference::wgs84()),
+                                Point(-2.6697273884990937, 56.064250073402874, SpatialReference::wgs84()),
+                                Point(-2.6395150461199726, 56.06127916736989, SpatialReference::wgs84())};
 
   // create the symbology for the points
   SimpleMarkerSymbol* sms = new SimpleMarkerSymbol(SimpleMarkerSymbolStyle::Circle, QColor("red"), 10, this);
 
   // create a graphic and add each of them to the overlay
-  foreach (const Point &buoyPoint, pointsList) {
+  foreach (const Point& buoyPoint, pointsList)
+  {
     Graphic* graphic = new Graphic(buoyPoint, this);
     graphic->setSymbol(sms);
     graphicsOverlay->graphics()->append(graphic);
@@ -107,7 +107,7 @@ void GOSymbols::addBuoyPoints(GraphicsOverlay* graphicsOverlay)
 
 void GOSymbols::addBoatTrip(GraphicsOverlay* graphicsOverlay)
 {
-  SimpleLineSymbol* sls = new SimpleLineSymbol(SimpleLineSymbolStyle::Dash,QColor("blue"), 1, this);
+  SimpleLineSymbol* sls = new SimpleLineSymbol(SimpleLineSymbolStyle::Dash, QColor("blue"), 1, this);
 
   // json for the polyline
   QString polylineJson = "{\"paths\":[[[-2.7184791227926772,56.06147084563517],"
@@ -198,12 +198,10 @@ void GOSymbols::addNestingGround(GraphicsOverlay* graphicsOverlay)
 void GOSymbols::addText(GraphicsOverlay* graphicsOverlay)
 {
   // text symbol
-  TextSymbol* textSymbolBassRock = new TextSymbol(QString("Bass Rock"), QColor("blue"), 10,
-                                                  HorizontalAlignment::Left,
-                                                  VerticalAlignment::Bottom, this);
-  TextSymbol* textSymbolCraigleith = new TextSymbol(QString("Craigleith"), QColor("blue"), 10,
-                                                    HorizontalAlignment::Right,
-                                                    VerticalAlignment::Top, this);
+  TextSymbol* textSymbolBassRock =
+    new TextSymbol(QString("Bass Rock"), QColor("blue"), 10, HorizontalAlignment::Left, VerticalAlignment::Bottom, this);
+  TextSymbol* textSymbolCraigleith =
+    new TextSymbol(QString("Craigleith"), QColor("blue"), 10, HorizontalAlignment::Right, VerticalAlignment::Top, this);
 
   // geometry for the graphics
   Point craigleith(-2.640631, 56.078083, SpatialReference::wgs84());
@@ -255,5 +253,3 @@ Geometry GOSymbols::createNestingGround()
 
   return nestingGroundPolygonBuilder.toGeometry();
 }
-
-

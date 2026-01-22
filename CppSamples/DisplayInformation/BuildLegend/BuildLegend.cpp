@@ -81,10 +81,12 @@ void BuildLegend::componentComplete()
 
 void BuildLegend::addLayers()
 {
-  ArcGISMapImageLayer* mapImageLayer = new ArcGISMapImageLayer(QUrl("https://sampleserver6.arcgisonline.com/arcgis/rest/services/Census/MapServer"), this);
+  ArcGISMapImageLayer* mapImageLayer =
+    new ArcGISMapImageLayer(QUrl("https://sampleserver6.arcgisonline.com/arcgis/rest/services/Census/MapServer"), this);
   m_map->operationalLayers()->append(mapImageLayer);
 
-  ServiceFeatureTable* featureTable = new ServiceFeatureTable(QUrl("https://sampleserver6.arcgisonline.com/arcgis/rest/services/Recreation/FeatureServer/0"), this);
+  ServiceFeatureTable* featureTable =
+    new ServiceFeatureTable(QUrl("https://sampleserver6.arcgisonline.com/arcgis/rest/services/Recreation/FeatureServer/0"), this);
   FeatureLayer* featureLayer = new FeatureLayer(featureTable, this);
   m_map->operationalLayers()->append(featureLayer);
 }

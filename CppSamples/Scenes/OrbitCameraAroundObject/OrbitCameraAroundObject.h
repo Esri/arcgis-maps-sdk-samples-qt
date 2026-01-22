@@ -28,7 +28,7 @@ namespace Esri::ArcGISRuntime
   class OrbitGeoElementCameraController;
   class Scene;
   class SceneQuickView;
-}
+} // namespace Esri::ArcGISRuntime
 
 Q_MOC_INCLUDE("SceneQuickView.h")
 
@@ -38,7 +38,8 @@ class OrbitCameraAroundObject : public QObject
 
   //Property declarations for interacting with the QML UI.
   Q_PROPERTY(Esri::ArcGISRuntime::SceneQuickView* sceneView READ sceneView WRITE setSceneView NOTIFY sceneViewChanged)
-  Q_PROPERTY(bool allowCamDistanceInteraction READ camDistanceInteractionAllowed WRITE setCamDistanceInteractionAllowed(bool) NOTIFY camDistanceInteractionAllowedChanged)
+  Q_PROPERTY(bool allowCamDistanceInteraction READ camDistanceInteractionAllowed WRITE setCamDistanceInteractionAllowed(bool)
+               NOTIFY camDistanceInteractionAllowedChanged)
   Q_PROPERTY(float planePitch READ planePitch() WRITE setPlanePitch(float) NOTIFY planePitchChanged)
   Q_PROPERTY(double cameraHeading READ cameraHeading() WRITE setCameraHeading(double) NOTIFY cameraHeadingChanged)
   Q_PROPERTY(QPointF cameraHeadingBounds READ cameraHeadingBounds() NOTIFY cameraHeadingBoundsChanged)

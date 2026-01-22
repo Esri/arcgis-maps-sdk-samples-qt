@@ -22,11 +22,11 @@
 
 namespace Esri::ArcGISRuntime
 {
-class Map;
-class MapQuickView;
-class ServiceFeatureTable;
-class StatisticsQueryResult;
-}
+  class Map;
+  class MapQuickView;
+  class ServiceFeatureTable;
+  class StatisticsQueryResult;
+} // namespace Esri::ArcGISRuntime
 
 class StatisticalQuery : public QQuickItem
 {

@@ -42,7 +42,7 @@
 
 using namespace Esri::ArcGISRuntime;
 
-QueryOGCAPICQLFilters::QueryOGCAPICQLFilters(QObject* parent /* = nullptr */):
+QueryOGCAPICQLFilters::QueryOGCAPICQLFilters(QObject* parent /* = nullptr */) :
   QObject(parent),
   m_map(new Map(BasemapStyle::ArcGISTopographic, this))
 {
@@ -81,7 +81,9 @@ MapQuickView* QueryOGCAPICQLFilters::mapView() const
 void QueryOGCAPICQLFilters::setMapView(MapQuickView* mapView)
 {
   if (!mapView || mapView == m_mapView)
+  {
     return;
+  }
 
   m_mapView = mapView;
   m_mapView->setMap(m_map);
@@ -105,7 +107,9 @@ void QueryOGCAPICQLFilters::setMapView(MapQuickView* mapView)
 void QueryOGCAPICQLFilters::query(const QString& whereClause, const QString& maxFeature, const QString& fromDateString, const QString& toDateString)
 {
   if (!m_ogcFeatureCollectionTable || !m_featureLayer || !m_mapView)
+  {
     return;
+  }
 
   // create the parameters
   QueryParameters queryParams;
@@ -116,12 +120,12 @@ void QueryOGCAPICQLFilters::query(const QString& whereClause, const QString& max
 
   if (!fromDateString.isEmpty() && !toDateString.isEmpty())
   {
-    const QDateTime fromDate = QDateTime::fromString(fromDateString,"MM/dd/yyyy");
-    const QDateTime toDate = QDateTime::fromString(toDateString,"MM/dd/yyyy");
+    const QDateTime fromDate = QDateTime::fromString(fromDateString, "MM/dd/yyyy");
+    const QDateTime toDate = QDateTime::fromString(toDateString, "MM/dd/yyyy");
     const TimeExtent timeExtent(fromDate.toUTC(), toDate.toUTC());
     queryParams.setTimeExtent(timeExtent);
   }
-  
+
   // Populate the feature collection table with features that match the parameters,
   // clear the cache to prepare for the new query results, and store all table fields
   auto future = m_ogcFeatureCollectionTable->populateFromServiceAsync(queryParams, true, {});

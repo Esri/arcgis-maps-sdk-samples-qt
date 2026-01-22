@@ -105,7 +105,9 @@ void ManageBookmarks::createBookmark(QString name, Viewpoint viewpoint)
   // Get the bookmark list
   BookmarkListModel* bookmarks = dynamic_cast<BookmarkListModel*>(m_bookmarks);
   if (!bookmarks)
+  {
     return;
+  }
 
   // Create the bookmark from the name and viewpoint
   Bookmark* bookmark = new Bookmark(name, viewpoint, this);
@@ -122,7 +124,9 @@ void ManageBookmarks::goToBookmark(int bookmarkIndex)
 {
   BookmarkListModel* bookmarks = dynamic_cast<BookmarkListModel*>(m_bookmarks);
   if (!bookmarks)
+  {
     return;
+  }
 
   m_mapView->setViewpointAsync(bookmarks->at(bookmarkIndex)->viewpoint());
 }
@@ -139,6 +143,5 @@ void ManageBookmarks::addBookmark(QString newBookmarkName)
 
 QString ManageBookmarks::bookmarkNameForIndex(int index) const
 {
-  return m_bookmarks->data(m_bookmarks->index(index),
-                           BookmarkListModel::BookmarkNameRole).toString();
+  return m_bookmarks->data(m_bookmarks->index(index), BookmarkListModel::BookmarkNameRole).toString();
 }

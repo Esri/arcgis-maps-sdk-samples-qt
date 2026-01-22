@@ -23,10 +23,10 @@
 
 namespace Esri::ArcGISRuntime
 {
-class Map;
-class MapQuickView;
-class OfflineMapTask;
-}
+  class Map;
+  class MapQuickView;
+  class OfflineMapTask;
+} // namespace Esri::ArcGISRuntime
 
 class GenerateOfflineMap : public QQuickItem
 {
@@ -52,7 +52,10 @@ signals:
   void showLayerErrors(const QString& error);
 
 private:
-  static const QString webMapId() { return s_webMapId; }
+  static const QString webMapId()
+  {
+    return s_webMapId;
+  }
 
 private:
   Esri::ArcGISRuntime::Map* m_map = nullptr;

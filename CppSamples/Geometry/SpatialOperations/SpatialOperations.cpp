@@ -42,15 +42,14 @@
 
 using namespace Esri::ArcGISRuntime;
 
-SpatialOperations::SpatialOperations(QQuickItem* parent /* = nullptr */):
+SpatialOperations::SpatialOperations(QQuickItem* parent /* = nullptr */) :
   QQuickItem(parent),
   m_polygon1(Geometry()),
   m_polygon2(Geometry()),
-  m_inputsOverlay (new GraphicsOverlay(this)),
-  m_outputsOverlay (new GraphicsOverlay(this)),
-  m_geometryOperations { QStringLiteral("None"),       QStringLiteral("Union")
-                       , QStringLiteral("Difference"), QStringLiteral("Symmetric difference")
-                       , QStringLiteral("Intersection") }
+  m_inputsOverlay(new GraphicsOverlay(this)),
+  m_outputsOverlay(new GraphicsOverlay(this)),
+  m_geometryOperations{QStringLiteral("None"), QStringLiteral("Union"), QStringLiteral("Difference"), QStringLiteral("Symmetric difference"),
+                       QStringLiteral("Intersection")}
 {
 }
 
@@ -73,6 +72,7 @@ void SpatialOperations::componentComplete()
   m_mapView->graphicsOverlays()->append(m_outputsOverlay);
   m_map->setInitialViewpoint(Viewpoint(Point(-13453, 6710127, SpatialReference::webMercator()), 30000));
 }
+
 void SpatialOperations::addPolygons()
 {
   // create blue polygon
@@ -126,32 +126,37 @@ void SpatialOperations::setMapQuickView(MapQuickView* mapQuickView)
 void SpatialOperations::applyGeometryOperation(int index)
 {
   if (!m_map || m_map->loadStatus() != LoadStatus::Loaded)
+  {
     return;
+  }
 
   // Perform geometry calculations
   Geometry resultPolygon;
-  switch (index) {
-  case 1:
-    resultPolygon = GeometryEngine::unionOf(m_polygon1, m_polygon2);
-    break;
-  case 2:
-    resultPolygon = GeometryEngine::difference(m_polygon1, m_polygon2);
-    break;
-  case 3:
-    resultPolygon = GeometryEngine::symmetricDifference(m_polygon1, m_polygon2);
-    break;
-  case 4:
-    resultPolygon = GeometryEngine::intersection(m_polygon1, m_polygon2);
-    break;
-  case 0:
-  default:
-    break;
+  switch (index)
+  {
+    case 1:
+      resultPolygon = GeometryEngine::unionOf(m_polygon1, m_polygon2);
+      break;
+    case 2:
+      resultPolygon = GeometryEngine::difference(m_polygon1, m_polygon2);
+      break;
+    case 3:
+      resultPolygon = GeometryEngine::symmetricDifference(m_polygon1, m_polygon2);
+      break;
+    case 4:
+      resultPolygon = GeometryEngine::intersection(m_polygon1, m_polygon2);
+      break;
+    case 0:
+    default:
+      break;
   }
 
   // Clear previous results
   m_outputsOverlay->graphics()->clear();
   if (resultPolygon.isEmpty())
+  {
     return;
+  }
 
   // Add the resulting polygon as a Graphic
   SimpleFillSymbol* fillSymbol = new SimpleFillSymbol(SimpleFillSymbolStyle::Solid, QColor("red"), this);

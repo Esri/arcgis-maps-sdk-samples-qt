@@ -26,12 +26,12 @@
 
 namespace Esri::ArcGISRuntime
 {
-class Map;
-class MapQuickView;
-class MobileMapPackage;
-class OfflineMapSyncTask;
-class OfflineMapSyncJob;
-}
+  class Map;
+  class MapQuickView;
+  class MobileMapPackage;
+  class OfflineMapSyncTask;
+  class OfflineMapSyncJob;
+} // namespace Esri::ArcGISRuntime
 
 Q_MOC_INCLUDE("MapQuickView.h")
 

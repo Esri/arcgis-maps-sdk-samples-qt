@@ -17,11 +17,11 @@
 #ifndef MAP_ROTATION_H
 #define MAP_ROTATION_H
 
-
-namespace Esri::ArcGISRuntime {
+namespace Esri::ArcGISRuntime
+{
   class Map;
   class MapGraphicsView;
-}
+} // namespace Esri::ArcGISRuntime
 
 class QLabel;
 class QSlider;

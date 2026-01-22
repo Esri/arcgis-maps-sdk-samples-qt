@@ -1,3 +1,4 @@
+// [WriteFile Name=SnapGeometryEditsWithRules, Category=EditData]
 // [Legal]
 // Copyright 2025 Esri.
 //
@@ -100,7 +101,7 @@ bool SnapSourcesListModel::setData(const QModelIndex& index, const QVariant& val
     if (snapSourceSettingsWrapper)
     {
       snapSourceSettingsWrapper->setEnabled(value.toBool());
-      emit dataChanged(index, index, { role });
+      emit dataChanged(index, index, {role});
       return true;
     }
   }

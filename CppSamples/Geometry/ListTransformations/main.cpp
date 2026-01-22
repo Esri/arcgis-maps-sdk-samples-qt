@@ -1,3 +1,4 @@
+// [WriteFile Name=ListTransformations, Category=Geometry]
 // [Legal]
 // Copyright 2017 Esri.
 //
@@ -34,7 +35,7 @@
 #define STRINGIZE(x) #x
 #define QUOTE(x) STRINGIZE(x)
 
-int main(int argc, char *argv[])
+int main(int argc, char* argv[])
 {
   QGuiApplication app(argc, argv);
   app.setApplicationName(QString("ListTransformations"));
@@ -57,12 +58,12 @@ int main(int argc, char *argv[])
 
   if (accessToken.isEmpty())
   {
-      qWarning() << "Use of ArcGIS location services, such as the basemap styles service, requires" <<
-                    "you to authenticate with an ArcGIS account or set the API Key property.";
+    qWarning() << "Use of ArcGIS location services, such as the basemap styles service, requires"
+               << "you to authenticate with an ArcGIS account or set the API Key property.";
   }
   else
   {
-      Esri::ArcGISRuntime::ArcGISRuntimeEnvironment::setApiKey(accessToken);
+    Esri::ArcGISRuntime::ArcGISRuntimeEnvironment::setApiKey(accessToken);
   }
 
   // Initialize the sample

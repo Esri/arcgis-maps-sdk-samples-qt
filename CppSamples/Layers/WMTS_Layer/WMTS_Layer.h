@@ -24,7 +24,7 @@ namespace Esri::ArcGISRuntime
 {
   class MapQuickView;
   class WmtsService;
-}
+} // namespace Esri::ArcGISRuntime
 
 class WMTS_Layer : public QQuickItem
 {

@@ -73,11 +73,11 @@ namespace
   {
     QString dataPath;
 
-  #ifdef Q_OS_IOS
+#ifdef Q_OS_IOS
     dataPath = QStandardPaths::writableLocation(QStandardPaths::DocumentsLocation);
-  #else
+#else
     dataPath = QStandardPaths::writableLocation(QStandardPaths::HomeLocation);
-  #endif
+#endif
 
     return dataPath;
   }
@@ -86,32 +86,30 @@ namespace
 namespace
 {
 
-// Initial fixed point to observe taxi.
-const Point observationPoint(-73.9853, 40.7484, 200, SpatialReference::wgs84());
+  // Initial fixed point to observe taxi.
+  const Point observationPoint(-73.9853, 40.7484, 200, SpatialReference::wgs84());
 
-// Waypoints around the block for taxi to drive.
-const std::array<Point, 4> waypoints = {{
-                                          { -73.984513, 40.748469, 2, SpatialReference::wgs84() },
-                                          { -73.985068, 40.747786, 2, SpatialReference::wgs84() },
-                                          { -73.983452, 40.747091, 2, SpatialReference::wgs84() },
-                                          { -73.982961, 40.747762, 2, SpatialReference::wgs84() }
-                                        }};
-}
+  // Waypoints around the block for taxi to drive.
+  const std::array<Point, 4> waypoints = {{{-73.984513, 40.748469, 2, SpatialReference::wgs84()},
+                                           {-73.985068, 40.747786, 2, SpatialReference::wgs84()},
+                                           {-73.983452, 40.747091, 2, SpatialReference::wgs84()},
+                                           {-73.982961, 40.747762, 2, SpatialReference::wgs84()}}};
+} // namespace
 
-LineOfSightGeoElement::LineOfSightGeoElement(QObject* parent /* = nullptr */):
+LineOfSightGeoElement::LineOfSightGeoElement(QObject* parent /* = nullptr */) :
   QObject(parent),
   m_scene(new Scene(BasemapStyle::ArcGISImageryStandard, this))
 {
   // create a new elevation source from Terrain3D rest service
-  ArcGISTiledElevationSource* elevationSource = new ArcGISTiledElevationSource(
-        QUrl("https://elevation3d.arcgis.com/arcgis/rest/services/WorldElevation3D/Terrain3D/ImageServer"), this);
+  ArcGISTiledElevationSource* elevationSource =
+    new ArcGISTiledElevationSource(QUrl("https://elevation3d.arcgis.com/arcgis/rest/services/WorldElevation3D/Terrain3D/ImageServer"), this);
 
   // add the elevation source to the scene to display elevation
   m_scene->baseSurface()->elevationSources()->append(elevationSource);
 
   // Load up the buildings that will block the line of sight.
   ArcGISSceneLayer* buildings = new ArcGISSceneLayer(
-        QUrl("https://tiles.arcgis.com/tiles/z2tnIkrLQ2BRzr6P/arcgis/rest/services/New_York_LoD2_3D_Buildings/SceneServer/layers/0"));
+    QUrl("https://tiles.arcgis.com/tiles/z2tnIkrLQ2BRzr6P/arcgis/rest/services/New_York_LoD2_3D_Buildings/SceneServer/layers/0"));
   m_scene->operationalLayers()->append(buildings);
 
   // Trigger animation of taxi every 100ms.
@@ -140,10 +138,13 @@ double LineOfSightGeoElement::heightZ() const
     return 0.0;
   }
 }
+
 void LineOfSightGeoElement::setHeightZ(double z)
 {
   if (!m_observer)
+  {
     return;
+  }
 
   const Point p = geometry_cast<Point>(m_observer->geometry());
   if (p.isValid())
@@ -173,7 +174,9 @@ void LineOfSightGeoElement::setSceneView(SceneQuickView* sceneView)
   emit sceneViewChanged();
 
   if (!defaultDataPath().isEmpty() && m_sceneView)
+  {
     initialize();
+  }
 }
 
 void LineOfSightGeoElement::initialize()
@@ -206,8 +209,7 @@ void LineOfSightGeoElement::initialize()
   ModelSceneSymbol* taxiSymbol = new ModelSceneSymbol(modelPath, 1.0, this);
   taxiSymbol->setAnchorPosition(SceneSymbolAnchorPosition::Bottom);
 
-  connect(taxiSymbol, &ModelSceneSymbol::doneLoading, this,
-          [this, graphicsOverlay, taxiSymbol](const Error& error)
+  connect(taxiSymbol, &ModelSceneSymbol::doneLoading, this, [this, graphicsOverlay, taxiSymbol](const Error& error)
   {
     if (!error.isEmpty())
     {
@@ -220,14 +222,13 @@ void LineOfSightGeoElement::initialize()
     graphicsOverlay->graphics()->append(m_taxi);
 
     // Set up our line of sight analysis.
-    AnalysisOverlay*  analysisOverlay = new AnalysisOverlay(this);
+    AnalysisOverlay* analysisOverlay = new AnalysisOverlay(this);
     m_sceneView->analysisOverlays()->append(analysisOverlay);
 
     GeoElementLineOfSight* lineOfSight = new GeoElementLineOfSight(m_observer, m_taxi, this);
     analysisOverlay->analyses()->append(lineOfSight);
 
-    connect(lineOfSight, &GeoElementLineOfSight::targetVisibilityChanged, this,
-            [this](LineOfSightTargetVisibility targetVisibility)
+    connect(lineOfSight, &GeoElementLineOfSight::targetVisibilityChanged, this, [this](LineOfSightTargetVisibility targetVisibility)
     {
       // Select taxi whenever there is a clear line of sight from observer position.
       m_taxi->setSelected(targetVisibility == LineOfSightTargetVisibility::Visible);
@@ -251,14 +252,16 @@ void LineOfSightGeoElement::animate()
   Point location = geometry_cast<Point>(m_taxi->geometry());
 
   if (!location.isValid())
+  {
     return;
+  }
 
-  GeodeticDistanceResult distance = GeometryEngine::distanceGeodetic(
-        location, waypoint, LinearUnit::meters(), AngularUnit::degrees(), GeodeticCurveType::Geodesic);
+  GeodeticDistanceResult distance =
+    GeometryEngine::distanceGeodetic(location, waypoint, LinearUnit::meters(), AngularUnit::degrees(), GeodeticCurveType::Geodesic);
 
   // Move taxi one metre along the line between its current position and the goal location.
-  QList<Point> newPoints = GeometryEngine::moveGeodetic(
-  { location }, 1.0, LinearUnit::meters(), distance.azimuth1(), AngularUnit::degrees(), GeodeticCurveType::Geodesic);
+  QList<Point> newPoints =
+    GeometryEngine::moveGeodetic({location}, 1.0, LinearUnit::meters(), distance.azimuth1(), AngularUnit::degrees(), GeodeticCurveType::Geodesic);
   if (newPoints.size() > 0)
   {
     location = newPoints.last();
@@ -270,7 +273,8 @@ void LineOfSightGeoElement::animate()
 
   // When taxi is close enough to the waypoint then increment the index for a new goal next animation step.
   // Index is cyclic and an element of [0, 3].
-  if (distance.distance() <= 2) {
+  if (distance.distance() <= 2)
+  {
     m_waypointIndex = (m_waypointIndex + 1) % waypoints.size();
   }
 }

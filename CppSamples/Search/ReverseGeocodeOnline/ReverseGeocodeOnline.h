@@ -22,13 +22,13 @@
 
 namespace Esri::ArcGISRuntime
 {
-class CalloutData;
-class Graphic;
-class GraphicsOverlay;
-class LocatorTask;
-class Map;
-class MapQuickView;
-}
+  class CalloutData;
+  class Graphic;
+  class GraphicsOverlay;
+  class LocatorTask;
+  class Map;
+  class MapQuickView;
+} // namespace Esri::ArcGISRuntime
 
 Q_MOC_INCLUDE("MapQuickView.h")
 Q_MOC_INCLUDE("CalloutData.h")

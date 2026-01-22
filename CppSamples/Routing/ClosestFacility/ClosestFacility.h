@@ -34,7 +34,7 @@ namespace Esri::ArcGISRuntime
   class Map;
   class MapQuickView;
   class Point;
-}
+} // namespace Esri::ArcGISRuntime
 
 class ClosestFacility : public QQuickItem
 {

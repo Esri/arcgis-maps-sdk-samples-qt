@@ -27,12 +27,12 @@
 
 namespace Esri::ArcGISRuntime
 {
-class KmlDataset;
-class KmlNode;
-class KmlNodeListModel;
-class Scene;
-class SceneQuickView;
-}
+  class KmlDataset;
+  class KmlNode;
+  class KmlNodeListModel;
+  class Scene;
+  class SceneQuickView;
+} // namespace Esri::ArcGISRuntime
 
 Q_MOC_INCLUDE("SceneQuickView.h")
 

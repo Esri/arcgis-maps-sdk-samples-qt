@@ -48,7 +48,7 @@
 
 using namespace Esri::ArcGISRuntime;
 
-StatisticalQuery::StatisticalQuery(QQuickItem* parent /* = nullptr */):
+StatisticalQuery::StatisticalQuery(QQuickItem* parent /* = nullptr */) :
   QQuickItem(parent)
 {
 }
@@ -83,17 +83,20 @@ void StatisticalQuery::componentComplete()
   connect(m_featureTable, &ServiceFeatureTable::errorOccurred, this, [this](const Error& e)
   {
     if (e.isEmpty())
+    {
       return;
+    }
 
     emit showStatistics(e.message());
   });
-
 }
 
 void StatisticalQuery::onQueryStatisticsCompleted_(StatisticsQueryResult* rawResult)
 {
   if (!rawResult)
+  {
     return;
+  }
 
   // Delete rawResult when we leave local scope.
   auto result = std::unique_ptr<StatisticsQueryResult>(rawResult);
@@ -122,16 +125,11 @@ void StatisticalQuery::queryStatistics(bool extentOnly, bool bigCitiesOnly)
   StatisticsQueryParameters queryParameters;
 
   // Add the Statistic Definitions
-  QList<StatisticDefinition> definitions
-  {
-    StatisticDefinition("POP", StatisticType::Average, ""),
-    StatisticDefinition("POP", StatisticType::Minimum, ""),
-    StatisticDefinition("POP", StatisticType::Maximum, ""),
-    StatisticDefinition("POP", StatisticType::Sum, ""),
-    StatisticDefinition("POP", StatisticType::StandardDeviation, ""),
-    StatisticDefinition("POP", StatisticType::Variance, ""),
-    StatisticDefinition("POP", StatisticType::Count, "CityCount")
-  };
+  QList<StatisticDefinition> definitions{
+    StatisticDefinition("POP", StatisticType::Average, ""),           StatisticDefinition("POP", StatisticType::Minimum, ""),
+    StatisticDefinition("POP", StatisticType::Maximum, ""),           StatisticDefinition("POP", StatisticType::Sum, ""),
+    StatisticDefinition("POP", StatisticType::StandardDeviation, ""), StatisticDefinition("POP", StatisticType::Variance, ""),
+    StatisticDefinition("POP", StatisticType::Count, "CityCount")};
   queryParameters.setStatisticDefinitions(definitions);
 
   // If only using features in the current extent, set up the spatial filter for the statistics query parameters
@@ -146,10 +144,13 @@ void StatisticalQuery::queryStatistics(bool extentOnly, bool bigCitiesOnly)
 
   // If only evaluating the largest cities (over 5 million in population), set up an attribute filter
   if (bigCitiesOnly)
+  {
     queryParameters.setWhereClause("POP_RANK = 1");
+  }
 
   // Execute the statistical query with these parameters
-  m_featureTable->queryStatisticsAsync(queryParameters).then(this, [this](StatisticsQueryResult* rawResult)
+  m_featureTable->queryStatisticsAsync(queryParameters)
+    .then(this, [this](StatisticsQueryResult* rawResult)
   {
     onQueryStatisticsCompleted_(rawResult);
   });

@@ -37,11 +37,11 @@ using namespace Esri::ArcGISRuntime;
 
 namespace
 {
-const QUrl url("https://services1.arcgis.com/6677msI40mnLuuLr/arcgis/rest/services/East_Lothian_Rivers/FeatureServer/0");
-const QUrl annotationUrl("https://sampleserver6.arcgisonline.com/arcgis/rest/services/RiversAnnotation/FeatureServer/0");
-}
+  const QUrl url("https://services1.arcgis.com/6677msI40mnLuuLr/arcgis/rest/services/East_Lothian_Rivers/FeatureServer/0");
+  const QUrl annotationUrl("https://sampleserver6.arcgisonline.com/arcgis/rest/services/RiversAnnotation/FeatureServer/0");
+} // namespace
 
-DisplayAnnotation::DisplayAnnotation(QObject* parent /* = nullptr */):
+DisplayAnnotation::DisplayAnnotation(QObject* parent /* = nullptr */) :
   QObject(parent),
   m_map(new Map(BasemapStyle::ArcGISLightGray, this))
 {
@@ -76,7 +76,9 @@ MapQuickView* DisplayAnnotation::mapView() const
 void DisplayAnnotation::setMapView(MapQuickView* mapView)
 {
   if (!mapView || mapView == m_mapView)
+  {
     return;
+  }
 
   m_mapView = mapView;
   m_mapView->setMap(m_map);

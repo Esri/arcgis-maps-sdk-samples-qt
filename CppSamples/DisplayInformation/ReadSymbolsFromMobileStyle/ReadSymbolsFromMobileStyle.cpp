@@ -59,18 +59,18 @@ constexpr int faceIndex = 3;
 // helper method to get cross platform data path
 namespace
 {
-QString defaultDataPath()
-{
-  QString dataPath;
+  QString defaultDataPath()
+  {
+    QString dataPath;
 
 #ifdef Q_OS_IOS
-  dataPath = QStandardPaths::writableLocation(QStandardPaths::DocumentsLocation);
+    dataPath = QStandardPaths::writableLocation(QStandardPaths::DocumentsLocation);
 #else
-  dataPath = QStandardPaths::writableLocation(QStandardPaths::HomeLocation);
+    dataPath = QStandardPaths::writableLocation(QStandardPaths::HomeLocation);
 #endif
 
-  return dataPath;
-}
+    return dataPath;
+  }
 } // namespace
 
 ReadSymbolsFromMobileStyle::ReadSymbolsFromMobileStyle(QObject* parent /* = nullptr */) :
@@ -84,7 +84,9 @@ ReadSymbolsFromMobileStyle::ReadSymbolsFromMobileStyle(QObject* parent /* = null
   connect(m_symbolStyle, &SymbolStyle::doneLoading, this, [this](const Error& e)
   {
     if (!e.isEmpty())
+    {
       return;
+    }
     searchSymbolLayer("Hat", hatIndex);
     searchSymbolLayer("Mouth", mouthIndex);
     searchSymbolLayer("Eyes", eyeIndex);
@@ -101,7 +103,8 @@ void ReadSymbolsFromMobileStyle::init()
   // Register the map view for QML
   qmlRegisterType<MapQuickView>("Esri.Samples", 1, 0, "MapView");
   qmlRegisterType<ReadSymbolsFromMobileStyle>("Esri.Samples", 1, 0, "ReadSymbolsFromMobileStyleSample");
-  qmlRegisterUncreatableType<SymbolStyleSearchResultListModel>("Esri.Samples", 1, 0, "SymbolStyleSearchResultListModel", "SymbolStyleSearchResultListModel is uncreateable");
+  qmlRegisterUncreatableType<SymbolStyleSearchResultListModel>("Esri.Samples", 1, 0, "SymbolStyleSearchResultListModel",
+                                                               "SymbolStyleSearchResultListModel is uncreateable");
 }
 
 MapQuickView* ReadSymbolsFromMobileStyle::mapView() const
@@ -113,7 +116,9 @@ MapQuickView* ReadSymbolsFromMobileStyle::mapView() const
 void ReadSymbolsFromMobileStyle::setMapView(MapQuickView* mapView)
 {
   if (!mapView || mapView == m_mapView)
+  {
     return;
+  }
 
   m_mapView = mapView;
   m_mapView->setMap(m_map);
@@ -131,7 +136,9 @@ void ReadSymbolsFromMobileStyle::setMapView(MapQuickView* mapView)
   connect(m_mapView, &MapQuickView::mouseClicked, this, [this, overlay](QMouseEvent& mouseEvent)
   {
     if (!m_currentSymbol)
+    {
       return;
+    }
 
     const Point clickedPoint = m_mapView->screenToLocation(mouseEvent.position().x(), mouseEvent.position().y());
     Graphic* graphic = new Graphic(clickedPoint, m_currentSymbol, m_graphicParent.get());
@@ -145,11 +152,15 @@ void ReadSymbolsFromMobileStyle::setMapView(MapQuickView* mapView)
 void ReadSymbolsFromMobileStyle::clearGraphics()
 {
   if (!m_mapView)
+  {
     return;
+  }
 
   GraphicsOverlay* overlay = m_mapView->graphicsOverlays()->first();
   if (!overlay)
+  {
     return;
+  }
 
   // clear the list model
   overlay->graphics()->clear();
@@ -161,7 +172,9 @@ void ReadSymbolsFromMobileStyle::clearGraphics()
 void ReadSymbolsFromMobileStyle::updateSymbol(int requestHatIndex, int requestMouthIndex, int requestEyeIndex, QColor color, int size)
 {
   if (!m_symbolStyle || !hatResults() || !mouthResults() || !eyeResults() || !faceResults())
+  {
     return;
+  }
 
   // set the color and size members
   m_currentColor = color;
@@ -173,25 +186,30 @@ void ReadSymbolsFromMobileStyle::updateSymbol(int requestHatIndex, int requestMo
   keys.append(eyeResults()->searchResults().at(requestEyeIndex).key());
   keys.append(mouthResults()->searchResults().at(requestMouthIndex).key());
   keys.append(hatResults()->searchResults().at(requestHatIndex).key());
-  m_symbolStyle->fetchSymbolAsync(keys).then(this,
-  [this](Symbol* symbol)
+  m_symbolStyle->fetchSymbolAsync(keys).then(this, [this](Symbol* symbol)
   {
     if (m_currentSymbol)
+    {
       delete m_currentSymbol;
+    }
 
     // store the resulting symbol
     m_currentSymbol = static_cast<MultilayerPointSymbol*>(symbol);
 
     // ensure cast was successful
     if (!m_currentSymbol)
+    {
       return;
+    }
 
     // set the size
     m_currentSymbol->setSize(m_symbolSize);
 
     // set the color preferences per layer
     for (SymbolLayer* lyr : *(m_currentSymbol->symbolLayers()))
+    {
       lyr->setColorLocked(true);
+    }
 
     m_currentSymbol->symbolLayers()->at(0)->setColorLocked(false);
 
@@ -199,11 +217,12 @@ void ReadSymbolsFromMobileStyle::updateSymbol(int requestHatIndex, int requestMo
     m_currentSymbol->setColor(m_currentColor);
 
     // request symbol swatch
-    m_currentSymbol->createSwatchAsync().then(this,
-    [this](const QImage& img)
+    m_currentSymbol->createSwatchAsync().then(this, [this](const QImage& img)
     {
       if (!m_symbolImageProvider)
+      {
         return;
+      }
 
       // convert the QUuid into a QString
       const QString imageId = QUuid().createUuid().toString(QUuid::StringFormat::WithoutBraces);
@@ -217,7 +236,6 @@ void ReadSymbolsFromMobileStyle::updateSymbol(int requestHatIndex, int requestMo
       // emit the signal to trigger the QML Image to update
       emit symbolImageUrlChanged();
     });
-
   });
 }
 
@@ -245,8 +263,7 @@ void ReadSymbolsFromMobileStyle::searchSymbolLayer(const QString& category, int 
 {
   SymbolStyleSearchParameters params;
   params.setCategories({category});
-  m_symbolStyle->searchSymbolsAsync(params).then(this,
-  [this, index](SymbolStyleSearchResultListModel* results)
+  m_symbolStyle->searchSymbolsAsync(params).then(this, [this, index](SymbolStyleSearchResultListModel* results)
   {
     m_models[index] = results;
     emit symbolResultsChanged();

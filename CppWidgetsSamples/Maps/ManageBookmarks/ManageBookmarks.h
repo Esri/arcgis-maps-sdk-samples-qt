@@ -17,10 +17,11 @@
 #ifndef MANAGE_BOOKMARKS_H
 #define MANAGE_BOOKMARKS_H
 
-namespace Esri::ArcGISRuntime {
+namespace Esri::ArcGISRuntime
+{
   class Map;
   class MapGraphicsView;
-}
+} // namespace Esri::ArcGISRuntime
 
 class QComboBox;
 class QPushButton;

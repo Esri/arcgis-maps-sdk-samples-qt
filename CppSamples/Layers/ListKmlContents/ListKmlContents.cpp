@@ -55,27 +55,27 @@ using namespace Esri::ArcGISRuntime;
 // helper method to get cross platform data path
 namespace
 {
-QString defaultDataPath()
-{
-  QString dataPath;
+  QString defaultDataPath()
+  {
+    QString dataPath;
 
 #ifdef Q_OS_IOS
-  dataPath = QStandardPaths::writableLocation(QStandardPaths::DocumentsLocation);
+    dataPath = QStandardPaths::writableLocation(QStandardPaths::DocumentsLocation);
 #else
-  dataPath = QStandardPaths::writableLocation(QStandardPaths::HomeLocation);
+    dataPath = QStandardPaths::writableLocation(QStandardPaths::HomeLocation);
 #endif
 
-  return dataPath;
-}
+    return dataPath;
+  }
 } // namespace
 
-ListKmlContents::ListKmlContents(QObject* parent /* = nullptr */):
+ListKmlContents::ListKmlContents(QObject* parent /* = nullptr */) :
   QObject(parent),
   m_scene(new Scene(BasemapStyle::ArcGISImagery, this))
 {
   // create a new elevation source from Terrain3D REST service
-  ArcGISTiledElevationSource* elevationSource = new ArcGISTiledElevationSource(
-        QUrl("https://elevation3d.arcgis.com/arcgis/rest/services/WorldElevation3D/Terrain3D/ImageServer"), this);
+  ArcGISTiledElevationSource* elevationSource =
+    new ArcGISTiledElevationSource(QUrl("https://elevation3d.arcgis.com/arcgis/rest/services/WorldElevation3D/Terrain3D/ImageServer"), this);
 
   // add the elevation source to the scene to display elevation
   m_scene->baseSurface()->elevationSources()->append(elevationSource);
@@ -113,39 +113,42 @@ ListKmlContents::ListKmlContents(QObject* parent /* = nullptr */):
   });
 }
 
-QString ListKmlContents::getKmlNodeType(KmlNode *node)
+QString ListKmlContents::getKmlNodeType(KmlNode* node)
 {
   if (node == nullptr)
+  {
     return "";
+  }
 
   QString type = "";
-  switch (node->kmlNodeType()) {
-  case KmlNodeType::KmlDocument:
-    type = "KmlDocument";
-    break;
-  case KmlNodeType::KmlFolder:
-    type = "KmlFolder";
-    break;
-  case KmlNodeType::KmlNetworkLink:
-    type = "KmlNetworkLink";
-    break;
-  case KmlNodeType::KmlPlacemark:
-    type = "KmlPlacemark";
-    break;
-  case KmlNodeType::KmlPhotoOverlay:
-    type = "KmlPhotoOverlay";
-    break;
-  case KmlNodeType::KmlGroundOverlay:
-    type = "KmlGroundOverlay";
-    break;
-  case KmlNodeType::KmlScreenOverlay:
-    type = "KmlScreenOverlay";
-    break;
-  case KmlNodeType::KmlTour:
-    type = "KmlTour";
-    break;
-  default:
-    return "";
+  switch (node->kmlNodeType())
+  {
+    case KmlNodeType::KmlDocument:
+      type = "KmlDocument";
+      break;
+    case KmlNodeType::KmlFolder:
+      type = "KmlFolder";
+      break;
+    case KmlNodeType::KmlNetworkLink:
+      type = "KmlNetworkLink";
+      break;
+    case KmlNodeType::KmlPlacemark:
+      type = "KmlPlacemark";
+      break;
+    case KmlNodeType::KmlPhotoOverlay:
+      type = "KmlPhotoOverlay";
+      break;
+    case KmlNodeType::KmlGroundOverlay:
+      type = "KmlGroundOverlay";
+      break;
+    case KmlNodeType::KmlScreenOverlay:
+      type = "KmlScreenOverlay";
+      break;
+    case KmlNodeType::KmlTour:
+      type = "KmlTour";
+      break;
+    default:
+      return "";
   }
   return type;
 }
@@ -154,16 +157,22 @@ QString ListKmlContents::getKmlNodeType(KmlNode *node)
 QStringList ListKmlContents::buildPathLabel(KmlNode* node) const
 {
   if (node != nullptr)
+  {
     return buildPathLabel(node->parentNode()) << node->name();
+  }
   else
-    return QStringList {};
+  {
+    return QStringList{};
+  }
 }
 
 void ListKmlContents::displayPreviousLevel()
 {
   KmlNode* parentNode = m_currentNode->parentNode();
   if (parentNode == nullptr)
+  {
     return;
+  }
 
   KmlNode* grandparentNode = parentNode->parentNode();
 
@@ -214,7 +223,9 @@ void ListKmlContents::processSelectedNode(const QString& nodeName)
       else
       {
         if (!m_viewpoint.isEmpty() && !m_viewpoint.targetGeometry().isEmpty())
+        {
           m_sceneView->setViewpointAsync(m_viewpoint);
+        }
       }
 
       // reset m_lastLevel before levelNodeNames() is called
@@ -242,17 +253,17 @@ void ListKmlContents::getViewpointFromKmlViewpoint(KmlNode* node)
 
     switch (kmlViewpoint.type())
     {
-    case KmlViewpointType::LookAt:
-      m_viewpoint = Viewpoint(kmlViewpoint.location(), Camera(kmlViewpoint.location(), kmlViewpoint.range(),
-                                                              kmlViewpoint.heading(), kmlViewpoint.pitch(), kmlViewpoint.roll()));
-      return;
-    case KmlViewpointType::Camera:
-      m_viewpoint = Viewpoint(kmlViewpoint.location(), Camera(kmlViewpoint.location(),
-                                                              kmlViewpoint.heading(), kmlViewpoint.pitch(), kmlViewpoint.roll()));
-      return;
-    default:
-      qWarning("Unexpected KmlViewpointType");
-      return;
+      case KmlViewpointType::LookAt:
+        m_viewpoint = Viewpoint(kmlViewpoint.location(), Camera(kmlViewpoint.location(), kmlViewpoint.range(), kmlViewpoint.heading(),
+                                                                kmlViewpoint.pitch(), kmlViewpoint.roll()));
+        return;
+      case KmlViewpointType::Camera:
+        m_viewpoint =
+          Viewpoint(kmlViewpoint.location(), Camera(kmlViewpoint.location(), kmlViewpoint.heading(), kmlViewpoint.pitch(), kmlViewpoint.roll()));
+        return;
+      default:
+        qWarning("Unexpected KmlViewpointType");
+        return;
     }
   }
 
@@ -274,9 +285,8 @@ void ListKmlContents::getViewpointFromKmlViewpoint(KmlNode* node)
     {
       // add padding to extent
       double bufferDistance = qMax(nodeExtent.width(), nodeExtent.height()) / 20;
-      Envelope bufferedExtent = Envelope(nodeExtent.xMin() - bufferDistance, nodeExtent.yMin() - bufferDistance,
-                                         nodeExtent.xMax() + bufferDistance, nodeExtent.yMax() + bufferDistance,
-                                         nodeExtent.zMin() - bufferDistance, nodeExtent.zMax() + bufferDistance,
+      Envelope bufferedExtent = Envelope(nodeExtent.xMin() - bufferDistance, nodeExtent.yMin() - bufferDistance, nodeExtent.xMax() + bufferDistance,
+                                         nodeExtent.yMax() + bufferDistance, nodeExtent.zMin() - bufferDistance, nodeExtent.zMax() + bufferDistance,
                                          SpatialReference::wgs84());
       m_viewpoint = Viewpoint(bufferedExtent);
     }
@@ -312,14 +322,18 @@ void ListKmlContents::getAltitudeAdjustedViewpoint(KmlNode* node)
 
   if (lookAtExtent.isValid())
   {
-    m_scene->baseSurface()->elevationAsync(lookAtExtent.center()).then(this, [this](double elevation)
+    m_scene->baseSurface()
+      ->elevationAsync(lookAtExtent.center())
+      .then(this, [this](double elevation)
     {
       onLocationToElevationCompleted_(elevation);
     });
   }
   else if (lookAtPoint.isValid())
   {
-    m_scene->baseSurface()->elevationAsync(lookAtPoint).then(this, [this](double elevation)
+    m_scene->baseSurface()
+      ->elevationAsync(lookAtPoint)
+      .then(this, [this](double elevation)
     {
       onLocationToElevationCompleted_(elevation);
     });
@@ -368,7 +382,9 @@ SceneQuickView* ListKmlContents::sceneView() const
 void ListKmlContents::setSceneView(SceneQuickView* sceneView)
 {
   if (!sceneView || sceneView == m_sceneView)
+  {
     return;
+  }
 
   m_sceneView = sceneView;
   m_sceneView->setArcGISScene(m_scene);
@@ -388,39 +404,35 @@ void ListKmlContents::onLocationToElevationCompleted_(double elevation)
   }
   // if altitude mode is Absolute, viewpoint doesn't need adjustment
   if (altMode == KmlAltitudeMode::Absolute)
+  {
     return;
+  }
 
   const Envelope lookAtExtent = geometry_cast<Envelope>(m_viewpoint.targetGeometry());
   const Point lookAtPoint = geometry_cast<Point>(m_viewpoint.targetGeometry());
 
   if (lookAtExtent.isValid())
   {
-    Envelope  target;
+    Envelope target;
     if (altMode == KmlAltitudeMode::ClampToGround)
     {
       // if depth of extent is 0, add 100m to the elevation to get zMax
       if (lookAtExtent.depth() == 0)
       {
-        target = Envelope(lookAtExtent.xMin(), lookAtExtent.yMin(),
-                          lookAtExtent.xMax(), lookAtExtent.yMax(),
-                          elevation, elevation + 100,
+        target = Envelope(lookAtExtent.xMin(), lookAtExtent.yMin(), lookAtExtent.xMax(), lookAtExtent.yMax(), elevation, elevation + 100,
                           lookAtExtent.spatialReference());
       }
       else
       {
-        target = Envelope(lookAtExtent.xMin(), lookAtExtent.yMin(),
-                          lookAtExtent.xMax(), lookAtExtent.yMax(),
+        target = Envelope(lookAtExtent.xMin(), lookAtExtent.yMin(), lookAtExtent.xMax(), lookAtExtent.yMax(),
                           // set the camera slightly above the placemark by adding one meter
-                          elevation, lookAtExtent.depth() + elevation + 1,
-                          lookAtExtent.spatialReference());
+                          elevation, lookAtExtent.depth() + elevation + 1, lookAtExtent.spatialReference());
       }
     }
     else
     {
-      target = Envelope(lookAtExtent.xMin(), lookAtExtent.yMin(),
-                        lookAtExtent.xMax(), lookAtExtent.yMax(),
-                        lookAtExtent.zMin() + elevation, lookAtExtent.zMax() + elevation,
-                        lookAtExtent.spatialReference());
+      target = Envelope(lookAtExtent.xMin(), lookAtExtent.yMin(), lookAtExtent.xMax(), lookAtExtent.yMax(), lookAtExtent.zMin() + elevation,
+                        lookAtExtent.zMax() + elevation, lookAtExtent.spatialReference());
     }
 
     // if node has viewpoint specified, return adjusted geometry with adjusted camera
@@ -472,7 +484,9 @@ void ListKmlContents::onLocationToElevationCompleted_(double elevation)
 QStringList ListKmlContents::levelNodeNames()
 {
   if (m_currentNode == nullptr)
+  {
     return {};
+  }
 
   QStringList nodeNames = {};
 
@@ -480,7 +494,7 @@ QStringList ListKmlContents::levelNodeNames()
   if (KmlContainer* container = dynamic_cast<KmlContainer*>(m_currentNode))
   {
     // for current level, get names of child nodes
-    for (KmlNode* node: *(container->childNodesListModel()))
+    for (KmlNode* node : *(container->childNodesListModel()))
     {
       QString str = node->name() + " - " + getKmlNodeType(node);
 
@@ -496,7 +510,7 @@ QStringList ListKmlContents::levelNodeNames()
   return m_levelNodeNames;
 }
 
-bool ListKmlContents::noGrandchildren(KmlNode *currentNode) const
+bool ListKmlContents::noGrandchildren(KmlNode* currentNode) const
 {
   bool hasNoGrandchildren = false;
 
@@ -505,7 +519,7 @@ bool ListKmlContents::noGrandchildren(KmlNode *currentNode) const
     hasNoGrandchildren = true;
 
     // for current level, get names of child nodes
-    for (KmlNode* node: *(container->childNodesListModel()))
+    for (KmlNode* node : *(container->childNodesListModel()))
     {
       // if node has children, add ">" to indicate further levels
       if (!node->children().isEmpty())
@@ -526,11 +540,19 @@ QString ListKmlContents::labelText() const
 bool ListKmlContents::isTopLevel() const
 {
   if (m_currentNode == nullptr)
+  {
     return true;
+  }
   else if (m_currentNode->parentNode() == nullptr)
+  {
     return true;
+  }
   else if (m_currentNode->name() == "")
+  {
     return true;
+  }
   else
+  {
     return false;
+  }
 }

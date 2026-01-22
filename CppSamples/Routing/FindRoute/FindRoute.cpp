@@ -170,7 +170,9 @@ void FindRoute::solveRoute()
   if (m_routeTask->loadStatus() == LoadStatus::Loaded)
   {
     if (m_routeParameters.isEmpty())
+    {
       return;
+    }
     // set parameters to return directions
     m_routeParameters.setReturnDirections(true);
 
@@ -182,10 +184,11 @@ void FindRoute::solveRoute()
     stop1.setName("Origin");
     Stop stop2(geometry_cast<Point>(m_stopsGraphicsOverlay->graphics()->at(1)->geometry()));
     stop2.setName("Destination");
-    m_routeParameters.setStops(QList<Stop> { stop1, stop2 });
+    m_routeParameters.setStops(QList<Stop>{stop1, stop2});
     //! [FindRoute new RouteTask]
     // solve the route with the parameters
-    m_routeTask->solveRouteAsync(m_routeParameters).then(this, [this](const RouteResult& routeResult)
+    m_routeTask->solveRouteAsync(m_routeParameters)
+      .then(this, [this](const RouteResult& routeResult)
     {
       // Add the route graphic once the solve completes
       Route generatedRoute = routeResult.routes().at(0);
@@ -202,4 +205,5 @@ void FindRoute::solveRoute()
     //! [FindRoute connect RouteTask signals]
   }
 }
+
 //! [FindRoute solveRoute]

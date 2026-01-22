@@ -65,17 +65,17 @@ namespace
   {
     QString dataPath;
 
-  #ifdef Q_OS_IOS
+#ifdef Q_OS_IOS
     dataPath = QStandardPaths::writableLocation(QStandardPaths::DocumentsLocation);
-  #else
+#else
     dataPath = QStandardPaths::writableLocation(QStandardPaths::HomeLocation);
-  #endif
+#endif
 
     return dataPath;
   }
 } // namespace
 
-EditAndSyncFeatures::EditAndSyncFeatures(QQuickItem* parent /* = nullptr */):
+EditAndSyncFeatures::EditAndSyncFeatures(QQuickItem* parent /* = nullptr */) :
   QQuickItem(parent),
   m_dataPath(defaultDataPath() + "/ArcGIS/Runtime/Data/")
 {
@@ -136,11 +136,14 @@ void EditAndSyncFeatures::connectSignals()
     {
       if (!m_selectedFeature)
       {
-        m_mapView->identifyLayerAsync(m_map->operationalLayers()->first(), mouseEvent.position(), 5, false, 1).then(this, [this](IdentifyLayerResult* identifyResult)
+        m_mapView->identifyLayerAsync(m_map->operationalLayers()->first(), mouseEvent.position(), 5, false, 1)
+          .then(this, [this](IdentifyLayerResult* identifyResult)
         {
           // once the identify is done
           if (!identifyResult)
+          {
             return;
+          }
 
           // clear any existing selection
           FeatureLayer* featureLayer = static_cast<FeatureLayer*>(m_map->operationalLayers()->first());
@@ -164,7 +167,9 @@ void EditAndSyncFeatures::connectSignals()
         // get the point from the mouse point
         const Point mapPoint = m_mapView->screenToLocation(mouseEvent.position().x(), mouseEvent.position().y());
         m_selectedFeature->setGeometry(mapPoint);
-        featureLayer->featureTable()->updateFeatureAsync(m_selectedFeature).then(this, [this, featureLayer]()
+        featureLayer->featureTable()
+          ->updateFeatureAsync(m_selectedFeature)
+          .then(this, [this, featureLayer]()
         {
           featureLayer->clearSelection();
           m_selectedFeature = nullptr;
@@ -193,6 +198,7 @@ GenerateGeodatabaseParameters EditAndSyncFeatures::getGenerateParameters(Envelop
 
   return params;
 }
+
 //! [EditAndSyncFeatures parameters generate]
 
 //! [EditAndSyncFeatures parameters sync]
@@ -210,6 +216,7 @@ SyncGeodatabaseParameters EditAndSyncFeatures::getSyncParameters()
 
   return params;
 }
+
 //! [EditAndSyncFeatures parameters sync]
 
 //! [EditAndSyncFeatures generate]
@@ -234,31 +241,32 @@ void EditAndSyncFeatures::generateGeodatabaseFromCorners(double xCorner1, double
     connect(generateJob, &GenerateGeodatabaseJob::statusChanged, this, [this, generateJob](JobStatus jobStatus)
     {
       // connect to the job's status changed signal to know once it is done
-      switch (jobStatus) {
-      case JobStatus::Failed:
-        emit updateStatus("Generate failed");
-        emit hideWindow(5000, false);
-        break;
-      case JobStatus::NotStarted:
-        emit updateStatus("Job not started");
-        break;
-      case JobStatus::Paused:
-        emit updateStatus("Job paused");
-        break;
-      case JobStatus::Started:
-        emit updateStatus("In progress...");
-        break;
-      case JobStatus::Succeeded:
-        m_isOffline = true;
-        m_offlineGdb = generateJob->result();
-        emit isOfflineChanged();
-        emit updateStatus("Complete");
-        emit hideWindow(1500, true);
-        emit updateInstruction("Tap on a feature");
-        addOfflineData();
-        break;
-      default:
-        break;
+      switch (jobStatus)
+      {
+        case JobStatus::Failed:
+          emit updateStatus("Generate failed");
+          emit hideWindow(5000, false);
+          break;
+        case JobStatus::NotStarted:
+          emit updateStatus("Job not started");
+          break;
+        case JobStatus::Paused:
+          emit updateStatus("Job paused");
+          break;
+        case JobStatus::Started:
+          emit updateStatus("In progress...");
+          break;
+        case JobStatus::Succeeded:
+          m_isOffline = true;
+          m_offlineGdb = generateJob->result();
+          emit isOfflineChanged();
+          emit updateStatus("Complete");
+          emit hideWindow(1500, true);
+          emit updateInstruction("Tap on a feature");
+          addOfflineData();
+          break;
+        default:
+          break;
       }
     });
 
@@ -312,29 +320,30 @@ void EditAndSyncFeatures::executeSync()
     connect(syncJob, &GenerateGeodatabaseJob::statusChanged, this, [this](JobStatus jobStatus)
     {
       // connect to the job's status changed signal to know once it is done
-      switch (jobStatus) {
-      case JobStatus::Failed:
-        emit updateStatus("Sync failed");
-        emit hideWindow(5000, false);
-        break;
-      case JobStatus::NotStarted:
-        emit updateStatus("Job not started");
-        break;
-      case JobStatus::Paused:
-        emit updateStatus("Job paused");
-        break;
-      case JobStatus::Started:
-        emit updateStatus("In progress...");
-        break;
-      case JobStatus::Succeeded:
-        m_isOffline = true;
-        emit isOfflineChanged();
-        emit updateStatus("Complete");
-        emit hideWindow(1500, true);
-        emit updateInstruction("Tap on a feature");
-        break;
-      default:
-        break;
+      switch (jobStatus)
+      {
+        case JobStatus::Failed:
+          emit updateStatus("Sync failed");
+          emit hideWindow(5000, false);
+          break;
+        case JobStatus::NotStarted:
+          emit updateStatus("Job not started");
+          break;
+        case JobStatus::Paused:
+          emit updateStatus("Job paused");
+          break;
+        case JobStatus::Started:
+          emit updateStatus("In progress...");
+          break;
+        case JobStatus::Succeeded:
+          m_isOffline = true;
+          emit isOfflineChanged();
+          emit updateStatus("Complete");
+          emit hideWindow(1500, true);
+          emit updateInstruction("Tap on a feature");
+          break;
+        default:
+          break;
       }
     });
 

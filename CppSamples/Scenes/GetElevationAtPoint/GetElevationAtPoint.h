@@ -27,7 +27,7 @@ namespace Esri::ArcGISRuntime
   class GraphicsOverlay;
   class Scene;
   class SceneQuickView;
-}
+} // namespace Esri::ArcGISRuntime
 
 class QMouseEvent;
 

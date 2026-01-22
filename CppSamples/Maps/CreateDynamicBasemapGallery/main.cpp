@@ -1,3 +1,4 @@
+// [WriteFile Name=CreateDynamicBasemapGallery, Category=Maps]
 // [Legal]
 // Copyright 2024 Esri.
 //
@@ -30,10 +31,10 @@
 #include <Windows.h>
 #endif
 
-int main(int argc, char *argv[])
+int main(int argc, char* argv[])
 {
-    QGuiApplication app(argc, argv);
-    app.setApplicationName(QString("CreateDynamicBasemapGallery"));
+  QGuiApplication app(argc, argv);
+  app.setApplicationName(QString("CreateDynamicBasemapGallery"));
 
   // Use of ArcGIS location services, such as basemap styles, geocoding, and routing services,
   // requires an access token. For more information see
@@ -53,28 +54,28 @@ int main(int argc, char *argv[])
 
   if (accessToken.isEmpty())
   {
-      qWarning() << "Use of ArcGIS location services, such as the basemap styles service, requires" <<
-                    "you to authenticate with an ArcGIS account or set the API Key property.";
+    qWarning() << "Use of ArcGIS location services, such as the basemap styles service, requires"
+               << "you to authenticate with an ArcGIS account or set the API Key property.";
   }
   else
   {
-      Esri::ArcGISRuntime::ArcGISRuntimeEnvironment::setApiKey(accessToken);
+    Esri::ArcGISRuntime::ArcGISRuntimeEnvironment::setApiKey(accessToken);
   }
 
-    // Initialize the sample
-    CreateDynamicBasemapGallery::init();
+  // Initialize the sample
+  CreateDynamicBasemapGallery::init();
 
-    // Initialize application view
-    QQmlApplicationEngine engine;
-    // Add the import Path
-    engine.addImportPath(QDir(QCoreApplication::applicationDirPath()).filePath("qml"));
+  // Initialize application view
+  QQmlApplicationEngine engine;
+  // Add the import Path
+  engine.addImportPath(QDir(QCoreApplication::applicationDirPath()).filePath("qml"));
 
 #ifdef ARCGIS_RUNTIME_IMPORT_PATH_2
-    engine.addImportPath(ARCGIS_RUNTIME_IMPORT_PATH_2);
+  engine.addImportPath(ARCGIS_RUNTIME_IMPORT_PATH_2);
 #endif
 
-    // Set the source
-    engine.load(QUrl("qrc:/Samples/Maps/CreateDynamicBasemapGallery/main.qml"));
+  // Set the source
+  engine.load(QUrl("qrc:/Samples/Maps/CreateDynamicBasemapGallery/main.qml"));
 
-    return app.exec();
+  return app.exec();
 }

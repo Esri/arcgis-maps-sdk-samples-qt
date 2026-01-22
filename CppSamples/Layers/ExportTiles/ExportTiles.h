@@ -28,7 +28,7 @@ namespace Esri::ArcGISRuntime
   class Map;
   class MapQuickView;
   class TileCache;
-}
+} // namespace Esri::ArcGISRuntime
 
 class ExportTiles : public QQuickItem
 {
@@ -51,7 +51,12 @@ signals:
 private:
   void createExportTileCacheTask();
   void displayOutputTileCache(Esri::ArcGISRuntime::TileCache* tileCache);
-  inline int exportTilesProgress() { return m_exportTilesProgress; }
+
+  inline int exportTilesProgress()
+  {
+    return m_exportTilesProgress;
+  }
+
   void onDefaultExportTileCacheParametersCompleted_(const Esri::ArcGISRuntime::ExportTileCacheParameters& parameters);
 
   Esri::ArcGISRuntime::ExportTileCacheTask* m_exportTileCacheTask = nullptr;

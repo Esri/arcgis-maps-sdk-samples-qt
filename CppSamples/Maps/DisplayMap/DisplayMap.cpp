@@ -28,7 +28,7 @@
 
 using namespace Esri::ArcGISRuntime;
 
-DisplayMap::DisplayMap(QObject* parent /* = nullptr */):
+DisplayMap::DisplayMap(QObject* parent /* = nullptr */) :
   QObject(parent),
   m_map(new Map(BasemapStyle::ArcGISImagery, this))
 {
@@ -55,11 +55,14 @@ MapQuickView* DisplayMap::mapView() const
 void DisplayMap::setMapView(MapQuickView* mapView)
 {
   if (!mapView || mapView == m_mapView)
+  {
     return;
+  }
 
   m_mapView = mapView;
   m_mapView->setMap(m_map);
 
   emit mapViewChanged();
 }
- //! [MapQuickView API Snippet]
+
+//! [MapQuickView API Snippet]

@@ -67,22 +67,23 @@ using namespace Esri::ArcGISRuntime;
 // helper method to get cross platform data path
 namespace
 {
-QString defaultDataPath()
-{
-  QString dataPath;
+  QString defaultDataPath()
+  {
+    QString dataPath;
 
 #ifdef Q_OS_IOS
-  dataPath = QStandardPaths::writableLocation(QStandardPaths::DocumentsLocation);
+    dataPath = QStandardPaths::writableLocation(QStandardPaths::DocumentsLocation);
 #else
-  dataPath = QStandardPaths::writableLocation(QStandardPaths::HomeLocation);
+    dataPath = QStandardPaths::writableLocation(QStandardPaths::HomeLocation);
 #endif
 
-  return dataPath;
-}
-const QUrl pinUrl("qrc:/Samples/Routing/OfflineRouting/orange_symbol.png");
+    return dataPath;
+  }
+
+  const QUrl pinUrl("qrc:/Samples/Routing/OfflineRouting/orange_symbol.png");
 } // namespace
 
-OfflineRouting::OfflineRouting(QObject* parent /* = nullptr */):
+OfflineRouting::OfflineRouting(QObject* parent /* = nullptr */) :
   QObject(parent),
   m_pinSymbol(new PictureMarkerSymbol(pinUrl, this)),
   m_stopsOverlay(new GraphicsOverlay(this)),
@@ -133,10 +134,14 @@ QStringList OfflineRouting::travelModeNames() const
 {
   // if route task not initialized or loaded, then do not execute
   if (!m_routeTask)
-    return { };
+  {
+    return {};
+  }
 
-  if(m_routeTask->loadStatus() != LoadStatus::Loaded)
-    return { };
+  if (m_routeTask->loadStatus() != LoadStatus::Loaded)
+  {
+    return {};
+  }
 
   const QList<TravelMode> modesList = m_routeTask->routeTaskInfo().travelModes();
   QStringList strList;
@@ -150,7 +155,9 @@ QStringList OfflineRouting::travelModeNames() const
 void OfflineRouting::setTravelModeIndex(int index)
 {
   if (m_travelModeIndex == index)
+  {
     return;
+  }
 
   m_travelModeIndex = index;
   emit travelModeIndexChanged();
@@ -180,12 +187,16 @@ void OfflineRouting::connectSignals()
   });
 
   // check whether mouse pressed over an existing stop
-  connect(m_mapView, &MapQuickView::mousePressed, this, [this](QMouseEvent& e){
-    m_mapView->identifyGraphicsOverlayAsync(m_stopsOverlay, e.position(), 10, false).then(this, [this](IdentifyGraphicsOverlayResult* rawIdentifyResult)
+  connect(m_mapView, &MapQuickView::mousePressed, this, [this](QMouseEvent& e)
+  {
+    m_mapView->identifyGraphicsOverlayAsync(m_stopsOverlay, e.position(), 10, false)
+      .then(this, [this](IdentifyGraphicsOverlayResult* rawIdentifyResult)
     {
       auto result = std::unique_ptr<IdentifyGraphicsOverlayResult>(rawIdentifyResult);
       if (!result->error().isEmpty())
+      {
         qDebug() << result->error().message() << result->error().additionalMessage();
+      }
 
       m_selectedGraphic = nullptr;
       if (!result->graphics().isEmpty())
@@ -198,7 +209,8 @@ void OfflineRouting::connectSignals()
   });
 
   // get stops from clicked locations
-  connect(m_mapView, &MapQuickView::mouseClicked, this, [this](QMouseEvent& e){
+  connect(m_mapView, &MapQuickView::mouseClicked, this, [this](QMouseEvent& e)
+  {
     if (!m_selectedGraphic)
     {
       // return if point is outside of bounds
@@ -207,7 +219,8 @@ void OfflineRouting::connectSignals()
         qWarning() << "Outside of routable area.";
         return;
       }
-      TextSymbol* textSymbol = new TextSymbol(QString::number(m_stopsOverlay->graphics()->size() + 1), Qt::white, 20, HorizontalAlignment::Center, VerticalAlignment::Bottom, this);
+      TextSymbol* textSymbol = new TextSymbol(QString::number(m_stopsOverlay->graphics()->size() + 1), Qt::white, 20, HorizontalAlignment::Center,
+                                              VerticalAlignment::Bottom, this);
       textSymbol->setOffsetY(m_pinSymbol->height() / 2);
       CompositeSymbol* stopLabel = new CompositeSymbol(QList<Symbol*>{m_pinSymbol, textSymbol}, this);
       Graphic* stopGraphic = new Graphic(m_mapView->screenToLocation(e.position().x(), e.position().y()), stopLabel, this);
@@ -218,7 +231,8 @@ void OfflineRouting::connectSignals()
   });
 
   // mouseMoved is processed before identifyGraphicsOverlayCompleted, so must clear graphic upon mouseReleased
-  connect(m_mapView, &MapQuickView::mouseReleased, this, [this](QMouseEvent& e) {
+  connect(m_mapView, &MapQuickView::mouseReleased, this, [this](QMouseEvent& e)
+  {
     if (m_selectedGraphic)
     {
       m_selectedGraphic = nullptr;
@@ -227,7 +241,8 @@ void OfflineRouting::connectSignals()
   });
 
   // if mouse is moved while pressing on a graphic, the click-and-pan effect of the MapView is prevented by e.accept()
-  connect(m_mapView, &MapQuickView::mouseMoved, this, [this](QMouseEvent&e){
+  connect(m_mapView, &MapQuickView::mouseMoved, this, [this](QMouseEvent& e)
+  {
     if (m_selectedGraphic)
     {
       e.accept();
@@ -247,7 +262,9 @@ void OfflineRouting::connectSignals()
 void OfflineRouting::findRoute()
 {
   if (!m_routeTaskFuture.isFinished() || m_stopsOverlay->graphics()->size() <= 1)
+  {
     return;
+  }
 
   QList<Stop> stops;
   for (const Graphic* graphic : *m_stopsOverlay->graphics())
@@ -263,7 +280,9 @@ void OfflineRouting::findRoute()
   m_routeTaskFuture.then(this, [this](const RouteResult& routeResult)
   {
     if (routeResult.isEmpty())
+    {
       return;
+    }
 
     // clear old route
     m_routeOverlay->graphics()->clear();
@@ -278,7 +297,9 @@ void OfflineRouting::findRoute()
 void OfflineRouting::setMapView(MapQuickView* mapView)
 {
   if (!mapView || mapView == m_mapView)
+  {
     return;
+  }
 
   m_mapView = mapView;
   m_mapView->setMap(m_map);
@@ -287,7 +308,8 @@ void OfflineRouting::setMapView(MapQuickView* mapView)
   m_mapView->graphicsOverlays()->append(m_routeOverlay);
 
   GraphicsOverlay* boundaryOverlay = new GraphicsOverlay(this);
-  m_routableArea = Envelope(Point(-13045352.223196, 3864910.900750,SpatialReference::webMercator()), Point(-13024588.857198, 3838880.505604, SpatialReference::webMercator()));
+  m_routableArea = Envelope(Point(-13045352.223196, 3864910.900750, SpatialReference::webMercator()),
+                            Point(-13024588.857198, 3838880.505604, SpatialReference::webMercator()));
   SimpleLineSymbol* boundarySymbol = new SimpleLineSymbol(SimpleLineSymbolStyle::Dash, Qt::green, 3, this);
   Graphic* boundaryGraphic = new Graphic(m_routableArea, boundarySymbol, this);
   boundaryOverlay->graphics()->append(boundaryGraphic);
@@ -302,7 +324,11 @@ void OfflineRouting::resetMap()
 {
   m_selectedGraphic = nullptr;
   if (m_stopsOverlay)
+  {
     m_stopsOverlay->graphics()->clear();
-  if(m_routeOverlay)
+  }
+  if (m_routeOverlay)
+  {
     m_routeOverlay->graphics()->clear();
+  }
 }

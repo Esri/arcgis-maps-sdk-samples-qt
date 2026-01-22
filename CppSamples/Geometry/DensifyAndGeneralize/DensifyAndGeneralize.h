@@ -25,12 +25,12 @@
 
 namespace Esri::ArcGISRuntime
 {
-class Map;
-class MapQuickView;
-class GraphicsOverlay;
-class Graphic;
-class PointCollection;
-}
+  class Map;
+  class MapQuickView;
+  class GraphicsOverlay;
+  class Graphic;
+  class PointCollection;
+} // namespace Esri::ArcGISRuntime
 
 class DensifyAndGeneralize : public QQuickItem
 {

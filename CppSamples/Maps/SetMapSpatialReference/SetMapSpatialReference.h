@@ -26,7 +26,7 @@ namespace Esri::ArcGISRuntime
   class MapQuickView;
   class Basemap;
   class ArcGISMapImageLayer;
-}
+} // namespace Esri::ArcGISRuntime
 
 class SetMapSpatialReference : public QQuickItem
 {

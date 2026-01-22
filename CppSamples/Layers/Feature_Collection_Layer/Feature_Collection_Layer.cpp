@@ -52,7 +52,7 @@
 
 using namespace Esri::ArcGISRuntime;
 
-Feature_Collection_Layer::Feature_Collection_Layer(QQuickItem* parent /* = nullptr */):
+Feature_Collection_Layer::Feature_Collection_Layer(QQuickItem* parent /* = nullptr */) :
   QQuickItem(parent)
 {
 }
@@ -75,7 +75,8 @@ void Feature_Collection_Layer::componentComplete()
 
   // Create a map using the topographic basemap
   m_map = new Map(BasemapStyle::ArcGISOceans, this);
-  m_map->setInitialViewpoint(Viewpoint(Envelope(-8917856.590171767, 903277.583136797, -8800611.655131537, 1100327.8941287803, SpatialReference(102100))));
+  m_map->setInitialViewpoint(
+    Viewpoint(Envelope(-8917856.590171767, 903277.583136797, -8800611.655131537, 1100327.8941287803, SpatialReference(102100))));
 
   // Set map to map view
   m_mapView->setMap(m_map);
@@ -101,7 +102,7 @@ void Feature_Collection_Layer::createPointTable()
   pointFields.append(placeField);
 
   // Create the table
-  FeatureCollectionTable* pointsTable =  new FeatureCollectionTable(pointFields, GeometryType::Point, SpatialReference(4326), this);
+  FeatureCollectionTable* pointsTable = new FeatureCollectionTable(pointFields, GeometryType::Point, SpatialReference(4326), this);
 
   // Define the renderer
   SimpleMarkerSymbol* sms = new SimpleMarkerSymbol(SimpleMarkerSymbolStyle::Triangle, QColor("red"), 18.0, this);
@@ -124,7 +125,7 @@ void Feature_Collection_Layer::createPolylineTable()
   lineFields.append(boundaryField);
 
   // Create the table
-  FeatureCollectionTable* linesTable =  new FeatureCollectionTable(lineFields, GeometryType::Polyline, SpatialReference(4326), this);
+  FeatureCollectionTable* linesTable = new FeatureCollectionTable(lineFields, GeometryType::Polyline, SpatialReference(4326), this);
 
   // Define the renderer
   SimpleLineSymbol* sls = new SimpleLineSymbol(SimpleLineSymbolStyle::Dash, QColor("green"), 3.0, this);
@@ -137,7 +138,7 @@ void Feature_Collection_Layer::createPolylineTable()
   // Add features to the table
   Point pt1(-79.497238, 8.849289, SpatialReference::wgs84());
   Point pt2(-80.035568, 9.432302, SpatialReference::wgs84());
-  QList<Point> points { pt1, pt2 };
+  QList<Point> points{pt1, pt2};
   addPolylineToTable("Boundary", "AManAPlanACanalPanama", points, linesTable);
 }
 
@@ -149,7 +150,7 @@ void Feature_Collection_Layer::createPolygonTable()
   polyFields.append(areaField);
 
   // Create the table
-  FeatureCollectionTable* polysTable =  new FeatureCollectionTable(polyFields, GeometryType::Polygon, SpatialReference(4326), this);
+  FeatureCollectionTable* polysTable = new FeatureCollectionTable(polyFields, GeometryType::Polygon, SpatialReference(4326), this);
 
   // Define the renderer
   SimpleLineSymbol* sls = new SimpleLineSymbol(SimpleLineSymbolStyle::Solid, QColor("blue"), 2.0, this);
@@ -164,7 +165,7 @@ void Feature_Collection_Layer::createPolygonTable()
   const Point pt1(-79.497238, 8.849289, SpatialReference::wgs84());
   const Point pt2(-79.337936, 8.638903, SpatialReference::wgs84());
   const Point pt3(-79.11409, 8.895422, SpatialReference::wgs84());
-  const QList<Point> points{ pt1, pt2, pt3 };
+  const QList<Point> points{pt1, pt2, pt3};
   addPolygonToTable("Area", "Restricted area", points, polysTable);
 }
 

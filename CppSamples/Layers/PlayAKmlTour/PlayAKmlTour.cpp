@@ -50,24 +50,24 @@ namespace
   {
     QString dataPath;
 
-  #ifdef Q_OS_IOS
+#ifdef Q_OS_IOS
     dataPath = QStandardPaths::writableLocation(QStandardPaths::DocumentsLocation);
-  #else
+#else
     dataPath = QStandardPaths::writableLocation(QStandardPaths::HomeLocation);
-  #endif
+#endif
 
     return dataPath;
   }
 } // namespace
 
-PlayAKmlTour::PlayAKmlTour(QObject* parent /* = nullptr */):
+PlayAKmlTour::PlayAKmlTour(QObject* parent /* = nullptr */) :
   QObject(parent),
   m_scene(new Scene(BasemapStyle::ArcGISImageryStandard, this)),
   m_dataPath(defaultDataPath() + "/ArcGIS/Runtime/Data")
 {
   // create a new elevation source from Terrain3D REST service
-  ArcGISTiledElevationSource* elevationSource = new ArcGISTiledElevationSource(
-        QUrl("https://elevation3d.arcgis.com/arcgis/rest/services/WorldElevation3D/Terrain3D/ImageServer"), this);
+  ArcGISTiledElevationSource* elevationSource =
+    new ArcGISTiledElevationSource(QUrl("https://elevation3d.arcgis.com/arcgis/rest/services/WorldElevation3D/Terrain3D/ImageServer"), this);
 
   // add the elevation source to the scene to display elevation
   m_scene->baseSurface()->elevationSources()->append(elevationSource);
@@ -92,7 +92,8 @@ PlayAKmlTour::PlayAKmlTour(QObject* parent /* = nullptr */):
     {
       connect(m_kmlTour, &KmlTour::tourStatusChanged, this, [this](KmlTourStatus tourStatus)
       {
-        switch (tourStatus) {
+        switch (tourStatus)
+        {
           case KmlTourStatus::Completed:
           case KmlTourStatus::Initialized:
             m_playButtonEnabled = true;
@@ -144,7 +145,9 @@ SceneQuickView* PlayAKmlTour::sceneView() const
 void PlayAKmlTour::setSceneView(SceneQuickView* sceneView)
 {
   if (!sceneView || sceneView == m_sceneView)
+  {
     return;
+  }
 
   m_sceneView = sceneView;
   m_sceneView->setArcGISScene(m_scene);
@@ -156,10 +159,12 @@ void PlayAKmlTour::playKmlTour()
 {
   m_kmlTourController->play();
 }
+
 void PlayAKmlTour::pauseKmlTour()
 {
   m_kmlTourController->pause();
 }
+
 void PlayAKmlTour::resetKmlTour()
 {
   m_kmlTourController->reset();
@@ -170,9 +175,13 @@ KmlTour* PlayAKmlTour::findFirstKMLTour(const QList<KmlNode*>& nodes)
   for (KmlNode* node : nodes)
   {
     if (node->kmlNodeType() == KmlNodeType::KmlTour)
+    {
       return dynamic_cast<KmlTour*>(node);
+    }
     else if ((node->kmlNodeType() == KmlNodeType::KmlDocument) || (node->kmlNodeType() == KmlNodeType::KmlFolder))
+    {
       return findFirstKMLTourFromListModel(*dynamic_cast<KmlContainer*>(node)->childNodesListModel());
+    }
   }
   return nullptr;
 }
@@ -182,9 +191,13 @@ KmlTour* PlayAKmlTour::findFirstKMLTourFromListModel(const KmlNodeListModel& nod
   for (KmlNode* node : nodes)
   {
     if (node->kmlNodeType() == KmlNodeType::KmlTour)
+    {
       return dynamic_cast<KmlTour*>(node);
+    }
     else if ((node->kmlNodeType() == KmlNodeType::KmlDocument) || (node->kmlNodeType() == KmlNodeType::KmlFolder))
+    {
       return findFirstKMLTourFromListModel(*dynamic_cast<KmlContainer*>(node)->childNodesListModel());
+    }
   }
   return nullptr;
 }

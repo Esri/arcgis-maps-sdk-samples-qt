@@ -25,7 +25,7 @@ namespace Esri::ArcGISRuntime
   class Map;
   class MapQuickView;
   class FeatureLayer;
-}
+} // namespace Esri::ArcGISRuntime
 
 class FeatureLayerChangeRenderer : public QQuickItem
 {

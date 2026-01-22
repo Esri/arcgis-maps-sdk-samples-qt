@@ -29,14 +29,14 @@
 
 namespace Esri::ArcGISRuntime
 {
-class AnnotationLayer;
-class Feature;
-class FeatureLayer;
-class Geodatabase;
-class IdentifyLayerResult;
-class Map;
-class MapQuickView;
-}
+  class AnnotationLayer;
+  class Feature;
+  class FeatureLayer;
+  class Geodatabase;
+  class IdentifyLayerResult;
+  class Map;
+  class MapQuickView;
+} // namespace Esri::ArcGISRuntime
 
 Q_MOC_INCLUDE("MapQuickView.h")
 Q_MOC_INCLUDE("IdentifyLayerResult.h")

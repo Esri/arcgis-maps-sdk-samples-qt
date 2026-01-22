@@ -65,21 +65,21 @@ using namespace Esri::ArcGISRuntime;
 // helper method to get cross platform data path
 namespace
 {
-QString defaultDataPath()
-{
-  QString dataPath;
+  QString defaultDataPath()
+  {
+    QString dataPath;
 
 #ifdef Q_OS_IOS
-  dataPath = QStandardPaths::writableLocation(QStandardPaths::DocumentsLocation);
+    dataPath = QStandardPaths::writableLocation(QStandardPaths::DocumentsLocation);
 #else
-  dataPath = QStandardPaths::writableLocation(QStandardPaths::HomeLocation);
+    dataPath = QStandardPaths::writableLocation(QStandardPaths::HomeLocation);
 #endif
 
-  return dataPath;
-}
+    return dataPath;
+  }
 } // namespace
 
-MobileMap_SearchAndRoute::MobileMap_SearchAndRoute(QQuickItem* parent):
+MobileMap_SearchAndRoute::MobileMap_SearchAndRoute(QQuickItem* parent) :
   QQuickItem(parent),
   m_selectedMmpkIndex(0),
   m_canRoute(false),
@@ -164,7 +164,9 @@ void MobileMap_SearchAndRoute::createMobileMapPackages(int index)
     createMobileMapPackages(++index);
   }
   else
+  {
     return;
+  }
 }
 
 void MobileMap_SearchAndRoute::connectSignals()
@@ -172,16 +174,20 @@ void MobileMap_SearchAndRoute::connectSignals()
   connect(m_mapView, &MapQuickView::mouseClicked, this, [this](QMouseEvent& mouseEvent)
   {
     if (!m_currentLocatorTask)
+    {
       return;
-\
+    }
+
     m_clickedPoint = Point(m_mapView->screenToLocation(mouseEvent.position().x(), mouseEvent.position().y()));
 
     // determine if user clicked on a graphic
-    m_mapView->identifyGraphicsOverlayAsync(m_stopsGraphicsOverlay, mouseEvent.position(), 5, false, 2).then(this,
-    [this](const IdentifyGraphicsOverlayResult* identifyResult)
+    m_mapView->identifyGraphicsOverlayAsync(m_stopsGraphicsOverlay, mouseEvent.position(), 5, false, 2)
+      .then(this, [this](const IdentifyGraphicsOverlayResult* identifyResult)
     {
       if (!identifyResult)
+      {
         return;
+      }
 
       // get graphics list
       QList<Graphic*> graphics = identifyResult->graphics();
@@ -190,7 +196,9 @@ void MobileMap_SearchAndRoute::connectSignals()
         // use the blue pin graphic instead of text graphic to as calloutData's geoElement
         Graphic* graphic = graphics[0];
         if (graphic->symbol()->symbolType() != SymbolType::PictureMarkerSymbol && graphics.count() > 1)
+        {
           graphic = graphics[1];
+        }
 
         m_mapView->calloutData()->setGeoElement(graphic);
         m_mapView->calloutData()->setDetail(graphic->attributes()->attributeValue("AddressLabel").toString());
@@ -199,19 +207,23 @@ void MobileMap_SearchAndRoute::connectSignals()
       // if clicked a point with no graphic on it, reverse geocode
       else
       {
-        m_currentLocatorTask->reverseGeocodeWithParametersAsync(m_clickedPoint, m_reverseGeocodeParameters).then(this,
-        [this](const QList<GeocodeResult>& geocodeResults)
+        m_currentLocatorTask->reverseGeocodeWithParametersAsync(m_clickedPoint, m_reverseGeocodeParameters)
+          .then(this, [this](const QList<GeocodeResult>& geocodeResults)
         {
           // make busy indicator invisible
           m_isGeocodeInProgress = false;
           emit isGeocodeInProgressChanged();
 
           if (geocodeResults.isEmpty())
+          {
             return;
+          }
 
           // create parent for the graphic
           if (!m_stopGraphicParent)
+          {
             m_stopGraphicParent = new QObject(this);
+          }
 
           // create a blue pin graphic to display location
           Graphic* bluePinGraphic = new Graphic(geocodeResults[0].displayLocation(), m_bluePinSymbol, m_stopGraphicParent);
@@ -225,7 +237,9 @@ void MobileMap_SearchAndRoute::connectSignals()
 
           // if routing is not enabled in map, return
           if (!m_currentRouteTask)
+          {
             return;
+          }
 
           //Set up the Stops
 
@@ -328,14 +342,18 @@ void MobileMap_SearchAndRoute::selectMap(int index)
     connect(m_currentRouteTask, &RouteTask::loadStatusChanged, this, [this](LoadStatus loadStatus)
     {
       if (loadStatus == LoadStatus::Loaded)
+      {
         m_currentRouteTask->createDefaultParametersAsync().then(this, [this](const RouteParameters& routeParameters)
         {
           m_currentRouteParameters = routeParameters;
         });
+      }
     });
   }
   else
+  {
     m_currentRouteTask = nullptr;
+  }
 }
 
 void MobileMap_SearchAndRoute::solveRoute()
@@ -351,11 +369,13 @@ void MobileMap_SearchAndRoute::solveRoute()
   // set stops and solve route
   m_currentRouteParameters.setStops(m_stops);
   // create a graphic using the RouteResult
-  m_currentRouteTask->solveRouteAsync(m_currentRouteParameters).then(this,
-  [this](const RouteResult& routeResult)
+  m_currentRouteTask->solveRouteAsync(m_currentRouteParameters)
+    .then(this, [this](const RouteResult& routeResult)
   {
     if (!m_routeGraphicParent)
+    {
       m_routeGraphicParent = new QObject(this);
+    }
 
     if (!routeResult.isEmpty())
     {

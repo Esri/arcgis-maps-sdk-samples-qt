@@ -51,11 +51,11 @@ namespace
   {
     QString dataPath;
 
-  #ifdef Q_OS_IOS
+#ifdef Q_OS_IOS
     dataPath = QStandardPaths::writableLocation(QStandardPaths::DocumentsLocation);
-  #else
+#else
     dataPath = QStandardPaths::writableLocation(QStandardPaths::HomeLocation);
-  #endif
+#endif
 
     return dataPath;
   }
@@ -117,7 +117,7 @@ void Picture_Marker_Symbol::componentComplete()
   m_mapView->graphicsOverlays()->append(m_graphicsOverlay);
 }
 
-void Picture_Marker_Symbol::addGraphic(Point &point, PictureMarkerSymbol* symbol)
+void Picture_Marker_Symbol::addGraphic(Point& point, PictureMarkerSymbol* symbol)
 {
   // create graphic
   Graphic* graphic = new Graphic(point, symbol, this);

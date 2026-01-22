@@ -45,12 +45,13 @@
 
 using namespace Esri::ArcGISRuntime;
 
-ApplyUniqueValuesWithAlternateSymbols::ApplyUniqueValuesWithAlternateSymbols(QObject* parent /* = nullptr */):
+ApplyUniqueValuesWithAlternateSymbols::ApplyUniqueValuesWithAlternateSymbols(QObject* parent /* = nullptr */) :
   QObject(parent),
   m_map(new Map(BasemapStyle::ArcGISTopographic, this))
 {
   // Create the feature table
-  ServiceFeatureTable* featureTable = new ServiceFeatureTable(QUrl("https://sampleserver6.arcgisonline.com/arcgis/rest/services/SF311/FeatureServer/0"), this);
+  ServiceFeatureTable* featureTable =
+    new ServiceFeatureTable(QUrl("https://sampleserver6.arcgisonline.com/arcgis/rest/services/SF311/FeatureServer/0"), this);
 
   // Create the feature layer using the feature table
   m_featureLayer = new FeatureLayer(featureTable, this);
@@ -82,7 +83,9 @@ MapQuickView* ApplyUniqueValuesWithAlternateSymbols::mapView() const
 void ApplyUniqueValuesWithAlternateSymbols::setMapView(MapQuickView* mapView)
 {
   if (!mapView || mapView == m_mapView)
+  {
     return;
+  }
 
   m_mapView = mapView;
   m_mapView->setMap(m_map);
@@ -106,7 +109,8 @@ void ApplyUniqueValuesWithAlternateSymbols::createUniqueValueRenderer()
   multilayerSymbol1->setReferenceProperties(new SymbolReferenceProperties(minScale, maxScale, this));
 
   // Create a unique value with alternate symbols
-  UniqueValue* uniqueValue = new UniqueValue("unique value", "unique values based on request type", QVariantList{"Damaged Property"}, multilayerSymbol1, alternateSymbols, this);
+  UniqueValue* uniqueValue = new UniqueValue("unique value", "unique values based on request type", QVariantList{"Damaged Property"},
+                                             multilayerSymbol1, alternateSymbols, this);
 
   // Create a unique value renderer
   m_uniqueValueRenderer = new UniqueValueRenderer(this);
@@ -142,7 +146,7 @@ QList<Symbol*> ApplyUniqueValuesWithAlternateSymbols::createAlternateSymbols()
 
 void ApplyUniqueValuesWithAlternateSymbols::resetViewpoint()
 {
-  if(m_mapView)
+  if (m_mapView)
   {
     Viewpoint vpCenter = Viewpoint(Point(-13631205.660131, 4546829.846004, SpatialReference::webMercator()), 25000);
     m_mapView->setViewpointAsync(vpCenter, 5);
@@ -156,9 +160,9 @@ double ApplyUniqueValuesWithAlternateSymbols::currentScale() const
 
 void ApplyUniqueValuesWithAlternateSymbols::queryCurrentScale()
 {
-  connect(m_mapView, &MapQuickView::viewpointChanged, this, [this](){
+  connect(m_mapView, &MapQuickView::viewpointChanged, this, [this]()
+  {
     m_currentScale = m_mapView->mapScale();
     emit currentScaleChanged();
   });
-
 }

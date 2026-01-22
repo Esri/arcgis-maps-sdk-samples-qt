@@ -32,59 +32,59 @@
 #include <Windows.h>
 #endif
 
-int main(int argc, char *argv[])
+int main(int argc, char* argv[])
 {
 #if defined(Q_OS_LINUX) && !defined(Q_OS_ANDROID)
-    // Linux requires 3.2 OpenGL Context
-    // in order to instance 3D symbols
-    QSurfaceFormat fmt = QSurfaceFormat::defaultFormat();
-    fmt.setVersion(3, 2);
-    QSurfaceFormat::setDefaultFormat(fmt);
+  // Linux requires 3.2 OpenGL Context
+  // in order to instance 3D symbols
+  QSurfaceFormat fmt = QSurfaceFormat::defaultFormat();
+  fmt.setVersion(3, 2);
+  QSurfaceFormat::setDefaultFormat(fmt);
 #endif
 
-    QGuiApplication app(argc, argv);
-    app.setApplicationName(QString("AddBuildingSceneLayer"));
+  QGuiApplication app(argc, argv);
+  app.setApplicationName(QString("AddBuildingSceneLayer"));
 
-    // Use of ArcGIS location services, such as basemap styles, geocoding, and routing services,
-    // requires an access token. For more information see
-    // https://links.esri.com/arcgis-runtime-security-auth.
+  // Use of ArcGIS location services, such as basemap styles, geocoding, and routing services,
+  // requires an access token. For more information see
+  // https://links.esri.com/arcgis-runtime-security-auth.
 
-    // The following methods grant an access token:
+  // The following methods grant an access token:
 
-    // 1. User authentication: Grants a temporary access token associated with a user's ArcGIS account.
-    // To generate a token, a user logs in to the app with an ArcGIS account that is part of an
-    // organization in ArcGIS Online or ArcGIS Enterprise.
+  // 1. User authentication: Grants a temporary access token associated with a user's ArcGIS account.
+  // To generate a token, a user logs in to the app with an ArcGIS account that is part of an
+  // organization in ArcGIS Online or ArcGIS Enterprise.
 
-    // 2. API key authentication: Get a long-lived access token that gives your application access to
-    // ArcGIS location services. Go to the tutorial at https://links.esri.com/create-an-api-key.
-    // Copy the API Key access token.
+  // 2. API key authentication: Get a long-lived access token that gives your application access to
+  // ArcGIS location services. Go to the tutorial at https://links.esri.com/create-an-api-key.
+  // Copy the API Key access token.
 
-    const QString accessToken = QString("");
+  const QString accessToken = QString("");
 
-    if (accessToken.isEmpty())
-    {
-        qWarning() << "Use of ArcGIS location services, such as the basemap styles service, requires" <<
-                      "you to authenticate with an ArcGIS account or set the API Key property.";
-    }
-    else
-    {
-        Esri::ArcGISRuntime::ArcGISRuntimeEnvironment::setApiKey(accessToken);
-    }
+  if (accessToken.isEmpty())
+  {
+    qWarning() << "Use of ArcGIS location services, such as the basemap styles service, requires"
+               << "you to authenticate with an ArcGIS account or set the API Key property.";
+  }
+  else
+  {
+    Esri::ArcGISRuntime::ArcGISRuntimeEnvironment::setApiKey(accessToken);
+  }
 
-    // Initialize the sample
-    AddBuildingSceneLayer::init();
+  // Initialize the sample
+  AddBuildingSceneLayer::init();
 
-    // Initialize application view
-    QQmlApplicationEngine engine;
-    // Add the import Path
-    engine.addImportPath(QDir(QCoreApplication::applicationDirPath()).filePath("qml"));
+  // Initialize application view
+  QQmlApplicationEngine engine;
+  // Add the import Path
+  engine.addImportPath(QDir(QCoreApplication::applicationDirPath()).filePath("qml"));
 
 #ifdef ARCGIS_RUNTIME_IMPORT_PATH_2
-    engine.addImportPath(ARCGIS_RUNTIME_IMPORT_PATH_2);
+  engine.addImportPath(ARCGIS_RUNTIME_IMPORT_PATH_2);
 #endif
 
-    // Set the source
-    engine.load(QUrl("qrc:/Samples/Layers/AddBuildingSceneLayer/main.qml"));
+  // Set the source
+  engine.load(QUrl("qrc:/Samples/Layers/AddBuildingSceneLayer/main.qml"));
 
-    return app.exec();
+  return app.exec();
 }

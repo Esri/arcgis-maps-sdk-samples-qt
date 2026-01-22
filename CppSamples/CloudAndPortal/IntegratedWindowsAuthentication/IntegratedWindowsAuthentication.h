@@ -23,16 +23,16 @@
 
 namespace Esri::ArcGISRuntime
 {
-class Map;
-class MapQuickView;
-class Portal;
-class PortalItem;
-class PortalQueryResultSetForItems;
-class PortalItemListModel;
-class PortalQueryParametersForItems;
-class PortalQueryResultSetForItems;
-class Error;
-}
+  class Map;
+  class MapQuickView;
+  class Portal;
+  class PortalItem;
+  class PortalQueryResultSetForItems;
+  class PortalItemListModel;
+  class PortalQueryParametersForItems;
+  class PortalQueryResultSetForItems;
+  class Error;
+} // namespace Esri::ArcGISRuntime
 
 Q_MOC_INCLUDE("MapQuickView.h")
 

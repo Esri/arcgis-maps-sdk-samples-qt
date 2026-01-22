@@ -26,7 +26,7 @@ namespace Esri::ArcGISRuntime
   class Map;
   class MapQuickView;
   class Viewpoint;
-}
+} // namespace Esri::ArcGISRuntime
 
 class QString;
 

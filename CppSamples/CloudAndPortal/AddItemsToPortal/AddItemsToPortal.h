@@ -22,10 +22,10 @@
 
 namespace Esri::ArcGISRuntime
 {
-    class Portal;
-    class PortalItem;
-    class PortalUser;
-}
+  class Portal;
+  class PortalItem;
+  class PortalUser;
+} // namespace Esri::ArcGISRuntime
 
 class AddItemsToPortal : public QQuickItem
 {

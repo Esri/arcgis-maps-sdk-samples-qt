@@ -41,6 +41,7 @@ void RelatedFeatureListModel::addRelatedFeature(RelatedFeature relatedFeature)
   m_relatedFeatures << relatedFeature;
   endInsertRows();
 }
+
 int RelatedFeatureListModel::rowCount(const QModelIndex& parent) const
 {
   Q_UNUSED(parent);
@@ -50,16 +51,24 @@ int RelatedFeatureListModel::rowCount(const QModelIndex& parent) const
 QVariant RelatedFeatureListModel::data(const QModelIndex& index, int role) const
 {
   if (index.row() < 0 || index.row() >= m_relatedFeatures.count())
+  {
     return QVariant();
+  }
 
   RelatedFeature relatedFeature = m_relatedFeatures[index.row()];
 
   if (role == DisplayFieldNameRole)
+  {
     return relatedFeature.displayFieldName();
+  }
   else if (role == DisplayFieldValueRole)
+  {
     return relatedFeature.displayFieldValue();
+  }
   else if (role == ServiceLayerName)
+  {
     return relatedFeature.serviceLayerName();
+  }
   return QVariant();
 }
 

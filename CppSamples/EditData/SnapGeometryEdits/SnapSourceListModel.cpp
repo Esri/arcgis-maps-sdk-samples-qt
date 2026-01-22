@@ -1,3 +1,4 @@
+// [WriteFile Name=SnapGeometryEdits, Category=EditData]
 // [Legal]
 // Copyright 2024 Esri.
 //
@@ -49,13 +50,15 @@ void SnapSourceListModel::setupRoles()
   m_roles[IsEnabledRole] = "isEnabled";
 }
 
-void SnapSourceListModel::enableAllLayersInSection(const QString &section)
+void SnapSourceListModel::enableAllLayersInSection(const QString& section)
 {
   beginResetModel();
   for (auto* source : m_snapSourceSettings)
   {
     if (determineSection(source) == section)
+    {
       source->setEnabled(true);
+    }
   }
   endResetModel();
 }
@@ -69,7 +72,9 @@ int SnapSourceListModel::rowCount(const QModelIndex& parent) const
 QVariant SnapSourceListModel::data(const QModelIndex& index, int role) const
 {
   if (index.row() < 0 || index.row() >= m_snapSourceSettings.count())
+  {
     return QVariant();
+  }
 
   SnapSourceSettings* snapSourceSetting = m_snapSourceSettings[index.row()];
 
@@ -79,17 +84,17 @@ QVariant SnapSourceListModel::data(const QModelIndex& index, int role) const
 
   switch (role)
   {
-  case SectionRole:
-    retVal = section.isEmpty() ? "Unknown" : section;
-    break;
-  case NameRole:
-    retVal = name.isEmpty() ? "Unknown Name" : name;
-    break;
-  case IsEnabledRole:
-    retVal = snapSourceSetting->isEnabled();
-    break;
-  default:
-    break;
+    case SectionRole:
+      retVal = section.isEmpty() ? "Unknown" : section;
+      break;
+    case NameRole:
+      retVal = name.isEmpty() ? "Unknown Name" : name;
+      break;
+    case IsEnabledRole:
+      retVal = snapSourceSetting->isEnabled();
+      break;
+    default:
+      break;
   }
 
   return retVal;
@@ -106,15 +111,15 @@ bool SnapSourceListModel::setData(const QModelIndex& index, const QVariant& valu
       {
         case IsEnabledRole:
         {
-        if (snapSourceSettings->isEnabled() != value.toBool())
-        {
-          snapSourceSettings->setEnabled(value.toBool());
-          emit dataChanged(index, index, QVector<int>() << role);
+          if (snapSourceSettings->isEnabled() != value.toBool())
+          {
+            snapSourceSettings->setEnabled(value.toBool());
+            emit dataChanged(index, index, QVector<int>() << role);
+          }
+          return true;
         }
-        return true;
-      }
-      default:
-        break;
+        default:
+          break;
       }
     }
   }
@@ -127,7 +132,7 @@ QHash<int, QByteArray> SnapSourceListModel::roleNames() const
   return m_roles;
 }
 
-QString SnapSourceListModel::determineSection(Esri::ArcGISRuntime::SnapSourceSettings *snapSourceSettings) const
+QString SnapSourceListModel::determineSection(Esri::ArcGISRuntime::SnapSourceSettings* snapSourceSettings) const
 {
   // determine if it is a feature layer or graphics overlay
   FeatureLayer* featureLayer = dynamic_cast<FeatureLayer*>(snapSourceSettings->source());
@@ -140,20 +145,20 @@ QString SnapSourceListModel::determineSection(Esri::ArcGISRuntime::SnapSourceSet
   {
     GeometryType type = featureLayer->featureTable()->geometryType();
 
-    switch(type)
+    switch (type)
     {
-    case GeometryType::Point:
-      section = "Point";
-      break;
-    case GeometryType::Polyline:
-      section = "Polyline";
-      break;
-    case GeometryType::Polygon:
-      section = "Polygon";
-      break;
-    default:
-      section = "Unknown";
-      break;
+      case GeometryType::Point:
+        section = "Point";
+        break;
+      case GeometryType::Polyline:
+        section = "Polyline";
+        break;
+      case GeometryType::Polygon:
+        section = "Polygon";
+        break;
+      default:
+        section = "Unknown";
+        break;
     }
   }
   else if (graphicsOverlay)
@@ -164,7 +169,7 @@ QString SnapSourceListModel::determineSection(Esri::ArcGISRuntime::SnapSourceSet
   return section;
 }
 
-QString SnapSourceListModel::determineName(Esri::ArcGISRuntime::SnapSourceSettings *snapSourceSettings) const
+QString SnapSourceListModel::determineName(Esri::ArcGISRuntime::SnapSourceSettings* snapSourceSettings) const
 {
   // determine if it is a feature layer or graphics overlay
   FeatureLayer* featureLayer = dynamic_cast<FeatureLayer*>(snapSourceSettings->source());
@@ -172,11 +177,17 @@ QString SnapSourceListModel::determineName(Esri::ArcGISRuntime::SnapSourceSettin
   GraphicsOverlay* graphicsOverlay = dynamic_cast<GraphicsOverlay*>(snapSourceSettings->source());
 
   if (featureLayer)
+  {
     return featureLayer->name();
+  }
   else if (graphicsOverlay)
+  {
     return graphicsOverlay->overlayId().isEmpty() ? "Default Graphics Overlay" : graphicsOverlay->overlayId();
+  }
   else
+  {
     return "Unknown";
+  }
 }
 
 void SnapSourceListModel::setSnapSourceSettings(QList<Esri::ArcGISRuntime::SnapSourceSettings*> snapSourceSettings)

@@ -46,59 +46,61 @@ using namespace Esri::ArcGISRuntime;
 // helper method to get cross platform data path
 namespace
 {
-QString defaultDataPath()
-{
-  QString dataPath;
+  QString defaultDataPath()
+  {
+    QString dataPath;
 
 #ifdef Q_OS_IOS
-  dataPath = QStandardPaths::writableLocation(QStandardPaths::DocumentsLocation);
+    dataPath = QStandardPaths::writableLocation(QStandardPaths::DocumentsLocation);
 #else
-  dataPath = QStandardPaths::writableLocation(QStandardPaths::HomeLocation);
+    dataPath = QStandardPaths::writableLocation(QStandardPaths::HomeLocation);
 #endif
 
-  return dataPath + "/ArcGIS/Runtime/Data/mmpk";
-}
-
-// sample MMPK location
-const QString sampleMmpk { "canyonlands" };
-
-// helper to copy directory from source to destination
-bool copyDir(const QString &srcPath, const QString &dstPath)
-{
-  const QDir parentDstDir(QFileInfo(dstPath).path());
-  if (!parentDstDir.mkdir(QFileInfo(dstPath).fileName()))
-    return false;
-
-  const QDir srcDir(srcPath);
-  const auto infos = srcDir.entryInfoList(QDir::Dirs | QDir::Files | QDir::NoDotAndDotDot);
-  for (const QFileInfo &info : infos)
-  {
-    const QString srcItemPath = srcPath + "/" + info.fileName();
-    const QString dstItemPath = dstPath + "/" + info.fileName();
-    if (info.isDir())
-    {
-      if (!copyDir(srcItemPath, dstItemPath))
-      {
-        return false;
-      }
-    }
-    else if (info.isFile())
-    {
-      if (!QFile::copy(srcItemPath, dstItemPath))
-      {
-        return false;
-      }
-    }
-    else
-    {
-      qDebug() << "Unhandled item" << info.filePath() << "in copyDir";
-    }
+    return dataPath + "/ArcGIS/Runtime/Data/mmpk";
   }
-  return true;
-}
-}
 
-ApplyScheduledMapUpdates::ApplyScheduledMapUpdates(QObject* parent /* = nullptr */):
+  // sample MMPK location
+  const QString sampleMmpk{"canyonlands"};
+
+  // helper to copy directory from source to destination
+  bool copyDir(const QString& srcPath, const QString& dstPath)
+  {
+    const QDir parentDstDir(QFileInfo(dstPath).path());
+    if (!parentDstDir.mkdir(QFileInfo(dstPath).fileName()))
+    {
+      return false;
+    }
+
+    const QDir srcDir(srcPath);
+    const auto infos = srcDir.entryInfoList(QDir::Dirs | QDir::Files | QDir::NoDotAndDotDot);
+    for (const QFileInfo& info : infos)
+    {
+      const QString srcItemPath = srcPath + "/" + info.fileName();
+      const QString dstItemPath = dstPath + "/" + info.fileName();
+      if (info.isDir())
+      {
+        if (!copyDir(srcItemPath, dstItemPath))
+        {
+          return false;
+        }
+      }
+      else if (info.isFile())
+      {
+        if (!QFile::copy(srcItemPath, dstItemPath))
+        {
+          return false;
+        }
+      }
+      else
+      {
+        qDebug() << "Unhandled item" << info.filePath() << "in copyDir";
+      }
+    }
+    return true;
+  }
+} // namespace
+
+ApplyScheduledMapUpdates::ApplyScheduledMapUpdates(QObject* parent /* = nullptr */) :
   QObject(parent)
 {
   // For the purposes of demonstrating the sample,
@@ -133,10 +135,11 @@ void ApplyScheduledMapUpdates::init()
 void ApplyScheduledMapUpdates::updateMap()
 {
   if (!m_offlineSyncTask)
+  {
     return;
+  }
 
-  m_offlineSyncTask->createDefaultOfflineMapSyncParametersAsync().then(this,
-  [this](OfflineMapSyncParameters parameters)
+  m_offlineSyncTask->createDefaultOfflineMapSyncParametersAsync().then(this, [this](OfflineMapSyncParameters parameters)
   {
     // set the parameters to download all updates for the mobile map packages
     parameters.setPreplannedScheduledUpdatesOption(PreplannedScheduledUpdatesOption::DownloadAllUpdates);
@@ -167,8 +170,7 @@ void ApplyScheduledMapUpdates::updateMap()
       }
 
       // re-check if updates are available
-      m_offlineSyncTask->checkForUpdatesAsync().then(this,
-      [this](const OfflineMapUpdatesInfo* info)
+      m_offlineSyncTask->checkForUpdatesAsync().then(this, [this](const OfflineMapUpdatesInfo* info)
       {
         if (info->downloadAvailability() == OfflineUpdateAvailability::Available)
         {
@@ -196,7 +198,9 @@ MapQuickView* ApplyScheduledMapUpdates::mapView() const
 void ApplyScheduledMapUpdates::setMapToMapView()
 {
   if (!m_map || !m_mapView)
+  {
     return;
+  }
 
   m_mapView->setMap(m_map);
 }
@@ -205,11 +209,15 @@ void ApplyScheduledMapUpdates::onMmpkDoneLoading(const Error& e)
 {
   // check if successful
   if (!e.isEmpty())
+  {
     return;
+  }
 
   // make sure there are valid maps
   if (m_mobileMapPackage->maps().isEmpty())
+  {
     return;
+  }
 
   // set the map on the map view
   m_map = m_mobileMapPackage->maps().at(0);
@@ -218,8 +226,7 @@ void ApplyScheduledMapUpdates::onMmpkDoneLoading(const Error& e)
   m_offlineSyncTask = new OfflineMapSyncTask(m_map, this);
 
   // check for updates
-  m_offlineSyncTask->checkForUpdatesAsync().then(this,
-  [this](OfflineMapUpdatesInfo* info)
+  m_offlineSyncTask->checkForUpdatesAsync().then(this, [this](OfflineMapUpdatesInfo* info)
   {
     if (info->downloadAvailability() == OfflineUpdateAvailability::Available)
     {
@@ -238,7 +245,9 @@ void ApplyScheduledMapUpdates::onMmpkDoneLoading(const Error& e)
 void ApplyScheduledMapUpdates::setMapView(MapQuickView* mapView)
 {
   if (!mapView || mapView == m_mapView)
+  {
     return;
+  }
 
   m_mapView = mapView;
 

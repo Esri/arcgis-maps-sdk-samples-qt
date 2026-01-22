@@ -35,7 +35,7 @@ namespace Esri::ArcGISRuntime
   class SimpleFillSymbol;
   class Symbol;
   enum class GeometryType;
-}
+} // namespace Esri::ArcGISRuntime
 
 Q_MOC_INCLUDE("MapQuickView.h");
 
@@ -57,7 +57,8 @@ public:
   explicit EditGeometriesWithProgrammaticReticleTool(QObject* parent = nullptr);
   ~EditGeometriesWithProgrammaticReticleTool() override;
 
-  enum class GeometryEditorMode {
+  enum class GeometryEditorMode
+  {
     PointMode,
     MultipointMode,
     PolygonMode,
@@ -66,7 +67,8 @@ public:
 
   Q_ENUM(GeometryEditorMode)
 
-  enum class ReticleState {
+  enum class ReticleState
+  {
     Default,
     PickedUp,
     HoveringVertex,

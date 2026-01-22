@@ -23,48 +23,48 @@
 
 namespace Esri::ArcGISRuntime
 {
-class Scene;
-class SceneQuickView;
-class Graphic;
-}
+  class Scene;
+  class SceneQuickView;
+  class Graphic;
+} // namespace Esri::ArcGISRuntime
 
 Q_MOC_INCLUDE("SceneQuickView.h")
 
 class LineOfSightGeoElement : public QObject
 {
-    Q_OBJECT
+  Q_OBJECT
 
-    Q_PROPERTY(double heightZ READ heightZ WRITE setHeightZ NOTIFY heightZChanged)
-    Q_PROPERTY(Esri::ArcGISRuntime::SceneQuickView* sceneView READ sceneView WRITE setSceneView NOTIFY sceneViewChanged)
+  Q_PROPERTY(double heightZ READ heightZ WRITE setHeightZ NOTIFY heightZChanged)
+  Q_PROPERTY(Esri::ArcGISRuntime::SceneQuickView* sceneView READ sceneView WRITE setSceneView NOTIFY sceneViewChanged)
 
 public:
-    explicit LineOfSightGeoElement(QObject* parent = nullptr);
-    ~LineOfSightGeoElement() override;
+  explicit LineOfSightGeoElement(QObject* parent = nullptr);
+  ~LineOfSightGeoElement() override;
 
-    static void init();
+  static void init();
 
 signals:
-    void heightZChanged();
-    void sceneViewChanged();
+  void heightZChanged();
+  void sceneViewChanged();
 
 private slots:
-    void animate();
+  void animate();
 
 private:
-    double heightZ() const;
-    void setHeightZ(double z);
+  double heightZ() const;
+  void setHeightZ(double z);
 
-    Esri::ArcGISRuntime::SceneQuickView* sceneView() const;
-    void setSceneView(Esri::ArcGISRuntime::SceneQuickView* sceneView);
-    void initialize();
+  Esri::ArcGISRuntime::SceneQuickView* sceneView() const;
+  void setSceneView(Esri::ArcGISRuntime::SceneQuickView* sceneView);
+  void initialize();
 
-    Esri::ArcGISRuntime::Scene* m_scene = nullptr;
-    Esri::ArcGISRuntime::SceneQuickView* m_sceneView = nullptr;
+  Esri::ArcGISRuntime::Scene* m_scene = nullptr;
+  Esri::ArcGISRuntime::SceneQuickView* m_sceneView = nullptr;
 
-    QTimer m_animation;
-    std::size_t m_waypointIndex = 0;
-    Esri::ArcGISRuntime::Graphic* m_taxi = nullptr;
-    Esri::ArcGISRuntime::Graphic* m_observer = nullptr;
+  QTimer m_animation;
+  std::size_t m_waypointIndex = 0;
+  Esri::ArcGISRuntime::Graphic* m_taxi = nullptr;
+  Esri::ArcGISRuntime::Graphic* m_observer = nullptr;
 };
 
 #endif // LineOfSightGeoElement_H

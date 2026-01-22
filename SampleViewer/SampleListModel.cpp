@@ -92,43 +92,45 @@ void SampleListModel::sortSamples()
   });
 }
 
-int SampleListModel::rowCount(const QModelIndex &parent) const
+int SampleListModel::rowCount(const QModelIndex& parent) const
 {
   Q_UNUSED(parent);
   return m_samples.count();
 }
 
-QVariant SampleListModel::data(const QModelIndex & index, int role) const
+QVariant SampleListModel::data(const QModelIndex& index, int role) const
 {
   if (index.row() < 0 || index.row() >= m_samples.count())
+  {
     return QVariant();
+  }
 
   Sample* sample = m_samples[index.row()];
   QVariant retVal;
 
   switch (role)
   {
-  case NameRole:
-  case Qt::DisplayRole:
-    retVal = sample->name();
-    break;
-  case PathRole:
-    retVal = sample->path();
-    break;
-  case SourceRole:
-    retVal = sample->source();
-    break;
-  case DescriptionRole:
-    retVal = sample->description();
-    break;
-  case ThumbnailUrlRole:
-    retVal = sample->thumbnailUrl();
-    break;
-  case SampleRole:
-    retVal = QVariant::fromValue(sample);
-    break;
-  default:
-    break;
+    case NameRole:
+    case Qt::DisplayRole:
+      retVal = sample->name();
+      break;
+    case PathRole:
+      retVal = sample->path();
+      break;
+    case SourceRole:
+      retVal = sample->source();
+      break;
+    case DescriptionRole:
+      retVal = sample->description();
+      break;
+    case ThumbnailUrlRole:
+      retVal = sample->thumbnailUrl();
+      break;
+    case SampleRole:
+      retVal = QVariant::fromValue(sample);
+      break;
+    default:
+      break;
   }
 
   return retVal;

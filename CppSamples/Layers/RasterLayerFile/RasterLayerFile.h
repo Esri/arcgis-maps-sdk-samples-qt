@@ -24,7 +24,7 @@ namespace Esri::ArcGISRuntime
 {
   class Map;
   class MapQuickView;
-}
+} // namespace Esri::ArcGISRuntime
 
 class RasterLayerFile : public QQuickItem
 {

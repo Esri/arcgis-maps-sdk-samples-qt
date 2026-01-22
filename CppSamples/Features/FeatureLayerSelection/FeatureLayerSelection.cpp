@@ -43,13 +43,14 @@
 
 using namespace Esri::ArcGISRuntime;
 
-FeatureLayerSelection::FeatureLayerSelection(QObject* parent /* = nullptr */):
+FeatureLayerSelection::FeatureLayerSelection(QObject* parent /* = nullptr */) :
   QObject(parent),
   m_map(new Map(BasemapStyle::ArcGISLightGray, this))
 {
   m_map->setInitialViewpoint(Viewpoint(Envelope(-6603299.491810, 1679677.742046, 9002253.947487, 8691318.054732, SpatialReference::webMercator())));
 
-  m_featureTable = new ServiceFeatureTable(QUrl("https://services1.arcgis.com/4yjifSiIG17X0gW4/arcgis/rest/services/GDP_per_capita_1960_2016/FeatureServer/0"), this);
+  m_featureTable = new ServiceFeatureTable(
+    QUrl("https://services1.arcgis.com/4yjifSiIG17X0gW4/arcgis/rest/services/GDP_per_capita_1960_2016/FeatureServer/0"), this);
   m_featureLayer = new FeatureLayer(m_featureTable, this);
   m_map->operationalLayers()->append(m_featureLayer);
 }
@@ -77,7 +78,9 @@ QString FeatureLayerSelection::selectedFeatureText() const
 void FeatureLayerSelection::setMapView(MapQuickView* mapView)
 {
   if (!mapView || mapView == m_mapView)
+  {
     return;
+  }
 
   m_mapView = mapView;
   m_mapView->setMap(m_map);
@@ -96,8 +99,8 @@ void FeatureLayerSelection::connectSignals()
     constexpr double tolerance = 22.0;
     constexpr bool returnPopupsOnly = false;
     constexpr int maximumResults = 1000;
-    m_mapView->identifyLayerAsync(m_featureLayer, mouseEvent.position(), tolerance, returnPopupsOnly, maximumResults).then(this,
-    [this](IdentifyLayerResult* result)
+    m_mapView->identifyLayerAsync(m_featureLayer, mouseEvent.position(), tolerance, returnPopupsOnly, maximumResults)
+      .then(this, [this](IdentifyLayerResult* result)
     {
       onIdentifyLayerCompleted_(result);
     });
@@ -109,7 +112,9 @@ void FeatureLayerSelection::onIdentifyLayerCompleted_(IdentifyLayerResult* resul
   auto identifyResult = std::unique_ptr<IdentifyLayerResult>(result);
 
   if (!identifyResult)
+  {
     return;
+  }
 
   // clear any existing selection
   m_featureLayer->clearSelection();
@@ -135,4 +140,5 @@ void FeatureLayerSelection::onIdentifyLayerCompleted_(IdentifyLayerResult* resul
   m_selectedFeatureText = count > 1 ? QString::number(count) + " features selected." : QString::number(count) + " feature selected.";
   emit selectedFeatureTextChanged();
 }
+
 //! [identify feature layer qml api snippet]

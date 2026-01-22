@@ -28,7 +28,7 @@ namespace Esri::ArcGISRuntime
   class ServiceFeatureTable;
   class UniqueValueRenderer;
   class SimpleFillSymbol;
-}
+} // namespace Esri::ArcGISRuntime
 
 class Unique_Value_Renderer : public QQuickItem
 {

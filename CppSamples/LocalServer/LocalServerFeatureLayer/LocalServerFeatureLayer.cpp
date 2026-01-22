@@ -49,7 +49,9 @@ LocalServerFeatureLayer::LocalServerFeatureLayer(QQuickItem* parent) :
 {
   // Create a temporary directory for the local server if one has not already been created
   if (!LocalServer::appDataPath().isEmpty() && !LocalServer::tempDataPath().isEmpty())
+  {
     return;
+  }
 
   // create temp/data path
   const QString tempPath = LocalServerFeatureLayer::shortestTempPath() + "/EsriQtTemp";
@@ -115,7 +117,9 @@ void LocalServerFeatureLayer::componentComplete()
     }
   }
   else
+  {
     qDebug() << "Local server install invalid";
+  }
 }
 
 void LocalServerFeatureLayer::connectSignals()
@@ -163,7 +167,9 @@ void LocalServerFeatureLayer::connectSignals()
 void LocalServerFeatureLayer::startFeatureService() const
 {
   if (m_localFeatureService->status() != LocalServerStatus::Started || m_localFeatureService->status() != LocalServerStatus::Starting)
+  {
     m_localFeatureService->start();
+  }
 }
 
 QString LocalServerFeatureLayer::shortestTempPath()
@@ -174,7 +180,11 @@ QString LocalServerFeatureLayer::shortestTempPath()
 
   // return whichever is shorter, temp or home path
   if (homePath.length() > tmpPath.length())
+  {
     return tmpPath;
+  }
   else
+  {
     return homePath;
+  }
 }

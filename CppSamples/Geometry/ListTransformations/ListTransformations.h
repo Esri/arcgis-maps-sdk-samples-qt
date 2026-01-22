@@ -27,11 +27,11 @@
 
 namespace Esri::ArcGISRuntime
 {
-class Map;
-class MapQuickView;
-class Graphic;
-class DatumTransformation;
-}
+  class Map;
+  class MapQuickView;
+  class Graphic;
+  class DatumTransformation;
+} // namespace Esri::ArcGISRuntime
 
 class ListTransformations : public QQuickItem
 {

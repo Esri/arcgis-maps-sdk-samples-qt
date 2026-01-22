@@ -47,12 +47,13 @@
 
 using namespace Esri::ArcGISRuntime;
 
-namespace {
-const QString itemId = "97e69120b6934fcaada347a215fdb91f";
-const QStringList layerNames = {"Details", "Units", "Levels"};
-}
+namespace
+{
+  const QString itemId = "97e69120b6934fcaada347a215fdb91f";
+  const QStringList layerNames = {"Details", "Units", "Levels"};
+} // namespace
 
-ShowDeviceLocationUsingIndoorPositioning::ShowDeviceLocationUsingIndoorPositioning(QObject* parent /* = nullptr */):
+ShowDeviceLocationUsingIndoorPositioning::ShowDeviceLocationUsingIndoorPositioning(QObject* parent /* = nullptr */) :
   QObject(parent)
 {
   m_map = new Map(new PortalItem(itemId, this), this);
@@ -90,13 +91,16 @@ MapQuickView* ShowDeviceLocationUsingIndoorPositioning::mapView() const
 void ShowDeviceLocationUsingIndoorPositioning::setMapView(MapQuickView* mapView)
 {
   if (!mapView || mapView == m_mapView)
+  {
     return;
+  }
 
   m_mapView = mapView;
   m_mapView->setMap(m_map);
 
   // workaround for https://bugreports.qt.io/browse/QTBUG-134211
-  QMetaObject::invokeMethod(this, [this](){
+  QMetaObject::invokeMethod(this, [this]()
+  {
     requestBluetoothThenLocationPermissions();
   }, Qt::QueuedConnection);
 
@@ -214,7 +218,7 @@ void ShowDeviceLocationUsingIndoorPositioning::changeFloorDisplay()
   }
 }
 
-  QVariantMap ShowDeviceLocationUsingIndoorPositioning::locationProperties() const
-  {
-    return m_locationProperties;
-  }
+QVariantMap ShowDeviceLocationUsingIndoorPositioning::locationProperties() const
+{
+  return m_locationProperties;
+}

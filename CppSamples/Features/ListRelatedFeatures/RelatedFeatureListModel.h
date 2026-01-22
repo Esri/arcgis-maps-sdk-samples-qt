@@ -45,7 +45,11 @@ public:
   int rowCount(const QModelIndex& parent = QModelIndex()) const override;
   QVariant data(const QModelIndex& index, int role = Qt::DisplayRole) const override;
   void clear();
-  int size() const { return m_relatedFeatures.size(); }
+
+  int size() const
+  {
+    return m_relatedFeatures.size();
+  }
 
 protected:
   QHash<int, QByteArray> roleNames() const override;

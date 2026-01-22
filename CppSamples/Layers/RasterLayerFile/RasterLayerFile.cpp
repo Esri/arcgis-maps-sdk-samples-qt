@@ -49,17 +49,17 @@ namespace
   {
     QString dataPath;
 
-  #ifdef Q_OS_IOS
+#ifdef Q_OS_IOS
     dataPath = QStandardPaths::writableLocation(QStandardPaths::DocumentsLocation);
-  #else
+#else
     dataPath = QStandardPaths::writableLocation(QStandardPaths::HomeLocation);
-  #endif
+#endif
 
     return dataPath;
   }
 } // namespace
 
-RasterLayerFile::RasterLayerFile(QQuickItem* parent /* = nullptr */):
+RasterLayerFile::RasterLayerFile(QQuickItem* parent /* = nullptr */) :
   QQuickItem(parent)
 {
 }
@@ -94,7 +94,9 @@ void RasterLayerFile::createAndAddRasterLayer(QString dataPath)
 {
   // correct data path if contains file:/ prefix
   if (dataPath.contains("file:/"))
+  {
     dataPath = QString(QUrl(dataPath).toLocalFile());
+  }
 
   //! [RasterLayerFile cpp new raster layer]
   Raster* raster = new Raster(dataPath, this);
@@ -104,7 +106,9 @@ void RasterLayerFile::createAndAddRasterLayer(QString dataPath)
   connect(rasterLayer, &RasterLayer::doneLoading, this, [this, rasterLayer](const Error& loadError)
   {
     if (!loadError.isEmpty())
+    {
       return;
+    }
 
     m_mapView->setViewpointCenterAsync(rasterLayer->fullExtent().center(), 80000);
   });

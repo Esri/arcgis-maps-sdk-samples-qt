@@ -25,16 +25,16 @@ using namespace Esri::ArcGISRuntime;
 DisplayMap::DisplayMap(QWidget* parent) :
   QWidget(parent)
 {
-    // Create a map using the Imagery with labels basemap
-    m_map = new Map(BasemapStyle::ArcGISImagery, this);
+  // Create a map using the Imagery with labels basemap
+  m_map = new Map(BasemapStyle::ArcGISImagery, this);
 
-    // Create a map view, and pass in the map
-    m_mapView = new MapGraphicsView(m_map, this);
+  // Create a map view, and pass in the map
+  m_mapView = new MapGraphicsView(m_map, this);
 
-    // Set up the UI
-    QVBoxLayout *vBoxLayout = new QVBoxLayout();
-    vBoxLayout->addWidget(m_mapView);
-    setLayout(vBoxLayout);
+  // Set up the UI
+  QVBoxLayout* vBoxLayout = new QVBoxLayout();
+  vBoxLayout->addWidget(m_mapView);
+  setLayout(vBoxLayout);
 }
 
 DisplayMap::~DisplayMap() = default;

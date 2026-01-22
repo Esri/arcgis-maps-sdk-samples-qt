@@ -41,13 +41,13 @@
 
 using namespace Esri::ArcGISRuntime;
 
-ViewPointCloudDataOffline::ViewPointCloudDataOffline(QObject* parent /* = nullptr */):
+ViewPointCloudDataOffline::ViewPointCloudDataOffline(QObject* parent /* = nullptr */) :
   QObject(parent),
   m_scene(new Scene(BasemapStyle::ArcGISImageryStandard, this))
 {
   // create a new elevation source from Terrain3D service
-  ArcGISTiledElevationSource* elevationSource = new ArcGISTiledElevationSource(
-        QUrl("https://elevation3d.arcgis.com/arcgis/rest/services/WorldElevation3D/Terrain3D/ImageServer"), this);
+  ArcGISTiledElevationSource* elevationSource =
+    new ArcGISTiledElevationSource(QUrl("https://elevation3d.arcgis.com/arcgis/rest/services/WorldElevation3D/Terrain3D/ImageServer"), this);
 
   // add the elevation source to the scene to display elevation
   m_scene->baseSurface()->elevationSources()->append(elevationSource);
@@ -61,6 +61,7 @@ void ViewPointCloudDataOffline::init()
   qmlRegisterType<SceneQuickView>("Esri.Samples", 1, 0, "SceneView");
   qmlRegisterType<ViewPointCloudDataOffline>("Esri.Samples", 1, 0, "ViewPointCloudDataOfflineSample");
 }
+
 SceneQuickView* ViewPointCloudDataOffline::sceneView() const
 {
   return m_sceneView;
@@ -73,15 +74,15 @@ namespace
   {
     QString dataPath;
 
-  #ifdef Q_OS_IOS
+#ifdef Q_OS_IOS
     dataPath = QStandardPaths::writableLocation(QStandardPaths::DocumentsLocation);
-  #else
+#else
     dataPath = QStandardPaths::writableLocation(QStandardPaths::HomeLocation);
-  #endif
+#endif
 
     return dataPath;
   }
-}
+} // namespace
 
 // Set the view (created in QML)
 void ViewPointCloudDataOffline::setSceneView(SceneQuickView* sceneView)
@@ -102,7 +103,9 @@ void ViewPointCloudDataOffline::setSceneView(SceneQuickView* sceneView)
   connect(pointCloudLyr, &PointCloudLayer::doneLoading, this, [this, pointCloudLyr](const Error& e)
   {
     if (!e.isEmpty())
+    {
       return;
+    }
 
     m_sceneView->setViewpointAsync(Viewpoint(pointCloudLyr->fullExtent()));
   });

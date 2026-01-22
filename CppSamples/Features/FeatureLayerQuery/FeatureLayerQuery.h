@@ -26,7 +26,7 @@ namespace Esri::ArcGISRuntime
   class MapQuickView;
   class FeatureLayer;
   class ServiceFeatureTable;
-}
+} // namespace Esri::ArcGISRuntime
 
 class FeatureLayerQuery : public QQuickItem
 {

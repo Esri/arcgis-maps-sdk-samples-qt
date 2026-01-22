@@ -27,7 +27,7 @@ namespace Esri::ArcGISRuntime
   class MapQuickView;
   class Raster;
   class RasterLayer;
-}
+} // namespace Esri::ArcGISRuntime
 
 class BlendRasterLayer : public QQuickItem
 {
@@ -44,7 +44,6 @@ public:
   Q_INVOKABLE void applyRenderSettings(double altitude, double azimuth, int slopeType, int colorRampType);
 
 private:
-
   Esri::ArcGISRuntime::RasterLayer* rasterLayer(bool useColorRamp);
 
   Esri::ArcGISRuntime::Map* m_map = nullptr;

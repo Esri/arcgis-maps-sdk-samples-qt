@@ -23,11 +23,11 @@
 
 namespace Esri::ArcGISRuntime
 {
-class Map;
-class MapQuickView;
-class Graphic;
-class CalloutData;
-}
+  class Map;
+  class MapQuickView;
+  class Graphic;
+  class CalloutData;
+} // namespace Esri::ArcGISRuntime
 
 class ProjectGeometry : public QQuickItem
 {

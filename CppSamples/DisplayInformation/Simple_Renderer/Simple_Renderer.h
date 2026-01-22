@@ -22,11 +22,11 @@
 
 namespace Esri::ArcGISRuntime
 {
-    class Map;
-    class MapQuickView;
-    class GraphicsOverlay;
-    class Point;
-}
+  class Map;
+  class MapQuickView;
+  class GraphicsOverlay;
+  class Point;
+} // namespace Esri::ArcGISRuntime
 
 class Simple_Renderer : public QQuickItem
 {
@@ -40,7 +40,7 @@ public:
   static void init();
 
 private:
-  void addPoint(Esri::ArcGISRuntime::Point &point);
+  void addPoint(Esri::ArcGISRuntime::Point& point);
 
 private:
   Esri::ArcGISRuntime::Map* m_map = nullptr;

@@ -28,16 +28,16 @@
 namespace
 {
 
-// Give points per character match
-constexpr qint64 DEFAULT_CHAR_MATCH     = 5;
-// Give points per character + case match
-constexpr qint64 DEFAULT_CASE_MATCH     = 7;
-// Modify the score by how close the score was to the start of the string.
-constexpr qint64 DEFAULT_START_MODIFIER = 2;
+  // Give points per character match
+  constexpr qint64 DEFAULT_CHAR_MATCH = 5;
+  // Give points per character + case match
+  constexpr qint64 DEFAULT_CASE_MATCH = 7;
+  // Modify the score by how close the score was to the start of the string.
+  constexpr qint64 DEFAULT_START_MODIFIER = 2;
 
-const QRegularExpression nonAlphaNumericCharsRegEx("[^a-zA-Z\\d\\s]");
+  const QRegularExpression nonAlphaNumericCharsRegEx("[^a-zA-Z\\d\\s]");
 
-/*!
+  /*!
  * \brief stringCompare
  *  Compares two strings. Returns a score > 0 if \c{subString} matches string
  *  entirely or if \c{subString}  partially matches the begining of \c{string}.
@@ -46,40 +46,41 @@ const QRegularExpression nonAlphaNumericCharsRegEx("[^a-zA-Z\\d\\s]");
  * \param subString Substring to see if partially or fully matches begining.
  * \return score value based on score system values.
  */
-qint64 stringCompare(const QStringView string, const QString& subString)
-{
-  qint64 score = 0;
-
-  // Substring is more specific than string. Abort.
-  if (subString.length() > string.length())
-    return score;
-
-  const int total = std::min(static_cast<qsizetype>(string.length()), subString.length());
-  for (int i = 0; i < total; ++i)
+  qint64 stringCompare(const QStringView string, const QString& subString)
   {
-    const auto& a = string.at(i);
-    const auto& b = subString.at(i);
+    qint64 score = 0;
 
-    // Make the score better if the categories match.
-    // I.E. TitleCase / UpperCase / LowerCase / Punctuation
-    const qint64 baseScore = a.category() == b.category() ? DEFAULT_CASE_MATCH
-                                                          : DEFAULT_CHAR_MATCH;
+    // Substring is more specific than string. Abort.
+    if (subString.length() > string.length())
+    {
+      return score;
+    }
 
-    // We'll assume that lowercase categories are always available.
-    if (a.toLower() == b.toLower())
+    const int total = std::min(static_cast<qsizetype>(string.length()), subString.length());
+    for (int i = 0; i < total; ++i)
     {
-      score += baseScore;
+      const auto& a = string.at(i);
+      const auto& b = subString.at(i);
+
+      // Make the score better if the categories match.
+      // I.E. TitleCase / UpperCase / LowerCase / Punctuation
+      const qint64 baseScore = a.category() == b.category() ? DEFAULT_CASE_MATCH : DEFAULT_CHAR_MATCH;
+
+      // We'll assume that lowercase categories are always available.
+      if (a.toLower() == b.toLower())
+      {
+        score += baseScore;
+      }
+      else
+      {
+        // Strings are different. End now.
+        return 0;
+      }
     }
-    else
-    {
-      // Strings are different. End now.
-      return 0;
-    }
+    return score;
   }
-  return score;
-}
 
-/*!
+  /*!
  * \brief subStringCompare
  *  Checks to see if \c{subString} is a sub-string of \c{string} at any
  *  position in \c{string}. Returns a positive integer and a position when a
@@ -92,35 +93,39 @@ qint64 stringCompare(const QStringView string, const QString& subString)
  *  returned being the position associated with the best score found.
  * \return pair of: score of match(es), and position of the best match.
  */
-QPair<qint64, int> subStringCompare(const QStringView string,
-                                    const QString& subString,
-                                    bool lazy = true)
-{
-  qint64 bestResult = 0;
-  QPair<qint64, int> output = { 0, -1 };
-
-  const int length = string.length();
-  for (int i = 0; i < length; ++i)
+  QPair<qint64, int> subStringCompare(const QStringView string, const QString& subString, bool lazy = true)
   {
-    auto result = stringCompare(string.sliced(i, length - i), subString);
-    if (i == 0)
-      result *= DEFAULT_START_MODIFIER;
-    output.first += std::max(0LL, result);
-    if (result > bestResult)
-    {
-      bestResult = result;
-      output.second = i;
-      if (lazy)
-        break;
-    }
+    qint64 bestResult = 0;
+    QPair<qint64, int> output = {0, -1};
 
-    //! If substring was a match. Skip ahead to a new second substring has
-    //! not touched.
-    if (result > 0)
-      i += subString.length();
+    const int length = string.length();
+    for (int i = 0; i < length; ++i)
+    {
+      auto result = stringCompare(string.sliced(i, length - i), subString);
+      if (i == 0)
+      {
+        result *= DEFAULT_START_MODIFIER;
+      }
+      output.first += std::max(0LL, result);
+      if (result > bestResult)
+      {
+        bestResult = result;
+        output.second = i;
+        if (lazy)
+        {
+          break;
+        }
+      }
+
+      //! If substring was a match. Skip ahead to a new second substring has
+      //! not touched.
+      if (result > 0)
+      {
+        i += subString.length();
+      }
+    }
+    return output;
   }
-  return output;
-}
 
 } // anonymous namespace
 
@@ -161,32 +166,31 @@ qint64 SearchFilterSimpleKeywordCriteria::descriptionModifier() const
   return m_detailModifier;
 }
 
-SearchResult SearchFilterSimpleKeywordCriteria::scoreValue(
-    const QModelIndex& index,
-    const QString& searchString) const
+SearchResult SearchFilterSimpleKeywordCriteria::scoreValue(const QModelIndex& index, const QString& searchString) const
 {
-  const auto nameScore   = scoreIndex(index, searchString, SampleListModel::NameRole, nameModifier());
-  const auto descScore   = scoreIndex(index, searchString, SampleListModel::DescriptionRole, descriptionModifier());
+  const auto nameScore = scoreIndex(index, searchString, SampleListModel::NameRole, nameModifier());
+  const auto descScore = scoreIndex(index, searchString, SampleListModel::DescriptionRole, descriptionModifier());
   const auto sourceScore = scoreIndex(index, searchString, SampleListModel::SourceRole, sourceModifer());
 
   qint64 best = sourceScore.first;
   if (descScore.first > best)
+  {
     best = descScore.first;
+  }
   if (nameScore.first > best)
+  {
     best = nameScore.first;
-  return { best, "" }; // We don't care for any kind of context help.
+  }
+  return {best, ""}; // We don't care for any kind of context help.
 }
 
-QPair<qint64, int> SearchFilterSimpleKeywordCriteria::scoreIndex(
-    const QModelIndex& index,
-    const QString& searchString,
-    int role,
-    qint64 modifier) const
+QPair<qint64, int> SearchFilterSimpleKeywordCriteria::scoreIndex(const QModelIndex& index,
+                                                                 const QString& searchString,
+                                                                 int role,
+                                                                 qint64 modifier) const
 {
-  const auto simpleSearchString = searchString
-      .simplified()
-      .remove(nonAlphaNumericCharsRegEx); // We need to remove parentheses for automation
-  QPair<qint64, int> bestResult { 0, -1 };
+  const auto simpleSearchString = searchString.simplified().remove(nonAlphaNumericCharsRegEx); // We need to remove parentheses for automation
+  QPair<qint64, int> bestResult{0, -1};
 
   if (index.isValid())
   {

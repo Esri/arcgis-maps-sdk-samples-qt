@@ -22,16 +22,16 @@
 
 namespace Esri::ArcGISRuntime
 {
-class Map;
-class MapQuickView;
-class ServiceFeatureTable;
-class ArcGISMapImageLayer;
-class GraphicsOverlay;
-class SimpleMarkerSymbol;
-class SimpleFillSymbol;
-class Symbol;
-class FeatureQueryResult;
-}
+  class Map;
+  class MapQuickView;
+  class ServiceFeatureTable;
+  class ArcGISMapImageLayer;
+  class GraphicsOverlay;
+  class SimpleMarkerSymbol;
+  class SimpleFillSymbol;
+  class Symbol;
+  class FeatureQueryResult;
+} // namespace Esri::ArcGISRuntime
 
 class QueryMapImageSublayer : public QQuickItem
 {

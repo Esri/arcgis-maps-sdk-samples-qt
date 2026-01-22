@@ -24,7 +24,7 @@
 
 namespace Esri::ArcGISRuntime
 {
-    class DictionarySymbolStyle;
+  class DictionarySymbolStyle;
 }
 
 class SearchDictionarySymbolStyle : public QQuickItem
@@ -37,7 +37,8 @@ public:
   explicit SearchDictionarySymbolStyle(QQuickItem* parent = nullptr);
   ~SearchDictionarySymbolStyle() override;
 
-  enum class FieldEnum {
+  enum class FieldEnum
+  {
     FieldNames,
     FieldTags,
     FieldClasses,
@@ -48,8 +49,10 @@ public:
 
   void componentComplete() override;
   static void init();
-  Q_INVOKABLE void search(const QStringList& namesSearchParam, const QStringList& tagsSearchParam,
-                          const QStringList& classesSearchParam,const QStringList& categoriesSearchParam,
+  Q_INVOKABLE void search(const QStringList& namesSearchParam,
+                          const QStringList& tagsSearchParam,
+                          const QStringList& classesSearchParam,
+                          const QStringList& categoriesSearchParam,
                           const QStringList& keysSearchParam);
 
   QAbstractListModel* searchResultsListModel() const;

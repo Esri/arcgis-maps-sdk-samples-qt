@@ -21,10 +21,13 @@
 #include "SampleCategory.h"
 #include "SampleListModel.h"
 
-SampleCategory::SampleCategory(const QString& name, const QString& displayName,
-                               const QString& path, const QString& thumbnailUrl,
+SampleCategory::SampleCategory(const QString& name,
+                               const QString& displayName,
+                               const QString& path,
+                               const QString& thumbnailUrl,
                                const QString& backgroundThumbnailUrl,
-                               SampleListModel* samples, QObject* parent /*= nullptr*/) :
+                               SampleListModel* samples,
+                               QObject* parent /*= nullptr*/) :
   QObject(parent),
   m_name(name),
   m_displayName(displayName),

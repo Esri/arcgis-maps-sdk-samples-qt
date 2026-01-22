@@ -30,7 +30,7 @@
 
 using namespace Esri::ArcGISRuntime;
 
-OSM_Layer::OSM_Layer(QQuickItem* parent /* = nullptr */):
+OSM_Layer::OSM_Layer(QQuickItem* parent /* = nullptr */) :
   QQuickItem(parent)
 {
 }

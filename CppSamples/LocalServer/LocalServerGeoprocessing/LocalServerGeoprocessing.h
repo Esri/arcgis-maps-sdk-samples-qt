@@ -26,13 +26,13 @@
 
 namespace Esri::ArcGISRuntime
 {
-class Map;
-class MapQuickView;
-class LocalServer;
-class LocalGeoprocessingService;
-class ArcGISTiledLayer;
-class GeoprocessingTask;
-}
+  class Map;
+  class MapQuickView;
+  class LocalServer;
+  class LocalGeoprocessingService;
+  class ArcGISTiledLayer;
+  class GeoprocessingTask;
+} // namespace Esri::ArcGISRuntime
 
 class QTemporaryDir;
 

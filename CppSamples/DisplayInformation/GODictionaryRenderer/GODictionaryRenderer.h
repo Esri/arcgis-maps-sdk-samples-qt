@@ -29,7 +29,7 @@ namespace Esri::ArcGISRuntime
   class Map;
   class GraphicsOverlay;
   class MapQuickView;
-}
+} // namespace Esri::ArcGISRuntime
 
 class GODictionaryRenderer : public QQuickItem
 {

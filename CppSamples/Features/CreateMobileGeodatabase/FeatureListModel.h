@@ -1,3 +1,4 @@
+// [WriteFile Name=CreateMobileGeodatabase, Category=Features]
 // [Legal]
 // Copyright 2024 Esri.
 //
@@ -21,7 +22,7 @@
 
 namespace Esri::ArcGISRuntime
 {
-class Feature;
+  class Feature;
 }
 
 class FeatureListModel : public QAbstractListModel
@@ -42,7 +43,11 @@ public:
   int rowCount(const QModelIndex& parent = QModelIndex()) const override;
   QVariant data(const QModelIndex& index, int role = Qt::DisplayRole) const override;
   void clear();
-  int size() const { return m_features.size(); }
+
+  int size() const
+  {
+    return m_features.size();
+  }
 
 protected:
   QHash<int, QByteArray> roleNames() const override;

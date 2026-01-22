@@ -31,7 +31,7 @@ namespace Esri::ArcGISRuntime
 
   enum class SortOrder;
   enum class StatisticType;
-}
+} // namespace Esri::ArcGISRuntime
 
 class StatisticResultListModel;
 

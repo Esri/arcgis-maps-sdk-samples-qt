@@ -30,7 +30,7 @@ namespace Esri::ArcGISRuntime
   class GraphicsOverlay;
   class Graphic;
   class LocatorTask;
-}
+} // namespace Esri::ArcGISRuntime
 
 class FindAddress : public QQuickItem
 {

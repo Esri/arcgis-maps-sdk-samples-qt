@@ -31,7 +31,7 @@
 #endif
 
 #ifdef QT_WEBVIEW_WEBENGINE_BACKEND
-#  include <QtWebEngineQuick>
+#include <QtWebEngineQuick>
 #endif // QT_WEBVIEW_WEBENGINE_BACKEND
 
 #include "ArcGISRuntimeEnvironment.h"
@@ -301,7 +301,7 @@ QObject* syntaxHighlighterProvider(QQmlEngine* engine, QJSEngine* scriptEngine);
 void registerClasses();
 void registerCppSampleClasses();
 
-int main(int argc, char *argv[])
+int main(int argc, char* argv[])
 {
 #ifdef QT_WEBVIEW_WEBENGINE_BACKEND
   QtWebEngineQuick::initialize();
@@ -605,32 +605,22 @@ void registerCppSampleClasses()
   LocalServerFeatureLayer::init();
   LocalServerGeoprocessing::init();
 #endif // LOCALSERVER_SUPPORTED
-
 }
 
 void registerClasses()
 {
-  qmlRegisterSingletonType<SampleManager>("Esri.ArcGISRuntimeSamples", 1, 0, "SampleManager",
-                                                  &esriSampleManagerProvider);
+  qmlRegisterSingletonType<SampleManager>("Esri.ArcGISRuntimeSamples", 1, 0, "SampleManager", &esriSampleManagerProvider);
 
-  qmlRegisterSingletonType<SyntaxHighlighter>("Esri.ArcGISRuntimeSamples", 1, 0, "SyntaxHighlighter",
-                                              &syntaxHighlighterProvider);
-  qmlRegisterUncreatableType<DataItem>("Esri.ArcGISRuntimeSamples", 1, 0,
-                                       "DataItem", "DataItem is an uncreatable type");
-  qmlRegisterUncreatableType<DataItemListModel>("Esri.ArcGISRuntimeSamples", 1, 0,
-                                                "DataItemListModel", "DataItemListModel is an uncreatable type");
-  qmlRegisterUncreatableType<CategoryListModel>("Esri.ArcGISRuntimeSamples", 1, 0,
-                                                "CategoryListModel", "CategoryListModel is an uncreatable type");
-  qmlRegisterUncreatableType<SampleListModel>("Esri.ArcGISRuntimeSamples", 1, 0,
-                                              "SampleListModel", "SampleListModel is an uncreatable type");
-  qmlRegisterUncreatableType<SampleCategory>("Esri.ArcGISRuntimeSamples", 1, 0,
-                                             "SampleCategory", "SampleCategory is an uncreatable type");
-  qmlRegisterUncreatableType<Sample>("Esri.ArcGISRuntimeSamples", 1, 0,
-                                     "Sample", "Sample is an uncreatable type");
-  qmlRegisterUncreatableType<SourceCodeListModel>("Esri.ArcGISRuntimeSamples", 1, 0,
-                                                  "SourceCodeListModel", "SourceCodeListModel is an uncreatable type");
-  qmlRegisterUncreatableType<SourceCode>("Esri.ArcGISRuntimeSamples", 1, 0,
-                                         "SourceCode", "SourceCode is an uncreatable type");
+  qmlRegisterSingletonType<SyntaxHighlighter>("Esri.ArcGISRuntimeSamples", 1, 0, "SyntaxHighlighter", &syntaxHighlighterProvider);
+  qmlRegisterUncreatableType<DataItem>("Esri.ArcGISRuntimeSamples", 1, 0, "DataItem", "DataItem is an uncreatable type");
+  qmlRegisterUncreatableType<DataItemListModel>("Esri.ArcGISRuntimeSamples", 1, 0, "DataItemListModel", "DataItemListModel is an uncreatable type");
+  qmlRegisterUncreatableType<CategoryListModel>("Esri.ArcGISRuntimeSamples", 1, 0, "CategoryListModel", "CategoryListModel is an uncreatable type");
+  qmlRegisterUncreatableType<SampleListModel>("Esri.ArcGISRuntimeSamples", 1, 0, "SampleListModel", "SampleListModel is an uncreatable type");
+  qmlRegisterUncreatableType<SampleCategory>("Esri.ArcGISRuntimeSamples", 1, 0, "SampleCategory", "SampleCategory is an uncreatable type");
+  qmlRegisterUncreatableType<Sample>("Esri.ArcGISRuntimeSamples", 1, 0, "Sample", "Sample is an uncreatable type");
+  qmlRegisterUncreatableType<SourceCodeListModel>("Esri.ArcGISRuntimeSamples", 1, 0, "SourceCodeListModel",
+                                                  "SourceCodeListModel is an uncreatable type");
+  qmlRegisterUncreatableType<SourceCode>("Esri.ArcGISRuntimeSamples", 1, 0, "SourceCode", "SourceCode is an uncreatable type");
 
   qmlRegisterType<SampleSearchFilterModel>("Esri.ArcGISRuntimeSamples", 1, 0, "SampleSearchFilterModel");
   qmlRegisterUncreatableType<SearchFilterCriteria>("Esri.ArcGISRuntimeSamples", 1, 0, "SearchFilterCriteria", "Abstract base class");

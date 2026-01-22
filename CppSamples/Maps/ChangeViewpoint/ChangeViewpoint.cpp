@@ -66,7 +66,7 @@ void ChangeViewpoint::changeViewpoint(QString viewpoint)
 {
   if (viewpoint == "Center")
   {
-    Point ptEsriHeadquarters(-117.195681,34.056218, SpatialReference(4326));
+    Point ptEsriHeadquarters(-117.195681, 34.056218, SpatialReference(4326));
     m_mapView->setViewpointCenterAsync(ptEsriHeadquarters);
   }
   else if (viewpoint == "Center and scale")

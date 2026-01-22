@@ -51,17 +51,17 @@ namespace
   {
     QString dataPath;
 
-  #ifdef Q_OS_IOS
+#ifdef Q_OS_IOS
     dataPath = QStandardPaths::writableLocation(QStandardPaths::DocumentsLocation);
-  #else
+#else
     dataPath = QStandardPaths::writableLocation(QStandardPaths::HomeLocation);
-  #endif
+#endif
 
     return dataPath;
   }
 } // namespace
 
-DisplayKml::DisplayKml(QQuickItem* parent /* = nullptr */):
+DisplayKml::DisplayKml(QQuickItem* parent /* = nullptr */) :
   QQuickItem(parent)
 {
 }
@@ -84,9 +84,7 @@ void DisplayKml::componentComplete()
   m_scene = new Scene(BasemapStyle::ArcGISImagery, this);
   Surface* surface = new Surface(this);
   surface->elevationSources()->append(
-        new ArcGISTiledElevationSource(
-          QUrl("https://elevation3d.arcgis.com/arcgis/rest/services/WorldElevation3D/Terrain3D/ImageServer"),
-          this));
+    new ArcGISTiledElevationSource(QUrl("https://elevation3d.arcgis.com/arcgis/rest/services/WorldElevation3D/Terrain3D/ImageServer"), this));
   m_scene->setBaseSurface(surface);
   m_sceneView->setArcGISScene(m_scene);
 
@@ -102,7 +100,7 @@ void DisplayKml::createFromUrl()
   clearLayers();
 
   // Create the Dataset from an Online URL
-  m_kmlDataset = new KmlDataset(QUrl("https://www.spc.noaa.gov/products/outlook/SPC_outlooks.kml"), this);
+  m_kmlDataset = new KmlDataset(QUrl("https://www.wpc.ncep.noaa.gov/kml/noaa_chart/WPC_Day1_SigWx_latest.kml"), this);
 
   // Create the Layer
   m_kmlLayer = new KmlLayer(m_kmlDataset, this);
@@ -143,12 +141,16 @@ void DisplayKml::createFromPortalItem()
 void DisplayKml::addLayerToScene(KmlLayer* layer)
 {
   if (!m_scene)
+  {
     return;
+  }
 
   m_scene->operationalLayers()->append(layer);
 
   if (m_viewpoint.isEmpty())
+  {
     return;
+  }
 
   m_sceneView->setViewpointAsync(m_viewpoint);
 }
@@ -156,7 +158,9 @@ void DisplayKml::addLayerToScene(KmlLayer* layer)
 void DisplayKml::clearLayers()
 {
   if (!m_scene)
+  {
     return;
+  }
 
   // remove the layers
   m_scene->operationalLayers()->clear();

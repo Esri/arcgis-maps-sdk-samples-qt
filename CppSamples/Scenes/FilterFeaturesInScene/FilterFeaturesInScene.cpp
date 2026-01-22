@@ -52,13 +52,14 @@
 
 using namespace Esri::ArcGISRuntime;
 
-FilterFeaturesInScene::FilterFeaturesInScene(QObject* parent /* = nullptr */):
+FilterFeaturesInScene::FilterFeaturesInScene(QObject* parent /* = nullptr */) :
   QObject(parent),
   m_scene(new Scene(this))
 {
   // Construct and set the scene topography
   Surface* surface = new Surface(this);
-  surface->elevationSources()->append(new ArcGISTiledElevationSource(QUrl("https://elevation3d.arcgis.com/arcgis/rest/services/WorldElevation3D/Terrain3D/ImageServer"), this));
+  surface->elevationSources()->append(
+    new ArcGISTiledElevationSource(QUrl("https://elevation3d.arcgis.com/arcgis/rest/services/WorldElevation3D/Terrain3D/ImageServer"), this));
   m_scene->setBaseSurface(surface);
 
   // Construct a basemap with the ArcGIS Navigation 3D Basemap then set it on the Scene
@@ -96,7 +97,8 @@ FilterFeaturesInScene::FilterFeaturesInScene(QObject* parent /* = nullptr */):
   });
 
   // Construct the detailed buildings scene layer
-  m_sanFrancisco3DOSceneLayer = new ArcGISSceneLayer(QUrl("https://tiles.arcgis.com/tiles/z2tnIkrLQ2BRzr6P/arcgis/rest/services/SanFrancisco_Bldgs/SceneServer"), this);
+  m_sanFrancisco3DOSceneLayer =
+    new ArcGISSceneLayer(QUrl("https://tiles.arcgis.com/tiles/z2tnIkrLQ2BRzr6P/arcgis/rest/services/SanFrancisco_Bldgs/SceneServer"), this);
 
   // Initially hide the detailed buildings so they don't clip into the 3D basemap buildings
   m_sanFrancisco3DOSceneLayer->setVisible(false);
@@ -122,13 +124,14 @@ FilterFeaturesInScene::FilterFeaturesInScene(QObject* parent /* = nullptr */):
     m_sceneLayerExtentPolygon = polygonBuilder->toPolygon();
 
     // Create the SceneLayerPolygonFilter to later apply to the OSM buildings layer
-    m_sceneLayerPolygonFilter = new SceneLayerPolygonFilter(
-      QList<Polygon>{m_sceneLayerExtentPolygon}, // polygons to filter by
-      SceneLayerPolygonFilterSpatialRelationship::Disjoint, // hide all features within the polygons
-      this);
+    m_sceneLayerPolygonFilter =
+      new SceneLayerPolygonFilter(QList<Polygon>{m_sceneLayerExtentPolygon}, // polygons to filter by
+                                  SceneLayerPolygonFilterSpatialRelationship::Disjoint, // hide all features within the polygons
+                                  this);
 
     // Create the extent graphic so we can add it later with the detailed buildings scene layer
-    SimpleFillSymbol* simpleFillSymbol = new SimpleFillSymbol(SimpleFillSymbolStyle::Solid, QColor(Qt::transparent), new SimpleLineSymbol(SimpleLineSymbolStyle::Solid, QColor(Qt::red), 5.0f, this), this);
+    SimpleFillSymbol* simpleFillSymbol = new SimpleFillSymbol(SimpleFillSymbolStyle::Solid, QColor(Qt::transparent),
+                                                              new SimpleLineSymbol(SimpleLineSymbolStyle::Solid, QColor(Qt::red), 5.0f, this), this);
     m_sanFranciscoExtentGraphic = new Graphic(m_sceneLayerExtentPolygon, simpleFillSymbol, this);
   });
 

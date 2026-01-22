@@ -26,10 +26,10 @@
 
 namespace Esri::ArcGISRuntime
 {
-class Map;
-class MapQuickView;
-class Graphic;
-}
+  class Map;
+  class MapQuickView;
+  class Graphic;
+} // namespace Esri::ArcGISRuntime
 
 class GeodesicOperations : public QQuickItem
 {

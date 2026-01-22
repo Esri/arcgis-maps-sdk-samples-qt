@@ -117,8 +117,8 @@ void IdentifyGraphics::connectSignals()
     constexpr bool returnPopupsOnly = false;
     constexpr int maximumResults = 1;
 
-    m_mapView->identifyGraphicsOverlayAsync(m_graphicsOverlay, mouseEvent.position(), tolerance, returnPopupsOnly, maximumResults).then(this,
-    [this](IdentifyGraphicsOverlayResult* rawIdentifyResult)
+    m_mapView->identifyGraphicsOverlayAsync(m_graphicsOverlay, mouseEvent.position(), tolerance, returnPopupsOnly, maximumResults)
+      .then(this, [this](IdentifyGraphicsOverlayResult* rawIdentifyResult)
     {
       // Delete rawIdentifyResult on leaving scope.
       auto identifyResult = std::unique_ptr<IdentifyGraphicsOverlayResult>(rawIdentifyResult);
@@ -129,7 +129,6 @@ void IdentifyGraphics::connectSignals()
         emit identifiedGraphicsCountChanged();
       }
     });
-
   });
   //! [identify graphics api snippet]
 }

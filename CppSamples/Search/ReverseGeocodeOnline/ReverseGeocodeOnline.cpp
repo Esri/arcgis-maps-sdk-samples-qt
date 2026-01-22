@@ -50,11 +50,11 @@ using namespace Esri::ArcGISRuntime;
 
 namespace
 {
-const QUrl url("https://geocode-api.arcgis.com/arcgis/rest/services/World/GeocodeServer");
-const QUrl pinUrl("qrc:/Samples/Search/ReverseGeocodeOnline/pin_circle_red.png");
+  const QUrl url("https://geocode-api.arcgis.com/arcgis/rest/services/World/GeocodeServer");
+  const QUrl pinUrl("qrc:/Samples/Search/ReverseGeocodeOnline/pin_circle_red.png");
 } // namespace
 
-ReverseGeocodeOnline::ReverseGeocodeOnline(QObject* parent /* = nullptr */):
+ReverseGeocodeOnline::ReverseGeocodeOnline(QObject* parent /* = nullptr */) :
   QObject(parent),
   m_map(new Map(BasemapStyle::ArcGISImagery, this))
 {
@@ -85,10 +85,13 @@ void ReverseGeocodeOnline::getAddress()
     const Point clickedLocation = m_mapView->screenToLocation(e.position().x(), e.position().y());
     ReverseGeocodeParameters reverseGeocodeParameters;
     reverseGeocodeParameters.setOutputSpatialReference(m_mapView->spatialReference());
-    m_locatorTask->reverseGeocodeWithParametersAsync(clickedLocation, reverseGeocodeParameters).then(this, [this](const QList<GeocodeResult>& geocodeResults)
+    m_locatorTask->reverseGeocodeWithParametersAsync(clickedLocation, reverseGeocodeParameters)
+      .then(this, [this](const QList<GeocodeResult>& geocodeResults)
     {
       if (geocodeResults.empty())
+      {
         return;
+      }
 
       GeocodeResult geocode = geocodeResults.at(0);
       const Point location = geocode.displayLocation();
@@ -133,7 +136,9 @@ CalloutData* ReverseGeocodeOnline::calloutData() const
 void ReverseGeocodeOnline::setMapView(MapQuickView* mapView)
 {
   if (!mapView || mapView == m_mapView)
+  {
     return;
+  }
 
   m_mapView = mapView;
   m_mapView->setMap(m_map);

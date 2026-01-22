@@ -25,9 +25,9 @@
 
 namespace Esri::ArcGISRuntime
 {
-class Scene;
-class SceneQuickView;
-}
+  class Scene;
+  class SceneQuickView;
+} // namespace Esri::ArcGISRuntime
 
 Q_MOC_INCLUDE("SceneQuickView.h")
 
@@ -37,7 +37,8 @@ class ChangeAtmosphereEffect : public QObject
   Q_PROPERTY(AtmosphereEnum atmosphereEffect READ atmosphereEffect WRITE setAtmosphereEffect NOTIFY atmosphereEffectChanged)
   Q_PROPERTY(Esri::ArcGISRuntime::SceneQuickView* sceneView READ sceneView WRITE setSceneView NOTIFY sceneViewChanged)
 public:
-  enum AtmosphereEnum {
+  enum AtmosphereEnum
+  {
     None = static_cast<int>(Esri::ArcGISRuntime::AtmosphereEffect::None),
     HorizonOnly = static_cast<int>(Esri::ArcGISRuntime::AtmosphereEffect::HorizonOnly),
     Realistic = static_cast<int>(Esri::ArcGISRuntime::AtmosphereEffect::Realistic)

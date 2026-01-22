@@ -1,3 +1,4 @@
+// [WriteFile Name=SnapGeometryEditsWithRules, Category=EditData]
 // [Legal]
 // Copyright 2025 Esri.
 //
@@ -23,10 +24,12 @@
 #include <QImage>
 #include <QObject>
 
-template <typename T> class QFuture;
+template<typename T>
+class QFuture;
 class QMouseEvent;
 
-namespace Esri::ArcGISRuntime {
+namespace Esri::ArcGISRuntime
+{
   class ArcGISFeature;
   class Geodatabase;
   class GeometryEditor;
@@ -39,7 +42,7 @@ namespace Esri::ArcGISRuntime {
   class SubtypeFeatureLayer;
   class SubtypeSublayer;
   class UtilityAssetType;
-}
+} // namespace Esri::ArcGISRuntime
 
 Q_MOC_INCLUDE("MapQuickView.h");
 
@@ -51,72 +54,71 @@ struct LoadOperationalLayersReturnStruct
 
 class SnapGeometryEditsWithRules : public QObject
 {
-    Q_OBJECT
-    Q_PROPERTY(Esri::ArcGISRuntime::MapQuickView* mapView READ mapView WRITE setMapView NOTIFY mapViewChanged)
-    Q_PROPERTY(bool geometryEditorStarted READ geometryEditorStarted NOTIFY geometryEditorStartedChanged)
-    Q_PROPERTY(bool isElementSelected READ isElementSelected NOTIFY isElementSelectedChanged)
-    Q_PROPERTY(SnapSourcesListModel* snapSourcesListModel READ snapSourcesListModel NOTIFY snapSourceModelChanged)
+  Q_OBJECT
+  Q_PROPERTY(Esri::ArcGISRuntime::MapQuickView* mapView READ mapView WRITE setMapView NOTIFY mapViewChanged)
+  Q_PROPERTY(bool geometryEditorStarted READ geometryEditorStarted NOTIFY geometryEditorStartedChanged)
+  Q_PROPERTY(bool isElementSelected READ isElementSelected NOTIFY isElementSelectedChanged)
+  Q_PROPERTY(SnapSourcesListModel* snapSourcesListModel READ snapSourcesListModel NOTIFY snapSourceModelChanged)
 
 public:
-    explicit SnapGeometryEditsWithRules(QObject* parent = nullptr);
-    ~SnapGeometryEditsWithRules() override;
+  explicit SnapGeometryEditsWithRules(QObject* parent = nullptr);
+  ~SnapGeometryEditsWithRules() override;
 
-    static void init();
-    Q_INVOKABLE void startEditor();
-    Q_INVOKABLE void stopEditing();
-    Q_INVOKABLE void discardEdits();
+  static void init();
+  Q_INVOKABLE void startEditor();
+  Q_INVOKABLE void stopEditing();
+  Q_INVOKABLE void discardEdits();
 
-    Esri::ArcGISRuntime::MapQuickView* mapView() const;
-    void setMapView(Esri::ArcGISRuntime::MapQuickView* mapView);
+  Esri::ArcGISRuntime::MapQuickView* mapView() const;
+  void setMapView(Esri::ArcGISRuntime::MapQuickView* mapView);
 
-    bool isElementSelected() const;
-    bool geometryEditorStarted() const;
-    SnapSourcesListModel* snapSourcesListModel() const;
+  bool isElementSelected() const;
+  bool geometryEditorStarted() const;
+  SnapSourcesListModel* snapSourcesListModel() const;
 
 signals:
-    void mapViewChanged();
-    void isElementSelectedChanged();
-    void geometryEditorStartedChanged();
-    void snapSourceModelChanged();
-    void assetGroupChanged(const QString& assetGroup);
-    void assetTypeChanged(const QString& assetType);
+  void mapViewChanged();
+  void isElementSelectedChanged();
+  void geometryEditorStartedChanged();
+  void snapSourceModelChanged();
+  void assetGroupChanged(const QString& assetGroup);
+  void assetTypeChanged(const QString& assetType);
 
 private slots:
-    void onMapViewClicked(const QMouseEvent& mouseEvent);
+  void onMapViewClicked(const QMouseEvent& mouseEvent);
 
 private:
-    void initializeMap();
+  void initializeMap();
 
-    QFuture<void>  loadGeodatabase();
-    QFuture<LoadOperationalLayersReturnStruct> loadOperationalLayers();
-    QFuture<void> loadUtilityNetwork();
+  QFuture<void> loadGeodatabase();
+  QFuture<LoadOperationalLayersReturnStruct> loadOperationalLayers();
+  QFuture<void> loadUtilityNetwork();
 
-    void modifyOperationalLayersVisibility(Esri::ArcGISRuntime::SubtypeFeatureLayer* pipeLayer, Esri::ArcGISRuntime::SubtypeFeatureLayer* deviceLayer);
-    void updateSnapSourceRenderers(const QList<Esri::ArcGISRuntime::SnapSourceSettings*>& snapSourceSettings);
-    Esri::ArcGISRuntime::ArcGISFeature* getFeatureFromResult(const QList<Esri::ArcGISRuntime::IdentifyLayerResult*>& identifyResult);
-    void setSnapSettings(Esri::ArcGISRuntime::UtilityAssetType* assetType);
-    void resetSelections();
+  void modifyOperationalLayersVisibility(Esri::ArcGISRuntime::SubtypeFeatureLayer* pipeLayer, Esri::ArcGISRuntime::SubtypeFeatureLayer* deviceLayer);
+  void updateSnapSourceRenderers(const QList<Esri::ArcGISRuntime::SnapSourceSettings*>& snapSourceSettings);
+  Esri::ArcGISRuntime::ArcGISFeature* getFeatureFromResult(const QList<Esri::ArcGISRuntime::IdentifyLayerResult*>& identifyResult);
+  void setSnapSettings(Esri::ArcGISRuntime::UtilityAssetType* assetType);
+  void resetSelections();
 
-    Esri::ArcGISRuntime::Map* m_map = nullptr;
-    Esri::ArcGISRuntime::MapQuickView* m_mapView = nullptr;
+  Esri::ArcGISRuntime::Map* m_map = nullptr;
+  Esri::ArcGISRuntime::MapQuickView* m_mapView = nullptr;
 
-    Esri::ArcGISRuntime::Geodatabase* m_geodatabase = nullptr;
+  Esri::ArcGISRuntime::Geodatabase* m_geodatabase = nullptr;
 
-    SnapSourcesListModel* m_snapSourcesListModel = nullptr;
+  SnapSourcesListModel* m_snapSourcesListModel = nullptr;
 
-    Esri::ArcGISRuntime::Renderer* m_defaultDistributionRenderer = nullptr;
-    Esri::ArcGISRuntime::Renderer* m_defaultServiceRenderer = nullptr;
-    Esri::ArcGISRuntime::Renderer* m_defaultGraphicsOverlayRenderer = nullptr;
-    
-    Esri::ArcGISRuntime::SubtypeSublayer* m_distributionPipeLayer = nullptr;
-    Esri::ArcGISRuntime::SubtypeSublayer* m_servicePipeLayer = nullptr;
+  Esri::ArcGISRuntime::Renderer* m_defaultDistributionRenderer = nullptr;
+  Esri::ArcGISRuntime::Renderer* m_defaultServiceRenderer = nullptr;
+  Esri::ArcGISRuntime::Renderer* m_defaultGraphicsOverlayRenderer = nullptr;
 
-    Esri::ArcGISRuntime::SimpleLineSymbol* m_rulesLimitSymbol = nullptr;
-    Esri::ArcGISRuntime::SimpleLineSymbol* m_rulesPreventSymbol = nullptr;
-    Esri::ArcGISRuntime::SimpleLineSymbol* m_noneSymbol = nullptr;
+  Esri::ArcGISRuntime::SubtypeSublayer* m_distributionPipeLayer = nullptr;
+  Esri::ArcGISRuntime::SubtypeSublayer* m_servicePipeLayer = nullptr;
 
-    Esri::ArcGISRuntime::ArcGISFeature* m_selectedFeature = nullptr;
+  Esri::ArcGISRuntime::SimpleLineSymbol* m_rulesLimitSymbol = nullptr;
+  Esri::ArcGISRuntime::SimpleLineSymbol* m_rulesPreventSymbol = nullptr;
+  Esri::ArcGISRuntime::SimpleLineSymbol* m_noneSymbol = nullptr;
 
+  Esri::ArcGISRuntime::ArcGISFeature* m_selectedFeature = nullptr;
 };
 
 #endif // SNAPGEOMETRYEDITSWITHRULES_H

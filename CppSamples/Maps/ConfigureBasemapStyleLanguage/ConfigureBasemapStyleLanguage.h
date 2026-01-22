@@ -20,12 +20,13 @@
 // Qt headers
 #include <QObject>
 
-namespace Esri::ArcGISRuntime {
+namespace Esri::ArcGISRuntime
+{
   class Basemap;
   class BasemapStyleParameters;
   class Map;
   class MapQuickView;
-}
+} // namespace Esri::ArcGISRuntime
 
 Q_MOC_INCLUDE("MapQuickView.h");
 

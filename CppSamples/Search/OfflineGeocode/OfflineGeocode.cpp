@@ -65,11 +65,11 @@ namespace
   {
     QString dataPath;
 
-  #ifdef Q_OS_IOS
+#ifdef Q_OS_IOS
     dataPath = QStandardPaths::writableLocation(QStandardPaths::DocumentsLocation);
-  #else
+#else
     dataPath = QStandardPaths::writableLocation(QStandardPaths::HomeLocation);
-  #endif
+#endif
 
     return dataPath;
   }
@@ -77,7 +77,7 @@ namespace
 
 using namespace Esri::ArcGISRuntime;
 
-OfflineGeocode::OfflineGeocode(QQuickItem* parent):
+OfflineGeocode::OfflineGeocode(QQuickItem* parent) :
   QQuickItem(parent),
   m_dataPath(defaultDataPath() + "/ArcGIS/Runtime/Data/")
 {
@@ -153,10 +153,13 @@ void OfflineGeocode::componentComplete()
 
 void OfflineGeocode::geocodeWithText(const QString& address)
 {
-  m_locatorTask->geocodeWithParametersAsync(address, m_geocodeParameters).then(this, [this](const QList<GeocodeResult>& geocodeResults)
+  m_locatorTask->geocodeWithParametersAsync(address, m_geocodeParameters)
+    .then(this,
+          [this](const QList<GeocodeResult>& geocodeResults)
   {
     onGeocodingCompleted_(geocodeResults);
-  }).onFailed(this, [this](const ErrorException& e)
+  })
+    .onFailed(this, [this](const ErrorException& e)
   {
     logException(e);
   });
@@ -165,10 +168,12 @@ void OfflineGeocode::geocodeWithText(const QString& address)
 void OfflineGeocode::geocodeWithSuggestion(int index)
 {
   m_locatorTask->geocodeWithSuggestResultAndParametersAsync(m_suggestListModel->suggestResults().at(index), m_geocodeParameters)
-      .then(this, [this](const QList<GeocodeResult>& geocodeResults)
+    .then(this,
+          [this](const QList<GeocodeResult>& geocodeResults)
   {
     onGeocodingCompleted_(geocodeResults);
-  }).onFailed(this, [this](const ErrorException& e)
+  })
+    .onFailed(this, [this](const ErrorException& e)
   {
     logException(e);
   });
@@ -181,7 +186,7 @@ void OfflineGeocode::setSuggestionsText(const QString& searchText)
 
 void OfflineGeocode::logError(const Error& error)
 {
-  setErrorMessage( QString("%1: %2").arg(error.message(), error.additionalMessage()));
+  setErrorMessage(QString("%1: %2").arg(error.message(), error.additionalMessage()));
 }
 
 void OfflineGeocode::logException(const ErrorException& exception)
@@ -216,28 +221,35 @@ void OfflineGeocode::connectSignals()
   {
     m_clickedPoint = m_mapView->screenToLocation(mouseEvent.position().x(), mouseEvent.position().y());
     m_mapView->identifyGraphicsOverlayAsync(m_graphicsOverlay, mouseEvent.position(), 5, false, 1)
-        .then(this, [this](IdentifyGraphicsOverlayResult* rawIdentifyResult)
+      .then(this,
+            [this](IdentifyGraphicsOverlayResult* rawIdentifyResult)
     {
       // Delete rawIdentifyResult when we leave scope.
       auto identifyResult = std::unique_ptr<IdentifyGraphicsOverlayResult>(rawIdentifyResult);
 
       if (!identifyResult)
+      {
         return;
+      }
 
       // if user clicked on pin, display callout
       const QList<Graphic*> graphics = identifyResult->graphics();
       if (graphics.count() > 0)
+      {
         m_calloutData->setVisible(true);
+      }
 
       // otherwise, reverse geocode at that point
       else
       {
         m_isReverseGeocode = true;
         m_locatorTask->reverseGeocodeWithParametersAsync(m_clickedPoint, m_reverseGeocodeParameters)
-            .then(this, [this](const QList<GeocodeResult>& geocodeResults)
+          .then(this,
+                [this](const QList<GeocodeResult>& geocodeResults)
         {
           onGeocodingCompleted_(geocodeResults);
-        }).onFailed(this, [this](const ErrorException& e)
+        })
+          .onFailed(this, [this](const ErrorException& e)
         {
           logException(e);
         });
@@ -245,7 +257,8 @@ void OfflineGeocode::connectSignals()
         m_geocodeInProgress = true;
         emit geocodeInProgressChanged();
       }
-    }).onFailed(this, [this](const ErrorException& e)
+    })
+      .onFailed(this, [this](const ErrorException& e)
     {
       logException(e);
     });
@@ -257,11 +270,15 @@ void OfflineGeocode::connectSignals()
     m_isReverseGeocode = true;
 
     // reverse geocode
-    m_locatorTask->reverseGeocodeWithParametersAsync(Point(m_mapView->screenToLocation(mouseEvent.position().x(), mouseEvent.position().y())), m_reverseGeocodeParameters)
-        .then(this, [this](const QList<GeocodeResult>& geocodeResults)
+    m_locatorTask
+      ->reverseGeocodeWithParametersAsync(Point(m_mapView->screenToLocation(mouseEvent.position().x(), mouseEvent.position().y())),
+                                          m_reverseGeocodeParameters)
+      .then(this,
+            [this](const QList<GeocodeResult>& geocodeResults)
     {
       onGeocodingCompleted_(geocodeResults);
-    }).onFailed(this, [this](const ErrorException& e)
+    })
+      .onFailed(this, [this](const ErrorException& e)
     {
       logException(e);
     });
@@ -276,11 +293,15 @@ void OfflineGeocode::connectSignals()
     // if user is dragging mouse hold, realtime reverse geocode
     if (m_isPressAndHold)
     {
-      m_locatorTask->reverseGeocodeWithParametersAsync(Point(m_mapView->screenToLocation(mouseEvent.position().x(), mouseEvent.position().y())), m_reverseGeocodeParameters)
-          .then(this, [this](const QList<GeocodeResult>& geocodeResults)
+      m_locatorTask
+        ->reverseGeocodeWithParametersAsync(Point(m_mapView->screenToLocation(mouseEvent.position().x(), mouseEvent.position().y())),
+                                            m_reverseGeocodeParameters)
+        .then(this,
+              [this](const QList<GeocodeResult>& geocodeResults)
       {
         onGeocodingCompleted_(geocodeResults);
-      }).onFailed(this, [this](const ErrorException& e)
+      })
+        .onFailed(this, [this](const ErrorException& e)
       {
         logException(e);
       });
@@ -347,11 +368,15 @@ void OfflineGeocode::onGeocodingCompleted_(const QList<GeocodeResult>& geocodeRe
   m_calloutData->setGeoElement(m_pinGraphic);
 
   if (m_isReverseGeocode)
+  {
     m_calloutData->setVisible(true);
+  }
 
   // continue reverse geocoding if user is pressing and holding
   if (!m_isPressAndHold)
+  {
     m_isReverseGeocode = false;
+  }
 }
 
 QString OfflineGeocode::errorMessage() const

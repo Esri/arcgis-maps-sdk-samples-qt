@@ -24,45 +24,45 @@
 using namespace Esri::ArcGISRuntime;
 
 MapLoaded::MapLoaded(QWidget* parent) :
-    QWidget(parent)
+  QWidget(parent)
 {
-    // Create a map using the streets basemap
-    m_map = new Map(BasemapStyle::ArcGISStreets, this);
+  // Create a map using the streets basemap
+  m_map = new Map(BasemapStyle::ArcGISStreets, this);
 
-    // Create a map view, and pass in the map
-    m_mapView = new MapGraphicsView(m_map, this);
+  // Create a map view, and pass in the map
+  m_mapView = new MapGraphicsView(m_map, this);
 
-    // Create the load status label
-    m_loadStatus= new QLabel("", this);
+  // Create the load status label
+  m_loadStatus = new QLabel("", this);
 
-    // Map Load Status changed lambda
-    connect(m_map, &Esri::ArcGISRuntime::Map::loadStatusChanged, this, [this](Esri::ArcGISRuntime::LoadStatus loadStatus)
+  // Map Load Status changed lambda
+  connect(m_map, &Esri::ArcGISRuntime::Map::loadStatusChanged, this, [this](Esri::ArcGISRuntime::LoadStatus loadStatus)
+  {
+    switch (loadStatus)
     {
-        switch (loadStatus)
-        {
-          case LoadStatus::Loaded:
-            m_loadStatus->setText(QString("Map Load Status: Loaded"));
-            break;
-          case LoadStatus::Loading:
-            m_loadStatus->setText(QString("Map Load Status: Loading..."));
-            break;
-          case LoadStatus::FailedToLoad:
-            m_loadStatus->setText(QString("Map Load Status: Failed to Load"));
-            break;
-          case LoadStatus::NotLoaded:
-            m_loadStatus->setText(QString("Map Load Status: Not Loaded"));
-            break;
-          case LoadStatus::Unknown:
-            m_loadStatus->setText(QString("Map Load Status: Unknown"));
-            break;
-        }
-    });
+      case LoadStatus::Loaded:
+        m_loadStatus->setText(QString("Map Load Status: Loaded"));
+        break;
+      case LoadStatus::Loading:
+        m_loadStatus->setText(QString("Map Load Status: Loading..."));
+        break;
+      case LoadStatus::FailedToLoad:
+        m_loadStatus->setText(QString("Map Load Status: Failed to Load"));
+        break;
+      case LoadStatus::NotLoaded:
+        m_loadStatus->setText(QString("Map Load Status: Not Loaded"));
+        break;
+      case LoadStatus::Unknown:
+        m_loadStatus->setText(QString("Map Load Status: Unknown"));
+        break;
+    }
+  });
 
-    // Set up the UI
-    QVBoxLayout *vBoxLayout = new QVBoxLayout();
-    vBoxLayout->addWidget(m_mapView);
-    vBoxLayout->addWidget(m_loadStatus);
-    setLayout(vBoxLayout);
+  // Set up the UI
+  QVBoxLayout* vBoxLayout = new QVBoxLayout();
+  vBoxLayout->addWidget(m_mapView);
+  vBoxLayout->addWidget(m_loadStatus);
+  setLayout(vBoxLayout);
 }
 
 MapLoaded::~MapLoaded() = default;

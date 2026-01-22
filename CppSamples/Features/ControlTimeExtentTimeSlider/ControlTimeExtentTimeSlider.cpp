@@ -31,11 +31,12 @@
 
 using namespace Esri::ArcGISRuntime;
 
-ControlTimeExtentTimeSlider::ControlTimeExtentTimeSlider(QObject* parent /* = nullptr */):
+ControlTimeExtentTimeSlider::ControlTimeExtentTimeSlider(QObject* parent /* = nullptr */) :
   QObject(parent),
   m_map(new Map(BasemapStyle::ArcGISTopographic, this))
 {
-  ServiceFeatureTable* featureTable = new ServiceFeatureTable(QUrl("https://services5.arcgis.com/N82JbI5EYtAkuUKU/ArcGIS/rest/services/Hurricane_time_enabled_layer_2005_1_day/FeatureServer/0"), this);
+  ServiceFeatureTable* featureTable = new ServiceFeatureTable(
+    QUrl("https://services5.arcgis.com/N82JbI5EYtAkuUKU/ArcGIS/rest/services/Hurricane_time_enabled_layer_2005_1_day/FeatureServer/0"), this);
   FeatureLayer* featureLayer = new FeatureLayer(featureTable, this);
   m_map->operationalLayers()->append(featureLayer);
 }
@@ -58,7 +59,9 @@ MapQuickView* ControlTimeExtentTimeSlider::mapView() const
 void ControlTimeExtentTimeSlider::setMapView(MapQuickView* mapView)
 {
   if (!mapView || mapView == m_mapView)
+  {
     return;
+  }
 
   m_mapView = mapView;
   m_mapView->setMap(m_map);

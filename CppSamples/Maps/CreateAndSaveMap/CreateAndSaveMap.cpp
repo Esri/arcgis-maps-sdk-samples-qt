@@ -39,7 +39,7 @@
 
 using namespace Esri::ArcGISRuntime;
 
-CreateAndSaveMap::CreateAndSaveMap(QQuickItem* parent /* = nullptr */):
+CreateAndSaveMap::CreateAndSaveMap(QQuickItem* parent /* = nullptr */) :
   QQuickItem(parent)
 {
 }
@@ -64,7 +64,9 @@ void CreateAndSaveMap::componentComplete()
   connect(m_portal, &Portal::doneLoading, this, [this](const Error& e)
   {
     if (!e.isEmpty())
+    {
       return;
+    }
 
     emit portalLoaded();
   });
@@ -75,13 +77,21 @@ void CreateAndSaveMap::createMap(const QString& basemap, const QStringList& oper
   // Create the Basemap
   Basemap* selectedBasemap = nullptr;
   if (basemap == "Streets")
+  {
     selectedBasemap = new Basemap(BasemapStyle::ArcGISStreets, this);
+  }
   else if (basemap == "Imagery")
+  {
     selectedBasemap = new Basemap(BasemapStyle::ArcGISImageryStandard, this);
+  }
   else if (basemap == "Topographic")
+  {
     selectedBasemap = new Basemap(BasemapStyle::ArcGISTopographic, this);
+  }
   else if (basemap == "Oceans")
+  {
     selectedBasemap = new Basemap(BasemapStyle::ArcGISOceans, this);
+  }
 
   // Create the Map with the basemap
   m_map = new Map(selectedBasemap, this);
@@ -91,13 +101,15 @@ void CreateAndSaveMap::createMap(const QString& basemap, const QStringList& oper
   {
     if (layer == "WorldElevations")
     {
-      ArcGISMapImageLayer* elevationLyr = new ArcGISMapImageLayer(QUrl("https://sampleserver5.arcgisonline.com/arcgis/rest/services/Elevation/WorldElevations/MapServer"), this);
+      ArcGISMapImageLayer* elevationLyr =
+        new ArcGISMapImageLayer(QUrl("https://sampleserver5.arcgisonline.com/arcgis/rest/services/Elevation/WorldElevations/MapServer"), this);
       elevationLyr->setOpacity(0.5f);
       m_map->operationalLayers()->append(elevationLyr);
     }
     else if (layer == "Census")
     {
-      m_map->operationalLayers()->append(new ArcGISMapImageLayer(QUrl("https://sampleserver5.arcgisonline.com/arcgis/rest/services/Census/MapServer"), this));
+      m_map->operationalLayers()->append(
+        new ArcGISMapImageLayer(QUrl("https://sampleserver5.arcgisonline.com/arcgis/rest/services/Census/MapServer"), this));
     }
   }
 
@@ -109,18 +121,26 @@ void CreateAndSaveMap::createMap(const QString& basemap, const QStringList& oper
 void CreateAndSaveMap::loadPortal()
 {
   if (!m_portal)
+  {
     return;
+  }
 
   if (m_portal->loadStatus() == LoadStatus::Loaded)
+  {
     emit portalLoaded();
+  }
   else
+  {
     m_portal->load();
+  }
 }
 
 void CreateAndSaveMap::saveMap(const QString& title, const QString& tags, const QString& description)
 {
   if (!m_map || !m_portal)
+  {
     return;
+  }
 
   // create save parameters
   const QStringList tagsList = tags.split(",");
@@ -129,14 +149,14 @@ void CreateAndSaveMap::saveMap(const QString& title, const QString& tags, const 
   const QByteArray thumbnail;
 
   // save the map
-  m_map->saveAsAsync(m_portal, title, tagsList, forceSave, folder, description, thumbnail).then(this,
-  [this]()
+  m_map->saveAsAsync(m_portal, title, tagsList, forceSave, folder, description, thumbnail)
+    .then(this,
+          [this]()
   {
     const QString itemId = m_map->item()->itemId();
     emit saveMapCompleted(true, itemId);
   })
-  .onFailed(
-  [this](ErrorException e)
+    .onFailed([this](ErrorException e)
   {
     emit saveMapCompleted(false, "", QString("%1 %2").arg(e.error().message(), e.error().additionalMessage()));
   });

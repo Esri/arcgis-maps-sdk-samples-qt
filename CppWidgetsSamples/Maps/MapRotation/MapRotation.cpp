@@ -30,36 +30,37 @@ using namespace Esri::ArcGISRuntime;
 MapRotation::MapRotation(QWidget* parent) :
   QWidget(parent)
 {
-    // Create a map using the streets basemap
-    m_map = new Map(BasemapStyle::ArcGISStreets, this);
+  // Create a map using the streets basemap
+  m_map = new Map(BasemapStyle::ArcGISStreets, this);
 
-    // Create a map view, and pass in the map
-    m_mapView = new MapGraphicsView(m_map, this);
+  // Create a map view, and pass in the map
+  m_mapView = new MapGraphicsView(m_map, this);
 
-    // Users should use slider to rotate map view
-    m_mapView->setRotationByPinchingEnabled(false);
+  // Users should use slider to rotate map view
+  m_mapView->setRotationByPinchingEnabled(false);
 
-    m_slider = new QSlider(Qt::Horizontal, this);
-    m_slider->setMinimum(0);
-    m_slider->setMaximum(360);
-    m_slider->setValue(0);
+  m_slider = new QSlider(Qt::Horizontal, this);
+  m_slider->setMinimum(0);
+  m_slider->setMaximum(360);
+  m_slider->setValue(0);
 
-    m_degrees = new QLabel("  0", this);
-    connect(m_slider, &QSlider::valueChanged, [this](int value){
-              m_degrees->setText(QString::number(value));
-              m_mapView->setViewpointRotationAsync(value);
-            });
+  m_degrees = new QLabel("  0", this);
+  connect(m_slider, &QSlider::valueChanged, [this](int value)
+  {
+    m_degrees->setText(QString::number(value));
+    m_mapView->setViewpointRotationAsync(value);
+  });
 
-    // Set up the UI
-    QHBoxLayout *hBoxLayout = new QHBoxLayout();
-    hBoxLayout->addWidget(m_slider);
-    hBoxLayout->addWidget(m_degrees);
+  // Set up the UI
+  QHBoxLayout* hBoxLayout = new QHBoxLayout();
+  hBoxLayout->addWidget(m_slider);
+  hBoxLayout->addWidget(m_degrees);
 
-    QVBoxLayout *vBoxLayout = new QVBoxLayout();
-    vBoxLayout->addWidget(m_mapView);
-    vBoxLayout->addLayout(hBoxLayout);
+  QVBoxLayout* vBoxLayout = new QVBoxLayout();
+  vBoxLayout->addWidget(m_mapView);
+  vBoxLayout->addLayout(hBoxLayout);
 
-    setLayout(vBoxLayout);
+  setLayout(vBoxLayout);
 }
 
 MapRotation::~MapRotation() = default;

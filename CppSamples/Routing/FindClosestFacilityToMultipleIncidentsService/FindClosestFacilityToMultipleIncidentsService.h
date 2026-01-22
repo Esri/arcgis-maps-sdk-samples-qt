@@ -26,20 +26,20 @@
 
 namespace Esri::ArcGISRuntime
 {
-class Map;
-class MapQuickView;
-class ServiceFeatureTable;
-class FeatureLayer;
-class GraphicsOverlay;
-class Graphic;
-class ClosestFacilityTask;
-class Facility;
-class Incident;
-class PictureMarkerSymbol;
-class SimpleLineSymbol;
-class QueryParameters;
-class Error;
-}
+  class Map;
+  class MapQuickView;
+  class ServiceFeatureTable;
+  class FeatureLayer;
+  class GraphicsOverlay;
+  class Graphic;
+  class ClosestFacilityTask;
+  class Facility;
+  class Incident;
+  class PictureMarkerSymbol;
+  class SimpleLineSymbol;
+  class QueryParameters;
+  class Error;
+} // namespace Esri::ArcGISRuntime
 
 Q_MOC_INCLUDE("MapQuickView.h")
 Q_MOC_INCLUDE("Error.h")

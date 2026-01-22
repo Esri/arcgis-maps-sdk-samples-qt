@@ -30,7 +30,7 @@
 
 using namespace Esri::ArcGISRuntime;
 
-ViewContentBeneathTerrainSurface::ViewContentBeneathTerrainSurface(QObject* parent /* = nullptr */):
+ViewContentBeneathTerrainSurface::ViewContentBeneathTerrainSurface(QObject* parent /* = nullptr */) :
   QObject(parent)
 {
   const auto url = QUrl("https://www.arcgis.com/home/item.html?id=91a4fafd747a47c7bab7797066cb9272");
@@ -39,7 +39,9 @@ ViewContentBeneathTerrainSurface::ViewContentBeneathTerrainSurface(QObject* pare
   connect(m_scene, &Scene::doneLoading, this, [this](const Error& loadError)
   {
     if (!loadError.isEmpty())
+    {
       return;
+    }
 
     m_scene->baseSurface()->setOpacity(0.4f);
     m_scene->baseSurface()->setNavigationConstraint(NavigationConstraint::None);
@@ -64,7 +66,9 @@ SceneQuickView* ViewContentBeneathTerrainSurface::sceneView() const
 void ViewContentBeneathTerrainSurface::setSceneView(SceneQuickView* sceneView)
 {
   if (!sceneView || sceneView == m_sceneView)
+  {
     return;
+  }
 
   m_sceneView = sceneView;
   m_sceneView->setArcGISScene(m_scene);

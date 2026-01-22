@@ -97,7 +97,7 @@ void Simple_Renderer::componentComplete()
   m_mapView->graphicsOverlays()->append(m_graphicsOverlay);
 }
 
-void Simple_Renderer::addPoint(Point &point)
+void Simple_Renderer::addPoint(Point& point)
 {
   // create graphic
   Graphic* graphic = new Graphic(point, this);

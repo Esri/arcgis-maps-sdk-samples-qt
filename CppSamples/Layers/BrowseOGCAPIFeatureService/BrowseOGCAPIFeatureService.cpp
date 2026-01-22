@@ -42,7 +42,7 @@
 
 using namespace Esri::ArcGISRuntime;
 
-BrowseOGCAPIFeatureService::BrowseOGCAPIFeatureService(QObject* parent /* = nullptr */):
+BrowseOGCAPIFeatureService::BrowseOGCAPIFeatureService(QObject* parent /* = nullptr */) :
   QObject(parent),
   m_map(new Map(BasemapStyle::ArcGISTopographic, this))
 {
@@ -69,7 +69,9 @@ MapQuickView* BrowseOGCAPIFeatureService::mapView() const
 void BrowseOGCAPIFeatureService::setMapView(MapQuickView* mapView)
 {
   if (!mapView || mapView == m_mapView)
+  {
     return;
+  }
 
   m_mapView = mapView;
   m_mapView->setMap(m_map);
@@ -101,15 +103,21 @@ void BrowseOGCAPIFeatureService::setErrorMessage(const QString& message)
 void BrowseOGCAPIFeatureService::handleError(const Esri::ArcGISRuntime::Error& error)
 {
   if (error.additionalMessage().isEmpty())
+  {
     setErrorMessage(error.message());
+  }
   else
+  {
     setErrorMessage(error.message() + "\n" + error.additionalMessage());
+  }
 }
 
 void BrowseOGCAPIFeatureService::loadFeatureService(const QUrl& url)
 {
   if (m_featureService && m_featureService->loadStatus() == LoadStatus::Loading)
+  {
     return;
+  }
 
   clearExistingFeatureService();
 
@@ -194,7 +202,7 @@ void BrowseOGCAPIFeatureService::loadFeatureCollection(int selectedFeature)
   // Populate the OGC feature collection table
   QueryParameters queryParameters;
   queryParameters.setMaxFeatures(1000);
-  auto future = m_featureCollectionTable->populateFromServiceAsync(queryParameters, false, QStringList{ /* empty */ });
+  auto future = m_featureCollectionTable->populateFromServiceAsync(queryParameters, false, QStringList{/* empty */});
   Q_UNUSED(future)
 
   // Create new Feature Layer from selected collection
@@ -240,10 +248,14 @@ void BrowseOGCAPIFeatureService::addFeatureLayerToMap()
 bool BrowseOGCAPIFeatureService::serviceOrFeatureLoading() const
 {
   if (m_featureService && m_featureService->loadStatus() == LoadStatus::Loading)
+  {
     return true;
+  }
 
   else if (m_featureLayer && m_featureLayer->loadStatus() == LoadStatus::Loading)
+  {
     return true;
+  }
 
   return false;
 }

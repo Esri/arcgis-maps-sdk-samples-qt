@@ -30,10 +30,14 @@ class Sample : public QObject
   Q_OBJECT
 
 public:
-  explicit Sample(const QVariant& name, const QVariant& path,
-                  const QVariant& source, const QVariant& description,
-                  SourceCodeListModel* codeFiles, const QVariant& thumbnailUrl,
-                  DataItemListModel* dataItems, QObject* parent = nullptr);
+  explicit Sample(const QVariant& name,
+                  const QVariant& path,
+                  const QVariant& source,
+                  const QVariant& description,
+                  SourceCodeListModel* codeFiles,
+                  const QVariant& thumbnailUrl,
+                  DataItemListModel* dataItems,
+                  QObject* parent = nullptr);
   ~Sample() override = default;
 
   Q_PROPERTY(QVariant source READ source CONSTANT)
@@ -43,13 +47,40 @@ public:
   Q_PROPERTY(DataItemListModel* dataItems READ dataItems CONSTANT)
   Q_PROPERTY(QVariant name READ name CONSTANT)
 
-  QVariant name() const { return m_name; }
-  QVariant path() const { return m_path; }
-  QVariant source() const { return m_source; }
-  QVariant description() const { return m_description; }
-  SourceCodeListModel* codeFiles() const { return m_codeFiles; }
-  QVariant thumbnailUrl() const { return m_thumbnailUrl; }
-  DataItemListModel* dataItems() const { return m_dataItems; }
+  QVariant name() const
+  {
+    return m_name;
+  }
+
+  QVariant path() const
+  {
+    return m_path;
+  }
+
+  QVariant source() const
+  {
+    return m_source;
+  }
+
+  QVariant description() const
+  {
+    return m_description;
+  }
+
+  SourceCodeListModel* codeFiles() const
+  {
+    return m_codeFiles;
+  }
+
+  QVariant thumbnailUrl() const
+  {
+    return m_thumbnailUrl;
+  }
+
+  DataItemListModel* dataItems() const
+  {
+    return m_dataItems;
+  }
 
 private:
   QVariant m_name;

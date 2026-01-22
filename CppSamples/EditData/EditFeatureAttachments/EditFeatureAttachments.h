@@ -33,7 +33,7 @@ namespace Esri::ArcGISRuntime
   class IdentifyLayerResult;
   class FeatureQueryResult;
   class FeatureEditResult;
-}
+} // namespace Esri::ArcGISRuntime
 
 class QString;
 

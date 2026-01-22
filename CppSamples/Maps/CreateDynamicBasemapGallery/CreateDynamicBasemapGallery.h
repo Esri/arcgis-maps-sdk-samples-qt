@@ -28,64 +28,64 @@ Q_MOC_INCLUDE("MapQuickView.h")
 class BasemapStyleListModel;
 class QAbstractListModel;
 
-namespace Esri::ArcGISRuntime {
-enum class BasemapStyleLanguageStrategy;
-class BasemapStyleInfo;
-class Map;
-class MapQuickView;
+namespace Esri::ArcGISRuntime
+{
+  enum class BasemapStyleLanguageStrategy;
+  class BasemapStyleInfo;
+  class Map;
+  class MapQuickView;
 } // namespace Esri::ArcGISRuntime
 
 class CreateDynamicBasemapGallery : public QObject
 {
-    Q_OBJECT
+  Q_OBJECT
 
-    Q_PROPERTY(Esri::ArcGISRuntime::MapQuickView* mapView READ mapView WRITE setMapView NOTIFY
-                   mapViewChanged)
-    Q_PROPERTY(QAbstractListModel* gallery READ gallery NOTIFY galleryChanged)
-    Q_PROPERTY(QStringList languageStrategies READ languageStrategies NOTIFY languageStrategiesChanged)
-    Q_PROPERTY(QStringList languages READ languages NOTIFY languagesChanged)
-    Q_PROPERTY(QStringList worldviews READ worldviews NOTIFY worldviewsChanged)
-    Q_PROPERTY(int indexOfSelectedStyle READ indexOfSelectedStyle NOTIFY selectedStyleChanged)
+  Q_PROPERTY(Esri::ArcGISRuntime::MapQuickView* mapView READ mapView WRITE setMapView NOTIFY mapViewChanged)
+  Q_PROPERTY(QAbstractListModel* gallery READ gallery NOTIFY galleryChanged)
+  Q_PROPERTY(QStringList languageStrategies READ languageStrategies NOTIFY languageStrategiesChanged)
+  Q_PROPERTY(QStringList languages READ languages NOTIFY languagesChanged)
+  Q_PROPERTY(QStringList worldviews READ worldviews NOTIFY worldviewsChanged)
+  Q_PROPERTY(int indexOfSelectedStyle READ indexOfSelectedStyle NOTIFY selectedStyleChanged)
 
 public:
-    explicit CreateDynamicBasemapGallery(QObject* parent = nullptr);
-    ~CreateDynamicBasemapGallery() override;
+  explicit CreateDynamicBasemapGallery(QObject* parent = nullptr);
+  ~CreateDynamicBasemapGallery() override;
 
-    static void init();
+  static void init();
 
-    Esri::ArcGISRuntime::MapQuickView* mapView() const;
-    void setMapView(Esri::ArcGISRuntime::MapQuickView* mapView);
-    QAbstractListModel* gallery() const;
-    const QStringList& languageStrategies() const;
-    const QStringList& languages() const;
-    const QStringList& worldviews() const;
-    int indexOfSelectedStyle() const;
+  Esri::ArcGISRuntime::MapQuickView* mapView() const;
+  void setMapView(Esri::ArcGISRuntime::MapQuickView* mapView);
+  QAbstractListModel* gallery() const;
+  const QStringList& languageStrategies() const;
+  const QStringList& languages() const;
+  const QStringList& worldviews() const;
+  int indexOfSelectedStyle() const;
 
-    Q_INVOKABLE void updateSelectedStyle(const QString& styleName);
-    Q_INVOKABLE void loadBasemap(const QString& selectedStrategy, const QString& selectedLanguage, const QString& selectedWorldview);
+  Q_INVOKABLE void updateSelectedStyle(const QString& styleName);
+  Q_INVOKABLE void loadBasemap(const QString& selectedStrategy, const QString& selectedLanguage, const QString& selectedWorldview);
 
 signals:
-    void mapViewChanged();
-    void selectedStyleChanged();
-    void galleryChanged();
-    void languageStrategiesChanged();
-    void languagesChanged();
-    void worldviewsChanged();
+  void mapViewChanged();
+  void selectedStyleChanged();
+  void galleryChanged();
+  void languageStrategiesChanged();
+  void languagesChanged();
+  void worldviewsChanged();
 
 private:
-    void createGallery();
-    void updateLanguageStrategiesList();
-    void updateLanguagesList();
-    void updateWorldviewsList();
+  void createGallery();
+  void updateLanguageStrategiesList();
+  void updateLanguagesList();
+  void updateWorldviewsList();
 
-    Esri::ArcGISRuntime::Map* m_map = nullptr;
-    Esri::ArcGISRuntime::MapQuickView* m_mapView = nullptr;
-    QList<Esri::ArcGISRuntime::BasemapStyleInfo*> m_styleInfos;
-    BasemapStyleListModel* m_gallery = nullptr;
-    Esri::ArcGISRuntime::BasemapStyleInfo* m_selectedStyle = nullptr;
-    QStringList m_languageStrategies;
-    QStringList m_languages;
-    QStringList m_worldviews;
+  Esri::ArcGISRuntime::Map* m_map = nullptr;
+  Esri::ArcGISRuntime::MapQuickView* m_mapView = nullptr;
+  QList<Esri::ArcGISRuntime::BasemapStyleInfo*> m_styleInfos;
+  BasemapStyleListModel* m_gallery = nullptr;
+  Esri::ArcGISRuntime::BasemapStyleInfo* m_selectedStyle = nullptr;
+  QStringList m_languageStrategies;
+  QStringList m_languages;
+  QStringList m_worldviews;
 };
 
 #endif // CREATEDYNAMICBASEMAPGALLERY_H

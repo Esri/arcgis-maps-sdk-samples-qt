@@ -22,14 +22,14 @@
 
 namespace Esri::ArcGISRuntime
 {
-    class FeatureCollectionTable;
-    class GraphicsOverlay;
-    class GeoprocessingTask;
-    class GeoprocessingResult;
-    class Graphic;
-    class Map;
-    class MapQuickView;
-}
+  class FeatureCollectionTable;
+  class GraphicsOverlay;
+  class GeoprocessingTask;
+  class GeoprocessingResult;
+  class Graphic;
+  class Map;
+  class MapQuickView;
+} // namespace Esri::ArcGISRuntime
 
 class AnalyzeViewshed : public QQuickItem
 {
@@ -68,7 +68,11 @@ private:
   void createOverlays();
   void calculateViewshed();
   void processResults(Esri::ArcGISRuntime::GeoprocessingResult* results);
-  QString jobStatus() const { return m_jobStatus; }
+
+  QString jobStatus() const
+  {
+    return m_jobStatus;
+  }
 };
 
 #endif // ANALYZEVIEWSHED_H

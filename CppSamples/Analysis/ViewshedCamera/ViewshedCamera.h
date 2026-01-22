@@ -22,11 +22,11 @@
 
 namespace Esri::ArcGISRuntime
 {
-class Scene;
-class SceneQuickView;
-class AnalysisOverlay;
-class LocationViewshed;
-}
+  class Scene;
+  class SceneQuickView;
+  class AnalysisOverlay;
+  class LocationViewshed;
+} // namespace Esri::ArcGISRuntime
 
 class ViewshedCamera : public QQuickItem
 {

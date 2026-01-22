@@ -33,7 +33,7 @@
 
 using namespace Esri::ArcGISRuntime;
 
-WMTS_Layer::WMTS_Layer(QQuickItem* parent /* = nullptr */):
+WMTS_Layer::WMTS_Layer(QQuickItem* parent /* = nullptr */) :
   QQuickItem(parent)
 {
 }

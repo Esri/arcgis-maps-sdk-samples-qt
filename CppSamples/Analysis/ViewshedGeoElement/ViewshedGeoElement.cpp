@@ -71,17 +71,17 @@ namespace
   {
     QString dataPath;
 
-  #ifdef Q_OS_IOS
+#ifdef Q_OS_IOS
     dataPath = QStandardPaths::writableLocation(QStandardPaths::DocumentsLocation);
-  #else
+#else
     dataPath = QStandardPaths::writableLocation(QStandardPaths::HomeLocation);
-  #endif
+#endif
 
     return dataPath;
   }
 } // namespace
 
-ViewshedGeoElement::ViewshedGeoElement(QQuickItem* parent /* = nullptr */):
+ViewshedGeoElement::ViewshedGeoElement(QQuickItem* parent /* = nullptr */) :
   QQuickItem(parent)
 {
 }
@@ -104,13 +104,12 @@ void ViewshedGeoElement::componentComplete()
   // Create a surface
   Surface* surface = new Surface(this);
   surface->elevationSources()->append(
-        new ArcGISTiledElevationSource(
-          QUrl("https://elevation3d.arcgis.com/arcgis/rest/services/WorldElevation3D/Terrain3D/ImageServer"),
-          this));
+    new ArcGISTiledElevationSource(QUrl("https://elevation3d.arcgis.com/arcgis/rest/services/WorldElevation3D/Terrain3D/ImageServer"), this));
   scene->setBaseSurface(surface);
 
   // Add a SceneLayer
-  ArcGISSceneLayer* sceneLayer = new ArcGISSceneLayer(QUrl("https://tiles.arcgis.com/tiles/P3ePLMYs2RVChkJx/arcgis/rest/services/Buildings_Brest/SceneServer/layers/0"), this);
+  ArcGISSceneLayer* sceneLayer =
+    new ArcGISSceneLayer(QUrl("https://tiles.arcgis.com/tiles/P3ePLMYs2RVChkJx/arcgis/rest/services/Buildings_Brest/SceneServer/layers/0"), this);
   scene->operationalLayers()->append(sceneLayer);
 
   // Add an AnalysisOverlay
@@ -130,10 +129,7 @@ void ViewshedGeoElement::componentComplete()
   const double maxDistance = 250.0;
   const double headingOffset = 0.0;
   const double pitchOffset = 0.0;
-  m_viewshed = new GeoElementViewshed(m_tank, horizontalAngle,
-                                      verticalAngle, minDistance,
-                                      maxDistance, headingOffset,
-                                      pitchOffset, this);
+  m_viewshed = new GeoElementViewshed(m_tank, horizontalAngle, verticalAngle, minDistance, maxDistance, headingOffset, pitchOffset, this);
   m_viewshed->setOffsetY(0.5);
   m_viewshed->setOffsetZ(0.5);
   m_analysisOverlay->analyses()->append(m_viewshed);
@@ -201,21 +197,19 @@ void ViewshedGeoElement::createGraphic()
 void ViewshedGeoElement::animate()
 {
   if (m_waypoint.isEmpty())
+  {
     return;
+  }
 
   // get current location and distance from waypoint
   Point location = geometry_cast<Point>(m_tank->geometry());
-  const GeodeticDistanceResult distance = GeometryEngine::distanceGeodetic(location, m_waypoint,
-                                                                           LinearUnit(m_linearUnit),
-                                                                           AngularUnit(m_angularUnit),
-                                                                           m_curveType);
+  const GeodeticDistanceResult distance =
+    GeometryEngine::distanceGeodetic(location, m_waypoint, LinearUnit(m_linearUnit), AngularUnit(m_angularUnit), m_curveType);
 
   // move toward waypoint based on speed and update orientation
-  location = GeometryEngine::moveGeodetic(QList<Point>{location}, 1.0,
-                                          LinearUnit(m_linearUnit),
-                                          distance.azimuth1(),
-                                          AngularUnit(m_angularUnit),
-                                          m_curveType).at(0);
+  location =
+    GeometryEngine::moveGeodetic(QList<Point>{location}, 1.0, LinearUnit(m_linearUnit), distance.azimuth1(), AngularUnit(m_angularUnit), m_curveType)
+      .at(0);
   m_tank->setGeometry(location);
 
   // update the heading

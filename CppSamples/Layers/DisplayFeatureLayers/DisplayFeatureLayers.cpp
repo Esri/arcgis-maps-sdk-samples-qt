@@ -50,21 +50,21 @@ using namespace Esri::ArcGISRuntime;
 // helper method to get cross platform data path
 namespace
 {
-QString defaultDataPath()
-{
-  QString dataPath;
+  QString defaultDataPath()
+  {
+    QString dataPath;
 
 #ifdef Q_OS_IOS
-  dataPath = QStandardPaths::writableLocation(QStandardPaths::DocumentsLocation);
+    dataPath = QStandardPaths::writableLocation(QStandardPaths::DocumentsLocation);
 #else
-  dataPath = QStandardPaths::writableLocation(QStandardPaths::HomeLocation);
+    dataPath = QStandardPaths::writableLocation(QStandardPaths::HomeLocation);
 #endif
 
-  return dataPath + "/ArcGIS/Runtime/Data/";
-}
+    return dataPath + "/ArcGIS/Runtime/Data/";
+  }
 } // namespace
 
-DisplayFeatureLayers::DisplayFeatureLayers(QObject* parent /* = nullptr */):
+DisplayFeatureLayers::DisplayFeatureLayers(QObject* parent /* = nullptr */) :
   QObject(parent),
   m_map(new Map(BasemapStyle::ArcGISTopographic, this))
 {
@@ -94,7 +94,9 @@ MapQuickView* DisplayFeatureLayers::mapView() const
 void DisplayFeatureLayers::setMapView(MapQuickView* mapView)
 {
   if (!mapView || mapView == m_mapView)
+  {
     return;
+  }
 
   m_mapView = mapView;
   m_mapView->setMap(m_map);
@@ -105,7 +107,9 @@ void DisplayFeatureLayers::setMapView(MapQuickView* mapView)
 void DisplayFeatureLayers::setLayerVisibility(FeatureLayerType featureLayerType)
 {
   if (!m_map || !m_mapView)
+  {
     return;
+  }
 
   // Hide all other layers
   for (Layer* layer : *m_map->operationalLayers())
@@ -114,7 +118,8 @@ void DisplayFeatureLayers::setLayerVisibility(FeatureLayerType featureLayerType)
   }
 
   // Make the selected feature layer visible and set the viewpoint to show the layer
-  switch (featureLayerType) {
+  switch (featureLayerType)
+  {
     case FeatureLayerType::Geodatabase:
       m_gdbFeatureLayer->setVisible(true);
       m_mapView->setViewpointGeometryAsync(m_gdbFeatureLayer->fullExtent());
@@ -177,7 +182,9 @@ void DisplayFeatureLayers::addGeopackageLayer()
     }
 
     if (!(gpkg->geoPackageFeatureTables().size() > 0))
+    {
       return;
+    }
 
     GeoPackageFeatureTable* gpkgFeatureTable = gpkg->geoPackageFeatureTables().at(0);
     m_gpkgFeatureLayer = new FeatureLayer(gpkgFeatureTable, this);
@@ -207,14 +214,16 @@ void DisplayFeatureLayers::addPortalItemLayer()
 
 void DisplayFeatureLayers::addServiceFeatureTableLayer()
 {
-  ServiceFeatureTable* serviceFeatureTable = new ServiceFeatureTable(QUrl("https://sampleserver6.arcgisonline.com/arcgis/rest/services/Energy/Geology/FeatureServer/9"), this);
+  ServiceFeatureTable* serviceFeatureTable =
+    new ServiceFeatureTable(QUrl("https://sampleserver6.arcgisonline.com/arcgis/rest/services/Energy/Geology/FeatureServer/9"), this);
   m_serviceFeatureTableFeatureLayer = new FeatureLayer(serviceFeatureTable, this);
   m_map->operationalLayers()->append(m_serviceFeatureTableFeatureLayer);
 }
 
 void DisplayFeatureLayers::addShapefileLayer()
 {
-  ShapefileFeatureTable* shpFeatureTable = new ShapefileFeatureTable(defaultDataPath() + "shp/ScottishWildlifeTrust_ReserveBoundaries_20201102.shp", this);
+  ShapefileFeatureTable* shpFeatureTable =
+    new ShapefileFeatureTable(defaultDataPath() + "shp/ScottishWildlifeTrust_ReserveBoundaries_20201102.shp", this);
   m_shpFeatureLayer = new FeatureLayer(shpFeatureTable, this);
   m_map->operationalLayers()->append(m_shpFeatureLayer);
 }

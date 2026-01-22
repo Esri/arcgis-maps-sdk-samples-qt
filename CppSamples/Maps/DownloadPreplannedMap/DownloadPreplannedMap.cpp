@@ -50,7 +50,7 @@
 
 using namespace Esri::ArcGISRuntime;
 
-DownloadPreplannedMap::DownloadPreplannedMap(QObject* parent /* = nullptr */):
+DownloadPreplannedMap::DownloadPreplannedMap(QObject* parent /* = nullptr */) :
   QObject(parent),
   m_graphicsOverlay(new GraphicsOverlay(this)),
   m_portalItem(new PortalItem("acc027394bc84c2fb04d1ed317aac674", this)),
@@ -59,16 +59,15 @@ DownloadPreplannedMap::DownloadPreplannedMap(QObject* parent /* = nullptr */):
 {
   m_graphicsOverlay->setRenderer(new SimpleRenderer(m_lineSymbol, this));
 
-  connect(m_portalItem, &PortalItem::doneLoading, this, [this] ()
+  connect(m_portalItem, &PortalItem::doneLoading, this, [this]()
   {
     m_offlineMapTask = new OfflineMapTask(m_map, this);
     m_mapView->graphicsOverlays()->append(m_graphicsOverlay);
 
-    connect(m_offlineMapTask, &OfflineMapTask::doneLoading, this, [this] ()
+    connect(m_offlineMapTask, &OfflineMapTask::doneLoading, this, [this]()
     {
       // fetch preplanned map areas from the portal item
-      m_offlineMapTask->preplannedMapAreasAsync().then(this,
-      [this](const QList<PreplannedMapArea*>&)
+      m_offlineMapTask->preplannedMapAreasAsync().then(this, [this](const QList<PreplannedMapArea*>&)
       {
         loadPreplannedMapAreas();
       });
@@ -100,7 +99,9 @@ MapQuickView* DownloadPreplannedMap::mapView() const
 void DownloadPreplannedMap::setMapView(MapQuickView* mapView)
 {
   if (!mapView || mapView == m_mapView)
+  {
     return;
+  }
 
   m_mapView = mapView;
   m_mapView->setMap(m_map);
@@ -111,23 +112,31 @@ void DownloadPreplannedMap::setMapView(MapQuickView* mapView)
 void DownloadPreplannedMap::checkIfMapAreaIsLoaded(int index)
 {
   if (!m_offlineMapTask)
+  {
     return;
+  }
 
   if (m_offlineMapTask->preplannedMapAreaList()->isEmpty())
+  {
     return;
+  }
 
   PreplannedMapArea* mapArea = m_offlineMapTask->preplannedMapAreaList()->at(index);
 
   if (!mapArea || mapArea->loadStatus() != LoadStatus::Loaded)
+  {
     return;
+  }
 
   m_busy = true;
   m_viewingOnlineMaps = false;
   emit busyChanged();
   emit viewingOnlineMapsChanged();
 
-  if(m_graphicsOverlay->isVisible())
+  if (m_graphicsOverlay->isVisible())
+  {
     m_graphicsOverlay->setVisible(false);
+  }
 
   loadSelectedMap(index);
 }
@@ -137,10 +146,13 @@ void DownloadPreplannedMap::loadSelectedMap(int index)
   checkIfMapExists(index);
 
   if (m_preplannedMapExists)
+  {
     loadExistingPreplannedMap();
+  }
   else
-    m_offlineMapTask->createDefaultDownloadPreplannedOfflineMapParametersAsync(m_offlineMapTask->preplannedMapAreaList()->at(index)).then(this,
-    [this](const DownloadPreplannedOfflineMapParameters& parameters)
+  {
+    m_offlineMapTask->createDefaultDownloadPreplannedOfflineMapParametersAsync(m_offlineMapTask->preplannedMapAreaList()->at(index))
+      .then(this, [this](const DownloadPreplannedOfflineMapParameters& parameters)
     {
       m_params = parameters;
 
@@ -153,7 +165,7 @@ void DownloadPreplannedMap::loadSelectedMap(int index)
       m_params.setUpdateMode(PreplannedUpdateMode::NoUpdates);
 
       m_preplannedMapJob = m_offlineMapTask->downloadPreplannedOfflineMap(m_params, m_path);
-      connect(m_preplannedMapJob, &DownloadPreplannedOfflineMapJob::progressChanged, this, [this] ()
+      connect(m_preplannedMapJob, &DownloadPreplannedOfflineMapJob::progressChanged, this, [this]()
       {
         m_percentDownloaded = .01 * m_preplannedMapJob->progress();
         emit percentDownloadedChanged();
@@ -165,20 +177,27 @@ void DownloadPreplannedMap::loadSelectedMap(int index)
       m_busy = false;
       emit busyChanged();
     });
+  }
 }
 
 void DownloadPreplannedMap::checkIfMapExists(int index)
 {
   if (!m_offlineMapTask)
+  {
     return;
+  }
 
   if (m_offlineMapTask->preplannedMapAreaList()->isEmpty())
+  {
     return;
+  }
 
   PreplannedMapArea* mapArea = m_offlineMapTask->preplannedMapAreaList()->at(index);
 
   if (!mapArea || mapArea->loadStatus() != LoadStatus::Loaded)
+  {
     return;
+  }
 
   m_path = QString(m_tempPath.path() + "/" + mapArea->portalItem()->title());
   QDir tempDir(m_path);
@@ -187,7 +206,9 @@ void DownloadPreplannedMap::checkIfMapExists(int index)
   emit preplannedMapExistsChanged();
 
   if (m_viewingOnlineMaps)
+  {
     m_mapView->setViewpointGeometryAsync(mapArea->areaOfInterest());
+  }
 }
 
 void DownloadPreplannedMap::showOnlineMap(int index)
@@ -203,7 +224,9 @@ void DownloadPreplannedMap::showOnlineMap(int index)
 void DownloadPreplannedMap::onDownloadPreplannedMapJobCompleted()
 {
   if (m_preplannedMapJob->jobStatus() != JobStatus::Succeeded)
+  {
     return;
+  }
 
   m_mapView->setMap(m_preplannedMapJob->result()->offlineMap());
   m_preplannedMapExists = true;
@@ -220,7 +243,7 @@ void DownloadPreplannedMap::loadPreplannedMapAreas()
   emit busyChanged();
   for (PreplannedMapArea* mapArea : *m_preplannedList)
   {
-    connect(mapArea, &PreplannedMapArea::doneLoading, this, [this, mapArea] (const Error& e)
+    connect(mapArea, &PreplannedMapArea::doneLoading, this, [this, mapArea](const Error& e)
     {
       if (!e.isEmpty())
       {
@@ -246,10 +269,12 @@ void DownloadPreplannedMap::loadExistingPreplannedMap()
 
   m_mmpk = new MobileMapPackage(m_path, this);
 
-  connect(m_mmpk, &MobileMapPackage::doneLoading, this, [this] (const Error& e)
+  connect(m_mmpk, &MobileMapPackage::doneLoading, this, [this](const Error& e)
   {
     if (!e.isEmpty())
+    {
       qDebug() << e.message() << " - " << e.additionalMessage();
+    }
 
     m_mapView->setMap(m_mmpk->maps().at(0));
     m_busy = false;

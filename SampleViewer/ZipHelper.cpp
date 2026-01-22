@@ -30,20 +30,19 @@
 #include <utime.h>
 #endif
 
-
 //--------------------------------------------------------------------
 
 ZipHelper::ZipHelper(QObject* parent) :
-    QObject(parent),
-    m_unzFile(nullptr),
-    m_zipFile(nullptr)
+  QObject(parent),
+  m_unzFile(nullptr),
+  m_zipFile(nullptr)
 {
 }
 
 ZipHelper::ZipHelper(const QString& path, QObject* parent) :
-    QObject(parent),
-    m_unzFile(nullptr),
-    m_zipFile(nullptr)
+  QObject(parent),
+  m_unzFile(nullptr),
+  m_zipFile(nullptr)
 {
   setPath(path);
 }
@@ -52,325 +51,308 @@ ZipHelper::ZipHelper(const QString& path, QObject* parent) :
 
 ZipHelper::~ZipHelper()
 {
-    zwClose();
-    zrClose();
+  zwClose();
+  zrClose();
 }
 
 //--------------------------------------------------------------------
 
-bool ZipHelper::zrOpen(const QString &filePath)
+bool ZipHelper::zrOpen(const QString& filePath)
 {
-    zrClose();
+  zrClose();
 
-    m_unzFile = unzOpen64(qPrintable(filePath));
+  m_unzFile = unzOpen64(qPrintable(filePath));
 
-    return m_unzFile != nullptr;
+  return m_unzFile != nullptr;
 }
 
 //--------------------------------------------------------------------
 
 void ZipHelper::zrClose()
 {
-    if (m_unzFile)
-    {
-        unzClose(m_unzFile);
-        m_unzFile = nullptr;
-    }
+  if (m_unzFile)
+  {
+    unzClose(m_unzFile);
+    m_unzFile = nullptr;
+  }
 }
 
 //--------------------------------------------------------------------
 
 bool ZipHelper::extractCurrentFile(const QString& outputFilePath)
 {
-    if (!zrIsOpen())
-    {
-        return false;
-    }
+  if (!zrIsOpen())
+  {
+    return false;
+  }
 
-    auto result = unzOpenCurrentFile(zrHandle());
+  auto result = unzOpenCurrentFile(zrHandle());
 
-    if (result != UNZ_OK)
-    {
+  if (result != UNZ_OK)
+  {
 #ifdef ZIP_LOGGING_ENABLED
-       qDebug() << "unzOpenCurrentFile" << result;
+    qDebug() << "unzOpenCurrentFile" << result;
 #endif
 
-       return false;
-    }
+    return false;
+  }
 
-    unz_file_info64   fileInfo;
+  unz_file_info64 fileInfo;
 
-    result = unzGetCurrentFileInfo64(zrHandle(),
-                                     &fileInfo,
-                                     nullptr, 0,
-                                     nullptr, 0,
-                                     nullptr, 0);
+  result = unzGetCurrentFileInfo64(zrHandle(), &fileInfo, nullptr, 0, nullptr, 0, nullptr, 0);
 
-    if (result != UNZ_OK)
-    {
+  if (result != UNZ_OK)
+  {
 #ifdef ZIP_LOGGING_ENABLED
-       qDebug() << "unzGetCurrentFileInfo64" << result;
+    qDebug() << "unzGetCurrentFileInfo64" << result;
 #endif
 
+    return false;
+  }
 
-       return false;
-    }
+  QFile outputFile(outputFilePath);
 
-    QFile outputFile(outputFilePath);
+  if (!outputFile.open(QIODevice::WriteOnly | QIODevice::Truncate))
+  {
+#ifdef ZIP_LOGGING_ENABLED
+    qDebug() << "Error opening:" << outputFilePath;
+#endif
+    return false;
+  }
 
-    if (!outputFile.open(QIODevice::WriteOnly | QIODevice::Truncate))
+  QByteArray buffer(4096, 0);
+  const auto fileName = currentFileName();
+#ifdef ZIP_LOGGING_ENABLED
+  qDebug() << "Extracting:" << fileName << " to " << outputFilePath << "Buffer size:" << buffer.size();
+#endif
+
+  quint64 readBytes = 0;
+
+  do
+  {
+    result = unzReadCurrentFile(zrHandle(), buffer.data(), buffer.size());
+
+    if (result < 0)
     {
 #ifdef ZIP_LOGGING_ENABLED
-        qDebug() << "Error opening:" << outputFilePath;
+      qDebug() << "unzReadCurrentFile" << result;
 #endif
-        return false;
+      unzCloseCurrentFile(zrHandle());
+
+      emit extractError(fileName, outputFilePath, (Result)result);
+
+      return false;
     }
-
-    QByteArray buffer(4096, 0);
-    const auto fileName = currentFileName();
-#ifdef ZIP_LOGGING_ENABLED
-    qDebug() << "Extracting:" <<  fileName << " to " << outputFilePath << "Buffer size:" << buffer.size();
-#endif
-
-    quint64 readBytes = 0;
-
-    do
+    else if (result > 0)
     {
+      auto percent = ((qreal)readBytes / (qreal)fileInfo.uncompressed_size) * 100.0;
 
-        result = unzReadCurrentFile(zrHandle(), buffer.data(), buffer.size());
+      emit extractProgress(fileName, outputFilePath, percent);
 
-        if (result < 0)
+      if (m_trackTotalProgress)
+      {
+        // check for a new percentage but only by whole numbers
+        auto oldPercentTotal = static_cast<int>(percentTotal());
+        m_bytesExtracted += result;
+        auto newPercentTotal = static_cast<int>(percentTotal());
+        if (newPercentTotal != oldPercentTotal)
         {
-#ifdef ZIP_LOGGING_ENABLED
-           qDebug() << "unzReadCurrentFile" << result;
-#endif
-           unzCloseCurrentFile(zrHandle());
-
-           emit extractError(fileName, outputFilePath, (Result)result);
-
-           return false;
+          emit extractProgressTotal(newPercentTotal);
         }
-        else if (result > 0)
-        {
-            auto percent = ((qreal)readBytes / (qreal)fileInfo.uncompressed_size) * 100.0;
+      }
 
-            emit extractProgress(fileName, outputFilePath, percent);
-
-            if (m_trackTotalProgress)
-            {
-                // check for a new percentage but only by whole numbers
-                auto oldPercentTotal = static_cast<int>(percentTotal());
-                m_bytesExtracted += result;
-                auto newPercentTotal = static_cast<int>(percentTotal());
-                if (newPercentTotal != oldPercentTotal)
-                    emit extractProgressTotal(newPercentTotal);
-            }
-
-            outputFile.write(buffer.data(), result);
-            readBytes += result;
-        }
+      outputFile.write(buffer.data(), result);
+      readBytes += result;
     }
-    while (result > 0);
+  }
+  while (result > 0);
 
-    outputFile.flush();
-    outputFile.close();
-    unzCloseCurrentFile(zrHandle());
+  outputFile.flush();
+  outputFile.close();
+  unzCloseCurrentFile(zrHandle());
 
-    // Set file time stamp
+  // Set file time stamp
 
-    auto fileDateTime = currentFileDateTime();
+  auto fileDateTime = currentFileDateTime();
 
-    setDateTime(outputFilePath, fileDateTime, fileDateTime);
+  setDateTime(outputFilePath, fileDateTime, fileDateTime);
 
-    emit extractProgress(fileName, outputFilePath, 100);
+  emit extractProgress(fileName, outputFilePath, 100);
 
-    return true;
+  return true;
 }
 
 //--------------------------------------------------------------------
 
 bool ZipHelper::extractAll(QDir& outputDir)
 {
-    if (m_trackTotalProgress)
-    {
-        m_bytesExtracted = 0;
-        m_bytesTotalUncompressed = 0;
-        for (bool haveFile = gotoFirstFile(); haveFile; haveFile = gotoNextFile())
-        {
-            m_bytesTotalUncompressed += currentFileInfo().uncompressed_size;
-        }
-    }
-
+  if (m_trackTotalProgress)
+  {
+    m_bytesExtracted = 0;
+    m_bytesTotalUncompressed = 0;
     for (bool haveFile = gotoFirstFile(); haveFile; haveFile = gotoNextFile())
     {
-        const auto fileName = currentFileName();
-        const auto path = QFileInfo(fileName).path();
-        if (!path.isEmpty() && path.compare(".") != 0)
-        {
-            outputDir.mkpath(path);
-        }
+      m_bytesTotalUncompressed += currentFileInfo().uncompressed_size;
+    }
+  }
 
-        auto outputFilePath = outputDir.filePath(fileName);
-
-        extractCurrentFile(outputFilePath);
+  for (bool haveFile = gotoFirstFile(); haveFile; haveFile = gotoNextFile())
+  {
+    const auto fileName = currentFileName();
+    const auto path = QFileInfo(fileName).path();
+    if (!path.isEmpty() && path.compare(".") != 0)
+    {
+      outputDir.mkpath(path);
     }
 
-    emit extractCompleted();
+    auto outputFilePath = outputDir.filePath(fileName);
 
-    return true;
+    extractCurrentFile(outputFilePath);
+  }
+
+  emit extractCompleted();
+
+  return true;
 }
 
 //--------------------------------------------------------------------
 
 QString ZipHelper::currentFileName()
 {
-    if (!zrIsOpen())
-    {
-        return QString();
-    }
+  if (!zrIsOpen())
+  {
+    return QString();
+  }
 
-    unz_file_info64   fileInfo { currentFileInfo() };
-    QByteArray        fileName(fileInfo.size_filename, '\0');
+  unz_file_info64 fileInfo{currentFileInfo()};
+  QByteArray fileName(fileInfo.size_filename, '\0');
 
-    auto result = unzGetCurrentFileInfo64(zrHandle(),
-                                          &fileInfo,
-                                          fileName.data(),
-                                          fileName.size(),
-                                          nullptr, 0,
-                                          nullptr, 0);
+  auto result = unzGetCurrentFileInfo64(zrHandle(), &fileInfo, fileName.data(), fileName.size(), nullptr, 0, nullptr, 0);
 
-    if (result != UNZ_OK)
-    {
+  if (result != UNZ_OK)
+  {
 #ifdef ZIP_LOGGING_ENABLED
-        qDebug() << QString("Error %d with zipfile in unzGetCurrentFileInfo \n").arg(result);
+    qDebug() << QString("Error %d with zipfile in unzGetCurrentFileInfo \n").arg(result);
 #endif
-    }
+  }
 
-    return fileName;
+  return fileName;
 }
 
 //--------------------------------------------------------------------
 
 unz_file_info64 ZipHelper::currentFileInfo()
 {
-    unz_file_info64   fileInfo = {};
+  unz_file_info64 fileInfo = {};
 
-    if (!zrIsOpen())
-    {
-        return fileInfo;
-    }
-
-    auto result = unzGetCurrentFileInfo64(zrHandle(),
-                                          &fileInfo,
-                                          nullptr, 0,
-                                          nullptr, 0,
-                                          nullptr, 0);
-
-    if (result != UNZ_OK)
-    {
-#ifdef ZIP_LOGGING_ENABLED
-        qDebug() << QString("Error %d with zipfile in unzGetCurrentFileInfo \n").arg(result);
-#endif
-        return fileInfo;
-    }
-
+  if (!zrIsOpen())
+  {
     return fileInfo;
+  }
+
+  auto result = unzGetCurrentFileInfo64(zrHandle(), &fileInfo, nullptr, 0, nullptr, 0, nullptr, 0);
+
+  if (result != UNZ_OK)
+  {
+#ifdef ZIP_LOGGING_ENABLED
+    qDebug() << QString("Error %d with zipfile in unzGetCurrentFileInfo \n").arg(result);
+#endif
+    return fileInfo;
+  }
+
+  return fileInfo;
 }
 
 //--------------------------------------------------------------------
 
 QDateTime ZipHelper::currentFileDateTime()
 {
-    if (!zrIsOpen())
-    {
-        return QDateTime();
-    }
+  if (!zrIsOpen())
+  {
+    return QDateTime();
+  }
 
-    unz_file_info64   fileInfo;
+  unz_file_info64 fileInfo;
 
-    auto result = unzGetCurrentFileInfo64(zrHandle(),
-                                          &fileInfo,
-                                          nullptr, 0,
-                                          nullptr, 0,
-                                          nullptr, 0);
+  auto result = unzGetCurrentFileInfo64(zrHandle(), &fileInfo, nullptr, 0, nullptr, 0, nullptr, 0);
 
-    if (result != UNZ_OK)
-    {
+  if (result != UNZ_OK)
+  {
 #ifdef ZIP_LOGGING_ENABLED
-        qDebug() << QString("Error %d with zipfile in unzGetCurrentFileInfo \n").arg(result);
+    qDebug() << QString("Error %d with zipfile in unzGetCurrentFileInfo \n").arg(result);
 #endif
-    }
+  }
 
-    QDateTime dateTime;
+  QDateTime dateTime;
 
-    dateTime.setDate(QDate(fileInfo.tmu_date.tm_year, fileInfo.tmu_date.tm_mon + 1, fileInfo.tmu_date.tm_mday + 1));
-    dateTime.setTime(QTime(fileInfo.tmu_date.tm_hour, fileInfo.tmu_date.tm_min, fileInfo.tmu_date.tm_sec));
+  dateTime.setDate(QDate(fileInfo.tmu_date.tm_year, fileInfo.tmu_date.tm_mon + 1, fileInfo.tmu_date.tm_mday + 1));
+  dateTime.setTime(QTime(fileInfo.tmu_date.tm_hour, fileInfo.tmu_date.tm_min, fileInfo.tmu_date.tm_sec));
 
-    return dateTime;
+  return dateTime;
 }
 
 //--------------------------------------------------------------------
 
 bool ZipHelper::gotoFirstFile()
 {
-    if (!zrIsOpen())
-    {
-        return false;
-    }
+  if (!zrIsOpen())
+  {
+    return false;
+  }
 
-    unz_global_info64 globalInfo;
+  unz_global_info64 globalInfo;
 
-    auto result = unzGetGlobalInfo64(zrHandle(), &globalInfo);
+  auto result = unzGetGlobalInfo64(zrHandle(), &globalInfo);
 
-    if (result != UNZ_OK)
-    {
+  if (result != UNZ_OK)
+  {
 #ifdef ZIP_LOGGING_ENABLED
-        qDebug() << QString("Error %d with zipfile in unzGetGlobalInfo \n").arg(result);
+    qDebug() << QString("Error %d with zipfile in unzGetGlobalInfo \n").arg(result);
 #endif
-        return false;
-    }
+    return false;
+  }
 
-    result = unzGoToFirstFile(zrHandle());
+  result = unzGoToFirstFile(zrHandle());
 
-    if (result != UNZ_OK)
-    {
+  if (result != UNZ_OK)
+  {
 #ifdef ZIP_LOGGING_ENABLED
-        qDebug() << QString("Error %d with zipfile in unzGoToFirstFile \n").arg(result);
+    qDebug() << QString("Error %d with zipfile in unzGoToFirstFile \n").arg(result);
 #endif
-        return false;
-    }
+    return false;
+  }
 
-    return true;
+  return true;
 }
 
 //--------------------------------------------------------------------
 
 bool ZipHelper::gotoNextFile()
 {
-    if (!zrIsOpen())
-    {
-        return false;
-    }
+  if (!zrIsOpen())
+  {
+    return false;
+  }
 
-    auto result = unzGoToNextFile(zrHandle());
+  auto result = unzGoToNextFile(zrHandle());
 
-    if (result != UNZ_OK && result != UNZ_END_OF_LIST_OF_FILE)
-    {
+  if (result != UNZ_OK && result != UNZ_END_OF_LIST_OF_FILE)
+  {
 #ifdef ZIP_LOGGING_ENABLED
-        qDebug() << QString("Error %d with zipfile in unzGoToNextFile \n").arg(result);
+    qDebug() << QString("Error %d with zipfile in unzGoToNextFile \n").arg(result);
 #endif
-    }
+  }
 
-    return result == UNZ_OK;
+  return result == UNZ_OK;
 }
 
 void ZipHelper::zwClose(const QString& globalComment)
 {
-    if (m_zipFile)
-    {
-        zipClose(m_zipFile, qPrintable(globalComment));
-        m_zipFile = nullptr;
-    }
+  if (m_zipFile)
+  {
+    zipClose(m_zipFile, qPrintable(globalComment));
+    m_zipFile = nullptr;
+  }
 }
 
 //--------------------------------------------------------------------
@@ -383,66 +365,68 @@ void ZipHelper::zwClose(const QString& globalComment)
 
 bool ZipHelper::exists() const
 {
-    if (path().isEmpty())
-    {
-        return false;
-    }
+  if (path().isEmpty())
+  {
+    return false;
+  }
 
-    return QFileInfo::exists(path());
+  return QFileInfo::exists(path());
 }
 
 //--------------------------------------------------------------------
 
 bool ZipHelper::zrOpen()
 {
-    if (zrIsOpen())
-    {
-        return true;
-    }
+  if (zrIsOpen())
+  {
+    return true;
+  }
 
-    zwClose();
+  zwClose();
 
-    if (!exists())
-    {
-        return false;
-    }
+  if (!exists())
+  {
+    return false;
+  }
 
-    auto ok = zrOpen(path());
+  auto ok = zrOpen(path());
 
-    if (!ok)
-    {
+  if (!ok)
+  {
 #ifdef ZIP_LOGGING_ENABLED
-        qDebug() << "Unable to open:" << path();
+    qDebug() << "Unable to open:" << path();
 #endif
-    }
+  }
 
-    return ok;
+  return ok;
 }
 
 qreal ZipHelper::percentTotal() const
 {
-    qreal percent = 0.0;
-    if (m_bytesTotalUncompressed != 0)
-        percent = m_bytesExtracted / static_cast<qreal>(m_bytesTotalUncompressed) * 100.0;
+  qreal percent = 0.0;
+  if (m_bytesTotalUncompressed != 0)
+  {
+    percent = m_bytesExtracted / static_cast<qreal>(m_bytesTotalUncompressed) * 100.0;
+  }
 
-    return percent;
+  return percent;
 }
 
 void ZipHelper::setPath(const QString& path)
 {
-    auto resolvedPath = ZipHelper::resolvedPath(path);
+  auto resolvedPath = ZipHelper::resolvedPath(path);
 
-    if (resolvedPath == m_Path)
-    {
-        return;
-    }
+  if (resolvedPath == m_Path)
+  {
+    return;
+  }
 
-    m_Path = resolvedPath;
+  m_Path = resolvedPath;
 
-    zwClose();
-    zrClose();
+  zwClose();
+  zrClose();
 
-    emit pathChanged();
+  emit pathChanged();
 }
 
 //--------------------------------------------------------------------
@@ -457,45 +441,45 @@ void ZipHelper::setPath(const QString& path)
   Returns \c true if successful; otherwise \c false.
 */
 
-bool ZipHelper::extractAll(const QString &outputPath, bool trackTotalProgress)
+bool ZipHelper::extractAll(const QString& outputPath, bool trackTotalProgress)
 {
-    m_trackTotalProgress = trackTotalProgress;
-    if (!zrOpen())
-    {
+  m_trackTotalProgress = trackTotalProgress;
+  if (!zrOpen())
+  {
 #ifdef ZIP_LOGGING_ENABLED
-        qDebug() << "ZIP not open" << path();
+    qDebug() << "ZIP not open" << path();
 #endif
-        return false;
-    }
+    return false;
+  }
 
-    QDir outputDir(outputPath);
+  QDir outputDir(outputPath);
 
 #ifdef ZIP_LOGGING_ENABLED
-    qDebug() << outputPath << outputDir;
+  qDebug() << outputPath << outputDir;
 #endif
 
-    return extractAll(outputDir);
+  return extractAll(outputDir);
 }
 
 // Methods moved from FileUtility to enable ZipHelper::setPath to work
 //--------------------------------------------------------------------
 
-#define kResourceScheme                         QStringLiteral("qrc")
-#define kResourcePathPrefix                     QStringLiteral(":/")
+#define kResourceScheme QStringLiteral("qrc")
+#define kResourcePathPrefix QStringLiteral(":/")
 
-#define kHttpScheme                             QStringLiteral("http")
-#define kHttpsScheme                            QStringLiteral("https")
+#define kHttpScheme QStringLiteral("http")
+#define kHttpsScheme QStringLiteral("https")
 
-#define kPathHomePrefix                         QStringLiteral("~")
-#define kPathVarPrefix                          QStringLiteral("$")
-#define kPathVarHome                            QStringLiteral("HOME")
-#define kPathVarTemp                            QStringLiteral("TEMP")
+#define kPathHomePrefix QStringLiteral("~")
+#define kPathVarPrefix QStringLiteral("$")
+#define kPathVarHome QStringLiteral("HOME")
+#define kPathVarTemp QStringLiteral("TEMP")
 
-#define kGroupName                              "Esri/ArcGISRuntime/pathVariables"
+#define kGroupName "Esri/ArcGISRuntime/pathVariables"
 
-#define kPropertyPathVariablePrefix             kGroupName "."
+#define kPropertyPathVariablePrefix kGroupName "."
 
-#define kSettingsGroupPathVariables             QStringLiteral(kGroupName)
+#define kSettingsGroupPathVariables QStringLiteral(kGroupName)
 
 //------------------------------------------------------------------------------
 
@@ -604,11 +588,9 @@ QString ZipHelper::pathVariable(const QString& name, const QString& defaultValue
 
   if (useFallbacks)
   {
-
-
     if (value.isEmpty())
     {
-      QSettings   settings;
+      QSettings settings;
 
       settings.beginGroup(kSettingsGroupPathVariables);
 
@@ -672,9 +654,7 @@ ZipHelper::PathVariableType ZipHelper::pathVariableType(const QString& name, boo
 
   if (useFallbacks)
   {
-
-
-    QSettings   settings;
+    QSettings settings;
 
     settings.beginGroup(kSettingsGroupPathVariables);
 
@@ -737,7 +717,7 @@ QString ZipHelper::defaultTempPath()
 
 QByteArray ZipHelper::pathPropertyName(const QString& name)
 {
-  return (QString(kPropertyPathVariablePrefix) +  name).toUtf8();
+  return (QString(kPropertyPathVariablePrefix) + name).toUtf8();
 }
 
 //--------------------------------------------------------------------

@@ -206,7 +206,7 @@ ApplicationWindow {
 
                         property bool currentSampleIsFavorite: false
 
-                        text: currentSampleIsFavorite ? qsTr("Unfavorite") : qsTr("Favorite")
+                        text: currentSampleIsFavorite ? qsTr("Remove Favorite") : qsTr("Favorite")
 
                         visible: SampleManager.currentSample && (
                                      SampleManager.currentMode === SampleManager.LiveSampleView ||
