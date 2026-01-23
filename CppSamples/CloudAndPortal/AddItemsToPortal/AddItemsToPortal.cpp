@@ -25,7 +25,6 @@
 #include "Authentication/OAuthUserConfiguration.h"
 #include "Error.h"
 #include "ErrorException.h"
-#include "ErrorInformationKeys.h"
 #include "MapTypes.h"
 #include "Portal.h"
 #include "PortalItem.h"
@@ -207,8 +206,7 @@ void AddItemsToPortal::addItem()
     m_busy = false;
 
     // Check for service error 409 "Conflict" - item already exists
-    const QVariantMap additionalInfo = e.error().additionalInformation();
-    if (additionalInfo.contains(ErrorInformationKeys::serviceError()) && additionalInfo.value(ErrorInformationKeys::serviceError()).toInt() == 409)
+    if (e.error().arcGISServerErrorCode().value_or(-1) == 409)
     {
       m_alreadyExisted = true;
       setStatusText("Item already exists; fetching existing item instead. " + m_item->itemId());
