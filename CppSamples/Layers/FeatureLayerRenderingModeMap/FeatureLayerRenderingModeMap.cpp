@@ -97,7 +97,7 @@ void FeatureLayerRenderingModeMap::componentComplete()
 
 void FeatureLayerRenderingModeMap::addFeatureLayers(Map* map)
 {
-  const QStringList layerIds = {"0", "8", "9"};
+  const QStringList layerIds = {"9", "8", "0"};
   for (const QString& layerId : layerIds)
   {
     QString featureServiceUrl = QString("%1/%2").arg(m_featureServiceUrl, layerId);
