@@ -61,7 +61,7 @@ Page {
             topMargin: 7
             bottomMargin: 7
         }
-        clip: false
+        clip: true
         model: SampleManager.categories
         delegate: Component {
             Item {

@@ -15,7 +15,7 @@
 
 import QtQuick
 import QtQuick.Controls
-import Qt5Compat.GraphicalEffects
+import QtQuick.Effects
 import Esri.ArcGISRuntimeSamples
 import Calcite
 
@@ -37,19 +37,9 @@ ItemDelegate {
     }
 
     background: Item {
-        // Mask shape - not visible, used as mask source
-        Rectangle {
-            id: maskRect
-            anchors.fill: parent
-            radius: 10
-            visible: false
-        }
-
-        // Combined image + gradient, masked together
         Item {
-            id: maskedContent
             anchors.fill: parent
-            visible: false
+            visible: true
 
             Image {
                 id: categoryImg
@@ -60,6 +50,7 @@ ItemDelegate {
 
             Rectangle {
                 anchors.fill: parent
+                radius: 10
                 gradient: Gradient {
                     GradientStop { position: 0.0; color: "#25000000" }
                     GradientStop { position: 0.5; color: "#65000000" }
@@ -68,21 +59,14 @@ ItemDelegate {
             }
         }
 
-        // Apply single mask to both image and gradient
-        OpacityMask {
-            anchors.fill: parent
-            source: maskedContent
-            maskSource: maskRect
-        }
-
         // Border on top
         Rectangle {
             anchors.fill: parent
             anchors.margins: card.hovered ? -1 : 0
             radius: card.hovered ? 11 : 10
             color: "transparent"
-            border.width: card.hovered ? 2 : 1
-            border.color: card.hovered ? Calcite.brand : (Calcite.theme !== Calcite.Theme.Light ? "#555555" : Calcite.border1)
+            border.width: card.hovered ? 4 : 1
+            border.color: card.hovered ? Calcite.brand : Calcite.border3
             Behavior on anchors.margins {
                 NumberAnimation { duration: 150 }
             }
@@ -123,14 +107,17 @@ ItemDelegate {
                     height: width
                     source: thumbnailUrl
                     clip: true
-                    visible: false
-                }
 
-                ColorOverlay {
-                    anchors.fill: thumbnailImage
-                    source: thumbnailImage
-                    color: Calcite.text1
-                    visible: drawer.visible
+                    layer.enabled: true
+                    layer.smooth: true
+                    layer.effect: MultiEffect {
+                        anchors.fill: thumbnailImage
+                        source: thumbnailImage
+                        colorization: 1.0
+                        brightness: 1.0
+                        colorizationColor: Calcite.text1
+                        visible: true
+                    }
                 }
             }
 

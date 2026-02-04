@@ -20,7 +20,6 @@ import QtQuick.Layouts
 import QtQuick.Effects
 import Esri.ArcGISRuntimeSamples
 import Calcite
-import Qt5Compat.GraphicalEffects
 
 ColumnLayout {
     id: root
@@ -305,10 +304,16 @@ ColumnLayout {
                                                 fillMode: Image.PreserveAspectFit
                                                 anchors.centerIn: parent
                                                 visible: downloadButton.parent.useIconMode
+
                                                 layer.enabled: true
                                                 layer.smooth: true
-                                                layer.effect: ColorOverlay {
-                                                    color: Calcite.offWhite
+                                                layer.effect: MultiEffect {
+                                                    anchors.fill: downloadIcon
+                                                    source: downloadIcon
+                                                    colorization: 1.0
+                                                    brightness: 1.0
+                                                    colorizationColor: Calcite.text1
+                                                    visible: true
                                                 }
                                             }
 
@@ -351,10 +356,16 @@ ColumnLayout {
                                                 fillMode: Image.PreserveAspectFit
                                                 anchors.centerIn: parent
                                                 visible: deleteButton.parent.useIconMode
+
                                                 layer.enabled: true
                                                 layer.smooth: true
-                                                layer.effect: ColorOverlay {
-                                                    color: Calcite.offWhite
+                                                layer.effect: MultiEffect {
+                                                    anchors.fill: deleteIcon
+                                                    source: deleteIcon
+                                                    colorization: 1.0
+                                                    brightness: 1.0
+                                                    colorizationColor: Calcite.text1
+                                                    visible: true
                                                 }
                                             }
 
