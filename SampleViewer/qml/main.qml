@@ -46,24 +46,39 @@ ApplicationWindow {
             color: Calcite.brand
         }
 
-        Image {
+        ToolButton {
+            id: hamburgerButton
             anchors {
                 left: parent.left
                 verticalCenter: parent.verticalCenter
                 margins: 5
             }
-            source: "qrc:/drawer.png"
-            width: 36
-            height: width
+            icon.source: "qrc:/hamburger.svg"
+            icon.width: 28
+            icon.height: 28
+            icon.color: Calcite.offWhite
+            flat: true
 
-            MouseArea {
-                anchors.fill: parent
-                onClicked: {
-                    if (drawer.opened) {
-                        drawer.close()
-                    } else {
-                        drawer.open()
-                    }
+            scale: pressed ? 0.92 : (hovered ? 1.08 : 1.0)
+            Behavior on scale {
+                NumberAnimation { duration: 150; easing.type: Easing.OutQuad }
+            }
+
+            background: Rectangle {
+                implicitWidth: 36
+                implicitHeight: 30
+                radius: 5
+                color: hamburgerButton.pressed ? "#40000000" : (hamburgerButton.hovered ? "#25FFFFFF" : "transparent")
+                Behavior on color {
+                    ColorAnimation { duration: 150 }
+                }
+            }
+
+            onClicked: {
+                if (drawer.opened) {
+                    drawer.close()
+                } else {
+                    drawer.open()
                 }
             }
         }
@@ -78,34 +93,52 @@ ApplicationWindow {
             color: Calcite.offWhite
         }
 
-        Image {
-            id: menuImage
+        ToolButton {
+            id: menuButton
             anchors {
                 right: parent.right
                 verticalCenter: parent.verticalCenter
                 margins: 5
             }
-            source: "qrc:/menu.png"
-            width: 32
-            height: width
+            icon.source: "qrc:/ellipsis.svg"
+            icon.width: 28
+            icon.height: 28
+            icon.color: Calcite.offWhite
+            flat: true
 
-            MouseArea {
-                anchors.fill: parent
-                onClicked: {
-                    if (drawer.opened) {
-                        drawer.close()
-                    }
-                    optionsMenu.open()
+            scale: pressed ? 0.92 : (hovered ? 1.08 : 1.0)
+            Behavior on scale {
+                NumberAnimation { duration: 150; easing.type: Easing.OutQuad }
+            }
+
+            background: Rectangle {
+                implicitWidth: 36
+                implicitHeight: 30
+                radius: 5
+                color: menuButton.pressed ? "#40000000" : (menuButton.hovered ? "#25FFFFFF" : "transparent")
+                Behavior on color {
+                    ColorAnimation { duration: 150 }
                 }
+            }
 
-                Menu {
+            onClicked: {
+                if (drawer.opened) {
+                    drawer.close()
+                }
+                optionsMenu.open()
+            }
+
+            Menu {
                     id: optionsMenu
                     x: parent.width - width
-                    transformOrigin: Menu.TopRight
+                    transformOrigin: Item.TopRight
                     width: 200
-                    height: contentChildren.height
 
                     readonly property real menuFontSize: 16
+
+                    enter: Transition {
+                        NumberAnimation { property: "scale"; from: 0.0; to: 1.0; duration: 40; easing.type: Easing.OutQuad }
+                    }
 
                     MenuItem {
                         width: parent.width
@@ -245,11 +278,10 @@ ApplicationWindow {
                 }
             }
         }
-    }
 
     CategoryDrawer {
         id: drawer
-        width: 240
+        width: 252
         height: parent.height
     }
 

@@ -15,6 +15,15 @@
 
 #include "pch.hpp"
 
+// ArcGIS Maps SDK headers
+#include "ArcGISRuntimeEnvironment.h"
+#include "Authentication/ArcGISCredentialStore.h"
+#include "Authentication/AuthenticationManager.h"
+#include "Authentication/NetworkCredentialStore.h"
+#include "ErrorException.h"
+#include "Portal.h"
+
+// Qt headers
 #include <QByteArray>
 #include <QDebug>
 #include <QDir>
@@ -25,6 +34,7 @@
 #include <QJsonDocument>
 #include <QJsonObject>
 #include <QNetworkProxy>
+#include <QQmlEngine>
 #include <QSet>
 #include <QStandardPaths>
 #include <QStringList>
@@ -33,16 +43,12 @@
 #include <QVariant>
 #include <QVariantList>
 #include <QVariantMap>
-#include <QQmlEngine>
+
+// STL headers
 #include <NetworkRequestProgress.h>
 
+// Other headers
 #include "ArcGISQt_global.h" // for LOCALSERVER_SUPPORTED
-#include "ArcGISRuntimeEnvironment.h"
-#include "Authentication/ArcGISCredentialStore.h"
-#include "Authentication/AuthenticationManager.h"
-#include "Authentication/NetworkCredentialStore.h"
-#include "ErrorException.h"
-#include "Portal.h"
 
 // toolkit authentication support
 #include "OAuthUserConfigurationManager.h"
@@ -257,7 +263,7 @@ SampleCategory* SampleManager::createCategory(const QString& name, const QString
   QDir categoryDir(dir.filePath(name));
   QString path = "qrc" + categoryDir.path();
   // get thumbnail URL
-  QString thumbnailUrl = "qrc" + dir.filePath(name + ".png");
+  QString thumbnailUrl = "qrc" + dir.filePath(name + ".svg");
   // get background thumbnail URL
   QString backgroundThumbnailUrl = "qrc" + dir.filePath("BG_" + name + ".png");
   // get the samples in the category

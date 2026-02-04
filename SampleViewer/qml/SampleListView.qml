@@ -26,23 +26,20 @@ Page {
     header: ToolBar {
         height: 42
 
-        Image {
+        ToolButton {
             id: back
             anchors {
                 left: parent.left
                 verticalCenter: parent.verticalCenter
                 margins: 5
             }
-            source: Calcite.theme === Calcite.Theme.Light ? "qrc:/back_light.png" : "qrc:/back.png"
-            width: 32
-            height: width
-
-            MouseArea {
-                anchors.fill: parent
-                onClicked: {
-                    stackView.pop();
-                }
-            }
+            icon.source: "qrc:/chevron-left.svg"
+            icon.width: 32
+            icon.height: 32
+            icon.color: Calcite.text1
+            flat: true
+            background: Item {}
+            onClicked: stackView.pop()
         }
 
         Label {
@@ -98,7 +95,7 @@ Page {
                         anchors.verticalCenter: parent.verticalCenter
                         visible: itemDelegate.isFavorite
                         background: Item {}
-                        icon.source: "qrc:/star-24-f.svg"
+                        icon.source: "qrc:/star-f.svg"
                         icon.color: "#FFD700"
                         icon.width: 18
                         icon.height: 18

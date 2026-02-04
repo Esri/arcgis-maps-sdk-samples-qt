@@ -1,42 +1,19 @@
 <RCC>
     <qresource prefix="/Samples">
-        <file>Analysis.png</file>
-        <file>Analysis@2x.png</file>
-        <file>Analysis@3x.png</file>
-        <file>CloudAndPortal.png</file>
-        <file>CloudAndPortal@2x.png</file>
-        <file>CloudAndPortal@3x.png</file>
-        <file>DisplayInformation.png</file>
-        <file>DisplayInformation@2x.png</file>
-        <file>DisplayInformation@3x.png</file>
-        <file>EditData.png</file>
-        <file>EditData@2x.png</file>
-        <file>EditData@3x.png</file>
-        <file>Features.png</file>
-        <file>Features@2x.png</file>
-        <file>Features@3x.png</file>
-        <file>Geometry.png</file>
-        <file>Geometry@2x.png</file>
-        <file>Geometry@3x.png</file>
-        <file>Layers.png</file>
-        <file>Layers@2x.png</file>
-        <file>Layers@3x.png</file>
-        <file>Maps.png</file>
-        <file>Maps@2x.png</file>
-        <file>Maps@3x.png</file>
-        <file>Routing.png</file>
-        <file>Routing@2x.png</file>
-        <file>Routing@3x.png</file>
-        <file>Scenes.png</file>
-        <file>Scenes@2x.png</file>
-        <file>Scenes@3x.png</file>
-        <file>Search.png</file>
-        <file>Search@2x.png</file>
-        <file>Search@3x.png</file>
-        <file>UtilityNetwork.png</file>
-        <file>UtilityNetwork@2x.png</file>
-        <file>UtilityNetwork@3x.png</file>
-        <file>Categories.xml</file>
+        <file>Analysis.svg</file>
+        <file>CloudAndPortal.svg</file>
+        <file>DisplayInformation.svg</file>
+        <file>EditData.svg</file>
+        <file>Features.svg</file>
+        <file>Geometry.svg</file>
+        <file>Layers.svg</file>
+        <file>LocalServer.svg</file>
+        <file>Maps.svg</file>
+        <file>Routing.svg</file>
+        <file>Scenes.svg</file>
+        <file>Search.svg</file>
+        <file>UtilityNetwork.svg</file>
+		<file>Categories.xml</file>
         <file>BG_Analysis@2x.png</file>
         <file>BG_Analysis@3x.png</file>
         <file>BG_CloudAndPortal@2x.png</file>
@@ -76,8 +53,5 @@
         <file>BG_UtilityNetwork.png</file>
         <file>BG_UtilityNetwork@2x.png</file>
         <file>BG_UtilityNetwork@3x.png</file>
-        <file>LocalServer.png</file>
-        <file>LocalServer@2x.png</file>
-        <file>LocalServer@3x.png</file>
     </qresource>
 </RCC>
