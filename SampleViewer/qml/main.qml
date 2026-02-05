@@ -59,22 +59,39 @@ ApplicationWindow {
             icon.color: Calcite.offWhite
             flat: true
 
-            scale: pressed ? 0.92 : (hovered ? 1.08 : 1.0)
-            Behavior on scale {
-                NumberAnimation { duration: 150; easing.type: Easing.OutQuad }
-            }
-
             background: Rectangle {
                 implicitWidth: 36
                 implicitHeight: 30
                 radius: 5
-                color: hamburgerButton.pressed ? "#40000000" : (hamburgerButton.hovered ? "#25FFFFFF" : "transparent")
+                color: hamburgerButton.hovered ? "#25FFFFFF" : "transparent"
+
                 Behavior on color {
                     ColorAnimation { duration: 150 }
+                }
+
+                Rectangle {
+                    id: hamburgerFlash
+                    anchors.fill: parent
+                    radius: parent.radius
+                    color: "#40000000"
+                    opacity: 0
+                }
+            }
+
+            SequentialAnimation {
+                id: hamburgerButtonTapAnim
+                ParallelAnimation {
+                    NumberAnimation { target: hamburgerButton; property: "scale"; to: 0.92; duration: 80; easing.type: Easing.OutQuad }
+                    NumberAnimation { target: hamburgerFlash; property: "opacity"; to: 1; duration: 80 }
+                }
+                ParallelAnimation {
+                    NumberAnimation { target: hamburgerButton; property: "scale"; to: 1.0; duration: 200; easing.type: Easing.OutBack }
+                    NumberAnimation { target: hamburgerFlash; property: "opacity"; to: 0; duration: 250; easing.type: Easing.OutQuad }
                 }
             }
 
             onClicked: {
+                hamburgerButtonTapAnim.restart()
                 if (drawer.opened) {
                     drawer.close()
                 } else {
@@ -106,22 +123,39 @@ ApplicationWindow {
             icon.color: Calcite.offWhite
             flat: true
 
-            scale: pressed ? 0.92 : (hovered ? 1.08 : 1.0)
-            Behavior on scale {
-                NumberAnimation { duration: 150; easing.type: Easing.OutQuad }
-            }
-
             background: Rectangle {
                 implicitWidth: 36
                 implicitHeight: 30
                 radius: 5
-                color: menuButton.pressed ? "#40000000" : (menuButton.hovered ? "#25FFFFFF" : "transparent")
+                color: menuButton.hovered ? "#25FFFFFF" : "transparent"
+
                 Behavior on color {
                     ColorAnimation { duration: 150 }
+                }
+
+                Rectangle {
+                    id: menuButtonFlash
+                    anchors.fill: parent
+                    radius: parent.radius
+                    color: "#40000000"
+                    opacity: 0
+                }
+            }
+
+            SequentialAnimation {
+                id: menuButtonTapAnim
+                ParallelAnimation {
+                    NumberAnimation { target: menuButton; property: "scale"; to: 0.92; duration: 80; easing.type: Easing.OutQuad }
+                    NumberAnimation { target: menuButtonFlash; property: "opacity"; to: 1; duration: 80 }
+                }
+                ParallelAnimation {
+                    NumberAnimation { target: menuButton; property: "scale"; to: 1.0; duration: 200; easing.type: Easing.OutBack }
+                    NumberAnimation { target: menuButtonFlash; property: "opacity"; to: 0; duration: 250; easing.type: Easing.OutQuad }
                 }
             }
 
             onClicked: {
+                menuButtonTapAnim.restart()
                 if (drawer.opened) {
                     drawer.close()
                 }
@@ -129,155 +163,155 @@ ApplicationWindow {
             }
 
             Menu {
-                    id: optionsMenu
-                    x: parent.width - width
-                    transformOrigin: Item.TopRight
-                    width: 200
+                id: optionsMenu
+                x: parent.width - width
+                transformOrigin: Item.TopRight
+                width: 200
 
-                    readonly property real menuFontSize: 16
+                readonly property real menuFontSize: 16
 
-                    enter: Transition {
-                        NumberAnimation { property: "scale"; from: 0.0; to: 1.0; duration: 40; easing.type: Easing.OutQuad }
+                enter: Transition {
+                    NumberAnimation { property: "scale"; from: 0.0; to: 1.0; duration: 60; easing.type: Easing.Linear }
+                }
+
+                MenuItem {
+                    width: parent.width
+                    height: visible? 48 : 0
+                    text: qsTr("Home")
+                    visible: SampleManager.currentMode != SampleManager.HomepageView
+                    onTriggered: {
+                        aboutView.visible = false;
+                        proxySetupView.visible = false;
+                        SampleManager.currentMode = SampleManager.HomepageView
+                    }
+                }
+                MenuItem {
+                    width: parent.width
+                    height: visible ? 48 : 0
+                    text: qsTr("Live Sample")
+                    visible: SampleManager.currentSample
+                    onTriggered: {
+                        aboutView.visible = false;
+                        proxySetupView.visible = false;
+                        SampleManager.currentMode = SampleManager.LiveSampleView
+                        // postEvent handled in
+                        // - SampleListView.qml for categories
+                        // - SearchView.qml for searches
+                    }
+                }
+                MenuItem {
+                    width: parent.width
+                    height: visible ? 48 : 0
+                    text: qsTr("Source Code")
+                    visible: SampleManager.currentSample
+                    onTriggered: {
+                        aboutView.visible = false;
+                        proxySetupView.visible = false;
+                        SampleManager.currentMode = SampleManager.SourceCodeView
+                    }
+                }
+                MenuItem {
+                    width: parent.width
+                    height: visible ? 48 : 0
+                    text: qsTr("Description")
+                    visible: SampleManager.currentSample
+                    onTriggered: {
+                        aboutView.visible = false;
+                        proxySetupView.visible = false;
+                        SampleManager.currentMode = SampleManager.DescriptionView
+                    }
+                }
+
+                MenuItem {
+                    width: parent.width
+                    height: 48
+                    text: qsTr("API Reference")
+                    onTriggered: {
+                        aboutView.visible = false;
+                        proxySetupView.visible = false;
+                        Qt.openUrlExternally(SampleManager.apiReferenceUrl)
+                    }
+                }
+
+                MenuItem {
+                    width: parent.width
+                    height: 48
+                    text: qsTr("Manage offline data")
+                    onTriggered: {
+                        aboutView.visible = false;
+                        proxySetupView.visible = false;
+                        if (SampleManager.currentMode !== SampleManager.DownloadDataView || !SampleManager.downloadsManager.downloadInProgress)
+                            SampleManager.currentMode = SampleManager.ManageOfflineDataView
+                    }
+                }
+
+                MenuItem {
+                    width: parent.width
+                    height: 48
+                    text: qsTr("Proxy Settings")
+                    onTriggered: {
+                        aboutView.visible = false;
+                        proxySetupView.visible = true;
+                    }
+                }
+
+                MenuItem {
+                    width: parent.width
+                    height: visible ? 48 : 0
+                    text: qsTr("About")
+                    visible: SampleManager.currentMode == SampleManager.HomepageView
+                    onTriggered: {
+                        aboutView.visible = true;
+                        proxySetupView.visible = false;
+                    }
+                }
+
+                MenuItem {
+                    id: favoriteMenuItem
+                    width: parent.width
+                    height: visible ? 48 : 0
+
+                    property bool currentSampleIsFavorite: false
+
+                    text: currentSampleIsFavorite ? qsTr("Remove Favorite") : qsTr("Favorite")
+
+                    visible: SampleManager.currentSample && (
+                                 SampleManager.currentMode === SampleManager.LiveSampleView ||
+                                 SampleManager.currentMode === SampleManager.DescriptionView ||
+                                 SampleManager.currentMode === SampleManager.SourceCodeView ||
+                                 SampleManager.currentMode === SampleManager.DownloadDataView)
+
+                    onTriggered: {
+                        const styledName = "<font color='" + Calcite.brand + "'>" + SampleManager.currentSample.name + "</font>";
+                        if (currentSampleIsFavorite) {
+                            SampleManager.removeSampleFromFavorites(SampleManager.currentSample);
+                            showToast(qsTr("Removed %1 from favorites").arg(styledName));
+                        } else {
+                            SampleManager.addSampleToFavorites(SampleManager.currentSample);
+                            showToast(qsTr("Added %1 to favorites").arg(styledName));
+                        }
                     }
 
-                    MenuItem {
-                        width: parent.width
-                        height: visible? 48 : 0
-                        text: qsTr("Home")
-                        visible: SampleManager.currentMode != SampleManager.HomepageView
-                        onTriggered: {
-                            aboutView.visible = false;
-                            proxySetupView.visible = false;
-                            SampleManager.currentMode = SampleManager.HomepageView
-                        }
-                    }
-                    MenuItem {
-                        width: parent.width
-                        height: visible ? 48 : 0
-                        text: qsTr("Live Sample")
-                        visible: SampleManager.currentSample
-                        onTriggered: {
-                            aboutView.visible = false;
-                            proxySetupView.visible = false;
-                            SampleManager.currentMode = SampleManager.LiveSampleView
-                            // postEvent handled in
-                            // - SampleListView.qml for categories
-                            // - SearchView.qml for searches
-                        }
-                    }
-                    MenuItem {
-                        width: parent.width
-                        height: visible ? 48 : 0
-                        text: qsTr("Source Code")
-                        visible: SampleManager.currentSample
-                        onTriggered: {
-                            aboutView.visible = false;
-                            proxySetupView.visible = false;
-                            SampleManager.currentMode = SampleManager.SourceCodeView
-                        }
-                    }
-                    MenuItem {
-                        width: parent.width
-                        height: visible ? 48 : 0
-                        text: qsTr("Description")
-                        visible: SampleManager.currentSample
-                        onTriggered: {
-                            aboutView.visible = false;
-                            proxySetupView.visible = false;
-                            SampleManager.currentMode = SampleManager.DescriptionView
-                        }
-                    }
-
-                    MenuItem {
-                        width: parent.width
-                        height: 48
-                        text: qsTr("API Reference")
-                        onTriggered: {
-                            aboutView.visible = false;
-                            proxySetupView.visible = false;
-                            Qt.openUrlExternally(SampleManager.apiReferenceUrl)
-                        }
-                    }
-
-                    MenuItem {
-                        width: parent.width
-                        height: 48
-                        text: qsTr("Manage offline data")
-                        onTriggered: {
-                            aboutView.visible = false;
-                            proxySetupView.visible = false;
-                            if (SampleManager.currentMode !== SampleManager.DownloadDataView || !SampleManager.downloadsManager.downloadInProgress)
-                                SampleManager.currentMode = SampleManager.ManageOfflineDataView
-                        }
-                    }
-
-                    MenuItem {
-                        width: parent.width
-                        height: 48
-                        text: qsTr("Proxy Settings")
-                        onTriggered: {
-                            aboutView.visible = false;
-                            proxySetupView.visible = true;
-                        }
-                    }
-
-                    MenuItem {
-                        width: parent.width
-                        height: visible ? 48 : 0
-                        text: qsTr("About")
-                        visible: SampleManager.currentMode == SampleManager.HomepageView
-                        onTriggered: {
-                            aboutView.visible = true;
-                            proxySetupView.visible = false;
-                        }
-                    }
-
-                    MenuItem {
-                        id: favoriteMenuItem
-                        width: parent.width
-                        height: visible ? 48 : 0
-
-                        property bool currentSampleIsFavorite: false
-
-                        text: currentSampleIsFavorite ? qsTr("Remove Favorite") : qsTr("Favorite")
-
-                        visible: SampleManager.currentSample && (
-                                     SampleManager.currentMode === SampleManager.LiveSampleView ||
-                                     SampleManager.currentMode === SampleManager.DescriptionView ||
-                                     SampleManager.currentMode === SampleManager.SourceCodeView ||
-                                     SampleManager.currentMode === SampleManager.DownloadDataView)
-
-                        onTriggered: {
-                            const styledName = "<font color='" + Calcite.brand + "'>" + SampleManager.currentSample.name + "</font>";
-                            if (currentSampleIsFavorite) {
-                                SampleManager.removeSampleFromFavorites(SampleManager.currentSample);
-                                showToast(qsTr("Removed %1 from favorites").arg(styledName));
-                            } else {
-                                SampleManager.addSampleToFavorites(SampleManager.currentSample);
-                                showToast(qsTr("Added %1 to favorites").arg(styledName));
-                            }
-                        }
-
-                        Connections {
-                            target: SampleManager
-                            function onFavoriteSamplesChanged() {
-                                favoriteMenuItem.currentSampleIsFavorite =
-                                        SampleManager.currentSample ? SampleManager.isFavorite(SampleManager.currentSample) : false;
-                            }
-                            function onCurrentSampleChanged() {
-                                favoriteMenuItem.currentSampleIsFavorite =
-                                        SampleManager.currentSample ? SampleManager.isFavorite(SampleManager.currentSample) : false;
-                            }
-                        }
-
-                        Component.onCompleted: {
-                            currentSampleIsFavorite =
+                    Connections {
+                        target: SampleManager
+                        function onFavoriteSamplesChanged() {
+                            favoriteMenuItem.currentSampleIsFavorite =
                                     SampleManager.currentSample ? SampleManager.isFavorite(SampleManager.currentSample) : false;
                         }
+                        function onCurrentSampleChanged() {
+                            favoriteMenuItem.currentSampleIsFavorite =
+                                    SampleManager.currentSample ? SampleManager.isFavorite(SampleManager.currentSample) : false;
+                        }
+                    }
+
+                    Component.onCompleted: {
+                        currentSampleIsFavorite =
+                                SampleManager.currentSample ? SampleManager.isFavorite(SampleManager.currentSample) : false;
                     }
                 }
             }
         }
+    }
 
     CategoryDrawer {
         id: drawer

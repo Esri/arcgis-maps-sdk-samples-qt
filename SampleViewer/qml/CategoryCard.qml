@@ -62,11 +62,11 @@ ItemDelegate {
         // Border on top
         Rectangle {
             anchors.fill: parent
-            anchors.margins: card.hovered ? -1 : 0
-            radius: card.hovered ? 11 : 10
+            anchors.margins: (card.hovered || card.pressed) ? -1 : 0
+            radius: (card.hovered || card.pressed) ? 11 : 10
             color: "transparent"
-            border.width: card.hovered ? 4 : 1
-            border.color: card.hovered ? Calcite.brand : Calcite.border3
+            border.width: (card.hovered || card.pressed) ? 4 : 1
+            border.color: (card.hovered || card.pressed) ? Calcite.brand : Calcite.border3
             Behavior on anchors.margins {
                 NumberAnimation { duration: 150 }
             }
