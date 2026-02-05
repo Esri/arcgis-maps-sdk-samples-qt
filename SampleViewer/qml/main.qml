@@ -170,9 +170,6 @@ ApplicationWindow {
 
                 readonly property real menuFontSize: 16
 
-                enter: Transition {
-                    NumberAnimation { property: "scale"; from: 0.0; to: 1.0; duration: 60; easing.type: Easing.Linear }
-                }
 
                 MenuItem {
                     width: parent.width
