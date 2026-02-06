@@ -17,6 +17,7 @@ import QtQuick
 import QtQuick.Controls
 import Qt.labs.platform
 import QtQuick.Layouts
+import QtQuick.Effects
 import Esri.ArcGISRuntimeSamples
 import Calcite
 
@@ -294,7 +295,8 @@ ColumnLayout {
 
                                         contentItem: Item {
                                             Image {
-                                                source: "qrc:/download_icon.svg"
+                                                id: downloadIcon
+                                                source: "qrc:/download.svg"
                                                 width: downloadButton.parent.iconSize
                                                 height: downloadButton.parent.iconSize
                                                 sourceSize.width: downloadButton.parent.iconSize
@@ -302,6 +304,17 @@ ColumnLayout {
                                                 fillMode: Image.PreserveAspectFit
                                                 anchors.centerIn: parent
                                                 visible: downloadButton.parent.useIconMode
+
+                                                layer.enabled: true
+                                                layer.smooth: true
+                                                layer.effect: MultiEffect {
+                                                    anchors.fill: downloadIcon
+                                                    source: downloadIcon
+                                                    colorization: 1.0
+                                                    brightness: 1.0
+                                                    colorizationColor: Calcite.text1
+                                                    visible: true
+                                                }
                                             }
 
                                             Label {
@@ -334,7 +347,8 @@ ColumnLayout {
 
                                         contentItem: Item {
                                             Image {
-                                                source: "qrc:/delete_icon.svg"
+                                                id: deleteIcon
+                                                source: "qrc:/trash.svg"
                                                 width: deleteButton.parent.iconSize
                                                 height: deleteButton.parent.iconSize
                                                 sourceSize.width: deleteButton.parent.iconSize
@@ -342,6 +356,17 @@ ColumnLayout {
                                                 fillMode: Image.PreserveAspectFit
                                                 anchors.centerIn: parent
                                                 visible: deleteButton.parent.useIconMode
+
+                                                layer.enabled: true
+                                                layer.smooth: true
+                                                layer.effect: MultiEffect {
+                                                    anchors.fill: deleteIcon
+                                                    source: deleteIcon
+                                                    colorization: 1.0
+                                                    brightness: 1.0
+                                                    colorizationColor: Calcite.text1
+                                                    visible: true
+                                                }
                                             }
 
                                             Label {

@@ -56,17 +56,23 @@ Page {
     GridView {
         anchors {
             fill: parent
-            leftMargin: 10
-            topMargin: 10
-            bottomMargin: 10
+            leftMargin: 7
+            rightMargin: 7
+            topMargin: 7
+            bottomMargin: 7
         }
         clip: true
         model: SampleManager.categories
         delegate: Component {
-            CategoryCard {
-                thumbnailUrl: model.thumbnailUrl
-                displayName: model.displayName
-                backgroundThumbnailUrl: model.backgroundThumbnailUrl
+            Item {
+                width: GridView.view.cellWidth
+                height: GridView.view.cellHeight
+                CategoryCard {
+                    anchors.centerIn: parent
+                    thumbnailUrl: model.thumbnailUrl
+                    displayName: model.displayName
+                    backgroundThumbnailUrl: model.backgroundThumbnailUrl
+                }
             }
         }
         cellWidth: width / 2

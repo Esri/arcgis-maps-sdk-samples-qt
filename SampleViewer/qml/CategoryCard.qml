@@ -15,29 +15,70 @@
 
 import QtQuick
 import QtQuick.Controls
+import QtQuick.Effects
 import Esri.ArcGISRuntimeSamples
+import Calcite
 
 ItemDelegate {
+    id: card
     width: 105
     height: 105
-    clip: true
+    clip: false
 
     property string thumbnailUrl
     property string displayName
     property string backgroundThumbnailUrl
 
-    background: Image {
-        id: categoryImg
-        anchors.fill: parent
-        source: backgroundThumbnailUrl
-        clip: true
+    // Hover/press scale effect with z-ordering
+    scale: pressed ? 0.97 : (hovered ? 1.03 : 1.0)
+    z: hovered ? 1 : 0
+    Behavior on scale {
+        NumberAnimation { duration: 150; easing.type: Easing.OutQuad }
+    }
 
+    background: Item {
+        Item {
+            anchors.fill: parent
+            visible: true
+
+            Image {
+                id: categoryImg
+                anchors.fill: parent
+                source: backgroundThumbnailUrl
+                fillMode: Image.PreserveAspectCrop
+            }
+
+            Rectangle {
+                anchors.fill: parent
+                radius: 10
+                gradient: Gradient {
+                    GradientStop { position: 0.0; color: "#25000000" }
+                    GradientStop { position: 0.5; color: "#65000000" }
+                    GradientStop { position: 1.0; color: "#CC000000" }
+                }
+            }
+        }
+
+        // Border on top
         Rectangle {
             anchors.fill: parent
-            clip: true
-            opacity: 0.4
-            color: "black"
-            radius: 10
+            anchors.margins: (card.hovered || card.pressed) ? -1 : 0
+            radius: (card.hovered || card.pressed) ? 11 : 10
+            color: "transparent"
+            border.width: (card.hovered || card.pressed) ? 4 : 1
+            border.color: (card.hovered || card.pressed) ? Calcite.brand : Calcite.border3
+            Behavior on anchors.margins {
+                NumberAnimation { duration: 150 }
+            }
+            Behavior on radius {
+                NumberAnimation { duration: 150 }
+            }
+            Behavior on border.width {
+                NumberAnimation { duration: 150 }
+            }
+            Behavior on border.color {
+                ColorAnimation { duration: 150 }
+            }
         }
     }
 
@@ -50,20 +91,33 @@ ItemDelegate {
             spacing: 2
 
             Rectangle {
+                id: iconCircle
                 anchors.horizontalCenter: parent.horizontalCenter
-                width: 30
+                width: 42
                 height: width
-                radius: 30
-                color: "#eeeeee"
+                radius: width / 2
+                color: Calcite.textInverse
+                border.width: Calcite.theme !== Calcite.Theme.Light ? 1 : 0
+                border.color: Calcite.border1
 
                 Image {
                     id: thumbnailImage
                     anchors.centerIn: parent
-                    width: 18
+                    width: 24
                     height: width
                     source: thumbnailUrl
                     clip: true
-                    visible: drawer.visible
+
+                    layer.enabled: true
+                    layer.smooth: true
+                    layer.effect: MultiEffect {
+                        anchors.fill: thumbnailImage
+                        source: thumbnailImage
+                        colorization: 1.0
+                        brightness: 1.0
+                        colorizationColor: Calcite.text1
+                        visible: true
+                    }
                 }
             }
 

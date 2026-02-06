@@ -50,73 +50,74 @@ Rectangle {
                 height: GridView.view ? GridView.view.delegateItemSize : 175
 
                 Rectangle {
-                    id: paddingRect
-                    anchors {
-                        top: parent.top
-                        left: parent.left
-                    }
-                    width: GridView.view ? (GridView.view.cellWidth - GridView.view.delegateItemSize) / 2 : 0
-                    height: 1
-                    color: "#00000000"
-                }
-
-                Rectangle {
-                    id: backgroundRectangle
-                    anchors {
-                        top: parent.top
-                        left: paddingRect.right
-                    }
+                    id: cardContainer
+                    anchors.centerIn: parent
                     height: cell.height * .90
                     width: cell.width * .90
-                    color: "black"
+                    color: "transparent"
 
-                    Image {
-                        id: img
-                        anchors.fill: parent
-                        anchors.margins: 1
-                        source: thumbnailUrl
-                        fillMode: Image.PreserveAspectCrop
+                    // Hover/press scale effect
+                    scale: cardMouseArea.pressed ? 0.97 : (cardMouseArea.containsMouse ? 1.03 : 1.0)
+                    z: cardMouseArea.containsMouse ? 1 : 0
+                    Behavior on scale {
+                        NumberAnimation { duration: 150; easing.type: Easing.OutQuad }
                     }
 
                     Rectangle {
-                        id: txtBackground
-                        anchors {
-                            bottom: img.bottom
-                            topMargin: cell.height * .05
-                            left: img.left
-                            right: img.right
+                        id: backgroundRectangle
+                        anchors.fill: parent
+                        color: "black"
+                        border.width: cardMouseArea.containsMouse ? 2 : 1
+                        border.color: cardMouseArea.containsMouse ? Calcite.brand : (Calcite.theme !== Calcite.Theme.Light ? "#555555" : Calcite.border1)
+                        Behavior on border.width {
+                            NumberAnimation { duration: 150 }
                         }
-                        height: txt.height
-                        color: "#80000000"
+                        Behavior on border.color {
+                            ColorAnimation { duration: 150 }
+                        }
 
-                        Text {
-                            id: txt
-                            padding: 5
-                            width: txtBackground.width - (padding * 2)
-                            text: name
-                            wrapMode: Text.WordWrap
-                            font.bold: true
-                            clip: true
-                            color: "white"
+                        Image {
+                            id: img
+                            anchors.fill: parent
+                            anchors.margins: cardMouseArea.containsMouse ? 3 : 1
+                            source: thumbnailUrl
+                            fillMode: Image.PreserveAspectCrop
+                            Behavior on anchors.margins {
+                                NumberAnimation { duration: 150 }
+                            }
+                        }
+
+                        Rectangle {
+                            id: txtBackground
+                            anchors {
+                                bottom: img.bottom
+                                left: img.left
+                                right: img.right
+                            }
+                            height: txt.height
+                            color: "#80000000"
+
+                            Text {
+                                id: txt
+                                padding: 5
+                                width: txtBackground.width - (padding * 2)
+                                text: name
+                                wrapMode: Text.WordWrap
+                                font.bold: true
+                                clip: true
+                                color: "white"
+                            }
                         }
                     }
 
                     MouseArea {
+                        id: cardMouseArea
                         anchors.fill: parent
                         hoverEnabled: true
                         onClicked: {
                             drawer.close();
                             SampleManager.currentSample = sample;
                             SampleManager.currentMode = SampleManager.LiveSampleView
-                        }
-                        onContainsMouseChanged: {
-                            if (containsMouse) {
-                                backgroundRectangle.color = Calcite.brandHover
-                                img.anchors.margins = 3
-                            } else {
-                                backgroundRectangle.color = "black"
-                                img.anchors.margins = 1
-                            }
                         }
                     }
                 }
