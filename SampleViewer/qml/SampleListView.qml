@@ -15,6 +15,7 @@
 
 import QtQuick
 import QtQuick.Controls
+import QtQuick.Effects
 import Esri.ArcGISRuntimeSamples
 
 Page {
@@ -38,8 +39,38 @@ Page {
             icon.height: 32
             icon.color: Calcite.text1
             flat: true
-            background: Item {}
-            onClicked: stackView.pop()
+
+            background: Rectangle {
+                implicitWidth: 36
+                implicitHeight: 30
+                radius: 5
+                color: back.hovered ? Calcite.foreground3 : "transparent"
+
+                Rectangle {
+                    id: backFlash
+                    anchors.fill: parent
+                    radius: parent.radius
+                    color: Calcite.foreground3
+                    opacity: 0
+                }
+            }
+
+            SequentialAnimation {
+                id: backTapAnim
+                ParallelAnimation {
+                    NumberAnimation { target: back; property: "scale"; to: 0.92; duration: 80; easing.type: Easing.OutQuad }
+                    NumberAnimation { target: backFlash; property: "opacity"; to: 1; duration: 80 }
+                }
+                ParallelAnimation {
+                    NumberAnimation { target: back; property: "scale"; to: 1.0; duration: 200; easing.type: Easing.OutBack }
+                    NumberAnimation { target: backFlash; property: "opacity"; to: 0; duration: 250; easing.type: Easing.OutQuad }
+                }
+            }
+
+            onClicked: {
+                backTapAnim.restart()
+                stackView.pop()
+            }
         }
 
         Label {
@@ -49,7 +80,7 @@ Page {
                 pixelSize: 18
                 family: fontFamily
             }
-            color: Calcite.text2
+            color: Calcite.text1
         }
     }
 
@@ -61,45 +92,185 @@ Page {
         }
         color: "transparent"
 
+        property var activeContextMenu: null
+
         ListView {
+            id: samplesListView
             anchors.fill: parent
             clip: true
             model: SampleManager.currentCategory ? SampleManager.currentCategory.samples : []
-            spacing: 10
+            spacing: 0
             delegate: ItemDelegate {
                 id: itemDelegate
                 width: parent ? parent.width : 0
-                height: 45
+                height: Math.max(40, contentLabel.implicitHeight + 16)
                 clip: true
                 text: name
+                enabled: !sampleListRect.activeContextMenu || contextMenu.visible
+                opacity: (sampleListRect.activeContextMenu !== null && !contextMenu.visible) ? 0.3 : 1.0
+
+                Behavior on opacity { NumberAnimation { duration: 150 } }
 
                 property bool isFavorite: false
+                property bool isSelected: SampleManager.currentSample === sample
+                property bool menuJustClosed: false
 
-                contentItem: Row {
-                    spacing: 8
+                Connections {
+                    target: contextMenu
+                    function onClosed() {
+                        if (itemDelegate.hovered) {
+                            itemDelegate.menuJustClosed = true;
+                        }
+                    }
+                }
 
-                    Label {
-                        text: itemDelegate.text
-                        font: itemDelegate.font
-                        elide: Text.ElideNone
-                        wrapMode: Text.Wrap
-                        verticalAlignment: Text.AlignVCenter
-                        width: parent.width - (starButton.visible ? starButton.width + parent.spacing : 0)
-                        height: parent.height
+                onHoveredChanged: {
+                    // Reset flag when mouse leaves
+                    if (!hovered) {
+                        menuJustClosed = false;
+                    }
+                }
+
+                TapHandler {
+                    id: tapHandler
+                    acceptedButtons: Qt.LeftButton | Qt.RightButton
+                    property bool didLongPress: false
+
+                    onLongPressed: {
+                        didLongPress = true;
+                        contextMenu.popup(point.position.x, point.position.y)
                     }
 
-                    ToolButton {
-                        id: starButton
-                        width: 18
-                        height: 18
-                        anchors.verticalCenter: parent.verticalCenter
-                        visible: itemDelegate.isFavorite
-                        background: Item {}
-                        icon.source: "qrc:/star-f.svg"
-                        icon.color: "#FFD700"
-                        icon.width: 18
-                        icon.height: 18
-                        padding: 0
+                    onTapped: function(eventPoint, button) {
+                        if (didLongPress) {
+                            didLongPress = false;
+                            return;
+                        }
+                        if (button === Qt.RightButton) {
+                            contextMenu.popup()
+                            return;
+                        }
+                        // Left click / tap
+                        if (itemDelegate.isSelected) return;
+                        if (itemDelegate.menuJustClosed) {
+                            itemDelegate.menuJustClosed = false;
+                            return;
+                        }
+                        drawer.close();
+                        SampleManager.currentSample = sample;
+                        SampleManager.currentMode = SampleManager.LiveSampleView;
+                    }
+
+                    onCanceled: didLongPress = false
+                }
+
+                contentItem: Item {
+                    Label {
+                        id: contentLabel
+                        anchors {
+                            left: parent.left
+                            right: rightIcons.left
+                            verticalCenter: parent.verticalCenter
+                            leftMargin: 8
+                            rightMargin: 8
+                        }
+                        text: itemDelegate.text
+                        font: itemDelegate.font
+                        color: itemDelegate.isSelected ? "#ffffff" : Calcite.text1
+                        wrapMode: Text.WordWrap
+                        verticalAlignment: Text.AlignVCenter
+                    }
+
+                    Row {
+                        id: rightIcons
+                        anchors {
+                            right: parent.right
+                            rightMargin: 8
+                            verticalCenter: parent.verticalCenter
+                        }
+                        spacing: 4
+
+                        ToolButton {
+                            id: starButton
+                            width: 18
+                            height: 18
+                            visible: itemDelegate.isFavorite
+                            background: Item {}
+                            icon.source: "qrc:/star-f.svg"
+                            icon.color: "#FFD700"
+                            icon.width: 18
+                            icon.height: 18
+                            padding: 0
+                        }
+
+                        Rectangle {
+                            id: kebabButton
+                            width: 24
+                            height: 24
+                            radius: 4
+                            enabled: ((itemDelegate.hovered && itemDelegate.enabled) || contextMenu.visible) ? 1 : 0
+                            opacity: ((itemDelegate.hovered && itemDelegate.enabled) || contextMenu.visible) ? 1 : 0
+                            color: "transparent"
+
+                            Behavior on opacity { NumberAnimation { duration: 150 } }
+
+                            property bool menuJustClosed: false
+
+
+                            Rectangle {
+                                anchors.fill: parent
+                                radius: parent.radius
+                                color: Calcite.foreground1
+                                opacity: kebabMouseArea.containsMouse ? 1 : 0
+
+                                Behavior on opacity {
+                                    NumberAnimation { duration: 150 }
+                                }
+                            }
+
+                            Image {
+                                id: kebabIcon
+                                anchors.centerIn: parent
+                                source: "qrc:/ellipsis.svg"
+                                width: 18
+                                height: 18
+                                sourceSize: Qt.size(18, 18)
+                                visible: true
+
+                                layer.enabled: true
+                                layer.effect: MultiEffect {
+                                    anchors.fill: kebabIcon
+                                    source: kebabIcon
+                                    colorization: 1.0
+                                    brightness: 1.0
+                                    colorizationColor: itemDelegate.isSelected ? "#ffffff"
+                                                                               : kebabMouseArea.containsMouse ? Calcite.text1 : Calcite.text2
+
+                                }
+                            }
+
+                            MouseArea {
+                                id: kebabMouseArea
+                                anchors.fill: parent
+                                hoverEnabled: true
+                                onClicked: {
+                                    if (kebabButton.menuJustClosed) {
+                                        kebabButton.menuJustClosed = false;
+                                        return;
+                                    }
+                                    contextMenu.popup();
+                                }
+                            }
+
+                            Connections {
+                                target: contextMenu
+                                function onClosed() {
+                                    if (kebabMouseArea.containsMouse) {
+                                        kebabButton.menuJustClosed = true;
+                                    }
+                                }
+                            }
+                        }
                     }
                 }
 
@@ -107,11 +278,36 @@ Page {
                     width: parent.width
                     height: parent.height
                     color: "transparent"
-                    radius: 4
-                    opacity: 0.9
-                    border {
-                        color: "darkgray"
-                        width: 1
+
+                    // Hover highlight
+                    Rectangle {
+                        anchors.fill: parent
+                        color: Calcite.foreground3
+                        opacity: ((itemDelegate.hovered && itemDelegate.enabled) || contextMenu.visible) ? 1 : 0
+                        visible: !itemDelegate.isSelected
+
+                        Behavior on opacity {
+                            enabled: !itemDelegate.hovered
+                            NumberAnimation { duration: 150 }
+                        }
+                    }
+
+                    // Selected highlight
+                    Rectangle {
+                        anchors.fill: parent
+                        color: Calcite.brandHover
+                        visible: itemDelegate.isSelected
+                    }
+
+                    // Bottom separator line
+                    Rectangle {
+                        anchors {
+                            left: parent.left
+                            right: parent.right
+                            bottom: parent.bottom
+                        }
+                        height: 1
+                        color: Calcite.border1
                     }
                 }
 
@@ -126,13 +322,97 @@ Page {
                     isFavorite = SampleManager.isFavorite(sample);
                 }
 
-                MouseArea {
-                    anchors.fill: parent
-                    onClicked: {
-                        drawer.close();
-                        // launch sample...
-                        SampleManager.currentSample = sample;
+                Menu {
+                    id: contextMenu
+
+                    onOpened: sampleListRect.activeContextMenu = contextMenu
+                    onClosed: sampleListRect.activeContextMenu = null
+
+                    background: Rectangle {
+                        implicitWidth: 200
+                        color: Calcite.foreground1
+                        border.color: Calcite.border1
+                        radius: 4
                     }
+
+                    MenuItem {
+                        text: qsTr("Live Sample")
+                        enabled: {
+                            if(SampleManager.currentSample == sample) {
+                                return (SampleManager.currentMode != SampleManager.LiveSampleView);
+                            }
+                            else {
+                                return true;
+                            }
+                        }
+                        onTriggered: {
+                            drawer.close();
+                            if(SampleManager.currentSample != sample) {
+                                SampleManager.currentSample = sample;
+                            }
+                            SampleManager.currentMode = SampleManager.LiveSampleView;
+                        }
+                    }
+
+                    MenuItem {
+                        text: qsTr("Source Code")
+                        enabled: {
+                            if(SampleManager.currentSample == sample) {
+                                return (SampleManager.currentMode != SampleManager.SourceCodeView);
+                            }
+                            else {
+                                return true;
+                            }
+                        }
+                        onTriggered: {
+                            drawer.close();
+                            SampleManager.currentSample = sample;
+                            SampleManager.currentMode = SampleManager.SourceCodeView;
+                        }
+                    }
+
+                    MenuItem {
+                        text: qsTr("Description")
+                        enabled: {
+                            if(SampleManager.currentSample == sample) {
+                                return (SampleManager.currentMode != SampleManager.DescriptionView);
+                            }
+                            else {
+                                return true;
+                            }
+                        }
+                        onTriggered: {
+                            drawer.close();
+                            SampleManager.currentSample = sample;
+                            SampleManager.currentMode = SampleManager.DescriptionView;
+                        }
+                    }
+
+                    MenuItem {
+                        text: itemDelegate.isFavorite ? qsTr("Remove from Favorites") : qsTr("Add to Favorites")
+                        onTriggered: {
+                            const styledName = "<font color='" + Calcite.brand + "'>" + name + "</font>";
+                            if (itemDelegate.isFavorite) {
+                                SampleManager.removeSampleFromFavorites(sample);
+                                window.showToast(qsTr("Removed %1 from favorites").arg(styledName));
+                            } else {
+                                SampleManager.addSampleToFavorites(sample);
+                                window.showToast(qsTr("Added %1 to favorites").arg(styledName));
+                            }
+                        }
+                    }
+                }
+            }
+        }
+
+        // Click-blocking overlay when context menu is open
+        MouseArea {
+            anchors.fill: parent
+            visible: sampleListRect.activeContextMenu !== null
+            z: 99
+            onClicked: {
+                if (sampleListRect.activeContextMenu) {
+                    sampleListRect.activeContextMenu.close();
                 }
             }
         }

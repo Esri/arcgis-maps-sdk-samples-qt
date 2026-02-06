@@ -34,7 +34,7 @@ Page {
                     family: fontFamily
                     pixelSize: 18
                 }
-                color: Calcite.text2
+                color: Calcite.text1
             }
             anchors.left: parent.left
             anchors.right: parent.right

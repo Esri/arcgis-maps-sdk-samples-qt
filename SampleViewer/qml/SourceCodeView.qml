@@ -55,6 +55,14 @@ Rectangle {
 
             Menu {
                 id: contextMenu
+
+                background: Rectangle {
+                    implicitWidth: 200
+                    color: Calcite.foreground1
+                    border.color: Calcite.border1
+                    radius: 4
+                }
+
                 MenuItem {
                     text: qsTr('Copy')
                     onTriggered: {
@@ -67,7 +75,7 @@ Rectangle {
                 anchors.fill: parent
                 acceptedButtons: Qt.RightButton
 
-                onClicked: {
+                onClicked: function(mouse) {
                     if (mouse.button === Qt.RightButton && textEdit.selectedText !== "") {
                         contextMenu.x = mouse.x;
                         contextMenu.y = mouse.y;
