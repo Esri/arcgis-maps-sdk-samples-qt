@@ -267,6 +267,7 @@
 #include "../CppSamples/Search/OfflineGeocode/OfflineGeocode.h"
 #include "../CppSamples/Search/ReverseGeocodeOnline/ReverseGeocodeOnline.h"
 #include "../CppSamples/Search/SearchDictionarySymbolStyle/SearchDictionarySymbolStyle.h"
+#include "../CppSamples/Search/QueryDynamicEntities/QueryDynamicEntities.h"
 #include "../CppSamples/UtilityNetwork/ConfigureSubnetworkTrace/ConfigureSubnetworkTrace.h"
 #include "../CppSamples/UtilityNetwork/CreateLoadReport/CreateLoadReport.h"
 #include "../CppSamples/UtilityNetwork/DisplayContentOfUtilityNetworkContainer/DisplayContentOfUtilityNetworkContainer.h"
@@ -546,6 +547,7 @@ void registerCppSampleClasses()
   SceneLayerSelection::init();
   ScenePropertiesExpressions::init();
   SearchDictionarySymbolStyle::init();
+  QueryDynamicEntities::init();
   ServiceArea::init();
   ToggleBetweenFeatureRequestModes::init();
   SetInitialMapArea::init();

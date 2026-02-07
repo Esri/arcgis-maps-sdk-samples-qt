@@ -1,0 +1,15 @@
+<RCC>
+    <qresource prefix="/Samples/Search/QueryDynamicEntities">
+        <file alias="sample.json">README.metadata.json</file>
+        <file>QueryDynamicEntities.qml</file>
+        <file>QueryDynamicEntities.h</file>
+        <file>QueryDynamicEntities.cpp</file>
+        <file>CustomDynamicEntityDataSource.h</file>
+        <file>CustomDynamicEntityDataSource.cpp</file>
+        <file>FlightInfoListModel.h</file>
+        <file>FlightInfoListModel.cpp</file>
+        <file>main.qml</file>
+        <file>screenshot.png</file>
+        <file>README.md</file>
+    </qresource>
+</RCC>

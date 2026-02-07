@@ -238,6 +238,9 @@ HEADERS += \
     "$$SAMPLEPATHCPP/Search/OfflineGeocode/OfflineGeocode.h" \
     "$$SAMPLEPATHCPP/Search/ReverseGeocodeOnline/ReverseGeocodeOnline.h" \
     "$$SAMPLEPATHCPP/Search/SearchDictionarySymbolStyle/SearchDictionarySymbolStyle.h" \
+    "$$SAMPLEPATHCPP/Search/QueryDynamicEntities/QueryDynamicEntities.h" \
+    "$$SAMPLEPATHCPP/Search/QueryDynamicEntities/FlightInfoListModel.h" \
+    "$$SAMPLEPATHCPP/Search/QueryDynamicEntities/CustomDynamicEntityDataSource.h" \
     "$$SAMPLEPATHCPP/UtilityNetwork/ConfigureSubnetworkTrace/ConfigureSubnetworkTrace.h" \
     "$$SAMPLEPATHCPP/UtilityNetwork/CreateLoadReport/CreateLoadReport.h" \
     "$$SAMPLEPATHCPP/UtilityNetwork/DisplayContentOfUtilityNetworkContainer/DisplayContentOfUtilityNetworkContainer.h" \
@@ -467,6 +470,9 @@ SOURCES += \
     "$$SAMPLEPATHCPP/Search/OfflineGeocode/OfflineGeocode.cpp" \
     "$$SAMPLEPATHCPP/Search/ReverseGeocodeOnline/ReverseGeocodeOnline.cpp" \
     "$$SAMPLEPATHCPP/Search/SearchDictionarySymbolStyle/SearchDictionarySymbolStyle.cpp" \
+    "$$SAMPLEPATHCPP/Search/QueryDynamicEntities/QueryDynamicEntities.cpp" \
+    "$$SAMPLEPATHCPP/Search/QueryDynamicEntities/FlightInfoListModel.cpp" \
+    "$$SAMPLEPATHCPP/Search/QueryDynamicEntities/CustomDynamicEntityDataSource.cpp" \
     "$$SAMPLEPATHCPP/UtilityNetwork/ConfigureSubnetworkTrace/ConfigureSubnetworkTrace.cpp" \
     "$$SAMPLEPATHCPP/UtilityNetwork/CreateLoadReport/CreateLoadReport.cpp" \
     "$$SAMPLEPATHCPP/UtilityNetwork/DisplayContentOfUtilityNetworkContainer/DisplayContentOfUtilityNetworkContainer.cpp" \
@@ -684,6 +690,7 @@ RESOURCES += \
     "$$SAMPLEPATHCPP/Search/OfflineGeocode/OfflineGeocode.qrc" \
     "$$SAMPLEPATHCPP/Search/ReverseGeocodeOnline/ReverseGeocodeOnline.qrc" \
     "$$SAMPLEPATHCPP/Search/SearchDictionarySymbolStyle/SearchDictionarySymbolStyle.qrc" \
+    "$$SAMPLEPATHCPP/Search/QueryDynamicEntities/QueryDynamicEntities.qrc" \
     "$$SAMPLEPATHCPP/UtilityNetwork/ConfigureSubnetworkTrace/ConfigureSubnetworkTrace.qrc" \
     "$$SAMPLEPATHCPP/UtilityNetwork/CreateLoadReport/CreateLoadReport.qrc" \
     "$$SAMPLEPATHCPP/UtilityNetwork/DisplayContentOfUtilityNetworkContainer/DisplayContentOfUtilityNetworkContainer.qrc" \

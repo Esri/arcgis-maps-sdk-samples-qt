@@ -1,0 +1,131 @@
+// [WriteFile Name=QueryDynamicEntities, Category=Search]
+// [Legal]
+// Copyright 2026 Esri.
+//
+// Licensed under the Apache License, Version 2.0 (the "License");
+// you may not use this file except in compliance with the License.
+// You may obtain a copy of the License at
+// http://www.apache.org/licenses/LICENSE-2.0
+
+// Unless required by applicable law or agreed to in writing, software
+// distributed under the License is distributed on an "AS IS" BASIS,
+// WITHOUT WARRANTIES OR CONDITIONS OF ANY KIND, either express or implied.
+// See the License for the specific language governing permissions and
+// limitations under the License.
+// [Legal]
+
+// sample headers
+#include "CustomDynamicEntityDataSource.h"
+
+// ArcGIS Maps SDK headers
+#include "Domain.h"
+#include "DynamicEntityDataSource.h"
+#include "DynamicEntityDataSourceInfo.h"
+#include "Field.h"
+#include "Point.h"
+#include "ServiceTypes.h"
+#include "SpatialReference.h"
+
+// Qt headers
+#include <QFile>
+#include <QFuture>
+#include <QTextStream>
+#include <QtConcurrent/QtConcurrent>
+
+using namespace Esri::ArcGISRuntime;
+
+CustomDynamicEntityDataSource::CustomDynamicEntityDataSource(const QString& fileName,
+                                                             const QString& entityIdField,
+                                                             const int msDelay,
+                                                             QObject* parent) :
+  DynamicEntityDataSource(parent),
+  m_fileName(fileName),
+  m_entityIdField(entityIdField),
+  m_msDelay(msDelay)
+{
+}
+
+CustomDynamicEntityDataSource::~CustomDynamicEntityDataSource()
+{
+  // The app will crash upon destruction if the asynchronous method is still running upon destruction
+  m_watcher.cancel();
+  m_watcher.waitForFinished();
+}
+
+// Override the virtual onLoadAsync method to define what the DynamicEntityDataSource will do upon load
+QFuture<DynamicEntityDataSourceInfo*> CustomDynamicEntityDataSource::onLoadAsync()
+{
+  m_fields = getSchema();
+
+  m_file.setFileName(m_fileName);
+
+  if (m_file.open(QIODevice::ReadOnly | QIODevice::Text))
+  {
+    m_textStream.setDevice(&m_file);
+  }
+
+  // Create a DynamicEntityDataSourceInfo object to return
+  DynamicEntityDataSourceInfo* dynamicEntityDataSourceInfo = new DynamicEntityDataSourceInfo(m_entityIdField, m_fields, this);
+
+  // Your data may not display correctly if you do not have a spatial reference set
+  dynamicEntityDataSourceInfo->setSpatialReference(SpatialReference::wgs84());
+
+  // Return the QFuture<DynamicEntityDataSourceInfo*>
+  return QtFuture::makeReadyValueFuture(dynamicEntityDataSourceInfo);
+}
+
+// Override the virtual onConnectAsync method to define what the DynamicEntityDataSource will do when the data source is connected
+QFuture<void> CustomDynamicEntityDataSource::onConnectAsync()
+{
+  m_watcher.setFuture(QtConcurrent::run([this]()
+  {
+    observationProcessLoopAsync();
+  }));
+  return QtFuture::makeReadyVoidFuture();
+}
+
+// Override the virtual onDisconnectAsync method to define what the DynamicEntityDataSource will do when the data source is disconnected
+QFuture<void> CustomDynamicEntityDataSource::onDisconnectAsync()
+{
+  m_watcher.cancel();
+  m_watcher.waitForFinished();
+  return QtFuture::makeReadyVoidFuture();
+}
+
+// This method runs asynchronously to step through the accompanying .json file and call addObservation(geometry, attributes) with each line
+void CustomDynamicEntityDataSource::observationProcessLoopAsync()
+{
+  while (!m_textStream.atEnd() && !m_watcher.isCanceled())
+  {
+    const QString line = m_textStream.readLine();
+    const QJsonObject jsonObject = QJsonDocument::fromJson(line.toUtf8()).object();
+
+    // Get the observation geometry from the line
+    const QJsonObject geometryObject = jsonObject.value("geometry").toObject();
+    const Point point(geometryObject.value("x").toDouble(), geometryObject.value("y").toDouble(), SpatialReference::wgs84());
+
+    // Get the observation attributes from the line
+    const QVariantMap attributes = jsonObject.value("attributes").toObject().toVariantMap();
+
+    addObservation(point, attributes);
+
+    QThread::msleep(m_msDelay);
+
+    if (m_textStream.atEnd())
+    {
+      m_textStream.seek(0);
+    }
+  }
+}
+
+// Schema fields that are hardcoded to match the accompanying .json data
+QList<Field> CustomDynamicEntityDataSource::getSchema()
+{
+  return QList<Field>{Field(FieldType::Text, "aircraft", "", 8, Domain(), false, false),
+                      Field(FieldType::Float64, "altitude_feet", "", 8, Domain(), false, false),
+                      Field(FieldType::Text, "arrival_airport", "", 8, Domain(), false, false),
+                      Field(FieldType::Text, "flight_number", "", 8, Domain(), false, false),
+                      Field(FieldType::Float64, "heading", "", 8, Domain(), false, false),
+                      Field(FieldType::Float64, "speed", "", 8, Domain(), false, false),
+                      Field(FieldType::Text, "status", "", 8, Domain(), false, false)};
+}
