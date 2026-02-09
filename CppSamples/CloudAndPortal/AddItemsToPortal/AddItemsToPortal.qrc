@@ -5,10 +5,10 @@
         <file>AddItemsToPortal.qml</file>
         <file>README.md</file>
         <file>add_item_sample.csv</file>
-        <file>ic_menu_account_dark.png</file>
-        <file>ic_menu_addencircled_dark.png</file>
-        <file>ic_menu_checkedcircled_dark.png</file>
-        <file>ic_menu_trash_dark.png</file>
+        <file>user-24.svg</file>
+        <file>plus-circle-24.svg</file>
+        <file>check-circle-24.svg</file>
+        <file>trash-24.svg</file>
         <file>AddItemsToPortal.cpp</file>
         <file>AddItemsToPortal.h</file>
     </qresource>

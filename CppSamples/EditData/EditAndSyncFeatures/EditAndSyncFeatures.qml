@@ -83,10 +83,10 @@ EditAndSyncFeaturesSample {
         leftPadding: 20
         rightPadding: 20
         icon {
-            source: isOffline ? "qrc:/Samples/EditData/EditAndSyncFeatures/sync.png" : "qrc:/Samples/EditData/EditAndSyncFeatures/download.png"
+            source: isOffline ? "qrc:/Samples/EditData/EditAndSyncFeatures/arrow-up-down-24.svg" : "qrc:/Samples/EditData/EditAndSyncFeatures/download-24.svg"
             width: 24
             height: 24
-            color: "#F8F8F8"
+            color: palette.buttonText
         }
 
         onClicked: {

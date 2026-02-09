@@ -29,7 +29,7 @@ ApplicationWindow {
 
     palette {
         button: Calcite.brand
-        buttonText: Calcite.text1
+        buttonText: Calcite.offWhite
         highlight: Calcite.brandHover
         base: Calcite.background
         text: Calcite.text1

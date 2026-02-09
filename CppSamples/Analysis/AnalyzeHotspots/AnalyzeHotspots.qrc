@@ -6,6 +6,5 @@
         <file>AnalyzeHotspots.h</file>
         <file>AnalyzeHotspots.cpp</file>
         <file>README.md</file>
-        <file>calendar.png</file>
     </qresource>
 </RCC>

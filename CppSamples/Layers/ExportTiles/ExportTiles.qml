@@ -49,10 +49,10 @@ ExportTilesSample {
             leftPadding: 20
             rightPadding: 20
             icon {
-                source: "qrc:/Samples/Layers/ExportTiles/download.png"
+                source: "qrc:/Samples/Layers/ExportTiles/download-24.svg"
                 width: 24
                 height: 24
-                color: "white"
+                color: palette.buttonText
             }
 
             onClicked: {
