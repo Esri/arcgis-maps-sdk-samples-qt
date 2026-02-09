@@ -43,7 +43,7 @@ using namespace Esri::ArcGISRuntime;
 
 AddBuildingSceneLayer::AddBuildingSceneLayer(QObject* parent /* = nullptr */) :
   QObject(parent),
-  m_scene(new Scene(BasemapStyle::ArcGISTopographic, SceneViewingMode::Local, this))
+  m_scene(new Scene(SceneViewingMode::Local, BasemapStyle::ArcGISTopographic, this))
 {
   // create a new elevation source from Terrain3D REST service
   ArcGISTiledElevationSource* elevationSource =

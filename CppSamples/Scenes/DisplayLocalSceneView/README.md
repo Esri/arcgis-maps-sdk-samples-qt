@@ -18,7 +18,7 @@ This sample displays a local scene clipped to an extent. Pan and zoom to explore
 
 ## How it works
 
-1. Create a local scene object with the `Scene(BasemapStyle::ArcGISTopographic, SceneViewingMode::Local)` constructor.
+1. Create a local scene object with the `Scene(SceneViewingMode::Local, BasemapStyle::ArcGISTopographic)` constructor.
 2. Create an `ArcGISTiledElevationSource` object and add it to the local scene's base surface.
 3. Create an `ArcGISSceneLayer` and add it to the local scene's operational layers.
 4. Create an `Envelope` and set it to the `Scene::setClippingArea`, then enable clipping by setting `Scene::setClippingEnabled` to `true`.

@@ -38,7 +38,7 @@ using namespace Esri::ArcGISRuntime;
 %{SampleName}::%{SampleName}(QObject* parent /* = nullptr */):
   QObject(parent),
   @if %{ThreeDSample}
-    m_scene(new Scene(BasemapStyle::ArcGISTopographic, %{JS: ( '%{GeoViewType}' === 'globalScene' ? 'SceneViewingMode::Global' : 'SceneViewingMode::Local' )}, this))
+    m_scene(new Scene(%{JS: ( '%{GeoViewType}' === 'globalScene' ? 'SceneViewingMode::Global' : 'SceneViewingMode::Local' )}, BasemapStyle::ArcGISTopographic, this))
   @else
     m_map(new Map(BasemapStyle::ArcGISTopographic, this))
   @endif
