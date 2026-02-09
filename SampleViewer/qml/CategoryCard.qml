@@ -38,7 +38,6 @@ ItemDelegate {
 
     background: Item {
         Item {
-            id: cardWrapper
             anchors.fill: parent
             Item {
                 id: cardContent
@@ -48,7 +47,6 @@ ItemDelegate {
                 layer.smooth: true
 
                 Image {
-                    id: categoryImg
                     anchors.fill: parent
                     source: backgroundThumbnailUrl
                     fillMode: Image.PreserveAspectCrop

@@ -34,10 +34,12 @@ Page {
                 verticalCenter: parent.verticalCenter
                 margins: 5
             }
-            icon.source: "qrc:/chevron-left.svg"
-            icon.width: 32
-            icon.height: 32
-            icon.color: Calcite.text1
+            icon {
+                source: "qrc:/chevron-left.svg"
+                width: 32
+                height: 32
+                color: Calcite.text1
+            }
             flat: true
 
             background: Rectangle {
@@ -196,10 +198,12 @@ Page {
                             height: 18
                             visible: itemDelegate.isFavorite
                             background: Item {}
-                            icon.source: "qrc:/star-f.svg"
-                            icon.color: "#FFD700"
-                            icon.width: 18
-                            icon.height: 18
+                            icon {
+                                source: "qrc:/star-f.svg"
+                                color: "#FFD700"
+                                width: 18
+                                height: 18
+                            }
                             padding: 0
                         }
 
@@ -338,7 +342,7 @@ Page {
                     MenuItem {
                         text: qsTr("Live Sample")
                         enabled: {
-                            if(SampleManager.currentSample == sample) {
+                            if (SampleManager.currentSample == sample) {
                                 return (SampleManager.currentMode != SampleManager.LiveSampleView);
                             }
                             else {
@@ -347,7 +351,7 @@ Page {
                         }
                         onTriggered: {
                             drawer.close();
-                            if(SampleManager.currentSample != sample) {
+                            if (SampleManager.currentSample != sample) {
                                 SampleManager.currentSample = sample;
                             }
                             SampleManager.currentMode = SampleManager.LiveSampleView;
@@ -357,7 +361,7 @@ Page {
                     MenuItem {
                         text: qsTr("Source Code")
                         enabled: {
-                            if(SampleManager.currentSample == sample) {
+                            if (SampleManager.currentSample == sample) {
                                 return (SampleManager.currentMode != SampleManager.SourceCodeView);
                             }
                             else {
@@ -374,7 +378,7 @@ Page {
                     MenuItem {
                         text: qsTr("Description")
                         enabled: {
-                            if(SampleManager.currentSample == sample) {
+                            if (SampleManager.currentSample == sample) {
                                 return (SampleManager.currentMode != SampleManager.DescriptionView);
                             }
                             else {
