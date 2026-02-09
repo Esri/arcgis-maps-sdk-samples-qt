@@ -114,7 +114,6 @@ ItemDelegate {
             spacing: 2
 
             Rectangle {
-                id: iconCircle
                 anchors.horizontalCenter: parent.horizontalCenter
                 width: 42
                 height: width

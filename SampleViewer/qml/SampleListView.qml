@@ -97,7 +97,6 @@ Page {
         property var activeContextMenu: null
 
         ListView {
-            id: samplesListView
             anchors.fill: parent
             clip: true
             model: SampleManager.currentCategory ? SampleManager.currentCategory.samples : []
@@ -134,7 +133,6 @@ Page {
                 }
 
                 TapHandler {
-                    id: tapHandler
                     acceptedButtons: Qt.LeftButton | Qt.RightButton
                     property bool didLongPress: false
 
@@ -193,7 +191,6 @@ Page {
                         spacing: 4
 
                         ToolButton {
-                            id: starButton
                             width: 18
                             height: 18
                             visible: itemDelegate.isFavorite
