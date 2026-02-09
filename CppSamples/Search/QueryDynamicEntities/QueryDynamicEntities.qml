@@ -69,7 +69,7 @@ Item {
                 columnSpacing: 8
                 width: Math.min(controlBox.width * 0.9, controlBox.width)
                 Label {
-                    text: "Query Flights"
+                    text: qsTr("Query Flights")
                     color: "black"
                     font.bold: true
                     Layout.alignment: Qt.AlignVCenter
@@ -90,7 +90,7 @@ Item {
                         // Clear prior UI state when switching queries
                         flightsCombo.currentIndex = -1
                         detailsText.text = ""
-                        model.onQuerySelectionChanged(currentText)
+                        model.handleQuerySelection(currentText)
                     }
                 }
             }
@@ -103,7 +103,7 @@ Item {
                 columnSpacing: 8
                 width: Math.min(controlBox.width * 0.9, controlBox.width)
                 Label {
-                    text: "Query Results"
+                    text: qsTr("Query Results")
                     color: "black"
                     font.bold: true
                     Layout.alignment: Qt.AlignVCenter
@@ -131,13 +131,13 @@ Item {
                 width: Math.min(controlBox.width * 0.9, controlBox.width)
                 TextField {
                     id: flightNumberField
-                    placeholderText: "(Eg: Flight_1107)"
+                    placeholderText: qsTr("(Eg: Flight_1107)")
                     Layout.preferredWidth: (searchGrid.width - searchGrid.columnSpacing) * 0.6
                     onAccepted: runButton.clicked()
                 }
                 Button {
                     id: runButton
-                    text: "Search"
+                    text: qsTr("Search")
                     Layout.preferredWidth: (searchGrid.width - searchGrid.columnSpacing) * 0.4
                     onClicked: {
                         detailsText.text = ""

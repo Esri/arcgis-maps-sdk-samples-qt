@@ -141,6 +141,30 @@ void QueryDynamicEntities::clearEntityUpdateConnections()
   m_entityConnections.clear();
 }
 
+void QueryDynamicEntities::addResultEntity(DynamicEntity* result, bool selectEntity)
+{
+  if (!result || !m_resultsModel)
+  {
+    return;
+  }
+
+  const QVariantMap map = result->attributes()->attributesMap();
+  const QString trackId = map.value("flight_number").toString();
+  if (trackId.isEmpty())
+  {
+    return;
+  }
+
+  if (selectEntity && m_dynamicEntityLayer)
+  {
+    m_dynamicEntityLayer->selectDynamicEntity(result);
+  }
+
+  m_resultsModel->setAttributesForTrack(trackId, map);
+  m_resultEntities.insert(trackId, result);
+  connectEntityUpdates(result, trackId);
+}
+
 MapQuickView* QueryDynamicEntities::mapView() const
 {
   return m_mapView;
@@ -225,7 +249,7 @@ void QueryDynamicEntities::setupDynamicEntityDataSource()
   m_map->operationalLayers()->append(m_dynamicEntityLayer);
 }
 
-void QueryDynamicEntities::onQuerySelectionChanged(const QString& queryType)
+void QueryDynamicEntities::handleQuerySelection(const QString& queryType)
 {
   m_dynamicEntityLayer->clearSelection();
   m_bufferGraphicsOverlay->setVisible(false);
@@ -254,17 +278,7 @@ void QueryDynamicEntities::onQuerySelectionChanged(const QString& queryType)
 
       for (DynamicEntity* result : results->iterator().asList())
       {
-        m_dynamicEntityLayer->selectDynamicEntity(result);
-        const QVariantMap map = result->attributes()->attributesMap();
-        const QString trackId = map.value("flight_number").toString();
-        if (!trackId.isEmpty())
-        {
-          m_resultsModel->setAttributesForTrack(trackId, map);
-          m_resultEntities.insert(trackId, result);
-
-          // Listen for live updates on this dynamic entity and refresh model
-          connectEntityUpdates(result, trackId);
-        }
+        addResultEntity(result, true);
       }
       emit resultsModelChanged();
     });
@@ -287,16 +301,7 @@ void QueryDynamicEntities::onQuerySelectionChanged(const QString& queryType)
 
       for (DynamicEntity* result : results->iterator().asList())
       {
-        const QVariantMap map = result->attributes()->attributesMap();
-        const QString trackId = map.value("flight_number").toString();
-        if (!trackId.isEmpty())
-        {
-          // Select matching entities per design
-          m_dynamicEntityLayer->selectDynamicEntity(result);
-          m_resultsModel->setAttributesForTrack(trackId, map);
-          m_resultEntities.insert(trackId, result);
-          connectEntityUpdates(result, trackId);
-        }
+        addResultEntity(result, true);
       }
       emit resultsModelChanged();
     });
@@ -343,14 +348,13 @@ void QueryDynamicEntities::runFlightNumberQuery(const QString& flightNumber)
     Esri::ArcGISRuntime::DynamicEntity* matched = nullptr;
     for (DynamicEntity* result : results->iterator().asList())
     {
-      const QVariantMap map = result->attributes()->attributesMap();
-      const QString trackId = map.value("flight_number").toString();
-      m_resultsModel->setAttributesForTrack(trackId, map);
-      m_resultEntities.insert(trackId, result);
-      matched = result;
-
-      connectEntityUpdates(result, trackId);
-      break;
+      const int before = m_resultEntities.size();
+      addResultEntity(result, false);
+      if (m_resultEntities.size() > before)
+      {
+        matched = result;
+        break;
+      }
     }
     emit resultsModelChanged();
 

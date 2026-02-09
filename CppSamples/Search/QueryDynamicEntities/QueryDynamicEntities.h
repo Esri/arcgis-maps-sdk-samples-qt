@@ -53,7 +53,7 @@ public:
   ~QueryDynamicEntities() override;
 
   static void init();
-  Q_INVOKABLE void onQuerySelectionChanged(const QString& queryType);
+  Q_INVOKABLE void handleQuerySelection(const QString& queryType);
   Q_INVOKABLE void runFlightNumberQuery(const QString& flightNumber);
   Q_INVOKABLE int resultsCount() const;
   Q_INVOKABLE QString flightDetailsForRow(int row) const;
@@ -69,6 +69,7 @@ private:
   void setupDynamicEntityDataSource();
   void connectEntityUpdates(Esri::ArcGISRuntime::DynamicEntity* entity, const QString& trackId);
   void clearEntityUpdateConnections();
+  void addResultEntity(Esri::ArcGISRuntime::DynamicEntity* result, bool selectEntity);
   FlightInfoListModel* resultsModel() const;
 
   Esri::ArcGISRuntime::Map* m_map = nullptr;
