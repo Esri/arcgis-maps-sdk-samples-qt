@@ -6,12 +6,11 @@
         <file>FindPlace.cpp</file>
         <file>screenshot.png</file>
         <file>README.md</file>
-        <file>find.png</file>
-		<file>find_light.png</file>
+        <file>search-24.svg</file>
+		<file>pin-32.svg</file>
         <file>red_pin.png</file>
         <file>SearchBox.qml</file>
         <file>SearchButton.qml</file>
         <file>SuggestionView.qml</file>
-        <file>location.png</file>
     </qresource>
 </RCC>

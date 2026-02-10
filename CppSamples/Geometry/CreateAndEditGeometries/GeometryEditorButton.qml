@@ -16,6 +16,7 @@
 
 import QtQuick
 import QtQuick.Controls
+import QtQuick.Effects
 import QtQuick.Layouts
 
 // This component defines each of the buttons in the Geometry Editor control UI
@@ -52,6 +53,12 @@ RoundButton {
         source: iconPath
         width: 20
         fillMode: Image.PreserveAspectFit
+        layer.enabled: true
+        layer.effect: MultiEffect {
+            colorization: 1.0
+            colorizationColor: palette.text
+            brightness: 1.0
+        }
     }
 
     Label {
