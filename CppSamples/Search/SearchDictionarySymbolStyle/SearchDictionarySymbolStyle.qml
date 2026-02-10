@@ -80,30 +80,32 @@ SearchDictionarySymbolStyleSample {
                             onAccepted: addCategoryButton.addCategory();
                         }
 
-                        Rectangle {
+                        ToolButton {
                             id: addCategoryButton
-                            height: childrenRect.height
+                            height: 24
                             width: height
-                            color: "transparent"
-                            Image {
-                                source: parent.enabled ? "qrc:/Samples/Search/SearchDictionarySymbolStyle/ic_menu_addencircled_light.png"
-                                                       : "qrc:/Samples/Search/SearchDictionarySymbolStyle/ic_menu_addencircled_dark.png"
-                            }
+                            padding: 0
+                            display: AbstractButton.IconOnly
                             enabled: categoryEntry.text.length > 0
+                            opacity: enabled ? 1 : 0
+                            icon {
+                                source: "qrc:/Samples/Search/SearchDictionarySymbolStyle/plus-circle-24.svg"
+                                width: 24
+                                height: 24
+                                color: hovered ? palette.buttonText : palette.text
+                            }
+                            onClicked: addCategory()
 
-                            MouseArea {
-                                id: addCategoryButtonMouseArea
-                                anchors.fill: parent
-                                onClicked: addCategoryButton.addCategory();
+                            background: Rectangle {
+                                color: parent.hovered ? palette.highlight : "transparent"
+                                radius: 2
                             }
 
                             function addCategory() {
                                 if (categoryEntry.text.length === 0)
                                     return;
-
                                 const tmp = searchParamList;
                                 tmp[index].push(categoryEntry.text);
-
                                 searchParamList = tmp;
                                 categoryEntry.text = "";
                             }
@@ -117,25 +119,29 @@ SearchDictionarySymbolStyleSample {
                             text: qsTr(searchParamList[index].length > 0 ? searchParamList[index].join() : "")
                         }
 
-                        Rectangle {
-                            height: childrenRect.height
+                        ToolButton {
+                            height: 24
                             width: height
-                            color: "transparent"
-                            Image {
-                                source: parent.enabled ? "qrc:/Samples/Search/SearchDictionarySymbolStyle/ic_menu_closeclear_light.png" :
-                                                         "qrc:/Samples/Search/SearchDictionarySymbolStyle/ic_menu_closeclear_dark.png"
-                            }
+                            padding: 0
+                            display: AbstractButton.IconOnly
                             enabled: categoryList.text.length > 0
+                            visible: enabled
+                            icon {
+                                source: "qrc:/Samples/Search/SearchDictionarySymbolStyle/x-24.svg"
+                                width: 24
+                                height: 24
+                                color: hovered ? palette.buttonText : palette.text
+                            }
+                            onClicked: {
+                                categoryEntry.text = "";
+                                const tmp = searchParamList;
+                                tmp[index] = [];
+                                searchParamList = tmp;
+                            }
 
-                            MouseArea {
-                                anchors.fill: parent
-                                onClicked: {
-                                    categoryEntry.text = "";
-                                    const tmp = searchParamList;
-                                    tmp[index] = [];
-
-                                    searchParamList = tmp;
-                                }
+                            background: Rectangle {
+                                color: parent.hovered ? palette.highlight : "transparent"
+                                radius: 2
                             }
                         }
                     }
@@ -149,7 +155,7 @@ SearchDictionarySymbolStyleSample {
             Button {
                 id: searchBtn
                 icon {
-                    source: "qrc:/Samples/Search/SearchDictionarySymbolStyle/ic_menu_find_light.png"
+                    source: "qrc:/Samples/Search/SearchDictionarySymbolStyle/search-24.svg"
                     width: 24
                     height: 24
                     color: palette.buttonText
@@ -190,15 +196,12 @@ SearchDictionarySymbolStyleSample {
                 checked: false
                 checkable: true
                 height: searchBtn.height
-                Image {
-                    anchors {
-                        top: parent.top
-                        bottom: parent.bottom
-                        horizontalCenter: parent.horizontalCenter
-                        margins: 3
-                    }
-                    source: parent.checked ? "qrc:/Samples/Search/SearchDictionarySymbolStyle/ic_menu_collapsed_light.png" :
-                                             "qrc:/Samples/Search/SearchDictionarySymbolStyle/ic_menu_expanded_light.png"
+
+                icon {
+                    source: checked ? "qrc:/Samples/Search/SearchDictionarySymbolStyle/chevron-down-24.svg" : "qrc:/Samples/Search/SearchDictionarySymbolStyle/chevron-up-24.svg"
+                    width: 24
+                    height: 24
+                    color: palette.buttonText
                 }
             }
         }
@@ -288,10 +291,10 @@ SearchDictionarySymbolStyleSample {
 
     //Search completed
     onSearchCompleted: count => {
-        searchBtn.enabled = true;
-        resultView.visible = true;
+                           searchBtn.enabled = true;
+                           resultView.visible = true;
 
-        //Update the number of results retuned
-        resultText.text = "Result(s) found: " + count
-   }
+                           //Update the number of results retuned
+                           resultText.text = "Result(s) found: " + count
+                       }
 }

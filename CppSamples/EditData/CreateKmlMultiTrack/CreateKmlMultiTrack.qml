@@ -71,17 +71,28 @@ Item {
             RowLayout {
                 spacing: 0
                 Layout.bottomMargin: 30
-                Image {
-                    sourceSize.width: 40
-                    sourceSize.height: 40
+                ToolButton {
                     Layout.leftMargin: 30
-                    source: "qrc:/Samples/EditData/CreateKmlMultiTrack/" + (enabled ? "point.png" : "disabled-point.png")
+                    width: 40
+                    height: 40
+                    padding: 0
+                    display: AbstractButton.IconOnly
                     enabled: multiTrackModel.isRecenterButtonEnabled
-                    MouseArea {
-                        anchors.fill: parent
-                        onClicked: {
-                            multiTrackModel.recenter()
-                        }
+                    icon {
+                        source: "qrc:/Samples/EditData/CreateKmlMultiTrack/point-24.svg"
+                        width: 40
+                        height: 40
+                        color: (hovered && enabled) ? palette.buttonText : palette.text
+                    }
+                    onClicked: {
+                        multiTrackModel.recenter()
+                    }
+
+                    background: Rectangle {
+                        implicitWidth: 40
+                        implicitHeight: 40
+                        color: (parent.hovered && parent.enabled) ? palette.highlight : palette.base
+                        radius: 20
                     }
                 }
 
@@ -111,17 +122,28 @@ Item {
                     Layout.fillWidth: true
                 }
 
-                Image {
-                    sourceSize.width: 30
-                    sourceSize.height: 30
+                ToolButton {
                     Layout.rightMargin: 30
+                    width: 30
+                    height: 30
+                    padding: 0
+                    display: AbstractButton.IconOnly
                     enabled: !multiTrackModel.isRecordingTrack
-                    source: "qrc:/Samples/EditData/CreateKmlMultiTrack/" + (enabled ? "save.png" : "disabled-save.png")
-                    MouseArea {
-                        anchors.fill: parent
-                        onClicked: {
-                            multiTrackModel.exportKmlMultiTrack();
-                        }
+                    icon {
+                        source: "qrc:/Samples/EditData/CreateKmlMultiTrack/save-24.svg"
+                        width: 30
+                        height: 30
+                        color: (hovered && enabled) ? palette.buttonText : palette.text
+                    }
+                    onClicked: {
+                        multiTrackModel.exportKmlMultiTrack()
+                    }
+
+                    background: Rectangle {
+                        implicitWidth: 30
+                        implicitHeight: 30
+                        color: (parent.hovered && parent.enabled) ? palette.highlight : palette.base
+                        radius: 4
                     }
                 }
             }

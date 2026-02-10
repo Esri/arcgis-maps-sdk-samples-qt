@@ -17,6 +17,7 @@
 import QtQuick
 import Esri.Samples
 import QtQuick.Controls
+import QtQuick.Effects
 import QtQuick.Layouts
 import Esri.ArcGISRuntime.Toolkit
 
@@ -100,26 +101,27 @@ OfflineGeocodeSample {
                 }
 
                 // button to close and open suggestions
-                Rectangle {
-                    Layout.margins: 5
+                ToolButton {
+                    Layout.rightMargin: 5
+                    Layout.topMargin: 5
+                    Layout.bottomMargin: 5
                     width: height
                     height: textField.contentHeight
-                    color: "transparent"
-                    radius: 2
+                    padding: 0
+                    display: AbstractButton.IconOnly
+                    icon {
+                        source: suggestionRect.visible ? "qrc:/Samples/Search/OfflineGeocode/x-24.svg" : "qrc:/Samples/Search/OfflineGeocode/chevron-down-24.svg"
+                        width: textField.contentHeight
+                        height: textField.contentHeight
+                        color: palette.text
+                    }
+                    onClicked: {
+                        suggestionRect.visible = !suggestionRect.visible
+                    }
 
-                    Image {
-                        anchors.fill: parent
-                        source: suggestionRect.visible ? Qt.application.styleHints.colorScheme === Qt.ColorScheme.Dark ?
-                                                             "qrc:/Samples/Search/OfflineGeocode/ic_menu_closeclear_d.png" : "qrc:/Samples/Search/OfflineGeocode/ic_menu_closeclear_light_d.png"
-                        : Qt.application.styleHints.colorScheme === Qt.ColorScheme.Dark ?
-                        "qrc:/Samples/Search/OfflineGeocode/ic_menu_collapsedencircled_d.png" : "qrc:/Samples/Search/OfflineGeocode/ic_menu_collapsedencircled_light_d.png"
-
-                        MouseArea {
-                            anchors.fill: parent
-                            onClicked: {
-                                suggestionRect.visible = !suggestionRect.visible;
-                            }
-                        }
+                    background: Rectangle {
+                        color: "transparent"
+                        radius: 2
                     }
                 }
             }

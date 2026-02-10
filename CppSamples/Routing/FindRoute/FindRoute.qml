@@ -93,12 +93,9 @@ FindRouteSample {
             onClicked: findRouteSample.solveRoute();
         }
 
-        // Create a button to show the direction window
-        Rectangle {
+        // Button to view directions
+        ToolButton {
             id: directionButton
-
-            property bool pressed: false
-
             visible: !solveButton.visible
             anchors {
                 right: parent.right
@@ -106,30 +103,28 @@ FindRouteSample {
                 rightMargin: 10
                 bottomMargin: 40
             }
-
             width: 45
-            height: width
-            color: pressed ? palette.base : palette.highlight
-            radius: 100
-            border {
-                color: "#585858"
-                width: 1.5
-            }
-
-            Image {
-                anchors.centerIn: parent
+            height: 45
+            padding: 0
+            display: AbstractButton.IconOnly
+            icon {
+                source: "qrc:/Samples/Routing/FindRoute/tour-24.svg"
                 width: 35
-                height: width
-                source: "qrc:/Samples/Routing/FindRoute/directions.png"
+                height: 35
+                color: hovered ? palette.text : palette.buttonText
+            }
+            onClicked: {
+                directionWindow.visible = !directionWindow.visible
             }
 
-            MouseArea {
-                anchors.fill: parent
-                onPressed: directionButton.pressed = true
-                onReleased: directionButton.pressed = false
-                onClicked: {
-                    // Show the direction window when it is clicked
-                    directionWindow.visible = !directionWindow.visible;
+            background: Rectangle {
+                implicitWidth: 45
+                implicitHeight: 45
+                color: parent.hovered ? palette.base : palette.highlight
+                radius: 100
+                border {
+                    color: "#585858"
+                    width: 1.5
                 }
             }
         }
