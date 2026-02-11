@@ -27,9 +27,6 @@
 #include "SpatialReference.h"
 
 // Qt headers
-#include <QFile>
-#include <QFuture>
-#include <QTextStream>
 #include <QtConcurrent/QtConcurrent>
 
 using namespace Esri::ArcGISRuntime;

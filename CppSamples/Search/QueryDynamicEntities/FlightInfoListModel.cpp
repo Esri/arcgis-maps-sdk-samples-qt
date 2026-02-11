@@ -23,6 +23,8 @@
 
 // Qt headers
 #include <QModelIndex>
+// STL headers
+#include <algorithm>
 
 FlightInfoListModel::FlightInfoListModel(QObject* parent) :
   QAbstractListModel(parent)
@@ -153,14 +155,9 @@ void FlightInfoListModel::setAttributesForTrack(const QString& trackId, const QV
 
 int FlightInfoListModel::indexOfTrack(const QString& trackId) const
 {
-  for (int i = 0; i < m_entries.count(); ++i)
-  {
-    if (m_entries.at(i).trackId == trackId)
-    {
-      return i;
-    }
-  }
-  return -1;
+  QList<FlightInfoEntry>::const_iterator it = std::find_if(m_entries.cbegin(), m_entries.cend(),
+                                                           [&trackId](const FlightInfoEntry& e) { return e.trackId == trackId; });
+  return it != m_entries.cend() ? static_cast<int>(std::distance(m_entries.cbegin(), it)) : -1;
 }
 
 QString FlightInfoListModel::attrToString(const QVariantMap& attrs, const char* key)

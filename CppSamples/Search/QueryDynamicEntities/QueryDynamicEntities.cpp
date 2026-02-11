@@ -190,7 +190,7 @@ void QueryDynamicEntities::setMapView(MapQuickView* mapView)
 void QueryDynamicEntities::setUpGraphics()
 {
   // Create a graphics overlay for the airport buffer.
-  m_bufferGraphicsOverlay = new GraphicsOverlay();
+	m_bufferGraphicsOverlay = new GraphicsOverlay(this);
   m_mapView->graphicsOverlays()->append(m_bufferGraphicsOverlay);
 
   // Create a 15-mile geodetic buffer around Phoenix Airport (PHX).
@@ -261,7 +261,7 @@ void QueryDynamicEntities::handleQuerySelection(const QString& queryType)
   {
     m_bufferGraphicsOverlay->setVisible(true);
 
-    m_params = new DynamicEntityQueryParameters();
+		m_params = new DynamicEntityQueryParameters(this);
     m_params->setGeometry(*m_phoenixAirportBuffer);
     m_params->setSpatialRelationship(SpatialRelationship::Intersects);
 
@@ -288,7 +288,7 @@ void QueryDynamicEntities::handleQuerySelection(const QString& queryType)
     m_bufferGraphicsOverlay->setVisible(false);
 
     // Perform query using where clause on the data source and select returned dynamic entities.
-    m_params = new DynamicEntityQueryParameters();
+		m_params = new DynamicEntityQueryParameters(this);
     m_params->setWhereClause("status = 'In flight' AND arrival_airport = 'PHX'");
     m_dataSource->queryDynamicEntitiesAsync(m_params).then(this, [this](DynamicEntityQueryResult* results)
     {
@@ -316,9 +316,6 @@ void QueryDynamicEntities::handleQuerySelection(const QString& queryType)
     m_resultEntities.clear();
     emit resultsModelChanged();
   }
-  else
-  {
-  }
 }
 
 void QueryDynamicEntities::runFlightNumberQuery(const QString& flightNumber)
@@ -329,7 +326,7 @@ void QueryDynamicEntities::runFlightNumberQuery(const QString& flightNumber)
   }
 
   // Perform query using trackId on the data source and select returned dynamic entities.
-  m_params = new DynamicEntityQueryParameters();
+	m_params = new DynamicEntityQueryParameters(this);
   m_params->setTrackIds(QStringList{flightNumber.trimmed()});
   m_dataSource->queryDynamicEntitiesAsync(m_params).then(this, [this](DynamicEntityQueryResult* results)
   {
