@@ -479,51 +479,51 @@ ApplicationWindow {
         anchors.fill: parent
     }
 
-    // Toast notification
-    Rectangle {
-        id: toast
-        anchors.horizontalCenter: parent.horizontalCenter
-        anchors.bottom: parent.bottom
-        anchors.bottomMargin: 20
-        width: toastLabel.implicitWidth + 32
+    // Toast notification (using Popup to appear above Drawer)
+    Popup {
+        id: toastPopup
+        x: (parent.width - width) / 2
+        y: parent.height - height - 20
+        width: Math.min(toastLabel.implicitWidth + 32, parent.width - 40)
         height: 40
-        radius: 8
-        color: Calcite.foreground3
-        opacity: 0
-        visible: opacity > 0
+        closePolicy: Popup.NoAutoClose
+        modal: false
 
-        Label {
+        background: Rectangle {
+            radius: 8
+            color: Calcite.foreground3
+            border.color: Calcite.border1
+            border.width: 1
+        }
+
+        contentItem: Label {
             id: toastLabel
-            anchors.centerIn: parent
             color: Calcite.text1
             font.pixelSize: 14
             textFormat: Text.StyledText
+            elide: Text.ElideRight
+            horizontalAlignment: Text.AlignHCenter
+            verticalAlignment: Text.AlignVCenter
         }
 
-        OpacityAnimator {
-            id: toastFadeIn
-            target: toast
-            from: 0; to: 1
-            duration: 200
+        enter: Transition {
+            NumberAnimation { property: "opacity"; from: 0; to: 1; duration: 200 }
         }
 
-        OpacityAnimator {
-            id: toastFadeOut
-            target: toast
-            from: 1; to: 0
-            duration: 300
+        exit: Transition {
+            NumberAnimation { property: "opacity"; from: 1; to: 0; duration: 300 }
         }
 
         Timer {
             id: toastTimer
             interval: 2000
-            onTriggered: toastFadeOut.start()
+            onTriggered: toastPopup.close()
         }
     }
 
     function showToast(message) {
         toastLabel.text = message;
-        toastFadeIn.start();
+        toastPopup.open();
         toastTimer.restart();
     }
 

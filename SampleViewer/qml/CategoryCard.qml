@@ -39,23 +39,46 @@ ItemDelegate {
     background: Item {
         Item {
             anchors.fill: parent
-            visible: true
-
-            Image {
-                id: categoryImg
+            Item {
+                id: cardContent
                 anchors.fill: parent
-                source: backgroundThumbnailUrl
-                fillMode: Image.PreserveAspectCrop
+                visible: false
+                layer.enabled: true
+                layer.smooth: true
+
+                Image {
+                    anchors.fill: parent
+                    source: backgroundThumbnailUrl
+                    fillMode: Image.PreserveAspectCrop
+                    smooth: true
+                }
+
+                Rectangle {
+                    anchors.fill: parent
+                    radius: 10
+                    gradient: Gradient {
+                        GradientStop { position: 0.0; color: "#25000000" }
+                        GradientStop { position: 0.5; color: "#65000000" }
+                        GradientStop { position: 1.0; color: "#CC000000" }
+                    }
+                }
             }
 
             Rectangle {
+                id: roundMask
                 anchors.fill: parent
                 radius: 10
-                gradient: Gradient {
-                    GradientStop { position: 0.0; color: "#25000000" }
-                    GradientStop { position: 0.5; color: "#65000000" }
-                    GradientStop { position: 1.0; color: "#CC000000" }
-                }
+                visible: false
+                layer.enabled: true
+            }
+
+            MultiEffect {
+                anchors.fill: parent
+                source: cardContent
+                maskEnabled: true
+                maskSource: roundMask
+                antialiasing: true
+                layer.enabled: true
             }
         }
 
@@ -91,7 +114,6 @@ ItemDelegate {
             spacing: 2
 
             Rectangle {
-                id: iconCircle
                 anchors.horizontalCenter: parent.horizontalCenter
                 width: 42
                 height: width
