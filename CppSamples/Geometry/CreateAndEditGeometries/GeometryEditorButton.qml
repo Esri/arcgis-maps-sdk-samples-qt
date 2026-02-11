@@ -56,7 +56,7 @@ RoundButton {
         layer.enabled: true
         layer.effect: MultiEffect {
             colorization: 1.0
-            colorizationColor: palette.text
+            colorizationColor: palette.buttonText
             brightness: 1.0
         }
     }
@@ -69,6 +69,6 @@ RoundButton {
         }
         text: buttonName
         font.pixelSize: 8
-        color: "white"
+        color: palette.buttonText
     }
 }

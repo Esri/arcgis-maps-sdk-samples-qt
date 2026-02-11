@@ -95,7 +95,7 @@ Item {
                     GeometryEditorButton {
                         id: pointButton
                         buttonName: qsTr("Point")
-                        iconPath: "qrc:/Samples/EditData/SnapGeometryEdits/iconAssets/point-32.png"
+                        iconPath: "qrc:/Samples/EditData/SnapGeometryEdits/iconAssets/point-24.svg"
                         checkable: true
                         enabled: !snapGeometryEditsSampleModel.geometryEditorStarted
                         onClicked: snapGeometryEditsSampleModel.startEditor(SnapGeometryEditsSample.PointMode);
@@ -104,7 +104,7 @@ Item {
                     GeometryEditorButton {
                         id: multiPointButton
                         buttonName: qsTr("Multipoint")
-                        iconPath: "qrc:/Samples/EditData/SnapGeometryEdits/iconAssets/multipoint-32.png"
+                        iconPath: "qrc:/Samples/EditData/SnapGeometryEdits/iconAssets/layer-points-24.svg"
                         checkable: true
                         enabled: !snapGeometryEditsSampleModel.geometryEditorStarted
                         onClicked: snapGeometryEditsSampleModel.startEditor(SnapGeometryEditsSample.MultipointMode);
@@ -113,7 +113,7 @@ Item {
                     GeometryEditorButton {
                         id: lineButton
                         buttonName: qsTr("Line")
-                        iconPath: "qrc:/Samples/EditData/SnapGeometryEdits/iconAssets/line-32.png"
+                        iconPath: "qrc:/Samples/EditData/SnapGeometryEdits/iconAssets/line-24.svg"
                         checkable: true
                         enabled: !snapGeometryEditsSampleModel.geometryEditorStarted
                         onClicked: snapGeometryEditsSampleModel.startEditor(SnapGeometryEditsSample.PolylineMode);
@@ -122,7 +122,7 @@ Item {
                     GeometryEditorButton {
                         id: polygonButton
                         buttonName: qsTr("Polygon")
-                        iconPath: "qrc:/Samples/EditData/SnapGeometryEdits/iconAssets/polygon-32.png"
+                        iconPath: "qrc:/Samples/EditData/SnapGeometryEdits/iconAssets/polygon-24.svg"
                         checkable: true
                         enabled: !snapGeometryEditsSampleModel.geometryEditorStarted
                         onClicked: snapGeometryEditsSampleModel.startEditor(SnapGeometryEditsSample.PolygonMode);
@@ -147,7 +147,7 @@ Item {
                     GeometryEditorButton {
                         id: undoButton
                         buttonName: qsTr("Undo")
-                        iconPath: "qrc:/Samples/EditData/SnapGeometryEdits/iconAssets/undo-32.png"
+                        iconPath: "qrc:/Samples/EditData/SnapGeometryEdits/iconAssets/undo-24.svg"
                         enabled: snapGeometryEditsSampleModel.geometryEditorStarted && snapGeometryEditsSampleModel.canUndo
                         onClicked: snapGeometryEditsSampleModel.editorUndo();
                     }
@@ -155,7 +155,7 @@ Item {
                     GeometryEditorButton {
                         id: deleteButton
                         buttonName: qsTr("Delete")
-                        iconPath: "qrc:/Samples/EditData/SnapGeometryEdits/iconAssets/erase-32.png"
+                        iconPath: "qrc:/Samples/EditData/SnapGeometryEdits/iconAssets/erase-24.svg"
                         enabled: snapGeometryEditsSampleModel.geometryEditorStarted || snapGeometryEditsSampleModel.isElementSelected
                         onClicked: snapGeometryEditsSampleModel.deleteSelection();
                     }
@@ -163,7 +163,7 @@ Item {
                     GeometryEditorButton {
                         id: saveEditsButton
                         buttonName: qsTr("Save")
-                        iconPath: "qrc:/Samples/EditData/SnapGeometryEdits/iconAssets/save-32.png"
+                        iconPath: "qrc:/Samples/EditData/SnapGeometryEdits/iconAssets/save-24.svg"
                         Layout.columnSpan: 2
                         enabled: snapGeometryEditsSampleModel.geometryEditorStarted
                         onClicked: snapGeometryEditsSampleModel.stopEditing();
@@ -172,7 +172,7 @@ Item {
                     GeometryEditorButton {
                         id: snapSettingsButton
                         buttonName: qsTr("Snap Settings")
-                        iconPath: "qrc:/Samples/EditData/SnapGeometryEdits/iconAssets/settings.png"
+                        iconPath: "qrc:/Samples/EditData/SnapGeometryEdits/iconAssets/gear-24.svg"
                         Layout.columnSpan: 2
                         enabled: snapGeometryEditsSampleModel.layersLoaded
                         onClicked: {
