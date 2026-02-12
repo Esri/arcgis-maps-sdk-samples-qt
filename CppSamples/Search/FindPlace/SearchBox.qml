@@ -16,6 +16,7 @@
 
 import QtQuick
 import QtQuick.Controls
+import QtQuick.Effects
 
 TextField {
     width: parent.width
@@ -40,11 +41,18 @@ TextField {
                 margins: 2
             }
             source: imageUrl
+            layer.enabled: true
+            layer.effect: MultiEffect {
+                colorization: 1.0
+                colorizationColor: palette.text
+                brightness: 1.0
+            }
 
             MouseArea {
                 anchors.fill: parent
                 onClicked: imageClicked()
             }
+
         }
     }
 }

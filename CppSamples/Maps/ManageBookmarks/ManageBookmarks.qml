@@ -36,39 +36,33 @@ ManageBookmarksSample {
         }
 
         // Create the add button so new bookmarks can be added
-        Rectangle {
+        ToolButton {
             id: addButton
-            property bool pressed: false
             anchors {
                 right: parent.right
                 bottom: mapView.attributionTop
                 rightMargin: 20
                 bottomMargin: 20
             }
-            width: childrenRect.width
-            height: childrenRect.height
-            color: pressed ? palette.highlight : palette.button
-            radius: 100
-            border {
-                color: "#585858"
-                width: 1
-            }
-
-            Image {
-                rotation: 45
-                source: "qrc:/Samples/Maps/ManageBookmarks/add.png"
+            padding: 4
+            icon {
+                source: "qrc:/Samples/Maps/ManageBookmarks/plus-24.svg"
                 width: 32
                 height: 32
+                color: palette.buttonText
             }
-
-            MouseArea {
-                anchors.fill: parent
-                onPressed: addButton.pressed = true
-                onReleased: addButton.pressed = false
-                onClicked: {
-                    // Show the add window when it is clicked
-                    addWindow.visible = true;
+            background: Rectangle {
+                implicitWidth: 40
+                implicitHeight: 40
+                color: addButton.pressed ? palette.highlight : palette.button
+                radius: 100
+                border {
+                    color: "#585858"
+                    width: 1
                 }
+            }
+            onClicked: {
+                addWindow.visible = true
             }
         }
     }

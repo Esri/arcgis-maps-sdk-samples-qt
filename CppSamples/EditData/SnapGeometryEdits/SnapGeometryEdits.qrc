@@ -8,15 +8,15 @@
         <file>screenshot.png</file>
         <file>README.md</file>
         <file>GeometryEditorButton.qml</file>
-        <file>iconAssets/erase-32.png</file>
-        <file>iconAssets/line-32.png</file>
-        <file>iconAssets/multipoint-32.png</file>
-        <file>iconAssets/point-32.png</file>
-        <file>iconAssets/polygon-32.png</file>
-        <file>iconAssets/save-32.png</file>
-        <file>iconAssets/trash-32.png</file>
-        <file>iconAssets/undo-32.png</file>
-        <file>iconAssets/settings.png</file>
+        <file>iconAssets/erase-24.svg</file>
+        <file>iconAssets/line-24.svg</file>
+        <file>iconAssets/layer-points-24.svg</file>
+        <file>iconAssets/point-24.svg</file>
+        <file>iconAssets/polygon-24.svg</file>
+        <file>iconAssets/save-24.svg</file>
+        <file>iconAssets/trash-24.svg</file>
+        <file>iconAssets/undo-24.svg</file>
+        <file>iconAssets/gear-24.svg</file>
         <file>SnapSourceListModel.cpp</file>
         <file>SnapSourceListModel.h</file>
     </qresource>

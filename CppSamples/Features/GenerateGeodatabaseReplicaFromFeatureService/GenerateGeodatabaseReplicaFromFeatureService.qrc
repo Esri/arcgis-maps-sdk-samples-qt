@@ -6,6 +6,6 @@
         <file>GenerateGeodatabaseReplicaFromFeatureService.h</file>
         <file>GenerateGeodatabaseReplicaFromFeatureService.cpp</file>
         <file>README.md</file>
-        <file>download.png</file>
+        <file>download-24.svg</file>
     </qresource>
 </RCC>

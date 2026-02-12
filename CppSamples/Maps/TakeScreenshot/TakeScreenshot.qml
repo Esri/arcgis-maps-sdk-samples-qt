@@ -72,27 +72,26 @@ TakeScreenshotSample {
             height: parent.height * 0.75
             source: mapImageUrl // bind to the property exposed by TakeScreenshot
 
-            Rectangle {
+            ToolButton {
                 anchors {
                     right: parent.right
                     top: parent.top
                     margins: 10
                 }
-                width: 28
-                height: width
-                color: palette.base
-                radius: 50
-
-                Image {
-                    anchors.centerIn: parent
-                    width: parent.width * 0.95
-                    height: parent.height * 0.95
-                    source: Qt.application.styleHints.colorScheme === Qt.ColorScheme.Dark ? "qrc:/Samples/Maps/TakeScreenshot/close.png" : "qrc:/Samples/Maps/TakeScreenshot/close_light.png"
+                padding: 0
+                icon {
+                    source: "qrc:/Samples/Maps/TakeScreenshot/x-24.svg"
+                    width: 26
+                    height: 26
+                    color: hovered ? palette.buttonText : palette.text
                 }
+                onClicked: imageRect.visible = false
 
-                MouseArea {
-                    anchors.fill: parent
-                    onClicked: imageRect.visible = false;
+                background: Rectangle {
+                    implicitWidth: 28
+                    implicitHeight: 28
+                    color: parent.hovered ? palette.highlight : palette.base
+                    radius: 50
                 }
             }
         }

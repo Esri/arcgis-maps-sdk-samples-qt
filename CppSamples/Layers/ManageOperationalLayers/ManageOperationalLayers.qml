@@ -17,6 +17,7 @@
 import QtQuick
 import QtQuick.Controls
 import QtQuick.Layouts
+import QtQuick.Effects
 import Esri.Samples
 
 Item {
@@ -89,7 +90,13 @@ Item {
                         Layout.alignment: Qt.AlignRight
                         Layout.preferredHeight: 25
                         Layout.preferredWidth: 25
-                        source: Qt.styleHints.colorScheme === Qt.Dark ? "qrc:/Samples/Layers/ManageOperationalLayers/menu_light.png" : "qrc:/Samples/Layers/ManageOperationalLayers/menu.png"
+                        source: "qrc:/Samples/Layers/ManageOperationalLayers/handle-vertical-24.svg"
+                        layer.enabled: true
+                        layer.effect: MultiEffect {
+                            colorization: 1.0
+                            colorizationColor: palette.text
+                            brightness: 1.0
+                        }
 
                         MouseArea {
                             anchors.fill: parent
@@ -188,7 +195,13 @@ Item {
                         Layout.alignment: Qt.AlignRight
                         Layout.preferredHeight: 25
                         Layout.preferredWidth: 25
-                        source: Qt.styleHints.colorScheme === Qt.Dark ? "qrc:/Samples/Layers/ManageOperationalLayers/menu_light.png" : "qrc:/Samples/Layers/ManageOperationalLayers/menu.png"
+                        source: "qrc:/Samples/Layers/ManageOperationalLayers/handle-vertical-24.svg"
+                        layer.enabled: true
+                        layer.effect: MultiEffect {
+                            colorization: 1.0
+                            colorizationColor: palette.text
+                            brightness: 1.0
+                        }
 
                         MouseArea {
                             anchors.fill: parent

@@ -6,8 +6,8 @@
         <file>FindRoute.h</file>
         <file>FindRoute.cpp</file>
         <file>README.md</file>
-        <file>directions.png</file>
         <file>pinA.png</file>
         <file>pinB.png</file>
+		<file>tour-24.svg</file>
     </qresource>
 </RCC>

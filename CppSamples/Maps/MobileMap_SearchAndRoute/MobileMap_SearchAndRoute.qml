@@ -16,6 +16,7 @@
 
 import QtQuick
 import QtQuick.Controls
+import QtQuick.Effects
 import Esri.Samples
 import Esri.ArcGISRuntime.Toolkit
 
@@ -71,9 +72,15 @@ MobileMap_SearchAndRouteSample {
                     Image {
                         anchors.centerIn: parent
                         mirror: true
-                        source: Qt.application.styleHints.colorScheme === Qt.ColorScheme.Dark ? "qrc:/Samples/Maps/MobileMap_SearchAndRoute/forwardIcon_light.png" : "qrc:/Samples/Maps/MobileMap_SearchAndRoute/forwardIcon.png"
+                        source: "qrc:/Samples/Maps/MobileMap_SearchAndRoute/chevron-right-24.svg"
                         height: 33
                         width: height
+                        layer.enabled: true
+                        layer.effect: MultiEffect {
+                            colorization: 1.0
+                            colorizationColor: palette.text
+                            brightness: 1.0
+                        }
                     }
                 }
 
@@ -95,41 +102,41 @@ MobileMap_SearchAndRouteSample {
                 spacing: 10
 
                 Button {
-                     id: routeButton
-                     text: qsTr("Route")
-                     leftPadding: 15
-                     rightPadding: 15
-                     width: 125
-                     icon {
-                         source: "qrc:/Samples/Maps/MobileMap_SearchAndRoute/routingSymbol.png"
-                         width: 24
-                         height: 24
-                         color: "#F8F8F8"
-                     }
-                     visible: mobileMapSearchRoute.canRoute
-                     onClicked: {
-                         mobileMapSearchRoute.solveRoute();
-                     }
-                 }
+                    id: routeButton
+                    text: qsTr("Route")
+                    leftPadding: 15
+                    rightPadding: 15
+                    width: 125
+                    icon {
+                        source: "qrc:/Samples/Maps/MobileMap_SearchAndRoute/road-sign-24.svg"
+                        width: 24
+                        height: 24
+                        color: palette.buttonText
+                    }
+                    visible: mobileMapSearchRoute.canRoute
+                    onClicked: {
+                        mobileMapSearchRoute.solveRoute();
+                    }
+                }
 
-                 // clear graphics button
-                 Button {
-                     id: clearButton
-                     text: qsTr("Clear")
-                     leftPadding: 15
-                     rightPadding: 15
-                     width: 125
-                     icon {
-                         source: "qrc:/Samples/Maps/MobileMap_SearchAndRoute/discardSymbol.png"
-                         width: 24
-                         height: 24
-                         color: "#F8F8F8"
-                     }
-                     visible: mobileMapSearchRoute.canClear
-                     onClicked: {
-                         mobileMapSearchRoute.resetMapView();
-                     }
-                 }
+                // clear graphics button
+                Button {
+                    id: clearButton
+                    text: qsTr("Clear")
+                    leftPadding: 15
+                    rightPadding: 15
+                    width: 125
+                    icon {
+                        source: "qrc:/Samples/Maps/MobileMap_SearchAndRoute/trash-24.svg"
+                        width: 24
+                        height: 24
+                        color: palette.buttonText
+                    }
+                    visible: mobileMapSearchRoute.canClear
+                    onClicked: {
+                        mobileMapSearchRoute.resetMapView();
+                    }
+                }
             }
         }
 
@@ -163,10 +170,16 @@ MobileMap_SearchAndRouteSample {
                                 right: parent.right
                                 margins: 10
                             }
-                            source: "qrc:/Samples/Maps/MobileMap_SearchAndRoute/forwardIcon_light.png"
+                            source: "qrc:/Samples/Maps/MobileMap_SearchAndRoute/chevron-right-24.svg"
                             height: 44
                             width: height
                             visible: isMapOpen
+                            layer.enabled: true
+                            layer.effect: MultiEffect {
+                                colorization: 1.0
+                                colorizationColor: palette.buttonText
+                                brightness: 1.0
+                            }
 
                             MouseArea {
                                 anchors.fill: parent
@@ -254,9 +267,15 @@ MobileMap_SearchAndRouteSample {
                                 margins: 10
                             }
                             mirror: true
-                            source: "qrc:/Samples/Maps/MobileMap_SearchAndRoute/forwardIcon_light.png"
+                            source: "qrc:/Samples/Maps/MobileMap_SearchAndRoute/chevron-right-24.svg"
                             height: 44
                             width: height
+                            layer.enabled: true
+                            layer.effect: MultiEffect {
+                                colorization: 1.0
+                                colorizationColor: palette.buttonText
+                                brightness: 1.0
+                            }
 
                             MouseArea {
                                 anchors.fill: parent
@@ -273,10 +292,16 @@ MobileMap_SearchAndRouteSample {
                                 right: parent.right
                                 margins: 10
                             }
-                            source: "qrc:/Samples/Maps/MobileMap_SearchAndRoute/forwardIcon_light.png"
+                            source: "qrc:/Samples/Maps/MobileMap_SearchAndRoute/chevron-right-24.svg"
                             height: 44
                             width: height
                             visible: isMapOpen
+                            layer.enabled: true
+                            layer.effect: MultiEffect {
+                                colorization: 1.0
+                                colorizationColor: palette.buttonText
+                                brightness: 1.0
+                            }
 
                             MouseArea {
                                 anchors.fill: parent
@@ -327,10 +352,15 @@ MobileMap_SearchAndRouteSample {
                                         top: parent.top
                                         margins: 5
                                     }
-                                    source: "qrc:/Samples/Maps/MobileMap_SearchAndRoute/pinOutlineSymbol.png"
+                                    source: "qrc:/Samples/Maps/MobileMap_SearchAndRoute/pin-24.svg"
                                     height: 20
                                     width: height
                                     visible: modelData.geocoding
+                                    layer.effect: MultiEffect {
+                                        colorization: 1.0
+                                        colorizationColor: palette.buttonText
+                                        brightness: 1.0
+                                    }
                                 }
 
                                 // routing available icon
@@ -340,10 +370,16 @@ MobileMap_SearchAndRouteSample {
                                         top: parent.top
                                         margins: 5
                                     }
-                                    source: "qrc:/Samples/Maps/MobileMap_SearchAndRoute/routingSymbol.png"
+                                    source: "qrc:/Samples/Maps/MobileMap_SearchAndRoute/road-sign-24.svg"
                                     height: 20
                                     width: height
                                     visible: modelData.routing
+                                    layer.enabled: true
+                                    layer.effect: MultiEffect {
+                                        colorization: 1.0
+                                        colorizationColor: palette.buttonText
+                                        brightness: 1.0
+                                    }
                                 }
 
                                 MouseArea {

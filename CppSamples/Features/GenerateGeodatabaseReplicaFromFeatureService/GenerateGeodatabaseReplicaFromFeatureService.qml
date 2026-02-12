@@ -73,10 +73,10 @@ GenerateGeodatabaseReplicaFromFeatureServiceSample {
         leftPadding: 20
         rightPadding: 20
         icon {
-            source: "qrc:/Samples/Features/GenerateGeodatabaseReplicaFromFeatureService/download.png"
+            source: "qrc:/Samples/Features/GenerateGeodatabaseReplicaFromFeatureService/download-24.svg"
             width: 24
             height: 24
-            color: palette.text
+            color: palette.buttonText
         }
 
         onClicked: {

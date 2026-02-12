@@ -89,7 +89,7 @@ Item {
                 GeometryEditorButton {
                     id: pointButton
                     buttonName: qsTr("Point")
-                    iconPath: "qrc:/Samples/Geometry/CreateAndEditGeometries/iconAssets/point-32.png"
+                    iconPath: "qrc:/Samples/Geometry/CreateAndEditGeometries/iconAssets/point-24.svg"
                     checkable: true
                     enabled: !model.geometryEditorStarted
                     onClicked: {
@@ -102,7 +102,7 @@ Item {
                 GeometryEditorButton {
                     id: multiPointButton
                     buttonName: qsTr("Multipoint")
-                    iconPath: "qrc:/Samples/Geometry/CreateAndEditGeometries/iconAssets/multipoint-32.png"
+                    iconPath: "qrc:/Samples/Geometry/CreateAndEditGeometries/iconAssets/layer-points-24.svg"
                     checkable: true
                     enabled: !model.geometryEditorStarted
                     onClicked: {
@@ -115,7 +115,7 @@ Item {
                 GeometryEditorButton {
                     id: lineButton
                     buttonName: qsTr("Line")
-                    iconPath: "qrc:/Samples/Geometry/CreateAndEditGeometries/iconAssets/line-32.png"
+                    iconPath: "qrc:/Samples/Geometry/CreateAndEditGeometries/iconAssets/line-24.svg"
                     checkable: true
                     enabled: !model.geometryEditorStarted
                     onClicked: {
@@ -126,7 +126,7 @@ Item {
                 GeometryEditorButton {
                     id: polygonButton
                     buttonName: qsTr("Polygon")
-                    iconPath: "qrc:/Samples/Geometry/CreateAndEditGeometries/iconAssets/polygon-32.png"
+                    iconPath: "qrc:/Samples/Geometry/CreateAndEditGeometries/iconAssets/polygon-24.svg"
                     checkable: true
                     enabled: !model.geometryEditorStarted
                     onClicked: {
@@ -211,7 +211,7 @@ Item {
                 GeometryEditorButton {
                     id: undoButton
                     buttonName: qsTr("Undo")
-                    iconPath: "qrc:/Samples/Geometry/CreateAndEditGeometries/iconAssets/undo-32.png"
+                    iconPath: "qrc:/Samples/Geometry/CreateAndEditGeometries/iconAssets/undo-24.svg"
                     enabled: model.geometryEditorStarted && model.canUndo
                     onClicked: model.undo();
                 }
@@ -219,7 +219,7 @@ Item {
                 GeometryEditorButton {
                     id: redoButton
                     buttonName: qsTr("Redo")
-                    iconPath: "qrc:/Samples/Geometry/CreateAndEditGeometries/iconAssets/redo-32.png"
+                    iconPath: "qrc:/Samples/Geometry/CreateAndEditGeometries/iconAssets/redo-24.svg"
                     enabled: model.geometryEditorStarted && model.canRedo
                     onClicked: model.redo();
                 }
@@ -227,7 +227,7 @@ Item {
                 GeometryEditorButton {
                     id: deleteVertexButton
                     buttonName: qsTr("Delete selected element")
-                    iconPath: "qrc:/Samples/Geometry/CreateAndEditGeometries/iconAssets/erase-32.png"
+                    iconPath: "qrc:/Samples/Geometry/CreateAndEditGeometries/iconAssets/erase-24.svg"
                     Layout.columnSpan: 2
                     enabled: model.geometryEditorStarted && model.elementIsSelected
                     onClicked: model.deleteSelectedElement();
@@ -236,7 +236,7 @@ Item {
                 GeometryEditorButton {
                     id: saveEditsButton
                     buttonName: qsTr("Stop and save edits")
-                    iconPath: "qrc:/Samples/Geometry/CreateAndEditGeometries/iconAssets/check-circle-32.png"
+                    iconPath: "qrc:/Samples/Geometry/CreateAndEditGeometries/iconAssets/check-circle-24.svg"
                     Layout.columnSpan: 2
                     enabled: model.geometryEditorStarted
                     onClicked: {
@@ -248,7 +248,7 @@ Item {
                 GeometryEditorButton {
                     id: discardEditsButton
                     buttonName: qsTr("Stop and discard edits")
-                    iconPath: "qrc:/Samples/Geometry/CreateAndEditGeometries/iconAssets/circle-disallowed-32.png"
+                    iconPath: "qrc:/Samples/Geometry/CreateAndEditGeometries/iconAssets/circle-disallowed-24.svg"
                     Layout.columnSpan: 2
                     enabled: model.geometryEditorStarted
                     onClicked: {
@@ -260,7 +260,7 @@ Item {
                 GeometryEditorButton {
                     id: clearGraphicsButton
                     buttonName: qsTr("Delete all geometries")
-                    iconPath: "qrc:/Samples/Geometry/CreateAndEditGeometries/iconAssets/trash-32.png"
+                    iconPath: "qrc:/Samples/Geometry/CreateAndEditGeometries/iconAssets/trash-24.svg"
                     Layout.columnSpan: 2
                     enabled: !model.geometryEditorStarted
                     onClicked: model.clearGraphics();

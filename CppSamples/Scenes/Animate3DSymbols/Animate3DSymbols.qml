@@ -247,45 +247,45 @@ Animate3DSymbolsSample {
                     left: parent.left
                     top: parent.top
                 }
-                spacing: 10
+                spacing: 2
 
-                Rectangle {
+                ToolButton {
                     Layout.margins: 5
-                    height: width
-                    width: childrenRect.width
-                    clip: true
-                    radius: 5
-                    opacity: 0.9
-
-                    Image {
-                        source: "qrc:/Samples/Scenes/Animate3DSymbols/plus-16-f.png"
+                    padding: 0
+                    icon {
+                        source: "qrc:/Samples/Scenes/Animate3DSymbols/minus-24.svg"
                         width: 24
-                        height: width
+                        height: 24
+                        color: palette.buttonText
+                    }
+                    onClicked: zoomMapOut()
 
-                        MouseArea {
-                            anchors.fill: parent
-                            onClicked: zoomMapIn()
-                        }
+                    background: Rectangle {
+                        implicitWidth: 24
+                        implicitHeight: 24
+                        color: parent.hovered ? palette.midlight : palette.button
+                        opacity: 0.9
+                        radius: 5
                     }
                 }
 
-                Rectangle {
+                ToolButton {
                     Layout.margins: 5
-                    height: width
-                    width: childrenRect.width
-                    opacity: 0.9
-                    clip: true
-                    radius: 5
-
-                    Image {
-                        source: "qrc:/Samples/Scenes/Animate3DSymbols/minus-16-f.png"
+                    padding: 0
+                    icon {
+                        source: "qrc:/Samples/Scenes/Animate3DSymbols/plus-24.svg"
                         width: 24
-                        height: width
+                        height: 24
+                        color: palette.buttonText
+                    }
+                    onClicked: zoomMapIn()
 
-                        MouseArea {
-                            anchors.fill: parent
-                            onClicked: zoomMapOut()
-                        }
+                    background: Rectangle {
+                        implicitWidth: 24
+                        implicitHeight: 24
+                        color: parent.hovered ? palette.midlight : palette.button
+                        opacity: 0.9
+                        radius: 5
                     }
                 }
             }

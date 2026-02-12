@@ -173,15 +173,22 @@ SearchForWebmapSample {
                 }
             }
 
-            Image {
+            ToolButton {
                 width: height
                 height: keyWordField.height
-                source: "qrc:/Samples/CloudAndPortal/SearchForWebmap/searchIcon.png"
+                enabled: keyWordField.text.length > 0
+                flat: true
+                icon {
+                    source: "qrc:/Samples/CloudAndPortal/SearchForWebmap/search-24.svg"
+                    width: 24
+                    height: 24
+                    color: palette.text
+                }
+                onClicked: search(keyWordField.text)
 
-                MouseArea {
-                    anchors.fill: parent
-                    enabled: keyWordField.text.length > 0
-                    onClicked : search(keyWordField.text);
+                background: Rectangle {
+                    color: "transparent"
+                    radius: 4
                 }
             }
 

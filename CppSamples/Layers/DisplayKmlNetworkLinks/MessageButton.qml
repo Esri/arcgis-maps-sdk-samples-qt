@@ -16,6 +16,7 @@
 
 import QtQuick
 import QtQuick.Controls
+import QtQuick.Effects
 
 Item {
     id: messageButton
@@ -52,13 +53,17 @@ Item {
             id: messageImage
             width: 32
             height: 32
-            source: Qt.application.styleHints.colorScheme === Qt.ColorScheme.Dark ? "qrc:/Samples/Layers/DisplayKmlNetworkLinks/iOS8_TabBar_Email90_light.png" : "qrc:/Samples/Layers/DisplayKmlNetworkLinks/iOS8_TabBar_Email90.png"
+            source: "qrc:/Samples/Layers/DisplayKmlNetworkLinks/envelope-24.svg"
             anchors.margins: 5
-
+            layer.enabled: true
+            layer.effect: MultiEffect {
+                colorization: 1.0
+                colorizationColor: palette.text
+                brightness: 1.0
+            }
             SequentialAnimation on opacity {
                 running: messageContents.visible
                 loops: Animation.Infinite
-
                 PropertyAnimation { to: 1; duration: 1000; easing.type: Easing.InOutQuad }
                 PropertyAnimation { to: 0; duration: 1000; easing.type: Easing.InOutQuad }
             }

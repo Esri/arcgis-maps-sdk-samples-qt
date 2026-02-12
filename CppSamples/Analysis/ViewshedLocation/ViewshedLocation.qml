@@ -36,28 +36,30 @@ ViewshedLocationSample {
             forceActiveFocus();
         }
 
-        Rectangle {
+        ToolButton {
             anchors {
                 right: parent.right
                 bottom: sceneView.attributionTop
                 margins: 10
             }
+            display: AbstractButton.IconOnly
             visible: !optionPanel.visible
             width: 45
-            height: width
-            color: palette.highlight
-            radius: 25
-
-            Image {
-                anchors.centerIn: parent
-                source: "qrc:/Samples/Analysis/ViewshedLocation/settings.png"
-                width: 40
-                height: width
+            height: 45
+            padding: 0
+            icon {
+                source: "qrc:/Samples/Analysis/ViewshedLocation/gear-24.svg"
+                width: 32
+                height: 32
+                color: hovered ? palette.buttonText : palette.text
             }
+            onClicked: optionPanel.visible = true
 
-            MouseArea {
-                anchors.fill: parent
-                onClicked: optionPanel.visible = true;
+            background: Rectangle {
+                implicitWidth: 45
+                implicitHeight: 45
+                color:  parent.hovered ? palette.highlight : palette.base
+                radius: 25
             }
         }
 
@@ -73,6 +75,14 @@ ViewshedLocationSample {
             visible: false
             color: palette.base
             opacity: 0.9
+
+            MouseArea {
+                anchors.fill: parent
+                acceptedButtons: Qt.LeftButton | Qt.RightButton
+                onClicked: mouse => mouse.accepted = true
+                onDoubleClicked: mouse => mouse.accepted = true
+                onWheel: wheel => wheel.accepted = true
+            }
 
             Flickable {
                 anchors {
@@ -100,25 +110,26 @@ ViewshedLocationSample {
 
                         }
 
-                        Rectangle {
+                        ToolButton {
                             anchors {
                                 right: parent.right
                                 verticalCenter: parent.verticalCenter
                             }
-                            width: 45
-                            height: width
-                            color: "transparent"
-
-                            Image {
-                                anchors.centerIn: parent
-                                source: Qt.styleHints.colorScheme === Qt.ColorScheme.Dark? "qrc:/Samples/Analysis/ViewshedLocation/close_light.png" : "qrc:/Samples/Analysis/ViewshedLocation/close.png"
-                                width: 40
-                                height: width
+                            padding: 0
+                            display: AbstractButton.IconOnly
+                            icon {
+                                source: "qrc:/Samples/Analysis/ViewshedLocation/x-24.svg"
+                                width: 32
+                                height: 32
+                                color: hovered ? palette.buttonText : palette.text
                             }
+                            onClicked: optionPanel.visible = false
 
-                            MouseArea {
-                                anchors.fill: parent
-                                onClicked: optionPanel.visible = false;
+                            background: Rectangle {
+                                implicitWidth: 32
+                                implicitHeight: 32
+                                color: parent.hovered ? palette.highlight : "transparent"
+                                radius: 10
                             }
                         }
                     }

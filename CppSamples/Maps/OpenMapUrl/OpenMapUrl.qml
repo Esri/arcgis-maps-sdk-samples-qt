@@ -130,41 +130,38 @@ OpenMapUrlSample {
     }
 
     // Create a button to show the map picker window
-    Rectangle {
-       id: switchButton
-       property bool pressed: false
-       visible: !mapPickerWindow.visible
-       anchors {
-           right: parent.right
-           bottom: parent.bottom
-           rightMargin: 20
-           bottomMargin: 40
-       }
+    ToolButton {
+        id: switchButton
+        visible: !mapPickerWindow.visible
+        anchors {
+            right: parent.right
+            bottom: parent.bottom
+            rightMargin: 20
+            bottomMargin: 40
+        }
+        width: 45
+        height: 45
+        padding: 0
+        display: AbstractButton.IconOnly
+        icon {
+            source: "qrc:/Samples/Maps/OpenMapUrl/map-24.svg"
+            width: 35
+            height: 35
+            color: hovered ? palette.text : palette.buttonText
+        }
+        onClicked: {
+            mapPickerWindow.visible = true
+        }
 
-       width: 45
-       height: width
-       color: pressed ? palette.highlight : palette.button
-       radius: 100
-       border {
-           color: "#585858"
-           width: 1
-       }
-
-       Image {
-           anchors.centerIn: parent
-           width: 35
-           height: width
-           source: "qrc:/Samples/Maps/OpenMapUrl/SwitchMap.png"
-       }
-
-       MouseArea {
-           anchors.fill: parent
-           onPressed: switchButton.pressed = true
-           onReleased: switchButton.pressed = false
-           onClicked: {
-               // Show the add window when it is clicked
-               mapPickerWindow.visible = true;
-           }
-       }
+        background: Rectangle {
+            implicitWidth: 45
+            implicitHeight: 45
+            color: parent.hovered ? palette.base : palette.highlight
+            radius: 100
+            border {
+                color: "#585858"
+                width: 1
+            }
+        }
     }
 }

@@ -179,8 +179,8 @@ ShowOrgBasemapsSample {
         }
         visible: mapView.visible
         text: qsTr("Back")
-        icon.source: "qrc:/Samples/CloudAndPortal/ShowOrgBasemaps/ic_menu_back_dark.png"
-        icon.color: "#F8F8F8"
+        icon.source: "qrc:/Samples/CloudAndPortal/ShowOrgBasemaps/chevron-left-24.svg"
+        icon.color: palette.buttonText
 
         opacity: 1
 
@@ -200,8 +200,8 @@ ShowOrgBasemapsSample {
             top: titleLabel.bottom
         }
         text: qsTr("Anonymous")
-        icon.source: "qrc:/Samples/CloudAndPortal/ShowOrgBasemaps/ic_menu_help_dark.png"
-        icon.color: "#F8F8F8"
+        icon.source: "qrc:/Samples/CloudAndPortal/ShowOrgBasemaps/question-24.svg"
+        icon.color: palette.buttonText
         visible: !portalLoaded
 
         onClicked: {
@@ -218,8 +218,8 @@ ShowOrgBasemapsSample {
         }
         width: anonymousLogIn.width
         text: qsTr("Sign-in")
-        icon.source: "qrc:/Samples/CloudAndPortal/ShowOrgBasemaps/ic_menu_account_dark.png"
-        icon.color: "#F8F8F8"
+        icon.source: "qrc:/Samples/CloudAndPortal/ShowOrgBasemaps/user-24.svg"
+        icon.color: palette.buttonText
         visible: !portalLoaded
 
         onClicked: {

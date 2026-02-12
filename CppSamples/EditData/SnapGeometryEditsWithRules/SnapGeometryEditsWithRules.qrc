@@ -8,9 +8,9 @@
         <file>SnapSourcesListModel.cpp</file>
         <file>SnapSourcesListModel.h</file>
         <file>GeometryEditorButton.qml</file>
-        <file>iconAssets/trash-32.png</file>
-        <file>iconAssets/save-32.png</file>
-        <file>iconAssets/settings.png</file>
+        <file>iconAssets/trash-24.svg</file>
+        <file>iconAssets/save-24.svg</file>
+        <file>iconAssets/gear-24.svg</file>
         <file>main.qml</file>
         <file>screenshot.png</file>
     </qresource>

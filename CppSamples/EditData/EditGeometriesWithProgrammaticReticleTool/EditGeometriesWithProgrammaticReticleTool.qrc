@@ -7,11 +7,6 @@
         <file>main.qml</file>
         <file>screenshot.png</file>
         <file>README.md</file>
-        <file>iconAssets/undo-32.png</file>
-        <file>iconAssets/redo-32.png</file>
-        <file>iconAssets/erase-32.png</file>
-        <file>iconAssets/save-32.png</file>
-        <file>iconAssets/trash-32.png</file>
         <file>GeometryEditorPopup.qml</file>
     </qresource>
 </RCC>

@@ -91,24 +91,33 @@ BuildLegendSample {
                 }
 
                 // Legend icon to allow expanding and collapsing
-                Image {
-                    source: legendRect.expanded ?
-                                (Qt.application.styleHints.colorScheme === Qt.ColorScheme.Dark ? "qrc:/Samples/DisplayInformation/BuildLegend/ic_menu_legendpopover_light_d.png" : "qrc:/Samples/DisplayInformation/BuildLegend/ic_menu_legendpopover_light_d_dark.png")
-                                                                                                : "qrc:/Samples/DisplayInformation/BuildLegend/ic_menu_legendpopover_light.png"
+                ToolButton {
                     width: 24
-                    height: width
+                    height: 24
+                    padding: 0
+                    display: AbstractButton.IconOnly
+                    icon {
+                        source: legendRect.expanded ?
+                                    "qrc:/Samples/DisplayInformation/BuildLegend/legend-24.svg" :
+                                    "qrc:/Samples/DisplayInformation/BuildLegend/expand-24.svg"
 
-                    MouseArea {
-                        anchors.fill: parent
-                        onClicked: {
-                            if (legendRect.expanded) {
-                                legendRect.height = 36;
-                                legendRect.expanded = false;
-                            } else {
-                                legendRect.height = 200;
-                                legendRect.expanded = true;
-                            }
+                        width: 24
+                        height: 24
+                        color: palette.text
+                    }
+                    onClicked: {
+                        if (legendRect.expanded) {
+                            legendRect.height = 36;
+                            legendRect.expanded = false;
+                        } else {
+                            legendRect.height = 200;
+                            legendRect.expanded = true;
                         }
+                    }
+
+                    background: Rectangle {
+                        color: parent.hovered ? palette.midlight : "transparent"
+                        radius: 4
                     }
                 }
             }

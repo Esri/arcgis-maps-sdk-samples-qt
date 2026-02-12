@@ -49,7 +49,7 @@ ManageFeaturesFeatureServiceSample {
             accessoryButtonType: addFeaturesSample.operationMode === ManageFeaturesFeatureService.OperationMode.DeleteFeatures ? "Custom" :
                                                                                                                                  (addFeaturesSample.operationMode === ManageFeaturesFeatureService.OperationMode.UpdateAttributes ? "Info" : "None")
 
-            customImageUrl: addFeaturesSample.operationMode === ManageFeaturesFeatureService.OperationMode.DeleteFeatures ? "qrc:/Samples/EditData/ManageFeaturesFeatureService/ic_menu_trash_light.png" : ""
+            customImageUrl: addFeaturesSample.operationMode === ManageFeaturesFeatureService.OperationMode.DeleteFeatures ? "qrc:/Samples/EditData/ManageFeaturesFeatureService/trash-24.svg" : ""
 
             onAccessoryButtonClicked: {
                 if (addFeaturesSample.operationMode === ManageFeaturesFeatureService.OperationMode.DeleteFeatures) {

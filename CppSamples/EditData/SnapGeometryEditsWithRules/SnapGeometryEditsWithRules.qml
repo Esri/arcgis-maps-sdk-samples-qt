@@ -130,7 +130,7 @@ Item {
                 GeometryEditorButton {
                     id: snapSettingsButton
                     buttonName: qsTr("Snap Settings")
-                    iconPath: "qrc:/Samples/EditData/SnapGeometryEditsWithRules/iconAssets/settings.png"
+                    iconPath: "qrc:/Samples/EditData/SnapGeometryEditsWithRules/iconAssets/gear-24.svg"
                     Layout.columnSpan: 2
                     enabled: snapGeometryEditsWithRulesModel.isElementSelected
                     onClicked: {
@@ -140,7 +140,7 @@ Item {
                 GeometryEditorButton {
                     id: saveButton
                     buttonName: qsTr("Save")
-                    iconPath: "qrc:/Samples/EditData/SnapGeometryEditsWithRules/iconAssets/save-32.png"
+                    iconPath: "qrc:/Samples/EditData/SnapGeometryEditsWithRules/iconAssets/save-24.svg"
                     enabled: snapGeometryEditsWithRulesModel.geometryEditorStarted
                     onClicked: snapGeometryEditsWithRulesModel.stopEditing();
                 }
@@ -148,7 +148,7 @@ Item {
                 GeometryEditorButton {
                     id: discardButton
                     buttonName: qsTr("Discard")
-                    iconPath: "qrc:/Samples/EditData/SnapGeometryEditsWithRules/iconAssets/trash-32.png"
+                    iconPath: "qrc:/Samples/EditData/SnapGeometryEditsWithRules/iconAssets/trash-24.svg"
                     enabled: snapGeometryEditsWithRulesModel.geometryEditorStarted
                     onClicked: snapGeometryEditsWithRulesModel.discardEdits();
                 }

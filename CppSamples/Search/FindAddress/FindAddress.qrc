@@ -6,10 +6,9 @@
         <file>FindAddress.h</file>
         <file>FindAddress.cpp</file>
         <file>README.md</file>
-		<file>ic_menu_closeclear_d.png</file>
-        <file>ic_menu_closeclear_light_d.png</file>
-		<file>ic_menu_collapsedencircled_d.png</file>
-        <file>ic_menu_collapsedencircled_light_d.png</file>
+		<file>x-24.svg</file>
+        <file>chevron-down-24.svg</file>
+		<file>chevron-left-24.svg</file>
         <file>pin_circle_red.png</file>
     </qresource>
 </RCC>

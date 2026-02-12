@@ -62,7 +62,7 @@ RasterFunctionServiceSample {
             }
             width: 26
             height: width
-            source: "qrc:/Samples/Layers/RasterFunctionService/RasterImageAnalysisHillshade.png"
+            source: "qrc:/Samples/Layers/RasterFunctionService/hillshade-effect-24.svg"
         }
 
         MouseArea {

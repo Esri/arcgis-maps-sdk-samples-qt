@@ -16,6 +16,7 @@
 
 import QtQuick
 import QtQuick.Controls
+import QtQuick.Effects
 import Esri.Samples
 import Esri.ArcGISRuntime.Toolkit
 
@@ -48,7 +49,7 @@ AddItemsToPortalSample {
                 height: 64
                 width: Math.min(256, parent.width)
                 color: enabled ? palette.highlight : "darkgrey"
-                border{
+                border {
                     color: "lightgrey"
                     width: 2
                 }
@@ -56,17 +57,27 @@ AddItemsToPortalSample {
                 enabled: !portalLoaded
 
                 Row {
-                    anchors.fill: parent
+                    anchors {
+                        fill: parent
+                        leftMargin: 16
+                    }
                     spacing: 16
 
                     Image {
+                        id: statusIcon
                         anchors.verticalCenter: parent.verticalCenter
                         source: !portalLoaded ?
-                                    "qrc:/Samples/CloudAndPortal/AddItemsToPortal/ic_menu_account_dark.png" :
-                                    "qrc:/Samples/CloudAndPortal/AddItemsToPortal/ic_menu_checkedcircled_dark.png"
+                                    "qrc:/Samples/CloudAndPortal/AddItemsToPortal/user-24.svg" :
+                                    "qrc:/Samples/CloudAndPortal/AddItemsToPortal/check-circle-24.svg"
                         fillMode: Image.PreserveAspectFit
-                        height: 64
+                        height: 32
                         width: height
+                        layer.enabled: true
+                        layer.effect: MultiEffect {
+                            colorization: 1.0
+                            colorizationColor: palette.buttonText
+                            brightness: 1.0
+                        }
                     }
 
                     Label {
@@ -100,18 +111,26 @@ AddItemsToPortalSample {
                 enabled: !portalItemLoaded && portalLoaded
 
                 Row {
-                    anchors.fill: parent
+                    anchors {
+                        fill: parent
+                        leftMargin: 16
+                    }
                     spacing: 16
 
                     Image {
                         anchors.verticalCenter: parent.verticalCenter
                         source: portalItemLoaded ?
-                                    "qrc:/Samples/CloudAndPortal/AddItemsToPortal/ic_menu_checkedcircled_dark.png" :
-                                    "qrc:/Samples/CloudAndPortal/AddItemsToPortal/ic_menu_addencircled_dark.png"
-
+                                    "qrc:/Samples/CloudAndPortal/AddItemsToPortal/check-circle-24.svg" :
+                                    "qrc:/Samples/CloudAndPortal/AddItemsToPortal/plus-circle-24.svg"
                         fillMode: Image.PreserveAspectFit
-                        height: 64
+                        height: 32
                         width: height
+                        layer.enabled: true
+                        layer.effect: MultiEffect {
+                            colorization: 1.0
+                            colorizationColor: palette.buttonText
+                            brightness: 1.0
+                        }
                     }
 
                     Label {
@@ -145,18 +164,26 @@ AddItemsToPortalSample {
                 enabled: portalItemLoaded && !itemDeleted
 
                 Row {
-                    anchors.fill: parent
+                    anchors {
+                        fill: parent
+                        leftMargin: 16
+                    }
                     spacing: 16
 
                     Image {
                         anchors.verticalCenter: parent.verticalCenter
                         source: !itemDeleted ?
-                                    "qrc:/Samples/CloudAndPortal/AddItemsToPortal/ic_menu_trash_dark.png" :
-                                    "qrc:/Samples/CloudAndPortal/AddItemsToPortal/ic_menu_checkedcircled_dark.png"
-
+                                    "qrc:/Samples/CloudAndPortal/AddItemsToPortal/trash-24.svg" :
+                                    "qrc:/Samples/CloudAndPortal/AddItemsToPortal/check-circle-24.svg"
                         fillMode: Image.PreserveAspectFit
-                        height: 64
+                        height: 32
                         width: height
+                        layer.enabled: true
+                        layer.effect: MultiEffect {
+                            colorization: 1.0
+                            colorizationColor: palette.buttonText
+                            brightness: 1.0
+                        }
                     }
 
                     Label {

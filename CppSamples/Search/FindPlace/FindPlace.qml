@@ -77,7 +77,7 @@ FindPlaceSample {
         // create a text field for the POI search
         SearchBox {
             id: poiTextField
-            imageUrl: Qt.application.styleHints.colorScheme === Qt.ColorScheme.Dark ? "qrc:/Samples/Search/FindPlace/find_light.png" : "qrc:/Samples/Search/FindPlace/find.png"
+            imageUrl: "qrc:/Samples/Search/FindPlace/search-24.svg"
             placeholderText: qsTr("Point of interest (e.g. Movie Theater)")
             onTextChanged: {
                 if (text.length > 0 && suggestionView)
@@ -100,7 +100,7 @@ FindPlaceSample {
         // create a text field for the location search
         SearchBox {
             id: locationTextField
-            imageUrl: "qrc:/Samples/Search/FindPlace/location.png"
+            imageUrl: "qrc:/Samples/Search/FindPlace/pin-32.svg"
             placeholderText: "In proximity of"
             text: qsTr("Current Location")
             onTextChanged: {

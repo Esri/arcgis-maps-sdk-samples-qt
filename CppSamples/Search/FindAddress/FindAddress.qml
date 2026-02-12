@@ -17,6 +17,7 @@
 import QtQuick
 import QtQuick.Controls
 import QtQuick.Layouts
+import QtQuick.Effects
 import Esri.Samples
 import Esri.ArcGISRuntime.Toolkit
 
@@ -99,7 +100,13 @@ FindAddressSample {
                     enabled: visible
                     Image {
                         anchors.fill: parent
-                        source: Qt.application.styleHints.colorScheme === Qt.ColorScheme.Dark ? "qrc:/Samples/Search/FindAddress/ic_menu_collapsedencircled_d.png" : "qrc:/Samples/Search/FindAddress/ic_menu_collapsedencircled_light_d.png"
+                        source: suggestView.visible ? "qrc:/Samples/Search/FindAddress/chevron-down-24.svg" : "qrc:/Samples/Search/FindAddress/chevron-left-24.svg"
+                        layer.enabled: true
+                        layer.effect: MultiEffect {
+                            colorization: 1.0
+                            colorizationColor: palette.text
+                            brightness: 1.0
+                        }
                         MouseArea {
                             anchors.fill: parent
                             onClicked: {
@@ -119,7 +126,13 @@ FindAddressSample {
                     enabled: visible
                     Image {
                         anchors.fill: parent
-                        source: Qt.application.styleHints.colorScheme === Qt.ColorScheme.Dark ? "qrc:/Samples/Search/FindAddress/ic_menu_closeclear_d.png" : "qrc:/Samples/Search/FindAddress/ic_menu_closeclear_light_d.png"
+                        source: "qrc:/Samples/Search/FindAddress/x-24.svg"
+                        layer.enabled: true
+                        layer.effect: MultiEffect {
+                            colorization: 1.0
+                            colorizationColor: palette.text
+                            brightness: 1.0
+                        }
 
                         MouseArea {
                             anchors.fill: parent

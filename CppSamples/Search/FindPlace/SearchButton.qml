@@ -34,6 +34,7 @@ Rectangle {
         anchors.centerIn: parent
         text: qsTr("Redo search in this area")
         font.pixelSize: 14
+        color: palette.buttonText
     }
 
     MouseArea {

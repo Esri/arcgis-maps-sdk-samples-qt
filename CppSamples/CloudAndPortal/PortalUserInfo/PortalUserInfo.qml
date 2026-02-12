@@ -16,6 +16,7 @@
 
 import QtQuick
 import QtQuick.Controls
+import QtQuick.Effects
 import Esri.Samples
 import Esri.ArcGISRuntime.Toolkit
 
@@ -55,9 +56,15 @@ PortalUserInfoSample {
         }
 
         Image {
-            source : thumbnailUrl.toString().length > 0 ? thumbnailUrl : "qrc:/Samples/CloudAndPortal/PortalUserInfo/placeholder_img.png"
+            source: thumbnailUrl.toString().length > 0 ? thumbnailUrl : "qrc:/Samples/CloudAndPortal/PortalUserInfo/user-24.svg"
             height: 32
             width: 32
+            layer.enabled: true
+            layer.effect: MultiEffect {
+                colorization: 1.0
+                colorizationColor: palette.text
+                brightness: 1.0
+            }
         }
     }
 
@@ -158,7 +165,10 @@ PortalUserInfoSample {
             top: parent.top
         }
         text: qsTr("Authenticate Portal")
-        icon.source: "qrc:/Samples/CloudAndPortal/PortalUserInfo/ic_menu_account_dark.png"
+        icon {
+            source: "qrc:/Samples/CloudAndPortal/PortalUserInfo/user-24.svg"
+            color: palette.buttonText
+        }
 
         visible: loginDismissed
         onClicked: {
