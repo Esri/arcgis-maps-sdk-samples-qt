@@ -19,12 +19,11 @@
     { "key": "QtQuickVersion", "value": "%{JS: %{QtVersion}.qtQuickVersion}" },
     { "key": "QtQuickWindowVersion", "value": "%{JS: %{QtVersion}.qtQuickWindowVersion}" },
     { "key": "QtQuickFeature", "value": "QtSupport.Wizards.FeatureQtQuick.%{QtQuickVersion}" },
-    { "key": "DisplayName", "value": "%{JS: Cpp.className('%{DispName}')}" },
+    { "key": "DisplayName", "value": "%{DisplayName}" },
     { "key": "SampleName", "value": "%{JS: '%{Class}'.charAt(0).toUpperCase() + '%{Class}'.substring(1)}" },
     { "key": "SampleDescription", "value": "%{SampleDesc}" },
     { "key": "SampleCategory", "value": "%{SampleCat}" },
     { "key": "IncludeGuard", "value": "%{JS: Cpp.headerGuard('%{Class}' + '_H')}" },
-    { "key": "ThreeDSample", "value": "%{threeD}" },
     { "key": "UseFeatureLayer", "value": "%{JS: ( '%{FeatureLayerURL}'.length === 0 ) ? 'false' : 'true'}" },
     { "key": "UseAPIKey", "value": "%{apiKey}" },
     { "key": "CurrentYear", "value": "%{JS: new Date().getFullYear()}" }
@@ -96,7 +95,7 @@
           }
         },
         {
-          "name": "DispName",
+          "name": "DisplayName",
           "trDisplayName": "Display Name:",
           "mandatory": true,
           "type": "LineEdit",
@@ -120,10 +119,39 @@
           }
         },
         {
-          "name": "threeD",
-          "trDisplayName": "3-D sample",
+          "name": "GeoViewType",
+          "trDisplayName": "GeoView type:",
+          "type": "ComboBox",
+          "trToolTip": "%{JS: ( '%{GeoViewType}' === 'map' ) ? 'A two-dimensional map' : ( '%{GeoViewType}' === 'globalScene') ? 'A three-dimensional scene on a globe' : 'A three-dimensional scene on a projected plane' }",
+          "data":
+          {
+            "index": 0,
+            "items":
+            [
+              {
+                "trKey": "2D Map",
+                "value": "map"
+              },
+              {
+                "trKey": "Global 3D Scene",
+                "value": "globalScene"
+              },
+              {
+                "trKey": "Local 3D Scene",
+                "value": "localScene"
+              }
+            ]
+          }
+        },
+        {
+          "name": "ThreeDSample",
+          "trDisplayName": "3D project",
           "type": "CheckBox",
-          "data":{"checked": false}
+          "visible": false,
+          "data":
+          {
+            "checked": "%{JS: ( '%{GeoViewType}' !== 'map' ) ? 'yes' : ''}"
+          }
         },
         {
           "name": "FeatureLayerURL",
