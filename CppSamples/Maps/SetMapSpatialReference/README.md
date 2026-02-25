@@ -30,6 +30,10 @@ The ArcGIS map image layer will reproject into the spatial reference set to the 
 * MapView
 * SpatialReference
 
+## About the data
+
+This sample uses a [World Cities Population](https://sampleserver6.arcgisonline.com/arcgis/rest/services/SampleWorldCities/MapServer) map service that displays world cities symbolized based on population.
+
 ## Additional information
 
 Operational layers will automatically project to this spatial reference when possible. There are 3 kinds of layer reprojection behaviors:
