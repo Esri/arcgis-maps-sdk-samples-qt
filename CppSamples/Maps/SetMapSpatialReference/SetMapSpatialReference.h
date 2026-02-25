@@ -31,6 +31,7 @@ namespace Esri::ArcGISRuntime
 class SetMapSpatialReference : public QQuickItem
 {
   Q_OBJECT
+  Q_PROPERTY(QStringList spatialReferenceNames READ spatialReferenceNames CONSTANT)
 
 public:
   explicit SetMapSpatialReference(QQuickItem* parent = nullptr);
@@ -39,11 +40,28 @@ public:
   void componentComplete() override;
   static void init();
 
+  QStringList spatialReferenceNames() const;
+
+public slots:
+  void setSpatialReference(int index);
+
 private:
   Esri::ArcGISRuntime::Map* m_map = nullptr;
   Esri::ArcGISRuntime::MapQuickView* m_mapView = nullptr;
   Esri::ArcGISRuntime::Basemap* m_basemap = nullptr;
   Esri::ArcGISRuntime::ArcGISMapImageLayer* m_imageLayer = nullptr;
+
+  const QList<QPair<QString, int>> m_srOptions = {{"Berghaus Star AAG", 102299},
+                                                  {"Fuller", 54050},
+                                                  {"New Zealand Map Grid", 27200},
+                                                  {"North Pole Stereographic", 102018},
+                                                  {"Peirce Quincuncial", 54090},
+                                                  {"UTM Zone 10 N", 32610},
+                                                  {"World Bonne", 54024},
+                                                  {"World Goode Homolosine", 54052},
+                                                  {"World Orthographic", 102038},
+                                                  {"Web Mercator", 3857},
+                                                  {"WGS 84", 4326}};
 };
 
 #endif // SET_MAP_SPATIAL_REFERENCE_H
