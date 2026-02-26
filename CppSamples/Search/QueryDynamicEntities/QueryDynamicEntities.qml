@@ -70,7 +70,6 @@ Item {
                 width: Math.min(controlBox.width * 0.9, controlBox.width)
                 Label {
                     text: qsTr("Query Flights")
-                    color: "black"
                     font.bold: true
                     Layout.alignment: Qt.AlignVCenter
                     Layout.preferredWidth: (queryGrid.width - queryGrid.columnSpacing) * 0.3
@@ -104,7 +103,6 @@ Item {
                 width: Math.min(controlBox.width * 0.9, controlBox.width)
                 Label {
                     text: qsTr("Query Results")
-                    color: "black"
                     font.bold: true
                     Layout.alignment: Qt.AlignVCenter
                     Layout.preferredWidth: (resultsGrid.width - resultsGrid.columnSpacing) * 0.3

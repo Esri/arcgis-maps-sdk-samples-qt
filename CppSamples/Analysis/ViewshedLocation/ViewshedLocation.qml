@@ -113,6 +113,7 @@ ViewshedLocationSample {
                         ToolButton {
                             anchors {
                                 right: parent.right
+                                rightMargin: 8
                                 verticalCenter: parent.verticalCenter
                             }
                             padding: 0
