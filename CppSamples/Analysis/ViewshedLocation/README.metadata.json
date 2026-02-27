@@ -15,7 +15,7 @@
         "AnalysisOverlay",
         "ArcGISSceneLayer",
         "ArcGISTiledElevationSource",
-        "LocationViewshed",
+        "ExploratoryLocationViewshed",
         "Viewshed"
     ],
     "redirect_from": [
@@ -25,7 +25,7 @@
         "AnalysisOverlay",
         "ArcGISSceneLayer",
         "ArcGISTiledElevationSource",
-        "LocationViewshed",
+        "ExploratoryLocationViewshed",
         "Viewshed"
     ],
     "snippets": [

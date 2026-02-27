@@ -15,14 +15,14 @@ Choose a unit system for the measurement. Click any location in the scene to sta
 ## How it works
 
 1. Create an `AnalysisOverlay` object and add it to the analysis overlay collection of the `SceneView` object.
-2. Specify the start location and end location to create a `LocationDistanceMeasurement` object. Initially, the start and end locations can be the same point.
+2. Specify the start location and end location to create a `ExploratoryLocationDistanceMeasurement` object. Initially, the start and end locations can be the same point.
 3. Add the location distance measurement analysis to the analysis overlay.
 4. The `measurementChanged` signal will trigger if the distances change. You can get the new values for the `directDistance`, `horizontalDistance`, and `verticalDistance` from the `MeasurementChanged` object returned by the signal.
 
 ## Relevant API
 
 * AnalysisOverlay
-* LocationDistanceMeasurement
+* ExploratoryLocationDistanceMeasurement
 * MeasurementChanged
 
 ## Additional information

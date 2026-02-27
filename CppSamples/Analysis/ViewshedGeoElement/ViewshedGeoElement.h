@@ -29,7 +29,7 @@ namespace Esri::ArcGISRuntime
 {
   class SceneQuickView;
   class AnalysisOverlay;
-  class GeoElementViewshed;
+  class ExploratoryGeoElementViewshed;
   class GraphicsOverlay;
   class Graphic;
 } // namespace Esri::ArcGISRuntime
@@ -54,7 +54,7 @@ private:
 
   Esri::ArcGISRuntime::SceneQuickView* m_sceneView = nullptr;
   Esri::ArcGISRuntime::AnalysisOverlay* m_analysisOverlay = nullptr;
-  Esri::ArcGISRuntime::GeoElementViewshed* m_viewshed = nullptr;
+  Esri::ArcGISRuntime::ExploratoryGeoElementViewshed* m_viewshed = nullptr;
   Esri::ArcGISRuntime::GraphicsOverlay* m_graphicsOverlay = nullptr;
   Esri::ArcGISRuntime::Graphic* m_tank = nullptr;
   Esri::ArcGISRuntime::Point m_waypoint;

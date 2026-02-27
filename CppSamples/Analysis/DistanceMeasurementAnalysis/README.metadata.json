@@ -20,7 +20,7 @@
     ],
     "relevant_apis": [
         "AnalysisOverlay",
-        "LocationDistanceMeasurement",
+        "ExploratoryLocationDistanceMeasurement",
         "MeasurementChanged"
     ],
     "snippets": [

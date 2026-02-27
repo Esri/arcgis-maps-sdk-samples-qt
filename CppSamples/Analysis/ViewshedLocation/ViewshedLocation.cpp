@@ -28,7 +28,7 @@
 #include "ArcGISTiledElevationSource.h"
 #include "Camera.h"
 #include "ElevationSourceListModel.h"
-#include "LocationViewshed.h"
+#include "ExploratoryLocationViewshed.h"
 #include "MapTypes.h"
 #include "Point.h"
 #include "Scene.h"
@@ -138,7 +138,8 @@ void ViewshedLocation::createViewshed(double x, double y)
   const Point pt = m_sceneView->screenToBaseSurface(x, y);
 
   // Create the Location Viewshed
-  m_locationViewshed = new LocationViewshed(pt, m_heading, m_pitch, m_horizontalAngle, m_veriticalAngle, m_minDistance, m_maxDistance, this);
+  m_locationViewshed =
+    new ExploratoryLocationViewshed(pt, m_heading, m_pitch, m_horizontalAngle, m_veriticalAngle, m_minDistance, m_maxDistance, this);
   m_locationViewshed->setVisible(m_viewshedVisible);
 
   // Add the Viewshed to the Analysis Overlay
@@ -392,34 +393,34 @@ void ViewshedLocation::setPitch(double pitch)
 
 QColor ViewshedLocation::visibleColor() const
 {
-  return LocationViewshed::visibleColor();
+  return ExploratoryLocationViewshed::visibleColor();
 }
 
 void ViewshedLocation::setVisibleColor(const QColor& visibleColor)
 {
-  if (LocationViewshed::visibleColor() == visibleColor)
+  if (ExploratoryLocationViewshed::visibleColor() == visibleColor)
   {
     return;
   }
 
-  LocationViewshed::setVisibleColor(visibleColor);
+  ExploratoryLocationViewshed::setVisibleColor(visibleColor);
 
   emit visibleColorChanged();
 }
 
 QColor ViewshedLocation::obstructedColor() const
 {
-  return LocationViewshed::obstructedColor();
+  return ExploratoryLocationViewshed::obstructedColor();
 }
 
 void ViewshedLocation::setObstructedColor(const QColor& obstructedColor)
 {
-  if (LocationViewshed::obstructedColor() == obstructedColor)
+  if (ExploratoryLocationViewshed::obstructedColor() == obstructedColor)
   {
     return;
   }
 
-  LocationViewshed::setObstructedColor(obstructedColor);
+  ExploratoryLocationViewshed::setObstructedColor(obstructedColor);
 
   emit obstructedColorChanged();
 }
