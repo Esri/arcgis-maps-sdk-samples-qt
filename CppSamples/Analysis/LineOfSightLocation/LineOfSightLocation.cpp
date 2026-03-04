@@ -28,7 +28,7 @@
 #include "ArcGISTiledElevationSource.h"
 #include "Camera.h"
 #include "ElevationSourceListModel.h"
-#include "LocationLineOfSight.h"
+#include "ExploratoryLocationLineOfSight.h"
 #include "MapTypes.h"
 #include "Point.h"
 #include "Scene.h"
@@ -88,13 +88,13 @@ void LineOfSightLocation::createLineOfSight()
   const Point targetPt(-73.079266999709162, -49.300457676730559, 1312, SpatialReference::wgs84());
 
   // create the line of sight
-  m_lineOfSight = new LocationLineOfSight(observerPt, targetPt, this);
+  m_lineOfSight = new ExploratoryLocationLineOfSight(observerPt, targetPt, this);
   m_analysisOverlay->analyses()->append(m_lineOfSight);
 
   // configure the LoS color and width
-  LineOfSight::setVisibleColor(QColor("cyan"));
-  LineOfSight::setObstructedColor(QColor("magenta"));
-  LineOfSight::setLineWidth(2.0f);
+  ExploratoryLineOfSight::setVisibleColor(QColor("cyan"));
+  ExploratoryLineOfSight::setObstructedColor(QColor("magenta"));
+  ExploratoryLineOfSight::setLineWidth(2.0f);
 }
 
 void LineOfSightLocation::setInitialViewpoint()

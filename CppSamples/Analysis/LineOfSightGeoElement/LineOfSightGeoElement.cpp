@@ -32,7 +32,7 @@
 #include "Camera.h"
 #include "ElevationSourceListModel.h"
 #include "Error.h"
-#include "GeoElementLineOfSight.h"
+#include "ExploratoryGeoElementLineOfSight.h"
 #include "GeodeticDistanceResult.h"
 #include "GeometryEngine.h"
 #include "Graphic.h"
@@ -225,10 +225,10 @@ void LineOfSightGeoElement::initialize()
     AnalysisOverlay* analysisOverlay = new AnalysisOverlay(this);
     m_sceneView->analysisOverlays()->append(analysisOverlay);
 
-    GeoElementLineOfSight* lineOfSight = new GeoElementLineOfSight(m_observer, m_taxi, this);
+    ExploratoryGeoElementLineOfSight* lineOfSight = new ExploratoryGeoElementLineOfSight(m_observer, m_taxi, this);
     analysisOverlay->analyses()->append(lineOfSight);
 
-    connect(lineOfSight, &GeoElementLineOfSight::targetVisibilityChanged, this, [this](LineOfSightTargetVisibility targetVisibility)
+    connect(lineOfSight, &ExploratoryGeoElementLineOfSight::targetVisibilityChanged, this, [this](LineOfSightTargetVisibility targetVisibility)
     {
       // Select taxi whenever there is a clear line of sight from observer position.
       m_taxi->setSelected(targetVisibility == LineOfSightTargetVisibility::Visible);

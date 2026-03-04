@@ -24,7 +24,7 @@ namespace Esri::ArcGISRuntime
 {
   class SceneQuickView;
   class AnalysisOverlay;
-  class LocationLineOfSight;
+  class ExploratoryLocationLineOfSight;
 } // namespace Esri::ArcGISRuntime
 
 class LineOfSightLocation : public QQuickItem
@@ -41,7 +41,7 @@ public:
 private:
   Esri::ArcGISRuntime::SceneQuickView* m_sceneView = nullptr;
   Esri::ArcGISRuntime::AnalysisOverlay* m_analysisOverlay = nullptr;
-  Esri::ArcGISRuntime::LocationLineOfSight* m_lineOfSight = nullptr;
+  Esri::ArcGISRuntime::ExploratoryLocationLineOfSight* m_lineOfSight = nullptr;
 
   bool m_calculating = false;
 
