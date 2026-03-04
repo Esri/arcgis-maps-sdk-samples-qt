@@ -98,7 +98,7 @@ void DistanceMeasurementAnalysis::setSceneView(SceneQuickView* sceneView)
   AnalysisOverlay* analysisOverlay = new AnalysisOverlay(this);
   m_sceneView->analysisOverlays()->append(analysisOverlay);
 
-  // Create and add the LocationDistanceMeasurement
+  // Create and add the ExploratoryLocationDistanceMeasurement
   const Point startLocation(-4.494677, 48.384472, 24.772694, SpatialReference::wgs84());
   const Point endLocation(-4.495646, 48.384377, 58.501115, SpatialReference::wgs84());
   m_distanceAnalysis = new ExploratoryLocationDistanceMeasurement(startLocation, endLocation, this);

@@ -12,7 +12,7 @@
         "visibility",
         "visibility analysis",
         "AnalysisOverlay",
-        "LocationLineOfSight",
+        "ExploratoryLocationLineOfSight",
         "SceneView"
     ],
     "redirect_from": [
@@ -20,7 +20,7 @@
     ],
     "relevant_apis": [
         "AnalysisOverlay",
-        "LocationLineOfSight",
+        "ExploratoryLocationLineOfSight",
         "SceneView"
     ],
     "snippets": [

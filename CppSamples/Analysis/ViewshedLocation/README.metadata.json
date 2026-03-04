@@ -15,8 +15,7 @@
         "AnalysisOverlay",
         "ArcGISSceneLayer",
         "ArcGISTiledElevationSource",
-        "ExploratoryLocationViewshed",
-        "Viewshed"
+        "ExploratoryLocationViewshed"
     ],
     "redirect_from": [
         "/qt/latest/cpp/sample-code/sample-qt-viewshedlocation.htm"
@@ -25,8 +24,7 @@
         "AnalysisOverlay",
         "ArcGISSceneLayer",
         "ArcGISTiledElevationSource",
-        "ExploratoryLocationViewshed",
-        "Viewshed"
+        "ExploratoryLocationViewshed"
     ],
     "snippets": [
         "ViewshedLocation.cpp",

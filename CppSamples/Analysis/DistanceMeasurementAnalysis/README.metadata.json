@@ -12,7 +12,7 @@
         "distance",
         "measure",
         "AnalysisOverlay",
-        "LocationDistanceMeasurement",
+        "ExploratoryLocationDistanceMeasurement",
         "MeasurementChanged"
     ],
     "redirect_from": [

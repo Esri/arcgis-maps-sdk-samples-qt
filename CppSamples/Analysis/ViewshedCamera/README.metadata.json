@@ -16,8 +16,8 @@
         "ArcGISScene",
         "ArcGISTiledElevationSource",
         "Camera",
+        "ExploratoryLocationViewshed",
         "IntegratedMeshLayer",
-        "LocationViewshed",
         "SceneView"
     ],
     "redirect_from": [
@@ -28,8 +28,8 @@
         "ArcGISScene",
         "ArcGISTiledElevationSource",
         "Camera",
+        "ExploratoryLocationViewshed",
         "IntegratedMeshLayer",
-        "LocationViewshed",
         "SceneView"
     ],
     "snippets": [
