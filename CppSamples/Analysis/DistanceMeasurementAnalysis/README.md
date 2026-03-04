@@ -27,7 +27,7 @@ Choose a unit system for the measurement. Click any location in the scene to sta
 
 ## Additional information
 
-The `LocationDistanceMeasurement` analysis only performs planar distance calculations. This may not be appropriate for large distances where the Earth's curvature must be considered.
+The `ExploratoryLocationDistanceMeasurement` analysis only performs planar distance calculations. This may not be appropriate for large distances where the Earth's curvature must be considered.
 
 ## Tags
 

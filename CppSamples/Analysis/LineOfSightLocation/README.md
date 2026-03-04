@@ -17,14 +17,14 @@ Click and hold to turn on the mouse moved signal, then move the mouse to update 
 ## How it works
 
 1. Create an `AnalysisOverlay` and add it to the scene view.
-2. Create a `LocationLineOfSight` with initial observer and target locations and add it to the analysis overlay.
+2. Create an `ExploratoryLocationLineOfSight` with initial observer and target locations and add it to the analysis overlay.
 3. Connect to the `SceneQuickView::mouseClicked` slot to capture to capture mouse movement. Turn the screen point into a scene point with `sceneView::screenToLocation(screenPoint)`.
-4. Update the target location with `LineOfSight::setTargetLocation(scenePoint)`.
+4. Update the target location with `ExploratoryLocationLineOfSight::setTargetLocation(scenePoint)`.
 
 ## Relevant API
 
 * AnalysisOverlay
-* LocationLineOfSight
+* ExploratoryLocationLineOfSight
 * SceneView
 
 ## Tags

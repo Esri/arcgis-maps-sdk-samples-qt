@@ -23,7 +23,6 @@ Use the sliders to change the properties (heading, pitch, etc.), of the viewshed
 * ArcGISSceneLayer
 * ArcGISTiledElevationSource
 * ExploratoryLocationViewshed
-* Viewshed
 
 ## About the data
 

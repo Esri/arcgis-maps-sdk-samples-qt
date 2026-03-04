@@ -26,8 +26,8 @@ The taxi will be highlighted when it is visible. You can change the observer hei
 ## Relevant API
 
 * AnalysisOverlay
-* GeoElementLineOfSight
-* LineOfSight::targetVisibility
+* ExploratoryGeoElementLineOfSight
+* LineOfSightTargetVisibility
 
 ## Offline data
 

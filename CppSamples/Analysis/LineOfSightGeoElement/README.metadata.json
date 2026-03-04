@@ -18,16 +18,16 @@
         "visibility",
         "visibility analysis",
         "AnalysisOverlay",
-        "GeoElementLineOfSight",
-        "LineOfSight::targetVisibility"
+        "ExploratoryGeoElementLineOfSight",
+        "LineOfSightTargetVisibility"
     ],
     "redirect_from": [
         "/qt/latest/cpp/sample-code/sample-qt-lineofsightgeoelement.htm"
     ],
     "relevant_apis": [
         "AnalysisOverlay",
-        "GeoElementLineOfSight",
-        "LineOfSight::targetVisibility"
+        "ExploratoryGeoElementLineOfSight",
+        "LineOfSightTargetVisibility"
     ],
     "snippets": [
         "LineOfSightGeoElement.cpp",
