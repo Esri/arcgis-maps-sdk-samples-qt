@@ -12,7 +12,7 @@
         "distance",
         "measure",
         "AnalysisOverlay",
-        "LocationDistanceMeasurement",
+        "ExploratoryLocationDistanceMeasurement",
         "MeasurementChanged"
     ],
     "redirect_from": [
@@ -20,7 +20,7 @@
     ],
     "relevant_apis": [
         "AnalysisOverlay",
-        "LocationDistanceMeasurement",
+        "ExploratoryLocationDistanceMeasurement",
         "MeasurementChanged"
     ],
     "snippets": [

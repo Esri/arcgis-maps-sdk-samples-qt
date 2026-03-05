@@ -30,7 +30,7 @@
 #include "ArcGISTiledElevationSource.h"
 #include "AttributeListModel.h"
 #include "ElevationSourceListModel.h"
-#include "GeoElementViewshed.h"
+#include "ExploratoryGeoElementViewshed.h"
 #include "GeodeticDistanceResult.h"
 #include "GeometryEngine.h"
 #include "Graphic.h"
@@ -129,7 +129,7 @@ void ViewshedGeoElement::componentComplete()
   const double maxDistance = 250.0;
   const double headingOffset = 0.0;
   const double pitchOffset = 0.0;
-  m_viewshed = new GeoElementViewshed(m_tank, horizontalAngle, verticalAngle, minDistance, maxDistance, headingOffset, pitchOffset, this);
+  m_viewshed = new ExploratoryGeoElementViewshed(m_tank, horizontalAngle, verticalAngle, minDistance, maxDistance, headingOffset, pitchOffset, this);
   m_viewshed->setOffsetY(0.5);
   m_viewshed->setOffsetZ(0.5);
   m_analysisOverlay->analyses()->append(m_viewshed);

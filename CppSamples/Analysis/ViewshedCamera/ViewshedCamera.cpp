@@ -28,9 +28,9 @@
 #include "ArcGISTiledElevationSource.h"
 #include "Camera.h"
 #include "ElevationSourceListModel.h"
+#include "ExploratoryLocationViewshed.h"
 #include "IntegratedMeshLayer.h"
 #include "LayerListModel.h"
-#include "LocationViewshed.h"
 #include "MapTypes.h"
 #include "Point.h"
 #include "Scene.h"
@@ -90,7 +90,7 @@ void ViewshedCamera::calculateViewshed()
     // Create the viewshed
     const double minDistance = 1;
     const double maxDistance = 1000;
-    m_viewshed = new LocationViewshed(m_sceneView->currentViewpointCamera(), minDistance, maxDistance, this);
+    m_viewshed = new ExploratoryLocationViewshed(m_sceneView->currentViewpointCamera(), minDistance, maxDistance, this);
 
     // display the frustum
     m_viewshed->setFrustumOutlineVisible(true);

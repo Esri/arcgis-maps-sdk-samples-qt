@@ -25,7 +25,7 @@ namespace Esri::ArcGISRuntime
   class Scene;
   class SceneQuickView;
   class AnalysisOverlay;
-  class LocationViewshed;
+  class ExploratoryLocationViewshed;
 } // namespace Esri::ArcGISRuntime
 
 class ViewshedCamera : public QQuickItem
@@ -46,7 +46,7 @@ private:
   Esri::ArcGISRuntime::Scene* m_scene = nullptr;
   Esri::ArcGISRuntime::SceneQuickView* m_sceneView = nullptr;
   Esri::ArcGISRuntime::AnalysisOverlay* m_analysisOverlay = nullptr;
-  Esri::ArcGISRuntime::LocationViewshed* m_viewshed = nullptr;
+  Esri::ArcGISRuntime::ExploratoryLocationViewshed* m_viewshed = nullptr;
 };
 
 #endif // VIEWSHEDCAMERA_H

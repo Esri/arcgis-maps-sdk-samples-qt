@@ -21,7 +21,7 @@
         "viewshed",
         "visibility analysis",
         "AnalysisOverlay",
-        "GeoElementViewshed",
+        "ExploratoryGeoElementViewshed",
         "GeodeticDistanceResult",
         "GeometryEngine::distanceGeodetic (used to animate the vehicle)",
         "ModelSceneSymbol",
@@ -32,7 +32,7 @@
     ],
     "relevant_apis": [
         "AnalysisOverlay",
-        "GeoElementViewshed",
+        "ExploratoryGeoElementViewshed",
         "GeodeticDistanceResult",
         "GeometryEngine::distanceGeodetic (used to animate the vehicle)",
         "ModelSceneSymbol",

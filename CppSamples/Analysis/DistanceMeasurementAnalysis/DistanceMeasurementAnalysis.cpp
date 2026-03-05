@@ -31,9 +31,9 @@
 #include "CoreTypes.h"
 #include "Distance.h"
 #include "ElevationSourceListModel.h"
+#include "ExploratoryLocationDistanceMeasurement.h"
 #include "LayerListModel.h"
 #include "LinearUnit.h"
-#include "LocationDistanceMeasurement.h"
 #include "MapTypes.h"
 #include "Point.h"
 #include "Scene.h"
@@ -98,10 +98,10 @@ void DistanceMeasurementAnalysis::setSceneView(SceneQuickView* sceneView)
   AnalysisOverlay* analysisOverlay = new AnalysisOverlay(this);
   m_sceneView->analysisOverlays()->append(analysisOverlay);
 
-  // Create and add the LocationDistanceMeasurement
+  // Create and add the ExploratoryLocationDistanceMeasurement
   const Point startLocation(-4.494677, 48.384472, 24.772694, SpatialReference::wgs84());
   const Point endLocation(-4.495646, 48.384377, 58.501115, SpatialReference::wgs84());
-  m_distanceAnalysis = new LocationDistanceMeasurement(startLocation, endLocation, this);
+  m_distanceAnalysis = new ExploratoryLocationDistanceMeasurement(startLocation, endLocation, this);
   m_distanceAnalysis->setUnitSystem(UnitSystem::Metric);
   analysisOverlay->analyses()->append(m_distanceAnalysis);
 
@@ -120,7 +120,7 @@ void DistanceMeasurementAnalysis::setSceneView(SceneQuickView* sceneView)
 void DistanceMeasurementAnalysis::connectSignals()
 {
   // connect to signal to obtain updated distances
-  connect(m_distanceAnalysis, &LocationDistanceMeasurement::measurementChanged, this,
+  connect(m_distanceAnalysis, &ExploratoryLocationDistanceMeasurement::measurementChanged, this,
           [this](const Distance& directDistance, const Distance& horizontalDistance, const Distance& verticalDistance)
   {
     m_directDistance = QString::number(directDistance.value(), 'f', 2) + QString(" %1").arg(directDistance.unit().abbreviation());
