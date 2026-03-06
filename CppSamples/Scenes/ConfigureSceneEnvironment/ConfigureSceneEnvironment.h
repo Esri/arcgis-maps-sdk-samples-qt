@@ -99,7 +99,6 @@ private:
   bool m_sunLighting = true;
   bool m_directShadowsEnabled = false;
   QDateTime m_lightingDateTime;
-  int m_lightingTimeZoneOffsetHours = 0;
   int m_lightingHour = 12;
 };
 

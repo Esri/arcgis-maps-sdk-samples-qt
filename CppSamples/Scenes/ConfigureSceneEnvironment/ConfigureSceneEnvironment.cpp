@@ -92,12 +92,13 @@ void ConfigureSceneEnvironment::readInitialEnvironmentState()
     m_lightingDateTime = sun->simulatedDate();
 
     // Time zone offset
+    double offsetHours = 0.0;
     if (TimeZoneOffset* tz = sun->displayTimeZone())
     {
-      m_lightingTimeZoneOffsetHours = tz->hours();
+      offsetHours = tz->hours();
     }
 
-    m_lightingHour = m_lightingDateTime.addSecs(m_lightingTimeZoneOffsetHours * 3600LL).time().hour();
+    m_lightingHour = m_lightingDateTime.addSecs(offsetHours * 3600LL).time().hour();
   }
   else
   {
@@ -199,6 +200,11 @@ void ConfigureSceneEnvironment::setSunLighting(bool isSun)
   }
 
   m_sunLighting = isSun;
+
+  if (SceneLighting* currentLighting = m_scene->environment()->lighting())
+  {
+    currentLighting->deleteLater();
+  }
 
   if (isSun)
   {
