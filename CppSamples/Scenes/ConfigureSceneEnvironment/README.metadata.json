@@ -1,0 +1,30 @@
+{
+  "category": "Scene",
+  "description": "Configure the environment settings in a local scene to change the lighting conditions and background appearance.",
+  "featured": true,
+  "ignore": false,
+  "images": [
+    "screenshot.png"
+  ],
+  "keywords": [
+    "3D",
+    "environment",
+    "lighting",
+    "scene"
+  ],
+  "redirect_from": "",
+  "relevant_apis": [
+    "LocalSceneView",
+    "Scene",
+    "SceneEnvironment",
+    "SceneLighting",
+    "SunLighting",
+    "VirtualLighting"
+  ],
+  "snippets": [
+    "ConfigureSceneEnvironment.cpp",
+    "ConfigureSceneEnvironment.h",
+    "ConfigureSceneEnvironment.qml"
+  ],
+  "title": "Configure scene environment"
+}

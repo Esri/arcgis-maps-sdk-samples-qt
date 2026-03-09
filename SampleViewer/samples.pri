@@ -211,6 +211,7 @@ HEADERS += \
     "$$SAMPLEPATHCPP/Scenes/BasicSceneView/BasicSceneView.h" \
     "$$SAMPLEPATHCPP/Scenes/ChangeAtmosphereEffect/ChangeAtmosphereEffect.h" \
     "$$SAMPLEPATHCPP/Scenes/ChooseCameraController/ChooseCameraController.h" \
+    "$$SAMPLEPATHCPP/Scenes/ConfigureSceneEnvironment/ConfigureSceneEnvironment.h" \
     "$$SAMPLEPATHCPP/Scenes/CreateTerrainSurfaceFromLocalRaster/CreateTerrainSurfaceFromLocalRaster.h" \
     "$$SAMPLEPATHCPP/Scenes/CreateTerrainSurfaceFromLocalTilePackage/CreateTerrainSurfaceFromLocalTilePackage.h" \
     "$$SAMPLEPATHCPP/Scenes/ShowLabelsOnLayerIn3D/ShowLabelsOnLayerIn3D.h" \
@@ -360,7 +361,7 @@ SOURCES += \
     "$$SAMPLEPATHCPP/Layers/FeatureCollectionLayerQuery/FeatureCollectionLayerQuery.cpp" \
     "$$SAMPLEPATHCPP/Layers/FeatureLayerRenderingModeMap/FeatureLayerRenderingModeMap.cpp" \
     "$$SAMPLEPATHCPP/Layers/FeatureLayerRenderingModeScene/FeatureLayerRenderingModeScene.cpp" \
-     "$$SAMPLEPATHCPP/Layers/FilterBuildingSceneLayer/FilterBuildingSceneLayer.cpp" \
+    "$$SAMPLEPATHCPP/Layers/FilterBuildingSceneLayer/FilterBuildingSceneLayer.cpp" \
     "$$SAMPLEPATHCPP/Layers/GroupLayers/GroupLayers.cpp" \
     "$$SAMPLEPATHCPP/Layers/Hillshade_Renderer/Hillshade_Renderer.cpp" \
     "$$SAMPLEPATHCPP/Layers/IdentifyKmlFeatures/IdentifyKmlFeatures.cpp" \
@@ -443,6 +444,7 @@ SOURCES += \
     "$$SAMPLEPATHCPP/Scenes/BasicSceneView/BasicSceneView.cpp" \
     "$$SAMPLEPATHCPP/Scenes/ChangeAtmosphereEffect/ChangeAtmosphereEffect.cpp" \
     "$$SAMPLEPATHCPP/Scenes/ChooseCameraController/ChooseCameraController.cpp" \
+    "$$SAMPLEPATHCPP/Scenes/ConfigureSceneEnvironment/ConfigureSceneEnvironment.cpp" \
     "$$SAMPLEPATHCPP/Scenes/CreateTerrainSurfaceFromLocalRaster/CreateTerrainSurfaceFromLocalRaster.cpp" \
     "$$SAMPLEPATHCPP/Scenes/CreateTerrainSurfaceFromLocalTilePackage/CreateTerrainSurfaceFromLocalTilePackage.cpp" \
     "$$SAMPLEPATHCPP/Scenes/ShowLabelsOnLayerIn3D/ShowLabelsOnLayerIn3D.cpp" \
@@ -584,7 +586,7 @@ RESOURCES += \
     "$$SAMPLEPATHCPP/Layers/FeatureCollectionLayerQuery/FeatureCollectionLayerQuery.qrc" \
     "$$SAMPLEPATHCPP/Layers/FeatureLayerRenderingModeMap/FeatureLayerRenderingModeMap.qrc" \
     "$$SAMPLEPATHCPP/Layers/FeatureLayerRenderingModeScene/FeatureLayerRenderingModeScene.qrc" \
-     "$$SAMPLEPATHCPP/Layers/FilterBuildingSceneLayer/FilterBuildingSceneLayer.qrc" \
+    "$$SAMPLEPATHCPP/Layers/FilterBuildingSceneLayer/FilterBuildingSceneLayer.qrc" \
     "$$SAMPLEPATHCPP/Layers/GroupLayers/GroupLayers.qrc" \
     "$$SAMPLEPATHCPP/Layers/Hillshade_Renderer/Hillshade_Renderer.qrc" \
     "$$SAMPLEPATHCPP/Layers/IdentifyKmlFeatures/IdentifyKmlFeatures.qrc" \
@@ -663,6 +665,7 @@ RESOURCES += \
     "$$SAMPLEPATHCPP/Scenes/BasicSceneView/BasicSceneView.qrc" \
     "$$SAMPLEPATHCPP/Scenes/ChangeAtmosphereEffect/ChangeAtmosphereEffect.qrc" \
     "$$SAMPLEPATHCPP/Scenes/ChooseCameraController/ChooseCameraController.qrc" \
+    "$$SAMPLEPATHCPP/Scenes/ConfigureSceneEnvironment/ConfigureSceneEnvironment.qrc" \
     "$$SAMPLEPATHCPP/Scenes/CreateTerrainSurfaceFromLocalRaster/CreateTerrainSurfaceFromLocalRaster.qrc" \
     "$$SAMPLEPATHCPP/Scenes/CreateTerrainSurfaceFromLocalTilePackage/CreateTerrainSurfaceFromLocalTilePackage.qrc" \
     "$$SAMPLEPATHCPP/Scenes/ShowLabelsOnLayerIn3D/ShowLabelsOnLayerIn3D.qrc" \
