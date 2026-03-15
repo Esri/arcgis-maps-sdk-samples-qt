@@ -51,6 +51,7 @@
 #include "ArcGISQt_global.h" // for LOCALSERVER_SUPPORTED
 
 // toolkit authentication support
+#include "AuthenticatorController.h"
 #include "OAuthUserConfigurationManager.h"
 
 #include "ZipHelper.h"
@@ -500,6 +501,11 @@ void SampleManager::resetAuthenticationState()
   {
     // when sample changes, restore the original toolkit challenge handler
     ArcGISRuntimeEnvironment::authenticationManager()->setArcGISAuthenticationChallengeHandler(m_toolkitChallengeHandler);
+  }
+
+  if (auto* authController = Toolkit::AuthenticatorController::instance(); authController)
+  {
+    authController->cancelOutstandingChallenges();
   }
 }
 
