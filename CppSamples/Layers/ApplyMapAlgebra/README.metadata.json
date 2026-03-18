@@ -1,0 +1,42 @@
+{
+  "category": "Layers",
+  "dataItems": [
+      {
+          "itemId": "aa97788593e34a32bcaae33947fdc271",
+          "path": "~/ArcGIS/Runtime/Data/raster/arran.tif"
+      }
+  ],
+  "description": "Apply map algebra to an elevation raster to floor, mask, and categorize the elevation values into discrete integer-based categories.",
+  "featured": true,
+  "ignore": false,
+  "images": [
+    "screenshot.png"
+  ],
+  "keywords": [
+    "elevation",
+    "map algebra",
+    "raster",
+    "spatial analysis",
+    "terrain"
+  ],
+  "redirect_from": "",
+  "relevant_apis": [
+    "BooleanFieldFunction",
+    "Colormap",
+    "ColormapRenderer",
+    "ColorRamp",
+    "ContinuousField",
+    "ContinuousFieldFunction",
+    "DiscreteField",
+    "DiscreteFieldFunction",
+    "Raster",
+    "RasterLayer",
+    "StretchRenderer"
+  ],
+  "snippets": [
+    "ApplyMapAlgebra.cpp",
+    "ApplyMapAlgebra.h",
+    "ApplyMapAlgebra.qml"
+  ],
+  "title": "Apply map algebra"
+}

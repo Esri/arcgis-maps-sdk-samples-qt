@@ -133,6 +133,7 @@
 #include "../CppSamples/Layers/AddCustomDynamicEntityDataSource/AddCustomDynamicEntityDataSource.h"
 #include "../CppSamples/Layers/AddDynamicEntityLayer/AddDynamicEntityLayer.h"
 #include "../CppSamples/Layers/AddVectorTiledLayerFromCustomStyle/AddVectorTiledLayerFromCustomStyle.h"
+#include "../CppSamples/Layers/ApplyMapAlgebra/ApplyMapAlgebra.h"
 #include "../CppSamples/Layers/ApplyMosaicRuleToRasters/ApplyMosaicRuleToRasters.h"
 #include "../CppSamples/Layers/ApplyUniqueValuesWithAlternateSymbols/ApplyUniqueValuesWithAlternateSymbols.h"
 #include "../CppSamples/Layers/ArcGISMapImageLayerUrl/ArcGISMapImageLayerUrl.h"
@@ -386,6 +387,7 @@ void registerCppSampleClasses()
   AnalyzeViewshed::init();
   Animate3DSymbols::init();
   AnimateImagesWithImageOverlay::init();
+  ApplyMapAlgebra::init();
   ApplyMosaicRuleToRasters::init();
   ApplyScheduledMapUpdates::init();
   ApplyUniqueValuesWithAlternateSymbols::init();
