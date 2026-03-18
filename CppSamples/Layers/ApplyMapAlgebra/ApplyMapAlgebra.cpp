@@ -209,7 +209,7 @@ void ApplyMapAlgebra::createElevationField()
 void ApplyMapAlgebra::createGeomorphicField()
 {
   ContinuousFieldFunction* continuousFieldFunction = ContinuousFieldFunction::create(m_elevationField, this);
-  ContinuousFieldFunction* elevationFieldFunction = continuousFieldFunction->mask(continuousFieldFunction->isGreaterThanOrEqualTo(0.0F));
+  ContinuousFieldFunction* elevationFieldFunction = continuousFieldFunction->mask(continuousFieldFunction->isGreaterThanOrEqualTo(0.0));
 
   DiscreteFieldFunction* tenMeterBinField = elevationFieldFunction->divide(10)->floor()->multiply(10)->toDiscreteFieldFunction();
 
@@ -251,7 +251,7 @@ void ApplyMapAlgebra::displayElevationRaster()
     new StretchRenderer(stretchParameters, {1.0}, false, ColorRamp::create(PresetColorRampType::Surface, 256, this), this);
 
   m_elevationRasterLayer->setRenderer(stretchRenderer);
-  m_elevationRasterLayer->setOpacity(0.5F);
+  m_elevationRasterLayer->setOpacity(0.5);
   m_map->operationalLayers()->append(m_elevationRasterLayer);
 }
 
@@ -275,7 +275,7 @@ void ApplyMapAlgebra::displayGeomorphicRaster(const QString& rasterFilePath)
 
   ColormapRenderer* colormapRenderer = new ColormapRenderer(Colormap::create(colors, this), this);
   m_geomorphicRasterLayer->setRenderer(colormapRenderer);
-  m_geomorphicRasterLayer->setOpacity(0.5F);
+  m_geomorphicRasterLayer->setOpacity(0.5);
   m_map->operationalLayers()->append(m_geomorphicRasterLayer);
   updateVisibleRasterLayer();
 }
