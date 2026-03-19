@@ -1,4 +1,4 @@
-// [WriteFile Name=AnalyzeViewshed, Category=Analysis]
+// [WriteFile Name=ShowViewshedCalculatedFromGeoprocessingTask, Category=Analysis]
 // [Legal]
 // Copyright 2016 Esri.
 //
@@ -19,7 +19,7 @@ import QtQuick.Controls
 import QtQuick.Layouts
 import Esri.Samples
 
-AnalyzeViewshedSample {
+ShowViewshedCalculatedFromGeoprocessingTaskSample {
     id: rootRectangle
     clip: true
     width: 800

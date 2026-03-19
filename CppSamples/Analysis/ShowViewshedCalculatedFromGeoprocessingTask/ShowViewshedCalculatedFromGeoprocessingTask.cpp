@@ -1,4 +1,4 @@
-// [WriteFile Name=AnalyzeViewshed, Category=Analysis]
+// [WriteFile Name=ShowViewshedCalculatedFromGeoprocessingTask, Category=Analysis]
 // [Legal]
 // Copyright 2016 Esri.
 //
@@ -19,7 +19,7 @@
 #endif // PCH_BUILD
 
 // sample headers
-#include "AnalyzeViewshed.h"
+#include "ShowViewshedCalculatedFromGeoprocessingTask.h"
 
 // ArcGIS Maps SDK headers
 #include "Error.h"
@@ -58,20 +58,20 @@
 
 using namespace Esri::ArcGISRuntime;
 
-AnalyzeViewshed::AnalyzeViewshed(QQuickItem* parent /* = nullptr */) :
+ShowViewshedCalculatedFromGeoprocessingTask::ShowViewshedCalculatedFromGeoprocessingTask(QQuickItem* parent /* = nullptr */) :
   QQuickItem(parent)
 {
 }
 
-AnalyzeViewshed::~AnalyzeViewshed() = default;
+ShowViewshedCalculatedFromGeoprocessingTask::~ShowViewshedCalculatedFromGeoprocessingTask() = default;
 
-void AnalyzeViewshed::init()
+void ShowViewshedCalculatedFromGeoprocessingTask::init()
 {
   qmlRegisterType<MapQuickView>("Esri.Samples", 1, 0, "MapView");
-  qmlRegisterType<AnalyzeViewshed>("Esri.Samples", 1, 0, "AnalyzeViewshedSample");
+  qmlRegisterType<ShowViewshedCalculatedFromGeoprocessingTask>("Esri.Samples", 1, 0, "ShowViewshedCalculatedFromGeoprocessingTaskSample");
 }
 
-void AnalyzeViewshed::componentComplete()
+void ShowViewshedCalculatedFromGeoprocessingTask::componentComplete()
 {
   QQuickItem::componentComplete();
 
@@ -97,7 +97,7 @@ void AnalyzeViewshed::componentComplete()
   connectSignals();
 }
 
-void AnalyzeViewshed::createOverlays()
+void ShowViewshedCalculatedFromGeoprocessingTask::createOverlays()
 {
   // Create the graphics overlays for the input and output
   m_inputOverlay = new GraphicsOverlay(this);
@@ -115,7 +115,7 @@ void AnalyzeViewshed::createOverlays()
   m_mapView->graphicsOverlays()->append(m_resultsOverlay);
 }
 
-void AnalyzeViewshed::connectSignals()
+void ShowViewshedCalculatedFromGeoprocessingTask::connectSignals()
 {
   // Set up signal handler for the mouse clicked signal
   connect(m_mapView, &MapQuickView::mouseClicked, this, [this](QMouseEvent& mouse)
@@ -156,7 +156,7 @@ void AnalyzeViewshed::connectSignals()
   });
 }
 
-void AnalyzeViewshed::calculateViewshed()
+void ShowViewshedCalculatedFromGeoprocessingTask::calculateViewshed()
 {
   // Create a new feature collection table based upon point geometries using the current map view spatial reference
   FeatureCollectionTable* inputFeatures = new FeatureCollectionTable(QList<Field>(), GeometryType::Point, SpatialReference::webMercator(), this);
@@ -175,7 +175,7 @@ void AnalyzeViewshed::calculateViewshed()
   });
 }
 
-void AnalyzeViewshed::onAddFeatureCompleted_(FeatureCollectionTable* inputFeatures)
+void ShowViewshedCalculatedFromGeoprocessingTask::onAddFeatureCompleted_(FeatureCollectionTable* inputFeatures)
 {
   // Create the parameters that are passed to the used geoprocessing task
   GeoprocessingParameters viewshedParameters = GeoprocessingParameters(GeoprocessingExecutionType::SynchronousExecute);
@@ -228,7 +228,7 @@ void AnalyzeViewshed::onAddFeatureCompleted_(FeatureCollectionTable* inputFeatur
   viewshedJob->start();
 }
 
-void AnalyzeViewshed::processResults(GeoprocessingResult* results)
+void ShowViewshedCalculatedFromGeoprocessingTask::processResults(GeoprocessingResult* results)
 {
   // Get the results from the outputs as GeoprocessingFeatures
   const QMap<QString, GeoprocessingParameter*> outputs = results->outputs();

@@ -1,4 +1,4 @@
-// [WriteFile Name=AnalyzeViewshed, Category=Analysis]
+// [WriteFile Name=ShowViewshedCalculatedFromGeoprocessingTask, Category=Analysis]
 // [Legal]
 // Copyright 2016 Esri.
 //
@@ -14,8 +14,8 @@
 // limitations under the License.
 // [Legal]
 
-#ifndef ANALYZEVIEWSHED_H
-#define ANALYZEVIEWSHED_H
+#ifndef ShowViewshedCalculatedFromGeoprocessingTask_H
+#define ShowViewshedCalculatedFromGeoprocessingTask_H
 
 // Qt headers
 #include <QQuickItem>
@@ -31,7 +31,7 @@ namespace Esri::ArcGISRuntime
   class MapQuickView;
 } // namespace Esri::ArcGISRuntime
 
-class AnalyzeViewshed : public QQuickItem
+class ShowViewshedCalculatedFromGeoprocessingTask : public QQuickItem
 {
   Q_OBJECT
 
@@ -39,8 +39,8 @@ class AnalyzeViewshed : public QQuickItem
   Q_PROPERTY(QString statusText READ jobStatus NOTIFY statusChanged)
 
 public:
-  explicit AnalyzeViewshed(QQuickItem* parent = nullptr);
-  ~AnalyzeViewshed() override;
+  explicit ShowViewshedCalculatedFromGeoprocessingTask(QQuickItem* parent = nullptr);
+  ~ShowViewshedCalculatedFromGeoprocessingTask() override;
 
   void componentComplete() override;
   static void init();
@@ -75,4 +75,4 @@ private:
   }
 };
 
-#endif // ANALYZEVIEWSHED_H
+#endif // ShowViewshedCalculatedFromGeoprocessingTask_H

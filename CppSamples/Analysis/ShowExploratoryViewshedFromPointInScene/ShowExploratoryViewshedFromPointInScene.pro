@@ -1,5 +1,5 @@
 #-------------------------------------------------
-# Copyright 2015 Esri.
+# Copyright 2017 Esri.
 
 # Licensed under the Apache License, Version 2.0 (the "License");
 # you may not use this file except in compliance with the License.
@@ -24,31 +24,36 @@ CONFIG += c++17
 # additional modules are pulled in via arcgisruntime.pri
 QT += qml quick
 
+TEMPLATE = app
+TARGET = ShowExploratoryViewshedFromPointInScene
+
 include($$PWD/../../../ArcGISRuntimeVersion.pri)
 include($$PWD/arcgisruntime.pri)
 
-TEMPLATE = app
-TARGET = AnalyzeViewshed
-
 #-------------------------------------------------------------------------------
 
-HEADERS += AnalyzeViewshed.h
+HEADERS += \
+    ShowExploratoryViewshedFromPointInScene.h
 
-SOURCES += main.cpp AnalyzeViewshed.cpp
+SOURCES += \
+    main.cpp \
+    ShowExploratoryViewshedFromPointInScene.cpp
 
-RESOURCES += AnalyzeViewshed.qrc
+RESOURCES += ShowExploratoryViewshedFromPointInScene.qrc
 
 #-------------------------------------------------------------------------------
 
 win32 {
-    LIBS += Ole32.lib
+    LIBS += \
+        Ole32.lib
 }
 
 ios {
     INCLUDEPATH += $$PWD
     DEPENDPATH += $$PWD
 
-    OTHER_FILES += $$PWD/Info.plist
+    OTHER_FILES += \
+        $$PWD/Info.plist
 
     QMAKE_INFO_PLIST = $$PWD/Info.plist
 }

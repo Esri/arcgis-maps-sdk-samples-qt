@@ -19,17 +19,17 @@
 
 HEADERS += \
     "$$SAMPLEPATHCPP/Analysis/AnalyzeHotspots/AnalyzeHotspots.h" \
-    "$$SAMPLEPATHCPP/Analysis/AnalyzeViewshed/AnalyzeViewshed.h" \
     "$$SAMPLEPATHCPP/Analysis/DistanceMeasurementAnalysis/DistanceMeasurementAnalysis.h" \
     "$$SAMPLEPATHCPP/Analysis/Geotriggers/Geotriggers.h" \
     "$$SAMPLEPATHCPP/Analysis/ShowExploratoryLineOfSightBetweenGeoelements/ShowExploratoryLineOfSightBetweenGeoelements.h" \
     "$$SAMPLEPATHCPP/Analysis/ShowExploratoryLineOfSightBetweenPoints/ShowExploratoryLineOfSightBetweenPoints.h" \
     "$$SAMPLEPATHCPP/Analysis/ShowExploratoryViewshedFromCameraInScene/ShowExploratoryViewshedFromCameraInScene.h" \
     "$$SAMPLEPATHCPP/Analysis/ShowExploratoryViewshedFromGeoelementInScene/ShowExploratoryViewshedFromGeoelementInScene.h" \
+    "$$SAMPLEPATHCPP/Analysis/ShowExploratoryViewshedFromPointInScene/ShowExploratoryViewshedFromPointInScene.h" \
+    "$$SAMPLEPATHCPP/Analysis/ShowViewshedCalculatedFromGeoprocessingTask/ShowViewshedCalculatedFromGeoprocessingTask.h" \
     "$$SAMPLEPATHCPP/Analysis/StatisticalQuery/StatisticalQuery.h" \
     "$$SAMPLEPATHCPP/Analysis/StatisticalQueryGroupSort/StatisticalQueryGroupSort.h" \
     "$$SAMPLEPATHCPP/Analysis/StatisticalQueryGroupSort/StatisticResultListModel.h" \
-    "$$SAMPLEPATHCPP/Analysis/ViewshedLocation/ViewshedLocation.h" \
     "$$SAMPLEPATHCPP/CloudAndPortal/IntegratedWindowsAuthentication/IntegratedWindowsAuthentication.h" \
     "$$SAMPLEPATHCPP/CloudAndPortal/TokenAuthentication/TokenAuthentication.h" \
     "$$SAMPLEPATHCPP/DisplayInformation/AddGraphicsWithRenderer/AddGraphicsWithRenderer.h" \
@@ -252,17 +252,17 @@ HEADERS += \
 
 SOURCES += \
     "$$SAMPLEPATHCPP/Analysis/AnalyzeHotspots/AnalyzeHotspots.cpp" \
-    "$$SAMPLEPATHCPP/Analysis/AnalyzeViewshed/AnalyzeViewshed.cpp" \
     "$$SAMPLEPATHCPP/Analysis/DistanceMeasurementAnalysis/DistanceMeasurementAnalysis.cpp" \
     "$$SAMPLEPATHCPP/Analysis/Geotriggers/Geotriggers.cpp" \
     "$$SAMPLEPATHCPP/Analysis/ShowExploratoryLineOfSightBetweenGeoelements/ShowExploratoryLineOfSightBetweenGeoelements.cpp" \
     "$$SAMPLEPATHCPP/Analysis/ShowExploratoryLineOfSightBetweenPoints/ShowExploratoryLineOfSightBetweenPoints.cpp" \
     "$$SAMPLEPATHCPP/Analysis/ShowExploratoryViewshedFromCameraInScene/ShowExploratoryViewshedFromCameraInScene.cpp" \
     "$$SAMPLEPATHCPP/Analysis/ShowExploratoryViewshedFromGeoelementInScene/ShowExploratoryViewshedFromGeoelementInScene.cpp" \
+    "$$SAMPLEPATHCPP/Analysis/ShowExploratoryViewshedFromPointInScene/ShowExploratoryViewshedFromPointInScene.cpp" \
+    "$$SAMPLEPATHCPP/Analysis/ShowViewshedCalculatedFromGeoprocessingTask/ShowViewshedCalculatedFromGeoprocessingTask.cpp" \
     "$$SAMPLEPATHCPP/Analysis/StatisticalQuery/StatisticalQuery.cpp" \
     "$$SAMPLEPATHCPP/Analysis/StatisticalQueryGroupSort/StatisticalQueryGroupSort.cpp" \
     "$$SAMPLEPATHCPP/Analysis/StatisticalQueryGroupSort/StatisticResultListModel.cpp" \
-    "$$SAMPLEPATHCPP/Analysis/ViewshedLocation/ViewshedLocation.cpp" \
     "$$SAMPLEPATHCPP/CloudAndPortal/IntegratedWindowsAuthentication/IntegratedWindowsAuthentication.cpp" \
     "$$SAMPLEPATHCPP/CloudAndPortal/TokenAuthentication/TokenAuthentication.cpp" \
     "$$SAMPLEPATHCPP/DisplayInformation/AddGraphicsWithRenderer/AddGraphicsWithRenderer.cpp" \
@@ -485,16 +485,16 @@ SOURCES += \
 
 RESOURCES += \
     "$$SAMPLEPATHCPP/Analysis/AnalyzeHotspots/AnalyzeHotspots.qrc" \
-    "$$SAMPLEPATHCPP/Analysis/AnalyzeViewshed/AnalyzeViewshed.qrc" \
     "$$SAMPLEPATHCPP/Analysis/DistanceMeasurementAnalysis/DistanceMeasurementAnalysis.qrc" \
     "$$SAMPLEPATHCPP/Analysis/Geotriggers/Geotriggers.qrc" \
     "$$SAMPLEPATHCPP/Analysis/ShowExploratoryLineOfSightBetweenGeoelements/ShowExploratoryLineOfSightBetweenGeoelements.qrc" \
     "$$SAMPLEPATHCPP/Analysis/ShowExploratoryLineOfSightBetweenPoints/ShowExploratoryLineOfSightBetweenPoints.qrc" \
     "$$SAMPLEPATHCPP/Analysis/ShowExploratoryViewshedFromCameraInScene/ShowExploratoryViewshedFromCameraInScene.qrc" \
     "$$SAMPLEPATHCPP/Analysis/ShowExploratoryViewshedFromGeoelementInScene/ShowExploratoryViewshedFromGeoelementInScene.qrc" \
+    "$$SAMPLEPATHCPP/Analysis/ShowExploratoryViewshedFromPointInScene/ShowExploratoryViewshedFromPointInScene.qrc" \
+    "$$SAMPLEPATHCPP/Analysis/ShowViewshedCalculatedFromGeoprocessingTask/ShowViewshedCalculatedFromGeoprocessingTask.qrc" \
     "$$SAMPLEPATHCPP/Analysis/StatisticalQuery/StatisticalQuery.qrc" \
     "$$SAMPLEPATHCPP/Analysis/StatisticalQueryGroupSort/StatisticalQueryGroupSort.qrc" \
-    "$$SAMPLEPATHCPP/Analysis/ViewshedLocation/ViewshedLocation.qrc" \
     "$$SAMPLEPATHCPP/CloudAndPortal/IntegratedWindowsAuthentication/IntegratedWindowsAuthentication.qrc" \
     "$$SAMPLEPATHCPP/CloudAndPortal/TokenAuthentication/TokenAuthentication.qrc" \
     "$$SAMPLEPATHCPP/DisplayInformation/AddGraphicsWithRenderer/AddGraphicsWithRenderer.qrc" \

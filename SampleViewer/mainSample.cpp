@@ -60,16 +60,16 @@
 
 // All Samples
 #include "../CppSamples/Analysis/AnalyzeHotspots/AnalyzeHotspots.h"
-#include "../CppSamples/Analysis/AnalyzeViewshed/AnalyzeViewshed.h"
 #include "../CppSamples/Analysis/DistanceMeasurementAnalysis/DistanceMeasurementAnalysis.h"
 #include "../CppSamples/Analysis/Geotriggers/Geotriggers.h"
 #include "../CppSamples/Analysis/ShowExploratoryLineOfSightBetweenGeoelements/ShowExploratoryLineOfSightBetweenGeoelements.h"
 #include "../CppSamples/Analysis/ShowExploratoryLineOfSightBetweenPoints/ShowExploratoryLineOfSightBetweenPoints.h"
 #include "../CppSamples/Analysis/ShowExploratoryViewshedFromCameraInScene/ShowExploratoryViewshedFromCameraInScene.h"
 #include "../CppSamples/Analysis/ShowExploratoryViewshedFromGeoelementInScene/ShowExploratoryViewshedFromGeoelementInScene.h"
+#include "../CppSamples/Analysis/ShowExploratoryViewshedFromPointInScene/ShowExploratoryViewshedFromPointInScene.h"
+#include "../CppSamples/Analysis/ShowViewshedCalculatedFromGeoprocessingTask/ShowViewshedCalculatedFromGeoprocessingTask.h"
 #include "../CppSamples/Analysis/StatisticalQuery/StatisticalQuery.h"
 #include "../CppSamples/Analysis/StatisticalQueryGroupSort/StatisticalQueryGroupSort.h"
-#include "../CppSamples/Analysis/ViewshedLocation/ViewshedLocation.h"
 #include "../CppSamples/CloudAndPortal/IntegratedWindowsAuthentication/IntegratedWindowsAuthentication.h"
 #include "../CppSamples/CloudAndPortal/TokenAuthentication/TokenAuthentication.h"
 #include "../CppSamples/DisplayInformation/AddGraphicsWithRenderer/AddGraphicsWithRenderer.h"
@@ -384,7 +384,6 @@ void registerCppSampleClasses()
   AddIntegratedMeshLayer::init();
   AddVectorTiledLayerFromCustomStyle::init();
   AnalyzeHotspots::init();
-  AnalyzeViewshed::init();
   Animate3DSymbols::init();
   AnimateImagesWithImageOverlay::init();
   ApplyMosaicRuleToRasters::init();
@@ -562,6 +561,8 @@ void registerCppSampleClasses()
   ShowExploratoryLineOfSightBetweenPoints::init();
   ShowExploratoryViewshedFromCameraInScene::init();
   ShowExploratoryViewshedFromGeoelementInScene::init();
+  ShowExploratoryViewshedFromPointInScene::init();
+  ShowViewshedCalculatedFromGeoprocessingTask::init();
   ShowGrid::init();
   ShowLabelsOnLayers::init();
   ShowLocationHistory::init();
@@ -588,7 +589,6 @@ void registerCppSampleClasses()
   ValidateUtilityNetworkTopology::init();
   ViewContentBeneathTerrainSurface::init();
   ViewPointCloudDataOffline::init();
-  ViewshedLocation::init();
   WMTS_Layer::init();
   Web_Tiled_Layer::init();
   WmsLayerUrl::init();

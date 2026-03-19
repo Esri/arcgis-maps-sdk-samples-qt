@@ -30,9 +30,9 @@
         "GeoprocessingTask"
     ],
     "snippets": [
-        "AnalyzeViewshed.cpp",
-        "AnalyzeViewshed.h",
-        "AnalyzeViewshed.qml"
+        "ShowViewshedCalculatedFromGeoprocessingTask.cpp",
+        "ShowViewshedCalculatedFromGeoprocessingTask.h",
+        "ShowViewshedCalculatedFromGeoprocessingTask.qml"
     ],
-    "title": "Viewshed (geoprocessing)"
+    "title": "Show viewshed calculated from geoprocessing task"
 }

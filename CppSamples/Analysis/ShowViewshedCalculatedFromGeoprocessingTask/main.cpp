@@ -1,4 +1,4 @@
-// [WriteFile Name=AnalyzeViewshed, Category=Analysis]
+// [WriteFile Name=ShowViewshedCalculatedFromGeoprocessingTask, Category=Analysis]
 // [Legal]
 // Copyright 2015 Esri.
 //
@@ -15,7 +15,7 @@
 // [Legal]
 
 // sample headers
-#include "AnalyzeViewshed.h"
+#include "ShowViewshedCalculatedFromGeoprocessingTask.h"
 
 // ArcGIS Maps SDK headers
 #include "ArcGISRuntimeEnvironment.h"
@@ -38,7 +38,7 @@
 int main(int argc, char* argv[])
 {
   QGuiApplication app(argc, argv);
-  app.setApplicationName(QString("Analyze Viewshed"));
+  app.setApplicationName(QString("ShowViewshedCalculatedFromGeoprocessingTask"));
 
   // Use of ArcGIS location services, such as basemap styles, geocoding, and routing services,
   // requires an access token. For more information see
@@ -66,7 +66,7 @@ int main(int argc, char* argv[])
     Esri::ArcGISRuntime::ArcGISRuntimeEnvironment::setApiKey(accessToken);
   }
   // Initialize the sample
-  AnalyzeViewshed::init();
+  ShowViewshedCalculatedFromGeoprocessingTask::init();
 
   // Initialize application view
   QQuickView view;
@@ -88,7 +88,7 @@ int main(int argc, char* argv[])
   view.engine()->addImportPath(arcGISRuntimeImportPath);
 
   // Set the source
-  view.setSource(QUrl("qrc:/Samples/Analysis/AnalyzeViewshed/AnalyzeViewshed.qml"));
+  view.setSource(QUrl("qrc:/Samples/Analysis/ShowViewshedCalculatedFromGeoprocessingTask/ShowViewshedCalculatedFromGeoprocessingTask.qml"));
 
   view.show();
 
