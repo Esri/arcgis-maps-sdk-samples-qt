@@ -25,7 +25,7 @@ CONFIG += c++17
 QT += qml quick
 
 TEMPLATE = app
-TARGET = LineOfSightLocation
+TARGET = ShowExploratoryLineOfSightBetweenPoints
 
 include($$PWD/../../../ArcGISRuntimeVersion.pri)
 include($$PWD/arcgisruntime.pri)
@@ -33,13 +33,13 @@ include($$PWD/arcgisruntime.pri)
 #-------------------------------------------------------------------------------
 
 HEADERS += \
-    LineOfSightLocation.h
+    ShowExploratoryLineOfSightBetweenPoints.h
 
 SOURCES += \
     main.cpp \
-    LineOfSightLocation.cpp
+    ShowExploratoryLineOfSightBetweenPoints.cpp
 
-RESOURCES += LineOfSightLocation.qrc
+RESOURCES += ShowExploratoryLineOfSightBetweenPoints.qrc
 
 #-------------------------------------------------------------------------------
 

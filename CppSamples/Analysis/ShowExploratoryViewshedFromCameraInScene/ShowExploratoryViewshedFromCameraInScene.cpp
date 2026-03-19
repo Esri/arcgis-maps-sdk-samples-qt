@@ -1,4 +1,4 @@
-// [WriteFile Name=ViewshedCamera, Category=Analysis]
+// [WriteFile Name=ShowExploratoryViewshedFromCameraInScene, Category=Analysis]
 // [Legal]
 // Copyright 2017 Esri.
 //
@@ -19,7 +19,7 @@
 #endif // PCH_BUILD
 
 // sample headers
-#include "ViewshedCamera.h"
+#include "ShowExploratoryViewshedFromCameraInScene.h"
 
 // ArcGIS Maps SDK headers
 #include "AnalysisListModel.h"
@@ -28,7 +28,6 @@
 #include "ArcGISTiledElevationSource.h"
 #include "Camera.h"
 #include "ElevationSourceListModel.h"
-#include "ExploratoryLocationViewshed.h"
 #include "IntegratedMeshLayer.h"
 #include "LayerListModel.h"
 #include "MapTypes.h"
@@ -39,21 +38,24 @@
 #include "Surface.h"
 #include "Viewpoint.h"
 
+// Other headers
+#include "ExploratoryLocationViewshed.h"
+
 using namespace Esri::ArcGISRuntime;
 
-ViewshedCamera::ViewshedCamera(QQuickItem* parent /* = nullptr */) :
+ShowExploratoryViewshedFromCameraInScene::ShowExploratoryViewshedFromCameraInScene(QQuickItem* parent /* = nullptr */) :
   QQuickItem(parent)
 {
 }
 
-void ViewshedCamera::init()
+void ShowExploratoryViewshedFromCameraInScene::init()
 {
   // Register classes for QML
   qmlRegisterType<SceneQuickView>("Esri.Samples", 1, 0, "SceneView");
-  qmlRegisterType<ViewshedCamera>("Esri.Samples", 1, 0, "ViewshedCameraSample");
+  qmlRegisterType<ShowExploratoryViewshedFromCameraInScene>("Esri.Samples", 1, 0, "ShowExploratoryViewshedFromCameraInSceneSample");
 }
 
-void ViewshedCamera::componentComplete()
+void ShowExploratoryViewshedFromCameraInScene::componentComplete()
 {
   QQuickItem::componentComplete();
 
@@ -83,7 +85,7 @@ void ViewshedCamera::componentComplete()
   m_sceneView->setArcGISScene(m_scene);
 }
 
-void ViewshedCamera::calculateViewshed()
+void ShowExploratoryViewshedFromCameraInScene::calculateViewshed()
 {
   if (!m_viewshed)
   {
@@ -104,7 +106,7 @@ void ViewshedCamera::calculateViewshed()
   }
 }
 
-void ViewshedCamera::setInitialViewpoint()
+void ShowExploratoryViewshedFromCameraInScene::setInitialViewpoint()
 {
   const double x_longitude = 2.82691;
   const double y_latitude = 41.985;

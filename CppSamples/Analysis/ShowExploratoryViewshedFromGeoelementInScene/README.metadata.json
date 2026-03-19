@@ -6,7 +6,7 @@
             "path": "~/ArcGIS/Runtime/Data/3D/bradley_low_3ds/bradle.3ds"
         }
     ],
-    "description": "Analyze the viewshed for an object (GeoElement) in a scene.",
+    "description": "Analyze the exploratory viewshed for an object (GeoElement) in a scene.",
     "featured": false,
     "ignore": false,
     "images": [
@@ -18,7 +18,7 @@
         "buildings",
         "model",
         "scene",
-        "viewshed",
+        "exploratory viewshed",
         "visibility analysis",
         "AnalysisOverlay",
         "ExploratoryGeoElementViewshed",
@@ -39,9 +39,9 @@
         "OrbitGeoElementCameraController"
     ],
     "snippets": [
-        "ViewshedGeoElement.cpp",
-        "ViewshedGeoElement.h",
-        "ViewshedGeoElement.qml"
+        "ShowExploratoryViewshedFromGeoelementInScene.cpp",
+        "ShowExploratoryViewshedFromGeoelementInScene.h",
+        "ShowExploratoryViewshedFromGeoelementInScene.qml"
     ],
-    "title": "Viewshed (GeoElement)"
+    "title": "Show exploratory viewshed (GeoElement)"
 }

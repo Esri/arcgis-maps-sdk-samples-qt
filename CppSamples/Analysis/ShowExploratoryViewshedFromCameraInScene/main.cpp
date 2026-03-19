@@ -1,4 +1,4 @@
-// [WriteFile Name=ViewshedCamera, Category=Analysis]
+// [WriteFile Name=ShowExploratoryViewshedFromCameraInScene, Category=Analysis]
 // [Legal]
 // Copyright 2017 Esri.
 //
@@ -15,7 +15,7 @@
 // [Legal]
 
 // sample headers
-#include "ViewshedCamera.h"
+#include "ShowExploratoryViewshedFromCameraInScene.h"
 
 // ArcGIS Maps SDK headers
 #include "ArcGISRuntimeEnvironment.h"
@@ -47,7 +47,7 @@ int main(int argc, char* argv[])
 #endif
 
   QGuiApplication app(argc, argv);
-  app.setApplicationName(QString("Viewshed Camera"));
+  app.setApplicationName(QString("ShowExploratoryViewshedFromCameraInScene"));
 
   // Use of ArcGIS location services, such as basemap styles, geocoding, and routing services,
   // requires an access token. For more information see
@@ -76,7 +76,7 @@ int main(int argc, char* argv[])
   }
 
   // Initialize the sample
-  ViewshedCamera::init();
+  ShowExploratoryViewshedFromCameraInScene::init();
 
   // Initialize application view
   QQuickView view;
@@ -97,7 +97,7 @@ int main(int argc, char* argv[])
   view.engine()->addImportPath(arcGISRuntimeImportPath);
 
   // Set the source
-  view.setSource(QUrl("qrc:/Samples/Analysis/ViewshedCamera/ViewshedCamera.qml"));
+  view.setSource(QUrl("qrc:/Samples/Analysis/ShowExploratoryViewshedFromCameraInScene/ShowExploratoryViewshedFromCameraInScene.qml"));
 
   view.show();
 

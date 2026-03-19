@@ -65,10 +65,10 @@
 #include "../CppSamples/Analysis/Geotriggers/Geotriggers.h"
 #include "../CppSamples/Analysis/ShowExploratoryLineOfSightBetweenGeoelements/ShowExploratoryLineOfSightBetweenGeoelements.h"
 #include "../CppSamples/Analysis/ShowExploratoryLineOfSightBetweenPoints/ShowExploratoryLineOfSightBetweenPoints.h"
+#include "../CppSamples/Analysis/ShowExploratoryViewshedFromCameraInScene/ShowExploratoryViewshedFromCameraInScene.h"
+#include "../CppSamples/Analysis/ShowExploratoryViewshedFromGeoelementInScene/ShowExploratoryViewshedFromGeoelementInScene.h"
 #include "../CppSamples/Analysis/StatisticalQuery/StatisticalQuery.h"
 #include "../CppSamples/Analysis/StatisticalQueryGroupSort/StatisticalQueryGroupSort.h"
-#include "../CppSamples/Analysis/ViewshedCamera/ViewshedCamera.h"
-#include "../CppSamples/Analysis/ViewshedGeoElement/ViewshedGeoElement.h"
 #include "../CppSamples/Analysis/ViewshedLocation/ViewshedLocation.h"
 #include "../CppSamples/CloudAndPortal/IntegratedWindowsAuthentication/IntegratedWindowsAuthentication.h"
 #include "../CppSamples/CloudAndPortal/TokenAuthentication/TokenAuthentication.h"
@@ -560,6 +560,8 @@ void registerCppSampleClasses()
   ShowDeviceLocationUsingIndoorPositioning::init();
   ShowExploratoryLineOfSightBetweenGeoelements::init();
   ShowExploratoryLineOfSightBetweenPoints::init();
+  ShowExploratoryViewshedFromCameraInScene::init();
+  ShowExploratoryViewshedFromGeoelementInScene::init();
   ShowGrid::init();
   ShowLabelsOnLayers::init();
   ShowLocationHistory::init();
@@ -586,8 +588,6 @@ void registerCppSampleClasses()
   ValidateUtilityNetworkTopology::init();
   ViewContentBeneathTerrainSurface::init();
   ViewPointCloudDataOffline::init();
-  ViewshedCamera::init();
-  ViewshedGeoElement::init();
   ViewshedLocation::init();
   WMTS_Layer::init();
   Web_Tiled_Layer::init();

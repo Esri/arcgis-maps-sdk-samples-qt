@@ -1,4 +1,4 @@
-// [WriteFile Name=ViewshedCamera, Category=Analysis]
+// [WriteFile Name=ShowExploratoryViewshedFromCameraInScene, Category=Analysis]
 // [Legal]
 // Copyright 2017 Esri.
 //
@@ -14,8 +14,8 @@
 // limitations under the License.
 // [Legal]
 
-#ifndef VIEWSHEDCAMERA_H
-#define VIEWSHEDCAMERA_H
+#ifndef ShowExploratoryViewshedFromCameraInScene_H
+#define ShowExploratoryViewshedFromCameraInScene_H
 
 // Qt headers
 #include <QQuickItem>
@@ -28,13 +28,13 @@ namespace Esri::ArcGISRuntime
   class ExploratoryLocationViewshed;
 } // namespace Esri::ArcGISRuntime
 
-class ViewshedCamera : public QQuickItem
+class ShowExploratoryViewshedFromCameraInScene : public QQuickItem
 {
   Q_OBJECT
 
 public:
-  explicit ViewshedCamera(QQuickItem* parent = nullptr);
-  ~ViewshedCamera() override = default;
+  explicit ShowExploratoryViewshedFromCameraInScene(QQuickItem* parent = nullptr);
+  ~ShowExploratoryViewshedFromCameraInScene() override = default;
 
   void componentComplete() override;
   static void init();
@@ -49,4 +49,4 @@ private:
   Esri::ArcGISRuntime::ExploratoryLocationViewshed* m_viewshed = nullptr;
 };
 
-#endif // VIEWSHEDCAMERA_H
+#endif // ShowExploratoryViewshedFromCameraInScene_H

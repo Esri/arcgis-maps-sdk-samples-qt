@@ -1,4 +1,4 @@
-// [WriteFile Name=ViewshedGeoElement, Category=Analysis]
+// [WriteFile Name=ShowExploratoryViewshedFromCameraInScene, Category=Analysis]
 // [Legal]
 // Copyright 2017 Esri.
 //
@@ -15,21 +15,33 @@
 // [Legal]
 
 import QtQuick
+import QtQuick.Controls
 import Esri.Samples
 
-ViewshedGeoElementSample {
+ShowExploratoryViewshedFromCameraInSceneSample {
     id: rootRectangle
     clip: true
     width: 800
     height: 600
 
     SceneView {
+        id: view
         objectName: "sceneView"
         anchors.fill: parent
 
         Component.onCompleted: {
             // Set the focus on SceneView to initially enable keyboard navigation
             forceActiveFocus();
+        }
+
+        Button {
+            anchors {
+                horizontalCenter: parent.horizontalCenter
+                bottom: view.attributionTop
+                margins: 5
+            }
+            text: qsTr("Calculate Viewshed")
+            onClicked: calculateViewshed();
         }
     }
 }

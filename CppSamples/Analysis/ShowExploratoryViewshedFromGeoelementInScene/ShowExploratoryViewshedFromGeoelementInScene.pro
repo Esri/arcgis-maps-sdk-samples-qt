@@ -25,7 +25,7 @@ CONFIG += c++17
 QT += qml quick
 
 TEMPLATE = app
-TARGET = ViewshedCamera
+TARGET = ShowExploratoryViewshedFromGeoelementInScene
 
 include($$PWD/../../../ArcGISRuntimeVersion.pri)
 include($$PWD/arcgisruntime.pri)
@@ -33,13 +33,13 @@ include($$PWD/arcgisruntime.pri)
 #-------------------------------------------------------------------------------
 
 HEADERS += \
-    ViewshedCamera.h
+    ShowExploratoryViewshedFromGeoelementInScene.h
 
 SOURCES += \
     main.cpp \
-    ViewshedCamera.cpp
+    ShowExploratoryViewshedFromGeoelementInScene.cpp
 
-RESOURCES += ViewshedCamera.qrc
+RESOURCES += ShowExploratoryViewshedFromGeoelementInScene.qrc
 
 #-------------------------------------------------------------------------------
 
