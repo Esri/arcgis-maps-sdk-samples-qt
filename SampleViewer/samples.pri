@@ -22,8 +22,8 @@ HEADERS += \
     "$$SAMPLEPATHCPP/Analysis/AnalyzeViewshed/AnalyzeViewshed.h" \
     "$$SAMPLEPATHCPP/Analysis/DistanceMeasurementAnalysis/DistanceMeasurementAnalysis.h" \
     "$$SAMPLEPATHCPP/Analysis/Geotriggers/Geotriggers.h" \
-    "$$SAMPLEPATHCPP/Analysis/LineOfSightGeoElement/LineOfSightGeoElement.h" \
     "$$SAMPLEPATHCPP/Analysis/LineOfSightLocation/LineOfSightLocation.h" \
+    "$$SAMPLEPATHCPP/Analysis/ShowExploratoryLineOfSightBetweenGeoelements/ShowExploratoryLineOfSightBetweenGeoelements.h" \
     "$$SAMPLEPATHCPP/Analysis/StatisticalQuery/StatisticalQuery.h" \
     "$$SAMPLEPATHCPP/Analysis/StatisticalQueryGroupSort/StatisticalQueryGroupSort.h" \
     "$$SAMPLEPATHCPP/Analysis/StatisticalQueryGroupSort/StatisticResultListModel.h" \
@@ -255,8 +255,8 @@ SOURCES += \
     "$$SAMPLEPATHCPP/Analysis/AnalyzeViewshed/AnalyzeViewshed.cpp" \
     "$$SAMPLEPATHCPP/Analysis/DistanceMeasurementAnalysis/DistanceMeasurementAnalysis.cpp" \
     "$$SAMPLEPATHCPP/Analysis/Geotriggers/Geotriggers.cpp" \
-    "$$SAMPLEPATHCPP/Analysis/LineOfSightGeoElement/LineOfSightGeoElement.cpp" \
     "$$SAMPLEPATHCPP/Analysis/LineOfSightLocation/LineOfSightLocation.cpp" \
+    "$$SAMPLEPATHCPP/Analysis/ShowExploratoryLineOfSightBetweenGeoelements/ShowExploratoryLineOfSightBetweenGeoelements.cpp" \
     "$$SAMPLEPATHCPP/Analysis/StatisticalQuery/StatisticalQuery.cpp" \
     "$$SAMPLEPATHCPP/Analysis/StatisticalQueryGroupSort/StatisticalQueryGroupSort.cpp" \
     "$$SAMPLEPATHCPP/Analysis/StatisticalQueryGroupSort/StatisticResultListModel.cpp" \
@@ -488,8 +488,8 @@ RESOURCES += \
     "$$SAMPLEPATHCPP/Analysis/AnalyzeViewshed/AnalyzeViewshed.qrc" \
     "$$SAMPLEPATHCPP/Analysis/DistanceMeasurementAnalysis/DistanceMeasurementAnalysis.qrc" \
     "$$SAMPLEPATHCPP/Analysis/Geotriggers/Geotriggers.qrc" \
-    "$$SAMPLEPATHCPP/Analysis/LineOfSightGeoElement/LineOfSightGeoElement.qrc" \
     "$$SAMPLEPATHCPP/Analysis/LineOfSightLocation/LineOfSightLocation.qrc" \
+    "$$SAMPLEPATHCPP/Analysis/ShowExploratoryLineOfSightBetweenGeoelements/ShowExploratoryLineOfSightBetweenGeoelements.qrc" \
     "$$SAMPLEPATHCPP/Analysis/StatisticalQuery/StatisticalQuery.qrc" \
     "$$SAMPLEPATHCPP/Analysis/StatisticalQueryGroupSort/StatisticalQueryGroupSort.qrc" \
     "$$SAMPLEPATHCPP/Analysis/ViewshedCamera/ViewshedCamera.qrc" \

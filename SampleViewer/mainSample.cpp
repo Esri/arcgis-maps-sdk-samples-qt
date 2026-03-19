@@ -1,17 +1,18 @@
-// [Legal]
-// Copyright 2026 Esri.
+// COPYRIGHT 2026 ESRI
+// TRADE SECRETS: ESRI PROPRIETARY AND CONFIDENTIAL
+// Unpublished material - all rights reserved under the
+// Copyright Laws of the United States and applicable international
+// laws, treaties, and conventions.
 //
-// Licensed under the Apache License, Version 2.0 (the "License");
-// you may not use this file except in compliance with the License.
-// You may obtain a copy of the License at
-// http://www.apache.org/licenses/LICENSE-2.0
+// For additional information, contact:
+// Environmental Systems Research Institute, Inc.
+// Attn: Contracts and Legal Services Department
+// 380 New York Street
+// Redlands, California, 92373
+// USA
 //
-// Unless required by applicable law or agreed to in writing, software
-// distributed under the License is distributed on an "AS IS" BASIS,
-// WITHOUT WARRANTIES OR CONDITIONS OF ANY KIND, either express or implied.
-// See the License for the specific language governing permissions and
-// limitations under the License.
-// [Legal]
+// email: contracts@esri.com
+/// \file mainSample.cpp
 
 #include "pch.hpp" // IWYU pragma: keep
 
@@ -62,8 +63,8 @@
 #include "../CppSamples/Analysis/AnalyzeViewshed/AnalyzeViewshed.h"
 #include "../CppSamples/Analysis/DistanceMeasurementAnalysis/DistanceMeasurementAnalysis.h"
 #include "../CppSamples/Analysis/Geotriggers/Geotriggers.h"
-#include "../CppSamples/Analysis/LineOfSightGeoElement/LineOfSightGeoElement.h"
 #include "../CppSamples/Analysis/LineOfSightLocation/LineOfSightLocation.h"
+#include "../CppSamples/Analysis/ShowExploratoryLineOfSightBetweenGeoelements/ShowExploratoryLineOfSightBetweenGeoelements.h"
 #include "../CppSamples/Analysis/StatisticalQuery/StatisticalQuery.h"
 #include "../CppSamples/Analysis/StatisticalQueryGroupSort/StatisticalQueryGroupSort.h"
 #include "../CppSamples/Analysis/ViewshedCamera/ViewshedCamera.h"
@@ -500,7 +501,6 @@ void registerCppSampleClasses()
   IdentifyLayers::init();
   IdentifyRasterCell::init();
   IntegratedWindowsAuthentication::init();
-  LineOfSightGeoElement::init();
   LineOfSightLocation::init();
   ListKmlContents::init();
   ListRelatedFeatures::init();
@@ -559,6 +559,7 @@ void registerCppSampleClasses()
   SetSurfacePlacementMode::init();
   ShowCallout::init();
   ShowDeviceLocationUsingIndoorPositioning::init();
+  ShowExploratoryLineOfSightBetweenGeoelements::init();
   ShowGrid::init();
   ShowLabelsOnLayers::init();
   ShowLocationHistory::init();

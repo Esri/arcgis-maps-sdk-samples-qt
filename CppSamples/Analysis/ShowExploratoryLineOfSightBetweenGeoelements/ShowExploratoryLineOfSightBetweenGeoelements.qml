@@ -1,4 +1,4 @@
-// [WriteFile Name=LineOfSightGeoElement, Category=Analysis]
+// [WriteFile Name=ShowExploratoryLineOfSightBetweenGeoelements, Category=Analysis]
 // [Legal]
 // Copyright 2019 Esri.
 //
@@ -74,7 +74,7 @@ Item {
     }
 
     // Declare the C++ instance which creates the scene etc. and supply the view
-    LineOfSightGeoElementSample {
+    ShowExploratoryLineOfSightBetweenGeoelementsSample {
         id: model
         sceneView: view
     }

@@ -1,4 +1,4 @@
-// [WriteFile Name=LineOfSightGeoElement, Category=Analysis]
+// [WriteFile Name=ShowExploratoryLineOfSightBetweenGeoelements, Category=Analysis]
 // [Legal]
 // Copyright 2019 Esri.
 //
@@ -14,8 +14,8 @@
 // limitations under the License.
 // [Legal]
 
-#ifndef LineOfSightGeoElement_H
-#define LineOfSightGeoElement_H
+#ifndef ShowExploratoryLineOfSightBetweenGeoelements_H
+#define ShowExploratoryLineOfSightBetweenGeoelements_H
 
 // Qt headers
 #include <QObject>
@@ -30,7 +30,7 @@ namespace Esri::ArcGISRuntime
 
 Q_MOC_INCLUDE("SceneQuickView.h")
 
-class LineOfSightGeoElement : public QObject
+class ShowExploratoryLineOfSightBetweenGeoelements : public QObject
 {
   Q_OBJECT
 
@@ -38,8 +38,8 @@ class LineOfSightGeoElement : public QObject
   Q_PROPERTY(Esri::ArcGISRuntime::SceneQuickView* sceneView READ sceneView WRITE setSceneView NOTIFY sceneViewChanged)
 
 public:
-  explicit LineOfSightGeoElement(QObject* parent = nullptr);
-  ~LineOfSightGeoElement() override;
+  explicit ShowExploratoryLineOfSightBetweenGeoelements(QObject* parent = nullptr);
+  ~ShowExploratoryLineOfSightBetweenGeoelements() override;
 
   static void init();
 
@@ -67,4 +67,4 @@ private:
   Esri::ArcGISRuntime::Graphic* m_observer = nullptr;
 };
 
-#endif // LineOfSightGeoElement_H
+#endif // ShowExploratoryLineOfSightBetweenGeoelements_H

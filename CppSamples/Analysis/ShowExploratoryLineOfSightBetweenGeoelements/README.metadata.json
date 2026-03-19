@@ -6,7 +6,7 @@
             "path": "~/ArcGIS/Runtime/Data/3D/dolmus_3ds/dolmus.zip"
         }
     ],
-    "description": "Show a line of sight between two moving objects.",
+    "description": "Show an exploratory line of sight between two moving objects.",
     "featured": false,
     "ignore": false,
     "images": [
@@ -30,9 +30,9 @@
         "LineOfSightTargetVisibility"
     ],
     "snippets": [
-        "LineOfSightGeoElement.cpp",
-        "LineOfSightGeoElement.h",
-        "LineOfSightGeoElement.qml"
+        "ShowExploratoryLineOfSightBetweenGeoelements.cpp",
+        "ShowExploratoryLineOfSightBetweenGeoelements.h",
+        "ShowExploratoryLineOfSightBetweenGeoelements.qml"
     ],
-    "title": "Line of sight (GeoElement)"
+    "title": "Show exploratory line of sight (GeoElement)"
 }

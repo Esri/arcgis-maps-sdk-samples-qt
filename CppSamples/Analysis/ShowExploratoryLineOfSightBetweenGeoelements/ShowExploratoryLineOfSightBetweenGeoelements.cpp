@@ -1,4 +1,4 @@
-// [WriteFile Name=LineOfSightGeoElement, Category=Analysis]
+// [WriteFile Name=ShowExploratoryLineOfSightBetweenGeoelements, Category=Analysis]
 // [Legal]
 // Copyright 2019 Esri.
 //
@@ -19,7 +19,7 @@
 #endif // PCH_BUILD
 
 // sample headers
-#include "LineOfSightGeoElement.h"
+#include "ShowExploratoryLineOfSightBetweenGeoelements.h"
 
 // ArcGIS Maps SDK headers
 #include "AnalysisListModel.h"
@@ -32,7 +32,6 @@
 #include "Camera.h"
 #include "ElevationSourceListModel.h"
 #include "Error.h"
-#include "ExploratoryGeoElementLineOfSight.h"
 #include "GeodeticDistanceResult.h"
 #include "GeometryEngine.h"
 #include "Graphic.h"
@@ -63,6 +62,9 @@
 
 // STL headers
 #include <array>
+
+// Other headers
+#include "ExploratoryGeoElementLineOfSight.h"
 
 using namespace Esri::ArcGISRuntime;
 
@@ -96,7 +98,7 @@ namespace
                                            {-73.982961, 40.747762, 2, SpatialReference::wgs84()}}};
 } // namespace
 
-LineOfSightGeoElement::LineOfSightGeoElement(QObject* parent /* = nullptr */) :
+ShowExploratoryLineOfSightBetweenGeoelements::ShowExploratoryLineOfSightBetweenGeoelements(QObject* parent /* = nullptr */) :
   QObject(parent),
   m_scene(new Scene(BasemapStyle::ArcGISImageryStandard, this))
 {
@@ -114,19 +116,19 @@ LineOfSightGeoElement::LineOfSightGeoElement(QObject* parent /* = nullptr */) :
 
   // Trigger animation of taxi every 100ms.
   m_animation.setInterval(100);
-  m_animation.callOnTimeout(this, &LineOfSightGeoElement::animate);
+  m_animation.callOnTimeout(this, &ShowExploratoryLineOfSightBetweenGeoelements::animate);
 }
 
-LineOfSightGeoElement::~LineOfSightGeoElement() = default;
+ShowExploratoryLineOfSightBetweenGeoelements::~ShowExploratoryLineOfSightBetweenGeoelements() = default;
 
-void LineOfSightGeoElement::init()
+void ShowExploratoryLineOfSightBetweenGeoelements::init()
 {
   // Register classes for QML
   qmlRegisterType<SceneQuickView>("Esri.Samples", 1, 0, "SceneView");
-  qmlRegisterType<LineOfSightGeoElement>("Esri.Samples", 1, 0, "LineOfSightGeoElementSample");
+  qmlRegisterType<ShowExploratoryLineOfSightBetweenGeoelements>("Esri.Samples", 1, 0, "ShowExploratoryLineOfSightBetweenGeoelementsSample");
 }
 
-double LineOfSightGeoElement::heightZ() const
+double ShowExploratoryLineOfSightBetweenGeoelements::heightZ() const
 {
   if (m_observer)
   {
@@ -139,7 +141,7 @@ double LineOfSightGeoElement::heightZ() const
   }
 }
 
-void LineOfSightGeoElement::setHeightZ(double z)
+void ShowExploratoryLineOfSightBetweenGeoelements::setHeightZ(double z)
 {
   if (!m_observer)
   {
@@ -156,13 +158,13 @@ void LineOfSightGeoElement::setHeightZ(double z)
   }
 }
 
-SceneQuickView* LineOfSightGeoElement::sceneView() const
+SceneQuickView* ShowExploratoryLineOfSightBetweenGeoelements::sceneView() const
 {
   return m_sceneView;
 }
 
 // Set the view (created in QML)
-void LineOfSightGeoElement::setSceneView(SceneQuickView* sceneView)
+void ShowExploratoryLineOfSightBetweenGeoelements::setSceneView(SceneQuickView* sceneView)
 {
   if (!sceneView || sceneView == m_sceneView)
   {
@@ -179,7 +181,7 @@ void LineOfSightGeoElement::setSceneView(SceneQuickView* sceneView)
   }
 }
 
-void LineOfSightGeoElement::initialize()
+void ShowExploratoryLineOfSightBetweenGeoelements::initialize()
 {
   // Setup the graphics overlay - ensure that all z-position are relative to the height of the surface.
   GraphicsOverlay* graphicsOverlay = new GraphicsOverlay(this);
@@ -243,7 +245,7 @@ void LineOfSightGeoElement::initialize()
   taxiSymbol->load();
 }
 
-void LineOfSightGeoElement::animate()
+void ShowExploratoryLineOfSightBetweenGeoelements::animate()
 {
   // Goal point to travel to
   Point waypoint = waypoints.at(m_waypointIndex);

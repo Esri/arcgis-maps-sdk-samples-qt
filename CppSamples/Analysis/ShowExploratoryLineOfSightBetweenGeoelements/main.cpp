@@ -1,4 +1,4 @@
-// [WriteFile Name=LineOfSightGeoElement, Category=Analysis]
+// [WriteFile Name=ShowExploratoryLineOfSightBetweenGeoelements, Category=Analysis]
 // [Legal]
 // Copyright 2018 Esri.
 //
@@ -15,7 +15,7 @@
 // [Legal]
 
 // sample headers
-#include "LineOfSightGeoElement.h"
+#include "ShowExploratoryLineOfSightBetweenGeoelements.h"
 
 // ArcGIS Maps SDK headers
 #include "ArcGISRuntimeEnvironment.h"
@@ -45,7 +45,7 @@ int main(int argc, char* argv[])
 #endif
 
   QGuiApplication app(argc, argv);
-  app.setApplicationName(QString("LineOfSightGeoElement"));
+  app.setApplicationName(QString("ShowExploratoryLineOfSightBetweenGeoelements"));
 
   // Use of ArcGIS location services, such as basemap styles, geocoding, and routing services,
   // requires an access token. For more information see
@@ -74,7 +74,7 @@ int main(int argc, char* argv[])
   }
 
   // Initialize the sample
-  LineOfSightGeoElement::init();
+  ShowExploratoryLineOfSightBetweenGeoelements::init();
 
   QString arcGISRuntimeImportPath = QUOTE(ARCGIS_RUNTIME_IMPORT_PATH);
 
@@ -93,7 +93,7 @@ int main(int argc, char* argv[])
   engine.addImportPath(arcGISRuntimeImportPath);
 
   // Set the source
-  engine.load(QUrl("qrc:/Samples/Analysis/LineOfSightGeoElement/main.qml"));
+  engine.load(QUrl("qrc:/Samples/Analysis/ShowExploratoryLineOfSightBetweenGeoelements/main.qml"));
 
   return app.exec();
 }
