@@ -14,6 +14,9 @@
 // limitations under the License.
 // [Legal]
 
+// sample headers
+#include "ShowExploratoryViewshedFromPointInScene.h"
+
 // ArcGIS Maps SDK headers
 #include "ArcGISRuntimeEnvironment.h"
 
@@ -24,9 +27,6 @@
 #include <QQmlEngine>
 #include <QQuickView>
 #include <QSurfaceFormat>
-
-// Other headers
-#include "ViewshedLocation.h"
 
 // Platform specific headers
 #ifdef Q_OS_WIN
