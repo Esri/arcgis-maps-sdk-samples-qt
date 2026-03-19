@@ -1,4 +1,4 @@
-// [WriteFile Name=LineOfSightLocation, Category=Analysis]
+// [WriteFile Name=ShowExploratoryLineOfSightBetweenPoints, Category=Analysis]
 // [Legal]
 // Copyright 2017 Esri.
 //
@@ -18,7 +18,7 @@ import QtQuick
 import QtQuick.Controls
 import Esri.Samples
 
-LineOfSightLocationSample {
+ShowExploratoryLineOfSightBetweenPointsSample {
     id: rootRectangle
     clip: true
     width: 800

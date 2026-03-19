@@ -1,4 +1,4 @@
-// [WriteFile Name=LineOfSightLocation, Category=Analysis]
+// [WriteFile Name=ShowExploratoryLineOfSightBetweenPoints, Category=Analysis]
 // [Legal]
 // Copyright 2017 Esri.
 //
@@ -19,7 +19,7 @@
 #endif // PCH_BUILD
 
 // sample headers
-#include "LineOfSightLocation.h"
+#include "ShowExploratoryLineOfSightBetweenPoints.h"
 
 // ArcGIS Maps SDK headers
 #include "AnalysisListModel.h"
@@ -28,7 +28,6 @@
 #include "ArcGISTiledElevationSource.h"
 #include "Camera.h"
 #include "ElevationSourceListModel.h"
-#include "ExploratoryLocationLineOfSight.h"
 #include "MapTypes.h"
 #include "Point.h"
 #include "Scene.h"
@@ -39,21 +38,24 @@
 // Qt headers
 #include <QFuture>
 
+// Other headers
+#include "ExploratoryLocationLineOfSight.h"
+
 using namespace Esri::ArcGISRuntime;
 
-LineOfSightLocation::LineOfSightLocation(QQuickItem* parent /* = nullptr */) :
+ShowExploratoryLineOfSightBetweenPoints::ShowExploratoryLineOfSightBetweenPoints(QQuickItem* parent /* = nullptr */) :
   QQuickItem(parent)
 {
 }
 
-void LineOfSightLocation::init()
+void ShowExploratoryLineOfSightBetweenPoints::init()
 {
   // Register classes for QML
   qmlRegisterType<SceneQuickView>("Esri.Samples", 1, 0, "SceneView");
-  qmlRegisterType<LineOfSightLocation>("Esri.Samples", 1, 0, "LineOfSightLocationSample");
+  qmlRegisterType<ShowExploratoryLineOfSightBetweenPoints>("Esri.Samples", 1, 0, "ShowExploratoryLineOfSightBetweenPointsSample");
 }
 
-void LineOfSightLocation::componentComplete()
+void ShowExploratoryLineOfSightBetweenPoints::componentComplete()
 {
   QQuickItem::componentComplete();
 
@@ -81,7 +83,7 @@ void LineOfSightLocation::componentComplete()
   connectSignals();
 }
 
-void LineOfSightLocation::createLineOfSight()
+void ShowExploratoryLineOfSightBetweenPoints::createLineOfSight()
 {
   // create the observer/target points
   const Point observerPt(-73.06958032962375, -49.253112971555446, 2000, SpatialReference::wgs84());
@@ -97,7 +99,7 @@ void LineOfSightLocation::createLineOfSight()
   ExploratoryLineOfSight::setLineWidth(2.0f);
 }
 
-void LineOfSightLocation::setInitialViewpoint()
+void ShowExploratoryLineOfSightBetweenPoints::setInitialViewpoint()
 {
   // Set a viewpoint
   Point point(-73.0815, -49.3272, 4059, SpatialReference::wgs84());
@@ -108,7 +110,7 @@ void LineOfSightLocation::setInitialViewpoint()
   m_sceneView->setViewpointCameraAsync(camera);
 }
 
-void LineOfSightLocation::connectSignals()
+void ShowExploratoryLineOfSightBetweenPoints::connectSignals()
 {
   // on mouse click perform the location viewshed
   connect(m_sceneView, &SceneQuickView::mouseClicked, this, [this](QMouseEvent& event)

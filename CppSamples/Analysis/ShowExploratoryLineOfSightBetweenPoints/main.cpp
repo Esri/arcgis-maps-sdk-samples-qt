@@ -1,4 +1,4 @@
-// [WriteFile Name=LineOfSightLocation, Category=Analysis]
+// [WriteFile Name=ShowExploratoryLineOfSightBetweenPoints, Category=Analysis]
 // [Legal]
 // Copyright 2017 Esri.
 //
@@ -15,7 +15,7 @@
 // [Legal]
 
 // sample headers
-#include "LineOfSightLocation.h"
+#include "ShowExploratoryLineOfSightBetweenPoints.h"
 
 // ArcGIS Maps SDK headers
 #include "ArcGISRuntimeEnvironment.h"
@@ -47,7 +47,7 @@ int main(int argc, char* argv[])
 #endif
 
   QGuiApplication app(argc, argv);
-  app.setApplicationName(QString("Line of Sight Location"));
+  app.setApplicationName(QString("ShowExploratoryLineOfSightBetweenPoints"));
 
   // Use of ArcGIS location services, such as basemap styles, geocoding, and routing services,
   // requires an access token. For more information see
@@ -76,7 +76,7 @@ int main(int argc, char* argv[])
   }
 
   // Initialize the sample
-  LineOfSightLocation::init();
+  ShowExploratoryLineOfSightBetweenPoints::init();
 
   // Initialize application view
   QQuickView view;
@@ -97,7 +97,7 @@ int main(int argc, char* argv[])
   view.engine()->addImportPath(arcGISRuntimeImportPath);
 
   // Set the source
-  view.setSource(QUrl("qrc:/Samples/Analysis/LineOfSightLocation/LineOfSightLocation.qml"));
+  view.setSource(QUrl("qrc:/Samples/Analysis/ShowExploratoryLineOfSightBetweenPoints/ShowExploratoryLineOfSightBetweenPoints.qml"));
 
   view.show();
 

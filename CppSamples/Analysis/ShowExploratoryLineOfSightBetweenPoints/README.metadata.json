@@ -1,6 +1,6 @@
 {
     "category": "Analysis",
-    "description": "Perform a line of sight analysis between two points in real time.",
+    "description": "Perform an exploratory line of sight analysis between two points in real time.",
     "featured": false,
     "ignore": false,
     "images": [
@@ -8,7 +8,7 @@
     ],
     "keywords": [
         "3D",
-        "line of sight",
+        "exploratory line of sight",
         "visibility",
         "visibility analysis",
         "AnalysisOverlay",
@@ -24,9 +24,9 @@
         "SceneView"
     ],
     "snippets": [
-        "LineOfSightLocation.cpp",
-        "LineOfSightLocation.h",
-        "LineOfSightLocation.qml"
+        "ShowExploratoryLineOfSightBetweenPoints.cpp",
+        "ShowExploratoryLineOfSightBetweenPoints.h",
+        "ShowExploratoryLineOfSightBetweenPoints.qml"
     ],
-    "title": "Line of sight (location)"
+    "title": "Show exploratory line of sight (Points)"
 }

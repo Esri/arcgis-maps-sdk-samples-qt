@@ -63,8 +63,8 @@
 #include "../CppSamples/Analysis/AnalyzeViewshed/AnalyzeViewshed.h"
 #include "../CppSamples/Analysis/DistanceMeasurementAnalysis/DistanceMeasurementAnalysis.h"
 #include "../CppSamples/Analysis/Geotriggers/Geotriggers.h"
-#include "../CppSamples/Analysis/LineOfSightLocation/LineOfSightLocation.h"
 #include "../CppSamples/Analysis/ShowExploratoryLineOfSightBetweenGeoelements/ShowExploratoryLineOfSightBetweenGeoelements.h"
+#include "../CppSamples/Analysis/ShowExploratoryLineOfSightBetweenPoints/ShowExploratoryLineOfSightBetweenPoints.h"
 #include "../CppSamples/Analysis/StatisticalQuery/StatisticalQuery.h"
 #include "../CppSamples/Analysis/StatisticalQueryGroupSort/StatisticalQueryGroupSort.h"
 #include "../CppSamples/Analysis/ViewshedCamera/ViewshedCamera.h"
@@ -501,7 +501,6 @@ void registerCppSampleClasses()
   IdentifyLayers::init();
   IdentifyRasterCell::init();
   IntegratedWindowsAuthentication::init();
-  LineOfSightLocation::init();
   ListKmlContents::init();
   ListRelatedFeatures::init();
   ListTransformations::init();
@@ -560,6 +559,7 @@ void registerCppSampleClasses()
   ShowCallout::init();
   ShowDeviceLocationUsingIndoorPositioning::init();
   ShowExploratoryLineOfSightBetweenGeoelements::init();
+  ShowExploratoryLineOfSightBetweenPoints::init();
   ShowGrid::init();
   ShowLabelsOnLayers::init();
   ShowLocationHistory::init();

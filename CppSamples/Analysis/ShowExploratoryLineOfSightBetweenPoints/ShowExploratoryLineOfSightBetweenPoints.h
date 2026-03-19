@@ -1,4 +1,4 @@
-// [WriteFile Name=LineOfSightLocation, Category=Analysis]
+// [WriteFile Name=ShowExploratoryLineOfSightBetweenPoints, Category=Analysis]
 // [Legal]
 // Copyright 2017 Esri.
 //
@@ -14,8 +14,8 @@
 // limitations under the License.
 // [Legal]
 
-#ifndef LINEOFSIGHTLOCATION_H
-#define LINEOFSIGHTLOCATION_H
+#ifndef ShowExploratoryLineOfSightBetweenPoints_H
+#define ShowExploratoryLineOfSightBetweenPoints_H
 
 // Qt headers
 #include <QQuickItem>
@@ -27,13 +27,13 @@ namespace Esri::ArcGISRuntime
   class ExploratoryLocationLineOfSight;
 } // namespace Esri::ArcGISRuntime
 
-class LineOfSightLocation : public QQuickItem
+class ShowExploratoryLineOfSightBetweenPoints : public QQuickItem
 {
   Q_OBJECT
 
 public:
-  explicit LineOfSightLocation(QQuickItem* parent = nullptr);
-  ~LineOfSightLocation() override = default;
+  explicit ShowExploratoryLineOfSightBetweenPoints(QQuickItem* parent = nullptr);
+  ~ShowExploratoryLineOfSightBetweenPoints() override = default;
 
   void componentComplete() override;
   static void init();
@@ -50,4 +50,4 @@ private:
   void createLineOfSight();
 };
 
-#endif // LINEOFSIGHTLOCATION_H
+#endif // ShowExploratoryLineOfSightBetweenPoints_H

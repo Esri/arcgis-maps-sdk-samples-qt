@@ -1,0 +1,10 @@
+<RCC>
+    <qresource prefix="/Samples/Analysis/ShowExploratoryLineOfSightBetweenPoints">
+        <file alias="sample.json">README.metadata.json</file>
+        <file>ShowExploratoryLineOfSightBetweenPoints.qml</file>
+        <file>ShowExploratoryLineOfSightBetweenPoints.h</file>
+        <file>ShowExploratoryLineOfSightBetweenPoints.cpp</file>
+        <file>screenshot.png</file>
+        <file>README.md</file>
+    </qresource>
+</RCC>
