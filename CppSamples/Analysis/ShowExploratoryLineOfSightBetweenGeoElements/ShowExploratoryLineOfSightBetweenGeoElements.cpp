@@ -1,4 +1,4 @@
-// [WriteFile Name=ShowExploratoryLineOfSightBetweenGeoelements, Category=Analysis]
+// [WriteFile Name=ShowExploratoryLineOfSightBetweenGeoElements, Category=Analysis]
 // [Legal]
 // Copyright 2019 Esri.
 //
@@ -19,7 +19,7 @@
 #endif // PCH_BUILD
 
 // sample headers
-#include "ShowExploratoryLineOfSightBetweenGeoelements.h"
+#include "ShowExploratoryLineOfSightBetweenGeoElements.h"
 
 // ArcGIS Maps SDK headers
 #include "AnalysisListModel.h"
@@ -32,6 +32,7 @@
 #include "Camera.h"
 #include "ElevationSourceListModel.h"
 #include "Error.h"
+#include "ExploratoryGeoElementLineOfSight.h"
 #include "GeodeticDistanceResult.h"
 #include "GeometryEngine.h"
 #include "Graphic.h"
@@ -62,9 +63,6 @@
 
 // STL headers
 #include <array>
-
-// Other headers
-#include "ExploratoryGeoElementLineOfSight.h"
 
 using namespace Esri::ArcGISRuntime;
 
@@ -98,7 +96,7 @@ namespace
                                            {-73.982961, 40.747762, 2, SpatialReference::wgs84()}}};
 } // namespace
 
-ShowExploratoryLineOfSightBetweenGeoelements::ShowExploratoryLineOfSightBetweenGeoelements(QObject* parent /* = nullptr */) :
+ShowExploratoryLineOfSightBetweenGeoElements::ShowExploratoryLineOfSightBetweenGeoElements(QObject* parent /* = nullptr */) :
   QObject(parent),
   m_scene(new Scene(BasemapStyle::ArcGISImageryStandard, this))
 {
@@ -116,19 +114,19 @@ ShowExploratoryLineOfSightBetweenGeoelements::ShowExploratoryLineOfSightBetweenG
 
   // Trigger animation of taxi every 100ms.
   m_animation.setInterval(100);
-  m_animation.callOnTimeout(this, &ShowExploratoryLineOfSightBetweenGeoelements::animate);
+  m_animation.callOnTimeout(this, &ShowExploratoryLineOfSightBetweenGeoElements::animate);
 }
 
-ShowExploratoryLineOfSightBetweenGeoelements::~ShowExploratoryLineOfSightBetweenGeoelements() = default;
+ShowExploratoryLineOfSightBetweenGeoElements::~ShowExploratoryLineOfSightBetweenGeoElements() = default;
 
-void ShowExploratoryLineOfSightBetweenGeoelements::init()
+void ShowExploratoryLineOfSightBetweenGeoElements::init()
 {
   // Register classes for QML
   qmlRegisterType<SceneQuickView>("Esri.Samples", 1, 0, "SceneView");
-  qmlRegisterType<ShowExploratoryLineOfSightBetweenGeoelements>("Esri.Samples", 1, 0, "ShowExploratoryLineOfSightBetweenGeoelementsSample");
+  qmlRegisterType<ShowExploratoryLineOfSightBetweenGeoElements>("Esri.Samples", 1, 0, "ShowExploratoryLineOfSightBetweenGeoElementsSample");
 }
 
-double ShowExploratoryLineOfSightBetweenGeoelements::heightZ() const
+double ShowExploratoryLineOfSightBetweenGeoElements::heightZ() const
 {
   if (m_observer)
   {
@@ -141,7 +139,7 @@ double ShowExploratoryLineOfSightBetweenGeoelements::heightZ() const
   }
 }
 
-void ShowExploratoryLineOfSightBetweenGeoelements::setHeightZ(double z)
+void ShowExploratoryLineOfSightBetweenGeoElements::setHeightZ(double z)
 {
   if (!m_observer)
   {
@@ -158,13 +156,13 @@ void ShowExploratoryLineOfSightBetweenGeoelements::setHeightZ(double z)
   }
 }
 
-SceneQuickView* ShowExploratoryLineOfSightBetweenGeoelements::sceneView() const
+SceneQuickView* ShowExploratoryLineOfSightBetweenGeoElements::sceneView() const
 {
   return m_sceneView;
 }
 
 // Set the view (created in QML)
-void ShowExploratoryLineOfSightBetweenGeoelements::setSceneView(SceneQuickView* sceneView)
+void ShowExploratoryLineOfSightBetweenGeoElements::setSceneView(SceneQuickView* sceneView)
 {
   if (!sceneView || sceneView == m_sceneView)
   {
@@ -181,7 +179,7 @@ void ShowExploratoryLineOfSightBetweenGeoelements::setSceneView(SceneQuickView* 
   }
 }
 
-void ShowExploratoryLineOfSightBetweenGeoelements::initialize()
+void ShowExploratoryLineOfSightBetweenGeoElements::initialize()
 {
   // Setup the graphics overlay - ensure that all z-position are relative to the height of the surface.
   GraphicsOverlay* graphicsOverlay = new GraphicsOverlay(this);
@@ -245,7 +243,7 @@ void ShowExploratoryLineOfSightBetweenGeoelements::initialize()
   taxiSymbol->load();
 }
 
-void ShowExploratoryLineOfSightBetweenGeoelements::animate()
+void ShowExploratoryLineOfSightBetweenGeoElements::animate()
 {
   // Goal point to travel to
   Point waypoint = waypoints.at(m_waypointIndex);

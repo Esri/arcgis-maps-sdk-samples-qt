@@ -30,9 +30,9 @@
         "LineOfSightTargetVisibility"
     ],
     "snippets": [
-        "ShowExploratoryLineOfSightBetweenGeoelements.cpp",
-        "ShowExploratoryLineOfSightBetweenGeoelements.h",
-        "ShowExploratoryLineOfSightBetweenGeoelements.qml"
+        "ShowExploratoryLineOfSightBetweenGeoElements.cpp",
+        "ShowExploratoryLineOfSightBetweenGeoElements.h",
+        "ShowExploratoryLineOfSightBetweenGeoElements.qml"
     ],
     "title": "Show exploratory line of sight (GeoElement)"
 }

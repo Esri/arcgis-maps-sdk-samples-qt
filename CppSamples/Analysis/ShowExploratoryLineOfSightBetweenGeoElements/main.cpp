@@ -15,7 +15,7 @@
 // [Legal]
 
 // sample headers
-#include "ShowExploratoryLineOfSightBetweenGeoelements.h"
+#include "ShowExploratoryLineOfSightBetweenGeoElements.h"
 
 // ArcGIS Maps SDK headers
 #include "ArcGISRuntimeEnvironment.h"
@@ -45,7 +45,7 @@ int main(int argc, char* argv[])
 #endif
 
   QGuiApplication app(argc, argv);
-  app.setApplicationName(QString("ShowExploratoryLineOfSightBetweenGeoelements"));
+  app.setApplicationName(QString("ShowExploratoryLineOfSightBetweenGeoElements"));
 
   // Use of ArcGIS location services, such as basemap styles, geocoding, and routing services,
   // requires an access token. For more information see
@@ -74,7 +74,7 @@ int main(int argc, char* argv[])
   }
 
   // Initialize the sample
-  ShowExploratoryLineOfSightBetweenGeoelements::init();
+  ShowExploratoryLineOfSightBetweenGeoElements::init();
 
   QString arcGISRuntimeImportPath = QUOTE(ARCGIS_RUNTIME_IMPORT_PATH);
 
@@ -93,7 +93,7 @@ int main(int argc, char* argv[])
   engine.addImportPath(arcGISRuntimeImportPath);
 
   // Set the source
-  engine.load(QUrl("qrc:/Samples/Analysis/ShowExploratoryLineOfSightBetweenGeoelements/main.qml"));
+  engine.load(QUrl("qrc:/Samples/Analysis/ShowExploratoryLineOfSightBetweenGeoElements/main.qml"));
 
   return app.exec();
 }

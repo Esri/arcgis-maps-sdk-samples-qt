@@ -25,7 +25,7 @@ CONFIG += c++17
 QT += qml quick
 
 TEMPLATE = app
-TARGET = ShowExploratoryLineOfSightBetweenGeoelements
+TARGET = ShowExploratoryLineOfSightBetweenGeoElements
 
 include($$PWD/../../../ArcGISRuntimeVersion.pri)
 include($$PWD/arcgisruntime.pri)
@@ -33,13 +33,13 @@ include($$PWD/arcgisruntime.pri)
 #-------------------------------------------------------------------------------
 
 HEADERS += \
-    ShowExploratoryLineOfSightBetweenGeoelements.h
+    ShowExploratoryLineOfSightBetweenGeoElements.h
 
 SOURCES += \
     main.cpp \
-    ShowExploratoryLineOfSightBetweenGeoelements.cpp
+    ShowExploratoryLineOfSightBetweenGeoElements.cpp
 
-RESOURCES += ShowExploratoryLineOfSightBetweenGeoelements.qrc
+RESOURCES += ShowExploratoryLineOfSightBetweenGeoElements.qrc
 
 #-------------------------------------------------------------------------------
 
