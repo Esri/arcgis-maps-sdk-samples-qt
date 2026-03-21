@@ -15,7 +15,7 @@
 // [Legal]
 
 // sample headers
-#include "ShowExploratoryViewshedFromGeoelementInScene.h"
+#include "ShowExploratoryViewshedFromGeoElementInScene.h"
 
 // ArcGIS Maps SDK headers
 #include "ArcGISRuntimeEnvironment.h"
@@ -47,7 +47,7 @@ int main(int argc, char* argv[])
 #endif
 
   QGuiApplication app(argc, argv);
-  app.setApplicationName(QString("ShowExploratoryViewshedFromGeoelementInScene"));
+  app.setApplicationName(QString("ShowExploratoryViewshedFromGeoElementInScene"));
 
   // Use of ArcGIS location services, such as basemap styles, geocoding, and routing services,
   // requires an access token. For more information see
@@ -76,7 +76,7 @@ int main(int argc, char* argv[])
   }
 
   // Initialize the sample
-  ShowExploratoryViewshedFromGeoelementInScene::init();
+  ShowExploratoryViewshedFromGeoElementInScene::init();
 
   // Initialize application view
   QQuickView view;
@@ -97,7 +97,7 @@ int main(int argc, char* argv[])
   view.engine()->addImportPath(arcGISRuntimeImportPath);
 
   // Set the source
-  view.setSource(QUrl("qrc:/Samples/Analysis/ShowExploratoryViewshedFromGeoelementInScene/ShowExploratoryViewshedFromGeoelementInScene.qml"));
+  view.setSource(QUrl("qrc:/Samples/Analysis/ShowExploratoryViewshedFromGeoElementInScene/ShowExploratoryViewshedFromGeoElementInScene.qml"));
 
   view.show();
 

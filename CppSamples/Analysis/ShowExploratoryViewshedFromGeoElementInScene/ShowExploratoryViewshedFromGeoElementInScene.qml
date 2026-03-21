@@ -1,4 +1,4 @@
-// [WriteFile Name=ShowExploratoryViewshedFromGeoelementInScene, Category=Analysis]
+// [WriteFile Name=ShowExploratoryViewshedFromGeoElementInScene, Category=Analysis]
 // [Legal]
 // Copyright 2017 Esri.
 //
@@ -17,7 +17,7 @@
 import QtQuick
 import Esri.Samples
 
-ShowExploratoryViewshedFromGeoelementInSceneSample {
+ShowExploratoryViewshedFromGeoElementInSceneSample {
     id: rootRectangle
     clip: true
     width: 800

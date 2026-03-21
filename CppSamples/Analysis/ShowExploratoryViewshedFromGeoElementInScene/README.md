@@ -1,4 +1,4 @@
-# Show exploratory viewshed from geoelement in scene
+# Show exploratory viewshed from GeoElement in scene
 
 Analyze the exploratory viewshed for an object (GeoElement) in a scene.
 

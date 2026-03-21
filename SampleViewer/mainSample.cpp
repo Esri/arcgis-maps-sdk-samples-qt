@@ -64,7 +64,7 @@
 #include "../CppSamples/Analysis/ShowExploratoryLineOfSightBetweenGeoElements/ShowExploratoryLineOfSightBetweenGeoElements.h"
 #include "../CppSamples/Analysis/ShowExploratoryLineOfSightBetweenPoints/ShowExploratoryLineOfSightBetweenPoints.h"
 #include "../CppSamples/Analysis/ShowExploratoryViewshedFromCameraInScene/ShowExploratoryViewshedFromCameraInScene.h"
-#include "../CppSamples/Analysis/ShowExploratoryViewshedFromGeoelementInScene/ShowExploratoryViewshedFromGeoelementInScene.h"
+#include "../CppSamples/Analysis/ShowExploratoryViewshedFromGeoelementInScene/ShowExploratoryViewshedFromGeoElementInScene.h"
 #include "../CppSamples/Analysis/ShowExploratoryViewshedFromPointInScene/ShowExploratoryViewshedFromPointInScene.h"
 #include "../CppSamples/Analysis/ShowViewshedCalculatedFromGeoprocessingTask/ShowViewshedCalculatedFromGeoprocessingTask.h"
 #include "../CppSamples/Analysis/StatisticalQuery/StatisticalQuery.h"
@@ -559,7 +559,7 @@ void registerCppSampleClasses()
   ShowExploratoryLineOfSightBetweenGeoElements::init();
   ShowExploratoryLineOfSightBetweenPoints::init();
   ShowExploratoryViewshedFromCameraInScene::init();
-  ShowExploratoryViewshedFromGeoelementInScene::init();
+  ShowExploratoryViewshedFromGeoElementInScene::init();
   ShowExploratoryViewshedFromPointInScene::init();
   ShowViewshedCalculatedFromGeoprocessingTask::init();
   ShowGrid::init();

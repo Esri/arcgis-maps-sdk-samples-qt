@@ -1,4 +1,4 @@
-// [WriteFile Name=ShowExploratoryViewshedFromGeoelementInScene, Category=Analysis]
+// [WriteFile Name=ShowExploratoryViewshedFromGeoElementInScene, Category=Analysis]
 // [Legal]
 // Copyright 2017 Esri.
 //
@@ -14,8 +14,8 @@
 // limitations under the License.
 // [Legal]
 
-#ifndef ShowExploratoryViewshedFromGeoelementInScene_H
-#define ShowExploratoryViewshedFromGeoelementInScene_H
+#ifndef ShowExploratoryViewshedFromGeoElementInScene_H
+#define ShowExploratoryViewshedFromGeoElementInScene_H
 
 // ArcGIS Maps SDK headers
 #include "GeometryTypes.h"
@@ -34,13 +34,13 @@ namespace Esri::ArcGISRuntime
   class Graphic;
 } // namespace Esri::ArcGISRuntime
 
-class ShowExploratoryViewshedFromGeoelementInScene : public QQuickItem
+class ShowExploratoryViewshedFromGeoElementInScene : public QQuickItem
 {
   Q_OBJECT
 
 public:
-  explicit ShowExploratoryViewshedFromGeoelementInScene(QQuickItem* parent = nullptr);
-  ~ShowExploratoryViewshedFromGeoelementInScene() override = default;
+  explicit ShowExploratoryViewshedFromGeoElementInScene(QQuickItem* parent = nullptr);
+  ~ShowExploratoryViewshedFromGeoElementInScene() override = default;
 
   void componentComplete() override;
   static void init();
@@ -66,4 +66,4 @@ private:
   QTimer* m_timer = nullptr;
 };
 
-#endif // ShowExploratoryViewshedFromGeoelementInScene_H
+#endif // ShowExploratoryViewshedFromGeoElementInScene_H

@@ -39,9 +39,9 @@
         "OrbitGeoElementCameraController"
     ],
     "snippets": [
-        "ShowExploratoryViewshedFromGeoelementInScene.cpp",
-        "ShowExploratoryViewshedFromGeoelementInScene.h",
-        "ShowExploratoryViewshedFromGeoelementInScene.qml"
+        "ShowExploratoryViewshedFromGeoElementInScene.cpp",
+        "ShowExploratoryViewshedFromGeoElementInScene.h",
+        "ShowExploratoryViewshedFromGeoElementInScene.qml"
     ],
     "title": "Show exploratory viewshed (GeoElement)"
 }

@@ -1,4 +1,4 @@
-// [WriteFile Name=ShowExploratoryViewshedFromGeoelementInScene, Category=Analysis]
+// [WriteFile Name=ShowExploratoryViewshedFromGeoElementInScene, Category=Analysis]
 // [Legal]
 // Copyright 2017 Esri.
 //
@@ -19,7 +19,7 @@
 #endif // PCH_BUILD
 
 // sample headers
-#include "ShowExploratoryViewshedFromGeoelementInScene.h"
+#include "ShowExploratoryViewshedFromGeoElementInScene.h"
 
 // ArcGIS Maps SDK headers
 #include "AnalysisListModel.h"
@@ -81,19 +81,19 @@ namespace
   }
 } // namespace
 
-ShowExploratoryViewshedFromGeoelementInScene::ShowExploratoryViewshedFromGeoelementInScene(QQuickItem* parent /* = nullptr */) :
+ShowExploratoryViewshedFromGeoElementInScene::ShowExploratoryViewshedFromGeoElementInScene(QQuickItem* parent /* = nullptr */) :
   QQuickItem(parent)
 {
 }
 
-void ShowExploratoryViewshedFromGeoelementInScene::init()
+void ShowExploratoryViewshedFromGeoElementInScene::init()
 {
   // Register classes for QML
   qmlRegisterType<SceneQuickView>("Esri.Samples", 1, 0, "SceneView");
-  qmlRegisterType<ShowExploratoryViewshedFromGeoelementInScene>("Esri.Samples", 1, 0, "ShowExploratoryViewshedFromGeoelementInSceneSample");
+  qmlRegisterType<ShowExploratoryViewshedFromGeoElementInScene>("Esri.Samples", 1, 0, "ShowExploratoryViewshedFromGeoElementInSceneSample");
 }
 
-void ShowExploratoryViewshedFromGeoelementInScene::componentComplete()
+void ShowExploratoryViewshedFromGeoElementInScene::componentComplete()
 {
   QQuickItem::componentComplete();
 
@@ -145,7 +145,7 @@ void ShowExploratoryViewshedFromGeoelementInScene::componentComplete()
   // Create a Timer
   m_timer = new QTimer(this);
   m_timer->setInterval(100);
-  connect(m_timer, &QTimer::timeout, this, &ShowExploratoryViewshedFromGeoelementInScene::animate);
+  connect(m_timer, &QTimer::timeout, this, &ShowExploratoryViewshedFromGeoElementInScene::animate);
 
   // connect to the mouse clicked signal
   connect(m_sceneView, &SceneQuickView::mouseClicked, this, [this](QMouseEvent& event)
@@ -155,7 +155,7 @@ void ShowExploratoryViewshedFromGeoelementInScene::componentComplete()
   });
 }
 
-void ShowExploratoryViewshedFromGeoelementInScene::createGraphicsOverlay()
+void ShowExploratoryViewshedFromGeoElementInScene::createGraphicsOverlay()
 {
   // Add a GraphicsOverlay
   m_graphicsOverlay = new GraphicsOverlay(this);
@@ -173,7 +173,7 @@ void ShowExploratoryViewshedFromGeoelementInScene::createGraphicsOverlay()
   m_graphicsOverlay->setRenderer(simpleRenderer);
 }
 
-void ShowExploratoryViewshedFromGeoelementInScene::createGraphic()
+void ShowExploratoryViewshedFromGeoElementInScene::createGraphic()
 {
   // Create the Graphic Point
   const double x = -4.508708007847015;
@@ -194,7 +194,7 @@ void ShowExploratoryViewshedFromGeoelementInScene::createGraphic()
   m_graphicsOverlay->graphics()->append(m_tank);
 }
 
-void ShowExploratoryViewshedFromGeoelementInScene::animate()
+void ShowExploratoryViewshedFromGeoElementInScene::animate()
 {
   if (m_waypoint.isEmpty())
   {
