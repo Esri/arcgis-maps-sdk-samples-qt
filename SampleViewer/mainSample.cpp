@@ -1,18 +1,17 @@
-// COPYRIGHT 2026 ESRI
-// TRADE SECRETS: ESRI PROPRIETARY AND CONFIDENTIAL
-// Unpublished material - all rights reserved under the
-// Copyright Laws of the United States and applicable international
-// laws, treaties, and conventions.
+// [Legal]
+// Copyright 2025 Esri.
 //
-// For additional information, contact:
-// Environmental Systems Research Institute, Inc.
-// Attn: Contracts and Legal Services Department
-// 380 New York Street
-// Redlands, California, 92373
-// USA
+// Licensed under the Apache License, Version 2.0 (the "License");
+// you may not use this file except in compliance with the License.
+// You may obtain a copy of the License at
+// http://www.apache.org/licenses/LICENSE-2.0
 //
-// email: contracts@esri.com
-/// \file mainSample.cpp
+// Unless required by applicable law or agreed to in writing, software
+// distributed under the License is distributed on an "AS IS" BASIS,
+// WITHOUT WARRANTIES OR CONDITIONS OF ANY KIND, either express or implied.
+// See the License for the specific language governing permissions and
+// limitations under the License.
+// [Legal]
 
 #include "pch.hpp" // IWYU pragma: keep
 
@@ -62,7 +61,7 @@
 #include "../CppSamples/Analysis/AnalyzeHotspots/AnalyzeHotspots.h"
 #include "../CppSamples/Analysis/DistanceMeasurementAnalysis/DistanceMeasurementAnalysis.h"
 #include "../CppSamples/Analysis/Geotriggers/Geotriggers.h"
-#include "../CppSamples/Analysis/ShowExploratoryLineOfSightBetweenGeoelements/ShowExploratoryLineOfSightBetweenGeoelements.h"
+#include "../CppSamples/Analysis/ShowExploratoryLineOfSightBetweenGeoElements/ShowExploratoryLineOfSightBetweenGeoElements.h"
 #include "../CppSamples/Analysis/ShowExploratoryLineOfSightBetweenPoints/ShowExploratoryLineOfSightBetweenPoints.h"
 #include "../CppSamples/Analysis/ShowExploratoryViewshedFromCameraInScene/ShowExploratoryViewshedFromCameraInScene.h"
 #include "../CppSamples/Analysis/ShowExploratoryViewshedFromGeoelementInScene/ShowExploratoryViewshedFromGeoelementInScene.h"
@@ -557,7 +556,7 @@ void registerCppSampleClasses()
   SetSurfacePlacementMode::init();
   ShowCallout::init();
   ShowDeviceLocationUsingIndoorPositioning::init();
-  ShowExploratoryLineOfSightBetweenGeoelements::init();
+  ShowExploratoryLineOfSightBetweenGeoElements::init();
   ShowExploratoryLineOfSightBetweenPoints::init();
   ShowExploratoryViewshedFromCameraInScene::init();
   ShowExploratoryViewshedFromGeoelementInScene::init();

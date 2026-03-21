@@ -21,7 +21,7 @@ HEADERS += \
     "$$SAMPLEPATHCPP/Analysis/AnalyzeHotspots/AnalyzeHotspots.h" \
     "$$SAMPLEPATHCPP/Analysis/DistanceMeasurementAnalysis/DistanceMeasurementAnalysis.h" \
     "$$SAMPLEPATHCPP/Analysis/Geotriggers/Geotriggers.h" \
-    "$$SAMPLEPATHCPP/Analysis/ShowExploratoryLineOfSightBetweenGeoelements/ShowExploratoryLineOfSightBetweenGeoelements.h" \
+    "$$SAMPLEPATHCPP/Analysis/ShowExploratoryLineOfSightBetweenGeoElements/ShowExploratoryLineOfSightBetweenGeoElements.h" \
     "$$SAMPLEPATHCPP/Analysis/ShowExploratoryLineOfSightBetweenPoints/ShowExploratoryLineOfSightBetweenPoints.h" \
     "$$SAMPLEPATHCPP/Analysis/ShowExploratoryViewshedFromCameraInScene/ShowExploratoryViewshedFromCameraInScene.h" \
     "$$SAMPLEPATHCPP/Analysis/ShowExploratoryViewshedFromGeoelementInScene/ShowExploratoryViewshedFromGeoelementInScene.h" \
@@ -254,7 +254,7 @@ SOURCES += \
     "$$SAMPLEPATHCPP/Analysis/AnalyzeHotspots/AnalyzeHotspots.cpp" \
     "$$SAMPLEPATHCPP/Analysis/DistanceMeasurementAnalysis/DistanceMeasurementAnalysis.cpp" \
     "$$SAMPLEPATHCPP/Analysis/Geotriggers/Geotriggers.cpp" \
-    "$$SAMPLEPATHCPP/Analysis/ShowExploratoryLineOfSightBetweenGeoelements/ShowExploratoryLineOfSightBetweenGeoelements.cpp" \
+    "$$SAMPLEPATHCPP/Analysis/ShowExploratoryLineOfSightBetweenGeoElements/ShowExploratoryLineOfSightBetweenGeoElements.cpp" \
     "$$SAMPLEPATHCPP/Analysis/ShowExploratoryLineOfSightBetweenPoints/ShowExploratoryLineOfSightBetweenPoints.cpp" \
     "$$SAMPLEPATHCPP/Analysis/ShowExploratoryViewshedFromCameraInScene/ShowExploratoryViewshedFromCameraInScene.cpp" \
     "$$SAMPLEPATHCPP/Analysis/ShowExploratoryViewshedFromGeoelementInScene/ShowExploratoryViewshedFromGeoelementInScene.cpp" \
@@ -487,7 +487,7 @@ RESOURCES += \
     "$$SAMPLEPATHCPP/Analysis/AnalyzeHotspots/AnalyzeHotspots.qrc" \
     "$$SAMPLEPATHCPP/Analysis/DistanceMeasurementAnalysis/DistanceMeasurementAnalysis.qrc" \
     "$$SAMPLEPATHCPP/Analysis/Geotriggers/Geotriggers.qrc" \
-    "$$SAMPLEPATHCPP/Analysis/ShowExploratoryLineOfSightBetweenGeoelements/ShowExploratoryLineOfSightBetweenGeoelements.qrc" \
+    "$$SAMPLEPATHCPP/Analysis/ShowExploratoryLineOfSightBetweenGeoElements/ShowExploratoryLineOfSightBetweenGeoElements.qrc" \
     "$$SAMPLEPATHCPP/Analysis/ShowExploratoryLineOfSightBetweenPoints/ShowExploratoryLineOfSightBetweenPoints.qrc" \
     "$$SAMPLEPATHCPP/Analysis/ShowExploratoryViewshedFromCameraInScene/ShowExploratoryViewshedFromCameraInScene.qrc" \
     "$$SAMPLEPATHCPP/Analysis/ShowExploratoryViewshedFromGeoelementInScene/ShowExploratoryViewshedFromGeoelementInScene.qrc" \

@@ -30,6 +30,7 @@
 #include "ArcGISTiledElevationSource.h"
 #include "AttributeListModel.h"
 #include "ElevationSourceListModel.h"
+#include "ExploratoryGeoElementViewshed.h"
 #include "GeodeticDistanceResult.h"
 #include "GeometryEngine.h"
 #include "Graphic.h"
@@ -60,9 +61,6 @@
 #include <QUrl>
 #include <QVariant>
 #include <QtCore/qglobal.h>
-
-// Other headers
-#include "ExploratoryGeoElementViewshed.h"
 
 using namespace Esri::ArcGISRuntime;
 

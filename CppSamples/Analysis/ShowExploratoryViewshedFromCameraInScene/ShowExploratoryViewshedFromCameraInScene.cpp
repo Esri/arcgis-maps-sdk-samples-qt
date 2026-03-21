@@ -28,6 +28,7 @@
 #include "ArcGISTiledElevationSource.h"
 #include "Camera.h"
 #include "ElevationSourceListModel.h"
+#include "ExploratoryLocationViewshed.h"
 #include "IntegratedMeshLayer.h"
 #include "LayerListModel.h"
 #include "MapTypes.h"
@@ -37,9 +38,6 @@
 #include "SpatialReference.h"
 #include "Surface.h"
 #include "Viewpoint.h"
-
-// Other headers
-#include "ExploratoryLocationViewshed.h"
 
 using namespace Esri::ArcGISRuntime;
 

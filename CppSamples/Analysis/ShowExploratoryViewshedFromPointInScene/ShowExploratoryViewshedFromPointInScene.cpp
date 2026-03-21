@@ -28,6 +28,7 @@
 #include "ArcGISTiledElevationSource.h"
 #include "Camera.h"
 #include "ElevationSourceListModel.h"
+#include "ExploratoryLocationViewshed.h"
 #include "MapTypes.h"
 #include "Point.h"
 #include "Scene.h"
@@ -37,9 +38,6 @@
 
 // Qt headers
 #include <QFuture>
-
-// Other headers
-#include "ExploratoryLocationViewshed.h"
 
 using namespace Esri::ArcGISRuntime;
 
