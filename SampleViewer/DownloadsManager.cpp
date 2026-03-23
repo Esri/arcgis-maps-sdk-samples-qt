@@ -222,18 +222,20 @@ void DownloadsManager::deleteDataItemFile(DataItem* dataItem)
 
 void DownloadsManager::cancelDataItem(const QString& dataItemKey)
 {
-  PortalItem* portalItem = nullptr;
-  if (m_activeDownloads.contains(dataItemKey))
+  if (m_activeFutures.contains(dataItemKey))
   {
-    portalItem = m_activeDownloads[dataItemKey];
+    // Cancel the in-flight fetchDataAsync; cleanup runs in the onCanceled callback
+    m_activeFutures[dataItemKey].cancel();
   }
-
-  m_dataItemProgress.remove(dataItemKey);
-  m_activeDownloads.remove(dataItemKey);
-
-  if (portalItem)
+  else
   {
-    portalItem->cancelLoad();
+    // Still in the load() phase — cancel the load and clean up maps directly
+    if (m_activeDownloads.contains(dataItemKey))
+    {
+      m_activeDownloads[dataItemKey]->cancelLoad();
+    }
+    m_dataItemProgress.remove(dataItemKey);
+    m_activeDownloads.remove(dataItemKey);
   }
 }
 
@@ -554,9 +556,16 @@ void DownloadsManager::cancelAllDownloads()
   // Set cancel flag to prevent downloadNextDataItem from processing more
   setCancelDownload(true);
 
-  if (m_dataItemProgress.isEmpty())
+  // Cancel any in-flight download (fetchDataAsync or still loading)
+  const QStringList activeKeys = m_dataItemProgress.keys();
+  for (const QString& key : activeKeys)
   {
-    // This function perfroms checks for the cancel flag
+    cancelDataItem(key);
+  }
+
+  // If nothing was active, trigger cleanup immediately
+  if (m_dataItemProgress.isEmpty() && m_activeFutures.isEmpty())
+  {
     downloadNextDataItem();
   }
 }
@@ -567,6 +576,11 @@ bool DownloadsManager::deleteAllOfflineData()
   {
     qWarning() << "DownloadsManager::deleteAllOfflineData: samples is null!";
     return false;
+  }
+
+  if (m_downloadInProgress)
+  {
+    cancelAllDownloads();
   }
 
   const int totalSamples = m_samples->size();
@@ -899,13 +913,30 @@ void DownloadsManager::onPortalItemLoaded(PortalItem* portalItem, const QString&
 {
   if (portalItem->loadStatus() != LoadStatus::Loaded)
   {
+    m_dataItemProgress.remove(dataItemKey);
+    m_activeDownloads.remove(dataItemKey);
+    portalItem->deleteLater();
+    downloadNextDataItem();
+    return;
+  }
+
+  // If cancelled while the portal item was loading, bail out before starting the fetch
+  if (m_cancelDownload)
+  {
+    m_dataItemProgress.remove(dataItemKey);
+    m_activeDownloads.remove(dataItemKey);
+    portalItem->deleteLater();
+    downloadNextDataItem();
     return;
   }
 
   const auto folder = portalItem->type() == PortalItemType::CodeSample ? portalItem->name() : QString();
   const QString formattedPath = this->formattedPath(outputPath, folder);
 
-  portalItem->fetchDataAsync(formattedPath)
+  auto fetchFuture = portalItem->fetchDataAsync(formattedPath);
+  m_activeFutures[dataItemKey] = fetchFuture;
+
+  fetchFuture
     .then(this,
           [this, portalItem, formattedPath, dataItemKey]()
   {
@@ -955,6 +986,7 @@ void DownloadsManager::onPortalItemLoaded(PortalItem* portalItem, const QString&
 
         m_dataItemProgress.remove(dataItemKey);
         m_activeDownloads.remove(dataItemKey);
+        m_activeFutures.remove(dataItemKey);
         downloadNextDataItem();
         portalItem->deleteLater();
         zipHelper->deleteLater();
@@ -968,11 +1000,21 @@ void DownloadsManager::onPortalItemLoaded(PortalItem* portalItem, const QString&
 
       m_dataItemProgress.remove(dataItemKey);
       m_activeDownloads.remove(dataItemKey);
+      m_activeFutures.remove(dataItemKey);
       downloadNextDataItem();
       portalItem->deleteLater();
     }
   })
-    .onFailed([this, portalItem, dataItemKey](const ErrorException&)
+    .onCanceled(this,
+                [this, portalItem, dataItemKey]()
+  {
+    m_dataItemProgress.remove(dataItemKey);
+    m_activeDownloads.remove(dataItemKey);
+    m_activeFutures.remove(dataItemKey);
+    downloadNextDataItem();
+    portalItem->deleteLater();
+  })
+    .onFailed(this, [this, portalItem, dataItemKey](const ErrorException&)
   {
     setDownloadFailed(true);
     setDownloadText(QString("Download failed for item %1").arg(portalItem->itemId()));
@@ -986,6 +1028,8 @@ void DownloadsManager::onPortalItemLoaded(PortalItem* portalItem, const QString&
 
     m_dataItemProgress.remove(dataItemKey);
     m_activeDownloads.remove(dataItemKey);
+    m_activeFutures.remove(dataItemKey);
+    portalItem->deleteLater();
   });
 }
 

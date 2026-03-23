@@ -28,6 +28,7 @@ namespace Esri::ArcGISRuntime
   class PortalItem;
 } // namespace Esri::ArcGISRuntime
 
+#include <QFuture>
 #include <QMap>
 #include <QObject>
 #include <QQueue>
@@ -127,6 +128,7 @@ private:
   QQueue<DataItem*> m_dataItems;
   QMap<QString, double> m_dataItemProgress;
   QMap<QString, Esri::ArcGISRuntime::PortalItem*> m_activeDownloads;
+  QMap<QString, QFuture<void>> m_activeFutures;
   QTimer* m_progressUpdateTimer = nullptr;
 
   Esri::ArcGISRuntime::Portal* m_portal = nullptr;

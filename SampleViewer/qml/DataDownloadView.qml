@@ -107,5 +107,13 @@ Page {
             visible: SampleManager.downloadsManager.downloadInProgress
             clip: true
         }
+
+        Button {
+            text: qsTr("Cancel")
+            Layout.alignment: Qt.AlignHCenter | Qt.AlignVCenter
+            visible: SampleManager.downloadsManager.downloadInProgress
+            onClicked: SampleManager.cancelAllDownloads()
+            clip: true
+        }
     }
 }
