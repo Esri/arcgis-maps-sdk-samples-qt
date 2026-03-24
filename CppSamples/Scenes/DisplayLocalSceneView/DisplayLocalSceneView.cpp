@@ -22,8 +22,8 @@
 #include "DisplayLocalSceneView.h"
 
 // ArcGIS Maps SDK headers
-#include "ArcGISTiledElevationSource.h"
 #include "ArcGISSceneLayer.h"
+#include "ArcGISTiledElevationSource.h"
 #include "Camera.h"
 #include "ElevationSourceListModel.h"
 #include "Envelope.h"
@@ -50,7 +50,7 @@ DisplayLocalSceneView::DisplayLocalSceneView(QObject* parent /* = nullptr */) :
   // add the elevation source to the scene to display elevation
   m_scene->baseSurface()->elevationSources()->append(elevationSource);
 
-  ArcGISSceneLayer* sceneLayer = new ArcGISSceneLayer(QUrl("https://www.arcgis.com/home/item.html?id=61da8dc1a7bc4eea901c20ffb3f8b7af"), this);
+  ArcGISSceneLayer* sceneLayer = new ArcGISSceneLayer(QUrl("https://www.arcgis.com/home/item.html?id=7a63e9808a054d39964a8b4712c85657"), this);
 
   m_scene->operationalLayers()->append(sceneLayer);
 }
