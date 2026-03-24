@@ -89,6 +89,7 @@ public:
   Q_INVOKABLE void downloadDataItemsCurrentSample();
   Q_INVOKABLE void downloadProjectData(const QString& sampleName);
   Q_INVOKABLE void cancelAllDownloads();
+  Q_INVOKABLE void cancelDownload(const QString& sampleName);
 
   // Delete operations
   Q_INVOKABLE bool deleteAllOfflineData();

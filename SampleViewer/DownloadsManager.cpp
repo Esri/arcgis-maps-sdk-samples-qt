@@ -78,7 +78,13 @@ DownloadsManager::DownloadsManager(QObject* parent) :
   });
 }
 
-DownloadsManager::~DownloadsManager() = default;
+DownloadsManager::~DownloadsManager()
+{
+  if (m_progressUpdateTimer && m_progressUpdateTimer->isActive())
+  {
+    m_progressUpdateTimer->stop();
+  }
+}
 
 void DownloadsManager::initialize(Portal* portal, const QString& homePath)
 {
@@ -565,6 +571,61 @@ void DownloadsManager::cancelAllDownloads()
 
   // If nothing was active, trigger cleanup immediately
   if (m_dataItemProgress.isEmpty() && m_activeFutures.isEmpty())
+  {
+    downloadNextDataItem();
+  }
+}
+
+void DownloadsManager::cancelDownloadForSample(Sample* sample)
+{
+  if (!sample)
+  {
+    qWarning() << "DownloadsManager::cancelDownloadForSample: sample is null!";
+    return;
+  }
+
+  // Build the set of data item keys belonging to this sample
+  QSet<QString> sampleKeys;
+  for (int i = 0; i < sample->dataItems()->size(); ++i)
+  {
+    DataItem* dataItem = sample->dataItems()->at(i);
+    sampleKeys.insert(buildDataItemKey(dataItem));
+  }
+
+  // Remove this sample's items from the pending queue
+  QQueue<DataItem*> filteredQueue;
+  while (!m_dataItems.isEmpty())
+  {
+    DataItem* item = m_dataItems.dequeue();
+    const QString key = buildDataItemKey(item);
+    if (!sampleKeys.contains(key))
+    {
+      filteredQueue.enqueue(item);
+    }
+  }
+  m_dataItems = filteredQueue;
+
+  // Cancel any active downloads for this sample
+  bool loadPhaseCancelled = false;
+  for (const QString& key : sampleKeys)
+  {
+    if (m_dataItemProgress.contains(key))
+    {
+      // If the item is still in load() phase (no future yet), cancelDataItem
+      // cleans up synchronously and no async callback will call downloadNextDataItem.
+      if (!m_activeFutures.contains(key))
+      {
+        loadPhaseCancelled = true;
+      }
+      cancelDataItem(key);
+    }
+  }
+
+  updateOfflineDataProjects();
+
+  // For load-phase cancellations, we must manually resume the queue since
+  // there is no onCanceled callback that will do it.
+  if (loadPhaseCancelled)
   {
     downloadNextDataItem();
   }

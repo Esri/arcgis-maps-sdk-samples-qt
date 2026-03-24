@@ -542,6 +542,22 @@ void SampleManager::cancelAllDownloads()
   m_downloadsManager->cancelAllDownloads();
 }
 
+void SampleManager::cancelDownload(const QString& sampleName)
+{
+  const SampleListModel* sampleList = samples();
+  const int totalSamples = sampleList->size();
+
+  for (int i = 0; i < totalSamples; ++i)
+  {
+    Sample* sample = sampleList->at(i);
+    if (sample->name().toString() == sampleName)
+    {
+      m_downloadsManager->cancelDownloadForSample(sample);
+      return;
+    }
+  }
+}
+
 static QString homePath()
 {
   QString homePath;

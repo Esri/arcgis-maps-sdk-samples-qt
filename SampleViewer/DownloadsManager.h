@@ -61,6 +61,7 @@ public:
   void downloadAllDataItems();
   void downloadDataItemsForSample(Sample* sample);
   void cancelAllDownloads();
+  void cancelDownloadForSample(Sample* sample);
 
   // Delete operations
   bool deleteAllOfflineData();

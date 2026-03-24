@@ -15,6 +15,7 @@
 
 #include "pch.hpp"
 
+// Qt headers
 #include <QAbstractListModel>
 #include <QByteArray>
 #include <QHash>
@@ -22,6 +23,7 @@
 #include <QObject>
 #include <QVariant>
 
+// Other headers
 #include "OfflineDataProjectsModel.h"
 #include "Sample.h"
 
@@ -62,11 +64,19 @@ void OfflineDataProjectsModel::updateProject(int index, SampleDownloadState stat
     return;
   }
 
-  m_projects[index].downloaded = state.downloaded;
-  m_projects[index].downloading = state.isDownloading;
-  m_projects[index].downloadProgress = state.progress;
-  m_projects[index].downloadedItemsCount = state.downloadedItems;
-  m_projects[index].totalItemsCount = state.totalItems;
+  OfflineDataProject& project = m_projects[index];
+  if (project.downloaded == state.downloaded && project.downloading == state.isDownloading &&
+      qFuzzyCompare(project.downloadProgress, state.progress) && project.downloadedItemsCount == state.downloadedItems &&
+      project.totalItemsCount == state.totalItems)
+  {
+    return;
+  }
+
+  project.downloaded = state.downloaded;
+  project.downloading = state.isDownloading;
+  project.downloadProgress = state.progress;
+  project.downloadedItemsCount = state.downloadedItems;
+  project.totalItemsCount = state.totalItems;
 
   QModelIndex modelIndex = this->index(index);
   emit dataChanged(modelIndex, modelIndex, {DownloadedRole, DownloadingRole, DownloadProgressRole, DownloadedItemsCountRole, TotalItemsCountRole});

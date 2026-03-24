@@ -175,12 +175,12 @@ ColumnLayout {
                 // Individual sample item
                 delegate: Item {
                     width: ListView.view.width
-                    height: (!root.showOnlyDownloaded || model.downloaded) ? Math.max(65, 80 * root.scaleFactor) + 5 : 0
+                    height: (!root.showOnlyDownloaded || model.downloadedItemsCount > 0) ? Math.max(65, 80 * root.scaleFactor) + 5 : 0
 
                     Rectangle {
                         anchors.fill: parent
                         anchors.bottomMargin: 5
-                        visible: !root.showOnlyDownloaded || model.downloaded
+                        visible: !root.showOnlyDownloaded || model.downloadedItemsCount > 0
                         color: Calcite.foreground2
                         radius: 8
                         border {
@@ -312,7 +312,7 @@ ColumnLayout {
                                                     source: downloadIcon
                                                     colorization: 1.0
                                                     brightness: 1.0
-                                                    colorizationColor: Calcite.text1
+                                                    colorizationColor: Calcite.offWhite
                                                     visible: true
                                                 }
                                             }
@@ -364,7 +364,7 @@ ColumnLayout {
                                                     source: cancelIcon
                                                     colorization: 1.0
                                                     brightness: 1.0
-                                                    colorizationColor: Calcite.text1
+                                                    colorizationColor: Calcite.offWhite
                                                     visible: true
                                                 }
                                             }
@@ -381,7 +381,7 @@ ColumnLayout {
                                         }
 
                                         onClicked: {
-                                            SampleManager.cancelAllDownloads();
+                                            SampleManager.cancelDownload(model.sample.name);
                                         }
                                     }
 
@@ -416,7 +416,7 @@ ColumnLayout {
                                                     source: deleteIcon
                                                     colorization: 1.0
                                                     brightness: 1.0
-                                                    colorizationColor: Calcite.text1
+                                                    colorizationColor: Calcite.offWhite
                                                     visible: true
                                                 }
                                             }
