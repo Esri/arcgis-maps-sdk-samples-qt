@@ -1,0 +1,14 @@
+<RCC>
+    <qresource prefix="/Samples/Analysis/ShowExploratoryViewshedFromPointInScene">
+        <file alias="sample.json">README.metadata.json</file>
+        <file>ShowExploratoryViewshedFromPointInScene.qml</file>
+        <file>ColorDialog.qml</file>
+        <file>ShowExploratoryViewshedFromPointInScene.h</file>
+        <file>ShowExploratoryViewshedFromPointInScene.cpp</file>
+        <file>screenshot.png</file>
+        <file>README.md</file>
+        <file>ViewshedSlider.qml</file>
+        <file>x-24.svg</file>
+        <file>gear-24.svg</file>
+    </qresource>
+</RCC>

@@ -1,0 +1,41 @@
+{
+    "category": "Analysis",
+    "description": "Analyze the exploratory viewshed for a camera showing the visible and obstructed areas from an observer's vantage point.",
+    "featured": false,
+    "ignore": false,
+    "images": [
+        "screenshot.png"
+    ],
+    "keywords": [
+        "3D",
+        "Scene",
+        "integrated mesh",
+        "exploratory viewshed",
+        "visibility analysis",
+        "AnalysisOverlay",
+        "ArcGISScene",
+        "ArcGISTiledElevationSource",
+        "Camera",
+        "ExploratoryLocationViewshed",
+        "IntegratedMeshLayer",
+        "SceneView"
+    ],
+    "redirect_from": [
+        "/qt/latest/cpp/sample-code/sample-qt-viewshedcamera.htm"
+    ],
+    "relevant_apis": [
+        "AnalysisOverlay",
+        "ArcGISScene",
+        "ArcGISTiledElevationSource",
+        "Camera",
+        "ExploratoryLocationViewshed",
+        "IntegratedMeshLayer",
+        "SceneView"
+    ],
+    "snippets": [
+        "ShowExploratoryViewshedFromCameraInScene.cpp",
+        "ShowExploratoryViewshedFromCameraInScene.h",
+        "ShowExploratoryViewshedFromCameraInScene.qml"
+    ],
+    "title": "Show exploratory viewshed (Camera)"
+}

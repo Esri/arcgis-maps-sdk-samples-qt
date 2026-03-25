@@ -1,0 +1,37 @@
+{
+    "category": "Analysis",
+    "description": "Perform an exploratory viewshed analysis from a defined vantage point.",
+    "featured": false,
+    "ignore": false,
+    "images": [
+        "screenshot.png"
+    ],
+    "keywords": [
+        "3D",
+        "frustum",
+        "scene",
+        "viewshed",
+        "visibility analysis",
+        "AnalysisOverlay",
+        "ArcGISSceneLayer",
+        "ArcGISTiledElevationSource",
+        "ExploratoryLocationViewshed"
+    ],
+    "redirect_from": [
+        "/qt/latest/cpp/sample-code/sample-qt-viewshedlocation.htm"
+    ],
+    "relevant_apis": [
+        "AnalysisOverlay",
+        "ArcGISSceneLayer",
+        "ArcGISTiledElevationSource",
+        "ExploratoryLocationViewshed"
+    ],
+    "snippets": [
+        "ShowExploratoryViewshedFromPointInScene.cpp",
+        "ShowExploratoryViewshedFromPointInScene.h",
+        "ColorDialog.qml",
+        "ViewshedSlider.qml",
+        "ShowExploratoryViewshedFromPointInScene.qml"
+    ],
+    "title": "Show exploratory viewshed (Point)"
+}

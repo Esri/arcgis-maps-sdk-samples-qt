@@ -1,5 +1,5 @@
 // [Legal]
-// Copyright 2026 Esri.
+// Copyright 2025 Esri.
 //
 // Licensed under the Apache License, Version 2.0 (the "License");
 // you may not use this file except in compliance with the License.
@@ -59,16 +59,16 @@
 
 // All Samples
 #include "../CppSamples/Analysis/AnalyzeHotspots/AnalyzeHotspots.h"
-#include "../CppSamples/Analysis/AnalyzeViewshed/AnalyzeViewshed.h"
 #include "../CppSamples/Analysis/DistanceMeasurementAnalysis/DistanceMeasurementAnalysis.h"
 #include "../CppSamples/Analysis/Geotriggers/Geotriggers.h"
-#include "../CppSamples/Analysis/LineOfSightGeoElement/LineOfSightGeoElement.h"
-#include "../CppSamples/Analysis/LineOfSightLocation/LineOfSightLocation.h"
+#include "../CppSamples/Analysis/ShowExploratoryLineOfSightBetweenGeoElements/ShowExploratoryLineOfSightBetweenGeoElements.h"
+#include "../CppSamples/Analysis/ShowExploratoryLineOfSightBetweenPoints/ShowExploratoryLineOfSightBetweenPoints.h"
+#include "../CppSamples/Analysis/ShowExploratoryViewshedFromCameraInScene/ShowExploratoryViewshedFromCameraInScene.h"
+#include "../CppSamples/Analysis/ShowExploratoryViewshedFromGeoelementInScene/ShowExploratoryViewshedFromGeoElementInScene.h"
+#include "../CppSamples/Analysis/ShowExploratoryViewshedFromPointInScene/ShowExploratoryViewshedFromPointInScene.h"
+#include "../CppSamples/Analysis/ShowViewshedCalculatedFromGeoprocessingTask/ShowViewshedCalculatedFromGeoprocessingTask.h"
 #include "../CppSamples/Analysis/StatisticalQuery/StatisticalQuery.h"
 #include "../CppSamples/Analysis/StatisticalQueryGroupSort/StatisticalQueryGroupSort.h"
-#include "../CppSamples/Analysis/ViewshedCamera/ViewshedCamera.h"
-#include "../CppSamples/Analysis/ViewshedGeoElement/ViewshedGeoElement.h"
-#include "../CppSamples/Analysis/ViewshedLocation/ViewshedLocation.h"
 #include "../CppSamples/CloudAndPortal/IntegratedWindowsAuthentication/IntegratedWindowsAuthentication.h"
 #include "../CppSamples/CloudAndPortal/TokenAuthentication/TokenAuthentication.h"
 #include "../CppSamples/DisplayInformation/AddGraphicsWithRenderer/AddGraphicsWithRenderer.h"
@@ -384,7 +384,6 @@ void registerCppSampleClasses()
   AddIntegratedMeshLayer::init();
   AddVectorTiledLayerFromCustomStyle::init();
   AnalyzeHotspots::init();
-  AnalyzeViewshed::init();
   Animate3DSymbols::init();
   AnimateImagesWithImageOverlay::init();
   ApplyMapAlgebra::init();
@@ -502,8 +501,6 @@ void registerCppSampleClasses()
   IdentifyLayers::init();
   IdentifyRasterCell::init();
   IntegratedWindowsAuthentication::init();
-  LineOfSightGeoElement::init();
-  LineOfSightLocation::init();
   ListKmlContents::init();
   ListRelatedFeatures::init();
   ListTransformations::init();
@@ -561,6 +558,12 @@ void registerCppSampleClasses()
   SetSurfacePlacementMode::init();
   ShowCallout::init();
   ShowDeviceLocationUsingIndoorPositioning::init();
+  ShowExploratoryLineOfSightBetweenGeoElements::init();
+  ShowExploratoryLineOfSightBetweenPoints::init();
+  ShowExploratoryViewshedFromCameraInScene::init();
+  ShowExploratoryViewshedFromGeoElementInScene::init();
+  ShowExploratoryViewshedFromPointInScene::init();
+  ShowViewshedCalculatedFromGeoprocessingTask::init();
   ShowGrid::init();
   ShowLabelsOnLayers::init();
   ShowLocationHistory::init();
@@ -587,9 +590,6 @@ void registerCppSampleClasses()
   ValidateUtilityNetworkTopology::init();
   ViewContentBeneathTerrainSurface::init();
   ViewPointCloudDataOffline::init();
-  ViewshedCamera::init();
-  ViewshedGeoElement::init();
-  ViewshedLocation::init();
   WMTS_Layer::init();
   Web_Tiled_Layer::init();
   WmsLayerUrl::init();

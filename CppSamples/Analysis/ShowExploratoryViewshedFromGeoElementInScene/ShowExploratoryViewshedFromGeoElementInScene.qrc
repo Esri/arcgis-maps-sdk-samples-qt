@@ -1,0 +1,10 @@
+<RCC>
+    <qresource prefix="/Samples/Analysis/ShowExploratoryViewshedFromGeoElementInScene">
+        <file alias="sample.json">README.metadata.json</file>
+        <file>ShowExploratoryViewshedFromGeoElementInScene.qml</file>
+        <file>ShowExploratoryViewshedFromGeoElementInScene.h</file>
+        <file>ShowExploratoryViewshedFromGeoElementInScene.cpp</file>
+        <file>screenshot.png</file>
+        <file>README.md</file>
+    </qresource>
+</RCC>
