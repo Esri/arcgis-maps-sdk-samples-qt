@@ -109,7 +109,7 @@ ShowExploratoryLineOfSightBetweenGeoElements::ShowExploratoryLineOfSightBetweenG
 
   // Load up the buildings that will block the line of sight.
   ArcGISSceneLayer* buildings = new ArcGISSceneLayer(
-    QUrl("https://tiles.arcgis.com/tiles/z2tnIkrLQ2BRzr6P/arcgis/rest/services/New_York_LoD2_3D_Buildings/SceneServer/layers/0"));
+    QUrl("https://tiles.arcgis.com/tiles/z2tnIkrLQ2BRzr6P/arcgis/rest/services/New_York_LoD2_3D_Buildings/SceneServer/layers/0"), this);
   m_scene->operationalLayers()->append(buildings);
 
   // Trigger animation of taxi every 100ms.
@@ -200,7 +200,7 @@ void ShowExploratoryLineOfSightBetweenGeoElements::initialize()
   graphicsOverlay->setRenderer(renderer3D);
 
   // Create our observation point as a red sphere.
-  m_observer = new Graphic(observationPoint, new SimpleMarkerSymbol(SimpleMarkerSymbolStyle::Circle, Qt::red, 5.f), this);
+  m_observer = new Graphic(observationPoint, new SimpleMarkerSymbol(SimpleMarkerSymbolStyle::Circle, Qt::red, 5.f, this), this);
   emit heightZChanged(); // We now have a point to extract the Z-height from.
   graphicsOverlay->graphics()->append(m_observer);
 
