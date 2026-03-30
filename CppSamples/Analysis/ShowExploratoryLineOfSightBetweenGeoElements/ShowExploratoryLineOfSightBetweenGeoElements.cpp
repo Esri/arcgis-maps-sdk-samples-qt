@@ -228,10 +228,11 @@ void ShowExploratoryLineOfSightBetweenGeoElements::initialize()
     ExploratoryGeoElementLineOfSight* lineOfSight = new ExploratoryGeoElementLineOfSight(m_observer, m_taxi, this);
     analysisOverlay->analyses()->append(lineOfSight);
 
-    connect(lineOfSight, &ExploratoryGeoElementLineOfSight::targetVisibilityChanged, this, [this](LineOfSightTargetVisibility targetVisibility)
+    connect(lineOfSight, &ExploratoryGeoElementLineOfSight::targetVisibilityChanged, this,
+            [this](ExploratoryLineOfSightTargetVisibility targetVisibility)
     {
       // Select taxi whenever there is a clear line of sight from observer position.
-      m_taxi->setSelected(targetVisibility == LineOfSightTargetVisibility::Visible);
+      m_taxi->setSelected(targetVisibility == ExploratoryLineOfSightTargetVisibility::Visible);
     });
 
     Camera camera(observationPoint, 700, -30, 45, 0);
