@@ -23,8 +23,8 @@
 
 namespace Esri::ArcGISRuntime
 {
-  class Map;
-  class MapQuickView;
+  class Scene;
+  class LocalSceneQuickView;
 }
 
 class QString;
@@ -49,8 +49,8 @@ private:
   void addLayers();
 
 private:
-  Esri::ArcGISRuntime::Map* m_map = nullptr;
-  Esri::ArcGISRuntime::MapQuickView* m_mapView = nullptr;
+  Esri::ArcGISRuntime::Scene* m_scene = nullptr;
+  Esri::ArcGISRuntime::LocalSceneQuickView* m_mapView = nullptr;
   QAbstractListModel* m_legendInfoListModel = nullptr;
 };
 

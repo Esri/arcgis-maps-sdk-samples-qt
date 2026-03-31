@@ -22,17 +22,17 @@
 
 namespace Esri::ArcGISRuntime
 {
-class Map;
-class MapQuickView;
+class Scene;
+class LocalSceneQuickView;
 }
 
-Q_MOC_INCLUDE("MapQuickView.h")
+Q_MOC_INCLUDE("LocalSceneQuickView.h")
 
 class ChangeBasemap : public QObject
 {
   Q_OBJECT
 
-  Q_PROPERTY(Esri::ArcGISRuntime::MapQuickView* mapView READ mapView WRITE setMapView NOTIFY mapViewChanged)
+  Q_PROPERTY(Esri::ArcGISRuntime::LocalSceneQuickView* localSceneView READ localSceneView WRITE setLocalSceneView NOTIFY mapViewChanged)
 
 public:
   explicit ChangeBasemap(QObject* parent = nullptr);
@@ -44,11 +44,11 @@ signals:
   void mapViewChanged();
 
 private:
-  Esri::ArcGISRuntime::MapQuickView* mapView() const;
-  void setMapView(Esri::ArcGISRuntime::MapQuickView* mapView);
+  Esri::ArcGISRuntime::LocalSceneQuickView* localSceneView() const;
+  void setLocalSceneView(Esri::ArcGISRuntime::LocalSceneQuickView* localSceneView);
 
-  Esri::ArcGISRuntime::Map* m_map = nullptr;
-  Esri::ArcGISRuntime::MapQuickView* m_mapView = nullptr;
+  Esri::ArcGISRuntime::Scene* m_scene = nullptr;
+  Esri::ArcGISRuntime::LocalSceneQuickView* m_localSceneView = nullptr;
 };
 
 #endif // CHANGEBASEMAP_H

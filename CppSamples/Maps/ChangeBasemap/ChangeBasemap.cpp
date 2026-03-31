@@ -22,15 +22,16 @@
 #include "ChangeBasemap.h"
 
 // ArcGIS Maps SDK headers
-#include "Map.h"
-#include "MapQuickView.h"
+#include "Scene.h"
+#include "LocalSceneQuickView.h"
 #include "MapTypes.h"
+#include "SceneViewTypes.h"
 
 using namespace Esri::ArcGISRuntime;
 
 ChangeBasemap::ChangeBasemap(QObject* parent /* = nullptr */):
   QObject(parent),
-  m_map(new Map(BasemapStyle::ArcGISTopographic, this))
+  m_scene(new Scene(SceneViewingMode::Local, BasemapStyle::ArcGISTopographic, this))
 {
 }
 
@@ -39,23 +40,23 @@ ChangeBasemap::~ChangeBasemap() = default;
 void ChangeBasemap::init()
 {
   // Register the map view for QML
-  qmlRegisterType<MapQuickView>("Esri.Samples", 1, 0, "MapView");
+  qmlRegisterType<LocalSceneQuickView>("Esri.Samples", 1, 0, "LocalSceneView");
   qmlRegisterType<ChangeBasemap>("Esri.Samples", 1, 0, "ChangeBasemapSample");
 }
 
-MapQuickView* ChangeBasemap::mapView() const
+LocalSceneQuickView* ChangeBasemap::localSceneView() const
 {
-  return m_mapView;
+  return m_localSceneView;
 }
 
 // Set the view (created in QML)
-void ChangeBasemap::setMapView(MapQuickView* mapView)
+void ChangeBasemap::setLocalSceneView(LocalSceneQuickView* localSceneView)
 {
-  if (!mapView || mapView == m_mapView)
+  if (!localSceneView || localSceneView == m_localSceneView)
     return;
 
-  m_mapView = mapView;
-  m_mapView->setMap(m_map);
+  m_localSceneView = localSceneView;
+  m_localSceneView->setArcGISScene(m_scene);
 
   emit mapViewChanged();
 }

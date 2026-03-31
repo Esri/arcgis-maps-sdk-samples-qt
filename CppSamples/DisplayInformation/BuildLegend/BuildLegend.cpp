@@ -27,13 +27,14 @@
 #include "FeatureLayer.h"
 #include "LayerListModel.h"
 #include "LegendInfoListModel.h"
-#include "Map.h"
-#include "MapQuickView.h"
+#include "Scene.h"
+#include "LocalSceneQuickView.h"
 #include "MapTypes.h"
 #include "Point.h"
 #include "ServiceFeatureTable.h"
 #include "SpatialReference.h"
 #include "Viewpoint.h"
+#include "SceneViewTypes.h"
 
 // Qt headers
 #include <QUrl>
@@ -49,7 +50,7 @@ BuildLegend::~BuildLegend() = default;
 
 void BuildLegend::init()
 {
-  qmlRegisterType<MapQuickView>("Esri.Samples", 1, 0, "MapView");
+  qmlRegisterType<LocalSceneQuickView>("Esri.Samples", 1, 0, "SceneView");
   qmlRegisterType<BuildLegend>("Esri.Samples", 1, 0, "BuildLegendSample");
   qmlRegisterUncreatableType<QAbstractListModel>("Esri.Samples", 1, 0, "AbstractListModel", "AbstractListModel is uncreateable");
 }
@@ -58,33 +59,33 @@ void BuildLegend::componentComplete()
 {
   QQuickItem::componentComplete();
 
-  // find QML MapView component
-  m_mapView = findChild<MapQuickView*>("mapView");
+  // find QML SceneView component
+  m_mapView = findChild<LocalSceneQuickView*>("localSceneView");
 
   // create a new basemap instance
   Basemap* basemap = new Basemap(BasemapStyle::ArcGISTopographic, this);
   // create a new map instance
-  m_map = new Map(basemap, this);
+  m_scene = new Scene(SceneViewingMode::Local, basemap, this);
   // set map to auto fetch LegendInfo
-  m_map->setAutoFetchLegendInfos(true);
+  m_scene->setAutoFetchLegendInfos(true);
   // set initial viewpoint
-  m_map->setInitialViewpoint(Viewpoint(Point(-11e6, 6e6, SpatialReference(3857)), 9e7));
+  m_scene->setInitialViewpoint(Viewpoint(Point(-11e6, 6e6, SpatialReference(3857)), 9e7));
   // set map on the map view
-  m_mapView->setMap(m_map);
+  m_mapView->setArcGISScene(m_scene);
 
   addLayers();
 
   // set the legend info list model
-  m_legendInfoListModel = m_map->legendInfos();
+  m_legendInfoListModel = m_scene->legendInfos();
   emit legendInfoListModelChanged();
 }
 
 void BuildLegend::addLayers()
 {
   ArcGISMapImageLayer* mapImageLayer = new ArcGISMapImageLayer(QUrl("https://sampleserver6.arcgisonline.com/arcgis/rest/services/Census/MapServer"), this);
-  m_map->operationalLayers()->append(mapImageLayer);
+  m_scene->operationalLayers()->append(mapImageLayer);
 
   ServiceFeatureTable* featureTable = new ServiceFeatureTable(QUrl("https://sampleserver6.arcgisonline.com/arcgis/rest/services/Recreation/FeatureServer/0"), this);
   FeatureLayer* featureLayer = new FeatureLayer(featureTable, this);
-  m_map->operationalLayers()->append(featureLayer);
+  m_scene->operationalLayers()->append(featureLayer);
 }

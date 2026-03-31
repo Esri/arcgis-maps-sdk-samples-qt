@@ -21,8 +21,8 @@ import Esri.ArcGISRuntime.Toolkit
 
 Item {
 
-    // add a mapView component
-    MapView {
+    // add a localSceneView component
+    LocalSceneView {
         id: view
         anchors.fill: parent
 
@@ -46,12 +46,12 @@ Item {
             }
         }
 
-        onMapChanged: basemapGallery.setGeoModelFromGeoView(view);
+        onSceneChanged: basemapGallery.setGeoModelFromGeoView(view);
     }
 
     // Declare the C++ instance which creates the map etc. and supply the view
     ChangeBasemapSample {
         id: model
-        mapView: view
+        localSceneView: view
     }
 }
