@@ -31,8 +31,11 @@
 #include "DynamicEntityChangedInfo.h"
 #include "DynamicEntityDataSource.h"
 #include "DynamicEntityDataSourcePurgeOptions.h"
+#include "DynamicEntityIterator.h"
 #include "DynamicEntityLayer.h"
 #include "DynamicEntityObservation.h"
+#include "DynamicEntityQueryParameters.h"
+#include "DynamicEntityQueryResult.h"
 #include "IdentifyLayerResult.h"
 #include "LabelDefinition.h"
 #include "LabelDefinitionListModel.h"
@@ -83,6 +86,27 @@ AddCustomDynamicEntityDataSource::AddCustomDynamicEntityDataSource(QObject* pare
 }
 
 AddCustomDynamicEntityDataSource::~AddCustomDynamicEntityDataSource() = default;
+
+void AddCustomDynamicEntityDataSource::performQuery(const QString& text)
+{
+  if (!m_dynamicEntityLayer)
+    return;
+
+  m_dynamicEntityLayer->clearSelection();
+
+  if (text.isEmpty())
+    return;
+
+  DynamicEntityQueryParameters params{};
+  static QString whereClauseFmt = QStringLiteral("VesselName LIKE '%%1%'");
+  params.setWhereClause(whereClauseFmt.arg(text));
+  m_dynamicEntityLayer->dataSource()->queryDynamicEntitiesAsync(&params, this).then(this, [this](DynamicEntityQueryResult* result)
+  {
+    const QList<DynamicEntity*> matches = result->iterator().asList();
+    m_dynamicEntityLayer->selectDynamicEntities(matches);
+    result->deleteLater();
+  });
+}
 
 void AddCustomDynamicEntityDataSource::init()
 {

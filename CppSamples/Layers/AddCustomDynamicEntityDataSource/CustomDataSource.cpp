@@ -124,6 +124,7 @@ void CustomDataSource::observationProcessLoopAsync()
 QList<Field> CustomDataSource::getSchema()
 {
   return QList<Field>{
+    Field(FieldType::Text, "IMO", "", 256, Domain(), false, false), /* <---- adding same field more than once */
     Field(FieldType::Text, "MMSI", "", 256, Domain(), false, false),       Field(FieldType::Float64, "BaseDateTime", "", 8, Domain(), false, false),
     Field(FieldType::Float64, "LAT", "", 8, Domain(), false, false),       Field(FieldType::Float64, "LONG", "", 8, Domain(), false, false),
     Field(FieldType::Float64, "SOG", "", 8, Domain(), false, false),       Field(FieldType::Float64, "COG", "", 8, Domain(), false, false),

@@ -44,4 +44,21 @@ Item {
         calloutData: view.calloutData
         accessoryButtonVisible: false
     }
+
+    Rectangle {
+        anchors {
+            right: parent.right
+            bottom: parent.bottom
+        }
+        height: 50
+        width: 200
+        color: "white"
+        TextField {
+            height: parent.height
+            width: parent.width
+            onTextChanged: {
+                model.performQuery(text);
+            }
+        }
+    }
 }

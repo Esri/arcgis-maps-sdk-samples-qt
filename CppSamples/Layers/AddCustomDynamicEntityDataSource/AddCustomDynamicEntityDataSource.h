@@ -41,6 +41,8 @@ public:
   explicit AddCustomDynamicEntityDataSource(QObject* parent = nullptr);
   ~AddCustomDynamicEntityDataSource() override;
 
+  Q_INVOKABLE void performQuery(const QString& text);
+
   static void init();
 
 signals:
