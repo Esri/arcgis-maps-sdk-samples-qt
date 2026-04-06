@@ -51,6 +51,12 @@ ListRelatedFeaturesSample {
         height: 0
         color: palette.base
 
+        MouseArea {
+            anchors.fill: parent
+            onClicked: mouse => mouse.accepted = true
+            onWheel: wheel => wheel.accepted = true
+        }
+
         // Animate the expand and collapse of the legend
         Behavior on height {
             SpringAnimation {
