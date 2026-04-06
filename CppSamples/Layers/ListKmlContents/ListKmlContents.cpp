@@ -41,14 +41,12 @@
 #include "SceneQuickView.h"
 #include "SpatialReference.h"
 #include "Surface.h"
+#include "Viewpoint.h"
 
 // Qt headers
 #include <QFuture>
 #include <QStandardPaths>
 #include <QUuid>
-
-// STL headers
-#include <algorithm>
 
 using namespace Esri::ArcGISRuntime;
 
@@ -80,7 +78,7 @@ ListKmlContents::ListKmlContents(QObject* parent /* = nullptr */) :
   // add the elevation source to the scene to display elevation
   m_scene->baseSurface()->elevationSources()->append(elevationSource);
 
-  const QString filepath = defaultDataPath() + "/ArcGIS/Runtime/Data/kml/esri_test_data.kmz";
+  const QString filepath = defaultDataPath() + "/ArcGIS/Runtime/Data/kml/esri_kml_sample_data.kmz";
 
   // create new KML layer
   m_kmlDataset = new KmlDataset(filepath, this);
@@ -96,12 +94,8 @@ ListKmlContents::ListKmlContents(QObject* parent /* = nullptr */) :
     }
 
     // recursively build tree to display KML contents
-    const auto nodes = m_kmlDataset->rootNodes();
-    for (KmlNode* node : nodes)
-    {
-      m_kmlNodesList << node;
-      buildTree(node);
-    }
+    const QList<KmlNode*> nodes = m_kmlDataset->rootNodes();
+    buildTree(nodes);
 
     // if at top node, then display children
     if (!m_kmlNodesList.isEmpty() && m_kmlNodesList[0]->parentNode() == nullptr)
@@ -160,10 +154,7 @@ QStringList ListKmlContents::buildPathLabel(KmlNode* node) const
   {
     return buildPathLabel(node->parentNode()) << node->name();
   }
-  else
-  {
-    return QStringList{};
-  }
+  return QStringList{};
 }
 
 void ListKmlContents::displayPreviousLevel()
@@ -179,18 +170,15 @@ void ListKmlContents::displayPreviousLevel()
   if (grandparentNode != nullptr)
   {
     m_currentNode = grandparentNode;
-    emit currentNodeChanged();
-    emit labelTextChanged();
-    emit levelNodeNamesChanged();
   }
   // if grandparent node is nullptr, then at top of tree
   else
   {
     m_currentNode = parentNode;
-    emit currentNodeChanged();
-    emit labelTextChanged();
-    emit levelNodeNamesChanged();
   }
+  emit currentNodeChanged();
+  emit labelTextChanged();
+  emit levelNodeNamesChanged();
 }
 
 // display selected node on sceneview and show its children
@@ -214,153 +202,108 @@ void ListKmlContents::processSelectedNode(const QString& nodeName)
       emit currentNodeChanged();
       emit labelTextChanged();
 
-      m_viewpoint = Viewpoint();
-      getViewpointFromKmlViewpoint(node);
-      if (m_needsAltitudeFixed)
+      KmlViewpoint nodeViewpoint = node->viewpoint();
+
+      if (nodeViewpoint.isEmpty())
       {
-        getAltitudeAdjustedViewpoint(node);
-      }
-      else
-      {
-        if (!m_viewpoint.isEmpty() && !m_viewpoint.targetGeometry().isEmpty())
+        // if no viewpoint, set view to encompass node's geometry
+        const Envelope nodeExtent = node->extent();
+        if (nodeExtent.width() == 0 && nodeExtent.height() == 0)
         {
-          m_sceneView->setViewpointAsync(m_viewpoint);
+          nodeViewpoint = KmlViewpoint::createLookAtViewpoint(nodeExtent.center(), 0, 45, 1000, KmlAltitudeMode::RelativeToGround);
+        }
+        else
+        {
+          nodeViewpoint = KmlViewpoint::createWithViewpoint(Viewpoint(nodeExtent));
         }
       }
+      setSceneViewCameraFromKmlViewpoint(nodeViewpoint);
 
       // reset m_lastLevel before levelNodeNames() is called
       emit levelNodeNamesChanged();
 
       // if displaying end-nodes, change m_currentNode to first end-node for correct behavior of back button
-      if (noGrandchildren(m_currentNode))
+      if (KmlContainer* container = dynamic_cast<KmlContainer*>(m_currentNode))
       {
-        m_currentNode = static_cast<KmlContainer*>(m_currentNode)->childNodesListModel()->at(0);
-        emit currentNodeChanged();
+        if (!hasGrandchildren(container))
+        {
+          m_currentNode = container->childNodesListModel()->at(0);
+          emit currentNodeChanged();
+        }
       }
       break;
     }
   }
 }
 
-void ListKmlContents::getViewpointFromKmlViewpoint(KmlNode* node)
+void ListKmlContents::setSceneViewCameraFromKmlViewpoint(const KmlViewpoint& viewpoint)
 {
-  const KmlViewpoint kmlViewpoint = node->viewpoint();
-
-  if (!kmlViewpoint.isEmpty())
+  if (viewpoint.isEmpty())
   {
-    // altitude adjustment is needed for all but Absolute altitude mode
-    m_needsAltitudeFixed = (kmlViewpoint.altitudeMode() != KmlAltitudeMode::Absolute);
-
-    switch (kmlViewpoint.type())
-    {
-      case KmlViewpointType::LookAt:
-        m_viewpoint = Viewpoint(kmlViewpoint.location(), Camera(kmlViewpoint.location(), kmlViewpoint.range(), kmlViewpoint.heading(),
-                                                                kmlViewpoint.pitch(), kmlViewpoint.roll()));
-        return;
-      case KmlViewpointType::Camera:
-        m_viewpoint =
-          Viewpoint(kmlViewpoint.location(), Camera(kmlViewpoint.location(), kmlViewpoint.heading(), kmlViewpoint.pitch(), kmlViewpoint.roll()));
-        return;
-      default:
-        qWarning("Unexpected KmlViewpointType");
-        return;
-    }
-  }
-
-  // if viewpoint was empty, then use node's extent
-  const Envelope nodeExtent = node->extent();
-  if (nodeExtent.isValid() && !nodeExtent.isEmpty())
-  {
-    // when no altitude is specified, assume elevation needs to be adjusted
-    m_needsAltitudeFixed = true;
-
-    if (nodeExtent.width() == 0 && nodeExtent.height() == 0)
-    {
-      // default values: distance = 1000m, pitch = 45 degrees
-      m_viewpoint = Viewpoint(nodeExtent);
-      m_sceneView->setViewpointCameraAndWait(Camera(nodeExtent.center(), 1000, 0, 45, 0));
-      return;
-    }
-    else
-    {
-      // add padding to extent
-      double bufferDistance = qMax(nodeExtent.width(), nodeExtent.height()) / 20;
-      Envelope bufferedExtent = Envelope(nodeExtent.xMin() - bufferDistance, nodeExtent.yMin() - bufferDistance, nodeExtent.xMax() + bufferDistance,
-                                         nodeExtent.yMax() + bufferDistance, nodeExtent.zMin() - bufferDistance, nodeExtent.zMax() + bufferDistance,
-                                         SpatialReference::wgs84());
-      m_viewpoint = Viewpoint(bufferedExtent);
-    }
-  }
-  else
-  {
-    // can't show viewpoint
-    m_needsAltitudeFixed = false;
-    m_viewpoint = Viewpoint();
-  }
-}
-
-void ListKmlContents::getAltitudeAdjustedViewpoint(KmlNode* node)
-{
-  // assume altitude mode is clamp-to-ground if not specified
-  KmlAltitudeMode altMode = KmlAltitudeMode::ClampToGround;
-  KmlViewpoint kmlViewpoint = node->viewpoint();
-
-  if (!kmlViewpoint.isEmpty())
-  {
-    altMode = kmlViewpoint.altitudeMode();
-  }
-
-  // if altitude mode is Absolute, viewpoint doesn't need adjustment
-  if (altMode == KmlAltitudeMode::Absolute)
-  {
-    m_sceneView->setViewpointAsync(m_viewpoint);
     return;
   }
 
-  const Envelope lookAtExtent = geometry_cast<Envelope>(m_viewpoint.targetGeometry());
-  const Point lookAtPoint = geometry_cast<Point>(m_viewpoint.targetGeometry());
-
-  if (lookAtExtent.isValid())
+  const Camera camera = [viewpoint]() -> Camera
   {
-    m_scene->baseSurface()
-      ->elevationAsync(lookAtExtent.center())
-      .then(this, [this](double elevation)
+    switch (viewpoint.type())
     {
-      onLocationToElevationCompleted_(elevation);
+      case KmlViewpointType::LookAt:
+        return Camera(viewpoint.location(), viewpoint.range(), viewpoint.heading(), viewpoint.pitch(), viewpoint.roll());
+        break;
+      case KmlViewpointType::Camera:
+        return Camera(viewpoint.location(), viewpoint.heading(), viewpoint.pitch(), viewpoint.roll());
+        break;
+      default:
+        qWarning("Unexpected KmlViewpointType");
+        return Camera();
+    }
+  }();
+
+  if (!camera.location().isValid())
+  {
+    qWarning() << "Invalid camera location in KML viewpoint";
+    return;
+  }
+
+  if (viewpoint.altitudeMode() != KmlAltitudeMode::Absolute)
+  {
+    // Get elevation at camera location
+    m_scene->baseSurface()
+      ->applyElevationAsync(viewpoint.location())
+      .then(this, [camera, this](const Geometry& locationOnSurface)
+    {
+      const double deltaElevation = Point(locationOnSurface).z();
+      const Camera raisedCamera = camera.elevate(deltaElevation);
+      m_sceneView->setViewpointCameraAsync(raisedCamera, 1);
     });
   }
-  else if (lookAtPoint.isValid())
+  else
   {
-    m_scene->baseSurface()
-      ->elevationAsync(lookAtPoint)
-      .then(this, [this](double elevation)
-    {
-      onLocationToElevationCompleted_(elevation);
-    });
+    m_sceneView->setViewpointCameraAsync(camera, 1);
   }
 }
 
 // recursively build list of all KML nodes
-void ListKmlContents::buildTree(KmlNode* parentNode)
+void ListKmlContents::buildTree(QList<KmlNode*> rootNodes)
 {
-  auto addNode = [this](KmlNode* node)
+  for (KmlNode* node : std::as_const(rootNodes))
   {
     // some nodes have default visibility set to false
     node->setVisible(true);
-
     m_kmlNodesList << node;
-    buildTree(node);
-  };
 
-  if (KmlContainer* container = dynamic_cast<KmlContainer*>(parentNode))
-  {
-    const KmlNodeListModel& childNodes = *container->childNodesListModel();
-    std::for_each(std::begin(childNodes), std::end(childNodes), addNode);
-  }
-  else if (KmlNetworkLink* networkLink = dynamic_cast<KmlNetworkLink*>(parentNode))
-  {
-    const QList<KmlNode*> childNodes = networkLink->childNodes();
-    std::for_each(std::begin(childNodes), std::end(childNodes), addNode);
+    if (KmlContainer* container = dynamic_cast<KmlContainer*>(node))
+    {
+      for (KmlNode* node : *(container->childNodesListModel()))
+      {
+        buildTree({node});
+      }
+    }
+    else if (KmlNetworkLink* networkLink = dynamic_cast<KmlNetworkLink*>(node))
+    {
+      const QList<KmlNode*> childNodes = networkLink->childNodes();
+      buildTree(childNodes);
+    }
   }
 }
 
@@ -392,95 +335,6 @@ void ListKmlContents::setSceneView(SceneQuickView* sceneView)
   emit sceneViewChanged();
 }
 
-void ListKmlContents::onLocationToElevationCompleted_(double elevation)
-{
-  // assume altitude mode is clamp-to-ground if not specified
-  KmlAltitudeMode altMode = KmlAltitudeMode::ClampToGround;
-  KmlViewpoint kmlViewpoint = m_currentNode->viewpoint();
-
-  if (!kmlViewpoint.isEmpty())
-  {
-    altMode = kmlViewpoint.altitudeMode();
-  }
-  // if altitude mode is Absolute, viewpoint doesn't need adjustment
-  if (altMode == KmlAltitudeMode::Absolute)
-  {
-    return;
-  }
-
-  const Envelope lookAtExtent = geometry_cast<Envelope>(m_viewpoint.targetGeometry());
-  const Point lookAtPoint = geometry_cast<Point>(m_viewpoint.targetGeometry());
-
-  if (lookAtExtent.isValid())
-  {
-    Envelope target;
-    if (altMode == KmlAltitudeMode::ClampToGround)
-    {
-      // if depth of extent is 0, add 100m to the elevation to get zMax
-      if (lookAtExtent.depth() == 0)
-      {
-        target = Envelope(lookAtExtent.xMin(), lookAtExtent.yMin(), lookAtExtent.xMax(), lookAtExtent.yMax(), elevation, elevation + 100,
-                          lookAtExtent.spatialReference());
-      }
-      else
-      {
-        target = Envelope(lookAtExtent.xMin(), lookAtExtent.yMin(), lookAtExtent.xMax(), lookAtExtent.yMax(),
-                          // set the camera slightly above the placemark by adding one meter
-                          elevation, lookAtExtent.depth() + elevation + 1, lookAtExtent.spatialReference());
-      }
-    }
-    else
-    {
-      target = Envelope(lookAtExtent.xMin(), lookAtExtent.yMin(), lookAtExtent.xMax(), lookAtExtent.yMax(), lookAtExtent.zMin() + elevation,
-                        lookAtExtent.zMax() + elevation, lookAtExtent.spatialReference());
-    }
-
-    // if node has viewpoint specified, return adjusted geometry with adjusted camera
-    if (!kmlViewpoint.isEmpty())
-    {
-      m_sceneView->setViewpointCameraAndWait(m_viewpoint.camera().elevate(elevation));
-      m_viewpoint = Viewpoint(target);
-      m_sceneView->setViewpointAsync(m_viewpoint);
-      return;
-    }
-    else
-    {
-      m_viewpoint = Viewpoint(target);
-      m_sceneView->setViewpointAsync(m_viewpoint);
-      return;
-    }
-  }
-  else if (lookAtPoint.isValid())
-  {
-    Point target;
-    if (altMode == KmlAltitudeMode::ClampToGround)
-    {
-      target = Point(lookAtPoint.x(), lookAtPoint.y(), elevation, lookAtPoint.spatialReference());
-    }
-    else
-    {
-      target = Point(lookAtPoint.x(), lookAtPoint.y(), lookAtPoint.z() + elevation, lookAtPoint.spatialReference());
-    }
-
-    // set the viewpoint using the adjusted target
-    if (!kmlViewpoint.isEmpty())
-    {
-      m_sceneView->setViewpointCameraAndWait(m_viewpoint.camera().elevate(elevation));
-      m_viewpoint = Viewpoint(target);
-      m_sceneView->setViewpointAsync(m_viewpoint);
-      return;
-    }
-    else
-    {
-      // use default values to set camera: distance = 1000m, pitch = 45 degrees
-      m_viewpoint = Viewpoint(target);
-      m_sceneView->setViewpointAsync(m_viewpoint);
-      m_sceneView->setViewpointCameraAndWait(Camera(target, 1000, 0, 45, 0));
-      return;
-    }
-  }
-}
-
 QStringList ListKmlContents::levelNodeNames()
 {
   if (m_currentNode == nullptr)
@@ -510,26 +364,20 @@ QStringList ListKmlContents::levelNodeNames()
   return m_levelNodeNames;
 }
 
-bool ListKmlContents::noGrandchildren(KmlNode* currentNode) const
+bool ListKmlContents::hasGrandchildren(KmlContainer* container) const
 {
-  bool hasNoGrandchildren = false;
-
-  if (KmlContainer* container = dynamic_cast<KmlContainer*>(currentNode))
+  return std::all_of(container->childNodesListModel()->begin(), container->childNodesListModel()->end(), [](KmlNode* node)
   {
-    hasNoGrandchildren = true;
-
-    // for current level, get names of child nodes
-    for (KmlNode* node : *(container->childNodesListModel()))
+    if (KmlContainer* container = dynamic_cast<KmlContainer*>(node))
     {
-      // if node has children, add ">" to indicate further levels
-      if (!node->children().isEmpty())
-      {
-        hasNoGrandchildren = false;
-      }
+      return !container->children().isEmpty();
     }
-  }
-
-  return hasNoGrandchildren;
+    else if (KmlNetworkLink* networkLink = dynamic_cast<KmlNetworkLink*>(node))
+    {
+      return !networkLink->childNodes().isEmpty();
+    }
+    return false;
+  });
 }
 
 QString ListKmlContents::labelText() const
@@ -539,20 +387,5 @@ QString ListKmlContents::labelText() const
 
 bool ListKmlContents::isTopLevel() const
 {
-  if (m_currentNode == nullptr)
-  {
-    return true;
-  }
-  else if (m_currentNode->parentNode() == nullptr)
-  {
-    return true;
-  }
-  else if (m_currentNode->name() == "")
-  {
-    return true;
-  }
-  else
-  {
-    return false;
-  }
+  return (!m_currentNode || !m_currentNode->parentNode());
 }

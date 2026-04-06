@@ -2,8 +2,8 @@
     "category": "Layers",
     "dataItems": [
         {
-            "itemId": "da301cb122874d5497f8a8f6c81eb36e",
-            "path": "~/ArcGIS/Runtime/Data/kml/esri_test_data.kmz"
+            "itemId": "b3ebedc3bed940fa985d824d55c44a2f",
+            "path": "~/ArcGIS/Runtime/Data/kml/esri_kml_sample_data.kmz"
         }
     ],
     "description": "List the contents of a KML file.",
@@ -26,8 +26,10 @@
         "KmlLayer",
         "KmlNetworkLink",
         "KmlNode",
+        "KmlPhotoOverlay",
         "KmlPlacemark",
-        "KmlScreenOverlay"
+        "KmlScreenOverlay",
+        "KmlViewpoint"
     ],
     "redirect_from": [
         ""
@@ -41,8 +43,10 @@
         "KmlLayer",
         "KmlNetworkLink",
         "KmlNode",
+        "KmlPhotoOverlay",
         "KmlPlacemark",
-        "KmlScreenOverlay"
+        "KmlScreenOverlay",
+        "KmlViewpoint"
     ],
     "snippets": [
         "ListKmlContents.cpp",
