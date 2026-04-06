@@ -39,7 +39,7 @@ To set up the sample's offline data, see the [Use offline data in the samples](h
 
 Link | Local Location
 ---------|-------|
-|[ESRI test data](https://www.arcgis.com/home/item.html?id=b3ebedc3bed940fa985d824d55c44a2f)| `<userhome>`/ArcGIS/Runtime/Data/kml/esri_kml_sample_data.kmz |
+|[Esri KML Sample Data](https://www.arcgis.com/home/item.html?id=b3ebedc3bed940fa985d824d55c44a2f)| `<userhome>`/ArcGIS/Runtime/Data/kml/esri_kml_sample_data.kmz |
 
 ## About the data
 

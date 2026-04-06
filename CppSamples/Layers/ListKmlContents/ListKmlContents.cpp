@@ -48,6 +48,10 @@
 #include <QStandardPaths>
 #include <QUuid>
 
+// C++ Headers
+#include <algorithm>
+#include <utility>
+
 using namespace Esri::ArcGISRuntime;
 
 // helper method to get cross platform data path
@@ -208,6 +212,11 @@ void ListKmlContents::processSelectedNode(const QString& nodeName)
       {
         // if no viewpoint, set view to encompass node's geometry
         const Envelope nodeExtent = node->extent();
+        if (!nodeExtent.isValid())
+        {
+          qWarning() << "Invalid geometry for node:" << node->name();
+          return;
+        }
         if (nodeExtent.width() == 0 && nodeExtent.height() == 0)
         {
           nodeViewpoint = KmlViewpoint::createLookAtViewpoint(nodeExtent.center(), 0, 45, 1000, KmlAltitudeMode::RelativeToGround);
@@ -249,10 +258,8 @@ void ListKmlContents::setSceneViewCameraFromKmlViewpoint(const KmlViewpoint& vie
     {
       case KmlViewpointType::LookAt:
         return Camera(viewpoint.location(), viewpoint.range(), viewpoint.heading(), viewpoint.pitch(), viewpoint.roll());
-        break;
       case KmlViewpointType::Camera:
         return Camera(viewpoint.location(), viewpoint.heading(), viewpoint.pitch(), viewpoint.roll());
-        break;
       default:
         qWarning("Unexpected KmlViewpointType");
         return Camera();
@@ -294,9 +301,14 @@ void ListKmlContents::buildTree(QList<KmlNode*> rootNodes)
 
     if (KmlContainer* container = dynamic_cast<KmlContainer*>(node))
     {
+      QList<KmlNode*> childNodes;
       for (KmlNode* node : *(container->childNodesListModel()))
       {
-        buildTree({node});
+        childNodes << node;
+      }
+      if (!childNodes.isEmpty())
+      {
+        buildTree(childNodes);
       }
     }
     else if (KmlNetworkLink* networkLink = dynamic_cast<KmlNetworkLink*>(node))
@@ -366,7 +378,7 @@ QStringList ListKmlContents::levelNodeNames()
 
 bool ListKmlContents::hasGrandchildren(KmlContainer* container) const
 {
-  return std::all_of(container->childNodesListModel()->begin(), container->childNodesListModel()->end(), [](KmlNode* node)
+  return std::any_of(container->childNodesListModel()->begin(), container->childNodesListModel()->end(), [](KmlNode* node)
   {
     if (KmlContainer* container = dynamic_cast<KmlContainer*>(node))
     {
