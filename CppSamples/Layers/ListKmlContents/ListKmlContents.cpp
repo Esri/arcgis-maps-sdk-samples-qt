@@ -205,30 +205,6 @@ void ListKmlContents::processSelectedNode(const QString& nodeName)
       m_currentNode = node;
       emit currentNodeChanged();
       emit labelTextChanged();
-
-      KmlViewpoint nodeViewpoint = node->viewpoint();
-
-      if (nodeViewpoint.isEmpty())
-      {
-        // if no viewpoint, set view to encompass node's geometry
-        const Envelope nodeExtent = node->extent();
-        if (!nodeExtent.isValid())
-        {
-          qWarning() << "Invalid geometry for node:" << node->name();
-          return;
-        }
-        if (nodeExtent.width() == 0 && nodeExtent.height() == 0)
-        {
-          nodeViewpoint = KmlViewpoint::createLookAtViewpoint(nodeExtent.center(), 0, 45, 1000, KmlAltitudeMode::RelativeToGround);
-        }
-        else
-        {
-          nodeViewpoint = KmlViewpoint::createWithViewpoint(Viewpoint(nodeExtent));
-        }
-      }
-      setSceneViewCameraFromKmlViewpoint(nodeViewpoint);
-
-      // reset m_lastLevel before levelNodeNames() is called
       emit levelNodeNamesChanged();
 
       // if displaying end-nodes, change m_currentNode to first end-node for correct behavior of back button
@@ -240,6 +216,28 @@ void ListKmlContents::processSelectedNode(const QString& nodeName)
           emit currentNodeChanged();
         }
       }
+
+      // If node has viewpoint, set view to that viewpoint. Otherwise, create a viewpoint to encompass node's geometry
+      KmlViewpoint nodeViewpoint = node->viewpoint();
+
+      if (nodeViewpoint.isEmpty())
+      {
+        // if no viewpoint, set view to encompass node's geometry
+        const Envelope nodeExtent = node->extent();
+        if (nodeExtent.isValid())
+        {
+          if (nodeExtent.width() == 0 && nodeExtent.height() == 0)
+          {
+            nodeViewpoint = KmlViewpoint::createLookAtViewpoint(nodeExtent.center(), 0, 45, 1000, KmlAltitudeMode::RelativeToGround);
+          }
+          else
+          {
+            nodeViewpoint = KmlViewpoint::createWithViewpoint(Viewpoint(nodeExtent));
+          }
+        }
+      }
+      // If nodeViewpoint is still empty, this method is a no-op and will not change the current view
+      setSceneViewCameraFromKmlViewpoint(nodeViewpoint);
       break;
     }
   }
