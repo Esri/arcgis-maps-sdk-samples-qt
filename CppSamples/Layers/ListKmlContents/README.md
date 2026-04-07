@@ -29,6 +29,7 @@ The contents of the KML file are shown in a list of buttons. Select a node to zo
 * KmlLayer
 * KmlNetworkLink
 * KmlNode
+* KmlPhotoOverlay
 * KmlPlacemark
 * KmlScreenOverlay
 * KmlViewpoint
