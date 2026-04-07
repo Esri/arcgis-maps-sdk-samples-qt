@@ -107,11 +107,11 @@ void AddBuildingSceneLayer::setLocalSceneView(LocalSceneQuickView* localSceneVie
     // Get the overview and full model sublayers.
     for (BuildingSublayer* sublayer : (*m_buildingSceneLayer->sublayers()))
     {
-      if (sublayer->name() == "Overview")
+      if (sublayer->modelName() == "Overview")
       {
         m_overviewSublayer = sublayer;
       }
-      else if (sublayer->name() == "Full Model")
+      else if (sublayer->modelName() == "FullModel")
       {
         m_fullModelSublayer = sublayer;
       }
