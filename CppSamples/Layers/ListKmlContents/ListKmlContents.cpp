@@ -300,9 +300,9 @@ void ListKmlContents::buildTree(const QList<KmlNode*>& rootNodes)
     if (KmlContainer* container = dynamic_cast<KmlContainer*>(node))
     {
       QList<KmlNode*> childNodes;
-      for (KmlNode* node : *(container->childNodesListModel()))
+      for (KmlNode* childNode : *(container->childNodesListModel()))
       {
-        childNodes << node;
+        childNodes << childNode;
       }
       if (!childNodes.isEmpty())
       {
