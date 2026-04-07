@@ -67,7 +67,7 @@ private:
   QString labelText() const;
   bool isTopLevel() const;
 
-  void buildTree(QList<Esri::ArcGISRuntime::KmlNode*> rootNodes);
+  void buildTree(const QList<Esri::ArcGISRuntime::KmlNode*>& rootNodes);
   QStringList buildPathLabel(Esri::ArcGISRuntime::KmlNode* node) const;
   QString getKmlNodeType(Esri::ArcGISRuntime::KmlNode* node);
   bool hasGrandchildren(Esri::ArcGISRuntime::KmlContainer* container) const;

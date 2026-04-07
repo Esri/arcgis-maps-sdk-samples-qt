@@ -221,7 +221,7 @@ void ListKmlContents::processSelectedNode(const QString& nodeName)
       KmlViewpoint nodeViewpoint = node->viewpoint();
 
       if (nodeViewpoint.isEmpty())
-      {
+        {
         // if no viewpoint, set view to encompass node's geometry
         const Envelope nodeExtent = node->extent();
         if (nodeExtent.isValid())
@@ -234,10 +234,10 @@ void ListKmlContents::processSelectedNode(const QString& nodeName)
           {
             nodeViewpoint = KmlViewpoint::createWithViewpoint(Viewpoint(nodeExtent));
           }
+          }
         }
-      }
       // If nodeViewpoint is still empty, this method is a no-op and will not change the current view
-      setSceneViewCameraFromKmlViewpoint(nodeViewpoint);
+        setSceneViewCameraFromKmlViewpoint(nodeViewpoint);
       break;
     }
   }
@@ -250,7 +250,7 @@ void ListKmlContents::setSceneViewCameraFromKmlViewpoint(const KmlViewpoint& vie
     return;
   }
 
-  const Camera camera = [viewpoint]() -> Camera
+  const Camera camera = [&viewpoint]() -> Camera
   {
     switch (viewpoint.type())
     {
@@ -289,7 +289,7 @@ void ListKmlContents::setSceneViewCameraFromKmlViewpoint(const KmlViewpoint& vie
 }
 
 // recursively build list of all KML nodes
-void ListKmlContents::buildTree(QList<KmlNode*> rootNodes)
+void ListKmlContents::buildTree(const QList<KmlNode*>& rootNodes)
 {
   for (KmlNode* node : std::as_const(rootNodes))
   {
