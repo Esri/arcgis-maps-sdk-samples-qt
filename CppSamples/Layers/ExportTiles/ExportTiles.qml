@@ -48,6 +48,7 @@ ExportTilesSample {
             text: qsTr("Export tiles")
             leftPadding: 20
             rightPadding: 20
+            hoverEnabled: !exportWindow.visible
             icon {
                 source: "qrc:/Samples/Layers/ExportTiles/download-24.svg"
                 width: 24
@@ -68,7 +69,7 @@ ExportTilesSample {
 
                       if (success) {
                           extentRectangle.visible = false;
-                          downloadButton.visible = false;
+                          exportTilesButton.visible = false;
                       }
                   }
 
