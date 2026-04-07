@@ -221,7 +221,7 @@ void ListKmlContents::processSelectedNode(const QString& nodeName)
       KmlViewpoint nodeViewpoint = node->viewpoint();
 
       if (nodeViewpoint.isEmpty())
-        {
+      {
         // if no viewpoint, set view to encompass node's geometry
         const Envelope nodeExtent = node->extent();
         if (nodeExtent.isValid())
@@ -234,10 +234,10 @@ void ListKmlContents::processSelectedNode(const QString& nodeName)
           {
             nodeViewpoint = KmlViewpoint::createWithViewpoint(Viewpoint(nodeExtent));
           }
-          }
         }
+      }
       // If nodeViewpoint is still empty, this method is a no-op and will not change the current view
-        setSceneViewCameraFromKmlViewpoint(nodeViewpoint);
+      setSceneViewCameraFromKmlViewpoint(nodeViewpoint);
       break;
     }
   }
