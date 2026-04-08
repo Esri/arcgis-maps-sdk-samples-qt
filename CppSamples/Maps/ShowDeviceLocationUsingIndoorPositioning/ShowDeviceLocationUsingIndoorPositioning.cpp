@@ -49,7 +49,7 @@ using namespace Esri::ArcGISRuntime;
 
 namespace
 {
-  const QString itemId = "97e69120b6934fcaada347a215fdb91f";
+  const QString itemId = "8fa941613b4b4b2b8a34ad4cdc3e4bba";
   const QStringList layerNames = {"Details", "Units", "Levels"};
 } // namespace
 
