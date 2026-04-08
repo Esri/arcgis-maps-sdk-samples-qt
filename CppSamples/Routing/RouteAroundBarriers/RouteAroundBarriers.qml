@@ -51,6 +51,12 @@ Item {
                 height: childrenRect.height
                 color: palette.base
 
+                MouseArea {
+                    anchors.fill: parent
+                    onClicked: mouse => mouse.accepted = true
+                    onWheel: wheel => wheel.accepted = true
+                }
+
                 GridLayout {
                     id: grid
                     anchors.horizontalCenter: parent.horizontalCenter
@@ -63,34 +69,31 @@ Item {
                         Layout.alignment: Qt.AlignHCenter
                         spacing: 5
                         padding: 5
+
+                        readonly property real buttonWidth: Math.max(stopButton.implicitWidth, barrierButton.implicitWidth)
+
                         Button {
                             id: stopButton
+                            width: buttonsRow.buttonWidth
                             text: qsTr("Add stop")
                             checked: true
                             highlighted: checked
-                            onClicked: {
-                                checked = true;
-                            }
-                            onCheckedChanged: {
-                                sampleModel.addStops = checked;
-                            }
+                            onClicked: checked = true
+                            onCheckedChanged: sampleModel.addStops = checked
                         }
                         Button {
                             id: barrierButton
+                            width: buttonsRow.buttonWidth
                             text: qsTr("Add barrier")
-                            highlighted: checked;
-                            onClicked: {
-                                checked = true;
-                            }
-                            onCheckedChanged: {
-                                sampleModel.addBarriers = checked;
-                            }
+                            highlighted: checked
+                            onClicked: checked = true
+                            onCheckedChanged: sampleModel.addBarriers = checked
                         }
                     }
 
                     Column {
                         spacing: 8
-
+                        Layout.alignment: Qt.AlignHCenter
                         CheckBox {
                             id: bestSequenceBox
                             text: qsTr("Find best sequence")
@@ -135,17 +138,13 @@ Item {
 
                     Row {
                         Layout.alignment: Qt.AlignHCenter
+                        Layout.bottomMargin: 10
                         Button {
-                            text: qsTr("Hide directions")
-                            onClicked: {
-                                if (text === qsTr("Hide directions")) {
-                                    directionsView.delegate = blankDelegate;
-                                    text = qsTr("Show directions");
-                                } else {
-                                    directionsView.delegate = directionDelegate;
-                                    text = qsTr("Hide directions");
-                                }
-                            }
+                            id: toggleDirectionsButton
+                            property bool userWantsVisible: false
+                            enabled: sampleModel.directions !== null
+                            text: directionWindow.visible ? qsTr("Hide directions") : qsTr("Show directions")
+                            onClicked: userWantsVisible = !userWantsVisible
                         }
                     }
                 }
@@ -156,7 +155,7 @@ Item {
                 id: directionWindow
                 Layout.alignment: Qt.AlignBottom
                 Layout.topMargin: 0
-                visible: true
+                visible: toggleDirectionsButton.userWantsVisible && sampleModel.directions !== null
                 Layout.preferredWidth: backBox.width
                 Layout.preferredHeight: 300
                 Layout.margins: 3
@@ -185,15 +184,6 @@ Item {
                     }
                 }
             }
-        }
-    }
-
-    Component {
-        id: blankDelegate
-        Rectangle {
-            width: parent.width
-            height: 35
-            color: directionWindow.color
         }
     }
 
