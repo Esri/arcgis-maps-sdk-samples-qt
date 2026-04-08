@@ -6,7 +6,7 @@ Configure the environment settings in a local scene to change the lighting condi
 
 ## Use case
 
-The scene environment defines the appearance of the local scene. This includes sky and background color settings, whether objects in the local scene cast shadows, and if virtual lighting or simulated sunlight is used to light the scene.
+The scene environment defines the appearance of a scene. This includes sky and background color settings, whether objects in the scene cast shadows, and the lighting used to illuminate the scene.
 
 For an exploration scenario, like a city planning app, a developer might decide to enable sun lighting and direct shadows so the user can see how buildings and trees cast shadows at a given date and time.
 
