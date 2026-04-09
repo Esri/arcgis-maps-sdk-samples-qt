@@ -1,7 +1,7 @@
 {
     "category": "Layers",
     "description": "Export tiles from an online vector tile service.",
-    "featured": true,
+    "featured": false,
     "ignore": false,
     "images": [
         "screenshot.png"

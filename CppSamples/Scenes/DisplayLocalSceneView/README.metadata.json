@@ -1,7 +1,7 @@
 {
     "category": "Scenes",
     "description": "Display a local scene with a topographic surface and 3D scene layer clipped to a local area.",
-    "featured": false,
+    "featured": true,
     "ignore": false,
     "images": [
         "screenshot.png"

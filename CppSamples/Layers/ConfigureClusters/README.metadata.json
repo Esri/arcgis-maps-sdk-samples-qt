@@ -1,7 +1,7 @@
 {
     "category": "Layers",
     "description": "Add client side feature reduction on a point feature layer that is not pre-configured with clustering.",
-    "featured": true,
+    "featured": false,
     "ignore": false,
     "images": [
         "screenshot.png"
