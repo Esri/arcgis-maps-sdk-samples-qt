@@ -7,7 +7,7 @@
         }
     ],
     "description": "Find dynamic entities from a data source that match a query.",
-    "featured": false,
+    "featured": true,
     "ignore": false,
     "images": [
         "screenshot.png"

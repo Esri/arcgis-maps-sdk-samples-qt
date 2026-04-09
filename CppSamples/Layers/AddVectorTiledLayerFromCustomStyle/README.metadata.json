@@ -7,7 +7,7 @@
         }
     ],
     "description": "Load ArcGIS vector tiled layers using custom styles.",
-    "featured": false,
+    "featured": true,
     "ignore": false,
     "images": [
         "screenshot.png"
