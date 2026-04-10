@@ -2,7 +2,7 @@
 
 ## Overview
 
-The repo contains [Qt](http://qt.io) projects for each sample that can be run from within the Qt Creator IDE. It also contains source code to build and run the [sample viewer app](https://www.arcgis.com/home/search.html?t=content&q=tags%3A%22CppSampleViewer%22) locally.
+The repo contains [Qt](http://qt.io) projects for the [ArcGIS Maps SDK for Qt v200.x samples](https://developers.arcgis.com/qt/v200/cpp/sample-code/) that can be run from within the Qt Creator IDE. It also contains source code to build and run the [sample viewer app](https://www.arcgis.com/home/search.html?t=content&q=tags%3A%22CppSampleViewer%22) locally.
 
 ## Table of Contents
 
@@ -22,7 +22,7 @@ The repo contains [Qt](http://qt.io) projects for each sample that can be run fr
 * Qt SDK 6.8.2 or higher (Open source or commercial)
 * Qt Creator
 * An [access token](http://links.esri.com/create-an-api-key)
-* [ArcGIS Maps SDK for Qt Toolkit](https://github.com/Esri/arcgis-runtime-toolkit-qt) is required as some samples utilize toolkit components.
+* [ArcGIS Maps SDK for Qt Toolkit](https://github.com/Esri/arcgis-maps-sdk-toolkit-qt/tree/lts.next) is required as some samples utilize toolkit components.
 * For more information, please visit the [System Requirements](https://developers.arcgis.com/qt/reference/system-requirements/) page.
 
 ## Set up the ArcGIS Maps SDK for Qt samples repo locally
@@ -46,7 +46,7 @@ git clone https://github.com/YOUR_USERNAME/arcgis-maps-sdk-samples-qt.git
 
 #### Clone the toolkit repo
 
-Change directory into your locally cloned samples repo and then use `git clone` to get a copy of the [ArcGIS Maps SDK for Qt Toolkit](https://github.com/Esri/arcgis-maps-sdk-toolkit-qt.git).
+Change directory into your locally cloned samples repo and then use `git clone` to get a copy of the [ArcGIS Maps SDK for Qt Toolkit](https://github.com/Esri/arcgis-maps-sdk-toolkit-qt/tree/lts.next). Note: ensure you use the `lts.next` version of the toolkit as this is needed for the version 208.x samples in this `lts.next` branch.
 
 ```bash
 # Change directory to the clone of the samples repository
@@ -93,22 +93,22 @@ Once you have set up a remote upstream you can keep your fork up to date with ou
 
 * Open a terminal (Mac users) or command prompt (Windows & Linux users)
 * Change to the current working directory of your local repository
-* Fetch the branches and commits from the upstream repository. Commits to `main` will be stored in a local branch, `upstream/main`.
+* Fetch the branches and commits from the upstream repository. Commits to `lts.next` will be stored in a local branch, `upstream/lts.next`.
 
 ```bash
 git fetch upstream
 ```
 
-* Check out your forks local `main` branch
+* Check out your forks local `lts.next` branch
 
 ```bash
-git checkout main
+git checkout lts.next
 ```
 
-* Merge changes from `upstream/main` into your local `main` branch which syncs your forks `main` branch with our samples repository.
+* Merge changes from `upstream/lts.next` into your local `lts.next` branch which syncs your forks `lts.next` branch with our samples repository.
 
 ```bash
-git merge upstream/main
+git merge upstream/lts.next
 ```
 
 ## Open a sample project file in Qt Creator
@@ -121,9 +121,9 @@ Start Qt Creator. When the IDE opens to the Welcome screen, click on the **Open 
 
 NOTE: the sample viewer project files search for the toolkit.pri at the [default location specified above](#clone-the-toolkit-repo). If you cloned the toolkit repo to a different location, you will need to update the path in the respective sample viewer's project file.
 
-## Use a previous version
+## The `lts.next` branch
 
-The `main` branch contains samples for the current, most up-to-date version of ArcGIS Maps SDK. To access previous versions, you can checkout by a tag or commit, or alternativley you can download the source zip: https://github.com/Esri/arcgis-maps-sdk-samples-qt/releases.
+The `lts.next` branch contains samples for the ArcGIS Maps SDK for Qt version 200.x. To access other versions, you can checkout by a tag or commit, or alternatively you can download the source zip: https://github.com/Esri/arcgis-maps-sdk-samples-qt/releases.
 
 ## Use offline data in the samples
 
