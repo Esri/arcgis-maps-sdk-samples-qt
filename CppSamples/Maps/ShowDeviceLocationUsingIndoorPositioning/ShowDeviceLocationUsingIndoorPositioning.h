@@ -62,7 +62,6 @@ signals:
 
 private:
   Esri::ArcGISRuntime::MapQuickView* mapView() const;
-  QVariantMap locationProperties() const;
   bool isLoading() const;
 
   void setMapView(Esri::ArcGISRuntime::MapQuickView* mapView);
