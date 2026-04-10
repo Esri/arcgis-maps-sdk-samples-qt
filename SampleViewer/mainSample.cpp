@@ -564,7 +564,7 @@ void registerCppSampleClasses()
   ShowExploratoryViewshedFromCameraInScene::init();
   ShowExploratoryViewshedFromGeoElementInScene::init();
   ShowExploratoryViewshedFromPointInScene::init();
-    ShowInteractiveViewshedWithAnalysisOverlay::init();
+  ShowInteractiveViewshedWithAnalysisOverlay::init();
   ShowViewshedCalculatedFromGeoprocessingTask::init();
   ShowGrid::init();
   ShowLabelsOnLayers::init();
