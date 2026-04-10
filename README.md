@@ -46,7 +46,7 @@ git clone https://github.com/YOUR_USERNAME/arcgis-maps-sdk-samples-qt.git
 
 #### Clone the toolkit repo
 
-Change directory into your locally cloned samples repo and then use `git clone` to get a copy of the [ArcGIS Maps SDK for Qt Toolkit](https://github.com/Esri/arcgis-maps-sdk-toolkit-qt/tree/lts.next). Note: ensure you use the `lts.next` version of the toolkit as this matches this samples in this `lts.next` branch for the v208.x samples.
+Change directory into your locally cloned samples repo and then use `git clone` to get a copy of the [ArcGIS Maps SDK for Qt Toolkit](https://github.com/Esri/arcgis-maps-sdk-toolkit-qt/tree/lts.next). Note: ensure you use the `lts.next` version of the toolkit as this is needed for the version 208.x samples in this `lts.next` branch.
 
 ```bash
 # Change directory to the clone of the samples repository
