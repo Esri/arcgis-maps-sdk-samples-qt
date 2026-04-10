@@ -27,6 +27,7 @@
 namespace Esri::ArcGISRuntime
 {
   class ArcGISFeatureTable;
+  class Error;
   class FeatureTable;
   class Map;
   class MapQuickView;
@@ -40,7 +41,8 @@ class ShowDeviceLocationUsingIndoorPositioning : public QObject
   Q_OBJECT
 
   Q_PROPERTY(Esri::ArcGISRuntime::MapQuickView* mapView READ mapView WRITE setMapView NOTIFY mapViewChanged)
-  Q_PROPERTY(QVariantMap locationProperties READ locationProperties NOTIFY locationPropertiesChanged)
+  Q_PROPERTY(QVariantMap locationProperties MEMBER m_locationProperties NOTIFY locationPropertiesChanged)
+  Q_PROPERTY(bool isLoading READ isLoading NOTIFY isLoadingChanged)
 
 public:
   explicit ShowDeviceLocationUsingIndoorPositioning(QObject* parent = nullptr);
@@ -53,29 +55,39 @@ public:
 signals:
   void mapViewChanged();
   void locationPropertiesChanged();
+  void isLoadingChanged();
   void locationPermissionDenied();
   void bluetoothPermissionDenied();
+  void errorOccurred(const QString& errorMessage);
 
 private:
   Esri::ArcGISRuntime::MapQuickView* mapView() const;
   QVariantMap locationProperties() const;
+  bool isLoading() const;
 
   void setMapView(Esri::ArcGISRuntime::MapQuickView* mapView);
   void trySetupIndoorsLocationDataSource();
   void locationChangedHandler(const Esri::ArcGISRuntime::Location& loc);
-  void changeFloorDisplay();
+  void changeFloorDisplay(const QString& floorLevelId);
   void requestLocationPermissionThenSetupILDS();
   void requestBluetoothThenLocationPermissions();
   void validatePermissions();
+  void setLoading(bool isLoading);
+  void handlePrerequisiteDoneLoading(const Esri::ArcGISRuntime::Error& loadError);
+  void completeIndoorsLocationSetup();
+  void showGroundFloor();
+  void failSetup(const QString& errorMessage);
 
   bool m_allPermissionsGranted = false;
+  bool m_hasReceivedFirstLocation = false;
+  bool m_isLoading = true;
+  bool m_isSettingUpIndoors = false;
+  bool m_setupFailed = false;
+  int m_pendingPrerequisiteLoads = 0;
   Esri::ArcGISRuntime::Map* m_map = nullptr;
   Esri::ArcGISRuntime::MapQuickView* m_mapView = nullptr;
-  Esri::ArcGISRuntime::FeatureTable* m_positioningTable = nullptr;
-  Esri::ArcGISRuntime::ArcGISFeatureTable* m_pathwaysTable = nullptr;
   Esri::ArcGISRuntime::IndoorsLocationDataSource* m_indoorsLocationDataSource = nullptr;
   QVariantMap m_locationProperties;
-  int m_currentFloor = 0;
 };
 
 #endif // SHOWDEVICELOCATIONUSINGINDOORPOSITIONING_H
