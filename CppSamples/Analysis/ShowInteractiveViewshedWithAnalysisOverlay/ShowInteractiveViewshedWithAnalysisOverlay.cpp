@@ -163,11 +163,11 @@ void ShowInteractiveViewshedWithAnalysisOverlay::connectSignals()
 void ShowInteractiveViewshedWithAnalysisOverlay::addOverlays()
 {
   // Create and add a graphics overlay to the map view.
-  m_graphicsOverlay = new GraphicsOverlay();
+  m_graphicsOverlay = new GraphicsOverlay(this);
   m_mapView->graphicsOverlays()->append(m_graphicsOverlay);
 
   // Create and add an analysis overlay to the map view.
-  m_analysisOverlay = new AnalysisOverlay();
+  m_analysisOverlay = new AnalysisOverlay(this);
   m_mapView->analysisOverlays()->append(m_analysisOverlay);
 
   createContinuousField();
@@ -240,8 +240,8 @@ void ShowInteractiveViewshedWithAnalysisOverlay::syncObserverGraphic()
   // Update the observer graphic geometry to the current observer position.
   if (!m_observerGraphic)
   {
-    SimpleMarkerSymbol* clickObserverSymbol = new SimpleMarkerSymbol(SimpleMarkerSymbolStyle::Circle, QColor("Blue"), 10.0f /*size*/, this);
-    m_observerGraphic = new Graphic(m_observerPositionPoint, clickObserverSymbol, this);
+    m_observerSymbol = new SimpleMarkerSymbol(SimpleMarkerSymbolStyle::Circle, QColor("Blue"), 10.0f /*size*/, this);
+    m_observerGraphic = new Graphic(m_observerPositionPoint, m_observerSymbol, this);
 
     m_graphicsOverlay->graphics()->append(m_observerGraphic);
     return;
@@ -373,14 +373,10 @@ void ShowInteractiveViewshedWithAnalysisOverlay::startObserverDrag(double x, dou
     return;
   }
 
-  if (m_observerGraphic)
+  if (m_observerSymbol)
   {
-    SimpleMarkerSymbol* symbol = dynamic_cast<SimpleMarkerSymbol*>(m_observerGraphic->symbol());
-    if (symbol)
-    {
-      // Change the observer graphic color to indicate it is being moved.
-      symbol->setColor(QColor("Yellow"));
-    }
+    // Change the observer graphic color to indicate it is being moved.
+    m_observerSymbol->setColor(QColor("Yellow"));
   }
 
   m_isDraggingObserver = true;
@@ -405,14 +401,10 @@ void ShowInteractiveViewshedWithAnalysisOverlay::endObserverDrag(double x, doubl
 
   updateObserverPositionFromScreen(x, y);
 
-  if (m_observerGraphic)
+  if (m_observerSymbol)
   {
-    SimpleMarkerSymbol* symbol = dynamic_cast<SimpleMarkerSymbol*>(m_observerGraphic->symbol());
-    if (symbol)
-    {
-      // Change the observer graphic color back when dragging ends.
-      symbol->setColor(QColor("Blue"));
-    }
+    // Change the observer graphic color back when dragging ends.
+    m_observerSymbol->setColor(QColor("Blue"));
   }
 
   m_isDraggingObserver = false;

@@ -32,6 +32,7 @@ namespace Esri::ArcGISRuntime
   class GraphicsOverlay;
   class Map;
   class MapQuickView;
+  class SimpleMarkerSymbol;
   class ViewshedFunction;
   class ViewshedParameters;
 } // namespace Esri::ArcGISRuntime
@@ -94,6 +95,7 @@ private:
   Esri::ArcGISRuntime::AnalysisOverlay* m_analysisOverlay = nullptr;
   Esri::ArcGISRuntime::Point m_observerPositionPoint;
   Esri::ArcGISRuntime::Graphic* m_observerGraphic = nullptr;
+  Esri::ArcGISRuntime::SimpleMarkerSymbol* m_observerSymbol = nullptr;
   Esri::ArcGISRuntime::ViewshedParameters* m_viewshedParameters = nullptr;
   Esri::ArcGISRuntime::ContinuousField* m_continuousField = nullptr;
   Esri::ArcGISRuntime::ViewshedFunction* m_viewshedFunction = nullptr;

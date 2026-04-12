@@ -92,7 +92,7 @@ Item {
                     Label {
                         Layout.preferredWidth: compactUi ? 52 : 64
                         horizontalAlignment: Text.AlignRight
-                        text: qsTr(Math.round(model.observerElevation) + " m")
+                        text: qsTr("%1 m").arg(Math.round(model.observerElevation))
                     }
                 }
             }
@@ -121,7 +121,7 @@ Item {
                     Label {
                         Layout.preferredWidth: compactUi ? 52 : 64
                         horizontalAlignment: Text.AlignRight
-                        text: qsTr(Math.round(model.targetHeight) + " m")
+                        text: qsTr("%1 m").arg(Math.round(model.targetHeight))
                     }
                 }
             }
@@ -150,7 +150,7 @@ Item {
                     Label {
                         Layout.preferredWidth: compactUi ? 52 : 64
                         horizontalAlignment: Text.AlignRight
-                        text: qsTr(Math.round(model.maxRadius) + " m")
+                        text: qsTr("%1 m").arg(Math.round(model.maxRadius))
                     }
                 }
             }
@@ -179,7 +179,7 @@ Item {
                     Label {
                         Layout.preferredWidth: compactUi ? 52 : 64
                         horizontalAlignment: Text.AlignRight
-                        text: qsTr(Math.round(model.fieldOfView) + "\u00B0")
+                        text: qsTr("%1\u00B0").arg(Math.round(model.fieldOfView))
                     }
                 }
             }
@@ -208,7 +208,7 @@ Item {
                     Label {
                         Layout.preferredWidth: compactUi ? 52 : 64
                         horizontalAlignment: Text.AlignRight
-                        text: qsTr(Math.round(model.heading) + "\u00B0")
+                        text: qsTr("%1\u00B0").arg(Math.round(model.heading))
                     }
                 }
             }
