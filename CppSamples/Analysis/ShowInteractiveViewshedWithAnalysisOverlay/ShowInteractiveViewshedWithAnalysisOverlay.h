@@ -109,7 +109,7 @@ private:
   double m_maxRadius = 8000.0;
   double m_fieldOfView = 150.0;
   double m_headingValue = 10.0;
-  std::optional<double> m_elevationSamplingInterval = std::nullopt;
+  std::optional<double> m_elevationSamplingInterval;
   double m_observerPointZ = 20.0;
 };
 
