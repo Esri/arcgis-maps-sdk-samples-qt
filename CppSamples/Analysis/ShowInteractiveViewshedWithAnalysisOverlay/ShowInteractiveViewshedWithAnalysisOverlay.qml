@@ -238,7 +238,7 @@ Item {
                     RadioButton {
                         checked: model.elevationSamplingInterval === 0
                         ButtonGroup.group: samplingGroup
-                        text: qsTr("0")
+                        text: qsTr("Unlimited")
                         onClicked: model.elevationSamplingInterval = 0
                     }
 

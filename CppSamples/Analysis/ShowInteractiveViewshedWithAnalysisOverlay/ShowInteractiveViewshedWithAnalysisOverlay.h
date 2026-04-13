@@ -18,6 +18,7 @@
 #define SHOWINTERACTIVEVIEWSHEDWITHANALYSISOVERLAY_H
 
 #include <QObject>
+#include <optional>
 
 // ArcGISRuntime headers
 #include <Point.h>
@@ -50,13 +51,14 @@ class ShowInteractiveViewshedWithAnalysisOverlay : public QObject
   Q_PROPERTY(double maxRadius MEMBER m_maxRadius WRITE setMaxRadius NOTIFY maxRadiusChanged)
   Q_PROPERTY(double fieldOfView MEMBER m_fieldOfView WRITE setFieldOfView NOTIFY fieldOfViewChanged)
   Q_PROPERTY(double heading MEMBER m_headingValue WRITE setHeading NOTIFY headingChanged)
-  Q_PROPERTY(double elevationSamplingInterval MEMBER m_elevationSamplingInterval WRITE setElevationSamplingInterval NOTIFY elevationSamplingIntervalChanged)
+  Q_PROPERTY(double elevationSamplingInterval READ elevationSamplingInterval WRITE setElevationSamplingInterval NOTIFY elevationSamplingIntervalChanged)
 
 public:
   explicit ShowInteractiveViewshedWithAnalysisOverlay(QObject* parent = nullptr);
   ~ShowInteractiveViewshedWithAnalysisOverlay() override;
 
   static void init();
+  double elevationSamplingInterval() const;
   bool initialized() const;
   Q_INVOKABLE void dragObserver(double x, double y);
   Q_INVOKABLE void endObserverDrag(double x, double y);
@@ -107,7 +109,7 @@ private:
   double m_maxRadius = 8000.0;
   double m_fieldOfView = 150.0;
   double m_headingValue = 10.0;
-  double m_elevationSamplingInterval = 0.0;
+  std::optional<double> m_elevationSamplingInterval = std::nullopt;
   double m_observerPointZ = 20.0;
 };
 

@@ -204,7 +204,7 @@ void ShowInteractiveViewshedWithAnalysisOverlay::initializeViewshed()
   syncObserverGraphic();
 
   // Initialize the viewshed parameters.
-  m_viewshedParameters = new ViewshedParameters();
+  m_viewshedParameters = new ViewshedParameters(this);
   m_viewshedParameters->setObserverPosition(m_observerPositionPoint);
   m_viewshedParameters->setTargetHeight(m_targetHeight);
   m_viewshedParameters->setMaxRadius(m_maxRadius);
@@ -240,7 +240,7 @@ void ShowInteractiveViewshedWithAnalysisOverlay::syncObserverGraphic()
   // Update the observer graphic geometry to the current observer position.
   if (!m_observerGraphic)
   {
-    m_observerSymbol = new SimpleMarkerSymbol(SimpleMarkerSymbolStyle::Circle, QColor("Blue"), 10.0f /*size*/, this);
+    m_observerSymbol = new SimpleMarkerSymbol(SimpleMarkerSymbolStyle::Circle, QColor(Qt::blue), 10.0f /*size*/, this);
     m_observerGraphic = new Graphic(m_observerPositionPoint, m_observerSymbol, this);
 
     m_graphicsOverlay->graphics()->append(m_observerGraphic);
@@ -347,18 +347,25 @@ void ShowInteractiveViewshedWithAnalysisOverlay::setHeading(double value)
 
 void ShowInteractiveViewshedWithAnalysisOverlay::setElevationSamplingInterval(double value)
 {
-  if (m_elevationSamplingInterval == value)
+  std::optional<double> newInterval = (value == 0.0) ? std::nullopt : std::optional<double>(value);
+
+  if (m_elevationSamplingInterval == newInterval)
   {
     return;
   }
 
-  m_elevationSamplingInterval = value;
+  m_elevationSamplingInterval = newInterval;
   if (m_viewshedParameters)
   {
-    m_viewshedParameters->setElevationSamplingInterval(value);
+    m_viewshedParameters->setElevationSamplingInterval(m_elevationSamplingInterval);
   }
 
   emit elevationSamplingIntervalChanged();
+}
+
+double ShowInteractiveViewshedWithAnalysisOverlay::elevationSamplingInterval() const
+{
+  return m_elevationSamplingInterval.value_or(0.0);
 }
 
 bool ShowInteractiveViewshedWithAnalysisOverlay::initialized() const
@@ -376,7 +383,7 @@ void ShowInteractiveViewshedWithAnalysisOverlay::startObserverDrag(double x, dou
   if (m_observerSymbol)
   {
     // Change the observer graphic color to indicate it is being moved.
-    m_observerSymbol->setColor(QColor("Yellow"));
+    m_observerSymbol->setColor(QColor(Qt::yellow));
   }
 
   m_isDraggingObserver = true;
@@ -404,7 +411,7 @@ void ShowInteractiveViewshedWithAnalysisOverlay::endObserverDrag(double x, doubl
   if (m_observerSymbol)
   {
     // Change the observer graphic color back when dragging ends.
-    m_observerSymbol->setColor(QColor("Blue"));
+    m_observerSymbol->setColor(QColor(Qt::blue));
   }
 
   m_isDraggingObserver = false;
