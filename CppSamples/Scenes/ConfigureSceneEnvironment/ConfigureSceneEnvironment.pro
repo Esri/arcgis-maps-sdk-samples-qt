@@ -27,7 +27,7 @@ QT += opengl qml quick
 TEMPLATE = app
 TARGET = ConfigureSceneEnvironment
 
-ARCGIS_RUNTIME_VERSION = 300.0.0
+include($$PWD/../../../ArcGISRuntimeVersion.pri)
 include($$PWD/arcgisruntime.pri)
 
 #-------------------------------------------------------------------------------
