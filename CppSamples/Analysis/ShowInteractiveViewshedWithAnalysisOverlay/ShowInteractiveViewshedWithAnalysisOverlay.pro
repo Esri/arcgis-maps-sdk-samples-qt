@@ -20,7 +20,6 @@ mac {
 #-------------------------------------------------------------------------------
 
 CONFIG += c++17
-CONFIG += add_ios_ffmpeg_libraries
 
 # additional modules are pulled in via arcgisruntime.pri
 QT += qml quick
@@ -28,7 +27,7 @@ QT += qml quick
 TEMPLATE = app
 TARGET = ShowInteractiveViewshedWithAnalysisOverlay
 
-ARCGIS_RUNTIME_VERSION = 300.0.0
+include($$PWD/../../../ArcGISRuntimeVersion.pri)
 include($$PWD/arcgisruntime.pri)
 
 #-------------------------------------------------------------------------------
