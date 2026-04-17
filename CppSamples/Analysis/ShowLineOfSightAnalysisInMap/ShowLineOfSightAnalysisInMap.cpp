@@ -25,9 +25,7 @@
 #include "CalloutData.h"
 #include "ContinuousField.h"
 #include "Error.h"
-#include "GeoView.h"
 #include "GeometryEngine.h"
-#include "GeometryTypes.h"
 #include "Graphic.h"
 #include "GraphicListModel.h"
 #include "GraphicsOverlay.h"
@@ -53,7 +51,6 @@
 
 #include <QFileInfo>
 #include <QFuture>
-#include <QImage>
 #include <QMouseEvent>
 #include <QStandardPaths>
 
@@ -146,16 +143,8 @@ void ShowLineOfSightAnalysisInMap::initialize()
   m_mapView->graphicsOverlays()->append(m_observersGraphicsOverlay);
   m_mapView->graphicsOverlays()->append(m_targetGraphicsOverlay);
 
-  PictureMarkerSymbol* beaconSymbol = nullptr;
-  const QImage beaconImage(QStringLiteral(":/Samples/Analysis/ShowLineOfSightAnalysisInMap/iconAssets/beacon.png"));
-  if (!beaconImage.isNull())
-  {
-    beaconSymbol = new PictureMarkerSymbol(beaconImage, this);
-  }
-  else
-  {
-    beaconSymbol = new PictureMarkerSymbol(QUrl(QStringLiteral("qrc:/Samples/Analysis/ShowLineOfSightAnalysisInMap/iconAssets/beacon.png")), this);
-  }
+  PictureMarkerSymbol* beaconSymbol =
+    new PictureMarkerSymbol(QUrl(QStringLiteral("qrc:/Samples/Analysis/ShowLineOfSightAnalysisInMap/iconAssets/beacon.png")), this);
 
   beaconSymbol->setWidth(24.0);
   beaconSymbol->setHeight(24.0);
@@ -164,10 +153,11 @@ void ShowLineOfSightAnalysisInMap::initialize()
   Graphic* targetGraphic = new Graphic(m_targetPoint, beaconSymbol, this);
   m_targetGraphicsOverlay->graphics()->append(targetGraphic);
 
-  const QList<ObserverDefinition> observers = createObservers();
-  for (int i = 0; i < observers.size(); ++i)
+  m_observers = createObservers();
+
+  for (int i = 0; i < m_observers.size(); ++i)
   {
-    const ObserverDefinition& observer = observers.at(i);
+    const ObserverDefinition& observer = m_observers.at(i);
     SimpleMarkerSymbol* symbol = new SimpleMarkerSymbol(SimpleMarkerSymbolStyle::Triangle, observer.color, 15.0, this);
     Graphic* observerGraphic = new Graphic(observer.position, symbol, this);
     observerGraphic->attributes()->insertAttribute(QStringLiteral("observerIndex"), i);
@@ -203,10 +193,9 @@ void ShowLineOfSightAnalysisInMap::onElevationFieldCreated(ContinuousField* elev
   LineOfSightPosition* targetPosition = new LineOfSightPosition(m_targetPoint, HeightOrigin::Relative, this);
   QList<LineOfSightPosition*> targetPositions{targetPosition};
 
-  const QList<ObserverDefinition> observers = createObservers();
   QList<LineOfSightPosition*> observerPositions;
-  observerPositions.reserve(observers.size());
-  for (const ObserverDefinition& observer : observers)
+  observerPositions.reserve(m_observers.size());
+  for (const ObserverDefinition& observer : m_observers)
   {
     observerPositions.append(new LineOfSightPosition(observer.position, HeightOrigin::Relative, this));
   }
@@ -226,7 +215,6 @@ void ShowLineOfSightAnalysisInMap::onLineOfSightEvaluated(const QList<LineOfSigh
 {
   if (results.isEmpty())
   {
-    m_isObserverIdentifyEnabled = true;
     return;
   }
 

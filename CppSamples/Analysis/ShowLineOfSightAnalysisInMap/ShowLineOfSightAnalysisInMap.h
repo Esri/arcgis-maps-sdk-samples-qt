@@ -81,6 +81,7 @@ private:
   QString lineOfSightDetail(Esri::ArcGISRuntime::LineOfSight* result) const;
 
   const QString m_elevationFilePath;
+  QList<ObserverDefinition> m_observers;
   bool m_isObserverIdentifyEnabled = false;
   bool m_visibilityFilter = false;
   bool m_initialized = false;
