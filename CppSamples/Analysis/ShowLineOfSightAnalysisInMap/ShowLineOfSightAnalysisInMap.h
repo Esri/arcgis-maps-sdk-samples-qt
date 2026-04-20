@@ -38,6 +38,12 @@ namespace Esri::ArcGISRuntime
 
 Q_MOC_INCLUDE("MapQuickView.h");
 
+struct ObserverDefinition
+{
+  QColor color;
+  Esri::ArcGISRuntime::Point position;
+};
+
 class ShowLineOfSightAnalysisInMap : public QObject
 {
   Q_OBJECT
@@ -58,14 +64,6 @@ signals:
   void visibilityFilterChanged();
 
 private:
-  struct ObserverDefinition
-  {
-    QColor color;
-    Esri::ArcGISRuntime::Point position;
-  };
-
-  static QList<ObserverDefinition> createObservers();
-
   Esri::ArcGISRuntime::MapQuickView* mapView() const;
   void setMapView(Esri::ArcGISRuntime::MapQuickView* mapView);
 

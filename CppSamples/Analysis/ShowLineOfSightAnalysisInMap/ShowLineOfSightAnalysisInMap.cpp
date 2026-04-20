@@ -66,6 +66,19 @@ namespace
     return QStandardPaths::writableLocation(QStandardPaths::HomeLocation);
 #endif
   }
+
+  QList<ObserverDefinition> createObservers()
+  {
+    const SpatialReference webMercator = SpatialReference::webMercator();
+    return {
+      {QColor(Qt::green), Point(-580893.546, 7489102.890, 5.0, webMercator)},
+      {QColor(Qt::white), Point(-583446.004, 7483567.462, 5.0, webMercator)},
+      {QColor(255, 165, 0), Point(-577665.236, 7490792.908, 5.0, webMercator)},
+      {QColor(Qt::yellow), Point(-576452.981, 7487071.388, 5.0, webMercator)},
+      {QColor(228, 168, 239), Point(-576650.067, 7481479.772, 5.0, webMercator)},
+      {QColor(Qt::blue), Point(-571683.896, 7492017.864, 5.0, webMercator)}
+    };
+  }
 } // namespace
 
 ShowLineOfSightAnalysisInMap::ShowLineOfSightAnalysisInMap(QObject* parent /* = nullptr */) :
@@ -333,15 +346,4 @@ void ShowLineOfSightAnalysisInMap::applyVisibilityFilter()
   }
 }
 
-QList<ShowLineOfSightAnalysisInMap::ObserverDefinition> ShowLineOfSightAnalysisInMap::createObservers()
-{
-  const SpatialReference webMercator = SpatialReference::webMercator();
-  return {
-    {QColor(Qt::green), Point(-580893.546, 7489102.890, 5.0, webMercator)},
-    {QColor(Qt::white), Point(-583446.004, 7483567.462, 5.0, webMercator)},
-    {QColor(255, 165, 0), Point(-577665.236, 7490792.908, 5.0, webMercator)},
-    {QColor(Qt::yellow), Point(-576452.981, 7487071.388, 5.0, webMercator)},
-    {QColor(228, 168, 239), Point(-576650.067, 7481479.772, 5.0, webMercator)},
-    {QColor(Qt::blue), Point(-571683.896, 7492017.864, 5.0, webMercator)}
-  };
-}
+
