@@ -19,7 +19,6 @@
 
 #include <QObject>
 #include <QColor>
-#include <QHash>
 #include <QList>
 
 #include "Point.h"
@@ -44,7 +43,7 @@ class ShowLineOfSightAnalysisInMap : public QObject
   Q_OBJECT
 
   Q_PROPERTY(Esri::ArcGISRuntime::MapQuickView* mapView READ mapView WRITE setMapView NOTIFY mapViewChanged)
-  Q_PROPERTY(bool visibilityFilter READ visibilityFilter WRITE setVisibilityFilter NOTIFY visibilityFilterChanged)
+  Q_PROPERTY(bool visibilityFilter MEMBER m_visibilityFilter WRITE setVisibilityFilter NOTIFY visibilityFilterChanged)
 
 public:
   explicit ShowLineOfSightAnalysisInMap(QObject* parent = nullptr);
@@ -52,7 +51,6 @@ public:
 
   static void init();
 
-  bool visibilityFilter() const;
   Q_INVOKABLE void setVisibilityFilter(bool visibilityFilter);
 
 signals:
@@ -94,7 +92,7 @@ private:
 
   Esri::ArcGISRuntime::Point m_targetPoint;
 
-  QHash<int, Esri::ArcGISRuntime::LineOfSight*> m_lineOfSightResults;
+  QList<Esri::ArcGISRuntime::LineOfSight*> m_lineOfSightResults;
 };
 
 #endif // SHOWLINEOFSIGHTANALYSISINMAP_H

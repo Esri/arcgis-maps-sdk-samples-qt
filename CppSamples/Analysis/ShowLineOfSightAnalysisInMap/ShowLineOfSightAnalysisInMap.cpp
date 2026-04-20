@@ -106,11 +106,6 @@ void ShowLineOfSightAnalysisInMap::setMapView(MapQuickView* mapView)
   emit mapViewChanged();
 }
 
-bool ShowLineOfSightAnalysisInMap::visibilityFilter() const
-{
-  return m_visibilityFilter;
-}
-
 void ShowLineOfSightAnalysisInMap::setVisibilityFilter(bool visibilityFilter)
 {
   if (m_visibilityFilter == visibilityFilter)
@@ -222,11 +217,13 @@ void ShowLineOfSightAnalysisInMap::onLineOfSightEvaluated(const QList<LineOfSigh
   SimpleLineSymbol* notVisibleLineSymbol =
     new SimpleLineSymbol(SimpleLineSymbolStyle::LongDash, Qt::gray, 2.0, this);
 
+  m_lineOfSightResults.clear();
+
   for (int i = 0; i < results.size(); ++i)
   {
     LineOfSight* result = results.at(i);
     const float targetVisibility = result->targetVisibility();
-    m_lineOfSightResults.insert(i, result);
+    m_lineOfSightResults.append(result);
 
     const Polyline visibleLine = result->visibleLine();
     if (!visibleLine.isEmpty())
@@ -340,11 +337,11 @@ QList<ShowLineOfSightAnalysisInMap::ObserverDefinition> ShowLineOfSightAnalysisI
 {
   const SpatialReference webMercator = SpatialReference::webMercator();
   return {
-    {Qt::green, Point(-580893.546, 7489102.890, 5.0, webMercator)},
-    {Qt::white, Point(-583446.004, 7483567.462, 5.0, webMercator)},
+    {QColor(Qt::green), Point(-580893.546, 7489102.890, 5.0, webMercator)},
+    {QColor(Qt::white), Point(-583446.004, 7483567.462, 5.0, webMercator)},
     {QColor(255, 165, 0), Point(-577665.236, 7490792.908, 5.0, webMercator)},
-    {Qt::yellow, Point(-576452.981, 7487071.388, 5.0, webMercator)},
+    {QColor(Qt::yellow), Point(-576452.981, 7487071.388, 5.0, webMercator)},
     {QColor(228, 168, 239), Point(-576650.067, 7481479.772, 5.0, webMercator)},
-    {Qt::blue, Point(-571683.896, 7492017.864, 5.0, webMercator)}
+    {QColor(Qt::blue), Point(-571683.896, 7492017.864, 5.0, webMercator)}
   };
 }
