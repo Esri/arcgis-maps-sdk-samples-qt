@@ -163,7 +163,7 @@ void ShowLineOfSightAnalysisInMap::initialize()
 
   m_observers = createObservers();
 
-  for (int i = 0; i < m_observers.size(); ++i)
+  for (int i = 0; i < static_cast<int>(m_observers.size()); ++i)
   {
     const ObserverDefinition& observer = m_observers.at(i);
     SimpleMarkerSymbol* symbol = new SimpleMarkerSymbol(SimpleMarkerSymbolStyle::Triangle, observer.color, 15.0, this);
@@ -203,7 +203,8 @@ void ShowLineOfSightAnalysisInMap::onElevationFieldCreated(ContinuousField* elev
 
   QList<LineOfSightPosition*> observerPositions;
   observerPositions.reserve(m_observers.size());
-  for (const ObserverDefinition& observer : m_observers)
+  const QList<ObserverDefinition>& observers = m_observers;
+  for (const ObserverDefinition& observer : observers)
   {
     observerPositions.append(new LineOfSightPosition(observer.position, HeightOrigin::Relative, this));
   }
@@ -232,9 +233,8 @@ void ShowLineOfSightAnalysisInMap::onLineOfSightEvaluated(const QList<LineOfSigh
 
   m_lineOfSightResults.clear();
 
-  for (int i = 0; i < results.size(); ++i)
+  for (LineOfSight* result : results)
   {
-    LineOfSight* result = results.at(i);
     const float targetVisibility = result->targetVisibility();
     m_lineOfSightResults.append(result);
 
@@ -290,7 +290,7 @@ void ShowLineOfSightAnalysisInMap::onIdentifyObserverCompleted(IdentifyGraphicsO
 
   Graphic* observerGraphic = graphics.constFirst();
   const int observerIndex = observerGraphic->attributes()->attributeValue(QStringLiteral("observerIndex")).toInt();
-  const QString detailText = lineOfSightDetail(m_lineOfSightResults.value(observerIndex, nullptr));
+  const QString detailText = lineOfSightDetail(m_lineOfSightResults.at(observerIndex));
 
   CalloutData* calloutData = m_mapView->calloutData();
   const Point observerPoint(observerGraphic->geometry());
@@ -338,12 +338,10 @@ void ShowLineOfSightAnalysisInMap::applyVisibilityFilter()
     return;
   }
 
-  for (int i = 0; i < m_resultsGraphicsOverlay->graphics()->size(); ++i)
+  GraphicListModel* lineGraphics = m_resultsGraphicsOverlay->graphics();
+  for (Graphic* lineGraphic : *lineGraphics)
   {
-    Graphic* lineGraphic = m_resultsGraphicsOverlay->graphics()->at(i);
     const float targetVisibility = lineGraphic->attributes()->attributeValue(QStringLiteral("targetVisibility")).toFloat();
     lineGraphic->setVisible(!m_visibilityFilter || targetVisibility == 1.0);
   }
 }
-
-
