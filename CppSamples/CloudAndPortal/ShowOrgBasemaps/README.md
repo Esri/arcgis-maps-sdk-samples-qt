@@ -34,8 +34,6 @@ You'll be prompted to load a portal anonymously or with a log-in. After you sign
 
 ## Additional information
 
-## Additional information
-
 This sample uses the `OAuthUserConfigurationManager` toolkit component and requires the [toolkit](https://github.com/Esri/arcgis-maps-sdk-toolkit-qt) to be cloned and set-up locally.
 
 See [Customize basemaps](https://enterprise.arcgis.com/en/portal/latest/administer/windows/customize-basemaps.htm) in the *Portal for ArcGIS* documentation to learn about customizing the organization's basemap list in a portal.
